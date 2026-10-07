@@ -155,9 +155,12 @@ function finishWizard(setup: PlanSetup): void {
         :key="peek"
         :code="peek"
         :subject="data.subjects[peek]"
+        :subjects="data.subjects"
+        :have="[...plan.plannedCodes.value, ...plan.plan.value.completed]"
         :course="plan.setup.value.course"
         :year="plan.terms.value[0]?.year ?? new Date().getFullYear()"
         @close="peek = null"
+        @open="peek = $event"
       />
 
       <details class="details surface">

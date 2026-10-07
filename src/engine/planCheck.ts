@@ -116,3 +116,23 @@ function visaLoadIssues(plan: Plan, data: Dataset): Issue[] {
       message: `${h.year} half ${h.half}: ${h.load} points. On a student visa you normally need ${VISA_HALF_YEAR_LOAD} per half-year (summer/winter count); less needs approval unless it's your final half-year — check with Stop 1.`,
     }))
 }
+
+/**
+ * What adding `code` to a term would flag, before it's added: availability,
+ * prerequisites met by earlier terms, corequisites, non-allowed clashes and the
+ * term's load. Issues the plan already has are left out.
+ */
+export function previewAdd(plan: Plan, data: Dataset, termIndex: number, code: string, standardLoad = 50): Issue[] {
+  const term = plan.terms[termIndex]
+  if (!term || term.subjects.includes(code)) return []
+  const terms = plan.terms.map((t, i) => (i === termIndex ? { ...t, subjects: [...t.subjects, code] } : t))
+  const before = checkTerms(plan, data, standardLoad)
+  const hadOverload = before.some((i) => i.kind === 'overload' && i.termIndex === termIndex)
+  return checkTerms({ ...plan, terms }, data, standardLoad).filter((i) => {
+    if (i.severity === 'info') return false
+    if (i.kind === 'overload') return i.termIndex === termIndex && !hadOverload
+    if (i.kind === 'duplicate') return false
+    // A later subject whose prerequisites now look different isn't this subject's problem.
+    return (i.subject === code && i.termIndex === termIndex) || (i.kind === 'non-allowed' && i.params.other === code)
+  })
+}

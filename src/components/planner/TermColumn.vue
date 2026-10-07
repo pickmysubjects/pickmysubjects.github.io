@@ -95,7 +95,7 @@ function onDrop(event: DragEvent): void {
       @hover="emit('hover', $event ? code : null)"
     />
     <p v-if="term.subjects.length === 0" class="term-empty">{{ t('plan.emptyTerm') }}</p>
-    <SubjectPicker :options="options" @pick="emit('add', $event)" />
+    <SubjectPicker :options="options" :term-index="termIndex" @pick="emit('add', $event)" />
   </section>
 </template>
 

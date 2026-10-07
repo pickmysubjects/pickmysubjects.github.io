@@ -34,7 +34,7 @@ const prereqText = computed(() => {
         <span class="code rec-code">{{ rec.code }}</span>
         <h3 class="rec-title"><a class="rec-link" :href="`#/subject/${rec.code}`">{{ rec.title }}</a></h3>
       </div>
-      <div class="rec-score" :aria-label="t('suggest.fit', { score: rec.score, confidence })">
+      <div class="rec-score" :aria-label="t('suggest.fit', { score: rec.score, confidence })" :title="t('suggest.fitHint')">
         <span class="rec-score-num">{{ rec.score }}</span>
         <span class="rec-score-bar" aria-hidden="true"><span class="rec-score-fill" :style="{ width }" /></span>
         <span class="rec-confidence">{{ confidence }}</span>

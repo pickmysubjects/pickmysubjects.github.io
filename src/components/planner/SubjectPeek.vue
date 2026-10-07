@@ -1,14 +1,22 @@
 <script setup lang="ts">
 import { computed, onMounted, useTemplateRef } from 'vue'
 import { CalendarRange, ExternalLink, X } from 'lucide-vue-next'
-import { periodsFor, type Subject } from '@/engine'
+import { periodsFor, referencedSubjects, type Subject } from '@/engine'
 import AssessmentPanel from '@/components/subject/AssessmentPanel.vue'
 import { useI18n } from '@/i18n'
 import { categoryLabel, describeReq } from '@/i18n/format'
 
 /** A quick look at a subject without leaving the planner. */
-const props = defineProps<{ code: string; subject?: Subject; course: string; year: number }>()
-const emit = defineEmits<{ close: [] }>()
+const props = defineProps<{
+  code: string
+  subject?: Subject
+  subjects: Record<string, Subject>
+  course: string
+  year: number
+  /** Codes in the plan or already passed, to mark which related subjects the student has. */
+  have: string[]
+}>()
+const emit = defineEmits<{ close: []; open: [code: string] }>()
 const { t } = useI18n()
 const dialog = useTemplateRef<HTMLDialogElement>('dialog')
 
@@ -25,6 +33,22 @@ const ratings = computed(() => {
     { key: 'rating.generosity', value: s.grading },
   ].filter((r): r is { key: string; value: number } => r.value !== undefined)
 })
+
+// What it's a prerequisite for, and what it can't count alongside (either side may list it).
+const leadsTo = computed(() =>
+  Object.values(props.subjects)
+    .filter((s) => referencedSubjects(s.prerequisites).includes(props.code))
+    .map((s) => s.code)
+    .sort(),
+)
+const clashes = computed(() => {
+  const own = props.subject && props.subject.nonAllowed !== 'unknown' ? props.subject.nonAllowed : []
+  const listed = Object.values(props.subjects)
+    .filter((s) => s.nonAllowed !== 'unknown' && s.nonAllowed.includes(props.code))
+    .map((s) => s.code)
+  return [...new Set([...own, ...listed])].sort()
+})
+const haveSet = computed(() => new Set(props.have))
 
 // Clicking the dimmed backdrop (the dialog element itself) closes it.
 function onClick(event: MouseEvent): void {
@@ -63,6 +87,32 @@ function onClick(event: MouseEvent): void {
           <p v-if="subject.prerequisites === 'none'">{{ t('subject.needsNone') }}</p>
           <p v-else-if="subject.prerequisites === 'unknown'" class="muted">{{ t('subject.notRecorded') }}</p>
           <p v-else>{{ describeReq(t, subject.prerequisites) }}</p>
+        </section>
+
+        <section class="peek-section">
+          <h3 class="peek-label">{{ t('subject.unlocks') }}</h3>
+          <p v-if="leadsTo.length === 0" class="muted">{{ t('subject.unlocksNone') }}</p>
+          <p v-else class="peek-codes">
+            <button v-for="c in leadsTo" :key="c" type="button" class="chip code peek-code-chip" @click="emit('open', c)">
+              {{ c }}<span v-if="haveSet.has(c)" class="peek-have">{{ t('plan.haveIt') }}</span>
+            </button>
+          </p>
+        </section>
+
+        <section v-if="clashes.length" class="peek-section">
+          <h3 class="peek-label">{{ t('subject.blocks') }}</h3>
+          <p class="peek-codes">
+            <button
+              v-for="c in clashes"
+              :key="c"
+              type="button"
+              class="chip code peek-code-chip"
+              :class="{ 'peek-clash': haveSet.has(c) }"
+              @click="emit('open', c)"
+            >
+              {{ c }}<span v-if="haveSet.has(c)" class="peek-have">{{ t('plan.haveIt') }}</span>
+            </button>
+          </p>
         </section>
 
         <AssessmentPanel class="peek-section" :subject="subject" :year="year" />
@@ -164,6 +214,33 @@ function onClick(event: MouseEvent): void {
   justify-content: space-between;
   gap: 12px;
   font-size: 0.92rem;
+}
+
+.peek-codes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.peek-code-chip {
+  cursor: pointer;
+  color: var(--accent);
+}
+
+.peek-code-chip:hover {
+  border-color: var(--accent);
+}
+
+.peek-have {
+  margin-left: 6px;
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+}
+
+.peek-clash {
+  border-color: var(--stop);
+  color: var(--stop);
 }
 
 .muted {

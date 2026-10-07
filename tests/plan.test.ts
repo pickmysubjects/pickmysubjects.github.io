@@ -3,7 +3,7 @@ import { offeredIn } from '../src/engine/availability'
 import { checkCourse } from '../src/engine/courseRules'
 import type { Plan } from '../src/engine/plan'
 import { planStart, standardTerms } from '../src/engine/plan'
-import { checkTerms } from '../src/engine/planCheck'
+import { checkTerms, previewAdd } from '../src/engine/planCheck'
 import { buildDataset } from '../scripts/dataset'
 import { dataset, demo, subject } from './helpers'
 
@@ -198,5 +198,39 @@ describe('checkTerms (student visa load)', () => {
       { year: 2027, period: 'semester-2', subjects: ['AAAA10005'] },
     ]
     expect(checkTerms(plan(true, terms), data).filter((i) => i.kind.startsWith('visa-'))).toEqual([])
+  })
+})
+
+describe('previewAdd', () => {
+  const data = dataset([
+    subject({ code: 'AAAA10001', offerings: { 2026: ['semester-1', 'semester-2'] }, prerequisites: 'none', non_allowed: [] }),
+    subject({ code: 'AAAA20001', level: 2, offerings: { 2026: ['semester-2'] }, prerequisites: 'AAAA10001', non_allowed: [] }),
+    subject({ code: 'BBBB10001', offerings: { 2026: ['semester-1', 'semester-2'] }, prerequisites: 'none', non_allowed: ['AAAA10001'] }),
+  ])
+  const plan: Plan = {
+    course: 'X',
+    courseYear: 2026,
+    completed: [],
+    terms: [
+      { year: 2026, period: 'semester-1', subjects: ['AAAA10001'] },
+      { year: 2026, period: 'semester-2', subjects: [] },
+    ],
+  }
+  const kinds = (termIndex: number, code: string) => previewAdd(plan, data, termIndex, code).map((i) => i.kind)
+
+  it('says nothing when it fits', () => {
+    expect(kinds(1, 'AAAA20001')).toEqual([])
+  })
+
+  it('flags a missing prerequisite and a term it does not run in', () => {
+    expect(kinds(0, 'AAAA20001').sort()).toEqual(['not-offered', 'prereq-unmet'])
+  })
+
+  it('flags a clash with a subject already planned, either way round', () => {
+    expect(kinds(1, 'BBBB10001')).toEqual(['non-allowed'])
+  })
+
+  it('ignores a subject already in that term', () => {
+    expect(kinds(0, 'AAAA10001')).toEqual([])
   })
 })
