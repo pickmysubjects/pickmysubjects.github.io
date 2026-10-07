@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, shallowRef } from 'vue'
+import { X } from 'lucide-vue-next'
 import { periodsFor, type Issue, type PlanTerm, type Subject } from '@/engine'
 import { termLabel } from '@/i18n/format'
 import { useI18n } from '@/i18n'
@@ -23,6 +24,8 @@ const emit = defineEmits<{
   drop: [code: string, from: number]
   moveBy: [code: string, delta: number]
   hover: [code: string | null]
+  removeTerm: []
+  open: [code: string]
 }>()
 
 const { t } = useI18n()
@@ -62,6 +65,16 @@ function onDrop(event: DragEvent): void {
   >
     <header class="term-head">
       <h3 class="term-name">{{ termLabel(t, term) }}</h3>
+      <button
+        v-if="term.subjects.length === 0 && (term.period === 'summer' || term.period === 'winter')"
+        class="term-remove"
+        type="button"
+        :aria-label="t('plan.removeThisTerm')"
+        :title="t('plan.removeThisTerm')"
+        @click="emit('removeTerm')"
+      >
+        <X :size="14" aria-hidden="true" />
+      </button>
       <span class="term-points" :class="{ 'term-points-over': overloaded }">{{ points }} / {{ load }}</span>
       <span class="term-bar" aria-hidden="true"><span class="term-bar-fill" :style="{ width: fill }" /></span>
     </header>
@@ -76,6 +89,7 @@ function onDrop(event: DragEvent): void {
       :term-index="termIndex"
       :highlighted="related?.has(code) ?? false"
       :dimmed="related !== null && !related.has(code)"
+      @open="emit('open', code)"
       @remove="emit('remove', code)"
       @move-by="emit('moveBy', code, $event)"
       @hover="emit('hover', $event ? code : null)"
@@ -99,6 +113,18 @@ function onDrop(event: DragEvent): void {
 
 .term-over {
   background: var(--overprint-tint);
+}
+
+.term-remove {
+  display: inline-grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--ink-soft);
+  cursor: pointer;
 }
 
 .term-head {

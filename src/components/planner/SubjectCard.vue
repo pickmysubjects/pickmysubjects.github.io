@@ -15,7 +15,13 @@ const props = defineProps<{
   highlighted: boolean
   dimmed: boolean
 }>()
-const emit = defineEmits<{ remove: []; moveBy: [delta: number]; hover: [on: boolean] }>()
+const emit = defineEmits<{ remove: []; moveBy: [delta: number]; hover: [on: boolean]; open: [] }>()
+
+// A click anywhere on the card (but not its move/remove buttons) opens the details.
+function onCardClick(event: MouseEvent): void {
+  if ((event.target as Element).closest('.card-tools')) return
+  emit('open')
+}
 
 // Info-level notes (e.g. "assumes the timetable repeats") stay in the Checks panel;
 // cards only carry a flag when something needs the student's attention.
@@ -57,13 +63,16 @@ function onDragStart(event: DragEvent): void {
     @mouseleave="emit('hover', false)"
     @focusin="emit('hover', true)"
     @focusout="emit('hover', false)"
+    @click="onCardClick"
   >
     <header class="card-top">
       <span class="control" aria-hidden="true" />
       <span class="code card-code">{{ code }}</span>
       <span v-if="subject" class="card-points">{{ subject.points }}</span>
     </header>
-    <p class="card-title">{{ subject?.title ?? t('plan.notInDataset') }}</p>
+    <button class="card-title" type="button" :aria-label="t('plan.openDetails', { code })" @click.stop="emit('open')">
+      {{ subject?.title ?? t('plan.notInDataset') }}
+    </button>
     <footer class="card-foot">
       <span v-if="subject" class="tag">L{{ subject.level }}</span>
       <span v-if="category" class="tag">{{ category }}</span>
@@ -134,6 +143,13 @@ function onDragStart(event: DragEvent): void {
 
 .card-title {
   margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
   font-size: 0.88rem;
   line-height: 1.3;
   display: -webkit-box;

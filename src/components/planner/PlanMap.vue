@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, nextTick, onBeforeUnmount, onMounted, shallowRef, useTemplateRef, watch } from 'vue'
-import { referencedSubjects, type Issue, type PlanTerm, type Subject } from '@/engine'
+import { referencedSubjects, SHORT_TERM_LOAD, termKey, type Issue, type Period, type PlanTerm, type Subject } from '@/engine'
+import { termLabel } from '@/i18n/format'
 import TermColumn from './TermColumn.vue'
 import { useI18n } from '@/i18n'
 
@@ -17,7 +18,10 @@ const emit = defineEmits<{
   remove: [termIndex: number, code: string]
   move: [code: string, from: number, to: number]
   addTerm: []
+  addTermAt: [year: number, period: Period]
+  removeTerm: [index: number]
   removeLastTerm: []
+  open: [code: string]
 }>()
 
 interface Route {
@@ -27,6 +31,30 @@ interface Route {
 }
 
 const { t } = useI18n()
+
+// Summer (Jan–Feb) and winter (Jun–Jul) terms the student could add, within the plan's span.
+const shortTerms = computed(() => {
+  const first = props.terms[0]
+  const last = props.terms.at(-1)
+  if (!first || !last) return []
+  const from = termKey(first.year, first.period)
+  const to = termKey(last.year, last.period)
+  const slots: { year: number; period: Period }[] = []
+  for (let year = first.year; year <= last.year; year++) {
+    for (const period of ['summer', 'winter'] as const) {
+      const key = termKey(year, period)
+      if (key > from && key < to && !props.terms.some((x) => x.year === year && x.period === period)) slots.push({ year, period })
+    }
+  }
+  return slots
+})
+
+function onShortTerm(event: Event): void {
+  const select = event.target as HTMLSelectElement
+  const [year, period] = select.value.split('|')
+  if (year && period) emit('addTermAt', Number(year), period as Period)
+  select.value = ''
+}
 const track = useTemplateRef<HTMLElement>('track')
 const routes = shallowRef<Route[]>([])
 const hovered = shallowRef<string | null>(null)
@@ -120,7 +148,7 @@ function onMoveBy(code: string, from: number, delta: number): void {
         :issues-by-code="issuesByCode"
         :term-issues="issues.filter((x) => x.termIndex === i && !x.subject)"
         :course="course"
-        :load="load"
+        :load="term.period === 'summer' || term.period === 'winter' ? Math.min(SHORT_TERM_LOAD, load) : load"
         :options="options"
         :related="related"
         @add="emit('add', i, $event)"
@@ -128,9 +156,17 @@ function onMoveBy(code: string, from: number, delta: number): void {
         @drop="(code, from) => emit('move', code, from, i)"
         @move-by="(code, delta) => onMoveBy(code, i, delta)"
         @hover="hovered = $event"
+        @remove-term="emit('removeTerm', i)"
+        @open="emit('open', $event)"
       />
       <div class="term-tools">
         <button class="button button-quiet" type="button" @click="emit('addTerm')">{{ t('plan.addTerm') }}</button>
+        <select v-if="shortTerms.length" class="select short-term" :aria-label="t('plan.addShortTerm')" @change="onShortTerm">
+          <option value="">{{ t('plan.addShortTerm') }}</option>
+          <option v-for="s in shortTerms" :key="`${s.year}|${s.period}`" :value="`${s.year}|${s.period}`">
+            {{ termLabel(t, s) }}
+          </option>
+        </select>
         <button class="button button-quiet" type="button" @click="emit('removeLastTerm')">{{ t('plan.removeTerm') }}</button>
       </div>
     </div>
@@ -183,6 +219,12 @@ function onMoveBy(code: string, from: number, delta: number): void {
   flex-direction: column;
   gap: 8px;
   padding-top: 38px;
+}
+
+.short-term {
+  max-width: 190px;
+  padding: 8px 10px;
+  font-size: 0.8rem;
 }
 
 .term-tools .button {

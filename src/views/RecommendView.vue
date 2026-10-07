@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { computed, shallowRef } from 'vue'
-import { recommend, type Goal } from '@/engine'
-import Interp from '@/components/Interp.vue'
+import { passedCodes, recommend, type Goal } from '@/engine'
 import { useI18n } from '@/i18n'
 import { categoryLabel, termLabel } from '@/i18n/format'
 import RecommendationCard from '@/components/recommend/RecommendationCard.vue'
+import QuickInterests from '@/components/recommend/QuickInterests.vue'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
 import { useProfile } from '@/composables/useProfile'
 
-const { name, data } = useDataset()
+const { data } = useDataset()
 const { profile, setGoal } = useProfile()
 const plan = usePlan()
 
@@ -25,14 +25,24 @@ const hasProfile = computed(
   () => profile.value.results.length > 0 || Object.keys(profile.value.skills).length > 0 || profile.value.interests.length > 0,
 )
 
+// Nothing to go on yet (or only interests): offer the interest chips right here.
+const showQuick = computed(() => profile.value.results.length === 0 && Object.keys(profile.value.skills).length === 0)
+
+// Only subjects at a level the student can take now: year 1 until 100 points are done, and so on.
+const yearLevel = computed(() => {
+  const done = passedCodes(profile.value.results).reduce((sum, c) => sum + (data.value.subjects[c]?.points ?? 12.5), 0)
+  return Math.min(3, Math.floor(done / 100) + 1)
+})
+
 const recs = computed(() =>
   recommend(data.value, profile.value, {
     planned: plan.plannedCodes.value,
     course: plan.setup.value.course,
     category: category.value || undefined,
     term: selectedTerm.value ? { year: selectedTerm.value.year, period: selectedTerm.value.period } : undefined,
-    limit: 30,
-  }),
+  })
+    .filter((r) => (data.value.subjects[r.code]?.level ?? 9) <= yearLevel.value)
+    .slice(0, 30),
 )
 
 function value(event: Event): string {
@@ -44,51 +54,47 @@ function value(event: Event): string {
   <div class="suggest">
     <section class="suggest-intro">
       <h1 class="suggest-title">{{ t('suggest.title') }}</h1>
-      <p v-if="!hasProfile" class="suggest-empty">
-        <Interp :text="t('suggest.emptyProfile')">
-          <template #link>
-            <a href="#/record">{{ t('suggest.emptyProfileLink') }}</a>
-          </template>
-        </Interp>
-      </p>
     </section>
 
-    <form class="filters" @submit.prevent>
-      <fieldset class="goal">
-        <legend class="field">{{ t('suggest.goal') }}</legend>
-        <label v-for="g in goals" :key="g" class="goal-option" :title="t(`suggest.goals.${g}Hint`)">
-          <input type="radio" name="goal" :value="g" :checked="profile.goal === g" @change="setGoal(g)" />
-          {{ t(`suggest.goals.${g}`) }}
-        </label>
-      </fieldset>
-      <label class="field">
-        {{ t('suggest.kind') }}
-        <select class="select" :value="category" @change="category = value($event)">
-          <option value="">{{ t('suggest.any') }}</option>
-          <option v-for="c in categories" :key="c" :value="c">{{ categoryLabel(t, c) }}</option>
-        </select>
-      </label>
-      <label class="field">
-        {{ t('suggest.when') }}
-        <select class="select" :value="termIndex" @change="termIndex = Number(value($event))">
-          <option :value="-1">{{ t('suggest.anyTime') }}</option>
-          <option v-for="(term, i) in plan.terms.value" :key="i" :value="i">{{ termLabel(t, term) }}</option>
-        </select>
-      </label>
-    </form>
+    <QuickInterests v-if="showQuick" :count="recs.length" />
 
-    <p v-if="recs.length === 0" class="suggest-empty">{{ t('suggest.nothing') }}</p>
-    <div class="rec-list">
-      <RecommendationCard
-        v-for="r in recs"
-        :key="r.code"
-        :rec="r"
-        :subject="data.subjects[r.code]"
-        :show-links="name === 'real'"
-        :add-label="selectedTerm ? termLabel(t, selectedTerm) : null"
-        @add="plan.addSubject(termIndex, r.code)"
-      />
-    </div>
+    <template v-if="hasProfile">
+      <form class="filters" @submit.prevent>
+        <fieldset class="goal">
+          <legend class="field">{{ t('suggest.goal') }}</legend>
+          <label v-for="g in goals" :key="g" class="goal-option" :title="t(`suggest.goals.${g}Hint`)">
+            <input type="radio" name="goal" :value="g" :checked="profile.goal === g" @change="setGoal(g)" />
+            {{ t(`suggest.goals.${g}`) }}
+          </label>
+        </fieldset>
+        <label class="field">
+          {{ t('suggest.kind') }}
+          <select class="select" :value="category" @change="category = value($event)">
+            <option value="">{{ t('suggest.any') }}</option>
+            <option v-for="c in categories" :key="c" :value="c">{{ categoryLabel(t, c) }}</option>
+          </select>
+        </label>
+        <label class="field">
+          {{ t('suggest.when') }}
+          <select class="select" :value="termIndex" @change="termIndex = Number(value($event))">
+            <option :value="-1">{{ t('suggest.anyTime') }}</option>
+            <option v-for="(term, i) in plan.terms.value" :key="i" :value="i">{{ termLabel(t, term) }}</option>
+          </select>
+        </label>
+      </form>
+
+      <p v-if="recs.length === 0" class="suggest-empty">{{ t('suggest.nothing') }}</p>
+      <div id="suggestions" class="rec-list">
+        <RecommendationCard
+          v-for="r in recs"
+          :key="r.code"
+          :rec="r"
+          :subject="data.subjects[r.code]"
+          :add-label="selectedTerm ? termLabel(t, selectedTerm) : null"
+          @add="plan.addSubject(termIndex, r.code)"
+        />
+      </div>
+    </template>
   </div>
 </template>
 

@@ -2,7 +2,7 @@
 import { BookOpen, Languages, Lock, Route, Sparkles } from 'lucide-vue-next'
 import { LOCALES, useI18n } from '@/i18n'
 
-const { t } = useI18n()
+const { t, locale, setLocale } = useI18n()
 const emit = defineEmits<{ search: [] }>()
 </script>
 
@@ -41,15 +41,24 @@ const emit = defineEmits<{ search: [] }>()
       <span class="tile-icon"><Languages :size="20" aria-hidden="true" /></span>
       <h2 class="tile-title">{{ t('home.langTitle') }}</h2>
       <p class="lang-cloud">
-        <span v-for="l in LOCALES" :key="l.code" :lang="l.code">{{ l.name }}</span>
+        <button
+          v-for="l in LOCALES"
+          :key="l.code"
+          type="button"
+          :lang="l.code"
+          :aria-pressed="locale === l.code"
+          @click="setLocale(l.code)"
+        >
+          {{ l.name }}
+        </button>
       </p>
     </div>
 
-    <div class="tile glass tile-private">
+    <a class="tile glass tile-private" href="#/privacy">
       <span class="tile-icon"><Lock :size="20" aria-hidden="true" /></span>
       <h2 class="tile-title">{{ t('home.trustNoLogin') }}</h2>
       <p class="tile-text">{{ t('home.trustLocal') }}</p>
-    </div>
+    </a>
   </section>
 </template>
 
@@ -196,13 +205,25 @@ a.tile:hover {
   margin-top: 4px;
 }
 
-.lang-cloud span {
+.lang-cloud button {
   padding: 4px 10px;
-  font-size: 0.8rem !important;
   border-radius: 999px;
   border: 1px solid var(--line);
   background: color-mix(in srgb, var(--surface) 75%, transparent);
-  font-size: 0.88rem;
+  font-size: 0.8rem;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.lang-cloud button:hover {
+  border-color: var(--accent);
+}
+
+.lang-cloud button[aria-pressed='true'] {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 600;
 }
 
 @media (max-width: 860px) {

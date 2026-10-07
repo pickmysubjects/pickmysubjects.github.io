@@ -1,7 +1,10 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, shallowRef } from 'vue'
 import ResultsEditor from '@/components/profile/ResultsEditor.vue'
 import SkillsEditor from '@/components/profile/SkillsEditor.vue'
+import SuggestionPreview from '@/components/profile/SuggestionPreview.vue'
+import { Download, Upload } from 'lucide-vue-next'
+import { downloadBackup, restoreBackup } from '@/utils/backup'
 import { useDataset } from '@/composables/useDataset'
 import { useProfile } from '@/composables/useProfile'
 import { useI18n } from '@/i18n'
@@ -14,6 +17,17 @@ const skills = computed({ get: () => profile.value.skills, set: setSkills })
 const interests = computed({ get: () => profile.value.interests, set: setInterests })
 const { t } = useI18n()
 const options = computed(() => subjectList.value.map((s) => ({ code: s.code, title: s.title })))
+
+const restoreFailed = shallowRef(false)
+async function onRestore(event: Event): Promise<void> {
+  const input = event.target as HTMLInputElement
+  const file = input.files?.[0]
+  input.value = ''
+  if (!file) return
+  restoreFailed.value = !restoreBackup(await file.text())
+  // Saved state is read when the app starts, so reload to pick up the restored copy.
+  if (!restoreFailed.value) location.reload()
+}
 </script>
 
 <template>
@@ -21,16 +35,33 @@ const options = computed(() => subjectList.value.map((s) => ({ code: s.code, tit
     <section class="record-intro">
       <h1 class="record-title">{{ t('record.title') }}</h1>
       <p class="record-lede">{{ t('record.lede') }}</p>
-      <p class="wam">
-        <span class="wam-label">WAM</span>
-        <span class="wam-value">{{ wam ?? '—' }}</span>
-        <span class="wam-note">{{ t('record.wamNote') }}</span>
-      </p>
+      <!-- UniMelb shows the official WAM; here it only feeds the predictions. -->
+      <p v-if="wam !== null" class="wam-line">{{ t('record.wamLine', { wam }) }}</p>
     </section>
     <div class="record-body">
       <ResultsEditor v-model="results" :subjects="data.subjects" :options="options" />
-      <SkillsEditor v-model:skills="skills" v-model:interests="interests" :topics="topics" />
+      <div class="record-side">
+        <SuggestionPreview />
+        <SkillsEditor v-model:skills="skills" v-model:interests="interests" :topics="topics" />
+      </div>
     </div>
+
+    <section class="backup surface">
+      <div>
+        <h2 class="backup-title">{{ t('record.backupTitle') }}</h2>
+        <p class="backup-text">{{ t('record.backupText') }}</p>
+        <p v-if="restoreFailed" class="backup-bad" role="alert">{{ t('record.restoreFailed') }}</p>
+      </div>
+      <div class="backup-actions">
+        <button class="button button-quiet" type="button" @click="downloadBackup">
+          <Download :size="16" aria-hidden="true" /> {{ t('record.backup') }}
+        </button>
+        <label class="button button-quiet">
+          <Upload :size="16" aria-hidden="true" /> {{ t('record.restore') }}
+          <input class="visually-hidden" type="file" accept="application/json,.json" @change="onRestore" />
+        </label>
+      </div>
+    </section>
   </div>
 </template>
 
@@ -53,30 +84,51 @@ const options = computed(() => subjectList.value.map((s) => ({ code: s.code, tit
   color: var(--ink-soft);
 }
 
-.wam {
+
+
+
+
+.wam-line {
+  margin-top: 8px;
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+}
+
+.record-side {
+  display: grid;
+  gap: 20px;
+}
+
+.backup {
   display: flex;
-  align-items: baseline;
-  gap: 10px;
-  margin: 14px 0 0;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px 24px;
+  padding: 18px 22px;
 }
 
-.wam-label {
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
+.backup-title {
+  font-size: 1rem;
+  font-weight: 650;
+}
+
+.backup-text {
+  margin-top: 4px;
+  font-size: 0.9rem;
   color: var(--ink-soft);
 }
 
-.wam-value {
-  font-family: var(--font-code);
-  font-size: 2rem;
+.backup-bad {
+  margin-top: 6px;
   font-weight: 600;
-  color: var(--overprint);
+  color: var(--bad);
 }
 
-.wam-note {
-  font-size: 0.8rem;
-  color: var(--ink-soft);
+.backup-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .record-body {

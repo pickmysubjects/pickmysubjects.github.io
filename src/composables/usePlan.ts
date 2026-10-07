@@ -5,6 +5,7 @@ import {
   findCourse,
   generatePlan,
   passedCodes,
+  nextSemester,
   planStart,
   termKey,
   standardTerms,
@@ -26,6 +27,8 @@ export interface PlanSetup {
   startPeriod: Period
   major: string
   specialisation: string
+  /** On a student visa (optional; changes the load warnings). */
+  international?: boolean
 }
 
 interface PlanState {
@@ -41,11 +44,13 @@ const plans = usePersisted<Record<string, PlanState>>('sc:plans', {})
 function defaultSetup(data: Dataset): PlanSetup {
   const course = data.courses[0]
   const major = data.components.find((c) => c.course === course?.code && c.kind === 'major')
+  // A new visitor is most likely planning ahead: start at the next semester that hasn't begun.
+  const next = nextSemester(new Date())
   return {
     course: course?.code ?? '',
     courseYear: course?.year ?? new Date().getFullYear(),
-    startYear: course?.year ?? new Date().getFullYear(),
-    startPeriod: 'semester-1',
+    startYear: next.year,
+    startPeriod: next.period,
     major: major?.id ?? '',
     specialisation: '',
   }
@@ -72,6 +77,7 @@ export function usePlan() {
     specialisation: state.value.setup.specialisation || undefined,
     completed: passedCodes(profile.value.results),
     terms: state.value.terms,
+    international: state.value.setup.international === true,
   }))
 
   const course = computed(() => findCourse(data.value, plan.value.course, plan.value.courseYear))
@@ -166,6 +172,24 @@ export function usePlan() {
     })
   }
 
+  /** Insert an empty term (e.g. a summer or winter term) in date order. */
+  function addTermAt(year: number, period: Period): void {
+    save((s) => {
+      if (s.terms.some((t) => t.year === year && t.period === period)) return s
+      const at = s.terms.findIndex((t) => termKey(t.year, t.period) > termKey(year, period))
+      s.terms.splice(at < 0 ? s.terms.length : at, 0, { year, period, subjects: [] })
+      return s
+    })
+  }
+
+  /** Remove a term, only if it's empty. */
+  function removeTerm(index: number): void {
+    save((s) => {
+      if ((s.terms[index]?.subjects.length ?? 1) === 0 && s.terms.length > 1) s.terms.splice(index, 1)
+      return s
+    })
+  }
+
   function removeLastTerm(): void {
     save((s) => {
       if (s.terms.length > 1 && (s.terms.at(-1)?.subjects.length ?? 0) === 0) s.terms.pop()
@@ -192,6 +216,8 @@ export function usePlan() {
     removeSubject,
     moveSubject,
     addTerm,
+    addTermAt,
+    removeTerm,
     removeLastTerm,
   }
 }

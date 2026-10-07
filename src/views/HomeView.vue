@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { Route, Sparkles } from 'lucide-vue-next'
 import SubjectSearch from '@/components/SubjectSearch.vue'
 import DataNotice from '@/components/DataNotice.vue'
 import HeroPreview from '@/components/home/HeroPreview.vue'
@@ -31,6 +32,10 @@ function focusSearch(): void {
         <p v-if="examples.length" class="stage-try">
           {{ t('home.tryLabel') }}
           <a v-for="c in examples" :key="c" class="try-chip code" :href="`#/subject/${c}`">{{ c }}</a>
+        </p>
+        <p class="stage-cta">
+          <a class="button button-accent" href="#/plan"><Route :size="18" aria-hidden="true" /> {{ t('home.cardPlan') }}</a>
+          <a class="button button-quiet" href="#/recommend"><Sparkles :size="18" aria-hidden="true" /> {{ t('home.cardForYou') }}</a>
         </p>
       </div>
       <HeroPreview class="stage-art" />
@@ -105,6 +110,13 @@ function focusSearch(): void {
 .stage-search {
   max-width: 520px;
   margin-top: 6px;
+}
+
+.stage-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 22px;
 }
 
 .stage-try {

@@ -3,6 +3,7 @@ import { computed, shallowRef } from 'vue'
 import { CircleCheck, Pencil, RotateCcw, TriangleAlert } from 'lucide-vue-next'
 import PlanWizard from '@/components/planner/PlanWizard.vue'
 import PlanMap from '@/components/planner/PlanMap.vue'
+import SubjectPeek from '@/components/planner/SubjectPeek.vue'
 import RuleLegend from '@/components/planner/RuleLegend.vue'
 import PlanIssues from '@/components/planner/PlanIssues.vue'
 import DataNotice from '@/components/DataNotice.vue'
@@ -12,7 +13,7 @@ import { useProfile } from '@/composables/useProfile'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan, type PlanSetup } from '@/composables/usePlan'
 import { useI18n } from '@/i18n'
-import { noteText, termLabel } from '@/i18n/format'
+import { issueText, noteText, termLabel } from '@/i18n/format'
 
 // The wizard copies the setup once, so it restarts when the dataset is switched.
 const { data, subjectList, name: dataName } = useDataset()
@@ -21,6 +22,12 @@ const { profile } = useProfile()
 const { t } = useI18n()
 
 const editing = shallowRef(false)
+// A longer plan on a student visa may need a new CoE.
+const extraTermsOnVisa = computed(
+  () => plan.setup.value.international === true && plan.notes.value.some((n) => typeof n !== 'string' && n.key === 'extraTerms'),
+)
+// Subject whose details are open in the quick-look dialog.
+const peek = shallowRef<string | null>(null)
 // Started before now but no record yet: the plan can't know what's done.
 const startedWithoutRecord = computed(() => {
   const { startYear: year, startPeriod: period } = plan.setup.value
@@ -35,14 +42,24 @@ const allIssues = computed(() => [...plan.termIssues.value, ...plan.courseCheck.
 const notes = computed(() => plan.notes.value.map((n) => noteText(t.value, n, rules.value)))
 
 const problems = computed(() => allIssues.value.filter((i) => i.severity === 'error').length)
+// Say what the problems are right under the status, not only in the collapsed details.
+// Problems if there are any, otherwise the things that can't be checked yet.
+const problemTexts = computed(() => {
+  const severity = problems.value ? 'error' : 'warning'
+  return allIssues.value
+    .filter((i) => i.severity === severity)
+    .map((i) => issueText(t.value, i, rules.value, plan.courseCheck.value.statuses))
+})
 const unknowns = computed(
   () =>
     plan.courseCheck.value.statuses.filter((s) => s.status === 'unknown').length +
     plan.termIssues.value.filter((i) => i.severity === 'warning').length,
 )
-const majorTitle = computed(
-  () => data.value.components.find((c) => c.id === plan.setup.value.major)?.title ?? t.value('wizard.notSure'),
-)
+const majorTitle = computed(() => {
+  const major = data.value.components.find((c) => c.id === plan.setup.value.major)?.title ?? t.value('wizard.notSure')
+  const spec = data.value.components.find((c) => c.id === plan.setup.value.specialisation)?.title
+  return spec ? `${major} + ${spec}` : major
+})
 const summary = computed(() =>
   t.value('wizard.summary', {
     course: plan.course.value?.title ?? plan.setup.value.course,
@@ -97,6 +114,8 @@ function finishWizard(setup: PlanSetup): void {
         </Interp>
       </p>
 
+      <p v-if="extraTermsOnVisa" class="started">{{ t('plan.extraTermsVisa') }}</p>
+
       <section class="status" :class="problems ? 'status-bad' : unknowns ? 'status-warn' : 'status-good'" role="status">
         <component :is="problems || unknowns ? TriangleAlert : CircleCheck" :size="22" aria-hidden="true" />
         <div>
@@ -105,8 +124,13 @@ function finishWizard(setup: PlanSetup): void {
             <template v-else-if="unknowns">{{ t('plan.statusUnknown', { n: unknowns }) }}</template>
             <template v-else>{{ t('plan.statusOk') }}</template>
           </p>
+          <ul v-if="problemTexts.length" class="status-list">
+            <li v-for="(p, i) in problemTexts.slice(0, 5)" :key="i">{{ p }}</li>
+          </ul>
         </div>
       </section>
+
+      <p class="hint">{{ t('plan.hint') }}</p>
 
       <PlanMap
         class="map"
@@ -120,7 +144,20 @@ function finishWizard(setup: PlanSetup): void {
         @remove="plan.removeSubject"
         @move="plan.moveSubject"
         @add-term="plan.addTerm()"
+        @add-term-at="(year, period) => plan.addTermAt(year, period)"
+        @remove-term="(i) => plan.removeTerm(i)"
+        @open="peek = $event"
         @remove-last-term="plan.removeLastTerm()"
+      />
+
+      <SubjectPeek
+        v-if="peek"
+        :key="peek"
+        :code="peek"
+        :subject="data.subjects[peek]"
+        :course="plan.setup.value.course"
+        :year="plan.terms.value[0]?.year ?? new Date().getFullYear()"
+        @close="peek = null"
       />
 
       <details class="details surface">
@@ -183,6 +220,10 @@ function finishWizard(setup: PlanSetup): void {
   border-radius: var(--radius-lg);
 }
 
+.status > svg {
+  flex-shrink: 0;
+}
+
 .status-good {
   background: var(--good-soft);
   color: var(--good);
@@ -200,6 +241,20 @@ function finishWizard(setup: PlanSetup): void {
 
 .status-title {
   font-weight: 650;
+}
+
+.hint {
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+}
+
+.status-list {
+  display: grid;
+  gap: 4px;
+  margin: 6px 0 0;
+  padding-left: 18px;
+  font-size: 0.9rem;
+  color: var(--ink);
 }
 
 .status-text {

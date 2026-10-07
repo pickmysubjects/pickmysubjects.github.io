@@ -1,11 +1,16 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { SKILLS, type Skill } from '@/engine'
 import { useI18n } from '@/i18n'
 
 const skills = defineModel<Partial<Record<Skill, number>>>('skills', { required: true })
 const interests = defineModel<string[]>('interests', { required: true })
-defineProps<{ topics: string[] }>()
-const { t } = useI18n()
+const props = defineProps<{ topics: string[] }>()
+const { t, locale } = useI18n()
+// In the order of the names the student sees, in their language.
+const sortedTopics = computed(() =>
+  [...props.topics].sort((a, b) => t.value(`topic.${a}`).localeCompare(t.value(`topic.${b}`), locale.value)),
+)
 
 // Two tap-to-toggle groups instead of eleven 1–5 dropdowns: strong = 5, weak = 1.
 const STRONG = 5
@@ -58,7 +63,7 @@ function toggleInterest(topic: string): void {
     <h2 class="section-title gap">{{ t('record.interestsTitle') }}</h2>
     <div class="chips" role="group" :aria-label="t('record.interests')">
       <button
-        v-for="topic in topics"
+        v-for="topic in sortedTopics"
         :key="topic"
         type="button"
         class="pick pick-strong"

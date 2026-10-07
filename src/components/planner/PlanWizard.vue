@@ -17,9 +17,24 @@ const years = [thisYear - 2, thisYear - 1, thisYear, thisYear + 1]
 const periods: Period[] = ['semester-1', 'semester-2']
 
 const majors = computed(() => props.components.filter((c) => c.course === draft.value.course && c.kind === 'major'))
+// Specialisations that go with the chosen major (an extra, optional choice).
+const specs = computed(() =>
+  props.components.filter(
+    (c) =>
+      c.course === draft.value.course &&
+      c.kind === 'specialisation' &&
+      (c.requiresMajor.length === 0 || c.requiresMajor.includes(draft.value.major)),
+  ),
+)
 
 function set(patch: Partial<PlanSetup>): void {
   draft.value = { ...draft.value, ...patch }
+}
+
+// A specialisation that doesn't go with the final major choice is dropped.
+function finish(): void {
+  const spec = specs.value.some((sp) => sp.id === draft.value.specialisation) ? draft.value.specialisation : ''
+  emit('done', { ...draft.value, specialisation: spec })
 }
 
 function chooseCourse(c: Course): void {
@@ -70,6 +85,13 @@ function chooseCourse(c: Course): void {
           </button>
         </template>
       </div>
+      <label class="intl">
+        <input type="checkbox" :checked="draft.international === true" @change="set({ international: ($event.target as HTMLInputElement).checked })" />
+        <span>
+          {{ t('wizard.international') }}
+          <span class="intl-hint">{{ t('wizard.internationalHint') }}</span>
+        </span>
+      </label>
     </div>
 
     <div v-else class="q">
@@ -91,6 +113,24 @@ function chooseCourse(c: Course): void {
           <Check v-if="draft.major === ''" :size="18" aria-hidden="true" />
         </button>
       </div>
+      <div v-if="specs.length" class="spec">
+        <p class="spec-title">{{ t('wizard.qSpec') }}</p>
+        <div class="spec-chips" role="group" :aria-label="t('wizard.qSpec')">
+          <button type="button" class="chip spec-chip" :aria-pressed="!draft.specialisation" @click="set({ specialisation: '' })">
+            {{ t('wizard.noSpec') }}
+          </button>
+          <button
+            v-for="sp in specs"
+            :key="sp.id"
+            type="button"
+            class="chip spec-chip"
+            :aria-pressed="draft.specialisation === sp.id"
+            @click="set({ specialisation: sp.id })"
+          >
+            {{ sp.title }}
+          </button>
+        </div>
+      </div>
     </div>
 
     <footer class="wizard-foot">
@@ -101,7 +141,7 @@ function chooseCourse(c: Course): void {
       <button v-if="step < 2" class="button" type="button" :disabled="step === 0 && !draft.course" @click="step++">
         {{ t('wizard.next') }} <ArrowRight :size="16" aria-hidden="true" />
       </button>
-      <button v-else class="button button-accent" type="button" @click="emit('done', draft)">
+      <button v-else class="button button-accent" type="button" @click="finish">
         {{ t('wizard.build') }}
       </button>
     </footer>
@@ -204,5 +244,55 @@ function chooseCourse(c: Course): void {
   .options-grid {
     grid-template-columns: 1fr;
   }
+}
+.intl {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.intl input {
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  accent-color: var(--accent);
+}
+
+.intl-hint {
+  display: block;
+  margin-top: 2px;
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--ink-soft);
+}
+.spec {
+  display: grid;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.spec-title {
+  font-weight: 600;
+}
+
+.spec-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.spec-chip {
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.spec-chip[aria-pressed='true'] {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 600;
 }
 </style>

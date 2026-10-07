@@ -4,23 +4,27 @@ import type { Recommendation, Subject } from '@/engine'
 import { useI18n } from '@/i18n'
 import { describeReq, reasonText } from '@/i18n/format'
 import { summariseAssessment } from '@/utils/assessment'
-import { discussionLinks } from '@/utils/links'
 
 const props = defineProps<{
   rec: Recommendation
   subject?: Subject
-  showLinks: boolean
   addLabel: string | null
 }>()
 const emit = defineEmits<{ add: [] }>()
 
-const links = computed(() => (props.showLinks ? discussionLinks(props.rec.code) : []))
 const width = computed(() => `${props.rec.score}%`)
 const { t } = useI18n()
 const reasons = computed(() => props.rec.reasons.map((n) => reasonText(t.value, n)))
 const warnings = computed(() => props.rec.warnings.map((n) => reasonText(t.value, n)))
 const confidence = computed(() => t.value(`suggest.confidence.${props.rec.confidence}`))
 const assessment = computed(() => (props.subject ? summariseAssessment(props.subject.assessment) : null))
+// When the student already meets them, say so instead of spelling out every alternative.
+const prereqText = computed(() => {
+  const pre = props.subject?.prerequisites
+  if (!pre) return ''
+  if (pre !== 'none' && props.rec.eligibility === 'ok') return t.value('suggest.prereqMet')
+  return describeReq(t.value, pre)
+})
 </script>
 
 <template>
@@ -49,12 +53,9 @@ const assessment = computed(() => (props.subject ? summariseAssessment(props.sub
     </ul>
     <footer class="rec-foot">
       <span v-if="subject" class="rec-meta">
-        {{ t('suggest.meta', { level: subject.level, points: subject.points, prereq: describeReq(t, subject.prerequisites) }) }}
+        {{ t('suggest.meta', { level: subject.level, points: subject.points, prereq: prereqText }) }}
       </span>
       <span class="rec-actions">
-        <a v-if="showLinks && subject?.handbook" :href="subject.handbook" target="_blank" rel="noopener">{{ t('suggest.handbook') }}</a>
-        <a v-for="l in links" :key="l.label" :href="l.href" target="_blank" rel="noopener" :lang="l.lang">{{ l.label }}</a>
-        <a :href="`#/feedback?topic=data&subject=${rec.code}`">{{ t('suggest.report') }}</a>
         <button v-if="addLabel" class="button button-quiet rec-add" type="button" @click="emit('add')">
           {{ t('suggest.add', { term: addLabel }) }}
         </button>
