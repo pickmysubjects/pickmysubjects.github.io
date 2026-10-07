@@ -38,7 +38,7 @@ const plannerUrl =
         <a href="#/contribute">{{ t('nav.contribute') }}</a>
         <a href="#/feedback">{{ t('nav.feedback') }}</a>
         <a href="#/privacy">{{ t('app.privacy') }}</a>
-        <a href="https://github.com/pualgao230113-sys/subject-compass" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://github.com/subject-compass/subject-compass" target="_blank" rel="noopener">GitHub</a>
       </nav>
       <p class="footer-note">
         <Interp :text="t('app.footer')">

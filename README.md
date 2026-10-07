@@ -2,6 +2,8 @@
 
 **An unofficial, student-built helper for choosing subjects at the University of Melbourne.**
 
+**Use it:** https://subject-compass.github.io/subject-compass/
+
 *Not affiliated with or endorsed by the University of Melbourne. Always confirm with the [Handbook](https://handbook.unimelb.edu.au/) and [My Course Planner](https://students.unimelb.edu.au/course-admin/planning-your-course-and-subjects/faculty-course-planning-resources/my-course-planner) before you enrol.*
 
 The University's My Course Planner tells you whether a plan is *valid*. Subject Compass helps you decide *what to take*. It explains what each subject is really like, which subjects suit you, and lays out a whole degree for you to adjust.

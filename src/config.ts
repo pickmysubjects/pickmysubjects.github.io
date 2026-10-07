@@ -8,7 +8,7 @@
  *   Responses go to a private Google Sheet; only aggregates are ever published.
  */
 export const FEEDBACK = {
-  githubRepo: 'pualgao230113-sys/subject-compass',
+  githubRepo: 'subject-compass/subject-compass',
   feedbackEmail: '',
   feedbackFormUrl: '',
 }
