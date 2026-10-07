@@ -54,6 +54,7 @@ function value(event: Event): string {
   <div class="suggest">
     <section class="suggest-intro">
       <h1 class="suggest-title">{{ t('suggest.title') }}</h1>
+      <p class="suggest-lede">{{ t('suggest.lede') }}</p>
     </section>
 
     <QuickInterests v-if="showQuick" :count="recs.length" />
@@ -66,6 +67,7 @@ function value(event: Event): string {
             <input type="radio" name="goal" :value="g" :checked="profile.goal === g" @change="setGoal(g)" />
             {{ t(`suggest.goals.${g}`) }}
           </label>
+          <p class="goal-hint">{{ t(`suggest.goals.${profile.goal}Hint`) }} {{ t('suggest.goalSource') }}</p>
         </fieldset>
         <label class="field">
           {{ t('suggest.kind') }}
@@ -103,17 +105,13 @@ function value(event: Event): string {
   padding-top: 32px;
   display: grid;
   gap: 18px;
-  max-width: 900px;
+  max-width: 1100px;
 }
 
-.suggest-title {
-  font-size: clamp(1.6rem, 3vw, 2.3rem);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-}
 
 .suggest-lede {
-  margin: 8px 0 0;
+  max-width: 62ch;
+  margin: 12px 0 0;
   color: var(--ink-soft);
 }
 
@@ -172,5 +170,11 @@ function value(event: Event): string {
 .rec-list {
   display: grid;
   gap: 12px;
+}
+.goal-hint {
+  flex-basis: 100%;
+  margin: 4px 0 0;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
 }
 </style>

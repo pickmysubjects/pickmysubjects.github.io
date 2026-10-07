@@ -148,11 +148,6 @@ function onCode(): void {
   gap: 20px;
 }
 
-.contribute-title {
-  font-size: clamp(1.6rem, 3vw, 2.3rem);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-}
 
 .steps {
   display: grid;

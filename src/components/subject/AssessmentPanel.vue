@@ -122,13 +122,13 @@ const otherTerms = computed(
 
 /* One hue per kind; the exam gets the accent because it's what students check first. */
 .k-exam { background: var(--accent); }
-.k-test { background: #8b5cf6; }
-.k-quiz { background: #c4b5fd; }
-.k-assignment { background: #6366f1; }
-.k-project { background: #0ea5e9; }
-.k-report { background: #14b8a6; }
-.k-presentation { background: #f59e0b; }
-.k-participation { background: #a3a3ad; }
+.k-test { background: #0f8b8d; }
+.k-quiz { background: #8fcfc9; }
+.k-assignment { background: #2c4a6b; }
+.k-project { background: #e0b21a; }
+.k-report { background: #b9853a; }
+.k-presentation { background: #b5543c; }
+.k-participation { background: #a3aca7; }
 
 .assess-facts,
 .assess-row {

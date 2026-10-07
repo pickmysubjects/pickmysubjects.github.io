@@ -14,6 +14,8 @@ export interface Profile {
   /** Topic tags the student is interested in, e.g. "machine-learning". */
   interests: string[]
   goal: Goal
+  /** Subjects whose uncheckable prerequisites (e.g. a VCE score) the student says they meet. */
+  confirmed?: string[]
 }
 
 export interface Recommendation {

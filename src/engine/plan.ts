@@ -17,6 +17,8 @@ export interface Plan {
   terms: PlanTerm[]
   /** On a student visa: each half-year normally needs 50 points. */
   international?: boolean
+  /** Subjects whose prerequisites the student says they meet where we can't check (e.g. a VCE score). */
+  confirmed?: string[]
 }
 
 export type Severity = 'error' | 'warning' | 'info'

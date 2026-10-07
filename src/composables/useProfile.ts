@@ -26,5 +26,10 @@ export function useProfile() {
     setSkills: (skills: Partial<Record<Skill, number>>) => update((p) => ({ ...p, skills })),
     setInterests: (interests: string[]) => update((p) => ({ ...p, interests })),
     setGoal: (goal: Goal) => update((p) => ({ ...p, goal })),
+    setConfirmed: (code: string, meets: boolean) =>
+      update((p) => {
+        const rest = (p.confirmed ?? []).filter((c) => c !== code)
+        return { ...p, confirmed: meets ? [...rest, code] : rest }
+      }),
   }
 }

@@ -72,11 +72,6 @@ function choose(id: string): void {
   max-width: 1100px;
 }
 
-.fb-title {
-  font-size: clamp(1.6rem, 3vw, 2.3rem);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-}
 
 .fb-lede {
   max-width: 72ch;

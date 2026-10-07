@@ -21,11 +21,6 @@ const sections = ['local', 'ratings', 'feedback', 'noTracking', 'google', 'remov
   max-width: 72ch;
 }
 
-.privacy-title {
-  font-size: clamp(1.6rem, 3vw, 2.3rem);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-}
 
 .privacy-updated {
   margin: 0;

@@ -18,7 +18,7 @@ import { issueText, noteText, termLabel } from '@/i18n/format'
 // The wizard copies the setup once, so it restarts when the dataset is switched.
 const { data, subjectList, name: dataName } = useDataset()
 const plan = usePlan()
-const { profile } = useProfile()
+const { profile, setConfirmed } = useProfile()
 const { t } = useI18n()
 
 const editing = shallowRef(false)
@@ -48,8 +48,13 @@ const problemTexts = computed(() => {
   const severity = problems.value ? 'error' : 'warning'
   return allIssues.value
     .filter((i) => i.severity === severity)
-    .map((i) => issueText(t.value, i, rules.value, plan.courseCheck.value.statuses))
+    .map((i) => ({
+      text: issueText(t.value, i, rules.value, plan.courseCheck.value.statuses),
+      // Conditions only the student can check (a VCE score, a test): let them say they meet it.
+      confirm: i.kind === 'prereq-unknown' ? i.subject : undefined,
+    }))
 })
+const hasConfirmable = computed(() => problemTexts.value.some((p) => p.confirm))
 const unknowns = computed(
   () =>
     plan.courseCheck.value.statuses.filter((s) => s.status === 'unknown').length +
@@ -81,7 +86,6 @@ function finishWizard(setup: PlanSetup): void {
       <h1 class="page-title">{{ t('plan.title') }}</h1>
     </section>
 
-    <DataNotice />
 
     <PlanWizard
       v-if="showWizard"
@@ -125,8 +129,14 @@ function finishWizard(setup: PlanSetup): void {
             <template v-else>{{ t('plan.statusOk') }}</template>
           </p>
           <ul v-if="problemTexts.length" class="status-list">
-            <li v-for="(p, i) in problemTexts.slice(0, 5)" :key="i">{{ p }}</li>
+            <li v-for="(p, i) in problemTexts.slice(0, 5)" :key="i">
+              {{ p.text }}
+              <button v-if="p.confirm" class="confirm" type="button" @click="setConfirmed(p.confirm, true)">
+                {{ t('plan.iMeetThis') }}
+              </button>
+            </li>
           </ul>
+          <p v-if="hasConfirmable" class="status-hint">{{ t('plan.confirmHint') }}</p>
         </div>
       </section>
 
@@ -180,6 +190,7 @@ function finishWizard(setup: PlanSetup): void {
         </div>
       </details>
     </template>
+    <DataNotice class="plan-notice" />
   </div>
 </template>
 
@@ -309,5 +320,23 @@ function finishWizard(setup: PlanSetup): void {
   .details-body {
     grid-template-columns: 1fr;
   }
+}
+.confirm {
+  margin-left: 6px;
+  padding: 1px 10px;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  background: none;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: inherit;
+  cursor: pointer;
+}
+
+.status-hint {
+  margin-top: 6px;
+  font-size: 0.85rem;
+  opacity: 0.85;
 }
 </style>

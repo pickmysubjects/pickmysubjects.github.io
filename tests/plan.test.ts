@@ -234,3 +234,18 @@ describe('previewAdd', () => {
     expect(kinds(0, 'AAAA10001')).toEqual([])
   })
 })
+
+describe('confirmed prerequisites', () => {
+  const data = dataset([
+    subject({ code: 'AAAA10001', offerings: { 2026: ['semester-1'] }, prerequisites: { manual: 'VCE Maths study score 25+' }, non_allowed: [] }),
+  ])
+  const plan: Plan = { course: 'X', courseYear: 2026, completed: [], terms: [{ year: 2026, period: 'semester-1', subjects: ['AAAA10001'] }] }
+
+  it('warns when a condition can only be checked by hand', () => {
+    expect(checkTerms(plan, data).map((i) => i.kind)).toContain('prereq-unknown')
+  })
+
+  it('stops warning once the student says they meet it', () => {
+    expect(checkTerms({ ...plan, confirmed: ['AAAA10001'] }, data).map((i) => i.kind)).not.toContain('prereq-unknown')
+  })
+})

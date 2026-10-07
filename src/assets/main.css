@@ -1,22 +1,25 @@
-/* Design tokens. One accent (magenta, the "route" colour); everything else neutral.
-   Status colours are reserved for status only. */
+/* Design tokens. The degree is drawn as a tram route: one line colour (Melbourne tram
+   green) plus a signal yellow for "you are here"; everything else is quiet. Status
+   colours are reserved for status only. */
 :root {
-  --bg: #fafaf9;
+  --bg: #f1f3f0;
   --surface: #ffffff;
-  --surface-2: #f4f4f2;
-  --ink: #0b0b0c;
-  --ink-soft: #5d5d63;
-  --ink-faint: #8f8f96;
-  --line: #e8e8e4;
-  --accent: #c2227a;
+  --surface-2: #e8ece7;
+  --ink: #111614;
+  --ink-soft: #4d5853;
+  --ink-faint: #85908a;
+  --line: #d7ddd8;
+  --accent: #00704a;
   --accent-ink: #ffffff;
-  --accent-soft: #fbe9f2;
-  --good: #1f8a52;
-  --good-soft: #e5f4ec;
-  --warn: #a96a00;
-  --warn-soft: #fdf2dc;
-  --bad: #c0352b;
-  --bad-soft: #fbe7e5;
+  --accent-soft: #dcefe4;
+  --signal: #f2c01e;
+  --signal-ink: #2a2000;
+  --good: #00704a;
+  --good-soft: #dcefe4;
+  --warn: #9a5d00;
+  --warn-soft: #fbefd6;
+  --bad: #c2372d;
+  --bad-soft: #fae5e2;
 
   /* Kept for older component styles. */
   --paper: var(--bg);
@@ -31,15 +34,17 @@
   --stop: var(--bad);
   --stop-tint: var(--bad-soft);
 
+  --font-display: 'Bricolage Grotesque Variable', 'Geist Sans', 'PingFang SC', 'Hiragino Sans', 'Apple SD Gothic Neo',
+    'Microsoft YaHei', system-ui, sans-serif;
   --font-ui: 'Geist Sans', 'PingFang SC', 'Hiragino Sans', 'Apple SD Gothic Neo', 'Microsoft YaHei', system-ui,
     sans-serif;
   --font-code: 'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace;
 
-  --radius-sm: 10px;
-  --radius: 14px;
-  --radius-lg: 22px;
-  --shadow-1: 0 1px 2px rgb(16 16 20 / 5%), 0 1px 1px rgb(16 16 20 / 3%);
-  --shadow-2: 0 10px 30px -12px rgb(16 16 20 / 18%), 0 2px 6px rgb(16 16 20 / 5%);
+  --radius-sm: 8px;
+  --radius: 12px;
+  --radius-lg: 16px;
+  --shadow-1: 0 1px 0 rgb(17 22 20 / 4%);
+  --shadow-2: 0 18px 40px -20px rgb(17 22 20 / 28%), 0 2px 6px rgb(17 22 20 / 6%);
   --shell: 1180px;
 
   color-scheme: light;
@@ -54,24 +59,25 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #0d0d0f;
-    --surface: #161619;
-    --surface-2: #1d1d21;
-    --ink: #f3f3f4;
-    --ink-soft: #a6a6ad;
-    --ink-faint: #74747c;
-    --line: #2a2a2f;
-    --accent: #f06bb0;
-    --accent-ink: #1a0610;
-    --accent-soft: #33152a;
-    --good: #5fd398;
-    --good-soft: #13291e;
+    --bg: #0d1210;
+    --surface: #141a17;
+    --surface-2: #1b231f;
+    --ink: #edf2ee;
+    --ink-soft: #a2ada7;
+    --ink-faint: #6c7872;
+    --line: #26302b;
+    --accent: #4fd18b;
+    --accent-ink: #04140b;
+    --accent-soft: #10291c;
+    --signal: #f2c01e;
+    --good: #4fd18b;
+    --good-soft: #10291c;
     --warn: #f0b44c;
     --warn-soft: #2e2412;
     --bad: #ff7d72;
     --bad-soft: #351816;
-    --shadow-1: 0 1px 2px rgb(0 0 0 / 40%);
-    --shadow-2: 0 12px 32px -12px rgb(0 0 0 / 60%);
+    --shadow-1: 0 1px 0 rgb(0 0 0 / 30%);
+    --shadow-2: 0 18px 40px -20px rgb(0 0 0 / 70%);
     color-scheme: dark;
   }
 }
@@ -94,6 +100,20 @@ h3 {
   margin: 0;
   line-height: 1.15;
   letter-spacing: -0.02em;
+}
+
+/* The display face is for page titles and big section titles only; small headings stay in the UI face. */
+h1,
+.display {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-variation-settings: 'opsz' 48;
+}
+
+h1 {
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  line-height: 1;
+  letter-spacing: -0.035em;
 }
 
 p {
@@ -138,8 +158,9 @@ textarea {
 }
 
 .page-title {
-  font-size: clamp(1.75rem, 3.4vw, 2.5rem);
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
   font-weight: 700;
+  line-height: 1;
 }
 
 .page-lede {
@@ -150,11 +171,12 @@ textarea {
 }
 
 .eyebrow {
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
+  font-family: var(--font-code);
+  font-size: 0.76rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: var(--ink-faint);
+  color: var(--accent);
 }
 
 /* Form controls */
@@ -196,7 +218,7 @@ textarea {
   min-height: 42px;
   padding: 0 18px;
   border: 1px solid transparent;
-  border-radius: 999px;
+  border-radius: var(--radius-sm);
   background: var(--ink);
   color: var(--bg);
   font-weight: 600;
@@ -207,13 +229,16 @@ textarea {
 }
 
 .button:hover {
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-2);
+  background: color-mix(in srgb, var(--ink) 86%, var(--bg));
 }
 
 .button-accent {
   background: var(--accent);
   color: var(--accent-ink);
+}
+
+.button-accent:hover {
+  background: color-mix(in srgb, var(--accent) 88%, var(--ink));
 }
 
 .button-quiet {
@@ -223,7 +248,8 @@ textarea {
 }
 
 .button-quiet:hover {
-  box-shadow: var(--shadow-1);
+  border-color: var(--ink-faint);
+  background: var(--surface);
 }
 
 .button:disabled {
@@ -285,68 +311,7 @@ textarea {
   font-family: var(--font-ui);
 }
 
-/* ---------- Depth: soft colour field behind every page + frosted glass surfaces ---------- */
-.backdrop {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  overflow: hidden;
-  pointer-events: none;
-  background: var(--bg);
-}
-
-.backdrop::before,
-.backdrop::after {
-  content: '';
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(90px);
-  opacity: 0.55;
-}
-
-.backdrop::before {
-  width: 720px;
-  height: 720px;
-  top: -260px;
-  left: -180px;
-  background: radial-gradient(circle, #f6c6de, transparent 65%);
-}
-
-.backdrop::after {
-  width: 820px;
-  height: 820px;
-  top: 10%;
-  right: -320px;
-  background: radial-gradient(circle, #cfd2ff, transparent 65%);
-}
-
-@media (prefers-color-scheme: dark) {
-  .backdrop::before {
-    background: radial-gradient(circle, #5a1f43, transparent 65%);
-  }
-
-  .backdrop::after {
-    background: radial-gradient(circle, #23285e, transparent 65%);
-  }
-}
-
-.surface,
-.glass {
-  border: 1px solid color-mix(in srgb, #ffffff 70%, var(--line));
-  background: color-mix(in srgb, var(--surface) 72%, transparent);
-  backdrop-filter: saturate(170%) blur(18px);
-  -webkit-backdrop-filter: saturate(170%) blur(18px);
-  box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 60%),
-    var(--shadow-1);
-}
-
-@media (prefers-color-scheme: dark) {
-  .surface,
-  .glass {
-    border-color: rgb(255 255 255 / 8%);
-    box-shadow:
-      inset 0 1px 0 rgb(255 255 255 / 6%),
-      var(--shadow-1);
-  }
+/* Flat, crisp surfaces: a hairline border does the work, no glass or colour blobs. */
+.surface {
+  box-shadow: none;
 }

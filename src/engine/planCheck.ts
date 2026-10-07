@@ -49,7 +49,7 @@ export function checkTerms(plan: Plan, data: Dataset, standardLoad = 50): Issue[
       const pre = evaluateField(s.prerequisites, ctx)
       if (pre.status === 'fail') {
         issues.push({ severity: 'error', kind: 'prereq-unmet', subject: code, termIndex, params: { code, year: term.year, period: term.period, needs: pre.unmet.join(', ') }, message: `${code} in ${where} needs ${pre.unmet.join(', ')} first.` })
-      } else if (pre.status === 'unknown') {
+      } else if (pre.status === 'unknown' && !plan.confirmed?.includes(code)) {
         issues.push({ severity: 'warning', kind: 'prereq-unknown', subject: code, termIndex, params: { code, needs: pre.unmet.join('; ') }, message: `${code}: prerequisites can't be confirmed — ${pre.unmet.join('; ')}.` })
       }
 

@@ -83,11 +83,6 @@ async function onRestore(event: Event): Promise<void> {
   max-width: 1100px;
 }
 
-.record-title {
-  font-size: clamp(1.6rem, 3vw, 2.3rem);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-}
 
 .record-lede {
   margin: 8px 0 0;

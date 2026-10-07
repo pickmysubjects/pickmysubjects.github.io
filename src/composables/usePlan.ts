@@ -78,6 +78,7 @@ export function usePlan() {
     completed: passedCodes(profile.value.results),
     terms: state.value.terms,
     international: state.value.setup.international === true,
+    confirmed: profile.value.confirmed ?? [],
   }))
 
   const course = computed(() => findCourse(data.value, plan.value.course, plan.value.courseYear))

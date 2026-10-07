@@ -4,6 +4,7 @@ import { CalendarRange, ExternalLink, X } from 'lucide-vue-next'
 import { periodsFor, referencedSubjects, type Subject } from '@/engine'
 import AssessmentPanel from '@/components/subject/AssessmentPanel.vue'
 import MajorRoles from '@/components/subject/MajorRoles.vue'
+import { useProfile } from '@/composables/useProfile'
 import { useI18n } from '@/i18n'
 import { categoryLabel, describeReq } from '@/i18n/format'
 
@@ -51,6 +52,11 @@ const clashes = computed(() => {
 })
 const haveSet = computed(() => new Set(props.have))
 
+// Conditions we can't check (a VCE score, a test): the student can say they meet them.
+const { profile, setConfirmed } = useProfile()
+const hasManual = computed(() => JSON.stringify(props.subject?.prerequisites ?? '').includes('"manual"'))
+const confirmed = computed(() => profile.value.confirmed?.includes(props.code) ?? false)
+
 // Clicking the dimmed backdrop (the dialog element itself) closes it.
 function onClick(event: MouseEvent): void {
   if (event.target === dialog.value) dialog.value?.close()
@@ -90,6 +96,10 @@ function onClick(event: MouseEvent): void {
           <p v-if="subject.prerequisites === 'none'">{{ t('subject.needsNone') }}</p>
           <p v-else-if="subject.prerequisites === 'unknown'" class="muted">{{ t('subject.notRecorded') }}</p>
           <p v-else>{{ describeReq(t, subject.prerequisites) }}</p>
+          <label v-if="hasManual" class="peek-confirm">
+            <input type="checkbox" :checked="confirmed" @change="setConfirmed(code, ($event.target as HTMLInputElement).checked)" />
+            {{ t('plan.iMeetThisLong') }}
+          </label>
         </section>
 
         <section class="peek-section">
@@ -244,6 +254,18 @@ function onClick(event: MouseEvent): void {
 .peek-clash {
   border-color: var(--stop);
   color: var(--stop);
+}
+
+.peek-confirm {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.peek-confirm input {
+  margin-top: 3px;
 }
 
 .muted {

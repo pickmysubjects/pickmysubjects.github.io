@@ -5,12 +5,12 @@ import { useI18n } from '@/i18n'
 const skills = defineModel<Partial<Record<Skill, number>>>('skills', { required: true })
 const { t } = useI18n()
 
-// One row per skill with two toggles instead of eleven 1–5 dropdowns: strong = 5, weak = 1.
-const STRONG = 5
-const WEAK = 1
+// Five steps, like a course survey: 1 = finds it hard … 5 = strong. Blank means "not sure".
+const LEVELS = [1, 2, 3, 4, 5] as const
 
-function toggle(skill: Skill, level: number): void {
+function pick(skill: Skill, level: number): void {
   const next = { ...skills.value }
+  // Tapping the chosen level again clears it.
   if (next[skill] === level) delete next[skill]
   else next[skill] = level
   skills.value = next
@@ -26,16 +26,25 @@ function toggle(skill: Skill, level: number): void {
     <ul class="skill-list">
       <li v-for="s in SKILLS" :key="s" class="skill">
         <span class="skill-name">{{ t(`skill.${s}`) }}</span>
-        <span class="skill-toggles" role="group" :aria-label="t(`skill.${s}`)">
-          <button type="button" class="toggle toggle-good" :aria-pressed="skills[s] === STRONG" @click="toggle(s, STRONG)">
-            {{ t('record.good') }}
-          </button>
-          <button type="button" class="toggle toggle-hard" :aria-pressed="skills[s] === WEAK" @click="toggle(s, WEAK)">
-            {{ t('record.harder') }}
+        <span class="scale" role="radiogroup" :aria-label="t(`skill.${s}`)">
+          <button
+            v-for="n in LEVELS"
+            :key="n"
+            type="button"
+            role="radio"
+            class="step"
+            :class="`step-${n}`"
+            :aria-checked="skills[s] === n"
+            :title="t(`record.level.${n}`)"
+            @click="pick(s, n)"
+          >
+            <span class="step-label">{{ t(`record.level.${n}`) }}</span>
+            <span class="step-num" aria-hidden="true">{{ n }}</span>
           </button>
         </span>
       </li>
     </ul>
+    <p class="scale-ends"><span>1 = {{ t('record.level.1') }}</span><span>5 = {{ t('record.level.5') }}</span></p>
   </section>
 </template>
 
@@ -59,7 +68,7 @@ function toggle(skill: Skill, level: number): void {
 
 .skill-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
   gap: 0 24px;
   margin: 0;
   padding: 0;
@@ -76,38 +85,76 @@ function toggle(skill: Skill, level: number): void {
   font-size: 0.92rem;
 }
 
-.skill-toggles {
-  display: flex;
-  gap: 4px;
+.scale {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
   flex: none;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
 }
 
-.toggle {
-  padding: 3px 10px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: none;
+.step {
+  min-width: 44px;
+  padding: 4px 6px;
+  border: 0;
+  border-left: 1px solid var(--line);
+  background: var(--surface);
   font: inherit;
-  font-size: 0.78rem;
+  font-size: 0.74rem;
   color: var(--ink-soft);
   cursor: pointer;
 }
 
-.toggle:hover {
-  border-color: var(--ink-faint);
+.step:first-child {
+  border-left: 0;
 }
 
-.toggle-good[aria-pressed='true'] {
-  border-color: var(--accent);
-  background: var(--accent-soft);
-  color: var(--accent);
+.step:hover {
+  background: var(--surface-2);
+}
+
+.step[aria-checked='true'] {
+  background: var(--accent);
+  color: var(--accent-ink);
   font-weight: 600;
 }
 
-.toggle-hard[aria-pressed='true'] {
-  border-color: var(--warn);
-  background: var(--warn-soft);
-  color: var(--warn);
-  font-weight: 600;
+.step-1[aria-checked='true'],
+.step-2[aria-checked='true'] {
+  background: var(--warn);
+  color: #fff;
+}
+
+.step-3[aria-checked='true'] {
+  background: var(--ink-soft);
+  color: var(--bg);
+}
+
+.step-num {
+  display: none;
+}
+
+/* Narrow screens: numbers only, with the two ends labelled below the list. */
+@media (max-width: 640px) {
+  .step-label {
+    display: none;
+  }
+
+  .step-num {
+    display: inline;
+  }
+}
+.scale-ends {
+  display: none;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: var(--ink-faint);
+}
+
+@media (max-width: 640px) {
+  .scale-ends {
+    display: flex;
+  }
 }
 </style>

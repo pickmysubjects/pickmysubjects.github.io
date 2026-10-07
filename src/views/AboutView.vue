@@ -76,12 +76,6 @@ const features = [
   color: var(--accent);
 }
 
-.about-title {
-  margin-top: 6px;
-  font-size: clamp(1.8rem, 4vw, 2.6rem);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-}
 
 .about-story {
   display: grid;
