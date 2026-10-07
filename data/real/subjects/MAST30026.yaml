@@ -5,9 +5,30 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
+prerequisites:
+  all:
+    - MAST20022
+    - any:
+        - MAST10009
+        - MAST20026
+        - MAST20033
+corequisites: none
+non_allowed: []
 categories:
   B-SCI: science
 handbook: https://handbook.unimelb.edu.au/2026/subjects/mast30026
 source_year: 2026
 verified_on: 2026-10-07
-notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+notes: Requirements and study periods copied by hand from the 2026 Handbook page.
+skills:
+  - maths
+topics:
+  - pure-maths
+assessment:
+  - kind: assignment
+    weight: 20
+  - kind: test
+    weight: 10
+  - kind: exam
+    weight: 70
+weekly_contact_hours: 4

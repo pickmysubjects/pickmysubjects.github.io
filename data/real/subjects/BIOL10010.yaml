@@ -5,9 +5,29 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
+prerequisites: none
+corequisites: none
+non_allowed:
+  - BIOL10011
 categories:
   B-SCI: science
 handbook: https://handbook.unimelb.edu.au/2026/subjects/biol10010
 source_year: 2026
 verified_on: 2026-10-07
-notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+notes: Requirements and study periods copied by hand from the 2026 Handbook page.
+skills:
+  - lab
+  - writing
+topics:
+  - biology
+assessment:
+  - kind: test
+    weight: 40
+  - kind: report
+    weight: 20
+    group: true
+  - kind: exam
+    weight: 40
+    hurdle: true
+weekly_contact_hours: 5.5
+min_attendance: 80

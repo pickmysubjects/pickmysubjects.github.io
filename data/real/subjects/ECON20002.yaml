@@ -1,0 +1,35 @@
+code: ECON20002
+title: Intermediate Microeconomics
+level: 2
+points: 12.5
+offerings:
+  "2026":
+    - summer
+    - semester-1
+    - semester-2
+prerequisites: ECON10004
+corequisites: none
+non_allowed: []
+categories:
+  B-SCI: breadth
+handbook: https://handbook.unimelb.edu.au/2026/subjects/econ20002
+source_year: 2026
+verified_on: 2026-10-07
+notes: Requirements and study periods copied by hand from the 2026 Handbook page.
+skills:
+  - business
+  - maths
+topics:
+  - economics
+assessment:
+  - kind: participation
+    weight: 5
+  - kind: participation
+    weight: 5
+  - kind: quiz
+    weight: 20
+  - kind: test
+    weight: 10
+  - kind: exam
+    weight: 60
+    hurdle: true

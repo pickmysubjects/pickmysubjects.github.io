@@ -1,32 +1,35 @@
-code: BIOL10001
-title: Biology of Australian Flora & Fauna
+code: JAPN10002
+title: Japanese 2
 level: 1
 points: 12.5
 offerings:
   "2026":
     - semester-2
-prerequisites: none
+prerequisites:
+  any:
+    - JAPN10001
+    - manual: Language placement test result that places you in Japanese 2
 corequisites: none
 non_allowed: []
 categories:
-  B-SCI: science
-handbook: https://handbook.unimelb.edu.au/2026/subjects/biol10001
+  B-SCI: breadth
+handbook: https://handbook.unimelb.edu.au/2026/subjects/japn10002
 source_year: 2026
 verified_on: 2026-10-07
 notes: Requirements and study periods copied by hand from the 2026 Handbook page.
 skills:
   - writing
-  - lab
+  - presentation
 topics:
-  - biology
-  - environment
+  - languages
 assessment:
   - kind: assignment
     weight: 15
-  - kind: test
+  - kind: presentation
+    weight: 20
+  - kind: project
     weight: 15
-  - kind: assignment
-    weight: 25
   - kind: exam
-    weight: 45
+    weight: 50
 weekly_contact_hours: 4
+min_attendance: 80

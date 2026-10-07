@@ -1,0 +1,47 @@
+code: ECON20003
+title: Quantitative Methods 2
+level: 2
+points: 12.5
+offerings:
+  "2026":
+    - summer
+    - semester-1
+    - semester-2
+prerequisites:
+  any:
+    - ECON10005
+    - MAST10010
+    - MAST10011
+    - MAST20004
+    - MAST20006
+corequisites: none
+non_allowed: []
+categories: {}
+handbook: https://handbook.unimelb.edu.au/2026/subjects/econ20003
+source_year: 2026
+verified_on: 2026-10-07
+notes: Requirements and study periods copied by hand from the 2026 Handbook page. Not listed as breadth for the Bachelor of Science.
+skills:
+  - statistics
+  - data
+  - business
+topics:
+  - statistics
+  - economics
+assessment:
+  - kind: assignment
+    weight: 10
+    group: true
+  - kind: assignment
+    weight: 10
+    group: true
+  - kind: assignment
+    weight: 10
+    group: true
+  - kind: test
+    weight: 10
+  - kind: participation
+    weight: 10
+  - kind: exam
+    weight: 50
+    hurdle: true

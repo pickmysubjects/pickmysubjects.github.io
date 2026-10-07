@@ -5,9 +5,26 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
+prerequisites: none
+corequisites: none
+non_allowed: []
 categories:
   B-SCI: science
 handbook: https://handbook.unimelb.edu.au/2026/subjects/atoc10001
 source_year: 2026
 verified_on: 2026-10-07
-notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+notes: Requirements and study periods copied by hand from the 2026 Handbook page.
+skills:
+  - writing
+  - data
+topics:
+  - earth-science
+  - environment
+assessment:
+  - kind: quiz
+    weight: 20
+  - kind: report
+    weight: 20
+  - kind: exam
+    weight: 60
+weekly_contact_hours: 5
