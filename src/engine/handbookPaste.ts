@@ -14,6 +14,11 @@ export interface PasteResult {
   /** Semester version of the assessment table; weights add up to 100. */
   assessment: AssessmentTask[] | 'unknown'
   weeklyContactHours?: number
+  /** From the page header, when the whole page was pasted. */
+  code?: string
+  title?: string
+  level?: number
+  points?: number
   /** Things the parser was unsure about; a human should double-check these. */
   warnings: string[]
 }
@@ -52,6 +57,7 @@ export function parseHandbookPaste(text: string): PasteResult {
     offerings: sections.avail ? parseAvailability(sections.avail.join('\n')) : 'unknown',
     assessment: sections.assess ? parseAssessment(sections.assess, warnings) : 'unknown',
     weeklyContactHours: parseContactHours(text),
+    ...parseHeader(text),
     warnings,
   }
   if (!sections.pre && !sections.co && !sections.non && !sections.avail) {
@@ -82,7 +88,9 @@ function splitSections(text: string): Partial<Record<Section, string[]>> {
       if (current === 'avail' && rest) out.avail?.push(rest)
       continue
     }
-    if (current && current !== 'skip') out[current]?.push(line)
+    // The assessment table keeps its tabs: the weight column is the cell after the last tab.
+    if (current === 'assess') out.assess?.push(raw.replace(/ +/g, ' ').trim())
+    else if (current && current !== 'skip') out[current]?.push(line)
   }
   return out
 }
@@ -185,9 +193,9 @@ export function parseAvailability(text: string): Period[] | 'unknown' {
 // First match wins, so the more specific kinds come first.
 const KIND_WORDS: [RegExp, AssessmentKind][] = [
   [/presentation|\boral\b/i, 'presentation'],
-  [/participation|attendance|engagement|activities/i, 'participation'],
+  [/participation|attendance|engagement|tutorial activit|in-class activit|design activit/i, 'participation'],
   [/quiz|online (test|assessment)/i, 'quiz'],
-  [/\btests?\b|mid-?semester (test|exam|assessment)|closed book timed|in-class (test|assessment)/i, 'test'],
+  [/\btests?\b|mid[- ]?semester\b.{0,20}\b(test|exam|assessment)|closed book timed|in-class (test|assessment)/i, 'test'],
   [/\bexam(ination)?\b(?! period)/i, 'exam'],
   [/report|essay|literature review/i, 'report'],
   [/project/i, 'project'],
@@ -211,8 +219,17 @@ function classify(description: string): AssessmentKind | undefined {
 function parseAssessment(lines: string[], warnings: string[]): AssessmentTask[] | 'unknown' {
   const tasks: AssessmentTask[] = []
   let text: string[] = []
-  for (const line of lines) {
-    const weight = line.match(/(\d+(?:\.\d+)?)%$/)
+  // With tabs, only the last cell counts as the weight, so "Test 1 … 10%" inside a description doesn't.
+  const tabbed = lines.some((l) => /\t\s*\d+(?:\.\d+)?%\s*$/.test(l))
+  const WEIGHT = tabbed ? /\t\s*(\d+(?:\.\d+)?)%\s*$/ : /(\d+(?:\.\d+)?)%$/
+  for (const raw of lines) {
+    const line = raw.replace(/\s+/g, ' ').trim()
+    // A row with no weight (e.g. an attendance hurdle marked N/A) ends its own description.
+    if (/N\/A\s*$/.test(raw)) {
+      text = []
+      continue
+    }
+    const weight = raw.match(WEIGHT)
     if (!weight) {
       text.push(line)
       continue
@@ -235,6 +252,22 @@ function parseAssessment(lines: string[], warnings: string[]): AssessmentTask[] 
   return tasks
 }
 
+/** "Machine Learning (COMP30027)" and "Undergraduate level 3Points: 12.5" from the page header. */
+export function parseHeader(text: string): Pick<PasteResult, 'code' | 'title' | 'level' | 'points'> {
+  const out: Pick<PasteResult, 'code' | 'title' | 'level' | 'points'> = {}
+  const name = text.match(/^\s*(.+?)\s*\(([A-Z]{4}\d{5})\)\s*$/m)
+  if (name) {
+    out.title = name[1]
+    out.code = name[2]
+  }
+  const level = text.match(/level\s*(\d)\s*Points:\s*(\d+(?:\.\d+)?)/i)
+  if (level) {
+    out.level = Number(level[1])
+    out.points = Number(level[2])
+  }
+  return out
+}
+
 /**
  * Weekly class hours from the "Contact hours" line, e.g. "48 hours, comprising…",
  * "3 x one hour lectures per week, 1 x one hour practice class per week" or
@@ -245,13 +278,22 @@ export function parseContactHours(text: string): number | undefined {
   if (!line) return undefined
   const HOURS: Record<string, number> = { one: 1, two: 2, three: 3, '1': 1, '1.5': 1.5, '2': 2, '3': 3 }
   const half = (x: number) => Math.round(x * 2) / 2
+  const body = line.replace(/^\s*contact hours\s*/i, '')
   // "48 hours, comprising …" / "48 hours: 24 x one-hour lectures …" give the semester total first.
-  const lead = line.replace(/^\s*contact hours\s*/i, '').match(/^(\d+(?:\.\d+)?)\s*hours/i)
+  const lead = body.match(/^(\d+(?:\.\d+)?)\s*hours?\s*(?:[,:(;]|$|comprising)/i)
   if (lead) return half(Number(lead[1]) / 12)
+  // "36 hours of lectures …, 15 hours of practicals …, 12 hours of workshops": add the parts up.
+  // Independent / online study isn't time in class.
+  const parts = [...body.matchAll(/(\d+(?:\.\d+)?)\s*hours? of\b(?!\s+(independent|self|online))/gi)]
+  if (parts.length) return half(parts.reduce((sum, m) => sum + Number(m[1]), 0) / 12)
   const perWeek = [...line.matchAll(/(\d+)\s*x\s*(one|two|three|1\.5|1|2|3)[- ]hours?/gi)]
   if (perWeek.length) return half(perWeek.reduce((sum, m) => sum + Number(m[1]) * (HOURS[m[2]!.toLowerCase()] ?? 1), 0))
   const sessions = [...line.matchAll(/(\d+)\s+(one|two|three)-hour/gi)]
-  if (sessions.length) return half(sessions.reduce((sum, m) => sum + Number(m[1]) * (HOURS[m[2]!.toLowerCase()] ?? 1), 0) / 12)
+  if (sessions.length) {
+    const hours = sessions.reduce((sum, m) => sum + Number(m[1]) * (HOURS[m[2]!.toLowerCase()] ?? 1), 0)
+    // "36 one-hour lectures" is a semester count; "3 one-hour lectures … per week" is already weekly.
+    return half(hours >= 12 ? hours / 12 : hours)
+  }
   const total = line.match(/(\d+(?:\.\d+)?)\s*hours/i)
   return total ? half(Number(total[1]) / 12) : undefined
 }

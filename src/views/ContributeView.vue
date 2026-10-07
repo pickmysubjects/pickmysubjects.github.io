@@ -1,11 +1,14 @@
 <script setup lang="ts">
-import { computed, shallowRef } from 'vue'
+import { computed, shallowRef, watch } from 'vue'
+import { Send } from 'lucide-vue-next'
 import { parseHandbookPaste, subjectYaml } from '@/engine'
 import ParsedPreview from '@/components/contribute/ParsedPreview.vue'
 import Interp from '@/components/Interp.vue'
+import { FEEDBACK_FORM } from '@/config'
 import { useI18n } from '@/i18n'
+import { isFormReady, submitGoogleForm } from '@/utils/googleForm'
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
 const code = shallowRef('')
 const title = shallowRef('')
 const level = shallowRef(1)
@@ -24,9 +27,34 @@ const yaml = computed(() =>
 )
 const handbookUrl = computed(() =>
   codeValid.value
-    ? `https://handbook.unimelb.edu.au/${year.value}/subjects/${cleanCode.value.toLowerCase()}/eligibility-and-requirements`
+    ? `https://handbook.unimelb.edu.au/${year.value}/subjects/${cleanCode.value.toLowerCase()}/print`
     : 'https://handbook.unimelb.edu.au/',
 )
+
+// A pasted print page carries its own code, title, level and points: fill the boxes from it.
+watch(parsed, (p) => {
+  if (p.code) code.value = p.code
+  if (p.title) title.value = p.title
+  if (p.level) level.value = p.level
+  if (p.points) points.value = p.points
+})
+
+// Only the facts (the YAML) go to the feedback form, never the pasted text.
+const canSend = isFormReady(FEEDBACK_FORM)
+const readSomething = computed(() => parsed.value.offerings !== 'unknown' || parsed.value.prerequisites !== 'unknown')
+const sendState = shallowRef<'idle' | 'sending' | 'sent' | 'failed'>('idle')
+watch(text, () => (sendState.value = 'idle'))
+
+async function send(): Promise<void> {
+  if (!codeValid.value || !readSomething.value) return
+  sendState.value = 'sending'
+  try {
+    await submitGoogleForm(FEEDBACK_FORM, { topic: 'data', subject: cleanCode.value, message: yaml.value, language: locale.value })
+    sendState.value = 'sent'
+  } catch {
+    sendState.value = 'failed'
+  }
+}
 
 function onCode(): void {
   // Level is the first digit of a UniMelb subject code (9 = graduate).
@@ -39,17 +67,27 @@ function onCode(): void {
   <div class="contribute">
     <section class="contribute-intro">
       <h1 class="contribute-title">{{ t('contribute.title') }}</h1>
-      <p class="contribute-lede">
-        <Interp :text="t('contribute.lede')">
-          <template #handbook>
-            <a :href="handbookUrl" target="_blank" rel="noopener">{{ t('contribute.handbookPage') }}</a>
-          </template>
-        </Interp>
-      </p>
+      <p class="contribute-lede">{{ t('contribute.lede') }}</p>
+      <ol class="steps">
+        <li>
+          <Interp :text="t('contribute.step1')">
+            <template #handbook>
+              <a :href="handbookUrl" target="_blank" rel="noopener">{{ t('contribute.handbookPage') }}</a>
+            </template>
+          </Interp>
+        </li>
+        <li>{{ t('contribute.step2') }}</li>
+        <li>{{ t('contribute.step3') }}</li>
+      </ol>
+      <p class="small">{{ t('contribute.onlyFacts') }}</p>
     </section>
 
     <div class="contribute-body">
       <form class="paste" @submit.prevent>
+        <label class="field">
+          {{ t('contribute.pasted') }}
+          <textarea v-model="text" class="textarea" rows="14" :placeholder="t('contribute.placeholder')" />
+        </label>
         <div class="meta">
           <label class="field">
             {{ t('contribute.code') }}
@@ -72,22 +110,27 @@ function onCode(): void {
             <input v-model.number="year" class="input" type="number" min="2017" max="2035" />
           </label>
         </div>
-        <label class="field">
-          {{ t('contribute.pasted') }}
-          <textarea
-            v-model="text"
-            class="textarea"
-            rows="16"
-            placeholder="Prerequisites&#10;All of&#10;COMP10002  Foundations of Algorithms …&#10;OR&#10;Admission into …&#10;Non-allowed subjects&#10;…&#10;Availability&#10;Semester 1 - On Campus"
-          />
-        </label>
       </form>
       <ParsedPreview :parsed="parsed" :yaml="yaml" />
     </div>
 
-    <section class="next">
-      <h2 class="next-title">{{ t('contribute.then') }}</h2>
-      <p>
+    <section class="send surface">
+      <template v-if="canSend">
+        <button
+          class="button button-accent"
+          type="button"
+          :disabled="!codeValid || !readSomething || sendState === 'sending' || sendState === 'sent'"
+          @click="send"
+        >
+          <Send :size="16" aria-hidden="true" />
+          {{ sendState === 'sending' ? t('contribute.sending') : t('contribute.send') }}
+        </button>
+        <p v-if="sendState === 'sent'" class="send-ok" role="status">{{ t('contribute.sent') }}</p>
+        <p v-else-if="sendState === 'failed'" class="send-bad" role="alert">{{ t('contribute.sendFailed') }}</p>
+        <p v-else-if="!codeValid || !readSomething" class="small">{{ t('contribute.needCode') }}</p>
+        <p v-else class="small">{{ t('contribute.sendText') }}</p>
+      </template>
+      <p class="small">
         <Interp :text="t('contribute.thenText')">
           <template #file>
             <code class="code">data/real/subjects/{{ cleanCode || 'CODE' }}.yaml</code>
@@ -111,6 +154,41 @@ function onCode(): void {
   letter-spacing: -0.02em;
 }
 
+.steps {
+  display: grid;
+  gap: 6px;
+  margin: 12px 0 0;
+  padding-left: 22px;
+  font-size: 1.02rem;
+}
+
+.small {
+  margin: 10px 0 0;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+
+.send {
+  display: grid;
+  justify-items: start;
+  gap: 4px;
+  padding: 18px 22px;
+}
+
+.send .small {
+  margin: 4px 0 0;
+}
+
+.send-ok {
+  font-weight: 600;
+  color: var(--good);
+}
+
+.send-bad {
+  font-weight: 600;
+  color: var(--bad);
+}
+
 .contribute-lede {
   max-width: 76ch;
   margin: 8px 0 0;
@@ -131,8 +209,16 @@ function onCode(): void {
 
 .meta {
   display: grid;
-  grid-template-columns: 1.1fr 2fr 0.6fr 0.7fr 0.9fr;
+  grid-template-columns: repeat(6, 1fr);
   gap: 10px;
+}
+
+.meta > .field {
+  grid-column: span 2;
+}
+
+.meta > .meta-title {
+  grid-column: span 4;
 }
 
 .textarea {
@@ -141,20 +227,14 @@ function onCode(): void {
   resize: vertical;
 }
 
-.next {
-  max-width: 76ch;
-  font-size: 0.9rem;
-}
 
-.next-title {
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
-}
 
 @media (max-width: 960px) {
+  .meta > .field,
+  .meta > .meta-title {
+    grid-column: auto;
+  }
+
   .contribute-body,
   .meta {
     grid-template-columns: 1fr;

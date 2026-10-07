@@ -64,13 +64,15 @@ async function copy(): Promise<void> {
     <ul v-if="parsed.warnings.length" class="warnings">
       <li v-for="(w, i) in parsed.warnings" :key="i">{{ w }}</li>
     </ul>
-    <div class="yaml-head">
-      <h2 class="section-title">{{ t('contribute.dataFile') }}</h2>
-      <button class="button button-quiet" type="button" @click="copy">
-        {{ copied ? t('contribute.copied') : t('contribute.copy') }}
-      </button>
-    </div>
-    <pre class="yaml code">{{ yaml }}</pre>
+    <details class="dev">
+      <summary class="dev-summary">{{ t('contribute.dataFile') }}</summary>
+      <div class="yaml-head">
+        <button class="button button-quiet" type="button" @click="copy">
+          {{ copied ? t('contribute.copied') : t('contribute.copy') }}
+        </button>
+      </div>
+      <pre class="yaml code">{{ yaml }}</pre>
+    </details>
   </section>
 </template>
 
@@ -105,11 +107,22 @@ async function copy(): Promise<void> {
   font-size: 0.85rem;
 }
 
+.dev {
+  margin-top: 20px;
+}
+
+.dev-summary {
+  width: fit-content;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+
 .yaml-head {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 20px;
+  justify-content: flex-end;
+  margin-top: 10px;
 }
 
 .yaml {

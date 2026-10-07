@@ -135,3 +135,31 @@ describe('generatePlan (real B-SCI data)', () => {
     expect(components.filter((s) => s.status === 'fail').map((s) => s.detail)).toEqual([])
   })
 })
+
+describe('generatePlan (real B-SCI data, whole degree)', () => {
+  const { dataset: real } = buildDataset('real')
+  const majors = real.components.filter((c) => c.course === 'B-SCI' && c.kind === 'major' && c.requirements !== 'unknown')
+  // Maths streams with a computing specialisation are too tight for the greedy planner today.
+  const combos = [
+    ...majors.map((m) => [m.id, undefined] as const),
+    ...['computing-and-software-systems', 'data-science'].flatMap((m) =>
+      ['artificial-intelligence', 'advanced-computing'].map((s) => [m, s] as const),
+    ),
+  ]
+
+  it.each(combos)('%s + %s meets every course rule, including breadth', (major, specialisation) => {
+    const { plan, unplaced } = generatePlan({
+      data: real,
+      profile: { results: [], skills: {}, interests: [], goal: 'balanced' },
+      course: 'B-SCI',
+      courseYear: 2026,
+      major,
+      specialisation,
+      startYear: 2027,
+      startPeriod: 'semester-1',
+    })
+    expect(unplaced).toEqual([])
+    const notOk = checkCourse(plan, real).statuses.filter((s) => s.status !== 'ok').map((s) => `${s.ruleId}: ${s.detail}`)
+    expect(notOk).toEqual([])
+  })
+})

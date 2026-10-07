@@ -133,6 +133,25 @@ describe('parseHandbookPaste – assessment and contact hours', () => {
     ])
   })
 
+  it('takes the weight from the last cell, not a percentage inside the description', () => {
+    const text = [
+      'Description\tTiming\tPercentage',
+      'Lab attendance',
+      'Hurdle requirement: attend 80% of labs\tThroughout\tN/A',
+      '3 Tests: Test 1 10% Test 2 20% Test 3 10%',
+      'Throughout the semester\t40%',
+      'Mid semester written exam',
+      'Week 7\t10%',
+      'Final exam',
+      'Exam period\t50%',
+    ].join('\n')
+    expect(parseHandbookPaste(text).assessment).toEqual([
+      { kind: 'test', weight: 40 },
+      { kind: 'test', weight: 10 },
+      { kind: 'exam', weight: 50 },
+    ])
+  })
+
   it("doesn't mistake a due date in the exam period for an exam", () => {
     const text = ['Description\tTiming\tPercentage', 'Research report, due in the first week of the examination period', 'Week 13\t100%'].join('\n')
     expect(parseHandbookPaste(text).assessment).toEqual([{ kind: 'report', weight: 100 }])
@@ -149,6 +168,17 @@ describe('parseHandbookPaste – assessment and contact hours', () => {
     expect(parseContactHours('Contact hours\t3 x one hour lectures per week, 1 x one hour practice class per week')).toBe(4)
     expect(parseContactHours('Contact hours\t36 one-hour lectures (three per week); 12 one-hour practice classes')).toBe(4)
     expect(parseContactHours('Contact hours\t48 hours: 24 x one-hour lectures, 12 x two-hour classes')).toBe(4)
+    expect(parseContactHours('Contact hours\t3 one-hour lectures and 1 one-hour practice class per week')).toBe(4)
+    expect(
+      parseContactHours('Contact hours\t36 hours of lectures, 15 hours of practicals, 12 hours of workshops. Up to 12 hours of independent online activities'),
+    ).toBe(5.5)
     expect(parseContactHours('no such line')).toBeUndefined()
+  })
+})
+
+describe('parseHandbookPaste – page header', () => {
+  it('reads code, title, level and points from a pasted print page', () => {
+    const text = ['HandbookSubjectsMachine LearningPrint', 'Machine Learning (COMP30027)', 'Undergraduate level 3Points: 12.5On Campus (Parkville)'].join('\n')
+    expect(parseHandbookPaste(text)).toMatchObject({ code: 'COMP30027', title: 'Machine Learning', level: 3, points: 12.5 })
   })
 })

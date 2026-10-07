@@ -71,7 +71,7 @@ export function generatePlan(input: GenerateInput): GenerateResult {
     const before = new Set([...completed, ...terms.slice(0, termIndex).flatMap((t) => t.subjects)])
     let used = term.subjects.reduce((sum, c) => sum + (data.subjects[c]?.points ?? 12.5), 0)
     while (used < load) {
-      const pick = pickElective({ input, course, term, before, placed: allPlaced(), completed, room: load - used, focus, reserved: pending, opens })
+      const pick = pickElective({ input, course, term, before, placed: allPlaced(), completed, room: load - used, focus, reserved: pending, opens, progress: (termIndex + 1) / terms.length })
       if (!pick) break
       term.subjects.push(pick.code)
       electives.add(pick.code)
@@ -364,6 +364,8 @@ interface PickCtx {
   /** Required subjects still to place: never picked as electives, and their non-allowed partners are off limits. */
   reserved: string[]
   opens: PathwayCounter
+  /** Share of the plan done by the end of this term (0–1]. */
+  progress: number
 }
 
 function pickElective(ctx: PickCtx): { code: string; why: string; ruleId: string } | null {
@@ -374,7 +376,10 @@ function pickElective(ctx: PickCtx): { code: string; why: string; ruleId: string
     .filter((r) => r.min !== undefined)
     .map((r) => ({ rule: r, gap: (r.min as number) - sumPoints(all, data, course.code, r) }))
     .filter((d) => d.gap > 0)
-    .sort((a, b) => specificity(b.rule) - specificity(a.rule) || b.gap - a.gap)
+    // A requirement that has fallen behind an even pace goes first, so ones that
+    // need a chain (level-1 breadth is capped, so level 2 needs a start) begin early.
+    .map((d) => ({ ...d, behind: specificity(d.rule) > 0 && (d.rule.min as number) - d.gap < (d.rule.min as number) * ctx.progress }))
+    .sort((a, b) => Number(b.behind) - Number(a.behind) || specificity(b.rule) - specificity(a.rule) || b.gap - a.gap)
   if (deficits.length === 0) return null
 
   // Year level follows the points already completed, so mid-degree students are placed correctly.
