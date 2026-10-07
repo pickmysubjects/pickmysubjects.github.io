@@ -8,6 +8,8 @@ export const zhCN: Messages = {
     handbook: 'Handbook',
     planner: 'My Course Planner',
     suggest: '提改进建议',
+    privacy: '隐私',
+    unofficial: '非官方',
     language: '语言',
   },
   nav: { plan: '选课规划', recommend: '推荐', record: '我的记录', contribute: '添加数据', feedback: '反馈', main: '主导航' },
@@ -310,6 +312,17 @@ export const zhCN: Messages = {
     cancel: '取消',
     sent: '谢谢！每天更新一次，一门课有至少 3 条评分后就会显示。',
     failed: '发送失败——请检查网络后重试。',
+  },
+  privacy: {
+    title: '隐私说明',
+    updated: '最后更新：2026 年 10 月 7 日',
+    local: '你的成绩记录、技能、兴趣和选课方案只保存在这个浏览器里（localStorage）。没有账号，也从不上传。清除浏览器数据就会删除它们。',
+    ratings: '你给课程打分时，回答会匿名发送到一个只有维护者能打开的私有 Google 表单/表格。不收集邮箱，也不需要登录。只公开汇总数据（平均分和数量，一门课至少有 3 条评分才显示）。文字评价未经审核绝不公开。',
+    feedback: '你发送的反馈也以同样方式私密保存。联系方式是选填的，只用来回复你。',
+    noTracking: '没有统计分析、没有广告、没有追踪 Cookie。字体随网站一起打包，打开网站不会连接第三方。',
+    google: '评分和反馈经由 Google 表单处理，所以你发送的内容也适用 Google 的隐私政策。网站托管在 GitHub，GitHub 可能保留常规的服务器日志。',
+    removal: '评分是匿名的，我们无法知道哪一条是你的。如果你想删除某条内容，请通过反馈描述它（课程、学期、大概时间），我们会删除匹配的记录。',
+    contact: '有疑问？请使用“反馈”页面。',
   },
   pain: {
     'when-offered': {

@@ -40,6 +40,10 @@ English, 简体中文, 繁體中文, 日本語, 한국어, Tiếng Việt, Bahas
 
 **Do write code?** See [CONTRIBUTING.md](CONTRIBUTING.md). Issues use templates: *data is wrong*, *idea*, *bug*.
 
+## Privacy
+
+No account, no analytics, no ads. Your record and plans stay in your browser. Ratings and feedback go anonymously to a private Google Form and Sheet; only aggregates are published, and only once a subject has at least 3 ratings. The full statement is on the app's *Privacy* page.
+
 ## Run it locally
 
 ```bash
@@ -60,3 +64,10 @@ There are two datasets:
 - `src/`: a Vue 3 app. Static hosting is enough.
 
 Design notes: [docs/design.md](docs/design.md). How other universities' student tools do it: [docs/competitive-analysis.md](docs/competitive-analysis.md).
+
+## Licence
+
+- Code: [MIT](LICENSE).
+- Curated data and aggregated ratings: [CC BY 4.0](data/LICENSE.md).
+
+University of Melbourne Handbook text is the University's copyright and is not reproduced here.

@@ -31,6 +31,7 @@ function onLocale(event: Event): void {
           <path d="M12 5 L14.5 12 L12 19 L9.5 12 Z" />
         </svg>
         Subject Compass
+        <span class="badge" :title="t('app.unofficial')">{{ t('app.unofficial') }}</span>
       </a>
       <nav class="nav" :aria-label="t('nav.main')">
         <a
@@ -98,6 +99,15 @@ function onLocale(event: Event): void {
   letter-spacing: -0.01em;
   color: var(--ink);
   text-decoration: none;
+}
+
+.badge {
+  padding: 1px 8px;
+  border: 1px solid var(--contour);
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--ink-soft);
 }
 
 .mark {

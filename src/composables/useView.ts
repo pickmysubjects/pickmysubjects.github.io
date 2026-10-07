@@ -1,6 +1,6 @@
 import { computed, onBeforeUnmount, onMounted, shallowRef } from 'vue'
 
-export const VIEWS = ['plan', 'recommend', 'record', 'contribute', 'feedback'] as const
+export const VIEWS = ['plan', 'recommend', 'record', 'contribute', 'feedback', 'privacy'] as const
 export type View = (typeof VIEWS)[number]
 
 function parse(): { view: View; query: URLSearchParams } {

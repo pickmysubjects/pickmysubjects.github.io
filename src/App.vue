@@ -6,6 +6,7 @@ import RecommendView from './views/RecommendView.vue'
 import RecordView from './views/RecordView.vue'
 import ContributeView from './views/ContributeView.vue'
 import FeedbackView from './views/FeedbackView.vue'
+import PrivacyView from './views/PrivacyView.vue'
 import { useView } from './composables/useView'
 import { useI18n } from './i18n'
 
@@ -22,7 +23,8 @@ const plannerUrl =
     <RecommendView v-else-if="view === 'recommend'" />
     <RecordView v-else-if="view === 'record'" />
     <ContributeView v-else-if="view === 'contribute'" />
-    <FeedbackView v-else />
+    <FeedbackView v-else-if="view === 'feedback'" />
+    <PrivacyView v-else />
   </main>
   <footer class="app-footer">
     <p>
@@ -37,6 +39,7 @@ const plannerUrl =
           <a href="#/feedback">{{ t('app.suggest') }}</a>
         </template>
       </Interp>
+      · <a href="#/privacy">{{ t('app.privacy') }}</a>
     </p>
   </footer>
 </template>

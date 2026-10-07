@@ -8,6 +8,8 @@ export const id: Messages = {
     handbook: 'Handbook',
     planner: 'My Course Planner',
     suggest: 'Usulkan perbaikan',
+    privacy: 'Privasi',
+    unofficial: 'Tidak resmi',
     language: 'Bahasa',
   },
   nav: { plan: 'Rencana', recommend: 'Saran', record: 'Catatanku', contribute: 'Tambah data', feedback: 'Masukan', main: 'Menu utama' },
@@ -310,6 +312,17 @@ export const id: Messages = {
     cancel: 'Batal',
     sent: 'Terima kasih! Penilaian muncul setelah pembaruan harian, setelah sebuah mata kuliah punya minimal 3 penilaian.',
     failed: 'Gagal mengirim — periksa koneksimu lalu coba lagi.',
+  },
+  privacy: {
+    title: 'Privasi',
+    updated: 'Terakhir diperbarui: 7 Oktober 2026',
+    local: 'Catatan, keterampilan, minat, dan rencanamu hanya disimpan di browser ini (localStorage). Tidak ada akun dan tidak pernah diunggah. Menghapus data browser akan menghapusnya.',
+    ratings: 'Saat kamu menilai mata kuliah, jawabanmu dikirim secara anonim ke Google Form/Sheet pribadi yang hanya bisa dibuka pengelola. Tidak ada email atau login yang dikumpulkan. Hanya data ringkasan (rata-rata dan jumlah, ditampilkan setelah sebuah mata kuliah punya minimal 3 penilaian) yang dipublikasikan. Komentar tertulis tidak pernah dipublikasikan tanpa ditinjau.',
+    feedback: 'Masukan yang kamu kirim juga disimpan secara pribadi. Kontak bersifat opsional dan hanya dipakai untuk membalasmu.',
+    noTracking: 'Tidak ada analitik, iklan, atau cookie pelacak. Font dibundel bersama situs, jadi membukanya tidak menghubungi pihak ketiga.',
+    google: 'Penilaian dan masukan diproses oleh Google Forms, jadi kebijakan privasi Google juga berlaku untuk yang kamu kirim. Situs ini di-host di GitHub, dan GitHub dapat menyimpan log server standar.',
+    removal: 'Penilaian bersifat anonim, jadi kami tidak tahu mana yang milikmu. Jika ingin sesuatu dihapus, kirim masukan yang menjelaskannya (mata kuliah, semester, kira-kira kapan) dan kami akan menghapus entri yang cocok.',
+    contact: 'Ada pertanyaan? Gunakan halaman Masukan.',
   },
   pain: {
     'when-offered': {

@@ -11,6 +11,8 @@ export const en = {
     handbook: 'Handbook',
     planner: 'My Course Planner',
     suggest: 'Suggest an improvement',
+    privacy: 'Privacy',
+    unofficial: 'Unofficial',
     language: 'Language',
   },
   nav: { plan: 'Plan', recommend: 'Suggestions', record: 'My record', contribute: 'Add data', feedback: 'Feedback', main: 'Main' },
@@ -314,6 +316,17 @@ export const en = {
     cancel: 'Cancel',
     sent: 'Thank you! Ratings show up after the daily update, once a subject has at least 3.',
     failed: 'Couldn’t send — check your connection and try again.',
+  },
+  privacy: {
+    title: 'Privacy',
+    updated: 'Last updated: 7 October 2026',
+    local: 'Your record, skills, interests and plans are stored only in this browser (localStorage). There is no account and they are never uploaded. Clearing your browser data deletes them.',
+    ratings: 'When you rate a subject, your answers are sent anonymously to a private Google Form/Sheet that only the maintainer can open. No email address or sign-in is collected. Only aggregates (averages and counts, shown once a subject has at least 3 ratings) are published. Written comments are never published unless reviewed first.',
+    feedback: 'Feedback you send is stored privately in the same way. Contact details are optional and used only to reply to you.',
+    noTracking: 'No analytics, no advertising and no tracking cookies. Fonts are bundled with the site, so loading it does not contact third parties.',
+    google: 'Ratings and feedback are processed by Google Forms, so Google’s privacy policy also applies to what you send. GitHub hosts the site and may keep standard server logs.',
+    removal: 'Ratings are anonymous, so we cannot tell which one is yours. If you want something removed, send feedback describing it (subject, semester, roughly when) and we will remove matching entries.',
+    contact: 'Questions? Use the Feedback page.',
   },
   pain: {
     'when-offered': {

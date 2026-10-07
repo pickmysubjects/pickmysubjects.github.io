@@ -8,6 +8,8 @@ export const ms: Messages = {
     handbook: 'Handbook',
     planner: 'My Course Planner',
     suggest: 'Cadangkan penambahbaikan',
+    privacy: 'Privasi',
+    unofficial: 'Tidak rasmi',
     language: 'Bahasa',
   },
   nav: { plan: 'Rancangan', recommend: 'Cadangan', record: 'Rekod saya', contribute: 'Tambah data', feedback: 'Maklum balas', main: 'Menu utama' },
@@ -310,6 +312,17 @@ export const ms: Messages = {
     cancel: 'Batal',
     sent: 'Terima kasih! Penilaian dipaparkan selepas kemas kini harian, apabila subjek mempunyai sekurang-kurangnya 3 penilaian.',
     failed: 'Gagal dihantar — semak sambungan anda dan cuba lagi.',
+  },
+  privacy: {
+    title: 'Privasi',
+    updated: 'Kemas kini terakhir: 7 Oktober 2026',
+    local: 'Rekod, kemahiran, minat dan rancangan anda hanya disimpan dalam pelayar ini (localStorage). Tiada akaun dan ia tidak pernah dimuat naik. Memadam data pelayar akan memadamnya.',
+    ratings: 'Apabila anda menilai subjek, jawapan anda dihantar tanpa nama ke Google Form/Sheet peribadi yang hanya boleh dibuka oleh penyelenggara. Tiada e-mel atau log masuk dikumpul. Hanya data agregat (purata dan bilangan, dipaparkan apabila subjek mempunyai sekurang-kurangnya 3 penilaian) diterbitkan. Ulasan bertulis tidak pernah diterbitkan tanpa semakan.',
+    feedback: 'Maklum balas yang anda hantar juga disimpan secara peribadi. Butiran hubungan adalah pilihan dan hanya digunakan untuk membalas anda.',
+    noTracking: 'Tiada analitik, iklan atau kuki penjejakan. Fon dibungkus bersama laman ini, jadi membukanya tidak menghubungi pihak ketiga.',
+    google: 'Penilaian dan maklum balas diproses oleh Google Forms, jadi dasar privasi Google juga terpakai pada apa yang anda hantar. Laman ini dihoskan di GitHub, dan GitHub mungkin menyimpan log pelayan biasa.',
+    removal: 'Penilaian adalah tanpa nama, jadi kami tidak tahu yang mana milik anda. Jika anda mahu sesuatu dibuang, hantar maklum balas yang menerangkannya (subjek, semester, lebih kurang bila) dan kami akan membuang entri yang sepadan.',
+    contact: 'Ada soalan? Gunakan halaman Maklum balas.',
   },
   pain: {
     'when-offered': {

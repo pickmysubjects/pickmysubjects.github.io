@@ -8,6 +8,8 @@ export const vi: Messages = {
     handbook: 'Handbook',
     planner: 'My Course Planner',
     suggest: 'Góp ý cải thiện',
+    privacy: 'Quyền riêng tư',
+    unofficial: 'Không chính thức',
     language: 'Ngôn ngữ',
   },
   nav: { plan: 'Kế hoạch', recommend: 'Gợi ý', record: 'Hồ sơ của tôi', contribute: 'Thêm dữ liệu', feedback: 'Góp ý', main: 'Menu chính' },
@@ -310,6 +312,17 @@ export const vi: Messages = {
     cancel: 'Hủy',
     sent: 'Cảm ơn bạn! Đánh giá được cập nhật mỗi ngày và hiển thị khi một môn có ít nhất 3 đánh giá.',
     failed: 'Không gửi được — hãy kiểm tra kết nối và thử lại.',
+  },
+  privacy: {
+    title: 'Quyền riêng tư',
+    updated: 'Cập nhật lần cuối: 7 tháng 10, 2026',
+    local: 'Hồ sơ, kỹ năng, sở thích và kế hoạch của bạn chỉ được lưu trong trình duyệt này (localStorage). Không có tài khoản và không bao giờ được tải lên. Xóa dữ liệu trình duyệt sẽ xóa chúng.',
+    ratings: 'Khi bạn đánh giá một môn, câu trả lời được gửi ẩn danh đến một Google Form/Sheet riêng tư mà chỉ người quản lý mở được. Không thu thập email và không cần đăng nhập. Chỉ công bố số liệu tổng hợp (điểm trung bình và số lượng, hiển thị khi một môn có ít nhất 3 đánh giá). Nhận xét bằng chữ không bao giờ được công bố nếu chưa duyệt.',
+    feedback: 'Góp ý bạn gửi cũng được lưu riêng tư như vậy. Thông tin liên hệ là không bắt buộc và chỉ dùng để trả lời bạn.',
+    noTracking: 'Không có công cụ phân tích, không quảng cáo, không cookie theo dõi. Phông chữ đi kèm trang web nên khi mở trang không kết nối tới bên thứ ba.',
+    google: 'Đánh giá và góp ý được xử lý qua Google Forms, nên chính sách quyền riêng tư của Google cũng áp dụng cho những gì bạn gửi. Trang web được lưu trữ trên GitHub và GitHub có thể giữ nhật ký máy chủ thông thường.',
+    removal: 'Đánh giá là ẩn danh nên chúng tôi không biết cái nào là của bạn. Nếu muốn xóa, hãy gửi góp ý mô tả nội dung (môn, học kỳ, thời gian gần đúng) và chúng tôi sẽ xóa các mục phù hợp.',
+    contact: 'Có câu hỏi? Hãy dùng trang Góp ý.',
   },
   pain: {
     'when-offered': {

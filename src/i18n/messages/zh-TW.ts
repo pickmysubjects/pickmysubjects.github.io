@@ -8,6 +8,8 @@ export const zhTW: Messages = {
     handbook: 'Handbook',
     planner: 'My Course Planner',
     suggest: '提出改進建議',
+    privacy: '隱私',
+    unofficial: '非官方',
     language: '語言',
   },
   nav: { plan: '選課規劃', recommend: '推薦', record: '我的紀錄', contribute: '新增資料', feedback: '意見回饋', main: '主選單' },
@@ -310,6 +312,17 @@ export const zhTW: Messages = {
     cancel: '取消',
     sent: '謝謝！每天更新一次，一門課有至少 3 則評分後就會顯示。',
     failed: '傳送失敗——請檢查網路後重試。',
+  },
+  privacy: {
+    title: '隱私說明',
+    updated: '最後更新：2026 年 10 月 7 日',
+    local: '你的成績紀錄、技能、興趣和選課方案只儲存在這個瀏覽器裡（localStorage）。沒有帳號，也從不上傳。清除瀏覽器資料就會刪除它們。',
+    ratings: '你為課程評分時，回答會匿名傳送到一個只有維護者能開啟的私人 Google 表單／試算表。不收集電子郵件，也不需要登入。只公開彙總資料（平均分和數量，一門課至少有 3 則評分才顯示）。文字評論未經審核絕不公開。',
+    feedback: '你傳送的意見也以同樣方式私密保存。聯絡方式是選填的，只用來回覆你。',
+    noTracking: '沒有統計分析、沒有廣告、沒有追蹤 Cookie。字型隨網站一起打包，開啟網站不會連線到第三方。',
+    google: '評分和意見經由 Google 表單處理，所以你傳送的內容也適用 Google 的隱私權政策。網站託管在 GitHub，GitHub 可能保留一般的伺服器紀錄。',
+    removal: '評分是匿名的，我們無法知道哪一則是你的。如果你想刪除某則內容，請透過意見回饋描述它（課程、學期、大概時間），我們會刪除相符的紀錄。',
+    contact: '有疑問？請使用「意見回饋」頁面。',
   },
   pain: {
     'when-offered': {
