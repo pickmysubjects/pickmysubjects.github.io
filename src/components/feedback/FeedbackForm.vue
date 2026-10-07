@@ -79,7 +79,7 @@ function value(event: Event): string {
 
     <label class="field">
       {{ t('feedback.subject') }}
-      <input class="input code" :value="draft.subject" placeholder="COMP30027" @input="set('subject', value($event).toUpperCase())" />
+      <input class="input code" maxlength="9" :value="draft.subject" placeholder="COMP30027" @input="set('subject', value($event).toUpperCase())" />
     </label>
 
     <label class="field">
@@ -87,6 +87,7 @@ function value(event: Event): string {
       <textarea
         class="textarea"
         rows="6"
+        maxlength="2000"
         :value="draft.message"
         :placeholder="t('feedback.messagePlaceholder')"
         @input="set('message', value($event))"
@@ -95,7 +96,7 @@ function value(event: Event): string {
 
     <label class="field">
       {{ t('feedback.contact') }}
-      <input class="input" :value="draft.contact" :placeholder="t('feedback.contactPlaceholder')" @input="set('contact', value($event))" />
+      <input class="input" maxlength="200" :value="draft.contact" :placeholder="t('feedback.contactPlaceholder')" @input="set('contact', value($event))" />
     </label>
 
     <div class="send">

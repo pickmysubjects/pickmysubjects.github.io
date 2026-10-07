@@ -33,26 +33,33 @@ export type RatingField =
   | 'language'
 
 export const RATINGS_FORM: GoogleFormConfig<RatingField> = {
-  formId: '',
+  formId: '1FAIpQLSfJcmsShsJlO8jOqAun_X4NksYJ2O0D8Vi0AVJJ5dwzoNzcRw',
   entries: {
-    code: '',
-    year: '',
-    semester: '',
-    difficulty: '',
-    workload: '',
-    generosity: '',
-    hours: '',
-    grade: '',
-    skills: '',
-    recommend: '',
-    wish: '',
-    language: '',
+    code: 'entry.43289954',
+    year: 'entry.1873105734',
+    semester: 'entry.587889816',
+    difficulty: 'entry.59375641',
+    workload: 'entry.595665220',
+    generosity: 'entry.239562994',
+    hours: 'entry.1276453434',
+    grade: 'entry.79836435',
+    skills: 'entry.1916343425',
+    recommend: 'entry.1515958851',
+    wish: 'entry.988102728',
+    language: 'entry.1579411750',
   },
 }
 
 export type FeedbackField = 'topic' | 'rating' | 'subject' | 'message' | 'contact' | 'language'
 
 export const FEEDBACK_FORM: GoogleFormConfig<FeedbackField> = {
-  formId: '',
-  entries: { topic: '', rating: '', subject: '', message: '', contact: '', language: '' },
+  formId: '1FAIpQLSfp5-NbSAXlU7qZC5_31ydAvvfj071oCw3H5opQ0cF4oKnGpA',
+  entries: {
+    topic: 'entry.1907363823',
+    rating: 'entry.1549398132',
+    subject: 'entry.1503185547',
+    message: 'entry.746225061',
+    contact: 'entry.1242842527',
+    language: 'entry.136711737',
+  },
 }
