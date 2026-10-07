@@ -9,6 +9,9 @@ import type { Dataset } from './schema'
  * Term-by-term checks: availability, prerequisites met by earlier terms,
  * corequisites, non-allowed combinations, duplicates and study load.
  */
+/** Usual most points in a summer or winter term. */
+export const SHORT_TERM_LOAD = 25
+
 export function checkTerms(plan: Plan, data: Dataset, standardLoad = 50): Issue[] {
   const issues: Issue[] = []
   const seen = new Set(plan.completed)
@@ -70,10 +73,46 @@ export function checkTerms(plan: Plan, data: Dataset, standardLoad = 50): Issue[
       }
     }
 
-    if (load > standardLoad) {
-      issues.push({ severity: 'warning', kind: 'overload', termIndex, params: { year: term.year, period: term.period, load, max: standardLoad }, message: `${where} has ${load} points; more than ${standardLoad} is an overload and needs approval.` })
+    // Summer and winter terms are short: 25 points is the usual most.
+    const max = term.period === 'summer' || term.period === 'winter' ? Math.min(SHORT_TERM_LOAD, standardLoad) : standardLoad
+    if (load > max) {
+      issues.push({ severity: 'warning', kind: 'overload', termIndex, params: { year: term.year, period: term.period, load, max }, message: `${where} has ${load} points; more than ${max} is an overload and needs approval.` })
     }
   })
 
+  if (plan.international) issues.push(...visaLoadIssues(plan, data))
   return issues
+}
+
+/** Points a student-visa holder normally needs each half-year (Jan–Jun, Jul–Dec). */
+export const VISA_HALF_YEAR_LOAD = 50
+
+/**
+ * Student-visa holders normally study 50 points per half-year; summer counts
+ * towards January–June and winter towards July–December. Less is fine in the
+ * final half-year, otherwise it needs approval — so it's a warning, not an error.
+ */
+function visaLoadIssues(plan: Plan, data: Dataset): Issue[] {
+  const halves = new Map<string, { year: number; half: 1 | 2; load: number; termIndex: number }>()
+  plan.terms.forEach((term, termIndex) => {
+    const half = term.period === 'summer' || term.period === 'semester-1' ? 1 : 2
+    const key = `${term.year}-${half}`
+    const load = term.subjects.reduce((sum, c) => sum + (data.subjects[c]?.points ?? 0), 0)
+    const entry = halves.get(key) ?? { year: term.year, half, load: 0, termIndex }
+    entry.load += load
+    // Attach the warning to the semester rather than the short term.
+    if (term.period === 'semester-1' || term.period === 'semester-2') entry.termIndex = termIndex
+    halves.set(key, entry)
+  })
+  const withStudy = [...halves.values()].filter((h) => h.load > 0)
+  const last = withStudy.at(-1)
+  return withStudy
+    .filter((h) => h !== last && h.load < VISA_HALF_YEAR_LOAD)
+    .map((h) => ({
+      severity: 'warning' as const,
+      kind: `visa-underload-h${h.half}`,
+      termIndex: h.termIndex,
+      params: { year: h.year, half: h.half, load: h.load, min: VISA_HALF_YEAR_LOAD },
+      message: `${h.year} half ${h.half}: ${h.load} points. On a student visa you normally need ${VISA_HALF_YEAR_LOAD} per half-year (summer/winter count); less needs approval unless it's your final half-year — check with Stop 1.`,
+    }))
 }

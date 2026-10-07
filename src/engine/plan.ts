@@ -15,6 +15,8 @@ export interface Plan {
   /** Subjects already completed before the first planned term (with or without marks). */
   completed: string[]
   terms: PlanTerm[]
+  /** On a student visa: each half-year normally needs 50 points. */
+  international?: boolean
 }
 
 export type Severity = 'error' | 'warning' | 'info'

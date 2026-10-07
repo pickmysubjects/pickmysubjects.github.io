@@ -165,3 +165,38 @@ describe('checkCourse (unknowns near a cap)', () => {
     expect(status(['MAST10006', 'MAST10007', 'COMP10003'], 'level1-areas')).toBe('unknown')
   })
 })
+
+describe('checkTerms (summer and winter load)', () => {
+  it('treats more than 25 points in a summer term as an overload', () => {
+    const subjects = ['AAAA10001', 'AAAA10002', 'AAAA10003'].map((code) => subject({ code, prerequisites: 'none', offerings: { 2027: ['summer'] } }))
+    const plan: Plan = { course: 'X', courseYear: 2026, completed: [], terms: [{ year: 2027, period: 'summer', subjects: subjects.map((s) => s.code) }] }
+    const over = checkTerms(plan, dataset(subjects)).filter((i) => i.kind === 'overload')
+    expect(over.map((i) => i.params.max)).toEqual([25])
+  })
+})
+
+describe('checkTerms (student visa load)', () => {
+  const subjects = ['AAAA10001', 'AAAA10002', 'AAAA10003', 'AAAA10004', 'AAAA10005'].map((code) =>
+    subject({ code, prerequisites: 'none', offerings: { 2027: ['summer', 'semester-1', 'semester-2'] } }),
+  )
+  const data = dataset(subjects)
+  const plan = (international: boolean, terms: Plan['terms']): Plan => ({ course: 'X', courseYear: 2026, completed: [], terms, international })
+
+  it('warns when a half-year (summer + semester 1) is under 50 points, but not in the final half-year or for local students', () => {
+    const terms: Plan['terms'] = [
+      { year: 2027, period: 'semester-1', subjects: ['AAAA10001', 'AAAA10002'] }, // 25: under
+      { year: 2027, period: 'semester-2', subjects: ['AAAA10003'] }, // final half-year: fine
+    ]
+    expect(checkTerms(plan(true, terms), data).filter((i) => i.kind.startsWith('visa-')).map((i) => i.kind)).toEqual(['visa-underload-h1'])
+    expect(checkTerms(plan(false, terms), data).filter((i) => i.kind.startsWith('visa-'))).toEqual([])
+  })
+
+  it('counts summer towards January–June', () => {
+    const terms: Plan['terms'] = [
+      { year: 2027, period: 'summer', subjects: ['AAAA10001', 'AAAA10002'] },
+      { year: 2027, period: 'semester-1', subjects: ['AAAA10003', 'AAAA10004'] }, // 25 + 25 summer = 50
+      { year: 2027, period: 'semester-2', subjects: ['AAAA10005'] },
+    ]
+    expect(checkTerms(plan(true, terms), data).filter((i) => i.kind.startsWith('visa-'))).toEqual([])
+  })
+})
