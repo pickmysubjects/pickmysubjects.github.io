@@ -1,6 +1,6 @@
 import { computed, onBeforeUnmount, onMounted, shallowRef } from 'vue'
 
-export const VIEWS = ['home', 'subject', 'plan', 'recommend', 'record', 'contribute', 'feedback', 'privacy'] as const
+export const VIEWS = ['home', 'subject', 'plan', 'recommend', 'record', 'contribute', 'feedback', 'privacy', 'about'] as const
 export type View = (typeof VIEWS)[number]
 
 interface Route {

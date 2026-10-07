@@ -10,6 +10,7 @@ import RecordView from './views/RecordView.vue'
 import ContributeView from './views/ContributeView.vue'
 import FeedbackView from './views/FeedbackView.vue'
 import PrivacyView from './views/PrivacyView.vue'
+import AboutView from './views/AboutView.vue'
 import { useView } from './composables/useView'
 import { useI18n } from './i18n'
 
@@ -30,11 +31,13 @@ const plannerUrl =
     <RecordView v-else-if="view === 'record'" />
     <ContributeView v-else-if="view === 'contribute'" />
     <FeedbackView v-else-if="view === 'feedback'" />
+    <AboutView v-else-if="view === 'about'" />
     <PrivacyView v-else />
   </main>
   <footer class="footer">
     <div class="footer-inner shell">
       <nav class="footer-links" :aria-label="t('nav.more')">
+        <a href="#/about">{{ t('app.about') }}</a>
         <a href="#/contribute">{{ t('nav.contribute') }}</a>
         <a href="#/feedback">{{ t('nav.feedback') }}</a>
         <a href="#/privacy">{{ t('app.privacy') }}</a>

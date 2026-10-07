@@ -4,6 +4,7 @@ import { ArrowLeft, CalendarRange, Check, ExternalLink, Plus, Star } from 'lucid
 import DataNotice from '@/components/DataNotice.vue'
 import RatingForm from '@/components/rating/RatingForm.vue'
 import AssessmentPanel from '@/components/subject/AssessmentPanel.vue'
+import MajorRoles from '@/components/subject/MajorRoles.vue'
 import { periodsFor, referencedSubjects, termKey } from '@/engine'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
@@ -122,6 +123,8 @@ const links = computed(() => (name.value === 'real' ? discussionLinks(code.value
       </header>
 
       <div class="grid">
+        <MajorRoles class="panel surface panel-wide" :code="code" />
+
         <section class="panel surface">
           <h2 class="panel-title">{{ t('subject.needs') }}</h2>
           <p v-if="subject.prerequisites === 'none'" class="panel-text">{{ t('subject.needsNone') }}</p>

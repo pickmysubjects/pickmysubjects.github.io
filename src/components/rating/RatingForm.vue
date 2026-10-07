@@ -102,7 +102,8 @@ function value(event: Event): string {
 <template>
   <form class="rate surface" @submit.prevent="send">
     <h3 class="rate-title">{{ t('rating.title', { code }) }}</h3>
-    <p class="rate-intro">{{ t('rating.intro') }} {{ t('rating.allOptional') }}</p>
+    <p class="rate-intro">{{ t('rating.intro') }}</p>
+    <p class="rate-required">{{ t('rating.allOptional') }}</p>
 
     <p v-if="demo" class="rate-off">{{ t('rating.demoOff') }}</p>
     <p v-else-if="!ready" class="rate-off">{{ t('rating.notReady') }}</p>
@@ -208,6 +209,7 @@ function value(event: Event): string {
         {{ t('rating.submit') }}
       </button>
       <button class="button button-quiet" type="button" @click="emit('done', false)">{{ t('rating.cancel') }}</button>
+      <span v-if="ready && !complete" class="rate-need">{{ t('rating.needOne') }}</span>
     </div>
   </form>
 </template>
@@ -331,7 +333,21 @@ function value(event: Event): string {
 
 .rate-actions {
   display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   gap: 8px;
+}
+
+.rate-required {
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  font-size: 0.88rem;
+}
+
+.rate-need {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
 }
 
 @media (max-width: 640px) {
