@@ -1,0 +1,26 @@
+code: EXAR10001
+title: Ideas That Shaped the World
+level: 1
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+    - semester-2
+prerequisites: none
+corequisites: none
+non_allowed: []
+categories:
+  EX-SCI: breadth
+skills:
+  - writing
+topics:
+  - philosophy
+  - history
+signals:
+  difficulty: 2
+  workload: 3
+  grading: 4
+  reviews: 20
+source_year: 2026
+verified_on: null
+notes: Fictional demo subject (Example University). Not a real UniMelb subject.

@@ -1,0 +1,24 @@
+code: EXMA10003
+title: Calculus 2
+level: 1
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites: EXMA10001
+corequisites: none
+non_allowed: []
+categories:
+  EX-SCI: science
+skills:
+  - maths
+topics:
+  - mathematics
+signals:
+  difficulty: 3.5
+  workload: 3
+  grading: 3
+  reviews: 41
+source_year: 2026
+verified_on: null
+notes: Fictional demo subject (Example University). Not a real UniMelb subject.

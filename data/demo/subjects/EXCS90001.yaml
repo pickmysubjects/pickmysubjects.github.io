@@ -1,0 +1,27 @@
+code: EXCS90001
+title: Introduction to Machine Learning (graduate)
+level: 9
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+    - semester-2
+prerequisites:
+  admission: EX-MCS
+corequisites: none
+non_allowed:
+  - EXCS30001
+categories: {}
+skills:
+  - maths
+  - programming
+topics:
+  - machine-learning
+signals:
+  difficulty: 3.5
+  workload: 3.5
+  grading: 3
+  reviews: 25
+source_year: 2026
+verified_on: null
+notes: Fictional demo subject (Example University). Not a real UniMelb subject.

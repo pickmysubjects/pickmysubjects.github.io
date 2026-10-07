@@ -1,0 +1,10 @@
+id: ex-maths-stats
+course: EX-SCI
+year: 2026
+kind: major
+title: Mathematics and Statistics (demo)
+points: 50
+requirements:
+  - all: [EXST30002]
+  - choose: { points: 37.5, from: [EXST30001, EXMA30001, EXCS30005, EXCS30001] }
+verified_on: null

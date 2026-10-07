@@ -1,0 +1,27 @@
+code: EXCS30004
+title: Software Project
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+    - semester-2
+prerequisites: EXCS20003
+corequisites: none
+non_allowed: []
+categories:
+  EX-SCI: science
+skills:
+  - design
+  - presentation
+  - programming
+topics:
+  - software-engineering
+signals:
+  difficulty: 3
+  workload: 5
+  grading: 3.5
+  reviews: 42
+source_year: 2026
+verified_on: null
+notes: Fictional demo subject (Example University). Not a real UniMelb subject.

@@ -1,0 +1,26 @@
+code: EXST20002
+title: Probability
+level: 2
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites: EXMA10003
+corequisites: none
+non_allowed: []
+categories:
+  EX-SCI: science
+skills:
+  - maths
+  - statistics
+topics:
+  - statistics
+  - mathematics
+signals:
+  difficulty: 4
+  workload: 3
+  grading: 3
+  reviews: 26
+source_year: 2026
+verified_on: null
+notes: Fictional demo subject (Example University). Not a real UniMelb subject.

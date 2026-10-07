@@ -1,0 +1,30 @@
+{
+  "name": "subject-compass",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Unofficial, student-built subject planner and recommender for University of Melbourne students. Not affiliated with the University.",
+  "type": "module",
+  "scripts": {
+    "data": "tsx scripts/build-data.ts",
+    "dev": "npm run data && vite",
+    "build": "npm run data && vue-tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "typecheck": "vue-tsc --noEmit",
+    "paste": "tsx scripts/paste-handbook.ts"
+  },
+  "dependencies": {
+    "vue": "^3.5.43",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@types/node": "^24.19.1",
+    "@vitejs/plugin-vue": "^6.0.9",
+    "tsx": "^4.23.15",
+    "typescript": "~5.9",
+    "vite": "^8.3.3",
+    "vitest": "^4.1.11",
+    "vue-tsc": "^3.3.12",
+    "yaml": "^2.9.1"
+  }
+}

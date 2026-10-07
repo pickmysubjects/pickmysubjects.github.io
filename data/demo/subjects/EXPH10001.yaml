@@ -1,0 +1,28 @@
+code: EXPH10001
+title: Physics 1
+level: 1
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites:
+  any:
+    - EXMA10001
+    - manual: VCE Specialist Mathematics or equivalent
+corequisites: none
+non_allowed: []
+categories:
+  EX-SCI: science
+skills:
+  - maths
+  - lab
+topics:
+  - physics
+signals:
+  difficulty: 3.5
+  workload: 3.5
+  grading: 3
+  reviews: 30
+source_year: 2026
+verified_on: null
+notes: Fictional demo subject (Example University). Not a real UniMelb subject.

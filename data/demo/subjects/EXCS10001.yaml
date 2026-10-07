@@ -1,0 +1,25 @@
+code: EXCS10001
+title: Foundations of Computing
+level: 1
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+    - semester-2
+prerequisites: none
+corequisites: none
+non_allowed: []
+categories:
+  EX-SCI: science
+skills:
+  - programming
+topics:
+  - programming
+signals:
+  difficulty: 2
+  workload: 3
+  grading: 4
+  reviews: 55
+source_year: 2026
+verified_on: null
+notes: Fictional demo subject (Example University). Not a real UniMelb subject.

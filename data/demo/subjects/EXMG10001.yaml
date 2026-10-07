@@ -1,0 +1,25 @@
+code: EXMG10001
+title: Management Essentials
+level: 1
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites: none
+corequisites: none
+non_allowed: []
+categories:
+  EX-SCI: breadth
+skills:
+  - business
+  - presentation
+topics:
+  - business
+signals:
+  difficulty: 1.5
+  workload: 2
+  grading: 4.5
+  reviews: 30
+source_year: 2026
+verified_on: null
+notes: Fictional demo subject (Example University). Not a real UniMelb subject.

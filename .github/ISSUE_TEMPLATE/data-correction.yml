@@ -1,0 +1,29 @@
+name: Subject data is wrong or missing
+description: A prerequisite, semester, non-allowed subject or rule doesn't match the Handbook.
+labels: [data]
+body:
+  - type: input
+    id: subject
+    attributes:
+      label: Subject code (or course/major)
+      placeholder: COMP30027
+    validations:
+      required: true
+  - type: textarea
+    id: wrong
+    attributes:
+      label: What's wrong?
+      description: Describe it in your own words. Please don't paste Handbook overviews or learning outcomes — that text belongs to the University.
+      placeholder: It runs in Semester 2 as well as Semester 1 in 2026.
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Handbook link that shows it
+      placeholder: https://handbook.unimelb.edu.au/2026/subjects/comp30027/dates-times
+  - type: dropdown
+    id: year
+    attributes:
+      label: Handbook year
+      options: ['2026', '2027', '2025', 'Other']

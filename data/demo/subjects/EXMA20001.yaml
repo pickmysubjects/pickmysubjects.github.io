@@ -1,0 +1,25 @@
+code: EXMA20001
+title: Real Analysis
+level: 2
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites: EXMA10003
+corequisites: none
+non_allowed: []
+categories:
+  EX-SCI: science
+skills:
+  - maths
+topics:
+  - mathematics
+  - theory
+signals:
+  difficulty: 4.5
+  workload: 4
+  grading: 2.5
+  reviews: 28
+source_year: 2026
+verified_on: null
+notes: Fictional demo subject (Example University). Not a real UniMelb subject.

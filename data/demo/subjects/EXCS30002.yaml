@@ -1,0 +1,26 @@
+code: EXCS30002
+title: Artificial Intelligence
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites: EXCS20001
+corequisites: none
+non_allowed: []
+categories:
+  EX-SCI: science
+skills:
+  - algorithms
+  - programming
+topics:
+  - ai
+  - algorithms
+signals:
+  difficulty: 3.5
+  workload: 3.5
+  grading: 3.5
+  reviews: 38
+source_year: 2026
+verified_on: null
+notes: Fictional demo subject (Example University). Not a real UniMelb subject.

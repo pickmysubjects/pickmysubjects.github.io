@@ -1,0 +1,29 @@
+code: EXST20001
+title: Statistical Modelling
+level: 2
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites:
+  all:
+    - EXST10001
+    - EXMA10002
+corequisites: none
+non_allowed: []
+categories:
+  EX-SCI: science
+skills:
+  - statistics
+  - maths
+topics:
+  - statistics
+  - data-science
+signals:
+  difficulty: 3.5
+  workload: 3
+  grading: 3
+  reviews: 22
+source_year: 2026
+verified_on: null
+notes: Fictional demo subject (Example University). Not a real UniMelb subject.

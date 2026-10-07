@@ -1,0 +1,30 @@
+code: EXMA20002
+title: Discrete Mathematics
+level: 2
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+    - semester-2
+prerequisites:
+  any:
+    - EXMA10001
+    - EXCS10001
+corequisites: none
+non_allowed: []
+categories:
+  EX-SCI: science
+skills:
+  - maths
+  - algorithms
+topics:
+  - mathematics
+  - algorithms
+signals:
+  difficulty: 3
+  workload: 3
+  grading: 3
+  reviews: 33
+source_year: 2026
+verified_on: null
+notes: Fictional demo subject (Example University). Not a real UniMelb subject.

@@ -1,0 +1,26 @@
+code: EXCS30006
+title: Data Visualisation
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites: EXCS20002
+corequisites: none
+non_allowed: []
+categories:
+  EX-SCI: science
+skills:
+  - data
+  - design
+topics:
+  - data-science
+  - design
+signals:
+  difficulty: 2
+  workload: 3
+  grading: 4
+  reviews: 19
+source_year: 2026
+verified_on: null
+notes: Fictional demo subject (Example University). Not a real UniMelb subject.

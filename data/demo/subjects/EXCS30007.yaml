@@ -1,0 +1,26 @@
+code: EXCS30007
+title: Deep Learning
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites: EXCS30001
+corequisites: none
+non_allowed: []
+categories:
+  EX-SCI: science
+skills:
+  - maths
+  - programming
+topics:
+  - machine-learning
+  - ai
+signals:
+  difficulty: 4
+  workload: 4
+  grading: 3
+  reviews: 12
+source_year: 2026
+verified_on: null
+notes: Fictional demo subject (Example University). Not a real UniMelb subject.

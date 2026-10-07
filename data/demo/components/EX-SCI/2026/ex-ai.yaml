@@ -1,0 +1,11 @@
+id: ex-ai
+course: EX-SCI
+year: 2026
+kind: specialisation
+title: Artificial Intelligence (demo)
+points: 50
+requires_major: [ex-computing]
+requirements:
+  - all: [EXAR20001, EXCS20001]
+  - choose: { points: 25, from: [EXCS30001, EXCS30007] }
+verified_on: null

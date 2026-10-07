@@ -1,0 +1,25 @@
+code: EXMA30001
+title: Optimisation
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites: EXMA10002
+corequisites: none
+non_allowed: []
+categories:
+  EX-SCI: science
+skills:
+  - maths
+topics:
+  - mathematics
+  - machine-learning
+signals:
+  difficulty: 3.5
+  workload: 3
+  grading: 3
+  reviews: 14
+source_year: 2026
+verified_on: null
+notes: Fictional demo subject (Example University). Not a real UniMelb subject.

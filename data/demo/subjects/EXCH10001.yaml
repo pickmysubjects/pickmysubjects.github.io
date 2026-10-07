@@ -1,0 +1,26 @@
+code: EXCH10001
+title: Chemistry 1
+level: 1
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+    - semester-2
+prerequisites: none
+corequisites: none
+non_allowed: []
+categories:
+  EX-SCI: science
+skills:
+  - lab
+  - maths
+topics:
+  - chemistry
+signals:
+  difficulty: 3
+  workload: 4
+  grading: 3
+  reviews: 50
+source_year: 2026
+verified_on: null
+notes: Fictional demo subject (Example University). Not a real UniMelb subject.

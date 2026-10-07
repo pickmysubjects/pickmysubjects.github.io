@@ -1,0 +1,25 @@
+code: EXST30002
+title: Bayesian Statistics
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites: EXST20002
+corequisites: none
+non_allowed: []
+categories:
+  EX-SCI: science
+skills:
+  - statistics
+  - maths
+topics:
+  - statistics
+signals:
+  difficulty: 4
+  workload: 3
+  grading: 3
+  reviews: 9
+source_year: 2026
+verified_on: null
+notes: Fictional demo subject (Example University). Not a real UniMelb subject.

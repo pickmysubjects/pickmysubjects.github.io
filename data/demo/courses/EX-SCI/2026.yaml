@@ -1,0 +1,84 @@
+# Demo course for Example University (fictional).
+code: EX-SCI
+title: Bachelor of Science (Example University — demo)
+year: 2026
+total_points: 300
+standard_load: 50
+categories: [science, breadth]
+# Fictional demo course mirroring the shape of real BSc rules.
+verified_on: null
+rules:
+  - id: total
+    kind: points
+    min: 300
+    description: 300 points in total
+  - id: exsc10001
+    kind: compulsory
+    subjects: [EXSC10001]
+    first_semester: true
+    description: EXSC10001 in your first semester
+  - id: science
+    kind: points
+    category: science
+    min: 225
+    description: At least 225 points of science subjects
+  - id: science-l1
+    kind: points
+    category: science
+    level: 1
+    min: 62.5
+    description: At least 62.5 points of level-1 science
+  - id: science-l2
+    kind: points
+    category: science
+    level: 2
+    min: 62.5
+    description: At least 62.5 points of level-2 science
+  - id: science-l3
+    kind: points
+    category: science
+    level: 3
+    min: 75
+    description: At least 75 points of level-3 science
+  - id: breadth
+    kind: points
+    category: breadth
+    min: 50
+    description: At least 50 points of breadth
+  - id: breadth-l1-cap
+    kind: points
+    category: breadth
+    level: 1
+    max: 25
+    description: No more than 25 points of level-1 breadth
+  - id: level1-cap
+    kind: points
+    level: 1
+    max: 125
+    description: No more than 125 points at level 1
+  - id: major
+    kind: major
+    count: 1
+    description: Complete one major
+  - id: specialisation
+    kind: specialisation
+    max: 1
+    description: At most one specialisation
+  - id: level1-areas
+    kind: level1-areas
+    category: science
+    min_areas: 2
+    max_points_per_area: 37.5
+    description: At least two level-1 science areas, at most 37.5 points from any one
+  - id: progress-to-l2
+    kind: progression
+    before_level: 2
+    level: 1
+    min_points: 50
+    description: Normally 50 level-1 points before level-2 subjects
+  - id: progress-to-l3
+    kind: progression
+    before_level: 3
+    level: 2
+    min_points: 50
+    description: Normally 50 level-2 points before level-3 subjects

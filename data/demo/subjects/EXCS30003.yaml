@@ -1,0 +1,25 @@
+code: EXCS30003
+title: Distributed Systems
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites: EXCS20004
+corequisites: none
+non_allowed: []
+categories:
+  EX-SCI: science
+skills:
+  - systems
+  - programming
+topics:
+  - systems
+signals:
+  difficulty: 4
+  workload: 4
+  grading: 3
+  reviews: 20
+source_year: 2026
+verified_on: null
+notes: Fictional demo subject (Example University). Not a real UniMelb subject.

@@ -1,0 +1,35 @@
+name: Idea or feedback
+description: Something that would make choosing subjects less painful.
+labels: [idea]
+body:
+  - type: dropdown
+    id: pain-point
+    attributes:
+      label: Which problem is it about?
+      # Keep in sync with src/painPoints.ts
+      options:
+        - Which semester a subject runs in (S1 only?)
+        - What to take each semester across the whole degree
+        - Prerequisites
+        - Taking one subject blocks another
+        - Easier marks / protecting my WAM
+        - Subjects known to be very hard
+        - Skills a subject needs
+        - Which subjects suit me
+        - Rules change by year, degree, major, level
+        - Where subjects lead after uni
+        - Something else
+    validations:
+      required: true
+  - type: dropdown
+    id: rating
+    attributes:
+      label: How well does Subject Compass handle this today?
+      options: ['1 - not at all', '2', '3', '4', '5 - solved it', "Haven't tried"]
+  - type: textarea
+    id: idea
+    attributes:
+      label: Your idea or experience
+      placeholder: When I picked my breadth subjects I wished I could…
+    validations:
+      required: true

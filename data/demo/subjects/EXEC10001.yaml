@@ -1,0 +1,26 @@
+code: EXEC10001
+title: Introductory Microeconomics
+level: 1
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+    - semester-2
+prerequisites: none
+corequisites: none
+non_allowed: []
+categories:
+  EX-SCI: breadth
+skills:
+  - maths
+  - business
+topics:
+  - economics
+signals:
+  difficulty: 2.5
+  workload: 3
+  grading: 3
+  reviews: 70
+source_year: 2026
+verified_on: null
+notes: Fictional demo subject (Example University). Not a real UniMelb subject.

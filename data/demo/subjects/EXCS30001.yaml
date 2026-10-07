@@ -1,0 +1,32 @@
+code: EXCS30001
+title: Machine Learning
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites:
+  all:
+    - EXCS20002
+    - EXMA10002
+corequisites: none
+non_allowed:
+  - EXCS90001
+categories:
+  EX-SCI: science
+skills:
+  - maths
+  - statistics
+  - programming
+topics:
+  - machine-learning
+  - ai
+  - data-science
+signals:
+  difficulty: 4
+  workload: 4
+  grading: 3
+  reviews: 50
+source_year: 2026
+verified_on: null
+notes: Fictional demo subject (Example University). Not a real UniMelb subject.

@@ -1,0 +1,25 @@
+code: EXLA10001
+title: Mandarin 1
+level: 1
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites: none
+corequisites: none
+non_allowed: []
+categories:
+  EX-SCI: breadth
+skills:
+  - writing
+  - presentation
+topics:
+  - languages
+signals:
+  difficulty: 3
+  workload: 4
+  grading: 3.5
+  reviews: 12
+source_year: 2026
+verified_on: null
+notes: Fictional demo subject (Example University). Not a real UniMelb subject.

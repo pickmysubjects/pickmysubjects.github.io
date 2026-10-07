@@ -1,0 +1,10 @@
+id: ex-data-science
+course: EX-SCI
+year: 2026
+kind: major
+title: Data Science (demo)
+points: 50
+requirements:
+  - all: [EXCS30001, EXST30001]
+  - choose: { points: 25, from: [EXCS30006, EXCS30007, EXST30002, EXMA30001, EXBI30001] }
+verified_on: null

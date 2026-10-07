@@ -1,0 +1,10 @@
+id: ex-computing
+course: EX-SCI
+year: 2026
+kind: major
+title: Computing (demo)
+points: 50
+requirements:
+  - all: [EXCS30002, EXCS30004, EXCS30005]
+  - choose: { points: 12.5, from: [EXCS30001, EXCS30003, EXCS30006, EXCS30007] }
+verified_on: null
