@@ -38,6 +38,8 @@ export function subjectYaml(draft: SubjectDraft, parsed: PasteResult, today = ne
     prerequisites: compactReq(parsed.prerequisites),
     corequisites: compactReq(parsed.corequisites),
     non_allowed: parsed.nonAllowed,
+    ...(parsed.assessment === 'unknown' ? {} : { assessment: parsed.assessment }),
+    ...(parsed.weeklyContactHours ? { weekly_contact_hours: parsed.weeklyContactHours } : {}),
     handbook: draft.handbook ?? `https://handbook.unimelb.edu.au/${draft.year}/subjects/${draft.code.toLowerCase()}`,
     source_year: draft.year,
     verified_on: localDate(today),

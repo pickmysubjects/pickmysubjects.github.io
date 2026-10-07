@@ -1,29 +1,20 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { CircleCheck, Clock, TriangleAlert, Users } from 'lucide-vue-next'
-import { ASSESSMENT_KINDS, periodsFor, type Subject } from '@/engine'
+import { periodsFor, type Subject } from '@/engine'
 import { useI18n } from '@/i18n'
+import { summariseAssessment } from '@/utils/assessment'
 
 const props = defineProps<{ subject: Subject; year: number }>()
 const { t } = useI18n()
 
-const round = (x: number): number => Math.round(x * 10) / 10
-const tasks = computed(() => props.subject.assessment ?? [])
-
-/** Weight per kind of task, biggest first. */
-const parts = computed(() =>
-  ASSESSMENT_KINDS.map((kind) => ({
-    kind,
-    weight: round(tasks.value.filter((x) => x.kind === kind).reduce((sum, x) => sum + x.weight, 0)),
-  }))
-    .filter((p) => p.weight > 0)
-    .sort((a, b) => b.weight - a.weight),
-)
+const info = computed(() => summariseAssessment(props.subject.assessment))
+const parts = computed(() => info.value?.parts ?? [])
 const summary = computed(() => parts.value.map((p) => `${t.value(`assess.kind.${p.kind}`)} ${p.weight}%`).join(', '))
-const group = computed(() => round(tasks.value.filter((x) => x.group).reduce((sum, x) => sum + x.weight, 0)))
-const noExam = computed(() => tasks.value.length > 0 && !tasks.value.some((x) => x.kind === 'exam'))
-const examHurdle = computed(() => tasks.value.some((x) => x.kind === 'exam' && x.hurdle))
-const otherHurdle = computed(() => !examHurdle.value && tasks.value.some((x) => x.hurdle))
+const group = computed(() => info.value?.group ?? 0)
+const noExam = computed(() => info.value !== null && info.value.exam === 0)
+const examHurdle = computed(() => info.value?.examHurdle ?? false)
+const otherHurdle = computed(() => info.value?.otherHurdle ?? false)
 const hasFacts = computed(
   () =>
     noExam.value ||
@@ -35,7 +26,7 @@ const hasFacts = computed(
 )
 // The Handbook lists summer/winter versions separately; we keep the semester one.
 const otherTerms = computed(
-  () => tasks.value.length > 0 && periodsFor(props.subject, props.year).some((p) => p === 'summer' || p === 'winter'),
+  () => info.value !== null && periodsFor(props.subject, props.year).some((p) => p === 'summer' || p === 'winter'),
 )
 </script>
 

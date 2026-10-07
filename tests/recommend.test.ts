@@ -105,6 +105,18 @@ describe('recommend (demo data)', () => {
   })
 })
 
+describe('recommend (going backwards)', () => {
+  it('never suggests a prerequisite of a subject already passed', () => {
+    const data = dataset([
+      subject({ code: 'AAAA10001', prerequisites: 'none' }),
+      subject({ code: 'AAAA10002', prerequisites: 'AAAA10001' }),
+      subject({ code: 'AAAA10003', prerequisites: 'none' }),
+    ])
+    const codes = recommend(data, { ...base, results: [{ code: 'AAAA10002', mark: 80 }] }).map((r) => r.code)
+    expect(codes).toEqual(['AAAA10003'])
+  })
+})
+
 describe('subject facts', () => {
   it('rejects assessment weights that do not add up to 100, and unknown topics', () => {
     expect(() => subject({ code: 'AAAA10001', assessment: [{ kind: 'exam', weight: 60 }, { kind: 'project', weight: 30 }] })).toThrow(

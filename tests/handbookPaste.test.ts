@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { parseAvailability, parseHandbookPaste } from '../src/engine/handbookPaste'
+import { parseAvailability, parseContactHours, parseHandbookPaste } from '../src/engine/handbookPaste'
 import { subjectYaml } from '../src/engine/serialize'
 import { parse } from 'yaml'
 import { subjectFileSchema } from '../src/engine/schema'
@@ -101,5 +101,54 @@ describe('subjectYaml', () => {
     expect(s.offerings).toEqual({ '2026': ['semester-1'] })
     expect(s.verifiedOn).toBe('2026-10-07')
     expect(yaml).toContain('- COMP10002') // compact shorthand, not { subject: … }
+  })
+})
+
+describe('parseHandbookPaste – assessment and contact hours', () => {
+  // Written for this test in the Handbook's layout; not Handbook text.
+  const page = [
+    'Assessment',
+    'Description\tTiming\tPercentage',
+    'Group project - build a small app with your team',
+    '30 hours (of work required)',
+    'Hurdle requirement: must pass the project\tWeek 6\t30%',
+    'Weekly online quiz',
+    'Throughout the semester\t10%',
+    'Written exam',
+    '2 hours',
+    'During the examination period\t60%',
+    'Summer Term',
+    'Description\tTiming\tPercentage',
+    'Exam',
+    'End of term\t100%',
+    'Dates & times',
+    'Contact hours\t36 hours, comprising two 1-hour lectures and one 1-hour tutorial per week',
+  ].join('\n')
+
+  it('reads the first (semester) table: kinds, weights, group work and hurdles', () => {
+    expect(parseHandbookPaste(page).assessment).toEqual([
+      { kind: 'project', weight: 30, group: true, hurdle: true },
+      { kind: 'quiz', weight: 10 },
+      { kind: 'exam', weight: 60 },
+    ])
+  })
+
+  it("doesn't mistake a due date in the exam period for an exam", () => {
+    const text = ['Description\tTiming\tPercentage', 'Research report, due in the first week of the examination period', 'Week 13\t100%'].join('\n')
+    expect(parseHandbookPaste(text).assessment).toEqual([{ kind: 'report', weight: 100 }])
+  })
+
+  it('leaves the table out (with a warning) when weights do not add up to 100', () => {
+    const r = parseHandbookPaste(['Description\tTiming\tPercentage', 'Exam', 'End\t70%'].join('\n'))
+    expect(r.assessment).toBe('unknown')
+    expect(r.warnings.join(' ')).toMatch(/70%/)
+  })
+
+  it('turns the contact hours line into hours a week', () => {
+    expect(parseHandbookPaste(page).weeklyContactHours).toBe(3)
+    expect(parseContactHours('Contact hours\t3 x one hour lectures per week, 1 x one hour practice class per week')).toBe(4)
+    expect(parseContactHours('Contact hours\t36 one-hour lectures (three per week); 12 one-hour practice classes')).toBe(4)
+    expect(parseContactHours('Contact hours\t48 hours: 24 x one-hour lectures, 12 x two-hour classes')).toBe(4)
+    expect(parseContactHours('no such line')).toBeUndefined()
   })
 })

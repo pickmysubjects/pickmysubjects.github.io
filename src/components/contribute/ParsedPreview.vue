@@ -3,6 +3,7 @@ import { computed, shallowRef } from 'vue'
 import type { PasteResult } from '@/engine'
 import { useI18n } from '@/i18n'
 import { describeReq, periodLabel } from '@/i18n/format'
+import { summariseAssessment } from '@/utils/assessment'
 
 const props = defineProps<{ parsed: PasteResult; yaml: string }>()
 
@@ -17,6 +18,19 @@ const nonAllowed = computed(() =>
   props.parsed.nonAllowed === 'unknown'
     ? t.value('contribute.notFound')
     : props.parsed.nonAllowed.join(', ') || t.value('contribute.none'),
+)
+
+const assessment = computed(() => {
+  const info = summariseAssessment(props.parsed.assessment)
+  if (!info) return t.value('contribute.notFound')
+  const parts = info.parts.map((p) => `${t.value(`assess.kind.${p.kind}`)} ${p.weight}%`)
+  if (info.group) parts.push(t.value('assess.group', { n: info.group }))
+  if (info.examHurdle) parts.push(t.value('assess.mustPassExam'))
+  else if (info.otherHurdle) parts.push(t.value('assess.hurdles'))
+  return parts.join(' · ')
+})
+const hours = computed(() =>
+  props.parsed.weeklyContactHours ? t.value('assess.hours', { n: props.parsed.weeklyContactHours }) : t.value('contribute.notFound'),
 )
 
 async function copy(): Promise<void> {
@@ -42,6 +56,10 @@ async function copy(): Promise<void> {
       <dd>{{ nonAllowed }}</dd>
       <dt>{{ t('contribute.runsIn') }}</dt>
       <dd>{{ offerings }}</dd>
+      <dt>{{ t('assess.title') }}</dt>
+      <dd>{{ assessment }}</dd>
+      <dt>{{ t('assess.classTime') }}</dt>
+      <dd>{{ hours }}</dd>
     </dl>
     <ul v-if="parsed.warnings.length" class="warnings">
       <li v-for="(w, i) in parsed.warnings" :key="i">{{ w }}</li>

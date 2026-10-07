@@ -1,4 +1,4 @@
-import type { Period, ReqExpr, ReqField } from './schema'
+import type { AssessmentKind, Period, ReqExpr, ReqField } from './schema'
 
 /**
  * Parses text that a person copied from a Handbook page they were reading
@@ -11,8 +11,18 @@ export interface PasteResult {
   corequisites: ReqField
   nonAllowed: string[] | 'unknown'
   offerings: Period[] | 'unknown'
+  /** Semester version of the assessment table; weights add up to 100. */
+  assessment: AssessmentTask[] | 'unknown'
+  weeklyContactHours?: number
   /** Things the parser was unsure about; a human should double-check these. */
   warnings: string[]
+}
+
+export interface AssessmentTask {
+  kind: AssessmentKind
+  weight: number
+  group?: boolean
+  hurdle?: boolean
 }
 
 const CODE = /\b[A-Z]{4}\d{5}\b/g
@@ -23,9 +33,13 @@ const SECTION_HEADINGS: [RegExp, Section][] = [
   [/^recommended background knowledge$/i, 'skip'],
   [/^inherent requirements/i, 'skip'],
   [/^availability/i, 'avail'],
-  [/^(fees|contact information|further information|assessment|dates and times)$/i, 'skip'],
+  [/^description timing percentage$/i, 'assess'],
+  [/^(fees|contact information|further information|assessment|dates (and|&) times|additional details|quotas apply)$/i, 'skip'],
 ]
-type Section = 'pre' | 'co' | 'non' | 'avail' | 'skip'
+type Section = 'pre' | 'co' | 'non' | 'avail' | 'assess' | 'skip'
+
+// Inside the assessment table these headings start another term's version; we keep the first.
+const TERM_VERSION = /^(summer term|winter term|semester [12]|january|february|june|july|november|december)$/i
 
 export function parseHandbookPaste(text: string): PasteResult {
   const warnings: string[] = []
@@ -36,6 +50,8 @@ export function parseHandbookPaste(text: string): PasteResult {
     corequisites: sections.co ? parseRequirement(sections.co, 'corequisites', warnings) : 'unknown',
     nonAllowed: sections.non ? parseNonAllowed(sections.non) : 'unknown',
     offerings: sections.avail ? parseAvailability(sections.avail.join('\n')) : 'unknown',
+    assessment: sections.assess ? parseAssessment(sections.assess, warnings) : 'unknown',
+    weeklyContactHours: parseContactHours(text),
     warnings,
   }
   if (!sections.pre && !sections.co && !sections.non && !sections.avail) {
@@ -47,10 +63,17 @@ export function parseHandbookPaste(text: string): PasteResult {
 function splitSections(text: string): Partial<Record<Section, string[]>> {
   const out: Partial<Record<Section, string[]>> = {}
   let current: Section | null = null
+  let assessDone = false // later tables repeat it for other terms
   for (const raw of text.split(/\r?\n/)) {
     const line = raw.replace(/\s+/g, ' ').trim()
     if (!line) continue
-    const heading = SECTION_HEADINGS.find(([re]) => re.test(line))
+    if (current === 'assess' && TERM_VERSION.test(line)) {
+      current = 'skip'
+      assessDone = true
+      continue
+    }
+    let heading = SECTION_HEADINGS.find(([re]) => re.test(line))
+    if (heading?.[1] === 'assess' && assessDone) heading = [heading[0], 'skip']
     if (heading) {
       current = heading[1]
       out[current] ??= []
@@ -157,6 +180,80 @@ export function parseAvailability(text: string): Period[] | 'unknown' {
     found.add('semester-2')
   }
   return found.size > 0 ? (['summer', 'semester-1', 'winter', 'semester-2'] as const).filter((p) => found.has(p)) : 'unknown'
+}
+
+// First match wins, so the more specific kinds come first.
+const KIND_WORDS: [RegExp, AssessmentKind][] = [
+  [/presentation|\boral\b/i, 'presentation'],
+  [/participation|attendance|engagement|activities/i, 'participation'],
+  [/quiz|online (test|assessment)/i, 'quiz'],
+  [/\btests?\b|mid-?semester (test|exam|assessment)|closed book timed|in-class (test|assessment)/i, 'test'],
+  [/\bexam(ination)?\b(?! period)/i, 'exam'],
+  [/report|essay|literature review/i, 'report'],
+  [/project/i, 'project'],
+  [/assignment|problem set|exercise|homework|practice set|written work/i, 'assignment'],
+]
+
+/** The task's own name usually opens the description ("Group project - …"), so try that first. */
+function classify(description: string): AssessmentKind | undefined {
+  const opening = description.split(/[.:(–-]\s/)[0]?.slice(0, 60) ?? ''
+  // In the opening, the word that comes first names the task; elsewhere, list order decides.
+  const first = KIND_WORDS.map(([re, kind]) => ({ kind, at: opening.search(re) }))
+    .filter((m) => m.at >= 0)
+    .sort((a, b) => a.at - b.at)[0]
+  return first?.kind ?? KIND_WORDS.find(([re]) => re.test(description))?.[1]
+}
+
+/**
+ * Rows of the "Description / Timing / Percentage" table: description lines,
+ * then a line ending in the weight. Only the first (semester) version is read.
+ */
+function parseAssessment(lines: string[], warnings: string[]): AssessmentTask[] | 'unknown' {
+  const tasks: AssessmentTask[] = []
+  let text: string[] = []
+  for (const line of lines) {
+    const weight = line.match(/(\d+(?:\.\d+)?)%$/)
+    if (!weight) {
+      text.push(line)
+      continue
+    }
+    const description = text.filter((l) => !/^hurdle requirement/i.test(l)).join(' ')
+    const all = [...text, line].join(' ')
+    const kind = classify(description)
+    if (!kind) warnings.push(`Couldn't tell what kind of task "${description.slice(0, 60)}" is; recorded as an assignment.`)
+    const task: AssessmentTask = { kind: kind ?? 'assignment', weight: Number(weight[1]) }
+    if (/\bgroups?\b(?! discussions?)|\bteams?\b/i.test(description)) task.group = true
+    if (/hurdle requirement/i.test(all)) task.hurdle = true
+    tasks.push(task)
+    text = []
+  }
+  const total = tasks.reduce((sum, t) => sum + t.weight, 0)
+  if (tasks.length === 0 || Math.abs(total - 100) > 0.01) {
+    if (tasks.length) warnings.push(`Assessment weights add up to ${total}%, not 100%; left out.`)
+    return 'unknown'
+  }
+  return tasks
+}
+
+/**
+ * Weekly class hours from the "Contact hours" line, e.g. "48 hours, comprising…",
+ * "3 x one hour lectures per week, 1 x one hour practice class per week" or
+ * "36 one-hour lectures (three per week); 12 one-hour practice classes".
+ */
+export function parseContactHours(text: string): number | undefined {
+  const line = text.split(/\r?\n/).find((l) => /^\s*contact hours\b/i.test(l))
+  if (!line) return undefined
+  const HOURS: Record<string, number> = { one: 1, two: 2, three: 3, '1': 1, '1.5': 1.5, '2': 2, '3': 3 }
+  const half = (x: number) => Math.round(x * 2) / 2
+  // "48 hours, comprising …" / "48 hours: 24 x one-hour lectures …" give the semester total first.
+  const lead = line.replace(/^\s*contact hours\s*/i, '').match(/^(\d+(?:\.\d+)?)\s*hours/i)
+  if (lead) return half(Number(lead[1]) / 12)
+  const perWeek = [...line.matchAll(/(\d+)\s*x\s*(one|two|three|1\.5|1|2|3)[- ]hours?/gi)]
+  if (perWeek.length) return half(perWeek.reduce((sum, m) => sum + Number(m[1]) * (HOURS[m[2]!.toLowerCase()] ?? 1), 0))
+  const sessions = [...line.matchAll(/(\d+)\s+(one|two|three)-hour/gi)]
+  if (sessions.length) return half(sessions.reduce((sum, m) => sum + Number(m[1]) * (HOURS[m[2]!.toLowerCase()] ?? 1), 0) / 12)
+  const total = line.match(/(\d+(?:\.\d+)?)\s*hours/i)
+  return total ? half(Number(total[1]) / 12) : undefined
 }
 
 function isExpr(e: ReqExpr | null): e is ReqExpr {

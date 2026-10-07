@@ -3,6 +3,7 @@ import { computed } from 'vue'
 import type { Recommendation, Subject } from '@/engine'
 import { useI18n } from '@/i18n'
 import { describeReq, reasonText } from '@/i18n/format'
+import { summariseAssessment } from '@/utils/assessment'
 import { discussionLinks } from '@/utils/links'
 
 const props = defineProps<{
@@ -19,6 +20,7 @@ const { t } = useI18n()
 const reasons = computed(() => props.rec.reasons.map((n) => reasonText(t.value, n)))
 const warnings = computed(() => props.rec.warnings.map((n) => reasonText(t.value, n)))
 const confidence = computed(() => t.value(`suggest.confidence.${props.rec.confidence}`))
+const assessment = computed(() => (props.subject ? summariseAssessment(props.subject.assessment) : null))
 </script>
 
 <template>
@@ -34,6 +36,12 @@ const confidence = computed(() => t.value(`suggest.confidence.${props.rec.confid
         <span class="rec-confidence">{{ confidence }}</span>
       </div>
     </header>
+    <p v-if="assessment" class="rec-assess">
+      <span class="chip" :class="{ 'chip-good': assessment.exam === 0 }">
+        {{ assessment.exam === 0 ? t('assess.noExam') : t('assess.examShare', { n: assessment.exam }) }}
+      </span>
+      <span v-if="assessment.group > 0" class="chip">{{ t('assess.group', { n: assessment.group }) }}</span>
+    </p>
     <ul class="rec-points">
       <li v-for="(r, i) in reasons" :key="`r${i}`" class="rec-reason">{{ r }}</li>
       <li v-for="(w, i) in warnings" :key="`w${i}`" class="rec-warning">{{ w }}</li>
@@ -66,6 +74,23 @@ const confidence = computed(() => t.value(`suggest.confidence.${props.rec.confid
   display: flex;
   justify-content: space-between;
   gap: 16px;
+}
+
+.rec-assess {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.rec-assess .chip {
+  font-size: 0.8rem;
+  padding: 2px 9px;
+}
+
+.chip-good {
+  border-color: transparent;
+  background: var(--good-soft);
+  color: var(--good);
 }
 
 .rec-code {

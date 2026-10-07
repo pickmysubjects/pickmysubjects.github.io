@@ -27,6 +27,11 @@ npm run typecheck
 - **No scraping or automated fetching** of University websites. Their terms forbid it. Everything is checked by a person in a normal browser.
 - One file per subject: `data/real/subjects/CODE.yaml`. Set `source_year`, and set `verified_on` to the date you checked it against the Handbook.
 - `unknown` means "not curated yet". Use `none` only when you've confirmed there is nothing.
+- What students check first, as structured facts (all optional):
+  - `assessment`: the semester version of the assessment table, one entry per task: `kind` (exam, test, quiz, assignment, project, report, presentation, participation), `weight` (%), `group: true` if done in groups, `hurdle: true` if it must be passed on its own. Weights must add up to 100.
+  - `weekly_contact_hours`: class hours a week (a "48 hours" semester total is 4).
+  - `min_attendance`: an attendance hurdle in %.
+  - `skills` and `topics`: tags from the fixed lists in `src/engine/schema.ts` (`SKILLS`, `TOPICS`). They drive "Subjects that suit me".
 - `npm run data` validates everything and lists subjects that are referenced but not yet curated. Those are good next ones to add.
 - Faster from the terminal: `pbpaste | npm run paste -- --code COMP30027 --title "Machine Learning" --level 3`
 

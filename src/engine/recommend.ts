@@ -95,9 +95,18 @@ export function recommend(data: Dataset, profile: Profile, opts: RecommendOption
     }),
   )
 
+  // Prerequisites of subjects already passed: going back to them adds nothing
+  // (e.g. COMP10001 after COMP10002).
+  const behind = new Set(
+    [...completed].flatMap((c) => {
+      const d = data.subjects[c]
+      return d ? referencedSubjects(d.prerequisites) : []
+    }),
+  )
+
   const recs: Recommendation[] = []
   for (const s of Object.values(data.subjects)) {
-    if (taken.has(s.code)) continue
+    if (taken.has(s.code) || behind.has(s.code)) continue
     if (blocked.has(s.code)) continue
     if (s.nonAllowed !== 'unknown' && s.nonAllowed.some((c) => taken.has(c))) continue
     if (opts.course && opts.category && s.categories[opts.course] !== opts.category) continue

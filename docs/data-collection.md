@@ -31,6 +31,9 @@ For each subject:
 1. Open `https://handbook.unimelb.edu.au/2026/subjects/<code>/eligibility-and-requirements` and copy everything from **Prerequisites** down to **Non-allowed subjects**.
 2. On the subject's overview page, copy the **Availability** line (e.g. "Semester 1 - On Campus").
 3. Note the **level** and **points** from the header.
+4. Copy the **Assessment** tab (the "Description / Timing / Percentage" table) and the **Contact hours** line from "Dates & times". The paste helper turns them into the exam share, group work, hurdles and class hours; check what it read.
+
+The simplest is the subject's print view (`…/subjects/<code>/print`), which has all of the above on one page.
 
 ### Step 4. Popular breadth subjects (optional)
 
