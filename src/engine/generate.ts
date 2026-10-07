@@ -4,7 +4,7 @@ import { evaluateField, type Tri } from './expr'
 import type { Note, Params, Plan, PlanTerm } from './plan'
 import { standardTerms } from './plan'
 import { passedCodes, recommend, type Profile } from './recommend'
-import type { Course, CourseRule, Dataset, Period, ReqExpr, Subject } from './schema'
+import type { ComponentReq, Course, CourseRule, Dataset, Period, ReqExpr, Subject } from './schema'
 
 export interface GenerateInput {
   data: Dataset
@@ -45,7 +45,9 @@ export function generatePlan(input: GenerateInput): GenerateResult {
   const done = new Set(completed)
   const load = course?.standardLoad ?? 50
 
-  const required = collectRequired(input, done, notes)
+  // needs: subjects the generator added as prerequisites for each required subject.
+  const needs = new Map<string, string[]>()
+  const required = collectRequired(input, done, notes, needs)
   const firstSemester = new Set(
     (course?.rules ?? []).flatMap((r) => (r.kind === 'compulsory' && r.firstSemester ? r.subjects : [])),
   )
@@ -58,7 +60,9 @@ export function generatePlan(input: GenerateInput): GenerateResult {
   const terms = standardTerms(input.startYear, input.startPeriod, termCount)
 
   const pending = [...required].filter((c) => !done.has(c))
-  const depth = dependentDepth(pending, data)
+  // Areas of the major/specialisation, used to break ties between equally scored electives.
+  const focus = new Set([...required].filter((c) => !firstSemester.has(c)).map((c) => data.subjects[c]?.area))
+  const depth = dependentDepth(pending, data, needs)
 
   const electives = new Set<string>()
   const fill = (term: PlanTerm, termIndex: number): void => {
@@ -66,7 +70,7 @@ export function generatePlan(input: GenerateInput): GenerateResult {
     const before = new Set([...completed, ...terms.slice(0, termIndex).flatMap((t) => t.subjects)])
     let used = term.subjects.reduce((sum, c) => sum + (data.subjects[c]?.points ?? 12.5), 0)
     while (used < load) {
-      const pick = pickElective({ input, course, term, before, placed: allPlaced(), completed, room: load - used })
+      const pick = pickElective({ input, course, term, before, placed: allPlaced(), completed, room: load - used, focus, reserved: pending })
       if (!pick) break
       term.subjects.push(pick.code)
       electives.add(pick.code)
@@ -83,6 +87,7 @@ export function generatePlan(input: GenerateInput): GenerateResult {
     // Required subjects first.
     const ready = pending
       .filter((c) => !before.has(c))
+      .filter((c) => (needs.get(c) ?? []).every((n) => before.has(n)))
       .filter((c) => canTake(c, term, before, data, input.course) !== 'fail')
       .filter((c) => !firstSemester.has(c) || termIndex === 0)
       .sort((a, b) => priority(b, firstSemester, depth, data, term.year) - priority(a, firstSemester, depth, data, term.year))
@@ -101,7 +106,7 @@ export function generatePlan(input: GenerateInput): GenerateResult {
   // Greedy filling can over-serve one requirement (e.g. science) and starve
   // another (e.g. breadth); swap electives where that's safe, then top up.
   if (course) {
-    repair(terms, { input, course, completed, electives, notes })
+    repair(terms, { input, course, completed, electives, notes, focus, reserved: pending })
     terms.forEach((t, i) => fill(t, i))
   }
   const placed = allPlaced()
@@ -125,7 +130,7 @@ function note(key: string, params: Params, text: string): Note {
   return { key, params, text }
 }
 
-function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[]): Set<string> {
+function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[], needs: Map<string, string[]>): Set<string> {
   const { data } = input
   const course = findCourse(data, input.course, input.courseYear)
   const required = new Set<string>()
@@ -133,27 +138,48 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[])
     if (rule.kind === 'compulsory') rule.subjects.forEach((c) => required.add(c))
   }
 
+  const groups: { title: string; req: Extract<ComponentReq, { choose: unknown }>; used: Set<string> }[] = []
   for (const id of [input.major, input.specialisation]) {
     const component = findComponent(data, id)
     if (id && !component) notes.push(note('componentMissing', { id }, `${id} isn't in the dataset, so its subjects weren't added.`))
     if (component?.requirements === 'unknown') notes.push(note('componentUnknown', { title: component.title }, `${component.title}'s structure isn't curated yet.`))
+    // Same allocation as the course check: a subject fills one requirement only.
+    const used = new Set<string>()
     for (const req of componentNeeds(component)) {
-      if ('all' in req) req.all.forEach((c) => required.add(c))
-      else {
-        let have = req.choose.from.filter((c) => done.has(c) || required.has(c))
-          .reduce((sum, c) => sum + (data.subjects[c]?.points ?? 0), 0)
-        const ranked = recommend(data, input.profile, { course: input.course, eligibleWith: [] })
-          .map((r) => r.code)
-          .filter((c) => req.choose.from.includes(c))
-        const order = [...ranked, ...req.choose.from.filter((c) => !ranked.includes(c))]
-        for (const c of order) {
-          if (have >= req.choose.points) break
-          if (done.has(c) || required.has(c)) continue
-          required.add(c)
-          have += data.subjects[c]?.points ?? 12.5
-          notes.push(note('chose', { code: c, title: component?.title ?? id ?? '' }, `Chose ${c} for ${component?.title ?? id} (best match among its options).`))
-        }
+      if ('all' in req) req.all.forEach((c) => (required.add(c), used.add(c)))
+      else groups.push({ title: component?.title ?? id ?? '', req, used })
+    }
+  }
+
+  // "Choose N points from" groups, once every fixed subject is known. Ties in
+  // score go to subjects that run in the least crowded teaching period.
+  const score = new Map(recommend(data, input.profile, { course: input.course, eligibleWith: [] }).map((r) => [r.code, r.score]))
+  for (const { title, req, used } of groups) {
+    let have = 0
+    for (const c of req.choose.from) {
+      if (have >= req.choose.points) break
+      if ((done.has(c) || required.has(c)) && !used.has(c)) {
+        used.add(c)
+        have += data.subjects[c]?.points ?? 0
       }
+    }
+    const crowd = periodCrowding(required, data, input.startYear)
+    const busy = (c: string) => {
+      const s = data.subjects[c]
+      const ps = s ? periodsFor(s, input.startYear) : []
+      return ps.length ? Math.min(...ps.map((p) => crowd.get(p) ?? 0)) : Infinity
+    }
+    const order = [...req.choose.from].sort(
+      (a, b) => (score.get(b) ?? -1) - (score.get(a) ?? -1) || busy(a) - busy(b),
+    )
+    for (const c of order) {
+      if (have >= req.choose.points) break
+      if (done.has(c) || required.has(c)) continue
+      if (!runsDuringPlan(data.subjects[c], input.startYear)) continue
+      required.add(c)
+      used.add(c)
+      have += data.subjects[c]?.points ?? 12.5
+      notes.push(note('chose', { code: c, title }, `Chose ${c} for ${title} (best match among its options).`))
     }
   }
 
@@ -164,6 +190,7 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[])
     const s = data.subjects[code]
     if (!s || s.prerequisites === 'none' || s.prerequisites === 'unknown') continue
     for (const need of resolvePrereqs(s.prerequisites, done, required, data, input.course)) {
+      needs.set(code, [...(needs.get(code) ?? []), need])
       if (!required.has(need) && !done.has(need)) {
         required.add(need)
         queue.push(need)
@@ -174,20 +201,96 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[])
   return required
 }
 
-/** Subjects to add so the expression can be satisfied, preferring the branch needing the fewest. */
+/**
+ * Subjects the expression relies on that aren't completed yet — already-required
+ * ones included, so they can be ordered first — preferring the branch that adds
+ * the fewest new subjects.
+ */
 function resolvePrereqs(expr: ReqExpr, done: Set<string>, required: Set<string>, data: Dataset, course: string): string[] {
-  const have = (c: string) => done.has(c) || required.has(c)
-  if ('subject' in expr) return have(expr.subject) ? [] : [expr.subject]
+  if ('subject' in expr) return done.has(expr.subject) ? [] : [expr.subject]
   if ('all' in expr) return [...new Set(expr.all.flatMap((e) => resolvePrereqs(e, done, required, data, course)))]
   if ('any' in expr) {
-    const options = expr.any
-      .filter((e) => !('admission' in e) || e.admission === course)
-      .filter((e) => !('manual' in e))
-      .map((e) => resolvePrereqs(e, done, required, data, course))
-    if (options.length === 0) return []
-    return options.reduce((best, o) => (o.length < best.length ? o : best))
+    // Fewest additions wins. A subject we have no data for (often a graduate
+    // alternative) costs the most; assuming a manual condition (a VCE score, a
+    // competency test) is cheaper than that but dearer than a subject we can place,
+    // so the plan stays on the safe side and the plan check flags the assumption.
+    const MANUAL = 50
+    const cost = (o: string[]) =>
+      o.reduce((sum, c) => sum + (required.has(c) ? 0 : clashes(c, done, required, data) ? 10_000 : data.subjects[c] ? 1 : 100), 0)
+    let best: string[] | null = null
+    let bestCost = Infinity
+    for (const e of expr.any) {
+      if ('admission' in e && e.admission !== course) continue
+      const o = 'manual' in e ? [] : resolvePrereqs(e, done, required, data, course)
+      const c = 'manual' in e ? MANUAL : cost(o)
+      if (c < bestCost) [best, bestCost] = [o, c]
+    }
+    return best ?? []
   }
-  return [] // points / admission / manual can't be resolved to specific subjects
+  if ('points' in expr) return pickForPoints(expr.points, done, required, data)
+  return [] // admission / manual can't be resolved to specific subjects
+}
+
+/** Would adding this subject break a non-allowed pair with one already completed or required? */
+function clashes(code: string, done: Set<string>, required: Set<string>, data: Dataset): boolean {
+  const mine = data.subjects[code]?.nonAllowed
+  for (const other of [...done, ...required]) {
+    if (mine && mine !== 'unknown' && mine.includes(other)) return true
+    const theirs = data.subjects[other]?.nonAllowed
+    if (theirs && theirs !== 'unknown' && theirs.includes(code)) return true
+  }
+  return false
+}
+
+/**
+ * Subjects to add for an "N points of X" prerequisite: the lowest-level matching
+ * subjects that run most often, until the threshold is met.
+ */
+function pickForPoints(
+  req: { min: number; level?: number; area?: string; from?: string[] },
+  done: Set<string>,
+  required: Set<string>,
+  data: Dataset,
+): string[] {
+  const fits = (s: Subject) =>
+    (req.from === undefined || req.from.includes(s.code)) &&
+    (req.level === undefined || s.level === req.level) &&
+    (req.area === undefined || s.area === req.area)
+  let have = [...done].reduce((sum, c) => {
+    const s = data.subjects[c]
+    return s && fits(s) ? sum + s.points : sum
+  }, 0)
+  const runs = (s: Subject) => (s.offerings === 'unknown' ? 0 : Math.max(0, ...Object.values(s.offerings).map((p) => p.length)))
+  const isNew = (s: Subject) => (required.has(s.code) ? 0 : 1)
+  // Lowest level first, so the requirement can be met early; within a level,
+  // reuse subjects that are already required before adding new ones.
+  const candidates = Object.values(data.subjects)
+    .filter((s) => fits(s) && !done.has(s.code) && (required.has(s.code) || (runs(s) > 0 && !clashes(s.code, done, required, data))))
+    .sort((a, b) => a.level - b.level || isNew(a) - isNew(b) || runs(b) - runs(a) || a.code.localeCompare(b.code))
+  const picks: string[] = []
+  for (const s of candidates) {
+    if (have >= req.min) break
+    picks.push(s.code)
+    have += s.points
+  }
+  return picks
+}
+
+/** False only when we know the subject doesn't run in any of the next few years. */
+function runsDuringPlan(s: Subject | undefined, startYear: number): boolean {
+  if (!s || s.offerings === 'unknown') return true
+  return [0, 1, 2, 3].some((d) => periodsFor(s, startYear + d).length > 0)
+}
+
+/** How many required subjects can only be taken in each teaching period. */
+function periodCrowding(required: Set<string>, data: Dataset, year: number): Map<Period, number> {
+  const crowd = new Map<Period, number>()
+  for (const c of required) {
+    const s = data.subjects[c]
+    const ps = s ? periodsFor(s, year) : []
+    if (ps.length === 1) crowd.set(ps[0] as Period, (crowd.get(ps[0] as Period) ?? 0) + 1)
+  }
+  return crowd
 }
 
 function canTake(code: string, term: PlanTerm, before: Set<string>, data: Dataset, course: string): Tri {
@@ -205,13 +308,13 @@ function priority(code: string, first: Set<string>, depth: Map<string, number>, 
 }
 
 /** Longest chain of required subjects that depend on each subject. */
-function dependentDepth(codes: string[], data: Dataset): Map<string, number> {
+function dependentDepth(codes: string[], data: Dataset, needs: Map<string, string[]>): Map<string, number> {
   const set = new Set(codes)
   const deps = new Map<string, string[]>()
   for (const c of codes) {
     const s = data.subjects[c]
-    if (!s || s.prerequisites === 'none' || s.prerequisites === 'unknown') continue
-    for (const p of referenced(s.prerequisites)) if (set.has(p)) deps.set(p, [...(deps.get(p) ?? []), c])
+    const refs = s && s.prerequisites !== 'none' && s.prerequisites !== 'unknown' ? referenced(s.prerequisites) : []
+    for (const p of new Set([...refs, ...(needs.get(c) ?? [])])) if (set.has(p)) deps.set(p, [...(deps.get(p) ?? []), c])
   }
   const memo = new Map<string, number>()
   const visit = (c: string, stack: Set<string>): number => {
@@ -256,6 +359,9 @@ interface PickCtx {
   placed: string[]
   completed: string[]
   room: number
+  focus: Set<string | undefined>
+  /** Required subjects still to place: never picked as electives, and their non-allowed partners are off limits. */
+  reserved: string[]
 }
 
 function pickElective(ctx: PickCtx): { code: string; why: string; ruleId: string } | null {
@@ -280,14 +386,13 @@ function pickElective(ctx: PickCtx): { code: string; why: string; ruleId: string
         category: rule.category,
         level,
         term: { year: term.year, period: term.period },
-        planned: ctx.placed,
+        planned: [...ctx.placed, ...ctx.reserved],
         eligibleWith: [...ctx.before],
       })
-      for (const rec of recs) {
+      for (const rec of rankElectives(recs, ctx.focus, data)) {
         const s = data.subjects[rec.code]
         if (!s || s.points > ctx.room) continue
         if (offeredIn(s, term.year, term.period).status !== 'ok') continue
-        if (rec.eligibility !== 'ok') continue
         if (!withinCaps(s, all, course, data)) continue
         if (!leavesRoomForOthers(s, all, course, data)) continue
         if (!progressionAllows(s.code, course, [...ctx.before], data)) continue
@@ -296,6 +401,23 @@ function pickElective(ctx: PickCtx): { code: string; why: string; ruleId: string
     }
   }
   return null
+}
+
+/**
+ * Order elective candidates: prerequisites confirmed met before ones we can't
+ * confirm (not curated yet — the plan check flags those, and a sparse dataset
+ * still yields a plan); then by score; on a tie, subjects in the major's own
+ * areas first, so an empty profile doesn't fall back to alphabetical order.
+ * Known-unmet candidates were already dropped by recommend().
+ */
+function rankElectives<T extends { code: string; score: number; eligibility: Tri }>(
+  recs: T[],
+  focus: Set<string | undefined>,
+  data: Dataset,
+): T[] {
+  const tier = (r: T) => (r.eligibility === 'ok' ? 0 : r.eligibility === 'unknown' ? 1 : 2)
+  const near = (r: T) => (focus.has(data.subjects[r.code]?.area) ? 0 : 1)
+  return recs.filter((r) => tier(r) < 2).sort((a, b) => tier(a) - tier(b) || b.score - a.score || near(a) - near(b))
 }
 
 type PointsRule = Extract<CourseRule, { kind: 'points' }>
@@ -358,6 +480,8 @@ interface RepairCtx {
   completed: string[]
   electives: Set<string>
   notes: Note[]
+  focus: Set<string | undefined>
+  reserved: string[]
 }
 
 /**
@@ -400,12 +524,12 @@ function trySwap(r: PointsRule, terms: PlanTerm[], all: string[], ctx: RepairCtx
         category: r.category,
         level: r.level,
         term: { year: term.year, period: term.period },
-        planned: all,
+        planned: [...all, ...ctx.reserved],
         eligibleWith: before,
       })
-      for (const rec of candidates) {
+      for (const rec of rankElectives(candidates, ctx.focus, data)) {
         const s = data.subjects[rec.code]
-        if (!s || rec.eligibility !== 'ok' || s.points > es.points) continue
+        if (!s || s.points > es.points) continue
         if (offeredIn(s, term.year, term.period).status !== 'ok') continue
         if (!withinCaps(s, others, course, data)) continue
         if (!progressionAllows(s.code, course, before, data)) continue

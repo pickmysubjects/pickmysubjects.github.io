@@ -17,6 +17,17 @@ describe('computeWam', () => {
   })
 })
 
+describe('recommend (non-allowed)', () => {
+  it('treats non-allowed as two-way even when only one subject lists it', () => {
+    const data = dataset([
+      subject({ code: 'AAAA10001', prerequisites: 'none', non_allowed: ['AAAA10002'] }),
+      subject({ code: 'AAAA10002', prerequisites: 'none' }), // its own list isn't curated
+    ])
+    expect(recommend(data, { ...base, results: [{ code: 'AAAA10001' }] }).map((r) => r.code)).not.toContain('AAAA10002')
+    expect(recommend(data, { ...base, results: [{ code: 'AAAA10002' }] }).map((r) => r.code)).not.toContain('AAAA10001')
+  })
+})
+
 describe('recommend (demo data)', () => {
   const data = demo()
 

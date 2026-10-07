@@ -179,7 +179,11 @@ function componentStatus(
     const detail = `${component.title}: structure not curated yet`
     return { ...base, status: 'unknown', detail, detailKey: 'componentUnknown', params: { title: component.title } }
   }
-  const unmet = component.requirements.map((r) => unmetRequirement(r, ctx)).filter((x): x is string => x !== null)
+  // A subject counts towards one requirement only: "all" lists claim theirs first,
+  // then each "choose" group (in file order) takes from what's left.
+  const used = new Set<string>()
+  const ordered = [...component.requirements.filter((r) => 'all' in r), ...component.requirements.filter((r) => !('all' in r))]
+  const unmet = ordered.map((r) => unmetRequirement(r, ctx, used)).filter((x): x is string => x !== null)
   if (unmet.length === 0) {
     return { ...base, status: 'ok', detail: `${component.title} complete`, detailKey: 'componentDone', params: { title: component.title } }
   }
@@ -192,14 +196,19 @@ function componentStatus(
   }
 }
 
-function unmetRequirement(req: ComponentReq, ctx: RuleCtx): string | null {
+function unmetRequirement(req: ComponentReq, ctx: RuleCtx, used: Set<string>): string | null {
   if ('all' in req) {
+    req.all.forEach((c) => used.add(c))
     const missing = req.all.filter((c) => !ctx.codes.includes(c))
     return missing.length ? `missing ${missing.join(', ')}` : null
   }
-  const have = req.choose.from
-    .filter((c) => ctx.codes.includes(c))
-    .reduce((sum, c) => sum + (ctx.data.subjects[c]?.points ?? 0), 0)
+  let have = 0
+  for (const c of req.choose.from) {
+    if (have >= req.choose.points) break
+    if (!ctx.codes.includes(c) || used.has(c)) continue
+    used.add(c)
+    have += ctx.data.subjects[c]?.points ?? 0
+  }
   return have >= req.choose.points ? null : `${have} / ${req.choose.points} points from ${req.choose.from.join(', ')}`
 }
 

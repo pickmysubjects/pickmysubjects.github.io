@@ -4,6 +4,7 @@ import { checkCourse } from '../src/engine/courseRules'
 import type { Plan } from '../src/engine/plan'
 import { standardTerms } from '../src/engine/plan'
 import { checkTerms } from '../src/engine/planCheck'
+import { buildDataset } from '../scripts/dataset'
 import { dataset, demo, subject } from './helpers'
 
 describe('offeredIn', () => {
@@ -104,5 +105,25 @@ describe('checkCourse (demo course)', () => {
   it('reports uncurated course rules as a warning, not a pass', () => {
     const { issues } = checkCourse({ course: 'NOPE', courseYear: 2026, completed: [], terms: [] }, data)
     expect(issues).toEqual([expect.objectContaining({ severity: 'warning', kind: 'course-unknown' })])
+  })
+})
+
+describe('checkCourse (one subject fills one requirement)', () => {
+  const { dataset: real } = buildDataset('real')
+  const status = (codes: string[]) => {
+    const plan: Plan = {
+      course: 'B-SCI',
+      courseYear: 2026,
+      major: 'mathematics-and-statistics-operations-research',
+      completed: codes,
+      terms: [],
+    }
+    return checkCourse(plan, real).statuses.find((s) => s.ruleId === 'major')?.status
+  }
+
+  it("doesn't let MAST30021 count for both 'one of 30021/30022' and the fourth subject", () => {
+    expect(status(['MAST30012', 'MAST30013', 'MAST30021'])).toBe('fail')
+    expect(status(['MAST30012', 'MAST30013', 'MAST30021', 'MAST30022'])).toBe('ok')
+    expect(status(['MAST30012', 'MAST30013', 'MAST30022', 'MAST30011'])).toBe('ok')
   })
 })

@@ -97,10 +97,18 @@ export function recommend(data: Dataset, profile: Profile, opts: RecommendOption
   const wam = computeWam(profile.results, data)
   const marks = new Map(profile.results.filter((r) => r.mark !== undefined).map((r) => [r.code, r.mark as number]))
   const dependents = buildDependents(data)
+  // Non-allowed works both ways, but the Handbook often lists it on one side only.
+  const blocked = new Set(
+    [...taken].flatMap((c) => {
+      const t = data.subjects[c]
+      return t && t.nonAllowed !== 'unknown' ? t.nonAllowed : []
+    }),
+  )
 
   const recs: Recommendation[] = []
   for (const s of Object.values(data.subjects)) {
     if (taken.has(s.code)) continue
+    if (blocked.has(s.code)) continue
     if (s.nonAllowed !== 'unknown' && s.nonAllowed.some((c) => taken.has(c))) continue
     if (opts.course && opts.category && s.categories[opts.course] !== opts.category) continue
     if (opts.level !== undefined && s.level !== opts.level) continue
