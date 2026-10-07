@@ -10,6 +10,7 @@ import {
   type Period,
   type Plan,
   type PlanTerm,
+  type Note,
 } from '@/engine'
 import { useDataset } from './useDataset'
 import { useProfile } from './useProfile'
@@ -28,8 +29,8 @@ export interface PlanSetup {
 interface PlanState {
   setup: PlanSetup
   terms: PlanTerm[]
-  notes: string[]
-  unplaced: { code: string; reason: string }[]
+  notes: Note[]
+  unplaced: { code: string; reason: string; reasonKey: string }[]
 }
 
 // One saved plan per dataset.

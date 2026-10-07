@@ -19,11 +19,26 @@ export interface Plan {
 
 export type Severity = 'error' | 'warning' | 'info'
 
+/** Values interpolated into a localised message. */
+export type Params = Record<string, string | number>
+
+/**
+ * A message the UI can localise: `key` selects the translation, `params` fills it,
+ * and `text` is the English rendering (used by tests, logs and as a fallback).
+ */
+export interface Note {
+  key: string
+  params: Params
+  text: string
+}
+
 export interface Issue {
   severity: Severity
-  /** Stable machine-readable kind, e.g. "prereq-unmet". */
+  /** Stable machine-readable kind, e.g. "prereq-unmet"; also the translation key. */
   kind: string
+  /** English text; the UI localises from `kind` + `params`. */
   message: string
+  params: Params
   subject?: string
   termIndex?: number
   ruleId?: string

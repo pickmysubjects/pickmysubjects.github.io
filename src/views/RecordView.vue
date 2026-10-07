@@ -4,6 +4,7 @@ import ResultsEditor from '@/components/profile/ResultsEditor.vue'
 import SkillsEditor from '@/components/profile/SkillsEditor.vue'
 import { useDataset } from '@/composables/useDataset'
 import { useProfile } from '@/composables/useProfile'
+import { useI18n } from '@/i18n'
 
 const { data, subjectList, topics } = useDataset()
 const { profile, wam, setResults, setSkills, setInterests } = useProfile()
@@ -11,21 +12,19 @@ const { profile, wam, setResults, setSkills, setInterests } = useProfile()
 const results = computed({ get: () => profile.value.results, set: setResults })
 const skills = computed({ get: () => profile.value.skills, set: setSkills })
 const interests = computed({ get: () => profile.value.interests, set: setInterests })
+const { t } = useI18n()
 const options = computed(() => subjectList.value.map((s) => ({ code: s.code, title: s.title })))
 </script>
 
 <template>
   <div class="record">
     <section class="record-intro">
-      <h1 class="record-title">My record</h1>
-      <p class="record-lede">
-        What you've done and what you're good at. It's saved only in this browser — there's no account and nothing is
-        uploaded.
-      </p>
+      <h1 class="record-title">{{ t('record.title') }}</h1>
+      <p class="record-lede">{{ t('record.lede') }}</p>
       <p class="wam">
         <span class="wam-label">WAM</span>
         <span class="wam-value">{{ wam ?? '—' }}</span>
-        <span class="wam-note">credit-point weighted, from the marks you've entered</span>
+        <span class="wam-note">{{ t('record.wamNote') }}</span>
       </p>
     </section>
     <div class="record-body">

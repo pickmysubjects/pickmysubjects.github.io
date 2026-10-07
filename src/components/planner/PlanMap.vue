@@ -2,6 +2,7 @@
 import { computed, nextTick, onBeforeUnmount, onMounted, shallowRef, useTemplateRef, watch } from 'vue'
 import { referencedSubjects, type Issue, type PlanTerm, type Subject } from '@/engine'
 import TermColumn from './TermColumn.vue'
+import { useI18n } from '@/i18n'
 
 const props = defineProps<{
   terms: PlanTerm[]
@@ -25,6 +26,7 @@ interface Route {
   d: string
 }
 
+const { t } = useI18n()
 const track = useTemplateRef<HTMLElement>('track')
 const routes = shallowRef<Route[]>([])
 const hovered = shallowRef<string | null>(null)
@@ -128,8 +130,8 @@ function onMoveBy(code: string, from: number, delta: number): void {
         @hover="hovered = $event"
       />
       <div class="term-tools">
-        <button class="button button-quiet" type="button" @click="emit('addTerm')">Add a term</button>
-        <button class="button button-quiet" type="button" @click="emit('removeLastTerm')">Remove last empty term</button>
+        <button class="button button-quiet" type="button" @click="emit('addTerm')">{{ t('plan.addTerm') }}</button>
+        <button class="button button-quiet" type="button" @click="emit('removeLastTerm')">{{ t('plan.removeTerm') }}</button>
       </div>
     </div>
   </div>

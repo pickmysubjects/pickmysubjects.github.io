@@ -86,6 +86,6 @@ describe('generatePlan (demo course)', () => {
 
   it('explains what it could not do instead of silently dropping requirements', () => {
     const { notes } = generate({ major: 'no-such-major' })
-    expect(notes.join(' ')).toMatch(/no-such-major isn't in the dataset/)
+    expect(notes.map((n) => n.text).join(' ')).toMatch(/no-such-major isn't in the dataset/)
   })
 })

@@ -1,13 +1,16 @@
 import type { Tri } from './expr'
-import type { Issue, Plan } from './plan'
+import type { Issue, Params, Plan } from './plan'
 import type { Component, ComponentReq, Course, CourseRule, Dataset, Subject } from './schema'
 
 export interface RuleStatus {
   ruleId: string
   description: string
   status: Tri
-  /** Short progress text, e.g. "212.5 / 225 points". */
+  /** Short English progress text, e.g. "212.5 / 225 points". */
   detail: string
+  /** Translation key and values for `detail`. */
+  detailKey: string
+  params: Params
 }
 
 export interface CourseCheck {
@@ -34,7 +37,14 @@ export function checkCourse(plan: Plan, data: Dataset): CourseCheck {
   if (!course) {
     return {
       statuses: [],
-      issues: [{ severity: 'warning', kind: 'course-unknown', message: `Rules for ${plan.course} haven't been curated yet.` }],
+      issues: [
+        {
+          severity: 'warning',
+          kind: 'course-unknown',
+          params: { course: plan.course },
+          message: `Rules for ${plan.course} haven't been curated yet.`,
+        },
+      ],
     }
   }
 
@@ -50,6 +60,7 @@ export function checkCourse(plan: Plan, data: Dataset): CourseCheck {
         severity: s.status === 'unknown' || soft ? 'warning' : 'error',
         kind: `rule-${rule?.kind ?? 'unknown'}`,
         ruleId: s.ruleId,
+        params: s.params,
         message: `${s.description} — ${s.detail}`,
       }
     })
@@ -69,13 +80,13 @@ function checkRule(rule: CourseRule, ctx: RuleCtx): RuleStatus {
   switch (rule.kind) {
     case 'compulsory': {
       const missing = rule.subjects.filter((c) => !ctx.codes.includes(c))
-      if (missing.length > 0) return { ...base, status: 'fail', detail: `missing ${missing.join(', ')}` }
+      if (missing.length > 0) return { ...base, status: 'fail', detail: `missing ${missing.join(', ')}`, detailKey: 'missing', params: { codes: missing.join(', ') } }
       if (rule.firstSemester) {
         const first = ctx.plan.terms[0]?.subjects ?? []
         const late = rule.subjects.filter((c) => !ctx.plan.completed.includes(c) && !first.includes(c))
-        if (late.length > 0) return { ...base, status: 'fail', detail: `${late.join(', ')} must be in your first semester` }
+        if (late.length > 0) return { ...base, status: 'fail', detail: `${late.join(', ')} must be in your first semester`, detailKey: 'firstSemester', params: { codes: late.join(', ') } }
       }
-      return { ...base, status: 'ok', detail: 'done' }
+      return { ...base, status: 'ok', detail: 'done', detailKey: 'done', params: {} }
     }
     case 'points': {
       let total = 0
@@ -98,23 +109,28 @@ function checkRule(rule: CourseRule, ctx: RuleCtx): RuleStatus {
       else if (rule.max !== undefined) parts.push(`${total} of max ${rule.max} points`)
       if (uncategorised > 0) parts.push(`${uncategorised} points not yet categorised`)
       const detail = parts.join('; ')
-      if (rule.max !== undefined && total > rule.max) return { ...base, status: 'fail', detail }
+      const pts = {
+        detail,
+        detailKey: rule.min !== undefined ? 'pointsMin' : 'pointsMax',
+        params: { have: total, need: rule.min ?? rule.max ?? 0, uncategorised },
+      }
+      if (rule.max !== undefined && total > rule.max) return { ...base, status: 'fail', ...pts }
       if (rule.min !== undefined && total < rule.min) {
         const couldStillPass = uncategorised > 0 || unknownSubjects > 0
-        return { ...base, status: couldStillPass ? 'unknown' : 'fail', detail }
+        return { ...base, status: couldStillPass ? 'unknown' : 'fail', ...pts }
       }
-      return { ...base, status: 'ok', detail }
+      return { ...base, status: 'ok', ...pts }
     }
     case 'major': {
       const major = findComponent(ctx.data, ctx.plan.major)
-      if (!major) return { ...base, status: 'fail', detail: 'no major chosen' }
+      if (!major) return { ...base, status: 'fail', detail: 'no major chosen', detailKey: 'noMajor', params: {} }
       return componentStatus(base, major, ctx)
     }
     case 'specialisation': {
       const spec = findComponent(ctx.data, ctx.plan.specialisation)
-      if (!spec) return { ...base, status: 'ok', detail: 'none chosen (optional)' }
+      if (!spec) return { ...base, status: 'ok', detail: 'none chosen (optional)', detailKey: 'noSpec', params: {} }
       if (spec.requiresMajor.length > 0 && !spec.requiresMajor.includes(ctx.plan.major ?? '')) {
-        return { ...base, status: 'fail', detail: `${spec.title} needs one of these majors: ${spec.requiresMajor.join(', ')}` }
+        return { ...base, status: 'fail', detail: `${spec.title} needs one of these majors: ${spec.requiresMajor.join(', ')}`, detailKey: 'needsMajor', params: { title: spec.title, majors: spec.requiresMajor.join(', ') } }
       }
       return componentStatus(base, spec, ctx)
     }
@@ -126,22 +142,30 @@ function checkRule(rule: CourseRule, ctx: RuleCtx): RuleStatus {
         byArea.set(s.area, (byArea.get(s.area) ?? 0) + s.points)
       }
       const over = [...byArea].filter(([, pts]) => pts > rule.maxPointsPerArea)
-      const detail = `${byArea.size} area(s)${over.length ? `; over ${rule.maxPointsPerArea} in ${over.map(([a]) => a).join(', ')}` : ''}`
-      if (over.length > 0 || byArea.size < rule.minAreas) return { ...base, status: 'fail', detail }
-      return { ...base, status: 'ok', detail }
+      const overAreas = over.map(([a]) => a).join(', ')
+      const detail = `${byArea.size} area(s)${over.length ? `; over ${rule.maxPointsPerArea} in ${overAreas}` : ''}`
+      const areas = { detail, detailKey: 'areas', params: { count: byArea.size, over: overAreas, max: rule.maxPointsPerArea } }
+      if (over.length > 0 || byArea.size < rule.minAreas) return { ...base, status: 'fail', ...areas }
+      return { ...base, status: 'ok', ...areas }
     }
     case 'progression': {
       const firstHigher = ctx.plan.terms.findIndex((t) =>
         t.subjects.some((c) => (ctx.data.subjects[c]?.level ?? 0) === rule.beforeLevel),
       )
-      if (firstHigher === -1) return { ...base, status: 'ok', detail: `no level ${rule.beforeLevel} subjects yet` }
+      if (firstHigher === -1) return { ...base, status: 'ok', detail: `no level ${rule.beforeLevel} subjects yet`, detailKey: 'progressionNone', params: { level: rule.beforeLevel } }
       const earlier = [...ctx.plan.completed, ...ctx.plan.terms.slice(0, firstHigher).flatMap((t) => t.subjects)]
       const pts = earlier.reduce((sum, c) => {
         const s = ctx.data.subjects[c]
         return s && s.level === rule.level ? sum + s.points : sum
       }, 0)
       const detail = `${pts} level-${rule.level} points before your first level-${rule.beforeLevel} subject`
-      return { ...base, status: pts >= rule.minPoints ? 'ok' : 'fail', detail }
+      return {
+        ...base,
+        status: pts >= rule.minPoints ? 'ok' : 'fail',
+        detail,
+        detailKey: 'progression',
+        params: { have: pts, level: rule.level, before: rule.beforeLevel },
+      }
     }
   }
 }
@@ -152,11 +176,20 @@ function componentStatus(
   ctx: RuleCtx,
 ): RuleStatus {
   if (component.requirements === 'unknown') {
-    return { ...base, status: 'unknown', detail: `${component.title}: structure not curated yet` }
+    const detail = `${component.title}: structure not curated yet`
+    return { ...base, status: 'unknown', detail, detailKey: 'componentUnknown', params: { title: component.title } }
   }
   const unmet = component.requirements.map((r) => unmetRequirement(r, ctx)).filter((x): x is string => x !== null)
-  if (unmet.length === 0) return { ...base, status: 'ok', detail: `${component.title} complete` }
-  return { ...base, status: 'fail', detail: `${component.title}: ${unmet.join('; ')}` }
+  if (unmet.length === 0) {
+    return { ...base, status: 'ok', detail: `${component.title} complete`, detailKey: 'componentDone', params: { title: component.title } }
+  }
+  return {
+    ...base,
+    status: 'fail',
+    detail: `${component.title}: ${unmet.join('; ')}`,
+    detailKey: 'componentMissing',
+    params: { title: component.title, missing: unmet.join('; ') },
+  }
 }
 
 function unmetRequirement(req: ComponentReq, ctx: RuleCtx): string | null {

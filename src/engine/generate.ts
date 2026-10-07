@@ -1,7 +1,7 @@
 import { offeredIn, periodsFor } from './availability'
 import { categoryOf, componentNeeds, findComponent, findCourse } from './courseRules'
 import { evaluateField, type Tri } from './expr'
-import type { Plan, PlanTerm } from './plan'
+import type { Note, Params, Plan, PlanTerm } from './plan'
 import { standardTerms } from './plan'
 import { passedCodes, recommend, type Profile } from './recommend'
 import type { Course, CourseRule, Dataset, Period, ReqExpr, Subject } from './schema'
@@ -22,9 +22,9 @@ export interface GenerateInput {
 export interface GenerateResult {
   plan: Plan
   /** Required subjects that could not be placed, with a reason. */
-  unplaced: { code: string; reason: string }[]
-  /** Human-readable notes about choices the generator made. */
-  notes: string[]
+  unplaced: { code: string; reason: string; reasonKey: string }[]
+  /** Notes about choices the generator made (localisable). */
+  notes: Note[]
 }
 
 /**
@@ -40,7 +40,7 @@ export interface GenerateResult {
 export function generatePlan(input: GenerateInput): GenerateResult {
   const { data, profile } = input
   const course = findCourse(data, input.course, input.courseYear)
-  const notes: string[] = []
+  const notes: Note[] = []
   const completed = passedCodes(profile.results)
   const done = new Set(completed)
   const load = course?.standardLoad ?? 50
@@ -71,7 +71,7 @@ export function generatePlan(input: GenerateInput): GenerateResult {
       term.subjects.push(pick.code)
       electives.add(pick.code)
       used += data.subjects[pick.code]?.points ?? 12.5
-      notes.push(`${pick.code} added in ${term.year} ${term.period} for: ${pick.why}.`)
+      notes.push(note('added', { code: pick.code, year: term.year, period: term.period, rule: pick.ruleId }, `${pick.code} added in ${term.year} ${term.period} for: ${pick.why}.`))
     }
   }
   const allPlaced = (): string[] => terms.flatMap((t) => t.subjects)
@@ -108,7 +108,7 @@ export function generatePlan(input: GenerateInput): GenerateResult {
 
   const unplaced = pending
     .filter((c) => !placed.includes(c))
-    .map((code) => ({ code, reason: explainUnplaced(code, data, input.startYear) }))
+    .map((code) => ({ code, ...explainUnplaced(code, data, input.startYear) }))
 
   const plan: Plan = {
     course: input.course,
@@ -121,7 +121,11 @@ export function generatePlan(input: GenerateInput): GenerateResult {
   return { plan, unplaced, notes }
 }
 
-function collectRequired(input: GenerateInput, done: Set<string>, notes: string[]): Set<string> {
+function note(key: string, params: Params, text: string): Note {
+  return { key, params, text }
+}
+
+function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[]): Set<string> {
   const { data } = input
   const course = findCourse(data, input.course, input.courseYear)
   const required = new Set<string>()
@@ -131,8 +135,8 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: string[
 
   for (const id of [input.major, input.specialisation]) {
     const component = findComponent(data, id)
-    if (id && !component) notes.push(`${id} isn't in the dataset, so its subjects weren't added.`)
-    if (component?.requirements === 'unknown') notes.push(`${component.title}'s structure isn't curated yet.`)
+    if (id && !component) notes.push(note('componentMissing', { id }, `${id} isn't in the dataset, so its subjects weren't added.`))
+    if (component?.requirements === 'unknown') notes.push(note('componentUnknown', { title: component.title }, `${component.title}'s structure isn't curated yet.`))
     for (const req of componentNeeds(component)) {
       if ('all' in req) req.all.forEach((c) => required.add(c))
       else {
@@ -147,7 +151,7 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: string[
           if (done.has(c) || required.has(c)) continue
           required.add(c)
           have += data.subjects[c]?.points ?? 12.5
-          notes.push(`Chose ${c} for ${component?.title ?? id} (best match among its options).`)
+          notes.push(note('chose', { code: c, title: component?.title ?? id ?? '' }, `Chose ${c} for ${component?.title ?? id} (best match among its options).`))
         }
       }
     }
@@ -163,7 +167,7 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: string[
       if (!required.has(need) && !done.has(need)) {
         required.add(need)
         queue.push(need)
-        notes.push(`Added ${need} because ${code} needs it.`)
+        notes.push(note('prereqAdded', { code: need, for: code }, `Added ${need} because ${code} needs it.`))
       }
     }
   }
@@ -254,7 +258,7 @@ interface PickCtx {
   room: number
 }
 
-function pickElective(ctx: PickCtx): { code: string; why: string } | null {
+function pickElective(ctx: PickCtx): { code: string; why: string; ruleId: string } | null {
   const { input, course, term } = ctx
   const data = input.data
   const all = [...ctx.completed, ...ctx.placed]
@@ -287,7 +291,7 @@ function pickElective(ctx: PickCtx): { code: string; why: string } | null {
         if (!withinCaps(s, all, course, data)) continue
         if (!leavesRoomForOthers(s, all, course, data)) continue
         if (!progressionAllows(s.code, course, [...ctx.before], data)) continue
-        return { code: s.code, why: rule.description.toLowerCase() }
+        return { code: s.code, why: rule.description.toLowerCase(), ruleId: rule.id }
       }
     }
   }
@@ -353,7 +357,7 @@ interface RepairCtx {
   course: Course
   completed: string[]
   electives: Set<string>
-  notes: string[]
+  notes: Note[]
 }
 
 /**
@@ -372,7 +376,7 @@ function repair(terms: PlanTerm[], ctx: RepairCtx): void {
       .sort((a, b) => specificity(b) - specificity(a))
     if (unmet.length === 0 || !unmet.some((r) => trySwap(r, terms, all, ctx))) return
   }
-  notes.push('Stopped rebalancing electives after many swaps; review the plan manually.')
+  notes.push(note('repairStopped', {}, 'Stopped rebalancing electives after many swaps; review the plan manually.'))
 }
 
 function trySwap(r: PointsRule, terms: PlanTerm[], all: string[], ctx: RepairCtx): boolean {
@@ -417,7 +421,7 @@ function trySwap(r: PointsRule, terms: PlanTerm[], all: string[], ctx: RepairCtx
         term.subjects[term.subjects.indexOf(e)] = s.code
         electives.delete(e)
         electives.add(s.code)
-        notes.push(`Swapped ${e} for ${s.code} in ${term.year} ${term.period} to meet: ${r.description.toLowerCase()}.`)
+        notes.push(note('swapped', { from: e, to: s.code, year: term.year, period: term.period, rule: r.id }, `Swapped ${e} for ${s.code} in ${term.year} ${term.period} to meet: ${r.description.toLowerCase()}.`))
         return true
       }
     }
@@ -431,10 +435,10 @@ function dependsOn(s: Subject | undefined, code: string): boolean {
   return refs(s.prerequisites).includes(code) || refs(s.corequisites).includes(code)
 }
 
-function explainUnplaced(code: string, data: Dataset, year: number): string {
+function explainUnplaced(code: string, data: Dataset, year: number): { reason: string; reasonKey: string } {
   const s = data.subjects[code]
-  if (!s) return 'not in the dataset yet'
-  if (s.offerings === 'unknown') return 'its teaching periods are not curated yet'
-  if (periodsFor(s, year).length === 0) return 'not offered in the planned years'
-  return 'its prerequisites or the study load left no room before the plan ended'
+  if (!s) return { reasonKey: 'notInDataset', reason: 'not in the dataset yet' }
+  if (s.offerings === 'unknown') return { reasonKey: 'offeringsUnknown', reason: 'its teaching periods are not curated yet' }
+  if (periodsFor(s, year).length === 0) return { reasonKey: 'notOffered', reason: 'not offered in the planned years' }
+  return { reasonKey: 'noRoom', reason: 'its prerequisites or the study load left no room before the plan ended' }
 }

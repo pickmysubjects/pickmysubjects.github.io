@@ -1,19 +1,21 @@
 <script setup lang="ts">
-import { PAIN_POINTS, STATUS_LABELS } from '@/painPoints'
+import { PAIN_POINTS } from '@/painPoints'
+import { useI18n } from '@/i18n'
 
 defineProps<{ selected: string }>()
 const emit = defineEmits<{ choose: [id: string] }>()
+const { t } = useI18n()
 </script>
 
 <template>
   <ul class="pains">
     <li v-for="p in PAIN_POINTS" :key="p.id" class="pain surface" :class="{ 'pain-selected': selected === p.id }">
-      <span class="status" :class="`status-${p.status}`">{{ STATUS_LABELS[p.status] }}</span>
-      <h3 class="pain-question">{{ p.question }}</h3>
-      <p class="pain-answer">{{ p.answer }}</p>
+      <span class="status" :class="`status-${p.status}`">{{ t(`feedback.status.${p.status}`) }}</span>
+      <h3 class="pain-question">{{ t(`pain.${p.id}.q`) }}</h3>
+      <p class="pain-answer">{{ t(`pain.${p.id}.a`) }}</p>
       <span class="pain-actions">
-        <a v-if="p.view" :href="`#/${p.view}`">Try it</a>
-        <button class="pain-feedback" type="button" @click="emit('choose', p.id)">Give feedback on this</button>
+        <a v-if="p.view" :href="`#/${p.view}`">{{ t('feedback.tryIt') }}</a>
+        <button class="pain-feedback" type="button" @click="emit('choose', p.id)">{{ t('feedback.give') }}</button>
       </span>
     </li>
   </ul>

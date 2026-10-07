@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { shallowRef, useId } from 'vue'
 import { PASS_MARK, type Profile, type Subject } from '@/engine'
+import { useI18n } from '@/i18n'
 
 const results = defineModel<Profile['results']>({ required: true })
 defineProps<{ subjects: Record<string, Subject>; options: { code: string; title: string }[] }>()
 
 const listId = useId()
+const { t } = useI18n()
 const code = shallowRef('')
 const mark = shallowRef<number | ''>('')
 const error = shallowRef('')
@@ -13,11 +15,11 @@ const error = shallowRef('')
 function add(): void {
   const c = code.value.trim().split(/\s/)[0]?.toUpperCase() ?? ''
   if (!/^[A-Z]{4}\d{5}$/.test(c)) {
-    error.value = 'Enter a subject code like COMP10001.'
+    error.value = t.value('record.badCode')
     return
   }
   if (results.value.some((r) => r.code === c)) {
-    error.value = `${c} is already in your record — edit its mark below.`
+    error.value = t.value('record.duplicate', { code: c })
     return
   }
   const m = mark.value === '' ? undefined : Number(mark.value)
@@ -43,40 +45,37 @@ function value(event: Event): string {
 
 <template>
   <section class="results" aria-labelledby="results-title">
-    <h2 id="results-title" class="section-title">Subjects you've completed</h2>
+    <h2 id="results-title" class="section-title">{{ t('record.completed') }}</h2>
     <form class="add" @submit.prevent="add">
       <label class="field add-code">
-        Subject
-        <input v-model="code" class="input" :list="listId" placeholder="Code or name" />
+        {{ t('record.subject') }}
+        <input v-model="code" class="input" :list="listId" :placeholder="t('record.subjectPlaceholder')" />
         <datalist :id="listId">
           <option v-for="o in options" :key="o.code" :value="`${o.code} ${o.title}`" />
         </datalist>
       </label>
       <label class="field add-mark">
-        Mark (optional)
-        <input v-model="mark" class="input" type="number" min="0" max="100" placeholder="0–100" />
+        {{ t('record.mark') }}
+        <input v-model="mark" class="input" type="number" min="0" max="100" :placeholder="t('record.markPlaceholder')" />
       </label>
-      <button class="button" type="submit">Add</button>
+      <button class="button" type="submit">{{ t('record.add') }}</button>
     </form>
     <p v-if="error" class="error" role="alert">{{ error }}</p>
 
-    <p v-if="results.length === 0" class="empty">
-      Nothing yet. Add what you've finished — marks sharpen suggestions, and a mark below {{ PASS_MARK }} counts as a
-      fail you can retake.
-    </p>
+    <p v-if="results.length === 0" class="empty">{{ t('record.empty', { pass: PASS_MARK }) }}</p>
     <table v-else class="table">
       <thead>
         <tr>
-          <th scope="col">Subject</th>
-          <th scope="col">Mark</th>
-          <th scope="col"><span class="visually-hidden">Actions</span></th>
+          <th scope="col">{{ t('record.colSubject') }}</th>
+          <th scope="col">{{ t('record.colMark') }}</th>
+          <th scope="col"><span class="visually-hidden">{{ t('record.colActions') }}</span></th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="r in results" :key="r.code">
           <td>
             <span class="code">{{ r.code }}</span>
-            <span class="title">{{ subjects[r.code]?.title ?? 'Not in the dataset' }}</span>
+            <span class="title">{{ subjects[r.code]?.title ?? t('record.notInDataset') }}</span>
           </td>
           <td>
             <input
@@ -85,12 +84,12 @@ function value(event: Event): string {
               min="0"
               max="100"
               :value="r.mark ?? ''"
-              :aria-label="`Mark for ${r.code}`"
+              :aria-label="t('record.markFor', { code: r.code })"
               @change="setMark(r.code, value($event))"
             />
-            <span v-if="r.mark !== undefined && r.mark < PASS_MARK" class="fail">Fail — can retake</span>
+            <span v-if="r.mark !== undefined && r.mark < PASS_MARK" class="fail">{{ t('record.fail') }}</span>
           </td>
-          <td><button class="button button-quiet" type="button" @click="remove(r.code)">Remove</button></td>
+          <td><button class="button button-quiet" type="button" @click="remove(r.code)">{{ t('record.remove') }}</button></td>
         </tr>
       </tbody>
     </table>

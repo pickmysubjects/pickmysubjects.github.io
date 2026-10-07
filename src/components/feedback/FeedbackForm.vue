@@ -3,21 +3,23 @@ import { computed, shallowRef } from 'vue'
 import { FEEDBACK } from '@/config'
 import { PAIN_POINTS } from '@/painPoints'
 import { feedbackText, githubIssueUrl, mailtoUrl, OTHER_TOPICS, type FeedbackDraft } from '@/utils/feedback'
+import { useI18n } from '@/i18n'
 
 const draft = defineModel<FeedbackDraft>({ required: true })
 
+const { t, locale } = useI18n()
 const copied = shallowRef(false)
 const ready = computed(() => draft.value.message.trim().length >= 5)
 const isPainPoint = computed(() => PAIN_POINTS.some((p) => p.id === draft.value.topic))
-const github = computed(() => githubIssueUrl(draft.value))
-const mail = computed(() => mailtoUrl(draft.value))
+const github = computed(() => githubIssueUrl(draft.value, locale.value))
+const mail = computed(() => mailtoUrl(draft.value, locale.value))
 
 function set<K extends keyof FeedbackDraft>(key: K, value: FeedbackDraft[K]): void {
   draft.value = { ...draft.value, [key]: value }
 }
 
 async function copy(): Promise<void> {
-  const { title, body } = feedbackText(draft.value)
+  const { title, body } = feedbackText(draft.value, locale.value)
   try {
     await navigator.clipboard.writeText(`${title}\n\n${body}`)
     copied.value = true
@@ -35,61 +37,61 @@ function value(event: Event): string {
 <template>
   <form class="feedback surface" @submit.prevent>
     <label class="field">
-      What is it about?
+      {{ t('feedback.about') }}
       <select class="select" :value="draft.topic" @change="set('topic', value($event))">
-        <optgroup label="The problems we're solving">
-          <option v-for="p in PAIN_POINTS" :key="p.id" :value="p.id">{{ p.question }}</option>
+        <optgroup :label="t('feedback.groupProblems')">
+          <option v-for="p in PAIN_POINTS" :key="p.id" :value="p.id">{{ t(`pain.${p.id}.q`) }}</option>
         </optgroup>
-        <optgroup label="Other">
-          <option v-for="t in OTHER_TOPICS" :key="t.id" :value="t.id">{{ t.label }}</option>
+        <optgroup :label="t('feedback.groupOther')">
+          <option v-for="o in OTHER_TOPICS" :key="o" :value="o">{{ t(`feedback.other.${o}`) }}</option>
         </optgroup>
       </select>
     </label>
 
     <fieldset v-if="isPainPoint" class="rating">
-      <legend class="field">How well does Subject Compass handle this for you?</legend>
+      <legend class="field">{{ t('feedback.rating') }}</legend>
       <label v-for="n in 5" :key="n" class="rating-option">
         <input type="radio" name="rating" :value="n" :checked="draft.rating === n" @change="set('rating', n)" />
         {{ n }}
       </label>
-      <span class="rating-ends">1 = not at all · 5 = solved it</span>
+      <span class="rating-ends">{{ t('feedback.ratingEnds') }}</span>
     </fieldset>
 
     <label class="field">
-      Subject code (if it's about one subject)
+      {{ t('feedback.subject') }}
       <input class="input code" :value="draft.subject" placeholder="COMP30027" @input="set('subject', value($event).toUpperCase())" />
     </label>
 
     <label class="field">
-      Your suggestion or what went wrong
+      {{ t('feedback.message') }}
       <textarea
         class="textarea"
         rows="6"
         :value="draft.message"
-        placeholder="e.g. COMP30027 actually runs in Semester 2 too — I took it in 2025. Or: I'd love to compare two majors side by side."
+        :placeholder="t('feedback.messagePlaceholder')"
         @input="set('message', value($event))"
       />
     </label>
 
     <label class="field">
-      How to reach you (optional)
-      <input class="input" :value="draft.contact" placeholder="Email, WeChat ID, Discord…" @input="set('contact', value($event))" />
+      {{ t('feedback.contact') }}
+      <input class="input" :value="draft.contact" :placeholder="t('feedback.contactPlaceholder')" @input="set('contact', value($event))" />
     </label>
 
     <div class="send">
-      <span class="send-label">Send it:</span>
-      <a v-if="github && ready" class="button" :href="github" target="_blank" rel="noopener">Open a GitHub issue</a>
-      <a v-if="mail && ready" class="button button-quiet" :href="mail">Email it</a>
+      <span class="send-label">{{ t('feedback.send') }}</span>
+      <a v-if="github && ready" class="button" :href="github" target="_blank" rel="noopener">{{ t('feedback.github') }}</a>
+      <a v-if="mail && ready" class="button button-quiet" :href="mail">{{ t('feedback.email') }}</a>
       <a v-if="FEEDBACK.feedbackFormUrl" class="button button-quiet" :href="FEEDBACK.feedbackFormUrl" target="_blank" rel="noopener">
-        Use the form (no account)
+        {{ t('feedback.form') }}
       </a>
       <button class="button button-quiet" type="button" :disabled="!ready" @click="copy">
-        {{ copied ? 'Copied' : 'Copy text' }}
+        {{ copied ? t('feedback.copied') : t('feedback.copy') }}
       </button>
     </div>
     <p class="send-hint">
-      No GitHub account? Copy the text and paste it to us anywhere — WeChat, Discord, Reddit or email.
-      <span v-if="!ready">Write a few words first.</span>
+      {{ t('feedback.hint') }}
+      <span v-if="!ready">{{ t('feedback.writeFirst') }}</span>
     </p>
   </form>
 </template>

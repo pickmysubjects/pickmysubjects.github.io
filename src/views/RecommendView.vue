@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { computed, shallowRef } from 'vue'
-import { recommend, termLabel, type Goal } from '@/engine'
+import { recommend, type Goal } from '@/engine'
+import Interp from '@/components/Interp.vue'
+import { useI18n } from '@/i18n'
+import { categoryLabel, termLabel } from '@/i18n/format'
 import RecommendationCard from '@/components/recommend/RecommendationCard.vue'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
@@ -13,11 +16,8 @@ const plan = usePlan()
 const category = shallowRef('')
 const termIndex = shallowRef(-1)
 
-const goals: { value: Goal; label: string; hint: string }[] = [
-  { value: 'wam', label: 'Protect my WAM', hint: 'Weights approachable, generously marked subjects you are likely to do well in.' },
-  { value: 'balanced', label: 'Balanced', hint: 'Mixes interest, fit and difficulty.' },
-  { value: 'challenge', label: 'Stretch me', hint: 'Favours what interests you and what it unlocks, even if it is hard.' },
-]
+const { t } = useI18n()
+const goals: Goal[] = ['wam', 'balanced', 'challenge']
 
 const categories = computed(() => plan.course.value?.categories ?? [])
 const selectedTerm = computed(() => plan.terms.value[termIndex.value])
@@ -43,43 +43,42 @@ function value(event: Event): string {
 <template>
   <div class="suggest">
     <section class="suggest-intro">
-      <h1 class="suggest-title">Subjects that suit you</h1>
-      <p class="suggest-lede">
-        Ranked from your record, skills and interests. Every score comes with its reasons, and subjects already in your
-        plan or ruled out by prerequisites are left out.
-      </p>
+      <h1 class="suggest-title">{{ t('suggest.title') }}</h1>
+      <p class="suggest-lede">{{ t('suggest.lede') }}</p>
       <p v-if="!hasProfile" class="suggest-empty">
-        These are generic until you <a href="#/record">add your results, skills and interests</a>.
+        <Interp :text="t('suggest.emptyProfile')">
+          <template #link>
+            <a href="#/record">{{ t('suggest.emptyProfileLink') }}</a>
+          </template>
+        </Interp>
       </p>
     </section>
 
     <form class="filters" @submit.prevent>
       <fieldset class="goal">
-        <legend class="field">What matters most this time?</legend>
-        <label v-for="g in goals" :key="g.value" class="goal-option" :title="g.hint">
-          <input type="radio" name="goal" :value="g.value" :checked="profile.goal === g.value" @change="setGoal(g.value)" />
-          {{ g.label }}
+        <legend class="field">{{ t('suggest.goal') }}</legend>
+        <label v-for="g in goals" :key="g" class="goal-option" :title="t(`suggest.goals.${g}Hint`)">
+          <input type="radio" name="goal" :value="g" :checked="profile.goal === g" @change="setGoal(g)" />
+          {{ t(`suggest.goals.${g}`) }}
         </label>
       </fieldset>
       <label class="field">
-        Kind of subject
+        {{ t('suggest.kind') }}
         <select class="select" :value="category" @change="category = value($event)">
-          <option value="">Any</option>
-          <option v-for="c in categories" :key="c" :value="c">{{ c }}</option>
+          <option value="">{{ t('suggest.any') }}</option>
+          <option v-for="c in categories" :key="c" :value="c">{{ categoryLabel(t, c) }}</option>
         </select>
       </label>
       <label class="field">
-        For which semester
+        {{ t('suggest.when') }}
         <select class="select" :value="termIndex" @change="termIndex = Number(value($event))">
-          <option :value="-1">Any time</option>
-          <option v-for="(t, i) in plan.terms.value" :key="i" :value="i">{{ termLabel(t) }}</option>
+          <option :value="-1">{{ t('suggest.anyTime') }}</option>
+          <option v-for="(term, i) in plan.terms.value" :key="i" :value="i">{{ termLabel(t, term) }}</option>
         </select>
       </label>
     </form>
 
-    <p v-if="recs.length === 0" class="suggest-empty">
-      Nothing matches these filters. Try “Any” for the kind of subject or semester.
-    </p>
+    <p v-if="recs.length === 0" class="suggest-empty">{{ t('suggest.nothing') }}</p>
     <div class="rec-list">
       <RecommendationCard
         v-for="r in recs"
@@ -87,7 +86,7 @@ function value(event: Event): string {
         :rec="r"
         :subject="data.subjects[r.code]"
         :show-links="name === 'real'"
-        :add-label="selectedTerm ? termLabel(selectedTerm) : null"
+        :add-label="selectedTerm ? termLabel(t, selectedTerm) : null"
         @add="plan.addSubject(termIndex, r.code)"
       />
     </div>

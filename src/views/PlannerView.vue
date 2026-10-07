@@ -6,6 +6,8 @@ import RuleLegend from '@/components/planner/RuleLegend.vue'
 import PlanIssues from '@/components/planner/PlanIssues.vue'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan, type PlanSetup as Setup } from '@/composables/usePlan'
+import { useI18n } from '@/i18n'
+import { noteText } from '@/i18n/format'
 
 const { data, subjectList } = useDataset()
 const plan = usePlan()
@@ -16,6 +18,9 @@ const setup = computed({
 })
 const options = computed(() => subjectList.value.map((s) => ({ code: s.code, title: s.title })))
 const allIssues = computed(() => [...plan.termIssues.value, ...plan.courseCheck.value.issues])
+const { t } = useI18n()
+const rules = computed(() => plan.course.value?.rules ?? [])
+const notes = computed(() => plan.notes.value.map((n) => noteText(t.value, n, rules.value)))
 
 // First visit: show a worked example rather than an empty board.
 onMounted(() => {
@@ -26,11 +31,8 @@ onMounted(() => {
 <template>
   <div class="planner">
     <section class="planner-intro">
-      <h1 class="planner-title">Your degree, as a route</h1>
-      <p class="planner-lede">
-        Each column is a semester and each card a subject. Magenta lines show which subjects unlock which — hover a
-        card to trace its path. Drag cards between semesters; the checks update as you go.
-      </p>
+      <h1 class="planner-title">{{ t('plan.title') }}</h1>
+      <p class="planner-lede">{{ t('plan.lede') }}</p>
       <PlanSetup
         v-model="setup"
         :courses="data.courses"
@@ -56,15 +58,15 @@ onMounted(() => {
         @remove-last-term="plan.removeLastTerm()"
       />
       <aside class="planner-rail surface">
-        <RuleLegend :statuses="plan.courseCheck.value.statuses" :title="plan.course.value?.title ?? 'Course rules'" />
-        <PlanIssues :issues="allIssues" />
+        <RuleLegend :statuses="plan.courseCheck.value.statuses" :rules="rules" :title="plan.course.value?.title ?? ''" />
+        <PlanIssues :issues="allIssues" :rules="rules" :statuses="plan.courseCheck.value.statuses" />
         <details v-if="plan.notes.value.length || plan.unplaced.value.length" class="how">
-          <summary>How this plan was built</summary>
+          <summary>{{ t('plan.howBuilt') }}</summary>
           <ul class="how-list">
             <li v-for="u in plan.unplaced.value" :key="u.code" class="how-unplaced">
-              Couldn't place {{ u.code }}: {{ u.reason }}.
+              {{ t('plan.unplaced', { code: u.code, reason: u.reasonKey ? t(`unplacedReason.${u.reasonKey}`) : u.reason }) }}
             </li>
-            <li v-for="(n, i) in plan.notes.value" :key="i">{{ n }}</li>
+            <li v-for="(n, i) in notes" :key="i">{{ n }}</li>
           </ul>
         </details>
       </aside>

@@ -1,15 +1,22 @@
 <script setup lang="ts">
 import { computed, shallowRef } from 'vue'
-import { describeField, PERIOD_LABELS, type PasteResult } from '@/engine'
+import type { PasteResult } from '@/engine'
+import { useI18n } from '@/i18n'
+import { describeReq, periodLabel } from '@/i18n/format'
 
 const props = defineProps<{ parsed: PasteResult; yaml: string }>()
 
+const { t } = useI18n()
 const copied = shallowRef(false)
 const offerings = computed(() =>
-  props.parsed.offerings === 'unknown' ? 'Not found' : props.parsed.offerings.map((p) => PERIOD_LABELS[p]).join(', '),
+  props.parsed.offerings === 'unknown'
+    ? t.value('contribute.notFound')
+    : props.parsed.offerings.map((p) => periodLabel(t.value, p)).join(', '),
 )
 const nonAllowed = computed(() =>
-  props.parsed.nonAllowed === 'unknown' ? 'Not found' : props.parsed.nonAllowed.join(', ') || 'None',
+  props.parsed.nonAllowed === 'unknown'
+    ? t.value('contribute.notFound')
+    : props.parsed.nonAllowed.join(', ') || t.value('contribute.none'),
 )
 
 async function copy(): Promise<void> {
@@ -25,23 +32,25 @@ async function copy(): Promise<void> {
 
 <template>
   <section class="preview" aria-labelledby="preview-title">
-    <h2 id="preview-title" class="section-title">What we read</h2>
+    <h2 id="preview-title" class="section-title">{{ t('contribute.read') }}</h2>
     <dl class="facts">
-      <dt>Prerequisites</dt>
-      <dd>{{ describeField(parsed.prerequisites) }}</dd>
-      <dt>Corequisites</dt>
-      <dd>{{ describeField(parsed.corequisites) }}</dd>
-      <dt>Non-allowed</dt>
+      <dt>{{ t('contribute.prerequisites') }}</dt>
+      <dd>{{ describeReq(t, parsed.prerequisites) }}</dd>
+      <dt>{{ t('contribute.corequisites') }}</dt>
+      <dd>{{ describeReq(t, parsed.corequisites) }}</dd>
+      <dt>{{ t('contribute.nonAllowed') }}</dt>
       <dd>{{ nonAllowed }}</dd>
-      <dt>Runs in</dt>
+      <dt>{{ t('contribute.runsIn') }}</dt>
       <dd>{{ offerings }}</dd>
     </dl>
     <ul v-if="parsed.warnings.length" class="warnings">
       <li v-for="(w, i) in parsed.warnings" :key="i">{{ w }}</li>
     </ul>
     <div class="yaml-head">
-      <h2 class="section-title">Data file</h2>
-      <button class="button button-quiet" type="button" @click="copy">{{ copied ? 'Copied' : 'Copy YAML' }}</button>
+      <h2 class="section-title">{{ t('contribute.dataFile') }}</h2>
+      <button class="button button-quiet" type="button" @click="copy">
+        {{ copied ? t('contribute.copied') : t('contribute.copy') }}
+      </button>
     </div>
     <pre class="yaml code">{{ yaml }}</pre>
   </section>

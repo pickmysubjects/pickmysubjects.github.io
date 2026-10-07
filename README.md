@@ -23,6 +23,10 @@ Choosing subjects is painful, and the rules change every year. These are the pro
 | Rules differ by year, degree, major and level | Partly | Rules stored per Handbook year; only Bachelor of Science 2026 so far |
 | Where do subjects lead after uni? | Not yet | Career pathways are planned |
 
+## Languages
+
+English, 简体中文, 繁體中文, 日本語, 한국어, Tiếng Việt, Bahasa Indonesia, Bahasa Melayu and हिन्दी. Students switch languages in the header. Non-English text is machine-assisted; fixes are very welcome (`src/i18n/messages/`). Subject and course names stay as the University publishes them.
+
 ## Principles
 
 - **Facts only, curated by people.** UniMelb's website terms forbid scraping, so nothing is scraped. Students add facts by hand (the app's *Add data* page turns text you copy from the Handbook into a data file). No Handbook prose is copied. See [docs/research.md](docs/research.md).

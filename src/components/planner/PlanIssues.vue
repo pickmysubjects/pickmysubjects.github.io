@@ -1,24 +1,30 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import type { Issue } from '@/engine'
+import type { CourseRule, Issue, RuleStatus } from '@/engine'
+import { useI18n } from '@/i18n'
+import { issueText } from '@/i18n/format'
 
-const props = defineProps<{ issues: Issue[] }>()
+const props = defineProps<{ issues: Issue[]; rules: CourseRule[]; statuses: RuleStatus[] }>()
+const { t } = useI18n()
 
-const problems = computed(() => props.issues.filter((i) => i.severity !== 'info'))
-const notes = computed(() => props.issues.filter((i) => i.severity === 'info'))
+const rows = computed(() =>
+  props.issues.map((i) => ({ severity: i.severity, text: issueText(t.value, i, props.rules, props.statuses) })),
+)
+const problems = computed(() => rows.value.filter((i) => i.severity !== 'info'))
+const notes = computed(() => rows.value.filter((i) => i.severity === 'info'))
 </script>
 
 <template>
   <section class="issues" aria-labelledby="issues-title">
-    <h2 id="issues-title" class="issues-title">Checks</h2>
-    <p v-if="problems.length === 0" class="issues-clear">No problems found in this plan.</p>
+    <h2 id="issues-title" class="issues-title">{{ t('checks.title') }}</h2>
+    <p v-if="problems.length === 0" class="issues-clear">{{ t('checks.clear') }}</p>
     <ul v-else class="issue-list">
-      <li v-for="(i, n) in problems" :key="n" class="issue" :class="`issue-${i.severity}`">{{ i.message }}</li>
+      <li v-for="(i, n) in problems" :key="n" class="issue" :class="`issue-${i.severity}`">{{ i.text }}</li>
     </ul>
     <details v-if="notes.length" class="issue-notes">
-      <summary>{{ notes.length }} note{{ notes.length === 1 ? '' : 's' }} about assumptions</summary>
+      <summary>{{ t('checks.notes', { n: notes.length }) }}</summary>
       <ul class="issue-list">
-        <li v-for="(i, n) in notes" :key="n" class="issue issue-info">{{ i.message }}</li>
+        <li v-for="(i, n) in notes" :key="n" class="issue issue-info">{{ i.text }}</li>
       </ul>
     </details>
   </section>

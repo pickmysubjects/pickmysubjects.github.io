@@ -1,24 +1,24 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import Interp from './Interp.vue'
 import { useDataset, type DatasetName } from '@/composables/useDataset'
 import type { View } from '@/composables/useView'
+import { LOCALES, useI18n, type LocaleCode } from '@/i18n'
 
 defineProps<{ view: View }>()
 
 const { name, data, setDataset } = useDataset()
+const { t, locale, setLocale } = useI18n()
 
-const links: { view: View; label: string }[] = [
-  { view: 'plan', label: 'Plan' },
-  { view: 'recommend', label: 'Suggestions' },
-  { view: 'record', label: 'My record' },
-  { view: 'contribute', label: 'Add data' },
-  { view: 'feedback', label: 'Feedback' },
-]
-
+const views: View[] = ['plan', 'recommend', 'record', 'contribute', 'feedback']
 const subjectCount = computed(() => Object.keys(data.value.subjects).length)
 
 function onDataset(event: Event): void {
   setDataset((event.target as HTMLSelectElement).value as DatasetName)
+}
+
+function onLocale(event: Event): void {
+  setLocale((event.target as HTMLSelectElement).value as LocaleCode)
 }
 </script>
 
@@ -32,31 +32,43 @@ function onDataset(event: Event): void {
         </svg>
         Subject Compass
       </a>
-      <nav class="nav" aria-label="Main">
+      <nav class="nav" :aria-label="t('nav.main')">
         <a
-          v-for="link in links"
-          :key="link.view"
+          v-for="v in views"
+          :key="v"
           class="nav-link"
-          :href="`#/${link.view}`"
-          :aria-current="view === link.view ? 'page' : undefined"
-          >{{ link.label }}</a
+          :href="`#/${v}`"
+          :aria-current="view === v ? 'page' : undefined"
+          >{{ t(`nav.${v}`) }}</a
         >
       </nav>
-      <label class="dataset">
-        <span class="visually-hidden">Data</span>
-        <select class="select dataset-select" :value="name" @change="onDataset">
-          <option value="demo">Demo data (fictional)</option>
-          <option value="real">UniMelb data (real, growing)</option>
-        </select>
-      </label>
+      <div class="pickers">
+        <label class="picker">
+          <span class="visually-hidden">{{ t('app.language') }}</span>
+          <svg class="picker-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="9" />
+            <path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z" />
+          </svg>
+          <select class="select picker-select" :value="locale" @change="onLocale">
+            <option v-for="l in LOCALES" :key="l.code" :value="l.code" :lang="l.code">{{ l.name }}</option>
+          </select>
+        </label>
+        <label class="picker">
+          <span class="visually-hidden">{{ t('data.label') }}</span>
+          <select class="select picker-select" :value="name" @change="onDataset">
+            <option value="demo">{{ t('data.demo') }}</option>
+            <option value="real">{{ t('data.real') }}</option>
+          </select>
+        </label>
+      </div>
     </div>
-    <p v-if="name === 'demo'" class="demo-note">
-      You're exploring a fictional “Example University” so every feature has data to show. Switch to UniMelb data —
-      it's real but still small, and it grows as students add subjects.
-    </p>
+    <p v-if="name === 'demo'" class="demo-note">{{ t('data.demoNote') }}</p>
     <p v-else class="demo-note">
-      Only {{ subjectCount }} UniMelb subjects are curated so far, so most checks will say “can't tell yet”.
-      <a href="#/contribute">Add a subject you know</a> — it takes about a minute.
+      <Interp :text="t('data.realNote', { n: subjectCount })">
+        <template #link>
+          <a href="#/contribute">{{ t('data.realLink') }}</a>
+        </template>
+      </Interp>
     </p>
   </header>
 </template>
@@ -128,7 +140,33 @@ function onDataset(event: Event): void {
   border-radius: 0;
 }
 
-.dataset-select {
+.pickers {
+  display: flex;
+  gap: 8px;
+}
+
+.picker {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.picker-icon {
+  position: absolute;
+  left: 10px;
+  width: 15px;
+  height: 15px;
+  fill: none;
+  stroke: var(--ink-soft);
+  stroke-width: 1.6;
+  pointer-events: none;
+}
+
+.picker-icon + .picker-select {
+  padding-left: 30px;
+}
+
+.picker-select {
   width: auto;
   font-size: 0.85rem;
 }

@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { computed, shallowRef } from 'vue'
-import { periodsFor, termLabel, type Issue, type PlanTerm, type Subject } from '@/engine'
+import { periodsFor, type Issue, type PlanTerm, type Subject } from '@/engine'
+import { termLabel } from '@/i18n/format'
+import { useI18n } from '@/i18n'
 import SubjectCard from './SubjectCard.vue'
 import SubjectPicker from './SubjectPicker.vue'
 
@@ -23,6 +25,7 @@ const emit = defineEmits<{
   hover: [code: string | null]
 }>()
 
+const { t } = useI18n()
 const dragOver = shallowRef(false)
 const points = computed(() => props.term.subjects.reduce((sum, c) => sum + (props.subjects[c]?.points ?? 0), 0))
 const overloaded = computed(() => points.value > props.load)
@@ -34,7 +37,7 @@ function onlyIn(code: string): string | null {
   if (!s) return null
   const sems = periodsFor(s, props.term.year).filter((p) => p === 'semester-1' || p === 'semester-2')
   if (sems.length !== 1) return null
-  return sems[0] === 'semester-1' ? 'S1 only' : 'S2 only'
+  return t.value(sems[0] === 'semester-1' ? 'plan.s1Only' : 'plan.s2Only')
 }
 
 function onDrop(event: DragEvent): void {
@@ -52,13 +55,13 @@ function onDrop(event: DragEvent): void {
   <section
     class="term"
     :class="{ 'term-over': dragOver }"
-    :aria-label="termLabel(term)"
+    :aria-label="termLabel(t, term)"
     @dragover.prevent="dragOver = true"
     @dragleave="dragOver = false"
     @drop.prevent="onDrop"
   >
     <header class="term-head">
-      <h3 class="term-name">{{ termLabel(term) }}</h3>
+      <h3 class="term-name">{{ termLabel(t, term) }}</h3>
       <span class="term-points" :class="{ 'term-points-over': overloaded }">{{ points }} / {{ load }}</span>
       <span class="term-bar" aria-hidden="true"><span class="term-bar-fill" :style="{ width: fill }" /></span>
     </header>
@@ -77,7 +80,7 @@ function onDrop(event: DragEvent): void {
       @move-by="emit('moveBy', code, $event)"
       @hover="emit('hover', $event ? code : null)"
     />
-    <p v-if="term.subjects.length === 0" class="term-empty">Drop a subject here or add one below.</p>
+    <p v-if="term.subjects.length === 0" class="term-empty">{{ t('plan.emptyTerm') }}</p>
     <SubjectPicker :options="options" @pick="emit('add', $event)" />
   </section>
 </template>

@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import type { Recommendation, Subject } from '@/engine'
-import { describeField } from '@/engine'
+import { useI18n } from '@/i18n'
+import { describeReq, reasonText } from '@/i18n/format'
 import { discussionLinks } from '@/utils/links'
 
 const props = defineProps<{
@@ -14,7 +15,10 @@ const emit = defineEmits<{ add: [] }>()
 
 const links = computed(() => (props.showLinks ? discussionLinks(props.rec.code) : []))
 const width = computed(() => `${props.rec.score}%`)
-const confidenceText = { low: 'Low confidence', medium: 'Medium confidence', high: 'High confidence' } as const
+const { t } = useI18n()
+const reasons = computed(() => props.rec.reasons.map((n) => reasonText(t.value, n)))
+const warnings = computed(() => props.rec.warnings.map((n) => reasonText(t.value, n)))
+const confidence = computed(() => t.value(`suggest.confidence.${props.rec.confidence}`))
 </script>
 
 <template>
@@ -24,29 +28,27 @@ const confidenceText = { low: 'Low confidence', medium: 'Medium confidence', hig
         <span class="code rec-code">{{ rec.code }}</span>
         <h3 class="rec-title">{{ rec.title }}</h3>
       </div>
-      <div class="rec-score" :aria-label="`Fit ${rec.score} out of 100, ${confidenceText[rec.confidence].toLowerCase()}`">
+      <div class="rec-score" :aria-label="t('suggest.fit', { score: rec.score, confidence })">
         <span class="rec-score-num">{{ rec.score }}</span>
         <span class="rec-score-bar" aria-hidden="true"><span class="rec-score-fill" :style="{ width }" /></span>
-        <span class="rec-confidence">{{ confidenceText[rec.confidence] }}</span>
+        <span class="rec-confidence">{{ confidence }}</span>
       </div>
     </header>
     <ul class="rec-points">
-      <li v-for="(r, i) in rec.reasons" :key="`r${i}`" class="rec-reason">{{ r }}</li>
-      <li v-for="(w, i) in rec.warnings" :key="`w${i}`" class="rec-warning">{{ w }}</li>
-      <li v-if="rec.reasons.length === 0 && rec.warnings.length === 0" class="rec-neutral">
-        Nothing stands out for you yet — add results, skills and interests in My record to sharpen this.
-      </li>
+      <li v-for="(r, i) in reasons" :key="`r${i}`" class="rec-reason">{{ r }}</li>
+      <li v-for="(w, i) in warnings" :key="`w${i}`" class="rec-warning">{{ w }}</li>
+      <li v-if="reasons.length === 0 && warnings.length === 0" class="rec-neutral">{{ t('suggest.neutral') }}</li>
     </ul>
     <footer class="rec-foot">
       <span v-if="subject" class="rec-meta">
-        L{{ subject.level }} · {{ subject.points }} pts · Prerequisites: {{ describeField(subject.prerequisites) }}
+        {{ t('suggest.meta', { level: subject.level, points: subject.points, prereq: describeReq(t, subject.prerequisites) }) }}
       </span>
       <span class="rec-actions">
-        <a v-if="showLinks && subject?.handbook" :href="subject.handbook" target="_blank" rel="noopener">Handbook</a>
+        <a v-if="showLinks && subject?.handbook" :href="subject.handbook" target="_blank" rel="noopener">{{ t('suggest.handbook') }}</a>
         <a v-for="l in links" :key="l.label" :href="l.href" target="_blank" rel="noopener" :lang="l.lang">{{ l.label }}</a>
-        <a :href="`#/feedback?topic=data&subject=${rec.code}`">Report wrong data</a>
+        <a :href="`#/feedback?topic=data&subject=${rec.code}`">{{ t('suggest.report') }}</a>
         <button v-if="addLabel" class="button button-quiet rec-add" type="button" @click="emit('add')">
-          Add to {{ addLabel }}
+          {{ t('suggest.add', { term: addLabel }) }}
         </button>
       </span>
     </footer>

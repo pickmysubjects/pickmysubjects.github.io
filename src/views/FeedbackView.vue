@@ -4,8 +4,11 @@ import PainPointList from '@/components/feedback/PainPointList.vue'
 import FeedbackForm from '@/components/feedback/FeedbackForm.vue'
 import { useView } from '@/composables/useView'
 import type { FeedbackDraft } from '@/utils/feedback'
+import Interp from '@/components/Interp.vue'
+import { useI18n } from '@/i18n'
 
 const { query } = useView()
+const { t } = useI18n()
 const form = useTemplateRef<HTMLElement>('formSection')
 
 const draft = shallowRef<FeedbackDraft>({ topic: 'fit-me', rating: null, message: '', subject: '', contact: '' })
@@ -32,26 +35,27 @@ function choose(id: string): void {
 <template>
   <div class="fb">
     <section>
-      <h1 class="fb-title">Help make it better</h1>
-      <p class="fb-lede">
-        Subject Compass started from the things that make choosing subjects at UniMelb painful. Here's each one and how
-        far we've got. Tell us what works, what doesn't, and what's missing — you don't need to write code.
-      </p>
+      <h1 class="fb-title">{{ t('feedback.title') }}</h1>
+      <p class="fb-lede">{{ t('feedback.lede') }}</p>
     </section>
 
     <PainPointList :selected="draft.topic" @choose="choose" />
 
     <section ref="formSection" class="fb-form">
-      <h2 class="fb-form-title">Your feedback</h2>
+      <h2 class="fb-form-title">{{ t('feedback.yours') }}</h2>
       <FeedbackForm v-model="draft" />
     </section>
 
     <section class="fb-code">
-      <h2 class="fb-form-title">Write code?</h2>
+      <h2 class="fb-form-title">{{ t('feedback.codeTitle') }}</h2>
       <p>
-        The repo has a contributing guide, issue templates and good-first tasks. The easiest code-free contribution is
-        <a href="#/contribute">adding a subject's facts</a>; the easiest code one is a rule or parser fix with a test.
+        <Interp :text="t('feedback.codeText')">
+          <template #link>
+            <a href="#/contribute">{{ t('feedback.codeLink') }}</a>
+          </template>
+        </Interp>
       </p>
+      <p>{{ t('feedback.translations') }}</p>
     </section>
   </div>
 </template>

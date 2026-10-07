@@ -1,46 +1,55 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import type { RuleStatus } from '@/engine'
+import type { CourseRule, RuleStatus } from '@/engine'
+import { useI18n } from '@/i18n'
+import { ruleDetail, ruleText } from '@/i18n/format'
 
-const props = defineProps<{ statuses: RuleStatus[]; title: string }>()
+const props = defineProps<{ statuses: RuleStatus[]; rules: CourseRule[]; title: string }>()
+const { t } = useI18n()
 
 const glyph = { ok: '✓', fail: '✕', unknown: '?' } as const
-const label = { ok: 'Met', fail: 'Not met', unknown: "Can't tell yet" } as const
 
-const met = computed(() => props.statuses.filter((s) => s.status === 'ok'))
-const open = computed(() => props.statuses.filter((s) => s.status !== 'ok'))
-const percent = computed(() => (props.statuses.length ? (met.value.length / props.statuses.length) * 100 : 0))
+const rows = computed(() =>
+  props.statuses.map((s) => ({
+    ...s,
+    text: ruleText(t.value, props.rules.find((r) => r.id === s.ruleId), s.description),
+    detailText: ruleDetail(t.value, s),
+  })),
+)
+const met = computed(() => rows.value.filter((s) => s.status === 'ok'))
+const open = computed(() => rows.value.filter((s) => s.status !== 'ok'))
+const percent = computed(() => (rows.value.length ? (met.value.length / rows.value.length) * 100 : 0))
 const summary = computed(() => {
-  if (props.statuses.length === 0) return 'No rules curated for this course yet.'
-  if (open.value.length === 0) return 'Every course rule is met.'
-  return `${met.value.length} of ${props.statuses.length} course rules met`
+  if (rows.value.length === 0) return t.value('rules.none')
+  if (open.value.length === 0) return t.value('rules.allMet')
+  return t.value('rules.progress', { met: met.value.length, total: rows.value.length })
 })
 </script>
 
 <template>
   <section class="legend" aria-labelledby="legend-title">
-    <h2 id="legend-title" class="legend-title">{{ title }}</h2>
+    <h2 id="legend-title" class="legend-title">{{ title || t('rules.title') }}</h2>
     <p class="legend-summary">{{ summary }}</p>
     <span class="legend-bar" aria-hidden="true"><span class="legend-fill" :style="{ width: `${percent}%` }" /></span>
 
     <ul v-if="open.length" class="rules">
       <li v-for="s in open" :key="s.ruleId" class="rule" :class="`rule-${s.status}`">
-        <span class="rule-glyph" :title="label[s.status]" aria-hidden="true">{{ glyph[s.status] }}</span>
-        <span class="visually-hidden">{{ label[s.status] }}:</span>
+        <span class="rule-glyph" :title="t(`rules.status.${s.status}`)" aria-hidden="true">{{ glyph[s.status] }}</span>
+        <span class="visually-hidden">{{ t(`rules.status.${s.status}`) }}:</span>
         <span class="rule-text">
-          {{ s.description }}
-          <span class="rule-detail">{{ s.detail }}</span>
+          {{ s.text }}
+          <span class="rule-detail">{{ s.detailText }}</span>
         </span>
       </li>
     </ul>
     <details v-if="met.length" class="met">
-      <summary>{{ met.length }} rule{{ met.length === 1 ? '' : 's' }} met</summary>
+      <summary>{{ t('rules.metCount', { n: met.length }) }}</summary>
       <ul class="rules">
         <li v-for="s in met" :key="s.ruleId" class="rule rule-ok">
           <span class="rule-glyph" aria-hidden="true">{{ glyph.ok }}</span>
           <span class="rule-text">
-            {{ s.description }}
-            <span class="rule-detail">{{ s.detail }}</span>
+            {{ s.text }}
+            <span class="rule-detail">{{ s.detailText }}</span>
           </span>
         </li>
       </ul>

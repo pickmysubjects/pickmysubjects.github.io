@@ -10,6 +10,7 @@ Thanks for helping. Every contribution should make one of the problems in [`src/
    - Open the subject's Handbook page in your own browser.
    - Copy the *Eligibility and requirements* section and the *Availability* line, and paste them in.
    - Copy the generated YAML into an issue, or into a pull request if you're comfortable with one.
+4. **Fix a translation:** use *Feedback* → "A translation is wrong", or edit `src/i18n/messages/<language>.ts` directly. Keep every `{placeholder}`; the tests check this.
 
 ## Writing code or data
 

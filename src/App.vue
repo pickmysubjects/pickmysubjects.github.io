@@ -1,13 +1,18 @@
 <script setup lang="ts">
 import AppHeader from './components/AppHeader.vue'
+import Interp from './components/Interp.vue'
 import PlannerView from './views/PlannerView.vue'
 import RecommendView from './views/RecommendView.vue'
 import RecordView from './views/RecordView.vue'
 import ContributeView from './views/ContributeView.vue'
 import FeedbackView from './views/FeedbackView.vue'
 import { useView } from './composables/useView'
+import { useI18n } from './i18n'
 
 const { view } = useView()
+const { t } = useI18n()
+const plannerUrl =
+  'https://students.unimelb.edu.au/course-admin/planning-your-course-and-subjects/faculty-course-planning-resources/my-course-planner'
 </script>
 
 <template>
@@ -21,16 +26,17 @@ const { view } = useView()
   </main>
   <footer class="app-footer">
     <p>
-      Subject Compass is an unofficial, student-built tool. It is not affiliated with or endorsed by the University of
-      Melbourne. Always confirm with the
-      <a href="https://handbook.unimelb.edu.au/" target="_blank" rel="noopener">Handbook</a> and
-      <a
-        href="https://students.unimelb.edu.au/course-admin/planning-your-course-and-subjects/faculty-course-planning-resources/my-course-planner"
-        target="_blank"
-        rel="noopener"
-        >My Course Planner</a
-      >
-      before you enrol. Your record and plans stay in this browser. <a href="#/feedback">Suggest an improvement</a>.
+      <Interp :text="t('app.footer')">
+        <template #handbook>
+          <a href="https://handbook.unimelb.edu.au/" target="_blank" rel="noopener">{{ t('app.handbook') }}</a>
+        </template>
+        <template #planner>
+          <a :href="plannerUrl" target="_blank" rel="noopener">{{ t('app.planner') }}</a>
+        </template>
+        <template #feedback>
+          <a href="#/feedback">{{ t('app.suggest') }}</a>
+        </template>
+      </Interp>
     </p>
   </footer>
 </template>

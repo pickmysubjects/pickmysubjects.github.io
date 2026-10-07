@@ -1,5 +1,6 @@
 import { offeredIn } from './availability'
 import { evaluateField, referencedSubjects, type Tri } from './expr'
+import type { Note, Params } from './plan'
 import type { Dataset, Period, Subject } from './schema'
 
 export const SKILLS = [
@@ -36,8 +37,8 @@ export interface Recommendation {
   score: number
   confidence: 'low' | 'medium' | 'high'
   eligibility: Tri
-  reasons: string[]
-  warnings: string[]
+  reasons: Note[]
+  warnings: Note[]
 }
 
 export interface RecommendOptions {
@@ -130,9 +131,13 @@ interface ScoreCtx {
   unmet: string[]
 }
 
+function note(key: string, params: Params, text: string): Note {
+  return { key, params, text }
+}
+
 function score(s: Subject, ctx: ScoreCtx): Recommendation {
-  const reasons: string[] = []
-  const warnings: string[] = []
+  const reasons: Note[] = []
+  const warnings: Note[] = []
   const parts: Partial<Record<Signal, number>> = {}
 
   // Skill fit: how well the student's self-rated skills cover what the subject uses.
@@ -142,15 +147,15 @@ function score(s: Subject, ctx: ScoreCtx): Recommendation {
     parts.skillFit = avg(fits)
     const strong = rated.filter((k) => (ctx.profile.skills[k] ?? 0) >= 4)
     const weak = rated.filter((k) => (ctx.profile.skills[k] ?? 5) <= 2)
-    if (strong.length) reasons.push(`Uses your strengths: ${strong.join(', ')}.`)
-    if (weak.length) warnings.push(`Leans on ${weak.join(', ')}, which you rated as weaker.`)
+    if (strong.length) reasons.push(note('strengths', { skills: strong.join(', ') }, `Uses your strengths: ${strong.join(', ')}.`))
+    if (weak.length) warnings.push(note('weakSkills', { skills: weak.join(', ') }, `Leans on ${weak.join(', ')}, which you rated as weaker.`))
   }
 
   // Interest: overlap between the subject's topics and the student's interests.
   if (s.topics.length > 0 && ctx.profile.interests.length > 0) {
     const hit = s.topics.filter((t) => ctx.profile.interests.includes(t))
     parts.interest = Math.min(1, hit.length / Math.min(2, s.topics.length))
-    if (hit.length) reasons.push(`Covers ${hit.join(', ')}, which you're interested in.`)
+    if (hit.length) reasons.push(note('interests', { topics: hit.join(', ') }, `Covers ${hit.join(', ')}, which you're interested in.`))
   }
 
   // Predicted performance: marks in its prerequisites / same area, else overall WAM.
@@ -161,8 +166,9 @@ function score(s: Subject, ctx: ScoreCtx): Recommendation {
     const m = avg(related.map((c) => ctx.marks.get(c) as number))
     parts.predicted = clamp((m - 50) / 50)
     const text = `${Math.round(m)} in related subjects (${related.join(', ')})`
-    if (m >= 70) reasons.push(`You averaged ${text}.`)
-    else if (m < 55) warnings.push(`You averaged only ${text}, so this may be tough.`)
+    const params = { mark: Math.round(m), codes: related.join(', ') }
+    if (m >= 70) reasons.push(note('averagedHigh', params, `You averaged ${text}.`))
+    else if (m < 55) warnings.push(note('averagedLow', params, `You averaged only ${text}, so this may be tough.`))
   } else if (ctx.wam !== null) {
     parts.predicted = clamp((ctx.wam - 50) / 50)
   }
@@ -173,12 +179,13 @@ function score(s: Subject, ctx: ScoreCtx): Recommendation {
     const trust = Math.min(1, s.signals.reviews / MIN_REVIEWS)
     parts.ease = 0.5 + (raw - 0.5) * trust
     const n = `${s.signals.reviews} review${s.signals.reviews === 1 ? '' : 's'}`
-    if (s.signals.reviews < MIN_REVIEWS) warnings.push(`Only ${n} so far — difficulty data is thin.`)
+    const { difficulty, workload, grading, reviews } = s.signals
+    if (reviews < MIN_REVIEWS) warnings.push(note('fewReviews', { n: reviews }, `Only ${n} so far — difficulty data is thin.`))
     else {
-      if (s.signals.difficulty >= 4) warnings.push(`Students rate it hard (${s.signals.difficulty}/5, ${n}).`)
-      if (s.signals.workload >= 4) warnings.push(`Heavy workload (${s.signals.workload}/5, ${n}).`)
-      if (s.signals.grading >= 4) reasons.push(`Students say marking is generous (${s.signals.grading}/5, ${n}).`)
-      if (s.signals.difficulty <= 2) reasons.push(`Students rate it approachable (${s.signals.difficulty}/5, ${n}).`)
+      if (difficulty >= 4) warnings.push(note('hard', { score: difficulty, n: reviews }, `Students rate it hard (${difficulty}/5, ${n}).`))
+      if (workload >= 4) warnings.push(note('heavy', { score: workload, n: reviews }, `Heavy workload (${workload}/5, ${n}).`))
+      if (grading >= 4) reasons.push(note('generous', { score: grading, n: reviews }, `Students say marking is generous (${grading}/5, ${n}).`))
+      if (difficulty <= 2) reasons.push(note('approachable', { score: difficulty, n: reviews }, `Students rate it approachable (${difficulty}/5, ${n}).`))
     }
   }
 
@@ -189,10 +196,14 @@ function score(s: Subject, ctx: ScoreCtx): Recommendation {
   })
   if (unlocks.length > 0) {
     parts.unlocks = Math.min(1, unlocks.length / 3)
-    reasons.push(`Opens up ${unlocks.slice(0, 3).join(', ')}${unlocks.length > 3 ? '…' : ''}.`)
+    const codes = `${unlocks.slice(0, 3).join(', ')}${unlocks.length > 3 ? '…' : ''}`
+    reasons.push(note('unlocks', { codes }, `Opens up ${codes}.`))
   }
 
-  if (ctx.eligibility === 'unknown') warnings.push(`Eligibility not confirmed: ${ctx.unmet.join('; ')}.`)
+  if (ctx.eligibility === 'unknown') {
+    const needs = ctx.unmet.join('; ')
+    warnings.push(note('eligibilityUnknown', { needs }, `Eligibility not confirmed: ${needs}.`))
+  }
 
   const weights = WEIGHTS[ctx.profile.goal]
   const present = (Object.keys(parts) as Signal[]).filter((k) => weights[k] > 0)

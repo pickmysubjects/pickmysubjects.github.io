@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { shallowRef, useId } from 'vue'
+import { useI18n } from '@/i18n'
 
 defineProps<{ options: { code: string; title: string }[] }>()
 const emit = defineEmits<{ pick: [code: string] }>()
 
 const listId = useId()
+const { t } = useI18n()
 const text = shallowRef('')
 
 function submit(): void {
@@ -22,8 +24,8 @@ function submit(): void {
       v-model="text"
       class="input picker-input"
       :list="listId"
-      placeholder="Add a subject code"
-      aria-label="Add a subject by code or name"
+      :placeholder="t('plan.addSubject')"
+      :aria-label="t('plan.addSubjectLabel')"
     />
     <datalist :id="listId">
       <option v-for="o in options" :key="o.code" :value="`${o.code} ${o.title}`" />

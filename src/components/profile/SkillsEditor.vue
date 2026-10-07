@@ -1,23 +1,12 @@
 <script setup lang="ts">
 import { SKILLS, type Skill } from '@/engine'
+import { useI18n } from '@/i18n'
 
 const skills = defineModel<Partial<Record<Skill, number>>>('skills', { required: true })
 const interests = defineModel<string[]>('interests', { required: true })
 defineProps<{ topics: string[] }>()
 
-const names: Record<Skill, string> = {
-  programming: 'Programming',
-  algorithms: 'Algorithms',
-  maths: 'Maths',
-  statistics: 'Statistics',
-  data: 'Working with data',
-  systems: 'Computer systems',
-  writing: 'Essay writing',
-  presentation: 'Presenting',
-  lab: 'Lab work',
-  design: 'Design',
-  business: 'Business',
-}
+const { t } = useI18n()
 
 function setSkill(skill: Skill, raw: string): void {
   const next = { ...skills.value }
@@ -39,24 +28,24 @@ function value(event: Event): string {
 
 <template>
   <section class="skills" aria-labelledby="skills-title">
-    <h2 id="skills-title" class="section-title">How strong are you at…</h2>
-    <p class="hint">Be honest — this only changes your own suggestions, and it never leaves this browser.</p>
+    <h2 id="skills-title" class="section-title">{{ t('record.skillsTitle') }}</h2>
+    <p class="hint">{{ t('record.skillsHint') }}</p>
     <div class="skill-grid">
       <label v-for="s in SKILLS" :key="s" class="field">
-        {{ names[s] }}
+        {{ t(`skill.${s}`) }}
         <select class="select" :value="skills[s] ?? ''" @change="setSkill(s, value($event))">
-          <option value="">Not sure</option>
-          <option value="1">1 · Weak</option>
+          <option value="">{{ t('record.notSure') }}</option>
+          <option value="1">1 · {{ t('record.weak') }}</option>
           <option value="2">2</option>
-          <option value="3">3 · OK</option>
+          <option value="3">3 · {{ t('record.ok') }}</option>
           <option value="4">4</option>
-          <option value="5">5 · Strong</option>
+          <option value="5">5 · {{ t('record.strong') }}</option>
         </select>
       </label>
     </div>
 
-    <h2 class="section-title interests-title">What do you want to learn about?</h2>
-    <div class="chips" role="group" aria-label="Interests">
+    <h2 class="section-title interests-title">{{ t('record.interestsTitle') }}</h2>
+    <div class="chips" role="group" :aria-label="t('record.interests')">
       <button
         v-for="t in topics"
         :key="t"

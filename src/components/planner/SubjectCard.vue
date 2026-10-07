@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import type { Issue, Subject } from '@/engine'
+import { categoryLabel } from '@/i18n/format'
+import { useI18n } from '@/i18n'
 
 const props = defineProps<{
   code: string
@@ -22,7 +24,9 @@ const worst = computed(() => {
   if (props.issues.some((i) => i.severity === 'warning')) return 'warning'
   return null
 })
-const category = computed(() => props.subject?.categories[props.course])
+const { t } = useI18n()
+const category = computed(() => categoryLabel(t.value, props.subject?.categories[props.course]))
+// Short hover text; the full localised messages are listed in the Checks panel.
 const issueText = computed(() =>
   props.issues
     .filter((i) => i.severity !== 'info')
@@ -59,20 +63,20 @@ function onDragStart(event: DragEvent): void {
       <span class="code card-code">{{ code }}</span>
       <span v-if="subject" class="card-points">{{ subject.points }}</span>
     </header>
-    <p class="card-title">{{ subject?.title ?? 'Not in the dataset yet' }}</p>
+    <p class="card-title">{{ subject?.title ?? t('plan.notInDataset') }}</p>
     <footer class="card-foot">
       <span v-if="subject" class="tag">L{{ subject.level }}</span>
       <span v-if="category" class="tag">{{ category }}</span>
       <span v-if="onlyIn" class="tag tag-only">{{ onlyIn }}</span>
       <span v-if="worst" class="flag" :title="issueText">
-        {{ worst === 'error' ? 'Problem' : 'Check' }}
+        {{ worst === 'error' ? t('plan.problem') : t('plan.check') }}
         <span class="visually-hidden">: {{ issueText }}</span>
       </span>
     </footer>
     <span class="card-tools">
-      <button class="tool" type="button" :aria-label="`Move ${code} one term earlier`" @click="emit('moveBy', -1)">←</button>
-      <button class="tool" type="button" :aria-label="`Move ${code} one term later`" @click="emit('moveBy', 1)">→</button>
-        <button class="tool" type="button" :aria-label="`Remove ${code}`" @click="emit('remove')">×</button>
+      <button class="tool" type="button" :aria-label="t('plan.moveEarlier', { code })" @click="emit('moveBy', -1)">←</button>
+      <button class="tool" type="button" :aria-label="t('plan.moveLater', { code })" @click="emit('moveBy', 1)">→</button>
+        <button class="tool" type="button" :aria-label="t('plan.remove', { code })" @click="emit('remove')">×</button>
     </span>
   </article>
 </template>

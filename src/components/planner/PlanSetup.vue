@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { PERIOD_LABELS, type Component, type Course, type Period } from '@/engine'
+import type { Component, Course, Period } from '@/engine'
+import { useI18n } from '@/i18n'
 import type { PlanSetup } from '@/composables/usePlan'
 
 const setup = defineModel<PlanSetup>({ required: true })
@@ -11,6 +12,7 @@ const forCourse = computed(() => props.components.filter((c) => c.course === set
 const majors = computed(() => forCourse.value.filter((c) => c.kind === 'major'))
 const specialisations = computed(() => forCourse.value.filter((c) => c.kind === 'specialisation'))
 const startPeriods: Period[] = ['semester-1', 'semester-2']
+const { t } = useI18n()
 
 function set<K extends keyof PlanSetup>(key: K, value: PlanSetup[K]): void {
   setup.value = { ...setup.value, [key]: value }
@@ -29,7 +31,7 @@ function onCourse(code: string): void {
 }
 
 function label(c: Component): string {
-  return c.requirements === 'unknown' ? `${c.title} (structure not curated yet)` : c.title
+  return c.requirements === 'unknown' ? t.value('plan.notCurated', { title: c.title }) : c.title
 }
 
 function value(event: Event): string {
@@ -40,13 +42,13 @@ function value(event: Event): string {
 <template>
   <form class="setup" @submit.prevent="emit('generate')">
     <label class="field">
-      Course
+      {{ t('plan.course') }}
       <select class="select" :value="setup.course" @change="onCourse(value($event))">
-        <option v-for="c in courses" :key="`${c.code}-${c.year}`" :value="c.code">{{ c.title }} ({{ c.year }} rules)</option>
+        <option v-for="c in courses" :key="`${c.code}-${c.year}`" :value="c.code">{{ t('plan.courseOption', { title: c.title, year: c.year }) }}</option>
       </select>
     </label>
     <label class="field field-narrow">
-      Starting
+      {{ t('plan.starting') }}
       <span class="start">
         <input
           class="input"
@@ -54,31 +56,31 @@ function value(event: Event): string {
           min="2020"
           max="2035"
           :value="setup.startYear"
-          aria-label="Start year"
+          :aria-label="t('plan.startYear')"
           @change="set('startYear', Number(value($event)))"
         />
-        <select class="select" :value="setup.startPeriod" aria-label="Start semester" @change="set('startPeriod', value($event) as Period)">
-          <option v-for="p in startPeriods" :key="p" :value="p">{{ PERIOD_LABELS[p] }}</option>
+        <select class="select" :value="setup.startPeriod" :aria-label="t('plan.startSemester')" @change="set('startPeriod', value($event) as Period)">
+          <option v-for="p in startPeriods" :key="p" :value="p">{{ t(`period.${p}`) }}</option>
         </select>
       </span>
     </label>
     <label class="field">
-      Major
+      {{ t('plan.major') }}
       <select class="select" :value="setup.major" @change="set('major', value($event))">
-        <option value="">Not decided</option>
+        <option value="">{{ t('plan.notDecided') }}</option>
         <option v-for="m in majors" :key="m.id" :value="m.id">{{ label(m) }}</option>
       </select>
     </label>
     <label v-if="specialisations.length" class="field">
-      Specialisation
+      {{ t('plan.specialisation') }}
       <select class="select" :value="setup.specialisation" @change="set('specialisation', value($event))">
-        <option value="">None</option>
+        <option value="">{{ t('plan.none') }}</option>
         <option v-for="s in specialisations" :key="s.id" :value="s.id">{{ label(s) }}</option>
       </select>
     </label>
     <div class="actions">
-      <button class="button" type="submit">Build a plan for me</button>
-      <button class="button button-quiet" type="button" @click="emit('startEmpty')">Start empty</button>
+      <button class="button" type="submit">{{ t('plan.build') }}</button>
+      <button class="button button-quiet" type="button" @click="emit('startEmpty')">{{ t('plan.startEmpty') }}</button>
     </div>
   </form>
 </template>

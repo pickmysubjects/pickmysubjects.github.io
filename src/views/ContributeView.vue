@@ -2,7 +2,10 @@
 import { computed, shallowRef } from 'vue'
 import { parseHandbookPaste, subjectYaml } from '@/engine'
 import ParsedPreview from '@/components/contribute/ParsedPreview.vue'
+import Interp from '@/components/Interp.vue'
+import { useI18n } from '@/i18n'
 
+const { t } = useI18n()
 const code = shallowRef('')
 const title = shallowRef('')
 const level = shallowRef(1)
@@ -35,12 +38,13 @@ function onCode(): void {
 <template>
   <div class="contribute">
     <section class="contribute-intro">
-      <h1 class="contribute-title">Add a subject</h1>
+      <h1 class="contribute-title">{{ t('contribute.title') }}</h1>
       <p class="contribute-lede">
-        Subject Compass only stores facts, typed in by students — it never scrapes the Handbook. Open the subject's
-        <a :href="handbookUrl" target="_blank" rel="noopener">Handbook page</a> in your browser, copy the
-        <em>Eligibility and requirements</em> section and the <em>Availability</em> line, and paste them below. The text
-        is read right here in your browser; nothing is sent anywhere.
+        <Interp :text="t('contribute.lede')">
+          <template #handbook>
+            <a :href="handbookUrl" target="_blank" rel="noopener">{{ t('contribute.handbookPage') }}</a>
+          </template>
+        </Interp>
       </p>
     </section>
 
@@ -48,28 +52,28 @@ function onCode(): void {
       <form class="paste" @submit.prevent>
         <div class="meta">
           <label class="field">
-            Code
+            {{ t('contribute.code') }}
             <input v-model="code" class="input code" placeholder="COMP30027" @change="onCode" />
           </label>
           <label class="field meta-title">
-            Title
+            {{ t('contribute.titleField') }}
             <input v-model="title" class="input" placeholder="Machine Learning" />
           </label>
           <label class="field">
-            Level
+            {{ t('contribute.level') }}
             <input v-model.number="level" class="input" type="number" min="1" max="9" />
           </label>
           <label class="field">
-            Points
+            {{ t('contribute.points') }}
             <input v-model.number="points" class="input" type="number" min="6.25" step="6.25" />
           </label>
           <label class="field">
-            Handbook year
+            {{ t('contribute.year') }}
             <input v-model.number="year" class="input" type="number" min="2017" max="2035" />
           </label>
         </div>
         <label class="field">
-          Pasted Handbook text
+          {{ t('contribute.pasted') }}
           <textarea
             v-model="text"
             class="textarea"
@@ -82,10 +86,13 @@ function onCode(): void {
     </div>
 
     <section class="next">
-      <h2 class="next-title">Then</h2>
+      <h2 class="next-title">{{ t('contribute.then') }}</h2>
       <p>
-        Check every line against the Handbook, then save the YAML as <code class="code">data/real/subjects/{{ cleanCode || 'CODE' }}.yaml</code>
-        and open a pull request. Don't paste overviews or learning outcomes — that text belongs to the University.
+        <Interp :text="t('contribute.thenText')">
+          <template #file>
+            <code class="code">data/real/subjects/{{ cleanCode || 'CODE' }}.yaml</code>
+          </template>
+        </Interp>
       </p>
     </section>
   </div>

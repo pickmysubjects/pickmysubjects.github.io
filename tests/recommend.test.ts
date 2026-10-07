@@ -32,7 +32,7 @@ describe('recommend (demo data)', () => {
   it('a WAM-focused student is steered toward generous, approachable subjects', () => {
     const wam = recommend(data, { ...base, goal: 'wam' }, { course: 'EX-SCI', category: 'breadth', level: 1 })
     expect(wam[0]?.code).toBe('EXMG10001') // easiest, most generously marked breadth subject
-    expect(wam[0]?.reasons.join(' ')).toMatch(/generous/)
+    expect(wam[0]?.reasons.map((n) => n.text).join(' ')).toMatch(/generous/)
   })
 
   it('a challenge-seeker with matching interests gets the interesting hard subject first', () => {
@@ -49,7 +49,7 @@ describe('recommend (demo data)', () => {
     }
     const recs = recommend(data, profile, { course: 'EX-SCI' })
     expect(recs[0]?.code).toBe('EXCS30001')
-    const text = recs[0]?.reasons.join(' ') ?? ''
+    const text = recs[0]?.reasons.map((n) => n.text).join(' ') ?? ''
     expect(text).toMatch(/interested in/)
     expect(text).toMatch(/averaged/)
     expect(text).toMatch(/Opens up EXCS30007/)
@@ -58,20 +58,20 @@ describe('recommend (demo data)', () => {
   it('treats weak related marks as a warning, not a reason', () => {
     const recs = recommend(data, { ...base, results: [{ code: 'EXMA10001', mark: 45 }] })
     const linAlg = recs.find((r) => r.code === 'EXMA10002') // same area, no prerequisites
-    expect(linAlg?.reasons.join(' ')).not.toMatch(/averaged/)
-    expect(linAlg?.warnings.join(' ')).toMatch(/averaged only 45/)
+    expect(linAlg?.reasons.map((n) => n.text).join(' ')).not.toMatch(/averaged/)
+    expect(linAlg?.warnings.map((n) => n.text).join(' ')).toMatch(/averaged only 45/)
   })
 
   it('warns when the student is weak in a skill the subject leans on', () => {
     const recs = recommend(data, { ...base, skills: { maths: 1 } })
     const calc = recs.find((r) => r.code === 'EXMA10001')
-    expect(calc?.warnings.join(' ')).toMatch(/maths/)
+    expect(calc?.warnings.map((n) => n.text).join(' ')).toMatch(/maths/)
   })
 
   it('shrinks thin review data toward neutral and says so', () => {
     const recs = recommend(data, { ...base, goal: 'wam' }, { course: 'EX-SCI', category: 'breadth', level: 2 })
     const thin = recs.find((r) => r.code === 'EXMG20001') // only 2 reviews
-    expect(thin?.warnings.join(' ')).toMatch(/Only 2 reviews/)
+    expect(thin?.warnings.map((n) => n.text).join(' ')).toMatch(/Only 2 reviews/)
   })
 
   it('lets a failed subject be taken again, and does not count it towards prerequisites', () => {
@@ -89,6 +89,6 @@ describe('recommend (demo data)', () => {
   it('marks eligibility as unknown when prerequisites include free text', () => {
     const phys = recommend(data, base).find((r) => r.code === 'EXPH10001')
     expect(phys?.eligibility).toBe('unknown')
-    expect(phys?.warnings.join(' ')).toMatch(/Eligibility not confirmed: .*VCE Specialist Mathematics/)
+    expect(phys?.warnings.map((n) => n.text).join(' ')).toMatch(/Eligibility not confirmed: .*VCE Specialist Mathematics/)
   })
 })
