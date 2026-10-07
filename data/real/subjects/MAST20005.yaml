@@ -12,15 +12,13 @@ prerequisites:
     - MAST20006
 corequisites: none
 non_allowed:
-  - MAST10010
-  - MAST10011
   - MAST90058
 categories:
   B-SCI: science
 handbook: https://handbook.unimelb.edu.au/2026/subjects/mast20005
 source_year: 2026
 verified_on: 2026-10-07
-notes: Requirements and study periods copied by hand from the 2026 Handbook page.
+notes: Requirements and study periods copied by hand from the 2026 Handbook page. MAST10010 and MAST10011 can't be taken after MAST20005 (taking them before is fine).
 skills:
   - statistics
   - maths

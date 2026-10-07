@@ -22,7 +22,6 @@ prerequisites:
 corequisites: none
 non_allowed:
   - MAST20032
-  - MAST20029
 categories:
   B-SCI: science
 handbook: https://handbook.unimelb.edu.au/2026/subjects/mast20009
