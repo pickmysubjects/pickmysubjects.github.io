@@ -1,20 +1,25 @@
 name: Aggregate ratings
 on:
   schedule:
-    - cron: '17 18 * * *' # daily, early morning Melbourne time
+    - cron: '17 18 * * 0' # weekly (Monday early morning Melbourne time); a daily diff could single out one person's rating
   workflow_dispatch:
 permissions:
   contents: write
+concurrency:
+  group: ratings
+  cancel-in-progress: false
 jobs:
   aggregate:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false # the token is only used in the push step below
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: 24
           cache: npm
-      - run: npm ci
+      - run: npm ci --ignore-scripts # no package install scripts while this job can write to the repo
       - name: Fetch and aggregate (skips if secrets are not set)
         run: npx tsx scripts/ratings/fetch.ts
         env:
@@ -23,11 +28,13 @@ jobs:
       - name: Validate data
         run: npm run data
       - name: Commit if changed
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           if [ -n "$(git status --porcelain data/real/ratings.json)" ]; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add data/real/ratings.json
             git commit -m "data: update aggregated ratings"
-            git push
+            git push "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:main
           fi

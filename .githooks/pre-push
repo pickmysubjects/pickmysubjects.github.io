@@ -14,5 +14,19 @@ while read -r local_ref local_sha remote_ref remote_sha; do
     echo "Fix: git config user.email <id>+<user>@users.noreply.github.com, then rewrite the commits." >&2
     status=1
   fi
+  # Personal addresses and private sheet links must not appear in what's pushed either.
+  # (Only lines being added are checked, so the docs that describe the rule don't trip it.)
+  leaks=$(git log -p --format= "$range" | grep -E '^\+' | grep -E -i '@gmail\.com|docs\.google\.com/spreadsheets/d/' | head -5)
+  if [ -n "$leaks" ]; then
+    echo "pre-push: blocked — the changes contain a personal email or a private sheet link:" >&2
+    echo "$leaks" >&2
+    status=1
+  fi
+  # Annotated tags carry their own email.
+  tagger=$(git for-each-ref --format='%(taggeremail)' "$local_ref" 2>/dev/null | grep -v -E 'users\.noreply\.github\.com|^$')
+  if [ -n "$tagger" ]; then
+    echo "pre-push: blocked — tag $local_ref uses a non-noreply email." >&2
+    status=1
+  fi
 done
 exit $status

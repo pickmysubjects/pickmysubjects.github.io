@@ -8,7 +8,7 @@
 import { createSign } from 'node:crypto'
 import { writeFileSync } from 'node:fs'
 import { join } from 'node:path'
-import { ROOT } from '../dataset'
+import { buildDataset, ROOT } from '../dataset'
 import { aggregate, rowsToObjects } from './aggregate'
 
 const credentials = process.env.GOOGLE_SERVICE_ACCOUNT_JSON
@@ -18,7 +18,15 @@ if (!credentials || !sheetId) {
   process.exit(0)
 }
 
-const { client_email: email, private_key: key } = JSON.parse(credentials) as { client_email: string; private_key: string }
+let parsed: { client_email: string; private_key: string }
+try {
+  parsed = JSON.parse(credentials) as typeof parsed
+} catch {
+  // Don't let a parse error echo part of the secret into the log.
+  console.error('GOOGLE_SERVICE_ACCOUNT_JSON is not valid JSON.')
+  process.exit(1)
+}
+const { client_email: email, private_key: key } = parsed
 
 function base64url(input: string | Buffer): string {
   return Buffer.from(input).toString('base64url')
@@ -55,6 +63,7 @@ const res = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${sheetId
 if (!res.ok) throw new Error(`sheet read failed: ${res.status}`)
 const { values = [] } = (await res.json()) as { values?: string[][] }
 
-const result = aggregate(rowsToObjects(values))
+const known = new Set(Object.keys(buildDataset('real').dataset.subjects))
+const result = aggregate(rowsToObjects(values), new Date(), known)
 writeFileSync(join(ROOT, 'data', 'real', 'ratings.json'), `${JSON.stringify(result.subjects, null, 2)}\n`)
 console.log(`Ratings: ${result.accepted} accepted, ${result.rejected} rejected, ${Object.keys(result.subjects).length} subjects.`)

@@ -3,7 +3,8 @@ import { shallowRef, useTemplateRef, watch } from 'vue'
 import PainPointList from '@/components/feedback/PainPointList.vue'
 import FeedbackForm from '@/components/feedback/FeedbackForm.vue'
 import { useView } from '@/composables/useView'
-import type { FeedbackDraft } from '@/utils/feedback'
+import { OTHER_TOPICS, type FeedbackDraft } from '@/utils/feedback'
+import { PAIN_POINTS } from '@/painPoints'
 import Interp from '@/components/Interp.vue'
 import { useI18n } from '@/i18n'
 
@@ -17,8 +18,11 @@ const draft = shallowRef<FeedbackDraft>({ topic: 'fit-me', rating: null, message
 watch(
   query,
   (q) => {
-    const topic = q.get('topic')
-    const subject = q.get('subject')
+    // Only known topics and real-looking codes: these end up in the form and in issue titles.
+    const rawTopic = q.get('topic')
+    const topic = rawTopic && [...PAIN_POINTS.map((p) => p.id), ...OTHER_TOPICS].includes(rawTopic) ? rawTopic : null
+    const rawSubject = q.get('subject')?.trim().toUpperCase() ?? ''
+    const subject = /^[A-Z]{4}\d{5}$/.test(rawSubject) ? rawSubject : null
     if (topic || subject) {
       draft.value = { ...draft.value, topic: topic ?? draft.value.topic, subject: subject ?? draft.value.subject }
     }

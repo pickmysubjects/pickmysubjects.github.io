@@ -89,14 +89,15 @@ function mergeRatings(file: string, subjects: Dataset['subjects']): void {
     string,
     {
       reviews: number
-      difficulty: number
-      workload: number
-      grading: number
+      difficulty: number | null
+      workload: number | null
+      grading: number | null
       skills: string[]
       examDifficulty?: number | null
       usefulness?: number | null
       interest?: number | null
       teaching?: number | null
+      hoursMedian?: number | null
     }
   >
   for (const [code, r] of Object.entries(ratings)) {
@@ -104,14 +105,15 @@ function mergeRatings(file: string, subjects: Dataset['subjects']): void {
     if (!s) continue
     const extra = (x: number | null | undefined) => x ?? undefined
     s.signals ??= {
-      difficulty: r.difficulty,
-      workload: r.workload,
-      grading: r.grading,
+      difficulty: extra(r.difficulty),
+      workload: extra(r.workload),
+      grading: extra(r.grading),
       reviews: r.reviews,
       examDifficulty: extra(r.examDifficulty),
       usefulness: extra(r.usefulness),
       interest: extra(r.interest),
       teaching: extra(r.teaching),
+      hours: extra(r.hoursMedian),
     }
     if (s.skills.length === 0 && r.reviews >= MIN_REVIEWS_FOR_SKILLS) {
       s.skills = r.skills.filter((k): k is Skill => (SKILLS as readonly string[]).includes(k))

@@ -6,8 +6,8 @@ Students rate subjects and send feedback from inside the app, with no account an
 App ──POST──▶ Google Form ──▶ private Google Sheet
                                       │  read-only service account (GitHub secret)
                                       ▼
-              GitHub Actions (daily) → scripts/ratings/fetch.ts → data/real/ratings.json
-                                      │  aggregates only: trimmed means, counts, median hours
+              GitHub Actions (weekly) → scripts/ratings/fetch.ts → data/real/ratings.json
+                                      │  weekly; aggregates only (3+ ratings): trimmed means, counts, median hours
                                       ▼
                          npm run data merges them into subjects → app shows them
 ```
@@ -86,6 +86,6 @@ Each one is published only once at least 3 people have answered it.
 3. GitHub repo → Settings → Secrets and variables → Actions. Add these two secrets:
    - `GOOGLE_SERVICE_ACCOUNT_JSON`: the whole JSON key.
    - `RATINGS_SHEET_ID`: the long id in the sheet's URL.
-4. The **Aggregate ratings** workflow then runs daily, and can also be run by hand. Without the secrets it skips quietly.
+4. The **Aggregate ratings** workflow then runs weekly, and can also be run by hand. Without the secrets it skips quietly.
 
 Keep the JSON key only in GitHub secrets. Delete the downloaded file after adding it, and never commit it.

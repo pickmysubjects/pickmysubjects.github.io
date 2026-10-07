@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, shallowRef } from 'vue'
+import { computed, shallowRef, watch } from 'vue'
 import { FEEDBACK, FEEDBACK_FORM } from '@/config'
 import { isFormReady, submitGoogleForm } from '@/utils/googleForm'
 import { PAIN_POINTS } from '@/painPoints'
@@ -12,6 +12,14 @@ const { t, locale } = useI18n()
 const copied = shallowRef(false)
 const direct = isFormReady(FEEDBACK_FORM)
 const sendState = shallowRef<'idle' | 'sending' | 'sent' | 'failed'>('idle')
+// A new topic or message is a new piece of feedback: allow sending again.
+watch(
+  draft,
+  () => {
+    if (sendState.value === 'sent' || sendState.value === 'failed') sendState.value = 'idle'
+  },
+  { deep: true },
+)
 
 async function sendDirect(): Promise<void> {
   sendState.value = 'sending'
@@ -29,7 +37,8 @@ async function sendDirect(): Promise<void> {
     sendState.value = 'failed'
   }
 }
-const ready = computed(() => draft.value.message.trim().length >= 5)
+// Optional like everything else: a score alone, or a few words alone, is enough.
+const ready = computed(() => draft.value.message.trim().length >= 5 || draft.value.rating !== null)
 const isPainPoint = computed(() => PAIN_POINTS.some((p) => p.id === draft.value.topic))
 const github = computed(() => githubIssueUrl(draft.value, locale.value))
 const mail = computed(() => mailtoUrl(draft.value, locale.value))

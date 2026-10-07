@@ -19,7 +19,8 @@ export function topicLabel(id: string): string {
   return en.feedback.other[id as keyof typeof en.feedback.other] ?? id
 }
 
-export function feedbackText(d: FeedbackDraft, locale: string): { title: string; body: string } {
+/** `isPublic`: the text goes into a public GitHub issue, so contact details are left out. */
+export function feedbackText(d: FeedbackDraft, locale: string, isPublic = false): { title: string; body: string } {
   const title = `[${d.topic}] ${d.subject ? `${d.subject}: ` : ''}${d.message.split('\n')[0]?.slice(0, 70) ?? ''}`
   const lines = [
     `**Topic:** ${topicLabel(d.topic)}`,
@@ -29,7 +30,7 @@ export function feedbackText(d: FeedbackDraft, locale: string): { title: string;
     '',
     d.message,
     '',
-    d.contact ? `**Contact:** ${d.contact}` : '',
+    d.contact && !isPublic ? `**Contact:** ${d.contact}` : '',
     `_Sent from Subject Compass (${location.href.split('#')[0]})_`,
   ]
   return { title, body: lines.filter((l, i, all) => l !== '' || all[i - 1] !== '').join('\n') }
@@ -37,7 +38,7 @@ export function feedbackText(d: FeedbackDraft, locale: string): { title: string;
 
 export function githubIssueUrl(d: FeedbackDraft, locale: string): string | null {
   if (!FEEDBACK.githubRepo) return null
-  const { title, body } = feedbackText(d, locale)
+  const { title, body } = feedbackText(d, locale, true)
   const params = new URLSearchParams({ title, body, labels: `feedback,${d.topic}` })
   return `https://github.com/${FEEDBACK.githubRepo}/issues/new?${params}`
 }

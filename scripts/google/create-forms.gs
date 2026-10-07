@@ -7,12 +7,13 @@ function createSubjectCompassForms() {
   setup(ratings, 'Anonymous subject ratings for Subject Compass, an unofficial student tool.');
   const r = {
     code: ratings.addTextItem().setTitle('Subject code').setRequired(true),
-    year: ratings.addTextItem().setTitle('Year taken').setRequired(true),
+    // Everything but the code (filled in by the app) is optional: students skip what they don't know.
+    year: ratings.addTextItem().setTitle('Year taken'),
     semester: ratings.addListItem().setTitle('Semester taken')
-      .setChoiceValues(['Summer', 'Semester 1', 'Winter', 'Semester 2']).setRequired(true),
-    difficulty: ratings.addScaleItem().setTitle('Difficulty').setBounds(1, 5).setRequired(true),
-    workload: ratings.addScaleItem().setTitle('Workload').setBounds(1, 5).setRequired(true),
-    generosity: ratings.addScaleItem().setTitle('Marking generosity').setBounds(1, 5).setRequired(true),
+      .setChoiceValues(['Summer', 'Semester 1', 'Winter', 'Semester 2']),
+    difficulty: ratings.addScaleItem().setTitle('Difficulty').setBounds(1, 5),
+    workload: ratings.addScaleItem().setTitle('Workload').setBounds(1, 5),
+    generosity: ratings.addScaleItem().setTitle('Marking generosity').setBounds(1, 5),
     hours: ratings.addTextItem().setTitle('Hours per week'),
     grade: ratings.addListItem().setTitle('Grade band')
       .setChoiceValues(['H1', 'H2A', 'H2B', 'H3', 'P', 'N', 'Prefer not to say']),
@@ -50,7 +51,7 @@ function createSubjectCompassForms() {
     topic: feedback.addTextItem().setTitle('Topic').setRequired(true),
     rating: feedback.addTextItem().setTitle('Rating'),
     subject: feedback.addTextItem().setTitle('Subject code'),
-    message: feedback.addParagraphTextItem().setTitle('Message').setRequired(true),
+    message: feedback.addParagraphTextItem().setTitle('Message'), // a score alone is fine
     contact: feedback.addTextItem().setTitle('Contact'),
     language: feedback.addTextItem().setTitle('App language'),
   };
@@ -79,6 +80,7 @@ function setup(form, description) {
   form.setCollectEmail(false);
   form.setLimitOneResponsePerUser(false);
   form.setAllowResponseEdits(false);
+  form.setPublishingSummary(false); // respondents never see other people's answers
   form.setAcceptingResponses(true);
   try { form.setPublished(true); } catch (e) { /* older API: publish manually */ }
 }
@@ -102,5 +104,28 @@ function addOptionalRatingItems(form) {
   return ['Exam difficulty', 'Usefulness', 'Interest', 'Teaching'].map(function (title) {
     const existing = form.getItems(FormApp.ItemType.SCALE).filter(function (i) { return i.getTitle() === title; })[0];
     return existing ? existing.asScaleItem() : form.addScaleItem().setTitle(title).setBounds(1, 5);
+  });
+}
+
+// ---------- Later change: answers optional ----------
+// Forms created before this had required questions, and Google drops a
+// submission that leaves a required question blank. Paste the feedback
+// form's edit link below too, then run makeAnswersOptional once.
+const FEEDBACK_FORM_EDIT_URL = 'PASTE THE FEEDBACK FORM EDIT LINK HERE';
+
+function makeAnswersOptional() {
+  setOptional(FormApp.openByUrl(RATINGS_FORM_EDIT_URL), ['Year taken', 'Semester taken', 'Difficulty', 'Workload', 'Marking generosity']);
+  setOptional(FormApp.openByUrl(FEEDBACK_FORM_EDIT_URL), ['Message']);
+  Logger.log('Done: those questions are now optional.');
+}
+
+function setOptional(form, titles) {
+  form.getItems().forEach(function (item) {
+    if (titles.indexOf(item.getTitle()) < 0) return;
+    const type = item.getType();
+    if (type === FormApp.ItemType.TEXT) item.asTextItem().setRequired(false);
+    if (type === FormApp.ItemType.PARAGRAPH_TEXT) item.asParagraphTextItem().setRequired(false);
+    if (type === FormApp.ItemType.LIST) item.asListItem().setRequired(false);
+    if (type === FormApp.ItemType.SCALE) item.asScaleItem().setRequired(false);
   });
 }
