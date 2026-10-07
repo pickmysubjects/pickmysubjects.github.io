@@ -163,3 +163,32 @@ describe('generatePlan (real B-SCI data, whole degree)', () => {
     expect(notOk).toEqual([])
   })
 })
+
+describe('generatePlan (repair keeps points prerequisites)', () => {
+  it('does not swap out a subject a later "25 points of level 2" prerequisite relies on', () => {
+    const { dataset: real } = buildDataset('real')
+    const { plan } = generatePlan({
+      data: real,
+      profile: {
+        results: [
+          { code: 'SCIE10005', mark: 70 },
+          { code: 'MAST10021', mark: 70 },
+          { code: 'COMP10001', mark: 70 },
+          { code: 'ACCT10002', mark: 70 },
+          { code: 'MAST10009', mark: 70 },
+          { code: 'JAPN10002', mark: 40 },
+        ],
+        skills: {},
+        interests: [],
+        goal: 'balanced',
+      },
+      course: 'B-SCI',
+      courseYear: 2026,
+      major: 'mathematics-and-statistics',
+      specialisation: 'advanced-computing',
+      startYear: 2028,
+      startPeriod: 'semester-2',
+    })
+    expect(checkTerms(plan, real).filter((i) => i.severity === 'error').map((i) => i.message)).toEqual([])
+  })
+})

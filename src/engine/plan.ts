@@ -60,6 +60,25 @@ export function standardTerms(startYear: number, startPeriod: Period, count: num
   return terms
 }
 
+/**
+ * The first semester that hasn't started yet: before March it's this year's
+ * Semester 1, before August this year's Semester 2, otherwise next year's Semester 1.
+ */
+export function nextSemester(today: Date): { year: number; period: Period } {
+  const year = today.getFullYear()
+  const month = today.getMonth() // 0 = January
+  if (month < 2) return { year, period: 'semester-1' }
+  if (month < 7) return { year, period: 'semester-2' }
+  return { year: year + 1, period: 'semester-1' }
+}
+
+/** Where a plan should begin: the start of study, or the next semester if that's already past. */
+export function planStart(start: { year: number; period: Period }, today: Date): { year: number; period: Period } {
+  const next = nextSemester(today)
+  const key = (t: { year: number; period: Period }) => t.year * 10 + (t.period === 'semester-2' ? 2 : 1)
+  return key(start) >= key(next) ? start : next
+}
+
 export function termLabel(term: Pick<PlanTerm, 'year' | 'period'>): string {
   const names: Record<Period, string> = {
     summer: 'Summer',

@@ -191,17 +191,23 @@ function score(s: Subject, ctx: ScoreCtx): Recommendation {
 
   // Ease from crowd signals, shrunk toward neutral when there are few reviews.
   if (s.signals) {
-    const raw = (5 - s.signals.difficulty + (5 - s.signals.workload) + (s.signals.grading - 1)) / 12
+    // Ease from whichever of the three averages we have (each on 0–4).
+    const easeParts = [
+      s.signals.difficulty === undefined ? undefined : 5 - s.signals.difficulty,
+      s.signals.workload === undefined ? undefined : 5 - s.signals.workload,
+      s.signals.grading === undefined ? undefined : s.signals.grading - 1,
+    ].filter((x): x is number => x !== undefined)
+    const raw = easeParts.length ? easeParts.reduce((a, b) => a + b, 0) / (4 * easeParts.length) : 0.5
     const trust = Math.min(1, s.signals.reviews / MIN_REVIEWS)
     parts.ease = 0.5 + (raw - 0.5) * trust
     const n = `${s.signals.reviews} review${s.signals.reviews === 1 ? '' : 's'}`
     const { difficulty, workload, grading, reviews } = s.signals
     if (reviews < MIN_REVIEWS) warnings.push(note('fewReviews', { n: reviews }, `Only ${n} so far — difficulty data is thin.`))
     else {
-      if (difficulty >= 4) warnings.push(note('hard', { score: difficulty, n: reviews }, `Students rate it hard (${difficulty}/5, ${n}).`))
-      if (workload >= 4) warnings.push(note('heavy', { score: workload, n: reviews }, `Heavy workload (${workload}/5, ${n}).`))
-      if (grading >= 4) reasons.push(note('generous', { score: grading, n: reviews }, `Students say marking is generous (${grading}/5, ${n}).`))
-      if (difficulty <= 2) reasons.push(note('approachable', { score: difficulty, n: reviews }, `Students rate it approachable (${difficulty}/5, ${n}).`))
+      if (difficulty !== undefined && difficulty >= 4) warnings.push(note('hard', { score: difficulty, n: reviews }, `Students rate it hard (${difficulty}/5, ${n}).`))
+      if (workload !== undefined && workload >= 4) warnings.push(note('heavy', { score: workload, n: reviews }, `Heavy workload (${workload}/5, ${n}).`))
+      if (grading !== undefined && grading >= 4) reasons.push(note('generous', { score: grading, n: reviews }, `Students say marking is generous (${grading}/5, ${n}).`))
+      if (difficulty !== undefined && difficulty <= 2) reasons.push(note('approachable', { score: difficulty, n: reviews }, `Students rate it approachable (${difficulty}/5, ${n}).`))
     }
   }
 

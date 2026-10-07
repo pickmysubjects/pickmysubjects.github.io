@@ -96,6 +96,9 @@ const assessmentTask = z
   })
   .strict()
 
+// Links rendered from data: only https on the Handbook's own site (no javascript: or data: URLs).
+const handbookUrl = z.url({ protocol: /^https$/, hostname: /^handbook\.unimelb\.edu\.au$/ })
+
 const SUBJECT_CODE = /^[A-Z]{4}\d{5}$/
 const subjectCode = z.string().regex(SUBJECT_CODE, 'expected a code like COMP10001')
 
@@ -150,15 +153,17 @@ const offerings = z
 /** Aggregated crowd signals on a 1–5 scale. Only demo data carries these today. */
 const signals = z
   .object({
-    difficulty: z.number().min(1).max(5),
-    workload: z.number().min(1).max(5),
-    grading: z.number().min(1).max(5), // 5 = generous marking
+    // Every question is optional for students, so each average may be missing.
+    difficulty: z.number().min(1).max(5).optional(),
+    workload: z.number().min(1).max(5).optional(),
+    grading: z.number().min(1).max(5).optional(), // 5 = generous marking
     reviews: z.number().int().nonnegative(),
     // Optional questions; present once enough students answered them.
     examDifficulty: z.number().min(1).max(5).optional(),
     usefulness: z.number().min(1).max(5).optional(),
     interest: z.number().min(1).max(5).optional(),
     teaching: z.number().min(1).max(5).optional(),
+    hours: z.number().positive().max(60).optional(), // median hours a week students report
   })
   .strict()
 
@@ -185,7 +190,7 @@ export const subjectFileSchema = z
     weekly_contact_hours: z.number().positive().max(40).optional(),
     min_attendance: z.number().min(1).max(100).optional(), // % of classes you must attend
     signals: signals.optional(),
-    handbook: z.url().optional(),
+    handbook: handbookUrl.optional(),
     source_year: z.number().int(),
     verified_on: z.union([z.iso.date(), z.null()]).default(null),
     notes: z.string().optional(),
@@ -271,7 +276,7 @@ export const courseFileSchema = z
     standard_load: z.number().positive(),
     categories: z.array(z.string()).default([]),
     rules: z.array(courseRule),
-    handbook: z.url().optional(),
+    handbook: handbookUrl.optional(),
     verified_on: z.union([z.iso.date(), z.null()]).default(null),
   })
   .strict()
@@ -352,7 +357,7 @@ export const componentFileSchema = z
     points: z.number().positive(),
     requires_major: z.array(z.string()).default([]),
     requirements: z.union([z.literal('unknown'), z.array(componentReq)]).default('unknown'),
-    handbook: z.url().optional(),
+    handbook: handbookUrl.optional(),
     verified_on: z.union([z.iso.date(), z.null()]).default(null),
   })
   .strict()

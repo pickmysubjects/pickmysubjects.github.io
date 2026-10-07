@@ -1,5 +1,5 @@
 import { offeredIn, periodsFor } from './availability'
-import { categoryOf, componentNeeds, findComponent, findCourse } from './courseRules'
+import { categoryOf, checkCourse, componentNeeds, findComponent, findCourse } from './courseRules'
 import { evaluateField, type Tri } from './expr'
 import type { Note, Params, Plan, PlanTerm } from './plan'
 import { standardTerms } from './plan'
@@ -37,7 +37,29 @@ export interface GenerateResult {
  * 3. fill the rest of each term with recommended electives that serve the
  *    largest unmet course-rule deficit without breaking any cap.
  */
+/**
+ * Builds the plan; if required subjects don't fit (often a chain of subjects
+ * that each run in one semester only), tries again with up to two extra
+ * semesters, as a student would take longer rather than drop the major.
+ */
 export function generatePlan(input: GenerateInput): GenerateResult {
+  // Unplaced subjects weigh most; then course rules the plan fails (e.g. breadth
+  // squeezed out by a heavy major + specialisation).
+  const shortfall = (r: GenerateResult) =>
+    r.unplaced.length * 100 + checkCourse(r.plan, input.data).statuses.filter((st) => st.status === 'fail').length
+  let result = buildPlan(input)
+  if (input.maxTerms !== undefined || shortfall(result) === 0) return result
+  const base = result.plan.terms.length
+  for (let extra = 1; extra <= 2 && shortfall(result) > 0; extra++) {
+    const longer = buildPlan({ ...input, maxTerms: base + extra })
+    if (shortfall(longer) >= shortfall(result)) continue
+    longer.notes.push(note('extraTerms', { n: extra }, `Planned ${extra} extra semester(s) so every required subject fits.`))
+    result = longer
+  }
+  return result
+}
+
+function buildPlan(input: GenerateInput): GenerateResult {
   const { data, profile } = input
   const course = findCourse(data, input.course, input.courseYear)
   const notes: Note[] = []
@@ -66,12 +88,12 @@ export function generatePlan(input: GenerateInput): GenerateResult {
   const depth = dependentDepth(pending, data, needs)
 
   const electives = new Set<string>()
-  const fill = (term: PlanTerm, termIndex: number): void => {
+  const fill = (term: PlanTerm, termIndex: number, relaxed = false): void => {
     if (!course) return
     const before = new Set([...completed, ...terms.slice(0, termIndex).flatMap((t) => t.subjects)])
     let used = term.subjects.reduce((sum, c) => sum + (data.subjects[c]?.points ?? 12.5), 0)
     while (used < load) {
-      const pick = pickElective({ input, course, term, before, placed: allPlaced(), completed, room: load - used, focus, reserved: pending, opens, progress: (termIndex + 1) / terms.length })
+      const pick = pickElective({ input, course, term, before, placed: allPlaced(), completed, room: load - used, focus, reserved: pending, opens, progress: (termIndex + 1) / terms.length, relaxed })
       if (!pick) break
       term.subjects.push(pick.code)
       electives.add(pick.code)
@@ -109,6 +131,8 @@ export function generatePlan(input: GenerateInput): GenerateResult {
   if (course) {
     repair(terms, { input, course, completed, electives, notes, focus, reserved: pending, opens })
     terms.forEach((t, i) => fill(t, i))
+    // Anything still short: better a full term than an empty slot kept for a minimum that can't be met.
+    terms.forEach((t, i) => fill(t, i, true))
   }
   const placed = allPlaced()
 
@@ -366,15 +390,21 @@ interface PickCtx {
   opens: PathwayCounter
   /** Share of the plan done by the end of this term (0–1]. */
   progress: number
+  /** Final top-up: fill a term even if some other minimum can no longer be met. */
+  relaxed?: boolean
 }
 
 function pickElective(ctx: PickCtx): { code: string; why: string; ruleId: string } | null {
   const { input, course, term } = ctx
   const data = input.data
-  const all = [...ctx.completed, ...ctx.placed]
+  // Required subjects not placed yet still count: they will use their share of
+  // each requirement and cap, so electives shouldn't take it first.
+  // (Not for the overall total, though: that only fills as terms actually fill.)
+  const all = [...new Set([...ctx.completed, ...ctx.placed, ...ctx.reserved])]
+  const placedOnly = [...ctx.completed, ...ctx.placed]
   const deficits = pointRules(course)
     .filter((r) => r.min !== undefined)
-    .map((r) => ({ rule: r, gap: (r.min as number) - sumPoints(all, data, course.code, r) }))
+    .map((r) => ({ rule: r, gap: (r.min as number) - sumPoints(specificity(r) > 0 ? all : placedOnly, data, course.code, r) }))
     .filter((d) => d.gap > 0)
     // A requirement that has fallen behind an even pace goes first, so ones that
     // need a chain (level-1 breadth is capped, so level 2 needs a start) begin early.
@@ -384,10 +414,15 @@ function pickElective(ctx: PickCtx): { code: string; why: string; ruleId: string
 
   // Year level follows the points already completed, so mid-degree students are placed correctly.
   const yearLevel = Math.min(3, Math.floor(sumPoints([...ctx.before], data, course.code, {}) / 100) + 1)
-  for (const { rule } of deficits) {
+  for (const { rule, gap } of deficits) {
     const levels = rule.level !== undefined ? [rule.level] : [yearLevel, ...[1, 2, 3].filter((l) => l !== yearLevel)]
     for (const level of levels) {
       if (level > yearLevel) continue
+      // When level 1 can't cover the rest of this requirement (e.g. breadth: at most
+      // 25 of its 50 points at level 1), a level-1 pick must lead on to a higher level.
+      const cap = pointRules(course).find((r) => r.max !== undefined && r.level === 1 && r.category === rule.category)
+      const levelOneRoom = cap ? (cap.max as number) - sumPoints(all, data, course.code, { level: 1, category: rule.category }) : Infinity
+      const needsPath = level === 1 && gap > levelOneRoom
       const recs = recommend(data, input.profile, {
         course: course.code,
         category: rule.category,
@@ -396,12 +431,12 @@ function pickElective(ctx: PickCtx): { code: string; why: string; ruleId: string
         planned: [...ctx.placed, ...ctx.reserved],
         eligibleWith: [...ctx.before],
       })
-      for (const rec of rankElectives(recs, ctx.focus, data, (c) => ctx.opens(c, rule.category))) {
+      for (const rec of rankElectives(recs, ctx.focus, data, (c) => ctx.opens(c, rule.category), needsPath)) {
         const s = data.subjects[rec.code]
         if (!s || s.points > ctx.room) continue
         if (offeredIn(s, term.year, term.period).status !== 'ok') continue
         if (!withinCaps(s, all, course, data)) continue
-        if (!leavesRoomForOthers(s, all, course, data)) continue
+        if (!ctx.relaxed && !leavesRoomForOthers(s, all, course, data)) continue
         if (!progressionAllows(s.code, course, [...ctx.before], data)) continue
         return { code: s.code, why: rule.description.toLowerCase(), ruleId: rule.id }
       }
@@ -424,12 +459,19 @@ function rankElectives<T extends { code: string; score: number; eligibility: Tri
   focus: Set<string | undefined>,
   data: Dataset,
   opens: (code: string) => number,
+  needsPath = false,
 ): T[] {
   const tier = (r: T) => (r.eligibility === 'ok' ? 0 : r.eligibility === 'unknown' ? 1 : 2)
   const near = (r: T) => (focus.has(data.subjects[r.code]?.area) ? 0 : 1)
+  // needsPath: a dead end would make the requirement impossible, so it's left out
+  // (a later term may offer a subject that leads on).
+  const path = (r: T) => (needsPath && opens(r.code) === 0 ? 1 : 0)
   return recs
-    .filter((r) => tier(r) < 2)
-    .sort((a, b) => tier(a) - tier(b) || b.score - a.score || near(a) - near(b) || opens(b.code) - opens(a.code))
+    .filter((r) => tier(r) < 2 && path(r) === 0)
+    .sort(
+      (a, b) =>
+        tier(a) - tier(b) || path(a) - path(b) || b.score - a.score || near(a) - near(b) || opens(b.code) - opens(a.code),
+    )
 }
 
 type PathwayCounter = (code: string, category: string | undefined) => number
@@ -542,10 +584,11 @@ function trySwap(r: PointsRule, terms: PlanTerm[], all: string[], ctx: RepairCtx
       const es = data.subjects[e]
       if (!electives.has(e) || !es || matches(es, course.code, r)) continue
       const others = all.filter((c) => c !== e)
-      const laterNeedsIt = terms
-        .slice(ti)
-        .flatMap((t) => t.subjects)
-        .some((c) => c !== e && dependsOn(data.subjects[c], e))
+      const laterNeedsIt =
+        terms
+          .slice(ti)
+          .flatMap((t) => t.subjects)
+          .some((c) => c !== e && dependsOn(data.subjects[c], e)) || pointsNeedIt(e, ti, terms, completed, input)
       if (laterNeedsIt) continue
 
       const before = [...completed, ...terms.slice(0, ti).flatMap((t) => t.subjects)]
@@ -578,6 +621,26 @@ function trySwap(r: PointsRule, terms: PlanTerm[], all: string[], ctx: RepairCtx
         notes.push(note('swapped', { from: e, to: s.code, year: term.year, period: term.period, rule: r.id }, `Swapped ${e} for ${s.code} in ${term.year} ${term.period} to meet: ${r.description.toLowerCase()}.`))
         return true
       }
+    }
+  }
+  return false
+}
+
+/**
+ * Would removing `code` from term `from` break a later subject's prerequisites
+ * (e.g. "25 points of level-2 MAST") that hold with it? dependsOn only sees named subjects.
+ */
+function pointsNeedIt(code: string, from: number, terms: PlanTerm[], completed: string[], input: GenerateInput): boolean {
+  const data = input.data
+  for (let j = from + 1; j < terms.length; j++) {
+    const before = [...completed, ...terms.slice(0, j).flatMap((t) => t.subjects)]
+    const without = new Set(before.filter((c) => c !== code))
+    for (const c of terms[j]?.subjects ?? []) {
+      const pre = data.subjects[c]?.prerequisites
+      if (!pre || pre === 'none' || pre === 'unknown') continue
+      const ctx = { subjects: data.subjects, admittedCourse: input.course }
+      const withIt = evaluateField(pre, { ...ctx, completed: new Set(before) }).status
+      if (withIt !== 'fail' && evaluateField(pre, { ...ctx, completed: without }).status === 'fail') return true
     }
   }
   return false

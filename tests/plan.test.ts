@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { offeredIn } from '../src/engine/availability'
 import { checkCourse } from '../src/engine/courseRules'
 import type { Plan } from '../src/engine/plan'
-import { standardTerms } from '../src/engine/plan'
+import { planStart, standardTerms } from '../src/engine/plan'
 import { checkTerms } from '../src/engine/planCheck'
 import { buildDataset } from '../scripts/dataset'
 import { dataset, demo, subject } from './helpers'
@@ -125,5 +125,43 @@ describe('checkCourse (one subject fills one requirement)', () => {
     expect(status(['MAST30012', 'MAST30013', 'MAST30021'])).toBe('fail')
     expect(status(['MAST30012', 'MAST30013', 'MAST30021', 'MAST30022'])).toBe('ok')
     expect(status(['MAST30012', 'MAST30013', 'MAST30022', 'MAST30011'])).toBe('ok')
+  })
+})
+
+describe('planStart', () => {
+  it('starts at the next semester that has not begun when study started earlier', () => {
+    const oct2026 = new Date(2026, 9, 7)
+    expect(planStart({ year: 2025, period: 'semester-2' }, oct2026)).toEqual({ year: 2027, period: 'semester-1' })
+    expect(planStart({ year: 2026, period: 'semester-2' }, new Date(2026, 4, 1))).toEqual({ year: 2026, period: 'semester-2' })
+    expect(planStart({ year: 2026, period: 'semester-1' }, new Date(2026, 4, 1))).toEqual({ year: 2026, period: 'semester-2' })
+    expect(planStart({ year: 2028, period: 'semester-1' }, oct2026)).toEqual({ year: 2028, period: 'semester-1' }) // future start is kept
+  })
+})
+
+describe('checkTerms (non-allowed listed on one side only)', () => {
+  it('flags a planned subject that a completed subject lists as non-allowed', () => {
+    const data = dataset([
+      subject({ code: 'AAAA10001', prerequisites: 'none', non_allowed: ['AAAA10002'], offerings: { 2026: ['semester-1'] } }),
+      subject({ code: 'AAAA10002', prerequisites: 'none', offerings: { 2026: ['semester-1'] } }), // its own list isn't curated
+    ])
+    const plan: Plan = { course: 'X', courseYear: 2026, completed: ['AAAA10001'], terms: [{ year: 2026, period: 'semester-1', subjects: ['AAAA10002'] }] }
+    expect(checkTerms(plan, data).filter((i) => i.kind === 'non-allowed')).toHaveLength(1)
+  })
+})
+
+describe('checkCourse (unknowns near a cap)', () => {
+  const { dataset: real } = buildDataset('real')
+  const status = (completed: string[], ruleId: string) =>
+    checkCourse({ course: 'B-SCI', courseYear: 2026, major: 'data-science', completed, terms: [] }, real).statuses.find((s) => s.ruleId === ruleId)?.status
+
+  it('says unknown, not ok, when subjects we know nothing about could break a cap', () => {
+    const ten = ['MAST10005', 'MAST10006', 'MAST10007', 'COMP10001', 'COMP10002', 'BIOL10008', 'BIOL10001', 'BIOL10010', 'CHEM10003', 'PHYC10003']
+    expect(status(ten, 'level1-cap')).toBe('ok')
+    expect(status([...ten, 'COMP10003'], 'level1-cap')).toBe('unknown') // COMP10003 isn't in the data
+  })
+
+  it('says unknown, not fail, when an uncurated subject could be the missing level-1 area', () => {
+    expect(status(['MAST10006', 'MAST10007'], 'level1-areas')).toBe('fail')
+    expect(status(['MAST10006', 'MAST10007', 'COMP10003'], 'level1-areas')).toBe('unknown')
   })
 })

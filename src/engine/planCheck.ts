@@ -55,14 +55,18 @@ export function checkTerms(plan: Plan, data: Dataset, standardLoad = 50): Issue[
         issues.push({ severity: 'error', kind: 'coreq-unmet', subject: code, termIndex, params: { code, needs: co.unmet.join(', ') }, message: `${code} needs ${co.unmet.join(', ')} in the same or an earlier term.` })
       }
 
-      if (s.nonAllowed !== 'unknown') {
-        for (const other of s.nonAllowed) {
-          const pair = [code, other].sort().join('|')
-          if (everywhere.has(other) && !reportedPairs.has(pair)) {
-            reportedPairs.add(pair)
-            issues.push({ severity: 'error', kind: 'non-allowed', subject: code, termIndex, params: { code, other }, message: `${code} and ${other} can't both count — they're non-allowed with each other.` })
-          }
-        }
+      // Non-allowed works both ways, but the Handbook often lists it on one side only
+      // (e.g. only on a subject already completed).
+      const clashes = new Set(s.nonAllowed !== 'unknown' ? s.nonAllowed.filter((o) => everywhere.has(o)) : [])
+      for (const other of everywhere) {
+        const o = data.subjects[other]
+        if (o && o.nonAllowed !== 'unknown' && o.nonAllowed.includes(code)) clashes.add(other)
+      }
+      for (const other of clashes) {
+        const pair = [code, other].sort().join('|')
+        if (reportedPairs.has(pair)) continue
+        reportedPairs.add(pair)
+        issues.push({ severity: 'error', kind: 'non-allowed', subject: code, termIndex, params: { code, other }, message: `${code} and ${other} can't both count — they're non-allowed with each other.` })
       }
     }
 

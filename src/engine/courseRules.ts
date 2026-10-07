@@ -115,6 +115,10 @@ function checkRule(rule: CourseRule, ctx: RuleCtx): RuleStatus {
         params: { have: total, need: rule.min ?? rule.max ?? 0, uncategorised },
       }
       if (rule.max !== undefined && total > rule.max) return { ...base, status: 'fail', ...pts }
+      // Uncategorised subjects, or ones we have no data for, might count towards a cap.
+      if (rule.max !== undefined && total + uncategorised + unknownSubjects * 12.5 > rule.max) {
+        return { ...base, status: 'unknown', ...pts }
+      }
       if (rule.min !== undefined && total < rule.min) {
         const couldStillPass = uncategorised > 0 || unknownSubjects > 0
         return { ...base, status: couldStillPass ? 'unknown' : 'fail', ...pts }
@@ -136,16 +140,23 @@ function checkRule(rule: CourseRule, ctx: RuleCtx): RuleStatus {
     }
     case 'level1-areas': {
       const byArea = new Map<string, number>()
+      // Areas that uncategorised or unknown subjects might still add.
+      const maybeAreas = new Set<string>()
       for (const s of ctx.known) {
         if (s.level !== 1) continue
-        if (rule.category !== undefined && categoryOf(s, ctx.course.code) !== rule.category) continue
+        const cat = categoryOf(s, ctx.course.code)
+        if (rule.category !== undefined && cat === undefined) maybeAreas.add(s.area)
+        if (rule.category !== undefined && cat !== rule.category) continue
         byArea.set(s.area, (byArea.get(s.area) ?? 0) + s.points)
       }
+      const unknownSubjects = ctx.codes.length - ctx.known.length
+      const couldReach = byArea.size + [...maybeAreas].filter((a) => !byArea.has(a)).length + unknownSubjects >= rule.minAreas
       const over = [...byArea].filter(([, pts]) => pts > rule.maxPointsPerArea)
       const overAreas = over.map(([a]) => a).join(', ')
       const detail = `${byArea.size} area(s)${over.length ? `; over ${rule.maxPointsPerArea} in ${overAreas}` : ''}`
       const areas = { detail, detailKey: 'areas', params: { count: byArea.size, over: overAreas, max: rule.maxPointsPerArea } }
-      if (over.length > 0 || byArea.size < rule.minAreas) return { ...base, status: 'fail', ...areas }
+      if (over.length > 0) return { ...base, status: 'fail', ...areas }
+      if (byArea.size < rule.minAreas) return { ...base, status: couldReach ? 'unknown' : 'fail', ...areas }
       return { ...base, status: 'ok', ...areas }
     }
     case 'progression': {
