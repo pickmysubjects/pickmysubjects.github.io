@@ -54,10 +54,10 @@ export const RATINGS_FORM: GoogleFormConfig<RatingField> = {
     wish: 'entry.988102728',
     language: 'entry.1579411750',
     // Added later with addRatingQuestions() in scripts/google/create-forms.gs.
-    examDifficulty: '',
-    usefulness: '',
-    interest: '',
-    teaching: '',
+    examDifficulty: 'entry.1781699414',
+    usefulness: 'entry.934824621',
+    interest: 'entry.2052097651',
+    teaching: 'entry.1490820390',
   },
   optional: ['examDifficulty', 'usefulness', 'interest', 'teaching'],
 }
