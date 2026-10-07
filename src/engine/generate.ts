@@ -62,6 +62,7 @@ export function generatePlan(input: GenerateInput): GenerateResult {
   const pending = [...required].filter((c) => !done.has(c))
   // Areas of the major/specialisation, used to break ties between equally scored electives.
   const focus = new Set([...required].filter((c) => !firstSemester.has(c)).map((c) => data.subjects[c]?.area))
+  const opens = pathwayCounter(data, input.course)
   const depth = dependentDepth(pending, data, needs)
 
   const electives = new Set<string>()
@@ -70,7 +71,7 @@ export function generatePlan(input: GenerateInput): GenerateResult {
     const before = new Set([...completed, ...terms.slice(0, termIndex).flatMap((t) => t.subjects)])
     let used = term.subjects.reduce((sum, c) => sum + (data.subjects[c]?.points ?? 12.5), 0)
     while (used < load) {
-      const pick = pickElective({ input, course, term, before, placed: allPlaced(), completed, room: load - used, focus, reserved: pending })
+      const pick = pickElective({ input, course, term, before, placed: allPlaced(), completed, room: load - used, focus, reserved: pending, opens })
       if (!pick) break
       term.subjects.push(pick.code)
       electives.add(pick.code)
@@ -106,7 +107,7 @@ export function generatePlan(input: GenerateInput): GenerateResult {
   // Greedy filling can over-serve one requirement (e.g. science) and starve
   // another (e.g. breadth); swap electives where that's safe, then top up.
   if (course) {
-    repair(terms, { input, course, completed, electives, notes, focus, reserved: pending })
+    repair(terms, { input, course, completed, electives, notes, focus, reserved: pending, opens })
     terms.forEach((t, i) => fill(t, i))
   }
   const placed = allPlaced()
@@ -362,6 +363,7 @@ interface PickCtx {
   focus: Set<string | undefined>
   /** Required subjects still to place: never picked as electives, and their non-allowed partners are off limits. */
   reserved: string[]
+  opens: PathwayCounter
 }
 
 function pickElective(ctx: PickCtx): { code: string; why: string; ruleId: string } | null {
@@ -389,7 +391,7 @@ function pickElective(ctx: PickCtx): { code: string; why: string; ruleId: string
         planned: [...ctx.placed, ...ctx.reserved],
         eligibleWith: [...ctx.before],
       })
-      for (const rec of rankElectives(recs, ctx.focus, data)) {
+      for (const rec of rankElectives(recs, ctx.focus, data, (c) => ctx.opens(c, rule.category))) {
         const s = data.subjects[rec.code]
         if (!s || s.points > ctx.room) continue
         if (offeredIn(s, term.year, term.period).status !== 'ok') continue
@@ -407,17 +409,39 @@ function pickElective(ctx: PickCtx): { code: string; why: string; ruleId: string
  * Order elective candidates: prerequisites confirmed met before ones we can't
  * confirm (not curated yet — the plan check flags those, and a sparse dataset
  * still yields a plan); then by score; on a tie, subjects in the major's own
- * areas first, so an empty profile doesn't fall back to alphabetical order.
- * Known-unmet candidates were already dropped by recommend().
+ * areas first, so an empty profile doesn't fall back to alphabetical order;
+ * then subjects that lead on to higher-level ones serving the same requirement
+ * (a level-1 breadth subject with a level-2 follow-on beats a dead end, since
+ * level-1 breadth is capped). Known-unmet candidates were already dropped by recommend().
  */
 function rankElectives<T extends { code: string; score: number; eligibility: Tri }>(
   recs: T[],
   focus: Set<string | undefined>,
   data: Dataset,
+  opens: (code: string) => number,
 ): T[] {
   const tier = (r: T) => (r.eligibility === 'ok' ? 0 : r.eligibility === 'unknown' ? 1 : 2)
   const near = (r: T) => (focus.has(data.subjects[r.code]?.area) ? 0 : 1)
-  return recs.filter((r) => tier(r) < 2).sort((a, b) => tier(a) - tier(b) || b.score - a.score || near(a) - near(b))
+  return recs
+    .filter((r) => tier(r) < 2)
+    .sort((a, b) => tier(a) - tier(b) || b.score - a.score || near(a) - near(b) || opens(b.code) - opens(a.code))
+}
+
+type PathwayCounter = (code: string, category: string | undefined) => number
+
+/** How many higher-level subjects (optionally of one category) list this one in their prerequisites. */
+function pathwayCounter(data: Dataset, course: string): PathwayCounter {
+  const dependents = new Map<string, Subject[]>()
+  for (const s of Object.values(data.subjects)) {
+    if (s.prerequisites === 'none' || s.prerequisites === 'unknown') continue
+    for (const c of new Set(referenced(s.prerequisites))) dependents.set(c, [...(dependents.get(c) ?? []), s])
+  }
+  return (code, category) => {
+    const level = data.subjects[code]?.level ?? 0
+    return (dependents.get(code) ?? []).filter(
+      (d) => d.level > level && (category === undefined || categoryOf(d, course) === category),
+    ).length
+  }
 }
 
 type PointsRule = Extract<CourseRule, { kind: 'points' }>
@@ -482,6 +506,7 @@ interface RepairCtx {
   notes: Note[]
   focus: Set<string | undefined>
   reserved: string[]
+  opens: PathwayCounter
 }
 
 /**
@@ -527,7 +552,7 @@ function trySwap(r: PointsRule, terms: PlanTerm[], all: string[], ctx: RepairCtx
         planned: [...all, ...ctx.reserved],
         eligibleWith: before,
       })
-      for (const rec of rankElectives(candidates, ctx.focus, data)) {
+      for (const rec of rankElectives(candidates, ctx.focus, data, (c) => ctx.opens(c, r.category))) {
         const s = data.subjects[rec.code]
         if (!s || s.points > es.points) continue
         if (offeredIn(s, term.year, term.period).status !== 'ok') continue

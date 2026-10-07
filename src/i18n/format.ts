@@ -93,7 +93,12 @@ export function reasonText(t: Translate, note: Note): string {
       .map((s) => t(`skill.${s}`))
       .join(', ')
   }
-  if (typeof params.topics === 'string') params.topics = params.topics.replace(/-/g, ' ')
+  if (typeof params.topics === 'string') {
+    params.topics = params.topics
+      .split(', ')
+      .map((x) => t(`topic.${x}`))
+      .join(', ')
+  }
   return t(`reason.${note.key}`, params)
 }
 

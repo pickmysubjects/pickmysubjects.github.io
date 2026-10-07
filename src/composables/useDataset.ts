@@ -12,7 +12,7 @@ const datasets: Record<DatasetName, Dataset> = {
 }
 
 // Module-level so every component shares the same choice.
-const current = usePersisted<DatasetName>('sc:dataset', 'demo')
+const current = usePersisted<DatasetName>('sc:dataset', 'real')
 
 export function useDataset() {
   const data = computed(() => datasets[current.value])

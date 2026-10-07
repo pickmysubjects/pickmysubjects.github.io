@@ -65,7 +65,7 @@ function toggleInterest(topic: string): void {
         :aria-pressed="interests.includes(topic)"
         @click="toggleInterest(topic)"
       >
-        {{ topic.replace(/-/g, ' ') }}
+        {{ t(`topic.${topic}`) }}
       </button>
     </div>
   </section>

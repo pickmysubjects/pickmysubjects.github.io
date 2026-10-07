@@ -3,7 +3,7 @@ import { join, relative } from 'node:path'
 import { parse } from 'yaml'
 import { z } from 'zod'
 import { referencedSubjects } from '../src/engine/expr'
-import { componentFileSchema, courseFileSchema, subjectFileSchema, type Dataset } from '../src/engine/schema'
+import { componentFileSchema, courseFileSchema, SKILLS, subjectFileSchema, type Dataset, type Skill } from '../src/engine/schema'
 
 export const ROOT = join(import.meta.dirname, '..')
 
@@ -87,12 +87,34 @@ function mergeRatings(file: string, subjects: Dataset['subjects']): void {
   if (!existsSync(file)) return
   const ratings = JSON.parse(readFileSync(file, 'utf8')) as Record<
     string,
-    { reviews: number; difficulty: number; workload: number; grading: number; skills: string[] }
+    {
+      reviews: number
+      difficulty: number
+      workload: number
+      grading: number
+      skills: string[]
+      examDifficulty?: number | null
+      usefulness?: number | null
+      interest?: number | null
+      teaching?: number | null
+    }
   >
   for (const [code, r] of Object.entries(ratings)) {
     const s = subjects[code]
     if (!s) continue
-    s.signals ??= { difficulty: r.difficulty, workload: r.workload, grading: r.grading, reviews: r.reviews }
-    if (s.skills.length === 0 && r.reviews >= MIN_REVIEWS_FOR_SKILLS) s.skills = r.skills
+    const extra = (x: number | null | undefined) => x ?? undefined
+    s.signals ??= {
+      difficulty: r.difficulty,
+      workload: r.workload,
+      grading: r.grading,
+      reviews: r.reviews,
+      examDifficulty: extra(r.examDifficulty),
+      usefulness: extra(r.usefulness),
+      interest: extra(r.interest),
+      teaching: extra(r.teaching),
+    }
+    if (s.skills.length === 0 && r.reviews >= MIN_REVIEWS_FOR_SKILLS) {
+      s.skills = r.skills.filter((k): k is Skill => (SKILLS as readonly string[]).includes(k))
+    }
   }
 }

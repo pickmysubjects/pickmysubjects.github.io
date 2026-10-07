@@ -34,6 +34,19 @@ function onEnter(): void {
   else if (/^[A-Za-z]{4}\d{5}$/.test(query.value.trim())) pick(query.value.trim().toUpperCase())
 }
 
+// Sends a missing subject to the feedback form, with the code filled in when it looks like one.
+const missingHref = computed(() => {
+  const q = query.value.trim().toUpperCase()
+  return /^[A-Z]{4}\d{5}$/.test(q) ? `#/feedback?topic=data&subject=${q}` : '#/feedback?topic=data'
+})
+
+function reportMissing(): void {
+  const href = missingHref.value
+  query.value = ''
+  open.value = false
+  go(href.slice(2))
+}
+
 function move(delta: number): void {
   if (results.value.length) active.value = (active.value + delta + results.value.length) % results.value.length
 }
@@ -72,7 +85,10 @@ function move(delta: number): void {
         <span class="code result-code">{{ s.code }}</span>
         <span class="result-title">{{ s.title }}</span>
       </li>
-      <li v-if="results.length === 0" class="result result-empty">{{ t('home.noResults', { q: query.trim() }) }}</li>
+      <li v-if="results.length === 0" class="result result-empty">
+        {{ t('home.noResults', { q: query.trim() }) }}
+        <a class="result-missing" :href="missingHref" @mousedown.prevent="reportMissing">{{ t('home.missing') }}</a>
+      </li>
     </ul>
   </div>
 </template>
@@ -158,7 +174,14 @@ function move(delta: number): void {
   white-space: nowrap;
 }
 
+.result-missing {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
 .result-empty {
+  flex-wrap: wrap;
+  gap: 4px 10px;
   color: var(--ink-soft);
   cursor: default;
 }

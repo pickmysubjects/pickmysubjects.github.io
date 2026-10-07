@@ -6,17 +6,12 @@ import HeroPreview from '@/components/home/HeroPreview.vue'
 import BentoFeatures from '@/components/home/BentoFeatures.vue'
 import { useDataset } from '@/composables/useDataset'
 import { useI18n } from '@/i18n'
+import { exampleSubjects } from '@/utils/showcase'
 
 const { t } = useI18n()
 const { subjectList } = useDataset()
 
-// Show the most-rated subjects as examples (falls back to catalogue order).
-const examples = computed(() =>
-  [...subjectList.value]
-    .sort((a, b) => (b.signals?.reviews ?? 0) - (a.signals?.reviews ?? 0))
-    .slice(0, 3)
-    .map((s) => s.code),
-)
+const examples = computed(() => exampleSubjects(subjectList.value, 3).map((s) => s.code))
 
 function focusSearch(): void {
   const input = document.querySelector<HTMLInputElement>('.stage .search-input')

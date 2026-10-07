@@ -16,6 +16,86 @@ export const PERIOD_LABELS: Record<Period, string> = {
   'semester-2': 'Semester 2',
 }
 
+/** Skills a subject leans on; students rate themselves on the same list. */
+export const SKILLS = [
+  'programming',
+  'algorithms',
+  'maths',
+  'statistics',
+  'data',
+  'systems',
+  'writing',
+  'presentation',
+  'lab',
+  'design',
+  'business',
+] as const
+export type Skill = (typeof SKILLS)[number]
+
+/** What a subject is about — the vocabulary students pick interests from. */
+export const TOPICS = [
+  'programming',
+  'algorithms',
+  'software-engineering',
+  'ai',
+  'machine-learning',
+  'data-science',
+  'databases',
+  'security',
+  'systems',
+  'graphics',
+  'theory',
+  'mathematics',
+  'calculus',
+  'linear-algebra',
+  'pure-maths',
+  'probability',
+  'statistics',
+  'optimisation',
+  'modelling',
+  'economics',
+  'finance',
+  'accounting',
+  'marketing',
+  'law',
+  'business',
+  'languages',
+  'biology',
+  'chemistry',
+  'physics',
+  'earth-science',
+  'environment',
+  'psychology',
+  'design',
+  'ethics',
+  'philosophy',
+  'history',
+  'science-communication',
+] as const
+export type Topic = (typeof TOPICS)[number]
+
+/** Kinds of assessment task, as students think of them. */
+export const ASSESSMENT_KINDS = [
+  'exam',
+  'test',
+  'quiz',
+  'assignment',
+  'project',
+  'report',
+  'presentation',
+  'participation',
+] as const
+export type AssessmentKind = (typeof ASSESSMENT_KINDS)[number]
+
+const assessmentTask = z
+  .object({
+    kind: z.enum(ASSESSMENT_KINDS),
+    weight: z.number().min(0).max(100),
+    group: z.boolean().optional(), // done in a group, at least partly
+    hurdle: z.boolean().optional(), // must be passed on its own to pass the subject
+  })
+  .strict()
+
 const SUBJECT_CODE = /^[A-Z]{4}\d{5}$/
 const subjectCode = z.string().regex(SUBJECT_CODE, 'expected a code like COMP10001')
 
@@ -74,6 +154,11 @@ const signals = z
     workload: z.number().min(1).max(5),
     grading: z.number().min(1).max(5), // 5 = generous marking
     reviews: z.number().int().nonnegative(),
+    // Optional questions; present once enough students answered them.
+    examDifficulty: z.number().min(1).max(5).optional(),
+    usefulness: z.number().min(1).max(5).optional(),
+    interest: z.number().min(1).max(5).optional(),
+    teaching: z.number().min(1).max(5).optional(),
   })
   .strict()
 
@@ -89,8 +174,16 @@ export const subjectFileSchema = z
     corequisites: reqField,
     non_allowed: z.union([z.literal('unknown'), z.array(subjectCode)]).default('unknown'),
     categories: z.record(z.string(), z.enum(['science', 'breadth', 'discipline'])).default({}),
-    skills: z.array(z.string()).default([]),
-    topics: z.array(z.string()).default([]),
+    skills: z.array(z.enum(SKILLS)).default([]),
+    topics: z.array(z.enum(TOPICS)).default([]),
+    // Semester version from the Handbook; weights add up to 100.
+    assessment: z
+      .array(assessmentTask)
+      .min(1)
+      .refine((tasks) => Math.abs(tasks.reduce((sum, t) => sum + t.weight, 0) - 100) < 0.01, 'weights must add up to 100')
+      .optional(),
+    weekly_contact_hours: z.number().positive().max(40).optional(),
+    min_attendance: z.number().min(1).max(100).optional(), // % of classes you must attend
     signals: signals.optional(),
     handbook: z.url().optional(),
     source_year: z.number().int(),
@@ -111,6 +204,9 @@ export const subjectFileSchema = z
     categories: s.categories,
     skills: s.skills,
     topics: s.topics,
+    assessment: s.assessment,
+    weeklyContactHours: s.weekly_contact_hours,
+    minAttendance: s.min_attendance,
     signals: s.signals,
     handbook: s.handbook,
     sourceYear: s.source_year,

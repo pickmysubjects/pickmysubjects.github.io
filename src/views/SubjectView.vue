@@ -2,10 +2,13 @@
 import { computed, shallowRef } from 'vue'
 import { ArrowLeft, CalendarRange, Check, ExternalLink, Plus, Star } from 'lucide-vue-next'
 import DataNotice from '@/components/DataNotice.vue'
+import RatingForm from '@/components/rating/RatingForm.vue'
+import AssessmentPanel from '@/components/subject/AssessmentPanel.vue'
 import { periodsFor, referencedSubjects } from '@/engine'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
 import { useProfile } from '@/composables/useProfile'
+import { useRated } from '@/composables/useRated'
 import { useI18n } from '@/i18n'
 import { categoryLabel, describeReq, termLabel } from '@/i18n/format'
 import { discussionLinks } from '@/utils/links'
@@ -14,6 +17,7 @@ const props = defineProps<{ code: string }>()
 const { name, data } = useDataset()
 const plan = usePlan()
 const { profile } = useProfile()
+const { rated, markRated } = useRated()
 const { t } = useI18n()
 
 const code = computed(() => props.code.toUpperCase())
@@ -31,6 +35,15 @@ const category = computed(() => categoryLabel(t.value, subject.value?.categories
 const inPlan = computed(() => plan.plannedCodes.value.includes(code.value))
 const taken = computed(() => profile.value.results.some((r) => r.code === code.value))
 const added = shallowRef<string | null>(null)
+const rating = shallowRef(false)
+const thanks = shallowRef(false)
+
+function onRated(sent: boolean): void {
+  rating.value = false
+  if (!sent) return
+  markRated(code.value)
+  thanks.value = true
+}
 
 /** First planned term the subject runs in, so "Add to my plan" lands somewhere sensible. */
 const targetTerm = computed(() =>
@@ -48,11 +61,17 @@ function addToPlan(): void {
 const meters = computed(() => {
   const s = subject.value?.signals
   if (!s) return []
-  return [
+  const meters = [
     { key: 'rating.difficulty', value: s.difficulty, low: 'rating.diffLow', high: 'rating.diffHigh' },
+    { key: 'rating.examDifficulty', value: s.examDifficulty, low: 'rating.diffLow', high: 'rating.diffHigh' },
     { key: 'rating.workload', value: s.workload, low: 'rating.loadLow', high: 'rating.loadHigh' },
     { key: 'rating.generosity', value: s.grading, low: 'rating.genLow', high: 'rating.genHigh' },
+    { key: 'rating.usefulness', value: s.usefulness, low: 'rating.useLow', high: 'rating.useHigh' },
+    { key: 'rating.interest', value: s.interest, low: 'rating.intLow', high: 'rating.intHigh' },
+    { key: 'rating.teaching', value: s.teaching, low: 'rating.teachLow', high: 'rating.teachHigh' },
   ]
+  // Optional questions only show once enough students answered them.
+  return meters.filter((m): m is (typeof meters)[number] & { value: number } => m.value !== undefined)
 })
 const links = computed(() => (name.value === 'real' ? discussionLinks(code.value) : []))
 </script>
@@ -81,9 +100,6 @@ const links = computed(() => (name.value === 'real' ? discussionLinks(code.value
             <component :is="inPlan ? Check : Plus" :size="18" aria-hidden="true" />
             {{ inPlan ? t('subject.inPlan') : t('subject.addToPlan') }}
           </button>
-          <a v-if="taken" class="button button-quiet" href="#/record">
-            <Star :size="18" aria-hidden="true" /> {{ t('subject.rateIt') }}
-          </a>
           <a v-if="subject.handbook" class="button button-quiet" :href="subject.handbook" target="_blank" rel="noopener">
             {{ t('subject.handbook') }} <ExternalLink :size="15" aria-hidden="true" />
           </a>
@@ -116,6 +132,8 @@ const links = computed(() => (name.value === 'real' ? discussionLinks(code.value
           </template>
         </section>
 
+        <AssessmentPanel class="panel surface panel-wide" :subject="subject" :year="year" />
+
         <section class="panel surface panel-wide">
           <h2 class="panel-title">{{ t('subject.ratingsTitle') }}</h2>
           <template v-if="meters.length">
@@ -130,6 +148,18 @@ const links = computed(() => (name.value === 'real' ? discussionLinks(code.value
             </div>
           </template>
           <p v-else class="panel-text muted">{{ t('subject.noRatings') }}</p>
+          <p v-if="thanks" class="added" role="status">{{ t('rating.sent') }}</p>
+          <p v-else-if="rated.has(subject.code)" class="panel-text muted">{{ t('rating.rated') }}</p>
+          <button
+            v-else-if="!rating"
+            class="button button-quiet rate-ask"
+            :class="{ 'rate-ask-strong': taken }"
+            type="button"
+            @click="rating = true"
+          >
+            <Star :size="16" aria-hidden="true" /> {{ t('subject.rateAsk') }}
+          </button>
+          <RatingForm v-if="rating" :code="subject.code" @done="onRated" />
         </section>
 
         <section v-if="links.length" class="panel surface panel-wide">
@@ -246,6 +276,15 @@ const links = computed(() => (name.value === 'real' ? discussionLinks(code.value
 
 .panel-title-gap {
   margin-top: 10px;
+}
+
+.rate-ask {
+  justify-self: start;
+}
+
+.rate-ask-strong {
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
 .panel-text {

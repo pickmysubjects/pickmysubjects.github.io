@@ -1,19 +1,23 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { Sparkles } from 'lucide-vue-next'
-import { recommend } from '@/engine'
+import { periodsFor, recommend } from '@/engine'
 import { useDataset } from '@/composables/useDataset'
 import { useProfile } from '@/composables/useProfile'
 import { useI18n } from '@/i18n'
+import { exampleSubjects } from '@/utils/showcase'
 
 /** A floating "product shot" built from the app's own data — no stock images needed. */
 const { data, subjectList } = useDataset()
 const { profile } = useProfile()
 const { t } = useI18n()
 
-const featured = computed(
-  () => [...subjectList.value].sort((a, b) => (b.signals?.reviews ?? 0) - (a.signals?.reviews ?? 0))[0],
+const showcase = computed(() => exampleSubjects(subjectList.value, 4))
+const hasProfile = computed(
+  () => profile.value.results.length > 0 || Object.keys(profile.value.skills).length > 0 || profile.value.interests.length > 0,
 )
+
+const featured = computed(() => showcase.value[0])
 const bars = computed(() => {
   const s = featured.value?.signals
   return s
@@ -24,10 +28,24 @@ const bars = computed(() => {
       ]
     : []
 })
-// Undergraduate subjects only, so the preview reads naturally.
-const top = computed(() =>
-  recommend(data.value, profile.value).filter((r) => (data.value.subjects[r.code]?.level ?? 9) < 9).slice(0, 3),
-)
+// With a profile: the visitor's top matches (undergraduate only). Without one a
+// match score means nothing, so show when a few familiar subjects run instead.
+const year = new Date().getFullYear()
+const rows = computed(() => {
+  if (hasProfile.value || showcase.value.length < 3) {
+    return recommend(data.value, profile.value)
+      .filter((r) => (data.value.subjects[r.code]?.level ?? 9) < 9)
+      .slice(0, 3)
+      .map((r) => ({ code: r.code, label: t.value('home.match', { n: r.score }) }))
+  }
+  return showcase.value.slice(1, 4).map((s) => ({
+    code: s.code,
+    label: periodsFor(s, year)
+      .filter((p) => p.startsWith('semester'))
+      .map((p) => t.value(`periodShort.${p}`))
+      .join(' · '),
+  }))
+})
 </script>
 
 <template>
@@ -54,9 +72,9 @@ const top = computed(() =>
     <article class="glass pane pane-match">
       <Sparkles :size="16" aria-hidden="true" />
       <div class="match-list">
-        <p v-for="r in top" :key="r.code" class="match-row">
+        <p v-for="r in rows" :key="r.code" class="match-row">
           <span class="code">{{ r.code }}</span>
-          <span class="match-score">{{ t('home.match', { n: r.score }) }}</span>
+          <span class="match-score">{{ r.label }}</span>
         </p>
       </div>
     </article>
@@ -187,7 +205,9 @@ const top = computed(() =>
 .match-row {
   display: flex;
   justify-content: space-between;
+  gap: 14px;
   padding: 3px 0;
+  white-space: nowrap;
   font-size: 0.82rem;
   color: var(--ink);
 }

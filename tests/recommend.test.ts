@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { computeWam, recommend, type Profile } from '../src/engine/recommend'
+import { buildDataset } from '../scripts/dataset'
 import { dataset, demo, subject } from './helpers'
 
 const base: Profile = { results: [], skills: {}, interests: [], goal: 'balanced' }
@@ -101,5 +102,28 @@ describe('recommend (demo data)', () => {
     const phys = recommend(data, base).find((r) => r.code === 'EXPH10001')
     expect(phys?.eligibility).toBe('unknown')
     expect(phys?.warnings.map((n) => n.text).join(' ')).toMatch(/Eligibility not confirmed: .*VCE Specialist Mathematics/)
+  })
+})
+
+describe('subject facts', () => {
+  it('rejects assessment weights that do not add up to 100, and unknown topics', () => {
+    expect(() => subject({ code: 'AAAA10001', assessment: [{ kind: 'exam', weight: 60 }, { kind: 'project', weight: 30 }] })).toThrow(
+      /add up to 100/,
+    )
+    expect(() => subject({ code: 'AAAA10001', topics: ['basket-weaving'] })).toThrow()
+    expect(subject({ code: 'AAAA10001', assessment: [{ kind: 'exam', weight: 60 }, { kind: 'project', weight: 40, group: true }] }).assessment).toHaveLength(2)
+  })
+
+  it('uses curated topics on real data: machine learning first-years see the way in, not unrated filler', () => {
+    const { dataset: real } = buildDataset('real')
+    const fresh = recommend(real, { ...base, interests: ['machine-learning'] }, { course: 'B-SCI', limit: 5 }).map((r) => r.code)
+    expect(fresh.slice(0, 2)).toEqual(expect.arrayContaining(['COMP10002', 'COMP10001'])) // the way to COMP30027
+    expect(fresh).not.toContain('ACTL30008') // no topics curated: neutral, so below real matches
+    const ready = recommend(
+      real,
+      { ...base, interests: ['machine-learning'], results: [{ code: 'COMP10002', mark: 80 }, { code: 'COMP20008', mark: 80 }] },
+      { course: 'B-SCI', limit: 3 },
+    ).map((r) => r.code)
+    expect(ready).toContain('COMP30027')
   })
 })

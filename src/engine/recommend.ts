@@ -1,22 +1,8 @@
 import { offeredIn } from './availability'
 import { evaluateField, referencedSubjects, type Tri } from './expr'
 import type { Note, Params } from './plan'
-import type { Dataset, Period, Subject } from './schema'
+import type { Dataset, Period, Skill, Subject } from './schema'
 
-export const SKILLS = [
-  'programming',
-  'algorithms',
-  'maths',
-  'statistics',
-  'data',
-  'systems',
-  'writing',
-  'presentation',
-  'lab',
-  'design',
-  'business',
-] as const
-export type Skill = (typeof SKILLS)[number]
 
 export type Goal = 'wam' | 'balanced' | 'challenge'
 
@@ -67,6 +53,10 @@ const WEIGHTS: Record<Goal, Record<Signal, number>> = {
 
 type Signal = 'ease' | 'predicted' | 'skillFit' | 'interest' | 'unlocks'
 const MIN_REVIEWS = 3
+/** Interest score for a subject that isn't on a topic you like but leads to one that is, less per extra step. */
+const PATHWAY_INTEREST = 0.7
+const PATHWAY_STEP = 0.08
+const PATHWAY_MAX_STEPS = 3
 
 export const PASS_MARK = 50
 
@@ -160,9 +150,18 @@ function score(s: Subject, ctx: ScoreCtx): Recommendation {
   }
 
   // Interest: overlap between the subject's topics and the student's interests.
-  if (s.topics.length > 0 && ctx.profile.interests.length > 0) {
-    const hit = s.topics.filter((t) => ctx.profile.interests.includes(t))
-    parts.interest = Math.min(1, hit.length / Math.min(2, s.topics.length))
+  // A subject that leads to an interesting one counts too, a bit less (the
+  // first-year subject on the way to Machine Learning); a subject with no
+  // curated topics stays neutral rather than looking like a mismatch.
+  const interests = ctx.profile.interests
+  const path = interests.length ? pathTo(s.code, interests, ctx) : { steps: 0, codes: [] }
+  const leadsTo = path.codes
+  if (interests.length > 0) {
+    const hit = s.topics.filter((t) => interests.includes(t))
+    // One shared interest is already a strong signal; a second makes it a full match.
+    if (hit.length) parts.interest = hit.length >= 2 ? 1 : 0.8
+    else if (path.steps) parts.interest = PATHWAY_INTEREST - PATHWAY_STEP * (path.steps - 1)
+    else if (s.topics.length) parts.interest = 0
     if (hit.length) reasons.push(note('interests', { topics: hit.join(', ') }, `Covers ${hit.join(', ')}, which you're interested in.`))
   }
 
@@ -198,10 +197,7 @@ function score(s: Subject, ctx: ScoreCtx): Recommendation {
   }
 
   // Pathway value: subjects it unlocks that match the student's interests.
-  const unlocks = (ctx.dependents.get(s.code) ?? []).filter((c) => {
-    const d = ctx.data.subjects[c]
-    return d !== undefined && d.topics.some((t) => ctx.profile.interests.includes(t))
-  })
+  const unlocks = leadsTo
   if (unlocks.length > 0) {
     parts.unlocks = Math.min(1, unlocks.length / 3)
     const codes = `${unlocks.slice(0, 3).join(', ')}${unlocks.length > 3 ? '…' : ''}`
@@ -213,10 +209,13 @@ function score(s: Subject, ctx: ScoreCtx): Recommendation {
     warnings.push(note('eligibilityUnknown', { needs }, `Eligibility not confirmed: ${needs}.`))
   }
 
+  // Signals we have no data for count as neutral (0.5), so a subject can't
+  // outrank a well-documented one just by having less known about it.
   const weights = WEIGHTS[ctx.profile.goal]
   const present = (Object.keys(parts) as Signal[]).filter((k) => weights[k] > 0)
-  const totalWeight = present.reduce((sum, k) => sum + weights[k], 0)
-  const value = totalWeight > 0 ? present.reduce((sum, k) => sum + weights[k] * (parts[k] as number), 0) / totalWeight : 0.5
+  const signalKeys = (Object.keys(weights) as Signal[]).filter((k) => weights[k] > 0)
+  const totalWeight = signalKeys.reduce((sum, k) => sum + weights[k], 0)
+  const value = signalKeys.reduce((sum, k) => sum + weights[k] * (parts[k] ?? 0.5), 0) / totalWeight
   const confidence = present.length >= 4 ? 'high' : present.length >= 2 ? 'medium' : 'low'
 
   return {
@@ -228,6 +227,22 @@ function score(s: Subject, ctx: ScoreCtx): Recommendation {
     reasons,
     warnings,
   }
+}
+
+/**
+ * Nearest subjects (within a few prerequisite steps) that this one leads to and
+ * that cover one of the student's interests.
+ */
+function pathTo(code: string, interests: string[], ctx: ScoreCtx): { steps: number; codes: string[] } {
+  let frontier = [code]
+  const seen = new Set(frontier)
+  for (let steps = 1; steps <= PATHWAY_MAX_STEPS; steps++) {
+    frontier = frontier.flatMap((c) => ctx.dependents.get(c) ?? []).filter((c) => !seen.has(c) && seen.add(c))
+    const hits = frontier.filter((c) => ctx.data.subjects[c]?.topics.some((t) => interests.includes(t)))
+    if (hits.length) return { steps, codes: hits }
+    if (frontier.length === 0) break
+  }
+  return { steps: 0, codes: [] }
 }
 
 function sameArea(s: Subject, ctx: ScoreCtx): string[] {
