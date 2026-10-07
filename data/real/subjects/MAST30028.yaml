@@ -1,0 +1,31 @@
+code: MAST30028
+title: Numerical Methods & Scientific Computing
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites:
+  all:
+    - any:
+        - MAST10009
+        - MAST20026
+        - MAST20033
+    - any:
+        - MAST10007
+        - MAST10008
+        - MAST10022
+    - any:
+        - any:
+            - COMP10001
+            - COMP20005
+            - PHYC20013
+        - manual: Other evidence of programming competence (e.g. a Year 12 subject, a MOOC, a programming test)
+corequisites: none
+non_allowed: []
+categories:
+  B-SCI: science
+handbook: https://handbook.unimelb.edu.au/2026/subjects/mast30028
+source_year: 2026
+verified_on: 2026-10-07
+notes: Requirements and study periods copied by hand from the 2026 Handbook page.

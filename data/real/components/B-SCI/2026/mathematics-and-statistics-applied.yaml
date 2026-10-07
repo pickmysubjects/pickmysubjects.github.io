@@ -1,0 +1,11 @@
+id: mathematics-and-statistics-applied
+course: B-SCI
+year: 2026
+kind: major
+title: Mathematics and Statistics (Applied Mathematics)
+points: 50
+requirements:
+  - all: [MAST30021, MAST30028]
+  - choose: { points: 25, from: [MAST30001, MAST30030, MAST30031, MAST30032] }
+handbook: https://handbook.unimelb.edu.au/2026/components/b-sci-major-29
+verified_on: 2026-10-07 # Applied Mathematics specialisation structure copied by hand from the Handbook

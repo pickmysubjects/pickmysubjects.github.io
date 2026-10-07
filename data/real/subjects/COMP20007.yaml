@@ -1,0 +1,32 @@
+code: COMP20007
+title: Design of Algorithms
+level: 2
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites:
+  any:
+    - all:
+        - COMP10002
+        - points:
+            min: 25
+            area: MAST
+    - all:
+        - ECON10005
+        - COMP10002
+        - points:
+            min: 12.5
+            area: MAST
+    - admission: MC-SOFTENG
+      note: Admission into the Master of Software Engineering
+corequisites: none
+non_allowed:
+  - COMP20003
+  - COMP90038
+categories:
+  B-SCI: science
+handbook: https://handbook.unimelb.edu.au/2026/subjects/comp20007
+source_year: 2026
+verified_on: 2026-10-07
+notes: Requirements and study periods copied by hand from the 2026 Handbook page. University maths points exclude MAST10012.

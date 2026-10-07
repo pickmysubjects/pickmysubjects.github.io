@@ -6,7 +6,7 @@ total_points: 300
 standard_load: 50
 categories: [science, breadth]
 handbook: https://handbook.unimelb.edu.au/2026/courses/b-sci/course-structure
-verified_on: null # from research notes 2026-10-07 — needs a human check against the Handbook
+verified_on: 2026-10-07 # rules checked by hand against the Handbook course structure
 rules:
   - id: total
     kind: points

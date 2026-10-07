@@ -3,8 +3,23 @@ title: Elements of Data Processing
 level: 2
 points: 12.5
 offerings:
-  2026: [semester-1, semester-2]
+  "2026":
+    - semester-1
+    - semester-2
+prerequisites:
+  any:
+    - any:
+        - COMP10001
+        - COMP10002
+        - COMP10003
+        - COMP90059
+    - admission: MC-DATASC
+      note: Admission into the Master of Data Science (or GD-CS, GD-DATASC, MC-SOFTENG)
+corequisites: none
+non_allowed: []
+categories:
+  B-SCI: science
 handbook: https://handbook.unimelb.edu.au/2026/subjects/comp20008
 source_year: 2026
-verified_on: null
-notes: Title, level and periods seen in another subject's requirements table; prerequisites not curated yet.
+verified_on: 2026-10-07
+notes: Requirements and study periods copied by hand from the 2026 Handbook page.

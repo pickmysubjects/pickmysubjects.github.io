@@ -1,0 +1,23 @@
+code: MAST20005
+title: Statistics
+level: 2
+points: 12.5
+offerings:
+  "2026":
+    - summer
+    - semester-2
+prerequisites:
+  any:
+    - MAST20004
+    - MAST20006
+corequisites: none
+non_allowed:
+  - MAST10010
+  - MAST10011
+  - MAST90058
+categories:
+  B-SCI: science
+handbook: https://handbook.unimelb.edu.au/2026/subjects/mast20005
+source_year: 2026
+verified_on: 2026-10-07
+notes: Requirements and study periods copied by hand from the 2026 Handbook page.

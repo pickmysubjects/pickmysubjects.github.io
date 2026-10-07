@@ -1,0 +1,22 @@
+code: INFO30006
+title: Information Security and Privacy
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites:
+  any:
+    - COMP10001
+    - COMP10002
+    - COMP10003
+    - COMP20005
+corequisites: none
+non_allowed:
+  - ISYS90070
+categories:
+  B-SCI: science
+handbook: https://handbook.unimelb.edu.au/2026/subjects/info30006
+source_year: 2026
+verified_on: 2026-10-07
+notes: Requirements and study periods copied by hand from the 2026 Handbook page.

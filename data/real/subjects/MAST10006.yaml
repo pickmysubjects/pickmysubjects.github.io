@@ -1,0 +1,24 @@
+code: MAST10006
+title: Calculus 2
+level: 1
+points: 12.5
+offerings:
+  "2026":
+    - summer
+    - semester-1
+    - semester-2
+prerequisites:
+  any:
+    - manual: VCE Specialist Mathematics 3/4 study score of at least 29 (or equivalent)
+    - MAST10005
+corequisites: none
+non_allowed:
+  - MAST10009
+  - MAST10021
+  - MAST10019
+categories:
+  B-SCI: science
+handbook: https://handbook.unimelb.edu.au/2026/subjects/mast10006
+source_year: 2026
+verified_on: 2026-10-07
+notes: Requirements and study periods copied by hand from the 2026 Handbook page. Not in the same semester as MAST10005. B-SCI allows at most three of MAST10005, MAST10006, MAST10007 and MAST10010.

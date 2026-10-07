@@ -1,0 +1,27 @@
+code: MAST30032
+title: Biological Modelling and Simulation
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites:
+  all:
+    - MAST20030
+    - any:
+        - MAST20004
+        - MAST20006
+    - any:
+        - any:
+            - COMP10001
+            - COMP20005
+            - PHYC20013
+        - manual: Other evidence of programming competence (e.g. a Year 12 subject, a MOOC, a programming test)
+corequisites: none
+non_allowed: []
+categories:
+  B-SCI: science
+handbook: https://handbook.unimelb.edu.au/2026/subjects/mast30032
+source_year: 2026
+verified_on: 2026-10-07
+notes: Requirements and study periods copied by hand from the 2026 Handbook page.

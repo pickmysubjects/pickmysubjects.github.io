@@ -1,0 +1,31 @@
+code: SWEN30006
+title: Software Modelling and Design
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+    - semester-2
+prerequisites:
+  any:
+    - all:
+        - any:
+            - COMP90041
+            - SWEN20003
+        - any:
+            - COMP20003
+            - COMP20007
+            - COMP90038
+            - ENGR30004
+    - admission: MC-IT
+      note: Admission into the Master of Information Technology
+    - admission: GC-CS
+      note: Admission into the Graduate Certificate in Computer Science
+corequisites: none
+non_allowed: []
+categories:
+  B-SCI: science
+handbook: https://handbook.unimelb.edu.au/2026/subjects/swen30006
+source_year: 2026
+verified_on: 2026-10-07
+notes: Requirements and study periods copied by hand from the 2026 Handbook page.

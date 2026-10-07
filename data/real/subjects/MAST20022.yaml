@@ -1,0 +1,28 @@
+code: MAST20022
+title: Group Theory and Linear Algebra
+level: 2
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites:
+  all:
+    - any:
+        - MAST10008
+        - MAST10007
+        - MAST10022
+        - MAST10013
+        - MAST10018
+    - any:
+        - MAST10009
+        - MAST20026
+        - MAST20033
+        - MAST20036
+corequisites: none
+non_allowed: []
+categories:
+  B-SCI: science
+handbook: https://handbook.unimelb.edu.au/2026/subjects/mast20022
+source_year: 2026
+verified_on: 2026-10-07
+notes: Requirements and study periods copied by hand from the 2026 Handbook page.

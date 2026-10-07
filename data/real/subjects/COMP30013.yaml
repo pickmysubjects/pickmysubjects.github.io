@@ -1,0 +1,22 @@
+code: COMP30013
+title: Advanced Studies in Computing
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+    - semester-2
+prerequisites:
+  all:
+    - manual: Permission from the School of CIS and an academic supervisor
+    - any:
+        - COMP20003
+        - COMP20007
+corequisites: none
+non_allowed: []
+categories:
+  B-SCI: science
+handbook: https://handbook.unimelb.edu.au/2026/subjects/comp30013
+source_year: 2026
+verified_on: 2026-10-07
+notes: Requirements and study periods copied by hand from the 2026 Handbook page.

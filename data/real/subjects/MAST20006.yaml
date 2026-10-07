@@ -1,0 +1,35 @@
+code: MAST20006
+title: Probability for Statistics
+level: 2
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+    - semester-2
+prerequisites:
+  any:
+    - all:
+        - any:
+            - MAST10006
+            - MAST10009
+            - MAST10021
+            - MAST10019
+        - any:
+            - MAST10007
+            - MAST10008
+            - MAST10010
+            - MAST10011
+            - MAST10022
+            - MAST10018
+            - MAST10013
+    - admission: MC-SCIBIF
+      note: Admission into the Master of Science (Bioinformatics)
+corequisites: none
+non_allowed:
+  - MAST20004
+categories:
+  B-SCI: science
+handbook: https://handbook.unimelb.edu.au/2026/subjects/mast20006
+source_year: 2026
+verified_on: 2026-10-07
+notes: Requirements and study periods copied by hand from the 2026 Handbook page.

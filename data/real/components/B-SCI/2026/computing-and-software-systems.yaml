@@ -4,6 +4,7 @@ year: 2026
 kind: major
 title: Computing and Software Systems
 points: 50
-requirements: unknown # structure not curated yet — contributions welcome
+requirements:
+  - all: [SWEN30006, COMP30023, COMP30022, COMP30026]
 handbook: https://handbook.unimelb.edu.au/2026/components/b-sci-major-1
-verified_on: null
+verified_on: 2026-10-07 # structure copied by hand from the Handbook

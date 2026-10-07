@@ -1,0 +1,30 @@
+code: MAST10005
+title: Calculus 1
+level: 1
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+    - semester-2
+prerequisites:
+  any:
+    - manual: VCE Mathematical Methods 3/4 study score of 25 or more (or equivalent)
+    - MAST10012
+    - all:
+        - MAST10014
+        - MAST10015
+    - all:
+        - MAST10025
+        - MAST10026
+corequisites: none
+non_allowed:
+  - MAST10008
+  - MAST10009
+  - MAST10019
+  - MAST10013
+categories:
+  B-SCI: science
+handbook: https://handbook.unimelb.edu.au/2026/subjects/mast10005
+source_year: 2026
+verified_on: 2026-10-07
+notes: Requirements and study periods copied by hand from the 2026 Handbook page. Can't be taken with or after MAST10006, or with a VCE Specialist Maths score of 30+. B-SCI allows at most three of MAST10005, MAST10006, MAST10007 and MAST10010.

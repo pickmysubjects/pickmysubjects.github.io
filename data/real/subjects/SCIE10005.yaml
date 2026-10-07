@@ -3,8 +3,20 @@ title: Today's Science, Tomorrow's World
 level: 1
 points: 12.5
 offerings:
-  2026: [semester-1, semester-2]
+  "2026":
+    - semester-1
+    - semester-2
+prerequisites:
+  any:
+    - admission: B-SCI
+      note: Admission into the Bachelor of Science
+    - admission: B-SCIEXTD
+      note: Admission into the Bachelor of Science (Extended)
+corequisites: none
+non_allowed: []
+categories:
+  B-SCI: science
 handbook: https://handbook.unimelb.edu.au/2026/subjects/scie10005
 source_year: 2026
-verified_on: null
-notes: Title, level and periods seen in another subject's requirements table; prerequisites not curated yet.
+verified_on: 2026-10-07
+notes: Requirements and study periods copied by hand from the 2026 Handbook page.

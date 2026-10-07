@@ -1,0 +1,18 @@
+code: MAST30027
+title: Modern Applied Statistics
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites: MAST30025
+corequisites: none
+non_allowed:
+  - ACTL30004
+  - ACTL30001
+categories:
+  B-SCI: science
+handbook: https://handbook.unimelb.edu.au/2026/subjects/mast30027
+source_year: 2026
+verified_on: 2026-10-07
+notes: Requirements and study periods copied by hand from the 2026 Handbook page.

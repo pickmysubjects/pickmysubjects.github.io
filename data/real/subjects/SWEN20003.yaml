@@ -1,0 +1,24 @@
+code: SWEN20003
+title: Object Oriented Software Development
+level: 2
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+    - semester-2
+prerequisites:
+  any:
+    - any:
+        - COMP10002
+        - COMP20005
+    - admission: MC-SOFTENG
+      note: Admission into the Master of Software Engineering
+corequisites: none
+non_allowed:
+  - COMP90041
+categories:
+  B-SCI: science
+handbook: https://handbook.unimelb.edu.au/2026/subjects/swen20003
+source_year: 2026
+verified_on: 2026-10-07
+notes: Requirements and study periods copied by hand from the 2026 Handbook page.

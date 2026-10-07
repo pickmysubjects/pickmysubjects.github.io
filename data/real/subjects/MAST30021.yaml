@@ -1,0 +1,26 @@
+code: MAST30021
+title: Complex Analysis
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+    - semester-2
+prerequisites:
+  all:
+    - any:
+        - MAST20026
+        - MAST10009
+        - MAST20033
+    - points:
+        min: 25
+        level: 2
+        area: MAST
+corequisites: none
+non_allowed: []
+categories:
+  B-SCI: science
+handbook: https://handbook.unimelb.edu.au/2026/subjects/mast30021
+source_year: 2026
+verified_on: 2026-10-07
+notes: Requirements and study periods copied by hand from the 2026 Handbook page. Handbook rule is 25 points including one of MAST20026, MAST10009 or MAST20033 plus another level-2 MAST subject; recorded here as 25 level-2 MAST points, which is slightly stricter for the MAST10009 route.

@@ -1,0 +1,29 @@
+code: COMP20003
+title: Algorithms and Data Structures
+level: 2
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites:
+  any:
+    - all:
+        - any:
+            - COMP10002
+            - COMP20005
+        - points:
+            min: 25
+            area: MAST
+    - admission: MC-SOFTENG
+      note: Admission into the Master of Software Engineering
+    - manual: VCE Algorithmics students may take the maths requirement concurrently (Enrolment Assistance form)
+corequisites: none
+non_allowed:
+  - COMP20007
+  - COMP90038
+categories:
+  B-SCI: science
+handbook: https://handbook.unimelb.edu.au/2026/subjects/comp20003
+source_year: 2026
+verified_on: 2026-10-07
+notes: Requirements and study periods copied by hand from the 2026 Handbook page. The 25 points of university maths exclude MAST10012.

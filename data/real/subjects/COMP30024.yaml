@@ -1,0 +1,22 @@
+code: COMP30024
+title: Artificial Intelligence
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites:
+  any:
+    - any:
+        - COMP20003
+        - COMP20007
+    - admission: GC-CS
+      note: Admission into the Graduate Certificate in Computer Science (or MC-SOFTENG)
+corequisites: none
+non_allowed: []
+categories:
+  B-SCI: science
+handbook: https://handbook.unimelb.edu.au/2026/subjects/comp30024
+source_year: 2026
+verified_on: 2026-10-07
+notes: Requirements and study periods copied by hand from the 2026 Handbook page.

@@ -4,6 +4,9 @@ year: 2026
 kind: specialisation
 title: Advanced Computing
 points: 50
-requirements: unknown # structure not curated yet — contributions welcome
+requirements:
+  - all: [INFO20003]
+  - choose: { points: 12.5, from: [COMP20003, COMP20007] }
+  - choose: { points: 25, from: [COMP30019, COMP30020, INFO30006, COMP30013] }
 handbook: https://handbook.unimelb.edu.au/2026/components/b-sci-spec-2
-verified_on: null
+verified_on: 2026-10-07 # structure copied by hand from the Handbook

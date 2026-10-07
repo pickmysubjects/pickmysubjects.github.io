@@ -1,0 +1,15 @@
+id: mathematics-and-statistics-statistics
+course: B-SCI
+year: 2026
+kind: major
+title: Mathematics and Statistics (Statistics / Stochastic Processes)
+points: 50
+requirements:
+  - all: [MAST30025, MAST30001]
+  - choose: { points: 12.5, from: [MAST30020, MAST30027] }
+  # "one more level-3 School of Mathematics and Statistics subject" — the level-3 MAST subjects in the 2026 science list
+  - choose:
+      points: 12.5
+      from: [MAST30020, MAST30027, MAST30005, MAST30011, MAST30012, MAST30013, MAST30021, MAST30022, MAST30024, MAST30026, MAST30028, MAST30030, MAST30031, MAST30032, MAST30034, MAST30035]
+handbook: https://handbook.unimelb.edu.au/2026/components/b-sci-major-29
+verified_on: 2026-10-07 # Statistics / Stochastic Processes specialisation structure copied by hand from the Handbook

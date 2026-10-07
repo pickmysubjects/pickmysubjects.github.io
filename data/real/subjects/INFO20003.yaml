@@ -1,0 +1,29 @@
+code: INFO20003
+title: Database Systems
+level: 2
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+    - semester-2
+prerequisites:
+  any:
+    - any:
+        - COMP10001
+        - COMP20005
+        - COMP10002
+        - COMP10003
+    - manual: At least 75% in the programming competency test
+    - admission: MC-SOFTENG
+      note: Admission into the Master of Software Engineering (or GD-CS)
+corequisites: none
+non_allowed:
+  - INFO90002
+  - INFO20001
+  - SINF90001
+categories:
+  B-SCI: science
+handbook: https://handbook.unimelb.edu.au/2026/subjects/info20003
+source_year: 2026
+verified_on: 2026-10-07
+notes: Requirements and study periods copied by hand from the 2026 Handbook page.

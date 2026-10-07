@@ -4,6 +4,7 @@ year: 2026
 kind: major
 title: Data Science
 points: 50
-requirements: unknown # structure not curated yet — contributions welcome
+requirements:
+  - all: [MAST30025, MAST30027, MAST30034, COMP30027]
 handbook: https://handbook.unimelb.edu.au/2026/components/b-sci-major-8
-verified_on: null
+verified_on: 2026-10-07 # structure copied by hand from the Handbook

@@ -1,0 +1,22 @@
+code: COMP30023
+title: Computer Systems
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites:
+  any:
+    - COMP20003
+    - COMP20007
+    - COMP90038
+corequisites: none
+non_allowed:
+  - COMP90007
+  - COMP30017
+categories:
+  B-SCI: science
+handbook: https://handbook.unimelb.edu.au/2026/subjects/comp30023
+source_year: 2026
+verified_on: 2026-10-07
+notes: Requirements and study periods copied by hand from the 2026 Handbook page.

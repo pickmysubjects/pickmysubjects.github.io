@@ -1,0 +1,14 @@
+code: PHYC20013
+title: Laboratory and Computational Physics 2
+level: 2
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+    - semester-2
+categories:
+  B-SCI: science
+handbook: https://handbook.unimelb.edu.au/2026/subjects/phyc20013
+source_year: 2026
+verified_on: 2026-10-07
+notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.

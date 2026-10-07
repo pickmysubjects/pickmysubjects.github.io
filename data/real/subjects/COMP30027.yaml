@@ -3,15 +3,22 @@ title: Machine Learning
 level: 3
 points: 12.5
 offerings:
-  2026: [semester-1]
+  "2026":
+    - semester-1
 prerequisites:
   any:
-    - all: [COMP10002, COMP20008]
+    - all:
+        - COMP10002
+        - COMP20008
     - admission: MC-SOFTENG
       note: Admission into the Master of Software Engineering
 corequisites: none
-non_allowed: [COMP90049, ACTL30008]
+non_allowed:
+  - COMP90049
+  - ACTL30008
+categories:
+  B-SCI: science
 handbook: https://handbook.unimelb.edu.au/2026/subjects/comp30027
 source_year: 2026
-verified_on: null
-notes: From research notes 2026-10-07; needs a human check against the Handbook.
+verified_on: 2026-10-07
+notes: Requirements and study periods copied by hand from the 2026 Handbook page.
