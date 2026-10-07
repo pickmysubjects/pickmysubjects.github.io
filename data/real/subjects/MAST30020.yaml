@@ -5,9 +5,34 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
+prerequisites:
+  all:
+    - any:
+        - MAST10009
+        - MAST20026
+        - MAST20033
+    - any:
+        - MAST20004
+        - MAST20006
+corequisites: none
+non_allowed: []
 categories:
   B-SCI: science
 handbook: https://handbook.unimelb.edu.au/2026/subjects/mast30020
 source_year: 2026
 verified_on: 2026-10-07
-notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+notes: Requirements and study periods copied by hand from the 2026 Handbook page. Via MAST20006 you need H2B or above.
+skills:
+  - maths
+  - statistics
+topics:
+  - probability
+  - statistics
+assessment:
+  - kind: assignment
+    weight: 15
+  - kind: quiz
+    weight: 15
+  - kind: exam
+    weight: 70
+weekly_contact_hours: 4

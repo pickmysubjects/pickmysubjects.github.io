@@ -5,9 +5,43 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
+prerequisites:
+  all:
+    - any:
+        - MAST20009
+        - MAST20032
+    - any:
+        - MAST10007
+        - MAST10008
+        - MAST10022
+        - MAST10013
+        - MAST10018
+    - any:
+        - MAST10006
+        - MAST10009
+        - MAST10021
+        - MAST10019
+corequisites: none
+non_allowed:
+  - MAST30029
+  - MAST30023
+  - MAST20029
 categories:
   B-SCI: science
 handbook: https://handbook.unimelb.edu.au/2026/subjects/mast20030
 source_year: 2026
 verified_on: 2026-10-07
-notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+notes: Requirements and study periods copied by hand from the 2026 Handbook page. Not in the same semester as MAST20009. MAST20029 can't be taken with or after it.
+skills:
+  - maths
+topics:
+  - modelling
+  - calculus
+assessment:
+  - kind: assignment
+    weight: 20
+  - kind: test
+    weight: 15
+  - kind: exam
+    weight: 65
+weekly_contact_hours: 4

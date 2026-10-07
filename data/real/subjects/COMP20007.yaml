@@ -30,3 +30,21 @@ handbook: https://handbook.unimelb.edu.au/2026/subjects/comp20007
 source_year: 2026
 verified_on: 2026-10-07
 notes: Requirements and study periods copied by hand from the 2026 Handbook page. University maths points exclude MAST10012.
+skills:
+  - algorithms
+  - maths
+  - programming
+topics:
+  - algorithms
+  - theory
+assessment:
+  - kind: project
+    weight: 30
+    hurdle: true
+  - kind: test
+    weight: 10
+    hurdle: true
+  - kind: exam
+    weight: 60
+    hurdle: true
+weekly_contact_hours: 4

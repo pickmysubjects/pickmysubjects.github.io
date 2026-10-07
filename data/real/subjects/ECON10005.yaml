@@ -1,0 +1,45 @@
+code: ECON10005
+title: Quantitative Methods 1
+level: 1
+points: 12.5
+offerings:
+  "2026":
+    - summer
+    - semester-1
+    - semester-2
+prerequisites:
+  any:
+    - manual: VCE Mathematical Methods 3/4 study score of at least 25 (or equivalent)
+    - admission: B-COM
+      note: Admission into the Bachelor of Commerce
+    - MAST10012
+corequisites: none
+non_allowed:
+  - MAST20005
+  - MAST10010
+  - MAST10011
+categories: {}
+handbook: https://handbook.unimelb.edu.au/2026/subjects/econ10005
+source_year: 2026
+verified_on: 2026-10-07
+notes: Requirements and study periods copied by hand from the 2026 Handbook page. Not listed as breadth for the Bachelor of Science. Not for students planning an Actuarial Studies major.
+skills:
+  - statistics
+  - business
+  - data
+topics:
+  - statistics
+  - economics
+assessment:
+  - kind: assignment
+    weight: 10
+    group: true
+  - kind: test
+    weight: 15
+  - kind: quiz
+    weight: 10
+  - kind: participation
+    weight: 15
+  - kind: exam
+    weight: 50
+    hurdle: true

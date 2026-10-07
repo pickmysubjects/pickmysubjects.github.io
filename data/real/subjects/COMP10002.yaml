@@ -21,3 +21,20 @@ handbook: https://handbook.unimelb.edu.au/2026/subjects/comp10002
 source_year: 2026
 verified_on: 2026-10-07
 notes: Requirements and study periods copied by hand from the 2026 Handbook page.
+skills:
+  - programming
+  - algorithms
+topics:
+  - programming
+  - algorithms
+assessment:
+  - kind: test
+    weight: 15
+    hurdle: true
+  - kind: assignment
+    weight: 12.5
+  - kind: test
+    weight: 12.5
+  - kind: exam
+    weight: 60
+    hurdle: true

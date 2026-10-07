@@ -22,3 +22,21 @@ handbook: https://handbook.unimelb.edu.au/2026/subjects/comp30027
 source_year: 2026
 verified_on: 2026-10-07
 notes: Requirements and study periods copied by hand from the 2026 Handbook page.
+skills:
+  - programming
+  - maths
+  - statistics
+  - data
+topics:
+  - machine-learning
+  - ai
+  - data-science
+assessment:
+  - kind: project
+    weight: 20
+  - kind: project
+    weight: 20
+    group: true
+  - kind: exam
+    weight: 60
+weekly_contact_hours: 3.5

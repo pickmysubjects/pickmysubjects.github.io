@@ -20,3 +20,14 @@ handbook: https://handbook.unimelb.edu.au/2026/subjects/mast30031
 source_year: 2026
 verified_on: 2026-10-07
 notes: Requirements and study periods copied by hand from the 2026 Handbook page.
+skills:
+  - maths
+topics:
+  - modelling
+  - physics
+assessment:
+  - kind: assignment
+    weight: 30
+  - kind: exam
+    weight: 70
+weekly_contact_hours: 4

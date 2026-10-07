@@ -20,3 +20,25 @@ handbook: https://handbook.unimelb.edu.au/2026/subjects/comp30022
 source_year: 2026
 verified_on: 2026-10-07
 notes: Requirements and study periods copied by hand from the 2026 Handbook page. Prerequisites are the rule the 2026 Handbook gives for 2027 onwards (adds COMP20008); in 2026 it is INFO20003 plus one of INFO30005 or SWEN30006.
+skills:
+  - programming
+  - design
+  - presentation
+  - writing
+topics:
+  - software-engineering
+  - programming
+assessment:
+  - kind: project
+    weight: 45
+    group: true
+    hurdle: true
+  - kind: project
+    weight: 20
+    group: true
+  - kind: presentation
+    weight: 15
+    group: true
+  - kind: report
+    weight: 20
+weekly_contact_hours: 3

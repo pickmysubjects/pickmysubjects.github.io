@@ -1,0 +1,34 @@
+code: MKTG10001
+title: Principles of Marketing
+level: 1
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+    - semester-2
+prerequisites: none
+corequisites: none
+non_allowed: []
+categories:
+  B-SCI: breadth
+handbook: https://handbook.unimelb.edu.au/2026/subjects/mktg10001
+source_year: 2026
+verified_on: 2026-10-07
+notes: Requirements and study periods copied by hand from the 2026 Handbook page.
+skills:
+  - business
+  - writing
+topics:
+  - marketing
+assessment:
+  - kind: participation
+    weight: 10
+  - kind: report
+    weight: 10
+  - kind: report
+    weight: 25
+    group: true
+  - kind: participation
+    weight: 5
+  - kind: exam
+    weight: 50

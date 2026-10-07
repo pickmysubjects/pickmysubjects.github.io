@@ -22,3 +22,21 @@ handbook: https://handbook.unimelb.edu.au/2026/subjects/swen20003
 source_year: 2026
 verified_on: 2026-10-07
 notes: Requirements and study periods copied by hand from the 2026 Handbook page.
+skills:
+  - programming
+  - design
+topics:
+  - software-engineering
+  - programming
+assessment:
+  - kind: assignment
+    weight: 20
+  - kind: test
+    weight: 20
+    hurdle: true
+  - kind: participation
+    weight: 10
+    group: true
+  - kind: exam
+    weight: 50
+    hurdle: true

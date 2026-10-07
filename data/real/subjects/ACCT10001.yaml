@@ -1,0 +1,32 @@
+code: ACCT10001
+title: Accounting Reports and Analysis
+level: 1
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+    - semester-2
+prerequisites: none
+corequisites: none
+non_allowed: []
+categories:
+  B-SCI: breadth
+handbook: https://handbook.unimelb.edu.au/2026/subjects/acct10001
+source_year: 2026
+verified_on: 2026-10-07
+notes: Requirements and study periods copied by hand from the 2026 Handbook page. Breadth students may be withdrawn if the subject is full and should then try a later study period.
+skills:
+  - business
+  - writing
+topics:
+  - accounting
+assessment:
+  - kind: participation
+    weight: 10
+  - kind: assignment
+    weight: 15
+  - kind: assignment
+    weight: 25
+    group: true
+  - kind: exam
+    weight: 50

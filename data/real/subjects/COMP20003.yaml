@@ -27,3 +27,24 @@ handbook: https://handbook.unimelb.edu.au/2026/subjects/comp20003
 source_year: 2026
 verified_on: 2026-10-07
 notes: Requirements and study periods copied by hand from the 2026 Handbook page. The 25 points of university maths exclude MAST10012.
+skills:
+  - programming
+  - algorithms
+topics:
+  - algorithms
+  - programming
+assessment:
+  - kind: assignment
+    weight: 10
+    group: true
+  - kind: assignment
+    weight: 15
+  - kind: assignment
+    weight: 15
+  - kind: participation
+    weight: 5
+  - kind: test
+    weight: 10
+  - kind: exam
+    weight: 45
+weekly_contact_hours: 4

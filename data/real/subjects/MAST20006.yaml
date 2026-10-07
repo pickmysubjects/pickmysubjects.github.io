@@ -33,3 +33,16 @@ handbook: https://handbook.unimelb.edu.au/2026/subjects/mast20006
 source_year: 2026
 verified_on: 2026-10-07
 notes: Requirements and study periods copied by hand from the 2026 Handbook page.
+skills:
+  - maths
+  - statistics
+topics:
+  - probability
+  - statistics
+assessment:
+  - kind: assignment
+    weight: 20
+  - kind: test
+    weight: 10
+  - kind: exam
+    weight: 70

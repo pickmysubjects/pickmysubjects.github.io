@@ -1,0 +1,33 @@
+code: FNCE20005
+title: Corporate Financial Decision Making
+level: 2
+points: 12.5
+offerings:
+  "2026":
+    - summer
+    - semester-1
+    - semester-2
+prerequisites: FNCE10002
+corequisites: none
+non_allowed:
+  - FNCE30002
+categories:
+  B-SCI: breadth
+handbook: https://handbook.unimelb.edu.au/2026/subjects/fnce20005
+source_year: 2026
+verified_on: 2026-10-07
+notes: Requirements and study periods copied by hand from the 2026 Handbook page.
+skills:
+  - business
+  - maths
+topics:
+  - finance
+assessment:
+  - kind: test
+    weight: 25
+  - kind: exam
+    weight: 60
+  - kind: participation
+    weight: 10
+  - kind: quiz
+    weight: 5

@@ -20,3 +20,23 @@ handbook: https://handbook.unimelb.edu.au/2026/subjects/scie10005
 source_year: 2026
 verified_on: 2026-10-07
 notes: Requirements and study periods copied by hand from the 2026 Handbook page.
+skills:
+  - writing
+  - presentation
+topics:
+  - science-communication
+  - environment
+assessment:
+  - kind: quiz
+    weight: 20
+    hurdle: true
+  - kind: report
+    weight: 20
+    hurdle: true
+  - kind: report
+    weight: 20
+    hurdle: true
+  - kind: project
+    weight: 40
+    group: true
+    hurdle: true

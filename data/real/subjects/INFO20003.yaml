@@ -27,3 +27,17 @@ handbook: https://handbook.unimelb.edu.au/2026/subjects/info20003
 source_year: 2026
 verified_on: 2026-10-07
 notes: Requirements and study periods copied by hand from the 2026 Handbook page.
+skills:
+  - data
+  - programming
+topics:
+  - databases
+assessment:
+  - kind: assignment
+    weight: 30
+    hurdle: true
+  - kind: exam
+    weight: 60
+  - kind: quiz
+    weight: 10
+    hurdle: true

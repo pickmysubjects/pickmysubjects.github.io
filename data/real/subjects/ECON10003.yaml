@@ -1,0 +1,50 @@
+code: ECON10003
+title: Introductory Macroeconomics
+level: 1
+points: 12.5
+offerings:
+  "2026":
+    - summer
+    - semester-1
+    - semester-2
+prerequisites:
+  all:
+    - ECON10004
+    - any:
+        - admission: B-SCI
+          note: Admission into the Bachelor of Science
+        - admission: B-COM
+          note: Admission into the Bachelor of Commerce
+        - MAST10012
+        - manual: VCE Mathematical Methods or Specialist Mathematics 3/4 study score of at least 25 (or equivalent)
+        - all:
+            - MAST10014
+            - MAST10015
+corequisites: none
+non_allowed: []
+categories:
+  B-SCI: breadth
+handbook: https://handbook.unimelb.edu.au/2026/subjects/econ10003
+source_year: 2026
+verified_on: 2026-10-07
+notes: Requirements and study periods copied by hand from the 2026 Handbook page.
+skills:
+  - business
+  - writing
+  - presentation
+topics:
+  - economics
+assessment:
+  - kind: test
+    weight: 20
+  - kind: presentation
+    weight: 10
+    group: true
+  - kind: assignment
+    weight: 20
+    group: true
+  - kind: participation
+    weight: 10
+  - kind: exam
+    weight: 40
+    hurdle: true

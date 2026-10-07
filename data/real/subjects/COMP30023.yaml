@@ -20,3 +20,23 @@ handbook: https://handbook.unimelb.edu.au/2026/subjects/comp30023
 source_year: 2026
 verified_on: 2026-10-07
 notes: Requirements and study periods copied by hand from the 2026 Handbook page.
+skills:
+  - programming
+  - systems
+topics:
+  - systems
+  - programming
+assessment:
+  - kind: project
+    weight: 30
+    hurdle: true
+  - kind: participation
+    weight: 10
+    hurdle: true
+  - kind: test
+    weight: 10
+    hurdle: true
+  - kind: exam
+    weight: 50
+    hurdle: true
+weekly_contact_hours: 4

@@ -5,9 +5,32 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
+prerequisites:
+  all:
+    - any:
+        - MAST10009
+        - MAST20026
+        - MAST20033
+    - points:
+        min: 25
+        level: 2
+        area: MAST
+corequisites: none
+non_allowed: []
 categories:
   B-SCI: science
 handbook: https://handbook.unimelb.edu.au/2026/subjects/mast30011
 source_year: 2026
 verified_on: 2026-10-07
-notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+notes: Requirements and study periods copied by hand from the 2026 Handbook page. Handbook rule is 25 points including one of MAST10009, MAST20026 or MAST20033 plus another level-2 MAST subject; recorded as 25 level-2 MAST points, slightly stricter for the MAST10009 route.
+skills:
+  - maths
+topics:
+  - mathematics
+  - theory
+assessment:
+  - kind: assignment
+    weight: 20
+  - kind: exam
+    weight: 80
+weekly_contact_hours: 4

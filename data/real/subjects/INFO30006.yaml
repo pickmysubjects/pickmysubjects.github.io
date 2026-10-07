@@ -20,3 +20,17 @@ handbook: https://handbook.unimelb.edu.au/2026/subjects/info30006
 source_year: 2026
 verified_on: 2026-10-07
 notes: Requirements and study periods copied by hand from the 2026 Handbook page.
+skills:
+  - writing
+  - systems
+topics:
+  - security
+assessment:
+  - kind: report
+    weight: 40
+    group: true
+  - kind: test
+    weight: 20
+  - kind: exam
+    weight: 40
+weekly_contact_hours: 3

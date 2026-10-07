@@ -28,3 +28,17 @@ handbook: https://handbook.unimelb.edu.au/2026/subjects/mast10005
 source_year: 2026
 verified_on: 2026-10-07
 notes: Requirements and study periods copied by hand from the 2026 Handbook page. Can't be taken with or after MAST10006, or with a VCE Specialist Maths score of 30+. B-SCI allows at most three of MAST10005, MAST10006, MAST10007 and MAST10010.
+skills:
+  - maths
+topics:
+  - calculus
+  - mathematics
+assessment:
+  - kind: assignment
+    weight: 15
+  - kind: test
+    weight: 20
+  - kind: quiz
+    weight: 5
+  - kind: exam
+    weight: 60

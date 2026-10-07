@@ -5,9 +5,33 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
+prerequisites:
+  any:
+    - MAST10008
+    - MAST10013
+    - manual: VCE Specialist Mathematics 3/4 study score of at least 38 (or equivalent), or permission from the Mathematics and Statistics Learning Centre
+corequisites: none
+non_allowed:
+  - MAST10006
+  - MAST20026
+  - MAST10021
+  - MAST10019
 categories:
   B-SCI: science
 handbook: https://handbook.unimelb.edu.au/2026/subjects/mast10009
 source_year: 2026
 verified_on: 2026-10-07
-notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+notes: Requirements and study periods copied by hand from the 2026 Handbook page.
+skills:
+  - maths
+topics:
+  - calculus
+  - pure-maths
+assessment:
+  - kind: assignment
+    weight: 15
+  - kind: test
+    weight: 15
+  - kind: exam
+    weight: 70
+weekly_contact_hours: 5

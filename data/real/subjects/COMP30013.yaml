@@ -20,3 +20,17 @@ handbook: https://handbook.unimelb.edu.au/2026/subjects/comp30013
 source_year: 2026
 verified_on: 2026-10-07
 notes: Requirements and study periods copied by hand from the 2026 Handbook page.
+skills:
+  - writing
+  - presentation
+  - programming
+topics:
+  - programming
+assessment:
+  - kind: report
+    weight: 10
+  - kind: presentation
+    weight: 10
+  - kind: report
+    weight: 80
+    hurdle: true

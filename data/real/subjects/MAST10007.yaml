@@ -23,3 +23,17 @@ handbook: https://handbook.unimelb.edu.au/2026/subjects/mast10007
 source_year: 2026
 verified_on: 2026-10-07
 notes: Requirements and study periods copied by hand from the 2026 Handbook page. B-SCI allows at most three of MAST10005, MAST10006, MAST10007 and MAST10010.
+skills:
+  - maths
+topics:
+  - linear-algebra
+  - mathematics
+assessment:
+  - kind: assignment
+    weight: 15
+  - kind: test
+    weight: 10
+  - kind: test
+    weight: 15
+  - kind: exam
+    weight: 60

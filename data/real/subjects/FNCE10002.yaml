@@ -1,0 +1,38 @@
+code: FNCE10002
+title: Principles of Finance
+level: 1
+points: 12.5
+offerings:
+  "2026":
+    - summer
+    - semester-1
+    - semester-2
+prerequisites:
+  any:
+    - admission: B-SCI
+      note: Admission into the Bachelor of Science
+    - admission: B-COM
+      note: Admission into the Bachelor of Commerce
+    - manual: VCE Mathematical Methods 3/4 study score of at least 25 (or equivalent)
+    - MAST10012
+corequisites: none
+non_allowed:
+  - FNCE20001
+categories:
+  B-SCI: breadth
+handbook: https://handbook.unimelb.edu.au/2026/subjects/fnce10002
+source_year: 2026
+verified_on: 2026-10-07
+notes: Requirements and study periods copied by hand from the 2026 Handbook page. Breadth students may be withdrawn if the subject is full and should then try a later study period.
+skills:
+  - business
+  - maths
+topics:
+  - finance
+assessment:
+  - kind: assignment
+    weight: 15
+  - kind: test
+    weight: 25
+  - kind: exam
+    weight: 60
