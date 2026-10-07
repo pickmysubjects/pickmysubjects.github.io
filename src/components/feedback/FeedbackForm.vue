@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, shallowRef } from 'vue'
-import { FEEDBACK } from '@/config'
+import { FEEDBACK, FEEDBACK_FORM } from '@/config'
+import { isFormReady, submitGoogleForm } from '@/utils/googleForm'
 import { PAIN_POINTS } from '@/painPoints'
 import { feedbackText, githubIssueUrl, mailtoUrl, OTHER_TOPICS, type FeedbackDraft } from '@/utils/feedback'
 import { useI18n } from '@/i18n'
@@ -9,6 +10,25 @@ const draft = defineModel<FeedbackDraft>({ required: true })
 
 const { t, locale } = useI18n()
 const copied = shallowRef(false)
+const direct = isFormReady(FEEDBACK_FORM)
+const sendState = shallowRef<'idle' | 'sending' | 'sent' | 'failed'>('idle')
+
+async function sendDirect(): Promise<void> {
+  sendState.value = 'sending'
+  try {
+    await submitGoogleForm(FEEDBACK_FORM, {
+      topic: draft.value.topic,
+      rating: draft.value.rating === null ? '' : String(draft.value.rating),
+      subject: draft.value.subject,
+      message: draft.value.message,
+      contact: draft.value.contact,
+      language: locale.value,
+    })
+    sendState.value = 'sent'
+  } catch {
+    sendState.value = 'failed'
+  }
+}
 const ready = computed(() => draft.value.message.trim().length >= 5)
 const isPainPoint = computed(() => PAIN_POINTS.some((p) => p.id === draft.value.topic))
 const github = computed(() => githubIssueUrl(draft.value, locale.value))
@@ -80,7 +100,16 @@ function value(event: Event): string {
 
     <div class="send">
       <span class="send-label">{{ t('feedback.send') }}</span>
-      <a v-if="github && ready" class="button" :href="github" target="_blank" rel="noopener">{{ t('feedback.github') }}</a>
+      <button
+        v-if="direct"
+        class="button"
+        type="button"
+        :disabled="!ready || sendState === 'sending' || sendState === 'sent'"
+        @click="sendDirect"
+      >
+        {{ sendState === 'sent' ? t('feedback.sent') : t('feedback.direct') }}
+      </button>
+      <a v-if="github && ready" class="button" :class="{ 'button-quiet': direct }" :href="github" target="_blank" rel="noopener">{{ t('feedback.github') }}</a>
       <a v-if="mail && ready" class="button button-quiet" :href="mail">{{ t('feedback.email') }}</a>
       <a v-if="FEEDBACK.feedbackFormUrl" class="button button-quiet" :href="FEEDBACK.feedbackFormUrl" target="_blank" rel="noopener">
         {{ t('feedback.form') }}
@@ -89,6 +118,7 @@ function value(event: Event): string {
         {{ copied ? t('feedback.copied') : t('feedback.copy') }}
       </button>
     </div>
+    <p v-if="sendState === 'failed'" class="send-failed" role="alert">{{ t('feedback.failed') }}</p>
     <p class="send-hint">
       {{ t('feedback.hint') }}
       <span v-if="!ready">{{ t('feedback.writeFirst') }}</span>
@@ -160,6 +190,11 @@ function value(event: Event): string {
 
 .send-label {
   font-weight: 600;
+}
+
+.send-failed {
+  margin: 0;
+  color: var(--stop);
 }
 
 .send-hint {

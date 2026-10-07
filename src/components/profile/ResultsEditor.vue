@@ -2,12 +2,25 @@
 import { shallowRef, useId } from 'vue'
 import { PASS_MARK, type Profile, type Subject } from '@/engine'
 import { useI18n } from '@/i18n'
+import RatingForm from '@/components/rating/RatingForm.vue'
+import { useRated } from '@/composables/useRated'
 
 const results = defineModel<Profile['results']>({ required: true })
 defineProps<{ subjects: Record<string, Subject>; options: { code: string; title: string }[] }>()
 
 const listId = useId()
 const { t } = useI18n()
+const { rated, markRated } = useRated()
+const rating = shallowRef<string | null>(null)
+const thanks = shallowRef<string | null>(null)
+
+function onRated(code: string, sent: boolean): void {
+  rating.value = null
+  if (sent) {
+    markRated(code)
+    thanks.value = code
+  }
+}
 const code = shallowRef('')
 const mark = shallowRef<number | ''>('')
 const error = shallowRef('')
@@ -89,10 +102,16 @@ function value(event: Event): string {
             />
             <span v-if="r.mark !== undefined && r.mark < PASS_MARK" class="fail">{{ t('record.fail') }}</span>
           </td>
-          <td><button class="button button-quiet" type="button" @click="remove(r.code)">{{ t('record.remove') }}</button></td>
+          <td class="row-actions">
+            <span v-if="rated.has(r.code)" class="rated">{{ t('rating.rated') }}</span>
+            <button v-else class="button button-quiet" type="button" @click="rating = r.code">{{ t('rating.rate') }}</button>
+            <button class="button button-quiet" type="button" @click="remove(r.code)">{{ t('record.remove') }}</button>
+          </td>
         </tr>
       </tbody>
     </table>
+    <p v-if="thanks" class="thanks" role="status">{{ t('rating.sent') }}</p>
+    <RatingForm v-if="rating" :key="rating" class="rating-form" :code="rating" @done="onRated(rating, $event)" />
   </section>
 </template>
 
@@ -157,6 +176,35 @@ function value(event: Event): string {
 
 .mark {
   width: 80px;
+}
+
+.row-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 6px;
+}
+
+.row-actions .button {
+  padding: 5px 10px;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.rated {
+  font-size: 0.8rem;
+  color: var(--forest);
+  white-space: nowrap;
+}
+
+.thanks {
+  margin: 12px 0 0;
+  color: var(--forest);
+  font-weight: 600;
+}
+
+.rating-form {
+  margin-top: 14px;
 }
 
 .fail {

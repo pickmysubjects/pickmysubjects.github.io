@@ -1,4 +1,4 @@
-import { readdirSync, readFileSync, statSync } from 'node:fs'
+import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs'
 import { join, relative } from 'node:path'
 import { parse } from 'yaml'
 import { z } from 'zod'
@@ -55,6 +55,8 @@ export function buildDataset(name: Dataset['name']): BuildResult {
     .map((f) => load(f, componentFileSchema, errors))
     .filter((c) => c !== null)
 
+  mergeRatings(join(base, 'ratings.json'), subjects)
+
   const missing = new Set<string>()
   for (const s of Object.values(subjects)) {
     for (const ref of [...referencedSubjects(s.prerequisites), ...referencedSubjects(s.corequisites)]) {
@@ -71,5 +73,26 @@ export function buildDataset(name: Dataset['name']): BuildResult {
     dataset: { name, generatedAt: new Date().toISOString(), subjects, courses, components },
     errors,
     missing: [...missing].sort(),
+  }
+}
+
+/** Minimum reviews before crowd skill tags are trusted (signals are shrunk by the engine instead). */
+const MIN_REVIEWS_FOR_SKILLS = 3
+
+/**
+ * Fold aggregated crowd ratings (written daily by scripts/ratings/fetch.ts) into the
+ * subjects. Curated values win: a subject's own `signals`/`skills` are never overwritten.
+ */
+function mergeRatings(file: string, subjects: Dataset['subjects']): void {
+  if (!existsSync(file)) return
+  const ratings = JSON.parse(readFileSync(file, 'utf8')) as Record<
+    string,
+    { reviews: number; difficulty: number; workload: number; grading: number; skills: string[] }
+  >
+  for (const [code, r] of Object.entries(ratings)) {
+    const s = subjects[code]
+    if (!s) continue
+    s.signals ??= { difficulty: r.difficulty, workload: r.workload, grading: r.grading, reviews: r.reviews }
+    if (s.skills.length === 0 && r.reviews >= MIN_REVIEWS_FOR_SKILLS) s.skills = r.skills
   }
 }
