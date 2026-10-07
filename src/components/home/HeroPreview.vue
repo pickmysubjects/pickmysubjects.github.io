@@ -20,13 +20,12 @@ const hasProfile = computed(
 const featured = computed(() => showcase.value[0])
 const bars = computed(() => {
   const s = featured.value?.signals
-  return s
-    ? [
-        { key: 'rating.difficulty', value: s.difficulty },
-        { key: 'rating.workload', value: s.workload },
-        { key: 'rating.generosity', value: s.grading },
-      ]
-    : []
+  if (!s) return []
+  return [
+    { key: 'rating.difficulty', value: s.difficulty },
+    { key: 'rating.workload', value: s.workload },
+    { key: 'rating.generosity', value: s.grading },
+  ].filter((b): b is { key: string; value: number } => b.value !== undefined)
 })
 // With a profile: the visitor's top matches (undergraduate only). Without one a
 // match score means nothing, so show when a few familiar subjects run instead.

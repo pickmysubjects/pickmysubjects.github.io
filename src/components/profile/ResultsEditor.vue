@@ -42,18 +42,18 @@ function add(): void {
   error.value = ''
 }
 
-function setMark(c: string, raw: string): void {
-  const m = raw === '' ? undefined : Math.max(0, Math.min(100, Number(raw)))
+function setMark(c: string, event: Event): void {
+  const input = event.target as HTMLInputElement
+  const m = input.value === '' ? undefined : Math.max(0, Math.min(100, Number(input.value)))
   results.value = results.value.map((r) => (r.code === c ? { code: c, mark: m } : r))
+  // If the stored mark didn't change (e.g. 100 → 150 → 100), Vue won't repaint the box.
+  input.value = m === undefined ? '' : String(m)
 }
 
 function remove(c: string): void {
   results.value = results.value.filter((r) => r.code !== c)
 }
 
-function value(event: Event): string {
-  return (event.target as HTMLInputElement).value
-}
 </script>
 
 <template>
@@ -98,7 +98,7 @@ function value(event: Event): string {
               max="100"
               :value="r.mark ?? ''"
               :aria-label="t('record.markFor', { code: r.code })"
-              @change="setMark(r.code, value($event))"
+              @change="setMark(r.code, $event)"
             />
             <span v-if="r.mark !== undefined && r.mark < PASS_MARK" class="fail">{{ t('record.fail') }}</span>
           </td>

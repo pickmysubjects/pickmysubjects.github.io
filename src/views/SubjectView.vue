@@ -4,7 +4,7 @@ import { ArrowLeft, CalendarRange, Check, ExternalLink, Plus, Star } from 'lucid
 import DataNotice from '@/components/DataNotice.vue'
 import RatingForm from '@/components/rating/RatingForm.vue'
 import AssessmentPanel from '@/components/subject/AssessmentPanel.vue'
-import { periodsFor, referencedSubjects } from '@/engine'
+import { periodsFor, referencedSubjects, termKey } from '@/engine'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
 import { useProfile } from '@/composables/useProfile'
@@ -45,17 +45,31 @@ function onRated(sent: boolean): void {
   thanks.value = true
 }
 
-/** First planned term the subject runs in, so "Add to my plan" lands somewhere sensible. */
-const targetTerm = computed(() =>
-  plan.terms.value.findIndex((term) => !subject.value || periodsFor(subject.value, term.year).includes(term.period)),
-)
+/**
+ * Where "Add to my plan" puts it: the first planned semester it runs in, or —
+ * for summer/winter-only subjects — the first such term within the plan's years
+ * (the planner adds that term).
+ */
+const target = computed(() => {
+  const s = subject.value
+  const terms = plan.terms.value
+  const first = terms[0]
+  const last = terms.at(-1)
+  if (!s || !first || !last) return null
+  const hit = terms.find((term) => periodsFor(s, term.year).includes(term.period))
+  if (hit) return { year: hit.year, period: hit.period }
+  for (let year = first.year; year <= last.year; year++) {
+    const period = periodsFor(s, year).find((p) => termKey(year, p) >= termKey(first.year, first.period))
+    if (period) return { year, period }
+  }
+  return null
+})
 
 function addToPlan(): void {
-  const i = targetTerm.value
-  const term = plan.terms.value[i]
-  if (i < 0 || !term) return
-  plan.addSubject(i, code.value)
-  added.value = termLabel(t.value, term)
+  const where = target.value
+  if (!where) return
+  plan.addSubjectAt(where.year, where.period, code.value)
+  added.value = termLabel(t.value, where)
 }
 
 const meters = computed(() => {
@@ -96,7 +110,7 @@ const links = computed(() => (name.value === 'real' ? discussionLinks(code.value
           </span>
         </div>
         <div class="actions">
-          <button class="button button-accent" type="button" :disabled="inPlan || targetTerm < 0" @click="addToPlan">
+          <button class="button button-accent" type="button" :disabled="inPlan || !target" @click="addToPlan">
             <component :is="inPlan ? Check : Plus" :size="18" aria-hidden="true" />
             {{ inPlan ? t('subject.inPlan') : t('subject.addToPlan') }}
           </button>
@@ -138,6 +152,7 @@ const links = computed(() => (name.value === 'real' ? discussionLinks(code.value
           <h2 class="panel-title">{{ t('subject.ratingsTitle') }}</h2>
           <template v-if="meters.length">
             <p class="panel-text muted">{{ t('subject.reviews', { n: subject.signals?.reviews ?? 0 }) }}</p>
+            <p v-if="subject.signals?.hours" class="panel-text">{{ t('subject.hoursWeek', { n: subject.signals.hours }) }}</p>
             <div class="meters">
               <div v-for="m in meters" :key="m.key" class="meter">
                 <span class="meter-label">{{ t(m.key) }}</span>

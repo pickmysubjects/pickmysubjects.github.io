@@ -42,7 +42,6 @@ describe('aggregate ratings', () => {
       hoursMedian: 10,
       recommendRate: 0.7,
       skills: ['maths'], // programming was ticked by 1 of 3, below the 50% bar
-      grades: { H1: 2 },
       examDifficulty: null,
       usefulness: null,
       interest: null,
@@ -75,12 +74,40 @@ describe('aggregate ratings', () => {
       row(), // exact duplicate (same timestamp too)
       row({ timestamp: 'later' }), // identical answers resubmitted later
       row({ code: 'not a code' }),
-      row({ difficulty: '9' }),
+      row({ timestamp: 'empty', difficulty: '', workload: '', generosity: '', hours: '', skills: '', recommend: '' }), // answers nothing
       row({ year: '2099' }),
     ]
     const result = aggregate(rowsToObjects(values), now)
-    expect(result.subjects.COMP30027?.reviews).toBe(1)
+    expect(result.accepted).toBe(1)
     expect(result.rejected).toBe(5)
+  })
+
+  it('takes partial answers: a blank year or question is fine, an out-of-range answer is ignored', () => {
+    const partial = [
+      row({ timestamp: 'a', year: '', semester: '', difficulty: '', generosity: '', workload: '2' }),
+      row({ timestamp: 'b', difficulty: '9', workload: '3' }), // 9 isn't on the scale
+      row({ timestamp: 'c', difficulty: '', workload: '4' }),
+    ]
+    const out = aggregate(rowsToObjects([header, ...partial]), now).subjects.COMP30027
+    expect(out?.reviews).toBe(3)
+    expect(out?.workload).toBe(3)
+    expect(out?.difficulty).toBeNull() // nobody gave a valid difficulty
+  })
+
+  it('publishes nothing about a subject until 3 people rated it, and never grade bands', () => {
+    const two = [row({ timestamp: 'a' }), row({ timestamp: 'b', hours: '4' })]
+    expect(aggregate(rowsToObjects([header, ...two]), now).subjects.COMP30027).toBeUndefined()
+    const out = aggregate(rowsToObjects([header, ...two, row({ timestamp: 'c', hours: '5' })]), now).subjects.COMP30027
+    expect(out?.reviews).toBe(3)
+    expect(JSON.stringify(out)).not.toMatch(/H1|grade/i)
+  })
+
+  it('ignores codes that are not in the dataset and caps a burst on one day', () => {
+    const known = new Set(['COMP30027'])
+    const fake = [1, 2, 3].map((i) => row({ code: 'ZZZZ10001', timestamp: `f${i}` }))
+    expect(aggregate(rowsToObjects([header, ...fake]), now, known).subjects.ZZZZ10001).toBeUndefined()
+    const burst = Array.from({ length: 30 }, (_, i) => row({ timestamp: `2026/10/07 10:${String(i).padStart(2, '0')}:00`, hours: String(i + 1) }))
+    expect(aggregate(rowsToObjects([header, ...burst]), now, known).subjects.COMP30027?.reviews).toBe(10)
   })
 
   it('never outputs free text or anything beyond aggregates', () => {

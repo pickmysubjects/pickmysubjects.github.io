@@ -6,16 +6,27 @@ import PlanMap from '@/components/planner/PlanMap.vue'
 import RuleLegend from '@/components/planner/RuleLegend.vue'
 import PlanIssues from '@/components/planner/PlanIssues.vue'
 import DataNotice from '@/components/DataNotice.vue'
+import Interp from '@/components/Interp.vue'
+import { planStart } from '@/engine'
+import { useProfile } from '@/composables/useProfile'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan, type PlanSetup } from '@/composables/usePlan'
 import { useI18n } from '@/i18n'
 import { noteText, termLabel } from '@/i18n/format'
 
-const { data, subjectList } = useDataset()
+// The wizard copies the setup once, so it restarts when the dataset is switched.
+const { data, subjectList, name: dataName } = useDataset()
 const plan = usePlan()
+const { profile } = useProfile()
 const { t } = useI18n()
 
 const editing = shallowRef(false)
+// Started before now but no record yet: the plan can't know what's done.
+const startedWithoutRecord = computed(() => {
+  const { startYear: year, startPeriod: period } = plan.setup.value
+  const start = planStart({ year, period }, new Date())
+  return (start.year !== year || start.period !== period) && profile.value.results.length === 0
+})
 const showWizard = computed(() => editing.value || (plan.isEmpty.value && plan.notes.value.length === 0))
 
 const options = computed(() => subjectList.value.map((s) => ({ code: s.code, title: s.title })))
@@ -57,6 +68,7 @@ function finishWizard(setup: PlanSetup): void {
 
     <PlanWizard
       v-if="showWizard"
+      :key="dataName"
       :setup="plan.setup.value"
       :courses="data.courses"
       :components="data.components"
@@ -76,6 +88,14 @@ function finishWizard(setup: PlanSetup): void {
           </button>
         </div>
       </section>
+
+      <p v-if="startedWithoutRecord" class="started">
+        <Interp :text="t('plan.started')">
+          <template #record>
+            <a href="#/record">{{ t('nav.record') }}</a>
+          </template>
+        </Interp>
+      </p>
 
       <section class="status" :class="problems ? 'status-bad' : unknowns ? 'status-warn' : 'status-good'" role="status">
         <component :is="problems || unknowns ? TriangleAlert : CircleCheck" :size="22" aria-hidden="true" />
@@ -146,6 +166,13 @@ function finishWizard(setup: PlanSetup): void {
 .bar-actions {
   display: flex;
   gap: 8px;
+}
+
+.started {
+  padding: 12px 16px;
+  border-radius: var(--radius);
+  background: var(--accent-soft);
+  font-size: 0.95rem;
 }
 
 .status {

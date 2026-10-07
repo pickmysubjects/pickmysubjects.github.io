@@ -5,6 +5,8 @@ import {
   findCourse,
   generatePlan,
   passedCodes,
+  planStart,
+  termKey,
   standardTerms,
   type Dataset,
   type Period,
@@ -88,6 +90,9 @@ export function usePlan() {
 
   function generate(): void {
     const { setup } = state.value
+    // Students who started already are planned from the next semester on; what
+    // they've done comes from their record.
+    const start = planStart({ year: setup.startYear, period: setup.startPeriod }, new Date())
     const result = generatePlan({
       data: data.value,
       profile: profile.value,
@@ -95,20 +100,36 @@ export function usePlan() {
       courseYear: setup.courseYear,
       major: setup.major || undefined,
       specialisation: setup.specialisation || undefined,
-      startYear: setup.startYear,
-      startPeriod: setup.startPeriod,
+      startYear: start.year,
+      startPeriod: start.period,
     })
     save((s) => ({ ...s, terms: result.plan.terms, notes: result.notes, unplaced: result.unplaced }))
   }
 
   function startEmpty(): void {
     const { setup } = state.value
-    save((s) => ({ ...s, terms: standardTerms(setup.startYear, setup.startPeriod, 6), notes: [], unplaced: [] }))
+    const start = planStart({ year: setup.startYear, period: setup.startPeriod }, new Date())
+    save((s) => ({ ...s, terms: standardTerms(start.year, start.period, 6), notes: [], unplaced: [] }))
   }
 
   function addSubject(termIndex: number, code: string): void {
     save((s) => {
-      s.terms[termIndex]?.subjects.push(code)
+      const term = s.terms[termIndex]
+      if (term && !term.subjects.includes(code)) term.subjects.push(code)
+      return s
+    })
+  }
+
+  /** Add to the plan's term for that year and period, creating it (e.g. a summer term) in order if needed. */
+  function addSubjectAt(year: number, period: Period, code: string): void {
+    save((s) => {
+      let term = s.terms.find((t) => t.year === year && t.period === period)
+      if (!term) {
+        term = { year, period, subjects: [] }
+        const at = s.terms.findIndex((t) => termKey(t.year, t.period) > termKey(year, period))
+        s.terms.splice(at < 0 ? s.terms.length : at, 0, term)
+      }
+      if (!term.subjects.includes(code)) term.subjects.push(code)
       return s
     })
   }
@@ -128,14 +149,15 @@ export function usePlan() {
       const target = s.terms[to]
       if (!source || !target || !source.subjects.includes(code)) return s
       source.subjects = source.subjects.filter((c) => c !== code)
-      target.subjects.push(code)
+      if (!target.subjects.includes(code)) target.subjects.push(code)
       return s
     })
   }
 
   function addTerm(): void {
     save((s) => {
-      const last = s.terms.at(-1)
+      // Summer/winter terms sit between semesters; the next one follows the last semester.
+      const last = [...s.terms].reverse().find((t) => t.period === 'semester-1' || t.period === 'semester-2')
       const next = last
         ? standardTerms(last.year, last.period, 2)[1]
         : standardTerms(s.setup.startYear, s.setup.startPeriod, 1)[0]
@@ -166,6 +188,7 @@ export function usePlan() {
     generate,
     startEmpty,
     addSubject,
+    addSubjectAt,
     removeSubject,
     moveSubject,
     addTerm,

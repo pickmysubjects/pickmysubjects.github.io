@@ -14,7 +14,16 @@ function parse(): Route {
   const [path = '', search = ''] = location.hash.replace(/^#\/?/, '').split('?')
   const [head = '', param = ''] = path.split('/')
   const view = (VIEWS as readonly string[]).includes(head) ? (head as View) : 'home'
-  return { view, param: decodeURIComponent(param), query: new URLSearchParams(search) }
+  return { view, param: safeDecode(param), query: new URLSearchParams(search) }
+}
+
+/** A cut-off link like #/subject/COMP%3 must not take the whole page down. */
+function safeDecode(text: string): string {
+  try {
+    return decodeURIComponent(text)
+  } catch {
+    return text
+  }
 }
 
 /**

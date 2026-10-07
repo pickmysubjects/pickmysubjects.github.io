@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, shallowRef } from 'vue'
 import { RATINGS_FORM } from '@/config'
+import { useDataset } from '@/composables/useDataset'
 import { SKILLS, type Period, type Skill } from '@/engine'
 import { useI18n } from '@/i18n'
 import { hasQuestion, isFormReady, submitGoogleForm } from '@/utils/googleForm'
@@ -10,8 +11,9 @@ const emit = defineEmits<{ done: [sent: boolean] }>()
 const { t, locale } = useI18n()
 
 const thisYear = new Date().getFullYear()
-const year = shallowRef(thisYear - 1)
-const semester = shallowRef<Period>('semester-1')
+// Every question is optional: students send whatever they remember ('' = not sure).
+const year = shallowRef<number | ''>(thisYear - 1)
+const semester = shallowRef<Period | ''>('semester-1')
 const difficulty = shallowRef<number | null>(null)
 const workload = shallowRef<number | null>(null)
 const generosity = shallowRef<number | null>(null)
@@ -26,8 +28,17 @@ const recommend = shallowRef('')
 const wish = shallowRef('')
 const status = shallowRef<'idle' | 'sending' | 'failed'>('idle')
 
-const ready = isFormReady(RATINGS_FORM)
-const complete = computed(() => difficulty.value !== null && workload.value !== null && generosity.value !== null)
+// Demo subjects are fictional: their ratings must never reach the real form.
+const { name: dataset } = useDataset()
+const demo = computed(() => dataset.value === 'demo')
+const ready = computed(() => isFormReady(RATINGS_FORM) && !demo.value)
+const complete = computed(
+  () =>
+    [difficulty, workload, generosity, examDifficulty, usefulness, interest, teaching].some((r) => r.value !== null) ||
+    hours.value !== '' ||
+    skills.value.length > 0 ||
+    recommend.value !== '',
+)
 const periods: Period[] = ['summer', 'semester-1', 'winter', 'semester-2']
 // Option labels as typed in the Google Form (English), independent of the UI language.
 const formSemester: Record<Period, string> = {
@@ -61,8 +72,8 @@ async function send(): Promise<void> {
   try {
     await submitGoogleForm(RATINGS_FORM, {
       code: props.code,
-      year: String(year.value),
-      semester: formSemester[semester.value],
+      year: year.value === '' ? '' : String(year.value),
+      semester: semester.value === '' ? '' : formSemester[semester.value],
       difficulty: String(difficulty.value),
       workload: String(workload.value),
       generosity: String(generosity.value),
@@ -91,19 +102,28 @@ function value(event: Event): string {
 <template>
   <form class="rate surface" @submit.prevent="send">
     <h3 class="rate-title">{{ t('rating.title', { code }) }}</h3>
-    <p class="rate-intro">{{ t('rating.intro') }}</p>
+    <p class="rate-intro">{{ t('rating.intro') }} {{ t('rating.allOptional') }}</p>
 
-    <p v-if="!ready" class="rate-off">{{ t('rating.notReady') }}</p>
+    <p v-if="demo" class="rate-off">{{ t('rating.demoOff') }}</p>
+    <p v-else-if="!ready" class="rate-off">{{ t('rating.notReady') }}</p>
     <template v-else>
       <div class="rate-row">
         <label class="field">
           {{ t('rating.year') }}
-          <input class="input" type="number" :min="2010" :max="thisYear" :value="year" @change="year = Number(value($event))" />
+          <input
+            class="input"
+            type="number"
+            :min="2010"
+            :max="thisYear"
+            :value="year"
+            @change="year = value($event) === '' ? '' : Number(value($event))"
+          />
         </label>
         <label class="field">
           {{ t('rating.semester') }}
-          <select class="select" :value="semester" @change="semester = value($event) as Period">
+          <select class="select" :value="semester" @change="semester = value($event) as Period | ''">
             <option v-for="p in periods" :key="p" :value="p">{{ t(`period.${p}`) }}</option>
+            <option value="">{{ t('rating.notSure') }}</option>
           </select>
         </label>
       </div>

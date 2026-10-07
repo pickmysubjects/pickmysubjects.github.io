@@ -47,6 +47,12 @@ function reportMissing(): void {
   go(href.slice(2))
 }
 
+// Typing again after a pick (focus never left the box) should reopen the list.
+function onInput(): void {
+  active.value = 0
+  open.value = true
+}
+
 function move(delta: number): void {
   if (results.value.length) active.value = (active.value + delta + results.value.length) % results.value.length
 }
@@ -67,7 +73,8 @@ function move(delta: number): void {
       :placeholder="compact ? t('home.searchShort') : t('home.search')"
       @focus="open = true"
       @blur="open = false"
-      @input="active = 0"
+      :aria-activedescendant="open && results[active] ? `${listId}-${active}` : undefined"
+      @input="onInput"
       @keydown.enter.prevent="onEnter"
       @keydown.down.prevent="move(1)"
       @keydown.up.prevent="move(-1)"
@@ -75,6 +82,7 @@ function move(delta: number): void {
     <ul v-if="open && query.trim()" :id="listId" class="results" role="listbox">
       <li
         v-for="(s, i) in results"
+        :id="`${listId}-${i}`"
         :key="s.code"
         class="result"
         role="option"

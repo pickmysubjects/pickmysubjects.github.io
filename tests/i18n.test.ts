@@ -77,3 +77,13 @@ describe('i18n', () => {
     expect(interpolate('{a} and {b}', { a: 1 })).toBe('1 and {b}')
   })
 })
+
+describe('counts of one', () => {
+  it('uses the singular message for n = 1 and the plural otherwise', async () => {
+    const { useI18n } = await import('../src/i18n')
+    const { t, setLocale } = useI18n()
+    setLocale('en')
+    expect(t.value('plan.statusUnknown', { n: 1 })).toBe('Looks fine, but 1 thing can’t be checked yet')
+    expect(t.value('plan.statusUnknown', { n: 2 })).toBe('Looks fine, but 2 things can’t be checked yet')
+  })
+})

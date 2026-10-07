@@ -7,6 +7,14 @@ import { ref, watch, type Ref } from 'vue'
 export function usePersisted<T>(key: string, initial: T): Ref<T> {
   const state = ref(read(key) ?? initial) as Ref<T>
   watch(state, (value) => write(key, value), { deep: true })
+  // Another tab saved a newer copy: take it, so this tab doesn't later write back a stale one.
+  if (typeof window !== 'undefined') {
+    window.addEventListener('storage', (e) => {
+      if (e.key !== key || e.newValue === null) return
+      const next = read<T>(key)
+      if (next !== null) state.value = next
+    })
+  }
   return state
 }
 

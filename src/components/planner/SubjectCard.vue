@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import type { Issue, Subject } from '@/engine'
-import { categoryLabel } from '@/i18n/format'
+import { categoryLabel, issueText as issueTextFor } from '@/i18n/format'
 import { useI18n } from '@/i18n'
 
 const props = defineProps<{
@@ -30,7 +30,7 @@ const category = computed(() => categoryLabel(t.value, props.subject?.categories
 const issueText = computed(() =>
   props.issues
     .filter((i) => i.severity !== 'info')
-    .map((i) => i.message)
+    .map((i) => issueTextFor(t.value, i, [], []))
     .join('\n'),
 )
 const cardClasses = computed(() => ({

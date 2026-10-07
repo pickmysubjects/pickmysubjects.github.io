@@ -69,7 +69,12 @@ export function useI18n() {
   const messages = computed(() => LOCALES.find((l) => l.code === locale.value)?.messages ?? en)
   const t = computed<Translate>(() => {
     const current = messages.value
-    return (key, params) => interpolate(lookup(current, key) ?? lookup(en, key) ?? key, params)
+    // A count of exactly one uses the "…One" message (e.g. "1 problem" not "1 problems").
+    const pick = (key: string, params?: Params) => (params?.n === 1 ? `${key}One` : key)
+    return (key, params) => {
+      const k = pick(key, params)
+      return interpolate(lookup(current, k) ?? lookup(en, k) ?? lookup(current, key) ?? lookup(en, key) ?? key, params)
+    }
   })
   return {
     locale: computed(() => locale.value),
