@@ -100,13 +100,14 @@ function onCode(): void {
 
 <style scoped>
 .contribute {
+  padding-top: 32px;
   display: grid;
   gap: 20px;
 }
 
 .contribute-title {
   font-size: clamp(1.6rem, 3vw, 2.3rem);
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: -0.02em;
 }
 
@@ -147,7 +148,7 @@ function onCode(): void {
 
 .next-title {
   font-size: 0.75rem;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--ink-soft);

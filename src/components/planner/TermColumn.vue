@@ -110,7 +110,7 @@ function onDrop(event: DragEvent): void {
 
 .term-name {
   font-size: 0.95rem;
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .term-points {

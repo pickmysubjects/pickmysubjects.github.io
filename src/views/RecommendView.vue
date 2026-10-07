@@ -44,7 +44,6 @@ function value(event: Event): string {
   <div class="suggest">
     <section class="suggest-intro">
       <h1 class="suggest-title">{{ t('suggest.title') }}</h1>
-      <p class="suggest-lede">{{ t('suggest.lede') }}</p>
       <p v-if="!hasProfile" class="suggest-empty">
         <Interp :text="t('suggest.emptyProfile')">
           <template #link>
@@ -95,6 +94,7 @@ function value(event: Event): string {
 
 <style scoped>
 .suggest {
+  padding-top: 32px;
   display: grid;
   gap: 18px;
   max-width: 900px;
@@ -102,7 +102,7 @@ function value(event: Event): string {
 
 .suggest-title {
   font-size: clamp(1.6rem, 3vw, 2.3rem);
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: -0.02em;
 }
 

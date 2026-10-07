@@ -48,7 +48,7 @@ const { t } = useI18n()
   padding: 1px 9px;
   border-radius: 999px;
   font-size: 0.72rem;
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .status-works {
@@ -68,7 +68,7 @@ const { t } = useI18n()
 
 .pain-question {
   font-size: 0.98rem;
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .pain-answer {

@@ -65,7 +65,7 @@ const summary = computed(() => {
 
 .legend-title {
   font-size: 1rem;
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .legend-summary {
@@ -110,7 +110,7 @@ const summary = computed(() => {
   height: 20px;
   border-radius: 50%;
   font-size: 0.7rem;
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .rule-ok .rule-glyph {

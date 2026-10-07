@@ -36,6 +36,7 @@ const options = computed(() => subjectList.value.map((s) => ({ code: s.code, tit
 
 <style scoped>
 .record {
+  padding-top: 32px;
   display: grid;
   gap: 24px;
   max-width: 1100px;
@@ -43,7 +44,7 @@ const options = computed(() => subjectList.value.map((s) => ({ code: s.code, tit
 
 .record-title {
   font-size: clamp(1.6rem, 3vw, 2.3rem);
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: -0.02em;
 }
 
@@ -61,7 +62,7 @@ const options = computed(() => subjectList.value.map((s) => ({ code: s.code, tit
 
 .wam-label {
   font-size: 0.75rem;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: 0.08em;
   color: var(--ink-soft);
 }

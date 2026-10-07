@@ -62,6 +62,7 @@ function choose(id: string): void {
 
 <style scoped>
 .fb {
+  padding-top: 32px;
   display: grid;
   gap: 24px;
   max-width: 1100px;
@@ -69,7 +70,7 @@ function choose(id: string): void {
 
 .fb-title {
   font-size: clamp(1.6rem, 3vw, 2.3rem);
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: -0.02em;
 }
 
@@ -88,7 +89,7 @@ function choose(id: string): void {
 
 .fb-form-title {
   font-size: 1.2rem;
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .fb-code {

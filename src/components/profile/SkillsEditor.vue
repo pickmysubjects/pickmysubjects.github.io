@@ -5,56 +5,67 @@ import { useI18n } from '@/i18n'
 const skills = defineModel<Partial<Record<Skill, number>>>('skills', { required: true })
 const interests = defineModel<string[]>('interests', { required: true })
 defineProps<{ topics: string[] }>()
-
 const { t } = useI18n()
 
-function setSkill(skill: Skill, raw: string): void {
+// Two tap-to-toggle groups instead of eleven 1–5 dropdowns: strong = 5, weak = 1.
+const STRONG = 5
+const WEAK = 1
+
+function toggle(skill: Skill, level: number): void {
   const next = { ...skills.value }
-  if (raw === '') delete next[skill]
-  else next[skill] = Number(raw)
+  if (next[skill] === level) delete next[skill]
+  else next[skill] = level
   skills.value = next
 }
 
-function toggle(topic: string): void {
+function toggleInterest(topic: string): void {
   interests.value = interests.value.includes(topic)
-    ? interests.value.filter((t) => t !== topic)
+    ? interests.value.filter((x) => x !== topic)
     : [...interests.value, topic]
-}
-
-function value(event: Event): string {
-  return (event.target as HTMLSelectElement).value
 }
 </script>
 
 <template>
   <section class="skills" aria-labelledby="skills-title">
-    <h2 id="skills-title" class="section-title">{{ t('record.skillsTitle') }}</h2>
-    <p class="hint">{{ t('record.skillsHint') }}</p>
-    <div class="skill-grid">
-      <label v-for="s in SKILLS" :key="s" class="field">
+    <h2 id="skills-title" class="section-title">{{ t('record.strongAt') }}</h2>
+    <div class="chips" role="group" :aria-label="t('record.strongAt')">
+      <button
+        v-for="s in SKILLS"
+        :key="`s-${s}`"
+        type="button"
+        class="pick pick-strong"
+        :aria-pressed="skills[s] === STRONG"
+        @click="toggle(s, STRONG)"
+      >
         {{ t(`skill.${s}`) }}
-        <select class="select" :value="skills[s] ?? ''" @change="setSkill(s, value($event))">
-          <option value="">{{ t('record.notSure') }}</option>
-          <option value="1">1 · {{ t('record.weak') }}</option>
-          <option value="2">2</option>
-          <option value="3">3 · {{ t('record.ok') }}</option>
-          <option value="4">4</option>
-          <option value="5">5 · {{ t('record.strong') }}</option>
-        </select>
-      </label>
+      </button>
     </div>
 
-    <h2 class="section-title interests-title">{{ t('record.interestsTitle') }}</h2>
+    <h2 class="section-title gap">{{ t('record.weakAt') }}</h2>
+    <div class="chips" role="group" :aria-label="t('record.weakAt')">
+      <button
+        v-for="s in SKILLS"
+        :key="`w-${s}`"
+        type="button"
+        class="pick pick-weak"
+        :aria-pressed="skills[s] === WEAK"
+        @click="toggle(s, WEAK)"
+      >
+        {{ t(`skill.${s}`) }}
+      </button>
+    </div>
+
+    <h2 class="section-title gap">{{ t('record.interestsTitle') }}</h2>
     <div class="chips" role="group" :aria-label="t('record.interests')">
       <button
-        v-for="t in topics"
-        :key="t"
+        v-for="topic in topics"
+        :key="topic"
         type="button"
-        class="chip"
-        :aria-pressed="interests.includes(t)"
-        @click="toggle(t)"
+        class="pick pick-strong"
+        :aria-pressed="interests.includes(topic)"
+        @click="toggleInterest(topic)"
       >
-        {{ t.replace(/-/g, ' ') }}
+        {{ topic.replace(/-/g, ' ') }}
       </button>
     </div>
   </section>
@@ -62,45 +73,52 @@ function value(event: Event): string {
 
 <style scoped>
 .section-title {
-  font-size: 1.1rem;
-  font-weight: 800;
+  margin-bottom: 12px;
+  font-size: 1.05rem;
+  font-weight: 650;
 }
 
-.hint {
-  margin: 4px 0 12px;
-  font-size: 0.85rem;
-  color: var(--ink-soft);
-}
-
-.skill-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-  gap: 10px 14px;
-}
-
-.interests-title {
-  margin: 22px 0 10px;
+.gap {
+  margin-top: 26px;
 }
 
 .chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 8px;
 }
 
-.chip {
-  padding: 5px 11px;
-  border: 1px solid var(--contour);
+.pick {
+  padding: 7px 14px;
+  border: 1px solid var(--line);
   border-radius: 999px;
-  background: var(--paper-raised);
-  font-size: 0.85rem;
+  background: var(--surface);
+  font-size: 0.9rem;
   cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
 }
 
-.chip[aria-pressed='true'] {
-  border-color: var(--overprint);
-  background: var(--overprint-tint);
-  color: var(--overprint);
+.pick:hover {
+  border-color: var(--ink-faint);
+}
+
+.pick-strong[aria-pressed='true'] {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent);
   font-weight: 600;
+}
+
+.pick-weak[aria-pressed='true'] {
+  border-color: var(--warn);
+  background: var(--warn-soft);
+  color: var(--warn);
+  font-weight: 600;
+}
+
+.hint {
+  margin-top: 18px;
+  font-size: 0.85rem;
+  color: var(--ink-faint);
 }
 </style>

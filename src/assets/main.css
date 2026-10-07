@@ -1,52 +1,77 @@
-/* Tokens. Palette borrows from orienteering maps: the course is overprinted in
-   magenta on a pale map; green and yellow are terrain colours reused for status. */
+/* Design tokens. One accent (magenta, the "route" colour); everything else neutral.
+   Status colours are reserved for status only. */
 :root {
-  --paper: #f3f5f0;
-  --paper-raised: #ffffff;
-  --ink: #1c2525;
-  --ink-soft: #56625f;
-  --contour: #cad3c5;
-  --overprint: #a3207a;
-  --overprint-tint: #f5e2ee;
-  --forest: #2e7a53;
-  --forest-tint: #e0efe6;
-  --open: #b97c0c;
-  --open-tint: #fbf0d6;
-  --stop: #b0281f;
-  --stop-tint: #f8e0dd;
+  --bg: #fafaf9;
+  --surface: #ffffff;
+  --surface-2: #f4f4f2;
+  --ink: #0b0b0c;
+  --ink-soft: #5d5d63;
+  --ink-faint: #8f8f96;
+  --line: #e8e8e4;
+  --accent: #c2227a;
+  --accent-ink: #ffffff;
+  --accent-soft: #fbe9f2;
+  --good: #1f8a52;
+  --good-soft: #e5f4ec;
+  --warn: #a96a00;
+  --warn-soft: #fdf2dc;
+  --bad: #c0352b;
+  --bad-soft: #fbe7e5;
 
-  --font-ui: 'Overpass', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
-  --font-code: 'Overpass Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  /* Kept for older component styles. */
+  --paper: var(--bg);
+  --paper-raised: var(--surface);
+  --contour: var(--line);
+  --overprint: var(--accent);
+  --overprint-tint: var(--accent-soft);
+  --forest: var(--good);
+  --forest-tint: var(--good-soft);
+  --open: var(--warn);
+  --open-tint: var(--warn-soft);
+  --stop: var(--bad);
+  --stop-tint: var(--bad-soft);
 
-  --radius: 10px;
-  --radius-lg: 16px;
-  --shadow-1: 0 1px 2px rgb(20 32 30 / 6%), 0 1px 3px rgb(20 32 30 / 4%);
-  --shadow-2: 0 4px 14px rgb(20 32 30 / 9%), 0 1px 3px rgb(20 32 30 / 6%);
-  --space: 8px;
+  --font-ui: 'Geist Sans', 'PingFang SC', 'Hiragino Sans', 'Apple SD Gothic Neo', 'Microsoft YaHei', system-ui,
+    sans-serif;
+  --font-code: 'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  --radius-sm: 10px;
+  --radius: 14px;
+  --radius-lg: 22px;
+  --shadow-1: 0 1px 2px rgb(16 16 20 / 5%), 0 1px 1px rgb(16 16 20 / 3%);
+  --shadow-2: 0 10px 30px -12px rgb(16 16 20 / 18%), 0 2px 6px rgb(16 16 20 / 5%);
+  --shell: 1180px;
 
   color-scheme: light;
   font-family: var(--font-ui);
-  font-size: 15px;
-  line-height: 1.45;
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: -0.005em;
   color: var(--ink);
-  background: var(--paper);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --paper: #151b1b;
-    --paper-raised: #1e2626;
-    --ink: #e7ece8;
-    --ink-soft: #9fb0aa;
-    --contour: #34403e;
-    --overprint: #e05aaf;
-    --overprint-tint: #3a1d31;
-    --forest: #5fbf8a;
-    --forest-tint: #1d3329;
-    --open: #e2a93b;
-    --open-tint: #3a2f17;
-    --stop: #ef6b60;
-    --stop-tint: #3d1d1b;
+    --bg: #0d0d0f;
+    --surface: #161619;
+    --surface-2: #1d1d21;
+    --ink: #f3f3f4;
+    --ink-soft: #a6a6ad;
+    --ink-faint: #74747c;
+    --line: #2a2a2f;
+    --accent: #f06bb0;
+    --accent-ink: #1a0610;
+    --accent-soft: #33152a;
+    --good: #5fd398;
+    --good-soft: #13291e;
+    --warn: #f0b44c;
+    --warn-soft: #2e2412;
+    --bad: #ff7d72;
+    --bad-soft: #351816;
+    --shadow-1: 0 1px 2px rgb(0 0 0 / 40%);
+    --shadow-2: 0 12px 32px -12px rgb(0 0 0 / 60%);
     color-scheme: dark;
   }
 }
@@ -60,7 +85,7 @@
 body {
   margin: 0;
   min-height: 100vh;
-  background: var(--paper);
+  background: var(--bg);
 }
 
 h1,
@@ -68,10 +93,16 @@ h2,
 h3 {
   margin: 0;
   line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+p {
+  margin: 0;
 }
 
 a {
-  color: var(--overprint);
+  color: var(--accent);
+  text-underline-offset: 3px;
 }
 
 button,
@@ -83,21 +114,55 @@ textarea {
 }
 
 :focus-visible {
-  outline: 2px solid var(--overprint);
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
 .code {
   font-family: var(--font-code);
-  letter-spacing: 0.02em;
+  letter-spacing: 0;
 }
 
-/* Shared form controls */
+/* Layout helpers */
+.shell {
+  max-width: var(--shell);
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.surface {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow-1);
+}
+
+.page-title {
+  font-size: clamp(1.75rem, 3.4vw, 2.5rem);
+  font-weight: 700;
+}
+
+.page-lede {
+  max-width: 62ch;
+  margin-top: 8px;
+  font-size: 1.05rem;
+  color: var(--ink-soft);
+}
+
+.eyebrow {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+/* Form controls */
 .field {
   display: grid;
-  gap: 4px;
-  font-size: 0.8rem;
-  font-weight: 600;
+  gap: 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
   color: var(--ink-soft);
 }
 
@@ -105,37 +170,79 @@ textarea {
 .select,
 .textarea {
   width: 100%;
-  padding: 8px 11px;
-  border: 1px solid var(--contour);
-  border-radius: var(--radius);
-  background: var(--paper-raised);
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
   font-size: 0.95rem;
   font-weight: 400;
   color: var(--ink);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-soft);
 }
 
 .button {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 9px 16px;
-  border: 1px solid var(--ink);
-  border-radius: var(--radius);
+  justify-content: center;
+  gap: 8px;
+  min-height: 42px;
+  padding: 0 18px;
+  border: 1px solid transparent;
+  border-radius: 999px;
   background: var(--ink);
-  color: var(--paper);
+  color: var(--bg);
   font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
   cursor: pointer;
+  transition: transform 0.15s, background 0.15s, box-shadow 0.15s;
+}
+
+.button:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-2);
+}
+
+.button-accent {
+  background: var(--accent);
+  color: var(--accent-ink);
 }
 
 .button-quiet {
-  border-color: var(--contour);
-  background: transparent;
+  border-color: var(--line);
+  background: var(--surface);
   color: var(--ink);
 }
 
+.button-quiet:hover {
+  box-shadow: var(--shadow-1);
+}
+
 .button:disabled {
-  opacity: 0.5;
+  opacity: 0.45;
   cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 11px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  font-size: 0.85rem;
+  color: var(--ink-soft);
 }
 
 .visually-hidden {
@@ -154,8 +261,92 @@ textarea {
   }
 }
 
-.surface {
-  border-radius: var(--radius-lg);
-  background: var(--paper-raised);
-  box-shadow: var(--shadow-1);
+/* CJK first for CJK locales, so full-width punctuation keeps its proper shape. */
+:root:lang(zh-CN) {
+  --font-ui: 'PingFang SC', 'Microsoft YaHei', 'Geist Sans', system-ui, sans-serif;
+}
+
+:root:lang(zh-TW) {
+  --font-ui: 'PingFang TC', 'Microsoft JhengHei', 'Geist Sans', system-ui, sans-serif;
+}
+
+:root:lang(ja) {
+  --font-ui: 'Hiragino Sans', 'Yu Gothic', 'Geist Sans', system-ui, sans-serif;
+}
+
+:root:lang(ko) {
+  --font-ui: 'Apple SD Gothic Neo', 'Malgun Gothic', 'Geist Sans', system-ui, sans-serif;
+}
+
+:root:lang(zh-CN),
+:root:lang(zh-TW),
+:root:lang(ja),
+:root:lang(ko) {
+  font-family: var(--font-ui);
+}
+
+/* ---------- Depth: soft colour field behind every page + frosted glass surfaces ---------- */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  background: var(--bg);
+}
+
+.backdrop::before,
+.backdrop::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.55;
+}
+
+.backdrop::before {
+  width: 720px;
+  height: 720px;
+  top: -260px;
+  left: -180px;
+  background: radial-gradient(circle, #f6c6de, transparent 65%);
+}
+
+.backdrop::after {
+  width: 820px;
+  height: 820px;
+  top: 10%;
+  right: -320px;
+  background: radial-gradient(circle, #cfd2ff, transparent 65%);
+}
+
+@media (prefers-color-scheme: dark) {
+  .backdrop::before {
+    background: radial-gradient(circle, #5a1f43, transparent 65%);
+  }
+
+  .backdrop::after {
+    background: radial-gradient(circle, #23285e, transparent 65%);
+  }
+}
+
+.surface,
+.glass {
+  border: 1px solid color-mix(in srgb, #ffffff 70%, var(--line));
+  background: color-mix(in srgb, var(--surface) 72%, transparent);
+  backdrop-filter: saturate(170%) blur(18px);
+  -webkit-backdrop-filter: saturate(170%) blur(18px);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 60%),
+    var(--shadow-1);
+}
+
+@media (prefers-color-scheme: dark) {
+  .surface,
+  .glass {
+    border-color: rgb(255 255 255 / 8%);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 6%),
+      var(--shadow-1);
+  }
 }

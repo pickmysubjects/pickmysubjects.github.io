@@ -59,7 +59,7 @@ async function copy(): Promise<void> {
 <style scoped>
 .section-title {
   font-size: 1.1rem;
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .facts {

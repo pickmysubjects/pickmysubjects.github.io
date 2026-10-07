@@ -26,7 +26,7 @@ const confidence = computed(() => t.value(`suggest.confidence.${props.rec.confid
     <header class="rec-head">
       <div class="rec-name">
         <span class="code rec-code">{{ rec.code }}</span>
-        <h3 class="rec-title">{{ rec.title }}</h3>
+        <h3 class="rec-title"><a class="rec-link" :href="`#/subject/${rec.code}`">{{ rec.title }}</a></h3>
       </div>
       <div class="rec-score" :aria-label="t('suggest.fit', { score: rec.score, confidence })">
         <span class="rec-score-num">{{ rec.score }}</span>
@@ -74,9 +74,18 @@ const confidence = computed(() => t.value(`suggest.confidence.${props.rec.confid
   font-weight: 600;
 }
 
+.rec-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.rec-link:hover {
+  color: var(--accent);
+}
+
 .rec-title {
   font-size: 1.1rem;
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .rec-score {
@@ -126,7 +135,7 @@ const confidence = computed(() => t.value(`suggest.confidence.${props.rec.confid
 .rec-warning::before {
   display: inline-block;
   width: 1.2em;
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .rec-reason::before {

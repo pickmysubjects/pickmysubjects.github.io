@@ -1,50 +1,95 @@
 <script setup lang="ts">
-import { computed, onMounted } from 'vue'
-import PlanSetup from '@/components/planner/PlanSetup.vue'
+import { computed, shallowRef } from 'vue'
+import { CircleCheck, Pencil, RotateCcw, TriangleAlert } from 'lucide-vue-next'
+import PlanWizard from '@/components/planner/PlanWizard.vue'
 import PlanMap from '@/components/planner/PlanMap.vue'
 import RuleLegend from '@/components/planner/RuleLegend.vue'
 import PlanIssues from '@/components/planner/PlanIssues.vue'
+import DataNotice from '@/components/DataNotice.vue'
 import { useDataset } from '@/composables/useDataset'
-import { usePlan, type PlanSetup as Setup } from '@/composables/usePlan'
+import { usePlan, type PlanSetup } from '@/composables/usePlan'
 import { useI18n } from '@/i18n'
-import { noteText } from '@/i18n/format'
+import { noteText, termLabel } from '@/i18n/format'
 
 const { data, subjectList } = useDataset()
 const plan = usePlan()
-
-const setup = computed({
-  get: () => plan.setup.value,
-  set: (value: Setup) => plan.updateSetup(value),
-})
-const options = computed(() => subjectList.value.map((s) => ({ code: s.code, title: s.title })))
-const allIssues = computed(() => [...plan.termIssues.value, ...plan.courseCheck.value.issues])
 const { t } = useI18n()
+
+const editing = shallowRef(false)
+const showWizard = computed(() => editing.value || (plan.isEmpty.value && plan.notes.value.length === 0))
+
+const options = computed(() => subjectList.value.map((s) => ({ code: s.code, title: s.title })))
 const rules = computed(() => plan.course.value?.rules ?? [])
+const allIssues = computed(() => [...plan.termIssues.value, ...plan.courseCheck.value.issues])
 const notes = computed(() => plan.notes.value.map((n) => noteText(t.value, n, rules.value)))
 
-// First visit: show a worked example rather than an empty board.
-onMounted(() => {
-  if (plan.isEmpty.value && plan.notes.value.length === 0) plan.generate()
-})
+const problems = computed(() => allIssues.value.filter((i) => i.severity === 'error').length)
+const unknowns = computed(
+  () =>
+    plan.courseCheck.value.statuses.filter((s) => s.status === 'unknown').length +
+    plan.termIssues.value.filter((i) => i.severity === 'warning').length,
+)
+const majorTitle = computed(
+  () => data.value.components.find((c) => c.id === plan.setup.value.major)?.title ?? t.value('wizard.notSure'),
+)
+const summary = computed(() =>
+  t.value('wizard.summary', {
+    course: plan.course.value?.title ?? plan.setup.value.course,
+    term: termLabel(t.value, { year: plan.setup.value.startYear, period: plan.setup.value.startPeriod }),
+    major: majorTitle.value,
+  }),
+)
+
+function finishWizard(setup: PlanSetup): void {
+  plan.updateSetup(setup)
+  plan.generate()
+  editing.value = false
+}
 </script>
 
 <template>
   <div class="planner">
-    <section class="planner-intro">
-      <h1 class="planner-title">{{ t('plan.title') }}</h1>
-      <p class="planner-lede">{{ t('plan.lede') }}</p>
-      <PlanSetup
-        v-model="setup"
-        :courses="data.courses"
-        :components="data.components"
-        @generate="plan.generate()"
-        @start-empty="plan.startEmpty()"
-      />
+    <section class="intro">
+      <h1 class="page-title">{{ t('plan.title') }}</h1>
     </section>
 
-    <div class="planner-body">
+    <DataNotice />
+
+    <PlanWizard
+      v-if="showWizard"
+      :setup="plan.setup.value"
+      :courses="data.courses"
+      :components="data.components"
+      @done="finishWizard"
+      @cancel="editing = false"
+    />
+
+    <template v-else>
+      <section class="bar">
+        <p class="bar-summary">{{ summary }}</p>
+        <div class="bar-actions">
+          <button class="button button-quiet" type="button" @click="editing = true">
+            <Pencil :size="16" aria-hidden="true" /> {{ t('wizard.edit') }}
+          </button>
+          <button class="button button-quiet" type="button" @click="plan.generate()">
+            <RotateCcw :size="16" aria-hidden="true" /> {{ t('plan.rebuild') }}
+          </button>
+        </div>
+      </section>
+
+      <section class="status" :class="problems ? 'status-bad' : unknowns ? 'status-warn' : 'status-good'" role="status">
+        <component :is="problems || unknowns ? TriangleAlert : CircleCheck" :size="22" aria-hidden="true" />
+        <div>
+          <p class="status-title">
+            <template v-if="problems">{{ t('plan.statusProblems', { n: problems }) }}</template>
+            <template v-else-if="unknowns">{{ t('plan.statusUnknown', { n: unknowns }) }}</template>
+            <template v-else>{{ t('plan.statusOk') }}</template>
+          </p>
+        </div>
+      </section>
+
       <PlanMap
-        class="planner-map"
+        class="map"
         :terms="plan.terms.value"
         :subjects="data.subjects"
         :issues="plan.termIssues.value"
@@ -57,20 +102,24 @@ onMounted(() => {
         @add-term="plan.addTerm()"
         @remove-last-term="plan.removeLastTerm()"
       />
-      <aside class="planner-rail surface">
-        <RuleLegend :statuses="plan.courseCheck.value.statuses" :rules="rules" :title="plan.course.value?.title ?? ''" />
-        <PlanIssues :issues="allIssues" :rules="rules" :statuses="plan.courseCheck.value.statuses" />
-        <details v-if="plan.notes.value.length || plan.unplaced.value.length" class="how">
-          <summary>{{ t('plan.howBuilt') }}</summary>
-          <ul class="how-list">
-            <li v-for="u in plan.unplaced.value" :key="u.code" class="how-unplaced">
-              {{ t('plan.unplaced', { code: u.code, reason: u.reasonKey ? t(`unplacedReason.${u.reasonKey}`) : u.reason }) }}
-            </li>
-            <li v-for="(n, i) in notes" :key="i">{{ n }}</li>
-          </ul>
-        </details>
-      </aside>
-    </div>
+
+      <details class="details surface">
+        <summary class="details-summary">{{ t('plan.details') }}</summary>
+        <div class="details-body">
+          <RuleLegend :statuses="plan.courseCheck.value.statuses" :rules="rules" :title="plan.course.value?.title ?? ''" />
+          <PlanIssues :issues="allIssues" :rules="rules" :statuses="plan.courseCheck.value.statuses" />
+          <div v-if="notes.length || plan.unplaced.value.length" class="how">
+            <h2 class="how-title">{{ t('plan.howBuilt') }}</h2>
+            <ul class="how-list">
+              <li v-for="u in plan.unplaced.value" :key="u.code" class="how-unplaced">
+                {{ t('plan.unplaced', { code: u.code, reason: u.reasonKey ? t(`unplacedReason.${u.reasonKey}`) : u.reason }) }}
+              </li>
+              <li v-for="(n, i) in notes" :key="i">{{ n }}</li>
+            </ul>
+          </div>
+        </div>
+      </details>
+    </template>
   </div>
 </template>
 
@@ -78,45 +127,84 @@ onMounted(() => {
 .planner {
   display: grid;
   gap: 20px;
+  padding-top: 32px;
 }
 
-.planner-intro {
-  display: grid;
+.bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
   gap: 12px;
 }
 
-.planner-title {
-  font-size: clamp(1.6rem, 3vw, 2.3rem);
-  font-weight: 800;
-  letter-spacing: -0.02em;
+.bar-summary {
+  font-size: 1.05rem;
+  font-weight: 600;
 }
 
-.planner-lede {
-  max-width: 68ch;
-  margin: 0;
+.bar-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.status {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px 20px;
+  border-radius: var(--radius-lg);
+}
+
+.status-good {
+  background: var(--good-soft);
+  color: var(--good);
+}
+
+.status-warn {
+  background: var(--warn-soft);
+  color: var(--warn);
+}
+
+.status-bad {
+  background: var(--bad-soft);
+  color: var(--bad);
+}
+
+.status-title {
+  font-weight: 650;
+}
+
+.status-text {
+  margin-top: 2px;
+  font-size: 0.9rem;
   color: var(--ink-soft);
 }
 
-.planner-body {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 320px;
-  gap: 20px;
-  align-items: start;
+.details {
+  padding: 4px 22px;
 }
 
-.planner-rail {
+.details-summary {
+  padding: 16px 0;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.details-body {
   display: grid;
-  gap: 22px;
-  padding: 18px;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  padding: 4px 0 22px;
 }
 
 .how {
-  font-size: 0.84rem;
+  grid-column: 1 / -1;
 }
 
-.how summary {
-  cursor: pointer;
-  font-weight: 600;
+.how-title {
+  font-size: 0.95rem;
+  font-weight: 650;
 }
 
 .how-list {
@@ -124,15 +212,16 @@ onMounted(() => {
   gap: 4px;
   margin: 8px 0 0;
   padding-left: 18px;
+  font-size: 0.88rem;
   color: var(--ink-soft);
 }
 
 .how-unplaced {
-  color: var(--stop);
+  color: var(--bad);
 }
 
-@media (max-width: 960px) {
-  .planner-body {
+@media (max-width: 860px) {
+  .details-body {
     grid-template-columns: 1fr;
   }
 }

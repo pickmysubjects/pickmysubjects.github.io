@@ -15,6 +15,7 @@ const sections = ['local', 'ratings', 'feedback', 'noTracking', 'google', 'remov
 
 <style scoped>
 .privacy {
+  padding-top: 32px;
   display: grid;
   gap: 12px;
   max-width: 72ch;
@@ -22,7 +23,7 @@ const sections = ['local', 'ratings', 'feedback', 'noTracking', 'google', 'remov
 
 .privacy-title {
   font-size: clamp(1.6rem, 3vw, 2.3rem);
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: -0.02em;
 }
 

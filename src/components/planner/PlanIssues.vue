@@ -33,7 +33,7 @@ const notes = computed(() => rows.value.filter((i) => i.severity === 'info'))
 <style scoped>
 .issues-title {
   font-size: 0.75rem;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--ink-soft);
