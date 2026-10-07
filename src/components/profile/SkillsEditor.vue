@@ -1,18 +1,11 @@
 <script setup lang="ts">
-import { computed } from 'vue'
 import { SKILLS, type Skill } from '@/engine'
 import { useI18n } from '@/i18n'
 
 const skills = defineModel<Partial<Record<Skill, number>>>('skills', { required: true })
-const interests = defineModel<string[]>('interests', { required: true })
-const props = defineProps<{ topics: string[] }>()
-const { t, locale } = useI18n()
-// In the order of the names the student sees, in their language.
-const sortedTopics = computed(() =>
-  [...props.topics].sort((a, b) => t.value(`topic.${a}`).localeCompare(t.value(`topic.${b}`), locale.value)),
-)
+const { t } = useI18n()
 
-// Two tap-to-toggle groups instead of eleven 1–5 dropdowns: strong = 5, weak = 1.
+// One row per skill with two toggles instead of eleven 1–5 dropdowns: strong = 5, weak = 1.
 const STRONG = 5
 const WEAK = 1
 
@@ -22,108 +15,99 @@ function toggle(skill: Skill, level: number): void {
   else next[skill] = level
   skills.value = next
 }
-
-function toggleInterest(topic: string): void {
-  interests.value = interests.value.includes(topic)
-    ? interests.value.filter((x) => x !== topic)
-    : [...interests.value, topic]
-}
 </script>
 
 <template>
-  <section class="skills" aria-labelledby="skills-title">
-    <h2 id="skills-title" class="section-title">{{ t('record.strongAt') }}</h2>
-    <div class="chips" role="group" :aria-label="t('record.strongAt')">
-      <button
-        v-for="s in SKILLS"
-        :key="`s-${s}`"
-        type="button"
-        class="pick pick-strong"
-        :aria-pressed="skills[s] === STRONG"
-        @click="toggle(s, STRONG)"
-      >
-        {{ t(`skill.${s}`) }}
-      </button>
-    </div>
-
-    <h2 class="section-title gap">{{ t('record.weakAt') }}</h2>
-    <div class="chips" role="group" :aria-label="t('record.weakAt')">
-      <button
-        v-for="s in SKILLS"
-        :key="`w-${s}`"
-        type="button"
-        class="pick pick-weak"
-        :aria-pressed="skills[s] === WEAK"
-        @click="toggle(s, WEAK)"
-      >
-        {{ t(`skill.${s}`) }}
-      </button>
-    </div>
-
-    <h2 class="section-title gap">{{ t('record.interestsTitle') }}</h2>
-    <div class="chips" role="group" :aria-label="t('record.interests')">
-      <button
-        v-for="topic in sortedTopics"
-        :key="topic"
-        type="button"
-        class="pick pick-strong"
-        :aria-pressed="interests.includes(topic)"
-        @click="toggleInterest(topic)"
-      >
-        {{ t(`topic.${topic}`) }}
-      </button>
-    </div>
+  <section class="card surface" aria-labelledby="skills-title">
+    <header class="card-head">
+      <h2 id="skills-title" class="card-title">{{ t('record.skillsTitle') }}</h2>
+      <p class="card-hint">{{ t('record.skillsHint') }}</p>
+    </header>
+    <ul class="skill-list">
+      <li v-for="s in SKILLS" :key="s" class="skill">
+        <span class="skill-name">{{ t(`skill.${s}`) }}</span>
+        <span class="skill-toggles" role="group" :aria-label="t(`skill.${s}`)">
+          <button type="button" class="toggle toggle-good" :aria-pressed="skills[s] === STRONG" @click="toggle(s, STRONG)">
+            {{ t('record.good') }}
+          </button>
+          <button type="button" class="toggle toggle-hard" :aria-pressed="skills[s] === WEAK" @click="toggle(s, WEAK)">
+            {{ t('record.harder') }}
+          </button>
+        </span>
+      </li>
+    </ul>
   </section>
 </template>
 
 <style scoped>
-.section-title {
-  margin-bottom: 12px;
+.card {
+  display: grid;
+  gap: 14px;
+  padding: 20px 22px;
+}
+
+.card-title {
   font-size: 1.05rem;
   font-weight: 650;
 }
 
-.gap {
-  margin-top: 26px;
+.card-hint {
+  margin-top: 4px;
+  font-size: 0.88rem;
+  color: var(--ink-soft);
 }
 
-.chips {
+.skill-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 0 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.skill {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.92rem;
 }
 
-.pick {
-  padding: 7px 14px;
+.skill-toggles {
+  display: flex;
+  gap: 4px;
+  flex: none;
+}
+
+.toggle {
+  padding: 3px 10px;
   border: 1px solid var(--line);
   border-radius: 999px;
-  background: var(--surface);
-  font-size: 0.9rem;
+  background: none;
+  font: inherit;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
   cursor: pointer;
-  transition: border-color 0.15s, background 0.15s;
 }
 
-.pick:hover {
+.toggle:hover {
   border-color: var(--ink-faint);
 }
 
-.pick-strong[aria-pressed='true'] {
+.toggle-good[aria-pressed='true'] {
   border-color: var(--accent);
   background: var(--accent-soft);
   color: var(--accent);
   font-weight: 600;
 }
 
-.pick-weak[aria-pressed='true'] {
+.toggle-hard[aria-pressed='true'] {
   border-color: var(--warn);
   background: var(--warn-soft);
   color: var(--warn);
   font-weight: 600;
-}
-
-.hint {
-  margin-top: 18px;
-  font-size: 0.85rem;
-  color: var(--ink-faint);
 }
 </style>

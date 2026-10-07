@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed } from 'vue'
 import Interp from '@/components/Interp.vue'
+import TopicChips from '@/components/profile/TopicChips.vue'
 import { useDataset } from '@/composables/useDataset'
 import { useProfile } from '@/composables/useProfile'
 import { useI18n } from '@/i18n'
@@ -9,20 +9,11 @@ import { useI18n } from '@/i18n'
 defineProps<{ count: number }>()
 const { topics } = useDataset()
 const { profile, setInterests } = useProfile()
-const { t, locale } = useI18n()
-
-const sorted = computed(() =>
-  [...topics.value].sort((a, b) => t.value(`topic.${a}`).localeCompare(t.value(`topic.${b}`), locale.value)),
-)
+const { t } = useI18n()
 
 // On a phone the list starts below the chips, out of sight.
 function scrollToList(): void {
   document.getElementById('suggestions')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-}
-
-function toggle(topic: string): void {
-  const current = profile.value.interests
-  setInterests(current.includes(topic) ? current.filter((x) => x !== topic) : [...current, topic])
 }
 </script>
 
@@ -36,18 +27,7 @@ function toggle(topic: string): void {
         </template>
       </Interp>
     </p>
-    <div class="quick-chips" role="group" :aria-label="t('record.interests')">
-      <button
-        v-for="topic in sorted"
-        :key="topic"
-        type="button"
-        class="chip quick-chip"
-        :aria-pressed="profile.interests.includes(topic)"
-        @click="toggle(topic)"
-      >
-        {{ t(`topic.${topic}`) }}
-      </button>
-    </div>
+    <TopicChips :model-value="profile.interests" :topics="topics" @update:model-value="setInterests" />
     <button v-if="count > 0 && profile.interests.length > 0" class="quick-below" type="button" @click="scrollToList">
       {{ t('suggest.below', { n: count }) }}
     </button>
@@ -57,8 +37,8 @@ function toggle(topic: string): void {
 <style scoped>
 .quick {
   display: grid;
-  gap: 10px;
-  padding: 20px 22px;
+  gap: 14px;
+  padding: 22px 24px;
 }
 
 .quick-title {
@@ -69,28 +49,6 @@ function toggle(topic: string): void {
 .quick-hint {
   font-size: 0.92rem;
   color: var(--ink-soft);
-}
-
-.quick-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.quick-chip {
-  color: var(--ink);
-  cursor: pointer;
-}
-
-.quick-chip:hover {
-  border-color: var(--accent);
-}
-
-.quick-chip[aria-pressed='true'] {
-  border-color: var(--accent);
-  background: var(--accent-soft);
-  color: var(--accent);
-  font-weight: 600;
 }
 
 .quick-below {

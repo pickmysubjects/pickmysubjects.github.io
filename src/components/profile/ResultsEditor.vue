@@ -117,8 +117,8 @@ function remove(c: string): void {
 
 <style scoped>
 .section-title {
-  font-size: 1.1rem;
-  font-weight: 700;
+  font-size: 1.05rem;
+  font-weight: 650;
   margin-bottom: 10px;
 }
 

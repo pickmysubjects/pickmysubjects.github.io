@@ -2,6 +2,7 @@
 import { computed, shallowRef } from 'vue'
 import ResultsEditor from '@/components/profile/ResultsEditor.vue'
 import SkillsEditor from '@/components/profile/SkillsEditor.vue'
+import TopicChips from '@/components/profile/TopicChips.vue'
 import SuggestionPreview from '@/components/profile/SuggestionPreview.vue'
 import { Download, Upload } from 'lucide-vue-next'
 import { downloadBackup, restoreBackup } from '@/utils/backup'
@@ -39,28 +40,37 @@ async function onRestore(event: Event): Promise<void> {
       <p v-if="wam !== null" class="wam-line">{{ t('record.wamLine', { wam }) }}</p>
     </section>
     <div class="record-body">
-      <ResultsEditor v-model="results" :subjects="data.subjects" :options="options" />
-      <div class="record-side">
+      <div class="record-col">
+        <ResultsEditor class="results-card surface" v-model="results" :subjects="data.subjects" :options="options" />
+        <section class="backup surface">
+          <div>
+            <h2 class="backup-title">{{ t('record.backupTitle') }}</h2>
+            <p class="backup-text">{{ t('record.backupText') }}</p>
+            <p v-if="restoreFailed" class="backup-bad" role="alert">{{ t('record.restoreFailed') }}</p>
+          </div>
+          <div class="backup-actions">
+            <button class="button button-quiet" type="button" @click="downloadBackup">
+              <Download :size="16" aria-hidden="true" /> {{ t('record.backup') }}
+            </button>
+            <label class="button button-quiet">
+              <Upload :size="16" aria-hidden="true" /> {{ t('record.restore') }}
+              <input class="visually-hidden" type="file" accept="application/json,.json" @change="onRestore" />
+            </label>
+          </div>
+        </section>
+      </div>
+      <div class="record-col">
         <SuggestionPreview />
-        <SkillsEditor v-model:skills="skills" v-model:interests="interests" :topics="topics" />
+        <SkillsEditor v-model:skills="skills" />
       </div>
     </div>
 
-    <section class="backup surface">
-      <div>
-        <h2 class="backup-title">{{ t('record.backupTitle') }}</h2>
-        <p class="backup-text">{{ t('record.backupText') }}</p>
-        <p v-if="restoreFailed" class="backup-bad" role="alert">{{ t('record.restoreFailed') }}</p>
-      </div>
-      <div class="backup-actions">
-        <button class="button button-quiet" type="button" @click="downloadBackup">
-          <Download :size="16" aria-hidden="true" /> {{ t('record.backup') }}
-        </button>
-        <label class="button button-quiet">
-          <Upload :size="16" aria-hidden="true" /> {{ t('record.restore') }}
-          <input class="visually-hidden" type="file" accept="application/json,.json" @change="onRestore" />
-        </label>
-      </div>
+    <section class="interests surface" aria-labelledby="interests-title">
+      <header>
+        <h2 id="interests-title" class="interests-title">{{ t('record.interestsTitle') }}</h2>
+        <p class="interests-hint">{{ t('record.interestsHint') }}</p>
+      </header>
+      <TopicChips v-model="interests" :topics="topics" />
     </section>
   </div>
 </template>
@@ -85,26 +95,42 @@ async function onRestore(event: Event): Promise<void> {
 }
 
 
-
-
-
 .wam-line {
   margin-top: 8px;
   font-size: 0.88rem;
   color: var(--ink-soft);
 }
 
-.record-side {
+.record-col {
   display: grid;
   gap: 20px;
+  align-content: start;
+}
+
+.interests {
+  display: grid;
+  gap: 14px;
+  padding: 20px 22px;
+}
+
+.interests-title {
+  font-size: 1.05rem;
+  font-weight: 650;
+}
+
+.interests-hint {
+  margin-top: 4px;
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+}
+
+.results-card {
+  padding: 20px 22px;
 }
 
 .backup {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  gap: 14px 24px;
+  display: grid;
+  gap: 12px;
   padding: 18px 22px;
 }
 
@@ -133,14 +159,23 @@ async function onRestore(event: Event): Promise<void> {
 
 .record-body {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 32px;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: 24px;
   align-items: start;
 }
 
 @media (max-width: 860px) {
   .record-body {
     grid-template-columns: 1fr;
+  }
+
+  /* One column on a phone: the backup goes last, after suggestions and strengths. */
+  .record-col {
+    display: contents;
+  }
+
+  .backup {
+    order: 1;
   }
 }
 </style>
