@@ -3,7 +3,7 @@ import { computed, shallowRef } from 'vue'
 import { RATINGS_FORM } from '@/config'
 import { SKILLS, type Period, type Skill } from '@/engine'
 import { useI18n } from '@/i18n'
-import { isFormReady, submitGoogleForm } from '@/utils/googleForm'
+import { hasQuestion, isFormReady, submitGoogleForm } from '@/utils/googleForm'
 
 const props = defineProps<{ code: string }>()
 const emit = defineEmits<{ done: [sent: boolean] }>()
@@ -15,6 +15,10 @@ const semester = shallowRef<Period>('semester-1')
 const difficulty = shallowRef<number | null>(null)
 const workload = shallowRef<number | null>(null)
 const generosity = shallowRef<number | null>(null)
+const examDifficulty = shallowRef<number | null>(null)
+const usefulness = shallowRef<number | null>(null)
+const interest = shallowRef<number | null>(null)
+const teaching = shallowRef<number | null>(null)
 const hours = shallowRef<number | ''>('')
 const grade = shallowRef('')
 const skills = shallowRef<Skill[]>([])
@@ -37,6 +41,15 @@ const scales = [
   { key: 'workload', model: workload, low: 'rating.loadLow', high: 'rating.loadHigh' },
   { key: 'generosity', model: generosity, low: 'rating.genLow', high: 'rating.genHigh' },
 ] as const
+// Optional extras, shown only once the Google Form has the matching question.
+const extraScales = [
+  { key: 'examDifficulty', model: examDifficulty, low: 'rating.diffLow', high: 'rating.diffHigh' },
+  { key: 'usefulness', model: usefulness, low: 'rating.useLow', high: 'rating.useHigh' },
+  { key: 'interest', model: interest, low: 'rating.intLow', high: 'rating.intHigh' },
+  { key: 'teaching', model: teaching, low: 'rating.teachLow', high: 'rating.teachHigh' },
+] as const
+const extras = extraScales.filter((s) => hasQuestion(RATINGS_FORM, s.key))
+const asText = (n: number | null): string => (n === null ? '' : String(n))
 
 function toggleSkill(s: Skill): void {
   skills.value = skills.value.includes(s) ? skills.value.filter((x) => x !== s) : [...skills.value, s]
@@ -53,6 +66,10 @@ async function send(): Promise<void> {
       difficulty: String(difficulty.value),
       workload: String(workload.value),
       generosity: String(generosity.value),
+      examDifficulty: asText(examDifficulty.value),
+      usefulness: asText(usefulness.value),
+      interest: asText(interest.value),
+      teaching: asText(teaching.value),
       hours: hours.value === '' ? '' : String(hours.value),
       grade: grade.value,
       skills: skills.value,
@@ -100,6 +117,19 @@ function value(event: Event): string {
         </label>
         <span class="scale-end">{{ t(s.high) }}</span>
       </fieldset>
+
+      <details v-if="extras.length" class="rate-more">
+        <summary class="rate-more-summary">{{ t('rating.more') }}</summary>
+        <fieldset v-for="s in extras" :key="s.key" class="scale">
+          <legend class="field">{{ t(`rating.${s.key}`) }}</legend>
+          <span class="scale-end">{{ t(s.low) }}</span>
+          <label v-for="n in 5" :key="n" class="scale-option">
+            <input type="radio" :name="`${code}-${s.key}`" :value="n" :checked="s.model.value === n" @change="s.model.value = n" />
+            {{ n }}
+          </label>
+          <span class="scale-end">{{ t(s.high) }}</span>
+        </fieldset>
+      </details>
 
       <div class="rate-row">
         <label class="field">
@@ -167,6 +197,23 @@ function value(event: Event): string {
   display: grid;
   gap: 14px;
   padding: 18px;
+}
+
+.rate-more {
+  display: grid;
+  gap: 12px;
+}
+
+.rate-more[open] {
+  padding-bottom: 4px;
+}
+
+.rate-more-summary {
+  width: fit-content;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--accent);
+  cursor: pointer;
 }
 
 .rate-title {

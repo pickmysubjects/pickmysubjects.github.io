@@ -17,7 +17,15 @@ export const COLUMNS = {
   grade: 'Grade band',
   skills: 'Skills used',
   recommend: 'Would you recommend it',
+  // Optional questions, added to the form later.
+  examDifficulty: 'Exam difficulty',
+  usefulness: 'Usefulness',
+  interest: 'Interest',
+  teaching: 'Teaching',
 } as const
+
+/** Answers an optional question needs before its average is published. */
+export const MIN_ANSWERS = 3
 
 export const SKILL_IDS = [
   'programming',
@@ -44,6 +52,11 @@ export interface SubjectAggregate {
   skills: string[]
   /** Grade bands reviewers chose to share, as counts. */
   grades: Record<string, number>
+  /** Optional 1–5 questions; null until at least MIN_ANSWERS people answered. */
+  examDifficulty: number | null
+  usefulness: number | null
+  interest: number | null
+  teaching: number | null
 }
 
 export interface AggregateResult {
@@ -101,15 +114,24 @@ export function aggregate(rows: Record<string, string>[], now = new Date()): Agg
       const g = r[COLUMNS.grade] ?? ''
       if (GRADES.includes(g)) grades[g] = (grades[g] ?? 0) + 1
     }
+    // Optional 1–5 answers: blanks and anything out of range are ignored.
+    const optional = (c: string): number | null => {
+      const xs = list.map((r) => Number(r[c])).filter((x) => Number.isInteger(x) && x >= 1 && x <= 5)
+      return xs.length >= MIN_ANSWERS ? round(trimmedMean(xs)) : null
+    }
     subjects[code] = {
       reviews: list.length,
-      difficulty: round(mean(num(COLUMNS.difficulty))),
-      workload: round(mean(num(COLUMNS.workload))),
-      grading: round(mean(num(COLUMNS.generosity))),
+      difficulty: round(trimmedMean(num(COLUMNS.difficulty))),
+      workload: round(trimmedMean(num(COLUMNS.workload))),
+      grading: round(trimmedMean(num(COLUMNS.generosity))),
       hoursMedian: hours.length ? median(hours) : null,
       recommendRate: recs.length ? round(recs.filter((r) => r === 'Yes').length / recs.length) : null,
       skills: [...skillCounts].filter(([, n]) => n / list.length >= 0.5).map(([s]) => s).sort(),
       grades,
+      examDifficulty: optional(COLUMNS.examDifficulty),
+      usefulness: optional(COLUMNS.usefulness),
+      interest: optional(COLUMNS.interest),
+      teaching: optional(COLUMNS.teaching),
     }
   }
   return { subjects, accepted: rows.length - rejected, rejected }
@@ -117,6 +139,17 @@ export function aggregate(rows: Record<string, string>[], now = new Date()): Agg
 
 function mean(xs: number[]): number {
   return xs.reduce((a, b) => a + b, 0) / xs.length
+}
+
+/**
+ * Mean after dropping the highest and lowest ~10% (at least one each side once
+ * there are 5+ ratings), so a few extreme or retaliatory ratings can't swing a
+ * subject. Below 5 ratings it's a plain mean.
+ */
+export function trimmedMean(xs: number[]): number {
+  if (xs.length < 5) return mean(xs)
+  const cut = Math.max(1, Math.floor(xs.length * 0.1))
+  return mean([...xs].sort((a, b) => a - b).slice(cut, xs.length - cut))
 }
 
 function median(xs: number[]): number {

@@ -16,6 +16,8 @@ export const FEEDBACK = {
 export interface GoogleFormConfig<K extends string> {
   formId: string
   entries: Record<K, string>
+  /** Questions that may be left unset (''): the app hides them until the form has them. */
+  optional?: readonly K[]
 }
 
 export type RatingField =
@@ -31,6 +33,10 @@ export type RatingField =
   | 'recommend'
   | 'wish'
   | 'language'
+  | 'examDifficulty'
+  | 'usefulness'
+  | 'interest'
+  | 'teaching'
 
 export const RATINGS_FORM: GoogleFormConfig<RatingField> = {
   formId: '1FAIpQLSfJcmsShsJlO8jOqAun_X4NksYJ2O0D8Vi0AVJJ5dwzoNzcRw',
@@ -47,7 +53,13 @@ export const RATINGS_FORM: GoogleFormConfig<RatingField> = {
     recommend: 'entry.1515958851',
     wish: 'entry.988102728',
     language: 'entry.1579411750',
+    // Added later with addRatingQuestions() in scripts/google/create-forms.gs.
+    examDifficulty: '',
+    usefulness: '',
+    interest: '',
+    teaching: '',
   },
+  optional: ['examDifficulty', 'usefulness', 'interest', 'teaching'],
 }
 
 export type FeedbackField = 'topic' | 'rating' | 'subject' | 'message' | 'contact' | 'language'

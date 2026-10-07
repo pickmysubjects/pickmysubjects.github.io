@@ -15,6 +15,10 @@ function row(over: Partial<Record<keyof typeof COLUMNS, string>> = {}): string[]
     grade: 'H1',
     skills: 'maths, programming',
     recommend: 'Yes',
+    examDifficulty: '',
+    usefulness: '',
+    interest: '',
+    teaching: '',
   }
   return (Object.keys(COLUMNS) as (keyof typeof COLUMNS)[]).map((k) => over[k] ?? base[k])
 }
@@ -39,7 +43,29 @@ describe('aggregate ratings', () => {
       recommendRate: 0.7,
       skills: ['maths'], // programming was ticked by 1 of 3, below the 50% bar
       grades: { H1: 2 },
+      examDifficulty: null,
+      usefulness: null,
+      interest: null,
+      teaching: null,
     })
+  })
+
+  it('publishes an optional question only once enough people answered it', () => {
+    const two = [row({ timestamp: 'a', usefulness: '5' }), row({ timestamp: 'b', usefulness: '4' }), row({ timestamp: 'c', hours: '3' })]
+    expect(aggregate(rowsToObjects([header, ...two]), now).subjects.COMP30027?.usefulness).toBeNull()
+    const three = [...two, row({ timestamp: 'd', usefulness: '3', teaching: '9' })]
+    const out = aggregate(rowsToObjects([header, ...three]), now).subjects.COMP30027
+    expect(out?.usefulness).toBe(4)
+    expect(out?.teaching).toBeNull() // 9 is out of range, so nobody really answered
+  })
+
+  it('one extreme rating among several honest ones barely moves the scores', () => {
+    const honest = Array.from({ length: 8 }, (_, i) => row({ timestamp: `t${i}`, hours: String(8 + i), difficulty: '3', generosity: '4' }))
+    const angry = row({ timestamp: 'tx', hours: '30', difficulty: '5', generosity: '1', recommend: 'No' })
+    const { subjects } = aggregate(rowsToObjects([header, ...honest, angry]), now)
+    expect(subjects.COMP30027?.reviews).toBe(9)
+    expect(subjects.COMP30027?.difficulty).toBe(3) // a plain mean would give 3.2
+    expect(subjects.COMP30027?.grading).toBe(4) // a plain mean would give 3.7
   })
 
   it('rejects malformed rows and counts identical resubmissions once', () => {

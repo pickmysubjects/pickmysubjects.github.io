@@ -1,7 +1,20 @@
 import type { GoogleFormConfig } from '@/config'
 
+const ENTRY = /^entry\.\d+$/
+
+/** The form exists and every required question has an entry id. */
 export function isFormReady<K extends string>(cfg: GoogleFormConfig<K>): boolean {
-  return cfg.formId !== '' && Object.values<string>(cfg.entries).every((e) => /^entry\.\d+$/.test(e))
+  return (
+    cfg.formId !== '' &&
+    (Object.entries(cfg.entries) as [K, string][]).every(
+      ([k, e]) => ENTRY.test(e) || (e === '' && (cfg.optional ?? []).includes(k)),
+    )
+  )
+}
+
+/** Whether this particular question exists on the form yet. */
+export function hasQuestion<K extends string>(cfg: GoogleFormConfig<K>, key: K): boolean {
+  return ENTRY.test(cfg.entries[key])
 }
 
 /**
@@ -17,7 +30,7 @@ export async function submitGoogleForm<K extends string>(
   const body = new URLSearchParams()
   for (const [field, value] of Object.entries(values) as [K, string | string[] | undefined][]) {
     const entry = cfg.entries[field]
-    if (!entry || value === undefined) continue
+    if (!ENTRY.test(entry) || value === undefined) continue
     for (const v of [value].flat()) if (v !== '') body.append(entry, v)
   }
   await fetch(`https://docs.google.com/forms/d/e/${cfg.formId}/formResponse`, {

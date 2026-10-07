@@ -7,7 +7,7 @@ App ──POST──▶ Google Form ──▶ private Google Sheet
                                       │  read-only service account (GitHub secret)
                                       ▼
               GitHub Actions (daily) → scripts/ratings/fetch.ts → data/real/ratings.json
-                                      │  aggregates only: means, counts, median hours
+                                      │  aggregates only: trimmed means, counts, median hours
                                       ▼
                          npm run data merges them into subjects → app shows them
 ```
@@ -65,6 +65,16 @@ Settings for both forms:
 3. Copy `<formId>` and each question's `entry.<number>` into `RATINGS_FORM` and `FEEDBACK_FORM` in `src/config.ts`.
 
 Until this is done, the app shows "Ratings aren't switched on yet" instead of the form.
+
+### Optional questions added later
+
+`Exam difficulty`, `Usefulness`, `Interest` and `Teaching` are optional 1–5 questions. Forms made before they existed don't have them, and the app hides them until `src/config.ts` has their entry ids.
+
+1. Open the ratings form in Google Forms and copy its address (`…/forms/d/<id>/edit`).
+2. In the Apps Script project, paste it into `RATINGS_FORM_EDIT_URL` and run `addRatingQuestions` once.
+3. Copy the four `entry.<number>` values from the logged pre-filled link into `examDifficulty`, `usefulness`, `interest` and `teaching` in `RATINGS_FORM`.
+
+Each one is published only once at least 3 people have answered it.
 
 ## 3. Daily aggregation
 

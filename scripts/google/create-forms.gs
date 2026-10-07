@@ -24,9 +24,10 @@ function createSubjectCompassForms() {
     wish: ratings.addParagraphTextItem().setTitle('What I wish I knew'),
     language: ratings.addTextItem().setTitle('App language'),
   };
+  const extra = addOptionalRatingItems(ratings);
   const ratingsSheet = SpreadsheetApp.create('Subject Compass – ratings (private)');
   ratings.setDestination(FormApp.DestinationType.SPREADSHEET, ratingsSheet.getId());
-  const ratingsLink = ratings.createResponse()
+  const ratingsResponse = ratings.createResponse()
     .withItemResponse(r.code.createResponse('COMP30027'))
     .withItemResponse(r.year.createResponse('2025'))
     .withItemResponse(r.semester.createResponse('Semester 1'))
@@ -38,8 +39,9 @@ function createSubjectCompassForms() {
     .withItemResponse(r.skills.createResponse(['maths']))
     .withItemResponse(r.recommend.createResponse('Yes'))
     .withItemResponse(r.wish.createResponse('sample'))
-    .withItemResponse(r.language.createResponse('en'))
-    .toPrefilledUrl();
+    .withItemResponse(r.language.createResponse('en'));
+  extra.forEach(function (item) { ratingsResponse.withItemResponse(item.createResponse(3)); });
+  const ratingsLink = ratingsResponse.toPrefilledUrl();
 
   // ---------- Form 2: feedback ----------
   const feedback = FormApp.create('Subject Compass – Feedback');
@@ -79,4 +81,26 @@ function setup(form, description) {
   form.setAllowResponseEdits(false);
   form.setAcceptingResponses(true);
   try { form.setPublished(true); } catch (e) { /* older API: publish manually */ }
+}
+
+// ---------- Later addition: optional rating questions ----------
+// Forms created before these questions existed: open the ratings form in Google
+// Forms, copy its address from the browser (…/forms/d/<id>/edit), paste it below,
+// then run addRatingQuestions once. Safe to run again; it won't add duplicates.
+const RATINGS_FORM_EDIT_URL = 'PASTE THE RATINGS FORM EDIT LINK HERE';
+
+function addRatingQuestions() {
+  const form = FormApp.openByUrl(RATINGS_FORM_EDIT_URL);
+  const items = addOptionalRatingItems(form);
+  const response = form.createResponse();
+  items.forEach(function (item) { response.withItemResponse(item.createResponse(3)); });
+  Logger.log('SEND TO CLAUDE – pre-filled link with the new questions:\n' + response.toPrefilledUrl());
+}
+
+// Optional 1–5 questions. Titles must match scripts/ratings/aggregate.ts.
+function addOptionalRatingItems(form) {
+  return ['Exam difficulty', 'Usefulness', 'Interest', 'Teaching'].map(function (title) {
+    const existing = form.getItems(FormApp.ItemType.SCALE).filter(function (i) { return i.getTitle() === title; })[0];
+    return existing ? existing.asScaleItem() : form.addScaleItem().setTitle(title).setBounds(1, 5);
+  });
 }
