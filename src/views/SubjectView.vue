@@ -192,6 +192,7 @@ const links = computed(() => (name.value === 'real' ? discussionLinks(code.value
       </div>
 
       <p class="verified">
+        {{ t('subject.source', { year: subject.sourceYear }) }} ·
         {{ subject.verifiedOn ? t('subject.verified', { date: subject.verifiedOn }) : t('subject.unverified') }}
         · <a :href="link(`feedback?topic=data&subject=${subject.code}`)">{{ t('suggest.report') }}</a>
       </p>

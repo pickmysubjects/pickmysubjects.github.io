@@ -31,7 +31,7 @@ English, 简体中文, 繁體中文, 日本語, 한국어, Tiếng Việt, Bahas
 
 ## Principles
 
-- **Facts only, curated by people.** UniMelb's website terms forbid scraping, so nothing is scraped. Students add facts by hand (the app's *Add data* page turns text you copy from the Handbook into a data file). No Handbook prose is copied. See [docs/research.md](docs/research.md).
+- **Facts only, from the official Handbook.** Each subject records facts such as when it runs, prerequisites and assessment weights, written in our own words and checked by people. No Handbook text is reproduced, and nothing is scraped. See [docs/research.md](docs/research.md).
 - **Honest about what it doesn't know.** Every check is *met*, *not met* or *can't tell yet*. Missing data never counts as a pass.
 - **Private by default.** Your results and plans stay in your browser. There is no account and no server.
 - **Links, not copies.** Discussion on Reddit, StudentVIP, 小红书 and elsewhere is linked, never copied or summarised by AI. See [docs/discussion-sources.md](docs/discussion-sources.md).

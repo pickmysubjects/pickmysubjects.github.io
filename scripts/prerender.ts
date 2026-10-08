@@ -171,6 +171,7 @@ function subjectPage(code: LocaleCode, s: Subject): Page {
   if (sig && sig.difficulty !== undefined && sig.workload !== undefined && sig.grading !== undefined) {
     parts.push(`<p>${esc(t('seo.ratings', { d: sig.difficulty, w: sig.workload, g: sig.grading, n: sig.reviews }))}</p>`)
   }
+  parts.push(`<p>${esc(t('subject.source', { year: s.sourceYear }))}</p>`)
   if (s.handbook) parts.push(`<p><a href="${esc(s.handbook)}">${esc(t('seo.confirm'))}</a></p>`)
   parts.push(`<p><a href="${href(code, '')}">${esc(t('seo.made'))}</a></p>`)
 

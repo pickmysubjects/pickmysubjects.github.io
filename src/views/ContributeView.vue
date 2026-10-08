@@ -111,7 +111,6 @@ function onCode(): void {
           </label>
         </div>
       </form>
-      <ParsedPreview :parsed="parsed" :yaml="yaml" />
     </div>
 
     <section class="send surface">
@@ -130,6 +129,13 @@ function onCode(): void {
         <p v-else-if="!codeValid || !readSomething" class="small">{{ t('contribute.needCode') }}</p>
         <p v-else class="small">{{ t('contribute.sendText') }}</p>
       </template>
+
+    </section>
+
+    <!-- What the page reader picked out, and the data file it makes: for whoever reviews it. -->
+    <details class="dev">
+      <summary class="small">{{ t('contribute.devDetails') }}</summary>
+      <ParsedPreview :parsed="parsed" :yaml="yaml" />
       <p class="small">
         <Interp :text="t('contribute.thenText')">
           <template #file>
@@ -137,7 +143,7 @@ function onCode(): void {
           </template>
         </Interp>
       </p>
-    </section>
+    </details>
   </div>
 </template>
 
@@ -192,9 +198,16 @@ function onCode(): void {
 
 .contribute-body {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 28px;
-  align-items: start;
+  max-width: 760px;
+}
+
+.dev {
+  display: grid;
+  gap: 12px;
+}
+
+.dev > summary {
+  cursor: pointer;
 }
 
 .paste {

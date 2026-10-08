@@ -10,4 +10,4 @@ requirements:
   # the other of MAST30021 / MAST30022, or one of the listed electives
   - choose: { points: 12.5, from: [MAST30021, MAST30022, MAST30001, MAST30005, MAST30011, MAST30025] }
 handbook: https://handbook.unimelb.edu.au/2026/components/b-sci-major-29
-verified_on: 2026-10-07 # Operations Research / Discrete Mathematics specialisation structure copied by hand from the Handbook
+verified_on: 2026-10-07 # Operations Research / Discrete Mathematics specialisation structure; source: 2026 Handbook, checked
