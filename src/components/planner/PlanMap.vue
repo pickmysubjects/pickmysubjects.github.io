@@ -12,6 +12,8 @@ const props = defineProps<{
   course: string
   load: number
   options: { code: string; title: string }[]
+  /** Subjects the degree or major requires, and picks from a major's lists. */
+  roles: Record<string, 'required' | 'option'>
 }>()
 const emit = defineEmits<{
   add: [termIndex: number, code: string]
@@ -150,6 +152,7 @@ function onMoveBy(code: string, from: number, delta: number): void {
         :course="course"
         :load="term.period === 'summer' || term.period === 'winter' ? Math.min(SHORT_TERM_LOAD, load) : load"
         :options="options"
+        :roles="roles"
         :related="related"
         @add="emit('add', i, $event)"
         @remove="emit('remove', i, $event)"

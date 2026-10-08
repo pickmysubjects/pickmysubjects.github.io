@@ -30,6 +30,7 @@ const RANKINGS = [
 ] as const
 
 const STUDENT_SITE = 'https://students.unimelb.edu.au/'
+const KEY_DATES = 'https://students.unimelb.edu.au/course-admin/key-dates'
 </script>
 
 <template>
@@ -60,6 +61,7 @@ const STUDENT_SITE = 'https://students.unimelb.edu.au/'
           <p class="aside">{{ t('guide.breadthText') }}</p>
           <p class="actions">
             <a class="button button-accent" :href="link('subjects?preset=firstSemester')">{{ t('guide.firstFind') }}</a>
+            <a class="button button-quiet" :href="link('majors')">{{ t('guide.firstMajors') }}</a>
             <a class="button button-quiet" :href="link('plan')">{{ t('guide.firstPlan') }}</a>
           </p>
         </GuideItem>
@@ -117,6 +119,18 @@ const STUDENT_SITE = 'https://students.unimelb.edu.au/'
             <p class="who-card">{{ t('guide.dropIntl') }}</p>
           </div>
           <p class="note">{{ t('guide.dropWhere') }}</p>
+        </GuideItem>
+
+        <GuideItem :title="t('guide.datesTitle')" :short="t('guide.datesShort')">
+          <ul class="plain">
+            <li>{{ t('guide.datesStart') }}</li>
+            <li>{{ t('guide.datesS1') }}</li>
+            <li>{{ t('guide.datesS2') }}</li>
+            <li>{{ t('guide.datesOther') }}</li>
+          </ul>
+          <p>
+            <a class="ext" :href="KEY_DATES" target="_blank" rel="noopener">{{ t('guide.datesLink') }}<ExternalLink :size="14" aria-hidden="true" /></a>
+          </p>
         </GuideItem>
       </div>
     </section>
@@ -365,6 +379,13 @@ const STUDENT_SITE = 'https://students.unimelb.edu.au/'
 }
 
 .links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--accent);
+}
+
+.ext {
   display: inline-flex;
   align-items: center;
   gap: 6px;

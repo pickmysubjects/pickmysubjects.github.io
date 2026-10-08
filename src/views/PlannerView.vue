@@ -9,7 +9,7 @@ import RuleLegend from '@/components/planner/RuleLegend.vue'
 import PlanIssues from '@/components/planner/PlanIssues.vue'
 import DataNotice from '@/components/DataNotice.vue'
 import Interp from '@/components/Interp.vue'
-import { planStart } from '@/engine'
+import { planRoles, planStart } from '@/engine'
 import { Printer, Share2 } from 'lucide-vue-next'
 import { decodePlan, encodePlan } from '@/utils/sharePlan'
 import { go, useView } from '@/composables/useView'
@@ -80,6 +80,15 @@ const showWizard = computed(
 )
 
 const options = computed(() => subjectList.value.map((s) => ({ code: s.code, title: s.title })))
+// Which planned subjects the degree or major insists on, shown as a tag on each card.
+const roles = computed(() => {
+  const { course, courseYear, major, specialisation } = plan.setup.value
+  const r = planRoles(data.value, course, courseYear, [major, specialisation])
+  const out: Record<string, 'required' | 'option'> = {}
+  for (const c of r.required) out[c] = 'required'
+  for (const c of r.options) out[c] = 'option'
+  return out
+})
 const rules = computed(() => plan.course.value?.rules ?? [])
 const allIssues = computed(() => [...plan.termIssues.value, ...plan.courseCheck.value.issues])
 const notes = computed(() => plan.notes.value.map((n) => noteText(t.value, n, rules.value)))
@@ -210,7 +219,11 @@ function finishWizard(setup: PlanSetup): void {
         </div>
       </section>
 
-      <p class="hint">{{ t('plan.hint') }}</p>
+      <p class="hint">{{ t('plan.hint') }} {{ t('plan.tagLegend') }}</p>
+      <p class="hint">
+        {{ t('plan.censusLine') }}
+        <a :href="link('guide')">{{ t('guide.datesTitle') }}</a>
+      </p>
 
       <PlanMap
         class="map"
@@ -220,6 +233,7 @@ function finishWizard(setup: PlanSetup): void {
         :course="plan.setup.value.course"
         :load="plan.course.value?.standardLoad ?? 50"
         :options="options"
+        :roles="roles"
         @add="plan.addSubject"
         @remove="plan.removeSubject"
         @move="plan.moveSubject"

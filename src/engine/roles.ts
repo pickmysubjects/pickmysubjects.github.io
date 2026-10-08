@@ -89,3 +89,69 @@ function blockedWithout(data: Dataset, code: string, course: string): Set<string
   blocked.delete(code)
   return blocked
 }
+
+export interface MajorOverview {
+  /** Level-3 subjects every student of the major takes. */
+  core: string[]
+  /** Pick `points` from `from`. */
+  choices: { points: number; from: string[] }[]
+  /** Earlier subjects the major can't be done without, with one subject each leads to. */
+  pathway: { code: string; via: string }[]
+  /** Earlier subjects that are one of several ways in. */
+  routes: { code: string; via: string }[]
+}
+
+/** What a major or specialisation asks for, including the earlier subjects on the way in. */
+export function majorOverview(data: Dataset, id: string, course: string): MajorOverview | null {
+  const c = data.components.find((x) => x.id === id && x.course === course)
+  if (!c || c.requirements === 'unknown') return null
+  const core = [...new Set(c.requirements.flatMap((r) => ('all' in r ? r.all : [])))].sort()
+  const choices = c.requirements.flatMap((r) => ('choose' in r ? [{ points: r.choose.points, from: [...r.choose.from].sort() }] : []))
+  const listed = new Set([...core, ...choices.flatMap((x) => x.from)])
+  const pathway: MajorOverview['pathway'] = []
+  const routes: MajorOverview['routes'] = []
+  for (const s of Object.values(data.subjects)) {
+    if (listed.has(s.code)) continue
+    // Cheap test first: only subjects some listed subject's prerequisites reach are worth the full check.
+    if (!leadsTo(data, s.code, [...listed])) continue
+    const role = subjectRoles(data, s.code, course).find((r) => r.component === id)
+    if (role?.role === 'pathway' && role.via) pathway.push({ code: s.code, via: role.via })
+    else if (role?.role === 'route' && role.via) routes.push({ code: s.code, via: role.via })
+  }
+  const byCode = (a: { code: string }, b: { code: string }) => a.code.localeCompare(b.code)
+  return { core, choices, pathway: pathway.sort(byCode), routes: routes.sort(byCode) }
+}
+
+/** Subjects two majors share anywhere in their overview (core, choices or pathway). */
+export function sharedSubjects(a: MajorOverview, b: MajorOverview): string[] {
+  const all = (o: MajorOverview) =>
+    new Set([...o.core, ...o.choices.flatMap((c) => c.from), ...o.pathway.map((p) => p.code)])
+  const bs = all(b)
+  return [...all(a)].filter((x) => bs.has(x)).sort()
+}
+
+/**
+ * Which subjects a plan must have, and which are picks from a major's lists: the course's
+ * compulsory subjects, plus the core and unavoidable earlier subjects of the chosen major
+ * and specialisation.
+ */
+export function planRoles(
+  data: Dataset,
+  course: string,
+  courseYear: number,
+  components: string[],
+): { required: Set<string>; options: Set<string> } {
+  const required = new Set<string>()
+  const options = new Set<string>()
+  const c = data.courses.find((x) => x.code === course && x.year === courseYear) ?? data.courses.find((x) => x.code === course)
+  for (const rule of c?.rules ?? []) if (rule.kind === 'compulsory') rule.subjects.forEach((s) => required.add(s))
+  for (const id of components.filter(Boolean)) {
+    const o = majorOverview(data, id, course)
+    if (!o) continue
+    o.core.forEach((s) => required.add(s))
+    o.pathway.forEach((p) => required.add(p.code))
+    o.choices.flatMap((x) => x.from).forEach((s) => options.add(s))
+  }
+  for (const s of required) options.delete(s)
+  return { required, options }
+}

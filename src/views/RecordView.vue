@@ -4,6 +4,7 @@ import ResultsEditor from '@/components/profile/ResultsEditor.vue'
 import SkillsEditor from '@/components/profile/SkillsEditor.vue'
 import TopicChips from '@/components/profile/TopicChips.vue'
 import SuggestionPreview from '@/components/profile/SuggestionPreview.vue'
+import WamGoal from '@/components/profile/WamGoal.vue'
 import { ArrowRight, Download, Upload } from 'lucide-vue-next'
 import { link } from '@/composables/useView'
 import { downloadBackup, restoreBackup } from '@/utils/backup'
@@ -49,6 +50,7 @@ async function onRestore(event: Event): Promise<void> {
       </div>
       <div class="record-col">
         <SuggestionPreview />
+        <WamGoal />
         <section class="backup surface">
           <div>
             <h2 class="backup-title">{{ t('record.backupTitle') }}</h2>

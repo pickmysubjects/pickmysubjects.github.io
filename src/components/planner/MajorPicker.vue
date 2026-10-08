@@ -3,6 +3,7 @@ import { computed, shallowRef } from 'vue'
 import { Check, Search } from 'lucide-vue-next'
 import type { Component } from '@/engine'
 import { useI18n } from '@/i18n'
+import { MAJOR_GROUPS, majorGroupOf } from '@/utils/majorGroups'
 
 /** Pick a major from a long list: grouped by field, with a search box that also matches the field name. */
 const props = defineProps<{ majors: Component[] }>()
@@ -10,24 +11,12 @@ const major = defineModel<string>({ required: true })
 const { t } = useI18n()
 const query = shallowRef('')
 
-// Field of each major, by its id. Anything new lands in "other" until it's added here.
-const GROUPS: { id: string; match: RegExp }[] = [
-  { id: 'computing', match: /^(computing|data-science|informatics|mathematics)/ },
-  { id: 'biomed', match: /^(biochemistry|cell-and|genetics|human-|immunology|infection|microbiology|neuroscience|pathology|pharmacology|physiology|biotechnology)/ },
-  { id: 'chemphys', match: /^(chemistry|physics)/ },
-  { id: 'psych', match: /^psychology/ },
-  { id: 'eco', match: /^(ecology|ecosystem|environmental-science|geography|geology|geoscience|climate|marine|plant|zoology)/ },
-  { id: 'eng', match: /systems$/ },
-  { id: 'agri', match: /^(animal|food|veterinary)/ },
-]
-const groupOf = (id: string) => GROUPS.find((g) => g.match.test(id))?.id ?? 'other'
-
 const groups = computed(() => {
   const q = query.value.trim().toLowerCase()
   const out: { id: string; majors: Component[] }[] = []
-  for (const id of [...GROUPS.map((g) => g.id), 'other']) {
+  for (const id of [...MAJOR_GROUPS.map((g) => g.id), 'other']) {
     const label = t.value(`majorGroup.${id}`).toLowerCase()
-    const inGroup = props.majors.filter((m) => groupOf(m.id) === id)
+    const inGroup = props.majors.filter((m) => majorGroupOf(m.id) === id)
     const hits = q === '' || label.includes(q) ? inGroup : inGroup.filter((m) => m.title.toLowerCase().includes(q))
     if (hits.length) out.push({ id, majors: [...hits].sort((a, b) => a.title.localeCompare(b.title)) })
   }

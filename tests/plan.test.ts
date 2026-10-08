@@ -278,3 +278,30 @@ describe('heavy terms', () => {
     expect(kinds(data, ['AAAA10001', 'AAAA10002']).some((k) => k.startsWith('heavy-term'))).toBe(false)
   })
 })
+
+describe('discontinued subjects', () => {
+  const old = subject({ code: 'AAAA20001', prerequisites: 'none', offerings: { 2026: ['semester-1', 'semester-2'] }, discontinued_from: 2027, replaced_by: ['AAAA20002'] })
+  const gone = subject({ code: 'AAAA20003', prerequisites: 'none', offerings: { 2026: ['semester-1'] }, discontinued_from: 2027 })
+  const data = dataset([old, gone, subject({ code: 'AAAA20002', prerequisites: 'none', offerings: { 2027: ['semester-1'] } })])
+
+  it('is not offered from the year it stops, even though older timetables would carry over', () => {
+    expect(offeredIn(old, 2026, 'semester-1').status).toBe('ok')
+    expect(offeredIn(old, 2027, 'semester-1').status).toBe('fail')
+    expect(offeredIn(old, 2030, 'semester-2').status).toBe('fail')
+  })
+
+  it('a plan that still has it says so, and names the replacement', () => {
+    const plan: Plan = { course: 'X', courseYear: 2026, completed: [], terms: [{ year: 2027, period: 'semester-1', subjects: ['AAAA20001', 'AAAA20003'] }] }
+    const issues = checkTerms(plan, data)
+    const d = issues.filter((i) => i.kind === 'discontinued')
+    expect(d.map((i) => [i.subject, i.params.instead])).toEqual([['AAAA20001', 'AAAA20002'], ['AAAA20003', '']])
+    expect(d.every((i) => i.severity === 'error')).toBe(true)
+    // One clear message per subject, not a second "not offered" on top.
+    expect(issues.filter((i) => i.kind === 'not-offered')).toHaveLength(0)
+  })
+
+  it('is fine in a year before it stops, and in what a student already passed', () => {
+    const plan: Plan = { course: 'X', courseYear: 2026, completed: ['AAAA20003'], terms: [{ year: 2026, period: 'semester-2', subjects: ['AAAA20001'] }] }
+    expect(checkTerms(plan, data).filter((i) => i.severity === 'error')).toEqual([])
+  })
+})

@@ -14,6 +14,7 @@ import PrivacyView from './views/PrivacyView.vue'
 import AboutView from './views/AboutView.vue'
 import GuideView from './views/GuideView.vue'
 import BrowseView from './views/BrowseView.vue'
+import MajorsView from './views/MajorsView.vue'
 import { watchEffect } from 'vue'
 import { useView, link } from './composables/useView'
 import { useDataset } from './composables/useDataset'
@@ -34,13 +35,17 @@ const TITLES: Partial<Record<string, string>> = {
   about: 'about.title',
   guide: 'guide.title',
   subjects: 'browse.title',
+  majors: 'majors.title',
 }
 watchEffect(() => {
   const s = view.value === 'subject' ? data.value.subjects[param.value.toUpperCase()] : undefined
   const key = TITLES[view.value]
+  const major = view.value === 'majors' && param.value ? data.value.components.find((c) => c.id === param.value) : undefined
   document.title = s
     ? `${t.value('seo.subjectTitle', { code: s.code, title: s.title })} | PickMySubjects`
-    : key
+    : major
+      ? `${t.value('majors.majorTitle', { title: major.title })} | PickMySubjects`
+      : key
       ? `${t.value(key)} | PickMySubjects`
       : t.value('seo.homeTitle')
 })
@@ -67,12 +72,14 @@ const plannerUrl =
     <AboutView v-else-if="view === 'about'" />
     <GuideView v-else-if="view === 'guide'" />
     <BrowseView v-else-if="view === 'subjects'" />
+    <MajorsView v-else-if="view === 'majors'" :id="param" />
     <PrivacyView v-else />
   </main>
   <footer class="footer">
     <div class="footer-inner shell">
       <nav class="footer-links" :aria-label="t('nav.more')">
         <a :href="link('subjects')">{{ t('browse.title') }}</a>
+        <a :href="link('majors')">{{ t('majors.title') }}</a>
         <a :href="link('guide')">{{ t('guide.title') }}</a>
         <a :href="link('about')">{{ t('app.about') }}</a>
         <a :href="link('contribute')">{{ t('nav.contribute') }}</a>

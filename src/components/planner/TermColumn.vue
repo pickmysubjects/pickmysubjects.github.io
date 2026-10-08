@@ -16,6 +16,7 @@ const props = defineProps<{
   course: string
   load: number
   options: { code: string; title: string }[]
+  roles: Record<string, 'required' | 'option'>
   related: Set<string> | null
 }>()
 const emit = defineEmits<{
@@ -92,6 +93,7 @@ function onDrop(event: DragEvent): void {
       :issues="issuesByCode[code] ?? []"
       :course="course"
       :only-in="onlyIn(code)"
+      :role="roles[code]"
       :term-index="termIndex"
       :highlighted="related?.has(code) ?? false"
       :dimmed="related !== null && !related.has(code)"

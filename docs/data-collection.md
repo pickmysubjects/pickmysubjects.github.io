@@ -44,3 +44,11 @@ Breadth is the easy-WAM question students ask most. Add level-1 and level-2 brea
 - Batches are fine. For example, paste 10 subjects one after another, each starting with its code and title.
 - If a requirement is unusual (e.g. "permission of coordinator"), paste it anyway. It's kept as "check manually" rather than guessed.
 - Record the date you copied it. That date becomes `verified_on`.
+
+## Every year: a new Handbook
+
+When the next year's Handbook comes out (usually October to December), check each subject again. Students' plans and records keep naming subjects, so:
+
+- **Never delete a subject that stops running.** Keep its file and add `discontinued_from: <first year it no longer runs>`. Add `replaced_by: [CODE, …]` if the Handbook names a replacement. Plans then say it doesn't run any more (and what to take instead), and suggestions and generated plans stop using it.
+- Add the new year's semesters under `offerings`, and update anything else that changed.
+- Delete a file only if it was wrong in the first place (for example, a page pasted under the wrong code).

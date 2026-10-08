@@ -194,6 +194,10 @@ export const subjectFileSchema = z
     source_year: z.number().int(),
     verified_on: z.union([z.iso.date(), z.null()]).default(null),
     notes: z.string().optional(),
+    // A subject the University stops running keeps its file (plans and records still name it):
+    // the first year it no longer runs, and what students take instead, if anything.
+    discontinued_from: z.number().int().optional(),
+    replaced_by: z.array(subjectCode).default([]),
   })
   .strict()
   .transform((s) => ({
@@ -217,6 +221,8 @@ export const subjectFileSchema = z
     sourceYear: s.source_year,
     verifiedOn: s.verified_on,
     notes: s.notes,
+    discontinuedFrom: s.discontinued_from,
+    replacedBy: s.replaced_by,
     // Filled in from data/<set>/discussions/ when there is one.
     discussion: undefined as DiscussionSummary | undefined,
   }))

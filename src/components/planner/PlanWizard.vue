@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { link } from '@/composables/useView'
 import { computed, shallowRef } from 'vue'
 import { ArrowLeft, ArrowRight, Check } from 'lucide-vue-next'
 import type { Component, Course, Period } from '@/engine'
@@ -100,6 +101,7 @@ function chooseCourse(c: Course): void {
     <div v-else class="q">
       <h2 class="q-title">{{ t('wizard.qMajor') }}</h2>
       <MajorPicker :majors="majors" :model-value="draft.major" @update:model-value="set({ major: $event })" />
+      <a class="majors-link" :href="link('majors')" target="_blank" rel="noopener">{{ t('wizard.majorsLink') }}</a>
       <div v-if="specs.length" class="spec">
         <p class="spec-title">{{ t('wizard.qSpec') }}</p>
         <div class="spec-chips" role="group" :aria-label="t('wizard.qSpec')">
@@ -283,5 +285,12 @@ function chooseCourse(c: Course): void {
   background: var(--accent-soft);
   color: var(--accent);
   font-weight: 600;
+}
+
+.majors-link {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: var(--accent);
 }
 </style>

@@ -81,6 +81,9 @@ export function issueText(
     const status = statuses.find((s) => s.ruleId === issue.ruleId)
     return `${ruleText(t, rule, issue.message)} — ${status ? ruleDetail(t, status) : ''}`
   }
+  if (issue.kind === 'discontinued') {
+    return t(issue.params.instead ? 'issue.discontinuedInstead' : 'issue.discontinued', issue.params)
+  }
   const key = issue.kind === 'not-offered' && issue.params.assumed ? 'not-offered-assumed' : issue.kind
   return t(`issue.${key}`, localiseParams(t, issue.params))
 }

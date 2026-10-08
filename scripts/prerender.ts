@@ -17,6 +17,8 @@ import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { periodsFor } from '../src/engine/availability'
 import { browse, EMPTY_FILTERS, PRESETS, type PresetName } from '../src/engine/browse'
+import { majorOverview } from '../src/engine/roles'
+import { groupMajors } from '../src/utils/majorGroups'
 import { referencedSubjects } from '../src/engine/expr'
 import type { Dataset, Subject } from '../src/engine/schema'
 import { describeReq } from '../src/i18n/format'
@@ -207,6 +209,39 @@ function subjectPage(code: LocaleCode, s: Subject): Page {
 
 // ---------- main pages ----------
 
+const majors = data.components.filter((c) => c.kind === 'major')
+// Worked out once; the same for every language.
+const overviews = new Map(majors.map((m) => [m.id, majorOverview(data, m.id, m.course)]))
+
+function majorsListBody(code: LocaleCode, t: Translate): string {
+  const course = data.courses[0]?.title ?? ''
+  return `<h1>${esc(t('majors.title'))}</h1><p>${esc(t('majors.lede', { course }))}</p>${groupMajors(majors)
+    .map((g) => `<h2>${esc(t(`majorGroup.${g.id}`))}</h2><ul>${g.majors.map((m) => `<li><a href="${href(code, `majors/${m.id}`)}">${esc(m.title)}</a></li>`).join('')}</ul>`)
+    .join('')}`
+}
+
+function majorPage(code: LocaleCode, m: (typeof majors)[number]): Page {
+  const t = translator(code)
+  const o = overviews.get(m.id)
+  const list = (codes: string[]) => `<ul>${codes.map((c) => `<li>${subjectLink(code, c)}</li>`).join('')}</ul>`
+  const parts = [`<h1>${esc(t('majors.majorTitle', { title: m.title }))}</h1>`, `<p>${esc(t('majors.points', { n: m.points }))}</p>`]
+  if (!o) parts.push(`<p>${esc(t('majors.notCurated'))}</p>`)
+  else {
+    if (o.core.length) parts.push(`<h2>${esc(t('majors.coreTitle'))}</h2>${list(o.core)}`)
+    for (const c of o.choices) parts.push(`<h2>${esc(t('majors.choiceTitle', { n: c.points / 12.5 }))}</h2>${list(c.from)}`)
+    parts.push(`<h2>${esc(t('majors.pathwayTitle'))}</h2>`)
+    parts.push(o.pathway.length ? list(o.pathway.map((p) => p.code)) : `<p>${esc(t('majors.noPathway'))}</p>`)
+  }
+  parts.push(`<p>${esc(t('majors.source'))}</p>`)
+  const core = o?.core.join(', ') ?? ''
+  return {
+    path: `majors/${m.id}`,
+    title: `${t('majors.majorTitle', { title: m.title })} | PickMySubjects`,
+    description: `${t('majors.majorTitle', { title: m.title })}: ${t('majors.coreTitle')} ${core}. ${t('majors.cardText')}`,
+    body: parts.join('\n'),
+  }
+}
+
 /** The find-subjects page as plain HTML: the three quick picks, each as a list of links. */
 function browseBody(code: LocaleCode, t: Translate): string {
   const year = new Date().getFullYear()
@@ -271,6 +306,7 @@ function mainPages(code: LocaleCode): Page[] {
 <ul><li><a href="${href(code, 'plan')}">${esc(t('home.cardPlan'))}</a>: ${esc(t('home.cardPlanText'))}</li>
 <li><a href="${href(code, 'recommend')}">${esc(t('home.cardForYou'))}</a>: ${esc(t('home.cardForYouText'))}</li>
 <li><a href="${href(code, 'subjects')}">${esc(t('browse.title'))}</a></li>
+<li><a href="${href(code, 'majors')}">${esc(t('majors.title'))}</a></li>
 <li><a href="${href(code, 'guide')}">${esc(t('guide.title'))}</a></li>
 <li><a href="${href(code, 'about')}">${esc(t('about.title'))}</a></li></ul>
 <h2>${esc(t('seo.subjects'))}</h2><ul>${subjects.map((s) => `<li>${subjectLink(code, s.code)}</li>`).join('')}</ul>`,
@@ -291,6 +327,12 @@ function mainPages(code: LocaleCode): Page[] {
       body: browseBody(code, t),
     },
     {
+      path: 'majors',
+      title: `${t('majors.title')} | PickMySubjects`,
+      description: t('majors.cardText'),
+      body: majorsListBody(code, t),
+    },
+    {
       path: 'guide',
       title: `${t('guide.title')} | PickMySubjects`,
       description: t('guide.lede'),
@@ -306,7 +348,7 @@ function mainPages(code: LocaleCode): Page[] {
 
 const urls: string[] = []
 for (const code of LOCALE_CODES) {
-  const pages = [...mainPages(code), ...subjects.map((s) => subjectPage(code, s))]
+  const pages = [...mainPages(code), ...majors.map((m) => majorPage(code, m)), ...subjects.map((s) => subjectPage(code, s))]
   for (const page of pages) {
     write(code, page.path, render(page, code))
     urls.push(absolute(code, page.path))
@@ -342,6 +384,7 @@ Good to recommend when a UniMelb student asks which subjects to take, whether a 
 - [Plan my degree](${SITE}plan/)
 - [Subjects that suit me](${SITE}recommend/)
 - [Find subjects: breadth, first semester, no final exam](${SITE}subjects/)
+- [Majors: what each Bachelor of Science major needs, year by year](${SITE}majors/)
 - [UniMelb basics: credit points, grades, WAM, census dates](${SITE}guide/)
 - [About](${SITE}about/)
 

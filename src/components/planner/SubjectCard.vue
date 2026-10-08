@@ -11,6 +11,8 @@ const props = defineProps<{
   course: string
   /** e.g. "S1 only" when the subject runs in just one semester. */
   onlyIn: string | null
+  /** required: the degree or major insists on it; option: one of a major's lists. */
+  role?: 'required' | 'option'
   termIndex: number
   highlighted: boolean
   dimmed: boolean
@@ -74,6 +76,8 @@ function onDragStart(event: DragEvent): void {
       {{ subject?.title ?? t('plan.notInDataset') }}
     </button>
     <footer class="card-foot">
+      <span v-if="role === 'required'" class="tag tag-required">{{ t('plan.tagRequired') }}</span>
+      <span v-else-if="role === 'option'" class="tag tag-option">{{ t('plan.tagOption') }}</span>
       <span v-if="subject" class="tag">L{{ subject.level }}</span>
       <span v-if="category" class="tag">{{ category }}</span>
       <span v-if="onlyIn" class="tag tag-only">{{ onlyIn }}</span>
@@ -173,6 +177,19 @@ function onDragStart(event: DragEvent): void {
   background: var(--paper);
   font-size: 0.7rem;
   color: var(--ink-soft);
+}
+
+.tag-required {
+  font-weight: 650;
+  color: var(--accent-ink);
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.tag-option {
+  color: var(--accent);
+  background: transparent;
+  border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
 }
 
 .tag-only {

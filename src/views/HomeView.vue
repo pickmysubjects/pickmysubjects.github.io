@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { link } from '@/composables/useView'
 import { computed } from 'vue'
-import { ArrowRight, BookOpen, Check, ListFilter, Route, Sparkles, User } from 'lucide-vue-next'
+import { ArrowRight, BookOpen, Check, GraduationCap, ListFilter, Route, Sparkles, User } from 'lucide-vue-next'
 import SubjectSearch from '@/components/SubjectSearch.vue'
 import DataNotice from '@/components/DataNotice.vue'
 import RouteLine from '@/components/home/RouteLine.vue'
@@ -94,6 +94,14 @@ const steps = computed(() => {
           <span class="tool-body">
             <span class="step-name">{{ t('browse.title') }}</span>
             <span class="step-text">{{ t('browse.lede') }}</span>
+          </span>
+          <ArrowRight :size="18" aria-hidden="true" class="tool-go" />
+        </a>
+        <a class="tool surface" :href="link('majors')">
+          <span class="tool-icon"><GraduationCap :size="20" aria-hidden="true" /></span>
+          <span class="tool-body">
+            <span class="step-name">{{ t('majors.title') }}</span>
+            <span class="step-text">{{ t('majors.cardText') }}</span>
           </span>
           <ArrowRight :size="18" aria-hidden="true" class="tool-go" />
         </a>
@@ -300,7 +308,7 @@ li:nth-child(3) .step-icon {
 
 .tools-list {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 14px;
 }
 
@@ -342,7 +350,7 @@ li:nth-child(3) .step-icon {
   color: var(--accent);
 }
 
-@media (max-width: 720px) {
+@media (max-width: 1000px) {
   .tools-list {
     grid-template-columns: 1fr;
   }

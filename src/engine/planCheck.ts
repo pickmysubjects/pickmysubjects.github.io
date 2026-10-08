@@ -36,6 +36,10 @@ export function checkTerms(plan: Plan, data: Dataset, standardLoad = 50): Issue[
       }
       load += s.points
 
+      if (s.discontinuedFrom !== undefined && term.year >= s.discontinuedFrom) {
+        issues.push({ severity: 'error', kind: 'discontinued', subject: code, termIndex, params: { code, year: s.discontinuedFrom, instead: s.replacedBy.join(', ') }, message: `${code} doesn't run from ${s.discontinuedFrom}${s.replacedBy.length ? `; take ${s.replacedBy.join(', ')} instead` : ''}.` })
+        continue
+      }
       const avail = offeredIn(s, term.year, term.period)
       if (avail.status === 'fail') {
         issues.push({ severity: 'error', kind: 'not-offered', subject: code, termIndex, params: { code, year: term.year, period: term.period, assumed: avail.assumedFromYear ?? '' }, message: `${code} is not offered in ${PERIOD_LABELS[term.period]}${avail.assumedFromYear ? ` (based on ${avail.assumedFromYear} data)` : ` ${term.year}`}.` })

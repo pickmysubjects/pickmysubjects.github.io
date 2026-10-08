@@ -28,6 +28,8 @@ const subject = computed(() => data.value.subjects[code.value])
 const year = computed(() => plan.terms.value[0]?.year ?? new Date().getFullYear())
 const periods = computed(() => (subject.value ? periodsFor(subject.value, year.value) : []))
 const offeringsKnown = computed(() => subject.value?.offerings !== 'unknown')
+// No longer run from the year being planned for.
+const gone = computed(() => subject.value?.discontinuedFrom !== undefined && year.value >= subject.value.discontinuedFrom)
 const unlocks = computed(() =>
   Object.values(data.value.subjects)
     .filter((s) => referencedSubjects(s.prerequisites).includes(code.value))
@@ -107,11 +109,16 @@ const links = computed(() => (name.value === 'real' ? discussionLinks(code.value
           <span v-if="category" class="chip">{{ category }}</span>
           <span class="chip chip-when">
             <CalendarRange :size="14" aria-hidden="true" />
-            <template v-if="!offeringsKnown">{{ t('subject.runsUnknown') }}</template>
+            <template v-if="gone">{{ t('subject.discontinued', { year: subject.discontinuedFrom ?? '' }) }}</template>
+            <template v-else-if="!offeringsKnown">{{ t('subject.runsUnknown') }}</template>
             <template v-else-if="periods.length === 0">{{ t('subject.notRunning') }}</template>
             <template v-else>{{ periods.map((p) => t(`period.${p}`)).join(' · ') }}</template>
           </span>
         </div>
+        <p v-if="gone && subject.replacedBy.length" class="instead">
+          {{ t('subject.insteadTake') }}
+          <a v-for="c in subject.replacedBy" :key="c" class="chip code" :href="link(`subject/${c}`)">{{ c }}</a>
+        </p>
         <div class="actions">
           <button class="button button-accent" type="button" :disabled="inPlan || !target" @click="addToPlan">
             <component :is="inPlan ? Check : Plus" :size="18" aria-hidden="true" />
@@ -385,5 +392,14 @@ const links = computed(() => (name.value === 'real' ? discussionLinks(code.value
   .meter-ends {
     grid-column: 1 / -1;
   }
+}
+
+.instead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.92rem;
+  color: var(--bad);
 }
 </style>

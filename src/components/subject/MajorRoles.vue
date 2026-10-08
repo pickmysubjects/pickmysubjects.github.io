@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { link } from '@/composables/useView'
 import { subjectRoles } from '@/engine'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
@@ -27,7 +28,7 @@ const roles = computed(() =>
       <li v-for="r in roles" :key="r.component" class="role" :class="`role-${r.role}`">
         <span class="role-tag">{{ t(`subject.role.${r.role}`) }}</span>
         <span>
-          <strong>{{ r.title }}</strong>
+          <a class="role-link" :href="link(`majors/${r.component}`)"><strong>{{ r.title }}</strong></a>
           <span v-if="r.mine" class="role-mine">{{ t('subject.yours') }}</span>
           <span v-if="r.via" class="role-via"> · {{ t('subject.roleVia', { code: r.via }) }}</span>
         </span>
@@ -85,5 +86,14 @@ const roles = computed(() =>
 
 .role-via {
   color: var(--ink-soft);
+}
+
+.role-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.role-link:hover strong {
+  color: var(--accent);
 }
 </style>

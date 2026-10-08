@@ -14,6 +14,8 @@ export interface AvailabilityResult {
  * closest later one) and reports it as an assumption rather than a fact.
  */
 export function offeredIn(subject: Subject, year: number, period: Period): AvailabilityResult {
+  // No longer run: never offered again, whatever earlier years' timetables said.
+  if (subject.discontinuedFrom !== undefined && year >= subject.discontinuedFrom) return { status: 'fail' }
   if (subject.offerings === 'unknown') return { status: 'unknown' }
   const exact = subject.offerings[String(year)]
   if (exact) return { status: exact.includes(period) ? 'ok' : 'fail' }
