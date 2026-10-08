@@ -1,0 +1,16 @@
+code: INFO20003
+source: StudentVIP
+url: https://studentvip.com.au/unimelb/subjects/info20003
+reviews: 10
+from: 2018
+to: 2025
+checked: 2026-10-08
+points:
+  - en: "Well organised with very responsive staff on the discussion board and full tutorial solutions provided."
+    zh: "课程组织良好，讨论区回复及时，并提供完整的辅导课答案。"
+  - en: "Covers ER modelling, SQL and query processing; the second half is more theory-heavy and dry."
+    zh: "涵盖ER建模、SQL和查询处理，后半部分偏理论、较枯燥。"
+  - en: "Assignments are fair: ER modelling is subjective but leniently marked; practise SQL early."
+    zh: "作业公平：ER建模较主观但评分宽松，建议尽早练习SQL。"
+  - en: "The open-book exam tests small details, so bring well-organised notes, tutorial solutions and the formula sheet."
+    zh: "开卷考试会考细节，建议带上整理好的笔记、辅导课答案和公式表。"

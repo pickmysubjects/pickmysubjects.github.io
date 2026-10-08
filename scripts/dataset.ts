@@ -3,7 +3,7 @@ import { join, relative } from 'node:path'
 import { parse } from 'yaml'
 import { z } from 'zod'
 import { referencedSubjects } from '../src/engine/expr'
-import { componentFileSchema, courseFileSchema, SKILLS, subjectFileSchema, type Dataset, type Skill } from '../src/engine/schema'
+import { componentFileSchema, courseFileSchema, discussionFileSchema, SKILLS, subjectFileSchema, type Dataset, type Skill } from '../src/engine/schema'
 
 export const ROOT = join(import.meta.dirname, '..')
 
@@ -56,6 +56,16 @@ export function buildDataset(name: Dataset['name']): BuildResult {
     .filter((c) => c !== null)
 
   mergeRatings(join(base, 'ratings.json'), subjects)
+
+  // Summaries of public discussion, one file per subject.
+  for (const file of yamlFiles(join(base, 'discussions'))) {
+    const d = load(file, discussionFileSchema, errors)
+    if (!d) continue
+    if (!file.endsWith(`${d.code}.yaml`)) errors.push(`${relative(ROOT, file)}: file name must be ${d.code}.yaml`)
+    const s = subjects[d.code]
+    if (!s) errors.push(`${relative(ROOT, file)}: ${d.code} is not a subject`)
+    else s.discussion = d
+  }
 
   const missing = new Set<string>()
   for (const s of Object.values(subjects)) {

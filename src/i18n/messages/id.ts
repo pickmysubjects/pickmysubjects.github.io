@@ -616,6 +616,10 @@ export const id: Messages = {
     searchFirst: 'Cari mata kuliah',
     notFoundText: 'Bantu mahasiswa lain dengan menambahkannya — sekitar satu menit.',
     addIt: 'Tambah mata kuliah',
+    discussTitle: 'Kata mahasiswa di internet',
+    discussNote: 'Ringkasan ulasan publik. Ini bukan penilaian Subject Compass dan tidak diberi skor.',
+    discussSource: 'Diringkas dari {n} ulasan di {source} ({years})',
+    discussRead: 'Baca ulasannya',
   },
   wizard: {
     qSpec: 'Menambah spesialisasi? (opsional)',

@@ -1,0 +1,16 @@
+code: COMP20008
+source: StudentVIP
+url: https://studentvip.com.au/unimelb/subjects/comp20008
+reviews: 10
+from: 2020
+to: 2025
+checked: 2026-10-08
+points:
+  - en: "The content (data wrangling, visualisation, intro machine learning) is widely seen as useful and interesting."
+    zh: "内容（数据处理、可视化、机器学习入门）普遍被认为有用、有趣。"
+  - en: "Many reviewers say much of it is self-taught: lectures stay high-level and the assignments need Python libraries you largely learn yourself."
+    zh: "很多同学说大部分要靠自学：讲课比较概括，作业需要的 Python 库基本要自己学。"
+  - en: "Assignments include group work and a report; reviewers mention vague specifications and inconsistent marking, though a recent review was much more positive."
+    zh: "作业包括小组项目和报告；有人提到作业要求含糊、评分不一致，不过最近有一条评价正面很多。"
+  - en: "A statistics background helps with the theory-based exam."
+    zh: "有统计基础会对偏理论的考试有帮助。"

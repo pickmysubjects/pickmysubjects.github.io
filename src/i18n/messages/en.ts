@@ -620,6 +620,10 @@ export const en = {
     searchFirst: 'Search for a subject',
     notFoundText: 'Help other students by adding it — it takes about a minute.',
     addIt: 'Add a subject',
+    discussTitle: 'What students say online',
+    discussNote: 'A short summary of public reviews. These are not Subject Compass ratings and are not scored.',
+    discussSource: 'Summarised from {n} reviews on {source} ({years})',
+    discussRead: 'Read the reviews',
   },
   wizard: {
     qSpec: 'Adding a specialisation? (optional)',

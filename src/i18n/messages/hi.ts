@@ -616,6 +616,10 @@ export const hi: Messages = {
     searchFirst: 'विषय खोजें',
     notFoundText: 'इसे जोड़कर दूसरे छात्रों की मदद करें — लगभग एक मिनट लगता है।',
     addIt: 'विषय जोड़ें',
+    discussTitle: 'ऑनलाइन छात्र क्या कहते हैं',
+    discussNote: 'सार्वजनिक समीक्षाओं का छोटा सारांश। ये Subject Compass की रेटिंग नहीं हैं और इनमें अंक नहीं दिए गए।',
+    discussSource: '{source} की {n} समीक्षाओं से सारांश ({years})',
+    discussRead: 'समीक्षाएँ पढ़ें',
   },
   wizard: {
     qSpec: 'स्पेशलाइज़ेशन जोड़ना है? (वैकल्पिक)',

@@ -6,6 +6,7 @@ import DataNotice from '@/components/DataNotice.vue'
 import RatingForm from '@/components/rating/RatingForm.vue'
 import AssessmentPanel from '@/components/subject/AssessmentPanel.vue'
 import MajorRoles from '@/components/subject/MajorRoles.vue'
+import DiscussionSummary from '@/components/subject/DiscussionSummary.vue'
 import { periodsFor, referencedSubjects, termKey } from '@/engine'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
@@ -151,6 +152,8 @@ const links = computed(() => (name.value === 'real' ? discussionLinks(code.value
         </section>
 
         <AssessmentPanel class="panel surface panel-wide" :subject="subject" :year="year" />
+
+        <DiscussionSummary v-if="subject.discussion" class="panel surface panel-wide" :discussion="subject.discussion" />
 
         <section class="panel surface panel-wide">
           <h2 class="panel-title">{{ t('subject.ratingsTitle') }}</h2>

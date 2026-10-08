@@ -616,6 +616,10 @@ export const vi: Messages = {
     searchFirst: 'Tìm một môn',
     notFoundText: 'Hãy thêm môn này để giúp các bạn khác — chỉ mất khoảng một phút.',
     addIt: 'Thêm môn học',
+    discussTitle: 'Sinh viên nói gì trên mạng',
+    discussNote: 'Tóm tắt các đánh giá công khai. Đây không phải điểm đánh giá của Subject Compass và không chấm điểm.',
+    discussSource: 'Tóm tắt từ {n} đánh giá trên {source} ({years})',
+    discussRead: 'Đọc đánh giá gốc',
   },
   wizard: {
     qSpec: 'Thêm chuyên ngành hẹp? (không bắt buộc)',

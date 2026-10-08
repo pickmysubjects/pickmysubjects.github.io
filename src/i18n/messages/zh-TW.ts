@@ -616,6 +616,10 @@ export const zhTW: Messages = {
     searchFirst: '搜尋一門課',
     notFoundText: '新增它來幫助其他同學——大約只要一分鐘。',
     addIt: '新增課程',
+    discussTitle: '網上討論摘要',
+    discussNote: '整理自公開的學生評價，不是本站評分，也不打分。',
+    discussSource: '根據 {source} 上的 {n} 則評價整理（{years}）',
+    discussRead: '查看原文',
   },
   wizard: {
     qSpec: '要加一個專精嗎？（可選）',

@@ -616,6 +616,10 @@ export const ms: Messages = {
     searchFirst: 'Cari subjek',
     notFoundText: 'Bantu pelajar lain dengan menambahnya — kira-kira seminit.',
     addIt: 'Tambah subjek',
+    discussTitle: 'Kata pelajar dalam talian',
+    discussNote: 'Ringkasan ulasan awam. Ini bukan penilaian Subject Compass dan tidak diberi skor.',
+    discussSource: 'Diringkaskan daripada {n} ulasan di {source} ({years})',
+    discussRead: 'Baca ulasan',
   },
   wizard: {
     qSpec: 'Tambah pengkhususan? (pilihan)',

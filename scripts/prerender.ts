@@ -172,6 +172,15 @@ function subjectPage(code: LocaleCode, s: Subject): Page {
   if (sig && sig.difficulty !== undefined && sig.workload !== undefined && sig.grading !== undefined) {
     parts.push(`<p>${esc(t('seo.ratings', { d: sig.difficulty, w: sig.workload, g: sig.grading, n: sig.reviews }))}</p>`)
   }
+  const d = s.discussion
+  if (d) {
+    const cjk = code === 'zh-CN' || code === 'zh-TW'
+    const years = d.from === d.to ? String(d.to) : `${d.from}–${d.to}`
+    parts.push(
+      `<h2>${esc(t('subject.discussTitle'))}</h2><p>${esc(t('subject.discussNote'))}</p><ul>${d.points.map((p) => `<li>${esc(cjk ? p.zh : p.en)}</li>`).join('')}</ul>` +
+        `<p>${esc(t('subject.discussSource', { n: d.reviews, years, source: d.source }))} <a href="${esc(d.url)}" rel="nofollow">${esc(t('subject.discussRead'))}</a></p>`,
+    )
+  }
   parts.push(`<p>${esc(t('subject.source', { year: s.sourceYear }))}</p>`)
   if (s.handbook) parts.push(`<p><a href="${esc(s.handbook)}">${esc(t('seo.confirm'))}</a></p>`)
   parts.push(`<p><a href="${href(code, '')}">${esc(t('seo.made'))}</a></p>`)

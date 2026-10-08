@@ -616,6 +616,10 @@ export const ko: Messages = {
     searchFirst: '과목 검색',
     notFoundText: '추가해서 다른 학생들을 도와주세요. 1분 정도면 됩니다.',
     addIt: '과목 추가',
+    discussTitle: '온라인 학생 후기 요약',
+    discussNote: '공개된 학생 후기를 요약한 것으로, 이 사이트의 평가가 아니며 점수도 매기지 않아요.',
+    discussSource: '{source}의 후기 {n}개를 요약 ({years})',
+    discussRead: '원문 보기',
   },
   wizard: {
     qSpec: '세부 전공을 추가하나요? (선택)',

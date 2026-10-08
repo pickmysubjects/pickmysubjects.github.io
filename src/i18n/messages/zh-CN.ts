@@ -616,6 +616,10 @@ export const zhCN: Messages = {
     searchFirst: '搜索一门课',
     notFoundText: '添加它来帮助其他同学——大约只要一分钟。',
     addIt: '添加课程',
+    discussTitle: '网上讨论摘要',
+    discussNote: '整理自公开的学生评价，不是本站评分，也不打分。',
+    discussSource: '根据 {source} 上的 {n} 条评价整理（{years}）',
+    discussRead: '查看原文',
   },
   wizard: {
     qSpec: '要加一个专精吗？（可选）',

@@ -1,0 +1,14 @@
+code: COMP20003
+source: StudentVIP
+url: https://studentvip.com.au/unimelb/subjects/comp20003
+reviews: 9
+from: 2017
+to: 2025
+checked: 2026-10-08
+points:
+  - en: "Generally well liked: practical algorithms with real applications, often compared favourably with COMP20007 for people who prefer applications over theory."
+    zh: "整体评价较好：算法偏实用、贴近实际应用；喜欢应用多于理论的同学常拿它和 COMP20007 比较，觉得更合适。"
+  - en: "The assignments are the main workload: written in C with heavy use of pointers, often from scratch. Start early; do not leave them to the last minute."
+    zh: "作业是主要的工作量：用 C 写，大量用到指针，常常要从零开始。一定要早点开始，不要拖到最后。"
+  - en: "Reviewers say the theory and maths are not especially heavy; a solid intuition for how each algorithm works is usually enough."
+    zh: "大家认为理论和数学要求不算高，理解每个算法大致怎么运作通常就够了。"

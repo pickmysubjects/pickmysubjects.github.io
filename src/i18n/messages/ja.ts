@@ -616,6 +616,10 @@ export const ja: Messages = {
     searchFirst: '科目を検索',
     notFoundText: '追加して他の学生を助けてください。約1分で終わります。',
     addIt: '科目を追加',
+    discussTitle: 'ネット上の学生の声',
+    discussNote: '公開されている学生レビューの要約です。当サイトの評価ではなく、点数も付けていません。',
+    discussSource: '{source} の {n} 件のレビューから要約（{years}）',
+    discussRead: 'レビューを読む',
   },
   wizard: {
     qSpec: '専攻分野（スペシャライゼーション）を追加しますか？（任意）',

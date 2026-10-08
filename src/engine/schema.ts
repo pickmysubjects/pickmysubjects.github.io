@@ -217,9 +217,34 @@ export const subjectFileSchema = z
     sourceYear: s.source_year,
     verifiedOn: s.verified_on,
     notes: s.notes,
+    // Filled in from data/<set>/discussions/ when there is one.
+    discussion: undefined as DiscussionSummary | undefined,
   }))
 
 export type Subject = z.output<typeof subjectFileSchema>
+
+/**
+ * A short summary of what students say about a subject on a public review site,
+ * kept apart from our own ratings: no scores, never mixed into averages, always
+ * linked to the source. Staff are never named.
+ */
+export const discussionFileSchema = z
+  .object({
+    code: subjectCode,
+    source: z.literal('StudentVIP'),
+    url: z.string().regex(/^https:\/\/studentvip\.com\.au\/unimelb\/subjects\/[a-z]{4}\d{5}$/),
+    reviews: z.number().int().positive(), // how many reviews the summary is based on
+    from: z.number().int(),
+    to: z.number().int(),
+    checked: z.iso.date(),
+    points: z
+      .array(z.object({ en: z.string().min(10).max(220), zh: z.string().min(4).max(120) }).strict())
+      .min(1)
+      .max(5),
+  })
+  .strict()
+
+export type DiscussionSummary = z.output<typeof discussionFileSchema>
 export type SubjectCategory = 'science' | 'breadth' | 'discipline'
 
 const ruleBase = { id: z.string().min(1), description: z.string().min(1) }
