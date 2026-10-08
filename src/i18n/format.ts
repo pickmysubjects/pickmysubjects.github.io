@@ -118,8 +118,10 @@ function describeExpr(t: Translate, e: ReqExpr): string {
       .join(sep)
   }
   if ('points' in e) {
-    const { min, level, from } = e.points
-    const base = level !== undefined ? t('expr.pointsOf', { n: min, what: t('expr.level', { level }) }) : t('expr.points', { n: min })
+    const { min, level, area, from } = e.points
+    // e.g. "25 points of MAST" or "25 points of level 2 COMP": keep the subject area.
+    const what = [level !== undefined ? t('expr.level', { level }) : '', area ?? ''].filter(Boolean).join(' ')
+    const base = what ? t('expr.pointsOf', { n: min, what }) : t('expr.points', { n: min })
     return from ? `${base} ${t('expr.from', { codes: from.join(', ') })}` : base
   }
   if ('admission' in e) return t('expr.admission', { course: e.admission })

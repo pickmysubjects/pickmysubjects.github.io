@@ -1,4 +1,6 @@
-import { computed, onBeforeUnmount, onMounted, shallowRef } from 'vue'
+import { computed, onBeforeUnmount, onMounted, shallowRef, watch } from 'vue'
+import { localeInPath } from '@/i18n/codes'
+import { currentLocale, useI18n } from '@/i18n'
 
 export const VIEWS = ['home', 'subject', 'plan', 'recommend', 'record', 'contribute', 'feedback', 'privacy', 'about'] as const
 export type View = (typeof VIEWS)[number]
@@ -13,21 +15,33 @@ interface Route {
 /** Where the site lives, e.g. "/subject-compass/" on GitHub Pages. */
 const BASE = import.meta.env.BASE_URL
 
-/** The address of a page inside the site, e.g. link('subject/COMP30027'). */
+/** "zh-CN/" for a non-English language, "" for English (English pages have no prefix). */
+function prefix(code: string = currentLocale()): string {
+  return code === 'en' ? '' : `${code}/`
+}
+
+/** The address of a page inside the site, in the current language, e.g. link('subject/COMP30027'). */
 export function link(path = ''): string {
-  return BASE + path.replace(/^\/+/, '')
+  return BASE + prefix() + path.replace(/^\/+/, '')
+}
+
+/** The path after the base, without any language part. */
+function pagePath(): string {
+  const rest = location.pathname.startsWith(BASE) ? location.pathname.slice(BASE.length) : ''
+  return localeInPath(rest) ? rest.split('/').slice(1).join('/') : rest
 }
 
 /** Splits "subject/COMP30027" (and a query string) into a route. Exported for tests. */
 export function parsePath(path: string, search = ''): Route {
-  const [head = '', param = ''] = path.replace(/^\/+|\/+$/g, '').split('/')
+  const parts = path.replace(/^\/+|\/+$/g, '').split('/')
+  if (localeInPath(path)) parts.shift()
+  const [head = '', param = ''] = parts
   const view = (VIEWS as readonly string[]).includes(head) ? (head as View) : 'home'
   return { view, param: safeDecode(param), query: new URLSearchParams(search) }
 }
 
 function current(): Route {
-  const path = location.pathname.startsWith(BASE) ? location.pathname.slice(BASE.length) : ''
-  return parsePath(path, location.search)
+  return parsePath(pagePath(), location.search)
 }
 
 /** A cut-off link like /subject/COMP%3 must not take the whole page down. */
@@ -47,10 +61,14 @@ function upgradeHashLink(): void {
 
 const listeners = new Set<() => void>()
 
-/** Go to a page inside the site without reloading it. */
-export function go(path: string): void {
-  history.pushState(null, '', link(path))
+function visit(address: string): void {
+  history.pushState(null, '', address)
   for (const l of listeners) l()
+}
+
+/** Go to a page inside the site (in the current language) without reloading it. */
+export function go(path: string): void {
+  visit(link(path))
 }
 
 // Clicks on ordinary links inside the site are handled here, so every page is a
@@ -64,7 +82,7 @@ function onClick(event: MouseEvent): void {
   // Same page, only a #fragment: let the browser scroll.
   if (url.pathname === location.pathname && url.search === location.search && url.hash) return
   event.preventDefault()
-  go(url.pathname.slice(BASE.length) + url.search)
+  visit(url.pathname + url.search)
 }
 
 /**
@@ -73,6 +91,14 @@ function onClick(event: MouseEvent): void {
  */
 export function useView() {
   upgradeHashLink()
+  const { locale } = useI18n()
+  // Keep the address in the shown language, so a copied link opens the same way.
+  const syncAddress = () => {
+    const want = BASE + prefix(locale.value) + pagePath()
+    if (location.pathname !== want) history.replaceState(null, '', want + location.search + location.hash)
+  }
+  syncAddress()
+  watch(locale, syncAddress)
   const route = shallowRef(current())
   const sync = () => {
     route.value = current()

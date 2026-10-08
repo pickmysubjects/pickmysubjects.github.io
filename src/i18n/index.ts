@@ -9,6 +9,7 @@ import { vi } from './messages/vi'
 import { id } from './messages/id'
 import { ms } from './messages/ms'
 import { hi } from './messages/hi'
+import { localeInPath, type LocaleCode } from './codes'
 
 /** Languages most used by UniMelb students. Names are written in their own language. */
 export const LOCALES = [
@@ -23,9 +24,9 @@ export const LOCALES = [
   { code: 'hi', name: 'हिन्दी', messages: hi },
 ] as const satisfies readonly { code: string; name: string; messages: Messages }[]
 
-export type LocaleCode = (typeof LOCALES)[number]['code']
-export type Params = Record<string, string | number>
-export type Translate = (key: string, params?: Params) => string
+export type { LocaleCode }
+import { interpolate, type Params, type Translate } from './interpolate'
+export { interpolate, type Params, type Translate }
 
 function detect(): LocaleCode {
   try {
@@ -44,6 +45,18 @@ function detect(): LocaleCode {
 // Module-level so every component shares one choice.
 const locale = usePersisted<LocaleCode>('sc:locale', detect())
 
+// A language in the address (/zh-CN/subject/…) wins: a shared link opens in its language.
+if (typeof location !== 'undefined') {
+  const base = import.meta.env.BASE_URL
+  const inUrl = location.pathname.startsWith(base) ? localeInPath(location.pathname.slice(base.length)) : null
+  if (inUrl) locale.value = inUrl
+}
+
+/** The language currently shown (for building addresses outside components). */
+export function currentLocale(): LocaleCode {
+  return locale.value
+}
+
 watch(
   locale,
   (code) => {
@@ -59,10 +72,6 @@ function lookup(messages: unknown, key: string): string | undefined {
     node = (node as Record<string, unknown>)[part]
   }
   return typeof node === 'string' ? node : undefined
-}
-
-export function interpolate(text: string, params: Params = {}): string {
-  return text.replace(/\{(\w+)\}/g, (match, name: string) => (name in params ? String(params[name]) : match))
 }
 
 export function useI18n() {
