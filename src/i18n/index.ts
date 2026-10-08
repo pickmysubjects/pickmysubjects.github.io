@@ -48,7 +48,9 @@ const locale = usePersisted<LocaleCode>('sc:locale', detect())
 // A language in the address (/zh-CN/subject/…) wins: a shared link opens in its language.
 if (typeof location !== 'undefined') {
   const base = import.meta.env.BASE_URL
-  const inUrl = location.pathname.startsWith(base) ? localeInPath(location.pathname.slice(base.length)) : null
+  // An old /subject-compass/… address keeps its language too (the router drops that part).
+  const rest = location.pathname.startsWith(base) ? location.pathname.slice(base.length).replace(/^subject-compass(?:\/|$)/, '') : null
+  const inUrl = rest === null ? null : localeInPath(rest)
   if (inUrl) locale.value = inUrl
 }
 

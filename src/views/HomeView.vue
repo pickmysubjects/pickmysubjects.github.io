@@ -11,9 +11,12 @@ import { useProfile } from '@/composables/useProfile'
 import { useI18n } from '@/i18n'
 import { exampleSubjects } from '@/utils/showcase'
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
 const { subjectList } = useDataset()
 
+// The title is split into phrases that never break inside; languages written with spaces keep one between them.
+const titleParts = computed(() => t.value('home.title').split('|'))
+const spaced = computed(() => !['zh-CN', 'zh-TW', 'ja'].includes(locale.value))
 const examples = computed(() => exampleSubjects(subjectList.value, 3).map((s) => s.code))
 
 // Three steps for a new student. Each shows a tick and what's done once it is.
@@ -51,7 +54,11 @@ const steps = computed(() => {
       <p class="eyebrow">{{ t('home.eyebrow') }}</p>
       <!-- "|" marks where the title may break, so a phrase is never split mid-word. -->
       <h1 class="hero-title">
-        <span v-for="(part, i) in t('home.title').split('|')" :key="i" class="hero-part">{{ part }}</span>
+        <template v-for="(part, i) in titleParts" :key="i">
+          <span class="hero-part">{{ part }}</span>
+          <!-- A real space between phrases where the language uses spaces: it vanishes at a line break. -->
+          <template v-if="spaced && i < titleParts.length - 1">{{ ' ' }}</template>
+        </template>
       </h1>
       <p class="hero-lede">{{ t('home.lede') }}</p>
       <SubjectSearch class="hero-search" />
@@ -169,10 +176,6 @@ const steps = computed(() => {
   display: inline-block;
 }
 
-/* Phrases are separate blocks, so languages written with spaces need the gap back. */
-:root:not(:lang(zh-CN), :lang(zh-TW), :lang(ja)) .hero-part + .hero-part {
-  margin-left: 0.25em;
-}
 
 .hero-title {
   max-width: 16em;

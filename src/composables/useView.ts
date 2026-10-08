@@ -53,6 +53,14 @@ function safeDecode(text: string): string {
   }
 }
 
+// Addresses that still carry the old project path (/subject-compass/…, from before the
+// site moved to the root, or mixed up by a search engine or an AI answer) lead to the same page.
+const OLD_PATH = /^subject-compass(?:\/|$)/
+function dropOldPath(): void {
+  const rest = location.pathname.startsWith(BASE) ? location.pathname.slice(BASE.length) : ''
+  if (OLD_PATH.test(rest)) history.replaceState(null, '', BASE + rest.replace(OLD_PATH, '') + location.search + location.hash)
+}
+
 // Links shared before the move away from #/ addresses still work.
 function upgradeHashLink(): void {
   if (!location.hash.startsWith('#/')) return
@@ -96,6 +104,7 @@ function onClick(event: MouseEvent): void {
 // Listeners are installed once, however many components ask for the route
 // (two click handlers would push every page twice onto the history).
 function install(): void {
+  dropOldPath()
   upgradeHashLink()
   const { locale, setLocale } = useI18n()
   // Keep the address in the shown language, so a copied link opens the same way.
