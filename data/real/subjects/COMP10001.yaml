@@ -9,14 +9,13 @@ offerings:
     - semester-2
 prerequisites: none
 corequisites: none
-non_allowed:
-  - INFO10001
+non_allowed: []
 categories:
   B-SCI: science
 handbook: https://handbook.unimelb.edu.au/2026/subjects/comp10001
 source_year: 2026
 verified_on: 2026-10-07
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. COMP10001 can’t be taken after COMP20005 (the other order is fine)."
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. COMP10001 can’t be taken after COMP20005 (the other order is fine). The Handbook’s INFO10001 exclusion is the pre-2011 Informatics 1, not today’s INFO10001."
 skills:
   - programming
 topics:
