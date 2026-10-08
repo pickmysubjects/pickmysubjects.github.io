@@ -2,6 +2,7 @@
 import { shallowRef, useId } from 'vue'
 import { PASS_MARK, type Profile, type Subject } from '@/engine'
 import { useI18n } from '@/i18n'
+import { link } from '@/composables/useView'
 import RatingForm from '@/components/rating/RatingForm.vue'
 import { useRated } from '@/composables/useRated'
 
@@ -110,6 +111,10 @@ function remove(c: string): void {
         </tr>
       </tbody>
     </table>
+    <p v-if="results.some((x) => x.mark !== undefined && x.mark < PASS_MARK)" class="fail-hint">
+      {{ t('record.failHint') }}
+      <a :href="link('guide')">{{ t('guide.failTitle') }}</a>
+    </p>
     <p v-if="thanks" class="thanks" role="status">{{ t('rating.sent') }}</p>
     <RatingForm v-if="rating" :key="rating" class="rating-form" :code="rating" @done="onRated(rating, $event)" />
   </section>
@@ -212,5 +217,18 @@ function remove(c: string): void {
   white-space: nowrap;
   color: var(--stop);
   font-size: 0.8rem;
+}
+
+.fail-hint {
+  margin-top: 10px;
+  padding: 10px 12px;
+  font-size: 0.88rem;
+  color: var(--ink);
+  background: var(--bad-soft);
+  border-radius: var(--radius-sm);
+}
+
+.fail-hint a {
+  color: var(--bad);
 }
 </style>

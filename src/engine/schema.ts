@@ -413,4 +413,11 @@ export interface Dataset {
   subjects: Record<string, Subject>
   courses: Course[]
   components: Component[]
+  /** Semester-load cutoffs worked out when the data is built (see termStress). */
+  stressCutoffs?: {
+    typical: Record<'time' | 'effort' | 'stress', number>
+    high: Record<'time' | 'effort' | 'stress', number>
+    heavy: number
+    veryHeavy: number
+  }
 }

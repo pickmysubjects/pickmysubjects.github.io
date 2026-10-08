@@ -43,7 +43,10 @@ const num = (e: Event) => Number((e.target as HTMLInputElement).value)
 <template>
   <section class="goal surface" aria-labelledby="goal-title">
     <h2 id="goal-title" class="goal-title"><Target :size="18" aria-hidden="true" /> {{ t('wamGoal.title') }}</h2>
-    <p class="goal-hint">{{ wam !== null ? t('wamGoal.fromMarks') : t('wamGoal.noMarks') }}</p>
+    <!-- With no marks yet there's nothing to work out: the WAM will simply be whatever the rest averages. -->
+    <p v-if="donePoints === 0" class="goal-hint">{{ t('wamGoal.noMarks') }}</p>
+    <template v-else>
+    <p class="goal-hint">{{ t('wamGoal.fromMarks') }}</p>
 
     <div class="fields">
       <label class="field">
@@ -74,6 +77,7 @@ const num = (e: Event) => Number((e.target as HTMLInputElement).value)
       <span v-if="projected !== null">{{ t('wamGoal.becomes', { wam: projected }) }}</span>
     </p>
     <p class="note">{{ t('wamGoal.note') }}</p>
+    </template>
   </section>
 </template>
 

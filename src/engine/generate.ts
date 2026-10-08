@@ -4,6 +4,8 @@ import { evaluateField, type Tri } from './expr'
 import type { Note, Params, Plan, PlanTerm } from './plan'
 import { standardTerms } from './plan'
 import { passedCodes, recommend, type Profile } from './recommend'
+import { checkTerms } from './planCheck'
+import { termStress } from './termStress'
 import type { ComponentReq, Course, CourseRule, Dataset, Period, ReqExpr, Subject } from './schema'
 
 export interface GenerateInput {
@@ -134,6 +136,8 @@ function buildPlan(input: GenerateInput): GenerateResult {
     // Anything still short: better a full term than an empty slot kept for a minimum that can't be met.
     terms.forEach((t, i) => fill(t, i, true))
   }
+  // Spread the load, so the hard subjects don't all land in one semester.
+  balance(terms, input, completed, notes)
   const placed = allPlaced()
 
   const unplaced = pending
@@ -149,6 +153,68 @@ function buildPlan(input: GenerateInput): GenerateResult {
     terms,
   }
   return { plan, unplaced, notes }
+}
+
+/**
+ * Load balancing: while a semester is heavy, swap one of its subjects with an equal-points
+ * subject in another semester when that evens out the load (sum of squared stress scores
+ * goes down) and nothing gets worse — no new term problems (prerequisites, when it runs,
+ * clashes) and no course rule newly unmet. Greedy, best swap first, a few rounds at most.
+ */
+const BALANCE_ROUNDS = 12
+function balance(terms: PlanTerm[], input: GenerateInput, completed: string[], notes: Note[]): void {
+  const { data, profile } = input
+  const plan = (): Plan => ({ course: input.course, courseYear: input.courseYear, major: input.major, specialisation: input.specialisation, completed, terms })
+  // Errors and warnings counted apart, so a warning can't quietly turn into an error.
+  const problems = () => {
+    const issues = checkTerms(plan(), data)
+    return { errors: issues.filter((i) => i.severity === 'error').length, warnings: issues.filter((i) => i.severity === 'warning').length }
+  }
+  const unmet = () => checkCourse(plan(), data).statuses.filter((s) => s.status === 'fail').length
+  const scores = () => terms.map((t) => termStress(t.subjects, data, profile).score)
+  const cost = (xs: number[]) => xs.reduce((sum, x) => sum + x * x, 0)
+  const baseProblems = problems()
+  const baseUnmet = unmet()
+  let current = scores()
+  for (let round = 0; round < BALANCE_ROUNDS; round++) {
+    const heaviest = current.indexOf(Math.max(...current))
+    if ((current[heaviest] ?? 0) < 1) return
+    const from = terms[heaviest] as PlanTerm
+    let best: { a: string; b: string; to: number; scores: number[] } | null = null
+    for (const a of from.subjects) {
+      for (const [to, other] of terms.entries()) {
+        if (to === heaviest) continue
+        for (const b of other.subjects) {
+          const sa = data.subjects[a]
+          const sb = data.subjects[b]
+          if (!sa || !sb || sa.points !== sb.points) continue
+          if (offeredIn(sa, other.year, other.period).status !== 'ok' || offeredIn(sb, from.year, from.period).status !== 'ok') continue
+          swap(from, other, a, b)
+          const next = scores()
+          if (cost(next) < cost(best?.scores ?? current) - 1e-6) {
+            const p = problems()
+            if (p.errors <= baseProblems.errors && p.warnings <= baseProblems.warnings && unmet() <= baseUnmet) best = { a, b, to, scores: next }
+          }
+          swap(from, other, b, a)
+        }
+      }
+    }
+    if (!best) return
+    const other = terms[best.to] as PlanTerm
+    swap(from, other, best.a, best.b)
+    current = best.scores
+    // Keep "added in …" notes true to where each subject now sits.
+    for (const n of notes) {
+      const where = n.params.code === best.a ? other : n.params.code === best.b ? from : null
+      if (where && 'year' in n.params) Object.assign(n.params, { year: where.year, period: where.period })
+    }
+    notes.push(note('balanced', { a: best.a, b: best.b }, `Swapped ${best.a} and ${best.b} between semesters to spread the load.`))
+  }
+}
+
+function swap(x: PlanTerm, y: PlanTerm, a: string, b: string): void {
+  x.subjects[x.subjects.indexOf(a)] = b
+  y.subjects[y.subjects.indexOf(b)] = a
 }
 
 function note(key: string, params: Params, text: string): Note {

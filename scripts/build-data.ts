@@ -5,7 +5,6 @@
 import { mkdirSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { buildDataset, ROOT } from './dataset'
-
 const OUT = join(ROOT, 'src', 'generated')
 mkdirSync(OUT, { recursive: true })
 

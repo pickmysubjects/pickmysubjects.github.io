@@ -285,6 +285,7 @@ function guideBody(t: Translate): string {
     `<dl>${['prereq', 'coreq', 'non'].map((k) => `<dt>${esc(t(`guide.${k}Term`))}</dt><dd>${esc(t(`guide.${k}Text`))}</dd>`).join('')}</dl>`,
     p('waiverText'),
     h2('dropTitle'), li(['dropBefore', 'dropWd', 'dropFail']), p('dropLocal'), p('dropIntl'), p('dropWhere'),
+    h2('failTitle'), li(['failPoints', 'failRepeat', 'failProgress', 'failSupp', 'failSpecial', 'failIntl']),
     h2('abroadTitle'), p('abroadText'), li(['wes', 'enic', 'cscse', 'umCalc']),
     h2('rankTitle'), p('rankText'), li(['qs', 'the', 'arwu']),
     p('sourcesText'),

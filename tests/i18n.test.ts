@@ -61,7 +61,9 @@ describe('i18n', () => {
         const text = lookup(locale.messages, key)
         expect(text, `${locale.code} is missing ${key}`).toBeTypeOf('string')
         const source = lookup(en, key)
-        if (source) expect(placeholders(text as string), `${locale.code} ${key}`).toEqual(placeholders(source))
+        // The same placeholders, each at least once; a translation may repeat one ("数学 … 以数学为主").
+        const set = (xs: string[]) => [...new Set(xs)].sort()
+        if (source) expect(set(placeholders(text as string)), `${locale.code} ${key}`).toEqual(set(placeholders(source)))
       }
     })
   }

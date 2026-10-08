@@ -133,11 +133,18 @@ function onMoveBy(code: string, from: number, delta: number): void {
   const to = from + delta
   if (to >= 0 && to < props.terms.length) emit('move', code, from, to)
 }
+// Wide enough for every term at its narrowest (and the add-term tools); wider screens stretch the
+// columns instead. Sized from the term count, not the content, so a long title can't widen them all.
+const MIN_TERM = 185
+const GAP = 20
+// The add-term buttons (about 158px) plus the track's own padding.
+const TOOLS = 170
+const trackWidth = computed(() => `max(100%, ${props.terms.length * (MIN_TERM + GAP) + TOOLS}px)`)
 </script>
 
 <template>
   <div class="map">
-    <div ref="track" class="track">
+    <div ref="track" class="track" :style="{ width: trackWidth }">
       <svg class="routes" aria-hidden="true">
         <path v-for="r in routes" :key="`${r.from}-${r.to}`" :class="routeClass(r)" :d="r.d" />
       </svg>
@@ -186,9 +193,8 @@ function onMoveBy(code: string, from: number, delta: number): void {
 .track {
   position: relative;
   display: flex;
-  gap: 28px;
-  width: max-content;
-  padding: 6px 16px 14px 6px;
+  gap: 20px;
+  padding: 6px 6px 14px;
 }
 
 .routes {
@@ -219,6 +225,7 @@ function onMoveBy(code: string, from: number, delta: number): void {
 
 .term-tools {
   display: flex;
+  flex: none;
   flex-direction: column;
   gap: 8px;
   padding-top: 38px;

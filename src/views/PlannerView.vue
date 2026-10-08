@@ -10,7 +10,7 @@ import PlanIssues from '@/components/planner/PlanIssues.vue'
 import PlanPrint from '@/components/planner/PlanPrint.vue'
 import DataNotice from '@/components/DataNotice.vue'
 import Interp from '@/components/Interp.vue'
-import { planRoles, planStart } from '@/engine'
+import { PASS_MARK, planRoles, planStart } from '@/engine'
 import { Printer, Share2 } from 'lucide-vue-next'
 import { decodePlan, encodePlan } from '@/utils/sharePlan'
 import { go, useView } from '@/composables/useView'
@@ -76,6 +76,15 @@ const startedWithoutRecord = computed(() => {
 })
 // A first visit shows only the questions; the board and its checks come once there's a plan.
 // A shared link shows its import banner instead.
+// Subjects the student failed: where the plan repeats them, or that it doesn't (an elective can be swapped).
+const failed = computed(() =>
+  profile.value.results
+    .filter((r) => r.mark !== undefined && r.mark < PASS_MARK)
+    .map((r) => {
+      const at = plan.terms.value.find((term) => term.subjects.includes(r.code))
+      return { code: r.code, term: at ? termLabel(t.value, at) : null }
+    }),
+)
 const showWizard = computed(
   () => editing.value || (plan.isEmpty.value && plan.notes.value.length === 0 && !shared.value),
 )
@@ -200,6 +209,13 @@ function finishWizard(setup: PlanSetup): void {
 
       <p v-if="extraTermsOnVisa" class="started">{{ t('plan.extraTermsVisa') }}</p>
 
+      <ul v-if="failed.length" class="failed">
+        <li v-for="f in failed" :key="f.code">
+          {{ f.term ? t('plan.failedRetake', { code: f.code, term: f.term }) : t('plan.failedNotPlanned', { code: f.code }) }}
+        </li>
+        <li class="failed-more"><a :href="link('guide')">{{ t('guide.failTitle') }}</a></li>
+      </ul>
+
       <section v-if="!plan.isEmpty.value" class="status" :class="problems ? 'status-bad' : unknowns ? 'status-warn' : 'status-good'" role="status">
         <component :is="problems || unknowns ? TriangleAlert : CircleCheck" :size="22" aria-hidden="true" />
         <div>
@@ -295,6 +311,13 @@ function finishWizard(setup: PlanSetup): void {
   padding-top: 32px;
 }
 
+/* Everything but the board stays at the usual reading width; the board takes the full screen. */
+.planner > :not(.map) {
+  width: 100%;
+  max-width: calc(var(--shell) - 40px);
+  margin-inline: auto;
+}
+
 .bar {
   display: flex;
   flex-wrap: wrap;
@@ -342,6 +365,25 @@ function finishWizard(setup: PlanSetup): void {
   border-radius: var(--radius);
   background: var(--accent-soft);
   font-size: 0.95rem;
+}
+
+.failed {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  padding: 12px 16px 12px 32px;
+  font-size: 0.92rem;
+  background: var(--bad-soft);
+  border-radius: var(--radius);
+}
+
+.failed-more {
+  list-style: none;
+  margin-left: -16px;
+}
+
+.failed-more a {
+  color: var(--bad);
 }
 
 .status {

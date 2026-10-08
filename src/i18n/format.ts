@@ -1,4 +1,4 @@
-import { simplifyFor, type CourseRule, type Issue, type Note, type Period, type PlanTerm, type ReqExpr, type ReqField, type RuleStatus, type Subject } from '@/engine'
+import { simplifyFor, type CourseRule, type StressReason, type Issue, type Note, type Period, type PlanTerm, type ReqExpr, type ReqField, type RuleStatus, type Subject } from '@/engine'
 import type { Params, Translate } from './index'
 
 /** Localised helpers for engine output. The engine stays language-neutral (keys + params). */
@@ -141,4 +141,11 @@ function describeExpr(t: Translate, e: ReqExpr): string {
   }
   if ('admission' in e) return t('expr.admission', { course: e.admission })
   return `“${e.manual}”`
+}
+
+/** One reason a semester looks heavy, with the skill named in the reader's language. */
+export function stressText(t: Translate, reason: StressReason): string {
+  const params: Params = { ...reason.params }
+  if (typeof params.skill === 'string') params.skill = t(`skill.${params.skill}`)
+  return t(`stress.${reason.key}`, params)
 }

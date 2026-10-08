@@ -31,6 +31,7 @@ const RANKINGS = [
 
 const STUDENT_SITE = 'https://students.unimelb.edu.au/'
 const KEY_DATES = 'https://students.unimelb.edu.au/course-admin/key-dates'
+const FAILING = 'https://students.unimelb.edu.au/course-admin/planning-your-course-and-subjects/failing-a-subject'
 </script>
 
 <template>
@@ -153,6 +154,20 @@ const KEY_DATES = 'https://students.unimelb.edu.au/course-admin/key-dates'
           <p class="yours">
             <span>{{ wam !== null ? t('guide.wamYours', { wam }) : t('guide.wamNone') }}</span>
             <a class="button button-quiet" :href="link('record')">{{ t('guide.wamGo') }}</a>
+          </p>
+        </GuideItem>
+
+        <GuideItem :title="t('guide.failTitle')" :short="t('guide.failShort')">
+          <ul class="plain">
+            <li>{{ t('guide.failPoints') }}</li>
+            <li>{{ t('guide.failRepeat') }}</li>
+            <li>{{ t('guide.failProgress') }}</li>
+            <li>{{ t('guide.failSupp') }}</li>
+            <li>{{ t('guide.failSpecial') }}</li>
+            <li>{{ t('guide.failIntl') }}</li>
+          </ul>
+          <p>
+            <a class="ext" :href="FAILING" target="_blank" rel="noopener">{{ t('guide.failLink') }}<ExternalLink :size="14" aria-hidden="true" /></a>
           </p>
         </GuideItem>
 
