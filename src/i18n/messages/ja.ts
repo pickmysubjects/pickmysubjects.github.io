@@ -130,7 +130,7 @@ export const ja: Messages = {
     pointsMin: '{have} / {need} ポイント',
     pointsMax: '{have} ポイント（上限 {need}）',
     uncategorised: '{n} ポイントは未分類',
-    noMajor: 'メジャー未選択',
+    noMajor: '専攻を選ぶとチェックされます',
     noSpec: '未選択（任意）',
     needsMajor: '{title} には次のいずれかのメジャーが必要です：{majors}',
     areas: '{count} 分野',
@@ -537,6 +537,8 @@ export const ja: Messages = {
     cat: { science: "理系", breadth: "Breadth" },
   },
   guide: {
+    nav: "基本",
+    planLink: "単位や前提科目がよくわからない？メルボルン大学の基本を読む",
     groupPlan: "科目選び",
     groupMarks: "成績",
     firstShort: "ふつうは4科目。まず専攻のレベル1科目から。",

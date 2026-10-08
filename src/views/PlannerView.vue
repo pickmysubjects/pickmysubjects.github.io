@@ -73,7 +73,11 @@ const startedWithoutRecord = computed(() => {
   const start = planStart({ year, period }, new Date())
   return (start.year !== year || start.period !== period) && profile.value.results.length === 0
 })
-const showWizard = computed(() => editing.value || (plan.isEmpty.value && plan.notes.value.length === 0))
+// A first visit shows only the questions; the board and its checks come once there's a plan.
+// A shared link shows its import banner instead.
+const showWizard = computed(
+  () => editing.value || (plan.isEmpty.value && plan.notes.value.length === 0 && !shared.value),
+)
 
 const options = computed(() => subjectList.value.map((s) => ({ code: s.code, title: s.title })))
 const rules = computed(() => plan.course.value?.rules ?? [])
@@ -88,7 +92,7 @@ const problemTexts = computed(() => {
   return allIssues.value
     .filter((i) => i.severity === severity)
     .map((i) => ({
-      text: issueText(t.value, i, rules.value, plan.courseCheck.value.statuses),
+      text: issueText(t.value, i, rules.value, plan.courseCheck.value.statuses, data.value.subjects),
       // Conditions only the student can check (a VCE score, a test): let them say they meet it.
       confirm: i.kind === 'prereq-unknown' ? i.subject : undefined,
     }))
@@ -123,8 +127,11 @@ function finishWizard(setup: PlanSetup): void {
   <div class="planner">
     <section class="intro">
       <h1 class="page-title">{{ t('plan.title') }}</h1>
+      <template v-if="showWizard">
+        <p class="page-lede">{{ t('plan.ledeShort') }}</p>
+        <a class="guide-link" :href="link('guide')">{{ t('guide.planLink') }}</a>
+      </template>
     </section>
-
 
     <PlanWizard
       v-if="showWizard"
@@ -132,6 +139,7 @@ function finishWizard(setup: PlanSetup): void {
       :setup="plan.setup.value"
       :courses="data.courses"
       :components="data.components"
+      :cancellable="!plan.isEmpty.value"
       @done="finishWizard"
       @cancel="editing = false"
     />
@@ -145,7 +153,7 @@ function finishWizard(setup: PlanSetup): void {
       </div>
     </section>
 
-    <template v-else>
+    <template v-else-if="!showWizard">
       <section class="bar">
         <p class="bar-summary">{{ summary }}</p>
         <div class="bar-actions">
@@ -182,7 +190,7 @@ function finishWizard(setup: PlanSetup): void {
 
       <p v-if="extraTermsOnVisa" class="started">{{ t('plan.extraTermsVisa') }}</p>
 
-      <section class="status" :class="problems ? 'status-bad' : unknowns ? 'status-warn' : 'status-good'" role="status">
+      <section v-if="!plan.isEmpty.value" class="status" :class="problems ? 'status-bad' : unknowns ? 'status-warn' : 'status-good'" role="status">
         <component :is="problems || unknowns ? TriangleAlert : CircleCheck" :size="22" aria-hidden="true" />
         <div>
           <p class="status-title">
@@ -252,7 +260,7 @@ function finishWizard(setup: PlanSetup): void {
         </div>
       </details>
     </template>
-    <DataNotice class="plan-notice" />
+    <DataNotice v-if="!showWizard" class="plan-notice" />
   </div>
 </template>
 
@@ -279,6 +287,30 @@ function finishWizard(setup: PlanSetup): void {
 .bar-actions {
   display: flex;
   gap: 8px;
+}
+
+.bar-actions .button {
+  white-space: nowrap;
+}
+
+.intro {
+  display: grid;
+  gap: 6px;
+}
+
+.guide-link {
+  justify-self: start;
+  font-size: 0.92rem;
+  color: var(--accent);
+}
+
+/* Phones: the four actions as a tidy 2 × 2 grid instead of squeezed pills. */
+@media (max-width: 720px) {
+  .bar-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+  }
 }
 
 .started {
@@ -430,7 +462,8 @@ function finishWizard(setup: PlanSetup): void {
   .details,
   .status-hint,
   .confirm,
-  .plan-notice {
+  .plan-notice,
+  .guide-link {
     display: none !important;
   }
 }

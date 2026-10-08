@@ -130,7 +130,7 @@ export const hi: Messages = {
     pointsMin: '{have} / {need} पॉइंट',
     pointsMax: '{have} पॉइंट (अधिकतम {need})',
     uncategorised: '{n} पॉइंट अभी वर्गीकृत नहीं',
-    noMajor: 'कोई मेजर नहीं चुना',
+    noMajor: 'मेजर चुनें, फिर यह जाँचा जाएगा',
     noSpec: 'नहीं चुना (वैकल्पिक)',
     needsMajor: '{title} के लिए इनमें से एक मेजर चाहिए: {majors}',
     areas: '{count} क्षेत्र',
@@ -537,6 +537,8 @@ export const hi: Messages = {
     cat: { science: "साइंस", breadth: "Breadth" },
   },
   guide: {
+    nav: "बुनियादी बातें",
+    planLink: "क्रेडिट पॉइंट या प्रीरिक्विज़िट समझ नहीं आ रहे? UniMelb की बुनियादी बातें पढ़ें",
     groupPlan: "सब्जेक्ट चुनना",
     groupMarks: "नंबर",
     firstShort: "आमतौर पर 4 सब्जेक्ट। अपने मेजर के लेवल 1 सब्जेक्ट से शुरू करें।",

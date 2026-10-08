@@ -127,7 +127,8 @@ function checkRule(rule: CourseRule, ctx: RuleCtx): RuleStatus {
     }
     case 'major': {
       const major = findComponent(ctx.data, ctx.plan.major)
-      if (!major) return { ...base, status: 'fail', detail: 'no major chosen', detailKey: 'noMajor', params: {} }
+      // Not decided yet is normal in first year: can't be checked, rather than broken.
+      if (!major) return { ...base, status: 'unknown', detail: 'no major chosen', detailKey: 'noMajor', params: {} }
       return componentStatus(base, major, ctx)
     }
     case 'specialisation': {

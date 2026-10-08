@@ -130,7 +130,7 @@ export const ms: Messages = {
     pointsMin: '{have} / {need} mata',
     pointsMax: '{have} mata (maks. {need})',
     uncategorised: '{n} mata belum dikategorikan',
-    noMajor: 'belum memilih major',
+    noMajor: 'pilih major untuk menyemak ini',
     noSpec: 'tidak dipilih (pilihan)',
     needsMajor: '{title} memerlukan salah satu major ini: {majors}',
     areas: '{count} bidang',
@@ -537,6 +537,8 @@ export const ms: Messages = {
     cat: { science: "Sains", breadth: "Breadth" },
   },
   guide: {
+    nav: "Asas",
+    planLink: "Tak pasti apa itu mata kredit atau prasyarat? Baca asas UniMelb",
     groupPlan: "Memilih subjek",
     groupMarks: "Markah",
     firstShort: "Biasanya 4 subjek. Mula dengan subjek tahap 1 major anda.",

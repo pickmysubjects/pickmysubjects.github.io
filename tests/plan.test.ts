@@ -83,7 +83,7 @@ describe('checkTerms', () => {
 describe('checkCourse (demo course)', () => {
   const data = demo()
 
-  it('reports the compulsory first-semester subject and a missing major', () => {
+  it('reports the compulsory first-semester subject, and a missing major as not yet checkable', () => {
     const plan: Plan = {
       course: 'EX-SCI',
       courseYear: 2026,
@@ -97,7 +97,8 @@ describe('checkCourse (demo course)', () => {
     const byId = Object.fromEntries(statuses.map((s) => [s.ruleId, s]))
     expect(byId.exsc10001?.status).toBe('fail')
     expect(byId.exsc10001?.detail).toMatch(/first semester/)
-    expect(byId.major?.status).toBe('fail')
+    // Not having chosen a major yet is normal; the rule waits rather than fails.
+    expect(byId.major?.status).toBe('unknown')
     expect(byId.total?.status).toBe('fail')
     expect(byId['level1-cap']?.status).toBe('ok')
   })

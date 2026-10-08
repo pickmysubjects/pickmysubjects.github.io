@@ -130,7 +130,7 @@ export const zhTW: Messages = {
     pointsMin: '{have} / {need} 學分',
     pointsMax: '{have} 學分（上限 {need}）',
     uncategorised: '{n} 學分尚未分類',
-    noMajor: '還沒選主修',
+    noMajor: '選好主修後再檢查',
     noSpec: '未選擇（可選）',
     needsMajor: '{title} 需要以下主修之一：{majors}',
     areas: '{count} 個領域',
@@ -537,6 +537,8 @@ export const zhTW: Messages = {
     cat: { science: "理科", breadth: "Breadth" },
   },
   guide: {
+    nav: "墨大入門",
+    planLink: "不清楚學分、先修課是什麼？先看墨大入門",
     groupPlan: "選課",
     groupMarks: "成績",
     firstShort: "一般修 4 門，先修主修要求的一年級課。",

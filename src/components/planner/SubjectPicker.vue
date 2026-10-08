@@ -29,7 +29,7 @@ const check = computed(() => {
   const at = plan.terms.value.find((term) => term.subjects.includes(c))
   if (at) return { title, planned: termLabel(t.value, at), problems: [] as string[] }
   const issues = previewAdd(plan.plan.value, data.value, props.termIndex, c, plan.course.value?.standardLoad)
-  return { title, planned: null, problems: issues.map((i) => issueText(t.value, i, [], [])) }
+  return { title, planned: null, problems: issues.map((i) => issueText(t.value, i, [], [], data.value.subjects)) }
 })
 
 function submit(): void {

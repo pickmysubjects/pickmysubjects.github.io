@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { link } from '@/composables/useView'
+import { BookOpen } from 'lucide-vue-next'
 import LangMenu from './LangMenu.vue'
 import AppLogo from '../AppLogo.vue'
 import SubjectSearch from '../SubjectSearch.vue'
@@ -33,6 +34,15 @@ const { t } = useI18n()
       </nav>
       <div class="tools">
         <SubjectSearch v-if="view !== 'home'" class="header-search" compact />
+        <a
+          class="guide"
+          :href="link('guide')"
+          :aria-current="view === 'guide' ? 'page' : undefined"
+          :title="t('guide.title')"
+        >
+          <BookOpen :size="16" aria-hidden="true" />
+          <span class="guide-label">{{ t('guide.nav') }}</span>
+        </a>
         <LangMenu />
       </div>
     </div>
@@ -132,12 +142,44 @@ const { t } = useI18n()
   margin-left: auto;
 }
 
+.guide {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+  white-space: nowrap;
+  background: var(--accent-soft);
+  border: 1px solid transparent;
+  border-radius: 999px;
+}
+
+.guide:hover,
+.guide[aria-current='page'] {
+  border-color: var(--accent);
+}
+
+/* Where the header is tight, just the book icon (its name is in the title and the footer). */
+@media (max-width: 1120px) and (min-width: 721px), (max-width: 480px) {
+  .guide-label {
+    display: none;
+  }
+
+  .guide {
+    padding: 0 10px;
+  }
+}
+
 .header-search {
   width: 220px;
 }
 
-/* The header search needs room next to five links; on smaller screens the Browse page has its own search. */
-@media (max-width: 1320px) {
+/* The header search needs room next to five links and Basics; below that, Browse has its own search. */
+@media (max-width: 1440px) {
   .header-search {
     display: none;
   }

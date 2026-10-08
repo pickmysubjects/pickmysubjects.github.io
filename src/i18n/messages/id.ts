@@ -130,7 +130,7 @@ export const id: Messages = {
     pointsMin: '{have} / {need} poin',
     pointsMax: '{have} poin (maks. {need})',
     uncategorised: '{n} poin belum dikategorikan',
-    noMajor: 'belum memilih jurusan',
+    noMajor: 'pilih major untuk mengecek ini',
     noSpec: 'tidak dipilih (opsional)',
     needsMajor: '{title} memerlukan salah satu jurusan ini: {majors}',
     areas: '{count} bidang',
@@ -537,6 +537,8 @@ export const id: Messages = {
     cat: { science: "Sains", breadth: "Breadth" },
   },
   guide: {
+    nav: "Dasar",
+    planLink: "Belum paham poin kredit atau prasyarat? Baca dasar-dasar UniMelb",
     groupPlan: "Memilih mata kuliah",
     groupMarks: "Nilai",
     firstShort: "Biasanya 4 mata kuliah. Mulai dari mata kuliah level 1 major-mu.",

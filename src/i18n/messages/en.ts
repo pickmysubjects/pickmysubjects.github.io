@@ -134,7 +134,7 @@ export const en = {
     pointsMin: '{have} / {need} points',
     pointsMax: '{have} of max {need} points',
     uncategorised: '{n} points not yet categorised',
-    noMajor: 'no major chosen',
+    noMajor: 'pick a major and this gets checked',
     noSpec: 'none chosen (optional)',
     needsMajor: '{title} needs one of these majors: {majors}',
     areas: '{count} area(s)',
@@ -541,6 +541,8 @@ export const en = {
     cat: { science: "Science", breadth: "Breadth" },
   },
   guide: {
+    nav: "Basics",
+    planLink: "Not sure what credit points or prerequisites are? Read the UniMelb basics",
     groupPlan: "Choosing subjects",
     groupMarks: "Marks",
     firstShort: "Usually 4 subjects. Start with your major’s level-1 subjects.",

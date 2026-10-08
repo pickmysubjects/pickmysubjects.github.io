@@ -1,4 +1,4 @@
-import type { CourseRule, Issue, Note, Period, PlanTerm, ReqExpr, ReqField, RuleStatus } from '@/engine'
+import type { CourseRule, Issue, Note, Period, PlanTerm, ReqExpr, ReqField, RuleStatus, Subject } from '@/engine'
 import type { Params, Translate } from './index'
 
 /** Localised helpers for engine output. The engine stays language-neutral (keys + params). */
@@ -66,7 +66,16 @@ function localiseParams(t: Translate, params: Params): Params {
   return out
 }
 
-export function issueText(t: Translate, issue: Issue, rules: CourseRule[], statuses: RuleStatus[]): string {
+export function issueText(
+  t: Translate,
+  issue: Issue,
+  rules: CourseRule[],
+  statuses: RuleStatus[],
+  subjects: Record<string, Subject> = {},
+): string {
+  // The engine's reason is English; say what the subject needs in the reader's language instead.
+  const s = issue.kind === 'prereq-unknown' && issue.subject ? subjects[issue.subject] : undefined
+  if (s) return t('issue.prereq-unknown', { code: s.code, needs: describeReq(t, s.prerequisites) })
   if (issue.kind.startsWith('rule-')) {
     const rule = rules.find((r) => r.id === issue.ruleId)
     const status = statuses.find((s) => s.ruleId === issue.ruleId)

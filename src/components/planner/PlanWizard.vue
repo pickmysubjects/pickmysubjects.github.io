@@ -7,7 +7,10 @@ import MajorPicker from './MajorPicker.vue'
 import { useI18n } from '@/i18n'
 
 /** Three plain questions, one at a time, then "Build my plan". */
-const props = defineProps<{ setup: PlanSetup; courses: Course[]; components: Component[] }>()
+const props = withDefaults(
+  defineProps<{ setup: PlanSetup; courses: Course[]; components: Component[]; cancellable?: boolean }>(),
+  { cancellable: true },
+)
 const emit = defineEmits<{ done: [setup: PlanSetup]; cancel: [] }>()
 const { t } = useI18n()
 
@@ -121,7 +124,9 @@ function chooseCourse(c: Course): void {
       <button v-if="step > 0" class="button button-quiet" type="button" @click="step--">
         <ArrowLeft :size="16" aria-hidden="true" /> {{ t('wizard.back') }}
       </button>
-      <button v-else class="button button-quiet" type="button" @click="emit('cancel')">{{ t('rating.cancel') }}</button>
+      <button v-else-if="cancellable" class="button button-quiet" type="button" @click="emit('cancel')">{{ t('rating.cancel') }}</button>
+      <!-- Nothing to go back to on a first visit: keep "Next" on the right. -->
+      <span v-else aria-hidden="true" />
       <button v-if="step < 2" class="button" type="button" :disabled="step === 0 && !draft.course" @click="step++">
         {{ t('wizard.next') }} <ArrowRight :size="16" aria-hidden="true" />
       </button>

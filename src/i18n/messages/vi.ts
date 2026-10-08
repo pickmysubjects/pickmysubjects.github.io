@@ -130,7 +130,7 @@ export const vi: Messages = {
     pointsMin: '{have} / {need} tín chỉ',
     pointsMax: '{have} tín chỉ (tối đa {need})',
     uncategorised: '{n} tín chỉ chưa được phân loại',
-    noMajor: 'chưa chọn chuyên ngành chính',
+    noMajor: 'chọn chuyên ngành để kiểm tra',
     noSpec: 'chưa chọn (không bắt buộc)',
     needsMajor: '{title} cần một trong các chuyên ngành: {majors}',
     areas: '{count} lĩnh vực',
@@ -537,6 +537,8 @@ export const vi: Messages = {
     cat: { science: "Khoa học", breadth: "Breadth" },
   },
   guide: {
+    nav: "Cơ bản",
+    planLink: "Chưa rõ tín chỉ hay môn tiên quyết là gì? Xem những điều cơ bản",
     groupPlan: "Chọn môn",
     groupMarks: "Điểm",
     firstShort: "Thường 4 môn. Học các môn level 1 của chuyên ngành trước.",

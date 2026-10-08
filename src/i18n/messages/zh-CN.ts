@@ -130,7 +130,7 @@ export const zhCN: Messages = {
     pointsMin: '{have} / {need} 学分',
     pointsMax: '{have} 学分（上限 {need}）',
     uncategorised: '{n} 学分尚未分类',
-    noMajor: '还没选主修',
+    noMajor: '选好主修后再检查',
     noSpec: '未选择（可选）',
     needsMajor: '{title} 需要以下主修之一：{majors}',
     areas: '{count} 个领域',
@@ -537,6 +537,8 @@ export const zhCN: Messages = {
     cat: { science: "理科", breadth: "Breadth" },
   },
   guide: {
+    nav: "墨大入门",
+    planLink: "不清楚学分、先修课是什么？先看墨大入门",
     groupPlan: "选课",
     groupMarks: "成绩",
     firstShort: "一般修 4 门，先修专业要求的一年级课。",

@@ -130,7 +130,7 @@ export const ko: Messages = {
     pointsMin: '{have} / {need}학점',
     pointsMax: '{have}학점 (최대 {need})',
     uncategorised: '{n}학점 미분류',
-    noMajor: '전공 미선택',
+    noMajor: '전공을 고르면 확인돼요',
     noSpec: '선택 안 함 (선택 사항)',
     needsMajor: '{title}에는 다음 전공 중 하나가 필요합니다: {majors}',
     areas: '영역 {count}개',
@@ -537,6 +537,8 @@ export const ko: Messages = {
     cat: { science: "이과", breadth: "Breadth" },
   },
   guide: {
+    nav: "기본 정보",
+    planLink: "학점이나 선수 과목이 뭔지 모르겠다면? 멜버른대 기본 정보 보기",
     groupPlan: "과목 고르기",
     groupMarks: "성적",
     firstShort: "보통 4과목. 전공의 레벨 1 과목부터 들으세요.",
