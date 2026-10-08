@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { link } from '@/composables/useView'
 import { computed } from 'vue'
-import { ArrowRight, Check, Route, Sparkles, User } from 'lucide-vue-next'
+import { ArrowRight, BookOpen, Check, ListFilter, Route, Sparkles, User } from 'lucide-vue-next'
 import SubjectSearch from '@/components/SubjectSearch.vue'
 import DataNotice from '@/components/DataNotice.vue'
 import RouteLine from '@/components/home/RouteLine.vue'
@@ -84,10 +84,28 @@ const steps = computed(() => {
         </li>
       </ol>
       <p class="steps-search">{{ t('home.justSearch') }}</p>
-      <p class="steps-guide">
-        <a :href="link('subjects')">{{ t('browse.homeLink') }}</a>
-        <a :href="link('guide')">{{ t('guide.homeLink') }}</a>
-      </p>
+    </section>
+
+    <section class="tools" aria-labelledby="tools-title">
+      <h2 id="tools-title" class="steps-title">{{ t('home.toolsTitle') }}</h2>
+      <div class="tools-list">
+        <a class="tool surface" :href="link('subjects')">
+          <span class="tool-icon"><ListFilter :size="20" aria-hidden="true" /></span>
+          <span class="tool-body">
+            <span class="step-name">{{ t('browse.title') }}</span>
+            <span class="step-text">{{ t('browse.lede') }}</span>
+          </span>
+          <ArrowRight :size="18" aria-hidden="true" class="tool-go" />
+        </a>
+        <a class="tool surface" :href="link('guide')">
+          <span class="tool-icon"><BookOpen :size="20" aria-hidden="true" /></span>
+          <span class="tool-body">
+            <span class="step-name">{{ t('guide.title') }}</span>
+            <span class="step-text">{{ t('guide.lede') }}</span>
+          </span>
+          <ArrowRight :size="18" aria-hidden="true" class="tool-go" />
+        </a>
+      </div>
     </section>
 
     <DataNotice />
@@ -141,6 +159,11 @@ const steps = computed(() => {
 
 .hero-part {
   display: inline-block;
+}
+
+/* Phrases are separate blocks, so languages written with spaces need the gap back. */
+:root:not(:lang(zh-CN), :lang(zh-TW), :lang(ja)) .hero-part + .hero-part {
+  margin-left: 0.25em;
 }
 
 .hero-title {
@@ -275,16 +298,54 @@ li:nth-child(3) .step-icon {
   color: var(--accent);
 }
 
-.steps-guide {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px 20px;
-  margin-top: 6px;
-  font-size: 0.9rem;
+.tools-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
 }
 
-.steps-guide a {
+.tool {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 20px;
+  color: var(--ink);
+  text-decoration: none;
+  transition: border-color 0.15s, transform 0.15s;
+}
+
+.tool:hover {
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.tool-icon {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 42px;
+  height: 42px;
   color: var(--accent);
+  background: var(--accent-soft);
+  border-radius: 12px;
+}
+
+.tool-body {
+  display: grid;
+  flex: 1;
+  gap: 4px;
+  min-width: 0;
+}
+
+.tool-go {
+  flex: none;
+  color: var(--accent);
+}
+
+@media (max-width: 720px) {
+  .tools-list {
+    grid-template-columns: 1fr;
+  }
 }
 
 .steps-search {

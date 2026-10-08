@@ -23,7 +23,7 @@ App ──POST──▶ Google Form ──▶ private Google Sheet
 
 Use the question titles exactly as written below. The aggregation script matches on these titles.
 
-**Subject Compass – Subject ratings**
+**PickMySubjects – Subject ratings**
 
 | Question | Type | Required |
 |---|---|---|
@@ -40,7 +40,7 @@ Use the question titles exactly as written below. The aggregation script matches
 | What I wish I knew | paragraph | |
 | App language | short answer | |
 
-**Subject Compass – Feedback**
+**PickMySubjects – Feedback**
 
 | Question | Type | Required |
 |---|---|---|

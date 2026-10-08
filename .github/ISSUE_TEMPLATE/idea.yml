@@ -24,7 +24,7 @@ body:
   - type: dropdown
     id: rating
     attributes:
-      label: How well does Subject Compass handle this today?
+      label: How well does PickMySubjects handle this today?
       options: ['1 - not at all', '2', '3', '4', '5 - solved it', "Haven't tried"]
   - type: textarea
     id: idea

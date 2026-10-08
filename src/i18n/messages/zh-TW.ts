@@ -2,9 +2,9 @@ import type { Messages } from './en'
 
 export const zhTW: Messages = {
   app: {
-    name: 'Subject Compass 選課指南針',
+    name: 'PickMySubjects 墨大選課',
     footer:
-      'Subject Compass 是學生自發製作的非官方工具，與墨爾本大學沒有任何關聯，也未獲其認可。選課前請務必以 {handbook} 和 {planner} 為準。你的成績紀錄和選課方案只儲存在目前的瀏覽器裡。{feedback}',
+      'PickMySubjects 是學生自發製作的非官方工具，與墨爾本大學沒有任何關聯，也未獲其認可。選課前請務必以 {handbook} 和 {planner} 為準。你的成績紀錄和選課方案只儲存在目前的瀏覽器裡。{feedback}',
     handbook: 'Handbook',
     planner: 'My Course Planner',
     suggest: '提出改進建議',
@@ -13,7 +13,7 @@ export const zhTW: Messages = {
     unofficial: '非官方',
     language: '語言',
   },
-  nav: { home: '首頁', more: '更多', plan: '排課', recommend: '推薦', record: '我的', contribute: '新增資料', feedback: '意見回饋', main: '主選單' },
+  nav: { home: '首頁', browse: '找課', more: '更多', plan: '排課', recommend: '推薦', record: '我的', contribute: '新增資料', feedback: '意見回饋', main: '主選單' },
   data: {
     label: '資料',
     demo: '示範資料（虛構）',
@@ -273,7 +273,7 @@ export const zhTW: Messages = {
     backupText: '下載一個備份檔，在新的地方打開就行。不會上傳任何東西。',
     backup: '下載備份',
     restore: '打開備份',
-    restoreFailed: '這不是 Subject Compass 的備份檔。',
+    restoreFailed: '這不是 PickMySubjects 的備份檔。',
     next: '下一步：產生學位計畫',
   },
   skill: {
@@ -407,7 +407,7 @@ export const zhTW: Messages = {
   },
   feedback: {
     title: '一起讓它變得更好',
-    lede: 'Subject Compass 源於在墨大選課時遇到的種種痛點。下面列出了每一個痛點，以及我們目前做到哪一步。告訴我們哪些好用、哪些不好用、還缺什麼——不需要會寫程式。',
+    lede: 'PickMySubjects 源於在墨大選課時遇到的種種痛點。下面列出了每一個痛點，以及我們目前做到哪一步。告訴我們哪些好用、哪些不好用、還缺什麼——不需要會寫程式。',
     status: { works: '已可用', partly: '部分可用', planned: '還沒做' },
     tryIt: '去試試',
     give: '對這一項提意見',
@@ -416,7 +416,7 @@ export const zhTW: Messages = {
     groupProblems: '我們要解決的問題',
     groupOther: '其他',
     other: { data: '某門課的資料有錯或缺漏', bug: '有功能壞了', idea: '新的想法', translation: '翻譯有誤' },
-    rating: 'Subject Compass 在這方面幫到你多少？',
+    rating: 'PickMySubjects 在這方面幫到你多少？',
     ratingEnds: '1 = 完全沒幫到 · 5 = 完全解決了',
     subject: '課程代碼（如果是關於某一門課）',
     message: '你的建議或遇到的問題',
@@ -497,8 +497,8 @@ export const zhTW: Messages = {
     needs: '先修要求：{needs}。',
     assessment: '考核：{parts}。',
     confirm: '選課前請以官方 Handbook 為準。',
-    made: 'Subject Compass 是墨大畢業生做的免費非官方選課工具。',
-    homeTitle: 'Subject Compass：墨大選課規劃',
+    made: 'PickMySubjects 是墨大畢業生做的免費非官方選課工具。',
+    homeTitle: 'PickMySubjects：墨大選課規劃',
     homeDesc: '墨爾本大學學生的免費非官方選課工具：先修課、開課學期、考核方式、同學評分，以及整個學位的選課計畫。',
     subjects: '課程',
     ratings: '同學評分：難度 {d}/5，作業量 {w}/5，給分 {g}/5（{n} 份評價）。',
@@ -539,6 +539,17 @@ export const zhTW: Messages = {
     cat: { science: "理科", breadth: "Breadth" },
   },
   guide: {
+    groupPlan: "選課",
+    groupMarks: "成績",
+    firstShort: "一般修 4 門，先修主修要求的一年級課。",
+    pointsShort: "一門課 12.5 分，畢業要 300 分。",
+    loadShort: "標準一學期 50 分，本地和國際學生規定不一樣。",
+    rulesShort: "先修課、同修課和不可同修是什麼意思。",
+    dropShort: "census date 之前退課不收費。",
+    gradesShort: "50 分及格，80 分以上是 H1。",
+    wamShort: "按學分加權的平均分。",
+    abroadShort: "誰要你的成績，就用誰的官方工具換算。",
+    rankShort: "QS、THE、軟科看的東西不一樣。",
     firstTitle: "第一學期",
     firstText: "大多數人第一學期修 4 門課。可以這樣選：",
     firstStep1: "先想好最可能讀的主修，把它要求的一年級課先修了。「排課」頁面會告訴你是哪幾門。",
@@ -663,6 +674,7 @@ export const zhTW: Messages = {
     contact: '有疑問？請使用「意見回饋」頁面。',
   },
   home: {
+    toolsTitle: '新生常用',
     stepsTitle: '三步上手',
     routeCaption: '電腦與軟體系統主修的一條真實路線，點任一站看課程詳情。',
     year: '第 {n} 年',
@@ -691,7 +703,7 @@ export const zhTW: Messages = {
     step3: '看適合你的課',
     langTitle: '9 種語言',
     match: '符合 {n}%',
-    preview: 'Subject Compass 預覽',
+    preview: 'PickMySubjects 預覽',
     step1Text: '已修的課和成績、強項、興趣。之後的計畫和推薦都會依這些來。',
     step1Done: '已填 {results} 門課、{interests} 個興趣',
     step2Text: '選主修，自動排好每個學期的課，並檢查所有規則。',

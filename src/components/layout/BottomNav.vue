@@ -34,7 +34,7 @@ const { t } = useI18n()
     inset: auto 0 0 0;
     z-index: 30;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     padding: 6px 8px calc(6px + env(safe-area-inset-bottom));
     border-top: 1px solid rgb(255 255 255 / 60%);
     background: rgb(255 255 255 / 55%);

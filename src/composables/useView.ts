@@ -12,7 +12,7 @@ interface Route {
   query: URLSearchParams
 }
 
-/** Where the site lives, e.g. "/subject-compass/" on GitHub Pages. */
+/** Where the site lives, e.g. "/" on GitHub Pages. */
 const BASE = import.meta.env.BASE_URL
 
 /** "zh-CN/" for a non-English language, "" for English (English pages have no prefix). */

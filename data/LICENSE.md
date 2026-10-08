@@ -1,12 +1,12 @@
 # Data licence
 
 The curated data in this folder (subject facts, course rules, component
-structures and aggregated ratings) is © Subject Compass contributors and
+structures and aggregated ratings) is © PickMySubjects contributors and
 licensed under **Creative Commons Attribution 4.0 International (CC BY 4.0)**:
 https://creativecommons.org/licenses/by/4.0/
 
 You may share and adapt it, including commercially, as long as you give
-appropriate credit ("Subject Compass contributors") and link to this licence.
+appropriate credit ("PickMySubjects contributors") and link to this licence.
 
 Notes:
 

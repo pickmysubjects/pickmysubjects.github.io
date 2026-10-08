@@ -1,10 +1,10 @@
 // Google Apps Script: run once at https://script.google.com to create the two
-// Subject Compass forms with private response sheets (see docs/ratings-setup.md).
+// PickMySubjects forms with private response sheets (see docs/ratings-setup.md).
 // It logs the pre-filled links (needed for src/config.ts) and the sheet links (keep private).
 function createSubjectCompassForms() {
   // ---------- Form 1: subject ratings ----------
-  const ratings = FormApp.create('Subject Compass – Subject ratings');
-  setup(ratings, 'Anonymous subject ratings for Subject Compass, an unofficial student tool.');
+  const ratings = FormApp.create('PickMySubjects – Subject ratings');
+  setup(ratings, 'Anonymous subject ratings for PickMySubjects, an unofficial student tool.');
   const r = {
     code: ratings.addTextItem().setTitle('Subject code').setRequired(true),
     // Everything but the code (filled in by the app) is optional: students skip what they don't know.
@@ -26,7 +26,7 @@ function createSubjectCompassForms() {
     language: ratings.addTextItem().setTitle('App language'),
   };
   const extra = addOptionalRatingItems(ratings);
-  const ratingsSheet = SpreadsheetApp.create('Subject Compass – ratings (private)');
+  const ratingsSheet = SpreadsheetApp.create('PickMySubjects – ratings (private)');
   ratings.setDestination(FormApp.DestinationType.SPREADSHEET, ratingsSheet.getId());
   const ratingsResponse = ratings.createResponse()
     .withItemResponse(r.code.createResponse('COMP30027'))
@@ -45,8 +45,8 @@ function createSubjectCompassForms() {
   const ratingsLink = ratingsResponse.toPrefilledUrl();
 
   // ---------- Form 2: feedback ----------
-  const feedback = FormApp.create('Subject Compass – Feedback');
-  setup(feedback, 'Feedback for Subject Compass, an unofficial student tool.');
+  const feedback = FormApp.create('PickMySubjects – Feedback');
+  setup(feedback, 'Feedback for PickMySubjects, an unofficial student tool.');
   const f = {
     topic: feedback.addTextItem().setTitle('Topic').setRequired(true),
     rating: feedback.addTextItem().setTitle('Rating'),
@@ -55,7 +55,7 @@ function createSubjectCompassForms() {
     contact: feedback.addTextItem().setTitle('Contact'),
     language: feedback.addTextItem().setTitle('App language'),
   };
-  const feedbackSheet = SpreadsheetApp.create('Subject Compass – feedback (private)');
+  const feedbackSheet = SpreadsheetApp.create('PickMySubjects – feedback (private)');
   feedback.setDestination(FormApp.DestinationType.SPREADSHEET, feedbackSheet.getId());
   const feedbackLink = feedback.createResponse()
     .withItemResponse(f.topic.createResponse('idea'))

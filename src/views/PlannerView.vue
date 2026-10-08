@@ -44,7 +44,7 @@ const copied = shallowRef(false)
 async function share(): Promise<void> {
   const url = new URL(link(`plan?share=${encodePlan(plan.setup.value, plan.terms.value)}`), location.href).href
   try {
-    if (navigator.share) await navigator.share({ title: 'Subject Compass', url })
+    if (navigator.share) await navigator.share({ title: 'PickMySubjects', url })
     else await navigator.clipboard.writeText(url)
     copied.value = true
     setTimeout(() => (copied.value = false), 2500)

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ExternalLink } from 'lucide-vue-next'
 import GradeScale from '@/components/guide/GradeScale.vue'
+import GuideItem from '@/components/guide/GuideItem.vue'
 import { link } from '@/composables/useView'
 import { useProfile } from '@/composables/useProfile'
 import { useI18n } from '@/i18n'
@@ -14,8 +15,6 @@ const FACTS = [
   { value: '300', key: 'guide.factDegree' },
   { value: '80+', key: 'guide.factH1' },
 ] as const
-
-const SECTIONS = ['first', 'points', 'load', 'grades', 'wam', 'rules', 'drop', 'abroad', 'rank'] as const
 
 const ABROAD = [
   { key: 'guide.wes', href: 'https://www.wes.org/' },
@@ -31,153 +30,136 @@ const RANKINGS = [
 ] as const
 
 const STUDENT_SITE = 'https://students.unimelb.edu.au/'
-
-// In-page jumps use scrollIntoView: a #fragment would go through the app's
-// history handler, which scrolls back to the top.
-function jump(id: string): void {
-  document.getElementById(`guide-${id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-}
 </script>
 
 <template>
   <article class="guide">
-    <header class="guide-head">
+    <header>
       <p class="guide-eyebrow">{{ t('guide.eyebrow') }}</p>
-      <h1 class="guide-title">{{ t('guide.title') }}</h1>
-      <p class="guide-lede">{{ t('guide.lede') }}</p>
+      <h1 class="page-title">{{ t('guide.title') }}</h1>
+      <p class="page-lede">{{ t('guide.lede') }}</p>
     </header>
 
-    <ul class="facts">
-      <li v-for="f in FACTS" :key="f.key" class="fact surface">
+    <ul class="facts surface">
+      <li v-for="f in FACTS" :key="f.key" class="fact">
         <span class="fact-value">{{ f.value }}</span>
         <span class="fact-label">{{ t(f.key) }}</span>
       </li>
     </ul>
 
-    <nav class="jumps" :aria-label="t('guide.contents')">
-      <button v-for="s in SECTIONS" :key="s" type="button" class="jump" @click="jump(s)">
-        {{ t(`guide.${s}Title`) }}
-      </button>
-    </nav>
+    <section class="group">
+      <h2 class="group-title">{{ t('guide.groupPlan') }}</h2>
+      <div class="list surface">
+        <GuideItem :title="t('guide.firstTitle')" :short="t('guide.firstShort')" open>
+          <ol class="steps">
+            <li>{{ t('guide.firstStep1') }}</li>
+            <li>{{ t('guide.firstStep2') }}</li>
+            <li>{{ t('guide.firstStep3') }}</li>
+            <li>{{ t('guide.firstStep4') }}</li>
+          </ol>
+          <p class="aside">{{ t('guide.breadthText') }}</p>
+          <p class="actions">
+            <a class="button button-accent" :href="link('subjects?preset=firstSemester')">{{ t('guide.firstFind') }}</a>
+            <a class="button button-quiet" :href="link('plan')">{{ t('guide.firstPlan') }}</a>
+          </p>
+        </GuideItem>
 
-    <section id="guide-first" class="block surface">
-      <h2>{{ t('guide.firstTitle') }}</h2>
-      <p>{{ t('guide.firstText') }}</p>
-      <ol class="steps">
-        <li>{{ t('guide.firstStep1') }}</li>
-        <li>{{ t('guide.firstStep2') }}</li>
-        <li>{{ t('guide.firstStep3') }}</li>
-        <li>{{ t('guide.firstStep4') }}</li>
-      </ol>
-      <p class="breadth">{{ t('guide.breadthText') }}</p>
-      <p class="actions">
-        <a class="button button-accent" :href="link('subjects?preset=firstSemester')">{{ t('guide.firstFind') }}</a>
-        <a class="button button-quiet" :href="link('plan')">{{ t('guide.firstPlan') }}</a>
-      </p>
-    </section>
+        <GuideItem :title="t('guide.pointsTitle')" :short="t('guide.pointsShort')">
+          <p>{{ t('guide.pointsText') }}</p>
+        </GuideItem>
 
-    <section id="guide-points" class="block surface">
-      <h2>{{ t('guide.pointsTitle') }}</h2>
-      <p>{{ t('guide.pointsText') }}</p>
-    </section>
+        <GuideItem :title="t('guide.loadTitle')" :short="t('guide.loadShort')">
+          <div class="who">
+            <div class="who-card">
+              <h3>{{ t('guide.localTitle') }}</h3>
+              <p>{{ t('guide.loadLocal') }}</p>
+            </div>
+            <div class="who-card">
+              <h3>{{ t('guide.intlTitle') }}</h3>
+              <p>{{ t('guide.loadIntl') }}</p>
+            </div>
+          </div>
+          <p>{{ t('guide.loadText') }}</p>
+          <ul class="plain">
+            <li>{{ t('guide.overloadWam') }}</li>
+            <li>{{ t('guide.overloadLast') }}</li>
+            <li>{{ t('guide.overloadFails') }}</li>
+          </ul>
+          <p class="note">{{ t('guide.overloadFinal') }}</p>
+        </GuideItem>
 
-    <section id="guide-load" class="block surface">
-      <h2>{{ t('guide.loadTitle') }}</h2>
-      <p>{{ t('guide.loadText') }}</p>
-      <ul class="checks">
-        <li>{{ t('guide.overloadWam') }}</li>
-        <li>{{ t('guide.overloadLast') }}</li>
-        <li>{{ t('guide.overloadFails') }}</li>
-      </ul>
-      <p class="note">{{ t('guide.overloadFinal') }}</p>
-      <div class="who">
-        <div class="who-card">
-          <h3>{{ t('guide.localTitle') }}</h3>
-          <p>{{ t('guide.loadLocal') }}</p>
-        </div>
-        <div class="who-card">
-          <h3>{{ t('guide.intlTitle') }}</h3>
-          <p>{{ t('guide.loadIntl') }}</p>
-        </div>
+        <GuideItem :title="t('guide.rulesTitle')" :short="t('guide.rulesShort')">
+          <dl class="terms">
+            <div>
+              <dt>{{ t('guide.prereqTerm') }}</dt>
+              <dd>{{ t('guide.prereqText') }}</dd>
+            </div>
+            <div>
+              <dt>{{ t('guide.coreqTerm') }}</dt>
+              <dd>{{ t('guide.coreqText') }}</dd>
+            </div>
+            <div>
+              <dt>{{ t('guide.nonTerm') }}</dt>
+              <dd>{{ t('guide.nonText') }}</dd>
+            </div>
+          </dl>
+          <p class="note">{{ t('guide.waiverText') }}</p>
+        </GuideItem>
+
+        <GuideItem :title="t('guide.dropTitle')" :short="t('guide.dropShort')">
+          <ol class="timeline">
+            <li class="tl-good">{{ t('guide.dropBefore') }}</li>
+            <li class="tl-warn">{{ t('guide.dropWd') }}</li>
+            <li class="tl-bad">{{ t('guide.dropFail') }}</li>
+          </ol>
+          <div class="who">
+            <p class="who-card">{{ t('guide.dropLocal') }}</p>
+            <p class="who-card">{{ t('guide.dropIntl') }}</p>
+          </div>
+          <p class="note">{{ t('guide.dropWhere') }}</p>
+        </GuideItem>
       </div>
     </section>
 
-    <section id="guide-grades" class="block surface">
-      <h2>{{ t('guide.gradesTitle') }}</h2>
-      <p>{{ t('guide.gradesText') }}</p>
-      <GradeScale />
-    </section>
+    <section class="group">
+      <h2 class="group-title">{{ t('guide.groupMarks') }}</h2>
+      <div class="list surface">
+        <GuideItem :title="t('guide.gradesTitle')" :short="t('guide.gradesShort')">
+          <GradeScale />
+        </GuideItem>
 
-    <section id="guide-wam" class="block surface">
-      <h2>{{ t('guide.wamTitle') }}</h2>
-      <p>{{ t('guide.wamText') }}</p>
-      <p class="formula">{{ t('guide.wamFormula') }}</p>
-      <p>{{ t('guide.wamExample') }}</p>
-      <ul class="plain">
-        <li>{{ t('guide.wamIn') }}</li>
-        <li>{{ t('guide.wamOut') }}</li>
-      </ul>
-      <p class="yours">
-        <span>{{ wam !== null ? t('guide.wamYours', { wam }) : t('guide.wamNone') }}</span>
-        <a class="button button-quiet" :href="link('record')">{{ t('guide.wamGo') }}</a>
-      </p>
-    </section>
+        <GuideItem :title="t('guide.wamTitle')" :short="t('guide.wamShort')">
+          <p>{{ t('guide.wamText') }}</p>
+          <p class="formula">{{ t('guide.wamFormula') }}</p>
+          <p>{{ t('guide.wamExample') }}</p>
+          <ul class="plain">
+            <li>{{ t('guide.wamIn') }}</li>
+            <li>{{ t('guide.wamOut') }}</li>
+          </ul>
+          <p class="yours">
+            <span>{{ wam !== null ? t('guide.wamYours', { wam }) : t('guide.wamNone') }}</span>
+            <a class="button button-quiet" :href="link('record')">{{ t('guide.wamGo') }}</a>
+          </p>
+        </GuideItem>
 
-    <section id="guide-rules" class="block surface">
-      <h2>{{ t('guide.rulesTitle') }}</h2>
-      <dl class="terms">
-        <div>
-          <dt>{{ t('guide.prereqTerm') }}</dt>
-          <dd>{{ t('guide.prereqText') }}</dd>
-        </div>
-        <div>
-          <dt>{{ t('guide.coreqTerm') }}</dt>
-          <dd>{{ t('guide.coreqText') }}</dd>
-        </div>
-        <div>
-          <dt>{{ t('guide.nonTerm') }}</dt>
-          <dd>{{ t('guide.nonText') }}</dd>
-        </div>
-      </dl>
-      <p class="note">{{ t('guide.waiverText') }}</p>
-    </section>
+        <GuideItem :title="t('guide.abroadTitle')" :short="t('guide.abroadShort')">
+          <p>{{ t('guide.abroadText') }}</p>
+          <ul class="links">
+            <li v-for="l in ABROAD" :key="l.key">
+              <a :href="l.href" target="_blank" rel="noopener">{{ t(l.key) }}<ExternalLink :size="14" aria-hidden="true" /></a>
+            </li>
+          </ul>
+        </GuideItem>
 
-    <section id="guide-drop" class="block surface">
-      <h2>{{ t('guide.dropTitle') }}</h2>
-      <ol class="timeline">
-        <li class="tl-good">{{ t('guide.dropBefore') }}</li>
-        <li class="tl-warn">{{ t('guide.dropWd') }}</li>
-        <li class="tl-bad">{{ t('guide.dropFail') }}</li>
-      </ol>
-      <div class="who">
-        <p class="who-card">{{ t('guide.dropLocal') }}</p>
-        <p class="who-card">{{ t('guide.dropIntl') }}</p>
+        <GuideItem :title="t('guide.rankTitle')" :short="t('guide.rankShort')">
+          <p>{{ t('guide.rankText') }}</p>
+          <ul class="links">
+            <li v-for="l in RANKINGS" :key="l.key">
+              <a :href="l.href" target="_blank" rel="noopener">{{ t(l.key) }}<ExternalLink :size="14" aria-hidden="true" /></a>
+            </li>
+          </ul>
+        </GuideItem>
       </div>
-      <p class="note">{{ t('guide.dropWhere') }}</p>
-    </section>
-
-    <section id="guide-abroad" class="block surface">
-      <h2>{{ t('guide.abroadTitle') }}</h2>
-      <p>{{ t('guide.abroadText') }}</p>
-      <ul class="links">
-        <li v-for="l in ABROAD" :key="l.key">
-          <a :href="l.href" target="_blank" rel="noopener">
-            {{ t(l.key) }}<ExternalLink :size="14" aria-hidden="true" />
-          </a>
-        </li>
-      </ul>
-    </section>
-
-    <section id="guide-rank" class="block surface">
-      <h2>{{ t('guide.rankTitle') }}</h2>
-      <p>{{ t('guide.rankText') }}</p>
-      <ul class="links">
-        <li v-for="l in RANKINGS" :key="l.key">
-          <a :href="l.href" target="_blank" rel="noopener">
-            {{ t(l.key) }}<ExternalLink :size="14" aria-hidden="true" />
-          </a>
-        </li>
-      </ul>
     </section>
 
     <p class="source">
@@ -190,12 +172,13 @@ function jump(id: string): void {
 <style scoped>
 .guide {
   display: grid;
-  gap: 18px;
-  max-width: 780px;
+  gap: 28px;
+  max-width: 760px;
   padding-top: 32px;
 }
 
 .guide-eyebrow {
+  margin-bottom: 6px;
   font-size: 0.8rem;
   font-weight: 600;
   letter-spacing: 0.06em;
@@ -203,22 +186,11 @@ function jump(id: string): void {
   color: var(--accent);
 }
 
-.guide-title {
-  margin-top: 4px;
-}
-
-.guide-lede {
-  margin-top: 10px;
-  font-size: 1.05rem;
-  line-height: 1.65;
-  color: var(--ink-soft);
-}
-
+/* Four numbers in one strip, split by hairlines. */
 .facts {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 10px;
-  margin: 6px 0 0;
+  margin: 0;
   padding: 0;
   list-style: none;
 }
@@ -227,56 +199,43 @@ function jump(id: string): void {
   display: grid;
   align-content: start;
   gap: 4px;
-  padding: 14px 16px;
+  padding: 18px 20px;
+}
+
+.fact + .fact {
+  border-left: 1px solid var(--line);
 }
 
 .fact-value {
   font-family: var(--font-code);
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   font-weight: 650;
   letter-spacing: -0.03em;
   color: var(--accent);
 }
 
 .fact-label {
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   line-height: 1.45;
   color: var(--ink-soft);
 }
 
-.jumps {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-.jump {
-  padding: 6px 12px;
-  font: inherit;
-  font-size: 0.85rem;
-  color: var(--ink-soft);
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  cursor: pointer;
-}
-
-.jump:hover {
-  color: var(--accent);
-  border-color: var(--accent);
-}
-
-.block {
+.group {
   display: grid;
   gap: 10px;
-  padding: 20px 22px;
-  line-height: 1.65;
-  scroll-margin-top: 84px;
 }
 
-.block h2 {
-  font-size: 1.15rem;
-  font-weight: 650;
+.group-title {
+  padding-left: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.list {
+  overflow: hidden;
 }
 
 .note {
@@ -284,17 +243,25 @@ function jump(id: string): void {
   color: var(--ink-soft);
 }
 
-.steps {
+.steps,
+.plain {
   display: grid;
   gap: 6px;
   margin: 0;
   padding-left: 22px;
 }
 
-.breadth {
+.aside,
+.formula,
+.who-card {
   padding: 12px 14px;
   background: var(--surface-2);
   border-radius: var(--radius-sm);
+}
+
+.formula {
+  font-family: var(--font-code);
+  font-size: 0.9rem;
 }
 
 .actions {
@@ -310,32 +277,13 @@ function jump(id: string): void {
 }
 
 .who-card {
-  padding: 12px 14px;
   font-size: 0.92rem;
-  background: var(--surface-2);
-  border-radius: var(--radius-sm);
 }
 
 .who-card h3 {
   margin-bottom: 4px;
   font-size: 0.95rem;
   font-weight: 650;
-}
-
-.checks,
-.plain {
-  display: grid;
-  gap: 6px;
-  margin: 0;
-  padding-left: 20px;
-}
-
-.formula {
-  padding: 10px 14px;
-  font-family: var(--font-code);
-  font-size: 0.92rem;
-  background: var(--surface-2);
-  border-radius: var(--radius-sm);
 }
 
 .yours {
@@ -367,7 +315,6 @@ function jump(id: string): void {
 /* Dropping a subject, in time order: free, then WD, then a fail. */
 .timeline {
   display: grid;
-  gap: 0;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -430,12 +377,24 @@ function jump(id: string): void {
 }
 
 @media (max-width: 720px) {
+  .guide {
+    gap: 22px;
+  }
+
   .facts {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .block {
-    padding: 16px;
+  .fact {
+    padding: 14px 16px;
+  }
+
+  .fact:nth-child(3) {
+    border-left: 0;
+  }
+
+  .fact:nth-child(n + 3) {
+    border-top: 1px solid var(--line);
   }
 
   .who {

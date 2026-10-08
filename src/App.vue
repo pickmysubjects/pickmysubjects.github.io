@@ -39,9 +39,9 @@ watchEffect(() => {
   const s = view.value === 'subject' ? data.value.subjects[param.value.toUpperCase()] : undefined
   const key = TITLES[view.value]
   document.title = s
-    ? `${t.value('seo.subjectTitle', { code: s.code, title: s.title })} | Subject Compass`
+    ? `${t.value('seo.subjectTitle', { code: s.code, title: s.title })} | PickMySubjects`
     : key
-      ? `${t.value(key)} | Subject Compass`
+      ? `${t.value(key)} | PickMySubjects`
       : t.value('seo.homeTitle')
 })
 const plannerUrl =
@@ -78,7 +78,7 @@ const plannerUrl =
         <a :href="link('contribute')">{{ t('nav.contribute') }}</a>
         <a :href="link('feedback')">{{ t('nav.feedback') }}</a>
         <a :href="link('privacy')">{{ t('app.privacy') }}</a>
-        <a href="https://github.com/subject-compass/subject-compass" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://github.com/pickmysubjects/pickmysubjects.github.io" target="_blank" rel="noopener">GitHub</a>
       </nav>
       <p class="footer-note">
         <Interp :text="t('app.footer')">

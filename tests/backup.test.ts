@@ -25,7 +25,13 @@ describe('backup', () => {
     expect(store.has('sc:locale')).toBe(false)
   })
 
-  it('refuses files that are not a Subject Compass backup', () => {
+  it('restores backups saved under the old name', () => {
+    const file = JSON.stringify({ app: 'subject-compass', version: 1, savedAt: '', data: { 'sc:rated': ['COMP10001'] } })
+    expect(restoreBackup(file)).toBe(true)
+    expect(JSON.parse(store.get('sc:rated') ?? '')).toEqual(['COMP10001'])
+  })
+
+  it('refuses files that are not a PickMySubjects backup', () => {
     expect(restoreBackup('not json')).toBe(false)
     expect(restoreBackup(JSON.stringify({ app: 'something-else', version: 1, data: {} }))).toBe(false)
     expect(store.size).toBe(0)

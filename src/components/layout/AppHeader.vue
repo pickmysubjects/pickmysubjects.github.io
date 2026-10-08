@@ -16,7 +16,7 @@ const { t } = useI18n()
     <div class="header-inner shell">
       <a class="brand" :href="link('')">
         <AppLogo class="mark" />
-        <span class="brand-name">Subject Compass</span>
+        <span class="brand-name">PickMySubjects</span>
         <span class="badge">{{ t('app.unofficial') }}</span>
       </a>
       <nav class="nav" :aria-label="t('nav.main')">
@@ -133,11 +133,43 @@ const { t } = useI18n()
 }
 
 .header-search {
-  width: 260px;
+  width: 220px;
 }
 
-@media (max-width: 960px) {
+/* The header search needs room next to five links; on smaller screens the Browse page has its own search. */
+@media (max-width: 1320px) {
   .header-search {
+    display: none;
+  }
+}
+
+/* Five links and the language menu must fit before the bottom bar takes over. */
+@media (max-width: 1060px) {
+  .badge,
+  .nav-link svg {
+    display: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .brand-name {
+    display: none;
+  }
+}
+
+/* The badge comes back with the bottom bar; on the narrowest phones it gives way to the language menu. */
+@media (max-width: 720px) {
+  .badge {
+    display: inline-flex;
+  }
+
+  .brand-name {
+    display: inline;
+  }
+}
+
+@media (max-width: 400px) {
+  .badge {
     display: none;
   }
 }

@@ -2,9 +2,9 @@ import type { Messages } from './en'
 
 export const ko: Messages = {
   app: {
-    name: 'Subject Compass',
+    name: 'PickMySubjects',
     footer:
-      'Subject Compass는 학생이 만든 비공식 도구로, 멜버른 대학교와 관련이 없으며 대학의 승인을 받지 않았습니다. 수강 신청 전에는 반드시 {handbook}와 {planner}에서 확인하세요. 성적 기록과 수강 계획은 이 브라우저에만 저장됩니다. {feedback}',
+      'PickMySubjects는 학생이 만든 비공식 도구로, 멜버른 대학교와 관련이 없으며 대학의 승인을 받지 않았습니다. 수강 신청 전에는 반드시 {handbook}와 {planner}에서 확인하세요. 성적 기록과 수강 계획은 이 브라우저에만 저장됩니다. {feedback}',
     handbook: 'Handbook',
     planner: 'My Course Planner',
     suggest: '개선 의견 보내기',
@@ -13,7 +13,7 @@ export const ko: Messages = {
     unofficial: '비공식',
     language: '언어',
   },
-  nav: { home: '홈', more: '더보기', plan: '계획', recommend: '추천', record: '내 정보', contribute: '데이터 추가', feedback: '피드백', main: '메인 메뉴' },
+  nav: { home: '홈', browse: '과목', more: '더보기', plan: '계획', recommend: '추천', record: '내 정보', contribute: '데이터 추가', feedback: '피드백', main: '메인 메뉴' },
   data: {
     label: '데이터',
     demo: '데모 데이터 (가상)',
@@ -273,7 +273,7 @@ export const ko: Messages = {
     backupText: '백업 파일을 내려받아 그곳에서 여세요. 아무것도 업로드되지 않습니다.',
     backup: '백업 내려받기',
     restore: '백업 열기',
-    restoreFailed: 'Subject Compass 백업 파일이 아닙니다.',
+    restoreFailed: 'PickMySubjects 백업 파일이 아닙니다.',
     next: '다음: 학위 계획 만들기',
   },
   skill: {
@@ -407,7 +407,7 @@ export const ko: Messages = {
   },
   feedback: {
     title: '더 좋게 만들어 주세요',
-    lede: 'Subject Compass는 멜버른대에서 과목을 고를 때 겪는 어려움에서 시작했습니다. 각 어려움과 지금까지의 진행 상황을 보여 드립니다. 잘 되는 점, 안 되는 점, 부족한 점을 알려 주세요. 코딩을 몰라도 됩니다.',
+    lede: 'PickMySubjects는 멜버른대에서 과목을 고를 때 겪는 어려움에서 시작했습니다. 각 어려움과 지금까지의 진행 상황을 보여 드립니다. 잘 되는 점, 안 되는 점, 부족한 점을 알려 주세요. 코딩을 몰라도 됩니다.',
     status: { works: '사용 가능', partly: '일부 지원', planned: '아직 없음' },
     tryIt: '써 보기',
     give: '이 항목에 의견 보내기',
@@ -416,7 +416,7 @@ export const ko: Messages = {
     groupProblems: '해결하려는 문제',
     groupOther: '기타',
     other: { data: '과목 데이터가 틀리거나 없음', bug: '기능이 작동하지 않음', idea: '새로운 아이디어', translation: '번역 오류' },
-    rating: '이 부분에서 Subject Compass가 얼마나 도움이 되나요?',
+    rating: '이 부분에서 PickMySubjects가 얼마나 도움이 되나요?',
     ratingEnds: '1 = 전혀 아님 · 5 = 완전히 해결',
     subject: '과목 코드 (특정 과목에 관한 경우)',
     message: '제안이나 문제점',
@@ -497,8 +497,8 @@ export const ko: Messages = {
     needs: '선수 과목: {needs}.',
     assessment: '평가: {parts}.',
     confirm: '수강 전 반드시 공식 Handbook에서 확인하세요.',
-    made: 'Subject Compass는 멜버른 대학교 졸업생이 만든 무료 비공식 과목 계획 도구예요.',
-    homeTitle: 'Subject Compass: 멜버른 대학교 과목 계획',
+    made: 'PickMySubjects는 멜버른 대학교 졸업생이 만든 무료 비공식 과목 계획 도구예요.',
+    homeTitle: 'PickMySubjects: 멜버른 대학교 과목 계획',
     homeDesc: '멜버른 대학교 학생을 위한 무료 비공식 과목 계획 도구: 선수 과목, 개설 학기, 평가 방식, 학생 평가, 학위 전체 계획.',
     subjects: '과목',
     ratings: '학생 평가: 난이도 {d}/5, 학습량 {w}/5, 채점 {g}/5 ({n}건).',
@@ -539,6 +539,17 @@ export const ko: Messages = {
     cat: { science: "이과", breadth: "Breadth" },
   },
   guide: {
+    groupPlan: "과목 고르기",
+    groupMarks: "성적",
+    firstShort: "보통 4과목. 전공의 레벨 1 과목부터 들으세요.",
+    pointsShort: "과목당 12.5학점, 졸업에는 300학점.",
+    loadShort: "표준은 한 학기 50학점. 국내 학생과 유학생 규칙이 달라요.",
+    rulesShort: "선수·동시 수강·중복 불가 과목이 뭔지.",
+    dropShort: "census date 전에 취소하면 학비를 안 내요.",
+    gradesShort: "50점이면 통과, 80점 이상이 H1.",
+    wamShort: "학점으로 가중치를 둔 평균 점수.",
+    abroadShort: "성적을 요구하는 곳의 공식 도구로 환산하세요.",
+    rankShort: "QS, THE, ARWU는 보는 기준이 달라요.",
     firstTitle: "첫 학기",
     firstText: "대부분 4과목을 들어요. 이렇게 고르면 쉬워요:",
     firstStep1: "가장 할 것 같은 전공을 정하고, 그 전공의 레벨 1 과목부터 들으세요. 어떤 과목인지는 “계획” 페이지에 나와요.",
@@ -663,6 +674,7 @@ export const ko: Messages = {
     contact: '궁금한 점은 "피드백" 페이지를 이용하세요.',
   },
   home: {
+    toolsTitle: '이것도 유용해요',
     stepsTitle: '3단계로 시작하기',
     routeCaption: 'Computing and Software Systems의 실제 경로예요. 정류장을 누르면 과목을 볼 수 있어요.',
     year: '{n}학년',
@@ -691,7 +703,7 @@ export const ko: Messages = {
     step3: '나에게 맞는 과목 보기',
     langTitle: '9개 언어',
     match: '적합도 {n}%',
-    preview: 'Subject Compass 미리보기',
+    preview: 'PickMySubjects 미리보기',
     step1Text: '이수한 과목과 성적, 강점, 관심사. 계획과 추천에 쓰여요.',
     step1Done: '과목 {results}개, 관심사 {interests}개 입력함',
     step2Text: '전공을 고르면 학기별 과목을 배치하고 규칙도 확인해요.',

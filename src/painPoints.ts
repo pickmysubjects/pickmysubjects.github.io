@@ -1,5 +1,5 @@
 /**
- * The problems Subject Compass exists to solve, from the founder's own experience
+ * The problems PickMySubjects exists to solve, from the founder's own experience
  * choosing subjects at UniMelb. Every feature and every piece of feedback should map
  * back to one of these. Keep `status` honest — it is shown to users. The wording of
  * each question and answer lives in the i18n catalogs under `pain.<id>`.

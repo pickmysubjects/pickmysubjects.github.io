@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { computed, shallowRef } from 'vue'
-import { ChevronDown, Search } from 'lucide-vue-next'
-import { PERIODS, type BrowseFilters, type BrowseSort } from '@/engine'
+import { ChevronDown, SlidersHorizontal } from 'lucide-vue-next'
+import { EMPTY_FILTERS, PERIODS, type BrowseFilters } from '@/engine'
 import { useI18n } from '@/i18n'
 
-defineProps<{ showRating: boolean }>()
 const filters = defineModel<BrowseFilters>({ required: true })
 const { t } = useI18n()
 
@@ -13,7 +12,7 @@ const LEVELS = [null, 1, 2, 3] as const
 const WHEN = [null, ...PERIODS] as const
 const TOGGLES = ['noPrereq', 'noExam', 'noGroup'] as const
 
-// Open on wide screens; on phones the list matters more, so the details start folded.
+// On phones the list matters more, so the filters start folded there.
 const open = shallowRef(typeof matchMedia === 'undefined' || matchMedia('(min-width: 721px)').matches)
 const active = computed(() => {
   const f = filters.value
@@ -23,136 +22,98 @@ const active = computed(() => {
 function set<K extends keyof BrowseFilters>(key: K, value: BrowseFilters[K]): void {
   filters.value = { ...filters.value, [key]: value }
 }
+
+function clear(): void {
+  filters.value = { ...EMPTY_FILTERS, text: filters.value.text, sort: filters.value.sort }
+}
 </script>
 
 <template>
-  <div class="filters surface">
-    <label class="search">
-      <Search :size="16" aria-hidden="true" class="search-icon" />
-      <span class="visually-hidden">{{ t('browse.searchLabel') }}</span>
-      <input
-        class="input search-input"
-        type="search"
-        :value="filters.text"
-        :placeholder="t('browse.searchPlaceholder')"
-        @input="set('text', ($event.target as HTMLInputElement).value)"
-      />
-    </label>
-
+  <aside class="filters">
     <button type="button" class="toggle" :aria-expanded="open" aria-controls="browse-more" @click="open = !open">
+      <SlidersHorizontal :size="16" aria-hidden="true" />
       {{ t('browse.filters') }}<span v-if="active" class="badge">{{ active }}</span>
       <ChevronDown :size="16" aria-hidden="true" class="toggle-icon" />
     </button>
 
-    <div v-show="open" id="browse-more" class="more">
-    <div class="row" role="group" :aria-label="t('browse.type')">
-      <span class="row-label">{{ t('browse.type') }}</span>
-      <button
-        v-for="c in CATEGORIES"
-        :key="c"
-        type="button"
-        class="opt"
-        :aria-pressed="filters.category === c"
-        @click="set('category', c)"
-      >
-        {{ c ? t(`browse.cat.${c}`) : t('browse.any') }}
-      </button>
-    </div>
+    <div v-show="open" id="browse-more" class="groups">
+      <fieldset class="group">
+        <legend>{{ t('browse.type') }}</legend>
+        <div class="seg">
+          <button
+            v-for="c in CATEGORIES"
+            :key="c"
+            type="button"
+            :aria-pressed="filters.category === c"
+            @click="set('category', c)"
+          >
+            {{ c ? t(`browse.cat.${c}`) : t('browse.any') }}
+          </button>
+        </div>
+      </fieldset>
 
-    <div class="row" role="group" :aria-label="t('browse.level')">
-      <span class="row-label">{{ t('browse.level') }}</span>
-      <button
-        v-for="l in LEVELS"
-        :key="String(l)"
-        type="button"
-        class="opt"
-        :aria-pressed="filters.level === l"
-        @click="set('level', l)"
-      >
-        {{ l === null ? t('browse.any') : t('browse.levelN', { n: l }) }}
-      </button>
-    </div>
+      <fieldset class="group">
+        <legend>{{ t('browse.level') }}</legend>
+        <div class="seg">
+          <button
+            v-for="l in LEVELS"
+            :key="String(l)"
+            type="button"
+            :aria-pressed="filters.level === l"
+            @click="set('level', l)"
+          >
+            {{ l === null ? t('browse.any') : l }}
+          </button>
+        </div>
+      </fieldset>
 
-    <div class="row" role="group" :aria-label="t('browse.when')">
-      <span class="row-label">{{ t('browse.when') }}</span>
-      <button
-        v-for="p in WHEN"
-        :key="String(p)"
-        type="button"
-        class="opt"
-        :aria-pressed="filters.period === p"
-        @click="set('period', p)"
-      >
-        {{ p === null ? t('browse.any') : t(`periodShort.${p}`) }}
-      </button>
-    </div>
+      <fieldset class="group">
+        <legend>{{ t('browse.when') }}</legend>
+        <div class="seg seg-wrap">
+          <button
+            v-for="p in WHEN"
+            :key="String(p)"
+            type="button"
+            :aria-pressed="filters.period === p"
+            @click="set('period', p)"
+          >
+            {{ p === null ? t('browse.any') : t(`periodShort.${p}`) }}
+          </button>
+        </div>
+      </fieldset>
 
-    <div class="row">
-      <span class="row-label">{{ t('browse.only') }}</span>
-      <button
-        v-for="k in TOGGLES"
-        :key="k"
-        type="button"
-        class="opt"
-        :aria-pressed="filters[k]"
-        @click="set(k, !filters[k])"
-      >
-        {{ t(`browse.${k}`) }}
-      </button>
-    </div>
+      <fieldset class="group">
+        <legend>{{ t('browse.only') }}</legend>
+        <label v-for="k in TOGGLES" :key="k" class="check">
+          <input type="checkbox" :checked="filters[k]" @change="set(k, !filters[k])" />
+          {{ t(`browse.${k}`) }}
+        </label>
+      </fieldset>
 
-    <label class="row sort">
-      <span class="row-label">{{ t('browse.sort') }}</span>
-      <select
-        class="select sort-select"
-        :value="filters.sort"
-        @change="set('sort', ($event.target as HTMLSelectElement).value as BrowseSort)"
-      >
-        <option value="code">{{ t('browse.sortCode') }}</option>
-        <option value="exam">{{ t('browse.sortExam') }}</option>
-        <option value="hours">{{ t('browse.sortHours') }}</option>
-        <option v-if="showRating" value="rating">{{ t('browse.sortRating') }}</option>
-      </select>
-    </label>
+      <button v-if="active" type="button" class="clear" @click="clear">{{ t('browse.clear') }}</button>
     </div>
-  </div>
+  </aside>
 </template>
 
 <style scoped>
 .filters {
   display: grid;
+  align-content: start;
   gap: 12px;
-  padding: 16px 18px;
-}
-
-.search {
-  position: relative;
-  display: block;
-}
-
-.search-icon {
-  position: absolute;
-  top: 50%;
-  left: 14px;
-  color: var(--ink-faint);
-  transform: translateY(-50%);
-}
-
-.search-input {
-  padding-left: 38px;
 }
 
 .toggle {
   display: none;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   justify-self: start;
-  padding: 0;
+  padding: 8px 14px;
   font-size: 0.9rem;
   font-weight: 600;
   color: var(--ink);
-  background: none;
-  border: 0;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 999px;
   cursor: pointer;
 }
 
@@ -171,54 +132,97 @@ function set<K extends keyof BrowseFilters>(key: K, value: BrowseFilters[K]): vo
   border-radius: 999px;
 }
 
-.more {
+.groups {
   display: grid;
-  gap: 12px;
+  gap: 20px;
 }
 
-.row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 6px;
+.group {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
 }
 
-.row-label {
-  min-width: 4.5em;
-  margin-right: 4px;
-  font-size: 0.82rem;
+.group legend {
+  margin-bottom: 8px;
+  padding: 0;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   color: var(--ink-faint);
 }
 
-.opt {
-  padding: 5px 12px;
+/* A segmented control: one rounded track, the chosen option raised. */
+.seg {
+  display: flex;
+  gap: 2px;
+  padding: 3px;
+  background: color-mix(in srgb, var(--ink) 6%, transparent);
+  border-radius: 12px;
+}
+
+.seg-wrap {
+  flex-wrap: wrap;
+}
+
+.seg button {
+  flex: 1 0 auto;
+  padding: 6px 10px;
   font-size: 0.85rem;
   color: var(--ink-soft);
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 999px;
+  white-space: nowrap;
+  background: none;
+  border: 0;
+  border-radius: 9px;
   cursor: pointer;
 }
 
-.opt:hover {
-  border-color: var(--accent);
+.seg button:hover {
+  color: var(--ink);
 }
 
-.opt[aria-pressed='true'] {
-  color: var(--accent-ink);
-  background: var(--accent);
-  border-color: var(--accent);
+.seg button[aria-pressed='true'] {
+  font-weight: 600;
+  color: var(--ink);
+  background: var(--surface);
+  box-shadow: var(--shadow-1);
 }
 
-.sort-select {
-  width: auto;
-  padding: 6px 12px;
+.check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.92rem;
+  cursor: pointer;
+}
+
+.check input {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: var(--accent);
+}
+
+.clear {
+  justify-self: start;
+  padding: 0;
   font-size: 0.88rem;
+  color: var(--accent);
+  background: none;
+  border: 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
 }
 
 /* Wide screens always show the filters, even if they were folded on a narrower window. */
 @media (min-width: 721px) {
-  .more {
+  .groups {
     display: grid !important;
   }
 }
@@ -227,11 +231,12 @@ function set<K extends keyof BrowseFilters>(key: K, value: BrowseFilters[K]): vo
   .toggle {
     display: inline-flex;
   }
-}
 
-@media (max-width: 560px) {
-  .row-label {
-    flex-basis: 100%;
+  .groups {
+    padding: 16px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
   }
 }
 </style>

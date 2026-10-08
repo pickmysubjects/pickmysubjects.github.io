@@ -2,9 +2,9 @@ import type { Messages } from './en'
 
 export const ja: Messages = {
   app: {
-    name: 'Subject Compass',
+    name: 'PickMySubjects',
     footer:
-      'Subject Compass は学生が作った非公式ツールです。メルボルン大学とは一切関係がなく、公認も受けていません。履修登録の前に必ず {handbook} と {planner} で確認してください。成績記録と履修プランはこのブラウザ内にのみ保存されます。{feedback}',
+      'PickMySubjects は学生が作った非公式ツールです。メルボルン大学とは一切関係がなく、公認も受けていません。履修登録の前に必ず {handbook} と {planner} で確認してください。成績記録と履修プランはこのブラウザ内にのみ保存されます。{feedback}',
     handbook: 'Handbook',
     planner: 'My Course Planner',
     suggest: '改善案を送る',
@@ -13,7 +13,7 @@ export const ja: Messages = {
     unofficial: '非公式',
     language: '言語',
   },
-  nav: { home: 'ホーム', more: 'その他', plan: 'プラン', recommend: 'おすすめ', record: 'マイ', contribute: 'データを追加', feedback: 'フィードバック', main: 'メインメニュー' },
+  nav: { home: 'ホーム', browse: '科目', more: 'その他', plan: 'プラン', recommend: 'おすすめ', record: 'マイ', contribute: 'データを追加', feedback: 'フィードバック', main: 'メインメニュー' },
   data: {
     label: 'データ',
     demo: 'デモデータ（架空）',
@@ -273,7 +273,7 @@ export const ja: Messages = {
     backupText: 'バックアップファイルをダウンロードして、移った先で開いてください。何もアップロードされません。',
     backup: 'バックアップをダウンロード',
     restore: 'バックアップを開く',
-    restoreFailed: 'Subject Compass のバックアップファイルではありません。',
+    restoreFailed: 'PickMySubjects のバックアップファイルではありません。',
     next: '次へ：学位プランを作る',
   },
   skill: {
@@ -407,7 +407,7 @@ export const ja: Messages = {
   },
   feedback: {
     title: 'より良くするために',
-    lede: 'Subject Compass は、メルボルン大学で科目を選ぶときの悩みから生まれました。それぞれの悩みと、現在どこまでできているかを載せています。使いやすい点、使いにくい点、足りない点を教えてください。コードは書けなくても大丈夫です。',
+    lede: 'PickMySubjects は、メルボルン大学で科目を選ぶときの悩みから生まれました。それぞれの悩みと、現在どこまでできているかを載せています。使いやすい点、使いにくい点、足りない点を教えてください。コードは書けなくても大丈夫です。',
     status: { works: '利用可能', partly: '一部対応', planned: '未対応' },
     tryIt: '試してみる',
     give: 'この項目に意見を送る',
@@ -416,7 +416,7 @@ export const ja: Messages = {
     groupProblems: '解決したい悩み',
     groupOther: 'その他',
     other: { data: '科目データの誤りや不足', bug: '動かない機能がある', idea: '新しいアイデア', translation: '翻訳の誤り' },
-    rating: 'この点で Subject Compass はどのくらい役立っていますか？',
+    rating: 'この点で PickMySubjects はどのくらい役立っていますか？',
     ratingEnds: '1 = まったく役立たない · 5 = 完全に解決',
     subject: '科目コード（特定の科目についての場合）',
     message: '提案や問題点',
@@ -497,8 +497,8 @@ export const ja: Messages = {
     needs: '前提科目：{needs}。',
     assessment: '評価：{parts}。',
     confirm: '履修前に必ず公式の Handbook で確認してください。',
-    made: 'Subject Compass はメルボルン大学の卒業生が作った無料・非公式の履修計画ツールです。',
-    homeTitle: 'Subject Compass：メルボルン大学の科目選び',
+    made: 'PickMySubjects はメルボルン大学の卒業生が作った無料・非公式の履修計画ツールです。',
+    homeTitle: 'PickMySubjects：メルボルン大学の科目選び',
     homeDesc: 'メルボルン大学の学生向け無料・非公式の履修計画ツール。前提科目、開講学期、評価方法、学生の評価、学位全体のプラン。',
     subjects: '科目',
     ratings: '学生の評価：難しさ {d}/5、負担 {w}/5、採点 {g}/5（{n} 件）。',
@@ -539,6 +539,17 @@ export const ja: Messages = {
     cat: { science: "理系", breadth: "Breadth" },
   },
   guide: {
+    groupPlan: "科目選び",
+    groupMarks: "成績",
+    firstShort: "ふつうは4科目。まず専攻のレベル1科目から。",
+    pointsShort: "1科目 12.5 単位、卒業には 300 単位。",
+    loadShort: "標準は1学期 50 単位。国内学生と留学生でルールが違います。",
+    rulesShort: "前提科目・同時履修・併修不可の意味。",
+    dropShort: "census date 前に取り消せば学費はかかりません。",
+    gradesShort: "50点で合格、80点以上が H1。",
+    wamShort: "単位数で重みをつけた平均点。",
+    abroadShort: "成績を求める側の公式ツールで換算します。",
+    rankShort: "QS、THE、ARWU は見ている指標が違います。",
     firstTitle: "最初の学期",
     firstText: "ほとんどの人は4科目取ります。選び方の一例：",
     firstStep1: "いちばん取りそうな専攻を決めて、そのレベル1科目を先に取る。どれかは「プラン」ページでわかります。",
@@ -663,6 +674,7 @@ export const ja: Messages = {
     contact: 'ご質問は「フィードバック」ページからどうぞ。',
   },
   home: {
+    toolsTitle: 'こちらも便利',
     stepsTitle: '3ステップで始める',
     routeCaption: 'Computing and Software Systems の実際のルート。駅を押すと科目が見られます。',
     year: '{n}年次',
@@ -691,7 +703,7 @@ export const ja: Messages = {
     step3: '自分に合う科目を見る',
     langTitle: '9か国語',
     match: '一致度 {n}%',
-    preview: 'Subject Compass のプレビュー',
+    preview: 'PickMySubjects のプレビュー',
     step1Text: '履修済みの科目と成績、得意なこと、興味。プランとおすすめに使われます。',
     step1Done: '{results} 科目と {interests} 個の興味を入力済み',
     step2Text: '専攻を選ぶと、各学期の科目を並べて規則もチェックします。',

@@ -15,14 +15,14 @@ Its own FAQ admits some pain points:
 - "doesn't meet the requirements of my major when I have all the required subjects"
 - "How do I know … if it will be offered in a future year?"
 
-So subject-compass does **not** compete on "is my plan valid?". It answers what the official tool can't:
+So PickMySubjects does **not** compete on "is my plan valid?". It answers what the official tool can't:
 
 1. **Which subjects suit *me*?** A ranking based on the student's own results, skills, interests and goal (WAM vs challenge), with every number explained.
 2. **What is a subject actually like?** Crowd-sourced difficulty, workload and grading, and the skills it uses.
 3. **Build me a good plan.** Automatic generation and comparison of whole plans. The official tool only lets you try one change at a time.
 4. **Explain the rules in plain language**, with Chinese as well as English for international students.
 
-The rule engine still exists, because recommendations and generated plans must be valid. But we treat it as plumbing, not as the product. The intended flow is: decide in subject-compass, then confirm in My Course Planner and enrol.
+The rule engine still exists, because recommendations and generated plans must be valid. But we treat it as plumbing, not as the product. The intended flow is: decide in PickMySubjects, then confirm in My Course Planner and enrol.
 
 **Out of scope: weekly timetabling and clash detection.** There are two reasons:
 

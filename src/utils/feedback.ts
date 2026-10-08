@@ -6,7 +6,7 @@ export const OTHER_TOPICS = ['data', 'bug', 'idea', 'translation'] as const
 
 export interface FeedbackDraft {
   topic: string
-  /** 1–5: how well Subject Compass handles this for you. */
+  /** 1–5: how well PickMySubjects handles this for you. */
   rating: number | null
   message: string
   subject: string
@@ -31,7 +31,7 @@ export function feedbackText(d: FeedbackDraft, locale: string, isPublic = false)
     d.message,
     '',
     d.contact && !isPublic ? `**Contact:** ${d.contact}` : '',
-    `_Sent from Subject Compass (${location.href.split('#')[0]})_`,
+    `_Sent from PickMySubjects (${location.href.split('#')[0]})_`,
   ]
   return { title, body: lines.filter((l, i, all) => l !== '' || all[i - 1] !== '').join('\n') }
 }

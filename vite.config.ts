@@ -30,9 +30,9 @@ const contentSecurityPolicy = (): Plugin => ({
 
 export default defineConfig({
   plugins: [vue(), contentSecurityPolicy()],
-  // The site is served from /subject-compass/ on GitHub Pages. Pages have real
-  // addresses (/subject-compass/subject/COMP30027), so assets need an absolute base.
-  base: '/subject-compass/',
+  // The site is served from / on GitHub Pages. Pages have real
+  // addresses (/subject/COMP30027), so assets need an absolute base.
+  base: '/',
   resolve: {
     alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) },
   },

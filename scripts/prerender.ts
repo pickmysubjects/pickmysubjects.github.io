@@ -34,8 +34,8 @@ import { hi } from '../src/i18n/messages/hi'
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
 const DIST = join(ROOT, 'dist')
-const SITE = 'https://subject-compass.github.io/subject-compass/'
-const BASE = '/subject-compass/'
+const SITE = 'https://pickmysubjects.github.io/'
+const BASE = '/'
 const YEAR = 2026
 const MESSAGES: Record<LocaleCode, unknown> = { en, 'zh-CN': zhCN, 'zh-TW': zhTW, ja, ko, vi, id, ms, hi }
 
@@ -87,7 +87,7 @@ function subjectLink(code: LocaleCode, c: string): string {
 
 /** schema.org data, so search engines and AI assistants know what the page is about. */
 function structured(page: Page, code: LocaleCode, url: string): object {
-  const site = { '@type': 'WebSite', name: 'Subject Compass', url: SITE }
+  const site = { '@type': 'WebSite', name: 'PickMySubjects', url: SITE }
   if (page.path === '') {
     return {
       '@context': 'https://schema.org',
@@ -111,7 +111,7 @@ function render(page: Page, code: LocaleCode): string {
     ...alternates,
     `<link rel="alternate" hreflang="x-default" href="${absolute('en', page.path)}" />`,
     `<meta property="og:type" content="website" />`,
-    `<meta property="og:site_name" content="Subject Compass" />`,
+    `<meta property="og:site_name" content="PickMySubjects" />`,
     `<meta property="og:locale" content="${code.replace('-', '_')}" />`,
     `<meta property="og:title" content="${esc(page.title)}" />`,
     `<meta property="og:description" content="${esc(page.description)}" />`,
@@ -199,7 +199,7 @@ function subjectPage(code: LocaleCode, s: Subject): Page {
     .join(sentenceSep(code))
   return {
     path: `subject/${s.code}`,
-    title: `${t('seo.subjectTitle', facts)} | Subject Compass`,
+    title: `${t('seo.subjectTitle', facts)} | PickMySubjects`,
     description: description.length > 300 ? `${description.slice(0, 297)}…` : description,
     body: parts.join('\n'),
   }
@@ -258,7 +258,7 @@ function mainPages(code: LocaleCode): Page[] {
   const intro = `<p>${esc(t('seo.made'))}</p>`
   const simple = (path: string, titleKey: string, ledeKey: string): Page => ({
     path,
-    title: `${t(titleKey)} | Subject Compass`,
+    title: `${t(titleKey)} | PickMySubjects`,
     description: t(ledeKey),
     body: `<h1>${esc(t(titleKey))}</h1><p>${esc(t(ledeKey))}</p>${intro}`,
   })
@@ -280,25 +280,25 @@ function mainPages(code: LocaleCode): Page[] {
     simple('record', 'record.title', 'record.lede'),
     {
       path: 'about',
-      title: `${t('about.title')} | Subject Compass`,
+      title: `${t('about.title')} | PickMySubjects`,
       description: `${t('about.me')} ${t('about.aim')}`,
       body: `<h1>${esc(t('about.title'))}</h1><p>${esc(t('about.me'))}</p><p>${esc(t('about.why'))}</p><p>${esc(t('about.aim'))}</p><h2>${esc(t('about.dataTitle'))}</h2><ul>${['dataFacts', 'dataRatings', 'dataDiscuss', 'dataSuggest'].map((k) => `<li>${esc(t(`about.${k}`))}</li>`).join('')}</ul>`,
     },
     {
       path: 'subjects',
-      title: `${t('browse.title')} | Subject Compass`,
+      title: `${t('browse.title')} | PickMySubjects`,
       description: t('browse.lede'),
       body: browseBody(code, t),
     },
     {
       path: 'guide',
-      title: `${t('guide.title')} | Subject Compass`,
+      title: `${t('guide.title')} | PickMySubjects`,
       description: t('guide.lede'),
       body: guideBody(t),
     },
     simple('contribute', 'contribute.title', 'contribute.lede'),
     simple('feedback', 'feedback.title', 'feedback.lede'),
-    { path: 'privacy', title: `${t('privacy.title')} | Subject Compass`, description: t('privacy.local'), body: `<h1>${esc(t('privacy.title'))}</h1><p>${esc(t('privacy.local'))}</p>` },
+    { path: 'privacy', title: `${t('privacy.title')} | PickMySubjects`, description: t('privacy.local'), body: `<h1>${esc(t('privacy.title'))}</h1><p>${esc(t('privacy.local'))}</p>` },
   ]
 }
 
@@ -327,7 +327,7 @@ writeFileSync(
 // A plain summary for AI assistants (the llms.txt convention).
 writeFileSync(
   join(DIST, 'llms.txt'),
-  `# Subject Compass
+  `# PickMySubjects
 
 > Free, unofficial subject planner for University of Melbourne students, made by a UniMelb graduate. Not affiliated with the University.
 

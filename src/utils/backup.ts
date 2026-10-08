@@ -4,10 +4,12 @@
  * being uploaded.
  */
 const KEYS = ['sc:profiles', 'sc:plans', 'sc:rated'] as const
-const APP = 'subject-compass'
+const APP = 'pickmysubjects'
+// Backups saved before the site was renamed from Subject Compass still restore.
+const OLD_APPS: readonly string[] = ['subject-compass']
 
 interface Backup {
-  app: typeof APP
+  app: string
   version: 1
   savedAt: string
   data: Partial<Record<(typeof KEYS)[number], unknown>>
@@ -50,7 +52,7 @@ export function restoreBackup(text: string): boolean {
 function isBackup(x: unknown): x is Backup {
   if (typeof x !== 'object' || x === null) return false
   const b = x as Partial<Backup>
-  return b.app === APP && b.version === 1 && typeof b.data === 'object' && b.data !== null
+  return (b.app === APP || OLD_APPS.includes(b.app ?? '')) && b.version === 1 && typeof b.data === 'object' && b.data !== null
 }
 
 /** Offer the backup as a file download (no upload anywhere). */
@@ -59,7 +61,7 @@ export function downloadBackup(): void {
   const url = URL.createObjectURL(blob)
   const a = document.createElement('a')
   a.href = url
-  a.download = `subject-compass-backup-${new Date().toISOString().slice(0, 10)}.json`
+  a.download = `pickmysubjects-backup-${new Date().toISOString().slice(0, 10)}.json`
   a.click()
   setTimeout(() => URL.revokeObjectURL(url), 1000)
 }
