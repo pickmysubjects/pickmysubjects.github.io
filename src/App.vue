@@ -21,6 +21,7 @@ const plannerUrl =
 </script>
 
 <template>
+  <div class="backdrop" aria-hidden="true" />
   <AppHeader :view="view" />
   <main class="app-main shell">
     <HomeView v-if="view === 'home'" />

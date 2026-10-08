@@ -24,6 +24,7 @@ const steps = [
 
 <template>
   <div class="home">
+    <div class="stage">
     <section class="hero">
       <p class="eyebrow">{{ t('home.eyebrow') }}</p>
       <h1 class="hero-title">{{ t('home.title') }}</h1>
@@ -35,16 +36,17 @@ const steps = [
       </p>
     </section>
 
-    <section class="hero-route">
+    <section class="hero-route surface">
       <RouteLine />
     </section>
+    </div>
 
     <section class="steps" aria-labelledby="steps-title">
-      <h2 id="steps-title" class="steps-title display">{{ t('home.stepsTitle') }}</h2>
+      <h2 id="steps-title" class="steps-title">{{ t('home.stepsTitle') }}</h2>
       <ol class="steps-list">
         <li v-for="s in steps" :key="s.title">
-          <a class="step" :href="s.href">
-            <component :is="s.icon" :size="20" aria-hidden="true" class="step-icon" />
+          <a class="step surface" :href="s.href">
+            <span class="step-icon"><component :is="s.icon" :size="20" aria-hidden="true" /></span>
             <span class="step-name">{{ t(s.title) }}</span>
             <span class="step-text">{{ t(s.text) }}</span>
             <ArrowRight :size="18" aria-hidden="true" class="step-go" />
@@ -60,24 +62,56 @@ const steps = [
 <style scoped>
 .home {
   display: grid;
-  gap: 56px;
-  padding-top: 48px;
+  gap: 40px;
+  padding-top: 24px;
+}
+
+/* A rounded "stage" with a soft gradient mesh: headline, search and the example route. */
+.stage {
+  display: grid;
+  gap: 36px;
+  padding: 64px 56px 48px;
+  border-radius: 36px;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    radial-gradient(60% 80% at 0% 0%, #ffd6e8 0%, transparent 60%),
+    radial-gradient(55% 70% at 100% 10%, #dcd8ff 0%, transparent 60%),
+    radial-gradient(60% 80% at 80% 100%, #ffe6d2 0%, transparent 60%),
+    linear-gradient(180deg, #fff7fb, #f6f4ff);
+  border: 1px solid rgb(255 255 255 / 80%);
+  box-shadow: 0 40px 80px -40px rgb(90 30 90 / 30%);
+}
+
+@media (prefers-color-scheme: dark) {
+  .stage {
+    background:
+      radial-gradient(60% 80% at 0% 0%, #4a1a3a 0%, transparent 60%),
+      radial-gradient(55% 70% at 100% 10%, #24255a 0%, transparent 60%),
+      radial-gradient(60% 80% at 80% 100%, #3d2617 0%, transparent 60%),
+      linear-gradient(180deg, #17121a, #121320);
+    border-color: rgb(255 255 255 / 8%);
+  }
 }
 
 .hero {
   display: grid;
   gap: 18px;
-  max-width: 900px;
+  max-width: 820px;
+}
+
+.hero .eyebrow {
+  color: var(--accent);
 }
 
 .hero-title {
-  font-size: clamp(2.8rem, 8vw, 6rem);
-  line-height: 0.95;
+  font-size: clamp(2.6rem, 7vw, 5rem);
+  line-height: 0.98;
 }
 
 .hero-lede {
   max-width: 54ch;
-  font-size: clamp(1.05rem, 1.6vw, 1.2rem);
+  font-size: clamp(1.05rem, 1.6vw, 1.18rem);
   color: var(--ink-soft);
 }
 
@@ -89,27 +123,27 @@ const steps = [
 .hero-try {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px 14px;
+  align-items: center;
+  gap: 8px;
   font-size: 0.88rem;
   color: var(--ink-faint);
 }
 
 .hero-try a {
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 70%);
+  font-size: 0.82rem;
   color: var(--ink);
-  text-decoration: underline;
-  text-decoration-color: var(--line);
-  text-underline-offset: 4px;
+  text-decoration: none;
 }
 
 .hero-try a:hover {
-  text-decoration-color: var(--accent);
+  color: var(--accent);
 }
 
 .hero-route {
-  padding: 28px 28px 22px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  background: var(--surface);
+  padding: 26px 28px 20px;
 }
 
 .steps-title {
@@ -120,13 +154,9 @@ const steps = [
 .steps-list {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1px;
+  gap: 16px;
   margin: 0;
   padding: 0;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  background: var(--line);
   list-style: none;
 }
 
@@ -134,26 +164,47 @@ const steps = [
   position: relative;
   display: grid;
   align-content: start;
-  gap: 8px;
+  gap: 10px;
   height: 100%;
-  padding: 22px 22px 48px;
-  background: var(--surface);
+  padding: 22px 22px 52px;
   color: var(--ink);
   text-decoration: none;
-  transition: background 0.15s;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .step:hover {
-  background: var(--accent-soft);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-2);
 }
 
+/* Gradient icon tiles, one hue each. */
 .step-icon {
-  color: var(--accent);
+  display: inline-grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 13px;
+  color: #fff;
+  background: linear-gradient(135deg, #f472b6, #c2227a);
+  box-shadow: 0 8px 18px -8px rgb(194 34 122 / 60%);
+}
+
+li:nth-child(2) .step-icon {
+  background: linear-gradient(135deg, #fb923c, #e0457b);
+}
+
+li:nth-child(3) .step-icon {
+  background: linear-gradient(135deg, #a78bfa, #6d5dfc);
+  box-shadow: 0 8px 18px -8px rgb(109 93 252 / 60%);
+}
+
+li:nth-child(4) .step-icon {
+  background: linear-gradient(135deg, #fbbf24, #f97316);
+  box-shadow: 0 8px 18px -8px rgb(249 115 22 / 60%);
 }
 
 .step-name {
-  font-family: var(--font-display);
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   font-weight: 700;
   letter-spacing: -0.02em;
 }
@@ -166,7 +217,7 @@ const steps = [
 .step-go {
   position: absolute;
   left: 22px;
-  bottom: 18px;
+  bottom: 20px;
   color: var(--accent);
   transition: transform 0.15s;
 }
@@ -179,20 +230,31 @@ const steps = [
   .steps-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  .stage {
+    padding: 44px 28px 32px;
+  }
 }
 
 @media (max-width: 560px) {
-  .home {
-    gap: 40px;
-    padding-top: 28px;
-  }
-
   .steps-list {
     grid-template-columns: 1fr;
   }
 
+  .stage {
+    padding: 32px 18px 20px;
+    border-radius: 26px;
+  }
+
   .hero-route {
-    padding: 22px 18px;
+    padding: 20px 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .step,
+  .step-go {
+    transition: none;
   }
 }
 </style>

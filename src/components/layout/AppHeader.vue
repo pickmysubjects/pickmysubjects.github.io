@@ -53,7 +53,7 @@ const { t } = useI18n()
 .header-inner {
   display: flex;
   align-items: center;
-  gap: 28px;
+  gap: 20px;
   height: 64px;
 }
 
@@ -67,9 +67,8 @@ const { t } = useI18n()
 }
 
 .brand-name {
-  font-family: var(--font-display);
   font-weight: 700;
-  font-size: 1.12rem;
+  font-size: 1.05rem;
   letter-spacing: -0.02em;
 }
 
@@ -97,48 +96,34 @@ const { t } = useI18n()
 
 .nav {
   display: flex;
-  align-self: stretch;
-  gap: 4px;
+  gap: 2px;
+  padding: 4px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
 }
 
 .nav-link {
-  position: relative;
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 0 12px;
-  font-size: 0.92rem;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 0.9rem;
   font-weight: 500;
   color: var(--ink-soft);
   text-decoration: none;
   white-space: nowrap;
-  transition: color 0.15s;
+  transition: background 0.15s, color 0.15s;
 }
 
 .nav-link:hover {
   color: var(--ink);
 }
 
-/* The current page sits on the line, like a stop on the route. */
-.nav-link::after {
-  content: '';
-  position: absolute;
-  left: 12px;
-  right: 12px;
-  bottom: -1px;
-  height: 3px;
-  border-radius: 3px 3px 0 0;
-  background: transparent;
-  transition: background 0.15s;
-}
-
 .nav-link[aria-current='page'] {
-  color: var(--ink);
-  font-weight: 600;
-}
-
-.nav-link[aria-current='page']::after {
-  background: var(--accent);
+  background: var(--ink);
+  color: var(--bg);
 }
 
 .tools {
