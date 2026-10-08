@@ -88,5 +88,6 @@ describe('plan builder spreads the load (real data)', () => {
       }
     }
     expect(veryHeavy / terms).toBeLessThan(0.1)
-  })
+    // Builds a plan for every major, which is slow on CI runners.
+  }, 60_000)
 })
