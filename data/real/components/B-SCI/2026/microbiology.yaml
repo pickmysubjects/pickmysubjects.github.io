@@ -1,0 +1,9 @@
+id: microbiology
+course: B-SCI
+year: 2026
+kind: major
+title: Microbiology
+points: 50
+requirements:
+  - all: [MIIM30011, MIIM30014, MIIM30016, MIIM30017]
+verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked

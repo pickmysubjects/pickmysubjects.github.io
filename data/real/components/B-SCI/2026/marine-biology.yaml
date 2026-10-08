@@ -1,0 +1,10 @@
+id: marine-biology
+course: B-SCI
+year: 2026
+kind: major
+title: Marine Biology
+points: 50
+requirements:
+  - all: [ECOL30007, ZOOL30008, BIOL30011]
+  - choose: { points: 12.5, from: [CHEM30012, ECOL30005, ECOL30006, GEOG30001, GEOM30009] }
+verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked

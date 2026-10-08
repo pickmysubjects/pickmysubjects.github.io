@@ -301,6 +301,16 @@ export const ms: Messages = {
       participation: 'Penyertaan',
     },
   },
+  majorGroup: {
+    computing: 'Pengkomputeran, data dan matematik',
+    biomed: 'Bioperubatan dan sains hayat',
+    chemphys: 'Kimia dan fizik',
+    psych: 'Psikologi',
+    eco: 'Ekologi, alam sekitar dan bumi',
+    eng: 'Sistem kejuruteraan',
+    agri: 'Pertanian, makanan dan haiwan',
+    other: 'Lain-lain',
+  },
   topicGroup: {
     computing: 'Pengkomputeran',
     maths: 'Matematik & statistik',
@@ -601,6 +611,8 @@ export const ms: Messages = {
     build: 'Bina rancangan saya',
     edit: 'Ubah',
     summary: '{course} · mula {term} · {major}',
+    majorSearch: 'Cari major, cth. psychology atau kimia',
+    noMajorMatch: 'Tiada major yang sepadan. Cuba perkataan lain, atau pilih “Belum pasti”.',
   },
   pain: {
     'when-offered': {

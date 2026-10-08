@@ -1,0 +1,9 @@
+id: civil-systems
+course: B-SCI
+year: 2026
+kind: major
+title: Civil Systems
+points: 50
+requirements:
+  - all: [CVEN30008, CVEN30010, CVEN30009, ENGR30002]
+verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked

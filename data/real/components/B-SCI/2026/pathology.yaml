@@ -1,0 +1,10 @@
+id: pathology
+course: B-SCI
+year: 2026
+kind: major
+title: Pathology
+points: 50
+requirements:
+  - all: [PATH30001, PATH30002, PATH30003]
+  - choose: { points: 12.5, from: [PATH30004, BIOM30003] }
+verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked

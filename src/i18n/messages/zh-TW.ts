@@ -301,6 +301,16 @@ export const zhTW: Messages = {
       participation: '課堂參與',
     },
   },
+  majorGroup: {
+    computing: '電腦、資料與數學',
+    biomed: '生物醫學與生命科學',
+    chemphys: '化學與物理',
+    psych: '心理學',
+    eco: '生態、環境與地球科學',
+    eng: '工程系統',
+    agri: '農業、食品與動物',
+    other: '其他',
+  },
   topicGroup: {
     computing: '電腦',
     maths: '數學與統計',
@@ -601,6 +611,8 @@ export const zhTW: Messages = {
     build: '產生我的方案',
     edit: '修改',
     summary: '{course} · {term} 入學 · {major}',
+    majorSearch: '搜尋主修，例如 psychology、化學',
+    noMajorMatch: '沒有找到符合的主修。換個詞試試，或選「還沒決定」。',
   },
   pain: {
     'when-offered': {

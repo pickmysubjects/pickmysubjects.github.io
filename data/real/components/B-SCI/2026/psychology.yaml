@@ -1,0 +1,11 @@
+# The APAC-accredited sequence also needs PSYC10003, PSYC10004 and PSYC20006-PSYC20009.
+id: psychology
+course: B-SCI
+year: 2026
+kind: major
+title: Psychology
+points: 50
+requirements:
+  - all: [PSYC30013, PSYC30021]
+  - choose: { points: 25, from: [PSYC30016, PSYC30017, PSYC30018, PSYC30014, PSYC30019, PSYC30020, PSYC30022, PSYC30023] }
+verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked

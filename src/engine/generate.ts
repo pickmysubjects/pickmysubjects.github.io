@@ -178,7 +178,7 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
 
   // "Choose N points from" groups, once every fixed subject is known. Ties in
   // score go to subjects that run in the least crowded teaching period.
-  const score = new Map(recommend(data, input.profile, { course: input.course, eligibleWith: [] }).map((r) => [r.code, r.score]))
+  const score = new Map(recommend(data, input.profile, { course: input.course, eligibleWith: [], year: input.startYear }).map((r) => [r.code, r.score]))
   for (const { title, req, used } of groups) {
     let have = 0
     for (const c of req.choose.from) {

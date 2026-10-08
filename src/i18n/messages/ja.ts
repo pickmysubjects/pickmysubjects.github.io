@@ -301,6 +301,16 @@ export const ja: Messages = {
       participation: '授業参加',
     },
   },
+  majorGroup: {
+    computing: 'コンピューター・データ・数学',
+    biomed: '生物医学・生命科学',
+    chemphys: '化学・物理',
+    psych: '心理学',
+    eco: '生態・環境・地球科学',
+    eng: '工学システム',
+    agri: '農業・食品・動物',
+    other: 'その他',
+  },
   topicGroup: {
     computing: 'コンピューター',
     maths: '数学・統計',
@@ -601,6 +611,8 @@ export const ja: Messages = {
     build: 'プランを作る',
     edit: '変更',
     summary: '{course} · {term} 入学 · {major}',
+    majorSearch: '専攻を検索（例：psychology、化学）',
+    noMajorMatch: '一致する専攻がありません。別の言葉で試すか、「まだ決めていない」を選んでください。',
   },
   pain: {
     'when-offered': {

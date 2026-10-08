@@ -80,7 +80,8 @@ const absolute = (code: LocaleCode, path: string) => `${SITE}${prefix(code)}${sl
 
 function subjectLink(code: LocaleCode, c: string): string {
   const s = data.subjects[c]
-  return `<a href="${href(code, `subject/${c}`)}">${esc(c)}${s ? ` ${esc(s.title)}` : ''}</a>`
+  // Subjects we don't have get no page, so no link (a link would land on a 404).
+  return s ? `<a href="${href(code, `subject/${c}`)}">${esc(c)} ${esc(s.title)}</a>` : esc(c)
 }
 
 /** schema.org data, so search engines and AI assistants know what the page is about. */

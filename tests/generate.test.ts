@@ -27,6 +27,26 @@ function generate(over: Partial<Parameters<typeof generatePlan>[0]> = {}) {
   })
 }
 
+/**
+ * Majors whose required subjects aren't fully curated yet (no study periods or
+ * prerequisites, or not in the data at all), so a whole-degree plan can't be built
+ * for them. Remove each one once its subjects are in (subject batches 7-19).
+ * Informatics: the Handbook's third core subject, INFO30004, is no longer available.
+ * Agri-food Biotechnology: its core subject BTCH30002 is not running in 2026.
+ */
+const DATA_PENDING = new Set([
+  'biotechnology-agrifood',
+  'environmental-science-climate',
+  'environmental-science-conservation',
+  'ecology-and-evolutionary-biology',
+  'ecosystem-science-forest',
+  'geography',
+  'informatics',
+  'marine-biology',
+  'plant-science',
+  'veterinary-bioscience',
+])
+
 describe('generatePlan (demo course)', () => {
   it('builds a complete three-year plan with no term errors and every course rule met', () => {
     const { plan, unplaced } = generate()
@@ -110,7 +130,9 @@ describe('generatePlan (demo course)', () => {
 
 describe('generatePlan (real B-SCI data)', () => {
   const { dataset: real, errors } = buildDataset('real')
-  const majors = real.components.filter((c) => c.course === 'B-SCI' && c.kind === 'major' && c.requirements !== 'unknown')
+  const majors = real.components.filter(
+    (c) => c.course === 'B-SCI' && c.kind === 'major' && c.requirements !== 'unknown' && !DATA_PENDING.has(c.id),
+  )
   const specs = real.components.filter((c) => c.course === 'B-SCI' && c.kind === 'specialisation' && c.requirements !== 'unknown')
   const combos = majors.flatMap((m) => [
     [m.id, undefined] as const,
@@ -138,7 +160,9 @@ describe('generatePlan (real B-SCI data)', () => {
 
 describe('generatePlan (real B-SCI data, whole degree)', () => {
   const { dataset: real } = buildDataset('real')
-  const majors = real.components.filter((c) => c.course === 'B-SCI' && c.kind === 'major' && c.requirements !== 'unknown')
+  const majors = real.components.filter(
+    (c) => c.course === 'B-SCI' && c.kind === 'major' && c.requirements !== 'unknown' && !DATA_PENDING.has(c.id),
+  )
   // Maths streams with a computing specialisation are too tight for the greedy planner today.
   const combos = [
     ...majors.map((m) => [m.id, undefined] as const),

@@ -1,0 +1,12 @@
+# Handbook: two of the list, at least one of CHEM30012/GEOL30003.
+id: environmental-science-resources
+course: B-SCI
+year: 2026
+kind: major
+title: Environmental Science (Natural Resources and Hazards)
+points: 50
+requirements:
+  - all: [EVSC30003, EVSC30002]
+  - choose: { points: 12.5, from: [CHEM30012, GEOL30003] }
+  - choose: { points: 12.5, from: [ATOC30008, CHEM30012, EVSC30007, GEOG30001, GEOG30021, GEOL30002, GEOL30003, GEOL30007, GEOM30009] }
+verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked

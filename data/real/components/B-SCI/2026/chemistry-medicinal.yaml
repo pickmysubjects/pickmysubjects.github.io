@@ -1,0 +1,9 @@
+id: chemistry-medicinal
+course: B-SCI
+year: 2026
+kind: major
+title: Chemistry (Medicinal Chemistry)
+points: 50
+requirements:
+  - all: [CHEM30016, CHEM30015, PHRM30008, PHRM30009]
+verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked

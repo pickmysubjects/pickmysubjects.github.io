@@ -1,0 +1,10 @@
+id: biochemistry-and-molecular-biology
+course: B-SCI
+year: 2026
+kind: major
+title: Biochemistry and Molecular Biology
+points: 50
+requirements:
+  - all: [BCMB30010, BCMB30012]
+  - choose: { points: 25, from: [BCMB30001, BCMB30002, BCMB30004, BCMB30011, BIOM30003, MIIM30017, CEDB30002] }
+verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked

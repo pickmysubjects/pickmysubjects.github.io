@@ -1,0 +1,10 @@
+id: environmental-science-energy
+course: B-SCI
+year: 2026
+kind: major
+title: Environmental Science (Energy Transition)
+points: 50
+requirements:
+  - all: [EVSC30002, EVSC30003, EVSC30009]
+  - choose: { points: 12.5, from: [BIOL30011, CHEN30016, ENST30003, ERTH30002, GEOG30019, PHYC30011] }
+verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked

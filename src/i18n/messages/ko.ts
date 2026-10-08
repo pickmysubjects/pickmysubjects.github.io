@@ -301,6 +301,16 @@ export const ko: Messages = {
       participation: '참여',
     },
   },
+  majorGroup: {
+    computing: '컴퓨팅·데이터·수학',
+    biomed: '생명의학·생명과학',
+    chemphys: '화학·물리',
+    psych: '심리학',
+    eco: '생태·환경·지구과학',
+    eng: '공학 시스템',
+    agri: '농업·식품·동물',
+    other: '기타',
+  },
   topicGroup: {
     computing: '컴퓨팅',
     maths: '수학·통계',
@@ -601,6 +611,8 @@ export const ko: Messages = {
     build: '내 계획 만들기',
     edit: '변경',
     summary: '{course} · {term} 입학 · {major}',
+    majorSearch: '전공 검색 (예: psychology, 화학)',
+    noMajorMatch: '맞는 전공이 없어요. 다른 단어로 찾거나 “아직 모르겠어요”를 고르세요.',
   },
   pain: {
     'when-offered': {

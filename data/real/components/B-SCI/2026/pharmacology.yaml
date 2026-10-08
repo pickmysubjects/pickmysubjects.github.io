@@ -1,0 +1,12 @@
+# Handbook: PHRM30009, at least two of PHRM30002/30003/30008, and one more of those or BIOM30003.
+id: pharmacology
+course: B-SCI
+year: 2026
+kind: major
+title: Pharmacology
+points: 50
+requirements:
+  - all: [PHRM30009]
+  - choose: { points: 25, from: [PHRM30003, PHRM30002, PHRM30008] }
+  - choose: { points: 12.5, from: [PHRM30003, PHRM30002, PHRM30008, BIOM30003] }
+verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked

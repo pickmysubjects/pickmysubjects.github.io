@@ -4,6 +4,8 @@ year: 2026
 kind: major
 title: Mathematics and Statistics (Pure Mathematics)
 points: 50
-requirements: unknown # Pure Mathematics stream structure not curated yet
+requirements:
+  - all: [MAST30005, MAST30021, MAST30026]
+  - choose: { points: 12.5, from: [MAST30011, MAST30012, MAST30024] }
 handbook: https://handbook.unimelb.edu.au/2026/components/b-sci-major-29
-verified_on: null
+verified_on: 2026-10-08 # Pure Mathematics specialisation structure; source: 2026 Handbook, checked

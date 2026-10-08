@@ -1,0 +1,10 @@
+id: biotechnology-biomedical-microbiology
+course: B-SCI
+year: 2026
+kind: major
+title: "Biotechnology (Biomedical: Microbiology and Immunology)"
+points: 50
+requirements:
+  - all: [BTCH30003, MIIM30002, MIIM30011]
+  - choose: { points: 12.5, from: [MIIM30015, MIIM30016] }
+verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked

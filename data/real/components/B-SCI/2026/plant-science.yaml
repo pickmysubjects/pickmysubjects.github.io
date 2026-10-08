@@ -1,0 +1,11 @@
+# Handbook: four of the list, at least one of BOTA30002/BOTA30005.
+id: plant-science
+course: B-SCI
+year: 2026
+kind: major
+title: Plant Science
+points: 50
+requirements:
+  - choose: { points: 12.5, from: [BOTA30002, BOTA30005] }
+  - choose: { points: 37.5, from: [AGRI30042, BOTA30001, BOTA30004, BOTA30005, BOTA30006, ECOL30006, FRST30001, SCIE30001, BOTA30002] }
+verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked

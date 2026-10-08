@@ -1,0 +1,9 @@
+id: digital-infrastructure-engineering-systems
+course: B-SCI
+year: 2026
+kind: major
+title: Digital Infrastructure Engineering Systems
+points: 50
+requirements:
+  - all: [CVEN30008, GEOM30009, GEOM30012, GEOM30014]
+verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked

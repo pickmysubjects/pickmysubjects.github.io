@@ -1,0 +1,12 @@
+# Handbook: four of the list, with at least one of BIOL30002/ZOOL30007 and one of BIOL30001/ZOOL30006.
+id: zoology
+course: B-SCI
+year: 2026
+kind: major
+title: Zoology
+points: 50
+requirements:
+  - choose: { points: 12.5, from: [BIOL30002, ZOOL30007] }
+  - choose: { points: 12.5, from: [BIOL30001, ZOOL30006] }
+  - choose: { points: 25, from: [BIOL30001, BIOL30002, CEDB30003, ECOL30007, SCIE30001, ZOOL30006, ZOOL30007, CEDB30002, VETS30033] }
+verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked

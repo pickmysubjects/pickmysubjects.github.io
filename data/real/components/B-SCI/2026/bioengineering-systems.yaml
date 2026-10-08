@@ -1,0 +1,10 @@
+id: bioengineering-systems
+course: B-SCI
+year: 2026
+kind: major
+title: Bioengineering Systems
+points: 50
+requirements:
+  - all: [BMEN30008, BMEN30009, BMEN30010]
+  - choose: { points: 12.5, from: [BMEN30006, ELEN30012] }
+verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked

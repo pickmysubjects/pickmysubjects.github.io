@@ -1,0 +1,10 @@
+# Handbook: VETS30031, VETS30014, VETS30016 and VETS30017 are also needed to progress to the DVM.
+id: veterinary-bioscience
+course: B-SCI
+year: 2026
+kind: major
+title: Veterinary Bioscience
+points: 50
+requirements:
+  - all: [VETS30018, VETS30029, VETS30032, VETS30030]
+verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked

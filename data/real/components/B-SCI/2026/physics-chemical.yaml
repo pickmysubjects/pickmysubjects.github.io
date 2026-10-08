@@ -1,0 +1,11 @@
+id: physics-chemical
+course: B-SCI
+year: 2026
+kind: major
+title: Physics (Chemical Physics)
+points: 50
+requirements:
+  - all: [PHYC30018, CHEM30016]
+  - choose: { points: 12.5, from: [PHYC30016, PHYC30017] }
+  - choose: { points: 12.5, from: [CHEM30015, PHYC30021] }
+verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked

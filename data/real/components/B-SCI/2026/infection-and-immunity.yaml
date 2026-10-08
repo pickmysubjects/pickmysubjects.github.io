@@ -1,0 +1,11 @@
+id: infection-and-immunity
+course: B-SCI
+year: 2026
+kind: major
+title: Infection and Immunity
+points: 50
+requirements:
+  - all: [MIIM30002]
+  - choose: { points: 25, from: [MIIM30011, MIIM30014, MIIM30017] }
+  - choose: { points: 12.5, from: [MIIM30015, MIIM30016] }
+verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked

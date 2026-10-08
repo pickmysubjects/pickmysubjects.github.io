@@ -1,0 +1,9 @@
+id: animal-health-and-disease
+course: B-SCI
+year: 2026
+kind: major
+title: Animal Health and Disease
+points: 50
+requirements:
+  - all: [VETS30033, ANSC30001, ANSC30002, ANSC30006]
+verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked

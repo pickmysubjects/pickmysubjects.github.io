@@ -301,6 +301,16 @@ export const zhCN: Messages = {
       participation: '课堂参与',
     },
   },
+  majorGroup: {
+    computing: '计算机、数据与数学',
+    biomed: '生物医学与生命科学',
+    chemphys: '化学与物理',
+    psych: '心理学',
+    eco: '生态、环境与地球科学',
+    eng: '工程系统',
+    agri: '农业、食品与动物',
+    other: '其他',
+  },
   topicGroup: {
     computing: '计算机',
     maths: '数学与统计',
@@ -601,6 +611,8 @@ export const zhCN: Messages = {
     build: '生成我的方案',
     edit: '修改',
     summary: '{course} · {term} 入学 · {major}',
+    majorSearch: '搜索专业，例如 psychology、化学',
+    noMajorMatch: '没有找到匹配的专业。换个词试试，或者选“还没决定”。',
   },
   pain: {
     'when-offered': {

@@ -1,0 +1,12 @@
+# Handbook: two of the list, at least one of ECOL30005/EVSC30006.
+id: environmental-science-conservation
+course: B-SCI
+year: 2026
+kind: major
+title: Environmental Science (Conservation and Ecosystems)
+points: 50
+requirements:
+  - all: [EVSC30003, EVSC30002]
+  - choose: { points: 12.5, from: [ECOL30005, EVSC30006] }
+  - choose: { points: 12.5, from: [BOTA30004, ECOL30005, ECOL30006, ECOL30007, ENST30003, EVSC30006, EVSC30007, FRST30001, FRST30003, GEOG30025, GEOL30007] }
+verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked

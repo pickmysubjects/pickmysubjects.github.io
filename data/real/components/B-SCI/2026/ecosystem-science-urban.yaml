@@ -1,0 +1,9 @@
+id: ecosystem-science-urban
+course: B-SCI
+year: 2026
+kind: major
+title: Ecosystem Science (Urban Ecosystems)
+points: 50
+requirements:
+  - all: [EVSC30007, ENST30003, FRST30003, EVSC30006]
+verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked

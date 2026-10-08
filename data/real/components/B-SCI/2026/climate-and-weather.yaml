@@ -1,0 +1,9 @@
+id: climate-and-weather
+course: B-SCI
+year: 2026
+kind: major
+title: Climate and Weather
+points: 50
+requirements:
+  - all: [ATOC30004, ATOC30006, ATOC30003, ATOC30008]
+verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked

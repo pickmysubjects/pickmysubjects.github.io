@@ -1,0 +1,10 @@
+id: environmental-science-climate
+course: B-SCI
+year: 2026
+kind: major
+title: Environmental Science (Climate Change)
+points: 50
+requirements:
+  - all: [EVSC30002, EVSC30003, ATOC30006]
+  - choose: { points: 12.5, from: [ATOC30003, ECOL30006, GEOG30023, ATOC30004, ATOC30008] }
+verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked

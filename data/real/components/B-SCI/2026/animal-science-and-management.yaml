@@ -1,0 +1,10 @@
+id: animal-science-and-management
+course: B-SCI
+year: 2026
+kind: major
+title: Animal Science and Management
+points: 50
+requirements:
+  - all: [ANSC30009]
+  - choose: { points: 37.5, from: [ANSC30003, ANSC30001, ANSC30002, ANSC30004, ANSC30006, ANSC30008, AGRI30045] }
+verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked

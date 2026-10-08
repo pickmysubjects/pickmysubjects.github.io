@@ -1,0 +1,12 @@
+# Handbook: at most two of the second list; that limit is not checked here.
+id: physiology
+course: B-SCI
+year: 2026
+kind: major
+title: Physiology
+points: 50
+requirements:
+  - all: [PHYS30010]
+  - choose: { points: 12.5, from: [PHYS30009, PHYS30011, PHYS30012] }
+  - choose: { points: 25, from: [PHYS30009, PHYS30011, PHYS30012, ANAT30007, ANAT30008, BIOL30001, BIOM30003, NEUR30002, NEUR30003, NEUR30004, PATH30001, PHRM30003] }
+verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked

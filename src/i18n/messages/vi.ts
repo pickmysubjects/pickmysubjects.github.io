@@ -301,6 +301,16 @@ export const vi: Messages = {
       participation: 'Tham gia lớp',
     },
   },
+  majorGroup: {
+    computing: 'Máy tính, dữ liệu và toán',
+    biomed: 'Y sinh và khoa học sự sống',
+    chemphys: 'Hoá học và vật lý',
+    psych: 'Tâm lý học',
+    eco: 'Sinh thái, môi trường và trái đất',
+    eng: 'Hệ thống kỹ thuật',
+    agri: 'Nông nghiệp, thực phẩm và động vật',
+    other: 'Khác',
+  },
   topicGroup: {
     computing: 'Máy tính',
     maths: 'Toán & thống kê',
@@ -601,6 +611,8 @@ export const vi: Messages = {
     build: 'Lập kế hoạch của tôi',
     edit: 'Đổi',
     summary: '{course} · từ {term} · {major}',
+    majorSearch: 'Tìm chuyên ngành, ví dụ psychology hoặc hoá học',
+    noMajorMatch: 'Không có chuyên ngành phù hợp. Thử từ khác, hoặc chọn “Chưa quyết định”.',
   },
   pain: {
     'when-offered': {

@@ -1,0 +1,9 @@
+id: electrical-systems
+course: B-SCI
+year: 2026
+kind: major
+title: Electrical Systems
+points: 50
+requirements:
+  - all: [ELEN30009, ELEN30011, ELEN30012, ELEN30013]
+verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked

@@ -301,6 +301,16 @@ export const id: Messages = {
       participation: 'Partisipasi',
     },
   },
+  majorGroup: {
+    computing: 'Komputer, data dan matematika',
+    biomed: 'Biomedis dan ilmu hayati',
+    chemphys: 'Kimia dan fisika',
+    psych: 'Psikologi',
+    eco: 'Ekologi, lingkungan dan bumi',
+    eng: 'Sistem rekayasa',
+    agri: 'Pertanian, pangan dan hewan',
+    other: 'Lainnya',
+  },
   topicGroup: {
     computing: 'Komputer',
     maths: 'Matematika & statistik',
@@ -601,6 +611,8 @@ export const id: Messages = {
     build: 'Buat rencanaku',
     edit: 'Ubah',
     summary: '{course} · mulai {term} · {major}',
+    majorSearch: 'Cari jurusan, mis. psychology atau kimia',
+    noMajorMatch: 'Tidak ada jurusan yang cocok. Coba kata lain, atau pilih “Belum yakin”.',
   },
   pain: {
     'when-offered': {

@@ -11,11 +11,34 @@ import ContributeView from './views/ContributeView.vue'
 import FeedbackView from './views/FeedbackView.vue'
 import PrivacyView from './views/PrivacyView.vue'
 import AboutView from './views/AboutView.vue'
+import { watchEffect } from 'vue'
 import { useView, link } from './composables/useView'
+import { useDataset } from './composables/useDataset'
 import { useI18n } from './i18n'
 
 const { view, param } = useView()
 const { t } = useI18n()
+const { data } = useDataset()
+
+// The tab title follows the page and the language (the built page only has the first one).
+const TITLES: Partial<Record<string, string>> = {
+  plan: 'plan.title',
+  recommend: 'suggest.title',
+  record: 'record.title',
+  contribute: 'contribute.title',
+  feedback: 'feedback.title',
+  privacy: 'privacy.title',
+  about: 'about.title',
+}
+watchEffect(() => {
+  const s = view.value === 'subject' ? data.value.subjects[param.value.toUpperCase()] : undefined
+  const key = TITLES[view.value]
+  document.title = s
+    ? `${t.value('seo.subjectTitle', { code: s.code, title: s.title })} | Subject Compass`
+    : key
+      ? `${t.value(key)} | Subject Compass`
+      : t.value('seo.homeTitle')
+})
 const plannerUrl =
   'https://students.unimelb.edu.au/course-admin/planning-your-course-and-subjects/faculty-course-planning-resources/my-course-planner'
 </script>

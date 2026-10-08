@@ -1,0 +1,12 @@
+# Handbook: at least one of PHYC30016/PHYC30017 and at most one of the other electives.
+id: physics-physics
+course: B-SCI
+year: 2026
+kind: major
+title: Physics (Physics)
+points: 50
+requirements:
+  - all: [PHYC30018, PHYC30021]
+  - choose: { points: 12.5, from: [PHYC30017, PHYC30016] }
+  - choose: { points: 12.5, from: [PHYC30017, PHYC30016, PHYC30011, PHYC30019, PHYC30022, PHYC30023, PHYC30024] }
+verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked

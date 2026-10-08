@@ -1,0 +1,10 @@
+id: ecosystem-science-forest
+course: B-SCI
+year: 2026
+kind: major
+title: Ecosystem Science (Forest Ecosystems)
+points: 50
+requirements:
+  - all: [EVSC30007, FRST30001]
+  - choose: { points: 25, from: [BOTA30004, BOTA30006, ECOL30005, EVSC30003, FRST30003, ENST30004] }
+verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked

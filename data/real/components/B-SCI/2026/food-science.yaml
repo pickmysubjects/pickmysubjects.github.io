@@ -1,0 +1,9 @@
+id: food-science
+course: B-SCI
+year: 2026
+kind: major
+title: Food Science
+points: 50
+requirements:
+  - all: [FOOD30008, FOOD30007, FOOD30009, FOOD30010]
+verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked

@@ -1,0 +1,12 @@
+# Handbook: 1-3 of the first list and at most two of the second; the "at most two" limit is not checked here.
+id: cell-and-developmental-biology
+course: B-SCI
+year: 2026
+kind: major
+title: Cell and Developmental Biology
+points: 50
+requirements:
+  - all: [CEDB30002]
+  - choose: { points: 12.5, from: [BIOL30001, BOTA30005, BTCH30003, CEDB30003, CEDB30004] }
+  - choose: { points: 25, from: [BIOL30001, BOTA30005, BTCH30003, CEDB30003, CEDB30004, BCMB30002, BCMB30004, BIOL30002, BIOM30003, GENE30002, GENE30005, MIIM30002, NEUR30005, NEUR30002, PATH30001] }
+verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked

@@ -48,6 +48,8 @@ export interface RecommendOptions {
   limit?: number
   /** "Now", for skipping subjects that aren't running soon. Defaults to this year. */
   year?: number
+  /** Only subjects up to this level (e.g. year-1 students see level 1). */
+  maxLevel?: number
 }
 
 const WEIGHTS: Record<Goal, Record<Signal, number>> = {
@@ -136,6 +138,7 @@ export function recommend(data: Dataset, profile: Profile, opts: RecommendOption
     if (s.nonAllowed !== 'unknown' && s.nonAllowed.some((c) => taken.has(c))) continue
     if (opts.course && opts.category && s.categories[opts.course] !== opts.category) continue
     if (opts.level !== undefined && s.level !== opts.level) continue
+    if (opts.maxLevel !== undefined && s.level > opts.maxLevel) continue
     if (opts.term && offeredIn(s, opts.term.year, opts.term.period).status === 'fail') continue
     // Without a chosen term: skip subjects we know aren't running soon.
     if (!opts.term && !runsSoon(s, opts.year ?? new Date().getFullYear())) continue
@@ -149,8 +152,10 @@ export function recommend(data: Dataset, profile: Profile, opts: RecommendOption
       admittedCourse: opts.course,
     })
     if (pre.status === 'fail') continue
+    // A condition only the student can check (a VCE score) that they said they meet.
+    const eligibility = pre.status === 'unknown' && profile.confirmed?.includes(s.code) ? 'ok' : pre.status
 
-    recs.push(score(s, { profile, data, wam, marks, dependents, eligibility: pre.status, unmet: pre.unmet, ratingMean }))
+    recs.push(score(s, { profile, data, wam, marks, dependents, eligibility, unmet: pre.unmet, ratingMean, taken }))
   }
 
   recs.sort((a, b) => b.score - a.score || a.code.localeCompare(b.code))
@@ -168,6 +173,8 @@ interface ScoreCtx {
   unmet: string[]
   /** Site-wide average ease, the prior that a subject's own ratings are shrunk toward. */
   ratingMean: number
+  /** Passed or planned: not worth pointing to as "opens up". */
+  taken: Set<string>
 }
 
 function note(key: string, params: Params, text: string): Note {
@@ -307,7 +314,7 @@ function pathTo(code: string, interests: string[], ctx: ScoreCtx): { steps: numb
   const seen = new Set(frontier)
   for (let steps = 1; steps <= PATHWAY_MAX_STEPS; steps++) {
     frontier = frontier.flatMap((c) => ctx.dependents.get(c) ?? []).filter((c) => !seen.has(c) && seen.add(c))
-    const hits = frontier.filter((c) => ctx.data.subjects[c]?.topics.some((t) => interests.includes(t)))
+    const hits = frontier.filter((c) => !ctx.taken.has(c) && ctx.data.subjects[c]?.topics.some((t) => interests.includes(t)))
     if (hits.length) return { steps, codes: hits }
     if (frontier.length === 0) break
   }
@@ -376,4 +383,10 @@ function diversify(recs: Recommendation[], data: Dataset): Recommendation[] {
     out.push(pool.splice(alt > 0 ? alt : 0, 1)[0] as Recommendation)
   }
   return out
+}
+
+/** The highest level a student can usually take: year 1 until 100 points are done, and so on. */
+export function yearLevel(results: Profile['results'], data: Dataset): number {
+  const done = passedCodes(results).reduce((sum, c) => sum + (data.subjects[c]?.points ?? 12.5), 0)
+  return Math.min(3, Math.floor(done / 100) + 1)
 }

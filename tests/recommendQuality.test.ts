@@ -76,4 +76,21 @@ describe('recommendation statistics', () => {
     const averaged = r?.reasons.find((n) => n.key === 'averagedHigh')
     expect(averaged).toBeDefined() // the related mark still counts for a lot
   })
+
+  it('a prerequisite the student confirmed (a VCE score) no longer shows as unconfirmed', () => {
+    const data = dataset([subject({ code: 'AAAA10001', prerequisites: { manual: 'VCE Maths study score 25+' }, non_allowed: [] })])
+    const before = recommend(data, base)[0]
+    const after = recommend(data, { ...base, confirmed: ['AAAA10001'] })[0]
+    expect(before?.eligibility).toBe('unknown')
+    expect(after?.eligibility).toBe('ok')
+    expect(after?.warnings.some((w) => w.key === 'eligibilityUnknown')).toBe(false)
+  })
+
+  it('maxLevel keeps a first-year list to first-year subjects', () => {
+    const data = dataset([
+      subject({ code: 'AAAA10001', prerequisites: 'none', non_allowed: [] }),
+      subject({ code: 'AAAA30001', level: 3, prerequisites: 'none', non_allowed: [] }),
+    ])
+    expect(recommend(data, base, { maxLevel: 1 }).map((r) => r.code)).toEqual(['AAAA10001'])
+  })
 })

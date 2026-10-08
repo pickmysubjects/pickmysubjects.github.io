@@ -1,0 +1,11 @@
+# Handbook: four of the list, at least one of ERTH30002/GEOL30009.
+id: geoscience
+course: B-SCI
+year: 2026
+kind: major
+title: Geoscience
+points: 50
+requirements:
+  - choose: { points: 12.5, from: [ERTH30002, GEOL30009] }
+  - choose: { points: 37.5, from: [GEOL30002, GEOL30003, GEOL30004, GEOL30007, GEOL30009, SCIE30001, ERTH30002] }
+verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked

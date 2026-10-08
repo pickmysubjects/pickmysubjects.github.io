@@ -1,0 +1,10 @@
+id: neuroscience
+course: B-SCI
+year: 2026
+kind: major
+title: Neuroscience
+points: 50
+requirements:
+  - all: [NEUR30003, NEUR30002]
+  - choose: { points: 25, from: [BCMB30004, BIOM30003, NEUR30004, NEUR30005, NEUR30006, NEUR30007, OPTO30007, PHRM30002] }
+verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked

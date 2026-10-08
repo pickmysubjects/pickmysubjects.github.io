@@ -1,0 +1,12 @@
+# Handbook: four of the list, with at least one of ECOL30005/ECOL30006 and one of ZOOL30007/ZOOL30009/SCIE30001.
+id: ecology-and-evolutionary-biology
+course: B-SCI
+year: 2026
+kind: major
+title: Ecology and Evolutionary Biology
+points: 50
+requirements:
+  - choose: { points: 12.5, from: [ECOL30005, ECOL30006] }
+  - choose: { points: 12.5, from: [ZOOL30007, ZOOL30009, SCIE30001] }
+  - choose: { points: 25, from: [BOTA30002, BOTA30006, BOTA30004, ECOL30005, ECOL30006, ECOL30007, EVSC30006, GENE30001, SCIE30001, ZOOL30004, ZOOL30006, ZOOL30007, ZOOL30009] }
+verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked

@@ -1,0 +1,10 @@
+id: genetics
+course: B-SCI
+year: 2026
+kind: major
+title: Genetics
+points: 50
+requirements:
+  - all: [GENE30001, GENE30002, GENE30004]
+  - choose: { points: 12.5, from: [BOTA30002, CEDB30002, GENE30005, MIIM30002, MIIM30011, SCIE30001, SCIE30002, ZOOL30004] }
+verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked

@@ -1,0 +1,9 @@
+id: environmental-science-sustainability
+course: B-SCI
+year: 2026
+kind: major
+title: Environmental Science (Sustainability Science)
+points: 50
+requirements:
+  - all: [EVSC30003, EVSC30002, ENST30004, GEOG30019]
+verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked

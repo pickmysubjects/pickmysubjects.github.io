@@ -1,0 +1,10 @@
+id: human-structure-and-function
+course: B-SCI
+year: 2026
+kind: major
+title: Human Structure and Function
+points: 50
+requirements:
+  - all: [ANAT30007, ANAT30008]
+  - choose: { points: 25, from: [BIOM30003, CEDB30003, NEUR30002, NEUR30003, NEUR30005, OPTO30007, PATH30001, PATH30002, PHYS30010, PHYS30011, PHYS30012] }
+verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked

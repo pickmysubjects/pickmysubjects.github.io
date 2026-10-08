@@ -1,0 +1,9 @@
+id: human-nutrition
+course: B-SCI
+year: 2026
+kind: major
+title: Human Nutrition
+points: 50
+requirements:
+  - all: [NUTR30002, NUTR30003, NUTR30004, NUTR30005]
+verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked

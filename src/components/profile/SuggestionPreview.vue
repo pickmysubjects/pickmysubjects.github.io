@@ -2,7 +2,7 @@
 import { link } from '@/composables/useView'
 import { computed } from 'vue'
 import { Sparkles } from 'lucide-vue-next'
-import { recommend } from '@/engine'
+import { recommend, yearLevel } from '@/engine'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
 import { useProfile } from '@/composables/useProfile'
@@ -21,6 +21,8 @@ const top = computed(() =>
   recommend(data.value, profile.value, {
     course: plan.setup.value.course,
     planned: plan.plannedCodes.value,
+    // Same list as the For-you page that "see more" opens.
+    maxLevel: yearLevel(profile.value.results, data.value),
     limit: 3,
   }),
 )

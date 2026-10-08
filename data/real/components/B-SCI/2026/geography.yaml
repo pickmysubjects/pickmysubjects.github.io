@@ -1,0 +1,12 @@
+# Handbook: 12.5-25 points from the first list and 25-37.5 from the second.
+id: geography
+course: B-SCI
+year: 2026
+kind: major
+title: Geography
+points: 50
+requirements:
+  - choose: { points: 12.5, from: [GEOG30007, GEOG30023, GEOG30025, GEOG30026, GEOG30027, GEOG30033] }
+  - choose: { points: 25, from: [GEOG30001, GEOG30019, GEOG30021, GEOG30024, GEOG30030] }
+  - choose: { points: 12.5, from: [GEOG30007, GEOG30023, GEOG30025, GEOG30026, GEOG30027, GEOG30033, GEOG30001, GEOG30019, GEOG30021, GEOG30024, GEOG30030] }
+verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked

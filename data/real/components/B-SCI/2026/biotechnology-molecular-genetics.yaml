@@ -1,0 +1,9 @@
+id: biotechnology-molecular-genetics
+course: B-SCI
+year: 2026
+kind: major
+title: "Biotechnology (Molecular: Genetics)"
+points: 50
+requirements:
+  - all: [GENE30002, GENE30001, GENE30004, BTCH30003]
+verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked

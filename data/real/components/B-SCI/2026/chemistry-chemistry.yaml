@@ -1,0 +1,10 @@
+id: chemistry-chemistry
+course: B-SCI
+year: 2026
+kind: major
+title: Chemistry (Chemistry)
+points: 50
+requirements:
+  - all: [CHEM30016, CHEM30015]
+  - choose: { points: 25, from: [CHEM30017, CHEM30014, CHEM30012] }
+verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked

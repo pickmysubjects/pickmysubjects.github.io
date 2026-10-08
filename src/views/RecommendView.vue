@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, shallowRef } from 'vue'
-import { passedCodes, recommend, type Goal } from '@/engine'
+import { recommend, yearLevel, type Goal } from '@/engine'
 import { useI18n } from '@/i18n'
 import { categoryLabel, termLabel } from '@/i18n/format'
 import RecommendationCard from '@/components/recommend/RecommendationCard.vue'
@@ -29,10 +29,7 @@ const hasProfile = computed(
 const showQuick = computed(() => profile.value.results.length === 0 && Object.keys(profile.value.skills).length === 0)
 
 // Only subjects at a level the student can take now: year 1 until 100 points are done, and so on.
-const yearLevel = computed(() => {
-  const done = passedCodes(profile.value.results).reduce((sum, c) => sum + (data.value.subjects[c]?.points ?? 12.5), 0)
-  return Math.min(3, Math.floor(done / 100) + 1)
-})
+const maxLevel = computed(() => yearLevel(profile.value.results, data.value))
 
 const recs = computed(() =>
   recommend(data.value, profile.value, {
@@ -40,8 +37,8 @@ const recs = computed(() =>
     course: plan.setup.value.course,
     category: category.value || undefined,
     term: selectedTerm.value ? { year: selectedTerm.value.year, period: selectedTerm.value.period } : undefined,
+    maxLevel: maxLevel.value,
   })
-    .filter((r) => (data.value.subjects[r.code]?.level ?? 9) <= yearLevel.value)
     .slice(0, 30),
 )
 

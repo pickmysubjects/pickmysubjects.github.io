@@ -1,0 +1,11 @@
+id: mechanical-systems
+course: B-SCI
+year: 2026
+kind: major
+title: Mechanical Systems
+points: 50
+requirements:
+  - all: [PHYC30018, MAST30021]
+  - choose: { points: 12.5, from: [PHYC30016, PHYC30017] }
+  - choose: { points: 12.5, from: [MAST30026, MAST30031] }
+verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked

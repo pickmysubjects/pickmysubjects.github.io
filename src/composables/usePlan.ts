@@ -43,7 +43,6 @@ const plans = usePersisted<Record<string, PlanState>>('sc:plans', {})
 
 function defaultSetup(data: Dataset): PlanSetup {
   const course = data.courses[0]
-  const major = data.components.find((c) => c.course === course?.code && c.kind === 'major')
   // A new visitor is most likely planning ahead: start at the next semester that hasn't begun.
   const next = nextSemester(new Date())
   return {
@@ -51,7 +50,7 @@ function defaultSetup(data: Dataset): PlanSetup {
     courseYear: course?.year ?? new Date().getFullYear(),
     startYear: next.year,
     startPeriod: next.period,
-    major: major?.id ?? '',
+    major: '', // "Not sure yet" until the student picks one
     specialisation: '',
   }
 }
@@ -61,13 +60,13 @@ export function usePlan() {
   const { profile } = useProfile()
 
   const state = computed<PlanState>(
-    () =>
-      plans.value[name.value] ?? {
-        setup: defaultSetup(data.value),
-        terms: standardTerms(data.value.courses[0]?.year ?? 2026, 'semester-1', 6),
-        notes: [],
-        unplaced: [],
-      },
+    () => {
+      const saved = plans.value[name.value]
+      if (saved) return saved
+      // No plan yet: the empty terms start where the default setup does (the next semester).
+      const setup = defaultSetup(data.value)
+      return { setup, terms: standardTerms(setup.startYear, setup.startPeriod, 6), notes: [], unplaced: [] }
+    },
   )
 
   const plan = computed<Plan>(() => ({

@@ -3,6 +3,7 @@ import { computed, shallowRef } from 'vue'
 import { ArrowLeft, ArrowRight, Check } from 'lucide-vue-next'
 import type { Component, Course, Period } from '@/engine'
 import type { PlanSetup } from '@/composables/usePlan'
+import MajorPicker from './MajorPicker.vue'
 import { useI18n } from '@/i18n'
 
 /** Three plain questions, one at a time, then "Build my plan". */
@@ -38,8 +39,7 @@ function finish(): void {
 }
 
 function chooseCourse(c: Course): void {
-  const firstMajor = props.components.find((m) => m.course === c.code && m.kind === 'major')
-  set({ course: c.code, courseYear: c.year, major: firstMajor?.id ?? '', specialisation: '' })
+  set({ course: c.code, courseYear: c.year, major: '', specialisation: '' })
 }
 </script>
 
@@ -96,23 +96,7 @@ function chooseCourse(c: Course): void {
 
     <div v-else class="q">
       <h2 class="q-title">{{ t('wizard.qMajor') }}</h2>
-      <div class="options">
-        <button
-          v-for="m in majors"
-          :key="m.id"
-          type="button"
-          class="option"
-          :aria-pressed="draft.major === m.id"
-          @click="set({ major: m.id })"
-        >
-          <span>{{ m.title }}</span>
-          <Check v-if="draft.major === m.id" :size="18" aria-hidden="true" />
-        </button>
-        <button type="button" class="option" :aria-pressed="draft.major === ''" @click="set({ major: '' })">
-          <span>{{ t('wizard.notSure') }}</span>
-          <Check v-if="draft.major === ''" :size="18" aria-hidden="true" />
-        </button>
-      </div>
+      <MajorPicker :majors="majors" :model-value="draft.major" @update:model-value="set({ major: $event })" />
       <div v-if="specs.length" class="spec">
         <p class="spec-title">{{ t('wizard.qSpec') }}</p>
         <div class="spec-chips" role="group" :aria-label="t('wizard.qSpec')">

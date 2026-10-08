@@ -1,4 +1,4 @@
-import { computed, onBeforeUnmount, onMounted, shallowRef, watch } from 'vue'
+import { computed, shallowRef, watch } from 'vue'
 import { localeInPath } from '@/i18n/codes'
 import { currentLocale, useI18n } from '@/i18n'
 
@@ -59,11 +59,17 @@ function upgradeHashLink(): void {
   history.replaceState(null, '', link(location.hash.slice(2)))
 }
 
-const listeners = new Set<() => void>()
+// One route for the whole app; every useView() reads the same one.
+const route = shallowRef<Route | null>(null)
+
+function sync(): void {
+  route.value = current()
+  window.scrollTo({ top: 0 })
+}
 
 function visit(address: string): void {
   history.pushState(null, '', address)
-  for (const l of listeners) l()
+  sync()
 }
 
 /** Go to a page inside the site (in the current language) without reloading it. */
@@ -79,19 +85,19 @@ function onClick(event: MouseEvent): void {
   if (!a || a.target || a.hasAttribute('download')) return
   const url = new URL(a.href, location.href)
   if (url.origin !== location.origin || !url.pathname.startsWith(BASE)) return
+  // Files like sitemap.xml or llms.txt aren't app pages.
+  if (/\.[a-z0-9]+$/i.test(url.pathname)) return
   // Same page, only a #fragment: let the browser scroll.
   if (url.pathname === location.pathname && url.search === location.search && url.hash) return
   event.preventDefault()
   visit(url.pathname + url.search)
 }
 
-/**
- * The current view, its parameter and query, kept in the address
- * (e.g. /subject/COMP30027 or /feedback?topic=data) so pages can be linked to.
- */
-export function useView() {
+// Listeners are installed once, however many components ask for the route
+// (two click handlers would push every page twice onto the history).
+function install(): void {
   upgradeHashLink()
-  const { locale } = useI18n()
+  const { locale, setLocale } = useI18n()
   // Keep the address in the shown language, so a copied link opens the same way.
   const syncAddress = () => {
     const want = BASE + prefix(locale.value) + pagePath()
@@ -99,24 +105,27 @@ export function useView() {
   }
   syncAddress()
   watch(locale, syncAddress)
-  const route = shallowRef(current())
-  const sync = () => {
-    route.value = current()
-    window.scrollTo({ top: 0 })
-  }
-  onMounted(() => {
-    listeners.add(sync)
-    window.addEventListener('popstate', sync)
-    document.addEventListener('click', onClick)
+  // Back/forward can land on an address in another language: follow it.
+  window.addEventListener('popstate', () => {
+    const rest = location.pathname.startsWith(BASE) ? location.pathname.slice(BASE.length) : ''
+    const inUrl = localeInPath(rest) ?? 'en'
+    if (inUrl !== locale.value) setLocale(inUrl)
+    sync()
   })
-  onBeforeUnmount(() => {
-    listeners.delete(sync)
-    window.removeEventListener('popstate', sync)
-    document.removeEventListener('click', onClick)
-  })
+  document.addEventListener('click', onClick)
+  route.value = current()
+}
+
+/**
+ * The current view, its parameter and query, kept in the address
+ * (e.g. /subject/COMP30027 or /feedback?topic=data) so pages can be linked to.
+ */
+export function useView() {
+  if (route.value === null) install()
+  const r = computed(() => route.value ?? current())
   return {
-    view: computed(() => route.value.view),
-    param: computed(() => route.value.param),
-    query: computed(() => route.value.query),
+    view: computed(() => r.value.view),
+    param: computed(() => r.value.param),
+    query: computed(() => r.value.query),
   }
 }

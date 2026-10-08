@@ -1,0 +1,10 @@
+id: biotechnology-biomedical-pharmacology
+course: B-SCI
+year: 2026
+kind: major
+title: "Biotechnology (Biomedical: Pharmacology)"
+points: 50
+requirements:
+  - all: [BTCH30003, PHRM30009]
+  - choose: { points: 25, from: [PHRM30003, PHRM30002, PHRM30008] }
+verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked

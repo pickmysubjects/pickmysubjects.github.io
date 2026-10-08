@@ -68,7 +68,7 @@ function pick(skill: Skill, level: number): void {
 
 .skill-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(360px, 100%), 1fr));
   gap: 0 24px;
   margin: 0;
   padding: 0;
@@ -95,7 +95,7 @@ function pick(skill: Skill, level: number): void {
 }
 
 .step {
-  min-width: 44px;
+  min-width: 40px;
   padding: 4px 6px;
   border: 0;
   border-left: 1px solid var(--line);
@@ -143,6 +143,10 @@ function pick(skill: Skill, level: number): void {
 
   .step-num {
     display: inline;
+  }
+
+  .step {
+    min-width: 30px;
   }
 }
 .scale-ends {

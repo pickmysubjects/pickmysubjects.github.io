@@ -1,0 +1,11 @@
+# Handbook also lists INFO30004 as core, but it is no longer available; ask the major coordinator.
+id: informatics
+course: B-SCI
+year: 2026
+kind: major
+title: Informatics
+points: 50
+requirements:
+  - all: [COMP30022, INFO30005]
+  - choose: { points: 12.5, from: [COMP30019, INFO30006] }
+verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked

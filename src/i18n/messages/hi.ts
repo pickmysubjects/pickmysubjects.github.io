@@ -301,6 +301,16 @@ export const hi: Messages = {
       participation: 'भागीदारी',
     },
   },
+  majorGroup: {
+    computing: 'कंप्यूटिंग, डेटा और गणित',
+    biomed: 'बायोमेडिकल और जीव विज्ञान',
+    chemphys: 'रसायन और भौतिकी',
+    psych: 'मनोविज्ञान',
+    eco: 'पारिस्थितिकी, पर्यावरण और पृथ्वी',
+    eng: 'इंजीनियरिंग सिस्टम',
+    agri: 'कृषि, भोजन और पशु',
+    other: 'अन्य',
+  },
   topicGroup: {
     computing: 'कंप्यूटिंग',
     maths: 'गणित और सांख्यिकी',
@@ -601,6 +611,8 @@ export const hi: Messages = {
     build: 'मेरा प्लान बनाएँ',
     edit: 'बदलें',
     summary: '{course} · {term} से · {major}',
+    majorSearch: 'मेजर खोजें, जैसे psychology या रसायन',
+    noMajorMatch: 'कोई मेजर नहीं मिला। दूसरा शब्द आज़माएँ, या “अभी तय नहीं” चुनें।',
   },
   pain: {
     'when-offered': {

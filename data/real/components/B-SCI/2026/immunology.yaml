@@ -1,0 +1,10 @@
+id: immunology
+course: B-SCI
+year: 2026
+kind: major
+title: Immunology
+points: 50
+requirements:
+  - all: [MIIM30002, MIIM30003, MIIM30015]
+  - choose: { points: 12.5, from: [BCMB30001, BCMB30002, BCMB30004, BCMB30011, CEDB30002, GENE30002, MIIM30011, MIIM30014, MIIM30017, NEUR30003, PATH30001, PHRM30003] }
+verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked

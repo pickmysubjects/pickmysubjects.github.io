@@ -1,0 +1,11 @@
+# Handbook: BTCH30002 is not available in 2026.
+id: biotechnology-agrifood
+course: B-SCI
+year: 2026
+kind: major
+title: Biotechnology (Agri-food Biotechnology)
+points: 50
+requirements:
+  - all: [BTCH30002]
+  - choose: { points: 37.5, from: [FOOD30010, BCMB30002, BTCH30003, ANSC30001, ANSC30002, FOOD30008] }
+verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked

@@ -305,6 +305,16 @@ export const en = {
       participation: 'Participation',
     },
   },
+  majorGroup: {
+    computing: 'Computing, data and maths',
+    biomed: 'Biomedical and life sciences',
+    chemphys: 'Chemistry and physics',
+    psych: 'Psychology',
+    eco: 'Ecology, environment and earth',
+    eng: 'Engineering systems',
+    agri: 'Agriculture, food and animals',
+    other: 'Other',
+  },
   topicGroup: {
     computing: 'Computing',
     maths: 'Maths & stats',
@@ -605,6 +615,8 @@ export const en = {
     build: 'Build my plan',
     edit: 'Change',
     summary: '{course} · from {term} · {major}',
+    majorSearch: 'Search a major, e.g. psychology or chemistry',
+    noMajorMatch: 'No major matches that. Try another word, or pick "Not sure yet".',
   },
   pain: {
     'when-offered': {
