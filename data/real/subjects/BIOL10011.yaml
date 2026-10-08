@@ -4,9 +4,21 @@ level: 1
 points: 12.5
 offerings:
   "2026": []
-categories:
-  B-SCI: science
+prerequisites:
+  manual: A study score of 25 or above in VCE Biology Units 3/4, or equivalent
+corequisites: none
+non_allowed:
+  - BIOL10010
+assessment:
+  - kind: test
+    weight: 40
+  - kind: report
+    weight: 20
+  - kind: exam
+    weight: 40
 handbook: https://handbook.unimelb.edu.au/2026/subjects/biol10011
 source_year: 2026
-verified_on: 2026-10-07
-notes: Not available in 2026. Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-09
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

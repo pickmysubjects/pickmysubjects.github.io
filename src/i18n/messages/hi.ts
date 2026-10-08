@@ -777,6 +777,7 @@ export const hi: Messages = {
     justSearch: 'सिर्फ़ कोई विषय देखना है? ऊपर के सर्च बॉक्स का इस्तेमाल करें।',
   },
   subject: {
+    coreqTitle: "उसी सेमेस्टर या पहले लें",
     discontinued: "{year} से नहीं चलेगा",
     insteadTake: "इसकी जगह लें:",
     fullPage: 'पूरा पेज खोलें',

@@ -781,6 +781,7 @@ export const en = {
     justSearch: 'Only want to look up a subject? Use the search box above.',
   },
   subject: {
+    coreqTitle: "Take in the same semester or earlier",
     discontinued: "No longer runs from {year}",
     insteadTake: "Take instead:",
     fullPage: 'Open full page',

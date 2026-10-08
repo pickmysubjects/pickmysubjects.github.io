@@ -6,9 +6,25 @@ offerings:
   "2026":
     - semester-1
     - semester-2
-categories:
-  B-SCI: science
+prerequisites:
+  any:
+    - PHRM20001
+    - manual: At least one level-2 subject in Anatomy and Cell Biology; Biochemistry and Molecular Biology; Microbiology and Immunology; Neuroscience; Pathology; Physiology; or Zoology
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: test
+    weight: 15
+  - kind: project
+    weight: 15
+  - kind: report
+    weight: 35
+    hurdle: true
+  - kind: exam
+    weight: 35
 handbook: https://handbook.unimelb.edu.au/2026/subjects/phrm30009
 source_year: 2026
-verified_on: 2026-10-07
-notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-09
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

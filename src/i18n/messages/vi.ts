@@ -777,6 +777,7 @@ export const vi: Messages = {
     justSearch: 'Chỉ muốn tra một môn? Dùng ô tìm kiếm ở trên.',
   },
   subject: {
+    coreqTitle: "Học cùng kỳ hoặc trước đó",
     discontinued: "Không mở từ năm {year}",
     insteadTake: "Học thay bằng:",
     fullPage: 'Mở trang đầy đủ',

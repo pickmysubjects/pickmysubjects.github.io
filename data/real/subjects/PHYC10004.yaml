@@ -6,9 +6,37 @@ offerings:
   "2026":
     - summer
     - semester-2
-categories:
-  B-SCI: science
+prerequisites:
+  all:
+    - any:
+        - any:
+            - PHYC10001
+            - PHYC10003
+        - PHYC10005
+        - PHYC10009
+    - any:
+        - all:
+            - MAST10014
+            - MAST10015
+        - manual: Study score of 25 of more in VCE Mathematical Methods 3 and 4 or equivalent
+        - admission: B-SCI
+          note: Admission into the B-SCI Bachelor of Science
+corequisites: none
+non_allowed:
+  - PHYC10002
+  - PHYC10006
+  - PHYC10007
+assessment:
+  - kind: assignment
+    weight: 25
+    hurdle: true
+  - kind: assignment
+    weight: 15
+  - kind: exam
+    weight: 60
 handbook: https://handbook.unimelb.edu.au/2026/subjects/phyc10004
 source_year: 2026
-verified_on: 2026-10-07
-notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-09
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

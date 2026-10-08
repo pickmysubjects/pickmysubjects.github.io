@@ -777,6 +777,7 @@ export const ko: Messages = {
     justSearch: '과목만 찾아보려면 위의 검색창을 쓰세요.',
   },
   subject: {
+    coreqTitle: "같은 학기나 그 전에 들어야 하는 과목",
     discontinued: "{year}년부터 개설 안 됨",
     insteadTake: "대신 들을 과목:",
     fullPage: '전체 페이지 열기',

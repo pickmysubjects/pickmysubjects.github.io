@@ -777,6 +777,7 @@ export const id: Messages = {
     justSearch: 'Hanya ingin mencari mata kuliah? Pakai kotak pencarian di atas.',
   },
   subject: {
+    coreqTitle: "Ambil di semester yang sama atau sebelumnya",
     discontinued: "Tidak dibuka lagi mulai {year}",
     insteadTake: "Gantinya ambil:",
     fullPage: 'Buka halaman lengkap',

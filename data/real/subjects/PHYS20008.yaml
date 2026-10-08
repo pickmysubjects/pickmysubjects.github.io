@@ -6,9 +6,51 @@ offerings:
   "2026":
     - semester-1
     - semester-2
-categories:
-  B-SCI: science
+prerequisites:
+  any:
+    - all:
+        - manual: A minimum of 12.5 credit points of a level-1 quantitative science subject (e.g. Chemistry, Physics, Maths, Psychology, Statistics)
+        - any:
+            - all:
+                - subject: BIOL10004
+                - subject: BIOL10005
+            - all:
+                - subject: BIOL10004
+                - any:
+                    - subject: BIOL10010
+                    - subject: BIOL10011
+            - all:
+                - subject: BIOL10005
+                - any:
+                    - subject: BIOL10008
+                    - subject: BIOL10009
+            - all:
+                - any:
+                    - subject: BIOL10008
+                    - subject: BIOL10009
+                - any:
+                    - subject: BIOL10010
+                    - subject: BIOL10011
+    - admission: MC-SCIBIF
+      note: Admission into the Master of Science (Bioinformatics)
+corequisites: none
+non_allowed:
+  - BIOM20002
+assessment:
+  - kind: quiz
+    weight: 15
+  - kind: test
+    weight: 15
+  - kind: test
+    weight: 15
+  - kind: project
+    weight: 15
+    group: true
+  - kind: exam
+    weight: 40
 handbook: https://handbook.unimelb.edu.au/2026/subjects/phys20008
 source_year: 2026
-verified_on: 2026-10-07
-notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-09
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

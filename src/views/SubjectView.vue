@@ -7,7 +7,7 @@ import RatingForm from '@/components/rating/RatingForm.vue'
 import AssessmentPanel from '@/components/subject/AssessmentPanel.vue'
 import MajorRoles from '@/components/subject/MajorRoles.vue'
 import DiscussionSummary from '@/components/subject/DiscussionSummary.vue'
-import { periodsFor, referencedSubjects, termKey } from '@/engine'
+import { periodsFor, referencedSubjects, simplifyFor, termKey } from '@/engine'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
 import { useProfile } from '@/composables/useProfile'
@@ -35,6 +35,13 @@ const unlocks = computed(() =>
     .filter((s) => referencedSubjects(s.prerequisites).includes(code.value))
     .map((s) => s.code),
 )
+// The subjects to link: only those in the requirement as this course's students meet it.
+const needs = computed(() => (subject.value ? simplifyFor(subject.value.prerequisites, plan.setup.value.course) : 'unknown'))
+const needCodes = computed(() => referencedSubjects(needs.value))
+const coreq = computed(() => {
+  const co = subject.value?.corequisites
+  return co && co !== 'none' && co !== 'unknown' ? describeReq(t.value, co, plan.setup.value.course) : ''
+})
 const blocks = computed(() => (subject.value && subject.value.nonAllowed !== 'unknown' ? subject.value.nonAllowed : []))
 const category = computed(() => categoryLabel(t.value, subject.value?.categories[plan.setup.value.course]))
 const inPlan = computed(() => plan.plannedCodes.value.includes(code.value))
@@ -136,12 +143,16 @@ const links = computed(() => (name.value === 'real' ? discussionLinks(code.value
 
         <section class="panel surface">
           <h2 class="panel-title">{{ t('subject.needs') }}</h2>
-          <p v-if="subject.prerequisites === 'none'" class="panel-text">{{ t('subject.needsNone') }}</p>
-          <p v-else-if="subject.prerequisites === 'unknown'" class="panel-text muted">{{ t('subject.notRecorded') }}</p>
-          <p v-else class="panel-text">{{ describeReq(t, subject.prerequisites) }}</p>
-          <p v-if="subject.prerequisites !== 'none' && subject.prerequisites !== 'unknown'" class="links-inline">
-            <a v-for="c in referencedSubjects(subject.prerequisites)" :key="c" class="chip code" :href="link(`subject/${c}`)">{{ c }}</a>
+          <p v-if="needs === 'none'" class="panel-text">{{ t('subject.needsNone') }}</p>
+          <p v-else-if="needs === 'unknown'" class="panel-text muted">{{ t('subject.notRecorded') }}</p>
+          <p v-else class="panel-text">{{ describeReq(t, needs) }}</p>
+          <p v-if="needCodes.length" class="links-inline">
+            <a v-for="c in needCodes" :key="c" class="chip code" :href="link(`subject/${c}`)">{{ c }}</a>
           </p>
+          <template v-if="coreq">
+            <h3 class="panel-subtitle">{{ t('subject.coreqTitle') }}</h3>
+            <p class="panel-text">{{ coreq }}</p>
+          </template>
         </section>
 
         <section class="panel surface">
@@ -401,5 +412,11 @@ const links = computed(() => (name.value === 'real' ? discussionLinks(code.value
   gap: 6px;
   font-size: 0.92rem;
   color: var(--bad);
+}
+
+.panel-subtitle {
+  margin-top: 14px;
+  font-size: 0.88rem;
+  font-weight: 650;
 }
 </style>

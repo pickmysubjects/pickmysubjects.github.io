@@ -7,9 +7,23 @@ offerings:
     - summer
     - semester-1
     - semester-2
-categories:
-  B-SCI: science
+prerequisites:
+  all:
+    - manual: Excellent results in a discipline appropriate to the project (normally an average of at least 75% in relevant 2nd and 3rd year subjects)
+    - manual: "Approval of the relevant Department Coordinator. Department specific details are listed in the link below: Link"
+corequisites: none
+non_allowed:
+  - PATH30004
+assessment:
+  - kind: report
+    weight: 60
+  - kind: presentation
+    weight: 30
+  - kind: project
+    weight: 10
 handbook: https://handbook.unimelb.edu.au/2026/subjects/biom30003
 source_year: 2026
-verified_on: 2026-10-07
-notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-09
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

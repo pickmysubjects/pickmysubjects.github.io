@@ -6,9 +6,23 @@ offerings:
   "2026":
     - summer
     - semester-2
-categories:
-  B-SCI: science
+prerequisites:
+  manual: Four of the Level 3 chemistry subjects (as defined in the chemistry major)
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: report
+    weight: 60
+    hurdle: true
+  - kind: project
+    weight: 30
+    hurdle: true
+  - kind: presentation
+    weight: 10
+    hurdle: true
 handbook: https://handbook.unimelb.edu.au/2026/subjects/chem30013
 source_year: 2026
-verified_on: 2026-10-07
-notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-09
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

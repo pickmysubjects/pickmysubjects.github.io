@@ -5,9 +5,20 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
-categories:
-  B-SCI: science
+prerequisites: GENE20001
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: quiz
+    weight: 20
+  - kind: assignment
+    weight: 30
+  - kind: exam
+    weight: 50
+weekly_contact_hours: 4
 handbook: https://handbook.unimelb.edu.au/2026/subjects/gene30001
 source_year: 2026
-verified_on: 2026-10-07
-notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-09
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

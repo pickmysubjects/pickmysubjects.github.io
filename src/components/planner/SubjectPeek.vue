@@ -96,7 +96,7 @@ function onClick(event: MouseEvent): void {
           <h3 class="peek-label">{{ t('subject.needs') }}</h3>
           <p v-if="subject.prerequisites === 'none'">{{ t('subject.needsNone') }}</p>
           <p v-else-if="subject.prerequisites === 'unknown'" class="muted">{{ t('subject.notRecorded') }}</p>
-          <p v-else>{{ describeReq(t, subject.prerequisites) }}</p>
+          <p v-else>{{ describeReq(t, subject.prerequisites, course) }}</p>
           <label v-if="hasManual" class="peek-confirm">
             <input type="checkbox" :checked="confirmed" @change="setConfirmed(code, ($event.target as HTMLInputElement).checked)" />
             {{ t('plan.iMeetThisLong') }}

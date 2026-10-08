@@ -5,9 +5,37 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
-categories:
-  B-SCI: science
+prerequisites:
+  all:
+    - any:
+        - MIIM20001
+        - BCMB20002
+    - any:
+        - BCMB20005
+        - GENE20004
+        - MIIM20002
+        - PATH20003
+        - GENE20003
+    - MIIM30002
+corequisites: none
+non_allowed:
+  - MIIM30013
+assessment:
+  - kind: presentation
+    weight: 12.5
+  - kind: report
+    weight: 2.5
+  - kind: report
+    weight: 12.5
+  - kind: presentation
+    weight: 22.5
+    group: true
+  - kind: exam
+    weight: 50
 handbook: https://handbook.unimelb.edu.au/2026/subjects/miim30015
 source_year: 2026
-verified_on: 2026-10-07
-notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-09
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+weekly_contact_hours: 5

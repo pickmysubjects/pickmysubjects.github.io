@@ -158,7 +158,9 @@ function assessment(t: Translate, s: Subject, sep: string): string | null {
 function subjectPage(code: LocaleCode, s: Subject): Page {
   const t = translator(code)
   const facts = { code: s.code, title: s.title, level: s.level, points: s.points }
-  const prereq = describeReq(t, s.prerequisites)
+  // Static pages are written for Bachelor of Science students, as the app's default course is.
+  const prereq = describeReq(t, s.prerequisites, 'B-SCI')
+  const coreq = s.corequisites !== 'none' && s.corequisites !== 'unknown' ? describeReq(t, s.corequisites, 'B-SCI') : ''
   const leads = (unlocks.get(s.code) ?? []).sort()
   const blocks = s.nonAllowed === 'unknown' ? [] : s.nonAllowed
   const assess = assessment(t, s, listSep(code))
@@ -167,6 +169,7 @@ function subjectPage(code: LocaleCode, s: Subject): Page {
     `<h1>${esc(s.code)} ${esc(s.title)}</h1>`,
     `<p>${esc(t('seo.facts', facts))} · ${esc(runs(t, s, listSep(code)))}</p>`,
     `<h2>${esc(t('subject.needs'))}</h2><p>${esc(prereq)}</p>`,
+    ...(coreq ? [`<h3>${esc(t('subject.coreqTitle'))}</h3><p>${esc(coreq)}</p>`] : []),
   ]
   // The subjects named in the prerequisites, as links (only ones that have a page).
   const needLinks = referencedSubjects(s.prerequisites).filter((c) => data.subjects[c])

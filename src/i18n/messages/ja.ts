@@ -777,6 +777,7 @@ export const ja: Messages = {
     justSearch: '科目を調べるだけなら、上の検索欄を使ってください。',
   },
   subject: {
+    coreqTitle: "同じ学期かそれより前に取る科目",
     discontinued: "{year} 年から開講なし",
     insteadTake: "代わりの科目：",
     fullPage: '詳細ページを開く',

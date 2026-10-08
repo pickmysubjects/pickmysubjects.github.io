@@ -5,9 +5,38 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
-categories:
-  B-SCI: science
+prerequisites:
+  all:
+    - any:
+        - PHYC10002
+        - manual: Excellent results in VCE Units 3 and 4 Physics (normally an unscaled score of at least 35) or equivalent
+        - PHYC10009
+    - any:
+        - manual: Excellent results in VCE Units 3 and 4 Specialist Mathematics (normally an unscaled score of at least 35) or equivalent
+        - any:
+            - MAST10006
+            - MAST10007
+            - MAST10008
+            - MAST10009
+            - MAST10021
+            - MAST10022
+            - MAST10018
+            - MAST10019
+corequisites: none
+non_allowed:
+  - PHYC10003
+assessment:
+  - kind: assignment
+    weight: 25
+    hurdle: true
+  - kind: assignment
+    weight: 15
+  - kind: exam
+    weight: 60
+weekly_contact_hours: 5.5
 handbook: https://handbook.unimelb.edu.au/2026/subjects/phyc10001
 source_year: 2026
-verified_on: 2026-10-07
-notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-09
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

@@ -5,9 +5,43 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
-categories:
-  B-SCI: science
+prerequisites:
+  points:
+    min: 25
+    from:
+      - BCMB20002
+      - BIOM20001
+      - BIOM20002
+      - CEDB20003
+      - GENE20001
+      - MAST20031
+      - PHYS20008
+      - PHYS20009
+      - ZOOL20005
+      - ZOOL20006
+corequisites: none
+non_allowed:
+  - BIOL30008
+assessment:
+  - kind: assignment
+    weight: 10
+    group: true
+  - kind: assignment
+    weight: 15
+  - kind: project
+    weight: 10
+  - kind: project
+    weight: 5
+    group: true
+  - kind: presentation
+    weight: 10
+    group: true
+  - kind: project
+    weight: 50
+weekly_contact_hours: 5
 handbook: https://handbook.unimelb.edu.au/2026/subjects/biol30002
 source_year: 2026
-verified_on: 2026-10-07
-notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-09
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

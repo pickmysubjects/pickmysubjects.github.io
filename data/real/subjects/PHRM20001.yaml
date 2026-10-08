@@ -5,9 +5,38 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
-categories:
-  B-SCI: science
+prerequisites:
+  points:
+    min: 37.5
+    from:
+      - BIOL10002
+      - BIOL10008
+      - BIOL10009
+      - BIOL10010
+      - BIOL10011
+      - BIOM10002
+      - CHEM10003
+      - CHEM10004
+      - CHEM10006
+      - CHEM10007
+      - CHEM10008
+      - CHEM10009
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: assignment
+    weight: 10
+    hurdle: true
+  - kind: quiz
+    weight: 10
+  - kind: test
+    weight: 20
+  - kind: exam
+    weight: 60
 handbook: https://handbook.unimelb.edu.au/2026/subjects/phrm20001
 source_year: 2026
-verified_on: 2026-10-07
-notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-09
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+weekly_contact_hours: 4

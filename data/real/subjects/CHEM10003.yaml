@@ -6,9 +6,41 @@ offerings:
   "2026":
     - semester-1
     - semester-2
-categories:
-  B-SCI: science
+prerequisites:
+  any:
+    - any:
+        - manual: Selection of the Biomedical specialisation (formal) in the MC-ENG Master of Engineering
+        - admission: MC-BIOMENG
+          note: Admission into the MC-BIOMENG Master of Biomedical Engineering
+    - all:
+        - any:
+            - CHEM10007
+            - manual: VCE Units 3/4 Chemistry, or equivalent
+        - any:
+            - all:
+                - MAST10014
+                - MAST10015
+            - MAST10012
+            - manual: VCE Units 3/4 Mathematical Methods
+            - manual: VCE Units 3/4 Further Mathematics
+            - admission: B-SCI
+              note: Admission into the B-SCI Bachelor of Science
+            - admission: B-COM
+              note: Admission into the B-COM Bachelor of Commerce
+corequisites: none
+non_allowed:
+  - CHEM10009
+assessment:
+  - kind: test
+    weight: 15
+  - kind: assignment
+    weight: 20
+    hurdle: true
+  - kind: exam
+    weight: 65
 handbook: https://handbook.unimelb.edu.au/2026/subjects/chem10003
 source_year: 2026
-verified_on: 2026-10-07
-notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-09
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

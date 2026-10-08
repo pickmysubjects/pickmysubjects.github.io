@@ -4,6 +4,7 @@ import { computed } from 'vue'
 import type { Recommendation, Subject } from '@/engine'
 import { useI18n } from '@/i18n'
 import { describeReq, reasonText } from '@/i18n/format'
+import { usePlan } from '@/composables/usePlan'
 import { summariseAssessment } from '@/utils/assessment'
 
 const props = defineProps<{
@@ -20,11 +21,12 @@ const warnings = computed(() => props.rec.warnings.map((n) => reasonText(t.value
 const confidence = computed(() => t.value(`suggest.confidence.${props.rec.confidence}`))
 const assessment = computed(() => (props.subject ? summariseAssessment(props.subject.assessment) : null))
 // When the student already meets them, say so instead of spelling out every alternative.
+const plan = usePlan()
 const prereqText = computed(() => {
   const pre = props.subject?.prerequisites
   if (!pre) return ''
   if (pre !== 'none' && props.rec.eligibility === 'ok') return t.value('suggest.prereqMet')
-  return describeReq(t.value, pre)
+  return describeReq(t.value, pre, plan.setup.value.course)
 })
 </script>
 

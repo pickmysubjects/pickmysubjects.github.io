@@ -102,7 +102,7 @@ const problemTexts = computed(() => {
   return allIssues.value
     .filter((i) => i.severity === severity)
     .map((i) => ({
-      text: issueText(t.value, i, rules.value, plan.courseCheck.value.statuses, data.value.subjects),
+      text: issueText(t.value, i, rules.value, plan.courseCheck.value.statuses, data.value.subjects, plan.setup.value.course),
       // Conditions only the student can check (a VCE score, a test): let them say they meet it.
       confirm: i.kind === 'prereq-unknown' ? i.subject : undefined,
     }))

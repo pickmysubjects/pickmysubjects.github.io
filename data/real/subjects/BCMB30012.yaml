@@ -6,9 +6,30 @@ offerings:
   "2026":
     - semester-1
     - semester-2
-categories:
-  B-SCI: science
+prerequisites:
+  any:
+    - BCMB20002
+    - BIOM20001
+corequisites:
+  any:
+    - BCMB20005
+    - GENE20004
+non_allowed: []
+assessment:
+  - kind: assignment
+    weight: 20
+  - kind: test
+    weight: 10
+  - kind: presentation
+    weight: 15
+    group: true
+  - kind: presentation
+    weight: 10
+  - kind: exam
+    weight: 45
 handbook: https://handbook.unimelb.edu.au/2026/subjects/bcmb30012
 source_year: 2026
-verified_on: 2026-10-07
-notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-09
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

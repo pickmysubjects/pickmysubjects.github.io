@@ -36,7 +36,7 @@ const overloaded = computed(() => points.value > props.load)
 // A gentle "this term looks heavy" note, from ratings or class hours.
 const heavy = computed(() => {
   const issue = props.termIssues.find((i) => i.kind.startsWith('heavy-term'))
-  return issue ? issueText(t.value, issue, [], [], props.subjects) : null
+  return issue ? issueText(t.value, issue, [], [], props.subjects, props.course) : null
 })
 const fill = computed(() => `${Math.min(100, (points.value / props.load) * 100)}%`)
 

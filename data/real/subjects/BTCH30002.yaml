@@ -4,9 +4,24 @@ level: 3
 points: 12.5
 offerings:
   "2026": []
-categories:
-  B-SCI: science
+prerequisites:
+  any:
+    - BIOL10002
+    - BIOL10008
+    - BIOL10009
+    - BIOL10004
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: presentation
+    weight: 20
+  - kind: test
+    weight: 25
+  - kind: exam
+    weight: 55
 handbook: https://handbook.unimelb.edu.au/2026/subjects/btch30002
 source_year: 2026
-verified_on: 2026-10-07
-notes: Not available in 2026. Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-09
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

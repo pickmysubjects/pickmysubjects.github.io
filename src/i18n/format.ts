@@ -1,4 +1,4 @@
-import type { CourseRule, Issue, Note, Period, PlanTerm, ReqExpr, ReqField, RuleStatus, Subject } from '@/engine'
+import { simplifyFor, type CourseRule, type Issue, type Note, type Period, type PlanTerm, type ReqExpr, type ReqField, type RuleStatus, type Subject } from '@/engine'
 import type { Params, Translate } from './index'
 
 /** Localised helpers for engine output. The engine stays language-neutral (keys + params). */
@@ -72,10 +72,11 @@ export function issueText(
   rules: CourseRule[],
   statuses: RuleStatus[],
   subjects: Record<string, Subject> = {},
+  course = '',
 ): string {
   // The engine's reason is English; say what the subject needs in the reader's language instead.
   const s = issue.kind === 'prereq-unknown' && issue.subject ? subjects[issue.subject] : undefined
-  if (s) return t('issue.prereq-unknown', { code: s.code, needs: describeReq(t, s.prerequisites) })
+  if (s) return t('issue.prereq-unknown', { code: s.code, needs: describeReq(t, s.prerequisites, course) })
   if (issue.kind.startsWith('rule-')) {
     const rule = rules.find((r) => r.id === issue.ruleId)
     const status = statuses.find((s) => s.ruleId === issue.ruleId)
@@ -114,7 +115,9 @@ export function reasonText(t: Translate, note: Note): string {
   return t(`reason.${note.key}`, params)
 }
 
-export function describeReq(t: Translate, field: ReqField): string {
+/** With a course, shows the requirement as that course's students meet it (see simplifyFor). */
+export function describeReq(t: Translate, field: ReqField, course = ''): string {
+  field = simplifyFor(field, course)
   if (field === 'none') return t('expr.none')
   if (field === 'unknown') return t('expr.unknown')
   return describeExpr(t, field)

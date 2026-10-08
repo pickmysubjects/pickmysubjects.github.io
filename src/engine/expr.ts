@@ -121,3 +121,38 @@ export function referencedSubjects(field: ReqField): string[] {
   walk(field)
   return [...new Set(out)]
 }
+
+// A free-text condition about another course ("… in the MC-ENG Master of Engineering").
+const OTHER_COURSE_TEXT = /\b(?:MC|B|D|GD)-[A-Z]{2,}\b|\bMaster of\b/
+
+/**
+ * The requirement as a student of `course` has to meet it: routes that need admission to
+ * another course are dropped, and anything their own admission already meets counts as met.
+ * Only for showing to students; checks evaluate the full expression.
+ */
+export function simplifyFor(field: ReqField, course: string): ReqField {
+  if (field === 'none' || field === 'unknown' || !course) return field
+  const MET = 'met' as const
+  const walk = (e: ReqExpr): ReqExpr | typeof MET | null => {
+    if ('admission' in e) return e.admission === course ? MET : null
+    if ('manual' in e) return OTHER_COURSE_TEXT.test(e.manual) && !e.manual.includes(course) ? null : e
+    if ('any' in e) {
+      const kept = e.any.map(walk)
+      if (kept.includes(MET)) return MET
+      const open = kept.filter((x): x is ReqExpr => x !== null && x !== MET)
+      if (open.length === 0) return null
+      return open.length === 1 ? (open[0] as ReqExpr) : { any: open }
+    }
+    if ('all' in e) {
+      const kept = e.all.map(walk)
+      if (kept.includes(null)) return null
+      const open = kept.filter((x): x is ReqExpr => x !== null && x !== MET)
+      if (open.length === 0) return MET
+      return open.length === 1 ? (open[0] as ReqExpr) : { all: open }
+    }
+    return e
+  }
+  const out = walk(field)
+  // Nothing open to this course at all: show the whole thing rather than hide it.
+  return out === MET ? 'none' : out === null ? field : out
+}

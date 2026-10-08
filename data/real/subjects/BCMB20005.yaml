@@ -6,9 +6,36 @@ offerings:
   "2026":
     - semester-1
     - semester-2
-categories:
-  B-SCI: science
+prerequisites:
+  all:
+    - any:
+        - BIOL10002
+        - BIOL10008
+        - BIOL10009
+    - any:
+        - CHEM10003
+        - CHEM10004
+        - CHEM10006
+        - CHEM10009
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: quiz
+    weight: 5
+  - kind: assignment
+    weight: 10
+  - kind: exam
+    weight: 10
+  - kind: report
+    weight: 25
+  - kind: exam
+    weight: 35
+  - kind: presentation
+    weight: 15
+    group: true
 handbook: https://handbook.unimelb.edu.au/2026/subjects/bcmb20005
 source_year: 2026
-verified_on: 2026-10-07
-notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-09
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

@@ -208,13 +208,15 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
     }
   }
 
-  // Close over prerequisites so required subjects can actually be taken.
+  // Close over prerequisites so required subjects can actually be taken. Corequisites
+  // ("in the same semester or before") are planned the safe way: in an earlier term.
   const queue = [...required]
   while (queue.length > 0) {
     const code = queue.pop() as string
     const s = data.subjects[code]
-    if (!s || s.prerequisites === 'none' || s.prerequisites === 'unknown') continue
-    for (const need of resolvePrereqs(s.prerequisites, done, required, data, input.course)) {
+    if (!s) continue
+    const fields = [s.prerequisites, s.corequisites].filter((f): f is ReqExpr => f !== 'none' && f !== 'unknown')
+    for (const need of fields.flatMap((f) => resolvePrereqs(f, done, required, data, input.course))) {
       needs.set(code, [...(needs.get(code) ?? []), need])
       if (!required.has(need) && !done.has(need)) {
         required.add(need)
@@ -232,7 +234,9 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
  * the fewest new subjects.
  */
 /** A requirement met by school results rather than a university subject. */
-const SCHOOL_RESULT = /study score/i
+// "Study score of 25 in …", "VCE Units 3 and 4 Physics or equivalent", "Excellent results in VCE Units 3/4 …".
+// Not "VCE Algorithmics students may …", which is a different kind of note.
+const SCHOOL_RESULT = /study score|^(?:excellent results? in )?VCE Units? 3/i
 
 function resolvePrereqs(expr: ReqExpr, done: Set<string>, required: Set<string>, data: Dataset, course: string): string[] {
   if ('subject' in expr) return done.has(expr.subject) ? [] : [expr.subject]
@@ -248,22 +252,55 @@ function resolvePrereqs(expr: ReqExpr, done: Set<string>, required: Set<string>,
     const MANUAL = 50
     const SCHOOL = 0.5
     const cost = (o: string[]) =>
-      o.reduce((sum, c) => sum + (required.has(c) ? 0 : clashes(c, done, required, data) ? 10_000 : data.subjects[c] ? 1 : 100), 0)
+      o.reduce(
+        (sum, c) =>
+          sum + (required.has(c) ? 0 : clashes(c, done, required, data) || closedTo(c, course, data) ? 10_000 : data.subjects[c] ? 1 : 100),
+        0,
+      )
     let best: string[] | null = null
     let bestCost = Infinity
+    // What an option assumes rather than plans: manual conditions anywhere inside it.
+    const assumed = (e: ReqExpr): number =>
+      'manual' in e ? (SCHOOL_RESULT.test(e.manual) ? SCHOOL : MANUAL) : 'all' in e ? e.all.reduce((sum, x) => sum + assumed(x), 0) : 0
     for (const e of expr.any) {
-      if ('admission' in e && e.admission !== course) continue
+      // An option that needs admission to another course isn't open to this student at all.
+      if (needsOtherAdmission(e, course)) continue
       const o = 'manual' in e ? [] : resolvePrereqs(e, done, required, data, course)
-      const c = 'manual' in e ? (SCHOOL_RESULT.test(e.manual) ? SCHOOL : MANUAL) : cost(o)
+      const c = cost(o) + assumed(e)
       if (c < bestCost) [best, bestCost] = [o, c]
     }
     return best ?? []
   }
-  if ('points' in expr) return pickForPoints(expr.points, done, required, data)
+  if ('points' in expr) return pickForPoints(expr.points, done, required, data, course)
   return [] // admission / manual can't be resolved to specific subjects
 }
 
 /** Would adding this subject break a non-allowed pair with one already completed or required? */
+function needsOtherAdmission(e: ReqExpr, course: string): boolean {
+  if ('admission' in e) return e.admission !== course
+  if ('all' in e) return e.all.some((x) => needsOtherAdmission(x, course))
+  if ('any' in e) return e.any.every((x) => needsOtherAdmission(x, course))
+  return false
+}
+
+/**
+ * A subject students of this course can't ever take: its prerequisites fail even with every
+ * other subject done (e.g. "admission into the Bachelor of Biomedicine" only).
+ */
+const closedCache = new WeakMap<Dataset, Map<string, boolean>>()
+function closedTo(code: string, course: string, data: Dataset): boolean {
+  const s = data.subjects[code]
+  if (!s || s.prerequisites === 'none' || s.prerequisites === 'unknown') return false
+  const cache = closedCache.get(data) ?? new Map<string, boolean>()
+  closedCache.set(data, cache)
+  const key = `${course}:${code}`
+  if (!cache.has(key)) {
+    const everything = new Set(Object.keys(data.subjects).filter((c) => c !== code))
+    cache.set(key, evaluateField(s.prerequisites, { completed: everything, subjects: data.subjects, admittedCourse: course }).status === 'fail')
+  }
+  return cache.get(key) as boolean
+}
+
 function clashes(code: string, done: Set<string>, required: Set<string>, data: Dataset): boolean {
   const mine = data.subjects[code]?.nonAllowed
   for (const other of [...done, ...required]) {
@@ -283,6 +320,7 @@ function pickForPoints(
   done: Set<string>,
   required: Set<string>,
   data: Dataset,
+  course: string,
 ): string[] {
   const fits = (s: Subject) =>
     (req.from === undefined || req.from.includes(s.code)) &&
@@ -297,7 +335,12 @@ function pickForPoints(
   // Lowest level first, so the requirement can be met early; within a level,
   // reuse subjects that are already required before adding new ones.
   const candidates = Object.values(data.subjects)
-    .filter((s) => fits(s) && !done.has(s.code) && (required.has(s.code) || (runs(s) > 0 && !clashes(s.code, done, required, data))))
+    .filter(
+      (s) =>
+        fits(s) &&
+        !done.has(s.code) &&
+        (required.has(s.code) || (runs(s) > 0 && !clashes(s.code, done, required, data) && !closedTo(s.code, course, data))),
+    )
     .sort((a, b) => a.level - b.level || isNew(a) - isNew(b) || runs(b) - runs(a) || a.code.localeCompare(b.code))
   const picks: string[] = []
   for (const s of candidates) {
@@ -330,7 +373,9 @@ function canTake(code: string, term: PlanTerm, before: Set<string>, data: Datase
   if (!s) return 'unknown'
   if (offeredIn(s, term.year, term.period).status === 'fail') return 'fail'
   const pre = evaluateField(s.prerequisites, { completed: before, subjects: data.subjects, admittedCourse: course })
-  return pre.status
+  const co = evaluateField(s.corequisites, { completed: before, subjects: data.subjects, admittedCourse: course })
+  if (pre.status === 'fail' || co.status === 'fail') return 'fail'
+  return pre.status === 'unknown' || co.status === 'unknown' ? 'unknown' : 'ok'
 }
 
 function priority(code: string, first: Set<string>, depth: Map<string, number>, data: Dataset, year: number): number {
@@ -345,7 +390,7 @@ function dependentDepth(codes: string[], data: Dataset, needs: Map<string, strin
   const deps = new Map<string, string[]>()
   for (const c of codes) {
     const s = data.subjects[c]
-    const refs = s && s.prerequisites !== 'none' && s.prerequisites !== 'unknown' ? referenced(s.prerequisites) : []
+    const refs = s ? [s.prerequisites, s.corequisites].flatMap((f) => (f !== 'none' && f !== 'unknown' ? referenced(f) : [])) : []
     for (const p of new Set([...refs, ...(needs.get(c) ?? [])])) if (set.has(p)) deps.set(p, [...(deps.get(p) ?? []), c])
   }
   const memo = new Map<string, number>()
@@ -445,6 +490,9 @@ function pickElective(ctx: PickCtx): { code: string; why: string; ruleId: string
         if (!withinCaps(s, all, course, data)) continue
         if (!ctx.relaxed && !leavesRoomForOthers(s, all, course, data)) continue
         if (!progressionAllows(s.code, course, [...ctx.before], data)) continue
+        // A corequisite must already be in the plan (this term or earlier).
+        const co = evaluateField(s.corequisites, { completed: new Set([...ctx.before, ...term.subjects]), subjects: data.subjects, admittedCourse: course.code })
+        if (co.status === 'fail') continue
         return { code: s.code, why: rule.description.toLowerCase(), ruleId: rule.id }
       }
     }

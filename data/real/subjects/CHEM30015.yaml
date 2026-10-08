@@ -5,9 +5,23 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
-categories:
-  B-SCI: science
+prerequisites: CHEM20019
+corequisites: CHEM30016
+non_allowed: []
+assessment:
+  - kind: presentation
+    weight: 78
+    group: true
+  - kind: presentation
+    weight: 10
+    group: true
+  - kind: report
+    weight: 12
+    group: true
+weekly_contact_hours: 7
 handbook: https://handbook.unimelb.edu.au/2026/subjects/chem30015
 source_year: 2026
-verified_on: 2026-10-07
-notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-09
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

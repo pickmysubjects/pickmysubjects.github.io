@@ -2,15 +2,17 @@
 import { computed } from 'vue'
 import type { CourseRule, Issue, RuleStatus } from '@/engine'
 import { useDataset } from '@/composables/useDataset'
+import { usePlan } from '@/composables/usePlan'
 import { useI18n } from '@/i18n'
 import { issueText } from '@/i18n/format'
 
 const props = defineProps<{ issues: Issue[]; rules: CourseRule[]; statuses: RuleStatus[] }>()
 const { t } = useI18n()
 const { data } = useDataset()
+const plan = usePlan()
 
 const rows = computed(() =>
-  props.issues.map((i) => ({ severity: i.severity, text: issueText(t.value, i, props.rules, props.statuses, data.value.subjects) })),
+  props.issues.map((i) => ({ severity: i.severity, text: issueText(t.value, i, props.rules, props.statuses, data.value.subjects, plan.setup.value.course) })),
 )
 const problems = computed(() => rows.value.filter((i) => i.severity !== 'info'))
 const notes = computed(() => rows.value.filter((i) => i.severity === 'info'))

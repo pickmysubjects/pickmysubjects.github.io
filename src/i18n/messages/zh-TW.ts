@@ -777,6 +777,7 @@ export const zhTW: Messages = {
     justSearch: '只想查某門課？直接用上面的搜尋框。',
   },
   subject: {
+    coreqTitle: "同一學期或之前要修",
     discontinued: "{year} 年起不再開設",
     insteadTake: "可以改修：",
     fullPage: '查看完整頁面',

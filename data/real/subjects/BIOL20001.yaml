@@ -5,9 +5,33 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
-categories:
-  B-SCI: science
+prerequisites:
+  any:
+    - BIOL10001
+    - BIOL10002
+    - BIOL10008
+    - BIOL10010
+    - BIOL10011
+    - BIOM10002
+    - BIOL10003
+    - BIOL10004
+    - BIOL10005
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: quiz
+    weight: 25
+  - kind: project
+    weight: 25
+  - kind: presentation
+    weight: 10
+    group: true
+  - kind: exam
+    weight: 40
 handbook: https://handbook.unimelb.edu.au/2026/subjects/biol20001
 source_year: 2026
-verified_on: 2026-10-07
-notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-09
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+weekly_contact_hours: 4

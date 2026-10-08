@@ -6,9 +6,21 @@ offerings:
   "2026":
     - summer
     - semester-2
-categories:
-  B-SCI: science
+prerequisites: CHEM10003
+corequisites: none
+non_allowed:
+  - CHEM10009
+assessment:
+  - kind: test
+    weight: 15
+  - kind: assignment
+    weight: 20
+    hurdle: true
+  - kind: exam
+    weight: 65
 handbook: https://handbook.unimelb.edu.au/2026/subjects/chem10004
 source_year: 2026
-verified_on: 2026-10-07
-notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-09
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

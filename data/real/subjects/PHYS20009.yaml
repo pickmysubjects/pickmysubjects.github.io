@@ -6,9 +6,36 @@ offerings:
   "2026":
     - semester-1
     - semester-2
-categories:
-  B-SCI: science
+prerequisites:
+  manual: One of Level 1 quantitative science subject (e.g. Chemistry, Physics, Maths, Psychology)
+corequisites: PHYS20008
+non_allowed:
+  - BIOM20002
+assessment:
+  - kind: assignment
+    weight: 5
+    group: true
+  - kind: assignment
+    weight: 10
+  - kind: assignment
+    weight: 10
+  - kind: assignment
+    weight: 30
+  - kind: quiz
+    weight: 5
+  - kind: project
+    weight: 40
+    group: true
+    hurdle: true
+  - kind: assignment
+    weight: 0
+    hurdle: true
+  - kind: participation
+    weight: 0
+    hurdle: true
 handbook: https://handbook.unimelb.edu.au/2026/subjects/phys20009
 source_year: 2026
-verified_on: 2026-10-07
-notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-09
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

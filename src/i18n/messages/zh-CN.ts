@@ -777,6 +777,7 @@ export const zhCN: Messages = {
     justSearch: '只想查某门课？直接用上面的搜索框。',
   },
   subject: {
+    coreqTitle: "同一学期或之前要修",
     discontinued: "{year} 年起不再开设",
     insteadTake: "可以改修：",
     fullPage: '查看完整页面',

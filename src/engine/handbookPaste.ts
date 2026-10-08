@@ -50,15 +50,28 @@ export function parseHandbookPaste(text: string): PasteResult {
   const warnings: string[] = []
   const sections = splitSections(text)
 
+  // Many pages list the requirement per degree; this site plans the Bachelor of Science.
+  const pre = sections.pre ? scienceOnly(sections.pre, warnings) : undefined
+  // "Concurrent prerequisites" (or a note that subjects "can also be taken concurrently") may be
+  // taken in the same semester: that's what a corequisite means here.
+  const split = pre ? splitConcurrent(pre) : undefined
+  const coLines = [...(sections.co ?? []).filter((l) => !(split?.concurrent.length && /^none\.?$/i.test(l))), ...(split?.concurrent ?? [])]
   const result: PasteResult = {
-    prerequisites: sections.pre ? parseRequirement(sections.pre, 'prerequisites', warnings) : 'unknown',
-    corequisites: sections.co ? parseRequirement(sections.co, 'corequisites', warnings) : 'unknown',
+    prerequisites: split ? parseRequirement(split.before, 'prerequisites', warnings) : 'unknown',
+    corequisites: sections.co || split?.concurrent.length ? parseRequirement(coLines, 'corequisites', warnings) : 'unknown',
     nonAllowed: sections.non ? parseNonAllowed(sections.non) : 'unknown',
     offerings: sections.avail ? parseAvailability(sections.avail.join('\n')) : 'unknown',
     assessment: sections.assess ? parseAssessment(sections.assess, warnings) : 'unknown',
     weeklyContactHours: parseContactHours(text),
     ...parseHeader(text),
     warnings,
+  }
+  // A page can list the subject itself (e.g. in an old/new code table); it's never its own requirement.
+  if (result.code) {
+    const self = result.code
+    result.prerequisites = withoutSubject(result.prerequisites, self)
+    result.corequisites = withoutSubject(result.corequisites, self)
+    if (Array.isArray(result.nonAllowed)) result.nonAllowed = result.nonAllowed.filter((c) => c !== self)
   }
   if (!sections.pre && !sections.co && !sections.non && !sections.avail) {
     warnings.push('No Handbook section headings found (e.g. "Prerequisites", "Non-allowed subjects", "Availability").')
@@ -95,8 +108,88 @@ function splitSections(text: string): Partial<Record<Section, string[]>> {
   return out
 }
 
+// "Bachelor of Science students", "B Science Students:", "B. Biomedicine Students:" …
+const DEGREE_HEADING = /^(?:for )?(?:bachelor of|b\.? ?)\s*(science|sc|biomedicine|biomed|agriculture|arts|commerce|design|music|fine arts)\b[^.]{0,30}students?:?(?:\s*\([^)]*\))?:?$/i
+
+function scienceOnly(lines: string[], warnings: string[]): string[] {
+  const heads = lines.map((l, i) => ({ i, degree: DEGREE_HEADING.exec(l)?.[1]?.toLowerCase() })).filter((h) => h.degree)
+  if (heads.length === 0) return lines
+  // With more than one (e.g. "pre 2013" and "2013 on"), the current students' one is the last that isn't "pre".
+  const science = heads.map((h, k) => ({ ...h, k })).filter((h) => h.degree === 'science' || h.degree === 'sc')
+  const current = science.filter((h) => !/\bpre\b/i.test(lines[h.i] ?? ''))
+  const at = (current.at(-1) ?? science.at(-1))?.k ?? -1
+  if (at < 0) {
+    warnings.push('Requirements are listed per degree, with none for the Bachelor of Science; kept them all.')
+    return lines
+  }
+  const start = (heads[at] as { i: number }).i + 1
+  const end = heads[at + 1]?.i ?? lines.length
+  warnings.push('Requirements are listed per degree; kept the Bachelor of Science one.')
+  // Text before the first heading (e.g. an overall "OR") belongs to no degree in particular.
+  return lines.slice(start, end)
+}
+
+function splitConcurrent(lines: string[]): { before: string[]; concurrent: string[] } {
+  const at = lines.findIndex((l) => /^concurrent prerequisites?:?$/i.test(l) || /can (?:also )?be taken concurrently/i.test(l))
+  if (at < 0) return { before: lines, concurrent: [] }
+  const rest = lines.slice(at + 1)
+  const stop = rest.findIndex((l) => /^(and|or)$/i.test(l))
+  const concurrent = stop < 0 ? rest : rest.slice(0, stop)
+  const after = stop < 0 ? [] : rest.slice(stop + 1)
+  // Drop a heading repeated just before the note ("Prerequisites" / a stray "Note:").
+  const before = [...lines.slice(0, at), ...after].filter((l) => !/^prerequisites?:?$/i.test(l))
+  return { before: before.length ? before : ['None'], concurrent }
+}
+
+function combine(kind: 'all' | 'any', fields: ReqField[]): ReqField {
+  if (fields.some((f) => f === 'unknown')) return 'unknown'
+  const exprs = fields.filter((f): f is ReqExpr => f !== 'none')
+  if (exprs.length === 0) return 'none'
+  // An option with no requirement at all makes the whole "any" free; a "none" part adds nothing to "all".
+  if (kind === 'any' && exprs.length < fields.length) return 'none'
+  return exprs.length === 1 ? (exprs[0] as ReqExpr) : ({ [kind]: exprs } as ReqExpr)
+}
+
+function withoutSubject(field: ReqField, code: string): ReqField {
+  if (field === 'none' || field === 'unknown') return field
+  const prune = (e: ReqExpr): ReqExpr | null => {
+    if ('subject' in e) return e.subject === code ? null : e
+    if ('all' in e || 'any' in e) {
+      const key = 'all' in e ? 'all' : 'any'
+      const kept = (e as Record<string, ReqExpr[]>)[key]!.map(prune).filter(isExpr)
+      if (kept.length === 0) return null
+      return kept.length === 1 ? (kept[0] as ReqExpr) : ({ [key]: kept } as ReqExpr)
+    }
+    if ('points' in e && e.points.from) return { points: { ...e.points, from: e.points.from.filter((c) => c !== code) } }
+    return e
+  }
+  return prune(field) ?? 'none'
+}
+
 function parseRequirement(lines: string[], label: string, warnings: string[]): ReqField {
   if (lines.length === 0 || (lines.length === 1 && /^none\.?$/i.test(lines[0] ?? ''))) return 'none'
+
+  // "Option 1 … Option 2 …": meeting any one option is enough.
+  const optionAt = lines.map((l, i) => (/^option \d+:?$/i.test(l) ? i : -1)).filter((i) => i >= 0)
+  if (optionAt.length >= 2) {
+    // Only an OR between two options goes; ORs inside an option are its own alternatives.
+    const trimOr = (ls: string[]) => {
+      let a = 0
+      let b = ls.length
+      while (a < b && /^or$/i.test(ls[a] ?? '')) a++
+      while (b > a && /^or$/i.test(ls[b - 1] ?? '')) b--
+      return ls.slice(a, b)
+    }
+    const options = optionAt.map((at, k) => trimOr(lines.slice(at + 1, optionAt[k + 1] ?? lines.length)))
+    return combine('any', options.map((o) => parseRequirement(o, label, warnings)))
+  }
+  // "Students are required to meet both Physics and Mathematics prerequisites below",
+  // then "Physics:" and "Mathematics:" parts: every part must be met.
+  const partAt = lines.map((l, i) => (/^[A-Z][a-z]+(?: [a-z]+)?:$/.test(l) ? i : -1)).filter((i) => i >= 0)
+  if (partAt.length >= 2 && lines.slice(0, partAt[0]).every((l) => /required to meet both|^and$/i.test(l))) {
+    const parts = partAt.map((at, k) => lines.slice(at + 1, partAt[k + 1] ?? lines.length))
+    return combine('all', parts.map((p) => parseRequirement(p, label, warnings)))
+  }
 
   // Blocks are separated by standalone OR / AND lines.
   const groups: string[][][] = [[[]]] // OR-groups of AND-blocks of lines
@@ -152,8 +245,15 @@ type Quantifier = { kind: 'all' } | { kind: 'one' } | { kind: 'points'; min: num
 
 function readQuantifier(line: string): Quantifier | null {
   if (/^all of:?$/i.test(line)) return { kind: 'all' }
-  if (/^(one|1) of:?$/i.test(line)) return { kind: 'one' }
-  const pts = /^(\d+(?:\.\d+)?) (?:credit )?points? (?:of|from):?$/i.exec(line)
+  if (/^(?:a )?(?:minimum of )?(one|1) of(?: the following)?:?$/i.test(line)) return { kind: 'one' }
+  // "A minimum of two of" a table of 12.5-point subjects: that many subjects' worth of points.
+  const count = /^(?:a )?(?:minimum of )?(two|three|four|[2-9]) of(?: the following)?:?$/i.exec(line)
+  if (count) {
+    const n = { two: 2, three: 3, four: 4 }[(count[1] as string).toLowerCase()] ?? Number(count[1])
+    return { kind: 'points', min: n * 12.5 }
+  }
+  // "25 points from", "A minimum of 25 credit points from", "Completion of a minimum of 37.5 credit points of".
+  const pts = /^(?:completion of )?(?:a )?(?:minimum of |at least )?(\d+(?:\.\d+)?) (?:credit )?points? (?:of|from)(?: the following)?:?$/i.exec(line)
   if (pts) return { kind: 'points', min: Number(pts[1]) }
   return null
 }
@@ -192,14 +292,14 @@ export function parseAvailability(text: string): Period[] | 'unknown' {
 
 // First match wins, so the more specific kinds come first.
 const KIND_WORDS: [RegExp, AssessmentKind][] = [
-  [/presentation|\boral\b/i, 'presentation'],
+  [/presentation|\boral\b|\bseminar\b/i, 'presentation'],
   [/participation|attendance|engagement|tutorial activit|in-class activit|design activit/i, 'participation'],
-  [/quiz|online (test|assessment)/i, 'quiz'],
-  [/\btests?\b|mid[- ]?semester\b.{0,20}\b(test|exam|assessment)|closed book timed|in-class (test|assessment)/i, 'test'],
-  [/\bexam(ination)?\b(?! period)/i, 'exam'],
+  [/quiz|\bMCQs?\b|questionnaire|online (test|assessment)/i, 'quiz'],
+  [/\btests?\b|\bMSTs?\b|mid[- ]?semester\b.{0,20}\b(test|exam|assessment)|closed book timed|in-class (test|assessment)/i, 'test'],
+  [/\bexam(ination)?s?\b(?! period)/i, 'exam'],
   [/report|essay|literature review/i, 'report'],
-  [/project/i, 'project'],
-  [/assignment|problem set|exercise|homework|practice set|written work/i, 'assignment'],
+  [/project|\bvideo\b/i, 'project'],
+  [/assignment|problem set|exercise|homework|practice set|written (work|task|assessment|submission)/i, 'assignment'],
 ]
 
 /** The task's own name usually opens the description ("Group project - …"), so try that first. */
@@ -229,7 +329,8 @@ function parseAssessment(lines: string[], warnings: string[]): AssessmentTask[] 
       text = []
       continue
     }
-    const weight = raw.match(WEIGHT)
+    // A weight alone on its line (the row had no timing cell) belongs to the description above it.
+    const weight = raw.match(WEIGHT) ?? raw.match(/^\s*(\d+(?:\.\d+)?)%\s*$/)
     if (!weight) {
       text.push(line)
       continue

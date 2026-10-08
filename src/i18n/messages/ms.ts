@@ -777,6 +777,7 @@ export const ms: Messages = {
     justSearch: 'Hanya mahu mencari subjek? Guna kotak carian di atas.',
   },
   subject: {
+    coreqTitle: "Ambil dalam semester yang sama atau lebih awal",
     discontinued: "Tidak ditawarkan lagi mulai {year}",
     insteadTake: "Gantinya ambil:",
     fullPage: 'Buka halaman penuh',
