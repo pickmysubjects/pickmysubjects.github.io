@@ -73,6 +73,10 @@ export function checkTerms(plan: Plan, data: Dataset, standardLoad = 50): Issue[
       }
     }
 
+    // A heavy term: several subjects students rate as heavy work, or lots of class time.
+    const heavy = heavyTerm(term.subjects, data)
+    if (heavy) issues.push({ severity: 'info', kind: heavy.rated >= HEAVY_RATED ? 'heavy-term-rated' : 'heavy-term-hours', termIndex, params: { year: term.year, period: term.period, n: heavy.rated, hours: heavy.hours }, message: `${where} looks heavy: ${heavy.rated >= HEAVY_RATED ? `${heavy.rated} subjects students rate as heavy work` : `about ${heavy.hours} hours of class a week`}. Consider swapping one for a lighter subject.` })
+
     // Summer and winter terms are short: 25 points is the usual most.
     const max = term.period === 'summer' || term.period === 'winter' ? Math.min(SHORT_TERM_LOAD, standardLoad) : standardLoad
     if (load > max) {
@@ -82,6 +86,22 @@ export function checkTerms(plan: Plan, data: Dataset, standardLoad = 50): Issue[
 
   if (plan.international) issues.push(...visaLoadIssues(plan, data))
   return issues
+}
+
+/** Two or more subjects rated heavy (workload 4+/5 from 3+ ratings) make a heavy term. */
+export const HEAVY_RATED = 2
+/** Average weekly class hours per subject (over 3+ subjects with known hours) that make a heavy term. */
+export const HEAVY_HOURS_EACH = 4.5
+
+function heavyTerm(codes: string[], data: Dataset): { rated: number; hours: number } | null {
+  const subjects = codes.map((c) => data.subjects[c]).filter((s) => s !== undefined)
+  const rated = subjects.filter((s) => s.signals && s.signals.reviews >= 3 && (s.signals.workload ?? 0) >= 4).length
+  const timed = subjects.filter((s) => s.weeklyContactHours !== undefined)
+  const each = timed.length ? timed.reduce((sum, s) => sum + (s.weeklyContactHours ?? 0), 0) / timed.length : 0
+  // Estimate the whole term from the subjects we know, so one unknown doesn't hide it.
+  const hours = Math.round(each * subjects.length)
+  if (rated >= HEAVY_RATED || (timed.length >= 3 && each >= HEAVY_HOURS_EACH)) return { rated, hours }
+  return null
 }
 
 /** Points a student-visa holder normally needs each half-year (Jan–Jun, Jul–Dec). */

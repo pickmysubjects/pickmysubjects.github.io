@@ -10,6 +10,9 @@ import PlanIssues from '@/components/planner/PlanIssues.vue'
 import DataNotice from '@/components/DataNotice.vue'
 import Interp from '@/components/Interp.vue'
 import { planStart } from '@/engine'
+import { Printer, Share2 } from 'lucide-vue-next'
+import { decodePlan, encodePlan } from '@/utils/sharePlan'
+import { go, useView } from '@/composables/useView'
 import { useProfile } from '@/composables/useProfile'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan, type PlanSetup } from '@/composables/usePlan'
@@ -23,6 +26,37 @@ const { profile, setConfirmed } = useProfile()
 const { t } = useI18n()
 
 const editing = shallowRef(false)
+
+// A plan someone shared: /plan?share=… (packed into the link, no server).
+const { query } = useView()
+const shared = computed(() => {
+  const code = query.value.get('share')
+  return code ? decodePlan(code) : null
+})
+function importShared(): void {
+  if (!shared.value) return
+  plan.importPlan(shared.value.setup, shared.value.terms)
+  editing.value = false
+  go('plan')
+}
+
+const copied = shallowRef(false)
+async function share(): Promise<void> {
+  const url = new URL(link(`plan?share=${encodePlan(plan.setup.value, plan.terms.value)}`), location.href).href
+  try {
+    if (navigator.share) await navigator.share({ title: 'Subject Compass', url })
+    else await navigator.clipboard.writeText(url)
+    copied.value = true
+    setTimeout(() => (copied.value = false), 2500)
+  } catch {
+    // Cancelled, or the clipboard is blocked: show the link so it can be copied by hand.
+    window.prompt(t.value('plan.share'), url)
+  }
+}
+
+function printPlan(): void {
+  window.print()
+}
 // A longer plan on a student visa may need a new CoE.
 const extraTermsOnVisa = computed(
   () => plan.setup.value.international === true && plan.notes.value.some((n) => typeof n !== 'string' && n.key === 'extraTerms'),
@@ -102,12 +136,27 @@ function finishWizard(setup: PlanSetup): void {
       @cancel="editing = false"
     />
 
+    <section v-if="shared" class="shared surface" role="status">
+      <p class="shared-text">{{ t('plan.sharedText', { n: shared.terms.reduce((sum, x) => sum + x.subjects.length, 0) }) }}</p>
+      <p v-if="!plan.isEmpty.value" class="shared-warn">{{ t('plan.sharedReplace') }}</p>
+      <div class="shared-actions">
+        <button class="button button-accent" type="button" @click="importShared">{{ t('plan.sharedImport') }}</button>
+        <button class="button button-quiet" type="button" @click="go('plan')">{{ t('plan.sharedDismiss') }}</button>
+      </div>
+    </section>
+
     <template v-else>
       <section class="bar">
         <p class="bar-summary">{{ summary }}</p>
         <div class="bar-actions">
           <button class="button button-quiet" type="button" @click="editing = true">
             <Pencil :size="16" aria-hidden="true" /> {{ t('wizard.edit') }}
+          </button>
+          <button class="button button-quiet" type="button" @click="share">
+            <Share2 :size="16" aria-hidden="true" /> {{ copied ? t('plan.copied') : t('plan.share') }}
+          </button>
+          <button class="button button-quiet" type="button" @click="printPlan">
+            <Printer :size="16" aria-hidden="true" /> {{ t('plan.print') }}
           </button>
           <button class="button button-quiet" type="button" @click="plan.generate()">
             <RotateCcw :size="16" aria-hidden="true" /> {{ t('plan.rebuild') }}
@@ -351,5 +400,38 @@ function finishWizard(setup: PlanSetup): void {
   margin-top: 6px;
   font-size: 0.85rem;
   opacity: 0.85;
+}
+.shared {
+  display: grid;
+  gap: 10px;
+  padding: 18px 20px;
+}
+
+.shared-text {
+  font-weight: 600;
+}
+
+.shared-warn {
+  font-size: 0.9rem;
+  color: var(--warn);
+}
+
+.shared-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* Printing (or saving as PDF): just the plan, every term visible. */
+@media print {
+  .bar-actions,
+  .hint,
+  .started,
+  .details,
+  .status-hint,
+  .confirm,
+  .plan-notice {
+    display: none !important;
+  }
 }
 </style>

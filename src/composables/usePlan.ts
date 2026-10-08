@@ -190,6 +190,11 @@ export function usePlan() {
     })
   }
 
+  /** Take a plan someone shared (setup and terms); this replaces the current one. */
+  function importPlan(setup: PlanSetup, terms: PlanTerm[]): void {
+    save(() => ({ setup, terms, notes: [], unplaced: [] }))
+  }
+
   function removeLastTerm(): void {
     save((s) => {
       if (s.terms.length > 1 && (s.terms.at(-1)?.subjects.length ?? 0) === 0) s.terms.pop()
@@ -219,5 +224,6 @@ export function usePlan() {
     addTermAt,
     removeTerm,
     removeLastTerm,
+    importPlan,
   }
 }

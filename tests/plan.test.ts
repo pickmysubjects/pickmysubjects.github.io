@@ -249,3 +249,31 @@ describe('confirmed prerequisites', () => {
     expect(checkTerms({ ...plan, confirmed: ['AAAA10001'] }, data).map((i) => i.kind)).not.toContain('prereq-unknown')
   })
 })
+
+describe('heavy terms', () => {
+  const heavy = (code: string, extra: Record<string, unknown>) => subject({ code, offerings: { 2026: ['semester-1'] }, prerequisites: 'none', non_allowed: [], ...extra })
+  const planOf = (codes: string[]): Plan => ({ course: 'X', courseYear: 2026, completed: [], terms: [{ year: 2026, period: 'semester-1', subjects: codes }] })
+  const kinds = (data: ReturnType<typeof dataset>, codes: string[]) => checkTerms(planOf(codes), data).map((i) => i.kind)
+
+  it('flags two subjects students rate as heavy work', () => {
+    const data = dataset([
+      heavy('AAAA10001', { signals: { reviews: 5, workload: 4.5 } }),
+      heavy('AAAA10002', { signals: { reviews: 3, workload: 4 } }),
+      heavy('AAAA10003', {}),
+    ])
+    expect(kinds(data, ['AAAA10001', 'AAAA10002', 'AAAA10003'])).toContain('heavy-term-rated')
+  })
+
+  it('flags a term with lots of class time, but not a normal one', () => {
+    const many = dataset(['AAAA10001', 'AAAA10002', 'AAAA10003', 'AAAA10004'].map((c) => heavy(c, { weekly_contact_hours: 6 })))
+    const normal = dataset(['AAAA10001', 'AAAA10002', 'AAAA10003', 'AAAA10004'].map((c) => heavy(c, { weekly_contact_hours: 3 })))
+    const codes = ['AAAA10001', 'AAAA10002', 'AAAA10003', 'AAAA10004']
+    expect(kinds(many, codes)).toContain('heavy-term-hours')
+    expect(kinds(normal, codes).some((k) => k.startsWith('heavy-term'))).toBe(false)
+  })
+
+  it('ignores ratings from fewer than three students', () => {
+    const data = dataset([heavy('AAAA10001', { signals: { reviews: 2, workload: 5 } }), heavy('AAAA10002', { signals: { reviews: 1, workload: 5 } })])
+    expect(kinds(data, ['AAAA10001', 'AAAA10002']).some((k) => k.startsWith('heavy-term'))).toBe(false)
+  })
+})

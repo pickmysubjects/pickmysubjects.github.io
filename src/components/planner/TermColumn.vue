@@ -2,7 +2,7 @@
 import { computed, shallowRef } from 'vue'
 import { X } from 'lucide-vue-next'
 import { periodsFor, type Issue, type PlanTerm, type Subject } from '@/engine'
-import { termLabel } from '@/i18n/format'
+import { issueText, termLabel } from '@/i18n/format'
 import { useI18n } from '@/i18n'
 import SubjectCard from './SubjectCard.vue'
 import SubjectPicker from './SubjectPicker.vue'
@@ -32,6 +32,11 @@ const { t } = useI18n()
 const dragOver = shallowRef(false)
 const points = computed(() => props.term.subjects.reduce((sum, c) => sum + (props.subjects[c]?.points ?? 0), 0))
 const overloaded = computed(() => points.value > props.load)
+// A gentle "this term looks heavy" note, from ratings or class hours.
+const heavy = computed(() => {
+  const issue = props.termIssues.find((i) => i.kind.startsWith('heavy-term'))
+  return issue ? issueText(t.value, issue, [], []) : null
+})
 const fill = computed(() => `${Math.min(100, (points.value / props.load) * 100)}%`)
 
 /** "S1 only" / "S2 only" for subjects that run in a single semester (pain point: when is it offered?). */
@@ -76,6 +81,7 @@ function onDrop(event: DragEvent): void {
         <X :size="14" aria-hidden="true" />
       </button>
       <span class="term-points" :class="{ 'term-points-over': overloaded }">{{ points }} / {{ load }}</span>
+      <span v-if="heavy" class="term-heavy" :title="heavy" tabindex="0" role="note" :aria-label="heavy">{{ t('plan.heavy') }}</span>
       <span class="term-bar" aria-hidden="true"><span class="term-bar-fill" :style="{ width: fill }" /></span>
     </header>
     <SubjectCard
@@ -172,5 +178,15 @@ function onDrop(event: DragEvent): void {
   font-size: 0.8rem;
   color: var(--ink-soft);
   text-align: center;
+}
+.term-heavy {
+  order: 3;
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: var(--warn-soft);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--warn);
+  cursor: help;
 }
 </style>

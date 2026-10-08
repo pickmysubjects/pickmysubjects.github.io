@@ -231,4 +231,19 @@ function onMoveBy(code: string, from: number, delta: number): void {
   font-size: 0.8rem;
   white-space: nowrap;
 }
+/* On paper the terms wrap into rows instead of scrolling sideways (the route lines are dropped). */
+@media print {
+  .map {
+    overflow: visible;
+  }
+
+  .track {
+    flex-wrap: wrap;
+    width: auto;
+  }
+
+  .routes {
+    display: none;
+  }
+}
 </style>
