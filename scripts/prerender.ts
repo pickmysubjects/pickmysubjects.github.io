@@ -165,6 +165,9 @@ function subjectPage(code: LocaleCode, s: Subject): Page {
     `<p>${esc(t('seo.facts', facts))} · ${esc(runs(t, s, listSep(code)))}</p>`,
     `<h2>${esc(t('subject.needs'))}</h2><p>${esc(prereq)}</p>`,
   ]
+  // The subjects named in the prerequisites, as links (only ones that have a page).
+  const needLinks = referencedSubjects(s.prerequisites).filter((c) => data.subjects[c])
+  if (needLinks.length) parts.push(`<ul>${needLinks.map((c) => `<li>${subjectLink(code, c)}</li>`).join('')}</ul>`)
   if (leads.length) parts.push(`<h2>${esc(t('subject.unlocks'))}</h2><ul>${leads.map((c) => `<li>${subjectLink(code, c)}</li>`).join('')}</ul>`)
   if (blocks.length) parts.push(`<h2>${esc(t('subject.blocks'))}</h2><ul>${blocks.map((c) => `<li>${subjectLink(code, c)}</li>`).join('')}</ul>`)
   if (assess) parts.push(`<h2>${esc(t('assess.title'))}</h2><p>${esc(assess)}</p>`)
@@ -230,7 +233,7 @@ function mainPages(code: LocaleCode): Page[] {
       path: 'about',
       title: `${t('about.title')} | Subject Compass`,
       description: `${t('about.me')} ${t('about.aim')}`,
-      body: `<h1>${esc(t('about.title'))}</h1><p>${esc(t('about.me'))}</p><p>${esc(t('about.why'))}</p><p>${esc(t('about.aim'))}</p>`,
+      body: `<h1>${esc(t('about.title'))}</h1><p>${esc(t('about.me'))}</p><p>${esc(t('about.why'))}</p><p>${esc(t('about.aim'))}</p><h2>${esc(t('about.dataTitle'))}</h2><ul>${['dataFacts', 'dataRatings', 'dataDiscuss', 'dataSuggest'].map((k) => `<li>${esc(t(`about.${k}`))}</li>`).join('')}</ul>`,
     },
     simple('contribute', 'contribute.title', 'contribute.lede'),
     simple('feedback', 'feedback.title', 'feedback.lede'),

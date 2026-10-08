@@ -533,6 +533,11 @@ export const en = {
     helpTitle: 'How you can help',
     help: 'The site gets better with every rating and every subject added. If you’ve finished a subject, a one-minute rating helps the next person choose.',
     helpRate: 'Rate a subject',
+    dataTitle: 'Where the information comes from',
+    dataFacts: 'Subject facts (when it runs, prerequisites, assessment, contact hours) come from the official University of Melbourne Handbook and are checked by hand.',
+    dataRatings: 'Ratings come from students on this site, anonymously, and are shown only once a subject has at least 3.',
+    dataDiscuss: '“What students say online” summarises public reviews on other sites, with a link to the source. It is not scored and never mixed into our ratings.',
+    dataSuggest: 'Suggestions rank subjects by your interests, strengths and marks, plus ratings when there are enough, and only include subjects you can take and that run soon.',
   },
   privacy: {
     title: 'Privacy',

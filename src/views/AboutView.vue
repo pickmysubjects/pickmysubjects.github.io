@@ -40,6 +40,16 @@ const features = [
       </ul>
     </section>
 
+    <section>
+      <h2 class="about-h2">{{ t('about.dataTitle') }}</h2>
+      <ul class="about-list">
+        <li>{{ t('about.dataFacts') }}</li>
+        <li>{{ t('about.dataRatings') }}</li>
+        <li>{{ t('about.dataDiscuss') }}</li>
+        <li>{{ t('about.dataSuggest') }}</li>
+      </ul>
+    </section>
+
     <section class="about-promises surface">
       <h2 class="about-h2">{{ t('about.promisesTitle') }}</h2>
       <ul>
@@ -130,6 +140,14 @@ const features = [
   margin-top: 4px;
   font-size: 0.92rem;
   color: var(--ink-soft);
+}
+
+.about-list {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding-left: 20px;
+  line-height: 1.6;
 }
 
 .about-promises {

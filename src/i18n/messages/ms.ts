@@ -529,6 +529,11 @@ export const ms: Messages = {
     helpTitle: 'Cara anda boleh membantu',
     help: 'Setiap penilaian dan setiap subjek yang ditambah menjadikan laman ini lebih berguna. Jika anda sudah menamatkan sesuatu subjek, penilaian seminit membantu orang seterusnya memilih.',
     helpRate: 'Nilai subjek',
+    dataTitle: 'Dari mana maklumat ini',
+    dataFacts: 'Fakta subjek (semester, prasyarat, penilaian, jam kelas) diambil daripada Handbook rasmi University of Melbourne dan disemak secara manual.',
+    dataRatings: 'Penilaian datang daripada pelajar di laman ini secara tanpa nama, dan hanya dipaparkan apabila sesuatu subjek ada sekurang-kurangnya 3.',
+    dataDiscuss: '“Kata pelajar dalam talian” meringkaskan ulasan awam di laman lain, dengan pautan ke sumber. Ia tidak diberi skor dan tidak dicampur dengan penilaian kami.',
+    dataSuggest: 'Cadangan disusun mengikut minat, kekuatan dan markah anda, serta penilaian jika mencukupi, dan hanya merangkumi subjek yang boleh anda ambil dan akan ditawarkan.',
   },
   privacy: {
     title: 'Privasi',

@@ -529,6 +529,11 @@ export const id: Messages = {
     helpTitle: 'Cara kamu bisa membantu',
     help: 'Setiap penilaian dan setiap mata kuliah yang ditambahkan membuat situs ini lebih berguna. Kalau kamu sudah menyelesaikan sebuah mata kuliah, satu menit memberi nilai membantu orang berikutnya memilih.',
     helpRate: 'Beri nilai mata kuliah',
+    dataTitle: 'Dari mana informasinya',
+    dataFacts: 'Fakta mata kuliah (semester, prasyarat, penilaian, jam kelas) berasal dari Handbook resmi University of Melbourne dan dicek manual.',
+    dataRatings: 'Penilaian berasal dari mahasiswa di situs ini secara anonim, dan baru ditampilkan setelah ada minimal 3.',
+    dataDiscuss: '“Kata mahasiswa di internet” merangkum ulasan publik di situs lain, dengan tautan ke sumbernya. Tidak diberi skor dan tidak dicampur dengan penilaian kami.',
+    dataSuggest: 'Saran diurutkan menurut minat, kekuatan dan nilaimu, ditambah penilaian bila cukup, dan hanya berisi mata kuliah yang bisa kamu ambil dan segera dibuka.',
   },
   privacy: {
     title: 'Privasi',

@@ -529,6 +529,11 @@ export const vi: Messages = {
     helpTitle: 'Bạn có thể giúp thế nào',
     help: 'Mỗi đánh giá, mỗi môn học được thêm vào đều làm trang hữu ích hơn. Nếu bạn đã học xong một môn, một phút đánh giá sẽ giúp người sau chọn môn.',
     helpRate: 'Đánh giá một môn',
+    dataTitle: 'Thông tin lấy từ đâu',
+    dataFacts: 'Thông tin môn học (học kỳ mở, môn tiên quyết, cách đánh giá, số giờ học) lấy từ Handbook chính thức của Đại học Melbourne và được kiểm tra thủ công.',
+    dataRatings: 'Điểm đánh giá đến từ sinh viên trên trang này, ẩn danh, và chỉ hiển thị khi một môn có ít nhất 3 đánh giá.',
+    dataDiscuss: '“Sinh viên nói gì trên mạng” tóm tắt các đánh giá công khai trên trang khác, kèm liên kết nguồn. Không chấm điểm và không gộp vào đánh giá của trang.',
+    dataSuggest: 'Gợi ý xếp hạng môn theo sở thích, thế mạnh và điểm của bạn, cùng điểm đánh giá khi đủ nhiều, và chỉ gồm các môn bạn học được và sắp mở.',
   },
   privacy: {
     title: 'Quyền riêng tư',
