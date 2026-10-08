@@ -62,7 +62,7 @@ function overall(subject: Subject): number | null {
   return parts.length ? Math.round((parts.reduce((a, b) => a + b, 0) / parts.length) * 10) / 10 : null
 }
 
-export function browseRow(subject: Subject, year: number): BrowseRow {
+function browseRow(subject: Subject, year: number): BrowseRow {
   return {
     subject,
     periods: periodsFor(subject, year),
