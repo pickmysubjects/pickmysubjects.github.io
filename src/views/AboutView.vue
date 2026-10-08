@@ -1,13 +1,14 @@
 <script setup lang="ts">
+import { link } from '@/composables/useView'
 import { BookOpen, Route, Sparkles, Star } from 'lucide-vue-next'
 import { useI18n } from '@/i18n'
 
 const { t } = useI18n()
 const features = [
-  { key: 'lookup', icon: BookOpen, href: '#/' },
-  { key: 'plan', icon: Route, href: '#/plan' },
-  { key: 'suggest', icon: Sparkles, href: '#/recommend' },
-  { key: 'rate', icon: Star, href: '#/record' },
+  { key: 'lookup', icon: BookOpen, href: link('') },
+  { key: 'plan', icon: Route, href: link('plan') },
+  { key: 'suggest', icon: Sparkles, href: link('recommend') },
+  { key: 'rate', icon: Star, href: link('record') },
 ] as const
 </script>
 
@@ -52,9 +53,9 @@ const features = [
       <h2 class="about-h2">{{ t('about.helpTitle') }}</h2>
       <p class="about-help">{{ t('about.help') }}</p>
       <p class="about-actions">
-        <a class="button button-accent" href="#/record">{{ t('about.helpRate') }}</a>
-        <a class="button button-quiet" href="#/contribute">{{ t('nav.contribute') }}</a>
-        <a class="button button-quiet" href="#/feedback">{{ t('nav.feedback') }}</a>
+        <a class="button button-accent" :href="link('record')">{{ t('about.helpRate') }}</a>
+        <a class="button button-quiet" :href="link('contribute')">{{ t('nav.contribute') }}</a>
+        <a class="button button-quiet" :href="link('feedback')">{{ t('nav.feedback') }}</a>
       </p>
     </section>
   </article>

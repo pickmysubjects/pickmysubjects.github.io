@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { link } from '@/composables/useView'
 import { computed } from 'vue'
 import { periodsFor } from '@/engine'
 import { useDataset } from '@/composables/useDataset'
@@ -28,7 +29,7 @@ const stops = computed(() =>
   <figure v-if="stops.length > 1" class="route">
     <ol class="route-line">
       <li v-for="(s, i) in stops" :key="s.code" class="stop" :class="{ 'stop-here': i === 0 }">
-        <a class="stop-link" :href="`#/subject/${s.code}`">
+        <a class="stop-link" :href="link(`subject/${s.code}`)">
           <span class="stop-dot" aria-hidden="true" />
           <span class="stop-year">{{ t('home.year', { n: s.level }) }}</span>
           <span class="stop-code code">{{ s.code }}</span>

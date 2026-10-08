@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { link } from '@/composables/useView'
 import { computed } from 'vue'
 import type { Recommendation, Subject } from '@/engine'
 import { useI18n } from '@/i18n'
@@ -32,7 +33,7 @@ const prereqText = computed(() => {
     <header class="rec-head">
       <div class="rec-name">
         <span class="code rec-code">{{ rec.code }}</span>
-        <h3 class="rec-title"><a class="rec-link" :href="`#/subject/${rec.code}`">{{ rec.title }}</a></h3>
+        <h3 class="rec-title"><a class="rec-link" :href="link(`subject/${rec.code}`)">{{ rec.title }}</a></h3>
       </div>
       <div class="rec-score" :aria-label="t('suggest.fit', { score: rec.score, confidence })" :title="t('suggest.fitHint')">
         <span class="rec-score-num">{{ rec.score }}</span>

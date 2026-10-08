@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { link } from '@/composables/useView'
 import { computed } from 'vue'
 import { Info } from 'lucide-vue-next'
 import { useDataset } from '@/composables/useDataset'
@@ -17,7 +18,7 @@ const count = computed(() => Object.keys(data.value.subjects).length)
     </p>
     <p v-else class="notice-text">
       <strong>{{ t('data.badgeReal') }}</strong> — {{ t('data.realShort', { n: count }) }}
-      <a href="#/contribute">{{ t('data.realLink') }}</a>
+      <a :href="link('contribute')">{{ t('data.realLink') }}</a>
     </p>
     <button class="notice-switch" type="button" @click="setDataset(name === 'demo' ? 'real' : 'demo')">
       {{ name === 'demo' ? t('data.switchToReal') : t('data.switchToDemo') }}

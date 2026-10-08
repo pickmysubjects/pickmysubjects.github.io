@@ -30,8 +30,9 @@ const contentSecurityPolicy = (): Plugin => ({
 
 export default defineConfig({
   plugins: [vue(), contentSecurityPolicy()],
-  // Relative base so the static build works from any path (e.g. GitHub Pages).
-  base: './',
+  // The site is served from /subject-compass/ on GitHub Pages. Pages have real
+  // addresses (/subject-compass/subject/COMP30027), so assets need an absolute base.
+  base: '/subject-compass/',
   resolve: {
     alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) },
   },

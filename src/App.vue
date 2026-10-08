@@ -11,7 +11,7 @@ import ContributeView from './views/ContributeView.vue'
 import FeedbackView from './views/FeedbackView.vue'
 import PrivacyView from './views/PrivacyView.vue'
 import AboutView from './views/AboutView.vue'
-import { useView } from './composables/useView'
+import { useView, link } from './composables/useView'
 import { useI18n } from './i18n'
 
 const { view, param } = useView()
@@ -37,10 +37,10 @@ const plannerUrl =
   <footer class="footer">
     <div class="footer-inner shell">
       <nav class="footer-links" :aria-label="t('nav.more')">
-        <a href="#/about">{{ t('app.about') }}</a>
-        <a href="#/contribute">{{ t('nav.contribute') }}</a>
-        <a href="#/feedback">{{ t('nav.feedback') }}</a>
-        <a href="#/privacy">{{ t('app.privacy') }}</a>
+        <a :href="link('about')">{{ t('app.about') }}</a>
+        <a :href="link('contribute')">{{ t('nav.contribute') }}</a>
+        <a :href="link('feedback')">{{ t('nav.feedback') }}</a>
+        <a :href="link('privacy')">{{ t('app.privacy') }}</a>
         <a href="https://github.com/subject-compass/subject-compass" target="_blank" rel="noopener">GitHub</a>
       </nav>
       <p class="footer-note">
@@ -52,7 +52,7 @@ const plannerUrl =
             <a :href="plannerUrl" target="_blank" rel="noopener">{{ t('app.planner') }}</a>
           </template>
           <template #feedback>
-            <a href="#/feedback">{{ t('app.suggest') }}</a>
+            <a :href="link('feedback')">{{ t('app.suggest') }}</a>
           </template>
         </Interp>
       </p>

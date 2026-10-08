@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { link } from '@/composables/useView'
 import { computed } from 'vue'
 import { ArrowRight, BookOpen, Route, Sparkles, Star } from 'lucide-vue-next'
 import SubjectSearch from '@/components/SubjectSearch.vue'
@@ -15,10 +16,10 @@ const examples = computed(() => exampleSubjects(subjectList.value, 3).map((s) =>
 
 // What a student does, in the order they usually do it.
 const steps = [
-  { icon: BookOpen, title: 'home.cardSubject', text: 'home.cardSubjectText', href: '#/subject/COMP10001' },
-  { icon: Route, title: 'home.cardPlan', text: 'home.cardPlanText', href: '#/plan' },
-  { icon: Sparkles, title: 'home.cardForYou', text: 'home.cardForYouText', href: '#/recommend' },
-  { icon: Star, title: 'about.f.rate', text: 'about.f.rateText', href: '#/record' },
+  { icon: BookOpen, title: 'home.cardSubject', text: 'home.cardSubjectText', href: link('subject/COMP10001') },
+  { icon: Route, title: 'home.cardPlan', text: 'home.cardPlanText', href: link('plan') },
+  { icon: Sparkles, title: 'home.cardForYou', text: 'home.cardForYouText', href: link('recommend') },
+  { icon: Star, title: 'about.f.rate', text: 'about.f.rateText', href: link('record') },
 ] as const
 </script>
 
@@ -32,7 +33,7 @@ const steps = [
       <SubjectSearch class="hero-search" />
       <p v-if="examples.length" class="hero-try">
         {{ t('home.tryLabel') }}
-        <a v-for="c in examples" :key="c" class="code" :href="`#/subject/${c}`">{{ c }}</a>
+        <a v-for="c in examples" :key="c" class="code" :href="link(`subject/${c}`)">{{ c }}</a>
       </p>
     </section>
 

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { link } from '@/composables/useView'
 import LangMenu from './LangMenu.vue'
 import SubjectSearch from '../SubjectSearch.vue'
 import { NAV_ITEMS } from './nav'
@@ -12,7 +13,7 @@ const { t } = useI18n()
 <template>
   <header class="header">
     <div class="header-inner shell">
-      <a class="brand" href="#/">
+      <a class="brand" :href="link('')">
         <svg class="mark" viewBox="0 0 24 24" aria-hidden="true">
           <circle cx="12" cy="12" r="9.5" />
           <path d="M12 4.5 L14.6 12 L12 19.5 L9.4 12 Z" />
@@ -25,7 +26,7 @@ const { t } = useI18n()
           v-for="item in NAV_ITEMS"
           :key="item.view"
           class="nav-link"
-          :href="`#/${item.view === 'home' ? '' : item.view}`"
+          :href="link(`${item.view === 'home' ? '' : item.view}`)"
           :aria-current="view === item.view ? 'page' : undefined"
         >
           <component :is="item.icon" :size="16" aria-hidden="true" />

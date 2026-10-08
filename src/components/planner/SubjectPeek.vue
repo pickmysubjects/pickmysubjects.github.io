@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { link } from '@/composables/useView'
 import { computed, onMounted, useTemplateRef } from 'vue'
 import { CalendarRange, ExternalLink, X } from 'lucide-vue-next'
 import { periodsFor, referencedSubjects, type Subject } from '@/engine'
@@ -143,7 +144,7 @@ function onClick(event: MouseEvent): void {
       </template>
 
       <footer class="peek-actions">
-        <a class="button button-accent" :href="`#/subject/${code}`">
+        <a class="button button-accent" :href="link(`subject/${code}`)">
           {{ t('subject.fullPage') }} <ExternalLink :size="15" aria-hidden="true" />
         </a>
         <button class="button button-quiet" type="button" @click="dialog?.close()">{{ t('subject.close') }}</button>

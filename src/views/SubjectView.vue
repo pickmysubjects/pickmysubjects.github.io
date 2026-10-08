@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { link } from '@/composables/useView'
 import { computed, shallowRef } from 'vue'
 import { ArrowLeft, CalendarRange, Check, ExternalLink, Plus, Star } from 'lucide-vue-next'
 import DataNotice from '@/components/DataNotice.vue'
@@ -93,7 +94,7 @@ const links = computed(() => (name.value === 'real' ? discussionLinks(code.value
 
 <template>
   <div class="subject">
-    <a class="back" href="#/"><ArrowLeft :size="16" aria-hidden="true" /> {{ t('subject.back') }}</a>
+    <a class="back" :href="link('')"><ArrowLeft :size="16" aria-hidden="true" /> {{ t('subject.back') }}</a>
 
     <template v-if="subject">
       <header class="head">
@@ -131,7 +132,7 @@ const links = computed(() => (name.value === 'real' ? discussionLinks(code.value
           <p v-else-if="subject.prerequisites === 'unknown'" class="panel-text muted">{{ t('subject.notRecorded') }}</p>
           <p v-else class="panel-text">{{ describeReq(t, subject.prerequisites) }}</p>
           <p v-if="subject.prerequisites !== 'none' && subject.prerequisites !== 'unknown'" class="links-inline">
-            <a v-for="c in referencedSubjects(subject.prerequisites)" :key="c" class="chip code" :href="`#/subject/${c}`">{{ c }}</a>
+            <a v-for="c in referencedSubjects(subject.prerequisites)" :key="c" class="chip code" :href="link(`subject/${c}`)">{{ c }}</a>
           </p>
         </section>
 
@@ -139,12 +140,12 @@ const links = computed(() => (name.value === 'real' ? discussionLinks(code.value
           <h2 class="panel-title">{{ t('subject.unlocks') }}</h2>
           <p v-if="unlocks.length === 0" class="panel-text muted">{{ t('subject.unlocksNone') }}</p>
           <p v-else class="links-inline">
-            <a v-for="c in unlocks" :key="c" class="chip code" :href="`#/subject/${c}`">{{ c }}</a>
+            <a v-for="c in unlocks" :key="c" class="chip code" :href="link(`subject/${c}`)">{{ c }}</a>
           </p>
           <template v-if="blocks.length">
             <h2 class="panel-title panel-title-gap">{{ t('subject.blocks') }}</h2>
             <p class="links-inline">
-              <a v-for="c in blocks" :key="c" class="chip code" :href="`#/subject/${c}`">{{ c }}</a>
+              <a v-for="c in blocks" :key="c" class="chip code" :href="link(`subject/${c}`)">{{ c }}</a>
             </p>
           </template>
         </section>
@@ -192,14 +193,14 @@ const links = computed(() => (name.value === 'real' ? discussionLinks(code.value
 
       <p class="verified">
         {{ subject.verifiedOn ? t('subject.verified', { date: subject.verifiedOn }) : t('subject.unverified') }}
-        · <a :href="`#/feedback?topic=data&subject=${subject.code}`">{{ t('suggest.report') }}</a>
+        · <a :href="link(`feedback?topic=data&subject=${subject.code}`)">{{ t('suggest.report') }}</a>
       </p>
     </template>
 
     <section v-else class="missing surface">
       <h1 class="page-title">{{ code ? t('subject.notFound', { code }) : t('subject.searchFirst') }}</h1>
       <p class="page-lede">{{ t('subject.notFoundText') }}</p>
-      <a class="button button-accent" href="#/contribute">{{ t('subject.addIt') }}</a>
+      <a class="button button-accent" :href="link('contribute')">{{ t('subject.addIt') }}</a>
     </section>
 
     <DataNotice />

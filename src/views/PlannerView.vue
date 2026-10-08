@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { link } from '@/composables/useView'
 import { computed, shallowRef } from 'vue'
 import { CircleCheck, Pencil, RotateCcw, TriangleAlert } from 'lucide-vue-next'
 import PlanWizard from '@/components/planner/PlanWizard.vue'
@@ -113,7 +114,7 @@ function finishWizard(setup: PlanSetup): void {
       <p v-if="startedWithoutRecord" class="started">
         <Interp :text="t('plan.started')">
           <template #record>
-            <a href="#/record">{{ t('nav.record') }}</a>
+            <a :href="link('record')">{{ t('nav.record') }}</a>
           </template>
         </Interp>
       </p>

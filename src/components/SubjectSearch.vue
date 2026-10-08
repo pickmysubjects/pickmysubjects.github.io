@@ -2,7 +2,7 @@
 import { computed, shallowRef, useId } from 'vue'
 import { Search } from 'lucide-vue-next'
 import { useDataset } from '@/composables/useDataset'
-import { go } from '@/composables/useView'
+import { go, link } from '@/composables/useView'
 import { useI18n } from '@/i18n'
 
 const props = defineProps<{ compact?: boolean }>()
@@ -37,14 +37,14 @@ function onEnter(): void {
 // Sends a missing subject to the feedback form, with the code filled in when it looks like one.
 const missingHref = computed(() => {
   const q = query.value.trim().toUpperCase()
-  return /^[A-Z]{4}\d{5}$/.test(q) ? `#/feedback?topic=data&subject=${q}` : '#/feedback?topic=data'
+  return /^[A-Z]{4}\d{5}$/.test(q) ? `feedback?topic=data&subject=${q}` : 'feedback?topic=data'
 })
 
 function reportMissing(): void {
   const href = missingHref.value
   query.value = ''
   open.value = false
-  go(href.slice(2))
+  go(href)
 }
 
 // Typing again after a pick (focus never left the box) should reopen the list.
@@ -95,7 +95,7 @@ function move(delta: number): void {
       </li>
       <li v-if="results.length === 0" class="result result-empty">
         {{ t('home.noResults', { q: query.trim() }) }}
-        <a class="result-missing" :href="missingHref" @mousedown.prevent="reportMissing">{{ t('home.missing') }}</a>
+        <a class="result-missing" :href="link(missingHref)" @mousedown.prevent="reportMissing">{{ t('home.missing') }}</a>
       </li>
     </ul>
   </div>

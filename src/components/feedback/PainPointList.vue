@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { link } from '@/composables/useView'
 import { PAIN_POINTS } from '@/painPoints'
 import { useI18n } from '@/i18n'
 
@@ -14,7 +15,7 @@ const { t } = useI18n()
       <h3 class="pain-question">{{ t(`pain.${p.id}.q`) }}</h3>
       <p class="pain-answer">{{ t(`pain.${p.id}.a`) }}</p>
       <span class="pain-actions">
-        <a v-if="p.view" :href="`#/${p.view}`">{{ t('feedback.tryIt') }}</a>
+        <a v-if="p.view" :href="link(`${p.view}`)">{{ t('feedback.tryIt') }}</a>
         <button class="pain-feedback" type="button" @click="emit('choose', p.id)">{{ t('feedback.give') }}</button>
       </span>
     </li>

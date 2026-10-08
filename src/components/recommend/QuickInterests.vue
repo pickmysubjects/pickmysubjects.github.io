@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { link } from '@/composables/useView'
 import Interp from '@/components/Interp.vue'
 import TopicChips from '@/components/profile/TopicChips.vue'
 import { useDataset } from '@/composables/useDataset'
@@ -23,7 +24,7 @@ function scrollToList(): void {
     <p class="quick-hint">
       <Interp :text="t('suggest.quickHint')">
         <template #link>
-          <a href="#/record">{{ t('nav.record') }}</a>
+          <a :href="link('record')">{{ t('nav.record') }}</a>
         </template>
       </Interp>
     </p>

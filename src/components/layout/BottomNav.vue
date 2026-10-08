@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { link } from '@/composables/useView'
 import type { View } from '@/composables/useView'
 import { useI18n } from '@/i18n'
 import { NAV_ITEMS } from './nav'
@@ -13,7 +14,7 @@ const { t } = useI18n()
       v-for="item in NAV_ITEMS"
       :key="item.view"
       class="tab"
-      :href="`#/${item.view === 'home' ? '' : item.view}`"
+      :href="link(`${item.view === 'home' ? '' : item.view}`)"
       :aria-current="view === item.view ? 'page' : undefined"
     >
       <component :is="item.icon" :size="20" aria-hidden="true" />

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { link } from '@/composables/useView'
 import { computed } from 'vue'
 import { Sparkles } from 'lucide-vue-next'
 import { recommend } from '@/engine'
@@ -31,10 +32,10 @@ const top = computed(() =>
     <p v-if="!hasInput" class="preview-empty">{{ t('record.previewEmpty') }}</p>
     <ol v-else class="preview-list">
       <li v-for="r in top" :key="r.code">
-        <a :href="`#/subject/${r.code}`"><span class="code">{{ r.code }}</span> {{ r.title }}</a>
+        <a :href="link(`subject/${r.code}`)"><span class="code">{{ r.code }}</span> {{ r.title }}</a>
       </li>
     </ol>
-    <a class="preview-more" href="#/recommend">{{ t('record.previewMore') }}</a>
+    <a class="preview-more" :href="link('recommend')">{{ t('record.previewMore') }}</a>
   </section>
 </template>
 

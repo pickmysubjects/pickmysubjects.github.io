@@ -2,7 +2,7 @@
 import { shallowRef, useTemplateRef, watch } from 'vue'
 import PainPointList from '@/components/feedback/PainPointList.vue'
 import FeedbackForm from '@/components/feedback/FeedbackForm.vue'
-import { useView } from '@/composables/useView'
+import { useView, link } from '@/composables/useView'
 import { OTHER_TOPICS, type FeedbackDraft } from '@/utils/feedback'
 import { PAIN_POINTS } from '@/painPoints'
 import Interp from '@/components/Interp.vue'
@@ -14,7 +14,7 @@ const form = useTemplateRef<HTMLElement>('formSection')
 
 const draft = shallowRef<FeedbackDraft>({ topic: 'fit-me', rating: null, message: '', subject: '', contact: '' })
 
-// Links like #/feedback?topic=data&subject=COMP30027 prefill the form.
+// Links like /feedback?topic=data&subject=COMP30027 prefill the form.
 watch(
   query,
   (q) => {
@@ -55,7 +55,7 @@ function choose(id: string): void {
       <p>
         <Interp :text="t('feedback.codeText')">
           <template #link>
-            <a href="#/contribute">{{ t('feedback.codeLink') }}</a>
+            <a :href="link('contribute')">{{ t('feedback.codeLink') }}</a>
           </template>
         </Interp>
       </p>
