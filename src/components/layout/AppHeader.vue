@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { link } from '@/composables/useView'
 import LangMenu from './LangMenu.vue'
+import AppLogo from '../AppLogo.vue'
 import SubjectSearch from '../SubjectSearch.vue'
 import { NAV_ITEMS } from './nav'
 import type { View } from '@/composables/useView'
@@ -14,10 +15,7 @@ const { t } = useI18n()
   <header class="header">
     <div class="header-inner shell">
       <a class="brand" :href="link('')">
-        <svg class="mark" viewBox="0 0 24 24" aria-hidden="true">
-          <circle cx="12" cy="12" r="9.5" />
-          <path d="M12 4.5 L14.6 12 L12 19.5 L9.4 12 Z" />
-        </svg>
+        <AppLogo class="mark" />
         <span class="brand-name">Subject Compass</span>
         <span class="badge">{{ t('app.unofficial') }}</span>
       </a>
@@ -46,9 +44,17 @@ const { t } = useI18n()
   position: sticky;
   top: 0;
   z-index: 20;
-  border-bottom: 1px solid var(--line);
-  background: color-mix(in srgb, var(--bg) 82%, transparent);
-  backdrop-filter: saturate(160%) blur(14px);
+  border-bottom: 1px solid rgb(255 255 255 / 55%);
+  background: rgb(255 255 255 / 45%);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+}
+
+@media (prefers-color-scheme: dark) {
+  .header {
+    border-bottom-color: rgb(255 255 255 / 8%);
+    background: rgb(20 18 26 / 55%);
+  }
 }
 
 .header-inner {
@@ -74,16 +80,8 @@ const { t } = useI18n()
 }
 
 .mark {
-  width: 24px;
-  height: 24px;
-  fill: none;
-  stroke: var(--accent);
-  stroke-width: 2;
-}
-
-.mark path {
-  fill: var(--accent);
-  stroke: none;
+  width: 30px;
+  height: 30px;
 }
 
 .badge {
@@ -101,7 +99,7 @@ const { t } = useI18n()
   padding: 4px;
   border: 1px solid var(--line);
   border-radius: 999px;
-  background: var(--surface);
+  background: rgb(255 255 255 / 55%);
 }
 
 .nav-link {

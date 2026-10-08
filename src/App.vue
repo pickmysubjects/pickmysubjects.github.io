@@ -2,6 +2,7 @@
 import AppHeader from './components/layout/AppHeader.vue'
 import BottomNav from './components/layout/BottomNav.vue'
 import Interp from './components/Interp.vue'
+import AppLogo from './components/AppLogo.vue'
 import HomeView from './views/HomeView.vue'
 import SubjectView from './views/SubjectView.vue'
 import PlannerView from './views/PlannerView.vue'
@@ -44,7 +45,12 @@ const plannerUrl =
 </script>
 
 <template>
-  <div class="backdrop" aria-hidden="true" />
+  <div class="backdrop" aria-hidden="true">
+    <span class="blob blob-1" />
+    <span class="blob blob-2" />
+    <span class="blob blob-3" />
+    <AppLogo class="backdrop-mark" />
+  </div>
   <AppHeader :view="view" />
   <main class="app-main shell">
     <HomeView v-if="view === 'home'" />

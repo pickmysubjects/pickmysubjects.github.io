@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { link } from '@/composables/useView'
 import { computed } from 'vue'
-import { ArrowRight, BookOpen, Route, Sparkles, Star } from 'lucide-vue-next'
+import { ArrowRight, Check, Route, Sparkles, User } from 'lucide-vue-next'
 import SubjectSearch from '@/components/SubjectSearch.vue'
 import DataNotice from '@/components/DataNotice.vue'
 import RouteLine from '@/components/home/RouteLine.vue'
 import { useDataset } from '@/composables/useDataset'
+import { usePlan } from '@/composables/usePlan'
+import { useProfile } from '@/composables/useProfile'
 import { useI18n } from '@/i18n'
 import { exampleSubjects } from '@/utils/showcase'
 
@@ -14,13 +16,32 @@ const { subjectList } = useDataset()
 
 const examples = computed(() => exampleSubjects(subjectList.value, 3).map((s) => s.code))
 
-// What a student does, in the order they usually do it.
-const steps = [
-  { icon: BookOpen, title: 'home.cardSubject', text: 'home.cardSubjectText', href: link('subject/COMP10001') },
-  { icon: Route, title: 'home.cardPlan', text: 'home.cardPlanText', href: link('plan') },
-  { icon: Sparkles, title: 'home.cardForYou', text: 'home.cardForYouText', href: link('recommend') },
-  { icon: Star, title: 'about.f.rate', text: 'about.f.rateText', href: link('record') },
-] as const
+// Three steps for a new student. Each shows a tick and what's done once it is.
+const { profile } = useProfile()
+const plan = usePlan()
+const steps = computed(() => {
+  const p = profile.value
+  const filled = p.results.length + Object.keys(p.skills).length + p.interests.length
+  return [
+    {
+      icon: User,
+      title: 'home.step1',
+      text: 'home.step1Text',
+      href: link('record'),
+      done: filled > 0,
+      status: filled > 0 ? t.value('home.step1Done', { results: p.results.length, interests: p.interests.length }) : t.value('home.optional'),
+    },
+    {
+      icon: Route,
+      title: 'home.step2',
+      text: 'home.step2Text',
+      href: link('plan'),
+      done: !plan.isEmpty.value,
+      status: plan.isEmpty.value ? '' : t.value('home.step2Done', { n: plan.plannedCodes.value.length }),
+    },
+    { icon: Sparkles, title: 'home.step3', text: 'home.step3Text', href: link('recommend'), done: false, status: '' },
+  ]
+})
 </script>
 
 <template>
@@ -28,7 +49,10 @@ const steps = [
     <div class="stage">
     <section class="hero">
       <p class="eyebrow">{{ t('home.eyebrow') }}</p>
-      <h1 class="hero-title">{{ t('home.title') }}</h1>
+      <!-- "|" marks where the title may break, so a phrase is never split mid-word. -->
+      <h1 class="hero-title">
+        <span v-for="(part, i) in t('home.title').split('|')" :key="i" class="hero-part">{{ part }}</span>
+      </h1>
       <p class="hero-lede">{{ t('home.lede') }}</p>
       <SubjectSearch class="hero-search" />
       <p v-if="examples.length" class="hero-try">
@@ -45,15 +69,21 @@ const steps = [
     <section class="steps" aria-labelledby="steps-title">
       <h2 id="steps-title" class="steps-title">{{ t('home.stepsTitle') }}</h2>
       <ol class="steps-list">
-        <li v-for="s in steps" :key="s.title">
-          <a class="step surface" :href="s.href">
-            <span class="step-icon"><component :is="s.icon" :size="20" aria-hidden="true" /></span>
+        <li v-for="(s, i) in steps" :key="s.title">
+          <a class="step surface" :class="{ 'step-done': s.done }" :href="s.href">
+            <span class="step-top">
+              <span class="step-icon"><component :is="s.icon" :size="20" aria-hidden="true" /></span>
+              <span class="step-num">{{ i + 1 }}</span>
+              <Check v-if="s.done" :size="18" class="step-tick" :aria-label="t('home.done')" />
+            </span>
             <span class="step-name">{{ t(s.title) }}</span>
             <span class="step-text">{{ t(s.text) }}</span>
+            <span v-if="s.status" class="step-status">{{ s.status }}</span>
             <ArrowRight :size="18" aria-hidden="true" class="step-go" />
           </a>
         </li>
       </ol>
+      <p class="steps-search">{{ t('home.justSearch') }}</p>
     </section>
 
     <DataNotice />
@@ -105,9 +135,24 @@ const steps = [
   color: var(--accent);
 }
 
+.hero-part {
+  display: inline-block;
+}
+
 .hero-title {
-  font-size: clamp(2.6rem, 7vw, 5rem);
-  line-height: 0.98;
+  max-width: 16em;
+  font-size: clamp(2.3rem, 5.6vw, 4.2rem);
+  line-height: 1.05;
+}
+
+/* Characters are wider than Latin letters: a size down reads the same weight. */
+:lang(zh-CN) .hero-title,
+:lang(zh-TW) .hero-title,
+:lang(ja) .hero-title,
+:lang(ko) .hero-title {
+  max-width: 12em;
+  font-size: clamp(1.9rem, 4.6vw, 3.5rem);
+  line-height: 1.2;
 }
 
 .hero-lede {
@@ -154,7 +199,7 @@ const steps = [
 
 .steps-list {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
   margin: 0;
   padding: 0;
@@ -199,9 +244,37 @@ li:nth-child(3) .step-icon {
   box-shadow: 0 8px 18px -8px rgb(109 93 252 / 60%);
 }
 
-li:nth-child(4) .step-icon {
-  background: linear-gradient(135deg, #fbbf24, #f97316);
-  box-shadow: 0 8px 18px -8px rgb(249 115 22 / 60%);
+.step-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.step-num {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--ink-faint);
+}
+
+.step-tick {
+  margin-left: auto;
+  color: var(--good);
+}
+
+.step-done {
+  border-color: var(--good-soft);
+}
+
+.step-status {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.steps-search {
+  margin-top: 14px;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
 }
 
 .step-name {
@@ -229,7 +302,7 @@ li:nth-child(4) .step-icon {
 
 @media (max-width: 900px) {
   .steps-list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 1fr;
   }
 
   .stage {

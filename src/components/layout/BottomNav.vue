@@ -36,9 +36,10 @@ const { t } = useI18n()
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     padding: 6px 8px calc(6px + env(safe-area-inset-bottom));
-    border-top: 1px solid var(--line);
-    background: color-mix(in srgb, var(--surface) 88%, transparent);
-    backdrop-filter: saturate(160%) blur(14px);
+    border-top: 1px solid rgb(255 255 255 / 60%);
+    background: rgb(255 255 255 / 55%);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
   }
 
   .tab {
@@ -58,6 +59,12 @@ const { t } = useI18n()
   .tab-label {
     font-size: 0.72rem;
     font-weight: 600;
+  }
+}
+@media (max-width: 720px) and (prefers-color-scheme: dark) {
+  .tabs {
+    border-top-color: rgb(255 255 255 / 8%);
+    background: rgb(20 18 26 / 60%);
   }
 }
 </style>

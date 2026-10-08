@@ -86,7 +86,8 @@
 body {
   margin: 0;
   min-height: 100vh;
-  background: var(--bg);
+  /* Transparent so the fixed colour field (.backdrop) shows through; the page colour lives on <html>. */
+  background: transparent;
 }
 
 h1,
@@ -95,6 +96,26 @@ h3 {
   margin: 0;
   line-height: 1.15;
   letter-spacing: -0.02em;
+}
+
+/* Even line lengths: no lone word (or lone 修) left on the last line of a heading. */
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+p,
+li {
+  text-wrap: pretty;
+}
+
+/* Chinese, Japanese and Korean: tight tracking cramps the characters. */
+:lang(zh-CN) :is(h1, h2, h3),
+:lang(zh-TW) :is(h1, h2, h3),
+:lang(ja) :is(h1, h2, h3),
+:lang(ko) :is(h1, h2, h3) {
+  letter-spacing: 0;
 }
 
 /* Every page title the same size and weight. */
@@ -299,69 +320,119 @@ textarea {
   font-family: var(--font-ui);
 }
 
-/* ---------- Depth: soft colour field behind every page + frosted glass surfaces ---------- */
+/* ---------- Depth: a soft colour field behind every page, seen through frosted glass ---------- */
 .backdrop {
   position: fixed;
   inset: 0;
   z-index: -1;
   overflow: hidden;
   pointer-events: none;
-  background: var(--bg);
+  background: linear-gradient(160deg, #fff5fa 0%, #f6f3ff 55%, #fff6ef 100%);
 }
 
-.backdrop::before,
-.backdrop::after {
-  content: '';
+.blob {
   position: absolute;
   border-radius: 50%;
-  filter: blur(90px);
-  opacity: 0.55;
+  filter: blur(80px);
+  opacity: 0.7;
 }
 
-.backdrop::before {
-  width: 720px;
-  height: 720px;
-  top: -260px;
-  left: -180px;
-  background: radial-gradient(circle, #f6c6de, transparent 65%);
+.blob-1 {
+  width: 620px;
+  height: 620px;
+  top: -200px;
+  left: -160px;
+  background: #f9c4dd;
 }
 
-.backdrop::after {
-  width: 820px;
-  height: 820px;
-  top: 10%;
-  right: -320px;
-  background: radial-gradient(circle, #cfd2ff, transparent 65%);
+.blob-2 {
+  width: 680px;
+  height: 680px;
+  top: 25%;
+  right: -260px;
+  background: #d6d3ff;
+}
+
+.blob-3 {
+  width: 560px;
+  height: 560px;
+  bottom: -240px;
+  left: 20%;
+  background: #ffdcc4;
+}
+
+/* The logo, large and faint, so the glass has something to show. */
+.backdrop-mark {
+  position: absolute;
+  right: -60px;
+  bottom: -40px;
+  width: 520px;
+  height: 520px;
+  opacity: 0.07;
+  transform: rotate(-12deg);
 }
 
 @media (prefers-color-scheme: dark) {
-  .backdrop::before {
-    background: radial-gradient(circle, #5a1f43, transparent 65%);
+  .backdrop {
+    background: linear-gradient(160deg, #150f17 0%, #11121c 55%, #17110e 100%);
   }
 
-  .backdrop::after {
-    background: radial-gradient(circle, #23285e, transparent 65%);
+  .blob {
+    opacity: 0.45;
+  }
+
+  .blob-1 {
+    background: #5a1f43;
+  }
+
+  .blob-2 {
+    background: #262a63;
+  }
+
+  .blob-3 {
+    background: #4a2a17;
+  }
+
+  .backdrop-mark {
+    opacity: 0.05;
   }
 }
 
+@media (max-width: 640px) {
+  .backdrop-mark {
+    width: 320px;
+    height: 320px;
+  }
+}
+
+/* iOS-style glass: translucent, blurred, with a light top edge. */
 .surface,
 .glass {
-  border: 1px solid color-mix(in srgb, #ffffff 70%, var(--line));
-  background: color-mix(in srgb, var(--surface) 72%, transparent);
-  backdrop-filter: saturate(170%) blur(18px);
-  -webkit-backdrop-filter: saturate(170%) blur(18px);
+  border: 1px solid rgb(255 255 255 / 65%);
+  background: rgb(255 255 255 / 52%);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
   box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 60%),
-    var(--shadow-1);
+    inset 0 1px 0 rgb(255 255 255 / 80%),
+    0 8px 32px -12px rgb(80 40 90 / 18%);
 }
 
 @media (prefers-color-scheme: dark) {
   .surface,
   .glass {
-    border-color: rgb(255 255 255 / 8%);
+    border-color: rgb(255 255 255 / 10%);
+    background: rgb(30 28 38 / 55%);
     box-shadow:
-      inset 0 1px 0 rgb(255 255 255 / 6%),
-      var(--shadow-1);
+      inset 0 1px 0 rgb(255 255 255 / 8%),
+      0 8px 32px -12px rgb(0 0 0 / 60%);
+  }
+}
+
+/* Older browsers without backdrop blur: keep text readable. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .surface,
+  .glass {
+    background: var(--surface);
   }
 }
 

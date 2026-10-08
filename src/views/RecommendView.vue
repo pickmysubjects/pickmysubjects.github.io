@@ -14,6 +14,9 @@ const { profile, setGoal } = useProfile()
 const plan = usePlan()
 
 const category = shallowRef('')
+// Ten at a time: a long wall of cards is hard to compare.
+const PAGE = 10
+const shown = shallowRef(PAGE)
 const termIndex = shallowRef(-1)
 
 const { t } = useI18n()
@@ -85,7 +88,7 @@ function value(event: Event): string {
       <p v-if="recs.length === 0" class="suggest-empty">{{ t('suggest.nothing') }}</p>
       <div id="suggestions" class="rec-list">
         <RecommendationCard
-          v-for="r in recs"
+          v-for="r in recs.slice(0, shown)"
           :key="r.code"
           :rec="r"
           :subject="data.subjects[r.code]"
@@ -93,6 +96,9 @@ function value(event: Event): string {
           @add="plan.addSubject(termIndex, r.code)"
         />
       </div>
+      <button v-if="recs.length > shown" class="button button-quiet more" type="button" @click="shown += PAGE">
+        {{ t('suggest.showMore', { n: Math.min(PAGE, recs.length - shown) }) }}
+      </button>
     </template>
   </div>
 </template>
@@ -173,5 +179,8 @@ function value(event: Event): string {
   margin: 4px 0 0;
   font-size: 0.85rem;
   color: var(--ink-soft);
+}
+.more {
+  justify-self: center;
 }
 </style>

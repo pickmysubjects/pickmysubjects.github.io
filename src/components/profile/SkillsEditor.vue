@@ -68,7 +68,7 @@ function pick(skill: Skill, level: number): void {
 
 .skill-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(360px, 100%), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(330px, 100%), 1fr));
   gap: 0 24px;
   margin: 0;
   padding: 0;

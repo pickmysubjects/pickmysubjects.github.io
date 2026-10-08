@@ -29,6 +29,10 @@ const extraTermsOnVisa = computed(
 )
 // Subject whose details are open in the quick-look dialog.
 const peek = shallowRef<string | null>(null)
+// Nothing in "Me" yet: electives can only be guessed, so point there (it's optional).
+const profileEmpty = computed(
+  () => profile.value.results.length === 0 && Object.keys(profile.value.skills).length === 0 && profile.value.interests.length === 0,
+)
 // Started before now but no record yet: the plan can't know what's done.
 const startedWithoutRecord = computed(() => {
   const { startYear: year, startPeriod: period } = plan.setup.value
@@ -113,6 +117,14 @@ function finishWizard(setup: PlanSetup): void {
 
       <p v-if="startedWithoutRecord" class="started">
         <Interp :text="t('plan.started')">
+          <template #record>
+            <a :href="link('record')">{{ t('nav.record') }}</a>
+          </template>
+        </Interp>
+      </p>
+
+      <p v-if="!startedWithoutRecord && profileEmpty" class="started">
+        <Interp :text="t('plan.fillRecord')">
           <template #record>
             <a :href="link('record')">{{ t('nav.record') }}</a>
           </template>

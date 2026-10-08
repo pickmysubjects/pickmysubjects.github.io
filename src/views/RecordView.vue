@@ -4,7 +4,8 @@ import ResultsEditor from '@/components/profile/ResultsEditor.vue'
 import SkillsEditor from '@/components/profile/SkillsEditor.vue'
 import TopicChips from '@/components/profile/TopicChips.vue'
 import SuggestionPreview from '@/components/profile/SuggestionPreview.vue'
-import { Download, Upload } from 'lucide-vue-next'
+import { ArrowRight, Download, Upload } from 'lucide-vue-next'
+import { link } from '@/composables/useView'
 import { downloadBackup, restoreBackup } from '@/utils/backup'
 import { useDataset } from '@/composables/useDataset'
 import { useProfile } from '@/composables/useProfile'
@@ -42,6 +43,9 @@ async function onRestore(event: Event): Promise<void> {
     <div class="record-body">
       <div class="record-col">
         <ResultsEditor class="results-card surface" v-model="results" :subjects="data.subjects" :options="options" />
+      </div>
+      <div class="record-col">
+        <SuggestionPreview />
         <section class="backup surface">
           <div>
             <h2 class="backup-title">{{ t('record.backupTitle') }}</h2>
@@ -59,11 +63,9 @@ async function onRestore(event: Event): Promise<void> {
           </div>
         </section>
       </div>
-      <div class="record-col">
-        <SuggestionPreview />
-        <SkillsEditor v-model:skills="skills" />
-      </div>
     </div>
+
+    <SkillsEditor v-model:skills="skills" />
 
     <section class="interests surface" aria-labelledby="interests-title">
       <header>
@@ -72,6 +74,10 @@ async function onRestore(event: Event): Promise<void> {
       </header>
       <TopicChips v-model="interests" :topics="topics" />
     </section>
+
+    <p class="next">
+      <a class="button button-accent" :href="link('plan')">{{ t('record.next') }} <ArrowRight :size="16" aria-hidden="true" /></a>
+    </p>
   </div>
 </template>
 
@@ -100,6 +106,11 @@ async function onRestore(event: Event): Promise<void> {
   display: grid;
   gap: 20px;
   align-content: start;
+}
+
+.next {
+  display: flex;
+  justify-content: flex-end;
 }
 
 .interests {

@@ -208,7 +208,7 @@ function mainPages(code: LocaleCode): Page[] {
       path: '',
       title: t('seo.homeTitle'),
       description: t('seo.homeDesc'),
-      body: `<h1>${esc(t('home.title'))}</h1><p>${esc(t('home.lede'))}</p>${intro}
+      body: `<h1>${esc(t('home.title').replace('|', ' '))}</h1><p>${esc(t('home.lede'))}</p>${intro}
 <ul><li><a href="${href(code, 'plan')}">${esc(t('home.cardPlan'))}</a>: ${esc(t('home.cardPlanText'))}</li>
 <li><a href="${href(code, 'recommend')}">${esc(t('home.cardForYou'))}</a>: ${esc(t('home.cardForYouText'))}</li>
 <li><a href="${href(code, 'about')}">${esc(t('about.title'))}</a></li></ul>
