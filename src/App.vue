@@ -12,6 +12,8 @@ import ContributeView from './views/ContributeView.vue'
 import FeedbackView from './views/FeedbackView.vue'
 import PrivacyView from './views/PrivacyView.vue'
 import AboutView from './views/AboutView.vue'
+import GuideView from './views/GuideView.vue'
+import BrowseView from './views/BrowseView.vue'
 import { watchEffect } from 'vue'
 import { useView, link } from './composables/useView'
 import { useDataset } from './composables/useDataset'
@@ -30,6 +32,8 @@ const TITLES: Partial<Record<string, string>> = {
   feedback: 'feedback.title',
   privacy: 'privacy.title',
   about: 'about.title',
+  guide: 'guide.title',
+  subjects: 'browse.title',
 }
 watchEffect(() => {
   const s = view.value === 'subject' ? data.value.subjects[param.value.toUpperCase()] : undefined
@@ -61,11 +65,15 @@ const plannerUrl =
     <ContributeView v-else-if="view === 'contribute'" />
     <FeedbackView v-else-if="view === 'feedback'" />
     <AboutView v-else-if="view === 'about'" />
+    <GuideView v-else-if="view === 'guide'" />
+    <BrowseView v-else-if="view === 'subjects'" />
     <PrivacyView v-else />
   </main>
   <footer class="footer">
     <div class="footer-inner shell">
       <nav class="footer-links" :aria-label="t('nav.more')">
+        <a :href="link('subjects')">{{ t('browse.title') }}</a>
+        <a :href="link('guide')">{{ t('guide.title') }}</a>
         <a :href="link('about')">{{ t('app.about') }}</a>
         <a :href="link('contribute')">{{ t('nav.contribute') }}</a>
         <a :href="link('feedback')">{{ t('nav.feedback') }}</a>

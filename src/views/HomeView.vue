@@ -84,6 +84,10 @@ const steps = computed(() => {
         </li>
       </ol>
       <p class="steps-search">{{ t('home.justSearch') }}</p>
+      <p class="steps-guide">
+        <a :href="link('subjects')">{{ t('browse.homeLink') }}</a>
+        <a :href="link('guide')">{{ t('guide.homeLink') }}</a>
+      </p>
     </section>
 
     <DataNotice />
@@ -268,6 +272,18 @@ li:nth-child(3) .step-icon {
 .step-status {
   font-size: 0.85rem;
   font-weight: 600;
+  color: var(--accent);
+}
+
+.steps-guide {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 20px;
+  margin-top: 6px;
+  font-size: 0.9rem;
+}
+
+.steps-guide a {
   color: var(--accent);
 }
 

@@ -2,7 +2,7 @@ import { computed, shallowRef, watch } from 'vue'
 import { localeInPath } from '@/i18n/codes'
 import { currentLocale, useI18n } from '@/i18n'
 
-export const VIEWS = ['home', 'subject', 'plan', 'recommend', 'record', 'contribute', 'feedback', 'privacy', 'about'] as const
+export const VIEWS = ['home', 'subject', 'plan', 'recommend', 'record', 'contribute', 'feedback', 'privacy', 'about', 'guide', 'subjects'] as const
 export type View = (typeof VIEWS)[number]
 
 interface Route {

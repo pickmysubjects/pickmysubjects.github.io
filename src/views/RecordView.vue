@@ -38,7 +38,10 @@ async function onRestore(event: Event): Promise<void> {
       <h1 class="record-title">{{ t('record.title') }}</h1>
       <p class="record-lede">{{ t('record.lede') }}</p>
       <!-- UniMelb shows the official WAM; here it only feeds the predictions. -->
-      <p v-if="wam !== null" class="wam-line">{{ t('record.wamLine', { wam }) }}</p>
+      <p v-if="wam !== null" class="wam-line">
+        {{ t('record.wamLine', { wam }) }}
+        <a :href="link('guide')">{{ t('guide.wamWhat') }}</a>
+      </p>
     </section>
     <div class="record-body">
       <div class="record-col">
