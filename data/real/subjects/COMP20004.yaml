@@ -1,0 +1,38 @@
+code: COMP20004
+title: Advanced Theoretical Computer Science
+level: 2
+points: 12.5
+offerings:
+  "2026": []
+prerequisites:
+  any:
+    - COMP30026
+    - manual: "Admission into one of the following: 100pt Program course entry point in the MC-IT Master of Information Technology MC-CS Master of Computer Science MC-SCICMP Master of Science (Computer Science)"
+corequisites: none
+non_allowed:
+  - COMP30025
+  - COMP30021
+assessment:
+  - kind: quiz
+    weight: 5
+  - kind: assignment
+    weight: 15
+  - kind: assignment
+    weight: 5
+  - kind: participation
+    weight: 15
+  - kind: exam
+    weight: 60
+    hurdle: true
+handbook: https://handbook.unimelb.edu.au/2026/subjects/comp20004
+source_year: 2026
+categories:
+  B-SCI: science
+skills:
+  - maths
+  - algorithms
+topics:
+  - theory
+  - algorithms
+verified_on: 2026-10-08
+notes: "Copied by hand from the 2026 Handbook page (pasted by a contributor) and checked. Not available in 2026. Also hurdles of 20/40 on the non-exam work and 30/60 on the exam."

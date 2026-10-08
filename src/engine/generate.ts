@@ -84,7 +84,7 @@ function buildPlan(input: GenerateInput): GenerateResult {
   const pending = [...required].filter((c) => !done.has(c))
   // Areas of the major/specialisation, used to break ties between equally scored electives.
   const focus = new Set([...required].filter((c) => !firstSemester.has(c)).map((c) => data.subjects[c]?.area))
-  const opens = pathwayCounter(data, input.course)
+  const opens = pathwayCounter(data, input.course, input.startYear)
   const depth = dependentDepth(pending, data, needs)
 
   const electives = new Set<string>()
@@ -231,6 +231,9 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
  * ones included, so they can be ordered first — preferring the branch that adds
  * the fewest new subjects.
  */
+/** A requirement met by school results rather than a university subject. */
+const SCHOOL_RESULT = /study score/i
+
 function resolvePrereqs(expr: ReqExpr, done: Set<string>, required: Set<string>, data: Dataset, course: string): string[] {
   if ('subject' in expr) return done.has(expr.subject) ? [] : [expr.subject]
   if ('all' in expr) return [...new Set(expr.all.flatMap((e) => resolvePrereqs(e, done, required, data, course)))]
@@ -239,7 +242,11 @@ function resolvePrereqs(expr: ReqExpr, done: Set<string>, required: Set<string>,
     // alternative) costs the most; assuming a manual condition (a VCE score, a
     // competency test) is cheaper than that but dearer than a subject we can place,
     // so the plan stays on the safe side and the plan check flags the assumption.
+    // The exception is a school result (a VCE study score or equivalent): that's how
+    // most students meet a first-year requirement, so it is assumed before adding a
+    // bridging subject like MAST10012. The plan check still asks the student to confirm.
     const MANUAL = 50
+    const SCHOOL = 0.5
     const cost = (o: string[]) =>
       o.reduce((sum, c) => sum + (required.has(c) ? 0 : clashes(c, done, required, data) ? 10_000 : data.subjects[c] ? 1 : 100), 0)
     let best: string[] | null = null
@@ -247,7 +254,7 @@ function resolvePrereqs(expr: ReqExpr, done: Set<string>, required: Set<string>,
     for (const e of expr.any) {
       if ('admission' in e && e.admission !== course) continue
       const o = 'manual' in e ? [] : resolvePrereqs(e, done, required, data, course)
-      const c = 'manual' in e ? MANUAL : cost(o)
+      const c = 'manual' in e ? (SCHOOL_RESULT.test(e.manual) ? SCHOOL : MANUAL) : cost(o)
       if (c < bestCost) [best, bestCost] = [o, c]
     }
     return best ?? []
@@ -477,10 +484,12 @@ function rankElectives<T extends { code: string; score: number; eligibility: Tri
 type PathwayCounter = (code: string, category: string | undefined) => number
 
 /** How many higher-level subjects (optionally of one category) list this one in their prerequisites. */
-function pathwayCounter(data: Dataset, course: string): PathwayCounter {
+function pathwayCounter(data: Dataset, course: string, startYear: number): PathwayCounter {
   const dependents = new Map<string, Subject[]>()
   for (const s of Object.values(data.subjects)) {
     if (s.prerequisites === 'none' || s.prerequisites === 'unknown') continue
+    // A follow-on subject that isn't running isn't a path anywhere.
+    if (!runsDuringPlan(s, startYear)) continue
     for (const c of new Set(referenced(s.prerequisites))) dependents.set(c, [...(dependents.get(c) ?? []), s])
   }
   return (code, category) => {

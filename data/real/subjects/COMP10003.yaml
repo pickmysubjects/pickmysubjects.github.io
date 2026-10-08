@@ -1,0 +1,32 @@
+code: COMP10003
+title: Media Computation
+level: 1
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites: none
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: assignment
+    weight: 35
+    group: true
+  - kind: test
+    weight: 15
+  - kind: exam
+    weight: 50
+    hurdle: true
+weekly_contact_hours: 3
+handbook: https://handbook.unimelb.edu.au/2026/subjects/comp10003
+source_year: 2026
+categories:
+  B-SCI: science
+skills:
+  - programming
+  - design
+topics:
+  - programming
+  - graphics
+verified_on: 2026-10-08
+notes: "Copied by hand from the 2026 Handbook page (pasted by a contributor) and checked."

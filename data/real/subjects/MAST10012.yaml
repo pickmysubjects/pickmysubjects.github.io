@@ -1,0 +1,33 @@
+code: MAST10012
+title: Introduction to Mathematics
+level: 1
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites:
+  any:
+    - manual: Successful completion of VCE Mathematical Methods 1/2 or equivalent
+    - MAST10017
+    - manual: Subject Coordinator approval
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: assignment
+    weight: 20
+  - kind: test
+    weight: 20
+  - kind: exam
+    weight: 60
+weekly_contact_hours: 5
+handbook: https://handbook.unimelb.edu.au/2026/subjects/mast10012
+source_year: 2026
+categories:
+  B-SCI: science
+skills:
+  - maths
+topics:
+  - mathematics
+  - calculus
+verified_on: 2026-10-08
+notes: "Copied by hand from the 2026 Handbook page (pasted by a contributor) and checked."

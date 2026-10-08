@@ -1,0 +1,36 @@
+code: ACTL30001
+title: Actuarial Modelling I
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites:
+  all:
+    - MAST20005
+    - ACTL20002
+    - ACTL20003
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: assignment
+    weight: 15
+  - kind: assignment
+    weight: 15
+  - kind: exam
+    weight: 70
+    hurdle: true
+handbook: https://handbook.unimelb.edu.au/2026/subjects/actl30001
+source_year: 2026
+categories:
+  B-SCI: breadth
+skills:
+  - maths
+  - statistics
+  - business
+topics:
+  - statistics
+  - finance
+  - modelling
+verified_on: 2026-10-08
+notes: "Copied by hand from the 2026 Handbook page (pasted by a contributor) and checked."

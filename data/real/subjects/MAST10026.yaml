@@ -1,0 +1,20 @@
+code: MAST10026
+title: Bridging Mathematics B
+level: 1
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites:
+  manual: Enrolled in the Uni Ready enabling program
+corequisites: none
+non_allowed: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/mast10026
+source_year: 2026
+skills:
+  - maths
+topics:
+  - mathematics
+  - calculus
+verified_on: 2026-10-08
+notes: "Copied by hand from the 2026 Handbook page (pasted by a contributor) and checked. Only for the Uni Ready enabling program; not for credit in any undergraduate course."

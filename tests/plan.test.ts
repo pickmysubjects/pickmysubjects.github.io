@@ -157,12 +157,12 @@ describe('checkCourse (unknowns near a cap)', () => {
   it('says unknown, not ok, when subjects we know nothing about could break a cap', () => {
     const ten = ['MAST10005', 'MAST10006', 'MAST10007', 'COMP10001', 'COMP10002', 'BIOL10008', 'BIOL10001', 'BIOL10010', 'CHEM10003', 'PHYC10003']
     expect(status(ten, 'level1-cap')).toBe('ok')
-    expect(status([...ten, 'COMP10003'], 'level1-cap')).toBe('unknown') // COMP10003 isn't in the data
+    expect(status([...ten, 'ZZZZ10001'], 'level1-cap')).toBe('unknown') // ZZZZ10001 isn't in the data
   })
 
   it('says unknown, not fail, when an uncurated subject could be the missing level-1 area', () => {
     expect(status(['MAST10006', 'MAST10007'], 'level1-areas')).toBe('fail')
-    expect(status(['MAST10006', 'MAST10007', 'COMP10003'], 'level1-areas')).toBe('unknown')
+    expect(status(['MAST10006', 'MAST10007', 'ZZZZ10001'], 'level1-areas')).toBe('unknown')
   })
 })
 

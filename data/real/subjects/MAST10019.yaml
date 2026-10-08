@@ -1,0 +1,38 @@
+code: MAST10019
+title: Accelerated Mathematics 2
+level: 1
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites:
+  any:
+    - manual: A study score of at least 38 in VCE Specialist Mathematics 3/4 or equivalent
+    - MAST10008
+    - MAST10013
+    - manual: Permission from the Director of the Mathematics and Statistics Learning Centre
+corequisites: none
+non_allowed:
+  - MAST10006
+  - MAST20026
+  - MAST10021
+assessment:
+  - kind: assignment
+    weight: 15
+  - kind: test
+    weight: 15
+  - kind: exam
+    weight: 70
+weekly_contact_hours: 5
+handbook: https://handbook.unimelb.edu.au/2026/subjects/mast10019
+source_year: 2026
+categories:
+  B-SCI: science
+skills:
+  - maths
+topics:
+  - mathematics
+  - calculus
+  - linear-algebra
+verified_on: 2026-10-08
+notes: "Copied by hand from the 2026 Handbook page (pasted by a contributor) and checked."

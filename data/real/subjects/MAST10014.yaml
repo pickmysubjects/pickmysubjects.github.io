@@ -1,0 +1,29 @@
+code: MAST10014
+title: Foundation Mathematics 1
+level: 1
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites:
+  manual: "Admission into one of the following: B-SCIEXT Bachelor of Science (Extended) B-ARTSEXT Bachelor of Arts (Extended)"
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: assignment
+    weight: 30
+  - kind: test
+    weight: 25
+  - kind: exam
+    weight: 45
+handbook: https://handbook.unimelb.edu.au/2026/subjects/mast10014
+source_year: 2026
+weekly_contact_hours: 6
+categories:
+  B-SCI: science
+skills:
+  - maths
+topics:
+  - mathematics
+verified_on: 2026-10-08
+notes: "Copied by hand from the 2026 Handbook page (pasted by a contributor) and checked. Only for the Bachelor of Science (Extended) and Bachelor of Arts (Extended)."

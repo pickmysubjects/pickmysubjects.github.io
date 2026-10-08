@@ -1,0 +1,37 @@
+code: BIOL10002
+title: Biomolecules and Cells
+level: 1
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites:
+  admission: B-BMED
+  note: Admission into the B-BMED Bachelor of Biomedicine
+corequisites: none
+non_allowed:
+  - BIOL10008
+  - BIOL10009
+  - BIOL10004
+assessment:
+  - kind: test
+    weight: 40
+  - kind: assignment
+    weight: 20
+    group: true
+  - kind: exam
+    weight: 40
+    hurdle: true
+weekly_contact_hours: 5.5
+handbook: https://handbook.unimelb.edu.au/2026/subjects/biol10002
+source_year: 2026
+categories:
+  B-SCI: science
+skills:
+  - lab
+  - writing
+topics:
+  - biology
+  - chemistry
+verified_on: 2026-10-08
+notes: "Copied by hand from the 2026 Handbook page (pasted by a contributor) and checked. Only for Bachelor of Biomedicine students."

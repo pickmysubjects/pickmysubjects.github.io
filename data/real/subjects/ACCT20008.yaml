@@ -1,0 +1,29 @@
+code: ACCT20008
+title: Accounting Information for Reporting
+level: 2
+points: 12.5
+offerings:
+  "2026": []
+prerequisites: ACCT10001
+corequisites: none
+non_allowed:
+  - ACCT10002
+assessment:
+  - kind: participation
+    weight: 10
+  - kind: quiz
+    weight: 10
+  - kind: assignment
+    weight: 20
+  - kind: exam
+    weight: 60
+handbook: https://handbook.unimelb.edu.au/2026/subjects/acct20008
+source_year: 2026
+categories:
+  B-SCI: breadth
+skills:
+  - business
+topics:
+  - accounting
+verified_on: 2026-10-08
+notes: "Copied by hand from the 2026 Handbook page (pasted by a contributor) and checked. Not available in 2026."

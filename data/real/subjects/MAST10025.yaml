@@ -1,0 +1,26 @@
+code: MAST10025
+title: Bridging Mathematics A
+level: 1
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites: none
+corequisites: MAST10026
+non_allowed: []
+assessment:
+  - kind: quiz
+    weight: 15
+  - kind: test
+    weight: 30
+  - kind: exam
+    weight: 55
+weekly_contact_hours: 5
+handbook: https://handbook.unimelb.edu.au/2026/subjects/mast10025
+source_year: 2026
+skills:
+  - maths
+topics:
+  - mathematics
+verified_on: 2026-10-08
+notes: "Copied by hand from the 2026 Handbook page (pasted by a contributor) and checked. Only for the Uni Ready enabling program; not for credit in any undergraduate course."

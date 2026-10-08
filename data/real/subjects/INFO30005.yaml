@@ -1,0 +1,35 @@
+code: INFO30005
+title: Advanced Interface Prototyping
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites:
+  any:
+    - all: [INFO20005, INFO20003]
+    - all:
+        - manual: Admission into the Human-Computer Interaction specialisation of the MC-IT Master of Information Technology
+        - any: [INFO90006, INFO90004]
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: report
+    weight: 30
+  - kind: project
+    weight: 70
+    group: true
+weekly_contact_hours: 4
+handbook: https://handbook.unimelb.edu.au/2026/subjects/info30005
+source_year: 2026
+categories:
+  B-SCI: science
+skills:
+  - design
+  - programming
+  - presentation
+topics:
+  - design
+  - software-engineering
+verified_on: 2026-10-08
+notes: "Copied by hand from the 2026 Handbook page (pasted by a contributor) and checked. Also a hurdle: attend at least 8 lectures and 8 tutorials."
