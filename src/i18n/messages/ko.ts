@@ -588,6 +588,14 @@ export const ko: Messages = {
     becomes: "이면 WAM은 {wam}이 돼요.",
     note: "여기 숫자로 계산한 추정치예요. 공식 WAM은 my.unimelb에서 확인하세요.",
   },
+  print: {
+    title: "수강 계획",
+    total: "총 {n}학점",
+    printed: "{date} 인쇄",
+    points: "{n}학점",
+    checks: "확인할 점",
+    footer: "비공식 도구예요. 수강 신청 전에 Handbook과 My Course Planner에서 확인하세요",
+  },
   guide: {
     firstMajors: "전공 소개 보기",
     datesTitle: "중요한 날짜",

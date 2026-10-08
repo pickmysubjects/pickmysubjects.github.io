@@ -588,6 +588,14 @@ export const zhTW: Messages = {
     becomes: "WAM 會變成 {wam}。",
     note: "這是依這裡的數字估算的，正式 WAM 以 my.unimelb 為準。",
   },
+  print: {
+    title: "選課計畫",
+    total: "共 {n} 學分",
+    printed: "列印於 {date}",
+    points: "{n} 學分",
+    checks: "需要注意",
+    footer: "非官方工具，選課前請以 Handbook 和 My Course Planner 為準",
+  },
   guide: {
     firstMajors: "看主修介紹",
     datesTitle: "重要日期",

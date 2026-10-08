@@ -7,6 +7,7 @@ import PlanMap from '@/components/planner/PlanMap.vue'
 import SubjectPeek from '@/components/planner/SubjectPeek.vue'
 import RuleLegend from '@/components/planner/RuleLegend.vue'
 import PlanIssues from '@/components/planner/PlanIssues.vue'
+import PlanPrint from '@/components/planner/PlanPrint.vue'
 import DataNotice from '@/components/DataNotice.vue'
 import Interp from '@/components/Interp.vue'
 import { planRoles, planStart } from '@/engine'
@@ -275,6 +276,15 @@ function finishWizard(setup: PlanSetup): void {
       </details>
     </template>
     <DataNotice v-if="!showWizard" class="plan-notice" />
+    <PlanPrint
+      v-if="!showWizard && !plan.isEmpty.value"
+      class="print-only"
+      :summary="summary"
+      :terms="plan.terms.value"
+      :subjects="data.subjects"
+      :roles="roles"
+      :notes="problemTexts.map((p) => p.text)"
+    />
   </div>
 </template>
 
@@ -468,17 +478,15 @@ function finishWizard(setup: PlanSetup): void {
   gap: 8px;
 }
 
-/* Printing (or saving as PDF): just the plan, every term visible. */
+/* Printing (or saving as PDF): only the print layout, not the screen page. */
 @media print {
-  .bar-actions,
-  .hint,
-  .started,
-  .details,
-  .status-hint,
-  .confirm,
-  .plan-notice,
-  .guide-link {
+  .planner > :not(.print-only) {
     display: none !important;
+  }
+
+  .planner {
+    display: block;
+    padding-top: 0;
   }
 }
 </style>

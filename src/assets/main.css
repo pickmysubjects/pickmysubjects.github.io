@@ -445,6 +445,11 @@ textarea {
 }
 
 /* Printing or "Save as PDF": plain paper, no app chrome, no glass. */
+@page {
+  size: A4;
+  margin: 14mm 14mm 16mm;
+}
+
 @media print {
   .backdrop,
   .header,

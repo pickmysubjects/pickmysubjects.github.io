@@ -588,6 +588,14 @@ export const hi: Messages = {
     becomes: "रहा तो WAM {wam} होगा।",
     note: "यह यहाँ के नंबरों से अंदाज़ा है। आधिकारिक WAM my.unimelb में देखें।",
   },
+  print: {
+    title: "सब्जेक्ट प्लान",
+    total: "कुल {n} पॉइंट",
+    printed: "{date} को प्रिंट किया",
+    points: "{n} पॉइंट",
+    checks: "ध्यान देने वाली बातें",
+    footer: "अनौपचारिक। एनरोल करने से पहले Handbook और My Course Planner में जाँचें",
+  },
   guide: {
     firstMajors: "मेजर देखें",
     datesTitle: "ज़रूरी तारीखें",

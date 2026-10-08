@@ -588,6 +588,14 @@ export const vi: Messages = {
     becomes: "thì WAM của bạn là {wam}.",
     note: "Đây là ước tính từ các con số ở đây. WAM chính thức xem trên my.unimelb.",
   },
+  print: {
+    title: "Kế hoạch môn học",
+    total: "Tổng {n} tín chỉ",
+    printed: "In ngày {date}",
+    points: "{n} tín chỉ",
+    checks: "Cần lưu ý",
+    footer: "Không chính thức. Hãy kiểm tra Handbook và My Course Planner trước khi đăng ký",
+  },
   guide: {
     firstMajors: "Xem các chuyên ngành",
     datesTitle: "Ngày quan trọng",

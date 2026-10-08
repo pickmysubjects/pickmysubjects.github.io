@@ -588,6 +588,14 @@ export const ms: Messages = {
     becomes: "WAM anda jadi {wam}.",
     note: "Ini anggaran daripada nombor di sini. WAM rasmi ada di my.unimelb.",
   },
+  print: {
+    title: "Rancangan subjek",
+    total: "Jumlah {n} mata",
+    printed: "Dicetak {date}",
+    points: "{n} mata",
+    checks: "Perlu disemak",
+    footer: "Tidak rasmi. Semak Handbook dan My Course Planner sebelum mendaftar",
+  },
   guide: {
     firstMajors: "Lihat senarai major",
     datesTitle: "Tarikh penting",

@@ -588,6 +588,14 @@ export const zhCN: Messages = {
     becomes: "WAM 会变成 {wam}。",
     note: "这是按这里的数字估算的，正式 WAM 以 my.unimelb 为准。",
   },
+  print: {
+    title: "选课计划",
+    total: "共 {n} 学分",
+    printed: "打印于 {date}",
+    points: "{n} 学分",
+    checks: "需要注意",
+    footer: "非官方工具，选课前请以 Handbook 和 My Course Planner 为准",
+  },
   guide: {
     firstMajors: "看专业介绍",
     datesTitle: "重要日期",

@@ -592,6 +592,14 @@ export const en = {
     becomes: "your WAM becomes {wam}.",
     note: "An estimate from the numbers here. Your official WAM is in my.unimelb.",
   },
+  print: {
+    title: "Subject plan",
+    total: "{n} points in total",
+    printed: "Printed {date}",
+    points: "{n} pts",
+    checks: "Worth checking",
+    footer: "Unofficial. Check the Handbook and My Course Planner before you enrol",
+  },
   guide: {
     firstMajors: "See the majors",
     datesTitle: "Key dates",

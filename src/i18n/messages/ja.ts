@@ -588,6 +588,14 @@ export const ja: Messages = {
     becomes: "なら WAM は {wam} になります。",
     note: "ここの数字からの見積もりです。正式な WAM は my.unimelb で確認してください。",
   },
+  print: {
+    title: "履修プラン",
+    total: "合計 {n} 単位",
+    printed: "{date} 印刷",
+    points: "{n} 単位",
+    checks: "確認が必要な点",
+    footer: "非公式ツールです。履修登録の前に Handbook と My Course Planner で確認してください",
+  },
   guide: {
     firstMajors: "専攻ガイドを見る",
     datesTitle: "大事な日付",
