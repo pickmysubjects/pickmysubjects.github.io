@@ -37,9 +37,10 @@ const { t } = useI18n()
     grid-template-columns: repeat(5, 1fr);
     padding: 6px 8px calc(6px + env(safe-area-inset-bottom));
     border-top: 1px solid rgb(255 255 255 / 60%);
-    background: rgb(255 255 255 / 55%);
-    backdrop-filter: blur(24px) saturate(180%);
+    background: rgb(255 255 255 / 70%);
+    box-shadow: 0 -6px 24px -18px rgb(80 40 90 / 35%);
     -webkit-backdrop-filter: blur(24px) saturate(180%);
+    backdrop-filter: blur(24px) saturate(180%);
   }
 
   .tab {
@@ -54,6 +55,8 @@ const { t } = useI18n()
 
   .tab[aria-current='page'] {
     color: var(--accent);
+    background: var(--glass-fill-hover);
+    box-shadow: var(--glass-shadow);
   }
 
   .tab-label {
@@ -64,7 +67,7 @@ const { t } = useI18n()
 @media (max-width: 720px) and (prefers-color-scheme: dark) {
   .tabs {
     border-top-color: rgb(255 255 255 / 8%);
-    background: rgb(20 18 26 / 60%);
+    background: rgb(20 18 26 / 75%);
   }
 }
 </style>

@@ -188,8 +188,8 @@ function clear(): void {
 .seg button[aria-pressed='true'] {
   font-weight: 600;
   color: var(--ink);
-  background: var(--surface);
-  box-shadow: var(--shadow-1);
+  background: var(--glass-fill-hover);
+  box-shadow: var(--glass-shadow);
 }
 
 .check {

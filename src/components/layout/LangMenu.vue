@@ -29,9 +29,10 @@ function onChange(event: Event): void {
   gap: 6px;
   height: 36px;
   padding: 0 12px;
-  border: 1px solid var(--line);
+  border: 1px solid var(--glass-edge);
   border-radius: 999px;
-  background: var(--surface);
+  background: var(--glass-fill);
+  box-shadow: var(--glass-shadow);
   font-size: 0.85rem;
   font-weight: 500;
   color: var(--ink-soft);
@@ -40,6 +41,7 @@ function onChange(event: Event): void {
 
 .lang:hover {
   color: var(--ink);
+  background: var(--glass-fill-hover);
 }
 
 .lang:focus-within {

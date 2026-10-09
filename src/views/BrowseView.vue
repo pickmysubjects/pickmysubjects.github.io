@@ -174,15 +174,18 @@ watch(filters, (f) => {
   font-size: 0.88rem;
   font-weight: 600;
   color: var(--ink-soft);
-  background: var(--surface);
-  border: 1px solid var(--line);
   border-radius: 999px;
+  border: 1px solid var(--glass-edge);
+  background: var(--glass-fill);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-shadow);
   cursor: pointer;
 }
 
 .preset:hover {
   color: var(--ink);
-  border-color: var(--accent);
+  background: var(--glass-fill-hover);
 }
 
 .preset[aria-pressed='true'] {

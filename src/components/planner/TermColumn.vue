@@ -125,9 +125,12 @@ function onDrop(event: DragEvent): void {
   place-items: center;
   width: 24px;
   height: 24px;
-  border: 1px solid var(--line);
   border-radius: 999px;
-  background: var(--surface);
+  border: 1px solid var(--glass-edge);
+  background: var(--glass-fill);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-shadow);
   color: var(--ink-soft);
   cursor: pointer;
 }

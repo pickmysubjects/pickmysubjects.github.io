@@ -55,15 +55,16 @@ const { t } = useI18n()
   top: 0;
   z-index: 20;
   border-bottom: 1px solid rgb(255 255 255 / 55%);
-  background: rgb(255 255 255 / 45%);
-  backdrop-filter: blur(24px) saturate(180%);
+  background: rgb(255 255 255 / 62%);
+  box-shadow: 0 6px 24px -18px rgb(80 40 90 / 35%);
   -webkit-backdrop-filter: blur(24px) saturate(180%);
+  backdrop-filter: blur(24px) saturate(180%);
 }
 
 @media (prefers-color-scheme: dark) {
   .header {
     border-bottom-color: rgb(255 255 255 / 8%);
-    background: rgb(20 18 26 / 55%);
+    background: rgb(20 18 26 / 72%);
   }
 }
 
@@ -107,9 +108,10 @@ const { t } = useI18n()
   display: flex;
   gap: 2px;
   padding: 4px;
-  border: 1px solid var(--line);
+  border: 1px solid var(--glass-edge);
   border-radius: 999px;
-  background: rgb(255 255 255 / 55%);
+  background: var(--glass-fill);
+  box-shadow: var(--glass-shadow);
 }
 
 .nav-link {
@@ -128,10 +130,12 @@ const { t } = useI18n()
 
 .nav-link:hover {
   color: var(--ink);
+  background: var(--glass-fill-hover);
 }
 
 .nav-link[aria-current='page'] {
-  background: var(--ink);
+  background: var(--glass-shine), color-mix(in srgb, var(--ink) 88%, transparent);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 30%), 0 4px 12px -6px rgb(16 16 20 / 45%);
   color: var(--bg);
 }
 
@@ -153,9 +157,10 @@ const { t } = useI18n()
   color: var(--accent);
   text-decoration: none;
   white-space: nowrap;
-  background: var(--accent-soft);
-  border: 1px solid transparent;
+  background: var(--glass-shine), color-mix(in srgb, var(--accent-soft) 80%, transparent);
+  border: 1px solid var(--glass-edge);
   border-radius: 999px;
+  box-shadow: var(--glass-shadow);
 }
 
 .guide:hover,
