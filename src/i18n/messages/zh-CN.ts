@@ -172,6 +172,7 @@ export const zhCN: Messages = {
   },
   genNote: {
     balanced: "把 {a} 和 {b} 换了学期，让每学期的压力更平均。",
+    lighter: "选了 {b} 而不是 {a}，免得那个学期太重。",
     extraTerms: '多排了 {n} 个学期，才能放下所有必修课（有些课每年只开一个学期）。',
     extraTermsOne: '多排了 1 个学期，才能放下所有必修课（有些课每年只开一个学期）。',
     added: '在 {term} 加入了 {code}，用来满足：{rule}。',
@@ -612,6 +613,7 @@ export const zhCN: Messages = {
     hard: "同学觉得 {codes} 很难。",
     spread: "帮我分开",
     swapWith: "把 {a} 和 {term} 的 {b} 对调",
+    replaceWith: "把 {a} 换成 {b} {title}",
     moveTo: "把 {code} 放到 {term}",
     more: "还有 {n} 条",
     less: "收起",

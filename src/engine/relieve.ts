@@ -2,7 +2,8 @@ import { offeredIn } from './availability'
 import { checkCourse } from './courseRules'
 import type { Plan, PlanTerm } from './plan'
 import { checkTerms } from './planCheck'
-import type { Profile } from './recommend'
+import { passedCodes, recommend, type Profile } from './recommend'
+import { planRoles } from './roles'
 import type { Dataset, Period } from './schema'
 import { termStress, type StressLevel } from './termStress'
 
@@ -87,6 +88,8 @@ export type Relief =
   | { kind: 'spread'; terms: PlanTerm[]; swaps: { a: string; b: string }[] }
   /** Taking one subject in the summer or winter term next to it. */
   | { kind: 'shortTerm'; code: string; year: number; period: Period }
+  /** Taking a different elective that counts the same way (same category, level and points). */
+  | { kind: 'replace'; code: string; with: string; terms: PlanTerm[] }
 
 /** The summer/winter terms either side of a semester: before it first (prerequisites are usually fine there). */
 function shortTermsBeside(term: PlanTerm): { year: number; period: Period }[] {
@@ -104,15 +107,20 @@ export function relieveTerm(plan: Plan, data: Dataset, termIndex: number, profil
   if (!term) return null
   const before = termStress(term.subjects, data, profile)
   if (before.level === 'ok') return null
-  const lighter = (subjects: string[]) => {
-    const after = termStress(subjects, data, profile)
-    return RANK[after.level] < RANK[before.level] || (after.level === before.level && after.score < before.score - 0.5)
-  }
+  // Only what actually takes the semester down a level counts: a button that leaves it
+  // "heavy" after you press it helps nobody.
+  const lighter = (subjects: string[]) => RANK[termStress(subjects, data, profile).level] < RANK[before.level]
 
   // A swap between this semester and another, so the one the student is looking at gets
   // lighter and the other doesn't get heavier. Best by the two semesters' combined load.
   const one = swapFor(plan, data, termIndex, profile, lighter)
   if (one) return one
+
+  // Keeping the semester as it is but taking a different elective in place of the one
+  // that makes it heavy, chosen the way suggestions are (the student's interests,
+  // strengths and marks).
+  const other = replaceFor(plan, data, termIndex, profile, lighter)
+  if (other) return other
 
   // Otherwise the whole-plan balance, if it happens to lighten this one.
   const copy: Plan = { ...plan, terms: plan.terms.map((t) => ({ ...t, subjects: [...t.subjects] })) }
@@ -150,26 +158,73 @@ export function relieveTerm(plan: Plan, data: Dataset, termIndex: number, profil
 
 /**
  * After balancing: for each semester still heavy, the one swap that brings its level down
- * without raising another's (what "Spread it out" offers), applied in turn. Changes
- * plan.terms in place and returns the swaps made.
+ * without raising another's (what "Spread it out" offers), or else a different elective in
+ * place of the one that makes it heavy; applied in turn. Changes plan.terms in place and
+ * returns what it changed.
  */
-export function fixHeavyTerms(plan: Plan, data: Dataset, profile?: Profile): { a: string; b: string }[] {
-  const made: { a: string; b: string }[] = []
+export function fixHeavyTerms(plan: Plan, data: Dataset, profile?: Profile): { a: string; b: string; kind: 'swap' | 'replace' }[] {
+  const made: { a: string; b: string; kind: 'swap' | 'replace' }[] = []
   for (let round = 0; round < plan.terms.length * 2; round++) {
     let changed = false
     for (const [i, term] of plan.terms.entries()) {
       const before = termStress(term.subjects, data, profile)
       if (before.level === 'ok') continue
       const lighter = (subjects: string[]) => RANK[termStress(subjects, data, profile).level] < RANK[before.level]
-      const r = swapFor(plan, data, i, profile, lighter)
-      if (r?.kind !== 'spread') continue
+      const r = swapFor(plan, data, i, profile, lighter) ?? replaceFor(plan, data, i, profile, lighter)
+      if (r?.kind === 'spread') made.push(...r.swaps.map((x) => ({ ...x, kind: 'swap' as const })))
+      else if (r?.kind === 'replace') made.push({ a: r.code, b: r.with, kind: 'replace' })
+      else continue
       plan.terms.splice(0, plan.terms.length, ...r.terms)
-      made.push(...r.swaps)
       changed = true
     }
     if (!changed) break
   }
   return made
+}
+
+/** How many suggested alternatives to try for each elective. */
+const REPLACE_TRIES = 12
+
+function replaceFor(
+  plan: Plan,
+  data: Dataset,
+  termIndex: number,
+  profile: Profile | undefined,
+  lighter: (subjects: string[]) => boolean,
+): Relief | null {
+  const term = plan.terms[termIndex] as PlanTerm
+  // Only free choices: not a compulsory subject, and not one picked from a major's or
+  // specialisation's own list (another subject of the same category wouldn't count there).
+  const roles = planRoles(data, plan.course, plan.courseYear, [plan.major ?? '', plan.specialisation ?? ''])
+  const fixed = new Set([...roles.required, ...roles.options])
+  const stress = termStress(term.subjects, data, profile)
+  const named = stress.reasons.flatMap((r) => String(r.params.codes ?? '').split(', ')).filter((c) => term.subjects.includes(c))
+  const done = [...plan.completed, ...passedCodes(profile?.results ?? [])]
+  const inPlan = plan.terms.flatMap((t) => t.subjects)
+  const before = [...done, ...plan.terms.slice(0, termIndex).flatMap((t) => t.subjects)]
+  const student: Profile = profile ?? { results: [], skills: {}, interests: [], goal: 'balanced' }
+  for (const code of [...new Set([...named, ...term.subjects])]) {
+    const s = data.subjects[code]
+    // Without a category we can't tell what it counts towards, so nothing could stand in for it.
+    if (!s || fixed.has(code) || !s.categories[plan.course]) continue
+    const recs = recommend(data, student, {
+      course: plan.course,
+      category: s.categories[plan.course],
+      level: s.level,
+      term: { year: term.year, period: term.period },
+      planned: [...inPlan, ...done],
+      eligibleWith: before,
+    })
+      .filter((x) => x.eligibility === 'ok' && data.subjects[x.code]?.points === s.points)
+      .slice(0, REPLACE_TRIES)
+    for (const rec of recs) {
+      const subjects = term.subjects.map((c) => (c === code ? rec.code : c))
+      if (!lighter(subjects)) continue
+      const terms = plan.terms.map((t, i) => (i === termIndex ? { ...t, subjects } : { ...t, subjects: [...t.subjects] }))
+      if (noWorse(plan, { ...plan, terms }, data)) return { kind: 'replace', code, with: rec.code, terms }
+    }
+  }
+  return null
 }
 
 function swapFor(

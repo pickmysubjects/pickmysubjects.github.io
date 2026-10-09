@@ -221,3 +221,20 @@ describe('relieveTerm picks a swap for the semester in question', () => {
     expect(s1.filter((c) => c.startsWith('COMP'))).toHaveLength(2)
   })
 })
+
+describe('relieveTerm offers a different elective', () => {
+  it('replaces the elective that makes the semester heavy with one that counts the same way', () => {
+    const s1 = { offerings: { 2027: ['semester-1'] } }
+    const breadth = { categories: { NONE: 'breadth' }, ...s1 }
+    const hard = { signals: { reviews: 5, difficulty: 4.5 } }
+    const data = dataset([
+      plain('MAST10006', { ...s1, ...hard }),
+      plain('ECON10003', { ...breadth, ...hard }),
+      plain('MKTG10001', breadth),
+      plain('BIOL10001', s1),
+      plain('BIOL10002', s1),
+    ])
+    const plan: Plan = { course: 'NONE', courseYear: 2026, completed: [], terms: [{ year: 2027, period: 'semester-1', subjects: ['MAST10006', 'ECON10003', 'BIOL10001', 'BIOL10002'] }] }
+    expect(relieveTerm(plan, data, 0)).toMatchObject({ kind: 'replace', code: 'ECON10003', with: 'MKTG10001' })
+  })
+})

@@ -172,6 +172,7 @@ export const vi: Messages = {
   },
   genNote: {
     balanced: "Đã đổi học kỳ của {a} và {b} để chia đều áp lực.",
+    lighter: "Chọn {b} thay cho {a} để kỳ đó không quá nặng.",
     extraTerms: 'Đã thêm {n} học kỳ để xếp đủ các môn bắt buộc (một số môn chỉ mở một học kỳ).',
     extraTermsOne: 'Đã thêm 1 học kỳ để xếp đủ các môn bắt buộc (một số môn chỉ mở một học kỳ).',
     added: 'Đã thêm {code} vào {term} để: {rule}.',
@@ -612,6 +613,7 @@ export const vi: Messages = {
     hard: "Sinh viên đánh giá {codes} là khó.",
     spread: "Chia ra giúp tôi",
     swapWith: "Đổi {a} với {b} ({term})",
+    replaceWith: "Học {b} {title} thay cho {a}",
     moveTo: "Chuyển {code} sang {term}",
     more: "Thêm {n}",
     less: "Thu gọn",

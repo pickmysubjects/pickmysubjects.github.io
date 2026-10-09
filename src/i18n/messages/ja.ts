@@ -172,6 +172,7 @@ export const ja: Messages = {
   },
   genNote: {
     balanced: "負担を均すため、{a} と {b} の学期を入れ替えました。",
+    lighter: "その学期が重くならないよう、{a} ではなく {b} を選びました。",
     extraTerms: '必修科目をすべて入れるため、学期を {n} つ追加しました（年1学期しか開講しない科目があります）。',
     extraTermsOne: '必修科目をすべて入れるため、学期を1つ追加しました（年1学期しか開講しない科目があります）。',
     added: '{term} に {code} を追加しました（目的：{rule}）。',
@@ -612,6 +613,7 @@ export const ja: Messages = {
     hard: "{codes} は難しいという声があります。",
     spread: "分けて配置する",
     swapWith: "{a} と {term} の {b} を入れ替える",
+    replaceWith: "{a} の代わりに {b} {title}",
     moveTo: "{code} を {term} に移す",
     more: "ほか {n} 件",
     less: "閉じる",

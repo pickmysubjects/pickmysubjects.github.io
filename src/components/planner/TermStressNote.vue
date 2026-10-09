@@ -3,6 +3,7 @@ import { computed, shallowRef } from 'vue'
 import { FEEDBACK_FORM } from '@/config'
 import { usePlanStress } from '@/composables/usePlanStress'
 import { usePlan } from '@/composables/usePlan'
+import { useDataset } from '@/composables/useDataset'
 import { isFormReady, submitGoogleForm } from '@/utils/googleForm'
 import { useI18n } from '@/i18n'
 import { stressText, termLabel } from '@/i18n/format'
@@ -14,6 +15,7 @@ import { stressText, termLabel } from '@/i18n/format'
 const props = defineProps<{ termIndex: number }>()
 const { t, locale } = useI18n()
 const plan = usePlan()
+const { data } = useDataset()
 const { stress, relief, applyRelief } = usePlanStress()
 const open = shallowRef(false)
 
@@ -44,6 +46,7 @@ const fixLabel = computed(() => {
   const r = fix.value
   if (!r) return ''
   if (r.kind === 'shortTerm') return t.value('stress.moveTo', { code: r.code, term: termLabel(t.value, r) })
+  if (r.kind === 'replace') return t.value('stress.replaceWith', { a: r.code, b: r.with, title: data.value.subjects[r.with]?.title ?? '' })
   // One swap: say exactly what changes, and where the other subject comes from.
   const only = r.swaps.length === 1 ? r.swaps[0] : undefined
   const there = only ? plan.terms.value.find((x) => x.subjects.includes(only.b)) : undefined

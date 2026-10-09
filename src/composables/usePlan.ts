@@ -199,7 +199,7 @@ export function usePlan() {
   /** Make a heavy semester lighter: take the spread-out arrangement, or move one subject to a summer/winter term. */
   function applyRelief(termIndex: number, relief: Relief): void {
     save((s) => {
-      if (relief.kind === 'spread') {
+      if (relief.kind === 'spread' || relief.kind === 'replace') {
         s.terms = cloneJson(relief.terms)
         return s
       }

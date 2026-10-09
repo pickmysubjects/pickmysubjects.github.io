@@ -172,6 +172,7 @@ export const zhTW: Messages = {
   },
   genNote: {
     balanced: "把 {a} 和 {b} 換了學期，讓每學期的壓力更平均。",
+    lighter: "選了 {b} 而不是 {a}，免得那個學期太重。",
     extraTerms: '多排了 {n} 個學期，才能放下所有必修課（有些課每年只開一個學期）。',
     extraTermsOne: '多排了 1 個學期，才能放下所有必修課（有些課每年只開一個學期）。',
     added: '在 {term} 加入了 {code}，用來符合：{rule}。',
@@ -612,6 +613,7 @@ export const zhTW: Messages = {
     hard: "同學覺得 {codes} 很難。",
     spread: "幫我分開",
     swapWith: "把 {a} 和 {term} 的 {b} 對調",
+    replaceWith: "把 {a} 換成 {b} {title}",
     moveTo: "把 {code} 放到 {term}",
     more: "還有 {n} 條",
     less: "收起",

@@ -139,8 +139,12 @@ function buildPlan(input: GenerateInput): GenerateResult {
   }
   // Spread the load, so the hard subjects don't all land in one semester.
   const draft: Plan = { course: input.course, courseYear: input.courseYear, major: input.major, specialisation: input.specialisation, completed, terms }
-  for (const { a, b } of [...balanceTerms(draft, data, input.profile), ...fixHeavyTerms(draft, data, input.profile)]) {
+  for (const { a, b } of balanceTerms(draft, data, input.profile)) {
     notes.push(note('balanced', { a, b }, `Swapped ${a} and ${b} between semesters to spread the load.`))
+  }
+  for (const { a, b, kind } of fixHeavyTerms(draft, data, input.profile)) {
+    if (kind === 'swap') notes.push(note('balanced', { a, b }, `Swapped ${a} and ${b} between semesters to spread the load.`))
+    else notes.push(note('lighter', { a, b }, `Took ${b} instead of ${a}, which would have made that semester heavy.`))
   }
   // Keep "added in …" notes true to where each subject now sits.
   for (const n of notes) {

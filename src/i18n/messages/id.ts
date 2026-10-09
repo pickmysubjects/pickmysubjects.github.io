@@ -172,6 +172,7 @@ export const id: Messages = {
   },
   genNote: {
     balanced: "Menukar semester {a} dan {b} supaya bebannya lebih merata.",
+    lighter: "Memilih {b} alih-alih {a} agar semester itu tidak terlalu berat.",
     extraTerms: 'Menambah {n} semester agar semua mata kuliah wajib muat (beberapa hanya dibuka satu semester).',
     extraTermsOne: 'Menambah 1 semester agar semua mata kuliah wajib muat (beberapa hanya dibuka satu semester).',
     added: '{code} ditambahkan di {term} untuk: {rule}.',
@@ -612,6 +613,7 @@ export const id: Messages = {
     hard: "Mahasiswa menilai {codes} sulit.",
     spread: "Pisahkan",
     swapWith: "Tukar {a} dengan {b} ({term})",
+    replaceWith: "Ambil {b} {title} sebagai ganti {a}",
     moveTo: "Pindahkan {code} ke {term}",
     more: "{n} lagi",
     less: "Tutup",

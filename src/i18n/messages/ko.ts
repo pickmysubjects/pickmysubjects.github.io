@@ -172,6 +172,7 @@ export const ko: Messages = {
   },
   genNote: {
     balanced: "학기별 부담을 고르게 하려고 {a}와 {b}의 학기를 바꿨어요.",
+    lighter: "그 학기가 너무 무거워지지 않게 {a} 대신 {b}를 골랐어요.",
     extraTerms: '필수 과목을 모두 넣기 위해 학기를 {n}개 더 추가했습니다(일부 과목은 한 학기에만 개설).',
     extraTermsOne: '필수 과목을 모두 넣기 위해 학기를 1개 더 추가했습니다(일부 과목은 한 학기에만 개설).',
     added: '{term}에 {code}를 추가했습니다 (목적: {rule}).',
@@ -612,6 +613,7 @@ export const ko: Messages = {
     hard: "{codes}는 어렵다는 평이 있어요.",
     spread: "나눠서 배치",
     swapWith: "{a}와 {term}의 {b} 바꾸기",
+    replaceWith: "{a} 대신 {b} {title}",
     moveTo: "{code}을(를) {term}으로",
     more: "{n}개 더",
     less: "접기",

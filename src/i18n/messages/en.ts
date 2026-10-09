@@ -176,6 +176,7 @@ export const en = {
   },
   genNote: {
     balanced: "Swapped {a} and {b} between semesters to spread the load.",
+    lighter: "Took {b} instead of {a}, which would have made that semester heavy.",
     extraTerms: 'Planned {n} extra semesters so every required subject fits (some run in one semester only).',
     extraTermsOne: 'Planned an extra semester so every required subject fits (some run in one semester only).',
     added: '{code} added in {term} for: {rule}.',
@@ -616,6 +617,7 @@ export const en = {
     hard: "Students rate {codes} hard.",
     spread: "Spread them out",
     swapWith: "Swap {a} with {b} ({term})",
+    replaceWith: "Take {b} {title} instead of {a}",
     moveTo: "Move {code} to {term}",
     more: "{n} more",
     less: "Less",
