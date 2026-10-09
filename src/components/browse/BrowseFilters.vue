@@ -111,9 +111,12 @@ function clear(): void {
   font-size: 0.9rem;
   font-weight: 600;
   color: var(--ink);
-  background: var(--surface);
-  border: 1px solid var(--line);
   border-radius: 999px;
+  border: 1px solid var(--glass-edge);
+  background: var(--glass-fill);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-shadow);
   cursor: pointer;
 }
 

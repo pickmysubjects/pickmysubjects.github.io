@@ -2,6 +2,7 @@
 import { computed, nextTick, onBeforeUnmount, onMounted, shallowRef, useTemplateRef, watch } from 'vue'
 import { referencedSubjects, SHORT_TERM_LOAD, termKey, type Issue, type Period, type PlanTerm, type Subject } from '@/engine'
 import { termLabel } from '@/i18n/format'
+import { ChevronDown } from 'lucide-vue-next'
 import TermColumn from './TermColumn.vue'
 import { useI18n } from '@/i18n'
 
@@ -51,11 +52,12 @@ const shortTerms = computed(() => {
   return slots
 })
 
-function onShortTerm(event: Event): void {
-  const select = event.target as HTMLSelectElement
-  const [year, period] = select.value.split('|')
-  if (year && period) emit('addTermAt', Number(year), period as Period)
-  select.value = ''
+// The summer/winter terms open as a short list of buttons under their own button, so the
+// three tools look and work alike (a native dropdown can't be styled to match).
+const shortOpen = shallowRef(false)
+function addShortTerm(year: number, period: Period): void {
+  emit('addTermAt', year, period)
+  shortOpen.value = false
 }
 const track = useTemplateRef<HTMLElement>('track')
 const routes = shallowRef<Route[]>([])
@@ -171,12 +173,23 @@ const trackWidth = computed(() => `max(100%, ${props.terms.length * (MIN_TERM + 
       />
       <div class="term-tools">
         <button class="button button-quiet" type="button" @click="emit('addTerm')">{{ t('plan.addTerm') }}</button>
-        <select v-if="shortTerms.length" class="select short-term" :aria-label="t('plan.addShortTerm')" @change="onShortTerm">
-          <option value="">{{ t('plan.addShortTerm') }}</option>
-          <option v-for="s in shortTerms" :key="`${s.year}|${s.period}`" :value="`${s.year}|${s.period}`">
-            {{ termLabel(t, s) }}
-          </option>
-        </select>
+        <template v-if="shortTerms.length">
+          <button class="button button-quiet" type="button" :aria-expanded="shortOpen" @click="shortOpen = !shortOpen">
+            {{ t('plan.addShortTerm') }}
+            <ChevronDown :size="14" aria-hidden="true" class="short-chevron" :class="{ open: shortOpen }" />
+          </button>
+          <div v-if="shortOpen" class="short-list">
+            <button
+              v-for="s in shortTerms"
+              :key="`${s.year}|${s.period}`"
+              class="button button-quiet short-item"
+              type="button"
+              @click="addShortTerm(s.year, s.period)"
+            >
+              {{ termLabel(t, s) }}
+            </button>
+          </div>
+        </template>
         <button class="button button-quiet" type="button" @click="emit('removeLastTerm')">{{ t('plan.removeTerm') }}</button>
       </div>
     </div>
@@ -231,13 +244,28 @@ const trackWidth = computed(() => `max(100%, ${props.terms.length * (MIN_TERM + 
   padding-top: 38px;
 }
 
-.short-term {
-  max-width: 190px;
-  padding: 8px 10px;
-  font-size: 0.8rem;
+.short-chevron {
+  transition: transform 0.15s;
+}
+
+.short-chevron.open {
+  transform: rotate(180deg);
+}
+
+.short-list {
+  display: grid;
+  gap: 6px;
+  padding-left: 12px;
+  border-left: 2px solid var(--glass-edge);
+}
+
+.term-tools .short-item {
+  min-height: 34px;
+  font-weight: 500;
 }
 
 .term-tools .button {
+  padding: 0 12px;
   font-size: 0.8rem;
   white-space: nowrap;
 }

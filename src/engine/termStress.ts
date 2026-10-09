@@ -1,29 +1,37 @@
 import type { Profile } from './recommend'
 import type { Dataset, Skill, Subject } from './schema'
+import { skillsOf } from './skills'
+
+export { skillsOf }
 
 /**
  * How hard one semester's subjects are to carry together.
  *
- * Follows course load analytics (Pardos & Borchers, "Credit hours is not enough", 2023):
- * credit points say little about workload, so each subject gets a load on three dimensions —
- * time in teaching weeks (class hours, coursework, rated workload), mental effort (difficulty,
- * and how well it suits this student) and exam stress (how much rides on the final and how
- * hard students found it) — and a semester's load is the sum of its subjects'. A subject can be
- * light week to week and brutal at exam time, or the other way round; the two are kept apart. "Typical" comes from the data: the semesters the plan builder makes for
- * every major (worked out when the data is built). A semester's overall score is its heaviest
- * dimension as a multiple of the typical; "heavy" is the top 15% of real semesters and "very
- * heavy" the top 3%.
+ * Credit points say little about workload (Pardos & Borchers, "Credit hours is not enough",
+ * 2023), so a semester is checked against a few plain rules, each one something a student
+ * would recognise and each said back to them in one sentence:
  *
- * On top of the sum, subjects that lean on the same skill the student is weak at (two maths
- * subjects for someone who struggles with maths) add effort: they compete for the same study time.
+ * - your weak spot: two or more subjects leaning on a skill the student is weak at (their
+ *   own rating, or low past marks); three or more counts twice;
+ * - busy weeks: 20+ class hours a week, or two subjects students rate as a heavy workload;
+ * - busy all semester: three or more subjects marked mostly on coursework (assignments due
+ *   week after week);
+ * - exam crunch: three or more subjects decided mostly by the final exam;
+ * - rated hard: two or more subjects students rate hard.
+ *
+ * One rule is a heavy semester, two a very heavy one. A subject can be light week to week and
+ * brutal at exam time, or the other way round; the rules keep the two apart. Where we don't
+ * know something (no ratings, no assessment), the rule stays quiet rather than guessing.
+ *
+ * Class hours alone aren't treated as workload: a lab subject has more of them, but the
+ * University expects about ten hours a week per subject either way.
  */
 
 export type StressLevel = 'ok' | 'heavy' | 'veryHeavy'
-export type Dimension = 'time' | 'effort' | 'stress'
 
 export interface StressReason {
   /** i18n key under `stress.` */
-  key: 'stackWeak' | 'stackMarks' | 'stack' | 'time' | 'effort' | 'exams' | 'examsHard'
+  key: 'stackWeak' | 'stackMarks' | 'hours' | 'workload' | 'coursework' | 'exams' | 'hard'
   params: Record<string, string | number>
 }
 
@@ -31,230 +39,179 @@ export interface TermStress {
   level: StressLevel
   reasons: StressReason[]
   /**
-   * How close the semester is to heavy (1 is the line), plus a step for each weak-skill stack.
-   * For comparing semesters (balancing).
+   * How close the semester is to tripping each rule (1 is the line on any one), added up.
+   * For comparing semesters (balancing), not for showing.
    */
   score: number
 }
 
 /** Skills that wear you down when two subjects lean on them in the same semester. */
 const STACKING: Skill[] = ['maths', 'programming', 'statistics', 'writing', 'lab']
-/** Stacking on these is mentioned even when we don't know the student; the rest only when they're weak at it. */
-const ALWAYS_NOTE: Skill[] = ['maths', 'programming', 'statistics']
-/** Skills that make a subject harder than its level alone suggests. */
-const DEMANDING: Skill[] = ['maths', 'programming', 'statistics']
-
-/** What a subject leans on when nobody has tagged it: by its area code. */
-const AREA_SKILLS: Record<string, Skill[]> = {
-  MAST: ['maths'],
-  ACTL: ['maths', 'statistics'],
-  PHYC: ['maths'],
-  COMP: ['programming'],
-  SWEN: ['programming'],
-  INFO: ['programming'],
-  CHEM: ['lab'],
-  BCMB: ['lab'],
-  MIIM: ['lab'],
-  PATH: ['lab'],
-}
-
-export function skillsOf(s: Subject): Skill[] {
-  return s.skills.length ? s.skills : (AREA_SKILLS[s.area ?? s.code.slice(0, 4)] ?? [])
-}
-
-/** A past average below this in a skill's subjects counts as a weakness; at or above STRONG_MARK, a strength. */
-export const WEAK_MARK = 65
-export const STRONG_MARK = 80
-/** Typical weekly class hours when a subject's aren't recorded. */
-const DEFAULT_HOURS = 3.5
-/** Final-exam share assumed when a subject's assessment isn't recorded (about the median). */
-const DEFAULT_EXAM = 50
-/** Extra effort for each further subject leaning on a skill the student is weak at. */
-const STACK_PENALTY = 0.6
-
-type Load = Record<Dimension, number>
-
-/** One subject's load, without anything about the student. */
-function baseLoad(s: Subject): Load {
-  const sig = s.signals && s.signals.reviews >= 3 ? s.signals : undefined
-  const hours = s.weeklyContactHours ?? DEFAULT_HOURS
-  // Rated workload 3/5 is typical; 5/5 adds 40% to the time, 1/5 takes 40% off.
-  // Teaching weeks: class time (scaled by rated workload) plus the coursework done along the way —
-  // a subject marked mostly on assignments and projects keeps you busy every week, whatever its exam.
-  const coursework = s.assessment ? (100 - examShare(s)) / 100 : 0.5
-  const time =
-    hours * (sig?.workload !== undefined ? 0.4 + 0.2 * sig.workload : 1) + 1.5 * coursework + ((s.assessment?.length ?? 0) > 5 ? 0.5 : 0)
-  const effort =
-    sig?.difficulty ?? 2.5 + 0.5 * (Math.min(s.level, 3) - 1) + (skillsOf(s).some((k) => DEMANDING.includes(k)) ? 0.3 : 0)
-  const exam = s.assessment ? examShare(s) : DEFAULT_EXAM
-  const stress =
-    1 + 2 * (exam / 100) + (s.assessment?.some((t) => t.kind === 'exam' && t.hurdle) ? 0.5 : 0) + (sig?.examDifficulty !== undefined ? (sig.examDifficulty - 3) * 0.3 : 0)
-  return { time, effort, stress }
-}
-
-/** The same, adjusted for how well the subject suits this student. */
-function loadFor(s: Subject, data: Dataset, profile?: Profile): Load {
-  const load = baseLoad(s)
-  if (!profile) return load
-  const skills = skillsOf(s)
-  const rated = skills.map((k) => profile.skills[k]).filter((x): x is number => x !== undefined)
-  if (rated.length) load.effort += (3 - rated.reduce((a, b) => a + b, 0) / rated.length) * 0.4
-  else {
-    const marks = skills.map((k) => pastAverage(k, data, profile)).filter((x): x is number => x !== null)
-    const avg = marks.length ? marks.reduce((a, b) => a + b, 0) / marks.length : null
-    if (avg !== null && avg < WEAK_MARK) load.effort += 0.5
-    if (avg !== null && avg >= STRONG_MARK) load.effort -= 0.3
-  }
-  return load
-}
 
 /**
- * What a real semester looks like, per subject: the typical (median) load on each dimension,
- * the level that counts as high on it (85th percentile), and cutoffs on the overall score —
- * the heaviest dimension as a multiple of typical — at its 85th and 97th percentile.
+ * A past average below this in a skill's subjects counts as a weakness — from two or more
+ * marks; a single mark only when it's clearly low (one bad semester says little).
  */
-export interface Cutoffs {
-  typical: Record<Dimension, number>
-  high: Record<Dimension, number>
-  heavy: number
-  veryHeavy: number
+export const WEAK_MARK = 65
+const WEAK_SINGLE_MARK = 55
+/** Typical weekly class hours when a subject's aren't recorded. */
+const DEFAULT_HOURS = 3.5
+/** Weekly class hours that make busy weeks (most full-time semesters have 14–17). */
+const HOURS_RULE = 20
+/** A subject is decided by the exam from this final-exam share, and by coursework up to COURSEWORK_EXAM. */
+const EXAM_HEAVY = 70
+const COURSEWORK_EXAM = 40
+/** How many exam-decided (or coursework-decided) subjects make a crunch. */
+const CRUNCH_RULE = 3
+/** A 1–5 rating that counts as hard / heavy, and how many such subjects trip the rule. */
+const HIGH_RATING = 4
+const RATED_RULE = 2
+/** Ratings from fewer students than this are left out. */
+const MIN_REVIEWS = 3
+
+export interface StressOptions {
+  /**
+   * Per skill, the most subjects a semester can have on it before it counts as stacked
+   * (default 1). planStress raises it when the plan can't spread them any thinner.
+   */
+  stackFloor?: Partial<Record<Skill, number>>
 }
 
-const DIMS = ['time', 'effort', 'stress'] as const
-const Q_HIGH = 0.85
-const Q_HEAVY = 0.85
-const Q_VERY_HEAVY = 0.97
-const round = (x: number) => Math.round(x * 1000) / 1000
-const at = (xs: number[], q: number) => [...xs].sort((a, b) => a - b)[Math.floor(q * (xs.length - 1))] as number
-
-function perSubject(loads: Load[]): Load {
-  const out: Load = { time: 0, effort: 0, stress: 0 }
-  for (const l of loads) for (const d of DIMS) out[d] += l[d] / loads.length
-  return out
-}
-
-/** Cutoffs from a set of semesters, each given as its subjects' loads. */
-function calibrate(terms: Load[][]): Cutoffs {
-  const avgs = terms.filter((t) => t.length >= 3).map(perSubject)
-  const typical = Object.fromEntries(DIMS.map((d) => [d, round(at(avgs.map((a) => a[d]), 0.5))])) as Record<Dimension, number>
-  const high = Object.fromEntries(DIMS.map((d) => [d, round(at(avgs.map((a) => a[d]), Q_HIGH))])) as Record<Dimension, number>
-  const overall = avgs.map((a) => Math.max(...DIMS.map((d) => a[d] / typical[d])))
-  return { typical, high, heavy: round(at(overall, Q_HEAVY)), veryHeavy: round(at(overall, Q_VERY_HEAVY)) }
-}
-
-/** Cutoffs from real semesters (the plan builder's, at data-build time). */
-export function calibrateCutoffs(data: Dataset, terms: string[][]): Cutoffs {
-  return calibrate(terms.map((codes) => codes.map((c) => data.subjects[c]).filter((s): s is Subject => s !== undefined).map(baseLoad)))
-}
-
-const CUTOFFS = new WeakMap<Dataset, Cutoffs>()
-/** Fallback for tiny datasets (tests, demo): what the 2026 Bachelor of Science data gives. */
-export const DEFAULT_CUTOFFS: Cutoffs = {
-  typical: { time: 4.588, effort: 3.1, stress: 2.2 },
-  high: { time: 4.938, effort: 3.5, stress: 2.4 },
-  heavy: 1.129,
-  veryHeavy: 1.185,
-}
-const SAMPLES = 4000
-
-export function loadCutoffs(data: Dataset): Cutoffs {
-  if (data.stressCutoffs) return data.stressCutoffs
-  const cached = CUTOFFS.get(data)
-  if (cached) return cached
-  // No real semesters to go by: random four-subject ones, from subjects we have full facts for.
-  const known = Object.values(data.subjects).filter((s) => s.weeklyContactHours !== undefined && s.assessment !== undefined)
-  if (known.length < 40) return DEFAULT_CUTOFFS
-  const loads = known.map(baseLoad)
-  let seed = 1
-  const rand = () => ((seed = (seed * 16807) % 2147483647) - 1) / 2147483646
-  const terms = Array.from({ length: SAMPLES }, () => Array.from({ length: 4 }, () => loads[Math.floor(rand() * loads.length)] as Load))
-  const cutoffs = calibrate(terms)
-  CUTOFFS.set(data, cutoffs)
-  return cutoffs
-}
-
-export function termStress(codes: string[], data: Dataset, profile?: Profile): TermStress {
+export function termStress(codes: string[], data: Dataset, profile?: Profile, opts: StressOptions = {}): TermStress {
   const subjects = codes.map((c) => data.subjects[c]).filter((s): s is Subject => s !== undefined)
   const reasons: StressReason[] = []
   // Fewer than three subjects is a light (or part-time) semester.
   if (subjects.length < 3) return { level: 'ok', reasons, score: 0 }
+  const list = (xs: Subject[]) => xs.map((s) => s.code).join(', ')
+  let points = 0
+  let score = 0
 
-  const loads = subjects.map((s) => ({ s, load: loadFor(s, data, profile) }))
-  const sum: Load = { time: 0, effort: 0, stress: 0 }
-  for (const { load } of loads) for (const d of ['time', 'effort', 'stress'] as const) sum[d] += load[d]
-
-  // Subjects stacked on the same skill.
+  // Your weak spot: subjects stacked on a skill the student is weak at.
   for (const skill of STACKING) {
-    const on = subjects.filter((s) => skillsOf(s).includes(skill))
+    const on = subjects.filter((s) => skillsOf(s, data).includes(skill))
     if (on.length < 2) continue
-    const codesOn = on.map((s) => s.code).join(', ')
     const self = profile?.skills[skill]
-    const marks = pastAverage(skill, data, profile)
-    if (self !== undefined && self <= 2) {
-      sum.effort += STACK_PENALTY * (on.length - 1)
-      reasons.push({ key: 'stackWeak', params: { skill, codes: codesOn, n: on.length } })
-    } else if (self === undefined && marks !== null && marks < WEAK_MARK) {
-      sum.effort += STACK_PENALTY * (on.length - 1)
-      reasons.push({ key: 'stackMarks', params: { skill, codes: codesOn, n: on.length, mark: marks } })
-    } else if (self === undefined && (marks === null || marks < STRONG_MARK) && ALWAYS_NOTE.includes(skill) && on.length >= 3) {
-      // We don't know how the student copes with it: worth a mention, not a verdict. Two is
-      // normal for most majors (a computing student has two programming subjects most terms).
-      reasons.push({ key: 'stack', params: { skill, codes: codesOn, n: on.length } })
-    }
+    const marks = self === undefined ? weakAverage(skill, data, profile) : null
+    const params = { skill, codes: list(on), n: on.length }
+    if (self !== undefined && self <= 2) reasons.push({ key: 'stackWeak', params })
+    else if (marks !== null) reasons.push({ key: 'stackMarks', params: { ...params, mark: marks } })
+    else continue
+    // Balancing still sees every stack; only the label skips one the plan can't avoid.
+    score += on.length - 1
+    if (on.length <= (opts.stackFloor?.[skill] ?? 1)) reasons.pop()
+    else points += on.length >= 3 ? 2 : 1
   }
 
-  // The heaviest dimension, per subject, as a multiple of a typical semester's.
-  const cutoffs = loadCutoffs(data)
-  const n = subjects.length
-  const per = (d: Dimension) => sum[d] / n
-  const overall = Math.max(...DIMS.map((d) => per(d) / cutoffs.typical[d]))
-  let level: StressLevel = overall >= cutoffs.veryHeavy ? 'veryHeavy' : overall >= cutoffs.heavy ? 'heavy' : 'ok'
-  // Subjects stacked on the student's own weak spot outweigh the averages: that's the
-  // combination students ask about ("Calculus 2 and Linear Algebra together, weak at maths?").
-  const weakStacks = reasons.filter((r) => r.key === 'stackWeak' || r.key === 'stackMarks')
-  if (weakStacks.some((r) => Number(r.params.n) >= 3) || weakStacks.length >= 2) level = 'veryHeavy'
-  else if (weakStacks.length && level === 'ok') level = 'heavy'
-
-  // Say which dimensions make it heavy (the highest one at least).
-  if (level !== 'ok' && overall >= cutoffs.heavy) {
-    const top = (d: Dimension) =>
-      [...loads]
-        .sort((a, b) => b.load[d] - a.load[d])
-        .slice(0, 2)
-        .map((x) => x.s.code)
-        .join(', ')
-    const worstDim = DIMS.reduce((a, d) => (per(d) / cutoffs.typical[d] > per(a) / cutoffs.typical[a] ? d : a))
-    for (const d of DIMS) {
-      if (per(d) < cutoffs.high[d] && d !== worstDim) continue
-      if (d === 'time') {
-        const hours = Math.round(subjects.reduce((a, s) => a + (s.weeklyContactHours ?? DEFAULT_HOURS), 0))
-        reasons.push({ key: 'time', params: { hours, codes: top('time') } })
-      } else if (d === 'effort') reasons.push({ key: 'effort', params: { codes: top('effort') } })
-      else {
-        const examHeavy = subjects.filter((s) => examShare(s) >= 60)
-        if (examHeavy.length >= 2) reasons.push({ key: 'exams', params: { n: examHeavy.length, codes: examHeavy.map((s) => s.code).join(', ') } })
-        else reasons.push({ key: 'examsHard', params: { codes: top('stress') } })
-      }
-    }
+  // Busy weeks: class hours, or students saying the workload is heavy.
+  const hours = Math.round(subjects.reduce((a, s) => a + (s.weeklyContactHours ?? DEFAULT_HOURS), 0))
+  const rated = (s: Subject) => (s.signals && s.signals.reviews >= MIN_REVIEWS ? s.signals : undefined)
+  const heavyWork = subjects.filter((s) => (rated(s)?.workload ?? 0) >= HIGH_RATING)
+  if (hours >= HOURS_RULE) {
+    points++
+    const most = [...subjects].sort((a, b) => (b.weeklyContactHours ?? 0) - (a.weeklyContactHours ?? 0)).slice(0, 2)
+    reasons.push({ key: 'hours', params: { hours, codes: list(most) } })
+  } else if (heavyWork.length >= RATED_RULE) {
+    points++
+    reasons.push({ key: 'workload', params: { n: heavyWork.length, codes: list(heavyWork) } })
   }
-  reasons.sort((a, b) => Number(a.key === 'stack') - Number(b.key === 'stack'))
-  // 1 is the heavy line; weak-skill stacks push it further. For comparing semesters (balancing).
-  const score = overall / cutoffs.heavy + 0.5 * weakStacks.length
+  score += Math.max(0, (hours - 16) / (HOURS_RULE - 16)) + heavyWork.length / RATED_RULE
+
+  // Busy all semester, or all at the end.
+  const recorded = subjects.filter((s) => s.assessment)
+  const coursework = recorded.filter((s) => examShare(s) <= COURSEWORK_EXAM)
+  const exams = recorded.filter((s) => examShare(s) >= EXAM_HEAVY)
+  if (coursework.length >= CRUNCH_RULE) {
+    points++
+    reasons.push({ key: 'coursework', params: { n: coursework.length, codes: list(coursework) } })
+  }
+  if (exams.length >= CRUNCH_RULE) {
+    points++
+    reasons.push({ key: 'exams', params: { n: exams.length, codes: list(exams) } })
+  }
+  score += coursework.length / CRUNCH_RULE + exams.length / CRUNCH_RULE
+
+  // Rated hard, unless the student says they're strong at what the subject leans on.
+  const strong = (s: Subject) => {
+    const own = skillsOf(s, data).map((k) => profile?.skills[k])
+    return own.length > 0 && own.every((x) => x !== undefined && x >= 4)
+  }
+  const hard = subjects.filter((s) => (rated(s)?.difficulty ?? 0) >= HIGH_RATING && !strong(s))
+  if (hard.length >= RATED_RULE) {
+    points++
+    reasons.push({ key: 'hard', params: { n: hard.length, codes: list(hard) } })
+  }
+  score += hard.length / RATED_RULE
+
+  const level: StressLevel = points >= 2 ? 'veryHeavy' : points === 1 ? 'heavy' : 'ok'
   return { level, reasons, score: Math.round(score * 1000) / 1000 }
+}
+
+/** A weak skill the plan leans on in every semester, so no amount of moving spreads it out. */
+export interface UnavoidableStack {
+  skill: Skill
+  /** Subjects in the plan on it. */
+  total: number
+  /** The fewest per full semester it can be spread to. */
+  perTerm: number
+}
+
+/**
+ * Every semester's load, judged as part of the whole plan: when the degree itself puts more
+ * subjects on a weak skill than there are semesters (a maths major who rates maths weak), two
+ * per semester is as spread as it gets — said once for the plan, not as a warning on each term.
+ */
+export function planStress(
+  terms: string[][],
+  data: Dataset,
+  profile?: Profile,
+): { terms: TermStress[]; unavoidable: UnavoidableStack[] } {
+  const full = terms.filter((t) => t.length >= 3)
+  const weak = weakSkills(data, profile)
+  const unavoidable: UnavoidableStack[] = []
+  const stackFloor: Partial<Record<Skill, number>> = {}
+  for (const skill of weak) {
+    const total = full.flat().filter((c) => {
+      const s = data.subjects[c]
+      return s !== undefined && skillsOf(s, data).includes(skill)
+    }).length
+    const perTerm = full.length ? Math.ceil(total / full.length) : 0
+    if (perTerm >= 2) {
+      stackFloor[skill] = perTerm
+      unavoidable.push({ skill, total, perTerm })
+    }
+  }
+  return { terms: terms.map((t) => termStress(t, data, profile, { stackFloor })), unavoidable }
 }
 
 function examShare(s: Subject): number {
   return (s.assessment ?? []).filter((t) => t.kind === 'exam').reduce((sum, t) => sum + t.weight, 0)
 }
 
-/** The student's average mark in past subjects that lean on this skill, if they've entered any. */
-function pastAverage(skill: Skill, data: Dataset, profile?: Profile): number | null {
-  const marks = (profile?.results ?? [])
+/** Skills the student is weak at: rated 1–2 themselves, or (unrated) a past average below WEAK_MARK. */
+export function weakSkills(data: Dataset, profile?: Profile): Set<Skill> {
+  const weak = new Set<Skill>()
+  for (const skill of STACKING) {
+    const self = profile?.skills[skill]
+    if (self !== undefined ? self <= 2 : weakAverage(skill, data, profile) !== null) weak.add(skill)
+  }
+  return weak
+}
+
+/** The student's past average in a skill's subjects when it marks a weakness, else null. */
+function weakAverage(skill: Skill, data: Dataset, profile?: Profile): number | null {
+  const marks = pastMarks(skill, data, profile)
+  if (!marks.length) return null
+  const avg = Math.round(marks.reduce((a, b) => a + b, 0) / marks.length)
+  return avg < (marks.length >= 2 ? WEAK_MARK : WEAK_SINGLE_MARK) ? avg : null
+}
+
+/** The student's marks in past subjects that lean on this skill. */
+function pastMarks(skill: Skill, data: Dataset, profile?: Profile): number[] {
+  return (profile?.results ?? [])
     .filter((r) => r.mark !== undefined)
     .filter((r) => {
       const s = data.subjects[r.code]
-      return s !== undefined && skillsOf(s).includes(skill)
+      return s !== undefined && skillsOf(s, data).includes(skill)
     })
     .map((r) => r.mark as number)
-  return marks.length ? Math.round(marks.reduce((a, b) => a + b, 0) / marks.length) : null
 }

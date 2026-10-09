@@ -2,7 +2,7 @@
 import { link } from '@/composables/useView'
 import { computed, onMounted, useTemplateRef } from 'vue'
 import { CalendarRange, ExternalLink, X } from 'lucide-vue-next'
-import { periodsFor, referencedSubjects, type Subject } from '@/engine'
+import { periodsFor, prerequisiteRoute, referencedSubjects, simplifyFor, type Subject } from '@/engine'
 import AssessmentPanel from '@/components/subject/AssessmentPanel.vue'
 import MajorRoles from '@/components/subject/MajorRoles.vue'
 import { useProfile } from '@/composables/useProfile'
@@ -53,6 +53,21 @@ const clashes = computed(() => {
 })
 const haveSet = computed(() => new Set(props.have))
 
+// The subjects it names, with titles to tap through; and the whole way back to first year,
+// folded away, so a third-year subject doesn't need opening one prerequisite at a time.
+const needs = computed(() => (props.subject ? simplifyFor(props.subject.prerequisites, props.course) : 'unknown'))
+const needCodes = computed(() => referencedSubjects(needs.value))
+const route = computed(() => prerequisiteRoute(props.code, props.subjects, props.course, haveSet.value))
+const routeMissing = computed(() => route.value.filter((c) => !haveSet.value.has(c)).length)
+const routeByLevel = computed(() => {
+  const groups = new Map<number, string[]>()
+  for (const c of route.value) {
+    const level = props.subjects[c]?.level ?? 0
+    groups.set(level, [...(groups.get(level) ?? []), c])
+  }
+  return [...groups.entries()]
+})
+
 // Conditions we can't check (a VCE score, a test): the student can say they meet them.
 const { profile, setConfirmed } = useProfile()
 const hasManual = computed(() => JSON.stringify(props.subject?.prerequisites ?? '').includes('"manual"'))
@@ -96,7 +111,34 @@ function onClick(event: MouseEvent): void {
           <h3 class="peek-label">{{ t('subject.needs') }}</h3>
           <p v-if="subject.prerequisites === 'none'">{{ t('subject.needsNone') }}</p>
           <p v-else-if="subject.prerequisites === 'unknown'" class="muted">{{ t('subject.notRecorded') }}</p>
-          <p v-else>{{ describeReq(t, subject.prerequisites, course) }}</p>
+          <template v-else>
+            <p>{{ describeReq(t, subject.prerequisites, course) }}</p>
+            <ul v-if="needCodes.length" class="peek-list">
+              <li v-for="c in needCodes" :key="c">
+                <button type="button" class="peek-row" @click="emit('open', c)">
+                  <span class="code">{{ c }}</span>
+                  <span class="peek-row-title">{{ subjects[c]?.title ?? t('plan.notInDataset') }}</span>
+                  <span v-if="haveSet.has(c)" class="peek-have">{{ t('plan.haveIt') }}</span>
+                </button>
+              </li>
+            </ul>
+            <details v-if="route.length > needCodes.length" class="peek-route">
+              <summary>{{ t('subject.routeTitle', { n: route.length, missing: routeMissing }) }}</summary>
+              <p class="muted">{{ t('subject.routeHint') }}</p>
+              <template v-for="[level, codes] in routeByLevel" :key="level">
+                <h4 class="peek-route-level">{{ level ? t('subject.level', { level }) : t('plan.notInDataset') }}</h4>
+                <ul class="peek-list">
+                  <li v-for="c in codes" :key="c">
+                    <button type="button" class="peek-row" @click="emit('open', c)">
+                      <span class="code">{{ c }}</span>
+                      <span class="peek-row-title">{{ subjects[c]?.title ?? t('plan.notInDataset') }}</span>
+                      <span v-if="haveSet.has(c)" class="peek-have">{{ t('plan.haveIt') }}</span>
+                    </button>
+                  </li>
+                </ul>
+              </template>
+            </details>
+          </template>
           <label v-if="hasManual" class="peek-confirm">
             <input type="checkbox" :checked="confirmed" @change="setConfirmed(code, ($event.target as HTMLInputElement).checked)" />
             {{ t('plan.iMeetThisLong') }}
@@ -237,6 +279,62 @@ function onClick(event: MouseEvent): void {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
+}
+
+.peek-list {
+  display: grid;
+  gap: 4px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.peek-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  width: 100%;
+  padding: 7px 10px;
+  border: 1px solid var(--glass-edge);
+  border-radius: var(--radius-sm);
+  background: var(--glass-fill);
+  box-shadow: var(--glass-shadow);
+  font: inherit;
+  font-size: 0.88rem;
+  text-align: left;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.peek-row:hover {
+  background: var(--glass-fill-hover);
+}
+
+.peek-row .code {
+  flex: none;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.peek-row-title {
+  flex: 1;
+  min-width: 0;
+}
+
+.peek-route {
+  margin-top: 10px;
+}
+
+.peek-route summary {
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.peek-route-level {
+  margin: 10px 0 0;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--ink-faint);
 }
 
 .peek-code-chip {

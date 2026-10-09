@@ -304,6 +304,45 @@ textarea {
   color: var(--ink-soft);
 }
 
+/* A dropdown that acts as a control (sort, add a term), not a form field: glass, like the buttons. */
+.select-glass {
+  width: auto;
+  max-width: 100%;
+  min-height: 42px;
+  padding: 0 36px 0 18px;
+  border: 1px solid var(--glass-edge);
+  border-radius: 999px;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238f8f96' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")
+      no-repeat right 13px center,
+    var(--glass-fill);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-shadow);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--ink);
+  appearance: none;
+  cursor: pointer;
+}
+
+.select-glass:hover {
+  background-color: var(--glass-fill-hover);
+}
+
+.select-glass:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: var(--glass-shadow), 0 0 0 4px var(--accent-soft);
+}
+
+button.chip {
+  border-color: var(--glass-edge);
+  background: var(--glass-fill);
+  box-shadow: var(--glass-shadow);
+  cursor: pointer;
+}
+
 .visually-hidden {
   position: absolute;
   width: 1px;

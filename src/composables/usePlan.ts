@@ -14,6 +14,7 @@ import {
   type Plan,
   type PlanTerm,
   type Note,
+  type Relief,
 } from '@/engine'
 import { useDataset } from './useDataset'
 import { useProfile } from './useProfile'
@@ -195,6 +196,27 @@ export function usePlan() {
     save(() => ({ setup, terms, notes: [], unplaced: [] }))
   }
 
+  /** Make a heavy semester lighter: take the spread-out arrangement, or move one subject to a summer/winter term. */
+  function applyRelief(termIndex: number, relief: Relief): void {
+    save((s) => {
+      if (relief.kind === 'spread') {
+        s.terms = cloneJson(relief.terms)
+        return s
+      }
+      const from = s.terms[termIndex]
+      if (!from) return s
+      from.subjects = from.subjects.filter((c) => c !== relief.code)
+      let term = s.terms.find((t) => t.year === relief.year && t.period === relief.period)
+      if (!term) {
+        term = { year: relief.year, period: relief.period, subjects: [] }
+        const at = s.terms.findIndex((t) => termKey(t.year, t.period) > termKey(relief.year, relief.period))
+        s.terms.splice(at < 0 ? s.terms.length : at, 0, term)
+      }
+      term.subjects.push(relief.code)
+      return s
+    })
+  }
+
   function removeLastTerm(): void {
     save((s) => {
       if (s.terms.length > 1 && (s.terms.at(-1)?.subjects.length ?? 0) === 0) s.terms.pop()
@@ -224,6 +246,7 @@ export function usePlan() {
     addTermAt,
     removeTerm,
     removeLastTerm,
+    applyRelief,
     importPlan,
   }
 }

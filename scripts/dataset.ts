@@ -3,8 +3,6 @@ import { join, relative } from 'node:path'
 import { parse } from 'yaml'
 import { z } from 'zod'
 import { referencedSubjects } from '../src/engine/expr'
-import { generatePlan } from '../src/engine/generate'
-import { calibrateCutoffs } from '../src/engine/termStress'
 import { componentFileSchema, courseFileSchema, discussionFileSchema, SKILLS, subjectFileSchema, type Dataset, type Skill } from '../src/engine/schema'
 
 export const ROOT = join(import.meta.dirname, '..')
@@ -82,25 +80,7 @@ export function buildDataset(name: Dataset['name']): BuildResult {
   }
 
   const dataset: Dataset = { name, generatedAt: new Date().toISOString(), subjects, courses, components }
-  // What a typical semester looks like, from the plans the builder makes (see termStress).
-  if (errors.length === 0) {
-    const terms = typicalTerms(dataset)
-    if (terms.length >= 50) dataset.stressCutoffs = calibrateCutoffs(dataset, terms)
-  }
   return { dataset, errors, missing: [...missing].sort() }
-}
-
-/** The semesters the plan builder makes for every major, with no student profile. */
-function typicalTerms(data: Dataset): string[][] {
-  const profile = { results: [], skills: {}, interests: [], goal: 'balanced' as const }
-  return data.courses.flatMap((course) =>
-    data.components
-      .filter((c) => c.course === course.code && c.kind === 'major' && c.requirements !== 'unknown')
-      .flatMap((m) => {
-        const input = { data, profile, course: course.code, courseYear: course.year, major: m.id, startYear: course.year + 1, startPeriod: 'semester-1' as const }
-        return generatePlan(input).plan.terms.map((t) => t.subjects)
-      }),
-  )
 }
 
 /** Minimum reviews before crowd skill tags are trusted (signals are shrunk by the engine instead). */

@@ -118,7 +118,7 @@ function planWithIt(): void {
         <h2 class="block-title">{{ t('majors.compareTitle') }}</h2>
         <label class="compare-pick">
           <span class="visually-hidden">{{ t('majors.comparePick') }}</span>
-          <select v-model="otherId" class="select">
+          <select v-model="otherId" class="select-glass">
             <option value="">{{ t('majors.comparePick') }}</option>
             <option v-for="o in others" :key="o.id" :value="o.id">{{ o.title }}</option>
           </select>
@@ -261,7 +261,7 @@ function planWithIt(): void {
   padding: 18px 20px;
 }
 
-.compare-pick .select {
+.compare-pick .select-glass {
   max-width: 420px;
 }
 

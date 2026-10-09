@@ -81,9 +81,12 @@ const chosen = computed(() => props.majors.find((m) => m.id === major.value))
 .search-input {
   width: 100%;
   padding: 12px 14px 12px 42px;
-  border: 1px solid var(--line);
   border-radius: var(--radius);
-  background: var(--surface);
+  border: 1px solid var(--glass-edge);
+  background: var(--glass-fill);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-shadow);
   font: inherit;
   color: var(--ink);
 }
@@ -140,7 +143,7 @@ const chosen = computed(() => props.majors.find((m) => m.id === major.value))
 }
 
 .option:hover {
-  border-color: var(--ink-faint);
+  background: var(--glass-fill-hover);
 }
 
 .option[aria-pressed='true'] {

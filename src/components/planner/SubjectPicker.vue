@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed, shallowRef, useId } from 'vue'
 import { CircleCheck, TriangleAlert } from 'lucide-vue-next'
-import { previewAdd, termStress, type StressLevel } from '@/engine'
-import { useProfile } from '@/composables/useProfile'
+import { previewAdd, type StressLevel } from '@/engine'
+import { usePlanStress } from '@/composables/usePlanStress'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
 import { useI18n } from '@/i18n'
@@ -15,7 +15,7 @@ const listId = useId()
 const { t } = useI18n()
 const { data } = useDataset()
 const plan = usePlan()
-const { profile } = useProfile()
+const { stressWith } = usePlanStress()
 const text = shallowRef('')
 
 const code = computed(() => {
@@ -34,13 +34,13 @@ const check = computed(() => {
   const problems = issues.map((i) => issueText(t.value, i, [], [], data.value.subjects, plan.setup.value.course))
   // Would it make the semester harder to carry? Say so before it's added, with the main reason.
   const now = plan.terms.value[props.termIndex]?.subjects ?? []
-  const before = termStress(now, data.value, profile.value)
-  const after = termStress([...now, c], data.value, profile.value)
+  const before = stressWith(now)
+  const after = stressWith([...now, c])
   const RANK: Record<StressLevel, number> = { ok: 0, heavy: 1, veryHeavy: 2 }
   if (RANK[after.level] > RANK[before.level]) {
     const known = new Set(before.reasons.map((r) => JSON.stringify(r)))
-    const fresh = after.reasons.find((r) => !known.has(JSON.stringify(r)) && r.key !== 'stack') ?? after.reasons[0]
-    problems.push(t.value('stress.previewWorse', { level: t.value(`stress.${after.level}`) }) + (fresh ? stressText(t.value, fresh) : ''))
+    const fresh = after.reasons.find((r) => !known.has(JSON.stringify(r))) ?? after.reasons[0]
+    problems.push(t.value('stress.previewWorse') + (fresh ? stressText(t.value, fresh) : ''))
   }
   return { title, planned: null, problems }
 })
@@ -141,9 +141,10 @@ function submit(): void {
 .check-add {
   justify-self: start;
   padding: 3px 10px;
-  border: 1px solid var(--accent);
+  border: 1px solid var(--glass-edge);
   border-radius: 999px;
-  background: none;
+  background: var(--glass-shine), color-mix(in srgb, var(--accent-soft) 80%, transparent);
+  box-shadow: var(--glass-shadow);
   font: inherit;
   font-weight: 600;
   color: var(--accent);

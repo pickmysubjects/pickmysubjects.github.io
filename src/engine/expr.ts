@@ -156,3 +156,43 @@ export function simplifyFor(field: ReqField, course: string): ReqField {
   // Nothing open to this course at all: show the whole thing rather than hide it.
   return out === MET ? 'none' : out === null ? field : out
 }
+
+/**
+ * One way through a subject's prerequisites, all the way back: every subject the student
+ * needs before it, not just the ones it names. Where there's a choice ("MAST20004 or
+ * MAST20006") the branch the student already has (in `have`) is taken, then one whose
+ * subjects we know, else the first. A subject the student already has isn't followed further
+ * back (they got in to it somehow, e.g. a VCE score). Admission, points and free-text
+ * conditions aren't subjects and are left out.
+ */
+export function prerequisiteRoute(
+  code: string,
+  subjects: Record<string, Subject>,
+  course: string,
+  have: Set<string> = new Set(),
+): string[] {
+  const out = new Set<string>()
+  const visit = (c: string): void => {
+    const s = subjects[c]
+    const field = s ? simplifyFor(s.prerequisites, course) : 'unknown'
+    if (field === 'none' || field === 'unknown') return
+    const pick = (e: ReqExpr): string[] => {
+      if ('subject' in e) return [e.subject]
+      if ('all' in e) return e.all.flatMap(pick)
+      if ('any' in e) {
+        const branches = e.any.map(pick).filter((b) => b.length)
+        const owned = (b: string[]) => b.filter((x) => have.has(x)).length / b.length
+        const known = (b: string[]) => b.filter((x) => subjects[x] !== undefined).length / b.length
+        return [...branches].sort((a, b) => owned(b) - owned(a) || known(b) - known(a))[0] ?? []
+      }
+      return []
+    }
+    for (const next of pick(field)) {
+      if (out.has(next) || next === code) continue
+      out.add(next)
+      if (!have.has(next)) visit(next)
+    }
+  }
+  visit(code)
+  return [...out].sort((a, b) => (subjects[a]?.level ?? 0) - (subjects[b]?.level ?? 0) || a.localeCompare(b))
+}

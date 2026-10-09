@@ -5,7 +5,8 @@ import type { Note, Params, Plan, PlanTerm } from './plan'
 import { standardTerms } from './plan'
 import { passedCodes, recommend, type Profile } from './recommend'
 import { checkTerms } from './planCheck'
-import { termStress } from './termStress'
+import { balanceTerms } from './relieve'
+import { skillsOf, weakSkills } from './termStress'
 import type { ComponentReq, Course, CourseRule, Dataset, Period, ReqExpr, Subject } from './schema'
 
 export interface GenerateInput {
@@ -137,7 +138,15 @@ function buildPlan(input: GenerateInput): GenerateResult {
     terms.forEach((t, i) => fill(t, i, true))
   }
   // Spread the load, so the hard subjects don't all land in one semester.
-  balance(terms, input, completed, notes)
+  const draft: Plan = { course: input.course, courseYear: input.courseYear, major: input.major, specialisation: input.specialisation, completed, terms }
+  for (const { a, b } of balanceTerms(draft, data, input.profile)) {
+    notes.push(note('balanced', { a, b }, `Swapped ${a} and ${b} between semesters to spread the load.`))
+  }
+  // Keep "added in …" notes true to where each subject now sits.
+  for (const n of notes) {
+    const where = typeof n.params.code === 'string' && 'year' in n.params ? terms.find((t) => t.subjects.includes(n.params.code as string)) : undefined
+    if (where) Object.assign(n.params, { year: where.year, period: where.period })
+  }
   const placed = allPlaced()
 
   const unplaced = pending
@@ -153,68 +162,6 @@ function buildPlan(input: GenerateInput): GenerateResult {
     terms,
   }
   return { plan, unplaced, notes }
-}
-
-/**
- * Load balancing: while a semester is heavy, swap one of its subjects with an equal-points
- * subject in another semester when that evens out the load (sum of squared stress scores
- * goes down) and nothing gets worse — no new term problems (prerequisites, when it runs,
- * clashes) and no course rule newly unmet. Greedy, best swap first, a few rounds at most.
- */
-const BALANCE_ROUNDS = 12
-function balance(terms: PlanTerm[], input: GenerateInput, completed: string[], notes: Note[]): void {
-  const { data, profile } = input
-  const plan = (): Plan => ({ course: input.course, courseYear: input.courseYear, major: input.major, specialisation: input.specialisation, completed, terms })
-  // Errors and warnings counted apart, so a warning can't quietly turn into an error.
-  const problems = () => {
-    const issues = checkTerms(plan(), data)
-    return { errors: issues.filter((i) => i.severity === 'error').length, warnings: issues.filter((i) => i.severity === 'warning').length }
-  }
-  const unmet = () => checkCourse(plan(), data).statuses.filter((s) => s.status === 'fail').length
-  const scores = () => terms.map((t) => termStress(t.subjects, data, profile).score)
-  const cost = (xs: number[]) => xs.reduce((sum, x) => sum + x * x, 0)
-  const baseProblems = problems()
-  const baseUnmet = unmet()
-  let current = scores()
-  for (let round = 0; round < BALANCE_ROUNDS; round++) {
-    const heaviest = current.indexOf(Math.max(...current))
-    if ((current[heaviest] ?? 0) < 1) return
-    const from = terms[heaviest] as PlanTerm
-    let best: { a: string; b: string; to: number; scores: number[] } | null = null
-    for (const a of from.subjects) {
-      for (const [to, other] of terms.entries()) {
-        if (to === heaviest) continue
-        for (const b of other.subjects) {
-          const sa = data.subjects[a]
-          const sb = data.subjects[b]
-          if (!sa || !sb || sa.points !== sb.points) continue
-          if (offeredIn(sa, other.year, other.period).status !== 'ok' || offeredIn(sb, from.year, from.period).status !== 'ok') continue
-          swap(from, other, a, b)
-          const next = scores()
-          if (cost(next) < cost(best?.scores ?? current) - 1e-6) {
-            const p = problems()
-            if (p.errors <= baseProblems.errors && p.warnings <= baseProblems.warnings && unmet() <= baseUnmet) best = { a, b, to, scores: next }
-          }
-          swap(from, other, b, a)
-        }
-      }
-    }
-    if (!best) return
-    const other = terms[best.to] as PlanTerm
-    swap(from, other, best.a, best.b)
-    current = best.scores
-    // Keep "added in …" notes true to where each subject now sits.
-    for (const n of notes) {
-      const where = n.params.code === best.a ? other : n.params.code === best.b ? from : null
-      if (where && 'year' in n.params) Object.assign(n.params, { year: where.year, period: where.period })
-    }
-    notes.push(note('balanced', { a: best.a, b: best.b }, `Swapped ${best.a} and ${best.b} between semesters to spread the load.`))
-  }
-}
-
-function swap(x: PlanTerm, y: PlanTerm, a: string, b: string): void {
-  x.subjects[x.subjects.indexOf(a)] = b
-  y.subjects[y.subjects.indexOf(b)] = a
 }
 
 function note(key: string, params: Params, text: string): Note {
@@ -549,7 +496,7 @@ function pickElective(ctx: PickCtx): { code: string; why: string; ruleId: string
         planned: [...ctx.placed, ...ctx.reserved],
         eligibleWith: [...ctx.before],
       })
-      for (const rec of rankElectives(recs, ctx.focus, data, (c) => ctx.opens(c, rule.category), needsPath)) {
+      for (const rec of rankElectives(recs, ctx.focus, data, (c) => ctx.opens(c, rule.category), input.profile, needsPath)) {
         const s = data.subjects[rec.code]
         if (!s || s.points > ctx.room) continue
         if (offeredIn(s, term.year, term.period).status !== 'ok') continue
@@ -580,9 +527,17 @@ function rankElectives<T extends { code: string; score: number; eligibility: Tri
   focus: Set<string | undefined>,
   data: Dataset,
   opens: (code: string) => number,
+  profile: Profile,
   needsPath = false,
 ): T[] {
   const tier = (r: T) => (r.eligibility === 'ok' ? 0 : r.eligibility === 'unknown' ? 1 : 2)
+  // A free choice leaning on the student's weak spot only when nothing else fits: stacked
+  // with the compulsory subjects on the same skill, it's what makes a semester too much.
+  const weak = weakSkills(data, profile)
+  const onWeak = (r: T) => {
+    const s = data.subjects[r.code]
+    return s && skillsOf(s, data).some((k) => weak.has(k)) ? 1 : 0
+  }
   const near = (r: T) => (focus.has(data.subjects[r.code]?.area) ? 0 : 1)
   // needsPath: a dead end would make the requirement impossible, so it's left out
   // (a later term may offer a subject that leads on).
@@ -591,7 +546,12 @@ function rankElectives<T extends { code: string; score: number; eligibility: Tri
     .filter((r) => tier(r) < 2 && path(r) === 0)
     .sort(
       (a, b) =>
-        tier(a) - tier(b) || path(a) - path(b) || b.score - a.score || near(a) - near(b) || opens(b.code) - opens(a.code),
+        tier(a) - tier(b) ||
+        path(a) - path(b) ||
+        onWeak(a) - onWeak(b) ||
+        b.score - a.score ||
+        near(a) - near(b) ||
+        opens(b.code) - opens(a.code),
     )
 }
 
@@ -723,7 +683,7 @@ function trySwap(r: PointsRule, terms: PlanTerm[], all: string[], ctx: RepairCtx
         planned: [...all, ...ctx.reserved],
         eligibleWith: before,
       })
-      for (const rec of rankElectives(candidates, ctx.focus, data, (c) => ctx.opens(c, r.category))) {
+      for (const rec of rankElectives(candidates, ctx.focus, data, (c) => ctx.opens(c, r.category), input.profile)) {
         const s = data.subjects[rec.code]
         if (!s || s.points > es.points) continue
         if (offeredIn(s, term.year, term.period).status !== 'ok') continue

@@ -94,7 +94,7 @@ watch(filters, (f) => {
           <label class="sort">
             <span>{{ t('browse.sort') }}</span>
             <select
-              class="sort-select"
+              class="select-glass"
               :value="filters.sort"
               @change="set('sort', ($event.target as HTMLSelectElement).value as BrowseSort)"
             >
@@ -232,15 +232,6 @@ watch(filters, (f) => {
   gap: 8px;
   font-size: 0.85rem;
   color: var(--ink-faint);
-}
-
-.sort-select {
-  padding: 6px 10px;
-  font-size: 0.88rem;
-  color: var(--ink);
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-sm);
 }
 
 .list {

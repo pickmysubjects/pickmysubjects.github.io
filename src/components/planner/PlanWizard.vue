@@ -197,9 +197,12 @@ function chooseCourse(c: Course): void {
   gap: 10px;
   min-height: 56px;
   padding: 0 18px;
-  border: 1px solid var(--line);
+  border: 1px solid var(--glass-edge);
   border-radius: var(--radius);
-  background: var(--surface);
+  background: var(--glass-fill);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-shadow);
   font-size: 1rem;
   font-weight: 500;
   text-align: left;
@@ -208,7 +211,7 @@ function chooseCourse(c: Course): void {
 }
 
 .option:hover {
-  border-color: var(--ink-faint);
+  background: var(--glass-fill-hover);
 }
 
 .option[aria-pressed='true'] {

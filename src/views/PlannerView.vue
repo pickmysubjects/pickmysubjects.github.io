@@ -17,6 +17,7 @@ import { go, useView } from '@/composables/useView'
 import { useProfile } from '@/composables/useProfile'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan, type PlanSetup } from '@/composables/usePlan'
+import { usePlanStress } from '@/composables/usePlanStress'
 import { useI18n } from '@/i18n'
 import { issueText, noteText, termLabel } from '@/i18n/format'
 
@@ -64,9 +65,15 @@ const extraTermsOnVisa = computed(
 )
 // Subject whose details are open in the quick-look dialog.
 const peek = shallowRef<string | null>(null)
-// Nothing in "Me" yet: electives can only be guessed, so point there (it's optional).
+// Nothing in "Me" says what the student finds hard (no skills rated, no marks): the plan
+// can't keep their weak spots apart, so point there (it's optional).
 const profileEmpty = computed(
-  () => profile.value.results.length === 0 && Object.keys(profile.value.skills).length === 0 && profile.value.interests.length === 0,
+  () => Object.keys(profile.value.skills).length === 0 && !profile.value.results.some((r) => r.mark !== undefined),
+)
+// Weak spots the degree leans on every semester: said once here, not on each semester.
+const { stress } = usePlanStress()
+const unavoidable = computed(() =>
+  stress.value.unavoidable.map((u) => t.value('stress.unavoidable', { skill: t.value(`skill.${u.skill}`), total: u.total, perTerm: u.perTerm })),
 )
 // Started before now but no record yet: the plan can't know what's done.
 const startedWithoutRecord = computed(() => {
@@ -206,6 +213,8 @@ function finishWizard(setup: PlanSetup): void {
           </template>
         </Interp>
       </p>
+
+      <p v-for="u in unavoidable" :key="u" class="started">{{ u }}</p>
 
       <p v-if="extraTermsOnVisa" class="started">{{ t('plan.extraTermsVisa') }}</p>
 

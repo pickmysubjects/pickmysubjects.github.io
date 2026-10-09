@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest'
-import { calibrateCutoffs, termStress } from '../src/engine/termStress'
+import { planStress, termStress } from '../src/engine/termStress'
+import { relieveTerm } from '../src/engine/relieve'
+import type { Plan } from '../src/engine/plan'
 import type { Profile } from '../src/engine/recommend'
 import { buildDataset } from '../scripts/dataset'
 import { dataset, subject } from './helpers'
@@ -9,55 +11,66 @@ const tasks = (exam: number) => [
   { kind: 'exam', weight: exam },
   { kind: 'assignment', weight: 100 - exam },
 ]
+const plain = (code: string, extra: Record<string, unknown> = {}) =>
+  subject({ code, prerequisites: 'none', assessment: tasks(50), weekly_contact_hours: 3.5, ...extra })
 
 describe('termStress', () => {
-  const plain = (code: string, area: string) =>
-    subject({ code, area, prerequisites: 'none', assessment: tasks(50), weekly_contact_hours: 3.5 })
-  const data = dataset([plain('MAST10006', 'MAST'), plain('MAST10007', 'MAST'), plain('MAST10005', 'MAST'), plain('BIOL10008', 'BIOL'), plain('HIST10001', 'HIST')])
+  const data = dataset([plain('MAST10006'), plain('MAST10007'), plain('MAST10005'), plain('BIOL10008'), plain('HIST10001')])
   const calcAndAlgebra = ['MAST10006', 'MAST10007', 'BIOL10008', 'HIST10001']
 
-  it('two maths subjects for someone who rated maths weak is a heavy term, and says why', () => {
+  it('two maths subjects for someone who rated maths weak is a heavy term, and says which', () => {
     const s = termStress(calcAndAlgebra, data, profile({ skills: { maths: 2 } }))
     expect(s.level).toBe('heavy')
-    expect(s.reasons[0]).toMatchObject({ key: 'stackWeak', params: { skill: 'maths', codes: 'MAST10006, MAST10007', n: 2 } })
+    expect(s.reasons).toEqual([{ key: 'stackWeak', params: { skill: 'maths', codes: 'MAST10006, MAST10007', n: 2 } }])
   })
 
   it('three subjects on a weak skill is very heavy', () => {
     expect(termStress(['MAST10005', 'MAST10006', 'MAST10007', 'BIOL10008'], data, profile({ skills: { maths: 1 } })).level).toBe('veryHeavy')
   })
 
-  it('the same pair for someone strong at maths raises nothing', () => {
+  it('the same subjects for someone strong at maths, or someone we know nothing about, raise nothing', () => {
     expect(termStress(calcAndAlgebra, data, profile({ skills: { maths: 5 } }))).toMatchObject({ level: 'ok', reasons: [] })
+    // Three maths subjects is the point of a maths major; without a weak spot it's no warning.
+    expect(termStress(['MAST10005', 'MAST10006', 'MAST10007', 'BIOL10008'], data)).toMatchObject({ level: 'ok', reasons: [] })
   })
 
-  it('without a self-rating, low past maths marks count as a weakness', () => {
-    const s = termStress(calcAndAlgebra, data, profile({ results: [{ code: 'MAST10005', mark: 58 }] }))
+  it('without a self-rating, low past maths marks count as a weakness — one middling mark doesn\'t', () => {
+    const withMarks = (...marks: number[]) =>
+      profile({ results: marks.map((mark, i) => ({ code: ['MAST10005', 'MAST10009'][i] as string, mark })) })
+    const twoData = dataset([...Object.values(data.subjects), plain('MAST10009')])
+    const s = termStress(calcAndAlgebra, twoData, withMarks(58, 62))
     expect(s.level).toBe('heavy')
-    expect(s.reasons[0]).toMatchObject({ key: 'stackMarks', params: { mark: 58 } })
+    expect(s.reasons[0]).toMatchObject({ key: 'stackMarks', params: { mark: 60 } })
+    expect(termStress(calcAndAlgebra, twoData, withMarks(58)).level).toBe('ok')
+    expect(termStress(calcAndAlgebra, twoData, withMarks(50)).reasons[0]).toMatchObject({ key: 'stackMarks', params: { mark: 50 } })
   })
 
-  it('knowing nothing about the student, two maths subjects is normal and three is a gentle note', () => {
-    expect(termStress(calcAndAlgebra, data)).toMatchObject({ level: 'ok', reasons: [] })
-    const three = termStress(['MAST10005', 'MAST10006', 'MAST10007', 'BIOL10008'], data)
-    expect(three.reasons.map((r) => r.key)).toEqual(['stack'])
+  const four = ['AAAA10001', 'AAAA10002', 'AAAA10003', 'AAAA10004']
+  const term = (extra: (i: number) => Record<string, unknown>) => dataset(four.map((code, i) => plain(code, extra(i))))
+
+  it('three subjects decided by the final is an exam crunch; mostly-60% finals are normal', () => {
+    const s = termStress(four, term((i) => ({ assessment: tasks(i < 3 ? 75 : 45) })))
+    expect(s).toMatchObject({ level: 'heavy', reasons: [{ key: 'exams', params: { n: 3, codes: 'AAAA10001, AAAA10002, AAAA10003' } }] })
+    expect(termStress(four, term(() => ({ assessment: tasks(60) }))).level).toBe('ok')
   })
 
-  it('adds up the whole semester: long hours, hard subjects and big finals', () => {
-    const four = ['AAAA10001', 'AAAA10002', 'AAAA10003', 'AAAA10004']
-    const busy = dataset(
-      four.map((code) => subject({ code, prerequisites: 'none', assessment: tasks(75), weekly_contact_hours: 6, signals: { reviews: 5, workload: 4.5, difficulty: 4.5 } })),
-    )
-    const s = termStress(four, busy)
-    expect(s.level).toBe('veryHeavy')
-    expect(s.reasons.map((r) => r.key).sort()).toEqual(['effort', 'exams', 'time'])
-    const calm = dataset(four.map((code) => subject({ code, prerequisites: 'none', assessment: tasks(40), weekly_contact_hours: 3 })))
-    expect(termStress(four, calm)).toMatchObject({ level: 'ok', reasons: [] })
+  it('three subjects marked on coursework keep you busy all semester, whatever the exams', () => {
+    const s = termStress(four, term((i) => ({ assessment: tasks(i < 3 ? 30 : 70) })))
+    expect(s).toMatchObject({ level: 'heavy', reasons: [{ key: 'coursework', params: { n: 3 } }] })
   })
 
-  it('ignores ratings from fewer than three students', () => {
-    const four = ['AAAA10001', 'AAAA10002', 'AAAA10003', 'AAAA10004']
-    const few = dataset(four.map((code) => subject({ code, prerequisites: 'none', assessment: tasks(40), weekly_contact_hours: 3, signals: { reviews: 2, workload: 5, difficulty: 5 } })))
-    expect(termStress(four, few).level).toBe('ok')
+  it('20+ class hours a week is busy weeks; two rules at once is very heavy', () => {
+    expect(termStress(four, term(() => ({ weekly_contact_hours: 5.5 }))).reasons.map((r) => r.key)).toEqual(['hours'])
+    expect(termStress(four, term(() => ({ weekly_contact_hours: 5.5, assessment: tasks(80) }))).level).toBe('veryHeavy')
+    // A couple of lab subjects (16–19 hours) is an ordinary science semester.
+    expect(termStress(four, term((i) => ({ weekly_contact_hours: i < 2 ? 6 : 3 }))).level).toBe('ok')
+  })
+
+  it('student ratings count only from three reviews, and not for someone strong at what it uses', () => {
+    const rated = (reviews: number) => term(() => ({ area: 'MAST', signals: { reviews, difficulty: 4.5 } }))
+    expect(termStress(four, rated(5)).reasons.map((r) => r.key)).toEqual(['hard'])
+    expect(termStress(four, rated(2)).level).toBe('ok')
+    expect(termStress(four, rated(5), profile({ skills: { maths: 5 } })).level).toBe('ok')
   })
 
   it('stays quiet for a part-time semester', () => {
@@ -65,29 +78,106 @@ describe('termStress', () => {
   })
 })
 
-describe('termStress calibration (real data)', () => {
-  const { dataset: real } = buildDataset('real')
-  it('keeps the heavy cutoff at or below the very-heavy one, and typical at or below high', () => {
-    const cut = calibrateCutoffs(real, [['MAST10006', 'MAST10007', 'BIOL10008', 'CHEM10003'], ['COMP10001', 'MAST10005', 'BIOL10008', 'ACCT10001'], ['PSYC10003', 'BIOL10010', 'CHEM10004', 'MAST10006']])
-    expect(cut.heavy).toBeLessThanOrEqual(cut.veryHeavy)
-    for (const d of ['time', 'effort', 'stress'] as const) expect(cut.typical[d]).toBeLessThanOrEqual(cut.high[d])
+describe('planStress', () => {
+  const maths = ['MAST10005', 'MAST10006', 'MAST10007', 'MAST10008', 'MAST10009']
+  const data = dataset([...maths.map((c) => plain(c)), ...['BIOL1', 'BIOL2', 'BIOL3', 'BIOL4'].map((c) => plain(`${c}0001`))])
+  const weak = profile({ skills: { maths: 2 } })
+
+  it('when every semester has to carry two maths subjects, says so once instead of on each semester', () => {
+    const terms = [
+      ['MAST10005', 'MAST10006', 'BIOL10001', 'BIOL20001'],
+      ['MAST10007', 'MAST10008', 'BIOL30001', 'BIOL40001'],
+    ]
+    const s = planStress(terms, data, weak)
+    expect(s.unavoidable).toEqual([{ skill: 'maths', total: 4, perTerm: 2 }])
+    expect(s.terms.map((t) => t.level)).toEqual(['ok', 'ok'])
+  })
+
+  it('still flags a semester that has more than its share', () => {
+    const terms = [
+      ['MAST10005', 'MAST10006', 'MAST10007', 'BIOL10001'],
+      ['MAST10008', 'BIOL20001', 'BIOL30001', 'BIOL40001'],
+    ]
+    const s = planStress(terms, data, weak)
+    expect(s.unavoidable).toEqual([{ skill: 'maths', total: 4, perTerm: 2 }])
+    expect(s.terms.map((t) => t.level)).toEqual(['veryHeavy', 'ok'])
+  })
+})
+
+describe('relieveTerm', () => {
+  const weak = profile({ skills: { maths: 2 } })
+  const planOf = (terms: Plan['terms']): Plan => ({ course: 'NONE', courseYear: 2026, completed: [], terms })
+  const both = { offerings: { 2027: ['semester-1', 'semester-2'] } }
+
+  it('swaps a subject with the next semester when that splits the pair', () => {
+    const data = dataset([
+      plain('MAST10006', both),
+      plain('MAST10007', both),
+      ...['BIOL10001', 'BIOL10002', 'BIOL10003', 'BIOL10004', 'BIOL10005', 'BIOL10006'].map((c) => plain(c, both)),
+    ])
+    const plan = planOf([
+      { year: 2027, period: 'semester-1', subjects: ['MAST10006', 'MAST10007', 'BIOL10001', 'BIOL10002'] },
+      { year: 2027, period: 'semester-2', subjects: ['BIOL10003', 'BIOL10004', 'BIOL10005', 'BIOL10006'] },
+    ])
+    const r = relieveTerm(plan, data, 0, weak)
+    expect(r?.kind).toBe('spread')
+    const s1 = r?.kind === 'spread' ? (r.terms[0]?.subjects ?? []) : []
+    expect(s1.filter((c) => c.startsWith('MAST'))).toHaveLength(1)
+    // The plan passed in is left alone.
+    expect(plan.terms[0]?.subjects).toEqual(['MAST10006', 'MAST10007', 'BIOL10001', 'BIOL10002'])
+  })
+
+  it('offers the winter term when nothing can swap, but never a term before the plan starts', () => {
+    const s1Only = { offerings: { 2027: ['semester-1'] } }
+    const s2Only = { offerings: { 2027: ['semester-2'] } }
+    const subjects = (m7: Record<string, unknown>) =>
+      dataset([
+        plain('MAST10006', s1Only),
+        plain('MAST10007', m7),
+        plain('BIOL10001', s1Only),
+        plain('BIOL10002', s1Only),
+        ...['BIOL20001', 'BIOL20002', 'BIOL20003', 'BIOL20004'].map((c) => plain(c, s2Only)),
+      ])
+    const plan = planOf([
+      { year: 2027, period: 'semester-1', subjects: ['MAST10006', 'MAST10007', 'BIOL10001', 'BIOL10002'] },
+      { year: 2027, period: 'semester-2', subjects: ['BIOL20001', 'BIOL20002', 'BIOL20003', 'BIOL20004'] },
+    ])
+    expect(relieveTerm(plan, subjects({ offerings: { 2027: ['semester-1', 'winter'] } }), 0, weak)).toEqual({
+      kind: 'shortTerm',
+      code: 'MAST10007',
+      year: 2027,
+      period: 'winter',
+    })
+    expect(relieveTerm(plan, subjects({ offerings: { 2027: ['summer', 'semester-1'] } }), 0, weak)).toBeNull()
+  })
+
+  it('has nothing to offer for a semester that is fine', () => {
+    const data = dataset(['A', 'B', 'C', 'D'].map((x) => plain(`${x}AAA10001`)))
+    const plan = planOf([{ year: 2027, period: 'semester-1', subjects: ['AAAA10001', 'BAAA10001', 'CAAA10001', 'DAAA10001'] }])
+    expect(relieveTerm(plan, data, 0, weak)).toBeNull()
   })
 })
 
 describe('plan builder spreads the load (real data)', () => {
-  it('keeps very heavy semesters rare across every major', async () => {
+  it('keeps heavy semesters rare across every major, also for a student weak at maths', async () => {
     const { generatePlan } = await import('../src/engine/generate')
     const { dataset: real } = buildDataset('real')
-    let terms = 0
-    let veryHeavy = 0
-    for (const m of real.components.filter((c) => c.kind === 'major')) {
-      const { plan } = generatePlan({ data: real, profile: profile(), course: 'B-SCI', courseYear: 2026, major: m.id, startYear: 2027, startPeriod: 'semester-1' })
-      for (const t of plan.terms.filter((x) => x.subjects.length >= 3)) {
-        terms++
-        if (termStress(t.subjects, real).level === 'veryHeavy') veryHeavy++
+    const share = (p: Profile) => {
+      let terms = 0
+      let heavy = 0
+      for (const m of real.components.filter((c) => c.kind === 'major')) {
+        const { plan } = generatePlan({ data: real, profile: p, course: 'B-SCI', courseYear: 2026, major: m.id, startYear: 2027, startPeriod: 'semester-1' })
+        const s = planStress(plan.terms.map((t) => t.subjects), real, p)
+        plan.terms.forEach((t, i) => {
+          if (t.subjects.length < 3) return
+          terms++
+          if (s.terms[i]?.level !== 'ok') heavy++
+        })
       }
+      return heavy / terms
     }
-    expect(veryHeavy / terms).toBeLessThan(0.1)
-    // Builds a plan for every major, which is slow on CI runners.
-  }, 60_000)
+    expect(share(profile())).toBeLessThan(0.05)
+    expect(share(profile({ skills: { maths: 2 } }))).toBeLessThan(0.05)
+    // Builds a plan for every major, twice, which is slow on CI runners.
+  }, 120_000)
 })

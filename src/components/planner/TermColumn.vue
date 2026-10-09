@@ -6,7 +6,7 @@ import { termLabel } from '@/i18n/format'
 import { useI18n } from '@/i18n'
 import SubjectCard from './SubjectCard.vue'
 import SubjectPicker from './SubjectPicker.vue'
-import TermStressBadge from './TermStressBadge.vue'
+import TermStressNote from './TermStressNote.vue'
 
 const props = defineProps<{
   term: PlanTerm
@@ -79,7 +79,7 @@ function onDrop(event: DragEvent): void {
       </button>
       <span class="term-points" :class="{ 'term-points-over': overloaded }">{{ points }} / {{ load }}</span>
       <span class="term-bar" aria-hidden="true"><span class="term-bar-fill" :style="{ width: fill }" /></span>
-      <TermStressBadge :codes="term.subjects" />
+      <TermStressNote :term-index="termIndex" />
     </header>
     <SubjectCard
       v-for="code in term.subjects"

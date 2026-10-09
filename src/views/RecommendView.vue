@@ -71,14 +71,14 @@ function value(event: Event): string {
         </fieldset>
         <label class="field">
           {{ t('suggest.kind') }}
-          <select class="select" :value="category" @change="category = value($event)">
+          <select class="select-glass" :value="category" @change="category = value($event)">
             <option value="">{{ t('suggest.any') }}</option>
             <option v-for="c in categories" :key="c" :value="c">{{ categoryLabel(t, c) }}</option>
           </select>
         </label>
         <label class="field">
           {{ t('suggest.when') }}
-          <select class="select" :value="termIndex" @change="termIndex = Number(value($event))">
+          <select class="select-glass" :value="termIndex" @change="termIndex = Number(value($event))">
             <option :value="-1">{{ t('suggest.anyTime') }}</option>
             <option v-for="(term, i) in plan.terms.value" :key="i" :value="i">{{ termLabel(t, term) }}</option>
           </select>
