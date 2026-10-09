@@ -1,0 +1,12 @@
+code: MAST10008
+year: 2026
+learn:
+  en: "Fast-paced maths covering linear algebra and calculus of two variables, with an introduction to proofs."
+  zh: "快节奏数学：线性代数和二元微积分，并学写证明。"
+outcomes:
+  - en: "Solve linear equation systems with matrices"
+    zh: "用矩阵解线性方程组"
+  - en: "Differentiate and integrate two-variable functions"
+    zh: "对二元函数求导和积分"
+  - en: "Write a simple mathematical proof"
+    zh: "写简单的数学证明"

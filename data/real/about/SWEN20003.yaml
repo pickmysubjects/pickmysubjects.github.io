@@ -1,0 +1,12 @@
+code: SWEN20003
+year: 2026
+learn:
+  en: "Designing software with objects and classes, and building those designs in a programming language."
+  zh: "用对象和类来设计软件，并用编程语言实现。"
+outcomes:
+  - en: "Design a medium-sized program with object-oriented models"
+    zh: "用面向对象方法设计中型程序"
+  - en: "Write code that follows your design"
+    zh: "按设计写出代码"
+  - en: "Compare the trade-offs of different designs"
+    zh: "比较不同设计的利弊"

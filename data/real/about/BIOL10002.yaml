@@ -1,0 +1,12 @@
+code: BIOL10002
+year: 2026
+learn:
+  en: "Life at the molecular and cell level: evolution, cell structure, genes, regulation and how organisms interact."
+  zh: "从分子和细胞层面看生命：演化、细胞、基因和生理调节。"
+outcomes:
+  - en: "Explain how cells work and pass on information"
+    zh: "解释细胞怎样工作和传递信息"
+  - en: "Describe how organisms regulate their internal state"
+    zh: "说明生物怎样调节内部环境"
+  - en: "Design and run a small inquiry project"
+    zh: "设计并完成一个探究项目"

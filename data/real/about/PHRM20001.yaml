@@ -1,0 +1,12 @@
+code: PHRM20001
+year: 2026
+learn:
+  en: "How drugs act on the body, their good and bad effects, and how new drugs are found and tested."
+  zh: "药物怎么在体内起作用、有什么好坏影响，新药怎么研发。"
+outcomes:
+  - en: "Explain how drugs act on the body and how it handles them"
+    zh: "解释药物对身体的作用和代谢"
+  - en: "Discuss the benefits and side effects of common drugs"
+    zh: "讨论常用药的疗效和副作用"
+  - en: "Describe how drugs are developed and approved"
+    zh: "说清新药怎么研发和审批"

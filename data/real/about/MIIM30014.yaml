@@ -1,0 +1,12 @@
+code: MIIM30014
+year: 2026
+learn:
+  en: "How viruses infect cells and cause disease, how the body fights back, and how vaccines and antivirals help."
+  zh: "病毒怎么感染细胞致病、身体怎么抵抗，以及疫苗和抗病毒药。"
+outcomes:
+  - en: "Explain how viruses replicate inside host cells"
+    zh: "解释病毒怎么在宿主细胞里复制"
+  - en: "Explain how viruses dodge the immune system"
+    zh: "解释病毒怎么躲过免疫系统"
+  - en: "Choose suitable tools to investigate an outbreak"
+    zh: "选合适的方法调查病毒暴发"

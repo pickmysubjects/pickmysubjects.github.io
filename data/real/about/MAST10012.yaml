@@ -1,0 +1,12 @@
+code: MAST10012
+year: 2026
+learn:
+  en: "Builds up algebra, functions, probability and basic calculus to prepare for Calculus 1."
+  zh: "补强代数、函数、概率和基础微积分，为微积分1做准备。"
+outcomes:
+  - en: "Sketch graphs of common functions"
+    zh: "画常见函数的图像"
+  - en: "Differentiate and integrate basic functions"
+    zh: "对基本函数求导和积分"
+  - en: "Calculate binomial and normal probabilities"
+    zh: "计算二项和正态分布概率"

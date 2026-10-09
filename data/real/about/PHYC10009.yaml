@@ -1,0 +1,12 @@
+code: PHYC10009
+year: 2026
+learn:
+  en: "Physics for students with little background: motion, waves, electricity, magnetism and key modern experiments."
+  zh: "给物理基础少的人：运动、波、电、磁和近代物理实验。"
+outcomes:
+  - en: "Explain basic physics ideas in everyday terms"
+    zh: "用日常的话讲清基础物理概念"
+  - en: "Solve simple physics problems with maths"
+    zh: "用数学解简单物理题"
+  - en: "Take measurements in the lab and interpret them"
+    zh: "在实验室测量并解读数据"

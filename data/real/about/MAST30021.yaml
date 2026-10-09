@@ -1,0 +1,12 @@
+code: MAST30021
+year: 2026
+learn:
+  en: "Calculus with complex numbers, a tool for equations that are hard to solve with real numbers alone."
+  zh: "复数上的微积分，能解只用实数难解的方程。"
+outcomes:
+  - en: "Check whether a complex function is holomorphic"
+    zh: "判断复函数是否全纯"
+  - en: "Evaluate integrals with contour integration"
+    zh: "用围道积分算积分"
+  - en: "Apply the residue theorem"
+    zh: "会用留数定理"

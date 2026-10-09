@@ -1,0 +1,12 @@
+code: BCMB30002
+year: 2026
+learn:
+  en: "How genomes are organised and controlled, and the tools used to study and edit genes."
+  zh: "基因组怎样组织和调控，以及研究和编辑基因的工具。"
+outcomes:
+  - en: "Analyse genomic data with bioinformatics tools"
+    zh: "用生物信息工具分析基因组数据"
+  - en: "Write scripts to work with genomic data"
+    zh: "写脚本处理基因组数据"
+  - en: "Plan gene editing experiments with CRISPR"
+    zh: "用CRISPR设计基因编辑实验"

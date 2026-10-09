@@ -1,0 +1,12 @@
+code: MAST30005
+year: 2026
+learn:
+  en: "The rules shared by integers, polynomials and matrices: rings, modules, fields and Galois theory."
+  zh: "整数、多项式和矩阵共有的代数规律：环、模、域和伽罗瓦理论。"
+outcomes:
+  - en: "Apply the Euclidean algorithm, including to polynomials"
+    zh: "用欧几里得算法，包括多项式"
+  - en: "Prove results about rings, modules and fields"
+    zh: "证明关于环、模、域的结论"
+  - en: "Calculate the Jordan normal form of a matrix"
+    zh: "算矩阵的若尔当标准形"

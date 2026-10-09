@@ -1,0 +1,12 @@
+code: CHEM30013
+year: 2026
+learn:
+  en: "A short chemistry research project supervised by a staff member, written up and presented."
+  zh: "在老师指导下做一个短期化学研究，写报告并做汇报。"
+outcomes:
+  - en: "Review published work before starting research"
+    zh: "动手前先查阅已有文献"
+  - en: "Plan research work carefully"
+    zh: "仔细规划研究工作"
+  - en: "Record observations and data accurately"
+    zh: "准确记录观察和数据"

@@ -1,0 +1,12 @@
+code: MAST20022
+year: 2026
+learn:
+  en: "Abstract algebra: groups and symmetry, plus deeper linear algebra, with RSA encryption as an application."
+  zh: "抽象代数：群和对称，加上更深的线性代数，还会讲 RSA 加密。"
+outcomes:
+  - en: "Do modular arithmetic and apply it to RSA encryption"
+    zh: "做模运算并用在 RSA 加密上"
+  - en: "Compute eigenvalues, eigenvectors and normal forms"
+    zh: "算特征值、特征向量和标准形"
+  - en: "Write rigorous proofs in algebra"
+    zh: "写严谨的代数证明"

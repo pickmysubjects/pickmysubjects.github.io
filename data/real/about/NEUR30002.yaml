@@ -1,0 +1,12 @@
+code: NEUR30002
+year: 2026
+learn:
+  en: "How nerve cells make electrical signals, talk to each other and form circuits that control the body."
+  zh: "神经细胞怎么产生电信号、互相交流，并组成控制身体的回路。"
+outcomes:
+  - en: "Explain how nerve cells generate electrical signals"
+    zh: "解释神经细胞怎么产生电信号"
+  - en: "Explain how nerves signal to other cells"
+    zh: "解释神经怎么向其他细胞传信号"
+  - en: "Describe simple circuits behind reflexes"
+    zh: "描述反射背后的简单回路"

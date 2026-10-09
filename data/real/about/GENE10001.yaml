@@ -1,0 +1,12 @@
+code: GENE10001
+year: 2026
+learn:
+  en: "Basic genetics and how news and social media report on it. No genetics background needed."
+  zh: "基础遗传学，以及新闻和社交媒体怎么报道它。不需要基础。"
+outcomes:
+  - en: "Use basic genetics terms correctly"
+    zh: "正确使用遗传学基本术语"
+  - en: "Check how accurate a genetics news story is"
+    zh: "判断遗传学新闻准不准"
+  - en: "Tell reliable sources from unreliable ones"
+    zh: "分辨可靠和不可靠的信息源"

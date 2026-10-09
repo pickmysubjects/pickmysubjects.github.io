@@ -819,6 +819,9 @@ export const id: Messages = {
     justSearch: 'Hanya ingin mencari mata kuliah? Pakai kotak pencarian di atas.',
   },
   subject: {
+    aboutLearn: "Belajar apa",
+    aboutOutcomes: "Setelahnya kamu bisa",
+    aboutWork: "Yang dikerjakan",
     routeTitle: "Rute lengkap dari tahun pertama ({n} mata kuliah, {missing} belum direncanakan)",
     routeHint: "Kalau ada pilihan, diambil yang sudah kamu punya, kalau tidak yang pertama.",
     coreqTitle: "Ambil di semester yang sama atau sebelumnya",

@@ -1,0 +1,12 @@
+code: COMP30027
+year: 2026
+learn:
+  en: "How computers learn to make predictions from data, from the ideas behind it to hands-on analysis."
+  zh: "电脑如何从数据中学会预测，从原理到动手分析。"
+outcomes:
+  - en: "Apply machine learning methods to real data"
+    zh: "把机器学习方法用到真实数据"
+  - en: "Interpret and explain model results"
+    zh: "解读模型结果"
+  - en: "Compare models and pick one for a problem"
+    zh: "比较模型并为问题选一个"

@@ -1,0 +1,12 @@
+code: ACCT10001
+year: 2026
+learn:
+  en: "How accounting works in business and markets, and how to read and use financial reports for decisions."
+  zh: "会计在企业和市场里的作用，以及怎么读懂和使用财务报表。"
+outcomes:
+  - en: "Read and interpret the main financial statements"
+    zh: "读懂并分析主要财务报表"
+  - en: "Use cost and revenue data for budgets and planning"
+    zh: "用成本和收入数据做预算和规划"
+  - en: "Spot the strengths and limits of accounting info"
+    zh: "判断会计信息的优点和局限"

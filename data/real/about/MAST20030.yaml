@@ -1,0 +1,12 @@
+code: MAST20030
+year: 2026
+learn:
+  en: "Solving linear differential equations, the models used across science and engineering."
+  zh: "解线性微分方程，这类方程是理工科常用的模型。"
+outcomes:
+  - en: "Solve differential equations with series methods"
+    zh: "用级数方法解微分方程"
+  - en: "Use Laplace and Fourier transforms to find solutions"
+    zh: "用拉普拉斯和傅里叶变换求解"
+  - en: "Solve partial differential equations from applications"
+    zh: "解应用中出现的偏微分方程"

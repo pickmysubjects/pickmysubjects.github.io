@@ -1,0 +1,12 @@
+code: PHYC10004
+year: 2026
+learn:
+  en: "Fluids, electricity and magnetism, quantum and nuclear physics, aimed at science, tech and engineering."
+  zh: "流体、电磁、量子和核物理，偏向理工和工程应用。"
+outcomes:
+  - en: "Apply physics to tech and engineering problems"
+    zh: "用物理解决技术和工程问题"
+  - en: "Predict what happens in a physical situation"
+    zh: "预测一个物理情境的结果"
+  - en: "Take measurements in the lab and interpret them"
+    zh: "在实验室测量并解读数据"

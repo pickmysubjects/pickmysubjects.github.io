@@ -1,0 +1,12 @@
+code: INFO10001
+year: 2026
+learn:
+  en: "Designing apps and technology that people find useful and easy to use, starting from users' needs."
+  zh: "从用户需求出发，设计有用又好用的应用和产品。"
+outcomes:
+  - en: "Interview users to find out what they need"
+    zh: "通过访谈了解用户需求"
+  - en: "Build prototypes and apply design principles"
+    zh: "做原型并运用设计原则"
+  - en: "Present and justify design decisions"
+    zh: "展示并说明设计决策"

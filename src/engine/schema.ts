@@ -225,6 +225,8 @@ export const subjectFileSchema = z
     replacedBy: s.replaced_by,
     // Filled in from data/<set>/discussions/ when there is one.
     discussion: undefined as DiscussionSummary | undefined,
+    // Filled in from data/<set>/about/ when there is one.
+    about: undefined as SubjectAbout | undefined,
   }))
 
 export type Subject = z.output<typeof subjectFileSchema>
@@ -255,6 +257,24 @@ export const discussionFileSchema = z
   .strict()
 
 export type DiscussionSummary = z.output<typeof discussionFileSchema>
+
+/**
+ * What a subject is about, in a sentence, and what you can do after it: our own short
+ * wording of the Handbook's overview and learning outcomes, so a student gets the gist
+ * without the Handbook's length. English and Chinese; other languages show the English.
+ */
+const enZh = (en: number, zh: number) => z.object({ en: z.string().min(10).max(en), zh: z.string().min(4).max(zh) }).strict()
+export const aboutFileSchema = z
+  .object({
+    code: subjectCode,
+    learn: enZh(140, 50),
+    outcomes: z.array(enZh(80, 30)).min(1).max(3),
+    // The Handbook year the wording follows.
+    year: z.number().int(),
+  })
+  .strict()
+
+export type SubjectAbout = z.output<typeof aboutFileSchema>
 export type SubjectCategory = 'science' | 'breadth' | 'discipline'
 
 const ruleBase = { id: z.string().min(1), description: z.string().min(1) }

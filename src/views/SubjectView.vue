@@ -6,6 +6,7 @@ import DataNotice from '@/components/DataNotice.vue'
 import RatingForm from '@/components/rating/RatingForm.vue'
 import AssessmentPanel from '@/components/subject/AssessmentPanel.vue'
 import MajorRoles from '@/components/subject/MajorRoles.vue'
+import SubjectAbout from '@/components/subject/SubjectAbout.vue'
 import DiscussionSummary from '@/components/subject/DiscussionSummary.vue'
 import { periodsFor, prerequisiteRoute, referencedSubjects, simplifyFor, termKey } from '@/engine'
 import SubjectLinks from '@/components/majors/SubjectLinks.vue'
@@ -144,6 +145,8 @@ const links = computed(() => (name.value === 'real' ? discussionLinks(code.value
       </header>
 
       <div class="grid">
+        <SubjectAbout class="panel surface panel-wide" :subject="subject" />
+
         <MajorRoles class="panel surface panel-wide" :code="code" />
 
         <section class="panel surface">

@@ -1,0 +1,12 @@
+code: MAST20032
+year: 2026
+learn:
+  en: "Calculus with several variables and vectors, covered with more proof and some extra topics."
+  zh: "多元和向量微积分，比普通版更重证明，还多讲一些内容。"
+outcomes:
+  - en: "Calculate line, surface and volume integrals"
+    zh: "算线积分、面积分和体积分"
+  - en: "Find constrained maximums and minimums"
+    zh: "求带约束条件的极值"
+  - en: "Prove and apply calculus theorems rigorously"
+    zh: "严谨地证明和应用微积分定理"

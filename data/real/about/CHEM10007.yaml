@@ -1,0 +1,12 @@
+code: CHEM10007
+year: 2026
+learn:
+  en: "Basic chemistry: matter, solutions, gases, reactions, equilibrium, acids and bases, and organic molecules."
+  zh: "化学基础：物质、溶液、气体、反应、平衡、酸碱和有机分子。"
+outcomes:
+  - en: "Explain how matter, solutions and gases behave"
+    zh: "解释物质、溶液和气体的性质"
+  - en: "Recognise structures and groups in organic molecules"
+    zh: "认出有机分子的结构和官能团"
+  - en: "Do basic lab work safely and write reports"
+    zh: "安全做基础实验并写报告"

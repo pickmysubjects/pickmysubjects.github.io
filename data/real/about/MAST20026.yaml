@@ -1,0 +1,12 @@
+code: MAST20026
+year: 2026
+learn:
+  en: "Why calculus works: rigorous proofs about real numbers, limits, series, derivatives and integrals."
+  zh: "讲清楚微积分为什么成立：用严格证明讲实数、极限、级数和积分。"
+outcomes:
+  - en: "Write proofs by induction and contradiction"
+    zh: "会用归纳法和反证法写证明"
+  - en: "Decide whether sequences and series converge"
+    zh: "判断数列和级数是否收敛"
+  - en: "Use Taylor and Fourier series"
+    zh: "会用泰勒级数和傅里叶级数"

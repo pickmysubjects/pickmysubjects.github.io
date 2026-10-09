@@ -5,6 +5,7 @@ import { CalendarRange, ExternalLink, X } from 'lucide-vue-next'
 import { periodsFor, prerequisiteRoute, referencedSubjects, simplifyFor, type Subject } from '@/engine'
 import AssessmentPanel from '@/components/subject/AssessmentPanel.vue'
 import MajorRoles from '@/components/subject/MajorRoles.vue'
+import SubjectAbout from '@/components/subject/SubjectAbout.vue'
 import { useProfile } from '@/composables/useProfile'
 import { useI18n } from '@/i18n'
 import { categoryLabel, describeReq } from '@/i18n/format'
@@ -104,6 +105,8 @@ function onClick(event: MouseEvent): void {
             <template v-else>{{ periods.map((p) => t(`period.${p}`)).join(' · ') }}</template>
           </span>
         </p>
+
+        <SubjectAbout class="peek-section" :subject="subject" />
 
         <MajorRoles class="peek-section" :code="code" />
 

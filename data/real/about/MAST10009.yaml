@@ -1,0 +1,12 @@
+code: MAST10009
+year: 2026
+learn:
+  en: "Rigorous calculus: limits, integrals, infinite series and differential equations, with proofs."
+  zh: "严谨的微积分：极限、积分、无穷级数和微分方程，含证明。"
+outcomes:
+  - en: "Test whether an infinite series converges"
+    zh: "判断无穷级数是否收敛"
+  - en: "Write functions as Taylor and Fourier series"
+    zh: "把函数展开成泰勒和傅里叶级数"
+  - en: "Solve differential equations for simple systems"
+    zh: "解微分方程描述简单系统"

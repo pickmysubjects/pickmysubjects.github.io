@@ -1,0 +1,12 @@
+code: CHEM30015
+year: 2026
+learn:
+  en: "Advanced lab chemistry: making complex molecules, analysing them and designing your own experiments."
+  zh: "高级化学实验：合成复杂分子、分析表征，并自己设计实验。"
+outcomes:
+  - en: "Make complex molecules through reactions"
+    zh: "通过反应合成复杂分子"
+  - en: "Collect and interpret spectroscopy data"
+    zh: "采集并解读光谱数据"
+  - en: "Use computing to analyse chemical data"
+    zh: "用计算方法分析化学数据"

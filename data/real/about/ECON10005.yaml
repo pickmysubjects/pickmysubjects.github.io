@@ -1,0 +1,12 @@
+code: ECON10005
+year: 2026
+learn:
+  en: "Basic statistics for business and economics: describing data, probability, testing ideas and regression."
+  zh: "商科和经济用的基础统计：描述数据、概率、假设检验和回归。"
+outcomes:
+  - en: "Graph and summarise data in Excel"
+    zh: "用Excel画图和总结数据"
+  - en: "Estimate values and test hypotheses"
+    zh: "做估计和假设检验"
+  - en: "Run a simple regression"
+    zh: "做简单回归分析"

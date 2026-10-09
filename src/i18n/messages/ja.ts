@@ -819,6 +819,9 @@ export const ja: Messages = {
     justSearch: '科目を調べるだけなら、上の検索欄を使ってください。',
   },
   subject: {
+    aboutLearn: "学ぶこと",
+    aboutOutcomes: "できるようになること",
+    aboutWork: "やること",
     routeTitle: "1年次までの全ルート（{n} 科目、未計画 {missing}）",
     routeHint: "選択肢がある所は、取得済みの科目、なければ最初の科目を選んでいます。",
     coreqTitle: "同じ学期かそれより前に取る科目",

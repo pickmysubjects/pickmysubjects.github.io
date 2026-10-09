@@ -1,0 +1,12 @@
+code: CHEM10003
+year: 2026
+learn:
+  en: "First-year general chemistry: atoms, bonding, gases, energy, equilibrium, acids and bases, and carbon compounds."
+  zh: "大一普通化学：原子、化学键、气体、能量、平衡、酸碱和有机物。"
+outcomes:
+  - en: "Do basic lab experiments and write reports"
+    zh: "做基础实验并写实验报告"
+  - en: "Handle and dispose of chemicals safely"
+    zh: "安全处理和处置化学品"
+  - en: "Name carbon compounds and spot functional groups"
+    zh: "给有机物命名、识别官能团"

@@ -819,6 +819,9 @@ export const ms: Messages = {
     justSearch: 'Hanya mahu mencari subjek? Guna kotak carian di atas.',
   },
   subject: {
+    aboutLearn: "Apa dipelajari",
+    aboutOutcomes: "Selepas itu anda boleh",
+    aboutWork: "Apa perlu dibuat",
     routeTitle: "Laluan penuh dari tahun satu ({n} subjek, {missing} belum dirancang)",
     routeHint: "Jika ada pilihan, subjek yang anda sudah ada diambil, jika tidak yang pertama.",
     coreqTitle: "Ambil dalam semester yang sama atau lebih awal",

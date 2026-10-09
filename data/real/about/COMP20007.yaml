@@ -1,0 +1,12 @@
+code: COMP20007
+year: 2026
+learn:
+  en: "Common data structures and algorithms, why they work, how fast they are and when to use each."
+  zh: "常用数据结构和算法：为什么对、有多快、什么时候用。"
+outcomes:
+  - en: "Write graph, greedy and dynamic programming code"
+    zh: "写图算法、贪心和动态规划"
+  - en: "Compare algorithms by how fast they run"
+    zh: "按运行效率比较算法"
+  - en: "Build multi-file programs in C"
+    zh: "用C写多模块程序"

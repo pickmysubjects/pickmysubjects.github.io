@@ -1,0 +1,12 @@
+code: PHYS20009
+year: 2026
+learn:
+  en: "How to design physiology experiments, plus a research project over several weeks."
+  zh: "学怎么设计生理实验，并做一个几周的研究项目。"
+outcomes:
+  - en: "Design an experiment to test a hypothesis"
+    zh: "设计实验来验证假设"
+  - en: "Run physiology experiments and analyse data"
+    zh: "做生理实验并分析数据"
+  - en: "Write a scientific report"
+    zh: "写一份科学报告"

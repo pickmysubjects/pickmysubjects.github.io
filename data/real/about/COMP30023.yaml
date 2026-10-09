@@ -1,0 +1,12 @@
+code: COMP30023
+year: 2026
+learn:
+  en: "How computers work under the hood: operating systems, networks and basic security."
+  zh: "电脑底层怎么运作：操作系统、网络和基础安全。"
+outcomes:
+  - en: "Explain how an operating system runs programs"
+    zh: "解释操作系统如何运行程序"
+  - en: "Build simple server applications"
+    zh: "写简单的服务器程序"
+  - en: "Spot common security weaknesses"
+    zh: "发现常见的安全漏洞"

@@ -1,0 +1,12 @@
+code: ACTL30001
+year: 2026
+learn:
+  en: "Maths and statistics models used in life insurance, such as survival models and models of moving between states."
+  zh: "寿险精算用的数学和统计模型，比如生存模型和状态转移模型。"
+outcomes:
+  - en: "Build models of people moving between states"
+    zh: "建立多状态转移模型"
+  - en: "Estimate death and transition rates from data"
+    zh: "用数据估计死亡率和转移率"
+  - en: "Apply Markov chains to insurance problems"
+    zh: "用马尔可夫链解决精算问题"

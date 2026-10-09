@@ -1,0 +1,12 @@
+code: BIOL20001
+year: 2026
+learn:
+  en: "How evolution works through selection, drift and migration, and why it matters for problems like drug resistance."
+  zh: "演化怎样通过选择、漂变和迁移发生，以及它对抗药性等问题的意义。"
+outcomes:
+  - en: "Build and read evolutionary trees"
+    zh: "构建和解读进化树"
+  - en: "Explain heritability, adaptation and speciation"
+    zh: "解释遗传力、适应和物种形成"
+  - en: "Describe how scientists study evolution"
+    zh: "说明研究演化的科学方法"

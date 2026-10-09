@@ -1,0 +1,12 @@
+code: CHEM20020
+year: 2026
+learn:
+  en: "How a molecule's shape, symmetry and electrons explain its properties, and how spectroscopy measures them."
+  zh: "分子的形状、对称性和电子怎样决定性质，以及怎样用光谱测量。"
+outcomes:
+  - en: "Classify molecules by their symmetry"
+    zh: "按对称性给分子分类"
+  - en: "Apply molecular orbital theory to simple molecules"
+    zh: "用分子轨道理论分析简单分子"
+  - en: "Explain how common spectroscopy methods work"
+    zh: "解释常用光谱方法的原理"

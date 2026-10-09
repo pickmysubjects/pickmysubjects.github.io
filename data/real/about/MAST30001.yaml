@@ -1,0 +1,12 @@
+code: MAST30001
+year: 2026
+learn:
+  en: "Models for random things that change over time, like queues, networks, finance and genetics."
+  zh: "随时间变化的随机过程模型，用在排队、网络、金融和遗传等领域。"
+outcomes:
+  - en: "Use Poisson processes and Markov chains"
+    zh: "会用泊松过程和马尔可夫链"
+  - en: "Build and simulate simple random models"
+    zh: "建立并模拟简单的随机模型"
+  - en: "Analyse random processes in real-life examples"
+    zh: "分析现实中的随机过程"

@@ -1,0 +1,12 @@
+code: COMP20008
+year: 2026
+learn:
+  en: "Getting data ready for analysis: collecting, cleaning, combining, querying and visualising it."
+  zh: "为分析准备数据：收集、清洗、合并、查询和可视化。"
+outcomes:
+  - en: "Clean messy data and fill in missing values"
+    zh: "清洗数据、补全缺失值"
+  - en: "Combine data from several sources"
+    zh: "合并多个来源的数据"
+  - en: "Build and compare steps in a data pipeline"
+    zh: "搭建并比较数据处理流程"

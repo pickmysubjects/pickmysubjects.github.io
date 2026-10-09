@@ -1,0 +1,12 @@
+code: CHEM30016
+year: 2026
+learn:
+  en: "Why and how chemical reactions happen, covering organic and metal reactions, catalysis and short-lived intermediates."
+  zh: "化学反应为什么发生、怎样发生：有机和金属反应以及催化。"
+outcomes:
+  - en: "Explain chemical reactivity in different systems"
+    zh: "解释不同体系的化学反应性"
+  - en: "Explain catalysis by transition metal complexes"
+    zh: "解释过渡金属配合物的催化"
+  - en: "Describe key spectroscopy methods used in research"
+    zh: "说明研究常用的光谱方法"

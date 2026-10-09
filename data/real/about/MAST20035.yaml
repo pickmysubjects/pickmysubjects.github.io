@@ -1,0 +1,12 @@
+code: MAST20035
+year: 2026
+learn:
+  en: "Maths for making the best decisions in areas like logistics, scheduling and network design."
+  zh: "用数学做最优决策，用在物流、排班、网络设计等方面。"
+outcomes:
+  - en: "Turn decision problems into optimisation models"
+    zh: "把决策问题写成优化模型"
+  - en: "Solve problems with linear and dynamic programming"
+    zh: "用线性规划和动态规划求解"
+  - en: "Check how sensitive a solution is to changes"
+    zh: "分析结果对条件变化的敏感度"

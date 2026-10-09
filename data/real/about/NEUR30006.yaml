@@ -1,0 +1,12 @@
+code: NEUR30006
+year: 2026
+learn:
+  en: "How real and artificial neural networks learn, and building your own network in Python."
+  zh: "真实和人工神经网络怎么学习，并用 Python 自己搭一个。"
+outcomes:
+  - en: "Program in Python with Jupyter notebooks"
+    zh: "用Jupyter写Python程序"
+  - en: "Build a neural network that learns from a large dataset"
+    zh: "搭一个从大数据中学习的神经网络"
+  - en: "Visualise and evaluate how well your network works"
+    zh: "可视化并评估网络的效果"

@@ -1,0 +1,12 @@
+code: CHEM20011
+year: 2026
+learn:
+  en: "The chemistry of water, air and soil, how pollution affects them, and how to measure it in the lab."
+  zh: "水、空气和土壤的化学，污染的影响，以及怎样在实验室检测。"
+outcomes:
+  - en: "Use lab instruments to analyse environmental samples"
+    zh: "用仪器分析环境样品"
+  - en: "Interpret environmental data and trends"
+    zh: "解读环境数据和趋势"
+  - en: "Explain chemical causes of environmental problems"
+    zh: "解释环境问题的化学原因"

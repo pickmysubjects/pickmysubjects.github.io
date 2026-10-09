@@ -1,0 +1,12 @@
+code: COMP20005
+year: 2026
+learn:
+  en: "Learning to program in C, then using it to solve number-based problems from science and engineering."
+  zh: "学C语言编程，再用它解决理工科里的数值计算问题。"
+outcomes:
+  - en: "Write and test small numerical programs"
+    zh: "编写并测试小型数值程序"
+  - en: "Solve equations, fit curves and integrate numerically"
+    zh: "数值解方程、拟合曲线和积分"
+  - en: "Explain rounding errors in computer arithmetic"
+    zh: "解释电脑计算中的误差"

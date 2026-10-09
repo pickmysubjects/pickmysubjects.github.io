@@ -1,0 +1,12 @@
+code: COMP10001
+year: 2026
+learn:
+  en: "A first programming subject for beginners: writing simple programs to work with and analyse data."
+  zh: "零基础入门编程：写简单的程序来处理和分析数据。"
+outcomes:
+  - en: "Read, write and debug small programs"
+    zh: "读懂、编写和调试小程序"
+  - en: "Use functions, lists and other basic data structures"
+    zh: "会用函数、列表等基本数据结构"
+  - en: "Break a problem into steps a program can solve"
+    zh: "把问题拆成程序能解决的步骤"

@@ -1,0 +1,12 @@
+code: BCMB20005
+year: 2026
+learn:
+  en: "Hands-on lab techniques for studying proteins, DNA and cells in biochemistry and molecular biology."
+  zh: "生化和分子生物学的实验技术，用来研究蛋白质、DNA和细胞。"
+outcomes:
+  - en: "Run standard lab protocols with proteins and DNA"
+    zh: "做蛋白质和DNA的标准实验"
+  - en: "Do biochemical calculations for lab work"
+    zh: "做实验相关的生化计算"
+  - en: "Write up experiments in scientific style"
+    zh: "按科学规范写实验报告"

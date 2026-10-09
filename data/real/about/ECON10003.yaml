@@ -1,0 +1,12 @@
+code: ECON10003
+year: 2026
+learn:
+  en: "How the whole economy works: output, jobs, inflation, interest rates, exchange rates and government policy."
+  zh: "整体经济怎么运转：产出、就业、通胀、利率、汇率和政策。"
+outcomes:
+  - en: "Explain how GDP and inflation are measured"
+    zh: "解释GDP和通胀怎么衡量"
+  - en: "Use demand and supply models for the economy"
+    zh: "用总需求总供给模型分析经济"
+  - en: "Assess monetary and fiscal policies"
+    zh: "评估货币和财政政策"

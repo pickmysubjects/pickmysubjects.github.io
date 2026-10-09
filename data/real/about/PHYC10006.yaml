@@ -1,0 +1,12 @@
+code: PHYC10006
+year: 2026
+learn:
+  en: "Physics behind living things and the environment: blood flow, heat, nerves, radiation and medical imaging."
+  zh: "生物和环境背后的物理：血流、热、神经电、辐射和医学成像。"
+outcomes:
+  - en: "Apply physics to biology and environment problems"
+    zh: "用物理解释生物和环境问题"
+  - en: "Explain how X-rays, CT and ultrasound work"
+    zh: "解释X光、CT和超声的原理"
+  - en: "Take measurements in the lab and interpret them"
+    zh: "在实验室测量并解读数据"

@@ -1,0 +1,12 @@
+code: MAST10006
+year: 2026
+learn:
+  en: "More calculus: series, differential equations and functions of two variables, with real-world uses."
+  zh: "深入微积分：级数、微分方程和二元函数，以及实际应用。"
+outcomes:
+  - en: "Solve first and second order differential equations"
+    zh: "解一阶和二阶微分方程"
+  - en: "Model real situations using calculus"
+    zh: "用微积分为实际问题建模"
+  - en: "Write maths solutions clearly and logically"
+    zh: "清楚有条理地写数学解答"

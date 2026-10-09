@@ -1,0 +1,10 @@
+code: MAST30027
+year: 2026
+learn:
+  en: "Using computers to do statistics: simulation, Bayesian methods and models for categorical data."
+  zh: "用电脑做统计：模拟、贝叶斯方法和分类数据的模型。"
+outcomes:
+  - en: "Pick a suitable statistical model for real data"
+    zh: "为真实数据选合适的统计模型"
+  - en: "Run the analysis in software and explain the results"
+    zh: "用软件做分析并解释结果"

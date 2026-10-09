@@ -1,0 +1,12 @@
+code: COMP30022
+year: 2026
+learn:
+  en: "A team project where you build a working IT system for a real client problem."
+  zh: "团队项目：为真实客户的需求做一个能用的IT系统。"
+outcomes:
+  - en: "Analyse, design, build and test an IT system"
+    zh: "分析、设计、开发和测试系统"
+  - en: "Work with clients and teammates on a project"
+    zh: "和客户、组员沟通推进项目"
+  - en: "Plan and manage a software project"
+    zh: "规划和管理一个软件项目"

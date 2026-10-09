@@ -1,0 +1,12 @@
+code: CHEM10004
+year: 2026
+learn:
+  en: "Follows Chemistry 1: reaction rates, organic reactions, redox, spectroscopy, metal compounds and solids."
+  zh: "接着化学1：反应速率、有机反应、氧化还原、光谱和金属化合物。"
+outcomes:
+  - en: "Work out chemical structures from spectra"
+    zh: "根据光谱数据推断分子结构"
+  - en: "Do basic lab experiments and write reports"
+    zh: "做基础实验并写实验报告"
+  - en: "Explain reaction rates and redox chemistry"
+    zh: "解释反应速率和氧化还原"

@@ -1,0 +1,12 @@
+code: MAST10025
+year: 2026
+learn:
+  en: "Catch-up maths for Uni Ready students: sets, functions, trig, counting, probability and statistics."
+  zh: "给 Uni Ready 学生补数学：集合、函数、三角、计数、概率和统计。"
+outcomes:
+  - en: "Work with sets and set operations"
+    zh: "会用集合和集合运算"
+  - en: "Analyse functions, compositions and inverses"
+    zh: "分析函数、复合函数和反函数"
+  - en: "Calculate probabilities and confidence intervals"
+    zh: "算概率和置信区间"

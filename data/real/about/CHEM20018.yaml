@@ -1,0 +1,12 @@
+code: CHEM20018
+year: 2026
+learn:
+  en: "How organic and inorganic molecules are made, the energy changes in reactions, and what gives materials their properties."
+  zh: "有机和无机分子怎样合成、反应中的能量变化和材料性质的来源。"
+outcomes:
+  - en: "Plan simple routes to make organic compounds"
+    zh: "设计简单有机物的合成路线"
+  - en: "Apply thermodynamics to mixtures and phase changes"
+    zh: "用热力学分析混合物和相变"
+  - en: "Explain reactions of main group and transition metals"
+    zh: "解释主族和过渡金属的反应"

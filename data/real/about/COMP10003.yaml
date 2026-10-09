@@ -1,0 +1,12 @@
+code: COMP10003
+year: 2026
+learn:
+  en: "Beginner programming focused on media: editing images, showing data and building simple web content."
+  zh: "零基础编程，侧重图片处理、数据展示和简单网页。"
+outcomes:
+  - en: "Write Python programs that work with data"
+    zh: "写Python程序处理数据"
+  - en: "Test ideas with paper and digital prototypes"
+    zh: "用纸面和数字原型检验想法"
+  - en: "Show data clearly to non-technical people"
+    zh: "把数据讲清楚给非技术人员"

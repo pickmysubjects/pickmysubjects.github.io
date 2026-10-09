@@ -1,0 +1,12 @@
+code: BCMB30010
+year: 2026
+learn:
+  en: "Advanced lab training in DNA, protein and cell culture work, from designing experiments to writing papers."
+  zh: "进阶实验训练：DNA、蛋白质和细胞培养，从设计实验到写论文。"
+outcomes:
+  - en: "Keep a proper lab notebook"
+    zh: "规范记录实验笔记"
+  - en: "Analyse DNA and protein data with bioinformatics"
+    zh: "用生物信息软件分析DNA和蛋白数据"
+  - en: "Write up findings as a scientific report"
+    zh: "把结果写成科学报告"

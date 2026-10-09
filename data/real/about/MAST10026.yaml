@@ -1,0 +1,12 @@
+code: MAST10026
+year: 2026
+learn:
+  en: "Catch-up maths for Uni Ready students: polynomials, trig, exponentials, logs and basic calculus."
+  zh: "给 Uni Ready 学生补数学：多项式、三角、指数对数和基础微积分。"
+outcomes:
+  - en: "Sketch and transform graphs of common functions"
+    zh: "画常见函数图像并做变换"
+  - en: "Differentiate and find maximums and minimums"
+    zh: "求导并找最大最小值"
+  - en: "Integrate to find areas under curves"
+    zh: "用积分算曲线下面积"

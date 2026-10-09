@@ -1,0 +1,12 @@
+code: INFO30005
+year: 2026
+learn:
+  en: "Designing and prototyping for technology beyond screens, like AI, VR/AR, smart homes and voice."
+  zh: "为屏幕之外的技术做设计和原型，比如AI、VR/AR、智能家居和语音。"
+outcomes:
+  - en: "Prototype different kinds of interactive devices"
+    zh: "为不同交互设备做原型"
+  - en: "Design a new user experience step by step"
+    zh: "迭代设计一个新的用户体验"
+  - en: "Present design ideas to stakeholders"
+    zh: "向相关方展示设计想法"

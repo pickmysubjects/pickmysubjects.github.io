@@ -1,0 +1,10 @@
+code: MAST30025
+year: 2026
+learn:
+  en: "The theory behind linear models, the most widely used statistical models: estimation, testing and model checking."
+  zh: "最常用的统计模型——线性模型背后的理论：估计、检验和模型诊断。"
+outcomes:
+  - en: "Explain how linear models work and where they fall short"
+    zh: "讲清线性模型的原理和局限"
+  - en: "Fit linear models in statistics software and read the output"
+    zh: "用统计软件拟合线性模型并解读结果"

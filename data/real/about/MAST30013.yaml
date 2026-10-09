@@ -1,0 +1,12 @@
+code: MAST30013
+year: 2026
+learn:
+  en: "Methods for solving nonlinear optimisation problems, with a group project on a real problem."
+  zh: "解非线性优化问题的方法，还有一个解决实际问题的小组项目。"
+outcomes:
+  - en: "Build models for planning and management problems"
+    zh: "为规划和管理问题建模"
+  - en: "Implement optimisation algorithms in code"
+    zh: "编程实现优化算法"
+  - en: "Use software to solve and interpret problems"
+    zh: "用软件求解并解读结果"

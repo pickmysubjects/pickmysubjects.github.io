@@ -1,0 +1,12 @@
+code: ECON20001
+year: 2026
+learn:
+  en: "Models of growth, short-term ups and downs, exchange rates and how policy affects the economy."
+  zh: "经济增长、短期波动、汇率的模型，以及政策的影响。"
+outcomes:
+  - en: "Use IS-LM to analyse monetary and fiscal policy"
+    zh: "用IS-LM分析货币和财政政策"
+  - en: "Trace how an economy responds to shocks"
+    zh: "分析经济受冲击后的变化"
+  - en: "Explain growth with the Solow model"
+    zh: "用索洛模型解释经济增长"

@@ -1,0 +1,12 @@
+code: INFO30006
+year: 2026
+learn:
+  en: "Protecting information and privacy: security threats, managing risk, encryption and hands-on security tools."
+  zh: "保护信息和隐私：安全威胁、风险管理、加密和实用安全工具。"
+outcomes:
+  - en: "Identify security and privacy threats"
+    zh: "识别安全和隐私威胁"
+  - en: "Apply security best practices"
+    zh: "运用安全最佳实践"
+  - en: "Explain how encryption protects information"
+    zh: "解释加密如何保护信息"

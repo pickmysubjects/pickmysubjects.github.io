@@ -1,0 +1,12 @@
+code: MAST30020
+year: 2026
+learn:
+  en: "Probability built on measure theory, the rigorous base for limit theorems used in statistics."
+  zh: "基于测度论的概率论，是统计里极限定理的严格基础。"
+outcomes:
+  - en: "Work with multivariate probability distributions"
+    zh: "处理多元概率分布"
+  - en: "Construct general conditional expectations"
+    zh: "构造一般的条件期望"
+  - en: "Compare different kinds of convergence"
+    zh: "比较不同的收敛方式"

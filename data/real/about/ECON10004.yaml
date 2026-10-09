@@ -1,0 +1,12 @@
+code: ECON10004
+year: 2026
+learn:
+  en: "How markets, firms and governments decide on prices and use limited resources."
+  zh: "市场、企业和政府怎么定价、分配有限的资源。"
+outcomes:
+  - en: "Use supply and demand to explain prices"
+    zh: "用供需解释价格"
+  - en: "Judge when government intervention helps"
+    zh: "判断政府干预什么时候有用"
+  - en: "Analyse strategic choices with game theory"
+    zh: "用博弈论分析策略选择"

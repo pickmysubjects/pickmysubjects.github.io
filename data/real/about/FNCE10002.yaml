@@ -1,0 +1,12 @@
+code: FNCE10002
+year: 2026
+learn:
+  en: "Key ideas of finance: time value of money, risk and return, investing in projects and raising funds."
+  zh: "金融基础：货币时间价值、风险与收益、项目投资和融资。"
+outcomes:
+  - en: "Solve basic financial maths problems"
+    zh: "解基础的金融计算题"
+  - en: "Evaluate projects with budgeting methods"
+    zh: "用资本预算方法评估项目"
+  - en: "Compare debt and equity as funding sources"
+    zh: "比较债务和股权融资"

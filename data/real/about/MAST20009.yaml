@@ -1,0 +1,12 @@
+code: MAST20009
+year: 2026
+learn:
+  en: "Calculus with several variables and vectors, including integrals over curves, surfaces and volumes."
+  zh: "多元函数和向量的微积分，包括曲线、曲面和体积上的积分。"
+outcomes:
+  - en: "Find maximums and minimums of multi-variable functions"
+    zh: "求多元函数的极值"
+  - en: "Calculate line, surface and volume integrals"
+    zh: "算线积分、面积分和体积分"
+  - en: "Apply Green's, Gauss' and Stokes' theorems"
+    zh: "会用格林、高斯和斯托克斯定理"

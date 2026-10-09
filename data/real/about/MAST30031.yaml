@@ -1,0 +1,12 @@
+code: MAST30031
+year: 2026
+learn:
+  en: "Advanced maths tools for physics, with examples from quantum theory, electromagnetism and particles."
+  zh: "物理用的进阶数学工具，例子来自量子、电磁和粒子物理。"
+outcomes:
+  - en: "Use special functions to solve physics equations"
+    zh: "用特殊函数解物理方程"
+  - en: "Use differential forms in multivariable calculus"
+    zh: "在多元微积分里用微分形式"
+  - en: "Model symmetries with groups and Lie algebras"
+    zh: "用群和李代数描述对称性"

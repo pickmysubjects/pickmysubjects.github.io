@@ -1,0 +1,12 @@
+code: MAST20033
+year: 2026
+learn:
+  en: "Rigorous proofs about real numbers, limits, series and integrals, with extra advanced topics."
+  zh: "严格证明实数、极限、级数和积分，比普通版多一些进阶内容。"
+outcomes:
+  - en: "Write proofs by induction, contradiction and epsilon-delta"
+    zh: "会用归纳、反证和 ε-δ 写证明"
+  - en: "Analyse whether sequences converge"
+    zh: "分析数列是否收敛"
+  - en: "Use power series and Taylor approximations"
+    zh: "会用幂级数和泰勒近似"

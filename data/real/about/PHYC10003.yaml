@@ -1,0 +1,12 @@
+code: PHYC10003
+year: 2026
+learn:
+  en: "First-year physics: motion, waves and sound, optics, gravity and special relativity, using calculus."
+  zh: "大一物理：力学、波和声、光学、引力和狭义相对论。"
+outcomes:
+  - en: "Solve physics problems using maths"
+    zh: "用数学解物理题"
+  - en: "Predict what happens in a physical situation"
+    zh: "预测一个物理情境的结果"
+  - en: "Take measurements in the lab and interpret them"
+    zh: "在实验室测量并解读数据"

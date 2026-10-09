@@ -1,0 +1,12 @@
+code: GENE20001
+year: 2026
+learn:
+  en: "What a genome is, how genes are expressed and passed on, and why individuals differ genetically."
+  zh: "基因组是什么、基因怎么表达和遗传、个体为什么有差异。"
+outcomes:
+  - en: "Explain how genes affect an organism's traits"
+    zh: "解释基因如何影响性状"
+  - en: "Describe how genetic variation is passed on"
+    zh: "描述遗传变异怎么传下去"
+  - en: "Analyse data from genetics experiments"
+    zh: "分析遗传学实验数据"

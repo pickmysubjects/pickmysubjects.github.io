@@ -1,0 +1,12 @@
+code: GENE20004
+year: 2026
+learn:
+  en: "Hands-on lab work learning the main techniques of molecular biology and genetic analysis."
+  zh: "在实验室动手学分子生物学和遗传分析的常用技术。"
+outcomes:
+  - en: "Run experiments on gene function and expression"
+    zh: "做基因功能和表达的实验"
+  - en: "Analyse genetic data with statistics"
+    zh: "用统计方法分析遗传数据"
+  - en: "Present results in scientific format"
+    zh: "按科学格式呈现结果"

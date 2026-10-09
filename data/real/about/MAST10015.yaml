@@ -1,0 +1,12 @@
+code: MAST10015
+year: 2026
+learn:
+  en: "VCE-level calculus, statistics and probability, preparing you for a Science or Commerce degree."
+  zh: "高中水平的微积分、统计和概率，为理科或商科学位打基础。"
+outcomes:
+  - en: "Use derivatives to find maximums and minimums"
+    zh: "用导数求最大值和最小值"
+  - en: "Find areas under curves by integration"
+    zh: "用积分求曲线下面积"
+  - en: "Summarise and chart data in Excel"
+    zh: "用Excel总结数据并画图"

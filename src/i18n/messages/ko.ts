@@ -819,6 +819,9 @@ export const ko: Messages = {
     justSearch: '과목만 찾아보려면 위의 검색창을 쓰세요.',
   },
   subject: {
+    aboutLearn: "배우는 것",
+    aboutOutcomes: "배우고 나면",
+    aboutWork: "해야 할 것",
     routeTitle: "1학년까지 전체 경로({n}과목, {missing}과목 남음)",
     routeHint: "고를 수 있는 곳은 이미 있는 과목을, 없으면 첫 번째를 골랐어요.",
     coreqTitle: "같은 학기나 그 전에 들어야 하는 과목",

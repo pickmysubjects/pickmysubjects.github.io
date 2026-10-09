@@ -823,6 +823,9 @@ export const en = {
     justSearch: 'Only want to look up a subject? Use the search box above.',
   },
   subject: {
+    aboutLearn: "What you learn",
+    aboutOutcomes: "After it you can",
+    aboutWork: "What you do",
     routeTitle: "Full route back to first year ({n} subjects, {missing} still to plan)",
     routeHint: "Where there’s a choice, this takes the subject you already have, else the first one.",
     coreqTitle: "Take in the same semester or earlier",

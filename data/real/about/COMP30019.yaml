@@ -1,0 +1,12 @@
+code: COMP30019
+year: 2026
+learn:
+  en: "How 2D and 3D graphics are made and how people interact with them, for games, VR and AR."
+  zh: "2D/3D图形怎么生成、人怎么和它互动，用于游戏和VR/AR。"
+outcomes:
+  - en: "Build interactive 3D graphics apps"
+    zh: "做可交互的3D图形应用"
+  - en: "Use lighting, rendering and animation methods"
+    zh: "用光照、渲染和动画技术"
+  - en: "Test how easy an app is to use"
+    zh: "评估应用好不好用"

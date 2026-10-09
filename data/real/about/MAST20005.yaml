@@ -1,0 +1,12 @@
+code: MAST20005
+year: 2026
+learn:
+  en: "The basics of statistics: fitting models to data, estimating values and testing hypotheses."
+  zh: "统计入门：用模型拟合数据、估计参数、做假设检验。"
+outcomes:
+  - en: "Estimate parameters and build confidence intervals"
+    zh: "估计参数并算置信区间"
+  - en: "Test hypotheses, both classical and Bayesian"
+    zh: "用经典和贝叶斯方法做假设检验"
+  - en: "Run standard analyses in statistical software"
+    zh: "用统计软件做常规分析"

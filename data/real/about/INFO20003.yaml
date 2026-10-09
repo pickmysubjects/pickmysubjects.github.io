@@ -1,0 +1,12 @@
+code: INFO20003
+year: 2026
+learn:
+  en: "How databases are designed and work, with lots of practice writing SQL."
+  zh: "数据库怎么设计和运作，大量练习写SQL。"
+outcomes:
+  - en: "Model data for a database"
+    zh: "为数据库设计数据模型"
+  - en: "Write efficient SQL queries"
+    zh: "写高效的SQL查询"
+  - en: "Use transactions and tune slow queries"
+    zh: "使用事务、优化慢查询"

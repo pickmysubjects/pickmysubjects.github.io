@@ -1,0 +1,12 @@
+code: BCMB20002
+year: 2026
+learn:
+  en: "How proteins, DNA, lipids and sugars are built and work, and how cells get energy through metabolism."
+  zh: "蛋白质、DNA、脂类和糖的结构与功能，以及细胞怎样代谢产能。"
+outcomes:
+  - en: "Use maths models to analyse enzyme activity"
+    zh: "用数学模型分析酶的活性"
+  - en: "Analyse DNA and protein sequences"
+    zh: "分析DNA和蛋白质序列"
+  - en: "Compare energy metabolism with and without oxygen"
+    zh: "比较有氧和无氧代谢"

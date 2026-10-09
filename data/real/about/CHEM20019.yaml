@@ -1,0 +1,12 @@
+code: CHEM20019
+year: 2026
+learn:
+  en: "Second-year lab chemistry: making compounds, analysing samples and running modern instruments."
+  zh: "二年级化学实验：合成化合物、分析样品和使用现代仪器。"
+outcomes:
+  - en: "Make and characterise organic and inorganic compounds"
+    zh: "合成并表征有机和无机化合物"
+  - en: "Operate common lab instruments and read results"
+    zh: "操作常用仪器并解读结果"
+  - en: "Analyse data and errors in lab reports"
+    zh: "在实验报告里分析数据和误差"

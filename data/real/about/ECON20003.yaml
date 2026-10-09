@@ -1,0 +1,12 @@
+code: ECON20003
+year: 2026
+learn:
+  en: "Statistics and analytics tools for business problems, done in software with reproducible analysis."
+  zh: "用软件做商业统计分析，强调结果可以复现。"
+outcomes:
+  - en: "Model relationships between business variables"
+    zh: "为商业变量之间的关系建模"
+  - en: "Check a model's assumptions and limits"
+    zh: "检查模型的假设和局限"
+  - en: "Explain statistical findings to others"
+    zh: "向别人讲清统计结论"

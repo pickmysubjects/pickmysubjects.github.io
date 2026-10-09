@@ -1,0 +1,12 @@
+code: PHYC10002
+year: 2026
+learn:
+  en: "Calculus-based physics for strong students: fluids, electricity and magnetism, quantum, atomic and nuclear physics."
+  zh: "给基础好的学生：流体、电磁、量子、原子和核物理。"
+outcomes:
+  - en: "Solve physics problems using calculus"
+    zh: "用微积分解物理题"
+  - en: "Predict what happens in a physical situation"
+    zh: "预测一个物理情境的结果"
+  - en: "Take measurements in the lab and interpret them"
+    zh: "在实验室测量并解读数据"

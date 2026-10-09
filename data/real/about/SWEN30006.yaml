@@ -1,0 +1,12 @@
+code: SWEN30006
+year: 2026
+learn:
+  en: "Analysing requirements and modelling software designs with UML diagrams and design patterns, in an Agile way."
+  zh: "分析需求，用UML图和设计模式做软件设计，采用敏捷方法。"
+outcomes:
+  - en: "Model requirements and designs with UML"
+    zh: "用UML画需求和设计模型"
+  - en: "Use design patterns to solve software problems"
+    zh: "用设计模式解决软件问题"
+  - en: "Pick suitable tools for software design"
+    zh: "选择合适的软件设计工具"

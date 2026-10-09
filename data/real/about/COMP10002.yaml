@@ -1,0 +1,12 @@
+code: COMP10002
+year: 2026
+learn:
+  en: "Programming in C with control over memory, plus standard ways to sort, search and store data."
+  zh: "用C语言编程，学会管内存，以及常用的排序、查找和数据结构。"
+outcomes:
+  - en: "Write, test and debug small C programs"
+    zh: "编写、测试和调试小型C程序"
+  - en: "Use linked lists, search trees and hash tables"
+    zh: "会用链表、搜索树和哈希表"
+  - en: "Pick an algorithm by comparing how fast it runs"
+    zh: "比较运行效率来选算法"

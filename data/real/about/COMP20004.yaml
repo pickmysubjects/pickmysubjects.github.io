@@ -1,0 +1,12 @@
+code: COMP20004
+year: 2026
+learn:
+  en: "The theory of what computers can and can't solve, and which problems can be solved efficiently."
+  zh: "计算理论：哪些问题电脑能解决，哪些能高效地解决。"
+outcomes:
+  - en: "Design and reason about Turing machines"
+    zh: "设计和分析图灵机"
+  - en: "Prove a problem is hard using reductions"
+    zh: "用归约证明问题很难"
+  - en: "Design approximate solutions for hard problems"
+    zh: "为难题设计近似算法"

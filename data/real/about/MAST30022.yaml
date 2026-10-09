@@ -1,0 +1,12 @@
+code: MAST30022
+year: 2026
+learn:
+  en: "Maths models for decisions: games between two players, multiple goals, uncertainty and group choice."
+  zh: "决策的数学模型：双人博弈、多目标、不确定性和群体选择。"
+outcomes:
+  - en: "Solve two-person games with linear programming"
+    zh: "用线性规划解双人博弈"
+  - en: "Use decision trees and dynamic programming"
+    zh: "用决策树和动态规划"
+  - en: "Solve decision problems under uncertainty"
+    zh: "解不确定情况下的决策问题"

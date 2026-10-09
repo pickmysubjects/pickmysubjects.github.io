@@ -1,0 +1,12 @@
+code: BCMB30004
+year: 2026
+learn:
+  en: "How cells send and receive signals via hormones and neurotransmitters, and how this goes wrong in disease."
+  zh: "细胞怎样通过激素和神经递质传递信号，出错时又怎样致病。"
+outcomes:
+  - en: "Explain how receptors pass signals into the cell"
+    zh: "解释受体怎样把信号传进细胞"
+  - en: "Plan experiments on faulty signalling in disease"
+    zh: "设计实验研究信号异常致病"
+  - en: "Analyse signalling proteins on computer"
+    zh: "用电脑分析信号蛋白"

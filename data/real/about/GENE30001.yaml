@@ -1,0 +1,12 @@
+code: GENE30001
+year: 2026
+learn:
+  en: "How evolution shapes genes and genomes, and the genetic tools used to map and compare them."
+  zh: "进化怎样改变基因和基因组，以及用来绘制和比较它们的遗传工具。"
+outcomes:
+  - en: "Explain how gene pools change over time"
+    zh: "解释基因库怎样随时间变化"
+  - en: "Measure evolutionary forces in real genomic data"
+    zh: "在真实基因组数据中找出进化的作用"
+  - en: "Link genetics to conservation and phylogenetics"
+    zh: "把遗传学用到保育和系统发育上"

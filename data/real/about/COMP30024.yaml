@@ -1,0 +1,12 @@
+code: COMP30024
+year: 2026
+learn:
+  en: "Making computer programs that act intelligently, using search, reasoning and learning."
+  zh: "让程序表现得聪明：搜索、推理和机器学习。"
+outcomes:
+  - en: "Solve problems with search algorithms"
+    zh: "用搜索算法解决问题"
+  - en: "Design agents that make their own decisions"
+    zh: "设计能自己做决定的智能体"
+  - en: "Build systems that improve by learning"
+    zh: "做能通过学习变好的系统"

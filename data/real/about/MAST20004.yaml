@@ -1,0 +1,12 @@
+code: MAST20004
+year: 2026
+learn:
+  en: "The maths of chance: random variables, distributions, and models like Poisson processes and Markov chains."
+  zh: "概率的数学基础：随机变量、分布，以及泊松过程、马尔可夫链等模型。"
+outcomes:
+  - en: "Turn uncertain real situations into probability models"
+    zh: "把有不确定性的实际问题建成概率模型"
+  - en: "Use conditional expectation and generating functions"
+    zh: "会用条件期望和生成函数"
+  - en: "Interpret Poisson processes and Markov chains"
+    zh: "理解泊松过程和马尔可夫链"

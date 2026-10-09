@@ -1,0 +1,12 @@
+code: MAST30028
+year: 2026
+learn:
+  en: "Solving maths problems on a computer: approximation, simulation, data fitting and accuracy."
+  zh: "用电脑解数学问题：数值近似、模拟、数据拟合和误差。"
+outcomes:
+  - en: "Write simple numerical programs"
+    zh: "写简单的数值计算程序"
+  - en: "Explain roundoff and truncation errors"
+    zh: "解释舍入误差和截断误差"
+  - en: "Pick a suitable numerical method and read its output"
+    zh: "选合适的数值方法并解读结果"

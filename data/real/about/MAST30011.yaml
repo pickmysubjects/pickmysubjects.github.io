@@ -1,0 +1,10 @@
+code: MAST30011
+year: 2026
+learn:
+  en: "Graphs as models of networks, and how proofs lead to algorithms that solve graph problems."
+  zh: "用图来描述各种网络，以及怎么从证明推出解题算法。"
+outcomes:
+  - en: "Implement standard graph algorithms"
+    zh: "实现常见的图算法"
+  - en: "Prove simple results about graphs"
+    zh: "证明简单的图论结论"

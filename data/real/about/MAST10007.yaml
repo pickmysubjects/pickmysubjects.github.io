@@ -1,0 +1,12 @@
+code: MAST10007
+year: 2026
+learn:
+  en: "Vectors, matrices and solving systems of equations, plus a first taste of mathematical proof."
+  zh: "向量、矩阵和解方程组，并初步接触数学证明。"
+outcomes:
+  - en: "Solve systems of linear equations with matrices"
+    zh: "用矩阵解线性方程组"
+  - en: "Describe lines and planes with vectors"
+    zh: "用向量描述直线和平面"
+  - en: "Use software for maths calculations"
+    zh: "用软件做数学计算"

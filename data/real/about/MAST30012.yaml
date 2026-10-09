@@ -1,0 +1,10 @@
+code: MAST30012
+year: 2026
+learn:
+  en: "Counting and building finite objects, like permutations and designs, often with efficient algorithms."
+  zh: "有限对象的计数和构造，比如排列和设计，常配合高效算法。"
+outcomes:
+  - en: "Solve counting and combinatorics problems"
+    zh: "解计数和组合问题"
+  - en: "Recognise links between discrete maths and other areas"
+    zh: "看出离散数学和其他领域的联系"

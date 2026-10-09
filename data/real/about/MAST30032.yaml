@@ -1,0 +1,12 @@
+code: MAST30032
+year: 2026
+learn:
+  en: "Maths and computer models of biology, like disease spread and ecology, tested against data."
+  zh: "用数学和电脑模型研究生物问题，比如疾病传播和生态，再用数据检验。"
+outcomes:
+  - en: "Write programs that solve simple biological models"
+    zh: "编程求解简单的生物模型"
+  - en: "Choose between modelling approaches for a problem"
+    zh: "为问题选合适的建模方法"
+  - en: "Test biological hypotheses with simulation"
+    zh: "用统计模拟检验生物学假设"

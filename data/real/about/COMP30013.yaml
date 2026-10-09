@@ -1,0 +1,10 @@
+code: COMP30013
+year: 2026
+learn:
+  en: "Advanced computing topics not taught elsewhere; content depends on the project and may involve building a system."
+  zh: "其他科目没有的进阶计算机内容，具体看项目，可能要做系统开发。"
+outcomes:
+  - en: "Apply advanced techniques to computing problems"
+    zh: "用进阶方法解决计算问题"
+  - en: "Explain and discuss technical solutions"
+    zh: "讲解和讨论技术方案"

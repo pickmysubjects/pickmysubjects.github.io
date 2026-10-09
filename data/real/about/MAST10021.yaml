@@ -1,0 +1,12 @@
+code: MAST10021
+year: 2026
+learn:
+  en: "Same topics as Calculus 2, but deeper, with more focus on concepts and proofs."
+  zh: "内容同微积分2，但更深入，更重概念和证明。"
+outcomes:
+  - en: "Test sequences and series for convergence"
+    zh: "判断数列和级数是否收敛"
+  - en: "Solve differential equations to model systems"
+    zh: "解微分方程为系统建模"
+  - en: "Find maxima and minima of multivariable functions"
+    zh: "求多元函数的极值"

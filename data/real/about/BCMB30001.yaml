@@ -1,0 +1,12 @@
+code: BCMB30001
+year: 2026
+learn:
+  en: "How a protein's 3D shape relates to what it does, and how this helps with drug design."
+  zh: "蛋白质的三维结构和功能，以及它们怎样帮助药物设计。"
+outcomes:
+  - en: "Analyse protein sequence and structure with software"
+    zh: "用软件分析蛋白质序列和结构"
+  - en: "Plan experiments to study protein function"
+    zh: "设计实验研究蛋白质功能"
+  - en: "Critically read protein research papers"
+    zh: "批判性阅读蛋白质研究论文"

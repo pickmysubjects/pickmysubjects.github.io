@@ -819,6 +819,9 @@ export const zhCN: Messages = {
     justSearch: '只想查某门课？直接用上面的搜索框。',
   },
   subject: {
+    aboutLearn: "学什么",
+    aboutOutcomes: "学完能",
+    aboutWork: "要做什么",
     routeTitle: "完整先修路线（{n} 门，还缺 {missing} 门）",
     routeHint: "有几选一的地方，优先选你已经有的，否则选第一门。",
     coreqTitle: "同一学期或之前要修",

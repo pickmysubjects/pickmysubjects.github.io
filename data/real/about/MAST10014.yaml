@@ -1,0 +1,12 @@
+code: MAST10014
+year: 2026
+learn:
+  en: "Foundation maths for the Diploma of Science: algebra, functions, exponentials, logs and trigonometry."
+  zh: "理学预科的基础数学：代数、函数、指数、对数和三角。"
+outcomes:
+  - en: "Solve linear and simultaneous equations"
+    zh: "解一次方程和方程组"
+  - en: "Sketch and transform graphs of functions"
+    zh: "画函数图像并做变换"
+  - en: "Use maths models for real-world problems"
+    zh: "用数学模型解决实际问题"

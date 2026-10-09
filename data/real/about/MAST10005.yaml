@@ -1,0 +1,12 @@
+code: MAST10005
+year: 2026
+learn:
+  en: "More functions and calculus, plus an introduction to vectors and complex numbers."
+  zh: "进一步学函数和微积分，并入门向量和复数。"
+outcomes:
+  - en: "Differentiate and sketch more types of functions"
+    zh: "对更多函数求导和画图"
+  - en: "Solve integrals and simple differential equations"
+    zh: "解积分和简单微分方程"
+  - en: "Calculate with vectors and complex numbers"
+    zh: "计算向量和复数"

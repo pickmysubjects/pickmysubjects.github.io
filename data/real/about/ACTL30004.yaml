@@ -1,0 +1,12 @@
+code: ACTL30004
+year: 2026
+learn:
+  en: "Statistics for actuarial work: regression, generalised linear models, Bayesian methods and credibility theory."
+  zh: "精算用的统计：回归、广义线性模型、贝叶斯方法和信度理论。"
+outcomes:
+  - en: "Fit regression models in software and read the results"
+    zh: "用软件拟合回归模型并解读结果"
+  - en: "Use the bootstrap to check how good an estimate is"
+    zh: "用自助法检验估计量的好坏"
+  - en: "Derive Bayesian estimators"
+    zh: "推导贝叶斯估计量"

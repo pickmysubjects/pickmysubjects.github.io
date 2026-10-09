@@ -819,6 +819,9 @@ export const vi: Messages = {
     justSearch: 'Chỉ muốn tra một môn? Dùng ô tìm kiếm ở trên.',
   },
   subject: {
+    aboutLearn: "Học gì",
+    aboutOutcomes: "Học xong có thể",
+    aboutWork: "Phải làm gì",
     routeTitle: "Toàn bộ lộ trình từ năm nhất ({n} môn, còn thiếu {missing})",
     routeHint: "Chỗ nào có lựa chọn thì lấy môn bạn đã có, nếu không thì lấy môn đầu tiên.",
     coreqTitle: "Học cùng kỳ hoặc trước đó",

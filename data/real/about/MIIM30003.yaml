@@ -1,0 +1,12 @@
+code: MIIM30003
+year: 2026
+learn:
+  en: "Immunology in medicine: vaccines, autoimmune disease, organ transplants and immune therapies for cancer."
+  zh: "医学中的免疫学：疫苗、自身免疫病、器官移植和癌症免疫疗法。"
+outcomes:
+  - en: "Explain how vaccines work and why they matter"
+    zh: "解释疫苗的原理和作用"
+  - en: "Describe how immunotherapy treats disease and cancer"
+    zh: "描述免疫疗法怎么治病和癌症"
+  - en: "Link lab research to clinical treatments"
+    zh: "把实验室研究和临床治疗联系起来"

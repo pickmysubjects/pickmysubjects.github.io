@@ -1,0 +1,12 @@
+code: CHEM30012
+year: 2026
+learn:
+  en: "Pollutants in water and soil, and the lab instruments used to detect and measure them."
+  zh: "水和土壤里的污染物，以及检测它们的分析仪器。"
+outcomes:
+  - en: "Measure contaminants in real environmental samples"
+    zh: "测定真实环境样品中的污染物"
+  - en: "Operate advanced analytical instruments safely"
+    zh: "安全操作高级分析仪器"
+  - en: "Draw sound conclusions from analytical data"
+    zh: "从分析数据得出可靠结论"

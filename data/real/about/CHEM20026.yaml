@@ -1,0 +1,12 @@
+code: CHEM20026
+year: 2026
+learn:
+  en: "The chemistry behind processes in living cells, and the chemical tools used to study them."
+  zh: "细胞里生命过程背后的化学，以及研究它们的化学工具。"
+outcomes:
+  - en: "Explain biological processes at the molecular level"
+    zh: "从分子层面解释生物过程"
+  - en: "Interpret biological data using chemistry"
+    zh: "用化学原理解读生物数据"
+  - en: "Explain key analysis methods in chemical biology"
+    zh: "说明化学生物学的主要分析方法"

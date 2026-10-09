@@ -1,0 +1,12 @@
+code: MAST20006
+year: 2026
+learn:
+  en: "The probability theory you need to understand statistics, with computer help but no programming."
+  zh: "学懂统计所需的概率论，会用电脑算但不用编程。"
+outcomes:
+  - en: "Build probability models from real-world problems"
+    zh: "从实际问题建立概率模型"
+  - en: "Work out distributions of sums and functions of variables"
+    zh: "求随机变量的和与函数的分布"
+  - en: "Use a computer package for probability calculations"
+    zh: "用软件做概率计算"

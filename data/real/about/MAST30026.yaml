@@ -1,0 +1,12 @@
+code: MAST30026
+year: 2026
+learn:
+  en: "Distance, convergence and continuity in general spaces, including infinite-dimensional Hilbert spaces."
+  zh: "一般空间里的距离、收敛和连续，包括无穷维的希尔伯特空间。"
+outcomes:
+  - en: "Prove standard results about metric spaces"
+    zh: "证明度量空间的基本结论"
+  - en: "Analyse linear maps between Hilbert spaces"
+    zh: "分析希尔伯特空间之间的线性映射"
+  - en: "Apply the theory to differential equations"
+    zh: "把理论用到微分方程上"

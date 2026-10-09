@@ -1,0 +1,12 @@
+code: MAST10022
+year: 2026
+learn:
+  en: "Same topics as Linear Algebra, but deeper, with more focus on proofs."
+  zh: "内容同线性代数，但更深入，更重证明。"
+outcomes:
+  - en: "Solve linear equation systems with matrices"
+    zh: "用矩阵解线性方程组"
+  - en: "Prove results about vector spaces"
+    zh: "证明向量空间的相关结论"
+  - en: "Use software for maths calculations"
+    zh: "用软件做数学计算"

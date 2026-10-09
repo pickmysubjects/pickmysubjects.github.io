@@ -1,0 +1,12 @@
+code: MAST30030
+year: 2026
+learn:
+  en: "Building differential equation models for disease spread, traffic flow and fluids."
+  zh: "用微分方程给疾病传播、交通流和流体建模。"
+outcomes:
+  - en: "Formulate and critique mathematical models"
+    zh: "建立并评价数学模型"
+  - en: "Classify critical points and sketch phase-plane behaviour"
+    zh: "分类临界点并分析相平面行为"
+  - en: "Model traffic flow with conservation laws"
+    zh: "用守恒律给交通流建模"

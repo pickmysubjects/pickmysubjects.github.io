@@ -1,0 +1,12 @@
+code: MIIM30015
+year: 2026
+learn:
+  en: "Lab-based capstone: immunology lab methods and a research project you present in talks and reports."
+  zh: "实验型毕业课：学免疫学实验方法，做研究项目并口头和书面汇报。"
+outcomes:
+  - en: "Run flow cytometry and other immune cell assays"
+    zh: "做流式细胞术等免疫细胞检测"
+  - en: "Design an experiment with proper controls"
+    zh: "设计带对照组的实验"
+  - en: "Keep lab records and present your findings"
+    zh: "做好实验记录并汇报结果"
