@@ -247,6 +247,10 @@ export const discussionFileSchema = z
       .array(z.object({ en: z.string().min(10).max(220), zh: z.string().min(4).max(120) }).strict())
       .min(1)
       .max(5),
+    // What the summary's own points say about the work and the difficulty, read off them so the
+    // semester check can use it before our own ratings come in. Left out when they don't say.
+    workload: z.enum(['light', 'heavy', 'mixed']).optional(),
+    difficulty: z.enum(['easy', 'hard', 'mixed']).optional(),
   })
   .strict()
 

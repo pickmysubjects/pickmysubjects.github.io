@@ -14,3 +14,5 @@ points:
     zh: "题目冗长、积分计算多，考试可能比往年试卷难。"
   - en: "Relies on Calculus 2, linear algebra and vector calculus, so revise them first."
     zh: "依赖微积分2、线性代数和向量微积分，需先复习。"
+workload: heavy
+difficulty: hard

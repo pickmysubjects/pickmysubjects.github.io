@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { link } from '@/composables/useView'
-import { computed, type Component } from 'vue'
+import { computed, shallowRef, useId, type Component } from 'vue'
 import { ArrowUpRight, Heart, Plus, Sparkles, ThumbsUp, TrendingUp, TriangleAlert } from 'lucide-vue-next'
 import { periodsFor, type Recommendation, type Subject } from '@/engine'
 import { useI18n } from '@/i18n'
@@ -19,6 +19,9 @@ const props = defineProps<{
 }>()
 const emit = defineEmits<{ add: [] }>()
 const { t } = useI18n()
+// What the number means: opens on tap (a title tooltip never shows on phones, and slowly elsewhere).
+const explainOpen = shallowRef(false)
+const explainId = useId()
 
 const ICONS: Record<string, Component> = {
   interests: Heart,
@@ -26,6 +29,7 @@ const ICONS: Record<string, Component> = {
   averagedHigh: TrendingUp,
   unlocks: ArrowUpRight,
   approachable: ThumbsUp,
+  reviewsEasy: ThumbsUp,
   generous: ThumbsUp,
 }
 // Full stops dropped: these read as labels, not sentences.
@@ -71,12 +75,22 @@ const where = computed(() => {
         <p class="rec-where"><span class="code rec-code">{{ rec.code }}</span> · {{ where }}</p>
         <h3 class="rec-title"><a class="rec-link" :href="link(`subject/${rec.code}`)">{{ rec.title }}</a></h3>
       </div>
-      <div class="rec-score" :title="t('suggest.fitHint')" :aria-label="t('suggest.fit', { score: rec.score, confidence: t(`suggest.band.${band}`) })">
-        <span class="rec-ring" :style="{ background: ring }" aria-hidden="true">
-          <span class="rec-ring-num">{{ rec.score }}</span>
-        </span>
-        <span class="rec-band">{{ t(`suggest.band.${band}`) }}</span>
-        <span v-if="rec.confidence === 'low'" class="rec-thin">{{ t('suggest.thinData') }}</span>
+      <div class="rec-score-wrap" @focusout="explainOpen = false">
+        <button
+          type="button"
+          class="rec-score"
+          :aria-expanded="explainOpen"
+          :aria-controls="explainId"
+          :aria-label="t('suggest.fit', { score: rec.score, confidence: t(`suggest.band.${band}`) })"
+          @click="explainOpen = !explainOpen"
+        >
+          <span class="rec-ring" :style="{ background: ring }" aria-hidden="true">
+            <span class="rec-ring-num">{{ rec.score }}</span>
+          </span>
+          <span class="rec-band">{{ t(`suggest.band.${band}`) }}</span>
+          <span v-if="rec.confidence === 'low'" class="rec-thin">{{ t('suggest.thinData') }}</span>
+        </button>
+        <p v-if="explainOpen" :id="explainId" class="rec-explain" role="note">{{ t('suggest.fitHint') }}</p>
       </div>
     </header>
 
@@ -152,12 +166,44 @@ const where = computed(() => {
   color: var(--accent);
 }
 
+.rec-score-wrap {
+  position: relative;
+  flex: none;
+}
+
 .rec-score {
   display: grid;
   justify-items: center;
   gap: 4px;
-  flex: none;
-  cursor: help;
+  padding: 4px;
+  border: 0;
+  border-radius: 12px;
+  background: none;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+.rec-score:hover .rec-band {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.rec-explain {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 5;
+  width: min(300px, 80vw);
+  margin: 0;
+  padding: 12px 14px;
+  border: 1px solid var(--glass-edge);
+  border-radius: 14px;
+  background: var(--surface);
+  box-shadow: var(--shadow-2);
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  color: var(--ink);
 }
 
 .rec-ring {
@@ -229,6 +275,7 @@ const where = computed(() => {
 }
 
 .rec-reason-approachable,
+.rec-reason-reviewsEasy,
 .rec-reason-generous {
   --tone: #2f7fc1;
 }

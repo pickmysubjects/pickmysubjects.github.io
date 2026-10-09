@@ -12,3 +12,4 @@ points:
     zh: "作业是主要的工作量：用 C 写，大量用到指针，常常要从零开始。一定要早点开始，不要拖到最后。"
   - en: "Reviewers say the theory and maths are not especially heavy; a solid intuition for how each algorithm works is usually enough."
     zh: "大家认为理论和数学要求不算高，理解每个算法大致怎么运作通常就够了。"
+workload: heavy

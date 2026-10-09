@@ -6,7 +6,7 @@ import { standardTerms } from './plan'
 import { passedCodes, recommend, type Profile } from './recommend'
 import { checkTerms } from './planCheck'
 import { balanceTerms } from './relieve'
-import { skillsOf, weakSkills } from './termStress'
+import { skillsOf, termStress, weakSkills, type StressLevel } from './termStress'
 import type { ComponentReq, Course, CourseRule, Dataset, Period, ReqExpr, Subject } from './schema'
 
 export interface GenerateInput {
@@ -496,7 +496,8 @@ function pickElective(ctx: PickCtx): { code: string; why: string; ruleId: string
         planned: [...ctx.placed, ...ctx.reserved],
         eligibleWith: [...ctx.before],
       })
-      for (const rec of rankElectives(recs, ctx.focus, data, (c) => ctx.opens(c, rule.category), input.profile, needsPath)) {
+      const loadsUp = (c: string) => heavierWith(term.subjects, c, data, input.profile)
+      for (const rec of rankElectives(recs, ctx.focus, data, (c) => ctx.opens(c, rule.category), input.profile, needsPath, loadsUp)) {
         const s = data.subjects[rec.code]
         if (!s || s.points > ctx.room) continue
         if (offeredIn(s, term.year, term.period).status !== 'ok') continue
@@ -522,6 +523,17 @@ function pickElective(ctx: PickCtx): { code: string; why: string; ruleId: string
  * (a level-1 breadth subject with a level-2 follow-on beats a dead end, since
  * level-1 breadth is capped). Known-unmet candidates were already dropped by recommend().
  */
+/** Recommendation points an elective gives up for making its semester heavier. */
+const HEAVY_PICK_COST = 6
+const STRESS_RANK: Record<StressLevel, number> = { ok: 0, heavy: 1, veryHeavy: 2 }
+
+/** Whether adding this subject to these makes the semester heavier than it is. */
+function heavierWith(subjects: string[], code: string, data: Dataset, profile: Profile): boolean {
+  const before = termStress(subjects, data, profile).level
+  const after = termStress([...subjects, code], data, profile).level
+  return STRESS_RANK[after] > STRESS_RANK[before]
+}
+
 function rankElectives<T extends { code: string; score: number; eligibility: Tri }>(
   recs: T[],
   focus: Set<string | undefined>,
@@ -529,8 +541,16 @@ function rankElectives<T extends { code: string; score: number; eligibility: Tri
   opens: (code: string) => number,
   profile: Profile,
   needsPath = false,
+  loadsUp: (code: string) => boolean = () => false,
 ): T[] {
   const tier = (r: T) => (r.eligibility === 'ok' ? 0 : r.eligibility === 'unknown' ? 1 : 2)
+  // A choice that would make its semester heavy gives up a few points, so a close
+  // alternative wins but a clearly better fit (the student's own interest) still doesn't lose.
+  const heavy = new Map<string, boolean>()
+  const fit = (r: T) => {
+    if (!heavy.has(r.code)) heavy.set(r.code, loadsUp(r.code))
+    return r.score - (heavy.get(r.code) ? HEAVY_PICK_COST : 0)
+  }
   // A free choice leaning on the student's weak spot only when nothing else fits: stacked
   // with the compulsory subjects on the same skill, it's what makes a semester too much.
   const weak = weakSkills(data, profile)
@@ -549,7 +569,7 @@ function rankElectives<T extends { code: string; score: number; eligibility: Tri
         tier(a) - tier(b) ||
         path(a) - path(b) ||
         onWeak(a) - onWeak(b) ||
-        b.score - a.score ||
+        fit(b) - fit(a) ||
         near(a) - near(b) ||
         opens(b.code) - opens(a.code),
     )
@@ -683,7 +703,9 @@ function trySwap(r: PointsRule, terms: PlanTerm[], all: string[], ctx: RepairCtx
         planned: [...all, ...ctx.reserved],
         eligibleWith: before,
       })
-      for (const rec of rankElectives(candidates, ctx.focus, data, (c) => ctx.opens(c, r.category), input.profile)) {
+      const rest = term.subjects.filter((c) => c !== e)
+      const loadsUp = (c: string) => heavierWith(rest, c, data, input.profile)
+      for (const rec of rankElectives(candidates, ctx.focus, data, (c) => ctx.opens(c, r.category), input.profile, false, loadsUp)) {
         const s = data.subjects[rec.code]
         if (!s || s.points > es.points) continue
         if (offeredIn(s, term.year, term.period).status !== 'ok') continue

@@ -59,11 +59,26 @@ describe('termStress', () => {
     expect(s).toMatchObject({ level: 'heavy', reasons: [{ key: 'coursework', params: { n: 3 } }] })
   })
 
+  it('three coding subjects with big projects pile up', () => {
+    const coding = term((i) => ({ area: 'COMP', assessment: [{ kind: 'project', weight: i < 3 ? 40 : 10 }, { kind: 'exam', weight: i < 3 ? 60 : 90 }] }))
+    expect(termStress(four, coding).reasons.map((r) => r.key)).toEqual(['projects'])
+  })
+
   it('20+ class hours a week is busy weeks; two rules at once is very heavy', () => {
     expect(termStress(four, term(() => ({ weekly_contact_hours: 5.5 }))).reasons.map((r) => r.key)).toEqual(['hours'])
     expect(termStress(four, term(() => ({ weekly_contact_hours: 5.5, assessment: tasks(80) }))).level).toBe('veryHeavy')
     // A couple of lab subjects (16–19 hours) is an ordinary science semester.
     expect(termStress(four, term((i) => ({ weekly_contact_hours: i < 2 ? 6 : 3 }))).level).toBe('ok')
+  })
+
+  it('without our own ratings, uses what the review summary says', () => {
+    const summary = (workload: string, difficulty: string) => ({
+      code: 'AAAA10001', source: 'StudentVIP', url: 'https://studentvip.com.au/unimelb/subjects/aaaa10001', reviews: 5, from: 2024, to: 2025, checked: '2026-10-09',
+      points: [{ en: 'A summary point long enough.', zh: '一条摘要要点' }], workload, difficulty,
+    })
+    const d = term(() => ({}))
+    for (const c of four.slice(0, 2)) (d.subjects[c] as { discussion?: unknown }).discussion = summary('heavy', 'hard')
+    expect(termStress(four, d).reasons.map((r) => r.key).sort()).toEqual(['hard', 'workload'])
   })
 
   it('student ratings count only from three reviews, and not for someone strong at what it uses', () => {
@@ -176,8 +191,9 @@ describe('plan builder spreads the load (real data)', () => {
       }
       return heavy / terms
     }
-    expect(share(profile())).toBeLessThan(0.05)
-    expect(share(profile({ skills: { maths: 2 } }))).toBeLessThan(0.05)
+    // Review summaries now flag real heavy subjects too, so a few more semesters carry a note.
+    expect(share(profile())).toBeLessThan(0.08)
+    expect(share(profile({ skills: { maths: 2 } }))).toBeLessThan(0.08)
     // Builds a plan for every major, twice, which is slow on CI runners.
   }, 120_000)
 })

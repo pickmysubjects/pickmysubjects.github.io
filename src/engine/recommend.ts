@@ -272,6 +272,19 @@ function score(s: Subject, ctx: ScoreCtx): Recommendation {
     }
   }
 
+  // No ratings of our own yet: what the public review summary says stands in, a little
+  // either side of neutral, until students rate it here.
+  if (!s.signals || s.signals.reviews < MIN_REVIEWS) {
+    const d = s.discussion
+    if (d?.difficulty === 'hard') warnings.push(note('reviewsHard', {}, 'Public reviews say it is hard.'))
+    if (d?.workload === 'heavy') warnings.push(note('reviewsHeavy', {}, 'Public reviews say it takes a lot of time.'))
+    if (d?.difficulty === 'easy') reasons.push(note('reviewsEasy', {}, 'Public reviews say it is manageable.'))
+    // Worth about as much as a handful of ratings: close to neutral, so it nudges rather than
+    // reorders. A heavy workload is shown as a warning and counts in the semester check, but
+    // costs time, not marks, so it doesn't count against ease here.
+    if (parts.ease === undefined && (d?.difficulty === 'hard' || d?.difficulty === 'easy')) parts.ease = d.difficulty === 'hard' ? 0.42 : 0.58
+  }
+
   // Pathway value: subjects it unlocks that match the student's interests.
   const unlocks = leadsTo
   if (unlocks.length > 0) {

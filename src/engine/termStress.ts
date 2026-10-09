@@ -17,7 +17,12 @@ export { skillsOf }
  * - busy all semester: three or more subjects marked mostly on coursework (assignments due
  *   week after week);
  * - exam crunch: three or more subjects decided mostly by the final exam;
+ * - project pile-up: three or more programming subjects each with a sizeable project or
+ *   assignment (20%+), so from about week 4 there is always code due;
  * - rated hard: two or more subjects students rate hard.
+ *
+ * "Students say": our own ratings once three people have given them, else what the public
+ * review summary says (heavy workload / hard), so a semester can be judged before anyone rates.
  *
  * One rule is a heavy semester, two a very heavy one. A subject can be light week to week and
  * brutal at exam time, or the other way round; the rules keep the two apart. Where we don't
@@ -31,7 +36,7 @@ export type StressLevel = 'ok' | 'heavy' | 'veryHeavy'
 
 export interface StressReason {
   /** i18n key under `stress.` */
-  key: 'stackWeak' | 'stackMarks' | 'hours' | 'workload' | 'coursework' | 'exams' | 'hard'
+  key: 'stackWeak' | 'stackMarks' | 'hours' | 'workload' | 'coursework' | 'exams' | 'projects' | 'hard'
   params: Record<string, string | number>
 }
 
@@ -63,6 +68,9 @@ const EXAM_HEAVY = 70
 const COURSEWORK_EXAM = 40
 /** How many exam-decided (or coursework-decided) subjects make a crunch. */
 const CRUNCH_RULE = 3
+/** A project or assignment worth this much makes a subject's weeks busy; this many of them in code is a pile-up. */
+const PROJECT_SHARE = 20
+const PROJECTS_RULE = 3
 /** A 1–5 rating that counts as hard / heavy, and how many such subjects trip the rule. */
 const HIGH_RATING = 4
 const RATED_RULE = 2
@@ -105,7 +113,10 @@ export function termStress(codes: string[], data: Dataset, profile?: Profile, op
   // Busy weeks: class hours, or students saying the workload is heavy.
   const hours = Math.round(subjects.reduce((a, s) => a + (s.weeklyContactHours ?? DEFAULT_HOURS), 0))
   const rated = (s: Subject) => (s.signals && s.signals.reviews >= MIN_REVIEWS ? s.signals : undefined)
-  const heavyWork = subjects.filter((s) => (rated(s)?.workload ?? 0) >= HIGH_RATING)
+  const heavyWork = subjects.filter((s) => {
+    const r = rated(s)
+    return r?.workload !== undefined ? r.workload >= HIGH_RATING : s.discussion?.workload === 'heavy'
+  })
   if (hours >= HOURS_RULE) {
     points++
     const most = [...subjects].sort((a, b) => (b.weeklyContactHours ?? 0) - (a.weeklyContactHours ?? 0)).slice(0, 2)
@@ -130,12 +141,28 @@ export function termStress(codes: string[], data: Dataset, profile?: Profile, op
   }
   score += coursework.length / CRUNCH_RULE + exams.length / CRUNCH_RULE
 
+  // Project pile-up: deadlines from several coding subjects landing in the same weeks.
+  const projects = recorded.filter(
+    (s) =>
+      skillsOf(s, data).includes('programming') &&
+      (s.assessment ?? []).some((t) => (t.kind === 'project' || t.kind === 'assignment') && t.weight >= PROJECT_SHARE),
+  )
+  if (projects.length >= PROJECTS_RULE) {
+    points++
+    reasons.push({ key: 'projects', params: { n: projects.length, codes: list(projects) } })
+  }
+  score += projects.length / PROJECTS_RULE
+
   // Rated hard, unless the student says they're strong at what the subject leans on.
   const strong = (s: Subject) => {
     const own = skillsOf(s, data).map((k) => profile?.skills[k])
     return own.length > 0 && own.every((x) => x !== undefined && x >= 4)
   }
-  const hard = subjects.filter((s) => (rated(s)?.difficulty ?? 0) >= HIGH_RATING && !strong(s))
+  const hard = subjects.filter((s) => {
+    const r = rated(s)
+    const isHard = r?.difficulty !== undefined ? r.difficulty >= HIGH_RATING : s.discussion?.difficulty === 'hard'
+    return isHard && !strong(s)
+  })
   if (hard.length >= RATED_RULE) {
     points++
     reasons.push({ key: 'hard', params: { n: hard.length, codes: list(hard) } })
