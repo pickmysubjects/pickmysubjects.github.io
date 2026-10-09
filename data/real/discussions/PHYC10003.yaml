@@ -42,5 +42,5 @@ points:
     ms: "Pandangan tentang peperiksaan berbelah bahagi: ada yang rasa adil, ada yang rasa jauh lebih sukar daripada kertas lepas. Jangan anggap ia subjek pengisi yang mudah."
     id: "Pendapat soal ujian terbelah: ada yang bilang adil, ada yang merasa jauh lebih sulit dari soal lama. Jangan anggap ini mata kuliah pengisi yang gampang."
     hi: "एग्ज़ाम पर राय बँटी है: कुछ को ठीक लगा, कुछ को पुराने पेपर्स से बहुत कठिन। इसे आसान फिलर सब्जेक्ट न समझें।"
-workload: mixed
-difficulty: mixed
+workload: heavy
+difficulty: hard
