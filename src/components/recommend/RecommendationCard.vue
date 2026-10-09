@@ -6,6 +6,7 @@ import { periodsFor, type Recommendation, type Subject } from '@/engine'
 import { useI18n } from '@/i18n'
 import { reasonText } from '@/i18n/format'
 import { summariseAssessment } from '@/utils/assessment'
+import { useProfile } from '@/composables/useProfile'
 
 /**
  * One suggested subject, read top to bottom: what it is, how well it fits (a number and a
@@ -37,7 +38,16 @@ const trim = (s: string) => s.replace(/[。.]\s*$/, '')
 const reasons = computed(() =>
   props.rec.reasons.map((n) => ({ key: n.key, icon: ICONS[n.key] ?? Sparkles, text: trim(reasonText(t.value, n)) })),
 )
-const warnings = computed(() => props.rec.warnings.map((n) => trim(reasonText(t.value, n))))
+// A condition only the student can check (a VCE score) gets a plain line, an "I meet it"
+// button, and the Handbook's own words folded away.
+const warnings = computed(() =>
+  props.rec.warnings.map((n) =>
+    n.key === 'eligibilityUnknown'
+      ? { manual: true, text: t.value('reason.eligibilityManual'), original: String(n.params.needs ?? '') }
+      : { manual: false, text: trim(reasonText(t.value, n)), original: '' },
+  ),
+)
+const { setConfirmed } = useProfile()
 
 const band = computed(() => (props.rec.score >= 70 ? 'great' : props.rec.score >= 55 ? 'good' : 'ok'))
 // The ring: the score as a share of a full circle.
@@ -103,9 +113,18 @@ const where = computed(() => {
     <p v-else class="rec-neutral">{{ t('suggest.neutral') }}</p>
 
     <ul v-if="warnings.length" class="rec-warnings">
-      <li v-for="(w, i) in warnings" :key="i" :title="w">
+      <li v-for="(w, i) in warnings" :key="i">
         <TriangleAlert :size="14" aria-hidden="true" />
-        <span>{{ w }}</span>
+        <div class="rec-warning-body">
+          <span>{{ w.text }}</span>
+          <div v-if="w.manual" class="rec-manual">
+            <button type="button" class="rec-meet" @click="setConfirmed(rec.code, true)">{{ t('suggest.iMeetIt') }}</button>
+            <details class="rec-original">
+              <summary>{{ t('suggest.original') }}</summary>
+              <p>{{ w.original }}</p>
+            </details>
+          </div>
+        </div>
       </li>
     </ul>
 
@@ -294,12 +313,38 @@ const where = computed(() => {
   margin-top: 2px;
 }
 
-/* A long Handbook condition: two lines here, the whole thing on hover and on the subject page. */
-.rec-warnings span {
-  display: -webkit-box;
-  overflow: hidden;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+.rec-warning-body {
+  display: grid;
+  gap: 6px;
+}
+
+.rec-manual {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 12px;
+}
+
+.rec-meet {
+  padding: 3px 11px;
+  border: 1px solid var(--glass-edge);
+  border-radius: 999px;
+  background: var(--glass-fill-hover);
+  box-shadow: var(--glass-shadow);
+  font: inherit;
+  font-weight: 600;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.rec-original summary {
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+
+.rec-original p {
+  margin: 4px 0 0;
+  color: var(--ink-soft);
 }
 
 .rec-neutral {

@@ -232,6 +232,22 @@ export const subjectFileSchema = z
 export type Subject = z.output<typeof subjectFileSchema>
 
 /**
+ * One piece of our own wording in every language the site has: English and Chinese written
+ * together, the others translated from the English (left out until they are).
+ */
+const OTHER_LANGS = ['zh-TW', 'ja', 'ko', 'vi', 'ms', 'id', 'hi'] as const
+const localized = (en: number, zh: number) =>
+  z
+    .object({
+      en: z.string().min(10).max(en),
+      zh: z.string().min(4).max(zh),
+      ...Object.fromEntries(OTHER_LANGS.map((l) => [l, z.string().min(2).max(Math.round(en * 1.8)).optional()])),
+    })
+    .strict() as z.ZodType<Localized>
+export type Localized = { en: string; zh: string } & Partial<Record<(typeof OTHER_LANGS)[number], string>>
+const enZh = localized
+
+/**
  * A short summary of what students say about a subject on a public review site,
  * kept apart from our own ratings: no scores, never mixed into averages, always
  * linked to the source. Staff are never named.
@@ -246,7 +262,7 @@ export const discussionFileSchema = z
     to: z.number().int(),
     checked: z.iso.date(),
     points: z
-      .array(z.object({ en: z.string().min(10).max(220), zh: z.string().min(4).max(120) }).strict())
+      .array(localized(220, 120))
       .min(1)
       .max(5),
     // What the summary's own points say about the work and the difficulty, read off them so the
@@ -263,7 +279,7 @@ export type DiscussionSummary = z.output<typeof discussionFileSchema>
  * wording of the Handbook's overview and learning outcomes, so a student gets the gist
  * without the Handbook's length. English and Chinese; other languages show the English.
  */
-const enZh = (en: number, zh: number) => z.object({ en: z.string().min(10).max(en), zh: z.string().min(4).max(zh) }).strict()
+
 export const aboutFileSchema = z
   .object({
     code: subjectCode,

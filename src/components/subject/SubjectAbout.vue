@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import type { Subject } from '@/engine'
+import type { Localized, Subject } from '@/engine'
+import { pickLocalized } from '@/i18n/localized'
 import { useI18n } from '@/i18n'
 import { summariseAssessment } from '@/utils/assessment'
 
 /** The gist of a subject: what it's about, what you can do after it, and what you'll be doing. */
 const props = defineProps<{ subject: Subject }>()
 const { t, locale } = useI18n()
-const chinese = computed(() => locale.value === 'zh-CN' || locale.value === 'zh-TW')
 const about = computed(() => props.subject.about)
-const pick = (x: { en: string; zh: string }) => (chinese.value ? x.zh : x.en)
+const pick = (x: Localized) => pickLocalized(x, locale.value)
 // "What you do" straight from the assessment: the parts by weight.
 const work = computed(() =>
   (summariseAssessment(props.subject.assessment)?.parts ?? []).map((p) => `${t.value(`assess.kind.${p.kind}`)} ${p.weight}%`).join(' · '),
@@ -37,15 +37,15 @@ const work = computed(() =>
 
 <style scoped>
 .about {
+  /* One grid for all three rows, so the text lines up after the longest label in any language. */
   display: grid;
-  gap: 14px;
+  grid-template-columns: minmax(96px, max-content) minmax(0, 1fr);
+  gap: 14px 16px;
+  align-items: baseline;
 }
 
 .about-row {
-  display: grid;
-  grid-template-columns: 96px minmax(0, 1fr);
-  gap: 4px 16px;
-  align-items: baseline;
+  display: contents;
 }
 
 .about-label {
@@ -76,8 +76,13 @@ const work = computed(() =>
 }
 
 @media (max-width: 560px) {
-  .about-row {
+  .about {
     grid-template-columns: 1fr;
+    row-gap: 4px;
+  }
+
+  .about-label:not(:first-child) {
+    margin-top: 10px;
   }
 }
 </style>

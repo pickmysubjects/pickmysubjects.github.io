@@ -306,8 +306,13 @@ function score(s: Subject, ctx: ScoreCtx): Recommendation {
   }
 
   if (ctx.eligibility === 'unknown') {
-    const needs = ctx.unmet.join('; ')
-    warnings.push(note('eligibilityUnknown', { needs }, `Eligibility not confirmed: ${needs}.`))
+    // Not added to our data yet, or a condition only the student knows (a VCE score): said
+    // plainly, with the Handbook's own words kept for whoever wants them.
+    if (s.prerequisites === 'unknown') warnings.push(note('prereqNotCurated', {}, 'Prerequisites not added yet: check the Handbook.'))
+    else {
+      const needs = ctx.unmet.join('; ')
+      warnings.push(note('eligibilityUnknown', { needs }, `Eligibility not confirmed: ${needs}.`))
+    }
   }
 
   // Signals we have no data for count as neutral (0.5), so a subject can't

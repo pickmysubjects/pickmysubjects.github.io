@@ -42,7 +42,19 @@ export function evaluate(expr: ReqExpr, ctx: EvalContext): EvalResult {
     if (!ctx.admittedCourse) return { status: 'unknown', unmet: [describe(expr)] }
     return ctx.admittedCourse === expr.admission ? ok() : { status: 'fail', unmet: [describe(expr)] }
   }
+  // "Admission into one of the following: B-SCIEXT … B-ARTSEXT" is a course list written out
+  // as text: decide it like an admission rule when we know the student's course.
+  const courses = admissionCourses(expr.manual)
+  if (courses.length && ctx.admittedCourse) {
+    return courses.includes(ctx.admittedCourse) ? ok() : { status: 'fail', unmet: [`admission to ${courses.join(' / ')}`] }
+  }
   return { status: 'unknown', unmet: [`check manually: ${expr.manual}`] }
+}
+
+/** Course codes in a free-text admission condition ("Admission into … B-SCIEXT …"), else none. */
+export function admissionCourses(text: string): string[] {
+  if (!/^\s*admission (?:in)?to\b/i.test(text)) return []
+  return [...new Set(text.match(/\b(?:MC|B|D|GD)-[A-Z]{2,}\b/g) ?? [])]
 }
 
 function evaluatePoints(

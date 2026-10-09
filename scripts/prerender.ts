@@ -12,6 +12,7 @@
  * Also writes 404.html (so any other address still opens the app), sitemap.xml,
  * robots.txt and llms.txt. Everything is static: GitHub Pages serves it for free.
  */
+import { pickLocalized } from '../src/i18n/localized'
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -183,10 +184,9 @@ function subjectPage(code: LocaleCode, s: Subject): Page {
   }
   const d = s.discussion
   if (d) {
-    const cjk = code === 'zh-CN' || code === 'zh-TW'
     const years = d.from === d.to ? String(d.to) : `${d.from}–${d.to}`
     parts.push(
-      `<h2>${esc(t('subject.discussTitle'))}</h2><p>${esc(t('subject.discussNote'))}</p><ul>${d.points.map((p) => `<li>${esc(cjk ? p.zh : p.en)}</li>`).join('')}</ul>` +
+      `<h2>${esc(t('subject.discussTitle'))}</h2><p>${esc(t('subject.discussNote'))}</p><ul>${d.points.map((p) => `<li>${esc(pickLocalized(p, code))}</li>`).join('')}</ul>` +
         `<p>${esc(t('subject.discussSource', { n: d.reviews, years, source: d.source }))} <a href="${esc(d.url)}" rel="nofollow">${esc(t('subject.discussRead'))}</a></p>`,
     )
   }
@@ -286,7 +286,7 @@ function guideBody(t: Translate): string {
     p('waiverText'),
     h2('dropTitle'), li(['dropBefore', 'dropWd', 'dropFail']), p('dropLocal'), p('dropIntl'), p('dropWhere'),
     h2('failTitle'), li(['failPoints', 'failRepeat', 'failProgress', 'failSupp', 'failSpecial', 'failIntl']),
-    h2('abroadTitle'), p('abroadText'), li(['wes', 'enic', 'cscse', 'umCalc']),
+    h2('abroadTitle'), p('abroadText'), li(['wes', 'enic', 'cscse', 'abroadJp', 'abroadKr', 'abroadVn', 'abroadMy', 'abroadId', 'abroadIn', 'abroadTw', 'abroadHk', 'umCalc']),
     h2('rankTitle'), p('rankText'), li(['qs', 'the', 'arwu']),
     p('sourcesText'),
   ].join('\n')

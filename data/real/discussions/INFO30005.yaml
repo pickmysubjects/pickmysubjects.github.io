@@ -8,7 +8,21 @@ checked: 2026-10-08
 points:
   - en: "Very content-heavy; reviewers warn it is tough without prior web development experience."
     zh: "内容量很大，评价者提醒没有网页开发经验会很吃力。"
+    zh-TW: "內容量非常大；評論者提醒，沒有網頁開發經驗會很吃力。"
+    ja: "内容がとても多い。Web開発の経験がないと大変だと口コミは警告。"
+    ko: "내용이 매우 많으며, 웹 개발 경험이 없으면 힘들다고 후기가 경고함."
+    vi: "Rất nặng nội dung; nhiều người cảnh báo sẽ vất vả nếu chưa có kinh nghiệm lập trình web."
+    ms: "Sangat padat kandungan; pengulas memberi amaran ia sukar tanpa pengalaman pembangunan web."
+    id: "Materinya sangat padat; pengulas mengingatkan akan berat tanpa pengalaman pengembangan web."
+    hi: "कंटेंट बहुत भारी है; रिव्यूअर चेताते हैं कि वेब डेवलपमेंट का अनुभव न हो तो मुश्किल है।"
   - en: "Plan to dedicate a lot of time, and expect hard multiple-choice questions."
     zh: "需投入大量时间，选择题难度较高。"
+    zh-TW: "要準備投入大量時間，選擇題也偏難。"
+    ja: "多くの時間を割く覚悟を。選択問題は難しい。"
+    ko: "시간을 많이 투자할 각오를 하고, 객관식 문제는 어렵다고 보세요."
+    vi: "Hãy dành nhiều thời gian, và câu trắc nghiệm khá khó."
+    ms: "Rancang untuk luangkan banyak masa, dan jangka soalan aneka pilihan yang sukar."
+    id: "Siapkan banyak waktu, dan siap-siap soal pilihan ganda yang sulit."
+    hi: "काफ़ी समय देने की योजना बनाएँ, और मल्टिपल-चॉइस सवाल कठिन होंगे।"
 workload: heavy
 difficulty: hard

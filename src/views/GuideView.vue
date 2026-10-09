@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { ExternalLink } from 'lucide-vue-next'
 import GradeScale from '@/components/guide/GradeScale.vue'
 import GuideItem from '@/components/guide/GuideItem.vue'
@@ -6,7 +7,9 @@ import { link } from '@/composables/useView'
 import { useProfile } from '@/composables/useProfile'
 import { useI18n } from '@/i18n'
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
+// The reader's own country first, the rest in the usual order.
+const ABROAD = computed(() => [...ABROAD_ALL].sort((a, b) => Number(b.home === locale.value) - Number(a.home === locale.value)))
 const { wam } = useProfile()
 
 const FACTS = [
@@ -16,12 +19,22 @@ const FACTS = [
   { value: '80+', key: 'guide.factH1' },
 ] as const
 
-const ABROAD = [
+// Official bodies (checked 2026-10-09). `home`: the site language whose readers most likely
+// need it, listed first for them. India moved from AIU to the UGC in April 2025.
+const ABROAD_ALL: { key: string; href: string; home?: string }[] = [
   { key: 'guide.wes', href: 'https://www.wes.org/' },
   { key: 'guide.enic', href: 'https://www.enic.org.uk/' },
-  { key: 'guide.cscse', href: 'https://zwfw.cscse.edu.cn/' },
+  { key: 'guide.cscse', href: 'https://zwfw.cscse.edu.cn/', home: 'zh-CN' },
+  { key: 'guide.abroadJp', href: 'https://www.nicjp.niad.ac.jp/en/', home: "ja" },
+  { key: 'guide.abroadKr', href: 'https://www.karic.kr', home: "ko" },
+  { key: 'guide.abroadVn', href: 'https://naric.edu.vn', home: "vi" },
+  { key: 'guide.abroadMy', href: 'https://www.mqa.gov.my', home: "ms" },
+  { key: 'guide.abroadId', href: 'https://piln.kemdiktisaintek.go.id', home: "id" },
+  { key: 'guide.abroadIn', href: 'https://equivalence.ugc.ac.in', home: "hi" },
+  { key: 'guide.abroadTw', href: 'https://www.fsedu.moe.gov.tw', home: "zh-TW" },
+  { key: 'guide.abroadHk', href: 'https://www.hkcaavq.edu.hk/en/services/qualifications-assessment/', home: "zh-TW" },
   { key: 'guide.umCalc', href: 'https://study.unimelb.edu.au/how-to-apply/graduate-coursework-study/grade-conversion-eligibility-calculator' },
-] as const
+]
 
 const RANKINGS = [
   { key: 'guide.qs', href: 'https://www.topuniversities.com/world-university-rankings' },
