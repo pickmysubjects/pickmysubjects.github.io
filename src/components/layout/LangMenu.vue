@@ -25,6 +25,8 @@ function onChange(event: Event): void {
 .lang {
   position: relative;
   display: inline-flex;
+  flex: none;
+  white-space: nowrap;
   align-items: center;
   gap: 6px;
   height: 36px;
@@ -56,7 +58,9 @@ function onChange(event: Event): void {
   cursor: pointer;
 }
 
-@media (max-width: 720px) {
+/* Phones, and mid-width screens where five nav links leave no room for "Bahasa Melayu":
+   the icon alone (the menu lists every language by name). */
+@media (max-width: 1180px) {
   .lang-name {
     display: none;
   }

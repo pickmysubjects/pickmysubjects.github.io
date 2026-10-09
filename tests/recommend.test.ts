@@ -139,3 +139,23 @@ describe('subject facts', () => {
     expect(ready).toContain('COMP30027')
   })
 })
+
+describe('the five skill steps read differently', () => {
+  const data = dataset([subject({ code: 'CHEM10003', prerequisites: 'none', skills: ['lab'] })])
+  const keys = (lab: number) => {
+    const r = recommend(data, { results: [], skills: { lab }, interests: [], goal: 'balanced' }, {})[0]
+    return [...(r?.reasons ?? []), ...(r?.warnings ?? [])].map((n) => n.key).filter((k) => k !== 'fewReviews')
+  }
+  it('strong, good at, neutral, weaker, a struggle', () => {
+    expect(keys(5)).toEqual(['strengths'])
+    expect(keys(4)).toEqual(['goodAt'])
+    expect(keys(3)).toEqual([])
+    expect(keys(2)).toEqual(['weakSkills'])
+    expect(keys(1)).toEqual(['struggleSkills'])
+  })
+  it('scores each step lower than the one above', () => {
+    const score = (lab: number) => recommend(data, { results: [], skills: { lab }, interests: [], goal: 'balanced' }, {})[0]?.score ?? 0
+    expect([5, 4, 3, 2, 1].map(score)).toEqual([...[5, 4, 3, 2, 1].map(score)].sort((a, b) => b - a))
+    expect(new Set([5, 4, 3, 2, 1].map(score)).size).toBe(5)
+  })
+})

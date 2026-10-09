@@ -143,11 +143,13 @@ const { t } = useI18n()
   display: flex;
   align-items: center;
   gap: 10px;
+  min-width: 0;
   margin-left: auto;
 }
 
 .guide {
   display: inline-flex;
+  flex: none;
   align-items: center;
   gap: 6px;
   height: 36px;
@@ -180,7 +182,9 @@ const { t } = useI18n()
 }
 
 .header-search {
-  width: 220px;
+  /* The first thing to give way when the header is tight: the language and Basics buttons never wrap. */
+  flex: 0 1 220px;
+  min-width: 140px;
 }
 
 /* The header search needs room next to five links and Basics; below that, Browse has its own search. */

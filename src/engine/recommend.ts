@@ -2,6 +2,7 @@ import { offeredIn, periodsFor } from './availability'
 import { evaluateField, referencedSubjects, type Tri } from './expr'
 import type { Note, Params } from './plan'
 import type { Dataset, Period, Skill, Subject } from './schema'
+import { skillsOf } from './skills'
 import { relatedTopics, topicsOf } from './topics'
 
 
@@ -187,16 +188,23 @@ function score(s: Subject, ctx: ScoreCtx): Recommendation {
   const warnings: Note[] = []
   const parts: Partial<Record<Signal, number>> = {}
 
-  // Skill fit: how well the student's self-rated skills cover what the subject uses.
-  const rated = s.skills.filter((k): k is Skill => ctx.profile.skills[k as Skill] !== undefined)
+  // Skill fit: how well the student's self-rated skills cover what the subject uses (its tags,
+  // or what we infer from its area, title and prerequisites). Each of the five steps reads
+  // differently: 5 a strength, 4 good at, 3 neutral, 2 weaker, 1 a struggle. The weakest one
+  // counts extra: being good at writing doesn't make up for struggling with the maths.
+  const rated = skillsOf(s, ctx.data).filter((k) => ctx.profile.skills[k] !== undefined)
   if (rated.length > 0) {
-    const fits = rated.map((k) => ((ctx.profile.skills[k] ?? 3) - 1) / 4)
-    parts.skillFit = avg(fits)
-    const strong = rated.filter((k) => (ctx.profile.skills[k] ?? 0) >= 4)
-    const weak = rated.filter((k) => (ctx.profile.skills[k] ?? 5) <= 2)
-    if (strong.length) reasons.push(note('strengths', { skills: strong.join(', ') }, `Uses your strengths: ${strong.join(', ')}.`))
-    if (weak.length) warnings.push(note('weakSkills', { skills: weak.join(', ') }, `Leans on ${weak.join(', ')}, which you rated as weaker.`))
+    const level = (k: Skill) => ctx.profile.skills[k] as number
+    const fits = rated.map((k) => (level(k) - 1) / 4)
+    parts.skillFit = 0.6 * avg(fits) + 0.4 * Math.min(...fits)
+    const at = (n: number) => rated.filter((k) => level(k) === n)
+    const list = (ks: Skill[]) => ks.join(', ')
+    if (at(5).length) reasons.push(note('strengths', { skills: list(at(5)) }, `Uses your strengths: ${list(at(5))}.`))
+    if (at(4).length) reasons.push(note('goodAt', { skills: list(at(4)) }, `Uses what you're good at: ${list(at(4))}.`))
+    if (at(2).length) warnings.push(note('weakSkills', { skills: list(at(2)) }, `Leans on ${list(at(2))}, which you rated as weaker.`))
+    if (at(1).length) warnings.push(note('struggleSkills', { skills: list(at(1)) }, `Leans heavily on ${list(at(1))}, which you find hard.`))
   }
+
 
   // Interest: overlap between the subject's topics and the student's interests.
   // A subject that leads to an interesting one counts too, a bit less (the

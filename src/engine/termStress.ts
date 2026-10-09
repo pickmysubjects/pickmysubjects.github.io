@@ -40,7 +40,7 @@ export type StressLevel = 'ok' | 'heavy' | 'veryHeavy'
 
 export interface StressReason {
   /** i18n key under `stress.` */
-  key: 'stackWeak' | 'stackMarks' | 'hours' | 'workload' | 'coursework' | 'exams' | 'deadlines' | 'projects' | 'hard'
+  key: 'stackWeak' | 'stackStruggle' | 'stackMarks' | 'hours' | 'workload' | 'coursework' | 'exams' | 'deadlines' | 'projects' | 'hard'
   params: Record<string, string | number>
 }
 
@@ -107,13 +107,15 @@ export function termStress(codes: string[], data: Dataset, profile?: Profile, op
     const self = profile?.skills[skill]
     const marks = self === undefined ? weakAverage(skill, data, profile) : null
     const params = { skill, codes: list(on), n: on.length }
-    if (self !== undefined && self <= 2) reasons.push({ key: 'stackWeak', params })
+    // "I struggle with it" (1) weighs more than "weaker" (2): two such subjects is already a lot.
+    if (self === 1) reasons.push({ key: 'stackStruggle', params })
+    else if (self !== undefined && self <= 2) reasons.push({ key: 'stackWeak', params })
     else if (marks !== null) reasons.push({ key: 'stackMarks', params: { ...params, mark: marks } })
     else continue
     // Balancing still sees every stack; only the label skips one the plan can't avoid.
     score += on.length - 1
     if (on.length <= (opts.stackFloor?.[skill] ?? 1)) reasons.pop()
-    else points += on.length >= 3 ? 2 : 1
+    else points += on.length >= 3 || self === 1 ? 2 : 1
   }
 
   // Busy weeks: class hours, or students saying the workload is heavy.

@@ -27,6 +27,7 @@ const explainId = useId()
 const ICONS: Record<string, Component> = {
   interests: Heart,
   strengths: Sparkles,
+  goodAt: Sparkles,
   averagedHigh: TrendingUp,
   unlocks: ArrowUpRight,
   approachable: ThumbsUp,
@@ -285,6 +286,7 @@ const where = computed(() => {
 }
 
 .rec-reason-strengths,
+.rec-reason-goodAt,
 .rec-reason-averagedHigh {
   --tone: var(--good);
 }
