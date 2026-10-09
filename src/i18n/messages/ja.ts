@@ -611,6 +611,7 @@ export const ja: Messages = {
     projects: "{n} 科目のプログラミング科目にそれぞれ大きな課題があり（{codes}）、4週目ごろからほぼ毎週コードの提出があります。",
     hard: "{codes} は難しいという声があります。",
     spread: "分けて配置する",
+    swapWith: "{a} と {term} の {b} を入れ替える",
     moveTo: "{code} を {term} に移す",
     more: "ほか {n} 件",
     less: "閉じる",

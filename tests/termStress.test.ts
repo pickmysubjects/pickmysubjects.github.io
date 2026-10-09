@@ -197,3 +197,27 @@ describe('plan builder spreads the load (real data)', () => {
     // Builds a plan for every major, twice, which is slow on CI runners.
   }, 120_000)
 })
+
+describe('relieveTerm picks a swap for the semester in question', () => {
+  it('lightens this semester even when the whole-plan balance would rather change another', () => {
+    const both = { offerings: { 2027: ['semester-1', 'semester-2'] } }
+    const code = (i: number) => ({ area: 'COMP', assessment: [{ kind: 'project', weight: 40 }, { kind: 'exam', weight: 60 }], ...both, code: `COMP2000${i}` })
+    const data = dataset([
+      ...[1, 2, 3].map((i) => subject({ prerequisites: 'none', weekly_contact_hours: 3, ...code(i) })),
+      ...['BIOL10001', 'BIOL10002', 'BIOL10003', 'BIOL10004', 'BIOL10005'].map((c) => plain(c, both)),
+    ])
+    const plan: Plan = {
+      course: 'NONE',
+      courseYear: 2026,
+      completed: [],
+      terms: [
+        { year: 2027, period: 'semester-1', subjects: ['COMP20001', 'COMP20002', 'COMP20003', 'BIOL10001'] },
+        { year: 2027, period: 'semester-2', subjects: ['BIOL10002', 'BIOL10003', 'BIOL10004', 'BIOL10005'] },
+      ],
+    }
+    const r = relieveTerm(plan, data, 0)
+    expect(r).toMatchObject({ kind: 'spread', swaps: [expect.objectContaining({})] })
+    const s1 = r?.kind === 'spread' ? (r.terms[0]?.subjects ?? []) : []
+    expect(s1.filter((c) => c.startsWith('COMP'))).toHaveLength(2)
+  })
+})

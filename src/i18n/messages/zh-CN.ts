@@ -611,6 +611,7 @@ export const zhCN: Messages = {
     projects: "{n} 门编程课都有大项目（{codes}），大概从第 4 周起几乎每周都有代码要交。",
     hard: "同学觉得 {codes} 很难。",
     spread: "帮我分开",
+    swapWith: "把 {a} 和 {term} 的 {b} 对调",
     moveTo: "把 {code} 放到 {term}",
     more: "还有 {n} 条",
     less: "收起",

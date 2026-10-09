@@ -611,6 +611,7 @@ export const ms: Messages = {
     projects: "{n} subjek pengaturcaraan masing-masing ada projek besar ({codes}), jadi dari kira-kira minggu 4 hampir setiap minggu ada kod perlu dihantar.",
     hard: "Pelajar menilai {codes} susah.",
     spread: "Asingkan untuk saya",
+    swapWith: "Tukar {a} dengan {b} ({term})",
     moveTo: "Pindah {code} ke {term}",
     more: "{n} lagi",
     less: "Tutup",

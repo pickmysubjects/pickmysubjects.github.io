@@ -615,6 +615,7 @@ export const en = {
     projects: "{n} programming subjects each have a big project ({codes}), so from about week 4 there's code due most weeks.",
     hard: "Students rate {codes} hard.",
     spread: "Spread them out",
+    swapWith: "Swap {a} with {b} ({term})",
     moveTo: "Move {code} to {term}",
     more: "{n} more",
     less: "Less",

@@ -611,6 +611,7 @@ export const ko: Messages = {
     projects: "{n}개 프로그래밍 과목에 모두 큰 프로젝트가 있어서({codes}) 4주차쯤부터 거의 매주 코드를 내야 해요.",
     hard: "{codes}는 어렵다는 평이 있어요.",
     spread: "나눠서 배치",
+    swapWith: "{a}와 {term}의 {b} 바꾸기",
     moveTo: "{code}을(를) {term}으로",
     more: "{n}개 더",
     less: "접기",

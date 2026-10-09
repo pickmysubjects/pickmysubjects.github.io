@@ -5,7 +5,7 @@ import type { Note, Params, Plan, PlanTerm } from './plan'
 import { standardTerms } from './plan'
 import { passedCodes, recommend, type Profile } from './recommend'
 import { checkTerms } from './planCheck'
-import { balanceTerms } from './relieve'
+import { balanceTerms, fixHeavyTerms } from './relieve'
 import { skillsOf, termStress, weakSkills, type StressLevel } from './termStress'
 import type { ComponentReq, Course, CourseRule, Dataset, Period, ReqExpr, Subject } from './schema'
 
@@ -139,7 +139,7 @@ function buildPlan(input: GenerateInput): GenerateResult {
   }
   // Spread the load, so the hard subjects don't all land in one semester.
   const draft: Plan = { course: input.course, courseYear: input.courseYear, major: input.major, specialisation: input.specialisation, completed, terms }
-  for (const { a, b } of balanceTerms(draft, data, input.profile)) {
+  for (const { a, b } of [...balanceTerms(draft, data, input.profile), ...fixHeavyTerms(draft, data, input.profile)]) {
     notes.push(note('balanced', { a, b }, `Swapped ${a} and ${b} between semesters to spread the load.`))
   }
   // Keep "added in …" notes true to where each subject now sits.

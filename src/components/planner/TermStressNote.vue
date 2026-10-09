@@ -43,7 +43,11 @@ async function rate(accurate: boolean): Promise<void> {
 const fixLabel = computed(() => {
   const r = fix.value
   if (!r) return ''
-  return r.kind === 'spread' ? t.value('stress.spread') : t.value('stress.moveTo', { code: r.code, term: termLabel(t.value, r) })
+  if (r.kind === 'shortTerm') return t.value('stress.moveTo', { code: r.code, term: termLabel(t.value, r) })
+  // One swap: say exactly what changes, and where the other subject comes from.
+  const only = r.swaps.length === 1 ? r.swaps[0] : undefined
+  const there = only ? plan.terms.value.find((x) => x.subjects.includes(only.b)) : undefined
+  return only && there ? t.value('stress.swapWith', { a: only.a, b: only.b, term: termLabel(t.value, there) }) : t.value('stress.spread')
 })
 </script>
 

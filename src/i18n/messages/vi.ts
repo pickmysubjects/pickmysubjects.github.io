@@ -611,6 +611,7 @@ export const vi: Messages = {
     projects: "{n} môn lập trình đều có dự án lớn ({codes}), nên từ khoảng tuần 4 gần như tuần nào cũng phải nộp code.",
     hard: "Sinh viên đánh giá {codes} là khó.",
     spread: "Chia ra giúp tôi",
+    swapWith: "Đổi {a} với {b} ({term})",
     moveTo: "Chuyển {code} sang {term}",
     more: "Thêm {n}",
     less: "Thu gọn",

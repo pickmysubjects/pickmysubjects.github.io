@@ -611,6 +611,7 @@ export const zhTW: Messages = {
     projects: "{n} 門程式課都有大專案（{codes}），大概從第 4 週起幾乎每週都有程式要交。",
     hard: "同學覺得 {codes} 很難。",
     spread: "幫我分開",
+    swapWith: "把 {a} 和 {term} 的 {b} 對調",
     moveTo: "把 {code} 放到 {term}",
     more: "還有 {n} 條",
     less: "收起",

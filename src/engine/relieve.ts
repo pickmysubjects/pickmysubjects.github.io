@@ -109,6 +109,12 @@ export function relieveTerm(plan: Plan, data: Dataset, termIndex: number, profil
     return RANK[after.level] < RANK[before.level] || (after.level === before.level && after.score < before.score - 0.5)
   }
 
+  // A swap between this semester and another, so the one the student is looking at gets
+  // lighter and the other doesn't get heavier. Best by the two semesters' combined load.
+  const one = swapFor(plan, data, termIndex, profile, lighter)
+  if (one) return one
+
+  // Otherwise the whole-plan balance, if it happens to lighten this one.
   const copy: Plan = { ...plan, terms: plan.terms.map((t) => ({ ...t, subjects: [...t.subjects] })) }
   const swaps = balanceTerms(copy, data, profile)
   if (swaps.length && lighter((copy.terms[termIndex] as PlanTerm).subjects)) return { kind: 'spread', terms: copy.terms, swaps }
@@ -140,6 +146,67 @@ export function relieveTerm(plan: Plan, data: Dataset, termIndex: number, profil
     }
   }
   return null
+}
+
+/**
+ * After balancing: for each semester still heavy, the one swap that brings its level down
+ * without raising another's (what "Spread it out" offers), applied in turn. Changes
+ * plan.terms in place and returns the swaps made.
+ */
+export function fixHeavyTerms(plan: Plan, data: Dataset, profile?: Profile): { a: string; b: string }[] {
+  const made: { a: string; b: string }[] = []
+  for (let round = 0; round < plan.terms.length * 2; round++) {
+    let changed = false
+    for (const [i, term] of plan.terms.entries()) {
+      const before = termStress(term.subjects, data, profile)
+      if (before.level === 'ok') continue
+      const lighter = (subjects: string[]) => RANK[termStress(subjects, data, profile).level] < RANK[before.level]
+      const r = swapFor(plan, data, i, profile, lighter)
+      if (r?.kind !== 'spread') continue
+      plan.terms.splice(0, plan.terms.length, ...r.terms)
+      made.push(...r.swaps)
+      changed = true
+    }
+    if (!changed) break
+  }
+  return made
+}
+
+function swapFor(
+  plan: Plan,
+  data: Dataset,
+  termIndex: number,
+  profile: Profile | undefined,
+  lighter: (subjects: string[]) => boolean,
+): Relief | null {
+  const from = plan.terms[termIndex] as PlanTerm
+  const copy: Plan = { ...plan, terms: plan.terms.map((t) => ({ ...t, subjects: [...t.subjects] })) }
+  const here = copy.terms[termIndex] as PlanTerm
+  const safe = guard(copy, data)
+  let best: { to: number; a: string; b: string; cost: number } | null = null
+  for (const a of from.subjects) {
+    for (const [to, other] of plan.terms.entries()) {
+      if (to === termIndex) continue
+      const there = copy.terms[to] as PlanTerm
+      const otherBefore = termStress(other.subjects, data, profile).level
+      for (const b of other.subjects) {
+        const sa = data.subjects[a]
+        const sb = data.subjects[b]
+        if (!sa || !sb || sa.points !== sb.points) continue
+        if (offeredIn(sa, other.year, other.period).status !== 'ok' || offeredIn(sb, from.year, from.period).status !== 'ok') continue
+        swap(here, there, a, b)
+        const otherAfter = termStress(there.subjects, data, profile)
+        if (lighter(here.subjects) && RANK[otherAfter.level] <= RANK[otherBefore]) {
+          const cost = termStress(here.subjects, data, profile).score ** 2 + otherAfter.score ** 2
+          if ((!best || cost < best.cost) && safe()) best = { to, a, b, cost }
+        }
+        swap(here, there, b, a)
+      }
+    }
+  }
+  if (!best) return null
+  swap(here, copy.terms[best.to] as PlanTerm, best.a, best.b)
+  return { kind: 'spread', terms: copy.terms, swaps: [{ a: best.a, b: best.b }] }
 }
 
 function noWorse(before: Plan, after: Plan, data: Dataset): boolean {
