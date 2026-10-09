@@ -120,7 +120,7 @@ const rows = [...GRADES].reverse()
   width: 100%;
   margin-top: 10px;
   border-collapse: collapse;
-  font-size: 0.92rem;
+  font-size: 0.9375rem;
 }
 
 .table th,
@@ -132,7 +132,7 @@ const rows = [...GRADES].reverse()
 }
 
 .table thead th {
-  font-size: 0.78rem;
+  font-size: 0.8125rem;
   font-weight: 600;
   color: var(--ink-faint);
 }

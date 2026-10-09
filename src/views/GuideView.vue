@@ -42,13 +42,8 @@ const FAILING = 'https://students.unimelb.edu.au/course-admin/planning-your-cour
       <p class="page-lede">{{ t('guide.lede') }}</p>
     </header>
 
-    <ul class="facts surface">
-      <li v-for="f in FACTS" :key="f.key" class="fact">
-        <span class="fact-value">{{ f.value }}</span>
-        <span class="fact-label">{{ t(f.key) }}</span>
-      </li>
-    </ul>
-
+    <div class="layout">
+    <div class="main">
     <section class="group">
       <h2 class="group-title">{{ t('guide.groupPlan') }}</h2>
       <div class="list surface">
@@ -195,6 +190,18 @@ const FAILING = 'https://students.unimelb.edu.au/course-admin/planning-your-cour
       {{ t('guide.sourcesText') }}
       <a :href="STUDENT_SITE" target="_blank" rel="noopener">{{ t('guide.sourcesLink') }}</a>
     </p>
+    </div>
+
+    <!-- The numbers people look up most, kept in view while reading. -->
+    <aside class="side">
+      <ul class="facts surface">
+        <li v-for="f in FACTS" :key="f.key" class="fact">
+          <span class="fact-value">{{ f.value }}</span>
+          <span class="fact-label">{{ t(f.key) }}</span>
+        </li>
+      </ul>
+    </aside>
+    </div>
   </article>
 </template>
 
@@ -202,13 +209,42 @@ const FAILING = 'https://students.unimelb.edu.au/course-admin/planning-your-cour
 .guide {
   display: grid;
   gap: 28px;
-  max-width: 760px;
   padding-top: 32px;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 32px;
+  align-items: start;
+}
+
+.main {
+  display: grid;
+  gap: 28px;
+  min-width: 0;
+}
+
+.side {
+  position: sticky;
+  top: 88px;
+}
+
+@media (max-width: 960px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  /* On narrow screens the numbers come first, as a strip. */
+  .side {
+    position: static;
+    order: -1;
+  }
 }
 
 .guide-eyebrow {
   margin-bottom: 6px;
-  font-size: 0.8rem;
+  font-size: 0.8125rem;
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -218,7 +254,6 @@ const FAILING = 'https://students.unimelb.edu.au/course-admin/planning-your-cour
 /* Four numbers in one strip, split by hairlines. */
 .facts {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
   margin: 0;
   padding: 0;
   list-style: none;
@@ -232,7 +267,19 @@ const FAILING = 'https://students.unimelb.edu.au/course-admin/planning-your-cour
 }
 
 .fact + .fact {
-  border-left: 1px solid var(--line);
+  border-top: 1px solid var(--glass-edge);
+}
+
+/* Between phone and desktop: one strip of four above the guide. */
+@media (max-width: 960px) {
+  .facts {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .fact + .fact {
+    border-top: 0;
+    border-left: 1px solid var(--glass-edge);
+  }
 }
 
 .fact-value {
@@ -244,7 +291,7 @@ const FAILING = 'https://students.unimelb.edu.au/course-admin/planning-your-cour
 }
 
 .fact-label {
-  font-size: 0.82rem;
+  font-size: 0.8125rem;
   line-height: 1.45;
   color: var(--ink-soft);
 }
@@ -256,7 +303,7 @@ const FAILING = 'https://students.unimelb.edu.au/course-admin/planning-your-cour
 
 .group-title {
   padding-left: 4px;
-  font-size: 0.8rem;
+  font-size: 0.8125rem;
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -268,7 +315,7 @@ const FAILING = 'https://students.unimelb.edu.au/course-admin/planning-your-cour
 }
 
 .note {
-  font-size: 0.9rem;
+  font-size: 0.9375rem;
   color: var(--ink-soft);
 }
 
@@ -290,7 +337,7 @@ const FAILING = 'https://students.unimelb.edu.au/course-admin/planning-your-cour
 
 .formula {
   font-family: var(--font-code);
-  font-size: 0.9rem;
+  font-size: 0.9375rem;
 }
 
 .actions {
@@ -306,12 +353,12 @@ const FAILING = 'https://students.unimelb.edu.au/course-admin/planning-your-cour
 }
 
 .who-card {
-  font-size: 0.92rem;
+  font-size: 0.9375rem;
 }
 
 .who-card h3 {
   margin-bottom: 4px;
-  font-size: 0.95rem;
+  font-size: 0.9375rem;
   font-weight: 650;
 }
 
@@ -408,7 +455,7 @@ const FAILING = 'https://students.unimelb.edu.au/course-admin/planning-your-cour
 }
 
 .source {
-  font-size: 0.85rem;
+  font-size: 0.875rem;
   color: var(--ink-faint);
 }
 
@@ -430,7 +477,7 @@ const FAILING = 'https://students.unimelb.edu.au/course-admin/planning-your-cour
   }
 
   .fact:nth-child(n + 3) {
-    border-top: 1px solid var(--line);
+    border-top: 1px solid var(--glass-edge);
   }
 
   .who {

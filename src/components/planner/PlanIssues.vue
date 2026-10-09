@@ -61,7 +61,7 @@ const notes = computed(() => rows.value.filter((i) => i.severity === 'info'))
   padding: 6px 8px 6px 10px;
   border-left: 3px solid;
   border-radius: 0 var(--radius) var(--radius) 0;
-  font-size: 0.84rem;
+  font-size: 0.875rem;
 }
 
 .issue-error {
@@ -81,7 +81,7 @@ const notes = computed(() => rows.value.filter((i) => i.severity === 'info'))
 
 .issue-notes {
   margin-top: 10px;
-  font-size: 0.84rem;
+  font-size: 0.875rem;
 }
 
 .issue-notes summary {

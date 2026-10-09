@@ -108,7 +108,7 @@ function clear(): void {
   gap: 8px;
   justify-self: start;
   padding: 8px 14px;
-  font-size: 0.9rem;
+  font-size: 0.9375rem;
   font-weight: 600;
   color: var(--ink);
   border-radius: 999px;
@@ -152,7 +152,7 @@ function clear(): void {
 .group legend {
   margin-bottom: 8px;
   padding: 0;
-  font-size: 0.78rem;
+  font-size: 0.8125rem;
   font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -175,7 +175,7 @@ function clear(): void {
 .seg button {
   flex: 1 0 auto;
   padding: 6px 10px;
-  font-size: 0.85rem;
+  font-size: 0.875rem;
   color: var(--ink-soft);
   white-space: nowrap;
   background: none;
@@ -199,7 +199,7 @@ function clear(): void {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 0.92rem;
+  font-size: 0.9375rem;
   cursor: pointer;
 }
 
@@ -214,7 +214,7 @@ function clear(): void {
 .clear {
   justify-self: start;
   padding: 0;
-  font-size: 0.88rem;
+  font-size: 0.875rem;
   color: var(--accent);
   background: none;
   border: 0;

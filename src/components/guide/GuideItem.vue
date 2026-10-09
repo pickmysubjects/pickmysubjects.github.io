@@ -55,7 +55,7 @@ defineProps<{ title: string; short: string; open?: boolean }>()
 }
 
 .short {
-  font-size: 0.9rem;
+  font-size: 0.9375rem;
   color: var(--ink-soft);
 }
 

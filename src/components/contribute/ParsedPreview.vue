@@ -87,7 +87,7 @@ async function copy(): Promise<void> {
   grid-template-columns: 120px 1fr;
   gap: 6px 12px;
   margin: 10px 0 0;
-  font-size: 0.9rem;
+  font-size: 0.9375rem;
 }
 
 .facts dt {
@@ -104,7 +104,7 @@ async function copy(): Promise<void> {
   padding: 10px 12px 10px 28px;
   border-left: 3px solid var(--open);
   background: var(--open-tint);
-  font-size: 0.85rem;
+  font-size: 0.875rem;
 }
 
 .dev {
@@ -113,7 +113,7 @@ async function copy(): Promise<void> {
 
 .dev-summary {
   width: fit-content;
-  font-size: 0.88rem;
+  font-size: 0.875rem;
   font-weight: 600;
   color: var(--ink-soft);
   cursor: pointer;
@@ -131,7 +131,7 @@ async function copy(): Promise<void> {
   border: 1px solid var(--contour);
   border-radius: var(--radius);
   background: var(--paper);
-  font-size: 0.8rem;
+  font-size: 0.8125rem;
   overflow-x: auto;
 }
 </style>

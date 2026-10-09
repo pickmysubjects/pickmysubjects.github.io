@@ -101,7 +101,7 @@ const chosen = computed(() => props.majors.find((m) => m.id === major.value))
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 0.9rem;
+  font-size: 0.9375rem;
   font-weight: 600;
   color: var(--accent);
 }
@@ -112,7 +112,7 @@ const chosen = computed(() => props.majors.find((m) => m.id === major.value))
 }
 
 .group-name {
-  font-size: 0.78rem;
+  font-size: 0.8125rem;
   font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -136,7 +136,7 @@ const chosen = computed(() => props.majors.find((m) => m.id === major.value))
   border-radius: var(--radius);
   background: var(--surface);
   font: inherit;
-  font-size: 0.93rem;
+  font-size: 0.9375rem;
   text-align: left;
   color: var(--ink);
   cursor: pointer;

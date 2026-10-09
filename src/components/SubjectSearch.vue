@@ -141,7 +141,7 @@ function move(delta: number): void {
   height: 38px;
   padding-left: 36px;
   box-shadow: none;
-  font-size: 0.88rem;
+  font-size: 0.875rem;
 }
 
 .results {

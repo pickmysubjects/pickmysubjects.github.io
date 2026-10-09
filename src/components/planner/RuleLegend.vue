@@ -70,7 +70,7 @@ const summary = computed(() => {
 
 .legend-summary {
   margin: 0;
-  font-size: 0.9rem;
+  font-size: 0.9375rem;
   color: var(--ink-soft);
 }
 
@@ -100,7 +100,7 @@ const summary = computed(() => {
   display: grid;
   grid-template-columns: 20px 1fr;
   gap: 8px;
-  font-size: 0.86rem;
+  font-size: 0.875rem;
 }
 
 .rule-glyph {
@@ -109,7 +109,7 @@ const summary = computed(() => {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   font-weight: 700;
 }
 
@@ -131,12 +131,12 @@ const summary = computed(() => {
 .rule-detail {
   display: block;
   font-family: var(--font-code);
-  font-size: 0.74rem;
+  font-size: 0.75rem;
   color: var(--ink-soft);
 }
 
 .met {
-  font-size: 0.86rem;
+  font-size: 0.875rem;
 }
 
 .met summary {

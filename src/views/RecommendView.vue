@@ -93,6 +93,7 @@ function value(event: Event): string {
           :rec="r"
           :subject="data.subjects[r.code]"
           :add-label="selectedTerm ? termLabel(t, selectedTerm) : null"
+          :year="selectedTerm?.year ?? plan.terms.value[0]?.year ?? new Date().getFullYear()"
           @add="plan.addSubject(termIndex, r.code)"
         />
       </div>
@@ -172,12 +173,19 @@ function value(event: Event): string {
 
 .rec-list {
   display: grid;
-  gap: 12px;
+  gap: 16px;
+}
+
+/* Two cards a row once there's room: easier to compare side by side. */
+@media (min-width: 1000px) {
+  .rec-list {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 .goal-hint {
   flex-basis: 100%;
   margin: 4px 0 0;
-  font-size: 0.85rem;
+  font-size: 0.875rem;
   color: var(--ink-soft);
 }
 .more {

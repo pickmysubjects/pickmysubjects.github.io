@@ -52,12 +52,12 @@ const top = computed(() =>
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 0.95rem;
+  font-size: 0.9375rem;
   font-weight: 650;
 }
 
 .preview-empty {
-  font-size: 0.9rem;
+  font-size: 0.9375rem;
   color: var(--ink-soft);
 }
 
@@ -79,12 +79,12 @@ const top = computed(() =>
 
 .preview-list .code {
   color: var(--accent);
-  font-size: 0.88rem;
+  font-size: 0.875rem;
 }
 
 .preview-more {
   width: fit-content;
-  font-size: 0.88rem;
+  font-size: 0.875rem;
   font-weight: 600;
 }
 </style>

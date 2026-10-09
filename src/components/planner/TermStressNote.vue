@@ -86,7 +86,7 @@ const fixLabel = computed(() => {
   border-radius: var(--radius-sm);
   background: color-mix(in srgb, var(--tone-soft) 70%, transparent);
   box-shadow: var(--glass-shadow);
-  font-size: 0.78rem;
+  font-size: 0.8125rem;
   line-height: 1.45;
 }
 
@@ -144,7 +144,7 @@ const fixLabel = computed(() => {
   align-items: center;
   gap: 4px 8px;
   margin: 0;
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   color: var(--ink-faint);
 }
 

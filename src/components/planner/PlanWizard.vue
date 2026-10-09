@@ -258,7 +258,7 @@ function chooseCourse(c: Course): void {
 .intl-hint {
   display: block;
   margin-top: 2px;
-  font-size: 0.85rem;
+  font-size: 0.875rem;
   font-weight: 400;
   color: var(--ink-soft);
 }
@@ -293,7 +293,7 @@ function chooseCourse(c: Course): void {
 .majors-link {
   display: inline-block;
   margin-top: 10px;
-  font-size: 0.9rem;
+  font-size: 0.9375rem;
   color: var(--accent);
 }
 </style>

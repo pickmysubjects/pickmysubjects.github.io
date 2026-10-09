@@ -37,12 +37,12 @@ const years = computed(() =>
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 0.95rem;
+  font-size: 0.9375rem;
   font-weight: 650;
 }
 
 .discussion-note {
-  font-size: 0.82rem;
+  font-size: 0.8125rem;
   color: var(--ink-faint);
 }
 
@@ -55,7 +55,7 @@ const years = computed(() =>
 }
 
 .discussion-source {
-  font-size: 0.82rem;
+  font-size: 0.8125rem;
   color: var(--ink-soft);
 }
 </style>

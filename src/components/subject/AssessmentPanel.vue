@@ -82,7 +82,7 @@ const otherTerms = computed(
 }
 
 .assess-title {
-  font-size: 0.95rem;
+  font-size: 0.9375rem;
   font-weight: 650;
 }
 
@@ -105,7 +105,7 @@ const otherTerms = computed(
   margin: 0;
   padding: 0;
   list-style: none;
-  font-size: 0.92rem;
+  font-size: 0.9375rem;
 }
 
 .assess-legend li {
@@ -158,17 +158,17 @@ const otherTerms = computed(
 
 .assess-label {
   min-width: 7.5em;
-  font-size: 0.85rem;
+  font-size: 0.875rem;
   color: var(--ink-soft);
 }
 
 .assess-muted {
-  font-size: 0.95rem;
+  font-size: 0.9375rem;
   color: var(--ink-soft);
 }
 
 .assess-small {
-  font-size: 0.82rem;
+  font-size: 0.8125rem;
 }
 
 @media (max-width: 560px) {

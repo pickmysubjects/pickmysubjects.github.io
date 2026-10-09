@@ -59,7 +59,7 @@ function toggle(topic: string): void {
 
 .group-name {
   padding-top: 6px;
-  font-size: 0.78rem;
+  font-size: 0.8125rem;
   font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -81,7 +81,7 @@ function toggle(topic: string): void {
   backdrop-filter: var(--glass-blur);
   box-shadow: var(--glass-shadow);
   font: inherit;
-  font-size: 0.86rem;
+  font-size: 0.875rem;
   color: var(--ink);
   cursor: pointer;
   transition: border-color 0.15s, background 0.15s;

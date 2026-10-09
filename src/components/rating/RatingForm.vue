@@ -232,7 +232,7 @@ function value(event: Event): string {
 
 .rate-more-summary {
   width: fit-content;
-  font-size: 0.9rem;
+  font-size: 0.9375rem;
   font-weight: 600;
   color: var(--accent);
   cursor: pointer;
@@ -246,7 +246,7 @@ function value(event: Event): string {
 .rate-intro,
 .hint {
   margin: 0;
-  font-size: 0.84rem;
+  font-size: 0.875rem;
   font-weight: 400;
   color: var(--ink-soft);
 }
@@ -281,7 +281,7 @@ function value(event: Event): string {
 }
 
 .scale-end {
-  font-size: 0.78rem;
+  font-size: 0.8125rem;
   color: var(--ink-soft);
 }
 
@@ -311,7 +311,7 @@ function value(event: Event): string {
   border: 1px solid var(--contour);
   border-radius: 999px;
   background: var(--paper-raised);
-  font-size: 0.85rem;
+  font-size: 0.875rem;
   cursor: pointer;
 }
 
@@ -342,11 +342,11 @@ function value(event: Event): string {
   padding: 8px 12px;
   border-radius: var(--radius-sm);
   background: var(--surface-2);
-  font-size: 0.88rem;
+  font-size: 0.875rem;
 }
 
 .rate-need {
-  font-size: 0.85rem;
+  font-size: 0.875rem;
   color: var(--ink-soft);
 }
 

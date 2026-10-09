@@ -266,7 +266,7 @@ const trackWidth = computed(() => `max(100%, ${props.terms.length * (MIN_TERM + 
 
 .term-tools .button {
   padding: 0 12px;
-  font-size: 0.8rem;
+  font-size: 0.8125rem;
   white-space: nowrap;
 }
 /* On paper the terms wrap into rows instead of scrolling sideways (the route lines are dropped). */

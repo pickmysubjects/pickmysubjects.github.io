@@ -93,7 +93,7 @@ function submit(): void {
   padding: 5px 8px;
   border-style: dashed;
   background: transparent;
-  font-size: 0.82rem;
+  font-size: 0.8125rem;
 }
 
 .check {
@@ -103,7 +103,7 @@ function submit(): void {
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: var(--surface);
-  font-size: 0.8rem;
+  font-size: 0.8125rem;
 }
 
 .check-title {

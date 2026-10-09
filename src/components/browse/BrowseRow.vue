@@ -37,7 +37,7 @@ const category = computed(() => s.value.categories[props.course])
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 12px 16px;
+  padding: 14px 18px;
   color: var(--ink);
   text-decoration: none;
   border-bottom: 1px solid var(--line);
@@ -61,14 +61,14 @@ const category = computed(() => s.value.categories[props.course])
 }
 
 .code {
-  font-size: 0.85rem;
+  font-size: 0.875rem;
   font-weight: 650;
   color: var(--accent);
 }
 
 .tag {
   padding: 1px 8px;
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   border-radius: 999px;
 }
 
@@ -78,15 +78,41 @@ const category = computed(() => s.value.categories[props.course])
 }
 
 .title {
+  font-size: 1rem;
   font-weight: 600;
   overflow-wrap: anywhere;
+}
+
+/* Wide rows: the facts line up in a column on the right, easy to scan down. */
+@media (min-width: 900px) {
+  .main {
+    grid-template-columns: minmax(0, 1fr) 300px;
+    grid-template-areas:
+      'head meta'
+      'title meta';
+    column-gap: 24px;
+  }
+
+  .head {
+    grid-area: head;
+  }
+
+  .title {
+    grid-area: title;
+  }
+
+  .meta {
+    grid-area: meta;
+    align-self: center;
+    justify-content: flex-end;
+  }
 }
 
 .meta {
   display: flex;
   flex-wrap: wrap;
   gap: 4px 12px;
-  font-size: 0.82rem;
+  font-size: 0.8125rem;
   color: var(--ink-soft);
 }
 

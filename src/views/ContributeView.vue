@@ -165,7 +165,7 @@ function onCode(): void {
 
 .small {
   margin: 10px 0 0;
-  font-size: 0.85rem;
+  font-size: 0.875rem;
   color: var(--ink-soft);
 }
 
@@ -231,7 +231,7 @@ function onCode(): void {
 
 .textarea {
   font-family: var(--font-code);
-  font-size: 0.82rem;
+  font-size: 0.8125rem;
   resize: vertical;
 }
 

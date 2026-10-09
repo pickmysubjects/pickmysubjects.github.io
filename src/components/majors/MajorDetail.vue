@@ -19,6 +19,7 @@ const year = computed(() => plan.terms.value[0]?.year ?? new Date().getFullYear(
 const courseTitle = computed(() => data.value.courses.find((c) => c.code === major.value?.course)?.title ?? major.value?.course ?? '')
 
 /** Earlier subjects, split by level, each noting which level-3 subject it leads to. */
+const pathwayCount = computed(() => pathwayByLevel.value.reduce((n, g) => n + g.codes.length, 0))
 const pathwayByLevel = computed(() => {
   const o = overview.value
   if (!o) return []
@@ -67,16 +68,10 @@ function planWithIt(): void {
     <header class="head">
       <p class="eyebrow-line">{{ courseTitle }} · {{ t('majors.points', { n: major.points }) }}</p>
       <h1 class="page-title">{{ major.title }}</h1>
-      <div class="actions">
-        <button class="button button-accent" type="button" @click="planWithIt">
-          <Route :size="16" aria-hidden="true" /> {{ t('majors.planIt') }}
-        </button>
-        <a v-if="major.handbook" class="button button-quiet" :href="major.handbook" target="_blank" rel="noopener">
-          {{ t('majors.handbook') }} <ExternalLink :size="15" aria-hidden="true" />
-        </a>
-      </div>
     </header>
 
+    <div class="layout">
+    <div class="main">
     <p v-if="!overview" class="note surface">{{ t('majors.notCurated') }}</p>
 
     <template v-else>
@@ -114,7 +109,34 @@ function planWithIt(): void {
         </details>
       </section>
 
-      <section class="block compare surface">
+    </template>
+    </div>
+
+    <aside class="side">
+      <section class="summary surface">
+        <dl v-if="overview" class="stats">
+          <div v-if="overview.core.length" class="stat">
+            <dt>{{ t('majors.statCore') }}</dt>
+            <dd>{{ t('majors.statCount', { n: overview.core.length }) }}</dd>
+          </div>
+          <div v-for="(c, i) in overview.choices" :key="i" class="stat">
+            <dt>{{ t('majors.statChoice') }}</dt>
+            <dd>{{ t('majors.statPick', { n: c.points / 12.5, of: c.from.length }) }}</dd>
+          </div>
+          <div class="stat">
+            <dt>{{ t('majors.statPathway') }}</dt>
+            <dd>{{ t('majors.statCount', { n: pathwayCount }) }}</dd>
+          </div>
+        </dl>
+        <button class="button button-accent summary-plan" type="button" @click="planWithIt">
+          <Route :size="16" aria-hidden="true" /> {{ t('majors.planIt') }}
+        </button>
+        <a v-if="major.handbook" class="button button-quiet summary-plan" :href="major.handbook" target="_blank" rel="noopener">
+          {{ t('majors.handbook') }} <ExternalLink :size="15" aria-hidden="true" />
+        </a>
+      </section>
+
+      <section v-if="overview" class="block compare surface">
         <h2 class="block-title">{{ t('majors.compareTitle') }}</h2>
         <label class="compare-pick">
           <span class="visually-hidden">{{ t('majors.comparePick') }}</span>
@@ -133,7 +155,8 @@ function planWithIt(): void {
           <a class="compare-open" :href="link(`majors/${otherId}`)">{{ t('majors.compareOpen') }}</a>
         </template>
       </section>
-    </template>
+    </aside>
+    </div>
 
     <p class="source">{{ t('majors.source') }}</p>
   </div>
@@ -148,7 +171,74 @@ function planWithIt(): void {
 .detail {
   display: grid;
   gap: 24px;
-  max-width: 760px;
+}
+
+/* The lists on the left; what it adds up to, and what to do with it, beside them. */
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 32px;
+  align-items: start;
+}
+
+.main {
+  display: grid;
+  gap: 28px;
+  min-width: 0;
+}
+
+.side {
+  position: sticky;
+  top: 88px;
+  display: grid;
+  gap: 16px;
+}
+
+.summary {
+  display: grid;
+  gap: 10px;
+  padding: 20px;
+  border-radius: 20px;
+}
+
+.stats {
+  display: grid;
+  gap: 2px;
+  margin: 0 0 8px;
+}
+
+.stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--glass-edge);
+}
+
+.stat dt {
+  font-size: 0.875rem;
+  color: var(--ink-soft);
+}
+
+.stat dd {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 650;
+}
+
+.summary-plan {
+  width: 100%;
+}
+
+@media (max-width: 960px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .side {
+    position: static;
+  }
 }
 
 .back {
@@ -156,7 +246,7 @@ function planWithIt(): void {
   align-items: center;
   gap: 6px;
   justify-self: start;
-  font-size: 0.9rem;
+  font-size: 0.9375rem;
   color: var(--ink-soft);
   text-decoration: none;
 }
@@ -171,17 +261,11 @@ function planWithIt(): void {
 }
 
 .eyebrow-line {
-  font-size: 0.85rem;
+  font-size: 0.875rem;
   font-weight: 600;
   color: var(--accent);
 }
 
-.actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 6px;
-}
 
 .block {
   display: grid;
@@ -195,7 +279,7 @@ function planWithIt(): void {
 
 .block-hint {
   margin-top: -4px;
-  font-size: 0.9rem;
+  font-size: 0.9375rem;
   color: var(--ink-soft);
 }
 
@@ -209,7 +293,7 @@ function planWithIt(): void {
 }
 
 .level-title {
-  font-size: 0.8rem;
+  font-size: 0.8125rem;
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -218,7 +302,7 @@ function planWithIt(): void {
 
 .note {
   padding: 14px 16px;
-  font-size: 0.92rem;
+  font-size: 0.9375rem;
   color: var(--ink-soft);
 }
 
@@ -238,7 +322,7 @@ function planWithIt(): void {
 }
 
 .route-for {
-  font-size: 0.9rem;
+  font-size: 0.9375rem;
   color: var(--ink-soft);
 }
 
@@ -258,11 +342,14 @@ function planWithIt(): void {
 }
 
 .compare {
-  padding: 18px 20px;
+  display: grid;
+  gap: 10px;
+  padding: 20px;
+  border-radius: 20px;
 }
 
 .compare-pick .select-glass {
-  max-width: 420px;
+  width: 100%;
 }
 
 .compare-result {
@@ -271,12 +358,12 @@ function planWithIt(): void {
 
 .compare-open {
   justify-self: start;
-  font-size: 0.9rem;
+  font-size: 0.9375rem;
   color: var(--accent);
 }
 
 .source {
-  font-size: 0.85rem;
+  font-size: 0.875rem;
   color: var(--ink-faint);
 }
 </style>

@@ -19,21 +19,29 @@ const roles = computed(() =>
     .map((r) => ({ ...r, mine: mine.value.has(r.component) }))
     .sort((a, b) => Number(b.mine) - Number(a.mine) || ORDER[a.role] - ORDER[b.role] || a.title.localeCompare(b.title)),
 )
+// One heading per kind of role, instead of the same tag on every line.
+const groups = computed(() =>
+  (Object.keys(ORDER) as (keyof typeof ORDER)[])
+    .map((role) => ({ role, items: roles.value.filter((r) => r.role === role) }))
+    .filter((g) => g.items.length),
+)
 </script>
 
 <template>
   <section v-if="roles.length" class="roles">
     <h3 class="roles-title">{{ t('subject.rolesTitle') }}</h3>
-    <ul class="roles-list">
-      <li v-for="r in roles" :key="r.component" class="role" :class="`role-${r.role}`">
-        <span class="role-tag">{{ t(`subject.role.${r.role}`) }}</span>
-        <span>
-          <a class="role-link" :href="link(`majors/${r.component}`)"><strong>{{ r.title }}</strong></a>
-          <span v-if="r.mine" class="role-mine">{{ t('subject.yours') }}</span>
-          <span v-if="r.via" class="role-via"> · {{ t('subject.roleVia', { code: r.via }) }}</span>
-        </span>
-      </li>
-    </ul>
+    <div class="groups">
+      <div v-for="g in groups" :key="g.role" class="group" :class="`role-${g.role}`">
+        <p class="role-tag">{{ t(`subject.role.${g.role}`) }}</p>
+        <ul class="roles-list">
+          <li v-for="r in g.items" :key="r.component" class="role">
+            <a class="role-link" :href="link(`majors/${r.component}`)">{{ r.title }}</a>
+            <span v-if="r.mine" class="role-mine">{{ t('subject.yours') }}</span>
+            <span v-if="r.via" class="role-via">{{ t('subject.roleVia', { code: r.via }) }}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
   </section>
 </template>
 
@@ -44,28 +52,42 @@ const roles = computed(() =>
 }
 
 .roles-title {
-  font-size: 0.95rem;
+  font-size: 0.9375rem;
   font-weight: 650;
+}
+
+.groups {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px 28px;
+}
+
+.group {
+  display: grid;
+  align-content: start;
+  gap: 8px;
 }
 
 .roles-list {
   display: grid;
-  gap: 6px;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 10px 24px;
+  align-items: start;
   margin: 0;
   padding: 0;
   list-style: none;
-  font-size: 0.9rem;
+  font-size: 0.9375rem;
 }
 
 .role {
-  display: flex;
-  gap: 8px;
-  align-items: baseline;
+  display: grid;
+  gap: 1px;
 }
 
 .role-tag {
-  flex: none;
-  padding: 1px 8px;
+  justify-self: start;
+  margin: 0;
+  padding: 2px 9px;
   border-radius: 999px;
   font-size: 0.75rem;
   font-weight: 600;
@@ -79,21 +101,23 @@ const roles = computed(() =>
 }
 
 .role-mine {
-  margin-left: 6px;
   font-size: 0.75rem;
+  font-weight: 600;
   color: var(--accent);
 }
 
 .role-via {
+  font-size: 0.8125rem;
   color: var(--ink-soft);
 }
 
 .role-link {
+  font-weight: 600;
   color: inherit;
   text-decoration: none;
 }
 
-.role-link:hover strong {
+.role-link:hover {
   color: var(--accent);
 }
 </style>

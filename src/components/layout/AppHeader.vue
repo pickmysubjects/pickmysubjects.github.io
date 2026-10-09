@@ -99,7 +99,7 @@ const { t } = useI18n()
   padding: 2px 8px;
   border-radius: 999px;
   background: var(--surface-2);
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   font-weight: 600;
   color: var(--ink-soft);
 }
@@ -120,7 +120,7 @@ const { t } = useI18n()
   gap: 6px;
   padding: 6px 14px;
   border-radius: 999px;
-  font-size: 0.9rem;
+  font-size: 0.9375rem;
   font-weight: 500;
   color: var(--ink-soft);
   text-decoration: none;
@@ -152,7 +152,7 @@ const { t } = useI18n()
   gap: 6px;
   height: 36px;
   padding: 0 12px;
-  font-size: 0.85rem;
+  font-size: 0.875rem;
   font-weight: 600;
   color: var(--accent);
   text-decoration: none;

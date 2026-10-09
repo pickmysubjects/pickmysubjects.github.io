@@ -145,7 +145,7 @@ function remove(c: string): void {
 .error {
   margin: 6px 0 0;
   color: var(--stop);
-  font-size: 0.85rem;
+  font-size: 0.875rem;
 }
 
 .empty {
@@ -157,7 +157,7 @@ function remove(c: string): void {
   width: 100%;
   margin-top: 12px;
   border-collapse: collapse;
-  font-size: 0.9rem;
+  font-size: 0.9375rem;
 }
 
 .table th {
@@ -192,12 +192,12 @@ function remove(c: string): void {
 
 .row-actions .button {
   padding: 5px 10px;
-  font-size: 0.85rem;
+  font-size: 0.875rem;
   white-space: nowrap;
 }
 
 .rated {
-  font-size: 0.8rem;
+  font-size: 0.8125rem;
   color: var(--forest);
   white-space: nowrap;
 }
@@ -216,13 +216,13 @@ function remove(c: string): void {
   margin-left: 8px;
   white-space: nowrap;
   color: var(--stop);
-  font-size: 0.8rem;
+  font-size: 0.8125rem;
 }
 
 .fail-hint {
   margin-top: 10px;
   padding: 10px 12px;
-  font-size: 0.88rem;
+  font-size: 0.875rem;
   color: var(--ink);
   background: var(--bad-soft);
   border-radius: var(--radius-sm);

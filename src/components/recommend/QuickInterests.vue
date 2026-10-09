@@ -48,7 +48,7 @@ function scrollToList(): void {
 }
 
 .quick-hint {
-  font-size: 0.92rem;
+  font-size: 0.9375rem;
   color: var(--ink-soft);
 }
 

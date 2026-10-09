@@ -103,7 +103,7 @@ async function onRestore(event: Event): Promise<void> {
 
 .wam-line {
   margin-top: 8px;
-  font-size: 0.88rem;
+  font-size: 0.875rem;
   color: var(--ink-soft);
 }
 
@@ -131,7 +131,7 @@ async function onRestore(event: Event): Promise<void> {
 
 .interests-hint {
   margin-top: 4px;
-  font-size: 0.88rem;
+  font-size: 0.875rem;
   color: var(--ink-soft);
 }
 
@@ -152,7 +152,7 @@ async function onRestore(event: Event): Promise<void> {
 
 .backup-text {
   margin-top: 4px;
-  font-size: 0.9rem;
+  font-size: 0.9375rem;
   color: var(--ink-soft);
 }
 

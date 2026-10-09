@@ -225,7 +225,7 @@ function onClick(event: MouseEvent): void {
 }
 
 .peek-code {
-  font-size: 0.85rem;
+  font-size: 0.875rem;
   font-weight: 500;
   color: var(--accent);
 }
@@ -264,7 +264,7 @@ function onClick(event: MouseEvent): void {
 }
 
 .peek-label {
-  font-size: 0.9rem;
+  font-size: 0.9375rem;
   font-weight: 650;
 }
 
@@ -272,7 +272,7 @@ function onClick(event: MouseEvent): void {
   display: flex;
   justify-content: space-between;
   gap: 12px;
-  font-size: 0.92rem;
+  font-size: 0.9375rem;
 }
 
 .peek-codes {
@@ -300,7 +300,7 @@ function onClick(event: MouseEvent): void {
   background: var(--glass-fill);
   box-shadow: var(--glass-shadow);
   font: inherit;
-  font-size: 0.88rem;
+  font-size: 0.875rem;
   text-align: left;
   color: var(--ink);
   cursor: pointer;
@@ -332,7 +332,7 @@ function onClick(event: MouseEvent): void {
 
 .peek-route-level {
   margin: 10px 0 0;
-  font-size: 0.78rem;
+  font-size: 0.8125rem;
   font-weight: 600;
   color: var(--ink-faint);
 }
@@ -362,7 +362,7 @@ function onClick(event: MouseEvent): void {
   display: flex;
   gap: 8px;
   align-items: flex-start;
-  font-size: 0.9rem;
+  font-size: 0.9375rem;
   cursor: pointer;
 }
 
@@ -371,7 +371,7 @@ function onClick(event: MouseEvent): void {
 }
 
 .muted {
-  font-size: 0.9rem;
+  font-size: 0.9375rem;
   color: var(--ink-soft);
 }
 

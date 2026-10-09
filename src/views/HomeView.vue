@@ -130,7 +130,7 @@ const steps = computed(() => {
 <style scoped>
 .home {
   display: grid;
-  gap: 40px;
+  gap: 56px;
   padding-top: 24px;
 }
 
@@ -209,7 +209,7 @@ const steps = computed(() => {
   flex-wrap: wrap;
   align-items: center;
   gap: 8px;
-  font-size: 0.88rem;
+  font-size: 0.875rem;
   color: var(--ink-faint);
 }
 
@@ -217,7 +217,7 @@ const steps = computed(() => {
   padding: 3px 10px;
   border-radius: 999px;
   background: rgb(255 255 255 / 70%);
-  font-size: 0.82rem;
+  font-size: 0.8125rem;
   color: var(--ink);
   text-decoration: none;
 }
@@ -289,7 +289,7 @@ li:nth-child(3) .step-icon {
 }
 
 .step-num {
-  font-size: 0.8rem;
+  font-size: 0.8125rem;
   font-weight: 700;
   color: var(--ink-faint);
 }
@@ -304,7 +304,7 @@ li:nth-child(3) .step-icon {
 }
 
 .step-status {
-  font-size: 0.85rem;
+  font-size: 0.875rem;
   font-weight: 600;
   color: var(--accent);
 }
@@ -361,7 +361,7 @@ li:nth-child(3) .step-icon {
 
 .steps-search {
   margin-top: 14px;
-  font-size: 0.9rem;
+  font-size: 0.9375rem;
   color: var(--ink-soft);
 }
 
@@ -372,7 +372,7 @@ li:nth-child(3) .step-icon {
 }
 
 .step-text {
-  font-size: 0.92rem;
+  font-size: 0.9375rem;
   color: var(--ink-soft);
 }
 

@@ -24,7 +24,7 @@ const sections = ['local', 'ratings', 'feedback', 'noTracking', 'google', 'remov
 
 .privacy-updated {
   margin: 0;
-  font-size: 0.85rem;
+  font-size: 0.875rem;
   color: var(--ink-soft);
 }
 

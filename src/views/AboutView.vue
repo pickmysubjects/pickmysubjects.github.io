@@ -80,7 +80,7 @@ const features = [
 }
 
 .about-eyebrow {
-  font-size: 0.8rem;
+  font-size: 0.8125rem;
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -138,7 +138,7 @@ const features = [
 .feature-text {
   display: block;
   margin-top: 4px;
-  font-size: 0.92rem;
+  font-size: 0.9375rem;
   color: var(--ink-soft);
 }
 

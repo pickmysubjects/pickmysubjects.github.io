@@ -1,32 +1,66 @@
 <script setup lang="ts">
 import { link } from '@/composables/useView'
-import { computed } from 'vue'
-import type { Recommendation, Subject } from '@/engine'
+import { computed, type Component } from 'vue'
+import { ArrowUpRight, Heart, Plus, Sparkles, ThumbsUp, TrendingUp, TriangleAlert } from 'lucide-vue-next'
+import { periodsFor, type Recommendation, type Subject } from '@/engine'
 import { useI18n } from '@/i18n'
-import { describeReq, reasonText } from '@/i18n/format'
-import { usePlan } from '@/composables/usePlan'
+import { reasonText } from '@/i18n/format'
 import { summariseAssessment } from '@/utils/assessment'
 
+/**
+ * One suggested subject, read top to bottom: what it is, how well it fits (a number and a
+ * word), why (one tinted line per reason), then the plain facts and what to check.
+ */
 const props = defineProps<{
   rec: Recommendation
   subject?: Subject
   addLabel: string | null
+  year: number
 }>()
 const emit = defineEmits<{ add: [] }>()
-
-const width = computed(() => `${props.rec.score}%`)
 const { t } = useI18n()
-const reasons = computed(() => props.rec.reasons.map((n) => reasonText(t.value, n)))
-const warnings = computed(() => props.rec.warnings.map((n) => reasonText(t.value, n)))
-const confidence = computed(() => t.value(`suggest.confidence.${props.rec.confidence}`))
-const assessment = computed(() => (props.subject ? summariseAssessment(props.subject.assessment) : null))
-// When the student already meets them, say so instead of spelling out every alternative.
-const plan = usePlan()
-const prereqText = computed(() => {
-  const pre = props.subject?.prerequisites
-  if (!pre) return ''
-  if (pre !== 'none' && props.rec.eligibility === 'ok') return t.value('suggest.prereqMet')
-  return describeReq(t.value, pre, plan.setup.value.course)
+
+const ICONS: Record<string, Component> = {
+  interests: Heart,
+  strengths: Sparkles,
+  averagedHigh: TrendingUp,
+  unlocks: ArrowUpRight,
+  approachable: ThumbsUp,
+  generous: ThumbsUp,
+}
+// Full stops dropped: these read as labels, not sentences.
+const trim = (s: string) => s.replace(/[。.]\s*$/, '')
+const reasons = computed(() =>
+  props.rec.reasons.map((n) => ({ key: n.key, icon: ICONS[n.key] ?? Sparkles, text: trim(reasonText(t.value, n)) })),
+)
+const warnings = computed(() => props.rec.warnings.map((n) => trim(reasonText(t.value, n))))
+
+const band = computed(() => (props.rec.score >= 70 ? 'great' : props.rec.score >= 55 ? 'good' : 'ok'))
+// The ring: the score as a share of a full circle.
+const ring = computed(() => `conic-gradient(var(--accent) ${props.rec.score * 3.6}deg, color-mix(in srgb, var(--ink) 10%, transparent) 0)`)
+
+const facts = computed(() => {
+  const s = props.subject
+  if (!s) return []
+  const out: string[] = []
+  const a = summariseAssessment(s.assessment)
+  if (a) out.push(a.exam === 0 ? t.value('assess.noExam') : t.value('assess.examShare', { n: a.exam }))
+  if (a && a.group > 0) out.push(t.value('assess.group', { n: a.group }))
+  // The long version of an unmet condition is in the warning above; here just where it stands.
+  out.push(
+    s.prerequisites === 'none'
+      ? t.value('suggest.prereqNone')
+      : props.rec.eligibility === 'ok'
+        ? t.value('suggest.prereqOk')
+        : t.value('suggest.prereqCheck'),
+  )
+  return out
+})
+const where = computed(() => {
+  const s = props.subject
+  if (!s) return ''
+  const periods = periodsFor(s, props.year).map((p) => t.value(`period.${p}`))
+  return [t.value('subject.level', { level: s.level }), t.value('subject.points', { points: s.points }), ...periods].join(' · ')
 })
 </script>
 
@@ -34,35 +68,38 @@ const prereqText = computed(() => {
   <article class="rec surface">
     <header class="rec-head">
       <div class="rec-name">
-        <span class="code rec-code">{{ rec.code }}</span>
+        <p class="rec-where"><span class="code rec-code">{{ rec.code }}</span> · {{ where }}</p>
         <h3 class="rec-title"><a class="rec-link" :href="link(`subject/${rec.code}`)">{{ rec.title }}</a></h3>
       </div>
-      <div class="rec-score" :aria-label="t('suggest.fit', { score: rec.score, confidence })" :title="t('suggest.fitHint')">
-        <span class="rec-score-num">{{ rec.score }}</span>
-        <span class="rec-score-bar" aria-hidden="true"><span class="rec-score-fill" :style="{ width }" /></span>
-        <span class="rec-confidence">{{ confidence }}</span>
+      <div class="rec-score" :title="t('suggest.fitHint')" :aria-label="t('suggest.fit', { score: rec.score, confidence: t(`suggest.band.${band}`) })">
+        <span class="rec-ring" :style="{ background: ring }" aria-hidden="true">
+          <span class="rec-ring-num">{{ rec.score }}</span>
+        </span>
+        <span class="rec-band">{{ t(`suggest.band.${band}`) }}</span>
+        <span v-if="rec.confidence === 'low'" class="rec-thin">{{ t('suggest.thinData') }}</span>
       </div>
     </header>
-    <p v-if="assessment" class="rec-assess">
-      <span class="chip" :class="{ 'chip-good': assessment.exam === 0 }">
-        {{ assessment.exam === 0 ? t('assess.noExam') : t('assess.examShare', { n: assessment.exam }) }}
-      </span>
-      <span v-if="assessment.group > 0" class="chip">{{ t('assess.group', { n: assessment.group }) }}</span>
-    </p>
-    <ul class="rec-points">
-      <li v-for="(r, i) in reasons" :key="`r${i}`" class="rec-reason">{{ r }}</li>
-      <li v-for="(w, i) in warnings" :key="`w${i}`" class="rec-warning">{{ w }}</li>
-      <li v-if="reasons.length === 0 && warnings.length === 0" class="rec-neutral">{{ t('suggest.neutral') }}</li>
+
+    <ul v-if="reasons.length" class="rec-reasons">
+      <li v-for="(r, i) in reasons" :key="i" class="rec-reason" :class="`rec-reason-${r.key}`">
+        <component :is="r.icon" :size="15" aria-hidden="true" />
+        <span>{{ r.text }}</span>
+      </li>
     </ul>
+    <p v-else class="rec-neutral">{{ t('suggest.neutral') }}</p>
+
+    <ul v-if="warnings.length" class="rec-warnings">
+      <li v-for="(w, i) in warnings" :key="i" :title="w">
+        <TriangleAlert :size="14" aria-hidden="true" />
+        <span>{{ w }}</span>
+      </li>
+    </ul>
+
     <footer class="rec-foot">
-      <span v-if="subject" class="rec-meta">
-        {{ t('suggest.meta', { level: subject.level, points: subject.points, prereq: prereqText }) }}
-      </span>
-      <span class="rec-actions">
-        <button v-if="addLabel" class="button button-quiet rec-add" type="button" @click="emit('add')">
-          {{ t('suggest.add', { term: addLabel }) }}
-        </button>
-      </span>
+      <p class="rec-facts">{{ facts.join(' · ') }}</p>
+      <button v-if="addLabel" class="button button-quiet rec-add" type="button" @click="emit('add')">
+        <Plus :size="15" aria-hidden="true" /> {{ t('suggest.add', { term: addLabel }) }}
+      </button>
     </footer>
   </article>
 </template>
@@ -70,37 +107,40 @@ const prereqText = computed(() => {
 <style scoped>
 .rec {
   display: grid;
-  gap: 10px;
-  padding: 16px 18px;
+  align-content: start;
+  gap: 14px;
+  padding: 20px 22px;
+  border-radius: 20px;
 }
 
 .rec-head {
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
   gap: 16px;
 }
 
-.rec-assess {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
+.rec-name {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
 }
 
-.rec-assess .chip {
-  font-size: 0.8rem;
-  padding: 2px 9px;
-}
-
-.chip-good {
-  border-color: transparent;
-  background: var(--good-soft);
-  color: var(--good);
+.rec-where {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
 }
 
 .rec-code {
-  font-size: 0.82rem;
-  color: var(--overprint);
-  font-weight: 600;
+  font-weight: 650;
+  color: var(--accent);
+}
+
+.rec-title {
+  font-size: 1.2rem;
+  font-weight: 650;
+  line-height: 1.3;
 }
 
 .rec-link {
@@ -112,72 +152,112 @@ const prereqText = computed(() => {
   color: var(--accent);
 }
 
-.rec-title {
-  font-size: 1.1rem;
-  font-weight: 700;
-}
-
 .rec-score {
   display: grid;
-  grid-template-columns: auto 90px;
-  align-items: center;
-  gap: 2px 8px;
-  flex: none;
-}
-
-.rec-score-num {
-  font-family: var(--font-code);
-  font-size: 1.4rem;
-  font-weight: 600;
-}
-
-.rec-score-bar {
-  height: 6px;
-  background: var(--contour);
-  border-radius: 3px;
-  overflow: hidden;
-}
-
-.rec-score-fill {
-  display: block;
-  height: 100%;
-  background: var(--overprint);
-}
-
-.rec-confidence {
-  grid-column: 1 / -1;
-  font-size: 0.72rem;
-  color: var(--ink-soft);
-  text-align: right;
-}
-
-.rec-points {
-  display: grid;
+  justify-items: center;
   gap: 4px;
+  flex: none;
+  cursor: help;
+}
+
+.rec-ring {
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+}
+
+.rec-ring-num {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--surface);
+  font-size: 1.05rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.rec-band {
+  font-size: 0.8125rem;
+  font-weight: 650;
+  color: var(--accent);
+}
+
+.rec-thin {
+  font-size: 0.75rem;
+  color: var(--ink-faint);
+}
+
+.rec-reasons,
+.rec-warnings {
+  display: grid;
+  gap: 6px;
   margin: 0;
   padding: 0;
   list-style: none;
-  font-size: 0.9rem;
 }
 
-.rec-reason::before,
-.rec-warning::before {
-  display: inline-block;
-  width: 1.2em;
-  font-weight: 700;
+.rec-reason {
+  --tone: var(--accent);
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 7px 11px;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--tone) 11%, var(--surface));
+  font-size: 0.9375rem;
+  line-height: 1.45;
+  color: var(--ink);
 }
 
-.rec-reason::before {
-  content: '+';
-  color: var(--forest);
+.rec-reason svg {
+  flex: none;
+  margin-top: 3px;
+  color: var(--tone);
 }
 
-.rec-warning::before {
-  content: '!';
-  color: var(--open);
+.rec-reason-strengths,
+.rec-reason-averagedHigh {
+  --tone: var(--good);
+}
+
+.rec-reason-unlocks {
+  --tone: #6d5bd0;
+}
+
+.rec-reason-approachable,
+.rec-reason-generous {
+  --tone: #2f7fc1;
+}
+
+.rec-warnings li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  color: var(--warn);
+}
+
+.rec-warnings svg {
+  flex: none;
+  margin-top: 2px;
+}
+
+/* A long Handbook condition: two lines here, the whole thing on hover and on the subject page. */
+.rec-warnings span {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 .rec-neutral {
+  margin: 0;
+  font-size: 0.9375rem;
   color: var(--ink-soft);
 }
 
@@ -186,25 +266,21 @@ const prereqText = computed(() => {
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  gap: 8px 16px;
-  padding-top: 8px;
-  border-top: 1px solid var(--contour);
-  font-size: 0.8rem;
+  gap: 10px 16px;
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid var(--glass-edge);
 }
 
-.rec-meta {
+.rec-facts {
+  margin: 0;
+  font-size: 0.8125rem;
   color: var(--ink-soft);
 }
 
-.rec-actions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 4px 12px;
-}
-
 .rec-add {
-  padding: 4px 10px;
-  font-size: 0.8rem;
+  min-height: 36px;
+  padding: 0 14px;
+  font-size: 0.875rem;
 }
 </style>

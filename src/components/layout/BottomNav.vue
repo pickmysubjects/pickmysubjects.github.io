@@ -60,7 +60,7 @@ const { t } = useI18n()
   }
 
   .tab-label {
-    font-size: 0.72rem;
+    font-size: 0.75rem;
     font-weight: 600;
   }
 }

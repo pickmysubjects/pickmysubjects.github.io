@@ -98,11 +98,9 @@ const courseTitle = computed(() => data.value.courses.find((c) => c.code === cou
 }
 
 .group-title {
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--ink-faint);
+  font-size: 1.05rem;
+  font-weight: 650;
+  color: var(--ink);
 }
 
 .cards {

@@ -33,7 +33,7 @@ function onChange(event: Event): void {
   border-radius: 999px;
   background: var(--glass-fill);
   box-shadow: var(--glass-shadow);
-  font-size: 0.85rem;
+  font-size: 0.875rem;
   font-weight: 500;
   color: var(--ink-soft);
   cursor: pointer;

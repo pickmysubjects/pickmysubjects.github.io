@@ -81,13 +81,13 @@ const rows = computed(() =>
 }
 
 .code {
-  font-size: 0.85rem;
+  font-size: 0.875rem;
   font-weight: 650;
   color: var(--accent);
 }
 
 .when {
-  font-size: 0.8rem;
+  font-size: 0.8125rem;
   color: var(--ink-faint);
 }
 
@@ -97,7 +97,7 @@ const rows = computed(() =>
 }
 
 .note {
-  font-size: 0.82rem;
+  font-size: 0.8125rem;
   color: var(--ink-soft);
 }
 

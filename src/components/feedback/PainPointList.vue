@@ -48,7 +48,7 @@ const { t } = useI18n()
   justify-self: start;
   padding: 1px 9px;
   border-radius: 999px;
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 700;
 }
 
@@ -68,13 +68,13 @@ const { t } = useI18n()
 }
 
 .pain-question {
-  font-size: 0.98rem;
+  font-size: 1rem;
   font-weight: 700;
 }
 
 .pain-answer {
   margin: 0;
-  font-size: 0.86rem;
+  font-size: 0.875rem;
   color: var(--ink-soft);
 }
 
@@ -82,7 +82,7 @@ const { t } = useI18n()
   display: flex;
   align-items: center;
   gap: 14px;
-  font-size: 0.85rem;
+  font-size: 0.875rem;
 }
 
 .pain-feedback {

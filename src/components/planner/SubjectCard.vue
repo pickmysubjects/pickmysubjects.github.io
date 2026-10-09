@@ -135,7 +135,7 @@ function onDragStart(event: DragEvent): void {
 
 .card-code {
   font-weight: 600;
-  font-size: 0.86rem;
+  font-size: 0.875rem;
 }
 
 .card-points {
@@ -154,7 +154,7 @@ function onDragStart(event: DragEvent): void {
   font: inherit;
   text-align: left;
   cursor: pointer;
-  font-size: 0.88rem;
+  font-size: 0.875rem;
   line-height: 1.3;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -175,7 +175,7 @@ function onDragStart(event: DragEvent): void {
   padding: 0 6px;
   border-radius: 999px;
   background: var(--paper);
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   color: var(--ink-soft);
 }
 
@@ -201,7 +201,7 @@ function onDragStart(event: DragEvent): void {
 .flag {
   padding: 0 7px;
   border-radius: 999px;
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   font-weight: 600;
 }
 

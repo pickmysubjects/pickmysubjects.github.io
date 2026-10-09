@@ -102,7 +102,7 @@ const num = (e: Event) => Number((e.target as HTMLInputElement).value)
 
 .goal-hint,
 .note {
-  font-size: 0.85rem;
+  font-size: 0.875rem;
   color: var(--ink-soft);
 }
 
@@ -124,7 +124,7 @@ const num = (e: Event) => Number((e.target as HTMLInputElement).value)
   flex-wrap: wrap;
   align-items: center;
   gap: 8px 12px;
-  font-size: 0.92rem;
+  font-size: 0.9375rem;
 }
 
 .whatif label {

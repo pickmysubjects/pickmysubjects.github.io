@@ -36,7 +36,7 @@ const count = computed(() => Object.keys(data.value.subjects).length)
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: var(--surface);
-  font-size: 0.9rem;
+  font-size: 0.9375rem;
 }
 
 .notice-demo {
@@ -66,7 +66,7 @@ const count = computed(() => Object.keys(data.value.subjects).length)
   -webkit-backdrop-filter: var(--glass-blur);
   backdrop-filter: var(--glass-blur);
   box-shadow: var(--glass-shadow);
-  font-size: 0.85rem;
+  font-size: 0.875rem;
   font-weight: 600;
   cursor: pointer;
 }

@@ -356,7 +356,7 @@ function finishWizard(setup: PlanSetup): void {
 
 .guide-link {
   justify-self: start;
-  font-size: 0.92rem;
+  font-size: 0.9375rem;
   color: var(--accent);
 }
 
@@ -373,7 +373,7 @@ function finishWizard(setup: PlanSetup): void {
   padding: 12px 16px;
   border-radius: var(--radius);
   background: var(--accent-soft);
-  font-size: 0.95rem;
+  font-size: 0.9375rem;
 }
 
 .failed {
@@ -381,7 +381,7 @@ function finishWizard(setup: PlanSetup): void {
   gap: 4px;
   margin: 0;
   padding: 12px 16px 12px 32px;
-  font-size: 0.92rem;
+  font-size: 0.9375rem;
   background: var(--bad-soft);
   border-radius: var(--radius);
 }
@@ -427,7 +427,7 @@ function finishWizard(setup: PlanSetup): void {
 }
 
 .hint {
-  font-size: 0.88rem;
+  font-size: 0.875rem;
   color: var(--ink-soft);
 }
 
@@ -436,13 +436,13 @@ function finishWizard(setup: PlanSetup): void {
   gap: 4px;
   margin: 6px 0 0;
   padding-left: 18px;
-  font-size: 0.9rem;
+  font-size: 0.9375rem;
   color: var(--ink);
 }
 
 .status-text {
   margin-top: 2px;
-  font-size: 0.9rem;
+  font-size: 0.9375rem;
   color: var(--ink-soft);
 }
 
@@ -468,7 +468,7 @@ function finishWizard(setup: PlanSetup): void {
 }
 
 .how-title {
-  font-size: 0.95rem;
+  font-size: 0.9375rem;
   font-weight: 650;
 }
 
@@ -477,7 +477,7 @@ function finishWizard(setup: PlanSetup): void {
   gap: 4px;
   margin: 8px 0 0;
   padding-left: 18px;
-  font-size: 0.88rem;
+  font-size: 0.875rem;
   color: var(--ink-soft);
 }
 
@@ -497,7 +497,7 @@ function finishWizard(setup: PlanSetup): void {
   border-radius: 999px;
   background: none;
   font: inherit;
-  font-size: 0.82rem;
+  font-size: 0.8125rem;
   font-weight: 600;
   color: inherit;
   cursor: pointer;
@@ -505,7 +505,7 @@ function finishWizard(setup: PlanSetup): void {
 
 .status-hint {
   margin-top: 6px;
-  font-size: 0.85rem;
+  font-size: 0.875rem;
   opacity: 0.85;
 }
 .shared {
@@ -519,7 +519,7 @@ function finishWizard(setup: PlanSetup): void {
 }
 
 .shared-warn {
-  font-size: 0.9rem;
+  font-size: 0.9375rem;
   color: var(--warn);
 }
 

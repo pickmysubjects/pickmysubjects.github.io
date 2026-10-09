@@ -171,7 +171,7 @@ watch(filters, (f) => {
 
 .preset {
   padding: 7px 14px;
-  font-size: 0.88rem;
+  font-size: 0.875rem;
   font-weight: 600;
   color: var(--ink-soft);
   border-radius: 999px;
@@ -210,7 +210,6 @@ watch(filters, (f) => {
 .results {
   display: grid;
   gap: 12px;
-  max-width: 760px;
 }
 
 .toolbar {
@@ -222,7 +221,7 @@ watch(filters, (f) => {
 }
 
 .count {
-  font-size: 0.9rem;
+  font-size: 0.9375rem;
   font-weight: 600;
 }
 
@@ -230,7 +229,7 @@ watch(filters, (f) => {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 0.85rem;
+  font-size: 0.875rem;
   color: var(--ink-faint);
 }
 
@@ -252,7 +251,7 @@ watch(filters, (f) => {
 }
 
 .coverage {
-  font-size: 0.85rem;
+  font-size: 0.875rem;
   color: var(--ink-faint);
 }
 

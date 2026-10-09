@@ -80,7 +80,7 @@ const stops = computed(() =>
 .stop-year {
   height: 22px;
   font-family: var(--font-code);
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--ink-faint);
@@ -104,7 +104,7 @@ const stops = computed(() =>
 
 .stop-code {
   order: 2;
-  font-size: 0.95rem;
+  font-size: 0.9375rem;
   font-weight: 500;
   color: var(--accent);
 }
@@ -118,7 +118,7 @@ const stops = computed(() =>
 .stop-runs {
   order: 4;
   margin-top: 4px;
-  font-size: 0.8rem;
+  font-size: 0.8125rem;
   color: var(--ink-soft);
 }
 
@@ -137,7 +137,7 @@ const stops = computed(() =>
 
 .route-caption {
   margin-top: 18px;
-  font-size: 0.82rem;
+  font-size: 0.8125rem;
   color: var(--ink-faint);
 }
 

@@ -62,7 +62,7 @@ function pick(skill: Skill, level: number): void {
 
 .card-hint {
   margin-top: 4px;
-  font-size: 0.88rem;
+  font-size: 0.875rem;
   color: var(--ink-soft);
 }
 
@@ -82,7 +82,7 @@ function pick(skill: Skill, level: number): void {
   gap: 10px;
   padding: 7px 0;
   border-bottom: 1px solid var(--line);
-  font-size: 0.92rem;
+  font-size: 0.9375rem;
 }
 
 .scale {
@@ -101,7 +101,7 @@ function pick(skill: Skill, level: number): void {
   border-left: 1px solid var(--line);
   background: var(--surface);
   font: inherit;
-  font-size: 0.74rem;
+  font-size: 0.75rem;
   color: var(--ink-soft);
   cursor: pointer;
 }
@@ -152,7 +152,7 @@ function pick(skill: Skill, level: number): void {
 .scale-ends {
   display: none;
   justify-content: space-between;
-  font-size: 0.8rem;
+  font-size: 0.8125rem;
   color: var(--ink-faint);
 }
 

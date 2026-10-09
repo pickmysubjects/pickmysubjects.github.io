@@ -7,7 +7,8 @@ import RatingForm from '@/components/rating/RatingForm.vue'
 import AssessmentPanel from '@/components/subject/AssessmentPanel.vue'
 import MajorRoles from '@/components/subject/MajorRoles.vue'
 import DiscussionSummary from '@/components/subject/DiscussionSummary.vue'
-import { periodsFor, referencedSubjects, simplifyFor, termKey } from '@/engine'
+import { periodsFor, prerequisiteRoute, referencedSubjects, simplifyFor, termKey } from '@/engine'
+import SubjectLinks from '@/components/majors/SubjectLinks.vue'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
 import { useProfile } from '@/composables/useProfile'
@@ -38,6 +39,10 @@ const unlocks = computed(() =>
 // The subjects to link: only those in the requirement as this course's students meet it.
 const needs = computed(() => (subject.value ? simplifyFor(subject.value.prerequisites, plan.setup.value.course) : 'unknown'))
 const needCodes = computed(() => referencedSubjects(needs.value))
+// Every subject needed before this one, back to first year (folded away under the direct ones).
+const have = computed(() => new Set([...plan.plannedCodes.value, ...plan.plan.value.completed]))
+const route = computed(() => prerequisiteRoute(code.value, data.value.subjects, plan.setup.value.course, have.value))
+const routeMissing = computed(() => route.value.filter((c) => !have.value.has(c)).length)
 const coreq = computed(() => {
   const co = subject.value?.corequisites
   return co && co !== 'none' && co !== 'unknown' ? describeReq(t.value, co, plan.setup.value.course) : ''
@@ -146,9 +151,12 @@ const links = computed(() => (name.value === 'real' ? discussionLinks(code.value
           <p v-if="needs === 'none'" class="panel-text">{{ t('subject.needsNone') }}</p>
           <p v-else-if="needs === 'unknown'" class="panel-text muted">{{ t('subject.notRecorded') }}</p>
           <p v-else class="panel-text">{{ describeReq(t, needs) }}</p>
-          <p v-if="needCodes.length" class="links-inline">
-            <a v-for="c in needCodes" :key="c" class="chip code" :href="link(`subject/${c}`)">{{ c }}</a>
-          </p>
+          <SubjectLinks v-if="needCodes.length" class="panel-links" :codes="needCodes" :year="year" />
+          <details v-if="route.length > needCodes.length" class="route">
+            <summary>{{ t('subject.routeTitle', { n: route.length, missing: routeMissing }) }}</summary>
+            <p class="panel-text muted">{{ t('subject.routeHint') }}</p>
+            <SubjectLinks :codes="route" :year="year" />
+          </details>
           <template v-if="coreq">
             <h3 class="panel-subtitle">{{ t('subject.coreqTitle') }}</h3>
             <p class="panel-text">{{ coreq }}</p>
@@ -158,14 +166,10 @@ const links = computed(() => (name.value === 'real' ? discussionLinks(code.value
         <section class="panel surface">
           <h2 class="panel-title">{{ t('subject.unlocks') }}</h2>
           <p v-if="unlocks.length === 0" class="panel-text muted">{{ t('subject.unlocksNone') }}</p>
-          <p v-else class="links-inline">
-            <a v-for="c in unlocks" :key="c" class="chip code" :href="link(`subject/${c}`)">{{ c }}</a>
-          </p>
+          <SubjectLinks v-else class="panel-links" :codes="unlocks" :year="year" />
           <template v-if="blocks.length">
             <h2 class="panel-title panel-title-gap">{{ t('subject.blocks') }}</h2>
-            <p class="links-inline">
-              <a v-for="c in blocks" :key="c" class="chip code" :href="link(`subject/${c}`)">{{ c }}</a>
-            </p>
+            <SubjectLinks class="panel-links" :codes="blocks" :year="year" />
           </template>
         </section>
 
@@ -230,6 +234,19 @@ const links = computed(() => (name.value === 'real' ? discussionLinks(code.value
 </template>
 
 <style scoped>
+.panel-links {
+  margin-top: 10px;
+}
+
+.route {
+  margin-top: 12px;
+}
+
+.route summary {
+  font-weight: 600;
+  cursor: pointer;
+}
+
 .subject {
   display: grid;
   gap: 24px;
@@ -241,7 +258,7 @@ const links = computed(() => (name.value === 'real' ? discussionLinks(code.value
   align-items: center;
   gap: 6px;
   width: fit-content;
-  font-size: 0.9rem;
+  font-size: 0.9375rem;
   font-weight: 500;
   color: var(--ink-soft);
   text-decoration: none;
@@ -257,7 +274,7 @@ const links = computed(() => (name.value === 'real' ? discussionLinks(code.value
 }
 
 .head-code {
-  font-size: 0.95rem;
+  font-size: 0.9375rem;
   font-weight: 500;
   color: var(--accent);
 }
@@ -296,6 +313,7 @@ const links = computed(() => (name.value === 'real' ? discussionLinks(code.value
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  align-items: start;
   gap: 16px;
 }
 
@@ -311,7 +329,7 @@ const links = computed(() => (name.value === 'real' ? discussionLinks(code.value
 }
 
 .panel-title {
-  font-size: 0.95rem;
+  font-size: 0.9375rem;
   font-weight: 650;
 }
 
@@ -333,7 +351,7 @@ const links = computed(() => (name.value === 'real' ? discussionLinks(code.value
 }
 
 .muted {
-  font-size: 0.95rem;
+  font-size: 0.9375rem;
   color: var(--ink-soft);
 }
 
@@ -370,12 +388,12 @@ const links = computed(() => (name.value === 'real' ? discussionLinks(code.value
 
 .meter-ends {
   grid-column: 2;
-  font-size: 0.78rem;
+  font-size: 0.8125rem;
   color: var(--ink-faint);
 }
 
 .verified {
-  font-size: 0.85rem;
+  font-size: 0.875rem;
   color: var(--ink-faint);
 }
 
@@ -410,13 +428,13 @@ const links = computed(() => (name.value === 'real' ? discussionLinks(code.value
   flex-wrap: wrap;
   align-items: center;
   gap: 6px;
-  font-size: 0.92rem;
+  font-size: 0.9375rem;
   color: var(--bad);
 }
 
 .panel-subtitle {
   margin-top: 14px;
-  font-size: 0.88rem;
+  font-size: 0.875rem;
   font-weight: 650;
 }
 </style>

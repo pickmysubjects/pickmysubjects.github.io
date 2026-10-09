@@ -179,7 +179,7 @@ function value(event: Event): string {
 }
 
 .rating-ends {
-  font-size: 0.78rem;
+  font-size: 0.8125rem;
   color: var(--ink-soft);
 }
 
@@ -209,7 +209,7 @@ function value(event: Event): string {
 
 .send-hint {
   margin: 0;
-  font-size: 0.82rem;
+  font-size: 0.8125rem;
   color: var(--ink-soft);
 }
 </style>
