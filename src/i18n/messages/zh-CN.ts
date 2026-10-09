@@ -202,7 +202,7 @@ export const zhCN: Messages = {
     when: '用于哪个学期',
     anyTime: '不限学期',
     nothing: '没有符合条件的课程。试试把课程类型或学期改成“不限”。',
-    fitHint: "满分 100，按你的兴趣、强项、成绩和同学评分算出来；上面选的「这次你最看重什么」会改变各项的比重。70 以上很适合，55–69 适合，55 以下可以考虑。「我的」里填得越多越准。",
+    fitHint: "满分 100，按你的兴趣、强项、成绩和同学评分算出来；上面选的「这次你最看重什么」会改变各项的比重。65 以上很适合，50–64 适合，50 以下可以考虑。「我的」里填得越多越准。",
     fit: '匹配度 {score}/100，{confidence}',
     neutral: '目前看不出明显的适合或不适合——在“我的记录”里补充成绩、技能和兴趣会更准。',
     handbook: 'Handbook',
@@ -216,6 +216,8 @@ export const zhCN: Messages = {
     prereqCheck: "先修待确认",
   },
   reason: {
+    makesHeavy: "加进这个学期会让它偏重。",
+    makesVeryHeavy: "加进这个学期会让它很重。",
     prereqNotCurated: "这门课的先修条件还没收录，选课前请看 Handbook。",
     eligibilityManual: "有一项需要你自己确认的条件（比如 VCE 成绩）。",
     reviewsHard: "网上的评价说它比较难。",

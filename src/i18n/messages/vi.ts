@@ -202,7 +202,7 @@ export const vi: Messages = {
     when: 'Cho học kỳ nào',
     anyTime: 'Bất kỳ lúc nào',
     nothing: 'Không có môn phù hợp với bộ lọc. Hãy thử chọn “Tất cả” cho loại môn hoặc học kỳ.',
-    fitHint: "Trên thang 100, tính từ sở thích, thế mạnh, điểm số và đánh giá của sinh viên khác; lựa chọn “Lần này bạn coi trọng gì” ở trên sẽ thay đổi trọng số. Từ 70 là rất hợp, 55–69 là hợp, dưới 55 là đáng cân nhắc. Bạn điền càng nhiều ở mục Của tôi thì càng chính xác.",
+    fitHint: "Trên thang 100, tính từ sở thích, thế mạnh, điểm số và đánh giá của sinh viên khác; lựa chọn “Lần này bạn coi trọng gì” ở trên sẽ thay đổi trọng số. Từ 65 là rất hợp, 50–64 là hợp, dưới 50 là đáng cân nhắc. Bạn điền càng nhiều ở mục Của tôi thì càng chính xác.",
     fit: 'Độ phù hợp {score}/100, {confidence}',
     neutral: 'Chưa có điểm gì nổi bật — hãy thêm điểm, kỹ năng và sở thích ở Hồ sơ của tôi để gợi ý chính xác hơn.',
     handbook: 'Handbook',
@@ -216,6 +216,8 @@ export const vi: Messages = {
     prereqCheck: "Cần kiểm tra môn tiên quyết",
   },
   reason: {
+    makesHeavy: "Thêm vào kỳ này sẽ làm kỳ này nặng.",
+    makesVeryHeavy: "Thêm vào kỳ này sẽ làm kỳ này rất nặng.",
     prereqNotCurated: "Điều kiện tiên quyết chưa được thêm: xem Handbook trước khi đăng ký.",
     eligibilityManual: "Có một điều kiện bạn cần tự xác nhận (như điểm VCE).",
     reviewsHard: "Các đánh giá công khai nói môn này khó.",

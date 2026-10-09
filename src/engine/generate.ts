@@ -3,7 +3,7 @@ import { categoryOf, checkCourse, componentNeeds, findComponent, findCourse } fr
 import { evaluateField, type Tri } from './expr'
 import type { Note, Params, Plan, PlanTerm } from './plan'
 import { standardTerms } from './plan'
-import { passedCodes, recommend, type Profile } from './recommend'
+import { HEAVY_PICK_COST, passedCodes, recommend, type Profile } from './recommend'
 import { checkTerms } from './planCheck'
 import { balanceTerms, fixHeavyTerms } from './relieve'
 import { skillsOf, termStress, weakSkills, type StressLevel } from './termStress'
@@ -527,8 +527,6 @@ function pickElective(ctx: PickCtx): { code: string; why: string; ruleId: string
  * (a level-1 breadth subject with a level-2 follow-on beats a dead end, since
  * level-1 breadth is capped). Known-unmet candidates were already dropped by recommend().
  */
-/** Recommendation points an elective gives up for making its semester heavier. */
-const HEAVY_PICK_COST = 6
 const STRESS_RANK: Record<StressLevel, number> = { ok: 0, heavy: 1, veryHeavy: 2 }
 
 /** Whether adding this subject to these makes the semester heavier than it is. */

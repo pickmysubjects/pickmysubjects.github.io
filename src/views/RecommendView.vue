@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, shallowRef } from 'vue'
-import { recommend, yearLevel, type Goal } from '@/engine'
+import { recommend, yearLevel, type Goal, passedCodes } from '@/engine'
 import { useI18n } from '@/i18n'
 import { categoryLabel, termLabel } from '@/i18n/format'
 import RecommendationCard from '@/components/recommend/RecommendationCard.vue'
@@ -31,8 +31,16 @@ const hasProfile = computed(
 // Nothing to go on yet (or only interests): offer the interest chips right here.
 const showQuick = computed(() => profile.value.results.length === 0 && Object.keys(profile.value.skills).length === 0)
 
-// Only subjects at a level the student can take now: year 1 until 100 points are done, and so on.
-const maxLevel = computed(() => yearLevel(profile.value.results, data.value))
+// For a chosen semester, what's done by then counts: passed subjects plus everything planned
+// in earlier semesters, both for prerequisites and for the year level (100 points a year).
+const before = computed(() =>
+  termIndex.value < 0 ? null : [...passedCodes(profile.value.results), ...plan.terms.value.slice(0, termIndex.value).flatMap((t) => t.subjects)],
+)
+const maxLevel = computed(() => {
+  if (!before.value) return yearLevel(profile.value.results, data.value)
+  const points = before.value.reduce((sum, c) => sum + (data.value.subjects[c]?.points ?? 12.5), 0)
+  return Math.min(3, Math.floor(points / 100) + 1)
+})
 
 const recs = computed(() =>
   recommend(data.value, profile.value, {
@@ -41,6 +49,8 @@ const recs = computed(() =>
     category: category.value || undefined,
     term: selectedTerm.value ? { year: selectedTerm.value.year, period: selectedTerm.value.period } : undefined,
     maxLevel: maxLevel.value,
+    eligibleWith: before.value ?? undefined,
+    termSubjects: selectedTerm.value?.subjects,
   })
     .slice(0, 30),
 )

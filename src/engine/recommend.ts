@@ -3,6 +3,7 @@ import { evaluateField, referencedSubjects, type Tri } from './expr'
 import type { Note, Params } from './plan'
 import type { Dataset, Period, Skill, Subject } from './schema'
 import { skillsOf } from './skills'
+import { termStress } from './termStress'
 import { relatedTopics, topicsOf } from './topics'
 
 
@@ -51,7 +52,16 @@ export interface RecommendOptions {
   year?: number
   /** Only subjects up to this level (e.g. year-1 students see level 1). */
   maxLevel?: number
+  /**
+   * What's already planned in the chosen term: a subject that would make it heavy says so and
+   * gives up a few points, as the plan builder does, so a close alternative ranks above it.
+   */
+  termSubjects?: string[]
 }
+
+/** Points a suggestion gives up for making its semester heavier (the plan builder uses the same). */
+export const HEAVY_PICK_COST = 6
+const STRESS_RANK = { ok: 0, heavy: 1, veryHeavy: 2 } as const
 
 const WEIGHTS: Record<Goal, Record<Signal, number>> = {
   wam: { ease: 0.35, predicted: 0.25, skillFit: 0.2, interest: 0.15, unlocks: 0.05 },
@@ -61,6 +71,8 @@ const WEIGHTS: Record<Goal, Record<Signal, number>> = {
 
 type Signal = 'ease' | 'predicted' | 'skillFit' | 'interest' | 'unlocks'
 const MIN_REVIEWS = 3
+/** How much of a score's distance from neutral is kept when only part of the evidence is known (the rest scales with coverage). */
+const SURE_BASE = 0.6
 /** Interest scores: two tagged matches, one, an area-implied match, a related topic. */
 const INTEREST_FULL = 1
 const INTEREST_ONE = 0.8
@@ -133,6 +145,7 @@ export function recommend(data: Dataset, profile: Profile, opts: RecommendOption
   const creditCourses = new Set(Object.values(data.subjects).flatMap((x) => Object.keys(x.categories)))
   const ratingMean = siteRatingMean(data)
 
+  const termBefore = opts.termSubjects ? termStress(opts.termSubjects, data, profile).level : null
   const recs: Recommendation[] = []
   for (const s of Object.values(data.subjects)) {
     if (taken.has(s.code) || behind.has(s.code)) continue
@@ -157,7 +170,15 @@ export function recommend(data: Dataset, profile: Profile, opts: RecommendOption
     // A condition only the student can check (a VCE score) that they said they meet.
     const eligibility = pre.status === 'unknown' && profile.confirmed?.includes(s.code) ? 'ok' : pre.status
 
-    recs.push(score(s, { profile, data, wam, marks, dependents, eligibility, unmet: pre.unmet, ratingMean, taken }))
+    const rec = score(s, { profile, data, wam, marks, dependents, eligibility, unmet: pre.unmet, ratingMean, taken })
+    if (opts.termSubjects && termBefore) {
+      const after = termStress([...opts.termSubjects, s.code], data, profile).level
+      if (STRESS_RANK[after] > STRESS_RANK[termBefore]) {
+        rec.score = Math.max(0, rec.score - HEAVY_PICK_COST)
+        rec.warnings.push(note(after === 'veryHeavy' ? 'makesVeryHeavy' : 'makesHeavy', {}, 'Adding it makes that semester heavier.'))
+      }
+    }
+    recs.push(rec)
   }
 
   recs.sort((a, b) => b.score - a.score || a.code.localeCompare(b.code))
@@ -323,13 +344,19 @@ function score(s: Subject, ctx: ScoreCtx): Recommendation {
     }
   }
 
-  // Signals we have no data for count as neutral (0.5), so a subject can't
-  // outrank a well-documented one just by having less known about it.
+  // Score from the signals we have, not with the missing ones filled in as "neutral": a
+  // missing one says nothing about fit, and counting it as 0.5 squeezed every score towards
+  // the middle (worst for "protect my WAM", whose signals need ratings and marks). Then pulled
+  // part of the way back to neutral by how much of the goal's weight we could actually see,
+  // so a subject known on one signal can't look as sure as a well-documented one.
   const weights = WEIGHTS[ctx.profile.goal]
   const present = (Object.keys(parts) as Signal[]).filter((k) => weights[k] > 0)
   const signalKeys = (Object.keys(weights) as Signal[]).filter((k) => weights[k] > 0)
   const totalWeight = signalKeys.reduce((sum, k) => sum + weights[k], 0)
-  const value = signalKeys.reduce((sum, k) => sum + weights[k] * (parts[k] ?? 0.5), 0) / totalWeight
+  const seenWeight = present.reduce((sum, k) => sum + weights[k], 0)
+  const seen = seenWeight > 0 ? present.reduce((sum, k) => sum + weights[k] * (parts[k] as number), 0) / seenWeight : 0.5
+  const coverage = seenWeight / totalWeight
+  const value = 0.5 + (seen - 0.5) * (SURE_BASE + (1 - SURE_BASE) * coverage)
   const confidence = present.length >= 4 ? 'high' : present.length >= 2 ? 'medium' : 'low'
 
   return {

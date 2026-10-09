@@ -202,7 +202,7 @@ export const zhTW: Messages = {
     when: '用於哪個學期',
     anyTime: '不限學期',
     nothing: '沒有符合條件的課程。試試把課程類型或學期改成「不限」。',
-    fitHint: "滿分 100，按你的興趣、強項、成績和同學評分算出來；上面選的「這次你最看重什麼」會改變各項的比重。70 以上很適合，55–69 適合，55 以下可以考慮。「我的」裡填得越多越準。",
+    fitHint: "滿分 100，按你的興趣、強項、成績和同學評分算出來；上面選的「這次你最看重什麼」會改變各項的比重。65 以上很適合，50–64 適合，50 以下可以考慮。「我的」裡填得越多越準。",
     fit: '適合度 {score}/100，{confidence}',
     neutral: '目前看不出明顯的適合或不適合——在「我的紀錄」裡補充成績、技能和興趣會更準確。',
     handbook: 'Handbook',
@@ -216,6 +216,8 @@ export const zhTW: Messages = {
     prereqCheck: "先修待確認",
   },
   reason: {
+    makesHeavy: "加進這個學期會讓它偏重。",
+    makesVeryHeavy: "加進這個學期會讓它很重。",
     prereqNotCurated: "這門課的先修條件還沒收錄，選課前請看 Handbook。",
     eligibilityManual: "有一項需要你自己確認的條件（例如 VCE 成績）。",
     reviewsHard: "網上的評價說它比較難。",

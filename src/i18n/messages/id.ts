@@ -202,7 +202,7 @@ export const id: Messages = {
     when: 'Untuk semester',
     anyTime: 'Kapan saja',
     nothing: 'Tidak ada yang cocok dengan filter ini. Coba pilih “Semua” untuk jenis mata kuliah atau semester.',
-    fitHint: "Dari 100, dihitung dari minat, kekuatan, nilai, dan penilaian mahasiswa lain; pilihan “Apa yang paling penting kali ini” di atas mengubah bobotnya. 70 ke atas sangat cocok, 55–69 cocok, di bawah 55 layak dipertimbangkan. Makin banyak yang kamu isi di Saya, makin akurat.",
+    fitHint: "Dari 100, dihitung dari minat, kekuatan, nilai, dan penilaian mahasiswa lain; pilihan “Apa yang paling penting kali ini” di atas mengubah bobotnya. 65 ke atas sangat cocok, 50–64 cocok, di bawah 50 layak dipertimbangkan. Makin banyak yang kamu isi di Saya, makin akurat.",
     fit: 'Kecocokan {score} dari 100, {confidence}',
     neutral: 'Belum ada yang menonjol untukmu — tambahkan nilai, keterampilan, dan minat di Catatanku agar lebih tepat.',
     handbook: 'Handbook',
@@ -216,6 +216,8 @@ export const id: Messages = {
     prereqCheck: "Cek prasyarat",
   },
   reason: {
+    makesHeavy: "Menambahkannya membuat semester itu berat.",
+    makesVeryHeavy: "Menambahkannya membuat semester itu sangat berat.",
     prereqNotCurated: "Prasyarat belum ditambahkan: cek Handbook sebelum mendaftar.",
     eligibilityManual: "Ada syarat yang perlu kamu pastikan sendiri (misalnya nilai VCE).",
     reviewsHard: "Ulasan publik bilang ini sulit.",

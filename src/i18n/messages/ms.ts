@@ -202,7 +202,7 @@ export const ms: Messages = {
     when: 'Untuk semester',
     anyTime: 'Bila-bila masa',
     nothing: 'Tiada yang sepadan dengan penapis ini. Cuba pilih “Semua” untuk jenis subjek atau semester.',
-    fitHint: "Daripada 100, dikira daripada minat, kekuatan, markah dan penilaian pelajar lain; pilihan “Apa paling penting kali ini” di atas mengubah pemberat setiap satu. 70 ke atas sangat sesuai, 55–69 sesuai, bawah 55 boleh dipertimbang. Lebih banyak anda isi di Saya, lebih tepat.",
+    fitHint: "Daripada 100, dikira daripada minat, kekuatan, markah dan penilaian pelajar lain; pilihan “Apa paling penting kali ini” di atas mengubah pemberat setiap satu. 65 ke atas sangat sesuai, 50–64 sesuai, bawah 50 boleh dipertimbang. Lebih banyak anda isi di Saya, lebih tepat.",
     fit: 'Kesesuaian {score} daripada 100, {confidence}',
     neutral: 'Belum ada yang menonjol untuk anda — tambah keputusan, kemahiran dan minat dalam Rekod saya supaya lebih tepat.',
     handbook: 'Handbook',
@@ -216,6 +216,8 @@ export const ms: Messages = {
     prereqCheck: "Semak prasyarat",
   },
   reason: {
+    makesHeavy: "Menambahnya menjadikan semester itu berat.",
+    makesVeryHeavy: "Menambahnya menjadikan semester itu sangat berat.",
     prereqNotCurated: "Prasyarat belum ditambah: semak Handbook sebelum mendaftar.",
     eligibilityManual: "Ada syarat yang perlu anda sahkan sendiri (seperti skor VCE).",
     reviewsHard: "Ulasan awam kata subjek ini susah.",

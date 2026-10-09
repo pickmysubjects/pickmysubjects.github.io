@@ -205,7 +205,7 @@ export const en = {
     when: 'For which semester',
     anyTime: 'Any time',
     nothing: 'Nothing matches these filters. Try “Any” for the kind of subject or semester.',
-    fitHint: "Out of 100, from your interests, strengths, marks and other students' ratings; what you said matters most this time changes how much each counts. 70 and up is a great fit, 55–69 a good fit, under 55 worth a look. The more you fill in under Me, the better it gets.",
+    fitHint: "Out of 100, from your interests, strengths, marks and other students' ratings; what you said matters most this time changes how much each counts. 65 and up is a great fit, 50–64 a good fit, under 50 worth a look. The more you fill in under Me, the better it gets.",
     fit: 'Fit {score} out of 100, {confidence}',
     neutral: 'Nothing stands out for you yet — add results, skills and interests in My record to sharpen this.',
     handbook: 'Handbook',
@@ -219,6 +219,8 @@ export const en = {
     prereqCheck: "Check prerequisites",
   },
   reason: {
+    makesHeavy: "Adding it makes that semester heavy.",
+    makesVeryHeavy: "Adding it makes that semester very heavy.",
     prereqNotCurated: "Prerequisites not added yet: check the Handbook before enrolling.",
     eligibilityManual: "A condition only you can confirm (like a VCE score).",
     reviewsHard: "Public reviews say it's hard.",
