@@ -26,7 +26,7 @@ const { t } = useI18n()
           :key="item.view"
           class="nav-link"
           :href="link(`${item.view === 'home' ? '' : item.view}`)"
-          :aria-current="view === item.view ? 'page' : undefined"
+          :aria-current="view === item.view || item.also?.includes(view) ? 'page' : undefined"
         >
           <component :is="item.icon" :size="16" aria-hidden="true" />
           {{ t(item.key) }}

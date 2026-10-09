@@ -2,7 +2,6 @@
 import { link } from '@/composables/useView'
 import { computed, shallowRef } from 'vue'
 import { ArrowLeft, CalendarRange, Check, ExternalLink, Plus, Star } from 'lucide-vue-next'
-import DataNotice from '@/components/DataNotice.vue'
 import RatingForm from '@/components/rating/RatingForm.vue'
 import AssessmentPanel from '@/components/subject/AssessmentPanel.vue'
 import MajorRoles from '@/components/subject/MajorRoles.vue'
@@ -232,7 +231,6 @@ const links = computed(() => (name.value === 'real' ? discussionLinks(code.value
       <a class="button button-accent" :href="link('contribute')">{{ t('subject.addIt') }}</a>
     </section>
 
-    <DataNotice />
   </div>
 </template>
 

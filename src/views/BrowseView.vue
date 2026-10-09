@@ -3,6 +3,7 @@ import { computed, shallowRef, watch } from 'vue'
 import { Search } from 'lucide-vue-next'
 import BrowseFilters from '@/components/browse/BrowseFilters.vue'
 import BrowseRow from '@/components/browse/BrowseRow.vue'
+import BrowseSwitch from '@/components/browse/BrowseSwitch.vue'
 import { browse, EMPTY_FILTERS, filtersFromQuery, filtersToQuery, PRESETS, type BrowseSort, type PresetName } from '@/engine'
 import { link, useView } from '@/composables/useView'
 import { useDataset } from '@/composables/useDataset'
@@ -55,6 +56,7 @@ watch(filters, (f) => {
 <template>
   <div class="browse">
     <header class="head">
+      <BrowseSwitch current="subjects" />
       <h1 class="page-title">{{ t('browse.title') }}</h1>
       <p class="page-lede">{{ t('browse.lede') }}</p>
     </header>

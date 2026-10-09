@@ -1,0 +1,12 @@
+code: MAST10017
+year: 2026
+learn:
+  en: "Foundation maths for later study in science, statistics and business: algebra, functions, statistics and basic calculus."
+  zh: "为理科、统计和商科打基础的数学：代数、函数、统计和基础微积分。"
+outcomes:
+  - en: "Solve equations and graph common functions"
+    zh: "解方程、画常见函数图像"
+  - en: "Work out basic probabilities and analyse simple data"
+    zh: "算基础概率、分析简单数据"
+  - en: "Differentiate and integrate simple functions"
+    zh: "对简单函数求导和积分"

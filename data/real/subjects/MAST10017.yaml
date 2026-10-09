@@ -1,0 +1,30 @@
+code: MAST10017
+title: Fundamentals of Mathematics
+level: 1
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites: none
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: assignment
+    weight: 30
+  - kind: test
+    weight: 20
+  - kind: exam
+    weight: 50
+weekly_contact_hours: 5.5
+handbook: https://handbook.unimelb.edu.au/2026/subjects/mast10017
+source_year: 2026
+# Counts towards the Diploma in General Studies only (taught at Dookie): not a Bachelor of
+# Science subject, so no B-SCI category.
+categories: {}
+skills:
+  - maths
+topics:
+  - mathematics
+  - calculus
+verified_on: 2026-10-09
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Dookie campus only; for the Diploma in General Studies. Not normally allowed with a VCE Mathematical Methods 3/4 study score of 25 or more."

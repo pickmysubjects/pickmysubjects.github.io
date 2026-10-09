@@ -8,7 +8,6 @@ import SubjectPeek from '@/components/planner/SubjectPeek.vue'
 import RuleLegend from '@/components/planner/RuleLegend.vue'
 import PlanIssues from '@/components/planner/PlanIssues.vue'
 import PlanPrint from '@/components/planner/PlanPrint.vue'
-import DataNotice from '@/components/DataNotice.vue'
 import Interp from '@/components/Interp.vue'
 import { PASS_MARK, planRoles, planStart } from '@/engine'
 import { Printer, Share2 } from 'lucide-vue-next'
@@ -300,7 +299,6 @@ function finishWizard(setup: PlanSetup): void {
         </div>
       </details>
     </template>
-    <DataNotice v-if="!showWizard" class="plan-notice" />
     <PlanPrint
       v-if="!showWizard && !plan.isEmpty.value"
       class="print-only"

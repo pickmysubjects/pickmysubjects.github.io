@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { link } from '@/composables/useView'
+import { handbookUrl } from '@/utils/links'
 import { computed, onMounted, useTemplateRef } from 'vue'
 import { CalendarRange, ExternalLink, X } from 'lucide-vue-next'
 import { periodsFor, prerequisiteRoute, referencedSubjects, simplifyFor, type Subject } from '@/engine'
@@ -118,9 +119,13 @@ function onClick(event: MouseEvent): void {
             <p>{{ describeReq(t, subject.prerequisites, course) }}</p>
             <ul v-if="needCodes.length" class="peek-list">
               <li v-for="c in needCodes" :key="c">
-                <button type="button" class="peek-row" @click="emit('open', c)">
+                <a v-if="!subjects[c]" class="peek-row" :href="handbookUrl(c)" target="_blank" rel="noopener">
                   <span class="code">{{ c }}</span>
-                  <span class="peek-row-title">{{ subjects[c]?.title ?? t('plan.notInDataset') }}</span>
+                  <span class="peek-row-title muted">{{ t('subject.notYetAdded') }}</span>
+                </a>
+                <button v-else type="button" class="peek-row" @click="emit('open', c)">
+                  <span class="code">{{ c }}</span>
+                  <span class="peek-row-title">{{ subjects[c]?.title }}</span>
                   <span v-if="haveSet.has(c)" class="peek-have">{{ t('plan.haveIt') }}</span>
                 </button>
               </li>
@@ -132,9 +137,13 @@ function onClick(event: MouseEvent): void {
                 <h4 class="peek-route-level">{{ level ? t('subject.level', { level }) : t('plan.notInDataset') }}</h4>
                 <ul class="peek-list">
                   <li v-for="c in codes" :key="c">
-                    <button type="button" class="peek-row" @click="emit('open', c)">
+                    <a v-if="!subjects[c]" class="peek-row" :href="handbookUrl(c)" target="_blank" rel="noopener">
                       <span class="code">{{ c }}</span>
-                      <span class="peek-row-title">{{ subjects[c]?.title ?? t('plan.notInDataset') }}</span>
+                      <span class="peek-row-title muted">{{ t('subject.notYetAdded') }}</span>
+                    </a>
+                    <button v-else type="button" class="peek-row" @click="emit('open', c)">
+                      <span class="code">{{ c }}</span>
+                      <span class="peek-row-title">{{ subjects[c]?.title }}</span>
                       <span v-if="haveSet.has(c)" class="peek-have">{{ t('plan.haveIt') }}</span>
                     </button>
                   </li>
@@ -307,6 +316,10 @@ function onClick(event: MouseEvent): void {
   text-align: left;
   color: var(--ink);
   cursor: pointer;
+}
+
+.peek-row {
+  text-decoration: none;
 }
 
 .peek-row:hover {

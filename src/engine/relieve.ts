@@ -16,6 +16,7 @@ import { termStress, type StressLevel } from './termStress'
  */
 
 const BALANCE_ROUNDS = 12
+const FIRST_TERM_WEIGHT = 1.5
 const RANK: Record<StressLevel, number> = { ok: 0, heavy: 1, veryHeavy: 2 }
 
 /** Problems a change must not add: errors and warnings counted apart, and unmet course rules. */
@@ -44,7 +45,9 @@ export function balanceTerms(plan: Plan, data: Dataset, profile?: Profile): { a:
   const { terms } = plan
   const safe = guard(plan, data)
   const scores = () => terms.map((t) => termStress(t.subjects, data, profile).score)
-  const cost = (xs: number[]) => xs.reduce((sum, x) => sum + x * x, 0)
+  // The first semester weighs more: students are still finding their feet, and measured by
+  // real load rather than credit points it is among the heaviest (Borchers & Pardos, LAK 2023).
+  const cost = (xs: number[]) => xs.reduce((sum, x, i) => sum + (i === 0 ? FIRST_TERM_WEIGHT : 1) * x * x, 0)
   const made: { a: string; b: string }[] = []
   let current = scores()
   for (let round = 0; round < BALANCE_ROUNDS; round++) {
@@ -84,8 +87,12 @@ function swap(x: PlanTerm, y: PlanTerm, a: string, b: string): void {
 }
 
 export type Relief =
-  /** Swapping subjects with other semesters makes this one lighter: the whole new arrangement. */
-  | { kind: 'spread'; terms: PlanTerm[]; swaps: { a: string; b: string }[] }
+  /**
+   * Swapping subjects with other semesters makes this one lighter: the whole new arrangement.
+   * `replaced`: the swap would have made the other semester heavy, so one of its free
+   * electives is taken differently too.
+   */
+  | { kind: 'spread'; terms: PlanTerm[]; swaps: { a: string; b: string }[]; replaced?: { code: string; with: string } }
   /** Taking one subject in the summer or winter term next to it. */
   | { kind: 'shortTerm'; code: string; year: number; period: Period }
   /** Taking a different elective that counts the same way (same category, level and points). */
@@ -121,6 +128,10 @@ export function relieveTerm(plan: Plan, data: Dataset, termIndex: number, profil
   // strengths and marks).
   const other = replaceFor(plan, data, termIndex, profile, lighter)
   if (other) return other
+
+  // A swap that would push the other semester over, fixed there by a different elective.
+  const both = swapThenReplace(plan, data, termIndex, profile, lighter)
+  if (both) return both
 
   // Otherwise the whole-plan balance, if it happens to lighten this one.
   const copy: Plan = { ...plan, terms: plan.terms.map((t) => ({ ...t, subjects: [...t.subjects] })) }
@@ -170,9 +181,14 @@ export function fixHeavyTerms(plan: Plan, data: Dataset, profile?: Profile): { a
       const before = termStress(term.subjects, data, profile)
       if (before.level === 'ok') continue
       const lighter = (subjects: string[]) => RANK[termStress(subjects, data, profile).level] < RANK[before.level]
-      const r = swapFor(plan, data, i, profile, lighter) ?? replaceFor(plan, data, i, profile, lighter)
-      if (r?.kind === 'spread') made.push(...r.swaps.map((x) => ({ ...x, kind: 'swap' as const })))
-      else if (r?.kind === 'replace') made.push({ a: r.code, b: r.with, kind: 'replace' })
+      const r =
+        swapFor(plan, data, i, profile, lighter) ??
+        replaceFor(plan, data, i, profile, lighter) ??
+        swapThenReplace(plan, data, i, profile, lighter)
+      if (r?.kind === 'spread') {
+        made.push(...r.swaps.map((x) => ({ ...x, kind: 'swap' as const })))
+        if (r.replaced) made.push({ a: r.replaced.code, b: r.replaced.with, kind: 'replace' })
+      } else if (r?.kind === 'replace') made.push({ a: r.code, b: r.with, kind: 'replace' })
       else continue
       plan.terms.splice(0, plan.terms.length, ...r.terms)
       changed = true
@@ -185,43 +201,105 @@ export function fixHeavyTerms(plan: Plan, data: Dataset, profile?: Profile): { a
 /** How many suggested alternatives to try for each elective. */
 const REPLACE_TRIES = 12
 
+const FIXED = new WeakMap<Dataset, Map<string, Set<string>>>()
+
+/** Compulsory subjects and picks from the major's or specialisation's lists (worked out once per plan setup). */
+function fixedSubjects(data: Dataset, plan: Plan): Set<string> {
+  let cache = FIXED.get(data)
+  if (!cache) FIXED.set(data, (cache = new Map()))
+  const key = [plan.course, plan.courseYear, plan.major ?? '', plan.specialisation ?? ''].join('|')
+  let out = cache.get(key)
+  if (!out) {
+    const roles = planRoles(data, plan.course, plan.courseYear, [plan.major ?? '', plan.specialisation ?? ''])
+    cache.set(key, (out = new Set([...roles.required, ...roles.options])))
+  }
+  return out
+}
+
+const ALTERNATIVES = new WeakMap<Dataset, Map<string, string[]>>()
+
+/** Subjects that could fill a free-elective slot, best first for this student (the suggestions' ranking). */
+function alternatives(data: Dataset, profile: Profile, course: string, category: string, level: number, term: PlanTerm): string[] {
+  let cache = ALTERNATIVES.get(data)
+  if (!cache) ALTERNATIVES.set(data, (cache = new Map()))
+  const key = JSON.stringify([profile, course, category, level, term.year, term.period])
+  let out = cache.get(key)
+  if (!out) {
+    out = recommend(data, profile, { course, category, level, term: { year: term.year, period: term.period }, eligibleWith: [] })
+      .filter((x) => x.eligibility !== 'fail')
+      .map((x) => x.code)
+    cache.set(key, out)
+  }
+  return out
+}
+
 function replaceFor(
   plan: Plan,
   data: Dataset,
   termIndex: number,
   profile: Profile | undefined,
   lighter: (subjects: string[]) => boolean,
+  onlyNamed = false,
 ): Relief | null {
   const term = plan.terms[termIndex] as PlanTerm
   // Only free choices: not a compulsory subject, and not one picked from a major's or
   // specialisation's own list (another subject of the same category wouldn't count there).
-  const roles = planRoles(data, plan.course, plan.courseYear, [plan.major ?? '', plan.specialisation ?? ''])
-  const fixed = new Set([...roles.required, ...roles.options])
+  const fixed = fixedSubjects(data, plan)
   const stress = termStress(term.subjects, data, profile)
   const named = stress.reasons.flatMap((r) => String(r.params.codes ?? '').split(', ')).filter((c) => term.subjects.includes(c))
   const done = [...plan.completed, ...passedCodes(profile?.results ?? [])]
   const inPlan = plan.terms.flatMap((t) => t.subjects)
-  const before = [...done, ...plan.terms.slice(0, termIndex).flatMap((t) => t.subjects)]
   const student: Profile = profile ?? { results: [], skills: {}, interests: [], goal: 'balanced' }
-  for (const code of [...new Set([...named, ...term.subjects])]) {
+  for (const code of onlyNamed ? [...new Set(named)] : [...new Set([...named, ...term.subjects])]) {
     const s = data.subjects[code]
     // Without a category we can't tell what it counts towards, so nothing could stand in for it.
     if (!s || fixed.has(code) || !s.categories[plan.course]) continue
-    const recs = recommend(data, student, {
-      course: plan.course,
-      category: s.categories[plan.course],
-      level: s.level,
-      term: { year: term.year, period: term.period },
-      planned: [...inPlan, ...done],
-      eligibleWith: before,
-    })
-      .filter((x) => x.eligibility === 'ok' && data.subjects[x.code]?.points === s.points)
+    // Ranked once per kind of slot (category, level, teaching period) and student; whether
+    // the prerequisites are met where it would go is checked on the whole plan below.
+    const recs = alternatives(data, student, plan.course, s.categories[plan.course] as string, s.level, term)
+      .filter((x) => !inPlan.includes(x) && !done.includes(x) && data.subjects[x]?.points === s.points)
       .slice(0, REPLACE_TRIES)
     for (const rec of recs) {
-      const subjects = term.subjects.map((c) => (c === code ? rec.code : c))
+      const subjects = term.subjects.map((c) => (c === code ? rec : c))
       if (!lighter(subjects)) continue
       const terms = plan.terms.map((t, i) => (i === termIndex ? { ...t, subjects } : { ...t, subjects: [...t.subjects] }))
-      if (noWorse(plan, { ...plan, terms }, data)) return { kind: 'replace', code, with: rec.code, terms }
+      if (noWorse(plan, { ...plan, terms }, data)) return { kind: 'replace', code, with: rec, terms }
+    }
+  }
+  return null
+}
+
+function swapThenReplace(
+  plan: Plan,
+  data: Dataset,
+  termIndex: number,
+  profile: Profile | undefined,
+  lighter: (subjects: string[]) => boolean,
+): Relief | null {
+  const from = plan.terms[termIndex] as PlanTerm
+  const reasons = termStress(from.subjects, data, profile).reasons
+  // Only the subjects that make it heavy are worth moving.
+  const movable = [...new Set(reasons.flatMap((x) => String(x.params.codes ?? '').split(', ')))].filter((c) => from.subjects.includes(c))
+  for (const a of movable) {
+    for (const [to, other] of plan.terms.entries()) {
+      if (to === termIndex) continue
+      const otherBefore = RANK[termStress(other.subjects, data, profile).level]
+      for (const b of other.subjects) {
+        const sa = data.subjects[a]
+        const sb = data.subjects[b]
+        if (!sa || !sb || sa.points !== sb.points) continue
+        if (offeredIn(sa, other.year, other.period).status !== 'ok' || offeredIn(sb, from.year, from.period).status !== 'ok') continue
+        const terms = plan.terms.map((t) => ({ ...t, subjects: [...t.subjects] }))
+        swap(terms[termIndex] as PlanTerm, terms[to] as PlanTerm, a, b)
+        if (!lighter((terms[termIndex] as PlanTerm).subjects)) continue
+        const swapped: Plan = { ...plan, terms }
+        const back = (subjects: string[]) => RANK[termStress(subjects, data, profile).level] <= otherBefore
+        if (back((terms[to] as PlanTerm).subjects)) continue // a plain swap; swapFor covers it
+        const fix = replaceFor(swapped, data, to, profile, back, true)
+        if (fix?.kind !== 'replace' || !noWorse(plan, { ...plan, terms: fix.terms }, data)) continue
+        if (!lighter((fix.terms[termIndex] as PlanTerm).subjects)) continue
+        return { kind: 'spread', terms: fix.terms, swaps: [{ a, b }], replaced: { code: fix.code, with: fix.with } }
+      }
     }
   }
   return null

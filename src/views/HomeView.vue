@@ -3,7 +3,6 @@ import { link } from '@/composables/useView'
 import { computed } from 'vue'
 import { ArrowRight, BookOpen, Check, GraduationCap, ListFilter, Route, Sparkles, User } from 'lucide-vue-next'
 import SubjectSearch from '@/components/SubjectSearch.vue'
-import DataNotice from '@/components/DataNotice.vue'
 import RouteLine from '@/components/home/RouteLine.vue'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
@@ -123,7 +122,6 @@ const steps = computed(() => {
       </div>
     </section>
 
-    <DataNotice />
   </div>
 </template>
 

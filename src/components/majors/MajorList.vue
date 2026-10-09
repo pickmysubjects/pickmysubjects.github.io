@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import BrowseSwitch from '@/components/browse/BrowseSwitch.vue'
 import { computed, shallowRef } from 'vue'
 import { ChevronRight, Search } from 'lucide-vue-next'
 import { link } from '@/composables/useView'
@@ -29,6 +30,7 @@ const courseTitle = computed(() => data.value.courses.find((c) => c.code === cou
 <template>
   <div class="list">
     <header>
+      <BrowseSwitch current="majors" />
       <h1 class="page-title">{{ t('majors.title') }}</h1>
       <p class="page-lede">{{ t('majors.lede', { course: courseTitle }) }}</p>
     </header>

@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
-import { planStress, termStress } from '../src/engine/termStress'
+import { planStress, requiredWithPrerequisites, termStress } from '../src/engine/termStress'
 import { relieveTerm } from '../src/engine/relieve'
+import { planRoles } from '../src/engine/roles'
 import type { Plan } from '../src/engine/plan'
 import type { Profile } from '../src/engine/recommend'
 import { buildDataset } from '../scripts/dataset'
@@ -180,20 +181,31 @@ describe('plan builder spreads the load (real data)', () => {
     const share = (p: Profile) => {
       let terms = 0
       let heavy = 0
+      const fixable: string[] = []
       for (const m of real.components.filter((c) => c.kind === 'major')) {
         const { plan } = generatePlan({ data: real, profile: p, course: 'B-SCI', courseYear: 2026, major: m.id, startYear: 2027, startPeriod: 'semester-1' })
-        const s = planStress(plan.terms.map((t) => t.subjects), real, p)
+        const roles = planRoles(real, 'B-SCI', 2026, [m.id])
+        const planned = plan.terms.flatMap((t) => t.subjects)
+        const fixed = requiredWithPrerequisites(new Set([...roles.required, ...roles.options]), planned, real.subjects, 'B-SCI')
+        const s = planStress(plan.terms.map((t) => t.subjects), real, p, fixed)
         plan.terms.forEach((t, i) => {
           if (t.subjects.length < 3) return
           terms++
-          if (s.terms[i]?.level !== 'ok') heavy++
+          if (s.terms[i]?.level === 'ok') return
+          heavy++
+          // Whatever the builder leaves heavy must be past fixing by a swap or another elective.
+          const r = relieveTerm(plan, real, i, p)
+          if (r && r.kind !== 'shortTerm') fixable.push(`${m.id} ${t.year} ${t.period}: ${r.kind}`)
         })
       }
+      expect(fixable).toEqual([])
       return heavy / terms
     }
     // Review summaries now flag real heavy subjects too, so a few more semesters carry a note.
     expect(share(profile())).toBeLessThan(0.08)
-    expect(share(profile({ skills: { maths: 2 } }))).toBeLessThan(0.08)
+    // Weak at maths, many science majors can't avoid two maths subjects somewhere (and the
+    // data has only maths-based level-2 breadth so far): flagged, but never left fixable.
+    expect(share(profile({ skills: { maths: 2 } }))).toBeLessThan(0.2)
     // Builds a plan for every major, twice, which is slow on CI runners.
   }, 120_000)
 })

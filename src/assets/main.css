@@ -32,8 +32,7 @@
   --stop: var(--bad);
   --stop-tint: var(--bad-soft);
 
-  --font-ui: 'Geist Sans', 'PingFang SC', 'Hiragino Sans', 'Apple SD Gothic Neo', 'Microsoft YaHei', system-ui,
-    sans-serif;
+  --font-ui: 'Geist Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-code: 'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace;
 
   --radius-sm: 10px;
@@ -88,6 +87,42 @@
     --glass-shine: linear-gradient(180deg, rgb(255 255 255 / 16%), rgb(255 255 255 / 0%) 55%);
     color-scheme: dark;
   }
+}
+
+/*
+ * Each language in its own best typeface. Latin letters and subject codes stay in Geist
+ * everywhere; the rest falls to fonts made for that script. Chinese, Japanese and Korean
+ * fonts are megabytes each, so those use the best one the device already has, in the order
+ * that looks best: the same character is drawn differently in Chinese and Japanese, so each
+ * gets its own list rather than one shared CJK stack.
+ */
+:lang(zh-CN) {
+  --font-ui: 'Geist Sans', 'PingFang SC', 'HarmonyOS Sans SC', 'MiSans', 'Source Han Sans SC', 'Noto Sans SC',
+    'Noto Sans CJK SC', 'Microsoft YaHei UI', 'Microsoft YaHei', sans-serif;
+}
+
+:lang(zh-TW) {
+  --font-ui: 'Geist Sans', 'PingFang TC', 'Source Han Sans TC', 'Noto Sans TC', 'Noto Sans CJK TC',
+    'Microsoft JhengHei UI', 'Microsoft JhengHei', sans-serif;
+}
+
+:lang(ja) {
+  --font-ui: 'Geist Sans', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', 'Noto Sans CJK JP',
+    'BIZ UDPGothic', 'Yu Gothic UI', 'Meiryo', sans-serif;
+}
+
+:lang(ko) {
+  --font-ui: 'Geist Sans', 'Apple SD Gothic Neo', 'Pretendard', 'Noto Sans KR', 'Noto Sans CJK KR',
+    'Malgun Gothic', sans-serif;
+}
+
+/* Geist has no Vietnamese tone marks: one face for the whole line instead of a patchwork. */
+:lang(vi) {
+  --font-ui: 'Be Vietnam Pro', system-ui, sans-serif;
+}
+
+:lang(hi) {
+  --font-ui: 'Geist Sans', 'Noto Sans Devanagari Variable', 'Kohinoor Devanagari', 'Nirmala UI', sans-serif;
 }
 
 *,

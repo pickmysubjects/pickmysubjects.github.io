@@ -15,7 +15,7 @@ const { t } = useI18n()
       :key="item.view"
       class="tab"
       :href="link(`${item.view === 'home' ? '' : item.view}`)"
-      :aria-current="view === item.view ? 'page' : undefined"
+      :aria-current="view === item.view || item.also?.includes(view) ? 'page' : undefined"
     >
       <component :is="item.icon" :size="20" aria-hidden="true" />
       <span class="tab-label">{{ t(item.key) }}</span>

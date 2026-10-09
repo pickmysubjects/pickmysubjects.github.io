@@ -63,6 +63,7 @@ const MIN_REVIEWS = 3
 /** Interest scores: two tagged matches, one, an area-implied match, a related topic. */
 const INTEREST_FULL = 1
 const INTEREST_ONE = 0.8
+const INTEREST_NAMED = 0.75
 const INTEREST_INFERRED = 0.6
 const INTEREST_RELATED = 0.55
 /** No match: nothing known about it, a broad area-implied mismatch, a tagged mismatch. */
@@ -205,13 +206,24 @@ function score(s: Subject, ctx: ScoreCtx): Recommendation {
   const path = interests.length ? pathTo(s.code, interests, ctx) : { steps: 0, codes: [] }
   const leadsTo = path.codes
   if (interests.length > 0) {
-    const { topics, inferred } = topicsOf(s)
+    const { topics, inferred, specific } = topicsOf(s)
     const hit = topics.filter((t) => interests.includes(t))
     const near = topics.some((t) => interests.some((i) => relatedTopics(t, i)))
     // One shared interest is already a strong signal; a second makes it a full match.
     // A topic only implied by the area code ("a biology subject") counts for less, and
     // a related topic (AI when you picked machine learning) for less again.
-    const direct = hit.length === 0 ? 0 : inferred ? INTEREST_INFERRED : hit.length >= 2 ? INTEREST_FULL : INTEREST_ONE
+    // Hand-tagged counts most; a topic its title or summary names, nearly as much; one only
+    // its area code implies, least.
+    const direct =
+      hit.length === 0
+        ? 0
+        : !inferred
+          ? hit.length >= 2
+            ? INTEREST_FULL
+            : INTEREST_ONE
+          : hit.some((t) => specific.includes(t))
+            ? INTEREST_NAMED
+            : INTEREST_INFERRED
     const viaPath = path.steps ? PATHWAY_INTEREST - PATHWAY_STEP * (path.steps - 1) : 0
     const related = near ? INTEREST_RELATED : 0
     const best = Math.max(direct, viaPath, related)
@@ -327,7 +339,10 @@ function pathTo(code: string, interests: string[], ctx: ScoreCtx): { steps: numb
   const seen = new Set(frontier)
   for (let steps = 1; steps <= PATHWAY_MAX_STEPS; steps++) {
     frontier = frontier.flatMap((c) => ctx.dependents.get(c) ?? []).filter((c) => !seen.has(c) && seen.add(c))
-    const hits = frontier.filter((c) => !ctx.taken.has(c) && ctx.data.subjects[c]?.topics.some((t) => interests.includes(t)))
+    const hits = frontier.filter((c) => {
+      const next = ctx.data.subjects[c]
+      return !ctx.taken.has(c) && next !== undefined && topicsOf(next).specific.some((t) => interests.includes(t))
+    })
     if (hits.length) return { steps, codes: hits }
     if (frontier.length === 0) break
   }

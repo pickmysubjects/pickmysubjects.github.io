@@ -1,5 +1,6 @@
 import type { Profile } from './recommend'
 import type { Dataset, Skill, Subject } from './schema'
+import { prerequisiteRoute } from './expr'
 import { skillsOf } from './skills'
 
 export { skillsOf }
@@ -17,6 +18,9 @@ export { skillsOf }
  * - busy all semester: three or more subjects marked mostly on coursework (assignments due
  *   week after week);
  * - exam crunch: three or more subjects decided mostly by the final exam;
+ * - many deadlines: 18+ assessment tasks across the semester (most have about 14). The number of
+ *   assignments, and how bunched they are, predicts felt workload better than credit points do
+ *   (Pardos, Borchers & Yu 2023, "Credit hours is not enough");
  * - project pile-up: three or more programming subjects each with a sizeable project or
  *   assignment (20%+), so from about week 4 there is always code due;
  * - rated hard: two or more subjects students rate hard.
@@ -36,7 +40,7 @@ export type StressLevel = 'ok' | 'heavy' | 'veryHeavy'
 
 export interface StressReason {
   /** i18n key under `stress.` */
-  key: 'stackWeak' | 'stackMarks' | 'hours' | 'workload' | 'coursework' | 'exams' | 'projects' | 'hard'
+  key: 'stackWeak' | 'stackMarks' | 'hours' | 'workload' | 'coursework' | 'exams' | 'deadlines' | 'projects' | 'hard'
   params: Record<string, string | number>
 }
 
@@ -68,6 +72,8 @@ const EXAM_HEAVY = 70
 const COURSEWORK_EXAM = 40
 /** How many exam-decided (or coursework-decided) subjects make a crunch. */
 const CRUNCH_RULE = 3
+/** Assessment tasks in one semester that make for many deadlines (the median semester has 14, the 95th percentile 17). */
+const DEADLINES_RULE = 18
 /** A project or assignment worth this much makes a subject's weeks busy; this many of them in code is a pile-up. */
 const PROJECT_SHARE = 20
 const PROJECTS_RULE = 3
@@ -141,6 +147,14 @@ export function termStress(codes: string[], data: Dataset, profile?: Profile, op
   }
   score += coursework.length / CRUNCH_RULE + exams.length / CRUNCH_RULE
 
+  // Many deadlines: every task is a date to meet, whatever it's worth.
+  const tasks = recorded.reduce((n, s) => n + (s.assessment?.length ?? 0), 0)
+  if (tasks >= DEADLINES_RULE) {
+    points++
+    reasons.push({ key: 'deadlines', params: { n: tasks } })
+  }
+  score += Math.max(0, (tasks - 14) / (DEADLINES_RULE - 14))
+
   // Project pile-up: deadlines from several coding subjects landing in the same weeks.
   const projects = recorded.filter(
     (s) =>
@@ -191,6 +205,11 @@ export function planStress(
   terms: string[][],
   data: Dataset,
   profile?: Profile,
+  /**
+   * Subjects the plan can't do without (compulsory, or picked from a major's list). Only these
+   * count towards "unavoidable": a free elective on the weak skill could be swapped for another.
+   */
+  fixed?: Set<string>,
 ): { terms: TermStress[]; unavoidable: UnavoidableStack[] } {
   const full = terms.filter((t) => t.length >= 3)
   const weak = weakSkills(data, profile)
@@ -199,9 +218,11 @@ export function planStress(
   for (const skill of weak) {
     const total = full.flat().filter((c) => {
       const s = data.subjects[c]
-      return s !== undefined && skillsOf(s, data).includes(skill)
+      return s !== undefined && (!fixed || fixed.has(c)) && skillsOf(s, data).includes(skill)
     }).length
-    const perTerm = full.length ? Math.ceil(total / full.length) : 0
+    // Seven maths subjects over six semesters puts two together once, not in every semester:
+    // only when every semester must carry two (or three) is that many a given.
+    const perTerm = full.length ? Math.floor(total / full.length) : 0
     if (perTerm >= 2) {
       stackFloor[skill] = perTerm
       unavoidable.push({ skill, total, perTerm })
@@ -241,4 +262,30 @@ function pastMarks(skill: Skill, data: Dataset, profile?: Profile): number[] {
       return s !== undefined && skillsOf(s, data).includes(skill)
     })
     .map((r) => r.mark as number)
+}
+
+/**
+ * The degree's own subjects plus the planned ones on the way to them: a first-year subject a
+ * required third-year one depends on is as fixed as the third-year one.
+ */
+export function requiredWithPrerequisites(
+  fixed: Set<string>,
+  planned: string[],
+  subjects: Dataset['subjects'],
+  course: string,
+): Set<string> {
+  const inPlan = new Set(planned)
+  const out = new Set(fixed)
+  // A planned prerequisite stops the route there, so walk on from each one found.
+  const queue = [...fixed].filter((c) => inPlan.has(c))
+  while (queue.length) {
+    const code = queue.pop() as string
+    for (const c of prerequisiteRoute(code, subjects, course, inPlan)) {
+      if (inPlan.has(c) && !out.has(c)) {
+        out.add(c)
+        queue.push(c)
+      }
+    }
+  }
+  return out
 }

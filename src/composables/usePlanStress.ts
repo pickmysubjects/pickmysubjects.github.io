@@ -1,5 +1,5 @@
 import { computed } from 'vue'
-import { planStress, relieveTerm, termStress, type Relief, type Skill, type TermStress } from '@/engine'
+import { planRoles, planStress, relieveTerm, requiredWithPrerequisites, termStress, type Relief, type Skill, type TermStress } from '@/engine'
 import { useDataset } from './useDataset'
 import { usePlan } from './usePlan'
 import { useProfile } from './useProfile'
@@ -10,7 +10,13 @@ export function usePlanStress() {
   const { data } = useDataset()
   const { profile } = useProfile()
 
-  const stress = computed(() => planStress(plan.terms.value.map((t) => t.subjects), data.value, profile.value))
+  // What the degree itself requires: only that makes a weak-skill stack unavoidable.
+  const fixed = computed(() => {
+    const { course, courseYear, major, specialisation } = plan.setup.value
+    const roles = planRoles(data.value, course, courseYear, [major, specialisation])
+    return requiredWithPrerequisites(new Set([...roles.required, ...roles.options]), plan.plannedCodes.value, data.value.subjects, course)
+  })
+  const stress = computed(() => planStress(plan.terms.value.map((t) => t.subjects), data.value, profile.value, fixed.value))
   const stackFloor = computed(
     () => Object.fromEntries(stress.value.unavoidable.map((u) => [u.skill, u.perTerm])) as Partial<Record<Skill, number>>,
   )

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { ChevronRight } from 'lucide-vue-next'
+import { ChevronRight, ExternalLink } from 'lucide-vue-next'
+import { handbookUrl } from '@/utils/links'
 import { periodsFor } from '@/engine'
 import { link } from '@/composables/useView'
 import { useDataset } from '@/composables/useDataset'
@@ -16,7 +17,9 @@ const rows = computed(() =>
     const s = data.value.subjects[code]
     return {
       code,
-      title: s?.title ?? t.value('plan.notInDataset'),
+      // Not added to our data yet: say so, and go to the Handbook instead of an empty page.
+      missing: !s,
+      title: s?.title ?? t.value('subject.notYetAdded'),
       when: s ? periodsFor(s, props.year).map((p) => t.value(`periodShort.${p}`)).join(' · ') : '',
       note: props.notes?.[code],
     }
@@ -27,7 +30,13 @@ const rows = computed(() =>
 <template>
   <ul class="links surface">
     <li v-for="r in rows" :key="r.code">
-      <a class="row" :href="link(`subject/${r.code}`)">
+      <a
+        class="row"
+        :class="{ 'row-missing': r.missing }"
+        :href="r.missing ? handbookUrl(r.code) : link(`subject/${r.code}`)"
+        :target="r.missing ? '_blank' : undefined"
+        :rel="r.missing ? 'noopener' : undefined"
+      >
         <span class="main">
           <span class="head">
             <span class="code">{{ r.code }}</span>
@@ -36,13 +45,19 @@ const rows = computed(() =>
           <span class="title">{{ r.title }}</span>
           <span v-if="r.note" class="note">{{ r.note }}</span>
         </span>
-        <ChevronRight :size="18" aria-hidden="true" class="go" />
+        <ExternalLink v-if="r.missing" :size="16" aria-hidden="true" class="go" />
+        <ChevronRight v-else :size="18" aria-hidden="true" class="go" />
       </a>
     </li>
   </ul>
 </template>
 
 <style scoped>
+.row-missing .title {
+  font-weight: 400;
+  color: var(--ink-soft);
+}
+
 .links {
   margin: 0;
   padding: 0;

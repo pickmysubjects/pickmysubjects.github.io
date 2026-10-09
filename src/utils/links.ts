@@ -23,3 +23,8 @@ export function discussionLinks(code: string): OutboundLink[] {
     { label: '知乎', href: `https://www.zhihu.com/search?type=content&q=${zh}`, lang: 'zh' },
   ]
 }
+
+/** A subject's page in the University's Handbook (the current year's). */
+export function handbookUrl(code: string, year = new Date().getFullYear()): string {
+  return `https://handbook.unimelb.edu.au/${year}/subjects/${code.toLowerCase()}`
+}

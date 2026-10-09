@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed, shallowRef } from 'vue'
 import { RATINGS_FORM } from '@/config'
-import { useDataset } from '@/composables/useDataset'
 import { SKILLS, type Period, type Skill } from '@/engine'
 import { useI18n } from '@/i18n'
 import { hasQuestion, isFormReady, submitGoogleForm } from '@/utils/googleForm'
@@ -28,10 +27,7 @@ const recommend = shallowRef('')
 const wish = shallowRef('')
 const status = shallowRef<'idle' | 'sending' | 'failed'>('idle')
 
-// Demo subjects are fictional: their ratings must never reach the real form.
-const { name: dataset } = useDataset()
-const demo = computed(() => dataset.value === 'demo')
-const ready = computed(() => isFormReady(RATINGS_FORM) && !demo.value)
+const ready = computed(() => isFormReady(RATINGS_FORM))
 const complete = computed(
   () =>
     [difficulty, workload, generosity, examDifficulty, usefulness, interest, teaching].some((r) => r.value !== null) ||
@@ -104,9 +100,7 @@ function value(event: Event): string {
     <h3 class="rate-title">{{ t('rating.title', { code }) }}</h3>
     <p class="rate-intro">{{ t('rating.intro') }}</p>
     <p class="rate-required">{{ t('rating.allOptional') }}</p>
-
-    <p v-if="demo" class="rate-off">{{ t('rating.demoOff') }}</p>
-    <p v-else-if="!ready" class="rate-off">{{ t('rating.notReady') }}</p>
+    <p v-if="!ready" class="rate-off">{{ t('rating.notReady') }}</p>
     <template v-else>
       <div class="rate-row">
         <label class="field">
