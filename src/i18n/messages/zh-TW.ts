@@ -18,6 +18,10 @@ export const zhTW: Messages = {
   periodShort: { summer: '夏季', 'semester-1': 'S1', winter: '冬季', 'semester-2': 'S2' },
   category: { science: '理科', breadth: 'Breadth', discipline: '專業' },
   plan: {
+    pastTag: "已修",
+    pastUndated: "已修 · 學期未填",
+    pastRetake: "未通過 · {term} 重修",
+    pastNotPassed: "未通過",
     failedRetake: "{code} 沒過，計畫裡已經在 {term} 安排重修，需要它的後續課程也排在它之後。",
     failedNotPlanned: "{code} 沒過，計畫裡沒有再安排：如果是選修，可以換別的課；如果是必修，要把它加回來。",
     tagRequired: "必修",
@@ -216,6 +220,7 @@ export const zhTW: Messages = {
     prereqCheck: "先修待確認",
   },
   reason: {
+    opensMany: "有 {n} 門後續課以它為先修，以後用得上。",
     makesHeavy: "加進這個學期會讓它偏重。",
     makesVeryHeavy: "加進這個學期會讓它很重。",
     prereqNotCurated: "這門課的先修條件還沒收錄，選課前請看 Handbook。",
@@ -239,6 +244,8 @@ export const zhTW: Messages = {
     eligibilityUnknown: '無法確認是否符合選課條件：{needs}。',
   },
   record: {
+    termUnknown: "學期：未填",
+    termFor: "{code} 是哪個學期上的",
     failHint: "低於 50 分就是被當：不給學分，但分數會算進 WAM。必修課的話，排課時會安排重修。",
     title: '我的紀錄',
     lede: '填上已修的課和你擅長的方向，推薦和排課都會用到。資料只存在這個瀏覽器裡（重開機也不會丟），不會上傳。',
@@ -297,6 +304,7 @@ export const zhTW: Messages = {
     business: '商科',
   },
   assess: {
+    guessedTags: "根據課程資料推測，還沒人工核對。",
     title: '考核方式',
     group: '小組作業占 {n}%',
     mustPassExam: '期末考試必須單獨及格',

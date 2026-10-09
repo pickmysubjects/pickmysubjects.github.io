@@ -4,9 +4,13 @@ import { referencedSubjects, SHORT_TERM_LOAD, termKey, type Issue, type Period, 
 import { termLabel } from '@/i18n/format'
 import { ChevronDown } from 'lucide-vue-next'
 import TermColumn from './TermColumn.vue'
+import PastTermColumn from './PastTermColumn.vue'
+import type { PastResult, PastTerm } from '@/utils/pastTerms'
 import { useI18n } from '@/i18n'
 
 const props = defineProps<{
+  /** Semesters already done, from the student's record (read-only, before the plan). */
+  past?: { terms: PastTerm[]; undated: PastResult[] }
   terms: PlanTerm[]
   subjects: Record<string, Subject>
   issues: Issue[]
@@ -141,7 +145,8 @@ const MIN_TERM = 185
 const GAP = 20
 // The add-term buttons (about 158px) plus the track's own padding.
 const TOOLS = 170
-const trackWidth = computed(() => `max(100%, ${props.terms.length * (MIN_TERM + GAP) + TOOLS}px)`)
+const pastCount = computed(() => (props.past?.terms.length ?? 0) + (props.past?.undated.length ? 1 : 0))
+const trackWidth = computed(() => `max(100%, ${(props.terms.length + pastCount.value) * (MIN_TERM + GAP) + TOOLS}px)`)
 </script>
 
 <template>
@@ -150,6 +155,23 @@ const trackWidth = computed(() => `max(100%, ${props.terms.length * (MIN_TERM + 
       <svg class="routes" aria-hidden="true">
         <path v-for="r in routes" :key="`${r.from}-${r.to}`" :class="routeClass(r)" :d="r.d" />
       </svg>
+      <PastTermColumn
+        v-if="past?.undated.length"
+        :term="null"
+        :results="past.undated"
+        :subjects="subjects"
+        :planned="terms"
+        @open="emit('open', $event)"
+      />
+      <PastTermColumn
+        v-for="p in past?.terms ?? []"
+        :key="`past-${p.year}-${p.period}`"
+        :term="p"
+        :results="p.results"
+        :subjects="subjects"
+        :planned="terms"
+        @open="emit('open', $event)"
+      />
       <TermColumn
         v-for="(term, i) in terms"
         :key="`${term.year}-${term.period}`"

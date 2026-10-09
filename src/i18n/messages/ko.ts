@@ -18,6 +18,10 @@ export const ko: Messages = {
   periodShort: { summer: '여름', 'semester-1': 'S1', winter: '겨울', 'semester-2': 'S2' },
   category: { science: '이학', breadth: '교양(Breadth)', discipline: '전공' },
   plan: {
+    pastTag: "이수함",
+    pastUndated: "이수함 · 학기 미입력",
+    pastRetake: "미통과 · {term} 재수강",
+    pastNotPassed: "미통과",
     failedRetake: "{code}를 낙제했어요. 계획에서 {term}에 다시 듣도록 넣었고, 그 과목이 필요한 과목은 그 뒤로 뒀어요.",
     failedNotPlanned: "{code}를 낙제했어요. 계획에 다시 들어가 있지 않아요. 선택 과목이면 다른 과목으로 바꿔도 되고, 필수 과목이면 다시 추가하세요.",
     tagRequired: "필수",
@@ -216,6 +220,7 @@ export const ko: Messages = {
     prereqCheck: "선수과목 확인 필요",
   },
   reason: {
+    opensMany: "{n}개 과목의 선수과목이라 나중에 쓸모가 많아요.",
     makesHeavy: "이 학기에 넣으면 빡빡해져요.",
     makesVeryHeavy: "이 학기에 넣으면 매우 빡빡해져요.",
     prereqNotCurated: "선수 조건이 아직 등록되지 않았어요. 수강 전에 Handbook을 확인하세요.",
@@ -239,6 +244,8 @@ export const ko: Messages = {
     eligibilityUnknown: '수강 자격을 확인할 수 없습니다: {needs}.',
   },
   record: {
+    termUnknown: "학기: 미입력",
+    termFor: "{code}을(를) 들은 학기",
     failHint: "50점 미만은 낙제예요. 학점은 안 나오지만 점수는 WAM에 들어가요. 필수 과목이면 수강 계획에 재수강을 넣어요.",
     title: '내 기록',
     lede: '이수한 과목과 잘하는 분야를 넣으면 추천과 계획에 쓰입니다. 이 브라우저에만 저장되며(재시작해도 유지) 업로드되지 않습니다.',
@@ -297,6 +304,7 @@ export const ko: Messages = {
     business: '경영',
   },
   assess: {
+    guessedTags: "과목 정보로 추정한 것이며 아직 직접 확인하지 않았어요.",
     title: '평가 방식',
     group: '조별 과제 {n}%',
     mustPassExam: '기말고사 단독 통과 필요',

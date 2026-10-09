@@ -21,6 +21,10 @@ export const en = {
   periodShort: { summer: 'Summer', 'semester-1': 'Sem 1', winter: 'Winter', 'semester-2': 'Sem 2' },
   category: { science: 'science', breadth: 'breadth', discipline: 'discipline' },
   plan: {
+    pastTag: "Done",
+    pastUndated: "Done · semester not given",
+    pastRetake: "Not passed · again in {term}",
+    pastNotPassed: "Not passed",
     failedRetake: "You failed {code}. The plan takes it again in {term}, and anything that needs it comes after.",
     failedNotPlanned: "You failed {code}. It isn’t in the plan again: if it’s an elective you can pick a different subject; if it’s compulsory, add it back.",
     tagRequired: "Required",
@@ -219,6 +223,7 @@ export const en = {
     prereqCheck: "Check prerequisites",
   },
   reason: {
+    opensMany: "{n} later subjects build on it, so it pays off later.",
     makesHeavy: "Adding it makes that semester heavy.",
     makesVeryHeavy: "Adding it makes that semester very heavy.",
     prereqNotCurated: "Prerequisites not added yet: check the Handbook before enrolling.",
@@ -242,6 +247,8 @@ export const en = {
     eligibilityUnknown: 'Eligibility not confirmed: {needs}.',
   },
   record: {
+    termUnknown: "Semester not given",
+    termFor: "Semester you took {code}",
     failHint: "Subjects under 50 are fails: no credit points, but the mark counts in your WAM. The plan repeats them if they’re compulsory.",
     title: 'My record',
     lede: 'Add what you’ve finished and what you’re good at — your suggestions and plan use it. It stays in this browser (even after a restart) and is never uploaded.',
@@ -300,6 +307,7 @@ export const en = {
     business: 'Business',
   },
   assess: {
+    guessedTags: "Worked out from the subject's facts, not checked by hand yet.",
     title: 'How it’s assessed',
     group: '{n}% group work',
     mustPassExam: 'Must pass the exam on its own',

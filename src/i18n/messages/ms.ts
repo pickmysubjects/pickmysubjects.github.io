@@ -18,6 +18,10 @@ export const ms: Messages = {
   periodShort: { summer: 'Musim panas', 'semester-1': 'Sem 1', winter: 'Musim sejuk', 'semester-2': 'Sem 2' },
   category: { science: 'sains', breadth: 'breadth', discipline: 'bidang' },
   plan: {
+    pastTag: "Sudah diambil",
+    pastUndated: "Sudah diambil · semester belum diisi",
+    pastRetake: "Tidak lulus · ulang pada {term}",
+    pastNotPassed: "Tidak lulus",
     failedRetake: "Anda gagal {code}. Pelan mengulangnya pada {term}, dan subjek yang memerlukannya diletakkan selepas itu.",
     failedNotPlanned: "Anda gagal {code}. Ia tiada lagi dalam pelan: jika elektif, anda boleh pilih subjek lain; jika wajib, tambahkannya semula.",
     tagRequired: "Wajib",
@@ -216,6 +220,7 @@ export const ms: Messages = {
     prereqCheck: "Semak prasyarat",
   },
   reason: {
+    opensMany: "{n} subjek kemudian memerlukannya, jadi berguna kelak.",
     makesHeavy: "Menambahnya menjadikan semester itu berat.",
     makesVeryHeavy: "Menambahnya menjadikan semester itu sangat berat.",
     prereqNotCurated: "Prasyarat belum ditambah: semak Handbook sebelum mendaftar.",
@@ -239,6 +244,8 @@ export const ms: Messages = {
     eligibilityUnknown: 'Kelayakan belum disahkan: {needs}.',
   },
   record: {
+    termUnknown: "Semester: belum diisi",
+    termFor: "Semester anda ambil {code}",
     failHint: "Bawah 50 ialah gagal: tiada mata kredit, tetapi markah dikira dalam WAM. Subjek wajib akan dijadualkan semula dalam pelan.",
     title: 'Rekod saya',
     lede: 'Tambah subjek yang telah selesai dan kekuatan anda — cadangan dan pelan menggunakannya. Data disimpan dalam pelayar ini (kekal selepas mula semula) dan tidak dimuat naik.',
@@ -297,6 +304,7 @@ export const ms: Messages = {
     business: 'Perniagaan',
   },
   assess: {
+    guessedTags: "Dianggarkan daripada maklumat subjek, belum disemak secara manual.",
     title: 'Cara penilaian',
     group: '{n}% kerja berkumpulan',
     mustPassExam: 'Peperiksaan akhir mesti lulus sendiri',

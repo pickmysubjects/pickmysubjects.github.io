@@ -30,6 +30,7 @@ const ICONS: Record<string, Component> = {
   goodAt: Sparkles,
   averagedHigh: TrendingUp,
   unlocks: ArrowUpRight,
+  opensMany: ArrowUpRight,
   approachable: ThumbsUp,
   reviewsEasy: ThumbsUp,
   generous: ThumbsUp,
@@ -292,7 +293,8 @@ const where = computed(() => {
   --tone: var(--good);
 }
 
-.rec-reason-unlocks {
+.rec-reason-unlocks,
+.rec-reason-opensMany {
   --tone: #6d5bd0;
 }
 

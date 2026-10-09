@@ -1,12 +1,20 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { CircleCheck, Clock, TriangleAlert, Users } from 'lucide-vue-next'
-import { periodsFor, type Subject } from '@/engine'
+import { periodsFor, skillsOf, topicsOf, type Subject } from '@/engine'
+import { useDataset } from '@/composables/useDataset'
 import { useI18n } from '@/i18n'
 import { summariseAssessment } from '@/utils/assessment'
 
 const props = defineProps<{ subject: Subject; year: number }>()
 const { t } = useI18n()
+
+// The skills and topics the suggestions and the semester check use: hand-tagged, or else
+// worked out from the subject's facts, said to be a guess.
+const { data } = useDataset()
+const skills = computed(() => skillsOf(props.subject, data.value))
+const topics = computed(() => topicsOf(props.subject).specific)
+const guessed = computed(() => props.subject.skills.length === 0)
 
 const info = computed(() => summariseAssessment(props.subject.assessment))
 const parts = computed(() => info.value?.parts ?? [])
@@ -61,15 +69,16 @@ const otherTerms = computed(
     </p>
     <p v-if="otherTerms" class="assess-muted assess-small">{{ t('assess.otherTerms') }}</p>
 
-    <div v-if="subject.skills.length || subject.topics.length" class="assess-tags">
-      <p v-if="subject.skills.length" class="assess-row">
+    <div v-if="skills.length || topics.length" class="assess-tags">
+      <p v-if="skills.length" class="assess-row">
         <span class="assess-label">{{ t('assess.uses') }}</span>
-        <span v-for="k in subject.skills" :key="k" class="chip">{{ t(`skill.${k}`) }}</span>
+        <span v-for="k in skills" :key="k" class="chip">{{ t(`skill.${k}`) }}</span>
       </p>
-      <p v-if="subject.topics.length" class="assess-row">
+      <p v-if="topics.length" class="assess-row">
         <span class="assess-label">{{ t('assess.about') }}</span>
-        <span v-for="k in subject.topics" :key="k" class="chip">{{ t(`topic.${k}`) }}</span>
+        <span v-for="k in topics" :key="k" class="chip">{{ t(`topic.${k}`) }}</span>
       </p>
+      <p v-if="guessed" class="assess-muted assess-small">{{ t('assess.guessedTags') }}</p>
     </div>
   </section>
 </template>

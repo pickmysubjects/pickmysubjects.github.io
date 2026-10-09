@@ -10,8 +10,11 @@ import { relatedTopics, topicsOf } from './topics'
 export type Goal = 'wam' | 'balanced' | 'challenge'
 
 export interface Profile {
-  /** Completed subjects; marks are optional (0–100). */
-  results: { code: string; mark?: number }[]
+  /**
+   * Completed subjects; marks are optional (0–100), and so is when it was taken (shown in its
+   * semester on the plan board; nothing is worked out from it).
+   */
+  results: { code: string; mark?: number; year?: number; period?: Period }[]
   /** Self-rated skill levels, 1 (weak) – 5 (strong). Missing = not rated. */
   skills: Partial<Record<Skill, number>>
   /** Topic tags the student is interested in, e.g. "machine-learning". */
@@ -63,16 +66,25 @@ export interface RecommendOptions {
 export const HEAVY_PICK_COST = 6
 const STRESS_RANK = { ok: 0, heavy: 1, veryHeavy: 2 } as const
 
+/** What each goal is mostly about; unknown, these count as neutral instead of being left out. */
+const CORE: Record<Goal, Signal[]> = { wam: ['ease', 'predicted'], balanced: [], challenge: ['opens'] }
+
+/**
+ * What each goal weighs. "Protect my WAM": easy to do well in, above all. "Challenge": hard to
+ * score in but useful later (many subjects build on it), and what interests you.
+ */
 const WEIGHTS: Record<Goal, Record<Signal, number>> = {
-  wam: { ease: 0.35, predicted: 0.25, skillFit: 0.2, interest: 0.15, unlocks: 0.05 },
-  balanced: { ease: 0.2, predicted: 0.2, skillFit: 0.2, interest: 0.3, unlocks: 0.1 },
-  challenge: { ease: 0, predicted: 0.1, skillFit: 0.2, interest: 0.45, unlocks: 0.25 },
+  wam: { ease: 0.5, predicted: 0.25, skillFit: 0.1, interest: 0.1, unlocks: 0, opens: 0.05, hardness: 0 },
+  balanced: { ease: 0.2, predicted: 0.2, skillFit: 0.2, interest: 0.3, unlocks: 0.1, opens: 0, hardness: 0 },
+  challenge: { ease: 0, predicted: 0.05, skillFit: 0.1, interest: 0.3, unlocks: 0.15, opens: 0.15, hardness: 0.25 },
 }
 
-type Signal = 'ease' | 'predicted' | 'skillFit' | 'interest' | 'unlocks'
+type Signal = 'ease' | 'predicted' | 'skillFit' | 'interest' | 'unlocks' | 'opens' | 'hardness'
+/** Subjects that list one as a prerequisite before it counts as fully "useful later". */
+const OPENS_FULL = 4
 const MIN_REVIEWS = 3
 /** How much of a score's distance from neutral is kept when only part of the evidence is known (the rest scales with coverage). */
-const SURE_BASE = 0.6
+const SURE_BASE = 0.3
 /** Interest scores: two tagged matches, one, an area-implied match, a related topic. */
 const INTEREST_FULL = 1
 const INTEREST_ONE = 0.8
@@ -326,6 +338,19 @@ function score(s: Subject, ctx: ScoreCtx): Recommendation {
     if (parts.ease === undefined && (d?.difficulty === 'hard' || d?.difficulty === 'easy')) parts.ease = d.difficulty === 'hard' ? 0.42 : 0.58
   }
 
+  // Nothing rated or reviewed: a small estimate from the Handbook facts, so "protect my WAM"
+  // still tells subjects apart. Exam-heavy subjects are felt as harder, and an exam hurdle
+  // adds risk; first-year subjects are gentler than third-year ones.
+  // Only from facts we have: a subject with nothing curated stays unknown.
+  if (parts.ease === undefined && s.assessment) parts.ease = structuralEase(s)
+  if (parts.ease !== undefined) parts.hardness = 1 - parts.ease
+
+  // Useful later: how many subjects build on it (and students' usefulness rating, once rated).
+  const builtOn = ctx.dependents.get(s.code)?.length ?? 0
+  const ratedUseful = s.signals && s.signals.reviews >= MIN_REVIEWS && s.signals.usefulness !== undefined ? (s.signals.usefulness - 1) / 4 : 0
+  parts.opens = Math.max(Math.min(1, builtOn / OPENS_FULL), ratedUseful)
+  if (builtOn >= 3) reasons.push(note('opensMany', { n: builtOn }, `${builtOn} later subjects build on it.`))
+
   // Pathway value: subjects it unlocks that match the student's interests.
   const unlocks = leadsTo
   if (unlocks.length > 0) {
@@ -350,6 +375,10 @@ function score(s: Subject, ctx: ScoreCtx): Recommendation {
   // part of the way back to neutral by how much of the goal's weight we could actually see,
   // so a subject known on one signal can't look as sure as a well-documented one.
   const weights = WEIGHTS[ctx.profile.goal]
+  // Except a goal's own core signals: "protect my WAM" is about how easy it is to do well, so
+  // a subject nobody has rated can't rank with ones known to be easy; there a missing core
+  // signal counts as neutral rather than being skipped.
+  for (const k of CORE[ctx.profile.goal]) parts[k] ??= 0.5
   const present = (Object.keys(parts) as Signal[]).filter((k) => weights[k] > 0)
   const signalKeys = (Object.keys(weights) as Signal[]).filter((k) => weights[k] > 0)
   const totalWeight = signalKeys.reduce((sum, k) => sum + weights[k], 0)
@@ -457,4 +486,18 @@ function diversify(recs: Recommendation[], data: Dataset): Recommendation[] {
 export function yearLevel(results: Profile['results'], data: Dataset): number {
   const done = passedCodes(results).reduce((sum, c) => sum + (data.subjects[c]?.points ?? 12.5), 0)
   return Math.min(3, Math.floor(done / 100) + 1)
+}
+
+/** A rough ease (0–1, 0.5 neutral) from what the Handbook says, for subjects nobody has rated. */
+function structuralEase(s: Subject): number {
+  let e = 0.5
+  if (s.level === 1) e += 0.04
+  if (s.level >= 3) e -= 0.04
+  if (s.assessment) {
+    const exam = s.assessment.filter((t) => t.kind === 'exam').reduce((n, t) => n + t.weight, 0)
+    if (exam >= 70) e -= 0.04
+    if (exam <= 40) e += 0.04
+    if (s.assessment.some((t) => t.kind === 'exam' && t.hurdle)) e -= 0.03
+  }
+  return e
 }

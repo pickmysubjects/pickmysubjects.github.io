@@ -18,6 +18,10 @@ export const vi: Messages = {
   periodShort: { summer: 'Hè', 'semester-1': 'HK1', winter: 'Đông', 'semester-2': 'HK2' },
   category: { science: 'khoa học', breadth: 'breadth (ngoài ngành)', discipline: 'chuyên ngành' },
   plan: {
+    pastTag: "Đã học",
+    pastUndated: "Đã học · chưa điền học kỳ",
+    pastRetake: "Chưa qua · học lại {term}",
+    pastNotPassed: "Chưa qua",
     failedRetake: "Bạn trượt {code}. Lộ trình xếp học lại vào {term}, các môn cần nó được xếp sau đó.",
     failedNotPlanned: "Bạn trượt {code}. Lộ trình không xếp lại môn này: nếu là môn tự chọn bạn có thể chọn môn khác; nếu là môn bắt buộc, hãy thêm lại.",
     tagRequired: "Bắt buộc",
@@ -216,6 +220,7 @@ export const vi: Messages = {
     prereqCheck: "Cần kiểm tra môn tiên quyết",
   },
   reason: {
+    opensMany: "Là môn tiên quyết của {n} môn sau, nên sau này rất hữu ích.",
     makesHeavy: "Thêm vào kỳ này sẽ làm kỳ này nặng.",
     makesVeryHeavy: "Thêm vào kỳ này sẽ làm kỳ này rất nặng.",
     prereqNotCurated: "Điều kiện tiên quyết chưa được thêm: xem Handbook trước khi đăng ký.",
@@ -239,6 +244,8 @@ export const vi: Messages = {
     eligibilityUnknown: 'Chưa xác nhận được điều kiện học: {needs}.',
   },
   record: {
+    termUnknown: "Học kỳ: chưa điền",
+    termFor: "Học kỳ bạn học {code}",
     failHint: "Dưới 50 điểm là trượt: không được tín chỉ, nhưng điểm vẫn tính vào WAM. Môn bắt buộc sẽ được xếp học lại trong lộ trình.",
     title: 'Hồ sơ của tôi',
     lede: 'Thêm các môn đã học và thế mạnh của bạn — gợi ý và kế hoạch sẽ dùng chúng. Dữ liệu nằm trong trình duyệt này (khởi động lại vẫn còn) và không được tải lên.',
@@ -297,6 +304,7 @@ export const vi: Messages = {
     business: 'Kinh doanh',
   },
   assess: {
+    guessedTags: "Suy ra từ thông tin môn học, chưa được kiểm tra thủ công.",
     title: 'Cách đánh giá',
     group: '{n}% làm việc nhóm',
     mustPassExam: 'Phải đạt riêng bài thi cuối kỳ',

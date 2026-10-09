@@ -17,6 +17,7 @@ import { useProfile } from '@/composables/useProfile'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan, type PlanSetup } from '@/composables/usePlan'
 import { usePlanStress } from '@/composables/usePlanStress'
+import { pastTerms } from '@/utils/pastTerms'
 import { useI18n } from '@/i18n'
 import { issueText, noteText, termLabel } from '@/i18n/format'
 
@@ -69,6 +70,8 @@ const peek = shallowRef<string | null>(null)
 const profileEmpty = computed(
   () => Object.keys(profile.value.skills).length === 0 && !profile.value.results.some((r) => r.mark !== undefined),
 )
+// The student's completed subjects, in the semesters they were taken, shown before the plan.
+const past = computed(() => pastTerms(profile.value.results))
 // Weak spots the degree leans on every semester: said once here, not on each semester.
 const { stress } = usePlanStress()
 const unavoidable = computed(() =>
@@ -259,6 +262,7 @@ function finishWizard(setup: PlanSetup): void {
         :load="plan.course.value?.standardLoad ?? 50"
         :options="options"
         :roles="roles"
+        :past="past"
         @add="plan.addSubject"
         @remove="plan.removeSubject"
         @move="plan.moveSubject"

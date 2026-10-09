@@ -25,3 +25,10 @@ categories:
   B-SCI: science
 notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
 weekly_contact_hours: 3
+skills:
+  - programming
+  - data
+  - writing
+topics:
+  - machine-learning
+  - biology

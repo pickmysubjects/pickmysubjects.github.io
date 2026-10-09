@@ -18,6 +18,10 @@ export const ja: Messages = {
   periodShort: { summer: '夏', 'semester-1': 'S1', winter: '冬', 'semester-2': 'S2' },
   category: { science: '理系科目', breadth: 'Breadth（専攻外科目）', discipline: '専門' },
   plan: {
+    pastTag: "履修済み",
+    pastUndated: "履修済み・学期未入力",
+    pastRetake: "不合格・{term} に再履修",
+    pastNotPassed: "不合格",
     failedRetake: "{code} は不合格でした。プランでは {term} に取り直しを入れ、それが必要な科目はその後にしています。",
     failedNotPlanned: "{code} は不合格でした。プランにはもう入っていません。選択科目なら別の科目に替えられます。必修なら追加し直してください。",
     tagRequired: "必修",
@@ -216,6 +220,7 @@ export const ja: Messages = {
     prereqCheck: "前提科目を確認",
   },
   reason: {
+    opensMany: "{n} 科目の前提科目で、後々役立ちます。",
     makesHeavy: "この学期に加えると重めになります。",
     makesVeryHeavy: "この学期に加えるとかなり重くなります。",
     prereqNotCurated: "前提条件はまだ未登録です。履修前に Handbook を確認してください。",
@@ -239,6 +244,8 @@ export const ja: Messages = {
     eligibilityUnknown: '履修条件を確認できません：{needs}。',
   },
   record: {
+    termUnknown: "学期：未入力",
+    termFor: "{code} を履修した学期",
     failHint: "50点未満は不合格です。単位はもらえませんが点数は WAM に入ります。必修なら履修計画で取り直しを入れます。",
     title: '自分の記録',
     lede: '履修済みの科目と得意分野を入れると、おすすめと履修計画に使われます。このブラウザに保存され（再起動しても消えません）、アップロードされません。',
@@ -297,6 +304,7 @@ export const ja: Messages = {
     business: 'ビジネス',
   },
   assess: {
+    guessedTags: "科目の情報から推測したもので、まだ人手で確認していません。",
     title: '評価方法',
     group: 'グループワーク {n}%',
     mustPassExam: '期末試験の単独合格が必要',

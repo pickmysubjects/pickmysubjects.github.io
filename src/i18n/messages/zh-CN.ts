@@ -18,6 +18,10 @@ export const zhCN: Messages = {
   periodShort: { summer: '夏季', 'semester-1': 'S1', winter: '冬季', 'semester-2': 'S2' },
   category: { science: '理科', breadth: 'Breadth', discipline: '专业' },
   plan: {
+    pastTag: "已修",
+    pastUndated: "已修 · 学期未填",
+    pastRetake: "未通过 · {term} 重修",
+    pastNotPassed: "未通过",
     failedRetake: "{code} 没过，计划里已经在 {term} 安排重修，需要它的后续课程也排在它之后。",
     failedNotPlanned: "{code} 没过，计划里没有再安排：如果是选修，可以换别的课；如果是必修，要把它加回来。",
     tagRequired: "必修",
@@ -216,6 +220,7 @@ export const zhCN: Messages = {
     prereqCheck: "先修待确认",
   },
   reason: {
+    opensMany: "有 {n} 门后续课以它为先修，以后用得上。",
     makesHeavy: "加进这个学期会让它偏重。",
     makesVeryHeavy: "加进这个学期会让它很重。",
     prereqNotCurated: "这门课的先修条件还没收录，选课前请看 Handbook。",
@@ -239,6 +244,8 @@ export const zhCN: Messages = {
     eligibilityUnknown: '无法确认是否满足选课条件：{needs}。',
   },
   record: {
+    termUnknown: "学期：未填",
+    termFor: "{code} 是哪个学期上的",
     failHint: "低于 50 分就是挂科：不给学分，但分数会算进 WAM。必修课的话，排课时会安排重修。",
     title: '我的记录',
     lede: '填上已修的课和你擅长的方向，推荐和排课都会用到。数据只存在这个浏览器里（重启也不会丢），不会上传。',
@@ -297,6 +304,7 @@ export const zhCN: Messages = {
     business: '商科',
   },
   assess: {
+    guessedTags: "根据课程资料推测，还没人工核对。",
     title: '考核方式',
     group: '小组作业占 {n}%',
     mustPassExam: '期末考试必须单独及格',

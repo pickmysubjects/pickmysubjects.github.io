@@ -24,3 +24,8 @@ categories:
   B-SCI: science
 notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Science students: PATH20001 before or at the same time. Biomedicine students need BIOM20001 instead."
 weekly_contact_hours: 4
+skills:
+  - lab
+  - writing
+topics:
+  - biology

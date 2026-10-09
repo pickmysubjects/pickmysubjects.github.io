@@ -5,11 +5,10 @@ import type { Dataset, ReqExpr, ReqField, Skill, Subject } from './schema'
  * spots apart. Hand-tagged skills win; for the rest they're worked out from what the data
  * does say: the area, the title, the assessment, and the subjects it requires.
  *
- * Checked against the hand-tagged subjects (scripts would tag them blind and compare):
- * precision / recall about 96/86 for maths, 83/86 programming, 93/93 statistics,
- * 83/83 writing, 100/75 lab — against 98/78, 81/77, 100/13 and nothing for writing and lab
- * when going by the area code alone. The rules were tuned on those same subjects, so
- * expect a little less on others.
+ * Checked blind against the 179 hand-tagged subjects: precision / recall about 93/82 for
+ * maths, 79/79 programming, 94/67 statistics, 89/53 writing, 83/58 lab (the area code alone
+ * found almost no statistics, writing or lab). Every curated subject is hand-tagged now, so
+ * this guess is only for subjects not curated yet.
  */
 
 const MATHS_AREAS = new Set(['MAST', 'PHYC', 'ACTL', 'ELEN', 'MCEN', 'CVEN', 'CHEN', 'BMEN', 'ENGR'])

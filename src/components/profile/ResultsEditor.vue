@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { shallowRef, useId } from 'vue'
-import { PASS_MARK, type Profile, type Subject } from '@/engine'
+import { PASS_MARK, type Period, type Profile, type Subject } from '@/engine'
+import { termLabel } from '@/i18n/format'
+import { recentTerms } from '@/utils/pastTerms'
 import { useI18n } from '@/i18n'
 import { link } from '@/composables/useView'
 import RatingForm from '@/components/rating/RatingForm.vue'
@@ -46,9 +48,22 @@ function add(): void {
 function setMark(c: string, event: Event): void {
   const input = event.target as HTMLInputElement
   const m = input.value === '' ? undefined : Math.max(0, Math.min(100, Number(input.value)))
-  results.value = results.value.map((r) => (r.code === c ? { code: c, mark: m } : r))
+  // Keep whatever else the row holds (the semester it was taken).
+  results.value = results.value.map((r) => (r.code === c ? { ...r, mark: m } : r))
   // If the stored mark didn't change (e.g. 100 → 150 → 100), Vue won't repaint the box.
   input.value = m === undefined ? '' : String(m)
+}
+
+// When it was taken: optional, only used to show it in its semester on the plan board.
+const TERMS = recentTerms()
+const termValue = (r: Profile['results'][number]) => (r.year && r.period ? `${r.year}|${r.period}` : '')
+function setTerm(c: string, event: Event): void {
+  const [y, p] = (event.target as HTMLSelectElement).value.split('|')
+  results.value = results.value.map((r) => {
+    if (r.code !== c) return r
+    const { year: _y, period: _p, ...rest } = r
+    return y && p ? { ...rest, year: Number(y), period: p as Period } : rest
+  })
 }
 
 function remove(c: string): void {
@@ -90,6 +105,13 @@ function remove(c: string): void {
           <td>
             <span class="code">{{ r.code }}</span>
             <span class="title">{{ subjects[r.code]?.title ?? t('record.notInDataset') }}</span>
+            <label class="when">
+              <span class="visually-hidden">{{ t('record.termFor', { code: r.code }) }}</span>
+              <select class="when-select" :value="termValue(r)" @change="setTerm(r.code, $event)">
+                <option value="">{{ t('record.termUnknown') }}</option>
+                <option v-for="x in TERMS" :key="`${x.year}|${x.period}`" :value="`${x.year}|${x.period}`">{{ termLabel(t, x) }}</option>
+              </select>
+            </label>
           </td>
           <td>
             <input
@@ -181,6 +203,23 @@ function remove(c: string): void {
 
 .mark {
   width: 80px;
+}
+
+.when {
+  display: block;
+  margin-top: 4px;
+}
+
+.when-select {
+  max-width: 100%;
+  padding: 2px 4px;
+  border: 0;
+  border-bottom: 1px dashed var(--line);
+  background: transparent;
+  font: inherit;
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
+  cursor: pointer;
 }
 
 .row-actions {

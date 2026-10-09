@@ -128,7 +128,8 @@ describe('subject facts', () => {
 
   it('uses curated topics on real data: machine learning first-years see the way in, not unrated filler', () => {
     const { dataset: real } = buildDataset('real')
-    const fresh = recommend(real, { ...base, interests: ['machine-learning'] }, { course: 'B-SCI', limit: 5 }).map((r) => r.code)
+    // Level 1 only, as the For-you page shows a first-year.
+    const fresh = recommend(real, { ...base, interests: ['machine-learning'] }, { course: 'B-SCI', limit: 5, maxLevel: 1 }).map((r) => r.code)
     expect(fresh.slice(0, 3)).toEqual(expect.arrayContaining(['COMP10002', 'COMP10001'])) // the way to COMP30027 (with MAST10007)
     expect(fresh).not.toContain('ACTL30008') // no topics curated: neutral, so below real matches
     const ready = recommend(

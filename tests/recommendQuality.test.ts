@@ -21,7 +21,10 @@ describe('recommendation quality (real data)', () => {
   it('related interests rank above subjects we know nothing about', () => {
     const list = top({ interests: ['finance'] })
     expect(list[0]).toBe('FNCE10002')
-    expect(list.filter((c) => ['ACCT', 'ECON', 'BLAW', 'MKTG', 'FNCE', 'MAST'].includes(area(c) ?? ''))).toHaveLength(list.length)
+    // A commerce or maths subject, or one tagged with a business topic (biotech commercialisation).
+    const business = new Set(['economics', 'finance', 'accounting', 'marketing', 'law', 'business'])
+    const related = (c: string) => ['ACCT', 'ECON', 'BLAW', 'MKTG', 'FNCE', 'MAST'].includes(area(c) ?? '') || (real.subjects[c]?.topics ?? []).some((t) => business.has(t))
+    expect(list.filter(related)).toHaveLength(list.length)
   })
 
   it('a second-year ML student gets the next step towards machine learning, not unknown filler', () => {
