@@ -5,9 +5,33 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
-categories:
-  B-SCI: science
+prerequisites:
+  any:
+    - AGRI10046
+    - CHEM10003
+    - CHEM10006
+corequisites: none
+non_allowed:
+  - EVSC20002
+assessment:
+  - kind: report
+    weight: 25
+  - kind: report
+    weight: 25
+  - kind: quiz
+    weight: 10
+  - kind: exam
+    weight: 40
 handbook: https://handbook.unimelb.edu.au/2026/subjects/agri20038
 source_year: 2026
-verified_on: 2026-10-07
-notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-10
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+skills:
+  - lab
+  - data
+topics:
+  - earth-science
+  - chemistry
+  - environment

@@ -5,9 +5,48 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
-categories:
-  B-SCI: science
+prerequisites:
+  any:
+    - any:
+        - BIOL10002
+        - BIOL10008
+        - BIOL10009
+        - BIOL10001
+        - BIOL10010
+        - BIOL10011
+        - BIOM10002
+        - AGRI10044
+        - AGRI10048
+        - AGRI10050
+        - AGRI20043
+        - UNIB10009
+        - MAST10016
+        - AGRI10051
+        - BIOL10004
+    - CHEM10009
+    - manual: a minimum of 12.5 credit points in Level 1 biology, biochemistry, biotechnology, ecology, agriculture, chemistry, biomedicine, mathematics, geography, or environments as approved by the subject coordinator.
+corequisites: none
+non_allowed:
+  - AGRI20026
+assessment:
+  - kind: report
+    weight: 20
+  - kind: test
+    weight: 20
+  - kind: presentation
+    weight: 10
+    group: true
+  - kind: exam
+    weight: 50
+weekly_contact_hours: 5
 handbook: https://handbook.unimelb.edu.au/2026/subjects/bota20001
 source_year: 2026
-verified_on: 2026-10-07
-notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-10
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+skills:
+  - lab
+topics:
+  - biology
+  - environment

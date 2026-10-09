@@ -5,9 +5,34 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
-categories:
-  B-SCI: science
+prerequisites:
+  any:
+    - AGRI10050
+    - BIOL10008
+    - BIOL10009
+    - BIOL10010
+    - BIOL10011
+    - BIOL10004
+corequisites: none
+non_allowed:
+  - AGRI30029
+assessment:
+  - kind: assignment
+    weight: 20
+  - kind: assignment
+    weight: 20
+  - kind: assignment
+    weight: 10
+  - kind: exam
+    weight: 50
 handbook: https://handbook.unimelb.edu.au/2026/subjects/agri20036
 source_year: 2026
-verified_on: 2026-10-07
-notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-10
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+skills:
+  - lab
+topics:
+  - biology
+  - environment

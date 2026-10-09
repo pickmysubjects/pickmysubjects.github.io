@@ -5,9 +5,42 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
-categories:
-  B-SCI: science
+prerequisites:
+  any:
+    - all:
+        - CHEN20010
+        - MAST20029
+    - all:
+        - all:
+            - CHEN20010
+            - MAST20009
+            - MAST20030
+        - ENGR30002
+corequisites: ENGR30002
+non_allowed:
+  - BMEN30007
+  - CHEN20009
+assessment:
+  - kind: participation
+    weight: 10
+  - kind: quiz
+    weight: 15
+  - kind: test
+    weight: 15
+  - kind: exam
+    weight: 60
+    hurdle: true
+weekly_contact_hours: 5
 handbook: https://handbook.unimelb.edu.au/2026/subjects/chen30016
 source_year: 2026
-verified_on: 2026-10-07
-notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-10
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+skills:
+  - maths
+  - lab
+topics:
+  - physics
+  - chemistry
+  - modelling

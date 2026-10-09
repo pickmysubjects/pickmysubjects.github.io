@@ -5,9 +5,40 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
-categories:
-  B-SCI: science
+prerequisites:
+  any:
+    - any:
+        - AGRI20026
+        - AGRI20035
+        - AGRI20036
+        - AGRI20037
+        - AGRI20038
+        - ANSC20001
+        - BOTA20001
+    - admission: MC-ENVENG
+      note: Admission into the MC-ENVENG Master of Environmental Engineering
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: quiz
+    weight: 15
+  - kind: report
+    weight: 20
+  - kind: quiz
+    weight: 15
+  - kind: report
+    weight: 20
+  - kind: report
+    weight: 30
+weekly_contact_hours: 4.5
 handbook: https://handbook.unimelb.edu.au/2026/subjects/agri30045
 source_year: 2026
-verified_on: 2026-10-07
-notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-10
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+skills:
+  - data
+topics:
+  - data-science
+  - environment

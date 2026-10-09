@@ -5,9 +5,44 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
-categories:
-  B-SCI: science
+prerequisites:
+  points:
+    min: 25
+    from:
+      - BIOL10001
+      - BIOL10002
+      - BIOL10008
+      - BIOL10009
+      - BIOL10010
+      - BIOL10011
+      - ENVS10001
+      - BIOM10002
+      - BIOL10003
+      - BIOL10004
+      - BIOL10005
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: quiz
+    weight: 15
+  - kind: assignment
+    weight: 15
+    group: true
+  - kind: report
+    weight: 30
+  - kind: exam
+    weight: 40
+weekly_contact_hours: 3.5
 handbook: https://handbook.unimelb.edu.au/2026/subjects/evsc20004
 source_year: 2026
-verified_on: 2026-10-07
-notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-10
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+skills:
+  - lab
+  - statistics
+  - writing
+topics:
+  - biology
+  - environment

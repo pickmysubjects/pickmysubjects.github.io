@@ -4,9 +4,34 @@ level: 3
 points: 12.5
 offerings:
   "2026": []
-categories:
-  B-SCI: science
+prerequisites:
+  any:
+    - manual: 25 points of 200-level subjects that address biological or human-related issues
+    - any:
+        - ECOL20003
+        - BIOL20001
+    - manual: 25 points of relevant 200-level subjects in biology (ZOOL, ECOL, BIOL, EVSC, BOTA, BIOM, or others subject to course coordinator approval)
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: quiz
+    weight: 10
+  - kind: assignment
+    weight: 20
+  - kind: assignment
+    weight: 10
+  - kind: report
+    weight: 30
+  - kind: exam
+    weight: 30
 handbook: https://handbook.unimelb.edu.au/2026/subjects/zool30004
 source_year: 2026
-verified_on: 2026-10-07
-notes: Not available in 2026. Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-10
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+skills:
+  - writing
+topics:
+  - biology
+  - psychology

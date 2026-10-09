@@ -5,9 +5,42 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
-categories:
-  B-SCI: science
+prerequisites:
+  any:
+    - any:
+        - ELEN20006
+        - ELEN30014
+    - all:
+        - ELEN30010
+        - ELEN20005
+corequisites: none
+non_allowed:
+  - ELEN30006
+assessment:
+  - kind: exam
+    weight: 30
+    hurdle: true
+  - kind: presentation
+    weight: 10
+    group: true
+  - kind: presentation
+    weight: 15
+    group: true
+  - kind: assignment
+    weight: 30
+  - kind: presentation
+    weight: 15
+    group: true
+weekly_contact_hours: 6
 handbook: https://handbook.unimelb.edu.au/2026/subjects/elen30013
 source_year: 2026
-verified_on: 2026-10-07
-notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-10
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+skills:
+  - lab
+  - design
+  - programming
+topics:
+  - systems

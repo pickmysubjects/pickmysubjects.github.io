@@ -5,9 +5,33 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
-categories:
-  B-SCI: science
+prerequisites:
+  any:
+    - manual: "Admission into or selection of one of the following: MC-SPATENG Master of Spatial Engineering MC-DINFENG Master of Digital Infrastructure Engineering"
+    - manual: VCE mathematics
+    - manual: equivalent
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: presentation
+    weight: 30
+  - kind: test
+    weight: 20
+  - kind: project
+    weight: 40
+    group: true
+  - kind: report
+    weight: 10
+weekly_contact_hours: 2
 handbook: https://handbook.unimelb.edu.au/2026/subjects/geom20015
 source_year: 2026
-verified_on: 2026-10-07
-notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-10
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+skills:
+  - lab
+  - data
+topics:
+  - earth-science
+  - modelling

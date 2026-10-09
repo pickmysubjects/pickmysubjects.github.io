@@ -249,3 +249,54 @@ describe('parseHandbookPaste – page header', () => {
     expect(parseHandbookPaste(text)).toMatchObject({ code: 'COMP30027', title: 'Machine Learning', level: 3, points: 12.5 })
   })
 })
+
+describe('contact hours given as session counts', () => {
+  it('reads "24 x one-hour …, 12 x two-hour …" as a semester total', async () => {
+    const { parseContactHours } = await import('../src/engine/handbookPaste')
+    expect(parseContactHours('Contact hours\t24 x one-hour lectures (2 per week), 12 x two-hour practice classes (1 per week)')).toBe(4)
+    expect(parseContactHours('Contact hours\t2 x one-hour lectures per week')).toBe(2)
+  })
+})
+
+describe('requirements split by kind of student, and "a minimum of two … subjects"', () => {
+  it('keeps the undergraduate requirement', async () => {
+    const { parseHandbookPaste } = await import('../src/engine/handbookPaste')
+    const text = 'Prerequisites\nUndergraduate Students\nOne of\nCode\tName\tTeaching period\tCredit Points\nBIOL10001\tBiology\t\n12.5\nBIOL10008\tBiology\t\n12.5\nPostgraduate students\nAdmission into the MC-URBHORT Master of Urban Horticulture\n\nCorequisites\nNone\n'
+    expect(parseHandbookPaste(text).prerequisites).toEqual({ any: [{ subject: 'BIOL10001' }, { subject: 'BIOL10008' }] })
+  })
+  it('reads "A minimum of two level three … subjects" as two of the table', async () => {
+    const { parseHandbookPaste } = await import('../src/engine/handbookPaste')
+    const text = 'Prerequisites\nA minimum of two level three Geoscience subjects (can be concurrent prerequisites)\nCode\tName\tTeaching period\tCredit Points\nGEOL30007\tGeobiology\t\n12.5\nGEOL30004\tGeochemistry\t\n12.5\nGEOL30003\tSedimentary\t\n12.5\n\nCorequisites\nNone\n'
+    expect(parseHandbookPaste(text).prerequisites).toMatchObject({ points: { min: 25 } })
+  })
+})
+
+describe('a NOTE under a requirements table', () => {
+  it('does not add the subjects it mentions', async () => {
+    const { parseHandbookPaste } = await import('../src/engine/handbookPaste')
+    const text = 'Prerequisites\nAll of\nCode\tName\tTeaching period\tCredit Points\nMAST20030\tDifferential Equations\t\n12.5\nNOTE: For students admitted into the master, BMEN30006 may be taken concurrently with BMEN20003 and MAST20029.\n\nCorequisites\nNone\n'
+    expect(parseHandbookPaste(text).prerequisites).toEqual({ subject: 'MAST20030' })
+  })
+})
+
+describe('"OR … can also be taken concurrently"', () => {
+  it('is one more alternative, not a corequisite', async () => {
+    const { parseHandbookPaste } = await import('../src/engine/handbookPaste')
+    const text = 'Prerequisites\nOne of\nCode\tName\tTeaching period\tCredit Points\nCOMP10002\tFoundations\t\n12.5\nCOMP20007\tDesign\t\n12.5\nOR\n\nNote: the following subject/s can also be taken concurrently (at the same time)\n\nOne of\nCode\tName\tTeaching period\tCredit Points\nCOMP20005\tNumerical\t\n12.5\nENGR20005\tNumerical Methods\t\n12.5\n\nCorequisites\nNone\n'
+    const r = parseHandbookPaste(text)
+    expect(r.corequisites).toBe('none')
+    const { evaluateField } = await import('../src/engine/expr')
+    const met = (c: string) => evaluateField(r.prerequisites, { completed: new Set([c]), subjects: {}, admittedCourse: 'B-SCI' }).status
+    expect(['COMP10002', 'COMP20007', 'COMP20005', 'ENGR20005'].map(met)).toEqual(['ok', 'ok', 'ok', 'ok'])
+  })
+})
+
+describe('a concurrent note inside "Option 1"', () => {
+  it('leaves "Option 2" as a prerequisite alternative', async () => {
+    const { parseHandbookPaste } = await import('../src/engine/handbookPaste')
+    const text = 'Prerequisites\nStudents must meet one of the following prerequisite options:\n\nOption 1\n\nENEN20002\tEarth Processes\t\nAND\n\nNote: the following subject/s can also be taken concurrently (at the same time)\n\nENGR30002\tFluid Mechanics\t\nOption 2\n\nAdmission into the MC-ENVENG Master of Environmental Engineering\n\nCorequisites\nNone\n'
+    const r = parseHandbookPaste(text)
+    expect(r.corequisites).toEqual({ subject: 'ENGR30002' })
+    expect(JSON.stringify(r.prerequisites)).toContain('ENEN20002')
+  })
+})

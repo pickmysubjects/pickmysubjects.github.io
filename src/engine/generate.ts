@@ -1,6 +1,6 @@
 import { offeredIn, periodsFor } from './availability'
 import { categoryOf, checkCourse, componentNeeds, findComponent, findCourse } from './courseRules'
-import { evaluateField, type Tri } from './expr'
+import { evaluateField, referencedSubjects, type Tri } from './expr'
 import type { Note, Params, Plan, PlanTerm } from './plan'
 import { standardTerms } from './plan'
 import { HEAVY_PICK_COST, passedCodes, recommend, type Profile } from './recommend'
@@ -106,7 +106,13 @@ function buildPlan(input: GenerateInput): GenerateResult {
   }
   const allPlaced = (): string[] => terms.flatMap((t) => t.subjects)
 
+  // The last term each required subject can start in and still leave room for what needs it.
+  const latest = latestStart(pending, needs, terms, data)
+  let now = 0
+  const urgency = (c: string) => ((latest.get(c) ?? Infinity) <= now ? 1 : 0)
+
   terms.forEach((term, termIndex) => {
+    now = termIndex
     const before = new Set([...completed, ...allPlaced()])
     let used = 0
 
@@ -116,7 +122,7 @@ function buildPlan(input: GenerateInput): GenerateResult {
       .filter((c) => (needs.get(c) ?? []).every((n) => before.has(n)))
       .filter((c) => canTake(c, term, before, data, input.course) !== 'fail')
       .filter((c) => !firstSemester.has(c) || termIndex === 0)
-      .sort((a, b) => priority(b, firstSemester, depth, data, term.year) - priority(a, firstSemester, depth, data, term.year))
+      .sort((a, b) => urgency(b) - urgency(a) || priority(b, firstSemester, depth, data, term.year) - priority(a, firstSemester, depth, data, term.year))
     for (const code of ready) {
       const pts = data.subjects[code]?.points ?? 12.5
       if (used + pts > load) continue
@@ -142,7 +148,8 @@ function buildPlan(input: GenerateInput): GenerateResult {
   for (const { a, b } of balanceTerms(draft, data, input.profile)) {
     notes.push(note('balanced', { a, b }, `Swapped ${a} and ${b} between semesters to spread the load.`))
   }
-  for (const { a, b, kind } of fixHeavyTerms(draft, data, input.profile)) {
+  // Subjects the plan needs (the major's, and what they lean on) stay; only free electives give way.
+  for (const { a, b, kind } of fixHeavyTerms(draft, data, input.profile, required)) {
     if (kind === 'swap') notes.push(note('balanced', { a, b }, `Swapped ${a} and ${b} between semesters to spread the load.`))
     else notes.push(note('lighter', { a, b }, `Took ${b} instead of ${a}, which would have made that semester heavy.`))
   }
@@ -211,8 +218,10 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
       const ps = s ? periodsFor(s, input.startYear) : []
       return ps.length ? Math.min(...ps.map((p) => crowd.get(p) ?? 0)) : Infinity
     }
+    // A summer- or winter-only option comes last: the plan is laid out in semesters.
+    const off = (c: string) => (data.subjects[c] && semesterless(data.subjects[c]!) ? 1 : 0)
     const order = [...req.choose.from].sort(
-      (a, b) => (score.get(b) ?? -1) - (score.get(a) ?? -1) || busy(a) - busy(b),
+      (a, b) => off(a) - off(b) || (score.get(b) ?? -1) - (score.get(a) ?? -1) || busy(a) - busy(b),
     )
     for (const c of order) {
       if (have >= req.choose.points) break
@@ -233,7 +242,7 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
     const s = data.subjects[code]
     if (!s) continue
     const fields = [s.prerequisites, s.corequisites].filter((f): f is ReqExpr => f !== 'none' && f !== 'unknown')
-    for (const need of fields.flatMap((f) => resolvePrereqs(f, done, required, data, input.course))) {
+    for (const need of fields.flatMap((f) => resolvePrereqs(f, done, required, data, input.course, code))) {
       needs.set(code, [...(needs.get(code) ?? []), need])
       if (!required.has(need) && !done.has(need)) {
         required.add(need)
@@ -255,9 +264,9 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
 // Not "VCE Algorithmics students may …", which is a different kind of note.
 const SCHOOL_RESULT = /study score|^(?:excellent results? in )?VCE Units? 3/i
 
-function resolvePrereqs(expr: ReqExpr, done: Set<string>, required: Set<string>, data: Dataset, course: string): string[] {
+function resolvePrereqs(expr: ReqExpr, done: Set<string>, required: Set<string>, data: Dataset, course: string, forCode = ''): string[] {
   if ('subject' in expr) return done.has(expr.subject) ? [] : [expr.subject]
-  if ('all' in expr) return [...new Set(expr.all.flatMap((e) => resolvePrereqs(e, done, required, data, course)))]
+  if ('all' in expr) return [...new Set(expr.all.flatMap((e) => resolvePrereqs(e, done, required, data, course, forCode)))]
   if ('any' in expr) {
     // Fewest additions wins. A subject we have no data for (often a graduate
     // alternative) costs the most; assuming a manual condition (a VCE score, a
@@ -271,25 +280,40 @@ function resolvePrereqs(expr: ReqExpr, done: Set<string>, required: Set<string>,
     const cost = (o: string[]) =>
       o.reduce(
         (sum, c) =>
-          sum + (required.has(c) ? 0 : clashes(c, done, required, data) || closedTo(c, course, data) ? 10_000 : data.subjects[c] ? 1 : 100),
+          sum + (required.has(c) ? 0 : clashes(c, done, required, data) || closedTo(c, course, data) ? 10_000 : data.subjects[c] ? (semesterless(data.subjects[c]!) ? 20 : 1) : 100),
         0,
       )
     let best: string[] | null = null
     let bestCost = Infinity
+    const firstYear = data.subjects[forCode]?.level === 1
     // What an option assumes rather than plans: manual conditions anywhere inside it.
     const assumed = (e: ReqExpr): number =>
       'manual' in e ? (SCHOOL_RESULT.test(e.manual) ? SCHOOL : MANUAL) : 'all' in e ? e.all.reduce((sum, x) => sum + assumed(x), 0) : 0
     for (const e of expr.any) {
       // An option that needs admission to another course isn't open to this student at all.
       if (needsOtherAdmission(e, course)) continue
-      const o = 'manual' in e ? [] : resolvePrereqs(e, done, required, data, course)
-      const c = cost(o) + assumed(e)
+      const o = 'manual' in e ? [] : resolvePrereqs(e, done, required, data, course, forCode)
+      // "Physics 1 needs Physics 2 or a VCE score; Physics 2 needs Physics 1 or a VCE score":
+      // an option that itself needs this subject first would leave both waiting on each other.
+      if (forCode && o.some((c) => needsFirst(c, forCode, data))) continue
+      // For a first-year subject, waiting on another subject (even one already in the plan)
+      // costs a semester, so the school result most students have wins over it.
+      const c = cost(o) + assumed(e) + (firstYear ? o.length : 0)
       if (c < bestCost) [best, bestCost] = [o, c]
     }
     return best ?? []
   }
   if ('points' in expr) return pickForPoints(expr.points, done, required, data, course)
   return [] // admission / manual can't be resolved to specific subjects
+}
+
+/** Whether `code` needs `target` first, through its prerequisites or corequisites (a few steps deep). */
+function needsFirst(code: string, target: string, data: Dataset, depth = 4): boolean {
+  if (depth === 0) return false
+  const s = data.subjects[code]
+  if (!s) return false
+  const refs = [...referencedSubjects(s.prerequisites), ...referencedSubjects(s.corequisites)]
+  return refs.includes(target) || refs.some((r) => r !== code && needsFirst(r, target, data, depth - 1))
 }
 
 /** Would adding this subject break a non-allowed pair with one already completed or required? */
@@ -305,6 +329,13 @@ function needsOtherAdmission(e: ReqExpr, course: string): boolean {
  * other subject done (e.g. "admission into the Bachelor of Biomedicine" only).
  */
 const closedCache = new WeakMap<Dataset, Map<string, boolean>>()
+/** Runs only in summer or winter: the planner lays out semesters, so it rarely finds a place. */
+function semesterless(s: Subject): boolean {
+  if (s.offerings === 'unknown') return false
+  const periods = Object.values(s.offerings).flat()
+  return periods.length > 0 && !periods.some((p) => p === 'semester-1' || p === 'semester-2')
+}
+
 function closedTo(code: string, course: string, data: Dataset): boolean {
   const s = data.subjects[code]
   if (!s || s.prerequisites === 'none' || s.prerequisites === 'unknown') return false
@@ -402,6 +433,33 @@ function priority(code: string, first: Set<string>, depth: Map<string, number>, 
 }
 
 /** Longest chain of required subjects that depend on each subject. */
+/**
+ * Latest term index each subject can start in, working back from the plan's end: a subject
+ * must come before everything that needs it, in a term it is offered. A chain that can't fit
+ * at all gets -1, so it is urgent from the start.
+ */
+function latestStart(codes: string[], needs: Map<string, string[]>, terms: PlanTerm[], data: Dataset): Map<string, number> {
+  const set = new Set(codes)
+  const deps = new Map<string, string[]>()
+  for (const c of codes) for (const p of needs.get(c) ?? []) if (set.has(p)) deps.set(p, [...(deps.get(p) ?? []), c])
+  const memo = new Map<string, number>()
+  const visit = (c: string, stack: Set<string>): number => {
+    const known = memo.get(c)
+    if (known !== undefined) return known
+    if (stack.has(c)) return terms.length - 1 // guard against cyclic data
+    stack.add(c)
+    const limit = Math.min(terms.length, ...(deps.get(c) ?? []).map((d) => visit(d, stack)))
+    stack.delete(c)
+    const s = data.subjects[c]
+    let i = limit - 1
+    while (i >= 0 && s && offeredIn(s, terms[i]!.year, terms[i]!.period).status === 'fail') i--
+    memo.set(c, i)
+    return i
+  }
+  codes.forEach((c) => visit(c, new Set()))
+  return memo
+}
+
 function dependentDepth(codes: string[], data: Dataset, needs: Map<string, string[]>): Map<string, number> {
   const set = new Set(codes)
   const deps = new Map<string, string[]>()

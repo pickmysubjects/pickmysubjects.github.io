@@ -5,9 +5,46 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
-categories:
-  B-SCI: science
+prerequisites:
+  any:
+    - all:
+        - any:
+            - MAST10006
+            - MAST10009
+            - MAST10021
+            - MAST10019
+        - any:
+            - MAST10007
+            - MAST10008
+            - MAST10022
+            - MAST10018
+    - manual: "Selection of one of the following: Admission into or selection of one of the following: Biomedical specialisation (formal) in the MC-ENG Master of Engineering Admission into or selection of one of the following: Biomedical with Business specialisation (formal) in the MC-ENG Master of Engineering Admission into or selection of one of the following: MC-BIOMENG Master of Biomedical Engineering"
+corequisites: none
+non_allowed:
+  - COMP20005
+  - BMEN20001
+assessment:
+  - kind: assignment
+    weight: 20
+  - kind: quiz
+    weight: 15
+  - kind: project
+    weight: 25
+    group: true
+  - kind: exam
+    weight: 40
+    hurdle: true
+weekly_contact_hours: 3
 handbook: https://handbook.unimelb.edu.au/2026/subjects/bmen20003
 source_year: 2026
-verified_on: 2026-10-07
-notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-10
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+skills:
+  - programming
+  - maths
+topics:
+  - programming
+  - modelling
+  - biology

@@ -4,9 +4,30 @@ level: 3
 points: 25
 offerings:
   "2026": []
-categories:
-  B-SCI: science
+prerequisites:
+  any:
+    - manual: Completion of 200 credit points of study, inclusive of 50 credit points of Level 2/Level 3 geography, Urban Planning, Asian studies, Environmental studies and Environmental Science subjects
+    - GEOG20010
+corequisites: none
+non_allowed:
+  - GEOG90007
+assessment:
+  - kind: assignment
+    weight: 25
+  - kind: assignment
+    weight: 25
+  - kind: report
+    weight: 50
+    group: true
 handbook: https://handbook.unimelb.edu.au/2026/subjects/geog30007
 source_year: 2026
-verified_on: 2026-10-07
-notes: Not available in 2026. Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-10
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+skills:
+  - presentation
+  - writing
+topics:
+  - environment
+  - economics

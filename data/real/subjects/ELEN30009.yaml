@@ -6,9 +6,36 @@ offerings:
   "2026":
     - semester-1
     - semester-2
-categories:
-  B-SCI: science
+prerequisites:
+  any:
+    - BMEN30006
+    - ELEN20005
+corequisites: none
+non_allowed:
+  - ELEN30014
+assessment:
+  - kind: report
+    weight: 20
+  - kind: test
+    weight: 10
+    hurdle: true
+  - kind: project
+    weight: 20
+    group: true
+    hurdle: true
+  - kind: exam
+    weight: 50
+    hurdle: true
 handbook: https://handbook.unimelb.edu.au/2026/subjects/elen30009
 source_year: 2026
-verified_on: 2026-10-07
-notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-10
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+skills:
+  - maths
+  - lab
+  - design
+topics:
+  - systems
+  - physics

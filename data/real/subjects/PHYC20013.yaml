@@ -6,9 +6,35 @@ offerings:
   "2026":
     - semester-1
     - semester-2
-categories:
-  B-SCI: science
+prerequisites:
+  all:
+    - any:
+        - PHYC10001
+        - PHYC10003
+        - PHYC10009
+    - any:
+        - PHYC10002
+        - PHYC10004
+        - PHYC10006
+    - manual: VCE Mathematical Methods or equivalent.
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: assignment
+    weight: 20
+  - kind: participation
+    weight: 20
+  - kind: presentation
+    weight: 60
 handbook: https://handbook.unimelb.edu.au/2026/subjects/phyc20013
 source_year: 2026
-verified_on: 2026-10-07
-notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-10
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+skills:
+  - lab
+  - programming
+topics:
+  - physics
+  - programming

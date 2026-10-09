@@ -5,9 +5,38 @@ points: 12.5
 offerings:
   "2026":
     - summer
-categories:
-  B-SCI: science
+prerequisites:
+  all:
+    - manual: Have completed at least 200 credit points prior to the commencement of this subject
+    - manual: Be undertaking a Bachelor of Science or Bachelor of Biomedicine degree, with a planned Major in one of the Engineering Majors
+    - manual: "Permission from the Subject Coordinator via a selection process Quotas for this subject apply. Students will be selected based on: their weighted average mark and a short expression of interest statement that addresses the importance of this international experience in the context of their degree. The subject co-ordinator will have final approval of all selected students. Applications can be submitted via this webpage: https://q.surveys.unimelb.edu.au/jfe/form/SV_b3o8rViSE48XssC"
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: presentation
+    weight: 0
+    hurdle: true
+  - kind: report
+    weight: 10
+    group: true
+  - kind: assignment
+    weight: 10
+  - kind: assignment
+    weight: 10
+  - kind: presentation
+    weight: 20
+    group: true
+  - kind: report
+    weight: 50
 handbook: https://handbook.unimelb.edu.au/2026/subjects/engr30005
 source_year: 2026
-verified_on: 2026-10-07
-notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-10
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+skills:
+  - presentation
+  - writing
+topics:
+  - design
+  - history

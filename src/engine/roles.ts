@@ -45,26 +45,46 @@ export function subjectRoles(data: Dataset, code: string, course: string): Subje
 
 /** The first of `targets` whose prerequisites reach `code` within a few steps. */
 function leadsTo(data: Dataset, code: string, targets: string[]): string | undefined {
-  for (const target of targets.sort()) {
-    let frontier = [target]
-    const seen = new Set(frontier)
-    for (let depth = 0; depth < PATHWAY_DEPTH && frontier.length; depth++) {
-      const next: string[] = []
-      for (const c of frontier) {
-        const s = data.subjects[c]
-        if (!s) continue
-        for (const r of referencedSubjects(s.prerequisites)) {
-          if (r === code) return target
-          if (!seen.has(r)) {
-            seen.add(r)
-            next.push(r)
-          }
+  return [...targets].sort().find((target) => ancestors(data, target).has(code))
+}
+
+const REFS = new WeakMap<Dataset, Map<string, string[]>>()
+/** Subjects named in a subject's prerequisites, worked out once per dataset. */
+function prereqRefs(data: Dataset, code: string): string[] {
+  let cache = REFS.get(data)
+  if (!cache) REFS.set(data, (cache = new Map()))
+  let out = cache.get(code)
+  if (!out) {
+    const s = data.subjects[code]
+    cache.set(code, (out = s ? referencedSubjects(s.prerequisites) : []))
+  }
+  return out
+}
+
+const ANCESTORS = new WeakMap<Dataset, Map<string, Set<string>>>()
+/** Everything within PATHWAY_DEPTH prerequisite steps of a subject (cached: every subject asks). */
+function ancestors(data: Dataset, target: string): Set<string> {
+  let cache = ANCESTORS.get(data)
+  if (!cache) ANCESTORS.set(data, (cache = new Map()))
+  let seen = cache.get(target)
+  if (seen) return seen
+  seen = new Set([target])
+  let frontier = [target]
+  for (let depth = 0; depth < PATHWAY_DEPTH && frontier.length; depth++) {
+    const next: string[] = []
+    for (const c of frontier) {
+      for (const r of prereqRefs(data, c)) {
+        if (!seen.has(r)) {
+          seen.add(r)
+          next.push(r)
         }
       }
-      frontier = next
     }
+    frontier = next
   }
-  return undefined
+  seen.delete(target)
+  cache.set(target, seen)
+  return seen
 }
 
 /**
@@ -79,7 +99,7 @@ function blockedWithout(data: Dataset, code: string, course: string): Set<string
     changed = false
     const completed = new Set(Object.keys(data.subjects).filter((c) => !blocked.has(c)))
     for (const s of Object.values(data.subjects)) {
-      if (blocked.has(s.code) || !referencedSubjects(s.prerequisites).some((r) => blocked.has(r))) continue
+      if (blocked.has(s.code) || !prereqRefs(data, s.code).some((r) => blocked.has(r))) continue
       if (evaluateField(s.prerequisites, { completed, subjects: data.subjects, admittedCourse: course }).status === 'fail') {
         blocked.add(s.code)
         changed = true

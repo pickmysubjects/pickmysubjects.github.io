@@ -6,9 +6,45 @@ offerings:
   "2026":
     - semester-1
     - semester-2
-categories:
-  B-SCI: science
+prerequisites:
+  all:
+    - ELEN20005
+    - any:
+        - MAST10009
+        - MAST20026
+        - MAST20029
+        - MAST20030
+        - MAST20033
+    # "Either one of COMP10002/COMP20007/BMEN20003, or BMEN20001, or COMP20005/ENGR20005
+    # (these two may also be taken at the same time)".
+    - any:
+        - COMP10002
+        - COMP20007
+        - BMEN20003
+        - BMEN20001
+        - COMP20005
+        - ENGR20005
+corequisites: none
+non_allowed:
+  - BMEN30006
+assessment:
+  - kind: assignment
+    weight: 40
+  - kind: test
+    weight: 15
+    hurdle: true
+  - kind: exam
+    weight: 45
+    hurdle: true
 handbook: https://handbook.unimelb.edu.au/2026/subjects/elen30012
 source_year: 2026
-verified_on: 2026-10-07
-notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-10
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+skills:
+  - maths
+  - programming
+topics:
+  - systems
+  - mathematics

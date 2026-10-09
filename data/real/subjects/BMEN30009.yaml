@@ -5,9 +5,48 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
-categories:
-  B-SCI: science
+prerequisites:
+  all:
+    - any:
+        - CHEM10003
+        - CHEM10006
+    - any:
+        - BIOL10002
+        - BIOL10008
+        - BIOL10009
+        - BIOL10004
+    - any:
+        - BMEN30010
+        - BMEN20001
+corequisites: none
+non_allowed:
+  - BMEN90023
+assessment:
+  - kind: quiz
+    weight: 10
+  - kind: report
+    weight: 20
+    group: true
+  - kind: report
+    weight: 20
+    group: true
+  - kind: presentation
+    weight: 10
+    group: true
+  - kind: exam
+    weight: 40
+    hurdle: true
+weekly_contact_hours: 2
 handbook: https://handbook.unimelb.edu.au/2026/subjects/bmen30009
 source_year: 2026
-verified_on: 2026-10-07
-notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-10
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+skills:
+  - lab
+  - writing
+topics:
+  - chemistry
+  - biology
+  - ethics

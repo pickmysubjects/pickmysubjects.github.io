@@ -5,9 +5,31 @@ points: 12.5
 offerings:
   "2026":
     - winter
-categories:
-  B-SCI: science
+prerequisites:
+  all:
+    - GEOG20002
+    - manual: 25 credit points of any other Level 2 Geography subjects, or equivalent at discretion of subject coordinator
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: assignment
+    weight: 15
+  - kind: presentation
+    weight: 35
+    group: true
+  - kind: report
+    weight: 50
+    hurdle: true
+weekly_contact_hours: 10
 handbook: https://handbook.unimelb.edu.au/2026/subjects/geog30033
 source_year: 2026
-verified_on: 2026-10-07
-notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-10
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+skills:
+  - lab
+  - data
+topics:
+  - earth-science
+  - environment

@@ -5,9 +5,48 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
-categories:
-  B-SCI: science
+prerequisites:
+  any:
+    - any:
+        - GEOL20003
+        - EVSC20008
+        - GEOL20002
+        - ERTH20002
+        - EVSC20006
+        - EVSC20004
+        - CHEM20011
+        - CHEM20018
+        - CHEM20019
+        - BCMB20005
+    - points:
+        min: 25
+        from:
+          - CHEM10003
+          - CHEM10004
+          - CHEM10006
+          - MAST20031
+          - CHEN20010
+    - admission: MC-GEOSC
+      note: Admission into the MC-GEOSC Master of Geoscience
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: assignment
+    weight: 45
+  - kind: quiz
+    weight: 20
+  - kind: exam
+    weight: 35
+weekly_contact_hours: 4
 handbook: https://handbook.unimelb.edu.au/2026/subjects/geol30004
 source_year: 2026
-verified_on: 2026-10-07
-notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-10
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+skills:
+  - lab
+  - data
+topics:
+  - earth-science
+  - chemistry

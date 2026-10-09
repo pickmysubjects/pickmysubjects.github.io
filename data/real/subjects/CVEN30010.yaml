@@ -5,9 +5,39 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
-categories:
-  B-SCI: science
+prerequisites:
+  any:
+    - manual: "Admission into or selection of one of the following: MC-ARCHENG Master of Architectural Engineering MC-CIVENG Master of Civil Engineering MC-ENVENG Master of Environmental Engineering Civil specialisation (formal) in the MC-ENG Master of Engineering Environmental specialisation (formal) in the MC-ENG Master of Engineering"
+    - all:
+        - ENEN20002
+        - ENGR30002
+        - CVEN20001
+    - all:
+        - ENEN20002
+        - MCEN30018
+        - CVEN20001
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: project
+    weight: 50
+    hurdle: true
+  - kind: report
+    weight: 10
+  - kind: exam
+    weight: 40
+    hurdle: true
+weekly_contact_hours: 4
 handbook: https://handbook.unimelb.edu.au/2026/subjects/cven30010
 source_year: 2026
-verified_on: 2026-10-07
-notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-10
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+skills:
+  - design
+  - lab
+  - writing
+topics:
+  - earth-science
+  - modelling

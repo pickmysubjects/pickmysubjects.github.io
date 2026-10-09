@@ -6,9 +6,46 @@ offerings:
   "2026":
     - semester-1
     - semester-2
-categories:
-  B-SCI: science
+prerequisites:
+  any:
+    - all:
+        - any:
+            - COMP10002
+            - COMP20005
+            - ENGR20005
+            - BMEN20003
+        - MAST20029
+    - all:
+        - any:
+            - COMP10002
+            - COMP20005
+            - ENGR20005
+            - BMEN20003
+        - MAST20030
+        - any:
+            - MAST20009
+            - MAST20032
+corequisites: none
+non_allowed:
+  - COMP20003
+  - COMP20007
+assessment:
+  - kind: assignment
+    weight: 20
+  - kind: assignment
+    weight: 20
+  - kind: exam
+    weight: 60
+    hurdle: true
 handbook: https://handbook.unimelb.edu.au/2026/subjects/engr30004
 source_year: 2026
-verified_on: 2026-10-07
-notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-10
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+skills:
+  - algorithms
+  - programming
+topics:
+  - algorithms
+  - optimisation

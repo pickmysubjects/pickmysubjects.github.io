@@ -6,9 +6,39 @@ offerings:
   "2026":
     - semester-1
     - semester-2
-categories:
-  B-SCI: science
+prerequisites:
+  any:
+    - manual: "Admission into or selection of one of the following: MC-CIVENG Master of Civil Engineering MC-ENVENG Master of Environmental Engineering MC-SOFTENG Master of Software Engineering MC-ARCHENG Master of Architectural Engineering"
+    - any:
+        - ENGR10005
+        - ENVS10001
+        - ENGR10006
+        - ENGR10004
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: assignment
+    weight: 30
+    group: true
+    hurdle: true
+  - kind: quiz
+    weight: 10
+  - kind: report
+    weight: 10
+    group: true
+    hurdle: true
+  - kind: exam
+    weight: 50
+    hurdle: true
 handbook: https://handbook.unimelb.edu.au/2026/subjects/enen20002
 source_year: 2026
-verified_on: 2026-10-07
-notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-10
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+skills:
+  - lab
+  - maths
+topics:
+  - earth-science
+  - environment

@@ -5,9 +5,37 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
-categories:
-  B-SCI: science
+prerequisites:
+  any:
+    - all:
+        - MAST20031
+        - ENEN20002
+        - CVEN20001
+    - manual: Selection of the Environmental specialisation (formal) in the MC-ENG Master of Engineering
+    - admission: MC-ENVENG
+      note: Admission into the MC-ENVENG Master of Environmental Engineering
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: presentation
+    weight: 10
+  - kind: report
+    weight: 15
+  - kind: project
+    weight: 25
+  - kind: exam
+    weight: 50
+weekly_contact_hours: 3
 handbook: https://handbook.unimelb.edu.au/2026/subjects/enen30001
 source_year: 2026
-verified_on: 2026-10-07
-notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-10
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+skills:
+  - design
+  - data
+  - writing
+topics:
+  - environment
+  - modelling

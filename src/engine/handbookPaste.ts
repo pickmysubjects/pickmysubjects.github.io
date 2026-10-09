@@ -51,7 +51,7 @@ export function parseHandbookPaste(text: string): PasteResult {
   const sections = splitSections(text)
 
   // Many pages list the requirement per degree; this site plans the Bachelor of Science.
-  const pre = sections.pre ? scienceOnly(sections.pre, warnings) : undefined
+  const pre = sections.pre ? scienceOnly(undergraduateOnly(sections.pre, warnings), warnings) : undefined
   // "Concurrent prerequisites" (or a note that subjects "can also be taken concurrently") may be
   // taken in the same semester: that's what a corequisite means here.
   const split = pre ? splitConcurrent(pre) : undefined
@@ -111,6 +111,20 @@ function splitSections(text: string): Partial<Record<Section, string[]>> {
 // "Bachelor of Science students", "B Science Students:", "B. Biomedicine Students:" …
 const DEGREE_HEADING = /^(?:for )?(?:bachelor of|b\.? ?)\s*(science|sc|biomedicine|biomed|agriculture|arts|commerce|design|music|fine arts)\b[^.]{0,30}students?:?(?:\s*\([^)]*\))?:?$/i
 
+/**
+ * "Undergraduate students: … / Postgraduate students: Admission into the Master of …": two
+ * separate requirements, one per kind of student. This site plans undergraduate degrees.
+ */
+function undergraduateOnly(lines: string[], warnings: string[]): string[] {
+  const ug = lines.findIndex((l) => /^undergraduate students?:?$/i.test(l.trim()))
+  const pg = lines.findIndex((l) => /^postgraduate students?\b/i.test(l.trim()))
+  if (ug < 0 && pg < 0) return lines
+  warnings.push('Requirements are listed per kind of student; kept the undergraduate one.')
+  const start = ug < 0 ? 0 : ug + 1
+  const end = pg > start ? pg : lines.length
+  return lines.slice(start, end)
+}
+
 function scienceOnly(lines: string[], warnings: string[]): string[] {
   const heads = lines.map((l, i) => ({ i, degree: DEGREE_HEADING.exec(l)?.[1]?.toLowerCase() })).filter((h) => h.degree)
   if (heads.length === 0) return lines
@@ -132,10 +146,18 @@ function scienceOnly(lines: string[], warnings: string[]): string[] {
 function splitConcurrent(lines: string[]): { before: string[]; concurrent: string[] } {
   const at = lines.findIndex((l) => /^concurrent prerequisites?:?$/i.test(l) || /can (?:also )?be taken concurrently/i.test(l))
   if (at < 0) return { before: lines, concurrent: [] }
+  // "… OR / Note: the following can also be taken concurrently / table": one more alternative,
+  // not a corequisite everyone needs. Planned as taken before, which is always allowed.
+  const prev = lines.slice(0, at).filter((l) => l.trim()).at(-1) ?? ''
+  if (/^or$/i.test(prev.trim()) && !/^concurrent prerequisites?:?$/i.test(lines[at] ?? '')) {
+    // An unlabelled table stays "All of" (ANAT20006 + PHYS20008 together stand in for one 25-point subject).
+    return { before: [...lines.slice(0, at), ...lines.slice(at + 1)], concurrent: [] }
+  }
   const rest = lines.slice(at + 1)
-  const stop = rest.findIndex((l) => /^(and|or)$/i.test(l))
+  const stop = rest.findIndex((l) => /^(and|or|option \d+:?)$/i.test(l.trim()))
   const concurrent = stop < 0 ? rest : rest.slice(0, stop)
-  const after = stop < 0 ? [] : rest.slice(stop + 1)
+  // An "Option 2" heading starts the next alternative, so it stays with the prerequisites.
+  const after = stop < 0 ? [] : rest.slice(/^option/i.test(rest[stop]!.trim()) ? stop : stop + 1)
   // Drop a heading repeated just before the note ("Prerequisites" / a stray "Note:").
   const before = [...lines.slice(0, at), ...after].filter((l) => !/^prerequisites?:?$/i.test(l))
   return { before: before.length ? before : ['None'], concurrent }
@@ -212,6 +234,8 @@ function parseRequirement(lines: string[], label: string, warnings: string[]): R
 }
 
 function parseBlock(lines: string[], label: string, warnings: string[]): ReqExpr | null {
+  // "NOTE: … may be taken concurrently with BMEN20003 …" names subjects but isn't a requirement.
+  lines = lines.filter((l) => !/^note\b/i.test(l.trim()))
   const codes = unique(lines.flatMap((l) => l.match(CODE) ?? []))
   const quantifier = lines.map(readQuantifier).find((q) => q !== null) ?? null
 
@@ -244,10 +268,15 @@ function parseBlock(lines: string[], label: string, warnings: string[]): ReqExpr
 type Quantifier = { kind: 'all' } | { kind: 'one' } | { kind: 'points'; min: number }
 
 function readQuantifier(line: string): Quantifier | null {
-  if (/^all of:?$/i.test(line)) return { kind: 'all' }
+  if (/^(?:all of|both(?: completed)?):?$/i.test(line)) return { kind: 'all' }
   if (/^(?:a )?(?:minimum of )?(one|1) of(?: the following)?:?$/i.test(line)) return { kind: 'one' }
+  if (/^at least one of(?: the following| these(?: \w+)? subjects)?:?$/i.test(line)) return { kind: 'one' }
   // "A minimum of two of" a table of 12.5-point subjects: that many subjects' worth of points.
-  const count = /^(?:a )?(?:minimum of )?(two|three|four|[2-9]) of(?: the following)?:?$/i.exec(line)
+  // Also "A minimum of two level three Geoscience subjects (can be concurrent …)" over a table.
+  const count =
+    /^(?:a )?(?:minimum of )?(two|three|four|[2-9]) of(?: the following)?:?$/i.exec(line) ??
+    /\bany (two|three|four|[2-9]) of(?: the following)?:?$/i.exec(line) ??
+    /^(?:a )?(?:minimum of |at least )(two|three|four|[2-9]) (?:level (?:one|two|three|[1-3]) )?[a-z ]*subjects?\b/i.exec(line)
   if (count) {
     const n = { two: 2, three: 3, four: 4 }[(count[1] as string).toLowerCase()] ?? Number(count[1])
     return { kind: 'points', min: n * 12.5 }
@@ -377,26 +406,57 @@ export function parseHeader(text: string): Pick<PasteResult, 'code' | 'title' | 
 export function parseContactHours(text: string): number | undefined {
   const line = text.split(/\r?\n/).find((l) => /^\s*contact hours\b/i.test(l))
   if (!line) return undefined
-  const HOURS: Record<string, number> = { one: 1, two: 2, three: 3, '1': 1, '1.5': 1.5, '2': 2, '3': 3 }
   const half = (x: number) => Math.round(x * 2) / 2
-  const body = line.replace(/^\s*contact hours\s*/i, '')
+  const body = line.replace(/^\s*contact hours\s*/i, '').replace(/×/g, 'x')
   // "48 hours, comprising …" / "48 hours: 24 x one-hour lectures …" give the semester total first.
-  const lead = body.match(/^(\d+(?:\.\d+)?)\s*hours?\s*(?:[,:(;]|$|comprising)/i)
-  if (lead) return half(Number(lead[1]) / 12)
+  const lead = body.match(/^(\d+(?:\.\d+)?)\s*(?:hours?)?\s*(?:in total|total)?\s*(?:[,:(;.]|$|comprising|consisting)/i)
+  // A bare 170 is the total time commitment pasted in the wrong row, not time in class.
+  if (lead && Number(lead[1]) < 120) return half(Number(lead[1]) / 12)
+  // "Total of 44 hours - …", "Total contact is 62 hours", "(36 hours total)", "36 in total".
+  const stated =
+    body.match(/\btotal(?: contact(?: hours)?)?(?: is| of|\s*[-:=])?\s*(\d+(?:\.\d+)?)\s*(?:contact )?hours?/i) ??
+    body.match(/\btotal contact hours\s*[-:=]\s*(\d+(?:\.\d+)?)/i) ??
+    body.match(/(\d+(?:\.\d+)?)\s*(?:hours?\s*)?(?:in )?total\b/i)
+  if (stated) return half(Number(stated[1]) / 12)
   // "36 hours of lectures …, 15 hours of practicals …, 12 hours of workshops": add the parts up.
   // Independent / online study isn't time in class.
-  const parts = [...body.matchAll(/(\d+(?:\.\d+)?)\s*hours? of\b(?!\s+(independent|self|online))/gi)]
-  if (parts.length) return half(parts.reduce((sum, m) => sum + Number(m[1]), 0) / 12)
-  const perWeek = [...line.matchAll(/(\d+)\s*x\s*(one|two|three|1\.5|1|2|3)[- ]hours?/gi)]
-  if (perWeek.length) return half(perWeek.reduce((sum, m) => sum + Number(m[1]) * (HOURS[m[2]!.toLowerCase()] ?? 1), 0))
-  const sessions = [...line.matchAll(/(\d+)\s+(one|two|three)-hour/gi)]
-  if (sessions.length) {
-    const hours = sessions.reduce((sum, m) => sum + Number(m[1]) * (HOURS[m[2]!.toLowerCase()] ?? 1), 0)
-    // "36 one-hour lectures" is a semester count; "3 one-hour lectures … per week" is already weekly.
-    return half(hours >= 12 ? hours / 12 : hours)
+  // Otherwise read it clause by clause: "2 x one hour lectures per week" is weekly (12 weeks,
+  // or "for N weeks"); "5 x 3-hour practicals" or "27 hours of practical work" is a semester total.
+  // Independent / online / own-time study isn't time in class.
+  const NUM = String.raw`(\d+(?:\.\d+)?|a|one|two|three|four|five|six|eight|nine|ten|eleven|twelve)`
+  const num = (w: string) => WORDS[w.toLowerCase()] ?? Number(w)
+  const WEEKLY = /per wee|each week|weekly|\/week/i
+  const hoursIn = (text: string) => {
+    const sized = new RegExp(String.raw`${NUM}\s*(?:x\s*|\s+)${NUM}\s*[- ]?(?:hours?|hrs?|h)\b`, 'i').exec(text)
+    const plain = new RegExp(String.raw`${NUM}\s*(?:hours?|hrs?)\b`, 'i').exec(text)
+    return sized ? num(sized[1]!) * num(sized[2]!) : plain ? num(plain[1]!) : 0
   }
-  const total = line.match(/(\d+(?:\.\d+)?)\s*hours/i)
-  return total ? half(Number(total[1]) / 12) : undefined
+  let total = 0
+  for (const sentence of body.split(/;(?![^(]*\))|\.\s|(?<=\))\s+(?=\d)/)) {
+    const clauses = sentence.split(/,(?![^(]*\))|\band\b|&/i)
+    // "Two x 1 hour lectures and one x 1 hour tutorial per week": the closing "per week" covers both.
+    const shared = WEEKLY.test((clauses.at(-1) ?? '').replace(/\([^)]*\)/g, ''))
+    for (const clause of clauses) {
+      if (/independent|self[- ]paced|online|own time|travel/i.test(clause)) continue
+      // "24 x one-hour lectures (2 per week)": the count outside the brackets is the total;
+      // "24 lectures (2 x 1hr per week)": only the brackets give hours.
+      const outside = clause.replace(/\([^)]*\)/g, '')
+      const own = hoursIn(outside)
+      const text = own ? outside : clause
+      const h = own || hoursIn(clause)
+      if (!h) continue
+      const weeks = new RegExp(String.raw`for\s+${NUM}\s+weeks`, 'i').exec(text)
+      const weekly = WEEKLY.test(text) || (shared && !/total|semester|weeks?\s+\d/i.test(text))
+      total += weeks ? h * num(weeks[1]!) : weekly ? h * 12 : h
+    }
+  }
+  if (total) return half(total / 12)
+  const stray = line.match(/(\d+(?:\.\d+)?)\s*hours/i)
+  return stray ? half(Number(stray[1]) / 12) : undefined
+}
+
+const WORDS: Record<string, number> = {
+  a: 1, one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, eight: 8, nine: 9, ten: 10, eleven: 11, twelve: 12,
 }
 
 function isExpr(e: ReqExpr | null): e is ReqExpr {

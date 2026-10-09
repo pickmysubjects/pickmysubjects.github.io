@@ -204,8 +204,9 @@ describe('plan builder spreads the load (real data)', () => {
     // Review summaries now flag real heavy subjects too, so a few more semesters carry a note.
     expect(share(profile())).toBeLessThan(0.08)
     // Weak at maths, many science majors can't avoid two maths subjects somewhere (and the
-    // data has only maths-based level-2 breadth so far): flagged, but never left fixable.
-    expect(share(profile({ skills: { maths: 2 } }))).toBeLessThan(0.2)
+    // data has only maths-based level-2 breadth so far; physics and the engineering-systems
+    // majors now carry their real maths prerequisites too): flagged, but never left fixable.
+    expect(share(profile({ skills: { maths: 2 } }))).toBeLessThan(0.3)
     // Builds a plan for every major, twice, which is slow on CI runners.
   }, 120_000)
 })
@@ -248,5 +249,29 @@ describe('relieveTerm offers a different elective', () => {
     ])
     const plan: Plan = { course: 'NONE', courseYear: 2026, completed: [], terms: [{ year: 2027, period: 'semester-1', subjects: ['MAST10006', 'ECON10003', 'BIOL10001', 'BIOL10002'] }] }
     expect(relieveTerm(plan, data, 0)).toMatchObject({ kind: 'replace', code: 'ECON10003', with: 'MKTG10001' })
+  })
+})
+
+describe('lightening a semester keeps what later subjects lean on (real data)', () => {
+  const { dataset: real } = buildDataset('real')
+  // Weak at maths, the heavy-semester fix used to drop MAST10006/MAST10007 for an easier
+  // elective, though BMEN20003 and COMP20003 ("25 points of MAST") need them.
+  it.each([
+    ['bioengineering-systems', undefined],
+    ['immunology', 'artificial-intelligence'],
+    ['pathology', 'artificial-intelligence'],
+  ])('%s + %s places every subject it needs', async (major, specialisation) => {
+    const { generatePlan } = await import('../src/engine/generate')
+    const { unplaced } = generatePlan({
+      data: real,
+      profile: profile({ skills: { maths: 2 }, goal: 'wam' }),
+      course: 'B-SCI',
+      courseYear: 2026,
+      major,
+      specialisation,
+      startYear: 2027,
+      startPeriod: 'semester-1',
+    })
+    expect(unplaced.map((u) => u.code)).toEqual([])
   })
 })

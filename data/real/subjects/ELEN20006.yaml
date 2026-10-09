@@ -6,9 +6,50 @@ offerings:
   "2026":
     - semester-1
     - semester-2
-categories:
-  B-SCI: science
+prerequisites:
+  any:
+    - any:
+        - manual: Selection of the Electrical specialisation (formal) in the MC-ENG Master of Engineering
+        - manual: Selection of the Electrical with Business specialisation (formal) in the MC-ENG Master of Engineering
+        - admission: MC-ELECENG
+          note: Admission into the MC-ELECENG Master of Electrical Engineering
+    - all:
+        - any:
+            - PHYC10002
+            - PHYC10004
+        - any:
+            - MAST10006
+            - MAST10009
+            - MAST10021
+            - MAST10019
+        - any:
+            - MAST10007
+            - MAST10008
+            - MAST10022
+            - MAST10018
+corequisites: none
+non_allowed:
+  - ELEN30010
+assessment:
+  - kind: test
+    weight: 15
+  - kind: presentation
+    weight: 15
+  - kind: exam
+    weight: 35
+    hurdle: true
+  - kind: report
+    weight: 35
+    hurdle: true
 handbook: https://handbook.unimelb.edu.au/2026/subjects/elen20006
 source_year: 2026
-verified_on: 2026-10-07
-notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-10
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+skills:
+  - lab
+  - design
+  - programming
+topics:
+  - systems

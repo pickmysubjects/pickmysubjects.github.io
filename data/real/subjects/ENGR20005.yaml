@@ -6,9 +6,40 @@ offerings:
   "2026":
     - semester-1
     - semester-2
-categories:
-  B-SCI: science
+prerequisites:
+  any:
+    - any:
+        - MAST10005
+        - MAST10007
+        - MAST10008
+        - MAST10022
+    - manual: "Admission into or selection of one of the following: MC-MECHENG Master of Mechanical Engineering MC-DINFENG Master of Digital Infrastructure Engineering Mechanical specialisation (formal) in the MC-ENG Master of Engineering Mechanical with Business specialisation (formal) in the MC-ENG Master of Engineering Mechanical with Aerospace specialisation (formal) in the MC-ENG Master of Engineering"
+corequisites: none
+non_allowed:
+  - COMP20005
+assessment:
+  - kind: assignment
+    weight: 10
+  - kind: assignment
+    weight: 15
+  - kind: assignment
+    weight: 20
+  - kind: assignment
+    weight: 5
+  - kind: exam
+    weight: 50
+    hurdle: true
 handbook: https://handbook.unimelb.edu.au/2026/subjects/engr20005
 source_year: 2026
-verified_on: 2026-10-07
-notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-10
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+skills:
+  - programming
+  - maths
+  - algorithms
+topics:
+  - mathematics
+  - programming
+  - modelling

@@ -6,9 +6,43 @@ offerings:
   "2026":
     - semester-1
     - semester-2
-categories:
-  B-SCI: science
+prerequisites:
+  any:
+    - all:
+        - ENGR20004
+        - ENGR20005
+        - MAST20029
+    - all:
+        - any:
+            - MAST20009
+            - MAST20032
+        - all:
+            - MAST20030
+            - ENGR20004
+            - ENGR20005
+corequisites: none
+non_allowed:
+  - ENGR30001
+  - MCEN30015
+  - ENGR30002
+assessment:
+  - kind: report
+    weight: 20
+  - kind: assignment
+    weight: 20
+  - kind: test
+    weight: 10
+  - kind: exam
+    weight: 50
+    hurdle: true
 handbook: https://handbook.unimelb.edu.au/2026/subjects/mcen30018
 source_year: 2026
-verified_on: 2026-10-07
-notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-10
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+skills:
+  - maths
+topics:
+  - physics
+  - modelling

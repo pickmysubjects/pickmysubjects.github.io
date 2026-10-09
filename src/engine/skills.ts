@@ -13,7 +13,8 @@ import type { Dataset, ReqExpr, ReqField, Skill, Subject } from './schema'
 
 const MATHS_AREAS = new Set(['MAST', 'PHYC', 'ACTL', 'ELEN', 'MCEN', 'CVEN', 'CHEN', 'BMEN', 'ENGR'])
 const PROGRAMMING_AREAS = new Set(['COMP', 'SWEN', 'INFO'])
-const LAB_AREAS = new Set(['CHEM', 'BCMB', 'MIIM', 'PATH', 'BIOL', 'GENE', 'ZOOL', 'BOTA', 'ANAT', 'PHRM', 'BTCH', 'PHYS', 'NEUR', 'FOOD', 'ANSC', 'VETS'])
+// Wet labs, plus the engineering labs and the field-and-lab earth sciences.
+const LAB_AREAS = new Set(['CHEM', 'BCMB', 'MIIM', 'PATH', 'BIOL', 'GENE', 'ZOOL', 'BOTA', 'ANAT', 'PHRM', 'BTCH', 'PHYS', 'NEUR', 'FOOD', 'ANSC', 'VETS', 'AGRI', 'GEOL', 'ERTH', 'ECOL', 'ELEN', 'BMEN', 'CEDB'])
 
 const TITLE: Partial<Record<Skill, RegExp>> = {
   maths:
@@ -25,7 +26,7 @@ const TITLE: Partial<Record<Skill, RegExp>> = {
 }
 const STATS_TITLE = /statistic|probabilit|stochastic|inference/i
 /** Skills that carry over from a required subject (you can't do the follow-on without them). */
-const INHERITED: Skill[] = ['maths', 'statistics', 'programming']
+const INHERITED: Skill[] = ['maths', 'statistics']
 
 /** Subjects every way of meeting the requirement includes (an "or" only counts what all branches share). */
 function required(field: ReqField): string[] {
@@ -49,8 +50,10 @@ function inferred(s: Subject, data: Dataset | undefined): Skill[] {
   if (PROGRAMMING_AREAS.has(area)) out.add('programming')
   for (const [skill, rx] of Object.entries(TITLE) as [Skill, RegExp][]) if (rx.test(s.title)) out.add(skill)
   const tasks = s.assessment ?? []
-  // Reports and presentations worth a fifth of the mark: written work is a real part of it.
-  if (tasks.filter((t) => t.kind === 'report' || t.kind === 'presentation').reduce((a, t) => a + t.weight, 0) >= 20) out.add('writing')
+  // Reports (talks at half weight) worth a fifth of the mark: written work is a real part of it.
+  // In a lab or field subject, reports are mostly write-ups of practical work, so it takes more.
+  const written = tasks.reduce((a, t) => a + (t.kind === 'report' ? t.weight : t.kind === 'presentation' ? t.weight * 0.5 : 0), 0)
+  if (written >= (LAB_AREAS.has(area) ? 60 : 20)) out.add('writing')
   if (LAB_AREAS.has(area) && (tasks.some((t) => t.kind === 'report') || (s.weeklyContactHours ?? 0) >= 5)) out.add('lab')
   for (const code of data ? required(s.prerequisites) : []) {
     const before = data?.subjects[code]

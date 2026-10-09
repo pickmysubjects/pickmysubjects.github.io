@@ -5,9 +5,36 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
-categories:
-  B-SCI: science
+prerequisites:
+  all:
+    - all:
+        - PHYC20012
+        - PHYC20013
+        - PHYC20015
+        - MAST20009
+        - MAST20032
+    - any:
+        - MAST20026
+        - MAST20030
+        - PHYC20014
+        - MAST20033
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: test
+    weight: 5
+  - kind: assignment
+    weight: 15
+  - kind: exam
+    weight: 80
+weekly_contact_hours: 3
 handbook: https://handbook.unimelb.edu.au/2026/subjects/phyc30011
 source_year: 2026
-verified_on: 2026-10-07
-notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-10
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+skills:
+  - maths
+topics:
+  - physics

@@ -6,9 +6,52 @@ offerings:
   "2026":
     - semester-1
     - semester-2
-categories:
-  B-SCI: science
+prerequisites:
+  any:
+    - all:
+        - any:
+            - MAST10006
+            - MAST10009
+            - MAST10021
+            - MAST10019
+        - any:
+            - MAST10007
+            - MAST10008
+            - MAST10022
+            - MAST10018
+        - PHYC10004
+    - all:
+        - any:
+            - MAST10006
+            - MAST10021
+            - MAST10009
+            - MAST10019
+        - any:
+            - MAST10007
+            - MAST10022
+            - MAST10008
+            - MAST10018
+        - PHYC10002
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: exam
+    weight: 60
+    hurdle: true
+  - kind: test
+    weight: 10
+  - kind: quiz
+    weight: 30
+    group: true
 handbook: https://handbook.unimelb.edu.au/2026/subjects/elen20005
 source_year: 2026
-verified_on: 2026-10-07
-notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-10
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+skills:
+  - lab
+  - maths
+topics:
+  - physics
+  - systems

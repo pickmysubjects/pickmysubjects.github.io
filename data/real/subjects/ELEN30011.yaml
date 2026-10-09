@@ -5,9 +5,34 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
-categories:
-  B-SCI: science
+prerequisites:
+  all:
+    - ELEN20005
+    - any:
+        - PHYC10002
+        - PHYC10004
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: exam
+    weight: 50
+    hurdle: true
+  - kind: project
+    weight: 30
+    group: true
+  - kind: test
+    weight: 20
+    hurdle: true
+weekly_contact_hours: 6
 handbook: https://handbook.unimelb.edu.au/2026/subjects/elen30011
 source_year: 2026
-verified_on: 2026-10-07
-notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-10
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+skills:
+  - maths
+  - lab
+topics:
+  - physics
+  - modelling

@@ -5,9 +5,32 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
-categories:
-  B-SCI: science
+prerequisites:
+  any:
+    - manual: A minimum of 100 credit points of Level 1 and/or Level 2 subjects
+    - manual: Admission into the Development Studies specialisation (formal) in the GC-ARTS Graduate Certificate in Arts
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: assignment
+    weight: 10
+  - kind: report
+    weight: 30
+  - kind: presentation
+    weight: 20
+    group: true
+  - kind: report
+    weight: 40
+weekly_contact_hours: 3
 handbook: https://handbook.unimelb.edu.au/2026/subjects/geog20001
 source_year: 2026
-verified_on: 2026-10-07
-notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-10
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+skills:
+  - writing
+  - presentation
+topics:
+  - environment
+  - philosophy

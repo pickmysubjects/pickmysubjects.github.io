@@ -5,9 +5,45 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
-categories:
-  B-SCI: science
+prerequisites:
+  any:
+    - all:
+        - manual: "B-AGR Students: Completion of at least 175 credit points"
+        - any:
+            - AGRI20038
+            - AGRI20042
+    - all:
+        - manual: "B-SCI Students: Completion of at least 175 credit points"
+        - points:
+            min: 25
+            from:
+              - AGRI20026
+              - AGRI20036
+              - AGRI20037
+              - AGRI20038
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: report
+    weight: 60
+  - kind: presentation
+    weight: 25
+    group: true
+  - kind: assignment
+    weight: 15
+  - kind: assignment
+    weight: 0
+    hurdle: true
 handbook: https://handbook.unimelb.edu.au/2026/subjects/agri30038
 source_year: 2026
-verified_on: 2026-10-07
-notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-10
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+skills:
+  - writing
+  - presentation
+topics:
+  - environment
+  - ethics
+  - business
