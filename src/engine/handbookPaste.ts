@@ -31,6 +31,7 @@ export interface AssessmentTask {
 }
 
 const CODE = /\b[A-Z]{4}\d{5}\b/g
+const CODE_ONE = /\b[A-Z]{4}\d{5}\b/
 const SECTION_HEADINGS: [RegExp, Section][] = [
   [/^prerequisites?$/i, 'pre'],
   [/^corequisites?$/i, 'co'],
@@ -133,6 +134,14 @@ function scienceOnly(lines: string[], warnings: string[]): string[] {
   const current = science.filter((h) => !/\bpre\b/i.test(lines[h.i] ?? ''))
   const at = (current.at(-1) ?? science.at(-1))?.k ?? -1
   if (at < 0) {
+    // "… general requirement … / Bachelor of Biomedicine Students: …": what comes before the
+    // only other degree's heading is everyone else's requirement.
+    const before = lines.slice(0, (heads[0] as { i: number }).i)
+    while (before.length && /^(or|and)?\s*$/i.test(before.at(-1)!.trim())) before.pop()
+    if (before.some((l) => CODE_ONE.test(l))) {
+      warnings.push('Requirements are listed for another degree too; kept the general one.')
+      return before
+    }
     warnings.push('Requirements are listed per degree, with none for the Bachelor of Science; kept them all.')
     return lines
   }

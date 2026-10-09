@@ -1,0 +1,42 @@
+code: VETS30018
+title: Veterinary Bioscience:Respiratory System
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites:
+  all:
+    - manual: Permission of the Faculty of Science is required to enrol into this subject. Enrolment is limited to BSc students who have been selected into the Veterinary Bioscience major, leading to articulation into the Doctor of Veterinary Medicine.
+    - all:
+        - VETS30016
+        - VETS30029
+        - VETS30030
+        - VETS30031
+corequisites:
+  all:
+    - VETS30014
+    - VETS30017
+    - VETS30032
+non_allowed: []
+assessment:
+  - kind: quiz
+    weight: 10
+  - kind: test
+    weight: 25
+  - kind: exam
+    weight: 55
+  - kind: presentation
+    weight: 10
+weekly_contact_hours: 6
+handbook: https://handbook.unimelb.edu.au/2026/subjects/vets30018
+source_year: 2026
+verified_on: 2026-10-10
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+categories:
+  B-SCI: science
+skills:
+  - lab
+topics:
+  - health
+  - biology

@@ -6,9 +6,38 @@ offerings:
   "2026":
     - semester-1
     - semester-2
-categories:
-  B-SCI: science
+prerequisites:
+  any:
+    - any:
+        - MAST10010
+        - MAST20031
+        - ECON10005
+        - ECOM20001
+        - MAST10024
+        - MAST10011
+    - MAST20005
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: quiz
+    weight: 5
+  - kind: assignment
+    weight: 20
+  - kind: project
+    weight: 15
+    group: true
+  - kind: exam
+    weight: 60
 handbook: https://handbook.unimelb.edu.au/2026/subjects/mast20034
 source_year: 2026
-verified_on: 2026-10-07
-notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-10
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+skills:
+  - statistics
+  - writing
+  - presentation
+topics:
+  - statistics
+  - data-science

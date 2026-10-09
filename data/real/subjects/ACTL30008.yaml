@@ -3,8 +3,32 @@ title: Actuarial Analytics and Data I
 level: 3
 points: 12.5
 offerings:
-  2026: [semester-1]
+  "2026":
+    - semester-1
+prerequisites: MAST20005
+corequisites: none
+non_allowed:
+  - COMP30027
+assessment:
+  - kind: assignment
+    weight: 20
+    group: true
+  - kind: assignment
+    weight: 20
+    group: true
+  - kind: exam
+    weight: 60
+    hurdle: true
+weekly_contact_hours: 3
 handbook: https://handbook.unimelb.edu.au/2026/subjects/actl30008
 source_year: 2026
-verified_on: null
-notes: Title, level and periods seen in another subject's requirements table; prerequisites not curated yet.
+verified_on: 2026-10-10
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+skills:
+  - statistics
+  - data
+  - programming
+topics:
+  - statistics
+  - machine-learning
+  - finance

@@ -1,0 +1,37 @@
+code: VETS30032
+title: Animal Production Systems 2
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites:
+  all:
+    - VETS30030
+    - VETS30031
+corequisites:
+  all:
+    - VETS30014
+    - VETS30017
+    - VETS30018
+non_allowed: []
+assessment:
+  - kind: quiz
+    weight: 15
+  - kind: test
+    weight: 25
+  - kind: exam
+    weight: 60
+weekly_contact_hours: 11.5
+handbook: https://handbook.unimelb.edu.au/2026/subjects/vets30032
+source_year: 2026
+verified_on: 2026-10-10
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+categories:
+  B-SCI: science
+skills:
+  - fieldwork
+topics:
+  - agriculture
+  - health
+  - ethics

@@ -8,7 +8,8 @@ export const TOPIC_GROUPS: { id: string; topics: Topic[] }[] = [
   },
   { id: 'maths', topics: ['mathematics', 'calculus', 'linear-algebra', 'pure-maths', 'probability', 'statistics', 'optimisation', 'modelling'] },
   { id: 'business', topics: ['economics', 'finance', 'accounting', 'marketing', 'law', 'business'] },
-  { id: 'science', topics: ['biology', 'chemistry', 'physics', 'earth-science', 'environment', 'psychology'] },
+  { id: 'science', topics: ['biology', 'ecology', 'chemistry', 'physics', 'earth-science', 'geography', 'environment', 'psychology'] },
+  { id: 'applied', topics: ['engineering', 'health', 'agriculture'] },
   { id: 'arts', topics: ['languages', 'design', 'ethics', 'philosophy', 'history', 'science-communication'] },
 ]
 
@@ -17,15 +18,17 @@ export const TOPIC_GROUPS: { id: string; topics: Topic[] }[] = [
  * (most of them). Coarse on purpose: it says "this is a biology subject", not which part.
  */
 const AREA_TOPICS: Record<string, Topic[]> = {
-  ACCT: ['accounting'], ACTL: ['finance', 'statistics'], AGRI: ['environment'], ANAT: ['biology'], ANSC: ['biology'],
-  ATOC: ['earth-science'], BCMB: ['biology', 'chemistry'], BIOL: ['biology'], BIOM: ['biology'], BMEN: ['biology'],
-  BOTA: ['biology'], BTCH: ['biology'], CHEM: ['chemistry'], CHEN: ['chemistry'], COMP: ['programming'],
-  ECOL: ['environment', 'biology'], ECON: ['economics'], ENEN: ['environment'], ENST: ['environment'], ENVS: ['environment'],
-  ERTH: ['earth-science'], EVSC: ['environment'], FNCE: ['finance'], FOOD: ['chemistry'], FRST: ['environment'],
-  GENE: ['biology'], GEOG: ['environment'], GEOL: ['earth-science'], GEOM: ['earth-science'], HORT: ['biology'],
-  LAWS: ['law'], MAST: ['mathematics'], MGMT: ['business'], MIIM: ['biology'], MKTG: ['marketing'],
-  NEUR: ['biology', 'psychology'], NUTR: ['biology'], PATH: ['biology'], PHRM: ['chemistry'], PHYC: ['physics'],
-  PHYS: ['biology'], PSYC: ['psychology'], SWEN: ['software-engineering', 'programming'], VETS: ['biology'], ZOOL: ['biology'],
+  ACCT: ['accounting'], ACTL: ['finance', 'statistics'], AGRI: ['agriculture'], ANAT: ['health', 'biology'], ANSC: ['agriculture', 'biology'],
+  ATOC: ['earth-science'], BCMB: ['biology', 'chemistry'], BIOL: ['biology'], BIOM: ['health', 'biology'], BMEN: ['engineering', 'health'],
+  BOTA: ['ecology', 'biology'], BTCH: ['biology'], CEDB: ['engineering'], CHEM: ['chemistry'], CHEN: ['engineering', 'chemistry'],
+  COMP: ['programming'], CVEN: ['engineering'], ECOL: ['ecology', 'environment'], ECON: ['economics'], ELEN: ['engineering'],
+  ENEN: ['engineering', 'environment'], ENGR: ['engineering'], ENST: ['environment'], ENVS: ['environment'], ERTH: ['earth-science'],
+  EVSC: ['environment'], FNCE: ['finance'], FOOD: ['agriculture', 'chemistry'], FRST: ['ecology', 'environment'], GENE: ['biology'],
+  GEOG: ['geography'], GEOL: ['earth-science'], GEOM: ['geography', 'engineering'], HORT: ['agriculture'], LAWS: ['law'],
+  MAST: ['mathematics'], MCEN: ['engineering'], MGMT: ['business'], MIIM: ['health', 'biology'], MKTG: ['marketing'],
+  NEUR: ['health', 'psychology'], NUTR: ['health'], OPTO: ['health'], PATH: ['health', 'biology'], PHRM: ['health', 'chemistry'],
+  PHYC: ['physics'], PHYS: ['health', 'biology'], PSYC: ['psychology'], SWEN: ['software-engineering', 'programming'],
+  VETS: ['agriculture', 'biology'], ZOOL: ['ecology', 'biology'],
 }
 
 

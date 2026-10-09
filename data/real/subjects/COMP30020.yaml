@@ -4,9 +4,33 @@ level: 3
 points: 12.5
 offerings:
   "2026": []
-categories:
-  B-SCI: science
+prerequisites:
+  any:
+    - any:
+        - COMP20003
+        - COMP20007
+        - COMP90038
+    - admission: GC-CS
+      note: Admission into the GC-CS Graduate Certificate in Computer Science
+corequisites: none
+non_allowed:
+  - COMP90048
+assessment:
+  - kind: project
+    weight: 30
+    hurdle: true
+  - kind: exam
+    weight: 70
+    hurdle: true
 handbook: https://handbook.unimelb.edu.au/2026/subjects/comp30020
 source_year: 2026
-verified_on: 2026-10-07
-notes: Not available in 2026. Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-10
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+skills:
+  - programming
+  - algorithms
+topics:
+  - programming
+  - theory

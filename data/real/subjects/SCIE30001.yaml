@@ -7,9 +7,26 @@ offerings:
     - summer
     - semester-1
     - semester-2
-categories:
-  B-SCI: science
+prerequisites:
+  manual: "Excellent results in a discipline appropriate to the project (normally an average of at least 75% in relevant second and third year level subjects, noting that these levels of attainment may vary from School to School, reflecting differences in required skills and expertise) and approval of the relevant departmental Science Research Project Coordinator or Head of Department and student services. For detailed information and the application process, refer to the Faculty of Science website: https://science.unimelb.edu.au/students/plan-your-study/research-project-subjects Link"
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: report
+    weight: 70
+  - kind: presentation
+    weight: 15
+  - kind: project
+    weight: 15
 handbook: https://handbook.unimelb.edu.au/2026/subjects/scie30001
 source_year: 2026
-verified_on: 2026-10-07
-notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-10
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+skills:
+  - data
+  - writing
+  - presentation
+topics:
+  - science-communication

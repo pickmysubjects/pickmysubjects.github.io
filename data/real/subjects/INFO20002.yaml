@@ -4,9 +4,32 @@ level: 2
 points: 12.5
 offerings:
   "2026": []
-categories:
-  B-SCI: science
+prerequisites:
+  any:
+    - COMP10001
+    - manual: VCE Algorithmics units 3/4
+    - manual: Achieving at least 75% in the programming competency test
+corequisites: none
+non_allowed:
+  - COMP20008
+  - INFO10002
+assessment:
+  - kind: project
+    weight: 40
+    group: true
+    hurdle: true
+  - kind: exam
+    weight: 60
+    hurdle: true
 handbook: https://handbook.unimelb.edu.au/2026/subjects/info20002
 source_year: 2026
-verified_on: 2026-10-07
-notes: Not available in 2026. Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-10
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+skills:
+  - data
+  - programming
+topics:
+  - data-science
+  - programming

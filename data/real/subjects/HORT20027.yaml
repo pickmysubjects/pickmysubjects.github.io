@@ -4,9 +4,26 @@ level: 2
 points: 12.5
 offerings:
   "2026": []
-categories:
-  B-SCI: science
+prerequisites: none
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: assignment
+    weight: 25
+  - kind: report
+    weight: 25
+  - kind: exam
+    weight: 50
 handbook: https://handbook.unimelb.edu.au/2026/subjects/hort20027
 source_year: 2026
-verified_on: 2026-10-07
-notes: Not available in 2026. Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-10
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+skills:
+  - lab
+  - fieldwork
+topics:
+  - agriculture
+  - ecology
+  - environment

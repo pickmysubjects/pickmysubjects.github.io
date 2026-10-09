@@ -51,6 +51,10 @@ const recs = computed(() =>
     maxLevel: maxLevel.value,
     eligibleWith: before.value ?? undefined,
     termSubjects: selectedTerm.value?.subjects,
+    programme: {
+      courseYear: plan.setup.value.courseYear,
+      components: [plan.setup.value.major, plan.setup.value.specialisation].filter(Boolean),
+    },
   })
     .slice(0, 30),
 )

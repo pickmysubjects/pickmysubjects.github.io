@@ -148,8 +148,11 @@ function buildPlan(input: GenerateInput): GenerateResult {
   for (const { a, b } of balanceTerms(draft, data, input.profile)) {
     notes.push(note('balanced', { a, b }, `Swapped ${a} and ${b} between semesters to spread the load.`))
   }
-  // Subjects the plan needs (the major's, and what they lean on) stay; only free electives give way.
-  for (const { a, b, kind } of fixHeavyTerms(draft, data, input.profile, required)) {
+  // A subject swapped out for a lighter one was only one way to meet a requirement; the swap is
+  // checked to keep every requirement met, so it isn't "left out" any more.
+  const replaced = new Set<string>()
+  for (const { a, b, kind } of fixHeavyTerms(draft, data, input.profile)) {
+    if (kind === 'replace') replaced.add(a)
     if (kind === 'swap') notes.push(note('balanced', { a, b }, `Swapped ${a} and ${b} between semesters to spread the load.`))
     else notes.push(note('lighter', { a, b }, `Took ${b} instead of ${a}, which would have made that semester heavy.`))
   }
@@ -161,7 +164,7 @@ function buildPlan(input: GenerateInput): GenerateResult {
   const placed = allPlaced()
 
   const unplaced = pending
-    .filter((c) => !placed.includes(c))
+    .filter((c) => !placed.includes(c) && !replaced.has(c))
     .map((code) => ({ code, ...explainUnplaced(code, data, input.startYear) }))
 
   const plan: Plan = {

@@ -4,9 +4,30 @@ level: 3
 points: 12.5
 offerings:
   "2026": []
-categories:
-  B-SCI: science
+prerequisites: SWEN30006
+corequisites: none
+non_allowed:
+  - SWEN30004
+  - COMP30016
+assessment:
+  - kind: test
+    weight: 55
+    group: true
+  - kind: assignment
+    weight: 30
+    group: true
+  - kind: project
+    weight: 15
 handbook: https://handbook.unimelb.edu.au/2026/subjects/swen30007
 source_year: 2026
-verified_on: 2026-10-07
-notes: Not available in 2026. Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-10
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+skills:
+  - programming
+  - design
+  - systems
+topics:
+  - software-engineering
+  - programming

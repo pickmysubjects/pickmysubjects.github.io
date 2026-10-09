@@ -5,9 +5,37 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
-categories:
-  B-SCI: science
+prerequisites:
+  any:
+    - MAST10006
+    - MAST10007
+    - MAST10008
+    - MAST10009
+    - MAST10021
+    - MAST10022
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: assignment
+    weight: 15
+  - kind: assignment
+    weight: 15
+  - kind: exam
+    weight: 60
+    hurdle: true
+  - kind: participation
+    weight: 10
+weekly_contact_hours: 3
 handbook: https://handbook.unimelb.edu.au/2026/subjects/mult20015
 source_year: 2026
-verified_on: 2026-10-07
-notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-10
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+skills:
+  - programming
+  - maths
+topics:
+  - physics
+  - programming
+  - algorithms

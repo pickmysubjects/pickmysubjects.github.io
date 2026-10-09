@@ -14,9 +14,10 @@ import type { Dataset, ReqExpr, ReqField, Skill, Subject } from './schema'
 const MATHS_AREAS = new Set(['MAST', 'PHYC', 'ACTL', 'ELEN', 'MCEN', 'CVEN', 'CHEN', 'BMEN', 'ENGR'])
 const PROGRAMMING_AREAS = new Set(['COMP', 'SWEN', 'INFO'])
 // Wet labs, plus the engineering labs and the field-and-lab earth sciences.
-const LAB_AREAS = new Set(['CHEM', 'BCMB', 'MIIM', 'PATH', 'BIOL', 'GENE', 'ZOOL', 'BOTA', 'ANAT', 'PHRM', 'BTCH', 'PHYS', 'NEUR', 'FOOD', 'ANSC', 'VETS', 'AGRI', 'GEOL', 'ERTH', 'ECOL', 'ELEN', 'BMEN', 'CEDB'])
+const LAB_AREAS = new Set(['CHEM', 'BCMB', 'MIIM', 'PATH', 'BIOL', 'GENE', 'ZOOL', 'BOTA', 'ANAT', 'PHRM', 'BTCH', 'PHYS', 'NEUR', 'FOOD', 'ANSC', 'VETS', 'AGRI', 'ERTH', 'ELEN', 'BMEN', 'CEDB'])
 
 const TITLE: Partial<Record<Skill, RegExp>> = {
+  fieldwork: /\bfield\b|field class|excursion/i,
   maths:
     /calculus|algebra|mathemat|differential|real analysis|complex analysis|vector|geometry|number theory|topolog|optimi[sz]ation|mechanics|quantum|electromagnet|microeconomics|finance|financial decision|econometric/i,
   statistics:
@@ -54,7 +55,8 @@ function inferred(s: Subject, data: Dataset | undefined): Skill[] {
   // In a lab or field subject, reports are mostly write-ups of practical work, so it takes more.
   const written = tasks.reduce((a, t) => a + (t.kind === 'report' ? t.weight : t.kind === 'presentation' ? t.weight * 0.5 : 0), 0)
   if (written >= (LAB_AREAS.has(area) ? 60 : 20)) out.add('writing')
-  if (LAB_AREAS.has(area) && (tasks.some((t) => t.kind === 'report') || (s.weeklyContactHours ?? 0) >= 5)) out.add('lab')
+  // A field subject's practical work is outdoors, not in a lab.
+  if (LAB_AREAS.has(area) && !out.has('fieldwork') && (tasks.some((t) => t.kind === 'report') || (s.weeklyContactHours ?? 0) >= 5)) out.add('lab')
   for (const code of data ? required(s.prerequisites) : []) {
     const before = data?.subjects[code]
     // One step back only, from hand tags or the area: a long chain of guesses drifts.

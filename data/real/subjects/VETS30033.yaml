@@ -5,9 +5,36 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
-categories:
-  B-SCI: science
+prerequisites:
+  any:
+    - ECOL20003
+    - VETS20019
+    - ZOOL20004
+    - ZOOL20005
+    - ZOOL20006
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: quiz
+    weight: 25
+  - kind: assignment
+    weight: 10
+  - kind: assignment
+    weight: 10
+  - kind: presentation
+    weight: 17
+    group: true
+  - kind: exam
+    weight: 38
+weekly_contact_hours: 2
 handbook: https://handbook.unimelb.edu.au/2026/subjects/vets30033
 source_year: 2026
-verified_on: 2026-10-07
-notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-10
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+skills:
+  - writing
+topics:
+  - ecology
+  - health

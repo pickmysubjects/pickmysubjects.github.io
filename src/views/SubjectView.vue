@@ -7,7 +7,7 @@ import AssessmentPanel from '@/components/subject/AssessmentPanel.vue'
 import MajorRoles from '@/components/subject/MajorRoles.vue'
 import SubjectAbout from '@/components/subject/SubjectAbout.vue'
 import DiscussionSummary from '@/components/subject/DiscussionSummary.vue'
-import { periodsFor, prerequisiteRoute, referencedSubjects, simplifyFor, termKey } from '@/engine'
+import { PASS_MARK, periodsFor, prerequisiteRoute, referencedSubjects, simplifyFor, termKey } from '@/engine'
 import SubjectLinks from '@/components/majors/SubjectLinks.vue'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
@@ -51,6 +51,8 @@ const blocks = computed(() => (subject.value && subject.value.nonAllowed !== 'un
 const category = computed(() => categoryLabel(t.value, subject.value?.categories[plan.setup.value.course]))
 const inPlan = computed(() => plan.plannedCodes.value.includes(code.value))
 const taken = computed(() => profile.value.results.some((r) => r.code === code.value))
+// Already passed (from My page): nothing to add; a fail can be planned again as a retake.
+const passed = computed(() => profile.value.results.find((r) => r.code === code.value && (r.mark === undefined || r.mark >= PASS_MARK)))
 const added = shallowRef<string | null>(null)
 const rating = shallowRef(false)
 const thanks = shallowRef(false)
@@ -132,7 +134,11 @@ const links = computed(() => (name.value === 'real' ? discussionLinks(code.value
           <a v-for="c in subject.replacedBy" :key="c" class="chip code" :href="link(`subject/${c}`)">{{ c }}</a>
         </p>
         <div class="actions">
-          <button class="button button-accent" type="button" :disabled="inPlan || !target" @click="addToPlan">
+          <span v-if="passed" class="button button-quiet done-badge" role="status">
+            <Check :size="18" aria-hidden="true" />
+            {{ passed.mark === undefined ? t('subject.passed') : t('subject.passedMark', { mark: passed.mark }) }}
+          </span>
+          <button v-else class="button button-accent" type="button" :disabled="inPlan || !target" @click="addToPlan">
             <component :is="inPlan ? Check : Plus" :size="18" aria-hidden="true" />
             {{ inPlan ? t('subject.inPlan') : t('subject.addToPlan') }}
           </button>
@@ -235,6 +241,11 @@ const links = computed(() => (name.value === 'real' ? discussionLinks(code.value
 </template>
 
 <style scoped>
+.done-badge {
+  color: var(--good);
+  cursor: default;
+}
+
 .panel-links {
   margin-top: 10px;
 }

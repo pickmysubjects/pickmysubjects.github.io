@@ -129,8 +129,9 @@ describe('subject facts', () => {
   it('uses curated topics on real data: machine learning first-years see the way in, not unrated filler', () => {
     const { dataset: real } = buildDataset('real')
     // Level 1 only, as the For-you page shows a first-year.
-    const fresh = recommend(real, { ...base, interests: ['machine-learning'] }, { course: 'B-SCI', limit: 5, maxLevel: 1 }).map((r) => r.code)
-    expect(fresh.slice(0, 3)).toEqual(expect.arrayContaining(['COMP10002', 'COMP10001'])) // the way to COMP30027 (with MAST10007)
+    const fresh = recommend(real, { ...base, interests: ['machine-learning'] }, { course: 'B-SCI', limit: 6, maxLevel: 1 }).map((r) => r.code)
+    // The way to COMP30027: programming plus the first-year maths it needs.
+    expect(fresh).toEqual(expect.arrayContaining(['COMP10002', 'COMP10001', 'MAST10007']))
     expect(fresh).not.toContain('ACTL30008') // no topics curated: neutral, so below real matches
     const ready = recommend(
       real,
@@ -158,5 +159,36 @@ describe('the five skill steps read differently', () => {
     const score = (lab: number) => recommend(data, { results: [], skills: { lab }, interests: [], goal: 'balanced' }, {})[0]?.score ?? 0
     expect([5, 4, 3, 2, 1].map(score)).toEqual([...[5, 4, 3, 2, 1].map(score)].sort((a, b) => b - a))
     expect(new Set([5, 4, 3, 2, 1].map(score)).size).toBe(5)
+  })
+})
+
+describe('recommend with the student’s major', () => {
+  it('nudges the major’s own subjects up and says why', async () => {
+    const { buildDataset } = await import('../scripts/dataset')
+    const { recommend, PROGRAMME_BONUS } = await import('../src/engine/recommend')
+    const { dataset: real } = buildDataset('real')
+    const profile = { results: [], skills: {}, interests: [], goal: 'balanced' as const }
+    const base = recommend(real, profile, { course: 'B-SCI', year: 2026 })
+    const mine = recommend(real, profile, { course: 'B-SCI', year: 2026, programme: { courseYear: 2026, components: ['geography'] } })
+    const geog = mine.find((r) => r.code === 'GEOG20002')
+    expect(geog?.reasons[0]?.key).toMatch(/^major(Core|Option)$/)
+    expect(geog!.score).toBe(Math.min(100, base.find((r) => r.code === 'GEOG20002')!.score + PROGRAMME_BONUS))
+    // Outside the major nothing changes.
+    const other = mine.find((r) => r.code === 'COMP10001')
+    expect(other?.score).toBe(base.find((r) => r.code === 'COMP10001')?.score)
+  })
+})
+
+describe('recommend after a fail', () => {
+  it('can suggest the subject again, and says it would be a retake', async () => {
+    const { buildDataset } = await import('../scripts/dataset')
+    const { recommend } = await import('../src/engine/recommend')
+    const { dataset: real } = buildDataset('real')
+    const profile = { results: [{ code: 'COMP10001', mark: 42 }], skills: {}, interests: [], goal: 'balanced' as const }
+    const rec = recommend(real, profile, { course: 'B-SCI', year: 2026 }).find((r) => r.code === 'COMP10001')
+    expect(rec?.warnings[0]).toMatchObject({ key: 'retake', params: { mark: 42 } })
+    // Passed or planned subjects never come back.
+    const passed = recommend(real, { ...profile, results: [{ code: 'COMP10001', mark: 70 }] }, { course: 'B-SCI', year: 2026, planned: ['COMP10002'] })
+    expect(passed.some((r) => r.code === 'COMP10001' || r.code === 'COMP10002')).toBe(false)
   })
 })

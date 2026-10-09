@@ -5,6 +5,7 @@ import SkillsEditor from '@/components/profile/SkillsEditor.vue'
 import TopicChips from '@/components/profile/TopicChips.vue'
 import SuggestionPreview from '@/components/profile/SuggestionPreview.vue'
 import WamGoal from '@/components/profile/WamGoal.vue'
+import DegreeCard from '@/components/profile/DegreeCard.vue'
 import { ArrowRight, Download, Upload } from 'lucide-vue-next'
 import { link } from '@/composables/useView'
 import { downloadBackup, restoreBackup } from '@/utils/backup'
@@ -44,6 +45,7 @@ async function onRestore(event: Event): Promise<void> {
         <a :href="link('guide')">{{ t('guide.wamWhat') }}</a>
       </p>
     </section>
+    <DegreeCard class="record-degree" />
     <div class="record-body">
       <div class="record-col">
         <ResultsEditor class="results-card surface" v-model="results" :subjects="data.subjects" :options="options" />
@@ -166,6 +168,10 @@ async function onRestore(event: Event): Promise<void> {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+}
+
+.record-degree {
+  margin-bottom: 24px;
 }
 
 .record-body {

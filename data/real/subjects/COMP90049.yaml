@@ -3,8 +3,41 @@ title: Introduction to Machine Learning
 level: 9
 points: 12.5
 offerings:
-  2026: [semester-1, semester-2]
+  "2026":
+    - semester-1
+    - semester-2
+prerequisites:
+  any:
+    - any:
+        - COMP20003
+        - COMP20007
+        - COMP90038
+        - ENGR30004
+        - ENGR30003
+    - manual: "Admission into or selection of one of the following: MC-SCICMP Master of Science (Computer Science) MC-CS Master of Computer Science GC-CS Graduate Certificate in Computer Science"
+    - manual: "Admission into or selection of one of the following: Distributed Computing (100pt) specialisation (formal) in the MC-IT Master of Information Technology Computing (100pt) specialisation (formal) in the MC-IT Master of Information Technology Cyber Security (100pt) specialisation (formal) in the MC-IT Master of Information Technology Artificial Intelligence (100pt) specialisation (formal) in the MC-IT Master of Information Technology Human-Computer Interaction (100pt) specialisation (formal) in the MC-IT Master of Information Technology Digital Innovation (100pt) specialisation (formal) in the MC-IT Master of Information Technology"
+    - manual: "Admission into or selection of one of the following: Distributed Computing (150pt) specialisation (formal) in the MC-IT Master of Information Technology Computing (150pt) specialisation (formal) in the MC-IT Master of Information Technology Cyber Security (150pt) specialisation (formal) in the MC-IT Master of Information Technology Artificial Intelligence (150pt) specialisation (formal) in the MC-IT Master of Information Technology"
+corequisites: none
+non_allowed:
+  - COMP30027
+  - COMP30018
+assessment:
+  - kind: project
+    weight: 20
+  - kind: project
+    weight: 30
+    group: true
+  - kind: exam
+    weight: 50
+    hurdle: true
 handbook: https://handbook.unimelb.edu.au/2026/subjects/comp90049
 source_year: 2026
-verified_on: null
-notes: Title, level and periods seen in another subject's requirements table; prerequisites not curated yet.
+verified_on: 2026-10-10
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+skills:
+  - programming
+  - maths
+  - data
+topics:
+  - machine-learning
+  - data-science

@@ -5,9 +5,36 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
-categories:
-  B-SCI: science
+prerequisites:
+  any:
+    - ANSC20001
+    - ANSC20005
+    - ANSC20002
+corequisites: none
+non_allowed:
+  - AGRI30003
+assessment:
+  - kind: assignment
+    weight: 25
+  - kind: assignment
+    weight: 25
+  - kind: presentation
+    weight: 10
+    group: true
+  - kind: report
+    weight: 40
+    group: true
+weekly_contact_hours: 4
 handbook: https://handbook.unimelb.edu.au/2026/subjects/ansc30009
 source_year: 2026
-verified_on: 2026-10-07
-notes: Name, points, study periods and science-subject status from the B-SCI science subject list; prerequisites not curated yet.
+verified_on: 2026-10-10
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+skills:
+  - writing
+  - business
+topics:
+  - agriculture
+  - environment
+  - economics

@@ -1,0 +1,39 @@
+code: VETS30029
+title: "Veterinary Bioscience: Cells to Systems"
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites:
+  all:
+    - VETS20019
+    - any:
+        - BCMB20002
+        - BIOM20001
+        - AGRI20043
+corequisites:
+  all:
+    - VETS30016
+    - VETS30030
+    - VETS30031
+non_allowed: []
+assessment:
+  - kind: test
+    weight: 15
+  - kind: test
+    weight: 25
+  - kind: exam
+    weight: 60
+weekly_contact_hours: 6
+handbook: https://handbook.unimelb.edu.au/2026/subjects/vets30029
+source_year: 2026
+verified_on: 2026-10-10
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+categories:
+  B-SCI: science
+skills:
+  - lab
+topics:
+  - health
+  - biology

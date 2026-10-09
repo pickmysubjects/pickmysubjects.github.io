@@ -300,3 +300,13 @@ describe('a concurrent note inside "Option 1"', () => {
     expect(JSON.stringify(r.prerequisites)).toContain('ENEN20002')
   })
 })
+
+describe('a requirement with a section for another degree only', () => {
+  it('keeps the general requirement before it', async () => {
+    const { parseHandbookPaste } = await import('../src/engine/handbookPaste')
+    const text = 'Prerequisites\nAll of\nBIOL10008\tFoundational Biology\t\nBIOL10010\tLife\'s Complexity\t\nBachelor of Biomedicine Students:\nAll of\nBIOL10002\tBiomolecules and Cells\t\nAND\nNote: the following subject/s can also be taken concurrently (at the same time)\nBIOM20001\tMolecular and Cellular Biomedicine\t\n\nCorequisites\nNone\n'
+    const r = parseHandbookPaste(text)
+    expect(r.prerequisites).toEqual({ all: [{ subject: 'BIOL10008' }, { subject: 'BIOL10010' }] })
+    expect(r.corequisites).toBe('none')
+  })
+})

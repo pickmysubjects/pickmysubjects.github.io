@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { link } from '@/composables/useView'
 import { computed, shallowRef, useId, type Component } from 'vue'
-import { ArrowUpRight, Heart, Plus, Sparkles, ThumbsUp, TrendingUp, TriangleAlert } from 'lucide-vue-next'
+import { ArrowUpRight, GraduationCap, Heart, Plus, Sparkles, ThumbsUp, TrendingUp, TriangleAlert } from 'lucide-vue-next'
 import { periodsFor, type Recommendation, type Subject } from '@/engine'
 import { useI18n } from '@/i18n'
 import { reasonText } from '@/i18n/format'
@@ -26,6 +26,8 @@ const explainId = useId()
 
 const ICONS: Record<string, Component> = {
   interests: Heart,
+  majorCore: GraduationCap,
+  majorOption: GraduationCap,
   strengths: Sparkles,
   goodAt: Sparkles,
   averagedHigh: TrendingUp,

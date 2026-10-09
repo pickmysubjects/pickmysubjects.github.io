@@ -4,6 +4,7 @@ import type { Note, Params } from './plan'
 import type { Dataset, Period, Skill, Subject } from './schema'
 import { skillsOf } from './skills'
 import { termStress } from './termStress'
+import { planRoles } from './roles'
 import { relatedTopics, topicsOf } from './topics'
 
 
@@ -60,10 +61,16 @@ export interface RecommendOptions {
    * gives up a few points, as the plan builder does, so a close alternative ranks above it.
    */
   termSubjects?: string[]
+  /** The student's major and specialisation (component ids): their subjects get a nudge and say so. */
+  programme?: { courseYear: number; components: string[] }
 }
 
 /** Points a suggestion gives up for making its semester heavier (the plan builder uses the same). */
 export const HEAVY_PICK_COST = 6
+/** A nudge, not a signal: in your major says nothing about whether it suits you. */
+export const PROGRAMME_BONUS = 4
+/** How far a subject two levels below the student's year drops. */
+export const BEHIND_LEVEL_COST = 8
 const STRESS_RANK = { ok: 0, heavy: 1, veryHeavy: 2 } as const
 
 /** What each goal is mostly about; unknown, these count as neutral instead of being left out. */
@@ -157,6 +164,10 @@ export function recommend(data: Dataset, profile: Profile, opts: RecommendOption
   const creditCourses = new Set(Object.values(data.subjects).flatMap((x) => Object.keys(x.categories)))
   const ratingMean = siteRatingMean(data)
 
+  const roles =
+    opts.course && opts.programme?.components.length
+      ? planRoles(data, opts.course, opts.programme.courseYear, opts.programme.components)
+      : null
   const termBefore = opts.termSubjects ? termStress(opts.termSubjects, data, profile).level : null
   const recs: Recommendation[] = []
   for (const s of Object.values(data.subjects)) {
@@ -183,6 +194,19 @@ export function recommend(data: Dataset, profile: Profile, opts: RecommendOption
     const eligibility = pre.status === 'unknown' && profile.confirmed?.includes(s.code) ? 'ok' : pre.status
 
     const rec = score(s, { profile, data, wam, marks, dependents, eligibility, unmet: pre.unmet, ratingMean, taken })
+    // A fail on My page: this would be a retake, which the student should know before adding it.
+    const failed = marks.get(s.code)
+    if (failed !== undefined && failed < PASS_MARK) rec.warnings.unshift(note('retake', { mark: failed }, `You got ${failed} last time: this would be a retake.`))
+    // A third-year student rarely gains from a first-year science subject (the degree wants
+    // level-3 points); breadth is different, since level-1 breadth is the usual way in.
+    if (opts.maxLevel !== undefined && opts.maxLevel - s.level >= 2 && opts.course && s.categories[opts.course] !== 'breadth') {
+      rec.score = Math.max(0, rec.score - BEHIND_LEVEL_COST)
+    }
+    if (roles && (roles.required.has(s.code) || roles.options.has(s.code))) {
+      const core = roles.required.has(s.code)
+      rec.score = Math.min(100, rec.score + PROGRAMME_BONUS)
+      rec.reasons.unshift(note(core ? 'majorCore' : 'majorOption', {}, core ? 'Compulsory in your major.' : 'One of the choices in your major.'))
+    }
     if (opts.termSubjects && termBefore) {
       const after = termStress([...opts.termSubjects, s.code], data, profile).level
       if (STRESS_RANK[after] > STRESS_RANK[termBefore]) {
@@ -426,6 +450,8 @@ function sameArea(s: Subject, ctx: ScoreCtx): string[] {
 function buildDependents(data: Dataset): Map<string, string[]> {
   const map = new Map<string, string[]>()
   for (const s of Object.values(data.subjects)) {
+    // A graduate subject (level 9) isn't somewhere an undergraduate subject leads in this degree.
+    if (s.level > 3) continue
     for (const ref of referencedSubjects(s.prerequisites)) {
       map.set(ref, [...(map.get(ref) ?? []), s.code])
     }

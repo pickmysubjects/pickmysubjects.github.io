@@ -1,0 +1,41 @@
+code: VETS30030
+title: Introduction to Professional Practice
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites:
+  all:
+    - VETS20019
+    - any:
+        - BCMB20002
+        - BIOM20001
+        - AGRI20043
+corequisites:
+  all:
+    - VETS30029
+    - VETS30031
+non_allowed: []
+assessment:
+  - kind: quiz
+    weight: 10
+  - kind: test
+    weight: 25
+  - kind: assignment
+    weight: 20
+  - kind: exam
+    weight: 45
+weekly_contact_hours: 8.5
+handbook: https://handbook.unimelb.edu.au/2026/subjects/vets30030
+source_year: 2026
+verified_on: 2026-10-10
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+categories:
+  B-SCI: science
+skills:
+  - fieldwork
+topics:
+  - health
+  - ethics
+  - law
