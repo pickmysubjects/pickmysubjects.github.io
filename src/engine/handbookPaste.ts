@@ -459,7 +459,9 @@ export function parseContactHours(text: string): number | undefined {
       total += weeks ? h * num(weeks[1]!) : weekly ? h * 12 : h
     }
   }
-  if (total) return half(total / 12)
+  // "A 2 hour lecture and a 1 hour tutorial" with no "per week": a semester of under 12 hours
+  // doesn't happen, so a total that small is already weekly.
+  if (total) return half(total < 12 ? total : total / 12)
   const stray = line.match(/(\d+(?:\.\d+)?)\s*hours/i)
   return stray ? half(Number(stray[1]) / 12) : undefined
 }

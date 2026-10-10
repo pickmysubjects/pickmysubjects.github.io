@@ -1,0 +1,38 @@
+code: MAST10024
+title: Mathematics & Statistics for Biomedicine
+level: 1
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+    - semester-2
+prerequisites: none
+corequisites: none
+non_allowed:
+  - MAST10010
+  - MAST10011
+  - MAST10016
+  - ECON10005
+  - MAST20005
+assessment:
+  - kind: assignment
+    weight: 30
+  - kind: test
+    weight: 10
+  - kind: quiz
+    weight: 10
+  - kind: exam
+    weight: 50
+handbook: https://handbook.unimelb.edu.au/2026/subjects/mast10024
+source_year: 2026
+verified_on: 2026-10-10
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+skills:
+  - maths
+  - statistics
+topics:
+  - modelling
+  - statistics
+  - health

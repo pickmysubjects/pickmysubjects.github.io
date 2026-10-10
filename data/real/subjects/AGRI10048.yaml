@@ -1,0 +1,31 @@
+code: AGRI10048
+title: Plant Production Systems
+level: 1
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites: none
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: exam
+    weight: 50
+  - kind: assignment
+    weight: 20
+    group: true
+  - kind: test
+    weight: 30
+weekly_contact_hours: 4.5
+handbook: https://handbook.unimelb.edu.au/2026/subjects/agri10048
+source_year: 2026
+verified_on: 2026-10-10
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+skills:
+  - writing
+  - presentation
+topics:
+  - agriculture
+  - environment

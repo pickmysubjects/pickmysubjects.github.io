@@ -1,0 +1,37 @@
+code: AGRI10046
+title: Foundations of Agricultural Sciences 2
+level: 1
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites: AGRI10045
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: quiz
+    weight: 5
+  - kind: assignment
+    weight: 10
+  - kind: assignment
+    weight: 25
+  - kind: report
+    weight: 15
+    group: true
+  - kind: exam
+    weight: 45
+weekly_contact_hours: 5.5
+handbook: https://handbook.unimelb.edu.au/2026/subjects/agri10046
+source_year: 2026
+verified_on: 2026-10-10
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+skills:
+  - maths
+  - data
+  - lab
+topics:
+  - physics
+  - chemistry
+  - agriculture

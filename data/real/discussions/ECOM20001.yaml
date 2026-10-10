@@ -1,0 +1,35 @@
+code: ECOM20001
+source: StudentVIP
+url: https://studentvip.com.au/unimelb/subjects/ecom20001
+reviews: 9
+from: 2014
+to: 2021
+checked: 2026-10-10
+points:
+  - en: "A practical econometrics subject using R (older offerings used EViews) that builds quantitative skills useful at work."
+    zh: "偏实用的计量经济学课,用R(早年用EViews),培养工作中用得上的量化技能。"
+    zh-TW: "偏實用的計量經濟學課,用R(早年用EViews),培養工作上用得到的量化技能。"
+    ja: "R(以前はEViews)を使う実践的な計量経済学で、仕事に役立つ定量スキルが身につきます。"
+    ko: "R(예전에는 EViews)을 쓰는 실용적인 계량경제학 과목으로, 업무에 유용한 정량 분석 능력을 기릅니다."
+    vi: "Môn kinh tế lượng thực tế dùng R (trước đây dùng EViews), rèn kỹ năng định lượng hữu ích cho công việc."
+    ms: "Subjek ekonometrik praktikal menggunakan R (dahulu EViews) yang membina kemahiran kuantitatif berguna di tempat kerja."
+    id: "Mata kuliah ekonometrika praktis memakai R (dulu EViews) yang membangun keterampilan kuantitatif berguna di dunia kerja."
+    hi: "R (पहले EViews) से पढ़ाया जाने वाला व्यावहारिक इकोनोमेट्रिक्स विषय, जो काम में उपयोगी मात्रात्मक कौशल देता है।"
+  - en: "Most enjoy the content and coordination; only basic R is needed, though assignments can be tedious."
+    zh: "多数人喜欢内容和课程安排;只需基础R,但作业可能比较繁琐。"
+    zh-TW: "多數人喜歡內容和課程安排;只需基礎R,但作業可能比較繁瑣。"
+    ja: "内容と運営は概ね好評。Rは基本程度で足りますが、課題は手間がかかることも。"
+    ko: "대부분 내용과 운영에 만족합니다. R은 기초만 있으면 되지만 과제가 번거로울 수 있습니다."
+    vi: "Đa số thích nội dung và cách tổ chức; chỉ cần R cơ bản, dù bài tập có thể khá tẻ nhạt."
+    ms: "Kebanyakan suka kandungan dan penyelarasan; hanya R asas diperlukan, walaupun tugasan boleh membosankan."
+    id: "Sebagian besar suka materi dan pengelolaannya; cukup R dasar, meski tugas bisa membosankan."
+    hi: "ज़्यादातर को विषय-वस्तु और संचालन पसंद है; केवल बुनियादी R चाहिए, हालांकि असाइनमेंट थकाऊ हो सकते हैं।"
+  - en: "Some found delivery and tutorials dry, and the final exam once leaned more on theory than past papers."
+    zh: "有人觉得讲授和辅导课枯燥,期末考试曾比往年真题更偏理论。"
+    zh-TW: "有人覺得講授和輔導課枯燥,期末考試曾比往年考古題更偏理論。"
+    ja: "講義やチュートリアルが単調という声もあり、期末試験が過去問より理論寄りだった年もあります。"
+    ko: "강의와 튜토리얼이 지루했다는 의견이 있고, 기말시험이 기출보다 이론 위주였던 해도 있습니다."
+    vi: "Một số thấy cách giảng và tutorial khô khan, và có năm bài thi cuối kỳ thiên về lý thuyết hơn đề cũ."
+    ms: "Ada yang rasa penyampaian dan tutorial hambar, dan peperiksaan akhir pernah lebih berat teori berbanding kertas lepas."
+    id: "Sebagian merasa penyampaian dan tutorial kering, dan ujian akhir pernah lebih teoretis daripada soal tahun lalu."
+    hi: "कुछ को पढ़ाने का तरीका और ट्यूटोरियल नीरस लगे, और एक बार अंतिम परीक्षा पुराने प्रश्नपत्रों से ज़्यादा सैद्धांतिक थी।"

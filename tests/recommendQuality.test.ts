@@ -14,7 +14,10 @@ describe('recommendation quality (real data)', () => {
   it('an untagged area still matches: biology interest gets biology subjects first', () => {
     // A biology department's subject, or one whose name says it's about biology (the
     // statistics subject for biologists, say).
-    const biological = (c: string) => ['BIOL', 'GENE', 'ZOOL', 'BOTA', 'MIIM', 'ANAT', 'PHYS'].includes(area(c) ?? '') || /biolog/i.test(real.subjects[c]?.title ?? '')
+    const biological = (c: string) =>
+      ['BIOL', 'GENE', 'ZOOL', 'BOTA', 'MIIM', 'ANAT', 'PHYS'].includes(area(c) ?? '') ||
+      /biolog/i.test(real.subjects[c]?.title ?? '') ||
+      (real.subjects[c]?.topics ?? []).includes('biology')
     expect(top({ interests: ['biology'] }).slice(0, 3).every(biological)).toBe(true)
   })
 

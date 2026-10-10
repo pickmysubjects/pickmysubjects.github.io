@@ -310,3 +310,10 @@ describe('a requirement with a section for another degree only', () => {
     expect(r.corequisites).toBe('none')
   })
 })
+
+describe('contact hours with no "per week"', () => {
+  it('reads a short list of sessions as weekly', async () => {
+    const { parseContactHours } = await import('../src/engine/handbookPaste')
+    expect(parseContactHours('Contact hours\tA 2 hour lecture and a 1 hour tutorial')).toBe(3)
+  })
+})

@@ -23,7 +23,8 @@ const TITLE: Partial<Record<Skill, RegExp>> = {
   statistics:
     /statistic|probabilit|stochastic|inference|regression|econometric|data analysis|biostat|actuarial|research methods|quantitative|machine learning|data processing/i,
   programming: /programming|computing|software|algorithm|data structure|machine learning|computational|database|web |coding|data science/i,
-  writing: /writing|essay|communication|law|history|philosophy|marketing|macroeconomic|accounting reports|society|ethics|culture/i,
+  // Whole words: "culture" must not match Agriculture or Horticulture.
+  writing: /\b(writing|essays?|communication|law|history|philosophy|marketing|macroeconomic|accounting reports|society|ethics|cultures?)\b/i,
 }
 const STATS_TITLE = /statistic|probabilit|stochastic|inference/i
 /** Skills that carry over from a required subject (you can't do the follow-on without them). */

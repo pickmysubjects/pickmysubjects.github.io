@@ -1,0 +1,37 @@
+code: LARC10001
+source: StudentVIP
+url: https://studentvip.com.au/unimelb/subjects/larc10001
+reviews: 4
+from: 2020
+to: 2023
+checked: 2026-10-10
+points:
+  - en: "Widely seen as an easy elective: a high mark is reachable without much effort."
+    zh: "普遍认为是轻松的选修课,不用花太多力气也能拿高分。"
+    zh-TW: "普遍認為是輕鬆的選修課,不用花太多力氣也能拿高分。"
+    ja: "楽な選択科目という評価が多く、あまり労力をかけずに高得点を取れます。"
+    ko: "쉬운 선택 과목이라는 평이 많고, 큰 노력 없이도 높은 점수를 받을 수 있습니다."
+    vi: "Được xem là môn tự chọn dễ, không cần nhiều công sức vẫn đạt điểm cao."
+    ms: "Dianggap elektif mudah; markah tinggi boleh dicapai tanpa banyak usaha."
+    id: "Dianggap mata kuliah pilihan yang mudah; nilai tinggi bisa diraih tanpa banyak usaha."
+    hi: "इसे आसान वैकल्पिक विषय माना जाता है; ज़्यादा मेहनत के बिना भी अच्छे अंक मिल सकते हैं।"
+  - en: "Lectures are often described as bland, and some say they can be skipped; tutorials and feedback are more useful."
+    zh: "讲座常被说比较平淡,有人说可以不去;辅导课和反馈更有用。"
+    zh-TW: "講座常被說比較平淡,有人說可以不去;輔導課和回饋更有用。"
+    ja: "講義は単調だという声が多く、出なくてもよいという人も。チュートリアルとフィードバックの方が役立ちます。"
+    ko: "강의는 지루하다는 평이 많고 빠져도 된다는 의견도 있습니다. 튜토리얼과 피드백이 더 유용합니다."
+    vi: "Bài giảng thường bị nhận xét là nhạt, có người bảo có thể bỏ; buổi tutorial và phản hồi hữu ích hơn."
+    ms: "Kuliah sering dikatakan hambar dan ada yang kata boleh ponteng; tutorial dan maklum balas lebih berguna."
+    id: "Kuliah sering disebut membosankan dan ada yang bilang bisa dilewati; tutorial dan umpan balik lebih berguna."
+    hi: "लेक्चर अक्सर नीरस बताए जाते हैं और कुछ कहते हैं उन्हें छोड़ा जा सकता है; ट्यूटोरियल और फ़ीडबैक ज़्यादा काम के हैं।"
+  - en: "No exam: assessment is relaxed essays and manageable weekly tasks, but citation rules are strict."
+    zh: "没有考试:考核是不太紧张的论文和可应付的每周任务,但引用格式要求很严。"
+    zh-TW: "沒有考試:評量是不太緊張的論文和可應付的每週任務,但引用格式要求很嚴。"
+    ja: "試験はなく、気楽なエッセイと無理のない毎週の課題で評価されますが、引用ルールは厳しめです。"
+    ko: "시험은 없고 부담 없는 에세이와 무난한 주간 과제로 평가하지만, 인용 규칙은 엄격합니다."
+    vi: "Không có thi: đánh giá bằng bài luận nhẹ nhàng và bài tập hằng tuần vừa sức, nhưng quy định trích dẫn khá khắt khe."
+    ms: "Tiada peperiksaan: penilaian melalui esei santai dan tugasan mingguan yang terurus, tetapi peraturan sitasi ketat."
+    id: "Tidak ada ujian: penilaian berupa esai santai dan tugas mingguan yang ringan, tetapi aturan sitasi ketat."
+    hi: "कोई परीक्षा नहीं: आकलन आसान निबंधों और संभालने लायक साप्ताहिक कामों से होता है, पर उद्धरण के नियम सख़्त हैं।"
+workload: light
+difficulty: easy

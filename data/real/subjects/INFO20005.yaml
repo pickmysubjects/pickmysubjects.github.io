@@ -1,0 +1,39 @@
+code: INFO20005
+title: User Interface Development
+level: 2
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites:
+  all:
+    - INFO10003
+    - any:
+        - COMP10001
+        - COMP10003
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: report
+    weight: 25
+    hurdle: true
+  - kind: report
+    weight: 25
+    hurdle: true
+  - kind: project
+    weight: 50
+    hurdle: true
+weekly_contact_hours: 4
+handbook: https://handbook.unimelb.edu.au/2026/subjects/info20005
+source_year: 2026
+verified_on: 2026-10-10
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+skills:
+  - design
+  - programming
+  - presentation
+topics:
+  - design
+  - software-engineering

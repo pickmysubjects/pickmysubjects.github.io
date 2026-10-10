@@ -1,0 +1,31 @@
+code: AGRI20042
+title: Agricultural Economics
+level: 2
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites: AGRI10047
+corequisites: none
+non_allowed:
+  - ECON20012
+assessment:
+  - kind: test
+    weight: 20
+  - kind: test
+    weight: 20
+  - kind: exam
+    weight: 60
+weekly_contact_hours: 3
+handbook: https://handbook.unimelb.edu.au/2026/subjects/agri20042
+source_year: 2026
+verified_on: 2026-10-10
+categories:
+  B-SCI: science
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+skills:
+  - business
+  - maths
+topics:
+  - economics
+  - agriculture
