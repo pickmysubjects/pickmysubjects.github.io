@@ -164,6 +164,7 @@ export const en = {
     noRoom: 'its prerequisites or the study load left no room before the plan ended',
   },
   genNote: {
+    keptOpen: "Planned {codes} first: most of the {n} majors in this field start from them, so you can still pick any.",
     balanced: "Swapped {a} and {b} between semesters to spread the load.",
     lighter: "Took {b} instead of {a}, which would have made that semester heavy.",
     extraTerms: 'Planned {n} extra semesters so every required subject fits (some run in one semester only).',
@@ -856,6 +857,7 @@ export const en = {
     justSearch: 'Only want to look up a subject? Use the search box above.',
   },
   subject: {
+    showAll: "Show all {n}",
     passed: "Done",
     passedMark: "Done · {mark}",
     notYetAdded: "Not added yet · open the Handbook",
@@ -926,6 +928,8 @@ export const en = {
     majorSearch: 'Search a major, e.g. psychology or chemistry',
     noMajorMatch: 'No major matches that. Try another word, or pick "Not sure yet".',
     allFields: "All fields",
+    fieldOnly: "In this field, not sure which major yet",
+    fieldUndecided: "{field} (major not chosen yet)",
   },
   pain: {
     'when-offered': {

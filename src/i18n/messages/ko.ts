@@ -161,6 +161,7 @@ export const ko: Messages = {
     noRoom: '선수 과목이나 수강 부담 때문에 계획이 끝나기 전에 넣을 자리가 없음',
   },
   genNote: {
+    keptOpen: "먼저 {codes}을(를) 넣었어요. 이 분야 {n}개 전공 대부분이 여기서 시작해서, 나중에 어느 전공이든 고를 수 있어요.",
     balanced: "학기별 부담을 고르게 하려고 {a}와 {b}의 학기를 바꿨어요.",
     lighter: "그 학기가 너무 무거워지지 않게 {a} 대신 {b}를 골랐어요.",
     extraTerms: '필수 과목을 모두 넣기 위해 학기를 {n}개 더 추가했습니다(일부 과목은 한 학기에만 개설).',
@@ -853,6 +854,7 @@ export const ko: Messages = {
     justSearch: '과목만 찾아보려면 위의 검색창을 쓰세요.',
   },
   subject: {
+    showAll: "전체 {n}개 보기",
     passed: "이수함",
     passedMark: "이수함 · {mark}점",
     notYetAdded: "아직 없음 · Handbook 열기",
@@ -923,6 +925,8 @@ export const ko: Messages = {
     majorSearch: '전공 검색 (예: psychology, 화학)',
     noMajorMatch: '맞는 전공이 없어요. 다른 단어로 찾거나 “아직 모르겠어요”를 고르세요.',
     allFields: "전체 분야",
+    fieldOnly: "이 분야로, 전공은 아직 미정",
+    fieldUndecided: "{field} (전공 미정)",
   },
   pain: {
     'when-offered': {

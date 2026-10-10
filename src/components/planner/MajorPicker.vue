@@ -11,6 +11,8 @@ import { MAJOR_GROUPS, majorGroupOf } from '@/utils/majorGroups'
  */
 const props = defineProps<{ majors: Component[] }>()
 const major = defineModel<string>({ required: true })
+/** A field chosen without a major yet ("biomedicine, not sure which"); '' for none. */
+const openField = defineModel<string>('field', { default: '' })
 const { t } = useI18n()
 const query = shallowRef('')
 
@@ -27,13 +29,21 @@ const groups = computed(() => {
 })
 const chosen = computed(() => props.majors.find((m) => m.id === major.value))
 // The open field; a major already chosen opens its own.
-const field = shallowRef<string | null>(chosen.value ? majorGroupOf(chosen.value.id) : null)
+const field = shallowRef<string | null>(chosen.value ? majorGroupOf(chosen.value.id) : openField.value || null)
 const searching = computed(() => query.value.trim() !== '')
 const fields = computed(() =>
   [...MAJOR_GROUPS.map((g) => g.id), 'other']
     .map((id) => ({ id, count: props.majors.filter((m) => majorGroupOf(m.id) === id).length }))
     .filter((f) => f.count > 0),
 )
+function pick(id: string): void {
+  major.value = id
+  openField.value = ''
+}
+function pickUnsure(f: string): void {
+  major.value = ''
+  openField.value = f
+}
 const shown = computed(() => (searching.value ? groups.value : groups.value.filter((g) => g.id === field.value)))
 </script>
 
@@ -46,7 +56,7 @@ const shown = computed(() => (searching.value ? groups.value : groups.value.filt
 
     <p v-if="chosen" class="chosen"><Check :size="16" aria-hidden="true" /> {{ chosen.title }}</p>
 
-    <button type="button" class="option option-unsure" :aria-pressed="major === ''" @click="major = ''">
+    <button type="button" class="option option-unsure" :aria-pressed="major === '' && !openField" @click="pickUnsure('')">
       <span>{{ t('wizard.notSure') }}</span>
       <Check v-if="major === ''" :size="18" aria-hidden="true" />
     </button>
@@ -71,6 +81,16 @@ const shown = computed(() => (searching.value ? groups.value : groups.value.filt
       <button v-if="!searching" type="button" class="back" @click="field = null">
         <ArrowLeft :size="16" aria-hidden="true" /> {{ t('wizard.allFields') }}
       </button>
+      <button
+        v-if="!searching && field"
+        type="button"
+        class="option option-unsure"
+        :aria-pressed="major === '' && openField === field"
+        @click="pickUnsure(field)"
+      >
+        <span>{{ t('wizard.fieldOnly') }}</span>
+        <Check v-if="major === '' && openField === field" :size="18" aria-hidden="true" />
+      </button>
       <section v-for="g in shown" :key="g.id" class="group">
         <h3 class="group-name">{{ t(`majorGroup.${g.id}`) }}</h3>
         <div class="group-list">
@@ -80,7 +100,7 @@ const shown = computed(() => (searching.value ? groups.value : groups.value.filt
             type="button"
             class="option"
             :aria-pressed="major === m.id"
-            @click="major = m.id"
+            @click="pick(m.id)"
           >
             <span>{{ m.title }}</span>
             <Check v-if="major === m.id" :size="18" aria-hidden="true" />

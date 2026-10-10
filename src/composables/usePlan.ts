@@ -20,6 +20,7 @@ import { useDataset } from './useDataset'
 import { useProfile } from './useProfile'
 import { usePersisted } from './usePersisted'
 import { cloneJson } from '@/utils/clone'
+import { majorGroupOf } from '@/utils/majorGroups'
 
 export interface PlanSetup {
   course: string
@@ -30,6 +31,8 @@ export interface PlanSetup {
   specialisation: string
   /** On a student visa (optional; changes the load warnings). */
   international?: boolean
+  /** No major yet, but a field in mind (a major group id): keeps its majors open. */
+  field?: string
 }
 
 interface PlanState {
@@ -109,6 +112,9 @@ export function usePlan() {
       specialisation: setup.specialisation || undefined,
       startYear: start.year,
       startPeriod: start.period,
+      keepOpen: !setup.major && setup.field
+        ? data.value.components.filter((c) => c.kind === 'major' && c.course === setup.course && majorGroupOf(c.id) === setup.field).map((c) => c.id)
+        : undefined,
     })
     save((s) => ({ ...s, terms: result.plan.terms, notes: result.notes, unplaced: result.unplaced }))
   }

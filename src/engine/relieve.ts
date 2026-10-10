@@ -67,6 +67,7 @@ export function balanceTerms(plan: Plan, data: Dataset, profile?: Profile): { a:
             const sb = data.subjects[b]
             if (!sa || !sb || sa.points !== sb.points) continue
             if (offeredIn(sa, other.year, other.period).status !== 'ok' || offeredIn(sb, from.year, from.period).status !== 'ok') continue
+            if (inverts(sa.level, sb.level, fromIndex, to)) continue
             swap(from, other, a, b)
             const next = scores()
             if (cost(next) < cost(best?.scores ?? current) - 1e-6 && safe()) best = { from: fromIndex, to, a, b, scores: next }
@@ -335,6 +336,7 @@ function swapThenReplace(
         const sb = data.subjects[b]
         if (!sa || !sb || sa.points !== sb.points) continue
         if (offeredIn(sa, other.year, other.period).status !== 'ok' || offeredIn(sb, from.year, from.period).status !== 'ok') continue
+        if (inverts(sa.level, sb.level, termIndex, to)) continue
         const terms = plan.terms.map((t) => ({ ...t, subjects: [...t.subjects] }))
         swap(terms[termIndex] as PlanTerm, terms[to] as PlanTerm, a, b)
         if (!lighter((terms[termIndex] as PlanTerm).subjects)) continue
@@ -351,6 +353,15 @@ function swapThenReplace(
     }
   }
   return null
+}
+
+/**
+ * Whether trading `a` (moving from term `from` to `to`) with `b` (the other way) would put the
+ * lower-level subject later: a first-year subject pushed into second year to make room for a
+ * second-year one in first year spreads the load but makes the order worse.
+ */
+function inverts(levelA: number, levelB: number, from: number, to: number): boolean {
+  return to > from ? levelA < levelB : levelB < levelA
 }
 
 function swapFor(
@@ -375,6 +386,7 @@ function swapFor(
         const sb = data.subjects[b]
         if (!sa || !sb || sa.points !== sb.points) continue
         if (offeredIn(sa, other.year, other.period).status !== 'ok' || offeredIn(sb, from.year, from.period).status !== 'ok') continue
+        if (inverts(sa.level, sb.level, termIndex, to)) continue
         swap(here, there, a, b)
         const otherAfter = termStress(there.subjects, data, profile)
         if (lighter(here.subjects) && RANK[otherAfter.level] <= RANK[otherBefore]) {

@@ -161,6 +161,7 @@ export const ja: Messages = {
     noRoom: '前提科目や履修量の関係で、プラン終了までに入りきらなかった',
   },
   genNote: {
+    keptOpen: "先に {codes} を入れました。この分野の {n} 専攻の多くがここから始まるので、後でどれでも選べます。",
     balanced: "負担を均すため、{a} と {b} の学期を入れ替えました。",
     lighter: "その学期が重くならないよう、{a} ではなく {b} を選びました。",
     extraTerms: '必修科目をすべて入れるため、学期を {n} つ追加しました（年1学期しか開講しない科目があります）。',
@@ -853,6 +854,7 @@ export const ja: Messages = {
     justSearch: '科目を調べるだけなら、上の検索欄を使ってください。',
   },
   subject: {
+    showAll: "全 {n} 件を表示",
     passed: "履修済み",
     passedMark: "履修済み · {mark} 点",
     notYetAdded: "未登録 · Handbook を開く",
@@ -923,6 +925,8 @@ export const ja: Messages = {
     majorSearch: '専攻を検索（例：psychology、化学）',
     noMajorMatch: '一致する専攻がありません。別の言葉で試すか、「まだ決めていない」を選んでください。',
     allFields: "すべての分野",
+    fieldOnly: "この分野で、専攻はまだ未定",
+    fieldUndecided: "{field}（専攻は未定）",
   },
   pain: {
     'when-offered': {

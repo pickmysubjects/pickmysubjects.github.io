@@ -161,6 +161,7 @@ export const id: Messages = {
     noRoom: 'prasyarat atau beban studi membuatnya tidak muat sebelum rencana berakhir',
   },
   genNote: {
+    keptOpen: "{codes} direncanakan dulu: sebagian besar dari {n} jurusan di bidang ini dimulai dari sini, jadi kamu masih bisa pilih yang mana pun.",
     balanced: "Menukar semester {a} dan {b} supaya bebannya lebih merata.",
     lighter: "Memilih {b} alih-alih {a} agar semester itu tidak terlalu berat.",
     extraTerms: 'Menambah {n} semester agar semua mata kuliah wajib muat (beberapa hanya dibuka satu semester).',
@@ -853,6 +854,7 @@ export const id: Messages = {
     justSearch: 'Hanya ingin mencari mata kuliah? Pakai kotak pencarian di atas.',
   },
   subject: {
+    showAll: "Tampilkan semua {n}",
     passed: "Sudah diambil",
     passedMark: "Sudah diambil · {mark}",
     notYetAdded: "Belum ditambahkan · buka Handbook",
@@ -923,6 +925,8 @@ export const id: Messages = {
     majorSearch: 'Cari jurusan, mis. psychology atau kimia',
     noMajorMatch: 'Tidak ada jurusan yang cocok. Coba kata lain, atau pilih “Belum yakin”.',
     allFields: "Semua bidang",
+    fieldOnly: "Bidang ini, jurusan belum pasti",
+    fieldUndecided: "{field} (jurusan belum dipilih)",
   },
   pain: {
     'when-offered': {

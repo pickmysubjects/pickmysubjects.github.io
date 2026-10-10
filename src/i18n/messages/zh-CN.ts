@@ -161,6 +161,7 @@ export const zhCN: Messages = {
     noRoom: '受先修要求或学习负担限制，方案结束前排不进去',
   },
   genNote: {
+    keptOpen: "先排了 {codes}：这个方向 {n} 个专业里大部分都从它们开始，之后选哪个都来得及。",
     balanced: "把 {a} 和 {b} 换了学期，让每学期的压力更平均。",
     lighter: "选了 {b} 而不是 {a}，免得那个学期太重。",
     extraTerms: '多排了 {n} 个学期，才能放下所有必修课（有些课每年只开一个学期）。',
@@ -853,6 +854,7 @@ export const zhCN: Messages = {
     justSearch: '只想查某门课？直接用上面的搜索框。',
   },
   subject: {
+    showAll: "显示全部 {n} 个",
     passed: "已修过",
     passedMark: "已修过 · {mark} 分",
     notYetAdded: "还没收录 · 点开看 Handbook",
@@ -923,6 +925,8 @@ export const zhCN: Messages = {
     majorSearch: '搜索专业，例如 psychology、化学',
     noMajorMatch: '没有找到匹配的专业。换个词试试，或者选“还没决定”。',
     allFields: "全部方向",
+    fieldOnly: "这个方向，还没定具体专业",
+    fieldUndecided: "{field}（专业未定）",
   },
   pain: {
     'when-offered': {

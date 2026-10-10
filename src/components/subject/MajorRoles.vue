@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, shallowRef } from 'vue'
 import { link } from '@/composables/useView'
 import { subjectRoles } from '@/engine'
 import { useDataset } from '@/composables/useDataset'
@@ -19,10 +19,14 @@ const roles = computed(() =>
     .map((r) => ({ ...r, mine: mine.value.has(r.component) }))
     .sort((a, b) => Number(b.mine) - Number(a.mine) || ORDER[a.role] - ORDER[b.role] || a.title.localeCompare(b.title)),
 )
+// A first-year subject leads into dozens of majors: show a few (yours first), the rest on a tap.
+const LIMIT = 6
+const expanded = shallowRef(false)
+const shown = computed(() => (expanded.value ? roles.value : roles.value.slice(0, LIMIT)))
 // One heading per kind of role, instead of the same tag on every line.
 const groups = computed(() =>
   (Object.keys(ORDER) as (keyof typeof ORDER)[])
-    .map((role) => ({ role, items: roles.value.filter((r) => r.role === role) }))
+    .map((role) => ({ role, items: shown.value.filter((r) => r.role === role) }))
     .filter((g) => g.items.length),
 )
 </script>
@@ -42,10 +46,25 @@ const groups = computed(() =>
         </ul>
       </div>
     </div>
+    <button v-if="!expanded && roles.length > LIMIT" type="button" class="roles-more" @click="expanded = true">
+      {{ t('subject.showAll', { n: roles.length }) }}
+    </button>
   </section>
 </template>
 
 <style scoped>
+.roles-more {
+  justify-self: start;
+  padding: 4px 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--accent);
+  cursor: pointer;
+}
+
 .roles {
   display: grid;
   gap: 8px;

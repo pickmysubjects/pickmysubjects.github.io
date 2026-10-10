@@ -132,7 +132,10 @@ const unknowns = computed(
     plan.termIssues.value.filter((i) => i.severity === 'warning').length,
 )
 const majorTitle = computed(() => {
-  const major = data.value.components.find((c) => c.id === plan.setup.value.major)?.title ?? t.value('wizard.notSure')
+  const field = plan.setup.value.field
+  const major =
+    data.value.components.find((c) => c.id === plan.setup.value.major)?.title ??
+    (field ? t.value('wizard.fieldUndecided', { field: t.value(`majorGroup.${field}`) }) : t.value('wizard.notSure'))
   const spec = data.value.components.find((c) => c.id === plan.setup.value.specialisation)?.title
   return spec ? `${major} + ${spec}` : major
 })

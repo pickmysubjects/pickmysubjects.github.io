@@ -216,3 +216,22 @@ describe('generatePlan (repair keeps points prerequisites)', () => {
     expect(checkTerms(plan, real).filter((i) => i.severity === 'error').map((i) => i.message)).toEqual([])
   })
 })
+
+describe('generatePlan with a field but no major yet', () => {
+  it('plans the first-year subjects most of the field’s majors need, so they all stay open', async () => {
+    const { buildDataset } = await import('../scripts/dataset')
+    const { dataset: real } = buildDataset('real')
+    const biomed = ['biochemistry-and-molecular-biology', 'genetics', 'immunology', 'microbiology', 'pathology', 'pharmacology', 'physiology'].filter((id) =>
+      real.components.some((c) => c.id === id),
+    )
+    const base = { data: real, profile: { results: [], skills: {}, interests: [], goal: 'balanced' as const }, course: 'B-SCI', courseYear: 2026, startYear: 2027, startPeriod: 'semester-1' as const }
+    const open = generatePlan({ ...base, keepOpen: biomed })
+    const year1 = open.plan.terms.slice(0, 2).flatMap((t) => t.subjects)
+    // Biology and chemistry: what nearly every biomedical major starts from.
+    expect(year1).toEqual(expect.arrayContaining(['BIOL10008', 'CHEM10003']))
+    expect(open.notes.some((n) => n.key === 'keptOpen')).toBe(true)
+    // Without a field, nothing is assumed.
+    const blank = generatePlan(base)
+    expect(blank.notes.some((n) => n.key === 'keptOpen')).toBe(false)
+  })
+})

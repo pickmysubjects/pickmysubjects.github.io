@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, shallowRef } from 'vue'
 import { ChevronRight, ExternalLink } from 'lucide-vue-next'
 import { handbookUrl } from '@/utils/links'
 import { periodsFor } from '@/engine'
@@ -8,12 +8,16 @@ import { useDataset } from '@/composables/useDataset'
 import { useI18n } from '@/i18n'
 
 // A short list of subjects, each a link with its title and when it runs; `notes` adds a line per code.
-const props = defineProps<{ codes: string[]; year: number; notes?: Record<string, string> }>()
+const props = defineProps<{ codes: string[]; year: number; notes?: Record<string, string>; limit?: number }>()
+// A long list starts short; the rest is one tap away.
+const expanded = shallowRef(false)
 const { data } = useDataset()
 const { t } = useI18n()
 
+const visible = computed(() => (props.limit && !expanded.value ? props.codes.slice(0, props.limit) : props.codes))
+const hidden = computed(() => props.codes.length - visible.value.length)
 const rows = computed(() =>
-  props.codes.map((code) => {
+  visible.value.map((code) => {
     const s = data.value.subjects[code]
     return {
       code,
@@ -49,6 +53,9 @@ const rows = computed(() =>
         <ChevronRight v-else :size="18" aria-hidden="true" class="go" />
       </a>
     </li>
+    <li v-if="hidden > 0" class="more-row">
+      <button type="button" class="more" @click="expanded = true">{{ t('subject.showAll', { n: codes.length }) }}</button>
+    </li>
   </ul>
 </template>
 
@@ -67,6 +74,23 @@ const rows = computed(() =>
 
 .links li + li {
   border-top: 1px solid var(--line);
+}
+
+.more {
+  width: 100%;
+  padding: 10px 14px;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--accent);
+  text-align: left;
+  cursor: pointer;
+}
+
+.more:hover {
+  background: var(--glass-fill-hover);
 }
 
 .row {

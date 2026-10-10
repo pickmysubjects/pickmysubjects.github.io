@@ -161,6 +161,7 @@ export const ms: Messages = {
     noRoom: 'prasyarat atau beban pengajian tidak meninggalkan ruang sebelum rancangan tamat',
   },
   genNote: {
+    keptOpen: "{codes} dirancang dahulu: kebanyakan daripada {n} major dalam bidang ini bermula dengannya, jadi anda masih boleh pilih mana-mana.",
     balanced: "Menukar semester {a} dan {b} supaya beban lebih sekata.",
     lighter: "Pilih {b} bukan {a} supaya semester itu tidak terlalu berat.",
     extraTerms: 'Menambah {n} semester supaya semua subjek wajib dapat dimuatkan (sesetengahnya dibuka satu semester sahaja).',
@@ -853,6 +854,7 @@ export const ms: Messages = {
     justSearch: 'Hanya mahu mencari subjek? Guna kotak carian di atas.',
   },
   subject: {
+    showAll: "Tunjuk semua {n}",
     passed: "Sudah diambil",
     passedMark: "Sudah diambil · {mark}",
     notYetAdded: "Belum ditambah · buka Handbook",
@@ -923,6 +925,8 @@ export const ms: Messages = {
     majorSearch: 'Cari major, cth. psychology atau kimia',
     noMajorMatch: 'Tiada major yang sepadan. Cuba perkataan lain, atau pilih “Belum pasti”.',
     allFields: "Semua bidang",
+    fieldOnly: "Bidang ini, major belum pasti",
+    fieldUndecided: "{field} (major belum dipilih)",
   },
   pain: {
     'when-offered': {

@@ -21,7 +21,11 @@ const editing = shallowRef(false)
 const chosen = computed(() => !plan.isEmpty.value || plan.notes.value.length > 0)
 const title = (id: string) => data.value.components.find((c) => c.id === id)?.title
 const course = computed(() => data.value.courses.find((c) => c.code === plan.setup.value.course)?.title ?? plan.setup.value.course)
-const major = computed(() => title(plan.setup.value.major) ?? t.value('wizard.notSure'))
+const major = computed(
+  () =>
+    title(plan.setup.value.major) ??
+    (plan.setup.value.field ? t.value('wizard.fieldUndecided', { field: t.value(`majorGroup.${plan.setup.value.field}`) }) : t.value('wizard.notSure')),
+)
 const spec = computed(() => title(plan.setup.value.specialisation))
 const start = computed(() => termLabel(t.value, { year: plan.setup.value.startYear, period: plan.setup.value.startPeriod }))
 

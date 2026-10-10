@@ -31,9 +31,11 @@ const periods = computed(() => (subject.value ? periodsFor(subject.value, year.v
 const offeringsKnown = computed(() => subject.value?.offerings !== 'unknown')
 // No longer run from the year being planned for.
 const gone = computed(() => subject.value?.discontinuedFrom !== undefined && year.value >= subject.value.discontinuedFrom)
+// What it leads to, the ones in the student's plan first, then by level and code.
 const unlocks = computed(() =>
   Object.values(data.value.subjects)
     .filter((s) => referencedSubjects(s.prerequisites).includes(code.value))
+    .sort((a, b) => Number(have.value.has(b.code)) - Number(have.value.has(a.code)) || a.level - b.level || a.code.localeCompare(b.code))
     .map((s) => s.code),
 )
 // The subjects to link: only those in the requirement as this course's students meet it.
@@ -174,7 +176,7 @@ const links = computed(() => (name.value === 'real' ? discussionLinks(code.value
         <section class="panel surface">
           <h2 class="panel-title">{{ t('subject.unlocks') }}</h2>
           <p v-if="unlocks.length === 0" class="panel-text muted">{{ t('subject.unlocksNone') }}</p>
-          <SubjectLinks v-else class="panel-links" :codes="unlocks" :year="year" />
+          <SubjectLinks v-else class="panel-links" :codes="unlocks" :year="year" :limit="4" />
           <template v-if="blocks.length">
             <h2 class="panel-title panel-title-gap">{{ t('subject.blocks') }}</h2>
             <SubjectLinks class="panel-links" :codes="blocks" :year="year" />

@@ -161,6 +161,7 @@ export const vi: Messages = {
     noRoom: 'do môn tiên quyết hoặc khối lượng học nên không còn chỗ trước khi kế hoạch kết thúc',
   },
   genNote: {
+    keptOpen: "Đã xếp {codes} trước: phần lớn {n} chuyên ngành trong lĩnh vực này bắt đầu từ đây, nên bạn vẫn chọn được bất kỳ ngành nào.",
     balanced: "Đã đổi học kỳ của {a} và {b} để chia đều áp lực.",
     lighter: "Chọn {b} thay cho {a} để kỳ đó không quá nặng.",
     extraTerms: 'Đã thêm {n} học kỳ để xếp đủ các môn bắt buộc (một số môn chỉ mở một học kỳ).',
@@ -853,6 +854,7 @@ export const vi: Messages = {
     justSearch: 'Chỉ muốn tra một môn? Dùng ô tìm kiếm ở trên.',
   },
   subject: {
+    showAll: "Xem tất cả {n}",
     passed: "Đã học",
     passedMark: "Đã học · {mark} điểm",
     notYetAdded: "Chưa có · mở Handbook",
@@ -923,6 +925,8 @@ export const vi: Messages = {
     majorSearch: 'Tìm chuyên ngành, ví dụ psychology hoặc hoá học',
     noMajorMatch: 'Không có chuyên ngành phù hợp. Thử từ khác, hoặc chọn “Chưa quyết định”.',
     allFields: "Tất cả lĩnh vực",
+    fieldOnly: "Lĩnh vực này, chưa chọn chuyên ngành",
+    fieldUndecided: "{field} (chưa chọn chuyên ngành)",
   },
   pain: {
     'when-offered': {

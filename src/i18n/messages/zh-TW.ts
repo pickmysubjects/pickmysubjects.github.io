@@ -161,6 +161,7 @@ export const zhTW: Messages = {
     noRoom: '受先修要求或修課負擔限制，方案結束前排不進去',
   },
   genNote: {
+    keptOpen: "先排了 {codes}：這個方向 {n} 個主修大多從它們開始，之後選哪個都來得及。",
     balanced: "把 {a} 和 {b} 換了學期，讓每學期的壓力更平均。",
     lighter: "選了 {b} 而不是 {a}，免得那個學期太重。",
     extraTerms: '多排了 {n} 個學期，才能放下所有必修課（有些課每年只開一個學期）。',
@@ -853,6 +854,7 @@ export const zhTW: Messages = {
     justSearch: '只想查某門課？直接用上面的搜尋框。',
   },
   subject: {
+    showAll: "顯示全部 {n} 個",
     passed: "已修過",
     passedMark: "已修過 · {mark} 分",
     notYetAdded: "還沒收錄 · 點開看 Handbook",
@@ -923,6 +925,8 @@ export const zhTW: Messages = {
     majorSearch: '搜尋主修，例如 psychology、化學',
     noMajorMatch: '沒有找到符合的主修。換個詞試試，或選「還沒決定」。',
     allFields: "全部方向",
+    fieldOnly: "這個方向，還沒決定主修",
+    fieldUndecided: "{field}（主修未定）",
   },
   pain: {
     'when-offered': {

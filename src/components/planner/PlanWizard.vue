@@ -43,7 +43,7 @@ function finish(): void {
 }
 
 function chooseCourse(c: Course): void {
-  set({ course: c.code, courseYear: c.year, major: '', specialisation: '' })
+  set({ course: c.code, courseYear: c.year, major: '', specialisation: '', field: '' })
 }
 </script>
 
@@ -100,7 +100,13 @@ function chooseCourse(c: Course): void {
 
     <div v-else class="q">
       <h2 class="q-title">{{ t('wizard.qMajor') }}</h2>
-      <MajorPicker :majors="majors" :model-value="draft.major" @update:model-value="set({ major: $event })" />
+      <MajorPicker
+        :majors="majors"
+        :model-value="draft.major"
+        :field="draft.field ?? ''"
+        @update:model-value="set({ major: $event })"
+        @update:field="set({ field: $event })"
+      />
       <a class="majors-link" :href="link('majors')" target="_blank" rel="noopener">{{ t('wizard.majorsLink') }}</a>
       <div v-if="specs.length" class="spec">
         <p class="spec-title">{{ t('wizard.qSpec') }}</p>

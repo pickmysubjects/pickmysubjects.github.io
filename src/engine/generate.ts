@@ -20,6 +20,11 @@ export interface GenerateInput {
   startPeriod: Period
   /** Upper bound on terms to plan. Defaults to what the remaining points need, capped at 10. */
   maxTerms?: number
+  /**
+   * No major yet, but a field in mind: the majors still in the running. The first-year subjects
+   * at least half of them need are planned, so none is closed off.
+   */
+  keepOpen?: string[]
 }
 
 export interface GenerateResult {
@@ -201,6 +206,19 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
       if ('all' in req) req.all.forEach((c) => (required.add(c), used.add(c)))
       else groups.push({ title: component?.title ?? id ?? '', req, used })
     }
+  }
+
+  if (!input.major && input.keepOpen?.length) {
+    const count = new Map<string, number>()
+    // Each major's own required subjects with their prerequisites, as if it were chosen.
+    for (const id of input.keepOpen) {
+      for (const c of collectRequired({ ...input, major: id, keepOpen: undefined }, done, [], new Map())) {
+        if (data.subjects[c]?.level === 1 && !done.has(c)) count.set(c, (count.get(c) ?? 0) + 1)
+      }
+    }
+    const common = [...count].filter(([, n]) => n * 2 >= input.keepOpen!.length).map(([c]) => c).sort()
+    common.forEach((c) => required.add(c))
+    if (common.length) notes.push(note('keptOpen', { codes: common.join(', '), n: input.keepOpen.length }, `Planned ${common.join(', ')}, which most of the ${input.keepOpen.length} majors you're deciding between start from.`))
   }
 
   // "Choose N points from" groups, once every fixed subject is known. Ties in

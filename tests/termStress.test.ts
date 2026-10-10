@@ -206,7 +206,9 @@ describe('plan builder spreads the load (real data)', () => {
     // Weak at maths, many science majors can't avoid two maths subjects somewhere (and the
     // data has only maths-based level-2 breadth so far; physics and the engineering-systems
     // majors now carry their real maths prerequisites too): flagged, but never left fixable.
-    expect(share(profile({ skills: { maths: 2 } }))).toBeLessThan(0.3)
+    // Swaps that would push a first-year subject behind a second-year one aren't made, even
+    // when they'd lighten a semester: order first, then load.
+    expect(share(profile({ skills: { maths: 2 } }))).toBeLessThan(0.33)
     // Builds a plan for every major, twice, which is slow on CI runners.
   }, 120_000)
 })
