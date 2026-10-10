@@ -922,6 +922,7 @@ export const zhTW: Messages = {
     summary: '{course} · {term} 入學 · {major}',
     majorSearch: '搜尋主修，例如 psychology、化學',
     noMajorMatch: '沒有找到符合的主修。換個詞試試，或選「還沒決定」。',
+    allFields: "全部方向",
   },
   pain: {
     'when-offered': {

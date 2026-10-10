@@ -922,6 +922,7 @@ export const vi: Messages = {
     summary: '{course} · từ {term} · {major}',
     majorSearch: 'Tìm chuyên ngành, ví dụ psychology hoặc hoá học',
     noMajorMatch: 'Không có chuyên ngành phù hợp. Thử từ khác, hoặc chọn “Chưa quyết định”.',
+    allFields: "Tất cả lĩnh vực",
   },
   pain: {
     'when-offered': {

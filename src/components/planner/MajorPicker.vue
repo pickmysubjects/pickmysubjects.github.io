@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import { computed, shallowRef } from 'vue'
-import { Check, Search } from 'lucide-vue-next'
+import { ArrowLeft, Check, ChevronRight, Search } from 'lucide-vue-next'
 import type { Component } from '@/engine'
 import { useI18n } from '@/i18n'
 import { MAJOR_GROUPS, majorGroupOf } from '@/utils/majorGroups'
 
-/** Pick a major from a long list: grouped by field, with a search box that also matches the field name. */
+/**
+ * Pick a major in two short steps: a field first ("Agriculture, food and animals"), then a major in
+ * it. Typing searches every field at once.
+ */
 const props = defineProps<{ majors: Component[] }>()
 const major = defineModel<string>({ required: true })
 const { t } = useI18n()
@@ -23,6 +26,15 @@ const groups = computed(() => {
   return out
 })
 const chosen = computed(() => props.majors.find((m) => m.id === major.value))
+// The open field; a major already chosen opens its own.
+const field = shallowRef<string | null>(chosen.value ? majorGroupOf(chosen.value.id) : null)
+const searching = computed(() => query.value.trim() !== '')
+const fields = computed(() =>
+  [...MAJOR_GROUPS.map((g) => g.id), 'other']
+    .map((id) => ({ id, count: props.majors.filter((m) => majorGroupOf(m.id) === id).length }))
+    .filter((f) => f.count > 0),
+)
+const shown = computed(() => (searching.value ? groups.value : groups.value.filter((g) => g.id === field.value)))
 </script>
 
 <template>
@@ -39,23 +51,43 @@ const chosen = computed(() => props.majors.find((m) => m.id === major.value))
       <Check v-if="major === ''" :size="18" aria-hidden="true" />
     </button>
 
-    <p v-if="groups.length === 0" class="empty">{{ t('wizard.noMajorMatch') }}</p>
-    <section v-for="g in groups" :key="g.id" class="group">
-      <h3 class="group-name">{{ t(`majorGroup.${g.id}`) }}</h3>
-      <div class="group-list">
-        <button
-          v-for="m in g.majors"
-          :key="m.id"
-          type="button"
-          class="option"
-          :aria-pressed="major === m.id"
-          @click="major = m.id"
-        >
-          <span>{{ m.title }}</span>
-          <Check v-if="major === m.id" :size="18" aria-hidden="true" />
-        </button>
-      </div>
-    </section>
+    <p v-if="searching && groups.length === 0" class="empty">{{ t('wizard.noMajorMatch') }}</p>
+
+    <div v-if="!searching && field === null" class="fields">
+      <button
+        v-for="f in fields"
+        :key="f.id"
+        type="button"
+        class="option field"
+        :aria-pressed="chosen !== undefined && majorGroupOf(chosen.id) === f.id"
+        @click="field = f.id"
+      >
+        <span>{{ t(`majorGroup.${f.id}`) }}</span>
+        <span class="field-count">{{ f.count }} <ChevronRight :size="16" aria-hidden="true" /></span>
+      </button>
+    </div>
+
+    <template v-else>
+      <button v-if="!searching" type="button" class="back" @click="field = null">
+        <ArrowLeft :size="16" aria-hidden="true" /> {{ t('wizard.allFields') }}
+      </button>
+      <section v-for="g in shown" :key="g.id" class="group">
+        <h3 class="group-name">{{ t(`majorGroup.${g.id}`) }}</h3>
+        <div class="group-list">
+          <button
+            v-for="m in g.majors"
+            :key="m.id"
+            type="button"
+            class="option"
+            :aria-pressed="major === m.id"
+            @click="major = m.id"
+          >
+            <span>{{ m.title }}</span>
+            <Check v-if="major === m.id" :size="18" aria-hidden="true" />
+          </button>
+        </div>
+      </section>
+    </template>
   </div>
 </template>
 
@@ -159,5 +191,39 @@ const chosen = computed(() => props.majors.find((m) => m.id === major.value))
 
 .empty {
   color: var(--ink-soft);
+}
+
+.fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr));
+  gap: 8px;
+}
+
+.field {
+  min-height: 52px;
+  font-weight: 600;
+}
+
+.field-count {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  font-weight: 500;
+  font-size: 0.8125rem;
+  color: var(--ink-faint);
+}
+
+.back {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 0.875rem;
+  color: var(--accent);
+  cursor: pointer;
 }
 </style>

@@ -36,14 +36,9 @@ function generate(over: Partial<Parameters<typeof generatePlan>[0]> = {}) {
  */
 const DATA_PENDING = new Set([
   'biotechnology-agrifood',
-  'environmental-science-climate',
-  'environmental-science-conservation',
-  'ecology-and-evolutionary-biology',
   'ecosystem-science-forest',
-  'geography',
   'informatics',
   'marine-biology',
-  'plant-science',
   'veterinary-bioscience',
 ])
 

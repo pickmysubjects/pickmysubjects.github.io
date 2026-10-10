@@ -922,6 +922,7 @@ export const ja: Messages = {
     summary: '{course} · {term} 入学 · {major}',
     majorSearch: '専攻を検索（例：psychology、化学）',
     noMajorMatch: '一致する専攻がありません。別の言葉で試すか、「まだ決めていない」を選んでください。',
+    allFields: "すべての分野",
   },
   pain: {
     'when-offered': {

@@ -925,6 +925,7 @@ export const en = {
     summary: '{course} · from {term} · {major}',
     majorSearch: 'Search a major, e.g. psychology or chemistry',
     noMajorMatch: 'No major matches that. Try another word, or pick "Not sure yet".',
+    allFields: "All fields",
   },
   pain: {
     'when-offered': {

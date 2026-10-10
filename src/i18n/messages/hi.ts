@@ -922,6 +922,7 @@ export const hi: Messages = {
     summary: '{course} · {term} से · {major}',
     majorSearch: 'मेजर खोजें, जैसे psychology या रसायन',
     noMajorMatch: 'कोई मेजर नहीं मिला। दूसरा शब्द आज़माएँ, या “अभी तय नहीं” चुनें।',
+    allFields: "सभी क्षेत्र",
   },
   pain: {
     'when-offered': {

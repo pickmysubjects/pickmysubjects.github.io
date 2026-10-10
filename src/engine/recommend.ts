@@ -71,6 +71,10 @@ export const HEAVY_PICK_COST = 6
 export const PROGRAMME_BONUS = 4
 /** How far a subject two levels below the student's year drops. */
 export const BEHIND_LEVEL_COST = 8
+/** A subject that uses a skill rated 1 (2 counts half), with none of the student's interests. */
+export const OFF_TOPIC_STRUGGLE_COST = 12
+/** In challenge mode, a subject that touches none of the student's interests. */
+export const OFF_TOPIC_CHALLENGE_COST = 10
 const STRESS_RANK = { ok: 0, heavy: 1, veryHeavy: 2 } as const
 
 /** What each goal is mostly about; unknown, these count as neutral instead of being left out. */
@@ -201,6 +205,21 @@ export function recommend(data: Dataset, profile: Profile, opts: RecommendOption
     // level-3 points); breadth is different, since level-1 breadth is the usual way in.
     if (opts.maxLevel !== undefined && opts.maxLevel - s.level >= 2 && opts.course && s.categories[opts.course] !== 'breadth') {
       rec.score = Math.max(0, rec.score - BEHIND_LEVEL_COST)
+    }
+    // Leaning on a skill the student finds hard, in a topic they didn't ask for: even
+    // "challenge yourself" means a hard subject in something you care about, not this.
+    if (!rec.reasons.some((x) => x.key === 'interests')) {
+      if (rec.warnings.some((x) => x.key === 'struggleSkills')) rec.score = Math.max(0, rec.score - OFF_TOPIC_STRUGGLE_COST)
+      else if (rec.warnings.some((x) => x.key === 'weakSkills')) rec.score = Math.max(0, rec.score - OFF_TOPIC_STRUGGLE_COST / 2)
+    }
+    // "Challenge yourself" is a hard subject that's useful to *you*: once interests are given,
+    // one unrelated to all of them drops below the ones in the student's own direction.
+    if (profile.goal === 'challenge' && profile.interests.length) {
+      const topics = topicsOf(s).topics
+      const exact = topics.some((t) => profile.interests.includes(t))
+      // Not in their interests but built on a strength of theirs: half the drop.
+      const strength = rec.reasons.some((x) => x.key === 'strengths' || x.key === 'goodAt')
+      if (!exact) rec.score = Math.max(0, rec.score - (strength ? OFF_TOPIC_CHALLENGE_COST / 2 : OFF_TOPIC_CHALLENGE_COST))
     }
     if (roles && (roles.required.has(s.code) || roles.options.has(s.code))) {
       const core = roles.required.has(s.code)

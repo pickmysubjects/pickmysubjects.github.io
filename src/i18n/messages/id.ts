@@ -922,6 +922,7 @@ export const id: Messages = {
     summary: '{course} · mulai {term} · {major}',
     majorSearch: 'Cari jurusan, mis. psychology atau kimia',
     noMajorMatch: 'Tidak ada jurusan yang cocok. Coba kata lain, atau pilih “Belum yakin”.',
+    allFields: "Semua bidang",
   },
   pain: {
     'when-offered': {

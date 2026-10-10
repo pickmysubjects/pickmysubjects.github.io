@@ -922,6 +922,7 @@ export const zhCN: Messages = {
     summary: '{course} · {term} 入学 · {major}',
     majorSearch: '搜索专业，例如 psychology、化学',
     noMajorMatch: '没有找到匹配的专业。换个词试试，或者选“还没决定”。',
+    allFields: "全部方向",
   },
   pain: {
     'when-offered': {

@@ -42,7 +42,7 @@ function done(setup: PlanSetup): void {
           <strong>{{ course }}</strong> · {{ major }}<template v-if="spec"> + {{ spec }}</template> · {{ t('record.degreeStart', { term: start }) }}
         </p>
         <p v-else class="degree-line">{{ t('record.degreeNone') }}</p>
-        <p class="degree-why">{{ t('record.degreeWhy') }}</p>
+        <p v-if="chosen" class="degree-why">{{ t('record.degreeWhy') }}</p>
       </div>
       <button v-if="!editing" type="button" class="button button-quiet degree-edit" @click="editing = true">
         <Pencil v-if="chosen" :size="15" aria-hidden="true" />
@@ -117,11 +117,15 @@ function done(setup: PlanSetup): void {
 }
 
 /* The wizard brings its own card; inside this one it sits flat. */
-.degree-wizard {
+.degree .degree-wizard,
+.degree .degree-wizard::before {
   box-shadow: none;
   border: 0;
   padding: 0;
   background: none;
+  max-width: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
 }
 
 @media (max-width: 520px) {
