@@ -76,9 +76,9 @@ function toggle(topic: string): void {
   padding: 5px 12px;
   border-radius: 999px;
   border: 1px solid var(--glass-edge);
+  /* No blur of its own: the card behind is already glass, and dozens of blurred chips stall
+     scrolling on ordinary laptops. */
   background: var(--glass-fill);
-  -webkit-backdrop-filter: var(--glass-blur);
-  backdrop-filter: var(--glass-blur);
   box-shadow: var(--glass-shadow);
   font: inherit;
   font-size: 0.875rem;
