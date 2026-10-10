@@ -22,7 +22,7 @@ const { name, data } = useDataset()
 const plan = usePlan()
 const { profile } = useProfile()
 const { rated, markRated } = useRated()
-const { t } = useI18n()
+const { t, locale } = useI18n()
 
 const code = computed(() => props.code.toUpperCase())
 const subject = computed(() => data.value.subjects[code.value])
@@ -107,7 +107,7 @@ const meters = computed(() => {
   // Optional questions only show once enough students answered them.
   return meters.filter((m): m is (typeof meters)[number] & { value: number } => m.value !== undefined)
 })
-const links = computed(() => (name.value === 'real' ? discussionLinks(code.value) : []))
+const links = computed(() => (name.value === 'real' ? discussionLinks(code.value, locale.value) : []))
 </script>
 
 <template>

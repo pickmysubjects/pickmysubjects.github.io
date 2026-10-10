@@ -81,7 +81,7 @@ function value(event: Event): string {
             <input type="radio" name="goal" :value="g" :checked="profile.goal === g" @change="setGoal(g)" />
             {{ t(`suggest.goals.${g}`) }}
           </label>
-          <p class="goal-hint">{{ t(`suggest.goals.${profile.goal}Hint`) }} {{ t('suggest.goalSource') }}</p>
+          <p class="goal-hint">{{ t(`suggest.goals.${profile.goal}Hint`) }}</p>
         </fieldset>
         <label class="field">
           {{ t('suggest.kind') }}
