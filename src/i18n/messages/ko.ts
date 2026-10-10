@@ -787,9 +787,9 @@ export const ko: Messages = {
     contact: '궁금한 점은 "피드백" 페이지를 이용하세요.',
   },
   home: {
+    startStep: "{n}단계부터 시작",
     toolsTitle: '이것도 유용해요',
     stepsTitle: '3단계로 시작하기',
-    routeCaption: 'Computing and Software Systems의 실제 경로예요. 정류장을 누르면 과목을 볼 수 있어요.',
     year: '{n}학년',
     eyebrow: '멜버른대 학생을 위해',
     title: '무엇을, 언제 들을지|한눈에.',

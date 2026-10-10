@@ -790,9 +790,9 @@ export const en = {
     contact: 'Questions? Use the Feedback page.',
   },
   home: {
+    startStep: "Start with step {n}",
     toolsTitle: 'Also useful',
     stepsTitle: 'Get started in three steps',
-    routeCaption: 'A real route through Computing and Software Systems. Tap a stop to see the subject.',
     year: 'Year {n}',
     eyebrow: 'For University of Melbourne students',
     title: 'Know what to take,|and when.',

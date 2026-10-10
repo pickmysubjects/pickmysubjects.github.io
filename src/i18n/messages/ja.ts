@@ -787,9 +787,9 @@ export const ja: Messages = {
     contact: 'ご質問は「フィードバック」ページからどうぞ。',
   },
   home: {
+    startStep: "ステップ {n} から始める",
     toolsTitle: 'こちらも便利',
     stepsTitle: '3ステップで始める',
-    routeCaption: 'Computing and Software Systems の実際のルート。駅を押すと科目が見られます。',
     year: '{n}年次',
     eyebrow: 'メルボルン大学の学生のために',
     title: '何を、|いつ取るか。|ひと目で。',

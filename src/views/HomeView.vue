@@ -3,7 +3,6 @@ import { link } from '@/composables/useView'
 import { computed } from 'vue'
 import { ArrowRight, BookOpen, Check, GraduationCap, ListFilter, Route, Sparkles, User } from 'lucide-vue-next'
 import SubjectSearch from '@/components/SubjectSearch.vue'
-import RouteLine from '@/components/home/RouteLine.vue'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
 import { useProfile } from '@/composables/useProfile'
@@ -44,6 +43,11 @@ const steps = computed(() => {
     { icon: Sparkles, title: 'home.step3', text: 'home.step3Text', href: link('recommend'), done: false, status: '' },
   ]
 })
+// The one button that says where to go next: the first step not done yet.
+const next = computed(() => {
+  const i = steps.value.findIndex((s) => !s.done)
+  return { n: i + 1, href: steps.value[i]?.href ?? link('recommend') }
+})
 </script>
 
 <template>
@@ -60,6 +64,9 @@ const steps = computed(() => {
         </template>
       </h1>
       <p class="hero-lede">{{ t('home.lede') }}</p>
+      <a class="button button-accent hero-start" :href="next.href">
+        {{ t('home.startStep', { n: next.n }) }} <ArrowRight :size="18" aria-hidden="true" />
+      </a>
       <SubjectSearch class="hero-search" />
       <p v-if="examples.length" class="hero-try">
         {{ t('home.tryLabel') }}
@@ -67,10 +74,6 @@ const steps = computed(() => {
       </p>
     </section>
 
-    <section class="hero-route surface">
-      <RouteLine />
-    </section>
-    </div>
 
     <section class="steps" aria-labelledby="steps-title">
       <h2 id="steps-title" class="steps-title">{{ t('home.stepsTitle') }}</h2>
@@ -90,6 +93,8 @@ const steps = computed(() => {
         </li>
       </ol>
     </section>
+    </div>
+
 
     <section class="tools" aria-labelledby="tools-title">
       <h2 id="tools-title" class="steps-title">{{ t('home.toolsTitle') }}</h2>
@@ -223,8 +228,11 @@ const steps = computed(() => {
   color: var(--accent);
 }
 
-.hero-route {
-  padding: 26px 28px 20px;
+.hero-start {
+  justify-self: start;
+  min-height: 48px;
+  padding: 0 22px;
+  font-size: 1rem;
 }
 
 .steps-title {
@@ -405,15 +413,58 @@ li:nth-child(3) .step-icon {
     border-radius: 26px;
   }
 
-  .hero-route {
-    padding: 20px 16px;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .step,
   .step-go {
     transition: none;
+  }
+}
+</style>
+
+<style scoped>
+/* The three steps sit beside the headline: what to do first is the first thing you see. */
+.stage .steps-list {
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.stage .steps-title {
+  margin-bottom: 12px;
+  font-size: 1.15rem;
+}
+
+.stage .step {
+  gap: 4px;
+  padding: 14px 44px 14px 18px;
+}
+
+.stage .step-top {
+  gap: 8px;
+}
+
+.stage .step-name {
+  font-size: 1rem;
+}
+
+.stage .step-text {
+  font-size: 0.875rem;
+}
+
+.stage .step-go {
+  left: auto;
+  right: 16px;
+  bottom: auto;
+  top: 50%;
+  translate: 0 -50%;
+}
+
+@media (min-width: 1000px) {
+  .stage {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    align-items: center;
+    column-gap: 48px;
   }
 }
 </style>

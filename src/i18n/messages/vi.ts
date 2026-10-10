@@ -787,9 +787,9 @@ export const vi: Messages = {
     contact: 'Có câu hỏi? Hãy dùng trang Góp ý.',
   },
   home: {
+    startStep: "Bắt đầu từ bước {n}",
     toolsTitle: 'Cũng hữu ích',
     stepsTitle: 'Bắt đầu với ba bước',
-    routeCaption: 'Một lộ trình thật trong ngành Computing and Software Systems. Bấm vào một trạm để xem môn học.',
     year: 'Năm {n}',
     eyebrow: 'Dành cho sinh viên Đại học Melbourne',
     title: 'Học môn gì, khi nào học,|nhìn là biết.',

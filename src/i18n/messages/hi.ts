@@ -787,9 +787,9 @@ export const hi: Messages = {
     contact: 'कोई सवाल? फ़ीडबैक पेज का उपयोग करें।',
   },
   home: {
+    startStep: "चरण {n} से शुरू करें",
     toolsTitle: 'ये भी काम के हैं',
     stepsTitle: 'तीन चरणों में शुरू करें',
-    routeCaption: 'Computing and Software Systems का एक असली रास्ता। विषय देखने के लिए किसी स्टॉप पर टैप करें।',
     year: 'साल {n}',
     eyebrow: 'University of Melbourne के छात्रों के लिए',
     title: 'क्या पढ़ना है, और कब,|एक नज़र में।',

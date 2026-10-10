@@ -787,9 +787,9 @@ export const zhTW: Messages = {
     contact: '有疑問？請使用「意見回饋」頁面。',
   },
   home: {
+    startStep: "從第 {n} 步開始",
     toolsTitle: '新生常用',
     stepsTitle: '三步上手',
-    routeCaption: '電腦與軟體系統主修的一條真實路線，點任一站看課程詳情。',
     year: '第 {n} 年',
     eyebrow: '為墨爾本大學學生打造',
     title: '修什麼課、|什麼時候修，|一眼看清。',

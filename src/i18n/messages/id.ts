@@ -787,9 +787,9 @@ export const id: Messages = {
     contact: 'Ada pertanyaan? Gunakan halaman Masukan.',
   },
   home: {
+    startStep: "Mulai dari langkah {n}",
     toolsTitle: 'Juga berguna',
     stepsTitle: 'Mulai dalam tiga langkah',
-    routeCaption: 'Rute nyata di Computing and Software Systems. Ketuk satu halte untuk melihat mata kuliahnya.',
     year: 'Tahun {n}',
     eyebrow: 'Untuk mahasiswa University of Melbourne',
     title: 'Tahu mau ambil apa,|dan kapan.',

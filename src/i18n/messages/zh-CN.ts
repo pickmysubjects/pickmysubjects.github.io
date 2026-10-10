@@ -787,9 +787,9 @@ export const zhCN: Messages = {
     contact: '有疑问？请使用“反馈”页面。',
   },
   home: {
+    startStep: "从第 {n} 步开始",
     toolsTitle: '新生常用',
     stepsTitle: '三步上手',
-    routeCaption: '计算机与软件系统专业的一条真实路线，点任意一站看课程详情。',
     year: '第 {n} 年',
     eyebrow: '为墨尔本大学学生打造',
     title: '修什么课、|什么时候修，|一眼看清。',
