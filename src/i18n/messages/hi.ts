@@ -622,6 +622,7 @@ export const hi: Messages = {
     thanks: "धन्यवाद।",
   },
   print: {
+    pointsUnit: "पॉइंट",
     title: "सब्जेक्ट प्लान",
     total: "कुल {n} पॉइंट",
     printed: "{date} को प्रिंट किया",

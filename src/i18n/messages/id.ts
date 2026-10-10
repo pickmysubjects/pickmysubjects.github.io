@@ -622,6 +622,7 @@ export const id: Messages = {
     thanks: "Terima kasih.",
   },
   print: {
+    pointsUnit: "poin",
     title: "Rencana mata kuliah",
     total: "Total {n} poin",
     printed: "Dicetak {date}",

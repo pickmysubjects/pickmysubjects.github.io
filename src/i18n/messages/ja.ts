@@ -622,6 +622,7 @@ export const ja: Messages = {
     thanks: "ありがとうございます。",
   },
   print: {
+    pointsUnit: "単位",
     title: "履修プラン",
     total: "合計 {n} 単位",
     printed: "{date} 印刷",

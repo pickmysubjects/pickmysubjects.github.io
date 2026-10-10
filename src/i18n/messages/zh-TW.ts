@@ -622,6 +622,7 @@ export const zhTW: Messages = {
     thanks: "收到，謝謝。",
   },
   print: {
+    pointsUnit: "學分",
     title: "選課計畫",
     total: "共 {n} 學分",
     printed: "列印於 {date}",

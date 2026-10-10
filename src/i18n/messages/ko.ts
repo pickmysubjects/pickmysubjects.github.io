@@ -622,6 +622,7 @@ export const ko: Messages = {
     thanks: "고마워요.",
   },
   print: {
+    pointsUnit: "학점",
     title: "수강 계획",
     total: "총 {n}학점",
     printed: "{date} 인쇄",

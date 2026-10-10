@@ -625,6 +625,7 @@ export const en = {
     thanks: "Thanks, noted.",
   },
   print: {
+    pointsUnit: "points",
     title: "Subject plan",
     total: "{n} points in total",
     printed: "Printed {date}",

@@ -622,6 +622,7 @@ export const zhCN: Messages = {
     thanks: "收到，谢谢。",
   },
   print: {
+    pointsUnit: "学分",
     title: "选课计划",
     total: "共 {n} 学分",
     printed: "打印于 {date}",

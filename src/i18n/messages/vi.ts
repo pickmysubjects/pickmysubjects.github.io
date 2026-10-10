@@ -622,6 +622,7 @@ export const vi: Messages = {
     thanks: "Cảm ơn bạn.",
   },
   print: {
+    pointsUnit: "tín chỉ",
     title: "Kế hoạch môn học",
     total: "Tổng {n} tín chỉ",
     printed: "In ngày {date}",

@@ -622,6 +622,7 @@ export const ms: Messages = {
     thanks: "Terima kasih.",
   },
   print: {
+    pointsUnit: "mata",
     title: "Rancangan subjek",
     total: "Jumlah {n} mata",
     printed: "Dicetak {date}",
