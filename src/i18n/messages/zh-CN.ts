@@ -288,6 +288,8 @@ export const zhCN: Messages = {
     fieldwork: "野外考察",
     design: '设计',
     business: '商科',
+    exams: "考试",
+    teamwork: "小组合作",
   },
   assess: {
     guessedTags: "根据课程资料推测，还没人工核对。",

@@ -192,3 +192,20 @@ describe('recommend after a fail', () => {
     expect(passed.some((r) => r.code === 'COMP10001' || r.code === 'COMP10002')).toBe(false)
   })
 })
+
+describe('recommend and how a subject is marked', () => {
+  it('a student who finds exams hard sees fewer exam-heavy subjects near the top', async () => {
+    const { buildDataset } = await import('../scripts/dataset')
+    const { recommend } = await import('../src/engine/recommend')
+    const { dataset: real } = buildDataset('real')
+    const examHeavy = (code: string) => {
+      const a = real.subjects[code]?.assessment
+      return Array.isArray(a) && a.filter((t) => t.kind === 'exam').reduce((s, t) => s + t.weight, 0) >= 50
+    }
+    const top = (skills: Record<string, number>) =>
+      recommend(real, { results: [], skills, interests: ['biology'], goal: 'balanced' }, { course: 'B-SCI', year: 2026, limit: 10 }).map((r) => r.code)
+    const neutral = top({}).filter(examHeavy).length
+    const hates = top({ exams: 1 }).filter(examHeavy).length
+    expect(hates).toBeLessThan(neutral)
+  })
+})

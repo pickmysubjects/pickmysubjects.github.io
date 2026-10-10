@@ -288,6 +288,8 @@ export const ja: Messages = {
     fieldwork: "フィールドワーク",
     design: 'デザイン',
     business: 'ビジネス',
+    exams: "試験",
+    teamwork: "グループワーク",
   },
   assess: {
     guessedTags: "科目の情報から推測したもので、まだ人手で確認していません。",

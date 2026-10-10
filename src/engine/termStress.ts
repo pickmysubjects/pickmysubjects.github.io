@@ -1,7 +1,7 @@
 import type { Profile } from './recommend'
 import type { Dataset, Skill, Subject } from './schema'
 import { prerequisiteRoute } from './expr'
-import { skillsOf } from './skills'
+import { MARKING_SKILLS, skillsOf } from './skills'
 
 export { skillsOf }
 
@@ -171,7 +171,10 @@ export function termStress(codes: string[], data: Dataset, profile?: Profile, op
 
   // Rated hard, unless the student says they're strong at what the subject leans on.
   const strong = (s: Subject) => {
-    const own = skillsOf(s, data).map((k) => profile?.skills[k])
+    // How it's marked only counts once the student has said how they do with exams or group work.
+    const own = skillsOf(s, data)
+      .filter((k) => !MARKING_SKILLS.includes(k) || profile?.skills[k] !== undefined)
+      .map((k) => profile?.skills[k])
     return own.length > 0 && own.every((x) => x !== undefined && x >= 4)
   }
   const hard = subjects.filter((s) => {

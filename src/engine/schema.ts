@@ -30,6 +30,9 @@ export const SKILLS = [
   'fieldwork',
   'design',
   'business',
+  // Read off the assessment, never tagged by hand: how a subject is marked suits some students.
+  'exams',
+  'teamwork',
 ] as const
 export type Skill = (typeof SKILLS)[number]
 

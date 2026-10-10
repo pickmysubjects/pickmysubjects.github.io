@@ -288,6 +288,8 @@ export const id: Messages = {
     fieldwork: "Kerja lapangan",
     design: 'Desain',
     business: 'Bisnis',
+    exams: "Ujian",
+    teamwork: "Kerja kelompok",
   },
   assess: {
     guessedTags: "Diperkirakan dari informasi mata kuliah, belum dicek manual.",

@@ -75,10 +75,26 @@ function areaOnly(s: Subject): Skill[] {
 const CACHE = new WeakMap<Subject, Skill[]>()
 
 export function skillsOf(s: Subject, data?: Dataset): Skill[] {
-  if (s.skills.length) return s.skills
   const hit = data ? CACHE.get(s) : undefined
   if (hit) return hit
-  const out = inferred(s, data)
+  const out = [...(s.skills.length ? s.skills : inferred(s, data)), ...markedBy(s)]
   if (data) CACHE.set(s, out)
+  return out
+}
+
+/** Skills read off the assessment rather than the subject matter. */
+export const MARKING_SKILLS: readonly Skill[] = ['exams', 'teamwork']
+
+/** Final exams worth half the mark or more, and group work worth a fifth or more. */
+const EXAM_SHARE = 50
+const GROUP_SHARE = 20
+
+/** What the way a subject is marked asks of you, from its assessment. */
+function markedBy(s: Subject): Skill[] {
+  const tasks = s.assessment ?? []
+  const share = (pick: (t: (typeof tasks)[number]) => boolean) => tasks.filter(pick).reduce((a, t) => a + t.weight, 0)
+  const out: Skill[] = []
+  if (share((t) => t.kind === 'exam') >= EXAM_SHARE) out.push('exams')
+  if (share((t) => t.group === true) >= GROUP_SHARE) out.push('teamwork')
   return out
 }

@@ -288,6 +288,8 @@ export const vi: Messages = {
     fieldwork: "Thực địa",
     design: 'Thiết kế',
     business: 'Kinh doanh',
+    exams: "Thi cử",
+    teamwork: "Làm nhóm",
   },
   assess: {
     guessedTags: "Suy ra từ thông tin môn học, chưa được kiểm tra thủ công.",

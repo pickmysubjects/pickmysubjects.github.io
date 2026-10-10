@@ -291,6 +291,8 @@ export const en = {
     fieldwork: "Fieldwork",
     design: 'Design',
     business: 'Business',
+    exams: "Exams",
+    teamwork: "Group work",
   },
   assess: {
     guessedTags: "Worked out from the subject's facts, not checked by hand yet.",

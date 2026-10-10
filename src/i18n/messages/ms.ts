@@ -288,6 +288,8 @@ export const ms: Messages = {
     fieldwork: "Kerja lapangan",
     design: 'Reka bentuk',
     business: 'Perniagaan',
+    exams: "Peperiksaan",
+    teamwork: "Kerja berkumpulan",
   },
   assess: {
     guessedTags: "Dianggarkan daripada maklumat subjek, belum disemak secara manual.",

@@ -288,6 +288,8 @@ export const ko: Messages = {
     fieldwork: "야외 조사",
     design: '디자인',
     business: '경영',
+    exams: "시험",
+    teamwork: "팀 과제",
   },
   assess: {
     guessedTags: "과목 정보로 추정한 것이며 아직 직접 확인하지 않았어요.",

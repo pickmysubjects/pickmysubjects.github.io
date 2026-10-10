@@ -288,6 +288,8 @@ export const zhTW: Messages = {
     fieldwork: "野外考察",
     design: '設計',
     business: '商科',
+    exams: "考試",
+    teamwork: "小組合作",
   },
   assess: {
     guessedTags: "根據課程資料推測，還沒人工核對。",

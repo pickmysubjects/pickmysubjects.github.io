@@ -288,6 +288,8 @@ export const hi: Messages = {
     fieldwork: "फ़ील्डवर्क",
     design: 'डिज़ाइन',
     business: 'बिज़नेस',
+    exams: "परीक्षा",
+    teamwork: "ग्रुप वर्क",
   },
   assess: {
     guessedTags: "सब्जेक्ट की जानकारी से अनुमान, अभी हाथ से जाँचा नहीं गया।",
