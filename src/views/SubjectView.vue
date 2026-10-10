@@ -29,7 +29,6 @@ const subject = computed(() => data.value.subjects[code.value])
 const year = computed(() => plan.terms.value[0]?.year ?? new Date().getFullYear())
 const periods = computed(() => (subject.value ? periodsFor(subject.value, year.value) : []))
 const offeringsKnown = computed(() => subject.value?.offerings !== 'unknown')
-// No longer run from the year being planned for.
 const gone = computed(() => subject.value?.discontinuedFrom !== undefined && year.value >= subject.value.discontinuedFrom)
 // What it leads to, the ones in the student's plan first, then by level and code.
 const unlocks = computed(() =>
@@ -164,7 +163,6 @@ const links = computed(() => (name.value === 'real' ? discussionLinks(code.value
           <SubjectLinks v-if="needCodes.length" class="panel-links" :codes="needCodes" :year="year" />
           <details v-if="route.length > needCodes.length" class="route">
             <summary>{{ t('subject.routeTitle', { n: route.length, missing: routeMissing }) }}</summary>
-            <p class="panel-text muted">{{ t('subject.routeHint') }}</p>
             <SubjectLinks :codes="route" :year="year" />
           </details>
           <template v-if="coreq">

@@ -77,7 +77,6 @@ async function onRestore(event: Event): Promise<void> {
     <section class="interests surface" aria-labelledby="interests-title">
       <header>
         <h2 id="interests-title" class="interests-title">{{ t('record.interestsTitle') }}</h2>
-        <p class="interests-hint">{{ t('record.interestsHint') }}</p>
       </header>
       <TopicChips v-model="interests" :topics="topics" />
     </section>

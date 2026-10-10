@@ -89,7 +89,6 @@ const steps = computed(() => {
           </a>
         </li>
       </ol>
-      <p class="steps-search">{{ t('home.justSearch') }}</p>
     </section>
 
     <section class="tools" aria-labelledby="tools-title">

@@ -55,7 +55,6 @@ const { setConfirmed } = useProfile()
 
 // Bands set on real lists: a match on interest and strengths lands around 55–70; unrelated subjects under 40.
 const band = computed(() => (props.rec.score >= 65 ? 'great' : props.rec.score >= 50 ? 'good' : 'ok'))
-// The ring: the score as a share of a full circle.
 const ring = computed(() => `conic-gradient(var(--accent) ${props.rec.score * 3.6}deg, color-mix(in srgb, var(--ink) 10%, transparent) 0)`)
 
 const facts = computed(() => {

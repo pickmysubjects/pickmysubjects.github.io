@@ -132,7 +132,6 @@ function onClick(event: MouseEvent): void {
             </ul>
             <details v-if="route.length > needCodes.length" class="peek-route">
               <summary>{{ t('subject.routeTitle', { n: route.length, missing: routeMissing }) }}</summary>
-              <p class="muted">{{ t('subject.routeHint') }}</p>
               <template v-for="[level, codes] in routeByLevel" :key="level">
                 <h4 class="peek-route-level">{{ level ? t('subject.level', { level }) : t('plan.notInDataset') }}</h4>
                 <ul class="peek-list">

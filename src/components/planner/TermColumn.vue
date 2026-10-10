@@ -36,7 +36,7 @@ const points = computed(() => props.term.subjects.reduce((sum, c) => sum + (prop
 const overloaded = computed(() => points.value > props.load)
 const fill = computed(() => `${Math.min(100, (points.value / props.load) * 100)}%`)
 
-/** "S1 only" / "S2 only" for subjects that run in a single semester (pain point: when is it offered?). */
+/** "S1 only" / "S2 only" for subjects that run in a single semester. */
 function onlyIn(code: string): string | null {
   const s = props.subjects[code]
   if (!s) return null

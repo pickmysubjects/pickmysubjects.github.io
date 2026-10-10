@@ -46,7 +46,6 @@ function done(setup: PlanSetup): void {
           <strong>{{ course }}</strong> · {{ major }}<template v-if="spec"> + {{ spec }}</template> · {{ t('record.degreeStart', { term: start }) }}
         </p>
         <p v-else class="degree-line">{{ t('record.degreeNone') }}</p>
-        <p v-if="chosen" class="degree-why">{{ t('record.degreeWhy') }}</p>
       </div>
       <button v-if="!editing" type="button" class="button button-quiet degree-edit" @click="editing = true">
         <Pencil v-if="chosen" :size="15" aria-hidden="true" />

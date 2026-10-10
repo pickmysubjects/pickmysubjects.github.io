@@ -156,7 +156,7 @@ const offerings = z
   ])
   .default('unknown')
 
-/** Aggregated crowd signals on a 1–5 scale. Only demo data carries these today. */
+/** Aggregated crowd signals on a 1–5 scale. */
 const signals = z
   .object({
     // Every question is optional for students, so each average may be missing.

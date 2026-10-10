@@ -86,7 +86,7 @@ function onCode(): void {
       <form class="paste" @submit.prevent>
         <label class="field">
           {{ t('contribute.pasted') }}
-          <textarea v-model="text" class="textarea" rows="14" :placeholder="t('contribute.placeholder')" />
+          <textarea v-model="text" class="textarea" rows="14" />
         </label>
         <div class="meta">
           <label class="field">
@@ -127,7 +127,6 @@ function onCode(): void {
         <p v-if="sendState === 'sent'" class="send-ok" role="status">{{ t('contribute.sent') }}</p>
         <p v-else-if="sendState === 'failed'" class="send-bad" role="alert">{{ t('contribute.sendFailed') }}</p>
         <p v-else-if="!codeValid || !readSomething" class="small">{{ t('contribute.needCode') }}</p>
-        <p v-else class="small">{{ t('contribute.sendText') }}</p>
       </template>
 
     </section>

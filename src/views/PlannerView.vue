@@ -59,11 +59,9 @@ async function share(): Promise<void> {
 function printPlan(): void {
   window.print()
 }
-// A longer plan on a student visa may need a new CoE.
 const extraTermsOnVisa = computed(
   () => plan.setup.value.international === true && plan.notes.value.some((n) => typeof n !== 'string' && n.key === 'extraTerms'),
 )
-// Subject whose details are open in the quick-look dialog.
 const peek = shallowRef<string | null>(null)
 // Nothing in "Me" says what the student finds hard (no skills rated, no marks): the plan
 // can't keep their weak spots apart, so point there (it's optional).

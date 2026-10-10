@@ -77,7 +77,6 @@ function planWithIt(): void {
     <template v-else>
       <section v-if="overview.core.length" class="block">
         <h2 class="block-title">{{ t('majors.coreTitle') }}</h2>
-        <p class="block-hint">{{ t('majors.coreHint') }}</p>
         <SubjectLinks :codes="overview.core" :year="year" />
       </section>
 
