@@ -36,10 +36,7 @@ function generate(over: Partial<Parameters<typeof generatePlan>[0]> = {}) {
  */
 const DATA_PENDING = new Set([
   'biotechnology-agrifood',
-  'ecosystem-science-forest',
   'informatics',
-  'marine-biology',
-  'veterinary-bioscience',
 ])
 
 describe('generatePlan (demo course)', () => {
@@ -233,5 +230,27 @@ describe('generatePlan with a field but no major yet', () => {
     // Without a field, nothing is assumed.
     const blank = generatePlan(base)
     expect(blank.notes.some((n) => n.key === 'keptOpen')).toBe(false)
+  })
+})
+
+describe('generatePlan with summer- or winter-only compulsory subjects', () => {
+  it('adds a summer or winter term for them instead of leaving them out', async () => {
+    const { buildDataset } = await import('../scripts/dataset')
+    const { dataset: real } = buildDataset('real')
+    for (const major of ['ecosystem-science-forest', 'marine-biology']) {
+      const { plan, unplaced } = generatePlan({
+        data: real,
+        profile: { results: [], skills: {}, interests: [], goal: 'balanced' },
+        course: 'B-SCI',
+        courseYear: 2026,
+        major,
+        startYear: 2027,
+        startPeriod: 'semester-1',
+      })
+      expect(unplaced.map((u) => u.code), major).toEqual([])
+      const short = plan.terms.filter((t) => t.period === 'summer' || t.period === 'winter')
+      expect(short.length, major).toBeGreaterThan(0)
+      expect(checkTerms(plan, real).filter((i) => i.severity === 'error'), major).toEqual([])
+    }
   })
 })

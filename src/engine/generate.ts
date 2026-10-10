@@ -1,4 +1,4 @@
-import { offeredIn, periodsFor } from './availability'
+import { offeredIn, periodsFor, termKey } from './availability'
 import { categoryOf, checkCourse, componentNeeds, findComponent, findCourse } from './courseRules'
 import { evaluateField, referencedSubjects, type Tri } from './expr'
 import type { Note, Params, Plan, PlanTerm } from './plan'
@@ -78,6 +78,7 @@ function buildPlan(input: GenerateInput): GenerateResult {
   // needs: subjects the generator added as prerequisites for each required subject.
   const needs = new Map<string, string[]>()
   const required = collectRequired(input, done, notes, needs)
+  const groupOf = coGroups(required, done, data)
   const firstSemester = new Set(
     (course?.rules ?? []).flatMap((r) => (r.kind === 'compulsory' && r.firstSemester ? r.subjects : [])),
   )
@@ -121,18 +122,23 @@ function buildPlan(input: GenerateInput): GenerateResult {
     const before = new Set([...completed, ...allPlaced()])
     let used = 0
 
-    // Required subjects first.
+    // Required subjects first. Corequisites go in together or not at all.
+    const fits = (c: string, group: string[]) =>
+      !before.has(c) &&
+      (needs.get(c) ?? []).every((n) => before.has(n) || group.includes(n)) &&
+      canTake(c, term, before, data, input.course, group) !== 'fail' &&
+      (!firstSemester.has(c) || termIndex === 0)
     const ready = pending
-      .filter((c) => !before.has(c))
-      .filter((c) => (needs.get(c) ?? []).every((n) => before.has(n)))
-      .filter((c) => canTake(c, term, before, data, input.course) !== 'fail')
-      .filter((c) => !firstSemester.has(c) || termIndex === 0)
+      .filter((c) => fits(c, groupOf(c)))
       .sort((a, b) => urgency(b) - urgency(a) || priority(b, firstSemester, depth, data, term.year) - priority(a, firstSemester, depth, data, term.year))
     for (const code of ready) {
-      const pts = data.subjects[code]?.points ?? 12.5
+      if (term.subjects.includes(code)) continue
+      const group = groupOf(code).filter((c) => !before.has(c) && !term.subjects.includes(c))
+      if (!group.every((c) => fits(c, group))) continue
+      const pts = group.reduce((sum, c) => sum + (data.subjects[c]?.points ?? 12.5), 0)
       if (used + pts > load) continue
-      if (course && !progressionAllows(code, course, [...before], data)) continue
-      term.subjects.push(code)
+      if (course && !group.every((c) => progressionAllows(c, course, [...before], data))) continue
+      term.subjects.push(...group)
       used += pts
     }
 
@@ -148,6 +154,9 @@ function buildPlan(input: GenerateInput): GenerateResult {
     // Anything still short: better a full term than an empty slot kept for a minimum that can't be met.
     terms.forEach((t, i) => fill(t, i, true))
   }
+  // Required subjects that only run in summer or winter: give them a short term of their own.
+  placeShortTerms(terms, pending, completed, data, input.course, course, notes)
+
   // Spread the load, so the hard subjects don't all land in one semester.
   const draft: Plan = { course: input.course, courseYear: input.courseYear, major: input.major, specialisation: input.specialisation, completed, terms }
   for (const { a, b } of balanceTerms(draft, data, input.profile)) {
@@ -255,16 +264,20 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
     }
   }
 
-  // Close over prerequisites so required subjects can actually be taken. Corequisites
-  // ("in the same semester or before") are planned the safe way: in an earlier term.
+  // Close over prerequisites so required subjects can actually be taken. Corequisites are
+  // required too, but taken in the same semester (see coGroups), so they aren't ordered first.
   const queue = [...required]
   while (queue.length > 0) {
     const code = queue.pop() as string
     const s = data.subjects[code]
     if (!s) continue
-    const fields = [s.prerequisites, s.corequisites].filter((f): f is ReqExpr => f !== 'none' && f !== 'unknown')
-    for (const need of fields.flatMap((f) => resolvePrereqs(f, done, required, data, input.course, code))) {
-      needs.set(code, [...(needs.get(code) ?? []), need])
+    const pre = s.prerequisites !== 'none' && s.prerequisites !== 'unknown' ? resolvePrereqs(s.prerequisites, done, required, data, input.course, code) : []
+    const co = s.corequisites !== 'none' && s.corequisites !== 'unknown' ? resolvePrereqs(s.corequisites, done, required, data, input.course, code) : []
+    // A corequisite that names this subject back (VETS30016 and VETS30029) goes in the same
+    // term; a one-way one ("25 points of GEOL, can be concurrent") may also come earlier.
+    const mutual = (c: string) => referencedSubjects(data.subjects[c]?.corequisites ?? 'none').includes(code)
+    for (const need of [...pre, ...co]) {
+      if (pre.includes(need) || !mutual(need)) needs.set(code, [...(needs.get(code) ?? []), need])
       if (!required.has(need) && !done.has(need)) {
         required.add(need)
         queue.push(need)
@@ -437,12 +450,39 @@ function periodCrowding(required: Set<string>, data: Dataset, year: number): Map
   return crowd
 }
 
-function canTake(code: string, term: PlanTerm, before: Set<string>, data: Dataset, course: string): Tri {
+/**
+ * Required subjects that name each other as corequisites ("must also be enrolled in"), as groups
+ * to place in the same term: VETS30016, VETS30029, VETS30030 and VETS30031 go in together.
+ */
+function coGroups(required: Set<string>, done: Set<string>, data: Dataset): (code: string) => string[] {
+  const parent = new Map<string, string>()
+  const find = (c: string): string => {
+    const p = parent.get(c) ?? c
+    if (p === c) return c
+    const root = find(p)
+    parent.set(c, root)
+    return root
+  }
+  for (const c of required) {
+    const s = data.subjects[c]
+    if (!s || done.has(c)) continue
+    for (const x of referencedSubjects(s.corequisites)) {
+      const back = referencedSubjects(data.subjects[x]?.corequisites ?? 'none').includes(c)
+      if (back && required.has(x) && !done.has(x)) parent.set(find(x), find(c))
+    }
+  }
+  const groups = new Map<string, string[]>()
+  for (const c of required) groups.set(find(c), [...(groups.get(find(c)) ?? []), c])
+  return (code) => groups.get(find(code)) ?? [code]
+}
+
+function canTake(code: string, term: PlanTerm, before: Set<string>, data: Dataset, course: string, alongside: string[] = []): Tri {
   const s = data.subjects[code]
   if (!s) return 'unknown'
   if (offeredIn(s, term.year, term.period).status === 'fail') return 'fail'
   const pre = evaluateField(s.prerequisites, { completed: before, subjects: data.subjects, admittedCourse: course })
-  const co = evaluateField(s.corequisites, { completed: before, subjects: data.subjects, admittedCourse: course })
+  // Corequisites may be taken in the same term: the ones planned there count.
+  const co = evaluateField(s.corequisites, { completed: new Set([...before, ...term.subjects, ...alongside]), subjects: data.subjects, admittedCourse: course })
   if (pre.status === 'fail' || co.status === 'fail') return 'fail'
   return pre.status === 'unknown' || co.status === 'unknown' ? 'unknown' : 'ok'
 }
@@ -508,6 +548,51 @@ function referenced(expr: ReqExpr): string[] {
   if ('all' in expr) return expr.all.flatMap(referenced)
   if ('any' in expr) return expr.any.flatMap(referenced)
   return []
+}
+
+/** Most points in a summer or winter term without counting as an overload. */
+const SHORT_TERM_POINTS = 25
+
+/**
+ * A required subject the semesters couldn't take but a summer or winter term can (FRST30001
+ * runs only in summer, say): put it in the earliest such term where its prerequisites are done,
+ * it runs, the course's progression allows it and the term has room, adding the term if needed.
+ */
+function placeShortTerms(terms: PlanTerm[], pending: string[], completed: string[], data: Dataset, courseCode: string, course: Course | undefined, notes: Note[]): void {
+  const placed = () => new Set(terms.flatMap((t) => t.subjects))
+  const first = terms[0]
+  const last = terms.at(-1)
+  if (!first || !last) return
+  for (const code of pending) {
+    if (placed().has(code)) continue
+    const s = data.subjects[code]
+    if (!s) continue
+    for (let year = first.year; year <= last.year; year++) {
+      const done = (() => {
+        for (const period of ['summer', 'winter'] as const) {
+          const key = termKey(year, period)
+          if (key < termKey(first.year, first.period) || key > termKey(last.year, last.period)) continue
+          if (offeredIn(s, year, period).status !== 'ok') continue
+          const existing = terms.find((t) => t.year === year && t.period === period)
+          const used = (existing?.subjects ?? []).reduce((sum, c) => sum + (data.subjects[c]?.points ?? 12.5), 0)
+          if (used + s.points > SHORT_TERM_POINTS) continue
+          const before = [...completed, ...terms.filter((t) => termKey(t.year, t.period) < key).flatMap((t) => t.subjects)]
+          const term = existing ?? { year, period, subjects: [] }
+          if (canTake(code, term, new Set(before), data, courseCode) === 'fail') continue
+          if (course && !progressionAllows(code, course, before, data)) continue
+          if (existing) existing.subjects.push(code)
+          else {
+            const at = terms.findIndex((t) => termKey(t.year, t.period) > key)
+            terms.splice(at < 0 ? terms.length : at, 0, { ...term, subjects: [code] })
+          }
+          notes.push(note('shortTerm', { code, year, period }, `${code} runs only outside semesters, so it's planned in ${year} ${period}.`))
+          return true
+        }
+        return false
+      })()
+      if (done) break
+    }
+  }
 }
 
 function progressionAllows(code: string, course: Course, taken: string[], data: Dataset): boolean {

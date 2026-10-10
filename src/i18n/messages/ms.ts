@@ -147,6 +147,7 @@ export const ms: Messages = {
     noRoom: 'prasyarat atau beban pengajian tidak meninggalkan ruang sebelum rancangan tamat',
   },
   genNote: {
+    shortTerm: "{code} hanya ditawarkan di luar semester, jadi dirancang pada {period} {year}.",
     keptOpen: "{codes} dirancang dahulu: kebanyakan daripada {n} major dalam bidang ini bermula dengannya, jadi anda masih boleh pilih mana-mana.",
     balanced: "Menukar semester {a} dan {b} supaya beban lebih sekata.",
     lighter: "Pilih {b} bukan {a} supaya semester itu tidak terlalu berat.",

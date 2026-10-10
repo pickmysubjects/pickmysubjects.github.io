@@ -150,6 +150,7 @@ export const en = {
     noRoom: 'its prerequisites or the study load left no room before the plan ended',
   },
   genNote: {
+    shortTerm: "{code} only runs outside semesters, so it's planned in {period} {year}.",
     keptOpen: "Planned {codes} first: most of the {n} majors in this field start from them, so you can still pick any.",
     balanced: "Swapped {a} and {b} between semesters to spread the load.",
     lighter: "Took {b} instead of {a}, which would have made that semester heavy.",

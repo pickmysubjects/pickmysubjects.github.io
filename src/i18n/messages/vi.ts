@@ -147,6 +147,7 @@ export const vi: Messages = {
     noRoom: 'do môn tiên quyết hoặc khối lượng học nên không còn chỗ trước khi kế hoạch kết thúc',
   },
   genNote: {
+    shortTerm: "{code} chỉ mở ngoài học kỳ chính, nên được xếp vào {period} {year}.",
     keptOpen: "Đã xếp {codes} trước: phần lớn {n} chuyên ngành trong lĩnh vực này bắt đầu từ đây, nên bạn vẫn chọn được bất kỳ ngành nào.",
     balanced: "Đã đổi học kỳ của {a} và {b} để chia đều áp lực.",
     lighter: "Chọn {b} thay cho {a} để kỳ đó không quá nặng.",

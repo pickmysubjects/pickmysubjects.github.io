@@ -147,6 +147,7 @@ export const ko: Messages = {
     noRoom: '선수 과목이나 수강 부담 때문에 계획이 끝나기 전에 넣을 자리가 없음',
   },
   genNote: {
+    shortTerm: "{code}은(는) 학기 외에만 열려서 {year}년 {period}에 넣었어요.",
     keptOpen: "먼저 {codes}을(를) 넣었어요. 이 분야 {n}개 전공 대부분이 여기서 시작해서, 나중에 어느 전공이든 고를 수 있어요.",
     balanced: "학기별 부담을 고르게 하려고 {a}와 {b}의 학기를 바꿨어요.",
     lighter: "그 학기가 너무 무거워지지 않게 {a} 대신 {b}를 골랐어요.",

@@ -147,6 +147,7 @@ export const ja: Messages = {
     noRoom: '前提科目や履修量の関係で、プラン終了までに入りきらなかった',
   },
   genNote: {
+    shortTerm: "{code} は学期外にしか開講されないため、{year} 年の{period}に入れました。",
     keptOpen: "先に {codes} を入れました。この分野の {n} 専攻の多くがここから始まるので、後でどれでも選べます。",
     balanced: "負担を均すため、{a} と {b} の学期を入れ替えました。",
     lighter: "その学期が重くならないよう、{a} ではなく {b} を選びました。",

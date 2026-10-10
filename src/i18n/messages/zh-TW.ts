@@ -147,6 +147,7 @@ export const zhTW: Messages = {
     noRoom: '受先修要求或修課負擔限制，方案結束前排不進去',
   },
   genNote: {
+    shortTerm: "{code} 只在學期之外開，所以排在 {year} 年{period}。",
     keptOpen: "先排了 {codes}：這個方向 {n} 個主修大多從它們開始，之後選哪個都來得及。",
     balanced: "把 {a} 和 {b} 換了學期，讓每學期的壓力更平均。",
     lighter: "選了 {b} 而不是 {a}，免得那個學期太重。",
