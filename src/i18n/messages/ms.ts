@@ -162,6 +162,9 @@ export const ms: Messages = {
     repairStopped: 'Pelarasan subjek elektif dihentikan selepas terlalu banyak pertukaran; semak rancangan secara manual.',
   },
   expr: {
+    anyOf: "Cukup penuhi salah satu:",
+    allOf: "Anda perlu semua ini:",
+    manualTitle: "Syarat lain, kata-kata Handbook ({n})",
     none: 'Tiada',
     unknown: 'Belum dimasukkan',
     and: 'dan',
@@ -820,6 +823,7 @@ export const ms: Messages = {
     done: 'Selesai',
   },
   subject: {
+    roleLine: { core: "wajib", option: "salah satu subjek pilihan", pathway: "perlu diambil sebelum {via}", route: "laluan biasa ke {via} (ada laluan lain)" },
     showAll: "Tunjuk semua {n}",
     passed: "Sudah diambil",
     passedMark: "Sudah diambil · {mark}",

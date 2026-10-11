@@ -165,6 +165,9 @@ export const en = {
     repairStopped: 'Stopped rebalancing electives after many swaps; review the plan manually.',
   },
   expr: {
+    anyOf: "Any one of these is enough:",
+    allOf: "You need all of these:",
+    manualTitle: "Other ways in, in the Handbook's words ({n})",
     none: 'None',
     unknown: 'Not curated yet',
     and: 'and',
@@ -823,6 +826,7 @@ export const en = {
     done: 'Done',
   },
   subject: {
+    roleLine: { core: "compulsory", option: "one of the subjects you choose from", pathway: "you must take this before {via}", route: "a usual way in to {via} (other routes exist)" },
     showAll: "Show all {n}",
     passed: "Done",
     passedMark: "Done · {mark}",

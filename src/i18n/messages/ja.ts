@@ -162,6 +162,9 @@ export const ja: Messages = {
     repairStopped: '選択科目の入れ替えが多すぎたため調整を止めました。プランを手動で確認してください。',
   },
   expr: {
+    anyOf: "次のどれか一つを満たせば OK：",
+    allOf: "次のすべてが必要：",
+    manualTitle: "その他の条件（Handbook の原文、{n} 件）",
     none: 'なし',
     unknown: '未整理',
     and: 'かつ',
@@ -820,6 +823,7 @@ export const ja: Messages = {
     done: '完了',
   },
   subject: {
+    roleLine: { core: "必修", option: "選択科目の一つ", pathway: "{via} を取るには先にこれが必要", route: "{via} へのよくあるルート（他の前提科目でも可）" },
     showAll: "全 {n} 件を表示",
     passed: "履修済み",
     passedMark: "履修済み · {mark} 点",

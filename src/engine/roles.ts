@@ -44,8 +44,14 @@ export function subjectRoles(data: Dataset, code: string, course: string): Subje
 }
 
 /** The first of `targets` whose prerequisites reach `code` within a few steps. */
+/** The target this subject reaches in the fewest prerequisite steps (COMP20003 → COMP30023). */
 function leadsTo(data: Dataset, code: string, targets: string[]): string | undefined {
-  return [...targets].sort().find((target) => ancestors(data, target).has(code))
+  let best: { target: string; steps: number } | undefined
+  for (const target of [...targets].sort()) {
+    const steps = ancestors(data, target).get(code)
+    if (steps !== undefined && (!best || steps < best.steps)) best = { target, steps }
+  }
+  return best?.target
 }
 
 const REFS = new WeakMap<Dataset, Map<string, string[]>>()
@@ -61,21 +67,21 @@ function prereqRefs(data: Dataset, code: string): string[] {
   return out
 }
 
-const ANCESTORS = new WeakMap<Dataset, Map<string, Set<string>>>()
-/** Everything within PATHWAY_DEPTH prerequisite steps of a subject (cached: every subject asks). */
-function ancestors(data: Dataset, target: string): Set<string> {
+const ANCESTORS = new WeakMap<Dataset, Map<string, Map<string, number>>>()
+/** Everything within PATHWAY_DEPTH prerequisite steps of a subject, with how many steps (cached). */
+function ancestors(data: Dataset, target: string): Map<string, number> {
   let cache = ANCESTORS.get(data)
   if (!cache) ANCESTORS.set(data, (cache = new Map()))
   let seen = cache.get(target)
   if (seen) return seen
-  seen = new Set([target])
+  seen = new Map([[target, 0]])
   let frontier = [target]
   for (let depth = 0; depth < PATHWAY_DEPTH && frontier.length; depth++) {
     const next: string[] = []
     for (const c of frontier) {
       for (const r of prereqRefs(data, c)) {
         if (!seen.has(r)) {
-          seen.add(r)
+          seen.set(r, depth + 1)
           next.push(r)
         }
       }

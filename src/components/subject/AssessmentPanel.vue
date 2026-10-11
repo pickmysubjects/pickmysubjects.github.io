@@ -33,9 +33,14 @@ const hasFacts = computed(
     !!props.subject.minAttendance,
 )
 // The Handbook lists summer/winter versions separately; we keep the semester one.
-const otherTerms = computed(
-  () => info.value !== null && periodsFor(props.subject, props.year).some((p) => p === 'summer' || p === 'winter'),
-)
+// Only worth saying when it runs both in a semester and outside one; a summer-only subject's
+// assessment *is* the summer one.
+const otherTerms = computed(() => {
+  const ps = periodsFor(props.subject, props.year)
+  const short = ps.some((p) => p === 'summer' || p === 'winter')
+  const semester = ps.some((p) => p === 'semester-1' || p === 'semester-2')
+  return info.value !== null && short && semester
+})
 </script>
 
 <template>

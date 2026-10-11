@@ -162,6 +162,9 @@ export const vi: Messages = {
     repairStopped: 'Đã dừng điều chỉnh môn tự chọn sau nhiều lần đổi; hãy tự kiểm tra lại kế hoạch.',
   },
   expr: {
+    anyOf: "Chỉ cần đáp ứng một trong các điều sau:",
+    allOf: "Cần đáp ứng tất cả các điều sau:",
+    manualTitle: "Điều kiện khác (nguyên văn Handbook, {n})",
     none: 'Không',
     unknown: 'Chưa nhập',
     and: 'và',
@@ -820,6 +823,7 @@ export const vi: Messages = {
     done: 'Xong',
   },
   subject: {
+    roleLine: { core: "bắt buộc", option: "một trong các môn tự chọn", pathway: "phải học môn này trước {via}", route: "đường thường đi để tới {via} (có cách khác)" },
     showAll: "Xem tất cả {n}",
     passed: "Đã học",
     passedMark: "Đã học · {mark} điểm",

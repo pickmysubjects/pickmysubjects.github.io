@@ -162,6 +162,9 @@ export const ko: Messages = {
     repairStopped: '선택 과목을 너무 많이 바꿔서 조정을 멈췄습니다. 계획을 직접 확인해 주세요.',
   },
   expr: {
+    anyOf: "아래 중 하나만 충족하면 돼요:",
+    allOf: "아래를 모두 충족해야 해요:",
+    manualTitle: "기타 조건 (Handbook 원문, {n}개)",
     none: '없음',
     unknown: '미정리',
     and: '그리고',
@@ -820,6 +823,7 @@ export const ko: Messages = {
     done: '완료',
   },
   subject: {
+    roleLine: { core: "필수", option: "선택 과목 중 하나", pathway: "{via}을(를) 들으려면 먼저 들어야 해요", route: "{via}로 가는 흔한 경로 (다른 선수 과목도 가능)" },
     showAll: "전체 {n}개 보기",
     passed: "이수함",
     passedMark: "이수함 · {mark}점",

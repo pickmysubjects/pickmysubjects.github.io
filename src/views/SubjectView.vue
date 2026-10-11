@@ -14,7 +14,7 @@ import { usePlan } from '@/composables/usePlan'
 import { useProfile } from '@/composables/useProfile'
 import { useRated } from '@/composables/useRated'
 import { useI18n } from '@/i18n'
-import { categoryLabel, describeReq, termLabel } from '@/i18n/format'
+import { categoryLabel, describeReq, requirementList, termLabel } from '@/i18n/format'
 import { discussionLinks } from '@/utils/links'
 
 const props = defineProps<{ code: string }>()
@@ -40,6 +40,7 @@ const unlocks = computed(() =>
 // The subjects to link: only those in the requirement as this course's students meet it.
 const needs = computed(() => (subject.value ? simplifyFor(subject.value.prerequisites, plan.setup.value.course) : 'unknown'))
 const needCodes = computed(() => referencedSubjects(needs.value))
+const needsList = computed(() => requirementList(t.value, needs.value))
 // Every subject needed before this one, back to first year (folded away under the direct ones).
 const have = computed(() => new Set([...plan.plannedCodes.value, ...plan.plan.value.completed]))
 const route = computed(() => prerequisiteRoute(code.value, data.value.subjects, plan.setup.value.course, have.value))
@@ -159,7 +160,19 @@ const links = computed(() => (name.value === 'real' ? discussionLinks(code.value
           <h2 class="panel-title">{{ t('subject.needs') }}</h2>
           <p v-if="needs === 'none'" class="panel-text">{{ t('subject.needsNone') }}</p>
           <p v-else-if="needs === 'unknown'" class="panel-text muted">{{ t('subject.notRecorded') }}</p>
-          <p v-else class="panel-text">{{ describeReq(t, needs) }}</p>
+          <template v-else-if="needsList">
+            <p v-if="needsList.items.length > 1 || needsList.manual.length" class="panel-text">
+              {{ needsList.kind === 'any' ? t('expr.anyOf') : t('expr.allOf') }}
+            </p>
+            <ol v-if="needsList.items.length > 1" class="needs-list">
+              <li v-for="(x, i) in needsList.items" :key="i">{{ x }}</li>
+            </ol>
+            <p v-else-if="needsList.items.length === 1" class="panel-text">{{ needsList.items[0] }}</p>
+            <details v-if="needsList.manual.length" class="needs-manual">
+              <summary>{{ t('expr.manualTitle', { n: needsList.manual.length }) }}</summary>
+              <p v-for="(m, i) in needsList.manual" :key="i">“{{ m }}”</p>
+            </details>
+          </template>
           <SubjectLinks v-if="needCodes.length" class="panel-links" :codes="needCodes" :year="year" />
           <details v-if="route.length > needCodes.length" class="route">
             <summary>{{ t('subject.routeTitle', { n: route.length, missing: routeMissing }) }}</summary>
@@ -241,6 +254,24 @@ const links = computed(() => (name.value === 'real' ? discussionLinks(code.value
 </template>
 
 <style scoped>
+.needs-list {
+  margin: 4px 0 0;
+  padding-left: 20px;
+  display: grid;
+  gap: 4px;
+  font-size: 0.9375rem;
+}
+
+.needs-manual {
+  margin-top: 6px;
+  font-size: 0.875rem;
+  color: var(--ink-soft);
+}
+
+.needs-manual summary {
+  cursor: pointer;
+}
+
 .done-badge {
   color: var(--good);
   cursor: default;

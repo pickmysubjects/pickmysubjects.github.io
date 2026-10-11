@@ -162,6 +162,9 @@ export const hi: Messages = {
     repairStopped: 'बहुत ज़्यादा बदलावों के बाद इलेक्टिव्स का संतुलन रोका गया; प्लान ख़ुद जाँचें।',
   },
   expr: {
+    anyOf: "इनमें से कोई एक काफ़ी है:",
+    allOf: "आपको ये सभी चाहिए:",
+    manualTitle: "दूसरी शर्तें, Handbook के शब्दों में ({n})",
     none: 'कोई नहीं',
     unknown: 'अभी जोड़ा नहीं गया',
     and: 'और',
@@ -820,6 +823,7 @@ export const hi: Messages = {
     done: 'पूरा',
   },
   subject: {
+    roleLine: { core: "ज़रूरी", option: "चुनने वाले सब्जेक्ट में से एक", pathway: "{via} से पहले यह लेना ज़रूरी है", route: "{via} तक पहुँचने का आम रास्ता (दूसरे रास्ते भी हैं)" },
     showAll: "सभी {n} दिखाएँ",
     passed: "पूरा हो चुका",
     passedMark: "पूरा हो चुका · {mark}",

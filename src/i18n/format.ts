@@ -123,6 +123,20 @@ export function describeReq(t: Translate, field: ReqField, course = ''): string 
   return describeExpr(t, field)
 }
 
+/**
+ * A requirement as a short list a student can read: "any one of these" or "all of these", with
+ * conditions only the Handbook's own words can state (a VCE score) kept apart.
+ */
+export function requirementList(t: Translate, field: ReqField, course = ''): { kind: 'any' | 'all'; items: string[]; manual: string[] } | null {
+  field = simplifyFor(field, course)
+  if (field === 'none' || field === 'unknown') return null
+  const top = 'any' in field ? field.any : 'all' in field ? field.all : [field]
+  const kind = 'all' in field ? 'all' : 'any'
+  const manual = top.filter((e): e is { manual: string } => 'manual' in e).map((e) => e.manual)
+  const items = top.filter((e) => !('manual' in e)).map((e) => describeExpr(t, e))
+  return { kind, items, manual }
+}
+
 function describeExpr(t: Translate, e: ReqExpr): string {
   if ('subject' in e) return e.subject
   if ('all' in e || 'any' in e) {

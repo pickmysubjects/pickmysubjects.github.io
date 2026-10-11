@@ -162,6 +162,9 @@ export const zhTW: Messages = {
     repairStopped: '調整選修課次數過多，已停止自動調整；請手動檢查方案。',
   },
   expr: {
+    anyOf: "滿足下面任一條即可：",
+    allOf: "下面這些都要滿足：",
+    manualTitle: "其他條件（Handbook 原文，{n} 條）",
     none: '無',
     unknown: '尚未整理',
     and: '和',
@@ -820,6 +823,7 @@ export const zhTW: Messages = {
     done: '已完成',
   },
   subject: {
+    roleLine: { core: "必修", option: "可選課之一", pathway: "要修 {via}，必須先修這門", route: "通往 {via} 的常見路線（也有別的先修可走）" },
     showAll: "顯示全部 {n} 個",
     passed: "已修過",
     passedMark: "已修過 · {mark} 分",

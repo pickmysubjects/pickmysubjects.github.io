@@ -162,6 +162,9 @@ export const id: Messages = {
     repairStopped: 'Penyesuaian mata kuliah pilihan dihentikan setelah terlalu banyak penukaran; periksa rencana secara manual.',
   },
   expr: {
+    anyOf: "Cukup penuhi salah satu:",
+    allOf: "Kamu perlu semua ini:",
+    manualTitle: "Syarat lain, kata-kata Handbook ({n})",
     none: 'Tidak ada',
     unknown: 'Belum dimasukkan',
     and: 'dan',
@@ -820,6 +823,7 @@ export const id: Messages = {
     done: 'Selesai',
   },
   subject: {
+    roleLine: { core: "wajib", option: "salah satu mata kuliah pilihan", pathway: "harus diambil sebelum {via}", route: "jalur umum ke {via} (ada jalur lain)" },
     showAll: "Tampilkan semua {n}",
     passed: "Sudah diambil",
     passedMark: "Sudah diambil · {mark}",

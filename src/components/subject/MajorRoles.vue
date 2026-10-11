@@ -23,29 +23,18 @@ const roles = computed(() =>
 const LIMIT = 6
 const expanded = shallowRef(false)
 const shown = computed(() => (expanded.value ? roles.value : roles.value.slice(0, LIMIT)))
-// One heading per kind of role, instead of the same tag on every line.
-const groups = computed(() =>
-  (Object.keys(ORDER) as (keyof typeof ORDER)[])
-    .map((role) => ({ role, items: shown.value.filter((r) => r.role === role) }))
-    .filter((g) => g.items.length),
-)
 </script>
 
 <template>
   <section v-if="roles.length" class="roles">
     <h3 class="roles-title">{{ t('subject.rolesTitle') }}</h3>
-    <div class="groups">
-      <div v-for="g in groups" :key="g.role" class="group" :class="`role-${g.role}`">
-        <p class="role-tag">{{ t(`subject.role.${g.role}`) }}</p>
-        <ul class="roles-list">
-          <li v-for="r in g.items" :key="r.component" class="role">
-            <a class="role-link" :href="link(`majors/${r.component}`)">{{ r.title }}</a>
-            <span v-if="r.mine" class="role-mine">{{ t('subject.yours') }}</span>
-            <span v-if="r.via" class="role-via">{{ t('subject.roleVia', { code: r.via }) }}</span>
-          </li>
-        </ul>
-      </div>
-    </div>
+    <ul class="roles-list">
+      <li v-for="r in shown" :key="r.component" class="role" :class="`role-${r.role}`">
+        <a class="role-link" :href="link(`majors/${r.component}`)">{{ r.title }}</a>
+        <span v-if="r.mine" class="role-mine">{{ t('subject.yours') }}</span>
+        <span class="role-what">{{ t(`subject.roleLine.${r.role}`, { via: r.via ?? '' }) }}</span>
+      </li>
+    </ul>
     <button v-if="!expanded && roles.length > LIMIT" type="button" class="roles-more" @click="expanded = true">
       {{ t('subject.showAll', { n: roles.length }) }}
     </button>
@@ -125,9 +114,14 @@ const groups = computed(() =>
   color: var(--accent);
 }
 
-.role-via {
+.role-what {
   font-size: 0.8125rem;
   color: var(--ink-soft);
+}
+
+.role-core .role-what {
+  font-weight: 600;
+  color: var(--accent);
 }
 
 .role-link {
