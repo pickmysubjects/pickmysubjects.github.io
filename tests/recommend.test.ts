@@ -209,3 +209,26 @@ describe('recommend and how a subject is marked', () => {
     expect(hates).toBeLessThan(neutral)
   })
 })
+
+describe('recommend: two bugs found in review', () => {
+  it('still suggests a subject the major needs, even when a passed subject listed it as one way in', async () => {
+    const { buildDataset } = await import('../scripts/dataset')
+    const { recommend } = await import('../src/engine/recommend')
+    const { dataset: real } = buildDataset('real')
+    // PHYC10002 needs PHYC10001 *or* a VCE score; passing it on the VCE score doesn't make
+    // PHYC10001 "behind" you when the physics major requires it.
+    const recs = recommend(real, { results: [{ code: 'PHYC10002', mark: 75 }], skills: {}, interests: ['physics'], goal: 'balanced' }, {
+      course: 'B-SCI',
+      year: 2026,
+      programme: { courseYear: 2026, components: ['physics-physics'] },
+    })
+    expect(recs.map((r) => r.code)).toContain('PHYC10001')
+  })
+
+  it('does not call a subject well known when its goal signals were only filled in as neutral', async () => {
+    const { recommend } = await import('../src/engine/recommend')
+    const data = dataset([subject({ code: 'AAAA10001', prerequisites: 'none' })])
+    const [rec] = recommend(data, { results: [], skills: {}, interests: [], goal: 'wam' }, { year: 2026 })
+    expect(rec?.confidence).toBe('low')
+  })
+})

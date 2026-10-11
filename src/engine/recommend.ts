@@ -156,22 +156,29 @@ export function recommend(data: Dataset, profile: Profile, opts: RecommendOption
     }),
   )
 
+  const roles =
+    opts.course && opts.programme?.components.length
+      ? planRoles(data, opts.course, opts.programme.courseYear, opts.programme.components)
+      : null
+
   // Prerequisites of subjects already passed: going back to them adds nothing
-  // (e.g. COMP10001 after COMP10002).
+  // (e.g. COMP10001 after COMP10002). Not when the major still needs it, nor when it was only
+  // another way in that leads back here (PHYC10001 and PHYC10002 each accept the other).
   const behind = new Set(
     [...completed].flatMap((c) => {
       const d = data.subjects[c]
-      return d ? referencedSubjects(d.prerequisites) : []
+      if (!d) return []
+      return referencedSubjects(d.prerequisites).filter((p) => {
+        if (roles?.required.has(p)) return false
+        const back = data.subjects[p]
+        return !back || !referencedSubjects(back.prerequisites).includes(c)
+      })
     }),
   )
 
   const creditCourses = new Set(Object.values(data.subjects).flatMap((x) => Object.keys(x.categories)))
   const ratingMean = siteRatingMean(data)
 
-  const roles =
-    opts.course && opts.programme?.components.length
-      ? planRoles(data, opts.course, opts.programme.courseYear, opts.programme.components)
-      : null
   const termBefore = opts.termSubjects ? termStress(opts.termSubjects, data, profile).level : null
   const recs: Recommendation[] = []
   for (const s of Object.values(data.subjects)) {
@@ -418,6 +425,9 @@ function score(s: Subject, ctx: ScoreCtx): Recommendation {
   // part of the way back to neutral by how much of the goal's weight we could actually see,
   // so a subject known on one signal can't look as sure as a well-documented one.
   const weights = WEIGHTS[ctx.profile.goal]
+  // How sure we are counts only what's actually known, before any neutral fill-in below.
+  const known = (Object.keys(parts) as Signal[]).filter((k) => weights[k] > 0).length
+  const confidence = known >= 4 ? 'high' : known >= 2 ? 'medium' : 'low'
   // Except a goal's own core signals: "protect my WAM" is about how easy it is to do well, so
   // a subject nobody has rated can't rank with ones known to be easy; there a missing core
   // signal counts as neutral rather than being skipped.
@@ -429,7 +439,6 @@ function score(s: Subject, ctx: ScoreCtx): Recommendation {
   const seen = seenWeight > 0 ? present.reduce((sum, k) => sum + weights[k] * (parts[k] as number), 0) / seenWeight : 0.5
   const coverage = seenWeight / totalWeight
   const value = 0.5 + (seen - 0.5) * (SURE_BASE + (1 - SURE_BASE) * coverage)
-  const confidence = present.length >= 4 ? 'high' : present.length >= 2 ? 'medium' : 'low'
 
   return {
     code: s.code,
