@@ -150,6 +150,8 @@ export function simplifyFor(field: ReqField, course: string): ReqField {
   const MET = 'met' as const
   const walk = (e: ReqExpr): ReqExpr | typeof MET | null => {
     if ('admission' in e) return e.admission === course ? MET : null
+    // A graduate subject (COMP90038) is no way in for a bachelor's student.
+    if ('subject' in e && course.startsWith('B-') && /^[A-Z]{4}9/.test(e.subject)) return null
     // A course code as a whole word: "B-SCI" isn't in "B-SCIEXT".
     if ('manual' in e) return OTHER_COURSE_TEXT.test(e.manual) && !new RegExp(`\\b${course}\\b`).test(e.manual) ? null : e
     if ('any' in e) {
@@ -211,4 +213,22 @@ export function prerequisiteRoute(
   }
   visit(code)
   return [...out].sort((a, b) => (subjects[a]?.level ?? 0) - (subjects[b]?.level ?? 0) || a.localeCompare(b))
+}
+
+/**
+ * Subjects that stand in for each other: the plain subject options of every "one of" in a
+ * requirement (COMP20003 or COMP20007 before COMP30023).
+ */
+export function alternativeGroups(field: ReqField): string[][] {
+  if (field === 'none' || field === 'unknown') return []
+  const out: string[][] = []
+  const walk = (e: ReqExpr): void => {
+    if ('any' in e) {
+      const plain = e.any.filter((x): x is { subject: string } => 'subject' in x).map((x) => x.subject)
+      if (plain.length >= 2) out.push(plain)
+      e.any.forEach(walk)
+    } else if ('all' in e) e.all.forEach(walk)
+  }
+  walk(field)
+  return out
 }

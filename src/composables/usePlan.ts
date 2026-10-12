@@ -4,6 +4,8 @@ import {
   checkTerms,
   findCourse,
   generatePlan,
+  offeredIn,
+  referencedSubjects,
   passedCodes,
   nextSemester,
   planStart,
@@ -147,6 +149,58 @@ export function usePlan() {
     })
   }
 
+  /**
+   * Take `to` instead of `from` (two subjects that stand in for each other). Where `to` runs and
+   * there's room, before every planned subject that needs it: `from`'s own term first, then the
+   * nearest. A full term can trade one of its free electives into `from`'s old place, if that
+   * elective runs there. Returns where `to` went, or null if nowhere works.
+   */
+  function swapSubject(from: string, to: string): { year: number; period: Period } | null {
+    const terms = state.value.terms
+    const at = terms.findIndex((t) => t.subjects.includes(from))
+    const subject = data.value.subjects[to]
+    if (at < 0 || !subject) return null
+    const pts = (c: string) => data.value.subjects[c]?.points ?? 12.5
+    const load = course.value?.standardLoad ?? 50
+    // It has to come before anything planned that lists `from` or `to` as a prerequisite.
+    const needers = terms.flatMap((t, i) =>
+      t.subjects.filter((c) => {
+        const refs = referencedSubjects(data.value.subjects[c]?.prerequisites ?? 'none')
+        return refs.includes(from) || refs.includes(to)
+      }).map(() => i),
+    )
+    const deadline = needers.length ? Math.min(...needers) : terms.length
+    // Free to trade: not needed before something else in the plan.
+    const free = (c: string) => !terms.some((t) => t.subjects.some((x) => referencedSubjects(data.value.subjects[x]?.prerequisites ?? 'none').includes(c)))
+    const order = terms.map((_, i) => i).filter((i) => i < deadline).sort((x, y) => Math.abs(x - at) - Math.abs(y - at) || x - y)
+    for (const i of order) {
+      const t = terms[i]!
+      if (offeredIn(subject, t.year, t.period).status === 'fail') continue
+      const others = t.subjects.filter((c) => c !== from && c !== to)
+      const used = others.reduce((sum, c) => sum + pts(c), 0)
+      let trade: string | undefined
+      if (used + subject.points > load) {
+        const home = terms[at]!
+        trade = others.find((c) => free(c) && pts(c) === subject.points && data.value.subjects[c] && offeredIn(data.value.subjects[c]!, home.year, home.period).status !== 'fail')
+        if (!trade) continue
+      }
+      save((s) => {
+        const target = s.terms[i]!
+        const home = s.terms[at]!
+        for (const x of s.terms) if (x !== target) x.subjects = x.subjects.filter((c) => c !== to)
+        if (target === home) target.subjects = target.subjects.filter((c) => c !== to).map((c) => (c === from ? to : c))
+        else {
+          home.subjects = home.subjects.map((c) => (c === from ? (trade ?? '') : c)).filter(Boolean)
+          target.subjects = target.subjects.map((c) => (c === trade ? to : c))
+          if (!trade) target.subjects.push(to)
+        }
+        return s
+      })
+      return { year: t.year, period: t.period }
+    }
+    return null
+  }
+
   function removeSubject(termIndex: number, code: string): void {
     save((s) => {
       const term = s.terms[termIndex]
@@ -247,6 +301,7 @@ export function usePlan() {
     addSubject,
     addSubjectAt,
     removeSubject,
+    swapSubject,
     moveSubject,
     addTerm,
     addTermAt,

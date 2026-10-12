@@ -283,8 +283,10 @@ function finishWizard(setup: PlanSetup): void {
         :have="[...plan.plannedCodes.value, ...plan.plan.value.completed]"
         :course="plan.setup.value.course"
         :year="plan.terms.value[0]?.year ?? new Date().getFullYear()"
+        :done="plan.plan.value.completed"
         @close="peek = null"
         @open="peek = $event"
+        @swap="(from, to) => plan.swapSubject(from, to)"
       />
 
       <details class="details surface">

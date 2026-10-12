@@ -3,7 +3,7 @@ import { link } from '@/composables/useView'
 import { handbookUrl } from '@/utils/links'
 import { computed, onMounted, useTemplateRef } from 'vue'
 import { CalendarRange, ExternalLink, X } from 'lucide-vue-next'
-import { periodsFor, prerequisiteRoute, referencedSubjects, simplifyFor, type Subject } from '@/engine'
+import { alternativeGroups, periodsFor, prerequisiteRoute, referencedSubjects, simplifyFor, type Subject } from '@/engine'
 import AssessmentPanel from '@/components/subject/AssessmentPanel.vue'
 import MajorRoles from '@/components/subject/MajorRoles.vue'
 import SubjectAbout from '@/components/subject/SubjectAbout.vue'
@@ -20,8 +20,10 @@ const props = defineProps<{
   year: number
   /** Codes in the plan or already passed, to mark which related subjects the student has. */
   have: string[]
+  /** Of those, the ones already passed (the rest are only planned). */
+  done?: string[]
 }>()
-const emit = defineEmits<{ close: []; open: [code: string] }>()
+const emit = defineEmits<{ close: []; open: [code: string]; swap: [from: string, to: string] }>()
 const { t } = useI18n()
 const dialog = useTemplateRef<HTMLDialogElement>('dialog')
 
@@ -59,6 +61,18 @@ const haveSet = computed(() => new Set(props.have))
 // folded away, so a third-year subject doesn't need opening one prerequisite at a time.
 const needs = computed(() => (props.subject ? simplifyFor(props.subject.prerequisites, props.course) : 'unknown'))
 const needCodes = computed(() => referencedSubjects(needs.value))
+const doneSet = computed(() => new Set(props.done ?? []))
+const status = (c: string) => (doneSet.value.has(c) ? 'done' : haveSet.value.has(c) ? 'planned' : '')
+// "COMP20003 or COMP20007": if one is only planned, the other can take its place in one tap.
+const swapFrom = (c: string) => {
+  if (haveSet.value.has(c) || !props.subjects[c]) return null
+  for (const group of alternativeGroups(needs.value)) {
+    if (!group.includes(c)) continue
+    const planned = group.find((x) => x !== c && status(x) === 'planned')
+    if (planned) return planned
+  }
+  return null
+}
 const route = computed(() => prerequisiteRoute(props.code, props.subjects, props.course, haveSet.value))
 const routeMissing = computed(() => route.value.filter((c) => !haveSet.value.has(c)).length)
 const routeByLevel = computed(() => {
@@ -123,11 +137,16 @@ function onClick(event: MouseEvent): void {
                   <span class="code">{{ c }}</span>
                   <span class="peek-row-title muted">{{ t('subject.notYetAdded') }}</span>
                 </a>
-                <button v-else type="button" class="peek-row" @click="emit('open', c)">
-                  <span class="code">{{ c }}</span>
-                  <span class="peek-row-title">{{ subjects[c]?.title }}</span>
-                  <span v-if="haveSet.has(c)" class="peek-have">{{ t('plan.haveIt') }}</span>
-                </button>
+                <div v-else class="peek-row-wrap">
+                  <button type="button" class="peek-row" @click="emit('open', c)">
+                    <span class="code">{{ c }}</span>
+                    <span class="peek-row-title">{{ subjects[c]?.title }}</span>
+                    <span v-if="status(c)" class="peek-have">{{ t(status(c) === 'done' ? 'plan.doneIt' : 'plan.plannedIt') }}</span>
+                  </button>
+                  <button v-if="swapFrom(c)" type="button" class="button button-quiet peek-swap" @click="emit('swap', swapFrom(c)!, c)">
+                    {{ t('plan.swapTo', { code: swapFrom(c)! }) }}
+                  </button>
+                </div>
               </li>
             </ul>
             <details v-if="route.length > needCodes.length" class="peek-route">
@@ -143,7 +162,7 @@ function onClick(event: MouseEvent): void {
                     <button v-else type="button" class="peek-row" @click="emit('open', c)">
                       <span class="code">{{ c }}</span>
                       <span class="peek-row-title">{{ subjects[c]?.title }}</span>
-                      <span v-if="haveSet.has(c)" class="peek-have">{{ t('plan.haveIt') }}</span>
+                      <span v-if="status(c)" class="peek-have">{{ t(status(c) === 'done' ? 'plan.doneIt' : 'plan.plannedIt') }}</span>
                     </button>
                   </li>
                 </ul>
@@ -161,7 +180,7 @@ function onClick(event: MouseEvent): void {
           <p v-if="leadsTo.length === 0" class="muted">{{ t('subject.unlocksNone') }}</p>
           <p v-else class="peek-codes">
             <button v-for="c in leadsTo" :key="c" type="button" class="chip code peek-code-chip" @click="emit('open', c)">
-              {{ c }}<span v-if="haveSet.has(c)" class="peek-have">{{ t('plan.haveIt') }}</span>
+              {{ c }}<span v-if="status(c)" class="peek-have">{{ t(status(c) === 'done' ? 'plan.doneIt' : 'plan.plannedIt') }}</span>
             </button>
           </p>
         </section>
@@ -177,7 +196,7 @@ function onClick(event: MouseEvent): void {
               :class="{ 'peek-clash': haveSet.has(c) }"
               @click="emit('open', c)"
             >
-              {{ c }}<span v-if="haveSet.has(c)" class="peek-have">{{ t('plan.haveIt') }}</span>
+              {{ c }}<span v-if="status(c)" class="peek-have">{{ t(status(c) === 'done' ? 'plan.doneIt' : 'plan.plannedIt') }}</span>
             </button>
           </p>
         </section>
@@ -207,6 +226,24 @@ function onClick(event: MouseEvent): void {
 </template>
 
 <style scoped>
+.peek-row-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.peek-row-wrap .peek-row {
+  flex: 1;
+  min-width: 0;
+}
+
+.peek-swap {
+  flex: none;
+  min-height: 32px;
+  padding: 0 12px;
+  font-size: 0.8125rem;
+}
+
 .peek {
   width: min(560px, calc(100vw - 32px));
   max-height: min(86vh, 760px);
