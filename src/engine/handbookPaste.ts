@@ -395,7 +395,9 @@ function parseAssessment(lines: string[], warnings: string[]): AssessmentTask[] 
     }
     const description = text.filter((l) => !/^hurdle requirement/i.test(l)).join(' ')
     const all = [...text, line].join(' ')
-    const kind = classify(description)
+    let kind = classify(description)
+    // An "examination" held mid-semester ("Mid semester", "Week 7") is a test, not the final exam.
+    if (kind === 'exam' && /mid[- ]?(semester|term)|\bweeks? \d|around week|week \d+ and \d+/i.test(all) && !/exam(ination)? period|end of (the )?semester|final exam/i.test(all)) kind = 'test'
     if (!kind) warnings.push(`Couldn't tell what kind of task "${description.slice(0, 60)}" is; recorded as an assignment.`)
     const task: AssessmentTask = { kind: kind ?? 'assignment', weight: Number(weight[1]) }
     if (/\bgroups?\b(?! discussions?)|\bteams?\b/i.test(description)) task.group = true

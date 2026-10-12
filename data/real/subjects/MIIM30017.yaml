@@ -12,7 +12,7 @@ prerequisites:
 corequisites: none
 non_allowed: []
 assessment:
-  - kind: exam
+  - kind: test
     weight: 40
   - kind: exam
     weight: 40

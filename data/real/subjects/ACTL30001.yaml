@@ -20,10 +20,10 @@ assessment:
   - kind: exam
     weight: 70
     hurdle: true
+weekly_contact_hours: 3
 handbook: https://handbook.unimelb.edu.au/2026/subjects/actl30001
 source_year: 2026
-categories:
-  B-SCI: breadth
+categories: {}
 skills:
   - maths
   - statistics

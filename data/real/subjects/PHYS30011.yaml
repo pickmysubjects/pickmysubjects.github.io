@@ -15,7 +15,7 @@ assessment:
   - kind: assignment
     weight: 0
     hurdle: true
-  - kind: exam
+  - kind: test
     weight: 30
   - kind: assignment
     weight: 0

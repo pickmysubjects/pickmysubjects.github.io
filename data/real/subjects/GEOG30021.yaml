@@ -11,6 +11,7 @@ non_allowed: []
 assessment:
   - kind: presentation
     weight: 15
+    group: true
   - kind: participation
     weight: 10
     group: true

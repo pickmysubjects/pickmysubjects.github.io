@@ -25,7 +25,7 @@ assessment:
   - kind: presentation
     weight: 20
     group: true
-  - kind: exam
+  - kind: test
     weight: 20
   - kind: exam
     weight: 40

@@ -329,3 +329,12 @@ describe('study periods named after a month', () => {
     expect(parseAvailability('November - On Campus', page('November', '24 November 2026', '9 December 2026'))).toEqual(['summer'])
   })
 })
+
+describe('an examination held mid-semester', () => {
+  it('counts as a test, not the final exam', async () => {
+    const { parseHandbookPaste } = await import('../src/engine/handbookPaste')
+    const text = 'Assessment\nDescription\tTiming\tPercentage\nWritten examination 45 min\nMid semester\t25%\nWritten examination 2 hours\nDuring the examination period\t75%\n\nDates and times\n'
+    const r = parseHandbookPaste(text)
+    expect(r.assessment).toEqual([{ kind: 'test', weight: 25 }, { kind: 'exam', weight: 75 }])
+  })
+})

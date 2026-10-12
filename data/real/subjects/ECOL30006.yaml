@@ -18,7 +18,7 @@ assessment:
     weight: 10
   - kind: report
     weight: 30
-  - kind: exam
+  - kind: test
     weight: 20
   - kind: exam
     weight: 40

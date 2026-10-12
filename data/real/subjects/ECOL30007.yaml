@@ -19,7 +19,7 @@ assessment:
     weight: 12.5
   - kind: report
     weight: 25
-  - kind: exam
+  - kind: test
     weight: 12.5
   - kind: exam
     weight: 50

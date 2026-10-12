@@ -14,6 +14,7 @@ prerequisites:
         - AGRI20043
 corequisites:
   all:
+    - VETS30016
     - VETS30029
     - VETS30031
 non_allowed: []

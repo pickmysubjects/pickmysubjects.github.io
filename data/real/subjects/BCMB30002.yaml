@@ -14,9 +14,9 @@ non_allowed: []
 assessment:
   - kind: assignment
     weight: 35
-  - kind: exam
+  - kind: test
     weight: 10
-  - kind: exam
+  - kind: test
     weight: 10
   - kind: exam
     weight: 45

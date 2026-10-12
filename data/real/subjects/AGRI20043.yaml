@@ -15,7 +15,7 @@ non_allowed:
 assessment:
   - kind: report
     weight: 25
-  - kind: exam
+  - kind: test
     weight: 25
   - kind: exam
     weight: 40

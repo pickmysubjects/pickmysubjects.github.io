@@ -17,7 +17,7 @@ non_allowed: []
 assessment:
   - kind: quiz
     weight: 15
-  - kind: exam
+  - kind: test
     weight: 15
   - kind: presentation
     weight: 20
