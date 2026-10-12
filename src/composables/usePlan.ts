@@ -23,6 +23,7 @@ import { useProfile } from './useProfile'
 import { usePersisted } from './usePersisted'
 import { cloneJson } from '@/utils/clone'
 import { majorGroupOf } from '@/utils/majorGroups'
+import { cleanPlans } from '@/utils/sanitize'
 
 export interface PlanSetup {
   course: string
@@ -35,6 +36,8 @@ export interface PlanSetup {
   international?: boolean
   /** No major yet, but a field in mind (a major group id): keeps its majors open. */
   field?: string
+  /** The student answered the setup questions (until then it's only the default). */
+  confirmed?: boolean
 }
 
 interface PlanState {
@@ -45,7 +48,7 @@ interface PlanState {
 }
 
 // One saved plan per dataset.
-const plans = usePersisted<Record<string, PlanState>>('sc:plans', {})
+const plans = usePersisted<Record<string, PlanState>>('sc:plans', {}, cleanPlans)
 
 function defaultSetup(data: Dataset): PlanSetup {
   const course = data.courses[0]
@@ -91,13 +94,15 @@ export function usePlan() {
   const courseCheck = computed(() => checkCourse(plan.value, data.value))
   const plannedCodes = computed(() => state.value.terms.flatMap((t) => t.subjects))
   const isEmpty = computed(() => plannedCodes.value.length === 0)
+  // Answered the questions, or built a plan with them before this was recorded (it left notes).
+  const setupChosen = computed(() => state.value.setup.confirmed === true || state.value.notes.length > 0)
 
   function save(change: (s: PlanState) => PlanState): void {
     plans.value = { ...plans.value, [name.value]: change(cloneJson(state.value)) }
   }
 
   function updateSetup(setup: PlanSetup): void {
-    save((s) => ({ ...s, setup }))
+    save((s) => ({ ...s, setup: { ...setup, confirmed: true } }))
   }
 
   function generate(): void {
@@ -253,7 +258,9 @@ export function usePlan() {
 
   /** Take a plan someone shared (setup and terms); this replaces the current one. */
   function importPlan(setup: PlanSetup, terms: PlanTerm[]): void {
-    save(() => ({ setup, terms, notes: [], unplaced: [] }))
+    // Whether you're on a student visa is about you, not the plan: a shared link keeps yours.
+    const international = state.value.setup.international
+    save(() => ({ setup: { ...setup, ...(international !== undefined ? { international } : {}) }, terms, notes: [], unplaced: [] }))
   }
 
   /** Make a heavy semester lighter: take the spread-out arrangement, or move one subject to a summer/winter term. */
@@ -295,6 +302,7 @@ export function usePlan() {
     courseCheck,
     plannedCodes,
     isEmpty,
+    setupChosen,
     updateSetup,
     generate,
     startEmpty,

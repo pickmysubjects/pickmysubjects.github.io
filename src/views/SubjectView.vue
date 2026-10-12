@@ -7,7 +7,7 @@ import AssessmentPanel from '@/components/subject/AssessmentPanel.vue'
 import MajorRoles from '@/components/subject/MajorRoles.vue'
 import SubjectAbout from '@/components/subject/SubjectAbout.vue'
 import DiscussionSummary from '@/components/subject/DiscussionSummary.vue'
-import { PASS_MARK, periodsFor, prerequisiteRoute, referencedSubjects, simplifyFor, termKey } from '@/engine'
+import { PASS_MARK, periodsFor, prerequisiteRoute, referencedSubjects, simplifyFor, termKey, type Period } from '@/engine'
 import SubjectLinks from '@/components/majors/SubjectLinks.vue'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
@@ -55,7 +55,6 @@ const inPlan = computed(() => plan.plannedCodes.value.includes(code.value))
 const taken = computed(() => profile.value.results.some((r) => r.code === code.value))
 // Already passed (from My page): nothing to add; a fail can be planned again as a retake.
 const passed = computed(() => profile.value.results.find((r) => r.code === code.value && (r.mark === undefined || r.mark >= PASS_MARK)))
-const added = shallowRef<string | null>(null)
 const rating = shallowRef(false)
 const thanks = shallowRef(false)
 
@@ -86,11 +85,14 @@ const target = computed(() => {
   return null
 })
 
+const addedAt = shallowRef<{ year: number; period: Period } | null>(null)
+// Worked out when shown, so it follows a language switch.
+const added = computed(() => (addedAt.value ? termLabel(t.value, addedAt.value) : ''))
 function addToPlan(): void {
   const where = target.value
   if (!where) return
   plan.addSubjectAt(where.year, where.period, code.value)
-  added.value = termLabel(t.value, where)
+  addedAt.value = { year: where.year, period: where.period }
 }
 
 const meters = computed(() => {
@@ -140,6 +142,9 @@ const links = computed(() => (name.value === 'real' ? discussionLinks(code.value
             <Check :size="18" aria-hidden="true" />
             {{ passed.mark === undefined ? t('subject.passed') : t('subject.passedMark', { mark: passed.mark }) }}
           </span>
+          <a v-else-if="!plan.setupChosen.value" class="button button-accent" :href="link('plan')">
+            <Plus :size="18" aria-hidden="true" /> {{ t('subject.chooseDegreeFirst') }}
+          </a>
           <button v-else class="button button-accent" type="button" :disabled="inPlan || !target" @click="addToPlan">
             <component :is="inPlan ? Check : Plus" :size="18" aria-hidden="true" />
             {{ inPlan ? t('subject.inPlan') : t('subject.addToPlan') }}

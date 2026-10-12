@@ -825,6 +825,7 @@ export const ja: Messages = {
     done: '完了',
   },
   subject: {
+    chooseDegreeFirst: "まず学位と専攻を選ぶ",
     roleLine: { core: "必修", option: "選択科目の一つ", pathway: "{via} を取るには先にこれが必要", route: "{via} へのよくあるルート（他の前提科目でも可）" },
     showAll: "全 {n} 件を表示",
     passed: "履修済み",

@@ -825,6 +825,7 @@ export const hi: Messages = {
     done: 'पूरा',
   },
   subject: {
+    chooseDegreeFirst: "पहले डिग्री चुनें",
     roleLine: { core: "ज़रूरी", option: "चुनने वाले सब्जेक्ट में से एक", pathway: "{via} से पहले यह लेना ज़रूरी है", route: "{via} तक पहुँचने का आम रास्ता (दूसरे रास्ते भी हैं)" },
     showAll: "सभी {n} दिखाएँ",
     passed: "पूरा हो चुका",

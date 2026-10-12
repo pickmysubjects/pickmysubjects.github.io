@@ -92,47 +92,49 @@ function remove(c: string): void {
     <p v-if="error" class="error" role="alert">{{ error }}</p>
 
     <p v-if="results.length === 0" class="empty">{{ t('record.empty', { pass: PASS_MARK }) }}</p>
-    <table v-else class="table">
-      <thead>
-        <tr>
-          <th scope="col">{{ t('record.colSubject') }}</th>
-          <th scope="col">{{ t('record.colMark') }}</th>
-          <th scope="col"><span class="visually-hidden">{{ t('record.colActions') }}</span></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="r in results" :key="r.code">
-          <td>
-            <span class="code">{{ r.code }}</span>
-            <span class="title">{{ subjects[r.code]?.title ?? t('record.notInDataset') }}</span>
-            <label class="when">
-              <span class="visually-hidden">{{ t('record.termFor', { code: r.code }) }}</span>
-              <select class="when-select" :value="termValue(r)" @change="setTerm(r.code, $event)">
-                <option value="">{{ t('record.termUnknown') }}</option>
-                <option v-for="x in TERMS" :key="`${x.year}|${x.period}`" :value="`${x.year}|${x.period}`">{{ termLabel(t, x) }}</option>
-              </select>
-            </label>
-          </td>
-          <td>
-            <input
-              class="input mark"
-              type="number"
-              min="0"
-              max="100"
-              :value="r.mark ?? ''"
-              :aria-label="t('record.markFor', { code: r.code })"
-              @change="setMark(r.code, $event)"
-            />
-            <span v-if="r.mark !== undefined && r.mark < PASS_MARK" class="fail">{{ t('record.fail') }}</span>
-          </td>
-          <td class="row-actions">
-            <span v-if="rated.has(r.code)" class="rated">{{ t('rating.rated') }}</span>
-            <button v-else class="button button-quiet" type="button" @click="rating = r.code">{{ t('rating.rate') }}</button>
-            <button class="button button-quiet" type="button" @click="remove(r.code)">{{ t('record.remove') }}</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div v-else class="table-scroll">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">{{ t('record.colSubject') }}</th>
+            <th scope="col">{{ t('record.colMark') }}</th>
+            <th scope="col"><span class="visually-hidden">{{ t('record.colActions') }}</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="r in results" :key="r.code">
+            <td>
+              <span class="code">{{ r.code }}</span>
+              <span class="title">{{ subjects[r.code]?.title ?? t('record.notInDataset') }}</span>
+              <label class="when">
+                <span class="visually-hidden">{{ t('record.termFor', { code: r.code }) }}</span>
+                <select class="when-select" :value="termValue(r)" @change="setTerm(r.code, $event)">
+                  <option value="">{{ t('record.termUnknown') }}</option>
+                  <option v-for="x in TERMS" :key="`${x.year}|${x.period}`" :value="`${x.year}|${x.period}`">{{ termLabel(t, x) }}</option>
+                </select>
+              </label>
+            </td>
+            <td>
+              <input
+                class="input mark"
+                type="number"
+                min="0"
+                max="100"
+                :value="r.mark ?? ''"
+                :aria-label="t('record.markFor', { code: r.code })"
+                @change="setMark(r.code, $event)"
+              />
+              <span v-if="r.mark !== undefined && r.mark < PASS_MARK" class="fail">{{ t('record.fail') }}</span>
+            </td>
+            <td class="row-actions">
+              <span v-if="rated.has(r.code)" class="rated">{{ t('rating.rated') }}</span>
+              <button v-else class="button button-quiet" type="button" @click="rating = r.code">{{ t('rating.rate') }}</button>
+              <button class="button button-quiet" type="button" @click="remove(r.code)">{{ t('record.remove') }}</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
     <p v-if="results.some((x) => x.mark !== undefined && x.mark < PASS_MARK)" class="fail-hint">
       {{ t('record.failHint') }}
       <a :href="link('guide')">{{ t('guide.failTitle') }}</a>
@@ -143,6 +145,11 @@ function remove(c: string): void {
 </template>
 
 <style scoped>
+/* On a phone the table scrolls inside its card instead of widening the page. */
+.table-scroll {
+  overflow-x: auto;
+}
+
 .section-title {
   font-size: 1.05rem;
   font-weight: 650;

@@ -1,8 +1,9 @@
 import { computed } from 'vue'
 import { usePersisted } from './usePersisted'
+import { cleanRated } from '@/utils/sanitize'
 
 // Subjects this browser has already rated, to discourage accidental duplicates.
-const rated = usePersisted<string[]>('sc:rated', [])
+const rated = usePersisted<string[]>('sc:rated', [], cleanRated)
 
 export function useRated() {
   return {

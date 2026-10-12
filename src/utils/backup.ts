@@ -1,3 +1,4 @@
+import { cleanPlans, cleanProfiles, cleanRated } from './sanitize'
 /**
  * A student's record, plans and rated subjects live only in this browser. A
  * backup file lets them move to another browser or computer without anything
@@ -39,9 +40,11 @@ export function restoreBackup(text: string): boolean {
   }
   if (!isBackup(parsed)) return false
   try {
+    // Put each part in shape before saving it, as reading it back would.
+    const CLEAN: Record<(typeof KEYS)[number], (x: unknown) => unknown> = { 'sc:profiles': cleanProfiles, 'sc:plans': cleanPlans, 'sc:rated': cleanRated }
     for (const key of KEYS) {
       const value = parsed.data[key]
-      if (value !== undefined) localStorage.setItem(key, JSON.stringify(value))
+      if (value !== undefined) localStorage.setItem(key, JSON.stringify(CLEAN[key](value)))
     }
   } catch {
     return false

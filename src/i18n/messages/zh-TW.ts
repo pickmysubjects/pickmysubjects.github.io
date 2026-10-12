@@ -825,6 +825,7 @@ export const zhTW: Messages = {
     done: '已完成',
   },
   subject: {
+    chooseDegreeFirst: "先選學位和主修",
     roleLine: { core: "必修", option: "可選課之一", pathway: "要修 {via}，必須先修這門", route: "通往 {via} 的常見路線（也有別的先修可走）" },
     showAll: "顯示全部 {n} 個",
     passed: "已修過",

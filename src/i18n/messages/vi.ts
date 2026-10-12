@@ -825,6 +825,7 @@ export const vi: Messages = {
     done: 'Xong',
   },
   subject: {
+    chooseDegreeFirst: "Chọn bằng và ngành trước",
     roleLine: { core: "bắt buộc", option: "một trong các môn tự chọn", pathway: "phải học môn này trước {via}", route: "đường thường đi để tới {via} (có cách khác)" },
     showAll: "Xem tất cả {n}",
     passed: "Đã học",

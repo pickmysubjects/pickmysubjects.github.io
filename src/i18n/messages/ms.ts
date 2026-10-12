@@ -825,6 +825,7 @@ export const ms: Messages = {
     done: 'Selesai',
   },
   subject: {
+    chooseDegreeFirst: "Pilih ijazah dahulu",
     roleLine: { core: "wajib", option: "salah satu subjek pilihan", pathway: "perlu diambil sebelum {via}", route: "laluan biasa ke {via} (ada laluan lain)" },
     showAll: "Tunjuk semua {n}",
     passed: "Sudah diambil",

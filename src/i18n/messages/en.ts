@@ -828,6 +828,7 @@ export const en = {
     done: 'Done',
   },
   subject: {
+    chooseDegreeFirst: "Choose your degree first",
     roleLine: { core: "compulsory", option: "one of the subjects you choose from", pathway: "you must take this before {via}", route: "a usual way in to {via} (other routes exist)" },
     showAll: "Show all {n}",
     passed: "Done",

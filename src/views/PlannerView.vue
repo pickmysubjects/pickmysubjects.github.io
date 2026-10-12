@@ -93,7 +93,7 @@ const failed = computed(() =>
     }),
 )
 const showWizard = computed(
-  () => editing.value || (plan.isEmpty.value && plan.notes.value.length === 0 && !shared.value),
+  () => editing.value || (!plan.setupChosen.value && !shared.value),
 )
 
 const options = computed(() => subjectList.value.map((s) => ({ code: s.code, title: s.title })))

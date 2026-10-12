@@ -244,7 +244,7 @@ function onCode(): void {
 
   .contribute-body,
   .meta {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 </style>

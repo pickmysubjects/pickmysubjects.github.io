@@ -7,14 +7,15 @@ import type { PlanSetup } from '@/composables/usePlan'
  */
 interface Packed {
   v: 1
-  s: [string, number, number, number, string, string] // course, courseYear, startYear, startPeriod index, major, specialisation
+  // course, courseYear, startYear, startPeriod index, major, specialisation, field (optional; older links lack it)
+  s: [string, number, number, number, string, string, string?]
   t: [number, number, string[]][] // year, period index, codes
 }
 
 export function encodePlan(setup: PlanSetup, terms: PlanTerm[]): string {
   const packed: Packed = {
     v: 1,
-    s: [setup.course, setup.courseYear, setup.startYear, PERIODS.indexOf(setup.startPeriod), setup.major, setup.specialisation],
+    s: [setup.course, setup.courseYear, setup.startYear, PERIODS.indexOf(setup.startPeriod), setup.major, setup.specialisation, setup.field ?? ''],
     t: terms.map((term) => [term.year, PERIODS.indexOf(term.period), term.subjects]),
   }
   const bytes = new TextEncoder().encode(JSON.stringify(packed))
@@ -35,9 +36,9 @@ export function decodePlan(text: string): { setup: PlanSetup; terms: PlanTerm[] 
       return x
     }
     const code = /^[A-Z]{4}\d{5}$/
-    const [course, courseYear, startYear, startPeriod, major, specialisation] = p.s
+    const [course, courseYear, startYear, startPeriod, major, specialisation, field] = p.s
     return {
-      setup: { course: String(course), courseYear: Number(courseYear), startYear: Number(startYear), startPeriod: period(startPeriod), major: String(major), specialisation: String(specialisation) },
+      setup: { course: String(course), courseYear: Number(courseYear), startYear: Number(startYear), startPeriod: period(startPeriod), major: String(major), specialisation: String(specialisation), ...(field ? { field: String(field) } : {}) },
       terms: p.t.map(([year, pi, codes]) => ({ year: Number(year), period: period(pi), subjects: codes.filter((c) => code.test(c)) })),
     }
   } catch {

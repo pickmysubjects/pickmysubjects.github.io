@@ -3,11 +3,12 @@ import { computeWam, type Goal, type Profile, type Skill } from '@/engine'
 import { useDataset } from './useDataset'
 import { usePersisted } from './usePersisted'
 import { cloneJson } from '@/utils/clone'
+import { cleanProfiles } from '@/utils/sanitize'
 
 const emptyProfile = (): Profile => ({ results: [], skills: {}, interests: [], goal: 'balanced' })
 
 // One profile per dataset: demo subject codes mean nothing in the real dataset.
-const profiles = usePersisted<Record<string, Profile>>('sc:profiles', {})
+const profiles = usePersisted<Record<string, Profile>>('sc:profiles', {}, cleanProfiles)
 
 export function useProfile() {
   const { name, data } = useDataset()

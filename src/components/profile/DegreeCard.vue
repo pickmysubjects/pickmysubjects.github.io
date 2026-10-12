@@ -18,7 +18,7 @@ const { t } = useI18n()
 const editing = shallowRef(false)
 
 // Until the questions have been answered once, the setup is only the default.
-const chosen = computed(() => !plan.isEmpty.value || plan.notes.value.length > 0)
+const chosen = plan.setupChosen
 const title = (id: string) => data.value.components.find((c) => c.id === id)?.title
 const course = computed(() => data.value.courses.find((c) => c.code === plan.setup.value.course)?.title ?? plan.setup.value.course)
 const major = computed(

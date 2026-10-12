@@ -20,7 +20,10 @@ describe('backup', () => {
     const file = makeBackup()
     store.clear()
     expect(restoreBackup(file)).toBe(true)
-    expect(JSON.parse(store.get('sc:profiles') ?? '')).toEqual({ real: { results: [{ code: 'COMP10001', mark: 80 }] } })
+    // Restored data is put in shape: the missing parts of an old profile get their defaults.
+    expect(JSON.parse(store.get('sc:profiles') ?? '')).toEqual({
+      real: { results: [{ code: 'COMP10001', mark: 80 }], skills: {}, interests: [], goal: 'balanced', confirmed: [] },
+    })
     expect(JSON.parse(store.get('sc:rated') ?? '')).toEqual(['COMP10001'])
     expect(store.has('sc:locale')).toBe(false)
   })

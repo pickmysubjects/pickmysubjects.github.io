@@ -825,6 +825,7 @@ export const id: Messages = {
     done: 'Selesai',
   },
   subject: {
+    chooseDegreeFirst: "Pilih gelar dulu",
     roleLine: { core: "wajib", option: "salah satu mata kuliah pilihan", pathway: "harus diambil sebelum {via}", route: "jalur umum ke {via} (ada jalur lain)" },
     showAll: "Tampilkan semua {n}",
     passed: "Sudah diambil",

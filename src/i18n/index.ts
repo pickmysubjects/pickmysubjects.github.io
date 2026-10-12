@@ -9,7 +9,7 @@ import { vi } from './messages/vi'
 import { id } from './messages/id'
 import { ms } from './messages/ms'
 import { hi } from './messages/hi'
-import { localeInPath, type LocaleCode } from './codes'
+import { LOCALE_CODES, localeInPath, type LocaleCode } from './codes'
 
 /** Languages most used by UniMelb students. Names are written in their own language. */
 export const LOCALES = [
@@ -43,7 +43,8 @@ function detect(): LocaleCode {
 }
 
 // Module-level so every component shares one choice.
-const locale = usePersisted<LocaleCode>('sc:locale', detect())
+// A saved language we don't offer ("fr", 42) falls back to the browser's.
+const locale = usePersisted<LocaleCode>('sc:locale', detect(), (raw) => ((LOCALE_CODES as readonly unknown[]).includes(raw) ? (raw as LocaleCode) : detect()))
 
 // A language in the address (/zh-CN/subject/…) wins: a shared link opens in its language.
 if (typeof location !== 'undefined') {

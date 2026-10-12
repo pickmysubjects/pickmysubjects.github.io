@@ -91,6 +91,7 @@ async function onRestore(event: Event): Promise<void> {
 .record {
   padding-top: 32px;
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 24px;
   max-width: 1100px;
 }
@@ -182,7 +183,7 @@ async function onRestore(event: Event): Promise<void> {
 
 @media (max-width: 860px) {
   .record-body {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   /* One column on a phone: the backup goes last, after suggestions and strengths. */

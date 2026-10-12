@@ -825,6 +825,7 @@ export const ko: Messages = {
     done: '완료',
   },
   subject: {
+    chooseDegreeFirst: "먼저 학위와 전공 선택",
     roleLine: { core: "필수", option: "선택 과목 중 하나", pathway: "{via}을(를) 들으려면 먼저 들어야 해요", route: "{via}로 가는 흔한 경로 (다른 선수 과목도 가능)" },
     showAll: "전체 {n}개 보기",
     passed: "이수함",

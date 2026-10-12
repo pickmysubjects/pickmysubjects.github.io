@@ -100,7 +100,7 @@ function toggle(topic: string): void {
 
 @media (max-width: 640px) {
   .group {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .group-name {
