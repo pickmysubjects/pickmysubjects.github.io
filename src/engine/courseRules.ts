@@ -48,7 +48,8 @@ export function checkCourse(plan: Plan, data: Dataset): CourseCheck {
     }
   }
 
-  const codes = [...plan.completed, ...plan.terms.flatMap((t) => t.subjects)]
+  // Each subject once, even if it's both completed and planned again (counted twice otherwise).
+  const codes = [...new Set([...plan.completed, ...plan.terms.flatMap((t) => t.subjects)])]
   const known = codes.map((c) => data.subjects[c]).filter((s): s is Subject => s !== undefined)
   const statuses = course.rules.map((rule) => checkRule(rule, { plan, data, course, known, codes }))
   const issues: Issue[] = statuses
@@ -82,7 +83,8 @@ function checkRule(rule: CourseRule, ctx: RuleCtx): RuleStatus {
       const missing = rule.subjects.filter((c) => !ctx.codes.includes(c))
       if (missing.length > 0) return { ...base, status: 'fail', detail: `missing ${missing.join(', ')}`, detailKey: 'missing', params: { codes: missing.join(', ') } }
       if (rule.firstSemester) {
-        const first = ctx.plan.terms[0]?.subjects ?? []
+        // The first semester, not a summer term added before it.
+        const first = ctx.plan.terms.find((t) => t.period === 'semester-1' || t.period === 'semester-2')?.subjects ?? []
         const late = rule.subjects.filter((c) => !ctx.plan.completed.includes(c) && !first.includes(c))
         if (late.length > 0) return { ...base, status: 'fail', detail: `${late.join(', ')} must be in your first semester`, detailKey: 'firstSemester', params: { codes: late.join(', ') } }
       }

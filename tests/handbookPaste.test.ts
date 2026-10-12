@@ -317,3 +317,15 @@ describe('contact hours with no "per week"', () => {
     expect(parseContactHours('Contact hours\tA 2 hour lecture and a 1 hour tutorial')).toBe(3)
   })
 })
+
+describe('study periods named after a month', () => {
+  it('reads them by when they actually run', async () => {
+    const { parseAvailability } = await import('../src/engine/handbookPaste')
+    const page = (m: string, from: string, to: string) => `${m} - On Campus\n${m}\nTeaching period\t${from} to ${to}\n`
+    expect(parseAvailability('February - On Campus', page('February', '23 February 2026', '10 May 2026'))).toEqual(['semester-1'])
+    expect(parseAvailability('February - On Campus', page('February', '4 February 2026', '25 February 2026'))).toEqual(['summer'])
+    expect(parseAvailability('July - Off Campus', page('July', '12 July 2026', '22 July 2026'))).toEqual(['winter'])
+    expect(parseAvailability('June - On Campus', page('June', '29 June 2026', '7 August 2026'))).toEqual(['winter'])
+    expect(parseAvailability('November - On Campus', page('November', '24 November 2026', '9 December 2026'))).toEqual(['summer'])
+  })
+})

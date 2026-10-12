@@ -61,7 +61,7 @@ export function parseHandbookPaste(text: string): PasteResult {
     prerequisites: split ? parseRequirement(split.before, 'prerequisites', warnings) : 'unknown',
     corequisites: sections.co || split?.concurrent.length ? parseRequirement(coLines, 'corequisites', warnings) : 'unknown',
     nonAllowed: sections.non ? parseNonAllowed(sections.non) : 'unknown',
-    offerings: sections.avail ? parseAvailability(sections.avail.join('\n')) : 'unknown',
+    offerings: sections.avail ? parseAvailability(sections.avail.join('\n'), text) : 'unknown',
     assessment: sections.assess ? parseAssessment(sections.assess, warnings) : 'unknown',
     weeklyContactHours: parseContactHours(text),
     ...parseHeader(text),
@@ -315,8 +315,28 @@ function parseNonAllowed(lines: string[]): string[] {
 }
 
 /** Reads teaching periods from availability text such as "Semester 1 - On Campus". */
-export function parseAvailability(text: string): Period[] | 'unknown' {
+const MONTHS = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december']
+
+/**
+ * A study period named after a month ("February - On Campus") is a semester or a short term
+ * depending on when it runs: February that teaches into May is Semester 1, a few weeks in
+ * January–February is summer, June–August is winter, November–December is next summer.
+ */
+function monthPeriod(month: string, page: string): Period {
+  const m = MONTHS.indexOf(month.toLowerCase())
+  const dates = new RegExp(`^${month}\\b[\\s\\S]*?Teaching period\\s+\\d{1,2} (\\w+) \\d{4} to \\d{1,2} (\\w+) \\d{4}`, 'im').exec(page)
+  const end = dates ? MONTHS.indexOf(dates[2]!.toLowerCase()) : -1
+  if (m <= 1) return end >= 3 ? 'semester-1' : 'summer'
+  if (m >= 5 && m <= 7) return end >= 9 ? 'semester-2' : 'winter'
+  if (m >= 10) return 'summer'
+  return m < 5 ? 'semester-1' : 'semester-2'
+}
+
+export function parseAvailability(text: string, page = text): Period[] | 'unknown' {
   const found = new Set<Period>()
+  for (const m of text.matchAll(/^(January|February|March|April|May|June|July|August|September|October|November|December)\b/gim)) {
+    found.add(monthPeriod(m[1]!, page))
+  }
   if (/summer/i.test(text)) found.add('summer')
   if (/semester 1\b/i.test(text)) found.add('semester-1')
   if (/winter/i.test(text)) found.add('winter')

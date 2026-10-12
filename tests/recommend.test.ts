@@ -232,3 +232,24 @@ describe('recommend: two bugs found in review', () => {
     expect(rec?.confidence).toBe('low')
   })
 })
+
+describe('recommend fixes from the code review', () => {
+  it('skips discontinued subjects, uses the better of two marks, and never points to a barred subject', async () => {
+    const { recommend } = await import('../src/engine/recommend')
+    const base = { results: [] as { code: string; mark?: number }[], skills: {}, interests: [] as string[], goal: 'balanced' as const }
+    const gone = dataset([subject({ code: 'AAAA10001', prerequisites: 'none', offerings: 'unknown', discontinued_from: 2020 })])
+    expect(recommend(gone, base, { year: 2026 }).map((r) => r.code)).toEqual([])
+
+    const twice = dataset([subject({ code: 'AAAA10001', prerequisites: 'none' }), subject({ code: 'AAAA20001', prerequisites: 'AAAA10001' })])
+    const rec = recommend(twice, { ...base, results: [{ code: 'AAAA10001', mark: 80 }, { code: 'AAAA10001', mark: 40 }] }, { year: 2026 })
+    expect(rec.find((r) => r.code === 'AAAA20001')?.warnings.some((w) => w.key === 'averagedLow')).toBe(false)
+
+    const barred = dataset([
+      subject({ code: 'AAAA10001', prerequisites: 'none' }),
+      subject({ code: 'CCCC20001', prerequisites: 'none' }),
+      subject({ code: 'BBBB20001', prerequisites: 'AAAA10001', topics: ['machine-learning'], non_allowed: ['CCCC20001'] }),
+    ])
+    const r2 = recommend(barred, { ...base, interests: ['machine-learning'], results: [{ code: 'CCCC20001', mark: 80 }] }, { year: 2026 })
+    expect(r2.find((r) => r.code === 'AAAA10001')?.reasons.some((x) => x.key === 'unlocks')).toBe(false)
+  })
+})

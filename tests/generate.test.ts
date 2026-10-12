@@ -237,7 +237,8 @@ describe('generatePlan with summer- or winter-only compulsory subjects', () => {
   it('adds a summer or winter term for them instead of leaving them out', async () => {
     const { buildDataset } = await import('../scripts/dataset')
     const { dataset: real } = buildDataset('real')
-    for (const major of ['ecosystem-science-forest', 'marine-biology']) {
+    // FRST30001 runs February–May (Semester 1), so the forest major no longer needs one.
+    for (const major of ['marine-biology']) {
       const { plan, unplaced } = generatePlan({
         data: real,
         profile: { results: [], skills: {}, interests: [], goal: 'balanced' },
@@ -252,5 +253,25 @@ describe('generatePlan with summer- or winter-only compulsory subjects', () => {
       expect(short.length, major).toBeGreaterThan(0)
       expect(checkTerms(plan, real).filter((i) => i.severity === 'error'), major).toEqual([])
     }
+  })
+})
+
+describe('generatePlan never takes a graduate route', () => {
+  it('plans Informatics the undergraduate way, with nothing from a master’s degree', async () => {
+    const { buildDataset } = await import('../scripts/dataset')
+    const { dataset: real } = buildDataset('real')
+    const { plan, unplaced } = generatePlan({
+      data: real,
+      profile: { results: [], skills: {}, interests: [], goal: 'balanced' },
+      course: 'B-SCI',
+      courseYear: 2026,
+      major: 'informatics',
+      startYear: 2027,
+      startPeriod: 'semester-1',
+    })
+    const all = plan.terms.flatMap((t) => t.subjects)
+    expect(all.filter((c) => /^[A-Z]{4}9/.test(c))).toEqual([])
+    expect(unplaced.map((u) => u.code)).toEqual([])
+    expect(all).toEqual(expect.arrayContaining(['INFO30005', 'COMP30022']))
   })
 })

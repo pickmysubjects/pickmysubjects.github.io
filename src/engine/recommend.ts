@@ -146,7 +146,9 @@ export function recommend(data: Dataset, profile: Profile, opts: RecommendOption
   const completed = new Set(passedCodes(profile.results))
   const taken = new Set([...completed, ...(opts.planned ?? [])])
   const wam = computeWam(profile.results, data)
-  const marks = new Map(profile.results.filter((r) => r.mark !== undefined).map((r) => [r.code, r.mark as number]))
+  // Taken twice (a fail, then a pass): the better mark says how they now go in it.
+  const marks = new Map<string, number>()
+  for (const r of profile.results) if (r.mark !== undefined) marks.set(r.code, Math.max(r.mark, marks.get(r.code) ?? -1))
   const dependents = buildDependents(data)
   // Non-allowed works both ways, but the Handbook often lists it on one side only.
   const blocked = new Set(
@@ -204,7 +206,7 @@ export function recommend(data: Dataset, profile: Profile, opts: RecommendOption
     // A condition only the student can check (a VCE score) that they said they meet.
     const eligibility = pre.status === 'unknown' && profile.confirmed?.includes(s.code) ? 'ok' : pre.status
 
-    const rec = score(s, { profile, data, wam, marks, dependents, eligibility, unmet: pre.unmet, ratingMean, taken })
+    const rec = score(s, { profile, data, wam, marks, dependents, eligibility, unmet: pre.unmet, ratingMean, taken, blocked })
     // A fail on My page: this would be a retake, which the student should know before adding it.
     const failed = marks.get(s.code)
     if (failed !== undefined && failed < PASS_MARK) rec.warnings.unshift(note('retake', { mark: failed }, `You got ${failed} last time: this would be a retake.`))
@@ -260,6 +262,8 @@ interface ScoreCtx {
   ratingMean: number
   /** Passed or planned: not worth pointing to as "opens up". */
   taken: Set<string>
+  /** Can't be taken alongside something passed or planned: not worth pointing to either. */
+  blocked: Set<string>
 }
 
 function note(key: string, params: Params, text: string): Note {
@@ -462,7 +466,9 @@ function pathTo(code: string, interests: string[], ctx: ScoreCtx): { steps: numb
     frontier = frontier.flatMap((c) => ctx.dependents.get(c) ?? []).filter((c) => !seen.has(c) && seen.add(c))
     const hits = frontier.filter((c) => {
       const next = ctx.data.subjects[c]
-      return !ctx.taken.has(c) && next !== undefined && topicsOf(next).specific.some((t) => interests.includes(t))
+      if (!next || ctx.taken.has(c) || ctx.blocked.has(c)) return false
+      if (next.nonAllowed !== 'unknown' && next.nonAllowed.some((x) => ctx.taken.has(x))) return false
+      return topicsOf(next).specific.some((t) => interests.includes(t))
     })
     if (hits.length) return { steps, codes: hits }
     if (frontier.length === 0) break
@@ -497,6 +503,7 @@ function clamp(x: number): number {
 
 /** Known to run in this year or the next few; unknown timetables get the benefit of the doubt. */
 function runsSoon(s: Subject, year: number): boolean {
+  if (s.discontinuedFrom !== undefined && year >= s.discontinuedFrom) return false
   if (s.offerings === 'unknown') return true
   for (let d = 0; d < RUN_HORIZON_YEARS; d++) if (periodsFor(s, year + d).length > 0) return true
   return false

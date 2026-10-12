@@ -54,6 +54,9 @@ export function evaluate(expr: ReqExpr, ctx: EvalContext): EvalResult {
 /** Course codes in a free-text admission condition ("Admission into … B-SCIEXT …"), else none. */
 export function admissionCourses(text: string): string[] {
   if (!/^\s*admission (?:in)?to\b/i.test(text)) return []
+  // "… selection of the Biomedical Engineering Systems major in the B-SCI": being in the course
+  // isn't enough, so it isn't a plain course list (the student's major decides; left unknown).
+  if (/\bmajor\b|\bspeciali[sz]ation\b|\bselection of\b/i.test(text)) return []
   return [...new Set(text.match(/\b(?:MC|B|D|GD)-[A-Z]{2,}\b/g) ?? [])]
 }
 
@@ -147,7 +150,8 @@ export function simplifyFor(field: ReqField, course: string): ReqField {
   const MET = 'met' as const
   const walk = (e: ReqExpr): ReqExpr | typeof MET | null => {
     if ('admission' in e) return e.admission === course ? MET : null
-    if ('manual' in e) return OTHER_COURSE_TEXT.test(e.manual) && !e.manual.includes(course) ? null : e
+    // A course code as a whole word: "B-SCI" isn't in "B-SCIEXT".
+    if ('manual' in e) return OTHER_COURSE_TEXT.test(e.manual) && !new RegExp(`\\b${course}\\b`).test(e.manual) ? null : e
     if ('any' in e) {
       const kept = e.any.map(walk)
       if (kept.includes(MET)) return MET

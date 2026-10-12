@@ -23,6 +23,10 @@ const top = computed(() =>
     planned: plan.plannedCodes.value,
     // Same list as the For-you page that "see more" opens.
     maxLevel: yearLevel(profile.value.results, data.value),
+    programme: {
+      courseYear: plan.setup.value.courseYear,
+      components: [plan.setup.value.major, plan.setup.value.specialisation].filter(Boolean),
+    },
     limit: 3,
   }),
 )

@@ -165,15 +165,29 @@ function buildPlan(input: GenerateInput): GenerateResult {
   // A subject swapped out for a lighter one was only one way to meet a requirement; the swap is
   // checked to keep every requirement met, so it isn't "left out" any more.
   const replaced = new Set<string>()
+  const swappedTo = new Map<string, string>()
   for (const { a, b, kind } of fixHeavyTerms(draft, data, input.profile)) {
-    if (kind === 'replace') replaced.add(a)
+    if (kind === 'replace') {
+      replaced.add(a)
+      swappedTo.set(a, b)
+    }
     if (kind === 'swap') notes.push(note('balanced', { a, b }, `Swapped ${a} and ${b} between semesters to spread the load.`))
     else notes.push(note('lighter', { a, b }, `Took ${b} instead of ${a}, which would have made that semester heavy.`))
   }
-  // Keep "added in …" notes true to where each subject now sits.
+  // Keep "added in …" notes true to where each subject now sits, and to what replaced it.
   for (const n of notes) {
+    if (n.key === 'added' && typeof n.params.code === 'string') {
+      const now = swappedTo.get(n.params.code)
+      if (now) {
+        n.text = n.text.replace(n.params.code, now)
+        n.params.code = now
+      }
+    }
     const where = typeof n.params.code === 'string' && 'year' in n.params ? terms.find((t) => t.subjects.includes(n.params.code as string)) : undefined
-    if (where) Object.assign(n.params, { year: where.year, period: where.period })
+    if (!where) continue
+    const was = `${n.params.year} ${n.params.period}`
+    Object.assign(n.params, { year: where.year, period: where.period })
+    n.text = n.text.replace(was, `${where.year} ${where.period}`)
   }
   const placed = allPlaced()
 
@@ -314,7 +328,7 @@ function resolvePrereqs(expr: ReqExpr, done: Set<string>, required: Set<string>,
     const cost = (o: string[]) =>
       o.reduce(
         (sum, c) =>
-          sum + (required.has(c) ? 0 : clashes(c, done, required, data) || closedTo(c, course, data) ? 10_000 : data.subjects[c] ? (semesterless(data.subjects[c]!) ? 20 : 1) : 100),
+          sum + (required.has(c) ? 0 : clashes(c, done, required, data) || closedTo(c, course, data) ? 10_000 : !data.subjects[c] || needsMissing(c, data) ? 100 : semesterless(data.subjects[c]!) ? 20 : 1),
         0,
       )
     let best: string[] | null = null
@@ -353,6 +367,10 @@ function needsFirst(code: string, target: string, data: Dataset, depth = 4): boo
 /** Would adding this subject break a non-allowed pair with one already completed or required? */
 function needsOtherAdmission(e: ReqExpr, course: string): boolean {
   if ('admission' in e) return e.admission !== course
+  // "Admission into … Master of IT" written out: a graduate route, not one for this student.
+  if ('manual' in e) return /\badmission into|\bselection of\b/i.test(e.manual) && !new RegExp(`\\b${course}\\b`).test(e.manual)
+  // A graduate subject (COMP90038) is never an undergraduate's way in.
+  if ('subject' in e) return /^[A-Z]{4}9/.test(e.subject)
   if ('all' in e) return e.all.some((x) => needsOtherAdmission(x, course))
   if ('any' in e) return e.any.every((x) => needsOtherAdmission(x, course))
   return false
@@ -370,6 +388,14 @@ function semesterless(s: Subject): boolean {
   return periods.length > 0 && !periods.some((p) => p === 'semester-1' || p === 'semester-2')
 }
 
+/** Its prerequisites can only be met through a subject we have no data for (AGRI10046 needs AGRI10045). */
+function needsMissing(code: string, data: Dataset): boolean {
+  const s = data.subjects[code]
+  if (!s || s.prerequisites === 'none' || s.prerequisites === 'unknown') return false
+  const known = new Set(Object.keys(data.subjects).filter((c) => c !== code))
+  return evaluateField(s.prerequisites, { completed: known, subjects: data.subjects }).status === 'fail'
+}
+
 function closedTo(code: string, course: string, data: Dataset): boolean {
   const s = data.subjects[code]
   if (!s || s.prerequisites === 'none' || s.prerequisites === 'unknown') return false
@@ -377,7 +403,9 @@ function closedTo(code: string, course: string, data: Dataset): boolean {
   closedCache.set(data, cache)
   const key = `${course}:${code}`
   if (!cache.has(key)) {
-    const everything = new Set(Object.keys(data.subjects).filter((c) => c !== code))
+    // Everything counts as done, including prerequisites we have no file for: only a condition
+    // no subject can meet (admission to another course) closes it.
+    const everything = new Set([...Object.keys(data.subjects), ...referencedSubjects(s.prerequisites)].filter((c) => c !== code))
     cache.set(key, evaluateField(s.prerequisites, { completed: everything, subjects: data.subjects, admittedCourse: course }).status === 'fail')
   }
   return cache.get(key) as boolean
