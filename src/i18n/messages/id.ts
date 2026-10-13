@@ -497,6 +497,7 @@ export const id: Messages = {
     hours: 'Jam per minggu, termasuk di luar kelas',
     grade: 'Nilaimu (opsional)',
     gradeNone: 'Tidak ingin menyebutkan',
+    wamBandNote: "Rentang WAM-mu tanpa mata kuliah ini ({range}) dikirim bersama tingkat nilai. Nilai angkamu tidak dikirim.",
     skills: 'Keterampilan apa yang dipakai?',
     recommend: 'Apakah kamu merekomendasikannya?',
     yes: 'Ya',

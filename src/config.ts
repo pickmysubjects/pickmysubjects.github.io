@@ -37,6 +37,7 @@ export type RatingField =
   | 'usefulness'
   | 'interest'
   | 'teaching'
+  | 'wamBand'
 
 export const RATINGS_FORM: GoogleFormConfig<RatingField> = {
   formId: '1FAIpQLSfJcmsShsJlO8jOqAun_X4NksYJ2O0D8Vi0AVJJ5dwzoNzcRw',
@@ -58,8 +59,10 @@ export const RATINGS_FORM: GoogleFormConfig<RatingField> = {
     usefulness: 'entry.934824621',
     interest: 'entry.2052097651',
     teaching: 'entry.1490820390',
+    // "WAM range without this subject", added with addWamRangeQuestion(); sent only with a grade band.
+    wamBand: '',
   },
-  optional: ['examDifficulty', 'usefulness', 'interest', 'teaching'],
+  optional: ['examDifficulty', 'usefulness', 'interest', 'teaching', 'wamBand'],
 }
 
 export type FeedbackField = 'topic' | 'rating' | 'subject' | 'message' | 'contact' | 'language'
@@ -74,23 +77,4 @@ export const FEEDBACK_FORM: GoogleFormConfig<FeedbackField> = {
     contact: 'entry.1242842527',
     language: 'entry.136711737',
   },
-}
-
-export type GradeField = 'code' | 'year' | 'band' | 'wamBand' | 'language'
-
-/**
- * Shared grade bands (see docs/ratings-setup.md, "Grade bands"). Empty until the form is made;
- * the app hides the sharing card until then. Never carries a mark, only its band and the range of
- * the sharer's WAM without that subject.
- */
-export const GRADES_FORM: GoogleFormConfig<GradeField> = {
-  formId: '',
-  entries: {
-    code: '',
-    year: '',
-    band: '',
-    wamBand: '',
-    language: '',
-  },
-  optional: ['year', 'language'],
 }

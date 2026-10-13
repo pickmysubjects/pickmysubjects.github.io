@@ -497,6 +497,7 @@ export const ms: Messages = {
     hours: 'Jam seminggu, termasuk di luar kelas',
     grade: 'Gred anda (pilihan)',
     gradeNone: 'Tidak mahu beritahu',
+    wamBandNote: "Julat WAM anda tanpa subjek ini ({range}) dihantar bersama gred. Markah anda tidak dihantar.",
     skills: 'Kemahiran apa yang digunakan?',
     recommend: 'Adakah anda mengesyorkannya?',
     yes: 'Ya',

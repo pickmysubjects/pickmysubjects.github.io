@@ -500,6 +500,7 @@ export const en = {
     hours: 'Hours per week, including outside class',
     grade: 'Your grade (optional)',
     gradeNone: 'Prefer not to say',
+    wamBandNote: "Your WAM range without this subject ({range}) is sent with the grade band, never your marks.",
     skills: 'Which skills did it use?',
     recommend: 'Would you recommend it?',
     yes: 'Yes',

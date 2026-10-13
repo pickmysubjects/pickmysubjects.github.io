@@ -2,8 +2,8 @@
  * Daily job (GitHub Actions): read the private ratings sheet with a read-only
  * service account, aggregate, and write data/real/ratings.json.
  *
- * Env (GitHub secrets): GOOGLE_SERVICE_ACCOUNT_JSON, RATINGS_SHEET_ID, and optionally
- * GRADES_SHEET_ID (shared grade bands → data/real/grade-offsets.json).
+ * Env (GitHub secrets): GOOGLE_SERVICE_ACCOUNT_JSON, RATINGS_SHEET_ID. Grade bands sent with a
+ * WAM range in the same sheet also give data/real/grade-offsets.json.
  * If they are missing, it exits quietly so CI stays green before setup.
  */
 import { createSign } from 'node:crypto'
@@ -74,15 +74,13 @@ const result = aggregate(rowsToObjects(values), new Date(), known)
 writeFileSync(join(ROOT, 'data', 'real', 'ratings.json'), `${JSON.stringify(result.subjects, null, 2)}\n`)
 console.log(`Ratings: ${result.accepted} accepted, ${result.rejected} rejected, ${Object.keys(result.subjects).length} subjects.`)
 
-// Shared grade bands: only per-subject offsets from 5+ shares are written; rows never are.
-const gradesSheet = process.env.GRADES_SHEET_ID
-if (gradesSheet) {
-  const rows = rowsToObjects(await readSheet(gradesSheet)).map((r) => ({
-    code: r['Subject code'] ?? '',
-    band: r['Grade band'] ?? '',
-    wamBand: r['WAM range without this subject'] ?? '',
-  }))
-  const offsets = gradeOffsets(rows, known)
-  writeFileSync(join(ROOT, 'data', 'real', 'grade-offsets.json'), `${JSON.stringify(offsets, null, 2)}\n`)
-  console.log(`Grade bands: ${rows.length} rows, ${Object.keys(offsets).length} subjects with 5+ shares.`)
-}
+// Grade bands sent with a WAM range (from a rating or the My page card): only per-subject offsets
+// from 5+ of them are written; rows never are.
+const graded = rowsToObjects(values).map((r) => ({
+  code: r['Subject code'] ?? '',
+  band: r['Grade band'] ?? '',
+  wamBand: r['WAM range without this subject'] ?? '',
+}))
+const offsets = gradeOffsets(graded, known)
+writeFileSync(join(ROOT, 'data', 'real', 'grade-offsets.json'), `${JSON.stringify(offsets, null, 2)}\n`)
+console.log(`Grade bands: ${Object.keys(offsets).length} subjects with 5+ shares.`)

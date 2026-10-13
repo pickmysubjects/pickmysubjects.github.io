@@ -497,6 +497,7 @@ export const ja: Messages = {
     hours: '週あたりの時間（授業外も含む）',
     grade: '成績（任意）',
     gradeNone: '答えたくない',
+    wamBandNote: "成績区分と一緒に、この科目を除いた WAM の範囲（{range}）を送ります。点数は送りません。",
     skills: 'どんなスキルを使いましたか？',
     recommend: 'おすすめしますか？',
     yes: 'はい',

@@ -130,32 +130,15 @@ function setOptional(form, titles) {
   });
 }
 
-// ---------- Later addition: shared grade bands ----------
-// Run createGradesForm once. It makes the form and a private sheet, then logs:
-// - the pre-filled link: copy the formId and each entry.<number> into GRADES_FORM in src/config.ts;
-// - the sheet id: add it as the GRADES_SHEET_ID secret in GitHub, and share the sheet (read-only)
-//   with the same service account that reads the ratings sheet.
-// The app sends only a band and a five-point WAM range per subject, never a mark.
-function createGradesForm() {
-  const form = FormApp.create('PickMySubjects – Grade bands');
-  setup(form, 'Anonymous grade bands for PickMySubjects, an unofficial student tool. One subject per response.');
-  const g = {
-    code: form.addTextItem().setTitle('Subject code').setRequired(true),
-    year: form.addTextItem().setTitle('Year taken'),
-    band: form.addListItem().setTitle('Grade band').setRequired(true)
-      .setChoiceValues(['H1', 'H2A', 'H2B', 'H3', 'P', 'N']),
-    wamBand: form.addTextItem().setTitle('WAM range without this subject').setRequired(true),
-    language: form.addTextItem().setTitle('App language'),
-  };
-  const sheet = SpreadsheetApp.create('PickMySubjects – grade bands (private)');
-  form.setDestination(FormApp.DestinationType.SPREADSHEET, sheet.getId());
-  const link = form.createResponse()
-    .withItemResponse(g.code.createResponse('COMP10001'))
-    .withItemResponse(g.year.createResponse('2026'))
-    .withItemResponse(g.band.createResponse('H1'))
-    .withItemResponse(g.wamBand.createResponse('70–74'))
-    .withItemResponse(g.language.createResponse('en'))
-    .toPrefilledUrl();
-  Logger.log('Grade bands pre-filled link (for src/config.ts): ' + link);
-  Logger.log('Grade bands sheet id (GitHub secret GRADES_SHEET_ID; keep the sheet private): ' + sheet.getId());
+// ---------- Later addition: WAM range with a grade band ----------
+// Paste the ratings form's edit link into RATINGS_FORM_EDIT_URL above, then run addWamRangeQuestion
+// once. It adds one optional question and logs its entry id: copy it into `wamBand` in RATINGS_FORM
+// (src/config.ts). The app fills it in only alongside a grade band, never with a mark.
+function addWamRangeQuestion() {
+  const form = FormApp.openByUrl(RATINGS_FORM_EDIT_URL);
+  const title = 'WAM range without this subject';
+  const existing = form.getItems().filter(function (i) { return i.getTitle() === title; })[0];
+  const item = existing ? existing.asTextItem() : form.addTextItem().setTitle(title);
+  const link = form.createResponse().withItemResponse(item.createResponse('70–74')).toPrefilledUrl();
+  Logger.log('WAM range question pre-filled link (the entry.<number> goes into wamBand): ' + link);
 }

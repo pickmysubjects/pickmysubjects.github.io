@@ -4,6 +4,7 @@ import { RATINGS_FORM } from '@/config'
 import { SKILLS, type Period, type Skill } from '@/engine'
 import { useI18n } from '@/i18n'
 import { hasQuestion, isFormReady, submitGoogleForm } from '@/utils/googleForm'
+import { useGradeShare } from '@/composables/useGradeShare'
 
 const props = defineProps<{ code: string }>()
 const emit = defineEmits<{ done: [sent: boolean] }>()
@@ -26,14 +27,20 @@ const skills = shallowRef<Skill[]>([])
 const recommend = shallowRef('')
 const wish = shallowRef('')
 const status = shallowRef<'idle' | 'sending' | 'failed'>('idle')
+// With a grade band, the student's WAM range without this subject goes too (when the form has the
+// question and My page has enough other marks): that's what makes a band comparable across students.
+const { wamBandFor, markShared } = useGradeShare()
+const wamBand = computed(() => (hasQuestion(RATINGS_FORM, 'wamBand') && BANDS.includes(grade.value) ? wamBandFor(props.code) : null))
 
+const BANDS = ['H1', 'H2A', 'H2B', 'H3', 'P', 'N']
 const ready = computed(() => isFormReady(RATINGS_FORM))
 const complete = computed(
   () =>
     [difficulty, workload, generosity, examDifficulty, usefulness, interest, teaching].some((r) => r.value !== null) ||
     hours.value !== '' ||
     skills.value.length > 0 ||
-    recommend.value !== '',
+    recommend.value !== '' ||
+    BANDS.includes(grade.value),
 )
 const periods: Period[] = ['summer', 'semester-1', 'winter', 'semester-2']
 // Option labels as typed in the Google Form (English), independent of the UI language.
@@ -79,11 +86,13 @@ async function send(): Promise<void> {
       teaching: asText(teaching.value),
       hours: hours.value === '' ? '' : String(hours.value),
       grade: grade.value,
+      wamBand: wamBand.value ?? '',
       skills: skills.value,
       recommend: recommend.value,
       wish: wish.value.trim(),
       language: locale.value,
     })
+    if (wamBand.value) markShared([props.code])
     emit('done', true)
   } catch {
     status.value = 'failed'
@@ -99,30 +108,9 @@ function value(event: Event): string {
   <form class="rate surface" @submit.prevent="send">
     <h3 class="rate-title">{{ t('rating.title', { code }) }}</h3>
     <p class="rate-intro">{{ t('rating.intro') }}</p>
-    <p class="rate-required">{{ t('rating.allOptional') }}</p>
     <p v-if="!ready" class="rate-off">{{ t('rating.notReady') }}</p>
     <template v-else>
-      <div class="rate-row">
-        <label class="field">
-          {{ t('rating.year') }}
-          <input
-            class="input"
-            type="number"
-            :min="2010"
-            :max="thisYear"
-            :value="year"
-            @change="year = value($event) === '' ? '' : Number(value($event))"
-          />
-        </label>
-        <label class="field">
-          {{ t('rating.semester') }}
-          <select class="select" :value="semester" @change="semester = value($event) as Period | ''">
-            <option v-for="p in periods" :key="p" :value="p">{{ t(`period.${p}`) }}</option>
-            <option value="">{{ t('rating.notSure') }}</option>
-          </select>
-        </label>
-      </div>
-
+      <!-- The four that matter most, a tap each; everything else is folded away. -->
       <fieldset v-for="s in scales" :key="s.key" class="scale">
         <legend class="field">{{ t(`rating.${s.key}`) }}</legend>
         <span class="scale-end">{{ t(s.low) }}</span>
@@ -133,67 +121,85 @@ function value(event: Event): string {
         <span class="scale-end">{{ t(s.high) }}</span>
       </fieldset>
 
-      <details v-if="extras.length" class="rate-more">
+      <fieldset class="chips-field">
+        <legend class="field">{{ t('rating.grade') }}</legend>
+        <button v-for="g in BANDS" :key="g" type="button" class="chip" :aria-pressed="grade === g" @click="grade = grade === g ? '' : g">{{ g }}</button>
+        <p v-if="wamBand" class="rate-note">{{ t('rating.wamBandNote', { range: wamBand }) }}</p>
+      </fieldset>
+
+      <details class="rate-more">
         <summary class="rate-more-summary">{{ t('rating.more') }}</summary>
-        <fieldset v-for="s in extras" :key="s.key" class="scale">
-          <legend class="field">{{ t(`rating.${s.key}`) }}</legend>
-          <span class="scale-end">{{ t(s.low) }}</span>
-          <label v-for="n in 5" :key="n" class="scale-option">
-            <input type="radio" :name="`${code}-${s.key}`" :value="n" :checked="s.model.value === n" @change="s.model.value = n" />
-            {{ n }}
+        <div class="rate-more-body">
+          <div class="rate-row">
+            <label class="field">
+              {{ t('rating.year') }}
+              <input
+                class="input"
+                type="number"
+                :min="2010"
+                :max="thisYear"
+                :value="year"
+                @change="year = value($event) === '' ? '' : Number(value($event))"
+              />
+            </label>
+            <label class="field">
+              {{ t('rating.semester') }}
+              <select class="select" :value="semester" @change="semester = value($event) as Period | ''">
+                <option v-for="p in periods" :key="p" :value="p">{{ t(`period.${p}`) }}</option>
+                <option value="">{{ t('rating.notSure') }}</option>
+              </select>
+            </label>
+            <label class="field">
+              {{ t('rating.hours') }}
+              <input v-model="hours" class="input" type="number" min="0" max="60" />
+            </label>
+          </div>
+
+          <fieldset v-for="s in extras" :key="s.key" class="scale">
+            <legend class="field">{{ t(`rating.${s.key}`) }}</legend>
+            <span class="scale-end">{{ t(s.low) }}</span>
+            <label v-for="n in 5" :key="n" class="scale-option">
+              <input type="radio" :name="`${code}-${s.key}`" :value="n" :checked="s.model.value === n" @change="s.model.value = n" />
+              {{ n }}
+            </label>
+            <span class="scale-end">{{ t(s.high) }}</span>
+          </fieldset>
+
+          <fieldset class="chips-field">
+            <legend class="field">{{ t('rating.recommend') }}</legend>
+            <button
+              v-for="r in ['Yes', 'Maybe', 'No']"
+              :key="r"
+              type="button"
+              class="chip"
+              :aria-pressed="recommend === r"
+              @click="recommend = recommend === r ? '' : r"
+            >
+              {{ t(`rating.${r.toLowerCase()}`) }}
+            </button>
+          </fieldset>
+
+          <fieldset class="chips-field">
+            <legend class="field">{{ t('rating.skills') }}</legend>
+            <button
+              v-for="sk in SKILLS"
+              :key="sk"
+              type="button"
+              class="chip"
+              :aria-pressed="skills.includes(sk)"
+              @click="toggleSkill(sk)"
+            >
+              {{ t(`skill.${sk}`) }}
+            </button>
+          </fieldset>
+
+          <label class="field">
+            {{ t('rating.wish') }}
+            <textarea v-model="wish" class="textarea" rows="3" maxlength="1000" />
+            <span class="hint">{{ t('rating.wishHint') }}</span>
           </label>
-          <span class="scale-end">{{ t(s.high) }}</span>
-        </fieldset>
+        </div>
       </details>
-
-      <div class="rate-row">
-        <label class="field">
-          {{ t('rating.hours') }}
-          <input v-model="hours" class="input" type="number" min="0" max="60" />
-        </label>
-        <label class="field">
-          {{ t('rating.grade') }}
-          <select v-model="grade" class="select">
-            <option value="">—</option>
-            <option v-for="g in ['H1', 'H2A', 'H2B', 'H3', 'P', 'N']" :key="g" :value="g">{{ g }}</option>
-            <option value="Prefer not to say">{{ t('rating.gradeNone') }}</option>
-          </select>
-        </label>
-      </div>
-
-      <fieldset class="chips-field">
-        <legend class="field">{{ t('rating.skills') }}</legend>
-        <button
-          v-for="s in SKILLS"
-          :key="s"
-          type="button"
-          class="chip"
-          :aria-pressed="skills.includes(s)"
-          @click="toggleSkill(s)"
-        >
-          {{ t(`skill.${s}`) }}
-        </button>
-      </fieldset>
-
-      <fieldset class="chips-field">
-        <legend class="field">{{ t('rating.recommend') }}</legend>
-        <button
-          v-for="r in ['Yes', 'Maybe', 'No']"
-          :key="r"
-          type="button"
-          class="chip"
-          :aria-pressed="recommend === r"
-          @click="recommend = recommend === r ? '' : r"
-        >
-          {{ t(`rating.${r.toLowerCase()}`) }}
-        </button>
-      </fieldset>
-
-      <label class="field">
-        {{ t('rating.wish') }}
-        <textarea v-model="wish" class="textarea" rows="3" maxlength="1000" />
-        <span class="hint">{{ t('rating.wishHint') }}</span>
-      </label>
 
       <p v-if="status === 'failed'" class="rate-failed" role="alert">{{ t('rating.failed') }}</p>
     </template>
@@ -332,12 +338,6 @@ function value(event: Event): string {
   gap: 8px;
 }
 
-.rate-required {
-  padding: 8px 12px;
-  border-radius: var(--radius-sm);
-  background: var(--surface-2);
-  font-size: 0.875rem;
-}
 
 .rate-need {
   font-size: 0.875rem;
@@ -347,6 +347,53 @@ function value(event: Event): string {
 @media (max-width: 640px) {
   .rate-row {
     grid-template-columns: 1fr;
+  }
+}
+.rate-note {
+  grid-column: 1 / -1;
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
+}
+.rate-more-body {
+  display: grid;
+  gap: 14px;
+  margin-top: 12px;
+}
+
+/* Phones: the five choices on one line, with the two end labels above them. */
+@media (max-width: 560px) {
+  .scale {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 6px;
+  }
+
+  .scale legend {
+    grid-column: 1 / -1;
+  }
+
+  .scale-end {
+    grid-row: 2;
+  }
+
+  .scale-end:first-of-type {
+    grid-column: 1 / 3;
+  }
+
+  .scale-end:last-of-type {
+    grid-column: 4 / 6;
+    text-align: right;
+  }
+
+  .scale-option {
+    grid-row: 3;
+    justify-content: center;
+    padding: 6px 0;
+  }
+
+  .scale-option input {
+    display: none;
   }
 }
 </style>

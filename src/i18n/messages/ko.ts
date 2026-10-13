@@ -497,6 +497,7 @@ export const ko: Messages = {
     hours: '주당 시간 (수업 외 포함)',
     grade: '내 성적 (선택)',
     gradeNone: '밝히고 싶지 않음',
+    wamBandNote: "성적 등급과 함께 이 과목을 뺀 WAM 구간({range})이 전송돼요. 점수는 보내지 않아요.",
     skills: '어떤 기술을 썼나요?',
     recommend: '추천하나요?',
     yes: '예',

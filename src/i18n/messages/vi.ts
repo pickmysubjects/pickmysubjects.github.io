@@ -497,6 +497,7 @@ export const vi: Messages = {
     hours: 'Số giờ mỗi tuần, kể cả ngoài giờ học',
     grade: 'Điểm của bạn (không bắt buộc)',
     gradeNone: 'Không muốn nói',
+    wamBandNote: "Cùng với mức điểm, khoảng WAM của bạn khi không tính môn này ({range}) sẽ được gửi. Điểm số không được gửi.",
     skills: 'Môn này dùng những kỹ năng nào?',
     recommend: 'Bạn có giới thiệu môn này không?',
     yes: 'Có',

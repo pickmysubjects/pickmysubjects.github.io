@@ -497,6 +497,7 @@ export const zhCN: Messages = {
     hours: '每周花多少小时（包括课外）',
     grade: '你的成绩（可选）',
     gradeNone: '不想透露',
+    wamBandNote: "会和成绩等级一起发送：不算这门课时你的 WAM 区间（{range}）。不会发送具体分数。",
     skills: '用到了哪些技能？',
     recommend: '你会推荐这门课吗？',
     yes: '会',

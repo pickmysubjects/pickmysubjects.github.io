@@ -1,39 +1,19 @@
 <script setup lang="ts">
-import { computed, shallowRef, watch } from 'vue'
+import { shallowRef, watch } from 'vue'
 import { Check, Send } from 'lucide-vue-next'
-import { GRADES_FORM } from '@/config'
-import { bandOf, computeWam, wamBandOf } from '@/engine'
+import { RATINGS_FORM } from '@/config'
 import { link } from '@/composables/useView'
-import { useDataset } from '@/composables/useDataset'
-import { usePersisted } from '@/composables/usePersisted'
-import { useProfile } from '@/composables/useProfile'
-import { isFormReady, submitGoogleForm } from '@/utils/googleForm'
-import { cleanRated } from '@/utils/sanitize'
+import { useGradeShare } from '@/composables/useGradeShare'
+import { submitGoogleForm } from '@/utils/googleForm'
 import { useI18n } from '@/i18n'
 
 /**
- * Optional and anonymous: share the grade band of subjects already on My page, so the site can
- * learn how each subject grades. Nothing is sent until the student ticks subjects and presses send;
- * each subject goes as its own response, so no one's subjects can be linked together.
+ * Optional and anonymous: share the grade band of subjects already on My page through the same
+ * form as subject ratings, so the site learns how each subject grades. Nothing is sent until the
+ * student ticks subjects and presses send; each subject goes as its own response.
  */
-const { profile } = useProfile()
-const { data } = useDataset()
 const { t, locale } = useI18n()
-const shared = usePersisted<string[]>('sc:gradesShared', [], cleanRated)
-const ready = isFormReady(GRADES_FORM)
-
-// A band only means something next to the student's level: their WAM without that subject,
-// which needs a few other marks.
-const MIN_OTHER_MARKS = 3
-const rows = computed(() =>
-  profile.value.results
-    .filter((r) => r.mark !== undefined && data.value.subjects[r.code] && !shared.value.includes(r.code))
-    .flatMap((r) => {
-      const others = profile.value.results.filter((x) => x.code !== r.code && x.mark !== undefined)
-      const wam = others.length >= MIN_OTHER_MARKS ? computeWam(others, data.value) : null
-      return wam === null ? [] : [{ code: r.code, year: r.year, band: bandOf(r.mark!), wamBand: wamBandOf(wam) }]
-    }),
-)
+const { ready, shared, shareable: rows, markShared } = useGradeShare()
 const picked = shallowRef<string[]>([])
 watch(rows, (rs) => (picked.value = rs.map((r) => r.code)), { immediate: true })
 const status = shallowRef<'idle' | 'sending' | 'sent' | 'failed'>('idle')
@@ -47,14 +27,14 @@ async function send(): Promise<void> {
   const sent: string[] = []
   try {
     for (const r of rows.value.filter((x) => picked.value.includes(x.code))) {
-      await submitGoogleForm(GRADES_FORM, { code: r.code, year: r.year ? String(r.year) : '', band: r.band, wamBand: r.wamBand, language: locale.value })
+      await submitGoogleForm(RATINGS_FORM, { code: r.code, year: r.year ? String(r.year) : '', grade: r.band, wamBand: r.wamBand, language: locale.value })
       sent.push(r.code)
     }
     status.value = 'sent'
   } catch {
     status.value = 'failed'
   } finally {
-    shared.value = [...new Set([...shared.value, ...sent])]
+    markShared(sent)
   }
 }
 </script>

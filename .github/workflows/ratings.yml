@@ -25,7 +25,6 @@ jobs:
         env:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
           RATINGS_SHEET_ID: ${{ secrets.RATINGS_SHEET_ID }}
-          GRADES_SHEET_ID: ${{ secrets.GRADES_SHEET_ID }}
       - name: Validate data
         run: npm run data
       - name: Commit if changed

@@ -76,22 +76,20 @@ Until this is done, the app shows "Ratings aren't switched on yet" instead of th
 
 Each one is published only once at least 3 people have answered it.
 
-## Grade bands (optional sharing on My page)
+## Grade bands with a WAM range
 
-Students can share the grade band of subjects already on My page, so the site learns how each
-subject grades next to its students' own level. Each subject is a separate response with only:
-subject code, year, band (H1–N) and the five-point range of the sharer's WAM without that subject.
-Marks never leave the browser, and nothing links one person's subjects together.
+A grade band says how hard a subject grades only next to how strong the student is. So when a
+student picks a grade band in a rating, or shares bands from the card on My page, the app also
+sends the five-point range of their WAM without that subject (if My page has 3+ other marks). It
+goes in the same ratings form, as one extra optional question. Marks never leave the browser.
 
-1. In the Apps Script project, run `createGradesForm` once (scripts/google/create-forms.gs).
-2. From the logged pre-filled link, copy the formId and the five `entry.<number>` values into
-   `GRADES_FORM` in `src/config.ts`. Until then the sharing card stays hidden.
-3. Share the new sheet read-only with the service account that reads the ratings sheet, and add
-   its id as the `GRADES_SHEET_ID` secret in GitHub. Keep the sheet private.
+1. In the Apps Script project, set `RATINGS_FORM_EDIT_URL` and run `addWamRangeQuestion` once.
+2. Copy the logged `entry.<number>` into `wamBand` in `RATINGS_FORM` (`src/config.ts`). Until then
+   ratings work as before and the My page card stays hidden.
 
-The weekly job then writes `data/real/grade-offsets.json`: for each subject with at least 5 shares,
-how far grades sit above or below the sharers' WAM, shrunk toward 0 when few have shared. Rows are
-never published. The likely-mark estimate and "ease" use it from then on.
+The weekly job also writes `data/real/grade-offsets.json`: for each subject with at least 5 bands
+that carry a WAM range, how far grades sit above or below the sharers' WAM, shrunk toward 0 when
+few have shared. Rows are never published. The likely-mark estimate and "ease" use it.
 
 ## 3. Daily aggregation
 

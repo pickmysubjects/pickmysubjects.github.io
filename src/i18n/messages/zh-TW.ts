@@ -497,6 +497,7 @@ export const zhTW: Messages = {
     hours: '每週花多少小時（包括課外）',
     grade: '你的成績（選填）',
     gradeNone: '不想透露',
+    wamBandNote: "會和成績等級一起傳送：不算這門課時你的 WAM 區間（{range}）。不會傳送具體分數。",
     skills: '用到了哪些技能？',
     recommend: '你會推薦這門課嗎？',
     yes: '會',
