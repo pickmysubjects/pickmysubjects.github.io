@@ -1,0 +1,25 @@
+code: ECON30031
+title: Agriculture, Water & Forestry Economics
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites: ECON20002
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: quiz
+    weight: 20
+  - kind: assignment
+    weight: 20
+  - kind: participation
+    weight: 10
+  - kind: exam
+    weight: 50
+weekly_contact_hours: 4
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/econ30031
+source_year: 2026
+verified_on: 2026-10-14
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

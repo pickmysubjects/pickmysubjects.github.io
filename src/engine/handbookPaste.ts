@@ -342,7 +342,7 @@ function parseBlock(lines: string[], label: string, warnings: string[]): ReqExpr
   if (points) return { points: { min: Number(points[1]), level: Number(points[2]) } }
   // "Completion of 100 credit points of study" / "A minimum of 200 credit points of Undergraduate study".
   // Only points of study in general; "25 points of Level 2 Earth Science" stays for a human.
-  const total = /(?:completion of|completed|a minimum of|at least) (\d+(?:\.\d+)?) (?:credit )?points?(?: of (?:prior |undergraduate )?(?:undergraduate )?study)?(?=[.;]|\s*$|\s+(?:this|students|and)\b)/i.exec(sentence)
+  const total = /(?:completion of|completed|a minimum of|at least) (\d+(?:\.\d+)?) (?:credit )?points?(?: of (?:prior |undergraduate )?(?:undergraduate )?study)?(?:\s*\([^)]*\))?(?=[.;]|\s*$|\s+(?:this|students|and|permission)\b)/i.exec(sentence)
   if (total) {
     const min = { points: { min: Number(total[1]) } }
     // Permission on top, unless it's only the way round the points rule ("… have not completed …").

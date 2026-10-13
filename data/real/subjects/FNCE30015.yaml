@@ -1,0 +1,28 @@
+code: FNCE30015
+title: Behavioural Finance
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites:
+  all:
+    - FNCE10002
+    - ECON10005
+corequisites: FNCE30001
+non_allowed: []
+assessment:
+  - kind: quiz
+    weight: 10
+  - kind: assignment
+    weight: 15
+  - kind: assignment
+    weight: 15
+  - kind: exam
+    weight: 60
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/fnce30015
+source_year: 2026
+verified_on: 2026-10-14
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

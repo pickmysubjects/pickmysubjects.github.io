@@ -1,0 +1,30 @@
+code: ECON30030
+title: Topics in Asian Economic History
+level: 3
+points: 12.5
+offerings: unknown
+prerequisites:
+  all:
+    - all:
+        - ECON20001
+        - ECON20002
+    - any:
+        - ECOM20001
+        - ECON20003
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: presentation
+    weight: 20
+  - kind: test
+    weight: 20
+  - kind: participation
+    weight: 10
+  - kind: exam
+    weight: 50
+    hurdle: true
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/econ30030
+source_year: 2026
+verified_on: 2026-10-14
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

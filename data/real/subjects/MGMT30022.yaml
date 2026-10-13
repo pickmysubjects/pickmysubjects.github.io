@@ -1,0 +1,23 @@
+code: MGMT30022
+title: Business Negotiations
+level: 3
+points: 12.5
+offerings: unknown
+prerequisites: none
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: participation
+    weight: 0
+    hurdle: true
+  - kind: participation
+    weight: 30
+  - kind: assignment
+    weight: 30
+  - kind: exam
+    weight: 40
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/mgmt30022
+source_year: 2026
+verified_on: 2026-10-14
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

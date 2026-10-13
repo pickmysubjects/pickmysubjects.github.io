@@ -95,4 +95,13 @@ describe('per-course rules (B-SCI and B-COM)', () => {
     const issues = checkTerms(plan('B-COM', ['ACCT10002']), data)
     expect(issues.some((i) => i.kind === 'closed-to-course' && i.subject === 'ACCT10002')).toBe(true)
   })
+  it('"not available in 2026" is unknown for later years, not never; the year itself stays no', async () => {
+    const { offeredIn } = await import('../src/engine/availability')
+    const s = data.subjects.ACCT20008!
+    expect(offeredIn(s, 2026, 'semester-1').status).toBe('fail')
+    expect(offeredIn(s, 2027, 'semester-1').status).toBe('unknown')
+    const { plan: p, unplaced } = generatePlan({ data, profile: { results: [], skills: {}, interests: [], goal: 'balanced' }, course: 'B-COM', courseYear: 2026, major: 'accounting', startYear: 2027, startPeriod: 'semester-1' })
+    expect(unplaced).toEqual([])
+    expect(p.terms.flatMap((t) => t.subjects)).toContain('ACCT20008')
+  })
 })

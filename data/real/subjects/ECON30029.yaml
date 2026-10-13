@@ -1,0 +1,26 @@
+code: ECON30029
+title: International Macroeconomics
+level: 3
+points: 12.5
+offerings: unknown
+prerequisites:
+  all:
+    - ECON20001
+    - ECON20002
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: assignment
+    weight: 15
+  - kind: assignment
+    weight: 15
+  - kind: test
+    weight: 20
+  - kind: exam
+    weight: 50
+    hurdle: true
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/econ30029
+source_year: 2026
+verified_on: 2026-10-14
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

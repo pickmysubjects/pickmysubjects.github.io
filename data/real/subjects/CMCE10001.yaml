@@ -1,0 +1,28 @@
+code: CMCE10001
+title: Sustainable Commerce
+level: 1
+points: 12.5
+offerings: unknown
+prerequisites:
+  admission: B-COM
+  note: Admission into the B-COM Bachelor of Commerce
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: quiz
+    weight: 10
+    hurdle: true
+  - kind: assignment
+    weight: 10
+  - kind: assignment
+    weight: 30
+    group: true
+  - kind: assignment
+    weight: 30
+  - kind: assignment
+    weight: 20
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/cmce10001
+source_year: 2026
+verified_on: 2026-10-14
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

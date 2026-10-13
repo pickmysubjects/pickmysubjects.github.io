@@ -1,0 +1,25 @@
+code: MGMT10003
+title: Organisation and Management
+level: 1
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites: none
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: assignment
+    weight: 10
+  - kind: test
+    weight: 10
+  - kind: assignment
+    weight: 30
+  - kind: exam
+    weight: 50
+weekly_contact_hours: 3.5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/mgmt10003
+source_year: 2026
+verified_on: 2026-10-14
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

@@ -155,7 +155,7 @@ export function recommend(raw: Dataset, profile: Profile, opts: RecommendOptions
   // Taken twice (a fail, then a pass): the better mark says how they now go in it.
   const marks = new Map<string, number>()
   for (const r of profile.results) if (r.mark !== undefined) marks.set(r.code, Math.max(r.mark, marks.get(r.code) ?? -1))
-  const dependents = buildDependents(data)
+  const dependents = buildDependents(data, opts.course)
   // Non-allowed works both ways, but the Handbook often lists it on one side only.
   const blocked = new Set(
     [...taken].flatMap((c) => {
@@ -546,11 +546,15 @@ function usefulLater(code: string, dependents: Map<string, string[]>, data: Data
 }
 
 /** code -> subjects whose prerequisites mention it. */
-function buildDependents(data: Dataset): Map<string, string[]> {
+function buildDependents(data: Dataset, course?: string): Map<string, string[]> {
   const map = new Map<string, string[]>()
+  // In a course whose subjects are categorised, one with no category there gives no credit, so
+  // it isn't somewhere this student's subjects lead (FNCE30014 for a science student).
+  const categorised = course !== undefined && Object.values(data.subjects).some((x) => x.categories[course] !== undefined)
   for (const s of Object.values(data.subjects)) {
     // A graduate subject (level 9) isn't somewhere an undergraduate subject leads in this degree.
     if (s.level > 3) continue
+    if (categorised && s.categories[course!] === undefined) continue
     for (const ref of referencedSubjects(s.prerequisites)) {
       map.set(ref, [...(map.get(ref) ?? []), s.code])
     }

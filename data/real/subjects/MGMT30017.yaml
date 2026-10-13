@@ -1,0 +1,29 @@
+code: MGMT30017
+title: Global Management Consulting
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - summer
+prerequisites:
+  all:
+    - points:
+        min: 150
+    - manual: Permission from the Subject Coordinator via a selection process. This subject has quotas and entry into the subject is competitive. Selection is determined via an application process and is contingent on permission from the Subject Coordinator. This subject has special entry requirements including strict application deadlines. See the Global Management Consulting webpage for further information and how to apply. Global Management Consulting Although this is a level-3 subject, high performing students commencing second semester in second year are encouraged to apply.
+corequisites: none
+non_allowed:
+  - MGMT30012
+assessment:
+  - kind: presentation
+    weight: 40
+    group: true
+  - kind: report
+    weight: 40
+    group: true
+  - kind: presentation
+    weight: 20
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/mgmt30017
+source_year: 2026
+verified_on: 2026-10-14
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

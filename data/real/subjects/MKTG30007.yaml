@@ -1,0 +1,45 @@
+code: MKTG30007
+title: Marketing and Society
+level: 3
+points: 12.5
+offerings: unknown
+prerequisites:
+  any:
+    - MKTG10001
+    - MKTG20001
+    - MKTG20006
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: assignment
+    weight: 20
+    group: true
+  - kind: presentation
+    weight: 10
+    group: true
+  - kind: assignment
+    weight: 10
+  - kind: participation
+    weight: 10
+  - kind: exam
+    weight: 50
+    hurdle: true
+breadth_for:
+  - Bachelor of Arts
+  - Bachelor of Biomedicine
+  - Bachelor of Design
+  - Bachelor of Fine Arts (Acting)
+  - Bachelor of Fine Arts (Animation)
+  - Bachelor of Fine Arts (Dance)
+  - Bachelor of Fine Arts (Film and Television)
+  - Bachelor of Fine Arts (Music Theatre)
+  - Bachelor of Fine Arts (Production)
+  - Bachelor of Fine Arts (Screenwriting)
+  - Bachelor of Fine Arts (Theatre)
+  - Bachelor of Fine Arts (Visual Art)
+  - Bachelor of Music
+  - Bachelor of Science
+handbook: https://handbook.unimelb.edu.au/2026/subjects/mktg30007
+source_year: 2026
+verified_on: 2026-10-14
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

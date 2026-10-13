@@ -1,0 +1,29 @@
+code: MKTG30012
+title: Business and Marketing Ethics
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites: none
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: participation
+    weight: 10
+  - kind: report
+    weight: 10
+  - kind: presentation
+    weight: 10
+    group: true
+  - kind: assignment
+    weight: 30
+    group: true
+  - kind: exam
+    weight: 40
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/mktg30012
+source_year: 2026
+verified_on: 2026-10-14
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

@@ -372,6 +372,7 @@ describe('an examination held mid-semester', () => {
 
     it('a points-of-study condition is a points rule, with permission only when it is extra', () => {
       expect(pre('Completion of 100 credit points of study').prerequisites).toEqual({ points: { min: 100 } })
+      expect(pre('Completion of a minimum of 150 credit points of undergraduate study (at the time of application)').prerequisites).toEqual({ points: { min: 150 } })
       const r = pre('Students must obtain written permission to enrol in this subject. Students must have completed at least 100 points of prior study.')
       expect(r.prerequisites).toMatchObject({ all: [{ points: { min: 100 } }, { manual: expect.any(String) }] })
     })

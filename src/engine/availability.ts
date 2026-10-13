@@ -25,6 +25,9 @@ export function offeredIn(subject: Subject, year: number, period: Period): Avail
   const earlier = years.filter((y) => y < year)
   const fallback = earlier.length > 0 ? Math.max(...earlier) : Math.min(...years)
   const periods = subject.offerings[String(fallback)] ?? []
+  // "Not available in 2026" says nothing about 2027 (often a pause, or a new subject still to
+  // start): unknown, not "never". A subject that stops for good has discontinued_from instead.
+  if (periods.length === 0) return { status: 'unknown', assumedFromYear: fallback }
   return { status: periods.includes(period) ? 'ok' : 'fail', assumedFromYear: fallback }
 }
 

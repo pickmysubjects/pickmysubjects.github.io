@@ -1,0 +1,40 @@
+code: ACCT20002
+title: Intermediate Financial Accounting
+level: 2
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+    - semester-2
+prerequisites: ACCT10002
+corequisites: none
+non_allowed:
+  - ACCT30013
+assessment:
+  - kind: participation
+    weight: 10
+  - kind: assignment
+    weight: 10
+  - kind: quiz
+    weight: 20
+  - kind: exam
+    weight: 60
+breadth_for:
+  - Bachelor of Arts
+  - Bachelor of Biomedicine
+  - Bachelor of Design
+  - Bachelor of Fine Arts (Acting)
+  - Bachelor of Fine Arts (Animation)
+  - Bachelor of Fine Arts (Dance)
+  - Bachelor of Fine Arts (Film and Television)
+  - Bachelor of Fine Arts (Music Theatre)
+  - Bachelor of Fine Arts (Production)
+  - Bachelor of Fine Arts (Screenwriting)
+  - Bachelor of Fine Arts (Theatre)
+  - Bachelor of Fine Arts (Visual Art)
+  - Bachelor of Music
+  - Bachelor of Science
+handbook: https://handbook.unimelb.edu.au/2026/subjects/acct20002
+source_year: 2026
+verified_on: 2026-10-14
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

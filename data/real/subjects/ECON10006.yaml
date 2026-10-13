@@ -1,0 +1,23 @@
+code: ECON10006
+title: Introductory Economics
+level: 1
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites: none
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: test
+    weight: 20
+  - kind: assignment
+    weight: 30
+  - kind: exam
+    weight: 50
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/econ10006
+source_year: 2026
+verified_on: 2026-10-14
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
