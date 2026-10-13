@@ -5,6 +5,7 @@ import LangMenu from './LangMenu.vue'
 import AppLogo from '../AppLogo.vue'
 import SubjectSearch from '../SubjectSearch.vue'
 import { MY_STEPS, NAV_ITEMS } from './nav'
+import MySteps from './MySteps.vue'
 import type { View } from '@/composables/useView'
 import { useI18n } from '@/i18n'
 
@@ -57,6 +58,10 @@ const { t } = useI18n()
         </a>
         <LangMenu />
       </div>
+    </div>
+    <!-- Phones: no room in the bar itself, so Me's steps get a slim row of their own under it. -->
+    <div v-if="MY_STEPS.some((x) => x.view === view)" class="header-steps shell">
+      <MySteps />
     </div>
   </header>
 </template>
@@ -291,6 +296,17 @@ const { t } = useI18n()
 
   .header-inner {
     height: 56px;
+  }
+}
+
+.header-steps {
+  display: none;
+}
+
+@media (max-width: 720px) {
+  .header-steps {
+    display: block;
+    padding-bottom: 8px;
   }
 }
 </style>

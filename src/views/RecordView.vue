@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import MySteps from '@/components/layout/MySteps.vue'
 import { computed, shallowRef } from 'vue'
 import ResultsEditor from '@/components/profile/ResultsEditor.vue'
 import SkillsEditor from '@/components/profile/SkillsEditor.vue'
@@ -41,7 +40,6 @@ async function onRestore(event: Event): Promise<void> {
 
 <template>
   <div class="record">
-    <MySteps />
     <section class="record-intro">
       <h1 class="record-title">{{ t('record.title') }}</h1>
       <p class="record-lede">{{ t('record.lede') }}</p>

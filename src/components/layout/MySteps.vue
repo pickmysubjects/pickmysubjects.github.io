@@ -77,13 +77,6 @@ const { t } = useI18n()
   background: var(--overprint);
 }
 
-/* Wider screens show the steps in the header instead. */
-@media (min-width: 721px) {
-  .steps {
-    display: none;
-  }
-}
-
 @media (max-width: 420px) {
   .step {
     padding: 6px 10px;
