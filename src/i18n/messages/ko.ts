@@ -105,6 +105,10 @@ export const ko: Messages = {
     specialisation: '세부 전공 최대 {max}개',
     level1Areas: '레벨 1 학문 영역 최소 {min}개, 한 영역당 최대 {max}학점',
     progression: '레벨 {before} 과목 전에 보통 레벨 {level} 과목 {min}학점',
+    requirementAll: '{codes}',
+    requirementChoose: '{codes} 중 {n}학점',
+    requirementPaths: '다음 중 하나: {paths}',
+    requirementOr: ' 또는 ',
   },
   ruleDetail: {
     done: '완료',
@@ -124,6 +128,7 @@ export const ko: Messages = {
     componentUnknown: '{title}: 구성 미정리',
     componentDone: '{title} 이수 완료',
     componentMissing: '{title}: {missing}',
+    requirementMissing: '{missing}',
   },
   issue: {
     'visa-underload-h1': '{year}년 1~6월: {load}학점. 학생 비자는 보통 반년마다 {min}학점이 필요합니다(여름 학기 포함). 부족하면 학교 승인이 필요합니다(마지막 반년 제외). Stop 1에 확인하세요.',
@@ -551,7 +556,7 @@ export const ko: Messages = {
     metaNoPrereq: "선수 과목 없음",
     coverage: "지금까지 {n}개 과목, 그중 Breadth {breadth}개예요.",
     preset: { firstSemester: "첫 학기", breadth: "Breadth", noExam: "기말시험 없음" },
-    cat: { science: "이과", breadth: "Breadth" },
+    cat: { science: "이과", breadth: "Breadth", discipline: "학위 과목" },
   },
   majors: {
     statCore: "3학년 필수",

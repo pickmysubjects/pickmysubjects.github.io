@@ -4,10 +4,12 @@ import { ChevronDown, SlidersHorizontal } from 'lucide-vue-next'
 import { EMPTY_FILTERS, PERIODS, type BrowseFilters } from '@/engine'
 import { useI18n } from '@/i18n'
 
+const props = defineProps<{ categories: string[] }>()
 const filters = defineModel<BrowseFilters>({ required: true })
 const { t } = useI18n()
 
-const CATEGORIES = ['', 'science', 'breadth'] as const
+// The current course's own categories (science/breadth for B-SCI, commerce/breadth for B-COM).
+const categories = computed(() => ['', ...props.categories])
 const LEVELS = [null, 1, 2, 3] as const
 const WHEN = [null, ...PERIODS] as const
 const TOGGLES = ['noPrereq', 'noExam', 'noGroup'] as const
@@ -41,7 +43,7 @@ function clear(): void {
         <legend>{{ t('browse.type') }}</legend>
         <div class="seg">
           <button
-            v-for="c in CATEGORIES"
+            v-for="c in categories"
             :key="c"
             type="button"
             :aria-pressed="filters.category === c"

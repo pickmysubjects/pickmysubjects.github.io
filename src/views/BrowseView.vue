@@ -14,7 +14,7 @@ const PAGE = 20
 
 const { t } = useI18n()
 const { query } = useView()
-const { subjectList } = useDataset()
+const { data, subjectList } = useDataset()
 const plan = usePlan()
 
 const course = computed(() => plan.setup.value.course || 'B-SCI')
@@ -23,7 +23,12 @@ const year = computed(() => plan.terms.value[0]?.year ?? new Date().getFullYear(
 const filters = shallowRef(filtersFromQuery(query.value))
 const shown = shallowRef(PAGE)
 
-const rows = computed(() => browse(subjectList.value, filters.value, course.value, year.value))
+// A category from another course (a "science" link opened under B-COM) filters nothing.
+const categories = computed(() => data.value.courses.find((c) => c.code === course.value)?.categories ?? [])
+const rows = computed(() => {
+  const f = filters.value
+  return browse(subjectList.value, categories.value.includes(f.category) ? f : { ...f, category: '' }, course.value, year.value)
+})
 const visible = computed(() => rows.value.slice(0, shown.value))
 const anyRated = computed(() => subjectList.value.some((s) => (s.signals?.reviews ?? 0) >= 3))
 const breadthCount = computed(() => subjectList.value.filter((s) => s.categories[course.value] === 'breadth').length)
@@ -88,7 +93,7 @@ watch(filters, (f) => {
     </div>
 
     <div class="layout">
-      <BrowseFilters v-model="filters" class="side" />
+      <BrowseFilters v-model="filters" :categories="categories" class="side" />
 
       <section class="results">
         <div class="toolbar">

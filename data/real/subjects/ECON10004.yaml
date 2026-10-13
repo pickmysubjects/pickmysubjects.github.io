@@ -5,6 +5,11 @@ points: 12.5
 offerings:
   "2026":
     - summer
+    - semester-1
+    - semester-2
+breadth_offerings:
+  "2026":
+    - summer
     - semester-2
 prerequisites:
   any:
@@ -26,7 +31,7 @@ categories:
 handbook: https://handbook.unimelb.edu.au/2026/subjects/econ10004
 source_year: 2026
 verified_on: 2026-10-13
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Also runs in Semester 1, but students taking it as breadth must enrol in Semester 2 or Summer, so only those are recorded here. Breadth students may be withdrawn if it is full."
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Students taking it as breadth must enrol in Semester 2 or Summer. Breadth students may be withdrawn if it is full."
 skills:
   - business
   - maths

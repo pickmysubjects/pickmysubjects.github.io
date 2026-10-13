@@ -105,6 +105,10 @@ export const zhCN: Messages = {
     specialisation: '最多 {max} 个专精',
     level1Areas: '至少 {min} 个 Level 1 学科领域，每个领域最多 {max} 学分',
     progression: '修 Level {before} 课程前一般需要先修满 {min} 学分的 Level {level} 课程',
+    requirementAll: '{codes}',
+    requirementChoose: '从 {codes} 中修 {n} 学分',
+    requirementPaths: '以下其一：{paths}',
+    requirementOr: '；或 ',
   },
   ruleDetail: {
     done: '已完成',
@@ -124,6 +128,7 @@ export const zhCN: Messages = {
     componentUnknown: '{title}：结构尚未整理',
     componentDone: '{title} 已完成',
     componentMissing: '{title}：{missing}',
+    requirementMissing: '{missing}',
   },
   issue: {
     'visa-underload-h1': '{year} 年 1–6 月：{load} 分。持学生签证一般每半年要修 {min} 分（夏季学期也算）。不够的话需要学校批准，最后一个半年除外，请先问 Stop 1。',
@@ -551,7 +556,7 @@ export const zhCN: Messages = {
     metaNoPrereq: "不需要先修课",
     coverage: "目前有 {n} 门课，其中 Breadth 课 {breadth} 门。",
     preset: { firstSemester: "新生第一学期", breadth: "Breadth 课", noExam: "没有期末考试" },
-    cat: { science: "理科", breadth: "Breadth" },
+    cat: { science: "理科", breadth: "Breadth", discipline: "本学位课" },
   },
   majors: {
     statCore: "三年级必修",

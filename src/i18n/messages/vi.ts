@@ -105,6 +105,10 @@ export const vi: Messages = {
     specialisation: 'Tối đa {max} chuyên sâu',
     level1Areas: 'Ít nhất {min} lĩnh vực level 1, mỗi lĩnh vực tối đa {max} tín chỉ',
     progression: 'Thường cần {min} tín chỉ level {level} trước khi học môn level {before}',
+    requirementAll: '{codes}',
+    requirementChoose: '{n} tín chỉ từ {codes}',
+    requirementPaths: 'Một trong: {paths}',
+    requirementOr: ' hoặc ',
   },
   ruleDetail: {
     done: 'xong',
@@ -124,6 +128,7 @@ export const vi: Messages = {
     componentUnknown: '{title}: chưa nhập cấu trúc',
     componentDone: '{title} đã hoàn thành',
     componentMissing: '{title}: {missing}',
+    requirementMissing: '{missing}',
   },
   issue: {
     'visa-underload-h1': 'Tháng 1–6/{year}: {load} tín chỉ. Với visa du học bạn thường cần {min} mỗi nửa năm (tính cả kỳ hè). Ít hơn cần được duyệt, trừ nửa năm cuối — hãy hỏi Stop 1.',
@@ -551,7 +556,7 @@ export const vi: Messages = {
     metaNoPrereq: "Không cần môn tiên quyết",
     coverage: "Hiện có {n} môn, trong đó {breadth} môn breadth.",
     preset: { firstSemester: "Học kỳ đầu", breadth: "Breadth", noExam: "Không thi cuối kỳ" },
-    cat: { science: "Khoa học", breadth: "Breadth" },
+    cat: { science: "Khoa học", breadth: "Breadth", discipline: "Trong ngành" },
   },
   majors: {
     statCore: "Bắt buộc năm ba",

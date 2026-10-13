@@ -184,6 +184,9 @@ export const subjectFileSchema = z
     points: z.number().positive(),
     area: z.string().optional(),
     offerings,
+    // Where breadth students may only enrol in some of the periods (ECON10004: not semester 1),
+    // those periods; used whenever the subject counts as breadth for the student's course.
+    breadth_offerings: z.record(z.string().regex(/^\d{4}$/), z.array(z.enum(PERIODS))).optional(),
     prerequisites: reqField,
     corequisites: reqField,
     non_allowed: z.union([z.literal('unknown'), z.array(subjectCode)]).default('unknown'),
@@ -218,6 +221,7 @@ export const subjectFileSchema = z
     points: s.points,
     area: s.area ?? s.code.slice(0, 4),
     offerings: s.offerings,
+    breadthOfferings: s.breadth_offerings,
     prerequisites: s.prerequisites,
     corequisites: s.corequisites,
     nonAllowed: s.non_allowed,
@@ -306,6 +310,11 @@ export const aboutFileSchema = z
 export type SubjectAbout = z.output<typeof aboutFileSchema>
 export type SubjectCategory = 'science' | 'breadth' | 'discipline'
 
+const componentReq = z.union([
+  z.object({ all: z.array(subjectCode).min(1) }).strict(),
+  z.object({ choose: z.object({ points: z.number().positive(), from: z.array(subjectCode).min(1) }).strict() }).strict(),
+])
+
 const ruleBase = { id: z.string().min(1), description: z.string().min(1) }
 
 const courseRule = z.discriminatedUnion('kind', [
@@ -349,6 +358,10 @@ const courseRule = z.discriminatedUnion('kind', [
       min_points: z.number().positive(),
     })
     .strict(),
+  // Complete one of these paths; each path is a list of "all"/"choose" requirements, like a major's.
+  z
+    .object({ ...ruleBase, kind: z.literal('requirement'), paths: z.array(z.array(componentReq).min(1)).min(1) })
+    .strict(),
 ])
 
 export const courseFileSchema = z
@@ -359,6 +372,12 @@ export const courseFileSchema = z
     total_points: z.number().positive(),
     standard_load: z.number().positive(),
     categories: z.array(z.string()).default([]),
+    // Subjects with no category of their own for this course get one from their area (code
+    // prefix): the course's own areas are `home`, every other subject is `other` (e.g. breadth).
+    area_categories: z.object({ home: z.string(), areas: z.array(z.string().regex(/^[A-Z]{4}$/)).min(1), other: z.string() }).strict().optional(),
+    // Subjects this course's students can't count (closed to new students): they get no category
+    // for it, so suggestions and the planner leave them out.
+    closed: z.array(subjectCode).default([]),
     rules: z.array(courseRule),
     handbook: handbookUrl.optional(),
     verified_on: z.union([z.iso.date(), z.null()]).default(null),
@@ -371,6 +390,8 @@ export const courseFileSchema = z
     totalPoints: c.total_points,
     standardLoad: c.standard_load,
     categories: c.categories,
+    areaCategories: c.area_categories,
+    closed: c.closed,
     rules: c.rules.map(camelRule),
     handbook: c.handbook,
     verifiedOn: c.verified_on,
@@ -404,6 +425,8 @@ function camelRule(r: z.output<typeof courseRule>): CourseRule {
         level: r.level,
         minPoints: r.min_points,
       }
+    case 'requirement':
+      return { id: r.id, description: r.description, kind: r.kind, paths: r.paths as ComponentReq[][] }
   }
 }
 
@@ -421,13 +444,10 @@ export type CourseRule =
       category?: string
     }
   | { id: string; description: string; kind: 'progression'; beforeLevel: number; level: number; minPoints: number }
+  | { id: string; description: string; kind: 'requirement'; paths: ComponentReq[][] }
 
 export type Course = z.output<typeof courseFileSchema>
 
-const componentReq = z.union([
-  z.object({ all: z.array(subjectCode).min(1) }).strict(),
-  z.object({ choose: z.object({ points: z.number().positive(), from: z.array(subjectCode).min(1) }).strict() }).strict(),
-])
 
 export type ComponentReq = { all: string[] } | { choose: { points: number; from: string[] } }
 

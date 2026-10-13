@@ -105,6 +105,10 @@ export const ms: Messages = {
     specialisation: 'Paling banyak {max} pengkhususan',
     level1Areas: 'Sekurang-kurangnya {min} bidang pengajian tahap 1, paling banyak {max} mata bagi setiap bidang',
     progression: 'Biasanya {min} mata tahap {level} sebelum subjek tahap {before}',
+    requirementAll: '{codes}',
+    requirementChoose: '{n} mata daripada {codes}',
+    requirementPaths: 'Salah satu: {paths}',
+    requirementOr: ' atau ',
   },
   ruleDetail: {
     done: 'selesai',
@@ -124,6 +128,7 @@ export const ms: Messages = {
     componentUnknown: '{title}: struktur belum dimasukkan',
     componentDone: '{title} lengkap',
     componentMissing: '{title}: {missing}',
+    requirementMissing: '{missing}',
   },
   issue: {
     'visa-underload-h1': 'Januari–Jun {year}: {load} mata. Dengan visa pelajar biasanya perlu {min} setiap setengah tahun (termasuk musim panas). Kurang daripada itu perlu kelulusan, kecuali setengah tahun terakhir — tanya Stop 1.',
@@ -551,7 +556,7 @@ export const ms: Messages = {
     metaNoPrereq: "Tiada prasyarat",
     coverage: "{n} subjek setakat ini, {breadth} daripadanya breadth.",
     preset: { firstSemester: "Semester pertama", breadth: "Breadth", noExam: "Tiada peperiksaan akhir" },
-    cat: { science: "Sains", breadth: "Breadth" },
+    cat: { science: "Sains", breadth: "Breadth", discipline: "Dalam ijazah" },
   },
   majors: {
     statCore: "Teras tahun tiga",

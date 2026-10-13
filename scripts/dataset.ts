@@ -3,7 +3,7 @@ import { join, relative } from 'node:path'
 import { parse } from 'yaml'
 import { z } from 'zod'
 import { referencedSubjects } from '../src/engine/expr'
-import { aboutFileSchema, componentFileSchema, courseFileSchema, discussionFileSchema, SKILLS, subjectFileSchema, type Dataset, type Skill } from '../src/engine/schema'
+import { aboutFileSchema, componentFileSchema, courseFileSchema, discussionFileSchema, SKILLS, subjectFileSchema, type Dataset, type Skill, type Subject } from '../src/engine/schema'
 
 export const ROOT = join(import.meta.dirname, '..')
 
@@ -55,6 +55,16 @@ export function buildDataset(name: Dataset['name']): BuildResult {
     .map((f) => load(f, componentFileSchema, errors))
     .filter((c) => c !== null)
 
+  // A course that says which areas are its own gives every other subject its "other" category.
+  for (const c of courses) {
+    if (!c.areaCategories) continue
+    const { home, areas, other } = c.areaCategories
+    for (const s of Object.values(subjects)) {
+      if (c.closed.includes(s.code)) continue
+      s.categories[c.code] ??= ((areas.includes(s.area) ? home : other) as Subject['categories'][string])
+    }
+  }
+
   mergeRatings(join(base, 'ratings.json'), subjects)
 
   // Summaries of public discussion, one file per subject.
@@ -83,6 +93,7 @@ export function buildDataset(name: Dataset['name']): BuildResult {
       if (!subjects[ref]) missing.add(ref)
     }
   }
+  for (const c of components) if (components.filter((x) => x.id === c.id).length > 1) errors.push(`${c.id}: component id used twice`)
   for (const c of components) {
     if (c.requirements === 'unknown') continue
     for (const r of c.requirements) for (const code of 'all' in r ? r.all : r.choose.from) if (!subjects[code]) missing.add(code)

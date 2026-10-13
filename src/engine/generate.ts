@@ -1,3 +1,4 @@
+import { forCourse } from './forCourse'
 import { offeredIn, periodsFor, termKey } from './availability'
 import { categoryOf, checkCourse, componentNeeds, findComponent, findCourse } from './courseRules'
 import { evaluateField, referencedSubjects, type Tri } from './expr'
@@ -52,7 +53,9 @@ export interface GenerateResult {
  * that each run in one semester only), tries again with up to two extra
  * semesters, as a student would take longer rather than drop the major.
  */
-export function generatePlan(input: GenerateInput): GenerateResult {
+export function generatePlan(raw: GenerateInput): GenerateResult {
+  // Periods as this course's students see them (breadth-only periods for breadth subjects).
+  const input = { ...raw, data: forCourse(raw.data, raw.course) }
   // Unplaced subjects weigh most; then course rules the plan fails (e.g. breadth
   // squeezed out by a heavy major + specialisation).
   const shortfall = (r: GenerateResult) =>
@@ -281,6 +284,20 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
     for (const req of componentNeeds(component)) {
       if ('all' in req) req.all.forEach((c) => (required.add(c), used.add(c)))
       else groups.push({ title: component?.title ?? id ?? '', req, used })
+    }
+  }
+
+  // A course requirement with several paths (B-COM's standard or mathematics quantitative path):
+  // the path that shares most with what's done or already required, else the first one listed.
+  for (const rule of course?.rules ?? []) {
+    if (rule.kind !== 'requirement') continue
+    const overlap = (path: ComponentReq[]) =>
+      path.flatMap((r) => ('all' in r ? r.all : r.choose.from)).filter((c) => done.has(c) || required.has(c)).length
+    const path = rule.paths.reduce((best, p) => (overlap(p) > overlap(best) ? p : best))
+    const used = new Set<string>()
+    for (const req of path) {
+      if ('all' in req) req.all.forEach((c) => (required.add(c), used.add(c)))
+      else groups.push({ title: rule.description, req, used })
     }
   }
 

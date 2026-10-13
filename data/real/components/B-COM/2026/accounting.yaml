@@ -1,0 +1,14 @@
+id: accounting
+course: B-COM
+year: 2026
+kind: major
+title: Accounting
+points: 62.5
+requirements:
+  # Both Level 2 core subjects are required; ACCT20008 is marked not available in 2026, so it sits in a choose worth both.
+  - choose: { points: 25, from: [ACCT20001, ACCT20008] }
+  - choose: { points: 25, from: [ACCT30002, ACCT30004, ACCT30006, ACCT30007, ACCT30011, ACCT30012, ACCT30013, ACCT30014, ACCT30015] }
+  - all: [ACCT30001]
+# No major URL in the paste; this is the course's majors page.
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-com/majors-minors-and-specialisations
+verified_on: 2026-10-13 # structure; source: 2026 Handbook, checked

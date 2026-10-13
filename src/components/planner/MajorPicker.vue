@@ -44,12 +44,14 @@ function pickUnsure(f: string): void {
   major.value = ''
   openField.value = f
 }
-const shown = computed(() => (searching.value ? groups.value : groups.value.filter((g) => g.id === field.value)))
+// A course whose majors all sit in one field (B-COM) skips the field step and the search.
+const single = computed(() => fields.value.length === 1)
+const shown = computed(() => (searching.value || single.value ? groups.value : groups.value.filter((g) => g.id === field.value)))
 </script>
 
 <template>
   <div class="picker">
-    <label class="search">
+    <label v-if="!single" class="search">
       <Search :size="18" aria-hidden="true" class="search-icon" />
       <input v-model="query" class="search-input" type="search" :placeholder="t('wizard.majorSearch')" :aria-label="t('wizard.majorSearch')" />
     </label>
@@ -63,7 +65,7 @@ const shown = computed(() => (searching.value ? groups.value : groups.value.filt
 
     <p v-if="searching && groups.length === 0" class="empty">{{ t('wizard.noMajorMatch') }}</p>
 
-    <div v-if="!searching && field === null" class="fields">
+    <div v-if="!searching && field === null && !single" class="fields">
       <button
         v-for="f in fields"
         :key="f.id"
@@ -78,11 +80,11 @@ const shown = computed(() => (searching.value ? groups.value : groups.value.filt
     </div>
 
     <template v-else>
-      <button v-if="!searching" type="button" class="back" @click="field = null">
+      <button v-if="!searching && !single" type="button" class="back" @click="field = null">
         <ArrowLeft :size="16" aria-hidden="true" /> {{ t('wizard.allFields') }}
       </button>
       <button
-        v-if="!searching && field"
+        v-if="!searching && field && !single"
         type="button"
         class="option option-unsure"
         :aria-pressed="major === '' && openField === field"
@@ -92,7 +94,7 @@ const shown = computed(() => (searching.value ? groups.value : groups.value.filt
         <Check v-if="major === '' && openField === field" :size="18" aria-hidden="true" />
       </button>
       <section v-for="g in shown" :key="g.id" class="group">
-        <h3 class="group-name">{{ t(`majorGroup.${g.id}`) }}</h3>
+        <h3 v-if="!single" class="group-name">{{ t(`majorGroup.${g.id}`) }}</h3>
         <div class="group-list">
           <button
             v-for="m in g.majors"

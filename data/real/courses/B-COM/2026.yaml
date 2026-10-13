@@ -1,0 +1,113 @@
+# Bachelor of Commerce course rules, 2026 Handbook. Facts re-expressed in our own words.
+code: B-COM
+title: Bachelor of Commerce
+year: 2026
+total_points: 300
+standard_load: 50
+categories: [discipline, breadth]
+# Breadth is anything outside the Faculty of Business and Economics; these are its subject areas.
+area_categories:
+  home: discipline
+  areas: [ACCT, ACTL, BUSA, CMCE, ECOM, ECON, FNCE, MGMT, MKTG]
+  other: breadth
+# Not available to B-COM students commencing from 2026.
+closed: [ACCT10002, ACCT20007, ACTL30006]
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-com/course-structure
+verified_on: 2026-10-13 # rules checked by hand against the Handbook course structure
+rules:
+  - id: total
+    kind: points
+    min: 300
+    description: 300 points in total
+  - id: econ10004
+    kind: compulsory
+    subjects: [ECON10004]
+    first_semester: true
+    description: ECON10004 in your first semester
+  - id: foundation
+    kind: requirement
+    paths:
+      - - choose: { points: 50, from: [ACCT10001, ECON10003, FNCE10002, ACTL10001, MKTG10001, MGMT10002, CMCE10002] }
+    description: At least 50 points of foundation subjects
+  - id: quantitative
+    kind: requirement
+    paths:
+      - - all: [ECON10005]
+        - choose: { points: 12.5, from: [ECON20003, ECOM20001, MGMT20005, MKTG20004] }
+      - - all: [MAST20005]
+        - choose: { points: 12.5, from: [MAST20006, MAST20004] }
+    description: The standard or the mathematics quantitative path
+  - id: commerce
+    kind: points
+    category: discipline
+    min: 237.5
+    description: At least 237.5 points of commerce subjects
+  - id: commerce-l1
+    kind: points
+    category: discipline
+    level: 1
+    min: 62.5
+    description: At least 62.5 points of level-1 commerce
+  - id: commerce-l2
+    kind: points
+    category: discipline
+    level: 2
+    min: 62.5
+    description: At least 62.5 points of level-2 commerce
+  - id: commerce-l3
+    kind: points
+    category: discipline
+    level: 3
+    min: 50
+    description: At least 50 points of level-3 commerce
+  - id: breadth
+    kind: points
+    category: breadth
+    min: 50
+    description: At least 50 points of breadth
+  - id: breadth-cap
+    kind: points
+    category: breadth
+    max: 62.5
+    description: No more than 62.5 points of breadth
+  - id: breadth-l1-cap
+    kind: points
+    category: breadth
+    level: 1
+    max: 37.5
+    description: No more than 37.5 points of level-1 breadth
+  - id: level1-cap
+    kind: points
+    level: 1
+    max: 125
+    description: No more than 125 points at level 1
+  - id: level2
+    kind: points
+    level: 2
+    min: 75
+    description: At least 75 points at level 2
+  - id: level3
+    kind: points
+    level: 3
+    min: 75
+    description: At least 75 points at level 3
+  - id: major
+    kind: major
+    count: 1
+    description: Complete one major (a second is optional)
+  - id: specialisation
+    kind: specialisation
+    max: 1
+    description: At most one specialisation
+  - id: progress-to-l2
+    kind: progression
+    before_level: 2
+    level: 1
+    min_points: 50
+    description: Normally 50 level-1 points before level-2 subjects
+  - id: progress-to-l3
+    kind: progression
+    before_level: 3
+    level: 2
+    min_points: 50
+    description: Normally 50 level-2 points before level-3 subjects

@@ -108,6 +108,10 @@ export const en = {
     specialisation: 'At most {max} specialisation',
     level1Areas: 'At least {min} level-1 areas of study, at most {max} points from any one',
     progression: 'Normally {min} level-{level} points before level-{before} subjects',
+    requirementAll: '{codes}',
+    requirementChoose: '{n} points from {codes}',
+    requirementPaths: 'One of: {paths}',
+    requirementOr: ' or ',
   },
   ruleDetail: {
     done: 'done',
@@ -127,6 +131,7 @@ export const en = {
     componentUnknown: '{title}: structure not curated yet',
     componentDone: '{title} complete',
     componentMissing: '{title}: {missing}',
+    requirementMissing: '{missing}',
   },
   issue: {
     'visa-underload-h1': 'January–June {year}: {load} points. On a student visa you normally need {min} per half-year (summer counts). Less needs approval unless it’s your final half-year — check with Stop 1.',
@@ -554,7 +559,7 @@ export const en = {
     metaNoPrereq: "No prerequisites",
     coverage: "{n} subjects so far, {breadth} of them breadth.",
     preset: { firstSemester: "First semester", breadth: "Breadth", noExam: "No final exam" },
-    cat: { science: "Science", breadth: "Breadth" },
+    cat: { science: "Science", breadth: "Breadth", discipline: "Own degree" },
   },
   majors: {
     statCore: "Third-year core",

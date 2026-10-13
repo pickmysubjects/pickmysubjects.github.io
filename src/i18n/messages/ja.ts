@@ -105,6 +105,10 @@ export const ja: Messages = {
     specialisation: 'スペシャライゼーションは {max} つまで',
     level1Areas: 'レベル1の学問分野を {min} つ以上、1分野あたり {max} ポイントまで',
     progression: 'レベル {before} の科目の前に、通常レベル {level} の科目を {min} ポイント',
+    requirementAll: '{codes}',
+    requirementChoose: '{codes} から {n} ポイント',
+    requirementPaths: '次のいずれか：{paths}',
+    requirementOr: '、または ',
   },
   ruleDetail: {
     done: '完了',
@@ -124,6 +128,7 @@ export const ja: Messages = {
     componentUnknown: '{title}：構成は未整理',
     componentDone: '{title} 修了',
     componentMissing: '{title}：{missing}',
+    requirementMissing: '{missing}',
   },
   issue: {
     'visa-underload-h1': '{year}年1〜6月：{load}単位。学生ビザでは通常半年ごとに{min}単位が必要です（夏期も含む）。不足する場合は大学の承認が必要です（最終の半年を除く）。Stop 1 に確認してください。',
@@ -551,7 +556,7 @@ export const ja: Messages = {
     metaNoPrereq: "前提科目なし",
     coverage: "いまは {n} 科目、そのうち Breadth は {breadth} 科目です。",
     preset: { firstSemester: "1学期目", breadth: "Breadth", noExam: "期末試験なし" },
-    cat: { science: "理系", breadth: "Breadth" },
+    cat: { science: "理系", breadth: "Breadth", discipline: "学位内科目" },
   },
   majors: {
     statCore: "3年次必修",

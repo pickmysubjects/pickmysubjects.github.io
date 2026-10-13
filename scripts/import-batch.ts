@@ -21,7 +21,7 @@ const { values, positionals } = parseArgs({
   options: { write: { type: 'boolean', default: false }, year: { type: 'string', default: '2026' } },
 })
 
-const KEEP = ['categories', 'skills', 'topics'] as const
+const KEEP = ['categories', 'skills', 'topics', 'breadth_offerings'] as const
 let written = 0
 
 for (const file of positionals) {

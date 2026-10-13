@@ -164,6 +164,18 @@ function checkRule(rule: CourseRule, ctx: RuleCtx): RuleStatus {
       if (byArea.size < rule.minAreas) return { ...base, status: couldReach ? 'unknown' : 'fail', ...areas }
       return { ...base, status: 'ok', ...areas }
     }
+    case 'requirement': {
+      // The path closest to done is the one shown; any finished path passes.
+      const results = rule.paths.map((path) => {
+        const used = new Set<string>()
+        const ordered = [...path.filter((r) => 'all' in r), ...path.filter((r) => !('all' in r))]
+        return ordered.map((r) => unmetRequirement(r, ctx, used)).filter((x): x is string => x !== null)
+      })
+      if (results.some((u) => u.length === 0)) return { ...base, status: 'ok', detail: 'done', detailKey: 'done', params: {} }
+      const best = results.reduce((a, b) => (b.length < a.length ? b : a))
+      const missing = best.join('; ')
+      return { ...base, status: 'fail', detail: missing, detailKey: 'requirementMissing', params: { missing } }
+    }
     case 'progression': {
       const firstHigher = ctx.plan.terms.findIndex((t) =>
         t.subjects.some((c) => (ctx.data.subjects[c]?.level ?? 0) === rule.beforeLevel),

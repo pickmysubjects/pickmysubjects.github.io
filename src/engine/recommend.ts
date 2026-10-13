@@ -1,3 +1,4 @@
+import { forCourse } from './forCourse'
 import { offeredIn, periodsFor } from './availability'
 import { evaluateField, referencedSubjects, type Tri } from './expr'
 import type { Note, Params } from './plan'
@@ -146,7 +147,8 @@ export function computeWam(results: Profile['results'], data: Dataset): number |
   return points > 0 ? Math.round((weighted / points) * 10) / 10 : null
 }
 
-export function recommend(data: Dataset, profile: Profile, opts: RecommendOptions = {}): Recommendation[] {
+export function recommend(raw: Dataset, profile: Profile, opts: RecommendOptions = {}): Recommendation[] {
+  const data = opts.course ? forCourse(raw, opts.course) : raw
   const completed = new Set(passedCodes(profile.results))
   const taken = new Set([...completed, ...(opts.planned ?? [])])
   const wam = computeWam(profile.results, data)

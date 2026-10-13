@@ -16,42 +16,19 @@ import {
   type Plan,
   type PlanTerm,
   type Note,
+  defaultCourse,
   type Relief,
 } from '@/engine'
+import { plans, type PlanSetup, type PlanState } from './planStore'
 import { useDataset } from './useDataset'
 import { useProfile } from './useProfile'
-import { usePersisted } from './usePersisted'
 import { cloneJson } from '@/utils/clone'
 import { majorGroupOf } from '@/utils/majorGroups'
-import { cleanPlans } from '@/utils/sanitize'
 
-export interface PlanSetup {
-  course: string
-  courseYear: number
-  startYear: number
-  startPeriod: Period
-  major: string
-  specialisation: string
-  /** On a student visa (optional; changes the load warnings). */
-  international?: boolean
-  /** No major yet, but a field in mind (a major group id): keeps its majors open. */
-  field?: string
-  /** The student answered the setup questions (until then it's only the default). */
-  confirmed?: boolean
-}
-
-interface PlanState {
-  setup: PlanSetup
-  terms: PlanTerm[]
-  notes: Note[]
-  unplaced: { code: string; reason: string; reasonKey: string }[]
-}
-
-// One saved plan per dataset.
-const plans = usePersisted<Record<string, PlanState>>('sc:plans', {}, cleanPlans)
+export type { PlanSetup } from './planStore'
 
 function defaultSetup(data: Dataset): PlanSetup {
-  const course = data.courses[0]
+  const course = data.courses.find((c) => c.code === defaultCourse(data))
   // A new visitor is most likely planning ahead: start at the next semester that hasn't begun.
   const next = nextSemester(new Date())
   return {

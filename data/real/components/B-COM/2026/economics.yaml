@@ -1,0 +1,17 @@
+id: economics
+course: B-COM
+year: 2026
+kind: major
+title: Economics
+points: 62.5
+requirements:
+  - all: [ECON20001, ECON20002]
+  # Capstone: one of the two econometrics subjects.
+  - choose: { points: 12.5, from: [ECOM30001, ECOM30002] }
+  # At least 12.5 points of Level 3 ECON electives.
+  - choose: { points: 12.5, from: [ECON30001, ECON30002, ECON30003, ECON30005, ECON30006, ECON30007, ECON30008, ECON30009, ECON30010, ECON30011, ECON30013, ECON30016, ECON30017, ECON30018, ECON30019, ECON30020, ECON30022, ECON30023, ECON30024, ECON30025, ECON30029, ECON30030, ECON30031] }
+  # Remaining 12.5 points: any Level 3 ECON or ECOM elective.
+  - choose: { points: 12.5, from: [ECON30001, ECON30002, ECON30003, ECON30005, ECON30006, ECON30007, ECON30008, ECON30009, ECON30010, ECON30011, ECON30013, ECON30016, ECON30017, ECON30018, ECON30019, ECON30020, ECON30022, ECON30023, ECON30024, ECON30025, ECON30029, ECON30030, ECON30031, ECOM30003, ECOM30004, ECOM30001, ECOM30002] }
+# No major URL in the paste; this is the course's majors page.
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-com/majors-minors-and-specialisations
+verified_on: 2026-10-13 # structure; source: 2026 Handbook, checked

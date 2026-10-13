@@ -105,6 +105,10 @@ export const hi: Messages = {
     specialisation: 'ज़्यादा से ज़्यादा {max} स्पेशलाइज़ेशन',
     level1Areas: 'कम से कम {min} लेवल-1 अध्ययन क्षेत्र, किसी एक से ज़्यादा से ज़्यादा {max} पॉइंट',
     progression: 'लेवल {before} विषयों से पहले आमतौर पर {min} पॉइंट लेवल {level} के',
+    requirementAll: '{codes}',
+    requirementChoose: '{codes} में से {n} पॉइंट',
+    requirementPaths: 'इनमें से एक: {paths}',
+    requirementOr: ' या ',
   },
   ruleDetail: {
     done: 'पूरा',
@@ -124,6 +128,7 @@ export const hi: Messages = {
     componentUnknown: '{title}: संरचना अभी जोड़ी नहीं गई',
     componentDone: '{title} पूरा',
     componentMissing: '{title}: {missing}',
+    requirementMissing: '{missing}',
   },
   issue: {
     'visa-underload-h1': 'जनवरी–जून {year}: {load} पॉइंट। स्टूडेंट वीज़ा पर आम तौर पर हर छमाही {min} पॉइंट चाहिए (समर टर्म भी गिना जाता है)। कम हो तो मंज़ूरी चाहिए, आख़िरी छमाही को छोड़कर — Stop 1 से पूछें।',
@@ -551,7 +556,7 @@ export const hi: Messages = {
     metaNoPrereq: "कोई प्रीरिक्विज़िट नहीं",
     coverage: "अब तक {n} सब्जेक्ट, जिनमें {breadth} breadth हैं।",
     preset: { firstSemester: "पहला सेमेस्टर", breadth: "Breadth", noExam: "फ़ाइनल परीक्षा नहीं" },
-    cat: { science: "साइंस", breadth: "Breadth" },
+    cat: { science: "साइंस", breadth: "Breadth", discipline: "डिग्री विषय" },
   },
   majors: {
     statCore: "तीसरे साल के अनिवार्य",

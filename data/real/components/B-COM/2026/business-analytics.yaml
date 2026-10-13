@@ -1,0 +1,14 @@
+id: business-analytics
+course: B-COM
+year: 2026
+kind: major
+title: Business Analytics
+points: 62.5
+requirements:
+  - all: [BUSA20001, MAST20034]
+  - choose: { points: 12.5, from: [CMCE30002, CMCE30004, CMCE30003] }
+  - choose: { points: 12.5, from: [ACCT30001, ACCT30002, ACTL30008, ECOM30001, ECOM30002, ECOM30003, ECOM30004, ECON30025, FNCE30010, MKTG30014, MGMT30020, MGMT30021, FNCE30014] }
+  - all: [CMCE30005]
+# No major URL in the paste; this is the course's majors page.
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-com/majors-minors-and-specialisations
+verified_on: 2026-10-13 # structure; source: 2026 Handbook, checked

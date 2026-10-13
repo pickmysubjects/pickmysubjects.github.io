@@ -225,10 +225,18 @@ const majors = data.components.filter((c) => c.kind === 'major')
 const overviews = new Map(majors.map((m) => [m.id, majorOverview(data, m.id, m.course)]))
 
 function majorsListBody(code: LocaleCode, t: Translate): string {
-  const course = data.courses[0]?.title ?? ''
-  return `<h1>${esc(t('majors.title'))}</h1><p>${esc(t('majors.lede', { course }))}</p>${groupMajors(majors)
-    .map((g) => `<h2>${esc(t(`majorGroup.${g.id}`))}</h2><ul>${g.majors.map((m) => `<li><a href="${href(code, `majors/${m.id}`)}">${esc(m.title)}</a></li>`).join('')}</ul>`)
-    .join('')}`
+  // One section per course, each with its majors grouped by field.
+  return data.courses
+    .filter((c) => majors.some((m) => m.course === c.code))
+    .map((c) => {
+      const own = majors.filter((m) => m.course === c.code)
+      const groups = groupMajors(own)
+      const list = (ms: typeof own) => `<ul>${ms.map((m) => `<li><a href="${href(code, `majors/${m.id}`)}">${esc(m.title)}</a></li>`).join('')}</ul>`
+      const body = groups.length === 1 ? list(groups[0]!.majors) : groups.map((g) => `<h3>${esc(t(`majorGroup.${g.id}`))}</h3>${list(g.majors)}`).join('')
+      return `<h2>${esc(c.title)}</h2>${body}`
+    })
+    .join('')
+    .replace(/^/, `<h1>${esc(t('majors.title'))}</h1>`)
 }
 
 function majorPage(code: LocaleCode, m: (typeof majors)[number]): Page {

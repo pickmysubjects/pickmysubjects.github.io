@@ -1,0 +1,14 @@
+id: finance
+course: B-COM
+year: 2026
+kind: major
+title: Finance
+points: 62.5
+requirements:
+  # Both Level 2 core subjects are required; FNCE20006 is marked not available in 2026, so it sits in a choose worth both.
+  - choose: { points: 25, from: [FNCE20005, FNCE20006] }
+  - choose: { points: 25, from: [FNCE30003, FNCE30006, FNCE30008, FNCE30009, FNCE30010, FNCE30011, FNCE30013, FNCE30014, FNCE30007, FNCE30015] }
+  - all: [FNCE30001]
+# No major URL in the paste; this is the course's majors page.
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-com/majors-minors-and-specialisations
+verified_on: 2026-10-13 # structure; source: 2026 Handbook, checked

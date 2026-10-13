@@ -43,6 +43,14 @@ export function ruleText(t: Translate, rule: CourseRule | undefined, fallback = 
       return t('rule.level1Areas', { min: rule.minAreas, max: rule.maxPointsPerArea })
     case 'progression':
       return t('rule.progression', { min: rule.minPoints, level: rule.level, before: rule.beforeLevel })
+    case 'requirement': {
+      const paths = rule.paths.map((path) =>
+        path
+          .map((r) => ('all' in r ? t('rule.requirementAll', { codes: r.all.join(', ') }) : t('rule.requirementChoose', { n: r.choose.points, codes: r.choose.from.join(', ') })))
+          .join(' + '),
+      )
+      return paths.length === 1 ? paths[0]! : t('rule.requirementPaths', { paths: paths.join(t('rule.requirementOr')) })
+    }
   }
 }
 

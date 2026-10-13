@@ -105,6 +105,10 @@ export const zhTW: Messages = {
     specialisation: '最多 {max} 個專精',
     level1Areas: '至少 {min} 個 Level 1 學科領域，每個領域最多 {max} 學分',
     progression: '修 Level {before} 課程前一般需要先修滿 {min} 學分的 Level {level} 課程',
+    requirementAll: '{codes}',
+    requirementChoose: '從 {codes} 中修 {n} 學分',
+    requirementPaths: '以下其一：{paths}',
+    requirementOr: '；或 ',
   },
   ruleDetail: {
     done: '已完成',
@@ -124,6 +128,7 @@ export const zhTW: Messages = {
     componentUnknown: '{title}：結構尚未整理',
     componentDone: '{title} 已完成',
     componentMissing: '{title}：{missing}',
+    requirementMissing: '{missing}',
   },
   issue: {
     'visa-underload-h1': '{year} 年 1–6 月：{load} 分。持學生簽證一般每半年要修 {min} 分（夏季學期也算）。不夠的話需要學校批准，最後一個半年除外，請先問 Stop 1。',
@@ -551,7 +556,7 @@ export const zhTW: Messages = {
     metaNoPrereq: "不需要先修課",
     coverage: "目前有 {n} 門課，其中 Breadth 課 {breadth} 門。",
     preset: { firstSemester: "新生第一學期", breadth: "Breadth 課", noExam: "沒有期末考" },
-    cat: { science: "理科", breadth: "Breadth" },
+    cat: { science: "理科", breadth: "Breadth", discipline: "本學位課" },
   },
   majors: {
     statCore: "三年級必修",
