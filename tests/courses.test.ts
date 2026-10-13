@@ -6,6 +6,7 @@ import { generatePlan } from '../src/engine/generate'
 import { periodsFor } from '../src/engine/availability'
 import { pinnedIn } from '../src/engine/relieve'
 import { checkTerms } from '../src/engine/planCheck'
+import { planStress } from '../src/engine/termStress'
 
 /** More than one bachelor: categories, breadth and rules follow the student's own course. */
 describe('per-course rules (B-SCI and B-COM)', () => {
@@ -103,5 +104,15 @@ describe('per-course rules (B-SCI and B-COM)', () => {
     const { plan: p, unplaced } = generatePlan({ data, profile: { results: [], skills: {}, interests: [], goal: 'balanced' }, course: 'B-COM', courseYear: 2026, major: 'accounting', startYear: 2027, startPeriod: 'semester-1' })
     expect(unplaced).toEqual([])
     expect(p.terms.flatMap((t) => t.subjects)).toContain('ACCT20008')
+  })
+  it('the study goal shapes the plan: protecting a WAM never leaves more heavy semesters than a challenge', () => {
+    const prof = (goal: 'wam' | 'challenge') => ({ results: [], skills: { programming: 4, maths: 2, writing: 3 }, interests: ['machine-learning', 'finance'], goal })
+    for (const [course, major] of [['B-SCI', 'computing-and-software-systems'], ['B-SCI', 'data-science'], ['B-COM', 'finance']] as const) {
+      const heavy = (goal: 'wam' | 'challenge') => {
+        const { plan: p } = generatePlan({ data, profile: prof(goal), course, courseYear: 2026, major, startYear: 2027, startPeriod: 'semester-1' })
+        return planStress(p.terms.map((t) => t.subjects), data, prof(goal)).terms.filter((x) => x.level !== 'ok').length
+      }
+      expect(heavy('wam'), `${course} ${major}`).toBeLessThanOrEqual(heavy('challenge'))
+    }
   })
 })

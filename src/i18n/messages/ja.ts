@@ -249,6 +249,7 @@ export const ja: Messages = {
     eligibilityUnknown: '履修条件を確認できません：{needs}。',
   },
   record: {
+    goalNote: "おすすめもプラン作成もこの設定に合わせます。WAM を守るなら難しい科目を分け、挑戦なら重めの学期も許します。",
     degreeTitle: "私の学位",
     degreeNone: "まだ選んでいません。学位と専攻を選ぶと、おすすめとプランがあなたに合わせて変わります。",
     degreeEdit: "変更",

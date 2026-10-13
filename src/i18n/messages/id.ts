@@ -249,6 +249,7 @@ export const id: Messages = {
     eligibilityUnknown: 'Kelayakan belum bisa dipastikan: {needs}.',
   },
   record: {
+    goalNote: "Rekomendasi dan pembuat rencana mengikuti pilihan ini: jaga WAM memisahkan mata kuliah sulit; tantangan membolehkan semester lebih berat.",
     degreeTitle: "Gelar saya",
     degreeNone: "Belum dipilih. Pilih gelar dan jurusan supaya saran dan rencana sesuai denganmu.",
     degreeEdit: "Ubah",

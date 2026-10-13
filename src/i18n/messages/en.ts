@@ -252,6 +252,7 @@ export const en = {
     eligibilityUnknown: 'Eligibility not confirmed: {needs}.',
   },
   record: {
+    goalNote: "Suggestions and the plan builder both follow this: protecting your WAM keeps hard subjects apart; a challenge allows a heavier semester.",
     degreeTitle: "My degree",
     degreeNone: "Not chosen yet. Pick your degree and major so suggestions and your plan fit you.",
     degreeEdit: "Change",

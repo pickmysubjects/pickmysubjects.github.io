@@ -249,6 +249,7 @@ export const zhCN: Messages = {
     eligibilityUnknown: '无法确认是否满足选课条件：{needs}。',
   },
   record: {
+    goalNote: "推荐和生成排课都会按这个来：保住 WAM 时会把难课分开排；挑战自己时允许某个学期重一些。",
     degreeTitle: "我的学位",
     degreeNone: "还没选。选上学位和专业，推荐和方案才会按你来。",
     degreeEdit: "修改",

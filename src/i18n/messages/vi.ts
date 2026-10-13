@@ -249,6 +249,7 @@ export const vi: Messages = {
     eligibilityUnknown: 'Chưa xác nhận được điều kiện học: {needs}.',
   },
   record: {
+    goalNote: "Gợi ý và trình tạo kế hoạch đều theo lựa chọn này: giữ WAM thì tách các môn khó ra; thử thách thì chấp nhận một kỳ nặng hơn.",
     degreeTitle: "Bằng của tôi",
     degreeNone: "Chưa chọn. Chọn bằng và chuyên ngành để gợi ý và kế hoạch hợp với bạn.",
     degreeEdit: "Đổi",

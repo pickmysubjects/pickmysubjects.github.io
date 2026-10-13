@@ -1,16 +1,17 @@
 <script setup lang="ts">
 import { computed, shallowRef } from 'vue'
-import { recommend, yearLevel, type Goal, passedCodes } from '@/engine'
+import { recommend, yearLevel, passedCodes } from '@/engine'
 import { useI18n } from '@/i18n'
 import { categoryLabel, termLabel } from '@/i18n/format'
 import RecommendationCard from '@/components/recommend/RecommendationCard.vue'
 import QuickInterests from '@/components/recommend/QuickInterests.vue'
+import GoalPicker from '@/components/profile/GoalPicker.vue'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
 import { useProfile } from '@/composables/useProfile'
 
 const { data } = useDataset()
-const { profile, setGoal } = useProfile()
+const { profile } = useProfile()
 const plan = usePlan()
 
 const category = shallowRef('')
@@ -20,7 +21,6 @@ const shown = shallowRef(PAGE)
 const termIndex = shallowRef(-1)
 
 const { t } = useI18n()
-const goals: Goal[] = ['wam', 'balanced', 'challenge']
 
 const categories = computed(() => plan.course.value?.categories ?? [])
 const selectedTerm = computed(() => plan.terms.value[termIndex.value])
@@ -75,22 +75,7 @@ function value(event: Event): string {
 
     <template v-if="hasProfile">
       <form class="filters" @submit.prevent>
-        <fieldset class="goal">
-          <legend class="field-label">{{ t('suggest.goal') }}</legend>
-          <div class="seg">
-            <button
-              v-for="g in goals"
-              :key="g"
-              type="button"
-              :aria-pressed="profile.goal === g"
-              :title="t(`suggest.goals.${g}Hint`)"
-              @click="setGoal(g)"
-            >
-              {{ t(`suggest.goals.${g}`) }}
-            </button>
-          </div>
-          <p class="goal-hint">{{ t(`suggest.goals.${profile.goal}Hint`) }}</p>
-        </fieldset>
+        <GoalPicker />
         <label class="field">
           <span class="field-label">{{ t('suggest.kind') }}</span>
           <select class="select-glass" :value="category" @change="category = value($event)">
@@ -170,52 +155,11 @@ function value(event: Event): string {
   color: var(--ink-soft);
 }
 
-.goal {
-  display: grid;
-  gap: 6px;
-  min-width: 0;
-  margin: 0;
-  padding: 0;
-  border: 0;
-}
 
-.seg {
-  display: flex;
-  gap: 2px;
-  padding: 3px;
-  background: color-mix(in srgb, var(--ink) 6%, transparent);
-  border-radius: 12px;
-}
 
-.seg button {
-  flex: 1 0 auto;
-  min-height: 38px;
-  padding: 6px 14px;
-  font: inherit;
-  font-size: 0.9375rem;
-  color: var(--ink-soft);
-  white-space: nowrap;
-  background: none;
-  border: 0;
-  border-radius: 9px;
-  cursor: pointer;
-}
 
-.seg button:hover {
-  color: var(--ink);
-}
 
-.seg button[aria-pressed='true'] {
-  font-weight: 650;
-  color: var(--ink);
-  background: var(--glass-fill-hover);
-  box-shadow: var(--glass-shadow);
-}
 
-.seg button:focus-visible {
-  outline: 2px solid var(--overprint);
-  outline-offset: 1px;
-}
 
 .select-glass {
   width: 100%;
@@ -242,11 +186,6 @@ function value(event: Event): string {
   .rec-list {
     grid-template-columns: 1fr 1fr;
   }
-}
-.goal-hint {
-  margin: 0;
-  font-size: 0.8125rem;
-  color: var(--ink-soft);
 }
 .more {
   justify-self: center;

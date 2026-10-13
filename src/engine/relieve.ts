@@ -55,7 +55,9 @@ export function balanceTerms(plan: Plan, data: Dataset, profile?: Profile): { a:
   for (let round = 0; round < BALANCE_ROUNDS; round++) {
     // Any semester at or over the line may give a subject away — not only the heaviest, which
     // is often heavy for reasons no swap can fix (a run of compulsory subjects).
-    const heavy = current.flatMap((x, i) => (x >= 1 ? [i] : []))
+    // A student out to challenge themselves takes a heavy semester; only a very heavy one is spread.
+    const line = profile?.goal === 'challenge' ? 2 : 1
+    const heavy = current.flatMap((x, i) => (x >= line ? [i] : []))
     let best: { from: number; to: number; a: string; b: string; scores: number[] } | null = null
     for (const fromIndex of heavy) {
       const from = terms[fromIndex] as PlanTerm
@@ -182,7 +184,7 @@ export function fixHeavyTerms(plan: Plan, data: Dataset, profile?: Profile): { a
     let changed = false
     for (const [i, term] of plan.terms.entries()) {
       const before = termStress(term.subjects, data, profile)
-      if (before.level === 'ok') continue
+      if (RANK[before.level] <= RANK[tolerated(profile)]) continue
       const lighter = (subjects: string[]) => RANK[termStress(subjects, data, profile).level] < RANK[before.level]
       const r =
         swapFor(plan, data, i, profile, lighter) ??
@@ -434,4 +436,9 @@ export function pinnedIn(plan: Plan, data: Dataset, termIndex: number, codes: st
       return errors({ ...plan, terms }) > base
     }),
   )
+}
+
+/** The heaviest semester a student's goal accepts without the plan builder stepping in. */
+function tolerated(profile?: Profile): StressLevel {
+  return profile?.goal === 'challenge' ? 'heavy' : 'ok'
 }

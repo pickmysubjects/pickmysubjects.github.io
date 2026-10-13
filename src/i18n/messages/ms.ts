@@ -249,6 +249,7 @@ export const ms: Messages = {
     eligibilityUnknown: 'Kelayakan belum disahkan: {needs}.',
   },
   record: {
+    goalNote: "Cadangan dan pembina rancangan ikut pilihan ini: jaga WAM akan asingkan subjek sukar; cabaran membenarkan semester lebih berat.",
     degreeTitle: "Ijazah saya",
     degreeNone: "Belum dipilih. Pilih ijazah dan major supaya cadangan dan pelan sesuai dengan anda.",
     degreeEdit: "Tukar",

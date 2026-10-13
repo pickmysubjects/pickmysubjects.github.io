@@ -870,7 +870,10 @@ function rankElectives<T extends { code: string; score: number; eligibility: Tri
   const heavy = new Map<string, boolean>()
   const fit = (r: T) => {
     if (!heavy.has(r.code)) heavy.set(r.code, loadsUp(r.code))
-    return r.score - (heavy.get(r.code) ? HEAVY_PICK_COST : 0)
+    // Protecting a WAM: a subject that makes its semester heavier costs twice as much; out to
+    // challenge themselves: half.
+    const cost = HEAVY_PICK_COST * (profile.goal === 'wam' ? 2 : profile.goal === 'challenge' ? 0.5 : 1)
+    return r.score - (heavy.get(r.code) ? cost : 0)
   }
   // A free choice leaning on the student's weak spot only when nothing else fits: stacked
   // with the compulsory subjects on the same skill, it's what makes a semester too much.

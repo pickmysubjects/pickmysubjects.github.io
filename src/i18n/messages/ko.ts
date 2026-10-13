@@ -249,6 +249,7 @@ export const ko: Messages = {
     eligibilityUnknown: '수강 자격을 확인할 수 없습니다: {needs}.',
   },
   record: {
+    goalNote: "추천과 계획 생성 모두 이 설정을 따라요. WAM을 지킬 땐 어려운 과목을 나눠 배치하고, 도전할 땐 무거운 학기도 허용해요.",
     degreeTitle: "내 학위",
     degreeNone: "아직 선택하지 않았어요. 학위와 전공을 고르면 추천과 플랜이 나에게 맞춰져요.",
     degreeEdit: "변경",

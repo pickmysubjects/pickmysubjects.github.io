@@ -249,6 +249,7 @@ export const zhTW: Messages = {
     eligibilityUnknown: '無法確認是否符合選課條件：{needs}。',
   },
   record: {
+    goalNote: "推薦和產生排課都會依這個設定：保住 WAM 時會把難課分開排；挑戰自己時允許某個學期重一些。",
     degreeTitle: "我的學位",
     degreeNone: "還沒選。選好學位和主修，推薦和方案才會依你來。",
     degreeEdit: "修改",

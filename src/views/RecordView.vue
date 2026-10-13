@@ -6,6 +6,7 @@ import TopicChips from '@/components/profile/TopicChips.vue'
 import SuggestionPreview from '@/components/profile/SuggestionPreview.vue'
 import WamGoal from '@/components/profile/WamGoal.vue'
 import DegreeCard from '@/components/profile/DegreeCard.vue'
+import GoalPicker from '@/components/profile/GoalPicker.vue'
 import { ArrowRight, Download, Upload } from 'lucide-vue-next'
 import { link } from '@/composables/useView'
 import { downloadBackup, restoreBackup } from '@/utils/backup'
@@ -79,6 +80,10 @@ async function onRestore(event: Event): Promise<void> {
         <h2 id="interests-title" class="interests-title">{{ t('record.interestsTitle') }}</h2>
       </header>
       <TopicChips v-model="interests" :topics="topics" />
+    </section>
+
+    <section class="interests goal-card surface">
+      <GoalPicker :note="t('record.goalNote')" />
     </section>
 
     <p class="next">
@@ -194,5 +199,17 @@ async function onRestore(event: Event): Promise<void> {
   .backup {
     order: 1;
   }
+}
+
+/* Same heading size as the other cards; the three choices stay a comfortable width. */
+.goal-card :deep(.goal-label) {
+  margin-bottom: 6px;
+  font-size: 1.05rem;
+  font-weight: 650;
+  color: var(--ink);
+}
+
+.goal-card :deep(.seg) {
+  max-width: 520px;
 }
 </style>
