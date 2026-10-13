@@ -135,6 +135,17 @@ describe('recommendation statistics', () => {
     expect(recommend(data, { ...base, goal: 'balanced', interests: ['psychology'] }).map((r) => r.code)).toEqual(['PSYC10001', 'GEOG10001'])
   })
 
+  it('versions of one subject (non-allowed with each other) don’t fill the top together', () => {
+    const data = dataset([
+      subject({ code: 'AAAA10001', topics: ['statistics'], prerequisites: 'none', non_allowed: ['AAAA10002'] }),
+      subject({ code: 'AAAA10002', topics: ['statistics'], prerequisites: 'none', non_allowed: ['AAAA10001'] }),
+      subject({ code: 'BBBB10001', topics: ['biology'], prerequisites: 'none', non_allowed: [] }),
+    ])
+    const codes = recommend(data, { ...base, goal: 'balanced', interests: ['statistics'] }).map((r) => r.code)
+    // The second version waits until after the other subject, though it scores higher.
+    expect(codes).toEqual(['AAAA10001', 'BBBB10001', 'AAAA10002'])
+  })
+
   it('maxLevel keeps a first-year list to first-year subjects', () => {
     const data = dataset([
       subject({ code: 'AAAA10001', prerequisites: 'none', non_allowed: [] }),

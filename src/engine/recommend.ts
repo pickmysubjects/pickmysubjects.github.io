@@ -68,8 +68,8 @@ export interface RecommendOptions {
 
 /** Points a suggestion gives up for making its semester heavier (the plan builder uses the same). */
 export const HEAVY_PICK_COST = 6
-/** Enough to put the major's own subjects and the way into them above unrelated ones of similar fit; still less than a real mismatch costs. */
-export const PROGRAMME_BONUS = 8
+/** Enough to put the major's own subjects and the way into them above unrelated ones of similar fit; no more than a real mismatch costs. */
+export const PROGRAMME_BONUS = 12
 /** How far a subject two levels below the student's year drops (one level below: half). */
 export const BEHIND_LEVEL_COST = 8
 /** A subject that uses a skill rated 1 (2 counts half), with none of the student's interests. */
@@ -288,7 +288,7 @@ export function recommend(raw: Dataset, profile: Profile, opts: RecommendOptions
 
   // Equal scores (common when a student has told us little): the subject more of the degree
   // builds on comes first, a better first step than whichever code sorts first.
-  const builtOn = (r: Recommendation) => dependents.get(r.code)?.length ?? 0
+  const builtOn = (r: Recommendation) => usefulLater(r.code, dependents, data, profile.interests)
   recs.sort((a, b) => b.score - a.score || builtOn(b) - builtOn(a) || a.code.localeCompare(b.code))
   const ranked = diversify(recs, data)
   return opts.limit ? ranked.slice(0, opts.limit) : ranked
@@ -448,15 +448,7 @@ function score(s: Subject, ctx: ScoreCtx): Recommendation {
   if (parts.ease !== undefined) parts.hardness = 1 - parts.ease
 
   // Useful later: how many subjects build on it (and students' usefulness rating, once rated).
-  // With interests given, only the ones heading somewhere the student wants to go count: forty
-  // physics subjects after PHYC10001 say nothing to someone who chose data science.
-  const after = ctx.dependents.get(s.code) ?? []
-  const builtOn = interests.length
-    ? after.filter((c) => {
-        const next = ctx.data.subjects[c]
-        return next !== undefined && topicsOf(next).topics.some((t) => interests.includes(t))
-      }).length
-    : after.length
+  const builtOn = usefulLater(s.code, ctx.dependents, ctx.data, interests)
   const ratedUseful = s.signals && s.signals.reviews >= MIN_REVIEWS && s.signals.usefulness !== undefined ? (s.signals.usefulness - 1) / 4 : 0
   parts.opens = Math.max(Math.min(1, builtOn / OPENS_FULL), ratedUseful)
   if (builtOn >= 3) reasons.push(note('opensMany', { n: builtOn }, `${builtOn} later subjects build on it.`))
@@ -539,6 +531,20 @@ function sameArea(s: Subject, ctx: ScoreCtx): string[] {
   return [...ctx.marks.keys()].filter((c) => ctx.data.subjects[c]?.area === s.area)
 }
 
+/**
+ * How many subjects build on this one. With interests given, only the ones heading somewhere
+ * the student wants to go count: forty physics subjects after PHYC10001 say nothing to someone
+ * who chose data science. Used for "useful later" and to break ties, so the two agree.
+ */
+function usefulLater(code: string, dependents: Map<string, string[]>, data: Dataset, interests: string[]): number {
+  const after = dependents.get(code) ?? []
+  if (!interests.length) return after.length
+  return after.filter((c) => {
+    const next = data.subjects[c]
+    return next !== undefined && topicsOf(next).topics.some((t) => interests.includes(t))
+  }).length
+}
+
 /** code -> subjects whose prerequisites mention it. */
 function buildDependents(data: Dataset): Map<string, string[]> {
   const map = new Map<string, string[]>()
@@ -586,20 +592,33 @@ function siteRatingMean(data: Dataset): number {
 /**
  * Variety without hiding better matches: when the next pick would make three in a row
  * from the same area, take the best subject from another area instead, but only if
- * it's within a few points. Scores are unchanged; only near-ties move.
+ * it's within a few points. Scores are unchanged; only near-ties and alternatives move.
  */
 function diversify(recs: Recommendation[], data: Dataset): Recommendation[] {
   const pool = [...recs]
   const out: Recommendation[] = []
+  // Versions of the same subject (non-allowed with one already listed: Linear Algebra and its
+  // Advanced and Accelerated forms) can't all be taken, so only the best keeps its place; the
+  // rest wait at the end instead of filling the top with one choice.
+  const later: Recommendation[] = []
+  const excluded = (x: string, y: string) => {
+    const nx = data.subjects[x]?.nonAllowed
+    const ny = data.subjects[y]?.nonAllowed
+    return (nx !== undefined && nx !== 'unknown' && nx.includes(y)) || (ny !== undefined && ny !== 'unknown' && ny.includes(x))
+  }
   const area = (r: Recommendation) => data.subjects[r.code]?.area
   while (pool.length) {
     const top = pool[0] as Recommendation
+    if (out.some((r) => excluded(r.code, top.code))) {
+      later.push(pool.shift() as Recommendation)
+      continue
+    }
     const [a, b] = [out.at(-1), out.at(-2)]
     const streak = a && b && area(a) === area(top) && area(b) === area(top)
-    const alt = streak ? pool.findIndex((r) => area(r) !== area(top) && top.score - r.score <= TIE_POINTS) : -1
+    const alt = streak ? pool.findIndex((r) => area(r) !== area(top) && top.score - r.score <= TIE_POINTS && !out.some((o) => excluded(o.code, r.code))) : -1
     out.push(pool.splice(alt > 0 ? alt : 0, 1)[0] as Recommendation)
   }
-  return out
+  return [...out, ...later]
 }
 
 /** The highest level a student can usually take: year 1 until 100 points are done, and so on. */
