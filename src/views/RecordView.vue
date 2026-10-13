@@ -49,6 +49,11 @@ async function onRestore(event: Event): Promise<void> {
       </p>
     </section>
     <DegreeCard class="record-degree" />
+    <section class="interests goal-card surface">
+      <GoalPicker :note="t('record.goalNote')" />
+      <WorkHours class="goal-work" />
+    </section>
+
     <div class="record-body">
       <div class="record-col">
         <ResultsEditor class="results-card surface" v-model="results" :subjects="data.subjects" :options="options" />
@@ -83,11 +88,6 @@ async function onRestore(event: Event): Promise<void> {
         <h2 id="interests-title" class="interests-title">{{ t('record.interestsTitle') }}</h2>
       </header>
       <TopicChips v-model="interests" :topics="topics" />
-    </section>
-
-    <section class="interests goal-card surface">
-      <GoalPicker :note="t('record.goalNote')" />
-      <WorkHours class="goal-work" />
     </section>
 
     <p class="next">
@@ -180,7 +180,7 @@ async function onRestore(event: Event): Promise<void> {
 }
 
 .record-degree {
-  margin-bottom: 24px;
+  margin-bottom: 0;
 }
 
 .record-body {
