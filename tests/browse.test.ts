@@ -66,4 +66,13 @@ describe('browse filters in the address', () => {
     expect(filtersFromQuery(new URLSearchParams('preset=firstSemester'))).toMatchObject({ level: 1, period: 'semester-1', noPrereq: false })
     expect(filtersFromQuery(new URLSearchParams('level=9&when=autumn&sort=x&preset=nope'))).toEqual(EMPTY_FILTERS)
   })
+
+  it('opens a quick pick from its own address, unless the query sets filters', () => {
+    expect(filtersFromQuery(new URLSearchParams(''), 'no-exam').noExam).toBe(true)
+    expect(filtersFromQuery(new URLSearchParams(''), 'breadth').category).toBe('breadth')
+    expect(filtersFromQuery(new URLSearchParams(''), 'first-semester')).toMatchObject({ level: 1, period: 'semester-1' })
+    // Filters the student changed since (written back to the query) win over the address.
+    expect(filtersFromQuery(new URLSearchParams('level=2'), 'no-exam').noExam).toBe(false)
+    expect(filtersFromQuery(new URLSearchParams(''), 'nonsense')).toEqual(filtersFromQuery(new URLSearchParams('')))
+  })
 })

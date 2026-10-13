@@ -18,7 +18,7 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { periodsFor } from '../src/engine/availability'
-import { browse, EMPTY_FILTERS, PRESETS, type PresetName } from '../src/engine/browse'
+import { browse, EMPTY_FILTERS, PRESET_SLUGS, PRESETS, type PresetName } from '../src/engine/browse'
 import { majorOverview } from '../src/engine/roles'
 import { groupMajors } from '../src/utils/majorGroups'
 import { referencedSubjects } from '../src/engine/expr'
@@ -320,9 +320,33 @@ function browseBody(code: LocaleCode, t: Translate): string {
   const section = (preset: PresetName) => {
     const rows = browse(subjects, { ...EMPTY_FILTERS, ...PRESETS[preset] }, 'B-SCI', year)
     if (rows.length === 0) return ''
-    return `<h2>${esc(t(`browse.preset.${preset}`))}</h2><ul>${rows.map((r) => `<li>${subjectLink(code, r.subject.code)}</li>`).join('')}</ul>`
+    return `<h2><a href="${href(code, `subjects/${PRESET_SLUGS[preset]}`)}">${esc(t(`browse.preset.${preset}`))}</a></h2><ul>${rows.map((r) => `<li>${subjectLink(code, r.subject.code)}</li>`).join('')}</ul>`
   }
   return `<h1>${esc(t('browse.title'))}</h1><p>${esc(t('browse.lede'))}</p>${(Object.keys(PRESETS) as PresetName[]).map(section).join('')}`
+}
+
+/**
+ * One page per quick pick (/subjects/no-exam/ and so on), each answering a question students
+ * search for in their own language. The lists are for Bachelor of Science students, as the rest
+ * of the static pages are; breadth says so in its title.
+ */
+function presetPages(code: LocaleCode, t: Translate): Page[] {
+  const titles: Record<PresetName, string> = { noExam: 'seo.presetNoExam', breadth: 'seo.presetBreadth', firstSemester: 'seo.presetFirstSemester' }
+  return (Object.keys(PRESETS) as PresetName[]).flatMap((preset) => {
+    const rows = browse(subjects, { ...EMPTY_FILTERS, ...PRESETS[preset] }, 'B-SCI', YEAR)
+    if (rows.length === 0) return []
+    const facts = { n: rows.length, year: YEAR }
+    const title = t(titles[preset], facts)
+    const description = t(`${titles[preset]}Desc`, facts)
+    const body = [
+      `<h1>${esc(title)}</h1>`,
+      `<p>${esc(description)}</p>`,
+      `<ul>${rows.map((r) => `<li>${subjectLink(code, r.subject.code)}</li>`).join('')}</ul>`,
+      `<p><a href="${href(code, 'subjects')}">${esc(t('browse.title'))}</a> · <a href="${href(code, 'plan')}">${esc(t('plan.title'))}</a></p>`,
+      `<p><a href="${href(code, '')}">${esc(t('seo.made'))}</a></p>`,
+    ].join('\n')
+    return [{ path: `subjects/${PRESET_SLUGS[preset]}`, title: `${title} | PickMySubjects`, description, body }]
+  })
 }
 
 /** The UniMelb basics page as plain HTML: the same facts as the app, readable without JavaScript. */
@@ -399,6 +423,7 @@ function mainPages(code: LocaleCode): Page[] {
       description: t('browse.lede'),
       body: browseBody(code, t),
     },
+    ...presetPages(code, t),
     {
       path: 'majors',
       title: `${t('majors.title')} | PickMySubjects`,

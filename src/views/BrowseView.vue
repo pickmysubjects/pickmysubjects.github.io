@@ -13,14 +13,15 @@ import { useI18n } from '@/i18n'
 const PAGE = 20
 
 const { t } = useI18n()
-const { query } = useView()
+const { query, param } = useView()
 const { data, subjectList } = useDataset()
 const plan = usePlan()
 
 const course = computed(() => plan.setup.value.course || 'B-SCI')
 const year = computed(() => plan.terms.value[0]?.year ?? new Date().getFullYear())
 
-const filters = shallowRef(filtersFromQuery(query.value))
+// A quick pick's own address (/subjects/no-exam/) opens with it applied.
+const filters = shallowRef(filtersFromQuery(query.value, param.value))
 const shown = shallowRef(PAGE)
 
 const categories = computed(() => data.value.courses.find((c) => c.code === course.value)?.categories ?? [])

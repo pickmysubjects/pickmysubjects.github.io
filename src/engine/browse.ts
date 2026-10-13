@@ -36,6 +36,13 @@ export const PRESETS = {
 
 export type PresetName = keyof typeof PRESETS
 
+/** Each quick pick's own address (/subjects/no-exam/), a page search engines can show on its own. */
+export const PRESET_SLUGS: Record<PresetName, string> = { firstSemester: 'first-semester', breadth: 'breadth', noExam: 'no-exam' }
+
+export function presetFromSlug(slug: string): PresetName | undefined {
+  return (Object.keys(PRESET_SLUGS) as PresetName[]).find((p) => PRESET_SLUGS[p] === slug)
+}
+
 export interface BrowseRow {
   subject: Subject
   periods: Period[]
@@ -122,8 +129,9 @@ export function filtersToQuery(f: BrowseFilters): string {
 const PERIOD_SET = new Set<string>(['summer', 'semester-1', 'winter', 'semester-2'])
 const SORT_SET = new Set<string>(['code', 'exam', 'hours', 'rating'])
 
-export function filtersFromQuery(q: URLSearchParams): BrowseFilters {
-  const preset = q.get('preset')
+/** `slug` is the quick pick in the path (/subjects/no-exam/); filters in the query win over it. */
+export function filtersFromQuery(q: URLSearchParams, slug = ''): BrowseFilters {
+  const preset = q.get('preset') ?? ([...q.keys()].length === 0 ? presetFromSlug(slug) : undefined)
   const base = { ...EMPTY_FILTERS, ...(preset && preset in PRESETS ? PRESETS[preset as PresetName] : {}) }
   const level = Number(q.get('level'))
   const when = q.get('when') ?? ''
