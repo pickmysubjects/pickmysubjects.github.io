@@ -6,13 +6,14 @@ import { periodsFor } from '@/engine'
 import { link } from '@/composables/useView'
 import { useDataset } from '@/composables/useDataset'
 import { useI18n } from '@/i18n'
+import { localTitle } from '@/i18n/localized'
 
 // A short list of subjects, each a link with its title and when it runs; `notes` adds a line per code.
 const props = defineProps<{ codes: string[]; year: number; notes?: Record<string, string>; limit?: number }>()
 // A long list starts short; the rest is one tap away.
 const expanded = shallowRef(false)
 const { data } = useDataset()
-const { t } = useI18n()
+const { t, locale } = useI18n()
 
 const visible = computed(() => (props.limit && !expanded.value ? props.codes.slice(0, props.limit) : props.codes))
 const hidden = computed(() => props.codes.length - visible.value.length)
@@ -23,7 +24,7 @@ const rows = computed(() =>
       code,
       // Not added to our data yet: say so, and go to the Handbook instead of an empty page.
       missing: !s,
-      title: s?.title ?? t.value('subject.notYetAdded'),
+      title: s ? [s.title, localTitle(s, locale.value)].filter(Boolean).join(' · ') : t.value('subject.notYetAdded'),
       when: s ? periodsFor(s, props.year).map((p) => t.value(`periodShort.${p}`)).join(' · ') : '',
       note: props.notes?.[code],
     }

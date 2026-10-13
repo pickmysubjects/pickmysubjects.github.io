@@ -246,9 +246,16 @@ export const subjectFileSchema = z
     discussion: undefined as DiscussionSummary | undefined,
     // Filled in from data/<set>/about/ when there is one.
     about: undefined as SubjectAbout | undefined,
+    // Filled in from data/<set>/subject-titles.yaml: the title in Chinese, for Chinese readers.
+    titles: undefined as SubjectTitles | undefined,
   }))
 
 export type Subject = z.output<typeof subjectFileSchema>
+
+/** Our own translation of a subject's title, so Chinese readers can recognise and search for it. */
+const subjectTitles = z.object({ zh: z.string().min(1).max(40), 'zh-TW': z.string().min(1).max(40).optional() }).strict()
+export type SubjectTitles = z.output<typeof subjectTitles>
+export const subjectTitlesFileSchema = z.record(subjectCode, subjectTitles)
 
 /**
  * One piece of our own wording in every language the site has: English and Chinese written

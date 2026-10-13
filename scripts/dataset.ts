@@ -3,7 +3,7 @@ import { join, relative } from 'node:path'
 import { parse } from 'yaml'
 import { z } from 'zod'
 import { referencedSubjects } from '../src/engine/expr'
-import { aboutFileSchema, componentFileSchema, courseFileSchema, discussionFileSchema, SKILLS, subjectFileSchema, type Dataset, type Skill, type Subject } from '../src/engine/schema'
+import { aboutFileSchema, componentFileSchema, courseFileSchema, discussionFileSchema, SKILLS, subjectFileSchema, subjectTitlesFileSchema, type Dataset, type Skill, type Subject } from '../src/engine/schema'
 
 export const ROOT = join(import.meta.dirname, '..')
 
@@ -91,6 +91,17 @@ export function buildDataset(name: Dataset['name']): BuildResult {
     const s = subjects[a.code]
     if (!s) errors.push(`${relative(ROOT, file)}: ${a.code} is not a subject`)
     else s.about = a
+  }
+
+  // Titles in Chinese, one file for every subject.
+  const titlesFile = join(base, 'subject-titles.yaml')
+  if (existsSync(titlesFile)) {
+    const titles = load(titlesFile, subjectTitlesFileSchema, errors) ?? {}
+    for (const [code, t] of Object.entries(titles)) {
+      const s = subjects[code]
+      if (!s) errors.push(`${relative(ROOT, titlesFile)}: ${code} is not a subject`)
+      else s.titles = t
+    }
   }
 
   const missing = new Set<string>()

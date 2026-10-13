@@ -12,7 +12,7 @@
  * Also writes 404.html (so any other address still opens the app), sitemap.xml,
  * robots.txt and llms.txt. Everything is static: GitHub Pages serves it for free.
  */
-import { pickLocalized } from '../src/i18n/localized'
+import { localTitle, pickLocalized, withLocalTitle } from '../src/i18n/localized'
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -23,6 +23,7 @@ import { groupMajors } from '../src/utils/majorGroups'
 import { referencedSubjects } from '../src/engine/expr'
 import type { Dataset, Subject } from '../src/engine/schema'
 import { describeReq } from '../src/i18n/format'
+import { subjectFaq, type FaqItem } from '../src/i18n/faq'
 import { interpolate, type Params, type Translate } from '../src/i18n/interpolate'
 import { LOCALE_CODES, type LocaleCode } from '../src/i18n/codes'
 import { en } from '../src/i18n/messages/en'
@@ -70,6 +71,8 @@ interface Page {
   title: string
   description: string
   body: string
+  /** Question-and-answer pairs shown on the page, also given to search engines as FAQPage data. */
+  faq?: FaqItem[]
 }
 
 function esc(text: string): string {
@@ -85,7 +88,7 @@ const absolute = (code: LocaleCode, path: string) => `${SITE}${prefix(code)}${sl
 function subjectLink(code: LocaleCode, c: string): string {
   const s = data.subjects[c]
   // Subjects we don't have get no page, so no link (a link would land on a 404).
-  return s ? `<a href="${href(code, `subject/${c}`)}">${esc(c)} ${esc(s.title)}</a>` : esc(c)
+  return s ? `<a href="${href(code, `subject/${c}`)}">${esc(c)} ${esc(withLocalTitle(s.title, localTitle(s, code)))}</a>` : esc(c)
 }
 
 /** schema.org data, so search engines and AI assistants know what the page is about. */
@@ -101,7 +104,15 @@ function structured(page: Page, code: LocaleCode, url: string): object {
       isAccessibleForFree: true,
     }
   }
-  return { '@context': 'https://schema.org', '@type': 'WebPage', name: page.title, description: page.description, url, inLanguage: code, isPartOf: site, isAccessibleForFree: true }
+  const webPage = { '@type': 'WebPage', name: page.title, description: page.description, url, inLanguage: code, isPartOf: site, isAccessibleForFree: true }
+  if (!page.faq?.length) return { '@context': 'https://schema.org', ...webPage }
+  const faq = {
+    '@type': 'FAQPage',
+    url,
+    inLanguage: code,
+    mainEntity: page.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  }
+  return { '@context': 'https://schema.org', '@graph': [webPage, faq] }
 }
 
 function render(page: Page, code: LocaleCode): string {
@@ -158,7 +169,7 @@ function assessment(t: Translate, s: Subject, sep: string): string | null {
 
 function subjectPage(code: LocaleCode, s: Subject): Page {
   const t = translator(code)
-  const facts = { code: s.code, title: s.title, level: s.level, points: s.points }
+  const facts = { code: s.code, title: withLocalTitle(s.title, localTitle(s, code)), level: s.level, points: s.points }
   // Static pages are written for Bachelor of Science students, as the app's default course is.
   const prereq = describeReq(t, s.prerequisites, 'B-SCI')
   const coreq = s.corequisites !== 'none' && s.corequisites !== 'unknown' ? describeReq(t, s.corequisites, 'B-SCI') : ''
@@ -167,7 +178,7 @@ function subjectPage(code: LocaleCode, s: Subject): Page {
   const assess = assessment(t, s, listSep(code))
   const sig = s.signals && s.signals.reviews >= 3 ? s.signals : undefined
   const parts = [
-    `<h1>${esc(s.code)} ${esc(s.title)}</h1>`,
+    `<h1>${esc(s.code)} ${esc(facts.title)}</h1>`,
     `<p>${esc(t('seo.facts', facts))} · ${esc(runs(t, s, listSep(code)))}</p>`,
     // Our own summary, in this page's language, so crawlers that don't run scripts see it too.
     ...(s.about
@@ -197,6 +208,10 @@ function subjectPage(code: LocaleCode, s: Subject): Page {
         `<p>${esc(t('subject.discussSource', { n: d.reviews, years, source: d.source }))} <a href="${esc(d.url)}" rel="nofollow">${esc(t('subject.discussRead'))}</a></p>`,
     )
   }
+  const faq = subjectFaq(t, s, { year: YEAR, course: 'B-SCI', unlocks: leads, listSep: listSep(code), sentenceSep: sentenceSep(code), locale: code })
+  if (faq.length) {
+    parts.push(`<h2>${esc(t('faq.title'))}</h2><dl>${faq.map((f) => `<dt>${esc(f.q)}</dt><dd>${esc(f.a)}</dd>`).join('')}</dl>`)
+  }
   parts.push(`<p>${esc(t('subject.source', { year: s.sourceYear }))}</p>`)
   if (s.handbook) parts.push(`<p><a href="${esc(s.handbook)}">${esc(t('seo.confirm'))}</a></p>`)
   parts.push(`<p><a href="${href(code, '')}">${esc(t('seo.made'))}</a></p>`)
@@ -215,6 +230,7 @@ function subjectPage(code: LocaleCode, s: Subject): Page {
     title: `${t('seo.subjectTitle', facts)} | PickMySubjects`,
     description: description.length > 300 ? `${description.slice(0, 297)}…` : description,
     body: parts.join('\n'),
+    faq,
   }
 }
 

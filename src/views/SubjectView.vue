@@ -7,6 +7,7 @@ import AssessmentPanel from '@/components/subject/AssessmentPanel.vue'
 import MajorRoles from '@/components/subject/MajorRoles.vue'
 import SubjectAbout from '@/components/subject/SubjectAbout.vue'
 import DiscussionSummary from '@/components/subject/DiscussionSummary.vue'
+import SubjectFaq from '@/components/subject/SubjectFaq.vue'
 import { PASS_MARK, periodsFor, prerequisiteRoute, referencedSubjects, simplifyFor, termKey, type Period } from '@/engine'
 import SubjectLinks from '@/components/majors/SubjectLinks.vue'
 import { useDataset } from '@/composables/useDataset'
@@ -16,6 +17,7 @@ import { useRated } from '@/composables/useRated'
 import { useI18n } from '@/i18n'
 import { categoryLabel, describeReq, requirementList, termLabel } from '@/i18n/format'
 import { discussionLinks } from '@/utils/links'
+import { localTitle } from '@/i18n/localized'
 
 const props = defineProps<{ code: string }>()
 const { name, data } = useDataset()
@@ -121,7 +123,9 @@ const links = computed(() => (name.value === 'real' ? discussionLinks(code.value
     <template v-if="subject">
       <header class="head">
         <p class="code head-code">{{ subject.code }}</p>
-        <h1 class="page-title">{{ subject.title }}</h1>
+        <h1 class="page-title">
+          {{ subject.title }}<span v-if="localTitle(subject, locale)" class="title-local" :lang="locale">{{ localTitle(subject, locale) }}</span>
+        </h1>
         <div class="facts">
           <span class="chip">{{ t('subject.level', { level: subject.level }) }}</span>
           <span class="chip">{{ t('subject.points', { points: subject.points }) }}</span>
@@ -233,6 +237,8 @@ const links = computed(() => (name.value === 'real' ? discussionLinks(code.value
           <RatingForm v-if="rating" :code="subject.code" @done="onRated" />
         </section>
 
+        <SubjectFaq class="panel surface panel-wide" :subject="subject" :year="year" :course="plan.setup.value.course" :unlocks="unlocks" />
+
         <section v-if="links.length" class="panel surface panel-wide">
           <h2 class="panel-title">{{ t('subject.discuss') }}</h2>
           <p class="links-inline">
@@ -260,6 +266,14 @@ const links = computed(() => (name.value === 'real' ? discussionLinks(code.value
 </template>
 
 <style scoped>
+.title-local {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.6em;
+  font-weight: 500;
+  color: var(--ink-soft);
+}
+
 .needs-list {
   margin: 4px 0 0;
   padding-left: 20px;

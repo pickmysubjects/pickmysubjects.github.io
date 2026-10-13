@@ -5,9 +5,10 @@ import type { BrowseRow } from '@/engine'
 import { link } from '@/composables/useView'
 import { useDataset } from '@/composables/useDataset'
 import { useI18n } from '@/i18n'
+import { localTitle } from '@/i18n/localized'
 
 const props = defineProps<{ row: BrowseRow; course: string }>()
-const { t } = useI18n()
+const { t, locale } = useI18n()
 
 const s = computed(() => props.row.subject)
 const { data } = useDataset()
@@ -24,7 +25,7 @@ const closed = computed(() => data.value.courses.some((c) => c.code === props.co
         <span v-if="closed" class="tag tag-closed">{{ t('browse.closedForYou') }}</span>
         <span v-else-if="category === 'breadth'" class="tag tag-breadth">{{ t('browse.cat.breadth') }}</span>
       </span>
-      <span class="title">{{ s.title }}</span>
+      <span class="title">{{ s.title }}<template v-if="localTitle(s, locale)"> · {{ localTitle(s, locale) }}</template></span>
       <span class="meta">
         <span>{{ row.periods.length ? row.periods.map((p) => t(`periodShort.${p}`)).join(' · ') : t('browse.notRunning') }}</span>
         <span v-if="row.exam !== null">{{ row.exam === 0 ? t('browse.metaNoExam') : t('browse.metaExam', { n: row.exam }) }}</span>

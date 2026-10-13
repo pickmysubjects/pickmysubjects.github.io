@@ -19,9 +19,10 @@ import { watchEffect } from 'vue'
 import { useView, link } from './composables/useView'
 import { useDataset } from './composables/useDataset'
 import { useI18n } from './i18n'
+import { localTitle, withLocalTitle } from './i18n/localized'
 
 const { view, param } = useView()
-const { t } = useI18n()
+const { t, locale } = useI18n()
 const { data } = useDataset()
 
 // The tab title follows the page and the language (the built page only has the first one).
@@ -42,7 +43,7 @@ watchEffect(() => {
   const key = TITLES[view.value]
   const major = view.value === 'majors' && param.value ? data.value.components.find((c) => c.id === param.value) : undefined
   document.title = s
-    ? `${t.value('seo.subjectTitle', { code: s.code, title: s.title })} | PickMySubjects`
+    ? `${t.value('seo.subjectTitle', { code: s.code, title: withLocalTitle(s.title, localTitle(s, locale.value)) })} | PickMySubjects`
     : major
       ? `${t.value('majors.majorTitle', { title: major.title })} | PickMySubjects`
       : key

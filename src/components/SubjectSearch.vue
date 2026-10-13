@@ -4,10 +4,11 @@ import { Search } from 'lucide-vue-next'
 import { useDataset } from '@/composables/useDataset'
 import { go, link } from '@/composables/useView'
 import { useI18n } from '@/i18n'
+import { localTitle } from '@/i18n/localized'
 
 const props = defineProps<{ compact?: boolean }>()
 const { subjectList } = useDataset()
-const { t } = useI18n()
+const { t, locale } = useI18n()
 
 const listId = useId()
 const query = shallowRef('')
@@ -18,7 +19,8 @@ const results = computed(() => {
   const q = query.value.trim().toLowerCase()
   if (!q) return []
   return subjectList.value
-    .filter((s) => s.code.toLowerCase().includes(q) || s.title.toLowerCase().includes(q))
+    // Chinese titles match in every language: students often search in Chinese whatever the page language.
+    .filter((s) => s.code.toLowerCase().includes(q) || s.title.toLowerCase().includes(q) || (s.titles && (s.titles.zh.includes(q) || (s.titles['zh-TW'] ?? '').includes(q))))
     .slice(0, props.compact ? 6 : 8)
 })
 
@@ -91,7 +93,7 @@ function move(delta: number): void {
         @mouseenter="active = i"
       >
         <span class="code result-code">{{ s.code }}</span>
-        <span class="result-title">{{ s.title }}</span>
+        <span class="result-title">{{ s.title }}<template v-if="localTitle(s, locale)"> · {{ localTitle(s, locale) }}</template></span>
       </li>
       <li v-if="results.length === 0" class="result result-empty">
         {{ t('home.noResults', { q: query.trim() }) }}
