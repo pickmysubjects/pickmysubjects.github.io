@@ -25,8 +25,7 @@ const fix = computed(() => (here.value && here.value.level !== 'ok' ? relief(pro
 // No fix: say which required subjects have nowhere else to go, so it doesn't look like an oversight.
 const stuck = computed(() => {
   if (!here.value || here.value.level === 'ok' || fix.value) return []
-  const p = pinned(props.termIndex)
-  return p.length >= 2 ? p : []
+  return pinned(props.termIndex)
 })
 // "Is this right?": the only way to learn whether the rules match how students find a
 // semester. Sends the verdict, the rules that fired and the subject codes — nothing about the student.

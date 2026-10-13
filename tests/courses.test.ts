@@ -72,4 +72,27 @@ describe('per-course rules (B-SCI and B-COM)', () => {
       }
     }
   })
+  it('a points-only prerequisite counts the required subjects and adds no closed or no-credit ones', () => {
+    for (const major of ['management', 'marketing']) {
+      const { plan: p } = generatePlan({ data, profile: { results: [], skills: {}, interests: [], goal: 'balanced' }, course: 'B-COM', courseYear: 2026, major, startYear: 2026, startPeriod: 'semester-1' })
+      const all = p.terms.flatMap((t) => t.subjects)
+      expect(all).not.toContain('ACCT10002')
+      const st = checkCourse(p, data).statuses
+      for (const id of ['level1-cap', 'breadth-cap', 'breadth-l1-cap']) expect(st.find((x) => x.ruleId === id)?.status, `${major} ${id}`).not.toBe('fail')
+    }
+  })
+
+  it('a choice never picks a subject whose prerequisite never runs', () => {
+    const r = generatePlan({ data, profile: { results: [], skills: {}, interests: [], goal: 'balanced' }, course: 'B-COM', courseYear: 2026, major: 'business-analytics', startYear: 2026, startPeriod: 'semester-1' })
+    expect(r.unplaced.map((u) => u.code)).toEqual([])
+  })
+
+  it('a view for one course turned into another starts from the full data', () => {
+    expect(periodsFor(forCourse(forCourse(data, 'B-SCI'), 'B-COM').subjects.ECON10004!, 2026)).toContain('semester-1')
+  })
+
+  it('a subject closed to the course is an error in the plan check', () => {
+    const issues = checkTerms(plan('B-COM', ['ACCT10002']), data)
+    expect(issues.some((i) => i.kind === 'closed-to-course' && i.subject === 'ACCT10002')).toBe(true)
+  })
 })

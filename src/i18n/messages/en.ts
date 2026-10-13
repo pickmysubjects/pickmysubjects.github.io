@@ -132,6 +132,8 @@ export const en = {
     componentDone: '{title} complete',
     componentMissing: '{title}: {missing}',
     requirementMissing: '{missing}',
+    missingSubjects: 'missing {codes}',
+    choosePoints: '{have} / {need} points from {codes}',
   },
   issue: {
     'visa-underload-h1': 'January–June {year}: {load} points. On a student visa you normally need {min} per half-year (summer counts). Less needs approval unless it’s your final half-year — check with Stop 1.',
@@ -139,6 +141,7 @@ export const en = {
     duplicate: '{code} is planned more than once (again in {term}).',
     'not-in-dataset': '{code} isn’t in the dataset yet, so nothing about it can be checked.',
     discontinued: "{code} doesn’t run from {year} on. Swap it for another subject.",
+    "closed-to-course": "{code} isn’t open to students in your degree. Swap it for another subject.",
     discontinuedInstead: "{code} doesn’t run from {year} on. Take {instead} instead.",
     'not-offered': '{code} doesn’t run in {term}.',
     'not-offered-assumed': '{code} doesn’t run in {period} (based on {assumed} data).',

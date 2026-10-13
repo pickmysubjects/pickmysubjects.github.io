@@ -86,12 +86,20 @@ export function usePlan() {
     const old = state.value
     const key = (course: string) => `${name.value}|${course}`
     if (setup.course !== old.setup.course) {
+      const built = (p: PlanState | undefined) => p !== undefined && p.terms.some((t) => t.subjects.length > 0)
       const kept = plans.value[key(setup.course)]
-      const rest = { ...plans.value, [key(old.setup.course)]: cloneJson(old) }
+      // Only a plan that was actually built is worth keeping (not the untouched default).
+      const rest = { ...plans.value, ...(built(old) ? { [key(old.setup.course)]: cloneJson(old) } : {}) }
       delete rest[key(setup.course)]
       const same = (a: PlanSetup, b: PlanSetup) =>
-        a.major === b.major && a.specialisation === b.specialisation && a.startYear === b.startYear && a.startPeriod === b.startPeriod
-      if (kept && same(kept.setup, setup)) {
+        a.courseYear === b.courseYear &&
+        a.major === b.major &&
+        a.specialisation === b.specialisation &&
+        (a.field ?? '') === (b.field ?? '') &&
+        a.startYear === b.startYear &&
+        a.startPeriod === b.startPeriod &&
+        (a.international === true) === (b.international === true)
+      if (kept && built(kept) && same(kept.setup, setup)) {
         plans.value = { ...rest, [name.value]: { ...kept, setup: { ...setup, confirmed: true } } }
         return true
       }

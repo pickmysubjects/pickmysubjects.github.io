@@ -3,12 +3,15 @@ import { MARKING_SKILLS, skillsOf } from './skills'
 import { topicsOf } from './topics'
 
 const cache = new WeakMap<Dataset, Map<string, Dataset>>()
+// Each view's source: a view for one course turned into another starts from the full data again.
+const rawOf = new WeakMap<Dataset, Dataset>()
 
 /**
  * The dataset as a student in `course` sees it: a subject that is breadth for them and limits
  * breadth students to some periods runs only in those.
  */
-export function forCourse(data: Dataset, course: string): Dataset {
+export function forCourse(given: Dataset, course: string): Dataset {
+  const data = rawOf.get(given) ?? given
   let byCourse = cache.get(data)
   if (!byCourse) cache.set(data, (byCourse = new Map()))
   const hit = byCourse.get(course)
@@ -21,6 +24,7 @@ export function forCourse(data: Dataset, course: string): Dataset {
     changed ||= limit !== undefined
   }
   const view = changed ? { ...data, subjects } : data
+  if (view !== data) rawOf.set(view, data)
   byCourse.set(course, view)
   return view
 }

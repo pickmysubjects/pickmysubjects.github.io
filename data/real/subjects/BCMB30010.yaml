@@ -32,6 +32,7 @@ verified_on: 2026-10-13
 min_attendance: 90
 categories:
   B-SCI: science
+breadth_for: []
 notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
 skills:
   - lab

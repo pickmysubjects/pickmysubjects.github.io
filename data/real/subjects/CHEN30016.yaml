@@ -14,7 +14,6 @@ prerequisites:
         - CHEN20010
         - MAST20009
         - MAST20030
-# Handbook: ENGR30002 "can also be taken concurrently" in both options.
 corequisites: ENGR30002
 non_allowed:
   - BMEN30007
@@ -35,6 +34,7 @@ source_year: 2026
 verified_on: 2026-10-13
 categories:
   B-SCI: science
+breadth_for: []
 notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
 skills:
   - maths

@@ -19,4 +19,13 @@ describe('switching degree keeps each degree’s plan', () => {
     // Back with a different major: rebuilt, not restored.
     expect(plan.updateSetup({ ...sci, course: 'B-COM', major: 'marketing' })).toBe(false)
   })
+  it('a never-built default is not restored, and a changed field rebuilds', () => {
+    const plan = usePlan()
+    const base = { ...plan.setup.value, course: 'B-SCI', courseYear: 2026, major: '', specialisation: '', field: 'computing', startYear: 2027, startPeriod: 'semester-1' as const }
+    plan.updateSetup(base)
+    plan.generate()
+    plan.updateSetup({ ...base, course: 'B-COM', major: 'finance', field: '' })
+    plan.generate()
+    expect(plan.updateSetup({ ...base, field: 'chemphys' })).toBe(false)
+  })
 })

@@ -54,7 +54,7 @@ export function parseHandbookPaste(text: string): PasteResult {
   const sections = splitSections(text)
 
   // Many pages list the requirement per degree; this site plans the Bachelor of Science.
-  const pre = sections.pre ? scienceOnly(undergraduateOnly(latestRuleOnly(sections.pre, warnings), warnings), warnings) : undefined
+  const pre = sections.pre ? scienceOnly(undergraduateOnly(latestRuleOnly(sections.pre, warnings, handbookYear(text)), warnings), warnings) : undefined
   // "Concurrent prerequisites" (or a note that subjects "can also be taken concurrently") may be
   // taken in the same semester: that's what a corequisite means here.
   const split = pre ? splitConcurrent(pre) : undefined
@@ -157,12 +157,32 @@ function scienceOnly(lines: string[], warnings: string[]): string[] {
   return lines.slice(start, end)
 }
 
+/** The Handbook year the page is from ("You’re viewing the 2026 Handbook"), else this year. */
+function handbookYear(text: string): number {
+  return Number(/viewing the (\d{4}) Handbook/i.exec(text)?.[1] ?? /\bYear: (\d{4})\b/.exec(text)?.[1] ?? new Date().getFullYear())
+}
+
 /** "For 2020, students must … From 2021, students must …": only the rule in force now applies. */
-function latestRuleOnly(lines: string[], warnings: string[]): string[] {
-  const at = lines.map((l, i) => (/^from \d{4}\b/i.test(l.trim()) ? i : -1)).filter((i) => i >= 0).at(-1)
+function latestRuleOnly(all: string[], warnings: string[], year: number): string[] {
+  // A rule that starts in a later year ("From 2027 onwards") doesn't apply yet: drop it.
+  const future = all.findIndex((l) => Number(/^from (\d{4})\b/i.exec(l.trim())?.[1] ?? 0) > year)
+  const lines = future < 0 ? all : all.slice(0, future)
+  if (future >= 0) warnings.push(`Left out a rule that starts later ("${all[future]!.trim().slice(0, 40)}").`)
+  // The latest "From YYYY" rule already in force (a "From 2027" one waits until then).
+  const at = lines
+    .map((l, i) => {
+      const y = /^from (\d{4})\b/i.exec(l.trim())?.[1]
+      return y && Number(y) <= year ? i : -1
+    })
+    .filter((i) => i >= 0)
+    .at(-1)
   if (at === undefined || !lines.slice(0, at).some((l) => /^(for|until|before|up to) \d{4}\b/i.test(l.trim()))) return lines
   warnings.push(`Kept only the current rule ("${lines[at]!.trim().slice(0, 40)}").`)
-  return lines.slice(at + 1)
+  // Keep what the line says after the year ("… students must have completed one of:"), so its
+  // "one of" / "both of" still labels the table under it; stop at a later rule for a future year.
+  const rest = lines[at]!.trim().replace(/^from \d{4}(?: onwards)?,?\s*/i, '').replace(/^students must (?:have )?(?:completed |meet )?/i, '')
+  const end = lines.findIndex((l, i) => i > at && /^(from|for) \d{4}\b/i.test(l.trim()))
+  return [...(rest ? [rest] : []), ...lines.slice(at + 1, end < 0 ? lines.length : end)]
 }
 
 function splitConcurrent(lines: string[]): { before: string[]; concurrent: string[] } {
@@ -224,8 +244,10 @@ function optionFromWords(line: string): ReqField {
   const found = [...line.matchAll(CODE)]
   const groups: string[][] = []
   found.forEach((m, k) => {
-    const gap = k === 0 ? '' : line.slice(found[k - 1]!.index! + 10, m.index)
-    if (k > 0 && /^\s*or\s*$/i.test(gap)) groups.at(-1)!.push(m[0])
+    const prev = found[k - 1]
+    const gap = k === 0 || !prev ? '' : line.slice(prev.index! + prev[0].length, m.index)
+    // "MAST10007 or MAST10022", also with a name between ("MAST10007 Linear Algebra or MAST10022").
+    if (k > 0 && /^(?:\s[^;,]*?)?\s*\bor\s*$/i.test(gap)) groups.at(-1)!.push(m[0])
     else if (!groups.some((g) => g.includes(m[0]))) groups.push([m[0]])
   })
   const parts: ReqExpr[] = groups.map((g) => (g.length === 1 ? { subject: g[0]! } : { any: g.map((c) => ({ subject: c })) }))
@@ -319,7 +341,8 @@ function parseBlock(lines: string[], label: string, warnings: string[]): ReqExpr
   const points = /^(\d+(?:\.\d+)?) (?:credit )?points? (?:of|at) level (\d)/i.exec(sentence)
   if (points) return { points: { min: Number(points[1]), level: Number(points[2]) } }
   // "Completion of 100 credit points of study" / "A minimum of 200 credit points of Undergraduate study".
-  const total = /(?:completion of|completed|a minimum of|at least) (\d+(?:\.\d+)?) (?:credit )?points?\b/i.exec(sentence)
+  // Only points of study in general; "25 points of Level 2 Earth Science" stays for a human.
+  const total = /(?:completion of|completed|a minimum of|at least) (\d+(?:\.\d+)?) (?:credit )?points?(?: of (?:prior |undergraduate )?(?:undergraduate )?study)?(?=[.;]|\s*$|\s+(?:this|students|and)\b)/i.exec(sentence)
   if (total) {
     const min = { points: { min: Number(total[1]) } }
     // Permission on top, unless it's only the way round the points rule ("… have not completed …").
@@ -564,15 +587,22 @@ export function parseBreadthFor(text: string): string[] | undefined {
   if (/not available as breadth/i.test(text)) return []
   const lines = text.split(/\r?\n/).map((l) => l.trim())
   const at = lines.findIndex((l) => /available as breadth in the following courses/i.test(l))
-  if (at < 0) return undefined
+  // The whole page was copied (its "Further information" part is there) with no breadth list:
+  // not breadth for any course. Only part of a page copied: we can't tell.
+  if (at < 0) return /^(?:further information|community access program)$|available through the community access program/im.test(text) ? [] : undefined
   const out: string[] = []
   for (const l of lines.slice(at + 1)) {
     if (!l) {
       if (out.length) break
       continue
     }
+    // A course name broken over two lines: "Bachelor of Fine Arts" / "(Acting)".
+    if (/^\(/.test(l) && out.length) {
+      out[out.length - 1] += ` ${l}`
+      continue
+    }
     if (!/^(Bachelor|Diploma|Graduate|Master|Associate)\b/.test(l)) break
     out.push(l)
   }
-  return out
+  return out.length ? out : undefined
 }

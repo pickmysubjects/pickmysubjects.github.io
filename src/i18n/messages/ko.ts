@@ -129,6 +129,8 @@ export const ko: Messages = {
     componentDone: '{title} 이수 완료',
     componentMissing: '{title}: {missing}',
     requirementMissing: '{missing}',
+    missingSubjects: '남은 과목: {codes}',
+    choosePoints: '{have} / {need}학점 ({codes} 중 선택)',
   },
   issue: {
     'visa-underload-h1': '{year}년 1~6월: {load}학점. 학생 비자는 보통 반년마다 {min}학점이 필요합니다(여름 학기 포함). 부족하면 학교 승인이 필요합니다(마지막 반년 제외). Stop 1에 확인하세요.',
@@ -136,6 +138,7 @@ export const ko: Messages = {
     duplicate: '{code}가 두 번 이상 들어가 있습니다 ({term}에 다시 있음).',
     'not-in-dataset': '{code}는 아직 데이터에 없어서 검사할 수 없습니다.',
     discontinued: "{code}는 {year}년부터 개설되지 않아요. 다른 과목으로 바꾸세요.",
+    "closed-to-course": "{code}는 내 학위에서는 들을 수 없어요. 다른 과목으로 바꾸세요.",
     discontinuedInstead: "{code}는 {year}년부터 개설되지 않아요. 대신 {instead}를 들으세요.",
     'not-offered': '{code}는 {term}에 개설되지 않습니다.',
     'not-offered-assumed': '{code}는 {period}에 개설되지 않습니다 ({assumed}년 데이터 기준).',

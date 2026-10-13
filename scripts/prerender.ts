@@ -281,7 +281,8 @@ function majorsListBody(code: LocaleCode, t: Translate): string {
   return data.courses
     .filter((c) => majors.some((m) => m.course === c.code))
     .map((c) => {
-      const own = majors.filter((m) => m.course === c.code)
+      // Closed majors stay reachable for earlier students but aren't listed, as in the app.
+      const own = majors.filter((m) => m.course === c.code && (m.closedFrom === undefined || new Date().getFullYear() < m.closedFrom))
       const groups = groupMajors(own)
       const list = (ms: typeof own) => `<ul>${ms.map((m) => `<li><a href="${href(code, `majors/${m.id}`)}">${esc(m.title)}</a></li>`).join('')}</ul>`
       const body = groups.length === 1 ? list(groups[0]!.majors) : groups.map((g) => `<h3>${esc(t(`majorGroup.${g.id}`))}</h3>${list(g.majors)}`).join('')

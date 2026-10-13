@@ -129,6 +129,8 @@ export const zhTW: Messages = {
     componentDone: '{title} 已完成',
     componentMissing: '{title}：{missing}',
     requirementMissing: '{missing}',
+    missingSubjects: '還缺 {codes}',
+    choosePoints: '已修 {have} / {need} 學分（從 {codes} 中選）',
   },
   issue: {
     'visa-underload-h1': '{year} 年 1–6 月：{load} 分。持學生簽證一般每半年要修 {min} 分（夏季學期也算）。不夠的話需要學校批准，最後一個半年除外，請先問 Stop 1。',
@@ -136,6 +138,7 @@ export const zhTW: Messages = {
     duplicate: '{code} 被安排了不只一次（{term} 又出現了一次）。',
     'not-in-dataset': '資料庫裡還沒有 {code}，所以無法檢查它。',
     discontinued: "{code} 從 {year} 年起不再開設，請換一門課。",
+    "closed-to-course": "{code} 不對你就讀的學位開放，換一門別的課吧。",
     discontinuedInstead: "{code} 從 {year} 年起不再開設，可以改修 {instead}。",
     'not-offered': '{code} 在 {term} 不開課。',
     'not-offered-assumed': '{code} 在{period}不開課（根據 {assumed} 年的資料）。',

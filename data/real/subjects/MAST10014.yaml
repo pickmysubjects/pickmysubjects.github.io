@@ -21,6 +21,7 @@ source_year: 2026
 weekly_contact_hours: 6
 min_attendance: 80
 categories: {}
+breadth_for: []
 skills:
   - maths
 topics:

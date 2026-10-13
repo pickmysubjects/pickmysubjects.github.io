@@ -69,6 +69,17 @@ export function buildDataset(name: Dataset['name']): BuildResult {
       if (home && areas.includes(s.area)) s.categories[c.code] = home as Subject['categories'][string]
       else if (s.breadthFor ? s.breadthFor.includes(c.title) : placed.has(s.code)) s.categories[c.code] = other as Subject['categories'][string]
     }
+    // A subject one of the course's majors makes compulsory counts as the course's own there
+    // (MAST20034 is a commerce subject within Business Analytics).
+    if (home) {
+      for (const comp of components) {
+        if (comp.course !== c.code || comp.requirements === 'unknown') continue
+        for (const r of comp.requirements) for (const code of 'all' in r ? r.all : []) {
+          const s = subjects[code]
+          if (s && s.categories[c.code] === undefined && !c.closed.includes(code)) s.categories[c.code] = home as Subject['categories'][string]
+        }
+      }
+    }
   }
 
   mergeRatings(join(base, 'ratings.json'), subjects)

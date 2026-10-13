@@ -26,6 +26,7 @@ min_attendance: 80
 handbook: https://handbook.unimelb.edu.au/2026/subjects/mast10015
 source_year: 2026
 categories: {}
+breadth_for: []
 skills:
   - maths
 topics:

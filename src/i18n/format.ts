@@ -61,6 +61,19 @@ export function ruleDetail(t: Translate, s: RuleStatus): string {
     return Number(p.uncategorised) > 0 ? `${main}; ${t('ruleDetail.uncategorised', { n: p.uncategorised ?? 0 })}` : main
   }
   if (s.detailKey === 'areas' && p.over) return t('ruleDetail.areasOver', p)
+  // What's missing, from the engine's language-neutral parts.
+  if ((s.detailKey === 'requirementMissing' || s.detailKey === 'componentMissing') && p.parts) {
+    const missing = String(p.parts)
+      .split('|')
+      .map((part) => {
+        const [kind, ...rest] = part.split(':')
+        if (kind === 'all') return t('ruleDetail.missingSubjects', { codes: rest[0]!.split(',').join(', ') })
+        const [have, need, codes] = rest
+        return t('ruleDetail.choosePoints', { have: have!, need: need!, codes: codes!.split(',').join(', ') })
+      })
+      .join('; ')
+    return t(`ruleDetail.${s.detailKey}`, { ...p, missing })
+  }
   return t(`ruleDetail.${s.detailKey}`, p)
 }
 

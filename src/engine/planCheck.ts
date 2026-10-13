@@ -16,6 +16,8 @@ export function checkTerms(plan: Plan, data: Dataset, standardLoad = 50): Issue[
   const issues: Issue[] = []
   const seen = new Set(plan.completed)
   const everywhere = new Set([...plan.completed, ...plan.terms.flatMap((t) => t.subjects)])
+  // Subjects the student's course has closed to them (B-COM's ACCT10002).
+  const closed = new Set(data.courses.find((c) => c.code === plan.course)?.closed ?? [])
   const reportedPairs = new Set<string>()
 
   plan.terms.forEach((term, termIndex) => {
@@ -36,6 +38,10 @@ export function checkTerms(plan: Plan, data: Dataset, standardLoad = 50): Issue[
       }
       load += s.points
 
+      if (closed.has(code)) {
+        issues.push({ severity: 'error', kind: 'closed-to-course', subject: code, termIndex, params: { code }, message: `${code} isn't open to students in your degree.` })
+        continue
+      }
       if (s.discontinuedFrom !== undefined && term.year >= s.discontinuedFrom) {
         issues.push({ severity: 'error', kind: 'discontinued', subject: code, termIndex, params: { code, year: s.discontinuedFrom, instead: s.replacedBy.join(', ') }, message: `${code} doesn't run from ${s.discontinuedFrom}${s.replacedBy.length ? `; take ${s.replacedBy.join(', ')} instead` : ''}.` })
         continue

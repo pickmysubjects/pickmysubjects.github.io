@@ -35,6 +35,7 @@ verified_on: 2026-10-13
 notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Handbook lists VETS30030 as its own corequisite (a typo); VETS30016 used instead, matching the sibling subjects."
 categories:
   B-SCI: science
+breadth_for: []
 skills:
   - fieldwork
 topics:

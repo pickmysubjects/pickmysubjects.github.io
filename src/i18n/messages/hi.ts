@@ -129,6 +129,8 @@ export const hi: Messages = {
     componentDone: '{title} पूरा',
     componentMissing: '{title}: {missing}',
     requirementMissing: '{missing}',
+    missingSubjects: 'बाकी: {codes}',
+    choosePoints: '{have} / {need} पॉइंट ({codes} में से चुनें)',
   },
   issue: {
     'visa-underload-h1': 'जनवरी–जून {year}: {load} पॉइंट। स्टूडेंट वीज़ा पर आम तौर पर हर छमाही {min} पॉइंट चाहिए (समर टर्म भी गिना जाता है)। कम हो तो मंज़ूरी चाहिए, आख़िरी छमाही को छोड़कर — Stop 1 से पूछें।',
@@ -136,6 +138,7 @@ export const hi: Messages = {
     duplicate: '{code} एक से ज़्यादा बार रखा गया है ({term} में फिर से)।',
     'not-in-dataset': '{code} अभी डेटा में नहीं है, इसलिए इसकी जाँच नहीं हो सकती।',
     discontinued: "{code} {year} से नहीं चलेगा। इसकी जगह कोई दूसरा सब्जेक्ट लें।",
+    "closed-to-course": "{code} आपकी डिग्री के लिए उपलब्ध नहीं है। इसकी जगह कोई दूसरा सब्जेक्ट लें।",
     discontinuedInstead: "{code} {year} से नहीं चलेगा। इसकी जगह {instead} लें।",
     'not-offered': '{code} {term} में नहीं चलता।',
     'not-offered-assumed': '{code} {period} में नहीं चलता ({assumed} के डेटा के आधार पर)।',

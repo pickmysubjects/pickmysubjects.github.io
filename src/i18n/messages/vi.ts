@@ -129,6 +129,8 @@ export const vi: Messages = {
     componentDone: '{title} đã hoàn thành',
     componentMissing: '{title}: {missing}',
     requirementMissing: '{missing}',
+    missingSubjects: 'còn thiếu {codes}',
+    choosePoints: '{have} / {need} tín chỉ (chọn từ {codes})',
   },
   issue: {
     'visa-underload-h1': 'Tháng 1–6/{year}: {load} tín chỉ. Với visa du học bạn thường cần {min} mỗi nửa năm (tính cả kỳ hè). Ít hơn cần được duyệt, trừ nửa năm cuối — hãy hỏi Stop 1.',
@@ -136,6 +138,7 @@ export const vi: Messages = {
     duplicate: '{code} được xếp nhiều hơn một lần (lại có ở {term}).',
     'not-in-dataset': '{code} chưa có trong dữ liệu nên không kiểm tra được.',
     discontinued: "{code} không mở từ năm {year}. Hãy đổi sang môn khác.",
+    "closed-to-course": "{code} không mở cho ngành của bạn. Hãy đổi sang môn khác.",
     discontinuedInstead: "{code} không mở từ năm {year}. Học {instead} thay thế.",
     'not-offered': '{code} không mở vào {term}.',
     'not-offered-assumed': '{code} không mở vào {period} (theo dữ liệu năm {assumed}).',

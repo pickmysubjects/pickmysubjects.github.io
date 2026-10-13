@@ -26,6 +26,7 @@ weekly_contact_hours: 5.5
 handbook: https://handbook.unimelb.edu.au/2026/subjects/biol10002
 source_year: 2026
 categories: {}
+breadth_for: []
 skills:
   - lab
   - writing

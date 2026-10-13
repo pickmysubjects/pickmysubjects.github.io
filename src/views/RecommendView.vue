@@ -77,13 +77,12 @@ function value(event: Event): string {
       <form class="filters" @submit.prevent>
         <fieldset class="goal">
           <legend class="field-label">{{ t('suggest.goal') }}</legend>
-          <div class="seg" role="radiogroup" :aria-label="t('suggest.goal')">
+          <div class="seg">
             <button
               v-for="g in goals"
               :key="g"
               type="button"
-              role="radio"
-              :aria-checked="profile.goal === g"
+              :aria-pressed="profile.goal === g"
               :title="t(`suggest.goals.${g}Hint`)"
               @click="setGoal(g)"
             >
@@ -206,7 +205,7 @@ function value(event: Event): string {
   color: var(--ink);
 }
 
-.seg button[aria-checked='true'] {
+.seg button[aria-pressed='true'] {
   font-weight: 650;
   color: var(--ink);
   background: var(--glass-fill-hover);

@@ -360,6 +360,9 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
       if (have >= req.choose.points) break
       if (done.has(c) || required.has(c)) continue
       if (!runsDuringPlan(data.subjects[c], input.startYear)) continue
+      // Nor one whose prerequisites nothing that runs can meet (ACCT30001 needs ACCT20008,
+      // which isn't running): it would only end up unplaced.
+      if (!prereqsCanRun(c, input.startYear, data, input.course)) continue
       // An option that can't be taken alongside a subject already required (COMP20003 and a
       // major's ENGR30004) leaves the other options to fill the choice.
       if (clashes(c, done, required, data)) continue
@@ -491,6 +494,8 @@ function needsMissing(code: string, data: Dataset): boolean {
 }
 
 function closedTo(code: string, course: string, data: Dataset): boolean {
+  // Closed to this course's students outright (B-COM's ACCT10002).
+  if (data.courses.some((c) => c.code === course && c.closed.includes(code))) return true
   const s = data.subjects[code]
   if (!s || s.prerequisites === 'none' || s.prerequisites === 'unknown') return false
   const cache = closedCache.get(data) ?? new Map<string, boolean>()
@@ -526,27 +531,35 @@ function pickForPoints(
   data: Dataset,
   course: string,
 ): string[] {
+  // Points of any study ("200 points before this capstone"): the degree's own points get there,
+  // and the subject is placed once they have. Adding subjects for it only piles up first-years.
+  if (req.from === undefined && req.level === undefined && req.area === undefined) return []
   const fits = (s: Subject) =>
     (req.from === undefined || req.from.includes(s.code)) &&
     (req.level === undefined || s.level === req.level) &&
     (req.area === undefined || s.area === req.area)
-  let have = [...done].reduce((sum, c) => {
+  // What's done or already required counts first: "200 points of study" before a capstone is
+  // mostly the major itself, not a pile of extra first-year subjects.
+  let have = [...new Set([...done, ...required])].reduce((sum, c) => {
     const s = data.subjects[c]
     return s && fits(s) ? sum + s.points : sum
   }, 0)
   const runs = (s: Subject) => (s.offerings === 'unknown' ? 0 : Math.max(0, ...Object.values(s.offerings).map((p) => p.length)))
-  const isNew = (s: Subject) => (required.has(s.code) ? 0 : 1)
-  // Lowest level first, so the requirement can be met early; within a level,
-  // reuse subjects that are already required before adding new ones.
+  // Lowest level first, so the requirement can be met early.
   const candidates = Object.values(data.subjects)
     .filter(
       (s) =>
         fits(s) &&
         !done.has(s.code) &&
-        // A far-campus subject (Dookie) only when already required.
-        (required.has(s.code) || (runs(s) > 0 && !s.campus && !clashes(s.code, done, required, data) && !closedTo(s.code, course, data))),
+        !required.has(s.code) &&
+        // Not a far-campus subject (Dookie), nor one that gives no credit in this course.
+        runs(s) > 0 &&
+        !s.campus &&
+        !noCredit(s, course, data) &&
+        !clashes(s.code, done, required, data) &&
+        !closedTo(s.code, course, data),
     )
-    .sort((a, b) => a.level - b.level || isNew(a) - isNew(b) || runs(b) - runs(a) || a.code.localeCompare(b.code))
+    .sort((a, b) => a.level - b.level || runs(b) - runs(a) || a.code.localeCompare(b.code))
   const picks: string[] = []
   for (const s of candidates) {
     if (have >= req.min) break
@@ -566,6 +579,16 @@ function noCredit(s: Subject, course: string, data: Dataset): boolean {
 }
 
 /** False only when we know the subject doesn't run in any of the next few years. */
+/** Whether some set of subjects that run (or whose timetable we don't know) meets its prerequisites. */
+function prereqsCanRun(code: string, startYear: number, data: Dataset, course: string): boolean {
+  const s = data.subjects[code]
+  if (!s || s.prerequisites === 'none' || s.prerequisites === 'unknown') return true
+  const running = new Set(
+    [...Object.keys(data.subjects), ...referencedSubjects(s.prerequisites)].filter((c) => c !== code && runsDuringPlan(data.subjects[c], startYear)),
+  )
+  return evaluateField(s.prerequisites, { completed: running, subjects: data.subjects, admittedCourse: course }).status !== 'fail'
+}
+
 function runsDuringPlan(s: Subject | undefined, startYear: number): boolean {
   if (!s || s.offerings === 'unknown') return true
   return [0, 1, 2, 3].some((d) => periodsFor(s, startYear + d).length > 0)

@@ -129,6 +129,8 @@ export const zhCN: Messages = {
     componentDone: '{title} 已完成',
     componentMissing: '{title}：{missing}',
     requirementMissing: '{missing}',
+    missingSubjects: '还缺 {codes}',
+    choosePoints: '已修 {have} / {need} 学分（从 {codes} 中选）',
   },
   issue: {
     'visa-underload-h1': '{year} 年 1–6 月：{load} 分。持学生签证一般每半年要修 {min} 分（夏季学期也算）。不够的话需要学校批准，最后一个半年除外，请先问 Stop 1。',
@@ -136,6 +138,7 @@ export const zhCN: Messages = {
     duplicate: '{code} 被安排了不止一次（{term} 又出现了一次）。',
     'not-in-dataset': '数据库里还没有 {code}，所以无法检查它。',
     discontinued: "{code} 从 {year} 年起不再开设，请换一门课。",
+    "closed-to-course": "{code} 不对你所读的学位开放，换一门别的课吧。",
     discontinuedInstead: "{code} 从 {year} 年起不再开设，可以改修 {instead}。",
     'not-offered': '{code} 在 {term} 不开课。',
     'not-offered-assumed': '{code} 在{period}不开课（根据 {assumed} 年的数据）。',

@@ -129,6 +129,8 @@ export const id: Messages = {
     componentDone: '{title} selesai',
     componentMissing: '{title}: {missing}',
     requirementMissing: '{missing}',
+    missingSubjects: 'belum diambil: {codes}',
+    choosePoints: '{have} / {need} poin (pilih dari {codes})',
   },
   issue: {
     'visa-underload-h1': 'Januari–Juni {year}: {load} poin. Dengan visa pelajar biasanya perlu {min} per setengah tahun (termasuk musim panas). Kurang dari itu perlu persetujuan, kecuali setengah tahun terakhir — tanyakan ke Stop 1.',
@@ -136,6 +138,7 @@ export const id: Messages = {
     duplicate: '{code} direncanakan lebih dari sekali (lagi di {term}).',
     'not-in-dataset': '{code} belum ada di data, jadi tidak bisa dicek.',
     discontinued: "{code} tidak dibuka lagi mulai {year}. Ganti dengan mata kuliah lain.",
+    "closed-to-course": "{code} tidak terbuka untuk gelarmu. Ganti dengan mata kuliah lain.",
     discontinuedInstead: "{code} tidak dibuka lagi mulai {year}. Ambil {instead} sebagai gantinya.",
     'not-offered': '{code} tidak dibuka di {term}.',
     'not-offered-assumed': '{code} tidak dibuka di {period} (berdasarkan data {assumed}).',

@@ -169,12 +169,12 @@ function checkRule(rule: CourseRule, ctx: RuleCtx): RuleStatus {
       const results = rule.paths.map((path) => {
         const used = new Set<string>()
         const ordered = [...path.filter((r) => 'all' in r), ...path.filter((r) => !('all' in r))]
-        return ordered.map((r) => unmetRequirement(r, ctx, used)).filter((x): x is string => x !== null)
+        return ordered.map((r) => unmetRequirement(r, ctx, used)).filter((x): x is Unmet => x !== null)
       })
       if (results.some((u) => u.length === 0)) return { ...base, status: 'ok', detail: 'done', detailKey: 'done', params: {} }
       const best = results.reduce((a, b) => (b.length < a.length ? b : a))
-      const missing = best.join('; ')
-      return { ...base, status: 'fail', detail: missing, detailKey: 'requirementMissing', params: { missing } }
+      const missing = best.map((u) => u.text).join('; ')
+      return { ...base, status: 'fail', detail: missing, detailKey: 'requirementMissing', params: { missing, parts: best.map((u) => u.part).join('|') } }
     }
     case 'progression': {
       const firstHigher = ctx.plan.terms.findIndex((t) =>
@@ -211,33 +211,45 @@ function componentStatus(
   // then each "choose" group (in file order) takes from what's left.
   const used = new Set<string>()
   const ordered = [...component.requirements.filter((r) => 'all' in r), ...component.requirements.filter((r) => !('all' in r))]
-  const unmet = ordered.map((r) => unmetRequirement(r, ctx, used)).filter((x): x is string => x !== null)
+  const unmet = ordered.map((r) => unmetRequirement(r, ctx, used)).filter((x): x is Unmet => x !== null)
   if (unmet.length === 0) {
     return { ...base, status: 'ok', detail: `${component.title} complete`, detailKey: 'componentDone', params: { title: component.title } }
   }
   return {
     ...base,
     status: 'fail',
-    detail: `${component.title}: ${unmet.join('; ')}`,
+    detail: `${component.title}: ${unmet.map((u) => u.text).join('; ')}`,
     detailKey: 'componentMissing',
-    params: { title: component.title, missing: unmet.join('; ') },
+    params: { title: component.title, missing: unmet.map((u) => u.text).join('; '), parts: unmet.map((u) => u.part).join('|') },
   }
 }
 
-function unmetRequirement(req: ComponentReq, ctx: RuleCtx, used: Set<string>): string | null {
+/**
+ * What's still missing from one requirement: English text, and a language-neutral part for the
+ * UI ("all:CODES" or "choose:HAVE:NEED:CODES", codes comma-separated).
+ */
+interface Unmet {
+  text: string
+  part: string
+}
+
+function unmetRequirement(req: ComponentReq, ctx: RuleCtx, used: Set<string>): Unmet | null {
   if ('all' in req) {
     req.all.forEach((c) => used.add(c))
     const missing = req.all.filter((c) => !ctx.codes.includes(c))
-    return missing.length ? `missing ${missing.join(', ')}` : null
+    return missing.length ? { text: `missing ${missing.join(', ')}`, part: `all:${missing.join(',')}` } : null
   }
   let have = 0
   for (const c of req.choose.from) {
     if (have >= req.choose.points) break
     if (!ctx.codes.includes(c) || used.has(c)) continue
     used.add(c)
-    have += ctx.data.subjects[c]?.points ?? 0
+    // A subject we have no data for yet still counts as a standard 12.5-point subject.
+    have += ctx.data.subjects[c]?.points ?? 12.5
   }
-  return have >= req.choose.points ? null : `${have} / ${req.choose.points} points from ${req.choose.from.join(', ')}`
+  if (have >= req.choose.points) return null
+  const from = req.choose.from.join(', ')
+  return { text: `${have} / ${req.choose.points} points from ${from}`, part: `choose:${have}:${req.choose.points}:${req.choose.from.join(',')}` }
 }
 
 /** Subjects a component needs, and which still have to be chosen. Used by the generator. */

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { parseAvailability, parseContactHours, parseHandbookPaste } from '../src/engine/handbookPaste'
+import { parseAvailability, parseBreadthFor, parseContactHours, parseHandbookPaste } from '../src/engine/handbookPaste'
 import { subjectYaml } from '../src/engine/serialize'
 import { parse } from 'yaml'
 import { subjectFileSchema } from '../src/engine/schema'
@@ -374,6 +374,31 @@ describe('an examination held mid-semester', () => {
       expect(pre('Completion of 100 credit points of study').prerequisites).toEqual({ points: { min: 100 } })
       const r = pre('Students must obtain written permission to enrol in this subject. Students must have completed at least 100 points of prior study.')
       expect(r.prerequisites).toMatchObject({ all: [{ points: { min: 100 } }, { manual: expect.any(String) }] })
+    })
+
+    it('points of a named level or discipline stay for a human', () => {
+      expect(pre('A minimum of 25 credit points of Level 2 Earth Science, Chemistry or Biology Subjects').prerequisites).toMatchObject({ manual: expect.any(String) })
+      expect(pre('A minimum of 25 credit points of university-level mathematics').prerequisites).toMatchObject({ manual: expect.any(String) })
+    })
+
+    it('the current rule keeps its own "one of", and a future rule waits', () => {
+      const r = pre(`For 2020, students must have completed both of:\n${table('MAST20005', 'ACTL20002')}\nFrom 2021, students must have completed one of:\n${table('ACTL20003', 'MAST20004')}`)
+      expect(r.prerequisites).toEqual({ any: [{ subject: 'ACTL20003' }, { subject: 'MAST20004' }] })
+      const later = parseHandbookPaste(`You’re viewing the 2026 Handbook:\nPrerequisites\nFor 2026 commencing students\n${table('INFO20003')}\nFrom 2027 onwards\n${table('COMP20008')}\nCorequisites\nNone\n`)
+      expect(JSON.stringify(later.prerequisites)).toContain('INFO20003')
+      expect(JSON.stringify(later.prerequisites)).not.toContain('COMP20008')
+    })
+
+    it('a subject name between two codes keeps their "or"', () => {
+      const r = pre(`Students must meet one of the following prerequisite options:\nA pass in MAST10007 Linear Algebra or MAST10022 Linear Algebra: Advanced;\nA pass in both MAST10008 and MAST10009.\n${table('MAST10007', 'MAST10022', 'MAST10008', 'MAST10009')}`)
+      expect(r.prerequisites).toMatchObject({ any: [{ any: [{ subject: 'MAST10007' }, { subject: 'MAST10022' }] }, expect.anything()] })
+    })
+
+    it('breadth list: a full page without one is none; a part page says nothing; names may wrap', () => {
+      expect(parseBreadthFor('Further information\nTexts\nAvailable through the Community Access Program')).toEqual([])
+      expect(parseBreadthFor('Assessment\nDescription')).toBeUndefined()
+      expect(parseBreadthFor('This subject is available as breadth in the following courses:\n\nBachelor of Arts\nBachelor of Fine Arts\n(Acting)\nBachelor of Science\n')).toEqual(['Bachelor of Arts', 'Bachelor of Fine Arts (Acting)', 'Bachelor of Science'])
+      expect(parseBreadthFor('This subject is available as breadth in the following courses:\n\nAvailable through the Community Access Program')).toBeUndefined()
     })
   })
 })

@@ -7,24 +7,24 @@ offerings:
     - semester-2
 prerequisites:
   any:
-  - all:
-    - PHYS20008
-    - any:
-        - PHYS20009
-        - ZOOL20006
-        - ZOOL30007
-        - PATH30002
-        - BCMB30011
-        - BCMB30002
-        - BCMB30003
-        - BCMB30010
-        - CEDB30002
-        - PSYC20007
-        - PSYC20008
-  - all:
-    - admission: B-BMED
-      note: Bachelor of Biomedicine students
-    - BIOM20002
+    - all:
+        - PHYS20008
+        - any:
+            - PHYS20009
+            - ZOOL20006
+            - ZOOL30007
+            - PATH30002
+            - BCMB30011
+            - BCMB30002
+            - BCMB30003
+            - BCMB30010
+            - CEDB30002
+            - PSYC20007
+            - PSYC20008
+    - all:
+        - admission: B-BMED
+          note: Bachelor of Biomedicine students
+        - BIOM20002
 corequisites: none
 non_allowed: []
 assessment:
@@ -48,6 +48,7 @@ source_year: 2026
 verified_on: 2026-10-13
 categories:
   B-SCI: science
+breadth_for: []
 notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
 skills:
   - lab

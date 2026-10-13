@@ -23,12 +23,17 @@ const year = computed(() => plan.terms.value[0]?.year ?? new Date().getFullYear(
 const filters = shallowRef(filtersFromQuery(query.value))
 const shown = shallowRef(PAGE)
 
-// A category from another course (a "science" link opened under B-COM) filters nothing.
 const categories = computed(() => data.value.courses.find((c) => c.code === course.value)?.categories ?? [])
-const rows = computed(() => {
-  const f = filters.value
-  return browse(subjectList.value, categories.value.includes(f.category) ? f : { ...f, category: '' }, course.value, year.value)
-})
+// A category from another course (a "science" link opened under B-COM) is dropped from the
+// filters themselves, so it neither filters nor counts as active nor stays in the address.
+watch(
+  [filters, categories],
+  ([f, cats]) => {
+    if (f.category && !cats.includes(f.category)) filters.value = { ...f, category: '' }
+  },
+  { immediate: true },
+)
+const rows = computed(() => browse(subjectList.value, filters.value, course.value, year.value))
 const visible = computed(() => rows.value.slice(0, shown.value))
 const anyRated = computed(() => subjectList.value.some((s) => (s.signals?.reviews ?? 0) >= 3))
 const breadthCount = computed(() => subjectList.value.filter((s) => s.categories[course.value] === 'breadth').length)

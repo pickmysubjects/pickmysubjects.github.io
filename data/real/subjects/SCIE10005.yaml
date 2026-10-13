@@ -16,6 +16,7 @@ corequisites: none
 non_allowed: []
 categories:
   B-SCI: core
+breadth_for: []
 handbook: https://handbook.unimelb.edu.au/2026/subjects/scie10005
 source_year: 2026
 verified_on: 2026-10-13

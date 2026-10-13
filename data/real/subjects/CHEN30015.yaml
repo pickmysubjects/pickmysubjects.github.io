@@ -6,7 +6,6 @@ offerings:
   "2026":
     - semester-2
 prerequisites: none
-# Handbook: all of CHEN20011, ENGR30002 and CHEN30016 (or the old CHEN30005), each "can be taken concurrently".
 corequisites:
   all:
     - CHEN20011
@@ -35,6 +34,7 @@ source_year: 2026
 verified_on: 2026-10-13
 categories:
   B-SCI: science
+breadth_for: []
 notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
 skills:
   - design

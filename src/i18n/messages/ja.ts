@@ -129,6 +129,8 @@ export const ja: Messages = {
     componentDone: '{title} 修了',
     componentMissing: '{title}：{missing}',
     requirementMissing: '{missing}',
+    missingSubjects: '未履修：{codes}',
+    choosePoints: '{have} / {need} ポイント（{codes} から選択）',
   },
   issue: {
     'visa-underload-h1': '{year}年1〜6月：{load}単位。学生ビザでは通常半年ごとに{min}単位が必要です（夏期も含む）。不足する場合は大学の承認が必要です（最終の半年を除く）。Stop 1 に確認してください。',
@@ -136,6 +138,7 @@ export const ja: Messages = {
     duplicate: '{code} が複数回入っています（{term} にも入っています）。',
     'not-in-dataset': '{code} はまだデータにないため、チェックできません。',
     discontinued: "{code} は {year} 年から開講されません。別の科目に替えてください。",
+    "closed-to-course": "{code} はあなたの学位では履修できません。別の科目に替えてください。",
     discontinuedInstead: "{code} は {year} 年から開講されません。代わりに {instead} を取ってください。",
     'not-offered': '{code} は {term} に開講されません。',
     'not-offered-assumed': '{code} は{period}に開講されません（{assumed}年のデータに基づく）。',
