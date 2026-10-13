@@ -14,7 +14,10 @@ const { t } = useI18n()
 const query = shallowRef('')
 
 const course = computed(() => plan.setup.value.course || 'B-SCI')
-const majors = computed(() => data.value.components.filter((c) => c.course === course.value && c.kind === 'major'))
+// Majors closed to new students aren't listed (their pages still open from an existing plan).
+const majors = computed(() =>
+  data.value.components.filter((c) => c.course === course.value && c.kind === 'major' && (c.closedFrom === undefined || new Date().getFullYear() < c.closedFrom)),
+)
 const groups = computed(() => {
   const q = query.value.trim().toLowerCase()
   return groupMajors(majors.value)

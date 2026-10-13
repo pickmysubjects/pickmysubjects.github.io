@@ -44,6 +44,19 @@ describe('recommendation quality (real data)', () => {
     expect(list.some((c) => ['CEDB', 'CVEN', 'ELEN'].includes(area(c) ?? ''))).toBe(false)
   })
 
+  it('a subject that only leads to an interest does not outrank one on it (path counted once)', () => {
+    const list = recommend(real, { ...base, interests: ['psychology'], results: [{ code: 'PSYC10003' }, { code: 'PSYC10004' }] }, { course: 'B-SCI', year: 2027, maxLevel: 2 }).map((r) => r.code)
+    expect(list.indexOf('PSYC20006')).toBeLessThan(list.indexOf('BIOL10008'))
+  })
+
+  it('a declared major puts the way into it first, even where there are several routes', () => {
+    const done = ['SCIE10005', 'PSYC10003', 'PSYC10004', 'PSYC20007', 'ECON10004', 'ATOC10001'].map((code) => ({ code }))
+    const recs = recommend(real, { ...base, results: done }, { course: 'B-SCI', year: 2028, term: { year: 2028, period: 'semester-1' }, maxLevel: 2, programme: { courseYear: 2026, components: ['psychology'] }, limit: 2 })
+    // The two level-2 psychology subjects open to this student in Semester 1.
+    expect(recs.map((r) => r.code).sort()).toEqual(['PSYC20006', 'PSYC20008'])
+    expect(recs.every((r) => r.reasons.some((n) => n.key === 'majorPath' || n.key === 'majorCore' || n.key === 'majorOption'))).toBe(true)
+  })
+
   it('a WAM-focused student who struggles with maths is steered away from maths', () => {
     const list = top({ goal: 'wam', skills: { maths: 1 }, results: [{ code: 'MAST10006', mark: 52 }, { code: 'BIOL10008', mark: 80 }] })
     expect(list.some((c) => area(c) === 'MAST')).toBe(false)
@@ -93,6 +106,33 @@ describe('recommendation statistics', () => {
     expect(before?.eligibility).toBe('unknown')
     expect(after?.eligibility).toBe('ok')
     expect(after?.warnings.some((w) => w.key === 'eligibilityUnknown')).toBe(false)
+  })
+
+  it('equal scores put the subject more of the degree builds on first, not the first code', () => {
+    const data = dataset([
+      subject({ code: 'AAAA10001', prerequisites: 'none', non_allowed: [] }),
+      subject({ code: 'ZZZZ10001', prerequisites: 'none', non_allowed: [] }),
+      subject({ code: 'ZZZZ20001', level: 2, prerequisites: 'ZZZZ10001', non_allowed: [] }),
+    ])
+    // Balanced: "opens up" has no weight there, so the two really tie.
+    expect(recommend(data, { ...base, goal: 'balanced' }, { maxLevel: 1 }).map((r) => r.code)).toEqual(['ZZZZ10001', 'AAAA10001'])
+  })
+
+  it('a subject one level below the student’s year gives up a little to one at their level', () => {
+    const data = dataset([
+      subject({ code: 'AAAA10001', prerequisites: 'none', non_allowed: [], categories: { 'B-SCI': 'science' } }),
+      subject({ code: 'BBBB20001', level: 2, prerequisites: 'none', non_allowed: [], categories: { 'B-SCI': 'science' } }),
+    ])
+    const recs = recommend(data, { ...base, goal: 'balanced' }, { course: 'B-SCI', maxLevel: 2 })
+    expect(recs.map((r) => r.code)).toEqual(['BBBB20001', 'AAAA10001'])
+  })
+
+  it('a subject from the interest’s own discipline beats one that touches it among other topics', () => {
+    const data = dataset([
+      subject({ code: 'GEOG10001', area: 'GEOG', topics: ['environment', 'psychology', 'geography'], prerequisites: 'none', non_allowed: [] }),
+      subject({ code: 'PSYC10001', area: 'PSYC', topics: ['psychology'], prerequisites: 'none', non_allowed: [] }),
+    ])
+    expect(recommend(data, { ...base, goal: 'balanced', interests: ['psychology'] }).map((r) => r.code)).toEqual(['PSYC10001', 'GEOG10001'])
   })
 
   it('maxLevel keeps a first-year list to first-year subjects', () => {

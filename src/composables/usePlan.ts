@@ -120,7 +120,7 @@ export function usePlan() {
       startYear: start.year,
       startPeriod: start.period,
       keepOpen: !setup.major && setup.field
-        ? data.value.components.filter((c) => c.kind === 'major' && c.course === setup.course && majorGroupOf(c.id) === setup.field).map((c) => c.id)
+        ? data.value.components.filter((c) => c.kind === 'major' && c.course === setup.course && majorGroupOf(c.id) === setup.field && (c.closedFrom === undefined || start.year < c.closedFrom)).map((c) => c.id)
         : undefined,
     })
     save((s) => ({ ...s, terms: result.plan.terms, notes: result.notes, unplaced: result.unplaced }))

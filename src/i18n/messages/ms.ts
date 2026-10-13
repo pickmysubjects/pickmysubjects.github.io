@@ -116,6 +116,7 @@ export const ms: Messages = {
     noMajor: 'pilih major untuk menyemak ini',
     noSpec: 'tidak dipilih (pilihan)',
     needsMajor: '{title} memerlukan salah satu major ini: {majors}',
+    cannotCombine: 'Major dan pengkhususan ini tidak boleh digabungkan: {reason}',
     areas: '{count} bidang',
     areasOver: '{count} bidang; melebihi {max} dalam {over}',
     progressionNone: 'belum ada subjek tahap {level}',
@@ -150,6 +151,7 @@ export const ms: Messages = {
   },
   genNote: {
     shortTerm: "{code} hanya ditawarkan di luar semester, jadi dirancang pada {period} {year}.",
+    shortTermChain: "{code} dirancang dalam {period} {year} supaya subjek selepasnya tidak lewat satu semester.",
     keptOpen: "{codes} dirancang dahulu: kebanyakan daripada {n} major dalam bidang ini bermula dengannya, jadi anda masih boleh pilih mana-mana.",
     balanced: "Menukar semester {a} dan {b} supaya beban lebih sekata.",
     lighter: "Pilih {b} bukan {a} supaya semester itu tidak terlalu berat.",
@@ -216,6 +218,7 @@ export const ms: Messages = {
     retake: "Kali lepas anda dapat {mark} dan gagal: kali ini ulang subjek.",
     majorCore: "Wajib dalam major anda",
     majorOption: "Salah satu pilihan dalam major anda",
+    majorPath: "Membawa kepada {codes} dalam major anda",
     makesVeryHeavy: "Menambahnya menjadikan semester itu sangat berat.",
     prereqNotCurated: "Prasyarat belum ditambah: semak Handbook sebelum mendaftar.",
     eligibilityManual: "Ada syarat yang perlu anda sahkan sendiri (seperti skor VCE).",

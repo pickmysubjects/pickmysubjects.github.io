@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { checkCourse } from '../src/engine/courseRules'
+import { cannotCombine, checkCourse } from '../src/engine/courseRules'
 import { generatePlan } from '../src/engine/generate'
 import { checkTerms } from '../src/engine/planCheck'
 import type { Profile } from '../src/engine/recommend'
@@ -128,10 +128,18 @@ describe('generatePlan (real B-SCI data)', () => {
   const specs = real.components.filter((c) => c.course === 'B-SCI' && c.kind === 'specialisation' && c.requirements !== 'unknown')
   const combos = majors.flatMap((m) => [
     [m.id, undefined] as const,
-    ...specs.filter((s) => s.requiresMajor.length === 0 || s.requiresMajor.includes(m.id)).map((s) => [m.id, s.id] as const),
+    ...specs
+      .filter((s) => (s.requiresMajor.length === 0 || s.requiresMajor.includes(m.id)) && !cannotCombine(real, m.id, s.id))
+      .map((s) => [m.id, s.id] as const),
   ])
 
   it('loads cleanly', () => expect(errors).toEqual([]))
+
+  it('knows when a major and a specialisation can never be combined', () => {
+    // ENGR30004 (Mechatronics) is non-allowed with both COMP20003 and COMP20007.
+    expect(cannotCombine(real, 'mechatronics-systems', 'artificial-intelligence')).toMatch(/ENGR30004/)
+    expect(cannotCombine(real, 'computing-and-software-systems', 'artificial-intelligence')).toBeNull()
+  })
 
   it.each(combos)('%s + %s: no term errors, and the major/specialisation are met', (major, specialisation) => {
     const { plan } = generatePlan({
@@ -274,4 +282,43 @@ describe('generatePlan never takes a graduate route', () => {
     expect(unplaced.map((u) => u.code)).toEqual([])
     expect(all).toEqual(expect.arrayContaining(['INFO30005', 'COMP30022']))
   })
+})
+
+describe('generatePlan keeps chains to the usual length', () => {
+  const { dataset: real } = buildDataset('real')
+  const plan = (major: string, startPeriod: 'semester-1' | 'semester-2') =>
+    generatePlan({ data: real, profile: { results: [], skills: {}, interests: [], goal: 'balanced' }, course: 'B-SCI', courseYear: 2026, major, startYear: 2027, startPeriod })
+  const semesters = (r: ReturnType<typeof plan>) => r.plan.terms.filter((t) => t.period.startsWith('semester')).length
+
+  it('places a one-way corequisite in the same semester (MIIM30016 with MIIM30011)', () => {
+    const r = plan('microbiology', 'semester-1')
+    expect(r.unplaced).toEqual([])
+    expect(semesters(r)).toBe(6)
+    const term = (c: string) => r.plan.terms.findIndex((t) => t.subjects.includes(c))
+    expect(term('MIIM30016')).toBe(term('MIIM30011'))
+  })
+
+  it('a summer-only subject replaces an elective instead of going past 300 points (marine biology)', () => {
+    const r = plan('marine-biology', 'semester-1')
+    const points = r.plan.terms.flatMap((t) => t.subjects).reduce((sum, c) => sum + (real.subjects[c]?.points ?? 0), 0)
+    expect(r.plan.terms.some((t) => t.subjects.includes('ZOOL30008'))).toBe(true)
+    expect(points).toBe(300)
+    expect(checkCourse(r.plan, real).statuses.filter((st) => st.status === 'fail')).toEqual([])
+  })
+
+  it('uses summer for a chain subject rather than adding a semester (mid-year chemistry)', () => {
+    const r = plan('chemistry-chemistry', 'semester-2')
+    expect(r.unplaced).toEqual([])
+    expect(semesters(r)).toBe(6)
+    expect(r.plan.terms.find((t) => t.period === 'summer')?.subjects).toContain('CHEM10004')
+    expect(r.notes.some((n) => n.key === 'shortTermChain')).toBe(true)
+  })
+  it('never plans a far-campus subject (Dookie) that no requirement needs', () => {
+    for (const m of real.components.filter((c) => c.course === 'B-SCI' && c.kind === 'major' && c.closedFrom === undefined)) {
+      for (const sp of ['semester-1', 'semester-2'] as const) {
+        const remote = plan(m.id, sp).plan.terms.flatMap((t) => t.subjects).filter((c) => real.subjects[c]?.campus)
+        expect(remote, `${m.id} ${sp}`).toEqual([])
+      }
+    }
+  }, 120_000)
 })

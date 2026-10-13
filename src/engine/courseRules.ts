@@ -139,6 +139,8 @@ function checkRule(rule: CourseRule, ctx: RuleCtx): RuleStatus {
       if (spec.requiresMajor.length > 0 && !spec.requiresMajor.includes(ctx.plan.major ?? '')) {
         return { ...base, status: 'fail', detail: `${spec.title} needs one of these majors: ${spec.requiresMajor.join(', ')}`, detailKey: 'needsMajor', params: { title: spec.title, majors: spec.requiresMajor.join(', ') } }
       }
+      const clash = ctx.plan.major ? cannotCombine(ctx.data, ctx.plan.major, spec.id) : null
+      if (clash) return { ...base, status: 'fail', detail: clash, detailKey: 'cannotCombine', params: { reason: clash } }
       return componentStatus(base, spec, ctx)
     }
     case 'level1-areas': {
@@ -230,4 +232,33 @@ function unmetRequirement(req: ComponentReq, ctx: RuleCtx, used: Set<string>): s
 export function componentNeeds(component: Component | undefined): ComponentReq[] {
   if (!component || component.requirements === 'unknown') return []
   return component.requirements
+}
+
+/**
+ * Why two components can't be taken together, or null: a subject one of them requires is
+ * non-allowed with every option of one of the other's "choose" sets (Mechatronics needs
+ * ENGR30004, which excludes both COMP20003 and COMP20007 that a computing specialisation
+ * picks from), or with one of its compulsory subjects.
+ */
+export function cannotCombine(data: Dataset, aId: string, bId: string): string | null {
+  const a = findComponent(data, aId)
+  const b = findComponent(data, bId)
+  const excludes = (x: string, y: string) => {
+    const nx = data.subjects[x]?.nonAllowed
+    const ny = data.subjects[y]?.nonAllowed
+    return (nx !== undefined && nx !== 'unknown' && nx.includes(y)) || (ny !== undefined && ny !== 'unknown' && ny.includes(x))
+  }
+  for (const [one, other] of [[a, b], [b, a]] as const) {
+    const fixed = componentNeeds(one).flatMap((r) => ('all' in r ? r.all : []))
+    for (const req of componentNeeds(other)) {
+      const options = 'all' in req ? req.all : req.choose.from
+      for (const f of fixed) {
+        const blocked = options.filter((o) => excludes(f, o))
+        if ('all' in req ? blocked.length > 0 : blocked.length === options.length) {
+          return `${f} (${one?.title}) can't be taken with ${blocked.join(' or ')} (${other?.title}).`
+        }
+      }
+    }
+  }
+  return null
 }

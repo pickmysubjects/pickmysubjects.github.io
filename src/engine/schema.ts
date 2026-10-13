@@ -206,6 +206,8 @@ export const subjectFileSchema = z
     // A subject the University stops running keeps its file (plans and records still name it):
     // the first year it no longer runs, and what students take instead, if anything.
     discontinued_from: z.number().int().optional(),
+    // Taught only at a campus far from Parkville (e.g. "Dookie"): not suggested unless the student's major needs it.
+    campus: z.string().optional(),
     replaced_by: z.array(subjectCode).default([]),
   })
   .strict()
@@ -231,6 +233,7 @@ export const subjectFileSchema = z
     verifiedOn: s.verified_on,
     notes: s.notes,
     discontinuedFrom: s.discontinued_from,
+    campus: s.campus,
     replacedBy: s.replaced_by,
     // Filled in from data/<set>/discussions/ when there is one.
     discussion: undefined as DiscussionSummary | undefined,
@@ -440,6 +443,8 @@ export const componentFileSchema = z
     requirements: z.union([z.literal('unknown'), z.array(componentReq)]).default('unknown'),
     handbook: handbookUrl.optional(),
     verified_on: z.union([z.iso.date(), z.null()]).default(null),
+    // First commencement year whose students can no longer choose it (still shown to earlier ones).
+    closed_from: z.number().int().optional(),
   })
   .strict()
   .transform((c) => ({
@@ -453,6 +458,7 @@ export const componentFileSchema = z
     requirements: c.requirements as 'unknown' | ComponentReq[],
     handbook: c.handbook,
     verifiedOn: c.verified_on,
+    closedFrom: c.closed_from,
   }))
 
 export type Component = z.output<typeof componentFileSchema>

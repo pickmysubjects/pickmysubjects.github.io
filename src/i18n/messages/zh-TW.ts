@@ -116,6 +116,7 @@ export const zhTW: Messages = {
     noMajor: '選好主修後再檢查',
     noSpec: '未選擇（可選）',
     needsMajor: '{title} 需要以下主修之一：{majors}',
+    cannotCombine: '這個主修和專業方向不能同時選：{reason}',
     areas: '{count} 個領域',
     areasOver: '{count} 個領域；{over} 超過 {max} 學分',
     progressionNone: '還沒有 Level {level} 的課程',
@@ -150,6 +151,7 @@ export const zhTW: Messages = {
   },
   genNote: {
     shortTerm: "{code} 只在學期之外開，所以排在 {year} 年{period}。",
+    shortTermChain: "{code} 排在 {year} 年{period}，這樣後面的課不會因此延後一個學期。",
     keptOpen: "先排了 {codes}：這個方向 {n} 個主修大多從它們開始，之後選哪個都來得及。",
     balanced: "把 {a} 和 {b} 換了學期，讓每學期的壓力更平均。",
     lighter: "選了 {b} 而不是 {a}，免得那個學期太重。",
@@ -216,6 +218,7 @@ export const zhTW: Messages = {
     retake: "你上次這門得了 {mark} 分沒過，這次是重修。",
     majorCore: "你主修的必修課",
     majorOption: "你主修裡可選的課",
+    majorPath: "通往你主修裡的 {codes}",
     makesVeryHeavy: "加進這個學期會讓它很重。",
     prereqNotCurated: "這門課的先修條件還沒收錄，選課前請看 Handbook。",
     eligibilityManual: "有一項需要你自己確認的條件（例如 VCE 成績）。",

@@ -25,6 +25,8 @@ export interface GenerateInput {
    * at least half of them need are planned, so none is closed off.
    */
   keepOpen?: string[]
+  /** Internal: also offer summer and winter terms, for chain subjects that would otherwise fall a semester behind. */
+  useShortTerms?: boolean
 }
 
 export interface GenerateResult {
@@ -57,6 +59,10 @@ export function generatePlan(input: GenerateInput): GenerateResult {
     r.unplaced.length * 100 + checkCourse(r.plan, input.data).statuses.filter((st) => st.status === 'fail').length
   let result = buildPlan(input)
   if (input.maxTerms !== undefined || shortfall(result) === 0) return result
+  // Before planning longer: a chain subject that also runs in summer or winter (CHEM10004 for a
+  // mid-year start) can go there and keep the degree to its usual length.
+  const viaShort = buildPlan({ ...input, useShortTerms: true })
+  if (shortfall(viaShort) === 0) return viaShort
   const base = result.plan.terms.length
   for (let extra = 1; extra <= 2 && shortfall(result) > 0; extra++) {
     const longer = buildPlan({ ...input, maxTerms: base + extra })
@@ -89,6 +95,15 @@ function buildPlan(input: GenerateInput): GenerateResult {
   )
   const termCount = input.maxTerms ?? Math.min(10, Math.max(1, Math.ceil(remainingPoints / load)))
   const terms = standardTerms(input.startYear, input.startPeriod, termCount)
+  if (input.useShortTerms) {
+    // Winter between Semester 1 and 2, summer between Semester 2 and the next Semester 1.
+    for (let i = terms.length - 1; i > 0; i--) {
+      const prev = terms[i - 1] as PlanTerm
+      const between: PlanTerm = prev.period === 'semester-1' ? { year: prev.year, period: 'winter', subjects: [] } : { year: prev.year + 1, period: 'summer', subjects: [] }
+      terms.splice(i, 0, between)
+    }
+  }
+  const isShort = (t: PlanTerm) => t.period === 'summer' || t.period === 'winter'
 
   const pending = [...required].filter((c) => !done.has(c))
   // Areas of the major/specialisation, used to break ties between equally scored electives.
@@ -121,41 +136,79 @@ function buildPlan(input: GenerateInput): GenerateResult {
     now = termIndex
     const before = new Set([...completed, ...allPlaced()])
     let used = 0
+    // A summer or winter term only takes a required subject that can't wait for the next semester.
+    const limit = isShort(term) ? SHORT_TERM_POINTS : load
 
-    // Required subjects first. Corequisites go in together or not at all.
+    // Required subjects first. Corequisites go in together or not at all; a one-way corequisite
+    // (MIIM30016 needs MIIM30011 earlier or alongside) may join once it is placed this term.
+    const coreqsOf = (c: string) => referencedSubjects(data.subjects[c]?.corequisites ?? 'none')
     const fits = (c: string, group: string[]) =>
       !before.has(c) &&
-      (needs.get(c) ?? []).every((n) => before.has(n) || group.includes(n)) &&
+      (needs.get(c) ?? []).every((n) => before.has(n) || group.includes(n) || (term.subjects.includes(n) && coreqsOf(c).includes(n))) &&
       canTake(c, term, before, data, input.course, group) !== 'fail' &&
       (!firstSemester.has(c) || termIndex === 0)
-    const ready = pending
-      .filter((c) => fits(c, groupOf(c)))
-      .sort((a, b) => urgency(b) - urgency(a) || priority(b, firstSemester, depth, data, term.year) - priority(a, firstSemester, depth, data, term.year))
-    for (const code of ready) {
-      if (term.subjects.includes(code)) continue
-      const group = groupOf(code).filter((c) => !before.has(c) && !term.subjects.includes(c))
-      if (!group.every((c) => fits(c, group))) continue
-      const pts = group.reduce((sum, c) => sum + (data.subjects[c]?.points ?? 12.5), 0)
-      if (used + pts > load) continue
-      if (course && !group.every((c) => progressionAllows(c, course, [...before], data))) continue
-      term.subjects.push(...group)
-      used += pts
+    // Again after each pass: a subject placed this term can let its one-way corequisite partner in.
+    for (let placedAny = true; placedAny; ) {
+      placedAny = false
+      const ready = pending
+        .filter((c) => !term.subjects.includes(c) && fits(c, groupOf(c)) && (!isShort(term) || urgency(c) === 1))
+        .sort((a, b) => urgency(b) - urgency(a) || priority(b, firstSemester, depth, data, term.year) - priority(a, firstSemester, depth, data, term.year))
+      for (const code of ready) {
+        if (term.subjects.includes(code)) continue
+        const group = groupOf(code).filter((c) => !before.has(c) && !term.subjects.includes(c))
+        if (!group.every((c) => fits(c, group))) continue
+        const pts = group.reduce((sum, c) => sum + (data.subjects[c]?.points ?? 12.5), 0)
+        if (used + pts > limit) continue
+        if (course && !group.every((c) => progressionAllows(c, course, [...before], data))) continue
+        term.subjects.push(...group)
+        used += pts
+        placedAny = true
+      }
     }
 
     // Then electives aimed at the most pressing unmet requirement.
-    fill(term, termIndex)
+    if (!isShort(term)) fill(term, termIndex)
   })
+  // Summer and winter terms nothing needed are dropped again.
+  for (let i = terms.length - 1; i >= 0; i--) if (isShort(terms[i] as PlanTerm) && (terms[i] as PlanTerm).subjects.length === 0) terms.splice(i, 1)
+  for (const t of terms.filter(isShort)) {
+    for (const code of t.subjects) {
+      notes.push(note('shortTermChain', { code, year: t.year, period: t.period }, `${code} is planned in ${t.period} ${t.year}, so the subjects after it don't fall a semester behind.`))
+    }
+  }
 
   // Greedy filling can over-serve one requirement (e.g. science) and starve
   // another (e.g. breadth); swap electives where that's safe, then top up.
   if (course) {
     repair(terms, { input, course, completed, electives, notes, focus, reserved: pending, opens })
-    terms.forEach((t, i) => fill(t, i))
+    terms.forEach((t, i) => isShort(t) || fill(t, i))
     // Anything still short: better a full term than an empty slot kept for a minimum that can't be met.
-    terms.forEach((t, i) => fill(t, i, true))
+    terms.forEach((t, i) => isShort(t) || fill(t, i, true))
   }
   // Required subjects that only run in summer or winter: give them a short term of their own.
   placeShortTerms(terms, pending, completed, data, input.course, course, notes)
+  // A summer or winter subject on top of full semesters goes past the course total: drop the
+  // latest electives no rule needs, so the degree isn't longer than it has to be.
+  if (course) {
+    const total = () => [...completed, ...allPlaced()].reduce((sum, c) => sum + (data.subjects[c]?.points ?? 12.5), 0)
+    const draftOf = (): Plan => ({ course: input.course, courseYear: input.courseYear, major: input.major, specialisation: input.specialisation, completed, terms })
+    const failing = () => checkCourse(draftOf(), data).statuses.filter((st) => st.status === 'fail').length
+    for (let i = terms.length - 1; i >= 0 && total() > course.totalPoints; i--) {
+      const term = terms[i] as PlanTerm
+      for (const code of [...term.subjects].reverse()) {
+        const points = data.subjects[code]?.points ?? 12.5
+        if (!electives.has(code) || total() - points < course.totalPoints) continue
+        const before = failing()
+        term.subjects.splice(term.subjects.indexOf(code), 1)
+        if (failing() > before || checkTerms(draftOf(), data).some((x) => x.severity === 'error')) term.subjects.push(code)
+        else {
+          electives.delete(code)
+          // Its "added in …" note would no longer be true.
+          for (let n = notes.length - 1; n >= 0; n--) if (notes[n]?.key === 'added' && notes[n]?.params.code === code) notes.splice(n, 1)
+        }
+      }
+    }
+  }
 
   // Spread the load, so the hard subjects don't all land in one semester.
   const draft: Plan = { course: input.course, courseYear: input.courseYear, major: input.major, specialisation: input.specialisation, completed, terms }
@@ -271,6 +324,9 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
       if (have >= req.choose.points) break
       if (done.has(c) || required.has(c)) continue
       if (!runsDuringPlan(data.subjects[c], input.startYear)) continue
+      // An option that can't be taken alongside a subject already required (COMP20003 and a
+      // major's ENGR30004) leaves the other options to fill the choice.
+      if (clashes(c, done, required, data)) continue
       required.add(c)
       used.add(c)
       have += data.subjects[c]?.points ?? 12.5
@@ -323,12 +379,13 @@ function resolvePrereqs(expr: ReqExpr, done: Set<string>, required: Set<string>,
     // The exception is a school result (a VCE study score or equivalent): that's how
     // most students meet a first-year requirement, so it is assumed before adding a
     // bridging subject like MAST10012. The plan check still asks the student to confirm.
+    // A subject taught only at a far campus (Dookie) is a last resort among placeable ones.
     const MANUAL = 50
     const SCHOOL = 0.5
     const cost = (o: string[]) =>
       o.reduce(
         (sum, c) =>
-          sum + (required.has(c) ? 0 : clashes(c, done, required, data) || closedTo(c, course, data) ? 10_000 : !data.subjects[c] || needsMissing(c, data) ? 100 : semesterless(data.subjects[c]!) ? 20 : 1),
+          sum + (required.has(c) ? 0 : clashes(c, done, required, data) || closedTo(c, course, data) ? 10_000 : !data.subjects[c] || needsMissing(c, data) ? 100 : data.subjects[c]!.campus ? 40 : semesterless(data.subjects[c]!) ? 20 : 1),
         0,
       )
     let best: string[] | null = null
@@ -449,7 +506,8 @@ function pickForPoints(
       (s) =>
         fits(s) &&
         !done.has(s.code) &&
-        (required.has(s.code) || (runs(s) > 0 && !clashes(s.code, done, required, data) && !closedTo(s.code, course, data))),
+        // A far-campus subject (Dookie) only when already required.
+        (required.has(s.code) || (runs(s) > 0 && !s.campus && !clashes(s.code, done, required, data) && !closedTo(s.code, course, data))),
     )
     .sort((a, b) => a.level - b.level || isNew(a) - isNew(b) || runs(b) - runs(a) || a.code.localeCompare(b.code))
   const picks: string[] = []

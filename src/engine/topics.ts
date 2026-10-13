@@ -109,6 +109,11 @@ function inferTopics(s: Subject): string[] {
   return [...out]
 }
 
+/** The broad topics a subject's own discipline (its area code) is about: "a psychology subject". */
+export function homeTopics(s: Subject): string[] {
+  return AREA_TOPICS[s.area ?? s.code.slice(0, 4)] ?? []
+}
+
 const INFERRED = new WeakMap<Subject, string[]>()
 
 /**

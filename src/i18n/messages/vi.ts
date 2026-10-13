@@ -116,6 +116,7 @@ export const vi: Messages = {
     noMajor: 'chọn chuyên ngành để kiểm tra',
     noSpec: 'chưa chọn (không bắt buộc)',
     needsMajor: '{title} cần một trong các chuyên ngành: {majors}',
+    cannotCombine: 'Không thể kết hợp chuyên ngành này với hướng chuyên sâu này: {reason}',
     areas: '{count} lĩnh vực',
     areasOver: '{count} lĩnh vực; vượt {max} ở {over}',
     progressionNone: 'chưa có môn level {level}',
@@ -150,6 +151,7 @@ export const vi: Messages = {
   },
   genNote: {
     shortTerm: "{code} chỉ mở ngoài học kỳ chính, nên được xếp vào {period} {year}.",
+    shortTermChain: "{code} được xếp vào {period} {year} để các môn học sau không bị chậm một học kỳ.",
     keptOpen: "Đã xếp {codes} trước: phần lớn {n} chuyên ngành trong lĩnh vực này bắt đầu từ đây, nên bạn vẫn chọn được bất kỳ ngành nào.",
     balanced: "Đã đổi học kỳ của {a} và {b} để chia đều áp lực.",
     lighter: "Chọn {b} thay cho {a} để kỳ đó không quá nặng.",
@@ -216,6 +218,7 @@ export const vi: Messages = {
     retake: "Lần trước bạn được {mark} điểm và chưa qua: lần này là học lại.",
     majorCore: "Môn bắt buộc của chuyên ngành bạn",
     majorOption: "Một môn tự chọn trong chuyên ngành bạn",
+    majorPath: "Dẫn đến {codes} trong chuyên ngành của bạn",
     makesVeryHeavy: "Thêm vào kỳ này sẽ làm kỳ này rất nặng.",
     prereqNotCurated: "Điều kiện tiên quyết chưa được thêm: xem Handbook trước khi đăng ký.",
     eligibilityManual: "Có một điều kiện bạn cần tự xác nhận (như điểm VCE).",

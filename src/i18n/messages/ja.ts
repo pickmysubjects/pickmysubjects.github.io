@@ -116,6 +116,7 @@ export const ja: Messages = {
     noMajor: '専攻を選ぶとチェックされます',
     noSpec: '未選択（任意）',
     needsMajor: '{title} には次のいずれかのメジャーが必要です：{majors}',
+    cannotCombine: 'このメジャーとスペシャライゼーションは組み合わせられません：{reason}',
     areas: '{count} 分野',
     areasOver: '{count} 分野；{over} は {max} ポイントを超えています',
     progressionNone: 'レベル {level} の科目はまだありません',
@@ -150,6 +151,7 @@ export const ja: Messages = {
   },
   genNote: {
     shortTerm: "{code} は学期外にしか開講されないため、{year} 年の{period}に入れました。",
+    shortTermChain: "{code} は {year} 年の{period}に入れています。後に続く科目が1学期遅れないようにするためです。",
     keptOpen: "先に {codes} を入れました。この分野の {n} 専攻の多くがここから始まるので、後でどれでも選べます。",
     balanced: "負担を均すため、{a} と {b} の学期を入れ替えました。",
     lighter: "その学期が重くならないよう、{a} ではなく {b} を選びました。",
@@ -216,6 +218,7 @@ export const ja: Messages = {
     retake: "前回は {mark} 点で不合格でした。今回は再履修になります。",
     majorCore: "あなたの専攻の必修科目",
     majorOption: "あなたの専攻の選択科目の一つ",
+    majorPath: "メジャーの {codes} につながる",
     makesVeryHeavy: "この学期に加えるとかなり重くなります。",
     prereqNotCurated: "前提条件はまだ未登録です。履修前に Handbook を確認してください。",
     eligibilityManual: "自分で確認が必要な条件があります（VCE の成績など）。",

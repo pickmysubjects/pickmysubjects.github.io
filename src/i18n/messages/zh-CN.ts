@@ -116,6 +116,7 @@ export const zhCN: Messages = {
     noMajor: '选好主修后再检查',
     noSpec: '未选择（可选）',
     needsMajor: '{title} 需要以下主修之一：{majors}',
+    cannotCombine: '这个主修和专业方向不能同时选：{reason}',
     areas: '{count} 个领域',
     areasOver: '{count} 个领域；{over} 超过 {max} 学分',
     progressionNone: '还没有 Level {level} 的课程',
@@ -150,6 +151,7 @@ export const zhCN: Messages = {
   },
   genNote: {
     shortTerm: "{code} 只在学期之外开，所以排在 {year} 年{period}。",
+    shortTermChain: "{code} 排在 {year} 年{period}，这样后面的课不会因此推迟一个学期。",
     keptOpen: "先排了 {codes}：这个方向 {n} 个专业里大部分都从它们开始，之后选哪个都来得及。",
     balanced: "把 {a} 和 {b} 换了学期，让每学期的压力更平均。",
     lighter: "选了 {b} 而不是 {a}，免得那个学期太重。",
@@ -216,6 +218,7 @@ export const zhCN: Messages = {
     retake: "你上次这门得了 {mark} 分没过，这次是重修。",
     majorCore: "你专业的必修课",
     majorOption: "你专业里可选的课",
+    majorPath: "通往你专业里的 {codes}",
     makesVeryHeavy: "加进这个学期会让它很重。",
     prereqNotCurated: "这门课的先修条件还没收录，选课前请看 Handbook。",
     eligibilityManual: "有一项需要你自己确认的条件（比如 VCE 成绩）。",

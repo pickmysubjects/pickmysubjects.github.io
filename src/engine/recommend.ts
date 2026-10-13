@@ -5,7 +5,7 @@ import type { Dataset, Period, Skill, Subject } from './schema'
 import { skillsOf } from './skills'
 import { termStress } from './termStress'
 import { planRoles } from './roles'
-import { relatedTopics, topicsOf } from './topics'
+import { homeTopics, relatedTopics, topicsOf } from './topics'
 
 
 export type Goal = 'wam' | 'balanced' | 'challenge'
@@ -67,9 +67,9 @@ export interface RecommendOptions {
 
 /** Points a suggestion gives up for making its semester heavier (the plan builder uses the same). */
 export const HEAVY_PICK_COST = 6
-/** A nudge, not a signal: in your major says nothing about whether it suits you. */
-export const PROGRAMME_BONUS = 4
-/** How far a subject two levels below the student's year drops. */
+/** Enough to put the major's own subjects and the way into them above unrelated ones of similar fit; still less than a real mismatch costs. */
+export const PROGRAMME_BONUS = 8
+/** How far a subject two levels below the student's year drops (one level below: half). */
 export const BEHIND_LEVEL_COST = 8
 /** A subject that uses a skill rated 1 (2 counts half), with none of the student's interests. */
 export const OFF_TOPIC_STRUGGLE_COST = 12
@@ -99,6 +99,10 @@ const SURE_BASE = 0.3
 /** Interest scores: two tagged matches, one, an area-implied match, a related topic. */
 const INTEREST_FULL = 1
 const INTEREST_ONE = 0.8
+/** One shared topic among several others, outside the subject's own discipline: it touches on it. */
+const INTEREST_SIDE = 0.7
+/** How many tagged topics make a subject broad enough that one outside its discipline is a side topic. */
+const SIDE_TOPICS = 3
 const INTEREST_NAMED = 0.75
 const INTEREST_INFERRED = 0.6
 const INTEREST_RELATED = 0.55
@@ -115,7 +119,7 @@ const TIE_POINTS = 3
 /** A subject that doesn't run in this many years from now isn't worth suggesting. */
 const RUN_HORIZON_YEARS = 2
 /** Interest score for a subject that isn't on a topic you like but leads to one that is, less per extra step. */
-const PATHWAY_INTEREST = 0.7
+const PATHWAY_INTEREST = 0.65
 const PATHWAY_STEP = 0.08
 const PATHWAY_MAX_STEPS = 3
 
@@ -162,6 +166,26 @@ export function recommend(data: Dataset, profile: Profile, opts: RecommendOption
     opts.course && opts.programme?.components.length
       ? planRoles(data, opts.course, opts.programme.courseYear, opts.programme.components)
       : null
+  // Earlier subjects the major's own subjects build on (a step or two back): the way into them,
+  // even where there are several to choose from (PSYC20006 for a psychology major).
+  const towardMajor = new Map<string, string[]>()
+  if (roles) {
+    let frontier = [...roles.required, ...roles.options].filter((c) => !completed.has(c))
+    for (let step = 0; step < 2; step++) {
+      const next: string[] = []
+      for (const target of frontier) {
+        const t = data.subjects[target]
+        if (!t) continue
+        for (const p of [...referencedSubjects(t.prerequisites), ...referencedSubjects(t.corequisites)]) {
+          if (completed.has(p) || roles.required.has(p) || roles.options.has(p)) continue
+          const leadsTo = towardMajor.get(p) ?? []
+          if (!leadsTo.includes(target)) towardMajor.set(p, [...leadsTo, target])
+          next.push(p)
+        }
+      }
+      frontier = next
+    }
+  }
 
   // Prerequisites of subjects already passed: going back to them adds nothing
   // (e.g. COMP10001 after COMP10002). Not when the major still needs it, nor when it was only
@@ -186,6 +210,8 @@ export function recommend(data: Dataset, profile: Profile, opts: RecommendOption
   for (const s of Object.values(data.subjects)) {
     if (taken.has(s.code) || behind.has(s.code)) continue
     if (blocked.has(s.code)) continue
+    // Taught only at a far campus (Dookie): only when the student's own major leads there.
+    if (s.campus && !(roles && (roles.required.has(s.code) || roles.options.has(s.code) || towardMajor.has(s.code)))) continue
     if (s.nonAllowed !== 'unknown' && s.nonAllowed.some((c) => taken.has(c))) continue
     if (opts.course && opts.category && s.categories[opts.course] !== opts.category) continue
     if (opts.level !== undefined && s.level !== opts.level) continue
@@ -211,9 +237,11 @@ export function recommend(data: Dataset, profile: Profile, opts: RecommendOption
     const failed = marks.get(s.code)
     if (failed !== undefined && failed < PASS_MARK) rec.warnings.unshift(note('retake', { mark: failed }, `You got ${failed} last time: this would be a retake.`))
     // A third-year student rarely gains from a first-year science subject (the degree wants
-    // level-3 points); breadth is different, since level-1 breadth is the usual way in.
-    if (opts.maxLevel !== undefined && opts.maxLevel - s.level >= 2 && opts.course && s.categories[opts.course] !== 'breadth') {
-      rec.score = Math.max(0, rec.score - BEHIND_LEVEL_COST)
+    // level-3 points), and a level below their year is a smaller step back; breadth is
+    // different, since level-1 breadth is the usual way in.
+    const behindBy = opts.maxLevel === undefined ? 0 : opts.maxLevel - s.level
+    if (behindBy > 0 && opts.course && s.categories[opts.course] !== 'breadth') {
+      rec.score = Math.max(0, rec.score - (behindBy >= 2 ? BEHIND_LEVEL_COST : BEHIND_LEVEL_COST / 2))
     }
     // Leaning on a skill the student finds hard, in a topic they didn't ask for: even
     // "challenge yourself" means a hard subject in something you care about, not this.
@@ -234,6 +262,10 @@ export function recommend(data: Dataset, profile: Profile, opts: RecommendOption
       const core = roles.required.has(s.code)
       rec.score = Math.min(100, rec.score + PROGRAMME_BONUS)
       rec.reasons.unshift(note(core ? 'majorCore' : 'majorOption', {}, core ? 'Compulsory in your major.' : 'One of the choices in your major.'))
+    } else if (towardMajor.has(s.code)) {
+      const codes = (towardMajor.get(s.code) as string[]).slice(0, 3).join(', ')
+      rec.score = Math.min(100, rec.score + PROGRAMME_BONUS)
+      rec.reasons.unshift(note('majorPath', { codes }, `Leads to ${codes} in your major.`))
     }
     if (opts.termSubjects && termBefore) {
       const after = termStress([...opts.termSubjects, s.code], data, profile).level
@@ -245,7 +277,10 @@ export function recommend(data: Dataset, profile: Profile, opts: RecommendOption
     recs.push(rec)
   }
 
-  recs.sort((a, b) => b.score - a.score || a.code.localeCompare(b.code))
+  // Equal scores (common when a student has told us little): the subject more of the degree
+  // builds on comes first, a better first step than whichever code sorts first.
+  const builtOn = (r: Recommendation) => dependents.get(r.code)?.length ?? 0
+  recs.sort((a, b) => b.score - a.score || builtOn(b) - builtOn(a) || a.code.localeCompare(b.code))
   const ranked = diversify(recs, data)
   return opts.limit ? ranked.slice(0, opts.limit) : ranked
 }
@@ -304,7 +339,9 @@ function score(s: Subject, ctx: ScoreCtx): Recommendation {
     const { topics, inferred, specific } = topicsOf(s)
     const hit = topics.filter((t) => interests.includes(t))
     const near = topics.some((t) => interests.some((i) => relatedTopics(t, i)))
-    // One shared interest is already a strong signal; a second makes it a full match.
+    // One shared interest is already a strong signal; a second makes it a full match. One of
+    // several topics, outside the subject's own discipline (health geography, for a psychology
+    // student), counts a little less than a subject from the discipline itself.
     // A topic only implied by the area code ("a biology subject") counts for less, and
     // a related topic (AI when you picked machine learning) for less again.
     // Hand-tagged counts most; a topic its title or summary names, nearly as much; one only
@@ -315,7 +352,9 @@ function score(s: Subject, ctx: ScoreCtx): Recommendation {
         : !inferred
           ? hit.length >= 2
             ? INTEREST_FULL
-            : INTEREST_ONE
+            : topics.length >= SIDE_TOPICS && !homeTopics(s).includes(hit[0] as string)
+              ? INTEREST_SIDE
+              : INTEREST_ONE
           : hit.some((t) => specific.includes(t))
             ? INTEREST_NAMED
             : INTEREST_INFERRED
@@ -405,10 +444,13 @@ function score(s: Subject, ctx: ScoreCtx): Recommendation {
   parts.opens = Math.max(Math.min(1, builtOn / OPENS_FULL), ratedUseful)
   if (builtOn >= 3) reasons.push(note('opensMany', { n: builtOn }, `${builtOn} later subjects build on it.`))
 
-  // Pathway value: subjects it unlocks that match the student's interests.
+  // Pathway value: subjects it unlocks that match the student's interests. Only for a subject
+  // that is itself on one of their topics: when the path is all that links it to them, the
+  // interest score above already counts it, and counting it twice put a broad first-year
+  // prerequisite of many subjects above the student's own subjects.
   const unlocks = leadsTo
   if (unlocks.length > 0) {
-    parts.unlocks = Math.min(1, unlocks.length / 3)
+    if (parts.interest !== undefined && parts.interest > PATHWAY_INTEREST) parts.unlocks = Math.min(1, unlocks.length / 3)
     const codes = `${unlocks.slice(0, 3).join(', ')}${unlocks.length > 3 ? '…' : ''}`
     reasons.push(note('unlocks', { codes }, `Opens up ${codes}.`))
   }

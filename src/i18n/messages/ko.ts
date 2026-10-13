@@ -116,6 +116,7 @@ export const ko: Messages = {
     noMajor: '전공을 고르면 확인돼요',
     noSpec: '선택 안 함 (선택 사항)',
     needsMajor: '{title}에는 다음 전공 중 하나가 필요합니다: {majors}',
+    cannotCombine: '이 전공과 세부 전공은 함께 선택할 수 없습니다: {reason}',
     areas: '영역 {count}개',
     areasOver: '영역 {count}개; {over}에서 {max}학점 초과',
     progressionNone: '아직 레벨 {level} 과목 없음',
@@ -150,6 +151,7 @@ export const ko: Messages = {
   },
   genNote: {
     shortTerm: "{code}은(는) 학기 외에만 열려서 {year}년 {period}에 넣었어요.",
+    shortTermChain: "{code}은(는) {year}년 {period}에 배치했습니다. 이어지는 과목이 한 학기 밀리지 않도록 하기 위해서입니다.",
     keptOpen: "먼저 {codes}을(를) 넣었어요. 이 분야 {n}개 전공 대부분이 여기서 시작해서, 나중에 어느 전공이든 고를 수 있어요.",
     balanced: "학기별 부담을 고르게 하려고 {a}와 {b}의 학기를 바꿨어요.",
     lighter: "그 학기가 너무 무거워지지 않게 {a} 대신 {b}를 골랐어요.",
@@ -216,6 +218,7 @@ export const ko: Messages = {
     retake: "지난번에 {mark}점으로 통과하지 못했어요. 이번에는 재수강이에요.",
     majorCore: "내 전공 필수 과목",
     majorOption: "내 전공 선택 과목 중 하나",
+    majorPath: "전공의 {codes}(으)로 이어짐",
     makesVeryHeavy: "이 학기에 넣으면 매우 빡빡해져요.",
     prereqNotCurated: "선수 조건이 아직 등록되지 않았어요. 수강 전에 Handbook을 확인하세요.",
     eligibilityManual: "직접 확인해야 하는 조건이 있어요(VCE 성적 등).",

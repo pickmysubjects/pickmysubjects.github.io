@@ -21,6 +21,7 @@ const BY_LOCALE: Record<string, (code: string) => OutboundLink[]> = {
       { label: '小红书', href: `https://www.xiaohongshu.com/search_result?keyword=${q}`, lang: 'zh-CN' },
       { label: '知乎', href: `https://www.zhihu.com/search?type=content&q=${q}`, lang: 'zh-CN' },
       { label: '哔哩哔哩', href: `https://search.bilibili.com/all?keyword=${q}`, lang: 'zh-CN' },
+      { label: '百度贴吧', href: `https://tieba.baidu.com/f/search/res?ie=utf-8&qw=${q}`, lang: 'zh-CN' },
     ]
   },
   'zh-TW': (c) => {
@@ -28,6 +29,7 @@ const BY_LOCALE: Record<string, (code: string) => OutboundLink[]> = {
     return [
       { label: 'Dcard', href: `https://www.dcard.tw/search?query=${q}`, lang: 'zh-TW' },
       { label: '小紅書', href: `https://www.xiaohongshu.com/search_result?keyword=${encodeURIComponent(`墨大 ${c}`)}`, lang: 'zh-TW' },
+      { label: 'PTT', href: `https://www.google.com/search?q=${encodeURIComponent(`site:ptt.cc 墨爾本大學 ${c}`)}`, lang: 'zh-TW' },
     ]
   },
   ja: (c) => {
@@ -35,11 +37,16 @@ const BY_LOCALE: Record<string, (code: string) => OutboundLink[]> = {
     return [
       { label: 'Yahoo!知恵袋', href: `https://chiebukuro.yahoo.co.jp/search?p=${encodeURIComponent('メルボルン大学')}`, lang: 'ja' },
       { label: 'note', href: `https://note.com/search?q=${q}&context=note`, lang: 'ja' },
+      { label: 'X', href: `https://x.com/search?q=${encodeURIComponent('#メルボルン大学')}`, lang: 'ja' },
     ]
   },
   ko: (c) => [{ label: '네이버', href: `https://search.naver.com/search.naver?query=${encodeURIComponent(`멜버른대 ${c}`)}`, lang: 'ko' }],
   vi: () => [{ label: 'VOZ', href: `https://voz.vn/search/1/?q=${encodeURIComponent('unimelb')}`, lang: 'vi' }],
-  ms: (c) => [{ label: 'Lowyat', href: `https://www.google.com/search?q=${encodeURIComponent(`site:forum.lowyat.net unimelb ${c}`)}`, lang: 'ms' }],
+  ms: (c) => [
+    { label: 'Lowyat', href: `https://www.google.com/search?q=${encodeURIComponent(`site:forum.lowyat.net unimelb ${c}`)}`, lang: 'ms' },
+    // Malaysian Chinese students use it as much as Lowyat.
+    { label: 'Xiaohongshu', href: `https://www.xiaohongshu.com/search_result?keyword=${encodeURIComponent(`墨大 ${c}`)}`, lang: 'zh-CN' },
+  ],
   id: () => [{ label: 'Kaskus', href: `https://www.kaskus.co.id/search?q=${encodeURIComponent('unimelb')}`, lang: 'id' }],
   hi: (c) => [{ label: 'Quora', href: `https://www.quora.com/search?q=${encodeURIComponent(`unimelb ${c}`)}`, lang: 'en' }],
 }

@@ -2,7 +2,8 @@
 import { link } from '@/composables/useView'
 import { computed, shallowRef } from 'vue'
 import { ArrowLeft, ArrowRight, Check } from 'lucide-vue-next'
-import type { Component, Course, Period } from '@/engine'
+import { cannotCombine, type Component, type Course, type Period } from '@/engine'
+import { useDataset } from '@/composables/useDataset'
 import type { PlanSetup } from '@/composables/usePlan'
 import MajorPicker from './MajorPicker.vue'
 import { useI18n } from '@/i18n'
@@ -14,6 +15,7 @@ const props = withDefaults(
 )
 const emit = defineEmits<{ done: [setup: PlanSetup]; cancel: [] }>()
 const { t } = useI18n()
+const { data } = useDataset()
 
 const draft = shallowRef<PlanSetup>({ ...props.setup })
 const step = shallowRef(0)
@@ -21,14 +23,24 @@ const thisYear = new Date().getFullYear()
 const years = [thisYear - 2, thisYear - 1, thisYear, thisYear + 1]
 const periods: Period[] = ['semester-1', 'semester-2']
 
-const majors = computed(() => props.components.filter((c) => c.course === draft.value.course && c.kind === 'major'))
+// A major closed to new students stays only for those who started before it closed (or already chose it).
+const majors = computed(() =>
+  props.components.filter(
+    (c) =>
+      c.course === draft.value.course &&
+      c.kind === 'major' &&
+      (c.closedFrom === undefined || draft.value.startYear < c.closedFrom || c.id === draft.value.major),
+  ),
+)
 // Specialisations that go with the chosen major (an extra, optional choice).
 const specs = computed(() =>
   props.components.filter(
     (c) =>
       c.course === draft.value.course &&
       c.kind === 'specialisation' &&
-      (c.requiresMajor.length === 0 || c.requiresMajor.includes(draft.value.major)),
+      (c.requiresMajor.length === 0 || c.requiresMajor.includes(draft.value.major)) &&
+      // Not one the major's own subjects rule out (Mechatronics with a computing specialisation).
+      !(draft.value.major && cannotCombine(data.value, draft.value.major, c.id)),
   ),
 )
 

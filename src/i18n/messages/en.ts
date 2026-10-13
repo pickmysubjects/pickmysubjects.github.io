@@ -119,6 +119,7 @@ export const en = {
     noMajor: 'pick a major and this gets checked',
     noSpec: 'none chosen (optional)',
     needsMajor: '{title} needs one of these majors: {majors}',
+    cannotCombine: 'This major and specialisation can’t be combined: {reason}',
     areas: '{count} area(s)',
     areasOver: '{count} area(s); over {max} in {over}',
     progressionNone: 'no level-{level} subjects yet',
@@ -153,6 +154,7 @@ export const en = {
   },
   genNote: {
     shortTerm: "{code} only runs outside semesters, so it's planned in {period} {year}.",
+    shortTermChain: "{code} is planned in {period} {year}, so the subjects after it don’t fall a semester behind.",
     keptOpen: "Planned {codes} first: most of the {n} majors in this field start from them, so you can still pick any.",
     balanced: "Swapped {a} and {b} between semesters to spread the load.",
     lighter: "Took {b} instead of {a}, which would have made that semester heavy.",
@@ -219,6 +221,7 @@ export const en = {
     retake: "You got {mark} last time: this would be a retake.",
     majorCore: "Compulsory in your major",
     majorOption: "One of the choices in your major",
+    majorPath: "Leads to {codes} in your major",
     makesVeryHeavy: "Adding it makes that semester very heavy.",
     prereqNotCurated: "Prerequisites not added yet: check the Handbook before enrolling.",
     eligibilityManual: "A condition only you can confirm (like a VCE score).",
