@@ -2,7 +2,7 @@ id: chemical-systems
 course: B-SCI
 year: 2026
 kind: major
-title: Chemical Systems
+title: Chemical Engineering Systems
 points: 50
 requirements:
   - all: [ENGR30002, CHEN30001, CHEN30015, CHEN30016]

@@ -2,7 +2,7 @@ id: civil-systems
 course: B-SCI
 year: 2026
 kind: major
-title: Civil Systems
+title: Civil Engineering Systems
 points: 50
 requirements:
   - all: [CVEN30008, CVEN30010, CVEN30009, ENGR30002]
