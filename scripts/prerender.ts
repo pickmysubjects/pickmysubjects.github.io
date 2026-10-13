@@ -13,7 +13,7 @@
  * robots.txt and llms.txt. Everything is static: GitHub Pages serves it for free.
  */
 import { localTitle, pickLocalized, withLocalTitle } from '../src/i18n/localized'
-import { subjectTitleKey } from '../src/utils/seo'
+import { PRESET_TITLE_KEYS, subjectTitleKey } from '../src/utils/seo'
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -331,13 +331,12 @@ function browseBody(code: LocaleCode, t: Translate): string {
  * of the static pages are; breadth says so in its title.
  */
 function presetPages(code: LocaleCode, t: Translate): Page[] {
-  const titles: Record<PresetName, string> = { noExam: 'seo.presetNoExam', breadth: 'seo.presetBreadth', firstSemester: 'seo.presetFirstSemester' }
   return (Object.keys(PRESETS) as PresetName[]).flatMap((preset) => {
     const rows = browse(subjects, { ...EMPTY_FILTERS, ...PRESETS[preset] }, 'B-SCI', YEAR)
     if (rows.length === 0) return []
     const facts = { n: rows.length, year: YEAR }
-    const title = t(titles[preset], facts)
-    const description = t(`${titles[preset]}Desc`, facts)
+    const title = t(PRESET_TITLE_KEYS[preset], facts)
+    const description = t(`${PRESET_TITLE_KEYS[preset]}Desc`, facts)
     const body = [
       `<h1>${esc(title)}</h1>`,
       `<p>${esc(description)}</p>`,

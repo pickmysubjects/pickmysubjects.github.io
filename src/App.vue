@@ -20,7 +20,8 @@ import { useView, link } from './composables/useView'
 import { useDataset } from './composables/useDataset'
 import { useI18n } from './i18n'
 import { localTitle, withLocalTitle } from './i18n/localized'
-import { subjectTitleKey } from '@/utils/seo'
+import { PRESET_TITLE_KEYS, subjectTitleKey } from '@/utils/seo'
+import { presetFromSlug } from '@/engine'
 
 const { view, param } = useView()
 const { t, locale } = useI18n()
@@ -43,10 +44,16 @@ watchEffect(() => {
   const s = view.value === 'subject' ? data.value.subjects[param.value.toUpperCase()] : undefined
   const key = TITLES[view.value]
   const major = view.value === 'majors' && param.value ? data.value.components.find((c) => c.id === param.value) : undefined
+  // A quick pick's own page keeps the title its static page has, so search engines that run
+  // the app see the same one.
+  const preset = view.value === 'subjects' ? presetFromSlug(param.value) : undefined
+  const year = Math.max(...Object.values(data.value.subjects).map((x) => x.sourceYear))
   document.title = s
     ? `${t.value(subjectTitleKey(s), { code: s.code, title: withLocalTitle(s.title, localTitle(s, locale.value)) })} | PickMySubjects`
     : major
       ? `${t.value('seo.majorTitle', { title: major.title })} | PickMySubjects`
+      : preset
+        ? `${t.value(PRESET_TITLE_KEYS[preset], { year })} | PickMySubjects`
       : key
       ? `${t.value(key)} | PickMySubjects`
       : t.value('seo.homeTitle')
