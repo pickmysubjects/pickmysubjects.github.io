@@ -73,6 +73,8 @@ describe('browse filters in the address', () => {
     expect(filtersFromQuery(new URLSearchParams(''), 'first-semester')).toMatchObject({ level: 1, period: 'semester-1' })
     // Filters the student changed since (written back to the query) win over the address.
     expect(filtersFromQuery(new URLSearchParams('level=2'), 'no-exam').noExam).toBe(false)
+    // A shared link's tracking parameters don't count as filters.
+    expect(filtersFromQuery(new URLSearchParams('fbclid=abc&utm_source=xhs'), 'no-exam').noExam).toBe(true)
     expect(filtersFromQuery(new URLSearchParams(''), 'nonsense')).toEqual(filtersFromQuery(new URLSearchParams('')))
   })
 })

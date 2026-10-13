@@ -129,9 +129,13 @@ export function filtersToQuery(f: BrowseFilters): string {
 const PERIOD_SET = new Set<string>(['summer', 'semester-1', 'winter', 'semester-2'])
 const SORT_SET = new Set<string>(['code', 'exam', 'hours', 'rating'])
 
+/** The query keys that set filters; anything else (fbclid, utm_source from a shared link) is ignored. */
+const FILTER_KEYS = new Set(['q', 'type', 'level', 'when', 'noprereq', 'noexam', 'nogroup', 'sort', 'preset'])
+
 /** `slug` is the quick pick in the path (/subjects/no-exam/); filters in the query win over it. */
 export function filtersFromQuery(q: URLSearchParams, slug = ''): BrowseFilters {
-  const preset = q.get('preset') ?? ([...q.keys()].length === 0 ? presetFromSlug(slug) : undefined)
+  const setsFilters = [...q.keys()].some((k) => FILTER_KEYS.has(k))
+  const preset = q.get('preset') ?? (setsFilters ? undefined : presetFromSlug(slug))
   const base = { ...EMPTY_FILTERS, ...(preset && preset in PRESETS ? PRESETS[preset as PresetName] : {}) }
   const level = Number(q.get('level'))
   const when = q.get('when') ?? ''
