@@ -290,6 +290,7 @@ export const en = {
     interestsTitle: 'What do you want to learn about?',
     skillsTitle: 'Your strengths',
     skillsHint: 'Pick a level only where you’re sure. Leave the rest blank; tap again to clear.',
+    skillsAnchor: "Go by the marks you usually get in this kind of subject, not by how you feel about it: strong = 80+ (H1), good = 75–79 (H2A), average = 70–74 (H2B), weaker = 60–69, struggle = below 60 or failed. Not at uni yet? Use the same kind of subject at school. Haven't done it? Leave it blank.",
     level: { 1: 'Hard', 2: 'Weak', 3: 'OK', 4: 'Good', 5: 'Strong' },
     wamLine: "Estimated WAM: {wam}",
     previewTitle: 'Suggested for you right now',

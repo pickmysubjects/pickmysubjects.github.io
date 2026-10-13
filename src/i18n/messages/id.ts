@@ -287,6 +287,7 @@ export const id: Messages = {
     interestsTitle: 'Apa yang ingin kamu pelajari?',
     skillsTitle: 'Kekuatanmu',
     skillsHint: 'Pilih hanya yang kamu yakin, sisanya biarkan kosong; ketuk lagi untuk menghapus.',
+    skillsAnchor: "Pilih berdasarkan nilai yang biasa kamu dapat di mata kuliah jenis ini, bukan perasaan: kuat = 80+ (H1), baik = 75–79 (H2A), biasa = 70–74 (H2B), agak lemah = 60–69, kesulitan = di bawah 60 atau pernah gagal. Belum kuliah? Pakai mata pelajaran serupa di sekolah. Belum pernah? Biarkan kosong.",
     level: { 1: 'Sulit', 2: 'Lemah', 3: 'Cukup', 4: 'Baik', 5: 'Jago' },
     wamLine: "Perkiraan WAM: {wam}",
     previewTitle: 'Rekomendasi untuk Anda saat ini',

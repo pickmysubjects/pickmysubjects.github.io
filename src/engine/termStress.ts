@@ -163,11 +163,13 @@ export function termStress(codes: string[], data: Dataset, profile?: Profile, op
       skillsOf(s, data).includes('programming') &&
       (s.assessment ?? []).some((t) => (t.kind === 'project' || t.kind === 'assignment') && t.weight >= PROJECT_SHARE),
   )
-  if (projects.length >= PROJECTS_RULE) {
+  // Someone strong at programming (5) takes one more coding project in their stride.
+  const projectLine = PROJECTS_RULE + (profile?.skills.programming === 5 ? 1 : 0)
+  if (projects.length >= projectLine) {
     points++
     reasons.push({ key: 'projects', params: { n: projects.length, codes: list(projects) } })
   }
-  score += projects.length / PROJECTS_RULE
+  score += projects.length / projectLine
 
   // Rated hard, unless the student says they're strong at what the subject leans on.
   const strong = (s: Subject) => {

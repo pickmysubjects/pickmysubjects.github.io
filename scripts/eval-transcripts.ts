@@ -52,6 +52,14 @@ function read(file: string) {
 
 const avg = (xs: number[]) => (xs.length ? xs.reduce((a, b) => a + b, 0) / xs.length : NaN)
 const fmt = (x: number) => (Number.isNaN(x) ? '–' : x.toFixed(2))
+/** ± one standard error: with few students or semesters, differences inside it are luck. */
+const se = (xs: number[]) => {
+  const v = xs.filter((x) => !Number.isNaN(x))
+  if (v.length < 2) return NaN
+  const m = avg(v)
+  return Math.sqrt(v.reduce((a, x) => a + (x - m) ** 2, 0) / (v.length - 1) / v.length)
+}
+const pm = (xs: number[]) => `${fmt(avg(xs))}±${fmt(se(xs))}`
 const all = { pCold: [] as number[], rCold: [] as number[], pMarks: [] as number[], rMarks: [] as number[], mae: [] as number[], maeWam: [] as number[] }
 
 for (const file of readdirSync(dir).filter((f) => f.endsWith('.txt')).sort()) {
@@ -102,7 +110,7 @@ for (const file of readdirSync(dir).filter((f) => f.endsWith('.txt')).sort()) {
     }
   })
   console.log(
-    `${file.padEnd(10)} ${st.course} ${(st.major || '-').padEnd(32)} recall@10 cold ${fmt(avg(per.rCold))} with marks ${fmt(avg(per.rMarks))} | precision ${fmt(avg(per.pCold))}/${fmt(avg(per.pMarks))} | mark MAE ${fmt(avg(per.err))} vs WAM ${fmt(avg(per.errWam))} (n=${per.err.length})`,
+    `${file.padEnd(10)} ${st.course} ${(st.major || '-').padEnd(32)} recall@10 cold ${pm(per.rCold)} with marks ${pm(per.rMarks)} (${per.rCold.length} semesters) | precision ${fmt(avg(per.pCold))}/${fmt(avg(per.pMarks))} | mark MAE ${pm(per.err)} vs WAM ${pm(per.errWam)} (n=${per.err.length})`,
   )
   all.pCold.push(avg(per.pCold))
   all.rCold.push(avg(per.rCold))
@@ -114,5 +122,6 @@ for (const file of readdirSync(dir).filter((f) => f.endsWith('.txt')).sort()) {
   }
 }
 console.log(
-  `\nAll ${all.rCold.length} students: recall@10 cold ${fmt(avg(all.rCold))}, with marks ${fmt(avg(all.rMarks))}; precision@10 ${fmt(avg(all.pCold))}/${fmt(avg(all.pMarks))}; mark MAE ${fmt(avg(all.mae))} vs WAM ${fmt(avg(all.maeWam))}`,
+  `\nAll ${all.rCold.length} students: recall@10 cold ${pm(all.rCold)}, with marks ${pm(all.rMarks)}; precision@10 ${fmt(avg(all.pCold))}/${fmt(avg(all.pMarks))}; mark MAE ${pm(all.mae)} vs WAM ${pm(all.maeWam)}` +
+    (all.rCold.length < 5 ? '\nFewer than 5 students: treat these as a direction, not a measure.' : ''),
 )

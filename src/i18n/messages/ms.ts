@@ -287,6 +287,7 @@ export const ms: Messages = {
     interestsTitle: 'Apa yang anda mahu pelajari?',
     skillsTitle: 'Kekuatan anda',
     skillsHint: 'Pilih yang anda pasti sahaja, biarkan selebihnya kosong; ketik sekali lagi untuk padam.',
+    skillsAnchor: "Pilih ikut markah yang biasa anda dapat dalam subjek jenis ini, bukan perasaan: kuat = 80+ (H1), baik = 75–79 (H2A), sederhana = 70–74 (H2B), lemah sedikit = 60–69, sukar = bawah 60 atau pernah gagal. Belum masuk universiti? Ikut subjek yang sama di sekolah. Belum pernah belajar? Biarkan kosong.",
     level: { 1: 'Sukar', 2: 'Lemah', 3: 'Sederhana', 4: 'Baik', 5: 'Mahir' },
     wamLine: "Anggaran WAM: {wam}",
     previewTitle: 'Cadangan untuk anda sekarang',

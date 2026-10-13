@@ -27,6 +27,7 @@ function pick(skill: Skill, level: number): void {
     <header class="card-head">
       <h2 id="skills-title" class="card-title">{{ t('record.skillsTitle') }}</h2>
       <p class="card-hint">{{ t('record.skillsHint') }}</p>
+      <p class="card-hint">{{ t('record.skillsAnchor') }}</p>
     </header>
     <ul class="skill-list">
       <li v-for="s in order" :key="s" class="skill">

@@ -287,6 +287,7 @@ export const vi: Messages = {
     interestsTitle: 'Bạn muốn học về điều gì?',
     skillsTitle: 'Điểm mạnh của bạn',
     skillsHint: 'Chỉ chọn những gì bạn chắc chắn, còn lại để trống; bấm lần nữa để bỏ chọn.',
+    skillsAnchor: "Chọn theo điểm bạn thường đạt ở loại môn này, không theo cảm giác: giỏi = 80+ (H1), khá = 75–79 (H2A), trung bình = 70–74 (H2B), hơi yếu = 60–69, khó khăn = dưới 60 hoặc từng trượt. Chưa vào đại học? Dựa vào môn tương tự ở phổ thông. Chưa học bao giờ? Để trống.",
     level: { 1: 'Khó', 2: 'Yếu', 3: 'Tạm', 4: 'Khá', 5: 'Giỏi' },
     wamLine: "WAM ước tính: {wam}",
     previewTitle: 'Gợi ý cho bạn lúc này',

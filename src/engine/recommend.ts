@@ -719,3 +719,4 @@ export function personalise(p: Profile, data: Dataset): { profile: Profile; like
   for (const [k, xs] of ease) if (skills[k] === undefined) skills[k] = Math.round(xs.reduce((a, b) => a + b, 0) / xs.length)
   return { profile: { ...p, skills }, liked }
 }
+

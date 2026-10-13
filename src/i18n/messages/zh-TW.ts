@@ -287,6 +287,7 @@ export const zhTW: Messages = {
     interestsTitle: '你想學哪些方向？',
     skillsTitle: '你的強項',
     skillsHint: '只選你確定的，其餘留空就好；再點一下可以取消。',
+    skillsAnchor: "按你這類課通常拿的分數選，不按感覺：擅長＝80 以上（H1），不錯＝75–79（H2A），一般＝70–74（H2B），偏弱＝60–69，吃力＝60 以下或被當過。還沒上大學？按高中同類科目選。沒學過？留空就好。",
     level: { 1: '吃力', 2: '偏弱', 3: '普通', 4: '不錯', 5: '擅長' },
     wamLine: "估算 WAM：{wam}",
     previewTitle: '現在推薦給你',
