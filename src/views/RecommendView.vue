@@ -76,22 +76,31 @@ function value(event: Event): string {
     <template v-if="hasProfile">
       <form class="filters" @submit.prevent>
         <fieldset class="goal">
-          <legend class="field">{{ t('suggest.goal') }}</legend>
-          <label v-for="g in goals" :key="g" class="goal-option" :title="t(`suggest.goals.${g}Hint`)">
-            <input type="radio" name="goal" :value="g" :checked="profile.goal === g" @change="setGoal(g)" />
-            {{ t(`suggest.goals.${g}`) }}
-          </label>
+          <legend class="field-label">{{ t('suggest.goal') }}</legend>
+          <div class="seg" role="radiogroup" :aria-label="t('suggest.goal')">
+            <button
+              v-for="g in goals"
+              :key="g"
+              type="button"
+              role="radio"
+              :aria-checked="profile.goal === g"
+              :title="t(`suggest.goals.${g}Hint`)"
+              @click="setGoal(g)"
+            >
+              {{ t(`suggest.goals.${g}`) }}
+            </button>
+          </div>
           <p class="goal-hint">{{ t(`suggest.goals.${profile.goal}Hint`) }}</p>
         </fieldset>
         <label class="field">
-          {{ t('suggest.kind') }}
+          <span class="field-label">{{ t('suggest.kind') }}</span>
           <select class="select-glass" :value="category" @change="category = value($event)">
             <option value="">{{ t('suggest.any') }}</option>
             <option v-for="c in categories" :key="c" :value="c">{{ categoryLabel(t, c) }}</option>
           </select>
         </label>
         <label class="field">
-          {{ t('suggest.when') }}
+          <span class="field-label">{{ t('suggest.when') }}</span>
           <select class="select-glass" :value="termIndex" @change="termIndex = Number(value($event))">
             <option :value="-1">{{ t('suggest.anyTime') }}</option>
             <option v-for="(term, i) in plan.terms.value" :key="i" :value="i">{{ termLabel(t, term) }}</option>
@@ -140,49 +149,88 @@ function value(event: Event): string {
   background: var(--overprint-tint);
 }
 
+/* One row on a laptop: what matters most (with its one-line hint under it), then the two
+   selects. Labels sit on the same line so the row reads as one. */
 .filters {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: end;
+  display: grid;
+  grid-template-columns: auto minmax(150px, 200px) minmax(150px, 220px);
+  justify-content: start;
+  align-items: start;
   gap: 12px 20px;
 }
 
-.filters > .field {
-  flex: 0 1 200px;
+.field {
+  display: grid;
+  gap: 6px;
+}
+
+.field-label {
+  padding: 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--ink-soft);
 }
 
 .goal {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
   gap: 6px;
+  min-width: 0;
   margin: 0;
   padding: 0;
   border: 0;
 }
 
-.goal legend {
-  margin-bottom: 4px;
+.seg {
+  display: flex;
+  gap: 2px;
+  padding: 3px;
+  background: color-mix(in srgb, var(--ink) 6%, transparent);
+  border-radius: 12px;
 }
 
-.goal-option {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 10px;
-  border: 1px solid var(--contour);
-  border-radius: var(--radius);
-  background: var(--paper-raised);
-  font-weight: 600;
+.seg button {
+  flex: 1 0 auto;
+  min-height: 38px;
+  padding: 6px 14px;
+  font: inherit;
+  font-size: 0.9375rem;
+  color: var(--ink-soft);
+  white-space: nowrap;
+  background: none;
+  border: 0;
+  border-radius: 9px;
   cursor: pointer;
 }
 
-.goal-option:has(input:checked) {
-  border-color: var(--overprint);
-  box-shadow: inset 0 0 0 1px var(--overprint);
+.seg button:hover {
+  color: var(--ink);
 }
 
-.goal-option input {
-  accent-color: var(--overprint);
+.seg button[aria-checked='true'] {
+  font-weight: 650;
+  color: var(--ink);
+  background: var(--glass-fill-hover);
+  box-shadow: var(--glass-shadow);
+}
+
+.seg button:focus-visible {
+  outline: 2px solid var(--overprint);
+  outline-offset: 1px;
+}
+
+.select-glass {
+  width: 100%;
+}
+
+/* Narrower: the goal on its own line, the two selects side by side under it. */
+@media (max-width: 820px) {
+  .filters {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .goal {
+    grid-column: 1 / -1;
+  }
 }
 
 .rec-list {
@@ -197,9 +245,8 @@ function value(event: Event): string {
   }
 }
 .goal-hint {
-  flex-basis: 100%;
-  margin: 4px 0 0;
-  font-size: 0.875rem;
+  margin: 0;
+  font-size: 0.8125rem;
   color: var(--ink-soft);
 }
 .more {
