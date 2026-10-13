@@ -60,7 +60,7 @@ export const RATINGS_FORM: GoogleFormConfig<RatingField> = {
     interest: 'entry.2052097651',
     teaching: 'entry.1490820390',
     // "WAM range without this subject", added with addWamRangeQuestion(); sent only with a grade band.
-    wamBand: '',
+    wamBand: 'entry.1922617865',
   },
   optional: ['examDifficulty', 'usefulness', 'interest', 'teaching', 'wamBand'],
 }
