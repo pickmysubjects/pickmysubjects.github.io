@@ -59,4 +59,13 @@ describe('marks and choices', () => {
     const p = { results: [{ code: 'MAST10006' }], skills: {}, interests: [], goal: 'balanced' as const, ratings: { MAST10006: { difficulty: 5 } } }
     expect(personalise(p, data).profile.skills.maths).toBe(1)
   })
+  it('protecting a WAM pushes an elective in a low-mark area further down than balanced does', () => {
+    const results = [{ code: 'MAST10006', mark: 52 }, { code: 'MAST10007', mark: 50 }, { code: 'BIOL10004', mark: 82 }, { code: 'COMP10001', mark: 84 }]
+    const rank = (goal: 'wam' | 'balanced') => {
+      const list = recommend(data, { results, skills: {}, interests: [], goal }, { course: 'B-SCI', year: 2026, maxLevel: 2 })
+      const r = list.find((x) => x.code.startsWith('MAST2') && x.warnings.some((w) => w.key === 'averagedLow'))
+      return r ? list.indexOf(r) / list.length : 1
+    }
+    expect(rank('wam')).toBeGreaterThanOrEqual(rank('balanced'))
+  })
 })

@@ -300,6 +300,12 @@ export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions =
       if (breadthFields.has(field) && s.categories[opts.course ?? ''] === 'breadth') rec.score = Math.min(100, rec.score + PAST_CHOICE_NUDGE)
       else if (!fromInterest && !inProgramme && !takenFields.has(field)) rec.score = Math.max(0, rec.score - PAST_CHOICE_NUDGE)
     }
+    // Protecting a WAM (or after marks only): an elective in an area where the student's own marks
+    // run low goes further down. One the major needs stays; it's flagged, not avoided.
+    if ((profile.goal === 'wam' || profile.goal === 'easy') && rec.warnings.some((x) => x.key === 'averagedLow')) {
+      const needed = roles !== null && (roles.required.has(s.code) || roles.options.has(s.code) || towardMajor.has(s.code))
+      if (!needed) rec.score = Math.max(0, rec.score - OFF_TOPIC_STRUGGLE_COST / 2)
+    }
     // Marks only: the major's subjects are still labelled, but not pushed up.
     const bonus = profile.goal === 'easy' ? 0 : PROGRAMME_BONUS
     if (roles && (roles.required.has(s.code) || roles.options.has(s.code))) {
