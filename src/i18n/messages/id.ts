@@ -195,6 +195,7 @@ export const id: Messages = {
     lede: "Diurutkan dari catatan, keterampilan, dan minatmu, beserta alasannya.",
     quickHint: 'Pilih beberapa dan rekomendasi muncul di bawah. Anda juga bisa menambahkan nilai dan keahlian di {link}.',
     goal: 'Apa yang paling penting kali ini?',
+    goalLocal: "Hanya untuk rekomendasi di sini. Rencanamu tetap mengikuti pilihan di halaman Saya.",
     goals: {
       wam: 'Jaga WAM',
       wamHint: 'Mengutamakan mata kuliah yang mudah diikuti dan penilaiannya longgar, yang kemungkinan bisa kamu kuasai.',
@@ -256,7 +257,7 @@ export const id: Messages = {
     eligibilityUnknown: 'Kelayakan belum bisa dipastikan: {needs}.',
   },
   record: {
-    goalNote: "Rekomendasi dan pembuat rencana mengikuti pilihan ini: jaga WAM memisahkan mata kuliah sulit; tantangan membolehkan semester lebih berat.",
+    goalNote: "Pembuat rencana mengikuti pilihan ini: jaga WAM memisahkan mata kuliah sulit; tantangan membolehkan semester lebih berat. Halaman rekomendasi bisa memilih sendiri.",
     degreeTitle: "Gelar saya",
     degreeNone: "Belum dipilih. Pilih gelar dan jurusan supaya saran dan rencana sesuai denganmu.",
     degreeEdit: "Ubah",

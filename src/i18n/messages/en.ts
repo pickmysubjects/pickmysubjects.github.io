@@ -198,6 +198,7 @@ export const en = {
     lede: "Ranked from your record, skills and interests, with the reasons.",
     quickHint: 'Pick a few and suggestions appear below. You can add your results and strengths in {link} too.',
     goal: 'What matters most this time?',
+    goalLocal: "Only for these suggestions. Your plan keeps the goal set on My page.",
     goals: {
       wam: 'Protect my WAM',
       wamHint: 'Weights approachable, generously marked subjects you are likely to do well in.',
@@ -259,7 +260,7 @@ export const en = {
     eligibilityUnknown: 'Eligibility not confirmed: {needs}.',
   },
   record: {
-    goalNote: "Suggestions and the plan builder both follow this: protecting your WAM keeps hard subjects apart; a challenge allows a heavier semester.",
+    goalNote: "The plan builder follows this: protecting your WAM keeps hard subjects apart; a challenge allows a heavier semester. Suggestions can look at it differently on their own page.",
     degreeTitle: "My degree",
     degreeNone: "Not chosen yet. Pick your degree and major so suggestions and your plan fit you.",
     degreeEdit: "Change",

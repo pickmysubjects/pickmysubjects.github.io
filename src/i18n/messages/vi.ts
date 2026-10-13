@@ -195,6 +195,7 @@ export const vi: Messages = {
     lede: "Xếp hạng theo hồ sơ, kỹ năng và sở thích của bạn, kèm lý do.",
     quickHint: 'Chọn vài mục và gợi ý sẽ hiện bên dưới. Bạn cũng có thể thêm kết quả và thế mạnh ở {link}.',
     goal: 'Lần này bạn ưu tiên điều gì?',
+    goalLocal: "Chỉ áp dụng cho gợi ý ở đây. Kế hoạch vẫn theo lựa chọn ở trang Của tôi.",
     goals: {
       wam: 'Giữ WAM',
       wamHint: 'Ưu tiên môn dễ tiếp cận, chấm điểm rộng rãi mà bạn có khả năng làm tốt.',
@@ -256,7 +257,7 @@ export const vi: Messages = {
     eligibilityUnknown: 'Chưa xác nhận được điều kiện học: {needs}.',
   },
   record: {
-    goalNote: "Gợi ý và trình tạo kế hoạch đều theo lựa chọn này: giữ WAM thì tách các môn khó ra; thử thách thì chấp nhận một kỳ nặng hơn.",
+    goalNote: "Trình tạo kế hoạch theo lựa chọn này: giữ WAM thì tách môn khó; thử thách thì chấp nhận kỳ nặng hơn. Trang gợi ý có thể chọn riêng.",
     degreeTitle: "Bằng của tôi",
     degreeNone: "Chưa chọn. Chọn bằng và chuyên ngành để gợi ý và kế hoạch hợp với bạn.",
     degreeEdit: "Đổi",

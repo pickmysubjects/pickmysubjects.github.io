@@ -195,6 +195,7 @@ export const ko: Messages = {
     lede: "기록, 기술, 관심사로 순위를 매기고 이유도 보여 줘요.",
     quickHint: '몇 개 고르면 아래에 추천이 나타납니다. {link}에서 이수 과목과 강점도 입력할 수 있습니다.',
     goal: '이번에 가장 중요한 것은?',
+    goalLocal: "여기 추천에만 적용돼요. 계획은 '내 기록'의 설정을 그대로 따라요.",
     goals: {
       wam: 'WAM 지키기',
       wamHint: '접근하기 쉽고 채점이 후하며 좋은 성적을 받을 만한 과목을 우선합니다.',
@@ -256,7 +257,7 @@ export const ko: Messages = {
     eligibilityUnknown: '수강 자격을 확인할 수 없습니다: {needs}.',
   },
   record: {
-    goalNote: "추천과 계획 생성 모두 이 설정을 따라요. WAM을 지킬 땐 어려운 과목을 나눠 배치하고, 도전할 땐 무거운 학기도 허용해요.",
+    goalNote: "계획 생성은 이 설정을 따라요. WAM을 지킬 땐 어려운 과목을 나누고, 도전할 땐 무거운 학기도 허용해요. 추천 페이지에서는 따로 고를 수 있어요.",
     degreeTitle: "내 학위",
     degreeNone: "아직 선택하지 않았어요. 학위와 전공을 고르면 추천과 플랜이 나에게 맞춰져요.",
     degreeEdit: "변경",

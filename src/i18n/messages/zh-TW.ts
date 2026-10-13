@@ -195,6 +195,7 @@ export const zhTW: Messages = {
     lede: "根據你的紀錄、技能和興趣排序，並附上理由。",
     quickHint: '點幾個，下面就會出現推薦。也可以到 {link} 填已修的課和你的強項。',
     goal: '這次你最看重什麼？',
+    goalLocal: "只影響這裡的推薦，排課仍依「我的」頁面裡的設定。",
     goals: {
       wam: '保住 WAM',
       wamHint: '優先推薦容易上手、給分寬鬆、你可能考得好的課。',
@@ -256,7 +257,7 @@ export const zhTW: Messages = {
     eligibilityUnknown: '無法確認是否符合選課條件：{needs}。',
   },
   record: {
-    goalNote: "推薦和產生排課都會依這個設定：保住 WAM 時會把難課分開排；挑戰自己時允許某個學期重一些。",
+    goalNote: "產生排課會依這個設定：保住 WAM 時會把難課分開排；挑戰自己時允許某個學期重一些。推薦頁可以另外選。",
     degreeTitle: "我的學位",
     degreeNone: "還沒選。選好學位和主修，推薦和方案才會依你來。",
     degreeEdit: "修改",

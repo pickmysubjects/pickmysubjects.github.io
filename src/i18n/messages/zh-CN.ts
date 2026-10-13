@@ -195,6 +195,7 @@ export const zhCN: Messages = {
     lede: "根据你的记录、技能和兴趣排序，并附上理由。",
     quickHint: '点几个，下面就会出现推荐。也可以去 {link} 填已修的课和你的强项。',
     goal: '这次你最看重什么？',
+    goalLocal: "只影响这里的推荐，排课仍按「我的」页面里的设置。",
     goals: {
       wam: '保住 WAM',
       wamHint: '优先推荐容易上手、给分宽松、你可能考得好的课。',
@@ -256,7 +257,7 @@ export const zhCN: Messages = {
     eligibilityUnknown: '无法确认是否满足选课条件：{needs}。',
   },
   record: {
-    goalNote: "推荐和生成排课都会按这个来：保住 WAM 时会把难课分开排；挑战自己时允许某个学期重一些。",
+    goalNote: "生成排课会按这个来：保住 WAM 时会把难课分开排；挑战自己时允许某个学期重一些。推荐页可以另外选。",
     degreeTitle: "我的学位",
     degreeNone: "还没选。选上学位和专业，推荐和方案才会按你来。",
     degreeEdit: "修改",

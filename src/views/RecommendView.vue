@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import MySteps from '@/components/layout/MySteps.vue'
 import { computed, shallowRef } from 'vue'
-import { recommend, yearLevel, passedCodes } from '@/engine'
+import { recommend, yearLevel, passedCodes, type Goal } from '@/engine'
 import { useI18n } from '@/i18n'
 import { categoryLabel, termLabel } from '@/i18n/format'
 import RecommendationCard from '@/components/recommend/RecommendationCard.vue'
 import QuickInterests from '@/components/recommend/QuickInterests.vue'
 import GoalPicker from '@/components/profile/GoalPicker.vue'
+import { usePersisted } from '@/composables/usePersisted'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
 import { useProfile } from '@/composables/useProfile'
@@ -14,6 +15,11 @@ import { useProfile } from '@/composables/useProfile'
 const { data } = useDataset()
 const { profile } = useProfile()
 const plan = usePlan()
+// Its own goal, apart from the one on My page that the plan follows: a student planning a balanced
+// degree may still want to look for easy marks here. Starts from My page's until changed.
+const GOALS: Goal[] = ['wam', 'balanced', 'challenge', 'easy']
+const lookGoal = usePersisted<Goal | null>('sc:suggestGoal', null, (x) => (GOALS.includes(x as Goal) ? (x as Goal) : null))
+const goal = computed<Goal>(() => lookGoal.value ?? profile.value.goal)
 
 const category = shallowRef('')
 // Ten at a time: a long wall of cards is hard to compare.
@@ -44,7 +50,7 @@ const maxLevel = computed(() => {
 })
 
 const recs = computed(() =>
-  recommend(data.value, profile.value, {
+  recommend(data.value, { ...profile.value, goal: goal.value }, {
     planned: plan.plannedCodes.value,
     course: plan.setup.value.course,
     category: category.value || undefined,
@@ -77,7 +83,7 @@ function value(event: Event): string {
 
     <template v-if="hasProfile">
       <form class="filters" @submit.prevent>
-        <GoalPicker with-easy />
+        <GoalPicker with-easy :goal="goal" :note="t('suggest.goalLocal')" @update:goal="lookGoal = $event" />
         <label class="field">
           <span class="field-label">{{ t('suggest.kind') }}</span>
           <select class="select-glass" :value="category" @change="category = value($event)">

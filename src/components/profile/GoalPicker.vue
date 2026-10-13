@@ -4,13 +4,22 @@ import type { Goal } from '@/engine'
 import { useProfile } from '@/composables/useProfile'
 import { useI18n } from '@/i18n'
 
-/** What the student wants most right now. One setting, shared by suggestions and the plan builder. */
-const props = defineProps<{ note?: string; withEasy?: boolean }>()
+/**
+ * What the student wants most. On My page it's their saved goal, which the plan builder follows;
+ * a page can instead pass its own `goal` (Suggestions: just for this look), and gets updates back.
+ */
+const props = defineProps<{ note?: string; withEasy?: boolean; goal?: Goal }>()
+const emit = defineEmits<{ 'update:goal': [goal: Goal] }>()
 const { profile, setGoal } = useProfile()
+const own = computed<Goal>(() => props.goal ?? profile.value.goal)
+function choose(g: Goal): void {
+  if (props.goal !== undefined) emit('update:goal', g)
+  else setGoal(g)
+}
 const { t } = useI18n()
 // "Marks only" lives on the suggestions page; elsewhere it reads as protecting a WAM.
 const goals = computed<Goal[]>(() => (props.withEasy ? ['wam', 'balanced', 'challenge', 'easy'] : ['wam', 'balanced', 'challenge']))
-const current = computed<Goal>(() => (!props.withEasy && profile.value.goal === 'easy' ? 'wam' : profile.value.goal))
+const current = computed<Goal>(() => (!props.withEasy && own.value === 'easy' ? 'wam' : own.value))
 </script>
 
 <template>
@@ -23,7 +32,7 @@ const current = computed<Goal>(() => (!props.withEasy && profile.value.goal === 
         type="button"
         :aria-pressed="current === g"
         :title="t(`suggest.goals.${g}Hint`)"
-        @click="setGoal(g)"
+        @click="choose(g)"
       >
         {{ t(`suggest.goals.${g}`) }}
       </button>

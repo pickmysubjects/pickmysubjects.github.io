@@ -195,6 +195,7 @@ export const ms: Messages = {
     lede: "Disusun ikut rekod, kemahiran dan minat anda, berserta sebabnya.",
     quickHint: 'Pilih beberapa dan cadangan akan muncul di bawah. Anda juga boleh menambah keputusan dan kekuatan di {link}.',
     goal: 'Apa yang paling penting kali ini?',
+    goalLocal: "Hanya untuk cadangan di sini. Rancangan anda kekal ikut pilihan di halaman Saya.",
     goals: {
       wam: 'Jaga WAM',
       wamHint: 'Mengutamakan subjek yang mudah diikuti dan pemarkahannya longgar, yang berkemungkinan anda boleh cemerlang.',
@@ -256,7 +257,7 @@ export const ms: Messages = {
     eligibilityUnknown: 'Kelayakan belum disahkan: {needs}.',
   },
   record: {
-    goalNote: "Cadangan dan pembina rancangan ikut pilihan ini: jaga WAM akan asingkan subjek sukar; cabaran membenarkan semester lebih berat.",
+    goalNote: "Pembina rancangan ikut pilihan ini: jaga WAM asingkan subjek sukar; cabaran benarkan semester lebih berat. Halaman cadangan boleh pilih lain.",
     degreeTitle: "Ijazah saya",
     degreeNone: "Belum dipilih. Pilih ijazah dan major supaya cadangan dan pelan sesuai dengan anda.",
     degreeEdit: "Tukar",
