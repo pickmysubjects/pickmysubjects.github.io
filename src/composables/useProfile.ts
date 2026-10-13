@@ -1,5 +1,5 @@
 import { computed } from 'vue'
-import { computeWam, type Goal, type Profile, type Skill } from '@/engine'
+import { computeWam, type Goal, type OwnRating, type Profile, type Skill } from '@/engine'
 import { useDataset } from './useDataset'
 import { usePersisted } from './usePersisted'
 import { cloneJson } from '@/utils/clone'
@@ -27,6 +27,8 @@ export function useProfile() {
     setSkills: (skills: Partial<Record<Skill, number>>) => update((p) => ({ ...p, skills })),
     setInterests: (interests: string[]) => update((p) => ({ ...p, interests })),
     setGoal: (goal: Goal) => update((p) => ({ ...p, goal })),
+    /** Keep the student's own rating of a subject, to personalise their suggestions. */
+    setOwnRating: (code: string, rating: OwnRating) => update((p) => ({ ...p, ratings: { ...(p.ratings ?? {}), [code]: rating } })),
     setConfirmed: (code: string, meets: boolean) =>
       update((p) => {
         const rest = (p.confirmed ?? []).filter((c) => c !== code)

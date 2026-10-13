@@ -33,6 +33,7 @@ const ICONS: Record<string, Component> = {
   averagedHigh: TrendingUp,
   predictedRange: TrendingUp,
   gradesAbove: TrendingUp,
+  likedBefore: TrendingUp,
   unlocks: ArrowUpRight,
   opensMany: ArrowUpRight,
   approachable: ThumbsUp,

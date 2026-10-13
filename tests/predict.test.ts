@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { buildDataset } from '../scripts/dataset'
 import { predictMark } from '../src/engine/predict'
-import { recommend } from '../src/engine/recommend'
+import { personalise, recommend } from '../src/engine/recommend'
 
 /** Predicting from similar subjects, the "marks only" goal, and past choices (real data). */
 describe('marks and choices', () => {
@@ -44,5 +44,19 @@ describe('marks and choices', () => {
       recommend(data, { results, skills: {}, interests: [], goal: 'balanced' }, { course: 'B-SCI', year: 2026 }).find((r) => r.code === s.code)?.warnings.map((w) => w.key) ?? []
     expect(warns([])).toContain('recommendedFirst')
     expect(warns([{ code: s.recommended[0]! }])).not.toContain('recommendedFirst')
+  })
+  it('own ratings fill in unrated skills and add soft interests, never overriding what was said', () => {
+    const p = { results: [{ code: 'COMP10001' }], skills: { writing: 2 }, interests: [], goal: 'balanced' as const, ratings: { COMP10001: { difficulty: 1, recommend: 'Yes' as const } } }
+    const { profile, liked } = personalise(p, data)
+    expect(profile.skills.programming).toBe(5)
+    expect(profile.skills.writing).toBe(2)
+    expect(liked.get('programming')).toBe('COMP10001')
+    const recs = recommend(data, p, { course: 'B-SCI', year: 2026 })
+    expect(recs.some((r) => r.reasons.some((x) => x.key === 'likedBefore'))).toBe(true)
+  })
+
+  it('a hard rating lowers an unrated skill, so related subjects warn', () => {
+    const p = { results: [{ code: 'MAST10006' }], skills: {}, interests: [], goal: 'balanced' as const, ratings: { MAST10006: { difficulty: 5 } } }
+    expect(personalise(p, data).profile.skills.maths).toBe(1)
   })
 })

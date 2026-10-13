@@ -27,7 +27,16 @@ export function cleanProfile(x: unknown): Profile {
     }
   }
   const goal = GOALS.find((g) => g === p.goal) ?? 'balanced'
-  return { results, skills, interests: strings(p.interests), goal, confirmed: strings(p.confirmed) }
+  const ratings: NonNullable<Profile['ratings']> = {}
+  if (isObject(p.ratings)) {
+    for (const [code, r] of Object.entries(p.ratings)) {
+      if (!/^[A-Z]{4}\d{5}$/.test(code) || !isObject(r)) continue
+      const scale = (v: unknown) => (typeof v === 'number' && v >= 1 && v <= 5 ? v : undefined)
+      const rec = r.recommend === 'Yes' || r.recommend === 'Maybe' || r.recommend === 'No' ? r.recommend : undefined
+      ratings[code] = { difficulty: scale(r.difficulty), interest: scale(r.interest), recommend: rec }
+    }
+  }
+  return { results, skills, interests: strings(p.interests), goal, confirmed: strings(p.confirmed), ...(Object.keys(ratings).length ? { ratings } : {}) }
 }
 
 export function cleanProfiles(x: unknown): Record<string, Profile> {

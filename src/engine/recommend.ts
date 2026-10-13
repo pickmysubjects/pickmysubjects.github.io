@@ -26,6 +26,15 @@ export interface Profile {
   goal: Goal
   /** Subjects whose uncheckable prerequisites (e.g. a VCE score) the student says they meet. */
   confirmed?: string[]
+  /** The student's own ratings of subjects they took (kept in their browser), used to personalise. */
+  ratings?: Record<string, OwnRating>
+}
+
+/** How the student themselves found a subject: difficulty and interest 1–5, would they recommend it. */
+export interface OwnRating {
+  difficulty?: number
+  interest?: number
+  recommend?: 'Yes' | 'Maybe' | 'No'
 }
 
 export interface Recommendation {
@@ -154,7 +163,9 @@ export function computeWam(results: Profile['results'], data: Dataset): number |
 
 export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions = {}): Recommendation[] {
   // Marks only: what a subject is about doesn't come into it, not even to break a tie.
-  const profile = given.goal === 'easy' ? { ...given, interests: [] } : given
+  const asked = given.goal === 'easy' ? { ...given, interests: [] } : given
+  // The student's own ratings of subjects they took fill in what they didn't say outright.
+  const { profile, liked } = personalise(asked, raw)
   const data = opts.course ? forCourse(raw, opts.course) : raw
   const completed = new Set(passedCodes(profile.results))
   const taken = new Set([...completed, ...(opts.planned ?? [])])
@@ -247,7 +258,7 @@ export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions =
     // A condition only the student can check (a VCE score) that they said they meet.
     const eligibility = pre.status === 'unknown' && profile.confirmed?.includes(s.code) ? 'ok' : pre.status
 
-    const rec = score(s, { profile, data, wam, marks, dependents, eligibility, unmet: pre.unmet, ratingMean, taken, blocked })
+    const rec = score(s, { profile, data, wam, marks, dependents, eligibility, unmet: pre.unmet, ratingMean, taken, blocked, liked })
     // A fail on My page: this would be a retake, which the student should know before adding it.
     const failed = marks.get(s.code)
     if (failed !== undefined && failed < PASS_MARK) rec.warnings.unshift(note('retake', { mark: failed }, `You got ${failed} last time: this would be a retake.`))
@@ -330,6 +341,8 @@ interface ScoreCtx {
   ratingMean: number
   /** Passed or planned: not worth pointing to as "opens up". */
   taken: Set<string>
+  /** Topics of subjects the student rated as worth it or interesting: softer than chosen interests. */
+  liked: Map<string, string>
   /** Can't be taken alongside something passed or planned: not worth pointing to either. */
   blocked: Set<string>
 }
@@ -368,6 +381,12 @@ function score(s: Subject, ctx: ScoreCtx): Recommendation {
   const interests = ctx.profile.interests
   const path = interests.length ? pathTo(s.code, interests, ctx) : { steps: 0, codes: [] }
   const leadsTo = path.codes
+  // Something like a subject they rated well, when none of their chosen interests match.
+  const likedHit = topicsOf(s).topics.map((t) => ctx.liked.get(t)).find((c): c is string => c !== undefined && c !== s.code)
+  if (interests.length === 0 && likedHit) {
+    parts.interest = INTEREST_RELATED
+    reasons.push(note('likedBefore', { codes: likedHit }, `Close to ${likedHit}, which you rated well.`))
+  }
   if (interests.length > 0) {
     const { topics, inferred, specific } = topicsOf(s)
     const hit = topics.filter((t) => interests.includes(t))
@@ -393,8 +412,12 @@ function score(s: Subject, ctx: ScoreCtx): Recommendation {
             : INTEREST_INFERRED
     const viaPath = path.steps ? PATHWAY_INTEREST - PATHWAY_STEP * (path.steps - 1) : 0
     const related = near ? INTEREST_RELATED : 0
-    const best = Math.max(direct, viaPath, related)
-    if (best > 0) parts.interest = best
+    const fromLiked = likedHit ? INTEREST_RELATED : 0
+    const best = Math.max(direct, viaPath, related, fromLiked)
+    if (best > 0) {
+      parts.interest = best
+      if (likedHit && best === fromLiked && direct === 0) reasons.push(note('likedBefore', { codes: likedHit }, `Close to ${likedHit}, which you rated well.`))
+    }
     // The area code is a coarse guess, so a mismatch there counts for less than a tagged one.
     else if (topics.length) parts.interest = inferred ? INTEREST_INFERRED_MISS : 0
     // Nothing known about what it covers: a little under neutral, so it can't tie with a real match.
@@ -669,4 +692,24 @@ function structuralEase(s: Subject): number {
     if (s.assessment.some((t) => t.kind === 'exam' && t.hurdle)) e -= 0.03
   }
   return e
+}
+
+/**
+ * Fill in a profile from the student's own ratings of subjects they took. A skill they didn't rate
+ * gets a level from how hard they found the subjects that use it (easy → strong); topics of
+ * subjects they'd recommend or found interesting become soft interests (topic → that subject).
+ */
+export function personalise(p: Profile, data: Dataset): { profile: Profile; liked: Map<string, string> } {
+  const liked = new Map<string, string>()
+  const own = Object.entries(p.ratings ?? {}).filter(([c]) => data.subjects[c])
+  if (!own.length) return { profile: p, liked }
+  const ease = new Map<Skill, number[]>()
+  for (const [code, r] of own) {
+    const s = data.subjects[code]!
+    if (r.difficulty !== undefined) for (const k of skillsOf(s, data)) ease.set(k, [...(ease.get(k) ?? []), 6 - r.difficulty])
+    if (r.recommend === 'Yes' || (r.interest ?? 0) >= 4) for (const t of topicsOf(s).topics) if (!liked.has(t)) liked.set(t, code)
+  }
+  const skills = { ...p.skills }
+  for (const [k, xs] of ease) if (skills[k] === undefined) skills[k] = Math.round(xs.reduce((a, b) => a + b, 0) / xs.length)
+  return { profile: { ...p, skills }, liked }
 }

@@ -241,6 +241,7 @@ export const vi: Messages = {
     struggleSkills: "Cần rất nhiều {skills}, kỹ năng bạn thấy khó.",
     interests: 'Có nội dung {topics} mà bạn quan tâm.',
     averagedHigh: 'Theo điểm các môn tương tự ({codes}), dự kiến khoảng {mark}.',
+    likedBefore: "Gần với {codes}, môn bạn đánh giá tốt.",
     averagedLow: 'Theo điểm các môn tương tự ({codes}), dự kiến chỉ khoảng {mark}, nên môn này có thể khó.',
     recommendedFirst: "Handbook khuyên học {codes} trước (không bắt buộc).",
     predictedRange: 'Theo điểm các môn tương tự ({codes}), dự kiến {low}–{high}.',

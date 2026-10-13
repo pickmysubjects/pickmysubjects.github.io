@@ -241,6 +241,7 @@ export const ja: Messages = {
     struggleSkills: "{skills} を大きく使います（苦手と回答した分野です）。",
     interests: '興味のある {topics} を扱います。',
     averagedHigh: '似た科目（{codes}）の成績から、約 {mark} 点の見込みです。',
+    likedBefore: "あなたが高く評価した {codes} に近い内容です。",
     averagedLow: '似た科目（{codes}）の成績から {mark} 点前後の見込みで、苦戦するかもしれません。',
     recommendedFirst: "Handbook では先に {codes} の履修を推奨しています（必須ではありません）。",
     predictedRange: '似た科目（{codes}）の成績から、{low}〜{high} 点の見込みです。',

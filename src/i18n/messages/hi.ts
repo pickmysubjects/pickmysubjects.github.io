@@ -241,6 +241,7 @@ export const hi: Messages = {
     struggleSkills: "{skills} पर बहुत निर्भर है, जो आपको कठिन लगता है।",
     interests: 'इसमें {topics} है, जिसमें आपकी रुचि है।',
     averagedHigh: 'मिलते-जुलते विषयों ({codes}) के आपके अंकों से लगभग {mark} का अनुमान है।',
+    likedBefore: "{codes} जैसा, जिसे आपने अच्छा रेट किया।",
     averagedLow: 'मिलते-जुलते विषयों ({codes}) के आपके अंकों से सिर्फ़ लगभग {mark} का अनुमान है, इसलिए यह कठिन हो सकता है।',
     recommendedFirst: "Handbook पहले {codes} लेने की सलाह देता है (ज़रूरी नहीं)।",
     predictedRange: 'मिलते-जुलते विषयों ({codes}) के आपके अंकों से {low}–{high} का अनुमान है।',

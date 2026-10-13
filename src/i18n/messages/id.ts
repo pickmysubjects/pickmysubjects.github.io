@@ -241,6 +241,7 @@ export const id: Messages = {
     struggleSkills: "Sangat bergantung pada {skills}, yang kamu rasa sulit.",
     interests: 'Membahas {topics}, yang kamu minati.',
     averagedHigh: 'Dari nilaimu di mata kuliah serupa ({codes}), perkiraannya sekitar {mark}.',
+    likedBefore: "Mirip dengan {codes}, yang kamu nilai bagus.",
     averagedLow: 'Dari nilaimu di mata kuliah serupa ({codes}), perkiraannya hanya sekitar {mark}, jadi ini mungkin berat.',
     recommendedFirst: "Handbook menyarankan {codes} terlebih dahulu (tidak wajib).",
     predictedRange: 'Dari nilaimu di mata kuliah serupa ({codes}), perkiraannya {low}–{high}.',

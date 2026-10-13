@@ -244,6 +244,7 @@ export const en = {
     struggleSkills: "Leans heavily on {skills}, which you find hard.",
     interests: 'Covers {topics}, which you’re interested in.',
     averagedHigh: 'Your marks in similar subjects ({codes}) point to about {mark}.',
+    likedBefore: "Close to {codes}, which you rated well.",
     averagedLow: 'Your marks in similar subjects ({codes}) point to about {mark}, so this may be tough.',
     recommendedFirst: "The Handbook recommends {codes} first (not required).",
     predictedRange: 'Likely {low}–{high}, from your marks in similar subjects ({codes}).',

@@ -241,6 +241,7 @@ export const zhCN: Messages = {
     struggleSkills: "很依赖 {skills}，你觉得这项吃力。",
     interests: '涉及 {topics}，是你感兴趣的方向。',
     averagedHigh: '按你在相近课程（{codes}）的成绩，预计约 {mark} 分。',
+    likedBefore: "和你评价不错的 {codes} 方向相近。",
     averagedLow: '按你在相近课程（{codes}）的成绩，预计只有 {mark} 分左右，可能会比较吃力。',
     recommendedFirst: "Handbook 建议先修 {codes}（不是硬性要求）。",
     predictedRange: '按你在相近课程（{codes}）的成绩，预计 {low}–{high} 分。',

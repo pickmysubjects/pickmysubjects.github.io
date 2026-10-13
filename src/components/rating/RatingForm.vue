@@ -5,15 +5,20 @@ import { SKILLS, type Period, type Skill } from '@/engine'
 import { useI18n } from '@/i18n'
 import { hasQuestion, isFormReady, submitGoogleForm } from '@/utils/googleForm'
 import { useGradeShare } from '@/composables/useGradeShare'
+import { useProfile } from '@/composables/useProfile'
 
 const props = defineProps<{ code: string }>()
 const emit = defineEmits<{ done: [sent: boolean] }>()
 const { t, locale } = useI18n()
 
 const thisYear = new Date().getFullYear()
-// Every question is optional: students send whatever they remember ('' = not sure).
-const year = shallowRef<number | ''>(thisYear - 1)
-const semester = shallowRef<Period | ''>('semester-1')
+// Every question is optional: students send whatever they remember ('' = not sure). When and
+// where they took it comes from My page if it's there; otherwise blank rather than a guess that
+// would quietly go out with every rating.
+const { profile, setOwnRating } = useProfile()
+const taken = profile.value.results.find((r) => r.code === props.code)
+const year = shallowRef<number | ''>(taken?.year ?? '')
+const semester = shallowRef<Period | ''>(taken?.period ?? '')
 const difficulty = shallowRef<number | null>(null)
 const workload = shallowRef<number | null>(null)
 const generosity = shallowRef<number | null>(null)
@@ -93,6 +98,9 @@ async function send(): Promise<void> {
       language: locale.value,
     })
     if (wamBand.value) markShared([props.code])
+    // Kept in this browser too: how they found it shapes their own suggestions.
+    const rec = recommend.value === 'Yes' || recommend.value === 'Maybe' || recommend.value === 'No' ? recommend.value : undefined
+    setOwnRating(props.code, { difficulty: difficulty.value ?? undefined, interest: interest.value ?? undefined, recommend: rec })
     emit('done', true)
   } catch {
     status.value = 'failed'
