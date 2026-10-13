@@ -3,6 +3,7 @@ import { join, relative } from 'node:path'
 import { parse } from 'yaml'
 import { z } from 'zod'
 import { referencedSubjects } from '../src/engine/expr'
+import { MIN_GRADE_SHARES, type GradeOffset } from '../src/engine/grades'
 import { aboutFileSchema, componentFileSchema, courseFileSchema, discussionFileSchema, SKILLS, subjectFileSchema, subjectTitlesFileSchema, type Dataset, type Skill, type Subject } from '../src/engine/schema'
 
 export const ROOT = join(import.meta.dirname, '..')
@@ -83,6 +84,14 @@ export function buildDataset(name: Dataset['name']): BuildResult {
   }
 
   mergeRatings(join(base, 'ratings.json'), subjects)
+  // Grading next to students' own level, from shared grade bands (absent until enough have shared).
+  const offsets = join(base, 'grade-offsets.json')
+  if (existsSync(offsets)) {
+    for (const [code, g] of Object.entries(JSON.parse(readFileSync(offsets, 'utf8')) as Record<string, GradeOffset>)) {
+      const s = subjects[code]
+      if (s && Number.isFinite(g.offset) && g.n >= MIN_GRADE_SHARES) s.gradeOffset = g
+    }
+  }
 
   // Summaries of public discussion, one file per subject.
   for (const file of yamlFiles(join(base, 'discussions'))) {

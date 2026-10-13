@@ -2,7 +2,8 @@
  * Daily job (GitHub Actions): read the private ratings sheet with a read-only
  * service account, aggregate, and write data/real/ratings.json.
  *
- * Env (GitHub secrets): GOOGLE_SERVICE_ACCOUNT_JSON, RATINGS_SHEET_ID.
+ * Env (GitHub secrets): GOOGLE_SERVICE_ACCOUNT_JSON, RATINGS_SHEET_ID, and optionally
+ * GRADES_SHEET_ID (shared grade bands → data/real/grade-offsets.json).
  * If they are missing, it exits quietly so CI stays green before setup.
  */
 import { createSign } from 'node:crypto'
@@ -10,6 +11,7 @@ import { writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { buildDataset, ROOT } from '../dataset'
 import { aggregate, rowsToObjects } from './aggregate'
+import { gradeOffsets } from '../../src/engine/grades'
 
 const credentials = process.env.GOOGLE_SERVICE_ACCOUNT_JSON
 const sheetId = process.env.RATINGS_SHEET_ID
@@ -57,13 +59,30 @@ async function accessToken(): Promise<string> {
 }
 
 const token = await accessToken()
-const res = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/A:Z`, {
-  headers: { Authorization: `Bearer ${token}` },
-})
-if (!res.ok) throw new Error(`sheet read failed: ${res.status}`)
-const { values = [] } = (await res.json()) as { values?: string[][] }
+
+async function readSheet(id: string): Promise<string[][]> {
+  const res = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${id}/values/A:Z`, {
+    headers: { Authorization: `Bearer ${token}` },
+  })
+  if (!res.ok) throw new Error(`sheet read failed: ${res.status}`)
+  return ((await res.json()) as { values?: string[][] }).values ?? []
+}
+const values = await readSheet(sheetId)
 
 const known = new Set(Object.keys(buildDataset('real').dataset.subjects))
 const result = aggregate(rowsToObjects(values), new Date(), known)
 writeFileSync(join(ROOT, 'data', 'real', 'ratings.json'), `${JSON.stringify(result.subjects, null, 2)}\n`)
 console.log(`Ratings: ${result.accepted} accepted, ${result.rejected} rejected, ${Object.keys(result.subjects).length} subjects.`)
+
+// Shared grade bands: only per-subject offsets from 5+ shares are written; rows never are.
+const gradesSheet = process.env.GRADES_SHEET_ID
+if (gradesSheet) {
+  const rows = rowsToObjects(await readSheet(gradesSheet)).map((r) => ({
+    code: r['Subject code'] ?? '',
+    band: r['Grade band'] ?? '',
+    wamBand: r['WAM range without this subject'] ?? '',
+  }))
+  const offsets = gradeOffsets(rows, known)
+  writeFileSync(join(ROOT, 'data', 'real', 'grade-offsets.json'), `${JSON.stringify(offsets, null, 2)}\n`)
+  console.log(`Grade bands: ${rows.length} rows, ${Object.keys(offsets).length} subjects with 5+ shares.`)
+}

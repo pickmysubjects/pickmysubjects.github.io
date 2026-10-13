@@ -75,3 +75,22 @@ export const FEEDBACK_FORM: GoogleFormConfig<FeedbackField> = {
     language: 'entry.136711737',
   },
 }
+
+export type GradeField = 'code' | 'year' | 'band' | 'wamBand' | 'language'
+
+/**
+ * Shared grade bands (see docs/ratings-setup.md, "Grade bands"). Empty until the form is made;
+ * the app hides the sharing card until then. Never carries a mark, only its band and the range of
+ * the sharer's WAM without that subject.
+ */
+export const GRADES_FORM: GoogleFormConfig<GradeField> = {
+  formId: '',
+  entries: {
+    code: '',
+    year: '',
+    band: '',
+    wamBand: '',
+    language: '',
+  },
+  optional: ['year', 'language'],
+}

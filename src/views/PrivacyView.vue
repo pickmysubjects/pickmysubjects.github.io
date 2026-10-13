@@ -2,7 +2,7 @@
 import { useI18n } from '@/i18n'
 
 const { t } = useI18n()
-const sections = ['local', 'ratings', 'feedback', 'noTracking', 'google', 'removal', 'contact'] as const
+const sections = ['local', 'ratings', 'grades', 'feedback', 'noTracking', 'google', 'removal', 'contact'] as const
 </script>
 
 <template>

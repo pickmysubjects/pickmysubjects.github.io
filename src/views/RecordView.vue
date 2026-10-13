@@ -7,6 +7,7 @@ import SuggestionPreview from '@/components/profile/SuggestionPreview.vue'
 import WamGoal from '@/components/profile/WamGoal.vue'
 import DegreeCard from '@/components/profile/DegreeCard.vue'
 import GoalPicker from '@/components/profile/GoalPicker.vue'
+import GradeShare from '@/components/profile/GradeShare.vue'
 import { ArrowRight, Download, Upload } from 'lucide-vue-next'
 import { link } from '@/composables/useView'
 import { downloadBackup, restoreBackup } from '@/utils/backup'
@@ -50,6 +51,7 @@ async function onRestore(event: Event): Promise<void> {
     <div class="record-body">
       <div class="record-col">
         <ResultsEditor class="results-card surface" v-model="results" :subjects="data.subjects" :options="options" />
+        <GradeShare />
       </div>
       <div class="record-col">
         <SuggestionPreview />

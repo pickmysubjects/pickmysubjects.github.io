@@ -76,6 +76,23 @@ Until this is done, the app shows "Ratings aren't switched on yet" instead of th
 
 Each one is published only once at least 3 people have answered it.
 
+## Grade bands (optional sharing on My page)
+
+Students can share the grade band of subjects already on My page, so the site learns how each
+subject grades next to its students' own level. Each subject is a separate response with only:
+subject code, year, band (H1–N) and the five-point range of the sharer's WAM without that subject.
+Marks never leave the browser, and nothing links one person's subjects together.
+
+1. In the Apps Script project, run `createGradesForm` once (scripts/google/create-forms.gs).
+2. From the logged pre-filled link, copy the formId and the five `entry.<number>` values into
+   `GRADES_FORM` in `src/config.ts`. Until then the sharing card stays hidden.
+3. Share the new sheet read-only with the service account that reads the ratings sheet, and add
+   its id as the `GRADES_SHEET_ID` secret in GitHub. Keep the sheet private.
+
+The weekly job then writes `data/real/grade-offsets.json`: for each subject with at least 5 shares,
+how far grades sit above or below the sharers' WAM, shrunk toward 0 when few have shared. Rows are
+never published. The likely-mark estimate and "ease" use it from then on.
+
 ## 3. Daily aggregation
 
 1. Google Cloud Console (free):

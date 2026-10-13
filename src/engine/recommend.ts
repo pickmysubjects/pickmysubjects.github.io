@@ -460,6 +460,15 @@ function score(s: Subject, ctx: ScoreCtx): Recommendation {
   // adds risk; first-year subjects are gentler than third-year ones.
   // Only from facts we have: a subject with nothing curated stays unknown.
   if (parts.ease === undefined && s.assessment) parts.ease = structuralEase(s)
+  // Real grades beat impressions: once enough students shared their bands, how far they did above
+  // or below their own WAM here counts for half of ease (±10 marks spans the whole scale).
+  if (s.gradeOffset) {
+    const fromGrades = clamp(0.5 + s.gradeOffset.offset / 20)
+    parts.ease = parts.ease === undefined ? fromGrades : (parts.ease + fromGrades) / 2
+    const params = { n: s.gradeOffset.n, by: Math.abs(Math.round(s.gradeOffset.offset)) }
+    if (s.gradeOffset.offset >= 3) reasons.push(note('gradesAbove', params, `${params.n} students who shared their grades did about ${params.by} marks better here than their WAM.`))
+    else if (s.gradeOffset.offset <= -3) warnings.push(note('gradesBelow', params, `${params.n} students who shared their grades did about ${params.by} marks worse here than their WAM.`))
+  }
   if (parts.ease !== undefined) parts.hardness = 1 - parts.ease
 
   // Useful later: how many subjects build on it (and students' usefulness rating, once rated).

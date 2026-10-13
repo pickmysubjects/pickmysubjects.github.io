@@ -1,3 +1,4 @@
+import type { GradeOffset } from './grades'
 import { z } from 'zod'
 
 /**
@@ -249,6 +250,8 @@ export const subjectFileSchema = z
     replacedBy: s.replaced_by,
     // Filled in from data/<set>/discussions/ when there is one.
     discussion: undefined as DiscussionSummary | undefined,
+    // How its grades sit against sharers' WAMs (scripts/ratings → grade-offsets.json), once 5+ shared.
+    gradeOffset: undefined as GradeOffset | undefined,
     // Filled in from data/<set>/about/ when there is one.
     about: undefined as SubjectAbout | undefined,
     // Filled in from data/<set>/subject-titles.yaml: the title in Chinese, for Chinese readers.

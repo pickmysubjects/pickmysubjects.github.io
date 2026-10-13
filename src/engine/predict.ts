@@ -33,12 +33,15 @@ export function predictMark(s: Subject, marks: Map<string, number>, data: Datase
     .map(([code, mark]) => ({ code, mark, w: prereqs.has(code) ? 1 : SAME_AREA_WEIGHT }))
   const w = related.reduce((sum, x) => sum + x.w, 0)
   const own = w > 0 ? related.reduce((sum, x) => sum + x.w * x.mark, 0) / w : wam
-  const mark = (own * w + wam * WAM_WEIGHT) / (w + WAM_WEIGHT)
+  // How the subject grades next to its students' own level, once enough have shared their bands.
+  const offset = s.gradeOffset?.offset ?? 0
+  const mark = Math.max(0, Math.min(100, (own * w + wam * WAM_WEIGHT) / (w + WAM_WEIGHT) + offset))
 
   // Range: the spread of the student's marks, narrower with more related evidence.
   const all = others.map(([, m]) => m)
   const sd = Math.sqrt(all.reduce((sum, m) => sum + (m - wam) ** 2, 0) / all.length) || 8
-  const half = Math.min(15, Math.max(4, sd / Math.sqrt(1 + w / 2)))
+  // Shared grades narrow it a little: the subject's own grading is then known, not assumed.
+  const half = Math.min(15, Math.max(4, sd / Math.sqrt(1 + w / 2 + (s.gradeOffset ? Math.min(s.gradeOffset.n, 20) / 10 : 0))))
   const basis = related.sort((a, b) => b.w - a.w).slice(0, 3).map((x) => x.code)
   return { mark, low: Math.max(0, mark - half), high: Math.min(100, mark + half), basis }
 }
