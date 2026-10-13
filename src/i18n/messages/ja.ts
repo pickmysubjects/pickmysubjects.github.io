@@ -15,7 +15,7 @@ export const ja: Messages = {
   nav: { home: 'ホーム', browse: '科目', more: 'その他', plan: 'プラン', recommend: 'おすすめ', record: 'マイ', contribute: 'データを追加', feedback: 'フィードバック', main: 'メインメニュー' },
   period: { summer: '夏学期', 'semester-1': '第1セメスター', winter: '冬学期', 'semester-2': '第2セメスター' },
   periodShort: { summer: '夏', 'semester-1': 'S1', winter: '冬', 'semester-2': 'S2' },
-  category: { science: '理系科目', breadth: 'Breadth（専攻外科目）', discipline: '専門' },
+  category: { science: '理系科目', breadth: 'Breadth（専攻外科目）', discipline: '専門', core: '必修' },
   plan: {
     pastTag: "履修済み",
     pastUndated: "履修済み・学期未入力",
@@ -629,6 +629,7 @@ export const ja: Messages = {
     less: "閉じる",
     unavoidable: "{skill}は苦手と回答済みですが、このプランには{skill}を使う科目が {total} あり、どの学期にも最低 {perTerm} 科目入ります。できるだけ分散済みです。",
     previewWorse: "これを加えると、この学期は重くなります。",
+    pinned: "分けられません：前提科目と開講学期の関係で、{codes} はこの学期にしか入りません。",
     accurate: "合っていますか？",
     yes: "はい",
     no: "いいえ",

@@ -15,7 +15,7 @@ export const hi: Messages = {
   nav: { home: 'होम', browse: 'सब्जेक्ट', more: 'और', plan: 'प्लान', recommend: 'आपके लिए', record: 'मेरा', contribute: 'डेटा जोड़ें', feedback: 'फ़ीडबैक', main: 'मुख्य मेन्यू' },
   period: { summer: 'समर टर्म', 'semester-1': 'सेमेस्टर 1', winter: 'विंटर टर्म', 'semester-2': 'सेमेस्टर 2' },
   periodShort: { summer: 'समर', 'semester-1': 'सेम 1', winter: 'विंटर', 'semester-2': 'सेम 2' },
-  category: { science: 'साइंस', breadth: 'ब्रेड्थ', discipline: 'विषय-क्षेत्र' },
+  category: { science: 'साइंस', breadth: 'ब्रेड्थ', discipline: 'विषय-क्षेत्र', core: 'अनिवार्य' },
   plan: {
     pastTag: "पूरा",
     pastUndated: "पूरा · सेमेस्टर नहीं भरा",
@@ -629,6 +629,7 @@ export const hi: Messages = {
     less: "कम दिखाएँ",
     unavoidable: "आपने {skill} को कमज़ोर बताया है, पर इस प्लान में {total} सब्जेक्ट उस पर टिके हैं, इसलिए हर सेमेस्टर में कम से कम {perTerm} रहेंगे। इन्हें जितना हो सकता था उतना बाँट दिया है।",
     previewWorse: "इसे जोड़ने से यह सेमेस्टर और भारी हो जाएगा। ",
+    pinned: "अलग नहीं हो सकते: पूर्व-आवश्यक विषयों और चलने वाले सेमेस्टर के कारण {codes} सिर्फ़ यहीं आ सकते हैं।",
     accurate: "क्या यह सही है?",
     yes: "हाँ",
     no: "नहीं",

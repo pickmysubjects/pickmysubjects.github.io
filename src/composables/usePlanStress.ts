@@ -1,5 +1,5 @@
 import { computed } from 'vue'
-import { planRoles, planStress, relieveTerm, requiredWithPrerequisites, termStress, type Relief, type Skill, type TermStress } from '@/engine'
+import { pinnedIn, planRoles, planStress, relieveTerm, requiredWithPrerequisites, termStress, type Relief, type Skill, type TermStress } from '@/engine'
 import { useDataset } from './useDataset'
 import { usePlan } from './usePlan'
 import { useProfile } from './useProfile'
@@ -31,5 +31,11 @@ export function usePlanStress() {
     return relieveTerm(plan.plan.value, data.value, termIndex, profile.value)
   }
 
-  return { stress, stressWith, relief, applyRelief: plan.applyRelief }
+  /** The degree's own subjects in a term that no other term can take: why a heavy term stays heavy. */
+  function pinned(termIndex: number): string[] {
+    const codes = (plan.terms.value[termIndex]?.subjects ?? []).filter((c) => fixed.value.has(c))
+    return pinnedIn(plan.plan.value, data.value, termIndex, codes)
+  }
+
+  return { stress, stressWith, relief, pinned, applyRelief: plan.applyRelief }
 }

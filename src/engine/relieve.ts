@@ -415,3 +415,23 @@ function noWorse(before: Plan, after: Plan, data: Dataset): boolean {
   const b = count(after)
   return b.every((x, i) => x <= (a[i] as number))
 }
+
+/**
+ * Subjects of a term that can't go anywhere else in the plan on their own: every other term
+ * breaks a prerequisite, a corequisite or when they run. When a heavy term has no fix, these say why.
+ */
+export function pinnedIn(plan: Plan, data: Dataset, termIndex: number, codes: string[]): string[] {
+  // A prerequisite that only a manual route (an enrolment form) could satisfy counts as broken too.
+  const errors = (p: Plan) => checkTerms(p, data).filter((i) => i.severity === 'error' || i.kind === 'prereq-unknown').length
+  const base = errors(plan)
+  return codes.filter((code) =>
+    plan.terms.every((_, j) => {
+      if (j === termIndex) return true
+      const terms = plan.terms.map((t, k) => ({
+        ...t,
+        subjects: k === termIndex ? t.subjects.filter((c) => c !== code) : k === j ? [...t.subjects, code] : t.subjects,
+      }))
+      return errors({ ...plan, terms }) > base
+    }),
+  )
+}

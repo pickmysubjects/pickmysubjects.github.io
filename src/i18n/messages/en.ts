@@ -18,7 +18,7 @@ export const en = {
   nav: { home: 'Home', browse: 'Browse', more: 'More', plan: 'Plan', recommend: 'For you', record: 'Me', contribute: 'Add data', feedback: 'Feedback', main: 'Main' },
   period: { summer: 'Summer', 'semester-1': 'Semester 1', winter: 'Winter', 'semester-2': 'Semester 2' },
   periodShort: { summer: 'Summer', 'semester-1': 'Sem 1', winter: 'Winter', 'semester-2': 'Sem 2' },
-  category: { science: 'science', breadth: 'breadth', discipline: 'discipline' },
+  category: { science: 'science', breadth: 'breadth', discipline: 'discipline', core: 'core' },
   plan: {
     pastTag: "Done",
     pastUndated: "Done · semester not given",
@@ -632,6 +632,7 @@ export const en = {
     less: "Less",
     unavoidable: "You rated {skill} weak, but {total} subjects in this plan lean on it, so every semester has at least {perTerm}. They're spread as evenly as they can be.",
     previewWorse: "This would make the semester heavier. ",
+    pinned: "Can’t be split: with their prerequisites and the semesters they run, {codes} only fit here.",
     accurate: "Is this right?",
     yes: "Yes",
     no: "No",

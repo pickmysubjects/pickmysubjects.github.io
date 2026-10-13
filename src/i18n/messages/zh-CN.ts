@@ -15,7 +15,7 @@ export const zhCN: Messages = {
   nav: { home: '首页', browse: '找课', more: '更多', plan: '排课', recommend: '推荐', record: '我的', contribute: '添加数据', feedback: '反馈', main: '主导航' },
   period: { summer: '夏季学期', 'semester-1': '第一学期', winter: '冬季学期', 'semester-2': '第二学期' },
   periodShort: { summer: '夏季', 'semester-1': 'S1', winter: '冬季', 'semester-2': 'S2' },
-  category: { science: '理科', breadth: 'Breadth', discipline: '专业' },
+  category: { science: '理科', breadth: 'Breadth', discipline: '专业', core: '必修' },
   plan: {
     pastTag: "已修",
     pastUndated: "已修 · 学期未填",
@@ -629,6 +629,7 @@ export const zhCN: Messages = {
     less: "收起",
     unavoidable: "你把{skill}评为偏弱，但这个计划有 {total} 门课要用{skill}，每学期至少 {perTerm} 门，已经尽量分开了。",
     previewWorse: "加上这门，这学期会更重。",
+    pinned: "分不开：按先修课和开课学期，{codes} 只能放在这学期。",
     accurate: "准吗？",
     yes: "准",
     no: "不准",

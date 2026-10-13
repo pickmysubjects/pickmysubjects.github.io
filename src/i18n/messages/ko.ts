@@ -15,7 +15,7 @@ export const ko: Messages = {
   nav: { home: '홈', browse: '과목', more: '더보기', plan: '계획', recommend: '추천', record: '내 정보', contribute: '데이터 추가', feedback: '피드백', main: '메인 메뉴' },
   period: { summer: '여름 학기', 'semester-1': '1학기', winter: '겨울 학기', 'semester-2': '2학기' },
   periodShort: { summer: '여름', 'semester-1': 'S1', winter: '겨울', 'semester-2': 'S2' },
-  category: { science: '이학', breadth: '교양(Breadth)', discipline: '전공' },
+  category: { science: '이학', breadth: '교양(Breadth)', discipline: '전공', core: '필수' },
   plan: {
     pastTag: "이수함",
     pastUndated: "이수함 · 학기 미입력",
@@ -629,6 +629,7 @@ export const ko: Messages = {
     less: "접기",
     unavoidable: "{skill}을(를) 약하다고 답했지만 이 계획엔 {skill} 과목이 {total}개라 학기마다 최소 {perTerm}개가 들어가요. 최대한 나눠 두었어요.",
     previewWorse: "이 과목을 더하면 이번 학기가 더 빡빡해져요.",
+    pinned: "나눌 수 없어요: 선수 과목과 개설 학기 때문에 {codes}는 이 학기에만 들어갈 수 있어요.",
     accurate: "맞나요?",
     yes: "맞아요",
     no: "아니요",

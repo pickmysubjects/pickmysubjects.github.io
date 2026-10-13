@@ -15,7 +15,7 @@ export const zhTW: Messages = {
   nav: { home: '首頁', browse: '找課', more: '更多', plan: '排課', recommend: '推薦', record: '我的', contribute: '新增資料', feedback: '意見回饋', main: '主選單' },
   period: { summer: '夏季學期', 'semester-1': '第一學期', winter: '冬季學期', 'semester-2': '第二學期' },
   periodShort: { summer: '夏季', 'semester-1': 'S1', winter: '冬季', 'semester-2': 'S2' },
-  category: { science: '理科', breadth: 'Breadth', discipline: '專業' },
+  category: { science: '理科', breadth: 'Breadth', discipline: '專業', core: '必修' },
   plan: {
     pastTag: "已修",
     pastUndated: "已修 · 學期未填",
@@ -629,6 +629,7 @@ export const zhTW: Messages = {
     less: "收起",
     unavoidable: "你把{skill}評為偏弱，但這個計畫有 {total} 門課要用{skill}，每學期至少 {perTerm} 門，已經盡量分開了。",
     previewWorse: "加上這門，這學期會更重。",
+    pinned: "分不開：按先修課和開課學期，{codes} 只能放在這學期。",
     accurate: "準嗎？",
     yes: "準",
     no: "不準",

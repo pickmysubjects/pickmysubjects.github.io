@@ -15,7 +15,7 @@ export const ms: Messages = {
   nav: { home: 'Utama', browse: 'Subjek', more: 'Lagi', plan: 'Rancangan', recommend: 'Untuk anda', record: 'Saya', contribute: 'Tambah data', feedback: 'Maklum balas', main: 'Menu utama' },
   period: { summer: 'Penggal musim panas', 'semester-1': 'Semester 1', winter: 'Penggal musim sejuk', 'semester-2': 'Semester 2' },
   periodShort: { summer: 'Musim panas', 'semester-1': 'Sem 1', winter: 'Musim sejuk', 'semester-2': 'Sem 2' },
-  category: { science: 'sains', breadth: 'breadth', discipline: 'bidang' },
+  category: { science: 'sains', breadth: 'breadth', discipline: 'bidang', core: 'teras' },
   plan: {
     pastTag: "Sudah diambil",
     pastUndated: "Sudah diambil · semester belum diisi",
@@ -629,6 +629,7 @@ export const ms: Messages = {
     less: "Tutup",
     unavoidable: "Anda menilai {skill} lemah, tetapi {total} subjek dalam rancangan ini bergantung padanya, jadi setiap semester ada sekurang-kurangnya {perTerm}. Sudah diagihkan sebaik mungkin.",
     previewWorse: "Menambah ini menjadikan semester lebih berat. ",
+    pinned: "Tidak boleh dipisahkan: disebabkan prasyarat dan semester ditawarkan, {codes} hanya muat di sini.",
     accurate: "Betul?",
     yes: "Ya",
     no: "Tidak",

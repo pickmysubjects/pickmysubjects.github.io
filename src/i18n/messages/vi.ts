@@ -15,7 +15,7 @@ export const vi: Messages = {
   nav: { home: 'Trang chủ', browse: 'Môn học', more: 'Thêm', plan: 'Kế hoạch', recommend: 'Gợi ý', record: 'Của tôi', contribute: 'Thêm dữ liệu', feedback: 'Góp ý', main: 'Menu chính' },
   period: { summer: 'Học kỳ hè', 'semester-1': 'Học kỳ 1', winter: 'Học kỳ đông', 'semester-2': 'Học kỳ 2' },
   periodShort: { summer: 'Hè', 'semester-1': 'HK1', winter: 'Đông', 'semester-2': 'HK2' },
-  category: { science: 'khoa học', breadth: 'breadth (ngoài ngành)', discipline: 'chuyên ngành' },
+  category: { science: 'khoa học', breadth: 'breadth (ngoài ngành)', discipline: 'chuyên ngành', core: 'bắt buộc' },
   plan: {
     pastTag: "Đã học",
     pastUndated: "Đã học · chưa điền học kỳ",
@@ -629,6 +629,7 @@ export const vi: Messages = {
     less: "Thu gọn",
     unavoidable: "Bạn đánh giá {skill} là yếu, nhưng kế hoạch này có {total} môn dùng {skill}, nên kỳ nào cũng có ít nhất {perTerm}. Đã chia đều hết mức có thể.",
     previewWorse: "Thêm môn này sẽ làm kỳ này nặng hơn. ",
+    pinned: "Không tách được: do môn tiên quyết và học kỳ mở lớp, {codes} chỉ xếp được vào kỳ này.",
     accurate: "Có đúng không?",
     yes: "Đúng",
     no: "Không",

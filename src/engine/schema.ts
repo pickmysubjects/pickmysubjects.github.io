@@ -190,7 +190,7 @@ export const subjectFileSchema = z
     prerequisites: reqField,
     corequisites: reqField,
     non_allowed: z.union([z.literal('unknown'), z.array(subjectCode)]).default('unknown'),
-    categories: z.record(z.string(), z.enum(['science', 'breadth', 'discipline'])).default({}),
+    categories: z.record(z.string(), z.enum(['science', 'breadth', 'discipline', 'core'])).default({}),
     skills: z.array(z.enum(SKILLS)).default([]),
     topics: z.array(z.enum(TOPICS)).default([]),
     // Semester version from the Handbook; weights add up to 100.
@@ -308,7 +308,8 @@ export const aboutFileSchema = z
   .strict()
 
 export type SubjectAbout = z.output<typeof aboutFileSchema>
-export type SubjectCategory = 'science' | 'breadth' | 'discipline'
+// 'core': counts towards the course total only, in none of its category rules (B-SCI's SCIE10005).
+export type SubjectCategory = 'science' | 'breadth' | 'discipline' | 'core'
 
 const componentReq = z.union([
   z.object({ all: z.array(subjectCode).min(1) }).strict(),

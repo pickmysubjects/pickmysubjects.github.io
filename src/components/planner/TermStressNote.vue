@@ -16,12 +16,18 @@ const props = defineProps<{ termIndex: number }>()
 const { t, locale } = useI18n()
 const plan = usePlan()
 const { data } = useDataset()
-const { stress, relief, applyRelief } = usePlanStress()
+const { stress, relief, pinned, applyRelief } = usePlanStress()
 const open = shallowRef(false)
 
 const here = computed(() => stress.value.terms[props.termIndex])
 const reasons = computed(() => (here.value?.reasons ?? []).map((r) => stressText(t.value, r)))
 const fix = computed(() => (here.value && here.value.level !== 'ok' ? relief(props.termIndex) : null))
+// No fix: say which required subjects have nowhere else to go, so it doesn't look like an oversight.
+const stuck = computed(() => {
+  if (!here.value || here.value.level === 'ok' || fix.value) return []
+  const p = pinned(props.termIndex)
+  return p.length >= 2 ? p : []
+})
 // "Is this right?": the only way to learn whether the rules match how students find a
 // semester. Sends the verdict, the rules that fired and the subject codes — nothing about the student.
 const askable = isFormReady(FEEDBACK_FORM)
@@ -63,6 +69,7 @@ const fixLabel = computed(() => {
     <ul v-if="open && reasons.length > 1" class="stress-rest">
       <li v-for="(r, i) in reasons.slice(1)" :key="i">{{ r }}</li>
     </ul>
+    <p v-if="stuck.length" class="stress-stuck">{{ t('stress.pinned', { codes: stuck.join(', ') }) }}</p>
     <div v-if="fix || reasons.length > 1" class="stress-actions">
       <button v-if="fix" type="button" class="stress-fix" @click="applyRelief(termIndex, fix)">{{ fixLabel }}</button>
       <button v-if="reasons.length > 1" type="button" class="stress-more" :aria-expanded="open" @click="open = !open">
@@ -100,6 +107,11 @@ const fixLabel = computed(() => {
 .stress-veryHeavy {
   --tone: var(--bad);
   --tone-soft: var(--bad-soft);
+}
+
+.stress-stuck {
+  margin: 0;
+  color: var(--ink-soft);
 }
 
 .stress-line {
