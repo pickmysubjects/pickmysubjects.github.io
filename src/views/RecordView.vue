@@ -8,6 +8,7 @@ import WamGoal from '@/components/profile/WamGoal.vue'
 import DegreeCard from '@/components/profile/DegreeCard.vue'
 import GoalPicker from '@/components/profile/GoalPicker.vue'
 import GradeShare from '@/components/profile/GradeShare.vue'
+import WorkHours from '@/components/profile/WorkHours.vue'
 import { ArrowRight, Download, Upload } from 'lucide-vue-next'
 import { link } from '@/composables/useView'
 import { downloadBackup, restoreBackup } from '@/utils/backup'
@@ -86,6 +87,7 @@ async function onRestore(event: Event): Promise<void> {
 
     <section class="interests goal-card surface">
       <GoalPicker :note="t('record.goalNote')" />
+      <WorkHours class="goal-work" />
     </section>
 
     <p class="next">
@@ -201,6 +203,10 @@ async function onRestore(event: Event): Promise<void> {
   .backup {
     order: 1;
   }
+}
+
+.goal-work {
+  margin-top: 18px;
 }
 
 /* Same heading size as the other cards; the three choices stay a comfortable width. */

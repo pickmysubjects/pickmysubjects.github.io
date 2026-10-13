@@ -28,6 +28,8 @@ export interface Profile {
   confirmed?: string[]
   /** The student's own ratings of subjects they took (kept in their browser), used to personalise. */
   ratings?: Record<string, OwnRating>
+  /** Hours a week of paid work or other fixed commitments during semester (bucket middle), if given. */
+  workHours?: number
 }
 
 /** How the student themselves found a subject: difficulty and interest 1–5, would they recommend it. */

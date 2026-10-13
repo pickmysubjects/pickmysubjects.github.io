@@ -27,6 +27,11 @@ export function useProfile() {
     setSkills: (skills: Partial<Record<Skill, number>>) => update((p) => ({ ...p, skills })),
     setInterests: (interests: string[]) => update((p) => ({ ...p, interests })),
     setGoal: (goal: Goal) => update((p) => ({ ...p, goal })),
+    setWorkHours: (workHours: number | undefined) =>
+      update((p) => {
+        const { workHours: _old, ...rest } = p
+        return workHours === undefined ? rest : { ...rest, workHours }
+      }),
     /** Keep the student's own rating of a subject, to personalise their suggestions. */
     setOwnRating: (code: string, rating: OwnRating) => update((p) => ({ ...p, ratings: { ...(p.ratings ?? {}), [code]: rating } })),
     setConfirmed: (code: string, meets: boolean) =>

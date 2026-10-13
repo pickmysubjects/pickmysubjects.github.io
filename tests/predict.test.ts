@@ -69,3 +69,16 @@ describe('marks and choices', () => {
     expect(rank('wam')).toBeGreaterThanOrEqual(rank('balanced'))
   })
 })
+
+describe('paid work hours', () => {
+  it('a busy job makes a term with ordinary class hours count as busy; none leaves it alone', async () => {
+    const { termStress } = await import('../src/engine/termStress')
+    const { dataset: data } = buildDataset('real')
+    const subjects = ['COMP10001', 'MAST10006', 'MAST10007', 'ECON10004']
+    const base = { results: [], skills: {}, interests: [], goal: 'balanced' as const }
+    const without = termStress(subjects, data, base).reasons.map((r) => r.key)
+    const withJob = termStress(subjects, data, { ...base, workHours: 25 }).reasons.map((r) => r.key)
+    expect(without).not.toContain('hours')
+    expect(withJob).toContain('hoursWork')
+  })
+})

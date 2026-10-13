@@ -36,7 +36,7 @@ export function cleanProfile(x: unknown): Profile {
       ratings[code] = { difficulty: scale(r.difficulty), interest: scale(r.interest), recommend: rec }
     }
   }
-  return { results, skills, interests: strings(p.interests), goal, confirmed: strings(p.confirmed), ...(Object.keys(ratings).length ? { ratings } : {}) }
+  return { results, skills, interests: strings(p.interests), goal, confirmed: strings(p.confirmed), ...(Object.keys(ratings).length ? { ratings } : {}), ...(typeof p.workHours === 'number' && p.workHours >= 0 && p.workHours <= 60 ? { workHours: p.workHours } : {}) }
 }
 
 export function cleanProfiles(x: unknown): Record<string, Profile> {
