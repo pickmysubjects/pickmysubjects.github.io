@@ -15,11 +15,11 @@ prerequisites:
 corequisites: none
 non_allowed: []
 categories:
-  B-SCI: science
+  B-SCI: core
 handbook: https://handbook.unimelb.edu.au/2026/subjects/scie10005
 source_year: 2026
-verified_on: 2026-10-07
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+verified_on: 2026-10-13
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Course structure lists it as the 12.5-point level-1 compulsory subject, apart from the 225 points of science, and it is not on the science-discipline list: it counts toward the total only."
 skills:
   - writing
   - presentation
