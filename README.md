@@ -70,6 +70,6 @@ Design notes: [docs/design.md](docs/design.md). How other universities' student 
 ## Licence
 
 - Code: [MIT](LICENSE).
-- Curated data and aggregated ratings: [CC BY 4.0](data/LICENSE.md).
+- Curated data and aggregated ratings: [CC BY-NC-SA 4.0](data/LICENSE.md) (non-commercial; ask for commercial use).
 
 University of Melbourne Handbook text is the University's copyright and is not reproduced here.

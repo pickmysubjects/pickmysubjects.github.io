@@ -46,7 +46,7 @@ Researched 2026-10-07 from public pages and search results. Nothing was scraped 
 - **Our own reviews:**
   - Structured fields: difficulty, weekly hours, assessment style, "what I wish I knew", semester taken, optional self-reported grade band.
   - About the *subject*, not named staff, because of defamation risk.
-  - A contributor licence of **CC BY 4.0 or a perpetual non-exclusive licence to the project**. Avoid NC licences if monetisation is possible.
+  - A contributor licence of **CC BY-NC-SA 4.0 to the public plus a perpetual non-exclusive licence to the project**, so the project itself is not limited by the NC term.
   - Authors may import their *own* past posts from other platforms; those platforms only take non-exclusive licences.
 - **Governance:**
   - anonymous but verified posting;
