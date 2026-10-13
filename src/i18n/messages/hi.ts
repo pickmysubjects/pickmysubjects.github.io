@@ -506,7 +506,9 @@ export const hi: Messages = {
     teachHigh: 'बेहतरीन',
   },
   seo: {
-    subjectTitle: '{code} {title}: पूर्व-आवश्यक विषय, सेमेस्टर, मूल्यांकन',
+    subjectTitle: "{code} {title} | यूनिमेलब: पूर्व-आवश्यक विषय, सेमेस्टर, मूल्यांकन",
+    subjectTitleReviews: "{code} {title} | यूनिमेलब सब्जेक्ट रिव्यू, कठिनाई, पूर्व-आवश्यक विषय",
+    majorTitle: "यूनिमेलब में {title} मेजर: अनिवार्य विषय, विकल्प और योजना",
     subjectDesc: 'यूनिवर्सिटी ऑफ़ मेलबर्न में {code} {title} (लेवल {level}, {points} पॉइंट)।',
     facts: 'यूनिवर्सिटी ऑफ़ मेलबर्न · लेवल {level} · {points} पॉइंट',
     runs: '{year} में चलता है: {periods}।',

@@ -506,7 +506,9 @@ export const ja: Messages = {
     teachHigh: 'とても良い',
   },
   seo: {
-    subjectTitle: '{code} {title}：前提科目・開講学期・評価方法',
+    subjectTitle: "{code} {title}｜メルボルン大学：前提科目・開講学期・評価方法",
+    subjectTitleReviews: "{code} {title}｜メルボルン大学の科目の評判・難易度・前提科目",
+    majorTitle: "メルボルン大学 {title} 専攻：必修科目・選択科目・履修計画",
     subjectDesc: 'メルボルン大学 {code} {title}（レベル {level}、{points} 単位）。',
     facts: 'メルボルン大学 · レベル {level} · {points} 単位',
     runs: '{year}年の開講：{periods}。',

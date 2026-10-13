@@ -506,7 +506,9 @@ export const ko: Messages = {
     teachHigh: '훌륭함',
   },
   seo: {
-    subjectTitle: '{code} {title}: 선수 과목, 개설 학기, 평가 방식',
+    subjectTitle: "{code} {title} | 멜버른대: 선수 과목, 개설 학기, 평가 방식",
+    subjectTitleReviews: "{code} {title} | 멜버른대 과목 평가, 난이도, 선수 과목",
+    majorTitle: "멜버른대 {title} 전공: 필수 과목, 선택 과목, 수강 계획",
     subjectDesc: '멜버른 대학교 {code} {title} (레벨 {level}, {points}학점).',
     facts: '멜버른 대학교 · 레벨 {level} · {points}학점',
     runs: '{year}년 개설: {periods}.',

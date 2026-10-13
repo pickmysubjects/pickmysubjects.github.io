@@ -506,7 +506,9 @@ export const zhTW: Messages = {
     teachHigh: '很好',
   },
   seo: {
-    subjectTitle: '{code} {title}：先修課、開課學期、考核方式',
+    subjectTitle: "{code} {title}｜墨大選課：先修課、開課學期、考核方式",
+    subjectTitleReviews: "{code} {title}｜墨大課程評價：難度、先修課、考核方式",
+    majorTitle: "墨大 {title} 主修：必修課、選修課和排課",
     subjectDesc: '墨爾本大學 {code} {title}（{level} 級，{points} 學分）。',
     facts: '墨爾本大學 · {level} 級 · {points} 學分',
     runs: '{year} 年開課：{periods}。',

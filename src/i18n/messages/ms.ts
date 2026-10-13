@@ -506,7 +506,9 @@ export const ms: Messages = {
     teachHigh: 'Cemerlang',
   },
   seo: {
-    subjectTitle: '{code} {title}: prasyarat, semester, penilaian',
+    subjectTitle: "{code} {title} | UniMelb: prasyarat, semester, penilaian",
+    subjectTitleReviews: "{code} {title} | Ulasan subjek UniMelb, tahap kesukaran, prasyarat",
+    majorTitle: "Major {title} di UniMelb: subjek teras, pilihan dan perancangan",
     subjectDesc: '{code} {title} (Tahap {level}, {points} mata) di University of Melbourne.',
     facts: 'University of Melbourne · Tahap {level} · {points} mata',
     runs: 'Ditawarkan pada {year}: {periods}.',

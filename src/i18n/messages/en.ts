@@ -509,7 +509,9 @@ export const en = {
     teachHigh: 'Excellent',
   },
   seo: {
-    subjectTitle: '{code} {title}: prerequisites, semesters, assessment',
+    subjectTitle: "{code} {title}: UniMelb prerequisites, semesters, assessment",
+    subjectTitleReviews: "{code} {title}: UniMelb subject reviews, difficulty, prerequisites",
+    majorTitle: "{title} major at UniMelb: core subjects, options and planning",
     subjectDesc: '{code} {title} (Level {level}, {points} points) at the University of Melbourne.',
     facts: 'University of Melbourne · Level {level} · {points} points',
     runs: 'Runs in {year}: {periods}.',

@@ -20,6 +20,7 @@ import { useView, link } from './composables/useView'
 import { useDataset } from './composables/useDataset'
 import { useI18n } from './i18n'
 import { localTitle, withLocalTitle } from './i18n/localized'
+import { subjectTitleKey } from '@/utils/seo'
 
 const { view, param } = useView()
 const { t, locale } = useI18n()
@@ -43,9 +44,9 @@ watchEffect(() => {
   const key = TITLES[view.value]
   const major = view.value === 'majors' && param.value ? data.value.components.find((c) => c.id === param.value) : undefined
   document.title = s
-    ? `${t.value('seo.subjectTitle', { code: s.code, title: withLocalTitle(s.title, localTitle(s, locale.value)) })} | PickMySubjects`
+    ? `${t.value(subjectTitleKey(s), { code: s.code, title: withLocalTitle(s.title, localTitle(s, locale.value)) })} | PickMySubjects`
     : major
-      ? `${t.value('majors.majorTitle', { title: major.title })} | PickMySubjects`
+      ? `${t.value('seo.majorTitle', { title: major.title })} | PickMySubjects`
       : key
       ? `${t.value(key)} | PickMySubjects`
       : t.value('seo.homeTitle')

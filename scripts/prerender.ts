@@ -13,6 +13,7 @@
  * robots.txt and llms.txt. Everything is static: GitHub Pages serves it for free.
  */
 import { localTitle, pickLocalized, withLocalTitle } from '../src/i18n/localized'
+import { subjectTitleKey } from '../src/utils/seo'
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -73,6 +74,8 @@ interface Page {
   body: string
   /** Question-and-answer pairs shown on the page, also given to search engines as FAQPage data. */
   faq?: FaqItem[]
+  /** More schema.org items about the page's subject: the course and its breadcrumb. */
+  ld?: object[]
 }
 
 function esc(text: string): string {
@@ -105,14 +108,14 @@ function structured(page: Page, code: LocaleCode, url: string): object {
     }
   }
   const webPage = { '@type': 'WebPage', name: page.title, description: page.description, url, inLanguage: code, isPartOf: site, isAccessibleForFree: true }
-  if (!page.faq?.length) return { '@context': 'https://schema.org', ...webPage }
-  const faq = {
+  if (!page.faq?.length && !page.ld?.length) return { '@context': 'https://schema.org', ...webPage }
+  const faq = page.faq?.length && {
     '@type': 'FAQPage',
     url,
     inLanguage: code,
     mainEntity: page.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
   }
-  return { '@context': 'https://schema.org', '@graph': [webPage, faq] }
+  return { '@context': 'https://schema.org', '@graph': [webPage, ...(faq ? [faq] : []), ...(page.ld ?? [])] }
 }
 
 function render(page: Page, code: LocaleCode): string {
@@ -227,11 +230,44 @@ function subjectPage(code: LocaleCode, s: Subject): Page {
     .join(sentenceSep(code))
   return {
     path: `subject/${s.code}`,
-    title: `${t('seo.subjectTitle', facts)} | PickMySubjects`,
+    title: `${t(subjectTitleKey(s), facts)} | PickMySubjects`,
     description: description.length > 300 ? `${description.slice(0, 297)}…` : description,
     body: parts.join('\n'),
     faq,
+    ld: courseLd(code, s, facts.title, s.prerequisites !== 'unknown' && s.prerequisites !== 'none' ? prereq : undefined),
   }
+}
+
+/**
+ * The course itself and where its page sits, from our own facts only. No rating markup until
+ * students have rated it here.
+ */
+function courseLd(code: LocaleCode, s: Subject, title: string, prereq: string | undefined): object[] {
+  const t = translator(code)
+  const url = absolute(code, `subject/${s.code}`)
+  return [
+    {
+      '@type': 'Course',
+      name: `${s.code} ${s.title}`,
+      courseCode: s.code,
+      description: s.about ? pickLocalized(s.about.learn, code) : t('seo.subjectDesc', { code: s.code, title, level: s.level, points: s.points }),
+      provider: { '@type': 'CollegeOrUniversity', name: 'The University of Melbourne', sameAs: 'https://www.unimelb.edu.au/' },
+      numberOfCredits: { '@type': 'StructuredValue', value: s.points, unitText: 'credit points' },
+      educationalLevel: `Level ${s.level}`,
+      inLanguage: 'en',
+      ...(prereq ? { coursePrerequisites: prereq } : {}),
+      url,
+      ...(s.handbook ? { sameAs: s.handbook } : {}),
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'PickMySubjects', item: absolute(code, '') },
+        { '@type': 'ListItem', position: 2, name: t('browse.title'), item: absolute(code, 'subjects') },
+        { '@type': 'ListItem', position: 3, name: `${s.code} ${title}`, item: url },
+      ],
+    },
+  ]
 }
 
 // ---------- main pages ----------
@@ -271,7 +307,7 @@ function majorPage(code: LocaleCode, m: (typeof majors)[number]): Page {
   const core = o?.core.join(', ') ?? ''
   return {
     path: `majors/${m.id}`,
-    title: `${t('majors.majorTitle', { title: m.title })} | PickMySubjects`,
+    title: `${t('seo.majorTitle', { title: m.title })} | PickMySubjects`,
     description: `${t('majors.majorTitle', { title: m.title })}: ${t('majors.coreTitle')} ${core}. ${t('majors.cardText')}`,
     body: parts.join('\n'),
   }

@@ -506,7 +506,9 @@ export const zhCN: Messages = {
     teachHigh: '很好',
   },
   seo: {
-    subjectTitle: '{code} {title}：先修课、开课学期、考核方式',
+    subjectTitle: "{code} {title}｜墨大选课：先修课、开课学期、考核方式",
+    subjectTitleReviews: "{code} {title}｜墨大课程评价：难度、先修课、考核方式",
+    majorTitle: "墨大 {title} 专业：必修课、选修课和排课",
     subjectDesc: '墨尔本大学 {code} {title}（{level} 级，{points} 学分）。',
     facts: '墨尔本大学 · {level} 级 · {points} 学分',
     runs: '{year} 年开课：{periods}。',

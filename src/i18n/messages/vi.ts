@@ -506,7 +506,9 @@ export const vi: Messages = {
     teachHigh: 'Xuất sắc',
   },
   seo: {
-    subjectTitle: '{code} {title}: môn tiên quyết, học kỳ, cách đánh giá',
+    subjectTitle: "{code} {title} | Đại học Melbourne: môn tiên quyết, học kỳ, cách đánh giá",
+    subjectTitleReviews: "{code} {title} | Đại học Melbourne: đánh giá môn học, độ khó, môn tiên quyết",
+    majorTitle: "Chuyên ngành {title} tại Đại học Melbourne: môn bắt buộc, môn tự chọn, lộ trình",
     subjectDesc: '{code} {title} (Level {level}, {points} tín chỉ) tại Đại học Melbourne.',
     facts: 'Đại học Melbourne · Level {level} · {points} tín chỉ',
     runs: 'Mở năm {year}: {periods}.',
