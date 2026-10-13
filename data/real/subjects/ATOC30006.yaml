@@ -8,11 +8,11 @@ offerings:
 prerequisites:
   any:
     - ATOC20003
-    - any:
-        - all:
-            - manual: A minimum of 12.5 credit points of Level 2 Physics or Mathematics subjects
+    - all:
+        - manual: A minimum of 12.5 credit points of Level 2 Physics or Mathematics subjects
+        - any:
             - MAST10005
-        - manual: Study score of 30 or more in VCE Specialist Mathematics 3/4 or equivalent
+            - manual: Study score of 30 or more in VCE Specialist Mathematics 3/4 or equivalent
 corequisites: none
 non_allowed: []
 assessment:
@@ -30,7 +30,7 @@ assessment:
 weekly_contact_hours: 4
 handbook: https://handbook.unimelb.edu.au/2026/subjects/atoc30006
 source_year: 2026
-verified_on: 2026-10-10
+verified_on: 2026-10-13
 categories:
   B-SCI: science
 notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

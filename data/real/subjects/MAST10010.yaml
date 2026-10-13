@@ -20,9 +20,6 @@ non_allowed:
   - MAST10011
   - MAST20005
   - MAST20017
-  - MAST10005
-  - MAST10006
-  - MAST10007
 assessment:
   - kind: quiz
     weight: 10
@@ -35,10 +32,10 @@ assessment:
 weekly_contact_hours: 5
 handbook: https://handbook.unimelb.edu.au/2026/subjects/mast10010
 source_year: 2026
-verified_on: 2026-10-10
+verified_on: 2026-10-13
 categories:
   B-SCI: science
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Bachelor of Science students may take at most three level-1 maths/stats subjects: not all four of MAST10005, MAST10006, MAST10007 and MAST10010."
 skills:
   - statistics
   - data

@@ -1,0 +1,9 @@
+id: mechatronics-systems
+course: B-SCI
+year: 2026
+kind: major
+title: Mechatronics Systems
+points: 50
+requirements:
+  - all: [ELEN30014, MCEN30020, MCEN30021, ENGR30004]
+verified_on: 2026-10-13 # structure; source: 2026 Handbook, checked

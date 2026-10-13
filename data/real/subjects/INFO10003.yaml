@@ -1,4 +1,4 @@
-code: INFO10001
+code: INFO10003
 title: Fundamentals of Interaction Design
 level: 1
 points: 12.5
@@ -19,7 +19,7 @@ assessment:
     weight: 40
     group: true
 weekly_contact_hours: 3
-handbook: https://handbook.unimelb.edu.au/2026/subjects/info10001
+handbook: https://handbook.unimelb.edu.au/2026/subjects/info10003
 source_year: 2026
 categories:
   B-SCI: breadth
@@ -28,5 +28,5 @@ skills:
   - presentation
 topics:
   - design
-verified_on: 2026-10-08
+verified_on: 2026-10-13
 notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

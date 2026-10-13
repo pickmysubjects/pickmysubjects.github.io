@@ -28,11 +28,12 @@ handbook: https://handbook.unimelb.edu.au/2026/subjects/comp20004
 source_year: 2026
 categories:
   B-SCI: science
+discontinued_from: 2026
 skills:
   - maths
   - algorithms
 topics:
   - theory
   - algorithms
-verified_on: 2026-10-08
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Not available in 2026. Also hurdles of 20/40 on the non-exam work and 30/60 on the exam."
+verified_on: 2026-10-13
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. The 2026 Handbook link now opens the graduate subject COMP90057 instead, so it is not offered to undergraduates. Also hurdles of 20/40 on the non-exam work and 30/60 on the exam."

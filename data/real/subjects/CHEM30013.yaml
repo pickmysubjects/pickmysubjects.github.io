@@ -7,7 +7,7 @@ offerings:
     - summer
     - semester-2
 prerequisites:
-  manual: Four of the Level 3 chemistry subjects (as defined in the chemistry major)
+  manual: "Bachelor of Science students: four of the Level 3 chemistry subjects (as defined in the chemistry major); these can be taken at the same time"
 corequisites: none
 non_allowed: []
 assessment:
@@ -22,7 +22,7 @@ assessment:
     hurdle: true
 handbook: https://handbook.unimelb.edu.au/2026/subjects/chem30013
 source_year: 2026
-verified_on: 2026-10-09
+verified_on: 2026-10-13
 categories:
   B-SCI: science
 notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

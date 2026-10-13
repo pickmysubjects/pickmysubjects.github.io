@@ -9,9 +9,7 @@ prerequisites:
   any:
     - admission: MC-GEOSC
       note: Admission into the MC-GEOSC Master of Geoscience
-    - points:
-        min: 12.5
-        level: 1
+    - manual: 12.5 credit points of Level 1 or Level 2 Geoscience, Geography, Chemistry or Biology subjects
 corequisites: none
 non_allowed: []
 assessment:
@@ -24,7 +22,7 @@ assessment:
 weekly_contact_hours: 7
 handbook: https://handbook.unimelb.edu.au/2026/subjects/evsc20008
 source_year: 2026
-verified_on: 2026-10-10
+verified_on: 2026-10-13
 categories:
   B-SCI: science
 notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

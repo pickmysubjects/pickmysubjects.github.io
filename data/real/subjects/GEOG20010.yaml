@@ -20,7 +20,8 @@ assessment:
 weekly_contact_hours: 3
 handbook: https://handbook.unimelb.edu.au/2026/subjects/geog20010
 source_year: 2026
-verified_on: 2026-10-10
+verified_on: 2026-10-13
+min_attendance: 73
 categories:
   B-SCI: breadth
 notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

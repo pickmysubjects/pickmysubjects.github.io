@@ -1,0 +1,10 @@
+id: mechanical-systems
+course: B-SCI
+year: 2026
+kind: major
+title: Mechanical Systems
+points: 50
+requirements:
+  - all: [MCEN30017, MCEN30018, MCEN30020, MCEN30021]
+# Handbook note: also MAST20029, or both MAST20009 and MAST20030, at level 2 (not checkable as a component rule yet).
+verified_on: 2026-10-13 # structure; source: 2026 Handbook, checked

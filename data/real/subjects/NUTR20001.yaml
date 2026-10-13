@@ -5,15 +5,14 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
-prerequisites:
+prerequisites: none
+corequisites:
   any:
-    - any:
-        - AGRI20043
-        - BIOM20001
-        - BIOM20002
-        - FOOD20003
+    - AGRI20043
+    - BIOM20001
+    - BIOM20002
+    - FOOD20003
     - BCMB20002
-corequisites: none
 non_allowed:
   - FOOD20008
 assessment:
@@ -27,12 +26,13 @@ assessment:
   - kind: exam
     weight: 40
 weekly_contact_hours: 3
+min_attendance: 75
 handbook: https://handbook.unimelb.edu.au/2026/subjects/nutr20001
 source_year: 2026
-verified_on: 2026-10-10
+verified_on: 2026-10-13
 categories:
   B-SCI: science
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. BCMB20002 can be taken at the same time; the others must be done first."
 skills:
   - writing
 topics:

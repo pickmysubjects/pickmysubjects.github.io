@@ -22,7 +22,8 @@ assessment:
     weight: 45
 handbook: https://handbook.unimelb.edu.au/2026/subjects/bcmb30011
 source_year: 2026
-verified_on: 2026-10-09
+verified_on: 2026-10-13
+min_attendance: 70
 categories:
   B-SCI: science
 notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

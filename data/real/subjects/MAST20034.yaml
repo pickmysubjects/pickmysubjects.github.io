@@ -6,17 +6,16 @@ offerings:
   "2026":
     - semester-1
     - semester-2
-prerequisites:
+prerequisites: none
+corequisites:
   any:
-    - any:
-        - MAST10010
-        - MAST20031
-        - ECON10005
-        - ECOM20001
-        - MAST10024
-        - MAST10011
+    - MAST10010
+    - MAST20031
+    - ECON10005
+    - ECOM20001
+    - MAST10024
+    - MAST10011
     - MAST20005
-corequisites: none
 non_allowed: []
 assessment:
   - kind: quiz
@@ -30,10 +29,10 @@ assessment:
     weight: 60
 handbook: https://handbook.unimelb.edu.au/2026/subjects/mast20034
 source_year: 2026
-verified_on: 2026-10-10
+verified_on: 2026-10-13
 categories:
   B-SCI: science
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. MAST20005 can be taken at the same time; the others must be done first."
 skills:
   - statistics
   - writing

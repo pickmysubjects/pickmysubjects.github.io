@@ -7,7 +7,12 @@ offerings:
     - semester-2
 prerequisites: none
 corequisites:
-  subject: PATH20001
+  any:
+    - all:
+        - admission: B-BMED
+          note: Bachelor of Biomedicine students
+        - subject: BIOM20001
+    - PATH20001
 non_allowed: []
 assessment:
   - kind: assignment
@@ -19,7 +24,7 @@ assessment:
     weight: 20
 handbook: https://handbook.unimelb.edu.au/2026/subjects/path20003
 source_year: 2026
-verified_on: 2026-10-09
+verified_on: 2026-10-13
 categories:
   B-SCI: science
 notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Science students: PATH20001 before or at the same time. Biomedicine students need BIOM20001 instead."

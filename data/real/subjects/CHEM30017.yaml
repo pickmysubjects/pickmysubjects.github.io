@@ -7,21 +7,22 @@ offerings:
     - semester-1
 prerequisites:
   all:
-    - CHEM30016
     - CHEM20018
     - CHEM20020
 corequisites: none
 non_allowed: []
 assessment:
   - kind: exam
-    weight: 100
+    weight: 80
+  - kind: assignment
+    weight: 20
 weekly_contact_hours: 3.5
 handbook: https://handbook.unimelb.edu.au/2026/subjects/chem30017
 source_year: 2026
-verified_on: 2026-10-09
+verified_on: 2026-10-13
 categories:
   B-SCI: science
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. The Handbook also accepts CHEM30016 taken at the same time; CHEM30016 itself needs CHEM20018 and CHEM20020, so this comes to the same thing."
 skills:
   - maths
 topics:

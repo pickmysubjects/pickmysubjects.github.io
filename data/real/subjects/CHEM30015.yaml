@@ -11,7 +11,6 @@ non_allowed: []
 assessment:
   - kind: presentation
     weight: 78
-    group: true
   - kind: presentation
     weight: 10
     group: true
@@ -21,7 +20,7 @@ assessment:
 weekly_contact_hours: 7
 handbook: https://handbook.unimelb.edu.au/2026/subjects/chem30015
 source_year: 2026
-verified_on: 2026-10-09
+verified_on: 2026-10-13
 categories:
   B-SCI: science
 notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

@@ -6,11 +6,12 @@ offerings:
   "2026":
     - semester-1
     - semester-2
-prerequisites:
+prerequisites: none
+# Handbook: "these can be taken concurrently (at the same time)".
+corequisites:
   any:
     - MAST20029
     - MAST20030
-corequisites: none
 non_allowed:
   - MCEN30018
 assessment:
@@ -27,7 +28,7 @@ assessment:
     hurdle: true
 handbook: https://handbook.unimelb.edu.au/2026/subjects/engr30002
 source_year: 2026
-verified_on: 2026-10-10
+verified_on: 2026-10-13
 categories:
   B-SCI: science
 notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

@@ -25,10 +25,10 @@ prerequisites:
         - MAST10008
         - MAST10022
         - MAST10018
-    - any:
-        - MAST20009
-        - MAST20032
-corequisites: none
+corequisites:
+  any:
+    - MAST20009
+    - MAST20032
 non_allowed: []
 assessment:
   - kind: assignment
@@ -38,10 +38,10 @@ assessment:
 weekly_contact_hours: 4
 handbook: https://handbook.unimelb.edu.au/2026/subjects/phyc20015
 source_year: 2026
-verified_on: 2026-10-10
+verified_on: 2026-10-13
 categories:
   B-SCI: science
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. PHYC10009 counts only with a result of at least 75 (H2A)."
 skills:
   - maths
 topics:

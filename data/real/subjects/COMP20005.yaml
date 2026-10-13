@@ -6,21 +6,21 @@ offerings:
   "2026":
     - semester-1
     - semester-2
-prerequisites:
-  any:
-    - all:
-        - any:
-            - MAST10005
-            - MAST10006
-            - MAST10009
-            - MAST10021
-        - any:
-            - MAST10007
-            - MAST10008
-            - MAST10022
-    - admission: MC-ENG
-      note: Admission into the Master of Engineering (or another listed engineering master's)
-corequisites: none
+prerequisites: none
+# Handbook: "Any of the above subjects may also be taken concurrently"; MAST10019 may replace MAST10006, MAST10018 may replace MAST10007. Graduate-only routes left out.
+corequisites:
+  all:
+    - any:
+        - MAST10005
+        - MAST10006
+        - MAST10009
+        - MAST10021
+        - MAST10019
+    - any:
+        - MAST10007
+        - MAST10008
+        - MAST10022
+        - MAST10018
 non_allowed:
   - COMP10002
   - ENGR20005
@@ -28,7 +28,7 @@ categories:
   B-SCI: science
 handbook: https://handbook.unimelb.edu.au/2026/subjects/comp20005
 source_year: 2026
-verified_on: 2026-10-07
+verified_on: 2026-10-13
 notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. The maths prerequisites may also be taken in the same semester."
 skills:
   - programming

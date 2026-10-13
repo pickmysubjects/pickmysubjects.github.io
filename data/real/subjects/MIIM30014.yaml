@@ -9,7 +9,6 @@ prerequisites:
   any:
     - BIOM20001
     - MIIM20001
-    - MIIM20002
 corequisites: none
 non_allowed: []
 assessment:
@@ -24,10 +23,10 @@ assessment:
 weekly_contact_hours: 3.5
 handbook: https://handbook.unimelb.edu.au/2026/subjects/miim30014
 source_year: 2026
-verified_on: 2026-10-09
+verified_on: 2026-10-13
 categories:
   B-SCI: science
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. MIIM20002 is strongly encouraged beforehand but not required."
 skills:
   - writing
 topics:

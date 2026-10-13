@@ -25,9 +25,10 @@ assessment:
     weight: 20
     hurdle: true
 weekly_contact_hours: 4
+min_attendance: 80
 handbook: https://handbook.unimelb.edu.au/2026/subjects/nutr30004
 source_year: 2026
-verified_on: 2026-10-10
+verified_on: 2026-10-13
 categories:
   B-SCI: science
 notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

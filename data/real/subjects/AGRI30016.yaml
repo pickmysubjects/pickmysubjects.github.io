@@ -16,12 +16,13 @@ assessment:
   - kind: exam
     weight: 50
 weekly_contact_hours: 3.5
+campus: Dookie
 handbook: https://handbook.unimelb.edu.au/2026/subjects/agri30016
 source_year: 2026
-verified_on: 2026-10-10
+verified_on: 2026-10-13
 categories:
   B-SCI: science
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. One-week June intensive taught only at the Dookie campus; accommodation and meals cost about $450."
 skills:
   - maths
 topics:

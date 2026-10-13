@@ -12,7 +12,7 @@ prerequisites:
         - GEOG30023
         - EVSC20008
         - MAST20031
-    - GEOG20002
+    - manual: 25 credit points of Level 2 Geography or Earth Sciences subjects (or equivalent as approved by the subject coordinator)
 corequisites: none
 non_allowed: []
 assessment:
@@ -25,10 +25,10 @@ assessment:
 weekly_contact_hours: 5
 handbook: https://handbook.unimelb.edu.au/2026/subjects/geog30001
 source_year: 2026
-verified_on: 2026-10-10
+verified_on: 2026-10-13
 categories:
   B-SCI: science
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. GEOG20002 is strongly recommended."
 skills:
   - lab
   - writing

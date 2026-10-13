@@ -7,6 +7,7 @@ offerings:
     - semester-1
 prerequisites:
   all:
+    - manual: Permission of the Faculty of Science is required to enrol into this subject. Enrolment is limited to BSc students who have been selected into the Veterinary Bioscience major, leading to articulation into the Doctor of Veterinary Medicine.
     - VETS20019
     - any:
         - BCMB20002
@@ -30,8 +31,8 @@ assessment:
 weekly_contact_hours: 8.5
 handbook: https://handbook.unimelb.edu.au/2026/subjects/vets30030
 source_year: 2026
-verified_on: 2026-10-10
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+verified_on: 2026-10-13
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Handbook lists VETS30030 as its own corequisite (a typo); VETS30016 used instead, matching the sibling subjects."
 categories:
   B-SCI: science
 skills:

@@ -34,9 +34,10 @@ assessment:
   - kind: assignment
     weight: 0
     hurdle: true
+min_attendance: 80
 handbook: https://handbook.unimelb.edu.au/2026/subjects/agri30038
 source_year: 2026
-verified_on: 2026-10-10
+verified_on: 2026-10-13
 categories:
   B-SCI: science
 notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

@@ -11,7 +11,9 @@ prerequisites:
     - admission: B-SCI
       note: Admission into the Bachelor of Science
     - admission: B-COM
-      note: Admission into the Bachelor of Commerce (or Biomedicine)
+      note: Admission into the Bachelor of Commerce
+    - admission: B-BMED
+      note: Admission into the Bachelor of Biomedicine
     - manual: VCE Mathematical Methods or Specialist Mathematics 3/4 study score of at least 25 (or equivalent)
     - MAST10012
     - all:
@@ -23,7 +25,7 @@ categories:
   B-SCI: breadth
 handbook: https://handbook.unimelb.edu.au/2026/subjects/econ10004
 source_year: 2026
-verified_on: 2026-10-07
+verified_on: 2026-10-13
 notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Also runs in Semester 1, but students taking it as breadth must enrol in Semester 2 or Summer, so only those are recorded here. Breadth students may be withdrawn if it is full."
 skills:
   - business

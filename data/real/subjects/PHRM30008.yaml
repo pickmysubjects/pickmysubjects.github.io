@@ -5,7 +5,14 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
-prerequisites: PHRM20001
+prerequisites:
+  any:
+    - PHRM20001
+    - all:
+        - admission: B-BMED
+          note: Bachelor of Biomedicine students
+        - subject: BIOM20002
+    - manual: Breadth students need the approval of the subject coordinator
 corequisites: none
 non_allowed: []
 assessment:
@@ -20,7 +27,7 @@ assessment:
 weekly_contact_hours: 3
 handbook: https://handbook.unimelb.edu.au/2026/subjects/phrm30008
 source_year: 2026
-verified_on: 2026-10-09
+verified_on: 2026-10-13
 categories:
   B-SCI: science
 notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

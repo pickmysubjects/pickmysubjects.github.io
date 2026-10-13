@@ -6,12 +6,23 @@ offerings:
   "2026":
     - semester-2
 prerequisites:
-  points:
-    min: 25
-    from:
-      - GENE20001
-      - GENE20004
-      - BIOL20001
+  any:
+    # Bachelor of Science students
+    - points:
+        min: 25
+        from:
+          - GENE20001
+          - GENE20004
+          - BIOL20001
+    - all:
+        - admission: B-BMED
+          note: Bachelor of Biomedicine students
+        - points:
+            min: 25
+            from:
+              - GENE20001
+              - GENE20004
+              - BCMB20005
 corequisites: none
 non_allowed: []
 assessment:
@@ -25,7 +36,7 @@ assessment:
 weekly_contact_hours: 5
 handbook: https://handbook.unimelb.edu.au/2026/subjects/gene30004
 source_year: 2026
-verified_on: 2026-10-09
+verified_on: 2026-10-13
 categories:
   B-SCI: science
 notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

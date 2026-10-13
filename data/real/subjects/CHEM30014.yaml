@@ -10,11 +10,13 @@ corequisites: none
 non_allowed: []
 assessment:
   - kind: exam
-    weight: 100
+    weight: 80
+  - kind: assignment
+    weight: 20
 weekly_contact_hours: 3.5
 handbook: https://handbook.unimelb.edu.au/2026/subjects/chem30014
 source_year: 2026
-verified_on: 2026-10-09
+verified_on: 2026-10-13
 categories:
   B-SCI: science
 notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

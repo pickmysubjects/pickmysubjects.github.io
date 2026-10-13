@@ -5,11 +5,12 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
-prerequisites:
+prerequisites: none
+# Handbook: one of CHEM20018 / CHEM20020, which "can be taken concurrently".
+corequisites:
   any:
     - CHEM20018
     - CHEM20020
-corequisites: none
 non_allowed:
   - CHEM20014
   - CHEM20021
@@ -25,7 +26,7 @@ assessment:
 weekly_contact_hours: 6
 handbook: https://handbook.unimelb.edu.au/2026/subjects/chem20019
 source_year: 2026
-verified_on: 2026-10-09
+verified_on: 2026-10-13
 categories:
   B-SCI: science
 notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

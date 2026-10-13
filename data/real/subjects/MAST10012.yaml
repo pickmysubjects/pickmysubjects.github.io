@@ -22,12 +22,12 @@ assessment:
 weekly_contact_hours: 5
 handbook: https://handbook.unimelb.edu.au/2026/subjects/mast10012
 source_year: 2026
-categories:
-  B-SCI: science
+min_attendance: 73
+categories: {}
 skills:
   - maths
 topics:
   - mathematics
   - calculus
-verified_on: 2026-10-08
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+verified_on: 2026-10-13
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Not available to students enrolled in the Bachelor of Science; not for credit with a VCE Mathematical Methods 3/4 study score of 25 or more."

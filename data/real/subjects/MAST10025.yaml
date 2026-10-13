@@ -5,7 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
-prerequisites: none
+prerequisites:
+  manual: Enrolment in the Uni Ready Enabling Program
 corequisites: MAST10026
 non_allowed: []
 assessment:
@@ -22,5 +23,5 @@ skills:
   - maths
 topics:
   - mathematics
-verified_on: 2026-10-08
+verified_on: 2026-10-13
 notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Only for the Uni Ready enabling program; not for credit in any undergraduate course."

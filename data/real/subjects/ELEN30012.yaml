@@ -15,16 +15,17 @@ prerequisites:
         - MAST20029
         - MAST20030
         - MAST20033
-    # "Either one of COMP10002/COMP20007/BMEN20003, or BMEN20001, or COMP20005/ENGR20005
-    # (these two may also be taken at the same time)".
-    - any:
-        - COMP10002
-        - COMP20007
-        - BMEN20003
-        - BMEN20001
-        - COMP20005
-        - ENGR20005
-corequisites: none
+# "Either one of COMP10002/COMP20007/BMEN20003, or BMEN20001, or COMP20005/ENGR20005
+# (these two may also be taken at the same time)". Kept as one group under corequisites
+# so the concurrent options work.
+corequisites:
+  any:
+    - COMP10002
+    - COMP20007
+    - BMEN20003
+    - BMEN20001
+    - COMP20005
+    - ENGR20005
 non_allowed:
   - BMEN30006
 assessment:
@@ -38,7 +39,7 @@ assessment:
     hurdle: true
 handbook: https://handbook.unimelb.edu.au/2026/subjects/elen30012
 source_year: 2026
-verified_on: 2026-10-10
+verified_on: 2026-10-13
 categories:
   B-SCI: science
 notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

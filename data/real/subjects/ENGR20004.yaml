@@ -7,30 +7,38 @@ offerings:
     - semester-1
     - semester-2
 prerequisites:
-  all:
-    - any:
-        - PHYC10001
-        - PHYC10003
-        - PHYC10009
-    - any:
-        - MAST10006
-        - MAST10009
-        - MAST10021
-    - any:
-        - MAST10007
-        - MAST10008
-        - MAST10022
-        - PHYC10001
-        - PHYC10003
-        - PHYC10009
-        - ENGR10004
-        - MAST10006
-        - MAST10009
-        - MAST10021
-    - any:
-        - MAST10007
-        - MAST10008
-        - MAST10022
+  any:
+    # Bachelor of Science, Biomedicine and Commerce students
+    - all:
+        - any:
+            - PHYC10001
+            - PHYC10003
+            - PHYC10009
+        - any:
+            - MAST10006
+            - MAST10009
+            - MAST10021
+        - any:
+            - MAST10007
+            - MAST10008
+            - MAST10022
+    # Bachelor of Design students (the physics/ENGR10004 subject may be taken concurrently)
+    - all:
+        - admission: B-DES
+          note: Bachelor of Design students
+        - any:
+            - PHYC10001
+            - PHYC10003
+            - PHYC10009
+            - ENGR10004
+        - any:
+            - MAST10006
+            - MAST10009
+            - MAST10021
+        - any:
+            - MAST10007
+            - MAST10008
+            - MAST10022
 corequisites: none
 non_allowed:
   - ENGR20003
@@ -48,7 +56,7 @@ assessment:
     hurdle: true
 handbook: https://handbook.unimelb.edu.au/2026/subjects/engr20004
 source_year: 2026
-verified_on: 2026-10-10
+verified_on: 2026-10-13
 categories:
   B-SCI: science
 notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

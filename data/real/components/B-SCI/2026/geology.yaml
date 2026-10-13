@@ -8,3 +8,4 @@ requirements:
   - all: [ERTH30002]
   - choose: { points: 37.5, from: [GEOL30002, GEOL30003, GEOL30004, GEOL30007, GEOL30009, SCIE30001] }
 verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked
+closed_from: 2024 # Handbook: no longer offered to students from 2024 onwards

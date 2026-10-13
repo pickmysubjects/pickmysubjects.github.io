@@ -5,10 +5,14 @@ points: 12.5
 offerings:
   "2026": []
 prerequisites:
-  all:
-    - PHYS20008
-    - PHYS20009
-    - BIOM20002
+  any:
+    - all:
+        - PHYS20008
+        - PHYS20009
+    - all:
+        - admission: B-BMED
+          note: Bachelor of Biomedicine students
+        - BIOM20002
 corequisites: none
 non_allowed: []
 assessment:
@@ -25,7 +29,7 @@ assessment:
     weight: 10
 handbook: https://handbook.unimelb.edu.au/2026/subjects/phys30009
 source_year: 2026
-verified_on: 2026-10-09
+verified_on: 2026-10-13
 categories:
   B-SCI: science
 notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

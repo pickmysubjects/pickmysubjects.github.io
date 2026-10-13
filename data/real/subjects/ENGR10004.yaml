@@ -8,8 +8,10 @@ offerings:
 prerequisites:
   any:
     - manual: A mark of at least 25 in VCE Math Methods or equivalent approved by the Subject Coordinator
+    - admission: B-SCI
+    - admission: B-BMED
+    - admission: B-COM
     - admission: B-DES
-      note: "Admission into one of: Admission into or selection of one of the following: B-SCI Bachelor of Science Admission into or selection of one of the following: B-BMED Bachelor of Biomedicine Admission into or selection of one of the following: B-COM Bachelor of Commerce Admission into the B-DES Bachelor of Design"
     - all:
         - MAST10014
         - MAST10015
@@ -34,7 +36,7 @@ assessment:
 weekly_contact_hours: 6
 handbook: https://handbook.unimelb.edu.au/2026/subjects/engr10004
 source_year: 2026
-verified_on: 2026-10-10
+verified_on: 2026-10-13
 categories:
   B-SCI: science
 notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

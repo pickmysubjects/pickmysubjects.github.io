@@ -14,8 +14,7 @@ prerequisites:
     - admission: B-SCI
       note: Admission into the B-SCI Bachelor of Science
 corequisites: none
-non_allowed:
-  - PHYC10003
+non_allowed: []
 assessment:
   - kind: assignment
     weight: 25
@@ -27,10 +26,10 @@ assessment:
 weekly_contact_hours: 5
 handbook: https://handbook.unimelb.edu.au/2026/subjects/phyc10009
 source_year: 2026
-verified_on: 2026-10-09
+verified_on: 2026-10-13
 categories:
   B-SCI: science
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Not for students with a study score of 25 or more in VCE Physics 3 and 4 or equivalent (they should take PHYC10003)."
 skills:
   - maths
 topics:

@@ -6,7 +6,13 @@ offerings:
   "2026":
     - semester-2
 prerequisites:
-  subject: MIIM20001
+  any:
+    - MIIM20001
+    - all:
+        - admission: B-BMED
+          note: Bachelor of Biomedicine students
+        - subject: CHEM10006
+        - subject: BIOM20001
 corequisites: none
 non_allowed: []
 assessment:
@@ -17,9 +23,10 @@ assessment:
   - kind: exam
     weight: 55
 weekly_contact_hours: 4.5
+min_attendance: 80
 handbook: https://handbook.unimelb.edu.au/2026/subjects/miim20002
 source_year: 2026
-verified_on: 2026-10-09
+verified_on: 2026-10-13
 categories:
   B-SCI: science
 notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

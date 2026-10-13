@@ -6,7 +6,9 @@ offerings:
   "2026":
     - semester-1
     - semester-2
-prerequisites:
+prerequisites: none
+# Handbook: all of these "can be taken concurrently (at the same time) in Semester 2".
+corequisites:
   any:
     - all:
         - any:
@@ -32,7 +34,6 @@ prerequisites:
             - MAST10008
             - MAST10018
         - PHYC10002
-corequisites: none
 non_allowed: []
 assessment:
   - kind: exam
@@ -45,7 +46,7 @@ assessment:
     group: true
 handbook: https://handbook.unimelb.edu.au/2026/subjects/elen20005
 source_year: 2026
-verified_on: 2026-10-10
+verified_on: 2026-10-13
 categories:
   B-SCI: science
 notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

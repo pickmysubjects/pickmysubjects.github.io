@@ -35,7 +35,8 @@ assessment:
     group: true
 handbook: https://handbook.unimelb.edu.au/2026/subjects/bcmb20005
 source_year: 2026
-verified_on: 2026-10-09
+verified_on: 2026-10-13
+min_attendance: 80
 categories:
   B-SCI: science
 notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

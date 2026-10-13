@@ -9,6 +9,10 @@ prerequisites:
   any:
     - BCMB20002
     - MIIM20001
+    - all:
+        - admission: B-BMED
+          note: Bachelor of Biomedicine students
+        - subject: BIOM20001
 corequisites: none
 non_allowed: []
 assessment:
@@ -22,7 +26,7 @@ assessment:
     weight: 50
 handbook: https://handbook.unimelb.edu.au/2026/subjects/miim30002
 source_year: 2026
-verified_on: 2026-10-09
+verified_on: 2026-10-13
 categories:
   B-SCI: science
 notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

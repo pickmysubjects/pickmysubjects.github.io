@@ -11,11 +11,10 @@ prerequisites:
         - CHEN20010
         - MAST20029
     - all:
-        - all:
-            - CHEN20010
-            - MAST20009
-            - MAST20030
-        - ENGR30002
+        - CHEN20010
+        - MAST20009
+        - MAST20030
+# Handbook: ENGR30002 "can also be taken concurrently" in both options.
 corequisites: ENGR30002
 non_allowed:
   - BMEN30007
@@ -33,7 +32,7 @@ assessment:
 weekly_contact_hours: 5
 handbook: https://handbook.unimelb.edu.au/2026/subjects/chen30016
 source_year: 2026
-verified_on: 2026-10-10
+verified_on: 2026-10-13
 categories:
   B-SCI: science
 notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

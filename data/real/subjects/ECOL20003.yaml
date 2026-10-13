@@ -15,7 +15,7 @@ prerequisites:
         - BIOL10011
         - ENVS10001
         - BIOM10002
-    - all:
+    - any:
         - BIOL10003
         - BIOL10004
         - BIOL10005
@@ -35,7 +35,7 @@ assessment:
 weekly_contact_hours: 5
 handbook: https://handbook.unimelb.edu.au/2026/subjects/ecol20003
 source_year: 2026
-verified_on: 2026-10-10
+verified_on: 2026-10-13
 categories:
   B-SCI: science
 notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

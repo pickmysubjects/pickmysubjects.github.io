@@ -6,19 +6,18 @@ offerings:
   "2026":
     - semester-1
 prerequisites:
-  any:
-    - all:
-        - MAST20029
+  all:
+    - MAST20029
+    - any:
         - COMP20005
-    - all:
         - BMEN20003
-        - any:
-            - BIOM20002
-            - BMEN20002
-    - all:
-        - ANAT20006
-        - PHYS20008
-    - manual: Equivalent
+    - any:
+        - BIOM20002
+        - BMEN20002
+        - all:
+            - ANAT20006
+            - PHYS20008
+        - manual: Equivalent
 corequisites: none
 non_allowed:
   - BMEN30005
@@ -38,13 +37,13 @@ assessment:
   - kind: exam
     weight: 50
     hurdle: true
-weekly_contact_hours: 4
+weekly_contact_hours: 5
 handbook: https://handbook.unimelb.edu.au/2026/subjects/bmen30010
 source_year: 2026
-verified_on: 2026-10-10
+verified_on: 2026-10-13
 categories:
   B-SCI: science
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. ANAT20006 and PHYS20008 may also be taken at the same time as this subject."
 skills:
   - maths
   - lab

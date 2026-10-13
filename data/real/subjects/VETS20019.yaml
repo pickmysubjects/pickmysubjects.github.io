@@ -16,7 +16,24 @@ prerequisites:
     - all:
         - BIOL10004
         - BIOL10005
-corequisites: none
+    - all:
+        - admission: B-BMED
+          note: Bachelor of Biomedicine students
+        - BIOL10002
+        - CHEM10006
+        - BIOM10002
+corequisites:
+  any:
+    - BIOM20001
+    - all:
+        - BIOL10008
+        - BIOL10010
+    - all:
+        - BIOL10009
+        - BIOL10011
+    - all:
+        - BIOL10004
+        - BIOL10005
 non_allowed: []
 assessment:
   - kind: report
@@ -28,10 +45,10 @@ assessment:
 weekly_contact_hours: 5
 handbook: https://handbook.unimelb.edu.au/2026/subjects/vets20019
 source_year: 2026
-verified_on: 2026-10-10
+verified_on: 2026-10-13
 categories:
   B-SCI: science
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Biomedicine route: BIOM20001 may be taken at the same time."
 skills:
   - writing
 topics:

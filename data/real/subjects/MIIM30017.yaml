@@ -9,6 +9,14 @@ prerequisites:
   any:
     - BCMB20002
     - MIIM20001
+    - all:
+        - admission: B-BMED
+          note: Bachelor of Biomedicine students
+        - subject: BIOM20001
+    - all:
+        - admission: B-AGR
+          note: Bachelor of Agriculture students
+        - subject: MIIM20004
 corequisites: none
 non_allowed: []
 assessment:
@@ -18,9 +26,10 @@ assessment:
     weight: 40
   - kind: assignment
     weight: 20
+min_attendance: 80
 handbook: https://handbook.unimelb.edu.au/2026/subjects/miim30017
 source_year: 2026
-verified_on: 2026-10-09
+verified_on: 2026-10-13
 categories:
   B-SCI: science
 notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
