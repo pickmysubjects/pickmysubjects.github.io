@@ -1,0 +1,12 @@
+id: agricultural-science
+course: B-SCI
+year: 2026
+kind: major
+title: Agricultural Science
+points: 50
+requirements:
+  - all: [AGRI30038]
+  - choose: { points: 37.5, from: [AGRI30042, AGRI30016, AGRI30037, AGRI30045, AGRI30048, AGRI30046, ANSC30006] }
+# Source: the 2026 Handbook page for this major under the Bachelor of Science Advanced (Honours);
+# B-SCI lists the same major (50 points).
+verified_on: 2026-10-13 # structure; source: 2026 Handbook, checked
