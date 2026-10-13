@@ -6,13 +6,12 @@ offerings:
   "2026":
     - semester-2
 prerequisites:
-  any:
+  all:
     - any:
         - ELEN20006
         - ELEN30014
-    - all:
         - ELEN30010
-        - ELEN20005
+    - ELEN20005
 corequisites: none
 non_allowed:
   - ELEN30006
@@ -34,10 +33,10 @@ assessment:
 weekly_contact_hours: 6
 handbook: https://handbook.unimelb.edu.au/2026/subjects/elen30013
 source_year: 2026
-verified_on: 2026-10-10
+verified_on: 2026-10-13
 categories:
   B-SCI: science
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Read from the Handbook layout: ELEN30010 (an older subject) is a third option beside ELEN20006 and ELEN30014, and ELEN20005 is needed either way."
 skills:
   - lab
   - design

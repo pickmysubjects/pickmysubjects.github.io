@@ -10,20 +10,26 @@ corequisites: none
 non_allowed: []
 assessment:
   - kind: assignment
-    weight: 30
+    weight: 20
   - kind: test
     weight: 25
+  - kind: assignment
+    weight: 5
+    group: true
+  - kind: presentation
+    weight: 5
+    group: true
   - kind: exam
     weight: 45
-weekly_contact_hours: 2
+weekly_contact_hours: 6
+min_attendance: 80
 handbook: https://handbook.unimelb.edu.au/2026/subjects/mast10015
 source_year: 2026
-categories:
-  B-SCI: science
+categories: {}
 skills:
   - maths
 topics:
   - mathematics
   - calculus
-verified_on: 2026-10-08
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Follows MAST10014 in the Extended degrees."
+verified_on: 2026-10-13
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Follows MAST10014. Only for students in the Bachelor of Science (Extended) or Bachelor of Arts (Extended), so not available in the standard B-SCI."
