@@ -4,7 +4,7 @@ import { BookOpen } from 'lucide-vue-next'
 import LangMenu from './LangMenu.vue'
 import AppLogo from '../AppLogo.vue'
 import SubjectSearch from '../SubjectSearch.vue'
-import { NAV_ITEMS } from './nav'
+import { MY_STEPS, NAV_ITEMS } from './nav'
 import type { View } from '@/composables/useView'
 import { useI18n } from '@/i18n'
 
@@ -31,6 +31,18 @@ const { t } = useI18n()
           <component :is="item.icon" :size="16" aria-hidden="true" />
           {{ t(item.key) }}
         </a>
+        <!-- Inside "Me": its three steps, right next to it. -->
+        <span v-if="MY_STEPS.some((x) => x.view === view)" class="nav-steps">
+          <a
+            v-for="(s, i) in MY_STEPS"
+            :key="s.view"
+            class="nav-step"
+            :href="link(s.view)"
+            :aria-current="view === s.view ? 'step' : undefined"
+          >
+            <span class="nav-step-n" aria-hidden="true">{{ i + 1 }}</span>{{ t(s.key) }}
+          </a>
+        </span>
       </nav>
       <div class="tools">
         <SubjectSearch v-if="view !== 'home'" class="header-search" compact />
@@ -112,6 +124,53 @@ const { t } = useI18n()
   border-radius: 999px;
   background: var(--glass-fill);
   box-shadow: var(--glass-shadow);
+}
+
+.nav-steps {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  margin-left: 4px;
+  padding-left: 6px;
+  border-left: 1px solid var(--glass-edge);
+}
+
+.nav-step {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 10px;
+  font-size: 0.875rem;
+  color: var(--ink-soft);
+  white-space: nowrap;
+  text-decoration: none;
+  border-radius: 999px;
+}
+
+.nav-step:hover {
+  color: var(--ink);
+}
+
+.nav-step[aria-current='step'] {
+  font-weight: 650;
+  color: var(--ink);
+  background: var(--glass-fill-hover);
+}
+
+.nav-step-n {
+  display: inline-grid;
+  place-items: center;
+  width: 16px;
+  height: 16px;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: #fff;
+  background: var(--ink-soft);
+  border-radius: 999px;
+}
+
+.nav-step[aria-current='step'] .nav-step-n {
+  background: var(--overprint);
 }
 
 .nav-link {

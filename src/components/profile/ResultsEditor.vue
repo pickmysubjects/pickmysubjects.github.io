@@ -277,4 +277,45 @@ function remove(c: string): void {
 .fail-hint a {
   color: var(--bad);
 }
+
+/* Phones: each subject as its own block, name on top, then the mark and its two actions, so
+   nothing hides off to the side. */
+@media (max-width: 520px) {
+  .table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+
+  .table,
+  .table tbody {
+    display: block;
+    width: 100%;
+  }
+
+  .table tr {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 8px 10px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .table td {
+    display: block;
+    padding: 0;
+    border: 0;
+  }
+
+  .table td:first-child {
+    grid-column: 1 / -1;
+  }
+
+  .row-actions {
+    justify-self: end;
+  }
+}
 </style>

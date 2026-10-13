@@ -25,6 +25,7 @@ const skills = computed({ get: () => profile.value.skills, set: setSkills })
 const interests = computed({ get: () => profile.value.interests, set: setInterests })
 const { t } = useI18n()
 const options = computed(() => subjectList.value.map((s) => ({ code: s.code, title: s.title })))
+const ratedSkills = computed(() => Object.keys(profile.value.skills).length)
 
 const restoreFailed = shallowRef(false)
 async function onRestore(event: Event): Promise<void> {
@@ -44,24 +45,52 @@ async function onRestore(event: Event): Promise<void> {
     <section class="record-intro">
       <h1 class="record-title">{{ t('record.title') }}</h1>
       <p class="record-lede">{{ t('record.lede') }}</p>
-      <!-- UniMelb shows the official WAM; here it only feeds the predictions. -->
-      <p v-if="wam !== null" class="wam-line">
-        {{ t('record.wamLine', { wam }) }}
-        <a :href="link('guide')">{{ t('guide.wamWhat') }}</a>
-      </p>
-    </section>
-    <DegreeCard class="record-degree" />
-    <section class="interests goal-card surface">
-      <GoalPicker :note="t('record.goalNote')" />
-      <WorkHours class="goal-work" />
+      <!-- At a glance: what's filled in so far. UniMelb shows the official WAM; this one only feeds predictions. -->
+      <ul class="summary">
+        <li v-if="wam !== null">{{ t('record.sumWam', { wam }) }} <a :href="link('guide')">{{ t('guide.wamWhat') }}</a></li>
+        <li :class="{ empty: !results.length }">{{ t('record.sumSubjects', { n: results.length }) }}</li>
+        <li :class="{ empty: !ratedSkills }">{{ t('record.sumSkills', { n: ratedSkills }) }}</li>
+        <li :class="{ empty: !interests.length }">{{ t('record.sumInterests', { n: interests.length }) }}</li>
+      </ul>
     </section>
 
-    <div class="record-body">
-      <div class="record-col">
-        <ResultsEditor class="results-card surface" v-model="results" :subjects="data.subjects" :options="options" />
-        <GradeShare />
+    <div class="record-layout">
+      <div class="record-main">
+        <section class="block">
+          <p class="block-step">{{ t('record.step', { n: 1 }) }} · {{ t('record.step1') }}</p>
+          <div class="block-card surface">
+            <DegreeCard class="flat" />
+            <div class="block-part"><GoalPicker :note="t('record.goalNote')" /></div>
+            <div class="block-part"><WorkHours /></div>
+          </div>
+        </section>
+
+        <section class="block">
+          <p class="block-step">{{ t('record.step', { n: 2 }) }} · {{ t('record.step2') }}</p>
+          <div class="block-card surface">
+            <ResultsEditor v-model="results" :subjects="data.subjects" :options="options" />
+          </div>
+          <GradeShare />
+        </section>
+
+        <section class="block">
+          <p class="block-step">{{ t('record.step', { n: 3 }) }} · {{ t('record.step3') }}</p>
+          <SkillsEditor v-model:skills="skills" />
+        </section>
+
+        <section class="block">
+          <p class="block-step">{{ t('record.step', { n: 4 }) }} · {{ t('record.step4') }}</p>
+          <div class="block-card surface">
+            <TopicChips v-model="interests" :topics="topics" :first-groups="3" />
+          </div>
+        </section>
+
+        <p class="next">
+          <a class="button button-accent" :href="link('plan')">{{ t('record.next') }} <ArrowRight :size="16" aria-hidden="true" /></a>
+        </p>
       </div>
-      <div class="record-col">
+
+      <aside class="record-side">
         <SuggestionPreview />
         <WamGoal />
         <section class="backup surface">
@@ -80,21 +109,8 @@ async function onRestore(event: Event): Promise<void> {
             </label>
           </div>
         </section>
-      </div>
+      </aside>
     </div>
-
-    <SkillsEditor v-model:skills="skills" />
-
-    <section class="interests surface" aria-labelledby="interests-title">
-      <header>
-        <h2 id="interests-title" class="interests-title">{{ t('record.interestsTitle') }}</h2>
-      </header>
-      <TopicChips v-model="interests" :topics="topics" />
-    </section>
-
-    <p class="next">
-      <a class="button button-accent" :href="link('plan')">{{ t('record.next') }} <ArrowRight :size="16" aria-hidden="true" /></a>
-    </p>
   </div>
 </template>
 
@@ -104,58 +120,142 @@ async function onRestore(event: Event): Promise<void> {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: 24px;
-  max-width: 1100px;
+  max-width: 1180px;
 }
-
 
 .record-lede {
   margin: 8px 0 0;
   color: var(--ink-soft);
 }
 
-
-.wam-line {
-  margin-top: 8px;
-  font-size: 0.875rem;
-  color: var(--ink-soft);
+.summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
 }
 
-.record-col {
+.summary li {
+  padding: 5px 12px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--ink);
+  border: 1px solid var(--glass-edge);
+  border-radius: 999px;
+  background: var(--glass-fill);
+}
+
+.summary li.empty {
+  font-weight: 500;
+  color: var(--ink-soft);
+  border-style: dashed;
+  background: none;
+}
+
+.summary a {
+  margin-left: 4px;
+  font-weight: 500;
+}
+
+/* Main column of numbered steps; a side column with live suggestions and tools. */
+.record-layout {
   display: grid;
-  gap: 20px;
-  align-content: start;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 340px);
+  gap: 28px;
+  align-items: start;
+}
+
+.record-main {
+  display: grid;
+  gap: 28px;
+  min-width: 0;
+}
+
+.record-side {
+  position: sticky;
+  top: 84px;
+  display: grid;
+  gap: 18px;
+  min-width: 0;
+}
+
+.block {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+
+.block-step {
+  margin: 0;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--overprint);
+}
+
+.block-card {
+  display: grid;
+  gap: 22px;
+  min-width: 0;
+  padding: 20px 22px;
+}
+
+/* The step label above already names these cards: their own headings stay for screen readers only. */
+.block :deep(#results-title),
+.block :deep(#skills-title) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Whatever sits in a step card stays within its width (a wide table scrolls inside instead). */
+.block-card > :deep(*) {
+  min-width: 0;
+}
+
+/* The degree card sits flat inside step 1's card. */
+.block-card :deep(.flat) {
+  padding: 0;
+  border: 0;
+  background: none;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+.block-part {
+  min-width: 0;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+
+.block-part :deep(.goal-label),
+.block-part :deep(.work-label) {
+  margin-bottom: 6px;
+  font-size: 1rem;
+  font-weight: 650;
+  color: var(--ink);
+}
+
+.block-part :deep(.seg) {
+  max-width: 520px;
 }
 
 .next {
   display: flex;
   justify-content: flex-end;
-}
-
-.interests {
-  display: grid;
-  gap: 14px;
-  padding: 20px 22px;
-}
-
-.interests-title {
-  font-size: 1.05rem;
-  font-weight: 650;
-}
-
-.interests-hint {
-  margin-top: 4px;
-  font-size: 0.875rem;
-  color: var(--ink-soft);
-}
-
-.results-card {
-  padding: 20px 22px;
+  margin: 0;
 }
 
 .backup {
   display: grid;
   gap: 12px;
-  padding: 18px 22px;
+  padding: 18px 20px;
 }
 
 .backup-title {
@@ -165,7 +265,7 @@ async function onRestore(event: Event): Promise<void> {
 
 .backup-text {
   margin-top: 4px;
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
   color: var(--ink-soft);
 }
 
@@ -181,45 +281,14 @@ async function onRestore(event: Event): Promise<void> {
   gap: 8px;
 }
 
-.record-degree {
-  margin-bottom: 0;
-}
-
-.record-body {
-  display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
-  gap: 24px;
-  align-items: start;
-}
-
-@media (max-width: 860px) {
-  .record-body {
+/* One column: the steps first, then suggestions and tools. */
+@media (max-width: 960px) {
+  .record-layout {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  /* One column on a phone: the backup goes last, after suggestions and strengths. */
-  .record-col {
-    display: contents;
+  .record-side {
+    position: static;
   }
-
-  .backup {
-    order: 1;
-  }
-}
-
-.goal-work {
-  margin-top: 18px;
-}
-
-/* Same heading size as the other cards; the three choices stay a comfortable width. */
-.goal-card :deep(.goal-label) {
-  margin-bottom: 6px;
-  font-size: 1.05rem;
-  font-weight: 650;
-  color: var(--ink);
-}
-
-.goal-card :deep(.seg) {
-  max-width: 520px;
 }
 </style>

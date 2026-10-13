@@ -84,4 +84,15 @@ const BUCKETS = [0, 5, 15, 25] as const
   font-size: 0.8125rem;
   color: var(--ink-soft);
 }
+
+/* Narrow screens: the choices share the width instead of pushing it wider. */
+@media (max-width: 480px) {
+  .seg button {
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 6px 4px;
+    font-size: 0.875rem;
+    white-space: normal;
+  }
+}
 </style>

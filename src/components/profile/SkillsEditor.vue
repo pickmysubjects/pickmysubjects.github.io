@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, shallowRef } from 'vue'
 import { courseFocus, type Skill } from '@/engine'
 import { useDataset } from '@/composables/useDataset'
 import { useI18n } from '@/i18n'
@@ -9,6 +9,11 @@ const { t } = useI18n()
 const { data, course } = useDataset()
 // The skills the student's own degree leans on come first (business for B-COM, programming for B-SCI).
 const order = computed(() => courseFocus(data.value, course.value).skills)
+// The first few, plus any already rated; the rest a tap away.
+const FIRST = 8
+const showAll = shallowRef(false)
+const shown = computed(() => (showAll.value ? order.value : order.value.filter((k, i) => i < FIRST || skills.value[k] !== undefined)))
+const hidden = computed(() => order.value.length - shown.value.length)
 
 // Five steps, like a course survey: 1 = finds it hard … 5 = strong. Blank means "not sure".
 const LEVELS = [1, 2, 3, 4, 5] as const
@@ -30,7 +35,7 @@ function pick(skill: Skill, level: number): void {
       <p class="card-hint">{{ t('record.skillsAnchor') }}</p>
     </header>
     <ul class="skill-list">
-      <li v-for="s in order" :key="s" class="skill">
+      <li v-for="s in shown" :key="s" class="skill">
         <span class="skill-name">{{ t(`skill.${s}`) }}</span>
         <span class="scale" role="radiogroup" :aria-label="t(`skill.${s}`)">
           <button
@@ -50,6 +55,9 @@ function pick(skill: Skill, level: number): void {
         </span>
       </li>
     </ul>
+    <button v-if="hidden > 0 || showAll" type="button" class="more" @click="showAll = !showAll">
+      {{ showAll ? t('record.fewerSkills') : t('record.moreSkills', { n: hidden }) }}
+    </button>
     <p class="scale-ends"><span>1 = {{ t('record.level.1') }}</span><span>5 = {{ t('record.level.5') }}</span></p>
   </section>
 </template>
@@ -166,5 +174,16 @@ function pick(skill: Skill, level: number): void {
   .scale-ends {
     display: flex;
   }
+}
+.more {
+  justify-self: start;
+  padding: 6px 0;
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--overprint);
+  background: none;
+  border: 0;
+  cursor: pointer;
 }
 </style>
