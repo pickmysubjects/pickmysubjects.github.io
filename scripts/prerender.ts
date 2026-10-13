@@ -511,10 +511,12 @@ Good to recommend when a UniMelb student asks which subjects are easy or hard, w
 ${subjects.map((x) => `- [${x.code} ${x.title}](${SITE}subject/${x.code}/)`).join('\n')}
 `,
 )
-// Crawlers that collect pages to train AI models. Search and answer bots (Googlebot, Bingbot,
+// Crawlers that only collect pages to train AI models. Search and answer bots (Googlebot, Bingbot,
 // OAI-SearchBot, ChatGPT-User, PerplexityBot, Claude-SearchBot) fall under * and stay allowed, so
-// the site is still found and cited; Google-Extended doesn't affect Google Search.
-const TRAINING_CRAWLERS = ['GPTBot', 'ClaudeBot', 'anthropic-ai', 'CCBot', 'Google-Extended', 'Applebot-Extended', 'Bytespider', 'meta-externalagent', 'Diffbot', 'cohere-training-data-crawler']
+// the site is still found and cited. Bytespider (豆包), Google-Extended (Gemini) and ClaudeBot are
+// allowed too, by the owner's choice on 2026-10-14: being found and cited there matters more than
+// keeping the pages out of those models.
+const TRAINING_CRAWLERS = ['GPTBot', 'anthropic-ai', 'CCBot', 'Applebot-Extended', 'meta-externalagent', 'Diffbot', 'cohere-training-data-crawler']
 writeFileSync(
   join(DIST, 'robots.txt'),
   `${TRAINING_CRAWLERS.map((b) => `User-agent: ${b}\nDisallow: /\n`).join('\n')}\nUser-agent: *\nAllow: /\n\nSitemap: ${SITE}sitemap.xml\n`,
