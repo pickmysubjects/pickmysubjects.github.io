@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import MySteps from '@/components/layout/MySteps.vue'
 import { computed, shallowRef } from 'vue'
 import { recommend, yearLevel, passedCodes } from '@/engine'
 import { useI18n } from '@/i18n'
@@ -66,6 +67,7 @@ function value(event: Event): string {
 
 <template>
   <div class="suggest">
+    <MySteps />
     <section class="suggest-intro">
       <h1 class="suggest-title">{{ t('suggest.title') }}</h1>
       <p class="suggest-lede">{{ t('suggest.lede') }}</p>

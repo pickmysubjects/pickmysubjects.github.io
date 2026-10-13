@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import MySteps from '@/components/layout/MySteps.vue'
 import { link } from '@/composables/useView'
 import { computed, shallowRef } from 'vue'
 import { CircleCheck, Pencil, RotateCcw, TriangleAlert } from 'lucide-vue-next'
@@ -154,6 +155,7 @@ function finishWizard(setup: PlanSetup): void {
 
 <template>
   <div class="planner">
+    <MySteps />
     <section class="intro">
       <h1 class="page-title">{{ t('plan.title') }}</h1>
       <template v-if="showWizard">
