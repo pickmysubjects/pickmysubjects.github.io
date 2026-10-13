@@ -41,6 +41,11 @@ npm run typecheck
 - UI: Vue 3 `<script setup>`. Keep it simple and plain-language. Check it in the browser, including at phone width.
 - Code comments are in English.
 
+### Licensing your contribution
+
+- Code contributions are licensed under [AGPL-3.0](LICENSE); data contributions under [CC BY-NC-SA 4.0](data/LICENSE.md).
+- By contributing you also grant the project's maintainer a perpetual, non-exclusive licence to use your contribution, including under other licences, so the project keeps its options.
+
 ### Good first tasks
 
 - Curate a subject that `npm run data` lists as "referenced but not curated".

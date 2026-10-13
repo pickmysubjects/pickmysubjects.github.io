@@ -69,7 +69,7 @@ Design notes: [docs/design.md](docs/design.md). How other universities' student 
 
 ## Licence
 
-- Code: [MIT](LICENSE).
+- Code: [AGPL-3.0](LICENSE), © 2026 PickMySubjects contributors. If you run a modified version as a website or app, you must publish its source under the same licence. Versions published before 2026-10-13 were MIT, and that licence still applies to those copies.
 - Curated data and aggregated ratings: [CC BY-NC-SA 4.0](data/LICENSE.md) (non-commercial; ask for commercial use).
 
 University of Melbourne Handbook text is the University's copyright and is not reproduced here.
