@@ -7,7 +7,7 @@ import { PERIODS, SKILLS, type Profile } from '@/engine'
  */
 const isObject = (x: unknown): x is Record<string, unknown> => typeof x === 'object' && x !== null && !Array.isArray(x)
 const strings = (x: unknown): string[] => (Array.isArray(x) ? x.filter((v): v is string => typeof v === 'string') : [])
-const GOALS = ['wam', 'balanced', 'challenge'] as const
+const GOALS = ['wam', 'balanced', 'challenge', 'easy'] as const
 
 export function cleanProfile(x: unknown): Profile {
   const p = isObject(x) ? x : {}

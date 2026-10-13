@@ -1,13 +1,16 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import type { Goal } from '@/engine'
 import { useProfile } from '@/composables/useProfile'
 import { useI18n } from '@/i18n'
 
 /** What the student wants most right now. One setting, shared by suggestions and the plan builder. */
-defineProps<{ note?: string }>()
+const props = defineProps<{ note?: string; withEasy?: boolean }>()
 const { profile, setGoal } = useProfile()
 const { t } = useI18n()
-const goals: Goal[] = ['wam', 'balanced', 'challenge']
+// "Marks only" lives on the suggestions page; elsewhere it reads as protecting a WAM.
+const goals = computed<Goal[]>(() => (props.withEasy ? ['wam', 'balanced', 'challenge', 'easy'] : ['wam', 'balanced', 'challenge']))
+const current = computed<Goal>(() => (!props.withEasy && profile.value.goal === 'easy' ? 'wam' : profile.value.goal))
 </script>
 
 <template>
@@ -18,14 +21,14 @@ const goals: Goal[] = ['wam', 'balanced', 'challenge']
         v-for="g in goals"
         :key="g"
         type="button"
-        :aria-pressed="profile.goal === g"
+        :aria-pressed="current === g"
         :title="t(`suggest.goals.${g}Hint`)"
         @click="setGoal(g)"
       >
         {{ t(`suggest.goals.${g}`) }}
       </button>
     </div>
-    <p class="goal-hint">{{ t(`suggest.goals.${profile.goal}Hint`) }}</p>
+    <p class="goal-hint">{{ t(`suggest.goals.${current}Hint`) }}</p>
     <p v-if="note" class="goal-hint">{{ note }}</p>
   </fieldset>
 </template>
@@ -49,6 +52,7 @@ const goals: Goal[] = ['wam', 'balanced', 'challenge']
 
 .seg {
   display: flex;
+  flex-wrap: wrap;
   gap: 2px;
   padding: 3px;
   background: color-mix(in srgb, var(--ink) 6%, transparent);

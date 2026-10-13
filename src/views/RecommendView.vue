@@ -75,7 +75,7 @@ function value(event: Event): string {
 
     <template v-if="hasProfile">
       <form class="filters" @submit.prevent>
-        <GoalPicker />
+        <GoalPicker with-easy />
         <label class="field">
           <span class="field-label">{{ t('suggest.kind') }}</span>
           <select class="select-glass" :value="category" @change="category = value($event)">

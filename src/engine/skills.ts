@@ -55,6 +55,9 @@ function inferred(s: Subject, data: Dataset | undefined): Skill[] {
   if (BUSINESS_AREAS.has(area)) out.add('business')
   // Econometrics is applied statistics.
   if (area === 'ECOM') out.add('maths').add('statistics')
+  // Finance is built on financial maths, and economics past first year on mathematical models:
+  // the quantitative side of commerce, as opposed to its written and case-based side.
+  if (area === 'FNCE' || (area === 'ECON' && s.level >= 2)) out.add('maths')
   for (const [skill, rx] of Object.entries(TITLE) as [Skill, RegExp][]) if (rx.test(s.title)) out.add(skill)
   const tasks = s.assessment ?? []
   // Reports (talks at half weight) worth a fifth of the mark: written work is a real part of it.

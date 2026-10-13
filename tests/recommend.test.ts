@@ -63,15 +63,15 @@ describe('recommend (demo data)', () => {
     expect(recs[0]?.code).toBe('EXCS30001')
     const text = recs[0]?.reasons.map((n) => n.text).join(' ') ?? ''
     expect(text).toMatch(/interested in/)
-    expect(text).toMatch(/averaged/)
+    expect(text).toMatch(/similar subjects/)
     expect(text).toMatch(/Opens up EXCS30007/)
   })
 
   it('treats weak related marks as a warning, not a reason', () => {
     const recs = recommend(data, { ...base, results: [{ code: 'EXMA10001', mark: 45 }] })
     const linAlg = recs.find((r) => r.code === 'EXMA10002') // same area, no prerequisites
-    expect(linAlg?.reasons.map((n) => n.text).join(' ')).not.toMatch(/averaged/)
-    expect(linAlg?.warnings.map((n) => n.text).join(' ')).toMatch(/averaged only 45/)
+    expect(linAlg?.reasons.map((n) => n.text).join(' ')).not.toMatch(/similar subjects/)
+    expect(linAlg?.warnings.map((n) => n.text).join(' ')).toMatch(/point to about 45/)
   })
 
   it('warns when the student is weak in a skill the subject leans on', () => {

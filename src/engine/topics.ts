@@ -7,7 +7,7 @@ export const TOPIC_GROUPS: { id: string; topics: Topic[] }[] = [
     topics: ['programming', 'algorithms', 'software-engineering', 'ai', 'machine-learning', 'data-science', 'databases', 'security', 'systems', 'graphics', 'theory'],
   },
   { id: 'maths', topics: ['mathematics', 'calculus', 'linear-algebra', 'pure-maths', 'probability', 'statistics', 'optimisation', 'modelling'] },
-  { id: 'business', topics: ['economics', 'finance', 'accounting', 'marketing', 'law', 'business'] },
+  { id: 'business', topics: ['economics', 'finance', 'accounting', 'marketing', 'management', 'human-resources', 'supply-chain', 'entrepreneurship', 'actuarial', 'law', 'business'] },
   { id: 'science', topics: ['biology', 'ecology', 'chemistry', 'physics', 'earth-science', 'geography', 'environment', 'psychology'] },
   { id: 'applied', topics: ['engineering', 'health', 'agriculture'] },
   { id: 'arts', topics: ['languages', 'design', 'ethics', 'philosophy', 'history', 'science-communication'] },
@@ -18,14 +18,14 @@ export const TOPIC_GROUPS: { id: string; topics: Topic[] }[] = [
  * (most of them). Coarse on purpose: it says "this is a biology subject", not which part.
  */
 const AREA_TOPICS: Record<string, Topic[]> = {
-  ACCT: ['accounting'], BLAW: ['law'], BUSA: ['business', 'data-science'], CMCE: ['business'], ECOM: ['statistics', 'economics'], ACTL: ['finance', 'statistics'], AGRI: ['agriculture'], ANAT: ['health', 'biology'], ANSC: ['agriculture', 'biology'],
+  ACCT: ['accounting'], BLAW: ['law'], BUSA: ['business', 'data-science'], CMCE: ['business'], ECOM: ['statistics', 'economics'], ACTL: ['actuarial', 'statistics'], AGRI: ['agriculture'], ANAT: ['health', 'biology'], ANSC: ['agriculture', 'biology'],
   ATOC: ['earth-science'], BCMB: ['biology', 'chemistry'], BIOL: ['biology'], BIOM: ['health', 'biology'], BMEN: ['engineering', 'health'],
   BOTA: ['ecology', 'biology'], BTCH: ['biology'], CEDB: ['engineering'], CHEM: ['chemistry'], CHEN: ['engineering', 'chemistry'],
   COMP: ['programming'], CVEN: ['engineering'], ECOL: ['ecology', 'environment'], ECON: ['economics'], ELEN: ['engineering'],
   ENEN: ['engineering', 'environment'], ENGR: ['engineering'], ENST: ['environment'], ENVS: ['environment'], ERTH: ['earth-science'],
   EVSC: ['environment'], FNCE: ['finance'], FOOD: ['agriculture', 'chemistry'], FRST: ['ecology', 'environment'], GENE: ['biology'],
   GEOG: ['geography'], GEOL: ['earth-science'], GEOM: ['geography', 'engineering'], HORT: ['agriculture'], LAWS: ['law'],
-  MAST: ['mathematics'], MCEN: ['engineering'], MGMT: ['business'], MIIM: ['health', 'biology'], MKTG: ['marketing'],
+  MAST: ['mathematics'], MCEN: ['engineering'], MGMT: ['management'], MIIM: ['health', 'biology'], MKTG: ['marketing'],
   NEUR: ['health', 'psychology'], NUTR: ['health'], OPTO: ['health'], PATH: ['health', 'biology'], PHRM: ['health', 'chemistry'],
   PHYC: ['physics'], PHYS: ['health', 'biology'], PSYC: ['psychology'], SWEN: ['software-engineering', 'programming'],
   VETS: ['agriculture', 'biology'], ZOOL: ['ecology', 'biology'],
@@ -65,11 +65,16 @@ const LEX: Record<string, RegExp> = {
   optimisation: /optimi[sz]|operations research|decision making|linear programming/i,
   modelling: /model(?:l)?ing|simulation|numerical/i,
   economics: /economic|microeconomic|macroeconomic|markets?\b/i,
-  finance: /financ|investment|actuarial/i,
+  finance: /financ|investment|valuation|derivative|asset pricing|trading/i,
+  actuarial: /actuar|insurance|survival models|life contingenc|risk management/i,
   accounting: /accounting/i,
   marketing: /marketing/i,
   law: /\blaw\b|legal/i,
-  business: /business|management|commerce/i,
+  business: /business|commerce/i,
+  management: /management|managing|manager|organi[sz]ation|leadership|consulting|strateg/i,
+  'human-resources': /human resource|employ|workforce|future of work|your career|labour relations/i,
+  'supply-chain': /supply chain|logistics|procurement|operations management|(?:&|and) operations/i,
+  entrepreneurship: /entrepreneur|innovation|start.?up|venture/i,
   biology: /biolog|cells?\b|genetic|genom|organism|ecolog|physiolog|anatom|microb|immun|zoolog|plant|animal|neuro|patholog|disease/i,
   chemistry: /chemi|molecul|reaction|organic|biochem/i,
   physics: /physic|quantum|mechanics|electromagnet|thermodynamic|relativity/i,
@@ -87,6 +92,12 @@ const LEX: Record<string, RegExp> = {
 const AREA_GROUP: Record<string, string> = {
   COMP: 'computing', SWEN: 'computing', INFO: 'computing', MAST: 'maths', ACTL: 'maths',
   ECON: 'business', FNCE: 'business', ACCT: 'business', MKTG: 'business', BLAW: 'business', MGMT: 'business',
+  BUSA: 'business', CMCE: 'business', ECOM: 'business',
+}
+
+/** The field a subject's area belongs to: computing, maths, business, or the area itself (PSYC, CHEM…). */
+export function areaField(area: string): string {
+  return AREA_GROUP[area] ?? area
 }
 const COMMERCE = new Set(['ECON', 'FNCE', 'ACCT', 'MKTG', 'BLAW', 'MGMT', 'ACTL'])
 const COMPUTING = new Set(['COMP', 'SWEN', 'INFO'])

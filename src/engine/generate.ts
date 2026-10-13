@@ -872,7 +872,7 @@ function rankElectives<T extends { code: string; score: number; eligibility: Tri
     if (!heavy.has(r.code)) heavy.set(r.code, loadsUp(r.code))
     // Protecting a WAM: a subject that makes its semester heavier costs twice as much; out to
     // challenge themselves: half.
-    const cost = HEAVY_PICK_COST * (profile.goal === 'wam' ? 2 : profile.goal === 'challenge' ? 0.5 : 1)
+    const cost = HEAVY_PICK_COST * (profile.goal === 'wam' || profile.goal === 'easy' ? 2 : profile.goal === 'challenge' ? 0.5 : 1)
     return r.score - (heavy.get(r.code) ? cost : 0)
   }
   // A free choice leaning on the student's weak spot only when nothing else fits: stacked

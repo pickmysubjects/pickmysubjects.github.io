@@ -3,13 +3,15 @@ import { offeredIn, periodsFor } from './availability'
 import { evaluateField, referencedSubjects, type Tri } from './expr'
 import type { Note, Params } from './plan'
 import type { Dataset, Period, Skill, Subject } from './schema'
+import { predictMark } from './predict'
 import { skillsOf } from './skills'
 import { termStress } from './termStress'
 import { planRoles } from './roles'
-import { homeTopics, relatedTopics, topicsOf } from './topics'
+import { areaField, homeTopics, relatedTopics, topicsOf } from './topics'
 
 
-export type Goal = 'wam' | 'balanced' | 'challenge'
+/** 'easy': marks only, whatever the subject is about (the "easiest H1" list). */
+export type Goal = 'wam' | 'balanced' | 'challenge' | 'easy'
 
 export interface Profile {
   /**
@@ -70,6 +72,9 @@ export interface RecommendOptions {
 export const HEAVY_PICK_COST = 6
 /** Enough to put the major's own subjects and the way into them above unrelated ones of similar fit; no more than a real mismatch costs. */
 export const PROGRAMME_BONUS = 12
+/** Subjects done before the student's own choices start to count, and how much they move a score. */
+const PAST_CHOICES_MIN = 4
+const PAST_CHOICE_NUDGE = 4
 /** How far a subject two levels below the student's year drops (one level below: half). */
 export const BEHIND_LEVEL_COST = 8
 /** A subject that uses a skill rated 1 (2 counts half), with none of the student's interests. */
@@ -79,16 +84,18 @@ export const OFF_TOPIC_CHALLENGE_COST = 10
 const STRESS_RANK = { ok: 0, heavy: 1, veryHeavy: 2 } as const
 
 /** What each goal is mostly about; unknown, these count as neutral instead of being left out. */
-const CORE: Record<Goal, Signal[]> = { wam: ['ease', 'predicted'], balanced: [], challenge: ['opens'] }
+const CORE: Record<Goal, Signal[]> = { wam: ['ease', 'predicted'], balanced: [], challenge: ['opens'], easy: ['ease', 'predicted'] }
 
 /**
  * What each goal weighs. "Protect my WAM": easy to do well in, above all. "Challenge": hard to
  * score in but useful later (many subjects build on it), and what interests you.
  */
 const WEIGHTS: Record<Goal, Record<Signal, number>> = {
-  wam: { ease: 0.5, predicted: 0.25, skillFit: 0.1, interest: 0.1, unlocks: 0, opens: 0.05, hardness: 0 },
+  // A high WAM: easy marking and the student's own likely mark count about the same.
+  wam: { ease: 0.4, predicted: 0.4, skillFit: 0.05, interest: 0.1, unlocks: 0, opens: 0.05, hardness: 0 },
   balanced: { ease: 0.2, predicted: 0.2, skillFit: 0.2, interest: 0.3, unlocks: 0.1, opens: 0, hardness: 0 },
   challenge: { ease: 0, predicted: 0.05, skillFit: 0.1, interest: 0.3, unlocks: 0.15, opens: 0.15, hardness: 0.25 },
+  easy: { ease: 0.6, predicted: 0.4, skillFit: 0, interest: 0, unlocks: 0, opens: 0, hardness: 0 },
 }
 
 type Signal = 'ease' | 'predicted' | 'skillFit' | 'interest' | 'unlocks' | 'opens' | 'hardness'
@@ -110,8 +117,6 @@ const INTEREST_RELATED = 0.55
 /** No match: nothing known about it, a broad area-implied mismatch, a tagged mismatch. */
 const INTEREST_UNKNOWN = 0.3
 const INTEREST_INFERRED_MISS = 0.2
-/** How many related marks it takes before they outweigh the overall WAM (Bayesian shrinkage). */
-const MARK_PRIOR_WEIGHT = 2
 /** Ratings are averaged with the site-wide average as if it were this many extra reviews. */
 const RATING_PRIOR_REVIEWS = 5
 const MIN_RATED_FOR_PRIOR = 10
@@ -147,7 +152,9 @@ export function computeWam(results: Profile['results'], data: Dataset): number |
   return points > 0 ? Math.round((weighted / points) * 10) / 10 : null
 }
 
-export function recommend(raw: Dataset, profile: Profile, opts: RecommendOptions = {}): Recommendation[] {
+export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions = {}): Recommendation[] {
+  // Marks only: what a subject is about doesn't come into it, not even to break a tie.
+  const profile = given.goal === 'easy' ? { ...given, interests: [] } : given
   const data = opts.course ? forCourse(raw, opts.course) : raw
   const completed = new Set(passedCodes(profile.results))
   const taken = new Set([...completed, ...(opts.planned ?? [])])
@@ -171,6 +178,12 @@ export function recommend(raw: Dataset, profile: Profile, opts: RecommendOptions
   // Earlier subjects the major's own subjects build on (a step or two back): the way into them,
   // even where there are several to choose from (PSYC20006 for a psychology major).
   const towardMajor = new Map<string, string[]>()
+  // Fields of what the student has actually completed (not what a plan has pencilled in), and
+  // of what they took as breadth.
+  const takenFields = new Set([...completed].map((c) => data.subjects[c]).filter((x): x is Subject => !!x).map((x) => areaField(x.area)))
+  const breadthFields = new Set(
+    [...completed].map((c) => data.subjects[c]).filter((x): x is Subject => !!x && x.categories[opts.course ?? ''] === 'breadth').map((x) => areaField(x.area)),
+  )
   if (roles) {
     let frontier = [...roles.required, ...roles.options].filter((c) => !completed.has(c))
     for (let step = 0; step < 2; step++) {
@@ -267,13 +280,24 @@ export function recommend(raw: Dataset, profile: Profile, opts: RecommendOptions
       const strength = rec.reasons.some((x) => x.key === 'strengths' || x.key === 'goodAt')
       if (!exact) rec.score = Math.max(0, rec.score - (strength ? OFF_TOPIC_CHALLENGE_COST / 2 : OFF_TOPIC_CHALLENGE_COST))
     }
+    // What the student has actually chosen says what they like: more from a field they keep
+    // taking as breadth, less from a field they've never touched when only a skill links it.
+    if (completed.size >= PAST_CHOICES_MIN && profile.goal !== 'easy') {
+      const field = areaField(s.area)
+      const fromInterest = rec.reasons.some((x) => x.key === 'interests')
+      const inProgramme = roles !== null && (roles.required.has(s.code) || roles.options.has(s.code) || towardMajor.has(s.code))
+      if (breadthFields.has(field) && s.categories[opts.course ?? ''] === 'breadth') rec.score = Math.min(100, rec.score + PAST_CHOICE_NUDGE)
+      else if (!fromInterest && !inProgramme && !takenFields.has(field)) rec.score = Math.max(0, rec.score - PAST_CHOICE_NUDGE)
+    }
+    // Marks only: the major's subjects are still labelled, but not pushed up.
+    const bonus = profile.goal === 'easy' ? 0 : PROGRAMME_BONUS
     if (roles && (roles.required.has(s.code) || roles.options.has(s.code))) {
       const core = roles.required.has(s.code)
-      rec.score = Math.min(100, rec.score + PROGRAMME_BONUS)
+      rec.score = Math.min(100, rec.score + bonus)
       rec.reasons.unshift(note(core ? 'majorCore' : 'majorOption', {}, core ? 'Compulsory in your major.' : 'One of the choices in your major.'))
     } else if (towardMajor.has(s.code)) {
       const codes = (towardMajor.get(s.code) as string[]).slice(0, 3).join(', ')
-      rec.score = Math.min(100, rec.score + PROGRAMME_BONUS)
+      rec.score = Math.min(100, rec.score + bonus)
       rec.reasons.unshift(note('majorPath', { codes }, `Leads to ${codes} in your major.`))
     }
     if (opts.termSubjects && termBefore) {
@@ -378,26 +402,17 @@ function score(s: Subject, ctx: ScoreCtx): Recommendation {
     if (hit.length) reasons.push(note('interests', { topics: hit.join(', ') }, `Covers ${hit.join(', ')}, which you're interested in.`))
   }
 
-  // Predicted performance: marks in its prerequisites / same area, else overall WAM.
-  // Its own prerequisites say most about how you'll go, same-area subjects less;
-  // with only a mark or two the estimate leans back toward your WAM.
-  const prereqs = new Set(referencedSubjects(s.prerequisites))
-  const related = [...new Set([...prereqs, ...sameArea(s, ctx)])].filter((c) => ctx.marks.has(c))
-  if (related.length > 0) {
-    let sum = 0
-    let weight = 0
-    for (const c of related) {
-      const w = prereqs.has(c) ? 1 : 0.6
-      sum += w * (ctx.marks.get(c) as number)
-      weight += w
-    }
-    const own = sum / weight
-    const m = ctx.wam === null ? own : (sum + MARK_PRIOR_WEIGHT * ctx.wam) / (weight + MARK_PRIOR_WEIGHT)
+  // Predicted performance from the student's own marks in similar subjects (see predict.ts),
+  // else their overall WAM. Always said as a range once there are marks to go on.
+  const guess = ctx.marks.size ? predictMark(s, ctx.marks, ctx.data) : null
+  if (guess) {
+    const m = guess.mark
     parts.predicted = clamp((m - 50) / 50)
-    const text = `${Math.round(m)} in related subjects (${related.join(', ')})`
-    const params = { mark: Math.round(m), codes: related.join(', ') }
-    if (m >= 70) reasons.push(note('averagedHigh', params, `You averaged ${text}.`))
-    else if (m < 55) warnings.push(note('averagedLow', params, `You averaged only ${text}, so this may be tough.`))
+    const params = { mark: Math.round(m), low: Math.round(guess.low), high: Math.round(guess.high), codes: guess.basis.join(', ') }
+    const wam = ctx.wam ?? m
+    if (m >= 75 || m >= wam + 3) reasons.push(note('averagedHigh', params, `Your marks in similar subjects (${params.codes}) point to about ${params.mark}.`))
+    else if (m < 55 || m <= wam - 5) warnings.push(note('averagedLow', params, `Your marks in similar subjects (${params.codes}) point to about ${params.mark}, so this may be tough.`))
+    else reasons.push(note('predictedRange', params, `Likely ${params.low}–${params.high}, from your marks in similar subjects.`))
   } else if (ctx.wam !== null) {
     parts.predicted = clamp((ctx.wam - 50) / 50)
   }
@@ -525,10 +540,6 @@ function pathTo(code: string, interests: string[], ctx: ScoreCtx): { steps: numb
     if (frontier.length === 0) break
   }
   return { steps: 0, codes: [] }
-}
-
-function sameArea(s: Subject, ctx: ScoreCtx): string[] {
-  return [...ctx.marks.keys()].filter((c) => ctx.data.subjects[c]?.area === s.area)
 }
 
 /**
