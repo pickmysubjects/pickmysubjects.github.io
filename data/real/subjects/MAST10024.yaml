@@ -25,10 +25,9 @@ assessment:
     weight: 50
 handbook: https://handbook.unimelb.edu.au/2026/subjects/mast10024
 source_year: 2026
-verified_on: 2026-10-10
-categories:
-  B-SCI: science
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+verified_on: 2026-10-13
+categories: {}
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Not on the 2026 B-SCI science list, and its Handbook page lists no breadth use, so it gives no B-SCI credit here."
 skills:
   - maths
   - statistics

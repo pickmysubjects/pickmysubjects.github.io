@@ -27,9 +27,8 @@ handbook: https://handbook.unimelb.edu.au/2026/subjects/agri10050
 source_year: 2026
 verified_on: 2026-10-13
 min_attendance: 80
-categories:
-  B-SCI: science
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+categories: {}
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Part of the Bachelor of Agriculture; not on the 2026 B-SCI science list, so it gives no B-SCI credit."
 skills:
   - lab
 topics:

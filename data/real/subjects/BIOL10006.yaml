@@ -24,9 +24,8 @@ campus: Dookie
 handbook: https://handbook.unimelb.edu.au/2026/subjects/biol10006
 source_year: 2026
 verified_on: 2026-10-13
-categories:
-  B-SCI: science
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Taught only at the Dookie campus."
+categories: {}
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Taught only at the Dookie campus. Part of the Diploma in General Studies; not on the 2026 B-SCI science list, so it gives no B-SCI credit."
 skills:
   - lab
 topics:

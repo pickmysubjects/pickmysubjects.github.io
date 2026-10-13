@@ -396,13 +396,14 @@ function resolvePrereqs(expr: ReqExpr, done: Set<string>, required: Set<string>,
     // The exception is a school result (a VCE study score or equivalent): that's how
     // most students meet a first-year requirement, so it is assumed before adding a
     // bridging subject like MAST10012. The plan check still asks the student to confirm.
-    // A subject taught only at a far campus (Dookie) is a last resort among placeable ones.
+    // A subject taught only at a far campus (Dookie) is a last resort among placeable ones, and
+    // one that gives no credit in this course (another degree's first-year subject) nearly so.
     const MANUAL = 50
     const SCHOOL = 0.5
     const cost = (o: string[]) =>
       o.reduce(
         (sum, c) =>
-          sum + (required.has(c) ? 0 : clashes(c, done, required, data) || closedTo(c, course, data) ? 10_000 : !data.subjects[c] || needsMissing(c, data) ? 100 : data.subjects[c]!.campus ? 40 : semesterless(data.subjects[c]!) ? 20 : 1),
+          sum + (required.has(c) ? 0 : clashes(c, done, required, data) || closedTo(c, course, data) ? 10_000 : !data.subjects[c] || needsMissing(c, data) ? 100 : data.subjects[c]!.campus ? 40 : noCredit(data.subjects[c]!, course, data) ? 30 : semesterless(data.subjects[c]!) ? 20 : 1),
         0,
       )
     let best: string[] | null = null
@@ -534,6 +535,15 @@ function pickForPoints(
     have += s.points
   }
   return picks
+}
+
+/** Courses whose subjects carry categories, per dataset (worked out once). */
+const categorisedCache = new WeakMap<Dataset, Set<string>>()
+/** In a course whose subjects are categorised, one with no category there counts for nothing. */
+function noCredit(s: Subject, course: string, data: Dataset): boolean {
+  let courses = categorisedCache.get(data)
+  if (!courses) categorisedCache.set(data, (courses = new Set(Object.values(data.subjects).flatMap((x) => Object.keys(x.categories)))))
+  return s.categories[course] === undefined && courses.has(course)
 }
 
 /** False only when we know the subject doesn't run in any of the next few years. */
@@ -980,6 +990,9 @@ function trySwap(r: PointsRule, terms: PlanTerm[], all: string[], ctx: RepairCtx
         if (offeredIn(s, term.year, term.period).status !== 'ok') continue
         if (!withinCaps(s, others, course, data)) continue
         if (!progressionAllows(s.code, course, before, data)) continue
+        // Its corequisites must be in the plan by then, as when an elective is first picked.
+        const co = evaluateField(s.corequisites, { completed: new Set([...before, ...term.subjects.filter((c) => c !== e)]), subjects: data.subjects, admittedCourse: course.code })
+        if (co.status === 'fail') continue
         // The swap must not break any minimum that is currently met.
         const after = [...others, s.code]
         const keepsMinimums = pointRules(course).every(

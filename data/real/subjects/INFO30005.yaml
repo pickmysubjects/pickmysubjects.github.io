@@ -22,8 +22,7 @@ assessment:
 weekly_contact_hours: 4
 handbook: https://handbook.unimelb.edu.au/2026/subjects/info30005
 source_year: 2026
-categories:
-  B-SCI: science
+categories: {}
 skills:
   - design
   - programming
@@ -31,5 +30,5 @@ skills:
 topics:
   - design
   - software-engineering
-verified_on: 2026-10-08
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Also a hurdle: attend at least 8 lectures and 8 tutorials."
+verified_on: 2026-10-13
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Also a hurdle: attend at least 8 lectures and 8 tutorials. Not on the 2026 B-SCI science list, and its Handbook page lists no breadth use, so it gives no B-SCI credit here."

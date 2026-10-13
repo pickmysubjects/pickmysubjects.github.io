@@ -25,8 +25,7 @@ assessment:
 weekly_contact_hours: 5.5
 handbook: https://handbook.unimelb.edu.au/2026/subjects/biol10002
 source_year: 2026
-categories:
-  B-SCI: science
+categories: {}
 skills:
   - lab
   - writing
@@ -35,4 +34,4 @@ topics:
   - chemistry
 verified_on: 2026-10-13
 min_attendance: 80
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Only for Bachelor of Biomedicine students."
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Only for Bachelor of Biomedicine students. Part of the Bachelor of Biomedicine; not on the 2026 B-SCI science list, so it gives no B-SCI credit."
