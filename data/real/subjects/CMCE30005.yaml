@@ -1,0 +1,34 @@
+code: CMCE30005
+title: Business Analytics Challenge
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites:
+  all:
+    - BUSA20001
+    - any:
+        - CMCE30002
+        - CMCE30003
+        - CMCE30004
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: project
+    weight: 10
+    group: true
+  - kind: project
+    weight: 20
+    group: true
+  - kind: report
+    weight: 10
+    group: true
+  - kind: report
+    weight: 60
+    group: true
+weekly_contact_hours: 3
+handbook: https://handbook.unimelb.edu.au/2026/subjects/cmce30005
+source_year: 2026
+verified_on: 2026-10-13
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

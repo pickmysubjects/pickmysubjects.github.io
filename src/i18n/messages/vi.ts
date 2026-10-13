@@ -15,7 +15,7 @@ export const vi: Messages = {
   nav: { home: 'Trang chủ', browse: 'Môn học', more: 'Thêm', plan: 'Kế hoạch', recommend: 'Gợi ý', record: 'Của tôi', contribute: 'Thêm dữ liệu', feedback: 'Góp ý', main: 'Menu chính' },
   period: { summer: 'Học kỳ hè', 'semester-1': 'Học kỳ 1', winter: 'Học kỳ đông', 'semester-2': 'Học kỳ 2' },
   periodShort: { summer: 'Hè', 'semester-1': 'HK1', winter: 'Đông', 'semester-2': 'HK2' },
-  category: { science: 'khoa học', breadth: 'breadth (ngoài ngành)', discipline: 'chuyên ngành', core: 'bắt buộc' },
+  category: { science: 'khoa học', commerce: 'kinh doanh', breadth: 'breadth (ngoài ngành)', core: 'bắt buộc' },
   plan: {
     pastTag: "Đã học",
     pastUndated: "Đã học · chưa điền học kỳ",
@@ -550,13 +550,14 @@ export const vi: Messages = {
     empty: "Không có môn nào phù hợp. Thử bỏ bớt một điều kiện.",
     more: "Xem thêm (còn {n})",
     notRunning: "Năm nay không mở",
+    closedForYou: "Ngành của bạn không được học",
     metaExam: "Thi {n}%",
     metaNoExam: "Không thi",
     metaHours: "{n} giờ/tuần trên lớp",
     metaNoPrereq: "Không cần môn tiên quyết",
     coverage: "Hiện có {n} môn, trong đó {breadth} môn breadth.",
     preset: { firstSemester: "Học kỳ đầu", breadth: "Breadth", noExam: "Không thi cuối kỳ" },
-    cat: { science: "Khoa học", breadth: "Breadth", discipline: "Trong ngành" },
+    cat: { science: "Khoa học", commerce: "Kinh doanh", breadth: "Breadth" },
   },
   majors: {
     statCore: "Bắt buộc năm ba",
@@ -681,7 +682,7 @@ export const vi: Messages = {
     firstStep2: "Phần còn lại chọn môn bạn thấy hay, hoặc môn breadth.",
     firstStep3: "Đăng ký môn (enrol) trên my.unimelb, rồi chọn giờ học trong My Timetable.",
     firstStep4: "Học thấy không hợp? Trước census date vẫn rút được miễn phí. Sinh viên quốc tế nên hỏi Stop 1 trước.",
-    breadthText: "Breadth là môn ngoài ngành của bạn, ví dụ học khoa học thì lấy môn kinh doanh, xã hội hoặc ngoại ngữ. Cử nhân Khoa học cần ít nhất 50 tín chỉ (4 môn) breadth, trong đó level 1 tối đa 25 tín chỉ.",
+    breadthText: "Breadth là môn ngoài ngành của bạn: học khoa học thì chọn kinh doanh hoặc xã hội, học kinh doanh thì chọn khoa học hoặc xã hội. Trang Handbook của mỗi môn ghi rõ ngành nào được học nó như Breadth. Bachelor of Science: ít nhất 50 tín chỉ (4 môn), tối đa 25 ở level 1. Bachelor of Commerce: 50 đến 62,5 tín chỉ, tối đa 37,5 ở level 1.",
     firstFind: "Tìm môn cho học kỳ đầu",
     firstPlan: "Mở trang Kế hoạch",
     eyebrow: "Hướng dẫn",
@@ -944,7 +945,7 @@ export const vi: Messages = {
     },
     'rules-change': {
       q: 'Quy định thay đổi mỗi năm và khác nhau theo chương trình, chuyên ngành, cử nhân/thạc sĩ/tiến sĩ.',
-      a: "Kế hoạch theo quy định Bachelor of Science trong Handbook 2026. Luôn kiểm tra lại trong Handbook và My Course Planner.",
+      a: "Kế hoạch theo quy định ngành của bạn (Bachelor of Science hoặc Bachelor of Commerce) trong Handbook 2026. Luôn kiểm tra lại trong Handbook và My Course Planner.",
     },
     future: {
       q: 'Môn nào dẫn tới con đường tôi muốn sau khi ra trường?',

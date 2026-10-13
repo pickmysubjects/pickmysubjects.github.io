@@ -55,13 +55,19 @@ export function buildDataset(name: Dataset['name']): BuildResult {
     .map((f) => load(f, componentFileSchema, errors))
     .filter((c) => c !== null)
 
-  // A course that says which areas are its own gives every other subject its "other" category.
+  // A subject with no category of its own for a course gets one: the course's own areas are
+  // `home`; any other subject is `other` (breadth) when the Handbook lists the course among those
+  // that may take it as breadth, or doesn't say. Closed and graduate subjects get none.
+  // What the files themselves say, before anything is derived: a subject no course takes on its
+  // own (another degree's first-year subject) isn't assumed to be breadth when its page is silent.
+  const placed = new Set(Object.values(subjects).filter((s) => Object.keys(s.categories).length > 0).map((s) => s.code))
   for (const c of courses) {
     if (!c.areaCategories) continue
     const { home, areas, other } = c.areaCategories
     for (const s of Object.values(subjects)) {
-      if (c.closed.includes(s.code)) continue
-      s.categories[c.code] ??= ((areas.includes(s.area) ? home : other) as Subject['categories'][string])
+      if (s.categories[c.code] !== undefined || c.closed.includes(s.code) || s.level > 3) continue
+      if (home && areas.includes(s.area)) s.categories[c.code] = home as Subject['categories'][string]
+      else if (s.breadthFor ? s.breadthFor.includes(c.title) : placed.has(s.code)) s.categories[c.code] = other as Subject['categories'][string]
     }
   }
 

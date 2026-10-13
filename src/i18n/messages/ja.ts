@@ -15,7 +15,7 @@ export const ja: Messages = {
   nav: { home: 'ホーム', browse: '科目', more: 'その他', plan: 'プラン', recommend: 'おすすめ', record: 'マイ', contribute: 'データを追加', feedback: 'フィードバック', main: 'メインメニュー' },
   period: { summer: '夏学期', 'semester-1': '第1セメスター', winter: '冬学期', 'semester-2': '第2セメスター' },
   periodShort: { summer: '夏', 'semester-1': 'S1', winter: '冬', 'semester-2': 'S2' },
-  category: { science: '理系科目', breadth: 'Breadth（専攻外科目）', discipline: '専門', core: '必修' },
+  category: { science: '理系科目', commerce: '商学系科目', breadth: 'Breadth（専攻外科目）', core: '必修' },
   plan: {
     pastTag: "履修済み",
     pastUndated: "履修済み・学期未入力",
@@ -550,13 +550,14 @@ export const ja: Messages = {
     empty: "当てはまる科目がありません。条件を1つ外してみてください。",
     more: "もっと見る（残り {n}）",
     notRunning: "今年は開講なし",
+    closedForYou: "あなたの学位では履修不可",
     metaExam: "試験 {n}%",
     metaNoExam: "試験なし",
     metaHours: "授業 週 {n} 時間",
     metaNoPrereq: "前提科目なし",
     coverage: "いまは {n} 科目、そのうち Breadth は {breadth} 科目です。",
     preset: { firstSemester: "1学期目", breadth: "Breadth", noExam: "期末試験なし" },
-    cat: { science: "理系", breadth: "Breadth", discipline: "学位内科目" },
+    cat: { science: "理系", commerce: "商学系", breadth: "Breadth" },
   },
   majors: {
     statCore: "3年次必修",
@@ -681,7 +682,7 @@ export const ja: Messages = {
     firstStep2: "残りは興味のある科目か、Breadth で埋める。",
     firstStep3: "my.unimelb で履修登録（enrol）してから、My Timetable で授業の時間を選ぶ。",
     firstStep4: "合わないと思ったら、census date までは無料で取り消せます。留学生は先に Stop 1 に相談してください。",
-    breadthText: "Breadth は自分の学位の分野外の科目です。理系なら商学、文系、語学などです。理学士では Breadth を 50 単位（4科目）以上取る必要があり、そのうちレベル1は 25 単位までです。",
+    breadthText: "Breadth は自分の学位の分野外の科目です。理学士なら商学や文系、商学士なら理系や文系の科目です。どの学位が Breadth として取れるかは各科目の Handbook ページに載っています。理学士は 50 ポイント（4 科目）以上、うちレベル 1 は 25 ポイントまで。商学士は 50〜62.5 ポイント、うちレベル 1 は 37.5 ポイントまでです。",
     firstFind: "1学期目に取れる科目を探す",
     firstPlan: "プランを開く",
     eyebrow: "ガイド",
@@ -944,7 +945,7 @@ export const ja: Messages = {
     },
     'rules-change': {
       q: '規則は毎年変わり、学位・メジャー・学士／修士／博士でも違う。',
-      a: "プランは 2026 年 Handbook の理学士の規則に沿っています。必ず Handbook と My Course Planner でも確認してください。",
+      a: "プランは 2026 年 Handbook のあなたの学位（理学士または商学士）の規則に沿っています。必ず Handbook と My Course Planner でも確認してください。",
     },
     future: {
       q: '卒業後に進みたい道につながる科目は？',

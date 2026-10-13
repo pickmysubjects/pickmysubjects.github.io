@@ -5,6 +5,7 @@ import { defaultCourse, forCourse } from '../src/engine/forCourse'
 import { generatePlan } from '../src/engine/generate'
 import { periodsFor } from '../src/engine/availability'
 import { pinnedIn } from '../src/engine/relieve'
+import { checkTerms } from '../src/engine/planCheck'
 
 /** More than one bachelor: categories, breadth and rules follow the student's own course. */
 describe('per-course rules (B-SCI and B-COM)', () => {
@@ -13,7 +14,7 @@ describe('per-course rules (B-SCI and B-COM)', () => {
     ({ course, courseYear: 2026, completed, terms: [{ year: 2027, period: 'semester-1', subjects }] }) as never
 
   it('a subject is breadth in one course and its own in the other', () => {
-    expect(data.subjects.ECON10004!.categories).toMatchObject({ 'B-SCI': 'breadth', 'B-COM': 'discipline' })
+    expect(data.subjects.ECON10004!.categories).toMatchObject({ 'B-SCI': 'breadth', 'B-COM': 'commerce' })
     expect(data.subjects.MAST10006!.categories).toMatchObject({ 'B-SCI': 'science', 'B-COM': 'breadth' })
   })
 
@@ -61,5 +62,14 @@ describe('per-course rules (B-SCI and B-COM)', () => {
     const i = p.terms.findIndex((t) => t.subjects.includes('COMP20003'))
     expect(p.terms[i]!.subjects).toContain('SWEN20003')
     expect(pinnedIn(p, data, i, ['COMP20003', 'SWEN20003'])).toEqual(['COMP20003', 'SWEN20003'])
+  })
+  it('every B-COM major plans without clashes, Actuarial on the mathematics path', () => {
+    for (const major of data.components.filter((c) => c.course === 'B-COM' && c.kind === 'major').map((c) => c.id)) {
+      for (const startPeriod of ['semester-1', 'semester-2'] as const) {
+        const { plan: p } = generatePlan({ data, profile: { results: [], skills: {}, interests: [], goal: 'balanced' }, course: 'B-COM', courseYear: 2026, major, startYear: 2027, startPeriod })
+        expect(checkTerms(p, data).filter((i) => i.severity === 'error').map((i) => i.message), `${major} ${startPeriod}`).toEqual([])
+        if (major === 'actuarial-studies') expect(p.terms.flatMap((t) => t.subjects)).not.toContain('ECON10005')
+      }
+    }
   })
 })

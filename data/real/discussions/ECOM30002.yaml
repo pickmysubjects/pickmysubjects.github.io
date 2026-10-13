@@ -1,0 +1,45 @@
+code: ECOM30002
+source: StudentVIP
+url: https://studentvip.com.au/unimelb/subjects/ecom30002
+reviews: 4
+from: 2016
+to: 2021
+checked: 2026-10-13
+points:
+  - en: "Newer reviews call it maths- and proof-heavy, a step up from the first econometrics subject; linear algebra or mathematical economics helps. An older review found it fairly easy."
+    zh: "近期评价说它偏数学、证明多，比计量一难一档；学过线性代数或数理经济会有帮助。较早有一条评价觉得挺简单。"
+    zh-TW: "近期評價說它偏數學、證明多，比計量一難一級；學過線性代數或數理經濟會有幫助。較早有一則評價覺得挺簡單。"
+    ja: "新しいレビューでは数学と証明が多く、計量経済学1より一段難しいとされ、線形代数や数理経済学の経験が役立つ。古いレビューにはかなり簡単という声も。"
+    ko: "최근 리뷰는 수학과 증명 비중이 커서 계량경제학 1보다 한 단계 어렵다고 하며, 선형대수나 수리경제학이 도움이 된다. 예전 리뷰 하나는 꽤 쉽다고 했다."
+    vi: "Các đánh giá mới nói môn nặng toán và chứng minh, khó hơn môn kinh tế lượng đầu tiên; biết đại số tuyến tính hay kinh tế toán sẽ có lợi. Một đánh giá cũ lại thấy khá dễ."
+    ms: "Ulasan baharu kata ia berat matematik dan bukti, setingkat lebih sukar daripada ekonometrik pertama; algebra linear atau ekonomi matematik membantu. Satu ulasan lama dapati ia agak mudah."
+    id: "Ulasan baru bilang materinya berat matematika dan pembuktian, setingkat di atas ekonometrika pertama; aljabar linear atau ekonomi matematika membantu. Satu ulasan lama menganggapnya cukup mudah."
+    hi: "नए रिव्यू इसे मैथ्स और प्रूफ़ से भरा बताते हैं, पहले इकोनोमेट्रिक्स विषय से एक कदम कठिन; लीनियर अलजेब्रा या मैथमेटिकल इकोनॉमिक्स मदद करते हैं। एक पुराने रिव्यू को यह काफ़ी आसान लगा।"
+  - en: "Assignments are done in R, so coding experience helps; without a coding or maths background they can be tough."
+    zh: "作业用 R 完成，有编程经验会轻松些；没有编程或数学基础的话作业可能很吃力。"
+    zh-TW: "作業用 R 完成，有程式經驗會輕鬆些；沒有程式或數學基礎的話作業可能很吃力。"
+    ja: "課題はRで行うのでコーディング経験があると楽。コーディングや数学の素地がないと大変なことも。"
+    ko: "과제는 R로 하므로 코딩 경험이 도움이 된다. 코딩이나 수학 배경이 없으면 힘들 수 있다."
+    vi: "Bài tập làm bằng R nên biết lập trình sẽ dễ hơn; không có nền tảng lập trình hay toán thì có thể khá vất vả."
+    ms: "Tugasan dibuat dalam R, jadi pengalaman pengekodan membantu; tanpa latar pengekodan atau matematik ia boleh sukar."
+    id: "Tugas dikerjakan dengan R, jadi pengalaman coding membantu; tanpa latar coding atau matematika bisa cukup berat."
+    hi: "असाइनमेंट R में होते हैं, इसलिए कोडिंग का अनुभव मदद करता है; कोडिंग या मैथ्स बैकग्राउंड के बिना ये मुश्किल हो सकते हैं।"
+  - en: "The exam was seen as fair but very long. One reviewer complained of few practice exams and none with solutions."
+    zh: "考试被认为公平但题量很大。有人抱怨模拟卷很少，而且都没有答案。"
+    zh-TW: "考試被認為公平但題量很大。有人抱怨模擬卷很少，而且都沒有解答。"
+    ja: "試験は公平だがとても長いという評価。模擬試験が少なく解答もなかったという不満も。"
+    ko: "시험은 공정하지만 매우 길다는 평. 모의고사가 적고 해답도 없었다는 불만도 있었다."
+    vi: "Bài thi được đánh giá công bằng nhưng rất dài. Một người phàn nàn có ít đề luyện và không đề nào có lời giải."
+    ms: "Peperiksaan dianggap adil tetapi sangat panjang. Seorang mengadu kertas latihan sedikit dan tiada jawapan."
+    id: "Ujiannya dinilai adil tapi sangat panjang. Satu pengulas mengeluh latihan soalnya sedikit dan tanpa pembahasan."
+    hi: "परीक्षा निष्पक्ष लेकिन बहुत लंबी मानी गई। एक रिव्यूअर ने शिकायत की कि प्रैक्टिस पेपर कम थे और किसी का हल नहीं था।"
+  - en: "Reviewers agree it suits students who enjoy statistics or plan on honours or stats-heavy fields like finance; the semester 2 run got a poorer write-up."
+    zh: "评价一致认为它适合喜欢统计、打算读荣誉或进入金融等统计密集领域的学生；第二学期那次的评价较差。"
+    zh-TW: "評價一致認為它適合喜歡統計、打算讀榮譽或進入金融等統計密集領域的學生；第二學期那次的評價較差。"
+    ja: "統計が好きな人や、オナーズ、金融など統計を多用する分野を目指す人向けという点では一致。第2学期の回は評価が低め。"
+    ko: "통계를 좋아하거나 아너스, 금융처럼 통계 비중이 큰 분야를 노리는 학생에게 맞는다는 데 의견이 모인다. 2학기 개설분은 평이 더 나빴다."
+    vi: "Mọi người đồng ý môn hợp với ai thích thống kê hoặc định học honours hay ngành nặng thống kê như tài chính; đợt học kỳ 2 bị đánh giá kém hơn."
+    ms: "Pengulas setuju ia sesuai untuk yang suka statistik atau merancang honours atau bidang berat statistik seperti kewangan; tawaran semester 2 dinilai lebih teruk."
+    id: "Pengulas sepakat ini cocok untuk yang suka statistika atau berencana honours atau bidang berat statistik seperti keuangan; penyelenggaraan semester 2 dinilai lebih buruk."
+    hi: "रिव्यूअर्स सहमत हैं कि यह स्टैटिस्टिक्स पसंद करने वालों या ऑनर्स व फ़ाइनेंस जैसे स्टैट्स-भारी क्षेत्रों की योजना वालों के लिए है; सेमेस्टर 2 वाले रन की समीक्षा कमज़ोर रही।"
+difficulty: hard

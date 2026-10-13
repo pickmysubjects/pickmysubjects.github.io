@@ -18,7 +18,7 @@ export const en = {
   nav: { home: 'Home', browse: 'Browse', more: 'More', plan: 'Plan', recommend: 'For you', record: 'Me', contribute: 'Add data', feedback: 'Feedback', main: 'Main' },
   period: { summer: 'Summer', 'semester-1': 'Semester 1', winter: 'Winter', 'semester-2': 'Semester 2' },
   periodShort: { summer: 'Summer', 'semester-1': 'Sem 1', winter: 'Winter', 'semester-2': 'Sem 2' },
-  category: { science: 'science', breadth: 'breadth', discipline: 'discipline', core: 'core' },
+  category: { science: 'science', commerce: 'commerce', breadth: 'breadth', core: 'core' },
   plan: {
     pastTag: "Done",
     pastUndated: "Done · semester not given",
@@ -553,13 +553,14 @@ export const en = {
     empty: "Nothing matches. Try turning a filter off.",
     more: "Show more ({n} left)",
     notRunning: "Not running this year",
+    closedForYou: "Not open to your degree",
     metaExam: "Exam {n}%",
     metaNoExam: "No exam",
     metaHours: "{n} h a week in class",
     metaNoPrereq: "No prerequisites",
     coverage: "{n} subjects so far, {breadth} of them breadth.",
     preset: { firstSemester: "First semester", breadth: "Breadth", noExam: "No final exam" },
-    cat: { science: "Science", breadth: "Breadth", discipline: "Own degree" },
+    cat: { science: "Science", commerce: "Commerce", breadth: "Breadth" },
   },
   majors: {
     statCore: "Third-year core",
@@ -684,7 +685,7 @@ export const en = {
     firstStep2: "Fill the rest with subjects you’re curious about, or with breadth.",
     firstStep3: "Enrol in my.unimelb, then choose your class times in My Timetable.",
     firstStep4: "Don’t like a subject? You can still drop it for free before the census date. International students, check with Stop 1 first.",
-    breadthText: "Breadth means subjects from outside your degree, like commerce, arts or a language if you do science. In the Bachelor of Science you need at least 50 points (4 subjects) of breadth, and no more than 25 points of it at level 1.",
+    breadthText: "Breadth means subjects from outside your degree: commerce or arts for a science student, science or arts for a commerce student. Each subject’s Handbook page lists the degrees that may take it as breadth. Bachelor of Science: at least 50 points (4 subjects), no more than 25 at level 1. Bachelor of Commerce: 50 to 62.5 points, no more than 37.5 at level 1.",
     firstFind: "Find first-semester subjects",
     firstPlan: "Open the Plan page",
     eyebrow: "Guide",
@@ -947,7 +948,7 @@ export const en = {
     },
     'rules-change': {
       q: 'Rules change every year and differ by degree, major, bachelor/master/PhD.',
-      a: "The plan follows the Bachelor of Science rules from the 2026 Handbook. Always confirm in the Handbook and My Course Planner.",
+      a: "The plan follows your degree’s rules from the 2026 Handbook (Bachelor of Science or Bachelor of Commerce). Always confirm in the Handbook and My Course Planner.",
     },
     future: {
       q: 'Which subjects lead where I want to go after uni?',

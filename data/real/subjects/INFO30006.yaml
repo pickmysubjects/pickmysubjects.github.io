@@ -16,6 +16,20 @@ non_allowed:
   - ISYS90070
 categories:
   B-SCI: science
+breadth_for:
+  - Bachelor of Arts
+  - Bachelor of Commerce
+  - Bachelor of Design
+  - Bachelor of Fine Arts (Acting)
+  - Bachelor of Fine Arts (Animation)
+  - Bachelor of Fine Arts (Dance)
+  - Bachelor of Fine Arts (Film and Television)
+  - Bachelor of Fine Arts (Music Theatre)
+  - Bachelor of Fine Arts (Production)
+  - Bachelor of Fine Arts (Screenwriting)
+  - Bachelor of Fine Arts (Theatre)
+  - Bachelor of Fine Arts (Visual Art)
+  - Bachelor of Music
 handbook: https://handbook.unimelb.edu.au/2026/subjects/info30006
 source_year: 2026
 verified_on: 2026-10-07

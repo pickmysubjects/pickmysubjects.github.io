@@ -15,7 +15,7 @@ export const id: Messages = {
   nav: { home: 'Beranda', browse: 'Cari', more: 'Lainnya', plan: 'Rencana', recommend: 'Untukmu', record: 'Saya', contribute: 'Tambah data', feedback: 'Masukan', main: 'Menu utama' },
   period: { summer: 'Semester musim panas', 'semester-1': 'Semester 1', winter: 'Semester musim dingin', 'semester-2': 'Semester 2' },
   periodShort: { summer: 'Musim panas', 'semester-1': 'Sem 1', winter: 'Musim dingin', 'semester-2': 'Sem 2' },
-  category: { science: 'sains', breadth: 'breadth', discipline: 'jurusan', core: 'inti' },
+  category: { science: 'sains', commerce: 'bisnis', breadth: 'breadth', core: 'inti' },
   plan: {
     pastTag: "Sudah diambil",
     pastUndated: "Sudah diambil · semester belum diisi",
@@ -550,13 +550,14 @@ export const id: Messages = {
     empty: "Tidak ada yang cocok. Coba matikan satu filter.",
     more: "Tampilkan lagi ({n} lagi)",
     notRunning: "Tidak dibuka tahun ini",
+    closedForYou: "Tidak terbuka untuk gelarmu",
     metaExam: "Ujian {n}%",
     metaNoExam: "Tanpa ujian",
     metaHours: "{n} jam kelas per minggu",
     metaNoPrereq: "Tanpa prasyarat",
     coverage: "Sejauh ini {n} mata kuliah, {breadth} di antaranya breadth.",
     preset: { firstSemester: "Semester pertama", breadth: "Breadth", noExam: "Tanpa ujian akhir" },
-    cat: { science: "Sains", breadth: "Breadth", discipline: "Dalam gelar" },
+    cat: { science: "Sains", commerce: "Bisnis", breadth: "Breadth" },
   },
   majors: {
     statCore: "Wajib tahun ketiga",
@@ -681,7 +682,7 @@ export const id: Messages = {
     firstStep2: "Sisanya isi dengan mata kuliah yang bikin kamu penasaran, atau breadth.",
     firstStep3: "Daftar (enrol) di my.unimelb, lalu pilih jam kelas di My Timetable.",
     firstStep4: "Ternyata tidak cocok? Sebelum census date kamu masih bisa membatalkannya gratis. Mahasiswa internasional, tanya Stop 1 dulu.",
-    breadthText: "Breadth adalah mata kuliah di luar bidang gelarmu, misalnya bisnis, seni, atau bahasa kalau kamu kuliah sains. Di Bachelor of Science kamu perlu minimal 50 poin (4 mata kuliah) breadth, dan paling banyak 25 poin di level 1.",
+    breadthText: "Breadth adalah mata kuliah di luar gelarmu: bisnis atau humaniora untuk mahasiswa sains, sains atau humaniora untuk mahasiswa bisnis. Halaman Handbook tiap mata kuliah mencantumkan gelar mana yang boleh mengambilnya sebagai breadth. Bachelor of Science: minimal 50 poin (4 mata kuliah), maksimal 25 di level 1. Bachelor of Commerce: 50 sampai 62,5 poin, maksimal 37,5 di level 1.",
     firstFind: "Cari mata kuliah semester pertama",
     firstPlan: "Buka halaman Rencana",
     eyebrow: "Panduan",
@@ -944,7 +945,7 @@ export const id: Messages = {
     },
     'rules-change': {
       q: 'Aturan berubah tiap tahun dan berbeda menurut program, jurusan, S1/S2/S3.',
-      a: "Rencana mengikuti aturan Bachelor of Science dari Handbook 2026. Selalu pastikan di Handbook dan My Course Planner.",
+      a: "Rencana mengikuti aturan gelarmu (Bachelor of Science atau Bachelor of Commerce) dari Handbook 2026. Selalu pastikan di Handbook dan My Course Planner.",
     },
     future: {
       q: 'Mata kuliah mana yang mengarah ke tujuanku setelah lulus?',

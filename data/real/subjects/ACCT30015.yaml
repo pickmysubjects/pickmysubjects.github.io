@@ -1,0 +1,24 @@
+code: ACCT30015
+title: "Accounting Information: Risks & Controls"
+level: 3
+points: 12.5
+offerings: unknown
+prerequisites: ACCT20001
+corequisites: none
+non_allowed:
+  - ACCT20007
+assessment:
+  - kind: participation
+    weight: 10
+  - kind: assignment
+    weight: 10
+  - kind: presentation
+    weight: 30
+    group: true
+  - kind: exam
+    weight: 50
+    hurdle: true
+handbook: https://handbook.unimelb.edu.au/2026/subjects/acct30015
+source_year: 2026
+verified_on: 2026-10-13
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

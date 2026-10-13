@@ -23,8 +23,8 @@ const STUDENTS: { name: string; interests: Topic[]; skills: Partial<Record<Skill
 
 describe('cold start (real data, no ratings needed)', () => {
   const { dataset: data } = buildDataset('real')
-  const fitShare = (s: (typeof STUDENTS)[number], goal: 'balanced' | 'wam' | 'challenge', maxLevel: number) => {
-    const recs = recommend(data, { results: [], skills: s.skills, interests: s.interests, goal }, { course: 'B-SCI', year: 2026, maxLevel }).slice(0, 10)
+  const fitShare = (s: (typeof STUDENTS)[number], goal: 'balanced' | 'wam' | 'challenge', maxLevel: number, course = 'B-SCI') => {
+    const recs = recommend(data, { results: [], skills: s.skills, interests: s.interests, goal }, { course, year: 2026, maxLevel }).slice(0, 10)
     const fits = recs.filter((r) => {
       const subject = data.subjects[r.code]!
       const uses = skillsOf(subject, data)
@@ -39,6 +39,26 @@ describe('cold start (real data, no ratings needed)', () => {
     const shares: number[] = []
     for (const s of STUDENTS) for (const goal of ['balanced', 'wam', 'challenge'] as const) for (const level of [1, 2, 3]) {
       const share = fitShare(s, goal, level)
+      shares.push(share)
+      expect(share, `${s.name} ${goal} level ${level}`).toBeGreaterThanOrEqual(0.5)
+    }
+    expect(shares.reduce((a, b) => a + b, 0) / shares.length).toBeGreaterThanOrEqual(0.8)
+  }, 60_000)
+
+  // Commerce students: a finance/economics one, an analytics one, a marketing/management one,
+  // and one who wants science as breadth.
+  const COMMERCE: (typeof STUDENTS)[number][] = [
+    { name: 'finance', interests: ['finance', 'economics'], skills: { business: 5, maths: 4, writing: 2 } },
+    { name: 'analytics', interests: ['data-science', 'statistics', 'business'], skills: { statistics: 4, programming: 4, writing: 2 } },
+    { name: 'marketing', interests: ['marketing', 'business'], skills: { writing: 4, presentation: 5, maths: 2 } },
+    { name: 'accounting', interests: ['accounting', 'law'], skills: { business: 4, writing: 4, programming: 1 } },
+    { name: 'science-breadth', interests: ['psychology', 'environment'], skills: { business: 4, writing: 4 } },
+  ]
+
+  it('fits at least half of every commerce student’s top ten too', () => {
+    const shares: number[] = []
+    for (const s of COMMERCE) for (const goal of ['balanced', 'wam', 'challenge'] as const) for (const level of [1, 2, 3]) {
+      const share = fitShare(s, goal, level, 'B-COM')
       shares.push(share)
       expect(share, `${s.name} ${goal} level ${level}`).toBeGreaterThanOrEqual(0.5)
     }

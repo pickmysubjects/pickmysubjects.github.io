@@ -15,7 +15,7 @@ export const zhCN: Messages = {
   nav: { home: '首页', browse: '找课', more: '更多', plan: '排课', recommend: '推荐', record: '我的', contribute: '添加数据', feedback: '反馈', main: '主导航' },
   period: { summer: '夏季学期', 'semester-1': '第一学期', winter: '冬季学期', 'semester-2': '第二学期' },
   periodShort: { summer: '夏季', 'semester-1': 'S1', winter: '冬季', 'semester-2': 'S2' },
-  category: { science: '理科', breadth: 'Breadth', discipline: '专业', core: '必修' },
+  category: { science: '理科', commerce: '商科', breadth: 'Breadth', core: '必修' },
   plan: {
     pastTag: "已修",
     pastUndated: "已修 · 学期未填",
@@ -550,13 +550,14 @@ export const zhCN: Messages = {
     empty: "没有符合的课。试试去掉一个条件。",
     more: "显示更多（还有 {n} 门）",
     notRunning: "今年不开",
+    closedForYou: "你的学位不能选",
     metaExam: "考试 {n}%",
     metaNoExam: "没有考试",
     metaHours: "每周上课 {n} 小时",
     metaNoPrereq: "不需要先修课",
     coverage: "目前有 {n} 门课，其中 Breadth 课 {breadth} 门。",
     preset: { firstSemester: "新生第一学期", breadth: "Breadth 课", noExam: "没有期末考试" },
-    cat: { science: "理科", breadth: "Breadth", discipline: "本学位课" },
+    cat: { science: "理科", commerce: "商科", breadth: "Breadth" },
   },
   majors: {
     statCore: "三年级必修",
@@ -681,7 +682,7 @@ export const zhCN: Messages = {
     firstStep2: "剩下的位置选你感兴趣的课，或者 Breadth 课。",
     firstStep3: "在 my.unimelb 选课（enrol），然后去 My Timetable 选上课时间。",
     firstStep4: "上了觉得不喜欢？census date 之前还能免费退。国际学生退课前先问 Stop 1。",
-    breadthText: "Breadth 就是你学位以外的课，比如读理科的去上商科、文科或者语言课。理学士至少要修 50 学分（4 门）Breadth，其中一年级的最多算 25 学分。",
+    breadthText: "Breadth 就是你学位以外的课：读理科的去上商科、文科，读商科的去上理科、文科。每门课的 Handbook 页面会写明哪些学位可以把它当 Breadth。理学士至少要修 50 学分（4 门），一年级的最多算 25 学分；商学士要修 50 到 62.5 学分，一年级的最多算 37.5 学分。",
     firstFind: "找第一学期能上的课",
     firstPlan: "去排课",
     eyebrow: "入门",
@@ -944,7 +945,7 @@ export const zhCN: Messages = {
     },
     'rules-change': {
       q: '规则每年都在变，不同学位、主修、本科/硕士/博士也不一样。',
-      a: "排课按 2026 年 Handbook 的理学士规则。请务必在 Handbook 和 My Course Planner 里再确认。",
+      a: "排课按 2026 年 Handbook 里你所读学位的规则（理学士或商学士）。请务必在 Handbook 和 My Course Planner 里再确认。",
     },
     future: {
       q: '哪些课能帮我走向毕业后想去的方向？',

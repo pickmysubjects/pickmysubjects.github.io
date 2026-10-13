@@ -28,6 +28,11 @@ source_year: 2026
 verified_on: 2026-10-10
 categories:
   B-SCI: science
+breadth_for:
+  - Bachelor of Arts
+  - Bachelor of Commerce
+  - Bachelor of Design
+  - Bachelor of Music
 notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
 skills:
   - maths

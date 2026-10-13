@@ -22,6 +22,10 @@ non_allowed:
   - MAST20026
 categories:
   B-SCI: science
+breadth_for:
+  - Bachelor of Commerce
+  - Bachelor of Design
+  - Bachelor of Music
 handbook: https://handbook.unimelb.edu.au/2026/subjects/mast20033
 source_year: 2026
 verified_on: 2026-10-07

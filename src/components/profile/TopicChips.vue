@@ -1,12 +1,15 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { courseFocus } from '@/engine'
 import { TOPIC_GROUPS } from '@/utils/topicGroups'
+import { useDataset } from '@/composables/useDataset'
 import { useI18n } from '@/i18n'
 
 /** Interest chips, grouped by area; only topics that some subject in the data covers. */
 const interests = defineModel<string[]>({ required: true })
 const props = defineProps<{ topics: string[] }>()
 const { t, locale } = useI18n()
+const { data, course } = useDataset()
 
 const groups = computed(() => {
   const known = new Set(props.topics)
@@ -16,7 +19,10 @@ const groups = computed(() => {
   // A topic added to the schema but not to a group still shows up.
   const rest = props.topics.filter((x) => !grouped.has(x)).sort(byName)
   if (rest.length) out.push({ id: 'other', topics: rest })
-  return out.filter((g) => g.topics.length > 0)
+  // Fields the student's own degree covers most come first.
+  const weight = courseFocus(data.value, course.value).topics
+  const size = (g: { topics: string[] }) => g.topics.reduce((n, x) => n + (weight.get(x) ?? 0), 0)
+  return out.filter((g) => g.topics.length > 0).sort((a, b) => size(b) - size(a))
 })
 
 function toggle(topic: string): void {

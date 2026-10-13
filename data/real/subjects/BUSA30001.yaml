@@ -1,0 +1,28 @@
+code: BUSA30001
+title: Business Case Analysis
+level: 3
+points: 12.5
+offerings: unknown
+prerequisites:
+  all:
+    - points:
+        min: 100
+    - manual: Students must obtain written permission to enrol in this subject by emailing the Subject Coordinator. Students must have completed at least 100 points of prior study.
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: presentation
+    weight: 20
+    group: true
+  - kind: presentation
+    weight: 30
+    group: true
+  - kind: presentation
+    weight: 30
+    group: true
+  - kind: report
+    weight: 20
+handbook: https://handbook.unimelb.edu.au/2026/subjects/busa30001
+source_year: 2026
+verified_on: 2026-10-13
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

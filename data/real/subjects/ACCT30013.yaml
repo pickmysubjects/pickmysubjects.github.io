@@ -1,0 +1,22 @@
+code: ACCT30013
+title: Contemporary Issues in Reporting
+level: 3
+points: 12.5
+offerings: unknown
+prerequisites: ACCT20008
+corequisites: none
+non_allowed:
+  - ACCT20002
+assessment:
+  - kind: participation
+    weight: 10
+  - kind: assignment
+    weight: 10
+  - kind: quiz
+    weight: 20
+  - kind: exam
+    weight: 60
+handbook: https://handbook.unimelb.edu.au/2026/subjects/acct30013
+source_year: 2026
+verified_on: 2026-10-13
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

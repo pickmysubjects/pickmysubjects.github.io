@@ -40,6 +40,7 @@ export function subjectYaml(draft: SubjectDraft, parsed: PasteResult, today = ne
     non_allowed: parsed.nonAllowed,
     ...(parsed.assessment === 'unknown' ? {} : { assessment: parsed.assessment }),
     ...(parsed.weeklyContactHours ? { weekly_contact_hours: parsed.weeklyContactHours } : {}),
+    ...(parsed.breadthFor ? { breadth_for: parsed.breadthFor } : {}),
     handbook: draft.handbook ?? `https://handbook.unimelb.edu.au/${draft.year}/subjects/${draft.code.toLowerCase()}`,
     source_year: draft.year,
     verified_on: localDate(today),

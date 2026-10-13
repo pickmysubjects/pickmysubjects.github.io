@@ -1,0 +1,45 @@
+code: MGMT20001
+source: StudentVIP
+url: https://studentvip.com.au/unimelb/subjects/mgmt20001
+reviews: 10
+from: 2018
+to: 2026
+checked: 2026-10-13
+points:
+  - en: "Most reviewers, including the newest, say it is hard to score highly: marking felt rigid or harsh for such a subjective subject, and effort did not always match marks."
+    zh: "多数评价（包括最新的）认为很难拿高分：对这样主观的科目来说评分死板或偏严，付出与分数不一定成正比。"
+    zh-TW: "多數評價（包括最新的）認為很難拿高分：以這麼主觀的科目來說評分死板或偏嚴，付出與分數不一定成正比。"
+    ja: "最新を含む多くのレビューが高得点は難しいとしている。主観的な科目なのに採点が硬直的・厳しく、努力が点に結びつかないことも。"
+    ko: "최신 리뷰를 포함해 대부분이 고득점이 어렵다고 한다. 주관적인 과목인데 채점이 경직되거나 엄하고, 노력만큼 점수가 나오지 않기도 했다."
+    vi: "Phần lớn đánh giá, kể cả mới nhất, nói khó đạt điểm cao: chấm cứng nhắc hoặc khắt khe với một môn chủ quan, và công sức không luôn tương xứng với điểm."
+    ms: "Kebanyakan pengulas, termasuk yang terbaru, kata sukar dapat markah tinggi: pemarkahan terasa kaku atau keras untuk subjek yang subjektif, dan usaha tidak selalu sepadan markah."
+    id: "Sebagian besar pengulas, termasuk yang terbaru, bilang sulit dapat nilai tinggi: penilaian terasa kaku atau keras untuk mata kuliah yang subjektif, dan usaha tak selalu sebanding nilai."
+    hi: "ज़्यादातर रिव्यूअर्स, सबसे नए समेत, कहते हैं कि ऊँचे अंक लाना मुश्किल है: इतने सब्जेक्टिव विषय के लिए मार्किंग कठोर या सख़्त लगी, और मेहनत के हिसाब से अंक हमेशा नहीं मिले।"
+  - en: "The large group assignment is the main pain point; several ended up carrying the work themselves, so choose teammates with care."
+    zh: "占比大的小组作业是最大痛点；好几位最后自己扛下了大部分工作，所以要慎选组员。"
+    zh-TW: "占比大的小組作業是最大痛點；好幾位最後自己扛下大部分工作，所以要慎選組員。"
+    ja: "大きなグループ課題が一番の悩みどころ。結局ほぼ一人でこなした人も複数いるので、メンバーは慎重に選ぼう。"
+    ko: "비중 큰 조별 과제가 가장 큰 고충이다. 결국 혼자 대부분을 떠맡은 사람이 여럿이니 조원을 신중히 고르자."
+    vi: "Bài nhóm lớn là điểm khổ nhất; vài người phải tự gánh phần lớn công việc, nên hãy chọn đồng đội cẩn thận."
+    ms: "Tugasan kumpulan besar ialah masalah utama; beberapa orang akhirnya buat sendiri, jadi pilih rakan sepasukan dengan teliti."
+    id: "Tugas kelompok besar adalah titik paling menyulitkan; beberapa orang akhirnya mengerjakan sendiri, jadi pilih rekan dengan cermat."
+    hi: "बड़ा ग्रुप असाइनमेंट सबसे बड़ी परेशानी है; कई लोगों को ज़्यादातर काम खुद करना पड़ा, इसलिए साथी सोच-समझकर चुनें."
+  - en: "Contact hours are light. Some liked the case studies and found the concepts easy to apply; others found lectures and tutorials vague."
+    zh: "上课时间少。有人喜欢案例分析、觉得概念容易应用；也有人觉得讲座和辅导课内容含糊。"
+    zh-TW: "上課時數少。有人喜歡案例分析、覺得概念容易應用；也有人覺得講座和輔導課內容含糊。"
+    ja: "授業時間は少なめ。ケーススタディが好きで概念も応用しやすいという人もいれば、講義やチュートリアルが曖昧だという人も。"
+    ko: "수업 시간은 적다. 사례 연구가 좋고 개념 적용이 쉽다는 사람도 있지만, 강의와 튜토리얼이 모호하다는 사람도 있다."
+    vi: "Số giờ lên lớp ít. Có người thích case study và thấy dễ áp dụng khái niệm; người khác thấy bài giảng và tutorial mơ hồ."
+    ms: "Waktu kelas sedikit. Ada yang suka kajian kes dan dapati konsep mudah diaplikasi; yang lain dapati kuliah dan tutorial kabur."
+    id: "Jam tatap muka sedikit. Ada yang suka studi kasus dan merasa konsepnya mudah diterapkan; yang lain merasa kuliah dan tutorial kurang jelas."
+    hi: "क्लास के घंटे कम हैं। कुछ को केस स्टडी पसंद आईं और कॉन्सेप्ट लागू करना आसान लगा; कुछ को लेक्चर और ट्यूटोरियल अस्पष्ट लगे।"
+  - en: "Tips: attend classes, don't miss the graded weekly quiz, and expect essays to need extra research."
+    zh: "建议：按时上课，别漏掉计分的每周小测，论文需要额外查资料。"
+    zh-TW: "建議：按時上課，別漏掉計分的每週小測，論文需要額外查資料。"
+    ja: "コツ：授業に出る、採点される毎週のクイズを忘れない、エッセイには追加の調査が必要。"
+    ko: "팁: 수업에 출석하고, 점수에 들어가는 주간 퀴즈를 놓치지 말고, 에세이는 추가 조사가 필요하다."
+    vi: "Mẹo: đi học đầy đủ, đừng bỏ bài quiz hằng tuần có tính điểm, và bài luận cần tìm thêm tài liệu."
+    ms: "Tip: hadiri kelas, jangan terlepas kuiz mingguan yang bermarkah, dan esei perlukan kajian tambahan."
+    id: "Tips: hadiri kelas, jangan lewatkan kuis mingguan yang dinilai, dan esai butuh riset tambahan."
+    hi: "सुझाव: क्लास में जाएँ, नंबर वाला साप्ताहिक क्विज़ न छोड़ें, और निबंधों के लिए अतिरिक्त रिसर्च की उम्मीद रखें।"
+difficulty: hard

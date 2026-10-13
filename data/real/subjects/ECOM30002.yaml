@@ -1,0 +1,64 @@
+code: ECOM30002
+title: Econometrics 2
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+    - semester-2
+prerequisites:
+  any:
+    - all:
+        - any:
+            - ECON20001
+            - ECON20002
+            - FNCE10002
+            - FNCE20001
+        - any:
+            - ECOM20001
+            - ECOM30001
+            - MAST20005
+    - all:
+        - any:
+            - ECON20001
+            - ECON20002
+            - FNCE10002
+            - FNCE20001
+        - ECON20003
+    - any:
+        - admission: GD-ECO
+          note: Admission into the GD-ECO Graduate Diploma in Economics
+        - admission: MC-ECO
+          note: Admission into the MC-ECO Master of Economics
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: project
+    weight: 5
+  - kind: test
+    weight: 10
+  - kind: project
+    weight: 10
+  - kind: project
+    weight: 25
+  - kind: exam
+    weight: 50
+handbook: https://handbook.unimelb.edu.au/2026/subjects/ecom30002
+source_year: 2026
+verified_on: 2026-10-13
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+breadth_for:
+  - Bachelor of Arts
+  - Bachelor of Biomedicine
+  - Bachelor of Design
+  - Bachelor of Fine Arts (Acting)
+  - Bachelor of Fine Arts (Animation)
+  - Bachelor of Fine Arts (Dance)
+  - Bachelor of Fine Arts (Film and Television)
+  - Bachelor of Fine Arts (Music Theatre)
+  - Bachelor of Fine Arts (Production)
+  - Bachelor of Fine Arts (Screenwriting)
+  - Bachelor of Fine Arts (Theatre)
+  - Bachelor of Fine Arts (Visual Art)
+  - Bachelor of Music
+  - Bachelor of Science

@@ -337,4 +337,43 @@ describe('an examination held mid-semester', () => {
     const r = parseHandbookPaste(text)
     expect(r.assessment).toEqual([{ kind: 'test', weight: 25 }, { kind: 'exam', weight: 75 }])
   })
+
+  describe('requirement layouts from commerce pages', () => {
+    const row = (c: string) => `${c}\tSome Subject\tSemester 1 (On Campus - Parkville)\n12.5`
+    const table = (...cs: string[]) => `Code\tName\tTeaching period\tCredit Points\n${cs.map(row).join('\n')}`
+    const pre = (body: string) => parseHandbookPaste(`Prerequisites\n${body}\nCorequisites\nNone\n`)
+
+    it('a concurrent table after "One of" adds to that choice, not a corequisite', () => {
+      const r = pre(`One of\n\n${table('MAST10007', 'MAST10008')}\n\nNote: the following subject/s can also be taken concurrently (at the same time)\n\n${table('MAST10006')}`)
+      expect(r.prerequisites).toEqual({ any: [{ subject: 'MAST10007' }, { subject: 'MAST10008' }, { subject: 'MAST10006' }] })
+      expect(r.corequisites).toBe('none')
+    })
+
+    it('titled "Option 1 - …" headings are alternatives', () => {
+      const r = pre(`Students must meet one of the following prerequisite options:\nOption 1 - Standard path\n${table('ECON20002')}\nOption 2 - Mathematics path\n${table('MAST20005')}`)
+      expect(r.prerequisites).toEqual({ any: [{ subject: 'ECON20002' }, { subject: 'MAST20005' }] })
+    })
+
+    it('only the rule in force applies when older years are listed', () => {
+      const r = pre(`For 2020, students must have completed both of:\n${table('MAST20005', 'ACTL20002')}\nFrom 2021, students must have completed both of:\n${table('ACTL20003', 'MAST20005')}`)
+      expect(r.prerequisites).toEqual({ all: [{ subject: 'ACTL20003' }, { subject: 'MAST20005' }] })
+    })
+
+    it('options written in words are alternatives; "or" is a choice inside one', () => {
+      const r = pre(`Students must meet one of the following prerequisite options:\n\nA total of 150 (out of 200) or more across MAST10006 or MAST10021 and MAST10007;\nA pass in both MAST10008 and MAST10009.\n${table('MAST10006', 'MAST10007', 'MAST10008', 'MAST10009', 'MAST10021')}`)
+      expect(r.prerequisites).toEqual({
+        any: [
+          { all: [{ any: [{ subject: 'MAST10006' }, { subject: 'MAST10021' }] }, { subject: 'MAST10007' }] },
+          { all: [{ subject: 'MAST10008' }, { subject: 'MAST10009' }] },
+        ],
+      })
+      expect(r.warnings.join(' ')).toMatch(/combined mark/)
+    })
+
+    it('a points-of-study condition is a points rule, with permission only when it is extra', () => {
+      expect(pre('Completion of 100 credit points of study').prerequisites).toEqual({ points: { min: 100 } })
+      const r = pre('Students must obtain written permission to enrol in this subject. Students must have completed at least 100 points of prior study.')
+      expect(r.prerequisites).toMatchObject({ all: [{ points: { min: 100 } }, { manual: expect.any(String) }] })
+    })
+  })
 })

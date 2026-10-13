@@ -50,7 +50,8 @@ const coreq = computed(() => {
   return co && co !== 'none' && co !== 'unknown' ? describeReq(t.value, co, plan.setup.value.course) : ''
 })
 const blocks = computed(() => (subject.value && subject.value.nonAllowed !== 'unknown' ? subject.value.nonAllowed : []))
-const category = computed(() => categoryLabel(t.value, subject.value?.categories[plan.setup.value.course]))
+const closedForYou = computed(() => data.value.courses.some((c) => c.code === plan.setup.value.course && c.closed.includes(subject.value?.code ?? '')))
+const category = computed(() => (closedForYou.value ? t.value('browse.closedForYou') : categoryLabel(t.value, subject.value?.categories[plan.setup.value.course])))
 const inPlan = computed(() => plan.plannedCodes.value.includes(code.value))
 const taken = computed(() => profile.value.results.some((r) => r.code === code.value))
 // Already passed (from My page): nothing to add; a fail can be planned again as a retake.

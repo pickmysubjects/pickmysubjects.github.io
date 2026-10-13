@@ -4,10 +4,10 @@ title: Bachelor of Commerce
 year: 2026
 total_points: 300
 standard_load: 50
-categories: [discipline, breadth]
+categories: [commerce, breadth]
 # Breadth is anything outside the Faculty of Business and Economics; these are its subject areas.
 area_categories:
-  home: discipline
+  home: commerce
   areas: [ACCT, ACTL, BUSA, CMCE, ECOM, ECON, FNCE, MGMT, MKTG]
   other: breadth
 # Not available to B-COM students commencing from 2026.
@@ -39,24 +39,24 @@ rules:
     description: The standard or the mathematics quantitative path
   - id: commerce
     kind: points
-    category: discipline
+    category: commerce
     min: 237.5
     description: At least 237.5 points of commerce subjects
   - id: commerce-l1
     kind: points
-    category: discipline
+    category: commerce
     level: 1
     min: 62.5
     description: At least 62.5 points of level-1 commerce
   - id: commerce-l2
     kind: points
-    category: discipline
+    category: commerce
     level: 2
     min: 62.5
     description: At least 62.5 points of level-2 commerce
   - id: commerce-l3
     kind: points
-    category: discipline
+    category: commerce
     level: 3
     min: 50
     description: At least 50 points of level-3 commerce

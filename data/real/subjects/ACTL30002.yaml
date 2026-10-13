@@ -1,0 +1,40 @@
+code: ACTL30002
+title: Actuarial Modelling II
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites:
+  all:
+    - MAST20005
+    - ACTL20002
+    - ACTL20003
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: assignment
+    weight: 15
+  - kind: assignment
+    weight: 15
+  - kind: exam
+    weight: 70
+    hurdle: true
+weekly_contact_hours: 3
+handbook: https://handbook.unimelb.edu.au/2026/subjects/actl30002
+source_year: 2026
+verified_on: 2026-10-13
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+breadth_for:
+  - Bachelor of Arts
+  - Bachelor of Design
+  - Bachelor of Fine Arts (Acting)
+  - Bachelor of Fine Arts (Animation)
+  - Bachelor of Fine Arts (Dance)
+  - Bachelor of Fine Arts (Film and Television)
+  - Bachelor of Fine Arts (Music Theatre)
+  - Bachelor of Fine Arts (Production)
+  - Bachelor of Fine Arts (Screenwriting)
+  - Bachelor of Fine Arts (Theatre)
+  - Bachelor of Fine Arts (Visual Art)
+  - Bachelor of Music

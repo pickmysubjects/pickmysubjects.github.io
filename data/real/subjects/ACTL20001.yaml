@@ -1,0 +1,81 @@
+code: ACTL20001
+title: Introductory Financial Mathematics
+level: 2
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites:
+  any:
+    - all:
+        - any:
+            - MAST10006
+            - MAST10021
+        - any:
+            - MAST10007
+            - MAST10022
+    - all:
+        - MAST10008
+        - MAST10009
+    - all:
+        - any:
+            - MAST10007
+            - MAST10022
+        - MAST10009
+    - all:
+        - MAST10008
+        - any:
+            - MAST10006
+            - MAST10021
+    - all:
+        - MAST10019
+        - MAST10018
+        - MAST20026
+    - all:
+        - MAST10019
+        - any:
+            - MAST10007
+            - MAST10022
+        - MAST20026
+    - all:
+        - MAST10018
+        - MAST10009
+    - all:
+        - MAST10018
+        - MAST10019
+    - all:
+        - MAST10018
+        - any:
+            - MAST10006
+            - MAST10021
+    - all:
+        - MAST10013
+        - MAST10009
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: assignment
+    weight: 15
+  - kind: assignment
+    weight: 15
+  - kind: exam
+    weight: 70
+    hurdle: true
+weekly_contact_hours: 3
+handbook: https://handbook.unimelb.edu.au/2026/subjects/actl20001
+source_year: 2026
+verified_on: 2026-10-13
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+breadth_for:
+  - Bachelor of Arts
+  - Bachelor of Design
+  - Bachelor of Fine Arts (Acting)
+  - Bachelor of Fine Arts (Animation)
+  - Bachelor of Fine Arts (Dance)
+  - Bachelor of Fine Arts (Film and Television)
+  - Bachelor of Fine Arts (Music Theatre)
+  - Bachelor of Fine Arts (Production)
+  - Bachelor of Fine Arts (Screenwriting)
+  - Bachelor of Fine Arts (Theatre)
+  - Bachelor of Fine Arts (Visual Art)
+  - Bachelor of Music

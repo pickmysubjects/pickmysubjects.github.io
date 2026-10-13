@@ -287,13 +287,31 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
     }
   }
 
+  // Also what the required subjects' own prerequisites name, two steps down: Actuarial's
+  // ACTL subjects build on MAST20004/MAST20005, the mathematics path's subjects.
+  const named = new Set<string>()
+  let frontier = [...required]
+  for (let depth = 0; depth < 2; depth++) {
+    const next: string[] = []
+    for (const c of frontier) {
+      const s = data.subjects[c]
+      for (const r of s ? [...referencedSubjects(s.prerequisites), ...referencedSubjects(s.corequisites)] : []) if (!named.has(r)) (named.add(r), next.push(r))
+    }
+    frontier = next
+  }
+
   // A course requirement with several paths (B-COM's standard or mathematics quantitative path):
   // the path that shares most with what's done or already required, else the first one listed.
   for (const rule of course?.rules ?? []) {
     if (rule.kind !== 'requirement') continue
-    const overlap = (path: ComponentReq[]) =>
-      path.flatMap((r) => ('all' in r ? r.all : r.choose.from)).filter((c) => done.has(c) || required.has(c)).length
-    const path = rule.paths.reduce((best, p) => (overlap(p) > overlap(best) ? p : best))
+    const codesOf = (path: ComponentReq[]) => path.flatMap((r) => ('all' in r ? r.all : r.choose.from))
+    // A path with a subject that can't be taken alongside one already required is out.
+    const usable = rule.paths.filter((p) => !(p.flatMap((r) => ('all' in r ? r.all : [])).some((c) => clashes(c, done, required, data))))
+    const score = (path: ComponentReq[]) => {
+      const codes = codesOf(path)
+      return codes.filter((c) => done.has(c) || required.has(c)).length * 10 + codes.filter((c) => named.has(c)).length
+    }
+    const path = (usable.length ? usable : rule.paths).reduce((best, p) => (score(p) > score(best) ? p : best))
     const used = new Set<string>()
     for (const req of path) {
       if ('all' in req) req.all.forEach((c) => (required.add(c), used.add(c)))
@@ -334,8 +352,9 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
     }
     // A summer- or winter-only option comes last: the plan is laid out in semesters.
     const off = (c: string) => (data.subjects[c] && semesterless(data.subjects[c]!) ? 1 : 0)
+    // An option the required subjects build on comes first: picking another would add it anyway.
     const order = [...req.choose.from].sort(
-      (a, b) => off(a) - off(b) || (score.get(b) ?? -1) - (score.get(a) ?? -1) || busy(a) - busy(b),
+      (a, b) => off(a) - off(b) || Number(named.has(b)) - Number(named.has(a)) || (score.get(b) ?? -1) - (score.get(a) ?? -1) || busy(a) - busy(b),
     )
     for (const c of order) {
       if (have >= req.choose.points) break

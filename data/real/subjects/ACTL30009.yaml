@@ -1,0 +1,20 @@
+code: ACTL30009
+title: Advanced Financial Mathematics
+level: 3
+points: 12.5
+offerings: unknown
+prerequisites: none
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: assignment
+    weight: 20
+  - kind: test
+    weight: 10
+  - kind: exam
+    weight: 70
+    hurdle: true
+handbook: https://handbook.unimelb.edu.au/2026/subjects/actl30009
+source_year: 2026
+verified_on: 2026-10-13
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

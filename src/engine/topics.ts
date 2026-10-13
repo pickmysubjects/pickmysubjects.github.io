@@ -18,7 +18,7 @@ export const TOPIC_GROUPS: { id: string; topics: Topic[] }[] = [
  * (most of them). Coarse on purpose: it says "this is a biology subject", not which part.
  */
 const AREA_TOPICS: Record<string, Topic[]> = {
-  ACCT: ['accounting'], ACTL: ['finance', 'statistics'], AGRI: ['agriculture'], ANAT: ['health', 'biology'], ANSC: ['agriculture', 'biology'],
+  ACCT: ['accounting'], BLAW: ['law'], BUSA: ['business', 'data-science'], CMCE: ['business'], ECOM: ['statistics', 'economics'], ACTL: ['finance', 'statistics'], AGRI: ['agriculture'], ANAT: ['health', 'biology'], ANSC: ['agriculture', 'biology'],
   ATOC: ['earth-science'], BCMB: ['biology', 'chemistry'], BIOL: ['biology'], BIOM: ['health', 'biology'], BMEN: ['engineering', 'health'],
   BOTA: ['ecology', 'biology'], BTCH: ['biology'], CEDB: ['engineering'], CHEM: ['chemistry'], CHEN: ['engineering', 'chemistry'],
   COMP: ['programming'], CVEN: ['engineering'], ECOL: ['ecology', 'environment'], ECON: ['economics'], ELEN: ['engineering'],
@@ -51,7 +51,7 @@ const LEX: Record<string, RegExp> = {
   'software-engineering': /software (?:engineering|development|design|modelling)|object.oriented|it project|software projects?/i,
   ai: /artificial intelligence|\bai\b|intelligent|agents?\b|search and planning/i,
   'machine-learning': /machine learning|learning from data|predictive model/i,
-  'data-science': /data science|data processing|data analy|big data|wrangl/i,
+  'data-science': /data science|data processing|data analy|analytics|big data|wrangl/i,
   databases: /database|\bsql\b|data management/i,
   security: /security|privacy|cryptograph/i,
   systems: /operating system|computer systems|network|distributed/i,

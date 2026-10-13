@@ -1,0 +1,30 @@
+code: ACCT30011
+title: International Accounting Study Program
+level: 3
+points: 12.5
+offerings: unknown
+prerequisites:
+  all:
+    - any:
+        - ACCT20001
+        - ACCT20002
+    - manual: Approval from the Subject Coordinator is required to enrol in this subject
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: report
+    weight: 25
+  - kind: participation
+    weight: 5
+    group: true
+  - kind: assignment
+    weight: 5
+  - kind: report
+    weight: 35
+    group: true
+  - kind: test
+    weight: 30
+handbook: https://handbook.unimelb.edu.au/2026/subjects/acct30011
+source_year: 2026
+verified_on: 2026-10-13
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

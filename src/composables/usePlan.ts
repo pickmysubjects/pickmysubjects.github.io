@@ -78,8 +78,27 @@ export function usePlan() {
     plans.value = { ...plans.value, [name.value]: change(cloneJson(state.value)) }
   }
 
-  function updateSetup(setup: PlanSetup): void {
+  /**
+   * Answers to the setup questions. Switching degree keeps the old degree's plan aside, so going
+   * back finds it again: true when that plan was put back as it was (no rebuild needed).
+   */
+  function updateSetup(setup: PlanSetup): boolean {
+    const old = state.value
+    const key = (course: string) => `${name.value}|${course}`
+    if (setup.course !== old.setup.course) {
+      const kept = plans.value[key(setup.course)]
+      const rest = { ...plans.value, [key(old.setup.course)]: cloneJson(old) }
+      delete rest[key(setup.course)]
+      const same = (a: PlanSetup, b: PlanSetup) =>
+        a.major === b.major && a.specialisation === b.specialisation && a.startYear === b.startYear && a.startPeriod === b.startPeriod
+      if (kept && same(kept.setup, setup)) {
+        plans.value = { ...rest, [name.value]: { ...kept, setup: { ...setup, confirmed: true } } }
+        return true
+      }
+      plans.value = rest
+    }
     save((s) => ({ ...s, setup: { ...setup, confirmed: true } }))
+    return false
   }
 
   function generate(): void {

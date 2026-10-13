@@ -1,9 +1,14 @@
 <script setup lang="ts">
-import { SKILLS, type Skill } from '@/engine'
+import { computed } from 'vue'
+import { courseFocus, type Skill } from '@/engine'
+import { useDataset } from '@/composables/useDataset'
 import { useI18n } from '@/i18n'
 
 const skills = defineModel<Partial<Record<Skill, number>>>('skills', { required: true })
 const { t } = useI18n()
+const { data, course } = useDataset()
+// The skills the student's own degree leans on come first (business for B-COM, programming for B-SCI).
+const order = computed(() => courseFocus(data.value, course.value).skills)
 
 // Five steps, like a course survey: 1 = finds it hard … 5 = strong. Blank means "not sure".
 const LEVELS = [1, 2, 3, 4, 5] as const
@@ -24,7 +29,7 @@ function pick(skill: Skill, level: number): void {
       <p class="card-hint">{{ t('record.skillsHint') }}</p>
     </header>
     <ul class="skill-list">
-      <li v-for="s in SKILLS" :key="s" class="skill">
+      <li v-for="s in order" :key="s" class="skill">
         <span class="skill-name">{{ t(`skill.${s}`) }}</span>
         <span class="scale" role="radiogroup" :aria-label="t(`skill.${s}`)">
           <button

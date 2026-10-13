@@ -3,13 +3,17 @@ import { computed } from 'vue'
 import { ChevronRight, Star } from 'lucide-vue-next'
 import type { BrowseRow } from '@/engine'
 import { link } from '@/composables/useView'
+import { useDataset } from '@/composables/useDataset'
 import { useI18n } from '@/i18n'
 
 const props = defineProps<{ row: BrowseRow; course: string }>()
 const { t } = useI18n()
 
 const s = computed(() => props.row.subject)
+const { data } = useDataset()
 const category = computed(() => s.value.categories[props.course])
+// Closed to new students of this course (B-COM's ACCT10002).
+const closed = computed(() => data.value.courses.some((c) => c.code === props.course && c.closed.includes(s.value.code)))
 </script>
 
 <template>
@@ -17,7 +21,8 @@ const category = computed(() => s.value.categories[props.course])
     <span class="main">
       <span class="head">
         <span class="code">{{ s.code }}</span>
-        <span v-if="category === 'breadth'" class="tag tag-breadth">{{ t('browse.cat.breadth') }}</span>
+        <span v-if="closed" class="tag tag-closed">{{ t('browse.closedForYou') }}</span>
+        <span v-else-if="category === 'breadth'" class="tag tag-breadth">{{ t('browse.cat.breadth') }}</span>
       </span>
       <span class="title">{{ s.title }}</span>
       <span class="meta">
@@ -70,6 +75,11 @@ const category = computed(() => s.value.categories[props.course])
   padding: 1px 8px;
   font-size: 0.75rem;
   border-radius: 999px;
+}
+
+.tag-closed {
+  color: var(--bad);
+  background: var(--bad-soft);
 }
 
 .tag-breadth {

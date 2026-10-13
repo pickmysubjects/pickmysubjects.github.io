@@ -13,6 +13,8 @@ import type { Dataset, ReqExpr, ReqField, Skill, Subject } from './schema'
 
 const MATHS_AREAS = new Set(['MAST', 'PHYC', 'ACTL', 'ELEN', 'MCEN', 'CVEN', 'CHEN', 'BMEN', 'ENGR'])
 const PROGRAMMING_AREAS = new Set(['COMP', 'SWEN', 'INFO'])
+// The Faculty of Business and Economics' areas, and business law.
+const BUSINESS_AREAS = new Set(['ACCT', 'ACTL', 'BUSA', 'CMCE', 'ECOM', 'ECON', 'FNCE', 'MGMT', 'MKTG', 'BLAW'])
 // Wet labs, plus the engineering labs and the field-and-lab earth sciences.
 const LAB_AREAS = new Set(['CHEM', 'BCMB', 'MIIM', 'PATH', 'BIOL', 'GENE', 'ZOOL', 'BOTA', 'ANAT', 'PHRM', 'BTCH', 'PHYS', 'NEUR', 'FOOD', 'ANSC', 'VETS', 'AGRI', 'ERTH', 'ELEN', 'BMEN', 'CEDB'])
 
@@ -50,6 +52,9 @@ function inferred(s: Subject, data: Dataset | undefined): Skill[] {
   if (MATHS_AREAS.has(area) && !(area === 'MAST' && STATS_TITLE.test(s.title))) out.add('maths')
   if (area === 'MAST' && STATS_TITLE.test(s.title)) out.add('maths').add('statistics')
   if (PROGRAMMING_AREAS.has(area)) out.add('programming')
+  if (BUSINESS_AREAS.has(area)) out.add('business')
+  // Econometrics is applied statistics.
+  if (area === 'ECOM') out.add('maths').add('statistics')
   for (const [skill, rx] of Object.entries(TITLE) as [Skill, RegExp][]) if (rx.test(s.title)) out.add(skill)
   const tasks = s.assessment ?? []
   // Reports (talks at half weight) worth a fifth of the mark: written work is a real part of it.

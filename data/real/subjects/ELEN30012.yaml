@@ -15,9 +15,6 @@ prerequisites:
         - MAST20029
         - MAST20030
         - MAST20033
-# "Either one of COMP10002/COMP20007/BMEN20003, or BMEN20001, or COMP20005/ENGR20005
-# (these two may also be taken at the same time)". Kept as one group under corequisites
-# so the concurrent options work.
 corequisites:
   any:
     - COMP10002
@@ -42,6 +39,20 @@ source_year: 2026
 verified_on: 2026-10-13
 categories:
   B-SCI: science
+breadth_for:
+  - Bachelor of Arts
+  - Bachelor of Commerce
+  - Bachelor of Design
+  - Bachelor of Fine Arts (Acting)
+  - Bachelor of Fine Arts (Animation)
+  - Bachelor of Fine Arts (Dance)
+  - Bachelor of Fine Arts (Film and Television)
+  - Bachelor of Fine Arts (Music Theatre)
+  - Bachelor of Fine Arts (Production)
+  - Bachelor of Fine Arts (Screenwriting)
+  - Bachelor of Fine Arts (Theatre)
+  - Bachelor of Fine Arts (Visual Art)
+  - Bachelor of Music
 notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
 skills:
   - maths

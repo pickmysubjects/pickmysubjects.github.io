@@ -186,11 +186,13 @@ export const subjectFileSchema = z
     offerings,
     // Where breadth students may only enrol in some of the periods (ECON10004: not semester 1),
     // those periods; used whenever the subject counts as breadth for the student's course.
+    // Course titles the Handbook lists as able to take it as breadth ([] = none); absent when unknown.
+    breadth_for: z.array(z.string().min(1)).optional(),
     breadth_offerings: z.record(z.string().regex(/^\d{4}$/), z.array(z.enum(PERIODS))).optional(),
     prerequisites: reqField,
     corequisites: reqField,
     non_allowed: z.union([z.literal('unknown'), z.array(subjectCode)]).default('unknown'),
-    categories: z.record(z.string(), z.enum(['science', 'breadth', 'discipline', 'core'])).default({}),
+    categories: z.record(z.string(), z.enum(['science', 'commerce', 'breadth', 'core'])).default({}),
     skills: z.array(z.enum(SKILLS)).default([]),
     topics: z.array(z.enum(TOPICS)).default([]),
     // Semester version from the Handbook; weights add up to 100.
@@ -222,6 +224,7 @@ export const subjectFileSchema = z
     area: s.area ?? s.code.slice(0, 4),
     offerings: s.offerings,
     breadthOfferings: s.breadth_offerings,
+    breadthFor: s.breadth_for,
     prerequisites: s.prerequisites,
     corequisites: s.corequisites,
     nonAllowed: s.non_allowed,
@@ -309,7 +312,7 @@ export const aboutFileSchema = z
 
 export type SubjectAbout = z.output<typeof aboutFileSchema>
 // 'core': counts towards the course total only, in none of its category rules (B-SCI's SCIE10005).
-export type SubjectCategory = 'science' | 'breadth' | 'discipline' | 'core'
+export type SubjectCategory = 'science' | 'commerce' | 'breadth' | 'core'
 
 const componentReq = z.union([
   z.object({ all: z.array(subjectCode).min(1) }).strict(),
@@ -375,7 +378,7 @@ export const courseFileSchema = z
     categories: z.array(z.string()).default([]),
     // Subjects with no category of their own for this course get one from their area (code
     // prefix): the course's own areas are `home`, every other subject is `other` (e.g. breadth).
-    area_categories: z.object({ home: z.string(), areas: z.array(z.string().regex(/^[A-Z]{4}$/)).min(1), other: z.string() }).strict().optional(),
+    area_categories: z.object({ home: z.string().optional(), areas: z.array(z.string().regex(/^[A-Z]{4}$/)).default([]), other: z.string() }).strict().optional(),
     // Subjects this course's students can't count (closed to new students): they get no category
     // for it, so suggestions and the planner leave them out.
     closed: z.array(subjectCode).default([]),

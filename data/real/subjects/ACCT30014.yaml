@@ -1,0 +1,22 @@
+code: ACCT30014
+title: Business Forensics and Fraud
+level: 3
+points: 12.5
+offerings: unknown
+prerequisites: ACCT20008
+corequisites: none
+non_allowed:
+  - ACCT20006
+assessment:
+  - kind: participation
+    weight: 10
+  - kind: assignment
+    weight: 30
+    group: true
+  - kind: exam
+    weight: 60
+    hurdle: true
+handbook: https://handbook.unimelb.edu.au/2026/subjects/acct30014
+source_year: 2026
+verified_on: 2026-10-13
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

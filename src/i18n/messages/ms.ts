@@ -15,7 +15,7 @@ export const ms: Messages = {
   nav: { home: 'Utama', browse: 'Subjek', more: 'Lagi', plan: 'Rancangan', recommend: 'Untuk anda', record: 'Saya', contribute: 'Tambah data', feedback: 'Maklum balas', main: 'Menu utama' },
   period: { summer: 'Penggal musim panas', 'semester-1': 'Semester 1', winter: 'Penggal musim sejuk', 'semester-2': 'Semester 2' },
   periodShort: { summer: 'Musim panas', 'semester-1': 'Sem 1', winter: 'Musim sejuk', 'semester-2': 'Sem 2' },
-  category: { science: 'sains', breadth: 'breadth', discipline: 'bidang', core: 'teras' },
+  category: { science: 'sains', commerce: 'perdagangan', breadth: 'breadth', core: 'teras' },
   plan: {
     pastTag: "Sudah diambil",
     pastUndated: "Sudah diambil · semester belum diisi",
@@ -550,13 +550,14 @@ export const ms: Messages = {
     empty: "Tiada yang sepadan. Cuba buang satu tapisan.",
     more: "Tunjuk lagi ({n} lagi)",
     notRunning: "Tidak ditawarkan tahun ini",
+    closedForYou: "Tidak dibuka untuk ijazah anda",
     metaExam: "Peperiksaan {n}%",
     metaNoExam: "Tiada peperiksaan",
     metaHours: "{n} jam kelas seminggu",
     metaNoPrereq: "Tiada prasyarat",
     coverage: "{n} subjek setakat ini, {breadth} daripadanya breadth.",
     preset: { firstSemester: "Semester pertama", breadth: "Breadth", noExam: "Tiada peperiksaan akhir" },
-    cat: { science: "Sains", breadth: "Breadth", discipline: "Dalam ijazah" },
+    cat: { science: "Sains", commerce: "Perdagangan", breadth: "Breadth" },
   },
   majors: {
     statCore: "Teras tahun tiga",
@@ -681,7 +682,7 @@ export const ms: Messages = {
     firstStep2: "Selebihnya isi dengan subjek yang anda minat, atau breadth.",
     firstStep3: "Daftar (enrol) di my.unimelb, kemudian pilih masa kelas di My Timetable.",
     firstStep4: "Tak suka subjek itu? Sebelum census date anda masih boleh gugurkan secara percuma. Pelajar antarabangsa, tanya Stop 1 dulu.",
-    breadthText: "Breadth ialah subjek di luar bidang ijazah anda, contohnya perniagaan, sastera atau bahasa jika anda belajar sains. Dalam Bachelor of Science anda perlu sekurang-kurangnya 50 mata (4 subjek) breadth, dan tidak lebih 25 mata daripadanya di tahap 1.",
+    breadthText: "Breadth ialah subjek di luar ijazah anda: perdagangan atau sastera untuk pelajar sains, sains atau sastera untuk pelajar perdagangan. Halaman Handbook setiap subjek menyenaraikan ijazah yang boleh mengambilnya sebagai breadth. Bachelor of Science: sekurang-kurangnya 50 mata (4 subjek), paling banyak 25 di tahap 1. Bachelor of Commerce: 50 hingga 62.5 mata, paling banyak 37.5 di tahap 1.",
     firstFind: "Cari subjek semester pertama",
     firstPlan: "Buka halaman Rancangan",
     eyebrow: "Panduan",
@@ -944,7 +945,7 @@ export const ms: Messages = {
     },
     'rules-change': {
       q: 'Peraturan berubah setiap tahun dan berbeza mengikut ijazah, major, sarjana muda/sarjana/PhD.',
-      a: "Rancangan mengikut peraturan Bachelor of Science daripada Handbook 2026. Sentiasa sahkan dalam Handbook dan My Course Planner.",
+      a: "Rancangan mengikut peraturan ijazah anda (Bachelor of Science atau Bachelor of Commerce) daripada Handbook 2026. Sentiasa sahkan dalam Handbook dan My Course Planner.",
     },
     future: {
       q: 'Subjek mana membawa ke arah yang saya mahu selepas tamat pengajian?',

@@ -146,8 +146,7 @@ const summary = computed(() =>
 )
 
 function finishWizard(setup: PlanSetup): void {
-  plan.updateSetup(setup)
-  plan.generate()
+  if (!plan.updateSetup(setup)) plan.generate()
   editing.value = false
 }
 </script>

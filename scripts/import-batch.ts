@@ -55,6 +55,8 @@ for (const file of positionals) {
     const doc = parse(subjectYaml({ code, title, level, points, year: Number(values.year) }, parsed)) as Record<string, unknown>
     if (doc.offerings === 'unknown' && old.offerings) doc.offerings = old.offerings
     for (const k of KEEP) if (old[k] !== undefined) doc[k] = old[k]
+    // A paste without its "Breadth options" part keeps the list we already had.
+    if (doc.breadth_for === undefined && old.breadth_for !== undefined) doc.breadth_for = old.breadth_for
     doc.notes = `Source: ${values.year} University of Melbourne Handbook; facts summarised and checked.`
     writeFileSync(path, stringify(doc, { lineWidth: 0 }))
     written++

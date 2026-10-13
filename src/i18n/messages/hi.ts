@@ -15,7 +15,7 @@ export const hi: Messages = {
   nav: { home: 'होम', browse: 'सब्जेक्ट', more: 'और', plan: 'प्लान', recommend: 'आपके लिए', record: 'मेरा', contribute: 'डेटा जोड़ें', feedback: 'फ़ीडबैक', main: 'मुख्य मेन्यू' },
   period: { summer: 'समर टर्म', 'semester-1': 'सेमेस्टर 1', winter: 'विंटर टर्म', 'semester-2': 'सेमेस्टर 2' },
   periodShort: { summer: 'समर', 'semester-1': 'सेम 1', winter: 'विंटर', 'semester-2': 'सेम 2' },
-  category: { science: 'साइंस', breadth: 'ब्रेड्थ', discipline: 'विषय-क्षेत्र', core: 'अनिवार्य' },
+  category: { science: 'साइंस', commerce: 'कॉमर्स', breadth: 'ब्रेड्थ', core: 'अनिवार्य' },
   plan: {
     pastTag: "पूरा",
     pastUndated: "पूरा · सेमेस्टर नहीं भरा",
@@ -550,13 +550,14 @@ export const hi: Messages = {
     empty: "कुछ नहीं मिला। कोई एक फ़िल्टर हटाकर देखें।",
     more: "और दिखाएँ ({n} बाकी)",
     notRunning: "इस साल नहीं चल रहा",
+    closedForYou: "आपकी डिग्री के लिए उपलब्ध नहीं",
     metaExam: "परीक्षा {n}%",
     metaNoExam: "परीक्षा नहीं",
     metaHours: "हफ़्ते में {n} घंटे क्लास",
     metaNoPrereq: "कोई प्रीरिक्विज़िट नहीं",
     coverage: "अब तक {n} सब्जेक्ट, जिनमें {breadth} breadth हैं।",
     preset: { firstSemester: "पहला सेमेस्टर", breadth: "Breadth", noExam: "फ़ाइनल परीक्षा नहीं" },
-    cat: { science: "साइंस", breadth: "Breadth", discipline: "डिग्री विषय" },
+    cat: { science: "साइंस", commerce: "कॉमर्स", breadth: "Breadth" },
   },
   majors: {
     statCore: "तीसरे साल के अनिवार्य",
@@ -681,7 +682,7 @@ export const hi: Messages = {
     firstStep2: "बाकी जगह उन सब्जेक्ट से भरें जिनमें दिलचस्पी है, या breadth से।",
     firstStep3: "my.unimelb में एनरोल करें, फिर My Timetable में क्लास का समय चुनें।",
     firstStep4: "सब्जेक्ट पसंद नहीं आया? census date से पहले मुफ़्त में छोड़ सकते हैं। इंटरनेशनल स्टूडेंट पहले Stop 1 से पूछें।",
-    breadthText: "Breadth का मतलब है आपकी डिग्री के बाहर के सब्जेक्ट, जैसे साइंस पढ़ रहे हैं तो कॉमर्स, आर्ट्स या कोई भाषा। Bachelor of Science में कम से कम 50 पॉइंट (4 सब्जेक्ट) breadth चाहिए, और उनमें लेवल 1 के 25 पॉइंट से ज़्यादा नहीं गिने जाते।",
+    breadthText: "Breadth का मतलब है आपकी डिग्री के बाहर के सब्जेक्ट: साइंस वालों के लिए कॉमर्स या आर्ट्स, कॉमर्स वालों के लिए साइंस या आर्ट्स। हर सब्जेक्ट के Handbook पेज पर लिखा होता है कि कौन सी डिग्री उसे breadth के रूप में ले सकती है। Bachelor of Science: कम से कम 50 पॉइंट (4 सब्जेक्ट), लेवल 1 के ज़्यादा से ज़्यादा 25। Bachelor of Commerce: 50 से 62.5 पॉइंट, लेवल 1 के ज़्यादा से ज़्यादा 37.5।",
     firstFind: "पहले सेमेस्टर के सब्जेक्ट खोजें",
     firstPlan: "प्लान पेज खोलें",
     eyebrow: "गाइड",
@@ -944,7 +945,7 @@ export const hi: Messages = {
     },
     'rules-change': {
       q: 'नियम हर साल बदलते हैं और डिग्री, मेजर, बैचलर/मास्टर/PhD के हिसाब से अलग होते हैं।',
-      a: "प्लान 2026 Handbook के Bachelor of Science नियमों पर चलता है। हमेशा Handbook और My Course Planner में पक्का करें।",
+      a: "प्लान 2026 Handbook में आपकी डिग्री (Bachelor of Science या Bachelor of Commerce) के नियमों पर चलता है। हमेशा Handbook और My Course Planner में पक्का करें।",
     },
     future: {
       q: 'कौन-से विषय मुझे पढ़ाई के बाद मेरी मंज़िल तक ले जाते हैं?',

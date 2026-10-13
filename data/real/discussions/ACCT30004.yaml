@@ -1,0 +1,35 @@
+code: ACCT30004
+source: StudentVIP
+url: https://studentvip.com.au/unimelb/subjects/acct30004
+reviews: 6
+from: 2013
+to: 2021
+checked: 2026-10-13
+points:
+  - en: "Hard at first without any auditing background, but it gets more enjoyable later; the workload was called manageable."
+    zh: "没有审计基础一开始会觉得难，但后面会越来越有意思；工作量被认为可以应付。"
+    zh-TW: "沒有審計基礎一開始會覺得難，但後面會越來越有趣；工作量被認為可以應付。"
+    ja: "監査の予備知識がないと最初は難しいが、後半は楽しくなる。課題量はこなせる程度とのこと。"
+    ko: "감사 배경이 없으면 처음엔 어렵지만 뒤로 갈수록 재미있어진다. 공부량은 감당할 만하다고 했다."
+    vi: "Lúc đầu khó nếu chưa học kiểm toán, nhưng về sau thú vị hơn; khối lượng bài được cho là vừa sức."
+    ms: "Sukar pada mulanya tanpa latar pengauditan, tetapi makin seronok kemudian; beban kerja dikatakan boleh diurus."
+    id: "Sulit di awal tanpa latar audit, tapi makin menyenangkan kemudian; beban kerjanya disebut masih wajar."
+    hi: "ऑडिटिंग बैकग्राउंड के बिना शुरू में कठिन, पर बाद में मज़ेदार होता जाता है; वर्कलोड संभालने लायक बताया गया।"
+  - en: "Several say lectures stay at a broad level while the exam asks for specific procedures, so the final felt harder than expected."
+    zh: "好几位说讲课只讲大概念，考试却问具体程序，所以期末比预想的难。"
+    zh-TW: "好幾位說講課只講大概念，考試卻問具體程序，所以期末比預想的難。"
+    ja: "講義は大まかな概念にとどまるのに試験は具体的な手続きを問うため、期末が予想より難しかったという声が複数。"
+    ko: "강의는 큰 개념 위주인데 시험은 구체적인 절차를 물어서 기말이 예상보다 어려웠다는 의견이 여럿이다."
+    vi: "Vài người nói bài giảng chỉ ở mức khái quát còn đề thi hỏi thủ tục cụ thể, nên bài cuối kỳ khó hơn dự kiến."
+    ms: "Beberapa kata kuliah kekal pada tahap umum sedangkan peperiksaan tanya prosedur khusus, jadi peperiksaan akhir terasa lebih sukar."
+    id: "Beberapa bilang kuliah hanya membahas konsep umum sementara ujian menanyakan prosedur spesifik, jadi ujian akhir terasa lebih sulit."
+    hi: "कई कहते हैं लेक्चर व्यापक स्तर पर रहते हैं जबकि परीक्षा विशिष्ट प्रक्रियाएँ पूछती है, इसलिए फ़ाइनल उम्मीद से कठिन लगा।"
+  - en: "Tip: cover the harder material in the textbook yourself, attend classes, and think like an auditor when working through cases."
+    zh: "建议：较难的内容要自己看教材补上，坚持上课，做案例时把自己当成审计师来想。"
+    zh-TW: "建議：較難的內容要自己看課本補上，堅持上課，做案例時把自己當成審計師來想。"
+    ja: "コツ：難しい部分は自分で教科書を読み、授業に出席し、ケースでは監査人の立場で考えること。"
+    ko: "팁: 어려운 내용은 교재로 직접 보충하고, 수업에 출석하며, 사례를 풀 때 감사인처럼 생각하자."
+    vi: "Mẹo: tự đọc giáo trình phần khó, đi học đầy đủ, và suy nghĩ như kiểm toán viên khi làm tình huống."
+    ms: "Tip: baca sendiri bahan sukar dalam buku teks, hadir kelas, dan berfikir seperti juruaudit semasa mengerjakan kes."
+    id: "Tips: pelajari sendiri materi sulit di buku teks, hadiri kelas, dan berpikirlah seperti auditor saat mengerjakan kasus."
+    hi: "टिप: कठिन हिस्सा टेक्स्टबुक से ख़ुद पढ़ें, क्लास में जाएँ, और केस करते समय ऑडिटर की तरह सोचें।"

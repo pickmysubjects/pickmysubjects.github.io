@@ -55,8 +55,7 @@ const shared = computed(() => {
 function planWithIt(): void {
   const m = major.value
   if (!m) return
-  plan.updateSetup({ ...plan.setup.value, course: m.course, major: m.id, specialisation: '' })
-  plan.generate()
+  if (!plan.updateSetup({ ...plan.setup.value, course: m.course, major: m.id, specialisation: '' })) plan.generate()
   go('plan')
 }
 </script>

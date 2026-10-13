@@ -5,6 +5,13 @@ year: 2026
 total_points: 300
 standard_load: 50
 categories: [science, breadth]
+# Science subjects are listed one by one (the official science list); any other subject is
+# breadth when the Handbook offers it to the Bachelor of Science.
+area_categories:
+  other: breadth
+# No credit in this course: other degrees' own first-year subjects, enabling-program maths, and
+# subjects whose pages don't offer them to the Bachelor of Science.
+closed: [AGRI10044, AGRI10046, AGRI10048, AGRI10050, AGRI10051, AGRI20035, AGRI20042, AGRI20044, BIOL10002, BIOL10006, CHEM10008, COMP10003, INFO20005, INFO30005, LARC10001, MAST10012, MAST10014, MAST10015, MAST10017, MAST10024, MAST10025, MAST10026]
 handbook: https://handbook.unimelb.edu.au/2026/courses/b-sci/course-structure
 verified_on: 2026-10-07 # rules checked by hand against the Handbook course structure
 rules:

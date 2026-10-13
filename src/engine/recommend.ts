@@ -253,6 +253,13 @@ export function recommend(raw: Dataset, profile: Profile, opts: RecommendOptions
     }
     // "Challenge yourself" is a hard subject that's useful to *you*: once interests are given,
     // one unrelated to all of them drops below the ones in the student's own direction.
+    // For an easy WAM too, among subjects that are all manageable, ones in the student's own
+    // direction or on a strength of theirs come first: half the challenge drop, nothing for a match.
+    if (profile.goal === 'wam' && profile.interests.length) {
+      const exact = topicsOf(s).topics.some((t) => profile.interests.includes(t))
+      const strength = rec.reasons.some((x) => x.key === 'strengths' || x.key === 'goodAt')
+      if (!exact && !strength) rec.score = Math.max(0, rec.score - OFF_TOPIC_CHALLENGE_COST / 2)
+    }
     if (profile.goal === 'challenge' && profile.interests.length) {
       const topics = topicsOf(s).topics
       const exact = topics.some((t) => profile.interests.includes(t))
@@ -441,7 +448,15 @@ function score(s: Subject, ctx: ScoreCtx): Recommendation {
   if (parts.ease !== undefined) parts.hardness = 1 - parts.ease
 
   // Useful later: how many subjects build on it (and students' usefulness rating, once rated).
-  const builtOn = ctx.dependents.get(s.code)?.length ?? 0
+  // With interests given, only the ones heading somewhere the student wants to go count: forty
+  // physics subjects after PHYC10001 say nothing to someone who chose data science.
+  const after = ctx.dependents.get(s.code) ?? []
+  const builtOn = interests.length
+    ? after.filter((c) => {
+        const next = ctx.data.subjects[c]
+        return next !== undefined && topicsOf(next).topics.some((t) => interests.includes(t))
+      }).length
+    : after.length
   const ratedUseful = s.signals && s.signals.reviews >= MIN_REVIEWS && s.signals.usefulness !== undefined ? (s.signals.usefulness - 1) / 4 : 0
   parts.opens = Math.max(Math.min(1, builtOn / OPENS_FULL), ratedUseful)
   if (builtOn >= 3) reasons.push(note('opensMany', { n: builtOn }, `${builtOn} later subjects build on it.`))

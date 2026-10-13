@@ -30,8 +30,7 @@ const spec = computed(() => title(plan.setup.value.specialisation))
 const start = computed(() => termLabel(t.value, { year: plan.setup.value.startYear, period: plan.setup.value.startPeriod }))
 
 function done(setup: PlanSetup): void {
-  plan.updateSetup(setup)
-  plan.generate()
+  if (!plan.updateSetup(setup)) plan.generate()
   editing.value = false
 }
 </script>

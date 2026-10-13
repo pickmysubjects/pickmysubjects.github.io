@@ -1,0 +1,37 @@
+code: MGMT20005
+source: StudentVIP
+url: https://studentvip.com.au/unimelb/subjects/mgmt20005
+reviews: 5
+from: 2016
+to: 2020
+checked: 2026-10-13
+points:
+  - en: "The subject covers decision trees, simulation and optimisation applied to business areas; reviewers found the content simple, though the newest also called it mostly dull."
+    zh: "课程涵盖决策树、模拟和优化在商业中的应用；评价者觉得内容简单，最新一条也说大部分比较枯燥。"
+    zh-TW: "課程涵蓋決策樹、模擬和最佳化在商業中的應用；評價者覺得內容簡單，最新一則也說大部分比較枯燥。"
+    ja: "決定木、シミュレーション、最適化をビジネスに応用する内容。内容は簡単だとされ、最新のレビューは大半が退屈とも述べている。"
+    ko: "의사결정나무, 시뮬레이션, 최적화를 비즈니스에 적용하는 내용이다. 내용은 쉽다는 평이고, 최신 리뷰는 대부분 지루하다고도 했다."
+    vi: "Môn học về cây quyết định, mô phỏng và tối ưu hóa áp dụng cho kinh doanh; người học thấy nội dung đơn giản, dù đánh giá mới nhất nói phần lớn khá nhàm."
+    ms: "Subjek meliputi pepohon keputusan, simulasi dan pengoptimuman untuk bidang perniagaan; pengulas dapati kandungan mudah, walaupun yang terbaru kata kebanyakannya membosankan."
+    id: "Mata kuliah ini membahas pohon keputusan, simulasi dan optimasi untuk bidang bisnis; pengulas merasa materinya sederhana, meski yang terbaru bilang sebagian besar membosankan."
+    hi: "विषय में डिसीज़न ट्री, सिमुलेशन और ऑप्टिमाइज़ेशन को बिज़नेस में लागू करना सिखाया जाता है; रिव्यूअर्स को कंटेंट सरल लगा, हालाँकि सबसे नए ने इसे ज़्यादातर नीरस भी कहा।"
+  - en: "A high mark is seen as reachable with modest effort if you attend tutorials, which were rated well; several reviewers earned an H1."
+    zh: "认为只要参加辅导课（评价很好），不用太多努力就能拿高分；好几位拿了 H1。"
+    zh-TW: "認為只要參加輔導課（評價很好），不用太多努力就能拿高分；好幾位拿了 H1。"
+    ja: "評価の高いチュートリアルに出ていれば、それほど努力せずに高得点が狙えるとされる。H1を取った人も複数。"
+    ko: "평이 좋은 튜토리얼에 참석하면 큰 노력 없이 고득점이 가능하다는 평이다. H1을 받은 사람도 여럿이다."
+    vi: "Điểm cao được xem là đạt được mà không cần quá nhiều công sức nếu đi tutorial (được đánh giá tốt); vài người đạt H1."
+    ms: "Markah tinggi dianggap boleh dicapai dengan usaha sederhana jika hadir tutorial, yang dinilai baik; beberapa pengulas dapat H1."
+    id: "Nilai tinggi dianggap bisa dicapai dengan usaha sedang jika rajin ikut tutorial, yang dinilai bagus; beberapa pengulas dapat H1."
+    hi: "ट्यूटोरियल में जाने पर, जिनकी तारीफ़ हुई, थोड़ी मेहनत से ऊँचे अंक संभव माने गए; कई रिव्यूअर्स को H1 मिला।"
+  - en: "The second and group assignments are the tricky parts and lean on computer and Excel skills, so pick teammates who can handle that side."
+    zh: "第二次作业和小组作业较难，依赖电脑和 Excel 技能，最好找能搞定这部分的组员。"
+    zh-TW: "第二次作業和小組作業較難，依賴電腦和 Excel 技能，最好找能搞定這部分的組員。"
+    ja: "2つ目の課題とグループ課題が難所で、PCとExcelのスキルが必要。そこを任せられるメンバーを選ぼう。"
+    ko: "두 번째 과제와 조별 과제가 까다롭고 컴퓨터·Excel 실력이 필요하니, 그 부분을 맡을 수 있는 조원을 고르자."
+    vi: "Bài tập thứ hai và bài nhóm là phần khó, cần kỹ năng máy tính và Excel, nên chọn đồng đội làm tốt phần đó."
+    ms: "Tugasan kedua dan tugasan kumpulan bahagian yang sukar dan perlukan kemahiran komputer serta Excel, jadi pilih rakan yang mampu."
+    id: "Tugas kedua dan tugas kelompok bagian yang sulit dan butuh keterampilan komputer serta Excel, jadi pilih rekan yang menguasainya."
+    hi: "दूसरा असाइनमेंट और ग्रुप असाइनमेंट मुश्किल हिस्से हैं और कंप्यूटर व Excel स्किल पर निर्भर हैं, इसलिए ऐसे साथी चुनें जो इसे संभाल सकें।"
+difficulty: easy
+workload: light

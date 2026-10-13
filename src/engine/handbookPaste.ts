@@ -14,6 +14,8 @@ export interface PasteResult {
   /** Semester version of the assessment table; weights add up to 100. */
   assessment: AssessmentTask[] | 'unknown'
   weeklyContactHours?: number
+  /** Courses (by title) that may take it as breadth, when the page has a "Breadth options" part. */
+  breadthFor?: string[]
   /** From the page header, when the whole page was pasted. */
   code?: string
   title?: string
@@ -52,7 +54,7 @@ export function parseHandbookPaste(text: string): PasteResult {
   const sections = splitSections(text)
 
   // Many pages list the requirement per degree; this site plans the Bachelor of Science.
-  const pre = sections.pre ? scienceOnly(undergraduateOnly(sections.pre, warnings), warnings) : undefined
+  const pre = sections.pre ? scienceOnly(undergraduateOnly(latestRuleOnly(sections.pre, warnings), warnings), warnings) : undefined
   // "Concurrent prerequisites" (or a note that subjects "can also be taken concurrently") may be
   // taken in the same semester: that's what a corequisite means here.
   const split = pre ? splitConcurrent(pre) : undefined
@@ -67,6 +69,9 @@ export function parseHandbookPaste(text: string): PasteResult {
     ...parseHeader(text),
     warnings,
   }
+  const breadth = parseBreadthFor(text)
+  if (breadth) result.breadthFor = breadth
+
   // A page can list the subject itself (e.g. in an old/new code table); it's never its own requirement.
   if (result.code) {
     const self = result.code
@@ -152,6 +157,14 @@ function scienceOnly(lines: string[], warnings: string[]): string[] {
   return lines.slice(start, end)
 }
 
+/** "For 2020, students must … From 2021, students must …": only the rule in force now applies. */
+function latestRuleOnly(lines: string[], warnings: string[]): string[] {
+  const at = lines.map((l, i) => (/^from \d{4}\b/i.test(l.trim()) ? i : -1)).filter((i) => i >= 0).at(-1)
+  if (at === undefined || !lines.slice(0, at).some((l) => /^(for|until|before|up to) \d{4}\b/i.test(l.trim()))) return lines
+  warnings.push(`Kept only the current rule ("${lines[at]!.trim().slice(0, 40)}").`)
+  return lines.slice(at + 1)
+}
+
 function splitConcurrent(lines: string[]): { before: string[]; concurrent: string[] } {
   const at = lines.findIndex((l) => /^concurrent prerequisites?:?$/i.test(l) || /can (?:also )?be taken concurrently/i.test(l))
   if (at < 0) return { before: lines, concurrent: [] }
@@ -162,8 +175,17 @@ function splitConcurrent(lines: string[]): { before: string[]; concurrent: strin
     // An unlabelled table stays "All of" (ANAT20006 + PHYS20008 together stand in for one 25-point subject).
     return { before: [...lines.slice(0, at), ...lines.slice(at + 1)], concurrent: [] }
   }
+  // Right after a "One of" table, an unlabelled concurrent table adds options to that same
+  // choice ("One of A, B; these can also be taken concurrently: C, D"): drop the note and the
+  // repeated table header so its rows join the list above.
+  const lastLabel = lines.slice(0, at).filter((l) => /^(one of|all of|both of|and|or)\b/i.test(l.trim())).at(-1) ?? ''
+  const next = lines.slice(at + 1).find((l) => l.trim()) ?? ''
+  if (/^one of/i.test(lastLabel.trim()) && /^code\s/i.test(next.trim()) && !/^concurrent prerequisites?:?$/i.test(lines[at] ?? '')) {
+    const header = lines.findIndex((l, k) => k > at && /^code\s/i.test(l.trim()))
+    return { before: lines.filter((_, k) => k !== at && k !== header), concurrent: [] }
+  }
   const rest = lines.slice(at + 1)
-  const stop = rest.findIndex((l) => /^(and|or|option \d+:?)$/i.test(l.trim()))
+  const stop = rest.findIndex((l) => /^(and|or|option \d+(?:\s*[-–—:].*)?)$/i.test(l.trim()))
   const concurrent = stop < 0 ? rest : rest.slice(0, stop)
   // An "Option 2" heading starts the next alternative, so it stays with the prerequisites.
   const after = stop < 0 ? [] : rest.slice(/^option/i.test(rest[stop]!.trim()) ? stop : stop + 1)
@@ -197,11 +219,37 @@ function withoutSubject(field: ReqField, code: string): ReqField {
   return prune(field) ?? 'none'
 }
 
+/** One option in words: codes joined by "or" are a choice, the rest are all needed. */
+function optionFromWords(line: string): ReqField {
+  const found = [...line.matchAll(CODE)]
+  const groups: string[][] = []
+  found.forEach((m, k) => {
+    const gap = k === 0 ? '' : line.slice(found[k - 1]!.index! + 10, m.index)
+    if (k > 0 && /^\s*or\s*$/i.test(gap)) groups.at(-1)!.push(m[0])
+    else if (!groups.some((g) => g.includes(m[0]))) groups.push([m[0]])
+  })
+  const parts: ReqExpr[] = groups.map((g) => (g.length === 1 ? { subject: g[0]! } : { any: g.map((c) => ({ subject: c })) }))
+  return parts.length === 1 ? parts[0]! : { all: parts }
+}
+
 function parseRequirement(lines: string[], label: string, warnings: string[]): ReqField {
   if (lines.length === 0 || (lines.length === 1 && /^none\.?$/i.test(lines[0] ?? ''))) return 'none'
 
+  // "Meet one of the following options:" then one option per line in words ("A total of 150 or
+  // more across MAST10006 or MAST10021 and MAST10007 or MAST10022"), then a table that only lists
+  // the subjects named: each line is an alternative; codes joined by "or" are a choice within it.
+  const intro = lines.findIndex((l) => /one of the following .*options?:?$/i.test(l.trim()))
+  if (intro >= 0 && !lines.some((l) => /^option \d+/i.test(l.trim()))) {
+    const tableAt = lines.findIndex((l, i) => i > intro && /^code\s/i.test(l.trim()))
+    const prose = lines.slice(intro + 1, tableAt < 0 ? lines.length : tableAt).filter((l) => CODE_ONE.test(l))
+    if (prose.length >= 2) {
+      if (prose.some((l) => /\d+\s*\(out of \d+\)|\bor more\b/i.test(l))) warnings.push('Some options also need a combined mark; only the subjects are recorded.')
+      return combine('any', prose.map(optionFromWords))
+    }
+  }
+
   // "Option 1 … Option 2 …": meeting any one option is enough.
-  const optionAt = lines.map((l, i) => (/^option \d+:?$/i.test(l) ? i : -1)).filter((i) => i >= 0)
+  const optionAt = lines.map((l, i) => (/^option \d+(?:\s*[-–—:].*)?$/i.test(l) ? i : -1)).filter((i) => i >= 0)
   if (optionAt.length >= 2) {
     // Only an OR between two options goes; ORs inside an option are its own alternatives.
     const trimOr = (ls: string[]) => {
@@ -270,6 +318,14 @@ function parseBlock(lines: string[], label: string, warnings: string[]): ReqExpr
   if (admission) return admission
   const points = /^(\d+(?:\.\d+)?) (?:credit )?points? (?:of|at) level (\d)/i.exec(sentence)
   if (points) return { points: { min: Number(points[1]), level: Number(points[2]) } }
+  // "Completion of 100 credit points of study" / "A minimum of 200 credit points of Undergraduate study".
+  const total = /(?:completion of|completed|a minimum of|at least) (\d+(?:\.\d+)?) (?:credit )?points?\b/i.exec(sentence)
+  if (total) {
+    const min = { points: { min: Number(total[1]) } }
+    // Permission on top, unless it's only the way round the points rule ("… have not completed …").
+    if (/permission|approval/i.test(sentence) && !/not (?:yet )?completed/i.test(sentence)) return { all: [min, { manual: sentence }] }
+    return min
+  }
   warnings.push(`Free-text ${label} kept for manual checking: “${sentence}”.`)
   return { manual: sentence }
 }
@@ -498,4 +554,25 @@ function isExpr(e: ReqExpr | null): e is ReqExpr {
 
 function unique<T>(xs: T[]): T[] {
   return [...new Set(xs)]
+}
+
+/**
+ * "This subject is available as breadth in the following courses:" and the course titles under
+ * it; [] when the page says it isn't available as breadth; undefined when the page doesn't say.
+ */
+export function parseBreadthFor(text: string): string[] | undefined {
+  if (/not available as breadth/i.test(text)) return []
+  const lines = text.split(/\r?\n/).map((l) => l.trim())
+  const at = lines.findIndex((l) => /available as breadth in the following courses/i.test(l))
+  if (at < 0) return undefined
+  const out: string[] = []
+  for (const l of lines.slice(at + 1)) {
+    if (!l) {
+      if (out.length) break
+      continue
+    }
+    if (!/^(Bachelor|Diploma|Graduate|Master|Associate)\b/.test(l)) break
+    out.push(l)
+  }
+  return out
 }

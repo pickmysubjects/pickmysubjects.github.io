@@ -15,7 +15,7 @@ export const ko: Messages = {
   nav: { home: '홈', browse: '과목', more: '더보기', plan: '계획', recommend: '추천', record: '내 정보', contribute: '데이터 추가', feedback: '피드백', main: '메인 메뉴' },
   period: { summer: '여름 학기', 'semester-1': '1학기', winter: '겨울 학기', 'semester-2': '2학기' },
   periodShort: { summer: '여름', 'semester-1': 'S1', winter: '겨울', 'semester-2': 'S2' },
-  category: { science: '이학', breadth: '교양(Breadth)', discipline: '전공', core: '필수' },
+  category: { science: '이학', commerce: '상경', breadth: '교양(Breadth)', core: '필수' },
   plan: {
     pastTag: "이수함",
     pastUndated: "이수함 · 학기 미입력",
@@ -550,13 +550,14 @@ export const ko: Messages = {
     empty: "맞는 과목이 없어요. 조건을 하나 빼 보세요.",
     more: "더 보기 ({n}개 남음)",
     notRunning: "올해 개설 안 됨",
+    closedForYou: "내 학위에서는 수강 불가",
     metaExam: "시험 {n}%",
     metaNoExam: "시험 없음",
     metaHours: "주 {n}시간 수업",
     metaNoPrereq: "선수 과목 없음",
     coverage: "지금까지 {n}개 과목, 그중 Breadth {breadth}개예요.",
     preset: { firstSemester: "첫 학기", breadth: "Breadth", noExam: "기말시험 없음" },
-    cat: { science: "이과", breadth: "Breadth", discipline: "학위 과목" },
+    cat: { science: "이과", commerce: "상경", breadth: "Breadth" },
   },
   majors: {
     statCore: "3학년 필수",
@@ -681,7 +682,7 @@ export const ko: Messages = {
     firstStep2: "나머지는 관심 있는 과목이나 Breadth로 채우세요.",
     firstStep3: "my.unimelb에서 수강 신청(enrol)을 하고, My Timetable에서 수업 시간을 고르세요.",
     firstStep4: "들어보니 별로라면 census date 전까지는 무료로 취소할 수 있어요. 유학생은 먼저 Stop 1에 물어보세요.",
-    breadthText: "Breadth는 내 학위 밖의 과목이에요. 이과라면 경영, 인문, 언어 과목 같은 거예요. 이학사는 Breadth를 최소 50학점(4과목) 들어야 하고, 그중 레벨 1은 25학점까지만 인정돼요.",
+    breadthText: "Breadth는 내 학위 밖의 과목이에요. 이학사라면 상경·인문 과목, 상경학사라면 이과·인문 과목이에요. 어떤 학위가 Breadth로 들을 수 있는지는 각 과목의 Handbook 페이지에 나와 있어요. 이학사는 최소 50학점(4과목), 레벨 1은 25학점까지예요. 상경학사는 50~62.5학점, 레벨 1은 37.5학점까지예요.",
     firstFind: "첫 학기에 들을 수 있는 과목 찾기",
     firstPlan: "계획 열기",
     eyebrow: "가이드",
@@ -944,7 +945,7 @@ export const ko: Messages = {
     },
     'rules-change': {
       q: '규정은 매년 바뀌고 학위, 전공, 학사/석사/박사마다 다릅니다.',
-      a: "계획은 2026년 Handbook의 이학사 규칙을 따라요. 꼭 Handbook과 My Course Planner에서도 확인하세요.",
+      a: "계획은 2026년 Handbook에서 내 학위(이학사 또는 상경학사)의 규칙을 따라요. 꼭 Handbook과 My Course Planner에서도 확인하세요.",
     },
     future: {
       q: '졸업 후 가고 싶은 방향으로 이어지는 과목은?',
