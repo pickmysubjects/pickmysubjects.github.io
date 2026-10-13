@@ -519,6 +519,7 @@ export const en = {
     presetNoExamDesc: "{n} University of Melbourne subjects with no final exam in {year}, from the Handbook's assessment: coursework, projects and tests only. Each links to its prerequisites, semesters and weekly hours.",
     presetBreadth: "Breadth subjects for UniMelb Bachelor of Science students ({year})",
     presetBreadthDesc: "{n} subjects a University of Melbourne Bachelor of Science student can take as breadth in {year}, each with its prerequisites, semesters and exam share.",
+    presetBreadthFor: "Breadth subjects for UniMelb {course} students ({year})",
     presetFirstSemester: "First-year UniMelb subjects in Semester 1 ({year})",
     presetFirstSemesterDesc: "{n} level-1 University of Melbourne subjects running in Semester 1 {year}, each with its prerequisites, exam share and weekly hours: a starting point for your first semester.",
     subjectDesc: '{code} {title} (Level {level}, {points} points) at the University of Melbourne.',

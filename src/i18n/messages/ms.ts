@@ -516,6 +516,7 @@ export const ms: Messages = {
     presetNoExamDesc: "{n} subjek University of Melbourne tanpa peperiksaan akhir pada {year}, berdasarkan penilaian dalam Handbook: tugasan, projek dan ujian sahaja. Setiap subjek ada prasyarat, semester dan jam kelas seminggu.",
     presetBreadth: "Subjek breadth untuk pelajar Bachelor of Science UniMelb ({year})",
     presetBreadthDesc: "{n} subjek yang boleh diambil pelajar Bachelor of Science University of Melbourne sebagai breadth pada {year}, dengan prasyarat, semester dan peratus peperiksaan akhir.",
+    presetBreadthFor: "Subjek breadth untuk pelajar {course} UniMelb ({year})",
     presetFirstSemester: "Subjek tahun pertama UniMelb pada Semester 1 ({year})",
     presetFirstSemesterDesc: "{n} subjek tahap 1 University of Melbourne pada Semester 1 {year}, dengan prasyarat, peratus peperiksaan akhir dan jam kelas seminggu: permulaan semester pertama anda.",
     subjectDesc: '{code} {title} (Tahap {level}, {points} mata) di University of Melbourne.',

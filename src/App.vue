@@ -25,7 +25,7 @@ import { presetFromSlug } from '@/engine'
 
 const { view, param } = useView()
 const { t, locale } = useI18n()
-const { data } = useDataset()
+const { data, course } = useDataset()
 
 // The tab title follows the page and the language (the built page only has the first one).
 const TITLES: Partial<Record<string, string>> = {
@@ -48,12 +48,15 @@ watchEffect(() => {
   // the app see the same one.
   const preset = view.value === 'subjects' ? presetFromSlug(param.value) : undefined
   const year = Math.max(...Object.values(data.value.subjects).map((x) => x.sourceYear))
+  // Breadth depends on the degree: the static page names the Bachelor of Science, but a student
+  // planning another degree sees that degree's breadth list, so the title names it instead.
+  const breadthElsewhere = preset === 'breadth' && course.value !== 'B-SCI' ? data.value.courses.find((c) => c.code === course.value)?.title : undefined
   document.title = s
     ? `${t.value(subjectTitleKey(s), { code: s.code, title: withLocalTitle(s.title, localTitle(s, locale.value)) })} | PickMySubjects`
     : major
       ? `${t.value('seo.majorTitle', { title: major.title })} | PickMySubjects`
       : preset
-        ? `${t.value(PRESET_TITLE_KEYS[preset], { year })} | PickMySubjects`
+        ? `${breadthElsewhere ? t.value('seo.presetBreadthFor', { course: breadthElsewhere, year }) : t.value(PRESET_TITLE_KEYS[preset], { year })} | PickMySubjects`
       : key
       ? `${t.value(key)} | PickMySubjects`
       : t.value('seo.homeTitle')

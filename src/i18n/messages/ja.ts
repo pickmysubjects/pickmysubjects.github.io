@@ -516,6 +516,7 @@ export const ja: Messages = {
     presetNoExamDesc: "{year}年のメルボルン大学で期末試験のない{n}科目。Handbookの評価方法をもとに、課題・プロジェクト・小テストだけの科目をまとめました。各科目の前提科目・開講学期・週あたりの授業時間も見られます。",
     presetBreadth: "メルボルン大学 理学士（B-SCI）のブレッドス科目（{year}）",
     presetBreadthDesc: "{year}年にメルボルン大学の理学士の学生がブレッドスとして履修できる{n}科目。各科目の前提科目・開講学期・期末試験の割合つき。",
+    presetBreadthFor: "メルボルン大学 {course} のブレッドス科目（{year}）",
     presetFirstSemester: "メルボルン大学 第1学期の1年次科目（{year}）",
     presetFirstSemesterDesc: "{year}年第1学期に開講されるメルボルン大学のレベル1科目{n}件。前提科目・期末試験の割合・週あたりの授業時間つきで、最初の学期の計画に使えます。",
     subjectDesc: 'メルボルン大学 {code} {title}（レベル {level}、{points} 単位）。',

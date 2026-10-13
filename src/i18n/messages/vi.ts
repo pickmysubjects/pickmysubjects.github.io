@@ -516,6 +516,7 @@ export const vi: Messages = {
     presetNoExamDesc: "{n} môn của Đại học Melbourne năm {year} không có thi cuối kỳ, theo cách đánh giá trong Handbook: chỉ có bài tập, dự án và bài kiểm tra. Mỗi môn có môn tiên quyết, học kỳ và số giờ học mỗi tuần.",
     presetBreadth: "Các môn breadth cho sinh viên Cử nhân Khoa học (B-SCI) Đại học Melbourne ({year})",
     presetBreadthDesc: "{n} môn sinh viên Cử nhân Khoa học của Đại học Melbourne có thể học làm breadth năm {year}, kèm môn tiên quyết, học kỳ và tỷ lệ thi cuối kỳ.",
+    presetBreadthFor: "Các môn breadth cho sinh viên {course} Đại học Melbourne ({year})",
     presetFirstSemester: "Các môn năm nhất học kỳ 1 ở Đại học Melbourne ({year})",
     presetFirstSemesterDesc: "{n} môn level 1 của Đại học Melbourne mở vào học kỳ 1 năm {year}, kèm môn tiên quyết, tỷ lệ thi cuối kỳ và số giờ học mỗi tuần, để bắt đầu học kỳ đầu tiên.",
     subjectDesc: '{code} {title} (Level {level}, {points} tín chỉ) tại Đại học Melbourne.',

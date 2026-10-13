@@ -516,6 +516,7 @@ export const id: Messages = {
     presetNoExamDesc: "{n} mata kuliah University of Melbourne tanpa ujian akhir pada {year}, berdasarkan penilaian di Handbook: hanya tugas, proyek, dan tes. Setiap mata kuliah ada prasyarat, semester, dan jam kelas per minggu.",
     presetBreadth: "Mata kuliah breadth untuk mahasiswa Bachelor of Science UniMelb ({year})",
     presetBreadthDesc: "{n} mata kuliah yang bisa diambil mahasiswa Bachelor of Science University of Melbourne sebagai breadth pada {year}, lengkap dengan prasyarat, semester, dan porsi ujian akhir.",
+    presetBreadthFor: "Mata kuliah breadth untuk mahasiswa {course} UniMelb ({year})",
     presetFirstSemester: "Mata kuliah tahun pertama UniMelb di Semester 1 ({year})",
     presetFirstSemesterDesc: "{n} mata kuliah level 1 University of Melbourne di Semester 1 {year}, lengkap dengan prasyarat, porsi ujian akhir, dan jam kelas per minggu: titik awal semester pertamamu.",
     subjectDesc: '{code} {title} (Level {level}, {points} poin) di University of Melbourne.',

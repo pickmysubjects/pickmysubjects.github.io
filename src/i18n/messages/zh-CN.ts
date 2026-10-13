@@ -516,6 +516,7 @@ export const zhCN: Messages = {
     presetNoExamDesc: "{year} 年墨尔本大学没有期末考试的 {n} 门课，按 Handbook 的考核方式整理：只有作业、项目和测验。每门课都能看到先修课、开课学期和每周课时。",
     presetBreadth: "墨大理学学士（B-SCI）可选的 breadth 课（{year}）",
     presetBreadthDesc: "{year} 年墨尔本大学理学学士学生可以当 breadth 修的 {n} 门课，每门都有先修课、开课学期和期末占比。",
+    presetBreadthFor: "墨大 {course} 学生可选的 breadth 课（{year}）",
     presetFirstSemester: "墨大第一学期的一年级课（{year}）",
     presetFirstSemesterDesc: "{year} 年第一学期开课的 {n} 门墨尔本大学一年级课，附先修课、期末占比和每周课时，适合新生排第一个学期。",
     subjectDesc: '墨尔本大学 {code} {title}（{level} 级，{points} 学分）。',
