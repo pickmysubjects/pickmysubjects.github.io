@@ -402,6 +402,12 @@ function score(s: Subject, ctx: ScoreCtx): Recommendation {
     if (hit.length) reasons.push(note('interests', { topics: hit.join(', ') }, `Covers ${hit.join(', ')}, which you're interested in.`))
   }
 
+  // Background the Handbook recommends (not required): a heads-up when none of it is done yet.
+  if (s.recommended.length && !s.recommended.some((c) => ctx.taken.has(c))) {
+    const codes = s.recommended.slice(0, 3).join(', ')
+    warnings.push(note('recommendedFirst', { codes }, `The Handbook recommends ${codes} first (not required).`))
+  }
+
   // Predicted performance from the student's own marks in similar subjects (see predict.ts),
   // else their overall WAM. Always said as a range once there are marks to go on.
   const guess = ctx.marks.size ? predictMark(s, ctx.marks, ctx.data) : null

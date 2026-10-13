@@ -13,6 +13,10 @@ prerequisites:
 corequisites: none
 non_allowed:
   - BIOL30001
+recommended:
+  - ANSC20001
+  - ANSC20002
+  - ANSC20005
 assessment:
   - kind: quiz
     weight: 20

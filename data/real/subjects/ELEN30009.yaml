@@ -13,6 +13,8 @@ prerequisites:
 corequisites: none
 non_allowed:
   - ELEN30014
+recommended:
+  - PHYC10004
 assessment:
   - kind: report
     weight: 20

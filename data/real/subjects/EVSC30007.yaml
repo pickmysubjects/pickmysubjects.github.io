@@ -8,6 +8,9 @@ offerings:
 prerequisites: ECOL20003
 corequisites: none
 non_allowed: []
+recommended:
+  - EVSC20005
+  - ENST20001
 assessment:
   - kind: project
     weight: 25

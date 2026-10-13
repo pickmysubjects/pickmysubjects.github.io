@@ -242,6 +242,7 @@ export const vi: Messages = {
     interests: 'Có nội dung {topics} mà bạn quan tâm.',
     averagedHigh: 'Theo điểm các môn tương tự ({codes}), dự kiến khoảng {mark}.',
     averagedLow: 'Theo điểm các môn tương tự ({codes}), dự kiến chỉ khoảng {mark}, nên môn này có thể khó.',
+    recommendedFirst: "Handbook khuyên học {codes} trước (không bắt buộc).",
     predictedRange: 'Theo điểm các môn tương tự ({codes}), dự kiến {low}–{high}.',
     gradesAbove: '{n} sinh viên chia sẻ điểm đạt cao hơn WAM của họ khoảng {by} điểm ở môn này.',
     gradesBelow: '{n} sinh viên chia sẻ điểm đạt thấp hơn WAM của họ khoảng {by} điểm ở môn này.',
@@ -846,6 +847,14 @@ export const vi: Messages = {
     failed: "Không gửi được. Hãy kiểm tra kết nối và thử lại.",
     send: "Gửi ẩn danh {n} môn",
   },
+  progress: {
+    title: "Tiến độ",
+    total: "Tổng tín chỉ",
+    level: "Level {n}",
+    major: "Chuyên ngành",
+    done: "Xong",
+    notYet: "Chưa",
+  },
   privacy: {
     title: 'Quyền riêng tư',
     updated: 'Cập nhật lần cuối: 14 tháng 10, 2026',
@@ -888,6 +897,7 @@ export const vi: Messages = {
     done: 'Xong',
   },
   subject: {
+    recommendedFirst: "Nên học trước (không bắt buộc)",
     chooseDegreeFirst: "Chọn bằng và ngành trước",
     roleLine: { core: "bắt buộc", option: "một trong các môn tự chọn", pathway: "phải học môn này trước {via}", route: "đường thường đi để tới {via} (có cách khác)" },
     showAll: "Xem tất cả {n}",

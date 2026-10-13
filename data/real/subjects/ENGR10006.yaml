@@ -14,6 +14,8 @@ prerequisites:
         - MAST10015
 corequisites: none
 non_allowed: []
+recommended:
+  - ENGR10004
 assessment:
   - kind: report
     weight: 35

@@ -242,6 +242,7 @@ export const zhTW: Messages = {
     interests: '涉及 {topics}，是你感興趣的方向。',
     averagedHigh: '依你在相近課程（{codes}）的成績，預計約 {mark} 分。',
     averagedLow: '依你在相近課程（{codes}）的成績，預計只有 {mark} 分左右，可能會比較吃力。',
+    recommendedFirst: "Handbook 建議先修 {codes}（不是硬性要求）。",
     predictedRange: '依你在相近課程（{codes}）的成績，預計 {low}–{high} 分。',
     gradesAbove: '{n} 位分享成績的同學在這門課比自己的 WAM 平均高約 {by} 分。',
     gradesBelow: '{n} 位分享成績的同學在這門課比自己的 WAM 平均低約 {by} 分。',
@@ -846,6 +847,14 @@ export const zhTW: Messages = {
     failed: "傳送失敗，請檢查網路後再試。",
     send: "匿名傳送 {n} 門",
   },
+  progress: {
+    title: "進度",
+    total: "總學分",
+    level: "Level {n}",
+    major: "主修",
+    done: "已完成",
+    notYet: "未完成",
+  },
   privacy: {
     title: '隱私說明',
     updated: '最後更新：2026 年 10 月 14 日',
@@ -888,6 +897,7 @@ export const zhTW: Messages = {
     done: '已完成',
   },
   subject: {
+    recommendedFirst: "建議先修（非必須）",
     chooseDegreeFirst: "先選學位和主修",
     roleLine: { core: "必修", option: "可選課之一", pathway: "要修 {via}，必須先修這門", route: "通往 {via} 的常見路線（也有別的先修可走）" },
     showAll: "顯示全部 {n} 個",

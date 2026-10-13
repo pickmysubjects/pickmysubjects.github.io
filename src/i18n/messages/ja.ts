@@ -242,6 +242,7 @@ export const ja: Messages = {
     interests: '興味のある {topics} を扱います。',
     averagedHigh: '似た科目（{codes}）の成績から、約 {mark} 点の見込みです。',
     averagedLow: '似た科目（{codes}）の成績から {mark} 点前後の見込みで、苦戦するかもしれません。',
+    recommendedFirst: "Handbook では先に {codes} の履修を推奨しています（必須ではありません）。",
     predictedRange: '似た科目（{codes}）の成績から、{low}〜{high} 点の見込みです。',
     gradesAbove: '成績を共有した {n} 人は、この科目で自分の WAM より平均約 {by} 点高くなりました。',
     gradesBelow: '成績を共有した {n} 人は、この科目で自分の WAM より平均約 {by} 点低くなりました。',
@@ -846,6 +847,14 @@ export const ja: Messages = {
     failed: "送信できませんでした。接続を確認してもう一度お試しください。",
     send: "{n} 科目を匿名で送信",
   },
+  progress: {
+    title: "進捗",
+    total: "合計ポイント",
+    level: "レベル {n}",
+    major: "専攻",
+    done: "完了",
+    notYet: "まだ",
+  },
   privacy: {
     title: 'プライバシー',
     updated: '最終更新：2026年10月14日',
@@ -888,6 +897,7 @@ export const ja: Messages = {
     done: '完了',
   },
   subject: {
+    recommendedFirst: "推奨される事前履修（必須ではない）",
     chooseDegreeFirst: "まず学位と専攻を選ぶ",
     roleLine: { core: "必修", option: "選択科目の一つ", pathway: "{via} を取るには先にこれが必要", route: "{via} へのよくあるルート（他の前提科目でも可）" },
     showAll: "全 {n} 件を表示",

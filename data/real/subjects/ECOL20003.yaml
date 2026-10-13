@@ -21,6 +21,8 @@ prerequisites:
         - BIOL10005
 corequisites: none
 non_allowed: []
+recommended:
+  - MAST20031
 assessment:
   - kind: quiz
     weight: 15

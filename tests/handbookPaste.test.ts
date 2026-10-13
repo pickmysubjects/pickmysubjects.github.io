@@ -401,5 +401,11 @@ describe('an examination held mid-semester', () => {
       expect(parseBreadthFor('This subject is available as breadth in the following courses:\n\nBachelor of Arts\nBachelor of Fine Arts\n(Acting)\nBachelor of Science\n')).toEqual(['Bachelor of Arts', 'Bachelor of Fine Arts (Acting)', 'Bachelor of Science'])
       expect(parseBreadthFor('This subject is available as breadth in the following courses:\n\nAvailable through the Community Access Program')).toBeUndefined()
     })
+
+    it('recommended background keeps only the codes it adds to the requirements', () => {
+      const r = parseHandbookPaste(`Prerequisites\n${table('MAST10006')}\nCorequisites\nNone\nRecommended background knowledge\nBasic probability, e.g. MAST20004 or MAST10006.\nInherent requirements (core participation requirements)\nText\n`)
+      expect(r.recommended).toEqual(['MAST20004'])
+      expect(parseHandbookPaste('Recommended background knowledge\nPlease refer to Prerequisites and Corequisites.\n').recommended).toBeUndefined()
+    })
   })
 })

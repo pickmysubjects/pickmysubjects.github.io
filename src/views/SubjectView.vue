@@ -188,6 +188,10 @@ const links = computed(() => (name.value === 'real' ? discussionLinks(code.value
             <summary>{{ t('subject.routeTitle', { n: route.length, missing: routeMissing }) }}</summary>
             <SubjectLinks :codes="route" :year="year" />
           </details>
+          <template v-if="subject.recommended.length">
+            <h3 class="panel-subtitle">{{ t('subject.recommendedFirst') }}</h3>
+            <SubjectLinks class="panel-links" :codes="subject.recommended" :year="year" :limit="3" />
+          </template>
           <template v-if="coreq">
             <h3 class="panel-subtitle">{{ t('subject.coreqTitle') }}</h3>
             <p class="panel-text">{{ coreq }}</p>

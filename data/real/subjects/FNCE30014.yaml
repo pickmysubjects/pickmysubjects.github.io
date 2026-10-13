@@ -18,6 +18,8 @@ corequisites: none
 non_allowed:
   - FNCE90084
   - FNCE30012
+recommended:
+  - COMP10001
 assessment:
   - kind: test
     weight: 20

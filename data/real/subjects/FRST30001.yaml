@@ -8,6 +8,10 @@ offerings:
 prerequisites: none
 corequisites: none
 non_allowed: []
+recommended:
+  - FRST20014
+  - ENST20001
+  - FRST20015
 assessment:
   - kind: assignment
     weight: 60

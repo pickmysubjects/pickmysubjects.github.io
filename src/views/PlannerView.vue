@@ -6,6 +6,7 @@ import PlanWizard from '@/components/planner/PlanWizard.vue'
 import PlanMap from '@/components/planner/PlanMap.vue'
 import SubjectPeek from '@/components/planner/SubjectPeek.vue'
 import RuleLegend from '@/components/planner/RuleLegend.vue'
+import PlanProgress from '@/components/planner/PlanProgress.vue'
 import PlanIssues from '@/components/planner/PlanIssues.vue'
 import PlanPrint from '@/components/planner/PlanPrint.vue'
 import Interp from '@/components/Interp.vue'
@@ -253,6 +254,7 @@ function finishWizard(setup: PlanSetup): void {
         <a :href="link('guide')">{{ t('guide.datesTitle') }}</a>
       </p>
 
+      <PlanProgress v-if="!plan.isEmpty.value" :statuses="plan.courseCheck.value.statuses" :rules="rules" />
       <PlanMap
         class="map"
         :terms="plan.terms.value"

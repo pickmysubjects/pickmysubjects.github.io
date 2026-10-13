@@ -12,6 +12,11 @@ prerequisites:
     - ZOOL20006
 corequisites: none
 non_allowed: []
+recommended:
+  - ECOL20003
+  - ANSC20003
+  - ANSC20005
+  - ANSC20002
 assessment:
   - kind: assignment
     weight: 35

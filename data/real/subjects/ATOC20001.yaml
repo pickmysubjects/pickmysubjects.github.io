@@ -11,6 +11,9 @@ prerequisites:
     - manual: a minimum of 12.5 credit points of Level 1 Mathematics subject (or equivalent)
 corequisites: none
 non_allowed: []
+recommended:
+  - EVSC10001
+  - ATOC10001
 assessment:
   - kind: quiz
     weight: 25

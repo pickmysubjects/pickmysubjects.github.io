@@ -8,6 +8,10 @@ offerings:
 prerequisites: none
 corequisites: none
 non_allowed: []
+recommended:
+  - UNIB10003
+  - EVSC10001
+  - GEOG20002
 assessment:
   - kind: quiz
     weight: 12.5

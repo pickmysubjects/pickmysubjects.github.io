@@ -23,6 +23,8 @@ corequisites: none
 non_allowed:
   - BIOM20001
   - AGRI20043
+recommended:
+  - BCMB20005
 assessment:
   - kind: test
     weight: 15

@@ -8,6 +8,10 @@ offerings:
 prerequisites: none
 corequisites: none
 non_allowed: []
+recommended:
+  - PSYC10003
+  - PSYC10006
+  - PSYC90097
 assessment:
   - kind: exam
     weight: 50

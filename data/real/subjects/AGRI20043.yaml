@@ -12,6 +12,9 @@ prerequisites:
 corequisites: none
 non_allowed:
   - BCMB20002
+recommended:
+  - AGRI10051
+  - AGRI10050
 assessment:
   - kind: report
     weight: 25

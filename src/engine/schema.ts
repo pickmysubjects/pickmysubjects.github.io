@@ -194,6 +194,8 @@ export const subjectFileSchema = z
     // those periods; used whenever the subject counts as breadth for the student's course.
     // Course titles the Handbook lists as able to take it as breadth ([] = none); absent when unknown.
     breadth_for: z.array(z.string().min(1)).optional(),
+    // Subjects the Handbook recommends having done first (background knowledge, not a requirement).
+    recommended: z.array(subjectCode).default([]),
     breadth_offerings: z.record(z.string().regex(/^\d{4}$/), z.array(z.enum(PERIODS))).optional(),
     prerequisites: reqField,
     corequisites: reqField,
@@ -231,6 +233,7 @@ export const subjectFileSchema = z
     offerings: s.offerings,
     breadthOfferings: s.breadth_offerings,
     breadthFor: s.breadth_for,
+    recommended: s.recommended,
     prerequisites: s.prerequisites,
     corequisites: s.corequisites,
     nonAllowed: s.non_allowed,

@@ -16,6 +16,10 @@ prerequisites:
         - MIIM20001
 corequisites: none
 non_allowed: []
+recommended:
+  - ANSC20001
+  - AGRI10049
+  - ANSC20002
 assessment:
   - kind: test
     weight: 30

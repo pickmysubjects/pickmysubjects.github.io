@@ -11,6 +11,11 @@ prerequisites:
     - manual: CHEM10006 Chemistry for Biomedicine, with the subject coordinator's approval
 corequisites: none
 non_allowed: []
+recommended:
+  - MAST10005
+  - MAST10006
+  - MAST10007
+  - CHEM20018
 assessment:
   - kind: test
     weight: 20

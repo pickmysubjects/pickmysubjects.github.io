@@ -242,6 +242,7 @@ export const ko: Messages = {
     interests: '관심 있는 {topics}을(를) 다룹니다.',
     averagedHigh: '비슷한 과목({codes}) 성적으로 보면 약 {mark}점이 예상돼요.',
     averagedLow: '비슷한 과목({codes}) 성적으로 보면 {mark}점 정도라 어려울 수 있어요.',
+    recommendedFirst: "Handbook은 {codes}를 먼저 듣길 권장해요(필수 아님).",
     predictedRange: '비슷한 과목({codes}) 성적으로 보면 {low}–{high}점이 예상돼요.',
     gradesAbove: '성적을 공유한 {n}명은 이 과목에서 자기 WAM보다 평균 약 {by}점 높았어요.',
     gradesBelow: '성적을 공유한 {n}명은 이 과목에서 자기 WAM보다 평균 약 {by}점 낮았어요.',
@@ -846,6 +847,14 @@ export const ko: Messages = {
     failed: "보내지 못했어요. 연결을 확인하고 다시 시도하세요.",
     send: "{n}개 과목 익명으로 보내기",
   },
+  progress: {
+    title: "진행 상황",
+    total: "총 학점",
+    level: "레벨 {n}",
+    major: "전공",
+    done: "완료",
+    notYet: "아직",
+  },
   privacy: {
     title: '개인정보 처리',
     updated: '최종 업데이트: 2026년 10월 14일',
@@ -888,6 +897,7 @@ export const ko: Messages = {
     done: '완료',
   },
   subject: {
+    recommendedFirst: "먼저 들으면 좋은 과목 (필수 아님)",
     chooseDegreeFirst: "먼저 학위와 전공 선택",
     roleLine: { core: "필수", option: "선택 과목 중 하나", pathway: "{via}을(를) 들으려면 먼저 들어야 해요", route: "{via}로 가는 흔한 경로 (다른 선수 과목도 가능)" },
     showAll: "전체 {n}개 보기",

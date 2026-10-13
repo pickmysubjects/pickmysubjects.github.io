@@ -13,6 +13,8 @@ prerequisites:
         - PHYC10004
 corequisites: none
 non_allowed: []
+recommended:
+  - ELEN30009
 assessment:
   - kind: exam
     weight: 50

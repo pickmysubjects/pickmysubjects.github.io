@@ -22,6 +22,8 @@ prerequisites:
 corequisites: none
 non_allowed:
   - BIOL30008
+recommended:
+  - BIOL30001
 assessment:
   - kind: assignment
     weight: 10

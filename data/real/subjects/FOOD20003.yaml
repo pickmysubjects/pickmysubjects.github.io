@@ -8,6 +8,15 @@ offerings:
 prerequisites: none
 corequisites: none
 non_allowed: []
+recommended:
+  - BIOL10002
+  - BIOL10008
+  - BIOL10009
+  - BIOL10010
+  - BIOL10011
+  - CHEM10003
+  - CHEM10006
+  - CHEM10007
 assessment:
   - kind: assignment
     weight: 5

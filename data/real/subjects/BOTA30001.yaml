@@ -12,6 +12,8 @@ prerequisites:
     - manual: Equivalent
 corequisites: none
 non_allowed: []
+recommended:
+  - EVSC20004
 assessment:
   - kind: test
     weight: 5

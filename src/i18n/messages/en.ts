@@ -245,6 +245,7 @@ export const en = {
     interests: 'Covers {topics}, which you’re interested in.',
     averagedHigh: 'Your marks in similar subjects ({codes}) point to about {mark}.',
     averagedLow: 'Your marks in similar subjects ({codes}) point to about {mark}, so this may be tough.',
+    recommendedFirst: "The Handbook recommends {codes} first (not required).",
     predictedRange: 'Likely {low}–{high}, from your marks in similar subjects ({codes}).',
     gradesAbove: '{n} students who shared their grades did about {by} marks better here than their WAM.',
     gradesBelow: '{n} students who shared their grades did about {by} marks worse here than their WAM.',
@@ -849,6 +850,14 @@ export const en = {
     failed: "Couldn't send. Check your connection and try again.",
     send: "Send {n} anonymously",
   },
+  progress: {
+    title: "Progress",
+    total: "Total points",
+    level: "Level {n}",
+    major: "Major",
+    done: "Done",
+    notYet: "Not yet",
+  },
   privacy: {
     title: 'Privacy',
     updated: 'Last updated: 14 October 2026',
@@ -891,6 +900,7 @@ export const en = {
     done: 'Done',
   },
   subject: {
+    recommendedFirst: "Recommended first (not required)",
     chooseDegreeFirst: "Choose your degree first",
     roleLine: { core: "compulsory", option: "one of the subjects you choose from", pathway: "you must take this before {via}", route: "a usual way in to {via} (other routes exist)" },
     showAll: "Show all {n}",

@@ -15,6 +15,10 @@ prerequisites:
 corequisites: none
 non_allowed:
   - ELEN30006
+recommended:
+  - PHYC10004
+  - ELEN30009
+  - COMP20005
 assessment:
   - kind: exam
     weight: 30

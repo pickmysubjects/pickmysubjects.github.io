@@ -25,6 +25,9 @@ non_allowed:
   - ENGR30001
   - MCEN30015
   - ENGR30002
+recommended:
+  - PHYC10003
+  - PHYC10004
 assessment:
   - kind: report
     weight: 20

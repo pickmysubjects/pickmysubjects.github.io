@@ -37,4 +37,12 @@ describe('marks and choices', () => {
     }
     expect(rank(['PSYC10003'])).toBeLessThan(rank(['CHEM10003']))
   })
+  it('says when the Handbook recommends something first, until any of it is done', () => {
+    const s = Object.values(data.subjects).find((x) => x.recommended.length && x.prerequisites === 'none')
+    if (!s) return
+    const warns = (results: { code: string }[]) =>
+      recommend(data, { results, skills: {}, interests: [], goal: 'balanced' }, { course: 'B-SCI', year: 2026 }).find((r) => r.code === s.code)?.warnings.map((w) => w.key) ?? []
+    expect(warns([])).toContain('recommendedFirst')
+    expect(warns([{ code: s.recommended[0]! }])).not.toContain('recommendedFirst')
+  })
 })

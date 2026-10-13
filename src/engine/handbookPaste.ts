@@ -14,6 +14,8 @@ export interface PasteResult {
   /** Semester version of the assessment table; weights add up to 100. */
   assessment: AssessmentTask[] | 'unknown'
   weeklyContactHours?: number
+  /** Subjects the Handbook recommends having done first (not required). */
+  recommended?: string[]
   /** Courses (by title) that may take it as breadth, when the page has a "Breadth options" part. */
   breadthFor?: string[]
   /** From the page header, when the whole page was pasted. */
@@ -38,13 +40,13 @@ const SECTION_HEADINGS: [RegExp, Section][] = [
   [/^prerequisites?$/i, 'pre'],
   [/^corequisites?$/i, 'co'],
   [/^non[- ]allowed subjects?$/i, 'non'],
-  [/^recommended background knowledge$/i, 'skip'],
+  [/^recommended background knowledge$/i, 'rec'],
   [/^inherent requirements/i, 'skip'],
   [/^availability/i, 'avail'],
   [/^description timing percentage$/i, 'assess'],
   [/^(fees|contact information|further information|assessment|dates (and|&) times|additional details|quotas apply)$/i, 'skip'],
 ]
-type Section = 'pre' | 'co' | 'non' | 'avail' | 'assess' | 'skip'
+type Section = 'pre' | 'co' | 'non' | 'rec' | 'avail' | 'assess' | 'skip'
 
 // Inside the assessment table these headings start another term's version; we keep the first.
 const TERM_VERSION = /^(summer term|winter term|semester [12]|january|february|june|july|november|december)$/i
@@ -68,6 +70,14 @@ export function parseHandbookPaste(text: string): PasteResult {
     weeklyContactHours: parseContactHours(text),
     ...parseHeader(text),
     warnings,
+  }
+  // Recommended (not required) background: only the subject codes it names, minus the
+  // requirements already listed and the subject itself.
+  if (sections.rec) {
+    const required = new Set([...(sections.pre ?? []), ...(sections.co ?? [])].flatMap((l) => l.match(CODE) ?? []))
+    const self = parseHeader(text).code
+    const codes = unique(sections.rec.flatMap((l) => l.match(CODE) ?? [])).filter((c) => !required.has(c) && c !== self)
+    if (codes.length) result.recommended = codes
   }
   const breadth = parseBreadthFor(text)
   if (breadth) result.breadthFor = breadth

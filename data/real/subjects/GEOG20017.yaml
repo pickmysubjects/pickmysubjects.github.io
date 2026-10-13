@@ -8,6 +8,11 @@ offerings:
 prerequisites: none
 corequisites: none
 non_allowed: []
+recommended:
+  - GEOG10001
+  - GEOG10002
+  - GEOM20013
+  - ENVS10006
 assessment:
   - kind: assignment
     weight: 20

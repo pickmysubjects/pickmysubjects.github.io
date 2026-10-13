@@ -21,6 +21,8 @@ prerequisites:
 corequisites: none
 non_allowed:
   - PHYC10001
+recommended:
+  - MAST10005
 assessment:
   - kind: assignment
     weight: 25

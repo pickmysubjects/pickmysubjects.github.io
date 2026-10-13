@@ -8,6 +8,11 @@ offerings:
 prerequisites: none
 corequisites: none
 non_allowed: []
+recommended:
+  - BIOM20002
+  - ZOOL20006
+  - PHYS20008
+  - PSYC20006
 assessment:
   - kind: test
     weight: 50

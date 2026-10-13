@@ -242,6 +242,7 @@ export const hi: Messages = {
     interests: 'इसमें {topics} है, जिसमें आपकी रुचि है।',
     averagedHigh: 'मिलते-जुलते विषयों ({codes}) के आपके अंकों से लगभग {mark} का अनुमान है।',
     averagedLow: 'मिलते-जुलते विषयों ({codes}) के आपके अंकों से सिर्फ़ लगभग {mark} का अनुमान है, इसलिए यह कठिन हो सकता है।',
+    recommendedFirst: "Handbook पहले {codes} लेने की सलाह देता है (ज़रूरी नहीं)।",
     predictedRange: 'मिलते-जुलते विषयों ({codes}) के आपके अंकों से {low}–{high} का अनुमान है।',
     gradesAbove: 'अपने ग्रेड साझा करने वाले {n} छात्रों ने यहाँ अपने WAM से लगभग {by} अंक ज़्यादा पाए।',
     gradesBelow: 'अपने ग्रेड साझा करने वाले {n} छात्रों ने यहाँ अपने WAM से लगभग {by} अंक कम पाए।',
@@ -846,6 +847,14 @@ export const hi: Messages = {
     failed: "भेजा नहीं जा सका। कनेक्शन जाँचें और फिर कोशिश करें।",
     send: "{n} गुमनाम रूप से भेजें",
   },
+  progress: {
+    title: "प्रगति",
+    total: "कुल पॉइंट",
+    level: "लेवल {n}",
+    major: "मेजर",
+    done: "पूरा",
+    notYet: "अभी नहीं",
+  },
   privacy: {
     title: 'गोपनीयता',
     updated: 'अंतिम अपडेट: 14 अक्टूबर 2026',
@@ -888,6 +897,7 @@ export const hi: Messages = {
     done: 'पूरा',
   },
   subject: {
+    recommendedFirst: "पहले लेने की सलाह (ज़रूरी नहीं)",
     chooseDegreeFirst: "पहले डिग्री चुनें",
     roleLine: { core: "ज़रूरी", option: "चुनने वाले सब्जेक्ट में से एक", pathway: "{via} से पहले यह लेना ज़रूरी है", route: "{via} तक पहुँचने का आम रास्ता (दूसरे रास्ते भी हैं)" },
     showAll: "सभी {n} दिखाएँ",

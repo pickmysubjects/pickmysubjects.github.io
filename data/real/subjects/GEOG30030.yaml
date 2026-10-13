@@ -11,6 +11,9 @@ prerequisites:
     - manual: Equivalent experience by permission of the subject coordinator
 corequisites: none
 non_allowed: []
+recommended:
+  - UNIB10006
+  - MAST10010
 assessment:
   - kind: assignment
     weight: 20

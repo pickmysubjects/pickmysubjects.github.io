@@ -13,6 +13,8 @@ prerequisites:
 corequisites: none
 non_allowed:
   - AGRI20035
+recommended:
+  - AGRI20038
 assessment:
   - kind: report
     weight: 25

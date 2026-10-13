@@ -16,6 +16,12 @@ prerequisites:
       note: Admission into the MC-ENVENG Master of Environmental Engineering
 corequisites: none
 non_allowed: []
+recommended:
+  - BIOL10001
+  - CHEM10003
+  - MAST20029
+  - ENVS10002
+  - ENGR10003
 assessment:
   - kind: presentation
     weight: 10

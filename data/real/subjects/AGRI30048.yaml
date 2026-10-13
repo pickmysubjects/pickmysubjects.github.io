@@ -13,6 +13,10 @@ prerequisites:
     - BIOL10005
 corequisites: none
 non_allowed: []
+recommended:
+  - AGRI20035
+  - AGRI20037
+  - AGRI20026
 assessment:
   - kind: quiz
     weight: 5

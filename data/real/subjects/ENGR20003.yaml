@@ -9,6 +9,11 @@ prerequisites: none
 corequisites: none
 non_allowed:
   - ENGR20004
+recommended:
+  - ENGR10005
+  - ENGR10003
+  - ENVS10009
+  - ENVS10003
 assessment:
   - kind: assignment
     weight: 15

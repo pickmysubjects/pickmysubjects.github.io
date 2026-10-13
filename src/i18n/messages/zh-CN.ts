@@ -242,6 +242,7 @@ export const zhCN: Messages = {
     interests: '涉及 {topics}，是你感兴趣的方向。',
     averagedHigh: '按你在相近课程（{codes}）的成绩，预计约 {mark} 分。',
     averagedLow: '按你在相近课程（{codes}）的成绩，预计只有 {mark} 分左右，可能会比较吃力。',
+    recommendedFirst: "Handbook 建议先修 {codes}（不是硬性要求）。",
     predictedRange: '按你在相近课程（{codes}）的成绩，预计 {low}–{high} 分。',
     gradesAbove: '{n} 位分享成绩的同学在这门课比自己的 WAM 平均高约 {by} 分。',
     gradesBelow: '{n} 位分享成绩的同学在这门课比自己的 WAM 平均低约 {by} 分。',
@@ -846,6 +847,14 @@ export const zhCN: Messages = {
     failed: "发送失败，请检查网络后再试。",
     send: "匿名发送 {n} 门",
   },
+  progress: {
+    title: "进度",
+    total: "总学分",
+    level: "Level {n}",
+    major: "专业",
+    done: "已完成",
+    notYet: "未完成",
+  },
   privacy: {
     title: '隐私说明',
     updated: '最后更新：2026 年 10 月 14 日',
@@ -888,6 +897,7 @@ export const zhCN: Messages = {
     done: '已完成',
   },
   subject: {
+    recommendedFirst: "建议先修（非必须）",
     chooseDegreeFirst: "先选学位和专业",
     roleLine: { core: "必修", option: "可选课之一", pathway: "要修 {via}，必须先修这门", route: "通往 {via} 的常见路线（也有别的先修可走）" },
     showAll: "显示全部 {n} 个",

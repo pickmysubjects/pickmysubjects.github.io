@@ -17,6 +17,11 @@ non_allowed:
   - CHEM20023
   - CHEM20024
   - CHEM20025
+recommended:
+  - MAST10005
+  - MAST10006
+  - MAST10007
+  - PHYC10005
 assessment:
   - kind: quiz
     weight: 10

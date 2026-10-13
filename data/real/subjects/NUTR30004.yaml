@@ -11,6 +11,9 @@ prerequisites:
     - NUTR20001
 corequisites: none
 non_allowed: []
+recommended:
+  - AGRI20003
+  - FOOD20006
 assessment:
   - kind: report
     weight: 20

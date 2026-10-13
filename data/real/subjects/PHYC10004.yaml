@@ -26,6 +26,8 @@ non_allowed:
   - PHYC10002
   - PHYC10006
   - PHYC10007
+recommended:
+  - MAST10005
 assessment:
   - kind: assignment
     weight: 25

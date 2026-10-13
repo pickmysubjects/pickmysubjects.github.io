@@ -242,6 +242,7 @@ export const id: Messages = {
     interests: 'Membahas {topics}, yang kamu minati.',
     averagedHigh: 'Dari nilaimu di mata kuliah serupa ({codes}), perkiraannya sekitar {mark}.',
     averagedLow: 'Dari nilaimu di mata kuliah serupa ({codes}), perkiraannya hanya sekitar {mark}, jadi ini mungkin berat.',
+    recommendedFirst: "Handbook menyarankan {codes} terlebih dahulu (tidak wajib).",
     predictedRange: 'Dari nilaimu di mata kuliah serupa ({codes}), perkiraannya {low}–{high}.',
     gradesAbove: '{n} mahasiswa yang berbagi nilai mendapat sekitar {by} poin lebih tinggi dari WAM mereka di sini.',
     gradesBelow: '{n} mahasiswa yang berbagi nilai mendapat sekitar {by} poin lebih rendah dari WAM mereka di sini.',
@@ -846,6 +847,14 @@ export const id: Messages = {
     failed: "Gagal mengirim. Periksa koneksi dan coba lagi.",
     send: "Kirim {n} secara anonim",
   },
+  progress: {
+    title: "Kemajuan",
+    total: "Total poin",
+    level: "Level {n}",
+    major: "Jurusan",
+    done: "Selesai",
+    notYet: "Belum",
+  },
   privacy: {
     title: 'Privasi',
     updated: 'Terakhir diperbarui: 14 Oktober 2026',
@@ -888,6 +897,7 @@ export const id: Messages = {
     done: 'Selesai',
   },
   subject: {
+    recommendedFirst: "Disarankan lebih dulu (tidak wajib)",
     chooseDegreeFirst: "Pilih gelar dulu",
     roleLine: { core: "wajib", option: "salah satu mata kuliah pilihan", pathway: "harus diambil sebelum {via}", route: "jalur umum ke {via} (ada jalur lain)" },
     showAll: "Tampilkan semua {n}",

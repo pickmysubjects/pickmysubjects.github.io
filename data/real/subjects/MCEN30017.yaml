@@ -12,6 +12,9 @@ prerequisites:
     - ENGR20004
 corequisites: none
 non_allowed: []
+recommended:
+  - PHYC10003
+  - PHYC10004
 assessment:
   - kind: participation
     weight: 15

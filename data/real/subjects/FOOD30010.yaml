@@ -8,6 +8,8 @@ offerings:
 prerequisites: none
 corequisites: none
 non_allowed: []
+recommended:
+  - FOOD20003
 assessment:
   - kind: test
     weight: 25

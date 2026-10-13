@@ -16,6 +16,8 @@ prerequisites:
 corequisites: none
 non_allowed:
   - ATOC20002
+recommended:
+  - ATOC20001
 assessment:
   - kind: assignment
     weight: 25

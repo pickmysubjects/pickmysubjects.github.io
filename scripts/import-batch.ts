@@ -57,6 +57,7 @@ for (const file of positionals) {
     for (const k of KEEP) if (old[k] !== undefined) doc[k] = old[k]
     // A paste without its "Breadth options" part keeps the list we already had.
     if (doc.breadth_for === undefined && old.breadth_for !== undefined) doc.breadth_for = old.breadth_for
+    if (doc.recommended === undefined && old.recommended !== undefined) doc.recommended = old.recommended
     doc.notes = `Source: ${values.year} University of Melbourne Handbook; facts summarised and checked.`
     writeFileSync(path, stringify(doc, { lineWidth: 0 }))
     written++

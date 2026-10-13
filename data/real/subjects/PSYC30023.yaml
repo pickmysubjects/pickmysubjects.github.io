@@ -8,6 +8,8 @@ offerings:
 prerequisites: none
 corequisites: none
 non_allowed: []
+recommended:
+  - PSYC30013
 assessment:
   - kind: assignment
     weight: 60

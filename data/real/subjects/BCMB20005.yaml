@@ -19,6 +19,8 @@ prerequisites:
         - CHEM10009
 corequisites: none
 non_allowed: []
+recommended:
+  - BCMB20002
 assessment:
   - kind: quiz
     weight: 5

@@ -11,6 +11,10 @@ prerequisites:
     - manual: 25 credit points of any other Level 2 Geography subjects, or equivalent at discretion of subject coordinator
 corequisites: none
 non_allowed: []
+recommended:
+  - GEOG10001
+  - EVSC10001
+  - GEOG20015
 assessment:
   - kind: assignment
     weight: 15

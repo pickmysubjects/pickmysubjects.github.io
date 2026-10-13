@@ -242,6 +242,7 @@ export const ms: Messages = {
     interests: 'Merangkumi {topics}, yang anda minati.',
     averagedHigh: 'Berdasarkan markah subjek serupa ({codes}), dijangka kira-kira {mark}.',
     averagedLow: 'Berdasarkan markah subjek serupa ({codes}), dijangka sekitar {mark} sahaja, jadi ini mungkin mencabar.',
+    recommendedFirst: "Handbook mengesyorkan {codes} dahulu (tidak wajib).",
     predictedRange: 'Berdasarkan markah subjek serupa ({codes}), dijangka {low}–{high}.',
     gradesAbove: '{n} pelajar yang berkongsi gred mendapat kira-kira {by} markah lebih tinggi daripada WAM mereka di sini.',
     gradesBelow: '{n} pelajar yang berkongsi gred mendapat kira-kira {by} markah lebih rendah daripada WAM mereka di sini.',
@@ -846,6 +847,14 @@ export const ms: Messages = {
     failed: "Tidak dapat dihantar. Semak sambungan dan cuba lagi.",
     send: "Hantar {n} tanpa nama",
   },
+  progress: {
+    title: "Kemajuan",
+    total: "Jumlah mata",
+    level: "Tahap {n}",
+    major: "Major",
+    done: "Selesai",
+    notYet: "Belum",
+  },
   privacy: {
     title: 'Privasi',
     updated: 'Kemas kini terakhir: 14 Oktober 2026',
@@ -888,6 +897,7 @@ export const ms: Messages = {
     done: 'Selesai',
   },
   subject: {
+    recommendedFirst: "Disyorkan dahulu (tidak wajib)",
     chooseDegreeFirst: "Pilih ijazah dahulu",
     roleLine: { core: "wajib", option: "salah satu subjek pilihan", pathway: "perlu diambil sebelum {via}", route: "laluan biasa ke {via} (ada laluan lain)" },
     showAll: "Tunjuk semua {n}",

@@ -11,6 +11,8 @@ prerequisites:
     - manual: Study score of 30 or more in VCE Specialist Mathematics 3/4 or equivalent
 corequisites: none
 non_allowed: []
+recommended:
+  - ATOC20001
 assessment:
   - kind: project
     weight: 30
