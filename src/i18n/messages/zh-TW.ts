@@ -34,6 +34,7 @@ export const zhTW: Messages = {
     title: '把你的學位畫成一張路線圖',
     lede: "依學位規則排好的每學期課表，拖動卡片就能調整。",
     addTerm: '增加一個學期',
+    inProgress: "進行中",
     addShortTerm: '新增夏季或冬季學期',
     removeThisTerm: '刪除這個學期',
     removeTerm: '刪除最後一個空學期',

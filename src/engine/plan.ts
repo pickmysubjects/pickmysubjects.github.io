@@ -76,11 +76,26 @@ export function nextSemester(today: Date): { year: number; period: Period } {
   return { year: year + 1, period: 'semester-1' }
 }
 
-/** Where a plan should begin: the start of study, or the next semester if that's already past. */
+/**
+ * The semester under way on this date (teaching through exams), or null between semesters.
+ * Semester 1 runs roughly March–June, semester 2 August–November.
+ */
+export function currentSemester(today: Date): { year: number; period: Period } | null {
+  const month = today.getMonth() // 0 = January
+  if (month >= 2 && month <= 5) return { year: today.getFullYear(), period: 'semester-1' }
+  if (month >= 7 && month <= 10) return { year: today.getFullYear(), period: 'semester-2' }
+  return null
+}
+
+/**
+ * Where a plan should begin: the start of study, or, for someone who started already, the
+ * semester they're in now (its subjects have no marks yet, so they aren't on the record), else
+ * the next one.
+ */
 export function planStart(start: { year: number; period: Period }, today: Date): { year: number; period: Period } {
-  const next = nextSemester(today)
+  const from = currentSemester(today) ?? nextSemester(today)
   const key = (t: { year: number; period: Period }) => t.year * 10 + (t.period === 'semester-2' ? 2 : 1)
-  return key(start) >= key(next) ? start : next
+  return key(start) >= key(from) ? start : from
 }
 
 export function termLabel(term: Pick<PlanTerm, 'year' | 'period'>): string {

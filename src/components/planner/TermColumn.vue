@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { currentSemester } from '@/engine/plan'
 import { computed, shallowRef } from 'vue'
 import { X } from 'lucide-vue-next'
 import { periodsFor, type Issue, type PlanTerm, type Subject } from '@/engine'
@@ -54,6 +55,9 @@ function onDrop(event: DragEvent): void {
     // Not one of our cards.
   }
 }
+// The semester under way: what the student is taking now goes here (no marks yet, so it isn't on the record).
+const now = currentSemester(new Date())
+const isNow = computed(() => now !== null && props.term.year === now.year && props.term.period === now.period)
 </script>
 
 <template>
@@ -67,6 +71,7 @@ function onDrop(event: DragEvent): void {
   >
     <header class="term-head">
       <h3 class="term-name">{{ termLabel(t, term) }}</h3>
+      <span v-if="isNow" class="term-now">{{ t('plan.inProgress') }}</span>
       <button
         v-if="term.subjects.length === 0 && (term.period === 'summer' || term.period === 'winter')"
         class="term-remove"
@@ -180,5 +185,14 @@ function onDrop(event: DragEvent): void {
   font-size: 0.8125rem;
   color: var(--ink-soft);
   text-align: center;
+}
+.term-now {
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: var(--good-soft);
+  font-size: 0.75rem;
+  font-weight: 650;
+  color: var(--good);
+  white-space: nowrap;
 }
 </style>

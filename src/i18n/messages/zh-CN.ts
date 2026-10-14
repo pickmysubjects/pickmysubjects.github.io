@@ -34,6 +34,7 @@ export const zhCN: Messages = {
     title: '把你的学位画成一张路线图',
     lede: "按学位规则排好的每学期课表，拖动卡片就能调整。",
     addTerm: '增加一个学期',
+    inProgress: "进行中",
     addShortTerm: '添加夏季或冬季学期',
     removeThisTerm: '删除这个学期',
     removeTerm: '删除最后一个空学期',

@@ -130,12 +130,18 @@ describe('checkCourse (one subject fills one requirement)', () => {
 })
 
 describe('planStart', () => {
-  it('starts at the next semester that has not begun when study started earlier', () => {
+  it('starts at the semester under way when study started earlier', () => {
     const oct2026 = new Date(2026, 9, 7)
-    expect(planStart({ year: 2025, period: 'semester-2' }, oct2026)).toEqual({ year: 2027, period: 'semester-1' })
+    expect(planStart({ year: 2025, period: 'semester-2' }, oct2026)).toEqual({ year: 2026, period: 'semester-2' })
+    expect(planStart({ year: 2026, period: 'semester-1' }, oct2026)).toEqual({ year: 2026, period: 'semester-2' })
     expect(planStart({ year: 2026, period: 'semester-2' }, new Date(2026, 4, 1))).toEqual({ year: 2026, period: 'semester-2' })
-    expect(planStart({ year: 2026, period: 'semester-1' }, new Date(2026, 4, 1))).toEqual({ year: 2026, period: 'semester-2' })
-    expect(planStart({ year: 2028, period: 'semester-1' }, oct2026)).toEqual({ year: 2028, period: 'semester-1' }) // future start is kept
+    expect(planStart({ year: 2026, period: 'semester-1' }, new Date(2026, 4, 1))).toEqual({ year: 2026, period: 'semester-1' })
+  })
+
+  it('starts at the next semester between semesters', () => {
+    expect(planStart({ year: 2025, period: 'semester-1' }, new Date(2026, 11, 20))).toEqual({ year: 2027, period: 'semester-1' })
+    expect(planStart({ year: 2025, period: 'semester-1' }, new Date(2026, 6, 5))).toEqual({ year: 2026, period: 'semester-2' })
+    expect(planStart({ year: 2028, period: 'semester-1' }, new Date(2026, 9, 7))).toEqual({ year: 2028, period: 'semester-1' }) // future start is kept
   })
 })
 

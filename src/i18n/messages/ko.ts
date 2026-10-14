@@ -34,6 +34,7 @@ export const ko: Messages = {
     title: '나의 학위를 한 장의 경로도로',
     lede: "학위 규칙에 맞춘 학기별 계획이에요. 카드를 끌어서 바꿀 수 있어요.",
     addTerm: '학기 추가',
+    inProgress: "수강 중",
     addShortTerm: '여름·겨울 학기 추가',
     removeThisTerm: '이 학기 삭제',
     removeTerm: '마지막 빈 학기 삭제',

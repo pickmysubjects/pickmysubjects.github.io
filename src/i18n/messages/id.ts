@@ -34,6 +34,7 @@ export const id: Messages = {
     title: 'Gelarmu dalam satu peta rute',
     lede: "Rencana per semester yang mengikuti aturan gelarmu; seret kartu untuk mengubahnya.",
     addTerm: 'Tambah semester',
+    inProgress: "Sedang berjalan",
     addShortTerm: 'Tambah semester musim panas atau dingin',
     removeThisTerm: 'Hapus semester ini',
     removeTerm: 'Hapus semester kosong terakhir',

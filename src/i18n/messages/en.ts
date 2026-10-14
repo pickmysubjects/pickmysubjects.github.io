@@ -37,6 +37,7 @@ export const en = {
     title: 'Your degree, as a route',
     lede: "A semester-by-semester plan that follows your degree’s rules; drag cards to change it.",
     addTerm: 'Add a term',
+    inProgress: "Now",
     addShortTerm: 'Add a summer or winter term',
     removeThisTerm: 'Remove this term',
     removeTerm: 'Remove last empty term',
