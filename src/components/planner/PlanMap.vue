@@ -250,7 +250,7 @@ const trackWidth = computed(() => `max(100%, ${(props.terms.length + pastCount.v
             </button>
           </div>
         </template>
-        <button v-if="terms.length > 1 && terms.at(-1)?.subjects.length === 0" class="button button-quiet" type="button" @click="emit('removeLastTerm')">{{ t('plan.removeTerm') }}</button>
+        <button v-if="terms.length > 0 && terms.at(-1)?.subjects.length === 0" class="button button-quiet" type="button" @click="emit('removeLastTerm')">{{ t('plan.removeTerm') }}</button>
       </div>
     </div>
   </div>

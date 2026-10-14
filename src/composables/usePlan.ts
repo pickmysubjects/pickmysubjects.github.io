@@ -258,7 +258,11 @@ export function usePlan() {
       const last = [...s.terms].reverse().find((t) => t.period === 'semester-1' || t.period === 'semester-2')
       const next = last
         ? standardTerms(last.year, last.period, 2)[1]
-        : standardTerms(s.setup.startYear, s.setup.startPeriod, 1)[0]
+        : (() => {
+            // No semesters yet: the one after the record (or the start of study).
+            const from = planStart({ year: s.setup.startYear, period: s.setup.startPeriod }, profile.value.results, startFill())
+            return standardTerms(from.year, from.period, 1)[0]
+          })()
       if (next) s.terms.push({ ...next, subjects: [] })
       return s
     })
@@ -312,7 +316,8 @@ export function usePlan() {
 
   function removeLastTerm(): void {
     save((s) => {
-      if (s.terms.length > 1 && (s.terms.at(-1)?.subjects.length ?? 0) === 0) s.terms.pop()
+      // Any empty last term, even the only one (a finished degree needs none).
+      if (s.terms.length > 0 && (s.terms.at(-1)?.subjects.length ?? 1) === 0) s.terms.pop()
       return s
     })
   }
