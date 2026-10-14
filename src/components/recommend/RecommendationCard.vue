@@ -111,6 +111,9 @@ const where = computed(() => {
       </div>
     </header>
 
+    <p v-if="rec.alternatives?.length" class="rec-alt">
+      {{ t('suggest.orInstead', { codes: rec.alternatives.join(', ') }) }}
+    </p>
     <ul v-if="reasons.length" class="rec-reasons">
       <li v-for="(r, i) in reasons" :key="i" class="rec-reason" :class="`rec-reason-${r.key}`">
         <component :is="r.icon" :size="15" aria-hidden="true" />
@@ -383,5 +386,10 @@ const where = computed(() => {
   min-height: 36px;
   padding: 0 14px;
   font-size: 0.875rem;
+}
+.rec-alt {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
 }
 </style>

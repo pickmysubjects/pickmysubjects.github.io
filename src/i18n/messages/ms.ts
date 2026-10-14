@@ -204,6 +204,7 @@ export const ms: Messages = {
     quickHint: 'Pilih beberapa dan cadangan akan muncul di bawah. Anda juga boleh menambah keputusan dan kekuatan di {link}.',
     goal: 'Apa yang paling penting kali ini?',
     goalLocal: "Hanya untuk cadangan di sini. Rancangan anda kekal ikut pilihan di halaman Saya.",
+    orInstead: "Atau gantinya: {codes} (hanya satu boleh dikira)",
     goals: {
       wam: 'Jaga WAM',
       wamHint: 'Mengutamakan subjek yang mudah diikuti dan pemarkahannya longgar, yang berkemungkinan anda boleh cemerlang.',
@@ -255,6 +256,7 @@ export const ms: Messages = {
     recommendedFirst: "Handbook mengesyorkan {codes} dahulu (tidak wajib).",
     predictedRange: 'Berdasarkan markah subjek serupa ({codes}), dijangka {low}–{high}.',
     predictedWam: "Berdasarkan markah anda setakat ini, dijangka {low}–{high}.",
+    continues: "Langkah seterusnya selepas {codes} yang sudah anda ambil.",
     gradesAbove: '{n} pelajar yang berkongsi gred mendapat kira-kira {by} markah lebih tinggi daripada WAM mereka di sini.',
     gradesBelow: '{n} pelajar yang berkongsi gred mendapat kira-kira {by} markah lebih rendah daripada WAM mereka di sini.',
     fewReviews: 'Baru {n} ulasan — data kesukaran masih sedikit.',

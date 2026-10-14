@@ -204,6 +204,7 @@ export const ko: Messages = {
     quickHint: '몇 개 고르면 아래에 추천이 나타납니다. {link}에서 이수 과목과 강점도 입력할 수 있습니다.',
     goal: '이번에 가장 중요한 것은?',
     goalLocal: "여기 추천에만 적용돼요. 계획은 '내 기록'의 설정을 그대로 따라요.",
+    orInstead: "대신 {codes}도 가능해요 (이 중 하나만 인정돼요)",
     goals: {
       wam: 'WAM 지키기',
       wamHint: '접근하기 쉽고 채점이 후하며 좋은 성적을 받을 만한 과목을 우선합니다.',
@@ -255,6 +256,7 @@ export const ko: Messages = {
     recommendedFirst: "Handbook은 {codes}를 먼저 듣길 권장해요(필수 아님).",
     predictedRange: '비슷한 과목({codes}) 성적으로 보면 {low}–{high}점이 예상돼요.',
     predictedWam: "지금까지 성적으로 보면 {low}–{high}점 정도예요.",
+    continues: "이미 들은 {codes}의 다음 단계예요.",
     gradesAbove: '성적을 공유한 {n}명은 이 과목에서 자기 WAM보다 평균 약 {by}점 높았어요.',
     gradesBelow: '성적을 공유한 {n}명은 이 과목에서 자기 WAM보다 평균 약 {by}점 낮았어요.',
     fewReviews: '리뷰가 아직 {n}개뿐이라 난이도 데이터가 부족합니다.',

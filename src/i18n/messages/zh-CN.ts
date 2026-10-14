@@ -204,6 +204,7 @@ export const zhCN: Messages = {
     quickHint: '点几个，下面就会出现推荐。也可以去 {link} 填已修的课和你的强项。',
     goal: '这次你最看重什么？',
     goalLocal: "只影响这里的推荐，排课仍按「我的」页面里的设置。",
+    orInstead: "也可以选 {codes}（这几门只能修一门）",
     goals: {
       wam: '保住 WAM',
       wamHint: '优先推荐容易上手、给分宽松、你可能考得好的课。',
@@ -255,6 +256,7 @@ export const zhCN: Messages = {
     recommendedFirst: "Handbook 建议先修 {codes}（不是硬性要求）。",
     predictedRange: '按你在相近课程（{codes}）的成绩，预计 {low}–{high} 分。',
     predictedWam: "按你目前的成绩，预计 {low}–{high} 分。",
+    continues: "接着你修过的 {codes} 往下学。",
     gradesAbove: '{n} 位分享成绩的同学在这门课比自己的 WAM 平均高约 {by} 分。',
     gradesBelow: '{n} 位分享成绩的同学在这门课比自己的 WAM 平均低约 {by} 分。',
     fewReviews: '目前只有 {n} 条评价——难度数据还不够多。',

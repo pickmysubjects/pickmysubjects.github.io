@@ -204,6 +204,7 @@ export const id: Messages = {
     quickHint: 'Pilih beberapa dan rekomendasi muncul di bawah. Anda juga bisa menambahkan nilai dan keahlian di {link}.',
     goal: 'Apa yang paling penting kali ini?',
     goalLocal: "Hanya untuk rekomendasi di sini. Rencanamu tetap mengikuti pilihan di halaman Saya.",
+    orInstead: "Atau sebagai gantinya: {codes} (hanya satu yang dihitung)",
     goals: {
       wam: 'Jaga WAM',
       wamHint: 'Mengutamakan mata kuliah yang mudah diikuti dan penilaiannya longgar, yang kemungkinan bisa kamu kuasai.',
@@ -255,6 +256,7 @@ export const id: Messages = {
     recommendedFirst: "Handbook menyarankan {codes} terlebih dahulu (tidak wajib).",
     predictedRange: 'Dari nilaimu di mata kuliah serupa ({codes}), perkiraannya {low}–{high}.',
     predictedWam: "Dari nilaimu sejauh ini, perkiraan {low}–{high}.",
+    continues: "Langkah berikutnya setelah {codes} yang sudah kamu ambil.",
     gradesAbove: '{n} mahasiswa yang berbagi nilai mendapat sekitar {by} poin lebih tinggi dari WAM mereka di sini.',
     gradesBelow: '{n} mahasiswa yang berbagi nilai mendapat sekitar {by} poin lebih rendah dari WAM mereka di sini.',
     fewReviews: 'Baru ada {n} ulasan — data tingkat kesulitan masih sedikit.',

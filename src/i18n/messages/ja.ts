@@ -204,6 +204,7 @@ export const ja: Messages = {
     quickHint: 'いくつか選ぶと下におすすめが出ます。{link} で履修済み科目や得意分野も入れられます。',
     goal: '今回いちばん重視することは？',
     goalLocal: "ここでのおすすめだけに使います。プランは「マイページ」の設定のままです。",
+    orInstead: "代わりに {codes} も選べます（どれか 1 つだけ）",
     goals: {
       wam: 'WAM を守る',
       wamHint: '取り組みやすく、採点が甘めで、良い成績が取れそうな科目を重視します。',
@@ -255,6 +256,7 @@ export const ja: Messages = {
     recommendedFirst: "Handbook では先に {codes} の履修を推奨しています（必須ではありません）。",
     predictedRange: '似た科目（{codes}）の成績から、{low}〜{high} 点の見込みです。',
     predictedWam: "これまでの成績から、{low}–{high} 点くらいの見込みです。",
+    continues: "履修済みの {codes} の次のステップです。",
     gradesAbove: '成績を共有した {n} 人は、この科目で自分の WAM より平均約 {by} 点高くなりました。',
     gradesBelow: '成績を共有した {n} 人は、この科目で自分の WAM より平均約 {by} 点低くなりました。',
     fewReviews: 'レビューはまだ {n} 件だけで、難易度データが不十分です。',

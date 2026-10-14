@@ -90,7 +90,8 @@ for (const file of readdirSync(dir).filter((f) => f.endsWith('.txt')).sort()) {
       limit: 10,
     }
     const base: Profile = { results: [], skills: st.skills, interests: st.interests, goal: 'balanced' }
-    const hits = (recs: { code: string }[]) => recs.filter((r) => target.some((x) => x.code === r.code)).length
+    // A card names its either-or versions too (COMP20003 or COMP20007), so those count as shown.
+    const hits = (recs: { code: string; alternatives?: string[] }[]) => recs.filter((r) => target.some((x) => x.code === r.code || r.alternatives?.includes(x.code))).length
     const cold = recommend(data, base, opts)
     const marked = recommend(data, { ...base, results: before.map((r) => ({ code: r.code, mark: r.mark })) }, opts)
     per.pCold.push(hits(cold) / 10)

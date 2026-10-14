@@ -50,6 +50,8 @@ export interface Recommendation {
    * number as. The raw score centres on 50, so a good match there looked like a poor mark.
    */
   betterThan: number
+  /** Versions of the same subject (only one can count) that scored lower: named on this card. */
+  alternatives?: string[]
   confidence: 'low' | 'medium' | 'high'
   eligibility: Tri
   reasons: Note[]
@@ -222,6 +224,9 @@ export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions =
       for (const target of frontier) {
         const t = data.subjects[target]
         if (!t) continue
+        // Already able to take it (a "one of" list met by something done): nothing in that list
+        // is a step towards it, however long the list.
+        if (evaluateField(t.prerequisites, { completed, subjects: data.subjects, admittedCourse: opts.course }).status === 'ok') continue
         for (const p of [...referencedSubjects(t.prerequisites), ...referencedSubjects(t.corequisites)]) {
           if (completed.has(p) || roles.required.has(p) || roles.options.has(p)) continue
           const leadsTo = towardMajor.get(p) ?? []
@@ -317,6 +322,13 @@ export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions =
       const field = areaField(s.area)
       const fromInterest = rec.reasons.some((x) => x.key === 'interests')
       const inProgramme = roles !== null && (roles.required.has(s.code) || roles.options.has(s.code) || towardMajor.has(s.code))
+      // The next step of a sequence they started (ECON10004 → ECON20002): a prerequisite they
+      // passed in the same area.
+      const continues = referencedSubjects(s.prerequisites).filter((c) => completed.has(c) && data.subjects[c]?.area === s.area)
+      if (continues.length && !inProgramme) {
+        rec.score = Math.min(100, rec.score + PAST_CHOICE_NUDGE)
+        rec.reasons.push(note('continues', { codes: continues.slice(0, 2).join(', ') }, `The next step after ${continues.slice(0, 2).join(', ')}, which you've done.`))
+      }
       if (breadthFields.has(field) && s.categories[opts.course ?? ''] === 'breadth') rec.score = Math.min(100, rec.score + PAST_CHOICE_NUDGE)
       else if (!fromInterest && !inProgramme && !takenFields.has(field)) rec.score = Math.max(0, rec.score - PAST_CHOICE_NUDGE)
     }
@@ -698,7 +710,10 @@ function diversify(recs: Recommendation[], data: Dataset): Recommendation[] {
   const area = (r: Recommendation) => data.subjects[r.code]?.area
   while (pool.length) {
     const top = pool[0] as Recommendation
-    if (out.some((r) => excluded(r.code, top.code))) {
+    const kept = out.find((r) => excluded(r.code, top.code))
+    if (kept) {
+      // Named on the card it competes with, so the choice is visible where it's made.
+      kept.alternatives = [...(kept.alternatives ?? []), top.code]
       later.push(pool.shift() as Recommendation)
       continue
     }

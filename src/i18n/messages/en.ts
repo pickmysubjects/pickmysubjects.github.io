@@ -207,6 +207,7 @@ export const en = {
     quickHint: 'Pick a few and suggestions appear below. You can add your results and strengths in {link} too.',
     goal: 'What matters most this time?',
     goalLocal: "Only for these suggestions. Your plan keeps the goal set on My page.",
+    orInstead: "Or instead: {codes} (only one of these can count)",
     goals: {
       wam: 'Protect my WAM',
       wamHint: 'Weights approachable, generously marked subjects you are likely to do well in.',
@@ -258,6 +259,7 @@ export const en = {
     recommendedFirst: "The Handbook recommends {codes} first (not required).",
     predictedRange: 'Likely {low}–{high}, from your marks in similar subjects ({codes}).',
     predictedWam: "Likely {low}–{high}, from your marks so far.",
+    continues: "The next step after {codes}, which you've done.",
     gradesAbove: '{n} students who shared their grades did about {by} marks better here than their WAM.',
     gradesBelow: '{n} students who shared their grades did about {by} marks worse here than their WAM.',
     fewReviews: 'Only {n} review(s) so far — difficulty data is thin.',

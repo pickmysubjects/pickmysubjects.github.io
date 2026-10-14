@@ -204,6 +204,7 @@ export const vi: Messages = {
     quickHint: 'Chọn vài mục và gợi ý sẽ hiện bên dưới. Bạn cũng có thể thêm kết quả và thế mạnh ở {link}.',
     goal: 'Lần này bạn ưu tiên điều gì?',
     goalLocal: "Chỉ áp dụng cho gợi ý ở đây. Kế hoạch vẫn theo lựa chọn ở trang Của tôi.",
+    orInstead: "Hoặc thay bằng {codes} (chỉ được tính một môn)",
     goals: {
       wam: 'Giữ WAM',
       wamHint: 'Ưu tiên môn dễ tiếp cận, chấm điểm rộng rãi mà bạn có khả năng làm tốt.',
@@ -255,6 +256,7 @@ export const vi: Messages = {
     recommendedFirst: "Handbook khuyên học {codes} trước (không bắt buộc).",
     predictedRange: 'Theo điểm các môn tương tự ({codes}), dự kiến {low}–{high}.',
     predictedWam: "Theo điểm của bạn đến nay, dự kiến {low}–{high}.",
+    continues: "Bước tiếp theo sau {codes} mà bạn đã học.",
     gradesAbove: '{n} sinh viên chia sẻ điểm đạt cao hơn WAM của họ khoảng {by} điểm ở môn này.',
     gradesBelow: '{n} sinh viên chia sẻ điểm đạt thấp hơn WAM của họ khoảng {by} điểm ở môn này.',
     fewReviews: 'Mới có {n} đánh giá — dữ liệu độ khó còn ít.',

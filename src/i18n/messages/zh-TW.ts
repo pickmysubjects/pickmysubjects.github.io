@@ -204,6 +204,7 @@ export const zhTW: Messages = {
     quickHint: '點幾個，下面就會出現推薦。也可以到 {link} 填已修的課和你的強項。',
     goal: '這次你最看重什麼？',
     goalLocal: "只影響這裡的推薦，排課仍依「我的」頁面裡的設定。",
+    orInstead: "也可以選 {codes}（這幾門只能修一門）",
     goals: {
       wam: '保住 WAM',
       wamHint: '優先推薦容易上手、給分寬鬆、你可能考得好的課。',
@@ -255,6 +256,7 @@ export const zhTW: Messages = {
     recommendedFirst: "Handbook 建議先修 {codes}（不是硬性要求）。",
     predictedRange: '依你在相近課程（{codes}）的成績，預計 {low}–{high} 分。',
     predictedWam: "按你目前的成績，預計 {low}–{high} 分。",
+    continues: "接著你修過的 {codes} 往下學。",
     gradesAbove: '{n} 位分享成績的同學在這門課比自己的 WAM 平均高約 {by} 分。',
     gradesBelow: '{n} 位分享成績的同學在這門課比自己的 WAM 平均低約 {by} 分。',
     fewReviews: '目前只有 {n} 則評價——難度資料還不夠多。',
