@@ -34,7 +34,6 @@ export const ko: Messages = {
     title: '나의 학위를 한 장의 경로도로',
     lede: "학위 규칙에 맞춘 학기별 계획이에요. 카드를 끌어서 바꿀 수 있어요.",
     addTerm: '학기 추가',
-    inProgress: "수강 중",
     addShortTerm: '여름·겨울 학기 추가',
     removeThisTerm: '이 학기 삭제',
     removeTerm: '마지막 빈 학기 삭제',
@@ -263,6 +262,8 @@ export const ko: Messages = {
     eligibilityUnknown: '수강 자격을 확인할 수 없습니다: {needs}.',
   },
   record: {
+    passFail: "통과/낙제",
+    passFailHint: "통과/낙제로만 평가되어 점수가 없고 WAM에 들어가지 않아요.",
     termAvg: "평균 {n}",
     markShort: "점수",
     levelLegend: "이런 과목에서 보통 받는 점수로 고르세요(대학 전이라면 고등학교의 비슷한 과목으로). 잘 모르겠으면 비워 두고, 다시 누르면 취소돼요.",
@@ -932,6 +933,7 @@ export const ko: Messages = {
     done: '완료',
   },
   gist: {
+    passFail: "통과/낙제만, WAM 미반영",
     noExam: "기말고사 없음: 전부 과제",
     examHeavy: "기말고사 {n}%: 시험 비중 큼",
     examLight: "기말고사 {n}%: 과제 위주",

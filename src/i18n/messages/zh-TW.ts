@@ -34,7 +34,6 @@ export const zhTW: Messages = {
     title: '把你的學位畫成一張路線圖',
     lede: "依學位規則排好的每學期課表，拖動卡片就能調整。",
     addTerm: '增加一個學期',
-    inProgress: "進行中",
     addShortTerm: '新增夏季或冬季學期',
     removeThisTerm: '刪除這個學期',
     removeTerm: '刪除最後一個空學期',
@@ -263,6 +262,8 @@ export const zhTW: Messages = {
     eligibilityUnknown: '無法確認是否符合選課條件：{needs}。',
   },
   record: {
+    passFail: "只記通過",
+    passFailHint: "這門課只記通過/不通過，沒有分數，不算進 WAM。",
     termAvg: "平均 {n}",
     markShort: "成績",
     levelLegend: "按你這類課通常拿的分數選（還沒上大學就按高中同類科目）。不確定就留空，再點一下可以取消。",
@@ -932,6 +933,7 @@ export const zhTW: Messages = {
     done: '已完成',
   },
   gist: {
+    passFail: "只記通過/不通過，不算進 WAM",
     noExam: "沒有期末考試，全是平時作業",
     examHeavy: "期末考試占 {n}%，偏重考試",
     examLight: "期末考試占 {n}%，平時分為主",

@@ -34,7 +34,6 @@ export const id: Messages = {
     title: 'Gelarmu dalam satu peta rute',
     lede: "Rencana per semester yang mengikuti aturan gelarmu; seret kartu untuk mengubahnya.",
     addTerm: 'Tambah semester',
-    inProgress: "Sedang berjalan",
     addShortTerm: 'Tambah semester musim panas atau dingin',
     removeThisTerm: 'Hapus semester ini',
     removeTerm: 'Hapus semester kosong terakhir',
@@ -263,6 +262,8 @@ export const id: Messages = {
     eligibilityUnknown: 'Kelayakan belum bisa dipastikan: {needs}.',
   },
   record: {
+    passFail: "Lulus/gagal",
+    passFailHint: "Hanya dinilai lulus/gagal, jadi tidak ada nilai angka dan tidak masuk WAM.",
     termAvg: "rata-rata {n}",
     markShort: "Nilai",
     levelLegend: "Pilih berdasarkan nilai yang biasa kamu dapat di mata kuliah jenis ini (mata pelajaran sekolah jika belum kuliah). Tidak yakin? Biarkan kosong; ketuk lagi untuk menghapus.",
@@ -932,6 +933,7 @@ export const id: Messages = {
     done: 'Selesai',
   },
   gist: {
+    passFail: "Hanya lulus/gagal, tidak masuk WAM",
     noExam: "Tanpa ujian akhir: semua tugas",
     examHeavy: "Ujian akhir {n}%: berat di ujian",
     examLight: "Ujian akhir {n}%: kebanyakan tugas",

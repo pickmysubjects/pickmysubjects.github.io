@@ -272,7 +272,7 @@ function pastMarks(skill: Skill, data: Dataset, profile?: Profile): number[] {
     .filter((r) => r.mark !== undefined)
     .filter((r) => {
       const s = data.subjects[r.code]
-      return s !== undefined && skillsOf(s, data).includes(skill)
+      return s !== undefined && !s.passFail && skillsOf(s, data).includes(skill)
     })
     .map((r) => r.mark as number)
 }

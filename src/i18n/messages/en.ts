@@ -37,7 +37,6 @@ export const en = {
     title: 'Your degree, as a route',
     lede: "A semester-by-semester plan that follows your degree’s rules; drag cards to change it.",
     addTerm: 'Add a term',
-    inProgress: "Now",
     addShortTerm: 'Add a summer or winter term',
     removeThisTerm: 'Remove this term',
     removeTerm: 'Remove last empty term',
@@ -266,6 +265,8 @@ export const en = {
     eligibilityUnknown: 'Eligibility not confirmed: {needs}.',
   },
   record: {
+    passFail: "Pass/fail",
+    passFailHint: "Marked pass/fail only, so it has no mark and doesn’t count in your WAM.",
     termAvg: "avg {n}",
     markShort: "Mark",
     levelLegend: "Go by the marks you usually get in that kind of subject (school subjects if you're not at uni yet). Leave a skill blank if unsure; tap again to clear.",
@@ -935,6 +936,7 @@ export const en = {
     done: 'Done',
   },
   gist: {
+    passFail: "Pass/fail only, not in the WAM",
     noExam: "No final exam: all coursework",
     examHeavy: "Final exam {n}%: exam-heavy",
     examLight: "Final exam {n}%: mostly coursework",

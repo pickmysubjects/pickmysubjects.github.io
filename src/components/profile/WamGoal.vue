@@ -13,7 +13,7 @@ const { profile, wam } = useProfile()
 const { t } = useI18n()
 
 const donePoints = computed(() =>
-  profile.value.results.filter((r) => r.mark !== undefined).reduce((sum, r) => sum + (data.value.subjects[r.code]?.points ?? 12.5), 0),
+  profile.value.results.filter((r) => r.mark !== undefined && !data.value.subjects[r.code]?.passFail).reduce((sum, r) => sum + (data.value.subjects[r.code]?.points ?? 12.5), 0),
 )
 
 // Start from the student's own numbers; they can change any of them.

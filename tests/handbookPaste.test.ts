@@ -409,3 +409,16 @@ describe('an examination held mid-semester', () => {
     })
   })
 })
+
+describe('pass/fail subjects', () => {
+  it('notes a subject marked pass/fail and keeps it in the YAML', () => {
+    const text = 'Assessment\nPass/Fail Grade\nThis subject is marked on a pass/fail basis and is not included in the weighted average mark (WAM) calculation.'
+    const parsed = parseHandbookPaste(text)
+    expect(parsed.passFail).toBe(true)
+    expect(parse(subjectYaml({ code: 'AAAA10001', title: 'X', level: 1, points: 12.5, year: 2026 }, parsed)).pass_fail).toBe(true)
+  })
+
+  it('leaves an ordinary subject alone', () => {
+    expect(parseHandbookPaste('Assessment\nExam 60%').passFail).toBeUndefined()
+  })
+})

@@ -253,3 +253,13 @@ describe('recommend fixes from the code review', () => {
     expect(r2.find((r) => r.code === 'AAAA10001')?.reasons.some((x) => x.key === 'unlocks')).toBe(false)
   })
 })
+
+describe('WAM with a pass/fail subject', () => {
+  it('leaves the pass/fail subject out', () => {
+    const data = dataset([
+      subject({ code: 'AAAA10001', points: 12.5 }),
+      subject({ code: 'AAAA10002', points: 12.5, pass_fail: true }),
+    ])
+    expect(computeWam([{ code: 'AAAA10001', mark: 80 }, { code: 'AAAA10002', mark: 50 }], data)).toBe(80)
+  })
+})

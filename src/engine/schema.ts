@@ -210,6 +210,8 @@ export const subjectFileSchema = z
       .refine((tasks) => Math.abs(tasks.reduce((sum, t) => sum + t.weight, 0) - 100) < 0.01, 'weights must add up to 100')
       .optional(),
     weekly_contact_hours: z.number().positive().max(40).optional(),
+    // Marked pass/fail only: no mark, and it doesn't count in the WAM.
+    pass_fail: z.boolean().optional(),
     min_attendance: z.number().min(1).max(100).optional(), // % of classes you must attend
     signals: signals.optional(),
     handbook: handbookUrl.optional(),
@@ -242,6 +244,7 @@ export const subjectFileSchema = z
     topics: s.topics,
     assessment: s.assessment,
     weeklyContactHours: s.weekly_contact_hours,
+    passFail: s.pass_fail === true,
     minAttendance: s.min_attendance,
     signals: s.signals,
     handbook: s.handbook,

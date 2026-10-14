@@ -34,7 +34,6 @@ export const ja: Messages = {
     title: 'あなたの学位を一枚のルートマップに',
     lede: "学位の規則に沿った学期ごとのプランです。カードをドラッグして変えられます。",
     addTerm: 'セメスターを追加',
-    inProgress: "履修中",
     addShortTerm: '夏期・冬期を追加',
     removeThisTerm: 'この学期を削除',
     removeTerm: '最後の空セメスターを削除',
@@ -263,6 +262,8 @@ export const ja: Messages = {
     eligibilityUnknown: '履修条件を確認できません：{needs}。',
   },
   record: {
+    passFail: "合否のみ",
+    passFailHint: "合否のみで評価されるため点数がなく、WAM に入りません。",
     termAvg: "平均 {n}",
     markShort: "点数",
     levelLegend: "この種の科目でふだん取る点数で選んでください（大学前なら高校の同系統の科目で）。迷ったら空欄で。もう一度押すと解除できます。",
@@ -932,6 +933,7 @@ export const ja: Messages = {
     done: '完了',
   },
   gist: {
+    passFail: "合否のみ、WAM に入らない",
     noExam: "期末試験なし：すべて課題で評価",
     examHeavy: "期末試験 {n}%：試験重視",
     examLight: "期末試験 {n}%：課題中心",

@@ -28,5 +28,6 @@ export function subjectGist(t: Translate, s: Subject): string[] {
   if (s.weeklyContactHours) out.push(t('gist.classHours', { n: s.weeklyContactHours }))
   else if (s.signals?.hours && s.signals.reviews >= 3) out.push(t('gist.reportedHours', { n: s.signals.hours }))
   if (tasks.some((x) => x.group)) out.push(t('gist.group'))
+  if (s.passFail) out.push(t('gist.passFail'))
   return out
 }

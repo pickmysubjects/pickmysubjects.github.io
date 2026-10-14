@@ -34,7 +34,6 @@ export const ms: Messages = {
     title: 'Ijazah anda sebagai satu peta laluan',
     lede: "Rancangan ikut semester yang mematuhi peraturan ijazah anda; seret kad untuk mengubahnya.",
     addTerm: 'Tambah semester',
-    inProgress: "Sedang berjalan",
     addShortTerm: 'Tambah penggal musim panas atau sejuk',
     removeThisTerm: 'Buang penggal ini',
     removeTerm: 'Buang semester kosong terakhir',
@@ -263,6 +262,8 @@ export const ms: Messages = {
     eligibilityUnknown: 'Kelayakan belum disahkan: {needs}.',
   },
   record: {
+    passFail: "Lulus/gagal",
+    passFailHint: "Dinilai lulus/gagal sahaja, jadi tiada markah dan tidak dikira dalam WAM.",
     termAvg: "purata {n}",
     markShort: "Markah",
     levelLegend: "Pilih ikut markah biasa anda dalam subjek jenis ini (subjek sekolah jika belum masuk universiti). Tidak pasti? Biarkan kosong; ketik sekali lagi untuk padam.",
@@ -932,6 +933,7 @@ export const ms: Messages = {
     done: 'Selesai',
   },
   gist: {
+    passFail: "Lulus/gagal sahaja, tidak dalam WAM",
     noExam: "Tiada peperiksaan akhir: semua kerja kursus",
     examHeavy: "Peperiksaan akhir {n}%: berat pada peperiksaan",
     examLight: "Peperiksaan akhir {n}%: kebanyakan kerja kursus",

@@ -29,7 +29,7 @@ export function useGradeShare() {
   /** Subjects on My page with a mark, not yet shared, ready to send. */
   const shareable = computed(() =>
     profile.value.results.flatMap((r) => {
-      if (r.mark === undefined || !data.value.subjects[r.code] || shared.value.includes(r.code)) return []
+      if (r.mark === undefined || !data.value.subjects[r.code] || data.value.subjects[r.code]?.passFail || shared.value.includes(r.code)) return []
       const wamBand = wamBandFor(r.code)
       return wamBand ? [{ code: r.code, year: r.year, band: bandOf(r.mark) as GradeBand, wamBand }] : []
     }),

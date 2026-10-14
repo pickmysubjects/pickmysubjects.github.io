@@ -34,7 +34,6 @@ export const vi: Messages = {
     title: 'Tấm bản đồ lộ trình cho tấm bằng của bạn',
     lede: "Kế hoạch theo từng học kỳ, đúng quy định của bằng; kéo thẻ để thay đổi.",
     addTerm: 'Thêm học kỳ',
-    inProgress: "Đang học",
     addShortTerm: 'Thêm kỳ hè hoặc kỳ đông',
     removeThisTerm: 'Xoá kỳ này',
     removeTerm: 'Xóa học kỳ trống cuối cùng',
@@ -263,6 +262,8 @@ export const vi: Messages = {
     eligibilityUnknown: 'Chưa xác nhận được điều kiện học: {needs}.',
   },
   record: {
+    passFail: "Đạt/Không đạt",
+    passFailHint: "Môn này chỉ chấm Đạt/Không đạt nên không có điểm và không tính vào WAM.",
     termAvg: "TB {n}",
     markShort: "Điểm",
     levelLegend: "Chọn theo điểm bạn thường đạt ở loại môn này (chưa vào đại học thì dựa vào môn tương tự ở phổ thông). Không chắc thì để trống; bấm lần nữa để bỏ.",
@@ -932,6 +933,7 @@ export const vi: Messages = {
     done: 'Xong',
   },
   gist: {
+    passFail: "Chỉ Đạt/Không đạt, không tính WAM",
     noExam: "Không thi cuối kỳ: toàn bài tập",
     examHeavy: "Thi cuối kỳ {n}%: nặng về thi",
     examLight: "Thi cuối kỳ {n}%: chủ yếu bài tập",

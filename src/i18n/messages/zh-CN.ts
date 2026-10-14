@@ -34,7 +34,6 @@ export const zhCN: Messages = {
     title: '把你的学位画成一张路线图',
     lede: "按学位规则排好的每学期课表，拖动卡片就能调整。",
     addTerm: '增加一个学期',
-    inProgress: "进行中",
     addShortTerm: '添加夏季或冬季学期',
     removeThisTerm: '删除这个学期',
     removeTerm: '删除最后一个空学期',
@@ -263,6 +262,8 @@ export const zhCN: Messages = {
     eligibilityUnknown: '无法确认是否满足选课条件：{needs}。',
   },
   record: {
+    passFail: "只记通过",
+    passFailHint: "这门课只记通过/不通过，没有分数，不算进 WAM。",
     termAvg: "平均 {n}",
     markShort: "成绩",
     levelLegend: "按你这类课通常拿的分数选（还没上大学就按高中同类科目）。不确定就留空，再点一下可以取消。",
@@ -932,6 +933,7 @@ export const zhCN: Messages = {
     done: '已完成',
   },
   gist: {
+    passFail: "只记通过/不通过，不算进 WAM",
     noExam: "没有期末考试，全是平时作业",
     examHeavy: "期末考试占 {n}%，偏重考试",
     examLight: "期末考试占 {n}%，平时分为主",

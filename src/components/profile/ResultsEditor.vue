@@ -40,7 +40,8 @@ function add(): void {
     error.value = t.value('record.duplicate', { code: c })
     return
   }
-  const m = mark.value === '' ? undefined : Number(mark.value)
+  // Pass/fail subjects have no mark to keep.
+  const m = mark.value === '' || props.subjects[c]?.passFail ? undefined : Number(mark.value)
   results.value = [...results.value, { code: c, mark: m }]
   code.value = ''
   mark.value = ''
@@ -151,7 +152,10 @@ function remove(c: string): void {
                 <option v-for="x in TERMS" :key="`${x.year}|${x.period}`" :value="`${x.year}|${x.period}`">{{ termLabel(t, x) }}</option>
               </select>
             </label>
-            <div class="mark-cell">
+            <div v-if="subjects[r.code]?.passFail" class="mark-cell">
+              <span class="pf" :title="t('record.passFailHint')">{{ t('record.passFail') }}</span>
+            </div>
+            <div v-else class="mark-cell">
               <input
                 class="input mark"
                 type="number"
@@ -487,5 +491,14 @@ function remove(c: string): void {
   .act {
     min-height: 40px;
   }
+}
+.pf {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--ink) 6%, transparent);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  white-space: nowrap;
 }
 </style>

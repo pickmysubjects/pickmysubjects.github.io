@@ -162,7 +162,8 @@ export function computeWam(results: Profile['results'], data: Dataset): number |
   let weighted = 0
   let points = 0
   for (const r of results) {
-    if (r.mark === undefined) continue
+    // A pass/fail subject has no mark to count (the University leaves it out of the WAM).
+    if (r.mark === undefined || data.subjects[r.code]?.passFail) continue
     const pts = data.subjects[r.code]?.points ?? 12.5
     weighted += r.mark * pts
     points += pts
@@ -181,7 +182,7 @@ export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions =
   const wam = computeWam(profile.results, data)
   // Taken twice (a fail, then a pass): the better mark says how they now go in it.
   const marks = new Map<string, number>()
-  for (const r of profile.results) if (r.mark !== undefined) marks.set(r.code, Math.max(r.mark, marks.get(r.code) ?? -1))
+  for (const r of profile.results) if (r.mark !== undefined && !raw.subjects[r.code]?.passFail) marks.set(r.code, Math.max(r.mark, marks.get(r.code) ?? -1))
   const dependents = buildDependents(data, opts.course)
   // Non-allowed works both ways, but the Handbook often lists it on one side only.
   const blocked = new Set(

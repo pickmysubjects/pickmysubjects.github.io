@@ -14,6 +14,8 @@ export interface PasteResult {
   /** Semester version of the assessment table; weights add up to 100. */
   assessment: AssessmentTask[] | 'unknown'
   weeklyContactHours?: number
+  /** "Marked on a pass/fail basis": no mark, not in the WAM. */
+  passFail?: boolean
   /** Subjects the Handbook recommends having done first (not required). */
   recommended?: string[]
   /** Courses (by title) that may take it as breadth, when the page has a "Breadth options" part. */
@@ -68,6 +70,7 @@ export function parseHandbookPaste(text: string): PasteResult {
     offerings: sections.avail ? parseAvailability(sections.avail.join('\n'), text) : 'unknown',
     assessment: sections.assess ? parseAssessment(sections.assess, warnings) : 'unknown',
     weeklyContactHours: parseContactHours(text),
+    ...(/marked on a pass\s*\/\s*fail basis|pass\s*\/\s*fail grade/i.test(text) ? { passFail: true } : {}),
     ...parseHeader(text),
     warnings,
   }
