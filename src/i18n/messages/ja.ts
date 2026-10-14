@@ -253,6 +253,7 @@ export const ja: Messages = {
     averagedLow: '似た科目（{codes}）の成績から {mark} 点前後の見込みで、苦戦するかもしれません。',
     recommendedFirst: "Handbook では先に {codes} の履修を推奨しています（必須ではありません）。",
     predictedRange: '似た科目（{codes}）の成績から、{low}〜{high} 点の見込みです。',
+    predictedWam: "これまでの成績から、{low}–{high} 点くらいの見込みです。",
     gradesAbove: '成績を共有した {n} 人は、この科目で自分の WAM より平均約 {by} 点高くなりました。',
     gradesBelow: '成績を共有した {n} 人は、この科目で自分の WAM より平均約 {by} 点低くなりました。',
     fewReviews: 'レビューはまだ {n} 件だけで、難易度データが不十分です。',

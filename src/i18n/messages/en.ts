@@ -256,6 +256,7 @@ export const en = {
     averagedLow: 'Your marks in similar subjects ({codes}) point to about {mark}, so this may be tough.',
     recommendedFirst: "The Handbook recommends {codes} first (not required).",
     predictedRange: 'Likely {low}–{high}, from your marks in similar subjects ({codes}).',
+    predictedWam: "Likely {low}–{high}, from your marks so far.",
     gradesAbove: '{n} students who shared their grades did about {by} marks better here than their WAM.',
     gradesBelow: '{n} students who shared their grades did about {by} marks worse here than their WAM.',
     fewReviews: 'Only {n} review(s) so far — difficulty data is thin.',

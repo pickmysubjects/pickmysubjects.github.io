@@ -278,3 +278,22 @@ describe('fails and retakes', () => {
     expect(passedCodes([{ code: 'AAAA10001', failed: true }])).toEqual([])
   })
 })
+
+describe('predicted marks after a retake', () => {
+  it('lets an earlier fail pull the same-area prediction down, and says when nothing related is known', () => {
+    const data = dataset([
+      subject({ code: 'AAAA10001', prerequisites: 'none' }),
+      subject({ code: 'AAAA10002', prerequisites: 'none' }),
+      subject({ code: 'BBBB10001', prerequisites: 'none' }),
+      subject({ code: 'CCCC10001', prerequisites: 'none' }),
+    ])
+    const range = (results: Profile['results'], code: string) => {
+      const r = recommend(data, { ...base, results }).find((x) => x.code === code)
+      return r?.reasons.find((n) => n.key.startsWith('predicted') || n.key.startsWith('averaged'))
+    }
+    const passOnly = range([{ code: 'AAAA10001', mark: 70 }, { code: 'BBBB10001', mark: 70 }], 'AAAA10002')
+    const withFail = range([{ code: 'AAAA10001', mark: 40 }, { code: 'AAAA10001', mark: 70 }, { code: 'BBBB10001', mark: 70 }], 'AAAA10002')
+    expect(Number(withFail?.params.mark)).toBeLessThan(Number(passOnly?.params.mark))
+    expect(range([{ code: 'AAAA10001', mark: 70 }], 'CCCC10001')?.key).toBe('predictedWam')
+  })
+})

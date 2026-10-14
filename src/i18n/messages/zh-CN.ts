@@ -253,6 +253,7 @@ export const zhCN: Messages = {
     averagedLow: '按你在相近课程（{codes}）的成绩，预计只有 {mark} 分左右，可能会比较吃力。',
     recommendedFirst: "Handbook 建议先修 {codes}（不是硬性要求）。",
     predictedRange: '按你在相近课程（{codes}）的成绩，预计 {low}–{high} 分。',
+    predictedWam: "按你目前的成绩，预计 {low}–{high} 分。",
     gradesAbove: '{n} 位分享成绩的同学在这门课比自己的 WAM 平均高约 {by} 分。',
     gradesBelow: '{n} 位分享成绩的同学在这门课比自己的 WAM 平均低约 {by} 分。',
     fewReviews: '目前只有 {n} 条评价——难度数据还不够多。',

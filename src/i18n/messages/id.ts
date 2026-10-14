@@ -253,6 +253,7 @@ export const id: Messages = {
     averagedLow: 'Dari nilaimu di mata kuliah serupa ({codes}), perkiraannya hanya sekitar {mark}, jadi ini mungkin berat.',
     recommendedFirst: "Handbook menyarankan {codes} terlebih dahulu (tidak wajib).",
     predictedRange: 'Dari nilaimu di mata kuliah serupa ({codes}), perkiraannya {low}–{high}.',
+    predictedWam: "Dari nilaimu sejauh ini, perkiraan {low}–{high}.",
     gradesAbove: '{n} mahasiswa yang berbagi nilai mendapat sekitar {by} poin lebih tinggi dari WAM mereka di sini.',
     gradesBelow: '{n} mahasiswa yang berbagi nilai mendapat sekitar {by} poin lebih rendah dari WAM mereka di sini.',
     fewReviews: 'Baru ada {n} ulasan — data tingkat kesulitan masih sedikit.',

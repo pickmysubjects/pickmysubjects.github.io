@@ -253,6 +253,7 @@ export const ko: Messages = {
     averagedLow: '비슷한 과목({codes}) 성적으로 보면 {mark}점 정도라 어려울 수 있어요.',
     recommendedFirst: "Handbook은 {codes}를 먼저 듣길 권장해요(필수 아님).",
     predictedRange: '비슷한 과목({codes}) 성적으로 보면 {low}–{high}점이 예상돼요.',
+    predictedWam: "지금까지 성적으로 보면 {low}–{high}점 정도예요.",
     gradesAbove: '성적을 공유한 {n}명은 이 과목에서 자기 WAM보다 평균 약 {by}점 높았어요.',
     gradesBelow: '성적을 공유한 {n}명은 이 과목에서 자기 WAM보다 평균 약 {by}점 낮았어요.',
     fewReviews: '리뷰가 아직 {n}개뿐이라 난이도 데이터가 부족합니다.',

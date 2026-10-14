@@ -253,6 +253,7 @@ export const ms: Messages = {
     averagedLow: 'Berdasarkan markah subjek serupa ({codes}), dijangka sekitar {mark} sahaja, jadi ini mungkin mencabar.',
     recommendedFirst: "Handbook mengesyorkan {codes} dahulu (tidak wajib).",
     predictedRange: 'Berdasarkan markah subjek serupa ({codes}), dijangka {low}–{high}.',
+    predictedWam: "Berdasarkan markah anda setakat ini, dijangka {low}–{high}.",
     gradesAbove: '{n} pelajar yang berkongsi gred mendapat kira-kira {by} markah lebih tinggi daripada WAM mereka di sini.',
     gradesBelow: '{n} pelajar yang berkongsi gred mendapat kira-kira {by} markah lebih rendah daripada WAM mereka di sini.',
     fewReviews: 'Baru {n} ulasan — data kesukaran masih sedikit.',

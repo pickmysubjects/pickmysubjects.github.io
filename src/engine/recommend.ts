@@ -188,7 +188,11 @@ export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions =
   const wam = computeWam(profile.results, data)
   // Taken twice (a fail, then a pass): the better mark says how they now go in it.
   const marks = new Map<string, number>()
-  for (const r of profile.results) if (r.mark !== undefined && !raw.subjects[r.code]?.passFail) marks.set(r.code, Math.max(r.mark, marks.get(r.code) ?? -1))
+  // Retaken subjects: the average of the attempts, so an earlier fail still says something
+  // about how the student goes in that area (taking only the best attempt hid it).
+  const attempts = new Map<string, number[]>()
+  for (const r of profile.results) if (r.mark !== undefined && !raw.subjects[r.code]?.passFail) attempts.set(r.code, [...(attempts.get(r.code) ?? []), r.mark])
+  for (const [code, ms] of attempts) marks.set(code, ms.reduce((a, b) => a + b, 0) / ms.length)
   const dependents = buildDependents(data, opts.course)
   // Non-allowed works both ways, but the Handbook often lists it on one side only.
   const blocked = new Set(
@@ -468,7 +472,9 @@ function score(s: Subject, ctx: ScoreCtx): Recommendation {
     parts.predicted = clamp((m - 50) / 50)
     const params = { mark: Math.round(m), low: Math.round(guess.low), high: Math.round(guess.high), codes: guess.basis.join(', ') }
     const wam = ctx.wam ?? m
-    if (m >= 75 || m >= wam + 3) reasons.push(note('averagedHigh', params, `Your marks in similar subjects (${params.codes}) point to about ${params.mark}.`))
+    // Nothing related to go on: it's the student's overall level, and said as that.
+    if (!guess.basis.length) reasons.push(note('predictedWam', params, `Likely ${params.low}–${params.high}, from your marks so far.`))
+    else if (m >= 75 || m >= wam + 3) reasons.push(note('averagedHigh', params, `Your marks in similar subjects (${params.codes}) point to about ${params.mark}.`))
     else if (m < 55 || m <= wam - 5) warnings.push(note('averagedLow', params, `Your marks in similar subjects (${params.codes}) point to about ${params.mark}, so this may be tough.`))
     else reasons.push(note('predictedRange', params, `Likely ${params.low}–${params.high}, from your marks in similar subjects.`))
   } else if (ctx.wam !== null) {

@@ -253,6 +253,7 @@ export const vi: Messages = {
     averagedLow: 'Theo điểm các môn tương tự ({codes}), dự kiến chỉ khoảng {mark}, nên môn này có thể khó.',
     recommendedFirst: "Handbook khuyên học {codes} trước (không bắt buộc).",
     predictedRange: 'Theo điểm các môn tương tự ({codes}), dự kiến {low}–{high}.',
+    predictedWam: "Theo điểm của bạn đến nay, dự kiến {low}–{high}.",
     gradesAbove: '{n} sinh viên chia sẻ điểm đạt cao hơn WAM của họ khoảng {by} điểm ở môn này.',
     gradesBelow: '{n} sinh viên chia sẻ điểm đạt thấp hơn WAM của họ khoảng {by} điểm ở môn này.',
     fewReviews: 'Mới có {n} đánh giá — dữ liệu độ khó còn ít.',
