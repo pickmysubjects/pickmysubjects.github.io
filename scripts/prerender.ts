@@ -98,13 +98,35 @@ function subjectLink(code: LocaleCode, c: string): string {
 function structured(page: Page, code: LocaleCode, url: string): object {
   const site = { '@type': 'WebSite', name: 'PickMySubjects', url: SITE }
   if (page.path === '') {
+    // Who we are, said once and plainly, so search engines and AI assistants name the site right
+    // (it was called Subject Compass until October 2026) and list what it actually does.
+    const app = {
+      '@type': 'WebApplication',
+      name: 'PickMySubjects',
+      alternateName: 'PickMySubjects 墨大选课',
+      url: SITE,
+      applicationCategory: 'EducationalApplication',
+      operatingSystem: 'Web',
+      offers: { '@type': 'Offer', price: 0, priceCurrency: 'AUD' },
+      isAccessibleForFree: true,
+      inLanguage: [...LOCALE_CODES],
+      about: { '@type': 'CollegeOrUniversity', name: 'The University of Melbourne', sameAs: 'https://www.unimelb.edu.au/' },
+      description:
+        'Free, unofficial subject guide and degree planner for University of Melbourne students, made by a graduate (formerly called Subject Compass). No ads, no sign-in.',
+      featureList: [
+        'A page per subject: prerequisites, semesters, final-exam share, weekly class hours',
+        'Subjects suggested from your own marks, strengths and interests, each with a reason',
+        'A whole-degree plan that checks prerequisites and course rules (Bachelor of Science, Bachelor of Commerce)',
+        'Lists of subjects with no final exam, breadth subjects and first-semester subjects',
+        'Every page in 9 languages: English, 简体中文, 繁體中文, 日本語, 한국어, Tiếng Việt, Bahasa Indonesia, Bahasa Melayu, हिन्दी',
+      ],
+    }
     return {
       '@context': 'https://schema.org',
-      ...site,
-      inLanguage: code,
-      description: page.description,
-      audience: { '@type': 'EducationalAudience', educationalRole: 'student' },
-      isAccessibleForFree: true,
+      '@graph': [
+        { ...site, inLanguage: code, description: page.description, audience: { '@type': 'EducationalAudience', educationalRole: 'student' }, isAccessibleForFree: true },
+        app,
+      ],
     }
   }
   const webPage = { '@type': 'WebPage', name: page.title, description: page.description, url, inLanguage: code, isPartOf: site, isAccessibleForFree: true }
