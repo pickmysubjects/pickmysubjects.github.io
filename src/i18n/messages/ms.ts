@@ -928,6 +928,15 @@ export const ms: Messages = {
     optional: 'Pilihan, kira-kira 2 minit',
     done: 'Selesai',
   },
+  gist: {
+    noExam: "Tiada peperiksaan akhir: semua kerja kursus",
+    examHeavy: "Peperiksaan akhir {n}%: berat pada peperiksaan",
+    examLight: "Peperiksaan akhir {n}%: kebanyakan kerja kursus",
+    exam: "Peperiksaan akhir {n}%",
+    classHours: "Kira-kira {n} jam kelas seminggu",
+    reportedHours: "Pelajar kata kira-kira {n} jam seminggu",
+    group: "Ada kerja berkumpulan",
+  },
   subject: {
     recommendedFirst: "Disyorkan dahulu (tidak wajib)",
     chooseDegreeFirst: "Pilih ijazah dahulu",

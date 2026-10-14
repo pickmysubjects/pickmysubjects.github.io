@@ -928,6 +928,15 @@ export const id: Messages = {
     optional: 'Opsional, sekitar 2 menit',
     done: 'Selesai',
   },
+  gist: {
+    noExam: "Tanpa ujian akhir: semua tugas",
+    examHeavy: "Ujian akhir {n}%: berat di ujian",
+    examLight: "Ujian akhir {n}%: kebanyakan tugas",
+    exam: "Ujian akhir {n}%",
+    classHours: "Sekitar {n} jam kuliah per minggu",
+    reportedHours: "Kata mahasiswa sekitar {n} jam per minggu",
+    group: "Ada tugas kelompok",
+  },
   subject: {
     recommendedFirst: "Disarankan lebih dulu (tidak wajib)",
     chooseDegreeFirst: "Pilih gelar dulu",

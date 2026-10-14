@@ -24,6 +24,7 @@ import { groupMajors } from '../src/utils/majorGroups'
 import { referencedSubjects } from '../src/engine/expr'
 import type { Dataset, Subject } from '../src/engine/schema'
 import { describeReq } from '../src/i18n/format'
+import { subjectGist } from '../src/i18n/gist'
 import { subjectFaq, type FaqItem } from '../src/i18n/faq'
 import { interpolate, type Params, type Translate } from '../src/i18n/interpolate'
 import { LOCALE_CODES, type LocaleCode } from '../src/i18n/codes'
@@ -203,9 +204,12 @@ function subjectPage(code: LocaleCode, s: Subject): Page {
   const blocks = s.nonAllowed === 'unknown' ? [] : s.nonAllowed
   const assess = assessment(t, s, listSep(code))
   const sig = s.signals && s.signals.reviews >= 3 ? s.signals : undefined
+  const gist = subjectGist(t, s)
   const parts = [
     `<h1>${esc(s.code)} ${esc(facts.title)}</h1>`,
     `<p>${esc(t('seo.facts', facts))} · ${esc(runs(t, s, listSep(code)))}</p>`,
+    // The same at-a-glance lines the app shows under the title, so search engines quote them.
+    ...(gist.length ? [`<ul>${gist.map((g) => `<li>${esc(g)}</li>`).join('')}</ul>`] : []),
     // Our own summary, in this page's language, so crawlers that don't run scripts see it too.
     ...(s.about
       ? [
@@ -244,6 +248,7 @@ function subjectPage(code: LocaleCode, s: Subject): Page {
 
   const description = [
     t('seo.subjectDesc', facts),
+    ...(gist.length ? [gist.join(listSep(code))] : []),
     ...(s.about ? [pickLocalized(s.about.learn, code)] : []),
     runs(t, s, listSep(code)),
     s.prerequisites === 'none' ? t('seo.noPrereq') : s.prerequisites === 'unknown' ? '' : t('seo.needs', { needs: prereq }),
@@ -257,7 +262,7 @@ function subjectPage(code: LocaleCode, s: Subject): Page {
     description: description.length > 300 ? `${description.slice(0, 297)}…` : description,
     body: parts.join('\n'),
     faq,
-    ld: courseLd(code, s, facts.title, s.prerequisites !== 'unknown' && s.prerequisites !== 'none' ? prereq : undefined),
+    ld: courseLd(code, s, facts.title, s.prerequisites !== 'unknown' && s.prerequisites !== 'none' ? prereq : undefined, gist.join(listSep(code))),
   }
 }
 
@@ -265,7 +270,7 @@ function subjectPage(code: LocaleCode, s: Subject): Page {
  * The course itself and where its page sits, from our own facts only. No rating markup until
  * students have rated it here.
  */
-function courseLd(code: LocaleCode, s: Subject, title: string, prereq: string | undefined): object[] {
+function courseLd(code: LocaleCode, s: Subject, title: string, prereq: string | undefined, gist = ''): object[] {
   const t = translator(code)
   const url = absolute(code, `subject/${s.code}`)
   return [
@@ -279,6 +284,8 @@ function courseLd(code: LocaleCode, s: Subject, title: string, prereq: string | 
       educationalLevel: `Level ${s.level}`,
       inLanguage: 'en',
       ...(prereq ? { coursePrerequisites: prereq } : {}),
+      // Exam share, class hours, group work, in this page's language.
+      ...(gist ? { abstract: gist } : {}),
       url,
       ...(s.handbook ? { sameAs: s.handbook } : {}),
     },

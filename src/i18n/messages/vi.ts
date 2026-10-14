@@ -928,6 +928,15 @@ export const vi: Messages = {
     optional: 'Không bắt buộc, khoảng 2 phút',
     done: 'Xong',
   },
+  gist: {
+    noExam: "Không thi cuối kỳ: toàn bài tập",
+    examHeavy: "Thi cuối kỳ {n}%: nặng về thi",
+    examLight: "Thi cuối kỳ {n}%: chủ yếu bài tập",
+    exam: "Thi cuối kỳ {n}%",
+    classHours: "Khoảng {n} giờ học mỗi tuần",
+    reportedHours: "Sinh viên nói khoảng {n} giờ mỗi tuần",
+    group: "Có bài nhóm",
+  },
   subject: {
     recommendedFirst: "Nên học trước (không bắt buộc)",
     chooseDegreeFirst: "Chọn bằng và ngành trước",

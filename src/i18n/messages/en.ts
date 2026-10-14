@@ -931,6 +931,15 @@ export const en = {
     optional: 'Optional, about 2 minutes',
     done: 'Done',
   },
+  gist: {
+    noExam: "No final exam: all coursework",
+    examHeavy: "Final exam {n}%: exam-heavy",
+    examLight: "Final exam {n}%: mostly coursework",
+    exam: "Final exam {n}%",
+    classHours: "About {n} class hours a week",
+    reportedHours: "Students say about {n} hours a week",
+    group: "Has group work",
+  },
   subject: {
     recommendedFirst: "Recommended first (not required)",
     chooseDegreeFirst: "Choose your degree first",

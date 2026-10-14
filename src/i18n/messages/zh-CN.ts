@@ -928,6 +928,15 @@ export const zhCN: Messages = {
     optional: '选填，大约 2 分钟',
     done: '已完成',
   },
+  gist: {
+    noExam: "没有期末考试，全是平时作业",
+    examHeavy: "期末考试占 {n}%，偏重考试",
+    examLight: "期末考试占 {n}%，平时分为主",
+    exam: "期末考试占 {n}%",
+    classHours: "每周约 {n} 小时课",
+    reportedHours: "同学说每周约 {n} 小时",
+    group: "有小组作业",
+  },
   subject: {
     recommendedFirst: "建议先修（非必须）",
     chooseDegreeFirst: "先选学位和专业",

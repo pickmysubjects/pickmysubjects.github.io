@@ -928,6 +928,15 @@ export const ko: Messages = {
     optional: '선택 사항, 약 2분',
     done: '완료',
   },
+  gist: {
+    noExam: "기말고사 없음: 전부 과제",
+    examHeavy: "기말고사 {n}%: 시험 비중 큼",
+    examLight: "기말고사 {n}%: 과제 위주",
+    exam: "기말고사 {n}%",
+    classHours: "수업 주당 약 {n}시간",
+    reportedHours: "학생들 말로는 주당 약 {n}시간",
+    group: "조별 과제 있음",
+  },
   subject: {
     recommendedFirst: "먼저 들으면 좋은 과목 (필수 아님)",
     chooseDegreeFirst: "먼저 학위와 전공 선택",

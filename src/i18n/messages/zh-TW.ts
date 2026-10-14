@@ -928,6 +928,15 @@ export const zhTW: Messages = {
     optional: '選填，大約 2 分鐘',
     done: '已完成',
   },
+  gist: {
+    noExam: "沒有期末考試，全是平時作業",
+    examHeavy: "期末考試占 {n}%，偏重考試",
+    examLight: "期末考試占 {n}%，平時分為主",
+    exam: "期末考試占 {n}%",
+    classHours: "每週約 {n} 小時課",
+    reportedHours: "同學說每週約 {n} 小時",
+    group: "有小組作業",
+  },
   subject: {
     recommendedFirst: "建議先修（非必須）",
     chooseDegreeFirst: "先選學位和主修",

@@ -18,6 +18,7 @@ import { useI18n } from '@/i18n'
 import { categoryLabel, describeReq, requirementList, termLabel } from '@/i18n/format'
 import { discussionLinks } from '@/utils/links'
 import { localTitle } from '@/i18n/localized'
+import { subjectGist } from '@/i18n/gist'
 
 const props = defineProps<{ code: string }>()
 const { name, data } = useDataset()
@@ -114,6 +115,7 @@ const meters = computed(() => {
   return meters.filter((m): m is (typeof meters)[number] & { value: number } => m.value !== undefined)
 })
 const links = computed(() => (name.value === 'real' ? discussionLinks(code.value, locale.value) : []))
+const gist = computed(() => (subject.value ? subjectGist(t.value, subject.value) : []))
 </script>
 
 <template>
@@ -138,6 +140,10 @@ const links = computed(() => (name.value === 'real' ? discussionLinks(code.value
             <template v-else>{{ periods.map((p) => t(`period.${p}`)).join(' · ') }}</template>
           </span>
         </div>
+        <!-- What students ask first, in their words: exam share, class hours, group work. -->
+        <ul v-if="gist.length" class="gist">
+          <li v-for="g in gist" :key="g">{{ g }}</li>
+        </ul>
         <p v-if="gone && subject.replacedBy.length" class="instead">
           {{ t('subject.insteadTake') }}
           <a v-for="c in subject.replacedBy" :key="c" class="chip code" :href="link(`subject/${c}`)">{{ c }}</a>
@@ -515,5 +521,30 @@ const links = computed(() => (name.value === 'real' ? discussionLinks(code.value
   margin-top: 14px;
   font-size: 0.875rem;
   font-weight: 650;
+}
+.gist {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  margin: 2px 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.gist li {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.gist li::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--overprint);
 }
 </style>

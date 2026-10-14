@@ -928,6 +928,15 @@ export const ja: Messages = {
     optional: '任意・約2分',
     done: '完了',
   },
+  gist: {
+    noExam: "期末試験なし：すべて課題で評価",
+    examHeavy: "期末試験 {n}%：試験重視",
+    examLight: "期末試験 {n}%：課題中心",
+    exam: "期末試験 {n}%",
+    classHours: "授業は週に約 {n} 時間",
+    reportedHours: "学生の話では週に約 {n} 時間",
+    group: "グループ課題あり",
+  },
   subject: {
     recommendedFirst: "推奨される事前履修（必須ではない）",
     chooseDegreeFirst: "まず学位と専攻を選ぶ",
