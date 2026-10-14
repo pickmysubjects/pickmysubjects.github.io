@@ -1,12 +1,28 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { periodsFor, type PlanTerm, type Subject } from '@/engine'
+import type { Period, Subject } from '@/engine'
 import { useI18n } from '@/i18n'
 
-/** The plan as a printed page: one block per calendar year, one line per subject. Hidden on screen. */
+/** One subject on the printed page: done (with its mark), not passed, or planned. */
+export interface PrintItem {
+  code: string
+  mark?: number
+  state: 'done' | 'failed' | 'planned'
+}
+/** A semester on the printed page; period null for subjects whose semester wasn't given. */
+export interface PrintTerm {
+  year: number | null
+  period: Period | null
+  items: PrintItem[]
+}
+
+/**
+ * The whole degree as a printed page: done and planned subjects, one block per calendar year,
+ * one line per subject. Hidden on screen.
+ */
 const props = defineProps<{
   summary: string
-  terms: PlanTerm[]
+  terms: PrintTerm[]
   subjects: Record<string, Subject>
   roles: Record<string, 'required' | 'option'>
   notes: string[]
@@ -14,12 +30,15 @@ const props = defineProps<{
 const { t, locale } = useI18n()
 
 const years = computed(() => {
-  const by = new Map<number, PlanTerm[]>()
+  const by = new Map<number | null, PrintTerm[]>()
   for (const term of props.terms) by.set(term.year, [...(by.get(term.year) ?? []), term])
   return [...by.entries()].map(([year, terms]) => ({ year, terms }))
 })
-const pointsOf = (codes: string[]) => codes.reduce((sum, c) => sum + (props.subjects[c]?.points ?? 12.5), 0)
-const total = computed(() => pointsOf(props.terms.flatMap((x) => x.subjects)))
+// Points earned or planned: a fail gives none.
+const pointsOf = (items: PrintItem[]) => items.filter((x) => x.state !== 'failed').reduce((sum, x) => sum + (props.subjects[x.code]?.points ?? 12.5), 0)
+const total = computed(() => pointsOf(props.terms.flatMap((x) => x.items)))
+// Calendar years numbered from the first dated one (undated subjects don't take a number).
+const firstYear = computed(() => Math.min(...props.terms.flatMap((x) => (x.year === null ? [] : [x.year]))))
 const today = computed(() => new Date().toLocaleDateString(locale.value, { year: 'numeric', month: 'short', day: 'numeric' }))
 
 /** Required or one of the major's choices; when a subject runs isn't news once it's planned. */
@@ -48,27 +67,32 @@ const subline = computed(() => parts.value.slice(0, -1))
       </div>
     </header>
 
-    <section v-for="(y, yi) in years" :key="y.year" class="year">
+    <section v-for="y in years" :key="String(y.year)" class="year">
       <div class="year-label">
-        <span class="year-n">{{ t('home.year', { n: yi + 1 }) }}</span>
-        <span class="year-cal">{{ y.year }}</span>
-        <span class="year-pts">{{ t('print.points', { n: pointsOf(y.terms.flatMap((x) => x.subjects)) }) }}</span>
+        <template v-if="y.year !== null">
+          <span class="year-n">{{ t('home.year', { n: y.year - firstYear + 1 }) }}</span>
+          <span class="year-cal">{{ y.year }}</span>
+        </template>
+        <span v-else class="year-n">{{ t('plan.pastUndated') }}</span>
+        <span class="year-pts">{{ t('print.points', { n: pointsOf(y.terms.flatMap((x) => x.items)) }) }}</span>
       </div>
       <div class="terms" :style="{ gridTemplateColumns: `repeat(${y.terms.length}, minmax(0, 1fr))` }">
-        <div v-for="term in y.terms" :key="term.period" class="term">
+        <div v-for="term in y.terms" :key="String(term.period)" class="term">
           <h3 class="term-title">
-            <span>{{ t(`period.${term.period}`) }}</span>
-            <span class="term-points">{{ t('print.points', { n: pointsOf(term.subjects) }) }}</span>
+            <span>{{ term.period ? t(`period.${term.period}`) : '' }}</span>
+            <span class="term-points">{{ t('print.points', { n: pointsOf(term.items) }) }}</span>
           </h3>
           <ul class="subjects">
-            <li v-for="code in term.subjects" :key="code">
-              <span class="code">{{ code }}</span>
-              <span class="name">{{ subjects[code]?.title ?? t('plan.notInDataset') }}</span>
-              <span v-if="role(code)" class="tag" :class="`tag-${role(code)}`">
-                {{ role(code) === 'required' ? t('plan.tagRequired') : t('plan.tagOption') }}
+            <li v-for="x in term.items" :key="`${x.code}-${x.state}`" :class="`item-${x.state}`">
+              <span class="code">{{ x.code }}</span>
+              <span class="name">{{ subjects[x.code]?.title ?? t('plan.notInDataset') }}</span>
+              <span v-if="x.state === 'failed'" class="tag tag-failed">{{ t('plan.pastNotPassed') }}{{ x.mark !== undefined ? ` ${x.mark}` : '' }}</span>
+              <span v-else-if="x.state === 'done'" class="tag tag-done">{{ x.mark !== undefined ? x.mark : t('plan.pastTag') }}</span>
+              <span v-else-if="role(x.code)" class="tag" :class="`tag-${role(x.code)}`">
+                {{ role(x.code) === 'required' ? t('plan.tagRequired') : t('plan.tagOption') }}
               </span>
             </li>
-            <li v-if="term.subjects.length === 0" class="empty">—</li>
+            <li v-if="term.items.length === 0" class="empty">—</li>
           </ul>
         </div>
       </div>
@@ -286,6 +310,20 @@ const subline = computed(() => parts.value.slice(0, -1))
 .foot {
   margin-top: 9pt;
   font-size: 7pt;
+  color: var(--soft);
+}
+.tag-done {
+  font-family: var(--font-code);
+  font-weight: 700;
+  color: #1f8a52;
+}
+
+.tag-failed {
+  color: #b42318;
+}
+
+.item-done .name,
+.item-failed .name {
   color: var(--soft);
 }
 </style>

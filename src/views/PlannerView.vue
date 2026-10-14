@@ -9,7 +9,7 @@ import RuleLegend from '@/components/planner/RuleLegend.vue'
 import PlanProgress from '@/components/planner/PlanProgress.vue'
 import PlanHowBuilt from '@/components/planner/PlanHowBuilt.vue'
 import PlanIssues from '@/components/planner/PlanIssues.vue'
-import PlanPrint from '@/components/planner/PlanPrint.vue'
+import PlanPrint, { type PrintTerm } from '@/components/planner/PlanPrint.vue'
 import Interp from '@/components/Interp.vue'
 import { PASS_MARK, isFail, passedCodes, planRoles, type PlanTerm } from '@/engine'
 import { Printer, Share2 } from 'lucide-vue-next'
@@ -175,6 +175,28 @@ const recordOverlap = computed(() => {
   }
   return null
 })
+// Something on the board: planned subjects, or ones already on My record (a finished degree has
+// only those). The checks, the progress and the printout show for either.
+const onBoard = computed(() => !plan.isEmpty.value || profile.value.results.length > 0)
+
+// The printout: every semester in order, done subjects (with marks) and planned ones together.
+const printTerms = computed<PrintTerm[]>(() => {
+  const order = (y: number, p: string) => y * 10 + ['summer', 'semester-1', 'winter', 'semester-2'].indexOf(p)
+  const by = new Map<string, PrintTerm>()
+  const at = (year: number | null, period: PlanTerm['period'] | null) => {
+    const key = `${year}|${period}`
+    if (!by.has(key)) by.set(key, { year, period, items: [] })
+    return by.get(key) as PrintTerm
+  }
+  for (const r of past.value.undated) at(null, null).items.push({ code: r.code, mark: r.mark, state: r.failed ? 'failed' : 'done' })
+  for (const term of past.value.terms) for (const r of term.results) at(term.year, term.period).items.push({ code: r.code, mark: r.mark, state: r.failed ? 'failed' : 'done' })
+  for (const term of plan.terms.value) {
+    const slot = at(term.year, term.period)
+    for (const c of term.subjects) slot.items.push({ code: c, state: 'planned' })
+  }
+  // An empty semester left at the end of the plan prints as nothing.
+  return [...by.values()].filter((x) => x.items.length > 0).sort((a, b) => (a.year === null ? -1 : b.year === null ? 1 : order(a.year, a.period as string) - order(b.year, b.period as string)))
+})
 </script>
 
 <template>
@@ -251,7 +273,7 @@ const recordOverlap = computed(() => {
         <li class="failed-more"><a :href="link('guide')">{{ t('guide.failTitle') }}</a></li>
       </ul>
 
-      <section v-if="!plan.isEmpty.value" class="status" :class="problems ? 'status-bad' : unknowns ? 'status-warn' : 'status-good'" role="status">
+      <section v-if="onBoard" class="status" :class="problems ? 'status-bad' : unknowns ? 'status-warn' : 'status-good'" role="status">
         <component :is="problems || unknowns ? TriangleAlert : CircleCheck" :size="22" aria-hidden="true" />
         <div>
           <p class="status-title">
@@ -271,7 +293,7 @@ const recordOverlap = computed(() => {
         </div>
       </section>
 
-      <PlanProgress v-if="!plan.isEmpty.value" :statuses="plan.courseCheck.value.statuses" :rules="rules" />
+      <PlanProgress v-if="onBoard" :statuses="plan.courseCheck.value.statuses" :rules="rules" />
       <PlanMap
         class="map"
         :terms="plan.terms.value"
@@ -339,10 +361,10 @@ const recordOverlap = computed(() => {
       </details>
     </template>
     <PlanPrint
-      v-if="!showWizard && !plan.isEmpty.value"
+      v-if="!showWizard && onBoard"
       class="print-only"
       :summary="summary"
-      :terms="plan.terms.value"
+      :terms="printTerms"
       :subjects="data.subjects"
       :roles="roles"
       :notes="problemTexts.map((p) => p.text)"
