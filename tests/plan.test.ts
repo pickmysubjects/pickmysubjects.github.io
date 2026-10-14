@@ -141,6 +141,14 @@ describe('planStart', () => {
     expect(planStart({ year: 2023, period: 'semester-1' }, [{ year: 2024, period: 'winter' }])).toEqual({ year: 2024, period: 'semester-2' })
   })
 
+  it('carries on in a semester on the record that is not full yet', () => {
+    const fill = { pointsOf: () => 12.5, load: 50 }
+    const done = [{ code: 'A', year: 2026, period: 'semester-1' as const }, { code: 'B', year: 2026, period: 'semester-2' as const }]
+    expect(planStart({ year: 2026, period: 'semester-1' }, done, fill)).toEqual({ year: 2026, period: 'semester-2' })
+    const full = ['A', 'B', 'C', 'D'].map((code) => ({ code, year: 2026, period: 'semester-2' as const }))
+    expect(planStart({ year: 2026, period: 'semester-1' }, full, fill)).toEqual({ year: 2027, period: 'semester-1' })
+  })
+
   it('keeps a start of study later than the record', () => {
     expect(planStart({ year: 2028, period: 'semester-1' }, [{ year: 2024, period: 'semester-1' }])).toEqual({ year: 2028, period: 'semester-1' })
   })

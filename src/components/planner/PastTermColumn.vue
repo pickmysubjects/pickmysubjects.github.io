@@ -3,6 +3,8 @@ import type { PlanTerm, Subject } from '@/engine'
 import { useI18n } from '@/i18n'
 import { termLabel } from '@/i18n/format'
 import type { PastResult } from '@/utils/pastTerms'
+import { computed } from 'vue'
+import DoneCard from './DoneCard.vue'
 
 /**
  * A semester already done, from the student's record: read-only, with marks. A failed subject
@@ -15,9 +17,13 @@ const props = defineProps<{
   subjects: Record<string, Subject>
   /** Planned semesters, to find a failed subject's retake. */
   planned: PlanTerm[]
+  /** A semester's usual load, shown as in planned columns. */
+  load?: number
 }>()
 const emit = defineEmits<{ open: [code: string] }>()
 const { t } = useI18n()
+
+const points = computed(() => props.results.filter((r) => !r.failed).reduce((sum, r) => sum + (props.subjects[r.code]?.points ?? 0), 0))
 
 function retake(code: string): string | null {
   const at = props.planned.find((p) => p.subjects.includes(code))
@@ -26,30 +32,21 @@ function retake(code: string): string | null {
 </script>
 
 <template>
+  <!-- A semester from My record: the same column as a planned one, its subjects as done cards. -->
   <section class="past" :aria-label="term ? termLabel(t, term) : t('plan.pastUndated')">
     <header class="past-head">
       <h3 class="past-name">{{ term ? termLabel(t, term) : t('plan.pastUndated') }}</h3>
-      <span class="past-tag">{{ t('plan.pastTag') }}</span>
+      <span class="past-points">{{ points }}<template v-if="load && term"> / {{ load }}</template></span>
+      <span class="past-bar" aria-hidden="true" />
     </header>
-    <!-- data-past-code, not data-code: a passed subject is a line's start, never a planned card. -->
-    <button
+    <DoneCard
       v-for="r in results"
       :key="r.code"
-      type="button"
-      class="past-card"
-      :class="{ 'past-failed': r.failed }"
-      :data-past-code="r.code"
-      @click="emit('open', r.code)"
-    >
-      <span class="past-top">
-        <span class="code past-code">{{ r.code }}</span>
-        <span v-if="r.mark !== undefined" class="past-mark">{{ r.mark }}</span>
-      </span>
-      <span class="past-title">{{ subjects[r.code]?.title ?? t('subject.notYetAdded') }}</span>
-      <span v-if="r.failed" class="past-fail">
-        {{ retake(r.code) ? t('plan.pastRetake', { term: retake(r.code) as string }) : t('plan.pastNotPassed') }}
-      </span>
-    </button>
+      :result="r"
+      :subject="subjects[r.code]"
+      :note="r.failed ? (retake(r.code) ? t('plan.pastRetake', { term: retake(r.code) as string }) : undefined) : undefined"
+      @open="emit('open', r.code)"
+    />
   </section>
 </template>
 
@@ -62,89 +59,30 @@ function retake(code: string): string | null {
   min-width: 185px;
   max-width: 300px;
   padding: 10px;
-  border-radius: var(--radius);
-  background: color-mix(in srgb, var(--ink) 4%, transparent);
 }
 
 .past-head {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr auto;
   align-items: baseline;
-  gap: 8px;
-  padding-bottom: 6px;
-  border-bottom: 1px dashed var(--line);
+  gap: 4px 8px;
 }
 
 .past-name {
   font-size: 0.9375rem;
-  font-weight: 650;
-  color: var(--ink-soft);
-}
-
-.past-tag {
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--ink-faint);
-}
-
-.past-card {
-  display: grid;
-  gap: 2px;
-  padding: 9px 11px;
-  border: 1px dashed var(--line);
-  border-radius: var(--radius);
-  background: transparent;
-  font: inherit;
-  text-align: left;
-  color: var(--ink-soft);
-  cursor: pointer;
-}
-
-.past-card:hover {
-  border-style: solid;
-  color: var(--ink);
-}
-
-.past-top {
-  display: flex;
-  justify-content: space-between;
-  gap: 8px;
-}
-
-.past-code {
-  font-size: 0.8125rem;
-  font-weight: 650;
-}
-
-.past-mark {
-  font-size: 0.875rem;
   font-weight: 700;
-  font-variant-numeric: tabular-nums;
-  color: var(--ink);
 }
 
-.past-title {
-  font-size: 0.875rem;
-  line-height: 1.35;
-}
-
-.past-failed {
-  border-color: color-mix(in srgb, var(--bad) 45%, transparent);
-}
-
-.past-failed .past-mark,
-.past-fail {
-  color: var(--bad);
-}
-
-.past-fail {
+.past-points {
+  font-family: var(--font-code);
   font-size: 0.75rem;
-  font-weight: 600;
+  color: var(--ink-soft);
 }
 
-@media print {
-  .past {
-    display: none;
-  }
+.past-bar {
+  grid-column: 1 / -1;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--good);
 }
 </style>

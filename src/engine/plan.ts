@@ -80,11 +80,17 @@ function semesterAfter(t: { year: number; period: Period }): { year: number; per
  */
 export function planStart(
   start: { year: number; period: Period },
-  results: { year?: number; period?: Period }[] = [],
+  results: { code?: string; year?: number; period?: Period }[] = [],
+  /** With points and a load: a semester not yet full is carried on in, not skipped. */
+  fill?: { pointsOf: (code: string) => number; load: number },
 ): { year: number; period: Period } {
-  const dated = results.filter((r): r is { year: number; period: Period } => Number.isInteger(r.year) && r.period !== undefined && r.period in ORDER)
+  const dated = results.filter((r): r is { code?: string; year: number; period: Period } => Number.isInteger(r.year) && r.period !== undefined && r.period in ORDER)
   if (!dated.length) return start
   const latest = dated.reduce((a, b) => (termOrder(a) >= termOrder(b) ? a : b))
+  if (fill && (latest.period === 'semester-1' || latest.period === 'semester-2')) {
+    const there = dated.filter((r) => r.year === latest.year && r.period === latest.period).reduce((sum, r) => sum + fill.pointsOf(r.code ?? ''), 0)
+    if (there < fill.load) return termOrder(latest) > termOrder(start) ? { year: latest.year, period: latest.period } : start
+  }
   const after = semesterAfter(latest)
   return termOrder(after) > termOrder(start) ? after : start
 }

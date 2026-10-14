@@ -5,10 +5,14 @@ import { periodsFor, type Issue, type PlanTerm, type Subject } from '@/engine'
 import { termLabel } from '@/i18n/format'
 import { useI18n } from '@/i18n'
 import SubjectCard from './SubjectCard.vue'
+import DoneCard from './DoneCard.vue'
+import type { PastResult } from '@/utils/pastTerms'
 import SubjectPicker from './SubjectPicker.vue'
 import TermStressNote from './TermStressNote.vue'
 
 const props = defineProps<{
+  /** Subjects on My record in this same semester (done or failed), shown above the planned ones. */
+  done?: PastResult[]
   term: PlanTerm
   termIndex: number
   subjects: Record<string, Subject>
@@ -32,7 +36,8 @@ const emit = defineEmits<{
 
 const { t } = useI18n()
 const dragOver = shallowRef(false)
-const points = computed(() => props.term.subjects.reduce((sum, c) => sum + (props.subjects[c]?.points ?? 0), 0))
+const donePoints = computed(() => (props.done ?? []).filter((r) => !r.failed).reduce((sum, r) => sum + (props.subjects[r.code]?.points ?? 0), 0))
+const points = computed(() => donePoints.value + props.term.subjects.reduce((sum, c) => sum + (props.subjects[c]?.points ?? 0), 0))
 const overloaded = computed(() => points.value > props.load)
 const fill = computed(() => `${Math.min(100, (points.value / props.load) * 100)}%`)
 
@@ -81,6 +86,8 @@ function onDrop(event: DragEvent): void {
       <span class="term-bar" aria-hidden="true"><span class="term-bar-fill" :style="{ width: fill }" /></span>
       <TermStressNote :term-index="termIndex" />
     </header>
+    <!-- Already on My record for this semester: the same card, done. -->
+    <DoneCard v-for="r in done ?? []" :key="`done-${r.code}`" :result="r" :subject="subjects[r.code]" @open="emit('open', r.code)" />
     <SubjectCard
       v-for="code in term.subjects"
       :key="code"
@@ -98,7 +105,7 @@ function onDrop(event: DragEvent): void {
       @move-by="emit('moveBy', code, $event)"
       @hover="emit('hover', $event ? code : null)"
     />
-    <p v-if="term.subjects.length === 0" class="term-empty">{{ t('plan.emptyTerm') }}</p>
+    <p v-if="term.subjects.length === 0 && !done?.length" class="term-empty">{{ t('plan.emptyTerm') }}</p>
     <SubjectPicker :options="options" :term-index="termIndex" @pick="emit('add', $event)" />
   </section>
 </template>

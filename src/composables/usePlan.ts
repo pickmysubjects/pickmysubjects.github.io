@@ -108,11 +108,20 @@ export function usePlan() {
     return false
   }
 
+  // A part-done semester on the record is carried on in (its done subjects share the column).
+  function startFill() {
+    const passed = new Set(passedCodes(profile.value.results))
+    return {
+      pointsOf: (c: string) => (passed.has(c) ? (data.value.subjects[c]?.points ?? 12.5) : 0),
+      load: course.value?.standardLoad ?? 50,
+    }
+  }
+
   function generate(): void {
     const { setup } = state.value
     // Students who started already are planned from the next semester on; what
     // they've done comes from their record.
-    const start = planStart({ year: setup.startYear, period: setup.startPeriod }, profile.value.results)
+    const start = planStart({ year: setup.startYear, period: setup.startPeriod }, profile.value.results, startFill())
     const result = generatePlan({
       data: data.value,
       profile: profile.value,
@@ -131,7 +140,7 @@ export function usePlan() {
 
   function startEmpty(): void {
     const { setup } = state.value
-    const start = planStart({ year: setup.startYear, period: setup.startPeriod }, profile.value.results)
+    const start = planStart({ year: setup.startYear, period: setup.startPeriod }, profile.value.results, startFill())
     save((s) => ({ ...s, terms: standardTerms(start.year, start.period, 6), notes: [], unplaced: [] }))
   }
 

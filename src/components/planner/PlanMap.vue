@@ -73,16 +73,24 @@ const issuesByCode = computed(() => {
   return map
 })
 
+// A recorded semester that the plan also has shares its column: done subjects sit at the top.
+const sameTerm = (a: { year: number; period: string }, b: { year: number; period: string }) => a.year === b.year && a.period === b.period
+const pastOnly = computed(() => (props.past?.terms ?? []).filter((p) => !props.terms.some((t) => sameTerm(t, p))))
+const doneIn = (t: PlanTerm) => props.past?.terms.find((p) => sameTerm(p, t))?.results ?? []
+
 /**
  * Prerequisite edges, earlier term → later term: between planned subjects, and from subjects
  * already passed (the record's columns sit before the plan; undated ones first of all).
  */
 const edges = computed(() => {
   const termOf = new Map<string, number>()
-  const pastCols = props.past?.terms ?? []
+  const pastCols = pastOnly.value
   for (const r of props.past?.undated ?? []) if (!r.failed) termOf.set(r.code, -pastCols.length - 1)
   pastCols.forEach((t, k) => t.results.forEach((r) => !r.failed && termOf.set(r.code, k - pastCols.length)))
-  props.terms.forEach((t, i) => t.subjects.forEach((c) => termOf.set(c, i)))
+  props.terms.forEach((t, i) => {
+    for (const r of doneIn(t)) if (!r.failed) termOf.set(r.code, i)
+    t.subjects.forEach((c) => termOf.set(c, i))
+  })
   const out: { from: string; to: string }[] = []
   for (const [code, i] of termOf) {
     const s = props.subjects[code]
@@ -152,7 +160,7 @@ const MIN_TERM = 185
 const GAP = 20
 // The add-term buttons (about 158px) plus the track's own padding.
 const TOOLS = 170
-const pastCount = computed(() => (props.past?.terms.length ?? 0) + (props.past?.undated.length ? 1 : 0))
+const pastCount = computed(() => pastOnly.value.length + (props.past?.undated.length ? 1 : 0))
 const trackWidth = computed(() => `max(100%, ${(props.terms.length + pastCount.value) * (MIN_TERM + GAP) + TOOLS}px)`)
 </script>
 
@@ -168,15 +176,17 @@ const trackWidth = computed(() => `max(100%, ${(props.terms.length + pastCount.v
         :results="past.undated"
         :subjects="subjects"
         :planned="terms"
+        :load="load"
         @open="emit('open', $event)"
       />
       <PastTermColumn
-        v-for="p in past?.terms ?? []"
+        v-for="p in pastOnly"
         :key="`past-${p.year}-${p.period}`"
         :term="p"
         :results="p.results"
         :subjects="subjects"
         :planned="terms"
+        :load="load"
         @open="emit('open', $event)"
       />
       <TermColumn
@@ -184,6 +194,7 @@ const trackWidth = computed(() => `max(100%, ${(props.terms.length + pastCount.v
         :key="`${term.year}-${term.period}`"
         :term="term"
         :term-index="i"
+        :done="doneIn(term)"
         :subjects="subjects"
         :issues-by-code="issuesByCode"
         :term-issues="issues.filter((x) => x.termIndex === i && !x.subject)"

@@ -107,6 +107,11 @@ function buildPlan(input: GenerateInput): GenerateResult {
     }
   }
   const isShort = (t: PlanTerm) => t.period === 'summer' || t.period === 'winter'
+  // Points already on the record in a planned semester (a part-done one the plan carries on in).
+  const preload = (t: PlanTerm) =>
+    profile.results
+      .filter((r) => r.year === t.year && r.period === t.period && completed.includes(r.code))
+      .reduce((sum, r) => sum + (data.subjects[r.code]?.points ?? 12.5), 0)
 
   const pending = [...required].filter((c) => !done.has(c))
   // Areas of the major/specialisation, used to break ties between equally scored electives.
@@ -118,7 +123,7 @@ function buildPlan(input: GenerateInput): GenerateResult {
   const fill = (term: PlanTerm, termIndex: number, relaxed = false): void => {
     if (!course) return
     const before = new Set([...completed, ...terms.slice(0, termIndex).flatMap((t) => t.subjects)])
-    let used = term.subjects.reduce((sum, c) => sum + (data.subjects[c]?.points ?? 12.5), 0)
+    let used = preload(term) + term.subjects.reduce((sum, c) => sum + (data.subjects[c]?.points ?? 12.5), 0)
     while (used < load) {
       const pick = pickElective({ input, course, term, before, placed: allPlaced(), completed, room: load - used, focus, reserved: pending, opens, progress: (termIndex + 1) / terms.length, relaxed })
       if (!pick) break
@@ -138,7 +143,7 @@ function buildPlan(input: GenerateInput): GenerateResult {
   terms.forEach((term, termIndex) => {
     now = termIndex
     const before = new Set([...completed, ...allPlaced()])
-    let used = 0
+    let used = preload(term)
     // A summer or winter term only takes a required subject that can't wait for the next semester.
     const limit = isShort(term) ? SHORT_TERM_POINTS : load
 
