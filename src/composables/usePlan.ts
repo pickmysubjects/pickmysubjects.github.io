@@ -40,6 +40,17 @@ function defaultSetup(data: Dataset): PlanSetup {
   }
 }
 
+/** Points on the record per semester, passed or failed (enrolled either way). */
+function recordedLoad(results: { code: string; year?: number; period?: string }[], subjects: Dataset['subjects']): Record<string, number> {
+  const out: Record<string, number> = {}
+  for (const r of results) {
+    if (r.year === undefined || r.period === undefined) continue
+    const key = `${r.year}|${r.period}`
+    out[key] = (out[key] ?? 0) + (subjects[r.code]?.points ?? 12.5)
+  }
+  return out
+}
+
 export function usePlan() {
   const { name, data } = useDataset()
   const { profile } = useProfile()
@@ -63,6 +74,7 @@ export function usePlan() {
     terms: state.value.terms,
     international: state.value.setup.international === true,
     confirmed: profile.value.confirmed ?? [],
+    recordedLoad: recordedLoad(profile.value.results, data.value.subjects),
   }))
 
   const course = computed(() => findCourse(data.value, plan.value.course, plan.value.courseYear))
@@ -110,9 +122,9 @@ export function usePlan() {
 
   // A part-done semester on the record is carried on in (its done subjects share the column).
   function startFill() {
-    const passed = new Set(passedCodes(profile.value.results))
     return {
-      pointsOf: (c: string) => (passed.has(c) ? (data.value.subjects[c]?.points ?? 12.5) : 0),
+      // Enrolled points, a fail included: the semester was that full either way.
+      pointsOf: (c: string) => data.value.subjects[c]?.points ?? 12.5,
       load: course.value?.standardLoad ?? 50,
     }
   }

@@ -17,6 +17,11 @@ export interface Plan {
   terms: PlanTerm[]
   /** On a student visa: each half-year normally needs 50 points. */
   international?: boolean
+  /**
+   * Points already on the record per semester ("2027|semester-2"), passed or failed: enrolled
+   * either way, so they count towards that semester's load.
+   */
+  recordedLoad?: Record<string, number>
   /** Subjects whose prerequisites the student says they meet where we can't check (e.g. a VCE score). */
   confirmed?: string[]
 }

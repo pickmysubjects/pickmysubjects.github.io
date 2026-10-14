@@ -33,7 +33,7 @@ export const ko: Messages = {
     title: '나의 학위를 한 장의 경로도로',
     lede: "학위 규칙에 맞춘 학기별 계획이에요. 카드를 끌어서 바꿀 수 있어요.",
     addTerm: '학기 추가',
-    recordOverlap: "'내 기록'이 {term}까지 있어 이 계획의 학기와 겹쳐요. 다시 만들면 그다음 학기부터 계획해요.",
+    recordOverlap: "{term}에서 계획과 '내 기록'이 맞지 않아요. 계획한 과목을 이미 들었거나 학기 학점이 넘쳐요. 다시 만들면 해결돼요.",
     doneAsk: "{term}에 다 들었나요? 점수(선택)를 넣으면 '내 기록'에 들어가요.",
     doneButton: "이수 완료로 표시",
     addShortTerm: '여름·겨울 학기 추가',

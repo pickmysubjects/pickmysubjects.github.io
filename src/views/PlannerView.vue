@@ -11,7 +11,7 @@ import PlanHowBuilt from '@/components/planner/PlanHowBuilt.vue'
 import PlanIssues from '@/components/planner/PlanIssues.vue'
 import PlanPrint from '@/components/planner/PlanPrint.vue'
 import Interp from '@/components/Interp.vue'
-import { PASS_MARK, isFail, planRoles, type PlanTerm } from '@/engine'
+import { PASS_MARK, isFail, passedCodes, planRoles, type PlanTerm } from '@/engine'
 import { Printer, Share2 } from 'lucide-vue-next'
 import { decodePlan, encodePlan } from '@/utils/sharePlan'
 import { go, useView } from '@/composables/useView'
@@ -159,16 +159,21 @@ function markDone(code: string, mark: number | undefined): void {
   setResults([...profile.value.results.filter((r) => r.code !== code || isFail(r)), { code, year, period, ...(mark === undefined ? {} : { mark }) }])
   plan.removeSubject(where.index, code)
 }
-// The latest semester on My record, when it's at or after the plan's first one: the plan was
-// made before those results were added, so rebuilding starts it after them.
+// The plan and My record disagree: a planned subject is already passed, or a semester holds
+// more than its load once its recorded subjects are counted. (A part-done semester the plan
+// carries on in is fine: its done and planned subjects share the column.) Names the semester.
 const recordOverlap = computed(() => {
-  const first = plan.terms.value[0]
-  if (!first) return null
-  const order = (x: { year: number; period: string }) => x.year * 10 + ['summer', 'semester-1', 'winter', 'semester-2'].indexOf(x.period)
-  const dated = profile.value.results.filter((r) => r.year !== undefined && r.period !== undefined) as { year: number; period: PlanTerm['period'] }[]
-  if (!dated.length) return null
-  const latest = dated.reduce((a, b) => (order(b) > order(a) ? b : a))
-  return order(latest) >= order(first) ? termLabel(t.value, latest) : null
+  const passed = new Set(passedCodes(profile.value.results))
+  const load = plan.course.value?.standardLoad ?? 50
+  const pts = (c: string) => data.value.subjects[c]?.points ?? 12.5
+  for (const term of plan.terms.value) {
+    if (term.subjects.some((c) => passed.has(c))) return termLabel(t.value, term)
+    const recorded = profile.value.results
+      .filter((r) => r.year === term.year && r.period === term.period && passed.has(r.code))
+      .reduce((sum, r) => sum + pts(r.code), 0)
+    if (recorded > 0 && recorded + term.subjects.reduce((sum, c) => sum + pts(c), 0) > load) return termLabel(t.value, term)
+  }
+  return null
 })
 </script>
 

@@ -33,7 +33,7 @@ export const ms: Messages = {
     title: 'Ijazah anda sebagai satu peta laluan',
     lede: "Rancangan ikut semester yang mematuhi peraturan ijazah anda; seret kad untuk mengubahnya.",
     addTerm: 'Tambah semester',
-    recordOverlap: "Rekod saya kini sampai {term}, bertindih dengan rancangan ini. Bina semula untuk merancang dari semester selepasnya.",
+    recordOverlap: "Dalam {term}, rancangan dan Rekod saya tidak sepadan: subjek yang dirancang sudah selesai, atau semester melebihi beban. Bina semula untuk membetulkan.",
     doneAsk: "Sudah selesai dalam {term}? Masukkan markah (pilihan), ia masuk ke Rekod saya.",
     doneButton: "Tanda selesai",
     addShortTerm: 'Tambah penggal musim panas atau sejuk',

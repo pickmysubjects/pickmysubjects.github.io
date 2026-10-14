@@ -110,7 +110,8 @@ function buildPlan(input: GenerateInput): GenerateResult {
   // Points already on the record in a planned semester (a part-done one the plan carries on in).
   const preload = (t: PlanTerm) =>
     profile.results
-      .filter((r) => r.year === t.year && r.period === t.period && completed.includes(r.code))
+      // Enrolled points, a fail included.
+      .filter((r) => r.year === t.year && r.period === t.period)
       .reduce((sum, r) => sum + (data.subjects[r.code]?.points ?? 12.5), 0)
 
   const pending = [...required].filter((c) => !done.has(c))

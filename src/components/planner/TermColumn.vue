@@ -36,7 +36,8 @@ const emit = defineEmits<{
 
 const { t } = useI18n()
 const dragOver = shallowRef(false)
-const donePoints = computed(() => (props.done ?? []).filter((r) => !r.failed).reduce((sum, r) => sum + (props.subjects[r.code]?.points ?? 0), 0))
+// Enrolled points, a fail included: the semester was that full.
+const donePoints = computed(() => (props.done ?? []).reduce((sum, r) => sum + (props.subjects[r.code]?.points ?? 0), 0))
 const points = computed(() => donePoints.value + props.term.subjects.reduce((sum, c) => sum + (props.subjects[c]?.points ?? 0), 0))
 const overloaded = computed(() => points.value > props.load)
 const fill = computed(() => `${Math.min(100, (points.value / props.load) * 100)}%`)

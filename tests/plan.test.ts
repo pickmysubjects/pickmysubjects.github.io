@@ -215,6 +215,15 @@ describe('checkTerms (student visa load)', () => {
     ]
     expect(checkTerms(plan(true, terms), data).filter((i) => i.kind.startsWith('visa-'))).toEqual([])
   })
+
+  it('counts subjects already on the record in that semester, a fail included', () => {
+    const terms: Plan['terms'] = [
+      { year: 2027, period: 'semester-1', subjects: ['AAAA10001', 'AAAA10002', 'AAAA10003'] }, // 37.5 + 12.5 recorded
+      { year: 2027, period: 'semester-2', subjects: ['AAAA10004'] },
+    ]
+    const withRecord = { ...plan(true, terms), recordedLoad: { '2027|semester-1': 12.5 } }
+    expect(checkTerms(withRecord, data).filter((i) => i.kind.startsWith('visa-'))).toEqual([])
+  })
 })
 
 describe('previewAdd', () => {

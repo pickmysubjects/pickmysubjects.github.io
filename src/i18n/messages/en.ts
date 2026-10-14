@@ -36,7 +36,7 @@ export const en = {
     title: 'Your degree, as a route',
     lede: "A semester-by-semester plan that follows your degree’s rules; drag cards to change it.",
     addTerm: 'Add a term',
-    recordOverlap: "My record now goes up to {term}, inside this plan. Rebuild to plan from the semester after it.",
+    recordOverlap: "In {term}, the plan and My record don't match: a planned subject is already done, or the semester is over its load. Rebuild to fix it.",
     doneAsk: "Finished it in {term}? Add your mark (optional) and it goes to My record.",
     doneButton: "Mark as done",
     addShortTerm: 'Add a summer or winter term',
