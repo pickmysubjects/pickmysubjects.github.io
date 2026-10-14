@@ -56,9 +56,9 @@ const warnings = computed(() =>
 )
 const { setConfirmed } = useProfile()
 
-// Bands set on real lists: a match on interest and strengths lands around 55–70; unrelated subjects under 40.
-const band = computed(() => (props.rec.score >= 65 ? 'great' : props.rec.score >= 50 ? 'good' : 'ok'))
-const ring = computed(() => `conic-gradient(var(--accent) ${props.rec.score * 3.6}deg, color-mix(in srgb, var(--ink) 10%, transparent) 0)`)
+// Shown relative to the student's other options (the raw score centres on 50 and read as a poor mark).
+const band = computed(() => (props.rec.betterThan >= 90 ? 'great' : props.rec.betterThan >= 60 ? 'good' : 'ok'))
+const ring = computed(() => `conic-gradient(var(--accent) ${props.rec.betterThan * 3.6}deg, color-mix(in srgb, var(--ink) 10%, transparent) 0)`)
 
 const facts = computed(() => {
   const s = props.subject
@@ -98,11 +98,11 @@ const where = computed(() => {
           class="rec-score"
           :aria-expanded="explainOpen"
           :aria-controls="explainId"
-          :aria-label="t('suggest.fit', { score: rec.score, confidence: t(`suggest.band.${band}`) })"
+          :aria-label="t('suggest.fit', { score: rec.betterThan, confidence: t(`suggest.band.${band}`) })"
           @click="explainOpen = !explainOpen"
         >
           <span class="rec-ring" :style="{ background: ring }" aria-hidden="true">
-            <span class="rec-ring-num">{{ rec.score }}</span>
+            <span class="rec-ring-num">{{ rec.betterThan }}</span>
           </span>
           <span class="rec-band">{{ t(`suggest.band.${band}`) }}</span>
           <span v-if="rec.confidence === 'low'" class="rec-thin">{{ t('suggest.thinData') }}</span>

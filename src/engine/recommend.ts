@@ -44,6 +44,11 @@ export interface Recommendation {
   title: string
   /** 0–100. Only meaningful alongside `reasons`. */
   score: number
+  /**
+   * Share (0–100) of the other options in this list that score lower: what students read a fit
+   * number as. The raw score centres on 50, so a good match there looked like a poor mark.
+   */
+  betterThan: number
   confidence: 'low' | 'medium' | 'high'
   eligibility: Tri
   reasons: Note[]
@@ -115,6 +120,8 @@ const OPENS_FULL = 4
 const MIN_REVIEWS = 3
 /** How much of a score's distance from neutral is kept when only part of the evidence is known (the rest scales with coverage). */
 const SURE_BASE = 0.3
+// Points off for an unconfirmed condition when protecting a WAM (about one band of ease).
+const UNCONFIRMED_RISK = 3
 /** Interest scores: two tagged matches, one, an area-implied match, a related topic. */
 const INTEREST_FULL = 1
 const INTEREST_ONE = 0.8
@@ -308,6 +315,11 @@ export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions =
       const needed = roles !== null && (roles.required.has(s.code) || roles.options.has(s.code) || towardMajor.has(s.code))
       if (!needed) rec.score = Math.max(0, rec.score - OFF_TOPIC_STRUGGLE_COST / 2)
     }
+    // A condition only the student can check (a VCE score) and haven't said they meet: for a WAM
+    // that's a risk, so it sits a little lower than an otherwise equal subject open to them.
+    if ((profile.goal === 'wam' || profile.goal === 'easy') && rec.warnings.some((x) => x.key === 'eligibilityUnknown')) {
+      rec.score = Math.max(0, rec.score - UNCONFIRMED_RISK)
+    }
     // Marks only: the major's subjects are still labelled, but not pushed up.
     const bonus = profile.goal === 'easy' ? 0 : PROGRAMME_BONUS
     if (roles && (roles.required.has(s.code) || roles.options.has(s.code))) {
@@ -334,6 +346,8 @@ export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions =
   const builtOn = (r: Recommendation) => usefulLater(r.code, dependents, data, profile.interests)
   recs.sort((a, b) => b.score - a.score || builtOn(b) - builtOn(a) || a.code.localeCompare(b.code))
   const ranked = diversify(recs, data)
+  const others = Math.max(1, recs.length - 1)
+  for (const r of ranked) r.betterThan = Math.round((100 * recs.filter((x) => x.score < r.score).length) / others)
   return opts.limit ? ranked.slice(0, opts.limit) : ranked
 }
 
@@ -560,6 +574,7 @@ function score(s: Subject, ctx: ScoreCtx): Recommendation {
     code: s.code,
     title: s.title,
     score: Math.round(value * 100),
+    betterThan: 0,
     confidence,
     eligibility: ctx.eligibility,
     reasons,
@@ -695,8 +710,8 @@ function structuralEase(s: Subject): number {
   if (s.level >= 3) e -= 0.04
   if (s.assessment) {
     const exam = s.assessment.filter((t) => t.kind === 'exam').reduce((n, t) => n + t.weight, 0)
-    if (exam >= 70) e -= 0.04
-    if (exam <= 40) e += 0.04
+    // The more rides on one exam, the riskier for a WAM: ±0.08 from all coursework to all exam.
+    e += ((50 - exam) / 50) * 0.08
     if (s.assessment.some((t) => t.kind === 'exam' && t.hurdle)) e -= 0.03
   }
   return e
