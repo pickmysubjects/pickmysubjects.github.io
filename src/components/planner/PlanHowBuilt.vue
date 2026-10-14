@@ -172,21 +172,21 @@ const others = computed(() =>
 }
 
 .rule-codes {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: 6px;
 }
 
 .code-btn {
-  flex: none;
   display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
   align-items: center;
   gap: 6px;
   min-height: 32px;
   padding: 4px 10px;
   border: 0;
-  border-radius: 999px;
+  border-radius: 10px;
   background: var(--accent-soft);
   font: inherit;
   font-size: 0.8125rem;
@@ -201,6 +201,7 @@ const others = computed(() =>
 }
 
 .code-term {
+  white-space: nowrap;
   font-weight: 500;
   color: var(--ink-soft);
 }
@@ -225,8 +226,16 @@ const others = computed(() =>
     padding: 10px;
   }
 
+  /* Two equal columns, so long term labels (Hindi, Vietnamese) still fit two codes per line. */
+  .rule-codes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
   .code-btn {
-    gap: 4px;
+    flex-wrap: wrap;
+    gap: 0 4px;
+    min-width: 0;
     padding: 4px 8px;
     font-size: 0.75rem;
   }

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { link } from '@/composables/useView'
 import { computed, shallowRef } from 'vue'
-import { CircleCheck, Pencil, RotateCcw, TriangleAlert } from 'lucide-vue-next'
+import { CircleCheck, Pencil, RotateCcw, TriangleAlert, ChevronDown } from 'lucide-vue-next'
 import PlanWizard from '@/components/planner/PlanWizard.vue'
 import PlanMap from '@/components/planner/PlanMap.vue'
 import SubjectPeek from '@/components/planner/SubjectPeek.vue'
@@ -285,16 +285,23 @@ function finishWizard(setup: PlanSetup): void {
       />
 
       <details class="details surface">
-        <summary class="details-summary">{{ t('plan.details') }}</summary>
+        <summary class="details-summary">
+          <span>{{ t('plan.details') }}</span>
+          <ChevronDown :size="18" aria-hidden="true" class="details-chevron" />
+        </summary>
         <div class="details-body">
           <!-- How to read the board and the census-date reminder live here, not above the plan. -->
-          <p class="hint">{{ t('plan.hint') }} {{ t('plan.tagLegend') }}</p>
-          <p class="hint">
-            {{ t('plan.censusLine') }}
-            <a :href="link('guide')">{{ t('guide.datesTitle') }}</a>
-          </p>
-          <RuleLegend :statuses="plan.courseCheck.value.statuses" :rules="rules" :title="plan.course.value?.title ?? ''" />
-          <PlanIssues :issues="allIssues" :rules="rules" :statuses="plan.courseCheck.value.statuses" />
+          <div class="details-info">
+            <p>{{ t('plan.hint') }} {{ t('plan.tagLegend') }}</p>
+            <p>
+              {{ t('plan.censusLine') }}
+              <a :href="link('guide')">{{ t('guide.datesTitle') }}</a>
+            </p>
+          </div>
+          <div class="details-pair">
+            <RuleLegend class="details-card" :statuses="plan.courseCheck.value.statuses" :rules="rules" :title="plan.course.value?.title ?? ''" />
+            <PlanIssues class="details-card" :issues="allIssues" :rules="rules" :statuses="plan.courseCheck.value.statuses" />
+          </div>
           <PlanHowBuilt
             v-if="plan.notes.value.length || plan.unplaced.value.length"
             :notes="plan.notes.value"
@@ -451,33 +458,106 @@ function finishWizard(setup: PlanSetup): void {
 }
 
 .details {
-  padding: 4px 22px;
+  padding: 0 22px;
 }
 
 .details-summary {
-  padding: 16px 0;
-  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 56px;
+  font-weight: 650;
   cursor: pointer;
+  list-style: none;
 }
 
+.details-summary::-webkit-details-marker {
+  display: none;
+}
+
+.details-chevron {
+  flex: none;
+  color: var(--ink-faint);
+  transition: transform 0.15s;
+}
+
+.details[open] .details-chevron {
+  transform: rotate(180deg);
+}
+
+/* One column: rules and checks side by side only when there's room for both. */
 .details-body {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 28px;
+  gap: 20px;
   padding: 4px 0 22px;
 }
 
-.details-body > .hint {
-  grid-column: 1 / -1;
+.details-info {
+  display: grid;
+  gap: 6px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--ink) 4%, transparent);
+  font-size: 0.875rem;
+  color: var(--ink-soft);
+}
+
+.details-info p {
   margin: 0;
 }
 
-
-@media (max-width: 860px) {
-  .details-body {
-    grid-template-columns: 1fr;
-  }
+.details-pair {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+  align-items: start;
+  gap: 16px;
 }
+
+.details-card {
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid var(--glass-edge);
+  border-radius: 16px;
+  background: var(--glass-fill);
+}
+
+/* Folded parts inside (met rules, assumption notes) share one look: a chevron, not the browser triangle. */
+.details-body :deep(details > summary) {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  cursor: pointer;
+  list-style: none;
+}
+
+.details-body :deep(details > summary::-webkit-details-marker) {
+  display: none;
+}
+
+.details-body :deep(details > summary::before) {
+  content: '';
+  flex: none;
+  width: 6px;
+  height: 6px;
+  margin: 0 4px 0 2px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(-45deg);
+  transition: transform 0.15s;
+}
+
+.details-body :deep(details[open] > summary::before) {
+  transform: rotate(45deg);
+}
+
+
+
+
 .confirm {
   margin-left: 6px;
   padding: 1px 10px;
