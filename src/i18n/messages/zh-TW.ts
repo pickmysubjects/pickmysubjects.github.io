@@ -262,6 +262,8 @@ export const zhTW: Messages = {
     eligibilityUnknown: '無法確認是否符合選課條件：{needs}。',
   },
   record: {
+    termAvg: "平均 {n}",
+    markShort: "成績",
     levelLegend: "按你這類課通常拿的分數選（還沒上大學就按高中同類科目）。不確定就留空，再點一下可以取消。",
     stepDone: "已完成",
     stepFirst: "先做這一步",

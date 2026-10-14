@@ -262,6 +262,8 @@ export const id: Messages = {
     eligibilityUnknown: 'Kelayakan belum bisa dipastikan: {needs}.',
   },
   record: {
+    termAvg: "rata-rata {n}",
+    markShort: "Nilai",
     levelLegend: "Pilih berdasarkan nilai yang biasa kamu dapat di mata kuliah jenis ini (mata pelajaran sekolah jika belum kuliah). Tidak yakin? Biarkan kosong; ketuk lagi untuk menghapus.",
     stepDone: "Selesai",
     stepFirst: "Mulai di sini",

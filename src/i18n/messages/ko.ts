@@ -262,6 +262,8 @@ export const ko: Messages = {
     eligibilityUnknown: '수강 자격을 확인할 수 없습니다: {needs}.',
   },
   record: {
+    termAvg: "평균 {n}",
+    markShort: "점수",
     levelLegend: "이런 과목에서 보통 받는 점수로 고르세요(대학 전이라면 고등학교의 비슷한 과목으로). 잘 모르겠으면 비워 두고, 다시 누르면 취소돼요.",
     stepDone: "완료",
     stepFirst: "여기부터",

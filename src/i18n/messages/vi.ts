@@ -262,6 +262,8 @@ export const vi: Messages = {
     eligibilityUnknown: 'Chưa xác nhận được điều kiện học: {needs}.',
   },
   record: {
+    termAvg: "TB {n}",
+    markShort: "Điểm",
     levelLegend: "Chọn theo điểm bạn thường đạt ở loại môn này (chưa vào đại học thì dựa vào môn tương tự ở phổ thông). Không chắc thì để trống; bấm lần nữa để bỏ.",
     stepDone: "Xong",
     stepFirst: "Bắt đầu ở đây",

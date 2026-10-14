@@ -265,6 +265,8 @@ export const en = {
     eligibilityUnknown: 'Eligibility not confirmed: {needs}.',
   },
   record: {
+    termAvg: "avg {n}",
+    markShort: "Mark",
     levelLegend: "Go by the marks you usually get in that kind of subject (school subjects if you're not at uni yet). Leave a skill blank if unsure; tap again to clear.",
     stepDone: "Done",
     stepFirst: "Start here",

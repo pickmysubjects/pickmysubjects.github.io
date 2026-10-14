@@ -262,6 +262,8 @@ export const ja: Messages = {
     eligibilityUnknown: '履修条件を確認できません：{needs}。',
   },
   record: {
+    termAvg: "平均 {n}",
+    markShort: "点数",
     levelLegend: "この種の科目でふだん取る点数で選んでください（大学前なら高校の同系統の科目で）。迷ったら空欄で。もう一度押すと解除できます。",
     stepDone: "完了",
     stepFirst: "ここから",

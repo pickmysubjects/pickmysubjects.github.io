@@ -262,6 +262,8 @@ export const ms: Messages = {
     eligibilityUnknown: 'Kelayakan belum disahkan: {needs}.',
   },
   record: {
+    termAvg: "purata {n}",
+    markShort: "Markah",
     levelLegend: "Pilih ikut markah biasa anda dalam subjek jenis ini (subjek sekolah jika belum masuk universiti). Tidak pasti? Biarkan kosong; ketik sekali lagi untuk padam.",
     stepDone: "Selesai",
     stepFirst: "Mula di sini",

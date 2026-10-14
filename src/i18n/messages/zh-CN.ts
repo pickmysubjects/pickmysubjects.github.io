@@ -262,6 +262,8 @@ export const zhCN: Messages = {
     eligibilityUnknown: '无法确认是否满足选课条件：{needs}。',
   },
   record: {
+    termAvg: "平均 {n}",
+    markShort: "成绩",
     levelLegend: "按你这类课通常拿的分数选（还没上大学就按高中同类科目）。不确定就留空，再点一下可以取消。",
     stepDone: "已完成",
     stepFirst: "先做这一步",

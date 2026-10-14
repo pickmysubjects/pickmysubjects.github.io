@@ -197,9 +197,9 @@ async function onRestore(event: Event): Promise<void> {
   min-width: 0;
 }
 
+/* Not sticky: the column (suggestions, WAM goal, backup) is often taller than the screen, and a
+   sticky column that tall hides its lower part until the page is scrolled to the very end. */
 .record-side {
-  position: sticky;
-  top: 84px;
   display: grid;
   gap: 18px;
   min-width: 0;
