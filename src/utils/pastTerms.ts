@@ -38,11 +38,15 @@ export function pastTerms(results: Profile['results']): { terms: PastTerm[]; und
   return { terms, undated }
 }
 
-/** Semesters a student may have taken subjects in: the last few years, newest first. */
-export function recentTerms(now = new Date(), years = 6): { year: number; period: Period }[] {
+/** Every term from one semester to another, in order (summer and winter included). */
+export function termsBetween(from: { year: number; period: Period }, to: { year: number; period: Period }): { year: number; period: Period }[] {
+  const order = (t: { year: number; period: Period }) => t.year * 10 + PERIODS.indexOf(t.period)
   const out: { year: number; period: Period }[] = []
-  for (let y = now.getFullYear(); y > now.getFullYear() - years; y--) {
-    for (const p of [...PERIODS].reverse()) out.push({ year: y, period: p })
+  for (let y = from.year; y <= to.year; y++) {
+    for (const p of PERIODS) {
+      const t = { year: y, period: p }
+      if (order(t) >= order(from) && order(t) <= order(to)) out.push(t)
+    }
   }
   return out
 }

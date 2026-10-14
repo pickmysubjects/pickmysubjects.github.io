@@ -73,9 +73,15 @@ const issuesByCode = computed(() => {
   return map
 })
 
-/** Prerequisite edges between subjects placed in the plan (earlier term → later term). */
+/**
+ * Prerequisite edges, earlier term → later term: between planned subjects, and from subjects
+ * already passed (the record's columns sit before the plan; undated ones first of all).
+ */
 const edges = computed(() => {
   const termOf = new Map<string, number>()
+  const pastCols = props.past?.terms ?? []
+  for (const r of props.past?.undated ?? []) if (!r.failed) termOf.set(r.code, -pastCols.length - 1)
+  pastCols.forEach((t, k) => t.results.forEach((r) => !r.failed && termOf.set(r.code, k - pastCols.length)))
   props.terms.forEach((t, i) => t.subjects.forEach((c) => termOf.set(c, i)))
   const out: { from: string; to: string }[] = []
   for (const [code, i] of termOf) {
@@ -104,7 +110,8 @@ function measure(): void {
   const el = track.value
   if (!el) return
   const base = el.getBoundingClientRect()
-  const box = (code: string) => el.querySelector<HTMLElement>(`[data-code="${code}"]`)?.getBoundingClientRect()
+  const box = (code: string) =>
+    (el.querySelector<HTMLElement>(`[data-code="${code}"]`) ?? el.querySelector<HTMLElement>(`[data-past-code="${code}"]`))?.getBoundingClientRect()
   const next: Route[] = []
   for (const e of edges.value) {
     const a = box(e.from)
@@ -120,7 +127,7 @@ function measure(): void {
   routes.value = next
 }
 
-watch(() => [props.terms, props.subjects], () => nextTick(measure), { deep: true, flush: 'post' })
+watch(() => [props.terms, props.subjects, props.past], () => nextTick(measure), { deep: true, flush: 'post' })
 
 let observer: ResizeObserver | null = null
 onMounted(() => {

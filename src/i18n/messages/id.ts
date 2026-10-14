@@ -30,7 +30,6 @@ export const id: Messages = {
     hint: "Ketuk mata kuliah untuk detail; seret untuk memindahkannya.",
     extraTermsVisa: 'Rencana ini lebih lama dari masa studi biasa. Dengan visa pelajar mungkin perlu CoE baru — tanyakan ke Stop 1 dulu.',
     openDetails: 'Detail {code}',
-    started: 'Sudah mulai kuliah? Tambahkan mata kuliah yang sudah diambil di {record}, dan rencana hanya mencakup sisanya.',
     title: 'Gelarmu dalam satu peta rute',
     lede: "Rencana per semester yang mengikuti aturan gelarmu; seret kartu untuk mengubahnya.",
     addTerm: 'Tambah semester',

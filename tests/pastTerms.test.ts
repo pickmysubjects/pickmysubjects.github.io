@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { pastTerms, recentTerms } from '../src/utils/pastTerms'
+import { pastTerms, termsBetween } from '../src/utils/pastTerms'
 
 describe('pastTerms', () => {
   it('groups completed subjects by semester, oldest first, and keeps the undated apart', () => {
@@ -23,9 +23,10 @@ describe('pastTerms', () => {
     expect(undated).toHaveLength(2)
   })
 
-  it('offers the last few years of semesters, newest first', () => {
-    const list = recentTerms(new Date('2026-10-09'), 2)
-    expect(list[0]).toEqual({ year: 2026, period: 'semester-2' })
-    expect(list).toHaveLength(8)
+  it('lists every term between two semesters, in order', () => {
+    const list = termsBetween({ year: 2025, period: 'semester-2' }, { year: 2026, period: 'semester-2' })
+    expect(list[0]).toEqual({ year: 2025, period: 'semester-2' })
+    expect(list.at(-1)).toEqual({ year: 2026, period: 'semester-2' })
+    expect(list).toHaveLength(5)
   })
 })

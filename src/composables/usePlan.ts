@@ -7,7 +7,6 @@ import {
   offeredIn,
   referencedSubjects,
   passedCodes,
-  nextSemester,
   planStart,
   termKey,
   standardTerms,
@@ -29,13 +28,13 @@ export type { PlanSetup } from './planStore'
 
 function defaultSetup(data: Dataset): PlanSetup {
   const course = data.courses.find((c) => c.code === defaultCourse(data))
-  // A new visitor is most likely planning ahead: start at the next semester that hasn't begun.
-  const next = nextSemester(new Date())
+  // Only a starting suggestion (the wizard asks): semester 1 of the Handbook year we have.
+  const year = course?.year ?? new Date().getFullYear()
   return {
     course: course?.code ?? '',
-    courseYear: course?.year ?? new Date().getFullYear(),
-    startYear: next.year,
-    startPeriod: next.period,
+    courseYear: year,
+    startYear: year,
+    startPeriod: 'semester-1',
     major: '', // "Not sure yet" until the student picks one
     specialisation: '',
   }
@@ -113,7 +112,7 @@ export function usePlan() {
     const { setup } = state.value
     // Students who started already are planned from the next semester on; what
     // they've done comes from their record.
-    const start = planStart({ year: setup.startYear, period: setup.startPeriod }, new Date())
+    const start = planStart({ year: setup.startYear, period: setup.startPeriod }, profile.value.results)
     const result = generatePlan({
       data: data.value,
       profile: profile.value,
@@ -132,7 +131,7 @@ export function usePlan() {
 
   function startEmpty(): void {
     const { setup } = state.value
-    const start = planStart({ year: setup.startYear, period: setup.startPeriod }, new Date())
+    const start = planStart({ year: setup.startYear, period: setup.startPeriod }, profile.value.results)
     save((s) => ({ ...s, terms: standardTerms(start.year, start.period, 6), notes: [], unplaced: [] }))
   }
 

@@ -30,7 +30,6 @@ export const zhCN: Messages = {
     hint: "点一门课看详情，拖动可以换学期。",
     extraTermsVisa: '这个计划比正常学制更长。持学生签证可能需要新的 CoE，请先问 Stop 1。',
     openDetails: '查看 {code} 详情',
-    started: '已经入学了？先在 {record} 页面填上已修的课，计划就只排剩下的。',
     title: '把你的学位画成一张路线图',
     lede: "按学位规则排好的每学期课表，拖动卡片就能调整。",
     addTerm: '增加一个学期',

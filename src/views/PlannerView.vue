@@ -11,8 +11,7 @@ import PlanHowBuilt from '@/components/planner/PlanHowBuilt.vue'
 import PlanIssues from '@/components/planner/PlanIssues.vue'
 import PlanPrint from '@/components/planner/PlanPrint.vue'
 import Interp from '@/components/Interp.vue'
-import { PASS_MARK, planRoles, planStart, type PlanTerm } from '@/engine'
-import { termStarted } from '@/engine/plan'
+import { PASS_MARK, planRoles, type PlanTerm } from '@/engine'
 import { Printer, Share2 } from 'lucide-vue-next'
 import { decodePlan, encodePlan } from '@/utils/sharePlan'
 import { go, useView } from '@/composables/useView'
@@ -78,12 +77,6 @@ const { stress } = usePlanStress()
 const unavoidable = computed(() =>
   stress.value.unavoidable.map((u) => t.value('stress.unavoidable', { skill: t.value(`skill.${u.skill}`), total: u.total, perTerm: u.perTerm })),
 )
-// Started before now but no record yet: the plan can't know what's done.
-const startedWithoutRecord = computed(() => {
-  const { startYear: year, startPeriod: period } = plan.setup.value
-  const start = planStart({ year, period }, new Date())
-  return (start.year !== year || start.period !== period) && profile.value.results.length === 0
-})
 // A first visit shows only the questions; the board and its checks come once there's a plan.
 // A shared link shows its import banner instead.
 // Subjects the student failed: where the plan repeats them, or that it doesn't (an elective can be swapped).
@@ -215,15 +208,7 @@ function markDone(code: string, mark: number | undefined): void {
         </div>
       </section>
 
-      <p v-if="startedWithoutRecord" class="started">
-        <Interp :text="t('plan.started')">
-          <template #record>
-            <a :href="link('record')">{{ t('nav.record') }}</a>
-          </template>
-        </Interp>
-      </p>
-
-      <p v-if="!startedWithoutRecord && profileEmpty" class="started">
+      <p v-if="profileEmpty" class="started">
         <Interp :text="t('plan.fillRecord')">
           <template #record>
             <a :href="link('record')">{{ t('nav.record') }}</a>
@@ -296,7 +281,7 @@ function markDone(code: string, mark: number | undefined): void {
         @close="peek = null"
         @open="peek = $event"
         @swap="(from, to) => plan.swapSubject(from, to)"
-        :done-term="peekTerm && termStarted(peekTerm.term, new Date()) ? termLabel(t, peekTerm.term) : undefined"
+        :done-term="peekTerm ? termLabel(t, peekTerm.term) : undefined"
         :pass-fail="data.subjects[peek]?.passFail"
         @mark-done="(m) => markDone(peek as string, m)"
       />

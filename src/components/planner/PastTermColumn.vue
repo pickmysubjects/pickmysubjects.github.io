@@ -31,7 +31,7 @@ function retake(code: string): string | null {
       <h3 class="past-name">{{ term ? termLabel(t, term) : t('plan.pastUndated') }}</h3>
       <span class="past-tag">{{ t('plan.pastTag') }}</span>
     </header>
-    <!-- data-past-code, not data-code: the prerequisite lines are drawn between planned cards only. -->
+    <!-- data-past-code, not data-code: a passed subject is a line's start, never a planned card. -->
     <button
       v-for="r in results"
       :key="r.code"

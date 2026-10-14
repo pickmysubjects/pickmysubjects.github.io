@@ -3,7 +3,8 @@ import { computed, shallowRef, useId } from 'vue'
 import { Check, Plus, Search, Star, Trash2 } from 'lucide-vue-next'
 import { PASS_MARK, type Period, type Profile, type Subject } from '@/engine'
 import { termLabel } from '@/i18n/format'
-import { recentTerms } from '@/utils/pastTerms'
+import { termsBetween } from '@/utils/pastTerms'
+import { usePlan } from '@/composables/usePlan'
 import { useI18n } from '@/i18n'
 import { localTitle } from '@/i18n/localized'
 import { link } from '@/composables/useView'
@@ -57,8 +58,22 @@ function setMark(c: string, event: Event): void {
   input.value = m === undefined ? '' : String(m)
 }
 
-// When it was taken: optional, only used to show it in its semester on the plan board.
-const TERMS = recentTerms()
+// When it was taken: the semesters of the plan, from the start of study to its last semester
+// (and any semester already on the record), so the two pages use the same years.
+const plan = usePlan()
+const TERMS = computed(() => {
+  const order = (x: { year: number; period: Period }) => x.year * 10 + ['summer', 'semester-1', 'winter', 'semester-2'].indexOf(x.period)
+  const known = [
+    { year: plan.setup.value.startYear, period: plan.setup.value.startPeriod },
+    ...plan.terms.value,
+    ...results.value.filter((r): r is typeof r & { year: number; period: Period } => r.year !== undefined && r.period !== undefined),
+  ]
+  const first = known.reduce((a, b) => (order(b) < order(a) ? b : a))
+  const last = known.reduce((a, b) => (order(b) > order(a) ? b : a))
+  // At least three years from the start, so a fresh setup still has semesters to pick.
+  const floor = { year: first.year + 2, period: 'semester-2' as Period }
+  return termsBetween(first, order(last) > order(floor) ? last : floor)
+})
 const termValue = (r: Profile['results'][number]) => (r.year && r.period ? `${r.year}|${r.period}` : '')
 function setTerm(c: string, event: Event): void {
   const [y, p] = (event.target as HTMLSelectElement).value.split('|')

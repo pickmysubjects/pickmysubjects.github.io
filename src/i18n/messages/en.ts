@@ -33,7 +33,6 @@ export const en = {
     hint: "Tap a subject for details; drag to move it.",
     extraTermsVisa: 'This plan takes longer than the usual length. On a student visa that may need a new CoE — talk to Stop 1 first.',
     openDetails: 'Details for {code}',
-    started: 'Started already? Add the subjects you’ve done in {record}, and the plan will only cover what’s left.',
     title: 'Your degree, as a route',
     lede: "A semester-by-semester plan that follows your degree’s rules; drag cards to change it.",
     addTerm: 'Add a term',

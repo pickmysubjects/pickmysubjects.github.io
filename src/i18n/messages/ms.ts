@@ -30,7 +30,6 @@ export const ms: Messages = {
     hint: "Ketik subjek untuk butiran; seret untuk mengalihkannya.",
     extraTermsVisa: 'Pelan ini lebih panjang daripada tempoh biasa. Dengan visa pelajar mungkin perlu CoE baharu — tanya Stop 1 dahulu.',
     openDetails: 'Butiran {code}',
-    started: 'Sudah mula belajar? Tambah subjek yang telah diambil di {record}, dan pelan hanya meliputi baki yang tinggal.',
     title: 'Ijazah anda sebagai satu peta laluan',
     lede: "Rancangan ikut semester yang mematuhi peraturan ijazah anda; seret kad untuk mengubahnya.",
     addTerm: 'Tambah semester',

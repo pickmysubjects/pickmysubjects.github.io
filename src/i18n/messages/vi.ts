@@ -30,7 +30,6 @@ export const vi: Messages = {
     hint: "Chạm vào môn để xem chi tiết; kéo để di chuyển.",
     extraTermsVisa: 'Kế hoạch này dài hơn thời gian thông thường. Với visa du học có thể cần CoE mới — hãy hỏi Stop 1 trước.',
     openDetails: 'Chi tiết {code}',
-    started: 'Đã bắt đầu học? Thêm các môn đã học trong {record}, kế hoạch sẽ chỉ gồm phần còn lại.',
     title: 'Tấm bản đồ lộ trình cho tấm bằng của bạn',
     lede: "Kế hoạch theo từng học kỳ, đúng quy định của bằng; kéo thẻ để thay đổi.",
     addTerm: 'Thêm học kỳ',

@@ -30,7 +30,6 @@ export const ko: Messages = {
     hint: "과목을 누르면 자세히 보이고, 끌어서 옮길 수 있어요.",
     extraTermsVisa: '이 계획은 보통 수업 연한보다 깁니다. 학생 비자라면 새 CoE가 필요할 수 있으니 먼저 Stop 1에 문의하세요.',
     openDetails: '{code} 자세히 보기',
-    started: '이미 재학 중인가요? {record}에서 이수한 과목을 입력하면 남은 과목만 계획합니다.',
     title: '나의 학위를 한 장의 경로도로',
     lede: "학위 규칙에 맞춘 학기별 계획이에요. 카드를 끌어서 바꿀 수 있어요.",
     addTerm: '학기 추가',

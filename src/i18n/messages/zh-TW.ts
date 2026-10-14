@@ -30,7 +30,6 @@ export const zhTW: Messages = {
     hint: "點一門課看詳情，拖動可以換學期。",
     extraTermsVisa: '這個計畫比正常學制更長。持學生簽證可能需要新的 CoE，請先問 Stop 1。',
     openDetails: '查看 {code} 詳情',
-    started: '已經入學了？先在 {record} 頁面填上已修的課，計畫就只排剩下的。',
     title: '把你的學位畫成一張路線圖',
     lede: "依學位規則排好的每學期課表，拖動卡片就能調整。",
     addTerm: '增加一個學期',
