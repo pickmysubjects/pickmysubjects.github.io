@@ -157,8 +157,21 @@ const plannerUrl =
 }
 
 @media (max-width: 720px) {
+  /* Clear the fixed bottom tabs, including the home-indicator inset. */
   .footer {
-    padding-bottom: 96px;
+    padding-bottom: calc(104px + env(safe-area-inset-bottom));
+  }
+
+  .footer-links {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 16px;
+  }
+
+  .footer-links a {
+    display: flex;
+    align-items: center;
+    min-height: 40px;
   }
 }
 

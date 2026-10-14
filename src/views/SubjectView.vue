@@ -164,7 +164,7 @@ const links = computed(() => (name.value === 'real' ? discussionLinks(code.value
       <div class="grid">
         <SubjectAbout class="panel surface panel-wide" :subject="subject" />
 
-        <MajorRoles class="panel surface panel-wide" :code="code" />
+        <AssessmentPanel class="panel surface panel-wide" :subject="subject" :year="year" />
 
         <section class="panel surface">
           <h2 class="panel-title">{{ t('subject.needs') }}</h2>
@@ -208,8 +208,6 @@ const links = computed(() => (name.value === 'real' ? discussionLinks(code.value
           </template>
         </section>
 
-        <AssessmentPanel class="panel surface panel-wide" :subject="subject" :year="year" />
-
         <DiscussionSummary v-if="subject.discussion" class="panel surface panel-wide" :discussion="subject.discussion" />
 
         <section class="panel surface panel-wide">
@@ -241,11 +239,13 @@ const links = computed(() => (name.value === 'real' ? discussionLinks(code.value
           <RatingForm v-if="rating" :code="subject.code" @done="onRated" />
         </section>
 
+        <MajorRoles class="panel surface panel-wide" :code="code" />
+
         <SubjectFaq class="panel surface panel-wide" :subject="subject" :year="year" :course="plan.setup.value.course" :unlocks="unlocks" />
 
         <section v-if="links.length" class="panel surface panel-wide">
           <h2 class="panel-title">{{ t('subject.discuss') }}</h2>
-          <p class="links-inline">
+          <p class="links-inline links-grid">
             <a v-for="l in links" :key="l.label" class="chip" :href="l.href" target="_blank" rel="noopener" :lang="l.lang">
               {{ l.label }} <ExternalLink :size="13" aria-hidden="true" />
             </a>
@@ -487,6 +487,18 @@ const links = computed(() => (name.value === 'real' ? discussionLinks(code.value
 
   .meter-ends {
     grid-column: 1 / -1;
+  }
+
+  /* Outside links as a two-column list of full-height rows, not a wrapping cloud of small chips. */
+  .links-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .links-grid .chip {
+    justify-content: space-between;
+    min-height: 44px;
   }
 }
 

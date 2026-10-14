@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import BrowseSwitch from '@/components/browse/BrowseSwitch.vue'
+import DegreeBadge from '@/components/browse/DegreeBadge.vue'
 import { computed, shallowRef } from 'vue'
-import { ChevronRight, Search } from 'lucide-vue-next'
+import { ChevronDown, ChevronRight, Search } from 'lucide-vue-next'
 import { link } from '@/composables/useView'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
@@ -36,6 +37,7 @@ const courseTitle = computed(() => data.value.courses.find((c) => c.code === cou
       <BrowseSwitch current="majors" />
       <h1 class="page-title">{{ t('majors.title') }}</h1>
       <p class="page-lede">{{ t('majors.lede', { course: courseTitle }) }}</p>
+      <DegreeBadge :course="course" />
     </header>
 
     <label class="search">
@@ -45,15 +47,20 @@ const courseTitle = computed(() => data.value.courses.find((c) => c.code === cou
 
     <p v-if="groups.length === 0" class="empty">{{ t('wizard.noMajorMatch') }}</p>
 
-    <section v-for="g in groups" :key="g.id" class="group">
-      <h2 class="group-title">{{ t(`majorGroup.${g.id}`) }}</h2>
+    <!-- Grouped and folded: the first group is open; a search opens every group it matches. -->
+    <details v-for="(g, i) in groups" :key="g.id" class="group" :open="i === 0 || query.trim() !== '' || undefined">
+      <summary class="group-title">
+        <span>{{ t(`majorGroup.${g.id}`) }}</span>
+        <span class="group-count">{{ g.majors.length }}</span>
+        <ChevronDown :size="18" aria-hidden="true" class="group-chevron" />
+      </summary>
       <div class="cards">
         <a v-for="m in g.majors" :key="m.id" class="card surface" :href="link(`majors/${m.id}`)">
           <span class="card-title">{{ m.title }}</span>
           <ChevronRight :size="18" aria-hidden="true" class="go" />
         </a>
       </div>
-    </section>
+    </details>
   </div>
 </template>
 
@@ -61,6 +68,12 @@ const courseTitle = computed(() => data.value.courses.find((c) => c.code === cou
 .list {
   display: grid;
   gap: 24px;
+}
+
+.list > header {
+  display: grid;
+  gap: 10px;
+  justify-items: start;
 }
 
 .search {
@@ -103,9 +116,43 @@ const courseTitle = computed(() => data.value.courses.find((c) => c.code === cou
 }
 
 .group-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 0 4px;
   font-size: 1.05rem;
   font-weight: 650;
   color: var(--ink);
+  border-bottom: 1px solid var(--glass-edge);
+  cursor: pointer;
+  list-style: none;
+}
+
+.group-title::-webkit-details-marker {
+  display: none;
+}
+
+.group-count {
+  padding: 1px 9px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  font-size: 0.8125rem;
+  color: var(--accent);
+}
+
+.group-chevron {
+  margin-left: auto;
+  color: var(--ink-faint);
+  transition: transform 0.15s;
+}
+
+.group[open] .group-chevron {
+  transform: rotate(180deg);
+}
+
+.group[open] .cards {
+  margin-top: 10px;
 }
 
 .cards {

@@ -624,6 +624,9 @@ export const zhTW: Messages = {
     cat: { science: "理科", commerce: "商科", breadth: "Breadth" },
   },
   majors: {
+    shownFor: "依 {course} 顯示",
+    change: "更改",
+    shownDefault: "還沒選學位，先依 {course} 顯示",
     statCore: "三年級必修",
     statChoice: "三年級選修",
     statPathway: "一二年級先修",

@@ -114,13 +114,14 @@ function pick(skill: Skill, level: number): void {
 }
 
 .step {
-  min-width: 40px;
-  padding: 4px 6px;
+  min-width: 44px;
+  min-height: 32px;
+  padding: 6px 8px;
   border: 0;
   border-left: 1px solid var(--line);
   background: var(--surface);
   font: inherit;
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   color: var(--ink-soft);
   cursor: pointer;
 }
@@ -165,7 +166,8 @@ function pick(skill: Skill, level: number): void {
   }
 
   .step {
-    min-width: 30px;
+    min-width: 36px;
+    min-height: 36px;
   }
 }
 .scale-ends {

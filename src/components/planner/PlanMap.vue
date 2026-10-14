@@ -291,6 +291,34 @@ const trackWidth = computed(() => `max(100%, ${(props.terms.length + pastCount.v
   font-size: 0.8125rem;
   white-space: nowrap;
 }
+/* Phones: terms stack top to bottom, so no column is cut off at the screen edge. The route lines
+   only make sense side by side, so they are dropped here (each card still names its prerequisites). */
+@media (max-width: 720px) {
+  .map {
+    overflow: visible;
+  }
+
+  .track {
+    flex-direction: column;
+    gap: 14px;
+    width: auto !important;
+  }
+
+  .track > :deep(.term),
+  .track > :deep(.past) {
+    max-width: none;
+  }
+
+  .routes {
+    display: none;
+  }
+
+  .term-tools {
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding-top: 0;
+  }
+}
 /* On paper the terms wrap into rows instead of scrolling sideways (the route lines are dropped). */
 @media print {
   .map {

@@ -627,6 +627,9 @@ export const en = {
     cat: { science: "Science", commerce: "Commerce", breadth: "Breadth" },
   },
   majors: {
+    shownFor: "Shown for {course}",
+    change: "Change",
+    shownDefault: "Not chosen yet: shown for {course}",
     statCore: "Third-year core",
     statChoice: "Third-year choice",
     statPathway: "Before third year",

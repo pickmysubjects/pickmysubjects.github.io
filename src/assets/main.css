@@ -339,6 +339,14 @@ textarea {
   color: var(--ink-soft);
 }
 
+/* Fingers need a bigger target than a mouse pointer. */
+@media (pointer: coarse) {
+  .chip {
+    min-height: 40px;
+    padding: 6px 14px;
+  }
+}
+
 /* A dropdown that acts as a control (sort, add a term), not a form field: glass, like the buttons. */
 .select-glass {
   width: auto;

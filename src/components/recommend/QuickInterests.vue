@@ -28,8 +28,8 @@ function scrollToList(): void {
         </template>
       </Interp>
     </p>
-    <TopicChips :model-value="profile.interests" :topics="topics" @update:model-value="setInterests" />
-    <button v-if="count > 0 && profile.interests.length > 0" class="quick-below" type="button" @click="scrollToList">
+    <TopicChips :model-value="profile.interests" :topics="topics" :first-groups="3" @update:model-value="setInterests" />
+    <button v-if="count > 0 && profile.interests.length > 0" class="button button-accent quick-below" type="button" @click="scrollToList">
       {{ t('suggest.below', { n: count }) }}
     </button>
   </section>
@@ -54,12 +54,5 @@ function scrollToList(): void {
 
 .quick-below {
   justify-self: start;
-  padding: 0;
-  border: 0;
-  background: none;
-  font: inherit;
-  font-weight: 600;
-  color: var(--accent);
-  cursor: pointer;
 }
 </style>

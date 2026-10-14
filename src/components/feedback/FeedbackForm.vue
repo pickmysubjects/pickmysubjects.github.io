@@ -158,12 +158,15 @@ function value(event: Event): string {
 }
 
 .rating-option {
+  position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  padding: 5px 11px;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
   border: 1px solid var(--contour);
-  border-radius: 999px;
+  border-radius: 12px;
+  font-weight: 600;
   cursor: pointer;
 }
 
@@ -171,11 +174,18 @@ function value(event: Event): string {
   border-color: var(--overprint);
   background: var(--overprint-tint);
   color: var(--overprint);
-  font-weight: 600;
 }
 
+.rating-option:has(input:focus-visible) {
+  outline: 2px solid var(--overprint);
+  outline-offset: 2px;
+}
+
+/* The number is the control; the radio stays for keyboards and screen readers. */
 .rating-option input {
-  accent-color: var(--overprint);
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .rating-ends {

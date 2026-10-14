@@ -624,6 +624,9 @@ export const hi: Messages = {
     cat: { science: "साइंस", commerce: "कॉमर्स", breadth: "Breadth" },
   },
   majors: {
+    shownFor: "{course} के लिए दिखाया गया",
+    change: "बदलें",
+    shownDefault: "अभी डिग्री नहीं चुनी: {course} के लिए दिखाया गया",
     statCore: "तीसरे साल के अनिवार्य",
     statChoice: "तीसरे साल के विकल्प",
     statPathway: "तीसरे साल से पहले",

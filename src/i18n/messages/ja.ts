@@ -624,6 +624,9 @@ export const ja: Messages = {
     cat: { science: "理系", commerce: "商学系", breadth: "Breadth" },
   },
   majors: {
+    shownFor: "{course} 向けに表示",
+    change: "変更",
+    shownDefault: "学位が未選択のため {course} で表示",
     statCore: "3年次必修",
     statChoice: "3年次選択",
     statPathway: "1・2年次の前提",

@@ -624,6 +624,9 @@ export const ko: Messages = {
     cat: { science: "이과", commerce: "상경", breadth: "Breadth" },
   },
   majors: {
+    shownFor: "{course} 기준으로 표시",
+    change: "변경",
+    shownDefault: "학위를 아직 안 골라서 {course} 기준으로 표시",
     statCore: "3학년 필수",
     statChoice: "3학년 선택",
     statPathway: "1·2학년 선수",

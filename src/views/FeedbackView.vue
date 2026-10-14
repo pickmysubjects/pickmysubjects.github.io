@@ -6,6 +6,7 @@ import { useView, link } from '@/composables/useView'
 import { OTHER_TOPICS, type FeedbackDraft } from '@/utils/feedback'
 import { PAIN_POINTS } from '@/painPoints'
 import Interp from '@/components/Interp.vue'
+import { PenLine } from 'lucide-vue-next'
 import { useI18n } from '@/i18n'
 
 const { query } = useView()
@@ -41,6 +42,10 @@ function choose(id: string): void {
     <section>
       <h1 class="fb-title">{{ t('feedback.title') }}</h1>
       <p class="fb-lede">{{ t('feedback.lede') }}</p>
+      <!-- The form sits below a long status list; this gets there in one tap. -->
+      <button class="button button-accent fb-jump" type="button" @click="form?.scrollIntoView({ behavior: 'smooth', block: 'start' })">
+        <PenLine :size="16" aria-hidden="true" /> {{ t('feedback.yours') }}
+      </button>
     </section>
 
     <PainPointList :selected="draft.topic" @choose="choose" />
@@ -77,6 +82,10 @@ function choose(id: string): void {
   max-width: 72ch;
   margin: 8px 0 0;
   color: var(--ink-soft);
+}
+
+.fb-jump {
+  margin-top: 14px;
 }
 
 .fb-form {

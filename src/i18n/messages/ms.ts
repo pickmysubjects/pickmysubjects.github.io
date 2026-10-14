@@ -624,6 +624,9 @@ export const ms: Messages = {
     cat: { science: "Sains", commerce: "Perdagangan", breadth: "Breadth" },
   },
   majors: {
+    shownFor: "Dipaparkan untuk {course}",
+    change: "Tukar",
+    shownDefault: "Belum pilih ijazah: dipaparkan untuk {course}",
     statCore: "Teras tahun tiga",
     statChoice: "Pilihan tahun tiga",
     statPathway: "Sebelum tahun tiga",

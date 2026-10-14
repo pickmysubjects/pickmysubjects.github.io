@@ -82,7 +82,7 @@ function planWithIt(): void {
       <section v-for="(c, i) in overview.choices" :key="i" class="block">
         <h2 class="block-title">{{ t('majors.choiceTitle', { n: c.points / 12.5 }) }}</h2>
         <p class="block-hint">{{ t('majors.choiceHint', { points: c.points }) }}</p>
-        <SubjectLinks :codes="c.from" :year="year" />
+        <SubjectLinks :codes="c.from" :year="year" :limit="4" />
       </section>
 
       <section class="block">
@@ -234,8 +234,20 @@ function planWithIt(): void {
     grid-template-columns: 1fr;
   }
 
+  /* One column: what the major adds up to, and the plan button, come first; the comparison
+     tool stays at the end. */
+  .layout {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
   .side {
-    position: static;
+    display: contents;
+  }
+
+  .summary {
+    order: -1;
   }
 }
 

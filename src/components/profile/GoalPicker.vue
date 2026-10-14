@@ -37,8 +37,9 @@ const current = computed<Goal>(() => (!props.withEasy && own.value === 'easy' ? 
         {{ t(`suggest.goals.${g}`) }}
       </button>
     </div>
-    <p class="goal-hint">{{ t(`suggest.goals.${current}Hint`) }}</p>
-    <p v-if="note" class="goal-hint">{{ note }}</p>
+    <p class="goal-hint">
+      {{ t(`suggest.goals.${current}Hint`) }}<template v-if="note"><br /><span class="goal-note">{{ note }}</span></template>
+    </p>
   </fieldset>
 </template>
 
@@ -96,6 +97,10 @@ const current = computed<Goal>(() => (!props.withEasy && own.value === 'easy' ? 
 .seg button:focus-visible {
   outline: 2px solid var(--overprint);
   outline-offset: 1px;
+}
+
+.goal-note {
+  color: var(--ink-faint, var(--ink-soft));
 }
 
 .goal-hint {

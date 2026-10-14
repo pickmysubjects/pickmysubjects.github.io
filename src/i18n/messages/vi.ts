@@ -624,6 +624,9 @@ export const vi: Messages = {
     cat: { science: "Khoa học", commerce: "Kinh doanh", breadth: "Breadth" },
   },
   majors: {
+    shownFor: "Hiển thị cho {course}",
+    change: "Đổi",
+    shownDefault: "Chưa chọn ngành: tạm hiển thị cho {course}",
     statCore: "Bắt buộc năm ba",
     statChoice: "Tự chọn năm ba",
     statPathway: "Tiên quyết năm 1–2",

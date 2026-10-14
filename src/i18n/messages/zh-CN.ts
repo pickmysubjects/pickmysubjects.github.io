@@ -624,6 +624,9 @@ export const zhCN: Messages = {
     cat: { science: "理科", commerce: "商科", breadth: "Breadth" },
   },
   majors: {
+    shownFor: "按 {course} 显示",
+    change: "更改",
+    shownDefault: "还没选学位，先按 {course} 显示",
     statCore: "三年级必修",
     statChoice: "三年级选修",
     statPathway: "一二年级先修",

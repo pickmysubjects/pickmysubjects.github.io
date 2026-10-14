@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import DegreeBadge from '@/components/browse/DegreeBadge.vue'
 import { computed, shallowRef, watch } from 'vue'
 import { Search } from 'lucide-vue-next'
 import BrowseFilters from '@/components/browse/BrowseFilters.vue'
@@ -70,6 +71,7 @@ watch(filters, (f) => {
       <BrowseSwitch current="subjects" />
       <h1 class="page-title">{{ t('browse.title') }}</h1>
       <p class="page-lede">{{ t('browse.lede') }}</p>
+      <DegreeBadge :course="course" />
     </header>
 
     <div class="top">

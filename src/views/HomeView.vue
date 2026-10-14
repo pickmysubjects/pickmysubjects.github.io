@@ -294,9 +294,19 @@ li:nth-child(3) .step-icon {
 }
 
 .step-num {
-  font-size: 0.8125rem;
+  display: inline-grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  font-size: 0.75rem;
   font-weight: 700;
-  color: var(--ink-faint);
+  color: #fff;
+  background: var(--overprint);
+  border-radius: 999px;
+}
+
+.step-done .step-num {
+  background: var(--good);
 }
 
 .step-tick {
@@ -412,7 +422,6 @@ li:nth-child(3) .step-icon {
     padding: 32px 18px 20px;
     border-radius: 26px;
   }
-
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -465,6 +474,24 @@ li:nth-child(3) .step-icon {
     grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
     align-items: center;
     column-gap: 48px;
+  }
+}
+
+@media (max-width: 560px) {
+  /* Phones: the three steps become a short list (number, name, status) so the hero ends on screen. */
+  .stage .step {
+    padding: 12px 40px 12px 14px;
+  }
+
+  .stage .step-icon,
+  .stage .step-text {
+    display: none;
+  }
+
+  .hero-try .code {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
   }
 }
 </style>
