@@ -976,6 +976,7 @@ export const vi: Messages = {
     runsUnknown: 'Chưa ghi học kỳ mở',
     notRunning: 'Không mở trong các năm đã chọn',
     addToPlan: 'Thêm vào kế hoạch',
+    addWhen: "Học kỳ nào",
     inPlan: 'Đã có trong kế hoạch',
     rateAsk: 'Đã học môn này? Đánh giá ngay',
     handbook: 'Handbook',

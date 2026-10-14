@@ -976,6 +976,7 @@ export const ja: Messages = {
     runsUnknown: '開講時期はまだ未登録',
     notRunning: '計画期間中は開講なし',
     addToPlan: 'プランに追加',
+    addWhen: "どの学期に入れるか",
     inPlan: 'プランに追加済み',
     rateAsk: '履修しましたか？評価する',
     handbook: 'Handbook',

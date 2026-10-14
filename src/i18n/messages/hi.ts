@@ -976,6 +976,7 @@ export const hi: Messages = {
     runsUnknown: 'सेमेस्टर अभी दर्ज नहीं',
     notRunning: 'प्लान किए सालों में नहीं चलता',
     addToPlan: 'मेरे प्लान में जोड़ें',
+    addWhen: "किस सेमेस्टर में",
     inPlan: 'प्लान में है',
     rateAsk: 'यह विषय पढ़ा है? रेटिंग दें',
     handbook: 'Handbook',

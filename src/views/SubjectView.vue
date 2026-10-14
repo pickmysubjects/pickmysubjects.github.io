@@ -19,6 +19,7 @@ import { categoryLabel, describeReq, requirementList, termLabel } from '@/i18n/f
 import { discussionLinks } from '@/utils/links'
 import { localTitle } from '@/i18n/localized'
 import { subjectGist } from '@/i18n/gist'
+import { termsBetween } from '@/utils/pastTerms'
 
 const props = defineProps<{ code: string }>()
 const { name, data } = useDataset()
@@ -70,23 +71,27 @@ function onRated(sent: boolean): void {
 }
 
 /**
- * Where "Add to my plan" puts it: the first planned semester it runs in, or —
- * for summer/winter-only subjects — the first such term within the plan's years
- * (the planner adds that term).
+ * Where "Add to my plan" can put it: every term it runs in from the start of study to the plan's
+ * last semester (at least three years on), summer and winter included. The student picks; the
+ * first planned semester it runs in is the default.
  */
-const target = computed(() => {
+const termChoices = computed(() => {
   const s = subject.value
-  const terms = plan.terms.value
-  const first = terms[0]
-  const last = terms.at(-1)
-  if (!s || !first || !last) return null
-  const hit = terms.find((term) => periodsFor(s, term.year).includes(term.period))
-  if (hit) return { year: hit.year, period: hit.period }
-  for (let year = first.year; year <= last.year; year++) {
-    const period = periodsFor(s, year).find((p) => termKey(year, p) >= termKey(first.year, first.period))
-    if (period) return { year, period }
-  }
-  return null
+  if (!s) return []
+  const start = { year: plan.setup.value.startYear, period: plan.setup.value.startPeriod }
+  const last = plan.terms.value.at(-1)
+  const floor = { year: start.year + 2, period: 'semester-2' as Period }
+  const end = last && termKey(last.year, last.period) > termKey(floor.year, floor.period) ? last : floor
+  return termsBetween(start, end).filter((x) => periodsFor(s, x.year).includes(x.period))
+})
+const chosenTerm = shallowRef('')
+const target = computed(() => {
+  const all = termChoices.value
+  if (!all.length) return null
+  const picked = all.find((x) => `${x.year}|${x.period}` === chosenTerm.value)
+  if (picked) return picked
+  const firstPlanned = plan.terms.value[0]
+  return all.find((x) => !firstPlanned || termKey(x.year, x.period) >= termKey(firstPlanned.year, firstPlanned.period)) ?? all[0]!
 })
 
 const addedAt = shallowRef<{ year: number; period: Period } | null>(null)
@@ -156,10 +161,21 @@ const gist = computed(() => (subject.value ? subjectGist(t.value, subject.value)
           <a v-else-if="!plan.setupChosen.value" class="button button-accent" :href="link('plan')">
             <Plus :size="18" aria-hidden="true" /> {{ t('subject.chooseDegreeFirst') }}
           </a>
-          <button v-else class="button button-accent" type="button" :disabled="inPlan || !target" @click="addToPlan">
-            <component :is="inPlan ? Check : Plus" :size="18" aria-hidden="true" />
-            {{ inPlan ? t('subject.inPlan') : t('subject.addToPlan') }}
-          </button>
+          <span v-else-if="inPlan" class="button button-quiet done-badge" role="status">
+            <Check :size="18" aria-hidden="true" /> {{ t('subject.inPlan') }}
+          </span>
+          <template v-else-if="target">
+            <!-- The student picks the semester; it lists only terms the subject runs in. -->
+            <label class="add-term">
+              <span class="visually-hidden">{{ t('subject.addWhen') }}</span>
+              <select class="select-glass" :value="`${target.year}|${target.period}`" @change="chosenTerm = ($event.target as HTMLSelectElement).value">
+                <option v-for="x in termChoices" :key="`${x.year}|${x.period}`" :value="`${x.year}|${x.period}`">{{ termLabel(t, x) }}</option>
+              </select>
+            </label>
+            <button class="button button-accent" type="button" @click="addToPlan">
+              <Plus :size="18" aria-hidden="true" /> {{ t('subject.addToPlan') }}
+            </button>
+          </template>
           <a v-if="subject.handbook" class="button button-quiet" :href="subject.handbook" target="_blank" rel="noopener">
             {{ t('subject.handbook') }} <ExternalLink :size="15" aria-hidden="true" />
           </a>

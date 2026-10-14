@@ -234,6 +234,8 @@ export function usePlan() {
     save((s) => {
       const term = s.terms[termIndex]
       if (term) term.subjects = term.subjects.filter((c) => c !== code)
+      // A summer or winter term left empty goes too: it was there for that subject.
+      if (term && term.subjects.length === 0 && (term.period === 'summer' || term.period === 'winter')) s.terms.splice(termIndex, 1)
       return s
     })
   }

@@ -976,6 +976,7 @@ export const ko: Messages = {
     runsUnknown: '개설 학기 미등록',
     notRunning: '계획한 연도에 개설되지 않음',
     addToPlan: '내 계획에 추가',
+    addWhen: "어느 학기에 넣을지",
     inPlan: '계획에 있음',
     rateAsk: '수강하셨나요? 평가하기',
     handbook: 'Handbook',

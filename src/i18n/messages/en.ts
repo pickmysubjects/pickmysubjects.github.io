@@ -979,6 +979,7 @@ export const en = {
     runsUnknown: 'Semesters not recorded yet',
     notRunning: 'Not running in the planned years',
     addToPlan: 'Add to my plan',
+    addWhen: "Which semester",
     inPlan: 'In your plan',
     rateAsk: 'Taken it? Rate it',
     handbook: 'Handbook',

@@ -976,6 +976,7 @@ export const zhTW: Messages = {
     runsUnknown: '開課學期還沒紀錄',
     notRunning: '規劃的年份裡不開',
     addToPlan: '加入我的方案',
+    addWhen: "放在哪個學期",
     inPlan: '已在方案中',
     rateAsk: '修過這門課？來評個分',
     handbook: 'Handbook',

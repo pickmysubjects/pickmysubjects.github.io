@@ -976,6 +976,7 @@ export const ms: Messages = {
     runsUnknown: 'Semester belum direkodkan',
     notRunning: 'Tidak ditawarkan pada tahun yang dirancang',
     addToPlan: 'Tambah ke rancangan saya',
+    addWhen: "Semester mana",
     inPlan: 'Sudah dalam rancangan',
     rateAsk: 'Pernah mengambilnya? Beri penilaian',
     handbook: 'Handbook',

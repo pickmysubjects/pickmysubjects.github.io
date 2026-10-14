@@ -976,6 +976,7 @@ export const zhCN: Messages = {
     runsUnknown: '开课学期还没记录',
     notRunning: '规划的年份里不开',
     addToPlan: '加入我的方案',
+    addWhen: "放在哪个学期",
     inPlan: '已在方案中',
     rateAsk: '上过这门课？来打个分',
     handbook: 'Handbook',
