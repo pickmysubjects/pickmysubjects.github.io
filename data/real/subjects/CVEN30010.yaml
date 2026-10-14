@@ -7,7 +7,15 @@ offerings:
     - semester-2
 prerequisites:
   any:
-    - manual: "Admission into or selection of one of the following: MC-ARCHENG Master of Architectural Engineering MC-CIVENG Master of Civil Engineering MC-ENVENG Master of Environmental Engineering Civil specialisation (formal) in the MC-ENG Master of Engineering Environmental specialisation (formal) in the MC-ENG Master of Engineering"
+    - any:
+        - admission: MC-ARCHENG
+          note: "Admission into or selection of one of the following: MC-ARCHENG Master of Architectural Engineering MC-CIVENG Master of Civil Engineering MC-ENVENG Master of Environmental Engineering Civil specialisation (formal) in the MC-ENG Master of Engineering Environmental specialisation (formal) in the MC-ENG Master of Engineering"
+        - admission: MC-CIVENG
+          note: "Admission into or selection of one of the following: MC-ARCHENG Master of Architectural Engineering MC-CIVENG Master of Civil Engineering MC-ENVENG Master of Environmental Engineering Civil specialisation (formal) in the MC-ENG Master of Engineering Environmental specialisation (formal) in the MC-ENG Master of Engineering"
+        - admission: MC-ENVENG
+          note: "Admission into or selection of one of the following: MC-ARCHENG Master of Architectural Engineering MC-CIVENG Master of Civil Engineering MC-ENVENG Master of Environmental Engineering Civil specialisation (formal) in the MC-ENG Master of Engineering Environmental specialisation (formal) in the MC-ENG Master of Engineering"
+        - admission: MC-ENG
+          note: "Admission into or selection of one of the following: MC-ARCHENG Master of Architectural Engineering MC-CIVENG Master of Civil Engineering MC-ENVENG Master of Environmental Engineering Civil specialisation (formal) in the MC-ENG Master of Engineering Environmental specialisation (formal) in the MC-ENG Master of Engineering"
     - all:
         - ENEN20002
         - ENGR30002

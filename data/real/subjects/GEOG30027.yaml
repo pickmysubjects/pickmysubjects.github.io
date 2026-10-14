@@ -7,7 +7,17 @@ offerings:
     - semester-2
 prerequisites:
   any:
-    - manual: Completion of a minimum of 50 credit points of Level 2 study, inclusive of a minimum of 25 credit points of Level 2 Geography subjects
+    - all:
+        - points:
+            min: 50
+            levels:
+              - 2
+        - points:
+            min: 25
+            levels:
+              - 2
+            areas:
+              - GEOG
     - manual: Permission from subject coordinator. This subject may be taken as a Capstone for the Geography major in the BA and BSc.
 corequisites: none
 non_allowed: []

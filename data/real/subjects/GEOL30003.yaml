@@ -12,7 +12,8 @@ prerequisites:
         - GEOL20002
         - GEOL20003
         - ERTH20002
-    - manual: "Admission into or selection of one of the following: MC-GEOSC Master of Geoscience"
+    - admission: MC-GEOSC
+      note: "Admission into or selection of one of the following: MC-GEOSC Master of Geoscience"
     - manual: By arrangement with subject coordinators
 corequisites: none
 non_allowed: []

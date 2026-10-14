@@ -14,9 +14,15 @@ prerequisites:
         - COMP90038
         - ENGR30004
         - ENGR30003
-    - manual: "Admission into or selection of one of the following: MC-SCICMP Master of Science (Computer Science) MC-CS Master of Computer Science GC-CS Graduate Certificate in Computer Science"
-    - manual: "Admission into or selection of one of the following: Distributed Computing (100pt) specialisation (formal) in the MC-IT Master of Information Technology Computing (100pt) specialisation (formal) in the MC-IT Master of Information Technology Cyber Security (100pt) specialisation (formal) in the MC-IT Master of Information Technology Artificial Intelligence (100pt) specialisation (formal) in the MC-IT Master of Information Technology Human-Computer Interaction (100pt) specialisation (formal) in the MC-IT Master of Information Technology Digital Innovation (100pt) specialisation (formal) in the MC-IT Master of Information Technology"
-    - manual: "Admission into or selection of one of the following: Distributed Computing (150pt) specialisation (formal) in the MC-IT Master of Information Technology Computing (150pt) specialisation (formal) in the MC-IT Master of Information Technology Cyber Security (150pt) specialisation (formal) in the MC-IT Master of Information Technology Artificial Intelligence (150pt) specialisation (formal) in the MC-IT Master of Information Technology"
+    - any:
+        - admission: MC-SCICMP
+          note: "Admission into or selection of one of the following: MC-SCICMP Master of Science (Computer Science) MC-CS Master of Computer Science GC-CS Graduate Certificate in Computer Science"
+        - admission: MC-CS
+          note: "Admission into or selection of one of the following: MC-SCICMP Master of Science (Computer Science) MC-CS Master of Computer Science GC-CS Graduate Certificate in Computer Science"
+    - admission: MC-IT
+      note: "Admission into or selection of one of the following: Distributed Computing (100pt) specialisation (formal) in the MC-IT Master of Information Technology Computing (100pt) specialisation (formal) in the MC-IT Master of Information Technology Cyber Security (100pt) specialisation (formal) in the MC-IT Master of Information Technology Artificial Intelligence (100pt) specialisation (formal) in the MC-IT Master of Information Technology Human-Computer Interaction (100pt) specialisation (formal) in the MC-IT Master of Information Technology Digital Innovation (100pt) specialisation (formal) in the MC-IT Master of Information Technology"
+    - admission: MC-IT
+      note: "Admission into or selection of one of the following: Distributed Computing (150pt) specialisation (formal) in the MC-IT Master of Information Technology Computing (150pt) specialisation (formal) in the MC-IT Master of Information Technology Cyber Security (150pt) specialisation (formal) in the MC-IT Master of Information Technology Artificial Intelligence (150pt) specialisation (formal) in the MC-IT Master of Information Technology"
 corequisites: none
 non_allowed:
   - COMP30027

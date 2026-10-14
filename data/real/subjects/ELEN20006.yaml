@@ -9,8 +9,10 @@ offerings:
 prerequisites:
   any:
     - any:
-        - manual: Selection of the Electrical specialisation (formal) in the MC-ENG Master of Engineering
-        - manual: Selection of the Electrical with Business specialisation (formal) in the MC-ENG Master of Engineering
+        - admission: MC-ENG
+          note: Selection of the Electrical specialisation (formal) in the MC-ENG Master of Engineering
+        - admission: MC-ENG
+          note: Selection of the Electrical with Business specialisation (formal) in the MC-ENG Master of Engineering
         - admission: MC-ELECENG
           note: Admission into the MC-ELECENG Master of Electrical Engineering
     - all:

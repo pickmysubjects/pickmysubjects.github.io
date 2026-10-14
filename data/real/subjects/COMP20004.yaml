@@ -7,7 +7,13 @@ offerings:
 prerequisites:
   any:
     - COMP30026
-    - manual: "Admission into one of the following: 100pt Program course entry point in the MC-IT Master of Information Technology MC-CS Master of Computer Science MC-SCICMP Master of Science (Computer Science)"
+    - any:
+        - admission: MC-IT
+          note: "Admission into one of the following: 100pt Program course entry point in the MC-IT Master of Information Technology MC-CS Master of Computer Science MC-SCICMP Master of Science (Computer Science)"
+        - admission: MC-CS
+          note: "Admission into one of the following: 100pt Program course entry point in the MC-IT Master of Information Technology MC-CS Master of Computer Science MC-SCICMP Master of Science (Computer Science)"
+        - admission: MC-SCICMP
+          note: "Admission into one of the following: 100pt Program course entry point in the MC-IT Master of Information Technology MC-CS Master of Computer Science MC-SCICMP Master of Science (Computer Science)"
 corequisites: none
 non_allowed:
   - COMP30025

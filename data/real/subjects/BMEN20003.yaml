@@ -18,7 +18,11 @@ prerequisites:
             - MAST10008
             - MAST10022
             - MAST10018
-    - manual: "Selection of one of the following: Admission into or selection of one of the following: Biomedical specialisation (formal) in the MC-ENG Master of Engineering Admission into or selection of one of the following: Biomedical with Business specialisation (formal) in the MC-ENG Master of Engineering Admission into or selection of one of the following: MC-BIOMENG Master of Biomedical Engineering"
+    - any:
+        - admission: MC-ENG
+          note: "Selection of one of the following: Admission into or selection of one of the following: Biomedical specialisation (formal) in the MC-ENG Master of Engineering Admission into or selection of one of the following: Biomedical with Business specialisation (formal) in the MC-ENG Master of Engineering Admission into or selection of one of the following: MC-BIOMENG Master of Biomedical Engineering"
+        - admission: MC-BIOMENG
+          note: "Selection of one of the following: Admission into or selection of one of the following: Biomedical specialisation (formal) in the MC-ENG Master of Engineering Admission into or selection of one of the following: Biomedical with Business specialisation (formal) in the MC-ENG Master of Engineering Admission into or selection of one of the following: MC-BIOMENG Master of Biomedical Engineering"
 corequisites: none
 non_allowed:
   - COMP20005

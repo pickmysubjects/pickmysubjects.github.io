@@ -13,7 +13,13 @@ prerequisites:
         - MAST10007
         - MAST10008
         - MAST10022
-    - manual: "Admission into or selection of one of the following: MC-MECHENG Master of Mechanical Engineering MC-DINFENG Master of Digital Infrastructure Engineering Mechanical specialisation (formal) in the MC-ENG Master of Engineering Mechanical with Business specialisation (formal) in the MC-ENG Master of Engineering Mechanical with Aerospace specialisation (formal) in the MC-ENG Master of Engineering"
+    - any:
+        - admission: MC-MECHENG
+          note: "Admission into or selection of one of the following: MC-MECHENG Master of Mechanical Engineering MC-DINFENG Master of Digital Infrastructure Engineering Mechanical specialisation (formal) in the MC-ENG Master of Engineering Mechanical with Business specialisation (formal) in the MC-ENG Master of Engineering Mechanical with Aerospace specialisation (formal) in the MC-ENG Master of Engineering"
+        - admission: MC-DINFENG
+          note: "Admission into or selection of one of the following: MC-MECHENG Master of Mechanical Engineering MC-DINFENG Master of Digital Infrastructure Engineering Mechanical specialisation (formal) in the MC-ENG Master of Engineering Mechanical with Business specialisation (formal) in the MC-ENG Master of Engineering Mechanical with Aerospace specialisation (formal) in the MC-ENG Master of Engineering"
+        - admission: MC-ENG
+          note: "Admission into or selection of one of the following: MC-MECHENG Master of Mechanical Engineering MC-DINFENG Master of Digital Infrastructure Engineering Mechanical specialisation (formal) in the MC-ENG Master of Engineering Mechanical with Business specialisation (formal) in the MC-ENG Master of Engineering Mechanical with Aerospace specialisation (formal) in the MC-ENG Master of Engineering"
 corequisites: none
 non_allowed:
   - COMP20005

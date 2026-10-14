@@ -444,3 +444,17 @@ describe('points of named fields', () => {
     expect(evaluateField(rule, { completed: new Set(['COMP10001']), subjects }).status).toBe('fail')
   })
 })
+
+describe('free text the Handbook writes in fixed ways', () => {
+  it('reads graduate selection, "inclusive of", "prior to" and "points in"', async () => {
+    const { structuredFromText } = await import('../src/engine/handbookPaste')
+    expect(structuredFromText('Selection of the Environmental specialisation (formal) in the MC-ENG Master of Engineering')).toMatchObject({ admission: 'MC-ENG' })
+    expect(structuredFromText('Selection of the Biomedical Engineering Systems major in the B-SCI')).toBeNull()
+    expect(structuredFromText('Have completed at least 200 credit points prior to the commencement of this subject')).toEqual({ points: { min: 200 } })
+    expect(structuredFromText('Completion of a minimum of 50 credit points of Level 2 study, inclusive of a minimum of 25 credit points of Level 2 Geography subjects')).toEqual({
+      all: [{ points: { min: 50, levels: [2] } }, { points: { min: 25, levels: [2], areas: ['GEOG'] } }],
+    })
+    expect(structuredFromText('25 credit points in a Level 1 biology subjects')).toEqual({ points: { min: 25, levels: [1], areas: ['BIOL'] } })
+    expect(structuredFromText('Breadth students need the approval of the subject coordinator')).toBeNull()
+  })
+})

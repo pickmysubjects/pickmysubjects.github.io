@@ -7,7 +7,12 @@ offerings:
 prerequisites:
   any:
     - all:
-        - manual: 25 credit points in a Level 1 biology subjects
+        - points:
+            min: 25
+            levels:
+              - 1
+            areas:
+              - BIOL
         - manual: 50 credit points in a Level 2 biological sciences subjects
     - manual: Equivalent
 corequisites: none

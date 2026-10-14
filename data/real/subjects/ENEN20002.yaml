@@ -8,7 +8,15 @@ offerings:
     - semester-2
 prerequisites:
   any:
-    - manual: "Admission into or selection of one of the following: MC-CIVENG Master of Civil Engineering MC-ENVENG Master of Environmental Engineering MC-SOFTENG Master of Software Engineering MC-ARCHENG Master of Architectural Engineering"
+    - any:
+        - admission: MC-CIVENG
+          note: "Admission into or selection of one of the following: MC-CIVENG Master of Civil Engineering MC-ENVENG Master of Environmental Engineering MC-SOFTENG Master of Software Engineering MC-ARCHENG Master of Architectural Engineering"
+        - admission: MC-ENVENG
+          note: "Admission into or selection of one of the following: MC-CIVENG Master of Civil Engineering MC-ENVENG Master of Environmental Engineering MC-SOFTENG Master of Software Engineering MC-ARCHENG Master of Architectural Engineering"
+        - admission: MC-SOFTENG
+          note: "Admission into or selection of one of the following: MC-CIVENG Master of Civil Engineering MC-ENVENG Master of Environmental Engineering MC-SOFTENG Master of Software Engineering MC-ARCHENG Master of Architectural Engineering"
+        - admission: MC-ARCHENG
+          note: "Admission into or selection of one of the following: MC-CIVENG Master of Civil Engineering MC-ENVENG Master of Environmental Engineering MC-SOFTENG Master of Software Engineering MC-ARCHENG Master of Architectural Engineering"
     - any:
         - ENGR10005
         - ENVS10001

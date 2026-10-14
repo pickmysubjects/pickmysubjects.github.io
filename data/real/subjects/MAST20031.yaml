@@ -19,7 +19,11 @@ prerequisites:
         - BIOL10003
         - BIOL10004
         - BIOL10005
-    - manual: Selection of the MC-ENVENG Master of Environmental Engineering, Environmental specialisation (formal) in the MC-ENG Master of Engineering
+    - any:
+        - admission: MC-ENVENG
+          note: Selection of the MC-ENVENG Master of Environmental Engineering, Environmental specialisation (formal) in the MC-ENG Master of Engineering
+        - admission: MC-ENG
+          note: Selection of the MC-ENVENG Master of Environmental Engineering, Environmental specialisation (formal) in the MC-ENG Master of Engineering
 corequisites: none
 non_allowed: []
 assessment:

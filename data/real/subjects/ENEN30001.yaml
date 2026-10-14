@@ -11,7 +11,8 @@ prerequisites:
         - MAST20031
         - ENEN20002
         - CVEN20001
-    - manual: Selection of the Environmental specialisation (formal) in the MC-ENG Master of Engineering
+    - admission: MC-ENG
+      note: Selection of the Environmental specialisation (formal) in the MC-ENG Master of Engineering
     - admission: MC-ENVENG
       note: Admission into the MC-ENVENG Master of Environmental Engineering
 corequisites: none

@@ -11,7 +11,8 @@ prerequisites:
         - INFO20005
         - INFO20003
     - all:
-        - manual: Admission into the Human-Computer Interaction specialisation of the MC-IT Master of Information Technology
+        - admission: MC-IT
+          note: Admission into the Human-Computer Interaction specialisation of the MC-IT Master of Information Technology
         - any:
             - INFO90006
             - INFO90004

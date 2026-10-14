@@ -7,7 +7,8 @@ offerings:
     - summer
 prerequisites:
   all:
-    - manual: Have completed at least 200 credit points prior to the commencement of this subject
+    - points:
+        min: 200
     - manual: Be undertaking a Bachelor of Science or Bachelor of Biomedicine degree, with a planned Major in one of the Engineering Majors
     - manual: "Permission from the Subject Coordinator via a selection process Quotas for this subject apply. Students will be selected based on: their weighted average mark and a short expression of interest statement that addresses the importance of this international experience in the context of their degree. The subject co-ordinator will have final approval of all selected students. Applications can be submitted via this webpage: https://q.surveys.unimelb.edu.au/jfe/form/SV_b3o8rViSE48XssC"
 corequisites: none

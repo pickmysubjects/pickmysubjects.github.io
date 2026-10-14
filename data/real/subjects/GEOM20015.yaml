@@ -7,7 +7,11 @@ offerings:
     - semester-2
 prerequisites:
   any:
-    - manual: "Admission into or selection of one of the following: MC-SPATENG Master of Spatial Engineering MC-DINFENG Master of Digital Infrastructure Engineering"
+    - any:
+        - admission: MC-SPATENG
+          note: "Admission into or selection of one of the following: MC-SPATENG Master of Spatial Engineering MC-DINFENG Master of Digital Infrastructure Engineering"
+        - admission: MC-DINFENG
+          note: "Admission into or selection of one of the following: MC-SPATENG Master of Spatial Engineering MC-DINFENG Master of Digital Infrastructure Engineering"
     - manual: VCE mathematics
     - manual: equivalent
 corequisites: none

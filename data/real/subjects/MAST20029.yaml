@@ -21,7 +21,23 @@ prerequisites:
             - MAST10022
             - MAST10013
             - MAST10018
-    - manual: "Admission into one of the following: MC-BIOMENG Master of Biomedical Engineering MC-CHEMENG Master of Chemical Engineering MC-CIVENG Master of Civil Engineering MC-ELECENG Master of Electrical Engineering MC-ENVENG Master of Environmental Engineering MC-MECHENG Master of Mechanical Engineering MC-MTRNENG Master of Mechatronics Engineering MC-ARCHENG Master of Architectural Engineering"
+    - any:
+        - admission: MC-BIOMENG
+          note: "Admission into one of the following: MC-BIOMENG Master of Biomedical Engineering MC-CHEMENG Master of Chemical Engineering MC-CIVENG Master of Civil Engineering MC-ELECENG Master of Electrical Engineering MC-ENVENG Master of Environmental Engineering MC-MECHENG Master of Mechanical Engineering MC-MTRNENG Master of Mechatronics Engineering MC-ARCHENG Master of Architectural Engineering"
+        - admission: MC-CHEMENG
+          note: "Admission into one of the following: MC-BIOMENG Master of Biomedical Engineering MC-CHEMENG Master of Chemical Engineering MC-CIVENG Master of Civil Engineering MC-ELECENG Master of Electrical Engineering MC-ENVENG Master of Environmental Engineering MC-MECHENG Master of Mechanical Engineering MC-MTRNENG Master of Mechatronics Engineering MC-ARCHENG Master of Architectural Engineering"
+        - admission: MC-CIVENG
+          note: "Admission into one of the following: MC-BIOMENG Master of Biomedical Engineering MC-CHEMENG Master of Chemical Engineering MC-CIVENG Master of Civil Engineering MC-ELECENG Master of Electrical Engineering MC-ENVENG Master of Environmental Engineering MC-MECHENG Master of Mechanical Engineering MC-MTRNENG Master of Mechatronics Engineering MC-ARCHENG Master of Architectural Engineering"
+        - admission: MC-ELECENG
+          note: "Admission into one of the following: MC-BIOMENG Master of Biomedical Engineering MC-CHEMENG Master of Chemical Engineering MC-CIVENG Master of Civil Engineering MC-ELECENG Master of Electrical Engineering MC-ENVENG Master of Environmental Engineering MC-MECHENG Master of Mechanical Engineering MC-MTRNENG Master of Mechatronics Engineering MC-ARCHENG Master of Architectural Engineering"
+        - admission: MC-ENVENG
+          note: "Admission into one of the following: MC-BIOMENG Master of Biomedical Engineering MC-CHEMENG Master of Chemical Engineering MC-CIVENG Master of Civil Engineering MC-ELECENG Master of Electrical Engineering MC-ENVENG Master of Environmental Engineering MC-MECHENG Master of Mechanical Engineering MC-MTRNENG Master of Mechatronics Engineering MC-ARCHENG Master of Architectural Engineering"
+        - admission: MC-MECHENG
+          note: "Admission into one of the following: MC-BIOMENG Master of Biomedical Engineering MC-CHEMENG Master of Chemical Engineering MC-CIVENG Master of Civil Engineering MC-ELECENG Master of Electrical Engineering MC-ENVENG Master of Environmental Engineering MC-MECHENG Master of Mechanical Engineering MC-MTRNENG Master of Mechatronics Engineering MC-ARCHENG Master of Architectural Engineering"
+        - admission: MC-MTRNENG
+          note: "Admission into one of the following: MC-BIOMENG Master of Biomedical Engineering MC-CHEMENG Master of Chemical Engineering MC-CIVENG Master of Civil Engineering MC-ELECENG Master of Electrical Engineering MC-ENVENG Master of Environmental Engineering MC-MECHENG Master of Mechanical Engineering MC-MTRNENG Master of Mechatronics Engineering MC-ARCHENG Master of Architectural Engineering"
+        - admission: MC-ARCHENG
+          note: "Admission into one of the following: MC-BIOMENG Master of Biomedical Engineering MC-CHEMENG Master of Chemical Engineering MC-CIVENG Master of Civil Engineering MC-ELECENG Master of Electrical Engineering MC-ENVENG Master of Environmental Engineering MC-MECHENG Master of Mechanical Engineering MC-MTRNENG Master of Mechatronics Engineering MC-ARCHENG Master of Architectural Engineering"
 corequisites: none
 non_allowed:
   - MAST20009

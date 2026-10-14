@@ -351,8 +351,8 @@ function parseBlock(lines: string[], label: string, warnings: string[]): ReqExpr
   if (!sentence) return null
   const admission = readAdmission(sentence)
   if (admission) return admission
-  const disciplines = parseDisciplinePoints(sentence)
-  if (disciplines) return disciplines
+  const structured = structuredFromText(sentence)
+  if (structured) return structured
   const points = /^(\d+(?:\.\d+)?) (?:credit )?points? (?:of|at) level (\d)/i.exec(sentence)
   if (points) return { points: { min: Number(points[1]), level: Number(points[2]) } }
   // "Completion of 100 credit points of study" / "A minimum of 200 credit points of Undergraduate study".
@@ -636,6 +636,11 @@ const DISCIPLINES: [RegExp, string[]][] = [
   [/^physics$/i, ['PHYC']],
   [/^psychology$/i, ['PSYC']],
   [/^environmental (?:studies|science)$/i, ['ENVS', 'EVSC']],
+  [/^biochemistry$/i, ['BCMB']],
+  [/^biotechnology$/i, ['BTCH']],
+  [/^ecology$/i, ['ECOL']],
+  [/^agriculture$/i, ['AGRI']],
+  [/^biomedicine$/i, ['BIOM']],
 ]
 
 /**
@@ -645,9 +650,9 @@ const DISCIPLINES: [RegExp, string[]][] = [
  */
 export function parseDisciplinePoints(sentence: string): ReqExpr | null {
   // Levels only, no field: "A minimum of 25 credit points of Level 2 subjects".
-  const plain = /^(?:completion of )?(?:a minimum of |at least )?(\d+(?:\.\d+)?) credit points? of ((?:level[- ]?\d)(?:\s*(?:,|or|and\/or|and|\/)\s*(?:level[- ]?)?\d)*)\s+subjects?\.?$/i.exec(sentence.trim())
+  const plain = /^(?:completion of )?(?:a minimum of |at least )?(\d+(?:\.\d+)?) credit points? (?:of|in) ((?:level[- ]?\d)(?:\s*(?:,|or|and\/or|and|\/)\s*(?:level[- ]?)?\d)*)\s+(?:subjects?|study)\.?$/i.exec(sentence.trim())
   if (plain) return { points: { min: Number(plain[1]), levels: [...new Set([...(plain[2] as string).matchAll(/\d/g)].map((x) => Number(x[0])))] } }
-  const m = /^(?:completion of )?(?:a minimum of |at least )?(\d+(?:\.\d+)?) credit points? of (?:an? )?((?:level[- ]?\d)(?:\s*(?:,|or|and\/or|and|\/)\s*(?:level[- ]?)?\d)*)\s+(.+?)\s+subjects?\b(.*)$/i.exec(sentence.trim())
+  const m = /^(?:completion of )?(?:a minimum of |at least )?(\d+(?:\.\d+)?) credit points? (?:of|in) (?:an? )?((?:level[- ]?\d)(?:\s*(?:,|or|and\/or|and|\/)\s*(?:level[- ]?)?\d)*)\s+(.+?)(?:\s+subjects?\b(.*))?\.?$/i.exec(sentence.trim())
   if (!m) return null
   const levels = [...(m[2] as string).matchAll(/\d/g)].map((x) => Number(x[0]))
   const names = (m[3] as string).split(/\s*,\s*|\s+or\s+|\s+and\s+|\s*\/\s*/).filter(Boolean)
@@ -658,6 +663,33 @@ export function parseDisciplinePoints(sentence: string): ReqExpr | null {
     areas.push(...hit[1])
   }
   const rule: ReqExpr = { points: { min: Number(m[1]), levels: [...new Set(levels)], areas: [...new Set(areas)] } }
-  const rest = (m[4] as string).replace(/^[\s.;]+|[\s.;]+$/g, '')
+  const rest = (m[4] ?? "").replace(/^[\s.;]+|[\s.;]+$/g, '')
   return rest ? { any: [rule, { manual: sentence.trim() }] } : rule
+}
+
+/**
+ * Free text the Handbook writes in a few fixed ways, as rules we can check:
+ * - selection into (or admission to) a graduate course ("… specialisation in the MC-ENG Master of
+ *   Engineering"): an undergraduate can't meet it, so it's an admission to that course;
+ * - "N points of …, inclusive of M points of …": both, each read on its own;
+ * - "completed at least N credit points prior to …": points of any study;
+ * - points of named levels and fields (parseDisciplinePoints).
+ * Null when it's none of these, so it stays for a human.
+ */
+export function structuredFromText(sentence: string): ReqExpr | null {
+  const text = sentence.trim()
+  const graduate = [...new Set(text.match(/\b(?:MC|GD|D)-[A-Z]{2,}\b/g) ?? [])]
+  if (graduate.length && !/\bB-[A-Z]{2,}\b/.test(text) && /\b(?:selection|admission)\b/i.test(text)) {
+    const options: ReqExpr[] = graduate.map((c) => ({ admission: c, note: text }))
+    return options.length === 1 ? (options[0] as ReqExpr) : { any: options }
+  }
+  const inclusive = /^(.*?credit points?.*?),?\s+(?:inclusive of|including)\s+(.*?credit points?.*)$/i.exec(text)
+  if (inclusive) {
+    const first = structuredFromText(inclusive[1] as string)
+    const second = structuredFromText(inclusive[2] as string)
+    if (first && second) return { all: [first, second] }
+  }
+  const prior = /^(?:have )?(?:completed|completion of) (?:at least |a minimum of )?(\d+(?:\.\d+)?) credit points?(?: of study)?(?: prior to [^.]*)?\.?$/i.exec(text)
+  if (prior) return { points: { min: Number(prior[1]) } }
+  return parseDisciplinePoints(text)
 }

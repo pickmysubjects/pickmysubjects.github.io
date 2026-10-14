@@ -10,7 +10,11 @@ prerequisites:
     - any:
         - BIOL10008
         - BIOL10009
-    - manual: "Admission into or selection of one of the following: MC-SCIBIF Master of Science (Bioinformatics), MC-COMPBIO Master of Computational Biology"
+    - any:
+        - admission: MC-SCIBIF
+          note: "Admission into or selection of one of the following: MC-SCIBIF Master of Science (Bioinformatics), MC-COMPBIO Master of Computational Biology"
+        - admission: MC-COMPBIO
+          note: "Admission into or selection of one of the following: MC-SCIBIF Master of Science (Bioinformatics), MC-COMPBIO Master of Computational Biology"
 corequisites: none
 non_allowed:
   - BIOM20001
