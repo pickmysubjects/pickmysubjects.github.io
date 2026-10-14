@@ -8,7 +8,7 @@ import MajorRoles from '@/components/subject/MajorRoles.vue'
 import SubjectAbout from '@/components/subject/SubjectAbout.vue'
 import DiscussionSummary from '@/components/subject/DiscussionSummary.vue'
 import SubjectFaq from '@/components/subject/SubjectFaq.vue'
-import { PASS_MARK, periodsFor, prerequisiteRoute, referencedSubjects, simplifyFor, termKey, type Period } from '@/engine'
+import { PASS_MARK, isFail, periodsFor, prerequisiteRoute, referencedSubjects, simplifyFor, termKey, type Period } from '@/engine'
 import SubjectLinks from '@/components/majors/SubjectLinks.vue'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
@@ -58,7 +58,7 @@ const category = computed(() => (closedForYou.value ? t.value('browse.closedForY
 const inPlan = computed(() => plan.plannedCodes.value.includes(code.value))
 const taken = computed(() => profile.value.results.some((r) => r.code === code.value))
 // Already passed (from My page): nothing to add; a fail can be planned again as a retake.
-const passed = computed(() => profile.value.results.find((r) => r.code === code.value && (r.mark === undefined || r.mark >= PASS_MARK)))
+const passed = computed(() => profile.value.results.find((r) => r.code === code.value && !isFail(r)))
 const rating = shallowRef(false)
 const thanks = shallowRef(false)
 

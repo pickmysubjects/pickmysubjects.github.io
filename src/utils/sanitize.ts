@@ -16,6 +16,7 @@ export function cleanProfile(x: unknown): Profile {
     .map((r) => ({
       code: r.code as string,
       ...(typeof r.mark === 'number' && r.mark >= 0 && r.mark <= 100 ? { mark: r.mark } : {}),
+      ...(r.failed === true ? { failed: true } : {}),
       ...(typeof r.year === 'number' ? { year: r.year } : {}),
       ...(typeof r.period === 'string' && (PERIODS as readonly string[]).includes(r.period) ? { period: r.period as Profile['results'][number]['period'] } : {}),
     }))

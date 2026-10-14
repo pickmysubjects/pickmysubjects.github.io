@@ -263,6 +263,9 @@ export const zhTW: Messages = {
     eligibilityUnknown: '無法確認是否符合選課條件：{needs}。',
   },
   record: {
+    pfPass: "通過",
+    pfFail: "沒過",
+    failedTwice: "{codes}：已經被當兩次。學校的學業進度規定可能會因此把你標為 at risk，再修之前先找 Stop 1 或課程顧問聊聊。",
     passFail: "只記通過",
     passFailHint: "這門課只記通過/不通過，沒有分數，不算進 WAM。",
     termAvg: "平均 {n}",

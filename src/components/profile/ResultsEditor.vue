@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, shallowRef, useId } from 'vue'
 import { Check, Plus, Search, Star, Trash2 } from 'lucide-vue-next'
-import { PASS_MARK, type Period, type Profile, type Subject } from '@/engine'
+import { isFail, PASS_MARK, type Period, type Profile, type Subject } from '@/engine'
 import { termLabel } from '@/i18n/format'
 import { termsBetween } from '@/utils/pastTerms'
 import { usePlan } from '@/composables/usePlan'
@@ -37,7 +37,9 @@ function add(): void {
     error.value = t.value('record.badCode')
     return
   }
-  if (results.value.some((r) => r.code === c)) {
+  // A retake is a new line (both attempts stay on the transcript and in the WAM); a second
+  // pass of the same subject is a mistake.
+  if (results.value.some((r) => r.code === c && !isFail(r))) {
     error.value = t.value('record.duplicate', { code: c })
     return
   }
@@ -49,11 +51,11 @@ function add(): void {
   error.value = ''
 }
 
-function setMark(c: string, event: Event): void {
+function setMark(i: number, event: Event): void {
   const input = event.target as HTMLInputElement
   const m = input.value === '' ? undefined : Math.max(0, Math.min(100, Number(input.value)))
   // Keep whatever else the row holds (the semester it was taken).
-  results.value = results.value.map((r) => (r.code === c ? { ...r, mark: m } : r))
+  results.value = results.value.map((r, j) => (j === i ? { ...r, mark: m } : r))
   // If the stored mark didn't change (e.g. 100 → 150 → 100), Vue won't repaint the box.
   input.value = m === undefined ? '' : String(m)
 }
@@ -75,10 +77,10 @@ const TERMS = computed(() => {
   return termsBetween(first, order(last) > order(floor) ? last : floor)
 })
 const termValue = (r: Profile['results'][number]) => (r.year && r.period ? `${r.year}|${r.period}` : '')
-function setTerm(c: string, event: Event): void {
+function setTerm(i: number, event: Event): void {
   const [y, p] = (event.target as HTMLSelectElement).value.split('|')
-  results.value = results.value.map((r) => {
-    if (r.code !== c) return r
+  results.value = results.value.map((r, j) => {
+    if (j !== i) return r
     const { year: _y, period: _p, ...rest } = r
     return y && p ? { ...rest, year: Number(y), period: p as Period } : rest
   })
@@ -96,10 +98,10 @@ function gradeOf(m: number): string {
 
 const PERIOD_ORDER: Record<string, number> = { summer: 0, 'semester-1': 1, winter: 2, 'semester-2': 3 }
 const groups = computed(() => {
-  const by = new Map<string, Profile['results']>()
-  for (const r of results.value) {
+  const by = new Map<string, (Profile['results'][number] & { i: number })[]>()
+  for (const [i, r] of results.value.entries()) {
     const key = r.year && r.period ? `${r.year}|${r.period}` : ''
-    by.set(key, [...(by.get(key) ?? []), r])
+    by.set(key, [...(by.get(key) ?? []), { ...r, i }])
   }
   const sortKey = (k: string) => {
     if (!k) return Infinity
@@ -120,8 +122,23 @@ const groups = computed(() => {
     })
 })
 
-function remove(c: string): void {
-  results.value = results.value.filter((r) => r.code !== c)
+function setFailed(i: number, failed: boolean): void {
+  results.value = results.value.map((r, j) => {
+    if (j !== i) return r
+    const { failed: _f, ...rest } = r
+    return failed ? { ...rest, failed: true } : rest
+  })
+}
+
+// The University's academic progress rules flag a subject failed twice; worth saying plainly.
+const failedTwice = computed(() => {
+  const n = new Map<string, number>()
+  for (const r of results.value) if (isFail(r)) n.set(r.code, (n.get(r.code) ?? 0) + 1)
+  return [...n].filter(([, k]) => k >= 2).map(([c]) => c)
+})
+
+function remove(i: number): void {
+  results.value = results.value.filter((_, j) => j !== i)
 }
 
 </script>
@@ -155,20 +172,22 @@ function remove(c: string): void {
           <span v-if="g.avg !== null" class="group-avg">{{ t('record.termAvg', { n: g.avg }) }}</span>
         </h3>
         <ul class="rows">
-          <li v-for="r in g.rows" :key="r.code" class="row" :class="{ 'row-fail': r.mark !== undefined && r.mark < PASS_MARK }">
+          <li v-for="r in g.rows" :key="r.i" class="row" :class="{ 'row-fail': isFail(r) }">
             <div class="row-main">
               <span class="code">{{ r.code }}</span>
               <span class="title">{{ titleOf(r.code) }}</span>
             </div>
             <label class="when">
               <span class="visually-hidden">{{ t('record.termFor', { code: r.code }) }}</span>
-              <select class="when-select" :value="termValue(r)" @change="setTerm(r.code, $event)">
+              <select class="when-select" :value="termValue(r)" @change="setTerm(r.i, $event)">
                 <option value="">{{ t('record.termUnknown') }}</option>
                 <option v-for="x in TERMS" :key="`${x.year}|${x.period}`" :value="`${x.year}|${x.period}`">{{ termLabel(t, x) }}</option>
               </select>
             </label>
-            <div v-if="subjects[r.code]?.passFail" class="mark-cell">
-              <span class="pf" :title="t('record.passFailHint')">{{ t('record.passFail') }}</span>
+            <!-- Pass/fail: no mark, just whether it was passed. -->
+            <div v-if="subjects[r.code]?.passFail" class="mark-cell pf-seg" role="group" :aria-label="t('record.passFailHint')" :title="t('record.passFailHint')">
+              <button type="button" :aria-pressed="!r.failed" @click="setFailed(r.i, false)">{{ t('record.pfPass') }}</button>
+              <button type="button" :aria-pressed="r.failed === true" @click="setFailed(r.i, true)">{{ t('record.pfFail') }}</button>
             </div>
             <div v-else class="mark-cell">
               <input
@@ -179,14 +198,14 @@ function remove(c: string): void {
                 :placeholder="t('record.markShort')"
                 :value="r.mark ?? ''"
                 :aria-label="t('record.markFor', { code: r.code })"
-                @change="setMark(r.code, $event)"
+                @change="setMark(r.i, $event)"
               />
               <span v-if="r.mark !== undefined" class="grade" :class="`grade-${gradeOf(r.mark).toLowerCase()}`">{{ gradeOf(r.mark) }}</span>
             </div>
             <div class="row-actions">
               <span v-if="rated.has(r.code)" class="rated"><Check :size="14" aria-hidden="true" /> {{ t('rating.rated') }}</span>
               <button v-else class="act act-rate" type="button" @click="rating = r.code"><Star :size="14" aria-hidden="true" /> <span class="act-label">{{ t('rating.rate') }}</span></button>
-              <button class="act act-remove" type="button" :aria-label="`${t('record.remove')} ${r.code}`" :title="t('record.remove')" @click="remove(r.code)">
+              <button class="act act-remove" type="button" :aria-label="`${t('record.remove')} ${r.code}`" :title="t('record.remove')" @click="remove(r.i)">
                 <Trash2 :size="15" aria-hidden="true" />
               </button>
             </div>
@@ -194,8 +213,9 @@ function remove(c: string): void {
         </ul>
       </section>
     </div>
-    <p v-if="results.some((x) => x.mark !== undefined && x.mark < PASS_MARK)" class="fail-hint">
+    <p v-if="results.some((x) => isFail(x))" class="fail-hint">
       {{ t('record.failHint') }}
+      <template v-if="failedTwice.length">{{ t('record.failedTwice', { codes: failedTwice.join(', ') }) }}</template>
       <a :href="link('guide')">{{ t('guide.failTitle') }}</a>
     </p>
     <p v-if="thanks" class="thanks" role="status">{{ t('rating.sent') }}</p>
@@ -507,13 +527,29 @@ function remove(c: string): void {
     min-height: 40px;
   }
 }
-.pf {
-  padding: 4px 10px;
-  border-radius: 999px;
+.pf-seg {
+  gap: 2px;
+  padding: 3px;
+  border-radius: 10px;
   background: color-mix(in srgb, var(--ink) 6%, transparent);
-  font-size: 0.75rem;
-  font-weight: 600;
+}
+
+.pf-seg button {
+  min-height: 30px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 8px;
+  background: none;
+  font: inherit;
+  font-size: 0.8125rem;
   color: var(--ink-soft);
-  white-space: nowrap;
+  cursor: pointer;
+}
+
+.pf-seg button[aria-pressed='true'] {
+  font-weight: 650;
+  color: var(--ink);
+  background: var(--glass-fill-hover);
+  box-shadow: var(--glass-shadow);
 }
 </style>

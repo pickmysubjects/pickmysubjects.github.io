@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { computeWam, recommend, type Profile } from '../src/engine/recommend'
+import { computeWam, isFail, passedCodes, recommend, type Profile } from '../src/engine/recommend'
 import { buildDataset } from '../scripts/dataset'
 import { dataset, demo, subject } from './helpers'
 
@@ -261,5 +261,20 @@ describe('WAM with a pass/fail subject', () => {
       subject({ code: 'AAAA10002', points: 12.5, pass_fail: true }),
     ])
     expect(computeWam([{ code: 'AAAA10001', mark: 80 }, { code: 'AAAA10002', mark: 50 }], data)).toBe(80)
+  })
+})
+
+describe('fails and retakes', () => {
+  it('counts both attempts of a retaken subject in the WAM, and the pass as done', () => {
+    const data = dataset([subject({ code: 'AAAA10001', points: 12.5 }), subject({ code: 'AAAA10002', points: 12.5 })])
+    const results = [{ code: 'AAAA10001', mark: 40 }, { code: 'AAAA10001', mark: 70 }, { code: 'AAAA10002', mark: 70 }]
+    expect(computeWam(results, data)).toBe(60)
+    expect(passedCodes(results)).toEqual(['AAAA10001', 'AAAA10002'])
+  })
+
+  it('treats a pass/fail subject marked not passed as a fail', () => {
+    expect(isFail({ failed: true })).toBe(true)
+    expect(isFail({})).toBe(false)
+    expect(passedCodes([{ code: 'AAAA10001', failed: true }])).toEqual([])
   })
 })

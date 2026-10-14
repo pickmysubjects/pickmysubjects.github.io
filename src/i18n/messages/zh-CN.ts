@@ -263,6 +263,9 @@ export const zhCN: Messages = {
     eligibilityUnknown: '无法确认是否满足选课条件：{needs}。',
   },
   record: {
+    pfPass: "通过",
+    pfFail: "没过",
+    failedTwice: "{codes}：已经挂了两次。学校的学业进度规定可能会因此把你标为 at risk，再修之前先找 Stop 1 或课程顾问聊聊。",
     passFail: "只记通过",
     passFailHint: "这门课只记通过/不通过，没有分数，不算进 WAM。",
     termAvg: "平均 {n}",

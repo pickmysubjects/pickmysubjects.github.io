@@ -266,6 +266,9 @@ export const en = {
     eligibilityUnknown: 'Eligibility not confirmed: {needs}.',
   },
   record: {
+    pfPass: "Passed",
+    pfFail: "Not passed",
+    failedTwice: "{codes}: failed twice. The University's academic progress rules can flag this (“at risk”); talk to Stop 1 or your course adviser before taking it again.",
     passFail: "Pass/fail",
     passFailHint: "Marked pass/fail only, so it has no mark and doesn’t count in your WAM.",
     termAvg: "avg {n}",

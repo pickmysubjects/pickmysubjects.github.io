@@ -263,6 +263,9 @@ export const ms: Messages = {
     eligibilityUnknown: 'Kelayakan belum disahkan: {needs}.',
   },
   record: {
+    pfPass: "Lulus",
+    pfFail: "Tidak lulus",
+    failedTwice: "{codes}: gagal dua kali. Peraturan kemajuan akademik universiti boleh menandakan ini sebagai “at risk”; berbincang dengan Stop 1 atau penasihat kursus sebelum mengambilnya lagi.",
     passFail: "Lulus/gagal",
     passFailHint: "Dinilai lulus/gagal sahaja, jadi tiada markah dan tidak dikira dalam WAM.",
     termAvg: "purata {n}",

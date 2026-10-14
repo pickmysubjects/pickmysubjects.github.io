@@ -18,7 +18,8 @@ export interface Profile {
    * Completed subjects; marks are optional (0–100), and so is when it was taken (shown in its
    * semester on the plan board; nothing is worked out from it).
    */
-  results: { code: string; mark?: number; year?: number; period?: Period }[]
+  // `failed`: a pass/fail subject not passed (it has no mark to show it).
+  results: { code: string; mark?: number; failed?: boolean; year?: number; period?: Period }[]
   /** Self-rated skill levels, 1 (weak) – 5 (strong). Missing = not rated. */
   skills: Partial<Record<Skill, number>>
   /** Topic tags the student is interested in, e.g. "machine-learning". */
@@ -153,8 +154,13 @@ export const PASS_MARK = 50
  * Subjects that count as done: passed, or completed without a mark entered.
  * A failed subject (mark below 50) can be planned again.
  */
+/** Not passed: a mark under 50, or a pass/fail subject marked as not passed. */
+export function isFail(r: { mark?: number; failed?: boolean }): boolean {
+  return r.failed === true || (r.mark !== undefined && r.mark < PASS_MARK)
+}
+
 export function passedCodes(results: Profile['results']): string[] {
-  return results.filter((r) => r.mark === undefined || r.mark >= PASS_MARK).map((r) => r.code)
+  return results.filter((r) => !isFail(r)).map((r) => r.code)
 }
 
 /** Credit-point weighted average of marked results, fails included (UniMelb WAM is points-weighted). */

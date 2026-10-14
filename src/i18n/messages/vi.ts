@@ -263,6 +263,9 @@ export const vi: Messages = {
     eligibilityUnknown: 'Chưa xác nhận được điều kiện học: {needs}.',
   },
   record: {
+    pfPass: "Đạt",
+    pfFail: "Không đạt",
+    failedTwice: "{codes}: đã trượt hai lần. Quy định tiến độ học tập của trường có thể xếp bạn vào diện “at risk”; hãy hỏi Stop 1 hoặc cố vấn ngành trước khi học lại.",
     passFail: "Đạt/Không đạt",
     passFailHint: "Môn này chỉ chấm Đạt/Không đạt nên không có điểm và không tính vào WAM.",
     termAvg: "TB {n}",

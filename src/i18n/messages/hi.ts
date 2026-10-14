@@ -263,6 +263,9 @@ export const hi: Messages = {
     eligibilityUnknown: 'पात्रता की पुष्टि नहीं: {needs}।',
   },
   record: {
+    pfPass: "पास",
+    pfFail: "पास नहीं",
+    failedTwice: "{codes}: दो बार फ़ेल। यूनिवर्सिटी के अकादमिक प्रगति नियमों में इसे “at risk” माना जा सकता है; दोबारा लेने से पहले Stop 1 या कोर्स सलाहकार से बात करें।",
     passFail: "पास/फ़ेल",
     passFailHint: "सिर्फ़ पास/फ़ेल से आँका जाता है, इसलिए अंक नहीं और WAM में नहीं गिना जाता।",
     termAvg: "औसत {n}",

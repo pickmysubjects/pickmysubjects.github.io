@@ -263,6 +263,9 @@ export const ja: Messages = {
     eligibilityUnknown: '履修条件を確認できません：{needs}。',
   },
   record: {
+    pfPass: "合格",
+    pfFail: "不合格",
+    failedTwice: "{codes}：2 回不合格です。大学の学業進捗の規定で “at risk” とされることがあります。もう一度取る前に Stop 1 か履修アドバイザーに相談しましょう。",
     passFail: "合否のみ",
     passFailHint: "合否のみで評価されるため点数がなく、WAM に入りません。",
     termAvg: "平均 {n}",

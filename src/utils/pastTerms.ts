@@ -1,4 +1,4 @@
-import { PASS_MARK, termKey, type Period, type Profile } from '@/engine'
+import { isFail, termKey, type Period, type Profile } from '@/engine'
 
 export interface PastResult {
   code: string
@@ -23,7 +23,7 @@ export function pastTerms(results: Profile['results']): { terms: PastTerm[]; und
   const byTerm = new Map<number, PastTerm>()
   const undated: PastResult[] = []
   for (const r of results) {
-    const item: PastResult = { code: r.code, mark: r.mark, failed: r.mark !== undefined && r.mark < PASS_MARK }
+    const item: PastResult = { code: r.code, mark: r.mark, failed: isFail(r) }
     const valid = Number.isInteger(r.year) && (r.year as number) >= 1990 && (r.year as number) <= 2100 && PERIODS.includes(r.period as Period)
     if (!valid) {
       undated.push(item)

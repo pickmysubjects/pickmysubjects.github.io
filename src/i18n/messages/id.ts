@@ -263,6 +263,9 @@ export const id: Messages = {
     eligibilityUnknown: 'Kelayakan belum bisa dipastikan: {needs}.',
   },
   record: {
+    pfPass: "Lulus",
+    pfFail: "Tidak lulus",
+    failedTwice: "{codes}: gagal dua kali. Aturan kemajuan akademik universitas bisa menandai ini sebagai “at risk”; bicarakan dengan Stop 1 atau penasihat program sebelum mengambilnya lagi.",
     passFail: "Lulus/gagal",
     passFailHint: "Hanya dinilai lulus/gagal, jadi tidak ada nilai angka dan tidak masuk WAM.",
     termAvg: "rata-rata {n}",

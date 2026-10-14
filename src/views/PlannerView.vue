@@ -11,7 +11,7 @@ import PlanHowBuilt from '@/components/planner/PlanHowBuilt.vue'
 import PlanIssues from '@/components/planner/PlanIssues.vue'
 import PlanPrint from '@/components/planner/PlanPrint.vue'
 import Interp from '@/components/Interp.vue'
-import { PASS_MARK, planRoles, type PlanTerm } from '@/engine'
+import { PASS_MARK, isFail, planRoles, type PlanTerm } from '@/engine'
 import { Printer, Share2 } from 'lucide-vue-next'
 import { decodePlan, encodePlan } from '@/utils/sharePlan'
 import { go, useView } from '@/composables/useView'
@@ -82,7 +82,8 @@ const unavoidable = computed(() =>
 // Subjects the student failed: where the plan repeats them, or that it doesn't (an elective can be swapped).
 const failed = computed(() =>
   profile.value.results
-    .filter((r) => r.mark !== undefined && r.mark < PASS_MARK)
+    // Passed on a later attempt: nothing left to say about the earlier fail.
+    .filter((r) => isFail(r) && !profile.value.results.some((x) => x.code === r.code && !isFail(x)))
     .map((r) => {
       const at = plan.terms.value.find((term) => term.subjects.includes(r.code))
       return { code: r.code, term: at ? termLabel(t.value, at) : null }
@@ -154,7 +155,8 @@ function markDone(code: string, mark: number | undefined): void {
   const where = peekTerm.value
   if (!where) return
   const { year, period } = where.term
-  setResults([...profile.value.results.filter((r) => r.code !== code), { code, year, period, ...(mark === undefined ? {} : { mark }) }])
+  // An earlier fail stays: both attempts are on the transcript and count in the WAM.
+  setResults([...profile.value.results.filter((r) => r.code !== code || isFail(r)), { code, year, period, ...(mark === undefined ? {} : { mark }) }])
   plan.removeSubject(where.index, code)
 }
 </script>
