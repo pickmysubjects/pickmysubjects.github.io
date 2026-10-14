@@ -33,6 +33,7 @@ export const zhTW: Messages = {
     title: '把你的學位畫成一張路線圖',
     lede: "依學位規則排好的每學期課表，拖動卡片就能調整。",
     addTerm: '增加一個學期',
+    recordOverlap: "「我的記錄」已經填到 {term}，和這個方案的學期重疊了。重新排一下，就會從下一學期開始排。",
     doneAsk: "{term} 已經修完了？填上成績（選填），會自動記進「我的記錄」。",
     doneButton: "記為已修",
     addShortTerm: '新增夏季或冬季學期',

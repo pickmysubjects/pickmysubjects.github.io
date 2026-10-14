@@ -33,6 +33,7 @@ export const vi: Messages = {
     title: 'Tấm bản đồ lộ trình cho tấm bằng của bạn',
     lede: "Kế hoạch theo từng học kỳ, đúng quy định của bằng; kéo thẻ để thay đổi.",
     addTerm: 'Thêm học kỳ',
+    recordOverlap: "Hồ sơ của tôi đã đến {term}, trùng với các học kỳ của kế hoạch. Lập lại để bắt đầu từ học kỳ sau đó.",
     doneAsk: "Đã học xong ở {term}? Nhập điểm (không bắt buộc), môn sẽ vào Hồ sơ của tôi.",
     doneButton: "Đánh dấu đã học",
     addShortTerm: 'Thêm kỳ hè hoặc kỳ đông',

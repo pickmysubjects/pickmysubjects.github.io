@@ -33,6 +33,7 @@ export const zhCN: Messages = {
     title: '把你的学位画成一张路线图',
     lede: "按学位规则排好的每学期课表，拖动卡片就能调整。",
     addTerm: '增加一个学期',
+    recordOverlap: "“我的记录”已经填到 {term}，和这个方案的学期重叠了。重新排一下，就会从下一学期开始排。",
     doneAsk: "{term} 已经修完了？填上成绩（选填），会自动记进“我的记录”。",
     doneButton: "记为已修",
     addShortTerm: '添加夏季或冬季学期',

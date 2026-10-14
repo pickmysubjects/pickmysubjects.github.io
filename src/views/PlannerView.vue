@@ -159,6 +159,17 @@ function markDone(code: string, mark: number | undefined): void {
   setResults([...profile.value.results.filter((r) => r.code !== code || isFail(r)), { code, year, period, ...(mark === undefined ? {} : { mark }) }])
   plan.removeSubject(where.index, code)
 }
+// The latest semester on My record, when it's at or after the plan's first one: the plan was
+// made before those results were added, so rebuilding starts it after them.
+const recordOverlap = computed(() => {
+  const first = plan.terms.value[0]
+  if (!first) return null
+  const order = (x: { year: number; period: string }) => x.year * 10 + ['summer', 'semester-1', 'winter', 'semester-2'].indexOf(x.period)
+  const dated = profile.value.results.filter((r) => r.year !== undefined && r.period !== undefined) as { year: number; period: PlanTerm['period'] }[]
+  if (!dated.length) return null
+  const latest = dated.reduce((a, b) => (order(b) > order(a) ? b : a))
+  return order(latest) >= order(first) ? termLabel(t.value, latest) : null
+})
 </script>
 
 <template>
@@ -209,6 +220,12 @@ function markDone(code: string, mark: number | undefined): void {
           </button>
         </div>
       </section>
+
+      <!-- The record now reaches into the plan's own semesters (filled in after the plan was made). -->
+      <p v-if="recordOverlap" class="started">
+        {{ t('plan.recordOverlap', { term: recordOverlap }) }}
+        <button class="button button-quiet" type="button" @click="plan.generate()">{{ t('plan.rebuild') }}</button>
+      </p>
 
       <p v-if="profileEmpty" class="started">
         <Interp :text="t('plan.fillRecord')">
