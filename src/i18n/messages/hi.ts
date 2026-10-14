@@ -266,6 +266,8 @@ export const hi: Messages = {
     eligibilityUnknown: 'पात्रता की पुष्टि नहीं: {needs}।',
   },
   record: {
+    skillFromMarks: "आपके अंक ({codes}: औसत {avg}) “{level}” जैसे लगते हैं।",
+    useIt: "यही रखें",
     pfPass: "पास",
     pfFail: "पास नहीं",
     failedTwice: "{codes}: दो बार फ़ेल। यूनिवर्सिटी के अकादमिक प्रगति नियमों में इसे “at risk” माना जा सकता है; दोबारा लेने से पहले Stop 1 या कोर्स सलाहकार से बात करें।",

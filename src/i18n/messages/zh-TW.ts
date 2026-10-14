@@ -266,6 +266,8 @@ export const zhTW: Messages = {
     eligibilityUnknown: '無法確認是否符合選課條件：{needs}。',
   },
   record: {
+    skillFromMarks: "按你的成績（{codes}，平均 {avg}）像是「{level}」。",
+    useIt: "用這個",
     pfPass: "通過",
     pfFail: "沒過",
     failedTwice: "{codes}：已經被當兩次。學校的學業進度規定可能會因此把你標為 at risk，再修之前先找 Stop 1 或課程顧問聊聊。",

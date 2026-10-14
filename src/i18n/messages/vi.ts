@@ -266,6 +266,8 @@ export const vi: Messages = {
     eligibilityUnknown: 'Chưa xác nhận được điều kiện học: {needs}.',
   },
   record: {
+    skillFromMarks: "Theo điểm của bạn ({codes}, trung bình {avg}) thì giống “{level}”.",
+    useIt: "Dùng mức này",
     pfPass: "Đạt",
     pfFail: "Không đạt",
     failedTwice: "{codes}: đã trượt hai lần. Quy định tiến độ học tập của trường có thể xếp bạn vào diện “at risk”; hãy hỏi Stop 1 hoặc cố vấn ngành trước khi học lại.",

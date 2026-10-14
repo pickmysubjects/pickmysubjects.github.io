@@ -269,6 +269,8 @@ export const en = {
     eligibilityUnknown: 'Eligibility not confirmed: {needs}.',
   },
   record: {
+    skillFromMarks: "Your marks ({codes}: average {avg}) look like “{level}”.",
+    useIt: "Use this",
     pfPass: "Passed",
     pfFail: "Not passed",
     failedTwice: "{codes}: failed twice. The University's academic progress rules can flag this (“at risk”); talk to Stop 1 or your course adviser before taking it again.",

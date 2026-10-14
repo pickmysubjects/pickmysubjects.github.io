@@ -266,6 +266,8 @@ export const ms: Messages = {
     eligibilityUnknown: 'Kelayakan belum disahkan: {needs}.',
   },
   record: {
+    skillFromMarks: "Markah anda ({codes}: purata {avg}) nampak seperti “{level}”.",
+    useIt: "Guna ini",
     pfPass: "Lulus",
     pfFail: "Tidak lulus",
     failedTwice: "{codes}: gagal dua kali. Peraturan kemajuan akademik universiti boleh menandakan ini sebagai “at risk”; berbincang dengan Stop 1 atau penasihat kursus sebelum mengambilnya lagi.",

@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { computed, shallowRef } from 'vue'
 import { courseFocus, type Skill } from '@/engine'
+import { skillsFromMarks } from '@/engine/skills'
+import { useProfile } from '@/composables/useProfile'
 import { useDataset } from '@/composables/useDataset'
 import { useI18n } from '@/i18n'
 
@@ -9,16 +11,27 @@ const { t } = useI18n()
 const { data, course } = useDataset()
 // The skills the student's own degree leans on come first (business for B-COM, programming for B-SCI).
 const order = computed(() => courseFocus(data.value, course.value).skills)
+// What the student's marks say, per skill: shown where it differs from their own answer.
+const { profile } = useProfile()
+const fromMarks = computed(() => skillsFromMarks(profile.value.results, data.value))
+const suggestion = (k: Skill) => {
+  const s = fromMarks.value[k]
+  return s && s.level !== skills.value[k] ? s : null
+}
 // The first few, plus any already rated; the rest a tap away.
 const FIRST = 8
 const showAll = shallowRef(false)
-const shown = computed(() => (showAll.value ? order.value : order.value.filter((k, i) => i < FIRST || skills.value[k] !== undefined)))
+const shown = computed(() => (showAll.value ? order.value : order.value.filter((k, i) => i < FIRST || skills.value[k] !== undefined || suggestion(k) !== null)))
 const hidden = computed(() => order.value.length - shown.value.length)
 
 // Five steps, like a course survey: 1 = finds it hard … 5 = strong. Blank means "not sure".
 const LEVELS = [1, 2, 3, 4, 5] as const
 // The usual mark in that kind of subject for each level (UniMelb bands).
 const RANGES: Record<number, string> = { 1: '<60', 2: '60–69', 3: '70–74', 4: '75–79', 5: '80+' }
+
+function useSuggestion(skill: Skill, level: number): void {
+  skills.value = { ...skills.value, [skill]: level }
+}
 
 function pick(skill: Skill, level: number): void {
   const next = { ...skills.value }
@@ -58,6 +71,10 @@ function pick(skill: Skill, level: number): void {
             <span class="step-num" aria-hidden="true">{{ n }}</span>
           </button>
         </span>
+        <p v-if="suggestion(s)" class="suggest">
+          {{ t('record.skillFromMarks', { codes: suggestion(s)!.codes.slice(0, 3).join(', '), avg: suggestion(s)!.avg, level: t(`record.level.${suggestion(s)!.level}`) }) }}
+          <button type="button" class="suggest-use" @click="useSuggestion(s, suggestion(s)!.level)">{{ t('record.useIt') }}</button>
+        </p>
       </li>
     </ul>
     <button v-if="hidden > 0 || showAll" type="button" class="more" @click="showAll = !showAll">
@@ -96,6 +113,7 @@ function pick(skill: Skill, level: number): void {
 
 .skill {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   gap: 10px;
@@ -214,5 +232,28 @@ function pick(skill: Skill, level: number): void {
   margin-right: 4px;
   font-weight: 650;
   color: var(--ink);
+}
+.suggest {
+  flex: 1 0 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+  margin: 2px 0 0;
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
+}
+
+.suggest-use {
+  min-height: 28px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  font: inherit;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--accent);
+  cursor: pointer;
 }
 </style>

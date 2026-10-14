@@ -106,3 +106,34 @@ function markedBy(s: Subject): Skill[] {
   if (share((t) => t.group === true) >= GROUP_SHARE) out.push('teamwork')
   return out
 }
+
+/** A level (1–5) from a usual mark, on the same bands My record shows (UniMelb grades). */
+export function levelFromMark(mark: number): number {
+  return mark >= 80 ? 5 : mark >= 75 ? 4 : mark >= 70 ? 3 : mark >= 60 ? 2 : 1
+}
+
+/**
+ * What the student's own marks say about each skill: the average mark in subjects that use it
+ * (a retake counts as the average of its attempts; pass/fail subjects have no mark), with two or
+ * more marked subjects. Offered as a suggestion only: rewriting the self-rating from marks made
+ * the mark predictions worse when tested.
+ */
+export function skillsFromMarks(
+  results: { code: string; mark?: number }[],
+  data: Dataset,
+): Partial<Record<Skill, { level: number; avg: number; codes: string[] }>> {
+  const attempts = new Map<string, number[]>()
+  for (const r of results) if (r.mark !== undefined && data.subjects[r.code] && !data.subjects[r.code]!.passFail) attempts.set(r.code, [...(attempts.get(r.code) ?? []), r.mark])
+  const bySkill = new Map<Skill, { code: string; mark: number }[]>()
+  for (const [code, ms] of attempts) {
+    const mark = ms.reduce((a, b) => a + b, 0) / ms.length
+    for (const k of skillsOf(data.subjects[code]!, data)) bySkill.set(k, [...(bySkill.get(k) ?? []), { code, mark }])
+  }
+  const out: Partial<Record<Skill, { level: number; avg: number; codes: string[] }>> = {}
+  for (const [k, xs] of bySkill) {
+    if (xs.length < 2) continue
+    const avg = Math.round(xs.reduce((a, x) => a + x.mark, 0) / xs.length)
+    out[k] = { level: levelFromMark(avg), avg, codes: xs.map((x) => x.code) }
+  }
+  return out
+}

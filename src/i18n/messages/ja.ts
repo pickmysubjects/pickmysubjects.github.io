@@ -266,6 +266,8 @@ export const ja: Messages = {
     eligibilityUnknown: '履修条件を確認できません：{needs}。',
   },
   record: {
+    skillFromMarks: "成績（{codes}、平均 {avg}）からは「{level}」に見えます。",
+    useIt: "これにする",
     pfPass: "合格",
     pfFail: "不合格",
     failedTwice: "{codes}：2 回不合格です。大学の学業進捗の規定で “at risk” とされることがあります。もう一度取る前に Stop 1 か履修アドバイザーに相談しましょう。",

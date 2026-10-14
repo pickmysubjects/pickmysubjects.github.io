@@ -297,3 +297,18 @@ describe('predicted marks after a retake', () => {
     expect(range([{ code: 'AAAA10001', mark: 70 }], 'CCCC10001')?.key).toBe('predictedWam')
   })
 })
+
+describe('skills from marks', () => {
+  it('suggests a level from the average mark in subjects using a skill, with two or more', async () => {
+    const { skillsFromMarks } = await import('../src/engine/skills')
+    const data = dataset([
+      subject({ code: 'AAAA10001', skills: ['programming'] }),
+      subject({ code: 'AAAA10002', skills: ['programming'] }),
+      subject({ code: 'BBBB10001', skills: ['maths'] }),
+    ])
+    const s = skillsFromMarks([{ code: 'AAAA10001', mark: 82 }, { code: 'AAAA10002', mark: 40 }, { code: 'AAAA10002', mark: 78 }, { code: 'BBBB10001', mark: 90 }], data)
+    // 82, and the retake's attempts averaged (40, 78 → 59): about 71, the 70–74 band.
+    expect(s.programming).toMatchObject({ level: 3, avg: 71 })
+    expect(s.maths).toBeUndefined()
+  })
+})

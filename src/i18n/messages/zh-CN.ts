@@ -266,6 +266,8 @@ export const zhCN: Messages = {
     eligibilityUnknown: '无法确认是否满足选课条件：{needs}。',
   },
   record: {
+    skillFromMarks: "按你的成绩（{codes}，平均 {avg}）像是“{level}”。",
+    useIt: "用这个",
     pfPass: "通过",
     pfFail: "没过",
     failedTwice: "{codes}：已经挂了两次。学校的学业进度规定可能会因此把你标为 at risk，再修之前先找 Stop 1 或课程顾问聊聊。",

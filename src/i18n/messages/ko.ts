@@ -266,6 +266,8 @@ export const ko: Messages = {
     eligibilityUnknown: '수강 자격을 확인할 수 없습니다: {needs}.',
   },
   record: {
+    skillFromMarks: "성적({codes}, 평균 {avg})으로 보면 '{level}'이에요.",
+    useIt: "이걸로",
     pfPass: "통과",
     pfFail: "미통과",
     failedTwice: "{codes}: 두 번 낙제했어요. 학교의 학업 진도 규정에 따라 'at risk'로 분류될 수 있어요. 다시 듣기 전에 Stop 1이나 과정 상담자와 이야기해 보세요.",

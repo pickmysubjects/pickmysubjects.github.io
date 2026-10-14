@@ -266,6 +266,8 @@ export const id: Messages = {
     eligibilityUnknown: 'Kelayakan belum bisa dipastikan: {needs}.',
   },
   record: {
+    skillFromMarks: "Nilaimu ({codes}: rata-rata {avg}) terlihat seperti “{level}”.",
+    useIt: "Pakai ini",
     pfPass: "Lulus",
     pfFail: "Tidak lulus",
     failedTwice: "{codes}: gagal dua kali. Aturan kemajuan akademik universitas bisa menandai ini sebagai “at risk”; bicarakan dengan Stop 1 atau penasihat program sebelum mengambilnya lagi.",
