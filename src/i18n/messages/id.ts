@@ -34,6 +34,8 @@ export const id: Messages = {
     title: 'Gelarmu dalam satu peta rute',
     lede: "Rencana per semester yang mengikuti aturan gelarmu; seret kartu untuk mengubahnya.",
     addTerm: 'Tambah semester',
+    doneAsk: "Sudah selesai di {term}? Isi nilai (opsional), lalu masuk ke Catatan saya.",
+    doneButton: "Tandai selesai",
     addShortTerm: 'Tambah semester musim panas atau dingin',
     removeThisTerm: 'Hapus semester ini',
     removeTerm: 'Hapus semester kosong terakhir',

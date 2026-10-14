@@ -76,6 +76,13 @@ export function nextSemester(today: Date): { year: number; period: Period } {
   return { year: year + 1, period: 'semester-1' }
 }
 
+/** Whether a term has begun by this date (roughly: summer January, S1 March, winter late June, S2 late July). */
+export function termStarted(term: { year: number; period: Period }, today: Date): boolean {
+  const START: Record<Period, [number, number]> = { summer: [0, 1], 'semester-1': [2, 1], winter: [5, 20], 'semester-2': [6, 20] }
+  const [month, day] = START[term.period]
+  return today >= new Date(term.year, month, day)
+}
+
 /**
  * The semester under way on this date (teaching through exams), or null between semesters.
  * Semester 1 runs roughly March–June, semester 2 August–November.

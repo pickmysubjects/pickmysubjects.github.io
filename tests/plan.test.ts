@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { offeredIn } from '../src/engine/availability'
 import { checkCourse } from '../src/engine/courseRules'
 import type { Plan } from '../src/engine/plan'
-import { planStart, standardTerms } from '../src/engine/plan'
+import { planStart, standardTerms, termStarted } from '../src/engine/plan'
 import { checkTerms, previewAdd } from '../src/engine/planCheck'
 import { buildDataset } from '../scripts/dataset'
 import { dataset, demo, subject } from './helpers'
@@ -309,5 +309,14 @@ describe('discontinued subjects', () => {
   it('is fine in a year before it stops, and in what a student already passed', () => {
     const plan: Plan = { course: 'X', courseYear: 2026, completed: ['AAAA20003'], terms: [{ year: 2026, period: 'semester-2', subjects: ['AAAA20001'] }] }
     expect(checkTerms(plan, data).filter((i) => i.severity === 'error')).toEqual([])
+  })
+})
+
+describe('termStarted', () => {
+  it('says whether a semester has begun', () => {
+    const oct2026 = new Date(2026, 9, 7)
+    expect(termStarted({ year: 2026, period: 'semester-2' }, oct2026)).toBe(true)
+    expect(termStarted({ year: 2027, period: 'semester-1' }, oct2026)).toBe(false)
+    expect(termStarted({ year: 2026, period: 'semester-1' }, new Date(2026, 1, 20))).toBe(false)
   })
 })

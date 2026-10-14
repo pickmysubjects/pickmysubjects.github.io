@@ -11,7 +11,8 @@ import PlanHowBuilt from '@/components/planner/PlanHowBuilt.vue'
 import PlanIssues from '@/components/planner/PlanIssues.vue'
 import PlanPrint from '@/components/planner/PlanPrint.vue'
 import Interp from '@/components/Interp.vue'
-import { PASS_MARK, planRoles, planStart } from '@/engine'
+import { PASS_MARK, planRoles, planStart, type PlanTerm } from '@/engine'
+import { termStarted } from '@/engine/plan'
 import { Printer, Share2 } from 'lucide-vue-next'
 import { decodePlan, encodePlan } from '@/utils/sharePlan'
 import { go, useView } from '@/composables/useView'
@@ -26,7 +27,7 @@ import { issueText, termLabel } from '@/i18n/format'
 // The wizard copies the setup once, so it restarts when the dataset is switched.
 const { data, subjectList, name: dataName } = useDataset()
 const plan = usePlan()
-const { profile, setConfirmed } = useProfile()
+const { profile, setConfirmed, setResults } = useProfile()
 const { t } = useI18n()
 
 const editing = shallowRef(false)
@@ -149,6 +150,19 @@ const summary = computed(() =>
 function finishWizard(setup: PlanSetup): void {
   if (!plan.updateSetup(setup)) plan.generate()
   editing.value = false
+}
+// The plan's semester for the subject open in the peek, if it's in the plan.
+const peekTerm = computed(() => {
+  const i = plan.terms.value.findIndex((x) => x.subjects.includes(peek.value ?? ''))
+  return i >= 0 ? { index: i, term: plan.terms.value[i] as PlanTerm } : null
+})
+// Done with a planned subject: it moves to My record, in the semester it was planned for.
+function markDone(code: string, mark: number | undefined): void {
+  const where = peekTerm.value
+  if (!where) return
+  const { year, period } = where.term
+  setResults([...profile.value.results.filter((r) => r.code !== code), { code, year, period, ...(mark === undefined ? {} : { mark }) }])
+  plan.removeSubject(where.index, code)
 }
 </script>
 
@@ -282,6 +296,9 @@ function finishWizard(setup: PlanSetup): void {
         @close="peek = null"
         @open="peek = $event"
         @swap="(from, to) => plan.swapSubject(from, to)"
+        :done-term="peekTerm && termStarted(peekTerm.term, new Date()) ? termLabel(t, peekTerm.term) : undefined"
+        :pass-fail="data.subjects[peek]?.passFail"
+        @mark-done="(m) => markDone(peek as string, m)"
       />
 
       <details class="details surface">

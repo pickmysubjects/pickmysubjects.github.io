@@ -34,6 +34,8 @@ export const ms: Messages = {
     title: 'Ijazah anda sebagai satu peta laluan',
     lede: "Rancangan ikut semester yang mematuhi peraturan ijazah anda; seret kad untuk mengubahnya.",
     addTerm: 'Tambah semester',
+    doneAsk: "Sudah selesai dalam {term}? Masukkan markah (pilihan), ia masuk ke Rekod saya.",
+    doneButton: "Tanda selesai",
     addShortTerm: 'Tambah penggal musim panas atau sejuk',
     removeThisTerm: 'Buang penggal ini',
     removeTerm: 'Buang semester kosong terakhir',

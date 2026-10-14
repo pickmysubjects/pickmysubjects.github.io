@@ -34,6 +34,8 @@ export const ja: Messages = {
     title: 'あなたの学位を一枚のルートマップに',
     lede: "学位の規則に沿った学期ごとのプランです。カードをドラッグして変えられます。",
     addTerm: 'セメスターを追加',
+    doneAsk: "{term} に履修済み？点数（任意）を入れると「マイ記録」に入ります。",
+    doneButton: "履修済みにする",
     addShortTerm: '夏期・冬期を追加',
     removeThisTerm: 'この学期を削除',
     removeTerm: '最後の空セメスターを削除',

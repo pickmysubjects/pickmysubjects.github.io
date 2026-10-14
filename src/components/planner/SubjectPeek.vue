@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { link } from '@/composables/useView'
 import { handbookUrl } from '@/utils/links'
-import { computed, onMounted, useTemplateRef } from 'vue'
-import { CalendarRange, ExternalLink, X } from 'lucide-vue-next'
+import { computed, onMounted, shallowRef, useTemplateRef } from 'vue'
+import { CalendarRange, CheckCheck, ExternalLink, X } from 'lucide-vue-next'
 import { alternativeGroups, periodsFor, prerequisiteRoute, referencedSubjects, simplifyFor, type Subject } from '@/engine'
 import AssessmentPanel from '@/components/subject/AssessmentPanel.vue'
 import MajorRoles from '@/components/subject/MajorRoles.vue'
@@ -22,8 +22,18 @@ const props = defineProps<{
   have: string[]
   /** Of those, the ones already passed (the rest are only planned). */
   done?: string[]
+  /** The plan's semester for it, once that semester has begun: it can be recorded as done there. */
+  doneTerm?: string
+  /** Marked pass/fail only: no mark to ask for. */
+  passFail?: boolean
 }>()
-const emit = defineEmits<{ close: []; open: [code: string]; swap: [from: string, to: string] }>()
+const emit = defineEmits<{ close: []; open: [code: string]; swap: [from: string, to: string]; markDone: [mark: number | undefined] }>()
+const doneMark = shallowRef<number | ''>('')
+function markDone(): void {
+  const m = doneMark.value === '' ? undefined : Math.max(0, Math.min(100, Number(doneMark.value)))
+  emit('markDone', m)
+  dialog.value?.close()
+}
 const { t } = useI18n()
 const dialog = useTemplateRef<HTMLDialogElement>('dialog')
 
@@ -107,6 +117,18 @@ function onClick(event: MouseEvent): void {
           <X :size="18" aria-hidden="true" />
         </button>
       </header>
+
+      <!-- Finished it: record it in My record, in this semester, with an optional mark. -->
+      <form v-if="doneTerm" class="peek-done" @submit.prevent="markDone">
+        <p class="peek-done-title">{{ t('plan.doneAsk', { term: doneTerm }) }}</p>
+        <div class="peek-done-row">
+          <label v-if="!passFail">
+            <span class="visually-hidden">{{ t('record.markFor', { code }) }}</span>
+            <input v-model="doneMark" class="input peek-done-mark" type="number" min="0" max="100" :placeholder="t('record.markShort')" />
+          </label>
+          <button class="button button-accent" type="submit"><CheckCheck :size="16" aria-hidden="true" /> {{ t('plan.doneButton') }}</button>
+        </div>
+      </form>
 
       <template v-if="subject">
         <p class="peek-facts">
@@ -431,5 +453,29 @@ function onClick(event: MouseEvent): void {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+}
+.peek-done {
+  display: grid;
+  gap: 8px;
+  margin: 4px 0 12px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: var(--good-soft);
+}
+
+.peek-done-title {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.peek-done-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.peek-done-mark {
+  width: 96px;
 }
 </style>

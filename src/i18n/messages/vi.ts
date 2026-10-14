@@ -34,6 +34,8 @@ export const vi: Messages = {
     title: 'Tấm bản đồ lộ trình cho tấm bằng của bạn',
     lede: "Kế hoạch theo từng học kỳ, đúng quy định của bằng; kéo thẻ để thay đổi.",
     addTerm: 'Thêm học kỳ',
+    doneAsk: "Đã học xong ở {term}? Nhập điểm (không bắt buộc), môn sẽ vào Hồ sơ của tôi.",
+    doneButton: "Đánh dấu đã học",
     addShortTerm: 'Thêm kỳ hè hoặc kỳ đông',
     removeThisTerm: 'Xoá kỳ này',
     removeTerm: 'Xóa học kỳ trống cuối cùng',
