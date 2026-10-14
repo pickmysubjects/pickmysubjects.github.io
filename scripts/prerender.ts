@@ -248,7 +248,8 @@ function subjectPage(code: LocaleCode, s: Subject): Page {
 
   const description = [
     t('seo.subjectDesc', facts),
-    ...(gist.length ? [gist.join(listSep(code))] : []),
+    // A sentence of its own: the gist lines carry no full stop.
+    ...(gist.length ? [`${gist.join(listSep(code))}${CJK.has(code) ? '。' : '.'}`] : []),
     ...(s.about ? [pickLocalized(s.about.learn, code)] : []),
     runs(t, s, listSep(code)),
     s.prerequisites === 'none' ? t('seo.noPrereq') : s.prerequisites === 'unknown' ? '' : t('seo.needs', { needs: prereq }),
