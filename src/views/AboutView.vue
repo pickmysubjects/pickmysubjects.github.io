@@ -19,11 +19,8 @@ const features = [
       <h1 class="about-title">{{ t('about.title') }}</h1>
     </header>
 
-    <section class="about-story">
-      <p>{{ t('about.me') }}</p>
-      <p>{{ t('about.why') }}</p>
-      <p>{{ t('about.aim') }}</p>
-    </section>
+    <!-- One-line lead first; the backstory folds away for whoever wants it. -->
+    <p class="about-lead">{{ t('about.aim') }}</p>
 
     <section>
       <h2 class="about-h2">{{ t('about.whatTitle') }}</h2>
@@ -59,6 +56,12 @@ const features = [
       </ul>
     </section>
 
+    <details class="about-story surface">
+      <summary class="about-h2">{{ t('about.storyTitle') }}</summary>
+      <p>{{ t('about.me') }}</p>
+      <p>{{ t('about.why') }}</p>
+    </details>
+
     <section>
       <h2 class="about-h2">{{ t('about.helpTitle') }}</h2>
       <p class="about-help">{{ t('about.help') }}</p>
@@ -87,13 +90,6 @@ const features = [
   color: var(--accent);
 }
 
-
-.about-story {
-  display: grid;
-  gap: 14px;
-  font-size: 1.05rem;
-  line-height: 1.7;
-}
 
 .about-h2 {
   margin-bottom: 12px;
@@ -171,5 +167,28 @@ const features = [
   flex-wrap: wrap;
   gap: 8px;
   margin-top: 14px;
+}
+.about-lead {
+  max-width: 62ch;
+  font-size: 1.1rem;
+  color: var(--ink-soft);
+}
+
+.about-story {
+  padding: 4px 20px;
+}
+
+.about-story summary {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  min-height: 48px;
+  cursor: pointer;
+}
+
+.about-story p {
+  margin: 0 0 14px;
+  line-height: 1.7;
+  color: var(--ink-soft);
 }
 </style>

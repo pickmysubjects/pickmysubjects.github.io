@@ -146,6 +146,7 @@ export const id: Messages = {
     'offering-assumed': '{code} di {term} mengasumsikan jadwal {assumed} berulang.',
     'prereq-unmet': '{code} di {term} memerlukan {needs} lebih dulu.',
     'prereq-unknown': '{code}: prasyarat belum bisa dipastikan — {needs}.',
+    'prereq-unknown-missing': "{code}: {missing} belum ada di rencanamu sebelum ini, jadi hanya tersisa “setara” — {needs}.",
     'coreq-unmet': '{code} memerlukan {needs} di semester yang sama atau sebelumnya.',
     'non-allowed': '{code} dan {other} tidak bisa dihitung bersamaan — keduanya saling mengecualikan.',
     overload: '{term} berisi {load} poin; lebih dari {max} termasuk kelebihan beban dan perlu persetujuan.',
@@ -831,6 +832,7 @@ export const id: Messages = {
     sourcesLink: "Situs mahasiswa UniMelb",
   },
   about: {
+    storyTitle: "Kenapa saya membuat ini",
     eyebrow: 'Tentang',
     title: "Kenapa aku membuat situs ini",
     me: "Aku lulusan University of Melbourne. Waktu kuliah, setiap kali memilih mata kuliah rasanya pusing.",
@@ -881,6 +883,7 @@ export const id: Messages = {
     notYet: "Belum",
   },
   privacy: {
+    pills: { account: "Tanpa daftar", local: "Data tetap di perangkatmu", anon: "Penilaian anonim" },
     title: 'Privasi',
     updated: 'Terakhir diperbarui: 14 Oktober 2026',
     local: 'Catatan, keterampilan, minat, dan rencanamu hanya disimpan di browser ini (localStorage). Tidak ada akun dan tidak pernah diunggah. Menghapus data browser akan menghapusnya. Satu-satunya pengecualian adalah tingkat nilai yang kamu pilih untuk dibagikan (di bawah).',

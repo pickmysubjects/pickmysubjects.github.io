@@ -146,6 +146,7 @@ export const ja: Messages = {
     'offering-assumed': '{term} の {code} は、{assumed}年の時間割が続くと仮定しています。',
     'prereq-unmet': '{term} の {code} には、先に {needs} が必要です。',
     'prereq-unknown': '{code}：前提科目を確認できません（{needs}）。',
+    'prereq-unknown-missing': "{code}：この前に {missing} がプランにないため、「同等の科目」しか残っていません（{needs}）。",
     'coreq-unmet': '{code} には、同じかそれ以前のセメスターに {needs} が必要です。',
     'non-allowed': '{code} と {other} は両方は認められません（non-allowed の組み合わせです）。',
     overload: '{term} は {load} ポイントです。{max} ポイントを超えるとオーバーロードとなり、承認が必要です。',
@@ -831,6 +832,7 @@ export const ja: Messages = {
     sourcesLink: "メルボルン大学 学生向けサイト",
   },
   about: {
+    storyTitle: "作った理由",
     eyebrow: 'このサイトについて',
     title: "このサイトを作った理由",
     me: "私はメルボルン大学の卒業生です。在学中、履修登録のたびに頭を抱えていました。",
@@ -881,6 +883,7 @@ export const ja: Messages = {
     notYet: "まだ",
   },
   privacy: {
+    pills: { account: "登録不要", local: "データは端末内だけ", anon: "評価は匿名" },
     title: 'プライバシー',
     updated: '最終更新：2026年10月14日',
     local: '成績記録、スキル、興味、履修プランはこのブラウザ（localStorage）にのみ保存されます。アカウントはなく、アップロードもされません。ブラウザのデータを消去すると削除されます。唯一の例外は、あなたが共有を選んだ成績区分です（下記）。',

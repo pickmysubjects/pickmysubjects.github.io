@@ -156,10 +156,35 @@ function onCode(): void {
 
 .steps {
   display: grid;
-  gap: 6px;
-  margin: 12px 0 0;
-  padding-left: 22px;
+  gap: 10px;
+  margin: 14px 0 0;
+  padding: 0;
   font-size: 1.02rem;
+  list-style: none;
+  counter-reset: step;
+}
+
+/* Same filled number circles as My record's steps. */
+.steps > li {
+  position: relative;
+  padding-left: 38px;
+  counter-increment: step;
+}
+
+.steps > li::before {
+  content: counter(step);
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #fff;
+  background: var(--overprint);
+  border-radius: 999px;
 }
 
 .small {

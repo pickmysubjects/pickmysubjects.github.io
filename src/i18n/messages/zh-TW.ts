@@ -146,6 +146,7 @@ export const zhTW: Messages = {
     'offering-assumed': '{code} 安排在 {term}，這是假設 {assumed} 年的開課安排不變。',
     'prereq-unmet': '{code}（{term}）需要先修 {needs}。',
     'prereq-unknown': '{code}：無法確認先修要求——{needs}。',
+    'prereq-unknown-missing': "{code}：你的方案在它之前還沒有排 {missing}，所以只剩「同等課程」這條路——{needs}。",
     'coreq-unmet': '{code} 需要在同一學期或更早修 {needs}。',
     'non-allowed': '{code} 和 {other} 不能同時計入學分——它們互斥（non-allowed）。',
     overload: '{term} 有 {load} 學分；超過 {max} 學分屬於超修，需要申請核准。',
@@ -831,6 +832,7 @@ export const zhTW: Messages = {
     sourcesLink: "墨大學生網站",
   },
   about: {
+    storyTitle: "我為什麼做這個",
     eyebrow: '關於',
     title: "為什麼做這個網站",
     me: "我是墨大畢業的。讀書那幾年，每到選課我都挺頭痛的。",
@@ -881,6 +883,7 @@ export const zhTW: Messages = {
     notYet: "未完成",
   },
   privacy: {
+    pills: { account: "不用註冊", local: "資料只存在你的裝置上", anon: "評分匿名" },
     title: '隱私說明',
     updated: '最後更新：2026 年 10 月 14 日',
     local: '你的成績紀錄、技能、興趣和選課方案只儲存在這個瀏覽器裡（localStorage）。沒有帳號，也從不上傳。清除瀏覽器資料就會刪除它們。唯一的例外是你主動選擇分享的成績等級（見下文）。',

@@ -236,6 +236,33 @@ describe('previewAdd', () => {
   })
 })
 
+describe('prerequisites left to "or equivalent"', () => {
+  const data = dataset([
+    subject({ code: 'AAAA10001', offerings: { 2026: ['semester-1'] }, prerequisites: 'none', non_allowed: [] }),
+    subject({ code: 'AAAA20001', offerings: { 2026: ['semester-2'] }, prerequisites: 'none', non_allowed: [] }),
+    subject({
+      code: 'AAAA30001',
+      offerings: { 2026: ['semester-2'] },
+      prerequisites: { any: [{ all: ['AAAA10001', 'AAAA20001'] }, { manual: 'Equivalent' }] },
+      non_allowed: [],
+    }),
+  ])
+  const plan: Plan = {
+    course: 'X',
+    courseYear: 2026,
+    completed: [],
+    terms: [
+      { year: 2026, period: 'semester-1', subjects: ['AAAA10001'] },
+      { year: 2026, period: 'semester-2', subjects: ['AAAA30001'] },
+    ],
+  }
+
+  it('names the listed subject still missing before it', () => {
+    const issue = checkTerms(plan, data).find((i) => i.kind === 'prereq-unknown')
+    expect(issue?.params.missing).toBe('AAAA20001')
+  })
+})
+
 describe('confirmed prerequisites', () => {
   const data = dataset([
     subject({ code: 'AAAA10001', offerings: { 2026: ['semester-1'] }, prerequisites: { manual: 'VCE Maths study score 25+' }, non_allowed: [] }),

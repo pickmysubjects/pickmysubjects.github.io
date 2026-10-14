@@ -97,6 +97,7 @@ export function issueText(
 ): string {
   // The engine's reason is English; say what the subject needs in the reader's language instead.
   const s = issue.kind === 'prereq-unknown' && issue.subject ? subjects[issue.subject] : undefined
+  if (s && issue.params?.missing) return t('issue.prereq-unknown-missing', { code: s.code, missing: String(issue.params.missing), needs: describeReq(t, s.prerequisites, course) })
   if (s) return t('issue.prereq-unknown', { code: s.code, needs: describeReq(t, s.prerequisites, course) })
   if (issue.kind.startsWith('rule-')) {
     const rule = rules.find((r) => r.id === issue.ruleId)

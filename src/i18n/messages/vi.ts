@@ -146,6 +146,7 @@ export const vi: Messages = {
     'offering-assumed': '{code} ở {term} đang giả định lịch năm {assumed} lặp lại.',
     'prereq-unmet': '{code} ở {term} cần học {needs} trước.',
     'prereq-unknown': '{code}: không xác nhận được môn tiên quyết — {needs}.',
+    'prereq-unknown-missing': "{code}: kế hoạch chưa có {missing} trước môn này, nên chỉ còn cách “môn tương đương” — {needs}.",
     'coreq-unmet': '{code} cần học {needs} cùng kỳ hoặc sớm hơn.',
     'non-allowed': '{code} và {other} không thể cùng được tính — hai môn này loại trừ nhau.',
     overload: '{term} có {load} tín chỉ; trên {max} là học vượt và cần được duyệt.',
@@ -831,6 +832,7 @@ export const vi: Messages = {
     sourcesLink: "Trang sinh viên UniMelb",
   },
   about: {
+    storyTitle: "Vì sao mình làm trang này",
     eyebrow: 'Giới thiệu',
     title: "Vì sao mình làm trang này",
     me: "Mình tốt nghiệp University of Melbourne. Hồi còn đi học, mỗi lần chọn môn là một lần đau đầu.",
@@ -881,6 +883,7 @@ export const vi: Messages = {
     notYet: "Chưa",
   },
   privacy: {
+    pills: { account: "Không cần đăng ký", local: "Dữ liệu chỉ ở trên máy bạn", anon: "Đánh giá ẩn danh" },
     title: 'Quyền riêng tư',
     updated: 'Cập nhật lần cuối: 14 tháng 10, 2026',
     local: 'Hồ sơ, kỹ năng, sở thích và kế hoạch của bạn chỉ được lưu trong trình duyệt này (localStorage). Không có tài khoản và không bao giờ được tải lên. Xóa dữ liệu trình duyệt sẽ xóa chúng. Ngoại lệ duy nhất là mức điểm bạn chọn chia sẻ (xem bên dưới).',

@@ -146,6 +146,7 @@ export const ms: Messages = {
     'offering-assumed': '{code} pada {term} mengandaikan jadual {assumed} berulang.',
     'prereq-unmet': '{code} pada {term} memerlukan {needs} terlebih dahulu.',
     'prereq-unknown': '{code}: prasyarat belum dapat disahkan — {needs}.',
+    'prereq-unknown-missing': "{code}: {missing} belum ada dalam rancangan sebelum ini, jadi hanya tinggal “setara” — {needs}.",
     'coreq-unmet': '{code} memerlukan {needs} pada semester yang sama atau lebih awal.',
     'non-allowed': '{code} dan {other} tidak boleh dikira bersama — kedua-duanya saling menyekat.',
     overload: '{term} mempunyai {load} mata; melebihi {max} ialah lebihan beban dan perlu kelulusan.',
@@ -831,6 +832,7 @@ export const ms: Messages = {
     sourcesLink: "Laman pelajar UniMelb",
   },
   about: {
+    storyTitle: "Kenapa saya buat ini",
     eyebrow: 'Perihal',
     title: "Kenapa saya buat laman ini",
     me: "Saya graduan University of Melbourne. Masa belajar dulu, setiap kali pilih subjek memang memeningkan.",
@@ -881,6 +883,7 @@ export const ms: Messages = {
     notYet: "Belum",
   },
   privacy: {
+    pills: { account: "Tiada pendaftaran", local: "Data kekal pada peranti anda", anon: "Penilaian tanpa nama" },
     title: 'Privasi',
     updated: 'Kemas kini terakhir: 14 Oktober 2026',
     local: 'Rekod, kemahiran, minat dan rancangan anda hanya disimpan dalam pelayar ini (localStorage). Tiada akaun dan ia tidak pernah dimuat naik. Memadam data pelayar akan memadamnya. Satu-satunya pengecualian ialah gred yang anda pilih untuk dikongsi (di bawah).',

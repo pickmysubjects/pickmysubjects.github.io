@@ -248,12 +248,6 @@ function finishWizard(setup: PlanSetup): void {
         </div>
       </section>
 
-      <p class="hint">{{ t('plan.hint') }} {{ t('plan.tagLegend') }}</p>
-      <p class="hint">
-        {{ t('plan.censusLine') }}
-        <a :href="link('guide')">{{ t('guide.datesTitle') }}</a>
-      </p>
-
       <PlanProgress v-if="!plan.isEmpty.value" :statuses="plan.courseCheck.value.statuses" :rules="rules" />
       <PlanMap
         class="map"
@@ -293,6 +287,12 @@ function finishWizard(setup: PlanSetup): void {
       <details class="details surface">
         <summary class="details-summary">{{ t('plan.details') }}</summary>
         <div class="details-body">
+          <!-- How to read the board and the census-date reminder live here, not above the plan. -->
+          <p class="hint">{{ t('plan.hint') }} {{ t('plan.tagLegend') }}</p>
+          <p class="hint">
+            {{ t('plan.censusLine') }}
+            <a :href="link('guide')">{{ t('guide.datesTitle') }}</a>
+          </p>
           <RuleLegend :statuses="plan.courseCheck.value.statuses" :rules="rules" :title="plan.course.value?.title ?? ''" />
           <PlanIssues :issues="allIssues" :rules="rules" :statuses="plan.courseCheck.value.statuses" />
           <div v-if="notes.length || plan.unplaced.value.length" class="how">

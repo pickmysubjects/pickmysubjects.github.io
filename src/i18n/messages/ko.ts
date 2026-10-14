@@ -146,6 +146,7 @@ export const ko: Messages = {
     'offering-assumed': '{term}의 {code}는 {assumed}년 시간표가 그대로라고 가정합니다.',
     'prereq-unmet': '{term}의 {code}는 먼저 {needs}이(가) 필요합니다.',
     'prereq-unknown': '{code}: 선수 과목 요건을 확인할 수 없습니다 ({needs}).',
+    'prereq-unknown-missing': "{code}: 이 과목 전에 {missing}이(가) 계획에 없어서 '동등 과목' 조건만 남았어요 ({needs}).",
     'coreq-unmet': '{code}는 같은 학기나 그 이전에 {needs}이(가) 필요합니다.',
     'non-allowed': '{code}와 {other}는 둘 다 인정되지 않습니다 (non-allowed 관계).',
     overload: '{term}은 {load}학점입니다. {max}학점을 넘으면 초과 수강이라 승인이 필요합니다.',
@@ -831,6 +832,7 @@ export const ko: Messages = {
     sourcesLink: "멜버른대 학생 웹사이트",
   },
   about: {
+    storyTitle: "만든 이유",
     eyebrow: '소개',
     title: "이 사이트를 만든 이유",
     me: "저는 멜버른대를 졸업했어요. 학교 다닐 때 수강 신청 때마다 머리가 아팠어요.",
@@ -881,6 +883,7 @@ export const ko: Messages = {
     notYet: "아직",
   },
   privacy: {
+    pills: { account: "가입 없음", local: "데이터는 내 기기에만", anon: "평가는 익명" },
     title: '개인정보 처리',
     updated: '최종 업데이트: 2026년 10월 14일',
     local: '내 기록, 기술, 관심사, 수강 계획은 이 브라우저(localStorage)에만 저장됩니다. 계정이 없고 업로드되지도 않습니다. 브라우저 데이터를 지우면 삭제됩니다. 유일한 예외는 직접 공유하기로 선택한 성적 등급이에요(아래 참고).',

@@ -146,6 +146,7 @@ export const zhCN: Messages = {
     'offering-assumed': '{code} 安排在 {term}，这是假设 {assumed} 年的开课安排不变。',
     'prereq-unmet': '{code}（{term}）需要先修 {needs}。',
     'prereq-unknown': '{code}：无法确认先修要求——{needs}。',
+    'prereq-unknown-missing': "{code}：你的方案在它之前还没有排 {missing}，所以只剩“同等课程”这条路——{needs}。",
     'coreq-unmet': '{code} 需要在同一学期或更早修 {needs}。',
     'non-allowed': '{code} 和 {other} 不能同时计入学分——它们互斥（non-allowed）。',
     overload: '{term} 有 {load} 学分；超过 {max} 学分属于超修，需要申请批准。',
@@ -831,6 +832,7 @@ export const zhCN: Messages = {
     sourcesLink: "墨大学生网站",
   },
   about: {
+    storyTitle: "我为什么做这个",
     eyebrow: '关于',
     title: "为什么做这个网站",
     me: "我是墨大毕业的。读书那几年，每到选课我都挺头疼的。",
@@ -881,6 +883,7 @@ export const zhCN: Messages = {
     notYet: "未完成",
   },
   privacy: {
+    pills: { account: "不用注册", local: "数据只存在你的设备上", anon: "评分匿名" },
     title: '隐私说明',
     updated: '最后更新：2026 年 10 月 14 日',
     local: '你的成绩记录、技能、兴趣和选课方案只保存在这个浏览器里（localStorage）。没有账号，也从不上传。清除浏览器数据就会删除它们。唯一的例外是你主动选择分享的成绩等级（见下文）。',

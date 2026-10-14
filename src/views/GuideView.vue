@@ -316,11 +316,9 @@ const FAILING = 'https://students.unimelb.edu.au/course-admin/planning-your-cour
 
 .group-title {
   padding-left: 4px;
-  font-size: 0.8125rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--ink-faint);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--ink);
 }
 
 .list {

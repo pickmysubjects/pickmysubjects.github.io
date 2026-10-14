@@ -1,5 +1,5 @@
 import { offeredIn } from './availability'
-import { evaluateField } from './expr'
+import { evaluateField, referencedSubjects } from './expr'
 import type { Issue, Plan } from './plan'
 import { termLabel } from './plan'
 import { PERIOD_LABELS } from './schema'
@@ -60,7 +60,10 @@ export function checkTerms(plan: Plan, data: Dataset, standardLoad = 50): Issue[
       if (pre.status === 'fail') {
         issues.push({ severity: 'error', kind: 'prereq-unmet', subject: code, termIndex, params: { code, year: term.year, period: term.period, needs: pre.unmet.join(', ') }, message: `${code} in ${where} needs ${pre.unmet.join(', ')} first.` })
       } else if (pre.status === 'unknown' && !plan.confirmed?.includes(code)) {
-        issues.push({ severity: 'warning', kind: 'prereq-unknown', subject: code, termIndex, params: { code, needs: pre.unmet.join('; ') }, message: `${code}: prerequisites can't be confirmed — ${pre.unmet.join('; ')}.` })
+        // Name the listed subjects not yet placed before this term: usually that's why only an
+        // unverifiable route ("or equivalent") is left, and adding them clears the warning.
+        const missing = referencedSubjects(s.prerequisites).filter((c) => !before.has(c))
+        issues.push({ severity: 'warning', kind: 'prereq-unknown', subject: code, termIndex, params: { code, needs: pre.unmet.join('; '), missing: missing.join(', ') }, message: `${code}: prerequisites can't be confirmed — ${pre.unmet.join('; ')}.` })
       }
 
       const co = evaluateField(s.corequisites, { ...ctx, completed: sameTerm })

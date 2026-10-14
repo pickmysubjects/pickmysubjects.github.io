@@ -149,6 +149,7 @@ export const en = {
     'offering-assumed': '{code} in {term} assumes the {assumed} timetable repeats.',
     'prereq-unmet': '{code} in {term} needs {needs} first.',
     'prereq-unknown': '{code}: prerequisites can’t be confirmed — {needs}.',
+    'prereq-unknown-missing': "{code}: {missing} isn't in your plan before it, so only “or equivalent” is left — {needs}.",
     'coreq-unmet': '{code} needs {needs} in the same or an earlier term.',
     'non-allowed': '{code} and {other} can’t both count — they’re non-allowed with each other.',
     overload: '{term} has {load} points; more than {max} is an overload and needs approval.',
@@ -834,6 +835,7 @@ export const en = {
     sourcesLink: "UniMelb student website",
   },
   about: {
+    storyTitle: "Why I made this",
     eyebrow: 'About',
     title: "Why I made this",
     me: "I graduated from the University of Melbourne, and picking subjects every semester was a headache.",
@@ -884,6 +886,7 @@ export const en = {
     notYet: "Not yet",
   },
   privacy: {
+    pills: { account: "No sign-up", local: "Stays on your device", anon: "Ratings are anonymous" },
     title: 'Privacy',
     updated: 'Last updated: 14 October 2026',
     local: 'Your record, skills, interests and plans are stored only in this browser (localStorage). There is no account and they are never uploaded. Clearing your browser data deletes them. The one exception is grade bands you choose to share (below).',

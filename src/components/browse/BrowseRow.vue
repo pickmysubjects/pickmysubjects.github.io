@@ -25,7 +25,11 @@ const closed = computed(() => data.value.courses.some((c) => c.code === props.co
         <span v-if="closed" class="tag tag-closed">{{ t('browse.closedForYou') }}</span>
         <span v-else-if="category === 'breadth'" class="tag tag-breadth">{{ t('browse.cat.breadth') }}</span>
       </span>
-      <span class="title">{{ s.title }}<template v-if="localTitle(s, locale)"> · {{ localTitle(s, locale) }}</template></span>
+      <!-- The reader's own language leads; the official English title sits under it on one line. -->
+      <span class="title">
+        {{ localTitle(s, locale) || s.title }}
+        <span v-if="localTitle(s, locale)" class="title-en">{{ s.title }}</span>
+      </span>
       <span class="meta">
         <span>{{ row.periods.length ? row.periods.map((p) => t(`periodShort.${p}`)).join(' · ') : t('browse.notRunning') }}</span>
         <span v-if="row.exam !== null">{{ row.exam === 0 ? t('browse.metaNoExam') : t('browse.metaExam', { n: row.exam }) }}</span>
@@ -92,6 +96,16 @@ const closed = computed(() => data.value.courses.some((c) => c.code === props.co
   font-size: 1rem;
   font-weight: 600;
   overflow-wrap: anywhere;
+}
+
+.title-en {
+  display: block;
+  overflow: hidden;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--ink-faint);
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 /* Wide rows: the facts line up in a column on the right, easy to scan down. */
