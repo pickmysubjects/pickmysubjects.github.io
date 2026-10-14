@@ -8,8 +8,11 @@ import { usePlan } from '@/composables/usePlan'
 import { useProfile } from '@/composables/useProfile'
 import { useI18n } from '@/i18n'
 import { exampleSubjects } from '@/utils/showcase'
+import { SEARCH_PHRASES } from '@/i18n/searchPhrases'
 
 const { t, locale } = useI18n()
+// The questions students search for, each a quick link to the page that answers it.
+const searches = computed(() => SEARCH_PHRASES[locale.value])
 const { subjectList } = useDataset()
 
 // The title is split into phrases that never break inside; languages written with spaces keep one between them.
@@ -126,6 +129,14 @@ const next = computed(() => {
       </div>
     </section>
 
+    <section class="searches" aria-labelledby="searches-title">
+      <h2 id="searches-title" class="steps-title">{{ searches.heading }}</h2>
+      <ul class="search-list">
+        <li v-for="item in searches.items" :key="item.text">
+          <a class="search-link" :href="link(`${item.to}/`)">{{ item.text }}</a>
+        </li>
+      </ul>
+    </section>
   </div>
 </template>
 
@@ -372,6 +383,31 @@ li:nth-child(3) .step-icon {
   .tools-list {
     grid-template-columns: 1fr;
   }
+}
+
+.search-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.search-link {
+  display: inline-block;
+  padding: 7px 13px;
+  font-size: 0.875rem;
+  color: var(--ink);
+  text-decoration: none;
+  background: var(--accent-soft);
+  border: 1px solid transparent;
+  border-radius: 999px;
+  transition: border-color 0.15s;
+}
+
+.search-link:hover {
+  border-color: var(--accent);
 }
 
 .steps-search {
