@@ -21,4 +21,16 @@ describe('rule fixes from the code review', () => {
     const r = evaluateField(s.prerequisites, { completed: new Set(['BMEN30006']), subjects: real.subjects, admittedCourse: 'B-SCI' })
     expect(r.status).not.toBe('ok')
   })
+
+  it('a subject not in our data counts 12.5 towards the total, and only its own level elsewhere', async () => {
+    const { buildDataset } = await import('../scripts/dataset')
+    const { checkCourse } = await import('../src/engine/courseRules')
+    const { dataset: real } = buildDataset('real')
+    const code = 'ZZZZ20001' // level 2, not in the data
+    const r = checkCourse({ course: 'B-SCI', courseYear: 2026, completed: ['MAST10006', code], terms: [] } as never, real)
+    expect(r.statuses.find((s) => s.ruleId === 'total')?.detail).toMatch(/^25 /)
+    // A level-2 unknown can't touch level-1 rules: they're decided, not "unknown".
+    expect(r.statuses.find((s) => s.ruleId === 'breadth-l1-cap')?.status).toBe('ok')
+    expect(r.statuses.find((s) => s.ruleId === 'science-l1')?.status).toBe('fail')
+  })
 })

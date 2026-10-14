@@ -203,7 +203,7 @@ const trackWidth = computed(() => `max(100%, ${(props.terms.length + pastCount.v
           :results="col.p.results"
           :subjects="subjects"
           :planned="terms"
-          :load="load"
+          :load="col.p.period === 'summer' || col.p.period === 'winter' ? Math.min(SHORT_TERM_LOAD, load) : load"
           :related="related"
           @open="emit('open', $event)"
           @hover="hovered = $event"

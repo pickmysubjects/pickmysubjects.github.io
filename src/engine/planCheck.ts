@@ -111,7 +111,7 @@ function visaLoadIssues(plan: Plan, data: Dataset): Issue[] {
   plan.terms.forEach((term, termIndex) => {
     const half = term.period === 'summer' || term.period === 'semester-1' ? 1 : 2
     const key = `${term.year}-${half}`
-    const load = (plan.recordedLoad?.[`${term.year}|${term.period}`] ?? 0) + term.subjects.reduce((sum, c) => sum + (data.subjects[c]?.points ?? 0), 0)
+    const load = (plan.recordedLoad?.[`${term.year}|${term.period}`] ?? 0) + term.subjects.reduce((sum, c) => sum + (data.subjects[c]?.points ?? 12.5), 0)
     const entry = halves.get(key) ?? { year: term.year, half, load: 0, termIndex }
     entry.load += load
     // Attach the warning to the semester rather than the short term.

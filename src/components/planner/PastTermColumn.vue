@@ -26,7 +26,7 @@ const emit = defineEmits<{ open: [code: string]; hover: [code: string | null] }>
 const { t } = useI18n()
 
 // Enrolled points, a fail included.
-const points = computed(() => props.results.reduce((sum, r) => sum + (props.subjects[r.code]?.points ?? 0), 0))
+const points = computed(() => props.results.reduce((sum, r) => sum + (props.subjects[r.code]?.points ?? 12.5), 0))
 
 function retake(code: string): string | null {
   const at = props.planned.find((p) => p.subjects.includes(code))

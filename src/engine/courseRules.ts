@@ -105,7 +105,15 @@ function checkRule(rule: CourseRule, ctx: RuleCtx): RuleStatus {
         }
         total += s.points
       }
-      const unknownSubjects = ctx.codes.length - ctx.known.length
+      // Subjects we have no data for: their level is the code's fifth character (MAST20018 is
+      // level 2), so only those that could fall under this rule count as unknown. A rule on
+      // total points alone counts them at the usual 12.5.
+      const unknownCodes = ctx.codes.filter((c) => !ctx.data.subjects[c] && (rule.level === undefined || Number(c[4]) === rule.level))
+      let unknownSubjects = unknownCodes.length
+      if (rule.level === undefined && rule.category === undefined) {
+        total += unknownSubjects * 12.5
+        unknownSubjects = 0
+      }
       const parts: string[] = []
       if (rule.min !== undefined) parts.push(`${total} / ${rule.min} points`)
       else if (rule.max !== undefined) parts.push(`${total} of max ${rule.max} points`)

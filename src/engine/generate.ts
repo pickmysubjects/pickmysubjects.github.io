@@ -94,7 +94,7 @@ function buildPlan(input: GenerateInput): GenerateResult {
 
   const remainingPoints = Math.max(
     0,
-    (course?.totalPoints ?? 300) - completed.reduce((sum, c) => sum + (data.subjects[c]?.points ?? 0), 0),
+    (course?.totalPoints ?? 300) - completed.reduce((sum, c) => sum + (data.subjects[c]?.points ?? 12.5), 0),
   )
   const termCount = input.maxTerms ?? Math.min(10, Math.max(1, Math.ceil(remainingPoints / load)))
   const terms = standardTerms(input.startYear, input.startPeriod, termCount)

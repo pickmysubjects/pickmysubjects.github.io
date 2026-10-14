@@ -18,7 +18,7 @@ const years = computed(() => {
   for (const term of props.terms) by.set(term.year, [...(by.get(term.year) ?? []), term])
   return [...by.entries()].map(([year, terms]) => ({ year, terms }))
 })
-const pointsOf = (codes: string[]) => codes.reduce((sum, c) => sum + (props.subjects[c]?.points ?? 0), 0)
+const pointsOf = (codes: string[]) => codes.reduce((sum, c) => sum + (props.subjects[c]?.points ?? 12.5), 0)
 const total = computed(() => pointsOf(props.terms.flatMap((x) => x.subjects)))
 const today = computed(() => new Date().toLocaleDateString(locale.value, { year: 'numeric', month: 'short', day: 'numeric' }))
 
