@@ -68,7 +68,7 @@ export function generatePlan(raw: GenerateInput): GenerateResult {
   // Before planning longer: a chain subject that also runs in summer or winter (CHEM10004 for a
   // mid-year start) can go there and keep the degree to its usual length.
   const viaShort = buildPlan({ ...input, useShortTerms: true })
-  if (shortfall(viaShort) === 0) return viaShort
+  if (shortfall(viaShort) === 0) return finishEarlier(input, viaShort, shortfall)
   const base = result.plan.terms.length
   for (let extra = 1; extra <= 2 && shortfall(result) > 0; extra++) {
     const longer = buildPlan({ ...input, maxTerms: base + extra })
@@ -76,7 +76,8 @@ export function generatePlan(raw: GenerateInput): GenerateResult {
     longer.notes.push(note('extraTerms', { n: extra }, `Planned ${extra} extra semester(s) so every required subject fits.`))
     result = longer
   }
-  return result
+  // A longer plan whose last semester holds only a subject or two: summer/winter may still save it.
+  return shortfall(result) === 0 ? finishEarlier(input, result, shortfall) : result
 }
 
 /**
@@ -120,7 +121,9 @@ function buildPlan(input: GenerateInput): GenerateResult {
     0,
     (course?.totalPoints ?? 300) - completed.reduce((sum, c) => sum + (data.subjects[c]?.points ?? 12.5), 0),
   )
-  const termCount = input.maxTerms ?? Math.min(10, Math.max(1, Math.ceil(remainingPoints / load)))
+  // Nothing left to plan (the degree is all on the record): no semesters at all.
+  const nothingLeft = remainingPoints === 0 && [...required].every((c) => done.has(c))
+  const termCount = input.maxTerms ?? (nothingLeft ? 0 : Math.min(10, Math.max(1, Math.ceil(remainingPoints / load))))
   const terms = standardTerms(input.startYear, input.startPeriod, termCount)
   if (input.useShortTerms) {
     // Winter between Semester 1 and 2, summer between Semester 2 and the next Semester 1.

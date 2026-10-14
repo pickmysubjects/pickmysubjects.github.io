@@ -31,6 +31,16 @@ export function categoryOf(subject: Subject, course: string): string | undefined
   return subject.categories[course]
 }
 
+/** The one category every known subject with this prefix and level has in the course, if they agree. */
+function prefixCategory(code: string, data: Dataset, course: string): string | undefined {
+  // Only subjects with a category count (postgraduate ones have none); a handful at least.
+  const cats = Object.values(data.subjects)
+    .filter((x) => x.code.startsWith(code.slice(0, 4)) && x.level === Number(code[4]))
+    .map((x) => categoryOf(x, course))
+    .filter((c): c is string => c !== undefined)
+  return cats.length >= 3 && new Set(cats).size === 1 ? cats[0] : undefined
+}
+
 /** Check course-level rules against everything completed or planned. */
 export function checkCourse(plan: Plan, data: Dataset): CourseCheck {
   const course = findCourse(data, plan.course, plan.courseYear)
@@ -108,7 +118,14 @@ function checkRule(rule: CourseRule, ctx: RuleCtx): RuleStatus {
       // Subjects we have no data for: their level is the code's fifth character (MAST20018 is
       // level 2), so only those that could fall under this rule count as unknown. A rule on
       // total points alone counts them at the usual 12.5.
-      const unknownCodes = ctx.codes.filter((c) => !ctx.data.subjects[c] && (rule.level === undefined || Number(c[4]) === rule.level))
+      let unknownCodes = ctx.codes.filter((c) => !ctx.data.subjects[c] && (rule.level === undefined || Number(c[4]) === rule.level))
+      // A category rule: an unknown subject whose code prefix is all one category in this
+      // course (every MAST subject is science in B-SCI) counts as that category.
+      if (rule.category !== undefined) {
+        const inferred = unknownCodes.map((c) => ({ c, cat: prefixCategory(c, ctx.data, ctx.course.code) }))
+        total += inferred.filter((x) => x.cat === rule.category).length * 12.5
+        unknownCodes = inferred.filter((x) => x.cat === undefined).map((x) => x.c)
+      }
       let unknownSubjects = unknownCodes.length
       if (rule.level === undefined && rule.category === undefined) {
         total += unknownSubjects * 12.5

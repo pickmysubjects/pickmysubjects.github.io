@@ -33,4 +33,13 @@ describe('rule fixes from the code review', () => {
     expect(r.statuses.find((s) => s.ruleId === 'breadth-l1-cap')?.status).toBe('ok')
     expect(r.statuses.find((s) => s.ruleId === 'science-l1')?.status).toBe('fail')
   })
+
+  it('an unknown subject counts towards a category when its prefix is all that category', async () => {
+    const { buildDataset } = await import('../scripts/dataset')
+    const { checkCourse } = await import('../src/engine/courseRules')
+    const { dataset: real } = buildDataset('real')
+    const { forCourse } = await import('../src/engine/forCourse')
+    const r = checkCourse({ course: 'B-SCI', courseYear: 2026, completed: ['MAST29999'], terms: [] } as never, forCourse(real, 'B-SCI'))
+    expect(r.statuses.find((s) => s.ruleId === 'science')?.detail).toMatch(/^12\.5 /)
+  })
 })
