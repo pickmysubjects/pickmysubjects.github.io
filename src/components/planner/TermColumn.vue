@@ -87,7 +87,16 @@ function onDrop(event: DragEvent): void {
       <TermStressNote :term-index="termIndex" />
     </header>
     <!-- Already on My record for this semester: the same card, done. -->
-    <DoneCard v-for="r in done ?? []" :key="`done-${r.code}`" :result="r" :subject="subjects[r.code]" @open="emit('open', r.code)" />
+    <DoneCard
+      v-for="r in done ?? []"
+      :key="`done-${r.code}`"
+      :result="r"
+      :subject="subjects[r.code]"
+      :highlighted="related?.has(r.code) ?? false"
+      :dimmed="related !== null && !related.has(r.code)"
+      @open="emit('open', r.code)"
+      @hover="emit('hover', $event ? r.code : null)"
+    />
     <SubjectCard
       v-for="code in term.subjects"
       :key="code"

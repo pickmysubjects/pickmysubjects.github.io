@@ -177,7 +177,9 @@ const trackWidth = computed(() => `max(100%, ${(props.terms.length + pastCount.v
         :subjects="subjects"
         :planned="terms"
         :load="load"
+        :related="related"
         @open="emit('open', $event)"
+        @hover="hovered = $event"
       />
       <PastTermColumn
         v-for="p in pastOnly"
@@ -187,7 +189,9 @@ const trackWidth = computed(() => `max(100%, ${(props.terms.length + pastCount.v
         :subjects="subjects"
         :planned="terms"
         :load="load"
+        :related="related"
         @open="emit('open', $event)"
+        @hover="hovered = $event"
       />
       <TermColumn
         v-for="(term, i) in terms"

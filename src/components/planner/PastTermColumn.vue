@@ -19,8 +19,10 @@ const props = defineProps<{
   planned: PlanTerm[]
   /** A semester's usual load, shown as in planned columns. */
   load?: number
+  /** Subjects linked to the hovered one, to highlight (others dim). */
+  related?: Set<string> | null
 }>()
-const emit = defineEmits<{ open: [code: string] }>()
+const emit = defineEmits<{ open: [code: string]; hover: [code: string | null] }>()
 const { t } = useI18n()
 
 const points = computed(() => props.results.filter((r) => !r.failed).reduce((sum, r) => sum + (props.subjects[r.code]?.points ?? 0), 0))
@@ -45,7 +47,10 @@ function retake(code: string): string | null {
       :result="r"
       :subject="subjects[r.code]"
       :note="r.failed ? (retake(r.code) ? t('plan.pastRetake', { term: retake(r.code) as string }) : undefined) : undefined"
+      :highlighted="related?.has(r.code) ?? false"
+      :dimmed="!!related && !related.has(r.code)"
       @open="emit('open', r.code)"
+      @hover="emit('hover', $event ? r.code : null)"
     />
   </section>
 </template>

@@ -10,14 +10,24 @@ import type { PastResult } from '@/utils/pastTerms'
  * tick (red when not passed), the mark where a planned card shows its points. A start for
  * prerequisite lines (data-past-code), never moved or removed here.
  */
-const props = defineProps<{ result: PastResult; subject?: Subject; note?: string }>()
-const emit = defineEmits<{ open: [] }>()
+const props = defineProps<{ result: PastResult; subject?: Subject; note?: string; highlighted?: boolean; dimmed?: boolean }>()
+const emit = defineEmits<{ open: []; hover: [on: boolean] }>()
 const { t } = useI18n()
 const label = computed(() => (props.result.failed ? t.value('plan.pastNotPassed') : t.value('plan.pastTag')))
 </script>
 
 <template>
-  <button type="button" class="done" :class="{ failed: result.failed }" :data-past-code="result.code" @click="emit('open')">
+  <button
+    type="button"
+    class="done"
+    :class="{ failed: result.failed, highlighted, dimmed }"
+    :data-past-code="result.code"
+    @click="emit('open')"
+    @mouseenter="emit('hover', true)"
+    @mouseleave="emit('hover', false)"
+    @focusin="emit('hover', true)"
+    @focusout="emit('hover', false)"
+  >
     <span class="top">
       <span class="mark-icon" aria-hidden="true">
         <X v-if="result.failed" :size="10" :stroke-width="3" />
@@ -37,6 +47,9 @@ const label = computed(() => (props.result.failed ? t.value('plan.pastNotPassed'
 
 <style scoped>
 .done {
+  /* Above the prerequisite lines, like a planned card. */
+  position: relative;
+  z-index: 1;
   display: grid;
   gap: 4px;
   padding: 10px 11px 9px;
@@ -47,6 +60,15 @@ const label = computed(() => (props.result.failed ? t.value('plan.pastNotPassed'
   text-align: left;
   color: var(--ink);
   cursor: pointer;
+}
+
+.highlighted {
+  border-color: var(--overprint);
+  box-shadow: 0 0 0 1px var(--overprint);
+}
+
+.dimmed {
+  opacity: 0.45;
 }
 
 .failed {
