@@ -27,8 +27,9 @@ export function useGradeShare() {
   }
 
   /** Subjects on My page with a mark, not yet shared, ready to send. */
+  // A retaken subject: only the last attempt is shared (one line per subject).
   const shareable = computed(() =>
-    profile.value.results.flatMap((r) => {
+    profile.value.results.filter((r, i, all) => !all.slice(i + 1).some((x) => x.code === r.code)).flatMap((r) => {
       if (r.mark === undefined || !data.value.subjects[r.code] || data.value.subjects[r.code]?.passFail || shared.value.includes(r.code)) return []
       const wamBand = wamBandFor(r.code)
       return wamBand ? [{ code: r.code, year: r.year, band: bandOf(r.mark) as GradeBand, wamBand }] : []
