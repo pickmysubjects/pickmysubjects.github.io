@@ -1003,6 +1003,7 @@ export const zhTW: Messages = {
     step: '第 {n} 步，共 3 步',
     qCourse: '你讀的是哪個學位？',
     qStart: '你什麼時候入學（或打算入學）？',
+    startFromRecord: "依「我的記錄」選好了：你最早的一門課在 {term}。不對的話可以改。",
     qMajor: '你想讀哪個主修？',
     notSure: '還沒決定',
     next: '下一步',

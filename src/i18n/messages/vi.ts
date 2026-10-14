@@ -1003,6 +1003,7 @@ export const vi: Messages = {
     step: 'Bước {n}/3',
     qCourse: 'Bạn học chương trình nào?',
     qStart: 'Bạn bắt đầu (hoặc sẽ bắt đầu) khi nào?',
+    startFromRecord: "Đã chọn theo Hồ sơ của tôi: môn sớm nhất của bạn ở {term}. Sai thì đổi lại nhé.",
     qMajor: 'Bạn nhắm chuyên ngành nào?',
     notSure: 'Chưa chắc',
     next: 'Tiếp',

@@ -1006,6 +1006,7 @@ export const en = {
     step: 'Step {n} of 3',
     qCourse: 'Which degree are you in?',
     qStart: 'When did (or will) you start?',
+    startFromRecord: "Chosen from My record: your earliest subject is in {term}. Change it if that's wrong.",
     qMajor: 'Which major are you aiming for?',
     notSure: 'Not sure yet',
     next: 'Next',

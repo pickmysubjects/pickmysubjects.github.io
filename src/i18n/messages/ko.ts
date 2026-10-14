@@ -1003,6 +1003,7 @@ export const ko: Messages = {
     step: '{n}/3단계',
     qCourse: '어떤 학위 과정인가요?',
     qStart: '언제 입학했나요 (또는 입학할 예정인가요)?',
+    startFromRecord: "내 기록에서 골랐어요: 가장 이른 과목이 {term}에 있어요. 틀리면 바꿔 주세요.",
     qMajor: '어떤 전공을 목표로 하나요?',
     notSure: '아직 모름',
     next: '다음',

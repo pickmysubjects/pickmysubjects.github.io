@@ -1003,6 +1003,7 @@ export const id: Messages = {
     step: 'Langkah {n} dari 3',
     qCourse: 'Kamu di program apa?',
     qStart: 'Kapan kamu mulai (atau akan mulai)?',
+    startFromRecord: "Dipilih dari Catatan saya: mata kuliah paling awalmu di {term}. Ubah kalau salah.",
     qMajor: 'Jurusan apa yang kamu tuju?',
     notSure: 'Belum yakin',
     next: 'Lanjut',

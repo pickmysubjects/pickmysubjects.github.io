@@ -1003,6 +1003,7 @@ export const ja: Messages = {
     step: 'ステップ {n} / 3',
     qCourse: 'どの学位に在籍していますか？',
     qStart: 'いつ入学しましたか（する予定ですか）？',
+    startFromRecord: "マイ記録から選びました：いちばん早い科目は {term} です。違っていれば変えてください。",
     qMajor: 'どのメジャーを目指しますか？',
     notSure: 'まだ決めていない',
     next: '次へ',

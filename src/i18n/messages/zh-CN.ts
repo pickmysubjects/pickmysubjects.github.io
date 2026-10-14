@@ -1003,6 +1003,7 @@ export const zhCN: Messages = {
     step: '第 {n} 步，共 3 步',
     qCourse: '你读的是哪个学位？',
     qStart: '你什么时候入学（或打算入学）？',
+    startFromRecord: "按“我的记录”选好了：你最早的一门课在 {term}。不对的话可以改。",
     qMajor: '你想读哪个主修？',
     notSure: '还没决定',
     next: '下一步',

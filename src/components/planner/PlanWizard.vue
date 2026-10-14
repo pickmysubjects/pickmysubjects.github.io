@@ -7,6 +7,8 @@ import { useDataset } from '@/composables/useDataset'
 import type { PlanSetup } from '@/composables/usePlan'
 import MajorPicker from './MajorPicker.vue'
 import { useI18n } from '@/i18n'
+import { useProfile } from '@/composables/useProfile'
+import { termLabel } from '@/i18n/format'
 
 /** Three plain questions, one at a time, then "Build my plan". */
 const props = withDefaults(
@@ -17,10 +19,33 @@ const emit = defineEmits<{ done: [setup: PlanSetup]; cancel: [] }>()
 const { t } = useI18n()
 const { data } = useDataset()
 
-const draft = shallowRef<PlanSetup>({ ...props.setup })
+const { profile } = useProfile()
+
+// The earliest semester on My record: you started no later than that. A summer or winter term
+// counts as the semester it sits before.
+const ORDER: Record<Period, number> = { summer: 0, 'semester-1': 1, winter: 2, 'semester-2': 3 }
+const fromRecord = computed(() => {
+  const dated = profile.value.results.filter((r) => r.year && r.period)
+  if (!dated.length) return null
+  const first = dated.reduce((a, b) => ((a.year as number) * 10 + ORDER[a.period as Period] <= (b.year as number) * 10 + ORDER[b.period as Period] ? a : b))
+  const period: Period = first.period === 'summer' || first.period === 'semester-1' ? 'semester-1' : 'semester-2'
+  return { year: first.year as number, period }
+})
+const key = (y: number, p: Period) => y * 10 + ORDER[p]
+
+// The record wins when it says you started earlier than the saved answer (it can't be later).
+const start0 =
+  fromRecord.value && key(fromRecord.value.year, fromRecord.value.period) < key(props.setup.startYear, props.setup.startPeriod)
+    ? { startYear: fromRecord.value.year, startPeriod: fromRecord.value.period }
+    : {}
+const draft = shallowRef<PlanSetup>({ ...props.setup, ...start0 })
 const step = shallowRef(0)
 const thisYear = new Date().getFullYear()
-const years = [thisYear - 2, thisYear - 1, thisYear, thisYear + 1]
+const firstYear = Math.min(thisYear - 2, fromRecord.value?.year ?? thisYear)
+const years = Array.from({ length: thisYear + 1 - firstYear + 1 }, (_, i) => firstYear + i)
+const startFromRecord = computed(
+  () => fromRecord.value !== null && draft.value.startYear === fromRecord.value.year && draft.value.startPeriod === fromRecord.value.period,
+)
 const periods: Period[] = ['semester-1', 'semester-2']
 
 // A major closed to new students stays only for those who started before it closed (or already chose it).
@@ -87,6 +112,7 @@ function chooseCourse(c: Course): void {
 
     <div v-else-if="step === 1" class="q">
       <h2 class="q-title">{{ t('wizard.qStart') }}</h2>
+      <p v-if="startFromRecord && fromRecord" class="from-record">{{ t('wizard.startFromRecord', { term: termLabel(t, fromRecord) }) }}</p>
       <div class="options options-grid">
         <template v-for="y in years" :key="y">
           <button
@@ -313,5 +339,10 @@ function chooseCourse(c: Course): void {
   margin-top: 10px;
   font-size: 0.9375rem;
   color: var(--accent);
+}
+.from-record {
+  margin: -4px 0 4px;
+  font-size: 0.875rem;
+  color: var(--good);
 }
 </style>
