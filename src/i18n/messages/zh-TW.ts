@@ -167,6 +167,7 @@ export const zhTW: Messages = {
   genNote: {
     shortTerm: "{code} 只在學期之外開，所以排在 {year} 年{period}。",
     shortTermChain: "{code} 排在 {year} 年{period}，這樣後面的課不會因此延後一個學期。",
+    finishEarlier: "把 {codes} 放在 {term}，這樣可以早一個學期畢業，不用為一門課多讀半年。",
     keptOpen: "先排了 {codes}：這個方向 {n} 個主修大多從它們開始，之後選哪個都來得及。",
     balanced: "把 {a} 和 {b} 換了學期，讓每學期的壓力更平均。",
     lighter: "選了 {b} 而不是 {a}，免得那個學期太重。",

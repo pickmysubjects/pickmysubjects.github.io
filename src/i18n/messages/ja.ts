@@ -167,6 +167,7 @@ export const ja: Messages = {
   genNote: {
     shortTerm: "{code} は学期外にしか開講されないため、{year} 年の{period}に入れました。",
     shortTermChain: "{code} は {year} 年の{period}に入れています。後に続く科目が1学期遅れないようにするためです。",
+    finishEarlier: "{codes} を {term} に入れたので、1 科目のためにもう半年残らず、1 学期早く卒業できます。",
     keptOpen: "先に {codes} を入れました。この分野の {n} 専攻の多くがここから始まるので、後でどれでも選べます。",
     balanced: "負担を均すため、{a} と {b} の学期を入れ替えました。",
     lighter: "その学期が重くならないよう、{a} ではなく {b} を選びました。",

@@ -167,6 +167,7 @@ export const ko: Messages = {
   genNote: {
     shortTerm: "{code}은(는) 학기 외에만 열려서 {year}년 {period}에 넣었어요.",
     shortTermChain: "{code}은(는) {year}년 {period}에 배치했습니다. 이어지는 과목이 한 학기 밀리지 않도록 하기 위해서입니다.",
+    finishEarlier: "{codes}를 {term}에 넣어서, 한 과목 때문에 반년 더 다니지 않고 한 학기 일찍 졸업해요.",
     keptOpen: "먼저 {codes}을(를) 넣었어요. 이 분야 {n}개 전공 대부분이 여기서 시작해서, 나중에 어느 전공이든 고를 수 있어요.",
     balanced: "학기별 부담을 고르게 하려고 {a}와 {b}의 학기를 바꿨어요.",
     lighter: "그 학기가 너무 무거워지지 않게 {a} 대신 {b}를 골랐어요.",

@@ -167,6 +167,7 @@ export const vi: Messages = {
   genNote: {
     shortTerm: "{code} chỉ mở ngoài học kỳ chính, nên được xếp vào {period} {year}.",
     shortTermChain: "{code} được xếp vào {period} {year} để các môn học sau không bị chậm một học kỳ.",
+    finishEarlier: "Xếp {codes} vào {term} để bạn tốt nghiệp sớm một học kỳ, không phải học thêm nửa năm chỉ vì một môn.",
     keptOpen: "Đã xếp {codes} trước: phần lớn {n} chuyên ngành trong lĩnh vực này bắt đầu từ đây, nên bạn vẫn chọn được bất kỳ ngành nào.",
     balanced: "Đã đổi học kỳ của {a} và {b} để chia đều áp lực.",
     lighter: "Chọn {b} thay cho {a} để kỳ đó không quá nặng.",

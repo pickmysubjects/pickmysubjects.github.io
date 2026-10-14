@@ -167,6 +167,7 @@ export const id: Messages = {
   genNote: {
     shortTerm: "{code} hanya dibuka di luar semester, jadi direncanakan di {period} {year}.",
     shortTermChain: "{code} direncanakan di {period} {year} agar mata kuliah sesudahnya tidak mundur satu semester.",
+    finishEarlier: "{codes} di {term}, jadi kamu lulus satu semester lebih cepat tanpa kembali hanya untuk satu mata kuliah.",
     keptOpen: "{codes} direncanakan dulu: sebagian besar dari {n} jurusan di bidang ini dimulai dari sini, jadi kamu masih bisa pilih yang mana pun.",
     balanced: "Menukar semester {a} dan {b} supaya bebannya lebih merata.",
     lighter: "Memilih {b} alih-alih {a} agar semester itu tidak terlalu berat.",

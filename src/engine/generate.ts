@@ -20,6 +20,8 @@ export interface GenerateInput {
   startYear: number
   startPeriod: Period
   /** Upper bound on terms to plan. Defaults to what the remaining points need, capped at 10. */
+  /** With useShortTerms: electives may also go in summer and winter when points are short. */
+  fillShortTerms?: boolean
   maxTerms?: number
   /**
    * No major yet, but a field in mind: the majors still in the running. The first-year subjects
@@ -61,7 +63,8 @@ export function generatePlan(raw: GenerateInput): GenerateResult {
   const shortfall = (r: GenerateResult) =>
     r.unplaced.length * 100 + checkCourse(r.plan, input.data).statuses.filter((st) => st.status === 'fail').length
   let result = buildPlan(input)
-  if (input.maxTerms !== undefined || shortfall(result) === 0) return result
+  if (input.maxTerms !== undefined) return result
+  if (shortfall(result) === 0) return finishEarlier(input, result, shortfall)
   // Before planning longer: a chain subject that also runs in summer or winter (CHEM10004 for a
   // mid-year start) can go there and keep the degree to its usual length.
   const viaShort = buildPlan({ ...input, useShortTerms: true })
@@ -74,6 +77,27 @@ export function generatePlan(raw: GenerateInput): GenerateResult {
     result = longer
   }
   return result
+}
+
+/**
+ * A last semester holding a summer's worth or less (a failed subject to make up, say): try one
+ * semester fewer with summer and winter terms, as students do, and keep it if every rule still
+ * holds. Otherwise the longer plan stands.
+ */
+function finishEarlier(input: GenerateInput, result: GenerateResult, shortfall: (r: GenerateResult) => number): GenerateResult {
+  const main = result.plan.terms.filter((t) => t.period === 'semester-1' || t.period === 'semester-2')
+  const last = main.at(-1)
+  if (!last || main.length < 2) return result
+  const lastPoints = last.subjects.reduce((sum, c) => sum + (input.data.subjects[c]?.points ?? 12.5), 0)
+  if (lastPoints > SHORT_TERM_POINTS) return result
+  const shorter = buildPlan({ ...input, maxTerms: main.length - 1, useShortTerms: true, fillShortTerms: true })
+  if (shortfall(shorter) > 0 || shorter.unplaced.length) return result
+  // Unused summer/winter slots are dropped; only the ones the plan fills stay.
+  shorter.plan.terms = shorter.plan.terms.filter((t) => t.subjects.length > 0 || (t.period !== 'summer' && t.period !== 'winter'))
+  for (const t of shorter.plan.terms.filter((x) => (x.period === 'summer' || x.period === 'winter') && x.subjects.length)) {
+    shorter.notes.push(note('finishEarlier', { year: t.year, period: t.period, codes: t.subjects.join(', ') }, `${t.subjects.join(', ')} in ${t.period} ${t.year}, so the degree finishes a semester earlier.`))
+  }
+  return shorter
 }
 
 function buildPlan(input: GenerateInput): GenerateResult {
@@ -121,12 +145,13 @@ function buildPlan(input: GenerateInput): GenerateResult {
   const depth = dependentDepth(pending, data, needs)
 
   const electives = new Set<string>()
-  const fill = (term: PlanTerm, termIndex: number, relaxed = false): void => {
+  const fill = (term: PlanTerm, termIndex: number, relaxed = false, upTo = Infinity): void => {
     if (!course) return
     const before = new Set([...completed, ...terms.slice(0, termIndex).flatMap((t) => t.subjects)])
     let used = preload(term) + term.subjects.reduce((sum, c) => sum + (data.subjects[c]?.points ?? 12.5), 0)
-    while (used < load) {
-      const pick = pickElective({ input, course, term, before, placed: allPlaced(), completed, room: load - used, focus, reserved: pending, opens, progress: (termIndex + 1) / terms.length, relaxed })
+    const cap = Math.min(isShort(term) ? SHORT_TERM_POINTS : load, used + upTo)
+    while (used < cap) {
+      const pick = pickElective({ input, course, term, before, placed: allPlaced(), completed, room: cap - used, focus, reserved: pending, opens, progress: (termIndex + 1) / terms.length, relaxed })
       if (!pick) break
       term.subjects.push(pick.code)
       electives.add(pick.code)
@@ -178,6 +203,15 @@ function buildPlan(input: GenerateInput): GenerateResult {
     // Then electives aimed at the most pressing unmet requirement.
     if (!isShort(term)) fill(term, termIndex)
   })
+  // Trying to finish a semester earlier: electives also go in summer and winter, earliest first,
+  // until the course total is reached.
+  if (input.fillShortTerms && course) {
+    const total = () => [...completed, ...allPlaced()].reduce((sum, c) => sum + (data.subjects[c]?.points ?? 12.5), 0)
+    terms.forEach((t, i) => {
+      // Only what's missing: a summer subject is extra study, not a place to park electives.
+      if (isShort(t) && total() < course.totalPoints) fill(t, i, false, course.totalPoints - total())
+    })
+  }
   // Summer and winter terms nothing needed are dropped again.
   for (let i = terms.length - 1; i >= 0; i--) if (isShort(terms[i] as PlanTerm) && (terms[i] as PlanTerm).subjects.length === 0) terms.splice(i, 1)
   for (const t of terms.filter(isShort)) {

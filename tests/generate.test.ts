@@ -322,3 +322,23 @@ describe('generatePlan keeps chains to the usual length', () => {
     }
   }, 120_000)
 })
+
+describe('one subject short after a fail', () => {
+  it('uses a summer or winter term instead of a whole extra semester', async () => {
+    const { buildDataset } = await import('../scripts/dataset')
+    const { dataset } = buildDataset('real')
+    const row = (code: string, year: number, period: 'semester-1' | 'semester-2', mark?: number) => ({ code, year, period, ...(mark === undefined ? {} : { mark }) })
+    const results = [
+      row('COMP10001', 2023, 'semester-1', 81), row('ECON10004', 2023, 'semester-1', 81), row('MAST10005', 2023, 'semester-1', 81), row('SCIE10005', 2023, 'semester-1'),
+      row('COMP10002', 2023, 'semester-2', 81), row('MAST10006', 2023, 'semester-2', 69), row('MAST10007', 2023, 'semester-2', 75), row('MGMT10002', 2023, 'semester-2', 85),
+      row('COMP20007', 2024, 'semester-1', 64), row('ECON20002', 2024, 'semester-1', 84), row('INFO20003', 2024, 'semester-1', 74), row('MGMT20002', 2024, 'semester-1', 82),
+      row('COMP30020', 2024, 'semester-2', 68), row('MAST20018', 2024, 'semester-2', 71), row('MAST20026', 2024, 'semester-2', 48), row('SWEN20003', 2024, 'semester-2', 75),
+    ]
+    const profile: Profile = { results, skills: {}, interests: [], goal: 'balanced' }
+    const r = generatePlan({ data: dataset, profile, course: 'B-SCI', courseYear: 2026, major: 'computing-and-software-systems', startYear: 2025, startPeriod: 'semester-1' })
+    const main = r.plan.terms.filter((t) => t.period === 'semester-1' || t.period === 'semester-2')
+    expect(main.at(-1)).toMatchObject({ year: 2025, period: 'semester-2' })
+    expect(r.plan.terms.some((t) => (t.period === 'summer' || t.period === 'winter') && t.subjects.length > 0)).toBe(true)
+    expect(r.notes.some((n) => typeof n !== 'string' && n.key === 'finishEarlier')).toBe(true)
+  })
+})
