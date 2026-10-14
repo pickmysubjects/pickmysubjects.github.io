@@ -40,8 +40,14 @@ interface Route {
 const { t } = useI18n()
 
 // Summer (Jan–Feb) and winter (Jun–Jul) terms the student could add, within the plan's span.
+// From the first semester on the board, recorded ones included (a summer taken back then can be
+// added and marked done), to the plan's last.
 const shortTerms = computed(() => {
-  const first = props.terms[0]
+  const recorded = props.past?.terms ?? []
+  const first = [...recorded, ...props.terms].reduce<{ year: number; period: Period } | undefined>(
+    (a, b) => (a && termKey(a.year, a.period) <= termKey(b.year, b.period) ? a : b),
+    undefined,
+  )
   const last = props.terms.at(-1)
   if (!first || !last) return []
   const from = termKey(first.year, first.period)
@@ -50,7 +56,8 @@ const shortTerms = computed(() => {
   for (let year = first.year; year <= last.year; year++) {
     for (const period of ['summer', 'winter'] as const) {
       const key = termKey(year, period)
-      if (key > from && key < to && !props.terms.some((x) => x.year === year && x.period === period)) slots.push({ year, period })
+      const taken = [...props.terms, ...recorded].some((x) => x.year === year && x.period === period)
+      if (key > from && key < to && !taken) slots.push({ year, period })
     }
   }
   return slots
@@ -83,14 +90,14 @@ const doneIn = (t: PlanTerm) => props.past?.terms.find((p) => sameTerm(p, t))?.r
  * already passed (the record's columns sit before the plan; undated ones first of all).
  */
 const edges = computed(() => {
+  // Ordered by when, not by column: recorded and planned semesters interleave.
   const termOf = new Map<string, number>()
-  const pastCols = pastOnly.value
-  for (const r of props.past?.undated ?? []) if (!r.failed) termOf.set(r.code, -pastCols.length - 1)
-  pastCols.forEach((t, k) => t.results.forEach((r) => !r.failed && termOf.set(r.code, k - pastCols.length)))
-  props.terms.forEach((t, i) => {
-    for (const r of doneIn(t)) if (!r.failed) termOf.set(r.code, i)
-    t.subjects.forEach((c) => termOf.set(c, i))
-  })
+  for (const r of props.past?.undated ?? []) if (!r.failed) termOf.set(r.code, -Infinity)
+  for (const t of pastOnly.value) for (const r of t.results) if (!r.failed) termOf.set(r.code, termKey(t.year, t.period))
+  for (const t of props.terms) {
+    for (const r of doneIn(t)) if (!r.failed) termOf.set(r.code, termKey(t.year, t.period))
+    for (const c of t.subjects) termOf.set(c, termKey(t.year, t.period))
+  }
   const out: { from: string; to: string }[] = []
   for (const [code, i] of termOf) {
     const s = props.subjects[code]
@@ -160,6 +167,13 @@ const MIN_TERM = 185
 const GAP = 20
 // The add-term buttons (about 158px) plus the track's own padding.
 const TOOLS = 170
+// Every column in time order: recorded-only semesters and planned ones (which may hold done subjects).
+const columns = computed(() =>
+  [
+    ...pastOnly.value.map((p) => ({ kind: 'past' as const, key: termKey(p.year, p.period), p, i: -1 })),
+    ...props.terms.map((term, i) => ({ kind: 'plan' as const, key: termKey(term.year, term.period), term, i })),
+  ].sort((a, b) => a.key - b.key),
+)
 const pastCount = computed(() => pastOnly.value.length + (props.past?.undated.length ? 1 : 0))
 const trackWidth = computed(() => `max(100%, ${(props.terms.length + pastCount.value) * (MIN_TERM + GAP) + TOOLS}px)`)
 </script>
@@ -181,40 +195,42 @@ const trackWidth = computed(() => `max(100%, ${(props.terms.length + pastCount.v
         @open="emit('open', $event)"
         @hover="hovered = $event"
       />
-      <PastTermColumn
-        v-for="p in pastOnly"
-        :key="`past-${p.year}-${p.period}`"
-        :term="p"
-        :results="p.results"
-        :subjects="subjects"
-        :planned="terms"
-        :load="load"
-        :related="related"
-        @open="emit('open', $event)"
-        @hover="hovered = $event"
-      />
-      <TermColumn
-        v-for="(term, i) in terms"
-        :key="`${term.year}-${term.period}`"
-        :term="term"
-        :term-index="i"
-        :done="doneIn(term)"
-        :subjects="subjects"
-        :issues-by-code="issuesByCode"
-        :term-issues="issues.filter((x) => x.termIndex === i && !x.subject)"
-        :course="course"
-        :load="term.period === 'summer' || term.period === 'winter' ? Math.min(SHORT_TERM_LOAD, load) : load"
-        :options="options"
-        :roles="roles"
-        :related="related"
-        @add="emit('add', i, $event)"
-        @remove="emit('remove', i, $event)"
-        @drop="(code, from) => emit('move', code, from, i)"
-        @move-by="(code, delta) => onMoveBy(code, i, delta)"
-        @hover="hovered = $event"
-        @remove-term="emit('removeTerm', i)"
-        @open="emit('open', $event)"
-      />
+      <template v-for="col in columns" :key="col.key">
+        <PastTermColumn
+          v-if="col.kind === 'past'"
+          :key="`past-${col.key}`"
+          :term="col.p"
+          :results="col.p.results"
+          :subjects="subjects"
+          :planned="terms"
+          :load="load"
+          :related="related"
+          @open="emit('open', $event)"
+          @hover="hovered = $event"
+        />
+        <TermColumn
+          v-else
+          :key="`${col.term.year}-${col.term.period}`"
+          :term="col.term"
+          :term-index="col.i"
+          :done="doneIn(col.term)"
+          :subjects="subjects"
+          :issues-by-code="issuesByCode"
+          :term-issues="issues.filter((x) => x.termIndex === col.i && !x.subject)"
+          :course="course"
+          :load="col.term.period === 'summer' || col.term.period === 'winter' ? Math.min(SHORT_TERM_LOAD, load) : load"
+          :options="options"
+          :roles="roles"
+          :related="related"
+          @add="emit('add', col.i, $event)"
+          @remove="emit('remove', col.i, $event)"
+          @drop="(code, from) => emit('move', code, from, col.i)"
+          @move-by="(code, delta) => onMoveBy(code, col.i, delta)"
+          @hover="hovered = $event"
+          @remove-term="emit('removeTerm', col.i)"
+          @open="emit('open', $event)"
+        />
+      </template>
       <div class="term-tools">
         <button class="button button-quiet" type="button" @click="emit('addTerm')">{{ t('plan.addTerm') }}</button>
         <template v-if="shortTerms.length">
