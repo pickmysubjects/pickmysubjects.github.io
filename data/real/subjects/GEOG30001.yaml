@@ -12,7 +12,16 @@ prerequisites:
         - GEOG30023
         - EVSC20008
         - MAST20031
-    - manual: 25 credit points of Level 2 Geography or Earth Sciences subjects (or equivalent as approved by the subject coordinator)
+    - any:
+        - points:
+            min: 25
+            levels:
+              - 2
+            areas:
+              - GEOG
+              - ERTH
+              - GEOL
+        - manual: 25 credit points of Level 2 Geography or Earth Sciences subjects (or equivalent as approved by the subject coordinator)
 corequisites: none
 non_allowed: []
 assessment:

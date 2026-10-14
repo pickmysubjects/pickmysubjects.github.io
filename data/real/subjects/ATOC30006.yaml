@@ -9,7 +9,13 @@ prerequisites:
   any:
     - ATOC20003
     - all:
-        - manual: A minimum of 12.5 credit points of Level 2 Physics or Mathematics subjects
+        - points:
+            min: 12.5
+            levels:
+              - 2
+            areas:
+              - PHYC
+              - MAST
         - any:
             - MAST10005
             - manual: Study score of 30 or more in VCE Specialist Mathematics 3/4 or equivalent

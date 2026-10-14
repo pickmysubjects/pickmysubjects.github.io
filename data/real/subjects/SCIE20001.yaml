@@ -6,7 +6,10 @@ offerings:
   "2026":
     - semester-2
 prerequisites:
-  manual: A minimum of 50 credit points of Level 1 subjects
+  points:
+    min: 50
+    levels:
+      - 1
 corequisites: none
 non_allowed: []
 assessment:

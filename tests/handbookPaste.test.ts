@@ -377,8 +377,10 @@ describe('an examination held mid-semester', () => {
       expect(r.prerequisites).toMatchObject({ all: [{ points: { min: 100 } }, { manual: expect.any(String) }] })
     })
 
-    it('points of a named level or discipline stay for a human', () => {
-      expect(pre('A minimum of 25 credit points of Level 2 Earth Science, Chemistry or Biology Subjects').prerequisites).toMatchObject({ manual: expect.any(String) })
+    it('points of named fields become a points rule; a field we cannot map stays for a human', () => {
+      expect(pre('A minimum of 25 credit points of Level 2 Earth Science, Chemistry or Biology Subjects').prerequisites).toEqual({
+        points: { min: 25, levels: [2], areas: ['ERTH', 'GEOL', 'CHEM', 'BIOL'] },
+      })
       expect(pre('A minimum of 25 credit points of university-level mathematics').prerequisites).toMatchObject({ manual: expect.any(String) })
     })
 
@@ -420,5 +422,25 @@ describe('pass/fail subjects', () => {
 
   it('leaves an ordinary subject alone', () => {
     expect(parseHandbookPaste('Assessment\nExam 60%').passFail).toBeUndefined()
+  })
+})
+
+describe('points of named fields', () => {
+  it('reads levels and fields into a points rule, and keeps "or equivalent" as a by-hand way', async () => {
+    const { parseDisciplinePoints } = await import('../src/engine/handbookPaste')
+    expect(parseDisciplinePoints('12.5 credit points of Level 1 or Level 2 Geoscience, Geography, Chemistry or Biology subjects')).toEqual({
+      points: { min: 12.5, levels: [1, 2], areas: ['ERTH', 'GEOL', 'GEOG', 'CHEM', 'BIOL'] },
+    })
+    expect(parseDisciplinePoints('A minimum of 100 credit points of Level 1 and/or Level 2 subjects')).toEqual({ points: { min: 100, levels: [1, 2] } })
+    expect(parseDisciplinePoints('25 credit points of Level 2 Geography subjects (or equivalent as approved)')).toMatchObject({ any: [{ points: { areas: ['GEOG'] } }, { manual: expect.any(String) }] })
+    expect(parseDisciplinePoints('A minimum of 12.5 credit points of a level-1 quantitative science subject')).toBeNull()
+  })
+
+  it('checks such a rule against what was passed, by level and code prefix', async () => {
+    const { evaluateField } = await import('../src/engine/expr')
+    const rule = { points: { min: 12.5, levels: [1, 2], areas: ['GEOG', 'CHEM'] } }
+    const subjects = { CHEM10003: { code: 'CHEM10003', level: 1, area: 'CHEM', points: 12.5 }, COMP10001: { code: 'COMP10001', level: 1, area: 'COMP', points: 12.5 } } as never
+    expect(evaluateField(rule, { completed: new Set(['CHEM10003']), subjects }).status).toBe('ok')
+    expect(evaluateField(rule, { completed: new Set(['COMP10001']), subjects }).status).toBe('fail')
   })
 })

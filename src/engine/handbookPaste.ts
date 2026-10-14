@@ -351,6 +351,8 @@ function parseBlock(lines: string[], label: string, warnings: string[]): ReqExpr
   if (!sentence) return null
   const admission = readAdmission(sentence)
   if (admission) return admission
+  const disciplines = parseDisciplinePoints(sentence)
+  if (disciplines) return disciplines
   const points = /^(\d+(?:\.\d+)?) (?:credit )?points? (?:of|at) level (\d)/i.exec(sentence)
   if (points) return { points: { min: Number(points[1]), level: Number(points[2]) } }
   // "Completion of 100 credit points of study" / "A minimum of 200 credit points of Undergraduate study".
@@ -618,4 +620,44 @@ export function parseBreadthFor(text: string): string[] | undefined {
     out.push(l)
   }
   return out.length ? out : undefined
+}
+
+/**
+ * Fields of study as the Handbook names them in points rules, and the code prefixes that teach
+ * them. Only fields with a clear set of codes: "quantitative science" or "a Science degree" stay
+ * for a human.
+ */
+const DISCIPLINES: [RegExp, string[]][] = [
+  [/^(?:geoscience|earth sciences?|geology)$/i, ['ERTH', 'GEOL']],
+  [/^geography$/i, ['GEOG']],
+  [/^chemistry$/i, ['CHEM']],
+  [/^biology$/i, ['BIOL']],
+  [/^(?:mathematics|maths|statistics)$/i, ['MAST']],
+  [/^physics$/i, ['PHYC']],
+  [/^psychology$/i, ['PSYC']],
+  [/^environmental (?:studies|science)$/i, ['ENVS', 'EVSC']],
+]
+
+/**
+ * "12.5 credit points of Level 1 or Level 2 Geoscience, Geography, Chemistry or Biology subjects"
+ * as a points rule over those levels and code prefixes. A trailing "(or equivalent …)" keeps the
+ * sentence as a by-hand alternative. Anything with a field not in the list stays free text.
+ */
+export function parseDisciplinePoints(sentence: string): ReqExpr | null {
+  // Levels only, no field: "A minimum of 25 credit points of Level 2 subjects".
+  const plain = /^(?:completion of )?(?:a minimum of |at least )?(\d+(?:\.\d+)?) credit points? of ((?:level[- ]?\d)(?:\s*(?:,|or|and\/or|and|\/)\s*(?:level[- ]?)?\d)*)\s+subjects?\.?$/i.exec(sentence.trim())
+  if (plain) return { points: { min: Number(plain[1]), levels: [...new Set([...(plain[2] as string).matchAll(/\d/g)].map((x) => Number(x[0])))] } }
+  const m = /^(?:completion of )?(?:a minimum of |at least )?(\d+(?:\.\d+)?) credit points? of (?:an? )?((?:level[- ]?\d)(?:\s*(?:,|or|and\/or|and|\/)\s*(?:level[- ]?)?\d)*)\s+(.+?)\s+subjects?\b(.*)$/i.exec(sentence.trim())
+  if (!m) return null
+  const levels = [...(m[2] as string).matchAll(/\d/g)].map((x) => Number(x[0]))
+  const names = (m[3] as string).split(/\s*,\s*|\s+or\s+|\s+and\s+|\s*\/\s*/).filter(Boolean)
+  const areas: string[] = []
+  for (const n of names) {
+    const hit = DISCIPLINES.find(([re]) => re.test(n.trim()))
+    if (!hit) return null
+    areas.push(...hit[1])
+  }
+  const rule: ReqExpr = { points: { min: Number(m[1]), levels: [...new Set(levels)], areas: [...new Set(areas)] } }
+  const rest = (m[4] as string).replace(/^[\s.;]+|[\s.;]+$/g, '')
+  return rest ? { any: [rule, { manual: sentence.trim() }] } : rule
 }

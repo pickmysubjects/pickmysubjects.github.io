@@ -7,7 +7,13 @@ offerings:
     - semester-1
 prerequisites:
   all:
-    - manual: A minimum of 12.5 credit points of Level 1 Chemistry or Physics subjects
+    - points:
+        min: 12.5
+        levels:
+          - 1
+        areas:
+          - CHEM
+          - PHYC
     - manual: VCE Maths Methods or equivalent (including admission into the Bachelor of Science)
 corequisites: none
 non_allowed: []

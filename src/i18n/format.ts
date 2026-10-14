@@ -169,9 +169,10 @@ function describeExpr(t: Translate, e: ReqExpr): string {
       .join(sep)
   }
   if ('points' in e) {
-    const { min, level, area, from } = e.points
-    // e.g. "25 points of MAST" or "25 points of level 2 COMP": keep the subject area.
-    const what = [level !== undefined ? t('expr.level', { level }) : '', area ?? ''].filter(Boolean).join(' ')
+    const { min, level, area, levels, areas, from } = e.points
+    // e.g. "25 points of MAST" or "12.5 points of level 1/2 GEOG/CHEM": keep the subject areas.
+    const lv = levels ?? (level !== undefined ? [level] : [])
+    const what = [lv.length ? t('expr.level', { level: lv.join('/') }) : '', (areas ?? (area ? [area] : [])).join('/')].filter(Boolean).join(' ')
     const base = what ? t('expr.pointsOf', { n: min, what }) : t('expr.points', { n: min })
     return from ? `${base} ${t('expr.from', { codes: from.join(', ') })}` : base
   }

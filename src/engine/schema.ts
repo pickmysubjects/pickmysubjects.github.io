@@ -122,7 +122,7 @@ export type ReqExpr =
   | { subject: string }
   | { all: ReqExpr[] }
   | { any: ReqExpr[] }
-  | { points: { min: number; level?: number; area?: string; from?: string[] } }
+  | { points: { min: number; level?: number; area?: string; levels?: number[]; areas?: string[]; from?: string[] } }
   | { admission: string; note?: string }
   | { manual: string }
 
@@ -143,6 +143,9 @@ const reqExpr: z.ZodType<ReqExpr> = z.lazy(() =>
             min: z.number().positive(),
             level: z.number().int().min(1).max(9).optional(),
             area: z.string().optional(),
+            // Any of these levels / code prefixes ("Level 1 or 2 Geography or Chemistry").
+            levels: z.array(z.number().int().min(1).max(9)).min(1).optional(),
+            areas: z.array(z.string().regex(/^[A-Z]{4}$/)).min(1).optional(),
             from: z.array(subjectCode).optional(),
           })
           .strict(),

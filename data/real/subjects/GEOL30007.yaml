@@ -7,7 +7,15 @@ offerings:
     - semester-2
 prerequisites:
   any:
-    - manual: A minimum of 25 credit points of Level 2 Earth Science, Chemistry or Biology Subjects
+    - points:
+        min: 25
+        levels:
+          - 2
+        areas:
+          - ERTH
+          - GEOL
+          - CHEM
+          - BIOL
     - manual: By arrangement with subject co-ordinators
 corequisites: none
 non_allowed: []

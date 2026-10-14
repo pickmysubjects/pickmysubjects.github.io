@@ -61,21 +61,24 @@ export function admissionCourses(text: string): string[] {
 }
 
 function evaluatePoints(
-  req: { min: number; level?: number; area?: string; from?: string[] },
+  req: { min: number; level?: number; area?: string; levels?: number[]; areas?: string[]; from?: string[] },
   ctx: EvalContext,
 ): EvalResult {
+  const levels = req.levels ?? (req.level !== undefined ? [req.level] : undefined)
+  const areas = req.areas ?? (req.area !== undefined ? [req.area] : undefined)
   let total = 0
   let unknownCompleted = false
   for (const code of ctx.completed) {
     if (req.from && !req.from.includes(code)) continue
     const s = ctx.subjects[code]
     if (!s) {
-      // A completed subject we have no data for might count towards the threshold.
-      unknownCompleted = true
+      // No data for it: the code still gives its area and level (MAST20018: MAST, level 2), so
+      // only one that could fit makes the answer "can't tell".
+      if ((!areas || areas.includes(code.slice(0, 4))) && (!levels || levels.includes(Number(code[4])))) unknownCompleted = true
       continue
     }
-    if (req.level !== undefined && s.level !== req.level) continue
-    if (req.area !== undefined && s.area !== req.area) continue
+    if (levels && !levels.includes(s.level)) continue
+    if (areas && !areas.includes(s.area)) continue
     total += s.points
   }
   if (total >= req.min) return ok()
@@ -110,8 +113,9 @@ export function describe(expr: ReqExpr): string {
   if ('all' in expr) return joinParts(expr.all, ' and ')
   if ('any' in expr) return joinParts(expr.any, ' or ')
   if ('points' in expr) {
-    const { min, level, area, from } = expr.points
-    const where = [level !== undefined ? `level ${level}` : '', area ?? ''].filter(Boolean).join(' ')
+    const { min, level, area, levels, areas, from } = expr.points
+    const lv = levels ?? (level !== undefined ? [level] : [])
+    const where = [lv.length ? `level ${lv.join(' or ')}` : '', (areas ?? (area ? [area] : [])).join('/')].filter(Boolean).join(' ')
     const fromText = from ? ` from ${from.join(', ')}` : ''
     return `${min} points${where ? ` of ${where}` : ''}${fromText}`
   }

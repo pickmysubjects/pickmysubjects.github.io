@@ -568,19 +568,22 @@ function clashes(code: string, done: Set<string>, required: Set<string>, data: D
  * subjects that run most often, until the threshold is met.
  */
 function pickForPoints(
-  req: { min: number; level?: number; area?: string; from?: string[] },
+  req: { min: number; level?: number; area?: string; levels?: number[]; areas?: string[]; from?: string[] },
   done: Set<string>,
   required: Set<string>,
   data: Dataset,
   course: string,
 ): string[] {
-  // Points of any study ("200 points before this capstone"): the degree's own points get there,
-  // and the subject is placed once they have. Adding subjects for it only piles up first-years.
-  if (req.from === undefined && req.level === undefined && req.area === undefined) return []
+  const levels = req.levels ?? (req.level !== undefined ? [req.level] : undefined)
+  const areas = req.areas ?? (req.area !== undefined ? [req.area] : undefined)
+  // Points of any study, or of a level only ("200 points before this capstone", "25 points of
+  // level 2"): the degree's own points get there, and the subject is placed once they have.
+  // Adding subjects for it only piles up first-years.
+  if (req.from === undefined && areas === undefined) return []
   const fits = (s: Subject) =>
     (req.from === undefined || req.from.includes(s.code)) &&
-    (req.level === undefined || s.level === req.level) &&
-    (req.area === undefined || s.area === req.area)
+    (levels === undefined || levels.includes(s.level)) &&
+    (areas === undefined || areas.includes(s.area))
   // What's done or already required counts first: "200 points of study" before a capstone is
   // mostly the major itself, not a pile of extra first-year subjects.
   let have = [...new Set([...done, ...required])].reduce((sum, c) => {

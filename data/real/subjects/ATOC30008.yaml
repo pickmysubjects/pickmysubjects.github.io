@@ -12,7 +12,14 @@ prerequisites:
         - EVSC20007
     - all:
         - MAST10005
-        - manual: A minimum of 12.5 credit points of Level 2 Physics, Mathematics or Chemistry subjects
+        - points:
+            min: 12.5
+            levels:
+              - 2
+            areas:
+              - PHYC
+              - MAST
+              - CHEM
 corequisites: none
 non_allowed:
   - ATOC20002

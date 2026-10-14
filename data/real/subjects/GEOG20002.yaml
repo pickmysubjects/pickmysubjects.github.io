@@ -13,7 +13,16 @@ prerequisites:
         - ERTH10002
         - EVSC10001
     - ENVS10002
-    - manual: a minimum of 25 credit points of Level 1 Geography, Environmental Studies or Earth sciences subjects
+    - points:
+        min: 25
+        levels:
+          - 1
+        areas:
+          - GEOG
+          - ENVS
+          - EVSC
+          - ERTH
+          - GEOL
     - manual: An equivalent approved by the subject coordinator.
 corequisites: none
 non_allowed:

@@ -204,7 +204,9 @@ describe('plan builder spreads the load (real data)', () => {
     // Review summaries now flag real heavy subjects too, so a few more semesters carry a note.
     // Agricultural Science (added 2026-10-13) brings one more that no swap can fix: two of its
     // options carry six assessment tasks each and only run in Semester 1.
-    expect(share(profile())).toBeLessThan(0.085)
+    // Points-of-field prerequisites ("12.5 points of level 1 or 2 Geography…", 2026-10-14) are now
+    // checked and planned for, so geoscience plans carry the subjects they really need: one more.
+    expect(share(profile())).toBeLessThan(0.09)
     // Weak at maths, many science majors can't avoid two maths subjects somewhere (and the
     // data has only maths-based level-2 breadth so far; physics and the engineering-systems
     // majors now carry their real maths prerequisites too): flagged, but never left fixable.
