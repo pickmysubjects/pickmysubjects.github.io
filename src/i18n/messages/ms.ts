@@ -257,6 +257,9 @@ export const ms: Messages = {
     eligibilityUnknown: 'Kelayakan belum disahkan: {needs}.',
   },
   record: {
+    levelLegend: "Pilih ikut markah biasa anda dalam subjek jenis ini (subjek sekolah jika belum masuk universiti). Tidak pasti? Biarkan kosong; ketik sekali lagi untuk padam.",
+    stepDone: "Selesai",
+    stepFirst: "Mula di sini",
     step: "Langkah {n}",
     step1: "Ijazah dan matlamat",
     step2: "Subjek selesai",
@@ -300,8 +303,6 @@ export const ms: Messages = {
     remove: 'Buang',
     interestsTitle: 'Apa yang anda mahu pelajari?',
     skillsTitle: 'Kekuatan anda',
-    skillsHint: 'Pilih yang anda pasti sahaja, biarkan selebihnya kosong; ketik sekali lagi untuk padam.',
-    skillsAnchor: "Pilih ikut markah yang biasa anda dapat dalam subjek jenis ini, bukan perasaan: kuat = 80+ (H1), baik = 75–79 (H2A), sederhana = 70–74 (H2B), lemah sedikit = 60–69, sukar = bawah 60 atau pernah gagal. Belum masuk universiti? Ikut subjek yang sama di sekolah. Belum pernah belajar? Biarkan kosong.",
     workTitle: "Berapa jam seminggu anda bekerja atau ada komitmen tetap lain semasa semester?",
     workHint: "Pilihan. Jika diisi, semester sibuk dikesan lebih awal dan subjek berat diasingkan.",
     work: { 0: "Tiada", 5: "1–10", 15: "11–20", 25: "21+" },

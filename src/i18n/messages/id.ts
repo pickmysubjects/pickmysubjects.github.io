@@ -257,6 +257,9 @@ export const id: Messages = {
     eligibilityUnknown: 'Kelayakan belum bisa dipastikan: {needs}.',
   },
   record: {
+    levelLegend: "Pilih berdasarkan nilai yang biasa kamu dapat di mata kuliah jenis ini (mata pelajaran sekolah jika belum kuliah). Tidak yakin? Biarkan kosong; ketuk lagi untuk menghapus.",
+    stepDone: "Selesai",
+    stepFirst: "Mulai di sini",
     step: "Langkah {n}",
     step1: "Gelar dan tujuan",
     step2: "Mata kuliah selesai",
@@ -300,8 +303,6 @@ export const id: Messages = {
     remove: 'Hapus',
     interestsTitle: 'Apa yang ingin kamu pelajari?',
     skillsTitle: 'Kekuatanmu',
-    skillsHint: 'Pilih hanya yang kamu yakin, sisanya biarkan kosong; ketuk lagi untuk menghapus.',
-    skillsAnchor: "Pilih berdasarkan nilai yang biasa kamu dapat di mata kuliah jenis ini, bukan perasaan: kuat = 80+ (H1), baik = 75–79 (H2A), biasa = 70–74 (H2B), agak lemah = 60–69, kesulitan = di bawah 60 atau pernah gagal. Belum kuliah? Pakai mata pelajaran serupa di sekolah. Belum pernah? Biarkan kosong.",
     workTitle: "Berapa jam per minggu kamu bekerja atau punya komitmen tetap lain selama semester?",
     workHint: "Opsional. Jika diisi, semester sibuk terdeteksi lebih awal dan mata kuliah berat dipisah.",
     work: { 0: "Tidak ada", 5: "1–10", 15: "11–20", 25: "21+" },

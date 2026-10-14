@@ -257,6 +257,9 @@ export const vi: Messages = {
     eligibilityUnknown: 'Chưa xác nhận được điều kiện học: {needs}.',
   },
   record: {
+    levelLegend: "Chọn theo điểm bạn thường đạt ở loại môn này (chưa vào đại học thì dựa vào môn tương tự ở phổ thông). Không chắc thì để trống; bấm lần nữa để bỏ.",
+    stepDone: "Xong",
+    stepFirst: "Bắt đầu ở đây",
     step: "Bước {n}",
     step1: "Ngành học và mục tiêu",
     step2: "Môn đã học",
@@ -300,8 +303,6 @@ export const vi: Messages = {
     remove: 'Xóa',
     interestsTitle: 'Bạn muốn học về điều gì?',
     skillsTitle: 'Điểm mạnh của bạn',
-    skillsHint: 'Chỉ chọn những gì bạn chắc chắn, còn lại để trống; bấm lần nữa để bỏ chọn.',
-    skillsAnchor: "Chọn theo điểm bạn thường đạt ở loại môn này, không theo cảm giác: giỏi = 80+ (H1), khá = 75–79 (H2A), trung bình = 70–74 (H2B), hơi yếu = 60–69, khó khăn = dưới 60 hoặc từng trượt. Chưa vào đại học? Dựa vào môn tương tự ở phổ thông. Chưa học bao giờ? Để trống.",
     workTitle: "Trong học kỳ, mỗi tuần bạn làm thêm hoặc có việc cố định khác khoảng bao nhiêu giờ?",
     workHint: "Không bắt buộc. Khi điền, kế hoạch sẽ nhận ra học kỳ bận sớm hơn và tách các môn nặng ra.",
     work: { 0: "Không", 5: "1–10", 15: "11–20", 25: "21+" },

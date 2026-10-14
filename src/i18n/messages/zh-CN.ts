@@ -257,6 +257,9 @@ export const zhCN: Messages = {
     eligibilityUnknown: '无法确认是否满足选课条件：{needs}。',
   },
   record: {
+    levelLegend: "按你这类课通常拿的分数选（还没上大学就按高中同类科目）。不确定就留空，再点一下可以取消。",
+    stepDone: "已完成",
+    stepFirst: "先做这一步",
     step: "第 {n} 步",
     step1: "学位与目标",
     step2: "已修课程",
@@ -300,8 +303,6 @@ export const zhCN: Messages = {
     remove: '删除',
     interestsTitle: '你想学哪些方向？',
     skillsTitle: '你的强项',
-    skillsHint: '只选你确定的，其余留空就好；再点一下可以取消。',
-    skillsAnchor: "按你这类课通常拿的分数选，不按感觉：擅长＝80 以上（H1），不错＝75–79（H2A），一般＝70–74（H2B），偏弱＝60–69，吃力＝60 以下或挂过。还没上大学？按高中同类科目选。没学过？留空就好。",
     workTitle: "学期中每周打工或其他固定事务大概几小时？",
     workHint: "选填。填了以后，排课会更早判断学期太忙，把重课分开。",
     work: { 0: "没有", 5: "1–10", 15: "11–20", 25: "21 以上" },

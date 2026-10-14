@@ -257,6 +257,9 @@ export const zhTW: Messages = {
     eligibilityUnknown: '無法確認是否符合選課條件：{needs}。',
   },
   record: {
+    levelLegend: "按你這類課通常拿的分數選（還沒上大學就按高中同類科目）。不確定就留空，再點一下可以取消。",
+    stepDone: "已完成",
+    stepFirst: "先做這一步",
     step: "第 {n} 步",
     step1: "學位與目標",
     step2: "已修課程",
@@ -300,8 +303,6 @@ export const zhTW: Messages = {
     remove: '刪除',
     interestsTitle: '你想學哪些方向？',
     skillsTitle: '你的強項',
-    skillsHint: '只選你確定的，其餘留空就好；再點一下可以取消。',
-    skillsAnchor: "按你這類課通常拿的分數選，不按感覺：擅長＝80 以上（H1），不錯＝75–79（H2A），一般＝70–74（H2B），偏弱＝60–69，吃力＝60 以下或被當過。還沒上大學？按高中同類科目選。沒學過？留空就好。",
     workTitle: "學期中每週打工或其他固定事務大概幾小時？",
     workHint: "選填。填了以後，排課會更早判斷學期太忙，把重課分開。",
     work: { 0: "沒有", 5: "1–10", 15: "11–20", 25: "21 以上" },

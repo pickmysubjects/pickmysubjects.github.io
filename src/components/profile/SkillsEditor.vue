@@ -17,6 +17,8 @@ const hidden = computed(() => order.value.length - shown.value.length)
 
 // Five steps, like a course survey: 1 = finds it hard … 5 = strong. Blank means "not sure".
 const LEVELS = [1, 2, 3, 4, 5] as const
+// The usual mark in that kind of subject for each level (UniMelb bands).
+const RANGES: Record<number, string> = { 1: '<60', 2: '60–69', 3: '70–74', 4: '75–79', 5: '80+' }
 
 function pick(skill: Skill, level: number): void {
   const next = { ...skills.value }
@@ -31,8 +33,11 @@ function pick(skill: Skill, level: number): void {
   <section class="card surface" aria-labelledby="skills-title">
     <header class="card-head">
       <h2 id="skills-title" class="card-title">{{ t('record.skillsTitle') }}</h2>
-      <p class="card-hint">{{ t('record.skillsHint') }}</p>
-      <p class="card-hint">{{ t('record.skillsAnchor') }}</p>
+      <p class="card-hint">{{ t('record.levelLegend') }}</p>
+      <!-- What each level means, in marks: more accurate than a feeling (see the research notes). -->
+      <ul class="legend">
+        <li v-for="n in LEVELS" :key="n"><strong>{{ t(`record.level.${n}`) }}</strong> {{ RANGES[n] }}</li>
+      </ul>
     </header>
     <ul class="skill-list">
       <li v-for="s in shown" :key="s" class="skill">
@@ -185,5 +190,27 @@ function pick(skill: Skill, level: number): void {
   background: none;
   border: 0;
   cursor: pointer;
+}
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.legend li {
+  padding: 3px 10px;
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--ink) 5%, transparent);
+}
+
+.legend strong {
+  margin-right: 4px;
+  font-weight: 650;
+  color: var(--ink);
 }
 </style>

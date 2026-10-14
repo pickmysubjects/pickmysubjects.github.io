@@ -260,6 +260,9 @@ export const en = {
     eligibilityUnknown: 'Eligibility not confirmed: {needs}.',
   },
   record: {
+    levelLegend: "Go by the marks you usually get in that kind of subject (school subjects if you're not at uni yet). Leave a skill blank if unsure; tap again to clear.",
+    stepDone: "Done",
+    stepFirst: "Start here",
     step: "Step {n}",
     step1: "Degree and goal",
     step2: "Subjects done",
@@ -303,8 +306,6 @@ export const en = {
     remove: 'Remove',
     interestsTitle: 'What do you want to learn about?',
     skillsTitle: 'Your strengths',
-    skillsHint: 'Pick a level only where you’re sure. Leave the rest blank; tap again to clear.',
-    skillsAnchor: "Go by the marks you usually get in this kind of subject, not by how you feel about it: strong = 80+ (H1), good = 75–79 (H2A), average = 70–74 (H2B), weaker = 60–69, struggle = below 60 or failed. Not at uni yet? Use the same kind of subject at school. Haven't done it? Leave it blank.",
     workTitle: "Paid work or other fixed hours a week during semester?",
     workHint: "Optional. Busy weeks then count earlier, so heavy semesters get spread out.",
     work: { 0: "None", 5: "1–10", 15: "11–20", 25: "21+" },

@@ -9,7 +9,8 @@ import DegreeCard from '@/components/profile/DegreeCard.vue'
 import GoalPicker from '@/components/profile/GoalPicker.vue'
 import GradeShare from '@/components/profile/GradeShare.vue'
 import WorkHours from '@/components/profile/WorkHours.vue'
-import { ArrowRight, Download, Upload } from 'lucide-vue-next'
+import { ArrowRight, Check, Download, Upload } from 'lucide-vue-next'
+import { usePlan } from '@/composables/usePlan'
 import { link } from '@/composables/useView'
 import { downloadBackup, restoreBackup } from '@/utils/backup'
 import { useDataset } from '@/composables/useDataset'
@@ -25,6 +26,14 @@ const interests = computed({ get: () => profile.value.interests, set: setInteres
 const { t } = useI18n()
 const options = computed(() => subjectList.value.map((s) => ({ code: s.code, title: s.title })))
 const ratedSkills = computed(() => Object.keys(profile.value.skills).length)
+const { setupChosen } = usePlan()
+// Each step's state, shown on its label: done, or (step 1 only) the one to do first.
+const steps = computed(() => [
+  { n: 1, key: 'record.step1', done: setupChosen.value },
+  { n: 2, key: 'record.step2', done: results.value.length > 0 },
+  { n: 3, key: 'record.step3', done: ratedSkills.value > 0 },
+  { n: 4, key: 'record.step4', done: interests.value.length > 0 },
+])
 
 const restoreFailed = shallowRef(false)
 async function onRestore(event: Event): Promise<void> {
@@ -55,7 +64,12 @@ async function onRestore(event: Event): Promise<void> {
     <div class="record-layout">
       <div class="record-main">
         <section class="block">
-          <p class="block-step">{{ t('record.step', { n: 1 }) }} · {{ t('record.step1') }}</p>
+          <h2 class="block-step" :class="{ done: steps[0]!.done }">
+            <span class="block-num" aria-hidden="true"><Check v-if="steps[0]!.done" :size="14" /><template v-else>1</template></span>
+            {{ t('record.step1') }}
+            <span v-if="steps[0]!.done" class="block-state">{{ t('record.stepDone') }}</span>
+            <span v-else class="block-state first">{{ t('record.stepFirst') }}</span>
+          </h2>
           <div class="block-card surface">
             <DegreeCard class="flat" />
             <div class="block-part"><GoalPicker :note="t('record.goalNote')" /></div>
@@ -64,7 +78,11 @@ async function onRestore(event: Event): Promise<void> {
         </section>
 
         <section class="block">
-          <p class="block-step">{{ t('record.step', { n: 2 }) }} · {{ t('record.step2') }}</p>
+          <h2 class="block-step" :class="{ done: steps[1]!.done }">
+            <span class="block-num" aria-hidden="true"><Check v-if="steps[1]!.done" :size="14" /><template v-else>2</template></span>
+            {{ t('record.step2') }}
+            <span v-if="steps[1]!.done" class="block-state">{{ t('record.stepDone') }}</span>
+          </h2>
           <div class="block-card surface">
             <ResultsEditor v-model="results" :subjects="data.subjects" :options="options" />
           </div>
@@ -72,12 +90,20 @@ async function onRestore(event: Event): Promise<void> {
         </section>
 
         <section class="block">
-          <p class="block-step">{{ t('record.step', { n: 3 }) }} · {{ t('record.step3') }}</p>
+          <h2 class="block-step" :class="{ done: steps[2]!.done }">
+            <span class="block-num" aria-hidden="true"><Check v-if="steps[2]!.done" :size="14" /><template v-else>3</template></span>
+            {{ t('record.step3') }}
+            <span v-if="steps[2]!.done" class="block-state">{{ t('record.stepDone') }}</span>
+          </h2>
           <SkillsEditor v-model:skills="skills" />
         </section>
 
         <section class="block">
-          <p class="block-step">{{ t('record.step', { n: 4 }) }} · {{ t('record.step4') }}</p>
+          <h2 class="block-step" :class="{ done: steps[3]!.done }">
+            <span class="block-num" aria-hidden="true"><Check v-if="steps[3]!.done" :size="14" /><template v-else>4</template></span>
+            {{ t('record.step4') }}
+            <span v-if="steps[3]!.done" class="block-state">{{ t('record.stepDone') }}</span>
+          </h2>
           <div class="block-card surface">
             <TopicChips v-model="interests" :topics="topics" :first-groups="3" />
           </div>
@@ -90,7 +116,7 @@ async function onRestore(event: Event): Promise<void> {
 
       <aside class="record-side">
         <SuggestionPreview />
-        <WamGoal />
+        <WamGoal v-if="wam !== null" />
         <section class="backup surface">
           <div>
             <h2 class="backup-title">{{ t('record.backupTitle') }}</h2>
@@ -186,10 +212,38 @@ async function onRestore(event: Event): Promise<void> {
 }
 
 .block-step {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.block-num {
+  display: inline-grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
   font-size: 0.8125rem;
   font-weight: 700;
-  letter-spacing: 0.02em;
+  color: #fff;
+  background: var(--overprint);
+  border-radius: 999px;
+}
+
+.block-step.done .block-num {
+  background: var(--good, #2e8b57);
+}
+
+.block-state {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--good, #2e8b57);
+}
+
+.block-state.first {
   color: var(--overprint);
 }
 

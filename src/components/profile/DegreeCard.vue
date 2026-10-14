@@ -46,7 +46,7 @@ function done(setup: PlanSetup): void {
         </p>
         <p v-else class="degree-line">{{ t('record.degreeNone') }}</p>
       </div>
-      <button v-if="!editing" type="button" class="button button-quiet degree-edit" @click="editing = true">
+      <button v-if="!editing" type="button" class="button degree-edit" :class="chosen ? 'button-quiet' : 'button-accent'" @click="editing = true">
         <Pencil v-if="chosen" :size="15" aria-hidden="true" />
         {{ chosen ? t('record.degreeEdit') : t('record.degreeChoose') }}
       </button>
