@@ -30,12 +30,14 @@ const closed = computed(() => data.value.courses.some((c) => c.code === props.co
         {{ localTitle(s, locale) || s.title }}
         <span v-if="localTitle(s, locale)" class="title-en">{{ s.title }}</span>
       </span>
+      <!-- Facts as small pills: when it runs leads; not running this year is visibly quieter. -->
       <span class="meta">
-        <span>{{ row.periods.length ? row.periods.map((p) => t(`periodShort.${p}`)).join(' · ') : t('browse.notRunning') }}</span>
-        <span v-if="row.exam !== null">{{ row.exam === 0 ? t('browse.metaNoExam') : t('browse.metaExam', { n: row.exam }) }}</span>
-        <span v-if="row.hours !== null">{{ t('browse.metaHours', { n: row.hours }) }}</span>
-        <span v-if="s.prerequisites === 'none'">{{ t('browse.metaNoPrereq') }}</span>
-        <span v-if="row.rating !== null" class="rating"><Star :size="12" aria-hidden="true" />{{ row.rating }}</span>
+        <span v-if="row.periods.length" class="pill pill-when">{{ row.periods.map((p) => t(`periodShort.${p}`)).join(' · ') }}</span>
+        <span v-else class="pill pill-off">{{ t('browse.notRunning') }}</span>
+        <span v-if="row.exam !== null" class="pill">{{ row.exam === 0 ? t('browse.metaNoExam') : t('browse.metaExam', { n: row.exam }) }}</span>
+        <span v-if="row.hours !== null" class="pill">{{ t('browse.metaHours', { n: row.hours }) }}</span>
+        <span v-if="s.prerequisites === 'none'" class="pill pill-good">{{ t('browse.metaNoPrereq') }}</span>
+        <span v-if="row.rating !== null" class="pill rating"><Star :size="12" aria-hidden="true" />{{ row.rating }}</span>
       </span>
     </span>
     <ChevronRight :size="18" aria-hidden="true" class="go" />
@@ -130,15 +132,43 @@ const closed = computed(() => data.value.courses.some((c) => c.code === props.co
     grid-area: meta;
     align-self: center;
     justify-content: flex-end;
+    margin-top: 0;
   }
 }
 
 .meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px 12px;
-  font-size: 0.8125rem;
+  gap: 6px;
+  margin-top: 6px;
+  font-size: 0.75rem;
   color: var(--ink-soft);
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--ink) 6%, transparent);
+  white-space: nowrap;
+}
+
+.pill-when {
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.pill-off {
+  color: var(--ink-faint);
+  background: none;
+  border: 1px dashed var(--line);
+}
+
+.pill-good {
+  color: var(--good);
+  background: var(--good-soft);
 }
 
 .rating {

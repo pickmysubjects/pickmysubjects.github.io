@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, shallowRef } from 'vue'
-import { ChevronDown, SlidersHorizontal } from 'lucide-vue-next'
+import { Check, ChevronDown, SlidersHorizontal } from 'lucide-vue-next'
 import { EMPTY_FILTERS, PERIODS, type BrowseFilters } from '@/engine'
 import { useI18n } from '@/i18n'
 
@@ -86,10 +86,12 @@ function clear(): void {
 
       <fieldset class="group">
         <legend>{{ t('browse.only') }}</legend>
-        <label v-for="k in TOGGLES" :key="k" class="check">
-          <input type="checkbox" :checked="filters[k]" @change="set(k, !filters[k])" />
-          {{ t(`browse.${k}`) }}
-        </label>
+        <div class="toggles">
+          <button v-for="k in TOGGLES" :key="k" type="button" class="chip only" :aria-pressed="filters[k]" @click="set(k, !filters[k])">
+            <Check v-if="filters[k]" :size="14" aria-hidden="true" />
+            {{ t(`browse.${k}`) }}
+          </button>
+        </div>
       </fieldset>
 
       <button v-if="active" type="button" class="clear" @click="clear">{{ t('browse.clear') }}</button>
@@ -154,11 +156,9 @@ function clear(): void {
 .group legend {
   margin-bottom: 8px;
   padding: 0;
-  font-size: 0.8125rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--ink-faint);
+  font-size: 0.875rem;
+  font-weight: 650;
+  color: var(--ink);
 }
 
 /* A segmented control: one rounded track, the chosen option raised. */
@@ -176,6 +176,7 @@ function clear(): void {
 
 .seg button {
   flex: 1 0 auto;
+  min-height: 34px;
   padding: 6px 10px;
   font-size: 0.875rem;
   color: var(--ink-soft);
@@ -197,20 +198,23 @@ function clear(): void {
   box-shadow: var(--glass-shadow);
 }
 
-.check {
+.toggles {
   display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 0.9375rem;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.only {
+  gap: 4px;
+  min-height: 34px;
   cursor: pointer;
 }
 
-.check input {
-  flex: none;
-  width: 16px;
-  height: 16px;
-  margin: 0;
-  accent-color: var(--accent);
+.only[aria-pressed='true'] {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  font-weight: 600;
 }
 
 .clear {

@@ -34,8 +34,10 @@ const courseTitle = computed(() => data.value.courses.find((c) => c.code === cou
 <template>
   <div class="list">
     <header>
-      <BrowseSwitch current="majors" />
-      <h1 class="page-title">{{ t('majors.title') }}</h1>
+      <div class="head-row">
+        <h1 class="page-title">{{ t('majors.title') }}</h1>
+        <BrowseSwitch current="majors" />
+      </div>
       <p class="page-lede">{{ t('majors.lede', { course: courseTitle }) }}</p>
       <DegreeBadge :course="course" />
     </header>
@@ -74,6 +76,15 @@ const courseTitle = computed(() => data.value.courses.find((c) => c.code === cou
   display: grid;
   gap: 10px;
   justify-items: start;
+}
+
+.head-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  justify-self: stretch;
 }
 
 .search {

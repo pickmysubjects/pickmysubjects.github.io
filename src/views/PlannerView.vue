@@ -7,6 +7,7 @@ import PlanMap from '@/components/planner/PlanMap.vue'
 import SubjectPeek from '@/components/planner/SubjectPeek.vue'
 import RuleLegend from '@/components/planner/RuleLegend.vue'
 import PlanProgress from '@/components/planner/PlanProgress.vue'
+import PlanHowBuilt from '@/components/planner/PlanHowBuilt.vue'
 import PlanIssues from '@/components/planner/PlanIssues.vue'
 import PlanPrint from '@/components/planner/PlanPrint.vue'
 import Interp from '@/components/Interp.vue'
@@ -20,7 +21,7 @@ import { usePlan, type PlanSetup } from '@/composables/usePlan'
 import { usePlanStress } from '@/composables/usePlanStress'
 import { pastTerms } from '@/utils/pastTerms'
 import { useI18n } from '@/i18n'
-import { issueText, noteText, termLabel } from '@/i18n/format'
+import { issueText, termLabel } from '@/i18n/format'
 
 // The wizard copies the setup once, so it restarts when the dataset is switched.
 const { data, subjectList, name: dataName } = useDataset()
@@ -109,7 +110,6 @@ const roles = computed(() => {
 })
 const rules = computed(() => plan.course.value?.rules ?? [])
 const allIssues = computed(() => [...plan.termIssues.value, ...plan.courseCheck.value.issues])
-const notes = computed(() => plan.notes.value.map((n) => noteText(t.value, n, rules.value)))
 
 const problems = computed(() => allIssues.value.filter((i) => i.severity === 'error').length)
 // Say what the problems are right under the status, not only in the collapsed details.
@@ -295,15 +295,13 @@ function finishWizard(setup: PlanSetup): void {
           </p>
           <RuleLegend :statuses="plan.courseCheck.value.statuses" :rules="rules" :title="plan.course.value?.title ?? ''" />
           <PlanIssues :issues="allIssues" :rules="rules" :statuses="plan.courseCheck.value.statuses" />
-          <div v-if="notes.length || plan.unplaced.value.length" class="how">
-            <h2 class="how-title">{{ t('plan.howBuilt') }}</h2>
-            <ul class="how-list">
-              <li v-for="u in plan.unplaced.value" :key="u.code" class="how-unplaced">
-                {{ t('plan.unplaced', { code: u.code, reason: u.reasonKey ? t(`unplacedReason.${u.reasonKey}`) : u.reason }) }}
-              </li>
-              <li v-for="(n, i) in notes" :key="i">{{ n }}</li>
-            </ul>
-          </div>
+          <PlanHowBuilt
+            v-if="plan.notes.value.length || plan.unplaced.value.length"
+            :notes="plan.notes.value"
+            :rules="rules"
+            :unplaced="plan.unplaced.value"
+            @open="peek = $event"
+          />
         </div>
       </details>
     </template>
@@ -469,27 +467,11 @@ function finishWizard(setup: PlanSetup): void {
   padding: 4px 0 22px;
 }
 
-.how {
+.details-body > .hint {
   grid-column: 1 / -1;
+  margin: 0;
 }
 
-.how-title {
-  font-size: 0.9375rem;
-  font-weight: 650;
-}
-
-.how-list {
-  display: grid;
-  gap: 4px;
-  margin: 8px 0 0;
-  padding-left: 18px;
-  font-size: 0.875rem;
-  color: var(--ink-soft);
-}
-
-.how-unplaced {
-  color: var(--bad);
-}
 
 @media (max-width: 860px) {
   .details-body {

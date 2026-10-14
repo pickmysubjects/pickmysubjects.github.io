@@ -18,7 +18,7 @@ const { t } = useI18n()
 .switch {
   display: inline-flex;
   gap: 2px;
-  margin-bottom: 14px;
+  margin: 0;
   padding: 4px;
   border: 1px solid var(--glass-edge);
   border-radius: 999px;

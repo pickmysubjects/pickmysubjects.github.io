@@ -68,10 +68,11 @@ watch(filters, (f) => {
 <template>
   <div class="browse">
     <header class="head">
-      <BrowseSwitch current="subjects" />
-      <h1 class="page-title">{{ t('browse.title') }}</h1>
-      <p class="page-lede">{{ t('browse.lede') }}</p>
-      <DegreeBadge :course="course" />
+      <div class="head-row">
+        <h1 class="page-title">{{ t('browse.title') }}</h1>
+        <BrowseSwitch current="subjects" />
+      </div>
+      <p class="page-lede head-lede">{{ t('browse.lede') }}</p>
     </header>
 
     <div class="top">
@@ -105,10 +106,13 @@ watch(filters, (f) => {
 
       <section class="results">
         <div class="toolbar">
-          <p class="count" role="status">{{ t('browse.count', { n: rows.length }) }}</p>
+          <div class="count-line">
+            <p class="count" role="status">{{ t('browse.count', { n: rows.length }) }}</p>
+            <DegreeBadge :course="course" />
+          </div>
           <label class="sort">
             <span>{{ t('browse.sort') }}</span>
-            <select
+            <select :aria-label="t('browse.sort')"
               class="select-glass"
               :value="filters.sort"
               @change="set('sort', ($event.target as HTMLSelectElement).value as BrowseSort)"
@@ -143,10 +147,31 @@ watch(filters, (f) => {
   padding-top: 32px;
 }
 
+.head {
+  display: grid;
+  gap: 6px;
+}
+
+/* Title and the subjects/majors switch share one line, so results start higher. */
+.head-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
 .top {
   display: grid;
-  gap: 14px;
+  gap: 12px;
   max-width: 720px;
+}
+
+.count-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
 }
 
 .search {
@@ -282,6 +307,44 @@ watch(filters, (f) => {
 
   .side {
     position: static;
+  }
+
+  .head-lede {
+    display: none;
+  }
+
+  /* Quick picks scroll sideways in one line instead of stacking. */
+  .presets {
+    flex-wrap: nowrap;
+    margin: 0 -16px;
+    padding: 2px 16px 6px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .preset {
+    flex: none;
+    min-height: 40px;
+  }
+
+  /* Count and sort on one line, the degree under them. */
+  .toolbar {
+    display: grid;
+    grid-template-columns: 1fr auto;
+  }
+
+  .count-line {
+    display: contents;
+  }
+
+  .count-line :deep(.degree) {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    justify-self: start;
+  }
+
+  .sort > span {
+    display: none;
   }
 }
 </style>
