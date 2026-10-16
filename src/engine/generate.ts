@@ -396,8 +396,16 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
     // A summer- or winter-only option comes last: the plan is laid out in semesters.
     const off = (c: string) => (data.subjects[c] && semesterless(data.subjects[c]!) ? 1 : 0)
     // An option the required subjects build on comes first: picking another would add it anyway.
+    // An option only a by-hand condition can open ("excellent results", coordinator approval),
+    // whatever else is done, comes after the ones the plan can show are open.
+    const everything = new Set(Object.keys(data.subjects))
+    const byHand = (c: string) => {
+      const sub = data.subjects[c]
+      if (!sub || sub.prerequisites === 'none' || sub.prerequisites === 'unknown') return 0
+      return evaluateField(sub.prerequisites, { completed: everything, subjects: data.subjects, admittedCourse: input.course }).status === 'unknown' ? 1 : 0
+    }
     const order = [...req.choose.from].sort(
-      (a, b) => off(a) - off(b) || Number(named.has(b)) - Number(named.has(a)) || (score.get(b) ?? -1) - (score.get(a) ?? -1) || busy(a) - busy(b),
+      (a, b) => off(a) - off(b) || byHand(a) - byHand(b) || Number(named.has(b)) - Number(named.has(a)) || (score.get(b) ?? -1) - (score.get(a) ?? -1) || busy(a) - busy(b),
     )
     for (const c of order) {
       if (have >= req.choose.points) break

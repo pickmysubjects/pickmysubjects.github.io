@@ -1,0 +1,12 @@
+id: bmed-biomedical-engineering-systems
+course: B-BMED
+year: 2026
+kind: major
+title: Biomedical Engineering Systems
+points: 50
+requirements:
+  - all: [BMEN30009, BMEN30008, BMEN30010]
+  - choose: { points: 12.5, from: [BMEN30006, ELEN30012] }
+# Structure from the 2026 Handbook major page (pasted); foundation subjects come in as prerequisites.
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-biomed/majors-minors-specialisations
+verified_on: 2026-10-16 # structure; source: 2026 Handbook major page

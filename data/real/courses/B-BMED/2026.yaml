@@ -1,0 +1,98 @@
+# Bachelor of Biomedicine course rules, 2026 Handbook. Facts re-expressed in our own words.
+code: B-BMED
+title: Bachelor of Biomedicine
+year: 2026
+total_points: 300
+standard_load: 50
+categories: [science, breadth]
+# Discipline subjects are the science areas (the Handbook's full electives list is a separate
+# page, b-bmed-stdopt-1, not pasted yet); everything else is breadth.
+area_categories:
+  home: science
+  areas: [AGRI, ANAT, ANSC, ATOC, BCMB, BIOL, BIOM, BMEN, BOTA, BTCH, CEDB, CHEM, CHEN, COMP, CVEN, ECOL, ELEN, ENEN, ENGR, ENST, ENVS, ERTH, EVSC, FOOD, FRST, GENE, GEOG, GEOL, GEOM, HORT, INFO, MAST, MCEN, MIIM, NEUR, NUTR, OPTO, PATH, PHRM, PHYC, PHYS, PSYC, SWEN, VETS, ZOOL]
+  other: breadth
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-biomed/course-structure
+verified_on: 2026-10-16 # rules checked by hand against the Handbook course structure
+rules:
+  - id: total
+    kind: points
+    min: 300
+    description: 300 points in total
+  - id: biom10001
+    kind: compulsory
+    subjects: [BIOM10001]
+    first_semester: true
+    description: BIOM10001 in your first semester
+  - id: core-l1
+    kind: compulsory
+    subjects: [BIOL10002, CHEM10006, BIOM10002]
+    description: The level-1 compulsory subjects
+  - id: core-l2
+    kind: compulsory
+    subjects: [BIOM20001, BIOM20002]
+    description: The level-2 compulsory subjects
+  - id: core-l3
+    kind: compulsory
+    subjects: [BIOM30001, BIOM30002]
+    description: The level-3 compulsory subjects
+  - id: foundation
+    kind: requirement
+    paths:
+      - - choose: { points: 25, from: [COMP10001, MAST10005, MAST10006, MAST10007, MAST10008, MAST10009, MAST10010, MAST10021, MAST10022, MAST10024, PHYC10003, PHYC10006, PHYC10007, PHYC10009, PHYC10001, PSYC10003, PSYC10004, PSYC10006, PSYC10007, ENGR10004] }
+    description: At least 25 points of foundation electives
+  - id: discipline
+    kind: points
+    category: science
+    min: 225
+    description: At least 225 points of discipline subjects
+  - id: discipline-l1
+    kind: points
+    category: science
+    level: 1
+    min: 75
+    description: At least 75 points of level-1 discipline subjects
+  - id: discipline-l2
+    kind: points
+    category: science
+    level: 2
+    min: 62.5
+    description: At least 62.5 points of level-2 discipline subjects
+  - id: discipline-l3
+    kind: points
+    category: science
+    level: 3
+    min: 75
+    description: At least 75 points of level-3 discipline subjects
+  - id: breadth
+    kind: points
+    category: breadth
+    min: 50
+    description: At least 50 points of breadth
+  - id: breadth-l1-cap
+    kind: points
+    category: breadth
+    level: 1
+    max: 37.5
+    description: No more than 37.5 points of level-1 breadth
+  - id: level1-cap
+    kind: points
+    level: 1
+    max: 125
+    description: No more than 125 points at level 1
+  - id: major
+    kind: major
+    count: 1
+    description: Complete one major
+  - id: progress-to-l2
+    kind: progression
+    before_level: 2
+    level: 1
+    min_points: 50
+    description: Normally 50 level-1 points before level-2 subjects
+  - id: progress-to-l3
+    kind: progression
+    before_level: 3
+    level: 2
+    min_points: 50
+    description: Normally 50 level-2 points before level-3 subjects
+# Not encoded yet: at most 125 points from any one discipline.

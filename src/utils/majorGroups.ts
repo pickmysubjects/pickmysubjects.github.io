@@ -1,7 +1,7 @@
 // Field of each major, by its id. Anything new lands in "other" until it's added here.
 export const MAJOR_GROUPS: { id: string; match: RegExp }[] = [
   { id: 'computing', match: /^(computing|data-science|informatics|mathematics)/ },
-  { id: 'biomed', match: /^(biochemistry|cell-and|genetics|human-|immunology|infection|microbiology|neuroscience|pathology|pharmacology|physiology|biotechnology)/ },
+  { id: 'biomed', match: /^(biochemistry|cell-and|genetics|human-|immunology|infection|microbiology|neuroscience|pathology|pharmacology|physiology|biotechnology|public-health)/ },
   { id: 'chemphys', match: /^(chemistry|physics|mathematical-physics)/ },
   { id: 'psych', match: /^(arts-)?psychology/ },
   { id: 'eco', match: /^(ecology|ecosystem|environmental-science|(arts-)?geography|geology|geoscience|climate|marine|plant|zoology)/ },
@@ -13,7 +13,12 @@ export const MAJOR_GROUPS: { id: string; match: RegExp }[] = [
   { id: 'social', match: /^(anthropology|asian|criminology|gender|indigenous|islamic|politics|sociology|arts-economics)/ },
 ]
 
-export const majorGroupOf = (id: string): string => MAJOR_GROUPS.find((g) => g.match.test(id))?.id ?? 'other'
+// Majors of other degrees with the same name carry a degree prefix (bmed-genetics); they group
+// with their namesakes.
+export const majorGroupOf = (id: string): string => {
+  const bare = id.replace(/^bmed-/, '')
+  return MAJOR_GROUPS.find((g) => g.match.test(bare))?.id ?? 'other'
+}
 
 /** Majors grouped by field, in a fixed field order, each group sorted by title. */
 export function groupMajors<T extends { id: string; title: string }>(majors: T[]): { id: string; majors: T[] }[] {

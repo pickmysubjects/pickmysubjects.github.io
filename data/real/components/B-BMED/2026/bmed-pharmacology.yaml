@@ -1,0 +1,13 @@
+id: bmed-pharmacology
+course: B-BMED
+year: 2026
+kind: major
+title: Pharmacology
+points: 50
+requirements:
+  - all: [PHRM30009]
+  - choose: { points: 25, from: [PHRM30003, PHRM30002, PHRM30008] }
+  # The last 12.5 may also be any level-3 subject from a range of biomedical areas (not listed here).
+  - choose: { points: 12.5, from: [PHRM30003, PHRM30002, PHRM30008, BIOM30003] }
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-biomed/majors-minors-specialisations
+verified_on: 2026-10-16 # structure; source: 2026 Handbook major page

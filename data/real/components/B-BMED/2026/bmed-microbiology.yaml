@@ -1,0 +1,11 @@
+id: bmed-microbiology
+course: B-BMED
+year: 2026
+kind: major
+title: Microbiology
+points: 50
+requirements:
+  - all: [MIIM30011, MIIM30014, MIIM30017, MIIM30016]
+# Structure from the 2026 Handbook major page (pasted); foundation subjects come in as prerequisites.
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-biomed/majors-minors-specialisations
+verified_on: 2026-10-16 # structure; source: 2026 Handbook major page

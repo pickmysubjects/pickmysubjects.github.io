@@ -1,0 +1,12 @@
+id: bmed-pathology
+course: B-BMED
+year: 2026
+kind: major
+title: Pathology
+points: 50
+requirements:
+  - all: [PATH30001, PATH30002, PATH30003]
+  - choose: { points: 12.5, from: [PATH30004, BIOM30003] }
+# Structure from the 2026 Handbook major page (pasted); foundation subjects come in as prerequisites.
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-biomed/majors-minors-specialisations
+verified_on: 2026-10-16 # structure; source: 2026 Handbook major page

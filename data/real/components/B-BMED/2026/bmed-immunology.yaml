@@ -1,0 +1,12 @@
+id: bmed-immunology
+course: B-BMED
+year: 2026
+kind: major
+title: Immunology
+points: 50
+requirements:
+  - all: [MIIM30002, MIIM30003, MIIM30015]
+  - choose: { points: 12.5, from: [MIIM30011, MIIM30014, MIIM30017, BCMB30001, BCMB30002, BCMB30004, GENE30002, CEDB30002, PATH30001, NEUR30003, BCMB30011, PHRM30003] }
+# Structure from the 2026 Handbook major page (pasted); foundation subjects come in as prerequisites.
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-biomed/majors-minors-specialisations
+verified_on: 2026-10-16 # structure; source: 2026 Handbook major page

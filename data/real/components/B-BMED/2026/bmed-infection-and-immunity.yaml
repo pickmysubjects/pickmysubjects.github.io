@@ -1,0 +1,13 @@
+id: bmed-infection-and-immunity
+course: B-BMED
+year: 2026
+kind: major
+title: Infection and Immunity
+points: 50
+requirements:
+  - all: [MIIM30002]
+  - choose: { points: 25, from: [MIIM30011, MIIM30014, MIIM30017] }
+  - choose: { points: 12.5, from: [MIIM30016, MIIM30015] }
+# Structure from the 2026 Handbook major page (pasted); foundation subjects come in as prerequisites.
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-biomed/majors-minors-specialisations
+verified_on: 2026-10-16 # structure; source: 2026 Handbook major page

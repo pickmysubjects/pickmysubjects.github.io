@@ -1,0 +1,12 @@
+id: bmed-biochemistry-and-molecular-biology
+course: B-BMED
+year: 2026
+kind: major
+title: Biochemistry and Molecular Biology
+points: 50
+requirements:
+  - all: [BCMB30010, BCMB30012]
+  - choose: { points: 25, from: [BCMB30001, BCMB30002, BCMB30004, BCMB30011, MIIM30017, BIOM30003, CEDB30002] }
+# Structure from the 2026 Handbook major page (pasted); foundation subjects come in as prerequisites.
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-biomed/majors-minors-specialisations
+verified_on: 2026-10-16 # structure; source: 2026 Handbook major page

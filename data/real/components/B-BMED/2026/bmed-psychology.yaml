@@ -1,0 +1,13 @@
+id: bmed-psychology
+course: B-BMED
+year: 2026
+kind: major
+title: Psychology
+points: 50
+requirements:
+  # The major itself (non-accredited); the APAC-accredited sequence adds level-1 and level-2
+  # psychology (PSYC10003/10006, PSYC10004/10007, PSYC20006–20009) for a psychology career.
+  - all: [PSYC30013, PSYC30021]
+  - choose: { points: 25, from: [PSYC30016, PSYC30017, PSYC30018, PSYC30014, PSYC30019, PSYC30020, PSYC30022, PSYC30023] }
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-biomed/majors-minors-specialisations
+verified_on: 2026-10-16 # structure; source: 2026 Handbook major page

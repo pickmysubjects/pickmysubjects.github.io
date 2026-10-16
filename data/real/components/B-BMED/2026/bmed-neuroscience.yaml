@@ -1,0 +1,12 @@
+id: bmed-neuroscience
+course: B-BMED
+year: 2026
+kind: major
+title: Neuroscience
+points: 50
+requirements:
+  - all: [NEUR30003, NEUR30002]
+  - choose: { points: 25, from: [NEUR30005, NEUR30004, OPTO30007, PHRM30002, BCMB30004, BIOM30003, NEUR30006, NEUR30007] }
+# Structure from the 2026 Handbook major page (pasted); foundation subjects come in as prerequisites.
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-biomed/majors-minors-specialisations
+verified_on: 2026-10-16 # structure; source: 2026 Handbook major page

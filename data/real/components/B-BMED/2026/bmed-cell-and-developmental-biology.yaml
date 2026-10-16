@@ -1,0 +1,13 @@
+id: bmed-cell-and-developmental-biology
+course: B-BMED
+year: 2026
+kind: major
+title: Cell and Developmental Biology
+points: 50
+requirements:
+  - all: [CEDB30002]
+  # 12.5 to 37.5 points of selectives; the rest (at most 25) may be electives.
+  - choose: { points: 12.5, from: [BIOL30001, CEDB30003, CEDB30004, BOTA30005, BTCH30003] }
+  - choose: { points: 25, from: [BIOL30001, CEDB30003, CEDB30004, BOTA30005, BTCH30003, BCMB30002, BCMB30004, BIOL30002, BIOM30003, GENE30002, MIIM30002] }
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-biomed/majors-minors-specialisations
+verified_on: 2026-10-16 # structure; source: 2026 Handbook major page
