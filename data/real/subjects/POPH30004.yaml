@@ -1,0 +1,43 @@
+code: POPH30004
+title: Ethics and Equity in Health and Medicine
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+topics:
+  - health
+  - ethics
+  - society
+assessment:
+  - kind: participation
+    weight: 10
+  - kind: quiz
+    weight: 20
+  - kind: test
+    weight: 30
+  - kind: assignment
+    weight: 40
+breadth_for:
+  - Bachelor of Arts
+  - Bachelor of Commerce
+  - Bachelor of Design
+  - Bachelor of Fine Arts (Acting)
+  - Bachelor of Fine Arts (Animation)
+  - Bachelor of Fine Arts (Dance)
+  - Bachelor of Fine Arts (Film and Television)
+  - Bachelor of Fine Arts (Music Theatre)
+  - Bachelor of Fine Arts (Production)
+  - Bachelor of Fine Arts (Screenwriting)
+  - Bachelor of Fine Arts (Theatre)
+  - Bachelor of Fine Arts (Visual Art)
+  - Bachelor of Music
+handbook: https://handbook.unimelb.edu.au/2026/subjects/poph30004
+source_year: 2026
+verified_on: 2026-10-16
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
