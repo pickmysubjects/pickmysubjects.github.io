@@ -447,6 +447,12 @@ export const hi: Messages = {
     philosophy: 'दर्शन',
     history: 'इतिहास',
     'science-communication': 'विज्ञान संचार',
+    politics: "राजनीति",
+    society: "समाज",
+    literature: "साहित्य",
+    media: "मीडिया",
+    art: "कला",
+    'indigenous-studies': "मूल निवासी अध्ययन",
   },
   contribute: {
     title: 'ऐसा विषय जोड़ें जो अभी नहीं है',

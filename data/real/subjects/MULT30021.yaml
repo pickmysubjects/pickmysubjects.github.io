@@ -1,0 +1,45 @@
+code: MULT30021
+title: Community Volunteering - Global
+level: 3
+points: 12.5
+offerings: unknown
+prerequisites:
+  manual: "100 credit points of undergraduate study completed Students are required to apply for permission to enrol into this subject prior to commencement of the internship. Students should make this application via the online application form: https://artsunimelb.formstack.com/forms/internship_application Applications will be reviewed in three rounds: Round 1 (Summer availability): closing 31 October Round 2 (June availability): closing 31 January Round 3 (June availability): closing 31 May The selection process for this subject includes consideration of academic performance in the first half of the degree. Students will receive outcomes within two weeks of the closing date for the relevant round. For further information including FAQS on the Application and Selection Process see: https://arts.unimelb.edu.au/students/wil#faqs"
+corequisites: none
+non_allowed:
+  - MULT20014
+  - POLS30001
+  - POLS30003
+  - SOCI30005
+  - POLS30002
+skills:
+  - writing
+  - presentation
+  - fieldwork
+topics:
+  - society
+assessment:
+  - kind: report
+    weight: 20
+  - kind: presentation
+    weight: 30
+    group: true
+  - kind: report
+    weight: 50
+breadth_for:
+  - Bachelor of Biomedicine
+  - Bachelor of Fine Arts (Acting)
+  - Bachelor of Fine Arts (Animation)
+  - Bachelor of Fine Arts (Dance)
+  - Bachelor of Fine Arts (Film and Television)
+  - Bachelor of Fine Arts (Music Theatre)
+  - Bachelor of Fine Arts (Production)
+  - Bachelor of Fine Arts (Screenwriting)
+  - Bachelor of Fine Arts (Theatre)
+  - Bachelor of Fine Arts (Visual Art)
+  - Bachelor of Music
+  - Bachelor of Science
+handbook: https://handbook.unimelb.edu.au/2026/subjects/mult30021
+source_year: 2026
+verified_on: 2026-10-16
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

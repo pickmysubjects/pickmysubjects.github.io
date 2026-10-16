@@ -206,7 +206,9 @@ describe('plan builder spreads the load (real data)', () => {
     // options carry six assessment tasks each and only run in Semester 1.
     // Points-of-field prerequisites ("12.5 points of level 1 or 2 Geography…", 2026-10-14) are now
     // checked and planned for, so geoscience plans carry the subjects they really need: one more.
-    expect(share(profile())).toBeLessThan(0.09)
+    // The first Arts subjects (2026-10-16) bring ARTS20002, an open level-2 breadth subject many
+    // science plans now take; it sits in a couple of semesters that were already busy.
+    expect(share(profile())).toBeLessThan(0.095)
     // Weak at maths, many science majors can't avoid two maths subjects somewhere (and the
     // data has only maths-based level-2 breadth so far; physics and the engineering-systems
     // majors now carry their real maths prerequisites too): flagged, but never left fixable.

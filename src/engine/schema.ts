@@ -86,6 +86,12 @@ export const TOPICS = [
   'philosophy',
   'history',
   'science-communication',
+  'politics',
+  'society',
+  'literature',
+  'media',
+  'art',
+  'indigenous-studies',
 ] as const
 export type Topic = (typeof TOPICS)[number]
 

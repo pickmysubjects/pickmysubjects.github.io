@@ -10,7 +10,7 @@ export const TOPIC_GROUPS: { id: string; topics: Topic[] }[] = [
   { id: 'business', topics: ['economics', 'finance', 'accounting', 'marketing', 'management', 'human-resources', 'supply-chain', 'entrepreneurship', 'actuarial', 'law', 'business'] },
   { id: 'science', topics: ['biology', 'ecology', 'chemistry', 'physics', 'earth-science', 'geography', 'environment', 'psychology'] },
   { id: 'applied', topics: ['engineering', 'health', 'agriculture'] },
-  { id: 'arts', topics: ['languages', 'design', 'ethics', 'philosophy', 'history', 'science-communication'] },
+  { id: 'arts', topics: ['languages', 'literature', 'history', 'philosophy', 'politics', 'society', 'media', 'art', 'indigenous-studies', 'ethics', 'design', 'science-communication'] },
 ]
 
 /**
@@ -29,6 +29,14 @@ const AREA_TOPICS: Record<string, Topic[]> = {
   NEUR: ['health', 'psychology'], NUTR: ['health'], OPTO: ['health'], PATH: ['health', 'biology'], PHRM: ['health', 'chemistry'],
   PHYC: ['physics'], PHYS: ['health', 'biology'], PSYC: ['psychology'], SWEN: ['software-engineering', 'programming'],
   VETS: ['agriculture', 'biology'], ZOOL: ['ecology', 'biology'],
+  // Arts disciplines.
+  AHIS: ['art', 'history'], ANCW: ['history'], ANTH: ['society'], ASIA: ['history', 'society'], CLAS: ['languages', 'history'],
+  CREW: ['literature'], CRIM: ['society', 'law'], DEVT: ['society', 'politics'], ENGL: ['literature'], EURO: ['history', 'politics'],
+  GEND: ['society'], HIST: ['history'], HPSC: ['philosophy', 'history'], INDG: ['indigenous-studies'], ISLM: ['history', 'society'],
+  LANG: ['languages'], LING: ['languages'], MECM: ['media'], PHIL: ['philosophy'], POLS: ['politics'], SCRN: ['media', 'art'],
+  SOCI: ['society'],
+  ARBC: ['languages'], CHIN: ['languages'], FREN: ['languages'], GERM: ['languages'], HEBR: ['languages'], INDO: ['languages'],
+  ITAL: ['languages'], JAPN: ['languages'], KORE: ['languages'], RUSS: ['languages'], SPAN: ['languages'],
 }
 
 

@@ -447,6 +447,12 @@ export const zhCN: Messages = {
     philosophy: '哲学',
     history: '历史',
     'science-communication': '科学传播',
+    politics: "政治",
+    society: "社会",
+    literature: "文学",
+    media: "媒体与传播",
+    art: "艺术",
+    'indigenous-studies': "原住民研究",
   },
   contribute: {
     title: '添加一门我们还没有的课',

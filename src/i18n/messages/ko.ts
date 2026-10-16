@@ -447,6 +447,12 @@ export const ko: Messages = {
     philosophy: '철학',
     history: '역사',
     'science-communication': '과학 커뮤니케이션',
+    politics: "정치",
+    society: "사회",
+    literature: "문학",
+    media: "미디어",
+    art: "예술",
+    'indigenous-studies': "원주민 연구",
   },
   contribute: {
     title: '아직 없는 과목 추가하기',

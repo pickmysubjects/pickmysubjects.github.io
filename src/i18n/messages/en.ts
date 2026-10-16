@@ -450,6 +450,12 @@ export const en = {
     philosophy: 'Philosophy',
     history: 'History',
     'science-communication': 'Science communication',
+    politics: "Politics",
+    society: "Society",
+    literature: "Literature",
+    media: "Media",
+    art: "Art",
+    'indigenous-studies': "Indigenous studies",
   },
   contribute: {
     title: 'Add a subject we don’t have yet',

@@ -447,6 +447,12 @@ export const id: Messages = {
     philosophy: 'Filsafat',
     history: 'Sejarah',
     'science-communication': 'Komunikasi sains',
+    politics: "Politik",
+    society: "Masyarakat",
+    literature: "Sastra",
+    media: "Media",
+    art: "Seni",
+    'indigenous-studies': "Studi Pribumi",
   },
   contribute: {
     title: 'Tambahkan mata kuliah yang belum ada',

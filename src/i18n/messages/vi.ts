@@ -447,6 +447,12 @@ export const vi: Messages = {
     philosophy: 'Triết học',
     history: 'Lịch sử',
     'science-communication': 'Truyền thông khoa học',
+    politics: "Chính trị",
+    society: "Xã hội",
+    literature: "Văn học",
+    media: "Truyền thông",
+    art: "Nghệ thuật",
+    'indigenous-studies': "Nghiên cứu bản địa",
   },
   contribute: {
     title: 'Thêm môn học chưa có',

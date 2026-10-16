@@ -447,6 +447,12 @@ export const ms: Messages = {
     philosophy: 'Falsafah',
     history: 'Sejarah',
     'science-communication': 'Komunikasi sains',
+    politics: "Politik",
+    society: "Masyarakat",
+    literature: "Kesusasteraan",
+    media: "Media",
+    art: "Seni",
+    'indigenous-studies': "Kajian Orang Asal",
   },
   contribute: {
     title: 'Tambah subjek yang belum ada',

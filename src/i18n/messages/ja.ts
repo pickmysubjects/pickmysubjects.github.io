@@ -447,6 +447,12 @@ export const ja: Messages = {
     philosophy: '哲学',
     history: '歴史',
     'science-communication': '科学コミュニケーション',
+    politics: "政治",
+    society: "社会",
+    literature: "文学",
+    media: "メディア",
+    art: "芸術",
+    'indigenous-studies': "先住民研究",
   },
   contribute: {
     title: 'まだない科目を追加',

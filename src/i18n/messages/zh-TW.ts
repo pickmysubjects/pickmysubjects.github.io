@@ -447,6 +447,12 @@ export const zhTW: Messages = {
     philosophy: '哲學',
     history: '歷史',
     'science-communication': '科學傳播',
+    politics: "政治",
+    society: "社會",
+    literature: "文學",
+    media: "媒體與傳播",
+    art: "藝術",
+    'indigenous-studies': "原住民研究",
   },
   contribute: {
     title: '新增一門我們還沒有的課',
