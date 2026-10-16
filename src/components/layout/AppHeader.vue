@@ -14,7 +14,7 @@ const { t } = useI18n()
 </script>
 
 <template>
-  <header class="header">
+  <header class="header" :class="{ 'header-with-steps': MY_STEPS.some((x) => x.view === view) }">
     <div class="header-inner shell">
       <a class="brand" :href="link('')">
         <AppLogo class="mark" />
@@ -303,10 +303,29 @@ const { t } = useI18n()
   display: none;
 }
 
-@media (max-width: 720px) {
+/* The three My steps sit in the bar on wide screens; below that (tablets, small laptops and
+   phones) they move to their own slim row under it, so long step names never widen the page. */
+@media (max-width: 1100px) {
+  .nav-steps {
+    display: none;
+  }
+
   .header-steps {
     display: block;
     padding-bottom: 8px;
+  }
+}
+/* With the three My steps in the bar there's less room: the language button keeps only its
+   icon a little earlier, so a long language name (Tiếng Việt) can't push it off the edge. */
+@media (max-width: 1400px) {
+  .header-with-steps :deep(.lang-name) {
+    display: none;
+  }
+
+  .header-with-steps :deep(.lang) {
+    width: 36px;
+    padding: 0;
+    justify-content: center;
   }
 }
 </style>
