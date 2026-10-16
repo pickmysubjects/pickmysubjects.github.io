@@ -209,7 +209,7 @@ export const subjectFileSchema = z
     prerequisites: reqField,
     corequisites: reqField,
     non_allowed: z.union([z.literal('unknown'), z.array(subjectCode)]).default('unknown'),
-    categories: z.record(z.string(), z.enum(['science', 'commerce', 'breadth', 'core'])).default({}),
+    categories: z.record(z.string(), z.enum(['science', 'commerce', 'arts', 'breadth', 'core'])).default({}),
     skills: z.array(z.enum(SKILLS)).default([]),
     topics: z.array(z.enum(TOPICS)).default([]),
     // Semester version from the Handbook; weights add up to 100.
@@ -342,7 +342,7 @@ export const aboutFileSchema = z
 
 export type SubjectAbout = z.output<typeof aboutFileSchema>
 // 'core': counts towards the course total only, in none of its category rules (B-SCI's SCIE10005).
-export type SubjectCategory = 'science' | 'commerce' | 'breadth' | 'core'
+export type SubjectCategory = 'science' | 'commerce' | 'arts' | 'breadth' | 'core'
 
 const componentReq = z.union([
   z.object({ all: z.array(subjectCode).min(1) }).strict(),
@@ -412,6 +412,8 @@ export const courseFileSchema = z
     // Subjects this course's students can't count (closed to new students): they get no category
     // for it, so suggestions and the planner leave them out.
     closed: z.array(subjectCode).default([]),
+    // False while a course is still being entered: its data is checked, but students can't pick it yet.
+    listed: z.boolean().default(true),
     rules: z.array(courseRule),
     handbook: handbookUrl.optional(),
     verified_on: z.union([z.iso.date(), z.null()]).default(null),
@@ -426,6 +428,7 @@ export const courseFileSchema = z
     categories: c.categories,
     areaCategories: c.area_categories,
     closed: c.closed,
+    listed: c.listed,
     rules: c.rules.map(camelRule),
     handbook: c.handbook,
     verifiedOn: c.verified_on,

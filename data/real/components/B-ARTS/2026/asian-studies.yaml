@@ -1,0 +1,15 @@
+id: asian-studies
+course: B-ARTS
+year: 2026
+kind: major
+title: Asian Studies
+points: 75
+requirements:
+  - choose: { points: 25, from: [ASIA20001, ASIA20003, ASIA20004, ASIA20008, ASIA20007, ASIA20009] }
+  - choose: { points: 12.5, from: [INDO20018, CHIN20007, CHIN20008, HIST20034, INDO20001, ISLM20015, JAPN20005, KORE20002, KORE20007] }
+  - all: [ASIA30002]
+  - choose: { points: 12.5, from: [ASIA30003, ASIA30004, ASIA30005, ISLM30018] }
+  - choose: { points: 12.5, from: [CHIN30002, JAPN30002, POLS30011, KORE30001, KORE30002, CHIN30030] }
+# Structure from the 2026 Handbook major page (pasted); foundation subjects come in as prerequisites.
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
+verified_on: 2026-10-16 # structure; source: 2026 Handbook major page

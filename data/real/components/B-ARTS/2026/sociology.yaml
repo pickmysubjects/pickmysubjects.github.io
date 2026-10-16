@@ -1,0 +1,15 @@
+id: sociology
+course: B-ARTS
+year: 2026
+kind: major
+title: Sociology
+points: 75
+requirements:
+  # The page allows 12.5–25 points of level-2 core and 12.5–25 of level-2 electives (37.5 in all);
+  # one core subject plus 25 points from the rest of level 2 always meets it.
+  - choose: { points: 12.5, from: [SOCI20019, SOCI20023] }
+  - choose: { points: 25, from: [SOCI20019, SOCI20023, POLS20035, SOCI20014, SOCI20016, SOCI20017, SOTH20002, SOCI20020, SOCI20021, SOCI20022] }
+  - all: [SOCI30016]
+  - choose: { points: 25, from: [SOCI30001, SOCI30005, SOCI30009, SOCI30014, SOCI30015, SOCI30018] }
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
+verified_on: 2026-10-16 # structure; source: 2026 Handbook major page

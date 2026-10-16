@@ -15,7 +15,7 @@ export const ko: Messages = {
   nav: { home: '홈', browse: '과목', more: '더보기', plan: '계획', recommend: '추천', record: '내 정보', contribute: '데이터 추가', feedback: '피드백', main: '메인 메뉴' },
   period: { summer: '여름 학기', 'semester-1': '1학기', winter: '겨울 학기', 'semester-2': '2학기' },
   periodShort: { summer: '여름', 'semester-1': 'S1', winter: '겨울', 'semester-2': 'S2' },
-  category: { science: '이학', commerce: '상경', breadth: '교양(Breadth)', core: '필수' },
+  category: { science: '이학', commerce: '상경', arts: '인문', breadth: '교양(Breadth)', core: '필수' },
   plan: {
     pastTag: "이수함",
     pastUndated: "이수함 · 학기 미입력",
@@ -381,6 +381,9 @@ export const ko: Messages = {
     },
   },
   majorGroup: {
+    languages: "언어",
+    humanities: "인문학",
+    social: "사회과학",
     computing: '컴퓨팅·데이터·수학',
     biomed: '생명의학·생명과학',
     chemphys: '화학·물리',
@@ -647,7 +650,7 @@ export const ko: Messages = {
     metaNoPrereq: "선수 과목 없음",
     coverage: "지금까지 {n}개 과목, 그중 Breadth {breadth}개예요.",
     preset: { firstSemester: "첫 학기", breadth: "Breadth", noExam: "기말시험 없음" },
-    cat: { science: "이과", commerce: "상경", breadth: "Breadth" },
+    cat: { science: "이과", commerce: "상경", arts: "인문", breadth: "Breadth" },
   },
   majors: {
     shownFor: "{course} 기준으로 표시",

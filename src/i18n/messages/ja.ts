@@ -15,7 +15,7 @@ export const ja: Messages = {
   nav: { home: 'ホーム', browse: '科目', more: 'その他', plan: 'プラン', recommend: 'おすすめ', record: 'マイ', contribute: 'データを追加', feedback: 'フィードバック', main: 'メインメニュー' },
   period: { summer: '夏学期', 'semester-1': '第1セメスター', winter: '冬学期', 'semester-2': '第2セメスター' },
   periodShort: { summer: '夏', 'semester-1': 'S1', winter: '冬', 'semester-2': 'S2' },
-  category: { science: '理系科目', commerce: '商学系科目', breadth: 'Breadth（専攻外科目）', core: '必修' },
+  category: { science: '理系科目', commerce: '商学系科目', arts: '文系科目', breadth: 'Breadth（専攻外科目）', core: '必修' },
   plan: {
     pastTag: "履修済み",
     pastUndated: "履修済み・学期未入力",
@@ -381,6 +381,9 @@ export const ja: Messages = {
     },
   },
   majorGroup: {
+    languages: "言語",
+    humanities: "人文学",
+    social: "社会科学",
     computing: 'コンピューター・データ・数学',
     biomed: '生物医学・生命科学',
     chemphys: '化学・物理',
@@ -647,7 +650,7 @@ export const ja: Messages = {
     metaNoPrereq: "前提科目なし",
     coverage: "いまは {n} 科目、そのうち Breadth は {breadth} 科目です。",
     preset: { firstSemester: "1学期目", breadth: "Breadth", noExam: "期末試験なし" },
-    cat: { science: "理系", commerce: "商学系", breadth: "Breadth" },
+    cat: { science: "理系", commerce: "商学系", arts: "文系", breadth: "Breadth" },
   },
   majors: {
     shownFor: "{course} 向けに表示",

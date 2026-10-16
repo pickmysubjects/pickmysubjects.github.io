@@ -303,7 +303,9 @@ function courseLd(code: LocaleCode, s: Subject, title: string, prereq: string | 
 
 // ---------- main pages ----------
 
-const majors = data.components.filter((c) => c.kind === 'major')
+// Only majors of courses students can pick (a course still being entered has none yet).
+const listedCourses = new Set(data.courses.filter((c) => c.listed).map((c) => c.code))
+const majors = data.components.filter((c) => c.kind === 'major' && listedCourses.has(c.course))
 // Worked out once; the same for every language.
 const overviews = new Map(majors.map((m) => [m.id, majorOverview(data, m.id, m.course)]))
 

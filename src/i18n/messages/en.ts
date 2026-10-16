@@ -18,7 +18,7 @@ export const en = {
   nav: { home: 'Home', browse: 'Browse', more: 'More', plan: 'Plan', recommend: 'For you', record: 'Me', contribute: 'Add data', feedback: 'Feedback', main: 'Main' },
   period: { summer: 'Summer', 'semester-1': 'Semester 1', winter: 'Winter', 'semester-2': 'Semester 2' },
   periodShort: { summer: 'Summer', 'semester-1': 'Sem 1', winter: 'Winter', 'semester-2': 'Sem 2' },
-  category: { science: 'science', commerce: 'commerce', breadth: 'breadth', core: 'core' },
+  category: { science: 'science', commerce: 'commerce', arts: 'arts', breadth: 'breadth', core: 'core' },
   plan: {
     pastTag: "Done",
     pastUndated: "Done · semester not given",
@@ -384,6 +384,9 @@ export const en = {
     },
   },
   majorGroup: {
+    languages: "Languages",
+    humanities: "Humanities",
+    social: "Social sciences",
     computing: 'Computing, data and maths',
     biomed: 'Biomedical and life sciences',
     chemphys: 'Chemistry and physics',
@@ -650,7 +653,7 @@ export const en = {
     metaNoPrereq: "No prerequisites",
     coverage: "{n} subjects so far, {breadth} of them breadth.",
     preset: { firstSemester: "First semester", breadth: "Breadth", noExam: "No final exam" },
-    cat: { science: "Science", commerce: "Commerce", breadth: "Breadth" },
+    cat: { science: "Science", commerce: "Commerce", arts: "Arts", breadth: "Breadth" },
   },
   majors: {
     shownFor: "Shown for {course}",

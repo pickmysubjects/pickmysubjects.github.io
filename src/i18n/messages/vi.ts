@@ -15,7 +15,7 @@ export const vi: Messages = {
   nav: { home: 'Trang chủ', browse: 'Môn học', more: 'Thêm', plan: 'Kế hoạch', recommend: 'Gợi ý', record: 'Của tôi', contribute: 'Thêm dữ liệu', feedback: 'Góp ý', main: 'Menu chính' },
   period: { summer: 'Học kỳ hè', 'semester-1': 'Học kỳ 1', winter: 'Học kỳ đông', 'semester-2': 'Học kỳ 2' },
   periodShort: { summer: 'Hè', 'semester-1': 'HK1', winter: 'Đông', 'semester-2': 'HK2' },
-  category: { science: 'khoa học', commerce: 'kinh doanh', breadth: 'breadth (ngoài ngành)', core: 'bắt buộc' },
+  category: { science: 'khoa học', commerce: 'kinh doanh', arts: 'nhân văn', breadth: 'breadth (ngoài ngành)', core: 'bắt buộc' },
   plan: {
     pastTag: "Đã học",
     pastUndated: "Đã học · chưa điền học kỳ",
@@ -381,6 +381,9 @@ export const vi: Messages = {
     },
   },
   majorGroup: {
+    languages: "Ngôn ngữ",
+    humanities: "Khoa học nhân văn",
+    social: "Khoa học xã hội",
     computing: 'Máy tính, dữ liệu và toán',
     biomed: 'Y sinh và khoa học sự sống',
     chemphys: 'Hoá học và vật lý',
@@ -647,7 +650,7 @@ export const vi: Messages = {
     metaNoPrereq: "Không cần môn tiên quyết",
     coverage: "Hiện có {n} môn, trong đó {breadth} môn breadth.",
     preset: { firstSemester: "Học kỳ đầu", breadth: "Breadth", noExam: "Không thi cuối kỳ" },
-    cat: { science: "Khoa học", commerce: "Kinh doanh", breadth: "Breadth" },
+    cat: { science: "Khoa học", commerce: "Kinh doanh", arts: "Nhân văn", breadth: "Breadth" },
   },
   majors: {
     shownFor: "Hiển thị cho {course}",

@@ -1,0 +1,15 @@
+id: indigenous-studies
+course: B-ARTS
+year: 2026
+kind: major
+title: Indigenous Studies
+points: 75
+requirements:
+  - all: [INDG20002, INDG20005]
+  - choose: { points: 12.5, from: [AIND20011, INDG20003, INDG20004, LING20009, POLS20035, HIST20088, UNIB20022] }
+  - all: [INDG30001]
+  - choose: { points: 12.5, from: [INDG30003, INDG30005] }
+  - choose: { points: 12.5, from: [AHIS30005, INDG30004, GEOG30025, POLS30039, MULT30022, POLS30028, HIST30078, GEND30006, PHYC30025] }
+# Structure from the 2026 Handbook major page (pasted); foundation subjects come in as prerequisites.
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
+verified_on: 2026-10-16 # structure; source: 2026 Handbook major page

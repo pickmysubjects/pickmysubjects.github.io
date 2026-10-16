@@ -1,0 +1,14 @@
+id: anthropology
+course: B-ARTS
+year: 2026
+kind: major
+title: Anthropology
+points: 75
+requirements:
+  - all: [ANTH20015, ANTH20017]
+  - choose: { points: 12.5, from: [ANTH20001, ANTH20011, ANTH20013, DEVT20001, GEND20001, GEND20008, ANTH20012, ANTH20016] }
+  - all: [ANTH30013]
+  - choose: { points: 25, from: [ANTH30003, ANTH30005, ANTH30009, POLS30039, ANTH30019, ANTH30024, ANTH30025, ANTH30026, ANTH30027] }
+# Structure from the 2026 Handbook major page (pasted); foundation subjects come in as prerequisites.
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
+verified_on: 2026-10-16 # structure; source: 2026 Handbook major page

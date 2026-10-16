@@ -1,0 +1,15 @@
+id: korean-studies
+course: B-ARTS
+year: 2026
+kind: major
+title: Korean Studies
+points: 75
+requirements:
+  - all: [KORE20003, KORE20004]
+  - choose: { points: 12.5, from: [KORE20002, KORE20007] }
+  - all: [KORE30003]
+  - all: [KORE30005]
+  - choose: { points: 12.5, from: [KORE30004, KORE30002, KORE30001] }
+# Structure from the 2026 Handbook major page (pasted); foundation subjects come in as prerequisites.
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
+verified_on: 2026-10-16 # structure; source: 2026 Handbook major page

@@ -1,0 +1,15 @@
+id: arts-psychology
+course: B-ARTS
+year: 2026
+kind: major
+title: Psychology
+points: 125
+requirements:
+  - choose: { points: 12.5, from: [PSYC10003, PSYC10006] }
+  - choose: { points: 12.5, from: [PSYC10004, PSYC10007] }
+  - all: [PSYC20006, PSYC20008, PSYC20007, PSYC20009]
+  - all: [PSYC30013, PSYC30021]
+  - choose: { points: 25, from: [PSYC30014, PSYC30016, PSYC30017, PSYC30018, PSYC30019, PSYC30020, PSYC30022, PSYC30023] }
+# Structure from the 2026 Handbook major page (pasted); foundation subjects come in as prerequisites.
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
+verified_on: 2026-10-16 # structure; source: 2026 Handbook major page

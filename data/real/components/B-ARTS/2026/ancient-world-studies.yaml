@@ -1,0 +1,13 @@
+id: ancient-world-studies
+course: B-ARTS
+year: 2026
+kind: major
+title: Ancient World Studies
+points: 75
+requirements:
+  - choose: { points: 37.5, from: [ANCW20003, ANCW20015, ANCW20019, ANCW20022, ANCW20023, ANCW20024, ANCW20025, ANCW20026, ANCW20027, ANCW20028, PHIL20040] }
+  - all: [ANCW30017]
+  - choose: { points: 25, from: [ANCW30004, ANCW30011, ANCW30016, ANCW30021, ANCW30023, ANCW30025] }
+# Structure from the 2026 Handbook major page (pasted); foundation subjects come in as prerequisites.
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
+verified_on: 2026-10-16 # structure; source: 2026 Handbook major page

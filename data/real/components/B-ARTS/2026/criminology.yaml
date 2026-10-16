@@ -1,0 +1,14 @@
+id: criminology
+course: B-ARTS
+year: 2026
+kind: major
+title: Criminology
+points: 75
+requirements:
+  - all: [CRIM20013]
+  - choose: { points: 25, from: [CRIM20002, CRIM20003, CRIM20004, CRIM20006, CRIM20007, CRIM20009, CRIM20010, GEND20003, POLS20035, SOCI20017, CRIM20012, SOCI20023] }
+  - all: [CRIM30014]
+  - choose: { points: 25, from: [CRIM30001, CRIM30002, CRIM30005, CRIM30006, CRIM30010, CRIM30012, POLS30039, SOCI30014, CRIM30013, CRIM30015] }
+# Structure from the 2026 Handbook major page (pasted); foundation subjects come in as prerequisites.
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
+verified_on: 2026-10-16 # structure; source: 2026 Handbook major page

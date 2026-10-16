@@ -213,7 +213,7 @@ const printTerms = computed<PrintTerm[]>(() => {
       v-if="showWizard"
       :key="dataName"
       :setup="plan.setup.value"
-      :courses="data.courses"
+      :courses="data.courses.filter((c) => c.listed)"
       :components="data.components"
       :cancellable="!plan.isEmpty.value"
       @done="finishWizard"

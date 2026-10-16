@@ -15,7 +15,7 @@ export const id: Messages = {
   nav: { home: 'Beranda', browse: 'Cari', more: 'Lainnya', plan: 'Rencana', recommend: 'Untukmu', record: 'Saya', contribute: 'Tambah data', feedback: 'Masukan', main: 'Menu utama' },
   period: { summer: 'Semester musim panas', 'semester-1': 'Semester 1', winter: 'Semester musim dingin', 'semester-2': 'Semester 2' },
   periodShort: { summer: 'Musim panas', 'semester-1': 'Sem 1', winter: 'Musim dingin', 'semester-2': 'Sem 2' },
-  category: { science: 'sains', commerce: 'bisnis', breadth: 'breadth', core: 'inti' },
+  category: { science: 'sains', commerce: 'bisnis', arts: 'humaniora', breadth: 'breadth', core: 'inti' },
   plan: {
     pastTag: "Sudah diambil",
     pastUndated: "Sudah diambil · semester belum diisi",
@@ -381,6 +381,9 @@ export const id: Messages = {
     },
   },
   majorGroup: {
+    languages: "Bahasa",
+    humanities: "Humaniora",
+    social: "Ilmu sosial",
     computing: 'Komputer, data dan matematika',
     biomed: 'Biomedis dan ilmu hayati',
     chemphys: 'Kimia dan fisika',
@@ -647,7 +650,7 @@ export const id: Messages = {
     metaNoPrereq: "Tanpa prasyarat",
     coverage: "Sejauh ini {n} mata kuliah, {breadth} di antaranya breadth.",
     preset: { firstSemester: "Semester pertama", breadth: "Breadth", noExam: "Tanpa ujian akhir" },
-    cat: { science: "Sains", commerce: "Bisnis", breadth: "Breadth" },
+    cat: { science: "Sains", commerce: "Bisnis", arts: "Humaniora", breadth: "Breadth" },
   },
   majors: {
     shownFor: "Ditampilkan untuk {course}",

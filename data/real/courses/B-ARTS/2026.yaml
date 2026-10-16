@@ -1,0 +1,84 @@
+# Bachelor of Arts course rules, 2026 Handbook. Facts re-expressed in our own words.
+code: B-ARTS
+title: Bachelor of Arts
+year: 2026
+total_points: 300
+standard_load: 50
+categories: [arts, breadth]
+# Arts discipline subjects are the Faculty of Arts study areas (the Handbook's "Diversity of
+# study" lists); everything else is breadth.
+area_categories:
+  home: arts
+  areas: [AHIS, ANCW, ANTH, ARBC, ARTS, ASIA, CHIN, CLAS, CREW, CRIM, DEVT, ENGL, EURO, FREN, GEND, GEOG, GERM, HEBR, HIST, HPSC, INDG, INDO, ISLM, ITAL, JAPN, KORE, LANG, LING, MECM, MULT, PHIL, POLS, PSYC, RUSS, SCRN, SOCI, SPAN, ECON]
+  other: breadth
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/course-structure
+verified_on: 2026-10-16 # rules checked by hand against the Handbook course structure
+# Hidden until its major subjects are entered (most aren't yet).
+listed: false
+rules:
+  - id: total
+    kind: points
+    min: 300
+    description: 300 points in total
+  - id: discovery
+    kind: requirement
+    paths:
+      - - choose: { points: 12.5, from: [AHIS10001, ARTS10005, CRIM10001, ENGL10002, HPSC10002, INDG10001, LANG10001, LING10002, PHIL10002, POLS10003, SOCI10001, ASIA10003, HIST10015] }
+    description: An Arts Discovery subject (taken in the first semester)
+  - id: arts
+    kind: points
+    category: arts
+    min: 225
+    description: At least 225 points of Arts discipline subjects
+  - id: arts-l1
+    kind: points
+    category: arts
+    level: 1
+    min: 75
+    description: At least 75 points of level-1 Arts subjects (Discovery and Foundation)
+  - id: arts-l2
+    kind: points
+    category: arts
+    level: 2
+    min: 75
+    description: At least 75 points of level-2 Arts subjects
+  - id: arts-l3
+    kind: points
+    category: arts
+    level: 3
+    min: 75
+    description: At least 75 points of level-3 Arts subjects
+  - id: breadth
+    kind: points
+    category: breadth
+    min: 50
+    description: At least 50 points of breadth
+  - id: breadth-l1-cap
+    kind: points
+    category: breadth
+    level: 1
+    max: 37.5
+    description: No more than 37.5 points of level-1 breadth
+  - id: level1-cap
+    kind: points
+    level: 1
+    max: 125
+    description: No more than 125 points at level 1
+  - id: major
+    kind: major
+    count: 1
+    description: Complete one major (a second is optional)
+  - id: progress-to-l2
+    kind: progression
+    before_level: 2
+    level: 1
+    min_points: 50
+    description: Normally 50 level-1 points before level-2 subjects
+  - id: progress-to-l3
+    kind: progression
+    before_level: 3
+    level: 2
+    min_points: 50
+    description: Normally 50 level-2 points before level-3 subjects
+# Not encoded yet: at most 125 points from any one discipline (diversity of study), at most one
+# minor, and the adjusted rules of the non-standard majors (Psychology, Geography, Economics).

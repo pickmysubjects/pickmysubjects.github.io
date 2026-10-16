@@ -56,7 +56,7 @@ function done(setup: PlanSetup): void {
       v-if="editing"
       class="degree-wizard"
       :setup="plan.setup.value"
-      :courses="data.courses"
+      :courses="data.courses.filter((c) => c.listed)"
       :components="data.components"
       @done="done"
       @cancel="editing = false"

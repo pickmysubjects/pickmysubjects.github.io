@@ -1,0 +1,14 @@
+id: arts-geography
+course: B-ARTS
+year: 2026
+kind: major
+title: Geography
+points: 100
+requirements:
+  - all: [GEOG10001]
+  - all: [GEOG10003]
+  - choose: { points: 37.5, from: [GEOG20001, GEOG20002, GEOG20003, GEOG20008, GEOG20010, GEOG20011, GEOG20012, GEOG20013, GEOG20015, GEOG20016, GEOG20017] }
+  - choose: { points: 37.5, from: [GEOG30001, GEOG30019, GEOG30021, GEOG30023, GEOG30024, GEOG30028, GEOG30029, GEOG30030, GEOG30031] }
+# Structure from the 2026 Handbook major page (pasted); foundation subjects come in as prerequisites.
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
+verified_on: 2026-10-16 # structure; source: 2026 Handbook major page

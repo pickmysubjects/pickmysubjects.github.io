@@ -15,7 +15,7 @@ export const zhCN: Messages = {
   nav: { home: '首页', browse: '找课', more: '更多', plan: '排课', recommend: '推荐', record: '我的', contribute: '添加数据', feedback: '反馈', main: '主导航' },
   period: { summer: '夏季学期', 'semester-1': '第一学期', winter: '冬季学期', 'semester-2': '第二学期' },
   periodShort: { summer: '夏季', 'semester-1': 'S1', winter: '冬季', 'semester-2': 'S2' },
-  category: { science: '理科', commerce: '商科', breadth: 'Breadth', core: '必修' },
+  category: { science: '理科', commerce: '商科', arts: '文科', breadth: 'Breadth', core: '必修' },
   plan: {
     pastTag: "已修",
     pastUndated: "已修 · 学期未填",
@@ -381,6 +381,9 @@ export const zhCN: Messages = {
     },
   },
   majorGroup: {
+    languages: "语言",
+    humanities: "人文",
+    social: "社会科学",
     computing: '计算机、数据与数学',
     biomed: '生物医学与生命科学',
     chemphys: '化学与物理',
@@ -647,7 +650,7 @@ export const zhCN: Messages = {
     metaNoPrereq: "不需要先修课",
     coverage: "目前有 {n} 门课，其中 Breadth 课 {breadth} 门。",
     preset: { firstSemester: "新生第一学期", breadth: "Breadth 课", noExam: "没有期末考试" },
-    cat: { science: "理科", commerce: "商科", breadth: "Breadth" },
+    cat: { science: "理科", commerce: "商科", arts: "文科", breadth: "Breadth" },
   },
   majors: {
     shownFor: "按 {course} 显示",

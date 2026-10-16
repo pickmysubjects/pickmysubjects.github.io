@@ -1,0 +1,13 @@
+id: history-and-philosophy-of-science
+course: B-ARTS
+year: 2026
+kind: major
+title: History and Philosophy of Science
+points: 75
+requirements:
+  - choose: { points: 37.5, from: [HPSC20015, HPSC20002, HPSC20009, HPSC20020, HPSC20026, PHIL20033, HPSC20023, HPSC20024, HPSC20025, HIST20080, ARTS20003, ARTS20004] }
+  - all: [HPSC30035]
+  - choose: { points: 25, from: [HPSC30023, HPSC30034, HPSC30019, HPSC30037, HPSC30038, HIST30004, HPSC30039] }
+# Structure from the 2026 Handbook major page (pasted); foundation subjects come in as prerequisites.
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
+verified_on: 2026-10-16 # structure; source: 2026 Handbook major page

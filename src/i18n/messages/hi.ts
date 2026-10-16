@@ -15,7 +15,7 @@ export const hi: Messages = {
   nav: { home: 'होम', browse: 'सब्जेक्ट', more: 'और', plan: 'प्लान', recommend: 'आपके लिए', record: 'मेरा', contribute: 'डेटा जोड़ें', feedback: 'फ़ीडबैक', main: 'मुख्य मेन्यू' },
   period: { summer: 'समर टर्म', 'semester-1': 'सेमेस्टर 1', winter: 'विंटर टर्म', 'semester-2': 'सेमेस्टर 2' },
   periodShort: { summer: 'समर', 'semester-1': 'सेम 1', winter: 'विंटर', 'semester-2': 'सेम 2' },
-  category: { science: 'साइंस', commerce: 'कॉमर्स', breadth: 'ब्रेड्थ', core: 'अनिवार्य' },
+  category: { science: 'साइंस', commerce: 'कॉमर्स', arts: 'आर्ट्स', breadth: 'ब्रेड्थ', core: 'अनिवार्य' },
   plan: {
     pastTag: "पूरा",
     pastUndated: "पूरा · सेमेस्टर नहीं भरा",
@@ -381,6 +381,9 @@ export const hi: Messages = {
     },
   },
   majorGroup: {
+    languages: "भाषाएँ",
+    humanities: "मानविकी",
+    social: "सामाजिक विज्ञान",
     computing: 'कंप्यूटिंग, डेटा और गणित',
     biomed: 'बायोमेडिकल और जीव विज्ञान',
     chemphys: 'रसायन और भौतिकी',
@@ -647,7 +650,7 @@ export const hi: Messages = {
     metaNoPrereq: "कोई प्रीरिक्विज़िट नहीं",
     coverage: "अब तक {n} सब्जेक्ट, जिनमें {breadth} breadth हैं।",
     preset: { firstSemester: "पहला सेमेस्टर", breadth: "Breadth", noExam: "फ़ाइनल परीक्षा नहीं" },
-    cat: { science: "साइंस", commerce: "कॉमर्स", breadth: "Breadth" },
+    cat: { science: "साइंस", commerce: "कॉमर्स", arts: "आर्ट्स", breadth: "Breadth" },
   },
   majors: {
     shownFor: "{course} के लिए दिखाया गया",

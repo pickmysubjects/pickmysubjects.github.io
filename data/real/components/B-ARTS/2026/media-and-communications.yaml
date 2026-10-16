@@ -1,0 +1,13 @@
+id: media-and-communications
+course: B-ARTS
+year: 2026
+kind: major
+title: Media and Communications
+points: 75
+requirements:
+  - choose: { points: 37.5, from: [MECM20003, MECM20006, MECM20010, MECM20011, MECM20013, MECM20014, MECM20015] }
+  - all: [MECM30002]
+  - choose: { points: 25, from: [MECM30015, MECM30016, MECM30004, MECM30013, MECM30017, CULS30006, MECM30019, MECM30020] }
+# Structure from the 2026 Handbook major page (pasted); foundation subjects come in as prerequisites.
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
+verified_on: 2026-10-16 # structure; source: 2026 Handbook major page

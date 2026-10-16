@@ -1,0 +1,14 @@
+id: islamic-studies
+course: B-ARTS
+year: 2026
+kind: major
+title: Islamic Studies
+points: 75
+requirements:
+  - all: [ISLM20003]
+  - choose: { points: 25, from: [ASIA20003, JEWI20006, JEWI20007, ISLM20015, ISLM20016, POLS20025, INDO20017, ASIA20007, ISLM20017] }
+  - all: [ISLM30017]
+  - choose: { points: 25, from: [ASIA30003, ISLM30003, ISLM30018, ISLM30021] }
+# Structure from the 2026 Handbook major page (pasted); foundation subjects come in as prerequisites.
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
+verified_on: 2026-10-16 # structure; source: 2026 Handbook major page

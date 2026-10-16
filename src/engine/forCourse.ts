@@ -32,7 +32,7 @@ export function forCourse(given: Dataset, course: string): Dataset {
 /** The course a new visitor starts with: the one with the most majors curated. */
 export function defaultCourse(data: Dataset): string {
   const majors = (code: string) => data.components.filter((c) => c.course === code && c.kind === 'major').length
-  return [...data.courses].sort((a, b) => majors(b.code) - majors(a.code))[0]?.code ?? ''
+  return [...data.courses].filter((c) => c.listed).sort((a, b) => majors(b.code) - majors(a.code))[0]?.code ?? ''
 }
 
 const focusCache = new WeakMap<Dataset, Map<string, CourseFocus>>()
