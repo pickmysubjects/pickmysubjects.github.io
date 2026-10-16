@@ -1,0 +1,39 @@
+code: BIOM30001
+title: Frontiers in Biomedicine
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites:
+  all:
+    - BIOM20001
+    - BIOM20002
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - presentation
+  - data
+topics:
+  - health
+  - science-communication
+assessment:
+  - kind: assignment
+    weight: 10
+  - kind: assignment
+    weight: 5
+  - kind: assignment
+    weight: 15
+  - kind: assignment
+    weight: 5
+  - kind: test
+    weight: 15
+  - kind: exam
+    weight: 50
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/biom30001
+source_year: 2026
+verified_on: 2026-10-16
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

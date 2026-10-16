@@ -1,0 +1,50 @@
+code: BIOM20001
+title: Molecular and Cellular Biomedicine
+level: 2
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites:
+  all:
+    - all:
+        - BIOL10002
+        - CHEM10006
+    - any:
+        - BIOM10002
+        - BIOL10003
+corequisites: none
+non_allowed:
+  - BCMB20002
+  - CEDB20003
+  - MIIM20001
+  - PATH20001
+  - BCMB20006
+skills:
+  - lab
+  - data
+topics:
+  - biology
+  - health
+assessment:
+  - kind: assignment
+    weight: 0
+    group: true
+    hurdle: true
+  - kind: assignment
+    weight: 10
+    hurdle: true
+  - kind: test
+    weight: 50
+  - kind: exam
+    weight: 40
+    group: true
+  - kind: assignment
+    weight: 0
+    hurdle: true
+weekly_contact_hours: 11
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/biom20001
+source_year: 2026
+verified_on: 2026-10-16
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

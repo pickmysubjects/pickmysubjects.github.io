@@ -1,0 +1,31 @@
+code: CHEM10006
+title: Chemistry for Biomedicine
+level: 1
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+    - semester-2
+prerequisites:
+  admission: B-BMED
+  note: Admission into the B-BMED Bachelor of Biomedicine
+corequisites: none
+non_allowed: []
+skills:
+  - lab
+  - writing
+topics:
+  - chemistry
+assessment:
+  - kind: test
+    weight: 6
+  - kind: assignment
+    weight: 20
+    hurdle: true
+  - kind: exam
+    weight: 74
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/chem10006
+source_year: 2026
+verified_on: 2026-10-16
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
