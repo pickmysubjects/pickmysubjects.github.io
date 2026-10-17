@@ -1,0 +1,51 @@
+code: JAPN20018
+title: Japanese Through the Media
+level: 2
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites:
+  any:
+    - any:
+        - JAPN10006
+        - JAPN20004
+        - JAPN30006
+    - manual: Equivalent
+    - manual: "New students will have their appropriate entry point determined by the Japanese Program, based on evidence of prior learning and/or results of a placement test as required. Placement Test information here: Link"
+corequisites: none
+non_allowed:
+  - JAPN30004
+skills:
+  - writing
+topics:
+  - media
+  - society
+  - languages
+assessment:
+  - kind: assignment
+    weight: 25
+  - kind: assignment
+    weight: 25
+  - kind: project
+    weight: 50
+weekly_contact_hours: 4
+breadth_for:
+  - Bachelor of Biomedicine
+  - Bachelor of Commerce
+  - Bachelor of Design
+  - Bachelor of Fine Arts (Acting)
+  - Bachelor of Fine Arts (Animation)
+  - Bachelor of Fine Arts (Dance)
+  - Bachelor of Fine Arts (Film and Television)
+  - Bachelor of Fine Arts (Music Theatre)
+  - Bachelor of Fine Arts (Production)
+  - Bachelor of Fine Arts (Screenwriting)
+  - Bachelor of Fine Arts (Theatre)
+  - Bachelor of Fine Arts (Visual Art)
+  - Bachelor of Music
+  - Bachelor of Science
+handbook: https://handbook.unimelb.edu.au/2026/subjects/japn20018
+source_year: 2026
+verified_on: 2026-10-17
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

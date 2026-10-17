@@ -1,0 +1,50 @@
+code: KORE20005
+title: Korean 5
+level: 2
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites:
+  any:
+    - any:
+        - KORE10004
+        - KORE20004
+    - manual: Passing the Language Placement Test of Korean 4
+corequisites: none
+non_allowed:
+  - KORE10004
+  - KORE30003
+skills:
+  - presentation
+topics:
+  - languages
+assessment:
+  - kind: assignment
+    weight: 20
+  - kind: presentation
+    weight: 25
+  - kind: assignment
+    weight: 15
+  - kind: exam
+    weight: 40
+weekly_contact_hours: 4
+breadth_for:
+  - Bachelor of Arts
+  - Bachelor of Biomedicine
+  - Bachelor of Commerce
+  - Bachelor of Design
+  - Bachelor of Fine Arts (Acting)
+  - Bachelor of Fine Arts (Animation)
+  - Bachelor of Fine Arts (Dance)
+  - Bachelor of Fine Arts (Film and Television)
+  - Bachelor of Fine Arts (Music Theatre)
+  - Bachelor of Fine Arts (Production)
+  - Bachelor of Fine Arts (Screenwriting)
+  - Bachelor of Fine Arts (Theatre)
+  - Bachelor of Fine Arts (Visual Art)
+  - Bachelor of Music
+handbook: https://handbook.unimelb.edu.au/2026/subjects/kore20005
+source_year: 2026
+verified_on: 2026-10-17
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
