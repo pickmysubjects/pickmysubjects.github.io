@@ -1,0 +1,57 @@
+code: INDO30011
+title: Indonesian 5
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites:
+  any:
+    - any:
+        - INDO10002
+        - INDO20007
+    - manual: Equivalent
+    - manual: All students enrolling in Indonesian at The University of Melbourne for the first time are required to complete the online language questionnaire and placement test at the link below. This applies to all students, including total beginners and those who have any experience with the language, whether through formal study, such as VCE or equivalent, or informally through family or overseas travel. The results of the test are binding and enrolment can only be changed in consultation with the relevant course coordinator. Link
+corequisites: none
+non_allowed:
+  - INDO10003
+  - INDO20008
+skills:
+  - writing
+  - presentation
+topics:
+  - languages
+assessment:
+  - kind: presentation
+    weight: 10
+  - kind: report
+    weight: 15
+  - kind: report
+    weight: 15
+  - kind: report
+    weight: 10
+  - kind: presentation
+    weight: 10
+  - kind: exam
+    weight: 40
+weekly_contact_hours: 4
+breadth_for:
+  - Bachelor of Arts
+  - Bachelor of Biomedicine
+  - Bachelor of Commerce
+  - Bachelor of Design
+  - Bachelor of Fine Arts (Acting)
+  - Bachelor of Fine Arts (Animation)
+  - Bachelor of Fine Arts (Dance)
+  - Bachelor of Fine Arts (Film and Television)
+  - Bachelor of Fine Arts (Music Theatre)
+  - Bachelor of Fine Arts (Production)
+  - Bachelor of Fine Arts (Screenwriting)
+  - Bachelor of Fine Arts (Theatre)
+  - Bachelor of Fine Arts (Visual Art)
+  - Bachelor of Music
+  - Bachelor of Science
+handbook: https://handbook.unimelb.edu.au/2026/subjects/indo30011
+source_year: 2026
+verified_on: 2026-10-17
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

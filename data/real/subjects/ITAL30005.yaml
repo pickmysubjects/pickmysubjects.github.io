@@ -1,0 +1,52 @@
+code: ITAL30005
+title: Contemporary Italy Study Abroad
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - summer
+prerequisites:
+  manual: "This subject is taught on site in Italy. Eligibility requirements: A minimum of 25 credit points of Italian Studies subjects with an average grade of H2B or above; Additional entry requirements also apply (please see below). Link"
+corequisites: none
+non_allowed:
+  - ITAL20004
+skills:
+  - writing
+  - presentation
+  - fieldwork
+topics:
+  - society
+  - art
+  - languages
+assessment:
+  - kind: project
+    weight: 15
+    group: true
+  - kind: assignment
+    weight: 15
+  - kind: presentation
+    weight: 10
+  - kind: assignment
+    weight: 15
+  - kind: assignment
+    weight: 45
+weekly_contact_hours: 2
+breadth_for:
+  - Bachelor of Biomedicine
+  - Bachelor of Commerce
+  - Bachelor of Design
+  - Bachelor of Fine Arts (Acting)
+  - Bachelor of Fine Arts (Animation)
+  - Bachelor of Fine Arts (Dance)
+  - Bachelor of Fine Arts (Film and Television)
+  - Bachelor of Fine Arts (Music Theatre)
+  - Bachelor of Fine Arts (Production)
+  - Bachelor of Fine Arts (Screenwriting)
+  - Bachelor of Fine Arts (Theatre)
+  - Bachelor of Fine Arts (Visual Art)
+  - Bachelor of Music
+  - Bachelor of Science
+handbook: https://handbook.unimelb.edu.au/2026/subjects/ital30005
+source_year: 2026
+verified_on: 2026-10-17
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
