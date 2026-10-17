@@ -166,6 +166,31 @@ li {
   letter-spacing: 0;
 }
 
+/*
+ * Line breaking that works for any language. Long unbroken strings (URLs, codes,
+ * German-length words) wrap instead of pushing a box wider than its parent.
+ * Japanese has no spaces, so by default it breaks between any two characters,
+ * splitting words like 単位|数; auto-phrase breaks between phrases instead (Chrome 119+,
+ * ignored elsewhere). Korean separates words with spaces, so keep-all keeps each
+ * word whole the way Korean readers expect.
+ */
+:root {
+  overflow-wrap: break-word;
+}
+
+:lang(ja) {
+  word-break: auto-phrase;
+}
+
+:lang(ko) {
+  word-break: keep-all;
+}
+
+/* Devanagari stacks marks above and below the letters; tight title leading makes them collide. */
+:lang(hi) :is(h1, h2, h3) {
+  line-height: 1.35;
+}
+
 /* Every page title the same size and weight. */
 h1 {
   font-size: clamp(2.2rem, 5vw, 3.4rem);

@@ -124,8 +124,11 @@ function pick(skill: Skill, level: number): void {
 
 .scale {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  flex: none;
+  /* Equal cells that may shrink below their label width: a long label (e.g. かなり得意)
+     wraps inside its cell instead of pushing the scale out of its column. */
+  grid-template-columns: repeat(5, minmax(44px, 1fr));
+  flex: 0 1 auto;
+  max-width: 100%;
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
   overflow: hidden;
@@ -140,6 +143,7 @@ function pick(skill: Skill, level: number): void {
   background: var(--surface);
   font: inherit;
   font-size: 0.8125rem;
+  line-height: 1.25;
   color: var(--ink-soft);
   cursor: pointer;
 }

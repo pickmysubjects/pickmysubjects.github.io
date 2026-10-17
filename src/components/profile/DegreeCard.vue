@@ -73,6 +73,7 @@ function done(setup: PlanSetup): void {
 
 .degree-head {
   display: flex;
+  flex-wrap: wrap;
   align-items: flex-start;
   gap: 12px;
 }
@@ -87,7 +88,9 @@ function done(setup: PlanSetup): void {
   display: grid;
   gap: 4px;
   min-width: 0;
-  flex: 1;
+  /* Grows beside the button, but drops the button to its own line rather than
+     squeezing the text into a narrow column (any language, any width). */
+  flex: 1 1 14em;
 }
 
 .degree-title {
@@ -128,11 +131,5 @@ function done(setup: PlanSetup): void {
   max-width: none;
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
-}
-
-@media (max-width: 520px) {
-  .degree-head {
-    flex-wrap: wrap;
-  }
 }
 </style>
