@@ -342,3 +342,29 @@ describe('one subject short after a fail', () => {
     expect(r.notes.some((n) => typeof n !== 'string' && n.key === 'finishEarlier')).toBe(true)
   })
 })
+
+describe('generatePlan (real B-ARTS data, capstones limited to a major)', () => {
+  const { dataset: real } = buildDataset('real')
+  const planFor = (major: string) =>
+    generatePlan({
+      data: real,
+      profile: { results: [], skills: {}, interests: ['chinese', 'china', 'asia'], goal: 'balanced' },
+      course: 'B-ARTS',
+      courseYear: 2026,
+      major,
+      startYear: 2026,
+      startPeriod: 'semester-1',
+    }).plan.terms.flatMap((t) => t.subjects)
+
+  it("never gives a History student another major's capstone, which a Chinese Studies plan can hold", () => {
+    expect(planFor('history')).not.toContain('CHIN30029')
+    expect(planFor('chinese-studies')).toContain('CHIN30029')
+  })
+
+  it("flags another major's capstone placed by hand in a History plan", () => {
+    const plan = { course: 'B-ARTS', courseYear: 2026, major: 'history', completed: [], terms: [{ year: 2028, period: 'semester-2' as const, subjects: ['CHIN30029'] }] }
+    const unmet = (major: string) => checkTerms({ ...plan, major }, real).filter((i) => i.kind === 'prereq-unmet' && i.subject === 'CHIN30029')
+    expect(unmet('history').map((i) => i.params.needs)).toEqual(['a place in the Chinese Studies major'])
+    expect(unmet('chinese-studies')).toEqual([])
+  })
+})

@@ -27,6 +27,15 @@ export function findComponent(data: Dataset, id: string | undefined): Component 
   return id ? data.components.find((c) => c.id === id) : undefined
 }
 
+/**
+ * Titles of the student's chosen major/specialisation ("Chinese Studies"), for conditions that
+ * name majors. Undefined when none is chosen (or none is in the dataset): those stay unknown.
+ */
+export function majorTitles(data: Dataset, ids: readonly (string | undefined)[]): string[] | undefined {
+  const titles = ids.map((id) => findComponent(data, id)?.title).filter((t): t is string => !!t)
+  return titles.length ? titles : undefined
+}
+
 export function categoryOf(subject: Subject, course: string): string | undefined {
   return subject.categories[course]
 }

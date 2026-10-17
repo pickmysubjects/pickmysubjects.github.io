@@ -9,6 +9,11 @@ export interface EvalContext {
   subjects: Readonly<Record<string, Subject>>
   /** Course the student is admitted to, e.g. "B-SCI". */
   admittedCourse?: string
+  /**
+   * Titles of the student's major(s)/specialisation(s) in that course ("Chinese Studies").
+   * Undefined when none is chosen: conditions about majors then stay unknown.
+   */
+  majors?: readonly string[]
 }
 
 export interface EvalResult {
@@ -42,6 +47,8 @@ export function evaluate(expr: ReqExpr, ctx: EvalContext): EvalResult {
     if (!ctx.admittedCourse) return { status: 'unknown', unmet: [describe(expr)] }
     return ctx.admittedCourse === expr.admission ? ok() : { status: 'fail', unmet: [describe(expr)] }
   }
+  const byMajor = majorCondition(expr.manual, ctx)
+  if (byMajor) return byMajor
   // "Admission into one of the following: B-SCIEXT … B-ARTSEXT" is a course list written out
   // as text: decide it like an admission rule when we know the student's course.
   const courses = admissionCourses(expr.manual)
@@ -58,6 +65,76 @@ export function admissionCourses(text: string): string[] {
   // isn't enough, so it isn't a plain course list (the student's major decides; left unknown).
   if (/\bmajor\b|\bspeciali[sz]ation\b|\bselection of\b/i.test(text)) return []
   return [...new Set(text.match(/\b(?:MC|B|D|GD)-[A-Z]{2,}\b/g) ?? [])]
+}
+
+const COURSE_CODE = String.raw`(?:MC|B|D|GD)-[A-Z]{2,}`
+// "Chinese Studies major in the B-ARTS", "Chinese Studies minor minor in the B-ARTS",
+// "French Studies specialisation (formal) in the GD-ARTS".
+const LISTED_COMPONENT = new RegExp(
+  String.raw`([A-Z][A-Za-z'’&\- ]*?) (major|minor(?: minor)?|specialisation(?: \(formal\))?) in the (${COURSE_CODE})\b`,
+  'g',
+)
+// "… only available to students in the Italian Studies Major within the Bachelor of Arts".
+const WITHIN_MAJOR = /\bstudents in the ([A-Z][A-Za-z'’&\- ]*?) Major within the ((?:Bachelor|Master|Diploma|Graduate Diploma) (?:of|in) [A-Z][a-z]+)/g
+
+/** A component named in a free-text condition: its title, kind and the course it belongs to. */
+export interface NamedComponent {
+  title: string
+  kind: 'major' | 'minor' | 'specialisation'
+  course: string
+}
+
+/**
+ * The majors, minors and specialisations a free-text condition names, each with its course
+ * ("Admission into or selection of one of the following: Chinese Studies major in the B-ARTS
+ * Bachelor of Arts, …"). A course written out by name ("Major within the Bachelor of Arts") is
+ * only resolved when the same text pairs that name with its code.
+ */
+export function namedComponents(text: string): NamedComponent[] {
+  const out: NamedComponent[] = []
+  // Course names the text pairs with a code ("B-ARTS Bachelor of Arts"), to strip from titles
+  // that follow them and to resolve the written-out phrasing.
+  const names = new Map<string, string>()
+  for (const m of text.matchAll(new RegExp(String.raw`(${COURSE_CODE}) ((?:Bachelor|Master|Diploma|Graduate Diploma|Doctor) (?:of|in) [A-Z][a-z]+)`, 'g'))) {
+    names.set(m[2] as string, m[1] as string)
+  }
+  const clean = (raw: string): string => {
+    let t = raw.split(/[:,]/).pop()!.trim()
+    for (const name of names.keys()) if (t.startsWith(`${name} `)) t = t.slice(name.length + 1)
+    return t.replace(/^(?:and|or|the) /i, '').trim()
+  }
+  for (const m of text.matchAll(LISTED_COMPONENT)) {
+    const kind = (m[2] as string).split(' ')[0] as NamedComponent['kind']
+    out.push({ title: clean(m[1] as string), kind, course: m[3] as string })
+  }
+  for (const m of text.matchAll(WITHIN_MAJOR)) {
+    const course = names.get(m[2] as string)
+    if (course) out.push({ title: clean(m[1] as string), kind: 'major', course })
+  }
+  const seen = new Set<string>()
+  return out.filter((c) => c.title && !seen.has(`${c.kind}:${c.course}:${c.title.toLowerCase()}`) && seen.add(`${c.kind}:${c.course}:${c.title.toLowerCase()}`))
+}
+
+const titleKey = (t: string) => t.toLowerCase().replace(/\s+major$/, '').trim()
+
+/**
+ * A condition limited to students in given majors ("only available to students in the Chinese
+ * Studies Major"), decided when we know the student's course and majors. Null when the text
+ * names no major of the student's course, or when a minor or specialisation of it (which we
+ * don't model) could let them in instead.
+ */
+function majorCondition(text: string, ctx: EvalContext): EvalResult | null {
+  if (!ctx.admittedCourse || !ctx.majors) return null
+  const mine = namedComponents(text).filter((c) => c.course === ctx.admittedCourse)
+  const majors = mine.filter((c) => c.kind === 'major')
+  if (!majors.length) return null
+  const have = new Set(ctx.majors.map(titleKey))
+  // A title can carry the tail of a course name before it ("… Master of Biomedical Engineering
+  // Biomedical Engineering Systems"), so a student's major matches as a whole-word ending.
+  const named = (t: string) => [...have].some((h) => t === h || t.endsWith(` ${h}`))
+  if (majors.some((c) => named(titleKey(c.title)))) return ok()
+  if (mine.some((c) => c.kind !== 'major')) return null
+  return { status: 'fail', unmet: [`a place in the ${majors.map((c) => c.title).join(' / ')} major`] }
 }
 
 function evaluatePoints(

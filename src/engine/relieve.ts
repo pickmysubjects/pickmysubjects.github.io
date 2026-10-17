@@ -1,5 +1,5 @@
 import { offeredIn } from './availability'
-import { checkCourse } from './courseRules'
+import { checkCourse, majorTitles } from './courseRules'
 import type { Plan, PlanTerm } from './plan'
 import { evaluateField, referencedSubjects } from './expr'
 import { checkTerms } from './planCheck'
@@ -259,7 +259,7 @@ function leanedOn(plan: Plan, data: Dataset, code: string): boolean {
     for (const c of (plan.terms[i] as PlanTerm).subjects) {
       const s = data.subjects[c]
       if (!s || s.prerequisites === 'none' || s.prerequisites === 'unknown') continue
-      const ctx = { subjects: data.subjects, admittedCourse: plan.course }
+      const ctx = { subjects: data.subjects, admittedCourse: plan.course, majors: majorTitles(data, [plan.major, plan.specialisation]) }
       if (evaluateField(s.prerequisites, { ...ctx, completed: new Set(before) }).status !== 'ok') continue
       if (evaluateField(s.prerequisites, { ...ctx, completed: without }).status !== 'ok') return true
     }
