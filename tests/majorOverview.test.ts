@@ -37,7 +37,8 @@ describe('majorOverview (real data)', () => {
     const start = performance.now()
     for (const c of data.components) majorOverview(data, c.id, c.course)
     expect(performance.now() - start).toBeLessThan(15000)
-  })
+    // The runner's 5s default would cut this off before the budget above when the suite runs in parallel.
+  }, 20000)
 })
 
 describe('planRoles', () => {
