@@ -1,0 +1,29 @@
+id: spanish-and-latin-american-studies
+course: B-ARTS
+year: 2026
+kind: major
+title: Spanish and Latin American Studies
+points: 75
+# Entry points by prior knowledge of the language; the plan follows the one the record points to.
+routes:
+  - title: Entry Point 1
+    requirements:
+      - choose: { points: 25, from: [SPAN20002, SPAN20003, SPAN20027] }
+      - choose: { points: 12.5, from: [SPAN20002, SPAN20003, SPAN20027] }
+      - all: [SPAN30014, SPAN30015]
+      - all: [SPAN30023]
+  - title: Entry Point 3
+    requirements:
+      - all: [SPAN20018, SPAN20019]
+      - choose: { points: 12.5, from: [SPAN20018, SPAN20019] }
+      - all: [SPAN30016]
+      - all: [SPAN30023]
+      - all: [SPAN30016]
+  - title: Entry Point 5
+    requirements:
+      - all: [SPAN20022]
+      - choose: { points: 25, from: [SPAN20001, SPAN20016, SPAN20025, SPAN20028] }
+      - choose: { points: 12.5, from: [LANG30001, SPAN30001, SPAN30012, SPAN30020, SPAN30021, SPAN30024] }
+      - choose: { points: 25, from: [LANG30001, SPAN30001, SPAN30012, SPAN30020, SPAN30021, SPAN30024] }
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
+verified_on: 2026-10-17 # structure; source: 2026 Handbook major page

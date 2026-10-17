@@ -1,0 +1,28 @@
+id: hebrew-and-jewish-studies
+course: B-ARTS
+year: 2026
+kind: major
+title: Hebrew and Jewish Studies
+points: 75
+# Entry points by prior knowledge of the language; the plan follows the one the record points to.
+routes:
+  - title: Entry Point 1
+    requirements:
+      - all: [HEBR20005, HEBR20006]
+      - choose: { points: 12.5, from: [HIST20013, HIST20060, ISLM20015, JEWI20006, JEWI20007] }
+      - all: [HEBR30003, HEBR30004]
+      - all: [JEWI30005]
+  - title: Entry Point 3
+    requirements:
+      - all: [HEBR20007, HEBR20008]
+      - choose: { points: 12.5, from: [HIST20013, HIST20060, ISLM20015, JEWI20006, JEWI20007] }
+      - choose: { points: 25, from: [HIST30010, HEBR30016, HEBR30017] }
+      - all: [JEWI30005]
+  - title: Entry Point 5
+    requirements:
+      - all: [HEBR20016, HEBR20017]
+      - choose: { points: 12.5, from: [HIST20013, HIST20060, ISLM20015, JEWI20006, JEWI20007] }
+      - all: [HEBR30018, HEBR30019]
+      - all: [JEWI30005]
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
+verified_on: 2026-10-17 # structure; source: 2026 Handbook major page

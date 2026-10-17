@@ -324,7 +324,8 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
     if (component?.requirements === 'unknown') notes.push(note('componentUnknown', { title: component.title }, `${component.title}'s structure isn't curated yet.`))
     // Same allocation as the course check: a subject fills one requirement only.
     const used = new Set<string>()
-    for (const req of componentNeeds(component)) {
+    // A major with routes follows the one the student's record points to.
+    for (const req of componentNeeds(component, done)) {
       if ('all' in req) req.all.forEach((c) => (required.add(c), used.add(c)))
       else groups.push({ title: component?.title ?? id ?? '', req, used })
     }

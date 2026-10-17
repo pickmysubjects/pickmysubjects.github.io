@@ -223,11 +223,32 @@ function checkRule(rule: CourseRule, ctx: RuleCtx): RuleStatus {
   }
 }
 
+/** The codes a set of requirements names. */
+const codesOf = (reqs: ComponentReq[]) => reqs.flatMap((r) => ('all' in r ? r.all : r.choose.from))
+
+/**
+ * The route a student is on: the one sharing most subjects with what they've done or planned
+ * (a language major's entry point shows in the first-year subjects taken), else the first.
+ */
+export function routeFor(component: Component, have: Iterable<string>): ComponentReq[] | 'unknown' {
+  if (!component.routes) return component.requirements
+  const set = new Set(have)
+  let best = component.routes[0]!
+  let bestHits = -1
+  for (const r of component.routes) {
+    const hits = codesOf(r.requirements).filter((c) => set.has(c)).length
+    if (hits > bestHits) [best, bestHits] = [r, hits]
+  }
+  return best.requirements
+}
+
 function componentStatus(
   base: { ruleId: string; description: string },
   component: Component,
   ctx: RuleCtx,
 ): RuleStatus {
+  // With routes, check the one that fits what's done and planned.
+  if (component.routes) component = { ...component, requirements: routeFor(component, ctx.codes) }
   if (component.requirements === 'unknown') {
     const detail = `${component.title}: structure not curated yet`
     return { ...base, status: 'unknown', detail, detailKey: 'componentUnknown', params: { title: component.title } }
@@ -278,9 +299,10 @@ function unmetRequirement(req: ComponentReq, ctx: RuleCtx, used: Set<string>): U
 }
 
 /** Subjects a component needs, and which still have to be chosen. Used by the generator. */
-export function componentNeeds(component: Component | undefined): ComponentReq[] {
-  if (!component || component.requirements === 'unknown') return []
-  return component.requirements
+export function componentNeeds(component: Component | undefined, have: Iterable<string> = []): ComponentReq[] {
+  if (!component) return []
+  const reqs = routeFor(component, have)
+  return reqs === 'unknown' ? [] : reqs
 }
 
 /**

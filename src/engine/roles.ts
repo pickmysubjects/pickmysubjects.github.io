@@ -23,8 +23,12 @@ export function subjectRoles(data: Dataset, code: string, course: string): Subje
   const blocked = blockedWithout(data, code, course)
   for (const c of data.components) {
     if (c.course !== course || c.requirements === 'unknown') continue
-    const core = new Set(c.requirements.flatMap((r) => ('all' in r ? r.all : [])))
-    const options = new Set(c.requirements.flatMap((r) => ('choose' in r ? r.choose.from : [])).filter((x) => !core.has(x)))
+    // Across every route: core if every route needs it, otherwise one way through.
+    const lists = c.routes ? c.routes.map((r) => r.requirements) : [c.requirements]
+    const allOf = (reqs: typeof c.requirements & unknown[]) => new Set(reqs.flatMap((r) => ('all' in r ? r.all : [])))
+    const cores = lists.map(allOf)
+    const core = new Set([...cores[0]!].filter((x) => cores.every((s) => s.has(x))))
+    const options = new Set(lists.flatMap((reqs) => reqs.flatMap((r) => ('all' in r ? r.all : r.choose.from))).filter((x) => !core.has(x)))
     const base = { component: c.id, title: c.title, kind: c.kind }
     if (core.has(code)) out.push({ ...base, role: 'core' })
     else if (options.has(code)) out.push({ ...base, role: 'option' })
@@ -125,6 +129,8 @@ export interface MajorOverview {
   pathway: { code: string; via: string }[]
   /** Earlier subjects that are one of several ways in. */
   routes: { code: string; via: string }[]
+  /** A major with entry points: their names, the first being the one shown. */
+  entryRoutes: { title: string; note?: string }[]
 }
 
 /** What a major or specialisation asks for, including the earlier subjects on the way in. */
@@ -145,7 +151,7 @@ export function majorOverview(data: Dataset, id: string, course: string): MajorO
     else if (role?.role === 'route' && role.via) routes.push({ code: s.code, via: role.via })
   }
   const byCode = (a: { code: string }, b: { code: string }) => a.code.localeCompare(b.code)
-  return { core, choices, pathway: pathway.sort(byCode), routes: routes.sort(byCode) }
+  return { core, choices, pathway: pathway.sort(byCode), routes: routes.sort(byCode), entryRoutes: (c.routes ?? []).map((r) => ({ title: r.title, note: r.note })) }
 }
 
 /** Subjects two majors share anywhere in their overview (core, choices or pathway). */

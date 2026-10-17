@@ -1,0 +1,29 @@
+code: LING30014
+title: Australian Indigenous Languages
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites: LING20006
+corequisites: none
+non_allowed:
+  - LING40005
+skills:
+  - writing
+topics:
+  - languages
+  - indigenous-studies
+assessment:
+  - kind: assignment
+    weight: 40
+  - kind: assignment
+    weight: 60
+weekly_contact_hours: 3
+breadth_for: []
+recommended:
+  - LING10001
+handbook: https://handbook.unimelb.edu.au/2026/subjects/ling30014
+source_year: 2026
+verified_on: 2026-10-17
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

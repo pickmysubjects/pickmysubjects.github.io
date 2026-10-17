@@ -1,0 +1,31 @@
+id: german-studies
+course: B-ARTS
+year: 2026
+kind: major
+title: German Studies
+points: 75
+# Entry points by prior knowledge of the language; the plan follows the one the record points to.
+routes:
+  - title: Entry Point 1
+    requirements:
+      - all: [GERM20004, GERM20005, GERM20006]
+      - all: [GERM30005, GERM30006]
+      - all: [GERM30025]
+  - title: Entry Point 3
+    requirements:
+      - all: [GERM20003, GERM20007, GERM20008]
+      - all: [GERM30021, GERM30022]
+      - all: [GERM30025]
+  - title: Entry Point 5
+    requirements:
+      - all: [GERM20001, GERM20003, GERM20002]
+      - all: [GERM30003, GERM30004]
+      - all: [GERM30025]
+  - title: Entry Point 7
+    requirements:
+      - all: [GERM20003, GERM20009, GERM20010]
+      - all: [GERM30002]
+      - choose: { points: 12.5, from: [LANG30001, GERM30024, EURO30002, EURO30001, EURO30004, EURO30005, ARTS30002, EURO30009] }
+      - all: [GERM30025]
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
+verified_on: 2026-10-17 # structure; source: 2026 Handbook major page

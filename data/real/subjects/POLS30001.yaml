@@ -1,0 +1,53 @@
+code: POLS30001
+title: Parliamentary Internship
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites:
+  all:
+    - manual: "Students are required to apply for permission to enrol into this subject prior to commencement of the internship, there is a quota of up to or around 15 students. Criteria for applying: Selection of one of the following: Politics and International Studies major in the B-ARTS Bachelor of Arts, Politics and International Studies specialisation (formal) in the GD-ARTS Graduate Diploma in Arts"
+    - points:
+        min: 12.5
+        from:
+          - INTS10001
+          - POLS10001
+          - POLS10003
+    - points:
+        min: 25
+        from:
+          - POLS20006
+          - POLS20008
+          - POLS20011
+          - POLS20023
+          - POLS20025
+          - POLS20026
+          - POLS20031
+          - POLS20035
+          - POLS20033
+          - MULT20008
+    - all:
+        - POLS20034
+        - MULT20003
+corequisites: none
+non_allowed:
+  - MULT20014
+  - MULT30021
+  - POLS30003
+  - SOCI30005
+skills:
+  - writing
+  - fieldwork
+topics:
+  - politics
+assessment:
+  - kind: report
+    weight: 80
+  - kind: report
+    weight: 20
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/pols30001
+source_year: 2026
+verified_on: 2026-10-17
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

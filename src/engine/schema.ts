@@ -498,6 +498,9 @@ export const componentFileSchema = z
     points: z.number().positive(),
     requires_major: z.array(z.string()).default([]),
     requirements: z.union([z.literal('unknown'), z.array(componentReq)]).default('unknown'),
+    // Several ways through, one to complete (a language major's entry points, by prior knowledge).
+    // `requirements` is then left out; the first route stands in wherever one list is needed.
+    routes: z.array(z.object({ title: z.string().min(1), note: z.string().optional(), requirements: z.array(componentReq).min(1) }).strict()).min(2).optional(),
     handbook: handbookUrl.optional(),
     verified_on: z.union([z.iso.date(), z.null()]).default(null),
     // First commencement year whose students can no longer choose it (still shown to earlier ones).
@@ -512,7 +515,8 @@ export const componentFileSchema = z
     title: c.title,
     points: c.points,
     requiresMajor: c.requires_major,
-    requirements: c.requirements as 'unknown' | ComponentReq[],
+    requirements: (c.routes ? c.routes[0]!.requirements : c.requirements) as 'unknown' | ComponentReq[],
+    routes: c.routes as { title: string; note?: string; requirements: ComponentReq[] }[] | undefined,
     handbook: c.handbook,
     verifiedOn: c.verified_on,
     closedFrom: c.closed_from,

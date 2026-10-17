@@ -1,0 +1,57 @@
+code: POLS30003
+title: Public Affairs Internship
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+    - semester-2
+prerequisites:
+  all:
+    - manual: There is a quota of 40 for this subject, and students are required to apply for permission to enrol into this subject prior to commencement of the internship.
+    - manual: "Criteria for applying: Selection of one of the following: Politics and International Studies major in the B-ARTS Bachelor of Arts, Politics and International Studies specialisation (formal) in the GD-ARTS Graduate Diploma in Arts"
+    - points:
+        min: 12.5
+        from:
+          - INTS10001
+          - POLS10001
+          - POLS10003
+    - points:
+        min: 25
+        from:
+          - POLS20006
+          - POLS20008
+          - POLS20011
+          - POLS20023
+          - POLS20025
+          - POLS20026
+          - POLS20031
+          - POLS20035
+          - POLS20033
+    - MULT20008
+    - POLS20034
+    - MULT20003
+    - manual: "The WAM of the above four subjects will be taken into consideration when assessing student applications. All students should have at least a WAM of 70. If students completed more than required points at that year level, the highest marks will be calculated for the WAM. Making the application: Students should make this application via the online application form: Application Form Applications will be reviewed in two rounds: Round 1 (Semester 1 availability): closing 31 October Round 2 (Semester 2 availability): closing 31 May Students will receive outcomes within two weeks of the closing date for the relevant round. For further information including FAQS on the Application and Selection Process see: Faculty of Arts - WIL FAQs *Late applications will be considered in both semesters if you meet the eligibility requirements and have secured a placement except in the event of the quota subject places reaching capacity. Please contact Experiential Learning Officer if you’re submitting a late application form: ssps-internships@unimelb.edu.au"
+corequisites: none
+non_allowed:
+  - MULT20014
+  - MULT30021
+  - POLS30001
+  - SOCI30005
+skills:
+  - writing
+  - fieldwork
+topics:
+  - politics
+assessment:
+  - kind: assignment
+    weight: 25
+  - kind: report
+    weight: 25
+  - kind: report
+    weight: 50
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/pols30003
+source_year: 2026
+verified_on: 2026-10-17
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

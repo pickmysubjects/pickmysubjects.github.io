@@ -1,0 +1,34 @@
+code: POLS30037
+title: Applied Political Science Project
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites:
+  manual: "This is a Capstone subject and only available to students in the Politics and International Studies Major within the Bachelor of Arts or the Politics and International Studies specialisation of the Graduate Diploma in Arts. This subject is not available to students in the Minor or as Breadth. Admission into or selection of one of the following: Politics and International Studies major in the B-ARTS Bachelor of Arts Politics and International Studies specialisation (formal) in the GD-ARTS Graduate Diploma in Arts"
+corequisites: none
+non_allowed:
+  - MULT30018
+skills:
+  - writing
+  - data
+  - presentation
+topics:
+  - politics
+assessment:
+  - kind: assignment
+    weight: 20
+    group: true
+  - kind: assignment
+    weight: 20
+  - kind: assignment
+    weight: 10
+  - kind: project
+    weight: 50
+weekly_contact_hours: 2
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/pols30037
+source_year: 2026
+verified_on: 2026-10-17
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

@@ -653,6 +653,7 @@ export const ms: Messages = {
     cat: { science: "Sains", commerce: "Perdagangan", arts: "Sastera", breadth: "Breadth" },
   },
   majors: {
+    entryRoutes: "Major ini ada {n} titik masuk mengikut tahap bahasa anda. Di bawah: {first}. Rancangan anda ikut titik masuk yang sepadan dengan subjek anda.",
     shownFor: "Dipaparkan untuk {course}",
     change: "Tukar",
     shownDefault: "Belum pilih ijazah: dipaparkan untuk {course}",

@@ -31,7 +31,7 @@ const AREA_TOPICS: Record<string, Topic[]> = {
   VETS: ['agriculture', 'biology'], ZOOL: ['ecology', 'biology'],
   // Arts disciplines.
   AHIS: ['art', 'history'], ANCW: ['history'], ANTH: ['society'], ASIA: ['history', 'society'], CLAS: ['languages', 'history'],
-  CREW: ['literature'], CRIM: ['society', 'law'], DEVT: ['society', 'politics'], ENGL: ['literature'], EURO: ['history', 'politics'],
+  CREW: ['literature'], CWRI: ['literature'], CULS: ['society', 'art'], INTS: ['politics'], CRIM: ['society'], DEVT: ['society', 'politics'], ENGL: ['literature'], EURO: ['history', 'politics'],
   GEND: ['society'], HIST: ['history'], HPSC: ['philosophy', 'history'], INDG: ['indigenous-studies'], ISLM: ['history', 'society'],
   LANG: ['languages'], LING: ['languages'], MECM: ['media'], PHIL: ['philosophy'], POLS: ['politics'], SCRN: ['media', 'art'],
   SOCI: ['society'],

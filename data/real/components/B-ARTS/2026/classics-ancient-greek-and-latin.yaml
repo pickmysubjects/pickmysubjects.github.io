@@ -1,0 +1,34 @@
+id: classics-ancient-greek-and-latin
+course: B-ARTS
+year: 2026
+kind: major
+title: Classics (Ancient Greek and Latin)
+points: 75
+# Entry points by prior knowledge of the language; the plan follows the one the record points to.
+routes:
+  - title: Latin Entry Point 1
+    requirements:
+      - all: [CLAS20029, CLAS20031]
+      - choose: { points: 12.5, from: [ANCW20003, ANCW20015, ANCW20019, ANCW20023, ANCW20024, ANCW20026, ANCW20027, ANCW20028, PHIL20040, ANCW20022, ANCW20025, CLAS20035, CLAS20015, CLAS20016, CLAS20013, CLAS20014] }
+      - all: [CLAS30013, CLAS30009]
+      - all: [ANCW30017]
+  - title: Latin Entry Point 3
+    requirements:
+      - all: [CLAS20030, CLAS20026]
+      - choose: { points: 12.5, from: [ANCW20003, ANCW20015, ANCW20019, ANCW20022, ANCW20023, ANCW20024, ANCW20025, ANCW20026, ANCW20027, ANCW20028, PHIL20040, CLAS20015, CLAS20016, CLAS20013, CLAS20014, CLAS20035] }
+      - choose: { points: 25, from: [ANCW30004, ANCW30011, ANCW30016, ANCW30021, ANCW30023, ANCW30025, CLAS30045, CLAS30025, CLAS30024, CLAS30046, CLAS30047] }
+      - all: [ANCW30017]
+  - title: Ancient Greek Entry Point 1
+    requirements:
+      - all: [CLAS20015, CLAS20016]
+      - choose: { points: 12.5, from: [ANCW20003, ANCW20015, ANCW20019, ANCW20022, ANCW20023, ANCW20024, ANCW20025, ANCW20026, ANCW20027, ANCW20028, PHIL20040, CLAS20029, CLAS20030, CLAS20031, CLAS20026] }
+      - all: [CLAS30024, CLAS30025]
+      - all: [ANCW30017]
+  - title: Ancient Greek Entry Point 3
+    requirements:
+      - all: [CLAS20013, CLAS20014]
+      - choose: { points: 12.5, from: [CLAS20029, CLAS20031, CLAS20030, CLAS20026, ANCW20003, ANCW20015, ANCW20019, ANCW20022, ANCW20023, ANCW20024, ANCW20025, ANCW20026, ANCW20027, ANCW20028, PHIL20040] }
+      - choose: { points: 25, from: [ANCW30004, ANCW30011, ANCW30016, ANCW30021, ANCW30023, ANCW30025, CLAS30013, CLAS30009, CLAS30004, CLAS30046, CLAS30047] }
+      - all: [ANCW30017]
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
+verified_on: 2026-10-17 # structure; source: 2026 Handbook major page

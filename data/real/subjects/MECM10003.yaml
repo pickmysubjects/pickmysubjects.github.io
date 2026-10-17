@@ -1,0 +1,42 @@
+code: MECM10003
+title: Media and Society
+level: 1
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites: none
+corequisites: none
+non_allowed:
+  - MECM20007
+skills:
+  - writing
+topics:
+  - media
+  - society
+assessment:
+  - kind: assignment
+    weight: 25
+  - kind: test
+    weight: 35
+  - kind: report
+    weight: 40
+weekly_contact_hours: 3
+breadth_for:
+  - Bachelor of Biomedicine
+  - Bachelor of Commerce
+  - Bachelor of Fine Arts (Acting)
+  - Bachelor of Fine Arts (Animation)
+  - Bachelor of Fine Arts (Dance)
+  - Bachelor of Fine Arts (Film and Television)
+  - Bachelor of Fine Arts (Music Theatre)
+  - Bachelor of Fine Arts (Production)
+  - Bachelor of Fine Arts (Screenwriting)
+  - Bachelor of Fine Arts (Theatre)
+  - Bachelor of Fine Arts (Visual Art)
+  - Bachelor of Music
+  - Bachelor of Science
+handbook: https://handbook.unimelb.edu.au/2026/subjects/mecm10003
+source_year: 2026
+verified_on: 2026-10-17
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

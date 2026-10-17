@@ -1,0 +1,27 @@
+code: MECM30016
+title: Digital Media Research
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - data
+  - writing
+topics:
+  - media
+  - data-science
+assessment:
+  - kind: assignment
+    weight: 40
+  - kind: report
+    weight: 60
+weekly_contact_hours: 2
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/mecm30016
+source_year: 2026
+verified_on: 2026-10-17
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,34 @@
+id: french-studies
+course: B-ARTS
+year: 2026
+kind: major
+title: French Studies
+points: 75
+# Entry points by prior knowledge of the language; the plan follows the one the record points to.
+routes:
+  - title: Entry Point 1
+    requirements:
+      - choose: { points: 25, from: [FREN20015, FREN20017, FREN20018] }
+      - choose: { points: 12.5, from: [FREN20015, FREN20017, FREN20018] }
+      - all: [FREN30023]
+      - all: [FREN30003, FREN30004]
+  - title: Entry Point 3
+    requirements:
+      - all: [FREN20001, FREN20002]
+      - choose: { points: 12.5, from: [FREN20001, FREN20002] }
+      - all: [FREN30024]
+      - all: [FREN30001]
+      - all: [FREN30001]
+  - title: Entry Point 5
+    requirements:
+      - all: [FREN20019, FREN20023]
+      - choose: { points: 12.5, from: [FREN20019, FREN20023] }
+      - all: [FREN30024]
+      - choose: { points: 25, from: [FREN30013, FREN30015, FREN30018, FREN30019, FREN30020, FREN30014, FREN30006, FREN30005, FREN30012, FREN30017, FREN30021, FREN30025, FREN30026, FREN30022] }
+  - title: Entry Point 7
+    requirements:
+      - choose: { points: 37.5, from: [FREN20003, FREN20011, FREN20013, FREN20020, FREN20021, FREN20022, FREN20007, FREN20004, FREN20012, FREN20010, FREN20016, FREN20024, FREN20025] }
+      - all: [FREN30024]
+      - choose: { points: 25, from: [FREN30013, FREN30015, FREN30018, FREN30019, FREN30020, FREN30014, FREN30006, FREN30005, FREN30012, FREN30017, FREN30021, FREN30025, FREN30026, FREN30022] }
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
+verified_on: 2026-10-17 # structure; source: 2026 Handbook major page

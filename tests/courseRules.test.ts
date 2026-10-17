@@ -43,3 +43,26 @@ describe('rule fixes from the code review', () => {
     expect(r.statuses.find((s) => s.ruleId === 'science')?.detail).toMatch(/^12\.5 /)
   })
 })
+
+describe('majors with entry points (routes)', () => {
+  it('checks and plans the route the record points to', async () => {
+    const { routeFor, checkCourse } = await import('../src/engine/courseRules')
+    const { dataset, subject } = await import('./helpers')
+    const major = {
+      id: 'lang', course: 'X', year: 2026, kind: 'major', title: 'Language', points: 25, requiresMajor: [], verifiedOn: null,
+      requirements: [{ all: ['AAAA20001'] }],
+      routes: [
+        { title: 'Entry Point 1', requirements: [{ all: ['AAAA20001', 'AAAA20002'] }] },
+        { title: 'Entry Point 3', requirements: [{ all: ['AAAA20003', 'AAAA20004'] }] },
+      ],
+    } as never
+    expect(routeFor(major, [])).toEqual([{ all: ['AAAA20001', 'AAAA20002'] }])
+    expect(routeFor(major, ['AAAA20003'])).toEqual([{ all: ['AAAA20003', 'AAAA20004'] }])
+    const data = dataset(['AAAA20001', 'AAAA20002', 'AAAA20003', 'AAAA20004'].map((code) => subject({ code, prerequisites: 'none' })))
+    data.components.push(major)
+    data.courses.push({ code: 'X', title: 'X', year: 2026, totalPoints: 25, standardLoad: 50, categories: [], closed: [], listed: true, rules: [{ id: 'major', kind: 'major', count: 1, description: 'A major' }] } as never)
+    const check = (codes: string[]) => checkCourse({ course: 'X', courseYear: 2026, major: 'lang', completed: codes, terms: [] } as never, data).statuses.find((s) => s.ruleId === 'major')?.status
+    expect(check(['AAAA20003', 'AAAA20004'])).toBe('ok')
+    expect(check(['AAAA20001'])).toBe('fail')
+  })
+})

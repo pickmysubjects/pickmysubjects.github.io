@@ -75,7 +75,7 @@ export function buildDataset(name: Dataset['name']): BuildResult {
     if (home) {
       for (const comp of components) {
         if (comp.course !== c.code || comp.requirements === 'unknown') continue
-        for (const r of comp.requirements) for (const code of 'all' in r ? r.all : []) {
+        for (const r of (comp.routes ?? [{ requirements: comp.requirements }]).flatMap((x) => x.requirements)) for (const code of 'all' in r ? r.all : []) {
           const s = subjects[code]
           if (s && s.categories[c.code] === undefined && !c.closed.includes(code)) s.categories[c.code] = home as Subject['categories'][string]
         }
@@ -133,7 +133,8 @@ export function buildDataset(name: Dataset['name']): BuildResult {
   for (const c of components) if (components.filter((x) => x.id === c.id).length > 1) errors.push(`${c.id}: component id used twice`)
   for (const c of components) {
     if (c.requirements === 'unknown') continue
-    for (const r of c.requirements) for (const code of 'all' in r ? r.all : r.choose.from) if (!subjects[code]) missing.add(code)
+    for (const reqs of c.routes ? c.routes.map((x) => x.requirements) : [c.requirements])
+      for (const r of reqs) for (const code of 'all' in r ? r.all : r.choose.from) if (!subjects[code]) missing.add(code)
     for (const m of c.requiresMajor) if (!components.some((x) => x.id === m)) errors.push(`${c.id}: unknown major ${m}`)
   }
 

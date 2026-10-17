@@ -1,0 +1,35 @@
+code: MECM30017
+title: Digital and Mobile Journalism
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites:
+  any:
+    - MECM10006
+    - MECM20013
+    - MECM30010
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - design
+topics:
+  - media
+  - ethics
+assessment:
+  - kind: report
+    weight: 20
+  - kind: project
+    weight: 20
+  - kind: project
+    weight: 50
+  - kind: participation
+    weight: 10
+weekly_contact_hours: 1
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/mecm30017
+source_year: 2026
+verified_on: 2026-10-17
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

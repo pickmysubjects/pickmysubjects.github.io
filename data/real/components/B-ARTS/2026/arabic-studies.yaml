@@ -1,0 +1,21 @@
+id: arabic-studies
+course: B-ARTS
+year: 2026
+kind: major
+title: Arabic Studies
+points: 75
+# Entry points by prior knowledge of the language; the plan follows the one the record points to.
+routes:
+  - title: Entry Point 1
+    requirements:
+      - all: [ARBC20004, ARBC20005, ARBC20001]
+      - all: [ARBC30004, ARBC30005]
+      - all: [ARBC30001]
+  - title: Entry Point 3
+    requirements:
+      - all: [ARBC20006, ARBC20007, ARBC20001]
+      - all: [ARBC30006]
+      - choose: { points: 12.5, from: [ISLM30003, ISLM30018] }
+      - all: [ARBC30001]
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
+verified_on: 2026-10-17 # structure; source: 2026 Handbook major page

@@ -74,6 +74,11 @@ function planWithIt(): void {
     <p v-if="!overview" class="note surface">{{ t('majors.notCurated') }}</p>
 
     <template v-else>
+      <!-- Entry points (a language major): the first is shown; the plan follows the student's. -->
+      <p v-if="overview.entryRoutes.length" class="note surface">
+        {{ t('majors.entryRoutes', { n: overview.entryRoutes.length, first: overview.entryRoutes[0]?.title ?? '' }) }}
+        <span class="route-names">{{ overview.entryRoutes.map((r) => r.title).join(' · ') }}</span>
+      </p>
       <section v-if="overview.core.length" class="block">
         <h2 class="block-title">{{ t('majors.coreTitle') }}</h2>
         <SubjectLinks :codes="overview.core" :year="year" />
@@ -374,6 +379,12 @@ function planWithIt(): void {
 
 .source {
   font-size: 0.875rem;
+  color: var(--ink-faint);
+}
+.route-names {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.8125rem;
   color: var(--ink-faint);
 }
 </style>

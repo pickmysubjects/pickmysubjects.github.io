@@ -653,6 +653,7 @@ export const ja: Messages = {
     cat: { science: "理系", commerce: "商学系", arts: "文系", breadth: "Breadth" },
   },
   majors: {
+    entryRoutes: "この専攻は、すでにある語学力に応じて {n} つの入り方があります。下は {first} です。プランは履修した科目に合う入り方に従います。",
     shownFor: "{course} 向けに表示",
     change: "変更",
     shownDefault: "学位が未選択のため {course} で表示",

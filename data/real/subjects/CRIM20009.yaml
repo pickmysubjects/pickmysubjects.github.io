@@ -1,0 +1,28 @@
+code: CRIM20009
+title: Race, Ethnicity, Crime and Justice
+level: 2
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - presentation
+topics:
+  - society
+  - indigenous-studies
+  - politics
+assessment:
+  - kind: assignment
+    weight: 45
+  - kind: presentation
+    weight: 55
+weekly_contact_hours: 2.5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/crim20009
+source_year: 2026
+verified_on: 2026-10-17
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

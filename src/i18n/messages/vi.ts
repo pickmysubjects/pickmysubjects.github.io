@@ -653,6 +653,7 @@ export const vi: Messages = {
     cat: { science: "Khoa học", commerce: "Kinh doanh", arts: "Nhân văn", breadth: "Breadth" },
   },
   majors: {
+    entryRoutes: "Ngành này có {n} lộ trình tùy trình độ ngôn ngữ bạn đã có. Bên dưới là {first}; kế hoạch sẽ theo lộ trình khớp với các môn bạn đã học.",
     shownFor: "Hiển thị cho {course}",
     change: "Đổi",
     shownDefault: "Chưa chọn ngành: tạm hiển thị cho {course}",

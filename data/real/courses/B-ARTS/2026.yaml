@@ -9,7 +9,7 @@ categories: [arts, breadth]
 # study" lists); everything else is breadth.
 area_categories:
   home: arts
-  areas: [AHIS, ANCW, ANTH, ARBC, ARTS, ASIA, CHIN, CLAS, CREW, CRIM, DEVT, ENGL, EURO, FREN, GEND, GEOG, GERM, HEBR, HIST, HPSC, INDG, INDO, ISLM, ITAL, JAPN, KORE, LANG, LING, MECM, MULT, PHIL, POLS, PSYC, RUSS, SCRN, SOCI, SPAN, ECON]
+  areas: [AHIS, AIND, ANCW, ANTH, ARBC, ARTS, ASIA, CHIN, CLAS, CRIM, CULS, CWRI, DEVT, ENGL, EURO, FREN, GEND, GEOG, GERM, HEBR, HIST, HPSC, INDG, INDO, INTS, ISLM, ITAL, JAPN, JEWI, KORE, LANG, LING, MECM, MULT, PHIL, POLS, PSYC, RUSS, SCRN, SOCI, SOTH, SPAN, ECON]
   other: breadth
 handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/course-structure
 verified_on: 2026-10-16 # rules checked by hand against the Handbook course structure

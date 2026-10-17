@@ -1,0 +1,28 @@
+id: indonesian-studies
+course: B-ARTS
+year: 2026
+kind: major
+title: Indonesian Studies
+points: 75
+# Entry points by prior knowledge of the language; the plan follows the one the record points to.
+routes:
+  - title: Entry Point 1
+    requirements:
+      - all: [INDO20006, INDO20007]
+      - choose: { points: 12.5, from: [INDO20001, INDO20018] }
+      - all: [INDO30011, INDO30007]
+      - all: [INDO30021]
+  - title: Entry Point 3
+    requirements:
+      - all: [INDO20008, INDO20009]
+      - choose: { points: 12.5, from: [INDO20001, INDO20018] }
+      - choose: { points: 25, from: [INDO30006, INDO30018, INDO30019, INDO30020] }
+      - all: [INDO30021]
+  - title: Entry Point 5
+    requirements:
+      - choose: { points: 25, from: [INDO20014, INDO20015, INDO20016, INDO20017] }
+      - choose: { points: 12.5, from: [INDO20001, INDO20018] }
+      - choose: { points: 25, from: [INDO30006, INDO30018, INDO30019, INDO30020] }
+      - all: [INDO30021]
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
+verified_on: 2026-10-17 # structure; source: 2026 Handbook major page

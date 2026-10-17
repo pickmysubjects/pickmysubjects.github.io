@@ -1,0 +1,31 @@
+code: MECM30015
+title: Media and Communications Project
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites: none
+corequisites: none
+non_allowed:
+  - MECM30007
+skills:
+  - writing
+  - presentation
+topics:
+  - media
+assessment:
+  - kind: assignment
+    weight: 20
+  - kind: presentation
+    weight: 25
+  - kind: report
+    weight: 55
+weekly_contact_hours: 2.5
+breadth_for: []
+recommended:
+  - MECM20011
+handbook: https://handbook.unimelb.edu.au/2026/subjects/mecm30015
+source_year: 2026
+verified_on: 2026-10-17
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
