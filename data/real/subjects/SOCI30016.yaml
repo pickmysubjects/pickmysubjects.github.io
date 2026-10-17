@@ -1,0 +1,48 @@
+code: SOCI30016
+title: Social Sustainability
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites:
+  manual: "This is a Capstone subject and only available to students in the Sociology Major within the Bachelor of Arts or the Sociology specialisation of the Graduate Diploma in Arts. This subject is not available to students in the Minor or as Breadth. Admission into or selection of one of the following: Sociology major in the B-ARTS Bachelor of Arts Sociology specialisation (formal) in the GD-ARTS Graduate Diploma in Arts"
+corequisites: none
+non_allowed: []
+skills:
+  - presentation
+  - writing
+topics:
+  - society
+  - environment
+assessment:
+  - kind: presentation
+    weight: 5
+    group: true
+  - kind: project
+    weight: 20
+    group: true
+  - kind: project
+    weight: 60
+  - kind: assignment
+    weight: 15
+weekly_contact_hours: 3
+breadth_for:
+  - Bachelor of Biomedicine
+  - Bachelor of Commerce
+  - Bachelor of Design
+  - Bachelor of Fine Arts (Acting)
+  - Bachelor of Fine Arts (Animation)
+  - Bachelor of Fine Arts (Dance)
+  - Bachelor of Fine Arts (Film and Television)
+  - Bachelor of Fine Arts (Music Theatre)
+  - Bachelor of Fine Arts (Production)
+  - Bachelor of Fine Arts (Screenwriting)
+  - Bachelor of Fine Arts (Theatre)
+  - Bachelor of Fine Arts (Visual Art)
+  - Bachelor of Music
+  - Bachelor of Science
+handbook: https://handbook.unimelb.edu.au/2026/subjects/soci30016
+source_year: 2026
+verified_on: 2026-10-17
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

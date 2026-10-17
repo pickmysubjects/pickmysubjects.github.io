@@ -1,0 +1,28 @@
+code: SOCI30001
+title: Contemporary Sociological Theory
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+topics:
+  - society
+  - theory
+assessment:
+  - kind: assignment
+    weight: 10
+  - kind: report
+    weight: 25
+  - kind: report
+    weight: 65
+weekly_contact_hours: 2.5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/soci30001
+source_year: 2026
+verified_on: 2026-10-17
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

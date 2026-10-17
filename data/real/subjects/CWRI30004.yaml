@@ -1,0 +1,31 @@
+code: CWRI30004
+title: Encounters with Writing
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites:
+  any:
+    - CWRI10001
+    - CWRI10003
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - presentation
+topics:
+  - literature
+assessment:
+  - kind: project
+    weight: 30
+    group: true
+  - kind: project
+    weight: 70
+    group: true
+weekly_contact_hours: 3.5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/cwri30004
+source_year: 2026
+verified_on: 2026-10-17
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
