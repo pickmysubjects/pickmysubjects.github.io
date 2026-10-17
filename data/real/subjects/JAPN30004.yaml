@@ -16,6 +16,7 @@ corequisites: none
 non_allowed:
   - JAPN20018
 skills:
+  - languages
   - writing
 topics:
   - languages

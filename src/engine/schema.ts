@@ -27,6 +27,7 @@ export const SKILLS = [
   'systems',
   'writing',
   'presentation',
+  'languages',
   'lab',
   'fieldwork',
   'design',

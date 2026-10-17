@@ -11,6 +11,7 @@ corequisites: none
 non_allowed:
   - HEBR10006
 skills:
+  - languages
   - presentation
 topics:
   - languages

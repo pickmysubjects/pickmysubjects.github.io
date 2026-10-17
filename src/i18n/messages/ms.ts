@@ -347,6 +347,7 @@ export const ms: Messages = {
     systems: 'Sistem komputer',
     writing: 'Penulisan esei',
     presentation: 'Pembentangan',
+    languages: "Bahasa asing",
     lab: 'Kerja makmal',
     fieldwork: "Kerja lapangan",
     design: 'Reka bentuk',

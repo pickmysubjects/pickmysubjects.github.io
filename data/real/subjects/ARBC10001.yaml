@@ -11,6 +11,7 @@ corequisites: none
 non_allowed:
   - ARBC20004
 skills:
+  - languages
   - presentation
 topics:
   - languages

@@ -347,6 +347,7 @@ export const zhTW: Messages = {
     systems: '電腦系統',
     writing: '論文寫作',
     presentation: '簡報表達',
+    languages: "外語",
     lab: '實驗',
     fieldwork: "野外考察",
     design: '設計',

@@ -16,6 +16,7 @@ corequisites: none
 non_allowed:
   - CLAS10012
 skills:
+  - languages
   - writing
 topics:
   - languages

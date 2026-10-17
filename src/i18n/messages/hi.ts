@@ -347,6 +347,7 @@ export const hi: Messages = {
     systems: 'कंप्यूटर सिस्टम',
     writing: 'निबंध लेखन',
     presentation: 'प्रेज़ेंटेशन',
+    languages: "विदेशी भाषा",
     lab: 'लैब का काम',
     fieldwork: "फ़ील्डवर्क",
     design: 'डिज़ाइन',

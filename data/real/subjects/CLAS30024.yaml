@@ -19,6 +19,7 @@ corequisites: none
 non_allowed:
   - CLAS20013
 skills:
+  - languages
   - writing
   - presentation
 topics:

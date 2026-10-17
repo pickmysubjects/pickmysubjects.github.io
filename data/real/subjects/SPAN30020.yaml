@@ -16,6 +16,7 @@ corequisites: none
 non_allowed:
   - SPAN20025
 skills:
+  - languages
   - writing
   - presentation
 topics:

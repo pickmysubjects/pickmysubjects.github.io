@@ -11,6 +11,8 @@ non_allowed:
   - CLAS30004
   - CLAS20021
   - CLAS10003
+skills:
+  - languages
 topics:
   - languages
 assessment:

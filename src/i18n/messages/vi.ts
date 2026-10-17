@@ -347,6 +347,7 @@ export const vi: Messages = {
     systems: 'Hệ thống máy tính',
     writing: 'Viết luận',
     presentation: 'Thuyết trình',
+    languages: "Ngoại ngữ",
     lab: 'Thí nghiệm',
     fieldwork: "Thực địa",
     design: 'Thiết kế',

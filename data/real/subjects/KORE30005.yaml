@@ -9,6 +9,7 @@ prerequisites: none
 corequisites: none
 non_allowed: []
 skills:
+  - languages
   - writing
   - presentation
 topics:

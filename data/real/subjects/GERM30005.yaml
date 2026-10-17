@@ -13,6 +13,8 @@ corequisites: none
 non_allowed:
   - GERM10006
   - GERM20007
+skills:
+  - languages
 topics:
   - languages
 assessment:

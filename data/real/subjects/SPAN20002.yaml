@@ -9,6 +9,8 @@ prerequisites: SPAN10002
 corequisites: none
 non_allowed:
   - SPAN10003
+skills:
+  - languages
 topics:
   - languages
 assessment:

@@ -11,6 +11,8 @@ corequisites: none
 non_allowed:
   - GERM20001
   - GERM30021
+skills:
+  - languages
 topics:
   - languages
 assessment:

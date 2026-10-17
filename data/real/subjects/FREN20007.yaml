@@ -26,6 +26,7 @@ corequisites: none
 non_allowed:
   - FREN30017
 skills:
+  - languages
   - writing
 topics:
   - society

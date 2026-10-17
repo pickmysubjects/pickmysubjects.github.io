@@ -14,6 +14,7 @@ corequisites: none
 non_allowed:
   - SPAN20022
 skills:
+  - languages
   - writing
   - presentation
 topics:

@@ -9,6 +9,7 @@ prerequisites: ANCW20023
 corequisites: none
 non_allowed: []
 skills:
+  - languages
   - writing
 topics:
   - languages

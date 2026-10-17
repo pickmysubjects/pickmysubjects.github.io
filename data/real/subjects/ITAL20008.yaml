@@ -12,6 +12,8 @@ prerequisites:
 corequisites: none
 non_allowed:
   - ITAL10002
+skills:
+  - languages
 topics:
   - languages
 assessment:

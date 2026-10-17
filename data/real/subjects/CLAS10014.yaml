@@ -17,6 +17,7 @@ corequisites: none
 non_allowed:
   - CLAS20031
 skills:
+  - languages
   - writing
 topics:
   - languages

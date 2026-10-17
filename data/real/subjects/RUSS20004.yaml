@@ -9,6 +9,7 @@ prerequisites: RUSS10002
 corequisites: none
 non_allowed: []
 skills:
+  - languages
   - presentation
 topics:
   - languages

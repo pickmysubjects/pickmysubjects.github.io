@@ -10,6 +10,8 @@ prerequisites:
 corequisites: none
 non_allowed:
   - CLAS20016
+skills:
+  - languages
 topics:
   - languages
 assessment:

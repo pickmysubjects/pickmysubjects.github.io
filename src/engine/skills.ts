@@ -18,6 +18,9 @@ const BUSINESS_AREAS = new Set(['ACCT', 'ACTL', 'BUSA', 'CMCE', 'ECOM', 'ECON', 
 // Wet labs, plus the engineering labs and the field-and-lab earth sciences.
 const LAB_AREAS = new Set(['CHEM', 'BCMB', 'MIIM', 'PATH', 'BIOL', 'GENE', 'ZOOL', 'BOTA', 'ANAT', 'PHRM', 'BTCH', 'PHYS', 'NEUR', 'FOOD', 'ANSC', 'VETS', 'AGRI', 'ERTH', 'ELEN', 'BMEN', 'CEDB'])
 
+// Language programs; a numbered title ("Spanish 3") is a language-practice level.
+const LANGUAGE_AREAS = new Set(['ARBC', 'CHIN', 'FREN', 'GERM', 'HEBR', 'INDO', 'ITAL', 'JAPN', 'KORE', 'RUSS', 'SPAN'])
+
 const TITLE: Partial<Record<Skill, RegExp>> = {
   fieldwork: /\bfield\b|field class|excursion/i,
   maths:
@@ -53,6 +56,7 @@ function inferred(s: Subject, data: Dataset | undefined): Skill[] {
   if (area === 'MAST' && STATS_TITLE.test(s.title)) out.add('maths').add('statistics')
   if (PROGRAMMING_AREAS.has(area)) out.add('programming')
   if (BUSINESS_AREAS.has(area)) out.add('business')
+  if (LANGUAGE_AREAS.has(area) && /\b\d+$/.test(s.title)) out.add('languages')
   // Econometrics is applied statistics.
   if (area === 'ECOM') out.add('maths').add('statistics')
   // Finance is built on financial maths, and economics past first year on mathematical models:

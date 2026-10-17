@@ -14,6 +14,7 @@ corequisites: none
 non_allowed:
   - FREN30023
 skills:
+  - languages
   - writing
 topics:
   - languages

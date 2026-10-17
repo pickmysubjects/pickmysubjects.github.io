@@ -21,6 +21,7 @@ corequisites: none
 non_allowed:
   - GERM30001
 skills:
+  - languages
   - writing
 topics:
   - society

@@ -17,6 +17,7 @@ corequisites: none
 non_allowed:
   - SPAN30012
 skills:
+  - languages
   - writing
   - presentation
 topics:

@@ -11,6 +11,8 @@ non_allowed:
   - CLAS20035
   - CLAS30045
   - CLAS10022
+skills:
+  - languages
 topics:
   - languages
 assessment:

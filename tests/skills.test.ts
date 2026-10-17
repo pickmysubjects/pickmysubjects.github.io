@@ -18,6 +18,12 @@ describe('skillsOf', () => {
     expect(skillsOf(data.subjects['HIST10001'] as Subject, data)).toEqual([])
   })
 
+  it('counts a numbered language level as language practice, not a subject merely about a region', () => {
+    const data = dataset([subject({ code: 'SPAN10003', title: 'Spanish 3' }), subject({ code: 'SPAN30021', title: 'Latin America in a Global World' })])
+    expect(skillsOf(data.subjects['SPAN10003'] as Subject, data)).toContain('languages')
+    expect(skillsOf(data.subjects['SPAN30021'] as Subject, data)).not.toContain('languages')
+  })
+
   it('agrees with the hand-tagged subjects when it has to guess them blind (real data)', () => {
     const { dataset: real } = buildDataset('real')
     const tagged = Object.values(real.subjects).filter((s) => s.skills.length)

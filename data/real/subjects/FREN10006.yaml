@@ -12,6 +12,7 @@ non_allowed:
   - FREN20001
   - FREN30003
 skills:
+  - languages
   - presentation
 topics:
   - languages

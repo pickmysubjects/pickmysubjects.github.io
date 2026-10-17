@@ -10,6 +10,7 @@ corequisites: none
 non_allowed:
   - MULT10015
 skills:
+  - languages
   - writing
 topics:
   - languages

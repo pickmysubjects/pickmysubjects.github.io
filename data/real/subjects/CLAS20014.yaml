@@ -17,6 +17,7 @@ corequisites: none
 non_allowed:
   - CLAS30025
 skills:
+  - languages
   - writing
 topics:
   - languages

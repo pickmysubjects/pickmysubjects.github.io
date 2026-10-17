@@ -11,6 +11,7 @@ prerequisites:
 corequisites: none
 non_allowed: []
 skills:
+  - languages
   - presentation
 topics:
   - languages

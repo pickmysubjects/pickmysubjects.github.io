@@ -16,6 +16,7 @@ corequisites: none
 non_allowed:
   - SPAN30020
 skills:
+  - languages
   - writing
   - presentation
 topics:

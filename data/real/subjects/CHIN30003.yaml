@@ -18,6 +18,7 @@ prerequisites:
 corequisites: none
 non_allowed: []
 skills:
+  - languages
   - writing
 topics:
   - languages

@@ -12,6 +12,8 @@ prerequisites:
 corequisites: none
 non_allowed:
   - SPAN10004
+skills:
+  - languages
 topics:
   - languages
 assessment:

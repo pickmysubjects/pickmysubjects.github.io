@@ -347,6 +347,7 @@ export const ko: Messages = {
     systems: '컴퓨터 시스템',
     writing: '에세이 작성',
     presentation: '발표',
+    languages: "외국어",
     lab: '실험',
     fieldwork: "야외 조사",
     design: '디자인',

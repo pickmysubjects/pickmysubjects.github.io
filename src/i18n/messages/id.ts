@@ -347,6 +347,7 @@ export const id: Messages = {
     systems: 'Sistem komputer',
     writing: 'Menulis esai',
     presentation: 'Presentasi',
+    languages: "Bahasa asing",
     lab: 'Praktikum',
     fieldwork: "Kerja lapangan",
     design: 'Desain',

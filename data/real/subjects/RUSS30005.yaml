@@ -9,6 +9,7 @@ prerequisites: RUSS30001
 corequisites: none
 non_allowed: []
 skills:
+  - languages
   - writing
   - presentation
 topics:

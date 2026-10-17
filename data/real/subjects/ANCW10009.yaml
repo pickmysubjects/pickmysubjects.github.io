@@ -9,6 +9,7 @@ prerequisites: ANCW10008
 corequisites: none
 non_allowed: []
 skills:
+  - languages
   - writing
 topics:
   - languages

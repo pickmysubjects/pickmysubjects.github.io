@@ -15,6 +15,7 @@ corequisites: none
 non_allowed:
   - KORE10004
 skills:
+  - languages
   - presentation
 topics:
   - languages

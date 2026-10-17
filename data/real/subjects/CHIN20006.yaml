@@ -15,6 +15,7 @@ corequisites: none
 non_allowed:
   - CHIN30011
 skills:
+  - languages
   - presentation
 topics:
   - languages

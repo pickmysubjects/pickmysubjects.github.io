@@ -347,6 +347,7 @@ export const zhCN: Messages = {
     systems: '计算机系统',
     writing: '论文写作',
     presentation: '演讲展示',
+    languages: "外语",
     lab: '实验',
     fieldwork: "野外考察",
     design: '设计',

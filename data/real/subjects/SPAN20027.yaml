@@ -17,6 +17,8 @@ non_allowed:
   - SPAN10004
   - SPAN20002
   - SPAN20003
+skills:
+  - languages
 topics:
   - languages
 assessment:

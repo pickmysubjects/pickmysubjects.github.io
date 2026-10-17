@@ -13,6 +13,7 @@ corequisites: none
 non_allowed:
   - CHIN30007
 skills:
+  - languages
   - writing
   - presentation
 topics:

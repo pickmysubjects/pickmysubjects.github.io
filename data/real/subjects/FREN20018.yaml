@@ -12,6 +12,8 @@ non_allowed:
   - FREN10003
   - FREN20015
   - FREN20017
+skills:
+  - languages
 topics:
   - languages
 assessment:

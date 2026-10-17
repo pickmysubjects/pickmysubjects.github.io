@@ -350,6 +350,7 @@ export const en = {
     systems: 'Computer systems',
     writing: 'Essay writing',
     presentation: 'Presenting',
+    languages: "Languages",
     lab: 'Lab work',
     fieldwork: "Fieldwork",
     design: 'Design',

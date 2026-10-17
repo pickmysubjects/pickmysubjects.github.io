@@ -10,6 +10,8 @@ prerequisites:
 corequisites: none
 non_allowed:
   - ITAL20007
+skills:
+  - languages
 topics:
   - languages
 assessment:

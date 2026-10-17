@@ -17,6 +17,7 @@ corequisites: none
 non_allowed:
   - CHIN20009
 skills:
+  - languages
   - writing
 topics:
   - languages

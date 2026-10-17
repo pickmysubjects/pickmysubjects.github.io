@@ -28,6 +28,7 @@ corequisites: none
 non_allowed:
   - FREN20007
 skills:
+  - languages
   - writing
 topics:
   - society

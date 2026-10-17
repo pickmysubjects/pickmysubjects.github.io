@@ -17,6 +17,7 @@ corequisites: none
 non_allowed:
   - CLAS30013
 skills:
+  - languages
   - writing
   - presentation
 topics:

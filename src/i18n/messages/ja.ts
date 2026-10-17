@@ -347,6 +347,7 @@ export const ja: Messages = {
     systems: 'コンピュータシステム',
     writing: 'レポート作成',
     presentation: 'プレゼン',
+    languages: "外国語",
     lab: '実験',
     fieldwork: "フィールドワーク",
     design: 'デザイン',

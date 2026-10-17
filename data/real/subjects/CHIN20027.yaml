@@ -17,6 +17,7 @@ corequisites: none
 non_allowed:
   - CHIN10003
 skills:
+  - languages
   - presentation
 topics:
   - languages

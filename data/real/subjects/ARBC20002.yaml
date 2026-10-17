@@ -15,6 +15,7 @@ corequisites: none
 non_allowed:
   - ARBC30006
 skills:
+  - languages
   - presentation
 topics:
   - languages

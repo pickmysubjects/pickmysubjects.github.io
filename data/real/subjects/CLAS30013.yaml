@@ -17,6 +17,7 @@ corequisites: none
 non_allowed:
   - CLAS20030
 skills:
+  - languages
   - writing
   - presentation
 topics:

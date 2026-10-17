@@ -14,6 +14,7 @@ corequisites: none
 non_allowed:
   - ITAL20012
 skills:
+  - languages
   - presentation
 topics:
   - languages

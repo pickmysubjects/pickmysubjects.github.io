@@ -10,6 +10,7 @@ corequisites: none
 non_allowed:
   - RUSS20006
 skills:
+  - languages
   - presentation
 topics:
   - languages

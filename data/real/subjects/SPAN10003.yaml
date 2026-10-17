@@ -10,6 +10,8 @@ prerequisites:
 corequisites: none
 non_allowed:
   - SPAN20002
+skills:
+  - languages
 topics:
   - languages
 assessment:
