@@ -5,9 +5,12 @@ kind: major
 title: Philosophy
 points: 75
 requirements:
+  # 37.5 points of Level 2 major electives.
   - choose: { points: 37.5, from: [HPSC20026, PHIL20008, PHIL20030, PHIL20033, PHIL20039, PHIL20040, PHIL20041, PHIL20044, PHIL20045, PHIL20046, HPSC20020, PHIL20047, PHIL20048] }
+  # Capstone.
   - all: [PHIL30007]
+  # 25 points of Level 3 major electives.
   - choose: { points: 25, from: [ISLM30003, PHIL30024, PHIL30043, PHIL30052, PHIL30053, PHIL30054, PHIL30055, HPSC30039] }
 # Structure from the 2026 Handbook major page (pasted); foundation subjects come in as prerequisites.
 handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
-verified_on: 2026-10-16 # structure; source: 2026 Handbook major page
+verified_on: 2026-10-17 # structure; source: 2026 Handbook major page

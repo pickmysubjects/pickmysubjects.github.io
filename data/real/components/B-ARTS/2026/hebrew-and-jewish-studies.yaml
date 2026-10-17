@@ -8,21 +8,33 @@ points: 75
 routes:
   - title: Entry Point 1
     requirements:
+      # Level 2 core.
       - all: [HEBR20005, HEBR20006]
+      # Level 2 elective.
       - choose: { points: 12.5, from: [HIST20013, HIST20060, ISLM20015, JEWI20006, JEWI20007] }
+      # Level 3 core.
       - all: [HEBR30003, HEBR30004]
+      # Capstone.
       - all: [JEWI30005]
   - title: Entry Point 3
     requirements:
+      # Level 2 core.
       - all: [HEBR20007, HEBR20008]
+      # Level 2 elective.
       - choose: { points: 12.5, from: [HIST20013, HIST20060, ISLM20015, JEWI20006, JEWI20007] }
+      # 25 points of Level 3 electives.
       - choose: { points: 25, from: [HIST30010, HEBR30016, HEBR30017] }
+      # Capstone.
       - all: [JEWI30005]
   - title: Entry Point 5
     requirements:
+      # Level 2 core.
       - all: [HEBR20016, HEBR20017]
+      # Level 2 elective.
       - choose: { points: 12.5, from: [HIST20013, HIST20060, ISLM20015, JEWI20006, JEWI20007] }
+      # Level 3 core.
       - all: [HEBR30018, HEBR30019]
+      # Capstone.
       - all: [JEWI30005]
 handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
 verified_on: 2026-10-17 # structure; source: 2026 Handbook major page

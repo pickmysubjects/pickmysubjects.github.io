@@ -39,7 +39,9 @@ for (const file of positionals) {
     // Notes in brackets on the header line ("(被引用 3 次)") are ours, not part of the title.
     const title = (old.title as string | undefined) || head.replace(/^=====\s*/, '').replace(code, '').replace(/\([^)]*\)/g, '').trim() || onPage || ''
     const level = (old.level as number | undefined) ?? Number(code[4])
-    const points = (old.points as number | undefined) ?? 12.5
+    // The page's own header says "Points: 25" for a double-weight subject; 12.5 only when it's missing.
+    const onPagePoints = Number(/Points:\s*(\d+(?:\.\d+)?)/.exec(body)?.[1]) || undefined
+    const points = onPagePoints ?? (old.points as number | undefined) ?? 12.5
 
     const problems = [...parsed.warnings]
     if (parsed.prerequisites === 'unknown') problems.push('PREREQUISITES UNKNOWN')

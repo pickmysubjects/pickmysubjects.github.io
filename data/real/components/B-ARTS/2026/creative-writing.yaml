@@ -5,9 +5,12 @@ kind: major
 title: Creative Writing
 points: 75
 requirements:
+  # 37.5 points of Level 2 major electives.
   - choose: { points: 37.5, from: [CWRI20002, CWRI20005, CWRI20007, CWRI20009, CWRI20010, CWRI20012] }
+  # Capstone.
   - all: [CWRI30004]
+  # 25 points of Level 3 major electives.
   - choose: { points: 25, from: [CWRI30001, CWRI30006, CWRI30013, CWRI30014, CWRI30015] }
 # Structure from the 2026 Handbook major page (pasted); foundation subjects come in as prerequisites.
 handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
-verified_on: 2026-10-16 # structure; source: 2026 Handbook major page
+verified_on: 2026-10-17 # structure; source: 2026 Handbook major page

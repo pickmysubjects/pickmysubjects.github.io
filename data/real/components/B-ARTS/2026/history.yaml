@@ -5,9 +5,12 @@ kind: major
 title: History
 points: 75
 requirements:
+  # 37.5 points of Level 2 major electives.
   - choose: { points: 37.5, from: [HIST20013, HIST20034, HIST20052, HIST20059, HIST20060, HIST20065, HIST20068, HIST20071, HIST20072, HIST20080, HIST20084, HIST20086, HIST20087, HIST20088, HIST20089, HIST20090, HIST20091, HPSC20002] }
+  # Capstone.
   - all: [HIST30060]
+  # 25 points of Level 3 major electives.
   - choose: { points: 25, from: [HIST30004, HIST30006, HIST30010, HIST30051, HIST30064, HIST30065, HIST30066, HIST30068, HIST30076, HIST30077, HIST30078, HPSC30034] }
 # Structure from the 2026 Handbook major page (pasted); foundation subjects come in as prerequisites.
 handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
-verified_on: 2026-10-16 # structure; source: 2026 Handbook major page
+verified_on: 2026-10-17 # structure; source: 2026 Handbook major page

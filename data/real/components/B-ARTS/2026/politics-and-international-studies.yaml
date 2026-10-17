@@ -5,10 +5,14 @@ kind: major
 title: Politics and International Studies
 points: 75
 requirements:
+  # Level 2 core.
   - all: [POLS20034]
+  # 25 points of Level 2 major electives.
   - choose: { points: 25, from: [POLS20035, POLS20006, POLS20008, POLS20011, POLS20023, POLS20025, POLS20026, POLS20031, POLS20033] }
+  # Capstone.
   - all: [POLS30037]
+  # 25 points of Level 3 major electives.
   - choose: { points: 25, from: [ISLM30018, POLS30039, POLS30001, POLS30003, POLS30007, POLS30011, POLS30015, POLS30018, POLS30019, POLS30022, POLS30028, POLS30030, POLS30032, POLS30033, POLS30034, POLS30035, POLS30036, POLS30038] }
 # Structure from the 2026 Handbook major page (pasted); foundation subjects come in as prerequisites.
 handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
-verified_on: 2026-10-16 # structure; source: 2026 Handbook major page
+verified_on: 2026-10-17 # structure; source: 2026 Handbook major page

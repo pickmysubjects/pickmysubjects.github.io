@@ -5,11 +5,16 @@ kind: major
 title: Korean Studies
 points: 75
 requirements:
+  # Level 2 core.
   - all: [KORE20003, KORE20004]
+  # Level 2 elective.
   - choose: { points: 12.5, from: [KORE20002, KORE20007] }
+  # Level 3 core.
   - all: [KORE30003]
+  # Capstone.
   - all: [KORE30005]
+  # Level 3 elective.
   - choose: { points: 12.5, from: [KORE30004, KORE30002, KORE30001] }
 # Structure from the 2026 Handbook major page (pasted); foundation subjects come in as prerequisites.
 handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
-verified_on: 2026-10-16 # structure; source: 2026 Handbook major page
+verified_on: 2026-10-17 # structure; source: 2026 Handbook major page

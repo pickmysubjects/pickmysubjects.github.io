@@ -8,27 +8,43 @@ points: 75
 routes:
   - title: Latin Entry Point 1
     requirements:
+      # Latin Level 2 core.
       - all: [CLAS20029, CLAS20031]
+      # Level 2 elective.
       - choose: { points: 12.5, from: [ANCW20003, ANCW20015, ANCW20019, ANCW20023, ANCW20024, ANCW20026, ANCW20027, ANCW20028, PHIL20040, ANCW20022, ANCW20025, CLAS20035, CLAS20015, CLAS20016, CLAS20013, CLAS20014] }
+      # Latin Level 3 core.
       - all: [CLAS30013, CLAS30009]
+      # Capstone.
       - all: [ANCW30017]
   - title: Latin Entry Point 3
     requirements:
+      # Latin Level 2 core.
       - all: [CLAS20030, CLAS20026]
+      # Level 2 elective: Ancient World Studies or Ancient Greek.
       - choose: { points: 12.5, from: [ANCW20003, ANCW20015, ANCW20019, ANCW20022, ANCW20023, ANCW20024, ANCW20025, ANCW20026, ANCW20027, ANCW20028, PHIL20040, CLAS20015, CLAS20016, CLAS20013, CLAS20014, CLAS20035] }
+      # 25 points of Level 3 electives: Ancient World Studies or Ancient Greek.
       - choose: { points: 25, from: [ANCW30004, ANCW30011, ANCW30016, ANCW30021, ANCW30023, ANCW30025, CLAS30045, CLAS30025, CLAS30024, CLAS30046, CLAS30047] }
+      # Capstone.
       - all: [ANCW30017]
   - title: Ancient Greek Entry Point 1
     requirements:
+      # Ancient Greek Level 2 core.
       - all: [CLAS20015, CLAS20016]
+      # Level 2 elective.
       - choose: { points: 12.5, from: [ANCW20003, ANCW20015, ANCW20019, ANCW20022, ANCW20023, ANCW20024, ANCW20025, ANCW20026, ANCW20027, ANCW20028, PHIL20040, CLAS20029, CLAS20030, CLAS20031, CLAS20026] }
+      # Ancient Greek Level 3 core.
       - all: [CLAS30024, CLAS30025]
+      # Capstone.
       - all: [ANCW30017]
   - title: Ancient Greek Entry Point 3
     requirements:
+      # Ancient Greek Level 2 core.
       - all: [CLAS20013, CLAS20014]
+      # Level 2 elective: Ancient World Studies or Latin.
       - choose: { points: 12.5, from: [CLAS20029, CLAS20031, CLAS20030, CLAS20026, ANCW20003, ANCW20015, ANCW20019, ANCW20022, ANCW20023, ANCW20024, ANCW20025, ANCW20026, ANCW20027, ANCW20028, PHIL20040] }
+      # 25 points of Level 3 electives: Ancient World Studies or Latin.
       - choose: { points: 25, from: [ANCW30004, ANCW30011, ANCW30016, ANCW30021, ANCW30023, ANCW30025, CLAS30013, CLAS30009, CLAS30004, CLAS30046, CLAS30047] }
+      # Capstone.
       - all: [ANCW30017]
 handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
 verified_on: 2026-10-17 # structure; source: 2026 Handbook major page

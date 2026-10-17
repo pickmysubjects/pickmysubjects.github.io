@@ -5,11 +5,16 @@ kind: major
 title: Russian Studies
 points: 75
 requirements:
+  # Level 2 core.
   - all: [RUSS20004, RUSS20005]
-  - choose: { points: 12.5, from: [RUSS20004, RUSS20005] }
+  # Level 2 elective.
+  - choose: { points: 12.5, from: [EURO20006, EURO20007, EURO20005, EURO20003, EURO20001, HIST20084, EURO20010] }
+  # Level 3 core.
   - all: [RUSS30001]
+  # Capstone.
   - all: [RUSS30006]
-  - all: [RUSS30001]
+  # Level 3 elective.
+  - choose: { points: 12.5, from: [EURO30001, EURO30002, EURO30004, EURO30005, EURO30006, RUSS30005, ARTS30002, LANG30001, EURO30009] }
 # Structure from the 2026 Handbook major page (pasted); foundation subjects come in as prerequisites.
 handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
-verified_on: 2026-10-16 # structure; source: 2026 Handbook major page
+verified_on: 2026-10-17 # structure; source: 2026 Handbook major page

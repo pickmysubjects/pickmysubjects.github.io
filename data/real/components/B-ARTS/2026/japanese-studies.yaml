@@ -8,29 +8,47 @@ points: 75
 routes:
   - title: Entry Point 1
     requirements:
+      # Level 2 core.
       - all: [JAPN20002, JAPN20007, JAPN20008]
+      # Level 3 core.
       - all: [JAPN30007]
+      # Capstone.
       - all: [JAPN30018]
+      # Level 3 elective.
       - choose: { points: 12.5, from: [JAPN30008, JAPN30019] }
   - title: Entry Point 3
     requirements:
+      # Level 2 core.
       - all: [JAPN20013, JAPN20014]
+      # Level 2 elective.
       - choose: { points: 12.5, from: [JAPN20002, JAPN20019] }
+      # Level 3 core.
       - all: [JAPN30005]
+      # Capstone.
       - all: [JAPN30018]
+      # Level 3 elective.
       - choose: { points: 12.5, from: [JAPN30006, JAPN30013] }
   - title: Entry Point 5
     requirements:
+      # Level 2 core.
       - all: [JAPN20003, JAPN20004]
+      # Level 2 elective.
       - choose: { points: 12.5, from: [JAPN20019, JAPN20010] }
+      # Level 3 core.
       - all: [JAPN30012]
+      # Capstone.
       - all: [JAPN30018]
+      # Level 3 elective.
       - choose: { points: 12.5, from: [JAPN30011, JAPN30004] }
   - title: Entry Point 7
     requirements:
+      # Level 2 core.
       - all: [JAPN20011, JAPN20012]
+      # Level 2 elective.
       - choose: { points: 12.5, from: [JAPN20005, JAPN20010] }
+      # Level 3 core.
       - all: [JAPN30002, JAPN30004]
+      # Capstone.
       - all: [JAPN30018]
 handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
 verified_on: 2026-10-17 # structure; source: 2026 Handbook major page

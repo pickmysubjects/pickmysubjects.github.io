@@ -5,10 +5,14 @@ kind: major
 title: Linguistics and Applied Linguistics
 points: 75
 requirements:
+  # Level 2 core.
   - all: [LING20005, LING20006]
+  # 12.5 points of Level 2 major electives.
   - choose: { points: 12.5, from: [LING20009, LING20003, LING20010, LING20011] }
+  # Capstone.
   - all: [LING30001]
+  # 25 points of Level 3 major electives.
   - choose: { points: 25, from: [EURO30001, LING30002, LING30003, LING30004, LING30007, LING30013, LING30014, LING30015] }
 # Structure from the 2026 Handbook major page (pasted); foundation subjects come in as prerequisites.
 handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
-verified_on: 2026-10-16 # structure; source: 2026 Handbook major page
+verified_on: 2026-10-17 # structure; source: 2026 Handbook major page

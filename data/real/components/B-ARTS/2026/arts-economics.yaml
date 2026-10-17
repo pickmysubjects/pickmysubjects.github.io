@@ -5,10 +5,16 @@ kind: major
 title: Economics
 points: 75
 requirements:
+  # Level 2 core.
   - all: [ECON20002, ECON20001]
-  - choose: { points: 12.5, from: [ECON20002, ECON20001] }
+  # Level 2 elective.
+  - choose: { points: 12.5, from: [ECOM20001, ECON20003] }
+  # Capstone: one of the two econometrics subjects.
   - choose: { points: 12.5, from: [ECOM30001, ECOM30002] }
-  - all: [ECOM30003, ECOM30004]
+  # At least 12.5 points of Level 3 ECON electives.
+  - choose: { points: 12.5, from: [ECON30001, ECON30002, ECON30003, ECON30005, ECON30006, ECON30007, ECON30008, ECON30009, ECON30010, ECON30011, ECON30013, ECON30016, ECON30017, ECON30018, ECON30019, ECON30020, ECON30022, ECON30023, ECON30024, ECON30025, ECON30029, ECON30030] }
+  # Remaining 12.5 points: any Level 3 ECON or econometrics elective.
+  - choose: { points: 12.5, from: [ECON30001, ECON30002, ECON30003, ECON30005, ECON30006, ECON30007, ECON30008, ECON30009, ECON30010, ECON30011, ECON30013, ECON30016, ECON30017, ECON30018, ECON30019, ECON30020, ECON30022, ECON30023, ECON30024, ECON30025, ECON30029, ECON30030, ECOM30003, ECOM30004, ECOM30001, ECOM30002] }
 # Structure from the 2026 Handbook major page (pasted); foundation subjects come in as prerequisites.
 handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
-verified_on: 2026-10-16 # structure; source: 2026 Handbook major page
+verified_on: 2026-10-17 # structure; source: 2026 Handbook major page

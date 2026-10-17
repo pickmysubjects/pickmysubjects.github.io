@@ -8,22 +8,39 @@ points: 75
 routes:
   - title: Entry Point 1
     requirements:
+      # Level 2 core: SPAN20002 and SPAN20003, or SPAN20027 alone.
       - choose: { points: 25, from: [SPAN20002, SPAN20003, SPAN20027] }
-      - choose: { points: 12.5, from: [SPAN20002, SPAN20003, SPAN20027] }
+      # Level 2 Spanish elective; European Studies/other subjects allowed (at most 12.5 points of them in the whole major, not enforced here).
+      - choose: { points: 12.5, from: [SPAN20001, SPAN20016, SPAN20025, SPAN20028, EURO20001, EURO20003, EURO20005, EURO20006, EURO20010] }
+      # Level 3 core.
       - all: [SPAN30014, SPAN30015]
+      # Capstone.
       - all: [SPAN30023]
   - title: Entry Point 3
     requirements:
+      # Level 2 core.
       - all: [SPAN20018, SPAN20019]
-      - choose: { points: 12.5, from: [SPAN20018, SPAN20019] }
+      # Level 2 Spanish elective; European Studies/other subjects allowed (at most 12.5 points of them in the whole major, not enforced here).
+      - choose: { points: 12.5, from: [SPAN20001, SPAN20016, SPAN20025, SPAN20028, EURO20001, EURO20003, EURO20005, EURO20006, EURO20010] }
+      # Level 3 core.
       - all: [SPAN30016]
+      # Capstone.
       - all: [SPAN30023]
-      - all: [SPAN30016]
+      # Level 3 Spanish elective; European Studies/other subjects allowed (at most 12.5 points of them in the whole major, not enforced here).
+      - choose: { points: 12.5, from: [LANG30001, SPAN30001, SPAN30012, SPAN30020, SPAN30021, SPAN30024, ARTS30002, EURO30001, EURO30002, EURO30004, EURO30005, EURO30006, EURO30009] }
   - title: Entry Point 5
     requirements:
+      # Level 2 core.
       - all: [SPAN20022]
-      - choose: { points: 25, from: [SPAN20001, SPAN20016, SPAN20025, SPAN20028] }
+      # Level 2 Spanish elective.
+      - choose: { points: 12.5, from: [SPAN20001, SPAN20016, SPAN20025, SPAN20028] }
+      # Second Level 2 Spanish elective; European Studies/other subjects allowed (at most 12.5 points of them in the whole major, not enforced here).
+      - choose: { points: 12.5, from: [SPAN20001, SPAN20016, SPAN20025, SPAN20028, EURO20001, EURO20003, EURO20005, EURO20006, EURO20010] }
+      # Capstone.
+      - all: [SPAN30023]
+      # Level 3 Spanish elective.
       - choose: { points: 12.5, from: [LANG30001, SPAN30001, SPAN30012, SPAN30020, SPAN30021, SPAN30024] }
-      - choose: { points: 25, from: [LANG30001, SPAN30001, SPAN30012, SPAN30020, SPAN30021, SPAN30024] }
+      # Second Level 3 Spanish elective; European Studies/other subjects allowed (at most 12.5 points of them in the whole major, not enforced here).
+      - choose: { points: 12.5, from: [LANG30001, SPAN30001, SPAN30012, SPAN30020, SPAN30021, SPAN30024, ARTS30002, EURO30001, EURO30002, EURO30004, EURO30005, EURO30006, EURO30009] }
 handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
 verified_on: 2026-10-17 # structure; source: 2026 Handbook major page

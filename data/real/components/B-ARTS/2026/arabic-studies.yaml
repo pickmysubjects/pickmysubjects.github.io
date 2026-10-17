@@ -8,14 +8,21 @@ points: 75
 routes:
   - title: Entry Point 1
     requirements:
+      # Level 2 core.
       - all: [ARBC20004, ARBC20005, ARBC20001]
+      # Level 3 core.
       - all: [ARBC30004, ARBC30005]
+      # Capstone.
       - all: [ARBC30001]
   - title: Entry Point 3
     requirements:
+      # Level 2 core.
       - all: [ARBC20006, ARBC20007, ARBC20001]
+      # Level 3 core.
       - all: [ARBC30006]
+      # Level 3 elective.
       - choose: { points: 12.5, from: [ISLM30003, ISLM30018] }
+      # Capstone.
       - all: [ARBC30001]
 handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
 verified_on: 2026-10-17 # structure; source: 2026 Handbook major page

@@ -8,28 +8,43 @@ points: 75
 routes:
   - title: Entry Point 1
     requirements:
+      # Level 2 core.
       - all: [CHIN20001, CHIN20002, CHIN20006]
+      # Level 3 core.
       - all: [CHIN30003, CHIN30008]
+      # Capstone.
       - all: [CHIN30029]
   - title: Entry Point 3
     requirements:
+      # Level 2 core.
       - all: [CHIN20003, CHIN20004, CHIN20006]
+      # Level 3 core.
       - all: [CHIN30003, CHIN30025]
+      # Capstone.
       - all: [CHIN30029]
   - title: Entry Point 5
     requirements:
+      # Level 2 core.
       - all: [CHIN20027, CHIN20028, CHIN20006]
+      # Level 3 core.
       - all: [CHIN30027, CHIN30028]
+      # Capstone.
       - all: [CHIN30029]
   - title: Entry Point 7
     requirements:
+      # Level 2 core.
       - all: [CHIN20012, CHIN20013, CHIN20026]
+      # 25 points of Level 3 electives.
       - choose: { points: 25, from: [CHIN30006, CHIN30007, CHIN30012, CHIN30018] }
+      # Capstone.
       - all: [CHIN30029]
   - title: Entry Point 9
     requirements:
+      # Level 2 core.
       - all: [CHIN20009, CHIN20016, CHIN20021]
+      # 25 points of Level 3 electives.
       - choose: { points: 25, from: [CHIN30002, CHIN30005, CHIN30007] }
+      # Capstone.
       - all: [CHIN30029]
 handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
 verified_on: 2026-10-17 # structure; source: 2026 Handbook major page
