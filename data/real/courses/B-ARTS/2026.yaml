@@ -13,8 +13,7 @@ area_categories:
   other: breadth
 handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/course-structure
 verified_on: 2026-10-16 # rules checked by hand against the Handbook course structure
-# Hidden until its major subjects are entered (most aren't yet).
-listed: false
+listed: true
 rules:
   - id: total
     kind: points
