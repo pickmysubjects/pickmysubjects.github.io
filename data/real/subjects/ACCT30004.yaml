@@ -16,6 +16,10 @@ corequisites:
     - ACCT20007
     - ACCT10003
 non_allowed: []
+skills:
+  - business
+topics:
+  - accounting
 assessment:
   - kind: test
     weight: 15

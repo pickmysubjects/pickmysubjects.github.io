@@ -20,6 +20,12 @@ non_allowed:
   - FNCE30012
 recommended:
   - COMP10001
+skills:
+  - programming
+  - maths
+  - data
+topics:
+  - finance
 assessment:
   - kind: test
     weight: 20

@@ -8,6 +8,10 @@ offerings:
 prerequisites: none
 corequisites: MKTG10001
 non_allowed: []
+skills:
+  - business
+topics:
+  - marketing
 assessment:
   - kind: participation
     weight: 10

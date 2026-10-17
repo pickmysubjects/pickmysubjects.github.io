@@ -11,6 +11,11 @@ prerequisites:
     - FNCE10001
 corequisites: none
 non_allowed: []
+skills:
+  - business
+  - presentation
+topics:
+  - finance
 assessment:
   - kind: assignment
     weight: 30

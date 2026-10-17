@@ -7,6 +7,11 @@ prerequisites:
   manual: Permission of subject co-ordinator
 corequisites: none
 non_allowed: []
+skills:
+  - business
+  - writing
+topics:
+  - accounting
 handbook: https://handbook.unimelb.edu.au/2026/subjects/acct30007
 source_year: 2026
 verified_on: 2026-10-13

@@ -10,6 +10,12 @@ prerequisites:
     - manual: Students must obtain written permission to enrol in this subject by emailing the Subject Coordinator. Students must have completed at least 100 points of prior study.
 corequisites: none
 non_allowed: []
+skills:
+  - business
+  - presentation
+topics:
+  - business
+  - management
 assessment:
   - kind: presentation
     weight: 20

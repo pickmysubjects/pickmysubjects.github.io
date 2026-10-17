@@ -26,8 +26,12 @@ describe('recommendation quality (real data)', () => {
     expect(list[0]).toBe('FNCE10002')
     // A commerce or maths subject, or one tagged with a business topic (biotech commercialisation).
     const business = new Set(['economics', 'finance', 'accounting', 'marketing', 'law', 'business'])
-    const related = (c: string) => ['ACCT', 'ECON', 'BLAW', 'MKTG', 'FNCE', 'MAST'].includes(area(c) ?? '') || (real.subjects[c]?.topics ?? []).some((t) => business.has(t))
-    expect(list.filter(related)).toHaveLength(list.length)
+    // Or a first step into a finance subject (programming before Algorithmic Trading).
+    const stepToFinance = (c: string) =>
+      Object.values(real.subjects).some((s) => s.topics.includes('finance') && JSON.stringify(s.prerequisites).includes(`"${c}"`))
+    const related = (c: string) =>
+      ['ACCT', 'ECON', 'BLAW', 'MKTG', 'FNCE', 'MAST'].includes(area(c) ?? '') || (real.subjects[c]?.topics ?? []).some((t) => business.has(t)) || stepToFinance(c)
+    expect(list.filter(related)).toEqual(list)
   })
 
   it('a second-year ML student gets the next step towards machine learning, not unknown filler', () => {

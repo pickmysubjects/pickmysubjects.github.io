@@ -11,6 +11,9 @@ prerequisites:
     - MKTG20004
 corequisites: none
 non_allowed: []
+topics:
+  - supply-chain
+  - management
 assessment:
   - kind: assignment
     weight: 10

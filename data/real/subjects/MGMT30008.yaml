@@ -8,6 +8,8 @@ offerings:
 prerequisites: MGMT20001
 corequisites: none
 non_allowed: []
+topics:
+  - management
 assessment:
   - kind: participation
     weight: 10

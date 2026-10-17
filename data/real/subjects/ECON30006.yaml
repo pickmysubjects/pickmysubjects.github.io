@@ -11,6 +11,12 @@ prerequisites:
     - ECON20002
 corequisites: none
 non_allowed: []
+skills:
+  - business
+  - maths
+topics:
+  - economics
+  - human-resources
 assessment:
   - kind: test
     weight: 20

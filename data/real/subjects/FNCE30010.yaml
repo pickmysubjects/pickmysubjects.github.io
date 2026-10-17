@@ -19,6 +19,13 @@ prerequisites:
         - COMP10002
 corequisites: none
 non_allowed: []
+skills:
+  - business
+  - programming
+  - maths
+topics:
+  - finance
+  - algorithms
 assessment:
   - kind: assignment
     weight: 13

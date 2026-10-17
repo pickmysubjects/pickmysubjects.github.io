@@ -53,6 +53,12 @@ prerequisites:
         - MAST10009
 corequisites: none
 non_allowed: []
+skills:
+  - maths
+  - business
+topics:
+  - finance
+  - actuarial
 assessment:
   - kind: assignment
     weight: 15

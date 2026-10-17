@@ -17,6 +17,11 @@ prerequisites:
             - MAST20006
 corequisites: none
 non_allowed: []
+skills:
+  - business
+  - maths
+topics:
+  - economics
 assessment:
   - kind: quiz
     weight: 20

@@ -18,6 +18,12 @@ prerequisites:
         - FNCE20001
 corequisites: none
 non_allowed: []
+skills:
+  - business
+  - data
+topics:
+  - accounting
+  - finance
 assessment:
   - kind: test
     weight: 25

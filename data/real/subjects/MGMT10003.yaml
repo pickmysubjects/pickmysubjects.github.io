@@ -8,6 +8,8 @@ offerings:
 prerequisites: none
 corequisites: none
 non_allowed: []
+topics:
+  - management
 assessment:
   - kind: assignment
     weight: 10

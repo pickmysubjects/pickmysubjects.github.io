@@ -9,6 +9,10 @@ prerequisites:
     - ECON20002
 corequisites: none
 non_allowed: []
+skills:
+  - business
+topics:
+  - economics
 assessment:
   - kind: assignment
     weight: 20

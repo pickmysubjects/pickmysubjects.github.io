@@ -13,6 +13,9 @@ prerequisites:
     - MGMT20004
 corequisites: none
 non_allowed: []
+topics:
+  - entrepreneurship
+  - management
 assessment:
   - kind: assignment
     weight: 15

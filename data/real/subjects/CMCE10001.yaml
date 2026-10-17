@@ -8,6 +8,12 @@ prerequisites:
   note: Admission into the B-COM Bachelor of Commerce
 corequisites: none
 non_allowed: []
+skills:
+  - business
+  - writing
+  - presentation
+topics:
+  - business
 assessment:
   - kind: quiz
     weight: 10

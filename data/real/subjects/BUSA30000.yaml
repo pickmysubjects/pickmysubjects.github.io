@@ -15,6 +15,14 @@ prerequisites:
         min: 200
 corequisites: none
 non_allowed: []
+skills:
+  - business
+  - presentation
+  - writing
+topics:
+  - management
+  - marketing
+  - business
 assessment:
   - kind: assignment
     weight: 10

@@ -10,6 +10,10 @@ prerequisites:
     - MKTG20006
 corequisites: none
 non_allowed: []
+skills:
+  - business
+topics:
+  - marketing
 assessment:
   - kind: assignment
     weight: 20

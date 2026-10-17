@@ -7,6 +7,11 @@ prerequisites: ACCT10002
 corequisites: none
 non_allowed:
   - ACCT30014
+skills:
+  - business
+topics:
+  - accounting
+  - law
 assessment:
   - kind: participation
     weight: 10

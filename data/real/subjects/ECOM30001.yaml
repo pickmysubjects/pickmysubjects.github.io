@@ -20,6 +20,13 @@ corequisites: none
 non_allowed:
   - ECOM90001
   - ECOM20001
+skills:
+  - statistics
+  - maths
+  - data
+topics:
+  - statistics
+  - economics
 assessment:
   - kind: project
     weight: 5

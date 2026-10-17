@@ -6,6 +6,11 @@ offerings: unknown
 prerequisites: MKTG10001
 corequisites: none
 non_allowed: []
+skills:
+  - business
+topics:
+  - entrepreneurship
+  - marketing
 assessment:
   - kind: assignment
     weight: 5

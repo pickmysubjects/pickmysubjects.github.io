@@ -7,6 +7,10 @@ prerequisites: ACCT20008
 corequisites: none
 non_allowed:
   - ACCT20002
+skills:
+  - business
+topics:
+  - accounting
 assessment:
   - kind: participation
     weight: 10

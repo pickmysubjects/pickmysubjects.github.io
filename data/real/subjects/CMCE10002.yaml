@@ -10,6 +10,11 @@ prerequisites: none
 corequisites: none
 non_allowed:
   - ISYS30008
+skills:
+  - business
+  - data
+topics:
+  - business
 assessment:
   - kind: quiz
     weight: 10

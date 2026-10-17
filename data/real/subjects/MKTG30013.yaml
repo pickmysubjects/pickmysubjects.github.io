@@ -12,6 +12,12 @@ prerequisites:
     - MKTG20006
 corequisites: none
 non_allowed: []
+skills:
+  - business
+  - writing
+topics:
+  - marketing
+  - management
 assessment:
   - kind: participation
     weight: 20

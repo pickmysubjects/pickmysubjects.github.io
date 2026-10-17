@@ -14,6 +14,12 @@ prerequisites:
         - CMCE30004
 corequisites: none
 non_allowed: []
+skills:
+  - data
+  - business
+  - presentation
+topics:
+  - business
 assessment:
   - kind: project
     weight: 10

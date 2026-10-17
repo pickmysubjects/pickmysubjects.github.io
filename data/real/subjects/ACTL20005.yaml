@@ -10,6 +10,12 @@ prerequisites:
 corequisites: MAST20005
 non_allowed:
   - FNCE30001
+skills:
+  - maths
+  - statistics
+topics:
+  - finance
+  - actuarial
 assessment:
   - kind: test
     weight: 10

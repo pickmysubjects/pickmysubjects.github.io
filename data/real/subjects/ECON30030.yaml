@@ -13,6 +13,10 @@ prerequisites:
         - ECON20003
 corequisites: none
 non_allowed: []
+skills:
+  - business
+topics:
+  - economics
 assessment:
   - kind: presentation
     weight: 20

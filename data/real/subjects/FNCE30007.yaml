@@ -21,6 +21,11 @@ prerequisites:
         - MAST20018
 corequisites: none
 non_allowed: []
+skills:
+  - business
+  - maths
+topics:
+  - finance
 assessment:
   - kind: participation
     weight: 10

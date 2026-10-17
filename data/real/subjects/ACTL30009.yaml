@@ -6,6 +6,11 @@ offerings: unknown
 prerequisites: none
 corequisites: none
 non_allowed: []
+skills:
+  - maths
+topics:
+  - finance
+  - probability
 assessment:
   - kind: assignment
     weight: 20

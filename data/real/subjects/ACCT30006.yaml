@@ -11,6 +11,12 @@ prerequisites:
     - FNCE10002
 corequisites: none
 non_allowed: []
+skills:
+  - business
+  - data
+topics:
+  - accounting
+  - finance
 assessment:
   - kind: assignment
     weight: 30

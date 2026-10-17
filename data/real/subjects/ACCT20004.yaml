@@ -6,6 +6,10 @@ offerings: unknown
 prerequisites: ACCT20002
 corequisites: none
 non_allowed: []
+skills:
+  - business
+topics:
+  - accounting
 assessment:
   - kind: test
     weight: 20

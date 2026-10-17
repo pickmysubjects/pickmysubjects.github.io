@@ -11,6 +11,11 @@ prerequisites:
     - ECON10005
 corequisites: FNCE30001
 non_allowed: []
+skills:
+  - business
+  - maths
+topics:
+  - finance
 assessment:
   - kind: quiz
     weight: 10

@@ -17,6 +17,14 @@ prerequisites:
 corequisites: none
 non_allowed:
   - ECOM90004
+skills:
+  - statistics
+  - maths
+  - data
+topics:
+  - statistics
+  - economics
+  - finance
 assessment:
   - kind: participation
     weight: 10

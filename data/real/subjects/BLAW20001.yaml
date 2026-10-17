@@ -11,6 +11,11 @@ prerequisites:
     - manual: Equivalent
 corequisites: none
 non_allowed: []
+skills:
+  - business
+topics:
+  - law
+  - business
 assessment:
   - kind: participation
     weight: 15

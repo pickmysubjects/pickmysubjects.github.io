@@ -8,6 +8,12 @@ offerings:
 prerequisites: MKTG10001
 corequisites: none
 non_allowed: []
+skills:
+  - business
+  - statistics
+  - data
+topics:
+  - marketing
 assessment:
   - kind: quiz
     weight: 10

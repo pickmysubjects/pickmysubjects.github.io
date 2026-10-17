@@ -7,6 +7,12 @@ prerequisites: ACCT20001
 corequisites: none
 non_allowed:
   - ACCT20007
+skills:
+  - business
+  - systems
+topics:
+  - accounting
+  - business
 assessment:
   - kind: participation
     weight: 10

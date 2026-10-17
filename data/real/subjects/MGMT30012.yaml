@@ -14,6 +14,9 @@ prerequisites:
 corequisites: none
 non_allowed:
   - MGMT30017
+topics:
+  - management
+  - business
 assessment:
   - kind: participation
     weight: 20

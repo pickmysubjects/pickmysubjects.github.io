@@ -11,6 +11,13 @@ prerequisites:
     - manual: Approval from the Subject Coordinator is required to enrol in this subject
 corequisites: none
 non_allowed: []
+skills:
+  - business
+  - writing
+  - presentation
+topics:
+  - accounting
+  - business
 assessment:
   - kind: report
     weight: 25

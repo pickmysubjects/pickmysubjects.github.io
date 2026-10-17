@@ -6,6 +6,12 @@ offerings: unknown
 prerequisites: ECON10004
 corequisites: none
 non_allowed: []
+skills:
+  - business
+  - maths
+topics:
+  - economics
+  - business
 assessment:
   - kind: assignment
     weight: 30

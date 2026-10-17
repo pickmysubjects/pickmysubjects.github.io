@@ -32,6 +32,13 @@ prerequisites:
           note: Admission into the MC-ECO Master of Economics
 corequisites: none
 non_allowed: []
+skills:
+  - statistics
+  - maths
+  - data
+topics:
+  - statistics
+  - economics
 assessment:
   - kind: project
     weight: 5

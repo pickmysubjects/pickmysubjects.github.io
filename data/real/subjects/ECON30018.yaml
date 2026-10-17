@@ -8,6 +8,12 @@ offerings:
 prerequisites: ECON20002
 corequisites: none
 non_allowed: []
+skills:
+  - business
+  - maths
+topics:
+  - economics
+  - law
 assessment:
   - kind: assignment
     weight: 20

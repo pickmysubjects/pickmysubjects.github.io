@@ -19,6 +19,11 @@ prerequisites:
         - MAST20029
 corequisites: none
 non_allowed: []
+skills:
+  - business
+  - maths
+topics:
+  - finance
 assessment:
   - kind: test
     weight: 15

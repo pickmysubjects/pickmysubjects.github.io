@@ -8,6 +8,9 @@ offerings:
 prerequisites: none
 corequisites: none
 non_allowed: []
+topics:
+  - human-resources
+  - management
 assessment:
   - kind: assignment
     weight: 10

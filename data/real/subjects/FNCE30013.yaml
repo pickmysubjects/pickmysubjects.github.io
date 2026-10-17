@@ -11,6 +11,12 @@ corequisites:
     - FNCE30007
     - FNCE30001
 non_allowed: []
+skills:
+  - business
+  - maths
+  - writing
+topics:
+  - finance
 assessment:
   - kind: assignment
     weight: 40

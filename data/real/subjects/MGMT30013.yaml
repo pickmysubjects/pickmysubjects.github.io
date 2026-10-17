@@ -12,6 +12,8 @@ prerequisites:
     - MGMT20004
 corequisites: none
 non_allowed: []
+topics:
+  - management
 assessment:
   - kind: assignment
     weight: 20

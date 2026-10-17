@@ -13,6 +13,11 @@ corequisites: none
 non_allowed:
   - ACTL90001
   - ACTL90002
+skills:
+  - maths
+  - business
+topics:
+  - actuarial
 assessment:
   - kind: test
     weight: 15

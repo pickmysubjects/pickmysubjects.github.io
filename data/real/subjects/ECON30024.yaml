@@ -21,6 +21,13 @@ prerequisites:
             - MAST20006
 corequisites: none
 non_allowed: []
+skills:
+  - business
+  - maths
+  - data
+topics:
+  - economics
+  - finance
 assessment:
   - kind: assignment
     weight: 6

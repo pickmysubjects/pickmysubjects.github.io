@@ -9,6 +9,8 @@ prerequisites: none
 corequisites: none
 non_allowed:
   - MGMT30022
+topics:
+  - management
 assessment:
   - kind: participation
     weight: 0

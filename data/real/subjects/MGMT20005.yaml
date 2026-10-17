@@ -15,6 +15,8 @@ prerequisites:
     - MAST20006
 corequisites: none
 non_allowed: []
+topics:
+  - management
 assessment:
   - kind: assignment
     weight: 25

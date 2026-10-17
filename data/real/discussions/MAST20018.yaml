@@ -1,0 +1,35 @@
+code: MAST20018
+source: StudentVIP
+url: https://studentvip.com.au/unimelb/subjects/mast20018
+reviews: 7
+from: 2015
+to: 2023
+checked: 2026-10-17
+points:
+  - en: "The subject has two halves: operations research (linear programming and the simplex method) and discrete maths (graphs, games, voting and fair division). Most found the discrete half the more interesting one."
+    zh: "课程分两半：运筹学（线性规划和单纯形法）和离散数学（图论、博弈、投票和公平分配）。多数人觉得离散数学那一半更有意思。"
+    zh-TW: "課程分兩半：作業研究（線性規劃和單純形法）和離散數學（圖論、賽局、投票和公平分配）。多數人覺得離散數學那一半更有趣。"
+    ja: "前半と後半で2分野：オペレーションズ・リサーチ（線形計画法とシンプレックス法）と離散数学（グラフ、ゲーム、投票、公平分割）。離散数学の方が面白いという声が多い。"
+    ko: "두 부분으로 구성됨: 운영과학(선형계획법과 심플렉스법)과 이산수학(그래프, 게임, 투표, 공정 분배). 대부분 이산수학 쪽이 더 재미있었다고 함."
+    vi: "Môn gồm hai nửa: vận trù học (quy hoạch tuyến tính, phương pháp đơn hình) và toán rời rạc (đồ thị, trò chơi, bầu cử, chia công bằng). Đa số thấy nửa toán rời rạc thú vị hơn."
+    ms: "Subjek ini ada dua bahagian: penyelidikan operasi (pengaturcaraan linear dan kaedah simpleks) dan matematik diskret (graf, permainan, pengundian, pembahagian adil). Ramai rasa bahagian diskret lebih menarik."
+    id: "Mata kuliah ini terdiri dari dua bagian: riset operasi (pemrograman linear dan metode simpleks) dan matematika diskrit (graf, permainan, pemungutan suara, pembagian adil). Banyak yang merasa bagian diskrit lebih menarik."
+    hi: "सब्जेक्ट के दो हिस्से हैं: ऑपरेशंस रिसर्च (लीनियर प्रोग्रामिंग और सिम्प्लेक्स मेथड) और डिस्क्रीट मैथ्स (ग्राफ़, गेम, वोटिंग और निष्पक्ष बँटवारा)। ज़्यादातर को डिस्क्रीट वाला हिस्सा ज़्यादा दिलचस्प लगा।"
+  - en: "Reviews from 2015 to 2019 were mostly positive, calling it accessible for second-year maths. From 2020 views dropped: the operations research half was hard to follow, and a 2023 reviewer found it poorly run."
+    zh: "2015到2019年的评论大多正面，认为作为二年级数学课比较好上手。2020年起评价变差：运筹学部分很难跟上，2023年有评论者觉得课程组织混乱。"
+    zh-TW: "2015到2019年的評論大多正面，認為作為二年級數學課比較好上手。2020年起評價變差：作業研究部分很難跟上，2023年有評論者覺得課程組織混亂。"
+    ja: "2015〜2019年のレビューはおおむね好意的で、2年次の数学科目としては取り組みやすいとの声。2020年以降は評価が下がり、OR部分が分かりにくく、2023年の評者は運営がまとまっていないと感じた。"
+    ko: "2015~2019년 리뷰는 대체로 긍정적이며 2학년 수학 과목치고 접근하기 쉽다는 평. 2020년부터 평가가 나빠져 운영과학 부분을 따라가기 어려웠고, 2023년 리뷰어는 운영이 엉망이라고 느낌."
+    vi: "Đánh giá 2015-2019 phần lớn tích cực, cho rằng môn dễ tiếp cận so với toán năm hai. Từ 2020 ý kiến đi xuống: phần vận trù học khó theo, và một người năm 2023 thấy môn tổ chức kém."
+    ms: "Ulasan 2015 hingga 2019 kebanyakannya positif, menganggapnya mudah didekati untuk subjek matematik tahun kedua. Sejak 2020 pendapat merosot: bahagian penyelidikan operasi sukar diikuti, dan pengulas 2023 rasa ia tidak tersusun."
+    id: "Ulasan 2015 sampai 2019 umumnya positif, menilainya mudah diikuti untuk matematika tahun kedua. Sejak 2020 penilaian menurun: bagian riset operasi sulit diikuti, dan pengulas 2023 merasa pengelolaannya buruk."
+    hi: "2015 से 2019 के रिव्यूज़ ज़्यादातर अच्छे थे, दूसरे साल के मैथ्स सब्जेक्ट के हिसाब से इसे आसान बताया। 2020 से राय गिरी: ऑपरेशंस रिसर्च वाला हिस्सा समझना मुश्किल लगा, और 2023 के एक रिव्यूअर को यह ठीक से व्यवस्थित नहीं लगा।"
+  - en: "Linear algebra background helps. Tutorials and past exams were seen as good preparation, assessment as reasonable, and keeping up each week matters so you do not fall behind."
+    zh: "有线性代数基础会有帮助。辅导课和往年试卷被认为是很好的备考材料，考核也算合理；每周要跟上进度，免得落后。"
+    zh-TW: "有線性代數基礎會有幫助。輔導課和往年考卷被認為是很好的備考材料，考核也算合理；每週要跟上進度，免得落後。"
+    ja: "線形代数の知識があると役立つ。チュートリアルと過去問は良い対策になり、評価も妥当とされた。遅れないよう毎週ついていくことが大事。"
+    ko: "선형대수 배경이 있으면 도움이 됨. 튜토리얼과 기출문제가 좋은 대비 자료이고 평가도 합리적이라는 평. 뒤처지지 않도록 매주 따라가는 게 중요함."
+    vi: "Có nền đại số tuyến tính sẽ giúp ích. Tutorial và đề thi cũ được xem là tài liệu ôn tốt, cách đánh giá hợp lý; cần theo kịp mỗi tuần để không bị tụt lại."
+    ms: "Asas algebra linear membantu. Tutorial dan kertas peperiksaan lepas dianggap persediaan yang baik, penilaian munasabah, dan penting untuk ikut setiap minggu supaya tidak ketinggalan."
+    id: "Dasar aljabar linear membantu. Tutorial dan ujian tahun lalu dinilai sebagai persiapan yang baik, penilaiannya wajar, dan penting mengikuti tiap minggu agar tidak tertinggal."
+    hi: "लीनियर अलजेब्रा की समझ मदद करती है। ट्यूटोरियल और पुराने एग्ज़ाम अच्छी तैयारी माने गए, असेसमेंट ठीक-ठाक रहा, और पीछे न छूटने के लिए हर हफ़्ते साथ चलना ज़रूरी है।"

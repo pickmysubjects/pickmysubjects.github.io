@@ -9,6 +9,11 @@ offerings:
 prerequisites: ACCT20001
 corequisites: none
 non_allowed: []
+skills:
+  - business
+topics:
+  - accounting
+  - management
 assessment:
   - kind: test
     weight: 25

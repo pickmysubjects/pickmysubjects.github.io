@@ -6,6 +6,8 @@ offerings: unknown
 prerequisites: none
 corequisites: none
 non_allowed: []
+topics:
+  - management
 assessment:
   - kind: participation
     weight: 0

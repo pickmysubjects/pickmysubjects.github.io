@@ -6,6 +6,12 @@ offerings: unknown
 prerequisites: ECON20002
 corequisites: none
 non_allowed: []
+skills:
+  - business
+  - maths
+topics:
+  - economics
+  - agriculture
 assessment:
   - kind: test
     weight: 20

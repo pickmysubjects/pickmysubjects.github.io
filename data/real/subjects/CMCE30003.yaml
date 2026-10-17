@@ -8,6 +8,12 @@ offerings:
 prerequisites: BUSA20001
 corequisites: none
 non_allowed: []
+skills:
+  - statistics
+  - programming
+  - data
+topics:
+  - business
 assessment:
   - kind: assignment
     weight: 30

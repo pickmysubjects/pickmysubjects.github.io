@@ -13,6 +13,9 @@ prerequisites:
     - MGMT20004
 corequisites: none
 non_allowed: []
+topics:
+  - supply-chain
+  - management
 assessment:
   - kind: project
     weight: 15

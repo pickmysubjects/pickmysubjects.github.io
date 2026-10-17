@@ -8,6 +8,11 @@ offerings:
 prerequisites: FNCE10002
 corequisites: none
 non_allowed: []
+skills:
+  - business
+  - maths
+topics:
+  - finance
 assessment:
   - kind: assignment
     weight: 10

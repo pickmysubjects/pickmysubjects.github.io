@@ -17,6 +17,12 @@ prerequisites:
             - MAST20006
 corequisites: none
 non_allowed: []
+skills:
+  - data
+  - programming
+  - maths
+topics:
+  - economics
 assessment:
   - kind: assignment
     weight: 20

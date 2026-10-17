@@ -10,6 +10,12 @@ prerequisites:
     min: 100
 corequisites: none
 non_allowed: []
+skills:
+  - business
+  - writing
+topics:
+  - accounting
+  - business
 assessment:
   - kind: assignment
     weight: 25

@@ -9,6 +9,12 @@ offerings:
 prerequisites: ACCT10001
 corequisites: none
 non_allowed: []
+skills:
+  - business
+  - maths
+topics:
+  - accounting
+  - management
 assessment:
   - kind: quiz
     weight: 10

@@ -13,6 +13,9 @@ prerequisites:
 corequisites: none
 non_allowed:
   - MGMT30012
+topics:
+  - management
+  - business
 assessment:
   - kind: presentation
     weight: 40

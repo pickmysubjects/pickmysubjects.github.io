@@ -8,6 +8,11 @@ offerings:
 prerequisites: none
 corequisites: none
 non_allowed: []
+skills:
+  - business
+topics:
+  - law
+  - media
 assessment:
   - kind: participation
     weight: 10

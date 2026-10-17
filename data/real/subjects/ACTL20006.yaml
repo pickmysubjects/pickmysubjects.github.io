@@ -6,6 +6,13 @@ offerings: unknown
 prerequisites: MAST20004
 corequisites: MAST20005
 non_allowed: []
+skills:
+  - statistics
+  - maths
+topics:
+  - statistics
+  - probability
+  - actuarial
 assessment:
   - kind: assignment
     weight: 15

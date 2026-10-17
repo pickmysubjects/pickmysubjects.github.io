@@ -6,6 +6,12 @@ offerings: unknown
 prerequisites: BUSA20001
 corequisites: none
 non_allowed: []
+skills:
+  - data
+  - programming
+  - business
+topics:
+  - business
 assessment:
   - kind: presentation
     weight: 10

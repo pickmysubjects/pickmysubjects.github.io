@@ -20,6 +20,12 @@ prerequisites:
         - MAST20029
 corequisites: none
 non_allowed: []
+skills:
+  - business
+  - maths
+topics:
+  - finance
+  - entrepreneurship
 assessment:
   - kind: assignment
     weight: 20

@@ -9,6 +9,9 @@ offerings:
 prerequisites: none
 corequisites: none
 non_allowed: []
+topics:
+  - management
+  - human-resources
 assessment:
   - kind: participation
     weight: 10

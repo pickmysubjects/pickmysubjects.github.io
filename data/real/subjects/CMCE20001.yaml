@@ -14,6 +14,11 @@ prerequisites:
     - manual: Permission from the Subject Coordinator via a selection process. There are limited university-sourced internships available and entry into the subject is competitive. Selection for university-sourced and self-sourced internships is determined via an application process and is contingent on permission from the Subject Coordinator. This subject has special entry requirements including strict application deadlines. See the Commerce Internship webpage for further information and how to apply. Commerce Internship Students must have space for a Level 2 general elective to enrol in this internship subject. Please consult Stop 1 for course planning, especially if you are pursuing a double major in the BCom and have limited space for general electives. Other WorkHub internships will be available on a limited basis to students who are participating in the Consortium for Advanced Studies Abroad (CASA) program.
 corequisites: none
 non_allowed: []
+skills:
+  - business
+  - writing
+topics:
+  - business
 assessment:
   - kind: assignment
     weight: 15

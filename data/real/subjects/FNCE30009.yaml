@@ -11,6 +11,10 @@ prerequisites:
     - FNCE20001
 corequisites: none
 non_allowed: []
+skills:
+  - business
+topics:
+  - finance
 assessment:
   - kind: assignment
     weight: 60

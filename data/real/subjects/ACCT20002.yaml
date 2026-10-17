@@ -10,6 +10,10 @@ prerequisites: ACCT10002
 corequisites: none
 non_allowed:
   - ACCT30013
+skills:
+  - business
+topics:
+  - accounting
 assessment:
   - kind: participation
     weight: 10
