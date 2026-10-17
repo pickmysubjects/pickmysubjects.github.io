@@ -1,0 +1,51 @@
+code: ARBC30006
+title: Arabic 7
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites:
+  any:
+    - ARBC20007
+    - ARBC30005
+corequisites: none
+non_allowed:
+  - ARBC20002
+skills:
+  - writing
+  - presentation
+topics:
+  - languages
+assessment:
+  - kind: assignment
+    weight: 15
+  - kind: report
+    weight: 25
+  - kind: presentation
+    weight: 15
+  - kind: presentation
+    weight: 15
+  - kind: exam
+    weight: 30
+weekly_contact_hours: 4
+breadth_for:
+  - Bachelor of Arts
+  - Bachelor of Biomedicine
+  - Bachelor of Commerce
+  - Bachelor of Design
+  - Bachelor of Fine Arts (Acting)
+  - Bachelor of Fine Arts (Animation)
+  - Bachelor of Fine Arts (Dance)
+  - Bachelor of Fine Arts (Film and Television)
+  - Bachelor of Fine Arts (Music Theatre)
+  - Bachelor of Fine Arts (Production)
+  - Bachelor of Fine Arts (Screenwriting)
+  - Bachelor of Fine Arts (Theatre)
+  - Bachelor of Fine Arts (Visual Art)
+  - Bachelor of Music
+  - Bachelor of Science
+handbook: https://handbook.unimelb.edu.au/2026/subjects/arbc30006
+source_year: 2026
+verified_on: 2026-10-17
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

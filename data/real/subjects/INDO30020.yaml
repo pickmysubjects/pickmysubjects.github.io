@@ -1,0 +1,58 @@
+code: INDO30020
+title: Indonesia in the World
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites:
+  any:
+    - any:
+        - INDO10004
+        - INDO20009
+        - INDO30007
+    - manual: Equivalent
+    - manual: All students enrolling in Indonesian at The University of Melbourne for the first time are required to complete the online language questionnaire and placement test at the link below. This applies to all students, including total beginners and those who have any experience with the language, whether through formal study, such as VCE or equivalent, or informally through family or overseas travel. The results of the test are binding and enrolment can only be changed in consultation with the relevant course coordinator. https://edtech.le.unimelb.edu.au/login/lptindonesian/
+corequisites: none
+non_allowed:
+  - INDO10014
+  - INDO20017
+skills:
+  - writing
+  - presentation
+topics:
+  - politics
+  - history
+  - society
+  - languages
+assessment:
+  - kind: assignment
+    weight: 20
+  - kind: report
+    weight: 20
+  - kind: report
+    weight: 30
+  - kind: presentation
+    weight: 20
+  - kind: presentation
+    weight: 10
+weekly_contact_hours: 3
+breadth_for:
+  - Bachelor of Biomedicine
+  - Bachelor of Commerce
+  - Bachelor of Design
+  - Bachelor of Fine Arts (Acting)
+  - Bachelor of Fine Arts (Animation)
+  - Bachelor of Fine Arts (Dance)
+  - Bachelor of Fine Arts (Film and Television)
+  - Bachelor of Fine Arts (Music Theatre)
+  - Bachelor of Fine Arts (Production)
+  - Bachelor of Fine Arts (Screenwriting)
+  - Bachelor of Fine Arts (Theatre)
+  - Bachelor of Fine Arts (Visual Art)
+  - Bachelor of Music
+  - Bachelor of Science
+handbook: https://handbook.unimelb.edu.au/2026/subjects/indo30020
+source_year: 2026
+verified_on: 2026-10-17
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,56 @@
+code: ARBC20007
+title: Arabic 6
+level: 2
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites:
+  any:
+    - any:
+        - ARBC20006
+        - ARBC30004
+        - ARBC10003
+    - manual: Equivalent All students enrolling in a language subject for the first time are required to complete the online language questionnaire and the placement test (if applicable) to the best of their knowledge and ability. This applies to all students, from beginners through to students who have completed formal language study (such as VCE or equivalent), or learned language informally through family, social networks or travel. The language questionnaire and placement test are designed to place students in the class that will best develop their language skills. Upon completion of the placement procedure, students will receive an email with the outcome. Within five working days of receiving the email, study plans will be updated, and students will be able to self-enrol into the first subject of their entry point. Students can appeal the outcome of the placement test by emailing the subject or program coordinator, who will review the case and make a final decision. Program staff are responsible for placing students appropriately. This means that, if program staff believe a student has been incorrectly placed in a subject, they have the right to move that student after classes have already begun. Program staff may make this decision upon further assessment of a student’s language skills. All students must read carefully and accept the academic staff rights clause before continuing. Link It is recommended that students undertake the language placement test at least two weeks prior to the commencement of semester.
+corequisites: none
+non_allowed:
+  - ARBC30005
+  - ARBC10004
+skills:
+  - presentation
+topics:
+  - languages
+assessment:
+  - kind: assignment
+    weight: 15
+  - kind: assignment
+    weight: 10
+  - kind: presentation
+    weight: 15
+  - kind: test
+    weight: 15
+  - kind: presentation
+    weight: 15
+  - kind: exam
+    weight: 30
+weekly_contact_hours: 4
+breadth_for:
+  - Bachelor of Arts
+  - Bachelor of Biomedicine
+  - Bachelor of Commerce
+  - Bachelor of Design
+  - Bachelor of Fine Arts (Acting)
+  - Bachelor of Fine Arts (Animation)
+  - Bachelor of Fine Arts (Dance)
+  - Bachelor of Fine Arts (Film and Television)
+  - Bachelor of Fine Arts (Music Theatre)
+  - Bachelor of Fine Arts (Production)
+  - Bachelor of Fine Arts (Screenwriting)
+  - Bachelor of Fine Arts (Theatre)
+  - Bachelor of Fine Arts (Visual Art)
+  - Bachelor of Music
+  - Bachelor of Science
+handbook: https://handbook.unimelb.edu.au/2026/subjects/arbc20007
+source_year: 2026
+verified_on: 2026-10-17
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

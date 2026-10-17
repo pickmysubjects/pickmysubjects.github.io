@@ -1,0 +1,28 @@
+code: HEBR30016
+title: Hebrew 7
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites:
+  manual: Students will be required to sit a placement test conducted by the subject co-ordinator.
+corequisites: none
+non_allowed: []
+skills:
+  - presentation
+topics:
+  - languages
+assessment:
+  - kind: assignment
+    weight: 50
+  - kind: presentation
+    weight: 10
+  - kind: exam
+    weight: 40
+weekly_contact_hours: 4
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/hebr30016
+source_year: 2026
+verified_on: 2026-10-17
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

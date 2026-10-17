@@ -1,0 +1,39 @@
+code: HEBR10006
+title: Hebrew 4
+level: 1
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites:
+  manual: Students will be required to sit a placement test conducted by the subject co-ordinator.
+corequisites: none
+non_allowed:
+  - HEBR20006
+skills:
+  - presentation
+topics:
+  - languages
+assessment:
+  - kind: assignment
+    weight: 30
+  - kind: presentation
+    weight: 10
+  - kind: test
+    weight: 10
+  - kind: presentation
+    weight: 10
+  - kind: exam
+    weight: 40
+weekly_contact_hours: 4
+breadth_for:
+  - Bachelor of Arts
+  - Bachelor of Biomedicine
+  - Bachelor of Commerce
+  - Bachelor of Design
+  - Bachelor of Music
+  - Bachelor of Science
+handbook: https://handbook.unimelb.edu.au/2026/subjects/hebr10006
+source_year: 2026
+verified_on: 2026-10-17
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
