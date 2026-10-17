@@ -1,0 +1,37 @@
+code: COMP90038
+source: StudentVIP
+url: https://studentvip.com.au/unimelb/subjects/comp90038
+reviews: 6
+from: 2015
+to: 2026
+checked: 2026-10-17
+points:
+  - en: "Reviews are mostly very positive: the newest (2026) called it one of the best subjects they had taken, and many see it as key for tech jobs and interviews."
+    zh: "评价大多非常正面：最新一条（2026）称这是读过最好的课之一，很多人认为它对技术岗位和面试很关键。"
+    zh-TW: "評價大多非常正面：最新一則（2026）說這是修過最好的課之一，很多人認為它對技術職位和面試很關鍵。"
+    ja: "評価はおおむね非常に良い。最新（2026）のレビューは最高の科目の一つと評し、技術職や面接に重要だという声が多い。"
+    ko: "평가는 대체로 매우 긍정적. 최신(2026) 리뷰는 들어본 최고의 과목 중 하나라고 했고, 기술직·면접에 중요하다는 의견이 많음."
+    vi: "Đánh giá phần lớn rất tích cực: bài mới nhất (2026) gọi đây là một trong những môn hay nhất, nhiều người thấy nó quan trọng cho việc làm và phỏng vấn ngành công nghệ."
+    ms: "Ulasan kebanyakannya sangat positif: yang terbaru (2026) menyebutnya antara subjek terbaik, ramai anggap ia penting untuk kerja dan temu duga teknologi."
+    id: "Ulasan sebagian besar sangat positif: yang terbaru (2026) menyebutnya salah satu mata kuliah terbaik, banyak yang menganggapnya penting untuk kerja dan wawancara teknologi."
+    hi: "रिव्यू ज़्यादातर बहुत अच्छे हैं: सबसे नया (2026) इसे अब तक के सबसे अच्छे सब्जेक्ट में गिनता है, कई इसे टेक जॉब और इंटरव्यू के लिए अहम मानते हैं।"
+  - en: "The content is heavy and mostly theory, with little actual coding. A solid maths background helps a lot; without maths or CS it can be tough."
+    zh: "内容多且以理论为主，实际写代码很少。数学基础扎实会很有帮助；没有数学或计算机背景会比较吃力。"
+    zh-TW: "內容多且以理論為主，實際寫程式很少。數學基礎紮實會很有幫助；沒有數學或資工背景會比較吃力。"
+    ja: "内容は多く主に理論で、実際のコーディングは少ない。数学の基礎があると大いに助かり、数学やCSの素養がないと厳しい。"
+    ko: "내용이 많고 주로 이론이며 실제 코딩은 적음. 수학 기초가 탄탄하면 큰 도움이 되고, 수학·CS 배경이 없으면 힘들 수 있음."
+    vi: "Nội dung nhiều và chủ yếu là lý thuyết, ít viết mã thực tế. Nền toán vững giúp rất nhiều; thiếu nền toán hoặc CS sẽ khá vất vả."
+    ms: "Kandungan berat dan kebanyakannya teori, sedikit pengekodan sebenar. Asas matematik kukuh sangat membantu; tanpa matematik atau CS ia boleh sukar."
+    id: "Materinya berat dan sebagian besar teori, sedikit coding nyata. Dasar matematika kuat sangat membantu; tanpa latar matematika atau CS bisa berat."
+    hi: "कंटेंट भारी और ज़्यादातर थ्योरी है, असली कोडिंग कम। गणित की अच्छी नींव बहुत मदद करती है; गणित या CS के बिना यह कठिन लग सकता है।"
+  - en: "Start assignments early and try tutorial problems yourself before checking answers. The exam is described as hard but fair; steady work beats cramming."
+    zh: "作业要早开始，辅导课的题先自己做再看答案。考试被形容为难但公平；稳定投入比临时抱佛脚有效。"
+    zh-TW: "作業要早開始，小組課的題目先自己做再看答案。考試被形容為難但公平；穩定投入比臨時抱佛腳有效。"
+    ja: "課題は早めに始め、チュートリアルの問題は解答を見る前に自分で解くこと。試験は難しいが公平とされ、一夜漬けより継続が効く。"
+    ko: "과제는 일찍 시작하고, 튜토리얼 문제는 답을 보기 전에 직접 풀 것. 시험은 어렵지만 공정하다는 평이며, 벼락치기보다 꾸준함이 낫다."
+    vi: "Bắt đầu bài tập sớm và tự làm bài tutorial trước khi xem đáp án. Kỳ thi được nói là khó nhưng công bằng; học đều đặn hơn học dồn."
+    ms: "Mula tugasan awal dan cuba soalan tutorial sendiri sebelum lihat jawapan. Peperiksaan disifatkan sukar tetapi adil; usaha berterusan lebih baik daripada belajar saat akhir."
+    id: "Mulai tugas lebih awal dan kerjakan soal tutorial sendiri sebelum melihat jawaban. Ujian disebut sulit tapi adil; belajar rutin lebih baik daripada SKS."
+    hi: "असाइनमेंट जल्दी शुरू करें और ट्यूटोरियल सवाल जवाब देखने से पहले खुद हल करें। एग्ज़ाम कठिन पर निष्पक्ष बताया गया; लगातार मेहनत रटने से बेहतर है।"
+workload: heavy
+difficulty: mixed

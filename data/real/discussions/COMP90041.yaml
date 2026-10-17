@@ -1,0 +1,36 @@
+code: COMP90041
+source: StudentVIP
+url: https://studentvip.com.au/unimelb/subjects/comp90041
+reviews: 6
+from: 2014
+to: 2024
+checked: 2026-10-17
+points:
+  - en: "Seen as a core object-oriented programming subject in Java that pays off in later subjects and in software jobs."
+    zh: "被视为用 Java 学面向对象编程的核心课，对后续课程和软件工作都很有用。"
+    zh-TW: "被視為用 Java 學物件導向程式設計的核心課，對後續課程和軟體工作都很有用。"
+    ja: "Java でオブジェクト指向を学ぶ中核科目とされ、後の科目やソフトウェアの仕事で役立つ。"
+    ko: "Java로 객체지향 프로그래밍을 배우는 핵심 과목으로, 이후 과목과 소프트웨어 취업에 도움이 된다는 평."
+    vi: "Được xem là môn cốt lõi về lập trình hướng đối tượng với Java, có ích cho các môn sau và công việc phần mềm."
+    ms: "Dianggap subjek teras pengaturcaraan berorientasikan objek dalam Java, berguna untuk subjek lanjutan dan kerja perisian."
+    id: "Dianggap mata kuliah inti pemrograman berorientasi objek dengan Java, berguna untuk mata kuliah lanjutan dan kerja software."
+    hi: "Java में ऑब्जेक्ट-ओरिएंटेड प्रोग्रामिंग का मुख्य सब्जेक्ट माना जाता है, जो आगे के सब्जेक्ट और सॉफ़्टवेयर जॉब में काम आता है।"
+  - en: "Hard with no prior programming. Practise lots of examples, and ask for help after a couple of hours stuck rather than losing a whole evening."
+    zh: "没有编程基础会很难。多练例题，卡住一两个小时就去求助，别耗掉一整晚。"
+    zh-TW: "沒有程式基礎會很難。多練例題，卡住一兩個小時就去求助，別耗掉一整晚。"
+    ja: "プログラミング未経験だと難しい。例題をたくさん練習し、数時間詰まったら一晩無駄にせず助けを求めること。"
+    ko: "프로그래밍 경험이 없으면 어려움. 예제를 많이 연습하고, 몇 시간 막히면 밤새 붙잡지 말고 도움을 요청할 것."
+    vi: "Khó nếu chưa từng lập trình. Luyện nhiều ví dụ, bị kẹt vài giờ thì hỏi người khác thay vì mất cả buổi tối."
+    ms: "Sukar tanpa pengalaman pengaturcaraan. Banyakkan latihan contoh, dan minta bantuan selepas tersekat beberapa jam, jangan bazir semalaman."
+    id: "Sulit tanpa pengalaman pemrograman. Banyak latihan contoh, dan minta bantuan setelah buntu beberapa jam, jangan habiskan semalaman."
+    hi: "प्रोग्रामिंग अनुभव न हो तो कठिन है। ढेर सारे उदाहरण अभ्यास करें, और कुछ घंटे अटकने पर पूरी शाम गँवाने के बजाय मदद माँगें।"
+  - en: "Several 2019 reviewers complained about poor organisation and little feedback before the exam. The final exam was called tough and tight on time."
+    zh: "几位2019年的评论者抱怨课程组织差、考前几乎没有反馈。期末考试被认为偏难且时间紧。"
+    zh-TW: "幾位2019年的評論者抱怨課程組織差、考前幾乎沒有回饋。期末考被認為偏難且時間緊。"
+    ja: "2019年のレビュー数件は運営のまずさと試験前のフィードバック不足に不満。期末試験は難しく時間も厳しいとされた。"
+    ko: "2019년 리뷰 몇 개는 운영이 엉성하고 시험 전 피드백이 거의 없다고 불만. 기말시험은 어렵고 시간이 빠듯하다는 평."
+    vi: "Vài đánh giá năm 2019 phàn nàn môn tổ chức kém và ít phản hồi trước kỳ thi. Thi cuối kỳ được nói là khó và gấp thời gian."
+    ms: "Beberapa pengulas 2019 merungut tentang pengurusan lemah dan kurang maklum balas sebelum peperiksaan. Peperiksaan akhir disifatkan sukar dan masa suntuk."
+    id: "Beberapa pengulas 2019 mengeluhkan pengelolaan buruk dan minim umpan balik sebelum ujian. Ujian akhir disebut sulit dan waktunya mepet."
+    hi: "2019 के कई रिव्यूअर ने खराब व्यवस्था और एग्ज़ाम से पहले कम फ़ीडबैक की शिकायत की। फ़ाइनल एग्ज़ाम कठिन और समय में तंग बताया गया।"
+difficulty: hard

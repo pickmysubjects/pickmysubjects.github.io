@@ -1,0 +1,53 @@
+code: COMP90041
+title: Programming and Software Development
+level: 9
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+    - semester-2
+prerequisites:
+  any:
+    - any:
+        - COMP10001
+        - COMP10002
+        - COMP20005
+        - COMP90059
+        - BMEN20003
+    - any:
+        - admission: MC-IT
+          note: "Admission into or selection of one of the following: MC-IT Master of Information Technology MC-MTRNENG Master of Mechatronics Engineering GD-CS Graduate Diploma in Computer Science MC-DATASC Master of Data Science GD-DATASC Graduate Diploma in Data Science Master of Engineering (Mechatronics) informal specialisation in the MC-ENG Master of Engineering"
+        - admission: MC-MTRNENG
+          note: "Admission into or selection of one of the following: MC-IT Master of Information Technology MC-MTRNENG Master of Mechatronics Engineering GD-CS Graduate Diploma in Computer Science MC-DATASC Master of Data Science GD-DATASC Graduate Diploma in Data Science Master of Engineering (Mechatronics) informal specialisation in the MC-ENG Master of Engineering"
+        - admission: GD-CS
+          note: "Admission into or selection of one of the following: MC-IT Master of Information Technology MC-MTRNENG Master of Mechatronics Engineering GD-CS Graduate Diploma in Computer Science MC-DATASC Master of Data Science GD-DATASC Graduate Diploma in Data Science Master of Engineering (Mechatronics) informal specialisation in the MC-ENG Master of Engineering"
+        - admission: MC-DATASC
+          note: "Admission into or selection of one of the following: MC-IT Master of Information Technology MC-MTRNENG Master of Mechatronics Engineering GD-CS Graduate Diploma in Computer Science MC-DATASC Master of Data Science GD-DATASC Graduate Diploma in Data Science Master of Engineering (Mechatronics) informal specialisation in the MC-ENG Master of Engineering"
+        - admission: GD-DATASC
+          note: "Admission into or selection of one of the following: MC-IT Master of Information Technology MC-MTRNENG Master of Mechatronics Engineering GD-CS Graduate Diploma in Computer Science MC-DATASC Master of Data Science GD-DATASC Graduate Diploma in Data Science Master of Engineering (Mechatronics) informal specialisation in the MC-ENG Master of Engineering"
+        - admission: MC-ENG
+          note: "Admission into or selection of one of the following: MC-IT Master of Information Technology MC-MTRNENG Master of Mechatronics Engineering GD-CS Graduate Diploma in Computer Science MC-DATASC Master of Data Science GD-DATASC Graduate Diploma in Data Science Master of Engineering (Mechatronics) informal specialisation in the MC-ENG Master of Engineering"
+corequisites: none
+non_allowed:
+  - SWEN20003
+skills:
+  - programming
+topics:
+  - programming
+  - software-engineering
+assessment:
+  - kind: quiz
+    weight: 10
+    hurdle: true
+  - kind: assignment
+    weight: 50
+    hurdle: true
+  - kind: exam
+    weight: 40
+    hurdle: true
+weekly_contact_hours: 4
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/comp90041
+source_year: 2026
+verified_on: 2026-10-17
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

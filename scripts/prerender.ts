@@ -319,7 +319,10 @@ function majorsListBody(code: LocaleCode, t: Translate): string {
       const groups = groupMajors(own)
       const list = (ms: typeof own) => `<ul>${ms.map((m) => `<li><a href="${href(code, `majors/${m.id}`)}">${esc(m.title)}</a></li>`).join('')}</ul>`
       const body = groups.length === 1 ? list(groups[0]!.majors) : groups.map((g) => `<h3>${esc(t(`majorGroup.${g.id}`))}</h3>${list(g.majors)}`).join('')
-      return `<h2>${esc(c.title)}</h2>${body}`
+      // Closed majors still have pages (for students already in them): linked here so they can be found.
+      const closed = majors.filter((m) => m.course === c.code && !own.includes(m))
+      const closedLine = closed.length ? `<p>${esc(t('majors.closedList'))} ${closed.map((m) => `<a href="${href(code, `majors/${m.id}`)}">${esc(m.title)}</a>`).join(', ')}</p>` : ''
+      return `<h2>${esc(c.title)}</h2>${body}${closedLine}`
     })
     .join('')
     .replace(/^/, `<h1>${esc(t('majors.title'))}</h1>`)
@@ -479,9 +482,12 @@ function mainPages(code: LocaleCode): Page[] {
 
 const urls: string[] = []
 for (const code of LOCALE_CODES) {
-  const pages = [...mainPages(code), ...majors.map((m) => majorPage(code, m)), ...subjects.map((s) => subjectPage(code, s))]
+  const main = mainPages(code)
+  // Every page links every main page, so a crawler following links reaches all of them, not just the sitemap.
+  const siteNav = `<nav>${main.map((m) => `<a href="${href(code, m.path)}">${esc(m.title.split(' | ')[0]!)}</a>`).join(' · ')}</nav>`
+  const pages = [...main, ...majors.map((m) => majorPage(code, m)), ...subjects.map((s) => subjectPage(code, s))]
   for (const page of pages) {
-    write(code, page.path, render(page, code))
+    write(code, page.path, render({ ...page, body: page.body + siteNav }, code))
     urls.push(absolute(code, page.path))
   }
 }

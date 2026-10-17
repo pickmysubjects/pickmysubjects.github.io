@@ -1,0 +1,39 @@
+code: COMP90059
+title: Introduction to Programming
+level: 9
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+    - semester-2
+prerequisites: none
+corequisites: none
+non_allowed:
+  - COMP10001
+  - COMP10002
+  - COMP20005
+  - ISYS90088
+skills:
+  - programming
+  - data
+topics:
+  - programming
+  - data-science
+assessment:
+  - kind: assignment
+    weight: 5
+  - kind: assignment
+    weight: 10
+  - kind: test
+    weight: 10
+  - kind: assignment
+    weight: 15
+  - kind: exam
+    weight: 60
+    hurdle: true
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/comp90059
+source_year: 2026
+verified_on: 2026-10-17
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

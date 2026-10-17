@@ -657,6 +657,7 @@ export const en = {
     cat: { science: "Science", commerce: "Commerce", arts: "Arts", breadth: "Breadth" },
   },
   majors: {
+    closedList: "No longer open to new students:",
     entryRoutes: "This major has {n} entry points, set by how much of the language you already know. Shown below: {first}. Your plan follows the one your subjects point to.",
     shownFor: "Shown for {course}",
     change: "Change",

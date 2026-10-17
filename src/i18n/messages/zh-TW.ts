@@ -654,6 +654,7 @@ export const zhTW: Messages = {
     cat: { science: "理科", commerce: "商科", arts: "文科", breadth: "Breadth" },
   },
   majors: {
+    closedList: "已不再招收新生：",
     entryRoutes: "這個專業依你原有的語言程度分 {n} 條路線。下面顯示的是 {first}；排課時會依你修過的課選對應的路線。",
     shownFor: "依 {course} 顯示",
     change: "更改",

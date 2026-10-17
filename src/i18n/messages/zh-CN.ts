@@ -654,6 +654,7 @@ export const zhCN: Messages = {
     cat: { science: "理科", commerce: "商科", arts: "文科", breadth: "Breadth" },
   },
   majors: {
+    closedList: "已不再招收新生：",
     entryRoutes: "这个专业按你原有的语言水平分 {n} 条路线。下面显示的是 {first}；排课时会按你修过的课选对应的路线。",
     shownFor: "按 {course} 显示",
     change: "更改",

@@ -1,0 +1,46 @@
+code: INFO90004
+title: Evaluating the User Experience
+level: 9
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites:
+  any:
+    - any:
+        - COMP90041
+        - ISYS90026
+    - any:
+        - admission: MC-CS
+          note: "Admission into or selection of one of the following: MC-CS Master of Computer Science MC-SOFTENG Master of Software Engineering"
+        - admission: MC-SOFTENG
+          note: "Admission into or selection of one of the following: MC-CS Master of Computer Science MC-SOFTENG Master of Software Engineering"
+    - all:
+        - admission: MC-IT
+          note: "Admission into one of the following: 100pt Program course entry point in the MC-IT Master of Information Technology, 150pt Program course entry point in the MC-IT Master of Information Technology"
+        - admission: MC-IT
+          note: Selection of the Human-Computer Interaction specialisation (formal) in the MC-IT Master of Information Technology
+corequisites: none
+non_allowed: []
+skills:
+  - design
+  - data
+topics:
+  - design
+  - psychology
+assessment:
+  - kind: report
+    weight: 10
+  - kind: test
+    weight: 20
+  - kind: report
+    weight: 50
+    group: true
+  - kind: presentation
+    weight: 20
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/info90004
+source_year: 2026
+verified_on: 2026-10-17
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

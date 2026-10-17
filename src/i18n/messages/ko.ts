@@ -654,6 +654,7 @@ export const ko: Messages = {
     cat: { science: "이과", commerce: "상경", arts: "인문", breadth: "Breadth" },
   },
   majors: {
+    closedList: "신입생 모집이 끝난 전공:",
     entryRoutes: "이 전공은 기존 언어 실력에 따라 {n}가지 진입 경로가 있어요. 아래는 {first}이고, 계획은 들은 과목에 맞는 경로를 따라요.",
     shownFor: "{course} 기준으로 표시",
     change: "변경",

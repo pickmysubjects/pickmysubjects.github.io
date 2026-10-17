@@ -654,6 +654,7 @@ export const id: Messages = {
     cat: { science: "Sains", commerce: "Bisnis", arts: "Humaniora", breadth: "Breadth" },
   },
   majors: {
+    closedList: "Tidak lagi menerima mahasiswa baru:",
     entryRoutes: "Jurusan ini punya {n} titik masuk sesuai kemampuan bahasamu. Di bawah: {first}. Rencanamu mengikuti titik masuk yang cocok dengan mata kuliahmu.",
     shownFor: "Ditampilkan untuk {course}",
     change: "Ganti",

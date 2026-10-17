@@ -654,6 +654,7 @@ export const ja: Messages = {
     cat: { science: "理系", commerce: "商学系", arts: "文系", breadth: "Breadth" },
   },
   majors: {
+    closedList: "新入生の受け付けを終了した専攻：",
     entryRoutes: "この専攻は、すでにある語学力に応じて {n} つの入り方があります。下は {first} です。プランは履修した科目に合う入り方に従います。",
     shownFor: "{course} 向けに表示",
     change: "変更",

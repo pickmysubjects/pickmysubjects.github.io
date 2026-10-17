@@ -654,6 +654,7 @@ export const vi: Messages = {
     cat: { science: "Khoa học", commerce: "Kinh doanh", arts: "Nhân văn", breadth: "Breadth" },
   },
   majors: {
+    closedList: "Không còn nhận sinh viên mới:",
     entryRoutes: "Ngành này có {n} lộ trình tùy trình độ ngôn ngữ bạn đã có. Bên dưới là {first}; kế hoạch sẽ theo lộ trình khớp với các môn bạn đã học.",
     shownFor: "Hiển thị cho {course}",
     change: "Đổi",

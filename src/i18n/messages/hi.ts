@@ -654,6 +654,7 @@ export const hi: Messages = {
     cat: { science: "साइंस", commerce: "कॉमर्स", arts: "आर्ट्स", breadth: "Breadth" },
   },
   majors: {
+    closedList: "अब नए छात्रों के लिए खुला नहीं:",
     entryRoutes: "इस मेजर में आपकी मौजूदा भाषा-योग्यता के हिसाब से {n} रास्ते हैं। नीचे {first} दिखाया गया है; प्लान आपके सब्जेक्ट से मेल खाने वाला रास्ता लेता है।",
     shownFor: "{course} के लिए दिखाया गया",
     change: "बदलें",
