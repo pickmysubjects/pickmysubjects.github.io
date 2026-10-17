@@ -1,0 +1,31 @@
+code: PSYC10006
+title: Mind, Brain and Behaviour A
+level: 1
+points: 12.5
+offerings:
+  "2026":
+    - winter
+    - semester-2
+prerequisites: none
+corequisites: none
+non_allowed:
+  - PSYC10003
+  - PSYC90097
+skills:
+  - writing
+topics:
+  - psychology
+assessment:
+  - kind: assignment
+    weight: 40
+  - kind: quiz
+    weight: 50
+  - kind: assignment
+    weight: 5
+  - kind: participation
+    weight: 5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/psyc10006
+source_year: 2026
+verified_on: 2026-10-17
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

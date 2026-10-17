@@ -1,0 +1,48 @@
+code: SPAN30020
+title: Realities and Fictions of Argentina
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - winter
+prerequisites:
+  any:
+    - any:
+        - SPAN10003
+        - SPAN20002
+        - SPAN20027
+    - manual: Equivalent
+corequisites: none
+non_allowed:
+  - SPAN20025
+skills:
+  - writing
+  - presentation
+topics:
+  - literature
+  - history
+  - languages
+assessment:
+  - kind: assignment
+    weight: 20
+  - kind: report
+    weight: 17.5
+    group: true
+  - kind: report
+    weight: 12.5
+  - kind: presentation
+    weight: 25
+  - kind: assignment
+    weight: 25
+weekly_contact_hours: 3.5
+breadth_for:
+  - Bachelor of Biomedicine
+  - Bachelor of Commerce
+  - Bachelor of Music
+recommended:
+  - SPAN10004
+  - SPAN20003
+handbook: https://handbook.unimelb.edu.au/2026/subjects/span30020
+source_year: 2026
+verified_on: 2026-10-17
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

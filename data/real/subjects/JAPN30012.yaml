@@ -1,0 +1,58 @@
+code: JAPN30012
+title: Variation in Japanese Language
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - summer
+    - semester-1
+prerequisites:
+  any:
+    - any:
+        - JAPN10006
+        - JAPN20004
+        - JAPN30006
+    - all:
+        - manual: Equivalent
+        - manual: "Approval from subject coordinator is required to enrol in the summer offering. The summer intensive has a quota, an application process applies. For further information on the application and selection process please use the link below: https://arts.unimelb.edu.au/students/overseas-experience#about Preference will be given to students who have declared a major, minor or are taking a Diploma in Languages (Japanese). Academic merit is also taken into account."
+corequisites: none
+non_allowed:
+  - JAPN20009
+  - JAPN30010
+  - JAPN20012
+  - JAPN10010
+skills:
+  - writing
+  - presentation
+topics:
+  - languages
+  - society
+assessment:
+  - kind: report
+    weight: 20
+  - kind: assignment
+    weight: 15
+  - kind: presentation
+    weight: 15
+  - kind: exam
+    weight: 50
+weekly_contact_hours: 5.5
+breadth_for:
+  - Bachelor of Biomedicine
+  - Bachelor of Commerce
+  - Bachelor of Design
+  - Bachelor of Fine Arts (Acting)
+  - Bachelor of Fine Arts (Animation)
+  - Bachelor of Fine Arts (Dance)
+  - Bachelor of Fine Arts (Film and Television)
+  - Bachelor of Fine Arts (Music Theatre)
+  - Bachelor of Fine Arts (Production)
+  - Bachelor of Fine Arts (Screenwriting)
+  - Bachelor of Fine Arts (Theatre)
+  - Bachelor of Fine Arts (Visual Art)
+  - Bachelor of Music
+  - Bachelor of Science
+handbook: https://handbook.unimelb.edu.au/2026/subjects/japn30012
+source_year: 2026
+verified_on: 2026-10-17
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,44 @@
+code: HPSC30035
+title: The Dynamics of Scientific Change
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites:
+  manual: "This is a Capstone subject and only available to students in the History and Philosophy of Science Major within the Bachelor of Arts or the History and Philosophy of Science specialisation of the Graduate Diploma in Arts. This subject is not available to students in the Minor or as Breadth. Admission into or selection of one of the following: History and Philosophy of Science major in the B-ARTS Bachelor of Arts History and Philosophy of Science specialisation (formal) in the GD-ARTS Graduate Diploma in Arts"
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - presentation
+topics:
+  - philosophy
+  - history
+assessment:
+  - kind: presentation
+    weight: 40
+  - kind: presentation
+    weight: 10
+  - kind: report
+    weight: 50
+weekly_contact_hours: 3
+breadth_for:
+  - Bachelor of Biomedicine
+  - Bachelor of Commerce
+  - Bachelor of Design
+  - Bachelor of Fine Arts (Acting)
+  - Bachelor of Fine Arts (Animation)
+  - Bachelor of Fine Arts (Dance)
+  - Bachelor of Fine Arts (Film and Television)
+  - Bachelor of Fine Arts (Music Theatre)
+  - Bachelor of Fine Arts (Production)
+  - Bachelor of Fine Arts (Screenwriting)
+  - Bachelor of Fine Arts (Theatre)
+  - Bachelor of Fine Arts (Visual Art)
+  - Bachelor of Music
+  - Bachelor of Science
+handbook: https://handbook.unimelb.edu.au/2026/subjects/hpsc30035
+source_year: 2026
+verified_on: 2026-10-17
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,42 @@
+code: INDG30003
+title: "On Country, On Campus: Wurundjeri"
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - summer
+    - winter
+prerequisites:
+  manual: "Approval from the Subject Coordinator is required to enrol in this subject, and a quota of 20 students applies. Preference will be given to students majoring in Indigenous Studies and Indigenous students. For non-Indigenous students not studying Indigenous Studies, selection will be based on academic performance and a personal statement. To apply for approval to enrol, please email the Subject Coordinator by Friday 14 November 2025 (Summer intensive) and Friday 22 May 2026 (June intensive): • A copy of your academic transcript (a statement of results is fine) with a short statement highlighting the Indigenous Studies or other Indigenous-related subjects you have completed; • A paragraph explaining why you would like to complete this subject (no more than 300 words); and Students who identify as Indigenous are encouraged to apply for this subject. While we ask that you send through your paragraph outlining your interest in the subject and your transcript, there is no need for a statement outlining your study in Indigenous studies or related subjects."
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - fieldwork
+topics:
+  - indigenous-studies
+assessment:
+  - kind: assignment
+    weight: 40
+  - kind: report
+    weight: 60
+weekly_contact_hours: 4.5
+breadth_for:
+  - Bachelor of Biomedicine
+  - Bachelor of Commerce
+  - Bachelor of Design
+  - Bachelor of Fine Arts (Acting)
+  - Bachelor of Fine Arts (Animation)
+  - Bachelor of Fine Arts (Dance)
+  - Bachelor of Fine Arts (Film and Television)
+  - Bachelor of Fine Arts (Music Theatre)
+  - Bachelor of Fine Arts (Production)
+  - Bachelor of Fine Arts (Screenwriting)
+  - Bachelor of Fine Arts (Theatre)
+  - Bachelor of Fine Arts (Visual Art)
+  - Bachelor of Music
+  - Bachelor of Science
+handbook: https://handbook.unimelb.edu.au/2026/subjects/indg30003
+source_year: 2026
+verified_on: 2026-10-17
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,35 @@
+code: ISLM30017
+title: Contemporary Challenges and Islam
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites:
+  any:
+    - ISLM10002
+    - ISLM10003
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - presentation
+topics:
+  - society
+  - philosophy
+  - ethics
+assessment:
+  - kind: presentation
+    weight: 15
+  - kind: assignment
+    weight: 15
+  - kind: report
+    weight: 60
+  - kind: participation
+    weight: 10
+weekly_contact_hours: 2.5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/islm30017
+source_year: 2026
+verified_on: 2026-10-17
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

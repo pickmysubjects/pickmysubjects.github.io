@@ -1,0 +1,32 @@
+code: INDG30001
+title: Being Indigenous in the 21st Century
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites:
+  any:
+    - INDG10001
+    - INDG10002
+corequisites: none
+non_allowed:
+  - AIND30007
+skills:
+  - writing
+topics:
+  - indigenous-studies
+  - politics
+assessment:
+  - kind: participation
+    weight: 20
+  - kind: assignment
+    weight: 30
+  - kind: report
+    weight: 50
+weekly_contact_hours: 2.5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/indg30001
+source_year: 2026
+verified_on: 2026-10-17
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,35 @@
+code: FREN30024
+title: Global French Studies (Advanced)
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites:
+  any:
+    - FREN10008
+    - FREN20019
+    - FREN30001
+corequisites: none
+non_allowed:
+  - FREN30023
+skills:
+  - writing
+topics:
+  - languages
+  - society
+  - literature
+assessment:
+  - kind: quiz
+    weight: 20
+  - kind: project
+    weight: 30
+    group: true
+  - kind: report
+    weight: 50
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/fren30024
+source_year: 2026
+verified_on: 2026-10-17
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

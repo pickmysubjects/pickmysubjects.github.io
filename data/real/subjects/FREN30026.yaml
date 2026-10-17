@@ -1,0 +1,62 @@
+code: FREN30026
+title: Global Francophone Cities
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites:
+  points:
+    min: 12.5
+    from:
+      - FREN10003
+      - FREN20017
+      - FREN20018
+      - FREN10006
+      - FREN20001
+      - FREN30003
+      - FREN10007
+      - FREN20002
+      - FREN30004
+      - FREN10008
+      - FREN20019
+      - FREN30001
+      - FREN10009
+      - FREN20023
+      - FREN30022
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - presentation
+topics:
+  - geography
+  - history
+  - languages
+assessment:
+  - kind: presentation
+    weight: 25
+    group: true
+  - kind: presentation
+    weight: 35
+  - kind: report
+    weight: 40
+weekly_contact_hours: 2.5
+breadth_for:
+  - Bachelor of Biomedicine
+  - Bachelor of Commerce
+  - Bachelor of Design
+  - Bachelor of Fine Arts (Acting)
+  - Bachelor of Fine Arts (Animation)
+  - Bachelor of Fine Arts (Dance)
+  - Bachelor of Fine Arts (Film and Television)
+  - Bachelor of Fine Arts (Music Theatre)
+  - Bachelor of Fine Arts (Production)
+  - Bachelor of Fine Arts (Screenwriting)
+  - Bachelor of Fine Arts (Theatre)
+  - Bachelor of Fine Arts (Visual Art)
+  - Bachelor of Music
+handbook: https://handbook.unimelb.edu.au/2026/subjects/fren30026
+source_year: 2026
+verified_on: 2026-10-17
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

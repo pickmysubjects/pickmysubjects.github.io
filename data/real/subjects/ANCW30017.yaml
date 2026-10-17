@@ -1,0 +1,46 @@
+code: ANCW30017
+title: Interpreting the Ancient World
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites:
+  any:
+    - any:
+        - ANCW10001
+        - ANCW10002
+        - ANCW10006
+        - ANCW10007
+        - ANCW10008
+        - ANCW10009
+    - any:
+        - CLAS10004
+        - CLAS10005
+        - CLAS10006
+        - CLAS10007
+        - CLAS10012
+        - CLAS10014
+        - CLAS10020
+        - CLAS10021
+    - admission: GD-ARTS
+      note: Admission into the Classical Studies and Archaeology specialisation (formal) in the GD-ARTS Graduate Diploma in Arts
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+topics:
+  - history
+assessment:
+  - kind: report
+    weight: 25
+  - kind: project
+    weight: 20
+  - kind: project
+    weight: 55
+weekly_contact_hours: 2
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/ancw30017
+source_year: 2026
+verified_on: 2026-10-17
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

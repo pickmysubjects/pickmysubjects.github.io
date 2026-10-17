@@ -1,0 +1,55 @@
+code: SPAN30012
+title: Pop Culture & Protest in Latin America
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites:
+  any:
+    - SPAN10004
+    - SPAN10008
+    - SPAN20003
+    - SPAN20019
+    - SPAN30015
+    - SPAN20027
+corequisites: none
+non_allowed:
+  - SPAN20016
+skills:
+  - writing
+  - presentation
+topics:
+  - media
+  - politics
+  - languages
+assessment:
+  - kind: presentation
+    weight: 30
+    group: true
+  - kind: presentation
+    weight: 10
+    group: true
+  - kind: project
+    weight: 60
+    group: true
+weekly_contact_hours: 3
+breadth_for:
+  - Bachelor of Biomedicine
+  - Bachelor of Commerce
+  - Bachelor of Design
+  - Bachelor of Fine Arts (Acting)
+  - Bachelor of Fine Arts (Animation)
+  - Bachelor of Fine Arts (Dance)
+  - Bachelor of Fine Arts (Film and Television)
+  - Bachelor of Fine Arts (Music Theatre)
+  - Bachelor of Fine Arts (Production)
+  - Bachelor of Fine Arts (Screenwriting)
+  - Bachelor of Fine Arts (Theatre)
+  - Bachelor of Fine Arts (Visual Art)
+  - Bachelor of Music
+  - Bachelor of Science
+handbook: https://handbook.unimelb.edu.au/2026/subjects/span30012
+source_year: 2026
+verified_on: 2026-10-17
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

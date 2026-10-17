@@ -1,0 +1,62 @@
+code: FREN20020
+title: In the Heart of the Loire Valley
+level: 2
+points: 12.5
+offerings:
+  "2026":
+    - winter
+prerequisites:
+  any:
+    - any:
+        - FREN10003
+        - FREN20017
+        - FREN20018
+        - FREN10006
+        - FREN20001
+        - FREN30003
+        - FREN10007
+        - FREN20002
+        - FREN30004
+        - FREN10008
+        - FREN20019
+        - FREN30001
+        - FREN10009
+        - FREN20023
+        - FREN30022
+    - manual: "Equivalent When the subject is run online or on campus, students who meet the prerequisites can self-enrol. In alternating years, this subject is taught overseas. In those years a quota of 30 will apply. Entry into the overseas availability of the subject is by application only. Places are limited, and students may not self-enrol. Preference is given to students with higher weighted average marks. Students will also need to meet the above subject prerequisites. Shortlisted applicants may be invited to attend a brief interview with the subject coordinator. Click here to apply: Link"
+corequisites: none
+non_allowed:
+  - FREN30018
+skills:
+  - writing
+  - presentation
+topics:
+  - history
+  - art
+  - languages
+assessment:
+  - kind: quiz
+    weight: 30
+  - kind: presentation
+    weight: 40
+  - kind: project
+    weight: 30
+weekly_contact_hours: 1.5
+breadth_for:
+  - Bachelor of Biomedicine
+  - Bachelor of Design
+  - Bachelor of Fine Arts (Acting)
+  - Bachelor of Fine Arts (Animation)
+  - Bachelor of Fine Arts (Dance)
+  - Bachelor of Fine Arts (Film and Television)
+  - Bachelor of Fine Arts (Music Theatre)
+  - Bachelor of Fine Arts (Production)
+  - Bachelor of Fine Arts (Screenwriting)
+  - Bachelor of Fine Arts (Theatre)
+  - Bachelor of Fine Arts (Visual Art)
+  - Bachelor of Music
+  - Bachelor of Science
+handbook: https://handbook.unimelb.edu.au/2026/subjects/fren20020
+source_year: 2026
+verified_on: 2026-10-17
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,31 @@
+code: GEND30003
+title: Feminist and Queer Praxis
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites:
+  any:
+    - GEND10001
+    - GEND10002
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+topics:
+  - society
+  - politics
+assessment:
+  - kind: assignment
+    weight: 15
+  - kind: assignment
+    weight: 15
+  - kind: project
+    weight: 70
+weekly_contact_hours: 2
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/gend30003
+source_year: 2026
+verified_on: 2026-10-17
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
