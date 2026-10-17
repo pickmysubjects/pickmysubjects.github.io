@@ -1,0 +1,27 @@
+code: SPAN10003
+source: StudentVIP
+url: https://studentvip.com.au/unimelb/subjects/span10003
+reviews: 3
+from: 2014
+to: 2022
+checked: 2026-10-17
+points:
+  - en: "All three reviewers praised friendly, engaging tutors and fun classes."
+    zh: "三位评论者都称赞辅导老师友善、投入，课堂有趣。"
+    zh-TW: "三位評論者都稱讚助教友善、投入，課堂有趣。"
+    ja: "3人とも、親切で熱心なチューターと楽しい授業を評価。"
+    ko: "리뷰어 3명 모두 친절하고 열정적인 튜터와 재미있는 수업을 칭찬함."
+    vi: "Cả ba người đều khen tutor thân thiện, nhiệt tình và lớp học vui."
+    ms: "Ketiga-tiga pengulas memuji tutor yang mesra dan bersemangat serta kelas yang seronok."
+    id: "Ketiga pengulas memuji tutor yang ramah dan antusias serta kelas yang seru."
+    hi: "तीनों रिव्यूअर्स ने दोस्ताना, जोशीले ट्यूटर्स और मज़ेदार क्लास की तारीफ़ की।"
+  - en: "The pace is moderate, even a little slow, which leaves time to consolidate; engage in tutorials and scoring well is easy."
+    zh: "节奏适中甚至稍慢，有时间巩固；积极参与辅导课就很容易拿高分。"
+    zh-TW: "節奏適中甚至稍慢，有時間鞏固；積極參與輔導課就很容易拿高分。"
+    ja: "ペースは程よく、やや遅いくらいで定着させる時間がある。チュートリアルに積極的に参加すれば高得点は簡単。"
+    ko: "진도는 적당하거나 약간 느려 복습할 시간이 있음. 튜토리얼에 적극 참여하면 고득점이 쉬움."
+    vi: "Tiến độ vừa phải, thậm chí hơi chậm, có thời gian củng cố; tham gia tích cực tutorial là dễ đạt điểm cao."
+    ms: "Rentaknya sederhana, malah agak perlahan, memberi masa untuk mengukuhkan; libatkan diri dalam tutorial dan skor tinggi mudah."
+    id: "Temponya sedang, bahkan agak lambat, jadi ada waktu memantapkan; aktif di tutorial dan nilai bagus mudah diraih."
+    hi: "रफ़्तार मध्यम, बल्कि थोड़ी धीमी है, जिससे पक्का करने का समय मिलता है; ट्यूटोरियल में भाग लें तो अच्छे अंक आसान हैं।"
+difficulty: easy

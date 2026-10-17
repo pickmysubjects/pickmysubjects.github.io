@@ -1,0 +1,36 @@
+code: SPAN10001
+source: StudentVIP
+url: https://studentvip.com.au/unimelb/subjects/span10001
+reviews: 10
+from: 2017
+to: 2026
+checked: 2026-10-17
+points:
+  - en: "From 2017 to 2024 reviewers called it a fun, well-organised beginners' course and an easy H1, with plenty of practice resources and no prior Spanish needed."
+    zh: "2017到2024年的评论者称它是有趣、组织良好的入门课，容易拿H1，练习资源丰富，零基础也可以。"
+    zh-TW: "2017到2024年的評論者稱它是有趣、組織良好的入門課，容易拿H1，練習資源豐富，零基礎也可以。"
+    ja: "2017〜2024年のレビューでは、楽しく運営もよい入門科目で、H1も取りやすく、練習用の教材も豊富、スペイン語未経験でOKとのこと。"
+    ko: "2017~2024년 리뷰어들은 재미있고 잘 운영되는 입문 과목이며 H1이 쉽고, 연습 자료가 풍부하며 스페인어 경험이 없어도 된다고 함."
+    vi: "Từ 2017 đến 2024, người đánh giá gọi đây là môn nhập môn vui, tổ chức tốt và dễ lấy H1, nhiều tài liệu luyện tập, không cần biết tiếng Tây Ban Nha trước."
+    ms: "Dari 2017 hingga 2024 pengulas menggelarnya kursus pemula yang seronok dan teratur serta H1 yang mudah, dengan banyak sumber latihan dan tiada asas Sepanyol diperlukan."
+    id: "Dari 2017 sampai 2024 pengulas menyebutnya kursus pemula yang seru dan tertata serta H1 yang mudah, dengan banyak bahan latihan dan tanpa perlu bisa bahasa Spanyol."
+    hi: "2017 से 2024 तक के रिव्यूअर्स ने इसे मज़ेदार, व्यवस्थित शुरुआती कोर्स और आसान H1 कहा, जिसमें अभ्यास के ढेर सारे संसाधन हैं और पहले से स्पेनिश ज़रूरी नहीं।"
+  - en: "The pace is fast, and the exam is the hardest part; a 2026 reviewer found keeping up demanding and compositions and the exam marked harshly."
+    zh: "进度快，考试是最难的部分；一位2026年的评论者觉得跟上进度很费力，作文和考试评分也严格。"
+    zh-TW: "進度快，考試是最難的部分；一位2026年的評論者覺得跟上進度很費力，作文和考試評分也嚴格。"
+    ja: "ペースは速く、試験が一番難しい。2026年のレビューでは、ついていくのが大変で、作文と試験の採点も厳しかったとのこと。"
+    ko: "진도가 빠르고 시험이 가장 어려움. 2026년 리뷰어는 따라가기 버거웠고 작문과 시험 채점도 엄격했다고 함."
+    vi: "Tiến độ nhanh và bài thi là phần khó nhất; một người năm 2026 thấy theo kịp rất vất vả, bài viết và bài thi chấm khắt khe."
+    ms: "Rentaknya pantas, dan peperiksaan ialah bahagian paling sukar; seorang pengulas 2026 dapati sukar mengikut rentak dan karangan serta peperiksaan dimarkah dengan ketat."
+    id: "Temponya cepat, dan ujian bagian tersulit; pengulas 2026 merasa berat mengikuti, dan karangan serta ujiannya dinilai ketat."
+    hi: "रफ़्तार तेज़ है और एग्ज़ाम सबसे कठिन हिस्सा है; 2026 के एक रिव्यूअर को साथ चलना मुश्किल लगा और कंपोज़िशन व एग्ज़ाम की मार्किंग सख़्त लगी।"
+  - en: "Go to every tutorial and take notes; knowing French or Italian makes the grammar easier."
+    zh: "每次辅导课都要去，并做好笔记；会法语或意大利语的话语法会容易些。"
+    zh-TW: "每次輔導課都要去，並做好筆記；會法語或義大利語的話文法會容易些。"
+    ja: "チュートリアルには毎回出てノートを取ること。フランス語やイタリア語を知っていると文法が楽になる。"
+    ko: "튜토리얼은 빠짐없이 가고 노트를 할 것. 프랑스어나 이탈리아어를 알면 문법이 쉬워짐."
+    vi: "Đi đủ mọi buổi tutorial và ghi chép; biết tiếng Pháp hay tiếng Ý thì ngữ pháp dễ hơn."
+    ms: "Hadir setiap tutorial dan ambil nota; tahu Bahasa Perancis atau Itali memudahkan tatabahasa."
+    id: "Hadiri setiap tutorial dan catat; kalau bisa bahasa Prancis atau Italia, tata bahasanya lebih mudah."
+    hi: "हर ट्यूटोरियल में जाएँ और नोट्स बनाएँ; फ़्रेंच या इतालवी आती हो तो ग्रामर आसान हो जाती है।"
+difficulty: easy

@@ -1,0 +1,37 @@
+code: SOCI10001
+source: StudentVIP
+url: https://studentvip.com.au/unimelb/subjects/soci10001
+reviews: 10
+from: 2020
+to: 2026
+checked: 2026-10-17
+points:
+  - en: "Widely seen as an easy, essay-based intro to sociology with light readings; several breadth students from science found it a good break. Good essay writing matters."
+    zh: "普遍被视为轻松的社会学入门课，以论文为主，阅读量少；好几位理科的跨学科选修学生觉得是很好的调剂。写好论文很重要。"
+    zh-TW: "普遍被視為輕鬆的社會學入門課，以論文為主，閱讀量少；好幾位理科的Breadth選修學生覺得是很好的調劑。寫好論文很重要。"
+    ja: "エッセイ中心で文献も少ない易しい社会学入門と広く見られ、理系からBreadthで取った学生には良い息抜きという声が複数。エッセイ力が大事。"
+    ko: "에세이 위주이고 읽기가 적은 쉬운 사회학 입문으로 널리 여겨지며, 이과에서 Breadth로 들은 학생 여럿은 좋은 휴식이었다고 함. 에세이 실력이 중요."
+    vi: "Được xem là môn nhập môn xã hội học dễ, chủ yếu viết luận, bài đọc nhẹ; nhiều sinh viên khoa học học làm Breadth thấy là sự thay đổi tốt. Viết luận tốt rất quan trọng."
+    ms: "Dianggap pengenalan sosiologi yang mudah berasaskan esei dengan bacaan ringan; beberapa pelajar sains yang ambil sebagai Breadth dapati ia rehat yang baik. Penulisan esei yang baik penting."
+    id: "Dianggap pengantar sosiologi yang mudah berbasis esai dengan bacaan ringan; beberapa mahasiswa sains yang mengambilnya sebagai Breadth merasa ini jeda yang baik. Kemampuan menulis esai penting."
+    hi: "इसे व्यापक रूप से निबंध-आधारित, हल्की रीडिंग वाला आसान समाजशास्त्र परिचय माना जाता है; विज्ञान के कई Breadth छात्रों को यह अच्छा बदलाव लगा। अच्छा निबंध लेखन मायने रखता है।"
+  - en: "The 2026 reviews are split: some found the long two-hour lectures and common-sense content very dull, while others found it fun and a WAM booster."
+    zh: "2026年的评论两极：有人觉得两小时的长讲座和常识性内容非常枯燥，也有人觉得有趣，是提分课。"
+    zh-TW: "2026年的評論兩極：有人覺得兩小時的長講座和常識性內容非常枯燥，也有人覺得有趣，是拉分課。"
+    ja: "2026年のレビューは割れている。2時間の長い講義と常識的な内容がとても退屈という人もいれば、楽しくWAMを上げやすいという人も。"
+    ko: "2026년 리뷰는 갈림. 2시간짜리 긴 강의와 상식적인 내용이 매우 지루하다는 사람도, 재미있고 WAM 올리기 좋다는 사람도 있음."
+    vi: "Các đánh giá năm 2026 chia rẽ: có người thấy bài giảng dài hai tiếng và nội dung thông thường rất nhàm, người khác thấy vui và là môn kéo điểm WAM."
+    ms: "Ulasan 2026 berbelah: ada yang dapati kuliah dua jam yang panjang dan kandungan akal biasa sangat membosankan, ada yang dapati seronok dan penaik WAM."
+    id: "Ulasan 2026 terbelah: sebagian merasa kuliah dua jam dan materi akal sehat sangat membosankan, sebagian lain merasa seru dan pendongkrak WAM."
+    hi: "2026 के रिव्यू बँटे हुए हैं: कुछ को दो घंटे के लंबे लेक्चर और सामान्य-समझ वाला कंटेंट बहुत उबाऊ लगा, जबकि दूसरों को यह मज़ेदार और WAM बढ़ाने वाला लगा।"
+  - en: "Tutorials focus on the readings and have an attendance hurdle; assessment is two essays and a final take-home task."
+    zh: "辅导课围绕阅读材料，有出勤门槛要求；考核是两篇论文和一项期末带回家完成的任务。"
+    zh-TW: "輔導課圍繞閱讀材料，有出勤門檻要求；考核是兩篇論文和一項期末帶回家完成的任務。"
+    ja: "チュートリアルは文献中心で出席要件（ハードル）がある。評価はエッセイ2本と期末の持ち帰り課題。"
+    ko: "튜토리얼은 읽기 자료 중심이며 출석 허들이 있음. 평가는 에세이 2편과 기말 테이크홈 과제."
+    vi: "Tutorial xoay quanh bài đọc và có yêu cầu chuyên cần bắt buộc; đánh giá gồm hai bài luận và một bài cuối kỳ làm tại nhà."
+    ms: "Tutorial fokus pada bacaan dan ada syarat kehadiran wajib; penilaian ialah dua esei dan tugasan akhir bawa pulang."
+    id: "Tutorial berfokus pada bacaan dan ada syarat kehadiran minimum; penilaian berupa dua esai dan tugas akhir dibawa pulang."
+    hi: "ट्यूटोरियल रीडिंग पर केंद्रित हैं और उपस्थिति की अनिवार्य शर्त है; असेसमेंट में दो निबंध और अंत में घर से करने वाला एक काम है।"
+workload: light
+difficulty: easy

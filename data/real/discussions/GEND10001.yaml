@@ -1,0 +1,36 @@
+code: GEND10001
+source: StudentVIP
+url: https://studentvip.com.au/unimelb/subjects/gend10001
+reviews: 10
+from: 2018
+to: 2026
+checked: 2026-10-17
+points:
+  - en: "Many reviewers, including science students taking it as a breadth, found it eye-opening and enjoyed the lectures and discussions."
+    zh: "许多评论者，包括把它当跨学科选修的理科生，都觉得开阔了眼界，也喜欢讲座和讨论。"
+    zh-TW: "許多評論者，包括把它當Breadth選修的理科生，都覺得開闊了眼界，也喜歡講課和討論。"
+    ja: "Breadthとして取った理系学生も含め、多くの人が視野が広がったと感じ、講義と議論を楽しんだ。"
+    ko: "Breadth로 들은 이과생을 포함해 많은 리뷰어가 시야가 넓어졌다고 느꼈고 강의와 토론을 즐김."
+    vi: "Nhiều người, kể cả sinh viên khoa học học làm Breadth, thấy mở mang tầm mắt và thích bài giảng lẫn thảo luận."
+    ms: "Ramai pengulas, termasuk pelajar sains yang mengambilnya sebagai Breadth, dapati ia membuka mata dan menikmati kuliah serta perbincangan."
+    id: "Banyak pengulas, termasuk mahasiswa sains yang mengambilnya sebagai Breadth, merasa wawasannya terbuka dan menikmati kuliah serta diskusi."
+    hi: "कई रिव्यूअर्स, जिनमें इसे Breadth के रूप में लेने वाले साइंस छात्र भी हैं, को यह आँखें खोलने वाला लगा और लेक्चर व चर्चाएँ पसंद आईं।"
+  - en: "Readings are heavy, and there is regular reflective journal writing (plus alternating quizzes in 2026), so you need to keep up every week."
+    zh: "阅读量大，还要定期写反思日志（2026年还有交替进行的小测验），所以每周都得跟上。"
+    zh-TW: "閱讀量大，還要定期寫反思日誌（2026年還有交替進行的小測驗），所以每週都得跟上。"
+    ja: "読み物が多く、定期的な振り返りジャーナル（2026年は交互にクイズも）があるので、毎週ついていく必要がある。"
+    ko: "읽기 자료가 많고 정기적인 성찰 저널(2026년엔 번갈아 퀴즈도)이 있어 매주 따라가야 함."
+    vi: "Đọc nhiều, lại phải viết nhật ký suy ngẫm định kỳ (năm 2026 xen kẽ thêm quiz), nên phải theo kịp mỗi tuần."
+    ms: "Bacaan berat, dan ada penulisan jurnal reflektif secara tetap (serta kuiz berselang pada 2026), jadi anda perlu ikut rentak setiap minggu."
+    id: "Bacaannya berat, dan ada penulisan jurnal reflektif rutin (plus kuis berselang di 2026), jadi kamu harus mengikuti tiap minggu."
+    hi: "रीडिंग्स भारी हैं, और नियमित रिफ़्लेक्टिव जर्नल लिखना होता है (2026 में बीच-बीच में क्विज़ भी), इसलिए हर हफ़्ते साथ चलना ज़रूरी है।"
+  - en: "Not a WAM booster: 2018-2021 reviewers mention harsh marking, and tutorial quality depended on your tutor."
+    zh: "不是拉高WAM的课：2018-2021年的评论者提到评分严格，辅导课质量取决于辅导老师。"
+    zh-TW: "不是拉高WAM的課：2018-2021年的評論者提到評分嚴格，輔導課品質取決於助教。"
+    ja: "WAMを上げる科目ではない。2018〜2021年のレビューでは採点が厳しく、チュートリアルの質はチューター次第とのこと。"
+    ko: "WAM 올리기용 아님. 2018~2021년 리뷰어들은 채점이 엄격하고 튜토리얼 질이 튜터에 따라 다르다고 함."
+    vi: "Không phải môn kéo WAM: người đánh giá 2018-2021 nhắc chấm khắt khe, và chất lượng tutorial tùy tutor."
+    ms: "Bukan penaik WAM: pengulas 2018-2021 menyebut pemarkahan ketat, dan kualiti tutorial bergantung pada tutor."
+    id: "Bukan pendongkrak WAM: pengulas 2018-2021 menyebut penilaian ketat, dan kualitas tutorial tergantung tutornya."
+    hi: "WAM बढ़ाने वाला विषय नहीं: 2018-2021 के रिव्यूअर्स ने सख़्त मार्किंग बताई, और ट्यूटोरियल की गुणवत्ता ट्यूटर पर निर्भर थी।"
+workload: heavy

@@ -1,0 +1,36 @@
+code: INTS10001
+source: StudentVIP
+url: https://studentvip.com.au/unimelb/subjects/ints10001
+reviews: 10
+from: 2021
+to: 2026
+checked: 2026-10-17
+points:
+  - en: "An intro to international politics structured as history, theory, then current issues. Nearly everyone found the content interesting, but there is a lot of it plus dense weekly readings."
+    zh: "国际政治入门，按历史、理论、当代议题的顺序展开。几乎所有人都觉得内容有趣，但内容多，每周阅读也很密集。"
+    zh-TW: "國際政治入門，按歷史、理論、當代議題的順序展開。幾乎所有人都覺得內容有趣，但內容多，每週閱讀也很密集。"
+    ja: "国際政治の入門で、歴史→理論→現代の課題の順に進む。ほぼ全員が内容を面白いとしたが、量が多く毎週の文献も濃い。"
+    ko: "국제정치 입문으로 역사, 이론, 현안 순으로 구성. 거의 모두 내용이 흥미롭다고 했지만 양이 많고 매주 읽을거리도 빽빽함."
+    vi: "Nhập môn chính trị quốc tế theo trình tự lịch sử, lý thuyết rồi vấn đề thời sự. Gần như ai cũng thấy nội dung thú vị, nhưng nhiều và bài đọc hằng tuần dày đặc."
+    ms: "Pengenalan politik antarabangsa disusun sebagai sejarah, teori, kemudian isu semasa. Hampir semua dapati kandungan menarik, tetapi banyak dan bacaan mingguan padat."
+    id: "Pengantar politik internasional yang tersusun sebagai sejarah, teori, lalu isu terkini. Hampir semua merasa materinya menarik, tapi banyak dan bacaan mingguannya padat."
+    hi: "अंतरराष्ट्रीय राजनीति का परिचय, इतिहास, सिद्धांत और फिर वर्तमान मुद्दों के क्रम में। लगभग सभी को कंटेंट दिलचस्प लगा, पर यह बहुत है और हर हफ़्ते की रीडिंग घनी है।"
+  - en: "Earlier reviewers (2021-2022) found it hard to score well and suggested it mainly for politics majors; 2026 reviewers found marking fair and got H1s by engaging with the readings."
+    zh: "早期评论者（2021-2022）觉得难拿高分，建议主要给政治专业的人修；2026年的评论者认为评分公平，认真读材料拿到了H1。"
+    zh-TW: "早期評論者（2021-2022）覺得難拿高分，建議主要給政治主修的人修；2026年的評論者認為評分公平，認真讀材料拿到了H1。"
+    ja: "以前のレビュー（2021-2022）は高得点が難しく主に政治学専攻向けとしたが、2026年は採点が妥当で、文献にしっかり取り組んでH1を取ったという。"
+    ko: "예전 리뷰(2021-2022)는 고득점이 어렵고 주로 정치학 전공자에게 권했지만, 2026년 리뷰는 채점이 공정하고 읽기에 충실해 H1을 받았다고 함."
+    vi: "Người đánh giá trước (2021-2022) thấy khó đạt điểm cao và khuyên chủ yếu dành cho chuyên ngành chính trị; người năm 2026 thấy chấm công bằng và đạt H1 nhờ chăm đọc tài liệu."
+    ms: "Pengulas awal (2021-2022) dapati sukar dapat markah tinggi dan cadangkan untuk major politik; pengulas 2026 dapati pemarkahan adil dan dapat H1 dengan tekun membaca."
+    id: "Pengulas awal (2021-2022) merasa sulit dapat nilai tinggi dan menyarankannya terutama untuk jurusan politik; pengulas 2026 merasa penilaian adil dan dapat H1 dengan rajin membaca."
+    hi: "पहले के रिव्यूअर्स (2021-2022) को अच्छे अंक पाना मुश्किल लगा और उन्होंने इसे मुख्यतः पॉलिटिक्स मेजर के लिए बताया; 2026 वालों को मार्किंग निष्पक्ष लगी और रीडिंग पर मेहनत से H1 मिला।"
+  - en: "Tutorials were widely called helpful for understanding readings and assignments."
+    zh: "辅导课普遍被认为有助于理解阅读材料和作业。"
+    zh-TW: "輔導課普遍被認為有助於理解閱讀材料和作業。"
+    ja: "チュートリアルは文献や課題の理解に役立つと広く評価された。"
+    ko: "튜토리얼은 읽기 자료와 과제 이해에 도움이 된다는 평이 많음."
+    vi: "Tutorial được nhiều người khen là giúp hiểu bài đọc và bài tập."
+    ms: "Tutorial secara meluas dikatakan membantu memahami bacaan dan tugasan."
+    id: "Tutorial banyak disebut membantu memahami bacaan dan tugas."
+    hi: "ट्यूटोरियल को रीडिंग और असाइनमेंट समझने में व्यापक रूप से मददगार बताया गया।"
+workload: heavy
