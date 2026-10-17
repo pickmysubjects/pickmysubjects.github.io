@@ -1,0 +1,41 @@
+code: ITAL30012
+title: "Languages of Venice: Study Abroad"
+level: 3
+points: 12.5
+offerings: unknown
+prerequisites:
+  manual: "Special Entry Conditions Apply. Admission requirements: Students are selected for this subject based on academic merit. Further information on the Appplication Process is available here: Link"
+corequisites:
+  any:
+    - HIST30051
+    - HIST20052
+non_allowed:
+  - ITAL20006
+skills:
+  - writing
+  - fieldwork
+topics:
+  - history
+  - society
+assessment:
+  - kind: assignment
+    weight: 35
+  - kind: report
+    weight: 65
+breadth_for:
+  - Bachelor of Design
+  - Bachelor of Fine Arts (Acting)
+  - Bachelor of Fine Arts (Animation)
+  - Bachelor of Fine Arts (Dance)
+  - Bachelor of Fine Arts (Film and Television)
+  - Bachelor of Fine Arts (Music Theatre)
+  - Bachelor of Fine Arts (Production)
+  - Bachelor of Fine Arts (Screenwriting)
+  - Bachelor of Fine Arts (Theatre)
+  - Bachelor of Fine Arts (Visual Art)
+  - Bachelor of Music
+  - Bachelor of Science
+handbook: https://handbook.unimelb.edu.au/2026/subjects/ital30012
+source_year: 2026
+verified_on: 2026-10-17
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

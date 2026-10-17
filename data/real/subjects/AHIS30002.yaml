@@ -1,0 +1,42 @@
+code: AHIS30002
+title: Studying Contemporary Art Abroad
+level: 3
+points: 12.5
+offerings: unknown
+prerequisites:
+  manual: "Intensive taught subject in the November off-campus. Students must seek coordinator approval before enrolling in this subject. Please note special entry conditions apply for this subject. This subject is taught overseas. Students must make an application and obtain approval from the subject co-ordinator. Further information here: Link"
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - fieldwork
+topics:
+  - art
+  - history
+assessment:
+  - kind: report
+    weight: 25
+  - kind: report
+    weight: 25
+    group: true
+  - kind: report
+    weight: 50
+breadth_for:
+  - Bachelor of Biomedicine
+  - Bachelor of Commerce
+  - Bachelor of Design
+  - Bachelor of Fine Arts (Acting)
+  - Bachelor of Fine Arts (Animation)
+  - Bachelor of Fine Arts (Dance)
+  - Bachelor of Fine Arts (Film and Television)
+  - Bachelor of Fine Arts (Music Theatre)
+  - Bachelor of Fine Arts (Production)
+  - Bachelor of Fine Arts (Screenwriting)
+  - Bachelor of Fine Arts (Theatre)
+  - Bachelor of Fine Arts (Visual Art)
+  - Bachelor of Music
+  - Bachelor of Science
+handbook: https://handbook.unimelb.edu.au/2026/subjects/ahis30002
+source_year: 2026
+verified_on: 2026-10-17
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

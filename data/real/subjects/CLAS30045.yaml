@@ -1,0 +1,45 @@
+code: CLAS30045
+title: Intensive Ancient Greek 1
+level: 3
+points: 12.5
+offerings: unknown
+prerequisites: none
+corequisites: none
+non_allowed:
+  - CLAS10004
+  - CLAS20035
+  - CLAS10022
+skills:
+  - languages
+  - writing
+topics:
+  - languages
+assessment:
+  - kind: test
+    weight: 5
+  - kind: assignment
+    weight: 35
+  - kind: test
+    weight: 25
+  - kind: exam
+    weight: 25
+  - kind: assignment
+    weight: 10
+breadth_for:
+  - Bachelor of Arts
+  - Bachelor of Commerce
+  - Bachelor of Design
+  - Bachelor of Fine Arts (Acting)
+  - Bachelor of Fine Arts (Animation)
+  - Bachelor of Fine Arts (Dance)
+  - Bachelor of Fine Arts (Film and Television)
+  - Bachelor of Fine Arts (Music Theatre)
+  - Bachelor of Fine Arts (Production)
+  - Bachelor of Fine Arts (Screenwriting)
+  - Bachelor of Fine Arts (Theatre)
+  - Bachelor of Fine Arts (Visual Art)
+  - Bachelor of Music
+handbook: https://handbook.unimelb.edu.au/2026/subjects/clas30045
+source_year: 2026
+verified_on: 2026-10-17
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

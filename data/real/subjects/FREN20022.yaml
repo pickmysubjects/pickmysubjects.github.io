@@ -1,0 +1,53 @@
+code: FREN20022
+title: "From Page to Stage: French Theatre"
+level: 2
+points: 12.5
+offerings: unknown
+prerequisites:
+  any:
+    - FREN10007
+    - FREN20002
+    - FREN30004
+    - FREN10008
+    - FREN20019
+    - FREN30001
+    - FREN10009
+    - FREN20023
+    - FREN30022
+corequisites: none
+non_allowed:
+  - FREN30020
+skills:
+  - languages
+  - writing
+  - presentation
+topics:
+  - literature
+  - art
+  - languages
+assessment:
+  - kind: assignment
+    weight: 10
+  - kind: test
+    weight: 20
+  - kind: presentation
+    weight: 30
+    group: true
+  - kind: assignment
+    weight: 40
+breadth_for:
+  - Bachelor of Biomedicine
+  - Bachelor of Commerce
+  - Bachelor of Design
+  - Bachelor of Fine Arts (Animation)
+  - Bachelor of Fine Arts (Dance)
+  - Bachelor of Fine Arts (Film and Television)
+  - Bachelor of Fine Arts (Production)
+  - Bachelor of Fine Arts (Screenwriting)
+  - Bachelor of Fine Arts (Visual Art)
+  - Bachelor of Music
+  - Bachelor of Science
+handbook: https://handbook.unimelb.edu.au/2026/subjects/fren20022
+source_year: 2026
+verified_on: 2026-10-17
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

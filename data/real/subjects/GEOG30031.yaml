@@ -1,0 +1,37 @@
+code: GEOG30031
+title: "Law Space: Geographies of Justice"
+level: 3
+points: 12.5
+offerings: unknown
+prerequisites:
+  any:
+    - GEOG20012
+    - manual: Permission of the subject coordinator
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - presentation
+topics:
+  - geography
+  - society
+  - politics
+assessment:
+  - kind: report
+    weight: 30
+    hurdle: true
+  - kind: presentation
+    weight: 30
+    hurdle: true
+  - kind: report
+    weight: 40
+    hurdle: true
+breadth_for:
+  - Bachelor of Biomedicine
+  - Bachelor of Commerce
+  - Bachelor of Music
+  - Bachelor of Science
+handbook: https://handbook.unimelb.edu.au/2026/subjects/geog30031
+source_year: 2026
+verified_on: 2026-10-17
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

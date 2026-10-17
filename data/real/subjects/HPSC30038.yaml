@@ -1,0 +1,26 @@
+code: HPSC30038
+title: Exploring Digital Realities
+level: 3
+points: 12.5
+offerings: unknown
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+topics:
+  - media
+  - society
+  - ethics
+assessment:
+  - kind: assignment
+    weight: 20
+  - kind: report
+    weight: 40
+  - kind: report
+    weight: 40
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/hpsc30038
+source_year: 2026
+verified_on: 2026-10-17
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

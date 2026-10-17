@@ -1,0 +1,29 @@
+code: ANTH30019
+title: Innovation, Design, and Society
+level: 3
+points: 12.5
+offerings: unknown
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - design
+topics:
+  - society
+  - design
+assessment:
+  - kind: project
+    weight: 20
+  - kind: project
+    weight: 50
+    group: true
+  - kind: report
+    weight: 30
+breadth_for: []
+recommended:
+  - ANTH10001
+handbook: https://handbook.unimelb.edu.au/2026/subjects/anth30019
+source_year: 2026
+verified_on: 2026-10-17
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
