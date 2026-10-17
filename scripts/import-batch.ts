@@ -36,7 +36,8 @@ for (const file of positionals) {
     const old = existsSync(path) ? (parse(readFileSync(path, 'utf8')) as Record<string, unknown>) : {}
     // The separator may carry only the code; the page itself has "Title (CODE)".
     const onPage = new RegExp(`^\\s*(.+?) \\(${code}\\)\\s*$`, 'm').exec(body)?.[1]?.trim()
-    const title = (old.title as string | undefined) || head.replace(/^=====\s*/, '').replace(code, '').trim() || onPage || ''
+    // Notes in brackets on the header line ("(被引用 3 次)") are ours, not part of the title.
+    const title = (old.title as string | undefined) || head.replace(/^=====\s*/, '').replace(code, '').replace(/\([^)]*\)/g, '').trim() || onPage || ''
     const level = (old.level as number | undefined) ?? Number(code[4])
     const points = (old.points as number | undefined) ?? 12.5
 
