@@ -7,11 +7,9 @@ offerings:
     - semester-2
 prerequisites:
   any:
-    - any:
-        - CLAS10004
-        - CLAS20035
-        - CLAS30045
-    - manual: Equivalent
+    - CLAS10004
+    - CLAS20035
+    - CLAS30045
 corequisites: none
 non_allowed: []
 skills:

@@ -7,8 +7,11 @@ offerings:
 prerequisites:
   any:
     - COMP10001
-    - manual: VCE Algorithmics units 3/4
-    - manual: Achieving at least 75% in the programming competency test
+    - school:
+        subject: Algorithmics
+      note: VCE Algorithmics units 3/4
+    - placement: programming
+      note: Achieving at least 75% in the programming competency test
 corequisites: none
 non_allowed:
   - COMP20008

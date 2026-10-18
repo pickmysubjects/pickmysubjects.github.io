@@ -5,10 +5,7 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
-prerequisites:
-  any:
-    - KORE10002
-    - manual: Equivalent
+prerequisites: KORE10002
 corequisites: none
 non_allowed: []
 skills:

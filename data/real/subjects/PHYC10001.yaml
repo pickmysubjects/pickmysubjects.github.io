@@ -9,10 +9,16 @@ prerequisites:
   all:
     - any:
         - PHYC10002
-        - manual: Excellent results in VCE Units 3 and 4 Physics (normally an unscaled score of at least 35) or equivalent
+        - school:
+            subject: Physics
+            minScore: 35
+          note: Excellent results in VCE Units 3 and 4 Physics (normally an unscaled score of at least 35) or equivalent
         - PHYC10009
     - any:
-        - manual: Excellent results in VCE Units 3 and 4 Specialist Mathematics (normally an unscaled score of at least 35) or equivalent
+        - school:
+            subject: Specialist Mathematics
+            minScore: 35
+          note: Excellent results in VCE Units 3 and 4 Specialist Mathematics (normally an unscaled score of at least 35) or equivalent
         - any:
             - MAST10006
             - MAST10007

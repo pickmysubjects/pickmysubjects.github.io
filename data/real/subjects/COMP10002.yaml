@@ -11,7 +11,8 @@ prerequisites:
     - any:
         - COMP10001
         - COMP10003
-    - manual: At least 75% in the programming competency test
+    - placement: programming
+      note: At least 75% in the programming competency test
 corequisites: none
 non_allowed:
   - COMP20005

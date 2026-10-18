@@ -18,7 +18,10 @@ prerequisites:
         - all:
             - MAST10014
             - MAST10015
-        - manual: Study score of 25 of more in VCE Mathematical Methods 3 and 4 or equivalent
+        - school:
+            subject: Mathematical Methods
+            minScore: 25
+          note: Study score of 25 of more in VCE Mathematical Methods 3 and 4 or equivalent
         - admission: B-SCI
           note: Admission into the B-SCI Bachelor of Science
 corequisites: none

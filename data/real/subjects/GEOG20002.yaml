@@ -23,7 +23,8 @@ prerequisites:
           - EVSC
           - ERTH
           - GEOL
-    - manual: An equivalent approved by the subject coordinator.
+    - permission: coordinator
+      note: An equivalent approved by the subject coordinator.
 corequisites: none
 non_allowed:
   - GEOG20009

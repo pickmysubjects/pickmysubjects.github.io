@@ -8,7 +8,9 @@ offerings:
 prerequisites:
   any:
     - CLAS10005
-    - manual: Students should have passed VCE Classical Greek or the equivalent.
+    - school:
+        subject: Classical Greek
+      note: Students should have passed VCE Classical Greek or the equivalent.
 corequisites: none
 non_allowed:
   - CLAS10021

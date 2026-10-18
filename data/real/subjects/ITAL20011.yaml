@@ -14,7 +14,9 @@ prerequisites:
         - any:
             - ITAL10002
             - ITAL20008
-    - manual: Completion of VCE Italian
+    - school:
+        subject: Italian
+      note: Completion of VCE Italian
 corequisites: none
 non_allowed:
   - ITAL10004

@@ -9,7 +9,8 @@ prerequisites:
     - all:
         - SPAN10001
         - SPAN10002
-    - manual: "Permission of the subject coordinator. Students are required to apply through the following link: https://arts.unimelb.edu.au/students/overseas-experience#undergraduate-subjects"
+    - permission: application
+      note: "Permission of the subject coordinator. Students are required to apply through the following link: https://arts.unimelb.edu.au/students/overseas-experience#undergraduate-subjects"
 corequisites: none
 non_allowed:
   - SPAN20028

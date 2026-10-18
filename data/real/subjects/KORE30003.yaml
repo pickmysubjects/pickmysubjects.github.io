@@ -10,7 +10,8 @@ prerequisites:
     - any:
         - KORE10004
         - KORE20004
-    - manual: Passing the Language Placement Test of Korean 4
+    - placement: Korean
+      note: Passing the Language Placement Test of Korean 4
 corequisites: none
 non_allowed:
   - KORE10005

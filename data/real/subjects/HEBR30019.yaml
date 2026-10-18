@@ -6,7 +6,8 @@ offerings:
   "2026":
     - semester-2
 prerequisites:
-  manual: Students will be required to sit a placement test conducted by the subject co-ordinator.
+  placement: language
+  note: Students will be required to sit a placement test conducted by the subject co-ordinator.
 corequisites: none
 non_allowed: []
 skills:

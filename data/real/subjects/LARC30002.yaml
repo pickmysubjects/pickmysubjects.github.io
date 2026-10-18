@@ -7,7 +7,6 @@ offerings:
     - semester-2
 prerequisites:
   any:
-    - ABPL10004
     - ARCH20003
     - PLAN10001
     - ABPL20055
@@ -15,12 +14,6 @@ corequisites: none
 non_allowed:
   - ABPL10006
   - ABPL20039
-skills:
-  - writing
-  - fieldwork
-topics:
-  - design
-  - history
 assessment:
   - kind: assignment
     weight: 20
@@ -49,4 +42,10 @@ breadth_for:
 handbook: https://handbook.unimelb.edu.au/2026/subjects/larc30002
 source_year: 2026
 verified_on: 2026-10-19
+skills:
+  - writing
+  - fieldwork
+topics:
+  - design
+  - history
 notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

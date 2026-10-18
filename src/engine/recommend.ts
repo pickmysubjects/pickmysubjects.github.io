@@ -201,6 +201,7 @@ export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions =
   const attempts = new Map<string, number[]>()
   for (const r of profile.results) if (r.mark !== undefined && !raw.subjects[r.code]?.passFail) attempts.set(r.code, [...(attempts.get(r.code) ?? []), r.mark])
   for (const [code, ms] of attempts) marks.set(code, ms.reduce((a, b) => a + b, 0) / ms.length)
+  const markRecord = Object.fromEntries(marks)
   const majors = opts.majors ?? (opts.programme ? majorTitles(data, opts.programme.components) : undefined)
   const dependents = buildDependents(data, opts.course)
   // Non-allowed works both ways, but the Handbook often lists it on one side only.
@@ -286,6 +287,7 @@ export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions =
       subjects: data.subjects,
       admittedCourse: opts.course,
       majors,
+      marks: markRecord,
     })
     if (pre.status === 'fail') continue
     // A condition only the student can check (a VCE score) that they said they meet.

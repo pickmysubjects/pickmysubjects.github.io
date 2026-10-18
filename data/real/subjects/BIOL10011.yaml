@@ -5,7 +5,10 @@ points: 12.5
 offerings:
   "2026": []
 prerequisites:
-  manual: A study score of 25 or above in VCE Biology Units 3/4, or equivalent
+  school:
+    subject: Biology
+    minScore: 25
+  note: A study score of 25 or above in VCE Biology Units 3/4, or equivalent
 corequisites: none
 non_allowed:
   - BIOL10010

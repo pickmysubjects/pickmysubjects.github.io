@@ -7,13 +7,14 @@ offerings:
     - semester-1
 prerequisites:
   any:
-    - any:
-        - ABPL20028
-        - ABPL20038
-        - ABPL20040
-        - ABPL20049
-        - ABPL20055
-        - ARCH10004
+    - all:
+        - any:
+            - ABPL20038
+            - ABPL20040
+            - ABPL20049
+        - any:
+            - ABPL20055
+            - ARCH10004
     - all:
         - ABPL10004
         - any:
@@ -21,11 +22,6 @@ prerequisites:
             - ARCH20002
 corequisites: ARCH20004
 non_allowed: []
-skills:
-  - design
-topics:
-  - design
-  - environment
 assessment:
   - kind: project
     weight: 20
@@ -41,4 +37,9 @@ recommended:
 handbook: https://handbook.unimelb.edu.au/2026/subjects/abpl30042
 source_year: 2026
 verified_on: 2026-10-19
+skills:
+  - design
+topics:
+  - design
+  - environment
 notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

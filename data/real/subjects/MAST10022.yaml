@@ -7,7 +7,10 @@ offerings:
     - semester-1
 prerequisites:
   any:
-    - manual: VCE Specialist Mathematics 3/4 study score of at least 36 (or equivalent)
+    - school:
+        subject: Specialist Mathematics
+        minScore: 36
+      note: VCE Specialist Mathematics 3/4 study score of at least 36 (or equivalent)
     - MAST10021
     - MAST10005
     - MAST10006

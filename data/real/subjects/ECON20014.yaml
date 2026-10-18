@@ -9,7 +9,8 @@ prerequisites:
     - all:
         - ECON10005
         - ECON20002
-    - manual: "Permission from the Subject Coordinator via a selection process. This subject has a quota of 20 students and entry into the subject is competitive. Selection is determined via an application process and is contingent on permission from the Subject Coordinator. Further information on the application process can be found here: https://go.unimelb.edu.au/v5e8"
+    - permission: application
+      note: "Permission from the Subject Coordinator via a selection process. This subject has a quota of 20 students and entry into the subject is competitive. Selection is determined via an application process and is contingent on permission from the Subject Coordinator. Further information on the application process can be found here: https://go.unimelb.edu.au/v5e8"
 corequisites: none
 non_allowed: []
 skills:

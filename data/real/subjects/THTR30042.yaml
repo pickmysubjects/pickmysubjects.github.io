@@ -10,12 +10,6 @@ offerings:
 prerequisites: none
 corequisites: none
 non_allowed: []
-skills:
-  - design
-topics:
-  - design
-  - media
-  - marketing
 assessment:
   - kind: assignment
     weight: 20
@@ -43,4 +37,10 @@ breadth_for:
 handbook: https://handbook.unimelb.edu.au/2026/subjects/thtr30042
 source_year: 2026
 verified_on: 2026-10-19
+skills:
+  - design
+topics:
+  - design
+  - media
+  - marketing
 notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

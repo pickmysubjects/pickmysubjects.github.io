@@ -16,7 +16,8 @@ prerequisites:
             - COMP10001
             - COMP20005
             - PHYC20013
-        - manual: Other evidence of programming competence (e.g. a Year 12 subject, a MOOC, a programming test)
+        - placement: programming
+          note: Other evidence of programming competence (e.g. a Year 12 subject, a MOOC, a programming test)
 corequisites: none
 non_allowed: []
 categories:

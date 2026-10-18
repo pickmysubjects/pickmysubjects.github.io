@@ -7,7 +7,10 @@ offerings:
     - semester-2
 prerequisites:
   any:
-    - manual: Study score of 25 or more in VCE Mathematical Methods 3/4 or equivalent
+    - school:
+        subject: Mathematical Methods
+        minScore: 25
+      note: Study score of 25 or more in VCE Mathematical Methods 3/4 or equivalent
     - MAST10012
     - points:
         min: 25

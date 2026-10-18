@@ -11,7 +11,11 @@ prerequisites:
   all:
     - points:
         min: 100
-    - manual: "A minimum of 100 credit points of study Students are required to apply for permission to enrol into this subject prior to commencement of the internship. Students should make this application via the online application form: Link Applications will be reviewed in three rounds: Round 1 (Summer and Semester 1 availability): closing 31 October Round 2 (Semester 1 availability): closing 31 January Round 3 (Semester 2 availability): closing 31 May Students will receive outcomes within two weeks of the closing date for the relevant round. For further information including FAQS on the Application and Selection Process see: Link"
+    - all:
+        - points:
+            min: 100
+        - permission: application
+          note: "Students are required to apply for permission to enrol into this subject prior to commencement of the internship. Students should make this application via the online application form: Link Applications will be reviewed in three rounds: Round 1 (Summer and Semester 1 availability): closing 31 October Round 2 (Semester 1 availability): closing 31 January Round 3 (Semester 2 availability): closing 31 May Students will receive outcomes within two weeks of the closing date for the relevant round. For further information including FAQS on the Application and Selection Process see: Link"
 corequisites: none
 non_allowed:
   - MULT30019

@@ -7,10 +7,8 @@ offerings:
     - semester-2
 prerequisites:
   any:
-    - any:
-        - KORE10003
-        - KORE20003
-    - manual: Equivalent
+    - KORE10003
+    - KORE20003
 corequisites: none
 non_allowed:
   - KORE10004

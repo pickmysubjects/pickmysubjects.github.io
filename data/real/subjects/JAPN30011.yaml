@@ -7,11 +7,9 @@ offerings:
     - semester-2
 prerequisites:
   any:
-    - any:
-        - JAPN20012
-        - JAPN30012
-        - JAPN10010
-    - manual: Equivalent
+    - JAPN20012
+    - JAPN30012
+    - JAPN10010
 corequisites: none
 non_allowed:
   - JAPN20002

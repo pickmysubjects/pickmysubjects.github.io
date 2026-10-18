@@ -9,8 +9,14 @@ offerings:
     - semester-2
 prerequisites:
   all:
-    - manual: Excellent results in a discipline appropriate to the project (normally an average of at least 75% in relevant 2nd and 3rd year subjects)
-    - manual: "Approval of the relevant Department Coordinator. Department specific details are listed in the link below: Link"
+    - average:
+        min: 75
+        levels:
+          - 2
+          - 3
+      note: Excellent results in a discipline appropriate to the project (normally an average of at least 75% in relevant 2nd and 3rd year subjects)
+    - permission: coordinator
+      note: "Approval of the relevant Department Coordinator. Department specific details are listed in the link below: Link"
 corequisites: none
 non_allowed:
   - PATH30004

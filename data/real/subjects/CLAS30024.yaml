@@ -6,15 +6,13 @@ offerings:
   "2026":
     - semester-1
 prerequisites:
-  any:
-    - all:
-        - any:
-            - CLAS10020
-            - CLAS20015
-        - any:
-            - CLAS10021
-            - CLAS20016
-    - manual: Equivalent
+  all:
+    - any:
+        - CLAS10020
+        - CLAS20015
+    - any:
+        - CLAS10021
+        - CLAS20016
 corequisites: none
 non_allowed:
   - CLAS20013

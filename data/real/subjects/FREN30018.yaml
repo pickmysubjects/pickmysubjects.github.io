@@ -23,7 +23,8 @@ prerequisites:
         - FREN10009
         - FREN20023
         - FREN30022
-    - manual: "Equivalent When the subject is run online or on campus, students who meet the prerequisites can self-enrol. In alternating years, this subject is taught overseas. In those years a quota of 30 will apply. Entry into the overseas availability of the subject is by application only. Places are limited, and students may not self-enrol. Preference is given to students with higher weighted average marks. Students will also need to meet the above subject prerequisites. Shortlisted applicants may be invited to attend a brief interview with the subject coordinator. Click here to apply: Link"
+    - permission: application
+      note: "Equivalent When the subject is run online or on campus, students who meet the prerequisites can self-enrol. In alternating years, this subject is taught overseas. In those years a quota of 30 will apply. Entry into the overseas availability of the subject is by application only. Places are limited, and students may not self-enrol. Preference is given to students with higher weighted average marks. Students will also need to meet the above subject prerequisites. Shortlisted applicants may be invited to attend a brief interview with the subject coordinator. Click here to apply: Link"
 corequisites: none
 non_allowed:
   - FREN20020

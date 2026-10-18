@@ -7,11 +7,9 @@ offerings:
     - semester-2
 prerequisites:
   any:
-    - any:
-        - CHIN10017
-        - CHIN20003
-        - CHIN30008
-    - manual: Equivalent
+    - CHIN10017
+    - CHIN20003
+    - CHIN30008
 corequisites: none
 non_allowed:
   - CHIN20004

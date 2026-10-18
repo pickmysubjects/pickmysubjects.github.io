@@ -9,12 +9,6 @@ prerequisites:
     - ARCH20001
 corequisites: none
 non_allowed: []
-skills:
-  - design
-  - presentation
-topics:
-  - design
-  - ethics
 assessment:
   - kind: assignment
     weight: 20
@@ -28,4 +22,10 @@ breadth_for: []
 handbook: https://handbook.unimelb.edu.au/2026/subjects/abpl30073
 source_year: 2026
 verified_on: 2026-10-19
+skills:
+  - design
+  - presentation
+topics:
+  - design
+  - ethics
 notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

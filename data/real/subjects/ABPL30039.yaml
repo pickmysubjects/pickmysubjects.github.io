@@ -8,12 +8,10 @@ offerings:
 prerequisites:
   any:
     - ABPL30055
-    - manual: Equivalent as approved by the coordinator.
+    - permission: coordinator
+      note: Equivalent as approved by the coordinator.
 corequisites: none
 non_allowed: []
-topics:
-  - law
-  - management
 assessment:
   - kind: assignment
     weight: 0
@@ -45,4 +43,7 @@ breadth_for:
 handbook: https://handbook.unimelb.edu.au/2026/subjects/abpl30039
 source_year: 2026
 verified_on: 2026-10-19
+topics:
+  - law
+  - management
 notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

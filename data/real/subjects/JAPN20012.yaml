@@ -14,7 +14,8 @@ prerequisites:
         - JAPN30006
     - all:
         - manual: Equivalent
-        - manual: Approval of subject coordinator is required for the Summer offering https://arts.unimelb.edu.au/students/overseas-experience#about Preference to students who have declared a major, minor or are taking a Diploma in Languages (Japanese). Academic merit is also taken into account.
+        - permission: coordinator
+          note: Approval of subject coordinator is required for the Summer offering https://arts.unimelb.edu.au/students/overseas-experience#about Preference to students who have declared a major, minor or are taking a Diploma in Languages (Japanese). Academic merit is also taken into account.
 corequisites: none
 non_allowed:
   - JAPN20009

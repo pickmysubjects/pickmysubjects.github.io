@@ -8,7 +8,8 @@ offerings:
 prerequisites:
   any:
     - CHIN10004
-    - manual: Approval by the subject coordinator
+    - permission: coordinator
+      note: Approval by the subject coordinator
 corequisites: none
 non_allowed:
   - CHIN10001

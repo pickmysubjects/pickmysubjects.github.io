@@ -7,7 +7,8 @@ offerings:
     - semester-1
     - winter
 prerequisites:
-  manual: "This subject availability has a quota, an application process applies. For further information on the application and selection process please use the link below: Link"
+  permission: application
+  note: "This subject availability has a quota, an application process applies. For further information on the application and selection process please use the link below: Link"
 corequisites: none
 non_allowed: []
 skills:

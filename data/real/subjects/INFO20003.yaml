@@ -13,7 +13,8 @@ prerequisites:
         - COMP20005
         - COMP10002
         - COMP10003
-    - manual: At least 75% in the programming competency test
+    - placement: programming
+      note: At least 75% in the programming competency test
     - admission: MC-SOFTENG
       note: Admission into the Master of Software Engineering (or GD-CS)
 corequisites: none

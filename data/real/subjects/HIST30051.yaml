@@ -5,7 +5,8 @@ points: 12.5
 offerings:
   "2026": []
 prerequisites:
-  manual: "Students enrolling in this subject must have coordinator approval: https://arts.unimelb.edu.au/students/overseas-experience#about"
+  permission: coordinator
+  note: "Students enrolling in this subject must have coordinator approval: https://arts.unimelb.edu.au/students/overseas-experience#about"
 corequisites:
   any:
     - ITAL20006

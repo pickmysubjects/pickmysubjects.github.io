@@ -9,7 +9,7 @@ export function compactReq(field: ReqField): unknown {
 }
 
 function compact(e: ReqExpr): unknown {
-  if ('subject' in e) return e.subject
+  if ('subject' in e) return e.concurrent ? e : e.subject
   if ('all' in e) return { all: e.all.map(compact) }
   if ('any' in e) return { any: e.any.map(compact) }
   return e

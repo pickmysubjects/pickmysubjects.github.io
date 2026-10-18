@@ -13,8 +13,9 @@ prerequisites:
     - all:
         - admission: B-BMED
           note: Bachelor of Biomedicine students
-        - subject: BIOM20002
-    - manual: Breadth students need the approval of the subject coordinator
+        - BIOM20002
+    - permission: coordinator
+      note: Breadth students need the approval of the subject coordinator
 corequisites: none
 non_allowed: []
 assessment:

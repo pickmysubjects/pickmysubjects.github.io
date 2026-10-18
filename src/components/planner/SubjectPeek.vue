@@ -96,7 +96,7 @@ const routeByLevel = computed(() => {
 
 // Conditions we can't check (a VCE score, a test): the student can say they meet them.
 const { profile, setConfirmed } = useProfile()
-const hasManual = computed(() => JSON.stringify(props.subject?.prerequisites ?? '').includes('"manual"'))
+const hasManual = computed(() => /"(?:manual|placement|permission|school|average|wam)"/.test(JSON.stringify(props.subject?.prerequisites ?? '')))
 const confirmed = computed(() => profile.value.confirmed?.includes(props.code) ?? false)
 
 // Clicking the dimmed backdrop (the dialog element itself) closes it.

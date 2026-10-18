@@ -5,10 +5,7 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
-prerequisites:
-  any:
-    - CHIN10006
-    - manual: Equivalent
+prerequisites: CHIN10006
 corequisites: none
 non_allowed:
   - CHIN10015

@@ -16,18 +16,11 @@ prerequisites:
     - any:
         - ABPL20036
         - ABPL10007
-    - any:
-        - ABPL10004
-        - ABPL20055
+    - ABPL20055
     - ABPL30041
 corequisites: none
 non_allowed:
   - ABPL30037
-skills:
-  - design
-  - presentation
-topics:
-  - design
 assessment:
   - kind: assignment
     weight: 15
@@ -45,4 +38,9 @@ breadth_for:
 handbook: https://handbook.unimelb.edu.au/2026/subjects/arch30002
 source_year: 2026
 verified_on: 2026-10-19
+skills:
+  - design
+  - presentation
+topics:
+  - design
 notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

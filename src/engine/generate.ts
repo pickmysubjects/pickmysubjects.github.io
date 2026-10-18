@@ -492,7 +492,15 @@ function resolvePrereqs(expr: ReqExpr, done: Set<string>, required: Set<string>,
     const firstYear = data.subjects[forCode]?.level === 1
     // What an option assumes rather than plans: manual conditions anywhere inside it.
     const assumed = (e: ReqExpr): number =>
-      'manual' in e ? (SCHOOL_RESULT.test(e.manual) ? SCHOOL : MANUAL) : 'all' in e ? e.all.reduce((sum, x) => sum + assumed(x), 0) : 0
+      'manual' in e
+        ? SCHOOL_RESULT.test(e.manual) ? SCHOOL : MANUAL
+        : 'school' in e
+          ? SCHOOL
+          : 'placement' in e || 'permission' in e || 'average' in e || 'wam' in e
+            ? MANUAL
+            : 'all' in e
+              ? e.all.reduce((sum, x) => sum + assumed(x), 0)
+              : 0
     for (const e of expr.any) {
       // An option that needs admission to another course isn't open to this student at all.
       if (needsOtherAdmission(e, course)) continue

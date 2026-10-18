@@ -8,9 +8,6 @@ offerings:
 prerequisites: ABPL20042
 corequisites: none
 non_allowed: []
-topics:
-  - management
-  - engineering
 assessment:
   - kind: assignment
     weight: 10
@@ -39,4 +36,7 @@ breadth_for:
 handbook: https://handbook.unimelb.edu.au/2026/subjects/abpl30055
 source_year: 2026
 verified_on: 2026-10-19
+topics:
+  - management
+  - engineering
 notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

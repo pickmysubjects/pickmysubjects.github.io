@@ -5,7 +5,8 @@ points: 12.5
 offerings:
   "2026": []
 prerequisites:
-  manual: Permission of subject co-ordinator
+  permission: coordinator
+  note: Permission of subject co-ordinator
 corequisites: none
 non_allowed: []
 skills:

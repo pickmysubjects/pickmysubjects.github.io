@@ -75,6 +75,7 @@ export function usePlan() {
     international: state.value.setup.international === true,
     confirmed: profile.value.confirmed ?? [],
     recordedLoad: recordedLoad(profile.value.results, data.value.subjects),
+    marks: Object.fromEntries(profile.value.results.filter((r) => r.mark !== undefined).map((r) => [r.code, r.mark as number])),
   }))
 
   const course = computed(() => findCourse(data.value, plan.value.course, plan.value.courseYear))

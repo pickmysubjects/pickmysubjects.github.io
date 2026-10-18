@@ -19,7 +19,10 @@ prerequisites:
       note: Admission into the Bachelor of Commerce
     - admission: B-BMED
       note: Admission into the Bachelor of Biomedicine
-    - manual: VCE Mathematical Methods or Specialist Mathematics 3/4 study score of at least 25 (or equivalent)
+    - school:
+        subject: Mathematical Methods or Specialist Mathematics
+        minScore: 25
+      note: VCE Mathematical Methods or Specialist Mathematics 3/4 study score of at least 25 (or equivalent)
     - MAST10012
     - all:
         - MAST10014

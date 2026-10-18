@@ -8,7 +8,8 @@ offerings:
 prerequisites:
   all:
     - manual: Completion of any two first-year arts subjects or permission of the convenor of the program. This subject does not presuppose knowledge of Indonesian.
-    - manual: An application process applies for enrolment into this subject. Please see the below the link for information. https://studyos.students.unimelb.edu.au/_portal/tds-program-brochure?programid=10418
+    - permission: application
+      note: An application process applies for enrolment into this subject. Please see the below the link for information. https://studyos.students.unimelb.edu.au/_portal/tds-program-brochure?programid=10418
 corequisites: none
 non_allowed: []
 skills:

@@ -5,16 +5,28 @@ points: 12.5
 offerings:
   "2026": []
 prerequisites:
-  any:
-    - all:
-        - points:
-            min: 25
-            levels:
-              - 1
-            areas:
-              - BIOL
-        - manual: 50 credit points in a Level 2 biological sciences subjects
-    - manual: Equivalent
+  all:
+    - points:
+        min: 25
+        levels:
+          - 1
+        areas:
+          - BIOL
+    - points:
+        min: 50
+        levels:
+          - 2
+        areas:
+          - BIOL
+          - BOTA
+          - ZOOL
+          - ECOL
+          - GENE
+          - BCMB
+          - MIIM
+          - ANAT
+          - PHYS
+          - PATH
 corequisites: none
 non_allowed: []
 recommended:

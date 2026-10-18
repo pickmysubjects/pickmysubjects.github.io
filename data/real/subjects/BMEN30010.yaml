@@ -17,7 +17,6 @@ prerequisites:
         - all:
             - ANAT20006
             - PHYS20008
-        - manual: Equivalent
 corequisites: none
 non_allowed:
   - BMEN30005

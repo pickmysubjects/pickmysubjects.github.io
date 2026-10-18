@@ -11,7 +11,8 @@ prerequisites:
         - ITAL10010
         - ITAL20003
         - ITAL30016
-    - manual: All students enrolling in Italian at The University of Melbourne for the first time, must have a result at least equivalent to Italian 8 from the online Italian Language Placement Test in order to enrol in this subject. This applies to all students, including total beginners and those who have experience with the language, whether through formal study, such as VCE or equivalent, or informally through family or overseas travel. The results of the test are binding and enrolment can only be changed in consultation with the relevant course coordinator. Link
+    - placement: Italian
+      note: All students enrolling in Italian at The University of Melbourne for the first time, must have a result at least equivalent to Italian 8 from the online Italian Language Placement Test in order to enrol in this subject. This applies to all students, including total beginners and those who have experience with the language, whether through formal study, such as VCE or equivalent, or informally through family or overseas travel. The results of the test are binding and enrolment can only be changed in consultation with the relevant course coordinator. Link
 corequisites: none
 non_allowed:
   - ITAL30001

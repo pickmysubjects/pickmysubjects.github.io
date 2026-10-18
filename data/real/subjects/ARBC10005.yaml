@@ -6,7 +6,8 @@ offerings:
   "2026":
     - semester-1
 prerequisites:
-  manual: "New students will have their appropriate entry point determined by the Arabic Program, based on evidence of prior learning and/or results of a placement test. Placement Test information available here: Link"
+  placement: Arabic
+  note: "New students will have their appropriate entry point determined by the Arabic Program, based on evidence of prior learning and/or results of a placement test. Placement Test information available here: Link"
 corequisites: none
 non_allowed: []
 skills:

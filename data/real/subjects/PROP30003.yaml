@@ -8,17 +8,10 @@ offerings:
 prerequisites:
   all:
     - ABPL30059
-    - any:
-        - ABPL30006
-        - PROP30001
+    - PROP30001
 corequisites: none
 non_allowed:
   - ABPL30045
-skills:
-  - business
-topics:
-  - finance
-  - business
 assessment:
   - kind: presentation
     weight: 5
@@ -51,4 +44,9 @@ breadth_for:
 handbook: https://handbook.unimelb.edu.au/2026/subjects/prop30003
 source_year: 2026
 verified_on: 2026-10-19
+skills:
+  - business
+topics:
+  - finance
+  - business
 notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

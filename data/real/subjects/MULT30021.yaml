@@ -4,7 +4,11 @@ level: 3
 points: 12.5
 offerings: unknown
 prerequisites:
-  manual: "100 credit points of undergraduate study completed Students are required to apply for permission to enrol into this subject prior to commencement of the internship. Students should make this application via the online application form: https://artsunimelb.formstack.com/forms/internship_application Applications will be reviewed in three rounds: Round 1 (Summer availability): closing 31 October Round 2 (June availability): closing 31 January Round 3 (June availability): closing 31 May The selection process for this subject includes consideration of academic performance in the first half of the degree. Students will receive outcomes within two weeks of the closing date for the relevant round. For further information including FAQS on the Application and Selection Process see: https://arts.unimelb.edu.au/students/wil#faqs"
+  all:
+    - points:
+        min: 100
+    - permission: application
+      note: "Students are required to apply for permission to enrol into this subject prior to commencement of the internship. Students should make this application via the online application form: https://artsunimelb.formstack.com/forms/internship_application Applications will be reviewed in three rounds: Round 1 (Summer availability): closing 31 October Round 2 (June availability): closing 31 January Round 3 (June availability): closing 31 May The selection process for this subject includes consideration of academic performance in the first half of the degree. Students will receive outcomes within two weeks of the closing date for the relevant round. For further information including FAQS on the Application and Selection Process see: https://arts.unimelb.edu.au/students/wil#faqs"
 corequisites: none
 non_allowed:
   - MULT20014

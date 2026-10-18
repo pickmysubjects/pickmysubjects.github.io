@@ -9,7 +9,8 @@ prerequisites:
   all:
     - points:
         min: 150
-    - manual: Permission from the Subject Coordinator via a selection process. This subject has quotas and entry into the subject is competitive. Selection is determined via an application process and is contingent on permission from the Subject Coordinator. This subject has special entry requirements including strict application deadlines. See the Global Management Consulting webpage for further information and how to apply. Global Management Consulting Although this is a level-3 subject, high performing students commencing second semester in second year are encouraged to apply.
+    - permission: application
+      note: Permission from the Subject Coordinator via a selection process. This subject has quotas and entry into the subject is competitive. Selection is determined via an application process and is contingent on permission from the Subject Coordinator. This subject has special entry requirements including strict application deadlines. See the Global Management Consulting webpage for further information and how to apply. Global Management Consulting Although this is a level-3 subject, high performing students commencing second semester in second year are encouraged to apply.
 corequisites: none
 non_allowed:
   - MGMT30012

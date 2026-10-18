@@ -56,7 +56,7 @@ export function checkTerms(plan: Plan, data: Dataset, standardLoad = 50): Issue[
         issues.push({ severity: 'info', kind: 'offering-assumed', subject: code, termIndex, params: { code, year: term.year, period: term.period, assumed: avail.assumedFromYear ?? '' }, message: `${code} in ${where} assumes the ${avail.assumedFromYear} timetable repeats.` })
       }
 
-      const ctx = { completed: before, subjects: data.subjects, admittedCourse: plan.course, majors: majorTitles(data, [plan.major, plan.specialisation]) }
+      const ctx = { completed: before, sameTerm, subjects: data.subjects, admittedCourse: plan.course, majors: majorTitles(data, [plan.major, plan.specialisation]), marks: plan.marks }
       const pre = evaluateField(s.prerequisites, ctx)
       if (pre.status === 'fail') {
         issues.push({ severity: 'error', kind: 'prereq-unmet', subject: code, termIndex, params: { code, year: term.year, period: term.period, needs: pre.unmet.join(', ') }, message: `${code} in ${where} needs ${pre.unmet.join(', ')} first.` })
@@ -64,7 +64,7 @@ export function checkTerms(plan: Plan, data: Dataset, standardLoad = 50): Issue[
         // Name the listed subjects not yet placed before this term: usually that's why only an
         // unverifiable route ("or equivalent") is left, and adding them clears the warning.
         const missing = referencedSubjects(s.prerequisites).filter((c) => !before.has(c))
-        issues.push({ severity: 'warning', kind: 'prereq-unknown', subject: code, termIndex, params: { code, needs: pre.unmet.join('; '), missing: missing.join(', ') }, message: `${code}: prerequisites can't be confirmed — ${pre.unmet.join('; ')}.` })
+        issues.push({ severity: 'warning', kind: 'prereq-unknown', subject: code, termIndex, params: { code, needs: pre.unmet.join('; '), missing: missing.join(', '), ...(pre.advisory ? { advisory: pre.advisory.join(',') } : {}) }, message: `${code}: prerequisites can't be confirmed — ${pre.unmet.join('; ')}.` })
       }
 
       const co = evaluateField(s.corequisites, { ...ctx, completed: sameTerm })

@@ -7,23 +7,21 @@ offerings:
     - semester-1
 prerequisites:
   any:
-    - any:
-        - FREN10003
-        - FREN20017
-        - FREN20018
-        - FREN10006
-        - FREN20001
-        - FREN30003
-        - FREN10007
-        - FREN20002
-        - FREN30004
-        - FREN10008
-        - FREN20019
-        - FREN30001
-        - FREN10009
-        - FREN20023
-        - FREN30022
-    - manual: Equivalent
+    - FREN10003
+    - FREN20017
+    - FREN20018
+    - FREN10006
+    - FREN20001
+    - FREN30003
+    - FREN10007
+    - FREN20002
+    - FREN30004
+    - FREN10008
+    - FREN20019
+    - FREN30001
+    - FREN10009
+    - FREN20023
+    - FREN30022
 corequisites: none
 non_allowed:
   - FREN20007

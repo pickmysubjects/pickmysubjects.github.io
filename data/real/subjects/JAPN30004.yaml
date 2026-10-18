@@ -7,11 +7,9 @@ offerings:
     - semester-1
 prerequisites:
   any:
-    - any:
-        - JAPN10006
-        - JAPN20004
-        - JAPN30006
-    - manual: Equivalent
+    - JAPN10006
+    - JAPN20004
+    - JAPN30006
 corequisites: none
 non_allowed:
   - JAPN20018

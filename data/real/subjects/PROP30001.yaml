@@ -6,28 +6,26 @@ offerings:
   "2026":
     - semester-1
 prerequisites:
-  all:
+  any:
     - all:
+        - admission: B-DES
+          note: "For B-DES students:"
         - all:
             - PROP10002
             - BLAW10001
             - PROP20002
+        - any:
             - PROP20003
             - ABPL20033
-            - ABPL30059
+    - all:
         - admission: B-COM
           note: Admission into the B-COM Bachelor of Commerce
-    - all:
-        - PROP20002
-        - PROP20003
+        - all:
+            - PROP20002
+            - PROP20003
 corequisites: none
 non_allowed:
   - ABPL20004
-skills:
-  - business
-topics:
-  - finance
-  - economics
 assessment:
   - kind: report
     weight: 20
@@ -56,4 +54,9 @@ breadth_for:
 handbook: https://handbook.unimelb.edu.au/2026/subjects/prop30001
 source_year: 2026
 verified_on: 2026-10-19
+skills:
+  - business
+topics:
+  - finance
+  - economics
 notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

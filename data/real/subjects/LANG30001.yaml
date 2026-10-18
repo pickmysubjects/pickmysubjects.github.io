@@ -18,8 +18,10 @@ prerequisites:
             - FREN10003
             - FREN20017
             - RUSS20005
-        - manual: Permission of subject coordinator.
-    - manual: Permission of coordinator if student is a native speaker of French, German, Italian, Russian or Spanish and has not undertaken language study at a tertiary level.
+        - permission: coordinator
+          note: Permission of subject coordinator.
+    - permission: coordinator
+      note: Permission of coordinator if student is a native speaker of French, German, Italian, Russian or Spanish and has not undertaken language study at a tertiary level.
 corequisites: none
 non_allowed: []
 skills:

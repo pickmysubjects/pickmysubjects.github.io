@@ -9,7 +9,8 @@ prerequisites:
     - all:
         - manual: Students completing a major/diploma in Spanish and Latin American Studies must be in Entry Point 1 to enrol in this subject.
         - SPAN20002
-    - manual: Permission from subject coordinator required for students taking it as a breadth subject who demonstrate the required language level through the university's language placement test.
+    - permission: coordinator
+      note: Permission from subject coordinator required for students taking it as a breadth subject who demonstrate the required language level through the university's language placement test.
 corequisites: none
 non_allowed: []
 skills:

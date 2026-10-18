@@ -5,7 +5,8 @@ points: 12.5
 offerings:
   "2026": []
 prerequisites:
-  manual: "Special entry conditions apply. Admission requirements: Students are selected for this subject based on academic merit. Further information on the Appplication Process is available here: https://arts.unimelb.edu.au/students/overseas-experience#about"
+  permission: application
+  note: "Special entry conditions apply. Admission requirements: Students are selected for this subject based on academic merit. Further information on the Appplication Process is available here: https://arts.unimelb.edu.au/students/overseas-experience#about"
 corequisites: HIST20052
 non_allowed:
   - ITAL30012

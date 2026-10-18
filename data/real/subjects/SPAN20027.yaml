@@ -6,11 +6,9 @@ offerings:
   "2026":
     - summer
 prerequisites:
-  any:
-    - all:
-        - SPAN10001
-        - SPAN10002
-    - manual: Equivalent
+  all:
+    - SPAN10001
+    - SPAN10002
 corequisites: none
 non_allowed:
   - SPAN10003

@@ -16,7 +16,8 @@ prerequisites:
         - GERM20008
         - GERM30006
         - GERM30022
-    - manual: "If enrolling in German at The University of Melbourne for the first time, a result at least equivalent to German 4 from the online German Placement Test: Link"
+    - placement: German
+      note: "If enrolling in German at The University of Melbourne for the first time, a result at least equivalent to German 4 from the online German Placement Test: Link"
 corequisites: none
 non_allowed:
   - GERM30001

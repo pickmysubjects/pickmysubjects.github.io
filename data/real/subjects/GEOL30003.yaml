@@ -14,7 +14,8 @@ prerequisites:
         - ERTH20002
     - admission: MC-GEOSC
       note: "Admission into or selection of one of the following: MC-GEOSC Master of Geoscience"
-    - manual: By arrangement with subject coordinators
+    - permission: coordinator
+      note: By arrangement with subject coordinators
 corequisites: none
 non_allowed: []
 assessment:

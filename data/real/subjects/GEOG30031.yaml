@@ -7,7 +7,8 @@ offerings:
 prerequisites:
   any:
     - GEOG20012
-    - manual: Permission of the subject coordinator
+    - permission: coordinator
+      note: Permission of the subject coordinator
 corequisites: none
 non_allowed: []
 skills:

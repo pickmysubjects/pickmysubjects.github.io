@@ -7,11 +7,9 @@ offerings:
     - winter
 prerequisites:
   any:
-    - any:
-        - SPAN10003
-        - SPAN20002
-        - SPAN20027
-    - manual: Equivalent
+    - SPAN10003
+    - SPAN20002
+    - SPAN20027
 corequisites: none
 non_allowed:
   - SPAN30020

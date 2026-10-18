@@ -11,8 +11,6 @@ prerequisites:
     - ABPL20053
 corequisites: none
 non_allowed: []
-topics:
-  - engineering
 assessment:
   - kind: assignment
     weight: 15
@@ -41,4 +39,6 @@ breadth_for:
 handbook: https://handbook.unimelb.edu.au/2026/subjects/abpl30046
 source_year: 2026
 verified_on: 2026-10-19
+topics:
+  - engineering
 notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

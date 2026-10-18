@@ -131,3 +131,58 @@ group('conditions limited to a major', () => {
     expect(evaluate({ manual: sci }, arts(['History'])).status).toBe('unknown')
   })
 })
+
+group('typed conditions', () => {
+  const withMarks = (done: string[], marks?: Record<string, number>) => ({ completed: new Set(done), subjects, marks })
+
+  it('an average is checked against the marks of the matching subjects', () => {
+    const rule = { average: { min: 75, levels: [2] } }
+    expect(evaluate(rule, withMarks(['AAAA20001', 'BBBB20001'], { AAAA20001: 80, BBBB20001: 72 })).status).toBe('ok')
+    expect(evaluate(rule, withMarks(['AAAA20001', 'BBBB20001'], { AAAA20001: 70, BBBB20001: 72 })).status).toBe('fail')
+    // A matching subject without a mark (planned, not taken yet) leaves it open.
+    expect(evaluate(rule, withMarks(['AAAA20001', 'BBBB20001'], { AAAA20001: 90 })).status).toBe('unknown')
+    expect(evaluate(rule, withMarks(['AAAA20001'])).status).toBe('unknown')
+    // Nothing done it could be the average of: not met yet.
+    expect(evaluate(rule, withMarks(['AAAA10001'], { AAAA10001: 90 })).status).toBe('fail')
+    expect(evaluate({ average: { min: 75, areas: ['BBBB'] } }, withMarks(['AAAA20001', 'BBBB20001'], { AAAA20001: 50, BBBB20001: 80 })).status).toBe('ok')
+  })
+
+  it('a WAM is the average of everything done, unknown without marks', () => {
+    expect(evaluate({ wam: { min: 70 } }, withMarks(['AAAA10001', 'AAAA20001'], { AAAA10001: 65, AAAA20001: 80 })).status).toBe('ok')
+    expect(evaluate({ wam: { min: 75 } }, withMarks(['AAAA10001', 'AAAA20001'], { AAAA10001: 65, AAAA20001: 80 })).status).toBe('fail')
+    expect(evaluate({ wam: { min: 70 } }, withMarks(['AAAA10001'])).status).toBe('unknown')
+  })
+
+  it('a concurrent requirement can be met in the same term', () => {
+    const rule = { subject: 'AAAA20001', concurrent: true }
+    expect(evaluate(rule, { ...ctx([]), sameTerm: new Set(['AAAA20001']) }).status).toBe('ok')
+    expect(evaluate({ subject: 'AAAA20001' }, { ...ctx([]), sameTerm: new Set(['AAAA20001']) }).status).toBe('fail')
+    const pts = { points: { min: 12.5, levels: [2], concurrent: true } }
+    expect(evaluate(pts, { ...ctx([]), sameTerm: new Set(['BBBB20001']) }).status).toBe('ok')
+  })
+
+  it('placement, permission and school conditions are unknown, marked as advisory', () => {
+    for (const rule of [{ placement: 'French' }, { permission: 'coordinator' as const }, { school: { subject: 'Physics', minScore: 30 } }]) {
+      const r = evaluate(rule, ctx([]))
+      expect(r.status).toBe('unknown')
+      expect(r.advisory).toHaveLength(1)
+    }
+    // Still advisory when it's the only open option; a free-text one makes it a plain unknown.
+    expect(evaluate({ any: [{ subject: 'AAAA10001' }, { placement: 'French' }] }, ctx([])).advisory).toEqual(['placement'])
+    expect(evaluate({ any: [{ placement: 'French' }, { manual: 'something else' }] }, ctx([])).advisory).toBeUndefined()
+    expect(evaluate({ any: [{ subject: 'AAAA10001' }, { placement: 'French' }] }, ctx(['AAAA10001'])).status).toBe('ok')
+  })
+
+  it('describes each kind in words', () => {
+    expect(describe({ placement: 'French' })).toBe('a French placement test')
+    expect(describe({ permission: 'application' })).toMatch(/application/)
+    expect(describe({ school: { subject: 'Physics', minScore: 30 } })).toBe('VCE Physics (study score 30+)')
+    expect(describe({ average: { min: 75, levels: [2, 3] } })).toBe('an average of 75 or more in level 2 or 3 subjects')
+    expect(describe({ wam: { min: 70 } })).toBe('a WAM of 70 or more')
+  })
+
+  it('the schema accepts the new kinds', () => {
+    const s = subject({ code: 'AAAA30001', prerequisites: { any: [{ placement: 'French', note: 'x' }, { school: { subject: 'French', minScore: 35 } }, { permission: 'coordinator' }, { wam: { min: 70 } }, { average: { min: 70, areas: ['ITAL'] } }, { subject: 'AAAA10001', concurrent: true }] } })
+    expect(s.prerequisites).toMatchObject({ any: expect.arrayContaining([{ placement: 'French', note: 'x' }]) })
+  })
+})

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { parseAvailability, parseBreadthFor, parseContactHours, parseHandbookPaste } from '../src/engine/handbookPaste'
+import { parseAvailability, parseBreadthFor, parseContactHours, parseHandbookPaste, restructure, structuredFromText } from '../src/engine/handbookPaste'
 import { subjectYaml } from '../src/engine/serialize'
 import { parse } from 'yaml'
 import { subjectFileSchema } from '../src/engine/schema'
@@ -86,7 +86,7 @@ describe('parseHandbookPaste', () => {
     )
     expect(r.prerequisites).toEqual({
       all: [
-        { any: [{ subject: 'AAAA10009' }, { manual: 'VCE Units 3 and 4 Physics or equivalent' }] },
+        { any: [{ subject: 'AAAA10009' }, { school: { subject: 'Physics' }, note: 'VCE Units 3 and 4 Physics or equivalent' }] },
         { any: [{ all: [{ subject: 'BBBB10014' }, { subject: 'BBBB10015' }] }, { admission: 'B-SCI', note: 'Admission into the B-SCI Bachelor of Science' }] },
       ],
     })
@@ -125,8 +125,8 @@ describe('parseHandbookPaste', () => {
   })
 
   it('keeps unrecognised free text for manual checking, with a warning', () => {
-    const r = parseHandbookPaste('Prerequisites\nPermission of the subject coordinator.')
-    expect(r.prerequisites).toEqual({ manual: 'Permission of the subject coordinator.' })
+    const r = parseHandbookPaste('Prerequisites\nAncient Near Eastern Language: Egyptian')
+    expect(r.prerequisites).toEqual({ manual: 'Ancient Near Eastern Language: Egyptian' })
     expect(r.warnings).toHaveLength(1)
   })
 
@@ -374,7 +374,7 @@ describe('an examination held mid-semester', () => {
       expect(pre('Completion of 100 credit points of study').prerequisites).toEqual({ points: { min: 100 } })
       expect(pre('Completion of a minimum of 150 credit points of undergraduate study (at the time of application)').prerequisites).toEqual({ points: { min: 150 } })
       const r = pre('Students must obtain written permission to enrol in this subject. Students must have completed at least 100 points of prior study.')
-      expect(r.prerequisites).toMatchObject({ all: [{ points: { min: 100 } }, { manual: expect.any(String) }] })
+      expect(r.prerequisites).toMatchObject({ all: [{ permission: 'coordinator' }, { points: { min: 100 } }] })
     })
 
     it('points of named fields become a points rule; a field we cannot map stays for a human', () => {
@@ -455,6 +455,113 @@ describe('free text the Handbook writes in fixed ways', () => {
       all: [{ points: { min: 50, levels: [2] } }, { points: { min: 25, levels: [2], areas: ['GEOG'] } }],
     })
     expect(structuredFromText('25 credit points in a Level 1 biology subjects')).toEqual({ points: { min: 25, levels: [1], areas: ['BIOL'] } })
-    expect(structuredFromText('Breadth students need the approval of the subject coordinator')).toBeNull()
+    expect(structuredFromText('Breadth students need the approval of the subject coordinator')).toMatchObject({ permission: 'coordinator' })
+  })
+})
+
+const row = (code: string, extra = '') => `${code}\tSome subject\t${extra}\nSemester 1 (On Campus - Parkville)\n\t12.5`
+const head = 'Code\tName\tTeaching period\tCredit Points'
+
+describe('requirement layouts from design pages', () => {
+  it('a "One of" table straight after an "All of" table is its own choice, needed as well', () => {
+    const r = parseHandbookPaste(`Prerequisites\nAll of\n${head}\n${row('AAAA10001')}\n${row('AAAA10002')}\nOne of\n${head}\n${row('BBBB20001')}\n${row('BBBB20002')}\nCorequisites\nNone`)
+    expect(r.prerequisites).toEqual({
+      all: [{ all: [{ subject: 'AAAA10001' }, { subject: 'AAAA10002' }] }, { any: [{ subject: 'BBBB20001' }, { subject: 'BBBB20002' }] }],
+    })
+    const and = parseHandbookPaste(`Prerequisites\nAll of\n${head}\n${row('AAAA10001')}\nAnd one of\n${head}\n${row('BBBB20001')}\n${row('BBBB20002')}\nCorequisites\nNone`)
+    expect(and.prerequisites).toEqual({ all: [{ subject: 'AAAA10001' }, { any: [{ subject: 'BBBB20001' }, { subject: 'BBBB20002' }] }] })
+  })
+
+  it('a recommendation to study two subjects together adds no requirement', () => {
+    const r = parseHandbookPaste(`Prerequisites\n${head}\n${row('AAAA20001')}\nIt is strongly recommended that CCCC30001 Case Studies be undertaken / studied concurrently with CCCC30002 Valuation.\nCorequisites\nNone`)
+    expect(r.prerequisites).toEqual({ subject: 'AAAA20001' })
+  })
+
+  it('"For B-DES students:" headings become one branch per degree, each needing that degree', () => {
+    const r = parseHandbookPaste(
+      `Prerequisites\nFor B-DES students:\nAll of\n${head}\n${row('AAAA10001')}\n${row('AAAA10002')}\nFor B-COM Students:\nAdmission into the B-COM Bachelor of Commerce\nAND\n${head}\n${row('BBBB20001')}\nFor Bachelor of Environments students ( B-ENVS):\n${head}\n${row('CCCC20001')}\nCorequisites\nNone`,
+    )
+    expect(r.prerequisites).toMatchObject({
+      any: [
+        { all: [{ admission: 'B-DES' }, { subject: 'AAAA10001' }, { subject: 'AAAA10002' }] },
+        { all: [{ admission: 'B-COM' }, { subject: 'BBBB20001' }] },
+        { all: [{ admission: 'B-ENVS' }, { subject: 'CCCC20001' }] },
+      ],
+    })
+  })
+
+  it('a general part before the degree headings applies to every degree', () => {
+    const r = parseHandbookPaste(`Prerequisites\n${head}\n${row('AAAA30001')}\nFor Bachelor of Commerce students:\n${head}\n${row('BBBB20001')}\nCorequisites\nNone`)
+    expect(r.prerequisites).toMatchObject({ all: [{ subject: 'AAAA30001' }, { all: [{ admission: 'B-COM' }, { subject: 'BBBB20001' }] }] })
+  })
+
+  it('rows marked "No longer available" are left out of requirement tables', () => {
+    const r = parseHandbookPaste(`Prerequisites\nOne of\n${head}\nAAAA20004\tOld subject\tNo longer available\t\n${row('AAAA30001')}\nCorequisites\nNone`)
+    expect(r.prerequisites).toEqual({ subject: 'AAAA30001' })
+    expect(r.warnings.join(' ')).toMatch(/No longer available/)
+  })
+})
+
+describe('typed conditions from free text', () => {
+  it('drops a bare "Equivalent" option and reads glued text after it', () => {
+    expect(restructure({ any: [{ subject: 'AAAA10001' }, { manual: 'Equivalent' }] })).toEqual({ subject: 'AAAA10001' })
+    expect(restructure({ any: [{ subject: 'AAAA10001' }, { manual: 'An approved equivalent' }, { manual: 'equivalent.' }] })).toEqual({ subject: 'AAAA10001' })
+    // A requirement that is nothing but "Equivalent" stays as it is.
+    expect(restructure({ manual: 'Equivalent' })).toEqual({ manual: 'Equivalent' })
+    const r = parseHandbookPaste(`Prerequisites\n${head}\n${row('AAAA10001')}\nOR\nEquivalent\nCorequisites\nNone`)
+    expect(r.prerequisites).toEqual({ subject: 'AAAA10001' })
+  })
+
+  it('reads points totals, by level and for a group of fields', () => {
+    expect(structuredFromText('B-SCI Students: Completion of at least 175 credit points')).toMatchObject({ all: [{ admission: 'B-SCI' }, { points: { min: 175 } }] })
+    expect(structuredFromText('Completion of 25 points at Level 1, and 37.5 points at Level 2.')).toEqual({
+      all: [{ points: { min: 25, levels: [1] } }, { points: { min: 37.5, levels: [2] } }],
+    })
+    expect(structuredFromText('50 credit points in a Level 2 biological sciences subjects')).toMatchObject({ points: { min: 50, levels: [2], areas: expect.arrayContaining(['BIOL', 'ZOOL', 'BOTA']) } })
+    expect(structuredFromText('a minimum of 12.5 credit points of Level 1 Mathematics subject (or equivalent)')).toEqual({ points: { min: 12.5, levels: [1], areas: ['MAST'] } })
+  })
+
+  it('reads averages and WAMs', () => {
+    expect(structuredFromText('Excellent results in a discipline appropriate to the project (normally an average of at least 75% in relevant 2nd and 3rd year subjects)')).toMatchObject({
+      average: { min: 75, levels: [2, 3] },
+    })
+    expect(structuredFromText('A minimum of 25 credit points of Italian Studies subjects with an average grade of H2B or above.')).toMatchObject({
+      all: [{ points: { min: 25, areas: ['ITAL'] } }, { average: { min: 70, areas: ['ITAL'] } }],
+    })
+    expect(structuredFromText('All students should have at least a WAM of 70.')).toMatchObject({ wam: { min: 70 } })
+  })
+
+  it('reads "can be taken at the same time" as a concurrent rule', () => {
+    expect(structuredFromText('Completion of 25 points at Level 1, and 37.5 points at Level 2.')).not.toHaveProperty('concurrent')
+    expect(structuredFromText('A minimum of 25 credit points of Level 3 Chemistry subjects; these can be taken at the same time')).toEqual({
+      points: { min: 25, levels: [3], areas: ['CHEM'], concurrent: true },
+    })
+  })
+
+  it('reads placement and competency tests', () => {
+    expect(structuredFromText('All students enrolling in French for the first time are required to complete the online language questionnaire/placement test at the link below.')).toMatchObject({ placement: 'French' })
+    expect(structuredFromText('Passing the Language Placement Test of Korean 4')).toMatchObject({ placement: 'Korean' })
+    expect(structuredFromText('Students will be required to sit a placement test conducted by the subject co-ordinator.')).toMatchObject({ placement: 'language' })
+    expect(structuredFromText('At least 75% in the programming competency test')).toMatchObject({ placement: 'programming' })
+  })
+
+  it('reads permission and application-only entry, but not a condition on a major', () => {
+    expect(structuredFromText('Permission of the subject coordinator')).toMatchObject({ permission: 'coordinator' })
+    expect(structuredFromText('Permission from the Subject Coordinator via a selection process. This subject has a quota of 20 students.')).toMatchObject({ permission: 'application' })
+    expect(structuredFromText('100 credit points of undergraduate study completed Students are required to apply for permission to enrol')).toMatchObject({
+      all: [{ points: { min: 100 } }, { permission: 'application' }],
+    })
+    expect(structuredFromText('Completion of any two first-year arts subjects or permission of the convenor of the program.')).toBeNull()
+    expect(structuredFromText('This is a Capstone subject and only available to students in the Sociology Major within the Bachelor of Arts')).toBeNull()
+  })
+
+  it('reads VCE results, with the study score when there is one', () => {
+    expect(structuredFromText('Study score of 30 or more in VCE Specialist Mathematics 3/4 or equivalent')).toMatchObject({ school: { subject: 'Specialist Mathematics', minScore: 30 } })
+    expect(structuredFromText('Excellent results in VCE Units 3 and 4 Physics (normally an unscaled score of at least 35) or equivalent')).toMatchObject({ school: { subject: 'Physics', minScore: 35 } })
+    expect(structuredFromText('Completion of VCE German, or equivalent.')).toEqual({ school: { subject: 'German' }, note: 'Completion of VCE German, or equivalent.' })
+    expect(structuredFromText('VCE Specialist Mathematics 3/4 study score of at least 38 (or equivalent), or permission from the Mathematics and Statistics Learning Centre')).toMatchObject({
+      any: [{ school: { subject: 'Specialist Mathematics', minScore: 38 } }, { permission: 'coordinator' }],
+    })
+    expect(structuredFromText('VCE Algorithmics students may take the maths requirement concurrently')).toBeNull()
   })
 })

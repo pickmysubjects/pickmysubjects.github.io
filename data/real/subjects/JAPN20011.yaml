@@ -5,10 +5,7 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
-prerequisites:
-  any:
-    - JAPN20012
-    - manual: Equivalent
+prerequisites: JAPN20012
 corequisites: none
 non_allowed:
   - JAPN20002

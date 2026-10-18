@@ -11,8 +11,12 @@ prerequisites:
         - FREN10003
         - FREN20017
         - FREN20018
-    - manual: VCE French study score of 35 or above (5 or above in IB French)
-    - manual: Achievement of French 4 standard in the French placement test
+    - school:
+        subject: French
+        minScore: 35
+      note: VCE French study score of 35 or above (5 or above in IB French)
+    - placement: French
+      note: Achievement of French 4 standard in the French placement test
     - manual: As otherwise determined by the French Program.
 corequisites: none
 non_allowed:

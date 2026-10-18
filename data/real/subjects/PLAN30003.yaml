@@ -8,11 +8,6 @@ offerings:
 prerequisites: ABPL20035
 corequisites: none
 non_allowed: []
-skills:
-  - writing
-topics:
-  - society
-  - geography
 assessment:
   - kind: assignment
     weight: 25
@@ -39,4 +34,9 @@ breadth_for:
 handbook: https://handbook.unimelb.edu.au/2026/subjects/plan30003
 source_year: 2026
 verified_on: 2026-10-19
+skills:
+  - writing
+topics:
+  - society
+  - geography
 notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

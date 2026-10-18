@@ -8,7 +8,8 @@ offerings:
     - semester-2
 prerequisites:
   any:
-    - manual: Permission of the coordinator is required prior to enrolling in this subject (some programming experience is required)
+    - permission: coordinator
+      note: Permission of the coordinator is required prior to enrolling in this subject (some programming experience is required)
     - COMP90059
     - any:
         - admission: MC-SOFTENG

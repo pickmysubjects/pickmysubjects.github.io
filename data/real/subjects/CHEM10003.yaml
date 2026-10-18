@@ -16,14 +16,20 @@ prerequisites:
     - all:
         - any:
             - CHEM10007
-            - manual: VCE Units 3/4 Chemistry, or equivalent
+            - school:
+                subject: Chemistry
+              note: VCE Units 3/4 Chemistry, or equivalent
         - any:
             - all:
                 - MAST10014
                 - MAST10015
             - MAST10012
-            - manual: VCE Units 3/4 Mathematical Methods
-            - manual: VCE Units 3/4 Further Mathematics
+            - school:
+                subject: Mathematical Methods
+              note: VCE Units 3/4 Mathematical Methods
+            - school:
+                subject: Further Mathematics
+              note: VCE Units 3/4 Further Mathematics
             - admission: B-SCI
               note: Admission into the B-SCI Bachelor of Science
             - admission: B-COM

@@ -8,7 +8,11 @@ prerequisites:
   all:
     - points:
         min: 100
-    - manual: Students must obtain written permission to enrol in this subject by emailing the Subject Coordinator. Students must have completed at least 100 points of prior study.
+    - all:
+        - permission: coordinator
+          note: Students must obtain written permission to enrol in this subject by emailing the Subject Coordinator.
+        - points:
+            min: 100
 corequisites: none
 non_allowed: []
 skills:

@@ -97,6 +97,7 @@ export function issueText(
 ): string {
   // The engine's reason is English; say what the subject needs in the reader's language instead.
   const s = issue.kind === 'prereq-unknown' && issue.subject ? subjects[issue.subject] : undefined
+  if (s && issue.params?.advisory) return t('issue.prereq-advisory', { code: s.code, needs: describeReq(t, s.prerequisites, course) })
   if (s && issue.params?.missing) return t('issue.prereq-unknown-missing', { code: s.code, missing: String(issue.params.missing), needs: describeReq(t, s.prerequisites, course) })
   if (s) return t('issue.prereq-unknown', { code: s.code, needs: describeReq(t, s.prerequisites, course) })
   if (issue.kind.startsWith('rule-')) {
@@ -160,7 +161,7 @@ export function requirementList(t: Translate, field: ReqField, course = ''): { k
 }
 
 function describeExpr(t: Translate, e: ReqExpr): string {
-  if ('subject' in e) return e.subject
+  if ('subject' in e) return e.concurrent ? t('expr.concurrent', { what: e.subject }) : e.subject
   if ('all' in e || 'any' in e) {
     const parts = 'all' in e ? e.all : e.any
     const sep = ` ${t('all' in e ? 'expr.and' : 'expr.or')} `
@@ -174,9 +175,26 @@ function describeExpr(t: Translate, e: ReqExpr): string {
     const lv = levels ?? (level !== undefined ? [level] : [])
     const what = [lv.length ? t('expr.level', { level: lv.join('/') }) : '', (areas ?? (area ? [area] : [])).join('/')].filter(Boolean).join(' ')
     const base = what ? t('expr.pointsOf', { n: min, what }) : t('expr.points', { n: min })
-    return from ? `${base} ${t('expr.from', { codes: from.join(', ') })}` : base
+    const text = from ? `${base} ${t('expr.from', { codes: from.join(', ') })}` : base
+    return e.points.concurrent ? t('expr.concurrent', { what: text }) : text
   }
   if ('admission' in e) return t('expr.admission', { course: e.admission })
+  if ('average' in e) {
+    const { min, levels, areas, from } = e.average
+    const what = [levels?.length ? t('expr.level', { level: levels.join('/') }) : '', (areas ?? []).join('/'), (from ?? []).join(', ')].filter(Boolean).join(' ')
+    return what ? t('expr.average', { min, what }) : t('expr.averageAll', { min })
+  }
+  if ('wam' in e) return t('expr.wam', { min: e.wam.min })
+  if ('placement' in e) {
+    if (e.placement === 'programming') return t('expr.placementProgramming')
+    if (e.placement === 'language') return t('expr.placementLanguage')
+    return t('expr.placement', { language: e.placement })
+  }
+  if ('permission' in e) return t(e.permission === 'coordinator' ? 'expr.permissionCoordinator' : 'expr.permissionApplication')
+  if ('school' in e) {
+    const { subject, minScore } = e.school
+    return minScore ? t('expr.schoolScore', { subject, score: minScore }) : t('expr.school', { subject })
+  }
   return `“${e.manual}”`
 }
 

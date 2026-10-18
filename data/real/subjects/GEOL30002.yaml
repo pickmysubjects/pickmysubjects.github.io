@@ -10,7 +10,8 @@ prerequisites:
     - GEOL20002
     - EVSC20008
     - GEOL20003
-    - manual: Permission of the subject coordinator
+    - permission: coordinator
+      note: Permission of the subject coordinator
 corequisites: none
 non_allowed: []
 assessment:

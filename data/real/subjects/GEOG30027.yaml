@@ -18,7 +18,8 @@ prerequisites:
               - 2
             areas:
               - GEOG
-    - manual: Permission from subject coordinator. This subject may be taken as a Capstone for the Geography major in the BA and BSc.
+    - permission: coordinator
+      note: Permission from subject coordinator. This subject may be taken as a Capstone for the Geography major in the BA and BSc.
 corequisites: none
 non_allowed: []
 assessment:

@@ -16,7 +16,9 @@ prerequisites:
         - PHYC10002
         - PHYC10004
         - PHYC10006
-    - manual: VCE Mathematical Methods or equivalent.
+    - school:
+        subject: Mathematical Methods
+      note: VCE Mathematical Methods or equivalent.
 corequisites: none
 non_allowed: []
 assessment:

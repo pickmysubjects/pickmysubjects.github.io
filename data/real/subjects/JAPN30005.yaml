@@ -11,7 +11,8 @@ prerequisites:
         - JAPN10004
         - JAPN20014
         - JAPN30008
-    - manual: "New students will have their appropriate entry point determined by the Japanese Program, based on evidence of prior learning and/or results of a placement test as required. Placement Test information here: Link"
+    - placement: Japanese
+      note: "New students will have their appropriate entry point determined by the Japanese Program, based on evidence of prior learning and/or results of a placement test as required. Placement Test information here: Link"
 corequisites: none
 non_allowed: []
 skills:

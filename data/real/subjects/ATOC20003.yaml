@@ -8,7 +8,10 @@ offerings:
 prerequisites:
   any:
     - MAST10005
-    - manual: Study score of 30 or more in VCE Specialist Mathematics 3/4 or equivalent
+    - school:
+        subject: Specialist Mathematics
+        minScore: 30
+      note: Study score of 30 or more in VCE Specialist Mathematics 3/4 or equivalent
 corequisites: none
 non_allowed: []
 recommended:

@@ -8,7 +8,9 @@ offerings:
 prerequisites:
   any:
     - manual: "There is an application process for this subject and a quota applies. See website for information: https://arts.unimelb.edu.au/students/overseas-experience#undergraduate-subjects Language requirement: 25 credit points of German language study"
-    - manual: Completion of VCE German, or equivalent.
+    - school:
+        subject: German
+      note: Completion of VCE German, or equivalent.
 corequisites: none
 non_allowed:
   - GERM30024

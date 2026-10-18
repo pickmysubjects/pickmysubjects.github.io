@@ -5,10 +5,7 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
-prerequisites:
-  any:
-    - BLAW10001
-    - manual: Equivalent
+prerequisites: BLAW10001
 corequisites: none
 non_allowed: []
 skills:

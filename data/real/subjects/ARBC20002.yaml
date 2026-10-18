@@ -7,10 +7,8 @@ offerings:
     - semester-1
 prerequisites:
   any:
-    - any:
-        - ARBC20007
-        - ARBC30005
-    - manual: Equivalent
+    - ARBC20007
+    - ARBC30005
 corequisites: none
 non_allowed:
   - ARBC30006

@@ -6,7 +6,17 @@ offerings:
   "2026":
     - summer
 prerequisites:
-  manual: "This subject is taught on site in Italy Eligibility requirements: A minimum of 25 credit points of Italian Studies subjects with an average grade of H2B or above. Additional entry requirements also apply (please see below). Link"
+  all:
+    - points:
+        min: 25
+        areas: &a1
+          - ITAL
+    - average:
+        min: 70
+        areas: *a1
+      note: "This subject is taught on site in Italy Eligibility requirements: A minimum of 25 credit points of Italian Studies subjects with an average grade of H2B or above. Additional entry requirements also apply (please see below). Link"
+    - permission: application
+      note: "This subject is taught on site in Italy Eligibility requirements: A minimum of 25 credit points of Italian Studies subjects with an average grade of H2B or above. Additional entry requirements also apply (please see below). Link"
 corequisites: none
 non_allowed:
   - ITAL30005

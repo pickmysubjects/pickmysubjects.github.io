@@ -6,7 +6,8 @@ offerings:
   "2026":
     - semester-1
 prerequisites:
-  manual: All students enrolling in Arabic for the first time are required to complete the online language questionnaire/placement test at the link below. This applies to all students, from total beginners through to formal study, such as VCE or equivalent, or informally through family or overseas travel. Upon completion of the placement test, students will receive an email with the outcome and entry point. Within 5 working days of receiving the email, study plans will be updated and students will be able to self-enrol into the first subject of their entry point. The results of the test are binding and enrolment can only be changed with approval from the coordinator of the language major. Link It is recommended that students undertake the language placement test at least two weeks prior to the commencement of semester.
+  placement: Arabic
+  note: All students enrolling in Arabic for the first time are required to complete the online language questionnaire/placement test at the link below. This applies to all students, from total beginners through to formal study, such as VCE or equivalent, or informally through family or overseas travel. Upon completion of the placement test, students will receive an email with the outcome and entry point. Within 5 working days of receiving the email, study plans will be updated and students will be able to self-enrol into the first subject of their entry point. The results of the test are binding and enrolment can only be changed with approval from the coordinator of the language major. Link It is recommended that students undertake the language placement test at least two weeks prior to the commencement of semester.
 corequisites: none
 non_allowed:
   - ARBC20004

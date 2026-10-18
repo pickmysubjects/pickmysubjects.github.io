@@ -7,7 +7,7 @@ offerings:
     - semester-2
 prerequisites:
   any:
-    - subject: CHEM10004
+    - CHEM10004
     - manual: CHEM10006 Chemistry for Biomedicine, with the subject coordinator's approval
 corequisites: none
 non_allowed: []

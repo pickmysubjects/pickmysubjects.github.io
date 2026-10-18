@@ -14,9 +14,6 @@ prerequisites:
         - ABPL20035
 corequisites: none
 non_allowed: []
-topics:
-  - geography
-  - environment
 assessment:
   - kind: assignment
     weight: 15
@@ -45,4 +42,7 @@ breadth_for:
 handbook: https://handbook.unimelb.edu.au/2026/subjects/plan30001
 source_year: 2026
 verified_on: 2026-10-19
+topics:
+  - geography
+  - environment
 notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

@@ -7,7 +7,8 @@ offerings:
     - semester-1
     - winter
 prerequisites:
-  manual: Online language placement test first; its result sets your entry point
+  placement: language
+  note: Online language placement test first; its result sets your entry point
 corequisites: none
 non_allowed:
   - JAPN20015

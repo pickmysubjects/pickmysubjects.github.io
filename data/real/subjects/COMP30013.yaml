@@ -8,7 +8,8 @@ offerings:
     - semester-2
 prerequisites:
   all:
-    - manual: Permission from the School of CIS and an academic supervisor
+    - permission: coordinator
+      note: Permission from the School of CIS and an academic supervisor
     - any:
         - COMP20003
         - COMP20007

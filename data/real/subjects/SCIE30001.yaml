@@ -8,7 +8,12 @@ offerings:
     - semester-1
     - semester-2
 prerequisites:
-  manual: "Excellent results in a discipline appropriate to the project (normally an average of at least 75% in relevant second and third year level subjects, noting that these levels of attainment may vary from School to School, reflecting differences in required skills and expertise) and approval of the relevant departmental Science Research Project Coordinator or Head of Department and student services. For detailed information and the application process, refer to the Faculty of Science website: https://science.unimelb.edu.au/students/plan-your-study/research-project-subjects Link"
+  average:
+    min: 75
+    levels:
+      - 2
+      - 3
+  note: "Excellent results in a discipline appropriate to the project (normally an average of at least 75% in relevant second and third year level subjects, noting that these levels of attainment may vary from School to School, reflecting differences in required skills and expertise) and approval of the relevant departmental Science Research Project Coordinator or Head of Department and student services. For detailed information and the application process, refer to the Faculty of Science website: https://science.unimelb.edu.au/students/plan-your-study/research-project-subjects Link"
 corequisites: none
 non_allowed: []
 assessment:

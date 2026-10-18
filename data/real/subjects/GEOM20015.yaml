@@ -12,8 +12,9 @@ prerequisites:
           note: "Admission into or selection of one of the following: MC-SPATENG Master of Spatial Engineering MC-DINFENG Master of Digital Infrastructure Engineering"
         - admission: MC-DINFENG
           note: "Admission into or selection of one of the following: MC-SPATENG Master of Spatial Engineering MC-DINFENG Master of Digital Infrastructure Engineering"
-    - manual: VCE mathematics
-    - manual: equivalent
+    - school:
+        subject: mathematics
+      note: VCE mathematics
 corequisites: none
 non_allowed: []
 assessment:

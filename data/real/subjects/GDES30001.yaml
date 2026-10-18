@@ -15,11 +15,6 @@ prerequisites:
         - GDES30002
 corequisites: none
 non_allowed: []
-skills:
-  - design
-topics:
-  - design
-  - art
 assessment:
   - kind: presentation
     weight: 25
@@ -34,4 +29,9 @@ breadth_for:
 handbook: https://handbook.unimelb.edu.au/2026/subjects/gdes30001
 source_year: 2026
 verified_on: 2026-10-19
+skills:
+  - design
+topics:
+  - design
+  - art
 notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

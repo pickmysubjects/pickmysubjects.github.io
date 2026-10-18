@@ -10,12 +10,16 @@ prerequisites:
   all:
     - any:
         - PHYC10009
-        - manual: VCE Units 3 and 4 Physics or equivalent
+        - school:
+            subject: Physics
+          note: VCE Units 3 and 4 Physics or equivalent
     - any:
         - all:
             - MAST10014
             - MAST10015
-        - manual: VCE Units 3 and 4 Mathematical Methods or equivalent
+        - school:
+            subject: Mathematical Methods
+          note: VCE Units 3 and 4 Mathematical Methods or equivalent
         - admission: B-SCI
           note: Admission into the B-SCI Bachelor of Science
 corequisites: none

@@ -6,7 +6,9 @@ offerings:
   "2026":
     - semester-1
 prerequisites:
-  manual: Students enrolling in this class should have passed VCE Ancient Greek or the equivalent.
+  school:
+    subject: Ancient Greek
+  note: Students enrolling in this class should have passed VCE Ancient Greek or the equivalent.
 corequisites: none
 non_allowed:
   - CLAS20015

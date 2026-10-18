@@ -8,7 +8,8 @@ offerings:
     - semester-2
 prerequisites:
   all:
-    - manual: There is a quota of 40 for this subject, and students are required to apply for permission to enrol into this subject prior to commencement of the internship.
+    - permission: application
+      note: There is a quota of 40 for this subject, and students are required to apply for permission to enrol into this subject prior to commencement of the internship.
     - manual: "Criteria for applying: Selection of one of the following: Politics and International Studies major in the B-ARTS Bachelor of Arts, Politics and International Studies specialisation (formal) in the GD-ARTS Graduate Diploma in Arts"
     - points:
         min: 12.5
@@ -31,7 +32,12 @@ prerequisites:
     - MULT20008
     - POLS20034
     - MULT20003
-    - manual: "The WAM of the above four subjects will be taken into consideration when assessing student applications. All students should have at least a WAM of 70. If students completed more than required points at that year level, the highest marks will be calculated for the WAM. Making the application: Students should make this application via the online application form: Application Form Applications will be reviewed in two rounds: Round 1 (Semester 1 availability): closing 31 October Round 2 (Semester 2 availability): closing 31 May Students will receive outcomes within two weeks of the closing date for the relevant round. For further information including FAQS on the Application and Selection Process see: Faculty of Arts - WIL FAQs *Late applications will be considered in both semesters if you meet the eligibility requirements and have secured a placement except in the event of the quota subject places reaching capacity. Please contact Experiential Learning Officer if you’re submitting a late application form: ssps-internships@unimelb.edu.au"
+    - all:
+        - wam:
+            min: 70
+          note: "The WAM of the above four subjects will be taken into consideration when assessing student applications. All students should have at least a WAM of 70. If students completed more than required points at that year level, the highest marks will be calculated for the WAM. Making the application: Students should make this application via the online application form: Application Form Applications will be reviewed in two rounds: Round 1 (Semester 1 availability): closing 31 October Round 2 (Semester 2 availability): closing 31 May Students will receive outcomes within two weeks of the closing date for the relevant round. For further information including FAQS on the Application and Selection Process see: Faculty of Arts - WIL FAQs *Late applications will be considered in both semesters if you meet the eligibility requirements and have secured a placement except in the event of the quota subject places reaching capacity. Please contact Experiential Learning Officer if you’re submitting a late application form: ssps-internships@unimelb.edu.au"
+        - permission: application
+          note: "The WAM of the above four subjects will be taken into consideration when assessing student applications. All students should have at least a WAM of 70. If students completed more than required points at that year level, the highest marks will be calculated for the WAM. Making the application: Students should make this application via the online application form: Application Form Applications will be reviewed in two rounds: Round 1 (Semester 1 availability): closing 31 October Round 2 (Semester 2 availability): closing 31 May Students will receive outcomes within two weeks of the closing date for the relevant round. For further information including FAQS on the Application and Selection Process see: Faculty of Arts - WIL FAQs *Late applications will be considered in both semesters if you meet the eligibility requirements and have secured a placement except in the event of the quota subject places reaching capacity. Please contact Experiential Learning Officer if you’re submitting a late application form: ssps-internships@unimelb.edu.au"
 corequisites: none
 non_allowed:
   - MULT20014

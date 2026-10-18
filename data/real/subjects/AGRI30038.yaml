@@ -8,12 +8,20 @@ offerings:
 prerequisites:
   any:
     - all:
-        - manual: "B-AGR Students: Completion of at least 175 credit points"
+        - all:
+            - admission: B-AGR
+              note: "B-AGR Students: Completion of at least 175 credit points"
+            - points:
+                min: 175
         - any:
             - AGRI20038
             - AGRI20042
     - all:
-        - manual: "B-SCI Students: Completion of at least 175 credit points"
+        - all:
+            - admission: B-SCI
+              note: "B-SCI Students: Completion of at least 175 credit points"
+            - points:
+                min: 175
         - points:
             min: 25
             from:

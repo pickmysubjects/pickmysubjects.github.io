@@ -1,3 +1,4 @@
+import { admissionCourses, namedComponents } from './expr'
 import type { AssessmentKind, Period, ReqExpr, ReqField } from './schema'
 
 /**
@@ -56,6 +57,14 @@ const TERM_VERSION = /^(summer term|winter term|semester [12]|january|february|j
 export function parseHandbookPaste(text: string): PasteResult {
   const warnings: string[] = []
   const sections = splitSections(text)
+  // A discontinued subject listed in a requirement table can't be taken: leave its row out.
+  for (const key of ['pre', 'co'] as const) {
+    const rows = sections[key]
+    if (rows?.some((l) => NO_LONGER.test(l))) {
+      warnings.push(`Left out ${key === 'pre' ? 'prerequisite' : 'corequisite'} rows marked "No longer available".`)
+      sections[key] = rows.filter((l) => !NO_LONGER.test(l))
+    }
+  }
 
   // Many pages list the requirement per degree; this site plans the Bachelor of Science.
   const pre = sections.pre ? scienceOnly(undergraduateOnly(latestRuleOnly(sections.pre, warnings, handbookYear(text)), warnings), warnings) : undefined
@@ -63,8 +72,9 @@ export function parseHandbookPaste(text: string): PasteResult {
   // taken in the same semester: that's what a corequisite means here.
   const split = pre ? splitConcurrent(pre) : undefined
   const coLines = [...(sections.co ?? []).filter((l) => !(split?.concurrent.length && /^none\.?$/i.test(l))), ...(split?.concurrent ?? [])]
+  const degrees = sections.pre ? perDegree(latestRuleOnly(sections.pre, [], handbookYear(text)), warnings) : null
   const result: PasteResult = {
-    prerequisites: split ? parseRequirement(split.before, 'prerequisites', warnings) : 'unknown',
+    prerequisites: degrees ?? (split ? parseRequirement(split.before, 'prerequisites', warnings) : 'unknown'),
     corequisites: sections.co || split?.concurrent.length ? parseRequirement(coLines, 'corequisites', warnings) : 'unknown',
     nonAllowed: sections.non ? parseNonAllowed(sections.non) : 'unknown',
     offerings: sections.avail ? parseAvailability(sections.avail.join('\n'), text) : 'unknown',
@@ -142,6 +152,52 @@ function undergraduateOnly(lines: string[], warnings: string[]): string[] {
   const start = ug < 0 ? 0 : ug + 1
   const end = pg > start ? pg : lines.length
   return lines.slice(start, end)
+}
+
+const NO_LONGER = /\bno longer available\b/i
+
+// "For B-DES students:", "For B-COM Students:", "For Bachelor of Environments students:".
+// Also "For Bachelor of Commerce students ( B-COM):".
+const FOR_DEGREE = /^for (?:(B-[A-Z]{2,})|bachelor of ([a-z ]+?)) students\s*(?:\(\s*(B-[A-Z]{2,})\s*\))?:?$/i
+const DEGREE_CODES: Record<string, string> = {
+  science: 'B-SCI',
+  biomedicine: 'B-BMED',
+  arts: 'B-ARTS',
+  commerce: 'B-COM',
+  design: 'B-DES',
+  agriculture: 'B-AGR',
+  music: 'B-MUS',
+  'fine arts': 'B-FA',
+  environments: 'B-ENVS',
+}
+
+/**
+ * Requirements listed per degree under "For B-DES students:" headings: one alternative per
+ * degree, each needing admission to that degree (when its code is known), so a student only has
+ * to meet their own degree's branch. Null when the page has no such headings.
+ */
+function perDegree(lines: string[], warnings: string[]): ReqField | null {
+  const heads = lines.map((l, i) => ({ i, m: FOR_DEGREE.exec(l.trim()) })).filter((h) => h.m)
+  if (heads.length === 0) return null
+  warnings.push('Requirements are listed per degree; each is kept for its own degree.')
+  const branches: ReqField[] = heads.map((h, k) => {
+    const code = (h.m![1] ?? h.m![3])?.toUpperCase() ?? DEGREE_CODES[h.m![2]!.toLowerCase()]
+    const block = lines.slice(h.i + 1, heads[k + 1]?.i ?? lines.length)
+    while (block.length && /^(or|and)?\s*$/i.test(block.at(-1)!.trim())) block.pop()
+    const own = parseRequirement(splitConcurrent(block).before, 'prerequisites', warnings)
+    if (!code || own === 'unknown') return own
+    const guard: ReqExpr = { admission: code, note: lines[h.i]!.trim() }
+    if (own === 'none') return guard
+    // "Admission into the B-COM …" already inside the branch: no need to say it twice.
+    if (JSON.stringify(own).includes(`"admission":"${code}"`)) return own
+    return 'all' in own ? { all: [guard, ...own.all] } : { all: [guard, own] }
+  })
+  const byDegree = combine('any', branches)
+  // What comes before the first heading applies to every degree.
+  const general = lines.slice(0, heads[0]!.i)
+  while (general.length && /^(or|and)?\s*$/i.test(general.at(-1)!.trim())) general.pop()
+  if (!general.some((l) => CODE_ONE.test(l))) return byDegree
+  return combine('all', [parseRequirement(splitConcurrent(general).before, 'prerequisites', warnings), byDegree])
 }
 
 function scienceOnly(lines: string[], warnings: string[]): string[] {
@@ -328,6 +384,17 @@ function parseRequirement(lines: string[], label: string, warnings: string[]): R
 function parseBlock(lines: string[], label: string, warnings: string[]): ReqExpr | null {
   // "NOTE: … may be taken concurrently with BMEN20003 …" names subjects but isn't a requirement.
   lines = lines.filter((l) => !/^note\b/i.test(l.trim()))
+  // "It is strongly recommended that A be studied concurrently with B": advice, not a requirement.
+  lines = lines.filter((l) => !/\brecommended\b/i.test(l))
+  // "All of" table then "One of" table with no "And" between: each table is its own part.
+  const labels = lines.map((l, i) => (readQuantifier(l) !== null ? i : -1)).filter((i) => i >= 0)
+  if (labels.length >= 2) {
+    const segments = labels.map((at, k) => lines.slice(k === 0 ? 0 : at, labels[k + 1] ?? lines.length))
+    if (segments.every((seg) => seg.some((l) => CODE_ONE.test(l)))) {
+      const parts = segments.map((seg) => parseBlock(seg, label, warnings)).filter(isExpr)
+      return parts.length === 1 ? (parts[0] as ReqExpr) : { all: parts }
+    }
+  }
   const codes = unique(lines.flatMap((l) => l.match(CODE) ?? []))
   const quantifier = lines.map(readQuantifier).find((q) => q !== null) ?? null
 
@@ -347,8 +414,14 @@ function parseBlock(lines: string[], label: string, warnings: string[]): ReqExpr
     return admission ? { all: [expr, admission] } : expr
   }
 
-  const sentence = lines.filter((l) => !isTableNoise(l) && readQuantifier(l) === null).join(' ').trim()
-  if (!sentence) return null
+  const sentence = lines
+    .filter((l) => !isTableNoise(l) && readQuantifier(l) === null)
+    .join(' ')
+    .trim()
+    // "Equivalent All students enrolling …": the word is a row of its own run into the next sentence.
+    .replace(/^equivalent\.?\s+(?=[A-Z])/, '')
+  // "Equivalent" on its own never decides anything: an option nobody can check is left out.
+  if (!sentence || BARE_EQUIVALENT.test(sentence)) return null
   const admission = readAdmission(sentence)
   if (admission) return admission
   const structured = structuredFromText(sentence)
@@ -371,8 +444,8 @@ function parseBlock(lines: string[], label: string, warnings: string[]): ReqExpr
 type Quantifier = { kind: 'all' } | { kind: 'one' } | { kind: 'points'; min: number }
 
 function readQuantifier(line: string): Quantifier | null {
-  if (/^(?:all of|both(?: completed)?):?$/i.test(line)) return { kind: 'all' }
-  if (/^(?:a )?(?:minimum of )?(one|1) of(?: the following)?:?$/i.test(line)) return { kind: 'one' }
+  if (/^(?:and )?(?:all of|both(?: completed)?):?$/i.test(line)) return { kind: 'all' }
+  if (/^(?:and )?(?:a )?(?:minimum of )?(one|1) of(?: the following)?:?$/i.test(line)) return { kind: 'one' }
   if (/^at least one of(?: the following| these(?: \w+)? subjects)?:?$/i.test(line)) return { kind: 'one' }
   // "A minimum of two of" a table of 12.5-point subjects: that many subjects' worth of points.
   // Also "A minimum of two level three Geoscience subjects (can be concurrent …)" over a table.
@@ -641,6 +714,9 @@ const DISCIPLINES: [RegExp, string[]][] = [
   [/^ecology$/i, ['ECOL']],
   [/^agriculture$/i, ['AGRI']],
   [/^biomedicine$/i, ['BIOM']],
+  [/^italian(?: studies)?$/i, ['ITAL']],
+  // A group of fields under one name: every code prefix that teaches one of them.
+  [/^biological sciences?$/i, ['BIOL', 'BOTA', 'ZOOL', 'ECOL', 'GENE', 'BCMB', 'MIIM', 'ANAT', 'PHYS', 'PATH']],
 ]
 
 /**
@@ -664,7 +740,9 @@ export function parseDisciplinePoints(sentence: string): ReqExpr | null {
   }
   const rule: ReqExpr = { points: { min: Number(m[1]), levels: [...new Set(levels)], areas: [...new Set(areas)] } }
   const rest = (m[4] ?? "").replace(/^[\s.;]+|[\s.;]+$/g, '')
-  return rest ? { any: [rule, { manual: sentence.trim() }] } : rule
+  if (!rest || /^\(?or (?:an? )?(?:approved )?equivalent\)?$/i.test(rest)) return rule
+  if (/^\(?or equivalent,? (?:as )?approved by the subject co-?ordinator\)?$/i.test(rest)) return { any: [rule, { permission: 'coordinator', note: sentence.trim() }] }
+  return { any: [rule, { manual: sentence.trim() }] }
 }
 
 /**
@@ -678,6 +756,14 @@ export function parseDisciplinePoints(sentence: string): ReqExpr | null {
  */
 export function structuredFromText(sentence: string): ReqExpr | null {
   const text = sentence.trim()
+  // "… these can be taken at the same time": the rule, taken before or alongside.
+  const together = /^(.+?)[;,]?\s*(?:\(?(?:these|which) can be taken (?:at the same time|concurrently)\)?|\(can be concurrent\))\.?$/i.exec(text)
+  if (together) {
+    const inner = structuredFromText(together[1] as string)
+    if (inner && 'points' in inner) return { points: { ...inner.points, concurrent: true } }
+    if (inner && 'subject' in inner) return { subject: inner.subject, concurrent: true }
+    return null
+  }
   const graduate = [...new Set(text.match(/\b(?:MC|GD|D)-[A-Z]{2,}\b/g) ?? [])]
   if (graduate.length && !/\bB-[A-Z]{2,}\b/.test(text) && /\b(?:selection|admission)\b/i.test(text)) {
     const options: ReqExpr[] = graduate.map((c) => ({ admission: c, note: text }))
@@ -689,7 +775,181 @@ export function structuredFromText(sentence: string): ReqExpr | null {
     const second = structuredFromText(inclusive[2] as string)
     if (first && second) return { all: [first, second] }
   }
-  const prior = /^(?:have )?(?:completed|completion of) (?:at least |a minimum of )?(\d+(?:\.\d+)?) credit points?(?: of study)?(?: prior to [^.]*)?\.?$/i.exec(text)
+  const prior = /^(?:students must )?(?:have )?(?:completed|completion of) (?:at least |a minimum of )?(\d+(?:\.\d+)?) (?:credit )?points?(?: of (?:prior )?study)?(?: prior to [^.]*)?\.?$/i.exec(text)
   if (prior) return { points: { min: Number(prior[1]) } }
-  return parseDisciplinePoints(text)
+  return parseDisciplinePoints(text) ?? conditionFromText(text)
+}
+
+/** "Equivalent", "Equivalent.", "An approved equivalent": an option nobody can check. */
+const BARE_EQUIVALENT = /^(?:an? )?(?:approved )?equivalent\.?$/i
+
+/**
+ * Takes out of an `any` list the bare "Equivalent" options (they never decide anything, so a
+ * list the student hasn't met stays unknown because of them), and turns free-text conditions
+ * structuredFromText can read into rules. The rest stays as it was.
+ */
+export function restructure(field: ReqField): ReqField {
+  if (field === 'none' || field === 'unknown') return field
+  const walk = (e: ReqExpr): ReqExpr | null => {
+    if ('manual' in e) {
+      const text = e.manual.trim().replace(/^equivalent\.?\s+(?=[A-Z])/, '')
+      if (BARE_EQUIVALENT.test(text)) return null
+      return structuredFromText(text) ?? e
+    }
+    if ('all' in e || 'any' in e) {
+      const key = 'all' in e ? 'all' : 'any'
+      const parts = (e as Record<string, ReqExpr[]>)[key]!
+      // Only an option is dropped: a requirement that is nothing but "Equivalent" stays.
+      const kept = parts.map((x) => (key === 'any' || !('manual' in x) ? walk(x) : (walk(x) ?? x))).filter(isExpr)
+      if (kept.length === 0) return e
+      return kept.length === 1 ? (kept[0] as ReqExpr) : ({ [key]: kept } as ReqExpr)
+    }
+    return e
+  }
+  return walk(field) ?? field
+}
+
+const ORDINAL: Record<string, number> = { first: 1, '1st': 1, second: 2, '2nd': 2, third: 3, '3rd': 3 }
+const GRADE_MIN: Record<string, number> = { H1: 80, H2A: 75, H2B: 70, H3: 65, P: 50 }
+
+/** Areas for a field name ("Italian Studies"), or null when it isn't one we know. */
+function disciplineAreas(name: string): string[] | null {
+  const parts = name.split(/\s*,\s*|\s+or\s+|\s+and\s+|\s*\/\s*/).filter(Boolean)
+  const areas: string[] = []
+  for (const n of parts) {
+    const hit = DISCIPLINES.find(([re]) => re.test(n.trim()))
+    if (!hit) return null
+    areas.push(...hit[1])
+  }
+  return [...new Set(areas)]
+}
+
+// Words that name a selection rather than a permission anyone can ask for.
+const APPLICATION = /\bapplications?\b|\bapply\b|\bselection process\b|\bselected\b|\bquotas?\b|\binterview\b|special entry conditions/i
+const PERMISSION = /co-?ordinator|convenor|\bpermission\b|\bapproval\b|by arrangement with/i
+// Conditions about who the student is, which a permission reading would lose.
+const RESTRICTION = /\bcompletion of\b|\bcompleted\b|\bonly available to\b|\blimited to\b|\bmust be in\b|\benrolled in\b|\bcriteria for applying\b|\bcredit points\b|\bpoints of\b|\baverage\b(?! marks?\b)|\bWAM\b|\bsubjects? taught\b/i
+
+/**
+ * Conditions the Handbook states in words that we can type even when we can't check them:
+ * points by level ("25 points at Level 1, and 37.5 points at Level 2"), averages and WAMs, a
+ * course-specific rule ("B-SCI Students: …"), VCE results, placement and competency tests, the
+ * coordinator's permission and application-only entry. Null when it's none of these.
+ */
+function conditionFromText(text: string): ReqExpr | null {
+  const scoped = /^((?:B|D)-[A-Z]{2,}) students:\s*(.+)$/i.exec(text)
+  if (scoped) {
+    const inner = structuredFromText(scoped[2] as string)
+    return inner ? { all: [{ admission: (scoped[1] as string).toUpperCase(), note: text }, inner] } : null
+  }
+  // "Completion of 25 points at Level 1, and 37.5 points at Level 2."
+  if (/^(?:completion of )?\d+(?:\.\d+)? (?:credit )?points at level \d(?:,? and \d+(?:\.\d+)? (?:credit )?points at level \d)+\.?$/i.test(text)) {
+    return { all: [...text.matchAll(/(\d+(?:\.\d+)?) (?:credit )?points at level (\d)/gi)].map((m) => ({ points: { min: Number(m[1]), levels: [Number(m[2])] } })) }
+  }
+  const average = averageFromText(text)
+  if (average) return average
+  const wam = /\bWAM of (?:at least )?(\d{2})\b/i.exec(text)
+  if (wam && !CODE_ONE.test(text)) {
+    const rule: ReqExpr = { wam: { min: Number(wam[1]) }, note: text }
+    return APPLICATION.test(text) ? { all: [rule, { permission: 'application', note: text }] } : rule
+  }
+  // "100 credit points of undergraduate study completed Students are required to apply …".
+  const pointsThen = /^(?:completion of )?(?:a minimum of |at least )?(\d+(?:\.\d+)?) credit points(?: of (?:undergraduate |prior )?study)?(?: completed)?[.,]?\s+(.+)$/i.exec(text)
+  if (pointsThen && /^[A-Z]/.test(pointsThen[2] as string)) {
+    const rest = permissionFromText(pointsThen[2] as string)
+    if (rest) return { all: [{ points: { min: Number(pointsThen[1]) } }, rest] }
+  }
+  const school = schoolFromText(text)
+  if (school) return school
+  const placement = placementFromText(text)
+  if (placement) return placement
+  const permission = permissionFromText(text)
+  if (permission) return permission
+  // Several sentences, each a condition: all of them.
+  const sentences = text.split(/(?<=\.)\s+(?=[A-Z])/).filter((x) => x.trim() && !/^link\.?$/i.test(x.trim()))
+  if (sentences.length >= 2) {
+    const parts = sentences.map((x) => structuredFromText(x))
+    if (parts.every(isExpr)) return { all: parts }
+  }
+  return null
+}
+
+/**
+ * "normally an average of at least 75% in relevant 2nd and 3rd year subjects", or "A minimum of 25
+ * credit points of Italian Studies subjects with an average grade of H2B or above".
+ */
+function averageFromText(text: string): ReqExpr | null {
+  const years = /\baverage of (?:at least )?(\d{2})%? in (?:relevant )?(first|second|third|1st|2nd|3rd)(?: (?:and|or) (first|second|third|1st|2nd|3rd))? year(?: level)? subjects/i.exec(text)
+  if (years && !CODE_ONE.test(text)) {
+    const levels = [years[2], years[3]].filter(Boolean).map((x) => ORDINAL[(x as string).toLowerCase()] as number)
+    return { average: { min: Number(years[1]), levels }, note: text }
+  }
+  const pointsAvg = /(?:a minimum of )?(\d+(?:\.\d+)?) credit points of (.+?) subjects with an average (?:grade |mark )?of (H1|H2A|H2B|H3|P|\d{2}%?) or (?:above|more)/i.exec(text)
+  if (pointsAvg) {
+    const areas = disciplineAreas(pointsAvg[2] as string)
+    if (!areas) return null
+    const grade = (pointsAvg[3] as string).toUpperCase()
+    const min = GRADE_MIN[grade] ?? Number.parseInt(grade, 10)
+    const rules: ReqExpr[] = [{ points: { min: Number(pointsAvg[1]), areas } }, { average: { min, areas }, note: text }]
+    // "Additional entry requirements also apply": an application on top.
+    if (APPLICATION.test(text) || /additional entry requirements/i.test(text)) rules.push({ permission: 'application', note: text })
+    return { all: rules }
+  }
+  return null
+}
+
+/** "Study score of 30 or more in VCE Specialist Mathematics 3/4 or equivalent", "VCE Units 3/4 Chemistry". */
+function schoolFromText(text: string): ReqExpr | null {
+  if (!/\bVCE\b/.test(text) || CODE_ONE.test(text)) return null
+  // A note about VCE students ("VCE Algorithmics students may …") or an equivalent spelled out.
+  if (/\bstudents may\b|^(?:an )?approved equivalent|\badmission into\b(?!.*\bincluding admission)/i.test(text)) return null
+  let t = text
+  let alternative: ReqExpr | null = null
+  const permission = /,?\s*or (?:permission|approval) (?:from|of) .+$/i.exec(t)
+  if (permission) {
+    alternative = { permission: 'coordinator', note: text }
+    t = t.slice(0, permission.index)
+  }
+  const score = /\b(?:study score|score|mark) of (?:at least )?(\d{2})\b/i.exec(t) ?? /\b(\d{2}) \(or higher\)/.exec(t)
+  let subject = t.slice(t.search(/\bVCE\b/) + 3)
+  subject = subject
+    .replace(/\([^)]*\)/g, ' ')
+    .replace(/\b(?:study )?score\b.*$/i, ' ')
+    .replace(/,?\s*or (?:the )?equivalent.*$/i, ' ')
+    .replace(/\bunits? 3\s*(?:and|&|\/)\s*4\b|\b3\s*(?:and|\/)\s*4\b/gi, ' ')
+    .replace(/^\s*[-–]\s*/, ' ')
+    .replace(/\s+/g, ' ')
+    .replace(/^[\s\-–,]+|[\s.,;]+$/g, '')
+  if (!/^[A-Za-z][A-Za-z0-9/ ]{1,60}$/.test(subject) || subject.split(' ').length > 6 || /\b(?:students?|subjects?|enrol)\b/i.test(subject)) return null
+  const rule: ReqExpr = { school: { subject, ...(score ? { minScore: Number(score[1]) } : {}) }, note: text }
+  return alternative ? { any: [rule, alternative] } : rule
+}
+
+const NOT_A_LANGUAGE = new Set(['Language', 'Online', 'The', 'All', 'A', 'This', 'Link', 'Placement', 'New', 'Students'])
+
+/** A language placement test, or a programming competency test. */
+function placementFromText(text: string): ReqExpr | null {
+  if (/programming competen(?:cy|ce)\b/i.test(text) && !CODE_ONE.test(text)) return { placement: 'programming', note: text }
+  if (!/placement (?:test|procedure)|language questionnaire|entry point determined by/i.test(text)) return null
+  // A permission that a test result only qualifies ("Permission … who demonstrate … through the placement test").
+  if (/^(?:permission|approval)\b/i.test(text) || CODE_ONE.test(text)) return null
+  const names = [
+    ...text.matchAll(/\benrolling in ([A-Z][a-z]+)\b(?: at The University of Melbourne)? for the first time/g),
+    ...text.matchAll(/\bdetermined by the ([A-Z][a-z]+) Program/g),
+    ...text.matchAll(/\b([A-Z][a-z]+) (?:Language )?[Pp]lacement [Tt]est/g),
+    ...text.matchAll(/\b[Pp]lacement [Tt]est of ([A-Z][a-z]+)/g),
+    ...text.matchAll(/\bplaces you in ([A-Z][a-z]+)/g),
+  ]
+    .map((m) => m[1] as string)
+    .filter((n) => !NOT_A_LANGUAGE.has(n))
+  return { placement: names[0] ?? 'language', note: text }
+}
+
+/** The coordinator's permission, or entry by application / selection. */
+function permissionFromText(text: string): ReqExpr | null {
+  if (CODE_ONE.test(text) || RESTRICTION.test(text)) return null
+  if (/\b(?:MC|B|D|GD|GC)-[A-Z]{2,}\b/.test(text) || namedComponents(text).length || admissionCourses(text).length) return null
+  if (APPLICATION.test(text)) return { permission: 'application', note: text }
+  if (PERMISSION.test(text)) return { permission: 'coordinator', note: text }
+  return null
 }

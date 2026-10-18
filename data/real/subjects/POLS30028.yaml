@@ -9,7 +9,15 @@ prerequisites:
   any:
     - all:
         - manual: "Selection of one of the following: Politics and International Studies major in the B-ARTS Bachelor of Arts, Indigenous Studies major in the B-ARTS Bachelor of Arts"
-        - manual: Completion of 25 points at Level 1, and 37.5 points at Level 2.
+        - all:
+            - points:
+                min: 25
+                levels:
+                  - 1
+            - points:
+                min: 37.5
+                levels:
+                  - 2
     - admission: GD-ARTS
       note: "Selection of the Politics and International Studies specialisation (formal) in the GD-ARTS Graduate Diploma in Arts, Indigenous Studies specialisation (formal) in the GD-ARTS Graduate Diploma in Arts Students must apply through the online application process by 2 February 2026 and obtain subject coordinator approval to enrol via the link below: Link A quota of 24 applies to this subject."
 corequisites: none

@@ -126,12 +126,28 @@ const subjectCode = z.string().regex(SUBJECT_CODE, 'expected a code like COMP100
 
 /** Requirement expression used for prerequisites and corequisites. */
 export type ReqExpr =
-  | { subject: string }
+  /** `concurrent`: may be taken in the same term as the subject that needs it. */
+  | { subject: string; concurrent?: boolean }
   | { all: ReqExpr[] }
   | { any: ReqExpr[] }
-  | { points: { min: number; level?: number; area?: string; levels?: number[]; areas?: string[]; from?: string[] } }
+  | { points: { min: number; level?: number; area?: string; levels?: number[]; areas?: string[]; from?: string[]; concurrent?: boolean } }
   | { admission: string; note?: string }
+  /** Average mark (0–100) over the completed subjects of these levels / areas / codes. */
+  | { average: { min: number; levels?: number[]; areas?: string[]; from?: string[] }; note?: string }
+  /** Weighted average mark over everything completed. */
+  | { wam: { min: number }; note?: string }
+  // Conditions we can't check from a student's record. They evaluate like a free-text condition
+  // (never blocking), but say plainly what the student has to do.
+  /** A placement or competency test: a language name ("French"), "language" or "programming". */
+  | { placement: string; note?: string }
+  /** The coordinator's permission, or a place won through an application / selection. */
+  | { permission: 'coordinator' | 'application'; note?: string }
+  /** A school (VCE) result: a study score of at least `minScore`, or just having done it. */
+  | { school: { subject: string; minScore?: number }; note?: string }
   | { manual: string }
+
+/** Kinds of condition only the student can vouch for (see ReqExpr). */
+export type AdvisoryKind = 'placement' | 'permission' | 'school'
 
 /** `unknown` = not curated yet; `none` = verified to have no requirement. */
 export type ReqField = 'unknown' | 'none' | ReqExpr
@@ -140,7 +156,7 @@ const reqExpr: z.ZodType<ReqExpr> = z.lazy(() =>
   z.union([
     // A bare subject code is shorthand for { subject: CODE }.
     subjectCode.transform((code) => ({ subject: code })),
-    z.object({ subject: subjectCode }).strict(),
+    z.object({ subject: subjectCode, concurrent: z.boolean().optional() }).strict(),
     z.object({ all: z.array(reqExpr).min(1) }).strict(),
     z.object({ any: z.array(reqExpr).min(1) }).strict(),
     z
@@ -154,11 +170,35 @@ const reqExpr: z.ZodType<ReqExpr> = z.lazy(() =>
             levels: z.array(z.number().int().min(1).max(9)).min(1).optional(),
             areas: z.array(z.string().regex(/^[A-Z]{4}$/)).min(1).optional(),
             from: z.array(subjectCode).optional(),
+            // May be taken in the same term as the subject that needs it.
+            concurrent: z.boolean().optional(),
           })
           .strict(),
       })
       .strict(),
     z.object({ admission: z.string().min(1), note: z.string().optional() }).strict(),
+    z
+      .object({
+        average: z
+          .object({
+            min: z.number().min(0).max(100),
+            levels: z.array(z.number().int().min(1).max(9)).min(1).optional(),
+            areas: z.array(z.string().regex(/^[A-Z]{4}$/)).min(1).optional(),
+            from: z.array(subjectCode).min(1).optional(),
+          })
+          .strict(),
+        note: z.string().optional(),
+      })
+      .strict(),
+    z.object({ wam: z.object({ min: z.number().min(0).max(100) }).strict(), note: z.string().optional() }).strict(),
+    z.object({ placement: z.string().min(1), note: z.string().optional() }).strict(),
+    z.object({ permission: z.enum(['coordinator', 'application']), note: z.string().optional() }).strict(),
+    z
+      .object({
+        school: z.object({ subject: z.string().min(1), minScore: z.number().int().min(1).max(50).optional() }).strict(),
+        note: z.string().optional(),
+      })
+      .strict(),
     z.object({ manual: z.string().min(1) }).strict(),
   ]),
 )

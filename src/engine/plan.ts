@@ -22,6 +22,8 @@ export interface Plan {
    * either way, so they count towards that semester's load.
    */
   recordedLoad?: Record<string, number>
+  /** Marks (0–100) of completed subjects, for average and WAM conditions. */
+  marks?: Record<string, number>
   /** Subjects whose prerequisites the student says they meet where we can't check (e.g. a VCE score). */
   confirmed?: string[]
 }

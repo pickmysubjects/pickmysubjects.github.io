@@ -6,7 +6,9 @@ offerings:
   "2026":
     - semester-2
 prerequisites:
-  manual: Students should have passed VCE Classical Greek or the equivalent.
+  school:
+    subject: Classical Greek
+  note: Students should have passed VCE Classical Greek or the equivalent.
 corequisites: none
 non_allowed:
   - CLAS20016

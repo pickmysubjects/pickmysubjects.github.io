@@ -8,7 +8,8 @@ offerings:
 prerequisites:
   any:
     - ARBC10006
-    - manual: "Equivalent New students will have their appropriate entry point determined by the Arabic Program, based on evidence of prior learning and/or results of a placement test as required. Placement Test information available here: Link"
+    - placement: Arabic
+      note: "Equivalent New students will have their appropriate entry point determined by the Arabic Program, based on evidence of prior learning and/or results of a placement test as required. Placement Test information available here: Link"
 corequisites: none
 non_allowed:
   - ARBC10001

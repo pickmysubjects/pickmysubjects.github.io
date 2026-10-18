@@ -7,28 +7,29 @@ offerings:
     - semester-2
 prerequisites:
   all:
-    - ABPL30059
-    - any:
-        - ABPL20004
+    - all:
+        - ABPL30059
         - PROP30001
-        - ABPL20031
-        - PROP20002
     - any:
-        - ABPL20004
-        - ABPL20035
-        - ABPL20051
-        - ACCT10001
-        - BLAW10001
-        - PROP20003
+        - all:
+            - admission: B-ENVS
+              note: "For Bachelor of Environments students:"
+            - PROP20002
+            - any:
+                - ABPL20035
+                - ACCT10001
+                - BLAW10001
+                - PROP20003
+        - any:
+            - all:
+                - admission: B-COM
+                  note: Admission into the B-COM Bachelor of Commerce
+                - PROP30001
+            - permission: coordinator
+              note: Approval from the Subject Coordinator
 corequisites: none
 non_allowed:
   - ABPL30012
-skills:
-  - business
-topics:
-  - management
-  - finance
-  - environment
 assessment:
   - kind: assignment
     weight: 10
@@ -61,4 +62,10 @@ breadth_for:
 handbook: https://handbook.unimelb.edu.au/2026/subjects/prop30002
 source_year: 2026
 verified_on: 2026-10-19
+skills:
+  - business
+topics:
+  - management
+  - finance
+  - environment
 notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

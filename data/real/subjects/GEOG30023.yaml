@@ -16,7 +16,8 @@ prerequisites:
         - GEOG30025
         - GEOG20015
         - ERTH20003
-    - manual: Approval from the subject coordinator.
+    - permission: coordinator
+      note: Approval from the subject coordinator.
 corequisites: none
 non_allowed: []
 assessment:

@@ -6,12 +6,10 @@ offerings:
   "2026":
     - semester-2
 prerequisites:
-  any:
-    - all:
-        - FOOD20003
-        - FOOD20006
-        - FOOD30008
-    - manual: Equivalent
+  all:
+    - FOOD20003
+    - FOOD20006
+    - FOOD30008
 corequisites: none
 non_allowed: []
 assessment:

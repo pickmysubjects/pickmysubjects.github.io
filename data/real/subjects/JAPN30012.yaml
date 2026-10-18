@@ -14,7 +14,8 @@ prerequisites:
         - JAPN30006
     - all:
         - manual: Equivalent
-        - manual: "Approval from subject coordinator is required to enrol in the summer offering. The summer intensive has a quota, an application process applies. For further information on the application and selection process please use the link below: https://arts.unimelb.edu.au/students/overseas-experience#about Preference will be given to students who have declared a major, minor or are taking a Diploma in Languages (Japanese). Academic merit is also taken into account."
+        - permission: application
+          note: "Approval from subject coordinator is required to enrol in the summer offering. The summer intensive has a quota, an application process applies. For further information on the application and selection process please use the link below: https://arts.unimelb.edu.au/students/overseas-experience#about Preference will be given to students who have declared a major, minor or are taking a Diploma in Languages (Japanese). Academic merit is also taken into account."
 corequisites: none
 non_allowed:
   - JAPN20009

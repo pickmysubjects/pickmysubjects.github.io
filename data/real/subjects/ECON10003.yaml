@@ -16,7 +16,10 @@ prerequisites:
         - admission: B-COM
           note: Admission into the Bachelor of Commerce
         - MAST10012
-        - manual: VCE Mathematical Methods or Specialist Mathematics 3/4 study score of at least 25 (or equivalent)
+        - school:
+            subject: Mathematical Methods or Specialist Mathematics
+            minScore: 25
+          note: VCE Mathematical Methods or Specialist Mathematics 3/4 study score of at least 25 (or equivalent)
         - all:
             - MAST10014
             - MAST10015

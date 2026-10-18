@@ -1,4 +1,4 @@
-import type { ReqExpr, ReqField, Subject } from './schema'
+import type { AdvisoryKind, ReqExpr, ReqField, Subject } from './schema'
 
 /** Three-valued result: uncurated or free-text requirements yield `unknown`, never `ok`. */
 export type Tri = 'ok' | 'fail' | 'unknown'
@@ -14,12 +14,28 @@ export interface EvalContext {
    * Undefined when none is chosen: conditions about majors then stay unknown.
    */
   majors?: readonly string[]
+  /**
+   * Subjects done by the end of the term being evaluated (`completed` plus that term's own):
+   * what a requirement that may be taken concurrently is checked against. Defaults to `completed`.
+   */
+  sameTerm?: ReadonlySet<string>
+  /**
+   * The student's marks (0–100) by subject code, for average and WAM conditions. Undefined when
+   * they aren't known: those conditions then stay unknown.
+   */
+  marks?: Readonly<Record<string, number>>
 }
 
 export interface EvalResult {
   status: Tri
   /** Human-readable descriptions of what is not (yet) satisfied. */
   unmet: string[]
+  /**
+   * When the status is unknown only because of conditions the student has to vouch for (a
+   * placement test, the coordinator's permission, a VCE score), their kinds. Planning treats
+   * these like any unknown; the UI can say exactly what to do.
+   */
+  advisory?: AdvisoryKind[]
 }
 
 export function evaluateField(field: ReqField, ctx: EvalContext): EvalResult {
@@ -30,23 +46,29 @@ export function evaluateField(field: ReqField, ctx: EvalContext): EvalResult {
 
 export function evaluate(expr: ReqExpr, ctx: EvalContext): EvalResult {
   if ('subject' in expr) {
-    return ctx.completed.has(expr.subject) ? ok() : { status: 'fail', unmet: [expr.subject] }
+    const done = expr.concurrent ? (ctx.sameTerm ?? ctx.completed) : ctx.completed
+    return done.has(expr.subject) ? ok() : { status: 'fail', unmet: [expr.subject] }
   }
   if ('all' in expr) {
     const parts = expr.all.map((e) => evaluate(e, ctx))
     const status = combineAll(parts.map((p) => p.status))
-    return { status, unmet: status === 'ok' ? [] : parts.flatMap((p) => p.unmet) }
+    return withAdvisory({ status, unmet: status === 'ok' ? [] : parts.flatMap((p) => p.unmet) }, parts)
   }
   if ('any' in expr) {
     const parts = expr.any.map((e) => evaluate(e, ctx))
     const status = combineAny(parts.map((p) => p.status))
-    return { status, unmet: status === 'ok' ? [] : [`one of: ${expr.any.map(describe).join(' / ')}`] }
+    return withAdvisory({ status, unmet: status === 'ok' ? [] : [`one of: ${expr.any.map(describe).join(' / ')}`] }, parts)
   }
-  if ('points' in expr) return evaluatePoints(expr.points, ctx)
+  if ('points' in expr) return evaluatePoints(expr.points, expr.points.concurrent ? { ...ctx, completed: ctx.sameTerm ?? ctx.completed } : ctx)
   if ('admission' in expr) {
     if (!ctx.admittedCourse) return { status: 'unknown', unmet: [describe(expr)] }
     return ctx.admittedCourse === expr.admission ? ok() : { status: 'fail', unmet: [describe(expr)] }
   }
+  if ('average' in expr) return evaluateAverage(expr.average, ctx)
+  if ('wam' in expr) return evaluateWam(expr.wam.min, ctx)
+  if ('placement' in expr) return { status: 'unknown', unmet: [describe(expr)], advisory: ['placement'] }
+  if ('permission' in expr) return { status: 'unknown', unmet: [describe(expr)], advisory: ['permission'] }
+  if ('school' in expr) return { status: 'unknown', unmet: [describe(expr)], advisory: ['school'] }
   const byMajor = majorCondition(expr.manual, ctx)
   if (byMajor) return byMajor
   // "Admission into one of the following: B-SCIEXT … B-ARTSEXT" is a course list written out
@@ -163,6 +185,68 @@ function evaluatePoints(
   return { status: unknownCompleted ? 'unknown' : 'fail', unmet }
 }
 
+/**
+ * An unknown that only advisory conditions leave open stays advisory: every unknown part has to
+ * be advisory (a free-text part makes the whole thing a plain unknown).
+ */
+function withAdvisory(result: EvalResult, parts: EvalResult[]): EvalResult {
+  if (result.status !== 'unknown') return result
+  const unknown = parts.filter((p) => p.status === 'unknown')
+  if (!unknown.length || unknown.some((p) => !p.advisory)) return result
+  return { ...result, advisory: [...new Set(unknown.flatMap((p) => p.advisory ?? []))] }
+}
+
+/** Completed subjects matching a levels / areas / codes filter, and whether any of them is one we know nothing about. */
+function matching(req: { levels?: number[]; areas?: string[]; from?: string[] }, ctx: EvalContext): { codes: string[]; unsure: boolean } {
+  const codes: string[] = []
+  let unsure = false
+  for (const code of ctx.completed) {
+    if (req.from && !req.from.includes(code)) continue
+    const s = ctx.subjects[code]
+    const level = s?.level ?? Number(code[4])
+    const area = s?.area ?? code.slice(0, 4)
+    if (req.levels && !req.levels.includes(level)) continue
+    if (req.areas && !req.areas.includes(area)) continue
+    if (!s) unsure = true
+    codes.push(code)
+  }
+  return { codes, unsure }
+}
+
+/** Points-weighted mean of the marks for these subjects, or null when any of them has none (pass/fail ones are left out). */
+function meanMark(codes: string[], ctx: EvalContext): number | null {
+  if (!ctx.marks) return null
+  let weighted = 0
+  let points = 0
+  for (const code of codes) {
+    const s = ctx.subjects[code]
+    if (s?.passFail) continue
+    const mark = ctx.marks[code]
+    if (mark === undefined) return null
+    const pts = s?.points ?? 12.5
+    weighted += mark * pts
+    points += pts
+  }
+  return points ? weighted / points : null
+}
+
+function evaluateAverage(req: { min: number; levels?: number[]; areas?: string[]; from?: string[] }, ctx: EvalContext): EvalResult {
+  const unmet = [describe({ average: req })]
+  const { codes } = matching(req, ctx)
+  // Nothing done that it could be the average of: it can't be met yet.
+  if (!codes.length) return { status: 'fail', unmet }
+  const mean = meanMark(codes, ctx)
+  if (mean === null) return { status: 'unknown', unmet }
+  return mean >= req.min ? ok() : { status: 'fail', unmet: [`${unmet[0]} (have ${Math.round(mean * 10) / 10})`] }
+}
+
+function evaluateWam(min: number, ctx: EvalContext): EvalResult {
+  const unmet = [describe({ wam: { min } })]
+  const mean = ctx.completed.size ? meanMark([...ctx.completed], ctx) : null
+  if (mean === null) return { status: 'unknown', unmet }
+  return mean >= min ? ok() : { status: 'fail', unmet: [`${unmet[0]} (have ${Math.round(mean * 10) / 10})`] }
+}
+
 function combineAll(statuses: Tri[]): Tri {
   if (statuses.includes('fail')) return 'fail'
   if (statuses.includes('unknown')) return 'unknown'
@@ -186,7 +270,7 @@ export function describeField(field: ReqField): string {
 }
 
 export function describe(expr: ReqExpr): string {
-  if ('subject' in expr) return expr.subject
+  if ('subject' in expr) return expr.concurrent ? `${expr.subject} (may be taken at the same time)` : expr.subject
   if ('all' in expr) return joinParts(expr.all, ' and ')
   if ('any' in expr) return joinParts(expr.any, ' or ')
   if ('points' in expr) {
@@ -194,9 +278,18 @@ export function describe(expr: ReqExpr): string {
     const lv = levels ?? (level !== undefined ? [level] : [])
     const where = [lv.length ? `level ${lv.join(' or ')}` : '', (areas ?? (area ? [area] : [])).join('/')].filter(Boolean).join(' ')
     const fromText = from ? ` from ${from.join(', ')}` : ''
-    return `${min} points${where ? ` of ${where}` : ''}${fromText}`
+    return `${min} points${where ? ` of ${where}` : ''}${fromText}${expr.points.concurrent ? ' (may be taken at the same time)' : ''}`
   }
   if ('admission' in expr) return `admission to ${expr.admission}`
+  if ('average' in expr) {
+    const { min, levels, areas, from } = expr.average
+    const where = [levels?.length ? `level ${levels.join(' or ')}` : '', (areas ?? []).join('/'), from ? from.join(', ') : ''].filter(Boolean).join(' ')
+    return where ? `an average of ${min} or more in ${where} subjects` : `an average mark of ${min} or more`
+  }
+  if ('wam' in expr) return `a WAM of ${expr.wam.min} or more`
+  if ('placement' in expr) return expr.placement === 'programming' ? 'a programming competency test' : `a ${expr.placement === 'language' ? 'language' : expr.placement} placement test`
+  if ('permission' in expr) return expr.permission === 'coordinator' ? "the subject coordinator's permission" : 'a place through an application or selection'
+  if ('school' in expr) return `VCE ${expr.school.subject}${expr.school.minScore ? ` (study score ${expr.school.minScore}+)` : ''}`
   return `“${expr.manual}”`
 }
 
@@ -213,6 +306,7 @@ export function referencedSubjects(field: ReqField): string[] {
     else if ('all' in e) e.all.forEach(walk)
     else if ('any' in e) e.any.forEach(walk)
     else if ('points' in e && e.points.from) out.push(...e.points.from)
+    else if ('average' in e && e.average.from) out.push(...e.average.from)
   }
   walk(field)
   return [...new Set(out)]

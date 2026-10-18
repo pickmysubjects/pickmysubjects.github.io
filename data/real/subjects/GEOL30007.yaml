@@ -16,7 +16,8 @@ prerequisites:
           - GEOL
           - CHEM
           - BIOL
-    - manual: By arrangement with subject co-ordinators
+    - permission: coordinator
+      note: By arrangement with subject co-ordinators
 corequisites: none
 non_allowed: []
 assessment:

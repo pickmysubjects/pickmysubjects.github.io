@@ -8,7 +8,8 @@ offerings:
 prerequisites:
   any:
     - JAPN10001
-    - manual: Language placement test result that places you in Japanese 2
+    - placement: Japanese
+      note: Language placement test result that places you in Japanese 2
 corequisites: none
 non_allowed: []
 categories:

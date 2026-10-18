@@ -27,12 +27,6 @@ prerequisites:
 corequisites: none
 non_allowed:
   - ABPL30060
-skills:
-  - design
-  - presentation
-topics:
-  - design
-  - geography
 assessment:
   - kind: presentation
     weight: 5
@@ -70,4 +64,10 @@ recommended:
 handbook: https://handbook.unimelb.edu.au/2026/subjects/plan30005
 source_year: 2026
 verified_on: 2026-10-19
+skills:
+  - design
+  - presentation
+topics:
+  - design
+  - geography
 notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

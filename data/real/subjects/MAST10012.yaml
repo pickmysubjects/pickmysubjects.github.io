@@ -7,9 +7,12 @@ offerings:
     - semester-1
 prerequisites:
   any:
-    - manual: Successful completion of VCE Mathematical Methods 1/2 or equivalent
+    - school:
+        subject: Mathematical Methods 1/2
+      note: Successful completion of VCE Mathematical Methods 1/2 or equivalent
     - MAST10017
-    - manual: Subject Coordinator approval
+    - permission: coordinator
+      note: Subject Coordinator approval
 corequisites: none
 non_allowed: []
 assessment:

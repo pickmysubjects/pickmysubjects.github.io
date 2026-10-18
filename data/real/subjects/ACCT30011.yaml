@@ -9,7 +9,8 @@ prerequisites:
     - any:
         - ACCT20001
         - ACCT20002
-    - manual: Approval from the Subject Coordinator is required to enrol in this subject
+    - permission: coordinator
+      note: Approval from the Subject Coordinator is required to enrol in this subject
 corequisites: none
 non_allowed: []
 skills:
