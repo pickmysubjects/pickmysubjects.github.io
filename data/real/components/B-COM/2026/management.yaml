@@ -10,5 +10,5 @@ requirements:
   - choose: { points: 25, from: [MGMT30004, MGMT30006, MGMT30008, MGMT30011, MGMT30012, MGMT30013, MGMT30017, MGMT30019, MGMT30015, MGMT30020, MGMT30021, MGMT30022, MGMT30023] }
   - choose: { points: 12.5, from: [BUSA30000, BUSA30001] }
 # No major URL in the paste; this is the course's majors page.
-handbook: https://handbook.unimelb.edu.au/2026/courses/b-com/majors-minors-and-specialisations
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-com/majors-minors-specialisations
 verified_on: 2026-10-13 # structure; source: 2026 Handbook, checked

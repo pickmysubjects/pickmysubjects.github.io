@@ -9,5 +9,5 @@ requirements:
   - choose: { points: 25, from: [MKTG30003, MKTG30006, MKTG30009, MKTG30010, MKTG30012, MKTG30013, MKTG30007, MKTG30008, MKTG30014] }
   - choose: { points: 12.5, from: [BUSA30000, BUSA30001] }
 # No major URL in the paste; this is the course's majors page.
-handbook: https://handbook.unimelb.edu.au/2026/courses/b-com/majors-minors-and-specialisations
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-com/majors-minors-specialisations
 verified_on: 2026-10-13 # structure; source: 2026 Handbook, checked

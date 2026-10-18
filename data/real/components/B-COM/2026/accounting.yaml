@@ -10,5 +10,5 @@ requirements:
   - choose: { points: 25, from: [ACCT30002, ACCT30004, ACCT30006, ACCT30007, ACCT30011, ACCT30012, ACCT30013, ACCT30014, ACCT30015] }
   - all: [ACCT30001]
 # No major URL in the paste; this is the course's majors page.
-handbook: https://handbook.unimelb.edu.au/2026/courses/b-com/majors-minors-and-specialisations
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-com/majors-minors-specialisations
 verified_on: 2026-10-13 # structure; source: 2026 Handbook, checked
