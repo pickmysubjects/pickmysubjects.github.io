@@ -1,0 +1,43 @@
+code: ABPL30061
+title: Landscape Capstone Studio
+level: 3
+points: 25
+offerings:
+  "2026":
+    - semester-2
+prerequisites:
+  all:
+    - any:
+        - ARCH20002
+        - ABPL20038
+        - ABPL20040
+    - any:
+        - ABPL30042
+        - ARCH20002
+        - ABPL20038
+        - ABPL20040
+    - all:
+        - ABPL30042
+        - LARC10001
+corequisites: none
+non_allowed: []
+skills:
+  - design
+topics:
+  - design
+  - ecology
+assessment:
+  - kind: report
+    weight: 20
+  - kind: presentation
+    weight: 30
+  - kind: project
+    weight: 50
+weekly_contact_hours: 7
+breadth_for: []
+recommended:
+  - ARCH20004
+handbook: https://handbook.unimelb.edu.au/2026/subjects/abpl30061
+source_year: 2026
+verified_on: 2026-10-19
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

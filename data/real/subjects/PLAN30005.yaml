@@ -1,0 +1,73 @@
+code: PLAN30005
+title: Urban Precinct Studio
+level: 3
+points: 25
+offerings:
+  "2026":
+    - semester-2
+prerequisites:
+  any:
+    - all:
+        - admission: B-ENVS
+          note: Admission into the B-ENVS Bachelor of Environments
+        - ABPL20049
+    - all:
+        - admission: B-DES
+          note: Admission into the B-DES Bachelor of Design
+        - all:
+            - PROP10001
+            - PLAN10002
+            - GEOM20013
+        - any:
+            - PLAN20002
+            - ARCH20002
+        - any:
+            - PLAN10001
+            - ARCH20003
+corequisites: none
+non_allowed:
+  - ABPL30060
+skills:
+  - design
+  - presentation
+topics:
+  - design
+  - geography
+assessment:
+  - kind: presentation
+    weight: 5
+    group: true
+    hurdle: true
+  - kind: report
+    weight: 15
+    group: true
+  - kind: presentation
+    weight: 5
+    group: true
+    hurdle: true
+  - kind: report
+    weight: 5
+    group: true
+  - kind: presentation
+    weight: 5
+    hurdle: true
+  - kind: presentation
+    weight: 5
+    hurdle: true
+  - kind: report
+    weight: 50
+  - kind: participation
+    weight: 10
+weekly_contact_hours: 1
+breadth_for: []
+recommended:
+  - ABPL20027
+  - ABPL20028
+  - ARCH20001
+  - ABPL20038
+  - ABPL20040
+  - ABPL30042
+handbook: https://handbook.unimelb.edu.au/2026/subjects/plan30005
+source_year: 2026
+verified_on: 2026-10-19
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

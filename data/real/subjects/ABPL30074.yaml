@@ -1,0 +1,36 @@
+code: ABPL30074
+title: Interior Design Capstone Studio-Retrofit
+level: 3
+points: 25
+offerings: unknown
+prerequisites:
+  all:
+    - ABPL30072
+    - ABPL30073
+    - ABPL20033
+    - ARCH10004
+corequisites: none
+non_allowed: []
+skills:
+  - design
+topics:
+  - design
+  - environment
+assessment:
+  - kind: presentation
+    weight: 20
+  - kind: presentation
+    weight: 20
+  - kind: presentation
+    weight: 20
+  - kind: presentation
+    weight: 30
+    hurdle: true
+  - kind: report
+    weight: 10
+    hurdle: true
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/abpl30074
+source_year: 2026
+verified_on: 2026-10-19
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

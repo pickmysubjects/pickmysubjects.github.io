@@ -1,5 +1,44 @@
 # Our own translations of subject titles, so Chinese readers can recognise and search for them.
 # zh = Simplified Chinese, zh-TW = Traditional Chinese (Taiwan terms).
+ABPL30039:
+  zh: "建筑合同管理"
+  zh-TW: "營建合約管理"
+ABPL30041:
+  zh: "建筑技术 3：实施"
+  zh-TW: "建築技術 3：實施"
+ABPL30042:
+  zh: "景观工作室：城市开放空间"
+  zh-TW: "景觀工作室：城市開放空間"
+ABPL30044:
+  zh: "行业合作项目工作室"
+  zh-TW: "產業合作專案工作室"
+ABPL30046:
+  zh: "钢结构与混凝土结构体系"
+  zh-TW: "鋼構與混凝土結構系統"
+ABPL30055:
+  zh: "施工管理"
+  zh-TW: "營建管理"
+ABPL30059:
+  zh: "房地产案例研究"
+  zh-TW: "不動產個案研究"
+ABPL30061:
+  zh: "景观毕业设计工作室"
+  zh-TW: "景觀畢業設計工作室"
+ABPL30072:
+  zh: "室内设计工作室：材料"
+  zh-TW: "室內設計工作室：材料"
+ABPL30073:
+  zh: "专业设计实务"
+  zh-TW: "專業設計實務"
+ABPL30074:
+  zh: "室内设计毕业工作室：改造"
+  zh-TW: "室內設計畢業工作室：改造"
+ABPL30075:
+  zh: "游戏设计工作室：Frost"
+  zh-TW: "遊戲設計工作室：Frost"
+ABPL30076:
+  zh: "游戏设计工作室：Solar"
+  zh-TW: "遊戲設計工作室：Solar"
 ACCT10001:
   zh: "会计报告与分析"
   zh-TW: "會計報告與分析"
@@ -435,6 +474,12 @@ ARBC30005:
 ARBC30006:
   zh: "阿拉伯语 7"
   zh-TW: "阿拉伯語 7"
+ARCH30001:
+  zh: "设计工作室 Delta"
+  zh-TW: "設計工作室 Delta"
+ARCH30002:
+  zh: "设计工作室 Epsilon"
+  zh-TW: "設計工作室 Epsilon"
 ARTS10003:
   zh: "我们的数字世界"
   zh-TW: "我們的數位世界"
@@ -1590,6 +1635,15 @@ EVSC30007:
 EVSC30009:
   zh: "净零能源路径"
   zh-TW: "淨零能源路徑"
+FINA30022:
+  zh: "空间工作室"
+  zh-TW: "空間工作室"
+FINA30023:
+  zh: "表演中的空间"
+  zh-TW: "表演中的空間"
+FINA30024:
+  zh: "表演设计工作室"
+  zh-TW: "表演設計工作室"
 FNCE10002:
   zh: "金融学原理"
   zh-TW: "金融學原理"
@@ -1806,6 +1860,21 @@ FRST30001:
 FRST30003:
   zh: "城市森林生态系统"
   zh-TW: "都市森林生態系統"
+GDES30001:
+  zh: "信息图工作室"
+  zh-TW: "資訊圖表工作室"
+GDES30002:
+  zh: "品牌设计"
+  zh-TW: "品牌設計"
+GDES30003:
+  zh: "平面设计工作室 3"
+  zh-TW: "平面設計工作室 3"
+GDES30007:
+  zh: "平面设计中的图像"
+  zh-TW: "平面設計中的圖像"
+GDES30008:
+  zh: "交互媒体"
+  zh-TW: "互動媒體"
 GEND10001:
   zh: "性、性别与文化"
   zh-TW: "性、性別與文化"
@@ -2403,6 +2472,12 @@ INFO30005:
 INFO30006:
   zh: "信息安全与隐私"
   zh-TW: "資訊安全與隱私"
+INFO30008:
+  zh: "交互技术项目"
+  zh-TW: "互動技術專題"
+INFO30009:
+  zh: "游戏设计"
+  zh-TW: "遊戲設計"
 INFO90004:
   zh: "用户体验评估"
   zh-TW: "使用者體驗評估"
@@ -2706,6 +2781,12 @@ LANG30001:
 LARC10001:
   zh: "设计中的自然史"
   zh-TW: "設計中的自然史"
+LARC30001:
+  zh: "场地构造"
+  zh-TW: "基地構造"
+LARC30002:
+  zh: "解读澳大利亚景观设计"
+  zh-TW: "解讀澳洲景觀設計"
 LING10001:
   zh: "语言的秘密生活"
   zh-TW: "語言的秘密生活"
@@ -3351,6 +3432,15 @@ PHYS30011:
 PHYS30012:
   zh: "生理学：适应挑战"
   zh-TW: "生理學：適應挑戰"
+PLAN30001:
+  zh: "规划情景与政策研讨"
+  zh-TW: "規劃情境與政策研討"
+PLAN30003:
+  zh: "规划研究方法"
+  zh-TW: "規劃研究方法"
+PLAN30005:
+  zh: "城市片区工作室"
+  zh-TW: "城市街區工作室"
 POLS10001:
   zh: "澳大利亚政治"
   zh-TW: "澳洲政治"
@@ -3450,6 +3540,15 @@ POPH30004:
 POPH30005:
   zh: "为健康而非伤害而传播"
   zh-TW: "為健康而非傷害而傳播"
+PROP30001:
+  zh: "土地与建筑物估价"
+  zh-TW: "土地與建物估價"
+PROP30002:
+  zh: "设计资产的可持续管理"
+  zh-TW: "設計資產的永續管理"
+PROP30003:
+  zh: "设计与房地产工作室"
+  zh-TW: "設計與不動產工作室"
 PSYC10003:
   zh: "心智、大脑与行为 1"
   zh-TW: "心智、大腦與行為 1"
@@ -3717,6 +3816,9 @@ SWEN30006:
 SWEN30007:
   zh: "软件系统项目"
   zh-TW: "軟體系統專題"
+THTR30042:
+  zh: "Hashtag Cyberstar：网络作品集"
+  zh-TW: "Hashtag Cyberstar：網路作品集"
 UNIB10009:
   zh: "健康星球的食物"
   zh-TW: "健康星球的食物"

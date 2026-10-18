@@ -1,0 +1,35 @@
+code: INFO30008
+title: Interactive Technology Project
+level: 3
+points: 25
+offerings:
+  "2026":
+    - semester-2
+prerequisites:
+  all:
+    - INFO20004
+    - INFO20005
+corequisites: none
+non_allowed: []
+skills:
+  - design
+topics:
+  - design
+  - software-engineering
+assessment:
+  - kind: assignment
+    weight: 20
+    group: true
+  - kind: assignment
+    weight: 30
+    group: true
+  - kind: exam
+    weight: 50
+    group: true
+    hurdle: true
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/info30008
+source_year: 2026
+verified_on: 2026-10-19
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

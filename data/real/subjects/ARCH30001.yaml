@@ -1,0 +1,57 @@
+code: ARCH30001
+title: Design Studio Delta
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+    - semester-2
+prerequisites:
+  all:
+    - ARCH20001
+    - ARCH20002
+    - ARCH20004
+corequisites: none
+non_allowed:
+  - ABPL20028
+  - ABPL30048
+  - ABPL20027
+skills:
+  - design
+  - presentation
+topics:
+  - design
+  - society
+assessment:
+  - kind: assignment
+    weight: 20
+  - kind: assignment
+    weight: 20
+  - kind: assignment
+    weight: 45
+  - kind: assignment
+    weight: 15
+weekly_contact_hours: 15
+breadth_for:
+  - Bachelor of Arts
+  - Bachelor of Biomedicine
+  - Bachelor of Commerce
+  - Bachelor of Design
+  - Bachelor of Fine Arts (Acting)
+  - Bachelor of Fine Arts (Animation)
+  - Bachelor of Fine Arts (Dance)
+  - Bachelor of Fine Arts (Film and Television)
+  - Bachelor of Fine Arts (Music Theatre)
+  - Bachelor of Fine Arts (Production)
+  - Bachelor of Fine Arts (Screenwriting)
+  - Bachelor of Fine Arts (Theatre)
+  - Bachelor of Fine Arts (Visual Art)
+  - Bachelor of Music
+  - Bachelor of Science
+recommended:
+  - ABPL20036
+  - ABPL30041
+handbook: https://handbook.unimelb.edu.au/2026/subjects/arch30001
+source_year: 2026
+verified_on: 2026-10-19
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

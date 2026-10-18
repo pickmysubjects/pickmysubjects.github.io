@@ -1,0 +1,37 @@
+code: GDES30001
+title: Infographics Studio
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites:
+  all:
+    - all:
+        - GDES20001
+        - GDES20002
+    - all:
+        - FINA20029
+        - GDES30002
+corequisites: none
+non_allowed: []
+skills:
+  - design
+topics:
+  - design
+  - art
+assessment:
+  - kind: presentation
+    weight: 25
+  - kind: presentation
+    weight: 25
+    group: true
+  - kind: assignment
+    weight: 50
+weekly_contact_hours: 3
+breadth_for:
+  - Bachelor of Design
+handbook: https://handbook.unimelb.edu.au/2026/subjects/gdes30001
+source_year: 2026
+verified_on: 2026-10-19
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

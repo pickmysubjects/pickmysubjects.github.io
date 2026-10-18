@@ -1,0 +1,48 @@
+code: ARCH30002
+title: Design Studio Epsilon
+level: 3
+points: 25
+offerings:
+  "2026":
+    - semester-1
+    - semester-2
+prerequisites:
+  all:
+    - all:
+        - ABPL30041
+        - ARCH20003
+        - ARCH20004
+        - ARCH30001
+    - any:
+        - ABPL20036
+        - ABPL10007
+    - any:
+        - ABPL10004
+        - ABPL20055
+    - ABPL30041
+corequisites: none
+non_allowed:
+  - ABPL30037
+skills:
+  - design
+  - presentation
+topics:
+  - design
+assessment:
+  - kind: assignment
+    weight: 15
+  - kind: assignment
+    weight: 15
+  - kind: assignment
+    weight: 20
+  - kind: assignment
+    weight: 40
+  - kind: quiz
+    weight: 10
+weekly_contact_hours: 7
+breadth_for:
+  - Bachelor of Design
+handbook: https://handbook.unimelb.edu.au/2026/subjects/arch30002
+source_year: 2026
+verified_on: 2026-10-19
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

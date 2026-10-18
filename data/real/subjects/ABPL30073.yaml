@@ -1,0 +1,31 @@
+code: ABPL30073
+title: Professional Design Practice
+level: 3
+points: 12.5
+offerings: unknown
+prerequisites:
+  all:
+    - ARCH20004
+    - ARCH20001
+corequisites: none
+non_allowed: []
+skills:
+  - design
+  - presentation
+topics:
+  - design
+  - ethics
+assessment:
+  - kind: assignment
+    weight: 20
+  - kind: assignment
+    weight: 20
+  - kind: report
+    weight: 45
+  - kind: assignment
+    weight: 15
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/abpl30073
+source_year: 2026
+verified_on: 2026-10-19
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,36 @@
+code: ABPL30076
+title: "Game Design Studio: Solar"
+level: 3
+points: 25
+offerings: unknown
+prerequisites:
+  all:
+    - ABPL20057
+    - ABPL20058
+    - ABPL30075
+    - MUSI20173
+corequisites: none
+non_allowed: []
+skills:
+  - design
+topics:
+  - design
+  - media
+assessment:
+  - kind: assignment
+    weight: 20
+  - kind: assignment
+    weight: 30
+  - kind: presentation
+    weight: 5
+  - kind: project
+    weight: 45
+    hurdle: true
+  - kind: participation
+    weight: 0
+    hurdle: true
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/abpl30076
+source_year: 2026
+verified_on: 2026-10-19
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,44 @@
+code: ABPL30042
+title: "Landscape Studio: Urban Open Space"
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites:
+  any:
+    - any:
+        - ABPL20028
+        - ABPL20038
+        - ABPL20040
+        - ABPL20049
+        - ABPL20055
+        - ARCH10004
+    - all:
+        - ABPL10004
+        - any:
+            - ARCH20001
+            - ARCH20002
+corequisites: ARCH20004
+non_allowed: []
+skills:
+  - design
+topics:
+  - design
+  - environment
+assessment:
+  - kind: project
+    weight: 20
+    group: true
+  - kind: project
+    weight: 80
+    hurdle: true
+weekly_contact_hours: 4
+breadth_for: []
+recommended:
+  - ENVS10007
+  - ABPL20047
+handbook: https://handbook.unimelb.edu.au/2026/subjects/abpl30042
+source_year: 2026
+verified_on: 2026-10-19
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,64 @@
+code: PROP30002
+title: Sustainable Management of Design Assets
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites:
+  all:
+    - ABPL30059
+    - any:
+        - ABPL20004
+        - PROP30001
+        - ABPL20031
+        - PROP20002
+    - any:
+        - ABPL20004
+        - ABPL20035
+        - ABPL20051
+        - ACCT10001
+        - BLAW10001
+        - PROP20003
+corequisites: none
+non_allowed:
+  - ABPL30012
+skills:
+  - business
+topics:
+  - management
+  - finance
+  - environment
+assessment:
+  - kind: assignment
+    weight: 10
+    group: true
+  - kind: assignment
+    weight: 20
+    group: true
+  - kind: test
+    weight: 10
+  - kind: test
+    weight: 10
+  - kind: exam
+    weight: 50
+    hurdle: true
+weekly_contact_hours: 3
+breadth_for:
+  - Bachelor of Arts
+  - Bachelor of Biomedicine
+  - Bachelor of Commerce
+  - Bachelor of Design
+  - Bachelor of Fine Arts (Acting)
+  - Bachelor of Fine Arts (Animation)
+  - Bachelor of Fine Arts (Dance)
+  - Bachelor of Fine Arts (Film and Television)
+  - Bachelor of Fine Arts (Music Theatre)
+  - Bachelor of Fine Arts (Production)
+  - Bachelor of Fine Arts (Screenwriting)
+  - Bachelor of Fine Arts (Theatre)
+  - Bachelor of Fine Arts (Visual Art)
+handbook: https://handbook.unimelb.edu.au/2026/subjects/prop30002
+source_year: 2026
+verified_on: 2026-10-19
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

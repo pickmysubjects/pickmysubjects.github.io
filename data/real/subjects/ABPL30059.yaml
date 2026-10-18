@@ -1,0 +1,42 @@
+code: ABPL30059
+title: Property Case Studies
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites:
+  all:
+    - BLAW10001
+    - PROP10002
+    - PROP20001
+    - PROP20002
+    - PROP20003
+    - ABPL20033
+    - PROP30001
+corequisites: none
+non_allowed: []
+skills:
+  - business
+topics:
+  - finance
+  - business
+assessment:
+  - kind: report
+    weight: 30
+    group: true
+  - kind: report
+    weight: 30
+    group: true
+  - kind: assignment
+    weight: 35
+    hurdle: true
+  - kind: assignment
+    weight: 5
+    group: true
+weekly_contact_hours: 4
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/abpl30059
+source_year: 2026
+verified_on: 2026-10-19
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,43 @@
+code: ABPL30044
+title: Industry Partner project Studio
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites:
+  all:
+    - admission: B-DES
+      note: Admission into the B-DES Bachelor of Design
+    - all:
+        - ABPL30055
+        - ABPL20036
+        - CONS20002
+        - ABPL30046
+corequisites: none
+non_allowed: []
+topics:
+  - management
+  - engineering
+assessment:
+  - kind: assignment
+    weight: 40
+    group: true
+  - kind: assignment
+    weight: 10
+  - kind: assignment
+    weight: 30
+  - kind: report
+    weight: 10
+    group: true
+  - kind: presentation
+    weight: 10
+    group: true
+weekly_contact_hours: 4
+breadth_for: []
+recommended:
+  - ABPL30039
+handbook: https://handbook.unimelb.edu.au/2026/subjects/abpl30044
+source_year: 2026
+verified_on: 2026-10-19
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

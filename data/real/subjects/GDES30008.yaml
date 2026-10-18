@@ -1,0 +1,32 @@
+code: GDES30008
+title: Interactive Media
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites:
+  all:
+    - GDES20001
+    - GDES20002
+corequisites: FINA20029
+non_allowed: []
+skills:
+  - design
+  - programming
+topics:
+  - design
+  - media
+assessment:
+  - kind: project
+    weight: 25
+  - kind: project
+    weight: 60
+  - kind: assignment
+    weight: 15
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/gdes30008
+source_year: 2026
+verified_on: 2026-10-19
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
