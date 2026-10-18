@@ -1,0 +1,86 @@
+# Bachelor of Design course rules, 2026 Handbook. Facts re-expressed in our own words.
+code: B-DES
+title: Bachelor of Design
+year: 2026
+total_points: 300
+standard_load: 50
+categories: [design, breadth]
+# Design discipline subjects are the Handbook's "subjects offered within the Bachelor of Design"
+# lists. Only the Architecture, Building and Planning study areas are mapped by prefix here; the
+# Science, Engineering and Fine Arts/Music subjects on those lists (COMP, INFO, MAST, GDES, ...)
+# are only some of their areas' subjects, so a prefix rule would wrongly make every subject in
+# those areas a Design subject. Not encoded yet: those individually listed discipline subjects.
+area_categories:
+  home: design
+  areas: [ABPL, ARCH, CONS, LARC, PLAN, PROP]
+  other: breadth
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-des/course-structure
+verified_on: 2026-10-19 # rules checked by hand against the Handbook course structure
+listed: false # majors not entered yet
+rules:
+  - id: total
+    kind: points
+    min: 300
+    description: 300 points in total
+  - id: design
+    kind: points
+    category: design
+    min: 225
+    description: At least 225 points of Design discipline subjects
+  - id: design-l1
+    kind: points
+    category: design
+    level: 1
+    min: 62.5
+    description: At least 62.5 points of level-1 Design subjects
+  - id: design-l2
+    kind: points
+    category: design
+    level: 2
+    min: 62.5
+    description: At least 62.5 points of level-2 Design subjects
+  - id: design-l3
+    kind: points
+    category: design
+    level: 3
+    min: 75
+    description: At least 75 points of level-3 Design subjects
+  - id: breadth
+    kind: points
+    category: breadth
+    min: 50
+    description: At least 50 points of breadth
+  - id: breadth-l1-cap
+    kind: points
+    category: breadth
+    level: 1
+    max: 37.5
+    description: No more than 37.5 points of level-1 breadth
+  - id: level1-cap
+    kind: points
+    level: 1
+    max: 125
+    description: No more than 125 points at level 1
+  - id: major
+    kind: major
+    count: 1
+    description: Complete one major (a second is optional)
+  - id: specialisation
+    kind: specialisation
+    max: 1
+    description: At most one specialisation
+  - id: progress-to-l2
+    kind: progression
+    before_level: 2
+    level: 1
+    min_points: 50
+    description: Normally 50 level-1 points before level-2 subjects
+  - id: progress-to-l3
+    kind: progression
+    before_level: 3
+    level: 2
+    min_points: 50
+    description: Normally 50 level-2 points before level-3 subjects
+# Not encoded (engine can't express): the compulsory Joining Melbourne modules in first year
+# (non-credit Canvas modules). The 25 free points (discipline or breadth) need no rule: they are
+# what's left of the 300 total. The structure page names no compulsory subjects.

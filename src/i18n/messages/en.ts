@@ -18,7 +18,7 @@ export const en = {
   nav: { home: 'Home', browse: 'Browse', more: 'More', plan: 'Plan', recommend: 'For you', record: 'Me', contribute: 'Add data', feedback: 'Feedback', main: 'Main' },
   period: { summer: 'Summer', 'semester-1': 'Semester 1', winter: 'Winter', 'semester-2': 'Semester 2' },
   periodShort: { summer: 'Summer', 'semester-1': 'Sem 1', winter: 'Winter', 'semester-2': 'Sem 2' },
-  category: { science: 'science', commerce: 'commerce', arts: 'arts', breadth: 'breadth', core: 'core' },
+  category: { science: 'science', commerce: 'commerce', arts: 'arts', design: 'design', breadth: 'breadth', core: 'core' },
   plan: {
     pastTag: "Done",
     pastUndated: "Done · semester not given",

@@ -15,7 +15,7 @@ export const ko: Messages = {
   nav: { home: '홈', browse: '과목', more: '더보기', plan: '계획', recommend: '추천', record: '내 정보', contribute: '데이터 추가', feedback: '피드백', main: '메인 메뉴' },
   period: { summer: '여름 학기', 'semester-1': '1학기', winter: '겨울 학기', 'semester-2': '2학기' },
   periodShort: { summer: '여름', 'semester-1': 'S1', winter: '겨울', 'semester-2': 'S2' },
-  category: { science: '이학', commerce: '상경', arts: '인문', breadth: '교양(Breadth)', core: '필수' },
+  category: { science: '이학', commerce: '상경', arts: '인문', design: '디자인', breadth: '교양(Breadth)', core: '필수' },
   plan: {
     pastTag: "이수함",
     pastUndated: "이수함 · 학기 미입력",

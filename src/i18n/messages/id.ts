@@ -15,7 +15,7 @@ export const id: Messages = {
   nav: { home: 'Beranda', browse: 'Cari', more: 'Lainnya', plan: 'Rencana', recommend: 'Untukmu', record: 'Saya', contribute: 'Tambah data', feedback: 'Masukan', main: 'Menu utama' },
   period: { summer: 'Semester musim panas', 'semester-1': 'Semester 1', winter: 'Semester musim dingin', 'semester-2': 'Semester 2' },
   periodShort: { summer: 'Musim panas', 'semester-1': 'Sem 1', winter: 'Musim dingin', 'semester-2': 'Sem 2' },
-  category: { science: 'sains', commerce: 'bisnis', arts: 'humaniora', breadth: 'breadth', core: 'inti' },
+  category: { science: 'sains', commerce: 'bisnis', arts: 'humaniora', design: 'desain', breadth: 'breadth', core: 'inti' },
   plan: {
     pastTag: "Sudah diambil",
     pastUndated: "Sudah diambil · semester belum diisi",

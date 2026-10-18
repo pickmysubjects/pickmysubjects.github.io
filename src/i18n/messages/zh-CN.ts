@@ -15,7 +15,7 @@ export const zhCN: Messages = {
   nav: { home: '首页', browse: '找课', more: '更多', plan: '排课', recommend: '推荐', record: '我的', contribute: '添加数据', feedback: '反馈', main: '主导航' },
   period: { summer: '夏季学期', 'semester-1': '第一学期', winter: '冬季学期', 'semester-2': '第二学期' },
   periodShort: { summer: '夏季', 'semester-1': 'S1', winter: '冬季', 'semester-2': 'S2' },
-  category: { science: '理科', commerce: '商科', arts: '文科', breadth: 'Breadth', core: '必修' },
+  category: { science: '理科', commerce: '商科', arts: '文科', design: '设计', breadth: 'Breadth', core: '必修' },
   plan: {
     pastTag: "已修",
     pastUndated: "已修 · 学期未填",
