@@ -385,6 +385,7 @@ export const vi: Messages = {
     languages: "Ngôn ngữ",
     humanities: "Khoa học nhân văn",
     social: "Khoa học xã hội",
+    design: "Thiết kế, xây dựng và quy hoạch",
     computing: 'Máy tính, dữ liệu và toán',
     biomed: 'Y sinh và khoa học sự sống',
     chemphys: 'Hoá học và vật lý',

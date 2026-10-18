@@ -385,6 +385,7 @@ export const zhTW: Messages = {
     languages: "語言",
     humanities: "人文",
     social: "社會科學",
+    design: "設計、建築與規劃",
     computing: '電腦、資料與數學',
     biomed: '生物醫學與生命科學',
     chemphys: '化學與物理',

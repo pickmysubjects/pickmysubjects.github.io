@@ -385,6 +385,7 @@ export const hi: Messages = {
     languages: "भाषाएँ",
     humanities: "मानविकी",
     social: "सामाजिक विज्ञान",
+    design: "डिज़ाइन, निर्माण और नियोजन",
     computing: 'कंप्यूटिंग, डेटा और गणित',
     biomed: 'बायोमेडिकल और जीव विज्ञान',
     chemphys: 'रसायन और भौतिकी',

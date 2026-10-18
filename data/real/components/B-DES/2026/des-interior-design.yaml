@@ -1,0 +1,14 @@
+id: des-interior-design
+course: B-DES
+year: 2026
+kind: major
+title: Interior Design
+points: 50
+requirements:
+  # Core (both marked not available in 2026 on the page).
+  - all: [ABPL30072, ABPL30073]
+  # Capstone (not available in 2026).
+  - all: [ABPL30074]
+# Not encoded: the page's non-allowed breadth list (the engine has no per-major breadth exclusions).
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-des/majors-minors-specialisations
+verified_on: 2026-10-19 # structure; source: 2026 Handbook major page

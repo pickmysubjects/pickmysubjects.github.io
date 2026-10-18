@@ -1,0 +1,12 @@
+id: des-performance-design
+course: B-DES
+year: 2026
+kind: major
+title: Performance Design
+points: 50
+requirements:
+  # Capstone subjects.
+  - all: [FINA30023, FINA30022, FINA30024]
+# Not encoded: the page's non-allowed breadth list (the engine has no per-major breadth exclusions).
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-des/majors-minors-specialisations
+verified_on: 2026-10-19 # structure; source: 2026 Handbook major page

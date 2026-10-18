@@ -11,12 +11,14 @@ export const MAJOR_GROUPS: { id: string; match: RegExp }[] = [
   { id: 'languages', match: /^(arabic|chinese|classics|french|german|hebrew|indonesian|italian|japanese|korean|russian|spanish|linguistics)/ },
   { id: 'humanities', match: /^(ancient|art-history|creative-writing|english|history|philosophy|media|screen)/ },
   { id: 'social', match: /^(anthropology|asian|criminology|gender|indigenous|islamic|politics|sociology|arts-economics)/ },
+  // Bachelor of Design (its computing and engineering majors join the groups above).
+  { id: 'design', match: /^(architecture|construction|user-experience|graphic|landscape|performance|property|urban-planning|interior|game)/ },
 ]
 
 // Majors of other degrees with the same name carry a degree prefix (bmed-genetics); they group
-// with their namesakes.
+// with their namesakes (Design's des- prefix likewise).
 export const majorGroupOf = (id: string): string => {
-  const bare = id.replace(/^bmed-/, '')
+  const bare = id.replace(/^(bmed|des)-/, '')
   return MAJOR_GROUPS.find((g) => g.match.test(bare))?.id ?? 'other'
 }
 

@@ -1,0 +1,14 @@
+id: des-graphic-design
+course: B-DES
+year: 2026
+kind: major
+title: Graphic Design
+points: 50
+requirements:
+  # 25 points of core subjects.
+  - choose: { points: 25, from: [GDES30001, GDES30002, GDES30007, GDES30008] }
+  # Capstone.
+  - all: [GDES30003]
+# Not encoded: the page's non-allowed breadth list (the engine has no per-major breadth exclusions).
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-des/majors-minors-specialisations
+verified_on: 2026-10-19 # structure; source: 2026 Handbook major page

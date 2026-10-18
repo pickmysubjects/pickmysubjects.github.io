@@ -1,0 +1,16 @@
+id: des-spec-advanced-computing
+course: B-DES
+year: 2026
+kind: specialisation
+title: Advanced Computing
+points: 50
+requirements:
+  # Level 2 core.
+  - all: [INFO20003]
+  # Level 2 elective.
+  - choose: { points: 12.5, from: [COMP20003, COMP20007] }
+  # Level 3 electives (COMP30020 not available in 2026).
+  - choose: { points: 25, from: [COMP30019, COMP30020, INFO30006, COMP30013] }
+# Taken with the Computing and Software Systems major for ACS accreditation.
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-des/majors-minors-specialisations
+verified_on: 2026-10-19 # structure; source: 2026 Handbook major page

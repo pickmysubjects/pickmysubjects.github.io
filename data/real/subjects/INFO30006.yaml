@@ -16,6 +16,7 @@ non_allowed:
   - ISYS90070
 categories:
   B-SCI: science
+  B-DES: design
 breadth_for:
   - Bachelor of Arts
   - Bachelor of Commerce

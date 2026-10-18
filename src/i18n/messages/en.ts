@@ -388,6 +388,7 @@ export const en = {
     languages: "Languages",
     humanities: "Humanities",
     social: "Social sciences",
+    design: "Design, building and planning",
     computing: 'Computing, data and maths',
     biomed: 'Biomedical and life sciences',
     chemphys: 'Chemistry and physics',

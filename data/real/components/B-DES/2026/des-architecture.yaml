@@ -1,0 +1,12 @@
+id: des-architecture
+course: B-DES
+year: 2026
+kind: major
+title: Architecture
+points: 50
+requirements:
+  # Core, including the capstone ARCH30002 Design Studio Epsilon.
+  - all: [ABPL30041, ARCH30001, ARCH30002]
+# Not encoded: the page's non-allowed breadth list (the engine has no per-major breadth exclusions).
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-des/majors-minors-specialisations
+verified_on: 2026-10-19 # structure; source: 2026 Handbook major page

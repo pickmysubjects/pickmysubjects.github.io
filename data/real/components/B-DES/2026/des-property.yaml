@@ -1,0 +1,12 @@
+id: des-property
+course: B-DES
+year: 2026
+kind: major
+title: Property
+points: 50
+requirements:
+  # Core.
+  - all: [ABPL30059, PROP30001, PROP30002, PROP30003]
+# Not encoded: the page's non-allowed breadth list (the engine has no per-major breadth exclusions).
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-des/majors-minors-specialisations
+verified_on: 2026-10-19 # structure; source: 2026 Handbook major page

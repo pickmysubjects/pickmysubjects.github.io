@@ -385,6 +385,7 @@ export const ko: Messages = {
     languages: "언어",
     humanities: "인문학",
     social: "사회과학",
+    design: "디자인·건축·도시계획",
     computing: '컴퓨팅·데이터·수학',
     biomed: '생명의학·생명과학',
     chemphys: '화학·물리',

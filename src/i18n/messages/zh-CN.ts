@@ -385,6 +385,7 @@ export const zhCN: Messages = {
     languages: "语言",
     humanities: "人文",
     social: "社会科学",
+    design: "设计、建筑与规划",
     computing: '计算机、数据与数学',
     biomed: '生物医学与生命科学',
     chemphys: '化学与物理',

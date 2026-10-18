@@ -385,6 +385,7 @@ export const ja: Messages = {
     languages: "言語",
     humanities: "人文学",
     social: "社会科学",
+    design: "デザイン・建築・都市計画",
     computing: 'コンピューター・データ・数学',
     biomed: '生物医学・生命科学',
     chemphys: '化学・物理',

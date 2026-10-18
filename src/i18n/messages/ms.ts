@@ -385,6 +385,7 @@ export const ms: Messages = {
     languages: "Bahasa",
     humanities: "Kemanusiaan",
     social: "Sains sosial",
+    design: "Reka bentuk, binaan dan perancangan",
     computing: 'Pengkomputeran, data dan matematik',
     biomed: 'Bioperubatan dan sains hayat',
     chemphys: 'Kimia dan fizik',

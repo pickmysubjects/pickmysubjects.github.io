@@ -385,6 +385,7 @@ export const id: Messages = {
     languages: "Bahasa",
     humanities: "Humaniora",
     social: "Ilmu sosial",
+    design: "Desain, bangunan dan perencanaan",
     computing: 'Komputer, data dan matematika',
     biomed: 'Biomedis dan ilmu hayati',
     chemphys: 'Kimia dan fisika',

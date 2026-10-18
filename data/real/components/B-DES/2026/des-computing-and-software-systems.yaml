@@ -1,0 +1,12 @@
+id: des-computing-and-software-systems
+course: B-DES
+year: 2026
+kind: major
+title: Computing and Software Systems
+points: 50
+requirements:
+  # Core.
+  - all: [COMP30023, COMP30022, SWEN30006, COMP30026]
+# Not encoded: the page's non-allowed breadth list (the engine has no per-major breadth exclusions). ACS accreditation needs the Artificial Intelligence or Advanced Computing specialisation as well.
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-des/majors-minors-specialisations
+verified_on: 2026-10-19 # structure; source: 2026 Handbook major page

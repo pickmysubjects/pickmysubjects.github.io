@@ -1,0 +1,16 @@
+id: des-spec-artificial-intelligence
+course: B-DES
+year: 2026
+kind: specialisation
+title: Artificial Intelligence
+points: 50
+requirements:
+  # Level 2 core.
+  - all: [COMP20008]
+  # Level 2 elective.
+  - choose: { points: 12.5, from: [COMP20003, COMP20007] }
+  # Level 3 electives.
+  - choose: { points: 25, from: [COMP30024, COMP30027, COMP30013] }
+# Taken with the Computing and Software Systems major for ACS accreditation.
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-des/majors-minors-specialisations
+verified_on: 2026-10-19 # structure; source: 2026 Handbook major page

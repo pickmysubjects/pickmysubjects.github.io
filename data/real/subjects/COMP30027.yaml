@@ -18,6 +18,7 @@ non_allowed:
   - ACTL30008
 categories:
   B-SCI: science
+  B-DES: design
 breadth_for:
   - Bachelor of Commerce
   - Bachelor of Fine Arts (Acting)

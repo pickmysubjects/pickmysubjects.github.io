@@ -1,0 +1,12 @@
+id: des-urban-planning
+course: B-DES
+year: 2026
+kind: major
+title: Urban Planning
+points: 50
+requirements:
+  # Core (PLAN30005 replaces ABPL30060 Urban Precinct Studio).
+  - all: [PLAN30005, PLAN30001, PLAN30003]
+# Not encoded: the page's non-allowed breadth list (the engine has no per-major breadth exclusions).
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-des/majors-minors-specialisations
+verified_on: 2026-10-19 # structure; source: 2026 Handbook major page

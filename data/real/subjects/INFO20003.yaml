@@ -23,6 +23,7 @@ non_allowed:
   - SINF90001
 categories:
   B-SCI: science
+  B-DES: design
 breadth_for:
   - Bachelor of Arts
   - Bachelor of Commerce

@@ -20,6 +20,7 @@ non_allowed:
   - COMP20004
 categories:
   B-SCI: science
+  B-DES: design
 breadth_for: []
 handbook: https://handbook.unimelb.edu.au/2026/subjects/comp30026
 source_year: 2026
