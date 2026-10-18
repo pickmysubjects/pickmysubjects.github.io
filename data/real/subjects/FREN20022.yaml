@@ -2,7 +2,8 @@ code: FREN20022
 title: "From Page to Stage: French Theatre"
 level: 2
 points: 12.5
-offerings: unknown
+offerings:
+  "2026": []
 prerequisites:
   any:
     - FREN10007

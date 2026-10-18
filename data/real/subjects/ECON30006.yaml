@@ -2,7 +2,8 @@ code: ECON30006
 title: Labour Economics
 level: 3
 points: 12.5
-offerings: unknown
+offerings:
+  "2026": []
 prerequisites:
   all:
     - any:

@@ -2,7 +2,8 @@ code: ECON30002
 title: Economic Development
 level: 3
 points: 12.5
-offerings: unknown
+offerings:
+  "2026": []
 prerequisites:
   any:
     - all:

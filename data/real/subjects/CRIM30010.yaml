@@ -2,7 +2,8 @@ code: CRIM30010
 title: "Managing Justice: Agencies and the State"
 level: 3
 points: 12.5
-offerings: unknown
+offerings:
+  "2026": []
 prerequisites: none
 corequisites: none
 non_allowed: []

@@ -7,6 +7,10 @@ points: 50
 requirements:
   # Core.
   - all: [ABPL30055, ABPL30046, ABPL30039, ABPL30044]
-# Not encoded: the page's non-allowed breadth list (the engine has no per-major breadth exclusions).
+# Subjects the page says students in this major can't take as breadth.
+non_allowed_breadth:
+  areas: [ACCT, CVEN, ECON, ENGR, GEOM, MGMT]
+  subjects: [ABPL10005, ABPL20033, ABPL20042, ABPL20053, ABPL30039, ABPL30040, ABPL30041, ABPL30044, ABPL30046, ABPL30055, ARCH10002, ENGR10005, ENGR20003, PROP10001, PROP20001, PROP20002, PROP20003, PROP30002, PROP30003]
+  except: [MGMT20001]
 handbook: https://handbook.unimelb.edu.au/2026/courses/b-des/majors-minors-specialisations
 verified_on: 2026-10-19 # structure; source: 2026 Handbook major page

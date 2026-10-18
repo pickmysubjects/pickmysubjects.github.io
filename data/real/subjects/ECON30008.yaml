@@ -2,7 +2,8 @@ code: ECON30008
 title: History of Economic Thought
 level: 3
 points: 12.5
-offerings: unknown
+offerings:
+  "2026": []
 prerequisites:
   all:
     - ECON20001

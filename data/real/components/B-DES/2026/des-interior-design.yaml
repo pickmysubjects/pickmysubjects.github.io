@@ -9,6 +9,8 @@ requirements:
   - all: [ABPL30072, ABPL30073]
   # Capstone (not available in 2026).
   - all: [ABPL30074]
-# Not encoded: the page's non-allowed breadth list (the engine has no per-major breadth exclusions).
+# Subjects the page says students in this major can't take as breadth.
+non_allowed_breadth:
+  subjects: [ABPL20055, ARCH20003, ABPL30041, ARCH30002, ARCH30001, ABPL20042, ABPL20036, ABPL20053, ABPL30061, ABPL30042, ABPL30046]
 handbook: https://handbook.unimelb.edu.au/2026/courses/b-des/majors-minors-specialisations
 verified_on: 2026-10-19 # structure; source: 2026 Handbook major page

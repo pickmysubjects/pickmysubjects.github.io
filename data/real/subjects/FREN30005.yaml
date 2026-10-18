@@ -2,7 +2,8 @@ code: FREN30005
 title: "Romanticism to Decadence: French Novels"
 level: 3
 points: 12.5
-offerings: unknown
+offerings:
+  "2026": []
 prerequisites:
   any:
     - FREN10006

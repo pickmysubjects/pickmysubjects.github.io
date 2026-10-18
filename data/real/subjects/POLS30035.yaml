@@ -2,7 +2,8 @@ code: POLS30035
 title: "Policy Design: From Theory to Practice"
 level: 3
 points: 12.5
-offerings: unknown
+offerings:
+  "2026": []
 prerequisites:
   any:
     - MULT20003

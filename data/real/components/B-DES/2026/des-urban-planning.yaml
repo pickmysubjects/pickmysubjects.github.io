@@ -7,6 +7,9 @@ points: 50
 requirements:
   # Core (PLAN30005 replaces ABPL30060 Urban Precinct Studio).
   - all: [PLAN30005, PLAN30001, PLAN30003]
-# Not encoded: the page's non-allowed breadth list (the engine has no per-major breadth exclusions).
+# Subjects the page says students in this major can't take as breadth.
+non_allowed_breadth:
+  areas: [GEOG]
+  subjects: [ABPL30042, ABPL30051, ECON30021, EVSC30006, HORT10015]
 handbook: https://handbook.unimelb.edu.au/2026/courses/b-des/majors-minors-specialisations
 verified_on: 2026-10-19 # structure; source: 2026 Handbook major page

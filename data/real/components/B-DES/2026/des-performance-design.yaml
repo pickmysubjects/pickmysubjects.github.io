@@ -7,6 +7,8 @@ points: 50
 requirements:
   # Capstone subjects.
   - all: [FINA30023, FINA30022, FINA30024]
-# Not encoded: the page's non-allowed breadth list (the engine has no per-major breadth exclusions).
+# Subjects the page says students in this major can't take as breadth.
+non_allowed_breadth:
+  subjects: [ABPL20028, ABPL30037, ABPL30048, COMP30019, FINA20033, FINA20026, FINA20035, FLTV10021, SCRN30005, THTR20042, THTR20043, THTR30039, GDES10001, GDES20001, GDES20002]
 handbook: https://handbook.unimelb.edu.au/2026/courses/b-des/majors-minors-specialisations
 verified_on: 2026-10-19 # structure; source: 2026 Handbook major page

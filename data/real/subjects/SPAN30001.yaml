@@ -2,7 +2,8 @@ code: SPAN30001
 title: Gender in Hispanic Cultures
 level: 3
 points: 12.5
-offerings: unknown
+offerings:
+  "2026": []
 prerequisites:
   any:
     - SPAN10004

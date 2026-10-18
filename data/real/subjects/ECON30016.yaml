@@ -2,7 +2,8 @@ code: ECON30016
 title: The Economics of Taxation
 level: 3
 points: 12.5
-offerings: unknown
+offerings:
+  "2026": []
 prerequisites: ECON20002
 corequisites: none
 non_allowed: []

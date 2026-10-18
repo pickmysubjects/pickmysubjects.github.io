@@ -2,7 +2,8 @@ code: HIST20090
 title: Gender in History, 1800 to the Present
 level: 2
 points: 12.5
-offerings: unknown
+offerings:
+  "2026": []
 prerequisites: none
 corequisites: none
 non_allowed: []

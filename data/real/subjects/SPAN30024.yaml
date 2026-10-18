@@ -2,7 +2,8 @@ code: SPAN30024
 title: "Chile: The Land at the End of the World"
 level: 3
 points: 12.5
-offerings: unknown
+offerings:
+  "2026": []
 prerequisites:
   all:
     - all:

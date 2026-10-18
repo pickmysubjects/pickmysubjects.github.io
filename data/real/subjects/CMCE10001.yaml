@@ -2,7 +2,8 @@ code: CMCE10001
 title: Sustainable Commerce
 level: 1
 points: 12.5
-offerings: unknown
+offerings:
+  "2026": []
 prerequisites:
   admission: B-COM
   note: Admission into the B-COM Bachelor of Commerce

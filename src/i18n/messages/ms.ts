@@ -157,6 +157,7 @@ export const ms: Messages = {
     'non-allowed': '{code} dan {other} tidak boleh dikira bersama — kedua-duanya saling menyekat.',
     overload: '{term} mempunyai {load} mata; melebihi {max} ialah lebihan beban dan perlu kelulusan.',
     'course-unknown': 'Peraturan untuk {course} belum dimasukkan.',
+    'breadth-not-allowed': '{code} tidak boleh dikira sebagai breadth bersama {major} kerana terlalu hampir dengannya. Ia tetap dikira dalam jumlah mata.',
   },
   unplacedReason: {
     notInDataset: 'belum ada dalam data',

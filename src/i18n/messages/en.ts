@@ -160,6 +160,7 @@ export const en = {
     'non-allowed': '{code} and {other} can’t both count — they’re non-allowed with each other.',
     overload: '{term} has {load} points; more than {max} is an overload and needs approval.',
     'course-unknown': 'Rules for {course} haven’t been curated yet.',
+    'breadth-not-allowed': '{code} can’t count as breadth with {major}, as it’s too close to it. It still counts towards your total points.',
   },
   unplacedReason: {
     notInDataset: 'not in the dataset yet',

@@ -7,6 +7,8 @@ points: 50
 requirements:
   # Core, including the capstone ARCH30002 Design Studio Epsilon.
   - all: [ABPL30041, ARCH30001, ARCH30002]
-# Not encoded: the page's non-allowed breadth list (the engine has no per-major breadth exclusions).
+# Subjects the page says students in this major can't take as breadth.
+non_allowed_breadth:
+  subjects: [ABPL20042, ABPL30037, ABPL30042, ABPL30046, ABPL30048, ABPL30061, GDES10001, GDES20001, GDES20002, ARCH20002, ABPL30076, ABPL30074]
 handbook: https://handbook.unimelb.edu.au/2026/courses/b-des/majors-minors-specialisations
 verified_on: 2026-10-19 # structure; source: 2026 Handbook major page

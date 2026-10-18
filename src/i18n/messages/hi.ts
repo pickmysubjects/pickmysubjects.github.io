@@ -157,6 +157,7 @@ export const hi: Messages = {
     'non-allowed': '{code} और {other} दोनों गिने नहीं जा सकते — ये एक-दूसरे के साथ अनुमत नहीं हैं।',
     overload: '{term} में {load} पॉइंट हैं; {max} से ज़्यादा ओवरलोड है और इसके लिए अनुमति चाहिए।',
     'course-unknown': '{course} के नियम अभी जोड़े नहीं गए हैं।',
+    'breadth-not-allowed': '{code} {major} के बहुत करीब है, इसलिए ब्रेड्थ में नहीं गिना जाता। यह कुल पॉइंट्स में फिर भी गिना जाता है।',
   },
   unplacedReason: {
     notInDataset: 'अभी डेटा में नहीं है',

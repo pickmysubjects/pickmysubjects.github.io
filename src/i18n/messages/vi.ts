@@ -157,6 +157,7 @@ export const vi: Messages = {
     'non-allowed': '{code} và {other} không thể cùng được tính — hai môn này loại trừ nhau.',
     overload: '{term} có {load} tín chỉ; trên {max} là học vượt và cần được duyệt.',
     'course-unknown': 'Chưa nhập quy định cho {course}.',
+    'breadth-not-allowed': '{code} không được tính là breadth khi học {major} vì quá gần với ngành này. Môn này vẫn được tính vào tổng số điểm.',
   },
   unplacedReason: {
     notInDataset: 'chưa có trong dữ liệu',

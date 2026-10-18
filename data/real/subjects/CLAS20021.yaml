@@ -2,7 +2,8 @@ code: CLAS20021
 title: Intensive Beginners Latin
 level: 2
 points: 25
-offerings: unknown
+offerings:
+  "2026": []
 prerequisites: none
 corequisites: none
 non_allowed:

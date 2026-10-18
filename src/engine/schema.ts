@@ -514,6 +514,16 @@ export const componentFileSchema = z
     verified_on: z.union([z.iso.date(), z.null()]).default(null),
     // First commencement year whose students can no longer choose it (still shown to earlier ones).
     closed_from: z.number().int().optional(),
+    // Subjects a student in this major can't count as breadth (too close to the major): listed
+    // codes, every subject with one of these code prefixes, minus any `except` codes.
+    non_allowed_breadth: z
+      .object({
+        subjects: z.array(subjectCode).default([]),
+        areas: z.array(z.string().regex(/^[A-Z]{4}$/)).default([]),
+        except: z.array(subjectCode).default([]),
+      })
+      .strict()
+      .optional(),
   })
   .strict()
   .transform((c) => ({
@@ -530,7 +540,14 @@ export const componentFileSchema = z
     handbook: c.handbook,
     verifiedOn: c.verified_on,
     closedFrom: c.closed_from,
+    nonAllowedBreadth: c.non_allowed_breadth as NonAllowedBreadth | undefined,
   }))
+
+export interface NonAllowedBreadth {
+  subjects: string[]
+  areas: string[]
+  except: string[]
+}
 
 export type Component = z.output<typeof componentFileSchema>
 

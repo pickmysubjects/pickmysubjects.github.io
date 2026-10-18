@@ -36,6 +36,55 @@ export function majorTitles(data: Dataset, ids: readonly (string | undefined)[])
   return titles.length ? titles : undefined
 }
 
+/** Whether a major's "non-allowed breadth" list covers this subject. */
+function barsBreadth(c: Component, code: string): boolean {
+  const n = c.nonAllowedBreadth
+  if (!n || n.except.includes(code)) return false
+  return n.subjects.includes(code) || n.areas.includes(code.slice(0, 4))
+}
+
+/**
+ * Subjects that would be breadth in `course` but the student's major/specialisation doesn't let
+ * them count as breadth, each with the component that bars it.
+ */
+export function barredBreadth(data: Dataset, course: string, ids: readonly (string | undefined)[]): Map<string, Component> {
+  const comps = ids.map((id) => findComponent(data, id)).filter((c): c is Component => !!c?.nonAllowedBreadth)
+  const barred = new Map<string, Component>()
+  if (comps.length === 0) return barred
+  for (const s of Object.values(data.subjects)) {
+    if (s.categories[course] !== 'breadth') continue
+    const by = comps.find((c) => barsBreadth(c, s.code))
+    if (by) barred.set(s.code, by)
+  }
+  return barred
+}
+
+const barredCache = new WeakMap<Dataset, Map<string, Dataset>>()
+
+/**
+ * The dataset as a student with these majors sees it: a subject their major won't let them count
+ * as breadth counts towards the course total only ('core'), in none of its category rules.
+ */
+export function withBarredBreadth(data: Dataset, course: string, ids: readonly (string | undefined)[]): Dataset {
+  const key = [course, ...ids].join('|')
+  let byKey = barredCache.get(data)
+  if (!byKey) barredCache.set(data, (byKey = new Map()))
+  const hit = byKey.get(key)
+  if (hit) return hit
+  const barred = barredBreadth(data, course, ids)
+  let view = data
+  if (barred.size > 0) {
+    const subjects = { ...data.subjects }
+    for (const code of barred.keys()) {
+      const s = subjects[code]!
+      subjects[code] = { ...s, categories: { ...s.categories, [course]: 'core' } }
+    }
+    view = { ...data, subjects }
+  }
+  byKey.set(key, view)
+  return view
+}
+
 export function categoryOf(subject: Subject, course: string): string | undefined {
   return subject.categories[course]
 }
@@ -51,8 +100,8 @@ function prefixCategory(code: string, data: Dataset, course: string): string | u
 }
 
 /** Check course-level rules against everything completed or planned. */
-export function checkCourse(plan: Plan, data: Dataset): CourseCheck {
-  const course = findCourse(data, plan.course, plan.courseYear)
+export function checkCourse(plan: Plan, given: Dataset): CourseCheck {
+  const course = findCourse(given, plan.course, plan.courseYear)
   if (!course) {
     return {
       statuses: [],
@@ -69,6 +118,8 @@ export function checkCourse(plan: Plan, data: Dataset): CourseCheck {
 
   // Each subject once, even if it's both completed and planned again (counted twice otherwise).
   const codes = [...new Set([...plan.completed, ...plan.terms.flatMap((t) => t.subjects)])]
+  const barred = barredBreadth(given, plan.course, [plan.major, plan.specialisation])
+  const data = withBarredBreadth(given, plan.course, [plan.major, plan.specialisation])
   const known = codes.map((c) => data.subjects[c]).filter((s): s is Subject => s !== undefined)
   const statuses = course.rules.map((rule) => checkRule(rule, { plan, data, course, known, codes }))
   const issues: Issue[] = statuses
@@ -84,6 +135,17 @@ export function checkCourse(plan: Plan, data: Dataset): CourseCheck {
         message: `${s.description} — ${s.detail}`,
       }
     })
+  for (const code of codes) {
+    const by = barred.get(code)
+    if (!by) continue
+    issues.push({
+      severity: 'info',
+      kind: 'breadth-not-allowed',
+      subject: code,
+      params: { code, major: by.title },
+      message: `${code} doesn't count as breadth for the ${by.title} ${by.kind}; it still counts towards your total points.`,
+    })
+  }
   return { statuses, issues }
 }
 

@@ -7,6 +7,9 @@ points: 50
 requirements:
   # Core.
   - all: [COMP30023, COMP30022, SWEN30006, COMP30026]
-# Not encoded: the page's non-allowed breadth list (the engine has no per-major breadth exclusions). ACS accreditation needs the Artificial Intelligence or Advanced Computing specialisation as well.
+# ACS accreditation needs the Artificial Intelligence or Advanced Computing specialisation as well.
+# Subjects the page says students in this major can't take as breadth.
+non_allowed_breadth:
+  areas: [COMP, ENGR, GEOM, INFO, ISYS, MAST, PHYC, SINF]
 handbook: https://handbook.unimelb.edu.au/2026/courses/b-des/majors-minors-specialisations
 verified_on: 2026-10-19 # structure; source: 2026 Handbook major page

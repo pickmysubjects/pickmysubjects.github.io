@@ -157,6 +157,7 @@ export const ko: Messages = {
     'non-allowed': '{code}와 {other}는 둘 다 인정되지 않습니다 (non-allowed 관계).',
     overload: '{term}은 {load}학점입니다. {max}학점을 넘으면 초과 수강이라 승인이 필요합니다.',
     'course-unknown': '{course}의 요건은 아직 정리되지 않았습니다.',
+    'breadth-not-allowed': '{code}은(는) {major}와 너무 가까워 Breadth로 인정되지 않습니다. 총 학점에는 포함됩니다.',
   },
   unplacedReason: {
     notInDataset: '아직 데이터에 없음',

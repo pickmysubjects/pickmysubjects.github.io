@@ -2,7 +2,8 @@ code: GEOG30031
 title: "Law Space: Geographies of Justice"
 level: 3
 points: 12.5
-offerings: unknown
+offerings:
+  "2026": []
 prerequisites:
   any:
     - GEOG20012

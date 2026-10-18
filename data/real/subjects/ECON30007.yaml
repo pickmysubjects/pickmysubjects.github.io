@@ -2,7 +2,8 @@ code: ECON30007
 title: Economics of Food Markets
 level: 3
 points: 12.5
-offerings: unknown
+offerings:
+  "2026": []
 prerequisites: ECON20002
 corequisites: none
 non_allowed: []

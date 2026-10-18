@@ -9,6 +9,9 @@ requirements:
   - choose: { points: 25, from: [GDES30001, GDES30002, GDES30007, GDES30008] }
   # Capstone.
   - all: [GDES30003]
-# Not encoded: the page's non-allowed breadth list (the engine has no per-major breadth exclusions).
+# Subjects the page says students in this major can't take as breadth.
+non_allowed_breadth:
+  areas: [FINA, AHIS]
+  subjects: [ABPL20028, ABPL30067, ABPL30037, ABPL30048, ARCH10003, ARCH20001, ARCH20002, ARCH30001, COMP30019, EDUC20077]
 handbook: https://handbook.unimelb.edu.au/2026/courses/b-des/majors-minors-specialisations
 verified_on: 2026-10-19 # structure; source: 2026 Handbook major page

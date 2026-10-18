@@ -157,6 +157,7 @@ export const id: Messages = {
     'non-allowed': '{code} dan {other} tidak bisa dihitung bersamaan — keduanya saling mengecualikan.',
     overload: '{term} berisi {load} poin; lebih dari {max} termasuk kelebihan beban dan perlu persetujuan.',
     'course-unknown': 'Aturan untuk {course} belum dimasukkan.',
+    'breadth-not-allowed': '{code} tidak bisa dihitung sebagai breadth bersama {major} karena terlalu dekat dengannya. Mata kuliah ini tetap dihitung ke total poin.',
   },
   unplacedReason: {
     notInDataset: 'belum ada di data',

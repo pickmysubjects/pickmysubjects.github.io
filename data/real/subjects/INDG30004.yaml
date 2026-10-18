@@ -2,7 +2,8 @@ code: INDG30004
 title: Aboriginal Writing
 level: 3
 points: 12.5
-offerings: unknown
+offerings:
+  "2026": []
 prerequisites: none
 corequisites: none
 non_allowed:

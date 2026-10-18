@@ -2,7 +2,8 @@ code: FREN30021
 title: French and Francophone Cultural Studies
 level: 3
 points: 12.5
-offerings: unknown
+offerings:
+  "2026": []
 prerequisites:
   any:
     - FREN10003

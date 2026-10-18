@@ -2,7 +2,8 @@ code: EURO30001
 title: Language and Society in Europe
 level: 3
 points: 12.5
-offerings: unknown
+offerings:
+  "2026": []
 prerequisites: none
 corequisites: none
 non_allowed:

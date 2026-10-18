@@ -1,6 +1,6 @@
 import { forCourse } from './forCourse'
 import { offeredIn, periodsFor, termKey } from './availability'
-import { categoryOf, checkCourse, componentNeeds, findComponent, findCourse, majorTitles } from './courseRules'
+import { categoryOf, checkCourse, componentNeeds, findComponent, findCourse, majorTitles, withBarredBreadth } from './courseRules'
 import { evaluateField, referencedSubjects, type Tri } from './expr'
 import type { Note, Params, Plan, PlanTerm } from './plan'
 import { standardTerms } from './plan'
@@ -9,6 +9,7 @@ import { checkTerms } from './planCheck'
 import { balanceTerms, fixHeavyTerms } from './relieve'
 import { skillsOf, termStress, weakSkills, type StressLevel } from './termStress'
 import type { ComponentReq, Course, CourseRule, Dataset, Period, ReqExpr, Subject } from './schema'
+import { PERIODS } from './schema'
 
 export interface GenerateInput {
   data: Dataset
@@ -57,7 +58,8 @@ export interface GenerateResult {
  */
 export function generatePlan(raw: GenerateInput): GenerateResult {
   // Periods as this course's students see them (breadth-only periods for breadth subjects).
-  const input = { ...raw, data: forCourse(raw.data, raw.course) }
+  // A subject the student's major won't let count as breadth is never picked to fill breadth.
+  const input = { ...raw, data: withBarredBreadth(forCourse(raw.data, raw.course), raw.course, [raw.major, raw.specialisation]) }
   // Unplaced subjects weigh most; then course rules the plan fails (e.g. breadth
   // squeezed out by a heavy major + specialisation).
   const shortfall = (r: GenerateResult) =>
@@ -652,7 +654,8 @@ function prereqsCanRun(code: string, startYear: number, data: Dataset, course: s
 
 function runsDuringPlan(s: Subject | undefined, startYear: number): boolean {
   if (!s || s.offerings === 'unknown') return true
-  return [0, 1, 2, 3].some((d) => periodsFor(s, startYear + d).length > 0)
+  // A year it might run counts too: "not available in 2026" says nothing about 2027.
+  return [0, 1, 2, 3].some((d) => PERIODS.some((p) => offeredIn(s, startYear + d, p).status !== 'fail'))
 }
 
 /** How many required subjects can only be taken in each teaching period. */

@@ -2,7 +2,8 @@ code: LING30015
 title: Corpus Linguistics
 level: 3
 points: 12.5
-offerings: unknown
+offerings:
+  "2026": []
 prerequisites:
   any:
     - LING10001

@@ -7,6 +7,8 @@ points: 50
 requirements:
   # Core, including the capstone GEOM30012.
   - all: [GEOM30009, CVEN30008, GEOM30014, GEOM30012]
-# Not encoded: the page's non-allowed breadth list (the engine has no per-major breadth exclusions).
+# Subjects the page says students in this major can't take as breadth.
+non_allowed_breadth:
+  areas: [COMP, ENGR, GEOM, INFO, GEOG, MAST, PHYC, SINF]
 handbook: https://handbook.unimelb.edu.au/2026/courses/b-des/majors-minors-specialisations
 verified_on: 2026-10-19 # structure; source: 2026 Handbook major page

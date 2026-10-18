@@ -2,7 +2,8 @@ code: FREN20004
 title: French Translation
 level: 2
 points: 12.5
-offerings: unknown
+offerings:
+  "2026": []
 prerequisites:
   any:
     - FREN10001

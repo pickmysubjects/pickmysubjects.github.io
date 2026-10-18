@@ -7,6 +7,10 @@ points: 50
 requirements:
   # Core, including the capstone ABPL30061.
   - all: [ABPL30042, ABPL30061, LARC30001]
-# Not encoded: the page's non-allowed breadth list (the engine has no per-major breadth exclusions). The page recommends LARC30002 for students heading to MC-LARCH (advice, not a requirement).
+# The page recommends LARC30002 for students heading to MC-LARCH (advice, not a requirement).
+# Subjects the page says students in this major can't take as breadth.
+non_allowed_breadth:
+  areas: [BOTA, ECOL, HORT]
+  subjects: [ABPL20028, ABPL30037, ABPL30048, ARCH20002]
 handbook: https://handbook.unimelb.edu.au/2026/courses/b-des/majors-minors-specialisations
 verified_on: 2026-10-19 # structure; source: 2026 Handbook major page

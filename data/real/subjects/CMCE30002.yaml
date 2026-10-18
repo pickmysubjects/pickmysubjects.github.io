@@ -2,7 +2,8 @@ code: CMCE30002
 title: Business Data Governance and Ethics
 level: 3
 points: 12.5
-offerings: unknown
+offerings:
+  "2026": []
 prerequisites: BUSA20001
 corequisites: none
 non_allowed: []

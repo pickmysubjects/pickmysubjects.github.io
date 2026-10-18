@@ -2,7 +2,8 @@ code: ACCT30007
 title: Special Topics in Accounting
 level: 3
 points: 12.5
-offerings: unknown
+offerings:
+  "2026": []
 prerequisites:
   manual: Permission of subject co-ordinator
 corequisites: none

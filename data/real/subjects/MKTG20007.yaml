@@ -2,7 +2,8 @@ code: MKTG20007
 title: Entrepreneurship and Product Innovation
 level: 2
 points: 12.5
-offerings: unknown
+offerings:
+  "2026": []
 prerequisites: MKTG10001
 corequisites: none
 non_allowed: []

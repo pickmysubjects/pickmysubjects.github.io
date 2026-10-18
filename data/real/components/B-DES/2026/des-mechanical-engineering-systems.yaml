@@ -7,6 +7,8 @@ points: 50
 requirements:
   # Core.
   - all: [MCEN30021, MCEN30017, MCEN30018, MCEN30020]
-# Not encoded: the page's non-allowed breadth list (the engine has no per-major breadth exclusions).
+# Subjects the page says students in this major can't take as breadth.
+non_allowed_breadth:
+  areas: [MAST, PHYC, CVEN, ERTH, ENGR, GEOL]
 handbook: https://handbook.unimelb.edu.au/2026/courses/b-des/majors-minors-specialisations
 verified_on: 2026-10-19 # structure; source: 2026 Handbook major page

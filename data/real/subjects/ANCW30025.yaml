@@ -2,7 +2,8 @@ code: ANCW30025
 title: Field Archaeology
 level: 3
 points: 12.5
-offerings: unknown
+offerings:
+  "2026": []
 prerequisites:
   manual: "Please note: Entry into this subject is by application only. Students will be selected based on academic background, strength of application, and possibly interview. Places are limited. Students may not self-enrol. Applications close end of March and successful students will be notified by mid-April. Further information can be found here: Link"
 corequisites: none

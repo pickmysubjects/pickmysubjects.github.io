@@ -2,7 +2,8 @@ code: MKTG30007
 title: Marketing and Society
 level: 3
 points: 12.5
-offerings: unknown
+offerings:
+  "2026": []
 prerequisites:
   any:
     - MKTG10001

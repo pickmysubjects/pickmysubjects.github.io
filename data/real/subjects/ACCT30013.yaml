@@ -2,7 +2,8 @@ code: ACCT30013
 title: Contemporary Issues in Reporting
 level: 3
 points: 12.5
-offerings: unknown
+offerings:
+  "2026": []
 prerequisites: ACCT20008
 corequisites: none
 non_allowed:

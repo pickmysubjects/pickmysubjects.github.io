@@ -157,6 +157,7 @@ export const zhTW: Messages = {
     'non-allowed': '{code} 和 {other} 不能同時計入學分——它們互斥（non-allowed）。',
     overload: '{term} 有 {load} 學分；超過 {max} 學分屬於超修，需要申請核准。',
     'course-unknown': '{course} 的規則還沒有整理。',
+    'breadth-not-allowed': '{code} 和 {major} 太接近，不能算作 breadth，但仍計入總學分。',
   },
   unplacedReason: {
     notInDataset: '資料庫裡還沒有這門課',

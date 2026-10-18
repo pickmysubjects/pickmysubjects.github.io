@@ -2,7 +2,8 @@ code: FREN30015
 title: "Matters of Taste: French Eating Cultures"
 level: 3
 points: 12.5
-offerings: unknown
+offerings:
+  "2026": []
 prerequisites:
   any:
     - any:

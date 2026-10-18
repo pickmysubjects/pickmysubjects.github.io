@@ -2,7 +2,8 @@ code: ACCT30006
 title: Financial Analysis and Valuation
 level: 3
 points: 12.5
-offerings: unknown
+offerings:
+  "2026": []
 prerequisites:
   all:
     - all:

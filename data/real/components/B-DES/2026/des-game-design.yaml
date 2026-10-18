@@ -9,6 +9,6 @@ requirements:
   - all: [ABPL30075, THTR30042]
   # Capstone (not available in 2026).
   - all: [ABPL30076]
-# Not encoded: the page's non-allowed breadth list (the engine has no per-major breadth exclusions).
+# The pasted page had no non-allowed breadth list; none encoded.
 handbook: https://handbook.unimelb.edu.au/2026/courses/b-des/majors-minors-specialisations
 verified_on: 2026-10-19 # structure; source: 2026 Handbook major page

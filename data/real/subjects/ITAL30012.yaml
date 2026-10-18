@@ -2,7 +2,8 @@ code: ITAL30012
 title: "Languages of Venice: Study Abroad"
 level: 3
 points: 12.5
-offerings: unknown
+offerings:
+  "2026": []
 prerequisites:
   manual: "Special Entry Conditions Apply. Admission requirements: Students are selected for this subject based on academic merit. Further information on the Appplication Process is available here: Link"
 corequisites:

@@ -157,6 +157,7 @@ export const zhCN: Messages = {
     'non-allowed': '{code} 和 {other} 不能同时计入学分——它们互斥（non-allowed）。',
     overload: '{term} 有 {load} 学分；超过 {max} 学分属于超修，需要申请批准。',
     'course-unknown': '{course} 的规则还没有整理。',
+    'breadth-not-allowed': '{code} 和 {major} 太接近，不能算作 breadth，但仍计入总学分。',
   },
   unplacedReason: {
     notInDataset: '数据库里还没有这门课',

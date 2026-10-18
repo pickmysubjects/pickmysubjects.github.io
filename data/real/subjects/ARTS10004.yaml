@@ -2,7 +2,8 @@ code: ARTS10004
 title: Philosophy, Politics and Economics
 level: 1
 points: 12.5
-offerings: unknown
+offerings:
+  "2026": []
 prerequisites: none
 corequisites: none
 non_allowed: []
