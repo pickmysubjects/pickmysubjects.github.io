@@ -52,5 +52,9 @@ routes:
       - choose: { points: 12.5, from: [FREN30013, FREN30015, FREN30018, FREN30019, FREN30020, FREN30014, FREN30006, FREN30005, FREN30012, FREN30017, FREN30021, FREN30025, FREN30026, FREN30022] }
       # Second Level 3 French elective, or one "other" elective (the Handbook allows only one "other" subject across both levels).
       - choose: { points: 12.5, from: [FREN30013, FREN30015, FREN30018, FREN30019, FREN30020, FREN30014, FREN30006, FREN30005, FREN30012, FREN30017, FREN30021, FREN30025, FREN30026, FREN30022, EURO30002, EURO30001, EURO30004, EURO30005, EURO30006, EURO30008, LANG30001, EURO30009] }
+# Handbook cap: one "other" (European Studies or LANG) elective in the whole major.
+limits:
+  - max: 12.5
+    from: [EURO20001, EURO20003, EURO20005, EURO20006, EURO20007, EURO20009, EURO20010, EURO30001, EURO30002, EURO30004, EURO30005, EURO30006, EURO30008, EURO30009, LANG30001]
 handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
 verified_on: 2026-10-17 # structure; source: 2026 Handbook major page

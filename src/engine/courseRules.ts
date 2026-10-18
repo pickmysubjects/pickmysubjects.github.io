@@ -1,6 +1,6 @@
 import type { Tri } from './expr'
 import type { Issue, Params, Plan } from './plan'
-import type { Component, ComponentReq, Course, CourseRule, Dataset, Subject } from './schema'
+import type { Component, ComponentLimit, ComponentReq, Course, CourseRule, Dataset, Subject } from './schema'
 
 export interface RuleStatus {
   ruleId: string
@@ -256,8 +256,12 @@ function componentStatus(
   component: Component,
   ctx: RuleCtx,
 ): RuleStatus {
-  // With routes, check the one that fits what's done and planned.
-  if (component.routes) component = { ...component, requirements: routeFor(component, ctx.codes) }
+  // With routes, check the one that fits what's done and planned (and that route's own limits).
+  if (component.routes) {
+    const reqs = routeFor(component, ctx.codes)
+    const route = component.routes.find((r) => r.requirements === reqs)
+    component = { ...component, requirements: reqs, limits: [...(component.limits ?? []), ...(route?.limits ?? [])] }
+  }
   if (component.requirements === 'unknown') {
     const detail = `${component.title}: structure not curated yet`
     return { ...base, status: 'unknown', detail, detailKey: 'componentUnknown', params: { title: component.title } }
@@ -265,8 +269,10 @@ function componentStatus(
   // A subject counts towards one requirement only: "all" lists claim theirs first,
   // then each "choose" group (in file order) takes from what's left.
   const used = new Set<string>()
+  // Points already counted from each limited pool; past its max a subject counts towards nothing.
+  const limits = (component.limits ?? []).map((l) => ({ ...l, taken: 0 }))
   const ordered = [...component.requirements.filter((r) => 'all' in r), ...component.requirements.filter((r) => !('all' in r))]
-  const unmet = ordered.map((r) => unmetRequirement(r, ctx, used)).filter((x): x is Unmet => x !== null)
+  const unmet = ordered.map((r) => unmetRequirement(r, ctx, used, limits)).filter((x): x is Unmet => x !== null)
   if (unmet.length === 0) {
     return { ...base, status: 'ok', detail: `${component.title} complete`, detailKey: 'componentDone', params: { title: component.title } }
   }
@@ -288,7 +294,7 @@ interface Unmet {
   part: string
 }
 
-function unmetRequirement(req: ComponentReq, ctx: RuleCtx, used: Set<string>): Unmet | null {
+function unmetRequirement(req: ComponentReq, ctx: RuleCtx, used: Set<string>, limits: (ComponentLimit & { taken: number })[] = []): Unmet | null {
   if ('all' in req) {
     req.all.forEach((c) => used.add(c))
     const missing = req.all.filter((c) => !ctx.codes.includes(c))
@@ -298,9 +304,13 @@ function unmetRequirement(req: ComponentReq, ctx: RuleCtx, used: Set<string>): U
   for (const c of req.choose.from) {
     if (have >= req.choose.points) break
     if (!ctx.codes.includes(c) || used.has(c)) continue
-    used.add(c)
     // A subject we have no data for yet still counts as a standard 12.5-point subject.
-    have += ctx.data.subjects[c]?.points ?? 12.5
+    const points = ctx.data.subjects[c]?.points ?? 12.5
+    const pools = limits.filter((l) => l.from.includes(c))
+    if (pools.some((l) => l.taken + points > l.max)) continue
+    pools.forEach((l) => (l.taken += points))
+    used.add(c)
+    have += points
   }
   if (have >= req.choose.points) return null
   const from = req.choose.from.join(', ')

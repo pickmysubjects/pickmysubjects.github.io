@@ -65,4 +65,21 @@ describe('majors with entry points (routes)', () => {
     expect(check(['AAAA20003', 'AAAA20004'])).toBe('ok')
     expect(check(['AAAA20001'])).toBe('fail')
   })
+
+  it('counts no more than a limit allows from a pool across the whole major', async () => {
+    const { checkCourse } = await import('../src/engine/courseRules')
+    const { dataset, subject } = await import('./helpers')
+    // Two electives, each French or "other" (EURO), but only one "other" in all.
+    const major = {
+      id: 'fren', course: 'X', year: 2026, kind: 'major', title: 'French', points: 25, requiresMajor: [], verifiedOn: null,
+      requirements: [{ choose: { points: 12.5, from: ['FREN20001', 'EURO20001', 'EURO20002'] } }, { choose: { points: 12.5, from: ['FREN30001', 'EURO30001'] } }],
+      limits: [{ max: 12.5, from: ['EURO20001', 'EURO20002', 'EURO30001'] }],
+    } as never
+    const data = dataset(['FREN20001', 'EURO20001', 'EURO20002', 'FREN30001', 'EURO30001'].map((code) => subject({ code, prerequisites: 'none' })))
+    data.components.push(major)
+    data.courses.push({ code: 'X', title: 'X', year: 2026, totalPoints: 25, standardLoad: 50, categories: [], closed: [], listed: true, rules: [{ id: 'major', kind: 'major', count: 1, description: 'A major' }] } as never)
+    const check = (codes: string[]) => checkCourse({ course: 'X', courseYear: 2026, major: 'fren', completed: codes, terms: [] } as never, data).statuses.find((s) => s.ruleId === 'major')?.status
+    expect(check(['EURO20001', 'FREN30001'])).toBe('ok')
+    expect(check(['EURO20001', 'EURO30001'])).toBe('fail')
+  })
 })
