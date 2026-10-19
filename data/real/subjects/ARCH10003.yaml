@@ -13,8 +13,8 @@ non_allowed:
 skills:
   - design
 topics:
+  - architecture
   - design
-  - art
 assessment:
   - kind: assignment
     weight: 15

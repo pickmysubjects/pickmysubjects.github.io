@@ -17,6 +17,7 @@ non_allowed:
 skills:
   - writing
 topics:
+  - architecture
   - history
   - design
 assessment:

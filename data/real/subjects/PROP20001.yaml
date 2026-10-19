@@ -12,6 +12,7 @@ non_allowed:
 skills:
   - maths
 topics:
+  - property
   - finance
 assessment:
   - kind: quiz

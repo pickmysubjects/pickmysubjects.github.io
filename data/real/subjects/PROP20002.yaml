@@ -16,9 +16,9 @@ non_allowed:
 skills:
   - writing
 topics:
-  - business
+  - property
+  - design
   - economics
-  - law
 assessment:
   - kind: presentation
     weight: 10

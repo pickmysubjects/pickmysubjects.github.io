@@ -415,6 +415,8 @@ export const hi: Messages = {
     science: 'विज्ञान',
     arts: 'कला और अन्य',
     applied: "इंजीनियरिंग, स्वास्थ्य और कृषि",
+    creative: 'रचनात्मक कला और डिज़ाइन',
+    built: 'निर्मित परिवेश',
     other: 'अन्य',
   },
   topic: {
@@ -471,6 +473,13 @@ export const hi: Messages = {
     media: "मीडिया",
     art: "कला",
     'indigenous-studies': "मूल निवासी अध्ययन",
+    'architecture': 'वास्तुकला और लैंडस्केप',
+    'urban-planning': 'नगर नियोजन',
+    'property': 'प्रॉपर्टी',
+    'construction': 'निर्माण',
+    'visual-communication': 'ग्राफ़िक डिज़ाइन',
+    'performance': 'रंगमंच और प्रदर्शन',
+    'film-and-screen': 'फ़िल्म और स्क्रीन',
   },
   contribute: {
     title: 'ऐसा विषय जोड़ें जो अभी नहीं है',

@@ -415,6 +415,8 @@ export const vi: Messages = {
     science: 'Khoa học',
     arts: 'Nhân văn & khác',
     applied: "Kỹ thuật, sức khỏe & nông nghiệp",
+    creative: 'Nghệ thuật sáng tạo & thiết kế',
+    built: 'Môi trường xây dựng',
     other: 'Khác',
   },
   topic: {
@@ -471,6 +473,13 @@ export const vi: Messages = {
     media: "Truyền thông",
     art: "Nghệ thuật",
     'indigenous-studies': "Nghiên cứu bản địa",
+    'architecture': 'Kiến trúc và cảnh quan',
+    'urban-planning': 'Quy hoạch đô thị',
+    'property': 'Bất động sản',
+    'construction': 'Xây dựng',
+    'visual-communication': 'Thiết kế đồ họa',
+    'performance': 'Sân khấu và biểu diễn',
+    'film-and-screen': 'Điện ảnh và màn ảnh',
   },
   contribute: {
     title: 'Thêm môn học chưa có',

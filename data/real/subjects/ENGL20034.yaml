@@ -11,7 +11,7 @@ non_allowed: []
 skills:
   - writing
 topics:
-  - art
+  - performance
 assessment:
   - kind: report
     weight: 25

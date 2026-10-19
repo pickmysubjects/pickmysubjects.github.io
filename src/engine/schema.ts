@@ -93,6 +93,13 @@ export const TOPICS = [
   'media',
   'art',
   'indigenous-studies',
+  'architecture',
+  'urban-planning',
+  'property',
+  'construction',
+  'visual-communication',
+  'performance',
+  'film-and-screen',
 ] as const
 export type Topic = (typeof TOPICS)[number]
 

@@ -415,6 +415,8 @@ export const ms: Messages = {
     science: 'Sains',
     arts: 'Kemanusiaan & lain-lain',
     applied: "Kejuruteraan, kesihatan & pertanian",
+    creative: 'Seni kreatif & reka bentuk',
+    built: 'Alam bina',
     other: 'Lain-lain',
   },
   topic: {
@@ -471,6 +473,13 @@ export const ms: Messages = {
     media: "Media",
     art: "Seni",
     'indigenous-studies': "Kajian Orang Asal",
+    'architecture': 'Seni bina dan landskap',
+    'urban-planning': 'Perancangan bandar',
+    'property': 'Hartanah',
+    'construction': 'Pembinaan',
+    'visual-communication': 'Reka bentuk grafik',
+    'performance': 'Teater dan persembahan',
+    'film-and-screen': 'Filem dan skrin',
   },
   contribute: {
     title: 'Tambah subjek yang belum ada',

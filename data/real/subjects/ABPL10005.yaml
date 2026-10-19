@@ -12,8 +12,8 @@ non_allowed:
 skills:
   - writing
 topics:
-  - engineering
-  - management
+  - architecture
+  - construction
 assessment:
   - kind: quiz
     weight: 10

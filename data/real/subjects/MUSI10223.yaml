@@ -11,8 +11,8 @@ non_allowed: []
 skills:
   - design
 topics:
+  - performance
   - design
-  - art
 assessment:
   - kind: project
     weight: 30

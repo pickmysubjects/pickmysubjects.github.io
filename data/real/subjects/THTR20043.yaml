@@ -11,9 +11,9 @@ non_allowed: []
 skills:
   - design
 topics:
+  - film-and-screen
   - design
   - media
-  - art
 assessment:
   - kind: assignment
     weight: 30

@@ -11,9 +11,9 @@ non_allowed: []
 skills:
   - design
 topics:
+  - architecture
   - design
   - ecology
-  - environment
 assessment:
   - kind: assignment
     weight: 15

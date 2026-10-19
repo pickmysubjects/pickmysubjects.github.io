@@ -415,6 +415,8 @@ export const zhCN: Messages = {
     science: '理科',
     arts: '文科及其他',
     applied: "工程、健康与农业",
+    creative: '创意艺术与设计',
+    built: '建筑与城市',
     other: '其他',
   },
   topic: {
@@ -471,6 +473,13 @@ export const zhCN: Messages = {
     media: "媒体与传播",
     art: "艺术",
     'indigenous-studies': "原住民研究",
+    'architecture': '建筑与景观',
+    'urban-planning': '城市规划',
+    'property': '房地产',
+    'construction': '建造与施工',
+    'visual-communication': '平面设计',
+    'performance': '戏剧与表演',
+    'film-and-screen': '电影与影视',
   },
   contribute: {
     title: '添加一门我们还没有的课',

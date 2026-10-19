@@ -415,6 +415,8 @@ export const ja: Messages = {
     science: '理科',
     arts: '人文ほか',
     applied: "工学・健康・農業",
+    creative: 'クリエイティブ・デザイン',
+    built: '建築・都市',
     other: 'その他',
   },
   topic: {
@@ -471,6 +473,13 @@ export const ja: Messages = {
     media: "メディア",
     art: "芸術",
     'indigenous-studies': "先住民研究",
+    'architecture': '建築・ランドスケープ',
+    'urban-planning': '都市計画',
+    'property': '不動産',
+    'construction': '建設・施工',
+    'visual-communication': 'グラフィックデザイン',
+    'performance': '演劇・パフォーマンス',
+    'film-and-screen': '映画・映像',
   },
   contribute: {
     title: 'まだない科目を追加',

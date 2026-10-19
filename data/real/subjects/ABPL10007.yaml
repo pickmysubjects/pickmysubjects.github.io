@@ -13,8 +13,8 @@ non_allowed:
 skills:
   - design
 topics:
+  - architecture
   - design
-  - engineering
   - environment
 assessment:
   - kind: assignment

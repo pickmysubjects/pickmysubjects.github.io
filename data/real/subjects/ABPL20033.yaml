@@ -15,7 +15,8 @@ non_allowed: []
 skills:
   - design
 topics:
-  - engineering
+  - architecture
+  - construction
   - design
 assessment:
   - kind: assignment

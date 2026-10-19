@@ -415,6 +415,8 @@ export const id: Messages = {
     science: 'Sains',
     arts: 'Humaniora & lainnya',
     applied: "Teknik, kesehatan & pertanian",
+    creative: 'Seni kreatif & desain',
+    built: 'Lingkungan binaan',
     other: 'Lainnya',
   },
   topic: {
@@ -471,6 +473,13 @@ export const id: Messages = {
     media: "Media",
     art: "Seni",
     'indigenous-studies': "Studi Pribumi",
+    'architecture': 'Arsitektur dan lanskap',
+    'urban-planning': 'Perencanaan kota',
+    'property': 'Properti',
+    'construction': 'Konstruksi',
+    'visual-communication': 'Desain grafis',
+    'performance': 'Teater dan pertunjukan',
+    'film-and-screen': 'Film dan layar',
   },
   contribute: {
     title: 'Tambahkan mata kuliah yang belum ada',

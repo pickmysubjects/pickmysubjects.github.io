@@ -12,9 +12,9 @@ non_allowed:
 skills:
   - writing
 topics:
+  - urban-planning
   - history
   - geography
-  - society
 assessment:
   - kind: assignment
     weight: 10

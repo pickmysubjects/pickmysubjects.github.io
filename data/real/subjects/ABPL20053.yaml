@@ -9,6 +9,7 @@ prerequisites: ABPL20042
 corequisites: none
 non_allowed: []
 topics:
+  - construction
   - engineering
 assessment:
   - kind: assignment

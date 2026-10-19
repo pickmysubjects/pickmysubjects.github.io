@@ -14,8 +14,8 @@ non_allowed: []
 skills:
   - writing
 topics:
+  - performance
   - literature
-  - art
 assessment:
   - kind: project
     weight: 15

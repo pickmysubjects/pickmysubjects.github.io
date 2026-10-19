@@ -15,8 +15,9 @@ non_allowed:
 skills:
   - writing
 topics:
-  - media
+  - performance
   - literature
+  - media
 assessment:
   - kind: participation
     weight: 10

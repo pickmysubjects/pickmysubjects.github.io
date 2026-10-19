@@ -415,6 +415,8 @@ export const ko: Messages = {
     science: '과학',
     arts: '인문 외',
     applied: "공학·건강·농업",
+    creative: '창작 예술·디자인',
+    built: '건축·도시',
     other: '기타',
   },
   topic: {
@@ -471,6 +473,13 @@ export const ko: Messages = {
     media: "미디어",
     art: "예술",
     'indigenous-studies': "원주민 연구",
+    'architecture': '건축·조경',
+    'urban-planning': '도시계획',
+    'property': '부동산',
+    'construction': '건설·시공',
+    'visual-communication': '그래픽 디자인',
+    'performance': '연극·공연',
+    'film-and-screen': '영화·영상',
   },
   contribute: {
     title: '아직 없는 과목 추가하기',

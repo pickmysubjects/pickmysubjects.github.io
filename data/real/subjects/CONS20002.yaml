@@ -15,6 +15,7 @@ non_allowed:
 skills:
   - maths
 topics:
+  - construction
   - engineering
 assessment:
   - kind: assignment

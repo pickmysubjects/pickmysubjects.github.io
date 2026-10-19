@@ -11,8 +11,8 @@ non_allowed:
 skills:
   - writing
 topics:
+  - film-and-screen
   - media
-  - art
 assessment:
   - kind: assignment
     weight: 15

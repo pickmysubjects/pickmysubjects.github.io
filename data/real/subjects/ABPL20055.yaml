@@ -18,8 +18,9 @@ non_allowed:
 skills:
   - writing
 topics:
-  - history
+  - architecture
   - design
+  - history
 assessment:
   - kind: presentation
     weight: 10

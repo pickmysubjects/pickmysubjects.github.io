@@ -415,6 +415,8 @@ export const zhTW: Messages = {
     science: '理科',
     arts: '文科及其他',
     applied: "工程、健康與農業",
+    creative: '創意藝術與設計',
+    built: '建築與城市',
     other: '其他',
   },
   topic: {
@@ -471,6 +473,13 @@ export const zhTW: Messages = {
     media: "媒體與傳播",
     art: "藝術",
     'indigenous-studies': "原住民研究",
+    'architecture': '建築與景觀',
+    'urban-planning': '都市規劃',
+    'property': '不動產',
+    'construction': '營建與施工',
+    'visual-communication': '平面設計',
+    'performance': '戲劇與表演',
+    'film-and-screen': '電影與影視',
   },
   contribute: {
     title: '新增一門我們還沒有的課',
