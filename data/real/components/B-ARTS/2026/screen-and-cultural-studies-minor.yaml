@@ -1,0 +1,13 @@
+id: screen-and-cultural-studies-minor
+course: B-ARTS
+year: 2026
+kind: minor
+title: Screen and Cultural Studies
+points: 50
+requirements:
+  # 25 points of Level 2 minor electives.
+  - choose: { points: 25, from: [CULS20017, CULS20018, SCRN20011, CULS20014, SCRN20013, SCRN20014, SCRN20015, CULS20019, CULS20020] }
+  # 25 points of Level 3 minor electives.
+  - choose: { points: 25, from: [CULS30004, CULS30005, CULS30006, SCRN30001, SCRN30005, SCRN30004, SCRN30006, SCRN30007] }
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
+verified_on: 2026-10-19 # structure; source: 2026 Handbook minor page

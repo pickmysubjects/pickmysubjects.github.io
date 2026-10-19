@@ -35,8 +35,8 @@ describe('saved plans from before minors', () => {
     const setup = { course: 'B-ARTS', courseYear: 2026, startYear: 2027, startPeriod: 'semester-1', major: 'history', specialisation: '' }
     const old = { real: { active: 'a', plans: [{ id: 'a', label: 'A', setup, terms: [], notes: [], unplaced: [] }] } }
     expect(cleanPlans(old).real!.plans[0]!.setup.minors).toEqual([])
-    const withMinor = { real: { active: 'a', plans: [{ id: 'a', label: 'A', setup: { ...setup, minors: ['philosophy-minor', 3] }, terms: [], notes: [], unplaced: [] }] } }
-    expect(cleanPlans(withMinor).real!.plans[0]!.setup.minors).toEqual(['philosophy-minor'])
+    const withMinor = { real: { active: 'a', plans: [{ id: 'a', label: 'A', setup: { ...setup, minors: ['test-philosophy-minor', 3] }, terms: [], notes: [], unplaced: [] }] } }
+    expect(cleanPlans(withMinor).real!.plans[0]!.setup.minors).toEqual(['test-philosophy-minor'])
   })
 })
 
@@ -44,9 +44,9 @@ describe('planning a minor', () => {
   const profile = { results: [], skills: {}, interests: [], goal: 'balanced' as const }
 
   it("plans the minor's required subjects alongside the major and meets its rule", () => {
-    const { plan, unplaced } = generatePlan({ data, profile, course: 'B-ARTS', courseYear: 2026, major: 'history', minors: ['philosophy-minor'], startYear: 2027, startPeriod: 'semester-1' })
+    const { plan, unplaced } = generatePlan({ data, profile, course: 'B-ARTS', courseYear: 2026, major: 'history', minors: ['test-philosophy-minor'], startYear: 2027, startPeriod: 'semester-1' })
     const codes = plan.terms.flatMap((t) => t.subjects)
-    expect(plan.minors).toEqual(['philosophy-minor'])
+    expect(plan.minors).toEqual(['test-philosophy-minor'])
     expect(codes).toContain('PHIL30024')
     expect(codes.filter((c) => ['PHIL20008', 'PHIL20030', 'PHIL20033', 'PHIL20039'].includes(c)).length).toBeGreaterThanOrEqual(2)
     expect(unplaced).toEqual([])
@@ -67,20 +67,20 @@ describe('the minor course rule', () => {
   it('is met with no minor (optional), missing until its subjects are in, complete once they are', () => {
     expect(minorRule(plan([])).status).toBe('ok')
     expect(minorRule(plan(undefined)).status).toBe('ok')
-    const missing = minorRule(plan(['philosophy-minor'], 'history', ['PHIL20008']))
+    const missing = minorRule(plan(['test-philosophy-minor'], 'history', ['PHIL20008']))
     expect(missing.status).toBe('fail')
     expect(missing.detailKey).toBe('componentMissing')
-    expect(minorRule(plan(['philosophy-minor'], 'history', ['PHIL20008', 'PHIL20030', 'PHIL30024'])).detailKey).toBe('componentDone')
+    expect(minorRule(plan(['test-philosophy-minor'], 'history', ['PHIL20008', 'PHIL20030', 'PHIL30024'])).detailKey).toBe('componentDone')
   })
 
   it('allows at most the course maximum', () => {
-    const r = minorRule(plan(['philosophy-minor', 'philosophy-minor-2']))
+    const r = minorRule(plan(['test-philosophy-minor', 'philosophy-minor-2']))
     expect(r.status).toBe('fail')
     expect(r.detailKey).toBe('tooManyMinors')
   })
 
   it("can't be the same discipline as the major (same title)", () => {
-    const r = minorRule(plan(['philosophy-minor'], 'philosophy', ['PHIL20008', 'PHIL20030', 'PHIL30024']))
+    const r = minorRule(plan(['test-philosophy-minor'], 'philosophy', ['PHIL20008', 'PHIL20030', 'PHIL30024']))
     expect(r.status).toBe('fail')
     expect(r.detailKey).toBe('minorSameAsMajor')
   })
@@ -109,7 +109,13 @@ describe('prerequisites a minor can meet', () => {
 
 describe('comparing plans', () => {
   it("shows each plan's minor next to its major", () => {
-    expect(setupTitles(data, { major: 'history', specialisation: '', minors: ['philosophy-minor'] })).toEqual({ major: 'History', minor: 'Philosophy' })
+    expect(setupTitles(data, { major: 'history', specialisation: '', minors: ['test-philosophy-minor'] })).toEqual({ major: 'History', minor: 'Philosophy' })
     expect(setupTitles(data, { major: 'history', specialisation: '', minors: [] }).minor).toBe('')
+  })
+
+  it('rules out a minor the Handbook pairs against the major ("Diversity of study")', async () => {
+    const { minorClash } = await import('../src/engine/courseRules')
+    expect(minorClash(data, 'chinese-studies', 'chinese-societies-minor')).toMatch(/can't be taken with/)
+    expect(minorClash(data, 'history', 'chinese-societies-minor')).toBeNull()
   })
 })

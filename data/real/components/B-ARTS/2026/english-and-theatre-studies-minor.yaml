@@ -1,0 +1,13 @@
+id: english-and-theatre-studies-minor
+course: B-ARTS
+year: 2026
+kind: minor
+title: English and Theatre Studies
+points: 50
+requirements:
+  # 25 points of Level 2 minor electives.
+  - choose: { points: 25, from: [ENGL20009, ENGL20020, ENGL20022, ENGL20025, ENGL20030, ENGL20031, ENGL20032, ENGL20033, ENGL20034, ENGL20035, ENGL20036, ENGL20037, ENGL20038] }
+  # 25 points of Level 3 minor electives.
+  - choose: { points: 25, from: [ENGL30006, ENGL30007, ENGL30013, ENGL30016, ENGL30046, ENGL30047, ENGL30048, ENGL30049, ENGL30051, ENGL30053, ENGL30054] }
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
+verified_on: 2026-10-19 # structure; source: 2026 Handbook minor page

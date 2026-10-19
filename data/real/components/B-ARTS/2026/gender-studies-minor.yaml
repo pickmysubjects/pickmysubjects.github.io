@@ -1,0 +1,13 @@
+id: gender-studies-minor
+course: B-ARTS
+year: 2026
+kind: minor
+title: Gender Studies
+points: 50
+requirements:
+  # 25 points of Level 2 minor electives.
+  - choose: { points: 25, from: [GEND20001, GEND20008, GEND20010, ASIA20003, GEND20003, GEND20011, EURO20010, GEND20012] }
+  # 25 points of Level 3 minor electives.
+  - choose: { points: 25, from: [GEND30005, GEND30006, GEND30007, CRIM30013, CULS30004] }
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
+verified_on: 2026-10-19 # structure; source: 2026 Handbook minor page

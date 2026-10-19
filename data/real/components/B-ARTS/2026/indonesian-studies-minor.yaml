@@ -1,0 +1,34 @@
+id: indonesian-studies-minor
+course: B-ARTS
+year: 2026
+kind: minor
+title: Indonesian Studies
+points: 50
+# Entry points by prior knowledge of the language; the plan follows the one the record points to.
+routes:
+  - title: Entry Point 1
+    requirements:
+      # Level 2 core.
+      - all: [INDO20006, INDO20007]
+      # Level 3 core.
+      - all: [INDO30011, INDO30007]
+  - title: Entry Point 3
+    requirements:
+      # Level 2 core.
+      - all: [INDO20008, INDO20009]
+      # 25 points of Level 3 minor electives.
+      - choose: { points: 25, from: [INDO30006, INDO30018, INDO30019, INDO30020] }
+  - title: Entry Point 5
+    requirements:
+      # 25 points of Level 2 minor electives.
+      - choose: { points: 25, from: [INDO20014, INDO20015, INDO20016, INDO20017] }
+      # 25 points of Level 3 minor electives.
+      - choose: { points: 25, from: [INDO30006, INDO30018, INDO30019, INDO30020] }
+  - title: Entry Point 7
+    requirements:
+      # Level 2 elective (the page lists only 12.5 Level 2 points here).
+      - choose: { points: 12.5, from: [INDO20014, INDO20015, INDO20016, INDO20017, INDO20001, INDO20018] }
+      # 25 points of Level 3 minor electives.
+      - choose: { points: 25, from: [INDO30006, INDO30018, INDO30019, INDO30020] }
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
+verified_on: 2026-10-19 # structure; source: 2026 Handbook minor page

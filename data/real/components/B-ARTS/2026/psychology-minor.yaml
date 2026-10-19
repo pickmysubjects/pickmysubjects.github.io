@@ -1,0 +1,18 @@
+id: psychology-minor
+course: B-ARTS
+year: 2026
+kind: minor
+title: Psychology
+points: 75
+# The 75-point non-accredited minor (the accredited path is the 125-point major).
+requirements:
+  # Level 1 core, Group A.
+  - choose: { points: 12.5, from: [PSYC10003, PSYC10006] }
+  # Level 1 core, Group B.
+  - choose: { points: 12.5, from: [PSYC10004, PSYC10007] }
+  # 25 points of Level 2 electives.
+  - choose: { points: 25, from: [PSYC20006, PSYC20008, PSYC20007, PSYC20009] }
+  # 25 points of Level 3 electives.
+  - choose: { points: 25, from: [PSYC30014, PSYC30016, PSYC30017, PSYC30018, PSYC30019, PSYC30020, PSYC30022, PSYC30023] }
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
+verified_on: 2026-10-19 # structure; source: 2026 Handbook minor page

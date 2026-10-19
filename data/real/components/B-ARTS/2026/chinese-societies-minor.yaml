@@ -1,0 +1,17 @@
+id: chinese-societies-minor
+course: B-ARTS
+year: 2026
+kind: minor
+title: Chinese Societies
+points: 50
+# Handbook "Diversity of study": not with these.
+not_with: [chinese-studies, chinese-studies-minor]
+requirements:
+  # 25 points of the Level 2 core subjects.
+  - choose: { points: 25, from: [CHIN20007, CHIN20008, ASIA20007] }
+  # At least 12.5 points of Level 3 core.
+  - choose: { points: 12.5, from: [CHIN30002, CHIN30030] }
+  # Rest of Level 3: the other core subject or one elective (at most 12.5 points of electives).
+  - choose: { points: 12.5, from: [CHIN30002, CHIN30030, POLS30011, AHIS30025] }
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
+verified_on: 2026-10-19 # structure; source: 2026 Handbook minor page

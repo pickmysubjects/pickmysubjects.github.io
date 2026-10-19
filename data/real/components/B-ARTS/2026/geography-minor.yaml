@@ -1,0 +1,17 @@
+id: geography-minor
+course: B-ARTS
+year: 2026
+kind: minor
+title: Geography
+points: 75
+requirements:
+  # Level 1 core.
+  - all: [GEOG10001]
+  # Level 1 elective or an Arts Discovery subject (list as in the Geography major).
+  - choose: { points: 12.5, from: [GEOG10003, AHIS10001, ARTS10005, CRIM10001, ENGL10002, HPSC10002, INDG10001, LANG10001, LING10002, PHIL10002, POLS10003, SOCI10001, ASIA10003, HIST10015] }
+  # 25 points of Level 2 electives.
+  - choose: { points: 25, from: [GEOG20001, GEOG20002, GEOG20003, GEOG20008, GEOG20010, GEOG20011, GEOG20012, GEOG20013, GEOG20015, GEOG20016, GEOG20017] }
+  # 25 points of Level 3 electives.
+  - choose: { points: 25, from: [GEOG30001, GEOG30007, GEOG30019, GEOG30021, GEOG30023, GEOG30024, GEOG30025, GEOG30026, GEOG30027, GEOG30028, GEOG30029, GEOG30030, GEOG30031, GEOG30033] }
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
+verified_on: 2026-10-19 # structure; source: 2026 Handbook minor page

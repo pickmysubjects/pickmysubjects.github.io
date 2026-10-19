@@ -1,0 +1,26 @@
+id: russian-studies-minor
+course: B-ARTS
+year: 2026
+kind: minor
+title: Russian Studies
+points: 50
+# Entry points by prior knowledge of the language; the plan follows the one the record points to.
+routes:
+  - title: Entry Point 1
+    requirements:
+      # Level 2 core.
+      - all: [RUSS20004, RUSS20005]
+      # Level 3 core.
+      - all: [RUSS30001, RUSS30006]
+  - title: Entry Point 3
+    requirements:
+      # Level 2 core.
+      - all: [RUSS20006]
+      # Level 2 elective.
+      - choose: { points: 12.5, from: [HIST20084, EURO20001, EURO20003, EURO20005, EURO20006, EURO20007] }
+      # Level 3 core.
+      - all: [RUSS30006]
+      # Level 3 elective.
+      - choose: { points: 12.5, from: [RUSS30005, EURO30001, EURO30002, EURO30004, EURO30005, EURO30006, ARTS30002, LANG30001] }
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
+verified_on: 2026-10-19 # structure; source: 2026 Handbook minor page

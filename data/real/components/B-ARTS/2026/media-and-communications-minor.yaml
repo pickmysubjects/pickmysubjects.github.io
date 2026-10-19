@@ -1,0 +1,13 @@
+id: media-and-communications-minor
+course: B-ARTS
+year: 2026
+kind: minor
+title: Media and Communications
+points: 50
+requirements:
+  # 25 points of Level 2 minor electives.
+  - choose: { points: 25, from: [MECM20006, MECM20010, MECM20003, MECM20011, MECM20013, MECM20014, MECM20015] }
+  # 25 points of Level 3 minor electives.
+  - choose: { points: 25, from: [MECM30015, MECM30016, MECM30004, MECM30013, MECM30017, CULS30006, MECM30019, MECM30020] }
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
+verified_on: 2026-10-19 # structure; source: 2026 Handbook minor page

@@ -1,0 +1,13 @@
+id: environmental-studies-minor
+course: B-ARTS
+year: 2026
+kind: minor
+title: Environmental Studies
+points: 50
+requirements:
+  # Level 2/3 core.
+  - all: [GEOG20003, GEOG20001, GEOG30019]
+  # Level 2/3 elective.
+  - choose: { points: 12.5, from: [HPSC20002, GEOG30024, SCRN30005, EVSC30009] }
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
+verified_on: 2026-10-19 # structure; source: 2026 Handbook minor page

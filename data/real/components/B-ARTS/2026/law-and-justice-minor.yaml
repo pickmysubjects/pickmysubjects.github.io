@@ -1,0 +1,18 @@
+id: law-and-justice-minor
+course: B-ARTS
+year: 2026
+kind: minor
+title: Law and Justice
+points: 50
+# All Law subjects in this minor are taken as breadth.
+requirements:
+  # Level 2 core.
+  - all: [LAWS20008]
+  # Level 2 elective.
+  - choose: { points: 12.5, from: [CRIM20002, CRIM20010] }
+  # Level 3 core.
+  - all: [CRIM30012]
+  # Level 3 elective.
+  - choose: { points: 12.5, from: [LAWS30024, CRIM30001, CRIM30002, CRIM30015] }
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
+verified_on: 2026-10-19 # structure; source: 2026 Handbook minor page

@@ -1,0 +1,15 @@
+id: criminology-minor
+course: B-ARTS
+year: 2026
+kind: minor
+title: Criminology
+points: 50
+requirements:
+  # Level 2 core.
+  - all: [CRIM20013]
+  # Level 2 elective.
+  - choose: { points: 12.5, from: [CRIM20002, CRIM20003, CRIM20004, CRIM20006, CRIM20007, CRIM20009, CRIM20010, GEND20003, POLS20035, SOCI20017, CRIM20012, SOCI20023] }
+  # 25 points of Level 3 minor electives.
+  - choose: { points: 25, from: [CRIM30001, CRIM30002, CRIM30005, CRIM30006, CRIM30010, CRIM30012, POLS30039, SOCI30014, CRIM30013, CRIM30015] }
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
+verified_on: 2026-10-19 # structure; source: 2026 Handbook minor page

@@ -1,0 +1,17 @@
+id: japanese-societies-minor
+course: B-ARTS
+year: 2026
+kind: minor
+title: Japanese Societies
+points: 50
+# Handbook "Diversity of study": not with these.
+not_with: [japanese-studies, japanese-studies-minor]
+requirements:
+  # Level 2 core.
+  - all: [JAPN20005]
+  # Level 2 elective.
+  - choose: { points: 12.5, from: [ASIA20001, ASIA20003, AHIS20021] }
+  # 25 points of Level 3 minor electives.
+  - choose: { points: 25, from: [ASIA30003, ASIA30004, ASIA30005, JAPN30002] }
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
+verified_on: 2026-10-19 # structure; source: 2026 Handbook minor page

@@ -1,0 +1,17 @@
+id: digital-studies-minor
+course: B-ARTS
+year: 2026
+kind: minor
+title: Digital Studies
+points: 50
+requirements:
+  # Level 2 core.
+  - all: [ARTS20001]
+  # Level 2 elective (BLAW20002 only as breadth).
+  - choose: { points: 12.5, from: [MECM20003, MECM20014, CULS20017, HPSC20009, CRIM20007, GEOG20017, BLAW20002, ASIA20008, SOCI20021] }
+  # Level 3 core.
+  - all: [ARTS30003]
+  # Level 3 elective.
+  - choose: { points: 12.5, from: [MECM30016, MECM30017, MECM30013, SCRN30005, ANTH30019, HPSC30038, GEOG30028, LING30015] }
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
+verified_on: 2026-10-19 # structure; source: 2026 Handbook minor page

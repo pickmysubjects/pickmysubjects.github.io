@@ -1,0 +1,48 @@
+id: chinese-studies-minor
+course: B-ARTS
+year: 2026
+kind: minor
+title: Chinese Studies
+points: 50
+# Entry points by prior knowledge of the language; the plan follows the one the record points to.
+routes:
+  - title: Entry Point 1
+    requirements:
+      # Level 2 core.
+      - all: [CHIN20001, CHIN20002]
+      # Level 3 core.
+      - all: [CHIN30008, CHIN30009]
+  - title: Entry Point 3
+    requirements:
+      # Level 2 core.
+      - all: [CHIN20003, CHIN20004]
+      # Level 3 core.
+      - all: [CHIN30025, CHIN30026]
+  - title: Entry Point 5
+    requirements:
+      # Level 2 core.
+      - all: [CHIN20027, CHIN20028]
+      # Level 3 core.
+      - all: [CHIN30028, CHIN30027]
+  - title: Entry Point 7
+    requirements:
+      # Level 2 core.
+      - all: [CHIN20012, CHIN20013]
+      # 25 points of Level 3 electives.
+      - choose: { points: 25, from: [CHIN30006, CHIN30007, CHIN30012, CHIN30018] }
+  - title: Entry Point 9
+    requirements:
+      # Level 2 core.
+      - all: [CHIN20016, CHIN20009]
+      # Level 3 core.
+      - all: [CHIN30007]
+      # Level 3 elective.
+      - choose: { points: 12.5, from: [CHIN30005, CHIN30002] }
+  - title: Entry Point 11
+    requirements:
+      # Level 2 core.
+      - all: [CHIN20009, CHIN20026]
+      # Level 3 core.
+      - all: [CHIN30007, CHIN30006]
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
+verified_on: 2026-10-19 # structure; source: 2026 Handbook minor page

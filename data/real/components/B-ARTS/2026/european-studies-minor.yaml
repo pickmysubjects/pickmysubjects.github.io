@@ -1,0 +1,17 @@
+id: european-studies-minor
+course: B-ARTS
+year: 2026
+kind: minor
+title: European Studies
+points: 50
+requirements:
+  # At least 12.5 points of Level 2 Group A.
+  - choose: { points: 12.5, from: [EURO20001, EURO20003, EURO20005, EURO20006, EURO20007, EURO20010, EURO20009] }
+  # Rest of Level 2: Group A or B.
+  - choose: { points: 12.5, from: [EURO20001, EURO20003, EURO20005, EURO20006, EURO20007, EURO20010, EURO20009, AHIS20016, PHIL20008, LING20010, ENGL20022, ENGL20020, HIST20068, HIST20060, HIST20052] }
+  # At least 12.5 points of Level 3 Group A.
+  - choose: { points: 12.5, from: [EURO30001, EURO30002, EURO30004, EURO30005, EURO30006, EURO30009, EURO30008] }
+  # Rest of Level 3: Group A or B.
+  - choose: { points: 12.5, from: [EURO30001, EURO30002, EURO30004, EURO30005, EURO30006, EURO30009, EURO30008, SOCI30001, ENGL30016, AHIS30003, POLS30018, ENGL30013, HIST30010, ARTS30002, PHIL30024, HIST30006, HIST30051] }
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
+verified_on: 2026-10-19 # structure; source: 2026 Handbook minor page

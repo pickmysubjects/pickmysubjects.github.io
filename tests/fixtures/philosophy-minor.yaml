@@ -1,5 +1,5 @@
 # A test-only minor (not real Handbook data): two level-2 Philosophy subjects and a level-3 one.
-id: philosophy-minor
+id: test-philosophy-minor
 course: B-ARTS
 year: 2026
 kind: minor

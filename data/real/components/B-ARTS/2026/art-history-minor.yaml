@@ -1,0 +1,13 @@
+id: art-history-minor
+course: B-ARTS
+year: 2026
+kind: minor
+title: Art History
+points: 50
+requirements:
+  # 25 points of Level 2 minor electives.
+  - choose: { points: 25, from: [AHIS20022, AHIS20021, AHIS20020, AHIS20018, AHIS20016, AHIS20011, AHIS20002] }
+  # 25 points of Level 3 minor electives.
+  - choose: { points: 25, from: [AHIS30002, AHIS30003, AHIS30005, AHIS30020, AHIS30022, AHIS30024, AHIS30025, AHIS30026] }
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
+verified_on: 2026-10-19 # structure; source: 2026 Handbook minor page

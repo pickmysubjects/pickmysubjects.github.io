@@ -1,0 +1,13 @@
+id: asian-studies-minor
+course: B-ARTS
+year: 2026
+kind: minor
+title: Asian Studies
+points: 50
+requirements:
+  # 25 points of Level 2 minor electives.
+  - choose: { points: 25, from: [ASIA20001, ASIA20003, ASIA20004, ASIA20008, ASIA20007, ASIA20009] }
+  # 25 points of Level 3 minor electives.
+  - choose: { points: 25, from: [ASIA30003, ASIA30004, ISLM30018, ASIA30005] }
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
+verified_on: 2026-10-19 # structure; source: 2026 Handbook minor page

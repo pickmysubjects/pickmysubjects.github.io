@@ -1,0 +1,13 @@
+id: sociology-minor
+course: B-ARTS
+year: 2026
+kind: minor
+title: Sociology
+points: 50
+requirements:
+  # 25 points of Level 2 minor electives.
+  - choose: { points: 25, from: [POLS20035, SOCI20014, SOCI20016, SOCI20017, SOCI20019, SOTH20002, SOCI20020, SOCI20021, SOCI20023, SOCI20022] }
+  # 25 points of Level 3 minor electives.
+  - choose: { points: 25, from: [SOCI30001, SOCI30005, SOCI30009, SOCI30014, SOCI30015, SOCI30018] }
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
+verified_on: 2026-10-19 # structure; source: 2026 Handbook minor page

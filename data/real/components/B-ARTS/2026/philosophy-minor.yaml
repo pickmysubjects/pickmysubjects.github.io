@@ -1,0 +1,13 @@
+id: philosophy-minor
+course: B-ARTS
+year: 2026
+kind: minor
+title: Philosophy
+points: 50
+requirements:
+  # 25 points of Level 2 minor electives.
+  - choose: { points: 25, from: [HPSC20026, PHIL20008, PHIL20030, PHIL20033, PHIL20039, PHIL20040, PHIL20041, PHIL20044, PHIL20045, PHIL20046, PHIL20047, PHIL20048] }
+  # 25 points of Level 3 minor electives.
+  - choose: { points: 25, from: [PHIL30024, PHIL30043, PHIL30052, PHIL30053, PHIL30054, PHIL30055, HPSC30039] }
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
+verified_on: 2026-10-19 # structure; source: 2026 Handbook minor page

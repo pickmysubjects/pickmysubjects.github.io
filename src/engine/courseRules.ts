@@ -56,7 +56,10 @@ export function minorClash(data: Dataset, majorId: string | undefined, minorId: 
   const minor = findComponent(data, minorId)
   if (!major || !minor) return null
   const key = (t: string) => t.toLowerCase().replace(/\s+(major|minor)$/, '').trim()
-  return key(major.title) === key(minor.title) ? `${minor.title} can't be both your major and your minor.` : null
+  if (key(major.title) === key(minor.title)) return `${minor.title} can't be both your major and your minor.`
+  // A pair the Handbook rules out, listed on either side.
+  if ((major.notWith ?? []).includes(minor.id) || (minor.notWith ?? []).includes(major.id)) return `The ${minor.title} minor can't be taken with the ${major.title} major.`
+  return null
 }
 
 /** Whether a major's "non-allowed breadth" list covers this subject. */

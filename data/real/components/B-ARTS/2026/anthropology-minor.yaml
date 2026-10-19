@@ -1,0 +1,13 @@
+id: anthropology-minor
+course: B-ARTS
+year: 2026
+kind: minor
+title: Anthropology
+points: 50
+requirements:
+  # 25 points of Level 2 minor electives.
+  - choose: { points: 25, from: [ANTH20001, ANTH20011, ANTH20012, ANTH20013, ANTH20015, ANTH20016, ANTH20017] }
+  # 25 points of Level 3 minor electives.
+  - choose: { points: 25, from: [ANTH30003, ANTH30005, ANTH30009, ANTH30019, ANTH30024, ANTH30025, ANTH30026, ANTH30027] }
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
+verified_on: 2026-10-19 # structure; source: 2026 Handbook minor page

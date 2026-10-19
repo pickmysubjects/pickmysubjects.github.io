@@ -1,0 +1,13 @@
+id: history-minor
+course: B-ARTS
+year: 2026
+kind: minor
+title: History
+points: 50
+requirements:
+  # 25 points of Level 2 minor electives.
+  - choose: { points: 25, from: [HIST20013, HIST20034, HIST20052, HIST20059, HIST20060, HIST20065, HIST20068, HIST20071, HIST20072, HIST20080, HIST20084, HIST20086, HIST20087, HIST20088, HIST20089, HIST20090, HIST20091, HPSC20002] }
+  # 25 points of Level 3 minor electives.
+  - choose: { points: 25, from: [HIST30004, HIST30006, HIST30010, HIST30051, HIST30064, HIST30065, HIST30066, HIST30068, HIST30076, HIST30077, HIST30078, HPSC30034] }
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
+verified_on: 2026-10-19 # structure; source: 2026 Handbook minor page

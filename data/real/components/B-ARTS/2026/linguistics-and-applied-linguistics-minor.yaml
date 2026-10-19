@@ -1,0 +1,13 @@
+id: linguistics-and-applied-linguistics-minor
+course: B-ARTS
+year: 2026
+kind: minor
+title: Linguistics and Applied Linguistics
+points: 50
+requirements:
+  # 25 points of Level 2 minor electives.
+  - choose: { points: 25, from: [LING20003, LING20005, LING20006, LING20009, LING20010, LING20011] }
+  # 25 points of Level 3 minor electives.
+  - choose: { points: 25, from: [EURO30001, LING30002, LING30003, LING30004, LING30007, LING30013, LING30014, LING30015] }
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
+verified_on: 2026-10-19 # structure; source: 2026 Handbook minor page

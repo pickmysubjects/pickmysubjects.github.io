@@ -1,0 +1,13 @@
+id: history-and-philosophy-of-science-minor
+course: B-ARTS
+year: 2026
+kind: minor
+title: History and Philosophy of Science
+points: 50
+requirements:
+  # 25 points of Level 2 minor electives.
+  - choose: { points: 25, from: [HPSC20015, HPSC20002, HPSC20009, HPSC20020, PHIL20033, HPSC20026, HPSC20023, HPSC20024, HPSC20025, HIST20080, ARTS20003, ARTS20004] }
+  # 25 points of Level 3 minor electives.
+  - choose: { points: 25, from: [HPSC30037, HPSC30023, HPSC30034, HPSC30019, HPSC30038, HIST30004, HPSC30039] }
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
+verified_on: 2026-10-19 # structure; source: 2026 Handbook minor page

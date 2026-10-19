@@ -1,0 +1,17 @@
+id: english-language-studies-minor
+course: B-ARTS
+year: 2026
+kind: minor
+title: English Language Studies
+points: 50
+# Handbook "Diversity of study": not with these.
+not_with: [linguistics-and-applied-linguistics, linguistics-and-applied-linguistics-minor]
+requirements:
+  # Level 2 core.
+  - all: [LING20011]
+  # Level 2 elective.
+  - choose: { points: 12.5, from: [LING20003, LING20005, LING20006, LING20010] }
+  # 25 points of Level 3 minor electives.
+  - choose: { points: 25, from: [LING30007, LING30003, LING30013, LING30004, LING30002] }
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
+verified_on: 2026-10-19 # structure; source: 2026 Handbook minor page

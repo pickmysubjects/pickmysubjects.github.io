@@ -1,0 +1,40 @@
+id: italian-studies-minor
+course: B-ARTS
+year: 2026
+kind: minor
+title: Italian Studies
+points: 50
+# Entry points by prior knowledge of the language. The page lists the Level 3 electives once, under Entry Point 7; they are used for every entry point.
+routes:
+  - title: Entry Point 1
+    requirements:
+      # Level 2 core.
+      - all: [ITAL20007, ITAL20008]
+      # Level 3 core.
+      - all: [ITAL30003]
+      # Level 3 elective.
+      - choose: { points: 12.5, from: [ITAL30005, ITAL30006, ITAL30007, ITAL30010, ITAL30012, ITAL30016] }
+  - title: Entry Point 3
+    requirements:
+      # Level 2 core.
+      - all: [ITAL20011, ITAL20010]
+      # Level 3 core.
+      - all: [ITAL30015]
+      # Level 3 elective.
+      - choose: { points: 12.5, from: [ITAL30005, ITAL30006, ITAL30007, ITAL30010, ITAL30012, ITAL30016] }
+  - title: Entry Point 5
+    requirements:
+      # Level 2 core.
+      - all: [ITAL20002, ITAL20003]
+      # Level 3 core.
+      - all: [ITAL30001]
+      # Level 3 elective.
+      - choose: { points: 12.5, from: [ITAL30005, ITAL30006, ITAL30007, ITAL30010, ITAL30012, ITAL30016] }
+  - title: Entry Point 7
+    requirements:
+      # Level 2 core (ITAL20001 can be swapped for a selected study-abroad subject).
+      - all: [ITAL20001, ITAL20012]
+      # 25 points of Level 3 minor electives.
+      - choose: { points: 25, from: [ITAL30005, ITAL30006, ITAL30007, ITAL30010, ITAL30012, ITAL30016] }
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
+verified_on: 2026-10-19 # structure; source: 2026 Handbook minor page

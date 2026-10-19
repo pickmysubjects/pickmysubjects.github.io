@@ -1,0 +1,40 @@
+id: japanese-studies-minor
+course: B-ARTS
+year: 2026
+kind: minor
+title: Japanese Studies
+points: 50
+# Entry points by prior knowledge of the language; the plan follows the one the record points to.
+routes:
+  - title: Entry Point 1
+    requirements:
+      # Level 2 core.
+      - all: [JAPN20007, JAPN20008]
+      # Level 3 core.
+      - all: [JAPN30007, JAPN30008]
+  - title: Entry Point 3
+    requirements:
+      # Level 2 core.
+      - all: [JAPN20013, JAPN20014]
+      # Level 3 core.
+      - all: [JAPN30005, JAPN30006]
+  - title: Entry Point 5
+    requirements:
+      # Level 2 core.
+      - all: [JAPN20003, JAPN20004]
+      # 25 points of Level 3 minor electives.
+      - choose: { points: 25, from: [JAPN30004, JAPN30011, JAPN30012] }
+  - title: Entry Point 7
+    requirements:
+      # Level 2 core.
+      - all: [JAPN20011, JAPN20012]
+      # Level 3 core.
+      - all: [JAPN30004, JAPN30018]
+  - title: Entry Point 9
+    requirements:
+      # Level 2 core.
+      - all: [JAPN20005, JAPN20018]
+      # Level 3 core.
+      - all: [JAPN30002, JAPN30018]
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
+verified_on: 2026-10-19 # structure; source: 2026 Handbook minor page

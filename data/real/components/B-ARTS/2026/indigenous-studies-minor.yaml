@@ -1,0 +1,15 @@
+id: indigenous-studies-minor
+course: B-ARTS
+year: 2026
+kind: minor
+title: Indigenous Studies
+points: 50
+requirements:
+  # Level 2 core.
+  - all: [INDG20002, INDG20005]
+  # Level 3 core: one of the two.
+  - choose: { points: 12.5, from: [INDG30003, INDG30005] }
+  # Level 3 elective (MULT30022 only as breadth).
+  - choose: { points: 12.5, from: [AHIS30005, INDG30004, GEOG30025, POLS30039, MULT30022, POLS30028, HIST30078, GEND30006, PHYC30025] }
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
+verified_on: 2026-10-19 # structure; source: 2026 Handbook minor page

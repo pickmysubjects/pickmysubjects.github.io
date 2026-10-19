@@ -1,0 +1,34 @@
+id: french-studies-minor
+course: B-ARTS
+year: 2026
+kind: minor
+title: French Studies
+points: 50
+# Entry points by prior knowledge of the language; the plan follows the one the record points to.
+routes:
+  - title: Entry Point 1
+    requirements:
+      # Level 2 core: French 3 and 4, or Intensive French 3 and 4.
+      - choose: { points: 25, from: [FREN20015, FREN20017, FREN20018] }
+      # Level 3 core.
+      - all: [FREN30003, FREN30004]
+  - title: Entry Point 3
+    requirements:
+      # Level 2 core.
+      - all: [FREN20001, FREN20002]
+      # Level 3 core.
+      - all: [FREN30001, FREN30022]
+  - title: Entry Point 5
+    requirements:
+      # Level 2 core.
+      - all: [FREN20019, FREN20023]
+      # 25 points of Level 3 minor electives.
+      - choose: { points: 25, from: [FREN30013, FREN30015, FREN30018, FREN30019, FREN30005, FREN30006, FREN30020, FREN30012, FREN30014, FREN30017, FREN30021, FREN30025, FREN30026] }
+  - title: Entry Point 7
+    requirements:
+      # 25 points of Level 2 minor electives.
+      - choose: { points: 25, from: [FREN20011, FREN20013, FREN20020, FREN20021, FREN20003, FREN20004, FREN20007, FREN20022, FREN20016, FREN20012, FREN20010, FREN20024, FREN20025] }
+      # 25 points of Level 3 minor electives.
+      - choose: { points: 25, from: [FREN30013, FREN30015, FREN30018, FREN30019, FREN30005, FREN30006, FREN30020, FREN30012, FREN30014, FREN30017, FREN30021, FREN30025, FREN30026] }
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
+verified_on: 2026-10-19 # structure; source: 2026 Handbook minor page

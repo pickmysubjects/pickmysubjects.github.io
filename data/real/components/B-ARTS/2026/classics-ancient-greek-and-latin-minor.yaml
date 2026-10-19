@@ -1,0 +1,54 @@
+id: classics-ancient-greek-and-latin-minor
+course: B-ARTS
+year: 2026
+kind: minor
+title: Classics (Ancient Greek and Latin)
+points: 50
+# Entry points by prior knowledge of each language. The page lists the Latin EP3 Level 2 options under the Ancient Greek EP1 heading.
+routes:
+  - title: Latin Entry Point 1
+    requirements:
+      # 25 points of Level 2 language electives; Ancient World Studies counts up to 12.5 points.
+      - choose: { points: 25, from: [CLAS20029, CLAS20031, ANCW20003, ANCW20015, ANCW20019, ANCW20022, ANCW20023, ANCW20024, ANCW20026, ANCW20027, ANCW20028, PHIL20040] }
+      # 25 points of Level 3 language electives; Ancient World Studies counts up to 12.5 points.
+      - choose: { points: 25, from: [CLAS30013, CLAS30009, ANCW30004, ANCW30011, ANCW30016, ANCW30021, ANCW30023, ANCW30025] }
+    limits:
+      - max: 12.5
+        from: [ANCW20003, ANCW20015, ANCW20019, ANCW20022, ANCW20023, ANCW20024, ANCW20026, ANCW20027, ANCW20028, PHIL20040]
+      - max: 12.5
+        from: [ANCW30004, ANCW30011, ANCW30016, ANCW30021, ANCW30023, ANCW30025]
+  - title: Latin Entry Point 3
+    requirements:
+      # 25 points of Level 2 language electives; Ancient World Studies counts up to 12.5 points.
+      - choose: { points: 25, from: [CLAS20029, CLAS20031, CLAS20030, CLAS20026, CLAS20015, CLAS20016, ANCW20003, ANCW20015, ANCW20019, ANCW20022, ANCW20023, ANCW20024, ANCW20026, ANCW20027, ANCW20028, PHIL20040] }
+      # 25 points of Level 3 language electives; Ancient World Studies counts up to 12.5 points.
+      - choose: { points: 25, from: [CLAS30013, CLAS30009, CLAS30024, CLAS30025, ANCW30004, ANCW30011, ANCW30016, ANCW30021, ANCW30023, ANCW30025] }
+    limits:
+      - max: 12.5
+        from: [ANCW20003, ANCW20015, ANCW20019, ANCW20022, ANCW20023, ANCW20024, ANCW20026, ANCW20027, ANCW20028, PHIL20040]
+      - max: 12.5
+        from: [ANCW30004, ANCW30011, ANCW30016, ANCW30021, ANCW30023, ANCW30025]
+  - title: Ancient Greek Entry Point 1
+    requirements:
+      # 25 points of Level 2 language electives; Ancient World Studies counts up to 12.5 points.
+      - choose: { points: 25, from: [CLAS20015, CLAS20016, ANCW20003, ANCW20015, ANCW20019, ANCW20022, ANCW20023, ANCW20024, ANCW20026, ANCW20027, ANCW20028, PHIL20040] }
+      # 25 points of Level 3 language electives; Ancient World Studies counts up to 12.5 points.
+      - choose: { points: 25, from: [CLAS30024, CLAS30025, ANCW30004, ANCW30011, ANCW30016, ANCW30021, ANCW30023, ANCW30025] }
+    limits:
+      - max: 12.5
+        from: [ANCW20003, ANCW20015, ANCW20019, ANCW20022, ANCW20023, ANCW20024, ANCW20026, ANCW20027, ANCW20028, PHIL20040]
+      - max: 12.5
+        from: [ANCW30004, ANCW30011, ANCW30016, ANCW30021, ANCW30023, ANCW30025]
+  - title: Ancient Greek Entry Point 3
+    requirements:
+      # 25 points of Level 2 language electives; Ancient World Studies counts up to 12.5 points.
+      - choose: { points: 25, from: [CLAS20015, CLAS20016, CLAS20013, CLAS20014, CLAS20029, CLAS20031, ANCW20003, ANCW20015, ANCW20019, ANCW20022, ANCW20023, ANCW20024, ANCW20026, ANCW20027, ANCW20028, PHIL20040] }
+      # 25 points of Level 3 language electives; Ancient World Studies counts up to 12.5 points.
+      - choose: { points: 25, from: [CLAS30013, CLAS30009, CLAS30024, CLAS30025, ANCW30004, ANCW30011, ANCW30016, ANCW30021, ANCW30023, ANCW30025] }
+    limits:
+      - max: 12.5
+        from: [ANCW20003, ANCW20015, ANCW20019, ANCW20022, ANCW20023, ANCW20024, ANCW20026, ANCW20027, ANCW20028, PHIL20040]
+      - max: 12.5
+        from: [ANCW30004, ANCW30011, ANCW30016, ANCW30021, ANCW30023, ANCW30025]
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
+verified_on: 2026-10-19 # structure; source: 2026 Handbook minor page

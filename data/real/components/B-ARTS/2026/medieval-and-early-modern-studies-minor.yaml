@@ -1,0 +1,13 @@
+id: medieval-and-early-modern-studies-minor
+course: B-ARTS
+year: 2026
+kind: minor
+title: Medieval and Early Modern Studies
+points: 50
+requirements:
+  # 25 points of Level 2 minor electives.
+  - choose: { points: 25, from: [AHIS20011, AHIS20021, CHIN20007, ENGL20033, FREN20010, FREN20020, HIST20052, HIST20072, HIST20080, HPSC20002, HPSC20015, ITAL20006, ITAL20009, ENGL20038] }
+  # 25 points of Level 3 minor electives.
+  - choose: { points: 25, from: [AHIS30003, AHIS30022, AHIS30024, ENGL30046, FREN30012, FREN30018, HIST30006, HIST30051, HIST30068, HPSC30034, ITAL30007, ITAL30012, ENGL30054] }
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
+verified_on: 2026-10-19 # structure; source: 2026 Handbook minor page

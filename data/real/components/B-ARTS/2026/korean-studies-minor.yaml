@@ -1,0 +1,22 @@
+id: korean-studies-minor
+course: B-ARTS
+year: 2026
+kind: minor
+title: Korean Studies
+points: 50
+# Entry points by prior knowledge of the language; the plan follows the one the record points to.
+routes:
+  - title: Entry Point 1
+    requirements:
+      # 25 points of Level 2 minor electives.
+      - choose: { points: 25, from: [KORE20003, KORE20004, KORE20002, KORE20007] }
+      # 25 points of Level 3 minor electives.
+      - choose: { points: 25, from: [KORE30001, KORE30002, ASIA30005, KORE30003, KORE30004] }
+  - title: Entry Point 3
+    requirements:
+      # 25 points of Level 2 minor electives.
+      - choose: { points: 25, from: [KORE20005, KORE20006, KORE20002, KORE20007] }
+      # 25 points of Level 3 minor electives.
+      - choose: { points: 25, from: [KORE30001, KORE30002, ASIA30005] }
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
+verified_on: 2026-10-19 # structure; source: 2026 Handbook minor page

@@ -1,0 +1,13 @@
+id: creative-writing-minor
+course: B-ARTS
+year: 2026
+kind: minor
+title: Creative Writing
+points: 50
+requirements:
+  # 25 points of Level 2 minor electives.
+  - choose: { points: 25, from: [CWRI20002, CWRI20005, CWRI20007, CWRI20009, CWRI20010, CWRI20012] }
+  # 25 points of Level 3 minor electives.
+  - choose: { points: 25, from: [CWRI30001, CWRI30006, CWRI30013, CWRI30014, CWRI30015] }
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
+verified_on: 2026-10-19 # structure; source: 2026 Handbook minor page

@@ -1,0 +1,28 @@
+id: hebrew-and-jewish-studies-minor
+course: B-ARTS
+year: 2026
+kind: minor
+title: Hebrew and Jewish Studies
+points: 50
+# Entry points by prior knowledge of the language; the plan follows the one the record points to.
+routes:
+  - title: Entry Point 1
+    requirements:
+      # Level 2 core.
+      - all: [HEBR20005, HEBR20006]
+      # Level 3 core.
+      - all: [HEBR30003, HEBR30004]
+  - title: Entry Point 3
+    requirements:
+      # Level 2 core.
+      - all: [HEBR20007, HEBR20008]
+      # Level 3 core.
+      - all: [HEBR30016, HEBR30017]
+  - title: Entry Point 5
+    requirements:
+      # Level 2 core.
+      - all: [HEBR20016, HEBR20017]
+      # Level 3 core.
+      - all: [HEBR30018, HEBR30019]
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
+verified_on: 2026-10-19 # structure; source: 2026 Handbook minor page

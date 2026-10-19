@@ -1,0 +1,22 @@
+id: arabic-studies-minor
+course: B-ARTS
+year: 2026
+kind: minor
+title: Arabic Studies
+points: 50
+# Entry points by prior knowledge of the language; the plan follows the one the record points to.
+routes:
+  - title: Entry Point 1
+    requirements:
+      # Level 2 core.
+      - all: [ARBC20004, ARBC20005]
+      # Level 3 core.
+      - all: [ARBC30004, ARBC30005]
+  - title: Entry Point 3
+    requirements:
+      # Level 2 core.
+      - all: [ARBC20006, ARBC20007]
+      # Level 3 core.
+      - all: [ARBC30006, ARBC30001]
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
+verified_on: 2026-10-19 # structure; source: 2026 Handbook minor page
