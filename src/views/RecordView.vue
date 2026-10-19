@@ -9,6 +9,9 @@ import DegreeCard from '@/components/profile/DegreeCard.vue'
 import GoalPicker from '@/components/profile/GoalPicker.vue'
 import GradeShare from '@/components/profile/GradeShare.vue'
 import WorkHours from '@/components/profile/WorkHours.vue'
+import PlanSwitcher from '@/components/plans/PlanSwitcher.vue'
+import { planName } from '@/components/plans/planName'
+import { usePlans } from '@/composables/usePlans'
 import { ArrowRight, Check, Download, Upload } from 'lucide-vue-next'
 import { usePlan } from '@/composables/usePlan'
 import { link } from '@/composables/useView'
@@ -27,6 +30,9 @@ const { t } = useI18n()
 const options = computed(() => subjectList.value.map((s) => ({ code: s.code, title: s.title })))
 const ratedSkills = computed(() => Object.keys(profile.value.skills).length)
 const { setupChosen } = usePlan()
+// Strengths, interests and goal are the open plan's: say which one.
+const { active: activePlan } = usePlans()
+const forPlan = computed(() => t.value('plans.forPlan', { name: planName(t.value, activePlan.value) }))
 // Each step's state, shown on its label: done, or (step 1 only) the one to do first.
 const steps = computed(() => [
   { n: 1, key: 'record.step1', done: setupChosen.value },
@@ -63,6 +69,10 @@ async function onRestore(event: Event): Promise<void> {
 
     <div class="record-layout">
       <div class="record-main">
+        <section class="plans-note">
+          <PlanSwitcher no-compare />
+          <p class="plans-text">{{ t('plans.prefsNote') }}</p>
+        </section>
         <section class="block">
           <h2 class="block-step" :class="{ done: steps[0]!.done }">
             <span class="block-num" aria-hidden="true"><Check v-if="steps[0]!.done" :size="14" /><template v-else>1</template></span>
@@ -72,7 +82,7 @@ async function onRestore(event: Event): Promise<void> {
           </h2>
           <div class="block-card surface">
             <DegreeCard class="flat" />
-            <div class="block-part"><GoalPicker :note="t('record.goalNote')" /></div>
+            <div class="block-part"><span class="for-plan">{{ forPlan }}</span><GoalPicker :note="t('record.goalNote')" /></div>
             <div class="block-part"><WorkHours /></div>
           </div>
         </section>
@@ -94,6 +104,7 @@ async function onRestore(event: Event): Promise<void> {
             <span class="block-num" aria-hidden="true"><Check v-if="steps[2]!.done" :size="14" /><template v-else>3</template></span>
             {{ t('record.step3') }}
             <span v-if="steps[2]!.done" class="block-state">{{ t('record.stepDone') }}</span>
+            <span class="for-plan">{{ forPlan }}</span>
           </h2>
           <SkillsEditor v-model:skills="skills" />
         </section>
@@ -103,6 +114,7 @@ async function onRestore(event: Event): Promise<void> {
             <span class="block-num" aria-hidden="true"><Check v-if="steps[3]!.done" :size="14" /><template v-else>4</template></span>
             {{ t('record.step4') }}
             <span v-if="steps[3]!.done" class="block-state">{{ t('record.stepDone') }}</span>
+            <span class="for-plan">{{ forPlan }}</span>
           </h2>
           <div class="block-card surface">
             <TopicChips v-model="interests" :topics="topics" :first-groups="3" />
@@ -139,6 +151,30 @@ async function onRestore(event: Event): Promise<void> {
 </template>
 
 <style scoped>
+.plans-note {
+  display: grid;
+  gap: 6px;
+}
+
+.plans-text {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.8125rem;
+}
+
+.for-plan {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--ink);
+  font-size: 0.75rem;
+  font-weight: 600;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
 .record {
   padding-top: 32px;
   display: grid;

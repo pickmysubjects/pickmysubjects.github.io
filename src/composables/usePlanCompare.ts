@@ -1,0 +1,52 @@
+import { computed, type Ref } from 'vue'
+import { checkCourse, comparePlans, findCourse, forCourse, planRoles, planStress, requiredWithPrerequisites, type RuleStatus } from '@/engine'
+import { useDataset } from './useDataset'
+import { useProfile } from './useProfile'
+import { planFor } from './usePlan'
+import type { PlanEntry } from './usePlans'
+
+export interface CompareSummary {
+  entry: PlanEntry
+  courseTitle: string
+  /** Major (+ specialisation) titles, or '' when none is picked yet. */
+  major: string
+  statuses: RuleStatus[]
+  met: number
+}
+
+/** Two of the student's plans, read side by side (each judged against its own degree). */
+export function usePlanCompare(a: Ref<PlanEntry | undefined>, b: Ref<PlanEntry | undefined>) {
+  const { all } = useDataset()
+  const { stored } = useProfile()
+
+  function side(entry: PlanEntry) {
+    const { setup, terms } = entry.state
+    // Judged with this plan's own strengths and goal, on the shared record.
+    const profile = { ...stored.value, ...entry.prefs }
+    const data = forCourse(all, setup.course)
+    const plan = planFor(entry.state, profile, data)
+    const codes = terms.flatMap((t) => t.subjects)
+    const roles = planRoles(data, setup.course, setup.courseYear, [setup.major, setup.specialisation])
+    const fixed = requiredWithPrerequisites(new Set([...roles.required, ...roles.options]), codes, data.subjects, setup.course)
+    const levels = planStress(terms.map((t) => t.subjects), data, profile, fixed, setup.course).terms.map((s) => s.level)
+    const statuses = checkCourse(plan, data).statuses
+    const title = (id: string) => data.components.find((c) => c.id === id)?.title
+    const major = [title(setup.major), title(setup.specialisation)].filter(Boolean).join(' + ')
+    const summary: CompareSummary = {
+      entry,
+      courseTitle: findCourse(data, setup.course, setup.courseYear)?.title ?? setup.course,
+      major,
+      statuses,
+      met: statuses.filter((s) => s.status === 'ok').length,
+    }
+    return { summary, levels, rules: findCourse(data, setup.course, setup.courseYear)?.rules ?? [] }
+  }
+
+  const sides = computed(() => (a.value && b.value ? [side(a.value), side(b.value)] as const : null))
+  const diff = computed(() => {
+    if (!sides.value || !a.value || !b.value) return null
+    const pts = (c: string) => all.subjects[c]?.points ?? 12.5
+    return comparePlans({ terms: a.value.state.terms, levels: sides.value[0].levels }, { terms: b.value.state.terms, levels: sides.value[1].levels }, pts)
+  })
+  return { sides, diff }
+}

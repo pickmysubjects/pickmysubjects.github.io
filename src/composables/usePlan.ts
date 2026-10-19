@@ -17,28 +17,19 @@ import {
   type Note,
   defaultCourse,
   type Relief,
+  type Profile,
 } from '@/engine'
-import { plans, type PlanSetup, type PlanState } from './planStore'
+import { activePlan, books, type PlanSetup, type PlanState, type SavedPlan } from './planStore'
+import { bookOf, planBody } from '@/utils/planBook'
 import { useDataset } from './useDataset'
 import { useProfile } from './useProfile'
 import { cloneJson } from '@/utils/clone'
+import { defaultState } from './planDefaults'
+
+export { defaultState } from './planDefaults'
 import { majorGroupOf } from '@/utils/majorGroups'
 
 export type { PlanSetup } from './planStore'
-
-function defaultSetup(data: Dataset): PlanSetup {
-  const course = data.courses.find((c) => c.code === defaultCourse(data))
-  // Only a starting suggestion (the wizard asks): semester 1 of the Handbook year we have.
-  const year = course?.year ?? new Date().getFullYear()
-  return {
-    course: course?.code ?? '',
-    courseYear: year,
-    startYear: year,
-    startPeriod: 'semester-1',
-    major: '', // "Not sure yet" until the student picks one
-    specialisation: '',
-  }
-}
 
 /** Points on the record per semester, passed or failed (enrolled either way). */
 function recordedLoad(results: { code: string; year?: number; period?: string }[], subjects: Dataset['subjects']): Record<string, number> {
@@ -51,32 +42,32 @@ function recordedLoad(results: { code: string; year?: number; period?: string }[
   return out
 }
 
+/** A saved plan as the engine reads it, with the student's record (shared by every plan). */
+export function planFor(state: PlanState, profile: Profile, data: Dataset): Plan {
+  return {
+    course: state.setup.course,
+    courseYear: state.setup.courseYear,
+    major: state.setup.major || undefined,
+    specialisation: state.setup.specialisation || undefined,
+    completed: passedCodes(profile.results),
+    terms: state.terms,
+    international: state.setup.international === true,
+    confirmed: profile.confirmed ?? [],
+    recordedLoad: recordedLoad(profile.results, data.subjects),
+    marks: Object.fromEntries(profile.results.filter((r) => r.mark !== undefined).map((r) => [r.code, r.mark as number])),
+  }
+}
+
 export function usePlan() {
   const { name, data } = useDataset()
   const { profile } = useProfile()
 
-  const state = computed<PlanState>(
-    () => {
-      const saved = plans.value[name.value]
-      if (saved) return saved
-      // No plan yet: the empty terms start where the default setup does (the next semester).
-      const setup = defaultSetup(data.value)
-      return { setup, terms: standardTerms(setup.startYear, setup.startPeriod, 6), notes: [], unplaced: [] }
-    },
-  )
+  // The open plan (Plan A, B…); the others wait in the book.
+  const current = computed<SavedPlan | undefined>(() => activePlan(books.value[name.value]))
+  // No plan yet: the empty terms start where the default setup does (the next semester).
+  const state = computed<PlanState>(() => current.value ?? defaultState(data.value))
 
-  const plan = computed<Plan>(() => ({
-    course: state.value.setup.course,
-    courseYear: state.value.setup.courseYear,
-    major: state.value.setup.major || undefined,
-    specialisation: state.value.setup.specialisation || undefined,
-    completed: passedCodes(profile.value.results),
-    terms: state.value.terms,
-    international: state.value.setup.international === true,
-    confirmed: profile.value.confirmed ?? [],
-    recordedLoad: recordedLoad(profile.value.results, data.value.subjects),
-    marks: Object.fromEntries(profile.value.results.filter((r) => r.mark !== undefined).map((r) => [r.code, r.mark as number])),
-  }))
+  const plan = computed<Plan>(() => planFor(state.value, profile.value, data.value))
 
   const course = computed(() => findCourse(data.value, plan.value.course, plan.value.courseYear))
   const termIssues = computed(() => checkTerms(plan.value, data.value, course.value?.standardLoad))
@@ -86,8 +77,20 @@ export function usePlan() {
   // Answered the questions, or built a plan with them before this was recorded (it left notes).
   const setupChosen = computed(() => state.value.setup.confirmed === true || state.value.notes.length > 0)
 
+  /** Write the open plan (its body, and the plans for other degrees it keeps aside). */
+  function put(body: PlanState, kept = current.value?.kept): void {
+    const book = books.value[name.value] ?? bookOf(state.value)
+    const id = activePlan(book)!.id
+    const plans = book.plans.map((p) => {
+      if (p.id !== id) return p
+      const { kept: _old, ...meta } = p
+      return { ...meta, ...planBody(body), ...(kept && Object.keys(kept).length ? { kept } : {}) }
+    })
+    books.value = { ...books.value, [name.value]: { active: id, plans } }
+  }
+
   function save(change: (s: PlanState) => PlanState): void {
-    plans.value = { ...plans.value, [name.value]: change(cloneJson(state.value)) }
+    put(change(cloneJson(planBody(state.value))))
   }
 
   /**
@@ -95,14 +98,13 @@ export function usePlan() {
    * back finds it again: true when that plan was put back as it was (no rebuild needed).
    */
   function updateSetup(setup: PlanSetup): boolean {
-    const old = state.value
-    const key = (course: string) => `${name.value}|${course}`
+    const old = planBody(state.value)
     if (setup.course !== old.setup.course) {
       const built = (p: PlanState | undefined) => p !== undefined && p.terms.some((t) => t.subjects.length > 0)
-      const kept = plans.value[key(setup.course)]
       // Only a plan that was actually built is worth keeping (not the untouched default).
-      const rest = { ...plans.value, ...(built(old) ? { [key(old.setup.course)]: cloneJson(old) } : {}) }
-      delete rest[key(setup.course)]
+      const kept = { ...(current.value?.kept ?? {}), ...(built(old) ? { [old.setup.course]: cloneJson(old) } : {}) }
+      const back = kept[setup.course]
+      delete kept[setup.course]
       const same = (a: PlanSetup, b: PlanSetup) =>
         a.courseYear === b.courseYear &&
         a.major === b.major &&
@@ -111,11 +113,11 @@ export function usePlan() {
         a.startYear === b.startYear &&
         a.startPeriod === b.startPeriod &&
         (a.international === true) === (b.international === true)
-      if (kept && built(kept) && same(kept.setup, setup)) {
-        plans.value = { ...rest, [name.value]: { ...kept, setup: { ...setup, confirmed: true } } }
+      if (back && built(back) && same(back.setup, setup)) {
+        put({ ...back, setup: { ...setup, confirmed: true } }, kept)
         return true
       }
-      plans.value = rest
+      put(old, kept)
     }
     save((s) => ({ ...s, setup: { ...setup, confirmed: true } }))
     return false

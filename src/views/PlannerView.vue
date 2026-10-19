@@ -11,6 +11,8 @@ import PlanHowBuilt from '@/components/planner/PlanHowBuilt.vue'
 import PlanIssues from '@/components/planner/PlanIssues.vue'
 import PlanPrint, { type PrintTerm } from '@/components/planner/PlanPrint.vue'
 import Interp from '@/components/Interp.vue'
+import PlanSwitcher from '@/components/plans/PlanSwitcher.vue'
+import PlanCompare from '@/components/plans/PlanCompare.vue'
 import { PASS_MARK, isFail, passedCodes, planRoles, type PlanTerm } from '@/engine'
 import { Printer, Share2 } from 'lucide-vue-next'
 import { decodePlan, encodePlan } from '@/utils/sharePlan'
@@ -30,6 +32,8 @@ const { profile, setConfirmed, setResults } = useProfile()
 const { t } = useI18n()
 
 const editing = shallowRef(false)
+// Two plans side by side, in place of the board.
+const comparing = shallowRef(false)
 
 // A plan someone shared: /plan?share=… (packed into the link, no server).
 const { query } = useView()
@@ -209,8 +213,11 @@ const printTerms = computed<PrintTerm[]>(() => {
       </template>
     </section>
 
+    <PlanSwitcher v-if="!shared && !comparing" @compare="comparing = true; editing = false" />
+    <PlanCompare v-if="comparing && !shared" @close="comparing = false" />
+
     <PlanWizard
-      v-if="showWizard"
+      v-if="showWizard && !comparing"
       :key="dataName"
       :setup="plan.setup.value"
       :courses="data.courses.filter((c) => c.listed)"
@@ -229,7 +236,7 @@ const printTerms = computed<PrintTerm[]>(() => {
       </div>
     </section>
 
-    <template v-else-if="!showWizard">
+    <template v-else-if="!showWizard && !comparing">
       <section class="bar">
         <p class="bar-summary">{{ summary }}</p>
         <div class="bar-actions">
@@ -361,7 +368,7 @@ const printTerms = computed<PrintTerm[]>(() => {
       </details>
     </template>
     <PlanPrint
-      v-if="!showWizard && onBoard"
+      v-if="!showWizard && !comparing && onBoard"
       class="print-only"
       :summary="summary"
       :terms="printTerms"
