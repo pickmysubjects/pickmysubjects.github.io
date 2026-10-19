@@ -3,6 +3,8 @@ import App from './App.vue'
 import { loadDataset } from './composables/useDataset'
 import { parsePath } from './composables/useView'
 import { VIEW_LOADERS } from './views/loaders'
+import { currentLocale, loadLocale } from './i18n'
+import { registerServiceWorker } from './utils/serviceWorker'
 // Fonts are bundled (not loaded from Google Fonts) so visitors' IPs aren't sent to a third party.
 import '@fontsource/geist-sans/400.css'
 import '@fontsource/geist-sans/500.css'
@@ -21,9 +23,10 @@ import './assets/main.css'
 // The page's own HTML (prerendered) stays on screen while the subject data and the code of the
 // page being opened load; the other pages' code follows once the browser is idle.
 const opening = VIEW_LOADERS[parsePath(location.pathname.slice(import.meta.env.BASE_URL.length)).view]
-Promise.all([loadDataset(), opening()]).then(
+Promise.all([loadDataset(), opening(), loadLocale(currentLocale())]).then(
   () => {
     createApp(App).mount('#app')
+    registerServiceWorker()
     const later = (f: () => void) => ('requestIdleCallback' in window ? requestIdleCallback(f, { timeout: 4000 }) : setTimeout(f, 2000))
     later(() => Object.values(VIEW_LOADERS).forEach((load) => void load().catch(() => {})))
   },

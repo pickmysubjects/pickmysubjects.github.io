@@ -3,8 +3,20 @@ import { checkCourse } from '../src/engine/courseRules'
 import { generatePlan } from '../src/engine/generate'
 import { checkTerms } from '../src/engine/planCheck'
 import { recommend, type Profile } from '../src/engine/recommend'
-import { LOCALES, interpolate } from '../src/i18n'
+import { interpolate } from '../src/i18n'
+import { LOCALE_CODES } from '../src/i18n/codes'
 import { en } from '../src/i18n/messages/en'
+import { zhCN } from '../src/i18n/messages/zh-CN'
+import { zhTW } from '../src/i18n/messages/zh-TW'
+import { ja } from '../src/i18n/messages/ja'
+import { ko } from '../src/i18n/messages/ko'
+import { vi } from '../src/i18n/messages/vi'
+import { id } from '../src/i18n/messages/id'
+import { ms } from '../src/i18n/messages/ms'
+import { hi } from '../src/i18n/messages/hi'
+
+const MESSAGES = { en, 'zh-CN': zhCN, 'zh-TW': zhTW, ja, ko, vi, id, ms, hi }
+const LOCALES = LOCALE_CODES.map((code) => ({ code, messages: MESSAGES[code] }))
 import { PAIN_POINTS } from '../src/painPoints'
 import { demo } from './helpers'
 

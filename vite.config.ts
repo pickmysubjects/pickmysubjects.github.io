@@ -1,4 +1,6 @@
 /// <reference types="vitest/config" />
+import { createHash } from 'node:crypto'
+import { readFileSync } from 'node:fs'
 import { fileURLToPath, URL } from 'node:url'
 import { defineConfig, type Plugin } from 'vite'
 import vue from '@vitejs/plugin-vue'
@@ -16,6 +18,8 @@ const CSP = [
   "img-src 'self' data:",
   "font-src 'self' data:", // small font files are inlined by the build
   "connect-src 'self' https://docs.google.com",
+  "worker-src 'self'", // the offline service worker (/sw.js)
+  "manifest-src 'self'",
   "object-src 'none'",
   "base-uri 'self'",
   "form-action 'none'",
@@ -42,8 +46,34 @@ const preloadCoreData = (): Plugin => ({
   },
 })
 
+/**
+ * Writes /sw.js (template: scripts/sw.js) for offline use. Precached: the app shell, every JS and
+ * CSS file except other languages' messages, the core subject data, icons and the manifest.
+ * Language chunks, fonts, per-area detail data and visited pages are cached when first used.
+ */
+const serviceWorker = (): Plugin => ({
+  name: 'service-worker',
+  apply: 'build',
+  generateBundle(_options, bundle) {
+    const files = Object.values(bundle)
+    const isMessages = (f: (typeof files)[number]) => f.type === 'chunk' && !!f.facadeModuleId && /\/i18n\/messages\/(?!en\.ts)/.test(f.facadeModuleId)
+    const precache = files
+      .filter((f) => !isMessages(f) && (/\.(js|css)$/.test(f.fileName) || (f.type === 'asset' && f.originalFileNames.some((n) => n.endsWith('real-core.json')))))
+      .map((f) => `/${f.fileName}`)
+      .sort()
+    const shell = ['/404.html', '/manifest.webmanifest', '/favicon.svg', '/icon-192.png', '/icon-512.png', '/apple-touch-icon.png']
+    const known = files.map((f) => `/${f.fileName}`).filter((f) => f.startsWith('/assets/')).sort()
+    const version = createHash('sha256').update(known.join('\n')).digest('hex').slice(0, 12)
+    const source = readFileSync(fileURLToPath(new URL('./scripts/sw.js', import.meta.url)), 'utf8')
+      .replace('__VERSION__', JSON.stringify(version))
+      .replace('__PRECACHE__', JSON.stringify([...shell, ...precache]))
+      .replace('__KNOWN__', JSON.stringify(known))
+    this.emitFile({ type: 'asset', fileName: 'sw.js', source })
+  },
+})
+
 export default defineConfig({
-  plugins: [vue(), contentSecurityPolicy(), preloadCoreData()],
+  plugins: [vue(), contentSecurityPolicy(), preloadCoreData(), serviceWorker()],
   // The site is served from / on GitHub Pages. Pages have real
   // addresses (/subject/COMP30027), so assets need an absolute base.
   base: '/',

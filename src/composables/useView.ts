@@ -1,6 +1,7 @@
 import { computed, shallowRef, watch } from 'vue'
 import { localeInPath } from '@/i18n/codes'
 import { currentLocale, useI18n } from '@/i18n'
+import { newVersionReady } from '@/utils/serviceWorker'
 
 export const VIEWS = ['home', 'subject', 'plan', 'recommend', 'record', 'contribute', 'feedback', 'privacy', 'about', 'guide', 'subjects', 'majors'] as const
 export type View = (typeof VIEWS)[number]
@@ -76,6 +77,11 @@ function sync(): void {
 }
 
 function visit(address: string): void {
+  // A new version was deployed and has taken over: load the next page in full to pick it up.
+  if (newVersionReady()) {
+    location.assign(address)
+    return
+  }
   history.pushState(null, '', address)
   sync()
 }

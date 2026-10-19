@@ -1,28 +1,56 @@
-import { computed, watch } from 'vue'
+import { computed, shallowReactive, watch } from 'vue'
 import { usePersisted } from '@/composables/usePersisted'
 import { en, type Messages } from './messages/en'
-import { zhCN } from './messages/zh-CN'
-import { zhTW } from './messages/zh-TW'
-import { ja } from './messages/ja'
-import { ko } from './messages/ko'
-import { vi } from './messages/vi'
-import { id } from './messages/id'
-import { ms } from './messages/ms'
-import { hi } from './messages/hi'
 import { LOCALE_CODES, localeInPath, type LocaleCode } from './codes'
 
 /** Languages most used by UniMelb students. Names are written in their own language. */
 export const LOCALES = [
-  { code: 'en', name: 'English', messages: en },
-  { code: 'zh-CN', name: '简体中文', messages: zhCN },
-  { code: 'zh-TW', name: '繁體中文', messages: zhTW },
-  { code: 'ja', name: '日本語', messages: ja },
-  { code: 'ko', name: '한국어', messages: ko },
-  { code: 'vi', name: 'Tiếng Việt', messages: vi },
-  { code: 'id', name: 'Bahasa Indonesia', messages: id },
-  { code: 'ms', name: 'Bahasa Melayu', messages: ms },
-  { code: 'hi', name: 'हिन्दी', messages: hi },
-] as const satisfies readonly { code: string; name: string; messages: Messages }[]
+  { code: 'en', name: 'English' },
+  { code: 'zh-CN', name: '简体中文' },
+  { code: 'zh-TW', name: '繁體中文' },
+  { code: 'ja', name: '日本語' },
+  { code: 'ko', name: '한국어' },
+  { code: 'vi', name: 'Tiếng Việt' },
+  { code: 'id', name: 'Bahasa Indonesia' },
+  { code: 'ms', name: 'Bahasa Melayu' },
+  { code: 'hi', name: 'हिन्दी' },
+] as const satisfies readonly { code: string; name: string }[]
+
+/**
+ * English is bundled (it is the fallback); every other language is its own chunk, downloaded
+ * only when that language is shown. Node scripts and tests import the files directly.
+ */
+const LOADERS: Record<Exclude<LocaleCode, 'en'>, () => Promise<Messages>> = {
+  'zh-CN': () => import('./messages/zh-CN').then((m) => m.zhCN),
+  'zh-TW': () => import('./messages/zh-TW').then((m) => m.zhTW),
+  ja: () => import('./messages/ja').then((m) => m.ja),
+  ko: () => import('./messages/ko').then((m) => m.ko),
+  vi: () => import('./messages/vi').then((m) => m.vi),
+  id: () => import('./messages/id').then((m) => m.id),
+  ms: () => import('./messages/ms').then((m) => m.ms),
+  hi: () => import('./messages/hi').then((m) => m.hi),
+}
+const loaded = shallowReactive<Partial<Record<LocaleCode, Messages>>>({ en })
+const loading = new Map<LocaleCode, Promise<void>>()
+
+/** Downloads a language's messages (once). Resolves even if the download fails: English shows instead. */
+export function loadLocale(code: LocaleCode): Promise<void> {
+  if (loaded[code]) return Promise.resolve()
+  let p = loading.get(code)
+  if (!p) {
+    p = LOADERS[code as Exclude<LocaleCode, 'en'>]().then(
+      (m) => {
+        loaded[code] = m
+      },
+      (e: unknown) => {
+        loading.delete(code)
+        console.warn(`Could not load ${code} messages`, e)
+      },
+    )
+    loading.set(code, p)
+  }
+  return p
+}
 
 export type { LocaleCode }
 import { interpolate, type Params, type Translate } from './interpolate'
@@ -64,6 +92,7 @@ watch(
   locale,
   (code) => {
     if (typeof document !== 'undefined') document.documentElement.lang = code
+    void loadLocale(code)
   },
   { immediate: true },
 )
@@ -78,7 +107,7 @@ function lookup(messages: unknown, key: string): string | undefined {
 }
 
 export function useI18n() {
-  const messages = computed(() => LOCALES.find((l) => l.code === locale.value)?.messages ?? en)
+  const messages = computed(() => loaded[locale.value] ?? en)
   const t = computed<Translate>(() => {
     const current = messages.value
     // A count of exactly one uses the "…One" message (e.g. "1 problem" not "1 problems").

@@ -14,7 +14,7 @@
  */
 import { localTitle, pickLocalized, withLocalTitle } from '../src/i18n/localized'
 import { PRESET_TITLE_KEYS, subjectTitleKey } from '../src/utils/seo'
-import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
+import { mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { periodsFor } from '../src/engine/availability'
@@ -47,6 +47,12 @@ const YEAR = 2026
 const MESSAGES: Record<LocaleCode, unknown> = { en, 'zh-CN': zhCN, 'zh-TW': zhTW, ja, ko, vi, id, ms, hi }
 
 const shell = readFileSync(join(DIST, 'index.html'), 'utf8')
+// The app downloads only English plus the page's own language; start that download with the page.
+const assetFiles = readdirSync(join(DIST, 'assets'))
+const messagesChunk = (code: LocaleCode): string | undefined => {
+  const hits = assetFiles.filter((f) => new RegExp(`^${code}-[\\w-]{8}\\.js$`).test(f))
+  return hits.length === 1 ? `${BASE}assets/${hits[0]}` : undefined
+}
 const data = JSON.parse(readFileSync(join(ROOT, 'src', 'generated', 'real.json'), 'utf8')) as Dataset
 const subjects = Object.values(data.subjects).sort((a, b) => a.code.localeCompare(b.code))
 
@@ -159,12 +165,14 @@ function render(page: Page, code: LocaleCode): string {
     `<meta property="og:url" content="${url}" />`,
     `<meta name="twitter:card" content="summary" />`,
     `<script type="application/ld+json">${JSON.stringify(structured(page, code, url)).replace(/</g, '\\u003c')}</script>`,
-  ].join('\n    ')
+  ]
+  const chunk = code === 'en' ? undefined : messagesChunk(code)
+  if (chunk) head.push(`<link rel="modulepreload" crossorigin href="${chunk}" />`)
   return shell
     .replace(/<html lang="[^"]*">/, `<html lang="${code}">`)
     .replace(/<title>[^<]*<\/title>/, '')
     .replace(/<meta name="description"[^>]*>/, '')
-    .replace('</head>', `    ${head}\n  </head>`)
+    .replace('</head>', `    ${head.join('\n    ')}\n  </head>`)
     .replace('<div id="app"></div>', `<div id="app"><main class="prerender">${page.body}</main></div>`)
 }
 
