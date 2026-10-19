@@ -60,12 +60,13 @@ function planWithIt(): void {
     const setup = plan.setup.value
     const sameCourse = setup.course === m.course
     const major = sameCourse && !minorClash(data.value, setup.major, m.id) ? setup.major : ''
-    const next = sameCourse ? { ...setup, major, minors: [m.id] } : { ...setup, course: m.course, major: '', specialisation: '', field: '', minors: [m.id] }
+    const major2 = major && setup.major2 && !minorClash(data.value, setup.major2, m.id) ? setup.major2 : ''
+    const next = sameCourse ? { ...setup, major, major2, minors: [m.id] } : { ...setup, course: m.course, major: '', major2: '', specialisation: '', field: '', minors: [m.id] }
     if (!plan.updateSetup(next)) plan.generate()
     go('plan')
     return
   }
-  if (!plan.updateSetup({ ...plan.setup.value, course: m.course, major: m.id, specialisation: '', minors: [] })) plan.generate()
+  if (!plan.updateSetup({ ...plan.setup.value, course: m.course, major: m.id, major2: '', specialisation: '', minors: [] })) plan.generate()
   go('plan')
 }
 </script>

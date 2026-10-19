@@ -45,13 +45,37 @@ export function minorTitles(data: Dataset, ids: readonly string[] | undefined): 
   return ids.map((id) => findComponent(data, id)?.title).filter((t): t is string => !!t)
 }
 
-/** Every component id a plan has chosen: major, specialisation, then its minors. */
-export function planComponentIds(plan: { major?: string; specialisation?: string; minors?: readonly string[] }): (string | undefined)[] {
-  return [plan.major, plan.specialisation, ...(plan.minors ?? [])]
+/** What a plan has chosen, as far as the course's components go. */
+export interface PlanComponents {
+  major?: string
+  /** The optional second major. */
+  major2?: string
+  specialisation?: string
+  minors?: readonly string[]
 }
 
-/** Why a minor can't go with this major, or null: the Handbook rules out a minor in the major's own discipline (same title). */
-export function minorClash(data: Dataset, majorId: string | undefined, minorId: string): string | null {
+/** Every component id a plan has chosen: its major(s), specialisation, then its minors. */
+export function planComponentIds(plan: PlanComponents): (string | undefined)[] {
+  return [plan.major, plan.major2, plan.specialisation, ...(plan.minors ?? [])]
+}
+
+/** The ids conditions naming a major are checked against: both majors and the specialisation. */
+export function heldMajorIds(plan: PlanComponents): (string | undefined)[] {
+  return [plan.major, plan.major2, plan.specialisation]
+}
+
+/**
+ * Why a minor can't go with this major (or with either of these majors), or null: the Handbook
+ * rules out a minor in the major's own discipline (same title), and the pairs it lists.
+ */
+export function minorClash(data: Dataset, majorId: string | undefined | readonly (string | undefined)[], minorId: string): string | null {
+  if (typeof majorId !== 'string' && majorId !== undefined) {
+    for (const id of majorId) {
+      const clash = minorClash(data, id, minorId)
+      if (clash) return clash
+    }
+    return null
+  }
   const major = findComponent(data, majorId)
   const minor = findComponent(data, minorId)
   if (!major || !minor) return null
@@ -60,6 +84,44 @@ export function minorClash(data: Dataset, majorId: string | undefined, minorId: 
   // A pair the Handbook rules out, listed on either side.
   if ((major.notWith ?? []).includes(minor.id) || (minor.notWith ?? []).includes(major.id)) return `The ${minor.title} minor can't be taken with the ${major.title} major.`
   return null
+}
+
+/** The course's major rule, if it has one. */
+function majorRule(course: Course | undefined): Extract<CourseRule, { kind: 'major' }> | undefined {
+  return course?.rules.find((r): r is Extract<CourseRule, { kind: 'major' }> => r.kind === 'major')
+}
+
+/** How many majors the course lets a student complete (1 when it says nothing). */
+export function maxMajors(data: Dataset, course: string, year: number): number {
+  const rule = majorRule(findCourse(data, course, year))
+  return rule ? Math.max(rule.max ?? rule.count, rule.count) : 1
+}
+
+/**
+ * Why this second major can't go with the first, or null: the same major twice, a pair the
+ * Handbook rules out (`not_with`, on either side), or one whose required subjects exclude the
+ * other's.
+ */
+export function majorClash(data: Dataset, firstId: string | undefined, secondId: string): string | null {
+  if (!firstId) return null
+  const a = findComponent(data, firstId)
+  const b = findComponent(data, secondId)
+  if (firstId === secondId) return `${b?.title ?? secondId} can't be both of your majors.`
+  if (!a || !b) return null
+  if ((a.notWith ?? []).includes(b.id) || (b.notWith ?? []).includes(a.id)) return `The ${a.title} and ${b.title} majors can't be taken together.`
+  return cannotCombine(data, a.id, b.id)
+}
+
+/**
+ * Whether a subject may count towards both of these components, by the course's rule: in
+ * B-ARTS it can't ("subjects cannot be credited to more than one major or minor").
+ */
+export function sharesAllowed(course: Course | undefined, aId: string, bId: string): boolean {
+  const rule = majorRule(course)
+  const no = rule?.noDoubleCount ?? false
+  if (no === true) return false
+  if (no === false) return true
+  return !no.some(([x, y]) => (x === aId && y === bId) || (x === bId && y === aId))
 }
 
 /** Whether a major's "non-allowed breadth" list covers this subject. */
@@ -147,7 +209,9 @@ export function checkCourse(plan: Plan, given: Dataset): CourseCheck {
   const barred = barredBreadth(given, plan.course, planComponentIds(plan))
   const data = withBarredBreadth(given, plan.course, planComponentIds(plan))
   const known = codes.map((c) => data.subjects[c]).filter((s): s is Subject => s !== undefined)
-  const statuses = course.rules.map((rule) => checkRule(rule, { plan, data, course, known, codes }))
+  const ctx: RuleCtx = { plan, data, course, known, codes, blocked: new Map(), contested: new Map() }
+  allocate(ctx)
+  const statuses = course.rules.map((rule) => checkRule(rule, ctx))
   const issues: Issue[] = statuses
     .filter((s) => s.status !== 'ok')
     .map((s) => {
@@ -181,6 +245,50 @@ interface RuleCtx {
   course: Course
   known: Subject[]
   codes: string[]
+  /** Per component id: subjects other components have claimed, which it can't count too. */
+  blocked: Map<string, Set<string>>
+  /** Per component id: subjects the components it can't share with also list (used last). */
+  contested: Map<string, Set<string>>
+}
+
+/** A component with the route the student is on (and that route's own limits). */
+function onRoute(component: Component, codes: string[]): Component {
+  if (!component.routes) return component
+  const reqs = routeFor(component, codes, true)
+  const route = component.routes.find((r) => r.requirements === reqs)
+  return { ...component, requirements: reqs, limits: [...(component.limits ?? []), ...(route?.limits ?? [])] }
+}
+
+/**
+ * Where the course doesn't let a subject count twice, which subjects each component can't use:
+ * every "all" subject of a component it can't share with, and whatever such a component chosen
+ * earlier (major, second major, specialisation, minors, in that order) has already counted.
+ */
+function allocate(ctx: RuleCtx): void {
+  const ids = [...new Set(planComponentIds(ctx.plan).filter((id): id is string => !!id))]
+  const comps = ids.map((id) => findComponent(ctx.data, id)).filter((c): c is Component => !!c).map((c) => onRoute(c, ctx.codes))
+  if (comps.every((a) => comps.every((b) => a === b || sharesAllowed(ctx.course, a.id, b.id)))) return
+  const reqsOf = (c: Component) => (c.requirements === 'unknown' ? [] : c.requirements)
+  const fixed = (c: Component) => reqsOf(c).flatMap((r) => ('all' in r ? r.all : []))
+  const counted = new Map<string, Set<string>>()
+  for (const c of comps) {
+    const partners = comps.filter((o) => o !== c && !sharesAllowed(ctx.course, c.id, o.id))
+    const own = new Set(fixed(c))
+    const mine = new Set<string>()
+    for (const o of partners) {
+      for (const x of fixed(o)) if (!own.has(x)) mine.add(x)
+      for (const x of counted.get(o.id) ?? []) if (!own.has(x)) mine.add(x)
+    }
+    ctx.blocked.set(c.id, mine)
+    // A choice both could count goes to the one that has no other option for it: picked last here.
+    ctx.contested.set(c.id, new Set(partners.flatMap((o) => codesOf(reqsOf(o)))))
+    if (c.requirements === 'unknown') continue
+    const used = new Set(mine)
+    const limits = (c.limits ?? []).map((l) => ({ ...l, taken: 0 }))
+    const ordered = [...c.requirements.filter((r) => 'all' in r), ...c.requirements.filter((r) => !('all' in r))]
+    ordered.forEach((r) => unmetRequirement(r, ctx, used, limits, ctx.contested.get(c.id)))
+    counted.set(c.id, new Set([...used].filter((x) => !mine.has(x))))
+  }
 }
 
 function checkRule(rule: CourseRule, ctx: RuleCtx): RuleStatus {
@@ -253,15 +361,25 @@ function checkRule(rule: CourseRule, ctx: RuleCtx): RuleStatus {
       const major = findComponent(ctx.data, ctx.plan.major)
       // Not decided yet is normal in first year: can't be checked, rather than broken.
       if (!major) return { ...base, status: 'unknown', detail: 'no major chosen', detailKey: 'noMajor', params: {} }
-      return componentStatus(base, major, ctx)
+      const first = componentStatus(base, major, ctx)
+      if (!ctx.plan.major2) return first
+      const max = Math.max(rule.max ?? rule.count, rule.count)
+      if (max < 2) return { ...base, status: 'fail', detail: `only ${max} major can be completed in this course`, detailKey: 'tooManyMajors', params: { max } }
+      const clash = majorClash(ctx.data, ctx.plan.major, ctx.plan.major2)
+      if (clash) return { ...base, status: 'fail', detail: clash, detailKey: 'majorsClash', params: { reason: clash } }
+      const major2 = findComponent(ctx.data, ctx.plan.major2)
+      const second = major2
+        ? componentStatus(base, major2, ctx)
+        : { ...base, status: 'unknown' as const, detail: `${ctx.plan.major2} isn't in the dataset`, detailKey: 'componentMissingData', params: { id: ctx.plan.major2 } }
+      return [first, second].find((r) => r.status === 'fail') ?? [first, second].find((r) => r.status === 'unknown') ?? second
     }
     case 'specialisation': {
       const spec = findComponent(ctx.data, ctx.plan.specialisation)
       if (!spec) return { ...base, status: 'ok', detail: 'none chosen (optional)', detailKey: 'noSpec', params: {} }
-      if (spec.requiresMajor.length > 0 && !spec.requiresMajor.includes(ctx.plan.major ?? '')) {
+      if (spec.requiresMajor.length > 0 && !spec.requiresMajor.includes(ctx.plan.major ?? '') && !spec.requiresMajor.includes(ctx.plan.major2 ?? '')) {
         return { ...base, status: 'fail', detail: `${spec.title} needs one of these majors: ${spec.requiresMajor.join(', ')}`, detailKey: 'needsMajor', params: { title: spec.title, majors: spec.requiresMajor.join(', ') } }
       }
-      const clash = ctx.plan.major ? cannotCombine(ctx.data, ctx.plan.major, spec.id) : null
+      const clash = [ctx.plan.major, ctx.plan.major2].filter((m): m is string => !!m).map((m) => cannotCombine(ctx.data, m, spec.id)).find((c) => c !== null) ?? null
       if (clash) return { ...base, status: 'fail', detail: clash, detailKey: 'cannotCombine', params: { reason: clash } }
       return componentStatus(base, spec, ctx)
     }
@@ -276,7 +394,7 @@ function checkRule(rule: CourseRule, ctx: RuleCtx): RuleStatus {
           results.push({ ...base, status: 'unknown', detail: `${id} isn't in the dataset`, detailKey: 'componentMissingData', params: { id } })
           continue
         }
-        const clash = minorClash(ctx.data, ctx.plan.major, id)
+        const clash = minorClash(ctx.data, [ctx.plan.major, ctx.plan.major2], id)
         if (clash) {
           results.push({ ...base, status: 'fail', detail: clash, detailKey: 'minorSameAsMajor', params: { title: minor.title } })
           continue
@@ -305,6 +423,22 @@ function checkRule(rule: CourseRule, ctx: RuleCtx): RuleStatus {
       if (over.length > 0) return { ...base, status: 'fail', ...areas }
       if (byArea.size < rule.minAreas) return { ...base, status: couldReach ? 'unknown' : 'fail', ...areas }
       return { ...base, status: 'ok', ...areas }
+    }
+    case 'area-cap': {
+      const exempt = capExempt(rule, ctx.data, planComponentIds(ctx.plan))
+      const byArea = new Map<string, number>()
+      for (const c of ctx.codes) {
+        if (exempt.has(c)) continue
+        const s = ctx.data.subjects[c]
+        if (rule.category !== undefined && (!s || categoryOf(s, ctx.course.code) !== rule.category)) continue
+        // A subject we have no data for still has its area in its code, at the usual 12.5.
+        const area = s?.area ?? c.slice(0, 4)
+        byArea.set(area, (byArea.get(area) ?? 0) + (s?.points ?? 12.5))
+      }
+      const over = [...byArea].filter(([, pts]) => pts > rule.max).map(([a, pts]) => `${a} (${pts})`).join(', ')
+      if (over) return { ...base, status: 'fail', detail: `over ${rule.max} points in ${over}`, detailKey: 'areaCapOver', params: { max: rule.max, over } }
+      const top = Math.max(0, ...byArea.values())
+      return { ...base, status: 'ok', detail: `at most ${top} points in any one area`, detailKey: 'areaCapOk', params: { have: top, max: rule.max } }
     }
     case 'requirement': {
       // The path closest to done is the one shown; any finished path passes.
@@ -347,16 +481,33 @@ const codesOf = (reqs: ComponentReq[]) => reqs.flatMap((r) => ('all' in r ? r.al
  * The route a student is on: the one sharing most subjects with what they've done or planned
  * (a language major's entry point shows in the first-year subjects taken), else the first.
  */
-export function routeFor(component: Component, have: Iterable<string>): ComponentReq[] | 'unknown' {
+export function routeFor(component: Component, have: Iterable<string>, coreFirst = false): ComponentReq[] | 'unknown' {
   if (!component.routes) return component.requirements
   const set = new Set(have)
   let best = component.routes[0]!
   let bestHits = -1
   for (const r of component.routes) {
-    const hits = codesOf(r.requirements).filter((c) => set.has(c)).length
+    // Checking a plan: a route's own compulsory subjects tell more than electives it shares with
+    // others (a second major's subjects can fill another route's elective lists).
+    const core = coreFirst ? r.requirements.flatMap((q) => ('all' in q ? q.all : [])).filter((c) => set.has(c)).length : 0
+    const hits = core * 1000 + codesOf(r.requirements).filter((c) => set.has(c)).length
     if (hits > bestHits) [best, bestHits] = [r, hits]
   }
   return best.requirements
+}
+
+/**
+ * Subjects an area cap doesn't count for this plan: those of the last component of each
+ * exception the plan has every component of.
+ */
+export function capExempt(rule: Extract<CourseRule, { kind: 'area-cap' }>, data: Dataset, ids: readonly (string | undefined)[]): Set<string> {
+  const out = new Set<string>()
+  for (const ex of rule.exceptions ?? []) {
+    if (!ex.components.every((id) => ids.includes(id))) continue
+    const last = findComponent(data, ex.components.at(-1))
+    for (const c of last && last.requirements !== 'unknown' ? codesOf(last.requirements) : []) out.add(c)
+  }
+  return out
 }
 
 function componentStatus(
@@ -365,22 +516,19 @@ function componentStatus(
   ctx: RuleCtx,
 ): RuleStatus {
   // With routes, check the one that fits what's done and planned (and that route's own limits).
-  if (component.routes) {
-    const reqs = routeFor(component, ctx.codes)
-    const route = component.routes.find((r) => r.requirements === reqs)
-    component = { ...component, requirements: reqs, limits: [...(component.limits ?? []), ...(route?.limits ?? [])] }
-  }
+  component = onRoute(component, ctx.codes)
   if (component.requirements === 'unknown') {
     const detail = `${component.title}: structure not curated yet`
     return { ...base, status: 'unknown', detail, detailKey: 'componentUnknown', params: { title: component.title } }
   }
   // A subject counts towards one requirement only: "all" lists claim theirs first,
-  // then each "choose" group (in file order) takes from what's left.
-  const used = new Set<string>()
+  // then each "choose" group (in file order) takes from what's left. Where the course doesn't
+  // let a subject count for two majors/minors, ones another has claimed are out too.
+  const used = new Set(ctx.blocked.get(component.id) ?? [])
   // Points already counted from each limited pool; past its max a subject counts towards nothing.
   const limits = (component.limits ?? []).map((l) => ({ ...l, taken: 0 }))
   const ordered = [...component.requirements.filter((r) => 'all' in r), ...component.requirements.filter((r) => !('all' in r))]
-  const unmet = ordered.map((r) => unmetRequirement(r, ctx, used, limits)).filter((x): x is Unmet => x !== null)
+  const unmet = ordered.map((r) => unmetRequirement(r, ctx, used, limits, ctx.contested.get(component.id))).filter((x): x is Unmet => x !== null)
   if (unmet.length === 0) {
     return { ...base, status: 'ok', detail: `${component.title} complete`, detailKey: 'componentDone', params: { title: component.title } }
   }
@@ -402,14 +550,15 @@ interface Unmet {
   part: string
 }
 
-function unmetRequirement(req: ComponentReq, ctx: RuleCtx, used: Set<string>, limits: (ComponentLimit & { taken: number })[] = []): Unmet | null {
+function unmetRequirement(req: ComponentReq, ctx: RuleCtx, used: Set<string>, limits: (ComponentLimit & { taken: number })[] = [], last?: Set<string>): Unmet | null {
   if ('all' in req) {
     req.all.forEach((c) => used.add(c))
     const missing = req.all.filter((c) => !ctx.codes.includes(c))
     return missing.length ? { text: `missing ${missing.join(', ')}`, part: `all:${missing.join(',')}` } : null
   }
   let have = 0
-  for (const c of req.choose.from) {
+  const from = last?.size ? [...req.choose.from.filter((c) => !last.has(c)), ...req.choose.from.filter((c) => last.has(c))] : req.choose.from
+  for (const c of from) {
     if (have >= req.choose.points) break
     if (!ctx.codes.includes(c) || used.has(c)) continue
     // A subject we have no data for yet still counts as a standard 12.5-point subject.
@@ -421,8 +570,8 @@ function unmetRequirement(req: ComponentReq, ctx: RuleCtx, used: Set<string>, li
     have += points
   }
   if (have >= req.choose.points) return null
-  const from = req.choose.from.join(', ')
-  return { text: `${have} / ${req.choose.points} points from ${from}`, part: `choose:${have}:${req.choose.points}:${req.choose.from.join(',')}` }
+  const list = req.choose.from.join(', ')
+  return { text: `${have} / ${req.choose.points} points from ${list}`, part: `choose:${have}:${req.choose.points}:${req.choose.from.join(',')}` }
 }
 
 /** Subjects a component needs, and which still have to be chosen. Used by the generator. */

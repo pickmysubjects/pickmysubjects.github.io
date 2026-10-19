@@ -53,7 +53,8 @@ function cleanState(v: unknown): PlanState | null {
     .filter((t): t is Record<string, unknown> => isObject(t) && typeof t.year === 'number' && (PERIODS as readonly string[]).includes(String(t.period)))
     .map((t) => ({ year: t.year, period: t.period, subjects: strings(t.subjects) }))
   return {
-    setup: { ...v.setup, minors: strings(v.setup.minors) } as unknown as PlanState['setup'],
+    // A plan saved before second majors existed has none; anything but a string is dropped.
+    setup: (({ major2, ...rest }) => ({ ...rest, minors: strings(v.setup.minors), ...(typeof major2 === 'string' ? { major2 } : {}) }))(v.setup) as unknown as PlanState['setup'],
     terms: terms as PlanState['terms'],
     notes: Array.isArray(v.notes) ? v.notes : [],
     unplaced: Array.isArray(v.unplaced) ? v.unplaced : [],

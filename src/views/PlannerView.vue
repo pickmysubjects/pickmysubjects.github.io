@@ -13,7 +13,7 @@ import PlanPrint, { type PrintTerm } from '@/components/planner/PlanPrint.vue'
 import Interp from '@/components/Interp.vue'
 import PlanSwitcher from '@/components/plans/PlanSwitcher.vue'
 import PlanCompare from '@/components/plans/PlanCompare.vue'
-import { PASS_MARK, isFail, passedCodes, planRoles, type PlanTerm } from '@/engine'
+import { PASS_MARK, isFail, passedCodes, planComponentIds, planRoles, type PlanTerm } from '@/engine'
 import { Printer, Share2 } from 'lucide-vue-next'
 import { decodePlan, encodePlan } from '@/utils/sharePlan'
 import { go, useView } from '@/composables/useView'
@@ -100,8 +100,8 @@ const showWizard = computed(
 const options = computed(() => subjectList.value.map((s) => ({ code: s.code, title: s.title })))
 // Which planned subjects the degree or major insists on, shown as a tag on each card.
 const roles = computed(() => {
-  const { course, courseYear, major, specialisation, minors } = plan.setup.value
-  const r = planRoles(data.value, course, courseYear, [major, specialisation, ...(minors ?? [])])
+  const { course, courseYear } = plan.setup.value
+  const r = planRoles(data.value, course, courseYear, planComponentIds(plan.plan.value).filter((id): id is string => !!id))
   const out: Record<string, 'required' | 'option'> = {}
   for (const c of r.required) out[c] = 'required'
   for (const c of r.options) out[c] = 'option'
@@ -134,9 +134,10 @@ const majorTitle = computed(() => {
   const major =
     data.value.components.find((c) => c.id === plan.setup.value.major)?.title ??
     (field ? t.value('wizard.fieldUndecided', { field: t.value(`majorGroup.${field}`) }) : t.value('wizard.notSure'))
+  const second = plan.plan.value.major2 ? data.value.components.find((c) => c.id === plan.plan.value.major2)?.title : undefined
   const spec = data.value.components.find((c) => c.id === plan.setup.value.specialisation)?.title
   const minor = (plan.setup.value.minors ?? []).map((id) => data.value.components.find((c) => c.id === id)?.title).filter(Boolean).join(' + ')
-  const main = spec ? `${major} + ${spec}` : major
+  const main = [major, second, spec].filter(Boolean).join(' + ')
   return minor ? `${main} · ${t.value('plans.minorLine', { title: minor })}` : main
 })
 const summary = computed(() =>

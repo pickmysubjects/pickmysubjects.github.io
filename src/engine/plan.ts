@@ -11,6 +11,8 @@ export interface Plan {
   /** Handbook year whose course rules apply (normally the year of commencement). */
   courseYear: number
   major?: string
+  /** An optional second major (component id), for courses that allow two. */
+  major2?: string
   specialisation?: string
   /** Minor ids (component ids). Undefined: not known, so conditions naming a minor stay unknown. */
   minors?: string[]

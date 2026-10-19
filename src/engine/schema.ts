@@ -418,7 +418,18 @@ const courseRule = z.discriminatedUnion('kind', [
       category: z.string().optional(),
     })
     .strict(),
-  z.object({ ...ruleBase, kind: z.literal('major'), count: z.number().int().positive() }).strict(),
+  z
+    .object({
+      ...ruleBase,
+      kind: z.literal('major'),
+      count: z.number().int().positive(),
+      // Most majors a student may complete (B-ARTS: "between one and two"); defaults to `count`.
+      max: z.number().int().positive().optional(),
+      // A subject counts towards one major or minor only: for every pair (true), or only for
+      // these pairs of component ids (B-COM: Management and Marketing share their capstones).
+      no_double_count: z.union([z.boolean(), z.array(z.tuple([z.string(), z.string()]))]).default(false),
+    })
+    .strict(),
   z
     .object({ ...ruleBase, kind: z.literal('specialisation'), max: z.number().int().nonnegative() })
     .strict(),
@@ -431,6 +442,19 @@ const courseRule = z.discriminatedUnion('kind', [
       min_areas: z.number().int().positive(),
       max_points_per_area: z.number().positive(),
       category: z.string().optional(),
+    })
+    .strict(),
+  // At most `max` points from any one discipline (a subject's area, its code prefix), across
+  // all levels. An exception lifts it for a combination of components the Handbook allows: the
+  // subjects of the last listed component then don't count (Geography major + Environmental
+  // Studies minor in B-ARTS).
+  z
+    .object({
+      ...ruleBase,
+      kind: z.literal('area-cap'),
+      max: z.number().positive(),
+      category: z.string().optional(),
+      exceptions: z.array(z.object({ components: z.array(z.string()).min(2) }).strict()).default([]),
     })
     .strict(),
   z
@@ -491,7 +515,9 @@ function camelRule(r: z.output<typeof courseRule>): CourseRule {
     case 'points':
       return { id: r.id, description: r.description, kind: r.kind, min: r.min, max: r.max, level: r.level, category: r.category }
     case 'major':
-      return { id: r.id, description: r.description, kind: r.kind, count: r.count }
+      return { id: r.id, description: r.description, kind: r.kind, count: r.count, max: Math.max(r.max ?? r.count, r.count), noDoubleCount: r.no_double_count as boolean | [string, string][] }
+    case 'area-cap':
+      return { id: r.id, description: r.description, kind: r.kind, max: r.max, category: r.category, exceptions: r.exceptions }
     case 'specialisation':
     case 'minor':
       return { id: r.id, description: r.description, kind: r.kind, max: r.max }
@@ -521,7 +547,8 @@ function camelRule(r: z.output<typeof courseRule>): CourseRule {
 export type CourseRule =
   | { id: string; description: string; kind: 'compulsory'; subjects: string[]; firstSemester: boolean }
   | { id: string; description: string; kind: 'points'; min?: number; max?: number; level?: number; category?: string }
-  | { id: string; description: string; kind: 'major'; count: number }
+  | { id: string; description: string; kind: 'major'; count: number; max: number; noDoubleCount: boolean | [string, string][] }
+  | { id: string; description: string; kind: 'area-cap'; max: number; category?: string; exceptions: { components: string[] }[] }
   | { id: string; description: string; kind: 'specialisation'; max: number }
   | { id: string; description: string; kind: 'minor'; max: number }
   | {

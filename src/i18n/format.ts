@@ -36,7 +36,9 @@ export function ruleText(t: Translate, rule: CourseRule | undefined, fallback = 
         ? t('rule.pointsMin', { n: rule.min, what: what(t, rule.level, rule.category) })
         : t('rule.pointsMax', { n: rule.max ?? 0, what: what(t, rule.level, rule.category) })
     case 'major':
-      return t('rule.major', { count: rule.count })
+      return (rule.max ?? rule.count) > rule.count ? t('rule.majorUpTo', { count: rule.count, max: rule.max }) : t('rule.major', { count: rule.count })
+    case 'area-cap':
+      return t('rule.areaCap', { max: rule.max })
     case 'specialisation':
       return t('rule.specialisation', { max: rule.max })
     case 'minor':

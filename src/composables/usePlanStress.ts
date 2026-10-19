@@ -1,5 +1,5 @@
 import { computed } from 'vue'
-import { pinnedIn, planRoles, planStress, relieveTerm, requiredWithPrerequisites, termStress, type Relief, type Skill, type TermStress } from '@/engine'
+import { pinnedIn, planComponentIds, planRoles, planStress, relieveTerm, requiredWithPrerequisites, termStress, type Relief, type Skill, type TermStress } from '@/engine'
 import { useDataset } from './useDataset'
 import { usePlan } from './usePlan'
 import { useProfile } from './useProfile'
@@ -12,8 +12,8 @@ export function usePlanStress() {
 
   // What the degree itself requires: only that makes a weak-skill stack unavoidable.
   const fixed = computed(() => {
-    const { course, courseYear, major, specialisation, minors } = plan.setup.value
-    const roles = planRoles(data.value, course, courseYear, [major, specialisation, ...(minors ?? [])])
+    const { course, courseYear } = plan.setup.value
+    const roles = planRoles(data.value, course, courseYear, planComponentIds(plan.plan.value).filter((id): id is string => !!id))
     return requiredWithPrerequisites(new Set([...roles.required, ...roles.options]), plan.plannedCodes.value, data.value.subjects, course)
   })
   const stress = computed(() => planStress(plan.terms.value.map((t) => t.subjects), data.value, profile.value, fixed.value, plan.setup.value.course))

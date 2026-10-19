@@ -2,7 +2,7 @@
 import { link } from '@/composables/useView'
 import { computed } from 'vue'
 import { Sparkles } from 'lucide-vue-next'
-import { recommend, yearLevel } from '@/engine'
+import { heldMajorIds, recommend, yearLevel } from '@/engine'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
 import { useProfile } from '@/composables/useProfile'
@@ -25,7 +25,7 @@ const top = computed(() =>
     maxLevel: yearLevel(profile.value.results, data.value),
     programme: {
       courseYear: plan.setup.value.courseYear,
-      components: [plan.setup.value.major, plan.setup.value.specialisation].filter(Boolean),
+      components: heldMajorIds(plan.plan.value).filter((id): id is string => !!id),
       minors: plan.setup.value.minors ?? [],
     },
     limit: 3,

@@ -1,5 +1,5 @@
 import { offeredIn } from './availability'
-import { majorTitles, minorTitles } from './courseRules'
+import { heldMajorIds, majorTitles, minorTitles } from './courseRules'
 import { evaluateField, referencedSubjects } from './expr'
 import type { Issue, Plan } from './plan'
 import { termLabel } from './plan'
@@ -56,7 +56,7 @@ export function checkTerms(plan: Plan, data: Dataset, standardLoad = 50): Issue[
         issues.push({ severity: 'info', kind: 'offering-assumed', subject: code, termIndex, params: { code, year: term.year, period: term.period, assumed: avail.assumedFromYear ?? '' }, message: `${code} in ${where} assumes the ${avail.assumedFromYear} timetable repeats.` })
       }
 
-      const ctx = { completed: before, sameTerm, subjects: data.subjects, admittedCourse: plan.course, majors: majorTitles(data, [plan.major, plan.specialisation]), minors: minorTitles(data, plan.minors), marks: plan.marks }
+      const ctx = { completed: before, sameTerm, subjects: data.subjects, admittedCourse: plan.course, majors: majorTitles(data, heldMajorIds(plan)), minors: minorTitles(data, plan.minors), marks: plan.marks }
       const pre = evaluateField(s.prerequisites, ctx)
       if (pre.status === 'fail') {
         issues.push({ severity: 'error', kind: 'prereq-unmet', subject: code, termIndex, params: { code, year: term.year, period: term.period, needs: pre.unmet.join(', ') }, message: `${code} in ${where} needs ${pre.unmet.join(', ')} first.` })

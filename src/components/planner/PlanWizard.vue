@@ -2,7 +2,7 @@
 import { link } from '@/composables/useView'
 import { computed, shallowRef } from 'vue'
 import { ArrowLeft, ArrowRight, Check } from 'lucide-vue-next'
-import { cannotCombine, minorClash, type Component, type Course, type Period } from '@/engine'
+import { cannotCombine, majorClash, maxMajors, minorClash, type Component, type Course, type Period } from '@/engine'
 import { useDataset } from '@/composables/useDataset'
 import type { PlanSetup } from '@/composables/usePlan'
 import MajorPicker from './MajorPicker.vue'
@@ -57,15 +57,24 @@ const majors = computed(() =>
       (c.closedFrom === undefined || draft.value.startYear < c.closedFrom || c.id === draft.value.major),
   ),
 )
-// Specialisations that go with the chosen major (an extra, optional choice).
+// A second major: only in a course that allows two, once a first is picked. Not the same one
+// again, nor one the Handbook rules out with it.
+const majors2 = computed(() => {
+  const first = draft.value.major
+  if (!first || maxMajors(data.value, draft.value.course, draft.value.courseYear) < 2) return []
+  return majors.value.filter((c) => !majorClash(data.value, first, c.id)).sort((a, b) => a.title.localeCompare(b.title))
+})
+const chosenMajors = computed(() => [draft.value.major, majors2.value.some((m) => m.id === draft.value.major2) ? draft.value.major2 : ''].filter(Boolean) as string[])
+
+// Specialisations that go with the chosen major(s) (an extra, optional choice).
 const specs = computed(() =>
   props.components.filter(
     (c) =>
       c.course === draft.value.course &&
       c.kind === 'specialisation' &&
-      (c.requiresMajor.length === 0 || c.requiresMajor.includes(draft.value.major)) &&
+      (c.requiresMajor.length === 0 || chosenMajors.value.some((m) => c.requiresMajor.includes(m))) &&
       // Not one the major's own subjects rule out (Mechatronics with a computing specialisation).
-      !(draft.value.major && cannotCombine(data.value, draft.value.major, c.id)),
+      !chosenMajors.value.some((m) => cannotCombine(data.value, m, c.id)),
   ),
 )
 
@@ -78,7 +87,7 @@ const minors = computed(() =>
         c.course === draft.value.course &&
         c.kind === 'minor' &&
         (c.closedFrom === undefined || draft.value.startYear < c.closedFrom || draft.value.minors?.includes(c.id)) &&
-        !minorClash(data.value, draft.value.major, c.id),
+        !minorClash(data.value, chosenMajors.value, c.id),
     )
     .sort((a, b) => a.title.localeCompare(b.title)),
 )
@@ -93,11 +102,13 @@ function finish(): void {
   const spec = specs.value.some((sp) => sp.id === draft.value.specialisation) ? draft.value.specialisation : ''
   // Likewise a minor the final major rules out.
   const kept = (draft.value.minors ?? []).filter((id) => minors.value.some((m) => m.id === id))
-  emit('done', { ...draft.value, specialisation: spec, minors: kept })
+  // And a second major that doesn't go with the first (or the course allows only one).
+  const major2 = majors2.value.some((m) => m.id === draft.value.major2) ? (draft.value.major2 ?? '') : ''
+  emit('done', { ...draft.value, major2, specialisation: spec, minors: kept })
 }
 
 function chooseCourse(c: Course): void {
-  set({ course: c.code, courseYear: c.year, major: '', specialisation: '', minors: [], field: '' })
+  set({ course: c.code, courseYear: c.year, major: '', major2: '', specialisation: '', minors: [], field: '' })
 }
 </script>
 
@@ -163,6 +174,18 @@ function chooseCourse(c: Course): void {
         @update:field="set({ field: $event })"
       />
       <a class="majors-link" :href="link('majors')" target="_blank" rel="noopener">{{ t('wizard.majorsLink') }}</a>
+      <label v-if="majors2.length" class="minor">
+        <span class="spec-title">{{ t('wizard.qMajor2') }}</span>
+        <select
+          class="select-glass minor-select"
+          data-testid="major2-select"
+          :value="chosenMajors[1] ?? ''"
+          @change="set({ major2: ($event.target as HTMLSelectElement).value })"
+        >
+          <option value="">{{ t('wizard.noMajor2') }}</option>
+          <option v-for="m in majors2" :key="m.id" :value="m.id">{{ m.title }}</option>
+        </select>
+      </label>
       <div v-if="specs.length" class="spec">
         <p class="spec-title">{{ t('wizard.qSpec') }}</p>
         <div class="spec-chips" role="group" :aria-label="t('wizard.qSpec')">

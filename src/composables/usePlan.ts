@@ -48,6 +48,8 @@ export function planFor(state: PlanState, profile: Profile, data: Dataset): Plan
     course: state.setup.course,
     courseYear: state.setup.courseYear,
     major: state.setup.major || undefined,
+    // A second major only alongside a first.
+    major2: (state.setup.major && state.setup.major2) || undefined,
     specialisation: state.setup.specialisation || undefined,
     minors: state.setup.minors ?? [],
     completed: passedCodes(profile.results),
@@ -109,6 +111,7 @@ export function usePlan() {
       const same = (a: PlanSetup, b: PlanSetup) =>
         a.courseYear === b.courseYear &&
         a.major === b.major &&
+        (a.major2 ?? '') === (b.major2 ?? '') &&
         a.specialisation === b.specialisation &&
         (a.minors ?? []).join(',') === (b.minors ?? []).join(',') &&
         (a.field ?? '') === (b.field ?? '') &&
@@ -145,6 +148,7 @@ export function usePlan() {
       course: setup.course,
       courseYear: setup.courseYear,
       major: setup.major || undefined,
+      major2: (setup.major && setup.major2) || undefined,
       specialisation: setup.specialisation || undefined,
       minors: setup.minors ?? [],
       startYear: start.year,

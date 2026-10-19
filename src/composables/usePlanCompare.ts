@@ -1,5 +1,5 @@
 import { computed, type Ref } from 'vue'
-import { checkCourse, comparePlans, findCourse, forCourse, planRoles, planStress, requiredWithPrerequisites, type Dataset, type RuleStatus } from '@/engine'
+import { checkCourse, comparePlans, planComponentIds, findCourse, forCourse, planRoles, planStress, requiredWithPrerequisites, type Dataset, type RuleStatus } from '@/engine'
 import type { PlanSetup } from './planStore'
 import { useDataset } from './useDataset'
 import { useProfile } from './useProfile'
@@ -18,10 +18,10 @@ export interface CompareSummary {
 }
 
 /** A plan's major (+ specialisation) and minor titles, '' for whichever isn't picked. */
-export function setupTitles(data: Dataset, setup: Pick<PlanSetup, 'major' | 'specialisation' | 'minors'>): { major: string; minor: string } {
-  const title = (id: string) => data.components.find((c) => c.id === id)?.title
+export function setupTitles(data: Dataset, setup: Pick<PlanSetup, 'major' | 'major2' | 'specialisation' | 'minors'>): { major: string; minor: string } {
+  const title = (id: string | undefined) => (id ? data.components.find((c) => c.id === id)?.title : undefined)
   return {
-    major: [title(setup.major), title(setup.specialisation)].filter(Boolean).join(' + '),
+    major: [title(setup.major), setup.major ? title(setup.major2) : undefined, title(setup.specialisation)].filter(Boolean).join(' + '),
     minor: (setup.minors ?? []).map(title).filter(Boolean).join(' + '),
   }
 }
@@ -38,7 +38,7 @@ export function usePlanCompare(a: Ref<PlanEntry | undefined>, b: Ref<PlanEntry |
     const data = forCourse(all, setup.course)
     const plan = planFor(entry.state, profile, data)
     const codes = terms.flatMap((t) => t.subjects)
-    const roles = planRoles(data, setup.course, setup.courseYear, [setup.major, setup.specialisation, ...(setup.minors ?? [])])
+    const roles = planRoles(data, setup.course, setup.courseYear, planComponentIds(setup).filter((id): id is string => !!id))
     const fixed = requiredWithPrerequisites(new Set([...roles.required, ...roles.options]), codes, data.subjects, setup.course)
     const levels = planStress(terms.map((t) => t.subjects), data, profile, fixed, setup.course).terms.map((s) => s.level)
     const statuses = checkCourse(plan, data).statuses

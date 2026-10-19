@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, shallowRef } from 'vue'
-import { recommend, yearLevel, passedCodes, type Goal } from '@/engine'
+import { heldMajorIds, recommend, yearLevel, passedCodes, type Goal } from '@/engine'
 import { useI18n } from '@/i18n'
 import { categoryLabel, termLabel } from '@/i18n/format'
 import RecommendationCard from '@/components/recommend/RecommendationCard.vue'
@@ -59,7 +59,7 @@ const recs = computed(() =>
     termSubjects: selectedTerm.value?.subjects,
     programme: {
       courseYear: plan.setup.value.courseYear,
-      components: [plan.setup.value.major, plan.setup.value.specialisation].filter(Boolean),
+      components: heldMajorIds(plan.plan.value).filter((id): id is string => !!id),
       minors: plan.setup.value.minors ?? [],
     },
   })

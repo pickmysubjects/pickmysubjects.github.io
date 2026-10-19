@@ -83,6 +83,11 @@ rules:
     kind: major
     count: 1
     description: Complete one major
+  # "A maximum of 125 credit points in a single discipline": taken as one subject area (code prefix).
+  - id: discipline-cap
+    kind: area-cap
+    max: 125
+    description: No more than 125 points from any one discipline
   - id: progress-to-l2
     kind: progression
     before_level: 2
@@ -95,4 +100,3 @@ rules:
     level: 2
     min_points: 50
     description: Normally 50 level-2 points before level-3 subjects
-# Not encoded yet: at most 125 points from any one discipline.

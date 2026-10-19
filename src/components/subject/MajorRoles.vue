@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, shallowRef } from 'vue'
 import { link } from '@/composables/useView'
-import { subjectRoles } from '@/engine'
+import { planComponentIds, subjectRoles } from '@/engine'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
 import { useI18n } from '@/i18n'
@@ -13,7 +13,7 @@ const plan = usePlan()
 const { t } = useI18n()
 
 const ORDER = { core: 0, option: 1, pathway: 2, route: 3 } as const
-const mine = computed(() => new Set([plan.setup.value.major, plan.setup.value.specialisation, ...(plan.setup.value.minors ?? [])].filter(Boolean)))
+const mine = computed(() => new Set(planComponentIds(plan.plan.value).filter(Boolean)))
 const roles = computed(() =>
   subjectRoles(data.value, props.code, plan.setup.value.course)
     .map((r) => ({ ...r, mine: mine.value.has(r.component) }))

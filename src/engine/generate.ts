@@ -1,6 +1,6 @@
 import { forCourse } from './forCourse'
 import { offeredIn, periodsFor, termKey } from './availability'
-import { categoryOf, checkCourse, componentNeeds, findComponent, findCourse, majorTitles, minorTitles, planComponentIds, withBarredBreadth } from './courseRules'
+import { capExempt, categoryOf, checkCourse, componentNeeds, findComponent, findCourse, heldMajorIds, majorTitles, minorTitles, planComponentIds, sharesAllowed, withBarredBreadth } from './courseRules'
 import { evaluateField, referencedSubjects, type EvalContext, type Tri } from './expr'
 import type { Note, Params, Plan, PlanTerm } from './plan'
 import { standardTerms } from './plan'
@@ -17,6 +17,8 @@ export interface GenerateInput {
   course: string
   courseYear: number
   major?: string
+  /** An optional second major: its required subjects are planned like the first's. */
+  major2?: string
   specialisation?: string
   /** Minor ids: planned like a second, smaller major. */
   minors?: string[]
@@ -241,7 +243,7 @@ function buildPlan(input: GenerateInput): GenerateResult {
   // latest electives no rule needs, so the degree isn't longer than it has to be.
   if (course) {
     const total = () => [...completed, ...allPlaced()].reduce((sum, c) => sum + (data.subjects[c]?.points ?? 12.5), 0)
-    const draftOf = (): Plan => ({ course: input.course, courseYear: input.courseYear, major: input.major, specialisation: input.specialisation, minors: input.minors, completed, terms })
+    const draftOf = (): Plan => ({ course: input.course, courseYear: input.courseYear, major: input.major, major2: input.major2, specialisation: input.specialisation, minors: input.minors, completed, terms })
     const failing = () => checkCourse(draftOf(), data).statuses.filter((st) => st.status === 'fail').length
     for (let i = terms.length - 1; i >= 0 && total() > course.totalPoints; i--) {
       const term = terms[i] as PlanTerm
@@ -261,7 +263,7 @@ function buildPlan(input: GenerateInput): GenerateResult {
   }
 
   // Spread the load, so the hard subjects don't all land in one semester.
-  const draft: Plan = { course: input.course, courseYear: input.courseYear, major: input.major, specialisation: input.specialisation, minors: input.minors, completed, terms }
+  const draft: Plan = { course: input.course, courseYear: input.courseYear, major: input.major, major2: input.major2, specialisation: input.specialisation, minors: input.minors, completed, terms }
   for (const { a, b } of balanceTerms(draft, data, input.profile)) {
     notes.push(note('balanced', { a, b }, `Swapped ${a} and ${b} between semesters to spread the load.`))
   }
@@ -302,6 +304,7 @@ function buildPlan(input: GenerateInput): GenerateResult {
     course: input.course,
     courseYear: input.courseYear,
     major: input.major,
+    major2: input.major2,
     specialisation: input.specialisation,
     minors: input.minors,
     completed,
@@ -315,7 +318,7 @@ type Held = Pick<EvalContext, 'majors' | 'minors'>
 
 /** Titles of the student's major, specialisation and minors, for conditions that name them. */
 function majorsOf(input: GenerateInput): Held {
-  return { majors: majorTitles(input.data, [input.major, input.specialisation]), minors: minorTitles(input.data, input.minors) }
+  return { majors: majorTitles(input.data, heldMajorIds(input)), minors: minorTitles(input.data, input.minors) }
 }
 
 function note(key: string, params: Params, text: string): Note {
@@ -330,18 +333,25 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
     if (rule.kind === 'compulsory') rule.subjects.forEach((c) => required.add(c))
   }
 
-  const groups: { title: string; req: Extract<ComponentReq, { choose: unknown }>; used: Set<string> }[] = []
-  for (const id of planComponentIds(input)) {
+  const groups: { title: string; req: Extract<ComponentReq, { choose: unknown }>; used: Set<string>; others?: Set<string>[] }[] = []
+  // Each component's claimed subjects, for courses where a subject counts towards one major or minor only.
+  const claimed: { id: string; used: Set<string> }[] = []
+  for (const id of new Set(planComponentIds(input))) {
     const component = findComponent(data, id)
     if (id && !component) notes.push(note('componentMissing', { id }, `${id} isn't in the dataset, so its subjects weren't added.`))
     if (component?.requirements === 'unknown') notes.push(note('componentUnknown', { title: component.title }, `${component.title}'s structure isn't curated yet.`))
     // Same allocation as the course check: a subject fills one requirement only.
     const used = new Set<string>()
+    if (component) claimed.push({ id: component.id, used })
     // A major with routes follows the one the student's record points to.
     for (const req of componentNeeds(component, done)) {
       if ('all' in req) req.all.forEach((c) => (required.add(c), used.add(c)))
-      else groups.push({ title: component?.title ?? id ?? '', req, used })
+      else groups.push({ title: component?.title ?? id ?? '', req, used, others: component ? partnersOf(component.id) : undefined })
     }
+  }
+  // What the components a subject can't count twice with have claimed (filled in as they go).
+  function partnersOf(id: string): Set<string>[] {
+    return claimed.filter((o) => o.id !== id && !sharesAllowed(course, id, o.id)).map((o) => o.used)
   }
 
   // Also what the required subjects' own prerequisites name, two steps down: Actuarial's
@@ -392,11 +402,13 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
   // "Choose N points from" groups, once every fixed subject is known. Ties in
   // score go to subjects that run in the least crowded teaching period.
   const score = new Map(recommend(data, input.profile, { course: input.course, eligibleWith: [], year: input.startYear }).map((r) => [r.code, r.score]))
-  for (const { title, req, used } of groups) {
+  for (const { title, req, used, others = [] } of groups) {
+    // Claimed by a component this one can't share subjects with (B-ARTS: one major or minor each).
+    const taken = (c: string) => used.has(c) || others.some((o) => o.has(c))
     let have = 0
     for (const c of req.choose.from) {
       if (have >= req.choose.points) break
-      if ((done.has(c) || required.has(c)) && !used.has(c)) {
+      if ((done.has(c) || required.has(c)) && !taken(c)) {
         used.add(c)
         have += data.subjects[c]?.points ?? 0
       }
@@ -418,8 +430,16 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
       if (!sub || sub.prerequisites === 'none' || sub.prerequisites === 'unknown') return 0
       return evaluateField(sub.prerequisites, { completed: everything, subjects: data.subjects, admittedCourse: input.course, ...majorsOf(input) }).status === 'unknown' ? 1 : 0
     }
+    // An option whose prerequisites would bring in three or more subjects not otherwise planned (a
+    // finance elective resting on three more maths subjects) after the ones that don't.
+    const extra = (c: string) => {
+      const sub = data.subjects[c]
+      if (!sub || sub.prerequisites === 'none' || sub.prerequisites === 'unknown') return 0
+      const adds = resolvePrereqs(sub.prerequisites, done, required, data, input.course, c, majorsOf(input)).filter((x) => !required.has(x)).length
+      return adds >= 3 ? adds : 0
+    }
     const order = [...req.choose.from].sort(
-      (a, b) => off(a) - off(b) || byHand(a) - byHand(b) || Number(named.has(b)) - Number(named.has(a)) || (score.get(b) ?? -1) - (score.get(a) ?? -1) || busy(a) - busy(b),
+      (a, b) => off(a) - off(b) || byHand(a) - byHand(b) || Number(named.has(b)) - Number(named.has(a)) || extra(a) - extra(b) || (score.get(b) ?? -1) - (score.get(a) ?? -1) || busy(a) - busy(b),
     )
     for (const c of order) {
       if (have >= req.choose.points) break
@@ -903,7 +923,7 @@ function pickElective(ctx: PickCtx): { code: string; why: string; ruleId: string
         const s = data.subjects[rec.code]
         if (!s || s.points > ctx.room) continue
         if (offeredIn(s, term.year, term.period).status !== 'ok') continue
-        if (!withinCaps(s, all, course, data)) continue
+        if (!withinCaps(s, all, course, data, planComponentIds(input))) continue
         if (!ctx.relaxed && !leavesRoomForOthers(s, all, course, data)) continue
         if (!progressionAllows(s.code, course, [...ctx.before], data)) continue
         // A corequisite must already be in the plan (this term or earlier).
@@ -1020,7 +1040,7 @@ function sumPoints(codes: string[], data: Dataset, course: string, r: { level?: 
   }, 0)
 }
 
-function withinCaps(s: Subject, taken: string[], course: Course, data: Dataset): boolean {
+function withinCaps(s: Subject, taken: string[], course: Course, data: Dataset, components: readonly (string | undefined)[] = []): boolean {
   for (const r of pointRules(course)) {
     if (r.max === undefined || !matches(s, course.code, r)) continue
     if (sumPoints(taken, data, course.code, r) + s.points > r.max) return false
@@ -1033,6 +1053,20 @@ function withinCaps(s: Subject, taken: string[], course: Course, data: Dataset):
       return t && t.level === 1 && t.area === s.area ? sum + t.points : sum
     }, 0)
     if (inArea + s.points > r.maxPointsPerArea) return false
+  }
+  // At most so many points from one discipline (B-ARTS: 125), all levels together.
+  for (const r of course.rules) {
+    if (r.kind !== 'area-cap') continue
+    if (r.category !== undefined && categoryOf(s, course.code) !== r.category) continue
+    const exempt = capExempt(r, data, components)
+    if (exempt.has(s.code)) continue
+    const inArea = taken.reduce((sum, c) => {
+      const t = data.subjects[c]
+      if (!t || exempt.has(c) || t.area !== s.area) return sum
+      if (r.category !== undefined && categoryOf(t, course.code) !== r.category) return sum
+      return sum + t.points
+    }, 0)
+    if (inArea + s.points > r.max) return false
   }
   return true
 }
@@ -1113,7 +1147,7 @@ function trySwap(r: PointsRule, terms: PlanTerm[], all: string[], ctx: RepairCtx
         const s = data.subjects[rec.code]
         if (!s || s.points > es.points) continue
         if (offeredIn(s, term.year, term.period).status !== 'ok') continue
-        if (!withinCaps(s, others, course, data)) continue
+        if (!withinCaps(s, others, course, data, planComponentIds(input))) continue
         if (!progressionAllows(s.code, course, before, data)) continue
         // Its corequisites must be in the plan by then, as when an elective is first picked.
         const co = evaluateField(s.corequisites, { completed: new Set([...before, ...term.subjects.filter((c) => c !== e)]), subjects: data.subjects, admittedCourse: course.code, ...majorsOf(input) })

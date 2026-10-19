@@ -9,6 +9,8 @@ export interface PlanSetup {
   startYear: number
   startPeriod: Period
   major: string
+  /** An optional second major, for courses that allow two ('' or missing: none; older plans lack it). */
+  major2?: string
   specialisation: string
   /** Optional minors (component ids); plans saved before minors existed get none. */
   minors: string[]

@@ -66,7 +66,19 @@ rules:
   - id: major
     kind: major
     count: 1
+    max: 2
+    # "Subjects cannot be credited to more than one major or minor."
+    no_double_count: true
     description: Complete one major (a second is optional)
+  # "Diversity of study": the Handbook's discipline lists, taken as subject areas (code prefix).
+  # Psychology is a 125-point major and still fits exactly. The one stated exception: the
+  # Geography major with the Environmental Studies minor.
+  - id: discipline-cap
+    kind: area-cap
+    max: 125
+    exceptions:
+      - components: [arts-geography, environmental-studies-minor]
+    description: No more than 125 points from any one discipline
   - id: minor
     kind: minor
     max: 1
@@ -83,6 +95,9 @@ rules:
     level: 2
     min_points: 50
     description: Normally 50 level-2 points before level-3 subjects
-# Not encoded yet: at most 125 points from any one discipline (diversity of study), and the
-# adjusted rules of the non-standard majors (Psychology, Geography, Economics). A minor in the
-# major's own discipline is only caught when the two share a title (History major + History minor).
+# Approximations: a discipline is taken as one subject area (code prefix); the Handbook's lists
+# mostly match one prefix each. Not encoded yet: Philosophy's tighter 87.5-point cap on its
+# level-2 and level-3 subjects, and the adjusted rules of the non-standard majors (Psychology,
+# Geography, Economics, the Ancient World Studies + Classics double major) beyond what their
+# component files already say. A minor in the major's own discipline is only caught when the two
+# share a title (History major + History minor) or list each other in not_with.

@@ -64,6 +64,10 @@ rules:
   - id: major
     kind: major
     count: 1
+    # "A maximum of two majors may be recognised. Double majors are only available in selected
+    # disciplines": that list is on a separate faculty page (not pasted), so no pair is ruled out
+    # yet. The Handbook doesn't say a subject can't count towards both.
+    max: 2
     description: Complete one major (a second is optional)
   - id: specialisation
     kind: specialisation
