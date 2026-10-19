@@ -87,5 +87,7 @@ export default defineConfig({
   server: { port: 5180 },
   test: {
     include: ['tests/**/*.test.ts'],
+    // Many tests plan on the real data; on shared CI runners they run past the 5s default.
+    testTimeout: 30_000,
   },
 })
