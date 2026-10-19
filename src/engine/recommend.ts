@@ -264,7 +264,7 @@ export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions =
   const creditCourses = new Set(Object.values(data.subjects).flatMap((x) => Object.keys(x.categories)))
   const ratingMean = siteRatingMean(data)
 
-  const termBefore = opts.termSubjects ? termStress(opts.termSubjects, data, profile).level : null
+  const termBefore = opts.termSubjects ? termStress(opts.termSubjects, data, profile, { course: opts.course }).level : null
   const recs: Recommendation[] = []
   for (const s of Object.values(data.subjects)) {
     if (taken.has(s.code) || behind.has(s.code)) continue
@@ -365,7 +365,7 @@ export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions =
       rec.reasons.unshift(note('majorPath', { codes }, `Leads to ${codes} in your major.`))
     }
     if (opts.termSubjects && termBefore) {
-      const after = termStress([...opts.termSubjects, s.code], data, profile).level
+      const after = termStress([...opts.termSubjects, s.code], data, profile, { course: opts.course }).level
       if (STRESS_RANK[after] > STRESS_RANK[termBefore]) {
         rec.score = Math.max(0, rec.score - HEAVY_PICK_COST)
         rec.warnings.push(note(after === 'veryHeavy' ? 'makesVeryHeavy' : 'makesHeavy', {}, 'Adding it makes that semester heavier.'))

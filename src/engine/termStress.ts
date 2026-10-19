@@ -1,6 +1,7 @@
 import type { Profile } from './recommend'
 import type { Dataset, Skill, Subject } from './schema'
 import { prerequisiteRoute } from './expr'
+import { planRoles } from './roles'
 import { MARKING_SKILLS, skillsOf } from './skills'
 
 export { skillsOf }
@@ -91,6 +92,108 @@ export interface StressOptions {
    * (default 1). planStress raises it when the plan can't spread them any thinner.
    */
   stackFloor?: Partial<Record<Skill, number>>
+  /**
+   * The student's course: a semester is judged against what is usual there, so a Design
+   * student's studio semester isn't "heavy" just because a Science one would be.
+   */
+  course?: string
+}
+
+/** The course whose usual load the rule lines above are set for. */
+const REFERENCE_COURSE = 'B-SCI'
+/** No course is judged harsher than the reference, nor more than this much more leniently. */
+const MAX_COURSE_FACTOR = 1.7
+
+/** How much a course's own subjects carry, per rule: the average per subject. */
+interface CourseLoad {
+  hours: number
+  tasks: number
+  coursework: number
+  exams: number
+  projects: number
+  workload: number
+  hard: number
+}
+type CourseFactors = CourseLoad
+
+const NO_FACTORS: CourseFactors = { hours: 1, tasks: 1, coursework: 1, exams: 1, projects: 1, workload: 1, hard: 1 }
+
+/**
+ * What a course's students typically take: its compulsory subjects and every major's core and
+ * listed options (falling back to the subjects it counts as its own, outside breadth), then
+ * per subject the average class hours, assessment tasks, and share that trips each rule.
+ */
+function courseLoad(data: Dataset, course: string): CourseLoad | null {
+  const codes = new Set<string>()
+  for (const m of data.components.filter((c) => c.kind === 'major' && c.course === course)) {
+    const roles = planRoles(data, course, m.year, [m.id])
+    for (const c of [...roles.required, ...roles.options]) codes.add(c)
+  }
+  let subjects = [...codes].map((c) => data.subjects[c]).filter((s): s is Subject => s !== undefined)
+  if (!subjects.length)
+    subjects = Object.values(data.subjects).filter((s) => {
+      const c = s.categories[course]
+      return c !== undefined && c !== 'breadth' && c !== 'core'
+    })
+  if (!subjects.length) return null
+  const recorded = subjects.filter((s) => s.assessment)
+  const share = (xs: Subject[], test: (s: Subject) => boolean) => (xs.length ? xs.filter(test).length / xs.length : 0)
+  const rated = (s: Subject) => (s.signals && s.signals.reviews >= MIN_REVIEWS ? s.signals : undefined)
+  return {
+    hours: subjects.reduce((a, s) => a + (s.weeklyContactHours ?? DEFAULT_HOURS), 0) / subjects.length,
+    tasks: recorded.length ? recorded.reduce((a, s) => a + (s.assessment?.length ?? 0), 0) / recorded.length : 0,
+    coursework: share(recorded, (s) => examShare(s) <= COURSEWORK_EXAM),
+    exams: share(recorded, (s) => examShare(s) >= EXAM_HEAVY),
+    projects: share(recorded, (s) => skillsOf(s, data).includes('programming') && bigProject(s)),
+    workload: share(subjects, (s) => heavyWorkload(s, rated(s))),
+    hard: share(subjects, (s) => ratedHard(s, rated(s))),
+  }
+}
+
+const factorCache = new WeakMap<Dataset['subjects'], Map<string, CourseFactors>>()
+
+/**
+ * Per rule, how much more a course's own subjects carry than the reference course's: that
+ * rule's line moves up by as much, so "heavy" means heavy for that degree (an Arts semester of
+ * essays is the norm there, not a crunch). Never below 1, so no degree is judged harsher than
+ * Science, and at most MAX_COURSE_FACTOR. Weak-skill stacks are about the student and don't move.
+ */
+export function courseStressFactors(data: Dataset, course?: string): CourseFactors {
+  if (!course || course === REFERENCE_COURSE) return NO_FACTORS
+  let byCourse = factorCache.get(data.subjects)
+  if (!byCourse) factorCache.set(data.subjects, (byCourse = new Map()))
+  let f = byCourse.get(course)
+  if (!f) {
+    const own = courseLoad(data, course)
+    const ref = courseLoad(data, REFERENCE_COURSE)
+    if (!own || !ref) f = NO_FACTORS
+    else {
+      const ratio = (k: keyof CourseLoad) => (ref[k] > 0 ? Math.round(Math.min(MAX_COURSE_FACTOR, Math.max(1, own[k] / ref[k])) * 1000) / 1000 : 1)
+      f = {
+        hours: ratio('hours'),
+        tasks: ratio('tasks'),
+        coursework: ratio('coursework'),
+        exams: ratio('exams'),
+        projects: ratio('projects'),
+        workload: ratio('workload'),
+        hard: ratio('hard'),
+      }
+    }
+    byCourse.set(course, f)
+  }
+  return f
+}
+
+function bigProject(s: Subject): boolean {
+  return (s.assessment ?? []).some((t) => (t.kind === 'project' || t.kind === 'assignment') && t.weight >= PROJECT_SHARE)
+}
+
+function heavyWorkload(s: Subject, r: Subject['signals'] | undefined): boolean {
+  return r?.workload !== undefined ? r.workload >= HIGH_RATING : s.discussion?.workload === 'heavy'
+}
+
+function ratedHard(s: Subject, r: Subject['signals'] | undefined): boolean {
+  return r?.difficulty !== undefined ? r.difficulty >= HIGH_RATING : s.discussion?.difficulty === 'hard'
 }
 
 export function termStress(codes: string[], data: Dataset, profile?: Profile, opts: StressOptions = {}): TermStress {
@@ -101,6 +204,8 @@ export function termStress(codes: string[], data: Dataset, profile?: Profile, op
   const list = (xs: Subject[]) => xs.map((s) => s.code).join(', ')
   let points = 0
   let score = 0
+  // The lines below, moved to what is usual in the student's degree.
+  const f = courseStressFactors(data, opts.course)
 
   // Your weak spot: subjects stacked on a skill the student is weak at.
   for (const skill of STACKING) {
@@ -123,19 +228,16 @@ export function termStress(codes: string[], data: Dataset, profile?: Profile, op
   // Busy weeks: class hours, or students saying the workload is heavy.
   const hours = Math.round(subjects.reduce((a, s) => a + (s.weeklyContactHours ?? DEFAULT_HOURS), 0))
   const rated = (s: Subject) => (s.signals && s.signals.reviews >= MIN_REVIEWS ? s.signals : undefined)
-  const heavyWork = subjects.filter((s) => {
-    const r = rated(s)
-    return r?.workload !== undefined ? r.workload >= HIGH_RATING : s.discussion?.workload === 'heavy'
-  })
+  const heavyWork = subjects.filter((s) => heavyWorkload(s, rated(s)))
   // Paid work or other fixed hours take from the same week. Each hour counts as half a class hour:
   // a judgement, not a published rate, so a full-time-ish job tips a busy semester, not every one.
   const work = profile?.workHours ?? 0
-  if (hours + work * WORK_SHARE >= HOURS_RULE) {
+  if (hours + work * WORK_SHARE >= HOURS_RULE * f.hours) {
     points++
     const most = [...subjects].sort((a, b) => (b.weeklyContactHours ?? 0) - (a.weeklyContactHours ?? 0)).slice(0, 2)
     if (work > 0) reasons.push({ key: 'hoursWork', params: { hours, work, codes: list(most) } })
     else reasons.push({ key: 'hours', params: { hours, codes: list(most) } })
-  } else if (heavyWork.length >= RATED_RULE) {
+  } else if (heavyWork.length >= RATED_RULE * f.workload) {
     points++
     reasons.push({ key: 'workload', params: { n: heavyWork.length, codes: list(heavyWork) } })
   }
@@ -145,11 +247,11 @@ export function termStress(codes: string[], data: Dataset, profile?: Profile, op
   const recorded = subjects.filter((s) => s.assessment)
   const coursework = recorded.filter((s) => examShare(s) <= COURSEWORK_EXAM)
   const exams = recorded.filter((s) => examShare(s) >= EXAM_HEAVY)
-  if (coursework.length >= CRUNCH_RULE) {
+  if (coursework.length >= CRUNCH_RULE * f.coursework) {
     points++
     reasons.push({ key: 'coursework', params: { n: coursework.length, codes: list(coursework) } })
   }
-  if (exams.length >= CRUNCH_RULE) {
+  if (exams.length >= CRUNCH_RULE * f.exams) {
     points++
     reasons.push({ key: 'exams', params: { n: exams.length, codes: list(exams) } })
   }
@@ -157,21 +259,17 @@ export function termStress(codes: string[], data: Dataset, profile?: Profile, op
 
   // Many deadlines: every task is a date to meet, whatever it's worth.
   const tasks = recorded.reduce((n, s) => n + (s.assessment?.length ?? 0), 0)
-  if (tasks >= DEADLINES_RULE) {
+  if (tasks >= DEADLINES_RULE * f.tasks) {
     points++
     reasons.push({ key: 'deadlines', params: { n: tasks } })
   }
   score += Math.max(0, (tasks - 14) / (DEADLINES_RULE - 14))
 
   // Project pile-up: deadlines from several coding subjects landing in the same weeks.
-  const projects = recorded.filter(
-    (s) =>
-      skillsOf(s, data).includes('programming') &&
-      (s.assessment ?? []).some((t) => (t.kind === 'project' || t.kind === 'assignment') && t.weight >= PROJECT_SHARE),
-  )
+  const projects = recorded.filter((s) => skillsOf(s, data).includes('programming') && bigProject(s))
   // Someone strong at programming (5) takes one more coding project in their stride.
   const projectLine = PROJECTS_RULE + (profile?.skills.programming === 5 ? 1 : 0)
-  if (projects.length >= projectLine) {
+  if (projects.length >= projectLine * f.projects) {
     points++
     reasons.push({ key: 'projects', params: { n: projects.length, codes: list(projects) } })
   }
@@ -185,12 +283,8 @@ export function termStress(codes: string[], data: Dataset, profile?: Profile, op
       .map((k) => profile?.skills[k])
     return own.length > 0 && own.every((x) => x !== undefined && x >= 4)
   }
-  const hard = subjects.filter((s) => {
-    const r = rated(s)
-    const isHard = r?.difficulty !== undefined ? r.difficulty >= HIGH_RATING : s.discussion?.difficulty === 'hard'
-    return isHard && !strong(s)
-  })
-  if (hard.length >= RATED_RULE) {
+  const hard = subjects.filter((s) => ratedHard(s, rated(s)) && !strong(s))
+  if (hard.length >= RATED_RULE * f.hard) {
     points++
     reasons.push({ key: 'hard', params: { n: hard.length, codes: list(hard) } })
   }
@@ -223,6 +317,8 @@ export function planStress(
    * count towards "unavoidable": a free elective on the weak skill could be swapped for another.
    */
   fixed?: Set<string>,
+  /** The student's course, so each semester is judged against what is usual there. */
+  course?: string,
 ): { terms: TermStress[]; unavoidable: UnavoidableStack[] } {
   const full = terms.filter((t) => t.length >= 3)
   const weak = weakSkills(data, profile)
@@ -241,7 +337,7 @@ export function planStress(
       unavoidable.push({ skill, total, perTerm })
     }
   }
-  return { terms: terms.map((t) => termStress(t, data, profile, { stackFloor })), unavoidable }
+  return { terms: terms.map((t) => termStress(t, data, profile, { stackFloor, course })), unavoidable }
 }
 
 function examShare(s: Subject): number {

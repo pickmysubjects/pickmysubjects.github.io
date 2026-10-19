@@ -110,7 +110,7 @@ describe('per-course rules (B-SCI and B-COM)', () => {
     for (const [course, major] of [['B-SCI', 'computing-and-software-systems'], ['B-SCI', 'data-science'], ['B-COM', 'finance']] as const) {
       const heavy = (goal: 'wam' | 'challenge') => {
         const { plan: p } = generatePlan({ data, profile: prof(goal), course, courseYear: 2026, major, startYear: 2027, startPeriod: 'semester-1' })
-        return planStress(p.terms.map((t) => t.subjects), data, prof(goal)).terms.filter((x) => x.level !== 'ok').length
+        return planStress(p.terms.map((t) => t.subjects), data, prof(goal), undefined, course).terms.filter((x) => x.level !== 'ok').length
       }
       expect(heavy('wam'), `${course} ${major}`).toBeLessThanOrEqual(heavy('challenge'))
     }

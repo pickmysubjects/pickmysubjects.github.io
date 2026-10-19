@@ -10,7 +10,7 @@ import DiscussionSummary from '@/components/subject/DiscussionSummary.vue'
 import SubjectFaq from '@/components/subject/SubjectFaq.vue'
 import { PASS_MARK, isFail, periodsFor, prerequisiteRoute, referencedSubjects, simplifyFor, termKey, type Period } from '@/engine'
 import SubjectLinks from '@/components/majors/SubjectLinks.vue'
-import { useDataset } from '@/composables/useDataset'
+import { useDataset, useSubjectDetail } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
 import { useProfile } from '@/composables/useProfile'
 import { useRated } from '@/composables/useRated'
@@ -29,7 +29,8 @@ const { rated, markRated } = useRated()
 const { t, locale } = useI18n()
 
 const code = computed(() => props.code.toUpperCase())
-const subject = computed(() => data.value.subjects[code.value])
+// With its long text (about, discussion) once that has loaded; the rest shows straight away.
+const { subject, ready: detailReady } = useSubjectDetail(code)
 const year = computed(() => plan.terms.value[0]?.year ?? new Date().getFullYear())
 const periods = computed(() => (subject.value ? periodsFor(subject.value, year.value) : []))
 const offeringsKnown = computed(() => subject.value?.offerings !== 'unknown')
@@ -184,7 +185,7 @@ const gist = computed(() => (subject.value ? subjectGist(t.value, subject.value)
       </header>
 
       <div class="grid">
-        <SubjectAbout class="panel surface panel-wide" :subject="subject" />
+        <SubjectAbout v-if="detailReady" class="panel surface panel-wide" :subject="subject" />
 
         <AssessmentPanel class="panel surface panel-wide" :subject="subject" :year="year" />
 
@@ -230,7 +231,7 @@ const gist = computed(() => (subject.value ? subjectGist(t.value, subject.value)
           </template>
         </section>
 
-        <DiscussionSummary v-if="subject.discussion" class="panel surface panel-wide" :discussion="subject.discussion" />
+        <DiscussionSummary v-if="detailReady && subject.discussion" class="panel surface panel-wide" :discussion="subject.discussion" />
 
         <section class="panel surface panel-wide">
           <h2 class="panel-title">{{ t('subject.ratingsTitle') }}</h2>

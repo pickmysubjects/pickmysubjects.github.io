@@ -3,25 +3,28 @@ import AppHeader from './components/layout/AppHeader.vue'
 import BottomNav from './components/layout/BottomNav.vue'
 import Interp from './components/Interp.vue'
 import AppLogo from './components/AppLogo.vue'
-import HomeView from './views/HomeView.vue'
-import SubjectView from './views/SubjectView.vue'
-import PlannerView from './views/PlannerView.vue'
-import RecommendView from './views/RecommendView.vue'
-import RecordView from './views/RecordView.vue'
-import ContributeView from './views/ContributeView.vue'
-import FeedbackView from './views/FeedbackView.vue'
-import PrivacyView from './views/PrivacyView.vue'
-import AboutView from './views/AboutView.vue'
-import GuideView from './views/GuideView.vue'
-import BrowseView from './views/BrowseView.vue'
-import MajorsView from './views/MajorsView.vue'
-import { watchEffect } from 'vue'
+import { VIEW_LOADERS } from './views/loaders'
+import { defineAsyncComponent, watchEffect } from 'vue'
 import { useView, link } from './composables/useView'
 import { useDataset } from './composables/useDataset'
 import { useI18n } from './i18n'
 import { localTitle, withLocalTitle } from './i18n/localized'
 import { PRESET_TITLE_KEYS, subjectTitleKey } from '@/utils/seo'
 import { presetFromSlug } from '@/engine'
+
+const lazy = (v: keyof typeof VIEW_LOADERS) => defineAsyncComponent(VIEW_LOADERS[v])
+const HomeView = lazy('home')
+const SubjectView = lazy('subject')
+const PlannerView = lazy('plan')
+const RecommendView = lazy('recommend')
+const RecordView = lazy('record')
+const ContributeView = lazy('contribute')
+const FeedbackView = lazy('feedback')
+const PrivacyView = lazy('privacy')
+const AboutView = lazy('about')
+const GuideView = lazy('guide')
+const BrowseView = lazy('subjects')
+const MajorsView = lazy('majors')
 
 const { view, param } = useView()
 const { t, locale } = useI18n()

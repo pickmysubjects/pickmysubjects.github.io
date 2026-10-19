@@ -89,6 +89,21 @@ describe('termStress', () => {
     expect(termStress(four, rated(5), profile({ skills: { maths: 5 } })).level).toBe('ok')
   })
 
+  it('judges a semester against what is usual in the student\'s own degree, never harsher than Science', () => {
+    // Science's own subjects are mostly exam-and-assignment; this degree's are all coursework.
+    const essays = four.map((code) => plain(code, { assessment: tasks(0), categories: { 'B-SCI': 'breadth', 'B-ESSAY': 'arts' } }))
+    const science = ['SCIE10001', 'SCIE10002', 'SCIE10003', 'SCIE10004'].map((code, i) =>
+      plain(code, { assessment: tasks(i === 0 ? 30 : 60), categories: { 'B-SCI': 'science' } }),
+    )
+    // A degree whose own subjects are lighter than Science's is still held to Science's lines.
+    const light = ['EASY10001', 'EASY10002'].map((code) => plain(code, { assessment: tasks(60), categories: { 'B-EASY': 'arts' } }))
+    const d = dataset([...essays, ...science, ...light])
+    expect(termStress(four, d).reasons.map((r) => r.key)).toEqual(['coursework'])
+    expect(termStress(four, d, undefined, { course: 'B-SCI' }).level).toBe('heavy')
+    expect(termStress(four, d, undefined, { course: 'B-ESSAY' })).toMatchObject({ level: 'ok', reasons: [] })
+    expect(termStress(four, d, undefined, { course: 'B-EASY' }).level).toBe('heavy')
+  })
+
   it('stays quiet for a part-time semester', () => {
     expect(termStress(['MAST10006', 'MAST10007'], data, profile({ skills: { maths: 1 } })).level).toBe('ok')
   })
@@ -187,7 +202,7 @@ describe('plan builder spreads the load (real data)', () => {
         const roles = planRoles(real, m.course, 2026, [m.id])
         const planned = plan.terms.flatMap((t) => t.subjects)
         const fixed = requiredWithPrerequisites(new Set([...roles.required, ...roles.options]), planned, real.subjects, m.course)
-        const s = planStress(plan.terms.map((t) => t.subjects), real, p, fixed)
+        const s = planStress(plan.terms.map((t) => t.subjects), real, p, fixed, m.course)
         plan.terms.forEach((t, i) => {
           if (t.subjects.length < 3) return
           terms++
@@ -209,10 +224,10 @@ describe('plan builder spreads the load (real data)', () => {
     // The first Arts subjects (2026-10-16) bring ARTS20002, an open level-2 breadth subject many
     // science plans now take; it sits in a couple of semesters that were already busy.
     expect(share(profile())).toBeLessThan(0.095)
-    // The other degrees, each against its own level today (2026-10-19), so a change that makes
-    // their plans heavier shows up. Design studios carry long contact hours and many tasks, so
-    // close to half of a Design plan's semesters read as heavy on the same scale.
-    const today: Record<string, number> = { 'B-COM': 0.12, 'B-ARTS': 0.12, 'B-BMED': 0.21, 'B-DES': 0.46 }
+    // The other degrees, each judged against its own usual load (2026-10-19: an Arts semester of
+    // essays or a Design studio's coursework is the norm there, not a heavy semester), so their
+    // shares sit near Science's. Measured then: B-COM 0.048, B-ARTS 0.015, B-BMED 0.045, B-DES 0.096.
+    const today: Record<string, number> = { 'B-COM': 0.07, 'B-ARTS': 0.04, 'B-BMED': 0.07, 'B-DES': 0.12 }
     for (const [course, max] of Object.entries(today)) expect(share(profile(), course), course).toBeLessThan(max)
     // Weak at maths, many science majors can't avoid two maths subjects somewhere (and the
     // data has only maths-based level-2 breadth so far; physics and the engineering-systems

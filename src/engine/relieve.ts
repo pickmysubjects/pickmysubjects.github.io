@@ -46,7 +46,7 @@ function guard(plan: Plan, data: Dataset): () => boolean {
 export function balanceTerms(plan: Plan, data: Dataset, profile?: Profile): { a: string; b: string }[] {
   const { terms } = plan
   const safe = guard(plan, data)
-  const scores = () => terms.map((t) => termStress(t.subjects, data, profile).score)
+  const scores = () => terms.map((t) => termStress(t.subjects, data, profile, { course: plan.course }).score)
   // The first semester weighs more: students are still finding their feet, and measured by
   // real load rather than credit points it is among the heaviest (Borchers & Pardos, LAK 2023).
   const cost = (xs: number[]) => xs.reduce((sum, x, i) => sum + (i === 0 ? FIRST_TERM_WEIGHT : 1) * x * x, 0)
@@ -117,11 +117,11 @@ const order = (t: { year: number; period: Period }) =>
 export function relieveTerm(plan: Plan, data: Dataset, termIndex: number, profile?: Profile): Relief | null {
   const term = plan.terms[termIndex]
   if (!term) return null
-  const before = termStress(term.subjects, data, profile)
+  const before = termStress(term.subjects, data, profile, { course: plan.course })
   if (before.level === 'ok') return null
   // Only what actually takes the semester down a level counts: a button that leaves it
   // "heavy" after you press it helps nobody.
-  const lighter = (subjects: string[]) => RANK[termStress(subjects, data, profile).level] < RANK[before.level]
+  const lighter = (subjects: string[]) => RANK[termStress(subjects, data, profile, { course: plan.course }).level] < RANK[before.level]
 
   // A swap between this semester and another, so the one the student is looking at gets
   // lighter and the other doesn't get heavier. Best by the two semesters' combined load.
@@ -183,9 +183,9 @@ export function fixHeavyTerms(plan: Plan, data: Dataset, profile?: Profile): { a
   for (let round = 0; round < plan.terms.length * 2; round++) {
     let changed = false
     for (const [i, term] of plan.terms.entries()) {
-      const before = termStress(term.subjects, data, profile)
+      const before = termStress(term.subjects, data, profile, { course: plan.course })
       if (RANK[before.level] <= RANK[tolerated(profile)]) continue
-      const lighter = (subjects: string[]) => RANK[termStress(subjects, data, profile).level] < RANK[before.level]
+      const lighter = (subjects: string[]) => RANK[termStress(subjects, data, profile, { course: plan.course }).level] < RANK[before.level]
       const r =
         swapFor(plan, data, i, profile, lighter) ??
         replaceFor(plan, data, i, profile, lighter) ??
@@ -286,7 +286,7 @@ function replaceFor(
     const p = data.subjects[c]
     if (p) for (const r of [...referencedSubjects(p.prerequisites), ...referencedSubjects(p.corequisites)]) if (inPlan.includes(r)) fixed.add(r)
   }
-  const stress = termStress(term.subjects, data, profile)
+  const stress = termStress(term.subjects, data, profile, { course: plan.course })
   const named = stress.reasons.flatMap((r) => String(r.params.codes ?? '').split(', ')).filter((c) => term.subjects.includes(c))
   const done = [...plan.completed, ...passedCodes(profile?.results ?? [])]
   const student: Profile = profile ?? { results: [], skills: {}, interests: [], goal: 'balanced' }
@@ -326,13 +326,13 @@ function swapThenReplace(
   lighter: (subjects: string[]) => boolean,
 ): Relief | null {
   const from = plan.terms[termIndex] as PlanTerm
-  const reasons = termStress(from.subjects, data, profile).reasons
+  const reasons = termStress(from.subjects, data, profile, { course: plan.course }).reasons
   // Only the subjects that make it heavy are worth moving.
   const movable = [...new Set(reasons.flatMap((x) => String(x.params.codes ?? '').split(', ')))].filter((c) => from.subjects.includes(c))
   for (const a of movable) {
     for (const [to, other] of plan.terms.entries()) {
       if (to === termIndex) continue
-      const otherBefore = RANK[termStress(other.subjects, data, profile).level]
+      const otherBefore = RANK[termStress(other.subjects, data, profile, { course: plan.course }).level]
       for (const b of other.subjects) {
         const sa = data.subjects[a]
         const sb = data.subjects[b]
@@ -343,7 +343,7 @@ function swapThenReplace(
         swap(terms[termIndex] as PlanTerm, terms[to] as PlanTerm, a, b)
         if (!lighter((terms[termIndex] as PlanTerm).subjects)) continue
         const swapped: Plan = { ...plan, terms }
-        const back = (subjects: string[]) => RANK[termStress(subjects, data, profile).level] <= otherBefore
+        const back = (subjects: string[]) => RANK[termStress(subjects, data, profile, { course: plan.course }).level] <= otherBefore
         if (back((terms[to] as PlanTerm).subjects)) continue // a plain swap; swapFor covers it
         const fix = replaceFor(swapped, data, to, profile, back, true)
         if (fix?.kind !== 'replace' || !noWorse(plan, { ...plan, terms: fix.terms }, data)) continue
@@ -382,7 +382,7 @@ function swapFor(
     for (const [to, other] of plan.terms.entries()) {
       if (to === termIndex) continue
       const there = copy.terms[to] as PlanTerm
-      const otherBefore = termStress(other.subjects, data, profile).level
+      const otherBefore = termStress(other.subjects, data, profile, { course: plan.course }).level
       for (const b of other.subjects) {
         const sa = data.subjects[a]
         const sb = data.subjects[b]
@@ -390,9 +390,9 @@ function swapFor(
         if (offeredIn(sa, other.year, other.period).status !== 'ok' || offeredIn(sb, from.year, from.period).status !== 'ok') continue
         if (inverts(sa.level, sb.level, termIndex, to)) continue
         swap(here, there, a, b)
-        const otherAfter = termStress(there.subjects, data, profile)
+        const otherAfter = termStress(there.subjects, data, profile, { course: plan.course })
         if (lighter(here.subjects) && RANK[otherAfter.level] <= RANK[otherBefore]) {
-          const cost = termStress(here.subjects, data, profile).score ** 2 + otherAfter.score ** 2
+          const cost = termStress(here.subjects, data, profile, { course: plan.course }).score ** 2 + otherAfter.score ** 2
           if ((!best || cost < best.cost) && safe()) best = { to, a, b, cost }
         }
         swap(here, there, b, a)

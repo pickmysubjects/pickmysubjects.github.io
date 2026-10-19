@@ -892,7 +892,7 @@ function pickElective(ctx: PickCtx): { code: string; why: string; ruleId: string
         planned: [...ctx.placed, ...ctx.reserved],
         eligibleWith: [...ctx.before],
       })
-      const loadsUp = (c: string) => heavierWith(term.subjects, c, data, input.profile)
+      const loadsUp = (c: string) => heavierWith(term.subjects, c, data, input.profile, input.course)
       for (const rec of rankElectives(recs, ctx.focus, data, (c) => ctx.opens(c, rule.category), input.profile, needsPath, loadsUp)) {
         const s = data.subjects[rec.code]
         if (!s || s.points > ctx.room) continue
@@ -922,9 +922,9 @@ function pickElective(ctx: PickCtx): { code: string; why: string; ruleId: string
 const STRESS_RANK: Record<StressLevel, number> = { ok: 0, heavy: 1, veryHeavy: 2 }
 
 /** Whether adding this subject to these makes the semester heavier than it is. */
-function heavierWith(subjects: string[], code: string, data: Dataset, profile: Profile): boolean {
-  const before = termStress(subjects, data, profile).level
-  const after = termStress([...subjects, code], data, profile).level
+function heavierWith(subjects: string[], code: string, data: Dataset, profile: Profile, course: string): boolean {
+  const before = termStress(subjects, data, profile, { course }).level
+  const after = termStress([...subjects, code], data, profile, { course }).level
   return STRESS_RANK[after] > STRESS_RANK[before]
 }
 
@@ -1102,7 +1102,7 @@ function trySwap(r: PointsRule, terms: PlanTerm[], all: string[], ctx: RepairCtx
         eligibleWith: before,
       })
       const rest = term.subjects.filter((c) => c !== e)
-      const loadsUp = (c: string) => heavierWith(rest, c, data, input.profile)
+      const loadsUp = (c: string) => heavierWith(rest, c, data, input.profile, input.course)
       for (const rec of rankElectives(candidates, ctx.focus, data, (c) => ctx.opens(c, r.category), input.profile, false, loadsUp)) {
         const s = data.subjects[rec.code]
         if (!s || s.points > es.points) continue

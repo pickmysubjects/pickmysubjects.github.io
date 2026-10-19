@@ -1,5 +1,11 @@
 import { describe, expect, it } from 'vitest'
+import { readFileSync } from 'node:fs'
 import { usePlan } from '../src/composables/usePlan'
+import { provideDataset } from '../src/composables/useDataset'
+import type { Dataset } from '../src/engine'
+
+// The app fetches its data before mounting; here the full set comes straight from disk.
+provideDataset(JSON.parse(readFileSync(new URL('../src/generated/real.json', import.meta.url), 'utf8')) as Dataset)
 
 describe('switching degree keeps each degree’s plan', () => {
   it('B-SCI → B-COM → B-SCI puts the first plan back unchanged', () => {

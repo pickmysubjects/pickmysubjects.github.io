@@ -2,9 +2,10 @@
  * Validates every curated YAML file and writes one JSON bundle per dataset to
  * src/generated/. Exits non-zero on any schema error, so bad data never reaches the app.
  */
-import { mkdirSync, writeFileSync } from 'node:fs'
+import { mkdirSync, rmSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { buildDataset, ROOT } from './dataset'
+import { splitDataset } from '../src/engine/split'
 const OUT = join(ROOT, 'src', 'generated')
 mkdirSync(OUT, { recursive: true })
 
@@ -21,5 +22,16 @@ for (const name of ['real', 'demo'] as const) {
     `✓ data/${name}: ${Object.keys(dataset.subjects).length} subjects, ${dataset.courses.length} course(s), ${dataset.components.length} component(s)${gaps}`,
   )
   writeFileSync(join(OUT, `${name}.json`), JSON.stringify(dataset))
+  if (name === 'real') {
+    // What the browser loads: a lean core before the app starts, and each area's long text
+    // (about, discussion summaries, breadth lists) only when one of its subjects is opened.
+    // Node-side scripts and tests keep reading the full real.json above.
+    const { core, details } = splitDataset(dataset)
+    writeFileSync(join(OUT, 'real-core.json'), JSON.stringify(core))
+    const dir = join(OUT, 'detail')
+    rmSync(dir, { recursive: true, force: true })
+    mkdirSync(dir)
+    for (const [area, part] of Object.entries(details)) writeFileSync(join(dir, `${area}.json`), JSON.stringify(part))
+  }
 }
 if (failed) process.exit(1)

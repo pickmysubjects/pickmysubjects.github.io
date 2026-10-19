@@ -16,14 +16,14 @@ export function usePlanStress() {
     const roles = planRoles(data.value, course, courseYear, [major, specialisation])
     return requiredWithPrerequisites(new Set([...roles.required, ...roles.options]), plan.plannedCodes.value, data.value.subjects, course)
   })
-  const stress = computed(() => planStress(plan.terms.value.map((t) => t.subjects), data.value, profile.value, fixed.value))
+  const stress = computed(() => planStress(plan.terms.value.map((t) => t.subjects), data.value, profile.value, fixed.value, plan.setup.value.course))
   const stackFloor = computed(
     () => Object.fromEntries(stress.value.unavoidable.map((u) => [u.skill, u.perTerm])) as Partial<Record<Skill, number>>,
   )
 
   /** A semester's load if it held these subjects (for "adding this makes it heavier"). */
   function stressWith(codes: string[]): TermStress {
-    return termStress(codes, data.value, profile.value, { stackFloor: stackFloor.value })
+    return termStress(codes, data.value, profile.value, { stackFloor: stackFloor.value, course: plan.setup.value.course })
   }
 
   function relief(termIndex: number): Relief | null {

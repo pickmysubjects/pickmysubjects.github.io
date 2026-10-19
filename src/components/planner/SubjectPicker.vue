@@ -17,6 +17,8 @@ const { data } = useDataset()
 const plan = usePlan()
 const { stressWith } = usePlanStress()
 const text = shallowRef('')
+// Every term has a picker; only one the student has used fills its list (1,300+ options each).
+const used = shallowRef(false)
 
 const code = computed(() => {
   const c = text.value.trim().split(/\s/)[0]?.toUpperCase() ?? ''
@@ -58,12 +60,15 @@ function submit(): void {
       v-model="text"
       class="input picker-input"
       :list="listId"
+      @focus="used = true"
       :placeholder="t('plan.addSubject')"
       :aria-label="t('plan.addSubjectLabel')"
       :aria-describedby="check ? `${listId}-check` : undefined"
     />
     <datalist :id="listId">
-      <option v-for="o in options" :key="o.code" :value="`${o.code} ${o.title}`" />
+      <template v-if="used">
+        <option v-for="o in options" :key="o.code" :value="`${o.code} ${o.title}`" />
+      </template>
     </datalist>
     <div v-if="check" :id="`${listId}-check`" class="check" aria-live="polite">
       <p class="check-title"><span class="code">{{ code }}</span> {{ check.title }}</p>
