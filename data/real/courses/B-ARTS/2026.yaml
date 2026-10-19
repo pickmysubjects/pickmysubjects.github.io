@@ -67,6 +67,10 @@ rules:
     kind: major
     count: 1
     description: Complete one major (a second is optional)
+  - id: minor
+    kind: minor
+    max: 1
+    description: At most one minor (optional; not in the same discipline as a major)
   - id: progress-to-l2
     kind: progression
     before_level: 2
@@ -79,5 +83,6 @@ rules:
     level: 2
     min_points: 50
     description: Normally 50 level-2 points before level-3 subjects
-# Not encoded yet: at most 125 points from any one discipline (diversity of study), at most one
-# minor, and the adjusted rules of the non-standard majors (Psychology, Geography, Economics).
+# Not encoded yet: at most 125 points from any one discipline (diversity of study), and the
+# adjusted rules of the non-standard majors (Psychology, Geography, Economics). A minor in the
+# major's own discipline is only caught when the two share a title (History major + History minor).

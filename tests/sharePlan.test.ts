@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { decodePlan, encodePlan } from '../src/utils/sharePlan'
 
 describe('shared plan links', () => {
-  const setup = { course: 'B-SCI', courseYear: 2026, startYear: 2027, startPeriod: 'semester-1' as const, major: 'data-science', specialisation: '' }
+  const setup = { course: 'B-SCI', courseYear: 2026, startYear: 2027, startPeriod: 'semester-1' as const, major: 'data-science', specialisation: '', minors: [] as string[] }
   const terms = [
     { year: 2027, period: 'semester-1' as const, subjects: ['COMP10001', 'MAST10006'] },
     { year: 2028, period: 'summer' as const, subjects: [] },
@@ -26,7 +26,7 @@ describe('shared plan links', () => {
 describe('share links keep the field', () => {
   it('round-trips a field with no major, and still reads links without one', async () => {
     const { encodePlan, decodePlan } = await import('../src/utils/sharePlan')
-    const setup = { course: 'B-SCI', courseYear: 2026, startYear: 2027, startPeriod: 'semester-2' as const, major: '', specialisation: '', field: 'computing' }
+    const setup = { course: 'B-SCI', courseYear: 2026, startYear: 2027, startPeriod: 'semester-2' as const, major: '', specialisation: '', minors: [] as string[], field: 'computing' }
     expect(decodePlan(encodePlan(setup, []))?.setup.field).toBe('computing')
     expect(decodePlan(encodePlan({ ...setup, field: undefined }, []))?.setup.field).toBeUndefined()
   })

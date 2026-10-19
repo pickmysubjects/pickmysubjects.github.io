@@ -36,6 +36,29 @@ export function majorTitles(data: Dataset, ids: readonly (string | undefined)[])
   return titles.length ? titles : undefined
 }
 
+/**
+ * Titles of the student's minors, for conditions that name a minor. Undefined when we don't know
+ * (no list given): those conditions then stay unknown. An empty list means no minor.
+ */
+export function minorTitles(data: Dataset, ids: readonly string[] | undefined): string[] | undefined {
+  if (!ids) return undefined
+  return ids.map((id) => findComponent(data, id)?.title).filter((t): t is string => !!t)
+}
+
+/** Every component id a plan has chosen: major, specialisation, then its minors. */
+export function planComponentIds(plan: { major?: string; specialisation?: string; minors?: readonly string[] }): (string | undefined)[] {
+  return [plan.major, plan.specialisation, ...(plan.minors ?? [])]
+}
+
+/** Why a minor can't go with this major, or null: the Handbook rules out a minor in the major's own discipline (same title). */
+export function minorClash(data: Dataset, majorId: string | undefined, minorId: string): string | null {
+  const major = findComponent(data, majorId)
+  const minor = findComponent(data, minorId)
+  if (!major || !minor) return null
+  const key = (t: string) => t.toLowerCase().replace(/\s+(major|minor)$/, '').trim()
+  return key(major.title) === key(minor.title) ? `${minor.title} can't be both your major and your minor.` : null
+}
+
 /** Whether a major's "non-allowed breadth" list covers this subject. */
 function barsBreadth(c: Component, code: string): boolean {
   const n = c.nonAllowedBreadth
@@ -118,8 +141,8 @@ export function checkCourse(plan: Plan, given: Dataset): CourseCheck {
 
   // Each subject once, even if it's both completed and planned again (counted twice otherwise).
   const codes = [...new Set([...plan.completed, ...plan.terms.flatMap((t) => t.subjects)])]
-  const barred = barredBreadth(given, plan.course, [plan.major, plan.specialisation])
-  const data = withBarredBreadth(given, plan.course, [plan.major, plan.specialisation])
+  const barred = barredBreadth(given, plan.course, planComponentIds(plan))
+  const data = withBarredBreadth(given, plan.course, planComponentIds(plan))
   const known = codes.map((c) => data.subjects[c]).filter((s): s is Subject => s !== undefined)
   const statuses = course.rules.map((rule) => checkRule(rule, { plan, data, course, known, codes }))
   const issues: Issue[] = statuses
@@ -238,6 +261,26 @@ function checkRule(rule: CourseRule, ctx: RuleCtx): RuleStatus {
       const clash = ctx.plan.major ? cannotCombine(ctx.data, ctx.plan.major, spec.id) : null
       if (clash) return { ...base, status: 'fail', detail: clash, detailKey: 'cannotCombine', params: { reason: clash } }
       return componentStatus(base, spec, ctx)
+    }
+    case 'minor': {
+      const ids = ctx.plan.minors ?? []
+      if (ids.length === 0) return { ...base, status: 'ok', detail: 'none chosen (optional)', detailKey: 'noMinor', params: {} }
+      if (ids.length > rule.max) return { ...base, status: 'fail', detail: `${ids.length} minors (at most ${rule.max})`, detailKey: 'tooManyMinors', params: { have: ids.length, max: rule.max } }
+      const results: RuleStatus[] = []
+      for (const id of ids) {
+        const minor = findComponent(ctx.data, id)
+        if (!minor) {
+          results.push({ ...base, status: 'unknown', detail: `${id} isn't in the dataset`, detailKey: 'componentMissingData', params: { id } })
+          continue
+        }
+        const clash = minorClash(ctx.data, ctx.plan.major, id)
+        if (clash) {
+          results.push({ ...base, status: 'fail', detail: clash, detailKey: 'minorSameAsMajor', params: { title: minor.title } })
+          continue
+        }
+        results.push(componentStatus(base, minor, ctx))
+      }
+      return results.find((r) => r.status === 'fail') ?? results.find((r) => r.status === 'unknown') ?? results[0]!
     }
     case 'level1-areas': {
       const byArea = new Map<string, number>()

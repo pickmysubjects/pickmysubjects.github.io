@@ -60,6 +60,7 @@ const recs = computed(() =>
     programme: {
       courseYear: plan.setup.value.courseYear,
       components: [plan.setup.value.major, plan.setup.value.specialisation].filter(Boolean),
+      minors: plan.setup.value.minors ?? [],
     },
   })
     .slice(0, 30),

@@ -10,6 +10,8 @@ export interface PlanSetup {
   startPeriod: Period
   major: string
   specialisation: string
+  /** Optional minors (component ids); plans saved before minors existed get none. */
+  minors: string[]
   /** On a student visa (optional; changes the load warnings). */
   international?: boolean
   /** No major yet, but a field in mind (a major group id): keeps its majors open. */

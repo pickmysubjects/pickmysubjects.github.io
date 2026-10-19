@@ -314,8 +314,10 @@ function courseLd(code: LocaleCode, s: Subject, title: string, prereq: string | 
 // Only majors of courses students can pick (a course still being entered has none yet).
 const listedCourses = new Set(data.courses.filter((c) => c.listed).map((c) => c.code))
 const majors = data.components.filter((c) => c.kind === 'major' && listedCourses.has(c.course))
+// Minors get pages like majors', listed under them.
+const minors = data.components.filter((c) => c.kind === 'minor' && listedCourses.has(c.course))
 // Worked out once; the same for every language.
-const overviews = new Map(majors.map((m) => [m.id, majorOverview(data, m.id, m.course)]))
+const overviews = new Map([...majors, ...minors].map((m) => [m.id, majorOverview(data, m.id, m.course)]))
 
 function majorsListBody(code: LocaleCode, t: Translate): string {
   // One section per course, each with its majors grouped by field.
@@ -330,7 +332,9 @@ function majorsListBody(code: LocaleCode, t: Translate): string {
       // Closed majors still have pages (for students already in them): linked here so they can be found.
       const closed = majors.filter((m) => m.course === c.code && !own.includes(m))
       const closedLine = closed.length ? `<p>${esc(t('majors.closedList'))} ${closed.map((m) => `<a href="${href(code, `majors/${m.id}`)}">${esc(m.title)}</a>`).join(', ')}</p>` : ''
-      return `<h2>${esc(c.title)}</h2>${body}${closedLine}`
+      const ownMinors = minors.filter((m) => m.course === c.code).sort((a, b) => a.title.localeCompare(b.title))
+      const minorsPart = ownMinors.length ? `<h3>${esc(t('majors.minorsTitle'))}</h3>${list(ownMinors)}` : ''
+      return `<h2>${esc(c.title)}</h2>${body}${closedLine}${minorsPart}`
     })
     .join('')
     .replace(/^/, `<h1>${esc(t('majors.title'))}</h1>`)
@@ -340,7 +344,8 @@ function majorPage(code: LocaleCode, m: (typeof majors)[number]): Page {
   const t = translator(code)
   const o = overviews.get(m.id)
   const list = (codes: string[]) => `<ul>${codes.map((c) => `<li>${subjectLink(code, c)}</li>`).join('')}</ul>`
-  const parts = [`<h1>${esc(t('majors.majorTitle', { title: m.title }))}</h1>`, `<p>${esc(t('majors.points', { n: m.points }))}</p>`]
+  const heading = t(m.kind === 'minor' ? 'majors.minorTitle' : 'majors.majorTitle', { title: m.title })
+  const parts = [`<h1>${esc(heading)}</h1>`, `<p>${esc(t('majors.points', { n: m.points }))}</p>`]
   if (!o) parts.push(`<p>${esc(t('majors.notCurated'))}</p>`)
   else {
     if (o.core.length) parts.push(`<h2>${esc(t('majors.coreTitle'))}</h2>${list(o.core)}`)
@@ -352,8 +357,8 @@ function majorPage(code: LocaleCode, m: (typeof majors)[number]): Page {
   const core = o?.core.join(', ') ?? ''
   return {
     path: `majors/${m.id}`,
-    title: `${t('seo.majorTitle', { title: m.title })} | PickMySubjects`,
-    description: `${t('majors.majorTitle', { title: m.title })}: ${t('majors.coreTitle')} ${core}. ${t('majors.cardText')}`,
+    title: `${m.kind === 'minor' ? t('seo.minorTitle', { title: m.title }) : t('seo.majorTitle', { title: m.title })} | PickMySubjects`,
+    description: `${heading}: ${t('majors.coreTitle')} ${core}. ${t('majors.cardText')}`,
     body: parts.join('\n'),
   }
 }
@@ -493,7 +498,7 @@ for (const code of LOCALE_CODES) {
   const main = mainPages(code)
   // Every page links every main page, so a crawler following links reaches all of them, not just the sitemap.
   const siteNav = `<nav>${main.map((m) => `<a href="${href(code, m.path)}">${esc(m.title.split(' | ')[0]!)}</a>`).join(' · ')}</nav>`
-  const pages = [...main, ...majors.map((m) => majorPage(code, m)), ...subjects.map((s) => subjectPage(code, s))]
+  const pages = [...main, ...majors.map((m) => majorPage(code, m)), ...minors.map((m) => majorPage(code, m)), ...subjects.map((s) => subjectPage(code, s))]
   for (const page of pages) {
     write(code, page.path, render({ ...page, body: page.body + siteNav }, code))
     urls.push(absolute(code, page.path))

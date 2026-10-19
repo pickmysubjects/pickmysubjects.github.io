@@ -1,7 +1,7 @@
 import { forCourse } from './forCourse'
 import { offeredIn, periodsFor, termKey } from './availability'
-import { categoryOf, checkCourse, componentNeeds, findComponent, findCourse, majorTitles, withBarredBreadth } from './courseRules'
-import { evaluateField, referencedSubjects, type Tri } from './expr'
+import { categoryOf, checkCourse, componentNeeds, findComponent, findCourse, majorTitles, minorTitles, planComponentIds, withBarredBreadth } from './courseRules'
+import { evaluateField, referencedSubjects, type EvalContext, type Tri } from './expr'
 import type { Note, Params, Plan, PlanTerm } from './plan'
 import { standardTerms } from './plan'
 import { HEAVY_PICK_COST, passedCodes, recommend, type Profile } from './recommend'
@@ -18,6 +18,8 @@ export interface GenerateInput {
   courseYear: number
   major?: string
   specialisation?: string
+  /** Minor ids: planned like a second, smaller major. */
+  minors?: string[]
   startYear: number
   startPeriod: Period
   /** Upper bound on terms to plan. Defaults to what the remaining points need, capped at 10. */
@@ -59,7 +61,7 @@ export interface GenerateResult {
 export function generatePlan(raw: GenerateInput): GenerateResult {
   // Periods as this course's students see them (breadth-only periods for breadth subjects).
   // A subject the student's major won't let count as breadth is never picked to fill breadth.
-  const input = { ...raw, data: withBarredBreadth(forCourse(raw.data, raw.course), raw.course, [raw.major, raw.specialisation]) }
+  const input = { ...raw, data: withBarredBreadth(forCourse(raw.data, raw.course), raw.course, planComponentIds(raw)) }
   // Unplaced subjects weigh most; then course rules the plan fails (e.g. breadth
   // squeezed out by a heavy major + specialisation).
   const shortfall = (r: GenerateResult) =>
@@ -239,7 +241,7 @@ function buildPlan(input: GenerateInput): GenerateResult {
   // latest electives no rule needs, so the degree isn't longer than it has to be.
   if (course) {
     const total = () => [...completed, ...allPlaced()].reduce((sum, c) => sum + (data.subjects[c]?.points ?? 12.5), 0)
-    const draftOf = (): Plan => ({ course: input.course, courseYear: input.courseYear, major: input.major, specialisation: input.specialisation, completed, terms })
+    const draftOf = (): Plan => ({ course: input.course, courseYear: input.courseYear, major: input.major, specialisation: input.specialisation, minors: input.minors, completed, terms })
     const failing = () => checkCourse(draftOf(), data).statuses.filter((st) => st.status === 'fail').length
     for (let i = terms.length - 1; i >= 0 && total() > course.totalPoints; i--) {
       const term = terms[i] as PlanTerm
@@ -259,7 +261,7 @@ function buildPlan(input: GenerateInput): GenerateResult {
   }
 
   // Spread the load, so the hard subjects don't all land in one semester.
-  const draft: Plan = { course: input.course, courseYear: input.courseYear, major: input.major, specialisation: input.specialisation, completed, terms }
+  const draft: Plan = { course: input.course, courseYear: input.courseYear, major: input.major, specialisation: input.specialisation, minors: input.minors, completed, terms }
   for (const { a, b } of balanceTerms(draft, data, input.profile)) {
     notes.push(note('balanced', { a, b }, `Swapped ${a} and ${b} between semesters to spread the load.`))
   }
@@ -301,15 +303,19 @@ function buildPlan(input: GenerateInput): GenerateResult {
     courseYear: input.courseYear,
     major: input.major,
     specialisation: input.specialisation,
+    minors: input.minors,
     completed,
     terms,
   }
   return { plan, unplaced, notes }
 }
 
-/** Titles of the student's major and specialisation, for conditions that name majors. */
-function majorsOf(input: GenerateInput): string[] | undefined {
-  return majorTitles(input.data, [input.major, input.specialisation])
+/** What conditions naming a major or minor are checked against. */
+type Held = Pick<EvalContext, 'majors' | 'minors'>
+
+/** Titles of the student's major, specialisation and minors, for conditions that name them. */
+function majorsOf(input: GenerateInput): Held {
+  return { majors: majorTitles(input.data, [input.major, input.specialisation]), minors: minorTitles(input.data, input.minors) }
 }
 
 function note(key: string, params: Params, text: string): Note {
@@ -325,7 +331,7 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
   }
 
   const groups: { title: string; req: Extract<ComponentReq, { choose: unknown }>; used: Set<string> }[] = []
-  for (const id of [input.major, input.specialisation]) {
+  for (const id of planComponentIds(input)) {
     const component = findComponent(data, id)
     if (id && !component) notes.push(note('componentMissing', { id }, `${id} isn't in the dataset, so its subjects weren't added.`))
     if (component?.requirements === 'unknown') notes.push(note('componentUnknown', { title: component.title }, `${component.title}'s structure isn't curated yet.`))
@@ -410,7 +416,7 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
     const byHand = (c: string) => {
       const sub = data.subjects[c]
       if (!sub || sub.prerequisites === 'none' || sub.prerequisites === 'unknown') return 0
-      return evaluateField(sub.prerequisites, { completed: everything, subjects: data.subjects, admittedCourse: input.course, majors: majorsOf(input) }).status === 'unknown' ? 1 : 0
+      return evaluateField(sub.prerequisites, { completed: everything, subjects: data.subjects, admittedCourse: input.course, ...majorsOf(input) }).status === 'unknown' ? 1 : 0
     }
     const order = [...req.choose.from].sort(
       (a, b) => off(a) - off(b) || byHand(a) - byHand(b) || Number(named.has(b)) - Number(named.has(a)) || (score.get(b) ?? -1) - (score.get(a) ?? -1) || busy(a) - busy(b),
@@ -466,9 +472,9 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
 // Not "VCE Algorithmics students may …", which is a different kind of note.
 const SCHOOL_RESULT = /study score|^(?:excellent results? in )?VCE Units? 3/i
 
-function resolvePrereqs(expr: ReqExpr, done: Set<string>, required: Set<string>, data: Dataset, course: string, forCode = '', majors?: readonly string[]): string[] {
+function resolvePrereqs(expr: ReqExpr, done: Set<string>, required: Set<string>, data: Dataset, course: string, forCode = '', held: Held = {}): string[] {
   if ('subject' in expr) return done.has(expr.subject) ? [] : [expr.subject]
-  if ('all' in expr) return [...new Set(expr.all.flatMap((e) => resolvePrereqs(e, done, required, data, course, forCode, majors)))]
+  if ('all' in expr) return [...new Set(expr.all.flatMap((e) => resolvePrereqs(e, done, required, data, course, forCode, held)))]
   if ('any' in expr) {
     // Fewest additions wins. A subject we have no data for (often a graduate
     // alternative) costs the most; assuming a manual condition (a VCE score, a
@@ -484,7 +490,7 @@ function resolvePrereqs(expr: ReqExpr, done: Set<string>, required: Set<string>,
     const cost = (o: string[]) =>
       o.reduce(
         (sum, c) =>
-          sum + (required.has(c) ? 0 : clashes(c, done, required, data) || closedTo(c, course, data, majors) ? 10_000 : !data.subjects[c] || needsMissing(c, data) ? 100 : data.subjects[c]!.campus ? 40 : noCredit(data.subjects[c]!, course, data) ? 30 : semesterless(data.subjects[c]!) ? 20 : 1),
+          sum + (required.has(c) ? 0 : clashes(c, done, required, data) || closedTo(c, course, data, held) ? 10_000 : !data.subjects[c] || needsMissing(c, data) ? 100 : data.subjects[c]!.campus ? 40 : noCredit(data.subjects[c]!, course, data) ? 30 : semesterless(data.subjects[c]!) ? 20 : 1),
         0,
       )
     let best: string[] | null = null
@@ -504,7 +510,7 @@ function resolvePrereqs(expr: ReqExpr, done: Set<string>, required: Set<string>,
     for (const e of expr.any) {
       // An option that needs admission to another course isn't open to this student at all.
       if (needsOtherAdmission(e, course)) continue
-      const o = 'manual' in e ? [] : resolvePrereqs(e, done, required, data, course, forCode, majors)
+      const o = 'manual' in e ? [] : resolvePrereqs(e, done, required, data, course, forCode, held)
       // "Physics 1 needs Physics 2 or a VCE score; Physics 2 needs Physics 1 or a VCE score":
       // an option that itself needs this subject first would leave both waiting on each other.
       if (forCode && o.some((c) => needsFirst(c, forCode, data))) continue
@@ -515,7 +521,7 @@ function resolvePrereqs(expr: ReqExpr, done: Set<string>, required: Set<string>,
     }
     return best ?? []
   }
-  if ('points' in expr) return pickForPoints(expr.points, done, required, data, course, majors)
+  if ('points' in expr) return pickForPoints(expr.points, done, required, data, course, held)
   return [] // admission / manual can't be resolved to specific subjects
 }
 
@@ -560,19 +566,19 @@ function needsMissing(code: string, data: Dataset): boolean {
   return evaluateField(s.prerequisites, { completed: known, subjects: data.subjects }).status === 'fail'
 }
 
-function closedTo(code: string, course: string, data: Dataset, majors?: readonly string[]): boolean {
+function closedTo(code: string, course: string, data: Dataset, held: Held = {}): boolean {
   // Closed to this course's students outright (B-COM's ACCT10002).
   if (data.courses.some((c) => c.code === course && c.closed.includes(code))) return true
   const s = data.subjects[code]
   if (!s || s.prerequisites === 'none' || s.prerequisites === 'unknown') return false
   const cache = closedCache.get(data) ?? new Map<string, boolean>()
   closedCache.set(data, cache)
-  const key = `${course}:${majors?.join('|') ?? '?'}:${code}`
+  const key = `${course}:${held.majors?.join('|') ?? '?'}:${held.minors?.join('|') ?? '?'}:${code}`
   if (!cache.has(key)) {
     // Everything counts as done, including prerequisites we have no file for: only a condition
     // no subject can meet (admission to another course) closes it.
     const everything = new Set([...Object.keys(data.subjects), ...referencedSubjects(s.prerequisites)].filter((c) => c !== code))
-    cache.set(key, evaluateField(s.prerequisites, { completed: everything, subjects: data.subjects, admittedCourse: course, majors }).status === 'fail')
+    cache.set(key, evaluateField(s.prerequisites, { completed: everything, subjects: data.subjects, admittedCourse: course, ...held }).status === 'fail')
   }
   return cache.get(key) as boolean
 }
@@ -597,7 +603,7 @@ function pickForPoints(
   required: Set<string>,
   data: Dataset,
   course: string,
-  majors?: readonly string[],
+  held: Held = {},
 ): string[] {
   const levels = req.levels ?? (req.level !== undefined ? [req.level] : undefined)
   const areas = req.areas ?? (req.area !== undefined ? [req.area] : undefined)
@@ -628,7 +634,7 @@ function pickForPoints(
         !s.campus &&
         !noCredit(s, course, data) &&
         !clashes(s.code, done, required, data) &&
-        !closedTo(s.code, course, data, majors),
+        !closedTo(s.code, course, data, held),
     )
     .sort((a, b) => a.level - b.level || runs(b) - runs(a) || a.code.localeCompare(b.code))
   const picks: string[] = []
@@ -651,13 +657,13 @@ function noCredit(s: Subject, course: string, data: Dataset): boolean {
 
 /** False only when we know the subject doesn't run in any of the next few years. */
 /** Whether some set of subjects that run (or whose timetable we don't know) meets its prerequisites. */
-function prereqsCanRun(code: string, startYear: number, data: Dataset, course: string, majors?: readonly string[]): boolean {
+function prereqsCanRun(code: string, startYear: number, data: Dataset, course: string, held: Held = {}): boolean {
   const s = data.subjects[code]
   if (!s || s.prerequisites === 'none' || s.prerequisites === 'unknown') return true
   const running = new Set(
     [...Object.keys(data.subjects), ...referencedSubjects(s.prerequisites)].filter((c) => c !== code && runsDuringPlan(data.subjects[c], startYear)),
   )
-  return evaluateField(s.prerequisites, { completed: running, subjects: data.subjects, admittedCourse: course, majors }).status !== 'fail'
+  return evaluateField(s.prerequisites, { completed: running, subjects: data.subjects, admittedCourse: course, ...held }).status !== 'fail'
 }
 
 function runsDuringPlan(s: Subject | undefined, startYear: number): boolean {
@@ -703,13 +709,13 @@ function coGroups(required: Set<string>, done: Set<string>, data: Dataset): (cod
   return (code) => groups.get(find(code)) ?? [code]
 }
 
-function canTake(code: string, term: PlanTerm, before: Set<string>, data: Dataset, course: string, alongside: string[] = [], majors?: readonly string[]): Tri {
+function canTake(code: string, term: PlanTerm, before: Set<string>, data: Dataset, course: string, alongside: string[] = [], held: Held = {}): Tri {
   const s = data.subjects[code]
   if (!s) return 'unknown'
   if (offeredIn(s, term.year, term.period).status === 'fail') return 'fail'
-  const pre = evaluateField(s.prerequisites, { completed: before, subjects: data.subjects, admittedCourse: course, majors })
+  const pre = evaluateField(s.prerequisites, { completed: before, subjects: data.subjects, admittedCourse: course, ...held })
   // Corequisites may be taken in the same term: the ones planned there count.
-  const co = evaluateField(s.corequisites, { completed: new Set([...before, ...term.subjects, ...alongside]), subjects: data.subjects, admittedCourse: course, majors })
+  const co = evaluateField(s.corequisites, { completed: new Set([...before, ...term.subjects, ...alongside]), subjects: data.subjects, admittedCourse: course, ...held })
   if (pre.status === 'fail' || co.status === 'fail') return 'fail'
   return pre.status === 'unknown' || co.status === 'unknown' ? 'unknown' : 'ok'
 }
@@ -785,7 +791,7 @@ const SHORT_TERM_POINTS = 25
  * runs only in summer, say): put it in the earliest such term where its prerequisites are done,
  * it runs, the course's progression allows it and the term has room, adding the term if needed.
  */
-function placeShortTerms(terms: PlanTerm[], pending: string[], completed: string[], data: Dataset, courseCode: string, course: Course | undefined, notes: Note[], majors?: readonly string[]): void {
+function placeShortTerms(terms: PlanTerm[], pending: string[], completed: string[], data: Dataset, courseCode: string, course: Course | undefined, notes: Note[], held: Held = {}): void {
   const placed = () => new Set(terms.flatMap((t) => t.subjects))
   const first = terms[0]
   const last = terms.at(-1)
@@ -805,7 +811,7 @@ function placeShortTerms(terms: PlanTerm[], pending: string[], completed: string
           if (used + s.points > SHORT_TERM_POINTS) continue
           const before = [...completed, ...terms.filter((t) => termKey(t.year, t.period) < key).flatMap((t) => t.subjects)]
           const term = existing ?? { year, period, subjects: [] }
-          if (canTake(code, term, new Set(before), data, courseCode, [], majors) === 'fail') continue
+          if (canTake(code, term, new Set(before), data, courseCode, [], held) === 'fail') continue
           if (course && !progressionAllows(code, course, before, data)) continue
           if (existing) existing.subjects.push(code)
           else {
@@ -885,7 +891,7 @@ function pickElective(ctx: PickCtx): { code: string; why: string; ruleId: string
       const needsPath = level === 1 && gap > levelOneRoom
       const recs = recommend(data, input.profile, {
         course: course.code,
-        majors: majorsOf(input),
+        ...majorsOf(input),
         category: rule.category,
         level,
         term: { year: term.year, period: term.period },
@@ -901,7 +907,7 @@ function pickElective(ctx: PickCtx): { code: string; why: string; ruleId: string
         if (!ctx.relaxed && !leavesRoomForOthers(s, all, course, data)) continue
         if (!progressionAllows(s.code, course, [...ctx.before], data)) continue
         // A corequisite must already be in the plan (this term or earlier).
-        const co = evaluateField(s.corequisites, { completed: new Set([...ctx.before, ...term.subjects]), subjects: data.subjects, admittedCourse: course.code, majors: majorsOf(input) })
+        const co = evaluateField(s.corequisites, { completed: new Set([...ctx.before, ...term.subjects]), subjects: data.subjects, admittedCourse: course.code, ...majorsOf(input) })
         if (co.status === 'fail') continue
         return { code: s.code, why: rule.description.toLowerCase(), ruleId: rule.id }
       }
@@ -1094,7 +1100,7 @@ function trySwap(r: PointsRule, terms: PlanTerm[], all: string[], ctx: RepairCtx
       const before = [...completed, ...terms.slice(0, ti).flatMap((t) => t.subjects)]
       const candidates = recommend(data, input.profile, {
         course: course.code,
-        majors: majorsOf(input),
+        ...majorsOf(input),
         category: r.category,
         level: r.level,
         term: { year: term.year, period: term.period },
@@ -1110,7 +1116,7 @@ function trySwap(r: PointsRule, terms: PlanTerm[], all: string[], ctx: RepairCtx
         if (!withinCaps(s, others, course, data)) continue
         if (!progressionAllows(s.code, course, before, data)) continue
         // Its corequisites must be in the plan by then, as when an elective is first picked.
-        const co = evaluateField(s.corequisites, { completed: new Set([...before, ...term.subjects.filter((c) => c !== e)]), subjects: data.subjects, admittedCourse: course.code, majors: majorsOf(input) })
+        const co = evaluateField(s.corequisites, { completed: new Set([...before, ...term.subjects.filter((c) => c !== e)]), subjects: data.subjects, admittedCourse: course.code, ...majorsOf(input) })
         if (co.status === 'fail') continue
         // The swap must not break any minimum that is currently met.
         const after = [...others, s.code]
@@ -1144,7 +1150,7 @@ function pointsNeedIt(code: string, from: number, terms: PlanTerm[], completed: 
     for (const c of terms[j]?.subjects ?? []) {
       const pre = data.subjects[c]?.prerequisites
       if (!pre || pre === 'none' || pre === 'unknown') continue
-      const ctx = { subjects: data.subjects, admittedCourse: input.course, majors: majorsOf(input) }
+      const ctx = { subjects: data.subjects, admittedCourse: input.course, ...majorsOf(input) }
       const withIt = evaluateField(pre, { ...ctx, completed: new Set(before) }).status
       if (withIt !== 'fail' && evaluateField(pre, { ...ctx, completed: without }).status === 'fail') return true
     }

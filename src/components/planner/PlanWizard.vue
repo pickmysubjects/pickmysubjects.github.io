@@ -2,7 +2,7 @@
 import { link } from '@/composables/useView'
 import { computed, shallowRef } from 'vue'
 import { ArrowLeft, ArrowRight, Check } from 'lucide-vue-next'
-import { cannotCombine, type Component, type Course, type Period } from '@/engine'
+import { cannotCombine, minorClash, type Component, type Course, type Period } from '@/engine'
 import { useDataset } from '@/composables/useDataset'
 import type { PlanSetup } from '@/composables/usePlan'
 import MajorPicker from './MajorPicker.vue'
@@ -69,6 +69,21 @@ const specs = computed(() =>
   ),
 )
 
+// Minors of the course (an optional extra, shown only when the course has any), open to new
+// students and not the major's own discipline.
+const minors = computed(() =>
+  props.components
+    .filter(
+      (c) =>
+        c.course === draft.value.course &&
+        c.kind === 'minor' &&
+        (c.closedFrom === undefined || draft.value.startYear < c.closedFrom || draft.value.minors?.includes(c.id)) &&
+        !minorClash(data.value, draft.value.major, c.id),
+    )
+    .sort((a, b) => a.title.localeCompare(b.title)),
+)
+const minor = computed(() => draft.value.minors?.[0] ?? '')
+
 function set(patch: Partial<PlanSetup>): void {
   draft.value = { ...draft.value, ...patch }
 }
@@ -76,11 +91,13 @@ function set(patch: Partial<PlanSetup>): void {
 // A specialisation that doesn't go with the final major choice is dropped.
 function finish(): void {
   const spec = specs.value.some((sp) => sp.id === draft.value.specialisation) ? draft.value.specialisation : ''
-  emit('done', { ...draft.value, specialisation: spec })
+  // Likewise a minor the final major rules out.
+  const kept = (draft.value.minors ?? []).filter((id) => minors.value.some((m) => m.id === id))
+  emit('done', { ...draft.value, specialisation: spec, minors: kept })
 }
 
 function chooseCourse(c: Course): void {
-  set({ course: c.code, courseYear: c.year, major: '', specialisation: '', field: '' })
+  set({ course: c.code, courseYear: c.year, major: '', specialisation: '', minors: [], field: '' })
 }
 </script>
 
@@ -164,6 +181,13 @@ function chooseCourse(c: Course): void {
           </button>
         </div>
       </div>
+      <label v-if="minors.length" class="minor">
+        <span class="spec-title">{{ t('wizard.qMinor') }}</span>
+        <select class="select-glass minor-select" :value="minor" @change="set({ minors: ($event.target as HTMLSelectElement).value ? [($event.target as HTMLSelectElement).value] : [] })">
+          <option value="">{{ t('wizard.noMinor') }}</option>
+          <option v-for="m in minors" :key="m.id" :value="m.id">{{ m.title }}</option>
+        </select>
+      </label>
     </div>
 
     <footer class="wizard-foot">
@@ -332,6 +356,17 @@ function chooseCourse(c: Course): void {
   background: var(--accent-soft);
   color: var(--accent);
   font-weight: 600;
+}
+
+.minor {
+  display: grid;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.minor-select {
+  width: 100%;
+  max-width: 360px;
 }
 
 .majors-link {

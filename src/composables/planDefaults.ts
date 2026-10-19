@@ -12,6 +12,7 @@ function defaultSetup(data: Dataset): PlanSetup {
     startPeriod: 'semester-1',
     major: '', // "Not sure yet" until the student picks one
     specialisation: '',
+    minors: [],
   }
 }
 

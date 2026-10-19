@@ -1,5 +1,6 @@
 import { computed, type Ref } from 'vue'
-import { checkCourse, comparePlans, findCourse, forCourse, planRoles, planStress, requiredWithPrerequisites, type RuleStatus } from '@/engine'
+import { checkCourse, comparePlans, findCourse, forCourse, planRoles, planStress, requiredWithPrerequisites, type Dataset, type RuleStatus } from '@/engine'
+import type { PlanSetup } from './planStore'
 import { useDataset } from './useDataset'
 import { useProfile } from './useProfile'
 import { planFor } from './usePlan'
@@ -10,8 +11,19 @@ export interface CompareSummary {
   courseTitle: string
   /** Major (+ specialisation) titles, or '' when none is picked yet. */
   major: string
+  /** Minor titles, or '' when there's none. */
+  minor: string
   statuses: RuleStatus[]
   met: number
+}
+
+/** A plan's major (+ specialisation) and minor titles, '' for whichever isn't picked. */
+export function setupTitles(data: Dataset, setup: Pick<PlanSetup, 'major' | 'specialisation' | 'minors'>): { major: string; minor: string } {
+  const title = (id: string) => data.components.find((c) => c.id === id)?.title
+  return {
+    major: [title(setup.major), title(setup.specialisation)].filter(Boolean).join(' + '),
+    minor: (setup.minors ?? []).map(title).filter(Boolean).join(' + '),
+  }
 }
 
 /** Two of the student's plans, read side by side (each judged against its own degree). */
@@ -26,16 +38,16 @@ export function usePlanCompare(a: Ref<PlanEntry | undefined>, b: Ref<PlanEntry |
     const data = forCourse(all, setup.course)
     const plan = planFor(entry.state, profile, data)
     const codes = terms.flatMap((t) => t.subjects)
-    const roles = planRoles(data, setup.course, setup.courseYear, [setup.major, setup.specialisation])
+    const roles = planRoles(data, setup.course, setup.courseYear, [setup.major, setup.specialisation, ...(setup.minors ?? [])])
     const fixed = requiredWithPrerequisites(new Set([...roles.required, ...roles.options]), codes, data.subjects, setup.course)
     const levels = planStress(terms.map((t) => t.subjects), data, profile, fixed, setup.course).terms.map((s) => s.level)
     const statuses = checkCourse(plan, data).statuses
-    const title = (id: string) => data.components.find((c) => c.id === id)?.title
-    const major = [title(setup.major), title(setup.specialisation)].filter(Boolean).join(' + ')
+    const { major, minor } = setupTitles(data, setup)
     const summary: CompareSummary = {
       entry,
       courseTitle: findCourse(data, setup.course, setup.courseYear)?.title ?? setup.course,
       major,
+      minor,
       statuses,
       met: statuses.filter((s) => s.status === 'ok').length,
     }

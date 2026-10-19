@@ -98,6 +98,7 @@ export const zhCN: Messages = {
     notesOne: '1 条关于假设的说明',
   },
   rule: {
+    minor: "最多 {max} 个辅修",
     compulsory: '必修 {codes}',
     compulsoryFirst: '第一个学期必须修 {codes}',
     pointsMin: '至少 {n} 学分的{what}',
@@ -117,6 +118,10 @@ export const zhCN: Messages = {
     requirementOr: '；或 ',
   },
   ruleDetail: {
+    noMinor: "未选择（可选）",
+    tooManyMinors: "{have} 个辅修（最多 {max} 个）",
+    minorSameAsMajor: "{title} 不能同时作为主修和辅修",
+    componentMissingData: "{id} 暂无数据",
     done: '已完成',
     missing: '缺少 {codes}',
     firstSemester: '{codes} 必须安排在第一个学期',
@@ -595,6 +600,7 @@ export const zhCN: Messages = {
     teachHigh: '很好',
   },
   seo: {
+    minorTitle: "墨大 {title} 辅修：科目与规划",
     subjectTitle: "{code} {title}｜墨大选课：先修课、开课学期、考核方式",
     subjectTitleReviews: "{code} {title}｜墨大课程评价：难度、先修课、考核方式",
     majorTitle: "墨大 {title} 专业：必修课、选修课和排课",
@@ -677,6 +683,11 @@ export const zhCN: Messages = {
     cat: { science: "理科", commerce: "商科", arts: "文科", breadth: "Breadth" },
   },
   majors: {
+    minorTitle: "{title} 辅修",
+    minorKind: "辅修",
+    planMinor: "把这个辅修加入我的计划",
+    minorsTitle: "辅修",
+    minorsHint: "辅修是主修之外一个较小的可选方向。",
     closedList: "已不再招收新生：",
     entryRoutes: "这个专业按你原有的语言水平分 {n} 条路线。下面显示的是 {first}；排课时会按你修过的课选对应的路线。",
     shownFor: "按 {course} 显示",
@@ -1045,6 +1056,7 @@ export const zhCN: Messages = {
     discussRead: '查看原文',
   },
   plans: {
+    minorLine: "辅修：{title}",
     goal: "目标",
     interests: "兴趣",
     noInterests: "还没选",
@@ -1079,6 +1091,8 @@ export const zhCN: Messages = {
     notPlanned: "没有安排",
   },
   wizard: {
+    qMinor: "加一个辅修吗？（可选）",
+    noMinor: "不加辅修",
     majorsLink: "不确定选哪个？看看各专业介绍",
     qSpec: '要加一个专精吗？（可选）',
     noSpec: '不加',

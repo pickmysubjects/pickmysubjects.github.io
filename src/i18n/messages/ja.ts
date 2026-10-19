@@ -98,6 +98,7 @@ export const ja: Messages = {
     notesOne: '前提に関するメモ 1 件',
   },
   rule: {
+    minor: "副専攻は最大 {max} つ",
     compulsory: '{codes} を履修する',
     compulsoryFirst: '最初のセメスターで {codes} を履修する',
     pointsMin: '{what}を {n} ポイント以上',
@@ -117,6 +118,10 @@ export const ja: Messages = {
     requirementOr: '、または ',
   },
   ruleDetail: {
+    noMinor: "未選択（任意）",
+    tooManyMinors: "副専攻が {have} つ（最大 {max} つ）",
+    minorSameAsMajor: "{title} を主専攻と副専攻の両方にはできません",
+    componentMissingData: "{id} はまだデータにありません",
     done: '完了',
     missing: '{codes} が不足',
     firstSemester: '{codes} は最初のセメスターに入れる必要があります',
@@ -595,6 +600,7 @@ export const ja: Messages = {
     teachHigh: 'とても良い',
   },
   seo: {
+    minorTitle: "メルボルン大学 {title} 副専攻：科目と履修計画",
     subjectTitle: "{code} {title}｜メルボルン大学：前提科目・開講学期・評価方法",
     subjectTitleReviews: "{code} {title}｜メルボルン大学の科目の評判・難易度・前提科目",
     majorTitle: "メルボルン大学 {title} 専攻：必修科目・選択科目・履修計画",
@@ -677,6 +683,11 @@ export const ja: Messages = {
     cat: { science: "理系", commerce: "商学系", arts: "文系", breadth: "Breadth" },
   },
   majors: {
+    minorTitle: "{title} 副専攻",
+    minorKind: "副専攻",
+    planMinor: "この副専攻をプランに追加",
+    minorsTitle: "副専攻",
+    minorsHint: "副専攻は主専攻と並行して取る、小さめの任意の分野です。",
     closedList: "新入生の受け付けを終了した専攻：",
     entryRoutes: "この専攻は、すでにある語学力に応じて {n} つの入り方があります。下は {first} です。プランは履修した科目に合う入り方に従います。",
     shownFor: "{course} 向けに表示",
@@ -1045,6 +1056,7 @@ export const ja: Messages = {
     discussRead: 'レビューを読む',
   },
   plans: {
+    minorLine: "副専攻：{title}",
     goal: "目標",
     interests: "興味",
     noInterests: "まだ選んでいません",
@@ -1079,6 +1091,8 @@ export const ja: Messages = {
     notPlanned: "予定なし",
   },
   wizard: {
+    qMinor: "副専攻を追加しますか？（任意）",
+    noMinor: "副専攻なし",
     majorsLink: "どの専攻か迷ったら？専攻ガイドを見る",
     qSpec: '専攻分野（スペシャライゼーション）を追加しますか？（任意）',
     noSpec: 'なし',

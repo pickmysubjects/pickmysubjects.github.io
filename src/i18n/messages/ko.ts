@@ -98,6 +98,7 @@ export const ko: Messages = {
     notesOne: '가정에 대한 메모 1개',
   },
   rule: {
+    minor: "부전공은 최대 {max}개",
     compulsory: '{codes} 이수',
     compulsoryFirst: '첫 학기에 {codes} 이수',
     pointsMin: '{what} 최소 {n}학점',
@@ -117,6 +118,10 @@ export const ko: Messages = {
     requirementOr: ' 또는 ',
   },
   ruleDetail: {
+    noMinor: "선택 안 함(선택 사항)",
+    tooManyMinors: "부전공 {have}개(최대 {max}개)",
+    minorSameAsMajor: "{title}은(는) 전공과 부전공을 동시에 할 수 없습니다",
+    componentMissingData: "{id}은(는) 아직 데이터에 없습니다",
     done: '완료',
     missing: '{codes} 부족',
     firstSemester: '{codes}는 첫 학기에 있어야 합니다',
@@ -595,6 +600,7 @@ export const ko: Messages = {
     teachHigh: '훌륭함',
   },
   seo: {
+    minorTitle: "멜버른대 {title} 부전공: 과목과 계획",
     subjectTitle: "{code} {title} | 멜버른대: 선수 과목, 개설 학기, 평가 방식",
     subjectTitleReviews: "{code} {title} | 멜버른대 과목 평가, 난이도, 선수 과목",
     majorTitle: "멜버른대 {title} 전공: 필수 과목, 선택 과목, 수강 계획",
@@ -677,6 +683,11 @@ export const ko: Messages = {
     cat: { science: "이과", commerce: "상경", arts: "인문", breadth: "Breadth" },
   },
   majors: {
+    minorTitle: "{title} 부전공",
+    minorKind: "부전공",
+    planMinor: "이 부전공을 내 계획에 추가",
+    minorsTitle: "부전공",
+    minorsHint: "부전공은 전공과 함께 듣는 작은 선택 분야입니다.",
     closedList: "신입생 모집이 끝난 전공:",
     entryRoutes: "이 전공은 기존 언어 실력에 따라 {n}가지 진입 경로가 있어요. 아래는 {first}이고, 계획은 들은 과목에 맞는 경로를 따라요.",
     shownFor: "{course} 기준으로 표시",
@@ -1045,6 +1056,7 @@ export const ko: Messages = {
     discussRead: '원문 보기',
   },
   plans: {
+    minorLine: "부전공: {title}",
     goal: "목표",
     interests: "관심사",
     noInterests: "아직 선택 안 함",
@@ -1079,6 +1091,8 @@ export const ko: Messages = {
     notPlanned: "계획 없음",
   },
   wizard: {
+    qMinor: "부전공을 추가할까요? (선택)",
+    noMinor: "부전공 없음",
     majorsLink: "어떤 전공인지 모르겠다면? 전공 소개 보기",
     qSpec: '세부 전공을 추가하나요? (선택)',
     noSpec: '안 함',

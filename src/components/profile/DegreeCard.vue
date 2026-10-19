@@ -27,6 +27,7 @@ const major = computed(
     (plan.setup.value.field ? t.value('wizard.fieldUndecided', { field: t.value(`majorGroup.${plan.setup.value.field}`) }) : t.value('wizard.notSure')),
 )
 const spec = computed(() => title(plan.setup.value.specialisation))
+const minor = computed(() => (plan.setup.value.minors ?? []).map(title).filter(Boolean).join(' + '))
 const start = computed(() => termLabel(t.value, { year: plan.setup.value.startYear, period: plan.setup.value.startPeriod }))
 
 function done(setup: PlanSetup): void {
@@ -42,7 +43,7 @@ function done(setup: PlanSetup): void {
       <div class="degree-text">
         <h2 id="degree-title" class="degree-title">{{ t('record.degreeTitle') }}</h2>
         <p v-if="chosen" class="degree-line">
-          <strong>{{ course }}</strong> · {{ major }}<template v-if="spec"> + {{ spec }}</template> · {{ t('record.degreeStart', { term: start }) }}
+          <strong>{{ course }}</strong> · {{ major }}<template v-if="spec"> + {{ spec }}</template><template v-if="minor"> · {{ t('plans.minorLine', { title: minor }) }}</template> · {{ t('record.degreeStart', { term: start }) }}
         </p>
         <p v-else class="degree-line">{{ t('record.degreeNone') }}</p>
       </div>

@@ -53,7 +53,7 @@ function cleanState(v: unknown): PlanState | null {
     .filter((t): t is Record<string, unknown> => isObject(t) && typeof t.year === 'number' && (PERIODS as readonly string[]).includes(String(t.period)))
     .map((t) => ({ year: t.year, period: t.period, subjects: strings(t.subjects) }))
   return {
-    setup: v.setup as unknown as PlanState['setup'],
+    setup: { ...v.setup, minors: strings(v.setup.minors) } as unknown as PlanState['setup'],
     terms: terms as PlanState['terms'],
     notes: Array.isArray(v.notes) ? v.notes : [],
     unplaced: Array.isArray(v.unplaced) ? v.unplaced : [],

@@ -12,6 +12,8 @@ export interface Plan {
   courseYear: number
   major?: string
   specialisation?: string
+  /** Minor ids (component ids). Undefined: not known, so conditions naming a minor stay unknown. */
+  minors?: string[]
   /** Subjects already completed before the first planned term (with or without marks). */
   completed: string[]
   terms: PlanTerm[]

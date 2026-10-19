@@ -13,7 +13,7 @@ const plan = usePlan()
 const { t } = useI18n()
 
 const ORDER = { core: 0, option: 1, pathway: 2, route: 3 } as const
-const mine = computed(() => new Set([plan.setup.value.major, plan.setup.value.specialisation].filter(Boolean)))
+const mine = computed(() => new Set([plan.setup.value.major, plan.setup.value.specialisation, ...(plan.setup.value.minors ?? [])].filter(Boolean)))
 const roles = computed(() =>
   subjectRoles(data.value, props.code, plan.setup.value.course)
     .map((r) => ({ ...r, mine: mine.value.has(r.component) }))

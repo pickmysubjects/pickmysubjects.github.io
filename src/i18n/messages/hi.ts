@@ -98,6 +98,7 @@ export const hi: Messages = {
     notesOne: 'अनुमानों के बारे में 1 नोट',
   },
   rule: {
+    minor: "अधिकतम {max} माइनर",
     compulsory: '{codes} लें',
     compulsoryFirst: 'पहले सेमेस्टर में {codes} लें',
     pointsMin: 'कम से कम {n} पॉइंट {what}',
@@ -117,6 +118,10 @@ export const hi: Messages = {
     requirementOr: ' या ',
   },
   ruleDetail: {
+    noMinor: "नहीं चुना (वैकल्पिक)",
+    tooManyMinors: "{have} माइनर (अधिकतम {max})",
+    minorSameAsMajor: "{title} एक साथ मेजर और माइनर नहीं हो सकता",
+    componentMissingData: "{id} अभी हमारे डेटा में नहीं है",
     done: 'पूरा',
     missing: '{codes} बाकी',
     firstSemester: '{codes} पहले सेमेस्टर में होना चाहिए',
@@ -595,6 +600,7 @@ export const hi: Messages = {
     teachHigh: 'बेहतरीन',
   },
   seo: {
+    minorTitle: "UniMelb में {title} माइनर: विषय और योजना",
     subjectTitle: "{code} {title} | यूनिमेलब: पूर्व-आवश्यक विषय, सेमेस्टर, मूल्यांकन",
     subjectTitleReviews: "{code} {title} | यूनिमेलब सब्जेक्ट रिव्यू, कठिनाई, पूर्व-आवश्यक विषय",
     majorTitle: "यूनिमेलब में {title} मेजर: अनिवार्य विषय, विकल्प और योजना",
@@ -677,6 +683,11 @@ export const hi: Messages = {
     cat: { science: "साइंस", commerce: "कॉमर्स", arts: "आर्ट्स", breadth: "Breadth" },
   },
   majors: {
+    minorTitle: "{title} माइनर",
+    minorKind: "माइनर",
+    planMinor: "यह माइनर मेरी योजना में जोड़ें",
+    minorsTitle: "माइनर",
+    minorsHint: "माइनर आपके मेजर के साथ एक छोटा, वैकल्पिक अध्ययन क्षेत्र है।",
     closedList: "अब नए छात्रों के लिए खुला नहीं:",
     entryRoutes: "इस मेजर में आपकी मौजूदा भाषा-योग्यता के हिसाब से {n} रास्ते हैं। नीचे {first} दिखाया गया है; प्लान आपके सब्जेक्ट से मेल खाने वाला रास्ता लेता है।",
     shownFor: "{course} के लिए दिखाया गया",
@@ -1045,6 +1056,7 @@ export const hi: Messages = {
     discussRead: 'समीक्षाएँ पढ़ें',
   },
   plans: {
+    minorLine: "माइनर: {title}",
     goal: "लक्ष्य",
     interests: "रुचियाँ",
     noInterests: "अभी कुछ नहीं चुना",
@@ -1079,6 +1091,8 @@ export const hi: Messages = {
     notPlanned: "कुछ प्लान नहीं",
   },
   wizard: {
+    qMinor: "माइनर जोड़ना है? (वैकल्पिक)",
+    noMinor: "कोई माइनर नहीं",
     majorsLink: "कौन सा मेजर, तय नहीं? सभी मेजर देखें",
     qSpec: 'स्पेशलाइज़ेशन जोड़ना है? (वैकल्पिक)',
     noSpec: 'नहीं',

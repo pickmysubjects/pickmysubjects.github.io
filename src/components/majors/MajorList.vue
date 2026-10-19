@@ -19,6 +19,13 @@ const course = computed(() => plan.setup.value.course || 'B-SCI')
 const majors = computed(() =>
   data.value.components.filter((c) => c.course === course.value && c.kind === 'major' && (c.closedFrom === undefined || new Date().getFullYear() < c.closedFrom)),
 )
+// The course's minors (a smaller, optional study area), listed under the majors.
+const minors = computed(() =>
+  data.value.components
+    .filter((c) => c.course === course.value && c.kind === 'minor' && (c.closedFrom === undefined || new Date().getFullYear() < c.closedFrom))
+    .filter((c) => !query.value.trim() || c.title.toLowerCase().includes(query.value.trim().toLowerCase()))
+    .sort((a, b) => a.title.localeCompare(b.title)),
+)
 const groups = computed(() => {
   const q = query.value.trim().toLowerCase()
   return groupMajors(majors.value)
@@ -47,7 +54,7 @@ const courseTitle = computed(() => data.value.courses.find((c) => c.code === cou
       <input v-model="query" class="search-input" type="search" :placeholder="t('majors.search')" :aria-label="t('majors.search')" />
     </label>
 
-    <p v-if="groups.length === 0" class="empty">{{ t('wizard.noMajorMatch') }}</p>
+    <p v-if="groups.length === 0 && minors.length === 0" class="empty">{{ t('wizard.noMajorMatch') }}</p>
 
     <!-- Grouped and folded: the first group is open; a search opens every group it matches. -->
     <details v-for="(g, i) in groups" :key="g.id" class="group" :open="i === 0 || query.trim() !== '' || undefined">
@@ -63,6 +70,17 @@ const courseTitle = computed(() => data.value.courses.find((c) => c.code === cou
         </a>
       </div>
     </details>
+
+    <section v-if="minors.length" class="minors" aria-labelledby="minors-title">
+      <h2 id="minors-title" class="minors-title">{{ t('majors.minorsTitle') }} <span class="group-count">{{ minors.length }}</span></h2>
+      <p class="minors-hint">{{ t('majors.minorsHint') }}</p>
+      <div class="cards">
+        <a v-for="m in minors" :key="m.id" class="card surface" :href="link(`majors/${m.id}`)">
+          <span class="card-title">{{ m.title }}</span>
+          <ChevronRight :size="18" aria-hidden="true" class="go" />
+        </a>
+      </div>
+    </section>
   </div>
 </template>
 
@@ -189,6 +207,25 @@ const courseTitle = computed(() => data.value.courses.find((c) => c.code === cou
 .card-title {
   flex: 1;
   font-weight: 600;
+}
+
+.minors {
+  display: grid;
+  gap: 10px;
+}
+
+.minors-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 8px 0 0;
+  font-size: 1.15rem;
+  font-weight: 650;
+}
+
+.minors-hint {
+  margin: 0;
+  color: var(--ink-soft);
 }
 
 .go {

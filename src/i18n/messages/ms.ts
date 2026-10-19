@@ -98,6 +98,7 @@ export const ms: Messages = {
     notesOne: '1 nota tentang andaian',
   },
   rule: {
+    minor: "Paling banyak {max} minor",
     compulsory: 'Ambil {codes}',
     compulsoryFirst: 'Ambil {codes} pada semester pertama',
     pointsMin: 'Sekurang-kurangnya {n} mata {what}',
@@ -117,6 +118,10 @@ export const ms: Messages = {
     requirementOr: ' atau ',
   },
   ruleDetail: {
+    noMinor: "belum dipilih (pilihan)",
+    tooManyMinors: "{have} minor (paling banyak {max})",
+    minorSameAsMajor: "{title} tidak boleh jadi major dan minor serentak",
+    componentMissingData: "{id} belum ada dalam data kami",
     done: 'selesai',
     missing: 'kurang {codes}',
     firstSemester: '{codes} mesti pada semester pertama',
@@ -595,6 +600,7 @@ export const ms: Messages = {
     teachHigh: 'Cemerlang',
   },
   seo: {
+    minorTitle: "Minor {title} di UniMelb: subjek dan perancangan",
     subjectTitle: "{code} {title} | UniMelb: prasyarat, semester, penilaian",
     subjectTitleReviews: "{code} {title} | Ulasan subjek UniMelb, tahap kesukaran, prasyarat",
     majorTitle: "Major {title} di UniMelb: subjek teras, pilihan dan perancangan",
@@ -677,6 +683,11 @@ export const ms: Messages = {
     cat: { science: "Sains", commerce: "Perdagangan", arts: "Sastera", breadth: "Breadth" },
   },
   majors: {
+    minorTitle: "Minor {title}",
+    minorKind: "Minor",
+    planMinor: "Tambah minor ini ke pelan saya",
+    minorsTitle: "Minor",
+    minorsHint: "Minor ialah bidang pengajian tambahan yang lebih kecil dan pilihan, di samping major.",
     closedList: "Tidak lagi menerima pelajar baharu:",
     entryRoutes: "Major ini ada {n} titik masuk mengikut tahap bahasa anda. Di bawah: {first}. Rancangan anda ikut titik masuk yang sepadan dengan subjek anda.",
     shownFor: "Dipaparkan untuk {course}",
@@ -1045,6 +1056,7 @@ export const ms: Messages = {
     discussRead: 'Baca ulasan',
   },
   plans: {
+    minorLine: "Minor: {title}",
     goal: "Matlamat",
     interests: "Minat",
     noInterests: "Belum dipilih",
@@ -1079,6 +1091,8 @@ export const ms: Messages = {
     notPlanned: "Tiada dirancang",
   },
   wizard: {
+    qMinor: "Mahu tambah minor? (pilihan)",
+    noMinor: "Tiada minor",
     majorsLink: "Tak pasti major mana? Lihat senarai major",
     qSpec: 'Tambah pengkhususan? (pilihan)',
     noSpec: 'Tidak',

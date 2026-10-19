@@ -8,7 +8,7 @@ import { provideDataset } from '../src/composables/useDataset'
 import type { Dataset } from '../src/engine'
 
 const state = (course: string, subjects: string[] = []): PlanState => ({
-  setup: { course, courseYear: 2026, startYear: 2027, startPeriod: 'semester-1', major: '', specialisation: '' },
+  setup: { course, courseYear: 2026, startYear: 2027, startPeriod: 'semester-1', major: '', specialisation: '', minors: [] },
   terms: [{ year: 2027, period: 'semester-1', subjects }],
   notes: [],
   unplaced: [],

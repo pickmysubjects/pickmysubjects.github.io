@@ -1,5 +1,5 @@
 import { offeredIn } from './availability'
-import { checkCourse, majorTitles } from './courseRules'
+import { checkCourse, majorTitles, minorTitles } from './courseRules'
 import type { Plan, PlanTerm } from './plan'
 import { evaluateField, referencedSubjects } from './expr'
 import { checkTerms } from './planCheck'
@@ -221,10 +221,11 @@ const FIXED = new WeakMap<Dataset, Map<string, Set<string>>>()
 function fixedSubjects(data: Dataset, plan: Plan): Set<string> {
   let cache = FIXED.get(data)
   if (!cache) FIXED.set(data, (cache = new Map()))
-  const key = [plan.course, plan.courseYear, plan.major ?? '', plan.specialisation ?? ''].join('|')
+  const ids = [plan.major ?? '', plan.specialisation ?? '', ...(plan.minors ?? [])]
+  const key = [plan.course, plan.courseYear, ...ids].join('|')
   let out = cache.get(key)
   if (!out) {
-    const roles = planRoles(data, plan.course, plan.courseYear, [plan.major ?? '', plan.specialisation ?? ''])
+    const roles = planRoles(data, plan.course, plan.courseYear, ids)
     cache.set(key, (out = new Set([...roles.required, ...roles.options])))
   }
   return out
@@ -259,7 +260,7 @@ function leanedOn(plan: Plan, data: Dataset, code: string): boolean {
     for (const c of (plan.terms[i] as PlanTerm).subjects) {
       const s = data.subjects[c]
       if (!s || s.prerequisites === 'none' || s.prerequisites === 'unknown') continue
-      const ctx = { subjects: data.subjects, admittedCourse: plan.course, majors: majorTitles(data, [plan.major, plan.specialisation]) }
+      const ctx = { subjects: data.subjects, admittedCourse: plan.course, majors: majorTitles(data, [plan.major, plan.specialisation]), minors: minorTitles(data, plan.minors) }
       if (evaluateField(s.prerequisites, { ...ctx, completed: new Set(before) }).status !== 'ok') continue
       if (evaluateField(s.prerequisites, { ...ctx, completed: without }).status !== 'ok') return true
     }

@@ -422,6 +422,8 @@ const courseRule = z.discriminatedUnion('kind', [
   z
     .object({ ...ruleBase, kind: z.literal('specialisation'), max: z.number().int().nonnegative() })
     .strict(),
+  // Optional minors: at most `max` of them (B-ARTS: one).
+  z.object({ ...ruleBase, kind: z.literal('minor'), max: z.number().int().nonnegative() }).strict(),
   z
     .object({
       ...ruleBase,
@@ -491,6 +493,7 @@ function camelRule(r: z.output<typeof courseRule>): CourseRule {
     case 'major':
       return { id: r.id, description: r.description, kind: r.kind, count: r.count }
     case 'specialisation':
+    case 'minor':
       return { id: r.id, description: r.description, kind: r.kind, max: r.max }
     case 'level1-areas':
       return {
@@ -520,6 +523,7 @@ export type CourseRule =
   | { id: string; description: string; kind: 'points'; min?: number; max?: number; level?: number; category?: string }
   | { id: string; description: string; kind: 'major'; count: number }
   | { id: string; description: string; kind: 'specialisation'; max: number }
+  | { id: string; description: string; kind: 'minor'; max: number }
   | {
       id: string
       description: string
@@ -545,7 +549,7 @@ export const componentFileSchema = z
     id: z.string().regex(/^[a-z0-9-]+$/),
     course: z.string().min(1),
     year: z.number().int(),
-    kind: z.enum(['major', 'specialisation']),
+    kind: z.enum(['major', 'specialisation', 'minor']),
     title: z.string().min(1),
     points: z.number().positive(),
     requires_major: z.array(z.string()).default([]),

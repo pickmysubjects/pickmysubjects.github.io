@@ -1,0 +1,10 @@
+# A test-only minor (not real Handbook data): two level-2 Philosophy subjects and a level-3 one.
+id: philosophy-minor
+course: B-ARTS
+year: 2026
+kind: minor
+title: Philosophy
+points: 50
+requirements:
+  - choose: { points: 25, from: [PHIL20008, PHIL20030, PHIL20033, PHIL20039] }
+  - all: [PHIL30024]

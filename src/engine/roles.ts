@@ -5,7 +5,7 @@ import type { Dataset } from './schema'
 export interface SubjectRole {
   component: string
   title: string
-  kind: 'major' | 'specialisation'
+  kind: 'major' | 'specialisation' | 'minor'
   /** core: compulsory; option: one of a list to choose from; pathway: a prerequisite on the way to a core or option subject. */
   role: 'core' | 'option' | 'pathway' | 'route'
   /** pathway: can't be skipped on the way to `via`; route: one of several ways to it. */

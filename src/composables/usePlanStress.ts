@@ -12,8 +12,8 @@ export function usePlanStress() {
 
   // What the degree itself requires: only that makes a weak-skill stack unavoidable.
   const fixed = computed(() => {
-    const { course, courseYear, major, specialisation } = plan.setup.value
-    const roles = planRoles(data.value, course, courseYear, [major, specialisation])
+    const { course, courseYear, major, specialisation, minors } = plan.setup.value
+    const roles = planRoles(data.value, course, courseYear, [major, specialisation, ...(minors ?? [])])
     return requiredWithPrerequisites(new Set([...roles.required, ...roles.options]), plan.plannedCodes.value, data.value.subjects, course)
   })
   const stress = computed(() => planStress(plan.terms.value.map((t) => t.subjects), data.value, profile.value, fixed.value, plan.setup.value.course))

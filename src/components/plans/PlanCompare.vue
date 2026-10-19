@@ -76,6 +76,7 @@ function open(id: string): void {
           <p class="card-name"><span class="side">{{ i === 0 ? '1' : '2' }}</span>{{ c.name }}</p>
           <p class="card-degree">{{ c.courseTitle }}</p>
           <p class="card-major">{{ c.major || t('plans.noMajor') }}</p>
+          <p v-if="c.minor" class="card-minor">{{ t('plans.minorLine', { title: c.minor }) }}</p>
           <dl class="facts">
             <div>
               <dt>{{ t('plans.total') }}</dt>
@@ -231,6 +232,7 @@ function open(id: string): void {
 }
 
 .card-major,
+.card-minor,
 .muted {
   margin: 0;
   color: var(--ink-soft);

@@ -101,6 +101,7 @@ export const en = {
     notesOne: '1 note about assumptions',
   },
   rule: {
+    minor: "At most {max} minor",
     compulsory: 'Take {codes}',
     compulsoryFirst: 'Take {codes} in your first semester',
     pointsMin: 'At least {n} points of {what}',
@@ -120,6 +121,10 @@ export const en = {
     requirementOr: ' or ',
   },
   ruleDetail: {
+    noMinor: "none chosen (optional)",
+    tooManyMinors: "{have} minors (at most {max})",
+    minorSameAsMajor: "{title} can’t be both your major and your minor",
+    componentMissingData: "{id} isn’t in our data yet",
     done: 'done',
     missing: 'missing {codes}',
     firstSemester: '{codes} must be in your first semester',
@@ -598,6 +603,7 @@ export const en = {
     teachHigh: 'Excellent',
   },
   seo: {
+    minorTitle: "{title} minor at UniMelb: subjects and planning",
     subjectTitle: "{code} {title}: UniMelb prerequisites, semesters, assessment",
     subjectTitleReviews: "{code} {title}: UniMelb subject reviews, difficulty, prerequisites",
     majorTitle: "{title} major at UniMelb: core subjects, options and planning",
@@ -680,6 +686,11 @@ export const en = {
     cat: { science: "Science", commerce: "Commerce", arts: "Arts", breadth: "Breadth" },
   },
   majors: {
+    minorTitle: "{title} minor",
+    minorKind: "Minor",
+    planMinor: "Add this minor to my plan",
+    minorsTitle: "Minors",
+    minorsHint: "A minor is a smaller, optional study area alongside your major.",
     closedList: "No longer open to new students:",
     entryRoutes: "This major has {n} entry points, set by how much of the language you already know. Shown below: {first}. Your plan follows the one your subjects point to.",
     shownFor: "Shown for {course}",
@@ -1048,6 +1059,7 @@ export const en = {
     discussRead: 'Read the reviews',
   },
   plans: {
+    minorLine: "Minor: {title}",
     goal: "Goal",
     interests: "Interests",
     noInterests: "None picked",
@@ -1082,6 +1094,8 @@ export const en = {
     notPlanned: "Nothing planned",
   },
   wizard: {
+    qMinor: "Adding a minor? (optional)",
+    noMinor: "No minor",
     majorsLink: "Not sure which major? Compare them",
     qSpec: 'Adding a specialisation? (optional)',
     noSpec: 'No',

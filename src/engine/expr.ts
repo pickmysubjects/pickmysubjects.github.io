@@ -15,6 +15,11 @@ export interface EvalContext {
    */
   majors?: readonly string[]
   /**
+   * Titles of the student's minor(s) in that course ("History"). Undefined when we don't know:
+   * conditions a minor could meet then stay unknown. Empty: the student has no minor.
+   */
+  minors?: readonly string[]
+  /**
    * Subjects done by the end of the term being evaluated (`completed` plus that term's own):
    * what a requirement that may be taken concurrently is checked against. Defaults to `completed`.
    */
@@ -137,26 +142,36 @@ export function namedComponents(text: string): NamedComponent[] {
   return out.filter((c) => c.title && !seen.has(`${c.kind}:${c.course}:${c.title.toLowerCase()}`) && seen.add(`${c.kind}:${c.course}:${c.title.toLowerCase()}`))
 }
 
-const titleKey = (t: string) => t.toLowerCase().replace(/\s+major$/, '').trim()
+const titleKey = (t: string) => t.toLowerCase().replace(/\s+(?:major|minor)$/, '').trim()
 
 /**
- * A condition limited to students in given majors ("only available to students in the Chinese
- * Studies Major"), decided when we know the student's course and majors. Null when the text
- * names no major of the student's course, or when a minor or specialisation of it (which we
- * don't model) could let them in instead.
+ * A condition limited to students in given majors or minors ("only available to students in the
+ * Chinese Studies Major", "History minor in the B-ARTS"), decided when we know the student's
+ * course and the components it names. Null when the text names no major or minor of the
+ * student's course, when a specialisation of it (which we don't track this way) could let them
+ * in instead, or when we don't know the student's majors/minors.
  */
 function majorCondition(text: string, ctx: EvalContext): EvalResult | null {
-  if (!ctx.admittedCourse || !ctx.majors) return null
+  if (!ctx.admittedCourse) return null
   const mine = namedComponents(text).filter((c) => c.course === ctx.admittedCourse)
   const majors = mine.filter((c) => c.kind === 'major')
-  if (!majors.length) return null
-  const have = new Set(ctx.majors.map(titleKey))
+  const minors = mine.filter((c) => c.kind === 'minor')
+  if (!majors.length && !minors.length) return null
   // A title can carry the tail of a course name before it ("… Master of Biomedical Engineering
-  // Biomedical Engineering Systems"), so a student's major matches as a whole-word ending.
-  const named = (t: string) => [...have].some((h) => t === h || t.endsWith(` ${h}`))
-  if (majors.some((c) => named(titleKey(c.title)))) return ok()
-  if (mine.some((c) => c.kind !== 'major')) return null
-  return { status: 'fail', unmet: [`a place in the ${majors.map((c) => c.title).join(' / ')} major`] }
+  // Biomedical Engineering Systems"), so a student's component matches as a whole-word ending.
+  const meets = (named: NamedComponent[], titles: readonly string[] | undefined) => {
+    if (!titles) return false
+    const have = titles.map(titleKey)
+    return named.some((c) => {
+      const t = titleKey(c.title)
+      return have.some((h) => t === h || t.endsWith(` ${h}`))
+    })
+  }
+  if (meets(majors, ctx.majors) || meets(minors, ctx.minors)) return ok()
+  if (mine.some((c) => c.kind === 'specialisation')) return null
+  if ((majors.length && !ctx.majors) || (minors.length && !ctx.minors)) return null
+  const places = [...majors.map((c) => `${c.title} major`), ...minors.map((c) => `${c.title} minor`)]
+  return { status: 'fail', unmet: [`a place in the ${places.join(' / ')}`] }
 }
 
 function evaluatePoints(

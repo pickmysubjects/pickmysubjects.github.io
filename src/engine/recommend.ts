@@ -1,6 +1,6 @@
 import { forCourse } from './forCourse'
 import { offeredIn, periodsFor } from './availability'
-import { majorTitles } from './courseRules'
+import { majorTitles, minorTitles } from './courseRules'
 import { evaluateField, referencedSubjects, type Tri } from './expr'
 import type { Note, Params } from './plan'
 import type { Dataset, Period, Skill, Subject } from './schema'
@@ -85,12 +85,14 @@ export interface RecommendOptions {
    */
   termSubjects?: string[]
   /** The student's major and specialisation (component ids): their subjects get a nudge and say so. */
-  programme?: { courseYear: number; components: string[] }
+  programme?: { courseYear: number; components: string[]; minors?: string[] }
   /**
    * Titles of the student's major/specialisation, for conditions limited to a major. Defaults to
    * those of `programme`; unknown (left undecided) when neither is given.
    */
   majors?: readonly string[]
+  /** Titles of the student's minors, for conditions a minor can meet; unknown when not given. */
+  minors?: readonly string[]
 }
 
 /** Points a suggestion gives up for making its semester heavier (the plan builder uses the same). */
@@ -203,6 +205,7 @@ export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions =
   for (const [code, ms] of attempts) marks.set(code, ms.reduce((a, b) => a + b, 0) / ms.length)
   const markRecord = Object.fromEntries(marks)
   const majors = opts.majors ?? (opts.programme ? majorTitles(data, opts.programme.components) : undefined)
+  const minors = opts.minors ?? (opts.programme ? minorTitles(data, opts.programme.minors) : undefined)
   const dependents = buildDependents(data, opts.course)
   // Non-allowed works both ways, but the Handbook often lists it on one side only.
   const blocked = new Set(
@@ -213,8 +216,8 @@ export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions =
   )
 
   const roles =
-    opts.course && opts.programme?.components.length
-      ? planRoles(data, opts.course, opts.programme.courseYear, opts.programme.components)
+    opts.course && (opts.programme?.components.length || opts.programme?.minors?.length)
+      ? planRoles(data, opts.course, opts.programme.courseYear, [...opts.programme.components, ...(opts.programme.minors ?? [])])
       : null
   // Earlier subjects the major's own subjects build on (a step or two back): the way into them,
   // even where there are several to choose from (PSYC20006 for a psychology major).
@@ -234,7 +237,7 @@ export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions =
         if (!t) continue
         // Already able to take it (a "one of" list met by something done): nothing in that list
         // is a step towards it, however long the list.
-        if (evaluateField(t.prerequisites, { completed, subjects: data.subjects, admittedCourse: opts.course, majors }).status === 'ok') continue
+        if (evaluateField(t.prerequisites, { completed, subjects: data.subjects, admittedCourse: opts.course, majors, minors }).status === 'ok') continue
         for (const p of [...referencedSubjects(t.prerequisites), ...referencedSubjects(t.corequisites)]) {
           if (completed.has(p) || roles.required.has(p) || roles.options.has(p)) continue
           const leadsTo = towardMajor.get(p) ?? []
@@ -287,6 +290,7 @@ export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions =
       subjects: data.subjects,
       admittedCourse: opts.course,
       majors,
+      minors,
       marks: markRecord,
     })
     if (pre.status === 'fail') continue

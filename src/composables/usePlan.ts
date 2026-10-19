@@ -49,6 +49,7 @@ export function planFor(state: PlanState, profile: Profile, data: Dataset): Plan
     courseYear: state.setup.courseYear,
     major: state.setup.major || undefined,
     specialisation: state.setup.specialisation || undefined,
+    minors: state.setup.minors ?? [],
     completed: passedCodes(profile.results),
     terms: state.terms,
     international: state.setup.international === true,
@@ -109,6 +110,7 @@ export function usePlan() {
         a.courseYear === b.courseYear &&
         a.major === b.major &&
         a.specialisation === b.specialisation &&
+        (a.minors ?? []).join(',') === (b.minors ?? []).join(',') &&
         (a.field ?? '') === (b.field ?? '') &&
         a.startYear === b.startYear &&
         a.startPeriod === b.startPeriod &&
@@ -144,6 +146,7 @@ export function usePlan() {
       courseYear: setup.courseYear,
       major: setup.major || undefined,
       specialisation: setup.specialisation || undefined,
+      minors: setup.minors ?? [],
       startYear: start.year,
       startPeriod: start.period,
       keepOpen: !setup.major && setup.field

@@ -100,8 +100,8 @@ const showWizard = computed(
 const options = computed(() => subjectList.value.map((s) => ({ code: s.code, title: s.title })))
 // Which planned subjects the degree or major insists on, shown as a tag on each card.
 const roles = computed(() => {
-  const { course, courseYear, major, specialisation } = plan.setup.value
-  const r = planRoles(data.value, course, courseYear, [major, specialisation])
+  const { course, courseYear, major, specialisation, minors } = plan.setup.value
+  const r = planRoles(data.value, course, courseYear, [major, specialisation, ...(minors ?? [])])
   const out: Record<string, 'required' | 'option'> = {}
   for (const c of r.required) out[c] = 'required'
   for (const c of r.options) out[c] = 'option'
@@ -135,7 +135,9 @@ const majorTitle = computed(() => {
     data.value.components.find((c) => c.id === plan.setup.value.major)?.title ??
     (field ? t.value('wizard.fieldUndecided', { field: t.value(`majorGroup.${field}`) }) : t.value('wizard.notSure'))
   const spec = data.value.components.find((c) => c.id === plan.setup.value.specialisation)?.title
-  return spec ? `${major} + ${spec}` : major
+  const minor = (plan.setup.value.minors ?? []).map((id) => data.value.components.find((c) => c.id === id)?.title).filter(Boolean).join(' + ')
+  const main = spec ? `${major} + ${spec}` : major
+  return minor ? `${main} · ${t.value('plans.minorLine', { title: minor })}` : main
 })
 const summary = computed(() =>
   t.value('wizard.summary', {

@@ -98,6 +98,7 @@ export const zhTW: Messages = {
     notesOne: '1 則關於假設的說明',
   },
   rule: {
+    minor: "最多 {max} 個輔修",
     compulsory: '必修 {codes}',
     compulsoryFirst: '第一個學期必須修 {codes}',
     pointsMin: '至少 {n} 學分的{what}',
@@ -117,6 +118,10 @@ export const zhTW: Messages = {
     requirementOr: '；或 ',
   },
   ruleDetail: {
+    noMinor: "未選擇（可選）",
+    tooManyMinors: "{have} 個輔修（最多 {max} 個）",
+    minorSameAsMajor: "{title} 不能同時作為主修和輔修",
+    componentMissingData: "{id} 暫無資料",
     done: '已完成',
     missing: '缺少 {codes}',
     firstSemester: '{codes} 必須安排在第一個學期',
@@ -595,6 +600,7 @@ export const zhTW: Messages = {
     teachHigh: '很好',
   },
   seo: {
+    minorTitle: "墨大 {title} 輔修：科目與規劃",
     subjectTitle: "{code} {title}｜墨大選課：先修課、開課學期、考核方式",
     subjectTitleReviews: "{code} {title}｜墨大課程評價：難度、先修課、考核方式",
     majorTitle: "墨大 {title} 主修：必修課、選修課和排課",
@@ -677,6 +683,11 @@ export const zhTW: Messages = {
     cat: { science: "理科", commerce: "商科", arts: "文科", breadth: "Breadth" },
   },
   majors: {
+    minorTitle: "{title} 輔修",
+    minorKind: "輔修",
+    planMinor: "把這個輔修加入我的計畫",
+    minorsTitle: "輔修",
+    minorsHint: "輔修是主修之外一個較小的可選方向。",
     closedList: "已不再招收新生：",
     entryRoutes: "這個專業依你原有的語言程度分 {n} 條路線。下面顯示的是 {first}；排課時會依你修過的課選對應的路線。",
     shownFor: "依 {course} 顯示",
@@ -1045,6 +1056,7 @@ export const zhTW: Messages = {
     discussRead: '查看原文',
   },
   plans: {
+    minorLine: "輔修：{title}",
     goal: "目標",
     interests: "興趣",
     noInterests: "還沒選",
@@ -1079,6 +1091,8 @@ export const zhTW: Messages = {
     notPlanned: "沒有安排",
   },
   wizard: {
+    qMinor: "加一個輔修嗎？（可選）",
+    noMinor: "不加輔修",
     majorsLink: "不確定選哪個？看看各主修介紹",
     qSpec: '要加一個專精嗎？（可選）',
     noSpec: '不加',
