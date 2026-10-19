@@ -63,7 +63,7 @@ export const RATINGS_FORM: GoogleFormConfig<RatingField> = {
     // "WAM range without this subject", added with addWamRangeQuestion(); sent only with a grade band.
     wamBand: 'entry.1922617865',
     // "Overall" (1–5 scale), not on the form yet: paste its entry id here once added.
-    overall: '',
+    overall: 'entry.868171789',
   },
   optional: ['examDifficulty', 'usefulness', 'interest', 'teaching', 'overall', 'wamBand'],
 }
