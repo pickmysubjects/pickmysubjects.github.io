@@ -1,10 +1,10 @@
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs'
-import { join, relative } from 'node:path'
+import { dirname, join, relative } from 'node:path'
 import { parse } from 'yaml'
 import { z } from 'zod'
 import { referencedSubjects } from '../src/engine/expr'
 import { MIN_GRADE_SHARES, type GradeOffset } from '../src/engine/grades'
-import { aboutFileSchema, componentFileSchema, courseFileSchema, discussionFileSchema, SKILLS, subjectFileSchema, subjectTitlesFileSchema, type Dataset, type Skill, type Subject } from '../src/engine/schema'
+import { aboutFileSchema, componentFileSchema, courseFileSchema, DISCUSSION_SOURCES, discussionFileSchema, SKILLS, subjectFileSchema, subjectTitlesFileSchema, type Dataset, type DiscussionSummary, type Skill, type Subject } from '../src/engine/schema'
 
 export const ROOT = join(import.meta.dirname, '..')
 
@@ -37,6 +37,30 @@ function load<S extends z.ZodType>(file: string, schema: S, errors: string[]): z
 }
 
 /** Load and validate one dataset directory (data/real or data/demo). */
+export interface DiscussionFile {
+  path: string
+  dir: string // folder under discussions/: '' or 'reddit'
+  d: DiscussionSummary
+}
+
+/**
+ * Puts each discussion summary on its subject, one per source, in DISCUSSION_SOURCES order
+ * (StudentVIP first). StudentVIP summaries sit in discussions/, Reddit ones in discussions/reddit/.
+ */
+export function attachDiscussions(subjects: Dataset['subjects'], files: DiscussionFile[], errors: string[]): void {
+  for (const { path, dir, d } of files) {
+    const want = d.source === 'Reddit' ? 'reddit' : ''
+    if (dir !== want) errors.push(`${path}: ${d.source} summaries go in discussions/${want && `${want}/`}`)
+    const s = subjects[d.code]
+    if (!s) errors.push(`${path}: ${d.code} is not a subject`)
+    else if (s.discussions?.some((x) => x.source === d.source)) errors.push(`${path}: ${d.code} already has a ${d.source} summary`)
+    else (s.discussions ??= []).push(d)
+  }
+  for (const s of Object.values(subjects)) {
+    s.discussions?.sort((a, b) => DISCUSSION_SOURCES.indexOf(a.source) - DISCUSSION_SOURCES.indexOf(b.source))
+  }
+}
+
 export function buildDataset(name: Dataset['name']): BuildResult {
   const base = join(ROOT, 'data', name)
   const errors: string[] = []
@@ -94,14 +118,14 @@ export function buildDataset(name: Dataset['name']): BuildResult {
   }
 
   // Summaries of public discussion, one file per subject.
+  const discussions: DiscussionFile[] = []
   for (const file of yamlFiles(join(base, 'discussions'))) {
     const d = load(file, discussionFileSchema, errors)
     if (!d) continue
     if (!file.endsWith(`${d.code}.yaml`)) errors.push(`${relative(ROOT, file)}: file name must be ${d.code}.yaml`)
-    const s = subjects[d.code]
-    if (!s) errors.push(`${relative(ROOT, file)}: ${d.code} is not a subject`)
-    else s.discussion = d
+    discussions.push({ path: relative(ROOT, file), dir: relative(join(base, 'discussions'), dirname(file)), d })
   }
+  attachDiscussions(subjects, discussions, errors)
 
   // What each subject is about, in short.
   for (const file of yamlFiles(join(base, 'about'))) {
@@ -164,6 +188,9 @@ function mergeRatings(file: string, subjects: Dataset['subjects']): void {
       interest?: number | null
       teaching?: number | null
       hoursMedian?: number | null
+      recommendRate?: number | null
+      overall?: number | null
+      overallCount?: number
     }
   >
   for (const [code, r] of Object.entries(ratings)) {
@@ -180,6 +207,9 @@ function mergeRatings(file: string, subjects: Dataset['subjects']): void {
       interest: extra(r.interest),
       teaching: extra(r.teaching),
       hours: extra(r.hoursMedian),
+      recommend: extra(r.recommendRate),
+      overall: extra(r.overall),
+      overallCount: r.overall == null ? undefined : r.overallCount,
     }
     if (s.skills.length === 0 && r.reviews >= MIN_REVIEWS_FOR_SKILLS) {
       s.skills = r.skills.filter((k): k is Skill => (SKILLS as readonly string[]).includes(k))

@@ -3,7 +3,7 @@ import type { Dataset, DiscussionSummary, Subject, SubjectAbout } from './schema
 /** The long text of one subject, loaded only when its page is opened. */
 export interface SubjectDetail {
   about?: SubjectAbout
-  discussion?: DiscussionSummary
+  discussions?: DiscussionSummary[]
   breadthFor?: string[]
 }
 
@@ -23,15 +23,15 @@ export function splitDataset(data: Dataset): { core: Dataset; details: Record<st
   const subjects: Record<string, Subject> = {}
   const details: Record<string, Record<string, SubjectDetail>> = {}
   for (const [code, s] of Object.entries(data.subjects)) {
-    const { about, discussion, breadthFor, ...rest } = s
+    const { about, discussions, breadthFor, ...rest } = s
     const lean: Subject = { ...rest } as Subject
     if (about) lean.about = { ...about, learn: { en: about.learn.en, zh: '' }, outcomes: [] }
-    if (discussion) lean.discussion = { ...discussion, points: [] }
+    if (discussions) lean.discussions = discussions.map((d) => ({ ...d, points: [] }))
     subjects[code] = lean
-    if (about || discussion || breadthFor) {
+    if (about || discussions || breadthFor) {
       const d: SubjectDetail = {}
       if (about) d.about = about
-      if (discussion) d.discussion = discussion
+      if (discussions) d.discussions = discussions
       if (breadthFor) d.breadthFor = breadthFor
       ;(details[detailArea(code)] ??= {})[code] = d
     }

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { aggregate, COLUMNS, rowsToObjects } from '../scripts/ratings/aggregate'
+import { aggregate, buildRatingFiles, COLUMNS, rowsToObjects } from '../scripts/ratings/aggregate'
 
 const header = Object.values(COLUMNS)
 function row(over: Partial<Record<keyof typeof COLUMNS, string>> = {}): string[] {
@@ -19,6 +19,8 @@ function row(over: Partial<Record<keyof typeof COLUMNS, string>> = {}): string[]
     usefulness: '',
     interest: '',
     teaching: '',
+    overall: '',
+    wamBand: '',
   }
   return (Object.keys(COLUMNS) as (keyof typeof COLUMNS)[]).map((k) => over[k] ?? base[k])
 }
@@ -46,6 +48,8 @@ describe('aggregate ratings', () => {
       usefulness: null,
       interest: null,
       teaching: null,
+      overall: null,
+      overallCount: 0,
     })
   })
 
@@ -116,4 +120,52 @@ describe('aggregate ratings', () => {
     expect(json).not.toContain('secret text')
     expect(json).not.toContain('@')
   })
+})
+
+describe('buildRatingFiles', () => {
+  const now = new Date('2026-10-07')
+
+  it('hours and recommend need 3 usable answers, like every other average', () => {
+    const rows = [row({ timestamp: 'a', recommend: '', hours: '' }), row({ timestamp: 'b', recommend: '', hours: '', difficulty: '2' }), row({ timestamp: 'c' })]
+    const out = buildRatingFiles([header, ...rows], undefined, now).ratings.COMP30027
+    expect(out?.reviews).toBe(3)
+    expect(out?.hoursMedian).toBeNull()
+    expect(out?.recommendRate).toBeNull()
+  })
+
+  it('publishes an overall score with its count, for rating markup', () => {
+    const rows = ['5', '4', '3', ''].map((o, i) => row({ timestamp: `t${i}`, overall: o }))
+    const out = buildRatingFiles([header, ...rows], undefined, now).ratings.COMP30027
+    expect(out?.overall).toBe(4)
+    expect(out?.overallCount).toBe(3)
+  })
+
+  it('never puts free text or grade bands in the published files', () => {
+    const cols = [...header, 'What I wish I knew', 'App language']
+    const rows = Array.from({ length: 6 }, (_, i) => [...row({ timestamp: `t${i}`, wamBand: '70–74', grade: 'H1' }), `secret comment ${i}`, 'en'])
+    const { ratings, offsets } = buildRatingFiles([cols, ...rows], new Set(['COMP30027']), now)
+    const text = JSON.stringify({ ratings, offsets })
+    expect(text).not.toContain('secret')
+    expect(text).not.toContain('H1')
+    expect(text).not.toContain('70')
+    expect(offsets.COMP30027?.n).toBe(6)
+  })
+
+  it('a grade band sent alone counts for offsets, but an identical resubmission only once', () => {
+    const card = (i: number) => row({ timestamp: `t${i}`, difficulty: '', workload: '', generosity: '', hours: '', skills: '', recommend: '', year: String(2020 + i), wamBand: '70–74', grade: 'H2A' })
+    const four = [1, 2, 3, 4].map(card)
+    const dupes = [header, ...four, card(4), card(4)]
+    expect(buildRatingFiles(dupes, undefined, now).offsets.COMP30027).toBeUndefined() // 4 distinct < 5
+    const five = [header, ...four, card(5)]
+    expect(buildRatingFiles(five, undefined, now).offsets.COMP30027?.n).toBe(5)
+    expect(buildRatingFiles(five, undefined, now).ratings.COMP30027).toBeUndefined() // a band alone isn't a rating
+  })
+})
+
+it('keeps every skill the form offers', async () => {
+  const { SKILLS } = await import('../src/engine/schema')
+  const rows = ['a', 'b', 'c'].map((t, i) => row({ timestamp: t, difficulty: String(i + 1), skills: 'fieldwork, languages, exams' }))
+  expect(SKILLS).toContain('fieldwork')
+  // exams is read off the assessment, never taken from ratings.
+  expect(aggregate(rowsToObjects([header, ...rows])).subjects.COMP30027?.skills).toEqual(['fieldwork', 'languages'])
 })

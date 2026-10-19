@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { link } from '@/composables/useView'
-import { computed, shallowRef } from 'vue'
+import { computed, nextTick, shallowRef } from 'vue'
 import { ArrowLeft, CalendarRange, Check, ExternalLink, Plus, Star } from 'lucide-vue-next'
 import RatingForm from '@/components/rating/RatingForm.vue'
 import AssessmentPanel from '@/components/subject/AssessmentPanel.vue'
@@ -64,6 +64,12 @@ const passed = computed(() => profile.value.results.find((r) => r.code === code.
 const rating = shallowRef(false)
 const thanks = shallowRef(false)
 
+function openRating(): void {
+  rating.value = true
+  // The form opens in the ratings panel further down; take the student there.
+  void nextTick(() => document.getElementById('ratings')?.scrollIntoView({ behavior: 'smooth', block: 'start' }))
+}
+
 function onRated(sent: boolean): void {
   rating.value = false
   if (!sent) return
@@ -109,6 +115,7 @@ const meters = computed(() => {
   const s = subject.value?.signals
   if (!s) return []
   const meters = [
+    { key: 'rating.overall', value: s.overall, low: 'rating.teachLow', high: 'rating.teachHigh' },
     { key: 'rating.difficulty', value: s.difficulty, low: 'rating.diffLow', high: 'rating.diffHigh' },
     { key: 'rating.examDifficulty', value: s.examDifficulty, low: 'rating.diffLow', high: 'rating.diffHigh' },
     { key: 'rating.workload', value: s.workload, low: 'rating.loadLow', high: 'rating.loadHigh' },
@@ -177,6 +184,10 @@ const gist = computed(() => (subject.value ? subjectGist(t.value, subject.value)
               <Plus :size="18" aria-hidden="true" /> {{ t('subject.addToPlan') }}
             </button>
           </template>
+          <!-- Taken it and not rated yet: the way to rate sits up here, not only at the bottom. -->
+          <button v-if="taken && !rated.has(subject.code) && !thanks && !rating" class="button button-quiet" type="button" @click="openRating">
+            <Star :size="18" aria-hidden="true" /> {{ t('rating.rate') }}
+          </button>
           <a v-if="subject.handbook" class="button button-quiet" :href="subject.handbook" target="_blank" rel="noopener">
             {{ t('subject.handbook') }} <ExternalLink :size="15" aria-hidden="true" />
           </a>
@@ -231,14 +242,17 @@ const gist = computed(() => (subject.value ? subjectGist(t.value, subject.value)
           </template>
         </section>
 
-        <DiscussionSummary v-if="detailReady && subject.discussion" class="panel surface panel-wide" :discussion="subject.discussion" />
+        <DiscussionSummary v-if="detailReady && subject.discussions?.length" class="panel surface panel-wide" :discussions="subject.discussions" />
 
-        <section class="panel surface panel-wide">
+        <section id="ratings" class="panel surface panel-wide">
           <h2 class="panel-title">{{ t('subject.ratingsTitle') }}</h2>
-          <template v-if="meters.length">
+          <template v-if="meters.length || subject.signals?.hours || subject.signals?.recommend !== undefined">
             <p class="panel-text muted">{{ t('subject.reviews', { n: subject.signals?.reviews ?? 0 }) }}</p>
             <p v-if="subject.signals?.hours" class="panel-text">{{ t('subject.hoursWeek', { n: subject.signals.hours }) }}</p>
-            <div class="meters">
+            <p v-if="subject.signals?.recommend !== undefined" class="panel-text">
+              {{ t('subject.recommendShare', { pct: Math.round(subject.signals.recommend * 100) }) }}
+            </p>
+            <div v-if="meters.length" class="meters">
               <div v-for="m in meters" :key="m.key" class="meter">
                 <span class="meter-label">{{ t(m.key) }}</span>
                 <span class="meter-track" aria-hidden="true"><span class="meter-fill" :style="{ width: `${(m.value / 5) * 100}%` }" /></span>

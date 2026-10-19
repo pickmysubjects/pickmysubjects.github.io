@@ -3,7 +3,7 @@ import { offeredIn, periodsFor } from './availability'
 import { majorTitles, minorTitles } from './courseRules'
 import { evaluateField, referencedSubjects, type Tri } from './expr'
 import type { Note, Params } from './plan'
-import type { Dataset, Period, Skill, Subject } from './schema'
+import { discussionVerdict, type Dataset, type Period, type Skill, type Subject } from './schema'
 import { predictMark } from './predict'
 import { skillsOf } from './skills'
 import { termStress } from './termStress'
@@ -528,6 +528,10 @@ function score(s: Subject, ctx: ScoreCtx): Recommendation {
       if (difficulty !== undefined && difficulty >= 4) warnings.push(note('hard', { score: difficulty, n: reviews }, `Students rate it hard (${difficulty}/5, ${n}).`))
       if (workload !== undefined && workload >= 4) warnings.push(note('heavy', { score: workload, n: reviews }, `Heavy workload (${workload}/5, ${n}).`))
       if (grading !== undefined && grading >= 4) reasons.push(note('generous', { score: grading, n: reviews }, `Students say marking is generous (${grading}/5, ${n}).`))
+      // Most who rated it would take it again: said as a reason, not added to the score (it mixes
+      // ease, interest and teaching, which the other parts already weigh).
+      const rec = s.signals.recommend
+      if (rec !== undefined && rec >= 0.8) reasons.push(note('recommended', { pct: Math.round(rec * 100), n: reviews }, `${Math.round(rec * 100)}% of students who rated it would recommend it (${n}).`))
       if (difficulty !== undefined && difficulty <= 2) reasons.push(note('approachable', { score: difficulty, n: reviews }, `Students rate it approachable (${difficulty}/5, ${n}).`))
     }
   }
@@ -535,14 +539,15 @@ function score(s: Subject, ctx: ScoreCtx): Recommendation {
   // No ratings of our own yet: what the public review summary says stands in, a little
   // either side of neutral, until students rate it here.
   if (!s.signals || s.signals.reviews < MIN_REVIEWS) {
-    const d = s.discussion
-    if (d?.difficulty === 'hard') warnings.push(note('reviewsHard', {}, 'Public reviews say it is hard.'))
-    if (d?.workload === 'heavy') warnings.push(note('reviewsHeavy', {}, 'Public reviews say it takes a lot of time.'))
-    if (d?.difficulty === 'easy') reasons.push(note('reviewsEasy', {}, 'Public reviews say it is manageable.'))
+    // All summaries together (see discussionVerdict: sources that disagree say nothing).
+    const d = { difficulty: discussionVerdict(s.discussions, 'difficulty')?.value, workload: discussionVerdict(s.discussions, 'workload')?.value }
+    if (d.difficulty === 'hard') warnings.push(note('reviewsHard', {}, 'Public reviews say it is hard.'))
+    if (d.workload === 'heavy') warnings.push(note('reviewsHeavy', {}, 'Public reviews say it takes a lot of time.'))
+    if (d.difficulty === 'easy') reasons.push(note('reviewsEasy', {}, 'Public reviews say it is manageable.'))
     // Worth about as much as a handful of ratings: close to neutral, so it nudges rather than
     // reorders. A heavy workload is shown as a warning and counts in the semester check, but
     // costs time, not marks, so it doesn't count against ease here.
-    if (parts.ease === undefined && (d?.difficulty === 'hard' || d?.difficulty === 'easy')) parts.ease = d.difficulty === 'hard' ? 0.42 : 0.58
+    if (parts.ease === undefined && (d.difficulty === 'hard' || d.difficulty === 'easy')) parts.ease = d.difficulty === 'hard' ? 0.42 : 0.58
   }
 
   // Nothing rated or reviewed: a small estimate from the Handbook facts, so "protect my WAM"

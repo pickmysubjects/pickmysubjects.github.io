@@ -22,6 +22,8 @@ import { useDataset } from '@/composables/useDataset'
 import { usePlan, type PlanSetup } from '@/composables/usePlan'
 import { usePlanStress } from '@/composables/usePlanStress'
 import { pastTerms } from '@/utils/pastTerms'
+import RatePrompt from '@/components/rating/RatePrompt.vue'
+import { useRated } from '@/composables/useRated'
 import { useI18n } from '@/i18n'
 import { issueText, termLabel } from '@/i18n/format'
 
@@ -158,6 +160,8 @@ const peekTerm = computed(() => {
   const i = plan.terms.value.findIndex((x) => x.subjects.includes(peek.value ?? ''))
   return i >= 0 ? { index: i, term: plan.terms.value[i] as PlanTerm } : null
 })
+const { shouldPrompt } = useRated()
+const rateNext = shallowRef<string | null>(null)
 // Done with a planned subject: it moves to My record, in the semester it was planned for.
 function markDone(code: string, mark: number | undefined): void {
   const where = peekTerm.value
@@ -166,6 +170,8 @@ function markDone(code: string, mark: number | undefined): void {
   // An earlier fail stays: both attempts are on the transcript and count in the WAM.
   setResults([...profile.value.results.filter((r) => r.code !== code || isFail(r)), { code, year, period, ...(mark === undefined ? {} : { mark }) }])
   plan.removeSubject(where.index, code)
+  // Just finished it: offer to rate it, once per subject.
+  if (shouldPrompt(code)) rateNext.value = code
 }
 // The plan and My record disagree: a planned subject is already passed, or a semester holds
 // more than its load once its recorded subjects are counted. (A part-done semester the plan
@@ -303,6 +309,8 @@ const printTerms = computed<PrintTerm[]>(() => {
           <p v-if="hasConfirmable" class="status-hint">{{ t('plan.confirmHint') }}</p>
         </div>
       </section>
+
+      <RatePrompt v-if="rateNext" :key="rateNext" :code="rateNext" @close="rateNext = null" />
 
       <PlanProgress v-if="onBoard" :statuses="plan.courseCheck.value.statuses" :rules="rules" />
       <PlanMap

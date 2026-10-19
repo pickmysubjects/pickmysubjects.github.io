@@ -33,6 +33,13 @@ const informals = computed(() =>
     .filter((c) => !query.value.trim() || c.title.toLowerCase().includes(query.value.trim().toLowerCase()))
     .sort((a, b) => a.title.localeCompare(b.title)),
 )
+// Its formal specialisations (taken with a major that allows them), likewise.
+const specs = computed(() =>
+  data.value.components
+    .filter((c) => c.course === course.value && c.kind === 'specialisation' && !c.informal && (c.closedFrom === undefined || new Date().getFullYear() < c.closedFrom))
+    .filter((c) => !query.value.trim() || c.title.toLowerCase().includes(query.value.trim().toLowerCase()))
+    .sort((a, b) => a.title.localeCompare(b.title)),
+)
 const groups = computed(() => {
   const q = query.value.trim().toLowerCase()
   return groupMajors(majors.value)
@@ -61,7 +68,7 @@ const courseTitle = computed(() => data.value.courses.find((c) => c.code === cou
       <input v-model="query" class="search-input" type="search" :placeholder="t('majors.search')" :aria-label="t('majors.search')" />
     </label>
 
-    <p v-if="groups.length === 0 && minors.length === 0 && informals.length === 0" class="empty">{{ t('wizard.noMajorMatch') }}</p>
+    <p v-if="groups.length === 0 && minors.length === 0 && informals.length === 0 && specs.length === 0" class="empty">{{ t('wizard.noMajorMatch') }}</p>
 
     <!-- Grouped and folded: the first group is open; a search opens every group it matches. -->
     <details v-for="(g, i) in groups" :key="g.id" class="group" :open="i === 0 || query.trim() !== '' || undefined">
@@ -83,6 +90,17 @@ const courseTitle = computed(() => data.value.courses.find((c) => c.code === cou
       <p class="minors-hint">{{ t('majors.minorsHint') }}</p>
       <div class="cards">
         <a v-for="m in minors" :key="m.id" class="card surface" :href="link(`majors/${m.id}`)">
+          <span class="card-title">{{ m.title }}</span>
+          <ChevronRight :size="18" aria-hidden="true" class="go" />
+        </a>
+      </div>
+    </section>
+
+    <section v-if="specs.length" class="minors" aria-labelledby="specs-title">
+      <h2 id="specs-title" class="minors-title">{{ t('majors.specsTitle') }} <span class="group-count">{{ specs.length }}</span></h2>
+      <p class="minors-hint">{{ t('majors.specsHint') }}</p>
+      <div class="cards">
+        <a v-for="m in specs" :key="m.id" class="card surface" :href="link(`majors/${m.id}`)">
           <span class="card-title">{{ m.title }}</span>
           <ChevronRight :size="18" aria-hidden="true" class="go" />
         </a>

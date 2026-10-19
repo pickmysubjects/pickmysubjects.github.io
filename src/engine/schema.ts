@@ -236,6 +236,9 @@ const signals = z
     interest: z.number().min(1).max(5).optional(),
     teaching: z.number().min(1).max(5).optional(),
     hours: z.number().positive().max(60).optional(), // median hours a week students report
+    recommend: z.number().min(0).max(1).optional(), // share who would recommend it
+    overall: z.number().min(1).max(5).optional(),
+    overallCount: z.number().int().nonnegative().optional(), // how many gave an overall score
   })
   .strict()
 
@@ -311,8 +314,8 @@ export const subjectFileSchema = z
     discontinuedFrom: s.discontinued_from,
     campus: s.campus,
     replacedBy: s.replaced_by,
-    // Filled in from data/<set>/discussions/ when there is one.
-    discussion: undefined as DiscussionSummary | undefined,
+    // Filled in from data/<set>/discussions/ (StudentVIP) and discussions/reddit/, in DISCUSSION_SOURCES order.
+    discussions: undefined as DiscussionSummary[] | undefined,
     // How its grades sit against sharers' WAMs (scripts/ratings → grade-offsets.json), once 5+ shared.
     gradeOffset: undefined as GradeOffset | undefined,
     // Filled in from data/<set>/about/ when there is one.
@@ -345,32 +348,67 @@ export type Localized = { en: string; zh: string } & Partial<Record<(typeof OTHE
 const enZh = localized
 
 /**
- * A short summary of what students say about a subject on a public review site,
- * kept apart from our own ratings: no scores, never mixed into averages, always
- * linked to the source. Staff are never named.
+ * A short summary of what students say about a subject in one public place (StudentVIP reviews,
+ * r/unimelb threads), kept apart from our own ratings: no scores, never mixed into averages,
+ * always linked to the source. Staff are never named. A subject can have one per source.
  */
-export const discussionFileSchema = z
-  .object({
-    code: subjectCode,
-    source: z.literal('StudentVIP'),
-    url: z.string().regex(/^https:\/\/studentvip\.com\.au\/unimelb\/subjects\/[a-z]{4}\d{5}$/),
-    reviews: z.number().int().positive(), // how many reviews the summary is based on
-    from: z.number().int(),
-    to: z.number().int(),
-    checked: z.iso.date(),
-    points: z
-      .array(localized(220, 120))
-      .min(1)
-      .max(5),
-    // What the summary's own points say about the work and the difficulty, read off them so the
-    // semester check can use it before our own ratings come in. Left out when they don't say.
-    // When older and newer reviews disagree, the newest decide: subjects change.
-    workload: z.enum(['light', 'heavy', 'mixed']).optional(),
-    difficulty: z.enum(['easy', 'hard', 'mixed']).optional(),
-  })
-  .strict()
+const discussionBase = {
+  code: subjectCode,
+  from: z.number().int(),
+  to: z.number().int(),
+  checked: z.iso.date(),
+  points: z.array(localized(220, 120)).min(1).max(5),
+  // What the summary's own points say about the work and the difficulty, read off them so the
+  // semester check can use it before our own ratings come in. Left out when they don't say.
+  // When older and newer posts disagree, the newest decide: subjects change.
+  workload: z.enum(['light', 'heavy', 'mixed']).optional(),
+  difficulty: z.enum(['easy', 'hard', 'mixed']).optional(),
+}
+export const discussionFileSchema = z.discriminatedUnion('source', [
+  z
+    .object({
+      source: z.literal('StudentVIP'),
+      url: z.string().regex(/^https:\/\/studentvip\.com\.au\/unimelb\/subjects\/[a-z]{4}\d{5}$/),
+      reviews: z.number().int().positive(), // how many reviews the summary is based on
+      ...discussionBase,
+    })
+    .strict(),
+  z
+    .object({
+      source: z.literal('Reddit'),
+      // An r/unimelb search or thread.
+      url: z.string().regex(/^https:\/\/www\.reddit\.com\/r\/unimelb\/\S+$/),
+      threads: z.number().int().positive(), // how many distinct threads the summary is based on
+      ...discussionBase,
+    })
+    .strict(),
+])
 
 export type DiscussionSummary = z.output<typeof discussionFileSchema>
+
+/** Sources in the order a subject lists them. */
+export const DISCUSSION_SOURCES = ['StudentVIP', 'Reddit'] as const
+
+/** How many reviews (StudentVIP) or threads (Reddit) a summary is based on. */
+export function discussionCount(d: DiscussionSummary): number {
+  return d.source === 'StudentVIP' ? d.reviews : d.threads
+}
+
+/**
+ * What a subject's summaries say together about its difficulty or workload. The rule: only
+ * sources that give a verdict count; if they all give the same one, that is the verdict; if
+ * they disagree (say StudentVIP "mixed", Reddit "hard"), there is none, since we can't tell
+ * which is right. `n` adds up the reviews/threads behind the agreeing sources.
+ */
+export function discussionVerdict<K extends 'difficulty' | 'workload'>(
+  list: readonly DiscussionSummary[] | undefined,
+  field: K,
+): { value: NonNullable<DiscussionSummary[K]>; n: number } | undefined {
+  const said = (list ?? []).filter((d) => d[field] !== undefined)
+  const value = said[0]?.[field]
+  if (value === undefined || said.some((d) => d[field] !== value)) return undefined
+  return { value: value as NonNullable<DiscussionSummary[K]>, n: said.reduce((a, d) => a + discussionCount(d), 0) }
+}
 
 /**
  * What a subject is about, in a sentence, and what you can do after it: our own short

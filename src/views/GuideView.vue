@@ -68,6 +68,11 @@ const FAILING = 'https://students.unimelb.edu.au/course-admin/planning-your-cour
             <li>{{ t('guide.firstStep4') }}</li>
           </ol>
           <p class="aside">{{ t('guide.breadthText') }}</p>
+          <p class="aside">
+            {{ t('guide.easyHardText') }}
+            <a :href="link('subjects/easy/')">{{ t('browse.rankList.easy') }}</a> ·
+            <a :href="link('subjects/hard/')">{{ t('browse.rankList.hard') }}</a>
+          </p>
           <p class="actions">
             <a class="button button-accent" :href="link('subjects?preset=firstSemester')">{{ t('guide.firstFind') }}</a>
             <a class="button button-quiet" :href="link('majors')">{{ t('guide.firstMajors') }}</a>

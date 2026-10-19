@@ -10,7 +10,7 @@ import { useDataset } from './composables/useDataset'
 import { useI18n } from './i18n'
 import { localTitle, withLocalTitle } from './i18n/localized'
 import { PRESET_TITLE_KEYS, subjectTitleKey } from '@/utils/seo'
-import { presetFromSlug } from '@/engine'
+import { presetFromSlug, rankFromSlug } from '@/engine'
 
 const lazy = (v: keyof typeof VIEW_LOADERS) => defineAsyncComponent(VIEW_LOADERS[v])
 const HomeView = lazy('home')
@@ -25,6 +25,8 @@ const AboutView = lazy('about')
 const GuideView = lazy('guide')
 const BrowseView = lazy('subjects')
 const MajorsView = lazy('majors')
+// The easy / hard lists (/subjects/easy/) live under Find subjects but are a page of their own.
+const RankingView = defineAsyncComponent(() => import('./views/RankingView.vue'))
 
 const { view, param } = useView()
 const { t, locale } = useI18n()
@@ -50,6 +52,7 @@ watchEffect(() => {
   // A quick pick's own page keeps the title its static page has, so search engines that run
   // the app see the same one.
   const preset = view.value === 'subjects' ? presetFromSlug(param.value) : undefined
+  const ranking = view.value === 'subjects' ? rankFromSlug(param.value) : undefined
   const year = Math.max(...Object.values(data.value.subjects).map((x) => x.sourceYear))
   // Breadth depends on the degree: the static page names the Bachelor of Science, but a student
   // planning another degree sees that degree's breadth list, so the title names it instead.
@@ -57,7 +60,9 @@ watchEffect(() => {
   document.title = s
     ? `${t.value(subjectTitleKey(s), { code: s.code, title: withLocalTitle(s.title, localTitle(s, locale.value)) })} | PickMySubjects`
     : major
-      ? `${t.value(major.informal ? 'seo.informalTitle' : major.kind === 'minor' ? 'seo.minorTitle' : 'seo.majorTitle', { title: major.title })} | PickMySubjects`
+      ? `${t.value(major.informal ? 'seo.informalTitle' : major.kind === 'minor' ? 'seo.minorTitle' : major.kind === 'specialisation' ? 'seo.specTitle' : 'seo.majorTitle', { title: major.title })} | PickMySubjects`
+      : ranking
+        ? `${t.value(ranking === 'easy' ? 'seo.rankEasy' : 'seo.rankHard', { year })} | PickMySubjects`
       : preset
         ? `${breadthElsewhere ? t.value('seo.presetBreadthFor', { course: breadthElsewhere, year }) : t.value(PRESET_TITLE_KEYS[preset], { year })} | PickMySubjects`
       : key
@@ -86,6 +91,7 @@ const plannerUrl =
     <FeedbackView v-else-if="view === 'feedback'" />
     <AboutView v-else-if="view === 'about'" />
     <GuideView v-else-if="view === 'guide'" />
+    <RankingView v-else-if="view === 'subjects' && rankFromSlug(param)" :key="param" :direction="rankFromSlug(param)!" />
     <BrowseView v-else-if="view === 'subjects'" />
     <MajorsView v-else-if="view === 'majors'" :id="param" />
     <PrivacyView v-else />

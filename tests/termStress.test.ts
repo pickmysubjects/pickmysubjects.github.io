@@ -78,7 +78,7 @@ describe('termStress', () => {
       points: [{ en: 'A summary point long enough.', zh: '一条摘要要点' }], workload, difficulty,
     })
     const d = term(() => ({}))
-    for (const c of four.slice(0, 2)) (d.subjects[c] as { discussion?: unknown }).discussion = summary('heavy', 'hard')
+    for (const c of four.slice(0, 2)) (d.subjects[c] as { discussions?: unknown }).discussions = [summary('heavy', 'hard')]
     expect(termStress(four, d).reasons.map((r) => r.key).sort()).toEqual(['hard', 'workload'])
   })
 

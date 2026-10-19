@@ -3,6 +3,8 @@
  * Only numbers and counts leave this function — free text ("What I wish I knew")
  * and anything that could identify a person are never published.
  */
+import { gradeOffsets } from '../../src/engine/grades'
+import { SKILLS } from '../../src/engine/schema'
 
 /** Form question titles, exactly as created in the Google Form (see docs/ratings-setup.md). */
 export const COLUMNS = {
@@ -22,6 +24,9 @@ export const COLUMNS = {
   usefulness: 'Usefulness',
   interest: 'Interest',
   teaching: 'Teaching',
+  overall: 'Overall',
+  // Sent only with a grade band (rating form or the My page card); feeds grade-offsets.json.
+  wamBand: 'WAM range without this subject',
 } as const
 
 /** Questions whose answer makes a row count as a rating. */
@@ -36,6 +41,7 @@ const ANSWER_COLUMNS = [
   COLUMNS.usefulness,
   COLUMNS.interest,
   COLUMNS.teaching,
+  COLUMNS.overall,
 ] as const
 
 /** Answers an optional question needs before its average is published. */
@@ -45,19 +51,8 @@ export const MIN_REVIEWS = 3
 /** At most this many ratings per subject per day count, so a burst can't take over a subject. */
 export const MAX_PER_SUBJECT_PER_DAY = 10
 
-export const SKILL_IDS = [
-  'programming',
-  'algorithms',
-  'maths',
-  'statistics',
-  'data',
-  'systems',
-  'writing',
-  'presentation',
-  'lab',
-  'design',
-  'business',
-] as const
+// Every skill the rating form offers, except the two read off the assessment (exams, teamwork).
+export const SKILL_IDS = SKILLS.filter((s) => s !== 'exams' && s !== 'teamwork')
 
 export interface SubjectAggregate {
   reviews: number
@@ -65,7 +60,9 @@ export interface SubjectAggregate {
   difficulty: number | null
   workload: number | null
   grading: number | null
+  /** Median of the hours people reported; null until MIN_ANSWERS gave a usable number. */
   hoursMedian: number | null
+  /** Share answering Yes among Yes/Maybe/No answers; null until MIN_ANSWERS answered. */
   recommendRate: number | null
   /** Skills ticked by at least half the reviewers. */
   skills: string[]
@@ -74,6 +71,9 @@ export interface SubjectAggregate {
   usefulness: number | null
   interest: number | null
   teaching: number | null
+  /** Overall 1–5 score, and how many gave one (the count rating markup needs). */
+  overall: number | null
+  overallCount: number
 }
 
 export interface AggregateResult {
@@ -133,8 +133,9 @@ export function aggregate(rows: Record<string, string>[], now = new Date(), know
       }
     }
     // Optional 1–5 answers: blanks and anything out of range are ignored.
+    const scores = (c: string): number[] => list.map((r) => Number(r[c])).filter((x) => Number.isInteger(x) && x >= 1 && x <= 5)
     const optional = (c: string): number | null => {
-      const xs = list.map((r) => Number(r[c])).filter((x) => Number.isInteger(x) && x >= 1 && x <= 5)
+      const xs = scores(c)
       return xs.length >= MIN_ANSWERS ? round(trimmedMean(xs)) : null
     }
     subjects[code] = {
@@ -142,16 +143,39 @@ export function aggregate(rows: Record<string, string>[], now = new Date(), know
       difficulty: optional(COLUMNS.difficulty),
       workload: optional(COLUMNS.workload),
       grading: optional(COLUMNS.generosity),
-      hoursMedian: hours.length ? median(hours) : null,
-      recommendRate: recs.length ? round(recs.filter((r) => r === 'Yes').length / recs.length) : null,
+      hoursMedian: hours.length >= MIN_ANSWERS ? median(hours) : null,
+      recommendRate: recs.length >= MIN_ANSWERS ? round(recs.filter((r) => r === 'Yes').length / recs.length) : null,
       skills: [...skillCounts].filter(([, n]) => n / list.length >= 0.5).map(([s]) => s).sort(),
       examDifficulty: optional(COLUMNS.examDifficulty),
       usefulness: optional(COLUMNS.usefulness),
       interest: optional(COLUMNS.interest),
       teaching: optional(COLUMNS.teaching),
+      overall: optional(COLUMNS.overall),
+      overallCount: scores(COLUMNS.overall).length,
     }
   }
   return { subjects, accepted: rows.length - rejected, rejected }
+}
+
+/**
+ * Everything the daily job publishes, from the sheet's raw values: per-subject rating aggregates,
+ * and grade offsets from bands sent with a WAM range. Free text ("What I wish I knew", app
+ * language) never reaches either output. Pure, so it's tested without the sheet.
+ */
+export function buildRatingFiles(values: string[][], known?: Set<string>, now = new Date()) {
+  const rows = rowsToObjects(values)
+  const result = aggregate(rows, now, known)
+  // A band can come alone (the My page card), so these rows skip the "answered a rating" rule,
+  // but an identical resubmission still counts once.
+  const seen = new Set<string>()
+  const graded = rows.flatMap((r) => {
+    const g = { code: r[COLUMNS.code] ?? '', band: r[COLUMNS.grade] ?? '', wamBand: r[COLUMNS.wamBand] ?? '' }
+    const key = JSON.stringify(Object.entries(r).filter(([k]) => k !== COLUMNS.timestamp))
+    if (seen.has(key)) return []
+    seen.add(key)
+    return [g]
+  })
+  return { ratings: result.subjects, offsets: gradeOffsets(graded, known), accepted: result.accepted, rejected: result.rejected }
 }
 
 function mean(xs: number[]): number {

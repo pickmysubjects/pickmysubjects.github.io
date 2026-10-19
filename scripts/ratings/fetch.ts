@@ -10,8 +10,7 @@ import { createSign } from 'node:crypto'
 import { writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { buildDataset, ROOT } from '../dataset'
-import { aggregate, rowsToObjects } from './aggregate'
-import { gradeOffsets } from '../../src/engine/grades'
+import { buildRatingFiles } from './aggregate'
 
 const credentials = process.env.GOOGLE_SERVICE_ACCOUNT_JSON
 const sheetId = process.env.RATINGS_SHEET_ID
@@ -70,17 +69,9 @@ async function readSheet(id: string): Promise<string[][]> {
 const values = await readSheet(sheetId)
 
 const known = new Set(Object.keys(buildDataset('real').dataset.subjects))
-const result = aggregate(rowsToObjects(values), new Date(), known)
-writeFileSync(join(ROOT, 'data', 'real', 'ratings.json'), `${JSON.stringify(result.subjects, null, 2)}\n`)
-console.log(`Ratings: ${result.accepted} accepted, ${result.rejected} rejected, ${Object.keys(result.subjects).length} subjects.`)
-
-// Grade bands sent with a WAM range (from a rating or the My page card): only per-subject offsets
-// from 5+ of them are written; rows never are.
-const graded = rowsToObjects(values).map((r) => ({
-  code: r['Subject code'] ?? '',
-  band: r['Grade band'] ?? '',
-  wamBand: r['WAM range without this subject'] ?? '',
-}))
-const offsets = gradeOffsets(graded, known)
-writeFileSync(join(ROOT, 'data', 'real', 'grade-offsets.json'), `${JSON.stringify(offsets, null, 2)}\n`)
-console.log(`Grade bands: ${Object.keys(offsets).length} subjects with 5+ shares.`)
+// Only aggregates are written: per-subject numbers from 3+ ratings, grade offsets from 5+ shares.
+const out = buildRatingFiles(values, known)
+writeFileSync(join(ROOT, 'data', 'real', 'ratings.json'), `${JSON.stringify(out.ratings, null, 2)}\n`)
+console.log(`Ratings: ${out.accepted} accepted, ${out.rejected} rejected, ${Object.keys(out.ratings).length} subjects.`)
+writeFileSync(join(ROOT, 'data', 'real', 'grade-offsets.json'), `${JSON.stringify(out.offsets, null, 2)}\n`)
+console.log(`Grade bands: ${Object.keys(out.offsets).length} subjects with 5+ shares.`)

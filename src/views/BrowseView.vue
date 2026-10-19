@@ -5,7 +5,7 @@ import { Search } from 'lucide-vue-next'
 import BrowseFilters from '@/components/browse/BrowseFilters.vue'
 import BrowseRow from '@/components/browse/BrowseRow.vue'
 import BrowseSwitch from '@/components/browse/BrowseSwitch.vue'
-import { browse, EMPTY_FILTERS, filtersFromQuery, filtersToQuery, PRESETS, type BrowseSort, type PresetName } from '@/engine'
+import { browse, EMPTY_FILTERS, filtersFromQuery, filtersToQuery, PRESETS, RANK_SLUGS, type BrowseSort, type PresetName, type RankDirection } from '@/engine'
 import { link, useView } from '@/composables/useView'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
@@ -41,6 +41,7 @@ const anyRated = computed(() => subjectList.value.some((s) => (s.signals?.review
 const breadthCount = computed(() => subjectList.value.filter((s) => s.categories[course.value] === 'breadth').length)
 
 const PRESET_NAMES = Object.keys(PRESETS) as PresetName[]
+const RANKS: RankDirection[] = ['easy', 'hard']
 function applyPreset(name: PresetName): void {
   // Tapping the chosen quick pick again turns it off.
   filters.value = isPreset(name)
@@ -98,6 +99,8 @@ watch(filters, (f) => {
         >
           {{ t(`browse.preset.${p}`) }}
         </button>
+        <!-- Ready-made ranked lists: their own pages, so links rather than filters. -->
+        <a v-for="d in RANKS" :key="d" class="preset preset-link" :href="link(`subjects/${RANK_SLUGS[d]}/`)">{{ t(`browse.rankList.${d}`) }}</a>
       </div>
     </div>
 
@@ -226,6 +229,10 @@ watch(filters, (f) => {
 .preset:hover {
   color: var(--ink);
   background: var(--glass-fill-hover);
+}
+
+.preset-link {
+  text-decoration: none;
 }
 
 .preset[aria-pressed='true'] {

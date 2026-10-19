@@ -1,5 +1,5 @@
 import type { Profile } from './recommend'
-import type { Dataset, Skill, Subject } from './schema'
+import { discussionVerdict, type Dataset, type Skill, type Subject } from './schema'
 import { prerequisiteRoute } from './expr'
 import { planRoles } from './roles'
 import { MARKING_SKILLS, skillsOf } from './skills'
@@ -189,11 +189,11 @@ function bigProject(s: Subject): boolean {
 }
 
 function heavyWorkload(s: Subject, r: Subject['signals'] | undefined): boolean {
-  return r?.workload !== undefined ? r.workload >= HIGH_RATING : s.discussion?.workload === 'heavy'
+  return r?.workload !== undefined ? r.workload >= HIGH_RATING : discussionVerdict(s.discussions, 'workload')?.value === 'heavy'
 }
 
 function ratedHard(s: Subject, r: Subject['signals'] | undefined): boolean {
-  return r?.difficulty !== undefined ? r.difficulty >= HIGH_RATING : s.discussion?.difficulty === 'hard'
+  return r?.difficulty !== undefined ? r.difficulty >= HIGH_RATING : discussionVerdict(s.discussions, 'difficulty')?.value === 'hard'
 }
 
 export function termStress(codes: string[], data: Dataset, profile?: Profile, opts: StressOptions = {}): TermStress {

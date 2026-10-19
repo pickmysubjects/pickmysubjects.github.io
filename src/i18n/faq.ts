@@ -1,4 +1,4 @@
-import { periodsFor, type Subject } from '@/engine'
+import { discussionCount, periodsFor, type Subject } from '@/engine'
 import { describeReq } from './format'
 import type { Translate } from './index'
 import { pickLocalized } from './localized'
@@ -75,13 +75,13 @@ export function subjectFaq(t: Translate, s: Subject, ctx: FaqContext): FaqItem[]
 
   const sig = s.signals && s.signals.reviews >= 3 ? s.signals : undefined
   const rated = sig && sig.difficulty !== undefined && sig.workload !== undefined
-  if (rated || s.discussion) {
-    const d = s.discussion
+  if (rated || s.discussions?.length) {
+    const d = s.discussions?.[0]
     items.push({
       q: t('faq.hardQ', { code }),
       a: join([
         rated ? t('faq.hardRated', { d: sig.difficulty ?? 0, w: sig.workload ?? 0, n: sig.reviews }) : '',
-        d?.points[0] ? t('faq.hardDiscuss', { n: d.reviews, source: d.source, point: pickLocalized(d.points[0], ctx.locale) }) : '',
+        d?.points[0] ? t(d.source === 'Reddit' ? 'faq.hardDiscussReddit' : 'faq.hardDiscuss', { n: discussionCount(d), source: d.source, point: pickLocalized(d.points[0], ctx.locale) }) : '',
       ]),
     })
   }

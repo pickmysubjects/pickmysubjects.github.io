@@ -66,6 +66,17 @@ function planWithIt(): void {
     go('plan')
     return
   }
+  // A specialisation goes with a major that allows it: the plan's own major when it does,
+  // else the first one that does.
+  if (m.kind === 'specialisation') {
+    const setup = plan.setup.value
+    const keep = setup.course === m.course && (m.requiresMajor.length === 0 || m.requiresMajor.includes(setup.major))
+    const major = keep ? setup.major : (m.requiresMajor[0] ?? '')
+    const next = { ...setup, course: m.course, major, major2: keep ? setup.major2 : '', specialisation: m.id, minors: keep ? setup.minors : [] }
+    if (!plan.updateSetup(next)) plan.generate()
+    go('plan')
+    return
+  }
   if (!plan.updateSetup({ ...plan.setup.value, course: m.course, major: m.id, major2: '', specialisation: '', minors: [] })) plan.generate()
   go('plan')
 }
@@ -76,7 +87,7 @@ function planWithIt(): void {
     <a class="back" :href="link('majors')"><ArrowLeft :size="16" aria-hidden="true" /> {{ t('majors.all') }}</a>
 
     <header class="head">
-      <p class="eyebrow-line">{{ courseTitle }}<template v-if="major.informal"> · {{ t('majors.informalKind') }}</template><template v-else-if="major.kind === 'minor'"> · {{ t('majors.minorKind') }}</template> · {{ t('majors.points', { n: major.points }) }}</p>
+      <p class="eyebrow-line">{{ courseTitle }}<template v-if="major.informal"> · {{ t('majors.informalKind') }}</template><template v-else-if="major.kind === 'minor'"> · {{ t('majors.minorKind') }}</template><template v-else-if="major.kind === 'specialisation'"> · {{ t('majors.specKind') }}</template> · {{ t('majors.points', { n: major.points }) }}</p>
       <h1 class="page-title">{{ major.title }}</h1>
     </header>
 
@@ -143,7 +154,7 @@ function planWithIt(): void {
           </div>
         </dl>
         <button class="button button-accent summary-plan" type="button" @click="planWithIt">
-          <Route :size="16" aria-hidden="true" /> {{ major.informal ? t('majors.planInformal') : major.kind === 'minor' ? t('majors.planMinor') : t('majors.planIt') }}
+          <Route :size="16" aria-hidden="true" /> {{ major.informal || major.kind === 'specialisation' ? t('majors.planInformal') : major.kind === 'minor' ? t('majors.planMinor') : t('majors.planIt') }}
         </button>
         <a v-if="major.handbook" class="button button-quiet summary-plan" :href="major.handbook" target="_blank" rel="noopener">
           {{ t('majors.handbook') }} <ExternalLink :size="15" aria-hidden="true" />

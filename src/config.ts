@@ -37,6 +37,7 @@ export type RatingField =
   | 'usefulness'
   | 'interest'
   | 'teaching'
+  | 'overall'
   | 'wamBand'
 
 export const RATINGS_FORM: GoogleFormConfig<RatingField> = {
@@ -61,8 +62,10 @@ export const RATINGS_FORM: GoogleFormConfig<RatingField> = {
     teaching: 'entry.1490820390',
     // "WAM range without this subject", added with addWamRangeQuestion(); sent only with a grade band.
     wamBand: 'entry.1922617865',
+    // "Overall" (1–5 scale), not on the form yet: paste its entry id here once added.
+    overall: '',
   },
-  optional: ['examDifficulty', 'usefulness', 'interest', 'teaching', 'wamBand'],
+  optional: ['examDifficulty', 'usefulness', 'interest', 'teaching', 'overall', 'wamBand'],
 }
 
 export type FeedbackField = 'topic' | 'rating' | 'subject' | 'message' | 'contact' | 'language'

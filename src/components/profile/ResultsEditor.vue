@@ -9,6 +9,7 @@ import { useI18n } from '@/i18n'
 import { localTitle } from '@/i18n/localized'
 import { link } from '@/composables/useView'
 import RatingForm from '@/components/rating/RatingForm.vue'
+import RatePrompt from '@/components/rating/RatePrompt.vue'
 import { useRated } from '@/composables/useRated'
 
 const results = defineModel<Profile['results']>({ required: true })
@@ -16,7 +17,9 @@ const props = defineProps<{ subjects: Record<string, Subject>; options: { code: 
 
 const listId = useId()
 const { t, locale } = useI18n()
-const { rated, markRated } = useRated()
+const { rated, markRated, shouldPrompt } = useRated()
+// Just added a subject: offer to rate it once (not for every row, and never again after).
+const rateNext = shallowRef<string | null>(null)
 const rating = shallowRef<string | null>(null)
 const thanks = shallowRef<string | null>(null)
 
@@ -46,6 +49,7 @@ function add(): void {
   // Pass/fail subjects have no mark to keep.
   const m = mark.value === '' || props.subjects[c]?.passFail ? undefined : Number(mark.value)
   results.value = [...results.value, { code: c, mark: m }]
+  rateNext.value = props.subjects[c] && shouldPrompt(c) ? c : null
   code.value = ''
   mark.value = ''
   error.value = ''
@@ -218,6 +222,7 @@ function remove(i: number): void {
       <template v-if="failedTwice.length">{{ t('record.failedTwice', { codes: failedTwice.join(', ') }) }}</template>
       <a :href="link('guide')">{{ t('guide.failTitle') }}</a>
     </p>
+    <RatePrompt v-if="rateNext && !rating && !rated.has(rateNext)" :key="rateNext" class="rating-form" :code="rateNext" @close="rateNext = null" />
     <p v-if="thanks" class="thanks" role="status">{{ t('rating.sent') }}</p>
     <RatingForm v-if="rating" :key="rating" class="rating-form" :code="rating" @done="onRated(rating, $event)" />
   </section>

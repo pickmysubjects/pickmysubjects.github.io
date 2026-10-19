@@ -26,6 +26,7 @@ const examDifficulty = shallowRef<number | null>(null)
 const usefulness = shallowRef<number | null>(null)
 const interest = shallowRef<number | null>(null)
 const teaching = shallowRef<number | null>(null)
+const overall = shallowRef<number | null>(null)
 const hours = shallowRef<number | ''>('')
 const grade = shallowRef('')
 const skills = shallowRef<Skill[]>([])
@@ -41,7 +42,7 @@ const BANDS = ['H1', 'H2A', 'H2B', 'H3', 'P', 'N']
 const ready = computed(() => isFormReady(RATINGS_FORM))
 const complete = computed(
   () =>
-    [difficulty, workload, generosity, examDifficulty, usefulness, interest, teaching].some((r) => r.value !== null) ||
+    [difficulty, workload, generosity, examDifficulty, usefulness, interest, teaching, overall].some((r) => r.value !== null) ||
     hours.value !== '' ||
     skills.value.length > 0 ||
     recommend.value !== '' ||
@@ -62,12 +63,15 @@ const scales = [
 ] as const
 // Optional extras, shown only once the Google Form has the matching question.
 const extraScales = [
+  { key: 'overall', model: overall, low: 'rating.teachLow', high: 'rating.teachHigh' },
   { key: 'examDifficulty', model: examDifficulty, low: 'rating.diffLow', high: 'rating.diffHigh' },
   { key: 'usefulness', model: usefulness, low: 'rating.useLow', high: 'rating.useHigh' },
   { key: 'interest', model: interest, low: 'rating.intLow', high: 'rating.intHigh' },
   { key: 'teaching', model: teaching, low: 'rating.teachLow', high: 'rating.teachHigh' },
 ] as const
 const extras = extraScales.filter((s) => hasQuestion(RATINGS_FORM, s.key))
+// Exams and teamwork come from the assessment, not from students' answers.
+const rateableSkills = SKILLS.filter((s) => s !== 'exams' && s !== 'teamwork')
 const asText = (n: number | null): string => (n === null ? '' : String(n))
 
 function toggleSkill(s: Skill): void {
@@ -82,13 +86,15 @@ async function send(): Promise<void> {
       code: props.code,
       year: year.value === '' ? '' : String(year.value),
       semester: semester.value === '' ? '' : formSemester[semester.value],
-      difficulty: String(difficulty.value),
-      workload: String(workload.value),
-      generosity: String(generosity.value),
+      // Unanswered stays blank: "null" would be an invalid scale answer and the form would drop the whole response.
+      difficulty: asText(difficulty.value),
+      workload: asText(workload.value),
+      generosity: asText(generosity.value),
       examDifficulty: asText(examDifficulty.value),
       usefulness: asText(usefulness.value),
       interest: asText(interest.value),
       teaching: asText(teaching.value),
+      overall: asText(overall.value),
       hours: hours.value === '' ? '' : String(hours.value),
       grade: grade.value,
       wamBand: wamBand.value ?? '',
@@ -190,7 +196,7 @@ function value(event: Event): string {
           <fieldset class="chips-field">
             <legend class="field">{{ t('rating.skills') }}</legend>
             <button
-              v-for="sk in SKILLS"
+              v-for="sk in rateableSkills"
               :key="sk"
               type="button"
               class="chip"

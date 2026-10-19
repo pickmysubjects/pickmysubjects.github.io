@@ -1,0 +1,12 @@
+# Made-up Reddit summary for tests only: the real data has no Reddit summaries.
+code: AAAA10001
+source: Reddit
+url: https://www.reddit.com/r/unimelb/search/?q=AAAA10001&restrict_sr=1
+threads: 12
+from: 2023
+to: 2026
+checked: 2026-10-19
+points:
+  - en: "A made-up point from forum threads, long enough for the schema."
+    zh: "一条测试用的论坛要点"
+difficulty: hard

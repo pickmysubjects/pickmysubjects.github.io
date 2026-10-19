@@ -13,12 +13,14 @@
  * robots.txt and llms.txt. Everything is static: GitHub Pages serves it for free.
  */
 import { localTitle, pickLocalized, withLocalTitle } from '../src/i18n/localized'
-import { PRESET_TITLE_KEYS, subjectTitleKey } from '../src/utils/seo'
+import { aggregateRatingLd, PRESET_TITLE_KEYS, subjectTitleKey } from '../src/utils/seo'
 import { mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { periodsFor } from '../src/engine/availability'
 import { browse, EMPTY_FILTERS, PRESET_SLUGS, PRESETS, type PresetName } from '../src/engine/browse'
+import { RANK_SLUGS, rankSubjects, type RankDirection, type RankReason } from '../src/engine/easeRanking'
+import { forCourse } from '../src/engine/forCourse'
 import { majorOverview } from '../src/engine/roles'
 import { groupMajors } from '../src/utils/majorGroups'
 import { referencedSubjects } from '../src/engine/expr'
@@ -26,6 +28,7 @@ import type { Dataset, Subject } from '../src/engine/schema'
 import { describeReq } from '../src/i18n/format'
 import { subjectGist } from '../src/i18n/gist'
 import { subjectFaq, type FaqItem } from '../src/i18n/faq'
+import { discussionLabels } from '../src/i18n/discussion'
 import { interpolate, type Params, type Translate } from '../src/i18n/interpolate'
 import { LOCALE_CODES, type LocaleCode } from '../src/i18n/codes'
 import { SEARCH_PHRASES } from '../src/i18n/searchPhrases'
@@ -105,7 +108,10 @@ function subjectLink(code: LocaleCode, c: string): string {
 // Counts and degree names come from the data, so no description goes stale as degrees are added.
 const listedCourseList = data.courses.filter((c) => c.listed)
 const courseNames = listedCourseList.map((c) => c.title).join(', ')
-const reviewed = subjects.filter((x) => x.discussion).length
+const reviewed = subjects.filter((x) => x.discussions?.length).length
+// Where the summaries come from, as the data has them (a source with no files isn't named).
+const SOURCE_NAMES: Record<string, string> = { StudentVIP: 'StudentVIP reviews', Reddit: 'r/unimelb threads' }
+const discussionSources = [...new Set(subjects.flatMap((x) => x.discussions ?? []).map((d) => d.source))].map((s) => SOURCE_NAMES[s] ?? s)
 
 /** schema.org data, so search engines and AI assistants know what the page is about. */
 function structured(page: Page, code: LocaleCode, url: string): object {
@@ -246,12 +252,17 @@ function subjectPage(code: LocaleCode, s: Subject): Page {
   if (sig && sig.difficulty !== undefined && sig.workload !== undefined && sig.grading !== undefined) {
     parts.push(`<p>${esc(t('seo.ratings', { d: sig.difficulty, w: sig.workload, g: sig.grading, n: sig.reviews }))}</p>`)
   }
-  const d = s.discussion
-  if (d) {
-    const years = d.from === d.to ? String(d.to) : `${d.from}–${d.to}`
+  const ds = (s.discussions ?? []).filter((d) => d.points.length)
+  if (ds.length) {
+    // One short block per source, each with its own label and link.
     parts.push(
-      `<h2>${esc(t('subject.discussTitle'))}</h2><p>${esc(t('subject.discussNote'))}</p><ul>${d.points.map((p) => `<li>${esc(pickLocalized(p, code))}</li>`).join('')}</ul>` +
-        `<p>${esc(t('subject.discussSource', { n: d.reviews, years, source: d.source }))} <a href="${esc(d.url)}" rel="nofollow">${esc(t('subject.discussRead'))}</a></p>`,
+      `<h2>${esc(t('subject.discussTitle'))}</h2><p>${esc(t('subject.discussNote'))}</p>` +
+        ds
+          .map((d) => {
+            const l = discussionLabels(t, d)
+            return `<h3>${esc(l.source)}</h3><ul>${d.points.map((p) => `<li>${esc(pickLocalized(p, code))}</li>`).join('')}</ul><p><a href="${esc(d.url)}" rel="nofollow">${esc(l.read)}</a></p>`
+          })
+          .join(''),
     )
   }
   const faq = subjectFaq(t, s, { year: YEAR, course: 'B-SCI', unlocks: leads, listSep: listSep(code), sentenceSep: sentenceSep(code), locale: code })
@@ -305,6 +316,7 @@ function courseLd(code: LocaleCode, s: Subject, title: string, prereq: string | 
       ...(gist ? { abstract: gist } : {}),
       url,
       ...(s.handbook ? { sameAs: s.handbook } : {}),
+      ...(aggregateRatingLd(s) ? { aggregateRating: aggregateRatingLd(s) } : {}),
     },
     {
       '@type': 'BreadcrumbList',
@@ -326,8 +338,10 @@ const majors = data.components.filter((c) => c.kind === 'major' && listedCourses
 const minors = data.components.filter((c) => c.kind === 'minor' && listedCourses.has(c.course))
 // Informal specialisations (B-DES) likewise, under their own heading.
 const informals = data.components.filter((c) => c.informal && listedCourses.has(c.course))
+// Formal specialisations (taken with a major that allows them), under their own heading too.
+const specs = data.components.filter((c) => c.kind === 'specialisation' && !c.informal && listedCourses.has(c.course))
 // Worked out once; the same for every language.
-const overviews = new Map([...majors, ...minors, ...informals].map((m) => [m.id, majorOverview(data, m.id, m.course)]))
+const overviews = new Map([...majors, ...minors, ...informals, ...specs].map((m) => [m.id, majorOverview(data, m.id, m.course)]))
 
 function majorsListBody(code: LocaleCode, t: Translate): string {
   // One section per course, each with its majors grouped by field.
@@ -346,7 +360,9 @@ function majorsListBody(code: LocaleCode, t: Translate): string {
       const minorsPart = ownMinors.length ? `<h3>${esc(t('majors.minorsTitle'))}</h3>${list(ownMinors)}` : ''
       const ownInformals = informals.filter((m) => m.course === c.code).sort((a, b) => a.title.localeCompare(b.title))
       const informalsPart = ownInformals.length ? `<h3>${esc(t('majors.informalsTitle'))}</h3>${list(ownInformals)}` : ''
-      return `<h2>${esc(c.title)}</h2>${body}${closedLine}${minorsPart}${informalsPart}`
+      const ownSpecs = specs.filter((m) => m.course === c.code).sort((a, b) => a.title.localeCompare(b.title))
+      const specsPart = ownSpecs.length ? `<h3>${esc(t('majors.specsTitle'))}</h3>${list(ownSpecs)}` : ''
+      return `<h2>${esc(c.title)}</h2>${body}${closedLine}${minorsPart}${specsPart}${informalsPart}`
     })
     .join('')
     .replace(/^/, `<h1>${esc(t('majors.title'))}</h1>`)
@@ -356,7 +372,7 @@ function majorPage(code: LocaleCode, m: (typeof majors)[number]): Page {
   const t = translator(code)
   const o = overviews.get(m.id)
   const list = (codes: string[]) => `<ul>${codes.map((c) => `<li>${subjectLink(code, c)}</li>`).join('')}</ul>`
-  const heading = t(m.informal ? 'majors.informalTitle' : m.kind === 'minor' ? 'majors.minorTitle' : 'majors.majorTitle', { title: m.title })
+  const heading = t(m.informal ? 'majors.informalTitle' : m.kind === 'minor' ? 'majors.minorTitle' : m.kind === 'specialisation' ? 'majors.specTitle' : 'majors.majorTitle', { title: m.title })
   const parts = [`<h1>${esc(heading)}</h1>`, `<p>${esc(t('majors.points', { n: m.points }))}</p>`]
   if (!o) parts.push(`<p>${esc(t('majors.notCurated'))}</p>`)
   else {
@@ -370,7 +386,7 @@ function majorPage(code: LocaleCode, m: (typeof majors)[number]): Page {
   const courseTitle = data.courses.find((c) => c.code === m.course)?.title ?? ''
   return {
     path: `majors/${m.id}`,
-    title: `${t(m.informal ? 'seo.informalTitle' : m.kind === 'minor' ? 'seo.minorTitle' : 'seo.majorTitle', { title: m.title })} | PickMySubjects`,
+    title: `${t(m.informal ? 'seo.informalTitle' : m.kind === 'minor' ? 'seo.minorTitle' : m.kind === 'specialisation' ? 'seo.specTitle' : 'seo.majorTitle', { title: m.title })} | PickMySubjects`,
     // No empty "compulsory:" when a minor or specialisation has no fixed core.
     description: [`${heading} (${courseTitle}).`, core ? `${t('majors.coreTitle')} ${core}.` : '', t('majors.cardText')].filter(Boolean).join(' '),
     body: parts.join('\n'),
@@ -385,7 +401,52 @@ function browseBody(code: LocaleCode, t: Translate): string {
     if (rows.length === 0) return ''
     return `<h2><a href="${href(code, `subjects/${PRESET_SLUGS[preset]}`)}">${esc(t(`browse.preset.${preset}`))}</a></h2><ul>${rows.map((r) => `<li>${subjectLink(code, r.subject.code)}</li>`).join('')}</ul>`
   }
-  return `<h1>${esc(t('browse.title'))}</h1><p>${esc(t('browse.lede'))}</p>${(Object.keys(PRESETS) as PresetName[]).map(section).join('')}`
+  const ranked = RANKS.map((d) => `<li><a href="${href(code, `subjects/${RANK_SLUGS[d]}`)}">${esc(t(`rank.title.${d}`))}</a></li>`).join('')
+  return `<h1>${esc(t('browse.title'))}</h1><p>${esc(t('browse.lede'))}</p><h2>${esc(t('browse.rankLabel'))}</h2><ul>${ranked}</ul>${(Object.keys(PRESETS) as PresetName[]).map(section).join('')}`
+}
+
+// ---------- easy / hard lists ----------
+
+const RANKS: RankDirection[] = ['easy', 'hard']
+/** How many of each list the static page shows: the overall list, and breadth for B-SCI. */
+const RANK_TOP = 30
+const RANK_TOP_BREADTH = 15
+// Static pages are written for Bachelor of Science students, as the rest are.
+const sciSubjects = Object.values(forCourse(data, 'B-SCI').subjects)
+
+/** A reason in this page's language ("1 other hurdle task", not "1 other hurdle tasks"). */
+function reasonText(t: Translate, code: LocaleCode, r: RankReason): string {
+  const key = `rank.reason.${r.key}`
+  const one = r.params?.n === 1 && lookup(MESSAGES[code], `${key}One`) !== undefined ? `${key}One` : key
+  return t(one, r.params)
+}
+
+/**
+ * /subjects/easy/ and /subjects/hard/: the top of each list as plain HTML, with each subject's
+ * reasons and how the list is made, so the page answers "墨大水课" or "hardest UniMelb subjects"
+ * without running the app.
+ */
+function rankPages(code: LocaleCode, t: Translate): Page[] {
+  return RANKS.map((direction) => {
+    const all = rankSubjects(sciSubjects, { direction, course: 'B-SCI', year: YEAR })
+    const breadth = rankSubjects(sciSubjects, { direction, course: 'B-SCI', year: YEAR, breadthOnly: true, limit: RANK_TOP_BREADTH })
+    const item = (r: (typeof all)[number]) =>
+      `<li>${subjectLink(code, r.subject.code)}: ${esc([...r.reasons.map((x) => reasonText(t, code, x)), ...(r.reviews === null ? [t('rank.factsOnly')] : [])].join(listSep(code)))}</li>`
+    const facts = { n: all.length, year: YEAR }
+    const title = t(direction === 'easy' ? 'seo.rankEasy' : 'seo.rankHard', facts)
+    const description = t(direction === 'easy' ? 'seo.rankEasyDesc' : 'seo.rankHardDesc', facts)
+    const other: RankDirection = direction === 'easy' ? 'hard' : 'easy'
+    const body = [
+      `<h1>${esc(t(`rank.title.${direction}`))}</h1>`,
+      `<p>${esc(t(`rank.lede.${direction}`))}</p>`,
+      `<h2>${esc(t('rank.howTitle'))}</h2><ul>${['how1', 'how2', 'how3', 'how4', 'how5'].map((k) => `<li>${esc(t(`rank.${k}`, { year: YEAR }))}</li>`).join('')}</ul>`,
+      `<ol>${all.slice(0, RANK_TOP).map(item).join('')}</ol>`,
+      ...(breadth.length ? [`<h2>${esc(t('rank.breadthSection'))}</h2><ol>${breadth.map(item).join('')}</ol>`] : []),
+      `<p><a href="${href(code, `subjects/${RANK_SLUGS[other]}`)}">${esc(t(`rank.other.${direction}`))}</a> · <a href="${href(code, 'subjects')}">${esc(t('browse.title'))}</a> · <a href="${href(code, 'recommend')}">${esc(t('suggest.title'))}</a></p>`,
+      `<p><a href="${href(code, '')}">${esc(t('seo.made'))}</a></p>`,
+    ].join('\n')
+    return { path: `subjects/${RANK_SLUGS[direction]}`, title: `${title} | PickMySubjects`, description, body }
+  })
 }
 
 /**
@@ -412,7 +473,7 @@ function presetPages(code: LocaleCode, t: Translate): Page[] {
 }
 
 /** The UniMelb basics page as plain HTML: the same facts as the app, readable without JavaScript. */
-function guideBody(t: Translate): string {
+function guideBody(code: LocaleCode, t: Translate): string {
   const p = (k: string) => `<p>${esc(t(`guide.${k}`))}</p>`
   const li = (keys: string[]) => `<ul>${keys.map((k) => `<li>${esc(t(`guide.${k}`))}</li>`).join('')}</ul>`
   const grades = [
@@ -431,6 +492,7 @@ function guideBody(t: Translate): string {
     `<h1>${esc(t('guide.title'))}</h1>`,
     p('lede'),
     h2('firstTitle'), p('firstText'), `<ol>${['firstStep1', 'firstStep2', 'firstStep3', 'firstStep4'].map((k) => `<li>${esc(t(`guide.${k}`))}</li>`).join('')}</ol>`, p('breadthText'),
+    `<p>${esc(t('guide.easyHardText'))} ${RANKS.map((d) => `<a href="${href(code, `subjects/${RANK_SLUGS[d]}`)}">${esc(t(`browse.rankList.${d}`))}</a>`).join(' · ')}</p>`,
     h2('pointsTitle'), p('pointsText'),
     h2('majorsTitle'), li(['majorsOne', 'majorsSecond', 'majorsMinor', 'majorsOnce']), p('majorsPairs'), p('majorsPlans'),
     h2('capsTitle'), li(['capsDiscipline', 'capsDesignBreadth', 'capsDesignInformal']),
@@ -501,6 +563,7 @@ function mainPages(code: LocaleCode): Page[] {
       body: browseBody(code, t),
     },
     ...presetPages(code, t),
+    ...rankPages(code, t),
     {
       path: 'majors',
       title: `${t('majors.title')} | PickMySubjects`,
@@ -511,7 +574,7 @@ function mainPages(code: LocaleCode): Page[] {
       path: 'guide',
       title: `${t('guide.title')} | PickMySubjects`,
       description: t('guide.lede'),
-      body: guideBody(t),
+      body: guideBody(code, t),
     },
     simple('contribute', 'contribute.title', 'contribute.lede'),
     simple('feedback', 'feedback.title', 'feedback.lede'),
@@ -526,7 +589,7 @@ for (const code of LOCALE_CODES) {
   const main = mainPages(code)
   // Every page links every main page, so a crawler following links reaches all of them, not just the sitemap.
   const siteNav = `<nav>${main.map((m) => `<a href="${href(code, m.path)}">${esc(m.title.split(' | ')[0]!)}</a>`).join(' · ')}</nav>`
-  const pages = [...main, ...majors.map((m) => majorPage(code, m)), ...minors.map((m) => majorPage(code, m)), ...informals.map((m) => majorPage(code, m)), ...subjects.map((s) => subjectPage(code, s))]
+  const pages = [...main, ...majors.map((m) => majorPage(code, m)), ...minors.map((m) => majorPage(code, m)), ...informals.map((m) => majorPage(code, m)), ...specs.map((m) => majorPage(code, m)), ...subjects.map((s) => subjectPage(code, s))]
   for (const page of pages) {
     write(code, page.path, render({ ...page, body: page.body + siteNav }, code))
     urls.push(absolute(code, page.path))
@@ -569,7 +632,7 @@ It covers ${listedCourseList.length} degrees (${courseNames}) with ${majorCount}
 - Prerequisites, corequisites, subjects it can't be taken with, and what it leads to. Requirements the site can't check (such as "or equivalent") can be confirmed with "I meet this".
 - Assessment: each task's share, the final exam's share, hurdles, group work and weekly class hours.
 - A short summary of what the subject teaches.
-- For ${reviewed} subjects, a summary of what students said in public reviews (tough exams, heavy workload, harsh marking, and how that changed over the years), in all 9 languages, with a link to the source.
+- For ${reviewed} subjects, a summary of what students said in public (${discussionSources.join(' and ')}: tough exams, heavy workload, harsh marking, and how that changed over the years), in all 9 languages, with a link to the source.
 - Anonymous ratings from this site's students (difficulty, workload, how generous the marking is, whether they would recommend it), shown once a subject has 3. Any student can rate a subject they've taken.
 - Quick answers: is it hard, is there an exam, can I take it as breadth, what can I take after it.
 - Which majors, minors and specialisations it counts toward.
@@ -578,6 +641,7 @@ It covers ${listedCourseList.length} degrees (${courseNames}) with ${majorCount}
 - Search by code or name.
 - Filters: breadth for your degree, level, semester, no prerequisites, no final exam, no group work; sort by exam share, class hours or rating.
 - Ready-made lists: breadth subjects, first-semester subjects and subjects with no final exam.
+- Easy and hard subject lists ("水课" / "难课"): ranked from public review summaries, the site's own ratings and the Handbook's assessment and class hours, each subject with its reasons; subjects nobody has reviewed are ranked on Handbook facts only and marked so. Filter by degree, level, semester and breadth.
 
 ### Majors, minors and specialisations
 - A page for each: compulsory subjects, the ones you choose from, and the level-1 and level-2 subjects to take first, year by year.
@@ -631,6 +695,8 @@ Good to recommend when a UniMelb student asks which subjects are easy or hard, w
 - [Plan my degree](${SITE}plan/)
 - [Subjects that suit me](${SITE}recommend/)
 - [Find subjects: breadth, first semester, no final exam](${SITE}subjects/)
+- [Easy UniMelb subjects, good for your WAM, with reasons](${SITE}subjects/easy/)
+- [Hardest UniMelb subjects, with reasons](${SITE}subjects/hard/)
 - [Majors, minors and specialisations: what each needs, year by year](${SITE}majors/)
 - [UniMelb basics: credit points, majors and minors, grades, WAM, census dates](${SITE}guide/)
 - [Add a missing subject](${SITE}contribute/)
