@@ -15,7 +15,17 @@ const ctx = { year: 2026, course: 'B-SCI', unlocks: [] as string[], listSep: ', 
 describe('subjectFaq', () => {
   it('answers only what is recorded, never guessing', () => {
     const s = subject({ code: 'AAAA10001', offerings: 'unknown', prerequisites: 'unknown' })
-    expect(subjectFaq(t, s, ctx)).toEqual([])
+    // Only the invitation to rate it, which is true of every subject.
+    expect(subjectFaq(t, s, ctx).map((f) => f.q)).toEqual(['Can I rate AAAA10001?'])
+  })
+
+  it('quotes what students said when there is a review summary', () => {
+    const s = {
+      ...subject({ code: 'AAAA10001', offerings: 'unknown', prerequisites: 'unknown' }),
+      discussions: [{ source: 'StudentVIP', url: 'https://example.com', points: [{ en: 'Tough exam.', zh: '考试难。' }], count: 5 }],
+    } as never
+    const say = subjectFaq(t, s, ctx).find((f) => f.q === 'What do students say about AAAA10001?')
+    expect(say?.a).toBe('Tough exam.')
   })
 
   it('gives the exam share, the hurdle and the full split', () => {

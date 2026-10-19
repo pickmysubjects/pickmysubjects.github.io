@@ -86,6 +86,12 @@ export function subjectFaq(t: Translate, s: Subject, ctx: FaqContext): FaqItem[]
     })
   }
 
+  // What students said, in this page's language: the summary's own points, so answer engines can quote them.
+  const said = (s.discussions ?? []).find((x) => x.points.length)
+  if (said) {
+    items.push({ q: t('faq.sayQ', { code }), a: join(said.points.slice(0, 3).map((p) => pickLocalized(p, ctx.locale))) })
+  }
+
   if (s.weeklyContactHours) {
     items.push({ q: t('faq.hoursQ', { code }), a: t('assess.hours', { n: s.weeklyContactHours }) })
   }
@@ -103,6 +109,9 @@ export function subjectFaq(t: Translate, s: Subject, ctx: FaqContext): FaqItem[]
       a: t('faq.leadsA', { n: ctx.unlocks.length, codes: ctx.unlocks.slice(0, NAMED_UNLOCKS).join(ctx.listSep) }),
     })
   }
+
+  // Every subject is open for anonymous ratings, reviewed or not.
+  items.push({ q: t('faq.rateQ', { code }), a: t('faq.rateA') })
 
   return items
 }

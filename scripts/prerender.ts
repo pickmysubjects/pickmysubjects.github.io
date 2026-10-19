@@ -249,22 +249,21 @@ function subjectPage(code: LocaleCode, s: Subject): Page {
   if (blocks.length) parts.push(`<h2>${esc(t('subject.blocks'))}</h2><ul>${blocks.map((c) => `<li>${subjectLink(code, c)}</li>`).join('')}</ul>`)
   if (assess) parts.push(`<h2>${esc(t('assess.title'))}</h2><p>${esc(assess)}</p>`)
   if (s.weeklyContactHours) parts.push(`<p>${esc(t('assess.hours', { n: s.weeklyContactHours }))}</p>`)
-  if (sig && sig.difficulty !== undefined && sig.workload !== undefined && sig.grading !== undefined) {
-    parts.push(`<p>${esc(t('seo.ratings', { d: sig.difficulty, w: sig.workload, g: sig.grading, n: sig.reviews }))}</p>`)
-  }
+  // One visible section for what students think: public review summaries, our own ratings (3+),
+  // and a plain invitation to rate it here. Never a made-up score.
   const ds = (s.discussions ?? []).filter((d) => d.points.length)
-  if (ds.length) {
-    // One short block per source, each with its own label and link.
-    parts.push(
-      `<h2>${esc(t('subject.discussTitle'))}</h2><p>${esc(t('subject.discussNote'))}</p>` +
-        ds
-          .map((d) => {
-            const l = discussionLabels(t, d)
-            return `<h3>${esc(l.source)}</h3><ul>${d.points.map((p) => `<li>${esc(pickLocalized(p, code))}</li>`).join('')}</ul><p><a href="${esc(d.url)}" rel="nofollow">${esc(l.read)}</a></p>`
-          })
-          .join(''),
-    )
+    const reviews = [`<h2 id="reviews">${esc(t('seo.reviewsTitle'))}</h2>`]
+  const [rd, rw, rg] = [sig?.difficulty, sig?.workload, sig?.grading]
+  const ratedHere = sig !== undefined && rd !== undefined && rw !== undefined && rg !== undefined
+  if (ratedHere) reviews.push(`<p>${esc(t('seo.ratings', { d: rd, w: rw, g: rg, n: sig.reviews }))}</p>`)
+  for (const d of ds) {
+    const l = discussionLabels(t, d)
+    reviews.push(`<h3>${esc(l.source)}</h3><ul>${d.points.map((p) => `<li>${esc(pickLocalized(p, code))}</li>`).join('')}</ul><p><a href="${esc(d.url)}" rel="nofollow">${esc(l.read)}</a></p>`)
   }
+  if (ds.length) reviews.push(`<p>${esc(t('subject.discussNote'))}</p>`)
+  if (!ds.length && !ratedHere) reviews.push(`<p>${esc(t('seo.noReviews'))}</p>`)
+  reviews.push(`<p>${esc(t('seo.rateCta'))} <a href="${href(code, `subject/${s.code}`)}#ratings">${esc(t('seo.rateLink', { code: s.code }))}</a></p>`)
+  parts.push(reviews.join(''))
   const faq = subjectFaq(t, s, { year: YEAR, course: 'B-SCI', unlocks: leads, listSep: listSep(code), sentenceSep: sentenceSep(code), locale: code })
   if (faq.length) {
     parts.push(`<h2>${esc(t('faq.title'))}</h2><dl>${faq.map((f) => `<dt>${esc(f.q)}</dt><dd>${esc(f.a)}</dd>`).join('')}</dl>`)
@@ -273,10 +272,15 @@ function subjectPage(code: LocaleCode, s: Subject): Page {
   if (s.handbook) parts.push(`<p><a href="${esc(s.handbook)}">${esc(t('seo.confirm'))}</a></p>`)
   parts.push(`<p><a href="${href(code, '')}">${esc(t('seo.made'))}</a></p>`)
 
+  // Lead with what students say (the first summary point), else the at-a-glance facts, then the
+  // invitation to rate it: that's what a student searching "<code> review" wants to see first.
+  const firstPoint = ds[0]?.points[0] ? pickLocalized(ds[0].points[0], code) : ''
   const description = [
-    t('seo.subjectDesc', facts),
+    firstPoint,
     // A sentence of its own: the gist lines carry no full stop.
     ...(gist.length ? [`${gist.join(listSep(code))}${CJK.has(code) ? '。' : '.'}`] : []),
+    t('seo.rateDesc'),
+    t('seo.subjectDesc', facts),
     ...(s.about ? [pickLocalized(s.about.learn, code)] : []),
     runs(t, s, listSep(code)),
     s.prerequisites === 'none' ? t('seo.noPrereq') : s.prerequisites === 'unknown' ? '' : t('seo.needs', { needs: prereq }),
@@ -290,7 +294,7 @@ function subjectPage(code: LocaleCode, s: Subject): Page {
     description: description.length > 300 ? `${description.slice(0, 297)}…` : description,
     body: parts.join('\n'),
     faq,
-    ld: courseLd(code, s, facts.title, s.prerequisites !== 'unknown' && s.prerequisites !== 'none' ? prereq : undefined, gist.join(listSep(code))),
+    ld: courseLd(code, s, facts.title, s.prerequisites !== 'unknown' && s.prerequisites !== 'none' ? prereq : undefined, [gist.length ? `${gist.join(listSep(code))}${CJK.has(code) ? '。' : '.'}` : '', firstPoint].filter(Boolean).join(sentenceSep(code))),
   }
 }
 
@@ -525,7 +529,7 @@ function mainPages(code: LocaleCode): Page[] {
     {
       path: '',
       title: t('seo.homeTitle'),
-      description: t('seo.homeDesc'),
+      description: t('seo.homeDesc', { n: reviewed }),
       body: `<h1>${esc(t('home.title').replace('|', ' '))}</h1><p>${esc(t('home.lede'))}</p>${intro}
 <ul><li><a href="${href(code, 'plan')}">${esc(t('home.cardPlan'))}</a>: ${esc(t('home.cardPlanText'))}</li>
 <li><a href="${href(code, 'recommend')}">${esc(t('home.cardForYou'))}</a>: ${esc(t('home.cardForYouText'))}</li>
@@ -623,6 +627,9 @@ writeFileSync(
   `# PickMySubjects
 
 > Free, unofficial subject guide and degree planner for University of Melbourne students, in 9 languages, made by a UniMelb graduate. Not affiliated with the University.
+
+## What it is for
+Student reviews and anonymous ratings for UniMelb subjects: ${reviewed} subject pages summarise what students said in public reviews (in our own words, with a link to the source), and every one of the ${subjects.length} subject pages lets a student who took it rate it anonymously (difficulty, workload, marking, would they recommend it) and leave a tip for next year's students. Averages show once 3 students have rated a subject; tips are checked before they appear, and no rating is ever made up. On top of that, it plans the whole degree.
 
 It covers ${listedCourseList.length} degrees (${courseNames}) with ${majorCount} majors, ${minorCount} minors and ${specCount} specialisations, and ${subjects.length} subjects.
 
