@@ -1,0 +1,38 @@
+code: CONS30002
+title: Building Information Management
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites:
+  all:
+    - admission: B-DES
+      note: Admission into the B-DES Bachelor of Design
+    - points:
+        min: 150
+corequisites: none
+non_allowed: []
+skills:
+  - business
+topics:
+  - construction
+  - management
+assessment:
+  - kind: report
+    weight: 30
+    group: true
+  - kind: report
+    weight: 20
+    group: true
+  - kind: presentation
+    weight: 10
+  - kind: exam
+    weight: 40
+    hurdle: true
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/cons30002
+source_year: 2026
+verified_on: 2026-10-19
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,41 @@
+code: ABPL30068
+title: Design Internship
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - summer
+    - semester-1
+    - semester-2
+prerequisites:
+  all:
+    - admission: B-DES
+      note: Admission into the B-DES Bachelor of Design
+    - points:
+        min: 200
+    - permission: coordinator
+      note: Coordinator approval after a resume and an endorsed work placement; students find their own placement before semester.
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+topics:
+  - design
+  - management
+assessment:
+  - kind: assignment
+    weight: 0
+    hurdle: true
+  - kind: report
+    weight: 25
+  - kind: presentation
+    weight: 25
+  - kind: presentation
+    weight: 50
+    hurdle: true
+weekly_contact_hours: 0.5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/abpl30068
+source_year: 2026
+verified_on: 2026-10-19
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

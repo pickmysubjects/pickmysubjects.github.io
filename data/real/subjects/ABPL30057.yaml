@@ -1,0 +1,38 @@
+code: ABPL30057
+title: Asia Pacific Modernities
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites:
+  any:
+    - ARCH20003
+    - PLAN10001
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - fieldwork
+topics:
+  - architecture
+  - urban-planning
+  - history
+  - society
+assessment:
+  - kind: assignment
+    weight: 25
+    hurdle: true
+  - kind: presentation
+    weight: 25
+  - kind: assignment
+    weight: 25
+  - kind: report
+    weight: 25
+weekly_contact_hours: 3
+breadth_for:
+  - Bachelor of Design
+handbook: https://handbook.unimelb.edu.au/2026/subjects/abpl30057
+source_year: 2026
+verified_on: 2026-10-19
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

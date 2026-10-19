@@ -1,0 +1,35 @@
+code: GDES30004
+title: "Design Visualisation: Analogue"
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+    - winter
+prerequisites:
+  any:
+    - ARCH10001
+    - DPSS10010
+corequisites: none
+non_allowed: []
+skills:
+  - design
+topics:
+  - visual-communication
+  - design
+  - art
+  - architecture
+assessment:
+  - kind: presentation
+    weight: 10
+    group: true
+  - kind: assignment
+    weight: 40
+  - kind: assignment
+    weight: 50
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/gdes30004
+source_year: 2026
+verified_on: 2026-10-19
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

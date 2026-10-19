@@ -1,0 +1,31 @@
+code: ABPL30071
+title: Managing Design Projects
+level: 3
+points: 12.5
+offerings: unknown
+prerequisites:
+  all:
+    - admission: B-DES
+      note: Admission into the B-DES Bachelor of Design
+    - points:
+        min: 150
+corequisites: none
+non_allowed: []
+skills:
+  - business
+topics:
+  - management
+  - design
+assessment:
+  - kind: report
+    weight: 20
+  - kind: project
+    weight: 50
+    group: true
+  - kind: exam
+    weight: 30
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/abpl30071
+source_year: 2026
+verified_on: 2026-10-19
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

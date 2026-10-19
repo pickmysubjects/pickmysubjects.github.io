@@ -1,0 +1,36 @@
+code: ARCH30005
+title: "Design Visualisation: Digital Techniques"
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites: ARCH20004
+corequisites: none
+non_allowed: []
+skills:
+  - design
+topics:
+  - architecture
+  - visual-communication
+  - design
+assessment:
+  - kind: assignment
+    weight: 20
+  - kind: assignment
+    weight: 25
+  - kind: presentation
+    weight: 35
+  - kind: assignment
+    weight: 20
+    hurdle: true
+weekly_contact_hours: 4.5
+breadth_for: []
+recommended:
+  - ARCH20002
+  - ARCH20003
+  - ABPL20033
+handbook: https://handbook.unimelb.edu.au/2026/subjects/arch30005
+source_year: 2026
+verified_on: 2026-10-19
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

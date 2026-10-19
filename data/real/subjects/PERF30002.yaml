@@ -1,0 +1,43 @@
+code: PERF30002
+title: "Performance Curation: The Buxton Project"
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - winter
+    - semester-2
+prerequisites:
+  all:
+    - permission: application
+      note: "PERMISSION OF COORDINATOR: Students are required to apply for permission to enrol in this subject. Students must submit proof of permission with an Enrolment Assistance form to Stop 1: Link to Enrolment Assistance form"
+    - manual: "Admission into or selection of one of the following: D-MUSIC Diploma in Music B-MUS Bachelor of Music B-FADANCE Bachelor of Fine Arts (Dance) B-FAFILMTV Bachelor of Fine Arts (Film and Television) B-FAMUSTH Bachelor of Fine Arts (Music Theatre) B-FAPRO Bachelor of Fine Arts (Production) B-FAVISART Bachelor of Fine Arts (Visual Art) B-DES Bachelor of Design"
+corequisites: none
+non_allowed: []
+skills:
+  - design
+topics:
+  - performance
+  - art
+  - design
+assessment:
+  - kind: assignment
+    weight: 10
+    hurdle: true
+  - kind: presentation
+    weight: 20
+    group: true
+    hurdle: true
+  - kind: assignment
+    weight: 10
+    hurdle: true
+  - kind: assignment
+    weight: 30
+  - kind: participation
+    weight: 30
+    hurdle: true
+weekly_contact_hours: 6
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/perf30002
+source_year: 2026
+verified_on: 2026-10-19
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

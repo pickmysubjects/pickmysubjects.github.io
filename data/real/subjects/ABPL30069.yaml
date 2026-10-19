@@ -1,0 +1,35 @@
+code: ABPL30069
+title: Installations and Happenings
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - summer
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - design
+  - fieldwork
+topics:
+  - urban-planning
+  - design
+  - art
+  - performance
+assessment:
+  - kind: project
+    weight: 10
+  - kind: project
+    weight: 20
+    group: true
+  - kind: project
+    weight: 20
+    group: true
+  - kind: report
+    weight: 50
+weekly_contact_hours: 12
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/abpl30069
+source_year: 2026
+verified_on: 2026-10-19
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
