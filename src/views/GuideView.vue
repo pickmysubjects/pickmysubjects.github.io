@@ -79,6 +79,28 @@ const FAILING = 'https://students.unimelb.edu.au/course-admin/planning-your-cour
           <p>{{ t('guide.pointsText') }}</p>
         </GuideItem>
 
+        <GuideItem :title="t('guide.majorsTitle')" :short="t('guide.majorsShort')">
+          <ul class="plain">
+            <li>{{ t('guide.majorsOne') }}</li>
+            <li>{{ t('guide.majorsSecond') }}</li>
+            <li>{{ t('guide.majorsMinor') }}</li>
+            <li>{{ t('guide.majorsOnce') }}</li>
+          </ul>
+          <p class="note">{{ t('guide.majorsPairs') }}</p>
+          <p class="aside">{{ t('guide.majorsPlans') }}</p>
+          <p class="actions">
+            <a class="button button-quiet" :href="link('plan')">{{ t('guide.majorsPlansLink') }}</a>
+          </p>
+        </GuideItem>
+
+        <GuideItem :title="t('guide.capsTitle')" :short="t('guide.capsShort')">
+          <ul class="plain">
+            <li>{{ t('guide.capsDiscipline') }}</li>
+            <li>{{ t('guide.capsDesignBreadth') }}</li>
+            <li>{{ t('guide.capsDesignInformal') }}</li>
+          </ul>
+        </GuideItem>
+
         <GuideItem :title="t('guide.loadTitle')" :short="t('guide.loadShort')">
           <div class="who">
             <div class="who-card">
@@ -115,6 +137,16 @@ const FAILING = 'https://students.unimelb.edu.au/course-admin/planning-your-cour
             </div>
           </dl>
           <p class="note">{{ t('guide.waiverText') }}</p>
+        </GuideItem>
+
+        <GuideItem :title="t('guide.checkTitle')" :short="t('guide.checkShort')">
+          <p>{{ t('guide.checkText') }}</p>
+          <ul class="plain">
+            <li>{{ t('guide.checkLanguage') }}</li>
+            <li>{{ t('guide.checkPermission') }}</li>
+            <li>{{ t('guide.checkVce') }}</li>
+            <li>{{ t('guide.checkAverage') }}</li>
+          </ul>
         </GuideItem>
 
         <GuideItem :title="t('guide.dropTitle')" :short="t('guide.dropShort')">
