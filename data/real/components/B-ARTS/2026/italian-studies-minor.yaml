@@ -7,6 +7,8 @@ points: 50
 # Entry points by prior knowledge of the language. The page lists the Level 3 electives once, under Entry Point 7; they are used for every entry point.
 routes:
   - title: Entry Point 1
+    # The minor page lists ITAL30003 as core, but its own page says it's only for Italian Studies major students.
+    note: The Handbook lists ITAL30003 here, but that subject's own page limits it to Italian Studies major students. Check with the Italian program before planning on it.
     requirements:
       # Level 2 core.
       - all: [ITAL20007, ITAL20008]
