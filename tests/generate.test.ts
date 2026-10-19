@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { cannotCombine, checkCourse } from '../src/engine/courseRules'
+import { checkCourse } from '../src/engine/courseRules'
 import { generatePlan } from '../src/engine/generate'
 import { checkTerms } from '../src/engine/planCheck'
 import type { Profile } from '../src/engine/recommend'
@@ -117,44 +117,6 @@ describe('generatePlan (demo course)', () => {
   it('explains what it could not do instead of silently dropping requirements', () => {
     const { notes } = generate({ major: 'no-such-major' })
     expect(notes.map((n) => n.text).join(' ')).toMatch(/no-such-major isn't in the dataset/)
-  })
-})
-
-describe('generatePlan (real B-SCI data)', () => {
-  const { dataset: real, errors } = buildDataset('real')
-  const majors = real.components.filter(
-    (c) => c.course === 'B-SCI' && c.kind === 'major' && c.requirements !== 'unknown' && !DATA_PENDING.has(c.id),
-  )
-  const specs = real.components.filter((c) => c.course === 'B-SCI' && c.kind === 'specialisation' && c.requirements !== 'unknown')
-  const combos = majors.flatMap((m) => [
-    [m.id, undefined] as const,
-    ...specs
-      .filter((s) => (s.requiresMajor.length === 0 || s.requiresMajor.includes(m.id)) && !cannotCombine(real, m.id, s.id))
-      .map((s) => [m.id, s.id] as const),
-  ])
-
-  it('loads cleanly', () => expect(errors).toEqual([]))
-
-  it('knows when a major and a specialisation can never be combined', () => {
-    // ENGR30004 (Mechatronics) is non-allowed with both COMP20003 and COMP20007.
-    expect(cannotCombine(real, 'mechatronics-systems', 'artificial-intelligence')).toMatch(/ENGR30004/)
-    expect(cannotCombine(real, 'computing-and-software-systems', 'artificial-intelligence')).toBeNull()
-  })
-
-  it.each(combos)('%s + %s: no term errors, and the major/specialisation are met', (major, specialisation) => {
-    const { plan } = generatePlan({
-      data: real,
-      profile: { results: [], skills: {}, interests: [], goal: 'balanced' },
-      course: 'B-SCI',
-      courseYear: 2026,
-      major,
-      specialisation,
-      startYear: 2027,
-      startPeriod: 'semester-1',
-    })
-    expect(checkTerms(plan, real).filter((i) => i.severity === 'error').map((i) => i.message)).toEqual([])
-    const components = checkCourse(plan, real).statuses.filter((s) => s.ruleId === 'major' || s.ruleId === 'specialisation')
-    expect(components.filter((s) => s.status === 'fail').map((s) => s.detail)).toEqual([])
   })
 })
 

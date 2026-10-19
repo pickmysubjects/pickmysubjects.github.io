@@ -11,6 +11,7 @@
     "build": "npm run data && vue-tsc --noEmit && vite build && tsx scripts/prerender.ts",
     "preview": "vite preview",
     "test": "npm run data && vitest run",
+    "test:fast": "vitest run --exclude 'tests/stress/**' --exclude tests/generateScienceMajors.test.ts",
     "typecheck": "vue-tsc --noEmit",
     "paste": "tsx scripts/paste-handbook.ts",
     "import-batch": "tsx scripts/import-batch.ts",
