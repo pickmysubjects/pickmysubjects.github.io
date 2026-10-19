@@ -99,6 +99,7 @@ export const ms: Messages = {
   },
   rule: {
     minor: "Paling banyak {max} minor",
+    informalSpec: "Paling banyak {max} pengkhususan tidak formal",
     compulsory: 'Ambil {codes}',
     compulsoryFirst: 'Ambil {codes} pada semester pertama',
     pointsMin: 'Sekurang-kurangnya {n} mata {what}',
@@ -607,6 +608,7 @@ export const ms: Messages = {
   },
   seo: {
     minorTitle: "Minor {title} di UniMelb: subjek dan perancangan",
+    informalTitle: "Pengkhususan tidak formal {title} di UniMelb: subjek dan perancangan",
     subjectTitle: "{code} {title} | UniMelb: prasyarat, semester, penilaian",
     subjectTitleReviews: "{code} {title} | Ulasan subjek UniMelb, tahap kesukaran, prasyarat",
     majorTitle: "Major {title} di UniMelb: subjek teras, pilihan dan perancangan",
@@ -694,6 +696,11 @@ export const ms: Messages = {
     planMinor: "Tambah minor ini ke pelan saya",
     minorsTitle: "Minor",
     minorsHint: "Minor ialah bidang pengajian tambahan yang lebih kecil dan pilihan, di samping major.",
+    informalTitle: "Pengkhususan tidak formal {title}",
+    informalKind: "Pengkhususan tidak formal",
+    planInformal: "Tambah pengkhususan ini ke pelan saya",
+    informalsTitle: "Pengkhususan tidak formal",
+    informalsHint: "Pengkhususan tidak formal ialah set kecil subjek tahap 3 pilihan di samping major anda.",
     closedList: "Tidak lagi menerima pelajar baharu:",
     entryRoutes: "Major ini ada {n} titik masuk mengikut tahap bahasa anda. Di bawah: {first}. Rancangan anda ikut titik masuk yang sepadan dengan subjek anda.",
     shownFor: "Dipaparkan untuk {course}",
@@ -1063,6 +1070,7 @@ export const ms: Messages = {
   },
   plans: {
     minorLine: "Minor: {title}",
+    informalLine: "Pengkhususan tidak formal: {title}",
     goal: "Matlamat",
     interests: "Minat",
     noInterests: "Belum dipilih",
@@ -1098,9 +1106,11 @@ export const ms: Messages = {
   },
   wizard: {
     qMinor: "Mahu tambah minor? (pilihan)",
+    qInformal: "Mahu tambah pengkhususan tidak formal? (pilihan)",
     qMajor2: "Tambah major kedua? (pilihan)",
     noMajor2: "Tiada major kedua",
     noMinor: "Tiada minor",
+    noInformal: "Tiada pengkhususan tidak formal",
     majorsLink: "Tak pasti major mana? Lihat senarai major",
     qSpec: 'Tambah pengkhususan? (pilihan)',
     noSpec: 'Tidak',

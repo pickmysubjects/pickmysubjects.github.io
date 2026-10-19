@@ -1,0 +1,12 @@
+id: des-informal-transport-design
+course: B-DES
+year: 2026
+kind: specialisation
+informal: true
+title: Transport Design
+points: 25
+requirements:
+  # Core: transport planning and data-driven transport planning.
+  - all: [PLAN30004, CVEN30011]
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-des/majors-minors-specialisations
+verified_on: 2026-10-19 # structure; source: 2026 Handbook informal specialisation page

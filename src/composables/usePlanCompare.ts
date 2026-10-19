@@ -1,5 +1,5 @@
 import { computed, type Ref } from 'vue'
-import { checkCourse, comparePlans, planComponentIds, findCourse, forCourse, planRoles, planStress, requiredWithPrerequisites, type Dataset, type RuleStatus } from '@/engine'
+import { checkCourse, comparePlans, informalPicks, planComponentIds, findCourse, forCourse, planRoles, planStress, requiredWithPrerequisites, type Dataset, type RuleStatus } from '@/engine'
 import type { PlanSetup } from './planStore'
 import { useDataset } from './useDataset'
 import { useProfile } from './useProfile'
@@ -13,16 +13,19 @@ export interface CompareSummary {
   major: string
   /** Minor titles, or '' when there's none. */
   minor: string
+  /** The minor picks are informal specialisations (B-DES). */
+  minorInformal: boolean
   statuses: RuleStatus[]
   met: number
 }
 
 /** A plan's major (+ specialisation) and minor titles, '' for whichever isn't picked. */
-export function setupTitles(data: Dataset, setup: Pick<PlanSetup, 'major' | 'major2' | 'specialisation' | 'minors'>): { major: string; minor: string } {
+export function setupTitles(data: Dataset, setup: Pick<PlanSetup, 'major' | 'major2' | 'specialisation' | 'minors'>): { major: string; minor: string; minorInformal: boolean } {
   const title = (id: string | undefined) => (id ? data.components.find((c) => c.id === id)?.title : undefined)
   return {
     major: [title(setup.major), setup.major ? title(setup.major2) : undefined, title(setup.specialisation)].filter(Boolean).join(' + '),
     minor: (setup.minors ?? []).map(title).filter(Boolean).join(' + '),
+    minorInformal: informalPicks(data, setup.minors),
   }
 }
 
@@ -42,12 +45,13 @@ export function usePlanCompare(a: Ref<PlanEntry | undefined>, b: Ref<PlanEntry |
     const fixed = requiredWithPrerequisites(new Set([...roles.required, ...roles.options]), codes, data.subjects, setup.course)
     const levels = planStress(terms.map((t) => t.subjects), data, profile, fixed, setup.course).terms.map((s) => s.level)
     const statuses = checkCourse(plan, data).statuses
-    const { major, minor } = setupTitles(data, setup)
+    const { major, minor, minorInformal } = setupTitles(data, setup)
     const summary: CompareSummary = {
       entry,
       courseTitle: findCourse(data, setup.course, setup.courseYear)?.title ?? setup.course,
       major,
       minor,
+      minorInformal,
       statuses,
       met: statuses.filter((s) => s.status === 'ok').length,
     }

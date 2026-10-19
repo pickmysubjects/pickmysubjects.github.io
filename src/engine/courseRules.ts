@@ -45,6 +45,16 @@ export function minorTitles(data: Dataset, ids: readonly string[] | undefined): 
   return ids.map((id) => findComponent(data, id)?.title).filter((t): t is string => !!t)
 }
 
+/** True when the plan's minor picks are informal specialisations (B-DES), so they're named as such. */
+export function informalPicks(data: Dataset, ids: readonly string[] | undefined): boolean {
+  return (ids ?? []).some((id) => findComponent(data, id)?.informal === true)
+}
+
+/** Components a plan holds in its minors: minors, and informal specialisations (B-DES). */
+export function heldAsMinor(c: Pick<Component, 'kind' | 'informal'>): boolean {
+  return c.kind === 'minor' || c.informal
+}
+
 /** What a plan has chosen, as far as the course's components go. */
 export interface PlanComponents {
   major?: string

@@ -20,7 +20,7 @@ describe('minors in the schema', () => {
     expect(fixture.kind).toBe('minor')
     expect(fixture.requirements).toEqual([{ choose: { points: 25, from: ['PHIL20008', 'PHIL20030', 'PHIL20033', 'PHIL20039'] } }, { all: ['PHIL30024'] }])
     const course = courseFileSchema.parse({ code: 'X', title: 'X', year: 2026, total_points: 300, standard_load: 50, rules: [{ id: 'minor', kind: 'minor', max: 1, description: 'At most one minor' }] })
-    expect(course.rules[0]).toEqual({ id: 'minor', kind: 'minor', max: 1, description: 'At most one minor' })
+    expect(course.rules[0]).toEqual({ id: 'minor', kind: 'minor', max: 1, informal: false, description: 'At most one minor' })
     expect(() => courseFileSchema.parse({ code: 'X', title: 'X', year: 2026, total_points: 300, standard_load: 50, rules: [{ id: 'minor', kind: 'minor', description: 'x' }] })).toThrow()
   })
 
@@ -109,7 +109,7 @@ describe('prerequisites a minor can meet', () => {
 
 describe('comparing plans', () => {
   it("shows each plan's minor next to its major", () => {
-    expect(setupTitles(data, { major: 'history', specialisation: '', minors: ['test-philosophy-minor'] })).toEqual({ major: 'History', minor: 'Philosophy' })
+    expect(setupTitles(data, { major: 'history', specialisation: '', minors: ['test-philosophy-minor'] })).toEqual({ major: 'History', minor: 'Philosophy', minorInformal: false })
     expect(setupTitles(data, { major: 'history', specialisation: '', minors: [] }).minor).toBe('')
   })
 

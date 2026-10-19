@@ -1,0 +1,12 @@
+id: des-informal-typography
+course: B-DES
+year: 2026
+kind: specialisation
+informal: true
+title: Typography
+points: 25
+requirements:
+  # Core: both level 3 typography subjects.
+  - all: [GDES30005, GDES30006]
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-des/majors-minors-specialisations
+verified_on: 2026-10-19 # structure; source: 2026 Handbook informal specialisation page

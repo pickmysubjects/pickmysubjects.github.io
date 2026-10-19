@@ -13,7 +13,7 @@ import PlanPrint, { type PrintTerm } from '@/components/planner/PlanPrint.vue'
 import Interp from '@/components/Interp.vue'
 import PlanSwitcher from '@/components/plans/PlanSwitcher.vue'
 import PlanCompare from '@/components/plans/PlanCompare.vue'
-import { PASS_MARK, isFail, passedCodes, planComponentIds, planRoles, type PlanTerm } from '@/engine'
+import { PASS_MARK, informalPicks, isFail, passedCodes, planComponentIds, planRoles, type PlanTerm } from '@/engine'
 import { Printer, Share2 } from 'lucide-vue-next'
 import { decodePlan, encodePlan } from '@/utils/sharePlan'
 import { go, useView } from '@/composables/useView'
@@ -138,7 +138,8 @@ const majorTitle = computed(() => {
   const spec = data.value.components.find((c) => c.id === plan.setup.value.specialisation)?.title
   const minor = (plan.setup.value.minors ?? []).map((id) => data.value.components.find((c) => c.id === id)?.title).filter(Boolean).join(' + ')
   const main = [major, second, spec].filter(Boolean).join(' + ')
-  return minor ? `${main} · ${t.value('plans.minorLine', { title: minor })}` : main
+  const key = informalPicks(data.value, plan.setup.value.minors) ? 'plans.informalLine' : 'plans.minorLine'
+  return minor ? `${main} · ${t.value(key, { title: minor })}` : main
 })
 const summary = computed(() =>
   t.value('wizard.summary', {

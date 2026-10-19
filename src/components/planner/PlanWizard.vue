@@ -2,7 +2,7 @@
 import { link } from '@/composables/useView'
 import { computed, shallowRef } from 'vue'
 import { ArrowLeft, ArrowRight, Check } from 'lucide-vue-next'
-import { cannotCombine, majorClash, maxMajors, minorClash, type Component, type Course, type Period } from '@/engine'
+import { cannotCombine, heldAsMinor, majorClash, maxMajors, minorClash, type Component, type Course, type Period } from '@/engine'
 import { useDataset } from '@/composables/useDataset'
 import type { PlanSetup } from '@/composables/usePlan'
 import MajorPicker from './MajorPicker.vue'
@@ -72,6 +72,7 @@ const specs = computed(() =>
     (c) =>
       c.course === draft.value.course &&
       c.kind === 'specialisation' &&
+      !c.informal &&
       (c.requiresMajor.length === 0 || chosenMajors.value.some((m) => c.requiresMajor.includes(m))) &&
       // Not one the major's own subjects rule out (Mechatronics with a computing specialisation).
       !chosenMajors.value.some((m) => cannotCombine(data.value, m, c.id)),
@@ -79,19 +80,20 @@ const specs = computed(() =>
 )
 
 // Minors of the course (an optional extra, shown only when the course has any), open to new
-// students and not the major's own discipline.
+// students and not the major's own discipline. In B-DES these are its informal specialisations.
 const minors = computed(() =>
   props.components
     .filter(
       (c) =>
         c.course === draft.value.course &&
-        c.kind === 'minor' &&
+        heldAsMinor(c) &&
         (c.closedFrom === undefined || draft.value.startYear < c.closedFrom || draft.value.minors?.includes(c.id)) &&
         !minorClash(data.value, chosenMajors.value, c.id),
     )
     .sort((a, b) => a.title.localeCompare(b.title)),
 )
 const minor = computed(() => draft.value.minors?.[0] ?? '')
+const informal = computed(() => minors.value.some((c) => c.informal))
 
 function set(patch: Partial<PlanSetup>): void {
   draft.value = { ...draft.value, ...patch }
@@ -205,9 +207,9 @@ function chooseCourse(c: Course): void {
         </div>
       </div>
       <label v-if="minors.length" class="minor">
-        <span class="spec-title">{{ t('wizard.qMinor') }}</span>
+        <span class="spec-title">{{ t(informal ? 'wizard.qInformal' : 'wizard.qMinor') }}</span>
         <select class="select-glass minor-select" :value="minor" @change="set({ minors: ($event.target as HTMLSelectElement).value ? [($event.target as HTMLSelectElement).value] : [] })">
-          <option value="">{{ t('wizard.noMinor') }}</option>
+          <option value="">{{ t(informal ? 'wizard.noInformal' : 'wizard.noMinor') }}</option>
           <option v-for="m in minors" :key="m.id" :value="m.id">{{ m.title }}</option>
         </select>
       </label>

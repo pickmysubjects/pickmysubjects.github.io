@@ -433,8 +433,9 @@ const courseRule = z.discriminatedUnion('kind', [
   z
     .object({ ...ruleBase, kind: z.literal('specialisation'), max: z.number().int().nonnegative() })
     .strict(),
-  // Optional minors: at most `max` of them (B-ARTS: one).
-  z.object({ ...ruleBase, kind: z.literal('minor'), max: z.number().int().nonnegative() }).strict(),
+  // Optional minors: at most `max` of them (B-ARTS: one). `informal`: this course's picks of this
+  // kind are informal specialisations (B-DES), which a plan holds the same way as a minor.
+  z.object({ ...ruleBase, kind: z.literal('minor'), max: z.number().int().nonnegative(), informal: z.boolean().default(false) }).strict(),
   z
     .object({
       ...ruleBase,
@@ -519,8 +520,9 @@ function camelRule(r: z.output<typeof courseRule>): CourseRule {
     case 'area-cap':
       return { id: r.id, description: r.description, kind: r.kind, max: r.max, category: r.category, exceptions: r.exceptions }
     case 'specialisation':
-    case 'minor':
       return { id: r.id, description: r.description, kind: r.kind, max: r.max }
+    case 'minor':
+      return { id: r.id, description: r.description, kind: r.kind, max: r.max, informal: r.informal }
     case 'level1-areas':
       return {
         id: r.id,
@@ -550,7 +552,7 @@ export type CourseRule =
   | { id: string; description: string; kind: 'major'; count: number; max: number; noDoubleCount: boolean | [string, string][] }
   | { id: string; description: string; kind: 'area-cap'; max: number; category?: string; exceptions: { components: string[] }[] }
   | { id: string; description: string; kind: 'specialisation'; max: number }
-  | { id: string; description: string; kind: 'minor'; max: number }
+  | { id: string; description: string; kind: 'minor'; max: number; informal: boolean }
   | {
       id: string
       description: string
@@ -580,6 +582,9 @@ export const componentFileSchema = z
     title: z.string().min(1),
     points: z.number().positive(),
     requires_major: z.array(z.string()).default([]),
+    // An informal specialisation (B-DES: 25 points of level 3, separate from the formal ones): a
+    // plan holds it in its minors, not as its specialisation. Only on kind specialisation.
+    informal: z.boolean().default(false),
     // Components that can't be taken alongside this one (Handbook "Diversity of study" pairs).
     not_with: z.array(z.string()).default([]),
     requirements: z.union([z.literal('unknown'), z.array(componentReq)]).default('unknown'),
@@ -606,11 +611,13 @@ export const componentFileSchema = z
       .optional(),
   })
   .strict()
+  .refine((c) => !c.informal || c.kind === 'specialisation', { message: 'informal is only for kind specialisation', path: ['informal'] })
   .transform((c) => ({
     id: c.id,
     course: c.course,
     year: c.year,
     kind: c.kind,
+    informal: c.informal,
     title: c.title,
     points: c.points,
     requiresMajor: c.requires_major,

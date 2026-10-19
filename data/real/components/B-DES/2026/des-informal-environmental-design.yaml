@@ -1,0 +1,12 @@
+id: des-informal-environmental-design
+course: B-DES
+year: 2026
+kind: specialisation
+informal: true
+title: Environmental Design
+points: 25
+requirements:
+  # Core: commercial (winter) and housing (summer) environmental design.
+  - all: [ARCH30003, ARCH30004]
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-des/majors-minors-specialisations
+verified_on: 2026-10-19 # structure; source: 2026 Handbook informal specialisation page

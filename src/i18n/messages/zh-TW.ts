@@ -99,6 +99,7 @@ export const zhTW: Messages = {
   },
   rule: {
     minor: "最多 {max} 個輔修",
+    informalSpec: "非正式專精最多 {max} 個",
     compulsory: '必修 {codes}',
     compulsoryFirst: '第一個學期必須修 {codes}',
     pointsMin: '至少 {n} 學分的{what}',
@@ -607,6 +608,7 @@ export const zhTW: Messages = {
   },
   seo: {
     minorTitle: "墨大 {title} 輔修：科目與規劃",
+    informalTitle: "墨爾本大學 {title} 非正式專精：課程與規劃",
     subjectTitle: "{code} {title}｜墨大選課：先修課、開課學期、考核方式",
     subjectTitleReviews: "{code} {title}｜墨大課程評價：難度、先修課、考核方式",
     majorTitle: "墨大 {title} 主修：必修課、選修課和排課",
@@ -694,6 +696,11 @@ export const zhTW: Messages = {
     planMinor: "把這個輔修加入我的計畫",
     minorsTitle: "輔修",
     minorsHint: "輔修是主修之外一個較小的可選方向。",
+    informalTitle: "{title} 非正式專精",
+    informalKind: "非正式專精",
+    planInformal: "把這個專精加入我的計畫",
+    informalsTitle: "非正式專精",
+    informalsHint: "非正式專精是在主修之外可選的一小組三年級課程。",
     closedList: "已不再招收新生：",
     entryRoutes: "這個專業依你原有的語言程度分 {n} 條路線。下面顯示的是 {first}；排課時會依你修過的課選對應的路線。",
     shownFor: "依 {course} 顯示",
@@ -1063,6 +1070,7 @@ export const zhTW: Messages = {
   },
   plans: {
     minorLine: "輔修：{title}",
+    informalLine: "非正式專精：{title}",
     goal: "目標",
     interests: "興趣",
     noInterests: "還沒選",
@@ -1098,9 +1106,11 @@ export const zhTW: Messages = {
   },
   wizard: {
     qMinor: "加一個輔修嗎？（可選）",
+    qInformal: "要加一個非正式專精嗎？（可選）",
     qMajor2: "要加第二個主修嗎？（可選）",
     noMajor2: "不加第二個主修",
     noMinor: "不加輔修",
+    noInformal: "不加非正式專精",
     majorsLink: "不確定選哪個？看看各主修介紹",
     qSpec: '要加一個專精嗎？（可選）',
     noSpec: '不加',

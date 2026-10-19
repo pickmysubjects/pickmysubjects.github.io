@@ -1,0 +1,14 @@
+id: des-informal-first-peoples-design-knowledge
+course: B-DES
+year: 2026
+kind: specialisation
+informal: true
+title: Working with First Peoples Design Knowledge
+points: 25
+requirements:
+  # First Peoples perspectives subject.
+  - all: [ARCH30006]
+  # One more Indigenous design subject (CREA30001 not available in 2026).
+  - choose: { points: 12.5, from: [CREA30001, MULT30022] }
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-des/majors-minors-specialisations
+verified_on: 2026-10-19 # structure; source: 2026 Handbook informal specialisation page

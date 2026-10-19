@@ -99,6 +99,7 @@ export const ja: Messages = {
   },
   rule: {
     minor: "副専攻は最大 {max} つ",
+    informalSpec: "非公式専門コースは最大 {max} つ",
     compulsory: '{codes} を履修する',
     compulsoryFirst: '最初のセメスターで {codes} を履修する',
     pointsMin: '{what}を {n} ポイント以上',
@@ -607,6 +608,7 @@ export const ja: Messages = {
   },
   seo: {
     minorTitle: "メルボルン大学 {title} 副専攻：科目と履修計画",
+    informalTitle: "メルボルン大学 {title} 非公式専門コース：科目と履修計画",
     subjectTitle: "{code} {title}｜メルボルン大学：前提科目・開講学期・評価方法",
     subjectTitleReviews: "{code} {title}｜メルボルン大学の科目の評判・難易度・前提科目",
     majorTitle: "メルボルン大学 {title} 専攻：必修科目・選択科目・履修計画",
@@ -694,6 +696,11 @@ export const ja: Messages = {
     planMinor: "この副専攻をプランに追加",
     minorsTitle: "副専攻",
     minorsHint: "副専攻は主専攻と並行して取る、小さめの任意の分野です。",
+    informalTitle: "{title} 非公式専門コース",
+    informalKind: "非公式専門コース",
+    planInformal: "この専門コースを計画に追加",
+    informalsTitle: "非公式専門コース",
+    informalsHint: "非公式専門コースは、主専攻と並行して取る短い任意の 3 年次科目のまとまりです。",
     closedList: "新入生の受け付けを終了した専攻：",
     entryRoutes: "この専攻は、すでにある語学力に応じて {n} つの入り方があります。下は {first} です。プランは履修した科目に合う入り方に従います。",
     shownFor: "{course} 向けに表示",
@@ -1063,6 +1070,7 @@ export const ja: Messages = {
   },
   plans: {
     minorLine: "副専攻：{title}",
+    informalLine: "非公式専門コース：{title}",
     goal: "目標",
     interests: "興味",
     noInterests: "まだ選んでいません",
@@ -1098,9 +1106,11 @@ export const ja: Messages = {
   },
   wizard: {
     qMinor: "副専攻を追加しますか？（任意）",
+    qInformal: "非公式専門コースを追加しますか？（任意）",
     qMajor2: "2つ目のメジャーを追加しますか？（任意）",
     noMajor2: "2つ目のメジャーなし",
     noMinor: "副専攻なし",
+    noInformal: "非公式専門コースなし",
     majorsLink: "どの専攻か迷ったら？専攻ガイドを見る",
     qSpec: '専攻分野（スペシャライゼーション）を追加しますか？（任意）',
     noSpec: 'なし',

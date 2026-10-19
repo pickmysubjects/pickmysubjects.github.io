@@ -73,6 +73,13 @@ rules:
     kind: specialisation
     max: 1
     description: At most one specialisation
+  # Informal specialisations (25 points of level 3 each) are separate from the formal ones above.
+  # The Handbook sets no limit on them; the planner holds one, kept like a minor.
+  - id: informal-specialisation
+    kind: minor
+    informal: true
+    max: 1
+    description: At most one informal specialisation (optional)
   - id: progress-to-l2
     kind: progression
     before_level: 2

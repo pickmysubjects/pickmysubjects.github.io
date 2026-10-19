@@ -2,7 +2,7 @@
 import { computed, shallowRef } from 'vue'
 import { ArrowLeft, ExternalLink, Route } from 'lucide-vue-next'
 import SubjectLinks from './SubjectLinks.vue'
-import { majorOverview, minorClash, sharedSubjects } from '@/engine'
+import { heldAsMinor, majorOverview, minorClash, sharedSubjects } from '@/engine'
 import { go, link } from '@/composables/useView'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
@@ -43,7 +43,7 @@ const routeGroups = computed(() => {
 const otherId = shallowRef('')
 const others = computed(() =>
   data.value.components
-    .filter((c) => c.course === major.value?.course && c.kind === major.value?.kind && c.id !== props.id)
+    .filter((c) => c.course === major.value?.course && c.kind === major.value?.kind && c.informal === major.value?.informal && c.id !== props.id)
     .sort((a, b) => a.title.localeCompare(b.title)),
 )
 const shared = computed(() => {
@@ -56,7 +56,7 @@ function planWithIt(): void {
   const m = major.value
   if (!m) return
   // A minor joins the plan's own major (same degree), unless it's that major's own discipline.
-  if (m.kind === 'minor') {
+  if (heldAsMinor(m)) {
     const setup = plan.setup.value
     const sameCourse = setup.course === m.course
     const major = sameCourse && !minorClash(data.value, setup.major, m.id) ? setup.major : ''
@@ -76,7 +76,7 @@ function planWithIt(): void {
     <a class="back" :href="link('majors')"><ArrowLeft :size="16" aria-hidden="true" /> {{ t('majors.all') }}</a>
 
     <header class="head">
-      <p class="eyebrow-line">{{ courseTitle }}<template v-if="major.kind === 'minor'"> · {{ t('majors.minorKind') }}</template> · {{ t('majors.points', { n: major.points }) }}</p>
+      <p class="eyebrow-line">{{ courseTitle }}<template v-if="major.informal"> · {{ t('majors.informalKind') }}</template><template v-else-if="major.kind === 'minor'"> · {{ t('majors.minorKind') }}</template> · {{ t('majors.points', { n: major.points }) }}</p>
       <h1 class="page-title">{{ major.title }}</h1>
     </header>
 
@@ -143,7 +143,7 @@ function planWithIt(): void {
           </div>
         </dl>
         <button class="button button-accent summary-plan" type="button" @click="planWithIt">
-          <Route :size="16" aria-hidden="true" /> {{ major.kind === 'minor' ? t('majors.planMinor') : t('majors.planIt') }}
+          <Route :size="16" aria-hidden="true" /> {{ major.informal ? t('majors.planInformal') : major.kind === 'minor' ? t('majors.planMinor') : t('majors.planIt') }}
         </button>
         <a v-if="major.handbook" class="button button-quiet summary-plan" :href="major.handbook" target="_blank" rel="noopener">
           {{ t('majors.handbook') }} <ExternalLink :size="15" aria-hidden="true" />

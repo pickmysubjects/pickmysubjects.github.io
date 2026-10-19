@@ -42,7 +42,7 @@ export function ruleText(t: Translate, rule: CourseRule | undefined, fallback = 
     case 'specialisation':
       return t('rule.specialisation', { max: rule.max })
     case 'minor':
-      return t('rule.minor', { max: rule.max })
+      return t(rule.informal ? 'rule.informalSpec' : 'rule.minor', { max: rule.max })
     case 'level1-areas':
       return t('rule.level1Areas', { min: rule.minAreas, max: rule.maxPointsPerArea })
     case 'progression':

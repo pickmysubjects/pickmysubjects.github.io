@@ -1,0 +1,12 @@
+id: des-informal-building-information-modelling
+course: B-DES
+year: 2026
+kind: specialisation
+informal: true
+title: Building Information Modelling
+points: 25
+requirements:
+  # Core: both level 3 BIM subjects.
+  - all: [CONS30001, CONS30002]
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-des/majors-minors-specialisations
+verified_on: 2026-10-19 # structure; source: 2026 Handbook informal specialisation page

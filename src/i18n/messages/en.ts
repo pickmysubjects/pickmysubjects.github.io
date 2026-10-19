@@ -102,6 +102,7 @@ export const en = {
   },
   rule: {
     minor: "At most {max} minor",
+    informalSpec: "At most {max} informal specialisation",
     compulsory: 'Take {codes}',
     compulsoryFirst: 'Take {codes} in your first semester',
     pointsMin: 'At least {n} points of {what}',
@@ -610,6 +611,7 @@ export const en = {
   },
   seo: {
     minorTitle: "{title} minor at UniMelb: subjects and planning",
+    informalTitle: "{title} informal specialisation at UniMelb: subjects and planning",
     subjectTitle: "{code} {title}: UniMelb prerequisites, semesters, assessment",
     subjectTitleReviews: "{code} {title}: UniMelb subject reviews, difficulty, prerequisites",
     majorTitle: "{title} major at UniMelb: core subjects, options and planning",
@@ -697,6 +699,11 @@ export const en = {
     planMinor: "Add this minor to my plan",
     minorsTitle: "Minors",
     minorsHint: "A minor is a smaller, optional study area alongside your major.",
+    informalTitle: "{title} informal specialisation",
+    informalKind: "Informal specialisation",
+    planInformal: "Add this specialisation to my plan",
+    informalsTitle: "Informal specialisations",
+    informalsHint: "An informal specialisation is a short, optional set of level 3 subjects alongside your major.",
     closedList: "No longer open to new students:",
     entryRoutes: "This major has {n} entry points, set by how much of the language you already know. Shown below: {first}. Your plan follows the one your subjects point to.",
     shownFor: "Shown for {course}",
@@ -1066,6 +1073,7 @@ export const en = {
   },
   plans: {
     minorLine: "Minor: {title}",
+    informalLine: "Informal specialisation: {title}",
     goal: "Goal",
     interests: "Interests",
     noInterests: "None picked",
@@ -1101,9 +1109,11 @@ export const en = {
   },
   wizard: {
     qMinor: "Adding a minor? (optional)",
+    qInformal: "Adding an informal specialisation? (optional)",
     qMajor2: "Adding a second major? (optional)",
     noMajor2: "No second major",
     noMinor: "No minor",
+    noInformal: "No informal specialisation",
     majorsLink: "Not sure which major? Compare them",
     qSpec: 'Adding a specialisation? (optional)',
     noSpec: 'No',

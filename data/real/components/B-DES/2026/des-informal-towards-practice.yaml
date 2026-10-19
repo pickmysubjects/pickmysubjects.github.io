@@ -1,0 +1,12 @@
+id: des-informal-towards-practice
+course: B-DES
+year: 2026
+kind: specialisation
+informal: true
+title: Towards Practice
+points: 25
+requirements:
+  # Electives: internships, visiting studios and practice subjects (some not available in 2026).
+  - choose: { points: 25, from: [ABPL30068, ABPL30064, ABPL30063, ABPL30051, THTR30042, ABPL30071, DPSS30007, PERF30002] }
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-des/majors-minors-specialisations
+verified_on: 2026-10-19 # structure; source: 2026 Handbook informal specialisation page

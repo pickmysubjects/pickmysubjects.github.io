@@ -99,6 +99,7 @@ export const ko: Messages = {
   },
   rule: {
     minor: "부전공은 최대 {max}개",
+    informalSpec: "비공식 세부전공은 최대 {max}개",
     compulsory: '{codes} 이수',
     compulsoryFirst: '첫 학기에 {codes} 이수',
     pointsMin: '{what} 최소 {n}학점',
@@ -607,6 +608,7 @@ export const ko: Messages = {
   },
   seo: {
     minorTitle: "멜버른대 {title} 부전공: 과목과 계획",
+    informalTitle: "멜버른대 {title} 비공식 세부전공: 과목과 계획",
     subjectTitle: "{code} {title} | 멜버른대: 선수 과목, 개설 학기, 평가 방식",
     subjectTitleReviews: "{code} {title} | 멜버른대 과목 평가, 난이도, 선수 과목",
     majorTitle: "멜버른대 {title} 전공: 필수 과목, 선택 과목, 수강 계획",
@@ -694,6 +696,11 @@ export const ko: Messages = {
     planMinor: "이 부전공을 내 계획에 추가",
     minorsTitle: "부전공",
     minorsHint: "부전공은 전공과 함께 듣는 작은 선택 분야입니다.",
+    informalTitle: "{title} 비공식 세부전공",
+    informalKind: "비공식 세부전공",
+    planInformal: "이 세부전공을 내 계획에 추가",
+    informalsTitle: "비공식 세부전공",
+    informalsHint: "비공식 세부전공은 전공과 함께 듣는 짧은 선택 3학년 과목 묶음입니다.",
     closedList: "신입생 모집이 끝난 전공:",
     entryRoutes: "이 전공은 기존 언어 실력에 따라 {n}가지 진입 경로가 있어요. 아래는 {first}이고, 계획은 들은 과목에 맞는 경로를 따라요.",
     shownFor: "{course} 기준으로 표시",
@@ -1063,6 +1070,7 @@ export const ko: Messages = {
   },
   plans: {
     minorLine: "부전공: {title}",
+    informalLine: "비공식 세부전공: {title}",
     goal: "목표",
     interests: "관심사",
     noInterests: "아직 선택 안 함",
@@ -1098,9 +1106,11 @@ export const ko: Messages = {
   },
   wizard: {
     qMinor: "부전공을 추가할까요? (선택)",
+    qInformal: "비공식 세부전공을 추가할까요? (선택)",
     qMajor2: "두 번째 전공을 추가할까요? (선택)",
     noMajor2: "두 번째 전공 없음",
     noMinor: "부전공 없음",
+    noInformal: "비공식 세부전공 없음",
     majorsLink: "어떤 전공인지 모르겠다면? 전공 소개 보기",
     qSpec: '세부 전공을 추가하나요? (선택)',
     noSpec: '안 함',

@@ -99,6 +99,7 @@ export const hi: Messages = {
   },
   rule: {
     minor: "अधिकतम {max} माइनर",
+    informalSpec: "अधिकतम {max} अनौपचारिक स्पेशलाइज़ेशन",
     compulsory: '{codes} लें',
     compulsoryFirst: 'पहले सेमेस्टर में {codes} लें',
     pointsMin: 'कम से कम {n} पॉइंट {what}',
@@ -607,6 +608,7 @@ export const hi: Messages = {
   },
   seo: {
     minorTitle: "UniMelb में {title} माइनर: विषय और योजना",
+    informalTitle: "UniMelb में {title} अनौपचारिक स्पेशलाइज़ेशन: विषय और योजना",
     subjectTitle: "{code} {title} | यूनिमेलब: पूर्व-आवश्यक विषय, सेमेस्टर, मूल्यांकन",
     subjectTitleReviews: "{code} {title} | यूनिमेलब सब्जेक्ट रिव्यू, कठिनाई, पूर्व-आवश्यक विषय",
     majorTitle: "यूनिमेलब में {title} मेजर: अनिवार्य विषय, विकल्प और योजना",
@@ -694,6 +696,11 @@ export const hi: Messages = {
     planMinor: "यह माइनर मेरी योजना में जोड़ें",
     minorsTitle: "माइनर",
     minorsHint: "माइनर आपके मेजर के साथ एक छोटा, वैकल्पिक अध्ययन क्षेत्र है।",
+    informalTitle: "{title} अनौपचारिक स्पेशलाइज़ेशन",
+    informalKind: "अनौपचारिक स्पेशलाइज़ेशन",
+    planInformal: "यह स्पेशलाइज़ेशन मेरी योजना में जोड़ें",
+    informalsTitle: "अनौपचारिक स्पेशलाइज़ेशन",
+    informalsHint: "अनौपचारिक स्पेशलाइज़ेशन आपके मेजर के साथ लेवल 3 विषयों का एक छोटा, वैकल्पिक समूह है।",
     closedList: "अब नए छात्रों के लिए खुला नहीं:",
     entryRoutes: "इस मेजर में आपकी मौजूदा भाषा-योग्यता के हिसाब से {n} रास्ते हैं। नीचे {first} दिखाया गया है; प्लान आपके सब्जेक्ट से मेल खाने वाला रास्ता लेता है।",
     shownFor: "{course} के लिए दिखाया गया",
@@ -1063,6 +1070,7 @@ export const hi: Messages = {
   },
   plans: {
     minorLine: "माइनर: {title}",
+    informalLine: "अनौपचारिक स्पेशलाइज़ेशन: {title}",
     goal: "लक्ष्य",
     interests: "रुचियाँ",
     noInterests: "अभी कुछ नहीं चुना",
@@ -1098,9 +1106,11 @@ export const hi: Messages = {
   },
   wizard: {
     qMinor: "माइनर जोड़ना है? (वैकल्पिक)",
+    qInformal: "अनौपचारिक स्पेशलाइज़ेशन जोड़ना है? (वैकल्पिक)",
     qMajor2: "दूसरा मेजर जोड़ना है? (वैकल्पिक)",
     noMajor2: "दूसरा मेजर नहीं",
     noMinor: "कोई माइनर नहीं",
+    noInformal: "कोई अनौपचारिक स्पेशलाइज़ेशन नहीं",
     majorsLink: "कौन सा मेजर, तय नहीं? सभी मेजर देखें",
     qSpec: 'स्पेशलाइज़ेशन जोड़ना है? (वैकल्पिक)',
     noSpec: 'नहीं',

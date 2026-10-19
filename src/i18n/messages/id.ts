@@ -99,6 +99,7 @@ export const id: Messages = {
   },
   rule: {
     minor: "Paling banyak {max} minor",
+    informalSpec: "Paling banyak {max} spesialisasi informal",
     compulsory: 'Ambil {codes}',
     compulsoryFirst: 'Ambil {codes} di semester pertama',
     pointsMin: 'Minimal {n} poin {what}',
@@ -607,6 +608,7 @@ export const id: Messages = {
   },
   seo: {
     minorTitle: "Minor {title} di UniMelb: mata kuliah dan perencanaan",
+    informalTitle: "Spesialisasi informal {title} di UniMelb: mata kuliah dan perencanaan",
     subjectTitle: "{code} {title} | UniMelb: prasyarat, semester, penilaian",
     subjectTitleReviews: "{code} {title} | Ulasan mata kuliah UniMelb, tingkat kesulitan, prasyarat",
     majorTitle: "Jurusan {title} di UniMelb: mata kuliah wajib, pilihan, dan perencanaan",
@@ -694,6 +696,11 @@ export const id: Messages = {
     planMinor: "Tambahkan minor ini ke rencanaku",
     minorsTitle: "Minor",
     minorsHint: "Minor adalah bidang studi tambahan yang lebih kecil dan opsional di samping major.",
+    informalTitle: "Spesialisasi informal {title}",
+    informalKind: "Spesialisasi informal",
+    planInformal: "Tambahkan spesialisasi ini ke rencana saya",
+    informalsTitle: "Spesialisasi informal",
+    informalsHint: "Spesialisasi informal adalah sekelompok kecil mata kuliah level 3 opsional di samping major.",
     closedList: "Tidak lagi menerima mahasiswa baru:",
     entryRoutes: "Jurusan ini punya {n} titik masuk sesuai kemampuan bahasamu. Di bawah: {first}. Rencanamu mengikuti titik masuk yang cocok dengan mata kuliahmu.",
     shownFor: "Ditampilkan untuk {course}",
@@ -1063,6 +1070,7 @@ export const id: Messages = {
   },
   plans: {
     minorLine: "Minor: {title}",
+    informalLine: "Spesialisasi informal: {title}",
     goal: "Tujuan",
     interests: "Minat",
     noInterests: "Belum dipilih",
@@ -1098,9 +1106,11 @@ export const id: Messages = {
   },
   wizard: {
     qMinor: "Mau tambah minor? (opsional)",
+    qInformal: "Mau tambah spesialisasi informal? (opsional)",
     qMajor2: "Tambah jurusan kedua? (opsional)",
     noMajor2: "Tanpa jurusan kedua",
     noMinor: "Tanpa minor",
+    noInformal: "Tanpa spesialisasi informal",
     majorsLink: "Belum yakin pilih major apa? Lihat daftar major",
     qSpec: 'Menambah spesialisasi? (opsional)',
     noSpec: 'Tidak',

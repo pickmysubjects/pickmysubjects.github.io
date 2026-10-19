@@ -99,6 +99,7 @@ export const vi: Messages = {
   },
   rule: {
     minor: "Tối đa {max} ngành phụ",
+    informalSpec: "Tối đa {max} chuyên sâu không chính thức",
     compulsory: 'Học {codes}',
     compulsoryFirst: 'Học {codes} trong học kỳ đầu tiên',
     pointsMin: 'Ít nhất {n} tín chỉ {what}',
@@ -607,6 +608,7 @@ export const vi: Messages = {
   },
   seo: {
     minorTitle: "Ngành phụ {title} tại UniMelb: môn học và kế hoạch",
+    informalTitle: "Chuyên sâu không chính thức {title} tại UniMelb: môn học và lộ trình",
     subjectTitle: "{code} {title} | Đại học Melbourne: môn tiên quyết, học kỳ, cách đánh giá",
     subjectTitleReviews: "{code} {title} | Đại học Melbourne: đánh giá môn học, độ khó, môn tiên quyết",
     majorTitle: "Chuyên ngành {title} tại Đại học Melbourne: môn bắt buộc, môn tự chọn, lộ trình",
@@ -694,6 +696,11 @@ export const vi: Messages = {
     planMinor: "Thêm ngành phụ này vào kế hoạch",
     minorsTitle: "Ngành phụ",
     minorsHint: "Ngành phụ là một hướng học nhỏ hơn, không bắt buộc, bên cạnh ngành chính.",
+    informalTitle: "Chuyên sâu không chính thức {title}",
+    informalKind: "Chuyên sâu không chính thức",
+    planInformal: "Thêm chuyên sâu này vào kế hoạch của tôi",
+    informalsTitle: "Chuyên sâu không chính thức",
+    informalsHint: "Chuyên sâu không chính thức là một nhóm nhỏ môn năm 3 tự chọn, học cùng chuyên ngành chính.",
     closedList: "Không còn nhận sinh viên mới:",
     entryRoutes: "Ngành này có {n} lộ trình tùy trình độ ngôn ngữ bạn đã có. Bên dưới là {first}; kế hoạch sẽ theo lộ trình khớp với các môn bạn đã học.",
     shownFor: "Hiển thị cho {course}",
@@ -1063,6 +1070,7 @@ export const vi: Messages = {
   },
   plans: {
     minorLine: "Ngành phụ: {title}",
+    informalLine: "Chuyên sâu không chính thức: {title}",
     goal: "Mục tiêu",
     interests: "Sở thích",
     noInterests: "Chưa chọn",
@@ -1098,9 +1106,11 @@ export const vi: Messages = {
   },
   wizard: {
     qMinor: "Thêm ngành phụ? (không bắt buộc)",
+    qInformal: "Thêm chuyên sâu không chính thức? (tùy chọn)",
     qMajor2: "Thêm chuyên ngành thứ hai? (không bắt buộc)",
     noMajor2: "Không có chuyên ngành thứ hai",
     noMinor: "Không có ngành phụ",
+    noInformal: "Không thêm chuyên sâu không chính thức",
     majorsLink: "Chưa chắc chọn ngành nào? Xem các chuyên ngành",
     qSpec: 'Thêm chuyên ngành hẹp? (không bắt buộc)',
     noSpec: 'Không',

@@ -57,7 +57,7 @@ watchEffect(() => {
   document.title = s
     ? `${t.value(subjectTitleKey(s), { code: s.code, title: withLocalTitle(s.title, localTitle(s, locale.value)) })} | PickMySubjects`
     : major
-      ? `${t.value(major.kind === 'minor' ? 'seo.minorTitle' : 'seo.majorTitle', { title: major.title })} | PickMySubjects`
+      ? `${t.value(major.informal ? 'seo.informalTitle' : major.kind === 'minor' ? 'seo.minorTitle' : 'seo.majorTitle', { title: major.title })} | PickMySubjects`
       : preset
         ? `${breadthElsewhere ? t.value('seo.presetBreadthFor', { course: breadthElsewhere, year }) : t.value(PRESET_TITLE_KEYS[preset], { year })} | PickMySubjects`
       : key

@@ -1,0 +1,12 @@
+id: des-informal-event-design
+course: B-DES
+year: 2026
+kind: specialisation
+informal: true
+title: Event Design
+points: 25
+requirements:
+  # Core: both intensive event design subjects.
+  - all: [ABPL30069, PERF30001]
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-des/majors-minors-specialisations
+verified_on: 2026-10-19 # structure; source: 2026 Handbook informal specialisation page

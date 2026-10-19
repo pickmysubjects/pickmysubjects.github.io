@@ -1,0 +1,12 @@
+id: des-informal-design-visualisation
+course: B-DES
+year: 2026
+kind: specialisation
+informal: true
+title: Design Visualisation
+points: 25
+requirements:
+  # Core: digital and analogue visualisation.
+  - all: [ARCH30005, GDES30004]
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-des/majors-minors-specialisations
+verified_on: 2026-10-19 # structure; source: 2026 Handbook informal specialisation page

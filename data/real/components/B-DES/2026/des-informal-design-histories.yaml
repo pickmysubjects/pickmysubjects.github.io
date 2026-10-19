@@ -1,0 +1,12 @@
+id: des-informal-design-histories
+course: B-DES
+year: 2026
+kind: specialisation
+informal: true
+title: Design Histories
+points: 25
+requirements:
+  # Listed as core, but only 25 points of the three are needed (Venice Studio ABPL30070 dropped: no longer available).
+  - choose: { points: 25, from: [ABPL30053, ABPL30057, LARC30002] }
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-des/majors-minors-specialisations
+verified_on: 2026-10-19 # structure; source: 2026 Handbook informal specialisation page
