@@ -13,9 +13,13 @@ const KEY = '876442e96cb453de6a57008ed8287770'
 const BATCH = 10_000
 
 async function main(): Promise<void> {
-  const res = await fetch(`${SITE}/sitemap.xml`)
-  if (!res.ok) throw new Error(`sitemap: HTTP ${res.status}`)
-  const urls = [...(await res.text()).matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1] as string)
+  const locs = async (url: string): Promise<string[]> => {
+    const res = await fetch(url)
+    if (!res.ok) throw new Error(`sitemap ${url}: HTTP ${res.status}`)
+    return [...(await res.text()).matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1] as string)
+  }
+  // sitemap.xml is an index of one sitemap per language.
+  const urls = (await Promise.all((await locs(`${SITE}/sitemap.xml`)).map(locs))).flat()
   if (!urls.length) throw new Error('sitemap: no URLs')
   for (let i = 0; i < urls.length; i += BATCH) {
     const post = await fetch('https://api.indexnow.org/indexnow', {

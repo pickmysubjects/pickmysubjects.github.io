@@ -14,6 +14,7 @@
  */
 import { localTitle, pickLocalized, withLocalTitle } from '../src/i18n/localized'
 import { aggregateRatingLd, PRESET_TITLE_KEYS, subjectTitleKey } from '../src/utils/seo'
+import { execFileSync } from 'node:child_process'
 import { mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -586,10 +587,36 @@ function mainPages(code: LocaleCode): Page[] {
   ]
 }
 
+// ---------- last modified ----------
+
+// When each data file last changed, from one pass over git history (CI checks out full history).
+// A subject page dates from its own files; every other page from the latest change to data or text.
+const changed = new Map<string, string>()
+try {
+  let date = ''
+  for (const line of execFileSync('git', ['log', '--format=@%cs', '--name-only', '--', 'data/real', 'src/i18n'], { cwd: ROOT, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 }).split('\n')) {
+    if (line.startsWith('@')) date = line.slice(1)
+    else if (line && !changed.has(line)) changed.set(line, date)
+  }
+} catch {
+  // No git (a plain copy of the files): every page falls back to today.
+}
+const fallbackDate = [...changed.values()].sort().at(-1) ?? new Date().toISOString().slice(0, 10)
+function lastModified(path: string): string {
+  const code = /^subject\/([a-z]{4}\d{5})/i.exec(path)?.[1]?.toUpperCase()
+  if (!code) return fallbackDate
+  const dates = [`data/real/subjects/${code}.yaml`, `data/real/about/${code}.yaml`, `data/real/discussions/${code}.yaml`].map((f) => changed.get(f)).filter((d): d is string => !!d)
+  return dates.sort().at(-1) ?? fallbackDate
+}
+
 // ---------- write ----------
 
 const urls: string[] = []
+// Per language: each page's address and the last time its own content changed.
+const byLocale = new Map<LocaleCode, { url: string; lastmod: string }[]>()
 for (const code of LOCALE_CODES) {
+  const entries: { url: string; lastmod: string }[] = []
+  byLocale.set(code, entries)
   const main = mainPages(code)
   // Every page links every main page, so a crawler following links reaches all of them, not just the sitemap.
   const siteNav = `<nav>${main.map((m) => `<a href="${href(code, m.path)}">${esc(m.title.split(' | ')[0]!)}</a>`).join(' · ')}</nav>`
@@ -597,18 +624,29 @@ for (const code of LOCALE_CODES) {
   for (const page of pages) {
     write(code, page.path, render({ ...page, body: page.body + siteNav }, code))
     urls.push(absolute(code, page.path))
+    entries.push({ url: absolute(code, page.path), lastmod: lastModified(page.path) })
   }
 }
 
 // Any other address (a subject added later, a typo) still opens the app.
 writeFileSync(join(DIST, '404.html'), shell)
 
-const today = new Date().toISOString().slice(0, 10)
+// One sitemap per language under an index: smaller files read more reliably, and Search Console
+// reports each language on its own.
+const sitemapName = (code: LocaleCode) => `sitemap-${code}.xml`
+for (const [code, entries] of byLocale) {
+  writeFileSync(
+    join(DIST, sitemapName(code)),
+    `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${entries
+      .map((e) => `  <url><loc>${e.url}</loc><lastmod>${e.lastmod}</lastmod></url>`)
+      .join('\n')}\n</urlset>\n`,
+  )
+}
 writeFileSync(
   join(DIST, 'sitemap.xml'),
-  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls
-    .map((u) => `  <url><loc>${u}</loc><lastmod>${today}</lastmod></url>`)
-    .join('\n')}\n</urlset>\n`,
+  `<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${[...byLocale]
+    .map(([code, entries]) => `  <sitemap><loc>${SITE}${sitemapName(code)}</loc><lastmod>${entries.map((e) => e.lastmod).sort().at(-1)}</lastmod></sitemap>`)
+    .join('\n')}\n</sitemapindex>\n`,
 )
 
 // A plain summary for AI assistants (the llms.txt convention).
