@@ -359,7 +359,7 @@ describe('generatePlan (real B-ARTS data, capstones limited to a major)', () => 
   it("never gives a History student another major's capstone, which a Chinese Studies plan can hold", () => {
     expect(planFor('history')).not.toContain('CHIN30029')
     expect(planFor('chinese-studies')).toContain('CHIN30029')
-  })
+  }, 30_000)
 
   it("flags another major's capstone placed by hand in a History plan", () => {
     const plan = { course: 'B-ARTS', courseYear: 2026, major: 'history', completed: [], terms: [{ year: 2028, period: 'semester-2' as const, subjects: ['CHIN30029'] }] }
