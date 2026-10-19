@@ -664,6 +664,8 @@ export const zhTW: Messages = {
     leadsA: "有 {n} 門課需要先修它，例如 {codes}。",
   },
   rank: {
+    switch: { label: "推薦和排行榜", recommend: "為你推薦", easy: "涼課榜", hard: "硬課榜" },
+    onList: { easy: "在涼課榜上（第 {n} 名）", hard: "在硬課榜上（第 {n} 名）" },
     title: {
       easy: "墨大涼課：好拿分的課",
       hard: "墨大難課：最難的課",
@@ -1069,6 +1071,8 @@ export const zhTW: Messages = {
     contact: '有疑問？請使用「意見回饋」頁面。',
   },
   home: {
+    ranksTitle: "涼課榜和硬課榜",
+    ranksText: "按拿高分的難易程度給課程排名，每門都寫了理由。",
     startStep: "從第 {n} 步開始",
     toolsTitle: '新生常用',
     stepsTitle: '三步上手',

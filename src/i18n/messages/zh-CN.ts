@@ -664,6 +664,8 @@ export const zhCN: Messages = {
     leadsA: "有 {n} 门课需要先修它，例如 {codes}。",
   },
   rank: {
+    switch: { label: "推荐和排行榜", recommend: "为你推荐", easy: "水课榜", hard: "难课榜" },
+    onList: { easy: "在水课榜上（第 {n} 名）", hard: "在难课榜上（第 {n} 名）" },
     title: {
       easy: "墨大水课：好拿分的课",
       hard: "墨大难课：最难的课",
@@ -1069,6 +1071,8 @@ export const zhCN: Messages = {
     contact: '有疑问？请使用“反馈”页面。',
   },
   home: {
+    ranksTitle: "水课榜和难课榜",
+    ranksText: "按拿高分的难易程度给课程排名，每门都写了理由。",
     startStep: "从第 {n} 步开始",
     toolsTitle: '新生常用',
     stepsTitle: '三步上手',

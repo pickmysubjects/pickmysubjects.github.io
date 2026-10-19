@@ -231,3 +231,39 @@ export const RANK_SLUGS: Record<RankDirection, string> = { easy: 'easy', hard: '
 export function rankFromSlug(slug: string): RankDirection | undefined {
   return slug === 'easy' || slug === 'hard' ? slug : undefined
 }
+
+/** Where a subject sits near the top of one of the lists. */
+export interface ListPlace {
+  direction: RankDirection
+  /** 1-based, as the list page numbers it. */
+  place: number
+}
+
+/** How far down a list still counts as "on the list" for a subject page. */
+export const LIST_TOP = 30
+
+// Both lists' top places per subjects record, per course and year: built once, then each lookup is a Map read.
+const placeCache = new WeakMap<Record<string, Subject>, Map<string, Map<string, ListPlace>>>()
+
+/**
+ * Whether `code` is in the top `top` of the easy or hard list for `course` in `year`, using the
+ * same unfiltered list the ranking page shows for that degree. `subjects` should be the course's
+ * view of the data (forCourse), as the ranking page uses. Null when it's on neither.
+ */
+export function listPlace(subjects: Record<string, Subject>, code: string, course: string, year: number, top = LIST_TOP): ListPlace | null {
+  let byKey = placeCache.get(subjects)
+  if (!byKey) placeCache.set(subjects, (byKey = new Map()))
+  const key = `${course}|${year}|${top}`
+  let places = byKey.get(key)
+  if (!places) {
+    places = new Map()
+    const list = Object.values(subjects)
+    for (const direction of ['easy', 'hard'] as const) {
+      rankSubjects(list, { direction, course, year, limit: top }).forEach((r, i) => {
+        if (!places!.has(r.subject.code)) places!.set(r.subject.code, { direction, place: i + 1 })
+      })
+    }
+    byKey.set(key, places)
+  }
+  return places.get(code) ?? null
+}

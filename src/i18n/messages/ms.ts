@@ -664,6 +664,8 @@ export const ms: Messages = {
     leadsA: "{n} subjek memerlukannya dahulu, contohnya {codes}.",
   },
   rank: {
+    switch: { label: "Cadangan dan senarai kedudukan", recommend: "Untuk anda", easy: "Subjek mudah", hard: "Paling sukar" },
+    onList: { easy: "Dalam senarai mudah (#{n})", hard: "Dalam senarai paling sukar (#{n})" },
     title: {
       easy: "Subjek UniMelb yang mudah: baik untuk WAM",
       hard: "Subjek UniMelb paling sukar",
@@ -1069,6 +1071,8 @@ export const ms: Messages = {
     contact: 'Ada soalan? Gunakan halaman Maklum balas.',
   },
   home: {
+    ranksTitle: "Senarai subjek mudah dan sukar",
+    ranksText: "Subjek disusun mengikut betapa mudah atau sukar untuk dapat markah baik, dengan sebabnya.",
     startStep: "Mula dengan langkah {n}",
     toolsTitle: 'Juga berguna',
     stepsTitle: 'Mula dalam tiga langkah',

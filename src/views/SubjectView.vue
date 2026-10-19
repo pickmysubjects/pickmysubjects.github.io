@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { link } from '@/composables/useView'
 import { computed, nextTick, shallowRef } from 'vue'
-import { ArrowLeft, CalendarRange, Check, ExternalLink, Plus, Star } from 'lucide-vue-next'
+import { ArrowLeft, CalendarRange, ChartNoAxesColumn, Check, ExternalLink, Plus, Star } from 'lucide-vue-next'
 import RatingForm from '@/components/rating/RatingForm.vue'
 import AssessmentPanel from '@/components/subject/AssessmentPanel.vue'
 import MajorRoles from '@/components/subject/MajorRoles.vue'
 import SubjectAbout from '@/components/subject/SubjectAbout.vue'
 import DiscussionSummary from '@/components/subject/DiscussionSummary.vue'
 import SubjectFaq from '@/components/subject/SubjectFaq.vue'
-import { PASS_MARK, isFail, periodsFor, prerequisiteRoute, referencedSubjects, simplifyFor, termKey, type Period } from '@/engine'
+import { PASS_MARK, RANK_SLUGS, isFail, listPlace, periodsFor, prerequisiteRoute, referencedSubjects, simplifyFor, termKey, type Period } from '@/engine'
 import SubjectLinks from '@/components/majors/SubjectLinks.vue'
 import { useDataset, useSubjectDetail } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
@@ -22,7 +22,7 @@ import { subjectGist } from '@/i18n/gist'
 import { termsBetween } from '@/utils/pastTerms'
 
 const props = defineProps<{ code: string }>()
-const { name, data } = useDataset()
+const { name, data, course: listCourse } = useDataset()
 const plan = usePlan()
 const { profile } = useProfile()
 const { rated, markRated } = useRated()
@@ -32,6 +32,12 @@ const code = computed(() => props.code.toUpperCase())
 // With its long text (about, discussion) once that has loaded; the rest shows straight away.
 const { subject, ready: detailReady } = useSubjectDetail(code)
 const year = computed(() => plan.terms.value[0]?.year ?? new Date().getFullYear())
+// Near the top of the easy or hard list for the student's degree (or the default one): ranked
+// once per degree and year, then a lookup.
+const onList = computed(() => {
+  const place = listPlace(data.value.subjects, code.value, listCourse.value, year.value)
+  return place && { ...place, href: link(`subjects/${RANK_SLUGS[place.direction]}/`) + `?course=${encodeURIComponent(listCourse.value)}` }
+})
 const periods = computed(() => (subject.value ? periodsFor(subject.value, year.value) : []))
 const offeringsKnown = computed(() => subject.value?.offerings !== 'unknown')
 const gone = computed(() => subject.value?.discontinuedFrom !== undefined && year.value >= subject.value.discontinuedFrom)
@@ -152,6 +158,10 @@ const gist = computed(() => (subject.value ? subjectGist(t.value, subject.value)
             <template v-else-if="periods.length === 0">{{ t('subject.notRunning') }}</template>
             <template v-else>{{ periods.map((p) => t(`period.${p}`)).join(' · ') }}</template>
           </span>
+          <a v-if="onList" class="chip chip-list" :href="onList.href">
+            <ChartNoAxesColumn :size="14" aria-hidden="true" />
+            {{ t(`rank.onList.${onList.direction}`, { n: onList.place }) }}
+          </a>
         </div>
         <!-- What students ask first, in their words: exam share, class hours, group work. -->
         <ul v-if="gist.length" class="gist">
@@ -393,6 +403,22 @@ const gist = computed(() => (subject.value ? subjectGist(t.value, subject.value)
 
 .actions {
   margin-top: 6px;
+}
+
+.chip-list {
+  gap: 6px;
+  color: var(--accent);
+  background: var(--accent-soft);
+  text-decoration: none;
+}
+
+.chip-list:hover {
+  text-decoration: underline;
+}
+
+.chip-list:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 .chip-when {

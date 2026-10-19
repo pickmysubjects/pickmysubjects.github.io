@@ -664,6 +664,8 @@ export const id: Messages = {
     leadsA: "{n} mata kuliah butuh ini lebih dulu, misalnya {codes}.",
   },
   rank: {
+    switch: { label: "Saran dan peringkat", recommend: "Untukmu", easy: "Mata kuliah mudah", hard: "Paling sulit" },
+    onList: { easy: "Di daftar mudah (#{n})", hard: "Di daftar paling sulit (#{n})" },
     title: {
       easy: "Mata kuliah UniMelb yang mudah: bagus untuk WAM",
       hard: "Mata kuliah UniMelb paling sulit",
@@ -1069,6 +1071,8 @@ export const id: Messages = {
     contact: 'Ada pertanyaan? Gunakan halaman Masukan.',
   },
   home: {
+    ranksTitle: "Daftar mata kuliah mudah dan sulit",
+    ranksText: "Mata kuliah diurutkan dari yang paling mudah atau sulit untuk dapat nilai bagus, lengkap dengan alasannya.",
     startStep: "Mulai dari langkah {n}",
     toolsTitle: 'Juga berguna',
     stepsTitle: 'Mulai dalam tiga langkah',

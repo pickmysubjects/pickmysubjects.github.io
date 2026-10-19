@@ -664,6 +664,8 @@ export const ja: Messages = {
     leadsA: "{n} 科目がこの科目を前提にしています。例：{codes}。",
   },
   rank: {
+    switch: { label: "おすすめとランキング", recommend: "あなたへのおすすめ", easy: "楽単ランキング", hard: "難関ランキング" },
+    onList: { easy: "楽単ランキング {n} 位", hard: "難関ランキング {n} 位" },
     title: {
       easy: "メルボルン大学の取りやすい科目：WAM を上げやすい",
       hard: "メルボルン大学の難しい科目",
@@ -1069,6 +1071,8 @@ export const ja: Messages = {
     contact: 'ご質問は「フィードバック」ページからどうぞ。',
   },
   home: {
+    ranksTitle: "楽単・難関ランキング",
+    ranksText: "良い成績を取りやすいか難しいかで科目を並べ、理由も載せています。",
     startStep: "ステップ {n} から始める",
     toolsTitle: 'こちらも便利',
     stepsTitle: '3ステップで始める',

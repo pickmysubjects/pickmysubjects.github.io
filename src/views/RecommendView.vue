@@ -4,6 +4,7 @@ import { heldMajorIds, recommend, yearLevel, passedCodes, type Goal } from '@/en
 import { useI18n } from '@/i18n'
 import { categoryLabel, termLabel } from '@/i18n/format'
 import RecommendationCard from '@/components/recommend/RecommendationCard.vue'
+import RankSwitch from '@/components/recommend/RankSwitch.vue'
 import QuickInterests from '@/components/recommend/QuickInterests.vue'
 import GoalPicker from '@/components/profile/GoalPicker.vue'
 import { usePersisted } from '@/composables/usePersisted'
@@ -73,6 +74,7 @@ function value(event: Event): string {
 
 <template>
   <div class="suggest">
+    <RankSwitch current="recommend" />
     <section class="suggest-intro">
       <h1 class="suggest-title">{{ t('suggest.title') }}</h1>
       <p class="suggest-lede">{{ t('suggest.lede') }}</p>

@@ -664,6 +664,8 @@ export const vi: Messages = {
     leadsA: "{n} môn cần học nó trước, ví dụ {codes}.",
   },
   rank: {
+    switch: { label: "Gợi ý và bảng xếp hạng", recommend: "Dành cho bạn", easy: "Môn dễ", hard: "Môn khó nhất" },
+    onList: { easy: "Trong danh sách môn dễ (#{n})", hard: "Trong danh sách môn khó nhất (#{n})" },
     title: {
       easy: "Môn dễ ở UniMelb: dễ lấy điểm WAM",
       hard: "Môn khó nhất ở UniMelb",
@@ -1069,6 +1071,8 @@ export const vi: Messages = {
     contact: 'Có câu hỏi? Hãy dùng trang Góp ý.',
   },
   home: {
+    ranksTitle: "Danh sách môn dễ và môn khó",
+    ranksText: "Các môn được xếp theo mức dễ hay khó để đạt điểm cao, kèm lý do.",
     startStep: "Bắt đầu từ bước {n}",
     toolsTitle: 'Cũng hữu ích',
     stepsTitle: 'Bắt đầu với ba bước',

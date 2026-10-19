@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { rankSubject, rankSubjects, type RankOptions } from '../src/engine/easeRanking'
+import { listPlace, rankSubject, rankSubjects, type RankOptions } from '../src/engine/easeRanking'
 import type { DiscussionSummary, Subject } from '../src/engine/schema'
 import { buildDataset } from '../scripts/dataset'
 import { subject } from './helpers'
@@ -126,4 +126,39 @@ describe('ease ranking (real data)', () => {
       expect(rows.slice(firstFactsOnly).some((r) => r.reviews !== null && r.reviews * sign >= 0.25)).toBe(false)
     })
   }
+})
+
+describe('listPlace (subject page chip)', () => {
+  const easy1 = withReviews(base('EASY10001', { assessment: allCoursework, weekly_contact_hours: 2 }), 'easy')
+  const easy2 = base('EASY10002', { assessment: allCoursework, weekly_contact_hours: 2 })
+  const hard1 = withReviews(base('HARD10001', { assessment: examHeavy, weekly_contact_hours: 6 }), 'hard')
+  const mid = base('MIDD10001', { assessment: middling, weekly_contact_hours: 3 })
+  const record = (...xs: Subject[]) => Object.fromEntries(xs.map((s) => [s.code, s]))
+  const subjects = record(easy1, easy2, hard1, mid)
+
+  it('gives the same place as the ranking list, for each direction', () => {
+    expect(listPlace(subjects, 'EASY10001', 'B-SCI', 2026)).toEqual({ direction: 'easy', place: 1 })
+    expect(listPlace(subjects, 'EASY10002', 'B-SCI', 2026)).toEqual({ direction: 'easy', place: 2 })
+    expect(listPlace(subjects, 'HARD10001', 'B-SCI', 2026)).toEqual({ direction: 'hard', place: 1 })
+  })
+
+  it('is null for a subject on neither list, an unknown code, or below the cut-off', () => {
+    expect(listPlace(subjects, 'MIDD10001', 'B-SCI', 2026)).toBeNull()
+    expect(listPlace(subjects, 'NOPE10001', 'B-SCI', 2026)).toBeNull()
+    expect(listPlace(subjects, 'EASY10002', 'B-SCI', 2026, 1)).toBeNull()
+  })
+
+  it('follows the course: a subject the degree does not list is on no list', () => {
+    expect(listPlace(subjects, 'EASY10001', 'B-COM', 2026)).toBeNull()
+  })
+
+  it('ranks once per subjects record and course, then reuses it', () => {
+    const fresh = record(easy1, easy2)
+    const a = listPlace(fresh, 'EASY10001', 'B-SCI', 2026)
+    // Changing the record in place after the first lookup is not seen: the ranking was memoised.
+    delete fresh.EASY10001
+    expect(listPlace(fresh, 'EASY10001', 'B-SCI', 2026)).toEqual(a)
+    // A new record ranks afresh.
+    expect(listPlace(record(easy2), 'EASY10001', 'B-SCI', 2026)).toBeNull()
+  })
 })

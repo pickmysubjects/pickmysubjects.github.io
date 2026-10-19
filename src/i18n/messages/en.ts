@@ -667,6 +667,8 @@ export const en = {
     leadsA: "{n} subjects need it first, for example {codes}.",
   },
   rank: {
+    switch: { label: "Suggestions and ranked lists", recommend: "For you", easy: "Easy subjects", hard: "Hardest" },
+    onList: { easy: "On the easy list (#{n})", hard: "On the hardest list (#{n})" },
     title: {
       easy: "Easy UniMelb subjects: good for your WAM",
       hard: "Hardest UniMelb subjects",
@@ -1072,6 +1074,8 @@ export const en = {
     contact: 'Questions? Use the Feedback page.',
   },
   home: {
+    ranksTitle: "Easy and hard subject lists",
+    ranksText: "Subjects ranked by how easy or hard they are to do well in, with the reasons.",
     startStep: "Start with step {n}",
     toolsTitle: 'Also useful',
     stepsTitle: 'Get started in three steps',

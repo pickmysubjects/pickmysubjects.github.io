@@ -664,6 +664,8 @@ export const ko: Messages = {
     leadsA: "{n}개 과목이 이 과목을 선수과목으로 요구합니다. 예: {codes}.",
   },
   rank: {
+    switch: { label: "추천과 순위", recommend: "맞춤 추천", easy: "꿀강 순위", hard: "어려운 과목" },
+    onList: { easy: "꿀강 순위 {n}위", hard: "어려운 과목 순위 {n}위" },
     title: {
       easy: "멜버른대 쉬운 과목: 학점(WAM) 잘 나오는 과목",
       hard: "멜버른대 어려운 과목",
@@ -1069,6 +1071,8 @@ export const ko: Messages = {
     contact: '궁금한 점은 "피드백" 페이지를 이용하세요.',
   },
   home: {
+    ranksTitle: "꿀강·어려운 과목 순위",
+    ranksText: "좋은 성적 받기 쉬운지 어려운지로 과목을 줄 세우고 이유도 함께 보여 줘요.",
     startStep: "{n}단계부터 시작",
     toolsTitle: '이것도 유용해요',
     stepsTitle: '3단계로 시작하기',

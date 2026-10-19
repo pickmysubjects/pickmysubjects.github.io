@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { link } from '@/composables/useView'
 import { computed } from 'vue'
-import { ArrowRight, BookOpen, Check, GraduationCap, ListFilter, Route, Sparkles, User } from 'lucide-vue-next'
+import { ArrowRight, BookOpen, ChartNoAxesColumn, Check, GraduationCap, ListFilter, Route, Sparkles, User } from 'lucide-vue-next'
 import SubjectSearch from '@/components/SubjectSearch.vue'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
@@ -126,6 +126,18 @@ const next = computed(() => {
           </span>
           <ArrowRight :size="18" aria-hidden="true" class="tool-go" />
         </a>
+        <!-- The two ranked lists: their own pages (for search), one tap from here. -->
+        <div class="tool tool-ranks surface">
+          <span class="tool-icon"><ChartNoAxesColumn :size="20" aria-hidden="true" /></span>
+          <span class="tool-body">
+            <span class="step-name">{{ t('home.ranksTitle') }}</span>
+            <span class="step-text">{{ t('home.ranksText') }}</span>
+          </span>
+          <span class="ranks-links">
+            <a class="button button-quiet" :href="link('subjects/easy/')">{{ t('rank.switch.easy') }} <ArrowRight :size="16" aria-hidden="true" /></a>
+            <a class="button button-quiet" :href="link('subjects/hard/')">{{ t('rank.switch.hard') }} <ArrowRight :size="16" aria-hidden="true" /></a>
+          </span>
+        </div>
       </div>
     </section>
 
@@ -377,6 +389,46 @@ li:nth-child(3) .step-icon {
 .tool-go {
   flex: none;
   color: var(--accent);
+}
+
+/* A full row under the three cards: two buttons, not one link, so it doesn't lift on hover. */
+.tool-ranks {
+  grid-column: 1 / -1;
+}
+
+.tool-ranks:hover {
+  border-color: var(--line);
+  transform: none;
+}
+
+.ranks-links {
+  display: flex;
+  flex: none;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ranks-links .button {
+  gap: 6px;
+}
+
+@media (max-width: 640px) {
+  .tool-ranks {
+    flex-wrap: wrap;
+  }
+
+  .tool-ranks .tool-body {
+    flex-basis: calc(100% - 56px);
+  }
+
+  .ranks-links {
+    flex: 1 1 100%;
+  }
+
+  .ranks-links .button {
+    flex: 1 1 0;
+    justify-content: center;
+  }
 }
 
 @media (max-width: 1000px) {

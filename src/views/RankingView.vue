@@ -2,6 +2,7 @@
 import { computed, shallowRef, watch } from 'vue'
 import { ChevronRight, Info } from 'lucide-vue-next'
 import BrowseSwitch from '@/components/browse/BrowseSwitch.vue'
+import RankSwitch from '@/components/recommend/RankSwitch.vue'
 import { forCourse, PERIODS, RANK_SLUGS, rankSubjects, type Period, type RankDirection, type RankReason } from '@/engine'
 import { link } from '@/composables/useView'
 import { useDataset } from '@/composables/useDataset'
@@ -64,6 +65,7 @@ function reasonText(r: RankReason): string {
 
 <template>
   <div class="ranking">
+    <RankSwitch :current="direction" />
     <header class="head">
       <div class="head-row">
         <h1 class="page-title">{{ t(`rank.title.${direction}`) }}</h1>
