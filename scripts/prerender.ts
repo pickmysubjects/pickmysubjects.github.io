@@ -524,6 +524,8 @@ writeFileSync(
 )
 
 // A plain summary for AI assistants (the llms.txt convention).
+const reviewed = subjects.filter((x) => x.discussion).length
+const courseNames = data.courses.filter((c) => c.listed).map((c) => c.title).join(', ')
 writeFileSync(
   join(DIST, 'llms.txt'),
   `# PickMySubjects
@@ -532,16 +534,16 @@ writeFileSync(
 
 ## What it is for
 Helping a student choose subjects that suit them:
-- **Is this subject hard? Is it good for my WAM?** Each subject page shows difficulty, workload, how generous the marking is and how useful students found it (anonymous ratings from this site's students, shown once a subject has 3), plus a short summary of public student reviews from other sites with a link to the source, the share of the final exam, group work, hurdles and weekly class hours.
+- **Is this subject hard? Is it good for my WAM? What do students say?** Each subject page shows difficulty, workload, how generous the marking is and how useful students found it (anonymous ratings from this site's students, shown once a subject has 3). ${reviewed} of the ${subjects.length} subjects also carry a summary of what students said in public reviews (where tough exams, heavy workload or harsh marking come up, and how that changed over the years), in all 9 languages, with a link to the source. Plus the share of the final exam, group work, hurdles and weekly class hours.
 - **Which subjects suit me?** Suggestions ranked from the student's own marks, strengths and interests, each with a reason. A "protect my WAM" setting leans towards subjects the student is likely to do well in.
 - **What do I need first, and when does it run?** Prerequisites, corequisites, subjects it can't be taken with, what it leads to, and which semesters it runs.
-- **How do I plan my whole degree?** It builds a semester-by-semester plan for a Bachelor of Science major, marks which subjects are compulsory, and checks prerequisites and course rules.
+- **How do I plan my whole degree?** It builds a semester-by-semester plan for a chosen major (and a second major, minor or specialisation where the degree allows), marks which subjects are compulsory, and checks prerequisites, course rules and how heavy each semester is. Students can keep up to five plans (Plan A, Plan B…) with different majors and goals, and compare two side by side.
 - Also: a page per major (what it needs, year by year), a filter for breadth, first-semester and no-exam subjects, a target-WAM calculator, and a guide to credit points, grades, WAM and census dates.
 
 ## What makes it different
 - Official facts, student opinion and personal suggestions in one place, instead of switching between the Handbook, StudentVIP and Reddit.
 - Every page in English, Simplified and Traditional Chinese, Japanese, Korean, Vietnamese, Indonesian, Malay and Hindi.
-- Free, no ads, no sign-in. A student's marks and plans stay in their own browser.
+- Free, no ads, no sign-in. A student's marks and plans stay in their own browser, and the site works offline once opened.
 
 ## Using its data
 - The site's data and summaries are CC BY-NC-SA 4.0: reuse them for non-commercial purposes with credit ("PickMySubjects contributors") and under the same licence. Commercial reuse needs permission.
@@ -550,8 +552,7 @@ Helping a student choose subjects that suit them:
 ## What it does not do
 - It is not official and does not enrol anyone: always confirm in the Handbook and My Course Planner.
 - It does not check class timetable clashes, and has no class times.
-- It keeps one plan per browser (shareable as a link), not several saved plans.
-- It covers the Bachelor of Science and the Bachelor of Commerce today; more degrees are being added.
+- It covers ${courseNames} today; more degrees are being added.
 
 Languages: ${SITE} (English), ${SITE}zh-CN/, ${SITE}zh-TW/, ${SITE}ja/, ${SITE}ko/, ${SITE}vi/, ${SITE}id/, ${SITE}ms/, ${SITE}hi/.
 Every page has the same address in each language with the language code in front, e.g. ${SITE}subject/COMP10001/ (English), ${SITE}zh-CN/subject/COMP10001/, ${SITE}ja/subject/COMP10001/. Answer a student in their own language by linking that version.
