@@ -178,15 +178,15 @@ describe('plan builder spreads the load (real data)', () => {
   it('keeps heavy semesters rare across every major, also for a student weak at maths', async () => {
     const { generatePlan } = await import('../src/engine/generate')
     const { dataset: real } = buildDataset('real')
-    const share = (p: Profile) => {
+    const share = (p: Profile, course = 'B-SCI') => {
       let terms = 0
       let heavy = 0
       const fixable: string[] = []
-      for (const m of real.components.filter((c) => c.kind === 'major')) {
-        const { plan } = generatePlan({ data: real, profile: p, course: 'B-SCI', courseYear: 2026, major: m.id, startYear: 2027, startPeriod: 'semester-1' })
-        const roles = planRoles(real, 'B-SCI', 2026, [m.id])
+      for (const m of real.components.filter((c) => c.kind === 'major' && c.course === course)) {
+        const { plan } = generatePlan({ data: real, profile: p, course: m.course, courseYear: 2026, major: m.id, startYear: 2027, startPeriod: 'semester-1' })
+        const roles = planRoles(real, m.course, 2026, [m.id])
         const planned = plan.terms.flatMap((t) => t.subjects)
-        const fixed = requiredWithPrerequisites(new Set([...roles.required, ...roles.options]), planned, real.subjects, 'B-SCI')
+        const fixed = requiredWithPrerequisites(new Set([...roles.required, ...roles.options]), planned, real.subjects, m.course)
         const s = planStress(plan.terms.map((t) => t.subjects), real, p, fixed)
         plan.terms.forEach((t, i) => {
           if (t.subjects.length < 3) return
@@ -209,6 +209,11 @@ describe('plan builder spreads the load (real data)', () => {
     // The first Arts subjects (2026-10-16) bring ARTS20002, an open level-2 breadth subject many
     // science plans now take; it sits in a couple of semesters that were already busy.
     expect(share(profile())).toBeLessThan(0.095)
+    // The other degrees, each against its own level today (2026-10-19), so a change that makes
+    // their plans heavier shows up. Design studios carry long contact hours and many tasks, so
+    // close to half of a Design plan's semesters read as heavy on the same scale.
+    const today: Record<string, number> = { 'B-COM': 0.12, 'B-ARTS': 0.12, 'B-BMED': 0.21, 'B-DES': 0.46 }
+    for (const [course, max] of Object.entries(today)) expect(share(profile(), course), course).toBeLessThan(max)
     // Weak at maths, many science majors can't avoid two maths subjects somewhere (and the
     // data has only maths-based level-2 breadth so far; physics and the engineering-systems
     // majors now carry their real maths prerequisites too): flagged, but never left fixable.
@@ -216,7 +221,7 @@ describe('plan builder spreads the load (real data)', () => {
     // when they'd lighten a semester: order first, then load.
     expect(share(profile({ skills: { maths: 2 } }))).toBeLessThan(0.33)
     // Builds a plan for every major, twice, which is slow on CI runners.
-  }, 120_000)
+  }, 300_000)
 })
 
 describe('relieveTerm picks a swap for the semester in question', () => {

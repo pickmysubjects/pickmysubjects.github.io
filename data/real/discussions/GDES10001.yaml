@@ -1,0 +1,36 @@
+code: GDES10001
+source: StudentVIP
+url: https://studentvip.com.au/unimelb/subjects/gdes10001
+reviews: 4
+from: 2023
+to: 2024
+checked: 2026-10-19
+points:
+  - en: "Reviewers described it as loose and arty: briefs are open, and much depends on your tutor."
+    zh: "评论者形容这门课很自由、偏艺术：任务开放，很大程度取决于导师。"
+    zh-TW: "評論者形容這門課很自由、偏藝術：作業開放，很大程度取決於助教。"
+    ja: "自由でアート寄りの科目とされる。課題は自由度が高く、チューター次第の部分が大きい。"
+    ko: "자유롭고 예술적인 과목이라는 평. 과제가 열려 있고 튜터에 따라 많이 달라짐."
+    vi: "Người đánh giá mô tả môn khá tự do, thiên nghệ thuật: đề bài mở và phụ thuộc nhiều vào tutor."
+    ms: "Pengulas menyifatkannya bebas dan berunsur seni: taklimat terbuka dan banyak bergantung pada tutor."
+    id: "Pengulas menyebutnya bebas dan nyeni: brief terbuka dan banyak bergantung pada tutor."
+    hi: "रिव्यूअर्स ने इसे खुला और कलात्मक बताया: ब्रीफ़ खुले हैं और बहुत कुछ ट्यूटर पर निर्भर है।"
+  - en: "Adobe software such as Illustrator is used but barely taught, so prior experience helps a lot."
+    zh: "会用到Illustrator等Adobe软件，但几乎不教，有经验会很有帮助。"
+    zh-TW: "會用到 Illustrator 等 Adobe 軟體，但幾乎不教，有經驗會很有幫助。"
+    ja: "IllustratorなどAdobeソフトを使うがほとんど教わらないので、経験があるとかなり有利。"
+    ko: "Illustrator 같은 Adobe 프로그램을 쓰지만 거의 가르쳐 주지 않아, 경험이 있으면 크게 유리함."
+    vi: "Có dùng phần mềm Adobe như Illustrator nhưng gần như không được dạy, nên có kinh nghiệm sẽ rất có lợi."
+    ms: "Perisian Adobe seperti Illustrator digunakan tetapi hampir tidak diajar, jadi pengalaman sedia ada banyak membantu."
+    id: "Software Adobe seperti Illustrator dipakai tapi hampir tak diajarkan, jadi pengalaman sebelumnya sangat membantu."
+    hi: "Illustrator जैसे Adobe सॉफ़्टवेयर इस्तेमाल होते हैं पर लगभग सिखाए नहीं जाते, इसलिए पहले का अनुभव बहुत काम आता है।"
+  - en: "Marking felt subjective and high marks were hard to get. Those who already enjoy graphic design liked it; others found it unfulfilling."
+    zh: "评分偏主观，高分难拿。本来就喜欢平面设计的人觉得不错，其他人觉得收获不大。"
+    zh-TW: "評分偏主觀，高分難拿。本來就喜歡平面設計的人覺得不錯，其他人覺得收穫不大。"
+    ja: "採点は主観的で高得点は取りにくい。グラフィックデザインが好きな人は楽しめたが、物足りないという人もいた。"
+    ko: "채점이 주관적이고 고득점이 어려움. 그래픽 디자인을 좋아하면 즐겼지만, 아쉬웠다는 사람도 있음."
+    vi: "Chấm điểm khá chủ quan, khó đạt điểm cao. Ai thích thiết kế đồ họa thì hài lòng; người khác thấy chưa đáng."
+    ms: "Pemarkahan terasa subjektif dan markah tinggi sukar dicapai. Yang memang minat reka grafik menyukainya; yang lain kurang puas."
+    id: "Penilaian terasa subjektif dan nilai tinggi sulit didapat. Yang memang suka desain grafis menikmatinya; yang lain kurang puas."
+    hi: "मार्किंग व्यक्तिपरक लगी और ऊँचे अंक मुश्किल थे। ग्राफ़िक डिज़ाइन पसंद करने वालों को अच्छा लगा; बाकियों को कम संतोष मिला।"
+difficulty: mixed

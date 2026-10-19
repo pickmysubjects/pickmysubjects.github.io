@@ -1,0 +1,37 @@
+code: PROP10001
+source: StudentVIP
+url: https://studentvip.com.au/unimelb/subjects/prop10001
+reviews: 4
+from: 2023
+to: 2025
+checked: 2026-10-19
+points:
+  - en: "Reviewers agree it is an easy subject to score well in, even without an economics or property background."
+    zh: "评论者一致认为这门课容易拿高分，即使没有经济学或物业背景。"
+    zh-TW: "評論者一致認為這門課容易拿高分，即使沒有經濟學或不動產背景。"
+    ja: "経済や不動産の知識がなくても高得点を取りやすいという点で意見が一致。"
+    ko: "경제나 부동산 배경이 없어도 좋은 점수를 받기 쉽다는 데 의견이 일치함."
+    vi: "Mọi người đồng ý môn dễ đạt điểm cao, kể cả khi chưa học kinh tế hay bất động sản."
+    ms: "Pengulas setuju subjek ini mudah untuk skor tinggi, walaupun tanpa asas ekonomi atau hartanah."
+    id: "Pengulas sepakat mata kuliah ini mudah dapat nilai bagus, meski tanpa latar ekonomi atau properti."
+    hi: "रिव्यूअर्स सहमत हैं कि इसमें अच्छे अंक लाना आसान है, बिना अर्थशास्त्र या प्रॉपर्टी पृष्ठभूमि के भी।"
+  - en: "Assessments are clear: an open-book quiz on basic economics, then a mapping task on land prices and density moving out from the city."
+    zh: "考核清晰：一次开卷的基础经济学测验，接着做从市中心向外的地价与密度地图分析。"
+    zh-TW: "考核清楚：一次開書的基礎經濟學測驗，接著做從市中心往外的地價與密度地圖分析。"
+    ja: "評価は明確。基礎経済のオープンブック小テストと、都心から外へ向かう地価・密度の地図課題。"
+    ko: "평가가 명확함. 기초 경제 오픈북 퀴즈, 그리고 도심에서 바깥으로 지가·밀도를 보는 지도 과제."
+    vi: "Đánh giá rõ ràng: bài kiểm tra mở sách về kinh tế cơ bản, rồi bài bản đồ giá đất và mật độ từ trung tâm ra ngoài."
+    ms: "Penilaian jelas: kuiz buku terbuka tentang ekonomi asas, kemudian tugasan peta harga tanah dan kepadatan dari pusat bandar."
+    id: "Penilaian jelas: kuis buku terbuka tentang ekonomi dasar, lalu tugas peta harga tanah dan kepadatan dari pusat kota."
+    hi: "मूल्यांकन साफ़ है: बुनियादी अर्थशास्त्र पर ओपन-बुक क्विज़, फिर शहर से बाहर ज़मीन की क़ीमत और घनत्व का मैपिंग टास्क।"
+  - en: "Content can be boring, and some felt tutorials just repeated the online modules."
+    zh: "内容可能比较枯燥，有人觉得辅导课只是重复线上模块。"
+    zh-TW: "內容可能比較枯燥，有人覺得小組課只是重複線上模組。"
+    ja: "内容は退屈になりがちで、チュートリアルはオンライン教材の繰り返しだと感じた人もいた。"
+    ko: "내용이 지루할 수 있고, 튜토리얼이 온라인 모듈 반복일 뿐이라는 의견도 있음."
+    vi: "Nội dung có thể chán, một số người thấy tutorial chỉ lặp lại học phần trực tuyến."
+    ms: "Kandungan boleh membosankan, dan ada yang rasa tutorial hanya mengulang modul dalam talian."
+    id: "Materinya bisa membosankan, dan ada yang merasa tutorial hanya mengulang modul daring."
+    hi: "कंटेंट उबाऊ हो सकता है, और कुछ को लगा ट्यूटोरियल बस ऑनलाइन मॉड्यूल दोहराते हैं।"
+workload: light
+difficulty: easy

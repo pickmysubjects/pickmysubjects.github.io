@@ -1,0 +1,37 @@
+code: ABPL20033
+source: StudentVIP
+url: https://studentvip.com.au/unimelb/subjects/abpl20033
+reviews: 5
+from: 2010
+to: 2024
+checked: 2026-10-19
+points:
+  - en: "Reviewers say it is fast-paced and content-heavy, and falling behind is easy; regular note-taking in class was the main advice."
+    zh: "评论者说课程节奏快、内容多，很容易落后；主要建议是课上坚持记笔记。"
+    zh-TW: "評論者說課程節奏快、內容多，很容易落後；主要建議是課堂上持續做筆記。"
+    ja: "進度が速く内容が多いので遅れやすい。授業で毎回メモを取るのが一番の助言。"
+    ko: "진도가 빠르고 내용이 많아 뒤처지기 쉬움. 수업 중 꾸준히 필기하라는 게 주된 조언."
+    vi: "Môn nhanh và nặng nội dung, rất dễ tụt lại; lời khuyên chính là ghi chép đều trên lớp."
+    ms: "Pengulas kata subjek ini laju dan padat, mudah ketinggalan; nasihat utama ialah mencatat nota dalam kelas."
+    id: "Pengulas bilang tempo cepat dan materi padat, mudah tertinggal; saran utamanya rajin mencatat di kelas."
+    hi: "रिव्यूअर्स के अनुसार यह तेज़ और भारी है, पीछे छूटना आसान है; मुख्य सलाह क्लास में नियमित नोट्स लेना।"
+  - en: "Some felt the lectures did not line up with the assignments, and that Rhino or CAD skills were expected without being taught."
+    zh: "有人觉得讲座和作业对不上，而且默认学生会Rhino或CAD却不教。"
+    zh-TW: "有人覺得講座和作業對不上，而且預設學生會 Rhino 或 CAD 卻不教。"
+    ja: "講義と課題が噛み合わず、RhinoやCADは教わらないのにできる前提だったという声もある。"
+    ko: "강의와 과제가 맞지 않고, Rhino나 CAD를 가르치지 않으면서 할 줄 안다고 전제했다는 의견도 있음."
+    vi: "Một số thấy bài giảng không khớp bài tập, và bị mặc định biết Rhino hay CAD mà không được dạy."
+    ms: "Ada yang rasa kuliah tidak selari dengan tugasan, dan kemahiran Rhino atau CAD dijangka tanpa diajar."
+    id: "Sebagian merasa kuliah tak nyambung dengan tugas, dan kemampuan Rhino atau CAD diharapkan tanpa diajarkan."
+    hi: "कुछ को लगा लेक्चर असाइनमेंट से मेल नहीं खाते, और Rhino या CAD बिना सिखाए अपेक्षित था।"
+  - en: "Views on value are split: a recent reviewer said it teaches construction in a real, tangible way, while older ones found it frustrating."
+    zh: "对收获看法不一：最近一位说它把建造讲得很实在，早期几位则觉得很挫败。"
+    zh-TW: "對收穫看法不一：最近一位說它把營造講得很實在，早期幾位則覺得很挫折。"
+    ja: "評価は分かれる。最近の人は建設を具体的に学べると言い、以前の人たちは不満が多かった。"
+    ko: "평가는 엇갈림. 최근 리뷰어는 시공을 실감 나게 배운다고 했고, 예전 리뷰어들은 답답했다고 함."
+    vi: "Ý kiến chia rẽ: người gần đây nói môn dạy xây dựng rất thực tế, còn người trước thấy bực bội."
+    ms: "Pandangan berbelah: pengulas terkini kata ia mengajar pembinaan secara nyata, manakala yang lebih lama rasa kecewa."
+    id: "Pendapat terbelah: pengulas terbaru bilang konstruksi diajarkan secara nyata, sedangkan yang lama merasa frustrasi."
+    hi: "राय बँटी है: हाल के रिव्यूअर ने कहा यह निर्माण को ठोस तरीक़े से सिखाता है, पुराने लोग निराश रहे।"
+workload: heavy
+difficulty: hard

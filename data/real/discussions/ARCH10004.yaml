@@ -1,0 +1,37 @@
+code: ARCH10004
+source: StudentVIP
+url: https://studentvip.com.au/unimelb/subjects/arch10004
+reviews: 4
+from: 2022
+to: 2026
+checked: 2026-10-19
+points:
+  - en: "Most reviewers called it a light, easy subject: one short lecture and tutorial a week, short readings and a weekly reading reflection."
+    zh: "多数评论者认为这门课轻松简单：每周一节短讲座和辅导课，阅读量小，每周写一篇阅读反思。"
+    zh-TW: "多數評論者認為這門課輕鬆簡單：每週一堂短講座和小組課，閱讀量小，每週寫一篇閱讀反思。"
+    ja: "多くのレビューで軽くて易しい科目とされた。週1回の短い講義とチュートリアル、短い文献、毎週の読書リフレクション。"
+    ko: "대부분 가볍고 쉬운 과목이라 평가. 주 1회 짧은 강의와 튜토리얼, 짧은 읽기, 매주 읽기 성찰문."
+    vi: "Đa số cho rằng môn nhẹ và dễ: mỗi tuần một bài giảng và một buổi tutorial ngắn, bài đọc ngắn, viết phản hồi bài đọc hằng tuần."
+    ms: "Kebanyakan pengulas kata subjek ini ringan dan mudah: satu kuliah dan tutorial pendek seminggu, bacaan ringkas dan refleksi bacaan mingguan."
+    id: "Sebagian besar menyebutnya ringan dan mudah: satu kuliah dan tutorial singkat per minggu, bacaan pendek, dan refleksi bacaan mingguan."
+    hi: "ज़्यादातर रिव्यूअर्स ने इसे हल्का और आसान बताया: हफ़्ते में एक छोटा लेक्चर और ट्यूटोरियल, छोटी रीडिंग और साप्ताहिक रिफ़्लेक्शन।"
+  - en: "Lectures were often described as dry, though changing guest speakers and class activities helped."
+    zh: "讲座常被形容为枯燥，不过轮换的嘉宾讲者和课堂活动有所帮助。"
+    zh-TW: "講座常被形容為枯燥，不過輪換的客座講者和課堂活動有些幫助。"
+    ja: "講義は退屈だとよく言われたが、毎週変わる講師や授業内の活動が助けになった。"
+    ko: "강의는 지루하다는 평이 많았지만, 매주 바뀌는 연사와 수업 활동이 도움이 됐음."
+    vi: "Bài giảng thường bị cho là khô khan, dù diễn giả thay đổi và hoạt động trên lớp giúp ích."
+    ms: "Kuliah sering dikatakan membosankan, walaupun penceramah yang bertukar dan aktiviti kelas membantu."
+    id: "Kuliah sering disebut membosankan, meski pembicara yang berganti dan aktivitas kelas cukup membantu."
+    hi: "लेक्चर अक्सर नीरस बताए गए, हालाँकि बदलते वक्ता और क्लास गतिविधियाँ मददगार रहीं।"
+  - en: "Assignments are mostly written with clear guidance and examples; one reviewer still found the two big tasks marked harshly."
+    zh: "作业大多是写作，有清楚的指引和范例；但有一位评论者认为两项大作业评分偏严。"
+    zh-TW: "作業大多是寫作，有清楚的指引和範例；但有一位評論者覺得兩項大作業評分偏嚴。"
+    ja: "課題はほぼ文章で、指示や例も明確。ただし大きな2課題の採点は厳しかったという声も一つあった。"
+    ko: "과제는 대부분 글쓰기이고 안내와 예시가 명확함. 다만 큰 과제 두 개 채점이 깐깐했다는 의견도 하나 있음."
+    vi: "Bài tập chủ yếu là viết, có hướng dẫn và ví dụ rõ; một người vẫn thấy hai bài lớn chấm khắt khe."
+    ms: "Tugasan kebanyakannya bertulis dengan panduan dan contoh jelas; seorang pengulas masih rasa dua tugasan besar dinilai ketat."
+    id: "Tugas sebagian besar berupa tulisan dengan panduan dan contoh jelas; satu pengulas merasa dua tugas besar dinilai ketat."
+    hi: "असाइनमेंट ज़्यादातर लिखित हैं, साफ़ निर्देश और उदाहरणों के साथ; एक रिव्यूअर को दो बड़े टास्क की मार्किंग सख़्त लगी।"
+workload: light
+difficulty: easy

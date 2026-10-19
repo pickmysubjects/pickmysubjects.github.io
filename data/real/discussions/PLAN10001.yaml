@@ -1,0 +1,37 @@
+code: PLAN10001
+source: StudentVIP
+url: https://studentvip.com.au/unimelb/subjects/plan10001
+reviews: 3
+from: 2019
+to: 2025
+checked: 2026-10-19
+points:
+  - en: "All three reviewers found the lectures poorly delivered or tedious, heavy on historical detail."
+    zh: "三位评论者都认为讲座讲得不好或很沉闷，历史细节偏多。"
+    zh-TW: "三位評論者都覺得講座講得不好或很沉悶，歷史細節偏多。"
+    ja: "3人とも講義は分かりにくい、または退屈で、歴史の細部が多いと感じた。"
+    ko: "세 명 모두 강의 전달이 서툴거나 지루하고 역사적 세부가 많다고 봄."
+    vi: "Cả ba người đều thấy bài giảng truyền đạt kém hoặc tẻ nhạt, nặng chi tiết lịch sử."
+    ms: "Ketiga-tiga pengulas rasa kuliah kurang baik atau membosankan, terlalu banyak butiran sejarah."
+    id: "Ketiga pengulas merasa kuliahnya kurang baik atau membosankan, terlalu banyak detail sejarah."
+    hi: "तीनों रिव्यूअर्स को लेक्चर कमज़ोर या उबाऊ लगे, ऐतिहासिक ब्योरे बहुत ज़्यादा।"
+  - en: "The workload is low and assignments are fairly standard; essay marking was described as lenient."
+    zh: "工作量低，作业比较常规；论文评分被认为宽松。"
+    zh-TW: "工作量低，作業比較常規；論文評分被認為寬鬆。"
+    ja: "負担は軽く課題も標準的。レポートの採点は甘めとのこと。"
+    ko: "부담이 적고 과제는 평범한 편. 에세이 채점은 후한 편이라고 함."
+    vi: "Khối lượng việc ít, bài tập khá bình thường; chấm tiểu luận được cho là dễ."
+    ms: "Beban kerja rendah dan tugasan agak biasa; pemarkahan esei dikatakan longgar."
+    id: "Beban kerja ringan dan tugas cukup standar; penilaian esai disebut longgar."
+    hi: "काम कम है और असाइनमेंट सामान्य हैं; निबंध की मार्किंग नरम बताई गई।"
+  - en: "Easy to pass, but several said it felt like they learned little."
+    zh: "容易通过，但几人表示感觉没学到多少。"
+    zh-TW: "容易通過，但幾個人表示感覺沒學到多少。"
+    ja: "合格は簡単だが、あまり学べなかったという声が複数あった。"
+    ko: "통과는 쉽지만 배운 게 별로 없다는 의견이 여럿."
+    vi: "Dễ qua môn, nhưng vài người nói cảm giác học được ít."
+    ms: "Mudah lulus, tetapi beberapa orang kata rasa tidak banyak belajar."
+    id: "Mudah lulus, tapi beberapa orang merasa tidak banyak belajar."
+    hi: "पास होना आसान है, पर कई ने कहा कि ज़्यादा कुछ सीखा नहीं।"
+workload: light
+difficulty: easy

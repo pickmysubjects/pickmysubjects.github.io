@@ -1,0 +1,36 @@
+code: ARCH20004
+source: StudentVIP
+url: https://studentvip.com.au/unimelb/subjects/arch20004
+reviews: 4
+from: 2018
+to: 2024
+checked: 2026-10-19
+points:
+  - en: "The 2024 reviewers found it extremely time-consuming, with three projects in one semester, and would not take it unless required."
+    zh: "2024年的评论者认为非常耗时，一学期三个项目，除非必修否则不会选。"
+    zh-TW: "2024年的評論者認為非常耗時，一學期三個專案，除非必修否則不會選。"
+    ja: "2024年のレビューでは非常に時間がかかり、1学期に3つのプロジェクトがあるので必修でなければ取らないとのこと。"
+    ko: "2024년 리뷰어들은 한 학기에 프로젝트 3개라 시간이 엄청 들고, 필수가 아니면 안 듣겠다고 함."
+    vi: "Người đánh giá năm 2024 thấy môn cực tốn thời gian, ba dự án trong một kỳ, không bắt buộc thì không chọn."
+    ms: "Pengulas 2024 rasa ia sangat memakan masa, tiga projek dalam satu semester, dan tidak akan ambil kecuali wajib."
+    id: "Pengulas 2024 merasa sangat menyita waktu, tiga proyek dalam satu semester, dan tak akan ambil kecuali wajib."
+    hi: "2024 के रिव्यूअर्स को यह बहुत समय लेने वाला लगा, एक सेमेस्टर में तीन प्रोजेक्ट, ज़रूरी न हो तो न लें।"
+  - en: "Earlier reviewers enjoyed it, especially learning Grasshopper with Rhino and trying VR."
+    zh: "早期评论者很喜欢，特别是学习Rhino配合Grasshopper以及体验VR。"
+    zh-TW: "早期評論者很喜歡，特別是學習 Rhino 搭配 Grasshopper 以及體驗 VR。"
+    ja: "以前のレビューでは好評で、特にRhinoとGrasshopperの習得やVR体験が良かった。"
+    ko: "예전 리뷰어들은 즐겼고, 특히 Rhino와 Grasshopper 학습과 VR 체험이 좋았다고 함."
+    vi: "Người đánh giá trước đây thích môn, nhất là học Grasshopper với Rhino và thử VR."
+    ms: "Pengulas terdahulu menyukainya, terutama belajar Grasshopper dengan Rhino dan mencuba VR."
+    id: "Pengulas lama menikmatinya, terutama belajar Grasshopper dengan Rhino dan mencoba VR."
+    hi: "पहले के रिव्यूअर्स को पसंद आया, ख़ासकर Rhino के साथ Grasshopper सीखना और VR आज़माना।"
+  - en: "Marking was described as fair, but the stress of the workload is the recurring theme in recent reviews."
+    zh: "评分被认为公平，但近期评论反复提到工作量带来的压力。"
+    zh-TW: "評分被認為公平，但近期評論反覆提到工作量帶來的壓力。"
+    ja: "採点は公平とされたが、最近のレビューでは作業量によるストレスが繰り返し語られる。"
+    ko: "채점은 공정하다는 평이지만, 최근 리뷰에서는 작업량 스트레스가 반복해서 나옴."
+    vi: "Chấm điểm được cho là công bằng, nhưng áp lực khối lượng việc là chủ đề lặp lại gần đây."
+    ms: "Pemarkahan dikatakan adil, tetapi tekanan beban kerja ialah tema berulang dalam ulasan terkini."
+    id: "Penilaian disebut adil, tapi tekanan beban kerja jadi tema berulang di ulasan terbaru."
+    hi: "मार्किंग निष्पक्ष बताई गई, पर हाल के रिव्यू में काम के बोझ का तनाव बार-बार आता है।"
+workload: heavy

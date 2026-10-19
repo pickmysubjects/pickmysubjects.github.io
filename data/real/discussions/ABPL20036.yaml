@@ -1,0 +1,37 @@
+code: ABPL20036
+source: StudentVIP
+url: https://studentvip.com.au/unimelb/subjects/abpl20036
+reviews: 4
+from: 2016
+to: 2020
+checked: 2026-10-19
+points:
+  - en: "Reviewers liked the content and the enthusiastic, well-organised teaching team."
+    zh: "评论者喜欢课程内容，以及热情、有条理的教学团队。"
+    zh-TW: "評論者喜歡課程內容，以及熱情、有條理的教學團隊。"
+    ja: "内容と、熱心でよく整った教員チームが好評。"
+    ko: "내용과 열정적이고 체계적인 교수진이 호평받음."
+    vi: "Người đánh giá thích nội dung và đội ngũ giảng dạy nhiệt tình, có tổ chức."
+    ms: "Pengulas suka kandungan serta pasukan pengajar yang bersemangat dan teratur."
+    id: "Pengulas menyukai materi serta tim pengajar yang antusias dan tertata."
+    hi: "रिव्यूअर्स को कंटेंट और उत्साही, व्यवस्थित टीचिंग टीम पसंद आई।"
+  - en: "The workload is heavy, especially the major assignment in the first half and the weekly pre-reading; staying on schedule matters."
+    zh: "工作量大，尤其是前半学期的大作业和每周预读；跟上进度很重要。"
+    zh-TW: "工作量大，尤其是前半學期的大作業和每週預讀；跟上進度很重要。"
+    ja: "負担は重く、特に前半の大課題と毎週の予習が大変。遅れないことが大事。"
+    ko: "부담이 큼. 특히 학기 전반부 큰 과제와 매주 예습. 일정 유지가 중요함."
+    vi: "Khối lượng việc nặng, nhất là bài lớn nửa đầu kỳ và bài đọc trước mỗi tuần; cần theo kịp tiến độ."
+    ms: "Beban kerja berat, terutama tugasan utama separuh pertama dan pra-bacaan mingguan; penting untuk tidak ketinggalan."
+    id: "Beban kerja berat, terutama tugas besar paruh pertama dan bacaan awal mingguan; jangan sampai tertinggal."
+    hi: "काम का बोझ भारी है, ख़ासकर पहले आधे में बड़ा असाइनमेंट और हर हफ़्ते की प्री-रीडिंग; समय पर रहना ज़रूरी है।"
+  - en: "The final exam was described as straightforward if you kept up with tutorials."
+    zh: "如果跟上了辅导课，期末考试被认为不难。"
+    zh-TW: "如果跟上了小組課，期末考被認為不難。"
+    ja: "チュートリアルについていけば期末試験は素直だったとのこと。"
+    ko: "튜토리얼을 잘 따라갔다면 기말시험은 무난했다고 함."
+    vi: "Thi cuối kỳ được cho là dễ hiểu nếu theo kịp các buổi tutorial."
+    ms: "Peperiksaan akhir dikatakan mudah jika anda ikut tutorial."
+    id: "Ujian akhir disebut lugas kalau mengikuti tutorial dengan baik."
+    hi: "अगर ट्यूटोरियल के साथ चले, तो फ़ाइनल एग्ज़ाम सीधा-सादा बताया गया।"
+workload: heavy
+difficulty: mixed

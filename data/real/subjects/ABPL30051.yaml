@@ -1,0 +1,31 @@
+code: ABPL30051
+title: Urban Morphological Mapping
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - design
+topics:
+  - design
+  - geography
+assessment:
+  - kind: assignment
+    weight: 20
+  - kind: assignment
+    weight: 25
+  - kind: assignment
+    weight: 30
+  - kind: presentation
+    weight: 25
+weekly_contact_hours: 3
+breadth_for:
+  - Bachelor of Design
+handbook: https://handbook.unimelb.edu.au/2026/subjects/abpl30051
+source_year: 2026
+verified_on: 2026-10-19
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

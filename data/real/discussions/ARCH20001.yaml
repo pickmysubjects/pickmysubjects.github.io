@@ -1,0 +1,37 @@
+code: ARCH20001
+source: StudentVIP
+url: https://studentvip.com.au/unimelb/subjects/arch20001
+reviews: 5
+from: 2018
+to: 2024
+checked: 2026-10-19
+points:
+  - en: "All five reviewers called it poorly organised, with vague briefs and expectations that shifted during the semester."
+    zh: "五位评论者都认为课程组织混乱，任务说明模糊，要求在学期中不断变化。"
+    zh-TW: "五位評論者都認為課程組織混亂，作業說明模糊，要求在學期中不斷變化。"
+    ja: "5人全員が運営がずさんだと指摘。課題説明はあいまいで、要求が学期中に変わった。"
+    ko: "다섯 명 모두 운영이 엉망이라고 함. 과제 설명이 모호하고 요구가 학기 중에 바뀜."
+    vi: "Cả năm người đều nói môn tổ chức kém, đề bài mơ hồ và yêu cầu thay đổi giữa kỳ."
+    ms: "Kelima-lima pengulas kata ia kurang teratur, taklimat kabur dan jangkaan berubah sepanjang semester."
+    id: "Kelima pengulas menyebutnya kurang tertata, brief kabur, dan ekspektasi berubah di tengah semester."
+    hi: "पाँचों रिव्यूअर्स ने इसे बदइंतज़ाम बताया, अस्पष्ट ब्रीफ़ और सेमेस्टर में बदलती अपेक्षाएँ।"
+  - en: "The workload is very heavy, and several felt the effort was not reflected in their grades."
+    zh: "工作量非常大，几人觉得付出和成绩不成正比。"
+    zh-TW: "工作量非常大，幾個人覺得付出和成績不成正比。"
+    ja: "作業量が非常に多く、努力が成績に見合わないと感じた人が複数いた。"
+    ko: "작업량이 매우 많고, 노력에 비해 성적이 안 나왔다는 의견이 여럿."
+    vi: "Khối lượng việc rất nặng, vài người thấy công sức không tương xứng với điểm."
+    ms: "Beban kerja sangat berat, dan beberapa orang rasa usaha tidak setimpal dengan gred."
+    id: "Beban kerja sangat berat, dan beberapa merasa usaha tak sebanding dengan nilai."
+    hi: "काम बहुत भारी है, और कई को लगा मेहनत के हिसाब से ग्रेड नहीं मिले।"
+  - en: "Lectures and readings were seen as theoretical and not much help for the studio work; staying on top of tasks from week one is the main advice."
+    zh: "讲座和阅读偏理论，对工作室作业帮助不大；主要建议是从第一周起就跟上进度。"
+    zh-TW: "講座和閱讀偏理論，對工作室作業幫助不大；主要建議是從第一週起就跟上進度。"
+    ja: "講義と文献は理論的でスタジオ課題にはあまり役立たない。初週から遅れないことが一番の助言。"
+    ko: "강의와 읽기는 이론적이라 스튜디오 작업에 큰 도움이 안 됨. 첫 주부터 밀리지 않는 게 핵심 조언."
+    vi: "Bài giảng và bài đọc thiên lý thuyết, ít giúp cho bài studio; lời khuyên chính là theo kịp từ tuần đầu."
+    ms: "Kuliah dan bacaan dilihat teoretikal dan kurang membantu kerja studio; nasihat utama ialah kekal di landasan sejak minggu pertama."
+    id: "Kuliah dan bacaan dinilai teoretis dan kurang membantu kerja studio; saran utamanya jangan tertinggal sejak minggu pertama."
+    hi: "लेक्चर और रीडिंग सैद्धांतिक लगे और स्टूडियो काम में कम मददगार; मुख्य सलाह पहले हफ़्ते से ही काम पर बने रहना।"
+workload: heavy
+difficulty: hard

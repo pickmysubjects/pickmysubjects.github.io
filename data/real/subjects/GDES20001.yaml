@@ -1,0 +1,32 @@
+code: GDES20001
+title: "Graphic Design Studio 2: Image & Media"
+level: 2
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+    - semester-2
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - design
+topics:
+  - design
+  - media
+assessment:
+  - kind: assignment
+    weight: 10
+  - kind: project
+    weight: 40
+  - kind: project
+    weight: 40
+  - kind: assignment
+    weight: 10
+weekly_contact_hours: 3
+breadth_for:
+  - Bachelor of Design
+handbook: https://handbook.unimelb.edu.au/2026/subjects/gdes20001
+source_year: 2026
+verified_on: 2026-10-19
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

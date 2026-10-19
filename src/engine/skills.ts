@@ -31,6 +31,7 @@ const TITLE: Partial<Record<Skill, RegExp>> = {
   // Whole words: "culture" must not match Agriculture or Horticulture.
   writing: /\b(writing|essays?|communication|law|history|philosophy|marketing|macroeconomic|accounting reports|society|ethics|cultures?)\b/i,
 }
+const UX_TITLE = /\bdesign\b|\buser\b|usability|interaction|experience/i
 const STATS_TITLE = /statistic|probabilit|stochastic|inference/i
 /** Skills that carry over from a required subject (you can't do the follow-on without them). */
 const INHERITED: Skill[] = ['maths', 'statistics']
@@ -54,7 +55,8 @@ function inferred(s: Subject, data: Dataset | undefined): Skill[] {
   const out = new Set<Skill>()
   if (MATHS_AREAS.has(area) && !(area === 'MAST' && STATS_TITLE.test(s.title))) out.add('maths')
   if (area === 'MAST' && STATS_TITLE.test(s.title)) out.add('maths').add('statistics')
-  if (PROGRAMMING_AREAS.has(area)) out.add('programming')
+  // Information systems' user-experience subjects (interaction design, usability) aren't programming.
+  if (PROGRAMMING_AREAS.has(area) && !(area === 'INFO' && UX_TITLE.test(s.title))) out.add('programming')
   if (BUSINESS_AREAS.has(area)) out.add('business')
   if (LANGUAGE_AREAS.has(area) && /\b\d+$/.test(s.title)) out.add('languages')
   // Econometrics is applied statistics.

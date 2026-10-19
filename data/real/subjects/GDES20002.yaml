@@ -1,0 +1,35 @@
+code: GDES20002
+title: Colour Studio
+level: 2
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites:
+  all:
+    - ARCH10001
+    - FINA10026
+    - GDES10001
+corequisites: FINA10032
+non_allowed: []
+skills:
+  - design
+topics:
+  - design
+  - art
+assessment:
+  - kind: assignment
+    weight: 15
+  - kind: assignment
+    weight: 25
+  - kind: assignment
+    weight: 20
+  - kind: project
+    weight: 40
+weekly_contact_hours: 3
+breadth_for:
+  - Bachelor of Design
+handbook: https://handbook.unimelb.edu.au/2026/subjects/gdes20002
+source_year: 2026
+verified_on: 2026-10-19
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

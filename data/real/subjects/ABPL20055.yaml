@@ -1,0 +1,38 @@
+code: ABPL20055
+title: Global Foundations of Design
+level: 2
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+    - semester-2
+prerequisites:
+  all:
+    - admission: B-DES
+      note: Prerequisite for B- DES students Admission into the B-DES Bachelor of Design
+    - ARCH10004
+corequisites: none
+non_allowed:
+  - ABPL10004
+  - ABPL20030
+skills:
+  - writing
+topics:
+  - history
+  - design
+assessment:
+  - kind: presentation
+    weight: 10
+    group: true
+  - kind: presentation
+    weight: 20
+  - kind: report
+    weight: 50
+  - kind: quiz
+    weight: 20
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/abpl20055
+source_year: 2026
+verified_on: 2026-10-19
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

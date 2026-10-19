@@ -1,0 +1,37 @@
+code: ARCH10003
+source: StudentVIP
+url: https://studentvip.com.au/unimelb/subjects/arch10003
+reviews: 5
+from: 2018
+to: 2023
+checked: 2026-10-19
+points:
+  - en: "Workload is the main complaint: several said the studio took over their nights and weekends, far more than a first-year subject should."
+    zh: "工作量是主要抱怨：多人说这门工作室占满了夜晚和周末，远超一年级课程该有的量。"
+    zh-TW: "工作量是主要抱怨：很多人說這門工作室佔滿了晚上和週末，遠超一年級課該有的量。"
+    ja: "一番の不満は作業量。夜や週末まで潰れ、1年生の科目としては多すぎるという声が複数あった。"
+    ko: "가장 큰 불만은 작업량. 밤과 주말까지 다 쓰게 되어 1학년 과목치고 너무 많다는 의견이 여럿."
+    vi: "Khối lượng việc là phàn nàn chính: nhiều người nói studio chiếm hết buổi tối và cuối tuần, quá nhiều cho môn năm nhất."
+    ms: "Beban kerja ialah aduan utama: beberapa orang kata studio ini mengambil malam dan hujung minggu, terlalu banyak untuk subjek tahun satu."
+    id: "Beban kerja jadi keluhan utama: beberapa orang bilang studio ini menyita malam dan akhir pekan, terlalu berat untuk mata kuliah tahun pertama."
+    hi: "सबसे बड़ी शिकायत काम का बोझ है: कई लोगों ने कहा स्टूडियो ने रातें और वीकेंड ले लिए, पहले साल के विषय के लिए बहुत ज़्यादा।"
+  - en: "Briefs and marking were often called vague and subjective, with different tutors giving different advice."
+    zh: "任务说明和评分常被认为含糊且主观，不同导师给的建议也不一样。"
+    zh-TW: "作業說明和評分常被認為含糊又主觀，不同助教給的建議也不一樣。"
+    ja: "課題の説明と採点はあいまいで主観的だとよく言われ、チューターによって助言も違った。"
+    ko: "과제 설명과 채점이 모호하고 주관적이라는 평이 많았고, 튜터마다 조언도 달랐음."
+    vi: "Đề bài và cách chấm thường bị cho là mơ hồ, chủ quan, mỗi tutor lại khuyên một kiểu."
+    ms: "Taklimat dan pemarkahan sering dikatakan kabur dan subjektif, dan tutor berbeza memberi nasihat berbeza."
+    id: "Brief dan penilaian sering disebut kabur dan subjektif, dan tiap tutor memberi saran berbeda."
+    hi: "ब्रीफ़ और मार्किंग को अक्सर अस्पष्ट और व्यक्तिपरक बताया गया, और अलग ट्यूटर अलग सलाह देते थे।"
+  - en: "Students who already sketch, model and use Rhino found it much easier; others learned a lot but had to work hard to catch up."
+    zh: "已经会手绘、做模型和用Rhino的学生轻松很多；其他人收获不少，但要拼命追赶。"
+    zh-TW: "已經會手繪、做模型和用 Rhino 的學生輕鬆很多；其他人收穫不少，但要拼命追趕。"
+    ja: "スケッチ・模型・Rhinoに慣れた人はかなり楽。そうでない人も多くを学べるが、追いつくのに苦労する。"
+    ko: "스케치·모형·Rhino에 익숙하면 훨씬 수월함. 그렇지 않으면 배우는 건 많지만 따라잡느라 고생함."
+    vi: "Ai đã biết phác thảo, làm mô hình và dùng Rhino thấy dễ hơn nhiều; người khác học được nhiều nhưng phải cố gắng bắt kịp."
+    ms: "Pelajar yang sudah pandai melakar, membuat model dan guna Rhino rasa lebih mudah; yang lain belajar banyak tetapi perlu bekerja keras."
+    id: "Yang sudah bisa sketsa, membuat maket, dan memakai Rhino merasa jauh lebih mudah; yang lain belajar banyak tapi harus kerja keras mengejar."
+    hi: "जो पहले से स्केच, मॉडल और Rhino जानते थे उन्हें आसान लगा; बाकी ने बहुत सीखा पर पकड़ने में मेहनत लगी।"
+workload: heavy
+difficulty: hard

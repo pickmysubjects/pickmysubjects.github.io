@@ -1,0 +1,36 @@
+code: CONS10001
+source: StudentVIP
+url: https://studentvip.com.au/unimelb/subjects/cons10001
+reviews: 4
+from: 2017
+to: 2018
+checked: 2026-10-19
+points:
+  - en: "Reviewers praised the teaching team as organised, patient and helpful."
+    zh: "评论者称赞教学团队有条理、有耐心、乐于帮助。"
+    zh-TW: "評論者稱讚教學團隊有條理、有耐心、樂於幫忙。"
+    ja: "教員チームは整理されていて、親切で助けになると好評だった。"
+    ko: "교수진이 체계적이고 친절하며 도움이 된다는 칭찬이 많았음."
+    vi: "Người đánh giá khen đội ngũ giảng dạy có tổ chức, kiên nhẫn và nhiệt tình."
+    ms: "Pengulas memuji pasukan pengajar sebagai teratur, sabar dan membantu."
+    id: "Pengulas memuji tim pengajar yang teratur, sabar, dan suka membantu."
+    hi: "रिव्यूअर्स ने टीचिंग टीम को व्यवस्थित, धैर्यवान और मददगार बताया।"
+  - en: "It involves physics-style problem solving; students without a physics background found it harder and were advised to use consultations."
+    zh: "课程涉及物理式的解题；没有物理基础的学生觉得更难，建议多去答疑时间。"
+    zh-TW: "課程涉及物理式的解題；沒有物理底子的學生覺得更難，建議多去答疑時間。"
+    ja: "物理のような問題演習がある。物理未経験だと難しく感じやすく、質問時間の活用が勧められた。"
+    ko: "물리식 문제 풀이가 있음. 물리 배경이 없으면 더 어렵게 느껴서 상담 시간을 활용하라는 조언."
+    vi: "Môn có giải bài kiểu vật lý; ai chưa học vật lý thấy khó hơn và được khuyên tận dụng giờ tư vấn."
+    ms: "Ia melibatkan penyelesaian masalah gaya fizik; pelajar tanpa asas fizik rasa lebih sukar dan dinasihatkan guna sesi konsultasi."
+    id: "Ada pemecahan soal ala fisika; mahasiswa tanpa latar fisika merasa lebih sulit dan disarankan memakai jam konsultasi."
+    hi: "इसमें भौतिकी जैसे सवाल हल करने होते हैं; बिना फ़िज़िक्स वालों को कठिन लगा और कंसल्टेशन लेने की सलाह दी गई।"
+  - en: "Attending lectures was recommended, since worked examples on the board did not show up in the recordings. One student struggled to finish the exam."
+    zh: "建议去上讲座，因为板书例题在录像里看不到。有一位学生没能做完考试。"
+    zh-TW: "建議去上講座，因為板書例題在錄影裡看不到。有一位學生沒能寫完考試。"
+    ja: "板書の例題は録画に映らないので、講義への出席が勧められた。試験を解き終えられなかった人もいた。"
+    ko: "칠판 예제가 녹화에 안 나와서 강의 출석을 권함. 시험을 다 못 푼 학생도 있었음."
+    vi: "Nên đi học trực tiếp vì ví dụ giải trên bảng không có trong bản ghi. Một sinh viên không kịp làm hết bài thi."
+    ms: "Hadir kuliah disyorkan kerana contoh di papan tidak kelihatan dalam rakaman. Seorang pelajar tidak sempat habiskan peperiksaan."
+    id: "Disarankan hadir kuliah karena contoh di papan tidak terekam. Satu mahasiswa tidak sempat menyelesaikan ujian."
+    hi: "लेक्चर में जाने की सलाह दी गई, क्योंकि बोर्ड पर हल किए उदाहरण रिकॉर्डिंग में नहीं आते। एक छात्र एग्ज़ाम पूरा नहीं कर पाया।"
+difficulty: mixed

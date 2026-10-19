@@ -1,0 +1,36 @@
+code: INFO20004
+title: Usability Evaluation Methods
+level: 2
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites: INFO10003
+corequisites: none
+non_allowed:
+  - INFO30004
+skills:
+  - design
+  - writing
+topics:
+  - design
+  - psychology
+assessment:
+  - kind: project
+    weight: 10
+    group: true
+  - kind: report
+    weight: 40
+    group: true
+  - kind: exam
+    weight: 50
+    hurdle: true
+  - kind: assignment
+    weight: 0
+    hurdle: true
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/info20004
+source_year: 2026
+verified_on: 2026-10-19
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

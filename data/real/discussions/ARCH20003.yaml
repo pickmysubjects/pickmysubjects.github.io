@@ -1,0 +1,36 @@
+code: ARCH20003
+source: StudentVIP
+url: https://studentvip.com.au/unimelb/subjects/arch20003
+reviews: 5
+from: 2018
+to: 2020
+checked: 2026-10-19
+points:
+  - en: "Reviewers found it interesting and well taught, one calling it the best history subject in the course."
+    zh: "评论者觉得有趣且教得好，有人称其为该课程中最好的历史课。"
+    zh-TW: "評論者覺得有趣且教得好，有人稱它是該學程中最好的歷史課。"
+    ja: "面白く教え方も良いと好評で、課程で一番の歴史科目だという声もある。"
+    ko: "흥미롭고 잘 가르친다는 평. 과정 중 최고의 역사 과목이라는 말도 있음."
+    vi: "Người đánh giá thấy môn thú vị, dạy tốt; có người gọi là môn lịch sử hay nhất của chương trình."
+    ms: "Pengulas rasa ia menarik dan diajar dengan baik; seorang menggelarnya subjek sejarah terbaik dalam kursus."
+    id: "Pengulas merasa menarik dan diajarkan dengan baik; ada yang menyebutnya mata kuliah sejarah terbaik."
+    hi: "रिव्यूअर्स को यह रोचक और अच्छा पढ़ाया हुआ लगा; एक ने इसे कोर्स का सबसे अच्छा इतिहास विषय कहा।"
+  - en: "The amount of content is very large, and doing well depends on essay writing and detailed notes on the weekly readings."
+    zh: "内容量非常大，想拿好成绩要靠论文写作和对每周阅读做详细笔记。"
+    zh-TW: "內容量非常大，想拿好成績要靠論文寫作和對每週閱讀做詳細筆記。"
+    ja: "内容が非常に多く、良い成績にはレポート力と毎週の文献の丁寧なメモが鍵。"
+    ko: "내용이 매우 많고, 좋은 성적은 에세이 실력과 매주 읽기 자료의 꼼꼼한 노트에 달림."
+    vi: "Lượng nội dung rất lớn, muốn điểm cao cần viết tiểu luận tốt và ghi chép kỹ bài đọc hằng tuần."
+    ms: "Kandungannya sangat banyak, dan prestasi baik bergantung pada penulisan esei dan nota terperinci bacaan mingguan."
+    id: "Materinya sangat banyak, dan nilai bagus bergantung pada menulis esai serta catatan rinci bacaan mingguan."
+    hi: "कंटेंट बहुत ज़्यादा है, और अच्छा करने के लिए निबंध लेखन और साप्ताहिक रीडिंग के विस्तृत नोट्स ज़रूरी हैं।"
+  - en: "Not recommended as a breadth unless you already know some architecture, since essays and exams expect its vocabulary."
+    zh: "除非已有一些建筑基础，否则不建议作为跨学科选修，因为论文和考试要求掌握专业词汇。"
+    zh-TW: "除非已有一些建築基礎，否則不建議當 Breadth 選修，因為論文和考試要求掌握專業詞彙。"
+    ja: "建築の基礎がないならBreadthとしては勧められない。レポートと試験で専門用語が求められる。"
+    ko: "건축 기초가 없다면 Breadth로는 비추천. 에세이와 시험에서 전문 용어를 요구함."
+    vi: "Không nên chọn làm Breadth nếu chưa biết chút kiến trúc, vì tiểu luận và bài thi đòi thuật ngữ chuyên ngành."
+    ms: "Tidak disyorkan sebagai Breadth kecuali anda sudah tahu sedikit seni bina, kerana esei dan peperiksaan memerlukan istilahnya."
+    id: "Tidak disarankan sebagai Breadth kecuali sudah paham sedikit arsitektur, karena esai dan ujian menuntut istilahnya."
+    hi: "जब तक थोड़ी वास्तुकला न आती हो, Breadth के रूप में सलाह नहीं दी गई, क्योंकि निबंध और एग्ज़ाम में उसकी शब्दावली चाहिए।"
+workload: heavy

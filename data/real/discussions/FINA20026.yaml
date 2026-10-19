@@ -1,0 +1,37 @@
+code: FINA20026
+source: StudentVIP
+url: https://studentvip.com.au/unimelb/subjects/fina20026
+reviews: 4
+from: 2021
+to: 2026
+checked: 2026-10-19
+points:
+  - en: "Reviewers enjoyed it and said no painting experience is needed; marks reward visible improvement, not raw talent."
+    zh: "评论者很喜欢这门课，说不需要绘画经验；评分看重可见的进步而非天赋。"
+    zh-TW: "評論者很喜歡這門課，說不需要繪畫經驗；評分看重看得到的進步而非天分。"
+    ja: "楽しかったという声が多く、絵の経験は不要。採点は才能より目に見える上達を評価する。"
+    ko: "즐거웠다는 평이 많고 그림 경험은 필요 없음. 채점은 재능보다 눈에 보이는 발전을 봄."
+    vi: "Người đánh giá thích môn và nói không cần biết vẽ; điểm chấm theo tiến bộ thấy được, không phải năng khiếu."
+    ms: "Pengulas menyukainya dan kata tiada pengalaman melukis diperlukan; markah menghargai kemajuan, bukan bakat semata."
+    id: "Pengulas menikmatinya dan bilang tak perlu pengalaman melukis; nilai menghargai kemajuan, bukan bakat."
+    hi: "रिव्यूअर्स को मज़ा आया और कहा पेंटिंग का अनुभव ज़रूरी नहीं; अंक प्रतिभा नहीं, दिखती प्रगति पर मिलते हैं।"
+  - en: "Keep the visual diary organised and up to date, since it is how your progress is judged."
+    zh: "视觉日记要保持整齐并及时更新，因为评判进步主要靠它。"
+    zh-TW: "視覺日記要保持整齊並及時更新，因為評判進步主要靠它。"
+    ja: "上達の評価はビジュアル日記で行われるので、整理して常に更新しておくこと。"
+    ko: "발전은 시각 일지로 평가되므로 깔끔하게 정리하고 꾸준히 업데이트할 것."
+    vi: "Giữ nhật ký hình ảnh gọn gàng và cập nhật, vì tiến bộ được đánh giá qua nó."
+    ms: "Pastikan diari visual teratur dan dikemas kini, kerana kemajuan dinilai melaluinya."
+    id: "Jaga buku visual tetap rapi dan terbarui, karena kemajuan dinilai dari situ."
+    hi: "विज़ुअल डायरी व्यवस्थित और अपडेट रखें, क्योंकि प्रगति उसी से आँकी जाती है।"
+  - en: "The workload is high, especially in the summer or winter intensive where deadlines come quickly; semester mode spreads it out more."
+    zh: "工作量大，尤其是暑期或冬季密集课，截止日期来得很快；学期制较为分散。"
+    zh-TW: "工作量大，尤其是暑期或冬季密集課，截止日來得很快；學期制比較分散。"
+    ja: "作業量は多く、特に夏・冬の集中講座は締切がすぐ来る。学期中の開講なら分散できる。"
+    ko: "작업량이 많고, 특히 여름·겨울 집중 과정은 마감이 빨리 옴. 정규 학기는 좀 더 분산됨."
+    vi: "Khối lượng việc nhiều, nhất là khóa cấp tốc hè hoặc đông với hạn nộp đến nhanh; học theo kỳ thì giãn hơn."
+    ms: "Beban kerja tinggi, terutama intensif musim panas atau sejuk dengan tarikh akhir yang cepat; mod semester lebih teragih."
+    id: "Beban kerja tinggi, terutama kelas intensif musim panas atau dingin yang tenggatnya cepat; mode semester lebih longgar."
+    hi: "काम ज़्यादा है, ख़ासकर समर या विंटर इंटेंसिव में जहाँ डेडलाइन जल्दी आती है; सेमेस्टर में यह फैला रहता है।"
+workload: heavy
+difficulty: mixed

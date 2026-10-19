@@ -1,0 +1,36 @@
+code: ABPL10007
+title: "Architectural Technologies 1: Place"
+level: 1
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+    - semester-2
+prerequisites: ARCH10001
+corequisites: none
+non_allowed:
+  - ABPL20036
+skills:
+  - design
+topics:
+  - design
+  - engineering
+  - environment
+assessment:
+  - kind: assignment
+    weight: 10
+    group: true
+  - kind: assignment
+    weight: 50
+  - kind: assignment
+    weight: 25
+  - kind: quiz
+    weight: 15
+weekly_contact_hours: 4
+breadth_for:
+  - Bachelor of Commerce
+  - Bachelor of Fine Arts (Film and Television)
+handbook: https://handbook.unimelb.edu.au/2026/subjects/abpl10007
+source_year: 2026
+verified_on: 2026-10-19
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
