@@ -2,7 +2,7 @@
  * Tells IndexNow search engines (Bing, and through it Copilot and ChatGPT search; also Yandex,
  * Seznam, Naver) about every page in the live sitemap, so new and changed pages are crawled
  * soon instead of whenever the crawler next comes by. Run weekly by .github/workflows/indexnow.yml
- * and by hand after a big data change: `npx tsx scripts/indexnow.ts`.
+ * and by hand after a big data change: `npm run indexnow`.
  *
  * The key is public by design: it only proves the submitter controls the site, through the
  * matching file served at the site's root (public/<key>.txt).

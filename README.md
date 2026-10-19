@@ -6,23 +6,54 @@
 
 *Not affiliated with or endorsed by the University of Melbourne. Always confirm with the [Handbook](https://handbook.unimelb.edu.au/) and [My Course Planner](https://students.unimelb.edu.au/course-admin/planning-your-course-and-subjects/faculty-course-planning-resources/my-course-planner) before you enrol.*
 
-The University's My Course Planner tells you whether a plan is *valid*. PickMySubjects helps you decide *what to take*. It explains what each subject is really like, which subjects suit you, and lays out a whole degree for you to adjust.
+The University's My Course Planner tells you whether a plan is *valid*. PickMySubjects helps you decide *what to take*: what each subject is really like, which subjects suit you, and a whole degree laid out for you to adjust.
+
+## What's covered
+
+Five degrees from the 2026 Handbook: Bachelor of Arts, Biomedicine, Commerce, Design and Science, with their majors, Arts minors, specialisations and Design's informal specialisations. About 1,360 subjects. The exact list and counts come from `data/` and are printed in the site's `llms.txt` on every build.
+
+## What you can do
+
+**Look up a subject.** Each subject has a page with:
+- when it runs, points and level;
+- prerequisites, corequisites, subjects it can't be taken with, and what it leads to (tap "I meet this" for requirements the site can't check);
+- assessment: each task's share, the final-exam share, hurdles, group work, weekly class hours;
+- a short summary of what it teaches, and which majors, minors and specialisations it counts toward;
+- for about 390 subjects, a summary of public student reviews in all 9 languages, with a link to the source;
+- anonymous ratings from students on this site (shown once 3 people have rated it), and a form to rate subjects you've taken;
+- quick answers: is it hard, is there an exam, can I take it as breadth, what comes after.
+
+**Find subjects.** Search by code or name, filter by breadth, level, semester, no prerequisites, no final exam or no group work, and sort by exam share, class hours or rating. Ready-made lists for breadth, first-semester and no-exam subjects. Students looking for 水课 or easy UniMelb subjects can sort by rating or filter for no final exam.
+
+**Majors, minors and specialisations.** What each one needs, year by year: compulsory subjects, the ones you choose from, and what to take first. Majors with several entry points (languages) show each one. Compare two majors to see what they share.
+
+**Get suggestions.** Subjects ranked from your marks, strengths and interests, each with a reason and a likely mark range. Goals: protect my WAM, balanced, stretch me, or marks only.
+
+**Plan the whole degree.** Pick a degree and major (plus a second major, minor or specialisation where the degree allows) and the site lays out every semester. It checks prerequisites, course rules and how heavy each semester is compared with that degree's normal load, explains heavy semesters and suggests swaps. Drag subjects around, add subjects, add summer or winter terms. Failed subjects get planned again. It warns when the plan runs longer than usual (student visas), shows census dates, and can share a plan as a link or print the whole degree.
+
+**Plan A, Plan B.** Keep up to five plans, each with its own major, strengths, interests and goal, and compare two side by side.
+
+**My record.** Finished subjects and marks, your WAM, a target-WAM calculator, strengths, interests, goal and weekly work hours. Back up to a file and restore it elsewhere. Optionally share grade bands anonymously.
+
+**Guide (墨大入门).** Credit points, majors, double majors (双主修) and minors (辅修), discipline and breadth limits, study load, grades, WAM, census dates and dropping, failing and repeating, how the degree is recognised abroad, and what to check yourself before you enrol.
+
+**Also:** add a missing subject by pasting its Handbook page, send feedback, works offline once opened and can be installed to your home screen.
 
 ## The problems it solves
 
-Choosing subjects is painful, and the rules change every year. These are the problems PickMySubjects exists for, with honest status. The same list is in the app's Feedback page (`src/painPoints.ts`).
+These are the problems PickMySubjects exists for, with honest status. The same list is in the app's Feedback page (`src/painPoints.ts`).
 
 | Problem | Status | How |
 |---|---|---|
 | Which semester does a subject run in? Which are S1 only? | Works | "S1 only" tags; the plan flags subjects placed in the wrong semester |
 | What should I take each semester, across the whole degree? | Works | "Build a plan for me" fills every semester while meeting course rules |
-| What do I need before taking a subject? | Works | Semester-by-semester prerequisite checks; magenta lines trace what unlocks what |
+| What do I need before taking a subject? | Works | Semester-by-semester prerequisite checks; lines trace what unlocks what |
 | If I take this, what can't I take? | Works | Non-allowed pairs are flagged and excluded from suggestions |
-| Which subjects are easier marks / good for my WAM? | Partly | "Protect my WAM" goal. Needs students' ratings, which are being collected |
-| Which subjects are known to be very hard? | Partly | Warnings from student ratings (still being collected) |
-| What skills does a subject need, and do I have them? | Partly | Skill self-rating plus warnings; skill tags for real subjects are being added |
+| Which subjects are easier marks / good for my WAM? | Partly | "Protect my WAM" goal, review summaries and ratings; ratings are still being collected |
+| Which subjects are known to be very hard? | Works | Review summaries, ratings once a subject has 3, heavy-semester warnings |
+| What skills does a subject need, and do I have them? | Works | Skill tags on subjects, your strengths shape suggestions and plans |
 | Which subjects suit *me*? | Works | Ranked from your results, skills and interests, with every score explained |
-| Rules differ by year, degree, major and level | Partly | Rules stored per Handbook year; only Bachelor of Science 2026 so far |
+| Rules differ by year, degree, major and level | Partly | Rules stored per Handbook year; five degrees for 2026 so far |
 | Where do subjects lead after uni? | Not yet | Career pathways are planned |
 
 ## Languages
@@ -34,7 +65,7 @@ English, 简体中文, 繁體中文, 日本語, 한국어, Tiếng Việt, Bahas
 - **Facts only, from the official Handbook.** Each subject records facts such as when it runs, prerequisites and assessment weights, written in our own words and checked by people. No Handbook text is reproduced, and nothing is scraped. See [docs/research.md](docs/research.md).
 - **Honest about what it doesn't know.** Every check is *met*, *not met* or *can't tell yet*. Missing data never counts as a pass.
 - **Private by default.** Your results and plans stay in your browser. There is no account and no server.
-- **Links, not copies.** Discussion on Reddit, StudentVIP, 小红书 and elsewhere is linked, never copied or summarised by AI. See [docs/discussion-sources.md](docs/discussion-sources.md).
+- **Links, not copies.** Discussion on Reddit, StudentVIP, 小红书 and elsewhere is linked, never copied. Where a subject has enough public reviews, a short summary in our own words sits next to the link. See [docs/discussion-sources.md](docs/discussion-sources.md).
 
 ## Feedback
 
@@ -53,11 +84,13 @@ npm install
 npm run dev        # validates data, then starts the app at http://localhost:5180
 npm test           # engine tests
 npm run typecheck
+npm run build      # app + one static page per subject and language, sitemap, robots.txt, llms.txt
+npm run indexnow   # tell Bing/IndexNow about every URL in the live sitemap (sends to an outside service)
 ```
 
 There are two datasets:
 - **Demo**: a fictional "Example University" that shows every feature.
-- **UniMelb**: real, but small, and growing as students add subjects.
+- **UniMelb**: the real data, five degrees and about 1,360 subjects so far.
 
 ## How it's built
 

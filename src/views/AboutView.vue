@@ -1,14 +1,19 @@
 <script setup lang="ts">
 import { link } from '@/composables/useView'
-import { BookOpen, Route, Sparkles, Star } from 'lucide-vue-next'
+import { BookOpen, Calculator, Compass, GitCompare, GraduationCap, Route, Sparkles, Star } from 'lucide-vue-next'
 import { useI18n } from '@/i18n'
 
 const { t } = useI18n()
+// Every main part of the site. Majors and the guide reuse their own page's title and lede.
 const features = [
-  { key: 'lookup', icon: BookOpen, href: link('') },
-  { key: 'plan', icon: Route, href: link('plan') },
-  { key: 'suggest', icon: Sparkles, href: link('recommend') },
-  { key: 'rate', icon: Star, href: link('record') },
+  { key: 'lookup', icon: BookOpen, href: link(''), name: 'about.f.lookup', text: 'about.f.lookupText' },
+  { key: 'plan', icon: Route, href: link('plan'), name: 'about.f.plan', text: 'about.f.planText' },
+  { key: 'plans', icon: GitCompare, href: link('plan'), name: 'about.f.plans', text: 'about.f.plansText' },
+  { key: 'suggest', icon: Sparkles, href: link('recommend'), name: 'about.f.suggest', text: 'about.f.suggestText' },
+  { key: 'majors', icon: GraduationCap, href: link('majors'), name: 'majors.title', text: 'majors.cardText' },
+  { key: 'record', icon: Calculator, href: link('record'), name: 'about.f.record', text: 'about.f.recordText' },
+  { key: 'guide', icon: Compass, href: link('guide'), name: 'guide.title', text: 'guide.lede' },
+  { key: 'rate', icon: Star, href: link('record'), name: 'about.f.rate', text: 'about.f.rateText' },
 ] as const
 </script>
 
@@ -29,8 +34,8 @@ const features = [
           <a class="feature surface" :href="f.href">
             <component :is="f.icon" :size="18" aria-hidden="true" class="feature-icon" />
             <span>
-              <strong class="feature-name">{{ t(`about.f.${f.key}`) }}</strong>
-              <span class="feature-text">{{ t(`about.f.${f.key}Text`) }}</span>
+              <strong class="feature-name">{{ t(f.name) }}</strong>
+              <span class="feature-text">{{ t(f.text) }}</span>
             </span>
           </a>
         </li>
