@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import DegreeBadge from '@/components/browse/DegreeBadge.vue'
+import DegreePick from '@/components/browse/DegreePick.vue'
 import { computed, shallowRef, watch } from 'vue'
 import { Search } from 'lucide-vue-next'
 import BrowseFilters from '@/components/browse/BrowseFilters.vue'
@@ -38,6 +39,9 @@ watch(
 const rows = computed(() => browse(subjectList.value, filters.value, course.value, year.value))
 const visible = computed(() => rows.value.slice(0, shown.value))
 const anyRated = computed(() => subjectList.value.some((s) => (s.signals?.reviews ?? 0) >= 3))
+// No degree yet: ask for it rather than quietly showing one (breadth depends on it).
+const askDegree = computed(() => !plan.courseChosen.value)
+const easyHref = computed(() => link('subjects/easy/') + `?course=${encodeURIComponent(course.value)}` + (filters.value.category === 'breadth' ? '&breadth=1' : ''))
 const breadthCount = computed(() => subjectList.value.filter((s) => s.categories[course.value] === 'breadth').length)
 
 const PRESET_NAMES = Object.keys(PRESETS) as PresetName[]
@@ -108,10 +112,13 @@ watch(filters, (f) => {
       <BrowseFilters v-model="filters" :categories="categories" class="side" />
 
       <section class="results">
+        <DegreePick v-if="askDegree" />
+        <!-- A degree-dependent list (breadth) waits for the degree rather than guessing one. -->
+        <template v-if="!(askDegree && filters.category)">
         <div class="toolbar">
           <div class="count-line">
             <p class="count" role="status">{{ t('browse.count', { n: rows.length }) }}</p>
-            <DegreeBadge :course="course" />
+            <DegreeBadge v-if="!askDegree" :course="course" />
           </div>
           <label class="sort">
             <span>{{ t('browse.sort') }}</span>
@@ -121,11 +128,13 @@ watch(filters, (f) => {
               @change="set('sort', ($event.target as HTMLSelectElement).value as BrowseSort)"
             >
               <option value="code">{{ t('browse.sortCode') }}</option>
+              <option value="easy">{{ t('browse.sortEasy') }}</option>
               <option value="exam">{{ t('browse.sortExam') }}</option>
               <option value="hours">{{ t('browse.sortHours') }}</option>
               <option v-if="anyRated" value="rating">{{ t('browse.sortRating') }}</option>
             </select>
           </label>
+          <a v-if="filters.sort === 'easy'" class="easy-link" :href="easyHref">{{ t('rank.switch.easy') }} →</a>
         </div>
 
         <div v-if="rows.length" class="list surface">
@@ -138,6 +147,7 @@ watch(filters, (f) => {
         </button>
 
         <p class="coverage">{{ t('browse.coverage', { n: subjectList.length, breadth: breadthCount }) }}</p>
+        </template>
       </section>
     </div>
   </div>
@@ -265,6 +275,13 @@ watch(filters, (f) => {
   align-items: center;
   justify-content: space-between;
   gap: 8px;
+}
+
+.easy-link {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
 }
 
 .count {

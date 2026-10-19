@@ -12,7 +12,7 @@ const { data } = useDataset()
 const plan = usePlan()
 const { t } = useI18n()
 const title = computed(() => data.value.courses.find((c) => c.code === props.course)?.title ?? props.course)
-const chosen = computed(() => Boolean(plan.setup.value.course))
+const chosen = plan.courseChosen
 </script>
 
 <template>

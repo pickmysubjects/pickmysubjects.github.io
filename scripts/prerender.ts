@@ -249,7 +249,7 @@ function subjectPage(code: LocaleCode, s: Subject): Page {
   if (leads.length) parts.push(`<h2>${esc(t('subject.unlocks'))}</h2><ul>${leads.map((c) => `<li>${subjectLink(code, c)}</li>`).join('')}</ul>`)
   if (blocks.length) parts.push(`<h2>${esc(t('subject.blocks'))}</h2><ul>${blocks.map((c) => `<li>${subjectLink(code, c)}</li>`).join('')}</ul>`)
   if (assess) parts.push(`<h2>${esc(t('assess.title'))}</h2><p>${esc(assess)}</p>`)
-  if (s.weeklyContactHours) parts.push(`<p>${esc(t('assess.hours', { n: s.weeklyContactHours }))}</p>`)
+  // Class hours are in the gist lines above, as on the app's page.
   // One visible section for what students think: public review summaries, our own ratings (3+),
   // and a plain invitation to rate it here. Never a made-up score.
   const ds = (s.discussions ?? []).filter((d) => d.points.length)

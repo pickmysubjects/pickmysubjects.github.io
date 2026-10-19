@@ -5,7 +5,6 @@ import LangMenu from './LangMenu.vue'
 import AppLogo from '../AppLogo.vue'
 import SubjectSearch from '../SubjectSearch.vue'
 import { MY_STEPS, NAV_ITEMS } from './nav'
-import MySteps from './MySteps.vue'
 import type { View } from '@/composables/useView'
 import { useI18n } from '@/i18n'
 
@@ -19,7 +18,6 @@ const { t } = useI18n()
       <a class="brand" :href="link('')">
         <AppLogo class="mark" />
         <span class="brand-name">PickMySubjects</span>
-        <span class="badge">{{ t('app.unofficial') }}</span>
       </a>
       <nav class="nav" :aria-label="t('nav.main')">
         <a
@@ -58,10 +56,6 @@ const { t } = useI18n()
         </a>
         <LangMenu />
       </div>
-    </div>
-    <!-- Phones: no room in the bar itself, so Me's steps get a slim row of their own under it. -->
-    <div v-if="MY_STEPS.some((x) => x.view === view)" class="header-steps shell">
-      <MySteps />
     </div>
   </header>
 </template>
@@ -110,15 +104,6 @@ const { t } = useI18n()
 .mark {
   width: 30px;
   height: 30px;
-}
-
-.badge {
-  padding: 2px 8px;
-  border-radius: 999px;
-  background: var(--surface-2);
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--ink-soft);
 }
 
 .nav {
@@ -220,18 +205,17 @@ const { t } = useI18n()
   padding: 0 12px;
   font-size: 0.875rem;
   font-weight: 600;
-  color: var(--accent);
+  color: var(--ink-soft);
   text-decoration: none;
   white-space: nowrap;
-  background: var(--glass-shine), color-mix(in srgb, var(--accent-soft) 80%, transparent);
-  border: 1px solid var(--glass-edge);
   border-radius: 999px;
-  box-shadow: var(--glass-shadow);
 }
 
+/* A plain link, not a second pill next to the nav. */
 .guide:hover,
 .guide[aria-current='page'] {
-  border-color: var(--accent);
+  color: var(--ink);
+  background: var(--glass-fill-hover);
 }
 
 /* Where the header is tight, just the book icon (its name is in the title and the footer). */
@@ -260,7 +244,6 @@ const { t } = useI18n()
 
 /* Five links and the language menu must fit before the bottom bar takes over. */
 @media (max-width: 1060px) {
-  .badge,
   .nav-link svg {
     display: none;
   }
@@ -272,20 +255,10 @@ const { t } = useI18n()
   }
 }
 
-/* The badge comes back with the bottom bar; on the narrowest phones it gives way to the language menu. */
+/* With the bottom bar there's room for the name again. */
 @media (max-width: 720px) {
-  .badge {
-    display: inline-flex;
-  }
-
   .brand-name {
     display: inline;
-  }
-}
-
-@media (max-width: 400px) {
-  .badge {
-    display: none;
   }
 }
 
@@ -299,20 +272,11 @@ const { t } = useI18n()
   }
 }
 
-.header-steps {
-  display: none;
-}
-
-/* The three My steps sit in the bar on wide screens; below that (tablets, small laptops and
-   phones) they move to their own slim row under it, so long step names never widen the page. */
+/* The three My steps sit in the bar on wide screens; below that they're a slim switch at the top
+   of the page itself (App.vue), so there's only ever one bar. */
 @media (max-width: 1100px) {
   .nav-steps {
     display: none;
-  }
-
-  .header-steps {
-    display: block;
-    padding-bottom: 8px;
   }
 }
 /* With the three My steps in the bar there's less room: the language button keeps only its

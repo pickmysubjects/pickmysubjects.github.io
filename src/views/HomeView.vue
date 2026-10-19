@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { link } from '@/composables/useView'
 import { computed } from 'vue'
-import { ArrowRight, BookOpen, ChartNoAxesColumn, Check, GraduationCap, ListFilter, Route, Sparkles, User } from 'lucide-vue-next'
+import { ArrowRight, ChartNoAxesColumn, Check, GraduationCap, Route, Sparkles, User } from 'lucide-vue-next'
 import SubjectSearch from '@/components/SubjectSearch.vue'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
@@ -11,8 +11,14 @@ import { exampleSubjects } from '@/utils/showcase'
 import { SEARCH_PHRASES } from '@/i18n/searchPhrases'
 
 const { t, locale } = useI18n()
-// The questions students search for, each a quick link to the page that answers it.
-const searches = computed(() => SEARCH_PHRASES[locale.value])
+// The questions students search for, each a quick link to the page that answers it. Home shows
+// only the lists (the planner, majors and basics have their own way in); the static page and
+// llms.txt keep them all.
+const HOME_SEARCHES = new Set(['subjects/easy', 'subjects/no-exam', 'subjects/breadth', 'subjects/first-semester'])
+const searches = computed(() => {
+  const s = SEARCH_PHRASES[locale.value]
+  return { heading: s.heading, items: s.items.filter((i) => HOME_SEARCHES.has(i.to)) }
+})
 const { subjectList } = useDataset()
 
 // The title is split into phrases that never break inside; languages written with spaces keep one between them.
@@ -102,27 +108,11 @@ const next = computed(() => {
     <section class="tools" aria-labelledby="tools-title">
       <h2 id="tools-title" class="steps-title">{{ t('home.toolsTitle') }}</h2>
       <div class="tools-list">
-        <a class="tool surface" :href="link('subjects')">
-          <span class="tool-icon"><ListFilter :size="20" aria-hidden="true" /></span>
-          <span class="tool-body">
-            <span class="step-name">{{ t('browse.title') }}</span>
-            <span class="step-text">{{ t('browse.lede') }}</span>
-          </span>
-          <ArrowRight :size="18" aria-hidden="true" class="tool-go" />
-        </a>
         <a class="tool surface" :href="link('majors')">
           <span class="tool-icon"><GraduationCap :size="20" aria-hidden="true" /></span>
           <span class="tool-body">
             <span class="step-name">{{ t('majors.title') }}</span>
             <span class="step-text">{{ t('majors.cardText') }}</span>
-          </span>
-          <ArrowRight :size="18" aria-hidden="true" class="tool-go" />
-        </a>
-        <a class="tool surface" :href="link('guide')">
-          <span class="tool-icon"><BookOpen :size="20" aria-hidden="true" /></span>
-          <span class="tool-body">
-            <span class="step-name">{{ t('guide.title') }}</span>
-            <span class="step-text">{{ t('guide.lede') }}</span>
           </span>
           <ArrowRight :size="18" aria-hidden="true" class="tool-go" />
         </a>
@@ -349,7 +339,7 @@ li:nth-child(3) .step-icon {
 
 .tools-list {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
   gap: 14px;
 }
 
@@ -391,11 +381,7 @@ li:nth-child(3) .step-icon {
   color: var(--accent);
 }
 
-/* A full row under the three cards: two buttons, not one link, so it doesn't lift on hover. */
-.tool-ranks {
-  grid-column: 1 / -1;
-}
-
+/* Two buttons, not one link, so it doesn't lift on hover. */
 .tool-ranks:hover {
   border-color: var(--line);
   transform: none;

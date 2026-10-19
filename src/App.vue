@@ -3,6 +3,8 @@ import AppHeader from './components/layout/AppHeader.vue'
 import BottomNav from './components/layout/BottomNav.vue'
 import Interp from './components/Interp.vue'
 import AppLogo from './components/AppLogo.vue'
+import MySteps from './components/layout/MySteps.vue'
+import { MY_STEPS } from './components/layout/nav'
 import { VIEW_LOADERS } from './views/loaders'
 import { defineAsyncComponent, watchEffect } from 'vue'
 import { useView, link } from './composables/useView'
@@ -69,8 +71,6 @@ watchEffect(() => {
       ? `${t.value(key)} | PickMySubjects`
       : t.value('seo.homeTitle')
 })
-const plannerUrl =
-  'https://students.unimelb.edu.au/course-admin/planning-your-course-and-subjects/faculty-course-planning-resources/my-course-planner'
 </script>
 
 <template>
@@ -82,6 +82,8 @@ const plannerUrl =
   </div>
   <AppHeader :view="view" />
   <main class="app-main shell" :class="{ 'shell-wide': view === 'plan' }">
+    <!-- Narrow screens: Me's three steps as a slim switch in the page (wide screens: in the bar). -->
+    <MySteps v-if="MY_STEPS.some((x) => x.view === view)" class="page-steps" />
     <HomeView v-if="view === 'home'" />
     <SubjectView v-else-if="view === 'subject'" :key="param" :code="param" />
     <PlannerView v-else-if="view === 'plan'" />
@@ -112,12 +114,6 @@ const plannerUrl =
         <Interp :text="t('app.footer')">
           <template #handbook>
             <a href="https://handbook.unimelb.edu.au/" target="_blank" rel="noopener">{{ t('app.handbook') }}</a>
-          </template>
-          <template #planner>
-            <a :href="plannerUrl" target="_blank" rel="noopener">{{ t('app.planner') }}</a>
-          </template>
-          <template #feedback>
-            <a :href="link('feedback')">{{ t('app.suggest') }}</a>
           </template>
         </Interp>
       </p>
@@ -181,6 +177,26 @@ const plannerUrl =
     display: flex;
     align-items: center;
     min-height: 40px;
+  }
+}
+
+.app-main > .page-steps {
+  display: none;
+}
+
+@media (max-width: 1100px) {
+  .app-main > .page-steps {
+    display: flex;
+    margin-top: 12px;
+  }
+
+  .app-main > .page-steps :deep(.step) {
+    min-height: 34px;
+    font-size: 0.875rem;
+  }
+
+  .app-main > .page-steps :deep(svg) {
+    display: none;
   }
 }
 

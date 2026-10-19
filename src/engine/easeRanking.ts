@@ -202,6 +202,16 @@ export function rankSubject(s: Subject, direction: RankDirection): RankedSubject
 }
 
 /**
+ * A sort key for "easiest first" in any list: the easy list's own order (reviews that say easy,
+ * then the rest, then reviews that say hard; score within each), and null when there's nothing
+ * to go on, so the caller puts it last.
+ */
+export function easeKey(s: Subject): { tier: number; score: number } | null {
+  const r = rankSubject(s, 'easy')
+  return r && { tier: tier(r.reviews, 'easy'), score: r.score }
+}
+
+/**
  * Subjects ranked for `direction`, easiest (or hardest) first. Only subjects that lean that way
  * and have at least one reason to show are listed.
  */

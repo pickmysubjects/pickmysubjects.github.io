@@ -1,7 +1,8 @@
 import { periodsFor } from './availability'
+import { easeKey } from './easeRanking'
 import type { Period, Subject } from './schema'
 
-export type BrowseSort = 'code' | 'exam' | 'hours' | 'rating'
+export type BrowseSort = 'code' | 'easy' | 'exam' | 'hours' | 'rating'
 
 export interface BrowseFilters {
   /** Free text matched against code and title. */
@@ -30,7 +31,8 @@ export const EMPTY_FILTERS: BrowseFilters = {
 /** Starting points for the questions new students ask most. */
 export const PRESETS = {
   firstSemester: { level: 1, period: 'semester-1' },
-  breadth: { category: 'breadth' },
+  // Breadth is picked for an easy mark more than anything: easiest first.
+  breadth: { category: 'breadth', sort: 'easy' },
   noExam: { noExam: true },
 } as const satisfies Record<string, Partial<BrowseFilters>>
 
@@ -88,6 +90,21 @@ const byNumber = (pick: (r: BrowseRow) => number | null, dir: 1 | -1) => (a: Bro
   return (x - y) * dir || a.subject.code.localeCompare(b.subject.code)
 }
 
+// Easiest first, as the easy list orders them; subjects with nothing to rank on go last.
+function easiest() {
+  const keys = new Map<string, ReturnType<typeof easeKey>>()
+  const key = (r: BrowseRow) => {
+    if (!keys.has(r.subject.code)) keys.set(r.subject.code, easeKey(r.subject))
+    return keys.get(r.subject.code)!
+  }
+  return (a: BrowseRow, b: BrowseRow) => {
+    const x = key(a)
+    const y = key(b)
+    if (!x || !y) return x === y ? a.subject.code.localeCompare(b.subject.code) : x ? -1 : 1
+    return x.tier - y.tier || y.score - x.score || a.subject.code.localeCompare(b.subject.code)
+  }
+}
+
 /**
  * Subjects matching every filter. A filter on something the data doesn't record
  * (no assessment, unknown prerequisites) leaves the subject out rather than guessing.
@@ -105,6 +122,7 @@ export function browse(subjects: Subject[], f: BrowseFilters, course: string, ye
     .filter((r) => !f.noGroup || r.group === 0)
   const sorts: Record<BrowseSort, (a: BrowseRow, b: BrowseRow) => number> = {
     code: (a, b) => a.subject.code.localeCompare(b.subject.code),
+    easy: easiest(),
     exam: byNumber((r) => r.exam, 1),
     hours: byNumber((r) => r.hours, 1),
     rating: byNumber((r) => r.rating, -1),
@@ -127,7 +145,7 @@ export function filtersToQuery(f: BrowseFilters): string {
 }
 
 const PERIOD_SET = new Set<string>(['summer', 'semester-1', 'winter', 'semester-2'])
-const SORT_SET = new Set<string>(['code', 'exam', 'hours', 'rating'])
+const SORT_SET = new Set<string>(['code', 'easy', 'exam', 'hours', 'rating'])
 
 /** The query keys that set filters; anything else (fbclid, utm_source from a shared link) is ignored. */
 const FILTER_KEYS = new Set(['q', 'type', 'level', 'when', 'noprereq', 'noexam', 'nogroup', 'sort', 'preset'])

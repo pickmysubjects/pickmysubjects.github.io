@@ -218,8 +218,7 @@ const printTerms = computed<PrintTerm[]>(() => {
     <section class="intro">
       <h1 class="page-title">{{ t('plan.title') }}</h1>
       <template v-if="showWizard">
-        <p class="page-lede">{{ t('plan.ledeShort') }}</p>
-        <a class="guide-link" :href="link('guide')">{{ t('guide.planLink') }}</a>
+        <p class="page-lede">{{ t('plan.ledeShort') }} <a class="guide-link" :href="link('guide')">{{ t('guide.nav') }} →</a></p>
       </template>
     </section>
 
@@ -433,8 +432,7 @@ const printTerms = computed<PrintTerm[]>(() => {
 }
 
 .guide-link {
-  justify-self: start;
-  font-size: 0.9375rem;
+  white-space: nowrap;
   color: var(--accent);
 }
 

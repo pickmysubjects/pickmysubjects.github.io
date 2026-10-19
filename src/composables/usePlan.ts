@@ -79,6 +79,8 @@ export function usePlan() {
   const isEmpty = computed(() => plannedCodes.value.length === 0)
   // Answered the questions, or built a plan with them before this was recorded (it left notes).
   const setupChosen = computed(() => state.value.setup.confirmed === true || state.value.notes.length > 0)
+  // The degree alone is known: picked on its own (Find subjects asks for it), or with the rest.
+  const courseChosen = computed(() => setupChosen.value || current.value !== undefined)
 
   /** Write the open plan (its body, and the plans for other degrees it keeps aside). */
   function put(body: PlanState, kept = current.value?.kept): void {
@@ -126,6 +128,17 @@ export function usePlan() {
     }
     save((s) => ({ ...s, setup: { ...setup, confirmed: true } }))
     return false
+  }
+
+  /**
+   * Just the degree, before any plan (Find subjects asks for it first). The rest of the questions
+   * stay unanswered, so the plan page still asks them, starting from this degree.
+   */
+  function chooseCourse(code: string): void {
+    if (current.value !== undefined && setupChosen.value) return
+    const c = data.value.courses.find((x) => x.code === code)
+    if (!c) return
+    save((s) => ({ ...s, setup: { ...s.setup, course: c.code, courseYear: c.year, major: '', major2: '', specialisation: '', minors: [] } }))
   }
 
   // A part-done semester on the record is carried on in (its done subjects share the column).
@@ -344,6 +357,8 @@ export function usePlan() {
     plannedCodes,
     isEmpty,
     setupChosen,
+    courseChosen,
+    chooseCourse,
     updateSetup,
     generate,
     startEmpty,

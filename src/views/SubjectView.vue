@@ -162,11 +162,9 @@ const gist = computed(() => (subject.value ? subjectGist(t.value, subject.value)
             <ChartNoAxesColumn :size="14" aria-hidden="true" />
             {{ t(`rank.onList.${onList.direction}`, { n: onList.place }) }}
           </a>
+          <!-- What students ask first, in their words: exam share, class hours, group work. -->
+          <span v-for="g in gist" :key="g" class="chip chip-gist">{{ g }}</span>
         </div>
-        <!-- What students ask first, in their words: exam share, class hours, group work. -->
-        <ul v-if="gist.length" class="gist">
-          <li v-for="g in gist" :key="g">{{ g }}</li>
-        </ul>
         <p v-if="gone && subject.replacedBy.length" class="instead">
           {{ t('subject.insteadTake') }}
           <a v-for="c in subject.replacedBy" :key="c" class="chip code" :href="link(`subject/${c}`)">{{ c }}</a>
@@ -292,11 +290,20 @@ const gist = computed(() => (subject.value ? subjectGist(t.value, subject.value)
 
         <section v-if="links.length" class="panel surface panel-wide">
           <h2 class="panel-title">{{ t('subject.discuss') }}</h2>
+          <!-- The two most used in the reader's language first; the rest one tap away. -->
           <p class="links-inline links-grid">
-            <a v-for="l in links" :key="l.label" class="chip" :href="l.href" target="_blank" rel="noopener" :lang="l.lang">
+            <a v-for="l in links.slice(0, 2)" :key="l.label" class="chip" :href="l.href" target="_blank" rel="noopener" :lang="l.lang">
               {{ l.label }} <ExternalLink :size="13" aria-hidden="true" />
             </a>
           </p>
+          <details v-if="links.length > 2" class="links-more">
+            <summary>{{ t('subject.discussMore', { n: links.length - 2 }) }}</summary>
+            <p class="links-inline links-grid">
+              <a v-for="l in links.slice(2)" :key="l.label" class="chip" :href="l.href" target="_blank" rel="noopener" :lang="l.lang">
+                {{ l.label }} <ExternalLink :size="13" aria-hidden="true" />
+              </a>
+            </p>
+          </details>
         </section>
       </div>
 
@@ -579,29 +586,23 @@ const gist = computed(() => (subject.value ? subjectGist(t.value, subject.value)
   font-size: 0.875rem;
   font-weight: 650;
 }
-.gist {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px 18px;
-  margin: 2px 0 0;
-  padding: 0;
-  list-style: none;
-  font-size: 0.9375rem;
+.chip-gist {
   font-weight: 600;
   color: var(--ink);
 }
 
-.gist li {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
+.links-more {
+  margin-top: 10px;
 }
 
-.gist li::before {
-  content: '';
-  width: 6px;
-  height: 6px;
-  border-radius: 999px;
-  background: var(--overprint);
+.links-more summary {
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.links-more .links-inline {
+  margin-top: 8px;
 }
 </style>

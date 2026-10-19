@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { CircleCheck, Clock, TriangleAlert, Users } from 'lucide-vue-next'
+import { TriangleAlert } from 'lucide-vue-next'
 import { periodsFor, skillsOf, topicsOf, type Subject } from '@/engine'
 import { useDataset } from '@/composables/useDataset'
 import { useI18n } from '@/i18n'
@@ -19,19 +19,11 @@ const guessed = computed(() => props.subject.skills.length === 0)
 const info = computed(() => summariseAssessment(props.subject.assessment))
 const parts = computed(() => info.value?.parts ?? [])
 const summary = computed(() => parts.value.map((p) => `${t.value(`assess.kind.${p.kind}`)} ${p.weight}%`).join(', '))
-const group = computed(() => info.value?.group ?? 0)
-const noExam = computed(() => info.value !== null && info.value.exam === 0)
 const examHurdle = computed(() => info.value?.examHurdle ?? false)
 const otherHurdle = computed(() => info.value?.otherHurdle ?? false)
-const hasFacts = computed(
-  () =>
-    noExam.value ||
-    examHurdle.value ||
-    otherHurdle.value ||
-    group.value > 0 ||
-    !!props.subject.weeklyContactHours ||
-    !!props.subject.minAttendance,
-)
+// Exam share, class hours and group work are in the summary under the title; here only the
+// warnings it doesn't carry.
+const hasFacts = computed(() => examHurdle.value || otherHurdle.value || !!props.subject.minAttendance)
 // The Handbook lists summer/winter versions separately; we keep the semester one.
 // Only worth saying when it runs both in a semester and outside one; a summer-only subject's
 // assessment *is* the summer one.
@@ -61,15 +53,10 @@ const otherTerms = computed(() => {
     <p v-else class="assess-muted">{{ t('assess.none') }}</p>
 
     <p v-if="hasFacts" class="assess-facts">
-      <span v-if="noExam" class="chip chip-good"><CircleCheck :size="14" aria-hidden="true" /> {{ t('assess.noExam') }}</span>
       <span v-if="examHurdle" class="chip chip-warn"><TriangleAlert :size="14" aria-hidden="true" /> {{ t('assess.mustPassExam') }}</span>
       <span v-if="otherHurdle" class="chip chip-warn"><TriangleAlert :size="14" aria-hidden="true" /> {{ t('assess.hurdles') }}</span>
       <span v-if="subject.minAttendance" class="chip chip-warn">
         <TriangleAlert :size="14" aria-hidden="true" /> {{ t('assess.attendance', { n: subject.minAttendance }) }}
-      </span>
-      <span v-if="group > 0" class="chip"><Users :size="14" aria-hidden="true" /> {{ t('assess.group', { n: group }) }}</span>
-      <span v-if="subject.weeklyContactHours" class="chip">
-        <Clock :size="14" aria-hidden="true" /> {{ t('assess.hours', { n: subject.weeklyContactHours }) }}
       </span>
     </p>
     <p v-if="otherTerms" class="assess-muted assess-small">{{ t('assess.otherTerms') }}</p>
