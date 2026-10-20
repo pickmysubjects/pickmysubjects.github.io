@@ -93,7 +93,16 @@ export const ko: Messages = {
     notes: '가정에 대한 메모 {n}개',
     notesOne: '가정에 대한 메모 1개',
   },
+  entry: {
+    sciextd: "애버리지니 및 토레스 해협 섬 주민 학생만",
+    dlang: "학생 비자로는 들을 수 없어요",
+    dcomp: "WAM 65, 50학점 이수, COMP10001 이수 필요. 학생 비자로는 들을 수 없어요",
+    dmathsc: "Specialist Maths 30점 이상(또는 동등) 필요. 학생 비자로는 들을 수 없어요",
+  },
   rule: {
+    diploma: "{title}: {rule}",
+    diplomaEligible: "내 학위와 전공으로 들을 수 있음",
+    diplomaStream: "스트림 하나 이수",
     minor: "부전공은 최대 {max}개",
     informalSpec: "비공식 세부전공은 최대 {max}개",
     compulsory: '{codes} 이수',
@@ -117,6 +126,8 @@ export const ko: Messages = {
     requirementOr: ' 또는 ',
   },
   ruleDetail: {
+    diplomaClash: "{reason}",
+    noStream: "스트림을 고르면 확인돼요",
     noMinor: "선택 안 함(선택 사항)",
     tooManyMinors: "부전공 {have}개(최대 {max}개)",
     minorSameAsMajor: "{title}은(는) 전공과 부전공을 동시에 할 수 없습니다",
@@ -764,6 +775,7 @@ export const ko: Messages = {
     cat: { science: "이과", commerce: "상경", arts: "인문", breadth: "Breadth" },
   },
   majors: {
+    basedOn: "{course}은(는) {base}의 전공을 써요.",
     specTitle: "{title} 세부전공",
     specKind: "세부전공",
     specsTitle: "세부전공 (Specialisation)",
@@ -870,6 +882,7 @@ export const ko: Messages = {
     footer: "비공식 도구예요. 수강 신청 전에 Handbook과 My Course Planner에서 확인하세요",
   },
   guide: {
+    majorsDiploma: "동시 이수 디플로마(concurrent diploma): Languages, Computing, Mathematical Sciences 디플로마는 학사와 함께 100학점을 더 듣는 과정으로, 보통 1년이 더 걸려요. 최대 50학점은 양쪽에 다 인정돼서 더 일찍 끝내는 학생도 있어요. 일부 전공은 Computing이나 Mathematical Sciences를 들을 수 없어요. 원주민 학생은 Bachelor of Science (Extended)도 고를 수 있어요. 기초 1년 뒤 일반 이학사 전공을 듣고, 350학점을 3년 반에 마쳐요.",
     majorsTitle: "전공, 복수전공, 부전공",
     majorsShort: "전공은 누구나 하나 필요해요. 학위에 따라 두 번째 전공이나 부전공도 가능해요.",
     majorsOne: "모든 학사 학위는 전공을 최소 하나 끝내야 해요. 3학년까지 이어서 듣는 주된 분야예요.",
@@ -926,7 +939,7 @@ export const ko: Messages = {
     firstStep2: "나머지는 관심 있는 과목이나 Breadth로 채우세요.",
     firstStep3: "my.unimelb에서 수강 신청(enrol)을 하고, My Timetable에서 수업 시간을 고르세요.",
     firstStep4: "들어보니 별로라면 census date 전까지는 무료로 취소할 수 있어요. 유학생은 먼저 Stop 1에 물어보세요.",
-    breadthText: "Breadth는 내 학위 분야 밖의 과목이에요(이학사라면 상경·인문 과목 등). 어떤 학위가 Breadth로 들을 수 있는지는 각 과목의 Handbook 페이지에 나와 있어요. 여기 있는 다섯 학위 모두 Breadth를 최소 50학점(4과목) 들어야 해요. 레벨 1 Breadth는 이학사 25학점, 인문·생명의학·상경·디자인 학사는 37.5학점까지 인정되고, 상경학사는 Breadth 전체도 62.5학점까지예요.",
+    breadthText: "Breadth는 내 학위 분야 밖의 과목이에요(이학사라면 상경·인문 과목 등). 어떤 학위가 Breadth로 들을 수 있는지는 각 과목의 Handbook 페이지에 나와 있어요. 여기 있는 여섯 학위 모두 Breadth를 최소 50학점(4과목) 들어야 해요. 레벨 1 Breadth는 이학사 25학점, 인문·생명의학·상경·디자인 학사는 37.5학점까지 인정되고, 상경학사는 Breadth 전체도 62.5학점까지예요.",
     easyHardText: "어떤 과목이 쉽고 어떤 과목이 어렵다고 하는지 궁금하면 쉬운 과목·어려운 과목 순위를 이유와 함께 보세요.",
     firstFind: "첫 학기에 들을 수 있는 과목 찾기",
     firstPlan: "계획 열기",
@@ -1176,6 +1189,7 @@ export const ko: Messages = {
     discussReadReddit: '스레드 보기',
   },
   plans: {
+    diplomaLine: "디플로마: {title}",
     minorLine: "부전공: {title}",
     informalLine: "비공식 세부전공: {title}",
     goal: "목표",
@@ -1212,6 +1226,10 @@ export const ko: Messages = {
     notPlanned: "계획 없음",
   },
   wizard: {
+    qDiploma: "동시 이수 디플로마를 추가할까요? (선택)",
+    noDiploma: "디플로마 없음",
+    diplomaHint: "학위 외에 100학점을 더 들어요. 보통 1년 더 걸려요.",
+    qStream: "어떤 스트림?",
     qMinor: "부전공을 추가할까요? (선택)",
     qInformal: "비공식 세부전공을 추가할까요? (선택)",
     qMajor2: "두 번째 전공을 추가할까요? (선택)",

@@ -93,7 +93,16 @@ export const zhTW: Messages = {
     notes: '{n} 則關於假設的說明',
     notesOne: '1 則關於假設的說明',
   },
+  entry: {
+    sciextd: "只招收原住民和托雷斯海峽島民學生",
+    dlang: "持學生簽證不能讀",
+    dcomp: "要求 WAM 65、已修 50 學分且修過 COMP10001；持學生簽證不能讀",
+    dmathsc: "要求 VCE Specialist Maths 30 分或同等；持學生簽證不能讀",
+  },
   rule: {
+    diploma: "{title}：{rule}",
+    diplomaEligible: "你的學位和主修可以讀",
+    diplomaStream: "完成一個方向",
     minor: "最多 {max} 個輔修",
     informalSpec: "非正式專精最多 {max} 個",
     compulsory: '必修 {codes}',
@@ -117,6 +126,8 @@ export const zhTW: Messages = {
     requirementOr: '；或 ',
   },
   ruleDetail: {
+    diplomaClash: "{reason}",
+    noStream: "選好方向後才能檢查",
     noMinor: "未選擇（可選）",
     tooManyMinors: "{have} 個輔修（最多 {max} 個）",
     minorSameAsMajor: "{title} 不能同時作為主修和輔修",
@@ -764,6 +775,7 @@ export const zhTW: Messages = {
     cat: { science: "理科", commerce: "商科", arts: "文科", breadth: "Breadth" },
   },
   majors: {
+    basedOn: "{course}用的是{base}的主修。",
     specTitle: "{title} 專業方向",
     specKind: "專業方向",
     specsTitle: "專業方向（Specialisation）",
@@ -870,6 +882,7 @@ export const zhTW: Messages = {
     footer: "非官方工具，選課前請以 Handbook 和 My Course Planner 為準",
   },
   guide: {
+    majorsDiploma: "並讀文憑（concurrent diploma）：語言、計算機或數學科學文憑都是在學士之外多讀 100 學分，通常多讀一年。最多 50 學分可以兩邊都算，所以有人能早點讀完。有些主修不能讀計算機或數學科學文憑。原住民學生還可以選理學士延長版（Bachelor of Science (Extended)）：先讀一年基礎課，再讀一般理學士的主修，共 350 學分，三年半。",
     majorsTitle: "主修、雙主修和輔修",
     majorsShort: "每個人至少要有一個主修。有些學位可以讀雙主修或加輔修。",
     majorsOne: "每個學士學位都至少要完成一個主修，也就是你讀到三年級的那個方向。",
@@ -926,7 +939,7 @@ export const zhTW: Messages = {
     firstStep2: "剩下的位置選你有興趣的課，或者 Breadth 課。",
     firstStep3: "在 my.unimelb 選課（enrol），然後到 My Timetable 選上課時間。",
     firstStep4: "上了覺得不喜歡？census date 之前還能免費退。國際學生退課前先問 Stop 1。",
-    breadthText: "Breadth 就是你學位領域以外的課，例如讀理科的去修商科或文科。每門課的 Handbook 頁面會寫明哪些學位可以把它當 Breadth。這裡的五個學位都要求至少 50 學分（4 門）Breadth。一年級 Breadth 理學士最多算 25 學分，文學士、生物醫學學士、商學士和設計學士最多算 37.5 學分；商學士的 Breadth 總共最多算 62.5 學分。",
+    breadthText: "Breadth 就是你學位領域以外的課，例如讀理科的去修商科或文科。每門課的 Handbook 頁面會寫明哪些學位可以把它當 Breadth。這裡的六個學位都要求至少 50 學分（4 門）Breadth。一年級 Breadth 理學士最多算 25 學分，文學士、生物醫學學士、商學士和設計學士最多算 37.5 學分；商學士的 Breadth 總共最多算 62.5 學分。",
     easyHardText: "想知道哪些課大家覺得容易、哪些難？可以看涼課和難課排行，每門都寫了原因。",
     firstFind: "找第一學期能上的課",
     firstPlan: "去排課",
@@ -1176,6 +1189,7 @@ export const zhTW: Messages = {
     discussReadReddit: '查看討論',
   },
   plans: {
+    diplomaLine: "文憑：{title}",
     minorLine: "輔修：{title}",
     informalLine: "非正式專精：{title}",
     goal: "目標",
@@ -1212,6 +1226,10 @@ export const zhTW: Messages = {
     notPlanned: "沒有安排",
   },
   wizard: {
+    qDiploma: "加讀一個並讀文憑嗎？（可選）",
+    noDiploma: "不加文憑",
+    diplomaHint: "在學位之外多讀 100 學分，通常多讀一年。",
+    qStream: "選哪個方向？",
     qMinor: "加一個輔修嗎？（可選）",
     qInformal: "要加一個非正式專精嗎？（可選）",
     qMajor2: "要加第二個主修嗎？（可選）",

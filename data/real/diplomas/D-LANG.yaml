@@ -1,0 +1,24 @@
+# Diploma in Languages, 2026 Handbook. Facts re-expressed in our own words.
+# 100 points of one language, taken alongside a bachelor degree. The Handbook's language
+# specialisations follow the Bachelor of Arts language majors (with their entry points), plus
+# the level-1 subjects before them, so those majors stand in as the streams here.
+code: D-LANG
+title: Diploma in Languages
+year: 2026
+total_points: 100
+entry_note: dlang
+# Up to 50 points of language subjects taken in the bachelor degree may be credited to the diploma.
+cross_credit: 50
+streams: [arabic-studies, chinese-studies, french-studies, german-studies, indonesian-studies, italian-studies, japanese-studies, korean-studies, russian-studies, spanish-and-latin-american-studies]
+rules:
+  - id: diploma-total
+    kind: points
+    min: 100
+    description: 100 points of the language
+  - id: diploma-l3
+    kind: points
+    level: 3
+    min: 37.5
+    description: At least 37.5 points at level 3
+handbook: https://handbook.unimelb.edu.au/2026/courses/d-lang/course-structure
+verified_on: 2026-10-21

@@ -93,7 +93,16 @@ export const ms: Messages = {
     notes: '{n} nota tentang andaian',
     notesOne: '1 nota tentang andaian',
   },
+  entry: {
+    sciextd: "Hanya untuk pelajar Orang Asli dan Kepulauan Selat Torres",
+    dlang: "Tidak dibuka untuk visa pelajar",
+    dcomp: "Perlu WAM 65, 50 mata selesai dan COMP10001; tidak dibuka untuk visa pelajar",
+    dmathsc: "Perlu skor Specialist Maths 30 atau setara; tidak dibuka untuk visa pelajar",
+  },
   rule: {
+    diploma: "{title}: {rule}",
+    diplomaEligible: "Terbuka kepada ijazah dan major anda",
+    diplomaStream: "Lengkapkan satu aliran",
     minor: "Paling banyak {max} minor",
     informalSpec: "Paling banyak {max} pengkhususan tidak formal",
     compulsory: 'Ambil {codes}',
@@ -117,6 +126,8 @@ export const ms: Messages = {
     requirementOr: ' atau ',
   },
   ruleDetail: {
+    diplomaClash: "{reason}",
+    noStream: "pilih satu aliran dan ini akan disemak",
     noMinor: "belum dipilih (pilihan)",
     tooManyMinors: "{have} minor (paling banyak {max})",
     minorSameAsMajor: "{title} tidak boleh jadi major dan minor serentak",
@@ -764,6 +775,7 @@ export const ms: Messages = {
     cat: { science: "Sains", commerce: "Perdagangan", arts: "Sastera", breadth: "Breadth" },
   },
   majors: {
+    basedOn: "{course} menggunakan major {base}.",
     specTitle: "Pengkhususan {title}",
     specKind: "Pengkhususan",
     specsTitle: "Pengkhususan",
@@ -870,6 +882,7 @@ export const ms: Messages = {
     footer: "Tidak rasmi. Semak Handbook dan My Course Planner sebelum mendaftar",
   },
   guide: {
+    majorsDiploma: "Diploma serentak (concurrent diploma): Diploma in Languages, Computing atau Mathematical Sciences ialah 100 mata tambahan yang diambil bersama ijazah sarjana muda, biasanya setahun lagi. Sehingga 50 mata boleh dikira untuk kedua-duanya, jadi ada pelajar yang tamat lebih awal. Sesetengah major tidak boleh mengambil Computing atau Mathematical Sciences. Pelajar Orang Asli juga boleh memilih Bachelor of Science (Extended): satu tahun asas, kemudian major Science biasa, 350 mata dalam tiga tahun setengah.",
     majorsTitle: "Major, double major dan minor",
     majorsShort: "Semua orang perlu satu major. Sesetengah ijazah membenarkan major kedua atau minor.",
     majorsOne: "Setiap ijazah sarjana muda perlukan sekurang-kurangnya satu major: bidang utama yang anda habiskan hingga tahun ketiga.",
@@ -926,7 +939,7 @@ export const ms: Messages = {
     firstStep2: "Selebihnya isi dengan subjek yang anda minat, atau breadth.",
     firstStep3: "Daftar (enrol) di my.unimelb, kemudian pilih masa kelas di My Timetable.",
     firstStep4: "Tak suka subjek itu? Sebelum census date anda masih boleh gugurkan secara percuma. Pelajar antarabangsa, tanya Stop 1 dulu.",
-    breadthText: "Breadth ialah subjek di luar bidang ijazah anda, contohnya perdagangan atau sastera untuk pelajar sains. Halaman Handbook setiap subjek menyenaraikan ijazah yang boleh mengambilnya sebagai breadth. Kelima-lima ijazah di sini memerlukan sekurang-kurangnya 50 mata breadth (4 subjek). Breadth tahap 1 dikira paling banyak 25 mata untuk Science dan 37.5 mata untuk Arts, Biomedicine, Commerce dan Design; Commerce juga mengira paling banyak 62.5 mata breadth secara keseluruhan.",
+    breadthText: "Breadth ialah subjek di luar bidang ijazah anda, contohnya perdagangan atau sastera untuk pelajar sains. Halaman Handbook setiap subjek menyenaraikan ijazah yang boleh mengambilnya sebagai breadth. Keenam-enam ijazah di sini memerlukan sekurang-kurangnya 50 mata breadth (4 subjek). Breadth tahap 1 dikira paling banyak 25 mata untuk Science dan 37.5 mata untuk Arts, Biomedicine, Commerce dan Design; Commerce juga mengira paling banyak 62.5 mata breadth secara keseluruhan.",
     easyHardText: "Ingin tahu subjek mana yang pelajar rasa mudah atau sukar? Lihat senarai subjek mudah dan sukar, dengan sebabnya.",
     firstFind: "Cari subjek semester pertama",
     firstPlan: "Buka halaman Rancangan",
@@ -1176,6 +1189,7 @@ export const ms: Messages = {
     discussReadReddit: 'Baca perbincangan',
   },
   plans: {
+    diplomaLine: "Diploma: {title}",
     minorLine: "Minor: {title}",
     informalLine: "Pengkhususan tidak formal: {title}",
     goal: "Matlamat",
@@ -1212,6 +1226,10 @@ export const ms: Messages = {
     notPlanned: "Tiada dirancang",
   },
   wizard: {
+    qDiploma: "Tambah diploma serentak? (pilihan)",
+    noDiploma: "Tiada diploma",
+    diplomaHint: "100 mata lagi di sebelah ijazah anda, biasanya setahun lagi.",
+    qStream: "Aliran mana?",
     qMinor: "Mahu tambah minor? (pilihan)",
     qInformal: "Mahu tambah pengkhususan tidak formal? (pilihan)",
     qMajor2: "Tambah major kedua? (pilihan)",

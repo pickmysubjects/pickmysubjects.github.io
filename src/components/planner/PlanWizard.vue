@@ -2,7 +2,7 @@
 import { link } from '@/composables/useView'
 import { computed, shallowRef } from 'vue'
 import { ArrowLeft, ArrowRight, Check } from 'lucide-vue-next'
-import { cannotCombine, heldAsMinor, majorClash, maxMajors, minorClash, type Component, type Course, type Period } from '@/engine'
+import { cannotCombine, componentCourse, diplomaClash, heldAsMinor, majorClash, maxMajors, minorClash, type Component, type Course, type Period } from '@/engine'
 import { useDataset } from '@/composables/useDataset'
 import type { PlanSetup } from '@/composables/usePlan'
 import MajorPicker from './MajorPicker.vue'
@@ -52,7 +52,7 @@ const periods: Period[] = ['semester-1', 'semester-2']
 const majors = computed(() =>
   props.components.filter(
     (c) =>
-      c.course === draft.value.course &&
+      c.course === componentCourse(data.value, draft.value.course) &&
       c.kind === 'major' &&
       (c.closedFrom === undefined || draft.value.startYear < c.closedFrom || c.id === draft.value.major),
   ),
@@ -70,7 +70,7 @@ const chosenMajors = computed(() => [draft.value.major, majors2.value.some((m) =
 const specs = computed(() =>
   props.components.filter(
     (c) =>
-      c.course === draft.value.course &&
+      c.course === componentCourse(data.value, draft.value.course) &&
       c.kind === 'specialisation' &&
       !c.informal &&
       (c.requiresMajor.length === 0 || chosenMajors.value.some((m) => c.requiresMajor.includes(m))) &&
@@ -85,7 +85,7 @@ const minors = computed(() =>
   props.components
     .filter(
       (c) =>
-        c.course === draft.value.course &&
+        c.course === componentCourse(data.value, draft.value.course) &&
         heldAsMinor(c) &&
         (c.closedFrom === undefined || draft.value.startYear < c.closedFrom || draft.value.minors?.includes(c.id)) &&
         !minorClash(data.value, chosenMajors.value, c.id),
@@ -94,6 +94,17 @@ const minors = computed(() =>
 )
 const minor = computed(() => draft.value.minors?.[0] ?? '')
 const informal = computed(() => minors.value.some((c) => c.informal))
+
+// A concurrent diploma (optional): the ones the chosen majors don't rule out, and its streams
+// that aren't already the major or minor.
+const diplomas = computed(() => (data.value.diplomas ?? []).filter((d) => !diplomaClash(data.value, d, { major: draft.value.major, major2: chosenMajors.value[1], specialisation: draft.value.specialisation })))
+const diploma = computed(() => diplomas.value.find((d) => d.code === draft.value.diploma))
+const streams = computed(() =>
+  (diploma.value?.streams ?? [])
+    .map((id) => props.components.find((c) => c.id === id))
+    .filter((c): c is Component => !!c && !diplomaClash(data.value, diploma.value!, { major: draft.value.major, major2: chosenMajors.value[1], minors: draft.value.minors, diplomaStream: c.id }))
+    .sort((a, b) => a.title.localeCompare(b.title)),
+)
 
 function set(patch: Partial<PlanSetup>): void {
   draft.value = { ...draft.value, ...patch }
@@ -106,11 +117,14 @@ function finish(): void {
   const kept = (draft.value.minors ?? []).filter((id) => minors.value.some((m) => m.id === id))
   // And a second major that doesn't go with the first (or the course allows only one).
   const major2 = majors2.value.some((m) => m.id === draft.value.major2) ? (draft.value.major2 ?? '') : ''
-  emit('done', { ...draft.value, major2, specialisation: spec, minors: kept })
+  // And a diploma (or stream) the final choices rule out.
+  const dip = diploma.value?.code ?? ''
+  const stream = dip && streams.value.some((s) => s.id === draft.value.diplomaStream) ? (draft.value.diplomaStream ?? '') : ''
+  emit('done', { ...draft.value, major2, specialisation: spec, minors: kept, diploma: dip, diplomaStream: stream })
 }
 
 function chooseCourse(c: Course): void {
-  set({ course: c.code, courseYear: c.year, major: '', major2: '', specialisation: '', minors: [], field: '' })
+  set({ course: c.code, courseYear: c.year, major: '', major2: '', specialisation: '', minors: [], field: '', diploma: '', diplomaStream: '' })
 }
 </script>
 
@@ -134,7 +148,10 @@ function chooseCourse(c: Course): void {
           :aria-pressed="draft.course === c.code"
           @click="chooseCourse(c)"
         >
-          <span>{{ c.title }}</span>
+          <span>
+            {{ c.title }}
+            <span v-if="c.entryNote" class="intl-hint">{{ t(`entry.${c.entryNote}`) }}</span>
+          </span>
           <Check v-if="draft.course === c.code" :size="18" aria-hidden="true" />
         </button>
       </div>
@@ -211,6 +228,32 @@ function chooseCourse(c: Course): void {
         <select class="select-glass minor-select" :value="minor" @change="set({ minors: ($event.target as HTMLSelectElement).value ? [($event.target as HTMLSelectElement).value] : [] })">
           <option value="">{{ t(informal ? 'wizard.noInformal' : 'wizard.noMinor') }}</option>
           <option v-for="m in minors" :key="m.id" :value="m.id">{{ m.title }}</option>
+        </select>
+      </label>
+      <label v-if="diplomas.length" class="minor">
+        <span class="spec-title">{{ t('wizard.qDiploma') }}</span>
+        <select
+          class="select-glass minor-select"
+          data-testid="diploma-select"
+          :value="diploma?.code ?? ''"
+          @change="set({ diploma: ($event.target as HTMLSelectElement).value, diplomaStream: '' })"
+        >
+          <option value="">{{ t('wizard.noDiploma') }}</option>
+          <option v-for="d in diplomas" :key="d.code" :value="d.code">{{ d.title }}</option>
+        </select>
+        <span class="intl-hint">{{ t('wizard.diplomaHint') }}</span>
+        <span v-if="diploma?.entryNote" class="intl-hint">{{ t(`entry.${diploma.entryNote}`) }}</span>
+      </label>
+      <label v-if="streams.length" class="minor">
+        <span class="spec-title">{{ t('wizard.qStream') }}</span>
+        <select
+          class="select-glass minor-select"
+          data-testid="diploma-stream-select"
+          :value="draft.diplomaStream ?? ''"
+          @change="set({ diplomaStream: ($event.target as HTMLSelectElement).value })"
+        >
+          <option value="">{{ t('wizard.notSure') }}</option>
+          <option v-for="s in streams" :key="s.id" :value="s.id">{{ s.title }}</option>
         </select>
       </label>
     </div>

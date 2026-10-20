@@ -14,7 +14,15 @@ const plan = usePlan()
 const { t } = useI18n()
 const query = shallowRef('')
 
-const course = computed(() => plan.setup.value.course || 'B-SCI')
+// A course based on another (B-SCIEXTD) lists that course's majors, with a line saying so.
+const planned = computed(() => plan.setup.value.course || 'B-SCI')
+const course = computed(() => data.value.courses.find((c) => c.code === planned.value)?.basedOn ?? planned.value)
+const basedNote = computed(() => {
+  if (course.value === planned.value) return ''
+  const title = (code: string) => data.value.courses.find((c) => c.code === code)?.title ?? code
+  const note = data.value.courses.find((c) => c.code === planned.value)?.entryNote
+  return [t.value('majors.basedOn', { course: title(planned.value), base: title(course.value) }), note ? t.value(`entry.${note}`) : ''].filter(Boolean).join(' ')
+})
 // Majors closed to new students aren't listed (their pages still open from an existing plan).
 const majors = computed(() =>
   data.value.components.filter((c) => c.course === course.value && c.kind === 'major' && (c.closedFrom === undefined || new Date().getFullYear() < c.closedFrom)),
@@ -61,6 +69,7 @@ const courseTitle = computed(() => data.value.courses.find((c) => c.code === cou
       </div>
       <p class="page-lede">{{ t('majors.lede', { course: courseTitle }) }}</p>
       <DegreeBadge :course="course" />
+      <p v-if="basedNote" class="page-lede">{{ basedNote }}</p>
     </header>
 
     <label class="search">

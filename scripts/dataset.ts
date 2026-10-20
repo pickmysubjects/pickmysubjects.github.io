@@ -2,9 +2,10 @@ import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs'
 import { dirname, join, relative } from 'node:path'
 import { parse } from 'yaml'
 import { z } from 'zod'
-import { referencedSubjects } from '../src/engine/expr'
+import { admissionCourses, namedComponents, referencedSubjects } from '../src/engine/expr'
 import { MIN_GRADE_SHARES, type GradeOffset } from '../src/engine/grades'
-import { aboutFileSchema, componentFileSchema, courseFileSchema, DISCUSSION_SOURCES, discussionFileSchema, SKILLS, subjectFileSchema, subjectTitlesFileSchema, type Dataset, type DiscussionSummary, type Skill, type Subject } from '../src/engine/schema'
+import type { ReqExpr, ReqField } from '../src/engine/schema'
+import { aboutFileSchema, componentFileSchema, courseFileSchema, diplomaFileSchema, DISCUSSION_SOURCES, discussionFileSchema, SKILLS, subjectFileSchema, subjectTitlesFileSchema, type Dataset, type DiscussionSummary, type Skill, type Subject } from '../src/engine/schema'
 
 export const ROOT = join(import.meta.dirname, '..')
 
@@ -79,6 +80,9 @@ export function buildDataset(name: Dataset['name']): BuildResult {
   const components = yamlFiles(join(base, 'components'))
     .map((f) => load(f, componentFileSchema, errors))
     .filter((c) => c !== null)
+  const diplomas = yamlFiles(join(base, 'diplomas'))
+    .map((f) => load(f, diplomaFileSchema, errors))
+    .filter((d) => d !== null)
 
   // A subject with no category of its own for a course gets one: the course's own areas are
   // `home`; any other subject is `other` (breadth) when the Handbook lists the course among those
@@ -104,6 +108,42 @@ export function buildDataset(name: Dataset['name']): BuildResult {
           if (s && s.categories[c.code] === undefined && !c.closed.includes(code)) s.categories[c.code] = home as Subject['categories'][string]
         }
       }
+    }
+  }
+
+  // A course based on another counts every subject the way that course does, unless its own
+  // file says otherwise or it closes the subject (B-SCIEXTD takes B-SCI's science and breadth).
+  for (const c of courses) {
+    if (!c.basedOn) continue
+    if (!courses.some((x) => x.code === c.basedOn)) errors.push(`${c.code}: based_on names an unknown course ${c.basedOn}`)
+    for (const s of Object.values(subjects)) {
+      const cat = s.categories[c.basedOn]
+      if (cat !== undefined && s.categories[c.code] === undefined && !c.closed.includes(s.code)) s.categories[c.code] = cat
+    }
+  }
+
+  // ...and its students are admitted wherever that course's are: a subject open to "admission
+  // into B-SCI" is open to B-SCIEXTD too (its students complete the B-SCI requirements).
+  const based = courses.filter((c) => c.basedOn)
+  if (based.length) {
+    const widen = (e: ReqExpr): ReqExpr => {
+      if ('all' in e) return { all: e.all.map(widen) }
+      if ('any' in e) return { any: e.any.map(widen) }
+      const named = 'admission' in e ? [e.admission] : 'manual' in e ? admissionCourses(e.manual) : []
+      const extra = based.filter((c) => named.includes(c.basedOn!) && !named.includes(c.code)).map((c): ReqExpr => ({ admission: c.code }))
+      // "… major in the B-SCI": the same major, held in the course based on it.
+      if ('manual' in e) {
+        const text = e.manual
+        for (const c of based.filter((x) => namedComponents(text).some((n) => n.course === x.basedOn))) {
+          extra.push({ all: [{ admission: c.code }, { manual: text.replace(new RegExp(String.raw`( in the )${c.basedOn}\b`, 'g'), `$1${c.code}`) }] })
+        }
+      }
+      return extra.length ? { any: [e, ...extra] } : e
+    }
+    const field = (f: ReqField): ReqField => (f === 'none' || f === 'unknown' ? f : widen(f))
+    for (const s of Object.values(subjects)) {
+      s.prerequisites = field(s.prerequisites)
+      s.corequisites = field(s.corequisites)
     }
   }
 
@@ -162,7 +202,18 @@ export function buildDataset(name: Dataset['name']): BuildResult {
     for (const m of c.requiresMajor) if (!components.some((x) => x.id === m)) errors.push(`${c.id}: unknown major ${m}`)
   }
 
-  const dataset: Dataset = { name, generatedAt: new Date().toISOString(), subjects, courses, components }
+  for (const d of diplomas) {
+    for (const id of [...d.streams, ...d.notWith]) if (!components.some((x) => x.id === id)) errors.push(`${d.code}: unknown component ${id}`)
+    for (const code of d.pool.subjects) if (!subjects[code]) missing.add(code)
+    for (const r of d.rules) {
+      if (r.kind === 'compulsory') r.subjects.forEach((code) => subjects[code] || missing.add(code))
+      if (r.kind === 'requirement') for (const path of r.paths) for (const q of path) for (const code of 'all' in q ? q.all : q.choose.from) if (!subjects[code]) missing.add(code)
+    }
+  }
+  for (const c of courses) for (const r of c.rules) if (r.kind === 'compulsory') r.subjects.forEach((code) => subjects[code] || missing.add(code))
+  for (const c of courses) for (const r of c.rules) if (r.kind === 'requirement') for (const path of r.paths) for (const q of path) for (const code of 'all' in q ? q.all : q.choose.from) if (!subjects[code]) missing.add(code)
+
+  const dataset: Dataset = { name, generatedAt: new Date().toISOString(), subjects, courses, components, ...(diplomas.length ? { diplomas } : {}) }
   return { dataset, errors, missing: [...missing].sort() }
 }
 

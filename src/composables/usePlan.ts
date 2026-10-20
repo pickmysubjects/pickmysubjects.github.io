@@ -2,6 +2,7 @@ import { computed } from 'vue'
 import {
   checkCourse,
   checkTerms,
+  componentCourse,
   findCourse,
   generatePlan,
   offeredIn,
@@ -52,6 +53,8 @@ export function planFor(state: PlanState, profile: Profile, data: Dataset): Plan
     major2: (state.setup.major && state.setup.major2) || undefined,
     specialisation: state.setup.specialisation || undefined,
     minors: state.setup.minors ?? [],
+    diploma: state.setup.diploma || undefined,
+    diplomaStream: (state.setup.diploma && state.setup.diplomaStream) || undefined,
     completed: passedCodes(profile.results),
     terms: state.terms,
     international: state.setup.international === true,
@@ -117,6 +120,8 @@ export function usePlan() {
         a.specialisation === b.specialisation &&
         (a.minors ?? []).join(',') === (b.minors ?? []).join(',') &&
         (a.field ?? '') === (b.field ?? '') &&
+        (a.diploma ?? '') === (b.diploma ?? '') &&
+        (a.diplomaStream ?? '') === (b.diplomaStream ?? '') &&
         a.startYear === b.startYear &&
         a.startPeriod === b.startPeriod &&
         (a.international === true) === (b.international === true)
@@ -138,7 +143,7 @@ export function usePlan() {
     if (current.value !== undefined && setupChosen.value) return
     const c = data.value.courses.find((x) => x.code === code)
     if (!c) return
-    save((s) => ({ ...s, setup: { ...s.setup, course: c.code, courseYear: c.year, major: '', major2: '', specialisation: '', minors: [] } }))
+    save((s) => ({ ...s, setup: { ...s.setup, course: c.code, courseYear: c.year, major: '', major2: '', specialisation: '', minors: [], diploma: '', diplomaStream: '' } }))
   }
 
   // A part-done semester on the record is carried on in (its done subjects share the column).
@@ -164,10 +169,12 @@ export function usePlan() {
       major2: (setup.major && setup.major2) || undefined,
       specialisation: setup.specialisation || undefined,
       minors: setup.minors ?? [],
+      diploma: setup.diploma || undefined,
+      diplomaStream: (setup.diploma && setup.diplomaStream) || undefined,
       startYear: start.year,
       startPeriod: start.period,
       keepOpen: !setup.major && setup.field
-        ? data.value.components.filter((c) => c.kind === 'major' && c.course === setup.course && majorGroupOf(c.id) === setup.field && (c.closedFrom === undefined || start.year < c.closedFrom)).map((c) => c.id)
+        ? data.value.components.filter((c) => c.kind === 'major' && c.course === componentCourse(data.value, setup.course) && majorGroupOf(c.id) === setup.field && (c.closedFrom === undefined || start.year < c.closedFrom)).map((c) => c.id)
         : undefined,
     })
     save((s) => ({ ...s, terms: result.plan.terms, notes: result.notes, unplaced: result.unplaced }))

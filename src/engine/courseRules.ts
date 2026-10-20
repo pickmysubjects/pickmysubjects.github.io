@@ -1,6 +1,6 @@
 import type { Tri } from './expr'
 import type { Issue, Params, Plan } from './plan'
-import type { Component, ComponentLimit, ComponentReq, Course, CourseRule, Dataset, Subject } from './schema'
+import type { Component, ComponentLimit, ComponentReq, Course, CourseRule, Dataset, Diploma, Subject } from './schema'
 
 export interface RuleStatus {
   ruleId: string
@@ -21,6 +21,14 @@ export interface CourseCheck {
 export function findCourse(data: Dataset, code: string, year: number): Course | undefined {
   const sameCode = data.courses.filter((c) => c.code === code)
   return sameCode.find((c) => c.year === year) ?? sameCode.sort((a, b) => b.year - a.year)[0]
+}
+
+/**
+ * The course whose majors, minors and specialisations a course uses: its own, or those of the
+ * course it is based on (B-SCIEXTD runs on B-SCI's).
+ */
+export function componentCourse(data: Dataset, code: string): string {
+  return data.courses.find((c) => c.code === code)?.basedOn ?? code
 }
 
 export function findComponent(data: Dataset, id: string | undefined): Component | undefined {
@@ -69,9 +77,12 @@ export function planComponentIds(plan: PlanComponents): (string | undefined)[] {
   return [plan.major, plan.major2, plan.specialisation, ...(plan.minors ?? [])]
 }
 
-/** The ids conditions naming a major are checked against: both majors and the specialisation. */
-export function heldMajorIds(plan: PlanComponents): (string | undefined)[] {
-  return [plan.major, plan.major2, plan.specialisation]
+/**
+ * The ids conditions naming a major are checked against: both majors, the specialisation, and a
+ * diploma's stream (D-LANG French opens the French capstone the major's students take).
+ */
+export function heldMajorIds(plan: PlanComponents & { diplomaStream?: string }): (string | undefined)[] {
+  return [plan.major, plan.major2, plan.specialisation, plan.diplomaStream]
 }
 
 /**
@@ -197,8 +208,35 @@ function prefixCategory(code: string, data: Dataset, course: string): string | u
   return cats.length >= 3 && new Set(cats).size === 1 ? cats[0] : undefined
 }
 
-/** Check course-level rules against everything completed or planned. */
+/**
+ * Check course-level rules against everything completed or planned. With a concurrent diploma,
+ * the diploma's own subjects are left out of the bachelor's rules (apart from the ones it may
+ * cross-credit), and the diploma's rules follow the bachelor's.
+ */
 export function checkCourse(plan: Plan, given: Dataset): CourseCheck {
+  const diploma = findDiploma(given, plan.diploma)
+  if (!diploma || !findCourse(given, plan.course, plan.courseYear)) return checkBachelor(plan, given)
+  const stream = diplomaStream(given, diploma, plan.diplomaStream)
+  const split = diplomaSplit(plan, given, diploma, stream)
+  const without = (shared: Set<string>): Plan => {
+    const out = new Set(split.mine.filter((c) => !shared.has(c)))
+    return { ...plan, completed: plan.completed.filter((c) => !out.has(c)), terms: plan.terms.map((t) => ({ ...t, subjects: t.subjects.filter((c) => !out.has(c)) })) }
+  }
+  // The cross-credit that serves the bachelor best: the subjects its majors name, or those and the earliest others.
+  const fails = (c: CourseCheck) => c.statuses.filter((s) => s.status === 'fail').length
+  const best = split.shared.map((shared) => checkBachelor(without(shared), given)).reduce((a, b) => (fails(b) < fails(a) ? b : a))
+  // Progression is about everything studied, the diploma's subjects included.
+  const progression = new Set(findCourse(given, plan.course, plan.courseYear)!.rules.filter((r) => r.kind === 'progression').map((r) => r.id))
+  const whole = progression.size ? checkBachelor(plan, given) : best
+  const bachelor = {
+    statuses: best.statuses.map((s) => (progression.has(s.ruleId) ? (whole.statuses.find((w) => w.ruleId === s.ruleId) ?? s) : s)),
+    issues: [...best.issues.filter((i) => !progression.has(i.ruleId ?? '')), ...whole.issues.filter((i) => progression.has(i.ruleId ?? ''))],
+  }
+  const own = checkDiploma(plan, given, diploma, stream, split.mine)
+  return { statuses: [...bachelor.statuses, ...own.statuses], issues: [...bachelor.issues, ...own.issues] }
+}
+
+function checkBachelor(plan: Plan, given: Dataset): CourseCheck {
   const course = findCourse(given, plan.course, plan.courseYear)
   if (!course) {
     return {
@@ -626,4 +664,177 @@ export function cannotCombine(data: Dataset, aId: string, bId: string): string |
     }
   }
   return null
+}
+
+/** A concurrent diploma by code (undefined for none, or one the dataset doesn't have). */
+export function findDiploma(data: Dataset, code: string | undefined): Diploma | undefined {
+  return code ? data.diplomas?.find((d) => d.code === code) : undefined
+}
+
+/** The plan's diploma stream, when it is one of the diploma's. */
+export function diplomaStream(data: Dataset, diploma: Diploma, id: string | undefined): Component | undefined {
+  return id && diploma.streams.includes(id) ? findComponent(data, id) : undefined
+}
+
+/**
+ * Why a plan can't add this diploma, or null: a major the diploma rules out, or a stream that is
+ * already the plan's major or minor (the same study twice).
+ */
+export function diplomaClash(data: Dataset, diploma: Diploma, plan: PlanComponents & { diplomaStream?: string }): string | null {
+  for (const id of [plan.major, plan.major2, plan.specialisation]) {
+    if (id && diploma.notWith.includes(id)) return `The ${diploma.title} can't be taken with the ${findComponent(data, id)?.title ?? id} major.`
+  }
+  const stream = diplomaStream(data, diploma, plan.diplomaStream)
+  const key = (t: string) => t.toLowerCase().replace(/\s+(major|minor)$/, '').trim()
+  for (const id of planComponentIds(plan)) {
+    const held = findComponent(data, id)
+    if (stream && held && (held.id === stream.id || key(held.title) === key(stream.title))) return `${stream.title} is already in your degree, so it can't also be your diploma.`
+  }
+  return null
+}
+
+/** The subject area most of a component's subjects share (FREN for French Studies). */
+function mainArea(component: Component): string | undefined {
+  const count = new Map<string, number>()
+  for (const reqs of component.routes ? component.routes.map((r) => r.requirements) : component.requirements === 'unknown' ? [] : [component.requirements])
+    for (const code of codesOf(reqs)) count.set(code.slice(0, 4), (count.get(code.slice(0, 4)) ?? 0) + 1)
+  return [...count].sort((a, b) => b[1] - a[1])[0]?.[0]
+}
+
+/** Whether a subject counts towards the diploma: its pool, its rules' subjects, or its stream's. */
+export function inDiploma(data: Dataset, diploma: Diploma, stream: Component | undefined, code: string): boolean {
+  const s = data.subjects[code]
+  if (s && s.level > 3) return false
+  const area = s?.area ?? code.slice(0, 4)
+  if (diploma.pool.subjects.includes(code) || diploma.pool.areas.includes(area)) return true
+  if (diploma.rules.some((r) => (r.kind === 'compulsory' && r.subjects.includes(code)) || (r.kind === 'requirement' && r.paths.some((p) => codesOf(p).includes(code))))) return true
+  if (!stream) return false
+  const lists = stream.routes ? stream.routes.map((r) => r.requirements) : stream.requirements === 'unknown' ? [] : [stream.requirements]
+  return lists.some((reqs) => codesOf(reqs).includes(code)) || mainArea(stream) === area
+}
+
+/**
+ * Which planned subjects are the diploma's (up to its points: its compulsory subjects, then its
+ * stream's, then enough at each level its rules ask for, then the rest in plan order, those the
+ * bachelor's majors don't name first), and the ways up to `crossCredit` points of them may count
+ * towards the bachelor too.
+ */
+export function diplomaSplit(plan: Plan, data: Dataset, diploma: Diploma, stream: Component | undefined): { mine: string[]; shared: Set<string>[] } {
+  const pts = (c: string) => data.subjects[c]?.points ?? 12.5
+  const ordered = [...new Set([...plan.completed, ...plan.terms.flatMap((t) => t.subjects)])]
+  const pool = ordered.filter((c) => inDiploma(data, diploma, stream, c))
+  // What the bachelor itself names: its compulsory subjects, its requirement paths, its majors' and minors' lists.
+  const own = findCourse(data, plan.course, plan.courseYear)?.rules ?? []
+  const named = new Set([
+    ...own.flatMap((r) => (r.kind === 'compulsory' ? r.subjects : r.kind === 'requirement' ? r.paths.flatMap(codesOf) : [])),
+    ...planComponentIds(plan)
+      .map((id) => findComponent(data, id))
+      .flatMap((c) => (c ? (c.routes ? c.routes.flatMap((r) => codesOf(r.requirements)) : c.requirements === 'unknown' ? [] : codesOf(c.requirements)) : [])),
+  ])
+  const prefer = [...pool.filter((c) => !named.has(c)), ...pool.filter((c) => named.has(c))]
+  const mine: string[] = []
+  let total = 0
+  const take = (c: string) => {
+    if (mine.includes(c) || total >= diploma.totalPoints) return
+    mine.push(c)
+    total += pts(c)
+  }
+  const compulsory = diploma.rules.flatMap((r) => (r.kind === 'compulsory' ? r.subjects : []))
+  prefer.filter((c) => compulsory.includes(c)).forEach(take)
+  // Each part of its structure in turn, so a choice it needs isn't crowded out by electives.
+  for (const r of diploma.rules) {
+    if (r.kind !== 'requirement') continue
+    const path = r.paths.reduce((best, p) => (codesOf(p).filter((c) => pool.includes(c)).length > codesOf(best).filter((c) => pool.includes(c)).length ? p : best))
+    // A subject fills one part only, as the check counts it.
+    const used = new Set<string>()
+    for (const q of [...path.filter((x) => 'all' in x), ...path.filter((x) => !('all' in x))]) {
+      if ('all' in q) prefer.filter((c) => q.all.includes(c)).forEach((c) => (take(c), used.add(c)))
+      else {
+        let got = 0
+        for (const c of [...mine, ...prefer]) {
+          if (got >= q.choose.points || used.has(c) || !q.choose.from.includes(c)) continue
+          take(c)
+          if (mine.includes(c)) (used.add(c), (got += pts(c)))
+        }
+      }
+    }
+  }
+  const streamCodes = stream ? codesOf(routeFor(stream, ordered, true) === 'unknown' ? [] : (routeFor(stream, ordered, true) as ComponentReq[])) : []
+  prefer.filter((c) => streamCodes.includes(c)).forEach(take)
+  for (const r of diploma.rules) {
+    if (r.kind !== 'points' || r.level === undefined || r.min === undefined) continue
+    const level = r.level
+    const at = () => mine.filter((c) => (data.subjects[c]?.level ?? Number(c[4])) === level).reduce((sum, c) => sum + pts(c), 0)
+    for (const c of prefer) if ((data.subjects[c]?.level ?? Number(c[4])) === level && at() < r.min) take(c)
+  }
+  prefer.forEach(take)
+  // Cross-credit: first what the bachelor's majors and minors name, then (another way) the earliest others too.
+  const credit = (list: string[]) => {
+    const out = new Set<string>()
+    let used = 0
+    for (const c of list) if (used + pts(c) <= diploma.crossCredit) (out.add(c), (used += pts(c)))
+    return out
+  }
+  const inOrder = ordered.filter((c) => mine.includes(c))
+  const first = credit(inOrder.filter((c) => named.has(c)))
+  const second = credit([...first, ...inOrder.filter((c) => !first.has(c))])
+  return { mine, shared: [first, second] }
+}
+
+/** The diploma's rules as the plan shows them: ids prefixed with its code, a stream rule and an entry rule first. */
+export function diplomaRules(diploma: Diploma): CourseRule[] {
+  const id = (x: string) => `${diploma.code}:${x}`
+  const extra: CourseRule[] = [{ id: id('eligible'), description: `${diploma.title}: open to this degree and major`, kind: 'major', count: 1, max: 1, noDoubleCount: false }]
+  if (diploma.streams.length) extra.push({ id: id('stream'), description: `${diploma.title}: complete one stream`, kind: 'major', count: 1, max: 1, noDoubleCount: false })
+  return [...extra, ...diploma.rules.map((r) => ({ ...r, id: id(r.id), description: `${diploma.title}: ${r.description}` }))]
+}
+
+/** Every rule a plan is checked against: its course's, then its diploma's. */
+export function planRules(data: Dataset, plan: { course: string; courseYear: number; diploma?: string }): CourseRule[] {
+  const diploma = findDiploma(data, plan.diploma)
+  return [...(findCourse(data, plan.course, plan.courseYear)?.rules ?? []), ...(diploma ? diplomaRules(diploma) : [])]
+}
+
+function checkDiploma(plan: Plan, data: Dataset, diploma: Diploma, stream: Component | undefined, mine: string[]): CourseCheck {
+  const rules = diplomaRules(diploma)
+  const statuses: RuleStatus[] = []
+  const base = (x: string) => ({ ruleId: `${diploma.code}:${x}`, description: rules.find((r) => r.id === `${diploma.code}:${x}`)!.description })
+  const clash = diplomaClash(data, diploma, plan)
+  if (clash) statuses.push({ ...base('eligible'), status: 'fail', detail: clash, detailKey: 'diplomaClash', params: { reason: clash } })
+  const allCodes = [...new Set([...plan.completed, ...plan.terms.flatMap((t) => t.subjects)])]
+  const course: Course = { code: diploma.code, title: diploma.title, year: diploma.year, totalPoints: diploma.totalPoints, standardLoad: 50, categories: [], areaCategories: undefined, closed: [], listed: false, basedOn: undefined, entryNote: diploma.entryNote, rules: diploma.rules, handbook: diploma.handbook, verifiedOn: diploma.verifiedOn }
+  if (diploma.streams.length) {
+    if (!stream) statuses.push({ ...base('stream'), status: 'unknown', detail: 'no stream chosen', detailKey: 'noStream', params: {} })
+    else {
+      // The stream is checked against the whole plan: its subjects may sit in the bachelor or the diploma.
+      const known = allCodes.map((c) => data.subjects[c]).filter((s): s is Subject => s !== undefined)
+      statuses.push(componentStatus(base('stream'), stream, { plan, data, course, known, codes: allCodes, blocked: new Map(), contested: new Map() }))
+    }
+  }
+  const known = mine.map((c) => data.subjects[c]).filter((s): s is Subject => s !== undefined)
+  const ctx: RuleCtx = { plan: { ...plan, completed: plan.completed.filter((c) => mine.includes(c)), terms: plan.terms.map((t) => ({ ...t, subjects: t.subjects.filter((c) => mine.includes(c)) })) }, data, course, known, codes: mine, blocked: new Map(), contested: new Map() }
+  for (const r of diploma.rules) statuses.push({ ...checkRule(r, ctx), ...base(r.id) })
+  const issues: Issue[] = statuses
+    .filter((s) => s.status !== 'ok')
+    .map((s) => ({
+      severity: s.status === 'unknown' ? 'warning' : 'error',
+      kind: `rule-${rules.find((r) => r.id === s.ruleId)?.kind ?? 'unknown'}`,
+      ruleId: s.ruleId,
+      params: s.params,
+      message: `${s.description} — ${s.detail}`,
+    }))
+  return { statuses, issues }
+}
+
+/**
+ * What a diploma asks the generator to plan: its stream's requirements (on the route the record
+ * points to) and its own compulsory and structure rules. Points to reach come from `diplomaPoints`.
+ */
+export function diplomaNeeds(data: Dataset, diploma: Diploma, streamId: string | undefined, have: Iterable<string> = []): ComponentReq[] {
+  const out: ComponentReq[] = [...componentNeeds(diplomaStream(data, diploma, streamId), have)]
+  for (const r of diploma.rules) {
+    if (r.kind === 'compulsory') out.push({ all: r.subjects })
+    if (r.kind === 'requirement') out.push(...r.paths[0]!)
+  }
+  return out
 }

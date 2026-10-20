@@ -1,4 +1,5 @@
 import type { Profile } from './recommend'
+import { componentCourse } from './courseRules'
 import { discussionVerdict, type Dataset, type Skill, type Subject } from './schema'
 import { prerequisiteRoute } from './expr'
 import { planRoles } from './roles'
@@ -125,7 +126,7 @@ const NO_FACTORS: CourseFactors = { hours: 1, tasks: 1, coursework: 1, exams: 1,
  */
 function courseLoad(data: Dataset, course: string): CourseLoad | null {
   const codes = new Set<string>()
-  for (const m of data.components.filter((c) => c.kind === 'major' && c.course === course)) {
+  for (const m of data.components.filter((c) => c.kind === 'major' && c.course === componentCourse(data, course))) {
     const roles = planRoles(data, course, m.year, [m.id])
     for (const c of [...roles.required, ...roles.options]) codes.add(c)
   }

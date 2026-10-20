@@ -96,7 +96,16 @@ export const en = {
     notes: '{n} notes about assumptions',
     notesOne: '1 note about assumptions',
   },
+  entry: {
+    sciextd: "Only for Aboriginal and Torres Strait Islander students",
+    dlang: "Not open on a student visa",
+    dcomp: "Needs a WAM of 65, 50 points done and COMP10001; not open on a student visa",
+    dmathsc: "Needs a Specialist Maths study score of 30 or equivalent; not open on a student visa",
+  },
   rule: {
+    diploma: "{title}: {rule}",
+    diplomaEligible: "Open to your degree and major",
+    diplomaStream: "Complete one stream",
     minor: "At most {max} minor",
     informalSpec: "At most {max} informal specialisation",
     compulsory: 'Take {codes}',
@@ -120,6 +129,8 @@ export const en = {
     requirementOr: ' or ',
   },
   ruleDetail: {
+    diplomaClash: "{reason}",
+    noStream: "pick a stream and this gets checked",
     noMinor: "none chosen (optional)",
     tooManyMinors: "{have} minors (at most {max})",
     minorSameAsMajor: "{title} can’t be both your major and your minor",
@@ -767,6 +778,7 @@ export const en = {
     cat: { science: "Science", commerce: "Commerce", arts: "Arts", breadth: "Breadth" },
   },
   majors: {
+    basedOn: "{course} uses the {base} majors.",
     specTitle: "{title} specialisation",
     specKind: "Specialisation",
     specsTitle: "Specialisations",
@@ -873,6 +885,7 @@ export const en = {
     footer: "Unofficial. Check the Handbook and My Course Planner before you enrol",
   },
   guide: {
+    majorsDiploma: "Concurrent diplomas: the Diploma in Languages, Computing or Mathematical Sciences is 100 extra points taken next to your bachelor, usually one more year. Up to 50 points can count for both, so some students finish sooner. Some majors can’t take Computing or Mathematical Sciences. Indigenous students can also choose the Bachelor of Science (Extended): a foundation year, then the usual Science majors, 350 points over three and a half years.",
     majorsTitle: "Majors, double majors and minors",
     majorsShort: "Everyone needs one major. Some degrees allow a second major or a minor.",
     majorsOne: "Every bachelor’s degree needs at least one major: the main subject area you finish in third year.",
@@ -929,7 +942,7 @@ export const en = {
     firstStep2: "Fill the rest with subjects you’re curious about, or with breadth.",
     firstStep3: "Enrol in my.unimelb, then choose your class times in My Timetable.",
     firstStep4: "Don’t like a subject? You can still drop it for free before the census date. International students, check with Stop 1 first.",
-    breadthText: "Breadth means subjects from outside your degree’s own area, such as commerce or arts for a science student. Each subject’s Handbook page lists the degrees that may take it as breadth. All five degrees here need at least 50 points of breadth (4 subjects). Level-1 breadth counts up to 25 points in Science and up to 37.5 points in Arts, Biomedicine, Commerce and Design; Commerce also counts no more than 62.5 points of breadth in all.",
+    breadthText: "Breadth means subjects from outside your degree’s own area, such as commerce or arts for a science student. Each subject’s Handbook page lists the degrees that may take it as breadth. All six degrees here need at least 50 points of breadth (4 subjects). Level-1 breadth counts up to 25 points in Science and up to 37.5 points in Arts, Biomedicine, Commerce and Design; Commerce also counts no more than 62.5 points of breadth in all.",
     easyHardText: "Wondering which subjects students find easier or harder? See the easy and hard subject lists, each with its reasons.",
     firstFind: "Find first-semester subjects",
     firstPlan: "Open the Plan page",
@@ -1179,6 +1192,7 @@ export const en = {
     discussReadReddit: 'Read the threads',
   },
   plans: {
+    diplomaLine: "Diploma: {title}",
     minorLine: "Minor: {title}",
     informalLine: "Informal specialisation: {title}",
     goal: "Goal",
@@ -1215,6 +1229,10 @@ export const en = {
     notPlanned: "Nothing planned",
   },
   wizard: {
+    qDiploma: "Adding a concurrent diploma? (optional)",
+    noDiploma: "No diploma",
+    diplomaHint: "100 more points next to your degree, usually one more year.",
+    qStream: "Which stream?",
     qMinor: "Adding a minor? (optional)",
     qInformal: "Adding an informal specialisation? (optional)",
     qMajor2: "Adding a second major? (optional)",

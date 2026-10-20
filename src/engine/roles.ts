@@ -1,4 +1,5 @@
 import { evaluateField, referencedSubjects } from './expr'
+import { componentCourse } from './courseRules'
 import type { Dataset } from './schema'
 
 /** How a subject matters to a major or specialisation. */
@@ -22,7 +23,7 @@ export function subjectRoles(data: Dataset, code: string, course: string): Subje
   const out: SubjectRole[] = []
   const blocked = blockedWithout(data, code, course)
   for (const c of data.components) {
-    if (c.course !== course || c.requirements === 'unknown') continue
+    if (c.course !== componentCourse(data, course) || c.requirements === 'unknown') continue
     // Across every route: core if every route needs it, otherwise one way through.
     const lists = c.routes ? c.routes.map((r) => r.requirements) : [c.requirements]
     const allOf = (reqs: typeof c.requirements & unknown[]) => new Set(reqs.flatMap((r) => ('all' in r ? r.all : [])))
@@ -135,7 +136,7 @@ export interface MajorOverview {
 
 /** What a major or specialisation asks for, including the earlier subjects on the way in. */
 export function majorOverview(data: Dataset, id: string, course: string): MajorOverview | null {
-  const c = data.components.find((x) => x.id === id && x.course === course)
+  const c = data.components.find((x) => x.id === id && x.course === componentCourse(data, course))
   if (!c || c.requirements === 'unknown') return null
   const core = [...new Set(c.requirements.flatMap((r) => ('all' in r ? r.all : [])))].sort()
   const choices = c.requirements.flatMap((r) => ('choose' in r ? [{ points: r.choose.points, from: [...r.choose.from].sort() }] : []))

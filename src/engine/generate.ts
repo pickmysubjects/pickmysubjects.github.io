@@ -1,6 +1,6 @@
 import { forCourse } from './forCourse'
 import { offeredIn, periodsFor, termKey } from './availability'
-import { capExempt, categoryOf, disciplineOf, checkCourse, componentNeeds, findComponent, findCourse, heldMajorIds, majorTitles, minorTitles, planComponentIds, sharesAllowed, withBarredBreadth } from './courseRules'
+import { capExempt, categoryOf, disciplineOf, checkCourse, componentNeeds, diplomaStream, findComponent, findCourse, findDiploma, inDiploma, heldMajorIds, majorTitles, minorTitles, planComponentIds, sharesAllowed, withBarredBreadth } from './courseRules'
 import { evaluateField, referencedSubjects, type EvalContext, type Tri } from './expr'
 import type { Note, Params, Plan, PlanTerm } from './plan'
 import { standardTerms } from './plan'
@@ -22,6 +22,9 @@ export interface GenerateInput {
   specialisation?: string
   /** Minor ids: planned like a second, smaller major. */
   minors?: string[]
+  /** A concurrent diploma (code) and its stream: their subjects are planned on top of the degree's. */
+  diploma?: string
+  diplomaStream?: string
   startYear: number
   startPeriod: Period
   /** Upper bound on terms to plan. Defaults to what the remaining points need, capped at 10. */
@@ -107,21 +110,65 @@ function finishEarlier(input: GenerateInput, result: GenerateResult, shortfall: 
   return shorter
 }
 
-function buildPlan(input: GenerateInput): GenerateResult {
-  const { data, profile } = input
-  const course = findCourse(data, input.course, input.courseYear)
+/**
+ * The course as the generator plans it: with a diploma, the diploma's points come on top of the
+ * degree's (the usual extra year; cross-credit to finish sooner is the student's call).
+ */
+function plannedCourse(input: GenerateInput): Course | undefined {
+  const course = findCourse(input.data, input.course, input.courseYear)
+  const diploma = findDiploma(input.data, input.diploma)
+  if (!course || !diploma) return course
+  const totalPoints = course.totalPoints + diploma.totalPoints
+  // The total, and caps on a level whatever the category (the diploma's subjects count there too), grow by its points.
+  const rules = course.rules.map((r) =>
+    r.kind !== 'points' || r.category !== undefined ? r : r.level === undefined && r.min !== undefined ? { ...r, min: totalPoints } : r.max !== undefined ? { ...r, max: r.max + diploma.totalPoints } : r,
+  )
+  return { ...course, totalPoints, rules }
+}
+
+/**
+ * The data as the degree's electives are chosen with a diploma: subjects planned only for the
+ * diploma count towards the degree's total, not its categories, so the degree's own rules are
+ * met without them (they are the diploma's, apart from any cross-credit).
+ */
+function diplomaOnlyAsCore(input: GenerateInput, required: Set<string>): GenerateInput {
+  const diploma = findDiploma(input.data, input.diploma)
+  if (!diploma) return input
+  const stream = diplomaStream(input.data, diploma, input.diplomaStream)
+  const course = findCourse(input.data, input.course, input.courseYear)
+  const named = new Set([
+    ...(course?.rules ?? []).flatMap((r) => (r.kind === 'compulsory' ? r.subjects : r.kind === 'requirement' ? r.paths.flat().flatMap((q) => ('all' in q ? q.all : q.choose.from)) : [])),
+    ...planComponentIds(input).flatMap((id) => componentNeeds(findComponent(input.data, id)).flatMap((q) => ('all' in q ? q.all : q.choose.from))),
+  ])
+  const subjects = { ...input.data.subjects }
+  for (const code of required) {
+    const s = subjects[code]
+    if (s && !named.has(code) && inDiploma(input.data, diploma, stream, code)) subjects[code] = { ...s, categories: { ...s.categories, [input.course]: 'core' } }
+  }
+  return { ...input, data: { ...input.data, subjects } }
+}
+
+function buildPlan(given: GenerateInput): GenerateResult {
+  const course = plannedCourse(given)
   const notes: Note[] = []
-  const completed = passedCodes(profile.results)
+  const completed = passedCodes(given.profile.results)
   const done = new Set(completed)
   const load = course?.standardLoad ?? 50
 
   // needs: subjects the generator added as prerequisites for each required subject.
   const needs = new Map<string, string[]>()
-  const required = collectRequired(input, done, notes, needs)
+  const required = collectRequired(given, done, notes, needs)
+  const input = diplomaOnlyAsCore(given, required)
+  const { data, profile } = input
   const groupOf = coGroups(required, done, data)
   const firstSemester = new Set(
     (course?.rules ?? []).flatMap((r) => (r.kind === 'compulsory' && r.firstSemester ? r.subjects : [])),
   )
+  // Subjects normally done in the first year (a foundation year): only in the first two semesters.
+  const firstYear = new Set(
+    (course?.rules ?? []).flatMap((r) => (r.kind === 'compulsory' && r.firstYear ? r.subjects : r.kind === 'requirement' && r.firstYear ? r.paths.flat().flatMap((q) => ('all' in q ? q.all : q.choose.from)) : [])),
+  )
+  const early = new Set([...firstSemester, ...firstYear])
 
   const remainingPoints = Math.max(
     0,
@@ -189,13 +236,14 @@ function buildPlan(input: GenerateInput): GenerateResult {
       !before.has(c) &&
       (needs.get(c) ?? []).every((n) => before.has(n) || group.includes(n) || (term.subjects.includes(n) && coreqsOf(c).includes(n))) &&
       canTake(c, term, before, data, input.course, group, majorsOf(input)) !== 'fail' &&
-      (!firstSemester.has(c) || termIndex === 0)
+      (!firstSemester.has(c) || termIndex === 0) &&
+      (!firstYear.has(c) || terms.slice(0, termIndex).filter((t) => !isShort(t)).length < 2)
     // Again after each pass: a subject placed this term can let its one-way corequisite partner in.
     for (let placedAny = true; placedAny; ) {
       placedAny = false
       const ready = pending
         .filter((c) => !term.subjects.includes(c) && fits(c, groupOf(c)) && (!isShort(term) || urgency(c) === 1))
-        .sort((a, b) => urgency(b) - urgency(a) || priority(b, firstSemester, depth, data, term.year) - priority(a, firstSemester, depth, data, term.year))
+        .sort((a, b) => Number(firstYear.has(b)) - Number(firstYear.has(a)) || urgency(b) - urgency(a) || priority(b, early, depth, data, term.year) - priority(a, early, depth, data, term.year))
       for (const code of ready) {
         if (term.subjects.includes(code)) continue
         const group = groupOf(code).filter((c) => !before.has(c) && !term.subjects.includes(c))
@@ -243,7 +291,7 @@ function buildPlan(input: GenerateInput): GenerateResult {
   // latest electives no rule needs, so the degree isn't longer than it has to be.
   if (course) {
     const total = () => [...completed, ...allPlaced()].reduce((sum, c) => sum + (data.subjects[c]?.points ?? 12.5), 0)
-    const draftOf = (): Plan => ({ course: input.course, courseYear: input.courseYear, major: input.major, major2: input.major2, specialisation: input.specialisation, minors: input.minors, completed, terms })
+    const draftOf = (): Plan => ({ course: input.course, courseYear: input.courseYear, major: input.major, major2: input.major2, specialisation: input.specialisation, minors: input.minors, diploma: input.diploma, diplomaStream: input.diplomaStream, completed, terms })
     const failing = () => checkCourse(draftOf(), data).statuses.filter((st) => st.status === 'fail').length
     for (let i = terms.length - 1; i >= 0 && total() > course.totalPoints; i--) {
       const term = terms[i] as PlanTerm
@@ -263,7 +311,7 @@ function buildPlan(input: GenerateInput): GenerateResult {
   }
 
   // Spread the load, so the hard subjects don't all land in one semester.
-  const draft: Plan = { course: input.course, courseYear: input.courseYear, major: input.major, major2: input.major2, specialisation: input.specialisation, minors: input.minors, completed, terms }
+  const draft: Plan = { course: input.course, courseYear: input.courseYear, major: input.major, major2: input.major2, specialisation: input.specialisation, minors: input.minors, diploma: input.diploma, diplomaStream: input.diplomaStream, completed, terms }
   for (const { a, b } of balanceTerms(draft, data, input.profile)) {
     notes.push(note('balanced', { a, b }, `Swapped ${a} and ${b} between semesters to spread the load.`))
   }
@@ -307,6 +355,7 @@ function buildPlan(input: GenerateInput): GenerateResult {
     major2: input.major2,
     specialisation: input.specialisation,
     minors: input.minors,
+    ...(input.diploma ? { diploma: input.diploma, diplomaStream: input.diplomaStream } : {}),
     completed,
     terms,
   }
@@ -336,7 +385,9 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
   const groups: { title: string; req: Extract<ComponentReq, { choose: unknown }>; used: Set<string>; others?: Set<string>[] }[] = []
   // Each component's claimed subjects, for courses where a subject counts towards one major or minor only.
   const claimed: { id: string; used: Set<string> }[] = []
-  for (const id of new Set(planComponentIds(input))) {
+  const diploma = findDiploma(data, input.diploma)
+  const stream = diploma ? diplomaStream(data, diploma, input.diplomaStream) : undefined
+  for (const id of new Set([...planComponentIds(input), stream?.id])) {
     const component = findComponent(data, id)
     if (id && !component) notes.push(note('componentMissing', { id }, `${id} isn't in the dataset, so its subjects weren't added.`))
     if (component?.requirements === 'unknown') notes.push(note('componentUnknown', { title: component.title }, `${component.title}'s structure isn't curated yet.`))
@@ -367,13 +418,18 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
     frontier = next
   }
 
+  // A diploma's chains first, so a course path whose subject they rule out isn't chosen (B-COM's
+  // ECON10005 with the mathematics a diploma stream builds on).
+  const ahead = new Set(required)
+  if (diploma) closePrereqs(input, ahead, done, [], new Map())
   // A course requirement with several paths (B-COM's standard or mathematics quantitative path):
   // the path that shares most with what's done or already required, else the first one listed.
-  for (const rule of course?.rules ?? []) {
+  for (const rule of [...(course?.rules ?? []), ...(diploma?.rules ?? [])]) {
+    if (rule.kind === 'compulsory' && diploma?.rules.includes(rule)) rule.subjects.forEach((c) => required.add(c))
     if (rule.kind !== 'requirement') continue
     const codesOf = (path: ComponentReq[]) => path.flatMap((r) => ('all' in r ? r.all : r.choose.from))
     // A path with a subject that can't be taken alongside one already required is out.
-    const usable = rule.paths.filter((p) => !(p.flatMap((r) => ('all' in r ? r.all : [])).some((c) => clashes(c, done, required, data))))
+    const usable = rule.paths.filter((p) => !(p.flatMap((r) => ('all' in r ? r.all : [])).some((c) => clashes(c, done, ahead, data))))
     const score = (path: ComponentReq[]) => {
       const codes = codesOf(path)
       return codes.filter((c) => done.has(c) || required.has(c)).length * 10 + codes.filter((c) => named.has(c)).length
@@ -448,6 +504,8 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
       // Nor one whose prerequisites nothing that runs can meet (ACCT30001 needs ACCT20008,
       // which isn't running): it would only end up unplaced.
       if (!prereqsCanRun(c, input.startYear, data, input.course, majorsOf(input))) continue
+      // Nor one closed to this course's students (B-SCI's COMP10003).
+      if (closedTo(c, input.course, data, majorsOf(input))) continue
       // An option that can't be taken alongside a subject already required (COMP20003 and a
       // major's ENGR30004) leaves the other options to fill the choice.
       if (clashes(c, done, required, data)) continue
@@ -458,8 +516,39 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
     }
   }
 
-  // Close over prerequisites so required subjects can actually be taken. Corequisites are
-  // required too, but taken in the same semester (see coGroups), so they aren't ordered first.
+  closePrereqs(input, required, done, notes, needs)
+  if (diploma) {
+    // The diploma's points (and its level minimums) beyond what its stream and rules name: the
+    // best-matching subjects of its pool, those with nothing more to take first.
+    const pts = (c: string) => data.subjects[c]?.points ?? 12.5
+    const mine = () => [...required, ...done].filter((c) => inDiploma(data, diploma, stream, c))
+    const levelRules = diploma.rules.filter((r): r is Extract<CourseRule, { kind: 'points' }> => r.kind === 'points' && r.min !== undefined && r.category === undefined)
+    const short = (r: { level?: number; min?: number }) => (r.min ?? 0) - mine().filter((c) => r.level === undefined || data.subjects[c]?.level === r.level).reduce((sum, c) => sum + pts(c), 0)
+    const pool = Object.values(data.subjects).filter((s) => s.level <= 3 && inDiploma(data, diploma, stream, s.code) && !s.campus)
+    for (const rule of [...levelRules].sort((a, b) => (b.level ?? 0) - (a.level ?? 0))) {
+      const order = pool
+        .filter((s) => (rule.level === undefined || s.level === rule.level) && !done.has(s.code) && !required.has(s.code))
+        .filter((s) => runsDuringPlan(s, input.startYear) && prereqsCanRun(s.code, input.startYear, data, input.course, majorsOf(input)) && !clashes(s.code, done, required, data) && !closedTo(s.code, input.course, data, majorsOf(input)))
+        .map((s) => ({ s, adds: s.prerequisites === 'none' || s.prerequisites === 'unknown' ? 0 : resolvePrereqs(s.prerequisites, done, required, data, input.course, s.code, majorsOf(input)).filter((x) => !required.has(x) && !done.has(x)).length }))
+        .sort((a, b) => a.adds - b.adds || (score.get(b.s.code) ?? -1) - (score.get(a.s.code) ?? -1) || a.s.code.localeCompare(b.s.code))
+      for (const { s } of order) {
+        if (short(rule) <= 0) break
+        if (required.has(s.code)) continue
+        required.add(s.code)
+        notes.push(note('chose', { code: s.code, title: diploma.title }, `Chose ${s.code} for ${diploma.title} (best match among its options).`))
+        closePrereqs(input, required, done, notes, needs)
+      }
+    }
+  }
+  return required
+}
+
+/**
+ * Close over prerequisites so required subjects can actually be taken. Corequisites are
+ * required too, but taken in the same semester (see coGroups), so they aren't ordered first.
+ */
+function closePrereqs(input: GenerateInput, required: Set<string>, done: Set<string>, notes: Note[], needs: Map<string, string[]>): void {
+  const { data } = input
   const queue = [...required]
   while (queue.length > 0) {
     const code = queue.pop() as string
@@ -471,7 +560,7 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
     // term; a one-way one ("25 points of GEOL, can be concurrent") may also come earlier.
     const mutual = (c: string) => referencedSubjects(data.subjects[c]?.corequisites ?? 'none').includes(code)
     for (const need of [...pre, ...co]) {
-      if (pre.includes(need) || !mutual(need)) needs.set(code, [...(needs.get(code) ?? []), need])
+      if ((pre.includes(need) || !mutual(need)) && !needs.get(code)?.includes(need)) needs.set(code, [...(needs.get(code) ?? []), need])
       if (!required.has(need) && !done.has(need)) {
         required.add(need)
         queue.push(need)
@@ -479,7 +568,6 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
       }
     }
   }
-  return required
 }
 
 /**

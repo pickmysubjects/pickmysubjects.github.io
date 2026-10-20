@@ -7,9 +7,9 @@ import type { PlanSetup } from '@/composables/usePlan'
  */
 interface Packed {
   v: 1
-  // course, courseYear, startYear, startPeriod index, major, specialisation, field, minors comma-joined, second major
-  // (the last three optional; older links lack them)
-  s: [string, number, number, number, string, string, string?, string?, string?]
+  // course, courseYear, startYear, startPeriod index, major, specialisation, field, minors comma-joined, second major,
+  // diploma, diploma stream (the last five optional; older links lack them)
+  s: [string, number, number, number, string, string, string?, string?, string?, string?, string?]
   t: [number, number, string[]][] // year, period index, codes
 }
 
@@ -20,7 +20,8 @@ export function encodePlan(setup: PlanSetup, terms: PlanTerm[]): string {
     t: terms.map((term) => [term.year, PERIODS.indexOf(term.period), term.subjects]),
   }
   // Only when there is one, so links without a second major stay as they were.
-  if (setup.major2) packed.s.push(setup.major2)
+  if (setup.major2 || setup.diploma) packed.s.push(setup.major2 ?? '')
+  if (setup.diploma) packed.s.push(setup.diploma, setup.diplomaStream ?? '')
   const bytes = new TextEncoder().encode(JSON.stringify(packed))
   let bin = ''
   for (const b of bytes) bin += String.fromCharCode(b)
@@ -39,9 +40,9 @@ export function decodePlan(text: string): { setup: PlanSetup; terms: PlanTerm[] 
       return x
     }
     const code = /^[A-Z]{4}\d{5}$/
-    const [course, courseYear, startYear, startPeriod, major, specialisation, field, minors, major2] = p.s
+    const [course, courseYear, startYear, startPeriod, major, specialisation, field, minors, major2, diploma, diplomaStream] = p.s
     return {
-      setup: { course: String(course), courseYear: Number(courseYear), startYear: Number(startYear), startPeriod: period(startPeriod), major: String(major), specialisation: String(specialisation), minors: minors ? String(minors).split(',').filter(Boolean) : [], ...(field ? { field: String(field) } : {}), ...(major2 ? { major2: String(major2) } : {}) },
+      setup: { course: String(course), courseYear: Number(courseYear), startYear: Number(startYear), startPeriod: period(startPeriod), major: String(major), specialisation: String(specialisation), minors: minors ? String(minors).split(',').filter(Boolean) : [], ...(field ? { field: String(field) } : {}), ...(major2 ? { major2: String(major2) } : {}), ...(diploma ? { diploma: String(diploma) } : {}), ...(diplomaStream ? { diplomaStream: String(diplomaStream) } : {}) },
       terms: p.t.map(([year, pi, codes]) => ({ year: Number(year), period: period(pi), subjects: codes.filter((c) => code.test(c)) })),
     }
   } catch {

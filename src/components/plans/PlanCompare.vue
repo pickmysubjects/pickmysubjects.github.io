@@ -77,6 +77,7 @@ function open(id: string): void {
           <p class="card-degree">{{ c.courseTitle }}</p>
           <p class="card-major">{{ c.major || t('plans.noMajor') }}</p>
           <p v-if="c.minor" class="card-minor">{{ t(c.minorInformal ? 'plans.informalLine' : 'plans.minorLine', { title: c.minor }) }}</p>
+          <p v-if="c.diploma" class="card-minor">{{ t('plans.diplomaLine', { title: c.diploma }) }}</p>
           <dl class="facts">
             <div>
               <dt>{{ t('plans.total') }}</dt>

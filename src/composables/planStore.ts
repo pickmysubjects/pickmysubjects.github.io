@@ -14,6 +14,9 @@ export interface PlanSetup {
   specialisation: string
   /** Optional minors (component ids); plans saved before minors existed get none. */
   minors: string[]
+  /** An optional concurrent diploma (its code, e.g. D-LANG) and its stream (component id), if it has streams. */
+  diploma?: string
+  diplomaStream?: string
   /** On a student visa (optional; changes the load warnings). */
   international?: boolean
   /** No major yet, but a field in mind (a major group id): keeps its majors open. */

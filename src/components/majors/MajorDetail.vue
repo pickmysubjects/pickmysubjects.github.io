@@ -2,7 +2,7 @@
 import { computed, shallowRef } from 'vue'
 import { ArrowLeft, ExternalLink, Route } from 'lucide-vue-next'
 import SubjectLinks from './SubjectLinks.vue'
-import { heldAsMinor, majorOverview, minorClash, sharedSubjects } from '@/engine'
+import { componentCourse, heldAsMinor, majorOverview, minorClash, sharedSubjects } from '@/engine'
 import { go, link } from '@/composables/useView'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
@@ -55,13 +55,16 @@ const shared = computed(() => {
 function planWithIt(): void {
   const m = major.value
   if (!m) return
+  // A course based on this one (B-SCIEXTD on B-SCI) keeps its own degree.
+  const own = componentCourse(data.value, plan.setup.value.course) === m.course
+  const course = own ? plan.setup.value.course : m.course
   // A minor joins the plan's own major (same degree), unless it's that major's own discipline.
   if (heldAsMinor(m)) {
     const setup = plan.setup.value
-    const sameCourse = setup.course === m.course
+    const sameCourse = own
     const major = sameCourse && !minorClash(data.value, setup.major, m.id) ? setup.major : ''
     const major2 = major && setup.major2 && !minorClash(data.value, setup.major2, m.id) ? setup.major2 : ''
-    const next = sameCourse ? { ...setup, major, major2, minors: [m.id] } : { ...setup, course: m.course, major: '', major2: '', specialisation: '', field: '', minors: [m.id] }
+    const next = sameCourse ? { ...setup, major, major2, minors: [m.id] } : { ...setup, course, major: '', major2: '', specialisation: '', field: '', minors: [m.id] }
     if (!plan.updateSetup(next)) plan.generate()
     go('plan')
     return
@@ -70,14 +73,14 @@ function planWithIt(): void {
   // else the first one that does.
   if (m.kind === 'specialisation') {
     const setup = plan.setup.value
-    const keep = setup.course === m.course && (m.requiresMajor.length === 0 || m.requiresMajor.includes(setup.major))
+    const keep = own && (m.requiresMajor.length === 0 || m.requiresMajor.includes(setup.major))
     const major = keep ? setup.major : (m.requiresMajor[0] ?? '')
-    const next = { ...setup, course: m.course, major, major2: keep ? setup.major2 : '', specialisation: m.id, minors: keep ? setup.minors : [] }
+    const next = { ...setup, course, major, major2: keep ? setup.major2 : '', specialisation: m.id, minors: keep ? setup.minors : [] }
     if (!plan.updateSetup(next)) plan.generate()
     go('plan')
     return
   }
-  if (!plan.updateSetup({ ...plan.setup.value, course: m.course, major: m.id, major2: '', specialisation: '', minors: [] })) plan.generate()
+  if (!plan.updateSetup({ ...plan.setup.value, course, major: m.id, major2: '', specialisation: '', minors: [] })) plan.generate()
   go('plan')
 }
 </script>

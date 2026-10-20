@@ -92,6 +92,7 @@ const FAILING = 'https://students.unimelb.edu.au/course-admin/planning-your-cour
             <li>{{ t('guide.majorsOnce') }}</li>
           </ul>
           <p class="note">{{ t('guide.majorsPairs') }}</p>
+          <p class="note">{{ t('guide.majorsDiploma') }}</p>
           <p class="aside">{{ t('guide.majorsPlans') }}</p>
           <p class="actions">
             <a class="button button-quiet" :href="link('plan')">{{ t('guide.majorsPlansLink') }}</a>

@@ -93,7 +93,16 @@ export const hi: Messages = {
     notes: 'अनुमानों के बारे में {n} नोट',
     notesOne: 'अनुमानों के बारे में 1 नोट',
   },
+  entry: {
+    sciextd: "सिर्फ़ Aboriginal और Torres Strait Islander छात्रों के लिए",
+    dlang: "स्टूडेंट वीज़ा पर उपलब्ध नहीं",
+    dcomp: "WAM 65, 50 पॉइंट पूरे और COMP10001 ज़रूरी; स्टूडेंट वीज़ा पर उपलब्ध नहीं",
+    dmathsc: "Specialist Maths में 30 स्टडी स्कोर या बराबर ज़रूरी; स्टूडेंट वीज़ा पर उपलब्ध नहीं",
+  },
   rule: {
+    diploma: "{title}: {rule}",
+    diplomaEligible: "आपकी डिग्री और मेजर के लिए खुला",
+    diplomaStream: "एक स्ट्रीम पूरी करें",
     minor: "अधिकतम {max} माइनर",
     informalSpec: "अधिकतम {max} अनौपचारिक स्पेशलाइज़ेशन",
     compulsory: '{codes} लें',
@@ -117,6 +126,8 @@ export const hi: Messages = {
     requirementOr: ' या ',
   },
   ruleDetail: {
+    diplomaClash: "{reason}",
+    noStream: "स्ट्रीम चुनें, तब यह जाँचा जाएगा",
     noMinor: "नहीं चुना (वैकल्पिक)",
     tooManyMinors: "{have} माइनर (अधिकतम {max})",
     minorSameAsMajor: "{title} एक साथ मेजर और माइनर नहीं हो सकता",
@@ -764,6 +775,7 @@ export const hi: Messages = {
     cat: { science: "साइंस", commerce: "कॉमर्स", arts: "आर्ट्स", breadth: "Breadth" },
   },
   majors: {
+    basedOn: "{course} में {base} के मेजर चलते हैं।",
     specTitle: "{title} स्पेशलाइज़ेशन",
     specKind: "स्पेशलाइज़ेशन",
     specsTitle: "स्पेशलाइज़ेशन",
@@ -870,6 +882,7 @@ export const hi: Messages = {
     footer: "अनौपचारिक। एनरोल करने से पहले Handbook और My Course Planner में जाँचें",
   },
   guide: {
+    majorsDiploma: "साथ में डिप्लोमा (concurrent diploma): Languages, Computing या Mathematical Sciences का डिप्लोमा बैचलर के साथ 100 पॉइंट और होता है, आमतौर पर एक साल ज़्यादा। 50 पॉइंट तक दोनों में गिने जा सकते हैं, इसलिए कुछ छात्र जल्दी खत्म कर लेते हैं। कुछ मेजर Computing या Mathematical Sciences नहीं ले सकते। आदिवासी (Indigenous) छात्र Bachelor of Science (Extended) भी चुन सकते हैं: पहले एक फ़ाउंडेशन साल, फिर Science के सामान्य मेजर, साढ़े तीन साल में 350 पॉइंट।",
     majorsTitle: "मेजर, डबल मेजर और माइनर",
     majorsShort: "हर किसी को एक मेजर चाहिए। कुछ डिग्रियों में दूसरा मेजर या माइनर भी ले सकते हैं।",
     majorsOne: "हर बैचलर डिग्री में कम से कम एक मेजर पूरा करना होता है: वह मुख्य विषय-क्षेत्र जिसे आप तीसरे साल तक पढ़ते हैं।",
@@ -926,7 +939,7 @@ export const hi: Messages = {
     firstStep2: "बाकी जगह उन सब्जेक्ट से भरें जिनमें दिलचस्पी है, या breadth से।",
     firstStep3: "my.unimelb में एनरोल करें, फिर My Timetable में क्लास का समय चुनें।",
     firstStep4: "सब्जेक्ट पसंद नहीं आया? census date से पहले मुफ़्त में छोड़ सकते हैं। इंटरनेशनल स्टूडेंट पहले Stop 1 से पूछें।",
-    breadthText: "Breadth का मतलब है आपकी डिग्री के क्षेत्र के बाहर के सब्जेक्ट, जैसे साइंस वालों के लिए कॉमर्स या आर्ट्स। हर सब्जेक्ट के Handbook पेज पर लिखा होता है कि कौन सी डिग्री उसे breadth के रूप में ले सकती है। यहाँ की पाँचों डिग्रियों में कम से कम 50 पॉइंट (4 सब्जेक्ट) breadth चाहिए। लेवल 1 breadth Science में 25 पॉइंट तक और Arts, Biomedicine, Commerce व Design में 37.5 पॉइंट तक गिनी जाती है; Commerce में कुल breadth भी 62.5 पॉइंट तक ही गिनी जाती है।",
+    breadthText: "Breadth का मतलब है आपकी डिग्री के क्षेत्र के बाहर के सब्जेक्ट, जैसे साइंस वालों के लिए कॉमर्स या आर्ट्स। हर सब्जेक्ट के Handbook पेज पर लिखा होता है कि कौन सी डिग्री उसे breadth के रूप में ले सकती है। यहाँ की छहों डिग्रियों में कम से कम 50 पॉइंट (4 सब्जेक्ट) breadth चाहिए। लेवल 1 breadth Science में 25 पॉइंट तक और Arts, Biomedicine, Commerce व Design में 37.5 पॉइंट तक गिनी जाती है; Commerce में कुल breadth भी 62.5 पॉइंट तक ही गिनी जाती है।",
     easyHardText: "कौन से सब्जेक्ट छात्रों को आसान या कठिन लगते हैं, यह जानना है? आसान और कठिन सब्जेक्ट की लिस्ट वजहों के साथ देखें।",
     firstFind: "पहले सेमेस्टर के सब्जेक्ट खोजें",
     firstPlan: "प्लान पेज खोलें",
@@ -1176,6 +1189,7 @@ export const hi: Messages = {
     discussReadReddit: 'चर्चाएँ पढ़ें',
   },
   plans: {
+    diplomaLine: "डिप्लोमा: {title}",
     minorLine: "माइनर: {title}",
     informalLine: "अनौपचारिक स्पेशलाइज़ेशन: {title}",
     goal: "लक्ष्य",
@@ -1212,6 +1226,10 @@ export const hi: Messages = {
     notPlanned: "कुछ प्लान नहीं",
   },
   wizard: {
+    qDiploma: "साथ में एक डिप्लोमा जोड़ें? (वैकल्पिक)",
+    noDiploma: "कोई डिप्लोमा नहीं",
+    diplomaHint: "डिग्री के साथ 100 पॉइंट और, आमतौर पर एक साल ज़्यादा।",
+    qStream: "कौन सी स्ट्रीम?",
     qMinor: "माइनर जोड़ना है? (वैकल्पिक)",
     qInformal: "अनौपचारिक स्पेशलाइज़ेशन जोड़ना है? (वैकल्पिक)",
     qMajor2: "दूसरा मेजर जोड़ना है? (वैकल्पिक)",

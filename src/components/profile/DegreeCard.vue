@@ -8,6 +8,7 @@ import { useDataset } from '@/composables/useDataset'
 import { termLabel } from '@/i18n/format'
 import { informalPicks } from '@/engine'
 import { useI18n } from '@/i18n'
+import { diplomaTitle } from '@/composables/usePlanCompare'
 
 /**
  * Your degree, major and start, on My page: the same three questions as the plan page and the
@@ -31,6 +32,7 @@ const major2 = computed(() => (plan.plan.value.major2 ? title(plan.plan.value.ma
 const spec = computed(() => title(plan.setup.value.specialisation))
 const minorKey = computed(() => (informalPicks(data.value, plan.setup.value.minors) ? 'plans.informalLine' : 'plans.minorLine'))
 const minor = computed(() => (plan.setup.value.minors ?? []).map(title).filter(Boolean).join(' + '))
+const diploma = computed(() => diplomaTitle(data.value, plan.setup.value))
 const start = computed(() => termLabel(t.value, { year: plan.setup.value.startYear, period: plan.setup.value.startPeriod }))
 
 function done(setup: PlanSetup): void {
@@ -46,7 +48,7 @@ function done(setup: PlanSetup): void {
       <div class="degree-text">
         <h2 id="degree-title" class="degree-title">{{ t('record.degreeTitle') }}</h2>
         <p v-if="chosen" class="degree-line">
-          <strong>{{ course }}</strong> · {{ major }}<template v-if="major2"> + {{ major2 }}</template><template v-if="spec"> + {{ spec }}</template><template v-if="minor"> · {{ t(minorKey, { title: minor }) }}</template> · {{ t('record.degreeStart', { term: start }) }}
+          <strong>{{ course }}</strong> · {{ major }}<template v-if="major2"> + {{ major2 }}</template><template v-if="spec"> + {{ spec }}</template><template v-if="minor"> · {{ t(minorKey, { title: minor }) }}</template><template v-if="diploma"> · {{ t('plans.diplomaLine', { title: diploma }) }}</template> · {{ t('record.degreeStart', { term: start }) }}
         </p>
         <p v-else class="degree-line">{{ t('record.degreeNone') }}</p>
       </div>

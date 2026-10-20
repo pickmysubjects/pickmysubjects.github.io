@@ -1,0 +1,27 @@
+# Diploma in Mathematical Sciences, 2026 Handbook. Facts re-expressed in our own words.
+# 100 points of mathematics and statistics, completing one specialisation of the Bachelor of
+# Science's Mathematics and Statistics major (its subjects may sit in the bachelor or the diploma).
+code: D-MATHSC
+title: Diploma in Mathematical Sciences
+year: 2026
+total_points: 100
+entry_note: dmathsc
+# Up to 50 points of mathematics and statistics in the bachelor degree may count towards the diploma.
+cross_credit: 50
+# Bachelor of Science majors in Mathematics and Statistics, Data Science or Mathematical Physics can't take it.
+not_with: [mathematics-and-statistics, mathematics-and-statistics-applied, mathematics-and-statistics-operations-research, mathematics-and-statistics-statistics, data-science, mathematical-physics]
+streams: [mathematics-and-statistics, mathematics-and-statistics-applied, mathematics-and-statistics-operations-research, mathematics-and-statistics-statistics]
+pool:
+  areas: [MAST]
+rules:
+  - id: diploma-total
+    kind: points
+    min: 100
+    description: 100 points of mathematics and statistics
+  - id: diploma-l3
+    kind: points
+    level: 3
+    min: 50
+    description: At least 50 points at level 3
+handbook: https://handbook.unimelb.edu.au/2026/courses/d-mathsc/course-structure
+verified_on: 2026-10-21

@@ -16,6 +16,9 @@ export interface Plan {
   specialisation?: string
   /** Minor ids (component ids). Undefined: not known, so conditions naming a minor stay unknown. */
   minors?: string[]
+  /** A concurrent diploma taken alongside (its code, e.g. D-COMP), and its stream (a component id). */
+  diploma?: string
+  diplomaStream?: string
   /** Subjects already completed before the first planned term (with or without marks). */
   completed: string[]
   terms: PlanTerm[]

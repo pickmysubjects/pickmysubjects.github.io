@@ -25,7 +25,8 @@ weekly_contact_hours: 6
 min_attendance: 80
 handbook: https://handbook.unimelb.edu.au/2026/subjects/mast10015
 source_year: 2026
-categories: {}
+categories:
+  B-SCIEXTD: core
 breadth_for: []
 skills:
   - maths

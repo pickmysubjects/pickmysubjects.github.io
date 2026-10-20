@@ -444,6 +444,8 @@ const courseRule = z.discriminatedUnion('kind', [
       kind: z.literal('compulsory'),
       subjects: z.array(subjectCode).min(1),
       first_semester: z.boolean().default(false),
+      // Normally taken in the first year (B-SCIEXTD's foundation subjects): planned there.
+      first_year: z.boolean().default(false),
     })
     .strict(),
   z
@@ -512,7 +514,7 @@ const courseRule = z.discriminatedUnion('kind', [
     .strict(),
   // Complete one of these paths; each path is a list of "all"/"choose" requirements, like a major's.
   z
-    .object({ ...ruleBase, kind: z.literal('requirement'), paths: z.array(z.array(componentReq).min(1)).min(1) })
+    .object({ ...ruleBase, kind: z.literal('requirement'), paths: z.array(z.array(componentReq).min(1)).min(1), first_year: z.boolean().default(false) })
     .strict(),
 ])
 
@@ -532,6 +534,11 @@ export const courseFileSchema = z
     closed: z.array(subjectCode).default([]),
     // False while a course is still being entered: its data is checked, but students can't pick it yet.
     listed: z.boolean().default(true),
+    // A course that runs on another's majors, minors and subject categories (B-SCIEXTD: B-SCI's),
+    // so they are kept once, under that course.
+    based_on: z.string().min(1).optional(),
+    // Who can enrol, when that limits the course (an i18n key under entry.*): shown under it.
+    entry_note: z.enum(['sciextd', 'dlang', 'dcomp', 'dmathsc']).optional(),
     rules: z.array(courseRule),
     handbook: handbookUrl.optional(),
     verified_on: z.union([z.iso.date(), z.null()]).default(null),
@@ -547,6 +554,8 @@ export const courseFileSchema = z
     areaCategories: c.area_categories,
     closed: c.closed,
     listed: c.listed,
+    basedOn: c.based_on,
+    entryNote: c.entry_note,
     rules: c.rules.map(camelRule),
     handbook: c.handbook,
     verifiedOn: c.verified_on,
@@ -555,7 +564,7 @@ export const courseFileSchema = z
 function camelRule(r: z.output<typeof courseRule>): CourseRule {
   switch (r.kind) {
     case 'compulsory':
-      return { id: r.id, description: r.description, kind: r.kind, subjects: r.subjects, firstSemester: r.first_semester }
+      return { id: r.id, description: r.description, kind: r.kind, subjects: r.subjects, firstSemester: r.first_semester, ...(r.first_year ? { firstYear: true } : {}) }
     case 'points':
       return { id: r.id, description: r.description, kind: r.kind, min: r.min, max: r.max, level: r.level, category: r.category }
     case 'major':
@@ -585,12 +594,12 @@ function camelRule(r: z.output<typeof courseRule>): CourseRule {
         minPoints: r.min_points,
       }
     case 'requirement':
-      return { id: r.id, description: r.description, kind: r.kind, paths: r.paths as ComponentReq[][] }
+      return { id: r.id, description: r.description, kind: r.kind, paths: r.paths as ComponentReq[][], ...(r.first_year ? { firstYear: true } : {}) }
   }
 }
 
 export type CourseRule =
-  | { id: string; description: string; kind: 'compulsory'; subjects: string[]; firstSemester: boolean }
+  | { id: string; description: string; kind: 'compulsory'; subjects: string[]; firstSemester: boolean; firstYear?: boolean }
   | { id: string; description: string; kind: 'points'; min?: number; max?: number; level?: number; category?: string }
   | { id: string; description: string; kind: 'major'; count: number; max: number; noDoubleCount: boolean | [string, string][] }
   | { id: string; description: string; kind: 'area-cap'; max: number; category?: string; areas?: string[]; levels?: number[]; groups: string[][]; exceptions: { components: string[] }[] }
@@ -605,7 +614,7 @@ export type CourseRule =
       category?: string
     }
   | { id: string; description: string; kind: 'progression'; beforeLevel: number; level: number; minPoints: number }
-  | { id: string; description: string; kind: 'requirement'; paths: ComponentReq[][] }
+  | { id: string; description: string; kind: 'requirement'; paths: ComponentReq[][]; firstYear?: boolean }
 
 export type Course = z.output<typeof courseFileSchema>
 
@@ -682,10 +691,56 @@ export interface NonAllowedBreadth {
 
 export type Component = z.output<typeof componentFileSchema>
 
+/**
+ * A concurrent diploma (D-LANG, D-COMP, D-MATHSC): 100 points taken alongside a bachelor degree,
+ * an optional add-on to a plan. Its subjects are the ones its pool covers; up to `cross_credit`
+ * points of them may count towards the bachelor too.
+ */
+export const diplomaFileSchema = z
+  .object({
+    code: z.string().regex(/^D-[A-Z]+$/),
+    title: z.string().min(1),
+    year: z.number().int(),
+    total_points: z.number().positive(),
+    cross_credit: z.number().nonnegative().default(0),
+    // Entry conditions we can't check (an i18n key under entry.*): shown under it.
+    entry_note: z.enum(['sciextd', 'dlang', 'dcomp', 'dmathsc']).optional(),
+    // Majors (component ids) whose students can't take it.
+    not_with: z.array(z.string()).default([]),
+    // One of these components to complete (a language, a mathematics specialisation); checked
+    // against the whole plan. Its own subjects, and others of its main subject area, count.
+    streams: z.array(z.string()).default([]),
+    // Other subjects that count: listed codes and every subject of these areas.
+    pool: z.object({ subjects: z.array(subjectCode).default([]), areas: z.array(z.string().regex(/^[A-Z]{4}$/)).default([]) }).strict().default({ subjects: [], areas: [] }),
+    // Checked against the diploma's own subjects (points, compulsory, requirement kinds).
+    rules: z.array(courseRule).default([]),
+    handbook: handbookUrl.optional(),
+    verified_on: z.union([z.iso.date(), z.null()]).default(null),
+  })
+  .strict()
+  .transform((d) => ({
+    code: d.code,
+    title: d.title,
+    year: d.year,
+    totalPoints: d.total_points,
+    crossCredit: d.cross_credit,
+    entryNote: d.entry_note,
+    notWith: d.not_with,
+    streams: d.streams,
+    pool: d.pool,
+    rules: d.rules.map(camelRule),
+    handbook: d.handbook,
+    verifiedOn: d.verified_on,
+  }))
+
+export type Diploma = z.output<typeof diplomaFileSchema>
+
 export interface Dataset {
   name: 'real' | 'demo'
   generatedAt: string
   subjects: Record<string, Subject>
   courses: Course[]
   components: Component[]
+  /** Concurrent diplomas a plan can add (none in older bundles). */
+  diplomas?: Diploma[]
 }

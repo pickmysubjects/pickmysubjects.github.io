@@ -25,6 +25,14 @@ function what(t: Translate, level?: number, category?: string): string {
 
 export function ruleText(t: Translate, rule: CourseRule | undefined, fallback = ''): string {
   if (!rule) return fallback
+  // A concurrent diploma's rule ("D-LANG:stream"): named with the diploma's title, which starts its description.
+  const diploma = /^D-[A-Z]+:(.+)$/.exec(rule.id)
+  if (diploma) {
+    const id = diploma[1]!
+    const title = rule.description.split(': ')[0]!
+    const inner = id === 'stream' ? t('rule.diplomaStream') : id === 'eligible' ? t('rule.diplomaEligible') : ruleText(t, { ...rule, id }, fallback)
+    return t('rule.diploma', { title, rule: inner })
+  }
   switch (rule.kind) {
     case 'compulsory':
       return t(rule.firstSemester ? 'rule.compulsoryFirst' : 'rule.compulsory', { codes: rule.subjects.join(', ') })

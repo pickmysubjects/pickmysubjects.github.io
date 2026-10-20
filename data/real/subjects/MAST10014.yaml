@@ -6,7 +6,11 @@ offerings:
   "2026":
     - semester-1
 prerequisites:
-  manual: "Admission into one of the following: B-SCIEXT Bachelor of Science (Extended) B-ARTSEXT Bachelor of Arts (Extended)"
+  any:
+    - admission: B-SCIEXTD
+      note: Admission into the Bachelor of Science (Extended)
+    - admission: B-ARTSEXT
+      note: Admission into the Bachelor of Arts (Extended)
 corequisites: none
 non_allowed: []
 assessment:
@@ -20,7 +24,8 @@ handbook: https://handbook.unimelb.edu.au/2026/subjects/mast10014
 source_year: 2026
 weekly_contact_hours: 6
 min_attendance: 80
-categories: {}
+categories:
+  B-SCIEXTD: core
 breadth_for: []
 skills:
   - maths

@@ -93,7 +93,16 @@ export const id: Messages = {
     notes: '{n} catatan tentang asumsi',
     notesOne: '1 catatan tentang asumsi',
   },
+  entry: {
+    sciextd: "Hanya untuk mahasiswa Aborigin dan Kepulauan Selat Torres",
+    dlang: "Tidak terbuka untuk visa pelajar",
+    dcomp: "Perlu WAM 65, 50 poin selesai dan COMP10001; tidak terbuka untuk visa pelajar",
+    dmathsc: "Perlu nilai Specialist Maths 30 atau setara; tidak terbuka untuk visa pelajar",
+  },
   rule: {
+    diploma: "{title}: {rule}",
+    diplomaEligible: "Terbuka untuk gelar dan major-mu",
+    diplomaStream: "Selesaikan satu jalur",
     minor: "Paling banyak {max} minor",
     informalSpec: "Paling banyak {max} spesialisasi informal",
     compulsory: 'Ambil {codes}',
@@ -117,6 +126,8 @@ export const id: Messages = {
     requirementOr: ' atau ',
   },
   ruleDetail: {
+    diplomaClash: "{reason}",
+    noStream: "pilih satu jalur dan ini akan dicek",
     noMinor: "belum dipilih (opsional)",
     tooManyMinors: "{have} minor (paling banyak {max})",
     minorSameAsMajor: "{title} tidak bisa jadi major sekaligus minor",
@@ -764,6 +775,7 @@ export const id: Messages = {
     cat: { science: "Sains", commerce: "Bisnis", arts: "Humaniora", breadth: "Breadth" },
   },
   majors: {
+    basedOn: "{course} memakai major {base}.",
     specTitle: "Spesialisasi {title}",
     specKind: "Spesialisasi",
     specsTitle: "Spesialisasi",
@@ -870,6 +882,7 @@ export const id: Messages = {
     footer: "Tidak resmi. Cek Handbook dan My Course Planner sebelum mendaftar",
   },
   guide: {
+    majorsDiploma: "Diploma bersamaan (concurrent diploma): Diploma in Languages, Computing atau Mathematical Sciences adalah 100 poin tambahan yang diambil bersama gelar sarjana, biasanya tambah satu tahun. Sampai 50 poin bisa dihitung untuk keduanya, jadi ada yang lulus lebih cepat. Beberapa major tidak boleh mengambil Computing atau Mathematical Sciences. Mahasiswa Pribumi juga bisa memilih Bachelor of Science (Extended): satu tahun dasar, lalu major Science biasa, 350 poin dalam tiga setengah tahun.",
     majorsTitle: "Major, double major dan minor",
     majorsShort: "Semua orang butuh satu major. Beberapa gelar membolehkan major kedua atau minor.",
     majorsOne: "Setiap gelar sarjana butuh minimal satu major: bidang utama yang kamu selesaikan sampai tahun ketiga.",
@@ -926,7 +939,7 @@ export const id: Messages = {
     firstStep2: "Sisanya isi dengan mata kuliah yang bikin kamu penasaran, atau breadth.",
     firstStep3: "Daftar (enrol) di my.unimelb, lalu pilih jam kelas di My Timetable.",
     firstStep4: "Ternyata tidak cocok? Sebelum census date kamu masih bisa membatalkannya gratis. Mahasiswa internasional, tanya Stop 1 dulu.",
-    breadthText: "Breadth adalah mata kuliah di luar bidang gelarmu, misalnya bisnis atau humaniora untuk mahasiswa sains. Halaman Handbook tiap mata kuliah mencantumkan gelar mana yang boleh mengambilnya sebagai breadth. Kelima gelar di sini butuh minimal 50 poin breadth (4 mata kuliah). Breadth level 1 dihitung maksimal 25 poin di Science dan 37,5 poin di Arts, Biomedicine, Commerce dan Design; Commerce juga menghitung maksimal 62,5 poin breadth secara total.",
+    breadthText: "Breadth adalah mata kuliah di luar bidang gelarmu, misalnya bisnis atau humaniora untuk mahasiswa sains. Halaman Handbook tiap mata kuliah mencantumkan gelar mana yang boleh mengambilnya sebagai breadth. Keenam gelar di sini butuh minimal 50 poin breadth (4 mata kuliah). Breadth level 1 dihitung maksimal 25 poin di Science dan 37,5 poin di Arts, Biomedicine, Commerce dan Design; Commerce juga menghitung maksimal 62,5 poin breadth secara total.",
     easyHardText: "Penasaran mata kuliah mana yang dianggap mudah atau sulit? Lihat daftar mata kuliah mudah dan sulit, lengkap dengan alasannya.",
     firstFind: "Cari mata kuliah semester pertama",
     firstPlan: "Buka halaman Rencana",
@@ -1176,6 +1189,7 @@ export const id: Messages = {
     discussReadReddit: 'Baca diskusinya',
   },
   plans: {
+    diplomaLine: "Diploma: {title}",
     minorLine: "Minor: {title}",
     informalLine: "Spesialisasi informal: {title}",
     goal: "Tujuan",
@@ -1212,6 +1226,10 @@ export const id: Messages = {
     notPlanned: "Belum ada",
   },
   wizard: {
+    qDiploma: "Tambah diploma bersamaan? (opsional)",
+    noDiploma: "Tanpa diploma",
+    diplomaHint: "100 poin lagi di samping gelarmu, biasanya tambah satu tahun.",
+    qStream: "Jalur yang mana?",
     qMinor: "Mau tambah minor? (opsional)",
     qInformal: "Mau tambah spesialisasi informal? (opsional)",
     qMajor2: "Tambah jurusan kedua? (opsional)",

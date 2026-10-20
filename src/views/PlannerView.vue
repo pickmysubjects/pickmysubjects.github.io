@@ -13,7 +13,8 @@ import PlanPrint, { type PrintTerm } from '@/components/planner/PlanPrint.vue'
 import Interp from '@/components/Interp.vue'
 import PlanSwitcher from '@/components/plans/PlanSwitcher.vue'
 import PlanCompare from '@/components/plans/PlanCompare.vue'
-import { PASS_MARK, informalPicks, isFail, passedCodes, planComponentIds, planRoles, type PlanTerm } from '@/engine'
+import { PASS_MARK, informalPicks, isFail, passedCodes, planComponentIds, planRoles, planRules, type PlanTerm } from '@/engine'
+import { diplomaTitle } from '@/composables/usePlanCompare'
 import { Printer, Share2 } from 'lucide-vue-next'
 import { decodePlan, encodePlan } from '@/utils/sharePlan'
 import { go, useView } from '@/composables/useView'
@@ -109,7 +110,9 @@ const roles = computed(() => {
   for (const c of r.options) out[c] = 'option'
   return out
 })
+// The degree's own rules (its progress meters), and those with the diploma's after them.
 const rules = computed(() => plan.course.value?.rules ?? [])
+const allRules = computed(() => planRules(data.value, plan.plan.value))
 const allIssues = computed(() => [...plan.termIssues.value, ...plan.courseCheck.value.issues])
 
 const problems = computed(() => allIssues.value.filter((i) => i.severity === 'error').length)
@@ -120,7 +123,7 @@ const problemTexts = computed(() => {
   return allIssues.value
     .filter((i) => i.severity === severity)
     .map((i) => ({
-      text: issueText(t.value, i, rules.value, plan.courseCheck.value.statuses, data.value.subjects, plan.setup.value.course),
+      text: issueText(t.value, i, allRules.value, plan.courseCheck.value.statuses, data.value.subjects, plan.setup.value.course),
       // Conditions only the student can check (a VCE score, a test): let them say they meet it.
       confirm: i.kind === 'prereq-unknown' ? i.subject : undefined,
     }))
@@ -141,7 +144,8 @@ const majorTitle = computed(() => {
   const minor = (plan.setup.value.minors ?? []).map((id) => data.value.components.find((c) => c.id === id)?.title).filter(Boolean).join(' + ')
   const main = [major, second, spec].filter(Boolean).join(' + ')
   const key = informalPicks(data.value, plan.setup.value.minors) ? 'plans.informalLine' : 'plans.minorLine'
-  return minor ? `${main} · ${t.value(key, { title: minor })}` : main
+  const diploma = diplomaTitle(data.value, plan.setup.value)
+  return [main, minor ? t.value(key, { title: minor }) : '', diploma ? t.value('plans.diplomaLine', { title: diploma }) : ''].filter(Boolean).join(' · ')
 })
 const summary = computed(() =>
   t.value('wizard.summary', {
@@ -365,8 +369,8 @@ const printTerms = computed<PrintTerm[]>(() => {
             </p>
           </div>
           <div class="details-pair">
-            <RuleLegend class="details-card" :statuses="plan.courseCheck.value.statuses" :rules="rules" :title="plan.course.value?.title ?? ''" />
-            <PlanIssues class="details-card" :issues="allIssues" :rules="rules" :statuses="plan.courseCheck.value.statuses" />
+            <RuleLegend class="details-card" :statuses="plan.courseCheck.value.statuses" :rules="allRules" :title="plan.course.value?.title ?? ''" />
+            <PlanIssues class="details-card" :issues="allIssues" :rules="allRules" :statuses="plan.courseCheck.value.statuses" />
           </div>
           <PlanHowBuilt
             v-if="plan.notes.value.length || plan.unplaced.value.length"

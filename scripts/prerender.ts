@@ -367,7 +367,12 @@ function majorsListBody(code: LocaleCode, t: Translate): string {
       const informalsPart = ownInformals.length ? `<h3>${esc(t('majors.informalsTitle'))}</h3>${list(ownInformals)}` : ''
       const ownSpecs = specs.filter((m) => m.course === c.code).sort((a, b) => a.title.localeCompare(b.title))
       const specsPart = ownSpecs.length ? `<h3>${esc(t('majors.specsTitle'))}</h3>${list(ownSpecs)}` : ''
-      return `<h2>${esc(c.title)}</h2>${body}${closedLine}${minorsPart}${specsPart}${informalsPart}`
+      // Courses that use these majors (B-SCIEXTD uses B-SCI's): a line, not pages of their own.
+      const basedLine = data.courses
+        .filter((x) => x.listed && x.basedOn === c.code)
+        .map((x) => `<p>${esc([t('majors.basedOn', { course: x.title, base: c.title }), x.entryNote ? t(`entry.${x.entryNote}`) : ''].filter(Boolean).join(' '))}</p>`)
+        .join('')
+      return `<h2>${esc(c.title)}</h2>${basedLine}${body}${closedLine}${minorsPart}${specsPart}${informalsPart}`
     })
     .join('')
     .replace(/^/, `<h1>${esc(t('majors.title'))}</h1>`)
@@ -499,7 +504,7 @@ function guideBody(code: LocaleCode, t: Translate): string {
     h2('firstTitle'), p('firstText'), `<ol>${['firstStep1', 'firstStep2', 'firstStep3', 'firstStep4'].map((k) => `<li>${esc(t(`guide.${k}`))}</li>`).join('')}</ol>`, p('breadthText'),
     `<p>${esc(t('guide.easyHardText'))} ${RANKS.map((d) => `<a href="${href(code, `subjects/${RANK_SLUGS[d]}`)}">${esc(t(`browse.rankList.${d}`))}</a>`).join(' · ')}</p>`,
     h2('pointsTitle'), p('pointsText'),
-    h2('majorsTitle'), li(['majorsOne', 'majorsSecond', 'majorsMinor', 'majorsOnce']), p('majorsPairs'), p('majorsPlans'),
+    h2('majorsTitle'), li(['majorsOne', 'majorsSecond', 'majorsMinor', 'majorsOnce']), p('majorsPairs'), p('majorsDiploma'), p('majorsPlans'),
     h2('capsTitle'), li(['capsDiscipline', 'capsDesignBreadth', 'capsDesignInformal']),
     h2('loadTitle'), p('loadText'), li(['overloadWam', 'overloadLast', 'overloadFails']), p('overloadFinal'),
     `<h3>${esc(t('guide.localTitle'))}</h3>`, p('loadLocal'), `<h3>${esc(t('guide.intlTitle'))}</h3>`, p('loadIntl'),

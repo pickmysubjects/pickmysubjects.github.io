@@ -93,7 +93,16 @@ export const vi: Messages = {
     notes: '{n} ghi chú về giả định',
     notesOne: '1 ghi chú về giả định',
   },
+  entry: {
+    sciextd: "Chỉ dành cho sinh viên thổ dân Aboriginal và Torres Strait Islander",
+    dlang: "Không mở cho visa du học",
+    dcomp: "Cần WAM 65, đã học 50 tín chỉ và COMP10001; không mở cho visa du học",
+    dmathsc: "Cần điểm Specialist Maths 30 hoặc tương đương; không mở cho visa du học",
+  },
   rule: {
+    diploma: "{title}: {rule}",
+    diplomaEligible: "Ngành và chuyên ngành của bạn được học",
+    diplomaStream: "Hoàn thành một hướng",
     minor: "Tối đa {max} ngành phụ",
     informalSpec: "Tối đa {max} chuyên sâu không chính thức",
     compulsory: 'Học {codes}',
@@ -117,6 +126,8 @@ export const vi: Messages = {
     requirementOr: ' hoặc ',
   },
   ruleDetail: {
+    diplomaClash: "{reason}",
+    noStream: "chọn một hướng thì mục này mới được kiểm tra",
     noMinor: "chưa chọn (không bắt buộc)",
     tooManyMinors: "{have} ngành phụ (tối đa {max})",
     minorSameAsMajor: "{title} không thể vừa là ngành chính vừa là ngành phụ",
@@ -764,6 +775,7 @@ export const vi: Messages = {
     cat: { science: "Khoa học", commerce: "Kinh doanh", arts: "Nhân văn", breadth: "Breadth" },
   },
   majors: {
+    basedOn: "{course} dùng các chuyên ngành của {base}.",
     specTitle: "Chuyên ngành hẹp {title}",
     specKind: "Chuyên ngành hẹp",
     specsTitle: "Chuyên ngành hẹp (Specialisation)",
@@ -870,6 +882,7 @@ export const vi: Messages = {
     footer: "Không chính thức. Hãy kiểm tra Handbook và My Course Planner trước khi đăng ký",
   },
   guide: {
+    majorsDiploma: "Văn bằng song song (concurrent diploma): văn bằng Languages, Computing hoặc Mathematical Sciences là 100 tín chỉ học thêm bên cạnh ngành cử nhân, thường lâu thêm một năm. Tối đa 50 tín chỉ được tính cho cả hai, nên có bạn xong sớm hơn. Một số chuyên ngành không được học Computing hoặc Mathematical Sciences. Sinh viên bản địa còn có thể chọn Bachelor of Science (Extended): một năm nền tảng, rồi học các chuyên ngành Science bình thường, 350 tín chỉ trong ba năm rưỡi.",
     majorsTitle: "Ngành chính, song ngành và ngành phụ",
     majorsShort: "Ai cũng cần một ngành chính. Một số bằng cho học thêm ngành thứ hai hoặc ngành phụ.",
     majorsOne: "Bằng cử nhân nào cũng cần hoàn thành ít nhất một ngành chính (major), là hướng bạn học đến năm ba.",
@@ -926,7 +939,7 @@ export const vi: Messages = {
     firstStep2: "Phần còn lại chọn môn bạn thấy hay, hoặc môn breadth.",
     firstStep3: "Đăng ký môn (enrol) trên my.unimelb, rồi chọn giờ học trong My Timetable.",
     firstStep4: "Học thấy không hợp? Trước census date vẫn rút được miễn phí. Sinh viên quốc tế nên hỏi Stop 1 trước.",
-    breadthText: "Breadth là môn ngoài lĩnh vực của ngành bạn, ví dụ học khoa học thì chọn kinh doanh hoặc xã hội. Trang Handbook của mỗi môn ghi rõ ngành nào được học nó như Breadth. Cả năm ngành ở đây đều cần ít nhất 50 tín chỉ Breadth (4 môn). Breadth level 1 được tính tối đa 25 tín chỉ với Science và 37,5 tín chỉ với Arts, Biomedicine, Commerce và Design; Commerce còn tính tối đa 62,5 tín chỉ Breadth tổng cộng.",
+    breadthText: "Breadth là môn ngoài lĩnh vực của ngành bạn, ví dụ học khoa học thì chọn kinh doanh hoặc xã hội. Trang Handbook của mỗi môn ghi rõ ngành nào được học nó như Breadth. Cả sáu ngành ở đây đều cần ít nhất 50 tín chỉ Breadth (4 môn). Breadth level 1 được tính tối đa 25 tín chỉ với Science và 37,5 tín chỉ với Arts, Biomedicine, Commerce và Design; Commerce còn tính tối đa 62,5 tín chỉ Breadth tổng cộng.",
     easyHardText: "Muốn biết môn nào sinh viên thấy dễ hay khó? Xem danh sách môn dễ và môn khó, có ghi lý do.",
     firstFind: "Tìm môn cho học kỳ đầu",
     firstPlan: "Mở trang Kế hoạch",
@@ -1176,6 +1189,7 @@ export const vi: Messages = {
     discussReadReddit: 'Đọc các thảo luận',
   },
   plans: {
+    diplomaLine: "Văn bằng: {title}",
     minorLine: "Ngành phụ: {title}",
     informalLine: "Chuyên sâu không chính thức: {title}",
     goal: "Mục tiêu",
@@ -1212,6 +1226,10 @@ export const vi: Messages = {
     notPlanned: "Chưa có môn",
   },
   wizard: {
+    qDiploma: "Học thêm một văn bằng song song? (không bắt buộc)",
+    noDiploma: "Không học văn bằng",
+    diplomaHint: "Thêm 100 tín chỉ ngoài ngành chính, thường lâu thêm một năm.",
+    qStream: "Hướng nào?",
     qMinor: "Thêm ngành phụ? (không bắt buộc)",
     qInformal: "Thêm chuyên sâu không chính thức? (tùy chọn)",
     qMajor2: "Thêm chuyên ngành thứ hai? (không bắt buộc)",

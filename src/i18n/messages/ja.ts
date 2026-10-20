@@ -93,7 +93,16 @@ export const ja: Messages = {
     notes: '前提に関するメモ {n} 件',
     notesOne: '前提に関するメモ 1 件',
   },
+  entry: {
+    sciextd: "アボリジナルおよびトレス海峡諸島民の学生のみ",
+    dlang: "学生ビザでは取れません",
+    dcomp: "WAM 65、50 ポイント修了、COMP10001 修了が必要。学生ビザでは取れません",
+    dmathsc: "Specialist Maths のスタディスコア 30 以上（または同等）が必要。学生ビザでは取れません",
+  },
   rule: {
+    diploma: "{title}：{rule}",
+    diplomaEligible: "自分の学位と専攻で取れる",
+    diplomaStream: "ストリームを 1 つ修了",
     minor: "副専攻は最大 {max} つ",
     informalSpec: "非公式専門コースは最大 {max} つ",
     compulsory: '{codes} を履修する',
@@ -117,6 +126,8 @@ export const ja: Messages = {
     requirementOr: '、または ',
   },
   ruleDetail: {
+    diplomaClash: "{reason}",
+    noStream: "ストリームを選ぶとチェックされます",
     noMinor: "未選択（任意）",
     tooManyMinors: "副専攻が {have} つ（最大 {max} つ）",
     minorSameAsMajor: "{title} を主専攻と副専攻の両方にはできません",
@@ -764,6 +775,7 @@ export const ja: Messages = {
     cat: { science: "理系", commerce: "商学系", arts: "文系", breadth: "Breadth" },
   },
   majors: {
+    basedOn: "{course}は{base}の専攻を使います。",
     specTitle: "{title} スペシャライゼーション",
     specKind: "スペシャライゼーション",
     specsTitle: "スペシャライゼーション",
@@ -870,6 +882,7 @@ export const ja: Messages = {
     footer: "非公式ツールです。履修登録の前に Handbook と My Course Planner で確認してください",
   },
   guide: {
+    majorsDiploma: "同時履修ディプロマ（concurrent diploma）：Languages、Computing、Mathematical Sciences のディプロマは、学士とは別に 100 ポイント取るもので、ふつうは 1 年延びます。最大 50 ポイントは両方に数えられるので、早く終える人もいます。一部の専攻は Computing や Mathematical Sciences を取れません。先住民の学生は Bachelor of Science (Extended) も選べます。基礎の 1 年のあと、ふつうの理学士の専攻を学び、350 ポイントを 3 年半で取ります。",
     majorsTitle: "メジャー、ダブルメジャー、マイナー",
     majorsShort: "メジャーは必ず1つ。学位によっては2つ目のメジャーやマイナーも取れます。",
     majorsOne: "どの学士課程でも、メジャー（3年次まで続ける主専攻）を最低1つ修了する必要があります。",
@@ -926,7 +939,7 @@ export const ja: Messages = {
     firstStep2: "残りは興味のある科目か、Breadth で埋める。",
     firstStep3: "my.unimelb で履修登録（enrol）してから、My Timetable で授業の時間を選ぶ。",
     firstStep4: "合わないと思ったら、census date までは無料で取り消せます。留学生は先に Stop 1 に相談してください。",
-    breadthText: "Breadth は自分の学位の分野外の科目です（理学士なら商学や文系など）。どの学位が Breadth として取れるかは各科目の Handbook ページに載っています。ここにある 5 つの学位はどれも Breadth が 50 ポイント（4 科目）以上必要です。レベル 1 の Breadth は理学士で 25 ポイントまで、文学士・生物医学士・商学士・デザイン学士で 37.5 ポイントまで。商学士は Breadth 全体でも 62.5 ポイントまでです。",
+    breadthText: "Breadth は自分の学位の分野外の科目です（理学士なら商学や文系など）。どの学位が Breadth として取れるかは各科目の Handbook ページに載っています。ここにある 6 つの学位はどれも Breadth が 50 ポイント（4 科目）以上必要です。レベル 1 の Breadth は理学士で 25 ポイントまで、文学士・生物医学士・商学士・デザイン学士で 37.5 ポイントまで。商学士は Breadth 全体でも 62.5 ポイントまでです。",
     easyHardText: "どの科目が取りやすく、どれが難しいと言われているかは、取りやすい科目・難しい科目のランキングで理由と一緒に見られます。",
     firstFind: "1学期目に取れる科目を探す",
     firstPlan: "プランを開く",
@@ -1176,6 +1189,7 @@ export const ja: Messages = {
     discussReadReddit: 'スレッドを読む',
   },
   plans: {
+    diplomaLine: "ディプロマ：{title}",
     minorLine: "副専攻：{title}",
     informalLine: "非公式専門コース：{title}",
     goal: "目標",
@@ -1212,6 +1226,10 @@ export const ja: Messages = {
     notPlanned: "予定なし",
   },
   wizard: {
+    qDiploma: "同時履修のディプロマを加えますか？（任意）",
+    noDiploma: "ディプロマなし",
+    diplomaHint: "学位とは別に 100 ポイント、ふつうは 1 年延びます。",
+    qStream: "どのストリーム？",
     qMinor: "副専攻を追加しますか？（任意）",
     qInformal: "非公式専門コースを追加しますか？（任意）",
     qMajor2: "2つ目のメジャーを追加しますか？（任意）",

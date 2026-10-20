@@ -1,0 +1,33 @@
+# Diploma in Computing, 2026 Handbook. Facts re-expressed in our own words.
+code: D-COMP
+title: Diploma in Computing
+year: 2026
+total_points: 100
+entry_note: dcomp
+# Up to 50 points can count towards both the diploma and the bachelor degree.
+cross_credit: 50
+# Bachelor of Science majors in Computing and Software Systems, Data Science or Informatics, and
+# Bachelor of Design majors in Computing and Software Systems or User Experience Design, can't take it.
+not_with: [computing-and-software-systems, data-science, informatics, des-computing-and-software-systems, des-user-experience-design]
+pool:
+  subjects: [COMP10001, COMP10002, COMP10003, INFO10003, ISYS10001, COMP20003, COMP20005, COMP20007, COMP20008, INFO20002, INFO20003, INFO20004, INFO20005, ISYS20006, SWEN20003, COMP30013, COMP30019, COMP30020, COMP30022, COMP30023, COMP30024, COMP30026, COMP30027, INFO30005, INFO30006, INFO30008, INFO30009, ISYS30008, SWEN30006, SWEN30007]
+rules:
+  - id: diploma-total
+    kind: points
+    min: 100
+    description: 100 points of diploma subjects
+  - id: diploma-core
+    kind: compulsory
+    subjects: [COMP10001]
+    description: COMP10001 Foundations of Computing
+  # A level-3 selective, 25 more points of level 3, and 50 points of electives at any level
+  # (so at most 50 points of level-1 and level-2 electives).
+  - id: diploma-structure
+    kind: requirement
+    paths:
+      - - choose: { points: 12.5, from: [SWEN30006, INFO30005] }
+        - choose: { points: 25, from: [COMP30013, COMP30019, COMP30020, COMP30022, COMP30023, COMP30024, COMP30026, COMP30027, INFO30005, INFO30006, INFO30008, INFO30009, ISYS30008, SWEN30006, SWEN30007] }
+        - choose: { points: 50, from: [COMP10002, COMP10003, INFO10003, ISYS10001, COMP20003, COMP20005, COMP20007, COMP20008, INFO20002, INFO20003, INFO20004, INFO20005, ISYS20006, SWEN20003, COMP30013, COMP30019, COMP30020, COMP30022, COMP30023, COMP30024, COMP30026, COMP30027, INFO30005, INFO30006, INFO30008, INFO30009, ISYS30008, SWEN30006, SWEN30007] }
+    description: A level-3 selective (SWEN30006 or INFO30005), 25 points of level-3 electives and 50 points of electives
+handbook: https://handbook.unimelb.edu.au/2026/courses/d-comp/course-structure
+verified_on: 2026-10-21
