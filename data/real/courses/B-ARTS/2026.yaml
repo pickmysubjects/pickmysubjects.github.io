@@ -76,9 +76,17 @@ rules:
   - id: discipline-cap
     kind: area-cap
     max: 125
+    # Disciplines that span two subject areas count as one.
+    groups: [[POLS, INTS], [SCRN, CULS], [HEBR, JEWI], [INDG, AIND], [SOCI, SOTH]]
     exceptions:
       - components: [arts-geography, environmental-studies-minor]
     description: No more than 125 points from any one discipline
+  - id: philosophy-cap
+    kind: area-cap
+    max: 87.5
+    areas: [PHIL]
+    levels: [2, 3]
+    description: No more than 87.5 points of level-2 and level-3 Philosophy
   - id: minor
     kind: minor
     max: 1
@@ -96,8 +104,7 @@ rules:
     min_points: 50
     description: Normally 50 level-2 points before level-3 subjects
 # Approximations: a discipline is taken as one subject area (code prefix); the Handbook's lists
-# mostly match one prefix each. Not encoded yet: Philosophy's tighter 87.5-point cap on its
-# level-2 and level-3 subjects, and the adjusted rules of the non-standard majors (Psychology,
+# mostly match one prefix each. Not encoded yet: the adjusted rules of the non-standard majors (Psychology,
 # Geography, Economics, the Ancient World Studies + Classics double major) beyond what their
 # component files already say. A minor in the major's own discipline is only caught when the two
 # share a title (History major + History minor) or list each other in not_with.

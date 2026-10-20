@@ -493,6 +493,11 @@ const courseRule = z.discriminatedUnion('kind', [
       kind: z.literal('area-cap'),
       max: z.number().positive(),
       category: z.string().optional(),
+      // Only these subject areas / levels (B-ARTS Philosophy: 87.5 points of level 2 and 3 PHIL).
+      areas: z.array(z.string().regex(/^[A-Z]{4}$/)).optional(),
+      levels: z.array(z.number().int().min(1).max(9)).optional(),
+      // Subject areas that are one discipline between them (Politics and International Studies: POLS + INTS).
+      groups: z.array(z.array(z.string().regex(/^[A-Z]{4}$/)).min(2)).default([]),
       exceptions: z.array(z.object({ components: z.array(z.string()).min(2) }).strict()).default([]),
     })
     .strict(),
@@ -556,7 +561,7 @@ function camelRule(r: z.output<typeof courseRule>): CourseRule {
     case 'major':
       return { id: r.id, description: r.description, kind: r.kind, count: r.count, max: Math.max(r.max ?? r.count, r.count), noDoubleCount: r.no_double_count as boolean | [string, string][] }
     case 'area-cap':
-      return { id: r.id, description: r.description, kind: r.kind, max: r.max, category: r.category, exceptions: r.exceptions }
+      return { id: r.id, description: r.description, kind: r.kind, max: r.max, category: r.category, areas: r.areas, levels: r.levels, groups: r.groups, exceptions: r.exceptions }
     case 'specialisation':
       return { id: r.id, description: r.description, kind: r.kind, max: r.max }
     case 'minor':
@@ -588,7 +593,7 @@ export type CourseRule =
   | { id: string; description: string; kind: 'compulsory'; subjects: string[]; firstSemester: boolean }
   | { id: string; description: string; kind: 'points'; min?: number; max?: number; level?: number; category?: string }
   | { id: string; description: string; kind: 'major'; count: number; max: number; noDoubleCount: boolean | [string, string][] }
-  | { id: string; description: string; kind: 'area-cap'; max: number; category?: string; exceptions: { components: string[] }[] }
+  | { id: string; description: string; kind: 'area-cap'; max: number; category?: string; areas?: string[]; levels?: number[]; groups: string[][]; exceptions: { components: string[] }[] }
   | { id: string; description: string; kind: 'specialisation'; max: number }
   | { id: string; description: string; kind: 'minor'; max: number; informal: boolean }
   | {

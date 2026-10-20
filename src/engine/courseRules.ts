@@ -441,9 +441,12 @@ function checkRule(rule: CourseRule, ctx: RuleCtx): RuleStatus {
         if (exempt.has(c)) continue
         const s = ctx.data.subjects[c]
         if (rule.category !== undefined && (!s || categoryOf(s, ctx.course.code) !== rule.category)) continue
-        // A subject we have no data for still has its area in its code, at the usual 12.5.
+        // A subject we have no data for still has its area and level in its code, at the usual 12.5.
         const area = s?.area ?? c.slice(0, 4)
-        byArea.set(area, (byArea.get(area) ?? 0) + (s?.points ?? 12.5))
+        if (rule.areas && !rule.areas.includes(area)) continue
+        if (rule.levels && !rule.levels.includes(s?.level ?? Number(c[4]))) continue
+        const discipline = disciplineOf(rule, area)
+        byArea.set(discipline, (byArea.get(discipline) ?? 0) + (s?.points ?? 12.5))
       }
       const over = [...byArea].filter(([, pts]) => pts > rule.max).map(([a, pts]) => `${a} (${pts})`).join(', ')
       if (over) return { ...base, status: 'fail', detail: `over ${rule.max} points in ${over}`, detailKey: 'areaCapOver', params: { max: rule.max, over } }
@@ -482,6 +485,11 @@ function checkRule(rule: CourseRule, ctx: RuleCtx): RuleStatus {
       }
     }
   }
+}
+
+/** The discipline an area counts towards under a cap: its group ("POLS+INTS") or the area itself. */
+export function disciplineOf(rule: { groups?: string[][] }, area: string): string {
+  return rule.groups?.find((g) => g.includes(area))?.join('+') ?? area
 }
 
 /** The codes a set of requirements names. */

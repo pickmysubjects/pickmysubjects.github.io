@@ -132,6 +132,26 @@ describe('discipline cap (B-ARTS, B-BMED)', () => {
     expect(String(status(heavy, 'discipline-cap')?.params.over)).toMatch(/HIST/)
   })
 
+  it('counts a two-area discipline together (Politics and International Studies: POLS + INTS)', () => {
+    const pick = (area: string, n: number) => Object.values(real.subjects).filter((s) => s.area === area && s.categories['B-ARTS'] && s.points === 12.5).slice(0, n).map((s) => s.code)
+    const base = { ...arts, terms: arts.terms.map((t) => ({ ...t, subjects: t.subjects.filter((c) => !/^(POLS|INTS)/.test(c)) })) }
+    const pols = pick('POLS', 10)
+    const ints = pick('INTS', 1)
+    expect(pols).toHaveLength(10)
+    expect(ints).toHaveLength(1)
+    const add = (codes: string[]) => ({ ...base, terms: [...base.terms, { year: 2031, period: 'semester-1' as const, subjects: codes }] })
+    // 125 points of POLS alone is at the cap; one INTS subject on top goes over, as one discipline.
+    expect(String(status(add(pols), 'discipline-cap')?.params.over ?? '')).not.toMatch(/POLS/)
+    expect(String(status(add([...pols, ...ints]), 'discipline-cap')?.params.over)).toMatch(/POLS\+INTS/)
+  })
+
+  it('caps level-2 and level-3 Philosophy at 87.5 points', () => {
+    expect(status(arts, 'philosophy-cap')?.status).toBe('ok')
+    const phil = Object.values(real.subjects).filter((s) => s.area === 'PHIL' && s.level >= 2 && s.categories['B-ARTS'] && s.points === 12.5).slice(0, 8).map((s) => s.code)
+    const heavy = { ...arts, terms: [...arts.terms, { year: 2031, period: 'semester-1' as const, subjects: phil }] }
+    expect(status(heavy, 'philosophy-cap')?.status).toBe('fail')
+  })
+
   it('the planner never goes past it, and Psychology (125 points of PSYC) still plans', () => {
     for (const major of ['history', 'arts-psychology', 'arts-economics', 'arts-geography']) {
       const p = plan('B-ARTS', major).plan

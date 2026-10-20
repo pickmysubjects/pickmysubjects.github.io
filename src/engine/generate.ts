@@ -1,6 +1,6 @@
 import { forCourse } from './forCourse'
 import { offeredIn, periodsFor, termKey } from './availability'
-import { capExempt, categoryOf, checkCourse, componentNeeds, findComponent, findCourse, heldMajorIds, majorTitles, minorTitles, planComponentIds, sharesAllowed, withBarredBreadth } from './courseRules'
+import { capExempt, categoryOf, disciplineOf, checkCourse, componentNeeds, findComponent, findCourse, heldMajorIds, majorTitles, minorTitles, planComponentIds, sharesAllowed, withBarredBreadth } from './courseRules'
 import { evaluateField, referencedSubjects, type EvalContext, type Tri } from './expr'
 import type { Note, Params, Plan, PlanTerm } from './plan'
 import { standardTerms } from './plan'
@@ -1058,11 +1058,13 @@ function withinCaps(s: Subject, taken: string[], course: Course, data: Dataset, 
   for (const r of course.rules) {
     if (r.kind !== 'area-cap') continue
     if (r.category !== undefined && categoryOf(s, course.code) !== r.category) continue
+    if ((r.areas && !r.areas.includes(s.area)) || (r.levels && !r.levels.includes(s.level))) continue
     const exempt = capExempt(r, data, components)
     if (exempt.has(s.code)) continue
     const inArea = taken.reduce((sum, c) => {
       const t = data.subjects[c]
-      if (!t || exempt.has(c) || t.area !== s.area) return sum
+      if (!t || exempt.has(c) || disciplineOf(r, t.area) !== disciplineOf(r, s.area)) return sum
+      if (r.levels && !r.levels.includes(t.level)) return sum
       if (r.category !== undefined && categoryOf(t, course.code) !== r.category) return sum
       return sum + t.points
     }, 0)
