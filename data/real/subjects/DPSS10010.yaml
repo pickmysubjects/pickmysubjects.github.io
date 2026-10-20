@@ -1,0 +1,40 @@
+code: DPSS10010
+title: Production Studio 2
+level: 1
+points: 25
+offerings:
+  "2026":
+    - semester-2
+prerequisites:
+  all:
+    - DPSS10008
+    - DPSS10009
+corequisites: none
+non_allowed:
+  - DPSS10006
+skills:
+  - design
+topics:
+  - performance
+  - design
+assessment:
+  - kind: project
+    weight: 15
+  - kind: project
+    weight: 15
+  - kind: project
+    weight: 15
+  - kind: project
+    weight: 15
+  - kind: project
+    weight: 15
+  - kind: project
+    weight: 15
+  - kind: presentation
+    weight: 10
+weekly_contact_hours: 24
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/dpss10010
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,37 @@
+code: ARCH10001
+source: StudentVIP
+url: https://studentvip.com.au/unimelb/subjects/arch10001
+reviews: 10
+from: 2017
+to: 2026
+checked: 2026-10-21
+points:
+  - en: "Almost every reviewer calls the workload very heavy, with long weekend hours; several advise taking it only if your degree needs it."
+    zh: "几乎所有评论者都说工作量很大，周末也要花很多时间；不少人建议只有专业要求才选。"
+    zh-TW: "幾乎所有評論者都說工作量很大，週末也要花很多時間；不少人建議只有學位要求才選。"
+    ja: "ほぼ全員が課題量はとても多く週末も長時間かかると言い、必修でなければ避けるよう勧める人も多い。"
+    ko: "거의 모든 리뷰어가 과제량이 매우 많고 주말에도 오래 해야 한다고 하며, 필수가 아니면 피하라는 조언도 많음."
+    vi: "Hầu hết người đánh giá nói khối lượng rất nặng, cuối tuần cũng phải làm lâu; nhiều người khuyên chỉ học nếu bắt buộc."
+    ms: "Hampir semua pengulas kata beban kerja sangat berat hingga hujung minggu; ramai nasihat ambil hanya jika diwajibkan."
+    id: "Hampir semua pengulas bilang bebannya sangat berat sampai akhir pekan; banyak yang menyarankan ambil hanya jika wajib."
+    hi: "लगभग सभी रिव्यूअर कहते हैं काम बहुत भारी है, वीकेंड पर भी घंटों लगते हैं; कई सलाह देते हैं कि ज़रूरी हो तभी लें।"
+  - en: "Learning Rhino and several design programs at once is a common struggle, and some found grading depends a lot on the tutor."
+    zh: "同时学Rhino和多个设计软件是常见难点，也有人觉得评分很看导师。"
+    zh-TW: "同時學 Rhino 和多個設計軟體是常見難點，也有人覺得評分很看助教。"
+    ja: "Rhinoなど複数のソフトを同時に覚えるのが大変で、採点がチューター次第だと感じた人もいる。"
+    ko: "Rhino 등 여러 디자인 프로그램을 한꺼번에 배우는 게 흔한 어려움이고, 채점이 튜터에 따라 다르다는 의견도 있음."
+    vi: "Học Rhino và nhiều phần mềm cùng lúc là khó khăn phổ biến; một số thấy điểm phụ thuộc nhiều vào tutor."
+    ms: "Belajar Rhino dan beberapa perisian serentak ialah cabaran biasa, dan ada yang rasa pemarkahan bergantung pada tutor."
+    id: "Belajar Rhino dan beberapa software sekaligus jadi kesulitan umum; sebagian merasa nilai sangat tergantung tutor."
+    hi: "Rhino और कई डिज़ाइन सॉफ़्टवेयर एक साथ सीखना आम मुश्किल है, और कुछ को लगा ग्रेडिंग ट्यूटर पर निर्भर है।"
+  - en: "On the plus side, reviewers say tutors and assignment guidance help, and the drawing and software skills are useful later, especially for architecture."
+    zh: "好的一面是导师和作业指引很有帮助，学到的绘图和软件技能之后很有用，尤其对建筑方向。"
+    zh-TW: "好的一面是助教和作業指引很有幫助，學到的繪圖和軟體技能之後很有用，尤其對建築方向。"
+    ja: "良い点として、チューターや課題の説明が助けになり、図面とソフトの技能は後で役立つ、特に建築志望には、という声。"
+    ko: "장점으로 튜터와 과제 안내가 도움이 되고, 도면·소프트웨어 실력은 특히 건축 전공에 나중에 유용하다고 함."
+    vi: "Mặt tích cực: tutor và hướng dẫn bài tập hữu ích, kỹ năng vẽ và phần mềm dùng được về sau, nhất là ngành kiến trúc."
+    ms: "Dari sudut baik, tutor dan panduan tugasan membantu, dan kemahiran lukisan serta perisian berguna kemudian, terutama seni bina."
+    id: "Sisi baiknya, tutor dan panduan tugas membantu, dan keterampilan gambar serta software berguna nanti, terutama arsitektur."
+    hi: "अच्छी बात यह कि ट्यूटर और असाइनमेंट गाइडेंस मदद करते हैं, और ड्रॉइंग व सॉफ़्टवेयर कौशल बाद में काम आते हैं, ख़ासकर आर्किटेक्चर में।"
+workload: heavy
+difficulty: hard
