@@ -135,6 +135,7 @@ export const zhCN: Messages = {
     done: '已完成',
     missing: '缺少 {codes}',
     firstSemester: '{codes} 必须安排在第一个学期',
+    firstYear: '{codes} 必须安排在第一年',
     pointsMin: '{have} / {need} 学分',
     pointsMax: '{have} 学分（上限 {need}）',
     uncategorised: '{n} 学分尚未分类',

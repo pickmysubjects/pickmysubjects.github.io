@@ -135,6 +135,7 @@ export const hi: Messages = {
     done: 'पूरा',
     missing: '{codes} बाकी',
     firstSemester: '{codes} पहले सेमेस्टर में होना चाहिए',
+    firstYear: '{codes} पहले साल में होना चाहिए',
     pointsMin: '{have} / {need} पॉइंट',
     pointsMax: '{have} पॉइंट (अधिकतम {need})',
     uncategorised: '{n} पॉइंट अभी वर्गीकृत नहीं',

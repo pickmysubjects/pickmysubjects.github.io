@@ -135,6 +135,7 @@ export const vi: Messages = {
     done: 'xong',
     missing: 'thiếu {codes}',
     firstSemester: '{codes} phải ở học kỳ đầu tiên',
+    firstYear: '{codes} phải ở năm đầu tiên',
     pointsMin: '{have} / {need} tín chỉ',
     pointsMax: '{have} tín chỉ (tối đa {need})',
     uncategorised: '{n} tín chỉ chưa được phân loại',

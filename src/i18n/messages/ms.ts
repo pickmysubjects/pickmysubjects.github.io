@@ -135,6 +135,7 @@ export const ms: Messages = {
     done: 'selesai',
     missing: 'kurang {codes}',
     firstSemester: '{codes} mesti pada semester pertama',
+    firstYear: '{codes} mesti pada tahun pertama',
     pointsMin: '{have} / {need} mata',
     pointsMax: '{have} mata (maks. {need})',
     uncategorised: '{n} mata belum dikategorikan',

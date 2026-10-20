@@ -351,6 +351,12 @@ function checkRule(rule: CourseRule, ctx: RuleCtx): RuleStatus {
         const late = rule.subjects.filter((c) => !ctx.plan.completed.includes(c) && !first.includes(c))
         if (late.length > 0) return { ...base, status: 'fail', detail: `${late.join(', ')} must be in your first semester`, detailKey: 'firstSemester', params: { codes: late.join(', ') } }
       }
+      if (rule.firstYear) {
+        // A foundation year: the first two semesters, not later.
+        const year = ctx.plan.terms.filter((t) => t.period === 'semester-1' || t.period === 'semester-2').slice(0, 2).flatMap((t) => t.subjects)
+        const late = rule.subjects.filter((c) => !ctx.plan.completed.includes(c) && !year.includes(c))
+        if (late.length > 0) return { ...base, status: 'fail', detail: `${late.join(', ')} must be in your first year`, detailKey: 'firstYear', params: { codes: late.join(', ') } }
+      }
       return { ...base, status: 'ok', detail: 'done', detailKey: 'done', params: {} }
     }
     case 'points': {

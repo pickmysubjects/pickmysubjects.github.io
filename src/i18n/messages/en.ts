@@ -138,6 +138,7 @@ export const en = {
     done: 'done',
     missing: 'missing {codes}',
     firstSemester: '{codes} must be in your first semester',
+    firstYear: '{codes} must be in your first year',
     pointsMin: '{have} / {need} points',
     pointsMax: '{have} of max {need} points',
     uncategorised: '{n} points not yet categorised',

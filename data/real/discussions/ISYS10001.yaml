@@ -1,0 +1,37 @@
+code: ISYS10001
+source: StudentVIP
+url: https://studentvip.com.au/unimelb/subjects/isys10001
+reviews: 5
+from: 2015
+to: 2020
+checked: 2026-10-21
+points:
+  - en: "Most reviewers call it an easy breadth subject that is hard to fail if you put effort into the assignments, though the content can feel dry."
+    zh: "多数评论者说这是门轻松的 breadth，作业认真做就很难挂，但内容有点枯燥。"
+    zh-TW: "多數評論者說這是門輕鬆的 breadth，作業認真做就很難被當，但內容有點枯燥。"
+    ja: "多くの人は楽なブレドス科目で、課題をきちんとやれば落としにくいと言うが、内容はやや退屈。"
+    ko: "대부분 쉬운 브레드스 과목이고 과제만 성실히 하면 낙제하기 어렵다고 하지만, 내용은 다소 지루함."
+    vi: "Phần lớn nói đây là môn breadth dễ, làm bài tập nghiêm túc thì khó trượt, dù nội dung hơi khô."
+    ms: "Kebanyakan pengulas kata ia subjek breadth mudah dan sukar gagal jika berusaha dalam tugasan, walaupun isinya agak hambar."
+    id: "Sebagian besar menyebutnya breadth yang mudah dan sulit gagal kalau serius mengerjakan tugas, meski materinya agak kering."
+    hi: "ज़्यादातर रिव्यूअर इसे आसान ब्रेड्थ विषय कहते हैं, असाइनमेंट में मेहनत करें तो फेल होना मुश्किल, पर सामग्री थोड़ी नीरस है।"
+  - en: "The team project carries real weight for your grade, so reviewers advise putting extra effort in and attending workshops, which cover exam concepts."
+    zh: "小组项目对成绩影响很大，评论者建议多花功夫，并认真上 workshop，那里讲的内容会考。"
+    zh-TW: "小組專案對成績影響很大，評論者建議多下功夫，並認真上 workshop，那裡講的內容會考。"
+    ja: "グループ課題は成績への影響が大きいので力を入れること、試験範囲を扱うワークショップに出ることが勧められている。"
+    ko: "팀 프로젝트가 성적에 크게 작용하니 신경 쓰고, 시험 개념을 다루는 워크숍에 꼭 가라는 조언."
+    vi: "Dự án nhóm ảnh hưởng nhiều đến điểm, nên được khuyên đầu tư thêm và đi workshop vì nội dung đó sẽ thi."
+    ms: "Projek kumpulan banyak mempengaruhi gred, jadi pengulas nasihatkan usaha lebih dan hadir bengkel yang merangkumi konsep peperiksaan."
+    id: "Proyek kelompok sangat menentukan nilai, jadi disarankan berusaha lebih dan ikut workshop yang membahas materi ujian."
+    hi: "टीम प्रोजेक्ट ग्रेड पर काफ़ी असर डालता है, इसलिए ज़्यादा मेहनत करने और वर्कशॉप में जाने की सलाह है, जहाँ परीक्षा वाले कॉन्सेप्ट आते हैं।"
+  - en: "Older reviewers found the exam close to the sample exam and said the last lecture hinted at what would be tested; one felt coordination was poor."
+    zh: "早期评论者说考试和样题很像，最后一节讲座会提示考点；也有人觉得课程组织得不好。"
+    zh-TW: "早期評論者說考試和範例考題很像，最後一堂講座會提示考點；也有人覺得課程安排不好。"
+    ja: "以前の人は試験が過去問に近く、最終講義で出題範囲が示されたと言う。運営がまずいと感じた人もいる。"
+    ko: "예전 리뷰어들은 시험이 샘플 시험과 비슷했고 마지막 강의에서 출제 범위를 알려줬다고 함. 운영이 미흡했다는 의견도 있음."
+    vi: "Người học trước nói đề thi giống đề mẫu và buổi giảng cuối có gợi ý phần thi; một người thấy khâu tổ chức kém."
+    ms: "Pengulas lama dapati peperiksaan hampir sama dengan contoh dan kuliah terakhir memberi petunjuk; seorang rasa penyelarasan lemah."
+    id: "Pengulas lama bilang ujian mirip contoh soal dan kuliah terakhir memberi bocoran cakupan; satu orang merasa koordinasinya buruk."
+    hi: "पुराने रिव्यूअर्स के अनुसार परीक्षा सैंपल जैसी थी और आख़िरी लेक्चर में संकेत मिले; एक को कोऑर्डिनेशन कमज़ोर लगा।"
+workload: light
+difficulty: easy

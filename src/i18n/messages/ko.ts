@@ -135,6 +135,7 @@ export const ko: Messages = {
     done: '완료',
     missing: '{codes} 부족',
     firstSemester: '{codes}는 첫 학기에 있어야 합니다',
+    firstYear: '{codes}는 첫 해에 있어야 합니다',
     pointsMin: '{have} / {need}학점',
     pointsMax: '{have}학점 (최대 {need})',
     uncategorised: '{n}학점 미분류',

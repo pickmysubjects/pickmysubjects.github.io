@@ -1,0 +1,33 @@
+code: SCIE10008
+title: "Science Knowledge Foundations: Physics"
+level: 1
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites:
+  admission: B-SCIEXTD
+  note: Admission into the B-SCIEXTD Bachelor of Science (Extended)
+corequisites: SCIE10010
+non_allowed: []
+skills:
+  - maths
+  - lab
+topics:
+  - physics
+  - science-communication
+assessment:
+  - kind: test
+    weight: 20
+  - kind: assignment
+    weight: 30
+  - kind: exam
+    weight: 50
+weekly_contact_hours: 5
+categories:
+  B-SCIEXTD: core
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/scie10008
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

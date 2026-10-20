@@ -135,6 +135,7 @@ export const zhTW: Messages = {
     done: '已完成',
     missing: '缺少 {codes}',
     firstSemester: '{codes} 必須安排在第一個學期',
+    firstYear: '{codes} 必須安排在第一年',
     pointsMin: '{have} / {need} 學分',
     pointsMax: '{have} 學分（上限 {need}）',
     uncategorised: '{n} 學分尚未分類',

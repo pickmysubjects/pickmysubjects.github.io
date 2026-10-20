@@ -1,0 +1,42 @@
+code: SCIE10010
+title: Science Skills Foundations
+level: 1
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites:
+  admission: B-SCIEXTD
+  note: Admission into the B-SCIEXTD Bachelor of Science (Extended)
+corequisites:
+  any:
+    - SCIE10006
+    - SCIE10008
+    - SCIE10009
+non_allowed: []
+skills:
+  - lab
+  - writing
+  - presentation
+topics:
+  - science-communication
+  - ethics
+assessment:
+  - kind: assignment
+    weight: 10
+  - kind: report
+    weight: 30
+  - kind: presentation
+    weight: 20
+    group: true
+  - kind: exam
+    weight: 40
+    hurdle: true
+weekly_contact_hours: 5
+categories:
+  B-SCIEXTD: core
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/scie10010
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

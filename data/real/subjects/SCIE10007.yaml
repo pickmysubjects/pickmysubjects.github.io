@@ -1,0 +1,49 @@
+code: SCIE10007
+title: Science in Practice
+level: 1
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites:
+  all:
+    - admission: B-SCIEXTD
+      note: Admission into the B-SCIEXTD Bachelor of Science (Extended)
+    - points:
+        min: 12.5
+        from:
+          - SCIE10006
+          - SCIE10008
+          - SCIE10009
+    - SCIE10010
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - presentation
+  - fieldwork
+topics:
+  - science-communication
+  - society
+assessment:
+  - kind: test
+    weight: 5
+  - kind: test
+    weight: 15
+  - kind: report
+    weight: 20
+  - kind: presentation
+    weight: 20
+    group: true
+  - kind: assignment
+    weight: 20
+  - kind: exam
+    weight: 20
+weekly_contact_hours: 5
+categories:
+  B-SCIEXTD: core
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/scie10007
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

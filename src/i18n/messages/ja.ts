@@ -135,6 +135,7 @@ export const ja: Messages = {
     done: '完了',
     missing: '{codes} が不足',
     firstSemester: '{codes} は最初のセメスターに入れる必要があります',
+    firstYear: '{codes} は1年目に入れる必要があります',
     pointsMin: '{have} / {need} ポイント',
     pointsMax: '{have} ポイント（上限 {need}）',
     uncategorised: '{n} ポイントは未分類',
