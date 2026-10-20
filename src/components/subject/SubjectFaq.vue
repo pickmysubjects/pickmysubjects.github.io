@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { MessageCircleQuestion } from 'lucide-vue-next'
+import { ChevronDown, MessageCircleQuestion } from 'lucide-vue-next'
 import type { Subject } from '@/engine'
 import { useI18n } from '@/i18n'
 import { subjectFaq } from '@/i18n/faq'
 
-/** Short answers to what students ask about a subject, folded away by default. */
+/** Short answers to what students ask about a subject: the questions show, each answer opens on tap. */
 const props = defineProps<{ subject: Subject; year: number; course: string; unlocks: string[] }>()
 const { t, locale } = useI18n()
 
@@ -24,15 +24,16 @@ const items = computed(() => {
 </script>
 
 <template>
-  <details v-if="items.length" class="faq">
-    <summary class="faq-title"><MessageCircleQuestion :size="18" aria-hidden="true" /> {{ t('faq.title') }}</summary>
-    <dl class="faq-list">
-      <div v-for="(item, i) in items" :key="i" class="faq-item">
-        <dt>{{ item.q }}</dt>
-        <dd>{{ item.a }}</dd>
-      </div>
-    </dl>
-  </details>
+  <section v-if="items.length" class="faq" :aria-labelledby="`faq-${subject.code}`">
+    <h2 :id="`faq-${subject.code}`" class="faq-title"><MessageCircleQuestion :size="18" aria-hidden="true" /> {{ t('faq.title') }}</h2>
+    <details v-for="(item, i) in items" :key="i" class="faq-item">
+      <summary>
+        <span>{{ item.q }}</span>
+        <ChevronDown class="faq-chevron" :size="18" aria-hidden="true" />
+      </summary>
+      <p>{{ item.a }}</p>
+    </details>
+  </section>
 </template>
 
 <style scoped>
@@ -40,24 +41,55 @@ const items = computed(() => {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 0.9375rem;
+  margin: 0 0 4px;
+  font-size: 1rem;
   font-weight: 650;
-  cursor: pointer;
 }
 
-.faq-list {
-  display: grid;
+.faq-item {
+  border-top: 1px solid var(--glass-edge);
+}
+
+.faq-item summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   gap: 12px;
-  margin: 12px 0 0;
-}
-
-.faq-item dt {
+  padding: 12px 0;
   font-weight: 600;
+  cursor: pointer;
+  list-style: none;
 }
 
-.faq-item dd {
-  margin: 2px 0 0;
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-item summary:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+.faq-chevron {
+  flex: none;
+  color: var(--ink-soft);
+  transition: transform 0.2s ease;
+}
+
+.faq-item[open] .faq-chevron {
+  transform: rotate(180deg);
+}
+
+.faq-item p {
+  margin: 0 0 12px;
   color: var(--ink-soft);
   line-height: 1.55;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faq-chevron {
+    transition: none;
+  }
 }
 </style>
