@@ -1,0 +1,61 @@
+# Bachelor of Fine Arts (Film and Television) course rules, 2026 Handbook. Facts re-expressed in our own words.
+# The nine Bachelor of Fine Arts streams share one shape (a fixed compulsory sequence, 50 points of
+# breadth, in some streams one elective) but no subjects beyond CREA10002, so each is its own file.
+code: B-FAFILMTV
+title: Bachelor of Fine Arts (Film and Television)
+year: 2026
+total_points: 300
+standard_load: 50
+categories: [fine-arts, breadth]
+# The stream's own areas (and CREA, for Stories of Place) are its discipline; a subject elsewhere
+# counts as breadth when its page lists this course for breadth. Which other Fine Arts and Music
+# areas a stream's students may take as breadth isn't on the course pages.
+area_categories:
+  home: fine-arts
+  areas: [CREA, FLTV, PERF]
+  other: breadth
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-fafilmtv/course-structure
+verified_on: 2026-10-21 # rules checked by hand against the Handbook course structure
+listed: false
+rules:
+  - id: total
+    kind: points
+    min: 300
+    description: 300 points in total
+  - id: stories-of-place
+    kind: compulsory
+    subjects: [CREA10002]
+    first_semester: true
+    description: Stories of Place, in the first semester
+  - id: compulsory-l1
+    kind: compulsory
+    subjects: [FLTV10006, FLTV10008, FLTV10009, FLTV10025]
+    description: The level-1 compulsory subjects
+  - id: compulsory-l2
+    kind: compulsory
+    subjects: [FLTV20006, FLTV20008, FLTV20009, FLTV20023]
+    description: The level-2 compulsory subjects
+  - id: compulsory-l3
+    kind: compulsory
+    subjects: [FLTV30009, FLTV30026, FLTV30027, FLTV30032]
+    description: The level-3 compulsory subjects
+  # FLTV20020 not available in 2026.
+  - id: elective
+    kind: requirement
+    paths:
+      - - choose: { points: 12.5, from: [FLTV20020, FLTV20021, FLTV20022, PERF30002] }
+    description: One Film and Television elective (12.5 points)
+  - id: breadth
+    kind: points
+    category: breadth
+    min: 50
+    description: At least 50 points of breadth
+  - id: breadth-l1-cap
+    kind: points
+    category: breadth
+    level: 1
+    max: 37.5
+    description: No more than 37.5 points of level-1 breadth
+# Not encoded (engine can't express): every level-1 compulsory subject before the level-2 ones, and
+# every level-2 one before level 3 (a progression rule would hold back breadth too; the subjects'
+# own prerequisites cover most of it).

@@ -11,7 +11,7 @@ export const vi: Messages = {
   nav: { home: 'Trang chủ', browse: 'Môn học', more: 'Thêm', plan: 'Kế hoạch', recommend: 'Gợi ý', record: 'Của tôi', contribute: 'Thêm dữ liệu', feedback: 'Góp ý', main: 'Menu chính' },
   period: { summer: 'Học kỳ hè', 'semester-1': 'Học kỳ 1', winter: 'Học kỳ đông', 'semester-2': 'Học kỳ 2' },
   periodShort: { summer: 'Hè', 'semester-1': 'HK1', winter: 'Đông', 'semester-2': 'HK2' },
-  category: { science: 'khoa học', commerce: 'kinh doanh', arts: 'nhân văn', design: 'thiết kế', breadth: 'breadth (ngoài ngành)', core: 'bắt buộc' },
+  category: { science: 'khoa học', commerce: 'kinh doanh', arts: 'nhân văn', design: 'thiết kế', music: 'âm nhạc', 'fine-arts': 'nghệ thuật', agriculture: 'nông nghiệp', 'oral-health': 'sức khỏe răng miệng', breadth: 'breadth (ngoài ngành)', core: 'bắt buộc' },
   plan: {
     pastTag: "Đã học",
     pastUndated: "Đã học · chưa điền học kỳ",

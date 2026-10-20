@@ -11,7 +11,7 @@ export const zhTW: Messages = {
   nav: { home: '首頁', browse: '找課', more: '更多', plan: '排課', recommend: '推薦', record: '我的', contribute: '新增資料', feedback: '意見回饋', main: '主選單' },
   period: { summer: '夏季學期', 'semester-1': '第一學期', winter: '冬季學期', 'semester-2': '第二學期' },
   periodShort: { summer: '夏季', 'semester-1': 'S1', winter: '冬季', 'semester-2': 'S2' },
-  category: { science: '理科', commerce: '商科', arts: '文科', design: '設計', breadth: 'Breadth', core: '必修' },
+  category: { science: '理科', commerce: '商科', arts: '文科', design: '設計', music: '音樂', 'fine-arts': '藝術', agriculture: '農業', 'oral-health': '口腔健康', breadth: 'Breadth', core: '必修' },
   plan: {
     pastTag: "已修",
     pastUndated: "已修 · 學期未填",

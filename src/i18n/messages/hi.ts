@@ -11,7 +11,7 @@ export const hi: Messages = {
   nav: { home: 'होम', browse: 'सब्जेक्ट', more: 'और', plan: 'प्लान', recommend: 'आपके लिए', record: 'मेरा', contribute: 'डेटा जोड़ें', feedback: 'फ़ीडबैक', main: 'मुख्य मेन्यू' },
   period: { summer: 'समर टर्म', 'semester-1': 'सेमेस्टर 1', winter: 'विंटर टर्म', 'semester-2': 'सेमेस्टर 2' },
   periodShort: { summer: 'समर', 'semester-1': 'सेम 1', winter: 'विंटर', 'semester-2': 'सेम 2' },
-  category: { science: 'साइंस', commerce: 'कॉमर्स', arts: 'आर्ट्स', design: 'डिज़ाइन', breadth: 'ब्रेड्थ', core: 'अनिवार्य' },
+  category: { science: 'साइंस', commerce: 'कॉमर्स', arts: 'आर्ट्स', design: 'डिज़ाइन', music: 'संगीत', 'fine-arts': 'ललित कला', agriculture: 'कृषि', 'oral-health': 'ओरल हेल्थ', breadth: 'ब्रेड्थ', core: 'अनिवार्य' },
   plan: {
     pastTag: "पूरा",
     pastUndated: "पूरा · सेमेस्टर नहीं भरा",

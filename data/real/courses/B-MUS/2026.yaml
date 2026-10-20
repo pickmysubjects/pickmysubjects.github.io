@@ -1,0 +1,51 @@
+# Bachelor of Music course rules, 2026 Handbook. Facts re-expressed in our own words.
+code: B-MUS
+title: Bachelor of Music
+year: 2026
+total_points: 300
+standard_load: 50
+categories: [music, breadth]
+# Music subjects are the MUSI area. Entry is by audition into one major, so the major is chosen
+# on admission, not later.
+area_categories:
+  home: music
+  areas: [MUSI]
+  other: breadth
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-mus/course-structure
+verified_on: 2026-10-21 # rules checked by hand against the Handbook course structure
+listed: false
+rules:
+  - id: total
+    kind: points
+    min: 300
+    description: 300 points in total
+  - id: perspectives
+    kind: compulsory
+    subjects: [MUSI10230]
+    first_year: true
+    description: Musical Perspectives (level 1, compulsory)
+  # The compulsory subject and the 225-point major.
+  - id: music
+    kind: points
+    category: music
+    min: 237.5
+    description: At least 237.5 points of music subjects
+  - id: breadth
+    kind: points
+    category: breadth
+    min: 50
+    description: At least 50 points of breadth
+  - id: breadth-l1-cap
+    kind: points
+    category: breadth
+    level: 1
+    max: 37.5
+    description: No more than 37.5 points of level-1 breadth
+  - id: major
+    kind: major
+    count: 1
+    description: Complete one major (225 points)
+# Not encoded (engine can't express): Musical Perspectives before any level-2 core subject, and
+# every level-1 core subject before level-3 core subjects (the subjects' own prerequisites cover
+# most of this). The music elective and ensemble lists are separate component pages (not pasted).
+# The 12.5 free points (music elective or breadth) need no rule: they are what's left of the 300.

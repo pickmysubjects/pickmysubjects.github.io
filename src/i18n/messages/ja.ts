@@ -11,7 +11,7 @@ export const ja: Messages = {
   nav: { home: 'ホーム', browse: '科目', more: 'その他', plan: 'プラン', recommend: 'おすすめ', record: 'マイ', contribute: 'データを追加', feedback: 'フィードバック', main: 'メインメニュー' },
   period: { summer: '夏学期', 'semester-1': '第1セメスター', winter: '冬学期', 'semester-2': '第2セメスター' },
   periodShort: { summer: '夏', 'semester-1': 'S1', winter: '冬', 'semester-2': 'S2' },
-  category: { science: '理系科目', commerce: '商学系科目', arts: '文系科目', design: 'デザイン系科目', breadth: 'Breadth（専攻外科目）', core: '必修' },
+  category: { science: '理系科目', commerce: '商学系科目', arts: '文系科目', design: 'デザイン系科目', music: '音楽系科目', 'fine-arts': '芸術系科目', agriculture: '農学系科目', 'oral-health': '口腔保健系科目', breadth: 'Breadth（専攻外科目）', core: '必修' },
   plan: {
     pastTag: "履修済み",
     pastUndated: "履修済み・学期未入力",

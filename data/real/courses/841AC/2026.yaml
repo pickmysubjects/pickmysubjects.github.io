@@ -1,0 +1,38 @@
+# Bachelor of Oral Health course rules, 2026 Handbook. Facts re-expressed in our own words.
+code: 841AC
+title: Bachelor of Oral Health
+year: 2026
+total_points: 300
+standard_load: 50
+categories: [oral-health]
+# A fixed three-year sequence of year-long subjects; no electives and no breadth.
+area_categories:
+  home: oral-health
+  areas: [ORAL]
+  other: breadth
+handbook: https://handbook.unimelb.edu.au/2026/courses/841ac/course-structure
+verified_on: 2026-10-21 # rules checked by hand against the Handbook course structure
+listed: false
+rules:
+  - id: total
+    kind: points
+    min: 300
+    description: 300 points in total
+  - id: year1
+    kind: compulsory
+    subjects: [ORAL10001, ORAL10003, ORAL10005]
+    first_year: true
+    description: First year (year-long subjects)
+  - id: year2
+    kind: compulsory
+    subjects: [ORAL20001, ORAL20003, ORAL20005]
+    description: Second year (year-long subjects)
+  - id: year3
+    kind: compulsory
+    subjects: [ORAL30001, ORAL30002]
+    description: Third year (year-long subjects)
+  - id: oral-health
+    kind: points
+    category: oral-health
+    min: 300
+    description: All 300 points from the course's own subjects

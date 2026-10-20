@@ -28,6 +28,8 @@ assessment:
   - kind: assignment
     weight: 50
 weekly_contact_hours: 3
+categories:
+  B-FAPRO: fine-arts
 breadth_for: []
 handbook: https://handbook.unimelb.edu.au/2026/subjects/gdes30004
 source_year: 2026

@@ -1,0 +1,84 @@
+# Bachelor of Agriculture course rules, 2026 Handbook. Facts re-expressed in our own words.
+code: B-AGR
+title: Bachelor of Agriculture
+year: 2026
+total_points: 300
+standard_load: 50
+categories: [agriculture]
+# No breadth in this degree: every subject is degree core or a discipline subject. AGRI and ANSC
+# map by prefix; the other subjects on the core and elective lists (ENVS10001, UNIB10009,
+# FOOD10001, FOOD20003) carry B-AGR: agriculture in their own files, since their areas aren't
+# all agriculture. A subject from anywhere else can't count: the 300-point rule below rejects it.
+area_categories:
+  home: agriculture
+  areas: [AGRI, ANSC]
+  other: breadth
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-agr/course-structure
+verified_on: 2026-10-21 # rules checked by hand against the Handbook course structure
+listed: false
+rules:
+  - id: total
+    kind: points
+    min: 300
+    description: 300 points in total
+  - id: core-l1
+    kind: compulsory
+    subjects: [AGRI10045, AGRI10046, AGRI10048, AGRI10049, AGRI10050, AGRI10051, ENVS10001]
+    description: The level-1 degree core subjects
+  - id: discovery
+    kind: compulsory
+    subjects: [AGRI10047]
+    first_year: true
+    description: Discovering Agriculture in Australia, in first year
+  - id: core-l2
+    kind: compulsory
+    subjects: [AGRI20038, AGRI20042, AGRI20043]
+    description: The level-2 degree core subjects
+  # Core (137.5 points) and discipline subjects (162.5) both count as agriculture here, so the
+  # discipline rules below are the Handbook's figures plus the core points at that level.
+  - id: agriculture
+    kind: points
+    category: agriculture
+    min: 300
+    description: All 300 points from the degree core and discipline lists
+  - id: agriculture-l1-cap
+    kind: points
+    category: agriculture
+    level: 1
+    max: 125
+    description: No more than 25 points of level-1 discipline electives (beyond the 100-point core)
+  - id: agriculture-l2
+    kind: points
+    category: agriculture
+    level: 2
+    min: 87.5
+    description: At least 50 points of level-2 discipline subjects (beyond the level-2 core)
+  - id: agriculture-l3
+    kind: points
+    category: agriculture
+    level: 3
+    min: 75
+    description: At least 75 points of level-3 discipline subjects
+  - id: major
+    kind: major
+    count: 1
+    description: Complete one major (87.5 points, capstone included)
+  - id: progress-to-l2
+    kind: progression
+    before_level: 2
+    level: 1
+    min_points: 50
+    description: Normally 50 level-1 points before level-2 subjects
+  - id: progress-to-l3
+    kind: progression
+    before_level: 3
+    level: 2
+    min_points: 50
+    description: Normally 50 level-2 points before level-3 subjects
+# Not encoded (engine can't express): AGRI30041 Industry Internship may be taken after first year,
+# an exception to the level-2 progression rule. The optional Dookie campus semester (AGRI20035,
+# AGRI20036, AGRI20038, AGRI20040 together in semester 2 of year 2) is a choice, not a rule.
+# Level-2 and level-3 elective lists: AGRI20003 AGRI20026 AGRI20027 AGRI20035 AGRI20036 AGRI20037
+# AGRI20040 AGRI20041 AGRI20044 AGRI20045 AGRI20046 ANSC20001-ANSC20005 FOOD20003; AGRI30006
+# AGRI30011 AGRI30016 AGRI30033 AGRI30037 AGRI30040-AGRI30043 AGRI30045 AGRI30046 AGRI30048
+# ANSC30003-ANSC30006 ANSC30008. Level-1 electives: AGRI10039 UNIB10009 FOOD10001 ANSC10001.
