@@ -40,7 +40,7 @@ export function subjectFaq(t: Translate, s: Subject, ctx: FaqContext): FaqItem[]
     items.push({
       q: t('faq.whenQ', { code }),
       a: periods.length
-        ? t('seo.runs', { year: ctx.year, periods: periods.map((p) => t(`period.${p}`)).join(ctx.listSep) })
+        ? t('seo.runs', { year: ctx.year, periods: s.yearLong ? t('plan.yearLongRuns') : periods.map((p) => t(`period.${p}`)).join(ctx.listSep) })
         : t('seo.notRunning', { year: ctx.year }),
     })
   }

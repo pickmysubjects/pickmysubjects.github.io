@@ -6,6 +6,9 @@ import {
   findCourse,
   generatePlan,
   offeredIn,
+  recordedLoads,
+  fitsLoad,
+  termShare,
   referencedSubjects,
   passedCodes,
   planStart,
@@ -32,16 +35,6 @@ import { majorGroupOf } from '@/utils/majorGroups'
 
 export type { PlanSetup } from './planStore'
 
-/** Points on the record per semester, passed or failed (enrolled either way). */
-function recordedLoad(results: { code: string; year?: number; period?: string }[], subjects: Dataset['subjects']): Record<string, number> {
-  const out: Record<string, number> = {}
-  for (const r of results) {
-    if (r.year === undefined || r.period === undefined) continue
-    const key = `${r.year}|${r.period}`
-    out[key] = (out[key] ?? 0) + (subjects[r.code]?.points ?? 12.5)
-  }
-  return out
-}
 
 /** A saved plan as the engine reads it, with the student's record (shared by every plan). */
 export function planFor(state: PlanState, profile: Profile, data: Dataset): Plan {
@@ -59,7 +52,7 @@ export function planFor(state: PlanState, profile: Profile, data: Dataset): Plan
     terms: state.terms,
     international: state.setup.international === true,
     confirmed: profile.confirmed ?? [],
-    recordedLoad: recordedLoad(profile.results, data.subjects),
+    recordedLoad: recordedLoads(profile.results, data),
     marks: Object.fromEntries(profile.results.filter((r) => r.mark !== undefined).map((r) => [r.code, r.mark as number])),
   }
 }
@@ -236,11 +229,12 @@ export function usePlan() {
       const t = terms[i]!
       if (offeredIn(subject, t.year, t.period).status === 'fail') continue
       const others = t.subjects.filter((c) => c !== from && c !== to)
-      const used = others.reduce((sum, c) => sum + pts(c), 0)
+      // Year-long subjects put half their points on each of their semesters (and need room in Semester 2).
+      const without = terms.map((x, j) => ({ ...x, subjects: j === i ? others : x.subjects.filter((c) => c !== from && c !== to) }))
       let trade: string | undefined
-      if (used + subject.points > load) {
+      if (!fitsLoad(without, i, to, data.value, load)) {
         const home = terms[at]!
-        trade = others.find((c) => free(c) && pts(c) === subject.points && data.value.subjects[c] && offeredIn(data.value.subjects[c]!, home.year, home.period).status !== 'fail')
+        trade = others.find((c) => free(c) && termShare(data.value.subjects[c]) === termShare(subject) && !data.value.subjects[c]?.yearLong && !subject.yearLong && data.value.subjects[c] && offeredIn(data.value.subjects[c]!, home.year, home.period).status !== 'fail')
         if (!trade) continue
       }
       save((s) => {

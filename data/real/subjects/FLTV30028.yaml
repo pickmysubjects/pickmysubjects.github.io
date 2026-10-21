@@ -2,6 +2,7 @@ code: FLTV30028
 title: Screen Industry Focus
 level: 3
 points: 25
+year_long: true
 offerings:
   "2026":
     - semester-1

@@ -9,13 +9,15 @@ export interface AvailabilityResult {
 }
 
 /**
- * Is the subject offered in this period of this year? When the requested year
+ * Is the subject offered in (can it be started in) this period of this year? When the requested year
  * isn't curated, falls back to the closest earlier year (or, failing that, the
  * closest later one) and reports it as an assumption rather than a fact.
  */
 export function offeredIn(subject: Subject, year: number, period: Period): AvailabilityResult {
   // No longer run: never offered again, whatever earlier years' timetables said.
   if (subject.discontinuedFrom !== undefined && year >= subject.discontinuedFrom) return { status: 'fail' }
+  // A year-long subject is enrolled in once, in Semester 1, and runs on through Semester 2.
+  if (subject.yearLong && period !== 'semester-1') return { status: 'fail' }
   if (subject.offerings === 'unknown') return { status: 'unknown' }
   const exact = subject.offerings[String(year)]
   if (exact) return { status: exact.includes(period) ? 'ok' : 'fail' }

@@ -252,6 +252,9 @@ export const subjectFileSchema = z
     points: z.number().positive(),
     area: z.string().optional(),
     offerings,
+    // Runs across Semester 1 and Semester 2 of one year as a single enrolment (the Handbook's
+    // "Year Long"); its offerings list both semesters, and it starts in Semester 1.
+    year_long: z.boolean().optional(),
     // Where breadth students may only enrol in some of the periods (ECON10004: not semester 1),
     // those periods; used whenever the subject counts as breadth for the student's course.
     // Course titles the Handbook lists as able to take it as breadth ([] = none); absent when unknown.
@@ -295,6 +298,7 @@ export const subjectFileSchema = z
     points: s.points,
     area: s.area ?? s.code.slice(0, 4),
     offerings: s.offerings,
+    yearLong: s.year_long === true,
     breadthOfferings: s.breadth_offerings,
     breadthFor: s.breadth_for,
     recommended: s.recommended,

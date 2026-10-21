@@ -259,7 +259,8 @@ export function termStress(codes: string[], data: Dataset, profile?: Profile, op
   score += coursework.length / CRUNCH_RULE + exams.length / CRUNCH_RULE
 
   // Many deadlines: every task is a date to meet, whatever it's worth.
-  const tasks = recorded.reduce((n, s) => n + (s.assessment?.length ?? 0), 0)
+  // A year-long subject's tasks are spread over both its semesters: half fall in each.
+  const tasks = Math.round(recorded.reduce((n, s) => n + (s.assessment?.length ?? 0) * (s.yearLong ? 0.5 : 1), 0))
   if (tasks >= DEADLINES_RULE * f.tasks) {
     points++
     reasons.push({ key: 'deadlines', params: { n: tasks } })

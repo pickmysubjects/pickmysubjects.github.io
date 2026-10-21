@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, shallowRef } from 'vue'
 import { X } from 'lucide-vue-next'
-import { periodsFor, type Issue, type PlanTerm, type Subject } from '@/engine'
+import { periodsFor, termShare, type Issue, type PlanTerm, type Subject } from '@/engine'
 import { termLabel } from '@/i18n/format'
 import { useI18n } from '@/i18n'
 import SubjectCard from './SubjectCard.vue'
@@ -23,6 +23,8 @@ const props = defineProps<{
   options: { code: string; title: string }[]
   roles: Record<string, 'required' | 'option'>
   related: Set<string> | null
+  /** Year-long subjects whose other half is in this term: begun in Semester 1, or on the record in the other semester. */
+  carried?: string[]
 }>()
 const emit = defineEmits<{
   add: [code: string]
@@ -37,8 +39,9 @@ const emit = defineEmits<{
 const { t } = useI18n()
 const dragOver = shallowRef(false)
 // Enrolled points, a fail included: the semester was that full.
-const donePoints = computed(() => (props.done ?? []).reduce((sum, r) => sum + (props.subjects[r.code]?.points ?? 12.5), 0))
-const points = computed(() => donePoints.value + props.term.subjects.reduce((sum, c) => sum + (props.subjects[c]?.points ?? 12.5), 0))
+const donePoints = computed(() => (props.done ?? []).reduce((sum, r) => sum + termShare(props.subjects[r.code]), 0))
+// A year-long subject puts half its points on each of its two semesters.
+const points = computed(() => donePoints.value + [...props.term.subjects, ...(props.carried ?? [])].reduce((sum, c) => sum + termShare(props.subjects[c]), 0))
 const overloaded = computed(() => points.value > props.load)
 const fill = computed(() => `${Math.min(100, (points.value / props.load) * 100)}%`)
 
@@ -46,6 +49,7 @@ const fill = computed(() => `${Math.min(100, (points.value / props.load) * 100)}
 function onlyIn(code: string): string | null {
   const s = props.subjects[code]
   if (!s) return null
+  if (s.yearLong) return t.value('plan.yearLong')
   const sems = periodsFor(s, props.term.year).filter((p) => p === 'semester-1' || p === 'semester-2')
   if (sems.length !== 1) return null
   return t.value(sems[0] === 'semester-1' ? 'plan.s1Only' : 'plan.s2Only')
@@ -115,12 +119,47 @@ function onDrop(event: DragEvent): void {
       @move-by="emit('moveBy', code, $event)"
       @hover="emit('hover', $event ? code : null)"
     />
-    <p v-if="term.subjects.length === 0 && !done?.length" class="term-empty">{{ t('plan.emptyTerm') }}</p>
+    <!-- Year-long subjects carried on from Semester 1: planned there, studied here too. -->
+    <button
+      v-for="code in carried ?? []"
+      :key="`carried-${code}`"
+      class="carried"
+      type="button"
+      @click="emit('open', code)"
+    >
+      <span class="carried-code">{{ code }}</span>
+      <span class="carried-note">{{ t(term.period === 'semester-2' ? 'plan.yearLongCont' : 'plan.yearLong') }}</span>
+    </button>
+    <p v-if="term.subjects.length === 0 && !done?.length && !carried?.length" class="term-empty">{{ t('plan.emptyTerm') }}</p>
     <SubjectPicker :options="options" :term-index="termIndex" @pick="emit('add', $event)" />
   </section>
 </template>
 
 <style scoped>
+.carried {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 8px;
+  align-items: baseline;
+  padding: 8px 10px;
+  border-radius: var(--radius);
+  border: 1px dashed var(--glass-edge);
+  background: var(--paper-raised);
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.carried-code {
+  font-weight: 600;
+}
+
+.carried-note {
+  font-size: 0.85em;
+  opacity: 0.75;
+}
+
 .term {
   display: flex;
   flex-direction: column;

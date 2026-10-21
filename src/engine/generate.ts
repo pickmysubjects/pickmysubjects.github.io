@@ -10,6 +10,7 @@ import { balanceTerms, fixHeavyTerms } from './relieve'
 import { skillsOf, termStress, weakSkills, type StressLevel } from './termStress'
 import type { ComponentLimit, ComponentReq, Course, CourseRule, Dataset, Period, ReqExpr, Subject } from './schema'
 import { PERIODS } from './schema'
+import { doneBefore, isYearLong, recordedLoads, secondHalfOf, termLoad, termShare } from './yearLong'
 
 export interface GenerateInput {
   data: Dataset
@@ -98,7 +99,7 @@ function finishEarlier(input: GenerateInput, result: GenerateResult, shortfall: 
   const main = result.plan.terms.filter((t) => t.period === 'semester-1' || t.period === 'semester-2')
   const last = main.at(-1)
   if (!last || main.length < 2) return result
-  const lastPoints = last.subjects.reduce((sum, c) => sum + (input.data.subjects[c]?.points ?? 12.5), 0)
+  const lastPoints = termLoad(result.plan.terms, result.plan.terms.indexOf(last), input.data)
   if (lastPoints > SHORT_TERM_POINTS) return result
   const shorter = buildPlan({ ...input, maxTerms: main.length - 1, useShortTerms: true, fillShortTerms: true })
   if (shortfall(shorter) > 0 || shorter.unplaced.length) return result
@@ -188,11 +189,9 @@ function buildPlan(given: GenerateInput): GenerateResult {
   }
   const isShort = (t: PlanTerm) => t.period === 'summer' || t.period === 'winter'
   // Points already on the record in a planned semester (a part-done one the plan carries on in).
-  const preload = (t: PlanTerm) =>
-    profile.results
-      // Enrolled points, a fail included.
-      .filter((r) => r.year === t.year && r.period === t.period)
-      .reduce((sum, r) => sum + (data.subjects[r.code]?.points ?? 12.5), 0)
+  // Enrolled points, a fail included (a year-long result half in each of its semesters).
+  const recorded = recordedLoads(profile.results, data)
+  const preload = (t: PlanTerm) => recorded[`${t.year}|${t.period}`] ?? 0
 
   const pending = [...required].filter((c) => !done.has(c))
   // Areas of the major/specialisation, used to break ties between equally scored electives.
@@ -203,19 +202,24 @@ function buildPlan(given: GenerateInput): GenerateResult {
   const electives = new Set<string>()
   const fill = (term: PlanTerm, termIndex: number, relaxed = false, upTo = Infinity): void => {
     if (!course) return
-    const before = new Set([...completed, ...terms.slice(0, termIndex).flatMap((t) => t.subjects)])
-    let used = preload(term) + term.subjects.reduce((sum, c) => sum + (data.subjects[c]?.points ?? 12.5), 0)
+    const before = doneBefore(completed, terms, termIndex, data)
+    let used = preload(term) + termLoad(terms, termIndex, data)
     const cap = Math.min(isShort(term) ? SHORT_TERM_POINTS : load, used + upTo)
     while (used < cap) {
-      const pick = pickElective({ input, course, term, before, placed: allPlaced(), completed, room: cap - used, focus, reserved: pending, opens, progress: (termIndex + 1) / terms.length, relaxed })
+      const pick = pickElective({ input, course, term, before, placed: allPlaced(), completed, room: cap - used, secondRoom: secondRoom(termIndex), focus, reserved: pending, opens, progress: (termIndex + 1) / terms.length, relaxed })
       if (!pick) break
       term.subjects.push(pick.code)
       electives.add(pick.code)
-      used += data.subjects[pick.code]?.points ?? 12.5
+      used += termShare(data.subjects[pick.code])
       notes.push(note('added', { code: pick.code, year: term.year, period: term.period, rule: pick.ruleId }, `${pick.code} added in ${term.year} ${term.period} for: ${pick.why}.`))
     }
   }
   const allPlaced = (): string[] => terms.flatMap((t) => t.subjects)
+  // Room left in the Semester 2 that finishes a year-long subject started in this term (none without one).
+  const secondRoom = (termIndex: number): number => {
+    const i = secondHalfOf(terms, termIndex)
+    return i < 0 ? 0 : load - preload(terms[i] as PlanTerm) - termLoad(terms, i, data)
+  }
 
   // The last term each required subject can start in and still leave room for what needs it.
   const latest = latestStart(pending, needs, terms, data)
@@ -224,8 +228,8 @@ function buildPlan(given: GenerateInput): GenerateResult {
 
   terms.forEach((term, termIndex) => {
     now = termIndex
-    const before = new Set([...completed, ...allPlaced()])
-    let used = preload(term)
+    const before = doneBefore(completed, terms, termIndex, data)
+    let used = preload(term) + termLoad(terms, termIndex, data)
     // A summer or winter term only takes a required subject that can't wait for the next semester.
     const limit = isShort(term) ? SHORT_TERM_POINTS : load
 
@@ -248,8 +252,11 @@ function buildPlan(given: GenerateInput): GenerateResult {
         if (term.subjects.includes(code)) continue
         const group = groupOf(code).filter((c) => !before.has(c) && !term.subjects.includes(c))
         if (!group.every((c) => fits(c, group))) continue
-        const pts = group.reduce((sum, c) => sum + (data.subjects[c]?.points ?? 12.5), 0)
+        const pts = group.reduce((sum, c) => sum + termShare(data.subjects[c]), 0)
         if (used + pts > limit) continue
+        // A year-long subject's second half needs room in Semester 2 as well.
+        const later = group.filter((c) => isYearLong(data.subjects[c])).reduce((sum, c) => sum + termShare(data.subjects[c]), 0)
+        if (later > 0 && later > secondRoom(termIndex)) continue
         if (course && !group.every((c) => progressionAllows(c, course, [...before], data))) continue
         term.subjects.push(...group)
         used += pts
@@ -868,7 +875,9 @@ function latestStart(codes: string[], needs: Map<string, string[]>, terms: PlanT
     stack.delete(c)
     const s = data.subjects[c]
     let i = limit - 1
-    while (i >= 0 && s && offeredIn(s, terms[i]!.year, terms[i]!.period).status === 'fail') i--
+    // A year-long subject is finished only after its Semester 2, which must come before what needs it.
+    const finishes = (at: number) => (isYearLong(s) ? secondHalfOf(terms, at) : at)
+    while (i >= 0 && s && (offeredIn(s, terms[i]!.year, terms[i]!.period).status === 'fail' || finishes(i) < 0 || finishes(i) >= limit)) i--
     memo.set(c, i)
     return i
   }
@@ -931,7 +940,9 @@ function placeShortTerms(terms: PlanTerm[], pending: string[], completed: string
           const existing = terms.find((t) => t.year === year && t.period === period)
           const used = (existing?.subjects ?? []).reduce((sum, c) => sum + (data.subjects[c]?.points ?? 12.5), 0)
           if (used + s.points > SHORT_TERM_POINTS) continue
-          const before = [...completed, ...terms.filter((t) => termKey(t.year, t.period) < key).flatMap((t) => t.subjects)]
+          // Year-long subjects begun in this year's Semester 1 are not finished by winter.
+          const running = (c: string) => period === 'winter' && isYearLong(data.subjects[c]) && terms.some((t) => t.year === year && t.period === 'semester-1' && t.subjects.includes(c))
+          const before = [...completed, ...terms.filter((t) => termKey(t.year, t.period) < key).flatMap((t) => t.subjects)].filter((c) => !running(c))
           const term = existing ?? { year, period, subjects: [] }
           if (canTake(code, term, new Set(before), data, courseCode, [], held) === 'fail') continue
           if (course && !progressionAllows(code, course, before, data)) continue
@@ -972,6 +983,8 @@ interface PickCtx {
   placed: string[]
   completed: string[]
   room: number
+  /** Room in the Semester 2 that would finish a year-long pick (0 when there is none). */
+  secondRoom: number
   focus: Set<string | undefined>
   /** Required subjects still to place: never picked as electives, and their non-allowed partners are off limits. */
   reserved: string[]
@@ -1023,7 +1036,8 @@ function pickElective(ctx: PickCtx): { code: string; why: string; ruleId: string
       const loadsUp = (c: string) => heavierWith(term.subjects, c, data, input.profile, input.course)
       for (const rec of rankElectives(recs, ctx.focus, data, (c) => ctx.opens(c, rule.category), input.profile, needsPath, loadsUp)) {
         const s = data.subjects[rec.code]
-        if (!s || s.points > ctx.room) continue
+        if (!s || termShare(s) > ctx.room) continue
+        if (isYearLong(s) && termShare(s) > ctx.secondRoom) continue
         if (offeredIn(s, term.year, term.period).status !== 'ok') continue
         if (!withinCaps(s, all, course, data, planComponentIds(input))) continue
         if (!ctx.relaxed && !leavesRoomForOthers(s, all, course, data)) continue
@@ -1235,7 +1249,7 @@ function trySwap(r: PointsRule, terms: PlanTerm[], all: string[], ctx: RepairCtx
           .some((c) => c !== e && dependsOn(data.subjects[c], e)) || pointsNeedIt(e, ti, terms, completed, input)
       if (laterNeedsIt) continue
 
-      const before = [...completed, ...terms.slice(0, ti).flatMap((t) => t.subjects)]
+      const before = [...doneBefore(completed, terms, ti, data)]
       const candidates = recommend(data, input.profile, {
         course: course.code,
         ...majorsOf(input),
@@ -1250,6 +1264,8 @@ function trySwap(r: PointsRule, terms: PlanTerm[], all: string[], ctx: RepairCtx
       for (const rec of rankElectives(candidates, ctx.focus, data, (c) => ctx.opens(c, r.category), input.profile, false, loadsUp)) {
         const s = data.subjects[rec.code]
         if (!s || s.points > es.points) continue
+        // Only like for like: a year-long subject would move half its points into Semester 2.
+        if (isYearLong(s) !== isYearLong(es)) continue
         if (offeredIn(s, term.year, term.period).status !== 'ok') continue
         if (!withinCaps(s, others, course, data, planComponentIds(input))) continue
         if (!progressionAllows(s.code, course, before, data)) continue
@@ -1283,7 +1299,7 @@ function trySwap(r: PointsRule, terms: PlanTerm[], all: string[], ctx: RepairCtx
 function pointsNeedIt(code: string, from: number, terms: PlanTerm[], completed: string[], input: GenerateInput): boolean {
   const data = input.data
   for (let j = from + 1; j < terms.length; j++) {
-    const before = [...completed, ...terms.slice(0, j).flatMap((t) => t.subjects)]
+    const before = [...doneBefore(completed, terms, j, data)]
     const without = new Set(before.filter((c) => c !== code))
     for (const c of terms[j]?.subjects ?? []) {
       const pre = data.subjects[c]?.prerequisites

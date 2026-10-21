@@ -156,6 +156,7 @@ const gist = computed(() => (subject.value ? subjectGist(t.value, subject.value)
             <template v-if="gone">{{ t('subject.discontinued', { year: subject.discontinuedFrom ?? '' }) }}</template>
             <template v-else-if="!offeringsKnown">{{ t('subject.runsUnknown') }}</template>
             <template v-else-if="periods.length === 0">{{ t('subject.notRunning') }}</template>
+            <template v-else-if="subject.yearLong">{{ t('plan.yearLongRuns') }}</template>
             <template v-else>{{ periods.map((p) => t(`period.${p}`)).join(' · ') }}</template>
           </span>
           <a v-if="onList" class="chip chip-list" :href="onList.href">

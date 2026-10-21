@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { PlanTerm, Subject } from '@/engine'
+import { termShare, type PlanTerm, type Subject } from '@/engine'
 import { useI18n } from '@/i18n'
 import { termLabel } from '@/i18n/format'
 import type { PastResult } from '@/utils/pastTerms'
@@ -21,12 +21,14 @@ const props = defineProps<{
   load?: number
   /** Subjects linked to the hovered one, to highlight (others dim). */
   related?: Set<string> | null
+  /** Year-long results recorded in the other semester of this year: half their points are here. */
+  carried?: string[]
 }>()
 const emit = defineEmits<{ open: [code: string]; hover: [code: string | null] }>()
 const { t } = useI18n()
 
 // Enrolled points, a fail included.
-const points = computed(() => props.results.reduce((sum, r) => sum + (props.subjects[r.code]?.points ?? 12.5), 0))
+const points = computed(() => [...props.results.map((r) => r.code), ...(props.carried ?? [])].reduce((sum, c) => sum + termShare(props.subjects[c]), 0))
 
 function retake(code: string): string | null {
   const at = props.planned.find((p) => p.subjects.includes(code))
@@ -53,10 +55,38 @@ function retake(code: string): string | null {
       @open="emit('open', r.code)"
       @hover="emit('hover', $event ? r.code : null)"
     />
+    <button v-for="code in carried ?? []" :key="`carried-${code}`" class="carried" type="button" @click="emit('open', code)">
+      <span class="carried-code">{{ code }}</span>
+      <span class="carried-note">{{ t(term?.period === 'semester-2' ? 'plan.yearLongCont' : 'plan.yearLong') }}</span>
+    </button>
   </section>
 </template>
 
 <style scoped>
+.carried {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 8px;
+  align-items: baseline;
+  padding: 8px 10px;
+  border-radius: var(--radius);
+  border: 1px dashed var(--glass-edge);
+  background: var(--paper-raised);
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.carried-code {
+  font-weight: 600;
+}
+
+.carried-note {
+  font-size: 0.85em;
+  opacity: 0.75;
+}
+
 .past {
   display: flex;
   flex-direction: column;

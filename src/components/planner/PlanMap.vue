@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, nextTick, onBeforeUnmount, onMounted, shallowRef, useTemplateRef, watch } from 'vue'
-import { referencedSubjects, SHORT_TERM_LOAD, termKey, type Issue, type Period, type PlanTerm, type Subject } from '@/engine'
+import { carriedInto, referencedSubjects, SHORT_TERM_LOAD, termKey, type Issue, type Period, type PlanTerm, type Subject } from '@/engine'
 import { termLabel } from '@/i18n/format'
 import { ChevronDown } from 'lucide-vue-next'
 import TermColumn from './TermColumn.vue'
@@ -83,6 +83,12 @@ const issuesByCode = computed(() => {
 // A recorded semester that the plan also has shares its column: done subjects sit at the top.
 const sameTerm = (a: { year: number; period: string }, b: { year: number; period: string }) => a.year === b.year && a.period === b.period
 const pastOnly = computed(() => (props.past?.terms ?? []).filter((p) => !props.terms.some((t) => sameTerm(t, p))))
+// Year-long results on the record in the other semester of the same year: half their points are studied here.
+const recordCarried = (t: { year: number; period: Period }): string[] => {
+  if (t.period !== 'semester-1' && t.period !== 'semester-2') return []
+  const other = t.period === 'semester-1' ? 'semester-2' : 'semester-1'
+  return (props.past?.terms.find((p) => p.year === t.year && p.period === other)?.results ?? []).filter((r) => props.subjects[r.code]?.yearLong).map((r) => r.code)
+}
 const doneIn = (t: PlanTerm) => props.past?.terms.find((p) => sameTerm(p, t))?.results ?? []
 
 /**
@@ -201,6 +207,7 @@ const trackWidth = computed(() => `max(100%, ${(props.terms.length + pastCount.v
           :key="`past-${col.key}`"
           :term="col.p"
           :results="col.p.results"
+          :carried="recordCarried(col.p)"
           :subjects="subjects"
           :planned="terms"
           :load="col.p.period === 'summer' || col.p.period === 'winter' ? Math.min(SHORT_TERM_LOAD, load) : load"
@@ -213,6 +220,7 @@ const trackWidth = computed(() => `max(100%, ${(props.terms.length + pastCount.v
           :key="`${col.term.year}-${col.term.period}`"
           :term="col.term"
           :term-index="col.i"
+          :carried="[...recordCarried(col.term), ...carriedInto(terms, col.i, { subjects })]"
           :done="doneIn(col.term)"
           :subjects="subjects"
           :issues-by-code="issuesByCode"

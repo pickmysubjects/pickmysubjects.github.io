@@ -139,6 +139,7 @@ function onClick(event: MouseEvent): void {
             <CalendarRange :size="14" aria-hidden="true" />
             <template v-if="subject.offerings === 'unknown'">{{ t('subject.runsUnknown') }}</template>
             <template v-else-if="periods.length === 0">{{ t('subject.notRunning') }}</template>
+            <template v-else-if="subject.yearLong">{{ t('plan.yearLongRuns') }}</template>
             <template v-else>{{ periods.map((p) => t(`period.${p}`)).join(' · ') }}</template>
           </span>
         </p>

@@ -2,6 +2,7 @@ code: DPSS30010
 title: Professional Practice and Internship
 level: 3
 points: 12.5
+year_long: true
 offerings:
   "2026":
     - semester-1

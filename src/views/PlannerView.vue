@@ -13,7 +13,7 @@ import PlanPrint, { type PrintTerm } from '@/components/planner/PlanPrint.vue'
 import Interp from '@/components/Interp.vue'
 import PlanSwitcher from '@/components/plans/PlanSwitcher.vue'
 import PlanCompare from '@/components/plans/PlanCompare.vue'
-import { PASS_MARK, informalPicks, isFail, passedCodes, planComponentIds, planRoles, planRules, type PlanTerm } from '@/engine'
+import { PASS_MARK, informalPicks, isFail, passedCodes, planComponentIds, planRoles, planRules, recordedLoads, termLoad, type PlanTerm } from '@/engine'
 import { diplomaTitle } from '@/composables/usePlanCompare'
 import { Printer, Share2 } from 'lucide-vue-next'
 import { decodePlan, encodePlan } from '@/utils/sharePlan'
@@ -183,13 +183,12 @@ function markDone(code: string, mark: number | undefined): void {
 const recordOverlap = computed(() => {
   const passed = new Set(passedCodes(profile.value.results))
   const load = plan.course.value?.standardLoad ?? 50
-  const pts = (c: string) => data.value.subjects[c]?.points ?? 12.5
   for (const term of plan.terms.value) {
     if (term.subjects.some((c) => passed.has(c))) return termLabel(t.value, term)
-    const recorded = profile.value.results
-      .filter((r) => r.year === term.year && r.period === term.period && passed.has(r.code))
-      .reduce((sum, r) => sum + pts(r.code), 0)
-    if (recorded > 0 && recorded + term.subjects.reduce((sum, c) => sum + pts(c), 0) > load) return termLabel(t.value, term)
+    // Year-long subjects: half their points on each of their semesters.
+    const recorded = recordedLoads(profile.value.results.filter((r) => passed.has(r.code)), data.value)[`${term.year}|${term.period}`] ?? 0
+    const i = plan.terms.value.indexOf(term)
+    if (recorded > 0 && recorded + termLoad(plan.terms.value, i, data.value) > load) return termLabel(t.value, term)
   }
   return null
 })

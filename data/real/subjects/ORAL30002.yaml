@@ -2,12 +2,16 @@ code: ORAL30002
 title: Oral Health Practice 3
 level: 3
 points: 75
+year_long: true
 offerings:
   "2026":
     - semester-1
     - semester-2
+# Handbook: at least 200 points of successfully completed Bachelor of Oral Health subjects from the earlier year(s).
 prerequisites:
-  manual: a minimum of 200 credit points of successfully completed Year 1 and Year 2 Bachelor of Oral Health subjects
+  points:
+    min: 200
+    from: [ORAL10001, ORAL10003, ORAL10005, ORAL20001, ORAL20003, ORAL20005]
 corequisites: none
 non_allowed: []
 skills:

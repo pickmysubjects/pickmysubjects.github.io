@@ -5,6 +5,7 @@ import type { Issue, Plan } from './plan'
 import { termLabel } from './plan'
 import { PERIOD_LABELS } from './schema'
 import type { Dataset } from './schema'
+import { termLoad, unfinishedIn } from './yearLong'
 
 /**
  * Term-by-term checks: availability, prerequisites met by earlier terms,
@@ -22,10 +23,13 @@ export function checkTerms(plan: Plan, data: Dataset, standardLoad = 50): Issue[
   const reportedPairs = new Set<string>()
 
   plan.terms.forEach((term, termIndex) => {
-    const before = new Set(seen)
-    const sameTerm = new Set([...before, ...term.subjects])
+    // A year-long subject begun in this year's Semester 1 is still running: not done yet, but
+    // studied alongside (a corequisite).
+    const running = unfinishedIn(plan.terms, termIndex, data)
+    const before = new Set([...seen].filter((c) => !running.includes(c)))
+    const sameTerm = new Set([...before, ...running, ...term.subjects])
     const where = termLabel(term)
-    let load = 0
+    const load = termLoad(plan.terms, termIndex, data)
 
     for (const code of term.subjects) {
       const s = data.subjects[code]
@@ -37,7 +41,6 @@ export function checkTerms(plan: Plan, data: Dataset, standardLoad = 50): Issue[
         issues.push({ severity: 'warning', kind: 'not-in-dataset', subject: code, termIndex, params: { code }, message: `${code} isn't in the dataset yet, so nothing about it can be checked.` })
         continue
       }
-      load += s.points
 
       if (closed.has(code)) {
         issues.push({ severity: 'error', kind: 'closed-to-course', subject: code, termIndex, params: { code }, message: `${code} isn't open to students in your degree.` })
@@ -112,7 +115,7 @@ function visaLoadIssues(plan: Plan, data: Dataset): Issue[] {
   plan.terms.forEach((term, termIndex) => {
     const half = term.period === 'summer' || term.period === 'semester-1' ? 1 : 2
     const key = `${term.year}-${half}`
-    const load = (plan.recordedLoad?.[`${term.year}|${term.period}`] ?? 0) + term.subjects.reduce((sum, c) => sum + (data.subjects[c]?.points ?? 12.5), 0)
+    const load = (plan.recordedLoad?.[`${term.year}|${term.period}`] ?? 0) + termLoad(plan.terms, termIndex, data)
     const entry = halves.get(key) ?? { year: term.year, half, load: 0, termIndex }
     entry.load += load
     // Attach the warning to the semester rather than the short term.

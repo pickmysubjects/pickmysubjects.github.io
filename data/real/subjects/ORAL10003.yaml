@@ -2,6 +2,7 @@ code: ORAL10003
 title: Oral Health Sciences 1
 level: 1
 points: 37.5
+year_long: true
 offerings:
   "2026":
     - semester-1

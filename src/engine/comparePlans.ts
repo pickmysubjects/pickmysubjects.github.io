@@ -33,18 +33,25 @@ export interface PlanDiff {
 }
 
 /** Two plans side by side: the subjects they differ on, and their semesters lined up by date. */
-export function comparePlans(a: CompareSide, b: CompareSide, pointsOf: (code: string) => number): PlanDiff {
+export function comparePlans(
+  a: CompareSide,
+  b: CompareSide,
+  pointsOf: (code: string) => number,
+  /** Points studied in a semester, when that is not just its own subjects' (year-long subjects). */
+  termPoints: (terms: PlanTerm[], i: number) => number = (terms, i) => (terms[i]?.subjects ?? []).reduce((sum, c) => sum + pointsOf(c), 0),
+): PlanDiff {
   const codesA = new Set(a.terms.flatMap((t) => t.subjects))
   const codesB = new Set(b.terms.flatMap((t) => t.subjects))
   const sorted = (xs: Iterable<string>) => [...xs].sort()
   const rows = new Map<number, CompareRow>()
   const fill = (side: CompareSide, which: 'a' | 'b') => {
     side.terms.forEach((t, i) => {
-      if (t.subjects.length === 0) return
+      const points = termPoints(side.terms, i)
+      if (points === 0) return
       const key = termKey(t.year, t.period)
       const row = rows.get(key) ?? { year: t.year, period: t.period, a: null, b: null }
       const level = side.levels?.[i]
-      row[which] = { points: t.subjects.reduce((sum, c) => sum + pointsOf(c), 0), count: t.subjects.length, ...(level ? { level } : {}) }
+      row[which] = { points, count: t.subjects.length, ...(level ? { level } : {}) }
       rows.set(key, row)
     })
   }

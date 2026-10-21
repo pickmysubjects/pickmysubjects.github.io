@@ -25,7 +25,7 @@ const rows = computed(() =>
       // Not added to our data yet: say so, and go to the Handbook instead of an empty page.
       missing: !s,
       title: s ? [s.title, localTitle(s, locale.value)].filter(Boolean).join(' · ') : t.value('subject.notYetAdded'),
-      when: s ? periodsFor(s, props.year).map((p) => t.value(`periodShort.${p}`)).join(' · ') : '',
+      when: s?.yearLong && periodsFor(s, props.year).length ? t.value('plan.yearLong') : s ? periodsFor(s, props.year).map((p) => t.value(`periodShort.${p}`)).join(' · ') : '',
       note: props.notes?.[code],
     }
   }),

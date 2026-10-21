@@ -2,6 +2,7 @@ code: DNCE20039
 title: Professional Placement
 level: 2
 points: 12.5
+year_long: true
 offerings:
   "2026":
     - semester-1

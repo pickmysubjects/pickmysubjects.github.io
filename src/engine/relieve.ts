@@ -8,6 +8,7 @@ import { planRoles } from './roles'
 import type { Dataset, Period } from './schema'
 import { requiredWithPrerequisites, termStress, type StressLevel } from './termStress'
 import { topicsOf } from './topics'
+import { doneBefore } from './yearLong'
 
 /**
  * Making a heavy semester lighter without breaking the plan: swapping subjects between
@@ -255,7 +256,7 @@ function alternatives(data: Dataset, profile: Profile, course: string, category:
 function leanedOn(plan: Plan, data: Dataset, code: string): boolean {
   const at = plan.terms.findIndex((t) => t.subjects.includes(code))
   for (let i = at + 1; i < plan.terms.length; i++) {
-    const before = [...plan.completed, ...plan.terms.slice(0, i).flatMap((t) => t.subjects)]
+    const before = [...doneBefore(plan.completed, plan.terms, i, data)]
     const without = new Set(before.filter((c) => c !== code))
     for (const c of (plan.terms[i] as PlanTerm).subjects) {
       const s = data.subjects[c]

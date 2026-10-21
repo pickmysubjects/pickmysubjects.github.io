@@ -1,5 +1,5 @@
 import { computed, type Ref } from 'vue'
-import { checkCourse, comparePlans, findDiploma, informalPicks, planComponentIds, planRules, findCourse, forCourse, planRoles, planStress, requiredWithPrerequisites, type Dataset, type RuleStatus } from '@/engine'
+import { checkCourse, comparePlans, findDiploma, informalPicks, planComponentIds, planRules, findCourse, forCourse, planRoles, planStress, requiredWithPrerequisites, termLoad, termsWithCarried, type Dataset, type RuleStatus } from '@/engine'
 import type { PlanSetup } from './planStore'
 import { useDataset } from './useDataset'
 import { useProfile } from './useProfile'
@@ -53,7 +53,7 @@ export function usePlanCompare(a: Ref<PlanEntry | undefined>, b: Ref<PlanEntry |
     const codes = terms.flatMap((t) => t.subjects)
     const roles = planRoles(data, setup.course, setup.courseYear, planComponentIds(setup).filter((id): id is string => !!id))
     const fixed = requiredWithPrerequisites(new Set([...roles.required, ...roles.options]), codes, data.subjects, setup.course)
-    const levels = planStress(terms.map((t) => t.subjects), data, profile, fixed, setup.course).terms.map((s) => s.level)
+    const levels = planStress(termsWithCarried(terms, data), data, profile, fixed, setup.course).terms.map((s) => s.level)
     const statuses = checkCourse(plan, data).statuses
     const { major, minor, minorInformal } = setupTitles(data, setup)
     const diploma = diplomaTitle(data, setup)
@@ -74,7 +74,7 @@ export function usePlanCompare(a: Ref<PlanEntry | undefined>, b: Ref<PlanEntry |
   const diff = computed(() => {
     if (!sides.value || !a.value || !b.value) return null
     const pts = (c: string) => all.subjects[c]?.points ?? 12.5
-    return comparePlans({ terms: a.value.state.terms, levels: sides.value[0].levels }, { terms: b.value.state.terms, levels: sides.value[1].levels }, pts)
+    return comparePlans({ terms: a.value.state.terms, levels: sides.value[0].levels }, { terms: b.value.state.terms, levels: sides.value[1].levels }, pts, (ts, i) => termLoad(ts, i, all))
   })
   return { sides, diff }
 }

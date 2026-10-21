@@ -82,6 +82,7 @@ const FAILING = 'https://students.unimelb.edu.au/course-admin/planning-your-cour
 
         <GuideItem :title="t('guide.pointsTitle')" :short="t('guide.pointsShort')">
           <p>{{ t('guide.pointsText') }}</p>
+          <p>{{ t('guide.pointsYearLong') }}</p>
         </GuideItem>
 
         <GuideItem :title="t('guide.majorsTitle')" :short="t('guide.majorsShort')">

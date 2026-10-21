@@ -2,6 +2,7 @@ code: ORAL10005
 title: Oral Health Practice 1
 level: 1
 points: 37.5
+year_long: true
 offerings:
   "2026":
     - semester-1

@@ -2,6 +2,7 @@ code: ORAL10001
 title: Society and Health 1
 level: 1
 points: 25
+year_long: true
 offerings:
   "2026":
     - semester-1

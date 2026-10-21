@@ -1,5 +1,5 @@
 import { computed } from 'vue'
-import { pinnedIn, planComponentIds, planRoles, planStress, relieveTerm, requiredWithPrerequisites, termStress, type Relief, type Skill, type TermStress } from '@/engine'
+import { pinnedIn, planComponentIds, planRoles, planStress, relieveTerm, requiredWithPrerequisites, termStress, termsWithCarried, type Relief, type Skill, type TermStress } from '@/engine'
 import { useDataset } from './useDataset'
 import { usePlan } from './usePlan'
 import { useProfile } from './useProfile'
@@ -16,7 +16,7 @@ export function usePlanStress() {
     const roles = planRoles(data.value, course, courseYear, planComponentIds(plan.plan.value).filter((id): id is string => !!id))
     return requiredWithPrerequisites(new Set([...roles.required, ...roles.options]), plan.plannedCodes.value, data.value.subjects, course)
   })
-  const stress = computed(() => planStress(plan.terms.value.map((t) => t.subjects), data.value, profile.value, fixed.value, plan.setup.value.course))
+  const stress = computed(() => planStress(termsWithCarried(plan.terms.value, data.value), data.value, profile.value, fixed.value, plan.setup.value.course))
   const stackFloor = computed(
     () => Object.fromEntries(stress.value.unavoidable.map((u) => [u.skill, u.perTerm])) as Partial<Record<Skill, number>>,
   )
