@@ -169,3 +169,42 @@ it('keeps every skill the form offers', async () => {
   // exams is read off the assessment, never taken from ratings.
   expect(aggregate(rowsToObjects([header, ...rows])).subjects.COMP30027?.skills).toEqual(['fieldwork', 'languages'])
 })
+
+describe('grade bands pass the same spam filter as ratings', () => {
+  const now = new Date('2026-10-07')
+  const bandOnly = { difficulty: '', workload: '', generosity: '', hours: '', skills: '', recommend: '', grade: 'H1' }
+
+  it('a one-day burst with impossible years publishes no offset', () => {
+    const rows = Array.from({ length: 30 }, (_, i) =>
+      row({ ...bandOnly, code: 'COMP10001', year: String(1900 + i), wamBand: '50–54', timestamp: '2026/10/07 10:00:00' }),
+    )
+    const out = buildRatingFiles([header, ...rows], undefined, now)
+    expect(out.ratings.COMP10001).toBeUndefined()
+    expect(out.offsets.COMP10001).toBeUndefined()
+  })
+
+  it('caps grade bands per subject per day', () => {
+    const rows = Array.from({ length: 30 }, (_, i) =>
+      row({ ...bandOnly, code: 'COMP10001', year: '2025', semester: `S${i}`, wamBand: '50–54', timestamp: '2026/10/07 10:00:00' }),
+    )
+    expect(buildRatingFiles([header, ...rows], undefined, now).offsets.COMP10001?.n).toBe(10)
+  })
+
+  it('dedupes on the normalised code, and spaced codes still count', () => {
+    const spaced = [1, 2, 3, 4, 5].map((i) => row({ ...bandOnly, code: 'COMP 10001', year: String(2020 + i), wamBand: '70–74', timestamp: `t${i}` }))
+    expect(buildRatingFiles([header, ...spaced], undefined, now).offsets.COMP10001?.n).toBe(5)
+    const cased = [1, 2, 3, 4].flatMap((i) => [
+      row({ ...bandOnly, code: 'COMP10001', year: String(2020 + i), wamBand: '70–74', timestamp: `t${i}` }),
+      row({ ...bandOnly, code: 'comp10001', year: String(2020 + i), wamBand: '70–74', timestamp: `u${i}` }),
+    ])
+    expect(buildRatingFiles([header, ...cased], undefined, now).offsets.COMP10001).toBeUndefined() // 4 distinct < 5
+    const ratings = ['COMP30027', 'comp30027', 'COMP 30027'].map((c, i) => row({ code: c, timestamp: `r${i}` }))
+    expect(aggregate(rowsToObjects([header, ...ratings]), now).subjects.COMP30027).toBeUndefined() // 1 distinct < 3
+  })
+})
+
+it('fetch reads more than 26 columns', async () => {
+  const { readFileSync } = await import('node:fs')
+  const src = readFileSync(new URL('../scripts/ratings/fetch.ts', import.meta.url), 'utf8')
+  expect(src).not.toMatch(/values\/A:Z`/)
+})

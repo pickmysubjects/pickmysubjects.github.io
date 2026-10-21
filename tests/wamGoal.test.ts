@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { gradeOf, neededAverage, projectedWam } from '../src/utils/wamGoal'
+import { gradeOf, neededAverage, pointsLeft, projectedWam } from '../src/utils/wamGoal'
+import { dataset, subject } from './helpers'
 
 describe('WAM goal', () => {
   it('works out the average needed on what is left', () => {
@@ -27,5 +28,13 @@ describe('WAM goal', () => {
 
   it('names grades by UniMelb bands', () => {
     expect([80, 79.9, 75, 70, 65, 50, 49.9].map(gradeOf)).toEqual(['H1', 'H2A', 'H2A', 'H2B', 'H3', 'P', 'N'])
+  })
+
+  it('counts only passed subjects as done, against the degree’s own points', () => {
+    const data = dataset([subject({ code: 'AAAA10001' }), subject({ code: 'AAAA10002' }), subject({ code: 'AAAA10003' })])
+    const results = [{ code: 'AAAA10001', mark: 80 }, { code: 'AAAA10002', mark: 40 }, { code: 'AAAA10003', mark: 65 }]
+    // Two passes of 12.5: a 350-point degree (B-SCIEXTD) has 325 left; the fail is still to take.
+    expect(pointsLeft(results, data, 350)).toBe(325)
+    expect(pointsLeft(results, data, 300)).toBe(275)
   })
 })

@@ -82,3 +82,17 @@ describe('paid work hours', () => {
     expect(withJob).toContain('hoursWork')
   })
 })
+
+describe('the WAM a prediction leans back to', () => {
+  it('is weighted by points, as the University works it out', async () => {
+    const { dataset, subject } = await import('./helpers')
+    const data = dataset([
+      subject({ code: 'AAAA10001', area: 'AAAA', points: 25 }),
+      subject({ code: 'BBBB10001', area: 'BBBB', points: 12.5 }),
+      subject({ code: 'CCCC10001', area: 'CCCC' }),
+    ])
+    // Nothing related to CCCC10001: the guess is the WAM itself, (90×25 + 60×12.5) / 37.5 = 80.
+    const guess = predictMark(data.subjects.CCCC10001!, new Map([['AAAA10001', 90], ['BBBB10001', 60]]), data)
+    expect(guess?.mark).toBe(80)
+  })
+})

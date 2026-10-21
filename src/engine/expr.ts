@@ -29,6 +29,11 @@ export interface EvalContext {
    * they aren't known: those conditions then stay unknown.
    */
   marks?: Readonly<Record<string, number>>
+  /**
+   * The student's WAM over their whole marked record, fails included (see computeWam), for WAM
+   * conditions. Undefined: worked out from `marks` over the completed subjects instead.
+   */
+  wam?: number | null
 }
 
 export interface EvalResult {
@@ -247,7 +252,10 @@ function meanMark(codes: string[], ctx: EvalContext): number | null {
 
 function evaluateAverage(req: { min: number; levels?: number[]; areas?: string[]; from?: string[] }, ctx: EvalContext): EvalResult {
   const unmet = [describe({ average: req })]
-  const { codes } = matching(req, ctx)
+  // The marked record, fails included: a subject failed and never passed still counts towards
+  // the average, as it does towards the WAM.
+  const record = ctx.marks ? new Set([...ctx.completed, ...Object.keys(ctx.marks)]) : ctx.completed
+  const { codes } = matching(req, { ...ctx, completed: record })
   // Nothing done that it could be the average of: it can't be met yet.
   if (!codes.length) return { status: 'fail', unmet }
   const mean = meanMark(codes, ctx)
@@ -257,7 +265,7 @@ function evaluateAverage(req: { min: number; levels?: number[]; areas?: string[]
 
 function evaluateWam(min: number, ctx: EvalContext): EvalResult {
   const unmet = [describe({ wam: { min } })]
-  const mean = ctx.completed.size ? meanMark([...ctx.completed], ctx) : null
+  const mean = ctx.wam !== undefined ? ctx.wam : ctx.completed.size ? meanMark([...ctx.completed], ctx) : null
   if (mean === null) return { status: 'unknown', unmet }
   return mean >= min ? ok() : { status: 'fail', unmet: [`${unmet[0]} (have ${Math.round(mean * 10) / 10})`] }
 }

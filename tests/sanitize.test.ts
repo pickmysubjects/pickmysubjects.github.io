@@ -12,6 +12,10 @@ describe('saved data is put back in shape', () => {
     })
     expect(cleanProfile({ skills: { maths: 9, programming: 4, juggling: 5 }, goal: 'nap' })).toMatchObject({ skills: { programming: 4 }, goal: 'balanced' })
   })
+  it('keeps only interests that are known topics', () => {
+    // A stale id would match no subject but still count as "has interests" (the off-topic penalty).
+    expect(cleanProfile({ interests: ['ai', 'retired-topic', 3, 'ai', 'statistics'] }).interests).toEqual(['ai', 'statistics'])
+  })
   it('drops a plan with no terms and keeps a readable one', () => {
     const plans = cleanPlans({ broken: { setup: { course: 'B-SCI' } }, ok: { setup: { course: 'B-SCI' }, terms: [{ year: 2027, period: 'semester-1', subjects: ['A', 3] }] } })
     expect(Object.keys(plans)).toEqual(['ok'])

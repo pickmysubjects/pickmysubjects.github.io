@@ -191,6 +191,7 @@ export const en = {
     offeringsUnknown: 'its teaching periods are not curated yet',
     notOffered: 'not offered in the planned years',
     noRoom: 'its prerequisites or the study load left no room before the plan ended',
+    closedToCourse: 'it isn’t open to students in this course',
   },
   genNote: {
     shortTerm: "{code} only runs outside semesters, so it's planned in {period} {year}.",
@@ -208,6 +209,8 @@ export const en = {
     prereqAdded: 'Added {code} because {for} needs it.',
     swapped: 'Swapped {from} for {to} in {term} to meet: {rule}.',
     repairStopped: 'Stopped rebalancing electives after many swaps; review the plan manually.',
+    firstYearLate: '{codes} can’t fit in your first year from this start (the subjects before them run in one semester only), so they’re planned as early as they can be.',
+    markUnmet: '{code} needs a mark your record doesn’t reach yet. Talk to the coordinator before enrolling.',
   },
   expr: {
     anyOf: "Any one of these is enough:",

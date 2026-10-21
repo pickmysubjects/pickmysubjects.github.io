@@ -188,6 +188,7 @@ export const zhTW: Messages = {
     offeringsUnknown: '它的開課學期還沒有整理',
     notOffered: '在規劃的年份裡不開課',
     noRoom: '受先修要求或修課負擔限制，方案結束前排不進去',
+    closedToCourse: '這門課不對本學位的學生開放',
   },
   genNote: {
     shortTerm: "{code} 只在學期之外開，所以排在 {year} 年{period}。",
@@ -205,6 +206,8 @@ export const zhTW: Messages = {
     prereqAdded: '加入了 {code}，因為 {for} 需要它作為先修。',
     swapped: '在 {term} 把 {from} 換成了 {to}，用來符合：{rule}。',
     repairStopped: '調整選修課次數過多，已停止自動調整；請手動檢查方案。',
+    firstYearLate: '從這個學期入學，{codes} 排不進第一年（前面的課每年只開一個學期），所以盡量往前排了。',
+    markUnmet: '{code} 要求的成績你目前還沒達到，選課前先問問課程協調人。',
   },
   expr: {
     anyOf: "滿足下面任一條即可：",

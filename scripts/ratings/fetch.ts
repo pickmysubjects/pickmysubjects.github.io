@@ -59,8 +59,9 @@ async function accessToken(): Promise<string> {
 
 const token = await accessToken()
 
+// A:ZZ, not A:Z: a longer form must never silently lose its later columns.
 async function readSheet(id: string): Promise<string[][]> {
-  const res = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${id}/values/A:Z`, {
+  const res = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${id}/values/A:ZZ`, {
     headers: { Authorization: `Bearer ${token}` },
   })
   if (!res.ok) throw new Error(`sheet read failed: ${res.status}`)

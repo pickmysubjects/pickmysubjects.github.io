@@ -188,6 +188,7 @@ export const zhCN: Messages = {
     offeringsUnknown: '它的开课学期还没有整理',
     notOffered: '在规划的年份里不开课',
     noRoom: '受先修要求或学习负担限制，方案结束前排不进去',
+    closedToCourse: '这门课不对本学位的学生开放',
   },
   genNote: {
     shortTerm: "{code} 只在学期之外开，所以排在 {year} 年{period}。",
@@ -205,6 +206,8 @@ export const zhCN: Messages = {
     prereqAdded: '加入了 {code}，因为 {for} 需要它作为先修。',
     swapped: '在 {term} 把 {from} 换成了 {to}，用来满足：{rule}。',
     repairStopped: '调整选修课次数过多，已停止自动调整；请手动检查方案。',
+    firstYearLate: '从这个学期入学，{codes} 排不进第一年（前面的课每年只开一个学期），所以尽量往前排了。',
+    markUnmet: '{code} 要求的成绩你目前还没达到，选课前先问问课程协调人。',
   },
   expr: {
     anyOf: "满足下面任意一条即可：",

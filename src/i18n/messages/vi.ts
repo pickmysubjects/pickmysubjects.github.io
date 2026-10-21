@@ -188,6 +188,7 @@ export const vi: Messages = {
     offeringsUnknown: 'chưa nhập học kỳ mở môn',
     notOffered: 'không mở trong các năm đã lên kế hoạch',
     noRoom: 'do môn tiên quyết hoặc khối lượng học nên không còn chỗ trước khi kế hoạch kết thúc',
+    closedToCourse: 'môn này không mở cho sinh viên ngành của bạn',
   },
   genNote: {
     shortTerm: "{code} chỉ mở ngoài học kỳ chính, nên được xếp vào {period} {year}.",
@@ -205,6 +206,8 @@ export const vi: Messages = {
     prereqAdded: 'Đã thêm {code} vì {for} cần môn này.',
     swapped: 'Đã đổi {from} thành {to} ở {term} để: {rule}.',
     repairStopped: 'Đã dừng điều chỉnh môn tự chọn sau nhiều lần đổi; hãy tự kiểm tra lại kế hoạch.',
+    firstYearLate: 'Bắt đầu từ kỳ này thì {codes} không xếp được vào năm nhất (các môn trước chỉ mở một kỳ mỗi năm), nên được xếp sớm nhất có thể.',
+    markUnmet: '{code} cần điểm mà bảng điểm của bạn chưa đạt. Hãy hỏi người điều phối trước khi đăng ký.',
   },
   expr: {
     anyOf: "Chỉ cần đáp ứng một trong các điều sau:",

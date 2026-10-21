@@ -88,37 +88,58 @@ export function rowsToObjects(values: string[][]): Record<string, string>[] {
   return rows.map((r) => Object.fromEntries(header.map((h, i) => [h.trim(), (r[i] ?? '').trim()])))
 }
 
+/** Subject codes as typed vary ("comp 10001"); everything downstream uses one form. */
+export function normaliseCode(code: string): string {
+  return code.toUpperCase().replace(/\s/g, '')
+}
+
+/**
+ * The anti-spam filter every published output goes through: a real subject code, a plausible
+ * year (when given), at least one answer that path cares about (`answered`), at most
+ * MAX_PER_SUBJECT_PER_DAY rows per subject per day, and identical resubmissions counted once.
+ * Returned rows carry the normalised code, so "COMP10001" and "comp 10001" are one subject.
+ */
+export function screenRows(
+  rows: Record<string, string>[],
+  now: Date,
+  known: Set<string> | undefined,
+  answered: (row: Record<string, string>) => boolean,
+): Record<string, string>[] {
+  const seen = new Set<string>()
+  const perDay = new Map<string, number>()
+  const out: Record<string, string>[] = []
+  for (const raw of rows) {
+    const code = normaliseCode(raw[COLUMNS.code] ?? '')
+    const row: Record<string, string> = { ...raw, [COLUMNS.code]: code }
+    const yearText = row[COLUMNS.year] ?? ''
+    const year = Number(yearText)
+    const yearOk = yearText === '' || (Number.isInteger(year) && year >= 2010 && year <= now.getFullYear())
+    const valid = /^[A-Z]{4}\d{5}$/.test(code) && yearOk && answered(row) && (!known || known.has(code))
+    // Identical answers submitted again (refresh, double click, simple spam) count once.
+    const fingerprint = JSON.stringify(Object.entries(row).filter(([k]) => k !== COLUMNS.timestamp))
+    // The date part of the form's timestamp ("2026/10/07 10:00:00" or "07/10/2026 …").
+    const dayKey = `${code}|${(row[COLUMNS.timestamp] ?? '').split(/[ T]/)[0]}`
+    if (!valid || seen.has(fingerprint) || (perDay.get(dayKey) ?? 0) >= MAX_PER_SUBJECT_PER_DAY) continue
+    seen.add(fingerprint)
+    perDay.set(dayKey, (perDay.get(dayKey) ?? 0) + 1)
+    out.push(row)
+  }
+  return out
+}
+
 /**
  * `known` limits output to subjects in the dataset, so spam with made-up codes
  * can't bloat the published file. Grade bands are never published.
  */
 export function aggregate(rows: Record<string, string>[], now = new Date(), known?: Set<string>): AggregateResult {
-  const seen = new Set<string>()
-  const perDay = new Map<string, number>()
   const bySubject = new Map<string, Record<string, string>[]>()
-  let rejected = 0
 
-  for (const row of rows) {
-    const code = (row[COLUMNS.code] ?? '').toUpperCase().replace(/\s/g, '')
-    // Every question is optional: a row counts if it's for a real subject and
-    // answers at least one question. A year, when given, must be plausible.
-    const yearText = row[COLUMNS.year] ?? ''
-    const year = Number(yearText)
-    const yearOk = yearText === '' || (Number.isInteger(year) && year >= 2010 && year <= now.getFullYear())
-    const answered = ANSWER_COLUMNS.some((c) => (row[c] ?? '') !== '')
-    const valid = /^[A-Z]{4}\d{5}$/.test(code) && yearOk && answered && (!known || known.has(code))
-    // Identical answers submitted again (refresh, double click, simple spam) count once.
-    const fingerprint = JSON.stringify(Object.entries(row).filter(([k]) => k !== COLUMNS.timestamp))
-    // The date part of the form's timestamp ("2026/10/07 10:00:00" or "07/10/2026 …").
-    const dayKey = `${code}|${(row[COLUMNS.timestamp] ?? '').split(/[ T]/)[0]}`
-    if (!valid || seen.has(fingerprint) || (perDay.get(dayKey) ?? 0) >= MAX_PER_SUBJECT_PER_DAY) {
-      rejected++
-      continue
-    }
-    seen.add(fingerprint)
-    perDay.set(dayKey, (perDay.get(dayKey) ?? 0) + 1)
+  const kept = screenRows(rows, now, known, (row) => ANSWER_COLUMNS.some((c) => (row[c] ?? '') !== ''))
+  for (const row of kept) {
+    const code = row[COLUMNS.code] as string
     bySubject.set(code, [...(bySubject.get(code) ?? []), row])
   }
+  const rejected = rows.length - kept.length
 
   const subjects: Record<string, SubjectAggregate> = {}
   for (const [code, list] of [...bySubject].sort(([a], [b]) => a.localeCompare(b))) {
@@ -166,15 +187,12 @@ export function buildRatingFiles(values: string[][], known?: Set<string>, now = 
   const rows = rowsToObjects(values)
   const result = aggregate(rows, now, known)
   // A band can come alone (the My page card), so these rows skip the "answered a rating" rule,
-  // but an identical resubmission still counts once.
-  const seen = new Set<string>()
-  const graded = rows.flatMap((r) => {
-    const g = { code: r[COLUMNS.code] ?? '', band: r[COLUMNS.grade] ?? '', wamBand: r[COLUMNS.wamBand] ?? '' }
-    const key = JSON.stringify(Object.entries(r).filter(([k]) => k !== COLUMNS.timestamp))
-    if (seen.has(key)) return []
-    seen.add(key)
-    return [g]
-  })
+  // but otherwise pass the same spam filter as ratings.
+  const graded = screenRows(rows, now, known, (r) => (r[COLUMNS.grade] ?? '') !== '' && (r[COLUMNS.wamBand] ?? '') !== '').map((r) => ({
+    code: r[COLUMNS.code] ?? '',
+    band: r[COLUMNS.grade] ?? '',
+    wamBand: r[COLUMNS.wamBand] ?? '',
+  }))
   return { ratings: result.subjects, offsets: gradeOffsets(graded, known), accepted: result.accepted, rejected: result.rejected }
 }
 

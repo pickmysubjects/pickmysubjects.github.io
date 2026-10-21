@@ -188,6 +188,7 @@ export const ja: Messages = {
     offeringsUnknown: '開講時期が未整理',
     notOffered: '計画期間中に開講されない',
     noRoom: '前提科目や履修量の関係で、プラン終了までに入りきらなかった',
+    closedToCourse: 'この学位の学生は履修できない',
   },
   genNote: {
     shortTerm: "{code} は学期外にしか開講されないため、{year} 年の{period}に入れました。",
@@ -205,6 +206,8 @@ export const ja: Messages = {
     prereqAdded: '{for} に必要なため、{code} を追加しました。',
     swapped: '{term} で {from} を {to} に入れ替えました（目的：{rule}）。',
     repairStopped: '選択科目の入れ替えが多すぎたため調整を止めました。プランを手動で確認してください。',
+    firstYearLate: 'この入学時期だと {codes} は1年目に入りません（前に取る科目が年1学期しか開講されないため）。できるだけ早い学期に入れました。',
+    markUnmet: '{code} に必要な成績にまだ届いていません。履修登録の前にコーディネーターに相談してください。',
   },
   expr: {
     anyOf: "次のどれか一つを満たせば OK：",

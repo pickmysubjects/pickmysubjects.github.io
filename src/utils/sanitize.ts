@@ -1,4 +1,4 @@
-import { PERIODS, SKILLS, type Profile } from '@/engine'
+import { PERIODS, SKILLS, TOPICS, type Profile } from '@/engine'
 import type { PlanBook, PlanPrefs, PlanState, SavedPlan } from '@/composables/planStore'
 
 /**
@@ -9,6 +9,8 @@ import type { PlanBook, PlanPrefs, PlanState, SavedPlan } from '@/composables/pl
 const isObject = (x: unknown): x is Record<string, unknown> => typeof x === 'object' && x !== null && !Array.isArray(x)
 const strings = (x: unknown): string[] => (Array.isArray(x) ? x.filter((v): v is string => typeof v === 'string') : [])
 const GOALS = ['wam', 'balanced', 'challenge'] as const
+// Interests are topic ids: a stale or hand-edited one would match no subject, yet still count as
+// "has interests" and mark every subject off-topic.
 
 /** A saved goal, read back. "Marks only" ('easy') is no longer offered: it becomes "protect my WAM". */
 export function cleanGoal(x: unknown): Profile['goal'] {
@@ -44,7 +46,7 @@ export function cleanProfile(x: unknown): Profile {
       ratings[code] = { difficulty: scale(r.difficulty), interest: scale(r.interest), recommend: rec }
     }
   }
-  return { results, skills, interests: strings(p.interests), goal, confirmed: strings(p.confirmed), ...(Object.keys(ratings).length ? { ratings } : {}), ...(typeof p.workHours === 'number' && p.workHours >= 0 && p.workHours <= 60 ? { workHours: p.workHours } : {}) }
+  return { results, skills, interests: [...new Set(strings(p.interests).filter((t) => (TOPICS as readonly string[]).includes(t)))], goal, confirmed: strings(p.confirmed), ...(Object.keys(ratings).length ? { ratings } : {}), ...(typeof p.workHours === 'number' && p.workHours >= 0 && p.workHours <= 60 ? { workHours: p.workHours } : {}) }
 }
 
 export function cleanProfiles(x: unknown): Record<string, Profile> {

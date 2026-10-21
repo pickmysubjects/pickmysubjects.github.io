@@ -26,7 +26,9 @@ const SAME_AREA_WEIGHT = 0.6
 export function predictMark(s: Subject, marks: Map<string, number>, data: Dataset): MarkPrediction | null {
   const others = [...marks].filter(([c]) => c !== s.code && data.subjects[c])
   if (others.length === 0) return null
-  const wam = others.reduce((sum, [, m]) => sum + m, 0) / others.length
+  // The baseline is the WAM as the University works it out: weighted by each subject's points.
+  const pts = (c: string) => data.subjects[c]!.points
+  const wam = others.reduce((sum, [c, m]) => sum + m * pts(c), 0) / others.reduce((sum, [c]) => sum + pts(c), 0)
   const prereqs = new Set(referencedSubjects(s.prerequisites))
   const related = others
     .filter(([c]) => prereqs.has(c) || data.subjects[c]!.area === s.area)

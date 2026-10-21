@@ -187,6 +187,23 @@ export function computeWam(results: Profile['results'], data: Dataset): number |
   return points > 0 ? Math.round((weighted / points) * 10) / 10 : null
 }
 
+/**
+ * Marks as prerequisite and mark conditions read them ("75 in MUSI10221", "an average of 70 in
+ * level-2 HIST"): one mark per subject, its best attempt, so a retake that passed counts whatever
+ * order the attempts were entered in. A subject only ever failed keeps its (failing) mark, so an
+ * average isn't overstated by leaving it out. Pass/fail subjects have no mark to count.
+ * Predictions and skills read the average of the attempts instead (an earlier fail still says
+ * something about how the student goes in that area).
+ */
+export function marksForConditions(results: Profile['results'], data: Dataset): Record<string, number> {
+  const best: Record<string, number> = {}
+  for (const r of results) {
+    if (r.mark === undefined || data.subjects[r.code]?.passFail) continue
+    best[r.code] = Math.max(best[r.code] ?? -Infinity, r.mark)
+  }
+  return best
+}
+
 export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions = {}): Recommendation[] {
   // Marks only: what a subject is about doesn't come into it, not even to break a tie.
   const asked = given.goal === 'easy' ? { ...given, interests: [] } : given
@@ -203,7 +220,8 @@ export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions =
   const attempts = new Map<string, number[]>()
   for (const r of profile.results) if (r.mark !== undefined && !raw.subjects[r.code]?.passFail) attempts.set(r.code, [...(attempts.get(r.code) ?? []), r.mark])
   for (const [code, ms] of attempts) marks.set(code, ms.reduce((a, b) => a + b, 0) / ms.length)
-  const markRecord = Object.fromEntries(marks)
+  // Conditions on marks read the best attempt (and the WAM over every attempt, as the University does).
+  const markRecord = marksForConditions(profile.results, raw)
   const majors = opts.majors ?? (opts.programme ? majorTitles(data, opts.programme.components) : undefined)
   const minors = opts.minors ?? (opts.programme ? minorTitles(data, opts.programme.minors) : undefined)
   const dependents = buildDependents(data, opts.course)
@@ -292,6 +310,7 @@ export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions =
       majors,
       minors,
       marks: markRecord,
+      wam,
     })
     if (pre.status === 'fail') continue
     // A condition only the student can check (a VCE score) that they said they meet.

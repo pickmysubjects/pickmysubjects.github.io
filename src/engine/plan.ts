@@ -31,6 +31,8 @@ export interface Plan {
   recordedLoad?: Record<string, number>
   /** Marks (0–100) of completed subjects, for average and WAM conditions. */
   marks?: Record<string, number>
+  /** The WAM over the whole marked record (fails included), for WAM conditions. */
+  wam?: number | null
   /** Subjects whose prerequisites the student says they meet where we can't check (e.g. a VCE score). */
   confirmed?: string[]
 }

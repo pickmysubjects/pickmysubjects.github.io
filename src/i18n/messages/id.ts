@@ -188,6 +188,7 @@ export const id: Messages = {
     offeringsUnknown: 'jadwal bukanya belum dimasukkan',
     notOffered: 'tidak dibuka pada tahun-tahun yang direncanakan',
     noRoom: 'prasyarat atau beban studi membuatnya tidak muat sebelum rencana berakhir',
+    closedToCourse: 'tidak terbuka untuk mahasiswa program ini',
   },
   genNote: {
     shortTerm: "{code} hanya dibuka di luar semester, jadi direncanakan di {period} {year}.",
@@ -205,6 +206,8 @@ export const id: Messages = {
     prereqAdded: 'Menambahkan {code} karena {for} memerlukannya.',
     swapped: 'Menukar {from} dengan {to} di {term} untuk memenuhi: {rule}.',
     repairStopped: 'Penyesuaian mata kuliah pilihan dihentikan setelah terlalu banyak penukaran; periksa rencana secara manual.',
+    firstYearLate: 'Dengan mulai di semester ini, {codes} tidak muat di tahun pertama (mata kuliah sebelumnya hanya dibuka satu semester), jadi direncanakan sedini mungkin.',
+    markUnmet: '{code} butuh nilai yang belum tercapai di transkripmu. Tanyakan ke koordinator sebelum mendaftar.',
   },
   expr: {
     anyOf: "Cukup penuhi salah satu:",

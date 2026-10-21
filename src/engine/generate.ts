@@ -4,7 +4,7 @@ import { capExempt, categoryOf, disciplineOf, checkCourse, componentNeeds, diplo
 import { evaluateField, referencedSubjects, type EvalContext, type Tri } from './expr'
 import type { Note, Params, Plan, PlanTerm } from './plan'
 import { standardTerms } from './plan'
-import { HEAVY_PICK_COST, passedCodes, recommend, type Profile } from './recommend'
+import { HEAVY_PICK_COST, computeWam, marksForConditions, passedCodes, recommend, type Profile } from './recommend'
 import { checkTerms } from './planCheck'
 import { balanceTerms, fixHeavyTerms } from './relieve'
 import { skillsOf, termStress, weakSkills, type StressLevel } from './termStress'
@@ -79,15 +79,27 @@ export function generatePlan(raw: GenerateInput): GenerateResult {
   // mid-year start) can go there and keep the degree to its usual length.
   const viaShort = buildPlan({ ...input, useShortTerms: true })
   if (shortfall(viaShort) === 0) return finishEarlier(input, viaShort, shortfall)
-  const base = result.plan.terms.length
-  for (let extra = 1; extra <= 2 && shortfall(result) > 0; extra++) {
-    const longer = buildPlan({ ...input, maxTerms: base + extra })
+  // One semester more at a time, up to the usual ten, while required subjects are still left out
+  // (or a course rule still fails, for at most two extra): a student takes longer rather than
+  // drop part of the degree.
+  const base = semesters(result)
+  for (let terms = base + 1; terms <= Math.max(MAX_TERMS, base + 2) && shortfall(result) > 0; terms++) {
+    if (terms > base + 2 && result.unplaced.length === 0) break
+    const longer = buildPlan({ ...input, maxTerms: terms })
     if (shortfall(longer) >= shortfall(result)) continue
+    const extra = terms - base
     longer.notes.push(note('extraTerms', { n: extra }, `Planned ${extra} extra semester(s) so every required subject fits.`))
     result = longer
   }
   // A longer plan whose last semester holds only a subject or two: summer/winter may still save it.
   return shortfall(result) === 0 ? finishEarlier(input, result, shortfall) : result
+}
+
+/** Most semesters a plan runs to. */
+const MAX_TERMS = 10
+
+function semesters(r: GenerateResult): number {
+  return r.plan.terms.filter((t) => t.period === 'semester-1' || t.period === 'semester-2').length
 }
 
 /**
@@ -193,7 +205,11 @@ function buildPlan(given: GenerateInput): GenerateResult {
   const recorded = recordedLoads(profile.results, data)
   const preload = (t: PlanTerm) => recorded[`${t.year}|${t.period}`] ?? 0
 
-  const pending = [...required].filter((c) => !done.has(c))
+  // A required subject the course closes to its students (B-SCI's INFO30005, for a major only
+  // pre-2018 starters may finish) can't be planned without an error: it's left out, with why.
+  const closedList = new Set(data.courses.find((c) => c.code === input.course)?.closed ?? [])
+  const closedRequired = [...required].filter((c) => !done.has(c) && closedList.has(c))
+  const pending = [...required].filter((c) => !done.has(c) && !closedList.has(c))
   // Areas of the major/specialisation, used to break ties between equally scored electives.
   const focus = new Set([...required].filter((c) => !firstSemester.has(c)).map((c) => data.subjects[c]?.area))
   const opens = pathwayCounter(data, input.course, input.startYear)
@@ -223,6 +239,12 @@ function buildPlan(given: GenerateInput): GenerateResult {
 
   // The last term each required subject can start in and still leave room for what needs it.
   const latest = latestStart(pending, needs, terms, data)
+  // A first-year subject whose chain can't reach it within the first year (a Semester 2-only
+  // follow-on to a Semester 1-only subject, for a mid-year start) still has to be taken: as early
+  // as it can be, rather than never.
+  const soonest = earliestStart(pending, needs, terms, data)
+  const inFirstYear = (i: number) => terms.slice(0, i).filter((t) => !isShort(t)).length < 2
+  const firstYearBound = (c: string) => firstYear.has(c) && inFirstYear(soonest.get(c) ?? 0)
   let now = 0
   const urgency = (c: string) => ((latest.get(c) ?? Infinity) <= now ? 1 : 0)
 
@@ -235,13 +257,14 @@ function buildPlan(given: GenerateInput): GenerateResult {
 
     // Required subjects first. Corequisites go in together or not at all; a one-way corequisite
     // (MIIM30016 needs MIIM30011 earlier or alongside) may join once it is placed this term.
-    const coreqsOf = (c: string) => referencedSubjects(data.subjects[c]?.corequisites ?? 'none')
+    // Corequisites, and prerequisites that may be taken at the same time (FLTV10025 with FLTV10016).
+    const alongsideOf = (c: string) => [...referencedSubjects(data.subjects[c]?.corequisites ?? 'none'), ...concurrentSubjects(data.subjects[c]?.prerequisites ?? 'none')]
     const fits = (c: string, group: string[]) =>
       !before.has(c) &&
-      (needs.get(c) ?? []).every((n) => before.has(n) || group.includes(n) || (term.subjects.includes(n) && coreqsOf(c).includes(n))) &&
+      (needs.get(c) ?? []).every((n) => before.has(n) || group.includes(n) || (term.subjects.includes(n) && alongsideOf(c).includes(n))) &&
       canTake(c, term, before, data, input.course, group, majorsOf(input)) !== 'fail' &&
       (!firstSemester.has(c) || termIndex === 0) &&
-      (!firstYear.has(c) || terms.slice(0, termIndex).filter((t) => !isShort(t)).length < 2)
+      (!firstYearBound(c) || inFirstYear(termIndex))
     // Again after each pass: a subject placed this term can let its one-way corequisite partner in.
     for (let placedAny = true; placedAny; ) {
       placedAny = false
@@ -267,6 +290,8 @@ function buildPlan(given: GenerateInput): GenerateResult {
     // Then electives aimed at the most pressing unmet requirement.
     if (!isShort(term)) fill(term, termIndex)
   })
+  const late = pending.filter((c) => firstYear.has(c) && !firstYearBound(c))
+  if (late.length) notes.push(note('firstYearLate', { codes: late.join(', ') }, `${late.join(', ')} can't fit in your first year from this start (the subjects before them run in one semester only), so they're planned as early as they can be.`))
   // Trying to finish a semester earlier: electives also go in summer and winter, earliest first,
   // until the course total is reached.
   if (input.fillShortTerms && course) {
@@ -350,10 +375,28 @@ function buildPlan(given: GenerateInput): GenerateResult {
     n.text = n.text.replace(was, `${where.year} ${where.period}`)
   }
   const placed = allPlaced()
+  // A required subject whose mark condition the record already fails ("75 in MUSI10221" with a
+  // 60): it's still the way the degree goes, so it stays planned, with a warning to talk to the
+  // coordinator (or retake) first.
+  const marks = marksForConditions(profile.results, data)
+  if (Object.keys(marks).length) {
+    const wam = computeWam(profile.results, data)
+    terms.forEach((t, i) => {
+      const before = doneBefore(completed, terms, i, data)
+      for (const code of t.subjects.filter((c) => required.has(c))) {
+        const pre = data.subjects[code]?.prerequisites ?? 'none'
+        const ctx = { completed: before, sameTerm: new Set([...before, ...t.subjects]), subjects: data.subjects, admittedCourse: input.course, ...majorsOf(input) }
+        if (evaluateField(pre, { ...ctx, marks, wam }).status === 'fail' && evaluateField(pre, ctx).status !== 'fail') {
+          notes.push(note('markUnmet', { code }, `${code} needs a mark your record doesn't reach yet; check with the coordinator before enrolling.`))
+        }
+      }
+    })
+  }
 
-  const unplaced = pending
-    .filter((c) => !placed.includes(c) && !replaced.has(c))
-    .map((code) => ({ code, ...explainUnplaced(code, data, input.startYear) }))
+  const unplaced = [
+    ...closedRequired.map((code) => ({ code, reasonKey: 'closedToCourse', reason: "it isn't open to students in this course" })),
+    ...pending.filter((c) => !placed.includes(c) && !replaced.has(c)).map((code) => ({ code, ...explainUnplaced(code, data, input.startYear) })),
+  ]
 
   const plan: Plan = {
     course: input.course,
@@ -574,7 +617,8 @@ function closePrereqs(input: GenerateInput, required: Set<string>, done: Set<str
   while (queue.length > 0) {
     const code = queue.pop() as string
     const s = data.subjects[code]
-    if (!s) continue
+    // Nothing is added for a subject the course closes: it's left out of the plan (see buildPlan).
+    if (!s || data.courses.some((c) => c.code === input.course && c.closed.includes(code))) continue
     const pre = s.prerequisites !== 'none' && s.prerequisites !== 'unknown' ? resolvePrereqs(s.prerequisites, done, required, data, input.course, code, majorsOf(input)) : []
     const co = s.corequisites !== 'none' && s.corequisites !== 'unknown' ? resolvePrereqs(s.corequisites, done, required, data, input.course, code, majorsOf(input)) : []
     // A corequisite that names this subject back (VETS30016 and VETS30029) goes in the same
@@ -619,7 +663,7 @@ function resolvePrereqs(expr: ReqExpr, done: Set<string>, required: Set<string>,
     const cost = (o: string[]) =>
       o.reduce(
         (sum, c) =>
-          sum + (required.has(c) ? 0 : clashes(c, done, required, data) || closedTo(c, course, data, held) ? 10_000 : !data.subjects[c] || needsMissing(c, data) ? 100 : data.subjects[c]!.campus ? 40 : noCredit(data.subjects[c]!, course, data) ? 30 : semesterless(data.subjects[c]!) ? 20 : 1),
+          sum + (closedTo(c, course, data, held) ? 10_000 : required.has(c) ? 0 : clashes(c, done, required, data) ? 10_000 : !data.subjects[c] || needsMissing(c, data) ? 100 : data.subjects[c]!.campus ? 40 : noCredit(data.subjects[c]!, course, data) ? 30 : semesterless(data.subjects[c]!) ? 20 : 1),
         0,
       )
     let best: string[] | null = null
@@ -842,9 +886,11 @@ function canTake(code: string, term: PlanTerm, before: Set<string>, data: Datase
   const s = data.subjects[code]
   if (!s) return 'unknown'
   if (offeredIn(s, term.year, term.period).status === 'fail') return 'fail'
-  const pre = evaluateField(s.prerequisites, { completed: before, subjects: data.subjects, admittedCourse: course, ...held })
-  // Corequisites may be taken in the same term: the ones planned there count.
-  const co = evaluateField(s.corequisites, { completed: new Set([...before, ...term.subjects, ...alongside]), subjects: data.subjects, admittedCourse: course, ...held })
+  // Corequisites, and prerequisites that may be taken concurrently, may be in the same term: the
+  // ones planned there count.
+  const sameTerm = new Set([...before, ...term.subjects, ...alongside])
+  const pre = evaluateField(s.prerequisites, { completed: before, sameTerm, subjects: data.subjects, admittedCourse: course, ...held })
+  const co = evaluateField(s.corequisites, { completed: sameTerm, subjects: data.subjects, admittedCourse: course, ...held })
   if (pre.status === 'fail' || co.status === 'fail') return 'fail'
   return pre.status === 'unknown' || co.status === 'unknown' ? 'unknown' : 'ok'
 }
@@ -885,6 +931,35 @@ function latestStart(codes: string[], needs: Map<string, string[]>, terms: PlanT
   return memo
 }
 
+/**
+ * Earliest term index each subject could start in: after everything it needs (a year-long one
+ * after its Semester 2), in a term it is offered. Terms past the end count as the plan's length.
+ */
+function earliestStart(codes: string[], needs: Map<string, string[]>, terms: PlanTerm[], data: Dataset): Map<string, number> {
+  const set = new Set(codes)
+  const memo = new Map<string, number>()
+  const visit = (c: string, stack: Set<string>): number => {
+    const known = memo.get(c)
+    if (known !== undefined) return known
+    if (stack.has(c)) return 0 // guard against cyclic data
+    stack.add(c)
+    const together = concurrentSubjects(data.subjects[c]?.prerequisites ?? 'none')
+    const after = Math.max(-1, ...(needs.get(c) ?? []).filter((n) => set.has(n)).map((n) => {
+      const at = visit(n, stack)
+      if (together.includes(n)) return at - 1
+      return isYearLong(data.subjects[n]) ? Math.max(at, secondHalfOf(terms, at)) : at
+    }))
+    stack.delete(c)
+    const s = data.subjects[c]
+    let i = after + 1
+    while (i < terms.length && s && offeredIn(s, terms[i]!.year, terms[i]!.period).status === 'fail') i++
+    memo.set(c, i)
+    return i
+  }
+  codes.forEach((c) => visit(c, new Set()))
+  return memo
+}
+
 function dependentDepth(codes: string[], data: Dataset, needs: Map<string, string[]>): Map<string, number> {
   const set = new Set(codes)
   const deps = new Map<string, string[]>()
@@ -905,6 +980,13 @@ function dependentDepth(codes: string[], data: Dataset, needs: Map<string, strin
   }
   codes.forEach((c) => visit(c, new Set()))
   return memo
+}
+
+/** Subjects a requirement lets be taken in the same term ("may be taken concurrently"). */
+function concurrentSubjects(field: Subject['prerequisites']): string[] {
+  if (field === 'none' || field === 'unknown') return []
+  const walk = (e: ReqExpr): string[] => ('subject' in e ? (e.concurrent ? [e.subject] : []) : 'all' in e ? e.all.flatMap(walk) : 'any' in e ? e.any.flatMap(walk) : [])
+  return walk(field)
 }
 
 function referenced(expr: ReqExpr): string[] {
@@ -999,13 +1081,13 @@ function pickElective(ctx: PickCtx): { code: string; why: string; ruleId: string
   const { input, course, term } = ctx
   const data = input.data
   // Required subjects not placed yet still count: they will use their share of
-  // each requirement and cap, so electives shouldn't take it first.
-  // (Not for the overall total, though: that only fills as terms actually fill.)
+  // each requirement and cap, so electives shouldn't take it first. The overall total too:
+  // electives only ever fill what the required subjects leave of the degree's points, so a
+  // required subject pushed to a later semester isn't crowded out by electives past the total.
   const all = [...new Set([...ctx.completed, ...ctx.placed, ...ctx.reserved])]
-  const placedOnly = [...ctx.completed, ...ctx.placed]
   const deficits = pointRules(course)
     .filter((r) => r.min !== undefined)
-    .map((r) => ({ rule: r, gap: (r.min as number) - sumPoints(specificity(r) > 0 ? all : placedOnly, data, course.code, r) }))
+    .map((r) => ({ rule: r, gap: (r.min as number) - sumPoints(all, data, course.code, r) }))
     .filter((d) => d.gap > 0)
     // A requirement that has fallen behind an even pace goes first, so ones that
     // need a chain (level-1 breadth is capped, so level 2 needs a start) begin early.

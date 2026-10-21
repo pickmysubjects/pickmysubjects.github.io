@@ -11,6 +11,8 @@ import {
   termShare,
   referencedSubjects,
   passedCodes,
+  marksForConditions,
+  computeWam,
   planStart,
   termKey,
   standardTerms,
@@ -53,7 +55,8 @@ export function planFor(state: PlanState, profile: Profile, data: Dataset): Plan
     international: state.setup.international === true,
     confirmed: profile.confirmed ?? [],
     recordedLoad: recordedLoads(profile.results, data),
-    marks: Object.fromEntries(profile.results.filter((r) => r.mark !== undefined).map((r) => [r.code, r.mark as number])),
+    marks: marksForConditions(profile.results, data),
+    wam: computeWam(profile.results, data),
   }
 }
 

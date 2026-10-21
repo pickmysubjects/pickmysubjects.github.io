@@ -1,3 +1,13 @@
+import { passedCodes, type Profile } from '@/engine/recommend'
+import type { Dataset } from '@/engine/schema'
+
+/** Points still to take in a degree of `degreePoints`: passed subjects only count as progress (a fail still counts in the WAM). */
+export function pointsLeft(results: Profile['results'], data: Dataset, degreePoints: number): number {
+  const passed = new Set(passedCodes(results))
+  const done = [...passed].reduce((sum, c) => sum + (data.subjects[c]?.points ?? 12.5), 0)
+  return Math.max(0, degreePoints - done)
+}
+
 /** Average mark needed over the remaining points to reach `target`. */
 export function neededAverage(wam: number, donePoints: number, target: number, remainingPoints: number): number | null {
   if (remainingPoints <= 0) return null

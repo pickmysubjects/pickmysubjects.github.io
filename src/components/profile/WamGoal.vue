@@ -4,12 +4,16 @@ import { Target } from 'lucide-vue-next'
 import { useDataset } from '@/composables/useDataset'
 import { useProfile } from '@/composables/useProfile'
 import { useI18n } from '@/i18n'
-import { gradeOf, neededAverage, projectedWam } from '@/utils/wamGoal'
+import { usePlan } from '@/composables/usePlan'
+import { gradeOf, neededAverage, pointsLeft, projectedWam } from '@/utils/wamGoal'
 
 /** "What do I need on the rest to reach my target WAM?", from the marks on this page. */
-const DEGREE_POINTS = 300
 const { data } = useDataset()
 const { profile, wam } = useProfile()
+const { course } = usePlan()
+// The planned degree's points (B-SCIEXTD: 350); 300, the usual bachelor's, before one is chosen.
+const degreePoints = computed(() => course.value?.totalPoints ?? 300)
+// Points the WAM is worked out over: every marked attempt, fails included.
 const { t } = useI18n()
 
 const donePoints = computed(() =>
@@ -19,13 +23,14 @@ const donePoints = computed(() =>
 // Start from the student's own numbers; they can change any of them.
 const current = shallowRef(wam.value ?? 70)
 const done = shallowRef(donePoints.value)
-const left = shallowRef(Math.max(0, DEGREE_POINTS - donePoints.value))
+const remaining = computed(() => pointsLeft(profile.value.results, data.value, degreePoints.value))
+const left = shallowRef(remaining.value)
 const target = shallowRef(Math.min(100, Math.ceil((wam.value ?? 70) + 3)))
 const average = shallowRef(75)
-watch([wam, donePoints], ([w, d]) => {
+watch([wam, donePoints, remaining], ([w, d, r]) => {
   if (w !== null) current.value = w
   done.value = d
-  left.value = Math.max(0, DEGREE_POINTS - d)
+  left.value = r
 })
 
 const need = computed(() => neededAverage(current.value, done.value, target.value, left.value))

@@ -188,6 +188,7 @@ export const ms: Messages = {
     offeringsUnknown: 'tempoh tawarannya belum dimasukkan',
     notOffered: 'tidak ditawarkan pada tahun yang dirancang',
     noRoom: 'prasyarat atau beban pengajian tidak meninggalkan ruang sebelum rancangan tamat',
+    closedToCourse: 'tidak dibuka kepada pelajar kursus ini',
   },
   genNote: {
     shortTerm: "{code} hanya ditawarkan di luar semester, jadi dirancang pada {period} {year}.",
@@ -205,6 +206,8 @@ export const ms: Messages = {
     prereqAdded: 'Menambah {code} kerana {for} memerlukannya.',
     swapped: 'Menukar {from} kepada {to} pada {term} untuk memenuhi: {rule}.',
     repairStopped: 'Pelarasan subjek elektif dihentikan selepas terlalu banyak pertukaran; semak rancangan secara manual.',
+    firstYearLate: 'Jika bermula semester ini, {codes} tidak muat dalam tahun pertama (subjek sebelumnya hanya ditawarkan satu semester), jadi dirancang seawal mungkin.',
+    markUnmet: '{code} memerlukan markah yang belum dicapai dalam rekod anda. Tanya penyelaras sebelum mendaftar.',
   },
   expr: {
     anyOf: "Cukup penuhi salah satu:",

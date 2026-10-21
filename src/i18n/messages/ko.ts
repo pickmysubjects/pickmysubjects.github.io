@@ -188,6 +188,7 @@ export const ko: Messages = {
     offeringsUnknown: '개설 학기가 아직 정리되지 않음',
     notOffered: '계획한 연도에 개설되지 않음',
     noRoom: '선수 과목이나 수강 부담 때문에 계획이 끝나기 전에 넣을 자리가 없음',
+    closedToCourse: '이 학위 학생에게는 열려 있지 않음',
   },
   genNote: {
     shortTerm: "{code}은(는) 학기 외에만 열려서 {year}년 {period}에 넣었어요.",
@@ -205,6 +206,8 @@ export const ko: Messages = {
     prereqAdded: '{for}에 필요해서 {code}를 추가했습니다.',
     swapped: '{term}에서 {from}을(를) {to}로 바꿨습니다 (목적: {rule}).',
     repairStopped: '선택 과목을 너무 많이 바꿔서 조정을 멈췄습니다. 계획을 직접 확인해 주세요.',
+    firstYearLate: '이 시작 학기로는 {codes}을(를) 1학년 안에 넣을 수 없어서(앞 과목이 한 학기에만 개설됨) 가능한 한 이른 학기에 넣었습니다.',
+    markUnmet: '{code}에 필요한 성적에 아직 못 미칩니다. 수강 신청 전에 코디네이터와 상의하세요.',
   },
   expr: {
     anyOf: "아래 중 하나만 충족하면 돼요:",

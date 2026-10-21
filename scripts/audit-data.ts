@@ -92,6 +92,27 @@ for (const dir of ['components', 'courses', 'diplomas']) {
     for (const c of set) requiredBy.set(c, [...(requiredBy.get(c) ?? []), String(doc.id ?? doc.code ?? f)])
   }
 }
+// A component (or the course itself) requiring a subject its course closes to its students: no
+// plan can finish it without an error. A component only earlier starters may finish says so.
+const closedBy = new Map<string, Set<string>>()
+for (const f of yamlFiles(join(BASE, 'courses'))) {
+  const doc = read(f)
+  if (doc.code && Array.isArray(doc.closed)) closedBy.set(String(doc.code), new Set(doc.closed.map(String)))
+}
+for (const dir of ['components', 'courses']) {
+  for (const f of yamlFiles(join(BASE, dir))) {
+    const doc = read(f)
+    const course = String(doc.course ?? doc.code ?? '')
+    const closed = closedBy.get(course)
+    if (!closed?.size) continue
+    const set = new Set<string>()
+    requiredCodes(doc.requirements, set)
+    if (doc.core) requiredCodes(doc.core, set)
+    for (const r of Array.isArray(doc.rules) ? doc.rules : []) if (r?.kind === 'compulsory') requiredCodes({ all: r.subjects }, set)
+    const hit = [...set].filter((c) => closed.has(c))
+    if (hit.length) add('requirements', 'component requires a subject its course closes', `${doc.id ?? doc.code} (${course}): ${hit.join(', ')}${doc.closed_from ? ` — closed to starters from ${doc.closed_from}` : ''}`)
+  }
+}
 // Subject prerequisites that need a code with no alternative.
 for (const [code, s] of subjects) {
   for (const field of ['prerequisites', 'corequisites']) {

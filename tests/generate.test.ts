@@ -241,8 +241,11 @@ describe('generatePlan never takes a graduate route', () => {
     })
     const all = plan.terms.flatMap((t) => t.subjects)
     expect(all.filter((c) => /^[A-Z]{4}9/.test(c))).toEqual([])
-    expect(unplaced.map((u) => u.code)).toEqual([])
-    expect(all).toEqual(expect.arrayContaining(['INFO30005', 'COMP30022']))
+    // INFO30005 isn't open to B-SCI students (the major is only for pre-2018 starters): left out,
+    // with why, and COMP30022 goes the other way in (SWEN30006).
+    expect(unplaced.map((u) => [u.code, u.reasonKey])).toEqual([['INFO30005', 'closedToCourse']])
+    expect(all).toEqual(expect.arrayContaining(['COMP30022']))
+    expect(all).not.toContain('INFO30005')
   })
 })
 
