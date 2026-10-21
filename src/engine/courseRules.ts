@@ -1,6 +1,7 @@
 import type { Tri } from './expr'
 import type { Issue, Params, Plan } from './plan'
 import type { Component, ComponentLimit, ComponentReq, Course, CourseRule, Dataset, Diploma, Subject } from './schema'
+import { doneBefore } from './yearLong'
 
 export interface RuleStatus {
   ruleId: string
@@ -20,7 +21,10 @@ export interface CourseCheck {
 
 export function findCourse(data: Dataset, code: string, year: number): Course | undefined {
   const sameCode = data.courses.filter((c) => c.code === code)
-  return sameCode.find((c) => c.year === year) ?? sameCode.sort((a, b) => b.year - a.year)[0]
+  // A year with no version of its own runs on the version in force then (the nearest earlier
+  // one); before the first version we have, the first one is the closest guess.
+  const byYear = [...sameCode].sort((a, b) => a.year - b.year)
+  return byYear.filter((c) => c.year <= year).at(-1) ?? byYear[0]
 }
 
 /**
@@ -468,7 +472,9 @@ function checkRule(rule: CourseRule, ctx: RuleCtx): RuleStatus {
         if (rule.category !== undefined && cat !== rule.category) continue
         byArea.set(s.area, (byArea.get(s.area) ?? 0) + s.points)
       }
-      const unknownSubjects = ctx.codes.length - ctx.known.length
+      // Only unknown level-1 subjects could add an area (the level is the code's fifth character).
+      const known = new Set(ctx.known.map((s) => s.code))
+      const unknownSubjects = ctx.codes.filter((c) => !known.has(c) && Number(c[4]) === 1).length
       const couldReach = byArea.size + [...maybeAreas].filter((a) => !byArea.has(a)).length + unknownSubjects >= rule.minAreas
       const over = [...byArea].filter(([, pts]) => pts > rule.maxPointsPerArea)
       const overAreas = over.map(([a]) => a).join(', ')
@@ -514,7 +520,8 @@ function checkRule(rule: CourseRule, ctx: RuleCtx): RuleStatus {
         t.subjects.some((c) => (ctx.data.subjects[c]?.level ?? 0) === rule.beforeLevel),
       )
       if (firstHigher === -1) return { ...base, status: 'ok', detail: `no level ${rule.beforeLevel} subjects yet`, detailKey: 'progressionNone', params: { level: rule.beforeLevel } }
-      const earlier = [...ctx.plan.completed, ...ctx.plan.terms.slice(0, firstHigher).flatMap((t) => t.subjects)]
+      // Finished by then: a year-long subject started that Semester 1 is still running in Semester 2.
+      const earlier = [...doneBefore(ctx.plan.completed, ctx.plan.terms, firstHigher, ctx.data)]
       const pts = earlier.reduce((sum, c) => {
         const s = ctx.data.subjects[c]
         return s && s.level === rule.level ? sum + s.points : sum

@@ -6,7 +6,7 @@ import { checkTerms } from './planCheck'
 import { passedCodes, recommend, type Profile } from './recommend'
 import { planRoles } from './roles'
 import type { Dataset, Period } from './schema'
-import { requiredWithPrerequisites, termStress, type StressLevel } from './termStress'
+import { requiredWithPrerequisites, termStressesInPlan, termStressInPlan, type StressLevel, type TermStress } from './termStress'
 import { topicsOf } from './topics'
 import { doneBefore } from './yearLong'
 
@@ -22,21 +22,55 @@ const BALANCE_ROUNDS = 12
 const FIRST_TERM_WEIGHT = 1.5
 const RANK: Record<StressLevel, number> = { ok: 0, heavy: 1, veryHeavy: 2 }
 
-/** Problems a change must not add: errors and warnings counted apart, and unmet course rules. */
+/** Judges terms the way the plan shows them (see termStressInPlan), for one plan's setup. */
+interface Judge {
+  at(terms: readonly PlanTerm[], index: number): TermStress
+  all(terms: readonly PlanTerm[]): TermStress[]
+}
+
+function judgeFor(plan: Plan, data: Dataset, profile?: Profile): Judge {
+  const fixed = requiredWithPrerequisites(fixedSubjects(data, plan), plan.terms.flatMap((t) => t.subjects), data.subjects, plan.course)
+  const ctx = { fixed, course: plan.course }
+  return {
+    at: (terms, index) => termStressInPlan(terms, index, data, profile, ctx),
+    all: (terms) => termStressesInPlan(terms, data, profile, ctx),
+  }
+}
+
+/** Whether a whole arrangement of terms is good enough (e.g. one term got lighter). */
+type Test = (terms: readonly PlanTerm[]) => boolean
+
+/** The same term with one subject changed for another. */
+function withTerm(terms: readonly PlanTerm[], index: number, subjects: string[]): PlanTerm[] {
+  return terms.map((t, i) => ({ ...t, subjects: i === index ? subjects : [...t.subjects] }))
+}
+
+/**
+ * The plan's problems by identity: each term error or warning (kind, subject, rule; a term-wide
+ * one by its term) and each unmet course rule. Counting them isn't enough: a swap could clear
+ * one corequisite and break another.
+ */
+function problems(plan: Plan, data: Dataset): Set<string> {
+  const out = new Set<string>()
+  for (const i of checkTerms(plan, data)) {
+    if (i.severity !== 'error' && i.severity !== 'warning') continue
+    const where = i.subject ?? `${i.params.year ?? ''} ${i.params.period ?? ''}`
+    out.add(`${i.severity}|${i.kind}|${where}|${i.ruleId ?? ''}`)
+  }
+  for (const s of checkCourse(plan, data).statuses) if (s.status === 'fail') out.add(`rule|${s.ruleId}`)
+  return out
+}
+
+/** Whether every problem in `after` was already there. */
+function noneNew(before: Set<string>, after: Set<string>): boolean {
+  for (const x of after) if (!before.has(x)) return false
+  return true
+}
+
+/** Problems a change must not add, judged against the plan as it is now. */
 function guard(plan: Plan, data: Dataset): () => boolean {
-  const count = () => {
-    const issues = checkTerms(plan, data)
-    return {
-      errors: issues.filter((i) => i.severity === 'error').length,
-      warnings: issues.filter((i) => i.severity === 'warning').length,
-      unmet: checkCourse(plan, data).statuses.filter((s) => s.status === 'fail').length,
-    }
-  }
-  const base = count()
-  return () => {
-    const now = count()
-    return now.errors <= base.errors && now.warnings <= base.warnings && now.unmet <= base.unmet
-  }
+  const base = problems(plan, data)
+  return () => noneNew(base, problems(plan, data))
 }
 
 /**
@@ -47,7 +81,8 @@ function guard(plan: Plan, data: Dataset): () => boolean {
 export function balanceTerms(plan: Plan, data: Dataset, profile?: Profile): { a: string; b: string }[] {
   const { terms } = plan
   const safe = guard(plan, data)
-  const scores = () => terms.map((t) => termStress(t.subjects, data, profile, { course: plan.course }).score)
+  const judge = judgeFor(plan, data, profile)
+  const scores = () => judge.all(terms).map((t) => t.score)
   // The first semester weighs more: students are still finding their feet, and measured by
   // real load rather than credit points it is among the heaviest (Borchers & Pardos, LAK 2023).
   const cost = (xs: number[]) => xs.reduce((sum, x, i) => sum + (i === 0 ? FIRST_TERM_WEIGHT : 1) * x * x, 0)
@@ -118,31 +153,37 @@ const order = (t: { year: number; period: Period }) =>
 export function relieveTerm(plan: Plan, data: Dataset, termIndex: number, profile?: Profile): Relief | null {
   const term = plan.terms[termIndex]
   if (!term) return null
-  const before = termStress(term.subjects, data, profile, { course: plan.course })
+  const judge = judgeFor(plan, data, profile)
+  const before = judge.at(plan.terms, termIndex)
   if (before.level === 'ok') return null
   // Only what actually takes the semester down a level counts: a button that leaves it
-  // "heavy" after you press it helps nobody.
-  const lighter = (subjects: string[]) => RANK[termStress(subjects, data, profile, { course: plan.course }).level] < RANK[before.level]
+  // "heavy" after you press it helps nobody. Judged in the whole arrangement (by year and
+  // teaching period, as a new short term can shift indexes).
+  const lighterAt = (terms: readonly PlanTerm[]) => {
+    const i = terms.findIndex((t) => t.year === term.year && t.period === term.period)
+    return RANK[judge.at(terms, i).level] < RANK[before.level]
+  }
+  const lighter: Test = lighterAt
 
   // A swap between this semester and another, so the one the student is looking at gets
   // lighter and the other doesn't get heavier. Best by the two semesters' combined load.
-  const one = swapFor(plan, data, termIndex, profile, lighter)
+  const one = swapFor(plan, data, termIndex, judge, lighter)
   if (one) return one
 
   // Keeping the semester as it is but taking a different elective in place of the one
   // that makes it heavy, chosen the way suggestions are (the student's interests,
   // strengths and marks).
-  const other = replaceFor(plan, data, termIndex, profile, lighter)
+  const other = replaceFor(plan, data, termIndex, profile, judge, lighter)
   if (other) return other
 
   // A swap that would push the other semester over, fixed there by a different elective.
-  const both = swapThenReplace(plan, data, termIndex, profile, lighter)
+  const both = swapThenReplace(plan, data, termIndex, profile, judge, lighter)
   if (both) return both
 
   // Otherwise the whole-plan balance, if it happens to lighten this one.
   const copy: Plan = { ...plan, terms: plan.terms.map((t) => ({ ...t, subjects: [...t.subjects] })) }
   const swaps = balanceTerms(copy, data, profile)
-  if (swaps.length && lighter((copy.terms[termIndex] as PlanTerm).subjects)) return { kind: 'spread', terms: copy.terms, swaps }
+  if (swaps.length && lighter(copy.terms)) return { kind: 'spread', terms: copy.terms, swaps }
 
   // Subjects named in the reasons first: they're what makes it heavy.
   const named = before.reasons.flatMap((r) => String(r.params.codes ?? '').split(', ')).filter((c) => term.subjects.includes(c))
@@ -166,7 +207,7 @@ export function relieveTerm(plan: Plan, data: Dataset, termIndex: number, profil
       // Measured against the plan as it was, with the new term (empty) already in it.
       const baseline: Plan = { ...plan, terms: terms.map((t) => (t === target ? { ...t, subjects: t.subjects.filter((c) => c !== code) } : t)) }
       baseline.terms = baseline.terms.map((t) => (t.year === term.year && t.period === term.period ? { ...t, subjects: [...term.subjects] } : t))
-      if (!lighter(term.subjects.filter((c) => c !== code))) continue
+      if (!lighter(moved.terms)) continue
       if (noWorse(baseline, moved, data)) return { kind: 'shortTerm', code, ...at }
     }
   }
@@ -184,15 +225,16 @@ export function fixHeavyTerms(plan: Plan, data: Dataset, profile?: Profile): { a
   for (let round = 0; round < plan.terms.length * 2; round++) {
     let changed = false
     for (const [i, term] of plan.terms.entries()) {
-      const before = termStress(term.subjects, data, profile, { course: plan.course })
+      const judge = judgeFor(plan, data, profile)
+      const before = judge.at(plan.terms, i)
       if (RANK[before.level] <= RANK[tolerated(profile)]) continue
-      const lighter = (subjects: string[]) => RANK[termStress(subjects, data, profile, { course: plan.course }).level] < RANK[before.level]
+      const lighter: Test = (terms) => RANK[judge.at(terms, i).level] < RANK[before.level]
       const r =
-        swapFor(plan, data, i, profile, lighter) ??
-        replaceFor(plan, data, i, profile, lighter) ??
-        swapThenReplace(plan, data, i, profile, lighter) ??
+        swapFor(plan, data, i, judge, lighter) ??
+        replaceFor(plan, data, i, profile, judge, lighter) ??
+        swapThenReplace(plan, data, i, profile, judge, lighter) ??
         // Last, the moves the "make it lighter" button would offer (it can chain several swaps).
-        lighterRelief(relieveTerm(plan, data, i, profile), i, lighter)
+        lighterRelief(relieveTerm(plan, data, i, profile), lighter)
       if (r?.kind === 'spread') {
         made.push(...r.swaps.map((x) => ({ ...x, kind: 'swap' as const })))
         if (r.replaced) made.push({ a: r.replaced.code, b: r.replaced.with, kind: 'replace' })
@@ -206,11 +248,11 @@ export function fixHeavyTerms(plan: Plan, data: Dataset, profile?: Profile): { a
   return made
 }
 
-function lighterRelief(r: Relief | null, i: number, lighter: (s: string[]) => boolean): Relief | null {
+function lighterRelief(r: Relief | null, lighter: Test): Relief | null {
   // Only moves between semesters: its replacements don't know which subjects the plan's
   // other requirements lean on (a maths prerequisite, say).
   if (!r || r.kind !== 'spread' || r.replaced) return null
-  return lighter((r.terms[i] as PlanTerm).subjects) ? r : null
+  return lighter(r.terms) ? r : null
 }
 
 /** How many suggested alternatives to try for each elective. */
@@ -274,7 +316,8 @@ function replaceFor(
   data: Dataset,
   termIndex: number,
   profile: Profile | undefined,
-  lighter: (subjects: string[]) => boolean,
+  judge: Judge,
+  lighter: Test,
   onlyNamed = false,
 ): Relief | null {
   const term = plan.terms[termIndex] as PlanTerm
@@ -288,7 +331,7 @@ function replaceFor(
     const p = data.subjects[c]
     if (p) for (const r of [...referencedSubjects(p.prerequisites), ...referencedSubjects(p.corequisites)]) if (inPlan.includes(r)) fixed.add(r)
   }
-  const stress = termStress(term.subjects, data, profile, { course: plan.course })
+  const stress = judge.at(plan.terms, termIndex)
   const named = stress.reasons.flatMap((r) => String(r.params.codes ?? '').split(', ')).filter((c) => term.subjects.includes(c))
   const done = [...plan.completed, ...passedCodes(profile?.results ?? [])]
   const student: Profile = profile ?? { results: [], skills: {}, interests: [], goal: 'balanced' }
@@ -311,9 +354,8 @@ function replaceFor(
     const keepsInterest = (c: string) => !likes(code) || likes(c)
     for (const rec of recs) {
       if (!keepsInterest(rec)) continue
-      const subjects = term.subjects.map((c) => (c === code ? rec : c))
-      if (!lighter(subjects)) continue
-      const terms = plan.terms.map((t, i) => (i === termIndex ? { ...t, subjects } : { ...t, subjects: [...t.subjects] }))
+      const terms = withTerm(plan.terms, termIndex, term.subjects.map((c) => (c === code ? rec : c)))
+      if (!lighter(terms)) continue
       if (noWorse(plan, { ...plan, terms }, data)) return { kind: 'replace', code, with: rec, terms }
     }
   }
@@ -325,16 +367,17 @@ function swapThenReplace(
   data: Dataset,
   termIndex: number,
   profile: Profile | undefined,
-  lighter: (subjects: string[]) => boolean,
+  judge: Judge,
+  lighter: Test,
 ): Relief | null {
   const from = plan.terms[termIndex] as PlanTerm
-  const reasons = termStress(from.subjects, data, profile, { course: plan.course }).reasons
+  const reasons = judge.at(plan.terms, termIndex).reasons
   // Only the subjects that make it heavy are worth moving.
   const movable = [...new Set(reasons.flatMap((x) => String(x.params.codes ?? '').split(', ')))].filter((c) => from.subjects.includes(c))
   for (const a of movable) {
     for (const [to, other] of plan.terms.entries()) {
       if (to === termIndex) continue
-      const otherBefore = RANK[termStress(other.subjects, data, profile, { course: plan.course }).level]
+      const otherBefore = RANK[judge.at(plan.terms, to).level]
       for (const b of other.subjects) {
         const sa = data.subjects[a]
         const sb = data.subjects[b]
@@ -343,15 +386,15 @@ function swapThenReplace(
         if (inverts(sa.level, sb.level, termIndex, to)) continue
         const terms = plan.terms.map((t) => ({ ...t, subjects: [...t.subjects] }))
         swap(terms[termIndex] as PlanTerm, terms[to] as PlanTerm, a, b)
-        if (!lighter((terms[termIndex] as PlanTerm).subjects)) continue
+        if (!lighter(terms)) continue
         const swapped: Plan = { ...plan, terms }
-        const back = (subjects: string[]) => RANK[termStress(subjects, data, profile, { course: plan.course }).level] <= otherBefore
-        if (back((terms[to] as PlanTerm).subjects)) continue // a plain swap; swapFor covers it
-        const fix = replaceFor(swapped, data, to, profile, back, true)
+        const back: Test = (ts) => RANK[judge.at(ts, to).level] <= otherBefore
+        if (back(terms)) continue // a plain swap; swapFor covers it
+        const fix = replaceFor(swapped, data, to, profile, judge, back, true)
         if (fix?.kind !== 'replace' || !noWorse(plan, { ...plan, terms: fix.terms }, data)) continue
         // Judged where it sat before the swap: moved later, nothing would seem to lean on it.
         if (leanedOn(plan, data, fix.code)) continue
-        if (!lighter((fix.terms[termIndex] as PlanTerm).subjects)) continue
+        if (!lighter(fix.terms)) continue
         return { kind: 'spread', terms: fix.terms, swaps: [{ a, b }], replaced: { code: fix.code, with: fix.with } }
       }
     }
@@ -372,8 +415,8 @@ function swapFor(
   plan: Plan,
   data: Dataset,
   termIndex: number,
-  profile: Profile | undefined,
-  lighter: (subjects: string[]) => boolean,
+  judge: Judge,
+  lighter: Test,
 ): Relief | null {
   const from = plan.terms[termIndex] as PlanTerm
   const copy: Plan = { ...plan, terms: plan.terms.map((t) => ({ ...t, subjects: [...t.subjects] })) }
@@ -384,7 +427,7 @@ function swapFor(
     for (const [to, other] of plan.terms.entries()) {
       if (to === termIndex) continue
       const there = copy.terms[to] as PlanTerm
-      const otherBefore = termStress(other.subjects, data, profile, { course: plan.course }).level
+      const otherBefore = judge.at(plan.terms, to).level
       for (const b of other.subjects) {
         const sa = data.subjects[a]
         const sb = data.subjects[b]
@@ -392,9 +435,10 @@ function swapFor(
         if (offeredIn(sa, other.year, other.period).status !== 'ok' || offeredIn(sb, from.year, from.period).status !== 'ok') continue
         if (inverts(sa.level, sb.level, termIndex, to)) continue
         swap(here, there, a, b)
-        const otherAfter = termStress(there.subjects, data, profile, { course: plan.course })
-        if (lighter(here.subjects) && RANK[otherAfter.level] <= RANK[otherBefore]) {
-          const cost = termStress(here.subjects, data, profile, { course: plan.course }).score ** 2 + otherAfter.score ** 2
+        const after = judge.all(copy.terms)
+        const otherAfter = after[to] as TermStress
+        if (lighter(copy.terms) && RANK[otherAfter.level] <= RANK[otherBefore]) {
+          const cost = (after[termIndex] as TermStress).score ** 2 + otherAfter.score ** 2
           if ((!best || cost < best.cost) && safe()) best = { to, a, b, cost }
         }
         swap(here, there, b, a)
@@ -406,18 +450,8 @@ function swapFor(
   return { kind: 'spread', terms: copy.terms, swaps: [{ a: best.a, b: best.b }] }
 }
 
-function noWorse(before: Plan, after: Plan, data: Dataset): boolean {
-  const count = (p: Plan) => {
-    const issues = checkTerms(p, data)
-    return [
-      issues.filter((i) => i.severity === 'error').length,
-      issues.filter((i) => i.severity === 'warning').length,
-      checkCourse(p, data).statuses.filter((s) => s.status === 'fail').length,
-    ]
-  }
-  const a = count(before)
-  const b = count(after)
-  return b.every((x, i) => x <= (a[i] as number))
+export function noWorse(before: Plan, after: Plan, data: Dataset): boolean {
+  return noneNew(problems(before, data), problems(after, data))
 }
 
 /**

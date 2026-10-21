@@ -83,3 +83,46 @@ describe('majors with entry points (routes)', () => {
     expect(check(['EURO20001', 'EURO30001'])).toBe('fail')
   })
 })
+
+describe('rule fixes from the second review', () => {
+  it('a year-long level-1 subject started in Semester 1 is not finished before a level-2 subject that Semester 2', async () => {
+    const { buildDataset } = await import('../scripts/dataset')
+    const { checkCourse } = await import('../src/engine/courseRules')
+    const { dataset: real } = buildDataset('real')
+    const data = { ...real, subjects: { ...real.subjects, MAST10006: { ...real.subjects.MAST10006!, yearLong: true } } }
+    const plan = {
+      course: 'B-SCI',
+      courseYear: 2026,
+      completed: [],
+      terms: [
+        { year: 2027, period: 'semester-1', subjects: ['MAST10006', 'MAST10007', 'BIOL10008', 'CHEM10003'] },
+        { year: 2027, period: 'semester-2', subjects: ['MAST20009'] },
+      ],
+    } as never
+    const status = (d: typeof real) => checkCourse(plan, d).statuses.find((s) => s.ruleId === 'progress-to-l2')
+    expect(status(real)?.status).toBe('ok')
+    expect(status(data)?.status).toBe('fail')
+    expect(status(data)?.params.have).toBe(37.5)
+  })
+
+  it('an unknown subject above level 1 cannot add a level-1 area', async () => {
+    const { buildDataset } = await import('../scripts/dataset')
+    const { checkCourse } = await import('../src/engine/courseRules')
+    const { dataset: real } = buildDataset('real')
+    const check = (code: string) =>
+      checkCourse({ course: 'B-SCI', courseYear: 2026, completed: ['MAST10006', code], terms: [] } as never, real).statuses.find((s) => s.ruleId === 'level1-areas')?.status
+    expect(check('ZZZZ20001')).toBe('fail')
+    expect(check('ZZZZ10001')).toBe('unknown')
+  })
+
+  it('a course year with no version of its own uses the nearest earlier version', async () => {
+    const { findCourse } = await import('../src/engine/courseRules')
+    const v = (year: number) => ({ code: 'X', year }) as never
+    const data = { courses: [v(2024), v(2026), v(2028)] } as never
+    expect(findCourse(data, 'X', 2027)?.year).toBe(2026)
+    expect(findCourse(data, 'X', 2026)?.year).toBe(2026)
+    expect(findCourse(data, 'X', 2030)?.year).toBe(2028)
+    expect(findCourse(data, 'X', 2020)?.year).toBe(2024)
+    expect(findCourse(data, 'Y', 2026)).toBeUndefined()
+  })
+})

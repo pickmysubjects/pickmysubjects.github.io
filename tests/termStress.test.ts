@@ -252,3 +252,13 @@ describe('lightening a semester keeps what later subjects lean on (real data)', 
     expect(unplaced.map((u) => u.code)).toEqual([])
   })
 })
+
+describe('many deadlines names the subjects behind them', () => {
+  const many = (code: string, n: number) =>
+    plain(code, { assessment: Array.from({ length: n }, () => ({ kind: 'assignment', weight: 100 / n })) })
+  it('lists the subjects whose move alone would clear it, most tasks first', () => {
+    const data = dataset([many('AAAA10001', 3), many('BBBB10001', 10), many('CCCC10001', 6), many('DDDD10001', 3)])
+    const s = termStress(['AAAA10001', 'BBBB10001', 'CCCC10001', 'DDDD10001'], data)
+    expect(s.reasons.find((r) => r.key === 'deadlines')?.params).toEqual({ n: 22, codes: 'BBBB10001, CCCC10001' })
+  })
+})

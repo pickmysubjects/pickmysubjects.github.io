@@ -8,7 +8,9 @@ offerings:
 prerequisites:
   all:
     - DRAM10034
-    - DRAM10035
+    # The Handbook page names Acting 2 (DRAM10035), but the Bachelor of Fine Arts (Theatre)
+    # structure has Theatre 2 (DRAM10036) in that place; either one is accepted here.
+    - any: [DRAM10035, DRAM10036]
 corequisites: none
 non_allowed: []
 skills:
@@ -32,4 +34,4 @@ breadth_for: []
 handbook: https://handbook.unimelb.edu.au/2026/subjects/dram20033
 source_year: 2026
 verified_on: 2026-10-21
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. The Handbook lists Performance Preparation Acting 2 (DRAM10035) as a prerequisite, but the Theatre course structure has Performance Preparation Theatre 2 (DRAM10036) instead; we plan it after Theatre 2. Check with the faculty."
