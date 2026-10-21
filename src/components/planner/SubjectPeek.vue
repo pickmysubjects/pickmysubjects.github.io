@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { link } from '@/composables/useView'
 import { handbookUrl } from '@/utils/links'
-import { computed, onMounted, shallowRef, useTemplateRef } from 'vue'
+import { computed, onMounted, shallowRef, toRef, useTemplateRef } from 'vue'
 import { CalendarRange, CheckCheck, ExternalLink, X } from 'lucide-vue-next'
 import { alternativeGroups, periodsFor, prerequisiteRoute, referencedSubjects, simplifyFor, type Subject } from '@/engine'
 import AssessmentPanel from '@/components/subject/AssessmentPanel.vue'
 import MajorRoles from '@/components/subject/MajorRoles.vue'
 import SubjectAbout from '@/components/subject/SubjectAbout.vue'
 import { useProfile } from '@/composables/useProfile'
+import { useSubjectDetail } from '@/composables/useDataset'
 import { useI18n } from '@/i18n'
 import { categoryLabel, describeReq } from '@/i18n/format'
 
@@ -28,6 +29,8 @@ const props = defineProps<{
   passFail?: boolean
 }>()
 const emit = defineEmits<{ close: []; open: [code: string]; swap: [from: string, to: string]; markDone: [mark: number | undefined] }>()
+// The plan's subjects carry only the English gist; load the full about (every language, outcomes).
+const { subject: detailed, ready: detailReady } = useSubjectDetail(toRef(props, 'code'))
 const doneMark = shallowRef<number | ''>('')
 function markDone(): void {
   const m = doneMark.value === '' ? undefined : Math.max(0, Math.min(100, Number(doneMark.value)))
@@ -144,7 +147,7 @@ function onClick(event: MouseEvent): void {
           </span>
         </p>
 
-        <SubjectAbout class="peek-section" :subject="subject" />
+        <SubjectAbout v-if="detailReady && detailed" class="peek-section" :subject="detailed" />
 
         <MajorRoles class="peek-section" :code="code" />
 
