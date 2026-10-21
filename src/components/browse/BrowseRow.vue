@@ -1,14 +1,20 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { ChevronRight, Star } from 'lucide-vue-next'
-import type { BrowseRow } from '@/engine'
+import type { BrowseRow, Recommendation } from '@/engine'
+import FitBadge from './FitBadge.vue'
+import RowWarnings from './RowWarnings.vue'
 import { link } from '@/composables/useView'
 import { useDataset } from '@/composables/useDataset'
 import { useI18n } from '@/i18n'
 import { localTitle } from '@/i18n/localized'
 
-/** `reasons`: why it's on the list chosen (or suits the student), shown under the facts. */
-const props = defineProps<{ row: BrowseRow; course: string; reasons?: string[] }>()
+/**
+ * `reasons`: why it's on the list chosen (or suits the student), shown under the facts.
+ * `rec` ("sort for me"): adds cautions and alternatives, and the fit badge when `fit` is set
+ * (with nothing filled in, every row would show the same score).
+ */
+const props = defineProps<{ row: BrowseRow; course: string; reasons?: string[]; rec?: Recommendation; fit?: boolean }>()
 const { t, locale } = useI18n()
 
 const s = computed(() => props.row.subject)
@@ -19,18 +25,20 @@ const closed = computed(() => data.value.courses.some((c) => c.code === props.co
 </script>
 
 <template>
-  <a class="row" :href="link(`subject/${s.code}`)">
+  <!-- The title link stretches over the whole row, so the badge and buttons inside stay real buttons. -->
+  <div class="row">
     <span class="main">
       <span class="head">
         <span class="code">{{ s.code }}</span>
         <span v-if="closed" class="tag tag-closed">{{ t('browse.closedForYou') }}</span>
         <span v-else-if="category === 'breadth'" class="tag tag-breadth">{{ t('browse.cat.breadth') }}</span>
+        <FitBadge v-if="rec && fit" :rec="rec" />
       </span>
       <!-- The reader's own language leads; the official English title sits under it on one line. -->
-      <span class="title">
+      <a class="title" :href="link(`subject/${s.code}`)">
         {{ localTitle(s, locale) || s.title }}
         <span v-if="localTitle(s, locale)" class="title-en">{{ s.title }}</span>
-      </span>
+      </a>
       <!-- Facts as small pills: when it runs leads; not running this year is visibly quieter. -->
       <span class="meta">
         <span v-if="row.periods.length" class="pill pill-when">{{ row.periods.map((p) => t(`periodShort.${p}`)).join(' · ') }}</span>
@@ -43,9 +51,10 @@ const closed = computed(() => data.value.courses.some((c) => c.code === props.co
       <span v-if="reasons?.length" class="reasons">
         <span v-for="x in reasons" :key="x" class="reason">{{ x }}</span>
       </span>
+      <RowWarnings v-if="rec" :rec="rec" class="notes" />
     </span>
     <ChevronRight :size="18" aria-hidden="true" class="go" />
-  </a>
+  </div>
 </template>
 
 <style scoped>
@@ -65,6 +74,7 @@ const closed = computed(() => data.value.courses.some((c) => c.code === props.co
 }
 
 .row {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -114,9 +124,26 @@ const closed = computed(() => data.value.courses.some((c) => c.code === props.co
 }
 
 .title {
+  color: inherit;
+  text-decoration: none;
   font-size: 1rem;
   font-weight: 600;
   overflow-wrap: anywhere;
+}
+
+.title::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.title:focus-visible {
+  outline: none;
+}
+
+.row:has(.title:focus-visible) {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
 }
 
 .title-en {
@@ -145,6 +172,11 @@ const closed = computed(() => data.value.courses.some((c) => c.code === props.co
 
   .title {
     grid-area: title;
+  }
+
+  .reasons,
+  .notes {
+    grid-column: 1 / -1;
   }
 
   .meta {

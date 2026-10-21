@@ -229,6 +229,13 @@ export const vi: Messages = {
     concurrent: "{what} (có thể học cùng học kỳ)",
   },
   suggest: {
+    iMeetIt: "Tôi đáp ứng",
+    original: "Nguyên văn Handbook",
+    orInstead: "Hoặc thay bằng {codes} (chỉ được tính một môn)",
+    fitHint: "So với các môn khác bạn có thể học: 90 nghĩa là hợp với bạn hơn 90% số đó. Dựa trên sở thích, điểm mạnh, điểm số và đánh giá; điền càng nhiều càng chính xác.",
+    fit: "Hợp hơn {score}% số môn bạn có thể chọn, {confidence}",
+    band: { great: "Rất hợp", good: "Hợp", ok: "Đáng cân nhắc" },
+    thinData: "Ít dữ liệu",
     title: 'Những môn hợp với bạn',
     lede: "Xếp hạng theo hồ sơ, kỹ năng và sở thích của bạn, kèm lý do.",
     goal: 'Lần này bạn ưu tiên điều gì?',

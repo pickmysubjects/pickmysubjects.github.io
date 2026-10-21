@@ -229,6 +229,13 @@ export const zhCN: Messages = {
     concurrent: "{what}（可在同一学期修）",
   },
   suggest: {
+    iMeetIt: "我满足",
+    original: "Handbook 原文",
+    orInstead: "也可以选 {codes}（这几门只能修一门）",
+    fitHint: "和你能选的其他课比：90 表示比其中 90% 的课更适合你。参考你的兴趣、强项、成绩和评分，填得越多越准。",
+    fit: "比 {score}% 的可选课更适合你，{confidence}",
+    band: { great: "很适合", good: "适合", ok: "可以考虑" },
+    thinData: "依据较少",
     title: '适合你的课程',
     lede: "根据你的记录、技能和兴趣排序，并附上理由。",
     goal: '这次你最看重什么？',

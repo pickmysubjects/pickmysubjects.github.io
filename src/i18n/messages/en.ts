@@ -232,6 +232,13 @@ export const en = {
     concurrent: "{what} (can be taken in the same semester)",
   },
   suggest: {
+    iMeetIt: "I meet it",
+    original: "Handbook wording",
+    orInstead: "Or instead: {codes} (only one of these can count)",
+    fitHint: "How it compares with the other subjects you can take: 90 means it suits you better than 90% of them. Based on your interests, strengths, marks and ratings; the more you fill in, the better it gets.",
+    fit: "Better fit than {score}% of your options, {confidence}",
+    band: { great: "Great fit", good: "Good fit", ok: "Worth a look" },
+    thinData: "Little to go on",
     title: 'Subjects that suit you',
     lede: "Ranked from your record, skills and interests, with the reasons.",
     goal: 'What matters most this time?',

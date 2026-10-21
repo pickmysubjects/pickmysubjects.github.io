@@ -102,10 +102,14 @@ function chipLabel(c: QuickChoice): string {
 
 // Reasons the row's own fact pills already say (exam share, class hours) aren't repeated.
 const SHOWN_AS_FACTS = new Set(['noExam', 'smallExam', 'bigExam', 'fewHours', 'manyHours'])
-// Why a row is where it is: the list's reasons, or the first reason it suits the student.
+// Why a row is where it is: the list's reasons, or the first few reasons it suits the student.
 const trim = (x: string) => x.replace(/[。.]\s*$/, '')
 function reasons(r: FoundRow): string[] {
-  if (r.rec) return r.rec.reasons.slice(0, 1).map((n) => trim(reasonText(t.value, n)))
+  if (r.rec)
+    return r.rec.reasons
+      .filter((n) => !SHOWN_AS_FACTS.has(n.key))
+      .slice(0, 3)
+      .map((n) => trim(reasonText(t.value, n)))
   if (r.ranked) {
     const own = r.ranked.reasons.filter((x) => !SHOWN_AS_FACTS.has(x.key)).map((x) => t.value(`rank.reason.${x.key}`, x.params))
     return [...own, ...(r.ranked.reviews === null ? [t.value('rank.factsOnly')] : [])]
@@ -218,7 +222,7 @@ watch(filters, (f) => {
         </details>
 
         <div v-if="rows.length" class="list surface">
-          <BrowseRow v-for="r in visible" :key="r.subject.code" :row="r" :course="course" :reasons="reasons(r)" />
+          <BrowseRow v-for="r in visible" :key="r.subject.code" :row="r" :course="course" :reasons="reasons(r)" :rec="r.rec" :fit="hasProfile" />
         </div>
         <p v-else class="empty surface">{{ t('browse.empty') }}</p>
 

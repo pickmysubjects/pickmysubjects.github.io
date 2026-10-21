@@ -229,6 +229,13 @@ export const ja: Messages = {
     concurrent: "{what}（同じ学期に履修可）",
   },
   suggest: {
+    iMeetIt: "満たしている",
+    original: "Handbook の原文",
+    orInstead: "代わりに {codes} も選べます（どれか 1 つだけ）",
+    fitHint: "選べるほかの科目との比較です。90 なら、その 90% より合っているという意味です。興味・得意分野・成績・評価から出しています。入力が多いほど正確になります。",
+    fit: "選べる科目の {score}% より合っています（{confidence}）",
+    band: { great: "とても合う", good: "合う", ok: "検討の価値あり" },
+    thinData: "判断材料が少ない",
     title: 'あなたに合う科目',
     lede: "記録・スキル・興味から順位をつけ、理由も表示します。",
     goal: '今回いちばん重視することは？',

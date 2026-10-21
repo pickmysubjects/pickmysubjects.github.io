@@ -229,6 +229,13 @@ export const ms: Messages = {
     concurrent: "{what} (boleh diambil dalam semester yang sama)",
   },
   suggest: {
+    iMeetIt: "Saya layak",
+    original: "Teks asal Handbook",
+    orInstead: "Atau gantinya: {codes} (hanya satu boleh dikira)",
+    fitHint: "Berbanding subjek lain yang boleh anda ambil: 90 bermaksud lebih sesuai daripada 90% daripadanya. Berdasarkan minat, kekuatan, markah dan penilaian; lebih banyak diisi, lebih tepat.",
+    fit: "Lebih sesuai daripada {score}% pilihan anda, {confidence}",
+    band: { great: "Sangat sesuai", good: "Sesuai", ok: "Boleh dipertimbang" },
+    thinData: "Sedikit maklumat",
     title: 'Subjek yang sesuai untuk anda',
     lede: "Disusun ikut rekod, kemahiran dan minat anda, berserta sebabnya.",
     goal: 'Apa yang paling penting kali ini?',
