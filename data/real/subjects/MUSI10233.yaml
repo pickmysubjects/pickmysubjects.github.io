@@ -1,0 +1,31 @@
+code: MUSI10233
+title: ANAM-MCM Ensembles 1
+level: 1
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites:
+  admission: "Bachelor of Music, concurrently enrolled at ANAM"
+corequisites: none
+non_allowed: []
+skills:
+  - presentation
+topics:
+  - performance
+assessment:
+  - kind: participation
+    weight: 50
+  - kind: presentation
+    weight: 10
+  - kind: presentation
+    weight: 10
+  - kind: presentation
+    weight: 30
+min_attendance: 80
+weekly_contact_hours: 6
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/musi10233
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Only for Bachelor of Music students concurrently enrolled at the Australian National Academy of Music (ANAM)."

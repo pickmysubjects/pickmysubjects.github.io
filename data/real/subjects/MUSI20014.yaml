@@ -1,0 +1,40 @@
+code: MUSI20014
+title: Chamber Music 2
+level: 2
+points: 6.25
+offerings:
+  "2026":
+  - summer
+  - semester-1
+  - semester-2
+prerequisites:
+  all:
+  - any:
+    - admission: B-MUS
+      note: Admission into B-MUS Bachelor of Music
+    - admission: D-MUSIC
+      note: Admission into D-MUSIC Diploma in Music
+  - permission: application
+    note: Apply via the Chamber Music application form with an Enrolment Assistance form
+corequisites: none
+non_allowed: []
+skills:
+- presentation
+topics:
+- performance
+assessment:
+- kind: participation
+  weight: 35
+- kind: assignment
+  weight: 15
+  group: true
+- kind: presentation
+  weight: 50
+  group: true
+weekly_contact_hours: 2.5
+min_attendance: 100
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/musi20014
+source_year: 2026
+verified_on: 2026-10-21
+notes: 'Source: 2026 University of Melbourne Handbook; facts summarised and checked.'

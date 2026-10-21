@@ -1,0 +1,32 @@
+code: MUSI30291
+title: "Diction for Singers: Italian & French"
+level: 3
+points: 6.25
+offerings:
+  "2026": []
+prerequisites: none
+corequisites: none
+non_allowed:
+  - MUSI30262
+  - MUSI30265
+skills:
+  - languages
+  - presentation
+topics:
+  - performance
+  - languages
+assessment:
+  - kind: assignment
+    weight: 40
+  - kind: quiz
+    weight: 10
+  - kind: presentation
+    weight: 25
+  - kind: presentation
+    weight: 25
+min_attendance: 75
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/musi30291
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Not available in 2026."

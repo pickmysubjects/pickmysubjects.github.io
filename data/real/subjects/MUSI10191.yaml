@@ -1,0 +1,32 @@
+code: MUSI10191
+title: Interactive Composition 1
+level: 1
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites:
+  admission: B-MUS
+  note: Admission into the Interactive Composition major in the B-MUS Bachelor of Music
+corequisites: none
+non_allowed: []
+skills:
+  - presentation
+  - design
+topics:
+  - media
+  - art
+assessment:
+  - kind: project
+    weight: 40
+  - kind: presentation
+    weight: 20
+  - kind: project
+    weight: 40
+weekly_contact_hours: 3
+min_attendance: 80
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/musi10191
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

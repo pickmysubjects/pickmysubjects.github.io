@@ -1,0 +1,30 @@
+code: MUSI20182
+title: Music Making Laboratory 3
+level: 2
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites: MUSI10196
+corequisites: none
+non_allowed: []
+skills:
+  - teamwork
+  - presentation
+  - writing
+topics:
+  - performance
+  - art
+assessment:
+  - kind: assignment
+    weight: 35
+  - kind: presentation
+    weight: 65
+    group: true
+weekly_contact_hours: 2.5
+min_attendance: 75
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/musi20182
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

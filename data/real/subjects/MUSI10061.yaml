@@ -1,0 +1,30 @@
+code: MUSI10061
+title: Symphonic Ensembles 2
+level: 1
+points: 6.25
+offerings:
+  "2026":
+    - semester-2
+prerequisites:
+  permission: coordinator
+  note: "AUDITION: Students are required to request an audition for this subject. Follow the link below to locate the relevant audition form. Link to audition forms This subject requires a successful audition outcome to enrol. A successful audition outcome may be used as proof of permission to enrol with the submission of an Enrolment Assistance form to Stop 1. Link to Enrolment Assistance form"
+corequisites: none
+non_allowed: []
+skills:
+  - presentation
+topics:
+  - performance
+assessment:
+  - kind: participation
+    weight: 100
+  - kind: participation
+    weight: 0
+    hurdle: true
+weekly_contact_hours: 6
+min_attendance: 100
+pass_fail: true
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/musi10061
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

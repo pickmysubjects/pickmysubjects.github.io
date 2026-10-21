@@ -2,27 +2,45 @@
 import DegreeBadge from '@/components/browse/DegreeBadge.vue'
 import DegreePick from '@/components/browse/DegreePick.vue'
 import { computed, shallowRef, watch } from 'vue'
-import { Search } from 'lucide-vue-next'
+import { Info, Search } from 'lucide-vue-next'
 import BrowseFilters from '@/components/browse/BrowseFilters.vue'
 import BrowseRow from '@/components/browse/BrowseRow.vue'
 import BrowseSwitch from '@/components/browse/BrowseSwitch.vue'
-import { browse, EMPTY_FILTERS, filtersFromQuery, filtersToQuery, PRESETS, RANK_SLUGS, type BrowseSort, type PresetName, type RankDirection } from '@/engine'
-import { link, useView } from '@/composables/useView'
+import GoalPicker from '@/components/profile/GoalPicker.vue'
+import Interp from '@/components/Interp.vue'
+import {
+  applyQuick,
+  browseAddress,
+  filtersFromQuery,
+  findRows,
+  heldMajorIds,
+  QUICK_CHOICES,
+  quickChoice,
+  recommend,
+  yearLevel,
+  type BrowseSort,
+  type FoundRow,
+  type QuickChoice,
+} from '@/engine'
+import { link, replaceAddress, useView } from '@/composables/useView'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
+import { useProfile } from '@/composables/useProfile'
 import { useI18n } from '@/i18n'
+import { reasonText } from '@/i18n/format'
 
 const PAGE = 20
 
 const { t } = useI18n()
 const { query, param } = useView()
 const { data, subjectList } = useDataset()
+const { profile } = useProfile()
 const plan = usePlan()
 
 const course = computed(() => plan.setup.value.course || 'B-SCI')
 const year = computed(() => plan.terms.value[0]?.year ?? new Date().getFullYear())
 
-// A quick pick's own address (/subjects/no-exam/) opens with it applied.
+// A quick choice's own address (/subjects/no-exam/, /subjects/easy/) opens with it chosen.
 const filters = shallowRef(filtersFromQuery(query.value, param.value))
 const shown = shallowRef(PAGE)
 
@@ -36,37 +54,74 @@ watch(
   },
   { immediate: true },
 )
-const rows = computed(() => browse(subjectList.value, filters.value, course.value, year.value))
+
+// "Sort for me": the student's own suggestions, from whatever they've filled in so far.
+const hasProfile = computed(
+  () => profile.value.results.length > 0 || Object.keys(profile.value.skills).length > 0 || profile.value.interests.length > 0,
+)
+const recs = computed(() =>
+  filters.value.mine
+    ? recommend(data.value, profile.value, {
+        planned: plan.plannedCodes.value,
+        course: plan.setup.value.course,
+        maxLevel: yearLevel(profile.value.results, data.value),
+        programme: {
+          courseYear: plan.setup.value.courseYear,
+          components: heldMajorIds(plan.plan.value).filter((id): id is string => !!id),
+          minors: plan.setup.value.minors ?? [],
+        },
+      })
+    : undefined,
+)
+
+const rows = computed(() =>
+  findRows(subjectList.value, filters.value, {
+    course: course.value,
+    // The easy and hard lists cover every degree until one is chosen.
+    rankCourse: plan.courseChosen.value ? course.value : '',
+    year: year.value,
+    recs: recs.value,
+  }),
+)
 const visible = computed(() => rows.value.slice(0, shown.value))
 const anyRated = computed(() => subjectList.value.some((s) => (s.signals?.reviews ?? 0) >= 3))
-// No degree yet: ask for it rather than quietly showing one (breadth depends on it).
+// No degree yet: breadth depends on it, so that list asks for it rather than guessing.
 const askDegree = computed(() => !plan.courseChosen.value)
-const easyHref = computed(() => link('subjects/easy/') + `?course=${encodeURIComponent(course.value)}` + (filters.value.category === 'breadth' ? '&breadth=1' : ''))
 const breadthCount = computed(() => subjectList.value.filter((s) => s.categories[course.value] === 'breadth').length)
 
-const PRESET_NAMES = Object.keys(PRESETS) as PresetName[]
-const RANKS: RankDirection[] = ['easy', 'hard']
-function applyPreset(name: PresetName): void {
-  // Tapping the chosen quick pick again turns it off.
-  filters.value = isPreset(name)
-    ? { ...EMPTY_FILTERS, text: filters.value.text }
-    : { ...EMPTY_FILTERS, ...PRESETS[name], text: filters.value.text }
+const choice = computed(() => quickChoice(filters.value))
+const rank = computed(() => filters.value.rank)
+function choose(c: QuickChoice): void {
+  filters.value = applyQuick(filters.value, c)
 }
-function isPreset(name: PresetName): boolean {
-  const want = { ...EMPTY_FILTERS, ...PRESETS[name], text: filters.value.text, sort: filters.value.sort }
-  return filtersToQuery(want) === filtersToQuery(filters.value)
+function chipLabel(c: QuickChoice): string {
+  if (c === 'all') return t.value('browse.any')
+  if (c === 'easy' || c === 'hard') return t.value(`browse.rankList.${c}`)
+  return t.value(`browse.preset.${c}`)
+}
+
+// Reasons the row's own fact pills already say (exam share, class hours) aren't repeated.
+const SHOWN_AS_FACTS = new Set(['noExam', 'smallExam', 'bigExam', 'fewHours', 'manyHours'])
+// Why a row is where it is: the list's reasons, or the first reason it suits the student.
+const trim = (x: string) => x.replace(/[。.]\s*$/, '')
+function reasons(r: FoundRow): string[] {
+  if (r.rec) return r.rec.reasons.slice(0, 1).map((n) => trim(reasonText(t.value, n)))
+  if (r.ranked) {
+    const own = r.ranked.reasons.filter((x) => !SHOWN_AS_FACTS.has(x.key)).map((x) => t.value(`rank.reason.${x.key}`, x.params))
+    return [...own, ...(r.ranked.reviews === null ? [t.value('rank.factsOnly')] : [])]
+  }
+  return []
 }
 
 function set<K extends keyof typeof filters.value>(key: K, value: (typeof filters.value)[K]): void {
   filters.value = { ...filters.value, [key]: value }
 }
 
-// Keep the address in step, so a filtered list can be shared. replaceState, not a
-// new history entry: every tap on a filter shouldn't need its own Back press.
+// Keep the address in step, so a list can be shared. replaceState, not a new history entry:
+// every tap on a filter shouldn't need its own Back press.
 watch(filters, (f) => {
   shown.value = PAGE
-  const q = filtersToQuery(f)
-  history.replaceState(null, '', link('subjects/') + (q ? `?${q}` : ''))
+  replaceAddress(browseAddress(f))
 })
 </script>
 
@@ -94,17 +149,15 @@ watch(filters, (f) => {
       </label>
       <div class="presets" role="group" :aria-label="t('browse.presets')">
         <button
-          v-for="p in PRESET_NAMES"
-          :key="p"
+          v-for="c in QUICK_CHOICES"
+          :key="c"
           type="button"
           class="preset"
-          :aria-pressed="isPreset(p)"
-          @click="applyPreset(p)"
+          :aria-pressed="choice === c"
+          @click="choose(c)"
         >
-          {{ t(`browse.preset.${p}`) }}
+          {{ chipLabel(c) }}
         </button>
-        <!-- Ready-made ranked lists: their own pages, so links rather than filters. -->
-        <a v-for="d in RANKS" :key="d" class="preset preset-link" :href="link(`subjects/${RANK_SLUGS[d]}/`)">{{ t(`browse.rankList.${d}`) }}</a>
       </div>
     </div>
 
@@ -112,33 +165,60 @@ watch(filters, (f) => {
       <BrowseFilters v-model="filters" :categories="categories" class="side" />
 
       <section class="results">
-        <DegreePick v-if="askDegree" />
-        <!-- A degree-dependent list (breadth) waits for the degree rather than guessing one. -->
-        <template v-if="!(askDegree && filters.category)">
+        <!-- A degree-dependent list (breadth) waits for the degree rather than guessing one;
+             other lists don't need it, so they don't ask. -->
+        <DegreePick v-if="askDegree && filters.category" />
+        <template v-else>
         <div class="toolbar">
           <div class="count-line">
             <p class="count" role="status">{{ t('browse.count', { n: rows.length }) }}</p>
             <DegreeBadge v-if="!askDegree" :course="course" />
           </div>
-          <label class="sort">
-            <span>{{ t('browse.sort') }}</span>
-            <select :aria-label="t('browse.sort')"
-              class="select-glass"
-              :value="filters.sort"
-              @change="set('sort', ($event.target as HTMLSelectElement).value as BrowseSort)"
-            >
-              <option value="code">{{ t('browse.sortCode') }}</option>
-              <option value="easy">{{ t('browse.sortEasy') }}</option>
-              <option value="exam">{{ t('browse.sortExam') }}</option>
-              <option value="hours">{{ t('browse.sortHours') }}</option>
-              <option v-if="anyRated" value="rating">{{ t('browse.sortRating') }}</option>
-            </select>
-          </label>
-          <a v-if="filters.sort === 'easy'" class="easy-link" :href="easyHref">{{ t('rank.switch.easy') }} →</a>
+          <div class="order">
+            <label class="mine">
+              <input type="checkbox" role="switch" :checked="filters.mine" @change="set('mine', ($event.target as HTMLInputElement).checked)" />
+              <span>{{ t('browse.forMe') }}</span>
+            </label>
+            <!-- A list or "sort for me" sets the order itself. -->
+            <label v-if="!filters.mine && !rank" class="sort">
+              <span>{{ t('browse.sort') }}</span>
+              <select :aria-label="t('browse.sort')"
+                class="select-glass"
+                :value="filters.sort"
+                @change="set('sort', ($event.target as HTMLSelectElement).value as BrowseSort)"
+              >
+                <option value="code">{{ t('browse.sortCode') }}</option>
+                <option value="easy">{{ t('browse.sortEasy') }}</option>
+                <option value="exam">{{ t('browse.sortExam') }}</option>
+                <option value="hours">{{ t('browse.sortHours') }}</option>
+                <option v-if="anyRated" value="rating">{{ t('browse.sortRating') }}</option>
+              </select>
+            </label>
+          </div>
         </div>
 
+        <div v-if="filters.mine" class="mine-bar">
+          <GoalPicker compact />
+          <p v-if="!hasProfile" class="nudge">
+            <Interp :text="t('browse.forMeNudge')">
+              <template #link><a :href="link('record')">{{ t('record.title') }}</a></template>
+            </Interp>
+          </p>
+        </div>
+
+        <details v-if="rank && !filters.mine" class="how">
+          <summary><Info :size="16" aria-hidden="true" /> {{ t(`rank.lede.${rank}`) }}</summary>
+          <ul>
+            <li>{{ t('rank.how1') }}</li>
+            <li>{{ t('rank.how2') }}</li>
+            <li>{{ t('rank.how3') }}</li>
+            <li>{{ t('rank.how4', { year }) }}</li>
+            <li>{{ t('rank.how5') }}</li>
+          </ul>
+        </details>
+
         <div v-if="rows.length" class="list surface">
-          <BrowseRow v-for="r in visible" :key="r.subject.code" :row="r" :course="course" />
+          <BrowseRow v-for="r in visible" :key="r.subject.code" :row="r" :course="course" :reasons="reasons(r)" />
         </div>
         <p v-else class="empty surface">{{ t('browse.empty') }}</p>
 
@@ -241,10 +321,6 @@ watch(filters, (f) => {
   background: var(--glass-fill-hover);
 }
 
-.preset-link {
-  text-decoration: none;
-}
-
 .preset[aria-pressed='true'] {
   color: var(--accent);
   background: var(--accent-soft);
@@ -277,11 +353,56 @@ watch(filters, (f) => {
   gap: 8px;
 }
 
-.easy-link {
-  font-size: 0.875rem;
+.order {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+}
+
+.mine {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  font-size: 0.9375rem;
   font-weight: 600;
-  color: var(--accent);
-  text-decoration: none;
+  cursor: pointer;
+}
+
+.mine input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent);
+}
+
+.mine-bar {
+  display: grid;
+  gap: 6px;
+}
+
+.nudge {
+  font-size: 0.875rem;
+  color: var(--ink-soft);
+}
+
+.how {
+  font-size: 0.875rem;
+  color: var(--ink-soft);
+}
+
+.how summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.how ul {
+  display: grid;
+  gap: 4px;
+  margin: 8px 0 0;
+  padding-left: 20px;
 }
 
 .count {

@@ -1,0 +1,27 @@
+code: MUSI20113
+title: Vocal Ensemble 2
+level: 2
+points: 6.25
+offerings:
+  "2026":
+  - semester-2
+prerequisites:
+  permission: application
+  note: Successful audition required
+corequisites: none
+non_allowed: []
+skills:
+- presentation
+topics:
+- performance
+assessment:
+- kind: participation
+  weight: 100
+weekly_contact_hours: 2
+pass_fail: true
+min_attendance: 100
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/musi20113
+source_year: 2026
+verified_on: 2026-10-21
+notes: 'Source: 2026 University of Melbourne Handbook; facts summarised and checked.'

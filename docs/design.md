@@ -107,8 +107,7 @@ The node types:
 | `components/planner/TermColumn.vue` | One term with its subjects and a points total | props: term, issues; emits as above |
 | `components/planner/SubjectPicker.vue` | Search box for adding a subject to a term | emits: pick(code) |
 | `components/planner/PlanIssues.vue` | List of validation issues | props: issues |
-| `views/RecommendView.vue` | Recommendation list for the profile | composition only |
-| `components/recommend/RecommendationCard.vue` | One subject: score, reasons, warnings, outbound links | props: rec |
+| `views/BrowseView.vue` | Find subjects: quick choices, filters, and "sort for me" (the recommendation list) | composition only |
 | `views/ProfileView.vue` | Composes the profile editors | composition only |
 | `components/profile/CompletedSubjects.vue` | Completed subjects and marks; shows WAM | v-model |
 | `components/profile/SkillsEditor.vue` | Skill self-ratings, interests, goal | v-model |

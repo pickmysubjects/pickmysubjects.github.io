@@ -1,0 +1,32 @@
+code: MUSI10056
+title: Early Voices 1
+level: 1
+points: 6.25
+offerings:
+  "2026":
+    - semester-1
+prerequisites:
+  permission: application
+  note: "Audition required; a successful audition counts as permission to enrol (submit it with an Enrolment Assistance form to Stop 1)."
+corequisites: none
+non_allowed: []
+skills:
+  - presentation
+topics:
+  - performance
+  - history
+assessment:
+  - kind: presentation
+    weight: 40
+    group: true
+  - kind: presentation
+    weight: 50
+  - kind: participation
+    weight: 10
+weekly_contact_hours: 2
+min_attendance: 100
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/musi10056
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Co-taught with MUSI20080 and MUSI30172."

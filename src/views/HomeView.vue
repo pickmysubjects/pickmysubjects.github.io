@@ -1,24 +1,15 @@
 <script setup lang="ts">
 import { link } from '@/composables/useView'
 import { computed } from 'vue'
-import { ArrowRight, ChartNoAxesColumn, Check, GraduationCap, Route, Sparkles, User } from 'lucide-vue-next'
+import { ArrowRight, Check, Route, Sparkles, User } from 'lucide-vue-next'
 import SubjectSearch from '@/components/SubjectSearch.vue'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
 import { useProfile } from '@/composables/useProfile'
 import { useI18n } from '@/i18n'
 import { exampleSubjects } from '@/utils/showcase'
-import { SEARCH_PHRASES } from '@/i18n/searchPhrases'
 
 const { t, locale } = useI18n()
-// The questions students search for, each a quick link to the page that answers it. Home shows
-// only the lists (the planner, majors and basics have their own way in); the static page and
-// llms.txt keep them all.
-const HOME_SEARCHES = new Set(['subjects/easy', 'subjects/no-exam', 'subjects/breadth', 'subjects/first-semester'])
-const searches = computed(() => {
-  const s = SEARCH_PHRASES[locale.value]
-  return { heading: s.heading, items: s.items.filter((i) => HOME_SEARCHES.has(i.to)) }
-})
 const { subjectList } = useDataset()
 
 // The title is split into phrases that never break inside; languages written with spaces keep one between them.
@@ -49,13 +40,13 @@ const steps = computed(() => {
       done: !plan.isEmpty.value,
       status: plan.isEmpty.value ? '' : t.value('home.step2Done', { n: plan.plannedCodes.value.length }),
     },
-    { icon: Sparkles, title: 'home.step3', text: 'home.step3Text', href: link('recommend'), done: false, status: '' },
+    { icon: Sparkles, title: 'home.step3', text: 'home.step3Text', href: link('subjects/?mine=1'), done: false, status: '' },
   ]
 })
 // The one button that says where to go next: the first step not done yet.
 const next = computed(() => {
   const i = steps.value.findIndex((s) => !s.done)
-  return { n: i + 1, href: steps.value[i]?.href ?? link('recommend') }
+  return { n: i + 1, href: steps.value[i]?.href ?? link('subjects/?mine=1') }
 })
 </script>
 
@@ -83,7 +74,6 @@ const next = computed(() => {
       </p>
     </section>
 
-
     <section class="steps" aria-labelledby="steps-title">
       <h2 id="steps-title" class="steps-title">{{ t('home.stepsTitle') }}</h2>
       <ol class="steps-list">
@@ -105,40 +95,6 @@ const next = computed(() => {
     </div>
 
 
-    <section class="tools" aria-labelledby="tools-title">
-      <h2 id="tools-title" class="steps-title">{{ t('home.toolsTitle') }}</h2>
-      <div class="tools-list">
-        <a class="tool surface" :href="link('majors')">
-          <span class="tool-icon"><GraduationCap :size="20" aria-hidden="true" /></span>
-          <span class="tool-body">
-            <span class="step-name">{{ t('majors.title') }}</span>
-            <span class="step-text">{{ t('majors.cardText') }}</span>
-          </span>
-          <ArrowRight :size="18" aria-hidden="true" class="tool-go" />
-        </a>
-        <!-- The two ranked lists: their own pages (for search), one tap from here. -->
-        <div class="tool tool-ranks surface">
-          <span class="tool-icon"><ChartNoAxesColumn :size="20" aria-hidden="true" /></span>
-          <span class="tool-body">
-            <span class="step-name">{{ t('home.ranksTitle') }}</span>
-            <span class="step-text">{{ t('home.ranksText') }}</span>
-          </span>
-          <span class="ranks-links">
-            <a class="button button-quiet" :href="link('subjects/easy/')">{{ t('rank.switch.easy') }} <ArrowRight :size="16" aria-hidden="true" /></a>
-            <a class="button button-quiet" :href="link('subjects/hard/')">{{ t('rank.switch.hard') }} <ArrowRight :size="16" aria-hidden="true" /></a>
-          </span>
-        </div>
-      </div>
-    </section>
-
-    <section class="searches" aria-labelledby="searches-title">
-      <h2 id="searches-title" class="steps-title">{{ searches.heading }}</h2>
-      <ul class="search-list">
-        <li v-for="item in searches.items" :key="item.text">
-          <a class="search-link" :href="link(`${item.to}/`)">{{ item.text }}</a>
-        </li>
-      </ul>
-    </section>
   </div>
 </template>
 
@@ -335,123 +291,6 @@ li:nth-child(3) .step-icon {
   font-size: 0.875rem;
   font-weight: 600;
   color: var(--accent);
-}
-
-.tools-list {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
-  gap: 14px;
-}
-
-.tool {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 18px 20px;
-  color: var(--ink);
-  text-decoration: none;
-  transition: border-color 0.15s, transform 0.15s;
-}
-
-.tool:hover {
-  border-color: var(--accent);
-  transform: translateY(-1px);
-}
-
-.tool-icon {
-  display: grid;
-  flex: none;
-  place-items: center;
-  width: 42px;
-  height: 42px;
-  color: var(--accent);
-  background: var(--accent-soft);
-  border-radius: 12px;
-}
-
-.tool-body {
-  display: grid;
-  flex: 1;
-  gap: 4px;
-  min-width: 0;
-}
-
-.tool-go {
-  flex: none;
-  color: var(--accent);
-}
-
-/* Two buttons, not one link, so it doesn't lift on hover. */
-.tool-ranks:hover {
-  border-color: var(--line);
-  transform: none;
-}
-
-.ranks-links {
-  display: flex;
-  flex: none;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.ranks-links .button {
-  gap: 6px;
-}
-
-@media (max-width: 640px) {
-  .tool-ranks {
-    flex-wrap: wrap;
-  }
-
-  .tool-ranks .tool-body {
-    flex-basis: calc(100% - 56px);
-  }
-
-  .ranks-links {
-    flex: 1 1 100%;
-  }
-
-  .ranks-links .button {
-    flex: 1 1 0;
-    justify-content: center;
-  }
-}
-
-@media (max-width: 1000px) {
-  .tools-list {
-    grid-template-columns: 1fr;
-  }
-}
-
-.search-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.search-link {
-  display: inline-block;
-  padding: 7px 13px;
-  font-size: 0.875rem;
-  color: var(--ink);
-  text-decoration: none;
-  background: var(--accent-soft);
-  border: 1px solid transparent;
-  border-radius: 999px;
-  transition: border-color 0.15s;
-}
-
-.search-link:hover {
-  border-color: var(--accent);
-}
-
-.steps-search {
-  margin-top: 14px;
-  font-size: 0.9375rem;
-  color: var(--ink-soft);
 }
 
 .step-name {

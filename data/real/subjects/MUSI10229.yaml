@@ -1,0 +1,33 @@
+code: MUSI10229
+title: Sound Studies 1
+level: 1
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites:
+  manual: Admission into the Interactive Composition major in the B-MUS Bachelor of Music
+corequisites: none
+non_allowed: []
+skills:
+  - lab
+  - writing
+topics:
+  - media
+  - art
+assessment:
+  - kind: assignment
+    weight: 25
+  - kind: assignment
+    weight: 25
+  - kind: assignment
+    weight: 25
+  - kind: exam
+    weight: 25
+min_attendance: 80
+weekly_contact_hours: 4
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/musi10229
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

@@ -3,7 +3,7 @@ import { link, useView } from '@/composables/useView'
 import { useI18n } from '@/i18n'
 import { MY_STEPS } from './nav'
 
-/** The three personal steps under "Me": where you are, and the next one a tap away. */
+/** The two personal steps under "Me": where you are, and the next one a tap away. */
 const { view } = useView()
 const { t } = useI18n()
 </script>

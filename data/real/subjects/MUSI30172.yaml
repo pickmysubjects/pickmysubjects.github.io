@@ -1,0 +1,35 @@
+code: MUSI30172
+title: Early Voices 1
+level: 3
+points: 6.25
+offerings:
+  '2026':
+  - semester-1
+prerequisites:
+  permission: application
+  note: Audition required; a successful audition is your permission to enrol.
+corequisites: none
+non_allowed: []
+skills:
+- presentation
+- teamwork
+topics:
+- performance
+- history
+assessment:
+- kind: participation
+  weight: 40
+- kind: presentation
+  weight: 50
+- kind: participation
+  weight: 10
+- kind: participation
+  weight: 0
+  hurdle: true
+weekly_contact_hours: 2
+min_attendance: 100
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/musi30172
+source_year: 2026
+verified_on: 2026-10-21
+notes: 'Source: 2026 University of Melbourne Handbook; facts summarised and checked.'

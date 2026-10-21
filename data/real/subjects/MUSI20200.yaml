@@ -1,0 +1,36 @@
+code: MUSI20200
+title: Practical Music 4
+level: 2
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+    - semester-2
+prerequisites:
+  any:
+    - MUSI20199
+    - MUSI20201
+corequisites: none
+non_allowed:
+  - MUSI20055
+  - MUSI20056
+  - MUSI20202
+  - MUSI30213
+  - MUSI30214
+skills:
+  - presentation
+topics:
+  - performance
+  - art
+assessment:
+  - kind: project
+    weight: 25
+  - kind: presentation
+    weight: 75
+weekly_contact_hours: 5
+min_attendance: 100
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/musi20200
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. 100% attendance hurdle in instrumental/vocal class plus assigned concert class or ensemble activity; recital program approved by census date."

@@ -5,10 +5,11 @@ import { useProfile } from '@/composables/useProfile'
 import { useI18n } from '@/i18n'
 
 /**
- * What the student wants most. On My page it's their saved goal, which the plan builder follows;
- * a page can instead pass its own `goal` (Suggestions: just for this look), and gets updates back.
+ * What the student wants most: the open plan's goal, which the plan builder and "sort for me"
+ * both follow. A page can instead pass its own `goal`, and gets updates back. `compact` leaves
+ * out the hint line under the choices.
  */
-const props = defineProps<{ note?: string; withEasy?: boolean; goal?: Goal }>()
+const props = defineProps<{ note?: string; goal?: Goal; compact?: boolean }>()
 const emit = defineEmits<{ 'update:goal': [goal: Goal] }>()
 const { profile, setGoal } = useProfile()
 const own = computed<Goal>(() => props.goal ?? profile.value.goal)
@@ -17,13 +18,13 @@ function choose(g: Goal): void {
   else setGoal(g)
 }
 const { t } = useI18n()
-// "Marks only" lives on the suggestions page; elsewhere it reads as protecting a WAM.
-const goals = computed<Goal[]>(() => (props.withEasy ? ['wam', 'balanced', 'challenge', 'easy'] : ['wam', 'balanced', 'challenge']))
-const current = computed<Goal>(() => (!props.withEasy && own.value === 'easy' ? 'wam' : own.value))
+const goals: Goal[] = ['wam', 'balanced', 'challenge']
+// "Marks only" is no longer offered; one saved before reads as protecting a WAM.
+const current = computed<Goal>(() => (own.value === 'easy' ? 'wam' : own.value))
 </script>
 
 <template>
-  <fieldset class="goal">
+  <fieldset class="goal" :class="{ 'goal-compact': compact }">
     <legend class="goal-label">{{ t('suggest.goal') }}</legend>
     <div class="seg">
       <button
@@ -37,7 +38,7 @@ const current = computed<Goal>(() => (!props.withEasy && own.value === 'easy' ? 
         {{ t(`suggest.goals.${g}`) }}
       </button>
     </div>
-    <p class="goal-hint">
+    <p v-if="!compact" class="goal-hint">
       {{ t(`suggest.goals.${current}Hint`) }}<template v-if="note"><br /><span class="goal-note">{{ note }}</span></template>
     </p>
   </fieldset>

@@ -1,0 +1,33 @@
+code: MUSI20227
+title: Popular Music Studies
+level: 2
+points: 12.5
+offerings:
+  "2026": []
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+- writing
+topics:
+- media
+- society
+assessment:
+- kind: assignment
+  weight: 25
+- kind: assignment
+  weight: 25
+- kind: assignment
+  weight: 10
+- kind: assignment
+  weight: 40
+breadth_for:
+- Bachelor of Arts
+- Bachelor of Biomedicine
+- Bachelor of Commerce
+- Bachelor of Design
+- Bachelor of Science
+handbook: https://handbook.unimelb.edu.au/2026/subjects/musi20227
+source_year: 2026
+verified_on: 2026-10-21
+notes: 'Source: 2026 University of Melbourne Handbook; facts summarised and checked.'

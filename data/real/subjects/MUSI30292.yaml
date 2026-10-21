@@ -1,0 +1,29 @@
+code: MUSI30292
+title: Art Song Interpretation
+level: 3
+points: 6.25
+offerings:
+  "2026":
+    - semester-2
+prerequisites: none
+corequisites: none
+non_allowed:
+  - MUSI30284
+  - MUSI30285
+skills:
+  - presentation
+topics:
+  - performance
+  - literature
+assessment:
+  - kind: presentation
+    weight: 50
+  - kind: presentation
+    weight: 50
+weekly_contact_hours: 2
+min_attendance: 75
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/musi30292
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

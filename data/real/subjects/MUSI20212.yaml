@@ -1,0 +1,30 @@
+code: MUSI20212
+title: Practical Anatomy for Classical Voice 2
+level: 2
+points: 6.25
+offerings:
+  '2026':
+  - semester-2
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+- writing
+topics:
+- performance
+- health
+assessment:
+- kind: assignment
+  weight: 50
+- kind: assignment
+  weight: 50
+- kind: participation
+  weight: 0
+  hurdle: true
+weekly_contact_hours: 2
+min_attendance: 75
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/musi20212
+source_year: 2026
+verified_on: 2026-10-21
+notes: 'Source: 2026 University of Melbourne Handbook; facts summarised and checked.'

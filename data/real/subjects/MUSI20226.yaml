@@ -1,0 +1,35 @@
+code: MUSI20226
+title: Jazz and Improvisation Global Atelier
+level: 2
+points: 12.5
+offerings:
+  "2026": []
+prerequisites:
+  all:
+  - admission: B-MUS
+    note: Admission into the Jazz & Improvisation major in the B-MUS Bachelor of Music
+  - wam:
+      min: 75
+    note: GPA of 75% or higher
+  - permission: application
+    note: 500-word expression of interest
+corequisites: none
+non_allowed: []
+skills:
+- presentation
+topics:
+- performance
+- society
+assessment:
+- kind: assignment
+  weight: 30
+- kind: project
+  weight: 50
+- kind: assignment
+  weight: 20
+min_attendance: 80
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/musi20226
+source_year: 2026
+verified_on: 2026-10-21
+notes: 'Source: 2026 University of Melbourne Handbook; facts summarised and checked. Two-week intensive study abroad (overseas travel); not offered in 2026.'

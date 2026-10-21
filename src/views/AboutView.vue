@@ -9,7 +9,7 @@ const features = [
   { key: 'lookup', icon: BookOpen, href: link(''), name: 'about.f.lookup', text: 'about.f.lookupText' },
   { key: 'plan', icon: Route, href: link('plan'), name: 'about.f.plan', text: 'about.f.planText' },
   { key: 'plans', icon: GitCompare, href: link('plan'), name: 'about.f.plans', text: 'about.f.plansText' },
-  { key: 'suggest', icon: Sparkles, href: link('recommend'), name: 'about.f.suggest', text: 'about.f.suggestText' },
+  { key: 'suggest', icon: Sparkles, href: link('subjects/?mine=1'), name: 'about.f.suggest', text: 'about.f.suggestText' },
   { key: 'majors', icon: GraduationCap, href: link('majors'), name: 'majors.title', text: 'majors.cardText' },
   { key: 'record', icon: Calculator, href: link('record'), name: 'about.f.record', text: 'about.f.recordText' },
   { key: 'guide', icon: Compass, href: link('guide'), name: 'guide.title', text: 'guide.lede' },

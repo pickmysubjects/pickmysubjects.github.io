@@ -1,0 +1,37 @@
+code: MUSI10023
+source: StudentVIP
+url: https://studentvip.com.au/unimelb/subjects/musi10023
+reviews: 3
+from: 2018
+to: 2023
+checked: 2026-10-21
+points:
+  - en: "How hard it feels depends on your theory background: strong readers called it easy, others found the many topics heavy."
+    zh: "难度取决于乐理基础：基础好的觉得简单，基础弱的觉得内容多、压力大。"
+    zh-TW: "難度取決於樂理基礎：基礎好的覺得簡單，基礎弱的覺得內容多、壓力大。"
+    ja: "難しさは楽典の基礎次第。得意な人は簡単、苦手な人は範囲が広く大変と感じた。"
+    ko: "난이도는 이론 기초에 달림: 기초가 탄탄하면 쉽고, 약하면 주제가 많아 버겁다는 평."
+    vi: "Độ khó tùy nền tảng nhạc lý: người vững thấy dễ, người yếu thấy nhiều chủ đề và nặng."
+    ms: "Kesukaran bergantung pada asas teori: yang kuat kata mudah, yang lain rasa banyak topik."
+    id: "Tingkat kesulitan tergantung dasar teori: yang kuat bilang mudah, yang lain merasa berat."
+    hi: "कठिनाई थ्योरी की नींव पर निर्भर: मज़बूत नींव वालों को आसान, बाकी को भारी लगा।"
+  - en: "The weekly assignments and surprise listening tests on early music take steady effort; the summer intensive was stressful."
+    zh: "每周作业和不预告的早期音乐听辨测验需要持续投入；夏季密集班压力很大。"
+    zh-TW: "每週作業和不預告的早期音樂聽辨測驗需要持續投入；夏季密集班壓力很大。"
+    ja: "毎週の課題と予告なしの古楽リスニングテストで継続的な努力が必要。夏の集中講座はきつかった。"
+    ko: "매주 과제와 예고 없는 고음악 청음 테스트로 꾸준한 노력이 필요. 여름 집중 과정은 힘들었다는 평."
+    vi: "Bài tập hằng tuần và bài nghe bất ngờ về nhạc cổ đòi hỏi nỗ lực đều đặn; khóa hè rất căng."
+    ms: "Tugasan mingguan dan ujian pendengaran mengejut perlukan usaha tetap; kursus musim panas tertekan."
+    id: "Tugas mingguan dan tes mendengar mendadak butuh usaha rutin; kelas musim panas bikin stres."
+    hi: "साप्ताहिक असाइनमेंट और अचानक लिसनिंग टेस्ट लगातार मेहनत माँगते हैं; समर इंटेंसिव तनावपूर्ण रहा।"
+  - en: "Opinions split: two praised the logical order and helpful staff, one called it a frustrating waste of time for performers."
+    zh: "评价不一：两位称赞内容循序渐进、老师乐于帮忙，一位认为对演奏专业学生是浪费时间。"
+    zh-TW: "評價不一：兩位稱讚內容循序漸進、老師樂於幫忙，一位認為對演奏主修學生是浪費時間。"
+    ja: "意見は分かれ、2人は構成の良さと親切な教員を評価、1人は演奏専攻には時間の無駄と批判。"
+    ko: "의견 엇갈림: 두 명은 체계적인 순서와 친절한 교수진을 칭찬, 한 명은 연주 전공생에겐 시간 낭비라 함."
+    vi: "Ý kiến chia rẽ: hai người khen trình tự hợp lý và giảng viên nhiệt tình, một người cho là phí thời gian."
+    ms: "Pendapat berbelah: dua puji susunan logik dan staf membantu, seorang kata membuang masa."
+    id: "Pendapat terbelah: dua memuji urutan logis dan staf yang membantu, satu menyebutnya buang waktu."
+    hi: "राय बँटी: दो ने क्रम और मददगार स्टाफ़ की तारीफ़ की, एक ने इसे कलाकारों के लिए समय की बर्बादी कहा।"
+workload: heavy
+difficulty: mixed

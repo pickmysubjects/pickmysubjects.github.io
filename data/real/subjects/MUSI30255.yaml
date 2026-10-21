@@ -1,0 +1,36 @@
+code: MUSI30255
+title: Applied Aural Musicianship 4
+level: 3
+points: 6.25
+offerings:
+  '2026':
+  - semester-2
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+- exams
+topics:
+- art
+- performance
+assessment:
+- kind: test
+  weight: 40
+- kind: assignment
+  weight: 12.5
+- kind: assignment
+  weight: 12.5
+- kind: assignment
+  weight: 12.5
+- kind: assignment
+  weight: 12.5
+- kind: participation
+  weight: 10
+weekly_contact_hours: 2.5
+breadth_for: []
+recommended:
+- MUSI20160
+handbook: https://handbook.unimelb.edu.au/2026/subjects/musi30255
+source_year: 2026
+verified_on: 2026-10-21
+notes: 'Source: 2026 University of Melbourne Handbook; facts summarised and checked.'

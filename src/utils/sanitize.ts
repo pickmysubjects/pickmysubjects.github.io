@@ -8,7 +8,13 @@ import type { PlanBook, PlanPrefs, PlanState, SavedPlan } from '@/composables/pl
  */
 const isObject = (x: unknown): x is Record<string, unknown> => typeof x === 'object' && x !== null && !Array.isArray(x)
 const strings = (x: unknown): string[] => (Array.isArray(x) ? x.filter((v): v is string => typeof v === 'string') : [])
-const GOALS = ['wam', 'balanced', 'challenge', 'easy'] as const
+const GOALS = ['wam', 'balanced', 'challenge'] as const
+
+/** A saved goal, read back. "Marks only" ('easy') is no longer offered: it becomes "protect my WAM". */
+export function cleanGoal(x: unknown): Profile['goal'] {
+  if (x === 'easy') return 'wam'
+  return GOALS.find((g) => g === x) ?? 'balanced'
+}
 
 export function cleanProfile(x: unknown): Profile {
   const p = isObject(x) ? x : {}
@@ -28,7 +34,7 @@ export function cleanProfile(x: unknown): Profile {
       if (typeof v === 'number' && v >= 1 && v <= 5) skills[k] = v
     }
   }
-  const goal = GOALS.find((g) => g === p.goal) ?? 'balanced'
+  const goal = cleanGoal(p.goal)
   const ratings: NonNullable<Profile['ratings']> = {}
   if (isObject(p.ratings)) {
     for (const [code, r] of Object.entries(p.ratings)) {

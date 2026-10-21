@@ -1,0 +1,33 @@
+code: MUSI30273
+title: Musicology/Ethnomusicology Capstone
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites:
+  any:
+    - MUSI30053
+    - MUSI30032
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - presentation
+  - data
+topics:
+  - history
+  - society
+  - art
+assessment:
+  - kind: report
+    weight: 80
+  - kind: assignment
+    weight: 20
+weekly_contact_hours: 2
+min_attendance: 75
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/musi30273
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. 2026 topic: digital musicology (music metadata, Python); no coding experience needed. The 80% task can be a 3200-word report or a 30-minute presentation."

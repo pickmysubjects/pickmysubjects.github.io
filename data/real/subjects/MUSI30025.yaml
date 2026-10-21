@@ -1,0 +1,49 @@
+code: MUSI30025
+title: Instrumentation and Arranging
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites:
+  any:
+    - MUSI10023
+    - MUSI20221
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+topics:
+  - art
+  - performance
+assessment:
+  - kind: assignment
+    weight: 40
+  - kind: project
+    weight: 30
+  - kind: exam
+    weight: 30
+  - kind: participation
+    weight: 0
+    hurdle: true
+weekly_contact_hours: 2
+breadth_for:
+  - Bachelor of Arts
+  - Bachelor of Biomedicine
+  - Bachelor of Commerce
+  - Bachelor of Design
+  - Bachelor of Fine Arts (Acting)
+  - Bachelor of Fine Arts (Animation)
+  - Bachelor of Fine Arts (Dance)
+  - Bachelor of Fine Arts (Film and Television)
+  - Bachelor of Fine Arts (Music Theatre)
+  - Bachelor of Fine Arts (Production)
+  - Bachelor of Fine Arts (Screenwriting)
+  - Bachelor of Fine Arts (Theatre)
+  - Bachelor of Fine Arts (Visual Art)
+  - Bachelor of Science
+handbook: https://handbook.unimelb.edu.au/2026/subjects/musi30025
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Lectures and tutorials run in three-week blocks; presenting work in progress at two scheduled check-ins is a hurdle."
+min_attendance: 75

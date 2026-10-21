@@ -1,0 +1,35 @@
+code: MUSI30281
+title: Advanced Harmonic Studies
+level: 3
+points: 6.25
+offerings:
+  '2026':
+  - semester-1
+prerequisites:
+  all:
+  - admission: B-MUS
+    note: Jazz & Improvisation major only
+  - MUSI20180
+corequisites: none
+non_allowed:
+- MUSI30238
+skills:
+- presentation
+topics:
+- performance
+- art
+assessment:
+- kind: presentation
+  weight: 15
+- kind: assignment
+  weight: 35
+- kind: presentation
+  weight: 25
+- kind: assignment
+  weight: 25
+weekly_contact_hours: 1
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/musi30281
+source_year: 2026
+verified_on: 2026-10-21
+notes: 'Source: 2026 University of Melbourne Handbook; facts summarised and checked.'

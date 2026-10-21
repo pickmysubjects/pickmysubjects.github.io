@@ -1,0 +1,40 @@
+code: MUSI20202
+title: Performance 4
+level: 2
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+    - semester-2
+prerequisites:
+  average:
+    min: 65
+    from:
+      - MUSI20201
+corequisites: none
+non_allowed:
+  - MUSI20055
+  - MUSI20056
+  - MUSI20200
+  - MUSI30213
+  - MUSI30214
+skills:
+  - presentation
+topics:
+  - performance
+  - art
+assessment:
+  - kind: presentation
+    weight: 25
+  - kind: presentation
+    weight: 75
+  - kind: participation
+    weight: 0
+    hurdle: true
+weekly_contact_hours: 7
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/musi20202
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Progress video and 30-minute performance exam on an approved program; full attendance at instrumental/vocal class and an assigned class or ensemble is a hurdle."
+min_attendance: 100

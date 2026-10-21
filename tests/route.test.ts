@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { parsePath } from '../src/composables/useView'
+import { movedTo, parsePath } from '../src/composables/useView'
 
 describe('parsePath', () => {
   it('reads a subject address, with or without a trailing slash', () => {
@@ -15,5 +15,13 @@ describe('parsePath', () => {
   it('keeps the query and survives a cut-off code', () => {
     expect(parsePath('feedback', '?topic=data').query.get('topic')).toBe('data')
     expect(parsePath('subject/COMP%3').param).toBe('COMP%3')
+  })
+})
+
+describe('moved pages', () => {
+  it('opens the old suggestions page as Find subjects sorted for the student', () => {
+    expect(parsePath('recommend/').view).toBe('recommend')
+    expect(movedTo('recommend')).toBe('subjects/?mine=1')
+    expect(movedTo('subjects')).toBeNull()
   })
 })

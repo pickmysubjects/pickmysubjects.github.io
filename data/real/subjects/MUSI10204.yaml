@@ -1,0 +1,33 @@
+code: MUSI10204
+title: Applied Aural Musicianship 1
+level: 1
+points: 6.25
+offerings:
+  "2026":
+    - semester-1
+prerequisites: none
+corequisites: none
+non_allowed: []
+topics:
+  - performance
+  - art
+assessment:
+  - kind: quiz
+    weight: 40
+  - kind: assignment
+    weight: 12.5
+  - kind: assignment
+    weight: 12.5
+  - kind: assignment
+    weight: 12.5
+  - kind: assignment
+    weight: 12.5
+  - kind: participation
+    weight: 10
+weekly_contact_hours: 2.5
+min_attendance: 80
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/musi10204
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

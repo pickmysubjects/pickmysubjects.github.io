@@ -23,11 +23,11 @@ Five degrees from the 2026 Handbook: Bachelor of Arts, Biomedicine, Commerce, De
 - anonymous ratings from students on this site (shown once 3 people have rated it), and a form to rate subjects you've taken;
 - quick answers: is it hard, is there an exam, can I take it as breadth, what comes after.
 
-**Find subjects.** Search by code or name, filter by breadth, level, semester, no prerequisites, no final exam or no group work, and sort by exam share, class hours or rating. Ready-made lists for breadth, first-semester and no-exam subjects. Students looking for 水课 or easy UniMelb subjects can sort by rating or filter for no final exam.
+**Find subjects.** Search by code or name, filter by breadth, level, semester, no prerequisites, no final exam or no group work, and sort by exam share, class hours or rating. One row of quick choices at the top: easy subjects (水课), hard subjects, no final exam, first semester, breadth. The easy and hard lists give each subject's reasons.
 
 **Majors, minors and specialisations.** What each one needs, year by year: compulsory subjects, the ones you choose from, and what to take first. Majors with several entry points (languages) show each one. Compare two majors to see what they share.
 
-**Get suggestions.** Subjects ranked from your marks, strengths and interests, each with a reason and a likely mark range. Goals: protect my WAM, balanced, stretch me, or marks only.
+**Sort for me.** A switch on Find subjects that orders the list by your marks, strengths and interests, each subject with a reason. Goals: protect my WAM, balanced, stretch me.
 
 **Plan the whole degree.** Pick a degree and major (plus a second major, minor or specialisation where the degree allows) and the site lays out every semester. It checks prerequisites, course rules and how heavy each semester is compared with that degree's normal load, explains heavy semesters and suggests swaps. Drag subjects around, add subjects, add summer or winter terms. Failed subjects get planned again. It warns when the plan runs longer than usual (student visas), shows census dates, and can share a plan as a link or print the whole degree.
 

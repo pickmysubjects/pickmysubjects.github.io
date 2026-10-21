@@ -1,0 +1,40 @@
+code: MUSI20229
+year: 2026
+learn:
+  en: "For ANAM students: orchestra and chamber music projects at the Conservatorium and ANAM, under direction and on your own."
+  zh: 面向ANAM学生：在音乐学院和ANAM参加管弦乐与室内乐项目，既有指导排练也有自主排练。
+  zh-TW: 面向ANAM學生：在音樂學院和ANAM參加管弦樂與室內樂計畫，既有指導排練也有自主排練。
+  ja: ANAM在籍者向け。音楽院とANAMでのオーケストラ・室内楽プロジェクトに、指導の下と自主の両方で取り組む。
+  ko: ANAM 학생 대상. 음악원과 ANAM에서 오케스트라·실내악 프로젝트를 지도 및 자율로 수행.
+  vi: "Dành cho sinh viên ANAM: dự án dàn nhạc và thính phòng tại Nhạc viện và ANAM, có chỉ huy và tự tập."
+  ms: "Untuk pelajar ANAM: projek orkestra dan muzik kamar di Konservatorium dan ANAM, berpandu dan berdikari."
+  id: "Untuk mahasiswa ANAM: proyek orkestra dan musik kamar di Konservatorium dan ANAM, dibimbing dan mandiri."
+  hi: "ANAM छात्रों के लिए: कंज़र्वेटोरियम और ANAM में ऑर्केस्ट्रा व चैंबर संगीत परियोजनाएँ।"
+outcomes:
+  - en: Rehearse well in an ensemble
+    zh: 在合奏中有效排练
+    zh-TW: 在合奏中有效排練
+    ja: アンサンブルで効果的にリハーサルする
+    ko: 앙상블에서 효과적으로 리허설하기
+    vi: Tập luyện hiệu quả trong hòa tấu
+    ms: Berlatih dengan baik dalam ensembel
+    id: Berlatih efektif dalam ansambel
+    hi: समूह में अच्छा रिहर्सल करना
+  - en: Perform in orchestra and chamber groups
+    zh: 参与管弦乐和室内乐演出
+    zh-TW: 參與管弦樂與室內樂演出
+    ja: オーケストラと室内楽で演奏する
+    ko: 오케스트라·실내악 연주하기
+    vi: Biểu diễn trong dàn nhạc và nhóm thính phòng
+    ms: Bermain dalam orkestra dan kumpulan kamar
+    id: Tampil dalam orkestra dan grup kamar
+    hi: ऑर्केस्ट्रा और चैंबर समूह में प्रस्तुति
+  - en: Prepare your part independently
+    zh: 独立准备自己的声部
+    zh-TW: 獨立準備自己的聲部
+    ja: 自分のパートを自主的に準備する
+    ko: 자신의 파트를 스스로 준비하기
+    vi: Tự chuẩn bị bè của mình
+    ms: Sediakan bahagian sendiri secara berdikari
+    id: Menyiapkan partitur sendiri secara mandiri
+    hi: अपना पार्ट स्वयं तैयार करना

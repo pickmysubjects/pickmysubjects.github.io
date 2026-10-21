@@ -1,0 +1,33 @@
+code: MUSI10182
+title: Individual Performance Studies 1
+level: 1
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+    - semester-2
+prerequisites:
+  admission: B-MUS
+  note: Admission into the Jazz & Improvisation major in the B-MUS Bachelor of Music
+corequisites: MUSI10181
+non_allowed: []
+skills:
+  - presentation
+topics:
+  - performance
+assessment:
+  - kind: presentation
+    weight: 60
+    hurdle: true
+  - kind: presentation
+    weight: 10
+  - kind: presentation
+    weight: 10
+  - kind: participation
+    weight: 20
+weekly_contact_hours: 3.5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/musi10182
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

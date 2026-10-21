@@ -1,0 +1,34 @@
+code: MUSI20175
+title: Individual Performance Studies 3
+level: 2
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+    - semester-2
+prerequisites:
+  all:
+    - MUSI10192
+    - MUSI10197
+corequisites: none
+non_allowed: []
+skills:
+  - presentation
+topics:
+  - performance
+assessment:
+  - kind: presentation
+    weight: 60
+    hurdle: true
+  - kind: presentation
+    weight: 10
+  - kind: presentation
+    weight: 10
+  - kind: participation
+    weight: 20
+weekly_contact_hours: 3.25
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/musi20175
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

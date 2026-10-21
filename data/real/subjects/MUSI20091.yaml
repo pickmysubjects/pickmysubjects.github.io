@@ -1,0 +1,31 @@
+code: MUSI20091
+title: String Ensemble 1
+level: 2
+points: 6.25
+offerings:
+  "2026":
+  - semester-1
+prerequisites:
+  permission: application
+  note: Successful audition required
+corequisites: none
+non_allowed: []
+skills:
+- presentation
+topics:
+- performance
+assessment:
+- kind: participation
+  weight: 30
+  group: true
+- kind: presentation
+  weight: 60
+- kind: participation
+  weight: 10
+weekly_contact_hours: 2
+min_attendance: 100
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/musi20091
+source_year: 2026
+verified_on: 2026-10-21
+notes: 'Source: 2026 University of Melbourne Handbook; facts summarised and checked.'

@@ -9,7 +9,8 @@ export const VIEW_LOADERS: Record<View, () => Promise<Component>> = {
   home: () => import('./HomeView.vue').then((m) => m.default),
   subject: () => import('./SubjectView.vue').then((m) => m.default),
   plan: () => import('./PlannerView.vue').then((m) => m.default),
-  recommend: () => import('./RecommendView.vue').then((m) => m.default),
+  // Suggestions moved into Find subjects ("sort for me"); the old address opens it.
+  recommend: () => import('./BrowseView.vue').then((m) => m.default),
   record: () => import('./RecordView.vue').then((m) => m.default),
   contribute: () => import('./ContributeView.vue').then((m) => m.default),
   feedback: () => import('./FeedbackView.vue').then((m) => m.default),

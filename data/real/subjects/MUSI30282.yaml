@@ -1,0 +1,33 @@
+code: MUSI30282
+title: Advanced Rhythmic Studies
+level: 3
+points: 6.25
+offerings:
+  '2026':
+  - semester-1
+prerequisites:
+  all:
+  - admission: B-MUS
+    note: Jazz & Improvisation major only
+  - MUSI20180
+corequisites: none
+non_allowed:
+- MUSI30238
+skills:
+- presentation
+topics:
+- performance
+- art
+assessment:
+- kind: presentation
+  weight: 20
+- kind: assignment
+  weight: 40
+- kind: presentation
+  weight: 40
+weekly_contact_hours: 1
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/musi30282
+source_year: 2026
+verified_on: 2026-10-21
+notes: 'Source: 2026 University of Melbourne Handbook; facts summarised and checked.'

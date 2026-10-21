@@ -1,0 +1,23 @@
+code: MUSI30160
+title: Acting for Singers 2
+level: 3
+points: 6.25
+offerings:
+  "2026": []
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - presentation
+topics:
+  - performance
+assessment:
+  - kind: participation
+    weight: 100
+pass_fail: true
+min_attendance: 80
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/musi30160
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Not available in 2026."

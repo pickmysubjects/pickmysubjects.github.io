@@ -1,0 +1,46 @@
+code: MUSI30046
+title: "Music Language 3: Modern Directions"
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - summer
+    - semester-2
+prerequisites: MUSI20061
+corequisites: none
+non_allowed: []
+skills:
+  - presentation
+topics:
+  - art
+  - history
+assessment:
+  - kind: assignment
+    weight: 70
+  - kind: quiz
+    weight: 15
+  - kind: test
+    weight: 5
+  - kind: participation
+    weight: 10
+weekly_contact_hours: 3
+min_attendance: 80
+breadth_for:
+  - Bachelor of Arts
+  - Bachelor of Biomedicine
+  - Bachelor of Commerce
+  - Bachelor of Design
+  - Bachelor of Fine Arts (Acting)
+  - Bachelor of Fine Arts (Animation)
+  - Bachelor of Fine Arts (Dance)
+  - Bachelor of Fine Arts (Film and Television)
+  - Bachelor of Fine Arts (Music Theatre)
+  - Bachelor of Fine Arts (Production)
+  - Bachelor of Fine Arts (Screenwriting)
+  - Bachelor of Fine Arts (Theatre)
+  - Bachelor of Fine Arts (Visual Art)
+  - Bachelor of Science
+handbook: https://handbook.unimelb.edu.au/2026/subjects/musi30046
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Summer Term runs as a 6-week intensive (about 6 hours a week); Semester 2 is about 3 hours a week."

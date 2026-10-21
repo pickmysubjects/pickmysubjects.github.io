@@ -1,0 +1,40 @@
+code: MUSI20237
+year: 2026
+learn:
+  en: "Electroacoustic composition about sound and the environment: field and studio recording, editing in a DAW, deep listening."
+  zh: 以声音与环境为主题的电子原声作曲：野外和录音室录音、DAW编辑、深度聆听。
+  zh-TW: 以聲音與環境為主題的電子原聲作曲：野外與錄音室錄音、DAW編輯、深度聆聽。
+  ja: 音と環境をテーマにした電子音響作曲。フィールド・スタジオ録音、DAW編集、ディープリスニング。
+  ko: 소리와 환경을 다루는 전자음향 작곡. 현장·스튜디오 녹음, DAW 편집, 딥 리스닝.
+  vi: "Sáng tác điện thanh về âm thanh và môi trường: thu âm ngoài trời và phòng thu, dựng trên DAW, nghe sâu."
+  ms: "Gubahan elektroakustik tentang bunyi dan alam: rakaman lapangan dan studio, suntingan DAW, mendengar mendalam."
+  id: "Komposisi elektroakustik tentang suara dan lingkungan: rekaman lapangan dan studio, edit di DAW, mendengar mendalam."
+  hi: "ध्वनि और पर्यावरण पर इलेक्ट्रोअकूस्टिक रचना: फ़ील्ड व स्टूडियो रिकॉर्डिंग, DAW एडिटिंग।"
+outcomes:
+  - en: Record sound in the field and studio
+    zh: 在野外和录音室录音
+    zh-TW: 在野外與錄音室錄音
+    ja: フィールドとスタジオで録音する
+    ko: 현장과 스튜디오에서 녹음하기
+    vi: Thu âm ngoài trời và trong phòng thu
+    ms: Rakam bunyi di lapangan dan studio
+    id: Merekam suara di lapangan dan studio
+    hi: फ़ील्ड और स्टूडियो में रिकॉर्डिंग
+  - en: Shape sound in a DAW
+    zh: 在DAW中加工声音
+    zh-TW: 在DAW中加工聲音
+    ja: DAWで音を加工する
+    ko: DAW에서 소리 다듬기
+    vi: Xử lý âm thanh trên DAW
+    ms: Olah bunyi dalam DAW
+    id: Mengolah suara di DAW
+    hi: DAW में ध्वनि को आकार देना
+  - en: Compose an original sonic work
+    zh: 创作原创声音作品
+    zh-TW: 創作原創聲音作品
+    ja: オリジナルの音響作品を作曲する
+    ko: 독창적인 음향 작품 작곡하기
+    vi: Sáng tác tác phẩm âm thanh gốc
+    ms: Gubah karya bunyi asli
+    id: Menggubah karya suara orisinal
+    hi: मौलिक ध्वनि रचना बनाना

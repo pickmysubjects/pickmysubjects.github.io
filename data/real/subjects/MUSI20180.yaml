@@ -1,0 +1,32 @@
+code: MUSI20180
+title: Contextual Studies 4
+level: 2
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites: MUSI20177
+corequisites: none
+non_allowed: []
+skills:
+  - presentation
+  - exams
+topics:
+  - art
+  - performance
+assessment:
+  - kind: project
+    weight: 20
+  - kind: exam
+    weight: 20
+  - kind: test
+    weight: 30
+  - kind: presentation
+    weight: 30
+weekly_contact_hours: 4
+min_attendance: 75
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/musi20180
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

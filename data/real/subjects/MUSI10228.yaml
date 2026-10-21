@@ -1,0 +1,32 @@
+code: MUSI10228
+title: Sound Studies 2
+level: 1
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites: MUSI10229
+corequisites: none
+non_allowed: []
+skills:
+  - lab
+  - writing
+topics:
+  - media
+  - art
+assessment:
+  - kind: assignment
+    weight: 25
+  - kind: assignment
+    weight: 25
+  - kind: assignment
+    weight: 25
+  - kind: exam
+    weight: 25
+min_attendance: 80
+weekly_contact_hours: 4
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/musi10228
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

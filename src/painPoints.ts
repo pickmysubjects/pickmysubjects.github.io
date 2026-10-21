@@ -10,7 +10,7 @@ export interface PainPoint {
   id: string
   status: PainStatus
   /** Where in the app to see it, if anywhere. */
-  view?: 'plan' | 'recommend' | 'record' | 'contribute'
+  view?: 'plan' | 'subjects/?mine=1' | 'subjects/easy/' | 'subjects/hard/' | 'record' | 'contribute'
 }
 
 export const PAIN_POINTS: PainPoint[] = [
@@ -18,10 +18,10 @@ export const PAIN_POINTS: PainPoint[] = [
   { id: 'what-when', status: 'works', view: 'plan' },
   { id: 'prerequisites', status: 'works', view: 'plan' },
   { id: 'blocks', status: 'works', view: 'plan' },
-  { id: 'easy-wam', status: 'partly', view: 'recommend' },
-  { id: 'known-hard', status: 'works', view: 'recommend' },
+  { id: 'easy-wam', status: 'partly', view: 'subjects/easy/' },
+  { id: 'known-hard', status: 'works', view: 'subjects/hard/' },
   { id: 'skills', status: 'works', view: 'record' },
-  { id: 'fit-me', status: 'works', view: 'recommend' },
+  { id: 'fit-me', status: 'works', view: 'subjects/?mine=1' },
   { id: 'rules-change', status: 'partly', view: 'contribute' },
   { id: 'future', status: 'planned' },
 ]

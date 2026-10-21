@@ -18,7 +18,6 @@ const lazy = (v: keyof typeof VIEW_LOADERS) => defineAsyncComponent(VIEW_LOADERS
 const HomeView = lazy('home')
 const SubjectView = lazy('subject')
 const PlannerView = lazy('plan')
-const RecommendView = lazy('recommend')
 const RecordView = lazy('record')
 const ContributeView = lazy('contribute')
 const FeedbackView = lazy('feedback')
@@ -27,8 +26,6 @@ const AboutView = lazy('about')
 const GuideView = lazy('guide')
 const BrowseView = lazy('subjects')
 const MajorsView = lazy('majors')
-// The easy / hard lists (/subjects/easy/) live under Find subjects but are a page of their own.
-const RankingView = defineAsyncComponent(() => import('./views/RankingView.vue'))
 
 const { view, param } = useView()
 const { t, locale } = useI18n()
@@ -37,7 +34,6 @@ const { data, course } = useDataset()
 // The tab title follows the page and the language (the built page only has the first one).
 const TITLES: Partial<Record<string, string>> = {
   plan: 'plan.title',
-  recommend: 'suggest.title',
   record: 'record.title',
   contribute: 'contribute.title',
   feedback: 'feedback.title',
@@ -82,18 +78,16 @@ watchEffect(() => {
   </div>
   <AppHeader :view="view" />
   <main class="app-main shell" :class="{ 'shell-wide': view === 'plan' }">
-    <!-- Narrow screens: Me's three steps as a slim switch in the page (wide screens: in the bar). -->
+    <!-- Narrow screens: Me's two steps as a slim switch in the page (wide screens: in the bar). -->
     <MySteps v-if="MY_STEPS.some((x) => x.view === view)" class="page-steps" />
     <HomeView v-if="view === 'home'" />
     <SubjectView v-else-if="view === 'subject'" :key="param" :code="param" />
     <PlannerView v-else-if="view === 'plan'" />
-    <RecommendView v-else-if="view === 'recommend'" />
     <RecordView v-else-if="view === 'record'" />
     <ContributeView v-else-if="view === 'contribute'" />
     <FeedbackView v-else-if="view === 'feedback'" />
     <AboutView v-else-if="view === 'about'" />
     <GuideView v-else-if="view === 'guide'" />
-    <RankingView v-else-if="view === 'subjects' && rankFromSlug(param)" :key="param" :direction="rankFromSlug(param)!" />
     <BrowseView v-else-if="view === 'subjects'" />
     <MajorsView v-else-if="view === 'majors'" :id="param" />
     <PrivacyView v-else />

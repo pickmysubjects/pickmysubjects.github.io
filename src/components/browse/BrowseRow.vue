@@ -7,7 +7,8 @@ import { useDataset } from '@/composables/useDataset'
 import { useI18n } from '@/i18n'
 import { localTitle } from '@/i18n/localized'
 
-const props = defineProps<{ row: BrowseRow; course: string }>()
+/** `reasons`: why it's on the list chosen (or suits the student), shown under the facts. */
+const props = defineProps<{ row: BrowseRow; course: string; reasons?: string[] }>()
 const { t, locale } = useI18n()
 
 const s = computed(() => props.row.subject)
@@ -39,12 +40,30 @@ const closed = computed(() => data.value.courses.some((c) => c.code === props.co
         <span v-if="s.prerequisites === 'none'" class="pill pill-good">{{ t('browse.metaNoPrereq') }}</span>
         <span v-if="row.rating !== null" class="pill rating"><Star :size="12" aria-hidden="true" />{{ row.rating }}</span>
       </span>
+      <span v-if="reasons?.length" class="reasons">
+        <span v-for="x in reasons" :key="x" class="reason">{{ x }}</span>
+      </span>
     </span>
     <ChevronRight :size="18" aria-hidden="true" class="go" />
   </a>
 </template>
 
 <style scoped>
+.reasons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 6px;
+  margin-top: 4px;
+  font-size: 0.75rem;
+}
+
+.reason {
+  padding: 2px 8px;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-radius: 999px;
+}
+
 .row {
   display: flex;
   align-items: center;

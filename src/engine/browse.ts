@@ -1,5 +1,6 @@
 import { periodsFor } from './availability'
-import { easeKey } from './easeRanking'
+import { easeKey, RANK_SLUGS, rankFromSlug, rankSubjects, type RankDirection, type RankedSubject } from './easeRanking'
+import type { Recommendation } from './recommend'
 import type { Period, Subject } from './schema'
 
 export type BrowseSort = 'code' | 'easy' | 'exam' | 'hours' | 'rating'
@@ -15,6 +16,10 @@ export interface BrowseFilters {
   noExam: boolean
   noGroup: boolean
   sort: BrowseSort
+  /** Only the easy (or hard) list, in its order; null for no list. */
+  rank: RankDirection | null
+  /** "Sort for me": ordered by the student's own suggestions. */
+  mine: boolean
 }
 
 export const EMPTY_FILTERS: BrowseFilters = {
@@ -26,6 +31,8 @@ export const EMPTY_FILTERS: BrowseFilters = {
   noExam: false,
   noGroup: false,
   sort: 'code',
+  rank: null,
+  mine: false,
 }
 
 /** Starting points for the questions new students ask most. */
@@ -141,6 +148,8 @@ export function filtersToQuery(f: BrowseFilters): string {
   if (f.noExam) q.set('noexam', '1')
   if (f.noGroup) q.set('nogroup', '1')
   if (f.sort !== 'code') q.set('sort', f.sort)
+  if (f.rank) q.set('list', f.rank)
+  if (f.mine) q.set('mine', '1')
   return q.toString()
 }
 
@@ -148,9 +157,13 @@ const PERIOD_SET = new Set<string>(['summer', 'semester-1', 'winter', 'semester-
 const SORT_SET = new Set<string>(['code', 'easy', 'exam', 'hours', 'rating'])
 
 /** The query keys that set filters; anything else (fbclid, utm_source from a shared link) is ignored. */
-const FILTER_KEYS = new Set(['q', 'type', 'level', 'when', 'noprereq', 'noexam', 'nogroup', 'sort', 'preset'])
+const FILTER_KEYS = new Set(['q', 'type', 'level', 'when', 'noprereq', 'noexam', 'nogroup', 'sort', 'preset', 'list', 'mine', 'breadth'])
 
-/** `slug` is the quick pick in the path (/subjects/no-exam/); filters in the query win over it. */
+/**
+ * `slug` is the quick pick in the path (/subjects/no-exam/, /subjects/easy/); filters in the query
+ * win over a filter preset. The easy and hard lists stay on whatever else the query sets, so the
+ * old list addresses (/subjects/easy/?level=1&breadth=1) open the same list.
+ */
 export function filtersFromQuery(q: URLSearchParams, slug = ''): BrowseFilters {
   const setsFilters = [...q.keys()].some((k) => FILTER_KEYS.has(k))
   const preset = q.get('preset') ?? (setsFilters ? undefined : presetFromSlug(slug))
@@ -160,12 +173,88 @@ export function filtersFromQuery(q: URLSearchParams, slug = ''): BrowseFilters {
   const sort = q.get('sort') ?? ''
   return {
     text: q.get('q') ?? base.text,
-    category: q.get('type') ?? base.category,
+    category: q.get('type') ?? (q.get('breadth') === '1' ? 'breadth' : base.category),
     level: Number.isInteger(level) && level >= 1 && level <= 3 ? level : base.level,
     period: PERIOD_SET.has(when) ? (when as Period) : base.period,
     noPrereq: q.get('noprereq') === '1' || base.noPrereq,
     noExam: q.get('noexam') === '1' || base.noExam,
     noGroup: q.get('nogroup') === '1' || base.noGroup,
     sort: SORT_SET.has(sort) ? (sort as BrowseSort) : base.sort,
+    rank: rankFromSlug(q.get('list') ?? '') ?? rankFromSlug(slug) ?? null,
+    mine: q.get('mine') === '1',
   }
+}
+
+/** The one row of quick choices on Find subjects: one at a time, or all. */
+export type QuickChoice = 'all' | RankDirection | PresetName
+export const QUICK_CHOICES: readonly QuickChoice[] = ['all', 'easy', 'hard', 'noExam', 'firstSemester', 'breadth']
+
+/** Which quick choice the filters amount to ('all' when none). Sort order doesn't count. */
+export function quickChoice(f: BrowseFilters): QuickChoice {
+  if (f.rank) return f.rank
+  for (const name of Object.keys(PRESETS) as PresetName[]) {
+    const want = PRESETS[name] as Partial<BrowseFilters>
+    if (Object.entries(want).every(([k, v]) => k === 'sort' || f[k as keyof BrowseFilters] === v)) return name
+  }
+  return 'all'
+}
+
+/** Filters after tapping a quick choice: the search text and "sort for me" stay, the rest starts over. */
+export function applyQuick(f: BrowseFilters, choice: QuickChoice): BrowseFilters {
+  const base: BrowseFilters = { ...EMPTY_FILTERS, text: f.text, mine: f.mine }
+  if (choice === 'all') return base
+  if (choice === 'easy' || choice === 'hard') return { ...base, rank: choice }
+  return { ...base, ...PRESETS[choice] }
+}
+
+/**
+ * The address for these filters, after the site part (e.g. "subjects/easy/"). A plain quick
+ * choice keeps its own page's address (titles and search results point there); anything more
+ * goes in the query.
+ */
+export function browseAddress(f: BrowseFilters): string {
+  const choice = quickChoice(f)
+  const q = filtersToQuery(f)
+  if (choice !== 'all' && q === filtersToQuery(applyQuick(EMPTY_FILTERS, choice))) {
+    return `subjects/${choice === 'easy' || choice === 'hard' ? RANK_SLUGS[choice] : PRESET_SLUGS[choice]}/`
+  }
+  return `subjects/${q ? `?${q}` : ''}`
+}
+
+/** A row on Find subjects, with why it's there when a list or "sort for me" put it there. */
+export interface FoundRow extends BrowseRow {
+  ranked?: RankedSubject
+  rec?: Recommendation
+}
+
+export interface FindOptions {
+  course: string
+  /** The degree the easy/hard lists go by; '' for any degree. */
+  rankCourse: string
+  year: number
+  /** The student's suggestions, best first: used when "sort for me" is on. */
+  recs?: Recommendation[]
+}
+
+/**
+ * What Find subjects lists: the filtered subjects; with an easy/hard list, only that list's
+ * subjects in its order; with "sort for me", only the student's suggestions in their order.
+ */
+export function findRows(subjects: Subject[], f: BrowseFilters, o: FindOptions): FoundRow[] {
+  let rows: FoundRow[] = browse(subjects, f, o.course, o.year)
+  if (f.rank) {
+    const byCode = new Map(rows.map((r) => [r.subject.code, r]))
+    rows = rankSubjects(subjects, { direction: f.rank, course: o.rankCourse, year: o.year }).flatMap((ranked) => {
+      const row = byCode.get(ranked.subject.code)
+      return row ? [{ ...row, ranked }] : []
+    })
+  }
+  if (f.mine && o.recs) {
+    const byCode = new Map(rows.map((r) => [r.subject.code, r]))
+    rows = o.recs.flatMap((rec) => {
+      const row = byCode.get(rec.code)
+      return row ? [{ ...row, rec }] : []
+    })
+  }
+  return rows
 }

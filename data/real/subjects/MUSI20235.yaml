@@ -1,0 +1,37 @@
+code: MUSI20235
+title: Jazz Improvisation
+level: 2
+points: 6.25
+offerings:
+  "2026":
+  - semester-1
+  - semester-2
+prerequisites:
+  all:
+  - MUSI20234
+  - any:
+    - admission: D-MUSIC
+      note: Admission into D-MUSIC Diploma in Music
+    - admission: B-MUS
+      note: 'Admission into one of these B-MUS Bachelor of Music majors: Composition, Interactive Composition, Musicology & Ethnomusicology, Music Studies, Performance, Performance (ANAM)'
+corequisites: none
+non_allowed: []
+skills:
+- presentation
+topics:
+- performance
+assessment:
+- kind: presentation
+  weight: 20
+- kind: project
+  weight: 40
+- kind: presentation
+  weight: 20
+- kind: quiz
+  weight: 20
+weekly_contact_hours: 1.5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/musi20235
+source_year: 2026
+verified_on: 2026-10-21
+notes: 'Source: 2026 University of Melbourne Handbook; facts summarised and checked.'

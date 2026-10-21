@@ -1,0 +1,34 @@
+code: MUSI20244
+title: Figured Bass Realisation 1
+level: 2
+points: 6.25
+offerings:
+  '2026':
+  - semester-1
+prerequisites:
+  any:
+  - MUSI10023
+  - MUSI10047
+corequisites: none
+non_allowed:
+- MUSI40122
+skills:
+- writing
+- presentation
+topics:
+- performance
+- history
+- art
+assessment:
+- kind: assignment
+  weight: 40
+- kind: presentation
+  weight: 50
+- kind: participation
+  weight: 10
+weekly_contact_hours: 2
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/musi20244
+source_year: 2026
+verified_on: 2026-10-21
+notes: 'Source: 2026 University of Melbourne Handbook; facts summarised and checked. Final task: a practical exam or a written realisation (your choice).'

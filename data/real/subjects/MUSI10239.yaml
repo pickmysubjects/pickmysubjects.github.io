@@ -1,0 +1,27 @@
+code: MUSI10239
+title: Percussion Ensemble 2
+level: 1
+points: 6.25
+offerings:
+  "2026":
+    - semester-2
+prerequisites:
+  permission: coordinator
+  note: "AUDITION: Students are required to request an audition for this subject. Follow the link below to locate the relevant audition form. Link to audition forms This subject requires a successful audition outcome to enrol. A successful audition outcome may be used as proof of permission to enrol with the submission of an Enrolment Assistance form to Stop 1. Link to Enrolment Assistance form"
+corequisites: none
+non_allowed: []
+skills:
+  - teamwork
+topics:
+  - performance
+assessment:
+  - kind: participation
+    weight: 100
+weekly_contact_hours: 2
+pass_fail: true
+min_attendance: 100
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/musi10239
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,38 @@
+code: MUSI30274
+title: Collaborative Music Capstone
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites: none
+corequisites: none
+non_allowed:
+  - MUSI30214
+  - MUSI30251
+  - MUSI30253
+  - MUSI30273
+skills:
+  - writing
+  - presentation
+  - business
+topics:
+  - performance
+  - art
+  - management
+assessment:
+  - kind: project
+    weight: 10
+  - kind: assignment
+    weight: 25
+  - kind: assignment
+    weight: 25
+  - kind: project
+    weight: 40
+weekly_contact_hours: 2
+min_attendance: 75
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/musi30274
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

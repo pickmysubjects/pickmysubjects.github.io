@@ -1,0 +1,36 @@
+code: MUSI20207
+title: Applied Aural Musicianship 2
+level: 2
+points: 6.25
+offerings:
+  "2026":
+  - semester-2
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+- presentation
+topics:
+- performance
+assessment:
+- kind: quiz
+  weight: 40
+- kind: assignment
+  weight: 12.5
+- kind: assignment
+  weight: 12.5
+- kind: assignment
+  weight: 12.5
+- kind: assignment
+  weight: 12.5
+- kind: participation
+  weight: 10
+weekly_contact_hours: 2.5
+min_attendance: 80
+breadth_for: []
+recommended:
+- MUSI10204
+handbook: https://handbook.unimelb.edu.au/2026/subjects/musi20207
+source_year: 2026
+verified_on: 2026-10-21
+notes: 'Source: 2026 University of Melbourne Handbook; facts summarised and checked.'

@@ -42,7 +42,7 @@ const top = computed(() =>
         <a :href="link(`subject/${r.code}`)"><span class="code">{{ r.code }}</span> {{ r.title }}</a>
       </li>
     </ol>
-    <a class="preview-more" :href="link('recommend')">{{ t('record.previewMore') }}</a>
+    <a class="preview-more" :href="link('subjects/?mine=1')">{{ t('record.previewMore') }}</a>
   </section>
 </template>
 

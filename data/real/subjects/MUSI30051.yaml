@@ -1,0 +1,50 @@
+code: MUSI30051
+title: Minor Music Performance 4
+level: 3
+points: 6.25
+offerings:
+  "2026":
+    - semester-1
+    - semester-2
+prerequisites:
+  all:
+    - MUSI30050
+    - any:
+        - permission: application
+          note: "Performance students: apply with the Minor Music Performance form plus an Enrolment Assistance form to Stop 1."
+        - all:
+            - any:
+                - average:
+                    min: 75
+                    from: [MUSI20056]
+                - average:
+                    min: 75
+                    from: [MUSI30213]
+            - permission: application
+              note: "Composition students: 75 or more in Composition 4 or 5, then apply the same way."
+corequisites:
+  any:
+    - any:
+        - MUSI30252
+        - MUSI30253
+    - any:
+        - MUSI30213
+        - MUSI30214
+non_allowed: []
+skills:
+  - presentation
+topics:
+  - performance
+assessment:
+  - kind: presentation
+    weight: 100
+  - kind: participation
+    weight: 0
+    hurdle: true
+weekly_contact_hours: 2.5
+min_attendance: 100
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/musi30051
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Second-instrument study: one 30-minute lesson plus a 2-hour class a week. Satisfactory teacher's report is a hurdle."

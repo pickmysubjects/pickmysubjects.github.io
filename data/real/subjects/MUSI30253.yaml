@@ -1,0 +1,37 @@
+code: MUSI30253
+title: Performance 6
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+    - semester-2
+prerequisites:
+  average:
+    min: 65
+    from: [MUSI30252]
+corequisites: none
+non_allowed:
+  - MUSI20055
+  - MUSI20056
+  - MUSI30213
+  - MUSI30214
+  - MUSI30251
+skills:
+  - presentation
+topics:
+  - performance
+  - art
+assessment:
+  - kind: presentation
+    weight: 100
+  - kind: participation
+    weight: 0
+    hurdle: true
+weekly_contact_hours: 7
+min_attendance: 100
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/musi30253
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

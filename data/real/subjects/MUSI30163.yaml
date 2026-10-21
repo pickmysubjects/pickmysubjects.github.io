@@ -1,0 +1,33 @@
+code: MUSI30163
+title: Baroque Ensemble 1
+level: 3
+points: 6.25
+offerings:
+  '2026':
+  - semester-1
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+- presentation
+- teamwork
+topics:
+- performance
+- history
+assessment:
+- kind: participation
+  weight: 40
+- kind: participation
+  weight: 40
+- kind: presentation
+  weight: 20
+- kind: participation
+  weight: 0
+  hurdle: true
+weekly_contact_hours: 2
+min_attendance: 75
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/musi30163
+source_year: 2026
+verified_on: 2026-10-21
+notes: 'Source: 2026 University of Melbourne Handbook; facts summarised and checked. 100% attendance expected; below 75% fails.'

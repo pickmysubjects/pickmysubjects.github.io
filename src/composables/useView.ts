@@ -41,8 +41,26 @@ export function parsePath(path: string, search = ''): Route {
   return { view, param: safeDecode(param), query: new URLSearchParams(search) }
 }
 
+/**
+ * Old pages that now live inside another one: where they go (after the site and language part).
+ * Suggestions became "sort for me" on Find subjects. Exported for tests.
+ */
+export function movedTo(view: View): string | null {
+  return view === 'recommend' ? 'subjects/?mine=1' : null
+}
+
 function current(): Route {
+  const r = parsePath(pagePath(), location.search)
+  const to = movedTo(r.view)
+  if (!to) return r
+  history.replaceState(null, '', link(to) + location.hash)
   return parsePath(pagePath(), location.search)
+}
+
+/** Swap the address for another page's in place (no new history entry), e.g. as filters change. */
+export function replaceAddress(path: string): void {
+  history.replaceState(null, '', link(path))
+  route.value = current()
 }
 
 /** A cut-off link like /subject/COMP%3 must not take the whole page down. */

@@ -1,0 +1,31 @@
+code: MUSI10041
+title: Baroque Ensemble 1
+level: 1
+points: 6.25
+offerings:
+  "2026":
+    - semester-1
+prerequisites:
+  permission: application
+  note: "PERMISSION OF COORDINATOR: Students are required to apply for permission to enrol in this subject. Students must specify their instrument when applying for permission. Students must submit proof of permission with an Enrolment Assistance form to Stop 1: Link to Enrolment Assistance form"
+corequisites: none
+non_allowed: []
+skills:
+  - presentation
+topics:
+  - performance
+  - history
+assessment:
+  - kind: presentation
+    weight: 40
+  - kind: participation
+    weight: 40
+  - kind: presentation
+    weight: 20
+weekly_contact_hours: 2
+min_attendance: 75
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/musi10041
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Co-taught with MUSI20069 and MUSI30163. Needs skill on an early (period) instrument, about AMEB grade 7."

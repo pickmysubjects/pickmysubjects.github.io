@@ -1,0 +1,32 @@
+code: MUSI10059
+title: Conservatorium Choir 2
+level: 1
+points: 6.25
+offerings:
+  "2026":
+    - semester-2
+prerequisites:
+  manual: "AUDITION: Students are required to pass an audition for this subject. The audition can be submitted via Canvas. Students may provisionally enrol via the Student Portal, but places are not guaranteed until the audition is passed. Students will be notified of their audition outcome by email."
+corequisites: none
+non_allowed: []
+skills:
+  - presentation
+topics:
+  - performance
+assessment:
+  - kind: participation
+    weight: 100
+  - kind: presentation
+    weight: 0
+    hurdle: true
+  - kind: participation
+    weight: 0
+    hurdle: true
+weekly_contact_hours: 2
+min_attendance: 100
+pass_fail: true
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/musi10059
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

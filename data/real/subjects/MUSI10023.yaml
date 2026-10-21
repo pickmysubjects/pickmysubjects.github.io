@@ -1,0 +1,50 @@
+code: MUSI10023
+title: "Music Language 1: the Diatonic World"
+level: 1
+points: 12.5
+offerings:
+  "2026":
+    - summer
+    - semester-2
+prerequisites:
+  any:
+    - admission: B-MUS Bachelor of Music, D-MUSIC Diploma in Music or GD-MUS Graduate Diploma in Music
+    - all:
+        - manual: AMEB Grade 4 theory or equivalent (breadth students)
+        - permission: application
+          note: Breadth students apply to the coordinator via the Fine Arts and Music Current Students page.
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+topics:
+  - art
+  - history
+assessment:
+  - kind: assignment
+    weight: 65
+  - kind: quiz
+    weight: 15
+  - kind: exam
+    weight: 20
+weekly_contact_hours: 3
+min_attendance: 80
+breadth_for:
+  - Bachelor of Arts
+  - Bachelor of Biomedicine
+  - Bachelor of Commerce
+  - Bachelor of Design
+  - Bachelor of Fine Arts (Acting)
+  - Bachelor of Fine Arts (Animation)
+  - Bachelor of Fine Arts (Dance)
+  - Bachelor of Fine Arts (Film and Television)
+  - Bachelor of Fine Arts (Music Theatre)
+  - Bachelor of Fine Arts (Production)
+  - Bachelor of Fine Arts (Screenwriting)
+  - Bachelor of Fine Arts (Theatre)
+  - Bachelor of Fine Arts (Visual Art)
+  - Bachelor of Science
+handbook: https://handbook.unimelb.edu.au/2026/subjects/musi10023
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Summer Term runs as a 6-week intensive (Parkville); Semester 2 is at Southbank. All assessment must be submitted to pass."

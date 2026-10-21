@@ -1,0 +1,33 @@
+code: MUSI30270
+title: Topics in Musicology
+level: 3
+points: 12.5
+offerings:
+  "2026": []
+prerequisites:
+  any:
+    - MUSI10047
+    - MUSI10227
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+topics:
+  - history
+assessment:
+  - kind: assignment
+    weight: 50
+  - kind: assignment
+    weight: 10
+  - kind: project
+    weight: 40
+breadth_for:
+  - Bachelor of Arts
+  - Bachelor of Biomedicine
+  - Bachelor of Commerce
+  - Bachelor of Design
+  - Bachelor of Science
+handbook: https://handbook.unimelb.edu.au/2026/subjects/musi30270
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Not available in 2026. The research topic changes each year."
