@@ -207,6 +207,7 @@ export const ko: Messages = {
     swapped: '{term}에서 {from}을(를) {to}로 바꿨습니다 (목적: {rule}).',
     repairStopped: '선택 과목을 너무 많이 바꿔서 조정을 멈췄습니다. 계획을 직접 확인해 주세요.',
     firstYearLate: '이 시작 학기로는 {codes}을(를) 1학년 안에 넣을 수 없어서(앞 과목이 한 학기에만 개설됨) 가능한 한 이른 학기에 넣었습니다.',
+    entryMoved: "이 학위는 일부 학기에만 신입생을 받아서 {year}년 {period}부터 시작해요.",
     markUnmet: '{code}에 필요한 성적에 아직 못 미칩니다. 수강 신청 전에 코디네이터와 상의하세요.',
   },
   expr: {
@@ -1232,6 +1233,7 @@ export const ko: Messages = {
     qCourse: '어떤 학위 과정인가요?',
     qStart: '언제 입학했나요 (또는 입학할 예정인가요)?',
     startFromRecord: "내 기록에서 골랐어요: 가장 이른 과목이 {term}에 있어요. 틀리면 바꿔 주세요.",
+    entryOnlyS1: "이 학위는 1학기에만 입학할 수 있어요.",
     qMajor: '어떤 전공을 목표로 하나요?',
     notSure: '아직 모름',
     next: '다음',

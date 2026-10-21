@@ -207,6 +207,7 @@ export const zhCN: Messages = {
     swapped: '在 {term} 把 {from} 换成了 {to}，用来满足：{rule}。',
     repairStopped: '调整选修课次数过多，已停止自动调整；请手动检查方案。',
     firstYearLate: '从这个学期入学，{codes} 排不进第一年（前面的课每年只开一个学期），所以尽量往前排了。',
+    entryMoved: "这个学位只在部分学期招新生，所以计划从 {year} 年{period}开始。",
     markUnmet: '{code} 要求的成绩你目前还没达到，选课前先问问课程协调人。',
   },
   expr: {
@@ -1232,6 +1233,7 @@ export const zhCN: Messages = {
     qCourse: '你读的是哪个学位？',
     qStart: '你什么时候入学（或打算入学）？',
     startFromRecord: "按“我的记录”选好了：你最早的一门课在 {term}。不对的话可以改。",
+    entryOnlyS1: "这个学位只能在第一学期入学。",
     qMajor: '你想读哪个主修？',
     notSure: '还没决定',
     next: '下一步',

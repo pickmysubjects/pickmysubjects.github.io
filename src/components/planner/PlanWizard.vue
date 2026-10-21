@@ -2,7 +2,7 @@
 import { link } from '@/composables/useView'
 import { computed, shallowRef } from 'vue'
 import { ArrowLeft, ArrowRight, Check } from 'lucide-vue-next'
-import { cannotCombine, componentCourse, diplomaClash, heldAsMinor, majorClash, maxMajors, minorClash, type Component, type Course, type Period } from '@/engine'
+import { canEnterIn, cannotCombine, componentCourse, findCourse, nextEntry, diplomaClash, heldAsMinor, majorClash, maxMajors, minorClash, type Component, type Course, type Period } from '@/engine'
 import { useDataset } from '@/composables/useDataset'
 import type { PlanSetup } from '@/composables/usePlan'
 import MajorPicker from './MajorPicker.vue'
@@ -46,7 +46,12 @@ const years = Array.from({ length: thisYear + 1 - firstYear + 1 }, (_, i) => fir
 const startFromRecord = computed(
   () => fromRecord.value !== null && draft.value.startYear === fromRecord.value.year && draft.value.startPeriod === fromRecord.value.period,
 )
+const course = computed(() => findCourse(data.value, draft.value.course, draft.value.courseYear))
+// A new start only in the periods the course takes new students in; a student whose record shows
+// they've started already isn't held to that, and a saved start stays offered (with a note).
+const startOk = computed(() => fromRecord.value !== null || canEnterIn(course.value, draft.value.startPeriod))
 const periods: Period[] = ['semester-1', 'semester-2']
+const showPeriod = (y: number, p: Period) => fromRecord.value !== null || canEnterIn(course.value, p) || (y === draft.value.startYear && p === draft.value.startPeriod)
 
 // A major closed to new students stays only for those who started before it closed (or already chose it).
 const majors = computed(() =>
@@ -124,7 +129,9 @@ function finish(): void {
 }
 
 function chooseCourse(c: Course): void {
-  set({ course: c.code, courseYear: c.year, major: '', major2: '', specialisation: '', minors: [], field: '', diploma: '', diplomaStream: '' })
+  // A new student's start moves to the next term the course takes new students in.
+  const start = fromRecord.value ? { year: draft.value.startYear, period: draft.value.startPeriod } : nextEntry(c, { year: draft.value.startYear, period: draft.value.startPeriod })
+  set({ course: c.code, courseYear: c.year, startYear: start.year, startPeriod: start.period, major: '', major2: '', specialisation: '', minors: [], field: '', diploma: '', diplomaStream: '' })
 }
 </script>
 
@@ -160,10 +167,11 @@ function chooseCourse(c: Course): void {
     <div v-else-if="step === 1" class="q">
       <h2 class="q-title">{{ t('wizard.qStart') }}</h2>
       <p v-if="startFromRecord && fromRecord" class="from-record">{{ t('wizard.startFromRecord', { term: termLabel(t, fromRecord) }) }}</p>
+      <p v-if="!startOk" class="from-record">{{ t('wizard.entryOnlyS1') }}</p>
       <div class="options options-grid">
         <template v-for="y in years" :key="y">
           <button
-            v-for="p in periods"
+            v-for="p in periods.filter((q) => showPeriod(y, q))"
             :key="`${y}-${p}`"
             type="button"
             class="option option-small"

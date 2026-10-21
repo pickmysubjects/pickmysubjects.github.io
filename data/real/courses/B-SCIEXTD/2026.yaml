@@ -10,6 +10,10 @@ categories: [science, breadth]
 based_on: B-SCI
 # Only for Aboriginal and Torres Strait Islander students; domestic students only.
 entry_note: sciextd
+# Semester 1 intake only: the Handbook's first year has Semester 1-only foundation subjects
+# (MAST10014, SCIE10010, SCIE10006/08/09) followed by Semester 2-only ones (MAST10015, SCIE10007),
+# "normally completed full time", so a mid-year start can't meet it.
+entry_periods: [semester-1]
 handbook: https://handbook.unimelb.edu.au/2026/courses/b-sciextd/course-structure
 verified_on: 2026-10-21 # rules checked by hand against the Handbook course structure
 rules:

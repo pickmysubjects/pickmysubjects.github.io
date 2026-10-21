@@ -207,6 +207,7 @@ export const vi: Messages = {
     swapped: 'Đã đổi {from} thành {to} ở {term} để: {rule}.',
     repairStopped: 'Đã dừng điều chỉnh môn tự chọn sau nhiều lần đổi; hãy tự kiểm tra lại kế hoạch.',
     firstYearLate: 'Bắt đầu từ kỳ này thì {codes} không xếp được vào năm nhất (các môn trước chỉ mở một kỳ mỗi năm), nên được xếp sớm nhất có thể.',
+    entryMoved: "Ngành này chỉ nhận sinh viên mới vào một số kỳ, nên kế hoạch bắt đầu từ {period} {year}.",
     markUnmet: '{code} cần điểm mà bảng điểm của bạn chưa đạt. Hãy hỏi người điều phối trước khi đăng ký.',
   },
   expr: {
@@ -1232,6 +1233,7 @@ export const vi: Messages = {
     qCourse: 'Bạn học chương trình nào?',
     qStart: 'Bạn bắt đầu (hoặc sẽ bắt đầu) khi nào?',
     startFromRecord: "Đã chọn theo Hồ sơ của tôi: môn sớm nhất của bạn ở {term}. Sai thì đổi lại nhé.",
+    entryOnlyS1: "Ngành này chỉ nhập học vào Học kỳ 1.",
     qMajor: 'Bạn nhắm chuyên ngành nào?',
     notSure: 'Chưa chắc',
     next: 'Tiếp',

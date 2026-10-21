@@ -120,3 +120,19 @@ export function termLabel(term: Pick<PlanTerm, 'year' | 'period'>): string {
   }
   return `${term.year} ${names[term.period]}`
 }
+
+/** Whether a new student can start the course in this period (every period, unless the course says). */
+export function canEnterIn(course: { entryPeriods?: readonly Period[] } | undefined, period: Period): boolean {
+  return !course?.entryPeriods || course.entryPeriods.includes(period)
+}
+
+/** The first term from `start` on that a new student can begin the course in. */
+export function nextEntry(course: { entryPeriods?: readonly Period[] } | undefined, start: { year: number; period: Period }): { year: number; period: Period } {
+  const periods = Object.keys(ORDER) as Period[]
+  let t = start
+  for (let i = 0; i < 4 && !canEnterIn(course, t.period); i++) {
+    const next = (ORDER[t.period] + 1) % 4
+    t = { year: next === 0 ? t.year + 1 : t.year, period: periods.find((p) => ORDER[p] === next) as Period }
+  }
+  return t
+}

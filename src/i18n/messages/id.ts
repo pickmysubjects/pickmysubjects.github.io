@@ -207,6 +207,7 @@ export const id: Messages = {
     swapped: 'Menukar {from} dengan {to} di {term} untuk memenuhi: {rule}.',
     repairStopped: 'Penyesuaian mata kuliah pilihan dihentikan setelah terlalu banyak penukaran; periksa rencana secara manual.',
     firstYearLate: 'Dengan mulai di semester ini, {codes} tidak muat di tahun pertama (mata kuliah sebelumnya hanya dibuka satu semester), jadi direncanakan sedini mungkin.',
+    entryMoved: "Gelar ini hanya menerima mahasiswa baru di semester tertentu, jadi rencana dimulai {period} {year}.",
     markUnmet: '{code} butuh nilai yang belum tercapai di transkripmu. Tanyakan ke koordinator sebelum mendaftar.',
   },
   expr: {
@@ -1232,6 +1233,7 @@ export const id: Messages = {
     qCourse: 'Kamu di program apa?',
     qStart: 'Kapan kamu mulai (atau akan mulai)?',
     startFromRecord: "Dipilih dari Catatan saya: mata kuliah paling awalmu di {term}. Ubah kalau salah.",
+    entryOnlyS1: "Gelar ini hanya menerima mahasiswa baru di Semester 1.",
     qMajor: 'Jurusan apa yang kamu tuju?',
     notSure: 'Belum yakin',
     next: 'Lanjut',

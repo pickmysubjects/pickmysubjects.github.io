@@ -207,6 +207,7 @@ export const ja: Messages = {
     swapped: '{term} で {from} を {to} に入れ替えました（目的：{rule}）。',
     repairStopped: '選択科目の入れ替えが多すぎたため調整を止めました。プランを手動で確認してください。',
     firstYearLate: 'この入学時期だと {codes} は1年目に入りません（前に取る科目が年1学期しか開講されないため）。できるだけ早い学期に入れました。',
+    entryMoved: "この学位は一部の学期しか新入生を受け入れないため、{year}年{period}から始めました。",
     markUnmet: '{code} に必要な成績にまだ届いていません。履修登録の前にコーディネーターに相談してください。',
   },
   expr: {
@@ -1232,6 +1233,7 @@ export const ja: Messages = {
     qCourse: 'どの学位に在籍していますか？',
     qStart: 'いつ入学しましたか（する予定ですか）？',
     startFromRecord: "マイ記録から選びました：いちばん早い科目は {term} です。違っていれば変えてください。",
+    entryOnlyS1: "この学位はセメスター1入学のみです。",
     qMajor: 'どのメジャーを目指しますか？',
     notSure: 'まだ決めていない',
     next: '次へ',

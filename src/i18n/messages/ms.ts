@@ -207,6 +207,7 @@ export const ms: Messages = {
     swapped: 'Menukar {from} kepada {to} pada {term} untuk memenuhi: {rule}.',
     repairStopped: 'Pelarasan subjek elektif dihentikan selepas terlalu banyak pertukaran; semak rancangan secara manual.',
     firstYearLate: 'Jika bermula semester ini, {codes} tidak muat dalam tahun pertama (subjek sebelumnya hanya ditawarkan satu semester), jadi dirancang seawal mungkin.',
+    entryMoved: "Ijazah ini hanya menerima pelajar baharu pada semester tertentu, jadi rancangan bermula {period} {year}.",
     markUnmet: '{code} memerlukan markah yang belum dicapai dalam rekod anda. Tanya penyelaras sebelum mendaftar.',
   },
   expr: {
@@ -1232,6 +1233,7 @@ export const ms: Messages = {
     qCourse: 'Anda dalam ijazah apa?',
     qStart: 'Bila anda mula (atau akan mula)?',
     startFromRecord: "Dipilih daripada Rekod saya: subjek terawal anda dalam {term}. Tukar jika salah.",
+    entryOnlyS1: "Ijazah ini hanya menerima kemasukan pada Semester 1.",
     qMajor: 'Major apa yang anda sasarkan?',
     notSure: 'Belum pasti',
     next: 'Seterusnya',

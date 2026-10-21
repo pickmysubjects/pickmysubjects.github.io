@@ -33,12 +33,24 @@ describe('a mid-year start places every required subject', () => {
   }
 
   it('a first-year subject the timetable can’t fit in the first year comes as early as it can, with a note', () => {
-    // B-SCIEXTD: MAST10015 (Semester 2 only) follows MAST10014 (Semester 1 only).
-    const { plan: p, unplaced, notes } = plan('B-SCIEXTD', undefined, 'semester-2')
+    // B-SCIEXTD: MAST10015 (Semester 2 only) follows MAST10014 (Semester 1 only). A student
+    // already enrolled (a dated subject on the record) is planned from mid-year as asked.
+    const started: Profile = { ...profile, results: [{ code: 'UNIB10001', mark: 70, year: 2027, period: 'semester-1' }] }
+    const { plan: p, unplaced, notes } = plan('B-SCIEXTD', undefined, 'semester-2', started)
+    expect(p.terms[0]).toMatchObject({ year: 2027, period: 'semester-2' })
     expect(unplaced).toEqual([])
     const at = (c: string) => p.terms.findIndex((t) => t.subjects.includes(c))
     expect(at('MAST10015')).toBe(at('MAST10014') + 1)
     expect(notes.some((n) => n.key === 'firstYearLate' && String(n.params.codes).includes('MAST10015'))).toBe(true)
+  }, 60_000)
+
+  it('a new student can’t start a Semester 1-only course mid-year: the plan starts the next Semester 1, with a note', () => {
+    const { plan: p, notes } = plan('B-SCIEXTD', undefined, 'semester-2')
+    expect(p.terms[0]).toMatchObject({ year: 2028, period: 'semester-1' })
+    expect(notes[0]).toMatchObject({ key: 'entryMoved', params: { year: 2028, period: 'semester-1' } })
+    // Other courses take either intake.
+    expect(plan('B-SCI', 'chemistry', 'semester-2').plan.terms[0]).toMatchObject({ year: 2027, period: 'semester-2' })
+    expect(plan('B-SCIEXTD', undefined, 'semester-1').notes.some((n) => n.key === 'entryMoved')).toBe(false)
   }, 60_000)
 
   it('a prerequisite that may be taken at the same time goes in the same semester', () => {

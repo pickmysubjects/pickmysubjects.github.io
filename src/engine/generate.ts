@@ -3,7 +3,7 @@ import { offeredIn, periodsFor, termKey } from './availability'
 import { capExempt, categoryOf, disciplineOf, checkCourse, componentNeeds, diplomaStream, findComponent, findCourse, findDiploma, inDiploma, heldMajorIds, majorTitles, minorTitles, planComponentIds, sharesAllowed, withBarredBreadth } from './courseRules'
 import { evaluateField, referencedSubjects, type EvalContext, type Tri } from './expr'
 import type { Note, Params, Plan, PlanTerm } from './plan'
-import { standardTerms } from './plan'
+import { nextEntry, standardTerms } from './plan'
 import { HEAVY_PICK_COST, computeWam, marksForConditions, passedCodes, recommend, type Profile } from './recommend'
 import { checkTerms } from './planCheck'
 import { balanceTerms, fixHeavyTerms } from './relieve'
@@ -64,7 +64,19 @@ export interface GenerateResult {
  * that each run in one semester only), tries again with up to two extra
  * semesters, as a student would take longer rather than drop the major.
  */
-export function generatePlan(raw: GenerateInput): GenerateResult {
+export function generatePlan(given: GenerateInput): GenerateResult {
+  // A new student (nothing dated on the record) starts in a period the course takes new students
+  // in; a student who has already started is planned on from where they are.
+  const course = findCourse(given.data, given.course, given.courseYear)
+  const started = given.profile.results.some((r) => r.year && r.period)
+  const entry = started ? { year: given.startYear, period: given.startPeriod } : nextEntry(course, { year: given.startYear, period: given.startPeriod })
+  const moved = entry.year !== given.startYear || entry.period !== given.startPeriod
+  const result = generateFrom({ ...given, startYear: entry.year, startPeriod: entry.period })
+  if (moved) result.notes.unshift(note('entryMoved', { year: entry.year, period: entry.period }, `This degree takes new students only in some semesters, so the plan starts in ${entry.period} ${entry.year}.`))
+  return result
+}
+
+function generateFrom(raw: GenerateInput): GenerateResult {
   // Periods as this course's students see them (breadth-only periods for breadth subjects).
   // A subject the student's major won't let count as breadth is never picked to fill breadth.
   const input = { ...raw, data: withBarredBreadth(forCourse(raw.data, raw.course), raw.course, planComponentIds(raw)) }

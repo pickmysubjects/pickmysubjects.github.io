@@ -210,6 +210,7 @@ export const en = {
     swapped: 'Swapped {from} for {to} in {term} to meet: {rule}.',
     repairStopped: 'Stopped rebalancing electives after many swaps; review the plan manually.',
     firstYearLate: '{codes} can’t fit in your first year from this start (the subjects before them run in one semester only), so they’re planned as early as they can be.',
+    entryMoved: "This degree only takes new students in some semesters, so the plan starts in {period} {year}.",
     markUnmet: '{code} needs a mark your record doesn’t reach yet. Talk to the coordinator before enrolling.',
   },
   expr: {
@@ -1235,6 +1236,7 @@ export const en = {
     qCourse: 'Which degree are you in?',
     qStart: 'When did (or will) you start?',
     startFromRecord: "Chosen from My record: your earliest subject is in {term}. Change it if that's wrong.",
+    entryOnlyS1: "This degree only takes new students in Semester 1.",
     qMajor: 'Which major are you aiming for?',
     notSure: 'Not sure yet',
     next: 'Next',

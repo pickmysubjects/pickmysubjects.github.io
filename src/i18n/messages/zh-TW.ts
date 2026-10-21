@@ -207,6 +207,7 @@ export const zhTW: Messages = {
     swapped: '在 {term} 把 {from} 換成了 {to}，用來符合：{rule}。',
     repairStopped: '調整選修課次數過多，已停止自動調整；請手動檢查方案。',
     firstYearLate: '從這個學期入學，{codes} 排不進第一年（前面的課每年只開一個學期），所以盡量往前排了。',
+    entryMoved: "這個學位只在部分學期招新生，所以計劃從 {year} 年{period}開始。",
     markUnmet: '{code} 要求的成績你目前還沒達到，選課前先問問課程協調人。',
   },
   expr: {
@@ -1232,6 +1233,7 @@ export const zhTW: Messages = {
     qCourse: '你讀的是哪個學位？',
     qStart: '你什麼時候入學（或打算入學）？',
     startFromRecord: "依「我的記錄」選好了：你最早的一門課在 {term}。不對的話可以改。",
+    entryOnlyS1: "這個學位只能在第一學期入學。",
     qMajor: '你想讀哪個主修？',
     notSure: '還沒決定',
     next: '下一步',
