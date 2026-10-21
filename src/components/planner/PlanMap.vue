@@ -1,13 +1,23 @@
 <script setup lang="ts">
 import { computed, nextTick, onBeforeUnmount, onMounted, shallowRef, useTemplateRef, watch } from 'vue'
-import { carriedInto, referencedSubjects, SHORT_TERM_LOAD, termKey, type Issue, type Period, type PlanTerm, type Subject } from '@/engine'
+import { Plus } from 'lucide-vue-next'
+import { carriedInto, SHORT_TERM_LOAD, termKey, type Issue, type Period, type PlanTerm, type Subject } from '@/engine'
 import { termLabel } from '@/i18n/format'
-import { ChevronDown } from 'lucide-vue-next'
 import TermColumn from './TermColumn.vue'
 import PastTermColumn from './PastTermColumn.vue'
+import SlotPicker from './SlotPicker.vue'
+import type { CardTone, MoveTarget } from './SubjectCard.vue'
 import type { PastResult, PastTerm } from '@/utils/pastTerms'
+import { chainOf, dropVerdict, type DropVerdict, type Edge } from '@/utils/planBoard'
+import { useDataset } from '@/composables/useDataset'
+import { usePlan } from '@/composables/usePlan'
 import { useI18n } from '@/i18n'
 
+/**
+ * The plan, one row per year (summer, Semester 1, winter, Semester 2 side by side), so the whole
+ * degree fits on one screen. Selecting a subject lights up its prerequisite route and what it
+ * unlocks; a requirement from the side panel lights up the subjects counting toward it.
+ */
 const props = defineProps<{
   /** Semesters already done, from the student's record (read-only, before the plan). */
   past?: { terms: PastTerm[]; undated: PastResult[] }
@@ -16,12 +26,18 @@ const props = defineProps<{
   issues: Issue[]
   course: string
   load: number
-  options: { code: string; title: string }[]
   /** Subjects the degree or major requires, and picks from a major's lists. */
   roles: Record<string, 'required' | 'option'>
+  /** Every subject on the major's or specialisation's lists. */
+  optionSet: ReadonlySet<string>
+  edges: Edge[]
+  selected: string | null
+  /** Subjects counting toward the requirement picked in the side panel. */
+  ruleCodes: ReadonlySet<string> | null
 }>()
 const emit = defineEmits<{
   add: [termIndex: number, code: string]
+  replace: [termIndex: number, from: string, to: string]
   remove: [termIndex: number, code: string]
   move: [code: string, from: number, to: number]
   addTerm: []
@@ -29,50 +45,24 @@ const emit = defineEmits<{
   removeTerm: [index: number]
   removeLastTerm: []
   open: [code: string]
+  select: [code: string | null]
 }>()
 
 interface Route {
-  from: string
-  to: string
+  key: string
   d: string
 }
 
 const { t } = useI18n()
+const { data } = useDataset()
+const plan = usePlan()
 
-// Summer (Jan–Feb) and winter (Jun–Jul) terms the student could add, within the plan's span.
-// From the first semester on the board, recorded ones included (a summer taken back then can be
-// added and marked done), to the plan's last.
-const shortTerms = computed(() => {
-  const recorded = props.past?.terms ?? []
-  const first = [...recorded, ...props.terms].reduce<{ year: number; period: Period } | undefined>(
-    (a, b) => (a && termKey(a.year, a.period) <= termKey(b.year, b.period) ? a : b),
-    undefined,
-  )
-  const last = props.terms.at(-1)
-  if (!first || !last) return []
-  const from = termKey(first.year, first.period)
-  const to = termKey(last.year, last.period)
-  const slots: { year: number; period: Period }[] = []
-  for (let year = first.year; year <= last.year; year++) {
-    for (const period of ['summer', 'winter'] as const) {
-      const key = termKey(year, period)
-      const taken = [...props.terms, ...recorded].some((x) => x.year === year && x.period === period)
-      if (key > from && key < to && !taken) slots.push({ year, period })
-    }
-  }
-  return slots
-})
-
-// The summer/winter terms open as a short list of buttons under their own button, so the
-// three tools look and work alike (a native dropdown can't be styled to match).
-const shortOpen = shallowRef(false)
-function addShortTerm(year: number, period: Period): void {
-  emit('addTermAt', year, period)
-  shortOpen.value = false
-}
-const track = useTemplateRef<HTMLElement>('track')
+const board = useTemplateRef<HTMLElement>('board')
 const routes = shallowRef<Route[]>([])
 const hovered = shallowRef<string | null>(null)
+const moveFor = shallowRef<string | null>(null)
+const dragging = shallowRef<{ code: string; from: number } | null>(null)
+const picker = shallowRef<{ termIndex: number; replacing?: string } | null>(null)
 
 const issuesByCode = computed(() => {
   const map: Record<string, Issue[]> = {}
@@ -82,114 +72,179 @@ const issuesByCode = computed(() => {
 
 // A recorded semester that the plan also has shares its column: done subjects sit at the top.
 const sameTerm = (a: { year: number; period: string }, b: { year: number; period: string }) => a.year === b.year && a.period === b.period
-const pastOnly = computed(() => (props.past?.terms ?? []).filter((p) => !props.terms.some((t) => sameTerm(t, p))))
+const pastOnly = computed(() => (props.past?.terms ?? []).filter((p) => !props.terms.some((x) => sameTerm(x, p))))
 // Year-long results on the record in the other semester of the same year: half their points are studied here.
-const recordCarried = (t: { year: number; period: Period }): string[] => {
-  if (t.period !== 'semester-1' && t.period !== 'semester-2') return []
-  const other = t.period === 'semester-1' ? 'semester-2' : 'semester-1'
-  return (props.past?.terms.find((p) => p.year === t.year && p.period === other)?.results ?? []).filter((r) => props.subjects[r.code]?.yearLong).map((r) => r.code)
+const recordCarried = (x: { year: number; period: Period }): string[] => {
+  if (x.period !== 'semester-1' && x.period !== 'semester-2') return []
+  const other = x.period === 'semester-1' ? 'semester-2' : 'semester-1'
+  return (props.past?.terms.find((p) => p.year === x.year && p.period === other)?.results ?? []).filter((r) => props.subjects[r.code]?.yearLong).map((r) => r.code)
 }
-const doneIn = (t: PlanTerm) => props.past?.terms.find((p) => sameTerm(p, t))?.results ?? []
+const doneIn = (x: PlanTerm) => props.past?.terms.find((p) => sameTerm(p, x))?.results ?? []
+const isShort = (p: Period) => p === 'summer' || p === 'winter'
+const termLoadFor = (p: Period) => (isShort(p) ? Math.min(SHORT_TERM_LOAD, props.load) : props.load)
 
-/**
- * Prerequisite edges, earlier term → later term: between planned subjects, and from subjects
- * already passed (the record's columns sit before the plan; undated ones first of all).
- */
-const edges = computed(() => {
-  // Ordered by when, not by column: recorded and planned semesters interleave.
-  const termOf = new Map<string, number>()
-  for (const r of props.past?.undated ?? []) if (!r.failed) termOf.set(r.code, -Infinity)
-  for (const t of pastOnly.value) for (const r of t.results) if (!r.failed) termOf.set(r.code, termKey(t.year, t.period))
-  for (const t of props.terms) {
-    for (const r of doneIn(t)) if (!r.failed) termOf.set(r.code, termKey(t.year, t.period))
-    for (const c of t.subjects) termOf.set(c, termKey(t.year, t.period))
-  }
-  const out: { from: string; to: string }[] = []
-  for (const [code, i] of termOf) {
-    const s = props.subjects[code]
-    if (!s) continue
-    for (const pre of referencedSubjects(s.prerequisites)) {
-      const j = termOf.get(pre)
-      if (j !== undefined && j < i) out.push({ from: pre, to: code })
-    }
-  }
-  return out
+type Column = { kind: 'past'; key: number; p: PastTerm } | { kind: 'plan'; key: number; term: PlanTerm; i: number }
+
+// Summer (Jan–Feb) and winter (Jun–Jul) terms the student could add: between the board's first
+// semester (recorded ones included) and the plan's last.
+const span = computed(() => {
+  const all = [...(props.past?.terms ?? []), ...props.terms]
+  if (!all.length || !props.terms.length) return null
+  const keys = all.map((x) => termKey(x.year, x.period))
+  const last = props.terms.at(-1) as PlanTerm
+  return { from: Math.min(...keys), to: termKey(last.year, last.period) }
+})
+function shortSlots(year: number): { year: number; period: Period }[] {
+  const s = span.value
+  if (!s) return []
+  return (['summer', 'winter'] as const)
+    .filter((period) => {
+      const key = termKey(year, period)
+      return key > s.from && key < s.to && ![...props.terms, ...(props.past?.terms ?? [])].some((x) => x.year === year && x.period === period)
+    })
+    .map((period) => ({ year, period }))
+}
+
+// Every column in time order: recorded-only semesters and planned ones (which may hold done subjects).
+const columns = computed<Column[]>(() =>
+  [
+    ...pastOnly.value.map((p) => ({ kind: 'past' as const, key: termKey(p.year, p.period), p })),
+    ...props.terms.map((term, i) => ({ kind: 'plan' as const, key: termKey(term.year, term.period), term, i })),
+  ].sort((a, b) => a.key - b.key),
+)
+// Summer and winter terms that can be added, each one tap.
+const shortTerms = computed(() => {
+  const years = [...new Set([...(props.past?.terms ?? []), ...props.terms].map((x) => x.year))].sort()
+  return years.flatMap((y) => shortSlots(y))
 })
 
-/** Subjects linked to the hovered one: itself, what it needs, and what needs it. */
-const related = computed(() => {
-  if (!hovered.value) return null
-  const set = new Set([hovered.value])
-  for (const e of edges.value) {
-    if (e.to === hovered.value) set.add(e.from)
-    if (e.from === hovered.value) set.add(e.to)
-  }
-  return set
+/** How each subject relates to what's in focus: the selected (or hovered) subject's route, or a rule's subjects. */
+const focus = computed(() => props.selected ?? (props.ruleCodes ? null : hovered.value))
+const tones = computed<Map<string, CardTone> | null>(() => {
+  if (props.ruleCodes) return new Map([...props.ruleCodes].map((c) => [c, 'rule' as const]))
+  const code = focus.value
+  if (!code) return null
+  const { needs, unlocks } = chainOf(code, props.edges)
+  // A hover only previews a route there is: a subject with no links leaves the board as it is.
+  if (!props.selected && needs.size + unlocks.size === 0) return null
+  const out = new Map<string, CardTone>([[code, 'self']])
+  for (const c of needs) out.set(c, 'need')
+  for (const c of unlocks) out.set(c, 'unlock')
+  return out
+})
+const toneSet = computed(() => (tones.value ? new Set(tones.value.keys()) : null))
+// Only the focused route's links are drawn: a quiet board until something is picked.
+const shownEdges = computed(() => {
+  const set = tones.value
+  if (!set || props.ruleCodes) return []
+  return props.edges.filter((e) => set.has(e.from) && set.has(e.to))
 })
 
 function measure(): void {
-  const el = track.value
+  const el = board.value
   if (!el) return
   const base = el.getBoundingClientRect()
   const box = (code: string) =>
     (el.querySelector<HTMLElement>(`[data-code="${code}"]`) ?? el.querySelector<HTMLElement>(`[data-past-code="${code}"]`))?.getBoundingClientRect()
   const next: Route[] = []
-  for (const e of edges.value) {
+  for (const e of shownEdges.value) {
     const a = box(e.from)
     const b = box(e.to)
     if (!a || !b) continue
-    const x1 = a.right - base.left
-    const y1 = a.top + a.height / 2 - base.top
-    const x2 = b.left - base.left
-    const y2 = b.top + b.height / 2 - base.top
-    const bend = Math.max(24, (x2 - x1) / 2)
-    next.push({ ...e, d: `M ${x1} ${y1} C ${x1 + bend} ${y1}, ${x2 - bend} ${y2}, ${x2} ${y2}` })
+    let d: string
+    if (b.left >= a.right - 4) {
+      // A later column: right edge to left edge.
+      const x1 = a.right - base.left
+      const y1 = a.top + a.height / 2 - base.top
+      const x2 = b.left - base.left
+      const y2 = b.top + b.height / 2 - base.top
+      const bend = Math.max(20, (x2 - x1) / 2)
+      d = `M ${x1} ${y1} C ${x1 + bend} ${y1}, ${x2 - bend} ${y2}, ${x2} ${y2}`
+    } else {
+      // Stacked (phones): bottom of the earlier card to the top of the later one.
+      const x1 = a.left + a.width / 2 - base.left
+      const y1 = a.bottom - base.top
+      const x2 = b.left + b.width / 2 - base.left
+      const y2 = b.top - base.top
+      const bend = Math.max(20, (y2 - y1) / 2)
+      d = `M ${x1} ${y1} C ${x1} ${y1 + bend}, ${x2} ${y2 - bend}, ${x2} ${y2}`
+    }
+    next.push({ key: `${e.from}-${e.to}`, d })
   }
   routes.value = next
 }
 
-watch(() => [props.terms, props.subjects, props.past], () => nextTick(measure), { deep: true, flush: 'post' })
+watch([shownEdges, () => props.terms], () => nextTick(measure), { flush: 'post' })
+
+// While dragging: where the card may go (green) and where it can't, with the reason.
+const verdicts = computed<DropVerdict[] | null>(() => {
+  const d = dragging.value
+  if (!d) return null
+  return props.terms.map((_, i) => dropVerdict(plan.plan.value, data.value, d.code, d.from, i, props.load))
+})
+const moveTargets = computed<MoveTarget[]>(() => {
+  const code = moveFor.value
+  if (!code) return []
+  const from = props.terms.findIndex((x) => x.subjects.includes(code))
+  return props.terms.map((term, i) => ({ index: i, label: termLabel(t.value, term), verdict: dropVerdict(plan.plan.value, data.value, code, from, i, props.load) }))
+})
+
+function onMoveTo(code: string, from: number, to: number): void {
+  moveFor.value = null
+  emit('move', code, from, to)
+}
+function onDrop(code: string, from: number, to: number): void {
+  dragging.value = null
+  emit('move', code, from, to)
+}
+function onSelect(code: string): void {
+  moveFor.value = null
+  emit('select', props.selected === code ? null : code)
+}
+function onPick(code: string): void {
+  const p = picker.value
+  if (!p) return
+  if (p.replacing) emit('replace', p.termIndex, p.replacing, code)
+  else emit('add', p.termIndex, code)
+}
+
+// Esc clears the selection and closes the move list; a tap outside the list closes it.
+function onKey(event: KeyboardEvent): void {
+  if (event.key !== 'Escape' || picker.value) return
+  if (moveFor.value) moveFor.value = null
+  else if (props.selected) emit('select', null)
+}
+function onPointer(event: PointerEvent): void {
+  if (moveFor.value && !(event.target as Element).closest('.sheet, .act')) moveFor.value = null
+}
 
 let observer: ResizeObserver | null = null
 onMounted(() => {
   measure()
   observer = new ResizeObserver(() => measure())
-  if (track.value) observer.observe(track.value)
+  if (board.value) observer.observe(board.value)
+  document.addEventListener('keydown', onKey)
+  document.addEventListener('pointerdown', onPointer)
 })
-onBeforeUnmount(() => observer?.disconnect())
-
-function routeClass(r: Route): string {
-  if (!hovered.value) return 'route'
-  return r.from === hovered.value || r.to === hovered.value ? 'route route-on' : 'route route-off'
-}
-
-function onMoveBy(code: string, from: number, delta: number): void {
-  const to = from + delta
-  if (to >= 0 && to < props.terms.length) emit('move', code, from, to)
-}
-// Wide enough for every term at its narrowest (and the add-term tools); wider screens stretch the
-// columns instead. Sized from the term count, not the content, so a long title can't widen them all.
-const MIN_TERM = 185
-const GAP = 20
-// The add-term buttons (about 158px) plus the track's own padding.
-const TOOLS = 170
-// Every column in time order: recorded-only semesters and planned ones (which may hold done subjects).
-const columns = computed(() =>
-  [
-    ...pastOnly.value.map((p) => ({ kind: 'past' as const, key: termKey(p.year, p.period), p, i: -1 })),
-    ...props.terms.map((term, i) => ({ kind: 'plan' as const, key: termKey(term.year, term.period), term, i })),
-  ].sort((a, b) => a.key - b.key),
-)
-const pastCount = computed(() => pastOnly.value.length + (props.past?.undated.length ? 1 : 0))
-const trackWidth = computed(() => `max(100%, ${(props.terms.length + pastCount.value) * (MIN_TERM + GAP) + TOOLS}px)`)
+onBeforeUnmount(() => {
+  observer?.disconnect()
+  document.removeEventListener('keydown', onKey)
+  document.removeEventListener('pointerdown', onPointer)
+})
 </script>
 
 <template>
-  <div class="map">
-    <div ref="track" class="track" :style="{ width: trackWidth }">
-      <svg class="routes" aria-hidden="true">
-        <path v-for="r in routes" :key="`${r.from}-${r.to}`" :class="routeClass(r)" :d="r.d" />
-      </svg>
+  <div ref="board" class="board" :class="{ 'board-dragging': dragging }">
+    <svg class="routes" aria-hidden="true">
+      <defs>
+        <marker id="route-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0 0 L8 4 L0 8 z" class="route-head" />
+        </marker>
+      </defs>
+      <path v-for="r in routes" :key="r.key" class="route" :d="r.d" marker-end="url(#route-arrow)" />
+    </svg>
+
+    <div class="track" @scroll.passive="measure">
       <PastTermColumn
         v-if="past?.undated.length"
         :term="null"
@@ -197,90 +252,88 @@ const trackWidth = computed(() => `max(100%, ${(props.terms.length + pastCount.v
         :subjects="subjects"
         :planned="terms"
         :load="load"
-        :related="related"
-        @open="emit('open', $event)"
+        :related="toneSet"
+        @open="onSelect"
         @hover="hovered = $event"
       />
       <template v-for="col in columns" :key="col.key">
         <PastTermColumn
           v-if="col.kind === 'past'"
-          :key="`past-${col.key}`"
           :term="col.p"
           :results="col.p.results"
           :carried="recordCarried(col.p)"
           :subjects="subjects"
           :planned="terms"
-          :load="col.p.period === 'summer' || col.p.period === 'winter' ? Math.min(SHORT_TERM_LOAD, load) : load"
-          :related="related"
-          @open="emit('open', $event)"
+          :load="termLoadFor(col.p.period)"
+          :related="toneSet"
+          @open="onSelect"
           @hover="hovered = $event"
         />
         <TermColumn
           v-else
-          :key="`${col.term.year}-${col.term.period}`"
           :term="col.term"
           :term-index="col.i"
           :carried="[...recordCarried(col.term), ...carriedInto(terms, col.i, { subjects })]"
           :done="doneIn(col.term)"
           :subjects="subjects"
           :issues-by-code="issuesByCode"
-          :term-issues="issues.filter((x) => x.termIndex === col.i && !x.subject)"
           :course="course"
-          :load="col.term.period === 'summer' || col.term.period === 'winter' ? Math.min(SHORT_TERM_LOAD, load) : load"
-          :options="options"
+          :load="termLoadFor(col.term.period)"
           :roles="roles"
-          :related="related"
-          @add="emit('add', col.i, $event)"
-          @remove="emit('remove', col.i, $event)"
-          @drop="(code, from) => emit('move', code, from, col.i)"
-          @move-by="(code, delta) => onMoveBy(code, col.i, delta)"
-          @hover="hovered = $event"
-          @remove-term="emit('removeTerm', col.i)"
+          :tones="tones"
+          :drop-verdict="verdicts ? (verdicts[col.i] ?? null) : null"
+          :move-for="moveFor"
+          :selected="selected"
+          :move-targets="moveTargets"
+          @add="picker = { termIndex: col.i }"
+          @swap="(code) => (picker = { termIndex: col.i, replacing: code })"
+          @remove="(code) => emit('remove', col.i, code)"
+          @drop="(code, from) => onDrop(code, from, col.i)"
+          @move-sheet="moveFor = $event"
+          @move-to="(code, to) => onMoveTo(code, col.i, to)"
+          @select="onSelect"
           @open="emit('open', $event)"
+          @hover="hovered = $event"
+          @drag-start="(code) => (dragging = { code, from: col.i })"
+          @drag-end="dragging = null"
+          @remove-term="emit('removeTerm', col.i)"
         />
       </template>
-      <div class="term-tools">
-        <button class="button button-quiet" type="button" @click="emit('addTerm')">{{ t('plan.addTerm') }}</button>
-        <template v-if="shortTerms.length">
-          <button class="button button-quiet" type="button" :aria-expanded="shortOpen" @click="shortOpen = !shortOpen">
-            {{ t('plan.addShortTerm') }}
-            <ChevronDown :size="14" aria-hidden="true" class="short-chevron" :class="{ open: shortOpen }" />
-          </button>
-          <div v-if="shortOpen" class="short-list">
-            <button
-              v-for="s in shortTerms"
-              :key="`${s.year}|${s.period}`"
-              class="button button-quiet short-item"
-              type="button"
-              @click="addShortTerm(s.year, s.period)"
-            >
-              {{ termLabel(t, s) }}
-            </button>
-          </div>
-        </template>
-        <button v-if="terms.length > 0 && terms.at(-1)?.subjects.length === 0" class="button button-quiet" type="button" @click="emit('removeLastTerm')">{{ t('plan.removeTerm') }}</button>
+      <div class="board-tools">
+        <button class="tool" type="button" @click="emit('addTerm')"><Plus :size="14" aria-hidden="true" /> {{ t('plan.addTerm') }}</button>
+        <!-- Summer and winter terms: one tap each, no menu. -->
+        <button v-for="s in shortTerms" :key="`${s.year}|${s.period}`" class="tool tool-short" type="button" @click="emit('addTermAt', s.year, s.period)">
+          <Plus :size="14" aria-hidden="true" /> {{ termLabel(t, s) }}
+        </button>
+        <button v-if="terms.length > 0 && terms.at(-1)?.subjects.length === 0" class="tool" type="button" @click="emit('removeLastTerm')">{{ t('plan.removeTerm') }}</button>
       </div>
     </div>
+
+    <SlotPicker
+      v-if="picker"
+      :key="`${picker.termIndex}-${picker.replacing ?? ''}`"
+      :term-index="picker.termIndex"
+      :replacing="picker.replacing"
+      :role="picker.replacing ? roles[picker.replacing] : undefined"
+      :option-set="optionSet"
+      @pick="onPick"
+      @close="picker = null"
+    />
   </div>
 </template>
 
 <style scoped>
-.map {
-  overflow-x: auto;
-  margin: 0 -6px;
-  padding: 0 6px;
-}
-
-.track {
+.board {
   position: relative;
-  display: flex;
-  gap: 20px;
-  padding: 6px 6px 14px;
+  display: grid;
+  gap: 18px;
+  min-width: 0;
 }
 
 .routes {
   position: absolute;
   inset: 0;
+  z-index: 0;
   width: 100%;
   height: 100%;
   pointer-events: none;
@@ -290,99 +343,82 @@ const trackWidth = computed(() => `max(100%, ${(props.terms.length + pastCount.v
 .route {
   fill: none;
   stroke: var(--overprint);
-  stroke-width: 1.6;
-  opacity: 0.55;
-  transition: opacity 0.15s, stroke-width 0.15s;
+  stroke-width: 2.2;
+  stroke-dasharray: 6 4;
 }
 
-.route-on {
-  opacity: 1;
-  stroke-width: 2.4;
+.route-head {
+  fill: var(--overprint);
 }
 
-.route-off {
-  opacity: 0.12;
+.track {
+  display: flex;
+  gap: 10px;
+  min-width: 0;
+  overflow-x: auto;
+  padding-bottom: 6px;
 }
 
-.term-tools {
+.board-tools {
   display: flex;
   flex: none;
   flex-direction: column;
-  gap: 8px;
-  /* Fixed to the width the track reserves for it (TOOLS), so a long label wraps instead of being cut. */
-  width: 150px;
-  padding-top: 38px;
-}
-
-.short-chevron {
-  transition: transform 0.15s;
-}
-
-.short-chevron.open {
-  transform: rotate(180deg);
-}
-
-.short-list {
-  display: grid;
   gap: 6px;
-  padding-left: 12px;
-  border-left: 2px solid var(--glass-edge);
+  width: 130px;
+  padding-top: 4px;
 }
 
-.term-tools .short-item {
-  min-height: 34px;
-  font-weight: 500;
+.tool {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 30px;
+  padding: 4px 10px;
+  border: 1px dashed var(--line);
+  border-radius: 999px;
+  background: none;
+  color: var(--ink-soft);
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
 }
 
-.term-tools .button {
-  padding: 6px 14px;
-  font-size: 0.8125rem;
-  line-height: 1.3;
-  text-align: center;
-  white-space: normal;
+.tool:hover,
+.tool:focus-visible {
+  border-color: var(--accent);
+  color: var(--accent);
 }
-/* Phones: terms stack top to bottom, so no column is cut off at the screen edge. The route lines
-   only make sense side by side, so they are dropped here (each card still names its prerequisites). */
-@media (max-width: 720px) {
-  .map {
-    overflow: visible;
-  }
 
+.tool-short:hover {
+  border-color: var(--warn);
+  color: var(--warn);
+}
+
+/* Phones: terms stack top to bottom, no sideways swiping. */
+@media (max-width: 640px) {
   .track {
     flex-direction: column;
-    gap: 14px;
-    width: auto !important;
+    overflow: visible;
   }
 
-  .track > :deep(.term),
-  .track > :deep(.past) {
-    max-width: none;
-  }
-
-  .routes {
-    display: none;
-  }
-
-  .term-tools {
+  .board-tools {
     flex-direction: row;
     flex-wrap: wrap;
-    padding-top: 0;
     width: auto;
   }
 }
-/* On paper the terms wrap into rows instead of scrolling sideways (the route lines are dropped). */
+
+/* On paper: no route lines. */
 @media print {
-  .map {
-    overflow: visible;
+  .routes {
+    display: none;
   }
 
   .track {
     flex-wrap: wrap;
-    width: auto;
-  }
-
-  .routes {
-    display: none;
+    overflow: visible;
   }
 }
 </style>

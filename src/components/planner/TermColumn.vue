@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { computed, shallowRef } from 'vue'
-import { X } from 'lucide-vue-next'
+import { Plus, X } from 'lucide-vue-next'
 import { periodsFor, termShare, type Issue, type PlanTerm, type Subject } from '@/engine'
 import { termLabel } from '@/i18n/format'
 import { useI18n } from '@/i18n'
-import SubjectCard from './SubjectCard.vue'
+import SubjectCard, { type CardTone, type MoveTarget } from './SubjectCard.vue'
 import DoneCard from './DoneCard.vue'
 import type { PastResult } from '@/utils/pastTerms'
-import SubjectPicker from './SubjectPicker.vue'
+import type { DropVerdict } from '@/utils/planBoard'
 import TermStressNote from './TermStressNote.vue'
 
 const props = defineProps<{
@@ -17,23 +17,33 @@ const props = defineProps<{
   termIndex: number
   subjects: Record<string, Subject>
   issuesByCode: Record<string, Issue[]>
-  termIssues: Issue[]
   course: string
   load: number
-  options: { code: string; title: string }[]
   roles: Record<string, 'required' | 'option'>
-  related: Set<string> | null
+  /** How each subject relates to what's selected (a subject's timeline, or a rule); null: nothing selected. */
+  tones: Map<string, CardTone> | null
   /** Year-long subjects whose other half is in this term: begun in Semester 1, or on the record in the other semester. */
   carried?: string[]
+  /** While a card is being dragged: whether it may land here, and why not. */
+  dropVerdict: DropVerdict | null
+  /** The card whose move list is open, and the terms it lists. */
+  moveFor: string | null
+  selected: string | null
+  moveTargets: MoveTarget[]
 }>()
 const emit = defineEmits<{
-  add: [code: string]
+  add: []
   remove: [code: string]
   drop: [code: string, from: number]
-  moveBy: [code: string, delta: number]
   hover: [code: string | null]
-  removeTerm: []
+  select: [code: string]
   open: [code: string]
+  swap: [code: string]
+  moveSheet: [code: string | null]
+  moveTo: [code: string, to: number]
+  dragStart: [code: string]
+  dragEnd: []
+  removeTerm: []
 }>()
 
 const { t } = useI18n()
@@ -44,6 +54,15 @@ const donePoints = computed(() => (props.done ?? []).reduce((sum, r) => sum + te
 const points = computed(() => donePoints.value + [...props.term.subjects, ...(props.carried ?? [])].reduce((sum, c) => sum + termShare(props.subjects[c]), 0))
 const overloaded = computed(() => points.value > props.load)
 const fill = computed(() => `${Math.min(100, (points.value / props.load) * 100)}%`)
+const free = computed(() => Math.max(0, props.load - points.value))
+const short = computed(() => props.term.period === 'summer' || props.term.period === 'winter')
+const empty = computed(() => props.term.subjects.length === 0 && !props.done?.length && !props.carried?.length)
+const dropClass = computed(() => {
+  const v = props.dropVerdict
+  if (!v || (!v.ok && v.reason === 'same')) return null
+  return v.ok ? (dragOver.value ? 'drop-ok drop-over' : 'drop-ok') : 'drop-no'
+})
+const dropReason = computed(() => (props.dropVerdict && !props.dropVerdict.ok && props.dropVerdict.reason !== 'same' ? t.value(`plan.why.${props.dropVerdict.reason}`) : null))
 
 /** "S1 only" / "S2 only" for subjects that run in a single semester. */
 function onlyIn(code: string): string | null {
@@ -55,8 +74,16 @@ function onlyIn(code: string): string | null {
   return t.value(sems[0] === 'semester-1' ? 'plan.s1Only' : 'plan.s2Only')
 }
 
+function onDragOver(event: DragEvent): void {
+  // Only where it's allowed: no drop target for a subject that can't run or isn't ready here.
+  if (props.dropVerdict && !props.dropVerdict.ok) return
+  event.preventDefault()
+  dragOver.value = true
+}
+
 function onDrop(event: DragEvent): void {
   dragOver.value = false
+  if (props.dropVerdict && !props.dropVerdict.ok) return
   try {
     const { code, from } = JSON.parse(event.dataTransfer?.getData('text/plain') ?? '') as { code: string; from: number }
     emit('drop', code, from)
@@ -64,21 +91,24 @@ function onDrop(event: DragEvent): void {
     // Not one of our cards.
   }
 }
+const tone = (code: string): CardTone | null => props.tones?.get(code) ?? null
 </script>
 
 <template>
   <section
     class="term"
-    :class="{ 'term-over': dragOver }"
+    :class="[dropClass, { 'term-short': short }]"
     :aria-label="termLabel(t, term)"
-    @dragover.prevent="dragOver = true"
+    :data-term="termIndex"
+    @dragover="onDragOver"
     @dragleave="dragOver = false"
     @drop.prevent="onDrop"
   >
     <header class="term-head">
       <h3 class="term-name">{{ termLabel(t, term) }}</h3>
+      <span class="term-points" :class="{ 'term-points-over': overloaded }">{{ points }} / {{ load }}</span>
       <button
-        v-if="term.subjects.length === 0 && (term.period === 'summer' || term.period === 'winter')"
+        v-if="term.subjects.length === 0 && short"
         class="term-remove"
         type="button"
         :aria-label="t('plan.removeThisTerm')"
@@ -87,55 +117,110 @@ function onDrop(event: DragEvent): void {
       >
         <X :size="14" aria-hidden="true" />
       </button>
-      <span class="term-points" :class="{ 'term-points-over': overloaded }">{{ points }} / {{ load }}</span>
       <span class="term-bar" aria-hidden="true"><span class="term-bar-fill" :style="{ width: fill }" /></span>
-      <TermStressNote :term-index="termIndex" />
     </header>
-    <!-- Already on My record for this semester: the same card, done. -->
-    <DoneCard
-      v-for="r in done ?? []"
-      :key="`done-${r.code}`"
-      :result="r"
-      :subject="subjects[r.code]"
-      :highlighted="related?.has(r.code) ?? false"
-      :dimmed="related !== null && !related.has(r.code)"
-      @open="emit('open', r.code)"
-      @hover="emit('hover', $event ? r.code : null)"
-    />
-    <SubjectCard
-      v-for="code in term.subjects"
-      :key="code"
-      :code="code"
-      :subject="subjects[code]"
-      :issues="issuesByCode[code] ?? []"
-      :course="course"
-      :only-in="onlyIn(code)"
-      :role="roles[code]"
-      :term-index="termIndex"
-      :highlighted="related?.has(code) ?? false"
-      :dimmed="related !== null && !related.has(code)"
-      @open="emit('open', code)"
-      @remove="emit('remove', code)"
-      @move-by="emit('moveBy', code, $event)"
-      @hover="emit('hover', $event ? code : null)"
-    />
-    <!-- Year-long subjects carried on from Semester 1: planned there, studied here too. -->
-    <button
-      v-for="code in carried ?? []"
-      :key="`carried-${code}`"
-      class="carried"
-      type="button"
-      @click="emit('open', code)"
-    >
-      <span class="carried-code">{{ code }}</span>
-      <span class="carried-note">{{ t(term.period === 'semester-2' ? 'plan.yearLongCont' : 'plan.yearLong') }}</span>
-    </button>
-    <p v-if="term.subjects.length === 0 && !done?.length && !carried?.length" class="term-empty">{{ t('plan.emptyTerm') }}</p>
-    <SubjectPicker :options="options" :term-index="termIndex" @pick="emit('add', $event)" />
+    <TermStressNote :term-index="termIndex" />
+    <p v-if="dropReason" class="drop-reason">{{ dropReason }}</p>
+    <div class="cards">
+      <!-- Already on My record for this semester: the same card, done. -->
+      <DoneCard
+        v-for="r in done ?? []"
+        :key="`done-${r.code}`"
+        :result="r"
+        :subject="subjects[r.code]"
+        :highlighted="tone(r.code) !== null"
+        :dimmed="tones !== null && tone(r.code) === null"
+        @open="emit('select', r.code)"
+        @hover="emit('hover', $event ? r.code : null)"
+      />
+      <SubjectCard
+        v-for="code in term.subjects"
+        :key="code"
+        :code="code"
+        :subject="subjects[code]"
+        :issues="issuesByCode[code] ?? []"
+        :course="course"
+        :only-in="onlyIn(code)"
+        :role="roles[code]"
+        :term-index="termIndex"
+        :tone="tone(code)"
+        :selected="selected === code"
+        :dimmed="tones !== null && tone(code) === null"
+        :move-open="moveFor === code"
+        :move-targets="moveFor === code ? moveTargets : []"
+        @select="emit('select', code)"
+        @open="emit('open', code)"
+        @hover="emit('hover', $event ? code : null)"
+        @swap="emit('swap', code)"
+        @move-sheet="emit('moveSheet', $event ? code : null)"
+        @move-to="emit('moveTo', code, $event)"
+        @remove="emit('remove', code)"
+        @drag-start="emit('dragStart', code)"
+        @drag-end="emit('dragEnd')"
+      />
+      <!-- Year-long subjects carried on from Semester 1: planned there, studied here too. -->
+      <button v-for="code in carried ?? []" :key="`carried-${code}`" class="carried" type="button" :data-carried="code" @click="emit('select', code)">
+        <span class="carried-code">{{ code }}</span>
+        <span class="carried-note">{{ t(term.period === 'semester-2' ? 'plan.yearLongCont' : 'plan.yearLong') }}</span>
+      </button>
+      <button v-if="free > 0 || empty" class="add-slot" :class="{ 'add-slot-empty': empty }" type="button" @click="emit('add')">
+        <Plus :size="16" aria-hidden="true" />
+        <span>{{ free > 0 ? t('plan.addFree', { n: free }) : t('plan.addInTerm') }}</span>
+      </button>
+    </div>
   </section>
 </template>
 
 <style scoped>
+.term {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 180px;
+  padding: 10px;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--ink) 2.5%, transparent);
+  transition: background 0.15s, border-color 0.15s, opacity 0.15s;
+}
+
+.term-short {
+  flex-grow: 0.7;
+  min-width: 150px;
+  background: color-mix(in srgb, var(--warn) 5%, transparent);
+}
+
+/* While dragging: allowed terms go green, the rest grey out and say why. */
+.drop-ok {
+  border: 1px dashed var(--good);
+  background: color-mix(in srgb, var(--good-soft) 60%, transparent);
+}
+
+.drop-over {
+  border-style: solid;
+  background: var(--good-soft);
+}
+
+.drop-no {
+  opacity: 0.55;
+  border: 1px dashed var(--line);
+  background: color-mix(in srgb, var(--ink) 5%, transparent);
+}
+
+.drop-reason {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 6px;
+}
+
 .carried {
   display: flex;
   flex-wrap: wrap;
@@ -143,7 +228,7 @@ function onDrop(event: DragEvent): void {
   align-items: baseline;
   padding: 8px 10px;
   border-radius: var(--radius);
-  border: 1px dashed var(--glass-edge);
+  border: 1px dashed var(--line);
   background: var(--paper-raised);
   color: inherit;
   font: inherit;
@@ -160,40 +245,9 @@ function onDrop(event: DragEvent): void {
   opacity: 0.75;
 }
 
-.term {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
-  flex: 1 1 185px;
-  min-width: 185px;
-  max-width: 300px;
-  padding: 10px;
-  border-radius: var(--radius);
-  transition: background 0.15s;
-}
-
-.term-over {
-  background: var(--overprint-tint);
-}
-
-.term-remove {
-  display: inline-grid;
-  place-items: center;
-  width: 24px;
-  height: 24px;
-  border-radius: 999px;
-  border: 1px solid var(--glass-edge);
-  background: var(--glass-fill);
-  -webkit-backdrop-filter: var(--glass-blur);
-  backdrop-filter: var(--glass-blur);
-  box-shadow: var(--glass-shadow);
-  color: var(--ink-soft);
-  cursor: pointer;
-}
-
 .term-head {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: 1fr auto auto;
   align-items: baseline;
   gap: 4px 8px;
 }
@@ -214,6 +268,18 @@ function onDrop(event: DragEvent): void {
   font-weight: 600;
 }
 
+.term-remove {
+  display: inline-grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+
 .term-bar {
   grid-column: 1 / -1;
   height: 3px;
@@ -228,13 +294,36 @@ function onDrop(event: DragEvent): void {
   background: var(--overprint);
 }
 
-.term-empty {
-  margin: 0;
-  padding: 18px 8px;
-  border: 1.5px dashed var(--contour);
+.add-slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 30px;
+  padding: 4px 8px;
+  border: 1px dashed var(--line);
   border-radius: var(--radius);
-  font-size: 0.8125rem;
+  background: transparent;
   color: var(--ink-soft);
-  text-align: center;
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.add-slot:hover,
+.add-slot:focus-visible {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.add-slot-empty {
+  min-height: 60px;
+}
+
+@media (max-width: 640px) {
+  .term {
+    min-width: 0;
+  }
 }
 </style>

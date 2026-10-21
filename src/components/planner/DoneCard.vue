@@ -52,7 +52,7 @@ const label = computed(() => (props.result.failed ? t.value('plan.pastNotPassed'
   z-index: 1;
   display: grid;
   gap: 4px;
-  padding: 10px 11px 9px;
+  padding: 6px 9px;
   border: 1px solid color-mix(in srgb, var(--good) 30%, transparent);
   border-radius: var(--radius);
   background: var(--good-soft);
@@ -110,13 +110,9 @@ const label = computed(() => (props.result.failed ? t.value('plan.pastNotPassed'
 }
 
 .title {
-  display: -webkit-box;
-  overflow: hidden;
   font-size: 0.875rem;
-  line-height: 1.3;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-  -webkit-box-orient: vertical;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
 }
 
 .foot {
@@ -131,7 +127,7 @@ const label = computed(() => (props.result.failed ? t.value('plan.pastNotPassed'
   padding: 0 6px;
   border-radius: 999px;
   background: rgb(255 255 255 / 60%);
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   color: var(--ink-soft);
 }
 

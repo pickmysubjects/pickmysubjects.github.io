@@ -257,6 +257,22 @@ export function usePlan() {
     return null
   }
 
+  /** Put the plan's terms back as they were (Undo after a change on the board). */
+  function restoreTerms(terms: PlanTerm[]): void {
+    save((s) => ({ ...s, terms: cloneJson(terms) }))
+  }
+
+  /** Put `to` in `from`'s place, in the same term (the card menu's Swap). */
+  function replaceSubject(termIndex: number, from: string, to: string): void {
+    save((s) => {
+      const term = s.terms[termIndex]
+      if (!term || !term.subjects.includes(from)) return s
+      for (const x of s.terms) if (x !== term) x.subjects = x.subjects.filter((c) => c !== to)
+      term.subjects = term.subjects.filter((c) => c !== to).map((c) => (c === from ? to : c))
+      return s
+    })
+  }
+
   function removeSubject(termIndex: number, code: string): void {
     save((s) => {
       const term = s.terms[termIndex]
@@ -370,6 +386,8 @@ export function usePlan() {
     addSubjectAt,
     removeSubject,
     swapSubject,
+    replaceSubject,
+    restoreTerms,
     moveSubject,
     addTerm,
     addTermAt,

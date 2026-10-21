@@ -91,10 +91,11 @@ function retake(code: string): string | null {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  flex: 1 1 185px;
-  min-width: 185px;
-  max-width: 300px;
+  flex: 1 1 0;
+  min-width: 180px;
   padding: 10px;
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--good) 4%, transparent);
 }
 
 .past-head {

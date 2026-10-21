@@ -1,22 +1,26 @@
 <script setup lang="ts">
 import { link } from '@/composables/useView'
-import { computed, shallowRef } from 'vue'
+import { computed, onBeforeUnmount, shallowRef } from 'vue'
 import { CircleCheck, Pencil, RotateCcw, TriangleAlert, ChevronDown } from 'lucide-vue-next'
 import PlanWizard from '@/components/planner/PlanWizard.vue'
 import PlanMap from '@/components/planner/PlanMap.vue'
 import SubjectPeek from '@/components/planner/SubjectPeek.vue'
 import RuleLegend from '@/components/planner/RuleLegend.vue'
 import PlanProgress from '@/components/planner/PlanProgress.vue'
+import PlanRequirements from '@/components/planner/PlanRequirements.vue'
+import SubjectTimeline from '@/components/planner/SubjectTimeline.vue'
 import PlanHowBuilt from '@/components/planner/PlanHowBuilt.vue'
 import PlanIssues from '@/components/planner/PlanIssues.vue'
 import PlanPrint, { type PrintTerm } from '@/components/planner/PlanPrint.vue'
 import Interp from '@/components/Interp.vue'
 import PlanSwitcher from '@/components/plans/PlanSwitcher.vue'
 import PlanCompare from '@/components/plans/PlanCompare.vue'
-import { PASS_MARK, informalPicks, isFail, passedCodes, planComponentIds, planRoles, planRules, recordedLoads, termLoad, type PlanTerm } from '@/engine'
+import { informalPicks, isFail, passedCodes, planComponentIds, planRoles, planRules, recordedLoads, termLoad, type PlanTerm } from '@/engine'
 import { diplomaTitle } from '@/composables/usePlanCompare'
 import { Printer, Share2 } from 'lucide-vue-next'
 import { decodePlan, encodePlan } from '@/utils/sharePlan'
+import { boardEdges, countsToward } from '@/utils/planBoard'
+import { cloneJson } from '@/utils/clone'
 import { go, useView } from '@/composables/useView'
 import { useProfile } from '@/composables/useProfile'
 import { useDataset } from '@/composables/useDataset'
@@ -34,6 +38,7 @@ const plan = usePlan()
 const { profile, setConfirmed, setResults } = useProfile()
 const { t } = useI18n()
 
+const STUDENT_SITE = 'https://students.unimelb.edu.au/'
 const editing = shallowRef(false)
 // Two plans side by side, in place of the board.
 const comparing = shallowRef(false)
@@ -100,11 +105,13 @@ const showWizard = computed(
   () => editing.value || (!plan.setupChosen.value && !shared.value),
 )
 
-const options = computed(() => subjectList.value.map((s) => ({ code: s.code, title: s.title })))
 // Which planned subjects the degree or major insists on, shown as a tag on each card.
-const roles = computed(() => {
+const roleSets = computed(() => {
   const { course, courseYear } = plan.setup.value
-  const r = planRoles(data.value, course, courseYear, planComponentIds(plan.plan.value).filter((id): id is string => !!id))
+  return planRoles(data.value, course, courseYear, planComponentIds(plan.plan.value).filter((id): id is string => !!id))
+})
+const roles = computed(() => {
+  const r = roleSets.value
   const out: Record<string, 'required' | 'option'> = {}
   for (const c of r.required) out[c] = 'required'
   for (const c of r.options) out[c] = 'option'
@@ -164,6 +171,8 @@ const peekTerm = computed(() => {
   const i = plan.terms.value.findIndex((x) => x.subjects.includes(peek.value ?? ''))
   return i >= 0 ? { index: i, term: plan.terms.value[i] as PlanTerm } : null
 })
+// Notes beside the status (shown when the line is opened).
+const noteCount = computed(() => Number(profileEmpty.value) + unavoidable.value.length + Number(extraTermsOnVisa.value) + failed.value.length)
 const { shouldPrompt } = useRated()
 const rateNext = shallowRef<string | null>(null)
 // Done with a planned subject: it moves to My record, in the semester it was planned for.
@@ -177,6 +186,73 @@ function markDone(code: string, mark: number | undefined): void {
   // Just finished it: offer to rate it, once per subject.
   if (shouldPrompt(code)) rateNext.value = code
 }
+// The board's focus: a selected subject (its timeline lights up) or a requirement (its subjects do).
+const selected = shallowRef<string | null>(null)
+const ruleFocus = shallowRef<string | null>(null)
+function select(code: string | null): void {
+  selected.value = code
+  if (code) ruleFocus.value = null
+}
+function focusRule(id: string | null): void {
+  ruleFocus.value = id
+  if (id) selected.value = null
+}
+const edges = computed(() => boardEdges(plan.terms.value, past.value, data.value.subjects))
+// Where each subject sits, for the timeline: its planned term, or "Done".
+const whereOf = computed(() => {
+  const out: Record<string, string> = {}
+  for (const r of profile.value.results) if (!isFail(r)) out[r.code] = t.value('plan.pastTag')
+  for (const term of plan.terms.value) for (const c of term.subjects) out[c] = termLabel(t.value, term)
+  return out
+})
+const boardCodes = computed(() => [...passedCodes(profile.value.results), ...plan.plannedCodes.value])
+const majorSubjects = computed(() => new Set([...roleSets.value.required, ...roleSets.value.options]))
+// Each requirement's subjects, counted automatically (nothing to tag).
+const members = computed(() => {
+  const out: Record<string, string[]> = {}
+  for (const rule of allRules.value) {
+    out[rule.id] = boardCodes.value.filter((c) => countsToward(rule, c, data.value.subjects, plan.setup.value.course, majorSubjects.value))
+  }
+  return out
+})
+const ruleCodes = computed(() => (ruleFocus.value ? new Set(members.value[ruleFocus.value] ?? []) : null))
+
+// Every change on the board can be taken back once, from a short note at the bottom.
+const undo = shallowRef<{ text: string; terms: PlanTerm[] } | null>(null)
+let undoTimer: ReturnType<typeof setTimeout> | undefined
+function change(text: string, act: () => void): void {
+  const before = cloneJson(plan.terms.value)
+  act()
+  undo.value = { text, terms: before }
+  clearTimeout(undoTimer)
+  undoTimer = setTimeout(() => (undo.value = null), 8000)
+}
+function undoLast(): void {
+  if (!undo.value) return
+  plan.restoreTerms(undo.value.terms)
+  undo.value = null
+}
+onBeforeUnmount(() => clearTimeout(undoTimer))
+const labelAt = (i: number) => {
+  const term = plan.terms.value[i]
+  return term ? termLabel(t.value, term) : ''
+}
+function onAdd(i: number, code: string): void {
+  change(t.value('plan.didAdd', { code, term: labelAt(i) }), () => plan.addSubject(i, code))
+}
+function onReplace(i: number, from: string, to: string): void {
+  change(t.value('plan.didSwap', { from, to }), () => plan.replaceSubject(i, from, to))
+  if (selected.value === from) selected.value = to
+}
+function onRemove(i: number, code: string): void {
+  change(t.value('plan.didRemove', { code }), () => plan.removeSubject(i, code))
+  if (selected.value === code) selected.value = null
+}
+function onMove(code: string, from: number, to: number): void {
+  if (from === to) return
+  change(t.value('plan.didMove', { code, term: labelAt(to) }), () => plan.moveSubject(code, from, to))
+}
+
 // The plan and My record disagree: a planned subject is already passed, or a semester holds
 // more than its load once its recorded subjects are counted. (A part-done semester the plan
 // carries on in is fine: its done and planned subjects share the column.) Names the semester.
@@ -273,33 +349,19 @@ const printTerms = computed<PrintTerm[]>(() => {
         <button class="button button-quiet" type="button" @click="plan.generate()">{{ t('plan.rebuild') }}</button>
       </p>
 
-      <p v-if="profileEmpty" class="started">
-        <Interp :text="t('plan.fillRecord')">
-          <template #record>
-            <a :href="link('record')">{{ t('nav.record') }}</a>
-          </template>
-        </Interp>
-      </p>
-
-      <p v-for="u in unavoidable" :key="u" class="started">{{ u }}</p>
-
-      <p v-if="extraTermsOnVisa" class="started">{{ t('plan.extraTermsVisa') }}</p>
-
-      <ul v-if="failed.length" class="failed">
-        <li v-for="f in failed" :key="f.code">
-          {{ f.term ? t('plan.failedRetake', { code: f.code, term: f.term }) : t('plan.failedNotPlanned', { code: f.code }) }}
-        </li>
-        <li class="failed-more"><a :href="link('guide')">{{ t('guide.failTitle') }}</a></li>
-      </ul>
-
-      <section v-if="onBoard" class="status" :class="problems ? 'status-bad' : unknowns ? 'status-warn' : 'status-good'" role="status">
-        <component :is="problems || unknowns ? TriangleAlert : CircleCheck" :size="22" aria-hidden="true" />
-        <div>
-          <p class="status-title">
+      <!-- The plan's status and every note about it, as one slim line that opens. Problems open it by themselves. -->
+      <details v-if="onBoard" class="status" :class="problems ? 'status-bad' : unknowns ? 'status-warn' : 'status-good'" :open="problems > 0">
+        <summary class="status-line" role="status">
+          <component :is="problems || unknowns ? TriangleAlert : CircleCheck" :size="18" aria-hidden="true" />
+          <span class="status-title">
             <template v-if="problems">{{ t('plan.statusProblems', { n: problems }) }}</template>
             <template v-else-if="unknowns">{{ t('plan.statusUnknown', { n: unknowns }) }}</template>
             <template v-else>{{ t('plan.statusOk') }}</template>
-          </p>
+          </span>
+          <span v-if="noteCount" class="status-more">{{ t('plan.moreNotes', { n: noteCount }) }}</span>
+          <ChevronDown :size="16" aria-hidden="true" class="status-chevron" />
+        </summary>
+        <div class="status-body">
           <ul v-if="problemTexts.length" class="status-list">
             <li v-for="(p, i) in problemTexts.slice(0, 5)" :key="i">
               {{ p.text }}
@@ -309,31 +371,82 @@ const printTerms = computed<PrintTerm[]>(() => {
             </li>
           </ul>
           <p v-if="hasConfirmable" class="status-hint">{{ t('plan.confirmHint') }}</p>
+          <p v-if="profileEmpty" class="started">
+            <Interp :text="t('plan.fillRecord')">
+              <template #record>
+                <a :href="link('record')">{{ t('nav.record') }}</a>
+              </template>
+            </Interp>
+          </p>
+          <p v-for="u in unavoidable" :key="u" class="started">{{ u }}</p>
+          <p v-if="extraTermsOnVisa" class="started">{{ t('plan.extraTermsVisa') }}</p>
+          <ul v-if="failed.length" class="failed">
+            <li v-for="f in failed" :key="f.code">
+              {{ f.term ? t('plan.failedRetake', { code: f.code, term: f.term }) : t('plan.failedNotPlanned', { code: f.code }) }}
+            </li>
+            <li class="failed-more"><a :href="link('guide')">{{ t('guide.failTitle') }}</a></li>
+          </ul>
         </div>
-      </section>
+      </details>
 
       <RatePrompt v-if="rateNext" :key="rateNext" :code="rateNext" @close="rateNext = null" />
 
-      <PlanProgress v-if="onBoard" :statuses="plan.courseCheck.value.statuses" :rules="rules" />
-      <PlanMap
-        class="map"
-        :terms="plan.terms.value"
-        :subjects="data.subjects"
-        :issues="plan.termIssues.value"
-        :course="plan.setup.value.course"
-        :load="plan.course.value?.standardLoad ?? 50"
-        :options="options"
-        :roles="roles"
-        :past="past"
-        @add="plan.addSubject"
-        @remove="plan.removeSubject"
-        @move="plan.moveSubject"
-        @add-term="plan.addTerm()"
-        @add-term-at="(year, period) => plan.addTermAt(year, period)"
-        @remove-term="(i) => plan.removeTerm(i)"
-        @open="peek = $event"
-        @remove-last-term="plan.removeLastTerm()"
-      />
+      <div class="workspace">
+        <div class="workspace-main">
+          <PlanProgress v-if="onBoard" :statuses="plan.courseCheck.value.statuses" :rules="rules" />
+          <PlanRequirements
+            v-if="onBoard"
+            :statuses="plan.courseCheck.value.statuses"
+            :rules="allRules"
+            :members="members"
+            :active="ruleFocus"
+            @focus="focusRule"
+          />
+          <p class="draft">
+            {{ t('plan.draftNote') }}
+            <a :href="STUDENT_SITE" target="_blank" rel="noopener">{{ t('plan.draftLink') }}</a>
+          </p>
+          <SubjectTimeline
+            v-if="selected"
+            class="timeline-bar"
+            bar
+            :code="selected"
+            :edges="edges"
+            :where-of="whereOf"
+            @select="select"
+            @open="peek = $event"
+            @clear="select(null)"
+          />
+          <PlanMap
+            :terms="plan.terms.value"
+            :subjects="data.subjects"
+            :issues="plan.termIssues.value"
+            :course="plan.setup.value.course"
+            :load="plan.course.value?.standardLoad ?? 50"
+            :roles="roles"
+            :option-set="roleSets.options"
+            :past="past"
+            :edges="edges"
+            :selected="selected"
+            :rule-codes="ruleCodes"
+            @add="onAdd"
+            @replace="onReplace"
+            @remove="onRemove"
+            @move="onMove"
+            @add-term="plan.addTerm()"
+            @add-term-at="(year, period) => plan.addTermAt(year, period)"
+            @remove-term="(i) => plan.removeTerm(i)"
+            @open="peek = $event"
+            @select="select"
+            @remove-last-term="plan.removeLastTerm()"
+          />
+        </div>
+      </div>
+
+      <div v-if="undo" class="undo" role="status">
+        <span>{{ undo.text }}</span>
+        <button class="undo-button" type="button" @click="undoLast">{{ t('plan.undo') }}</button>
+      </div>
 
       <SubjectPeek
         v-if="peek"
@@ -351,7 +464,9 @@ const printTerms = computed<PrintTerm[]>(() => {
         :done-term="peekTerm ? termLabel(t, peekTerm.term) : undefined"
         :pass-fail="data.subjects[peek]?.passFail"
         @mark-done="(m) => markDone(peek as string, m)"
-      />
+      >
+        <SubjectTimeline :code="peek" :edges="edges" :where-of="whereOf" @select="peek = $event" />
+      </SubjectPeek>
 
       <details class="details surface">
         <summary class="details-summary">
@@ -401,7 +516,7 @@ const printTerms = computed<PrintTerm[]>(() => {
 }
 
 /* Everything but the board stays at the usual reading width; the board takes the full screen. */
-.planner > :not(.map, dialog) {
+.planner > :not(.workspace, dialog) {
   width: 100%;
   max-width: calc(var(--shell) - 40px);
   margin-inline: auto;
@@ -475,15 +590,50 @@ const printTerms = computed<PrintTerm[]>(() => {
 }
 
 .status {
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
-  padding: 16px 20px;
-  border-radius: var(--radius-lg);
+  padding: 0 16px;
+  border-radius: var(--radius);
 }
 
-.status > svg {
+.status-line {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 40px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.status-line::-webkit-details-marker {
+  display: none;
+}
+
+.status-line > svg {
   flex-shrink: 0;
+}
+
+.status-more {
+  font-size: 0.8125rem;
+  opacity: 0.8;
+}
+
+.status-chevron {
+  margin-left: auto;
+  transition: transform 0.15s;
+}
+
+.status[open] .status-chevron {
+  transform: rotate(180deg);
+}
+
+.status-body {
+  display: grid;
+  gap: 8px;
+  padding: 0 0 12px 28px;
+}
+
+.status-body .started,
+.status-body .failed {
+  color: var(--ink);
 }
 
 .status-good {
@@ -513,7 +663,7 @@ const printTerms = computed<PrintTerm[]>(() => {
 .status-list {
   display: grid;
   gap: 4px;
-  margin: 6px 0 0;
+  margin: 0;
   padding-left: 18px;
   font-size: 0.9375rem;
   color: var(--ink);
@@ -663,6 +813,83 @@ const printTerms = computed<PrintTerm[]>(() => {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+}
+
+/* The board takes the full width, with the requirements beside it on wide screens. */
+.workspace {
+  display: grid;
+  gap: 16px;
+  width: 100%;
+  max-width: 1800px;
+  margin-inline: auto;
+  padding-inline: 20px;
+}
+
+.workspace-main {
+  display: grid;
+  gap: 12px;
+  align-content: start;
+  min-width: 0;
+}
+
+.workspace-side {
+  min-width: 0;
+}
+
+@media (max-width: 640px) {
+  .workspace {
+    padding-inline: 0;
+  }
+
+  /* Phones: the timeline stays where it is instead of covering the screen. */
+  .timeline-bar {
+    position: static;
+  }
+}
+
+.timeline-bar {
+  position: sticky;
+  top: 8px;
+  z-index: 20;
+}
+
+.draft {
+  font-size: 0.8125rem;
+  color: var(--ink-faint);
+}
+
+.draft a {
+  color: var(--ink-soft);
+}
+
+.undo {
+  position: fixed;
+  z-index: 50;
+  left: 50%;
+  bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  max-width: calc(100vw - 32px);
+  padding: 10px 12px 10px 18px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--bg);
+  font-size: 0.875rem;
+  box-shadow: var(--shadow-2);
+  transform: translateX(-50%);
+}
+
+.undo-button {
+  flex: none;
+  padding: 4px 12px;
+  border: 0;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--bg) 18%, transparent);
+  color: inherit;
+  font: inherit;
+  font-weight: 650;
+  cursor: pointer;
 }
 
 /* Printing (or saving as PDF): only the print layout, not the screen page. */

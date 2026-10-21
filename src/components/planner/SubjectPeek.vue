@@ -121,6 +121,9 @@ function onClick(event: MouseEvent): void {
         </button>
       </header>
 
+      <!-- The subject's place in the plan (needs → this → unlocks), from the planner. -->
+      <slot />
+
       <!-- Finished it: record it in My record, in this semester, with an optional mark. -->
       <form v-if="doneTerm" class="peek-done" @submit.prevent="markDone">
         <p class="peek-done-title">{{ t('plan.doneAsk', { term: doneTerm }) }}</p>
