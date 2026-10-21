@@ -1,0 +1,45 @@
+code: EDUC10057
+title: Wellbeing, Motivation and Performance
+level: 1
+points: 12.5
+offerings:
+  "2026":
+    - summer
+    - semester-1
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+topics:
+  - psychology
+  - health
+assessment:
+  - kind: quiz
+    weight: 20
+  - kind: project
+    weight: 35
+  - kind: assignment
+    weight: 45
+weekly_contact_hours: 3
+min_attendance: 70
+breadth_for:
+  - Bachelor of Arts
+  - Bachelor of Biomedicine
+  - Bachelor of Commerce
+  - Bachelor of Design
+  - Bachelor of Fine Arts (Acting)
+  - Bachelor of Fine Arts (Animation)
+  - Bachelor of Fine Arts (Dance)
+  - Bachelor of Fine Arts (Film and Television)
+  - Bachelor of Fine Arts (Music Theatre)
+  - Bachelor of Fine Arts (Production)
+  - Bachelor of Fine Arts (Screenwriting)
+  - Bachelor of Fine Arts (Theatre)
+  - Bachelor of Fine Arts (Visual Art)
+  - Bachelor of Music
+  - Bachelor of Science
+handbook: https://handbook.unimelb.edu.au/2026/subjects/educ10057
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Summer Term is an intensive: pre-teaching from 27 January, classes 2-13 February 2026. Semester 1 mixes weekly tutorials with online activities."

@@ -1,0 +1,25 @@
+code: PPMN40006
+title: "Public Policy & Management Thesis Part 1"
+level: 4
+points: 18.75
+offerings:
+  "2026":
+    - semester-1
+prerequisites:
+  manual: Admission to fourth-year Bachelor of Arts (Honours) or the Graduate Diploma (Advanced) in Public Policy and Management
+corequisites: PPMN90058
+non_allowed:
+  - PPMN40005
+skills:
+  - writing
+topics:
+  - politics
+  - management
+assessment:
+  - kind: report
+    weight: 100
+breadth_for: []
+handbook: "https://handbook.unimelb.edu.au/2026/subjects/ppmn40006"
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Part 1 of a 50-point thesis (12,000 words) over two semesters, then PPMN40007; one result covers both. Hurdles: regular supervision meetings, topic proposal, progress report and full draft, and all work submitted. You must also take POLS40013 Social Science Research Seminar (can be concurrent). Public policy background at undergraduate level recommended."

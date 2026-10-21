@@ -30,7 +30,7 @@ assessment:
     weight: 10
   - kind: presentation
     weight: 25
-weekly_contact_hours: 16
+weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Arts
   - Bachelor of Commerce

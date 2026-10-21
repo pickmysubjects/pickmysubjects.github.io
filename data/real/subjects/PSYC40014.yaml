@@ -1,0 +1,46 @@
+code: PSYC40014
+title: "Advanced Research Methods in Psychology"
+level: 4
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites:
+  admission: "340AA"
+  note: Students must be enrolled in the Graduate Diploma in Psychology
+corequisites: none
+non_allowed:
+  - PSYC30013
+skills:
+  - statistics
+  - data
+  - writing
+topics:
+  - psychology
+  - statistics
+assessment:
+  - kind: assignment
+    weight: 20
+  - kind: assignment
+    weight: 25
+  - kind: assignment
+    weight: 30
+  - kind: exam
+    weight: 25
+  - kind: participation
+    weight: 0
+    hurdle: true
+weekly_contact_hours: 3.5
+min_attendance: 80
+breadth_for: []
+recommended:
+  - PSYC10003
+  - PSYC10006
+  - PSYC90097
+  - PSYC10004
+  - PSYC10007
+  - PSYC90098
+handbook: "https://handbook.unimelb.edu.au/2026/subjects/psyc40014"
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. At Parkville: weekly 2-hour lecture and 1-hour lab, plus four seminars. 80% lab attendance hurdle; missed labs mean extra work before you can pass."

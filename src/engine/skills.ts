@@ -58,7 +58,10 @@ function required(field: ReqField): string[] {
 function inferred(s: Subject, data: Dataset | undefined): Skill[] {
   const area = s.area ?? s.code.slice(0, 4)
   const out = new Set<Skill>()
-  if (MATHS_AREAS.has(area) && !(area === 'MAST' && STATS_TITLE.test(s.title))) out.add('maths')
+  // Entry by the coordinator's permission alone marks a research project: what it takes depends
+  // on the project, so the area says nothing about it (its written work still counts below).
+  const projectOnly = typeof s.prerequisites === 'object' && 'permission' in s.prerequisites
+  if (MATHS_AREAS.has(area) && !projectOnly && !(area === 'MAST' && STATS_TITLE.test(s.title))) out.add('maths')
   if (area === 'MAST' && STATS_TITLE.test(s.title)) out.add('maths').add('statistics')
   // Information systems' user-experience subjects (interaction design, usability) aren't programming.
   if (PROGRAMMING_AREAS.has(area) && !(area === 'INFO' && UX_TITLE.test(s.title))) out.add('programming')

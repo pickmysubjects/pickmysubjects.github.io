@@ -1083,6 +1083,7 @@ export const ja: Messages = {
     eyebrow: 'メルボルン大学の学生のために',
     title: '何を、|いつ取るか。|ひと目で。',
     lede: "科目の難しさ、課題の量、採点の厳しさ、学生の評判。そのうえで成績と興味に合う科目を選び、学位全体のプランを作れます。",
+    scope: "現在は学士課程（Bachelor）のみ。",
     search: '科目コードか科目名で検索',
     searchShort: '科目を検索',
     searchLabel: '科目を検索',

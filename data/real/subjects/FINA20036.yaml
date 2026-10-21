@@ -1,0 +1,44 @@
+code: FINA20036
+title: Under Camera Animation
+level: 2
+points: 12.5
+offerings:
+  "2026":
+    - summer
+    - winter
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - design
+topics:
+  - art
+  - film-and-screen
+assessment:
+  - kind: project
+    weight: 30
+  - kind: project
+    weight: 70
+  - kind: participation
+    weight: 0
+    hurdle: true
+weekly_contact_hours: 3
+min_attendance: 75
+breadth_for:
+  - Bachelor of Arts
+  - Bachelor of Biomedicine
+  - Bachelor of Commerce
+  - Bachelor of Design
+  - Bachelor of Fine Arts (Acting)
+  - Bachelor of Fine Arts (Dance)
+  - Bachelor of Fine Arts (Film and Television)
+  - Bachelor of Fine Arts (Music Theatre)
+  - Bachelor of Fine Arts (Production)
+  - Bachelor of Fine Arts (Screenwriting)
+  - Bachelor of Fine Arts (Theatre)
+  - Bachelor of Music
+  - Bachelor of Science
+handbook: https://handbook.unimelb.edu.au/2026/subjects/fina20036
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Runs online as 6-day intensives (6 hours a day): two in Summer Term (late January and early February) and two in July (shown as Winter). You shoot frames with a tablet. Quotas apply. All assessment must be submitted to pass."

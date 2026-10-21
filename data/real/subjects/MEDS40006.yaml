@@ -1,0 +1,42 @@
+code: MEDS40006
+title: Advanced Medical Research
+level: 4
+points: 25
+offerings:
+  "2026":
+    - summer
+    - winter
+prerequisites: MEDS40007
+corequisites: none
+non_allowed: []
+skills:
+  - statistics
+  - writing
+  - presentation
+topics:
+  - health
+  - statistics
+assessment:
+  - kind: quiz
+    weight: 0
+    hurdle: true
+  - kind: quiz
+    weight: 15
+  - kind: assignment
+    weight: 20
+  - kind: assignment
+    weight: 15
+  - kind: presentation
+    weight: 10
+  - kind: assignment
+    weight: 10
+  - kind: exam
+    weight: 15
+  - kind: exam
+    weight: 15
+weekly_contact_hours: 11
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/meds40006
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Second subject of the Bachelor of Medical Science (Honours): a 6-week block from late January (shown as Summer) or mid-July (shown as Winter), with about 120 hours of classes plus 15 hours of mentor meetings. Each weekly mini quiz needs 40% or more."

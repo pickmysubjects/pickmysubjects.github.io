@@ -6,9 +6,12 @@ offerings:
   "2026":
     - semester-1
 prerequisites:
-  all:
-    - CHEM20018
-    - CHEM20020
+  any:
+    - subject: CHEM30016
+      concurrent: true
+    - all:
+        - CHEM20018
+        - CHEM20020
 corequisites: none
 non_allowed: []
 assessment:

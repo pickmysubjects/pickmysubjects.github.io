@@ -1,0 +1,43 @@
+code: EDUC10054
+title: Drawing, Painting and Sensory Knowing
+level: 1
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+    - semester-2
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - design
+topics:
+  - art
+assessment:
+  - kind: assignment
+    weight: 10
+  - kind: project
+    weight: 40
+  - kind: project
+    weight: 50
+weekly_contact_hours: 3
+min_attendance: 80
+breadth_for:
+  - Bachelor of Arts
+  - Bachelor of Biomedicine
+  - Bachelor of Commerce
+  - Bachelor of Design
+  - Bachelor of Fine Arts (Acting)
+  - Bachelor of Fine Arts (Animation)
+  - Bachelor of Fine Arts (Dance)
+  - Bachelor of Fine Arts (Film and Television)
+  - Bachelor of Fine Arts (Music Theatre)
+  - Bachelor of Fine Arts (Production)
+  - Bachelor of Fine Arts (Screenwriting)
+  - Bachelor of Fine Arts (Theatre)
+  - Bachelor of Music
+  - Bachelor of Science
+handbook: https://handbook.unimelb.edu.au/2026/subjects/educ10054
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Quota of 50 in Semester 1 and 75 in Semester 2, by enrolment date. Weekly 3-hour studio workshops, some at museums and galleries."

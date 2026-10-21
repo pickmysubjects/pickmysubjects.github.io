@@ -1,0 +1,47 @@
+code: FINA20044
+title: Art and the Botanical
+level: 2
+points: 12.5
+offerings:
+  "2026":
+    - summer
+    - semester-1
+    - winter
+    - semester-2
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - design
+  - writing
+topics:
+  - art
+assessment:
+  - kind: assignment
+    weight: 25
+  - kind: project
+    weight: 75
+  - kind: participation
+    weight: 0
+    hurdle: true
+weekly_contact_hours: 3
+min_attendance: 75
+breadth_for:
+  - Bachelor of Arts
+  - Bachelor of Biomedicine
+  - Bachelor of Commerce
+  - Bachelor of Design
+  - Bachelor of Fine Arts (Acting)
+  - Bachelor of Fine Arts (Animation)
+  - Bachelor of Fine Arts (Dance)
+  - Bachelor of Fine Arts (Film and Television)
+  - Bachelor of Fine Arts (Music Theatre)
+  - Bachelor of Fine Arts (Production)
+  - Bachelor of Fine Arts (Screenwriting)
+  - Bachelor of Fine Arts (Theatre)
+  - Bachelor of Music
+  - Bachelor of Science
+handbook: https://handbook.unimelb.edu.au/2026/subjects/fina20044
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Runs online. February (summer) and July (winter) are 6-day intensives of 6 hours a day; the semesters are 3 hours a week. Quotas apply. All assessment must be submitted to pass."

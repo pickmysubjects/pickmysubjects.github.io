@@ -1,0 +1,39 @@
+code: UNIB20028
+title: "Coffee: Science, Trade & Culture"
+level: 2
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - presentation
+  - writing
+  - business
+topics:
+  - agriculture
+  - economics
+  - business
+  - health
+assessment:
+  - kind: quiz
+    weight: 10
+  - kind: presentation
+    weight: 45
+    group: true
+  - kind: assignment
+    weight: 20
+  - kind: project
+    weight: 10
+    group: true
+  - kind: presentation
+    weight: 15
+    group: true
+weekly_contact_hours: 3.5
+breadth_for: []
+handbook: "https://handbook.unimelb.edu.au/2026/subjects/unib20028"
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. At Parkville: two 2-hour lectures a week for 9 weeks, plus four workshops. The paste lists no breadth courses."

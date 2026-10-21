@@ -1083,6 +1083,7 @@ export const id: Messages = {
     eyebrow: 'Untuk mahasiswa University of Melbourne',
     title: 'Tahu mau ambil apa,|dan kapan.',
     lede: "Seberapa sulit mata kuliahnya, banyak tugas atau tidak, penilaiannya ketat atau tidak, dan apa kata mahasiswa. Lalu pilih yang cocok dengan nilai dan minatmu, dan susun rencana seluruh kuliahmu.",
+    scope: "Saat ini hanya program sarjana (Bachelor).",
     search: 'Cari kode atau nama mata kuliah',
     searchShort: 'Cari mata kuliah',
     searchLabel: 'Cari mata kuliah',

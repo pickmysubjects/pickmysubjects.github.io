@@ -1,0 +1,24 @@
+code: PPMN40007
+title: "Public Policy & Management Thesis Part 2"
+level: 4
+points: 18.75
+offerings:
+  "2026":
+    - semester-2
+prerequisites: PPMN40006
+corequisites: none
+non_allowed:
+  - PPMN40005
+skills:
+  - writing
+topics:
+  - politics
+  - management
+assessment:
+  - kind: report
+    weight: 100
+breadth_for: []
+handbook: "https://handbook.unimelb.edu.au/2026/subjects/ppmn40007"
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Part 2 of the 50-point Public Policy & Management thesis started in PPMN40006; the assessment (a 12,000-word thesis) is set in Part 1 and covers both parts."

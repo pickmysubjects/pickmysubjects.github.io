@@ -1083,6 +1083,7 @@ export const zhCN: Messages = {
     eyebrow: '为墨尔本大学学生打造',
     title: '修什么课、|什么时候修，|一眼看清。',
     lede: "哪门课难、作业多不多、给分松不松、同学怎么说。再按你的成绩和兴趣挑适合你的课，排好整个学位。",
+    scope: "目前只有本科（Bachelor）。",
     search: '搜索课号或课名',
     searchShort: '搜索课程',
     searchLabel: '搜索课程',

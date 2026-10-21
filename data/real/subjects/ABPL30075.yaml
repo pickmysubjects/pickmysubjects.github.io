@@ -22,6 +22,7 @@ assessment:
   - kind: participation
     weight: 0
     hurdle: true
+min_attendance: 75
 breadth_for: []
 handbook: https://handbook.unimelb.edu.au/2026/subjects/abpl30075
 source_year: 2026

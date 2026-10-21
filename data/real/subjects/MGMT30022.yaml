@@ -19,6 +19,7 @@ assessment:
     weight: 30
   - kind: exam
     weight: 40
+min_attendance: 80
 breadth_for: []
 handbook: https://handbook.unimelb.edu.au/2026/subjects/mgmt30022
 source_year: 2026

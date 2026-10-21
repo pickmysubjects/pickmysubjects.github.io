@@ -23,7 +23,7 @@ assessment:
     weight: 20
   - kind: report
     weight: 40
-weekly_contact_hours: 31.5
+weekly_contact_hours: 2.5
 breadth_for:
   - Bachelor of Biomedicine
   - Bachelor of Commerce

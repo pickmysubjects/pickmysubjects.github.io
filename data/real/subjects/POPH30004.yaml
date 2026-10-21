@@ -23,6 +23,7 @@ assessment:
     weight: 30
   - kind: assignment
     weight: 40
+weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Arts
   - Bachelor of Commerce

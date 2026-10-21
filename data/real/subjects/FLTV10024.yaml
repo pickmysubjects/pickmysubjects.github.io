@@ -1,0 +1,40 @@
+code: FLTV10024
+title: Making Micro Documentaries
+level: 1
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+    - semester-2
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - design
+  - writing
+topics:
+  - film-and-screen
+  - media
+assessment:
+  - kind: quiz
+    weight: 5
+  - kind: quiz
+    weight: 10
+  - kind: project
+    weight: 20
+  - kind: assignment
+    weight: 15
+  - kind: project
+    weight: 50
+weekly_contact_hours: 2
+breadth_for:
+  - Bachelor of Commerce
+  - Bachelor of Fine Arts (Acting)
+  - Bachelor of Fine Arts (Music Theatre)
+  - Bachelor of Fine Arts (Production)
+  - Bachelor of Fine Arts (Theatre)
+  - Bachelor of Fine Arts (Visual Art)
+handbook: https://handbook.unimelb.edu.au/2026/subjects/fltv10024
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Online only; you film and edit on your own phone or device."

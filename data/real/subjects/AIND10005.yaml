@@ -1,0 +1,38 @@
+code: AIND10005
+title: Decolonising the Landscape MultiStudio 1
+level: 1
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - design
+  - presentation
+  - writing
+topics:
+  - indigenous-studies
+  - art
+assessment:
+  - kind: assignment
+    weight: 20
+  - kind: presentation
+    weight: 25
+  - kind: project
+    weight: 40
+  - kind: report
+    weight: 15
+weekly_contact_hours: 3
+breadth_for:
+  - Bachelor of Arts
+  - Bachelor of Biomedicine
+  - Bachelor of Commerce
+  - Bachelor of Design
+  - Bachelor of Music
+  - Bachelor of Science
+handbook: https://handbook.unimelb.edu.au/2026/subjects/aind10005
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. One 3-hour studio a week at Southbank, taught by First Nations people. Quota of 30 students, so a place is not guaranteed."

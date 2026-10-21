@@ -1,0 +1,43 @@
+code: ABPL30065
+title: "Foregrounding: Design Studio & History"
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - summer
+prerequisites:
+  all:
+    - admission: E-ABP
+      note: Only for enabling students in E-ABP (Enabling Course - Architecture, Building & Planning)
+    - permission: application
+      note: Faculty approval needed if you plan to apply for the 300-point Master of Architecture
+corequisites: none
+non_allowed: []
+skills:
+  - design
+  - presentation
+  - writing
+topics:
+  - architecture
+  - design
+  - history
+assessment:
+  - kind: presentation
+    weight: 5
+  - kind: presentation
+    weight: 5
+  - kind: presentation
+    weight: 15
+  - kind: assignment
+    weight: 10
+  - kind: project
+    weight: 40
+  - kind: assignment
+    weight: 25
+weekly_contact_hours: 3
+min_attendance: 80
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/abpl30065
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Intensive in November (16 Nov to 2 Dec 2026), 36 contact hours at Parkville with some off-campus teaching in Melbourne; you must attend 80% of studios."

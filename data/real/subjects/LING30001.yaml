@@ -7,8 +7,10 @@ offerings:
     - semester-2
 prerequisites:
   all:
-    - LING10001
-    - LING10002
+    - manual: "Admission into or selection of one of the following: Linguistics and Applied Linguistics major in the B-ARTS Bachelor of Arts; Linguistics and Applied Linguistics specialisation (formal) in the GD-ARTS Graduate Diploma in Arts"
+    - any:
+        - LING10001
+        - LING10002
 corequisites: none
 non_allowed: []
 skills:

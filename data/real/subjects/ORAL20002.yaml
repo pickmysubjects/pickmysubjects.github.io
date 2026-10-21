@@ -1,0 +1,32 @@
+code: ORAL20002
+title: "Health Promotion 2B"
+level: 2
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites: ORAL20001
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - fieldwork
+topics:
+  - health
+  - ethics
+  - society
+assessment:
+  - kind: assignment
+    weight: 40
+  - kind: report
+    weight: 60
+  - kind: participation
+    weight: 0
+    hurdle: true
+weekly_contact_hours: 5
+min_attendance: 100
+breadth_for: []
+handbook: "https://handbook.unimelb.edu.au/2026/subjects/oral20002"
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Bachelor of Oral Health subject at Parkville, with practical sessions and field visits. Attendance hurdle: 75% of lectures and 100% of seminars, tutorials and practical classes."

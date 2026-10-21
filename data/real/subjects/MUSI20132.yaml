@@ -1,0 +1,50 @@
+code: MUSI20132
+title: Big Band 2 (Breadth)
+level: 2
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites:
+  permission: application
+  note: "Audition required; a successful audition is your permission to enrol."
+corequisites: none
+non_allowed: []
+skills:
+  - presentation
+  - music
+topics:
+  - performance
+  - music
+assessment:
+  - kind: participation
+    weight: 50
+    group: true
+  - kind: presentation
+    weight: 25
+  - kind: assignment
+    weight: 25
+  - kind: participation
+    weight: 0
+    hurdle: true
+weekly_contact_hours: 3
+min_attendance: 80
+breadth_for:
+  - Bachelor of Arts
+  - Bachelor of Biomedicine
+  - Bachelor of Commerce
+  - Bachelor of Design
+  - Bachelor of Fine Arts (Acting)
+  - Bachelor of Fine Arts (Animation)
+  - Bachelor of Fine Arts (Dance)
+  - Bachelor of Fine Arts (Film and Television)
+  - Bachelor of Fine Arts (Music Theatre)
+  - Bachelor of Fine Arts (Production)
+  - Bachelor of Fine Arts (Screenwriting)
+  - Bachelor of Fine Arts (Theatre)
+  - Bachelor of Fine Arts (Visual Art)
+  - Bachelor of Science
+handbook: https://handbook.unimelb.edu.au/2026/subjects/musi20132
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Big Band playing jazz from the 1930s to today, with improvising encouraged; one 2-hour rehearsal a week plus concerts. Auditions at the start of the year; about AMEB grade 8 standard recommended."

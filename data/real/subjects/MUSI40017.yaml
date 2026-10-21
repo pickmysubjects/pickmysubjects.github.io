@@ -1,0 +1,29 @@
+code: MUSI40017
+title: "Practical Study 2"
+level: 4
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+    - semester-2
+prerequisites: MUSI40016
+corequisites: none
+non_allowed: []
+skills:
+  - music
+topics:
+  - music
+  - performance
+assessment:
+  - kind: presentation
+    weight: 100
+  - kind: participation
+    weight: 0
+    hurdle: true
+weekly_contact_hours: 7
+min_attendance: 100
+breadth_for: []
+handbook: "https://handbook.unimelb.edu.au/2026/subjects/musi40017"
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Graduate Diploma in Music subject at Southbank: weekly 45-minute lesson, instrument class and concert practice class. Marked by a 25-minute recital chosen from a 30-minute program, which you submit for approval by the census date. Full attendance at instrumental class and Performance Class (or an assigned ensemble) is a hurdle."

@@ -1,0 +1,29 @@
+code: MUSI40013
+title: "GradDip Composition 2"
+level: 4
+points: 18.75
+offerings:
+  "2026":
+    - semester-1
+    - semester-2
+prerequisites: MUSI40012
+corequisites: none
+non_allowed: []
+skills:
+  - music
+  - writing
+topics:
+  - music
+assessment:
+  - kind: project
+    weight: 70
+  - kind: presentation
+    weight: 20
+  - kind: assignment
+    weight: 10
+weekly_contact_hours: 2.5
+breadth_for: []
+handbook: "https://handbook.unimelb.edu.au/2026/subjects/musi40013"
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Graduate Diploma in Music subject at Southbank: eight 1-hour individual lessons and a weekly 2-hour seminar. Includes a concert of about 15 minutes of your own works in the last 4 weeks."

@@ -1,0 +1,40 @@
+code: LANG40004
+title: Seminar in Languages 2
+level: 4
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+    - semester-2
+prerequisites:
+  all:
+    - any:
+        - admission: GC-ARTS
+          note: Graduate Certificate in Arts
+        - admission: GD-ARTS
+          note: Graduate Diploma in Arts
+    - permission: coordinator
+      note: "At least 25 points of study in your language, and approval from that language's coordinator."
+corequisites: none
+non_allowed: []
+skills:
+  - languages
+  - writing
+topics:
+  - languages
+  - society
+assessment:
+  - kind: assignment
+    weight: 50
+  - kind: assignment
+    weight: 50
+  - kind: participation
+    weight: 0
+    hurdle: true
+weekly_contact_hours: 2
+min_attendance: 80
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/lang40004
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Seminar for Graduate Certificate or Graduate Diploma in Arts students; the topic is set by the language program. All assessment must be submitted to pass."

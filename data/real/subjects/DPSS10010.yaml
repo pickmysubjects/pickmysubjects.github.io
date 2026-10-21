@@ -32,7 +32,7 @@ assessment:
     weight: 15
   - kind: presentation
     weight: 10
-weekly_contact_hours: 24
+weekly_contact_hours: 12
 breadth_for: []
 handbook: https://handbook.unimelb.edu.au/2026/subjects/dpss10010
 source_year: 2026

@@ -1,0 +1,40 @@
+code: PHYC10007
+title: "Physics for Biomedicine"
+level: 1
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+    - semester-2
+prerequisites:
+  any:
+    - MAST10012
+    - school:
+        subject: Mathematical Methods
+      note: "VCE Unit 3/4 Mathematical Methods"
+    - admission: B-BMED
+      note: Admission into the B-BMED Bachelor of Biomedicine
+corequisites: none
+non_allowed:
+  - PHYC10009
+skills:
+  - maths
+  - lab
+topics:
+  - physics
+  - health
+assessment:
+  - kind: report
+    weight: 25
+    hurdle: true
+  - kind: assignment
+    weight: 15
+  - kind: exam
+    weight: 60
+weekly_contact_hours: 5
+min_attendance: 80
+breadth_for: []
+handbook: "https://handbook.unimelb.edu.au/2026/subjects/phyc10007"
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. At Parkville: three lectures and one tutorial a week, plus six 2.5-hour labs. The practical work (lab reports, a take-home group experiment, an app review) is a hurdle: attend and submit for at least 80% of sessions and score at least 50%. Not open to students with a VCE Physics study score of 25 or more."

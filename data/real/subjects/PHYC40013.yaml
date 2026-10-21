@@ -1,0 +1,31 @@
+code: PHYC40013
+title: "Physics Research Project Pt2"
+level: 4
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+    - semester-2
+prerequisites:
+  any:
+    - PHYC40009
+    - PHYC40010
+    - PHYC40011
+    - PHYC40012
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - presentation
+topics:
+  - physics
+assessment:
+  - kind: report
+    weight: 90
+  - kind: presentation
+    weight: 10
+breadth_for: []
+handbook: "https://handbook.unimelb.edu.au/2026/subjects/phyc40013"
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Part 2, early-start (2 January to 31 May, or 1 July to 25 October 2026). Part of the research project in the Graduate Diploma in Science (Advanced): 50 points of project spread over two consecutive semesters, ending in a thesis of up to 25 pages and a 20-minute talk. You need an approved project and supervisor first; contact hours depend on the project. At Parkville."

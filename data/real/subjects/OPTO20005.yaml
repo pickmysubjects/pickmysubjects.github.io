@@ -1,0 +1,29 @@
+code: OPTO20005
+title: "The Science of Vision"
+level: 2
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites: OPTO20004
+corequisites: none
+non_allowed: []
+skills:
+  - lab
+topics:
+  - health
+  - biology
+  - physics
+assessment:
+  - kind: test
+    weight: 20
+  - kind: report
+    weight: 30
+  - kind: exam
+    weight: 50
+weekly_contact_hours: 4
+breadth_for: []
+handbook: "https://handbook.unimelb.edu.au/2026/subjects/opto20005"
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. On campus at Parkville: lectures, tutorials, seminars and six 3-hour practical classes. Part of the Bachelor of Biomedicine; builds on OPTO20004."

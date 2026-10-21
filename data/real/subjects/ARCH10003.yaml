@@ -27,7 +27,7 @@ assessment:
     hurdle: true
   - kind: quiz
     weight: 10
-weekly_contact_hours: 13
+weekly_contact_hours: 3.8
 breadth_for:
   - Bachelor of Arts
   - Bachelor of Biomedicine

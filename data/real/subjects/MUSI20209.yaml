@@ -1,0 +1,48 @@
+code: MUSI20209
+title: Chinese Music Ensemble 2 (Breadth)
+level: 2
+points: 12.5
+offerings:
+  "2026":
+    - summer
+    - semester-1
+    - semester-2
+prerequisites: MUSI20135
+corequisites: none
+non_allowed: []
+skills:
+  - presentation
+  - music
+topics:
+  - performance
+  - music
+  - society
+assessment:
+  - kind: participation
+    weight: 30
+  - kind: presentation
+    weight: 20
+  - kind: assignment
+    weight: 25
+  - kind: presentation
+    weight: 25
+weekly_contact_hours: 2
+breadth_for:
+  - Bachelor of Arts
+  - Bachelor of Biomedicine
+  - Bachelor of Commerce
+  - Bachelor of Design
+  - Bachelor of Fine Arts (Acting)
+  - Bachelor of Fine Arts (Animation)
+  - Bachelor of Fine Arts (Dance)
+  - Bachelor of Fine Arts (Film and Television)
+  - Bachelor of Fine Arts (Music Theatre)
+  - Bachelor of Fine Arts (Production)
+  - Bachelor of Fine Arts (Screenwriting)
+  - Bachelor of Fine Arts (Theatre)
+  - Bachelor of Fine Arts (Visual Art)
+  - Bachelor of Science
+handbook: https://handbook.unimelb.edu.au/2026/subjects/musi20209
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Follows Chinese Music Ensemble 1; includes going to two live concerts. Summer Term (January-February) has two rehearsals a week. Quotas apply."

@@ -64,6 +64,7 @@ const next = computed(() => {
         </template>
       </h1>
       <p class="hero-lede">{{ t('home.lede') }}</p>
+      <p class="hero-scope">{{ t('home.scope') }}</p>
       <a class="button button-accent hero-start" :href="next.href">
         {{ t('home.startStep', { n: next.n }) }} <ArrowRight :size="18" aria-hidden="true" />
       </a>
@@ -148,6 +149,11 @@ const next = computed(() => {
 }
 
 
+.hero-scope {
+  margin: 0.25rem 0 0;
+  font-size: 0.875rem;
+  color: var(--ink-soft);
+}
 .hero-title {
   max-width: 16em;
   font-size: clamp(2.3rem, 5.6vw, 4.2rem);

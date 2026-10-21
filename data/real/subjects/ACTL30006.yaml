@@ -1,0 +1,48 @@
+code: ACTL30006
+title: Intermediate Financial Mathematics
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites:
+  all:
+    - ACTL20003
+    - ACTL20004
+corequisites: none
+non_allowed:
+  - FNCE30001
+skills:
+  - maths
+  - statistics
+topics:
+  - actuarial
+  - finance
+  - probability
+  - modelling
+assessment:
+  - kind: assignment
+    weight: 10
+  - kind: test
+    weight: 10
+  - kind: assignment
+    weight: 10
+  - kind: exam
+    weight: 70
+    hurdle: true
+weekly_contact_hours: 3
+breadth_for:
+  - Bachelor of Fine Arts (Acting)
+  - Bachelor of Fine Arts (Animation)
+  - Bachelor of Fine Arts (Dance)
+  - Bachelor of Fine Arts (Film and Television)
+  - Bachelor of Fine Arts (Music Theatre)
+  - Bachelor of Fine Arts (Production)
+  - Bachelor of Fine Arts (Screenwriting)
+  - Bachelor of Fine Arts (Theatre)
+  - Bachelor of Fine Arts (Visual Art)
+  - Bachelor of Music
+handbook: https://handbook.unimelb.edu.au/2026/subjects/actl30006
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Students who started their degree in 2018 or earlier need ACTL20002 instead. You must pass the end-of-semester exam to pass."

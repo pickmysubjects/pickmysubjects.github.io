@@ -1,0 +1,32 @@
+code: UNIB10028
+title: "Australian Surfing"
+level: 1
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - presentation
+  - writing
+  - fieldwork
+topics:
+  - society
+  - history
+  - environment
+assessment:
+  - kind: presentation
+    weight: 34
+  - kind: report
+    weight: 33
+  - kind: presentation
+    weight: 33
+    group: true
+weekly_contact_hours: 4
+breadth_for: []
+handbook: "https://handbook.unimelb.edu.au/2026/subjects/unib10028"
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. At Parkville: weekly lectures, six practicals and two full-day field trips. The paste lists no breadth courses."

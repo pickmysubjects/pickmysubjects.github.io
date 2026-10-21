@@ -1086,6 +1086,7 @@ export const en = {
     eyebrow: 'For University of Melbourne students',
     title: 'Know what to take,|and when.',
     lede: "How hard a subject is, how much work, how it’s marked and what students say. Then subjects picked for your marks and interests, and a plan for your whole degree.",
+    scope: "Bachelor degrees only for now.",
     search: 'Search by subject code or name',
     searchShort: 'Search subjects',
     searchLabel: 'Search subjects',

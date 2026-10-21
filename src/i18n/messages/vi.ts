@@ -1083,6 +1083,7 @@ export const vi: Messages = {
     eyebrow: 'Dành cho sinh viên Đại học Melbourne',
     title: 'Học môn gì, khi nào học,|nhìn là biết.',
     lede: "Môn nào khó, bài tập nhiều không, chấm điểm dễ hay khắt khe, sinh viên nói gì. Rồi chọn môn hợp với điểm và sở thích của bạn, và xếp lộ trình cả bằng.",
+    scope: "Hiện chỉ có bậc cử nhân (Bachelor).",
     search: 'Tìm theo mã hoặc tên môn',
     searchShort: 'Tìm môn',
     searchLabel: 'Tìm môn',

@@ -1,0 +1,48 @@
+code: EDUC10050
+title: Understanding Knowing and Learning
+level: 1
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+topics:
+  - psychology
+  - society
+assessment:
+  - kind: quiz
+    weight: 15
+  - kind: assignment
+    weight: 30
+  - kind: assignment
+    weight: 50
+  - kind: presentation
+    weight: 5
+    group: true
+    hurdle: true
+weekly_contact_hours: 3
+min_attendance: 80
+breadth_for:
+  - Bachelor of Arts
+  - Bachelor of Biomedicine
+  - Bachelor of Commerce
+  - Bachelor of Design
+  - Bachelor of Fine Arts (Acting)
+  - Bachelor of Fine Arts (Animation)
+  - Bachelor of Fine Arts (Dance)
+  - Bachelor of Fine Arts (Film and Television)
+  - Bachelor of Fine Arts (Music Theatre)
+  - Bachelor of Fine Arts (Production)
+  - Bachelor of Fine Arts (Screenwriting)
+  - Bachelor of Fine Arts (Theatre)
+  - Bachelor of Fine Arts (Visual Art)
+  - Bachelor of Music
+  - Bachelor of Science
+handbook: https://handbook.unimelb.edu.au/2026/subjects/educ10050
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Volunteer tutoring in community learning programs is part of the subject. Students must co-lead a tutorial segment in a group (hurdle)."

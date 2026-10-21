@@ -1,0 +1,52 @@
+code: UNIB10023
+title: "The Making of Melbourne"
+level: 1
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - fieldwork
+topics:
+  - history
+  - urban-planning
+  - geography
+  - indigenous-studies
+assessment:
+  - kind: quiz
+    weight: 20
+  - kind: report
+    weight: 30
+    group: true
+  - kind: report
+    weight: 30
+    group: true
+  - kind: assignment
+    weight: 20
+  - kind: participation
+    weight: 0
+    hurdle: true
+breadth_for:
+  - Bachelor of Arts
+  - Bachelor of Biomedicine
+  - Bachelor of Commerce
+  - Bachelor of Design
+  - Bachelor of Fine Arts (Acting)
+  - Bachelor of Fine Arts (Animation)
+  - Bachelor of Fine Arts (Dance)
+  - Bachelor of Fine Arts (Film and Television)
+  - Bachelor of Fine Arts (Music Theatre)
+  - Bachelor of Fine Arts (Production)
+  - Bachelor of Fine Arts (Screenwriting)
+  - Bachelor of Fine Arts (Theatre)
+  - Bachelor of Fine Arts (Visual Art)
+  - Bachelor of Music
+  - Bachelor of Science
+handbook: "https://handbook.unimelb.edu.au/2026/subjects/unib10023"
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Off campus, with online modules (completing them is a hurdle) and a group field report on Melbourne."

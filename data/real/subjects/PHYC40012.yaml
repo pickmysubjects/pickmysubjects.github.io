@@ -1,0 +1,28 @@
+code: PHYC40012
+title: "Physics Research Project Pt1"
+level: 4
+points: 50
+offerings:
+  "2026":
+    - semester-1
+    - semester-2
+prerequisites:
+  permission: coordinator
+  note: "Coordinator approval – students are required to have an approved research project and supervisor before undertaking a research component"
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - presentation
+topics:
+  - physics
+assessment:
+  - kind: report
+    weight: 90
+  - kind: presentation
+    weight: 10
+breadth_for: []
+handbook: "https://handbook.unimelb.edu.au/2026/subjects/phyc40012"
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Part 1 (extended semester). Part of the research project in the Graduate Diploma in Science (Advanced): 50 points of project spread over two consecutive semesters, ending in a thesis of up to 25 pages and a 20-minute talk. You need an approved project and supervisor first; contact hours depend on the project. At Parkville."

@@ -1,0 +1,32 @@
+code: MUSI40016
+title: "Practical Study 1"
+level: 4
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+    - semester-2
+prerequisites:
+  admission: GD-MUS
+  note: Admission into the Practical Music informal specialisation in the GD-MUS Graduate Diploma in Music
+corequisites: none
+non_allowed:
+  - MUSI40088
+skills:
+  - music
+topics:
+  - music
+  - performance
+assessment:
+  - kind: presentation
+    weight: 100
+  - kind: participation
+    weight: 0
+    hurdle: true
+weekly_contact_hours: 7
+min_attendance: 100
+breadth_for: []
+handbook: "https://handbook.unimelb.edu.au/2026/subjects/musi40016"
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Graduate Diploma in Music (Practical Music) subject at Southbank: weekly 45-minute lesson, instrument class and concert practice class. Marked by a 15-minute technical examination; you must attend all applicable classes."

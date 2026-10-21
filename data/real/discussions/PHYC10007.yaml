@@ -1,0 +1,37 @@
+code: PHYC10007
+source: StudentVIP
+url: https://studentvip.com.au/unimelb/subjects/phyc10007
+reviews: 10
+from: 2018
+to: 2020
+checked: 2026-10-21
+points:
+  - en: "Most reviewers, many with no physics background, found it hard and poorly organised, with confusing lectures and practice exams that lacked clear answers."
+    zh: "多数评论者（不少没学过物理）觉得这门课难、组织混乱，讲课让人困惑，往年试题也缺少清楚的答案。"
+    zh-TW: "多數評論者（不少沒學過物理）覺得這門課難、組織混亂，講課令人困惑，考古題也缺少清楚的解答。"
+    ja: "物理未経験者を中心に、難しく運営もまとまりがないとの声が多い。講義がわかりにくく、過去問の解答も不十分。"
+    ko: "물리 배경이 없는 수강생이 많았고, 대부분 어렵고 운영이 엉성하며 강의가 혼란스럽고 기출 해설도 부실했다고 함."
+    vi: "Phần lớn người review, nhiều người chưa học vật lý, thấy môn khó và tổ chức kém, bài giảng khó hiểu, đề cũ thiếu đáp án rõ."
+    ms: "Kebanyakan pengulas, ramai tanpa latar fizik, rasa ia sukar dan kurang teratur, kuliah mengelirukan dan jawapan soalan lepas tidak jelas."
+    id: "Sebagian besar pengulas, banyak yang tanpa latar fisika, merasa sulit dan kurang tertata, kuliah membingungkan, soal lama minim jawaban jelas."
+    hi: "ज़्यादातर रिव्यूअर, कई बिना फ़िज़िक्स बैकग्राउंड के, इसे कठिन और अव्यवस्थित बताते हैं; लेक्चर उलझाऊ और पुराने पेपरों के जवाब अस्पष्ट।"
+  - en: "Lab reports are written within the session, and several said prac marks depend a lot on which demonstrator you get and that feedback was thin."
+    zh: "实验报告要在课上当场写完，有几位说实验分数很看带课助教，反馈也很少。"
+    zh-TW: "實驗報告要在課堂上當場寫完，有幾位說實驗分數很看帶課助教，回饋也很少。"
+    ja: "実験レポートはその場で書き上げる形式。実験の点数は担当デモンストレーター次第で、フィードバックも少ないとの声。"
+    ko: "실험 보고서는 수업 중에 써야 하고, 실험 점수가 담당 조교에 크게 좌우되며 피드백이 적었다는 의견이 여럿."
+    vi: "Báo cáo thí nghiệm phải viết ngay trong buổi; vài người nói điểm thực hành phụ thuộc nhiều vào người hướng dẫn và ít phản hồi."
+    ms: "Laporan makmal ditulis dalam sesi itu sendiri; beberapa kata markah amali banyak bergantung pada demonstrator dan maklum balas sedikit."
+    id: "Laporan praktikum ditulis saat sesi; beberapa bilang nilai praktikum sangat tergantung asisten dan umpan baliknya minim."
+    hi: "लैब रिपोर्ट सत्र के भीतर लिखनी होती है; कई ने कहा प्रैक के अंक डेमॉन्स्ट्रेटर पर बहुत निर्भर हैं और फ़ीडबैक कम मिला।"
+  - en: "Those who did well say an H1 is reachable by working through many textbook and past exam questions; the exam reused past questions and scaling helped."
+    zh: "考得好的人说，多做课本题和往年真题就有机会拿H1；考试会重复往年题目，调分也有帮助。"
+    zh-TW: "考得好的人說，多做課本題和考古題就有機會拿H1；考試會重複往年題目，調分也有幫助。"
+    ja: "高得点の人は、教科書と過去問を大量に解けばH1も狙えると言う。試験は過去問の再利用があり、スケーリングにも助けられた。"
+    ko: "잘 받은 사람들은 교재와 기출을 많이 풀면 H1도 가능하다고 함. 시험에 기출이 재사용됐고 스케일링도 도움이 됨."
+    vi: "Người đạt điểm cao nói có thể lấy H1 nếu luyện nhiều bài sách và đề cũ; đề thi lặp lại câu cũ và có scaling giúp đỡ."
+    ms: "Yang berjaya kata H1 boleh dicapai dengan banyak latihan buku teks dan soalan lepas; peperiksaan ulang soalan lama dan penskalaan membantu."
+    id: "Yang berhasil bilang H1 bisa diraih dengan banyak latihan soal buku dan ujian lama; ujian mengulang soal lama dan scaling membantu."
+    hi: "अच्छे अंक पाने वाले कहते हैं कि किताब और पुराने पेपर के बहुत सवाल करने से H1 मिल सकता है; परीक्षा में पुराने सवाल दोहराए गए और स्केलिंग से मदद मिली।"
+workload: heavy
+difficulty: hard

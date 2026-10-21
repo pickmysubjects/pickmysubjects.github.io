@@ -1,0 +1,41 @@
+code: PSYC40013
+title: "Advanced Psychological Theory & Practice"
+level: 4
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites:
+  all:
+    - admission: "340AA"
+      note: Admission into the 340AA Graduate Diploma in Psychology
+    - PSYC40014
+    - points:
+        min: 25
+        level: 2
+corequisites: none
+non_allowed:
+  - PSYC30021
+skills:
+  - writing
+  - presentation
+  - statistics
+topics:
+  - psychology
+assessment:
+  - kind: presentation
+    weight: 10
+  - kind: report
+    weight: 40
+  - kind: exam
+    weight: 50
+  - kind: participation
+    weight: 0
+    hurdle: true
+weekly_contact_hours: 3.5
+min_attendance: 80
+breadth_for: []
+handbook: "https://handbook.unimelb.edu.au/2026/subjects/psyc40013"
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Capstone of the Graduate Diploma in Psychology, at Parkville: lectures plus small-group research seminars where you run a supervised research project. Missing seminars beyond the 80% hurdle means extra work before you can pass."

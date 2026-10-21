@@ -1,0 +1,37 @@
+code: EDUC20073
+source: StudentVIP
+url: https://studentvip.com.au/unimelb/subjects/educ20073
+reviews: 3
+from: 2022
+to: 2025
+checked: 2026-10-21
+points:
+  - en: "Reviewers say the assignments build on each other and come with a detailed rubric, so it is clear what earns marks."
+    zh: "评论者说作业环环相扣，并有详细评分标准，得分要求很清楚。"
+    zh-TW: "評論者說作業環環相扣，並有詳細評分標準，得分要求很清楚。"
+    ja: "課題は段階的につながり、詳しいルーブリックがあるので何で点が取れるか明確とのこと。"
+    ko: "과제가 서로 이어지고 자세한 루브릭이 있어 점수 기준이 분명하다는 평."
+    vi: "Người học nói các bài tập nối tiếp nhau và có rubric chi tiết, nên biết rõ cách lấy điểm."
+    ms: "Pengulas kata tugasan saling bersambung dan ada rubrik terperinci, jadi jelas cara mendapat markah."
+    id: "Pengulas bilang tugas saling berkaitan dan ada rubrik rinci, jadi jelas cara mendapat nilai."
+    hi: "रिव्यूअर्स के अनुसार असाइनमेंट एक-दूसरे पर बनते हैं और विस्तृत रूब्रिक है, इसलिए अंक पाना साफ़ है।"
+  - en: "The weekly load is described as light: one short lecture, a reading or two, and a relaxed seminar, with the readings mostly feeding the quizzes."
+    zh: "每周负担被认为较轻：一节短讲座、一两篇阅读和轻松的研讨课，阅读主要用于小测。"
+    zh-TW: "每週負擔被認為較輕：一堂短講座、一兩篇閱讀和輕鬆的研討課，閱讀主要用於小考。"
+    ja: "週の負担は軽めで、短い講義と1〜2本の文献、気楽なセミナー。文献は主に小テスト用。"
+    ko: "주간 부담은 가벼운 편: 짧은 강의, 읽기 한두 개, 편한 세미나. 읽기는 주로 퀴즈용."
+    vi: "Khối lượng mỗi tuần nhẹ: một bài giảng ngắn, một hai bài đọc và buổi seminar thoải mái; bài đọc chủ yếu cho quiz."
+    ms: "Beban mingguan ringan: satu kuliah pendek, satu dua bacaan dan seminar santai; bacaan kebanyakannya untuk kuiz."
+    id: "Beban mingguan ringan: satu kuliah singkat, satu dua bacaan dan seminar santai; bacaan terutama untuk kuis."
+    hi: "साप्ताहिक बोझ हल्का बताया गया: एक छोटा लेक्चर, एक-दो रीडिंग और आरामदेह सेमिनार; रीडिंग मुख्यतः क्विज़ के लिए।"
+  - en: "Most found it interesting and the staff passionate, though some weeks felt dry and the seminars sometimes ran short of material."
+    zh: "多数人觉得内容有趣、老师很投入，但有几周较枯燥，研讨课有时内容不够。"
+    zh-TW: "多數人覺得內容有趣、老師很投入，但有幾週較枯燥，研討課有時內容不夠。"
+    ja: "多くは面白く教員も熱心と評価。ただ退屈な週もあり、セミナーは内容が足りないこともある。"
+    ko: "대부분 흥미롭고 교수진이 열정적이라 했지만, 지루한 주도 있고 세미나 내용이 부족할 때도 있음."
+    vi: "Đa số thấy môn thú vị và giảng viên nhiệt tình, dù vài tuần hơi khô và seminar đôi khi thiếu nội dung."
+    ms: "Kebanyakan rasa ia menarik dan pengajar bersemangat, walaupun ada minggu yang hambar dan seminar kadang kurang isi."
+    id: "Sebagian besar merasa menarik dan pengajarnya bersemangat, meski ada minggu yang kering dan seminar kadang kurang materi."
+    hi: "ज़्यादातर को यह रोचक और स्टाफ़ उत्साही लगा, पर कुछ हफ़्ते नीरस थे और सेमिनार में कभी सामग्री कम पड़ी।"
+workload: light
+difficulty: easy

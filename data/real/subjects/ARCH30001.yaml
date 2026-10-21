@@ -25,7 +25,7 @@ assessment:
     weight: 45
   - kind: assignment
     weight: 15
-weekly_contact_hours: 15
+weekly_contact_hours: 4
 breadth_for:
   - Bachelor of Arts
   - Bachelor of Biomedicine

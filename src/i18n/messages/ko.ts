@@ -1083,6 +1083,7 @@ export const ko: Messages = {
     eyebrow: '멜버른대 학생을 위해',
     title: '무엇을, 언제 들을지|한눈에.',
     lede: "과목이 얼마나 어려운지, 과제가 많은지, 채점이 후한지, 학생들은 뭐라고 하는지. 그다음 내 성적과 관심사에 맞는 과목을 고르고 학위 전체 계획을 세워요.",
+    scope: "지금은 학사(Bachelor)만 있어요.",
     search: '과목 코드나 이름으로 검색',
     searchShort: '과목 검색',
     searchLabel: '과목 검색',

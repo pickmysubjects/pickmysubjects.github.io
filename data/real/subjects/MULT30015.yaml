@@ -1,0 +1,27 @@
+code: MULT30015
+title: Independent Research Project
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - summer
+    - semester-1
+    - winter
+    - semester-2
+prerequisites:
+  permission: coordinator
+  note: "Needs a workable research proposal and an academic who agrees to supervise it."
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+topics:
+  - society
+assessment:
+  - kind: assignment
+    weight: 100
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/mult30015
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Your own 4000-word research paper with a supervisor, usually 30-minute meetings every fortnight; works like a small Honours project. Summer Term runs January-February and Winter Term June-July. All assessment must be submitted to pass."

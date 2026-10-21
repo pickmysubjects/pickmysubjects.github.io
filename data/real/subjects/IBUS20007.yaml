@@ -1,0 +1,41 @@
+code: IBUS20007
+title: International Business Experience
+level: 2
+points: 12.5
+offerings:
+  "2026":
+    - summer
+    - winter
+prerequisites:
+  all:
+    - admission: B-COM
+      note: Bachelor of Commerce students
+    - points:
+        min: 50
+        level: 1
+    - permission: application
+      note: "Selection on your WAM, a short statement and a one-page CV; apply through the faculty before the tour."
+corequisites: none
+non_allowed: []
+skills:
+  - business
+  - presentation
+  - writing
+topics:
+  - business
+  - economics
+  - management
+assessment:
+  - kind: presentation
+    weight: 30
+    group: true
+  - kind: assignment
+    weight: 20
+  - kind: assignment
+    weight: 50
+weekly_contact_hours: 6.5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/ibus20007
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Two-week overseas study tour run with partner universities, in June (shown as Winter) or November (shown as Summer): lectures, company visits and cultural activities, about 8 hours a day for 10 days. Quotas apply."

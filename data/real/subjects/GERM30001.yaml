@@ -1,0 +1,62 @@
+code: GERM30001
+title: German Cultural Studies B
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites:
+  any:
+    - any:
+        - GERM10002
+        - GERM10007
+        - GERM20005
+        - GERM20008
+        - GERM30006
+    - placement: German
+      note: "First time studying German here: a placement test result at German 4 level or higher."
+corequisites: none
+non_allowed:
+  - GERM20003
+skills:
+  - languages
+  - writing
+  - presentation
+topics:
+  - languages
+  - society
+  - literature
+  - history
+assessment:
+  - kind: assignment
+    weight: 25
+  - kind: assignment
+    weight: 25
+  - kind: presentation
+    weight: 10
+  - kind: assignment
+    weight: 40
+  - kind: participation
+    weight: 0
+    hurdle: true
+weekly_contact_hours: 3
+min_attendance: 80
+breadth_for:
+  - Bachelor of Biomedicine
+  - Bachelor of Commerce
+  - Bachelor of Design
+  - Bachelor of Fine Arts (Acting)
+  - Bachelor of Fine Arts (Animation)
+  - Bachelor of Fine Arts (Dance)
+  - Bachelor of Fine Arts (Film and Television)
+  - Bachelor of Fine Arts (Music Theatre)
+  - Bachelor of Fine Arts (Production)
+  - Bachelor of Fine Arts (Screenwriting)
+  - Bachelor of Fine Arts (Theatre)
+  - Bachelor of Fine Arts (Visual Art)
+  - Bachelor of Music
+  - Bachelor of Science
+handbook: https://handbook.unimelb.edu.au/2026/subjects/germ30001
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Topic changes from semester to semester (literature, media, culture or history of German-speaking societies). All assessment must be submitted to pass."

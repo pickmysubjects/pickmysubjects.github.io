@@ -1083,6 +1083,7 @@ export const zhTW: Messages = {
     eyebrow: '為墨爾本大學學生打造',
     title: '修什麼課、|什麼時候修，|一眼看清。',
     lede: "哪門課難、作業多不多、給分鬆不鬆、同學怎麼說。再依你的成績和興趣挑適合你的課，排好整個學位。",
+    scope: "目前只有大學部（Bachelor）。",
     search: '搜尋課號或課名',
     searchShort: '搜尋課程',
     searchLabel: '搜尋課程',

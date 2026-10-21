@@ -1,0 +1,37 @@
+code: FLTV10010
+source: StudentVIP
+url: https://studentvip.com.au/unimelb/subjects/fltv10010
+reviews: 6
+from: 2020
+to: 2025
+checked: 2026-10-21
+points:
+  - en: "Most found it a light, all-online intro: one weekly lecture with clips from working filmmakers, easy weekly quizzes and no tutorials."
+    zh: "多数人觉得这是轻松的全网课入门：每周一节配片段的讲座、简单的每周小测，没有辅导课。"
+    zh-TW: "多數人覺得這是輕鬆的全線上入門：每週一堂配片段的講座、簡單的每週小測，沒有輔導課。"
+    ja: "多くは気軽な完全オンライン入門と評価：週1回の映像付き講義、簡単な毎週の小テスト、チュートリアルなし。"
+    ko: "대부분 가벼운 전면 온라인 입문으로 봄: 주 1회 영상 강의, 쉬운 주간 퀴즈, 튜토리얼 없음."
+    vi: "Đa số thấy đây là môn nhập môn nhẹ, hoàn toàn online: một bài giảng mỗi tuần, quiz dễ, không có tutorial."
+    ms: "Kebanyakan dapati ia pengenalan ringan dalam talian: satu kuliah seminggu, kuiz mudah, tiada tutorial."
+    id: "Sebagian besar menganggapnya pengantar ringan dan daring: satu kuliah per minggu, kuis mudah, tanpa tutorial."
+    hi: "ज़्यादातर को यह हल्का, पूरी तरह ऑनलाइन परिचय लगा: हफ़्ते में एक लेक्चर, आसान क्विज़, कोई ट्यूटोरियल नहीं।"
+  - en: "The storyboard and director's statement were seen as fun, and marks were usually high; follow the brief closely (for example, no text if told so)."
+    zh: "分镜作业和导演阐述被认为有趣，分数普遍较高；要严格按要求做（比如说了不能有文字就别加）。"
+    zh-TW: "分鏡作業和導演闡述被認為有趣，分數普遍較高；要嚴格按要求做（例如說了不能有文字就別加）。"
+    ja: "絵コンテ課題と監督ステートメントは楽しく、点数も高めという声。指示には厳密に従うこと（文字禁止なら入れない）。"
+    ko: "스토리보드와 연출 의도 과제는 재미있었고 점수도 대체로 높음. 지침을 꼼꼼히 따를 것(문자 금지면 넣지 말기)."
+    vi: "Bài phân cảnh và tuyên bố đạo diễn được cho là vui, điểm thường cao; hãy làm đúng yêu cầu (cấm chữ thì đừng thêm)."
+    ms: "Tugasan papan cerita dan kenyataan pengarah dianggap seronok, markah biasanya tinggi; ikut arahan dengan teliti."
+    id: "Tugas storyboard dan pernyataan sutradara dianggap seru, nilai umumnya tinggi; ikuti instruksi dengan ketat."
+    hi: "स्टोरीबोर्ड और निर्देशक वक्तव्य मज़ेदार माने गए, अंक आमतौर पर अच्छे; निर्देशों का सख़्ती से पालन करें।"
+  - en: "A few found the two-hour lectures dull and the guidance thin, and said a high mark still isn't guaranteed."
+    zh: "少数人觉得两小时的讲座很闷、作业指导不足，并说高分也不是稳拿。"
+    zh-TW: "少數人覺得兩小時的講座很悶、作業指導不足，並說高分也不是穩拿。"
+    ja: "2時間の講義が退屈で指導も少ないと感じた人もおり、高得点は保証されないとの声。"
+    ko: "일부는 2시간 강의가 지루하고 지도가 부족하며 높은 점수도 보장되지 않는다고 함."
+    vi: "Một số thấy bài giảng 2 giờ nhàm chán, hướng dẫn ít, và điểm cao không chắc chắn."
+    ms: "Segelintir rasa kuliah dua jam membosankan, bimbingan kurang, dan markah tinggi tidak dijamin."
+    id: "Beberapa merasa kuliah dua jam membosankan, bimbingan minim, dan nilai tinggi tidak dijamin."
+    hi: "कुछ को दो घंटे के लेक्चर उबाऊ और मार्गदर्शन कम लगा, और कहा कि ऊँचे अंक तय नहीं हैं।"
+workload: light
+difficulty: easy

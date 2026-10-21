@@ -1,0 +1,50 @@
+code: SCIE30004
+title: "Science Innovation: Asia to Australia"
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - winter
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - presentation
+  - writing
+  - fieldwork
+topics:
+  - science-communication
+  - business
+  - indigenous-studies
+assessment:
+  - kind: project
+    weight: 20
+    group: true
+  - kind: presentation
+    weight: 20
+    group: true
+  - kind: assignment
+    weight: 30
+  - kind: assignment
+    weight: 30
+weekly_contact_hours: 4
+breadth_for:
+  - Bachelor of Arts
+  - Bachelor of Biomedicine
+  - Bachelor of Commerce
+  - Bachelor of Design
+  - Bachelor of Fine Arts (Acting)
+  - Bachelor of Fine Arts (Animation)
+  - Bachelor of Fine Arts (Dance)
+  - Bachelor of Fine Arts (Film and Television)
+  - Bachelor of Fine Arts (Music Theatre)
+  - Bachelor of Fine Arts (Production)
+  - Bachelor of Fine Arts (Screenwriting)
+  - Bachelor of Fine Arts (Theatre)
+  - Bachelor of Fine Arts (Visual Art)
+  - Bachelor of Music
+  - Bachelor of Science
+handbook: "https://handbook.unimelb.edu.au/2026/subjects/scie30004"
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Intensive in July (20 to 31 July 2026) at Parkville: five 8-hour days of field trips around Melbourne, then three 2-hour seminars, 46 contact hours. Written work is due after teaching ends."

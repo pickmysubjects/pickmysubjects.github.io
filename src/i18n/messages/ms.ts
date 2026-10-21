@@ -1083,6 +1083,7 @@ export const ms: Messages = {
     eyebrow: 'Untuk pelajar University of Melbourne',
     title: 'Tahu subjek apa nak ambil,|dan bila.',
     lede: "Betapa sukar sesuatu subjek, banyak kerja atau tidak, pemarkahan ketat atau tidak, dan apa kata pelajar. Kemudian pilih subjek yang sesuai dengan markah dan minat anda, dan susun rancangan seluruh ijazah.",
+    scope: "Buat masa ini ijazah sarjana muda (Bachelor) sahaja.",
     search: 'Cari kod atau nama subjek',
     searchShort: 'Cari subjek',
     searchLabel: 'Cari subjek',

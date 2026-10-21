@@ -33,6 +33,7 @@ assessment:
     group: true
   - kind: report
     weight: 20
+min_attendance: 100
 breadth_for: []
 handbook: https://handbook.unimelb.edu.au/2026/subjects/mgmt30012
 source_year: 2026

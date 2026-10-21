@@ -36,6 +36,7 @@ assessment:
     weight: 30
     hurdle: true
 weekly_contact_hours: 6
+min_attendance: 75
 breadth_for: []
 handbook: https://handbook.unimelb.edu.au/2026/subjects/perf30002
 source_year: 2026

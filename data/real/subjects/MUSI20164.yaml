@@ -1,0 +1,50 @@
+code: MUSI20164
+title: Free Play New Music Improvisation Ensem
+level: 2
+points: 12.5
+offerings:
+  "2026":
+    - summer
+    - semester-1
+    - winter
+    - semester-2
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - presentation
+  - music
+topics:
+  - performance
+  - music
+assessment:
+  - kind: participation
+    weight: 50
+  - kind: assignment
+    weight: 15
+  - kind: presentation
+    weight: 35
+  - kind: participation
+    weight: 0
+    hurdle: true
+weekly_contact_hours: 2
+min_attendance: 80
+breadth_for:
+  - Bachelor of Arts
+  - Bachelor of Biomedicine
+  - Bachelor of Commerce
+  - Bachelor of Design
+  - Bachelor of Fine Arts (Acting)
+  - Bachelor of Fine Arts (Animation)
+  - Bachelor of Fine Arts (Dance)
+  - Bachelor of Fine Arts (Film and Television)
+  - Bachelor of Fine Arts (Music Theatre)
+  - Bachelor of Fine Arts (Production)
+  - Bachelor of Fine Arts (Screenwriting)
+  - Bachelor of Fine Arts (Theatre)
+  - Bachelor of Fine Arts (Visual Art)
+  - Bachelor of Science
+handbook: https://handbook.unimelb.edu.au/2026/subjects/musi20164
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. February (summer), Semester 1 and June (winter) run online; Semester 2 on campus. February and June are 4-week intensives of three 2-hour classes a week. Quotas apply. All assessment must be submitted to pass. Not available to Bachelor of Music or Diploma in Music students."

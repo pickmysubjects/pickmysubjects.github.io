@@ -1,0 +1,32 @@
+code: NRMT10007
+title: "Land Resources and Management"
+level: 1
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - fieldwork
+  - writing
+topics:
+  - agriculture
+  - environment
+  - earth-science
+assessment:
+  - kind: report
+    weight: 20
+    group: true
+  - kind: report
+    weight: 30
+  - kind: exam
+    weight: 50
+weekly_contact_hours: 4
+breadth_for: []
+handbook: "https://handbook.unimelb.edu.au/2026/subjects/nrmt10007"
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Taught at Dookie: weekly lecture and tutorial or practical for 9 weeks, plus two 5-hour field trips (weeks 5 and 11)."
+campus: Dookie
