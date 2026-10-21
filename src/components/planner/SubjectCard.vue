@@ -237,9 +237,11 @@ function onDragStart(event: DragEvent): void {
 }
 
 .card-tools {
+  /* Sits on the card's top edge, so it never covers the subject code. */
   position: absolute;
-  top: 5px;
-  right: 5px;
+  z-index: 1;
+  top: -12px;
+  right: 6px;
   display: flex;
   border-radius: var(--radius);
   background: var(--paper-raised);
