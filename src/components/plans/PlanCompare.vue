@@ -151,7 +151,7 @@ function open(id: string): void {
 <style scoped>
 .compare {
   display: grid;
-  gap: 16px;
+  gap: var(--space-5);
   min-width: 0;
 }
 
@@ -159,7 +159,7 @@ function open(id: string): void {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 12px;
+  gap: var(--space-3);
 }
 
 .title {
@@ -170,15 +170,16 @@ function open(id: string): void {
 .pickers {
   display: grid;
   grid-template-columns: minmax(0, 20em) auto minmax(0, 20em);
+  justify-content: start;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-2);
 }
 
 .pick {
   width: 100%;
   min-width: 0;
   min-height: 42px;
-  padding: 0 12px;
+  padding: 0 var(--space-3);
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: var(--paper);
@@ -194,16 +195,16 @@ function open(id: string): void {
 .pair {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
-  gap: 12px;
+  gap: var(--space-4);
 }
 
 .card,
 .group {
   display: grid;
   align-content: start;
-  gap: 6px;
+  gap: var(--space-2);
   min-width: 0;
-  padding: 14px 16px;
+  padding: var(--space-5);
 }
 
 .card p {
@@ -213,7 +214,7 @@ function open(id: string): void {
 .card-name {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-2);
   font-weight: 700;
 }
 
@@ -242,8 +243,8 @@ function open(id: string): void {
 .facts {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 8px;
-  margin: 6px 0 0;
+  gap: var(--space-3) var(--space-4);
+  margin: var(--space-2) 0 0;
 }
 
 .facts dt {
@@ -271,8 +272,8 @@ function open(id: string): void {
 
 .rules {
   display: grid;
-  gap: 4px;
-  margin: 4px 0 0;
+  gap: var(--space-1);
+  margin: var(--space-1) 0 0;
   padding-left: 18px;
   color: var(--ink-soft);
   font-size: 0.8125rem;
@@ -284,7 +285,7 @@ function open(id: string): void {
 
 .card-open {
   justify-self: start;
-  margin-top: 6px;
+  margin-top: var(--space-3);
 }
 
 .group-title {
@@ -299,15 +300,15 @@ summary.group-title {
 }
 
 .count {
-  margin-left: 4px;
+  margin-left: var(--space-1);
   color: var(--ink-soft);
   font-weight: 500;
 }
 
 .codes {
   display: grid;
-  gap: 4px;
-  margin: 4px 0 0;
+  gap: var(--space-1);
+  margin: var(--space-1) 0 0;
   padding: 0;
   list-style: none;
   font-size: 0.875rem;
@@ -321,13 +322,13 @@ summary.group-title {
 
 .terms {
   display: grid;
-  gap: 4px;
+  gap: var(--space-1);
 }
 
 .term {
   display: grid;
   grid-template-columns: minmax(5.5em, 0.8fr) 1fr 1fr;
-  gap: 8px;
+  gap: var(--space-2);
   align-items: center;
   min-width: 0;
 }
@@ -350,10 +351,10 @@ summary.group-title {
 .cell {
   display: flex;
   flex-wrap: wrap;
-  gap: 2px 8px;
+  gap: 2px var(--space-2);
   align-items: baseline;
   min-width: 0;
-  padding: 6px 10px;
+  padding: var(--space-2) var(--space-3);
   border-radius: var(--radius-sm);
   background: var(--good-soft);
   font-size: 0.875rem;
