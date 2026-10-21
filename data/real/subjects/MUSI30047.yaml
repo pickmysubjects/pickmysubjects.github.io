@@ -9,9 +9,11 @@ corequisites: none
 non_allowed: []
 skills:
 - writing
+- music
 topics:
 - art
 - history
+- music
 assessment:
 - kind: assignment
   weight: 60

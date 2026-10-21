@@ -10,9 +10,11 @@ corequisites: none
 non_allowed: []
 skills:
 - writing
+- music
 topics:
 - indigenous-studies
 - society
+- music
 assessment:
 - kind: assignment
   weight: 30

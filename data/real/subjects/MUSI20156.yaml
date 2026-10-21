@@ -10,9 +10,11 @@ corequisites: none
 non_allowed: []
 skills:
 - writing
+- music
 topics:
 - performance
 - health
+- music
 assessment:
 - kind: assignment
   weight: 50

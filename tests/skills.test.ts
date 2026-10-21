@@ -24,6 +24,14 @@ describe('skillsOf', () => {
     expect(skillsOf(data.subjects['SPAN30021'] as Subject, data)).not.toContain('languages')
   })
 
+  it('gives practical music subjects the music skill, not ones that write about music', () => {
+    const data = dataset([subject({ code: 'MUSI10001', title: 'String Ensemble 1' }), subject({ code: 'MUSI10002', title: 'Music and Politics' }), subject({ code: 'HIST10001', title: 'Music Theory of History' })])
+    expect(skillsOf(data.subjects['MUSI10001'] as Subject, data)).toContain('music')
+    expect(skillsOf(data.subjects['MUSI10002'] as Subject, data)).not.toContain('music')
+    // Only within the music area: the title alone doesn't make it a musicianship subject.
+    expect(skillsOf(data.subjects['HIST10001'] as Subject, data)).not.toContain('music')
+  })
+
   it('agrees with the hand-tagged subjects when it has to guess them blind (real data)', () => {
     const { dataset: real } = buildDataset('real')
     const tagged = Object.values(real.subjects).filter((s) => s.skills.length)

@@ -17,9 +17,11 @@ corequisites: none
 non_allowed: []
 skills:
 - presentation
+- music
 topics:
 - performance
 - society
+- music
 assessment:
 - kind: assignment
   weight: 30

@@ -361,6 +361,7 @@ export const zhCN: Messages = {
     languages: "外语",
     lab: '实验',
     fieldwork: "野外考察",
+    music: "音乐技能",
     design: '设计',
     business: '商科',
     exams: "考试",
@@ -477,6 +478,7 @@ export const zhCN: Messages = {
     'construction': '建造与施工',
     'visual-communication': '平面设计',
     'performance': '戏剧与表演',
+    'music': '音乐',
     'film-and-screen': '电影与影视',
   },
   contribute: {

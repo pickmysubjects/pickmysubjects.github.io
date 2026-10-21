@@ -15,8 +15,10 @@ non_allowed: []
 skills:
   - design
   - writing
+  - music
 topics:
   - art
+  - music
 assessment:
   - kind: presentation
     weight: 10

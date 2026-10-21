@@ -361,6 +361,7 @@ export const ms: Messages = {
     languages: "Bahasa asing",
     lab: 'Kerja makmal',
     fieldwork: "Kerja lapangan",
+    music: "Kemahiran muzik",
     design: 'Reka bentuk',
     business: 'Perniagaan',
     exams: "Peperiksaan",
@@ -477,6 +478,7 @@ export const ms: Messages = {
     'construction': 'Pembinaan',
     'visual-communication': 'Reka bentuk grafik',
     'performance': 'Teater dan persembahan',
+    'music': 'Muzik',
     'film-and-screen': 'Filem dan skrin',
   },
   contribute: {

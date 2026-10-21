@@ -9,7 +9,7 @@ categories: [design, breadth]
 # lists. Only the Architecture, Building and Planning study areas are mapped by prefix here; the
 # Science, Engineering and Fine Arts/Music subjects on those lists (COMP, INFO, MAST, GDES, ...)
 # are only some of their areas' subjects, so a prefix rule would wrongly make every subject in
-# those areas a Design subject. Not encoded yet: those individually listed discipline subjects.
+# those areas a Design subject; those listed subjects carry `B-DES: design` in their own files.
 area_categories:
   home: design
   areas: [ABPL, ARCH, CONS, LARC, PLAN, PROP]

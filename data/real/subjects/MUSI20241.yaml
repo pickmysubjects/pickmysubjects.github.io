@@ -11,9 +11,11 @@ non_allowed:
 - MUSI10021
 skills:
 - presentation
+- music
 topics:
 - performance
 - society
+- music
 assessment:
 - kind: participation
   weight: 50

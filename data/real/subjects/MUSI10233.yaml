@@ -6,13 +6,16 @@ offerings:
   "2026":
     - semester-1
 prerequisites:
-  admission: "Bachelor of Music, concurrently enrolled at ANAM"
+  admission: B-MUS
+  note: Bachelor of Music students concurrently enrolled at ANAM only
 corequisites: none
 non_allowed: []
 skills:
   - presentation
+  - music
 topics:
   - performance
+  - music
 assessment:
   - kind: participation
     weight: 50

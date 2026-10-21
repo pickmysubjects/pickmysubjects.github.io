@@ -11,7 +11,7 @@ export const TOPIC_GROUPS: { id: string; topics: Topic[] }[] = [
   { id: 'science', topics: ['biology', 'ecology', 'chemistry', 'physics', 'earth-science', 'geography', 'environment', 'psychology'] },
   { id: 'applied', topics: ['engineering', 'health', 'agriculture'] },
   { id: 'arts', topics: ['languages', 'literature', 'history', 'philosophy', 'politics', 'society', 'indigenous-studies', 'ethics', 'science-communication'] },
-  { id: 'creative', topics: ['design', 'visual-communication', 'art', 'performance', 'film-and-screen', 'media'] },
+  { id: 'creative', topics: ['design', 'visual-communication', 'art', 'performance', 'music', 'film-and-screen', 'media'] },
   { id: 'built', topics: ['architecture', 'urban-planning', 'property', 'construction'] },
 ]
 
@@ -33,7 +33,7 @@ const AREA_TOPICS: Record<string, Topic[]> = {
   VETS: ['agriculture', 'biology'], ZOOL: ['ecology', 'biology'],
   // Built environment and creative arts.
   ABPL: ['architecture'], ARCH: ['architecture', 'design'], PLAN: ['urban-planning'], PROP: ['property'], CONS: ['construction'],
-  LARC: ['architecture', 'design'], GDES: ['visual-communication', 'design'], FINA: ['art'], THTR: ['performance'], MUSI: ['performance'],
+  LARC: ['architecture', 'design'], GDES: ['visual-communication', 'design'], FINA: ['art'], THTR: ['performance'], MUSI: ['music'],
   // Arts disciplines.
   AHIS: ['art', 'history'], ANCW: ['history'], ANTH: ['society'], ASIA: ['history', 'society'], CLAS: ['languages', 'history'],
   CREW: ['literature'], CWRI: ['literature'], CULS: ['society', 'art'], INTS: ['politics'], CRIM: ['society'], DEVT: ['society', 'politics'], ENGL: ['literature'], EURO: ['history', 'politics'],
@@ -99,6 +99,7 @@ const LEX: Record<string, RegExp> = {
   ethics: /ethic|responsib|society/i,
   philosophy: /philosoph/i,
   history: /histor/i,
+  music: /\bmusic|musicolog|orchestra|choir|choral|\bjazz\b|\bopera\b|\bsonic\b|songwrit/i,
   'science-communication': /communicat|science and society|public/i,
 }
 

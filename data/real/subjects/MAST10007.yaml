@@ -21,6 +21,7 @@ non_allowed:
   - MAST10013
   - MAST10018
 categories:
+  B-DES: design
   B-SCI: science
 breadth_for:
   - Bachelor of Arts

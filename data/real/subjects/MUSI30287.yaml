@@ -10,9 +10,11 @@ corequisites: none
 non_allowed: []
 skills:
 - design
+- music
 topics:
 - performance
 - art
+- music
 assessment:
 - kind: project
   weight: 30

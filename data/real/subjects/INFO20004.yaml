@@ -29,6 +29,8 @@ assessment:
     weight: 0
     hurdle: true
 weekly_contact_hours: 3
+categories:
+  B-DES: design
 breadth_for: []
 handbook: https://handbook.unimelb.edu.au/2026/subjects/info20004
 source_year: 2026

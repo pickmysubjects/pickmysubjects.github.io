@@ -28,6 +28,8 @@ assessment:
   - kind: project
     weight: 40
 weekly_contact_hours: 3
+categories:
+  B-DES: design
 breadth_for:
   - Bachelor of Design
 handbook: https://handbook.unimelb.edu.au/2026/subjects/gdes20002

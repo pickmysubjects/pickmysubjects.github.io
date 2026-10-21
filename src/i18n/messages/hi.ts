@@ -361,6 +361,7 @@ export const hi: Messages = {
     languages: "विदेशी भाषा",
     lab: 'लैब का काम',
     fieldwork: "फ़ील्डवर्क",
+    music: "संगीत कौशल",
     design: 'डिज़ाइन',
     business: 'बिज़नेस',
     exams: "परीक्षा",
@@ -477,6 +478,7 @@ export const hi: Messages = {
     'construction': 'निर्माण',
     'visual-communication': 'ग्राफ़िक डिज़ाइन',
     'performance': 'रंगमंच और प्रदर्शन',
+    'music': 'संगीत',
     'film-and-screen': 'फ़िल्म और स्क्रीन',
   },
   contribute: {

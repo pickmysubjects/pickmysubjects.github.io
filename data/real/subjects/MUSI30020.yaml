@@ -16,9 +16,11 @@ non_allowed: []
 skills:
 - presentation
 - teamwork
+- music
 topics:
 - performance
 - art
+- music
 assessment:
 - kind: participation
   weight: 35

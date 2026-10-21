@@ -361,6 +361,7 @@ export const zhTW: Messages = {
     languages: "外語",
     lab: '實驗',
     fieldwork: "野外考察",
+    music: "音樂技能",
     design: '設計',
     business: '商科',
     exams: "考試",
@@ -477,6 +478,7 @@ export const zhTW: Messages = {
     'construction': '營建與施工',
     'visual-communication': '平面設計',
     'performance': '戲劇與表演',
+    'music': '音樂',
     'film-and-screen': '電影與影視',
   },
   contribute: {

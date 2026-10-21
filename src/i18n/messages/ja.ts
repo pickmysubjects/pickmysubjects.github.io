@@ -361,6 +361,7 @@ export const ja: Messages = {
     languages: "外国語",
     lab: '実験',
     fieldwork: "フィールドワーク",
+    music: "音楽の技能",
     design: 'デザイン',
     business: 'ビジネス',
     exams: "試験",
@@ -477,6 +478,7 @@ export const ja: Messages = {
     'construction': '建設・施工',
     'visual-communication': 'グラフィックデザイン',
     'performance': '演劇・パフォーマンス',
+    'music': '音楽',
     'film-and-screen': '映画・映像',
   },
   contribute: {

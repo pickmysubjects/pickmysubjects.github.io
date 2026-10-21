@@ -8,9 +8,12 @@ offerings:
 prerequisites: none
 corequisites: none
 non_allowed: []
+skills:
+  - music
 topics:
   - performance
   - art
+  - music
 assessment:
   - kind: quiz
     weight: 40

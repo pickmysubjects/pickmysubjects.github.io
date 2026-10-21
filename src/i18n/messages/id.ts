@@ -361,6 +361,7 @@ export const id: Messages = {
     languages: "Bahasa asing",
     lab: 'Praktikum',
     fieldwork: "Kerja lapangan",
+    music: "Keterampilan musik",
     design: 'Desain',
     business: 'Bisnis',
     exams: "Ujian",
@@ -477,6 +478,7 @@ export const id: Messages = {
     'construction': 'Konstruksi',
     'visual-communication': 'Desain grafis',
     'performance': 'Teater dan pertunjukan',
+    'music': 'Musik',
     'film-and-screen': 'Film dan layar',
   },
   contribute: {

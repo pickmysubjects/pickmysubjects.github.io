@@ -21,6 +21,8 @@ assessment:
   - kind: presentation
     weight: 50
 weekly_contact_hours: 3
+categories:
+  B-DES: design
 breadth_for:
   - Bachelor of Arts
   - Bachelor of Biomedicine

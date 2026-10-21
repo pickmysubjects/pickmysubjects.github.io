@@ -21,6 +21,8 @@ assessment:
   - kind: project
     weight: 60
 weekly_contact_hours: 3
+categories:
+  B-DES: design
 breadth_for:
   - Bachelor of Design
   - Bachelor of Fine Arts (Acting)

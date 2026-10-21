@@ -8,7 +8,7 @@ import { HEAVY_PICK_COST, passedCodes, recommend, type Profile } from './recomme
 import { checkTerms } from './planCheck'
 import { balanceTerms, fixHeavyTerms } from './relieve'
 import { skillsOf, termStress, weakSkills, type StressLevel } from './termStress'
-import type { ComponentReq, Course, CourseRule, Dataset, Period, ReqExpr, Subject } from './schema'
+import type { ComponentLimit, ComponentReq, Course, CourseRule, Dataset, Period, ReqExpr, Subject } from './schema'
 import { PERIODS } from './schema'
 
 export interface GenerateInput {
@@ -382,7 +382,7 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
     if (rule.kind === 'compulsory') rule.subjects.forEach((c) => required.add(c))
   }
 
-  const groups: { title: string; req: Extract<ComponentReq, { choose: unknown }>; used: Set<string>; others?: Set<string>[] }[] = []
+  const groups: { title: string; req: Extract<ComponentReq, { choose: unknown }>; used: Set<string>; others?: Set<string>[]; limits?: (ComponentLimit & { taken: number })[] }[] = []
   // Each component's claimed subjects, for courses where a subject counts towards one major or minor only.
   const claimed: { id: string; used: Set<string> }[] = []
   const diploma = findDiploma(data, input.diploma)
@@ -395,9 +395,14 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
     const used = new Set<string>()
     if (component) claimed.push({ id: component.id, used })
     // A major with routes follows the one the student's record points to.
-    for (const req of componentNeeds(component, done)) {
+    const needs = componentNeeds(component, done)
+    // The component's caps on its choices ("no more than 25 points of level-1 electives"), with
+    // the route's own, shared by all its "choose" groups as the course check counts them.
+    const route = component?.routes?.find((r) => r.requirements === needs)
+    const limits = [...(component?.limits ?? []), ...(route?.limits ?? [])].map((l) => ({ ...l, taken: 0 }))
+    for (const req of needs) {
       if ('all' in req) req.all.forEach((c) => (required.add(c), used.add(c)))
-      else groups.push({ title: component?.title ?? id ?? '', req, used, others: component ? partnersOf(component.id) : undefined })
+      else groups.push({ title: component?.title ?? id ?? '', req, used, others: component ? partnersOf(component.id) : undefined, limits })
     }
   }
   // What the components a subject can't count twice with have claimed (filled in as they go).
@@ -458,13 +463,20 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
   // "Choose N points from" groups, once every fixed subject is known. Ties in
   // score go to subjects that run in the least crowded teaching period.
   const score = new Map(recommend(data, input.profile, { course: input.course, eligibleWith: [], year: input.startYear }).map((r) => [r.code, r.score]))
-  for (const { title, req, used, others = [] } of groups) {
+  for (const { title, req, used, others = [], limits = [] } of groups) {
     // Claimed by a component this one can't share subjects with (B-ARTS: one major or minor each).
     const taken = (c: string) => used.has(c) || others.some((o) => o.has(c))
+    // Whether counting `c` keeps within the component's caps; if so, counts it against them.
+    const fits = (c: string, points: number) => {
+      const pools = limits.filter((l) => l.from.includes(c))
+      if (pools.some((l) => l.taken + points > l.max)) return false
+      pools.forEach((l) => (l.taken += points))
+      return true
+    }
     let have = 0
     for (const c of req.choose.from) {
       if (have >= req.choose.points) break
-      if ((done.has(c) || required.has(c)) && !taken(c)) {
+      if ((done.has(c) || required.has(c)) && !taken(c) && fits(c, data.subjects[c]?.points ?? 12.5)) {
         used.add(c)
         have += data.subjects[c]?.points ?? 0
       }
@@ -509,6 +521,8 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
       // An option that can't be taken alongside a subject already required (COMP20003 and a
       // major's ENGR30004) leaves the other options to fill the choice.
       if (clashes(c, done, required, data)) continue
+      // Nor one past the component's cap on that kind of choice (B-MUS: 25 points of level 1).
+      if (!fits(c, data.subjects[c]?.points ?? 12.5)) continue
       required.add(c)
       used.add(c)
       have += data.subjects[c]?.points ?? 12.5

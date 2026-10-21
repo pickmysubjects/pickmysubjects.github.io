@@ -19,9 +19,11 @@ non_allowed:
   - MUSI30253
 skills:
   - presentation
+  - music
 topics:
   - performance
   - art
+  - music
 assessment:
   - kind: presentation
     weight: 100

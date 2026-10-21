@@ -14,9 +14,11 @@ non_allowed:
   - MUSI40103
 skills:
   - presentation
+  - music
 topics:
   - performance
   - history
+  - music
 assessment:
   - kind: presentation
     weight: 20

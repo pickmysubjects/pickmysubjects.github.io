@@ -11,8 +11,10 @@ corequisites: MUSI10182
 non_allowed: []
 skills:
   - presentation
+  - music
 topics:
   - performance
+  - music
 assessment:
   - kind: participation
     weight: 30

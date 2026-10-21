@@ -21,6 +21,11 @@ const LAB_AREAS = new Set(['CHEM', 'BCMB', 'MIIM', 'PATH', 'BIOL', 'GENE', 'ZOOL
 // Language programs; a numbered title ("Spanish 3") is a language-practice level.
 const LANGUAGE_AREAS = new Set(['ARBC', 'CHIN', 'FREN', 'GERM', 'HEBR', 'INDO', 'ITAL', 'JAPN', 'KORE', 'RUSS', 'SPAN'])
 
+// Music subjects that train musicianship (playing, singing, hearing and reading music, writing
+// it down) rather than writing about it.
+const MUSICIANSHIP_TITLE =
+  /performance|ensemble|aural|musicianship|theory|harmony|counterpoint|composition|composing|conduct|orchestra|choir|choral|keyboard|piano|voice|vocal|instrument|improvis|practical|studio|techniques?\b|arranging|orchestration|songwrit|repertoire|chamber|recital|band\b|jazz/i
+
 const TITLE: Partial<Record<Skill, RegExp>> = {
   fieldwork: /\bfield\b|field class|excursion/i,
   maths:
@@ -59,6 +64,7 @@ function inferred(s: Subject, data: Dataset | undefined): Skill[] {
   if (PROGRAMMING_AREAS.has(area) && !(area === 'INFO' && UX_TITLE.test(s.title))) out.add('programming')
   if (BUSINESS_AREAS.has(area)) out.add('business')
   if (LANGUAGE_AREAS.has(area) && /\b\d+$/.test(s.title)) out.add('languages')
+  if (area === 'MUSI' && MUSICIANSHIP_TITLE.test(s.title)) out.add('music')
   // Econometrics is applied statistics.
   if (area === 'ECOM') out.add('maths').add('statistics')
   // Finance is built on financial maths, and economics past first year on mathematical models:

@@ -12,10 +12,12 @@ non_allowed: []
 skills:
   - presentation
   - writing
+  - music
 topics:
   - performance
   - art
   - media
+  - music
 assessment:
   - kind: assignment
     weight: 50

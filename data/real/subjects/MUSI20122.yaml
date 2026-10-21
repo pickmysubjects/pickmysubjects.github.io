@@ -12,8 +12,10 @@ non_allowed:
 skills:
   - design
   - teamwork
+  - music
 topics:
   - art
+  - music
 assessment:
   - kind: project
     weight: 25

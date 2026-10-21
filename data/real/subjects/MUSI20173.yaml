@@ -10,9 +10,11 @@ corequisites: none
 non_allowed: []
 skills:
   - design
+  - music
 topics:
   - art
   - media
+  - music
 assessment:
   - kind: assignment
     weight: 15
@@ -21,6 +23,8 @@ assessment:
   - kind: project
     weight: 60
 weekly_contact_hours: 2
+categories:
+  B-DES: design
 breadth_for:
   - Bachelor of Arts
   - Bachelor of Biomedicine

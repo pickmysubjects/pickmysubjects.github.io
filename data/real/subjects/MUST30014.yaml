@@ -16,9 +16,11 @@ non_allowed:
   - MUST30003
 skills:
   - presentation
+  - music
 topics:
   - performance
   - film-and-screen
+  - music
 assessment:
   - kind: presentation
     weight: 30

@@ -12,9 +12,11 @@ non_allowed:
   - MUSI30285
 skills:
   - presentation
+  - music
 topics:
   - performance
   - literature
+  - music
 assessment:
   - kind: presentation
     weight: 50

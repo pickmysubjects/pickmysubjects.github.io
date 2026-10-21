@@ -14,6 +14,8 @@ assessment:
   - kind: report
     weight: 75
 weekly_contact_hours: 3
+categories:
+  B-DES: design
 breadth_for:
   - Bachelor of Biomedicine
   - Bachelor of Commerce

@@ -11,9 +11,11 @@ non_allowed: []
 skills:
   - design
   - presentation
+  - music
 topics:
   - art
   - media
+  - music
 assessment:
   - kind: project
     weight: 70

@@ -10,6 +10,7 @@ prerequisites: none
 corequisites: none
 non_allowed: []
 categories:
+  B-DES: design
   B-SCI: breadth
 breadth_for:
   - Bachelor of Arts

@@ -19,7 +19,7 @@ function createSubjectCompassForms() {
       .setChoiceValues(['H1', 'H2A', 'H2B', 'H3', 'P', 'N', 'Prefer not to say']),
     skills: ratings.addCheckboxItem().setTitle('Skills used').setChoiceValues([
       'programming', 'algorithms', 'maths', 'statistics', 'data', 'systems',
-      'writing', 'presentation', 'lab', 'design', 'business']),
+      'writing', 'presentation', 'languages', 'lab', 'fieldwork', 'music', 'design', 'business']),
     recommend: ratings.addMultipleChoiceItem().setTitle('Would you recommend it')
       .setChoiceValues(['Yes', 'Maybe', 'No']),
     wish: ratings.addParagraphTextItem().setTitle('What I wish I knew'),

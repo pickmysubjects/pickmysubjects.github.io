@@ -364,6 +364,7 @@ export const en = {
     languages: "Languages",
     lab: 'Lab work',
     fieldwork: "Fieldwork",
+    music: "Music skills",
     design: 'Design',
     business: 'Business',
     exams: "Exams",
@@ -480,6 +481,7 @@ export const en = {
     'construction': 'Construction',
     'visual-communication': 'Graphic design',
     'performance': 'Theatre and performance',
+    'music': 'Music',
     'film-and-screen': 'Film and screen',
   },
   contribute: {

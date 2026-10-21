@@ -14,8 +14,10 @@ non_allowed:
   - MUST20004
 skills:
   - presentation
+  - music
 topics:
   - performance
+  - music
 assessment:
   - kind: presentation
     weight: 20

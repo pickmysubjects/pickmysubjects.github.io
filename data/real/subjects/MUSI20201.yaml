@@ -20,9 +20,11 @@ non_allowed:
   - MUSI30214
 skills:
   - presentation
+  - music
 topics:
   - performance
   - art
+  - music
 assessment:
   - kind: presentation
     weight: 25

@@ -24,6 +24,7 @@ non_allowed:
   - COMP10002
   - ENGR20005
 categories:
+  B-DES: design
   B-SCI: science
 breadth_for:
   - Bachelor of Arts

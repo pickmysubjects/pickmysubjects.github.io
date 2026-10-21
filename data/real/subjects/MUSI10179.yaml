@@ -10,9 +10,11 @@ corequisites: none
 non_allowed: []
 skills:
   - writing
+  - music
 topics:
   - film-and-screen
   - media
+  - music
 assessment:
   - kind: assignment
     weight: 25

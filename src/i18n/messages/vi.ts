@@ -361,6 +361,7 @@ export const vi: Messages = {
     languages: "Ngoại ngữ",
     lab: 'Thí nghiệm',
     fieldwork: "Thực địa",
+    music: "Kỹ năng âm nhạc",
     design: 'Thiết kế',
     business: 'Kinh doanh',
     exams: "Thi cử",
@@ -477,6 +478,7 @@ export const vi: Messages = {
     'construction': 'Xây dựng',
     'visual-communication': 'Thiết kế đồ họa',
     'performance': 'Sân khấu và biểu diễn',
+    'music': 'Âm nhạc',
     'film-and-screen': 'Điện ảnh và màn ảnh',
   },
   contribute: {

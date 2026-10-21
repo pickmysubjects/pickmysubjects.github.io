@@ -44,6 +44,13 @@ describe('per-course rules (B-SCI and B-COM)', () => {
     for (const id of ['econ10004', 'foundation', 'quantitative']) expect(st.find((s) => s.ruleId === id)?.status).toBe('ok')
   })
 
+  it("a major's choice stays within the major's own caps (B-MUS: at most 25 points of level-1 electives)", () => {
+    const { plan: p } = generatePlan({ data, profile: { results: [], skills: {}, interests: [], goal: 'balanced' }, course: 'B-MUS', courseYear: 2026, major: 'mus-performance', startYear: 2027, startPeriod: 'semester-1' })
+    const cap = data.components.find((c) => c.id === 'mus-performance')!.limits![0]!
+    const codes = p.terms.flatMap((t) => t.subjects)
+    expect(codes.filter((c) => cap.from.includes(c)).reduce((sum, c) => sum + data.subjects[c]!.points, 0)).toBeLessThanOrEqual(cap.max)
+    expect(checkCourse(p, data).statuses.find((s) => s.ruleId === 'major')?.status).toBe('ok')
+  })
   it('a new visitor starts in the course with the most majors', () => {
     expect(defaultCourse(data)).toBe('B-SCI')
   })

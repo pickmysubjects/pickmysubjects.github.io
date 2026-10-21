@@ -10,8 +10,10 @@ corequisites: none
 non_allowed: []
 skills:
   - presentation
+  - music
 topics:
   - performance
+  - music
 assessment:
   - kind: participation
     weight: 100

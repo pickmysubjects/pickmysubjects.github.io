@@ -30,6 +30,7 @@ export const SKILLS = [
   'languages',
   'lab',
   'fieldwork',
+  'music',
   'design',
   'business',
   // Read off the assessment, never tagged by hand: how a subject is marked suits some students.
@@ -99,6 +100,7 @@ export const TOPICS = [
   'construction',
   'visual-communication',
   'performance',
+  'music',
   'film-and-screen',
 ] as const
 export type Topic = (typeof TOPICS)[number]

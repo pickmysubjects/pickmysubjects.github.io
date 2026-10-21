@@ -20,7 +20,8 @@ assessment:
 weekly_contact_hours: 3
 handbook: https://handbook.unimelb.edu.au/2026/subjects/comp10003
 source_year: 2026
-categories: {}
+categories:
+  B-DES: design
 breadth_for:
   - Bachelor of Arts
   - Bachelor of Commerce

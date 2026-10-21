@@ -361,6 +361,7 @@ export const ko: Messages = {
     languages: "외국어",
     lab: '실험',
     fieldwork: "야외 조사",
+    music: "음악 실기",
     design: '디자인',
     business: '경영',
     exams: "시험",
@@ -477,6 +478,7 @@ export const ko: Messages = {
     'construction': '건설·시공',
     'visual-communication': '그래픽 디자인',
     'performance': '연극·공연',
+    'music': '음악',
     'film-and-screen': '영화·영상',
   },
   contribute: {

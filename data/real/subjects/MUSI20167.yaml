@@ -10,9 +10,11 @@ non_allowed:
 - MUSI10186
 skills:
 - design
+- music
 topics:
 - media
 - art
+- music
 assessment:
 - kind: assignment
   weight: 40
