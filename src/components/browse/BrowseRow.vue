@@ -61,24 +61,29 @@ const closed = computed(() => data.value.courses.some((c) => c.code === props.co
 .reasons {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px 6px;
-  margin-top: 4px;
-  font-size: 0.75rem;
+  gap: var(--space-1) var(--space-3);
+  margin-top: var(--space-2);
+  font-size: 0.8125rem;
+  line-height: 1.4;
 }
 
+/* Plain accent text, not another row of pills: the facts above already use pills. */
 .reason {
-  padding: 2px 8px;
   color: var(--accent);
-  background: var(--accent-soft);
-  border-radius: 999px;
+}
+
+.reason + .reason::before {
+  content: '·';
+  margin-right: var(--space-3);
+  color: var(--ink-faint);
 }
 
 .row {
   position: relative;
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 14px 18px;
+  gap: var(--space-3);
+  padding: var(--space-4) 18px;
   color: var(--ink);
   text-decoration: none;
   border-bottom: 1px solid var(--line);
@@ -92,7 +97,7 @@ const closed = computed(() => data.value.courses.some((c) => c.code === props.co
   display: grid;
   flex: 1;
   min-width: 0;
-  gap: 2px;
+  gap: var(--space-1);
 }
 
 .head {
@@ -191,7 +196,7 @@ const closed = computed(() => data.value.courses.some((c) => c.code === props.co
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  margin-top: 6px;
+  margin-top: var(--space-2);
   font-size: 0.75rem;
   color: var(--ink-soft);
 }

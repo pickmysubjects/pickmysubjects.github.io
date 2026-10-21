@@ -99,8 +99,8 @@ function onDragStart(event: DragEvent): void {
   position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: 4px;
-  padding: 10px 11px 9px;
+  gap: 6px;
+  padding: 12px 14px;
   border: 1px solid transparent;
   border-radius: var(--radius);
   background: var(--paper-raised);

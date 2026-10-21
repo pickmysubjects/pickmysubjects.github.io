@@ -41,6 +41,14 @@
   --shadow-1: 0 1px 2px rgb(16 16 20 / 5%), 0 1px 1px rgb(16 16 20 / 3%);
   --shadow-2: 0 10px 30px -12px rgb(16 16 20 / 18%), 0 2px 6px rgb(16 16 20 / 5%);
   --shell: 1180px;
+  /* Spacing rhythm: one scale for gaps between items, groups and sections. */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
   /* Glass buttons: see-through fill, light top edge, soft lift. */
   --glass-fill: rgb(255 255 255 / 50%);
   --glass-fill-hover: rgb(255 255 255 / 72%);
@@ -252,7 +260,7 @@ textarea {
 
 .page-lede {
   max-width: 62ch;
-  margin-top: 8px;
+  margin-top: var(--space-3);
   font-size: 1.05rem;
   color: var(--ink-soft);
 }
@@ -366,7 +374,7 @@ textarea {
 
 /* Fingers need a bigger target than a mouse pointer. */
 @media (pointer: coarse) {
-  .chip {
+  :is(button, a, label).chip {
     min-height: 40px;
     padding: 6px 14px;
   }

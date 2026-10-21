@@ -150,14 +150,14 @@ function onCode(): void {
 .contribute {
   padding-top: 32px;
   display: grid;
-  gap: 20px;
+  gap: var(--space-5);
 }
 
 
 .steps {
   display: grid;
-  gap: 10px;
-  margin: 14px 0 0;
+  gap: var(--space-3);
+  margin: var(--space-5) 0 0;
   padding: 0;
   font-size: 1.02rem;
   list-style: none;
@@ -216,7 +216,7 @@ function onCode(): void {
 
 .contribute-lede {
   max-width: 76ch;
-  margin: 8px 0 0;
+  margin: var(--space-3) 0 0;
   color: var(--ink-soft);
 }
 

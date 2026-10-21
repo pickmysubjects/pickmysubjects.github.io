@@ -151,7 +151,7 @@ function onClick(event: MouseEvent): void {
 
         <MajorRoles class="peek-section" :code="code" />
 
-        <section class="peek-section">
+        <section class="peek-section" :class="{ 'peek-inline': needCodes.length === 0 && route.length === 0 && !hasManual }">
           <h3 class="peek-label">{{ t('subject.needs') }}</h3>
           <p v-if="subject.prerequisites === 'none'">{{ t('subject.needsNone') }}</p>
           <p v-else-if="subject.prerequisites === 'unknown'" class="muted">{{ t('subject.notRecorded') }}</p>
@@ -201,10 +201,13 @@ function onClick(event: MouseEvent): void {
           </label>
         </section>
 
-        <section class="peek-section">
+        <section v-if="leadsTo.length === 0" class="peek-section peek-inline">
           <h3 class="peek-label">{{ t('subject.unlocks') }}</h3>
-          <p v-if="leadsTo.length === 0" class="muted">{{ t('subject.unlocksNone') }}</p>
-          <p v-else class="peek-codes">
+          <p class="muted">{{ t('subject.unlocksNone') }}</p>
+        </section>
+        <section v-else class="peek-section">
+          <h3 class="peek-label">{{ t('subject.unlocks') }}</h3>
+          <p class="peek-codes">
             <button v-for="c in leadsTo" :key="c" type="button" class="chip code peek-code-chip" @click="emit('open', c)">
               {{ c }}<span v-if="status(c)" class="peek-have">{{ t(status(c) === 'done' ? 'plan.doneIt' : 'plan.plannedIt') }}</span>
             </button>
@@ -229,7 +232,7 @@ function onClick(event: MouseEvent): void {
 
         <AssessmentPanel class="peek-section" :subject="subject" :year="year" />
 
-        <section class="peek-section">
+        <section class="peek-section" :class="{ 'peek-inline': ratings.length === 0 }">
           <h3 class="peek-label">{{ t('subject.ratingsTitle') }}</h3>
           <p v-if="ratings.length === 0" class="muted">{{ t('subject.noRatings') }}</p>
           <template v-else>
@@ -287,8 +290,8 @@ function onClick(event: MouseEvent): void {
 
 .peek-body {
   display: grid;
-  gap: 16px;
-  padding: 22px;
+  gap: var(--space-6);
+  padding: var(--space-5) var(--space-5) 0;
 }
 
 .peek-head {
@@ -327,19 +330,39 @@ function onClick(event: MouseEvent): void {
 .peek-facts {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: var(--space-2);
+  margin-top: calc(var(--space-3) - var(--space-6));
 }
 
+/* Sections are set apart by space, not rules; each opens with the same small heading. */
 .peek-section {
   display: grid;
-  gap: 6px;
-  padding-top: 14px;
-  border-top: 1px solid var(--line);
+  gap: var(--space-2);
 }
 
-.peek-label {
-  font-size: 0.9375rem;
+.peek-label,
+.peek-section :deep(:is(.roles-title, .assess-title, .about-label)) {
+  margin: 0;
+  font-size: 0.8125rem;
   font-weight: 650;
+  letter-spacing: 0.01em;
+  color: var(--ink-soft);
+}
+
+.peek-section :deep(.assess-tags) {
+  padding-top: var(--space-2);
+}
+
+/* Nothing to show: heading and answer share one quiet line. */
+.peek-inline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-1) var(--space-3);
+}
+
+.peek-inline + .peek-inline {
+  margin-top: calc(var(--space-3) - var(--space-6));
 }
 
 .peek-rating {
@@ -352,13 +375,13 @@ function onClick(event: MouseEvent): void {
 .peek-codes {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: var(--space-2);
 }
 
 .peek-list {
   display: grid;
-  gap: 4px;
-  margin: 8px 0 0;
+  gap: var(--space-2);
+  margin: var(--space-1) 0 0;
   padding: 0;
   list-style: none;
 }
@@ -368,7 +391,7 @@ function onClick(event: MouseEvent): void {
   align-items: baseline;
   gap: 8px;
   width: 100%;
-  padding: 7px 10px;
+  padding: 9px 12px;
   border: 1px solid var(--glass-edge);
   border-radius: var(--radius-sm);
   background: var(--glass-fill);
@@ -400,7 +423,7 @@ function onClick(event: MouseEvent): void {
 }
 
 .peek-route {
-  margin-top: 10px;
+  margin-top: var(--space-2);
 }
 
 .peek-route summary {
@@ -409,7 +432,7 @@ function onClick(event: MouseEvent): void {
 }
 
 .peek-route-level {
-  margin: 10px 0 0;
+  margin: var(--space-3) 0 0;
   font-size: 0.8125rem;
   font-weight: 600;
   color: var(--ink-faint);
@@ -453,17 +476,24 @@ function onClick(event: MouseEvent): void {
   color: var(--ink-soft);
 }
 
+/* Always in reach at the foot of the window, however long the subject's details run. */
 .peek-actions {
+  position: sticky;
+  bottom: 0;
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: var(--space-2);
+  margin: 0 calc(-1 * var(--space-5));
+  padding: var(--space-4) var(--space-5) var(--space-5);
+  border-top: 1px solid var(--line);
+  background: var(--surface);
 }
+
 .peek-done {
   display: grid;
-  gap: 8px;
-  margin: 4px 0 12px;
-  padding: 12px 14px;
-  border-radius: 14px;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border-radius: var(--radius);
   background: var(--good-soft);
 }
 

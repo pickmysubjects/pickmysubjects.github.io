@@ -48,9 +48,9 @@ const warnings = computed(() =>
   position: relative;
   z-index: 1;
   display: grid;
-  gap: 4px;
-  margin-top: 4px;
-  font-size: 0.75rem;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+  font-size: 0.8125rem;
   line-height: 1.45;
 }
 
@@ -61,7 +61,7 @@ const warnings = computed(() =>
 
 .warnings {
   display: grid;
-  gap: 3px;
+  gap: var(--space-2);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -70,7 +70,7 @@ const warnings = computed(() =>
 .warnings li {
   display: flex;
   align-items: flex-start;
-  gap: 6px;
+  gap: var(--space-2);
   color: var(--warn);
 }
 
@@ -81,7 +81,7 @@ const warnings = computed(() =>
 
 .body {
   display: grid;
-  gap: 4px;
+  gap: var(--space-2);
   min-width: 0;
 }
 

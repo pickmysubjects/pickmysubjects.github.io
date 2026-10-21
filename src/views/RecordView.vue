@@ -153,7 +153,7 @@ async function onRestore(event: Event): Promise<void> {
 <style scoped>
 .plans-note {
   display: grid;
-  gap: 6px;
+  gap: var(--space-2);
 }
 
 .plans-text {
@@ -184,15 +184,15 @@ async function onRestore(event: Event): Promise<void> {
 }
 
 .record-lede {
-  margin: 8px 0 0;
+  margin: var(--space-3) 0 0;
   color: var(--ink-soft);
 }
 
 .summary {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin: 14px 0 0;
+  gap: var(--space-2);
+  margin: var(--space-5) 0 0;
   padding: 0;
   list-style: none;
 }
@@ -229,7 +229,7 @@ async function onRestore(event: Event): Promise<void> {
 
 .record-main {
   display: grid;
-  gap: 28px;
+  gap: var(--space-6);
   min-width: 0;
 }
 
@@ -237,13 +237,13 @@ async function onRestore(event: Event): Promise<void> {
    sticky column that tall hides its lower part until the page is scrolled to the very end. */
 .record-side {
   display: grid;
-  gap: 18px;
+  gap: var(--space-5);
   min-width: 0;
 }
 
 .block {
   display: grid;
-  gap: 10px;
+  gap: var(--space-3);
   min-width: 0;
 }
 

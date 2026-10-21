@@ -309,6 +309,8 @@ const trackWidth = computed(() => `max(100%, ${(props.terms.length + pastCount.v
   flex: none;
   flex-direction: column;
   gap: 8px;
+  /* Fixed to the width the track reserves for it (TOOLS), so a long label wraps instead of being cut. */
+  width: 150px;
   padding-top: 38px;
 }
 
@@ -333,9 +335,11 @@ const trackWidth = computed(() => `max(100%, ${(props.terms.length + pastCount.v
 }
 
 .term-tools .button {
-  padding: 0 12px;
+  padding: 6px 14px;
   font-size: 0.8125rem;
-  white-space: nowrap;
+  line-height: 1.3;
+  text-align: center;
+  white-space: normal;
 }
 /* Phones: terms stack top to bottom, so no column is cut off at the screen edge. The route lines
    only make sense side by side, so they are dropped here (each card still names its prerequisites). */
@@ -363,6 +367,7 @@ const trackWidth = computed(() => `max(100%, ${(props.terms.length + pastCount.v
     flex-direction: row;
     flex-wrap: wrap;
     padding-top: 0;
+    width: auto;
   }
 }
 /* On paper the terms wrap into rows instead of scrolling sideways (the route lines are dropped). */

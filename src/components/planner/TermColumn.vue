@@ -163,7 +163,7 @@ function onDrop(event: DragEvent): void {
 .term {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--space-3);
   flex: 1 1 185px;
   min-width: 185px;
   max-width: 300px;

@@ -28,18 +28,15 @@ const chosen = plan.courseChosen
   display: inline-flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 6px 8px;
+  gap: var(--space-2) var(--space-3);
   margin: 0;
-  padding: 6px 6px 6px 14px;
-  border: 1px solid var(--glass-edge);
-  border-radius: 999px;
-  background: var(--glass-fill);
+  /* A quiet line, not a pill: in longer languages it wraps, and a wrapped pill looks broken. */
   font-size: 0.875rem;
   color: var(--ink-soft);
 }
 
-.degree-default {
-  border-color: var(--accent);
+.degree-default svg {
+  color: var(--accent);
 }
 
 .degree-change {

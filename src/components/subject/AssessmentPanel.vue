@@ -153,8 +153,8 @@ const otherTerms = computed(() => {
 
 .assess-tags {
   display: grid;
-  gap: 8px;
-  padding-top: 4px;
+  gap: var(--space-3);
+  padding-top: var(--space-2);
 }
 
 .assess-label {

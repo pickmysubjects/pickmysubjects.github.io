@@ -80,7 +80,7 @@ function choose(id: string): void {
 
 .fb-lede {
   max-width: 72ch;
-  margin: 8px 0 0;
+  margin: var(--space-3) 0 0;
   color: var(--ink-soft);
 }
 

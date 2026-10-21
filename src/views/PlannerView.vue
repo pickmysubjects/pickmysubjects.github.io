@@ -401,7 +401,7 @@ const printTerms = computed<PrintTerm[]>(() => {
 }
 
 /* Everything but the board stays at the usual reading width; the board takes the full screen. */
-.planner > :not(.map) {
+.planner > :not(.map, dialog) {
   width: 100%;
   max-width: calc(var(--shell) - 40px);
   margin-inline: auto;

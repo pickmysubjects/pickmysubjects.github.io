@@ -392,7 +392,7 @@ const gist = computed(() => (subject.value ? subjectGist(t.value, subject.value)
 
 .head {
   display: grid;
-  gap: 12px;
+  gap: var(--space-4);
 }
 
 .head-code {
@@ -452,14 +452,14 @@ const gist = computed(() => (subject.value ? subjectGist(t.value, subject.value)
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: start;
-  gap: 16px;
+  gap: var(--space-5);
 }
 
 .panel {
   display: grid;
   align-content: start;
-  gap: 10px;
-  padding: 22px;
+  gap: var(--space-3);
+  padding: var(--space-5);
 }
 
 .panel-wide {
@@ -472,7 +472,7 @@ const gist = computed(() => (subject.value ? subjectGist(t.value, subject.value)
 }
 
 .panel-title-gap {
-  margin-top: 10px;
+  margin-top: var(--space-4);
 }
 
 .rate-ask {
