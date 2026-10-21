@@ -1,0 +1,32 @@
+code: DRAM30030
+title: Performance Practice 4
+level: 3
+points: 25
+offerings:
+  "2026":
+    - semester-2
+prerequisites:
+  all:
+    - DRAM30027
+    - DRAM30028
+    - DRAM30029
+corequisites: none
+non_allowed:
+  - DRAM30023
+skills:
+  - presentation
+topics:
+  - performance
+  - film-and-screen
+assessment:
+  - kind: project
+    weight: 50
+  - kind: presentation
+    weight: 50
+weekly_contact_hours: 20
+min_attendance: 75
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/dram30030
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

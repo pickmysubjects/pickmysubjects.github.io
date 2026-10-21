@@ -1,0 +1,37 @@
+code: FLTV10009
+title: Screen Culture
+level: 1
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites:
+  any:
+    - admission: B-FAFILMTV
+      note: Admission into the Bachelor of Fine Arts (Film and Television)
+    - admission: B-FASCWRI
+      note: Admission into the Bachelor of Fine Arts (Screenwriting)
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+topics:
+  - film-and-screen
+  - history
+  - media
+assessment:
+  - kind: project
+    weight: 15
+  - kind: assignment
+    weight: 25
+  - kind: assignment
+    weight: 50
+  - kind: participation
+    weight: 10
+weekly_contact_hours: 3.5
+min_attendance: 75
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/fltv10009
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

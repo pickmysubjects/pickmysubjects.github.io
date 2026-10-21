@@ -1,0 +1,45 @@
+code: AGRI20040
+title: Enterprise Management
+level: 2
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites:
+  all:
+    - AGRI10047
+    - AGRI10048
+    - AGRI10049
+corequisites:
+  any:
+    - AGRI20035
+    - AGRI20036
+    - AGRI20038
+non_allowed: []
+skills:
+  - business
+  - fieldwork
+  - presentation
+topics:
+  - agriculture
+  - business
+  - management
+  - economics
+assessment:
+  - kind: assignment
+    weight: 25
+  - kind: presentation
+    weight: 15
+    group: true
+  - kind: assignment
+    weight: 20
+  - kind: exam
+    weight: 40
+weekly_contact_hours: 7
+min_attendance: 80
+campus: Dookie
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/agri20040
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,34 @@
+code: AGRI30041
+title: Industry Internship
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - summer
+    - semester-1
+    - semester-2
+prerequisites:
+  all:
+    - manual: A minimum of 100 credit points of Level 1 study (completion of Year 1)
+    - permission: application
+      note: Confirmation of enrolment in this subject will require approval by the Subject Coordinator and the Careers and Industry team in the Faculty of Science and be based on students having secured a host organisation and submitted details of their internship placement via the Platform (https://industry.science.unimelb.edu.au/index.php?r=studentRequest/create). Students must apply at least 3 weeks before they are set to commence their internship and application deadline. Research material used for other subjects must not be used in any of the assessment pieces for this subject.
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - presentation
+topics:
+  - agriculture
+assessment:
+  - kind: assignment
+    weight: 25
+  - kind: assignment
+    weight: 50
+  - kind: presentation
+    weight: 25
+weekly_contact_hours: 1.5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/agri30041
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

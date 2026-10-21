@@ -1,0 +1,36 @@
+code: FLTV20018
+title: Writing for the Youth Screen Market
+level: 2
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites:
+  all:
+    - FLTV10009
+    - FLTV10015
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - presentation
+topics:
+  - film-and-screen
+  - media
+assessment:
+  - kind: assignment
+    weight: 15
+  - kind: presentation
+    weight: 15
+  - kind: assignment
+    weight: 65
+    hurdle: true
+  - kind: participation
+    weight: 5
+weekly_contact_hours: 4
+min_attendance: 75
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/fltv20018
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

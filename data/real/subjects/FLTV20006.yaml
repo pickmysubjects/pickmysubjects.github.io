@@ -1,0 +1,38 @@
+code: FLTV20006
+title: Screen Practice 2A
+level: 2
+points: 25
+offerings:
+  "2026":
+    - semester-1
+prerequisites:
+  all:
+    - FLTV10008
+    - FLTV10009
+corequisites: none
+non_allowed: []
+skills:
+  - design
+  - writing
+topics:
+  - film-and-screen
+assessment:
+  - kind: project
+    weight: 30
+  - kind: report
+    weight: 10
+  - kind: assignment
+    weight: 15
+  - kind: project
+    weight: 25
+  - kind: report
+    weight: 10
+  - kind: participation
+    weight: 10
+weekly_contact_hours: 7.5
+min_attendance: 75
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/fltv20006
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

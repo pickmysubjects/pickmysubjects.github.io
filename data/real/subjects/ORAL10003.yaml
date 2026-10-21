@@ -1,0 +1,37 @@
+code: ORAL10003
+title: Oral Health Sciences 1
+level: 1
+points: 37.5
+offerings:
+  "2026":
+    - semester-1
+    - semester-2
+prerequisites: none
+corequisites: ORAL10005
+non_allowed: []
+skills:
+  - lab
+topics:
+  - health
+  - biology
+assessment:
+  - kind: exam
+    weight: 30
+  - kind: exam
+    weight: 35
+  - kind: assignment
+    weight: 7.5
+  - kind: test
+    weight: 7.5
+  - kind: assignment
+    weight: 2.5
+  - kind: quiz
+    weight: 10
+  - kind: test
+    weight: 7.5
+weekly_contact_hours: 4
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/oral10003
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Year-long subject (both semesters, one enrolment); shown here as semester 1 and semester 2."

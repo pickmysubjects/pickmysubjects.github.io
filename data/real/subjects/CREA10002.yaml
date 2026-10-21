@@ -1,0 +1,31 @@
+code: CREA10002
+title: Stories of Place
+level: 1
+points: 6.25
+offerings:
+  "2026":
+    - semester-1
+    - semester-2
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+topics:
+  - indigenous-studies
+  - art
+  - society
+assessment:
+  - kind: assignment
+    weight: 65
+    hurdle: true
+  - kind: assignment
+    weight: 35
+    hurdle: true
+weekly_contact_hours: 1.5
+pass_fail: true
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/crea10002
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

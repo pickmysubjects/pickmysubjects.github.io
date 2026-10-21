@@ -1,0 +1,35 @@
+code: DNCE10031
+title: "Dance Lab 2: Integrated Practices"
+level: 1
+points: 25
+offerings:
+  "2026":
+    - semester-2
+prerequisites:
+  all:
+    - DNCE10029
+    - DNCE10030
+corequisites: none
+non_allowed:
+  - DNCE10022
+  - DNCE10023
+skills:
+  - presentation
+  - writing
+topics:
+  - performance
+assessment:
+  - kind: presentation
+    weight: 20
+  - kind: assignment
+    weight: 30
+  - kind: presentation
+    weight: 50
+    group: true
+weekly_contact_hours: 21
+min_attendance: 75
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/dnce10031
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,35 @@
+code: DNCE10030
+title: "Dance Lab 1: Studio Practices"
+level: 1
+points: 18.75
+offerings:
+  "2026":
+    - semester-1
+prerequisites: none
+corequisites: none
+non_allowed:
+  - DNCE10016
+  - DNCE10017
+skills:
+  - presentation
+topics:
+  - performance
+assessment:
+  - kind: participation
+    weight: 10
+  - kind: quiz
+    weight: 10
+  - kind: presentation
+    weight: 20
+    group: true
+  - kind: project
+    weight: 25
+  - kind: exam
+    weight: 35
+weekly_contact_hours: 15
+min_attendance: 75
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/dnce10030
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

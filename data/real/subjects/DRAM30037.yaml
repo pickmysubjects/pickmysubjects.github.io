@@ -1,0 +1,33 @@
+code: DRAM30037
+title: Theatre Skills 4
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites:
+  all:
+    - DRAM30033
+    - DRAM30034
+    - DRAM30035
+corequisites: none
+non_allowed:
+  - DRAM30026
+skills:
+  - presentation
+topics:
+  - performance
+assessment:
+  - kind: presentation
+    weight: 50
+  - kind: assignment
+    weight: 40
+  - kind: participation
+    weight: 10
+weekly_contact_hours: 8.5
+min_attendance: 75
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/dram30037
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

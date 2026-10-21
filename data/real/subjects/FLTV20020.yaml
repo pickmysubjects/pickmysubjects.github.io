@@ -1,0 +1,28 @@
+code: FLTV20020
+title: International Film Festival Studio
+level: 2
+points: 12.5
+offerings:
+  "2026": []
+prerequisites: FLTV20006
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - design
+topics:
+  - film-and-screen
+  - media
+assessment:
+  - kind: project
+    weight: 50
+  - kind: assignment
+    weight: 40
+  - kind: participation
+    weight: 10
+min_attendance: 75
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/fltv20020
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

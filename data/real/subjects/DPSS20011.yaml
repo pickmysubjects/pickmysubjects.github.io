@@ -1,0 +1,36 @@
+code: DPSS20011
+title: Production Studio 3
+level: 2
+points: 25
+offerings:
+  "2026":
+    - semester-1
+prerequisites:
+  all:
+    - DPSS10005
+    - DPSS10010
+corequisites: none
+non_allowed:
+  - DPSS20003
+  - DPSS20004
+skills:
+  - design
+topics:
+  - performance
+  - design
+assessment:
+  - kind: project
+    weight: 25
+  - kind: project
+    weight: 25
+  - kind: project
+    weight: 25
+  - kind: project
+    weight: 25
+weekly_contact_hours: 8
+min_attendance: 75
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/dpss20011
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

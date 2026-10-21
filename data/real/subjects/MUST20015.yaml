@@ -1,0 +1,40 @@
+code: MUST20015
+title: Music Theatre Studio 4
+level: 2
+points: 25
+offerings:
+  "2026":
+    - semester-2
+prerequisites:
+  all:
+    - MUST20012
+    - MUST20013
+corequisites: none
+non_allowed:
+  - MUST20001
+  - MUST20002
+  - MUST20003
+  - MUST20005
+skills:
+  - presentation
+topics:
+  - performance
+assessment:
+  - kind: presentation
+    weight: 15
+    group: true
+  - kind: presentation
+    weight: 30
+    group: true
+  - kind: presentation
+    weight: 40
+    group: true
+  - kind: report
+    weight: 15
+weekly_contact_hours: 16.25
+min_attendance: 75
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/must20015
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,37 @@
+code: DNCE20037
+title: Digital Dance
+level: 2
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites:
+  all:
+    - DNCE20034
+    - DNCE20035
+corequisites: none
+non_allowed:
+  - DNCE20019
+skills:
+  - presentation
+  - design
+topics:
+  - performance
+  - media
+assessment:
+  - kind: presentation
+    weight: 25
+    group: true
+  - kind: presentation
+    weight: 35
+    group: true
+  - kind: presentation
+    weight: 40
+    group: true
+weekly_contact_hours: 6
+min_attendance: 75
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/dnce20037
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

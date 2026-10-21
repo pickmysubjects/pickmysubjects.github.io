@@ -1,0 +1,37 @@
+code: FLTV10020
+title: Animation Lab 1
+level: 1
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites:
+  all:
+    - FLTV10016
+    - FLTV10017
+    - FLTV10025
+corequisites: none
+non_allowed: []
+skills:
+  - design
+  - presentation
+topics:
+  - film-and-screen
+  - visual-communication
+  - art
+assessment:
+  - kind: presentation
+    weight: 20
+  - kind: project
+    weight: 20
+  - kind: project
+    weight: 20
+  - kind: project
+    weight: 40
+weekly_contact_hours: 3
+min_attendance: 75
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/fltv10020
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

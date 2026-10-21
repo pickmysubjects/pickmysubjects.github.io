@@ -1,0 +1,33 @@
+code: MUSI10230
+title: Musical Perspectives
+level: 1
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - presentation
+topics:
+  - performance
+  - society
+assessment:
+  - kind: assignment
+    weight: 20
+  - kind: assignment
+    weight: 10
+  - kind: participation
+    weight: 45
+    group: true
+  - kind: presentation
+    weight: 25
+weekly_contact_hours: 2.5
+pass_fail: true
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/musi10230
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

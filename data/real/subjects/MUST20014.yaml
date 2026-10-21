@@ -1,0 +1,35 @@
+code: MUST20014
+title: Music Theatre Combination Skills 2
+level: 2
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites:
+  all:
+    - MUST20012
+    - MUST20013
+corequisites: none
+non_allowed:
+  - MUST20006
+skills:
+  - presentation
+topics:
+  - performance
+assessment:
+  - kind: presentation
+    weight: 30
+  - kind: presentation
+    weight: 20
+  - kind: presentation
+    weight: 40
+    group: true
+  - kind: report
+    weight: 10
+weekly_contact_hours: 12
+min_attendance: 75
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/must20014
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

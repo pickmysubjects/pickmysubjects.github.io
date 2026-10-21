@@ -1,0 +1,34 @@
+code: DRAM30029
+title: Professional Practice Acting 1
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites:
+  all:
+    - DRAM20030
+    - DRAM20031
+corequisites: none
+non_allowed:
+  - DRAM30022
+skills:
+  - writing
+  - business
+topics:
+  - performance
+  - entrepreneurship
+assessment:
+  - kind: participation
+    weight: 30
+  - kind: assignment
+    weight: 20
+  - kind: assignment
+    weight: 50
+weekly_contact_hours: 2.5
+min_attendance: 75
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/dram30029
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

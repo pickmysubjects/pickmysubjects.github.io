@@ -1,0 +1,33 @@
+code: ORAL10005
+title: Oral Health Practice 1
+level: 1
+points: 37.5
+offerings:
+  "2026":
+    - semester-1
+    - semester-2
+prerequisites: none
+corequisites: ORAL10003
+non_allowed: []
+skills:
+  - lab
+topics:
+  - health
+assessment:
+  - kind: project
+    weight: 30
+  - kind: exam
+    weight: 30
+    hurdle: true
+  - kind: participation
+    weight: 0
+    hurdle: true
+  - kind: exam
+    weight: 40
+weekly_contact_hours: 12.5
+min_attendance: 100
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/oral10005
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Year-long subject (both semesters, one enrolment); shown here as semester 1 and semester 2."

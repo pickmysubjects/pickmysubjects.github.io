@@ -1,0 +1,35 @@
+code: DNCE20034
+title: "Dance Lab 3: Repertory Studies"
+level: 2
+points: 25
+offerings:
+  "2026":
+    - semester-1
+prerequisites:
+  all:
+    - DNCE10031
+    - DNCE10032
+corequisites: none
+non_allowed:
+  - DNCE10019
+skills:
+  - presentation
+  - writing
+topics:
+  - performance
+assessment:
+  - kind: presentation
+    weight: 20
+  - kind: presentation
+    weight: 20
+  - kind: presentation
+    weight: 30
+  - kind: assignment
+    weight: 30
+weekly_contact_hours: 21
+min_attendance: 75
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/dnce20034
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

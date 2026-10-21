@@ -1,0 +1,36 @@
+code: DPSS20013
+title: Production Studio 4
+level: 2
+points: 25
+offerings:
+  "2026":
+    - semester-2
+prerequisites:
+  all:
+    - DPSS20010
+    - DPSS20011
+corequisites: none
+non_allowed:
+  - DPSS20005
+  - DPSS20006
+skills:
+  - design
+topics:
+  - performance
+  - design
+assessment:
+  - kind: project
+    weight: 25
+  - kind: project
+    weight: 25
+  - kind: project
+    weight: 25
+  - kind: project
+    weight: 25
+weekly_contact_hours: 8
+min_attendance: 75
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/dpss20013
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,36 @@
+code: FLTV10008
+title: Screen Practice 1B
+level: 1
+points: 25
+offerings:
+  "2026":
+    - semester-2
+prerequisites:
+  all:
+    - FLTV10006
+    - FLTV10025
+corequisites: none
+non_allowed: []
+skills:
+  - design
+  - writing
+topics:
+  - film-and-screen
+assessment:
+  - kind: assignment
+    weight: 25
+  - kind: participation
+    weight: 10
+  - kind: project
+    weight: 35
+  - kind: report
+    weight: 20
+  - kind: participation
+    weight: 10
+weekly_contact_hours: 14
+min_attendance: 75
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/fltv10008
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

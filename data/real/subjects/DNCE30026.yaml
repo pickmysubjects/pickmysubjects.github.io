@@ -1,0 +1,35 @@
+code: DNCE30026
+title: "Dance Lab 5: Dance and Music"
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+    - semester-2
+prerequisites:
+  all:
+    - DNCE20036
+    - DNCE20037
+    - permission: coordinator
+      note: Permission of the subject coordinator is also needed.
+corequisites: none
+non_allowed:
+  - DNCE30011
+skills:
+  - presentation
+topics:
+  - performance
+assessment:
+  - kind: participation
+    weight: 30
+  - kind: assignment
+    weight: 30
+  - kind: presentation
+    weight: 40
+weekly_contact_hours: 10
+min_attendance: 75
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/dnce30026
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

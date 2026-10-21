@@ -1,0 +1,39 @@
+code: ORAL20003
+title: Oral Health Sciences 2
+level: 2
+points: 25
+offerings:
+  "2026":
+    - semester-1
+    - semester-2
+prerequisites:
+  manual: a minimum of 100 credit points of successfully completed Year 1 Bachelor of Oral Health subjects
+corequisites: ORAL20005
+non_allowed: []
+skills:
+  - lab
+  - presentation
+topics:
+  - health
+  - biology
+assessment:
+  - kind: test
+    weight: 20
+  - kind: test
+    weight: 0
+    hurdle: true
+  - kind: exam
+    weight: 20
+  - kind: presentation
+    weight: 15
+    group: true
+  - kind: report
+    weight: 15
+    group: true
+  - kind: exam
+    weight: 30
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/oral20003
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Year-long subject (both semesters, one enrolment); shown here as semester 1 and semester 2."

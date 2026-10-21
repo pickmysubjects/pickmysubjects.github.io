@@ -1,0 +1,44 @@
+code: ORAL20001
+title: Health Promotion 2
+level: 2
+points: 25
+offerings:
+  "2026":
+    - semester-1
+    - semester-2
+prerequisites:
+  manual: a minimum of 100 credit points of successfully completed Year 1 Bachelor of Oral Health subjects
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - presentation
+topics:
+  - health
+  - society
+  - ethics
+assessment:
+  - kind: assignment
+    weight: 10
+  - kind: presentation
+    weight: 10
+    group: true
+  - kind: assignment
+    weight: 15
+  - kind: assignment
+    weight: 15
+  - kind: assignment
+    weight: 5
+    group: true
+  - kind: assignment
+    weight: 15
+  - kind: report
+    weight: 25
+  - kind: assignment
+    weight: 5
+weekly_contact_hours: 3.5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/oral20001
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Year-long subject (both semesters, one enrolment); shown here as semester 1 and semester 2."

@@ -1,0 +1,35 @@
+code: DNCE20035
+title: Knowing Dance
+level: 2
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites:
+  all:
+    - DNCE10031
+    - DNCE10032
+corequisites: none
+non_allowed:
+  - DNCE20017
+skills:
+  - writing
+  - presentation
+topics:
+  - performance
+  - history
+  - indigenous-studies
+assessment:
+  - kind: presentation
+    weight: 30
+  - kind: report
+    weight: 50
+  - kind: presentation
+    weight: 20
+weekly_contact_hours: 6
+min_attendance: 75
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/dnce20035
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

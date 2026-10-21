@@ -47,5 +47,7 @@ rules:
     description: Complete one major (225 points)
 # Not encoded (engine can't express): Musical Perspectives before any level-2 core subject, and
 # every level-1 core subject before level-3 core subjects (the subjects' own prerequisites cover
-# most of this). The music elective and ensemble lists are separate component pages (not pasted).
+# most of this). The Music Electives list (which already holds every 6.25-point ensemble subject on
+# the Ensembles page) is encoded inside each major's elective groups, since the majors, not the
+# course, set the elective points and level-1 caps.
 # The 12.5 free points (music elective or breadth) need no rule: they are what's left of the 300.

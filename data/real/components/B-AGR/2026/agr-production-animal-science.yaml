@@ -1,0 +1,22 @@
+id: agr-production-animal-science
+course: B-AGR
+year: 2026
+kind: major
+title: Production Animal Science
+points: 87.5
+# Recommended (not required) electives: AGRI20003 at level 2, AGRI30045 at level 3.
+requirements:
+  # Level 2 degree core.
+  - all: [AGRI20043]
+  # Level 2 major core.
+  - all: [ANSC20001]
+  # Level 2 major elective.
+  - choose: { points: 12.5, from: [AGRI20044, ANSC20002, AGRI20036] }
+  # Level 3 major core.
+  - all: [ANSC30008]
+  # 25 points of level 3 major electives.
+  - choose: { points: 25, from: [ANSC30003, ANSC30004, ANSC30005, ANSC30006] }
+  # Capstone.
+  - all: [AGRI30038]
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-agr/majors-minors-specialisations
+verified_on: 2026-10-21 # structure; source: 2026 Handbook major page

@@ -1,0 +1,29 @@
+code: FINA30002
+title: Studio Studies 6
+level: 3
+points: 37.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites: FINA30028
+corequisites: none
+non_allowed: []
+skills:
+  - design
+  - writing
+topics:
+  - art
+assessment:
+  - kind: assignment
+    weight: 15
+  - kind: assignment
+    weight: 15
+  - kind: project
+    weight: 70
+weekly_contact_hours: 9
+min_attendance: 75
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/fina30002
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

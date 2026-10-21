@@ -1,0 +1,37 @@
+code: DPSS30010
+title: Professional Practice and Internship
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+    - semester-2
+prerequisites:
+  all:
+    - DPSS20012
+    - DPSS20013
+corequisites: none
+non_allowed:
+  - DPSS30002
+  - DPSS30003
+skills:
+  - writing
+topics:
+  - performance
+  - business
+assessment:
+  - kind: assignment
+    weight: 15
+  - kind: assignment
+    weight: 20
+  - kind: assignment
+    weight: 20
+  - kind: assignment
+    weight: 45
+weekly_contact_hours: 6
+min_attendance: 75
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/dpss30010
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Year-long subject (both semesters, one enrolment); shown here as semester 1 and semester 2. Includes a 120-hour industry internship."

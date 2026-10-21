@@ -1,0 +1,22 @@
+id: agr-plant-and-soil-science
+course: B-AGR
+year: 2026
+kind: major
+title: Plant and Soil Science
+points: 87.5
+# Recommended (not required) electives: AGRI20003 AGRI20044 at level 2, AGRI30045 at level 3.
+requirements:
+  # Level 2 degree core.
+  - all: [AGRI20038]
+  # Level 2 elective, Group A.
+  - choose: { points: 12.5, from: [AGRI20037, AGRI20035] }
+  # Level 2 elective, Group B.
+  - choose: { points: 12.5, from: [AGRI20026, AGRI20036] }
+  # Level 3 major core.
+  - all: [AGRI30046]
+  # 25 points of level 3 major electives (AGRI30016 is a Dookie intensive between semesters).
+  - choose: { points: 25, from: [AGRI30037, AGRI30042, AGRI30048, AGRI30016] }
+  # Capstone.
+  - all: [AGRI30038]
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-agr/majors-minors-specialisations
+verified_on: 2026-10-21 # structure; source: 2026 Handbook major page

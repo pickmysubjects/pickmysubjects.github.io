@@ -1,0 +1,36 @@
+code: AGRI20046
+title: Pacific Field School
+level: 2
+points: 12.5
+offerings:
+  "2026":
+    - winter
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - fieldwork
+  - writing
+  - presentation
+topics:
+  - agriculture
+  - environment
+  - society
+  - geography
+assessment:
+  - kind: participation
+    weight: 5
+    hurdle: true
+  - kind: presentation
+    weight: 25
+  - kind: assignment
+    weight: 20
+  - kind: report
+    weight: 50
+weekly_contact_hours: 1
+min_attendance: 100
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/agri20046
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Includes a 10-day field trip in Fiji."

@@ -1,0 +1,36 @@
+code: FINA30026
+title: Global Travelling Studio
+level: 3
+points: 12.5
+offerings:
+  "2026": []
+prerequisites:
+  all:
+    - all:
+        - FINA20030
+        - FINA20032
+    - manual: Submit a 500-word expression of interest
+    - permission: application
+      note: "PERMISSION OF COORDINATOR: Students are required to apply for permission to enrol in this subject. Students must submit proof of permission with an Enrolment Assistance form to Stop 1: Link to Enrolment Assistance form"
+corequisites: none
+non_allowed: []
+skills:
+  - design
+  - writing
+topics:
+  - art
+assessment:
+  - kind: assignment
+    weight: 20
+  - kind: project
+    weight: 20
+  - kind: project
+    weight: 50
+  - kind: participation
+    weight: 10
+min_attendance: 75
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/fina30026
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,27 @@
+code: FLTV30015
+title: Screen Adaptation
+level: 3
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites: FLTV20017
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+topics:
+  - film-and-screen
+  - literature
+assessment:
+  - kind: presentation
+    weight: 30
+  - kind: assignment
+    weight: 70
+weekly_contact_hours: 3
+min_attendance: 75
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/fltv30015
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

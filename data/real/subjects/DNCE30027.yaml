@@ -1,0 +1,35 @@
+code: DNCE30027
+title: Inter-disciplinary Project
+level: 3
+points: 25
+offerings:
+  "2026":
+    - semester-1
+prerequisites:
+  all:
+    - DNCE20036
+    - DNCE20037
+corequisites: none
+non_allowed:
+  - DNCE30015
+  - DNCE30016
+skills:
+  - presentation
+  - writing
+topics:
+  - performance
+  - art
+assessment:
+  - kind: report
+    weight: 25
+  - kind: presentation
+    weight: 50
+  - kind: assignment
+    weight: 25
+weekly_contact_hours: 22
+min_attendance: 75
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/dnce30027
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

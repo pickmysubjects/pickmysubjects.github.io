@@ -1,0 +1,33 @@
+code: DRAM20032
+title: Theatre Practice 1
+level: 2
+points: 25
+offerings:
+  "2026":
+    - semester-1
+prerequisites:
+  all:
+    - DRAM10034
+    - DRAM10035
+corequisites: none
+non_allowed:
+  - DRAM20026
+skills:
+  - presentation
+topics:
+  - performance
+assessment:
+  - kind: participation
+    weight: 50
+  - kind: presentation
+    weight: 30
+  - kind: presentation
+    weight: 20
+    group: true
+weekly_contact_hours: 18.5
+min_attendance: 75
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/dram20032
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

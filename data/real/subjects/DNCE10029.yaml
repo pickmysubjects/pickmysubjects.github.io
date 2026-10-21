@@ -1,0 +1,30 @@
+code: DNCE10029
+title: "Body Knowledges: Dance Science"
+level: 1
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites: none
+corequisites: none
+non_allowed:
+  - DNCE10018
+skills:
+  - presentation
+topics:
+  - performance
+  - health
+assessment:
+  - kind: presentation
+    weight: 30
+  - kind: presentation
+    weight: 30
+  - kind: assignment
+    weight: 40
+weekly_contact_hours: 6
+min_attendance: 75
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/dnce10029
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

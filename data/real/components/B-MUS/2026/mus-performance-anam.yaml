@@ -1,0 +1,17 @@
+id: mus-performance-anam
+course: B-MUS
+year: 2026
+kind: major
+title: Performance (ANAM)
+points: 225
+# Special entry: only for students enrolled at the Australian National Academy of Music (ANAM)
+# taking a concurrent Bachelor of Music. All 225 points are core; there are no music electives.
+requirements:
+  # Level 1 core.
+  - all: [MUSI10047, MUSI10220, MUSI10233, MUSI10023, MUSI10221, MUSI10234]
+  # Level 2 core.
+  - all: [MUSI20198, MUSI20201, MUSI20229, MUSI20061, MUSI20202, MUSI20230]
+  # Level 3 core.
+  - all: [MUSI30249, MUSI30252, MUSI30275, MUSI30046, MUSI30253, MUSI30276]
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-mus/majors-minors-specialisations
+verified_on: 2026-10-21 # structure; source: 2026 Handbook major page

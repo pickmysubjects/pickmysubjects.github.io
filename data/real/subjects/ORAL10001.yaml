@@ -1,0 +1,35 @@
+code: ORAL10001
+title: Society and Health 1
+level: 1
+points: 25
+offerings:
+  "2026":
+    - semester-1
+    - semester-2
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - presentation
+topics:
+  - health
+  - society
+assessment:
+  - kind: project
+    weight: 35
+  - kind: assignment
+    weight: 10
+    hurdle: true
+  - kind: assignment
+    weight: 20
+  - kind: presentation
+    weight: 15
+    group: true
+  - kind: assignment
+    weight: 20
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/oral10001
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Year-long subject (both semesters, one enrolment); shown here as semester 1 and semester 2."

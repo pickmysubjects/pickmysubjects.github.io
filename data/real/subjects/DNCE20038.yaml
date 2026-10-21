@@ -1,0 +1,33 @@
+code: DNCE20038
+title: "Global Atelier: Travelling Studio"
+level: 2
+points: 12.5
+offerings:
+  "2026": []
+prerequisites:
+  all:
+    - DNCE10031
+    - permission: application
+      note: "PERMISSION OF COORDINATOR: Students are required to apply for permission to enrol in this subject via a 300-word Expression of Interest."
+corequisites: none
+non_allowed: []
+skills:
+  - presentation
+  - writing
+topics:
+  - performance
+  - art
+assessment:
+  - kind: participation
+    weight: 50
+  - kind: presentation
+    weight: 25
+    group: true
+  - kind: assignment
+    weight: 25
+min_attendance: 75
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/dnce20038
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

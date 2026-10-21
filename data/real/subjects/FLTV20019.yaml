@@ -1,0 +1,33 @@
+code: FLTV20019
+title: Writing Animation
+level: 2
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites:
+  all:
+    - FLTV10019
+    - FLTV10020
+    - FLTV10025
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+topics:
+  - film-and-screen
+  - literature
+assessment:
+  - kind: report
+    weight: 30
+  - kind: project
+    weight: 35
+  - kind: assignment
+    weight: 35
+weekly_contact_hours: 3.5
+min_attendance: 75
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/fltv20019
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

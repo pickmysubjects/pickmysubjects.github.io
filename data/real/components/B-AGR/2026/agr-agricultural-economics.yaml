@@ -1,0 +1,18 @@
+id: agr-agricultural-economics
+course: B-AGR
+year: 2026
+kind: major
+title: Agricultural Economics
+points: 87.5
+# Recommended (not required) level-3 elective: AGRI30045.
+requirements:
+  # Level 2 degree core.
+  - all: [AGRI20042]
+  # 25 points of level 2 major electives (AGRI20035 and AGRI20037 are anti-requisites).
+  - choose: { points: 25, from: [AGRI20003, AGRI20041, AGRI20036, AGRI20040, AGRI20037, AGRI20035] }
+  # Level 3 major core.
+  - all: [AGRI30033, AGRI30040, AGRI30043]
+  # Capstone.
+  - all: [AGRI30038]
+handbook: https://handbook.unimelb.edu.au/2026/courses/b-agr/majors-minors-specialisations
+verified_on: 2026-10-21 # structure; source: 2026 Handbook major page

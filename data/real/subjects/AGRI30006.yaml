@@ -1,0 +1,31 @@
+code: AGRI30006
+title: Industry Project
+level: 3
+points: 25
+offerings:
+  "2026":
+    - semester-2
+prerequisites:
+  manual: Completion of 150 points in the Bachelor of Agriculture
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - presentation
+  - fieldwork
+topics:
+  - agriculture
+assessment:
+  - kind: project
+    weight: 30
+  - kind: report
+    weight: 50
+  - kind: presentation
+    weight: 20
+weekly_contact_hours: 1
+campus: Dookie
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/agri30006
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

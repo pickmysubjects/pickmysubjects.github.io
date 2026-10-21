@@ -1,0 +1,37 @@
+code: FLTV30024
+title: Animation Studio 3B
+level: 3
+points: 37.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites:
+  all:
+    - FLTV30018
+    - FLTV30021
+    - FLTV30023
+corequisites: none
+non_allowed:
+  - FLTV30019
+  - FLTV30020
+skills:
+  - design
+  - business
+topics:
+  - film-and-screen
+  - marketing
+  - management
+assessment:
+  - kind: project
+    weight: 35
+  - kind: project
+    weight: 40
+  - kind: project
+    weight: 25
+weekly_contact_hours: 7.5
+min_attendance: 75
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/fltv30024
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

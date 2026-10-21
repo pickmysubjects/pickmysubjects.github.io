@@ -1,0 +1,37 @@
+code: ANSC10001
+source: StudentVIP
+url: https://studentvip.com.au/unimelb/subjects/ansc10001
+reviews: 3
+from: 2019
+to: 2020
+checked: 2026-10-21
+points:
+  - en: "Reviewers agree it is not difficult and the workload is light; a lot of the content felt close to common knowledge."
+    zh: "评论者一致认为不难、工作量轻；很多内容接近常识。"
+    zh-TW: "評論者一致認為不難、作業量輕；很多內容接近常識。"
+    ja: "難しくなく負担も軽いという点で一致。内容の多くは常識に近いと感じられた。"
+    ko: "어렵지 않고 부담이 적다는 데 의견 일치. 내용 상당수가 상식에 가깝다는 평."
+    vi: "Mọi người đồng ý môn không khó, khối lượng nhẹ; nhiều nội dung gần như kiến thức phổ thông."
+    ms: "Pengulas sepakat ia tidak sukar dan beban ringan; banyak isi terasa seperti pengetahuan umum."
+    id: "Pengulas sepakat tidak sulit dan bebannya ringan; banyak materi terasa seperti pengetahuan umum."
+    hi: "सभी सहमत हैं कि यह कठिन नहीं और काम हल्का है; बहुत सी सामग्री आम जानकारी जैसी लगी।"
+  - en: "Opinions split on interest: one liked the guest lectures and free choice of presentation topic, two found it boring."
+    zh: "对趣味性看法不一：一位喜欢客座讲座和自选演讲题目，两位觉得无聊。"
+    zh-TW: "對趣味性看法不一：一位喜歡客座講座與自選報告題目，兩位覺得無聊。"
+    ja: "面白さは意見が分かれ、ゲスト講義と自由な発表テーマを評価する人もいれば、退屈だという人も2人。"
+    ko: "흥미는 엇갈림: 한 명은 초청 강의와 자유 발표 주제를 좋아했고, 두 명은 지루했다고 함."
+    vi: "Ý kiến chia rẽ: một người thích bài giảng khách mời và tự chọn đề tài, hai người thấy chán."
+    ms: "Pendapat berbelah: seorang suka kuliah tetamu dan topik bebas, dua orang rasa membosankan."
+    id: "Pendapat terbelah: satu suka kuliah tamu dan topik presentasi bebas, dua merasa membosankan."
+    hi: "रुचि पर राय बँटी: एक को गेस्ट लेक्चर और खुला विषय पसंद आया, दो को उबाऊ लगा।"
+  - en: "The assessments and exam were described as fair and closely tied to the lectures."
+    zh: "作业和考试被认为公平，并且紧扣讲座内容。"
+    zh-TW: "作業與考試被認為公平，並且緊扣講座內容。"
+    ja: "課題と試験は公平で、講義内容に沿っていたとされる。"
+    ko: "과제와 시험은 공정하고 강의 내용과 밀접했다는 평."
+    vi: "Bài tập và bài thi được cho là công bằng, bám sát bài giảng."
+    ms: "Tugasan dan peperiksaan dikatakan adil dan berkait rapat dengan kuliah."
+    id: "Tugas dan ujian disebut adil dan sesuai dengan kuliah."
+    hi: "असेसमेंट और परीक्षा निष्पक्ष और लेक्चर से जुड़े बताए गए।"
+workload: light
+difficulty: easy

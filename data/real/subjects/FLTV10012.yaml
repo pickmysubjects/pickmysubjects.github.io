@@ -1,0 +1,30 @@
+code: FLTV10012
+title: Screenwriting Practices 1A
+level: 1
+points: 18.75
+offerings:
+  "2026":
+    - semester-1
+prerequisites: none
+corequisites: none
+non_allowed:
+  - FLTV10014
+skills:
+  - writing
+topics:
+  - film-and-screen
+  - visual-communication
+assessment:
+  - kind: presentation
+    weight: 25
+  - kind: project
+    weight: 25
+  - kind: assignment
+    weight: 50
+weekly_contact_hours: 4
+min_attendance: 75
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/fltv10012
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

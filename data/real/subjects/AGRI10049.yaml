@@ -1,0 +1,32 @@
+code: AGRI10049
+title: Animal Production Systems
+level: 1
+points: 12.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - fieldwork
+topics:
+  - agriculture
+  - biology
+assessment:
+  - kind: test
+    weight: 30
+  - kind: report
+    weight: 20
+  - kind: exam
+    weight: 50
+  - kind: participation
+    weight: 0
+    hurdle: true
+weekly_contact_hours: 5.5
+min_attendance: 80
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/agri10049
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

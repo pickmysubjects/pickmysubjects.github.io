@@ -1,0 +1,32 @@
+code: DRAM10032
+title: Contextual Studies 1
+level: 1
+points: 12.5
+offerings:
+  "2026":
+    - semester-1
+prerequisites: none
+corequisites: none
+non_allowed:
+  - DRAM10029
+skills:
+  - writing
+  - presentation
+topics:
+  - performance
+  - history
+assessment:
+  - kind: assignment
+    weight: 10
+  - kind: presentation
+    weight: 40
+    group: true
+  - kind: assignment
+    weight: 50
+weekly_contact_hours: 3
+min_attendance: 75
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/dram10032
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

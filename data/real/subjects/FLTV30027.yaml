@@ -1,0 +1,35 @@
+code: FLTV30027
+title: Screen Practice 3B
+level: 3
+points: 37.5
+offerings:
+  "2026":
+    - semester-2
+prerequisites:
+  all:
+    - FLTV30009
+    - FLTV30032
+corequisites: none
+non_allowed: []
+skills:
+  - design
+  - writing
+topics:
+  - film-and-screen
+  - media
+assessment:
+  - kind: project
+    weight: 30
+  - kind: project
+    weight: 10
+  - kind: project
+    weight: 50
+  - kind: report
+    weight: 10
+weekly_contact_hours: 21.25
+min_attendance: 75
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/fltv30027
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

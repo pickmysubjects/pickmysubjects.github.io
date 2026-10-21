@@ -1,0 +1,39 @@
+code: ORAL30002
+title: Oral Health Practice 3
+level: 3
+points: 75
+offerings:
+  "2026":
+    - semester-1
+    - semester-2
+prerequisites:
+  manual: a minimum of 200 credit points of successfully completed Year 1 and Year 2 Bachelor of Oral Health subjects
+corequisites: none
+non_allowed: []
+skills:
+  - lab
+  - fieldwork
+topics:
+  - health
+assessment:
+  - kind: project
+    weight: 40
+  - kind: exam
+    weight: 20
+  - kind: participation
+    weight: 0
+    hurdle: true
+  - kind: presentation
+    weight: 15
+  - kind: assignment
+    weight: 5
+    group: true
+  - kind: exam
+    weight: 20
+    hurdle: true
+weekly_contact_hours: 37
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/oral30002
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Year-long subject (both semesters, one enrolment); shown here as semester 1 and semester 2."

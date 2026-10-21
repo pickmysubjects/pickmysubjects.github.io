@@ -1,0 +1,36 @@
+code: ORAL20005
+title: Oral Health Practice 2
+level: 2
+points: 50
+offerings:
+  "2026":
+    - semester-1
+    - semester-2
+prerequisites:
+  manual: a minimum of 100 credit points of successfully completed Year 1 Bachelor of Oral Health subjects
+corequisites: ORAL20003
+non_allowed: []
+skills:
+  - lab
+topics:
+  - health
+assessment:
+  - kind: project
+    weight: 20
+  - kind: exam
+    weight: 30
+    hurdle: true
+  - kind: exam
+    weight: 20
+  - kind: participation
+    weight: 0
+    hurdle: true
+  - kind: exam
+    weight: 30
+weekly_contact_hours: 17.5
+min_attendance: 100
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/oral20005
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Year-long subject (both semesters, one enrolment); shown here as semester 1 and semester 2."

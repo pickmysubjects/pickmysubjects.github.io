@@ -1,0 +1,36 @@
+code: DRAM10036
+title: Performance Preparation Theatre 1
+level: 1
+points: 18.75
+offerings:
+  "2026":
+    - semester-1
+prerequisites: none
+corequisites: none
+non_allowed: []
+skills:
+  - presentation
+topics:
+  - performance
+assessment:
+  - kind: presentation
+    weight: 40
+    hurdle: true
+  - kind: presentation
+    weight: 30
+    group: true
+    hurdle: true
+  - kind: assignment
+    weight: 20
+    hurdle: true
+  - kind: participation
+    weight: 10
+    hurdle: true
+weekly_contact_hours: 19.5
+min_attendance: 75
+pass_fail: true
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/dram10036
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

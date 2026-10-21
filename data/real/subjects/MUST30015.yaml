@@ -1,0 +1,38 @@
+code: MUST30015
+title: Production Studio 1
+level: 3
+points: 25
+offerings:
+  "2026":
+    - semester-1
+prerequisites:
+  all:
+    - MUST20014
+    - MUST20015
+corequisites: none
+non_allowed:
+  - MUST30004
+  - MUST30005
+skills:
+  - presentation
+topics:
+  - performance
+assessment:
+  - kind: presentation
+    weight: 20
+    group: true
+  - kind: presentation
+    weight: 30
+    group: true
+  - kind: presentation
+    weight: 40
+    group: true
+  - kind: report
+    weight: 10
+weekly_contact_hours: 28.5
+min_attendance: 75
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/must30015
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

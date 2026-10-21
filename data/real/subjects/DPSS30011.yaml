@@ -1,0 +1,40 @@
+code: DPSS30011
+title: Design and Production Local x Global
+level: 3
+points: 12.5
+offerings:
+  "2026": []
+prerequisites:
+  any:
+    - all:
+        - admission: B-FAPRO
+          note: Admission into the B-FAPRO Bachelor of Fine Arts (Production)
+        - DPSS20013
+    - all:
+        - admission: B-DES
+          note: Admission into the B-DES Bachelor of Design
+        - ARCH10001
+        - manual: Submit a 200-word expression of interest.
+corequisites: none
+non_allowed: []
+skills:
+  - design
+  - writing
+topics:
+  - design
+  - performance
+  - media
+assessment:
+  - kind: project
+    weight: 40
+  - kind: project
+    weight: 30
+    group: true
+  - kind: assignment
+    weight: 30
+min_attendance: 75
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/dpss30011
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

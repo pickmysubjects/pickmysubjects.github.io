@@ -1,0 +1,35 @@
+code: FLTV20012
+title: Screenwriting Practices 2A
+level: 2
+points: 25
+offerings:
+  "2026":
+    - semester-1
+prerequisites:
+  all:
+    - FLTV10009
+    - FLTV10015
+corequisites: none
+non_allowed: []
+skills:
+  - writing
+  - presentation
+topics:
+  - film-and-screen
+  - media
+assessment:
+  - kind: project
+    weight: 35
+    group: true
+  - kind: presentation
+    weight: 20
+    group: true
+  - kind: assignment
+    weight: 45
+weekly_contact_hours: 4
+min_attendance: 75
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/fltv20012
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

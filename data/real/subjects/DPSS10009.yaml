@@ -1,0 +1,32 @@
+code: DPSS10009
+title: Production Studio 1
+level: 1
+points: 18.75
+offerings:
+  "2026":
+    - semester-1
+prerequisites: none
+corequisites: none
+non_allowed:
+  - DPSS10002
+skills:
+  - design
+topics:
+  - performance
+  - design
+assessment:
+  - kind: project
+    weight: 25
+  - kind: project
+    weight: 25
+  - kind: project
+    weight: 25
+  - kind: project
+    weight: 25
+weekly_contact_hours: 20
+min_attendance: 75
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/dpss10009
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

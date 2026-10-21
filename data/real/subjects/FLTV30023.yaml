@@ -1,0 +1,35 @@
+code: FLTV30023
+title: Animation Studio 3A
+level: 3
+points: 25
+offerings:
+  "2026":
+    - semester-1
+prerequisites:
+  all:
+    - FLTV20013
+    - FLTV20016
+corequisites: none
+non_allowed:
+  - FLTV30019
+  - FLTV30020
+skills:
+  - design
+  - writing
+topics:
+  - film-and-screen
+  - art
+assessment:
+  - kind: project
+    weight: 30
+  - kind: assignment
+    weight: 35
+  - kind: project
+    weight: 35
+weekly_contact_hours: 7
+min_attendance: 75
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/fltv30023
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

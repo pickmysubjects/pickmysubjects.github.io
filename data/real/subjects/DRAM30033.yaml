@@ -1,0 +1,33 @@
+code: DRAM30033
+title: Theatre Practice 3
+level: 3
+points: 25
+offerings:
+  "2026":
+    - semester-1
+prerequisites:
+  all:
+    - DRAM20034
+    - DRAM20035
+corequisites: none
+non_allowed:
+  - DRAM30025
+skills:
+  - presentation
+  - writing
+topics:
+  - performance
+assessment:
+  - kind: participation
+    weight: 50
+  - kind: assignment
+    weight: 25
+  - kind: report
+    weight: 25
+weekly_contact_hours: 20
+min_attendance: 75
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/dram30033
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."

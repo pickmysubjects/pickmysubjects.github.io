@@ -1,0 +1,35 @@
+code: DRAM30036
+title: Theatre Practice 4
+level: 3
+points: 25
+offerings:
+  "2026":
+    - semester-2
+prerequisites:
+  all:
+    - DRAM30033
+    - DRAM30034
+    - DRAM30035
+corequisites: none
+non_allowed:
+  - DRAM30026
+skills:
+  - presentation
+  - writing
+topics:
+  - performance
+assessment:
+  - kind: participation
+    weight: 45
+  - kind: assignment
+    weight: 25
+  - kind: presentation
+    weight: 30
+    group: true
+weekly_contact_hours: 21.5
+min_attendance: 75
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2026/subjects/dram30036
+source_year: 2026
+verified_on: 2026-10-21
+notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
