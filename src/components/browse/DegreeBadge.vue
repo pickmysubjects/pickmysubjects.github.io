@@ -35,6 +35,16 @@ const chosen = plan.courseChosen
   color: var(--ink-soft);
 }
 
+/* The icon stays with the sentence; only the Change button drops to the next line. */
+.degree span {
+  flex: 1 1 14em;
+  min-width: 0;
+}
+
+.degree svg {
+  flex: none;
+}
+
 .degree-default svg {
   color: var(--accent);
 }

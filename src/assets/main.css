@@ -186,6 +186,12 @@ li {
   overflow-wrap: break-word;
 }
 
+/* A placeholder or chosen option longer than its box ends in "…" instead of being cut mid-letter. */
+input,
+select {
+  text-overflow: ellipsis;
+}
+
 :lang(ja) {
   word-break: auto-phrase;
 }
@@ -194,8 +200,9 @@ li {
   word-break: keep-all;
 }
 
-/* Devanagari stacks marks above and below the letters; tight title leading makes them collide. */
-:lang(hi) :is(h1, h2, h3) {
+/* Devanagari stacks marks above and below the letters; tight title leading makes them collide.
+   :root adds weight so a component's own heading leading (one scoped class) doesn't win. */
+:root:lang(hi) :is(h1, h2, h3) {
   line-height: 1.35;
 }
 

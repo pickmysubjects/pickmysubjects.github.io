@@ -73,15 +73,16 @@ const meters = computed<Meter[]>(() => {
   grid-template-columns: 1fr auto;
   gap: 4px 8px;
   align-items: baseline;
+  /* A label that wraps pushes its own text up, so the bars still line up along the bottom. */
+  align-content: end;
   min-width: 0;
 }
 
 .meter-label {
-  overflow: hidden;
+  /* Wraps rather than cutting off a longer language's name (Breadth（専攻外科目）). */
+  min-width: 0;
   font-size: 0.8125rem;
   color: var(--ink-soft);
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .meter-value {

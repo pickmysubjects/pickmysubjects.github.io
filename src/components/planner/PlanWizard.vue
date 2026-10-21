@@ -371,7 +371,18 @@ function chooseCourse(c: Course): void {
 
 .wizard-foot {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
+  gap: var(--space-2);
+}
+
+/* Each button keeps its label on one line; a long pair wraps, the forward one going right. */
+.wizard-foot .button {
+  white-space: nowrap;
+}
+
+.wizard-foot > :last-child {
+  margin-left: auto;
 }
 
 @media (max-width: 560px) {

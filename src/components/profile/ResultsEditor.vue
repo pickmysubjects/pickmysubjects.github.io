@@ -181,6 +181,8 @@ function remove(i: number): void {
               <span class="code">{{ r.code }}</span>
               <span class="title">{{ titleOf(r.code) }}</span>
             </div>
+            <!-- One cell on a phone, so the mark can drop under a long semester name. -->
+            <div class="row-sub">
             <label class="when">
               <span class="visually-hidden">{{ t('record.termFor', { code: r.code }) }}</span>
               <select class="when-select" :value="termValue(r)" @change="setTerm(r.i, $event)">
@@ -205,6 +207,7 @@ function remove(i: number): void {
                 @change="setMark(r.i, $event)"
               />
               <span v-if="r.mark !== undefined" class="grade" :class="`grade-${gradeOf(r.mark).toLowerCase()}`">{{ gradeOf(r.mark) }}</span>
+            </div>
             </div>
             <div class="row-actions">
               <span v-if="rated.has(r.code)" class="rated"><Check :size="14" aria-hidden="true" /> {{ t('rating.rated') }}</span>
@@ -315,8 +318,9 @@ function remove(i: number): void {
 
 .row {
   display: grid;
-  /* Fixed columns so semester, mark and actions line up from row to row. */
-  grid-template-columns: minmax(0, 1fr) 150px 112px minmax(140px, auto);
+  /* Semester, mark and actions line up from row to row: every select holds the same
+     options, so its natural width is the same in every row. */
+  grid-template-columns: minmax(0, 1fr) auto 112px minmax(140px, auto);
   grid-template-areas: 'main when mark actions';
   align-items: center;
   gap: 12px;
@@ -328,6 +332,10 @@ function remove(i: number): void {
 
 .row-fail {
   border-color: var(--bad);
+}
+
+.row-sub {
+  display: contents;
 }
 
 .row-main {
@@ -352,10 +360,7 @@ function remove(i: number): void {
 }
 
 .title {
-  overflow: hidden;
   font-weight: 600;
-  white-space: nowrap;
-  text-overflow: ellipsis;
 }
 
 .when-select {
@@ -492,16 +497,24 @@ function remove(i: number): void {
     grid-template-columns: minmax(0, 1fr) auto;
     grid-template-areas:
       'main actions'
-      'when mark';
+      'sub sub';
     row-gap: 8px;
+  }
+
+  .row-sub {
+    grid-area: sub;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 12px;
+  }
+
+  .when {
+    flex: 1 0 auto;
   }
 
   .row-actions {
     align-self: start;
-  }
-
-  .title {
-    white-space: normal;
   }
 
   /* Just the star on a phone; the button keeps its name for screen readers. */

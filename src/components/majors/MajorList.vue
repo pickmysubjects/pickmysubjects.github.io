@@ -82,8 +82,8 @@ const courseTitle = computed(() => data.value.courses.find((c) => c.code === cou
     <!-- Grouped and folded: the first group is open; a search opens every group it matches. -->
     <details v-for="(g, i) in groups" :key="g.id" class="group" :open="i === 0 || query.trim() !== '' || undefined">
       <summary class="group-title">
-        <span>{{ t(`majorGroup.${g.id}`) }}</span>
-        <span class="group-count">{{ g.majors.length }}</span>
+        <!-- The count rides inline, so it stays next to the last word when the name wraps. -->
+        <span class="group-name">{{ t(`majorGroup.${g.id}`) }} <span class="group-count">{{ g.majors.length }}</span></span>
         <ChevronDown :size="18" aria-hidden="true" class="group-chevron" />
       </summary>
       <div class="cards">
@@ -207,7 +207,12 @@ const courseTitle = computed(() => data.value.courses.find((c) => c.code === cou
   display: none;
 }
 
+.group-name {
+  min-width: 0;
+}
+
 .group-count {
+  margin-left: var(--space-1);
   padding: 1px 9px;
   border-radius: 999px;
   background: var(--accent-soft);
