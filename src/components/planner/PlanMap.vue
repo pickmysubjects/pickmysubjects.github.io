@@ -208,6 +208,17 @@ function onPick(code: string): void {
   else emit('add', p.termIndex, code)
 }
 
+// The subject window's Swap and Move hand over to the board.
+defineExpose({
+  openSwap(code: string): void {
+    const i = props.terms.findIndex((x) => x.subjects.includes(code))
+    if (i >= 0) picker.value = { termIndex: i, replacing: code }
+  },
+  openMove(code: string): void {
+    moveFor.value = code
+  },
+})
+
 // Esc clears the selection and closes the move list; a tap outside the list closes it.
 function onKey(event: KeyboardEvent): void {
   if (event.key !== 'Escape' || picker.value) return

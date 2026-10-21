@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import { link } from '@/composables/useView'
-import { computed, onBeforeUnmount, shallowRef } from 'vue'
+import { computed, onBeforeUnmount, shallowRef, useTemplateRef } from 'vue'
 import { CircleCheck, Pencil, RotateCcw, TriangleAlert, ChevronDown } from 'lucide-vue-next'
 import PlanWizard from '@/components/planner/PlanWizard.vue'
 import PlanMap from '@/components/planner/PlanMap.vue'
 import SubjectPeek from '@/components/planner/SubjectPeek.vue'
 import RuleLegend from '@/components/planner/RuleLegend.vue'
-import PlanProgress from '@/components/planner/PlanProgress.vue'
 import PlanRequirements from '@/components/planner/PlanRequirements.vue'
 import SubjectTimeline from '@/components/planner/SubjectTimeline.vue'
 import PlanHowBuilt from '@/components/planner/PlanHowBuilt.vue'
@@ -173,6 +172,9 @@ const peekTerm = computed(() => {
 })
 // Notes beside the status (shown when the line is opened).
 const noteCount = computed(() => Number(profileEmpty.value) + unavoidable.value.length + Number(extraTermsOnVisa.value) + failed.value.length)
+// A term has begun once its first month has: only then can a subject in it be marked done.
+const START_MONTH = { summer: 0, 'semester-1': 2, winter: 5, 'semester-2': 6 } as const
+const begun = (term: PlanTerm) => new Date() >= new Date(term.year, START_MONTH[term.period], 1)
 const { shouldPrompt } = useRated()
 const rateNext = shallowRef<string | null>(null)
 // Done with a planned subject: it moves to My record, in the semester it was planned for.
@@ -187,6 +189,7 @@ function markDone(code: string, mark: number | undefined): void {
   if (shouldPrompt(code)) rateNext.value = code
 }
 // The board's focus: a selected subject (its timeline lights up) or a requirement (its subjects do).
+const board = useTemplateRef<InstanceType<typeof PlanMap>>('board')
 const selected = shallowRef<string | null>(null)
 const ruleFocus = shallowRef<string | null>(null)
 function select(code: string | null): void {
@@ -393,11 +396,11 @@ const printTerms = computed<PrintTerm[]>(() => {
 
       <div class="workspace">
         <div class="workspace-main">
-          <PlanProgress v-if="onBoard" :statuses="plan.courseCheck.value.statuses" :rules="rules" />
           <PlanRequirements
             v-if="onBoard"
             :statuses="plan.courseCheck.value.statuses"
             :rules="allRules"
+            :degree-rules="rules"
             :members="members"
             :active="ruleFocus"
             @focus="focusRule"
@@ -418,6 +421,7 @@ const printTerms = computed<PrintTerm[]>(() => {
             @clear="select(null)"
           />
           <PlanMap
+            ref="board"
             :terms="plan.terms.value"
             :subjects="data.subjects"
             :issues="plan.termIssues.value"
@@ -461,9 +465,13 @@ const printTerms = computed<PrintTerm[]>(() => {
         @close="peek = null"
         @open="peek = $event"
         @swap="(from, to) => plan.swapSubject(from, to)"
-        :done-term="peekTerm ? termLabel(t, peekTerm.term) : undefined"
+        :done-term="peekTerm && begun(peekTerm.term) ? termLabel(t, peekTerm.term) : undefined"
         :pass-fail="data.subjects[peek]?.passFail"
         @mark-done="(m) => markDone(peek as string, m)"
+        :planned="!!peekTerm"
+        @swap-it="board?.openSwap(peek as string)"
+        @move-it="board?.openMove(peek as string)"
+        @remove-it="peekTerm && onRemove(peekTerm.index, peek as string)"
       >
         <SubjectTimeline :code="peek" :edges="edges" :where-of="whereOf" @select="peek = $event" />
       </SubjectPeek>

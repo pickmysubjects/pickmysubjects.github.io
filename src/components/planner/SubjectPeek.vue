@@ -2,7 +2,8 @@
 import { link } from '@/composables/useView'
 import { handbookUrl } from '@/utils/links'
 import { computed, onMounted, shallowRef, toRef, useTemplateRef } from 'vue'
-import { CalendarRange, CheckCheck, ExternalLink, X } from 'lucide-vue-next'
+import { ArrowRightLeft, BookOpen, CalendarRange, CheckCheck, ExternalLink, X } from 'lucide-vue-next'
+import { localTitle } from '@/i18n/localized'
 import { alternativeGroups, periodsFor, prerequisiteRoute, referencedSubjects, simplifyFor, type Subject } from '@/engine'
 import AssessmentPanel from '@/components/subject/AssessmentPanel.vue'
 import MajorRoles from '@/components/subject/MajorRoles.vue'
@@ -27,8 +28,25 @@ const props = defineProps<{
   doneTerm?: string
   /** Marked pass/fail only: no mark to ask for. */
   passFail?: boolean
+  /** In the plan: it can be swapped, moved or removed from here. */
+  planned?: boolean
 }>()
-const emit = defineEmits<{ close: []; open: [code: string]; swap: [from: string, to: string]; markDone: [mark: number | undefined] }>()
+const emit = defineEmits<{
+  close: []
+  open: [code: string]
+  swap: [from: string, to: string]
+  markDone: [mark: number | undefined]
+  swapIt: []
+  moveIt: []
+  removeIt: []
+}>()
+// Hand over to the board (its picker or move list opens in this window's place), then close.
+function act(e: 'swapIt' | 'moveIt' | 'removeIt'): void {
+  if (e === 'swapIt') emit('swapIt')
+  else if (e === 'moveIt') emit('moveIt')
+  else emit('removeIt')
+  dialog.value?.close()
+}
 // The plan's subjects carry only the English gist; load the full about (every language, outcomes).
 const { subject: detailed, ready: detailReady } = useSubjectDetail(toRef(props, 'code'))
 const doneMark = shallowRef<number | ''>('')
@@ -37,7 +55,8 @@ function markDone(): void {
   emit('markDone', m)
   dialog.value?.close()
 }
-const { t } = useI18n()
+const { t, locale } = useI18n()
+const local = computed(() => (props.subject ? localTitle(props.subject, locale.value) : ''))
 const dialog = useTemplateRef<HTMLDialogElement>('dialog')
 
 onMounted(() => dialog.value?.showModal())
@@ -112,9 +131,25 @@ function onClick(event: MouseEvent): void {
   <dialog ref="dialog" class="peek" :aria-label="code" @close="emit('close')" @click="onClick">
     <div class="peek-body">
       <header class="peek-head">
-        <div>
-          <p class="code peek-code">{{ code }}</p>
-          <h2 class="peek-title">{{ subject?.title ?? t('plan.notInDataset') }}</h2>
+        <div class="peek-head-main">
+          <p class="peek-code-row">
+            <span class="code peek-code">{{ code }}</span>
+            <a class="peek-hb" :href="handbookUrl(code)" target="_blank" rel="noopener"><BookOpen :size="14" aria-hidden="true" /> Handbook</a>
+          </p>
+          <h2 class="peek-title">{{ local || subject?.title || t('plan.notInDataset') }}</h2>
+          <p v-if="local" class="peek-title-en">{{ subject?.title }}</p>
+          <p v-if="subject" class="peek-facts">
+            <span class="chip">{{ t('subject.level', { level: subject.level }) }}</span>
+            <span class="chip">{{ t('subject.points', { points: subject.points }) }}</span>
+            <span v-if="category" class="chip">{{ category }}</span>
+            <span class="chip">
+              <CalendarRange :size="14" aria-hidden="true" />
+              <template v-if="subject.offerings === 'unknown'">{{ t('subject.runsUnknown') }}</template>
+              <template v-else-if="periods.length === 0">{{ t('subject.notRunning') }}</template>
+              <template v-else-if="subject.yearLong">{{ t('plan.yearLongRuns') }}</template>
+              <template v-else>{{ periods.map((p) => t(`period.${p}`)).join(' · ') }}</template>
+            </span>
+          </p>
         </div>
         <button class="peek-close" type="button" :aria-label="t('subject.close')" @click="dialog?.close()">
           <X :size="18" aria-hidden="true" />
@@ -124,32 +159,7 @@ function onClick(event: MouseEvent): void {
       <!-- The subject's place in the plan (needs → this → unlocks), from the planner. -->
       <slot />
 
-      <!-- Finished it: record it in My record, in this semester, with an optional mark. -->
-      <form v-if="doneTerm" class="peek-done" @submit.prevent="markDone">
-        <p class="peek-done-title">{{ t('plan.doneAsk', { term: doneTerm }) }}</p>
-        <div class="peek-done-row">
-          <label v-if="!passFail">
-            <span class="visually-hidden">{{ t('record.markFor', { code }) }}</span>
-            <input v-model="doneMark" class="input peek-done-mark" type="number" min="0" max="100" :placeholder="t('record.markShort')" />
-          </label>
-          <button class="button button-accent" type="submit"><CheckCheck :size="16" aria-hidden="true" /> {{ t('plan.doneButton') }}</button>
-        </div>
-      </form>
-
       <template v-if="subject">
-        <p class="peek-facts">
-          <span class="chip">{{ t('subject.level', { level: subject.level }) }}</span>
-          <span class="chip">{{ t('subject.points', { points: subject.points }) }}</span>
-          <span v-if="category" class="chip">{{ category }}</span>
-          <span class="chip">
-            <CalendarRange :size="14" aria-hidden="true" />
-            <template v-if="subject.offerings === 'unknown'">{{ t('subject.runsUnknown') }}</template>
-            <template v-else-if="periods.length === 0">{{ t('subject.notRunning') }}</template>
-            <template v-else-if="subject.yearLong">{{ t('plan.yearLongRuns') }}</template>
-            <template v-else>{{ periods.map((p) => t(`period.${p}`)).join(' · ') }}</template>
-          </span>
-        </p>
-
         <SubjectAbout v-if="detailReady && detailed" class="peek-section" :subject="detailed" />
 
         <MajorRoles class="peek-section" :code="code" />
@@ -247,11 +257,27 @@ function onClick(event: MouseEvent): void {
         </section>
       </template>
 
+      <!-- Everything to do with it, at the foot of the window: change it in the plan, record it, read more. -->
       <footer class="peek-actions">
-        <a class="button button-accent" :href="link(`subject/${code}`)">
-          {{ t('subject.fullPage') }} <ExternalLink :size="15" aria-hidden="true" />
-        </a>
-        <button class="button button-quiet" type="button" @click="dialog?.close()">{{ t('subject.close') }}</button>
+        <!-- Finished it: record it in My record, in this semester, with an optional mark. -->
+        <form v-if="doneTerm" class="peek-done" @submit.prevent="markDone">
+          <span class="peek-done-title">{{ t('plan.doneAsk', { term: doneTerm }) }}</span>
+          <label v-if="!passFail">
+            <span class="visually-hidden">{{ t('record.markFor', { code }) }}</span>
+            <input v-model="doneMark" class="input peek-done-mark" type="number" min="0" max="100" :placeholder="t('record.markShort')" />
+          </label>
+          <button class="button button-accent peek-btn" type="submit"><CheckCheck :size="16" aria-hidden="true" /> {{ t('plan.doneButton') }}</button>
+        </form>
+        <div class="peek-buttons">
+          <template v-if="planned">
+            <button class="button button-quiet peek-btn" type="button" @click="act('swapIt')"><ArrowRightLeft :size="15" aria-hidden="true" /> {{ t('plan.swap') }}</button>
+            <button class="button button-quiet peek-btn" type="button" @click="act('moveIt')"><CalendarRange :size="15" aria-hidden="true" /> {{ t('plan.move') }}</button>
+            <button class="button button-quiet peek-btn peek-remove" type="button" @click="act('removeIt')"><X :size="15" aria-hidden="true" /> {{ t('plan.removeShort') }}</button>
+          </template>
+          <a class="button button-quiet peek-btn peek-full" :href="link(`subject/${code}`)">
+            {{ t('subject.fullPage') }} <ExternalLink :size="15" aria-hidden="true" />
+          </a>
+        </div>
       </footer>
     </div>
   </dialog>
@@ -304,15 +330,44 @@ function onClick(event: MouseEvent): void {
   gap: 12px;
 }
 
+.peek-head-main {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.peek-code-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 12px;
+  margin: 0;
+}
+
 .peek-code {
   font-size: 0.875rem;
-  font-weight: 500;
+  font-weight: 650;
   color: var(--accent);
 }
 
+.peek-hb {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
 .peek-title {
-  margin-top: 2px;
   font-size: 1.35rem;
+  line-height: 1.3;
+}
+
+.peek-title-en {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--ink-soft);
 }
 
 .peek-close {
@@ -334,7 +389,7 @@ function onClick(event: MouseEvent): void {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2);
-  margin-top: calc(var(--space-3) - var(--space-6));
+  margin: 8px 0 0;
 }
 
 /* Sections are set apart by space, not rules; each opens with the same small heading. */
@@ -483,36 +538,58 @@ function onClick(event: MouseEvent): void {
 .peek-actions {
   position: sticky;
   bottom: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
+  display: grid;
+  gap: var(--space-3);
   margin: 0 calc(-1 * var(--space-5));
   padding: var(--space-4) var(--space-5) var(--space-5);
   border-top: 1px solid var(--line);
   background: var(--surface);
 }
 
+.peek-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.peek-btn {
+  min-height: 38px;
+  padding: 0 14px;
+  font-size: 0.875rem;
+}
+
+.peek-remove {
+  color: var(--bad);
+}
+
+.peek-full {
+  margin-left: auto;
+}
+
 .peek-done {
-  display: grid;
-  gap: var(--space-3);
-  padding: var(--space-4);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 10px;
+  padding: 10px 12px;
   border-radius: var(--radius);
   background: var(--good-soft);
 }
 
 .peek-done-title {
-  margin: 0;
+  flex: 1 1 200px;
   font-size: 0.875rem;
   font-weight: 600;
 }
 
-.peek-done-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+.peek-done-mark {
+  width: 88px;
+  min-height: 38px;
 }
 
-.peek-done-mark {
-  width: 96px;
+@media (max-width: 480px) {
+  .peek-full {
+    margin-left: 0;
+  }
 }
 </style>
