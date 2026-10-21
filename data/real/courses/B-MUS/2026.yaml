@@ -11,6 +11,8 @@ area_categories:
   home: music
   areas: [MUSI]
   other: breadth
+# Breadth subjects whose pages bar Bachelor of Music students.
+closed: [MUSI20163]
 handbook: https://handbook.unimelb.edu.au/2026/courses/b-mus/course-structure
 verified_on: 2026-10-21 # rules checked by hand against the Handbook course structure
 listed: true
