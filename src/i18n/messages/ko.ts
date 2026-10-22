@@ -1216,7 +1216,7 @@ export const ko: Messages = {
   },
   home: {
     moreSubjects: "외 {n}과목",
-    sub: "멜버른대 모든 과목의 실제 난이도, 평가 방식, 학생 후기를 한곳에서.",
+    sub: "나에게 맞춘 과목 추천. 숨은 고득점 과목을 찾고, 예상 밖의 과제 폭탄을 피하고, 멜버른대 모든 과목의 진짜 후기를 확인하세요.",
     proofSubjects: "과목 {n}개",
     proofDegrees: "학사 학위 {n}개",
     proofLanguages: "9개 언어",
@@ -1225,7 +1225,7 @@ export const ko: Messages = {
     stepsTitle: '3단계로 시작하기',
     year: '{n}학년',
     eyebrow: '멜버른대 학생을 위해',
-    title: "학위 전체를|30초 만에 계획하세요.",
+    title: "학위 *전체*를|*30초* 만에 계획하세요.",
     lede: "과목이 얼마나 어려운지, 과제가 많은지, 채점이 후한지, 학생들은 뭐라고 하는지. 그다음 내 성적과 관심사에 맞는 과목을 고르고 학위 전체 계획을 세워요.",
     scope: "지금은 학사(Bachelor)만 있어요.",
     search: '과목 코드나 이름으로 검색',

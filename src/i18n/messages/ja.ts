@@ -1216,7 +1216,7 @@ export const ja: Messages = {
   },
   home: {
     moreSubjects: "ほか {n} 科目",
-    sub: "メルボルン大学の全科目について、本当の難しさ・評価方法・学生の声がわかります。",
+    sub: "あなたに合わせた科目選び。隠れた高得点科目を見つけ、思わぬ重い科目を避け、メルボルン大学の全科目の本当の評判がわかります。",
     proofSubjects: "{n} 科目",
     proofDegrees: "学士課程 {n} 種",
     proofLanguages: "9 言語",
@@ -1225,7 +1225,7 @@ export const ja: Messages = {
     stepsTitle: '3ステップで始める',
     year: '{n}年次',
     eyebrow: 'メルボルン大学の学生のために',
-    title: "学位まるごと、|30秒で計画。",
+    title: "学位*まるごと*、|*30秒*で計画。",
     lede: "科目の難しさ、課題の量、採点の厳しさ、学生の評判。そのうえで成績と興味に合う科目を選び、学位全体のプランを作れます。",
     scope: "現在は学士課程（Bachelor）のみ。",
     search: '科目コードか科目名で検索',

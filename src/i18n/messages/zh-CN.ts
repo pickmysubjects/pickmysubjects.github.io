@@ -1216,7 +1216,7 @@ export const zhCN: Messages = {
   },
   home: {
     moreSubjects: "还有 {n} 门",
-    sub: "墨大每门课的真实难度、给分方式和同学评价，都在这里。",
+    sub: "为你量身挑课：找出被忽略的高分课，避开意外的重课，看看同学对墨大每门课的真实评价。",
     proofSubjects: "{n} 门课",
     proofDegrees: "{n} 个本科学位",
     proofLanguages: "9 种语言",
@@ -1225,7 +1225,7 @@ export const zhCN: Messages = {
     stepsTitle: '三步上手',
     year: '第 {n} 年',
     eyebrow: '为墨尔本大学学生打造',
-    title: "30 秒，|排好整个学位。",
+    title: "*30 秒*，|排好*整个*学位。",
     lede: "哪门课难、作业多不多、给分松不松、同学怎么说。再按你的成绩和兴趣挑适合你的课，排好整个学位。",
     scope: "目前只有本科（Bachelor）。",
     search: '搜索课号或课名',

@@ -16,7 +16,12 @@ import { summariseAssessment } from '@/utils/assessment'
 const { t, locale } = useI18n()
 
 // The title is split into phrases that never break inside; languages written with spaces keep one between them.
-const titleParts = computed(() => t.value('home.title').split('|'))
+// "|" marks where the title may break; "*…*" marks the words to emphasise.
+const titleParts = computed(() =>
+  t.value('home.title')
+    .split('|')
+    .map((part) => part.split('*').map((text, i) => ({ text, em: i % 2 === 1 })).filter((x) => x.text)),
+)
 const spaced = computed(() => !['zh-CN', 'zh-TW', 'ja'].includes(locale.value))
 // Two real examples worked out at build time (scripts/homeDemo.ts): shown, not described.
 const { subject: demoSubject, plan: demoPlan, stats } = demo as unknown as HomeDemo
@@ -76,7 +81,7 @@ const next = computed(() => {
         <!-- "|" marks where the title may break, so a phrase is never split mid-word. -->
         <h1 class="hero-title">
           <template v-for="(part, i) in titleParts" :key="i">
-            <span class="hero-part">{{ part }}</span>
+            <span class="hero-part"><template v-for="(seg, j) in part" :key="j"><em v-if="seg.em" class="hero-em">{{ seg.text }}</em><template v-else>{{ seg.text }}</template></template></span>
             <!-- A real space between phrases where the language uses spaces: it vanishes at a line break. -->
             <template v-if="spaced && i < titleParts.length - 1">{{ ' ' }}</template>
           </template>
@@ -186,6 +191,14 @@ const next = computed(() => {
 
 .hero-part {
   display: inline-block;
+}
+
+.hero-em {
+  font-style: normal;
+  background: linear-gradient(100deg, var(--accent), #8b5cf6);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .hero-title {

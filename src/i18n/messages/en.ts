@@ -1219,7 +1219,7 @@ export const en = {
   },
   home: {
     moreSubjects: "+{n} more",
-    sub: "Real difficulty, marking and student reviews for every UniMelb subject.",
+    sub: "Personalised picks, hidden high-scorers, surprise workloads to dodge, and what students really say about every UniMelb subject.",
     proofSubjects: "{n} subjects",
     proofDegrees: "{n} bachelor degrees",
     proofLanguages: "9 languages",
@@ -1228,7 +1228,7 @@ export const en = {
     stepsTitle: 'Get started in three steps',
     year: 'Year {n}',
     eyebrow: 'For University of Melbourne students',
-    title: "Your whole degree,|planned in 30 seconds.",
+    title: "Your *whole* degree,|planned in *30 seconds*.",
     lede: "See how hard a subject is, how much work it takes, how it’s marked and what students say. Then get subjects picked for your marks and interests, and a plan for your whole degree.",
     scope: "Bachelor degrees only for now.",
     search: 'Search by subject code or name',

@@ -1216,7 +1216,7 @@ export const id: Messages = {
   },
   home: {
     moreSubjects: "+{n} lainnya",
-    sub: "Tingkat kesulitan nyata, cara penilaian, dan ulasan mahasiswa untuk setiap mata kuliah UniMelb.",
+    sub: "Pilihan mata kuliah yang dipersonalisasi: temukan mata kuliah nilai tinggi yang tersembunyi, hindari beban tugas tak terduga, dan lihat ulasan nyata mahasiswa untuk setiap mata kuliah UniMelb.",
     proofSubjects: "{n} mata kuliah",
     proofDegrees: "{n} program sarjana",
     proofLanguages: "9 bahasa",
@@ -1225,7 +1225,7 @@ export const id: Messages = {
     stepsTitle: 'Mulai dalam tiga langkah',
     year: 'Tahun {n}',
     eyebrow: 'Untuk mahasiswa University of Melbourne',
-    title: "Seluruh kuliahmu,|direncanakan dalam 30 detik.",
+    title: "*Seluruh* kuliahmu,|direncanakan dalam *30 detik*.",
     lede: "Seberapa sulit mata kuliahnya, banyak tugas atau tidak, penilaiannya ketat atau tidak, dan apa kata mahasiswa. Lalu pilih yang cocok dengan nilai dan minatmu, dan susun rencana seluruh kuliahmu.",
     scope: "Saat ini hanya program sarjana (Bachelor).",
     search: 'Cari kode atau nama mata kuliah',

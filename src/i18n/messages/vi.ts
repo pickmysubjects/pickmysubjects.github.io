@@ -1216,7 +1216,7 @@ export const vi: Messages = {
   },
   home: {
     moreSubjects: "+{n} môn nữa",
-    sub: "Độ khó thật, cách chấm điểm và đánh giá của sinh viên cho mọi môn ở UniMelb.",
+    sub: "Gợi ý môn học dành riêng cho bạn: tìm môn dễ lấy điểm cao, tránh môn nặng bất ngờ, và xem sinh viên thật sự nói gì về mọi môn ở UniMelb.",
     proofSubjects: "{n} môn học",
     proofDegrees: "{n} bằng cử nhân",
     proofLanguages: "9 ngôn ngữ",
@@ -1225,7 +1225,7 @@ export const vi: Messages = {
     stepsTitle: 'Bắt đầu với ba bước',
     year: 'Năm {n}',
     eyebrow: 'Dành cho sinh viên Đại học Melbourne',
-    title: "Cả tấm bằng,|lên kế hoạch trong 30 giây.",
+    title: "*Cả* tấm bằng,|lên kế hoạch trong *30 giây*.",
     lede: "Môn nào khó, bài tập nhiều không, chấm điểm dễ hay khắt khe, sinh viên nói gì. Rồi chọn môn hợp với điểm và sở thích của bạn, và xếp lộ trình cả bằng.",
     scope: "Hiện chỉ có bậc cử nhân (Bachelor).",
     search: 'Tìm theo mã hoặc tên môn',
