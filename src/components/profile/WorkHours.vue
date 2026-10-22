@@ -80,8 +80,10 @@ const BUCKETS = [0, 5, 15, 25] as const
 }
 
 .work-hint {
+  max-width: 60ch;
   margin: 0;
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
   color: var(--ink-soft);
 }
 

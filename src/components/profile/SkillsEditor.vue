@@ -111,13 +111,12 @@ function pick(skill: Skill, level: number): void {
   list-style: none;
 }
 
+/* Name above its scale on every row, so a short name ("Maths") lines up like the long ones. */
 .skill {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-  padding: 7px 0;
+  display: grid;
+  justify-items: start;
+  gap: var(--space-2);
+  padding: 10px 0;
   border-bottom: 1px solid var(--line);
   font-size: 0.9375rem;
 }

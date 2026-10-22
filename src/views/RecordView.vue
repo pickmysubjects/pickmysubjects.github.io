@@ -65,7 +65,8 @@ const filled = computed(() => [
         <p class="summary-title">{{ t('record.summaryTitle') }}</p>
         <p class="wam">
           <span class="wam-label">WAM</span>
-          <span class="wam-value">{{ wam ?? '–' }}</span>
+          <span v-if="wam !== null" class="wam-value">{{ wam }}</span>
+          <span v-else class="wam-none">{{ t('record.noMarks') }}</span>
           <a class="wam-what" :href="link('guide')">{{ t('guide.wamWhat') }}</a>
         </p>
         <ul class="counts">
@@ -223,6 +224,7 @@ const filled = computed(() => [
 .sec-state,
 .sec-badge,
 .for-plan {
+  align-self: center;
   padding: 2px 10px;
   border-radius: 999px;
   font-size: 0.8125rem;
@@ -287,12 +289,22 @@ const filled = computed(() => [
   display: none;
 }
 
+/* Three steps per section: the section title, then a question as a label (body size, muted),
+   then its control. */
 .sub,
 .sec :deep(:is(.goal-label, .work-label, .share-title)) {
-  margin: 0 0 6px;
-  font-size: 1rem;
-  font-weight: 650;
-  color: var(--ink);
+  margin: 0;
+  padding: 0;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.sec :deep(:is(.goal-hint, .work-hint)) {
+  max-width: 60ch;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
 }
 
 .sec :deep(.seg) {
@@ -318,11 +330,13 @@ const filled = computed(() => [
   padding: var(--space-5);
 }
 
-.summary-title {
+/* The three sidebar cards share one padding and one title style. */
+.summary-title,
+.backup-title {
   margin: 0;
-  font-size: 0.875rem;
+  font-size: 1rem;
   font-weight: 650;
-  color: var(--ink-soft);
+  color: var(--ink);
 }
 
 .wam {
@@ -345,6 +359,11 @@ const filled = computed(() => [
   font-weight: 600;
   line-height: 1;
   color: var(--ink);
+}
+
+.wam-none {
+  font-size: 0.9375rem;
+  color: var(--ink-faint);
 }
 
 .wam-what {
@@ -375,12 +394,6 @@ const filled = computed(() => [
   display: grid;
   gap: var(--space-2);
   padding: var(--space-5);
-}
-
-.backup-title {
-  margin: 0;
-  font-size: 1rem;
-  font-weight: 650;
 }
 
 .bad {

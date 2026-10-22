@@ -39,7 +39,7 @@ const current = computed<Goal>(() => (own.value === 'easy' ? 'wam' : own.value))
       </button>
     </div>
     <p v-if="!compact" class="goal-hint">
-      {{ t(`suggest.goals.${current}Hint`) }}<template v-if="note"><br /><span class="goal-note">{{ note }}</span></template>
+      {{ t(`suggest.goals.${current}Hint`) }}<template v-if="note">{{ ' ' }}{{ note }}</template>
     </p>
   </fieldset>
 </template>
@@ -47,7 +47,7 @@ const current = computed<Goal>(() => (own.value === 'easy' ? 'wam' : own.value))
 <style scoped>
 .goal {
   display: grid;
-  gap: 6px;
+  gap: var(--space-2);
   min-width: 0;
   margin: 0;
   padding: 0;
@@ -100,13 +100,12 @@ const current = computed<Goal>(() => (own.value === 'easy' ? 'wam' : own.value))
   outline-offset: 1px;
 }
 
-.goal-note {
-  color: var(--ink-faint, var(--ink-soft));
-}
-
+/* The one helper-text style for form sections. */
 .goal-hint {
+  max-width: 60ch;
   margin: 0;
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
   color: var(--ink-soft);
 }
 

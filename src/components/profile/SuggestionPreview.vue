@@ -50,20 +50,21 @@ const top = computed(() =>
 <style scoped>
 .preview {
   display: grid;
-  gap: 8px;
-  padding: 16px 18px;
+  gap: var(--space-3);
+  /* Same padding and title as the other cards beside My record. */
+  padding: var(--space-5);
 }
 
 .preview-title {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 0.9375rem;
+  font-size: 1rem;
   font-weight: 650;
 }
 
 .preview-empty {
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
   color: var(--ink-soft);
 }
 

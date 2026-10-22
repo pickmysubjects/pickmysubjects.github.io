@@ -66,19 +66,16 @@ function toggle(topic: string): void {
   gap: 14px;
 }
 
+/* The field's name above its chips: long names ("Engineering, health & agriculture") never
+   squeeze into a narrow column. */
 .group {
   display: grid;
-  grid-template-columns: 9.5rem 1fr;
-  gap: 8px 14px;
-  align-items: start;
+  gap: var(--space-2);
 }
 
 .group-name {
-  padding-top: 6px;
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
   color: var(--ink-faint);
 }
 
@@ -114,15 +111,6 @@ function toggle(topic: string): void {
   font-weight: 600;
 }
 
-@media (max-width: 640px) {
-  .group {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .group-name {
-    padding-top: 0;
-  }
-}
 .more {
   justify-self: start;
   padding: 6px 0;
