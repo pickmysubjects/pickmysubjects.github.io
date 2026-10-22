@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import { ExternalLink } from 'lucide-vue-next'
 import GradeScale from '@/components/guide/GradeScale.vue'
+import CanDoList from '@/components/home/CanDoList.vue'
 import GuideItem from '@/components/guide/GuideItem.vue'
 import { link } from '@/composables/useView'
 import { useProfile } from '@/composables/useProfile'
@@ -44,6 +45,18 @@ const RANKINGS = [
 
 const STUDENT_SITE = 'https://students.unimelb.edu.au/'
 const KEY_DATES = 'https://students.unimelb.edu.au/course-admin/key-dates'
+const ENROL_POLICY = 'https://policy.unimelb.edu.au/MPF1294/'
+const ASSESS_POLICY = 'https://policy.unimelb.edu.au/MPF1326/'
+const TT_HOW = 'https://students.unimelb.edu.au/course-admin/class-timetable/how-class-timetabling-works'
+const TT_CLASH = 'https://students.unimelb.edu.au/course-admin/class-timetable/swap-to-available-or-full-classes'
+const SPEC_APPLY = 'https://students.unimelb.edu.au/course-admin/assessment-adjustments/how-to-apply-for-an-assessment-adjustment'
+const SPEC_OUT = 'https://students.unimelb.edu.au/course-admin/assessment-adjustments/special-consideration'
+const SPEC_DOCS = 'https://students.unimelb.edu.au/course-admin/assessment-adjustments/eligibility-and-supporting-documentation'
+const RSL = 'https://students.unimelb.edu.au/support-and-wellbeing/international-student-support/reduced-study-load'
+const SKILLS = 'https://students.unimelb.edu.au/academic-skills'
+const EXAMS = 'https://library.unimelb.edu.au/examination_papers'
+const ACC_SCI = 'https://handbook.unimelb.edu.au/2026/courses/b-sci/attributes-outcomes-skills'
+const ACC_COM = 'https://handbook.unimelb.edu.au/2026/courses/b-com/attributes-outcomes-skills'
 const FAILING = 'https://students.unimelb.edu.au/course-admin/planning-your-course-and-subjects/failing-a-subject'
 </script>
 
@@ -126,6 +139,26 @@ const FAILING = 'https://students.unimelb.edu.au/course-admin/planning-your-cour
             <li>{{ t('guide.overloadFails') }}</li>
           </ul>
           <p class="note">{{ t('guide.overloadFinal') }}</p>
+          <p class="aside">
+            {{ t('guide.loadSummer') }}
+            <a :href="link('subjects/summer-winter/')">{{ t('guide.loadSummerLink') }}</a>
+          </p>
+          <p>
+            <a class="ext" :href="ENROL_POLICY" target="_blank" rel="noopener">{{ t('guide.enrolPolicyLink') }}<ExternalLink :size="14" aria-hidden="true" /></a>
+          </p>
+        </GuideItem>
+
+        <GuideItem :title="t('guide.rslTitle')" :short="t('guide.rslShort')">
+          <ul class="plain">
+            <li>{{ t('guide.rsl8202') }}</li>
+            <li>{{ t('guide.rslUnder') }}</li>
+            <li>{{ t('guide.rslGrounds') }}</li>
+            <li>{{ t('guide.rslNot') }}</li>
+          </ul>
+          <p class="note">{{ t('guide.rslStay') }}</p>
+          <p>
+            <a class="ext" :href="RSL" target="_blank" rel="noopener">{{ t('guide.officialPage') }}: {{ t('guide.rslLink') }}<ExternalLink :size="14" aria-hidden="true" /></a>
+          </p>
         </GuideItem>
 
         <GuideItem :title="t('guide.rulesTitle')" :short="t('guide.rulesShort')">
@@ -162,11 +195,15 @@ const FAILING = 'https://students.unimelb.edu.au/course-admin/planning-your-cour
             <li class="tl-warn">{{ t('guide.dropWd') }}</li>
             <li class="tl-bad">{{ t('guide.dropFail') }}</li>
           </ol>
+          <p class="note">{{ t('guide.dropLate') }}</p>
           <div class="who">
             <p class="who-card">{{ t('guide.dropLocal') }}</p>
             <p class="who-card">{{ t('guide.dropIntl') }}</p>
           </div>
           <p class="note">{{ t('guide.dropWhere') }}</p>
+          <p>
+            <a class="ext" :href="ENROL_POLICY" target="_blank" rel="noopener">{{ t('guide.enrolPolicyLink') }}<ExternalLink :size="14" aria-hidden="true" /></a>
+          </p>
         </GuideItem>
 
         <GuideItem :title="t('guide.datesTitle')" :short="t('guide.datesShort')">
@@ -178,6 +215,69 @@ const FAILING = 'https://students.unimelb.edu.au/course-admin/planning-your-cour
           </ul>
           <p>
             <a class="ext" :href="KEY_DATES" target="_blank" rel="noopener">{{ t('guide.datesLink') }}<ExternalLink :size="14" aria-hidden="true" /></a>
+          </p>
+        </GuideItem>
+      </div>
+    </section>
+
+    <section class="group">
+      <h2 class="group-title">{{ t('guide.groupTerm') }}</h2>
+      <div class="list surface">
+        <GuideItem :title="t('guide.ttTitle')" :short="t('guide.ttShort')">
+          <ol class="steps">
+            <li>{{ t('guide.ttStep1') }}</li>
+            <li>{{ t('guide.ttStep2') }}</li>
+            <li>{{ t('guide.ttStep3') }}</li>
+            <li>{{ t('guide.ttStep4') }}</li>
+          </ol>
+          <ul class="plain">
+            <li>{{ t('guide.ttRegister') }}</li>
+            <li>{{ t('guide.ttMissed') }}</li>
+            <li>{{ t('guide.ttTaf') }}</li>
+          </ul>
+          <div class="aside">
+            <h3 class="aside-title">{{ t('guide.clashTitle') }}</h3>
+            <ul class="plain">
+              <li>{{ t('guide.clashBackToBack') }}</li>
+              <li>{{ t('guide.clashSwap') }}</li>
+              <li>{{ t('guide.clashTaf') }}</li>
+              <li>{{ t('guide.clashAccept') }}</li>
+            </ul>
+          </div>
+          <p class="note">{{ t('guide.ttOther') }}</p>
+          <ul class="links">
+            <li><a :href="TT_HOW" target="_blank" rel="noopener">{{ t('guide.ttLink') }}<ExternalLink :size="14" aria-hidden="true" /></a></li>
+            <li><a :href="TT_CLASH" target="_blank" rel="noopener">{{ t('guide.clashLink') }}<ExternalLink :size="14" aria-hidden="true" /></a></li>
+          </ul>
+        </GuideItem>
+
+        <GuideItem :title="t('guide.specTitle')" :short="t('guide.specShort')">
+          <ul class="plain">
+            <li>{{ t('guide.specWhen') }}</li>
+            <li>{{ t('guide.specOne') }}</li>
+            <li>{{ t('guide.specDocs') }}</li>
+            <li>{{ t('guide.specOutcomes') }}</li>
+          </ul>
+          <p class="note">{{ t('guide.specNot') }}</p>
+          <ul class="links">
+            <li><a :href="SPEC_APPLY" target="_blank" rel="noopener">{{ t('guide.specLink') }}<ExternalLink :size="14" aria-hidden="true" /></a></li>
+            <li><a :href="SPEC_OUT" target="_blank" rel="noopener">{{ t('guide.specOutLink') }}<ExternalLink :size="14" aria-hidden="true" /></a></li>
+            <li><a :href="SPEC_DOCS" target="_blank" rel="noopener">{{ t('guide.specDocLink') }}<ExternalLink :size="14" aria-hidden="true" /></a></li>
+          </ul>
+        </GuideItem>
+
+        <GuideItem :title="t('guide.hurdleTitle')" :short="t('guide.hurdleShort')">
+          <p>{{ t('guide.hurdleText') }}</p>
+          <p class="note">{{ t('guide.hurdleTip') }}</p>
+          <p>
+            <a class="ext" :href="ASSESS_POLICY" target="_blank" rel="noopener">{{ t('guide.policyLink') }}<ExternalLink :size="14" aria-hidden="true" /></a>
+          </p>
+        </GuideItem>
+
+        <GuideItem :title="t('guide.lateTitle')" :short="t('guide.lateShort')">
+          <p>{{ t('guide.lateText') }}</p>
+          <p>
+            <a class="ext" :href="ASSESS_POLICY" target="_blank" rel="noopener">{{ t('guide.policyLink') }}<ExternalLink :size="14" aria-hidden="true" /></a>
           </p>
         </GuideItem>
       </div>
@@ -237,6 +337,37 @@ const FAILING = 'https://students.unimelb.edu.au/course-admin/planning-your-cour
         </GuideItem>
       </div>
     </section>
+
+    <section class="group">
+      <h2 class="group-title">{{ t('guide.groupHelp') }}</h2>
+      <div class="list surface">
+        <GuideItem :title="t('guide.helpTitle')" :short="t('guide.helpShort')">
+          <ul class="plain">
+            <li>{{ t('guide.helpSkills') }}</li>
+            <li>{{ t('guide.helpPass') }}</li>
+            <li>{{ t('guide.helpExams') }}</li>
+          </ul>
+          <ul class="links">
+            <li><a :href="SKILLS" target="_blank" rel="noopener">{{ t('guide.helpSkillsLink') }}<ExternalLink :size="14" aria-hidden="true" /></a></li>
+            <li><a :href="EXAMS" target="_blank" rel="noopener">{{ t('guide.helpExamsLink') }}<ExternalLink :size="14" aria-hidden="true" /></a></li>
+          </ul>
+        </GuideItem>
+
+        <GuideItem :title="t('guide.accTitle')" :short="t('guide.accShort')">
+          <ul class="plain">
+            <li>{{ t('guide.accSci') }}</li>
+            <li>{{ t('guide.accCom') }}</li>
+          </ul>
+          <p class="note">{{ t('guide.accCheck') }}</p>
+          <ul class="links">
+            <li><a :href="ACC_SCI" target="_blank" rel="noopener">{{ t('guide.accSciLink') }}<ExternalLink :size="14" aria-hidden="true" /></a></li>
+            <li><a :href="ACC_COM" target="_blank" rel="noopener">{{ t('guide.accComLink') }}<ExternalLink :size="14" aria-hidden="true" /></a></li>
+          </ul>
+        </GuideItem>
+      </div>
+    </section>
+
+    <CanDoList :title="t('guide.canTitle')" class="guide-can" />
 
     <p class="source">
       {{ t('guide.sourcesText') }}
@@ -383,6 +514,16 @@ const FAILING = 'https://students.unimelb.edu.au/course-admin/planning-your-cour
   padding: 12px 14px;
   background: var(--surface-2);
   border-radius: var(--radius-sm);
+}
+
+.aside-title {
+  margin-bottom: 6px;
+  font-size: 0.9375rem;
+  font-weight: 650;
+}
+
+.guide-can :deep(.can-title) {
+  padding-left: 4px;
 }
 
 .formula {

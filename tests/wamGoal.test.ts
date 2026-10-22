@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { gradeOf, neededAverage, pointsLeft, projectedWam } from '../src/utils/wamGoal'
+import { wamIf, gradeOf, neededAverage, pointsLeft, projectedWam } from '../src/utils/wamGoal'
 import { dataset, subject } from './helpers'
 
 describe('WAM goal', () => {
@@ -36,5 +36,24 @@ describe('WAM goal', () => {
     // Two passes of 12.5: a 350-point degree (B-SCIEXTD) has 325 left; the fail is still to take.
     expect(pointsLeft(results, data, 350)).toBe(325)
     expect(pointsLeft(results, data, 300)).toBe(275)
+  })
+
+  it('what-if: adds one mark, weighted by that subject’s points', () => {
+    const data = dataset([
+      subject({ code: 'AAAA10001' }),
+      subject({ code: 'AAAA10002' }),
+      subject({ code: 'BBBB20001', points: 25 }),
+      subject({ code: 'CCCC10001', pass_fail: true }),
+    ])
+    const results = [{ code: 'AAAA10001', mark: 80 }, { code: 'AAAA10002', mark: 60 }]
+    // (80 + 60 + 2 × 90) / 4 = 80: a 25-point subject counts twice.
+    expect(wamIf(results, data, 'BBBB20001', 90)).toBe(80)
+    // (80 + 60 + 70) / 3 = 70 for a 12.5-point one.
+    expect(wamIf(results, data, 'AAAA10003', 70)).toBe(70)
+    // Pass/fail subjects never count, and marks are kept inside 0–100.
+    expect(wamIf(results, data, 'CCCC10001', 90)).toBeNull()
+    expect(wamIf([], data, 'AAAA10001', 140)).toBe(100)
+    // A pass/fail result on record doesn't move it either; a retake counts as another attempt.
+    expect(wamIf([...results, { code: 'CCCC10001', failed: false }], data, 'AAAA10002', 80)).toBe(73.3)
   })
 })

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import DegreeBadge from '@/components/browse/DegreeBadge.vue'
 import DegreePick from '@/components/browse/DegreePick.vue'
-import { computed, shallowRef, watch } from 'vue'
+import { computed, onMounted, shallowRef, useTemplateRef, watch } from 'vue'
 import { Info, Search } from 'lucide-vue-next'
 import BrowseFilters from '@/components/browse/BrowseFilters.vue'
 import BrowseRow from '@/components/browse/BrowseRow.vue'
@@ -94,6 +94,16 @@ const rank = computed(() => filters.value.rank)
 function choose(c: QuickChoice): void {
   filters.value = applyQuick(filters.value, c)
 }
+// On phones the quick picks scroll sideways: bring the chosen one into view when a page opens on it.
+const presetRow = useTemplateRef<HTMLElement>('presetRow')
+onMounted(() => {
+  const row = presetRow.value
+  const on = row?.querySelector<HTMLElement>('[aria-pressed="true"]')
+  if (!row || !on || row.scrollWidth <= row.clientWidth) return
+  const a = row.getBoundingClientRect()
+  const b = on.getBoundingClientRect()
+  row.scrollLeft += b.left - a.left - (a.width - b.width) / 2
+})
 function chipLabel(c: QuickChoice): string {
   if (c === 'all') return t.value('browse.any')
   if (c === 'easy' || c === 'hard') return t.value(`browse.rankList.${c}`)
@@ -151,7 +161,7 @@ watch(filters, (f) => {
           @input="set('text', ($event.target as HTMLInputElement).value)"
         />
       </label>
-      <div class="presets" role="group" :aria-label="t('browse.presets')">
+      <div ref="presetRow" class="presets" role="group" :aria-label="t('browse.presets')">
         <button
           v-for="c in QUICK_CHOICES"
           :key="c"

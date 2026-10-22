@@ -5,12 +5,19 @@ import { useDataset } from '@/composables/useDataset'
 import { useProfile } from '@/composables/useProfile'
 import { useI18n } from '@/i18n'
 import { usePlan } from '@/composables/usePlan'
+import WamWhatIf from '@/components/profile/WamWhatIf.vue'
+import { passedCodes } from '@/engine'
 import { gradeOf, neededAverage, pointsLeft, projectedWam } from '@/utils/wamGoal'
 
 /** "What do I need on the rest to reach my target WAM?", from the marks on this page. */
 const { data } = useDataset()
 const { profile, wam } = useProfile()
-const { course } = usePlan()
+const { course, plannedCodes } = usePlan()
+// Planned subjects not passed yet: the ones a "what if I get …" is about.
+const whatIfChoices = computed(() => {
+  const passed = new Set(passedCodes(profile.value.results))
+  return [...new Set(plannedCodes.value)].filter((c) => !passed.has(c))
+})
 // The planned degree's points (B-SCIEXTD: 350); 300, the usual bachelor's, before one is chosen.
 const degreePoints = computed(() => course.value?.totalPoints ?? 300)
 // Points the WAM is worked out over: every marked attempt, fails included.
@@ -81,6 +88,7 @@ const num = (e: Event) => Number((e.target as HTMLInputElement).value)
       </label>
       <span v-if="projected !== null">{{ t('wamGoal.becomes', { wam: projected }) }}</span>
     </p>
+    <WamWhatIf class="sub-whatif" :choices="whatIfChoices" />
     <p class="note">{{ t('wamGoal.note') }}</p>
     </template>
   </section>
@@ -136,6 +144,11 @@ const num = (e: Event) => Number((e.target as HTMLInputElement).value)
   display: inline-flex;
   align-items: center;
   gap: 8px;
+}
+
+.sub-whatif {
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
 }
 
 .small {

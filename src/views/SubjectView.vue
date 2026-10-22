@@ -6,6 +6,7 @@ import AssessmentPanel from '@/components/subject/AssessmentPanel.vue'
 import MajorRoles from '@/components/subject/MajorRoles.vue'
 import OutsideLinks from '@/components/subject/OutsideLinks.vue'
 import SubjectAbout from '@/components/subject/SubjectAbout.vue'
+import FoldSection from '@/components/subject/FoldSection.vue'
 import SubjectFaq from '@/components/subject/SubjectFaq.vue'
 import SubjectHeader from '@/components/subject/SubjectHeader.vue'
 import SubjectRoute from '@/components/subject/SubjectRoute.vue'
@@ -17,6 +18,7 @@ import { usePlan } from '@/composables/usePlan'
 import { useProfile } from '@/composables/useProfile'
 import { useRated } from '@/composables/useRated'
 import { useSimilar } from '@/composables/useSimilar'
+import { usePhone } from '@/composables/usePhone'
 import { useI18n } from '@/i18n'
 import { discussionLinks } from '@/utils/links'
 
@@ -41,6 +43,7 @@ const unlocks = computed(() =>
 )
 const taken = computed(() => profile.value.results.some((r) => r.code === code.value))
 const similar = useSimilar(subject, year)
+const phone = usePhone()
 const links = computed(() => (name.value === 'real' ? discussionLinks(code.value, locale.value) : []))
 
 const rating = shallowRef(false)
@@ -101,18 +104,24 @@ const sections = computed(() => {
             <MajorRoles class="sec-roles" :code="code" />
           </section>
 
+          <!-- The long lower sections fold on phones (FoldSection), so the page isn't a mile long. -->
           <section id="faq" class="sec">
-            <SubjectFaq :subject="subject" :year="year" :course="plan.setup.value.course" :unlocks="unlocks" />
+            <FoldSection v-if="phone" :title="t('faq.title')">
+              <SubjectFaq :subject="subject" :year="year" :course="plan.setup.value.course" :unlocks="unlocks" />
+            </FoldSection>
+            <SubjectFaq v-else :subject="subject" :year="year" :course="plan.setup.value.course" :unlocks="unlocks" />
           </section>
 
           <section v-if="links.length" id="discuss" class="sec">
-            <h2 class="sec-title">{{ t('subject.discuss') }}</h2>
-            <OutsideLinks :links="links" />
+            <FoldSection :title="t('subject.discuss')">
+              <OutsideLinks :links="links" />
+            </FoldSection>
           </section>
 
           <section v-if="similar.length" id="similar" class="sec">
-            <h2 class="sec-title">{{ t('subject.similar') }}</h2>
-            <SubjectLinks :codes="similar" :year="year" />
+            <FoldSection :title="t('subject.similar')">
+              <SubjectLinks :codes="similar" :year="year" />
+            </FoldSection>
           </section>
         </div>
 

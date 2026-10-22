@@ -7,6 +7,7 @@ import { localTitle } from '@/i18n/localized'
 import { alternativeGroups, periodsFor, prerequisiteRoute, referencedSubjects, simplifyFor, type Subject } from '@/engine'
 import AssessmentPanel from '@/components/subject/AssessmentPanel.vue'
 import MajorRoles from '@/components/subject/MajorRoles.vue'
+import WamWhatIf from '@/components/profile/WamWhatIf.vue'
 import SubjectAbout from '@/components/subject/SubjectAbout.vue'
 import { useProfile } from '@/composables/useProfile'
 import { useSubjectDetail } from '@/composables/useDataset'
@@ -255,6 +256,9 @@ function onClick(event: MouseEvent): void {
             <p class="muted">{{ t('subject.reviews', { n: subject.signals?.reviews ?? 0 }) }}</p>
           </template>
         </section>
+
+        <!-- Not passed yet: what a mark in it would do to the WAM. -->
+        <WamWhatIf v-if="!doneSet.has(code)" class="peek-section" :code="code" />
       </template>
 
       <!-- Everything to do with it, at the foot of the window: change it in the plan, record it, read more. -->

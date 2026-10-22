@@ -15,6 +15,27 @@ describe('browse (real data)', () => {
     expect(rows.map((r) => r.subject.code)).toEqual([...rows.map((r) => r.subject.code)].sort())
   })
 
+  it('summer & winter lists only subjects offered in summer or winter that year', () => {
+    const rows = run({ offTerm: true })
+    expect(rows.length).toBeGreaterThan(0)
+    for (const r of rows) expect(r.periods.some((p) => p === 'summer' || p === 'winter')).toBe(true)
+    const semesterOnly = run({}).filter((r) => r.periods.length > 0 && r.periods.every((p) => p === 'semester-1' || p === 'semester-2'))
+    expect(semesterOnly.length).toBeGreaterThan(0)
+    const codes = new Set(rows.map((r) => r.subject.code))
+    for (const r of semesterOnly) expect(codes.has(r.subject.code)).toBe(false)
+  })
+
+  it('summer & winter round-trips through its address and the query', () => {
+    const f = applyQuick(EMPTY_FILTERS, 'summerWinter')
+    expect(f.offTerm).toBe(true)
+    expect(browseAddress(f)).toBe('subjects/summer-winter/')
+    expect(browseAddress({ ...f, level: 1 })).toBe('subjects/?level=1&offterm=1')
+    expect(filtersFromQuery(new URLSearchParams('level=1&offterm=1'))).toEqual({ ...f, level: 1 })
+    expect(quickChoice(filtersFromQuery(new URLSearchParams(''), 'summer-winter'))).toBe('summerWinter')
+    // Another quick choice starts over, so the summer & winter filter goes.
+    expect(applyQuick(f, 'noExam').offTerm).toBe(false)
+  })
+
   it('finds breadth subjects for B-SCI', () => {
     const rows = run({ category: 'breadth' })
     expect(rows.length).toBeGreaterThan(0)
@@ -56,7 +77,7 @@ describe('browse (real data)', () => {
 
 describe('browse filters in the address', () => {
   it('round-trips', () => {
-    const f: BrowseFilters = { text: 'maths', category: 'breadth', level: 2, period: 'semester-2', noPrereq: true, noExam: true, noGroup: true, sort: 'hours', rank: 'easy', mine: true }
+    const f: BrowseFilters = { text: 'maths', category: 'breadth', level: 2, period: 'semester-2', noPrereq: true, noExam: true, noGroup: true, sort: 'hours', rank: 'easy', mine: true, offTerm: true }
     expect(filtersFromQuery(new URLSearchParams(filtersToQuery(f)))).toEqual(f)
   })
 
@@ -87,7 +108,7 @@ describe('quick choices on Find subjects', () => {
   const opts = { course: 'B-SCI', rankCourse: 'B-SCI', year: 2026 }
 
   it('each choice opens from its old address and keeps that address when nothing else is set', () => {
-    const slugs: Record<string, string> = { easy: 'easy', hard: 'hard', noExam: 'no-exam', firstSemester: 'first-semester', breadth: 'breadth' }
+    const slugs: Record<string, string> = { easy: 'easy', hard: 'hard', noExam: 'no-exam', firstSemester: 'first-semester', breadth: 'breadth', summerWinter: 'summer-winter' }
     for (const c of QUICK_CHOICES) {
       const f = applyQuick(EMPTY_FILTERS, c)
       expect(quickChoice(f)).toBe(c)

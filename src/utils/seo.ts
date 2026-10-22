@@ -11,7 +11,8 @@ export function subjectTitleKey(s: Subject): 'seo.subjectTitle' | 'seo.subjectTi
 }
 
 /** The search title of each quick pick's own page (/subjects/no-exam/…); it takes `{year}`. */
-export const PRESET_TITLE_KEYS: Record<PresetName, 'seo.presetNoExam' | 'seo.presetBreadth' | 'seo.presetFirstSemester'> = {
+export const PRESET_TITLE_KEYS: Record<PresetName, 'seo.presetNoExam' | 'seo.presetBreadth' | 'seo.presetFirstSemester' | 'seo.presetSummerWinter'> = {
+  summerWinter: 'seo.presetSummerWinter',
   noExam: 'seo.presetNoExam',
   breadth: 'seo.presetBreadth',
   firstSemester: 'seo.presetFirstSemester',

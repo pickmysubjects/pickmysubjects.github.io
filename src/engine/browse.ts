@@ -20,6 +20,8 @@ export interface BrowseFilters {
   rank: RankDirection | null
   /** "Sort for me": ordered by the student's own suggestions. */
   mine: boolean
+  /** Only subjects offered in summer or winter term that year. */
+  offTerm: boolean
 }
 
 export const EMPTY_FILTERS: BrowseFilters = {
@@ -33,6 +35,7 @@ export const EMPTY_FILTERS: BrowseFilters = {
   sort: 'code',
   rank: null,
   mine: false,
+  offTerm: false,
 }
 
 /** Starting points for the questions new students ask most. */
@@ -41,12 +44,13 @@ export const PRESETS = {
   // Breadth is picked for an easy mark more than anything: easiest first.
   breadth: { category: 'breadth', sort: 'easy' },
   noExam: { noExam: true },
+  summerWinter: { offTerm: true },
 } as const satisfies Record<string, Partial<BrowseFilters>>
 
 export type PresetName = keyof typeof PRESETS
 
 /** Each quick pick's own address (/subjects/no-exam/), a page search engines can show on its own. */
-export const PRESET_SLUGS: Record<PresetName, string> = { firstSemester: 'first-semester', breadth: 'breadth', noExam: 'no-exam' }
+export const PRESET_SLUGS: Record<PresetName, string> = { firstSemester: 'first-semester', breadth: 'breadth', noExam: 'no-exam', summerWinter: 'summer-winter' }
 
 export function presetFromSlug(slug: string): PresetName | undefined {
   return (Object.keys(PRESET_SLUGS) as PresetName[]).find((p) => PRESET_SLUGS[p] === slug)
@@ -125,6 +129,7 @@ export function browse(subjects: Subject[], f: BrowseFilters, course: string, ye
     .filter((s) => !f.noPrereq || s.prerequisites === 'none')
     .map((s) => browseRow(s, year))
     .filter((r) => f.period === null || r.periods.includes(f.period))
+    .filter((r) => !f.offTerm || r.periods.includes('summer') || r.periods.includes('winter'))
     .filter((r) => !f.noExam || r.exam === 0)
     .filter((r) => !f.noGroup || r.group === 0)
   const sorts: Record<BrowseSort, (a: BrowseRow, b: BrowseRow) => number> = {
@@ -150,6 +155,7 @@ export function filtersToQuery(f: BrowseFilters): string {
   if (f.sort !== 'code') q.set('sort', f.sort)
   if (f.rank) q.set('list', f.rank)
   if (f.mine) q.set('mine', '1')
+  if (f.offTerm) q.set('offterm', '1')
   return q.toString()
 }
 
@@ -157,7 +163,7 @@ const PERIOD_SET = new Set<string>(['summer', 'semester-1', 'winter', 'semester-
 const SORT_SET = new Set<string>(['code', 'easy', 'exam', 'hours', 'rating'])
 
 /** The query keys that set filters; anything else (fbclid, utm_source from a shared link) is ignored. */
-const FILTER_KEYS = new Set(['q', 'type', 'level', 'when', 'noprereq', 'noexam', 'nogroup', 'sort', 'preset', 'list', 'mine', 'breadth'])
+const FILTER_KEYS = new Set(['q', 'type', 'level', 'when', 'noprereq', 'noexam', 'nogroup', 'sort', 'preset', 'list', 'mine', 'breadth', 'offterm'])
 
 /**
  * `slug` is the quick pick in the path (/subjects/no-exam/, /subjects/easy/); filters in the query
@@ -182,12 +188,13 @@ export function filtersFromQuery(q: URLSearchParams, slug = ''): BrowseFilters {
     sort: SORT_SET.has(sort) ? (sort as BrowseSort) : base.sort,
     rank: rankFromSlug(q.get('list') ?? '') ?? rankFromSlug(slug) ?? null,
     mine: q.get('mine') === '1',
+    offTerm: q.get('offterm') === '1' || base.offTerm,
   }
 }
 
 /** The one row of quick choices on Find subjects: one at a time, or all. */
 export type QuickChoice = 'all' | RankDirection | PresetName
-export const QUICK_CHOICES: readonly QuickChoice[] = ['all', 'easy', 'hard', 'noExam', 'firstSemester', 'breadth']
+export const QUICK_CHOICES: readonly QuickChoice[] = ['all', 'easy', 'hard', 'noExam', 'firstSemester', 'breadth', 'summerWinter']
 
 /** Which quick choice the filters amount to ('all' when none). Sort order doesn't count. */
 export function quickChoice(f: BrowseFilters): QuickChoice {

@@ -8,6 +8,7 @@ import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
 import { useProfile } from '@/composables/useProfile'
 import { useI18n } from '@/i18n'
+import { usePhone } from '@/composables/usePhone'
 import { describeReq, requirementList, termLabel } from '@/i18n/format'
 import type { Edge } from '@/utils/planBoard'
 
@@ -20,6 +21,8 @@ const plan = usePlan()
 const { data } = useDataset()
 const { profile } = useProfile()
 const { t } = useI18n()
+// On phones the chain above already shows the subjects; the full lists fold under it.
+const phone = usePhone()
 
 const course = computed(() => plan.setup.value.course)
 const code = computed(() => props.subject.code)
@@ -58,6 +61,8 @@ function go(c: string): void {
   <div class="route">
     <SubjectTimeline :code="code" :edges="edges" :where-of="whereOf" @select="go" @open="go" />
 
+    <component :is="phone ? 'details' : 'div'" class="cols-wrap" :class="{ 'cols-fold': phone }">
+    <summary v-if="phone" class="cols-summary">{{ t('subject.fullRoute') }}</summary>
     <div class="cols">
       <section class="col">
         <h3 class="sub">{{ t('subject.needs') }}</h3>
@@ -100,10 +105,23 @@ function go(c: string): void {
         </template>
       </section>
     </div>
+    </component>
   </div>
 </template>
 
 <style scoped>
+.cols-summary {
+  padding: 10px 0;
+  font-size: 0.9375rem;
+  font-weight: 650;
+  color: var(--accent);
+  cursor: pointer;
+}
+
+.cols-fold[open] .cols-summary {
+  margin-bottom: 8px;
+}
+
 .route {
   display: grid;
   gap: var(--space-5);

@@ -5,12 +5,15 @@ import { planComponentIds, subjectRoles } from '@/engine'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
 import { useI18n } from '@/i18n'
+import { usePhone } from '@/composables/usePhone'
 
 /** Which majors and specialisations need this subject: compulsory, one of a choice, or on the way there. */
 const props = defineProps<{ code: string }>()
 const { data } = useDataset()
 const plan = usePlan()
 const { t } = useI18n()
+// A long list on a phone: folded to its heading, opened on tap.
+const phone = usePhone()
 
 const ORDER = { core: 0, option: 1, pathway: 2, route: 3 } as const
 const mine = computed(() => new Set(planComponentIds(plan.plan.value).filter(Boolean)))
@@ -26,8 +29,9 @@ const shown = computed(() => (expanded.value ? roles.value : roles.value.slice(0
 </script>
 
 <template>
-  <section v-if="roles.length" class="roles">
-    <h3 class="roles-title">{{ t('subject.rolesTitle') }}</h3>
+  <component :is="phone ? 'details' : 'section'" v-if="roles.length" class="roles" :class="{ 'roles-fold': phone }">
+    <summary v-if="phone" class="roles-title roles-summary">{{ t('subject.rolesTitle') }}</summary>
+    <h3 v-else class="roles-title">{{ t('subject.rolesTitle') }}</h3>
     <ul class="roles-list">
       <li v-for="r in shown" :key="r.component" class="role" :class="`role-${r.role}`">
         <a class="role-link" :href="link(`majors/${r.component}`)">{{ r.title }}</a>
@@ -38,10 +42,16 @@ const shown = computed(() => (expanded.value ? roles.value : roles.value.slice(0
     <button v-if="!expanded && roles.length > LIMIT" type="button" class="roles-more" @click="expanded = true">
       {{ t('subject.showAll', { n: roles.length }) }}
     </button>
-  </section>
+  </component>
 </template>
 
 <style scoped>
+.roles-summary {
+  padding: 10px 0;
+  color: var(--accent);
+  cursor: pointer;
+}
+
 .roles-more {
   justify-self: start;
   padding: 4px 0;

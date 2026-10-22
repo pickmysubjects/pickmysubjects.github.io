@@ -2,6 +2,7 @@
 import { link } from '@/composables/useView'
 import { computed } from 'vue'
 import { ArrowRight, Check, Route, Sparkles, User } from 'lucide-vue-next'
+import CanDoList from '@/components/home/CanDoList.vue'
 import SubjectSearch from '@/components/SubjectSearch.vue'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
@@ -95,7 +96,7 @@ const next = computed(() => {
     </section>
     </div>
 
-
+    <CanDoList class="home-can" />
   </div>
 </template>
 

@@ -1,4 +1,4 @@
-import { passedCodes, type Profile } from '@/engine/recommend'
+import { computeWam, passedCodes, type Profile } from '@/engine/recommend'
 import type { Dataset } from '@/engine/schema'
 
 /** Points still to take in a degree of `degreePoints`: passed subjects only count as progress (a fail still counts in the WAM). */
@@ -30,4 +30,14 @@ export function gradeOf(mark: number): string {
   if (mark >= 65) return 'H3'
   if (mark >= 50) return 'P'
   return 'N'
+}
+
+/**
+ * WAM if the student gets `mark` in `code`: the marks on record plus this one attempt, worked out
+ * the same way as the real WAM (computeWam). Null for a pass/fail subject, which has no mark to count.
+ */
+export function wamIf(results: Profile['results'], data: Dataset, code: string, mark: number): number | null {
+  if (data.subjects[code]?.passFail) return null
+  const m = Math.max(0, Math.min(100, mark))
+  return computeWam([...results, { code, mark: m }], data)
 }
