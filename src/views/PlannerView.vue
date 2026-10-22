@@ -192,6 +192,11 @@ function markDone(code: string, mark: number | undefined): void {
 const board = useTemplateRef<InstanceType<typeof PlanMap>>('board')
 const selected = shallowRef<string | null>(null)
 const ruleFocus = shallowRef<string | null>(null)
+// Closing the subject window also clears its timeline, so the board is back to normal in one step.
+function closePeek(): void {
+  peek.value = null
+  selected.value = null
+}
 function select(code: string | null): void {
   selected.value = code
   if (code) ruleFocus.value = null
@@ -462,7 +467,7 @@ const printTerms = computed<PrintTerm[]>(() => {
         :course="plan.setup.value.course"
         :year="plan.terms.value[0]?.year ?? new Date().getFullYear()"
         :done="plan.plan.value.completed"
-        @close="peek = null"
+        @close="closePeek"
         @open="peek = $event"
         @swap="(from, to) => plan.swapSubject(from, to)"
         :done-term="peekTerm && begun(peekTerm.term) ? termLabel(t, peekTerm.term) : undefined"
