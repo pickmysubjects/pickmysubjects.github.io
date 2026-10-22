@@ -35,18 +35,19 @@ const ITEMS = [
 <style scoped>
 .can {
   display: grid;
-  gap: 12px;
+  gap: var(--space-4);
 }
 
+/* Same as the home page's section titles. */
 .can-title {
-  font-size: 1.15rem;
+  font-size: 1.375rem;
   font-weight: 700;
 }
 
 .can-list {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 8px;
+  gap: var(--space-3);
   margin: 0;
   padding: 0;
   list-style: none;

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { link } from '@/composables/useView'
 import { computed } from 'vue'
-import { ArrowRight, Check, Route, Sparkles, User } from 'lucide-vue-next'
+import { ArrowRight, Check, CircleCheck } from 'lucide-vue-next'
 import CanDoList from '@/components/home/CanDoList.vue'
 import SubjectSearch from '@/components/SubjectSearch.vue'
 import { usePlan } from '@/composables/usePlan'
@@ -11,6 +11,7 @@ import DemoPlan from '@/components/home/DemoPlan.vue'
 import DemoSubject from '@/components/home/DemoSubject.vue'
 import demo from '@/generated/home-demo.json'
 import type { HomeDemo } from '@/utils/homeDemo'
+import { summariseAssessment } from '@/utils/assessment'
 
 const { t, locale } = useI18n()
 
@@ -18,7 +19,22 @@ const { t, locale } = useI18n()
 const titleParts = computed(() => t.value('home.title').split('|'))
 const spaced = computed(() => !['zh-CN', 'zh-TW', 'ja'].includes(locale.value))
 // Two real examples worked out at build time (scripts/homeDemo.ts): shown, not described.
-const { subject: demoSubject, plan: demoPlan } = demo as unknown as HomeDemo
+const { subject: demoSubject, plan: demoPlan, stats } = demo as unknown as HomeDemo
+// The final exam's share, for the small subject chip floating over the plan.
+const examChip = computed(() => {
+  const exam = summariseAssessment(demoSubject.assessment)?.parts.find((p) => p.kind === 'exam')
+  return exam ? t.value('gist.exam', { n: exam.weight }) : ''
+})
+// A quiet row of plain facts under the hero, counted from the data at build time.
+const proof = computed(() => {
+  const n = (x: number) => x.toLocaleString(locale.value)
+  return [
+    t.value('home.proofSubjects', { n: n(stats.subjects) }),
+    t.value('home.proofDegrees', { n: n(stats.degrees) }),
+    t.value('home.proofLanguages'),
+    t.value('home.proofFree'),
+  ]
+})
 
 // Three steps for a new student. Each shows a tick and what's done once it is.
 const { profile } = useProfile()
@@ -28,7 +44,6 @@ const steps = computed(() => {
   const filled = p.results.length + Object.keys(p.skills).length + p.interests.length
   return [
     {
-      icon: User,
       title: 'home.step1',
       text: 'home.step1Text',
       href: link('record'),
@@ -36,14 +51,13 @@ const steps = computed(() => {
       status: filled > 0 ? t.value('home.step1Done', { results: p.results.length, interests: p.interests.length }) : t.value('home.optional'),
     },
     {
-      icon: Route,
       title: 'home.step2',
       text: 'home.step2Text',
       href: link('plan'),
       done: !plan.isEmpty.value,
       status: plan.isEmpty.value ? '' : t.value('home.step2Done', { n: plan.plannedCodes.value.length }),
     },
-    { icon: Sparkles, title: 'home.step3', text: 'home.step3Text', href: link('subjects/?mine=1'), done: false, status: '' },
+    { title: 'home.step3', text: 'home.step3Text', href: link('subjects/?mine=1'), done: false, status: '' },
   ]
 })
 // The one button that says where to go next: the first step not done yet.
@@ -55,73 +69,82 @@ const next = computed(() => {
 
 <template>
   <div class="home">
+    <!-- The hero: headline, one line, search; a real planned degree beside it. -->
     <section class="stage hero">
-      <p class="eyebrow">{{ t('home.eyebrow') }}</p>
-      <!-- "|" marks where the title may break, so a phrase is never split mid-word. -->
-      <h1 class="hero-title">
-        <template v-for="(part, i) in titleParts" :key="i">
-          <span class="hero-part">{{ part }}</span>
-          <!-- A real space between phrases where the language uses spaces: it vanishes at a line break. -->
-          <template v-if="spaced && i < titleParts.length - 1">{{ ' ' }}</template>
-        </template>
-      </h1>
-      <SubjectSearch class="hero-search" />
-      <p class="hero-scope">{{ t('home.scope') }}</p>
-    </section>
-
-    <div class="demos">
-      <section class="demo-col fade" aria-labelledby="demo-subject">
-        <h2 id="demo-subject" class="demo-caption">{{ t('home.demoSubject') }}</h2>
-        <DemoSubject :subject="demoSubject" />
-      </section>
-      <section class="demo-col fade" aria-labelledby="demo-plan">
-        <h2 id="demo-plan" class="demo-caption">{{ t('home.demoPlan') }}</h2>
-        <DemoPlan :plan="demoPlan" />
-      </section>
-    </div>
-
-    <section class="steps" aria-labelledby="steps-title">
-      <div class="steps-head">
-        <h2 id="steps-title" class="steps-title">{{ t('home.stepsTitle') }}</h2>
-        <a class="button button-accent hero-start" :href="next.href">
-          {{ t('home.startStep', { n: next.n }) }} <ArrowRight :size="18" aria-hidden="true" />
-        </a>
+      <div class="hero-text">
+        <p class="eyebrow">{{ t('home.eyebrow') }}</p>
+        <!-- "|" marks where the title may break, so a phrase is never split mid-word. -->
+        <h1 class="hero-title">
+          <template v-for="(part, i) in titleParts" :key="i">
+            <span class="hero-part">{{ part }}</span>
+            <!-- A real space between phrases where the language uses spaces: it vanishes at a line break. -->
+            <template v-if="spaced && i < titleParts.length - 1">{{ ' ' }}</template>
+          </template>
+        </h1>
+        <p class="hero-sub">{{ t('home.sub') }}</p>
+        <SubjectSearch class="hero-search" />
+        <p class="hero-more">
+          <a class="hero-link" :href="link('subjects')">{{ t('browse.title') }} <ArrowRight :size="16" aria-hidden="true" /></a>
+          <span class="hero-scope">{{ t('home.scope') }}</span>
+        </p>
       </div>
-      <ol class="steps-list">
-        <li v-for="(s, i) in steps" :key="s.title">
-          <a class="step surface" :class="{ 'step-done': s.done }" :href="s.href">
-            <span class="step-top">
-              <span class="step-icon"><component :is="s.icon" :size="20" aria-hidden="true" /></span>
-              <span class="step-num">{{ i + 1 }}</span>
-              <Check v-if="s.done" :size="18" class="step-tick" :aria-label="t('home.done')" />
-            </span>
-            <span class="step-name">{{ t(s.title) }}</span>
-            <span class="step-text">{{ t(s.text) }}</span>
-            <span v-if="s.status" class="step-status">{{ s.status }}</span>
-            <ArrowRight :size="18" aria-hidden="true" class="step-go" />
-          </a>
-        </li>
-      </ol>
+      <div class="hero-visual fade">
+        <DemoPlan :plan="demoPlan" :caption="t('home.demoPlan')" hide-rules />
+        <!-- Two small pieces of the real product floating over it: one subject's exam share, the plan's verdict. -->
+        <a v-if="examChip" class="float float-subject glass" :href="link(`subject/${demoSubject.code}`)">
+          <span class="float-code">{{ demoSubject.code }}</span> · {{ examChip }}
+        </a>
+        <span v-if="demoPlan.met === demoPlan.total" class="float float-ready glass">
+          <CircleCheck :size="16" aria-hidden="true" /> {{ t('rules.progress', { met: demoPlan.met, total: demoPlan.total }) }}
+        </span>
+      </div>
     </section>
 
-    <CanDoList class="home-can" />
+    <ul class="proof" :aria-label="t('home.eyebrow')">
+      <li v-for="p in proof" :key="p">{{ p }}</li>
+    </ul>
+
+    <!-- One tidy grid: the subject example, the three steps, and the easy-to-miss features. -->
+    <div class="bento">
+      <DemoSubject class="tile-subject fade" :subject="demoSubject" :caption="t('home.demoSubject')" />
+      <section class="tile-steps glass" aria-labelledby="steps-title">
+        <div class="tile-head">
+          <h2 id="steps-title" class="tile-title">{{ t('home.stepsTitle') }}</h2>
+          <a class="button button-accent steps-start" :href="next.href">
+            {{ t('home.startStep', { n: next.n }) }} <ArrowRight :size="18" aria-hidden="true" />
+          </a>
+        </div>
+        <ol class="steps-list">
+          <li v-for="(s, i) in steps" :key="s.title">
+            <a class="step" :class="{ 'step-done': s.done }" :href="s.href">
+              <span class="step-num">
+                <Check v-if="s.done" :size="16" :stroke-width="3" :aria-label="t('home.done')" />
+                <template v-else>{{ i + 1 }}</template>
+              </span>
+              <span class="step-name">{{ t(s.title) }}</span>
+              <span class="step-text">{{ t(s.text) }}</span>
+              <span v-if="s.status" class="step-status">{{ s.status }}</span>
+            </a>
+          </li>
+        </ol>
+      </section>
+      <CanDoList class="tile-can" />
+    </div>
   </div>
 </template>
 
 <style scoped>
+/* One rhythm between the hero, the proof row and the grid. */
 .home {
   display: grid;
-  gap: 56px;
-  padding-top: 24px;
+  gap: var(--space-6);
+  padding-top: var(--space-5);
 }
 
-/* A rounded "stage" with a soft gradient mesh: headline and search. */
+/* A rounded "stage" with a soft gradient mesh. */
 .stage {
-  display: grid;
-  gap: 36px;
-  padding: 64px 56px 48px;
+  padding: 64px 56px;
   border-radius: 36px;
-  overflow: hidden;
   isolation: isolate;
   background:
     radial-gradient(60% 80% at 0% 0%, #ffd6e8 0%, transparent 60%),
@@ -144,14 +167,20 @@ const next = computed(() => {
 }
 
 .hero {
-  gap: 18px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 56px;
 }
 
-.hero > * {
-  max-width: 820px;
+.hero-text {
+  display: grid;
+  gap: var(--space-4);
+  min-width: 0;
 }
 
 .hero .eyebrow {
+  margin: 0;
   color: var(--accent);
 }
 
@@ -159,16 +188,9 @@ const next = computed(() => {
   display: inline-block;
 }
 
-.hero-scope {
-  margin: 0.25rem 0 0;
-  font-size: 0.875rem;
-  color: var(--ink-soft);
-}
-
 .hero-title {
-  max-width: 16em;
-  font-size: clamp(2.3rem, 5.6vw, 4.2rem);
-  line-height: 1.05;
+  font-size: clamp(2.4rem, 4.8vw, 4rem);
+  line-height: 1.02;
 }
 
 /* Characters are wider than Latin letters: a size down reads the same weight. */
@@ -176,98 +198,195 @@ const next = computed(() => {
 :lang(zh-TW) .hero-title,
 :lang(ja) .hero-title,
 :lang(ko) .hero-title {
-  max-width: 12em;
-  font-size: clamp(1.9rem, 4.6vw, 3.5rem);
+  font-size: clamp(2rem, 3.8vw, 3.2rem);
   line-height: 1.2;
 }
 
+/* Longer words (Hindi, Vietnamese, Malay, Indonesian): a step smaller so the title stays short. */
+:lang(hi) .hero-title,
+:lang(vi) .hero-title,
+:lang(ms) .hero-title,
+:lang(id) .hero-title {
+  font-size: clamp(2.1rem, 3.8vw, 3.2rem);
+}
+
+.hero-sub {
+  margin: 0;
+  max-width: 34em;
+  font-size: 1.125rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
 .hero-search {
-  max-width: 620px;
-  margin-top: 6px;
+  margin-top: var(--space-3);
 }
 
-.hero-start {
-  flex: none;
-  min-height: 48px;
-  padding: 0 22px;
-  font-size: 1rem;
+.hero-more {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-5);
+  margin: 0;
 }
 
-.steps-head {
+.hero-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.hero-link:hover {
+  text-decoration: underline;
+}
+
+.hero-scope {
+  font-size: 0.875rem;
+  color: var(--ink-faint);
+}
+
+/* The product visual: the plan card with two chips layered over its corners. */
+.hero-visual {
+  position: relative;
+  min-width: 0;
+  padding: 28px 0 28px 28px;
+}
+
+.float {
+  position: absolute;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--ink);
+  text-decoration: none;
+  white-space: nowrap;
+  box-shadow: 0 14px 32px -12px rgb(80 40 90 / 35%);
+}
+
+.float-subject {
+  top: 0;
+  right: 24px;
+}
+
+.float-code {
+  color: var(--accent);
+}
+
+.float-ready {
+  bottom: 0;
+  left: 0;
+  color: var(--good);
+}
+
+/* Plain facts, quiet: one line, dots between. */
+.proof {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-2) var(--space-5);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.proof li + li::before {
+  content: '·';
+  margin-right: var(--space-5);
+  color: var(--ink-faint);
+}
+
+/* Bento: subject card on the left, steps on the right, features across the bottom. */
+.bento {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--space-5);
+}
+
+.tile-subject {
+  grid-column: span 5;
+}
+
+.tile-steps {
+  grid-column: span 7;
+  display: grid;
+  align-content: start;
+  gap: var(--space-5);
+  padding: var(--space-5);
+  border-radius: var(--radius-lg);
+}
+
+.tile-can {
+  grid-column: 1 / -1;
+}
+
+.tile-head {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 12px 20px;
-  margin-bottom: 18px;
+  gap: var(--space-3) var(--space-4);
 }
 
-.steps-title {
-  font-size: clamp(1.5rem, 3vw, 2rem);
+/* The single heading style below the hero (CanDoList uses the same). */
+.tile-title {
+  font-size: 1.375rem;
+  font-weight: 700;
 }
 
 .steps-list {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
+  gap: var(--space-3);
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
+/* A step: number, title, one line. The whole step is the link. */
 .step {
-  position: relative;
   display: grid;
   align-content: start;
-  gap: 10px;
+  gap: var(--space-2);
   height: 100%;
-  padding: 22px 22px 52px;
+  padding: var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
   color: var(--ink);
   text-decoration: none;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: border-color 0.15s, transform 0.15s;
 }
 
 .step:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-2);
+  border-color: var(--accent);
+  transform: translateY(-2px);
 }
 
-/* Gradient icon tiles, one hue each. */
-.step-icon {
-  display: inline-grid;
-  place-items: center;
-  width: 42px;
-  height: 42px;
-  border-radius: 13px;
-  color: #fff;
-  background: linear-gradient(135deg, #f472b6, #c2227a);
-  box-shadow: 0 8px 18px -8px rgb(194 34 122 / 60%);
-}
-
-li:nth-child(2) .step-icon {
-  background: linear-gradient(135deg, #fb923c, #e0457b);
-}
-
-li:nth-child(3) .step-icon {
-  background: linear-gradient(135deg, #a78bfa, #6d5dfc);
-  box-shadow: 0 8px 18px -8px rgb(109 93 252 / 60%);
-}
-
-.step-top {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+.step:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 .step-num {
   display: inline-grid;
   place-items: center;
-  width: 24px;
-  height: 24px;
-  font-size: 0.75rem;
+  width: 28px;
+  height: 28px;
+  font-size: 0.8125rem;
   font-weight: 700;
   color: #fff;
-  background: var(--overprint);
+  background: var(--accent);
   border-radius: 999px;
 }
 
@@ -275,71 +394,31 @@ li:nth-child(3) .step-icon {
   background: var(--good);
 }
 
-.step-tick {
-  margin-left: auto;
-  color: var(--good);
-}
-
-.step-done {
-  border-color: var(--good-soft);
-}
-
-.step-status {
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--accent);
-}
-
 .step-name {
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 700;
-  letter-spacing: -0.02em;
+  line-height: 1.3;
 }
 
 .step-text {
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
   color: var(--ink-soft);
 }
 
-.step-go {
-  position: absolute;
-  left: 22px;
-  bottom: 20px;
-  color: var(--accent);
-  transition: transform 0.15s;
+.step-status {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--good);
 }
 
-.step:hover .step-go {
-  transform: translateX(4px);
-}
-
-/* The two examples: side by side on wide screens, one under the other on phones. */
-.demos {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 20px;
-  margin-top: -24px;
-}
-
-.demo-col {
-  display: grid;
-  grid-template-rows: auto 1fr;
-  gap: 10px;
-  min-width: 0;
-}
-
-.demo-caption {
-  font-size: 1.05rem;
-  font-weight: 700;
+.steps-start {
+  min-height: 44px;
+  padding: 0 20px;
 }
 
 /* A short fade on load, nothing more. */
 .fade {
   animation: fade-in 0.4s ease-out both;
-}
-
-.fade + .fade {
-  animation-delay: 0.08s;
 }
 
 @keyframes fade-in {
@@ -349,28 +428,73 @@ li:nth-child(3) .step-icon {
   }
 }
 
-@media (max-width: 900px) {
-  .demos {
+@media (max-width: 1100px) {
+  .hero {
     grid-template-columns: 1fr;
+    gap: var(--space-6);
   }
 
-  .steps-list {
-    grid-template-columns: 1fr;
-  }
-
-  .stage {
-    padding: 44px 28px 32px;
+  .tile-subject,
+  .tile-steps {
+    grid-column: 1 / -1;
   }
 }
 
-@media (max-width: 560px) {
+@media (max-width: 900px) {
+  .stage {
+    padding: 40px 28px 28px;
+  }
+}
+
+@media (max-width: 640px) {
+  .stage {
+    padding: 28px 16px 20px;
+    border-radius: 26px;
+  }
+
+  .hero-sub {
+    font-size: 1rem;
+  }
+
+  .hero-visual {
+    padding: 22px 0 22px 0;
+  }
+
+  .float-subject {
+    right: 8px;
+  }
+
+  .float-ready {
+    left: 8px;
+  }
+
+  .proof {
+    justify-content: flex-start;
+    gap: var(--space-2) var(--space-4);
+    font-size: 0.875rem;
+  }
+
+  .proof li + li::before {
+    display: none;
+  }
+
+  .proof li {
+    padding: 4px 12px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+  }
+
   .steps-list {
     grid-template-columns: 1fr;
   }
 
-  .stage {
-    padding: 32px 18px 20px;
-    border-radius: 26px;
+  .tile-steps {
+    padding: var(--space-4);
+  }
+
+  .steps-start {
+    flex: 1 1 100%;
+    justify-content: center;
   }
 }
 
@@ -379,8 +503,7 @@ li:nth-child(3) .step-icon {
     animation: none;
   }
 
-  .step,
-  .step-go {
+  .step {
     transition: none;
   }
 }

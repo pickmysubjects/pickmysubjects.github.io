@@ -1215,6 +1215,11 @@ export const zhCN: Messages = {
     contact: '有疑问？请使用“反馈”页面。',
   },
   home: {
+    sub: "每门课难不难、怎么给分，再帮你排好整个学位的选课。",
+    proofSubjects: "{n} 门课",
+    proofDegrees: "{n} 个本科学位",
+    proofLanguages: "9 种语言",
+    proofFree: "免费，无需注册",
     startStep: "从第 {n} 步开始",
     stepsTitle: '三步上手',
     year: '第 {n} 年',

@@ -32,6 +32,18 @@ function pagePath(): string {
   return localeInPath(rest) ? rest.split('/').slice(1).join('/') : rest
 }
 
+/**
+ * An address without a language part (/, /subject/X) when another language was chosen before:
+ * the same page in that language, to load in full before anything is drawn. Otherwise null.
+ * Without this the English page's static HTML showed first and the app then painted the saved
+ * language's parts over it (an English page with Chinese subject titles) before moving.
+ */
+export function savedLocaleAddress(): string | null {
+  const rest = location.pathname.startsWith(BASE) ? location.pathname.slice(BASE.length) : null
+  if (rest === null || currentLocale() === 'en' || localeInPath(rest) || /^subject-compass(?:\/|$)/.test(rest)) return null
+  return BASE + prefix() + rest + location.search + location.hash
+}
+
 /** Splits "subject/COMP30027" (and a query string) into a route. Exported for tests. */
 export function parsePath(path: string, search = ''): Route {
   const parts = path.replace(/^\/+|\/+$/g, '').split('/')

@@ -1215,6 +1215,11 @@ export const id: Messages = {
     contact: 'Ada pertanyaan? Gunakan halaman Masukan.',
   },
   home: {
+    sub: "Seberapa sulit tiap mata kuliah, cara penilaiannya, dan rencana untuk seluruh gelarmu.",
+    proofSubjects: "{n} mata kuliah",
+    proofDegrees: "{n} program sarjana",
+    proofLanguages: "9 bahasa",
+    proofFree: "Gratis, tanpa daftar",
     startStep: "Mulai dari langkah {n}",
     stepsTitle: 'Mulai dalam tiga langkah',
     year: 'Tahun {n}',

@@ -1215,6 +1215,11 @@ export const ms: Messages = {
     contact: 'Ada soalan? Gunakan halaman Maklum balas.',
   },
   home: {
+    sub: "Betapa sukar setiap subjek, cara ia dinilai, dan rancangan untuk seluruh ijazah anda.",
+    proofSubjects: "{n} subjek",
+    proofDegrees: "{n} ijazah sarjana muda",
+    proofLanguages: "9 bahasa",
+    proofFree: "Percuma, tanpa daftar",
     startStep: "Mula dengan langkah {n}",
     stepsTitle: 'Mula dalam tiga langkah',
     year: 'Tahun {n}',

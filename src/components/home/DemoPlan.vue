@@ -9,7 +9,7 @@ import type { HomeDemo } from '@/utils/homeDemo'
  * A real generated plan in miniature: each semester's subject codes, grouped by year, and the
  * planner's progress ring showing every course rule met. Opens the planner.
  */
-const props = defineProps<{ plan: HomeDemo['plan'] }>()
+const props = defineProps<{ plan: HomeDemo['plan']; caption?: string; hideRules?: boolean }>()
 const { t } = useI18n()
 
 const years = computed(() => {
@@ -28,6 +28,7 @@ const allMet = computed(() => props.plan.met === props.plan.total)
 
 <template>
   <a class="demo surface" :href="link('plan')">
+    <span v-if="caption" class="caption">{{ caption }}</span>
     <span class="head">
       <span class="ring" :class="{ 'ring-ok': allMet }" aria-hidden="true"><Check :size="18" :stroke-width="3" /></span>
       <span class="head-text">
@@ -49,13 +50,23 @@ const allMet = computed(() => props.plan.met === props.plan.total)
     </span>
 
     <span class="foot">
-      <span class="rules">{{ t('rules.progress', { met: plan.met, total: plan.total }) }}</span>
+      <span v-if="!hideRules" class="rules">{{ t('rules.progress', { met: plan.met, total: plan.total }) }}</span>
       <span class="go">{{ t('home.cardPlan') }} <ArrowRight :size="16" aria-hidden="true" /></span>
     </span>
   </a>
 </template>
 
 <style scoped>
+/* What the example shows, as the card's own header line. */
+.caption {
+  padding-bottom: var(--space-3);
+  margin-bottom: var(--space-1);
+  border-bottom: 1px solid var(--line);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
 .demo {
   display: grid;
   align-content: start;
@@ -197,6 +208,16 @@ const allMet = computed(() => props.plan.met === props.plan.total)
 
   .term-label {
     grid-column: 1 / -1;
+  }
+
+  .demo {
+    padding: 16px 14px;
+  }
+
+  /* A code on one line, even in the hero's narrower card. */
+  .cell {
+    font-size: 0.625rem;
+    white-space: nowrap;
   }
 }
 

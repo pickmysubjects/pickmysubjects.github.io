@@ -1215,6 +1215,11 @@ export const ko: Messages = {
     contact: '궁금한 점은 "피드백" 페이지를 이용하세요.',
   },
   home: {
+    sub: "과목 난이도와 평가 방식을 보고, 학위 전체 수강 계획까지 세울 수 있어요.",
+    proofSubjects: "과목 {n}개",
+    proofDegrees: "학사 학위 {n}개",
+    proofLanguages: "9개 언어",
+    proofFree: "무료, 가입 없음",
     startStep: "{n}단계부터 시작",
     stepsTitle: '3단계로 시작하기',
     year: '{n}학년',

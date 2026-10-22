@@ -27,6 +27,11 @@ export function buildHomeDemo(data: Dataset, year: number): HomeDemo {
   const major = data.components.find((c) => c.id === DEMO_MAJOR)
   const course = data.courses.find((c) => c.code === DEMO_COURSE)
   return {
+    // Plain counts for the proof row under the hero.
+    stats: {
+      subjects: Object.keys(data.subjects).length,
+      degrees: data.courses.filter((c) => c.title.startsWith('Bachelor')).length,
+    },
     // The card shows the reviewers' verdicts and source, not their points: leave those out to keep it small.
     subject: { ...s, about: undefined, discussions: s.discussions?.map((d) => ({ ...d, points: [] })) },
     plan: {

@@ -1215,6 +1215,11 @@ export const vi: Messages = {
     contact: 'Có câu hỏi? Hãy dùng trang Góp ý.',
   },
   home: {
+    sub: "Môn nào khó, chấm điểm ra sao, và kế hoạch cho cả bằng của bạn.",
+    proofSubjects: "{n} môn học",
+    proofDegrees: "{n} bằng cử nhân",
+    proofLanguages: "9 ngôn ngữ",
+    proofFree: "Miễn phí, không cần đăng ký",
     startStep: "Bắt đầu từ bước {n}",
     stepsTitle: 'Bắt đầu với ba bước',
     year: 'Năm {n}',

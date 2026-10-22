@@ -1215,6 +1215,11 @@ export const ja: Messages = {
     contact: 'ご質問は「フィードバック」ページからどうぞ。',
   },
   home: {
+    sub: "科目の難しさや評価方法がわかり、学位全体の履修プランも作れます。",
+    proofSubjects: "{n} 科目",
+    proofDegrees: "学士課程 {n} 種",
+    proofLanguages: "9 言語",
+    proofFree: "無料・登録不要",
     startStep: "ステップ {n} から始める",
     stepsTitle: '3ステップで始める',
     year: '{n}年次',

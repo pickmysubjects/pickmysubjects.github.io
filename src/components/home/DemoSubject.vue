@@ -13,7 +13,7 @@ import { summariseAssessment } from '@/utils/assessment'
  * A real subject page in miniature: the facts every subject page leads with (title, the
  * exam share and class hours, the assessment split, what reviewers say). Opens that page.
  */
-const props = defineProps<{ subject: Subject }>()
+const props = defineProps<{ subject: Subject; caption?: string }>()
 const { t, locale } = useI18n()
 
 const local = computed(() => localTitle(props.subject, locale.value))
@@ -40,6 +40,7 @@ const source = computed(() => {
 
 <template>
   <a class="demo surface" :href="link(`subject/${subject.code}`)">
+    <span v-if="caption" class="caption">{{ caption }}</span>
     <span class="top">
       <span class="code">{{ subject.code }}</span>
       <span class="meta">{{ t('subject.level', { level: subject.level }) }} · {{ t('subject.points', { points: subject.points }) }}</span>
@@ -72,6 +73,16 @@ const source = computed(() => {
 </template>
 
 <style scoped>
+/* What the example shows, as the card's own header line. */
+.caption {
+  padding-bottom: var(--space-3);
+  margin-bottom: var(--space-1);
+  border-bottom: 1px solid var(--line);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
 .demo {
   display: grid;
   align-content: start;

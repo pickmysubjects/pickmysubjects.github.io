@@ -1218,6 +1218,11 @@ export const en = {
     contact: 'Questions? Use the Feedback page.',
   },
   home: {
+    sub: "How hard each subject is, how it’s marked, and a plan for your whole degree.",
+    proofSubjects: "{n} subjects",
+    proofDegrees: "{n} bachelor degrees",
+    proofLanguages: "9 languages",
+    proofFree: "Free, no sign-up",
     startStep: "Start with step {n}",
     stepsTitle: 'Get started in three steps',
     year: 'Year {n}',

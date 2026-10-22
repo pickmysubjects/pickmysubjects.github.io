@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import { loadDataset } from './composables/useDataset'
-import { parsePath } from './composables/useView'
+import { parsePath, savedLocaleAddress } from './composables/useView'
 import { VIEW_LOADERS } from './views/loaders'
 import { currentLocale, loadLocale } from './i18n'
 import { registerServiceWorker } from './utils/serviceWorker'
@@ -20,15 +20,23 @@ import '@fontsource/be-vietnam-pro/700.css'
 import '@fontsource-variable/noto-sans-devanagari/wght.css'
 import './assets/main.css'
 
-// The page's own HTML (prerendered) stays on screen while the subject data and the code of the
-// page being opened load; the other pages' code follows once the browser is idle.
-const opening = VIEW_LOADERS[parsePath(location.pathname.slice(import.meta.env.BASE_URL.length)).view]
-Promise.all([loadDataset(), opening(), loadLocale(currentLocale())]).then(
-  () => {
-    createApp(App).mount('#app')
-    registerServiceWorker()
-    const later = (f: () => void) => ('requestIdleCallback' in window ? requestIdleCallback(f, { timeout: 4000 }) : setTimeout(f, 2000))
-    later(() => Object.values(VIEW_LOADERS).forEach((load) => void load().catch(() => {})))
-  },
-  (e: unknown) => console.error(e),
-)
+// A saved language other than English, on an English address: open that language's own page
+// straight away instead of drawing the English one and switching it over.
+const moveTo = savedLocaleAddress()
+if (moveTo) location.replace(moveTo)
+else start()
+
+function start(): void {
+  // The page's own HTML (prerendered) stays on screen while the subject data and the code of the
+  // page being opened load; the other pages' code follows once the browser is idle.
+  const opening = VIEW_LOADERS[parsePath(location.pathname.slice(import.meta.env.BASE_URL.length)).view]
+  Promise.all([loadDataset(), opening(), loadLocale(currentLocale())]).then(
+    () => {
+      createApp(App).mount('#app')
+      registerServiceWorker()
+      const later = (f: () => void) => ('requestIdleCallback' in window ? requestIdleCallback(f, { timeout: 4000 }) : setTimeout(f, 2000))
+      later(() => Object.values(VIEW_LOADERS).forEach((load) => void load().catch(() => {})))
+    },
+    (e: unknown) => console.error(e),
+  )
+}
