@@ -57,12 +57,12 @@ const local = computed(() => (props.subject ? localTitle(props.subject, locale.v
 // Touch screens have no hover: a tap opens the sheet with every action instead.
 const touch = () => typeof window !== 'undefined' && window.matchMedia('(hover: none), (max-width: 720px)').matches
 
-// A tap selects the subject (its timeline lights up across the plan); a second tap opens the details.
+// One click opens the details and selects the subject, so its timeline stays lit behind the window.
 function onCardClick(event: MouseEvent): void {
   if ((event.target as Element).closest('.row-actions, .sheet')) return
-  if (touch()) emit('moveSheet', true)
-  else if (props.selected) emit('open')
-  else emit('select')
+  if (touch()) return emit('moveSheet', true)
+  if (!props.selected) emit('select')
+  emit('open')
 }
 
 // Info-level notes (e.g. "assumes the timetable repeats") stay in the Checks panel;
