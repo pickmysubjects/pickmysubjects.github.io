@@ -197,7 +197,8 @@ function onDragStart(event: DragEvent): void {
   grid-template-areas:
     'dot code pts'
     'title title title'
-    'tags tags tags';
+    'tags tags tags'
+    'acts acts acts';
   align-items: center;
   gap: 2px 6px;
   min-width: 0;
@@ -326,26 +327,22 @@ function onDragStart(event: DragEvent): void {
   color: var(--ink-faint);
 }
 
-/* The actions sit over the tags and points, on hover or keyboard focus only. */
+/* The actions get their own line under the title on hover or keyboard focus, so they never sit
+   over the code or the title. The row only grows for the hovered card. */
 .row-actions {
-  position: absolute;
-  top: 3px;
-  right: 4px;
-  height: 24px;
-  display: flex;
+  grid-area: acts;
+  display: none;
+  justify-content: flex-end;
   gap: 2px;
-  padding-left: 18px;
-  border-radius: 8px;
-  background: linear-gradient(90deg, transparent, var(--paper-raised) 16px);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.12s;
+  height: 26px;
+  margin-top: 2px;
+  padding-top: 2px;
+  border-top: 1px dashed var(--line);
 }
 
 .row:hover .row-actions,
 .row:focus-within .row-actions {
-  opacity: 1;
-  pointer-events: auto;
+  display: flex;
 }
 
 .act {
@@ -504,7 +501,8 @@ function onDragStart(event: DragEvent): void {
 
 /* Phones: no hover actions (the sheet has them); the sheet sits along the bottom. */
 @media (hover: none), (max-width: 720px) {
-  .row-actions {
+  .row:hover .row-actions,
+  .row:focus-within .row-actions {
     display: none;
   }
 
@@ -525,8 +523,7 @@ function onDragStart(event: DragEvent): void {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .row,
-  .row-actions {
+  .row {
     transition: none;
   }
 }

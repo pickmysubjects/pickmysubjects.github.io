@@ -32,6 +32,8 @@ function onRated(code: string, sent: boolean): void {
 }
 const code = shallowRef('')
 const mark = shallowRef<number | ''>('')
+// The semester it was taken, if the student gives one ("year|period").
+const addTerm = shallowRef('')
 const error = shallowRef('')
 
 function add(): void {
@@ -48,11 +50,13 @@ function add(): void {
   }
   // Pass/fail subjects have no mark to keep.
   const m = mark.value === '' || props.subjects[c]?.passFail ? undefined : Number(mark.value)
-  results.value = [...results.value, { code: c, mark: m }]
+  const [y, p] = addTerm.value.split('|')
+  results.value = [...results.value, y && p ? { code: c, mark: m, year: Number(y), period: p as Period } : { code: c, mark: m }]
   rateNext.value = props.subjects[c] && shouldPrompt(c) ? c : null
   code.value = ''
   mark.value = ''
   error.value = ''
+  // The semester stays: several subjects from one semester are usually entered in a row.
 }
 
 function setMark(i: number, event: Event): void {
@@ -149,7 +153,7 @@ function remove(i: number): void {
 
 <template>
   <section class="results" aria-labelledby="results-title">
-    <h2 id="results-title" class="section-title">{{ t('record.completed') }}</h2>
+    <h2 id="results-title" class="section-title visually-hidden">{{ t('record.completed') }}</h2>
     <form class="add" @submit.prevent="add">
       <label class="add-code">
         <span class="visually-hidden">{{ t('record.subject') }}</span>
@@ -162,6 +166,13 @@ function remove(i: number): void {
       <label class="add-mark">
         <span class="visually-hidden">{{ t('record.mark') }}</span>
         <input v-model="mark" class="input" type="number" min="0" max="100" :placeholder="t('record.markShort')" />
+      </label>
+      <label class="add-term">
+        <span class="visually-hidden">{{ t('record.addTerm') }}</span>
+        <select v-model="addTerm" class="input add-term-select">
+          <option value="">{{ t('record.addTerm') }}</option>
+          <option v-for="x in TERMS" :key="`${x.year}|${x.period}`" :value="`${x.year}|${x.period}`">{{ termLabel(t, x) }}</option>
+        </select>
       </label>
       <button class="button button-accent add-btn" type="submit"><Plus :size="16" aria-hidden="true" /> {{ t('record.add') }}</button>
     </form>
@@ -265,6 +276,15 @@ function remove(i: number): void {
 
 .add-mark {
   flex: 0 0 96px;
+}
+
+.add-term {
+  flex: 0 1 190px;
+  min-width: 0;
+}
+
+.add-term-select {
+  width: 100%;
 }
 
 .add-mark .input {
@@ -537,6 +557,10 @@ function remove(i: number): void {
 
   .add-mark {
     flex: 1 1 96px;
+  }
+
+  .add-term {
+    flex: 2 1 160px;
   }
 }
 

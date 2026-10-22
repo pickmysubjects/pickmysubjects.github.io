@@ -38,7 +38,8 @@ const top = computed(() =>
     <h2 class="preview-title"><Sparkles :size="16" aria-hidden="true" /> {{ t('record.previewTitle') }}</h2>
     <p v-if="!hasInput" class="preview-empty">{{ t('record.previewEmpty') }}</p>
     <ol v-else class="preview-list">
-      <li v-for="r in top" :key="r.code">
+      <li v-for="(r, i) in top" :key="r.code">
+        <span class="n" aria-hidden="true">{{ i + 1 }}.</span>
         <a :href="link(`subject/${r.code}`)"><span class="code">{{ r.code }}</span> {{ r.title }}</a>
       </li>
     </ol>
@@ -70,7 +71,20 @@ const top = computed(() =>
   display: grid;
   gap: 4px;
   margin: 0;
-  padding-left: 20px;
+  padding: 0;
+  list-style: none;
+}
+
+/* Numbers written out: Chrome can leave stale list numbers after the list re-renders in place. */
+.preview-list li {
+  display: flex;
+  gap: 6px;
+}
+
+.n {
+  flex: none;
+  min-width: 1.2em;
+  color: var(--ink-faint);
 }
 
 .preview-list a {

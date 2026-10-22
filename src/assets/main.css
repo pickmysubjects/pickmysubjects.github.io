@@ -98,38 +98,39 @@
 }
 
 /*
- * Each language in its own best typeface. Latin letters and subject codes stay in Geist
- * everywhere; the rest falls to fonts made for that script. Chinese, Japanese and Korean
+ * Each language in its own best typeface. Chinese, Japanese and Korean list their own
+ * fonts first so full-width punctuation keeps its proper shape; subject codes stay in
+ * Geist Mono everywhere. Chinese, Japanese and Korean
  * fonts are megabytes each, so those use the best one the device already has, in the order
  * that looks best: the same character is drawn differently in Chinese and Japanese, so each
  * gets its own list rather than one shared CJK stack.
  */
-:lang(zh-CN) {
-  --font-ui: 'Geist Sans', 'PingFang SC', 'HarmonyOS Sans SC', 'MiSans', 'Source Han Sans SC', 'Noto Sans SC',
-    'Noto Sans CJK SC', 'Microsoft YaHei UI', 'Microsoft YaHei', sans-serif;
+:root:lang(zh-CN) {
+  --font-ui: 'PingFang SC', 'HarmonyOS Sans SC', 'MiSans', 'Source Han Sans SC', 'Noto Sans SC', 'Noto Sans CJK SC',
+    'Microsoft YaHei UI', 'Microsoft YaHei', 'Geist Sans', system-ui, sans-serif;
 }
 
-:lang(zh-TW) {
-  --font-ui: 'Geist Sans', 'PingFang TC', 'Source Han Sans TC', 'Noto Sans TC', 'Noto Sans CJK TC',
-    'Microsoft JhengHei UI', 'Microsoft JhengHei', sans-serif;
+:root:lang(zh-TW) {
+  --font-ui: 'PingFang TC', 'Source Han Sans TC', 'Noto Sans TC', 'Noto Sans CJK TC', 'Microsoft JhengHei UI',
+    'Microsoft JhengHei', 'Geist Sans', system-ui, sans-serif;
 }
 
-:lang(ja) {
-  --font-ui: 'Geist Sans', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', 'Noto Sans CJK JP',
-    'BIZ UDPGothic', 'Yu Gothic UI', 'Meiryo', sans-serif;
+:root:lang(ja) {
+  --font-ui: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', 'Noto Sans CJK JP', 'BIZ UDPGothic',
+    'Yu Gothic UI', 'Yu Gothic', 'Meiryo', 'Geist Sans', system-ui, sans-serif;
 }
 
-:lang(ko) {
-  --font-ui: 'Geist Sans', 'Apple SD Gothic Neo', 'Pretendard', 'Noto Sans KR', 'Noto Sans CJK KR',
-    'Malgun Gothic', sans-serif;
+:root:lang(ko) {
+  --font-ui: 'Apple SD Gothic Neo', 'Pretendard', 'Noto Sans KR', 'Noto Sans CJK KR', 'Malgun Gothic', 'Geist Sans',
+    system-ui, sans-serif;
 }
 
 /* Geist has no Vietnamese tone marks: one face for the whole line instead of a patchwork. */
-:lang(vi) {
+:root:lang(vi) {
   --font-ui: 'Be Vietnam Pro', system-ui, sans-serif;
 }
 
-:lang(hi) {
+:root:lang(hi) {
   --font-ui: 'Geist Sans', 'Noto Sans Devanagari Variable', 'Kohinoor Devanagari', 'Nirmala UI', sans-serif;
 }
 
@@ -204,6 +205,46 @@ select {
    :root adds weight so a component's own heading leading (one scoped class) doesn't win. */
 :root:lang(hi) :is(h1, h2, h3) {
   line-height: 1.35;
+}
+
+/*
+ * Reading comfort per script. Han, kana and hangul are dense square glyphs: a touch larger,
+ * taller lines, no negative tracking. Devanagari has marks above and below the letters, so
+ * it gets the most leading. Vietnamese stacks tone marks over vowels: a little extra room.
+ */
+:root:is(:lang(zh-CN), :lang(zh-TW), :lang(ja), :lang(ko)) {
+  font-size: 16.5px;
+  line-height: 1.7;
+  letter-spacing: 0;
+  line-break: strict;
+  font-family: var(--font-ui);
+}
+
+:root:lang(zh-CN),
+:root:lang(zh-TW) {
+  word-break: normal;
+}
+
+:root:lang(hi) {
+  line-height: 1.75;
+  letter-spacing: 0;
+}
+
+:root:lang(vi) {
+  line-height: 1.6;
+}
+
+:root:lang(vi) :is(h1, h2, h3) {
+  line-height: 1.3;
+}
+
+:root:is(:lang(zh-CN), :lang(zh-TW), :lang(ja), :lang(ko)) :is(h1, h2, h3) {
+  line-height: 1.35;
+}
+
+/* No tracking on CJK text anywhere, including components that track their Latin labels. */
+:root:is(:lang(zh-CN), :lang(zh-TW), :lang(ja), :lang(ko)) :not(.code) {
+  letter-spacing: 0;
 }
 
 /* Every page title the same size and weight. */
@@ -440,30 +481,6 @@ button.chip {
     transition: none !important;
     animation: none !important;
   }
-}
-
-/* CJK first for CJK locales, so full-width punctuation keeps its proper shape. */
-:root:lang(zh-CN) {
-  --font-ui: 'PingFang SC', 'Microsoft YaHei', 'Geist Sans', system-ui, sans-serif;
-}
-
-:root:lang(zh-TW) {
-  --font-ui: 'PingFang TC', 'Microsoft JhengHei', 'Geist Sans', system-ui, sans-serif;
-}
-
-:root:lang(ja) {
-  --font-ui: 'Hiragino Sans', 'Yu Gothic', 'Geist Sans', system-ui, sans-serif;
-}
-
-:root:lang(ko) {
-  --font-ui: 'Apple SD Gothic Neo', 'Malgun Gothic', 'Geist Sans', system-ui, sans-serif;
-}
-
-:root:lang(zh-CN),
-:root:lang(zh-TW),
-:root:lang(ja),
-:root:lang(ko) {
-  font-family: var(--font-ui);
 }
 
 /* ---------- Depth: a soft colour field behind every page, seen through frosted glass ---------- */
