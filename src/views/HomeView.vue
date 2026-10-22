@@ -168,7 +168,7 @@ const next = computed(() => {
 
 .hero {
   display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   align-items: center;
   gap: 48px;
 }
@@ -189,7 +189,7 @@ const next = computed(() => {
 }
 
 .hero-title {
-  font-size: clamp(2.4rem, 4.8vw, 4rem);
+  font-size: clamp(2.2rem, 3.9vw, 3.4rem);
   line-height: 1.02;
 }
 
