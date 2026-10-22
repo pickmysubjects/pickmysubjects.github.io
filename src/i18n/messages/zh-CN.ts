@@ -1224,7 +1224,7 @@ export const zhCN: Messages = {
     startStep: "从第 {n} 步开始",
     stepsTitle: '三步上手',
     year: '第 {n} 年',
-    eyebrow: '为墨尔本大学学生打造',
+    eyebrow: '墨大学生的选课工具',
     title: "*30 秒*，|排好*整个*学位。",
     lede: "哪门课难、作业多不多、给分松不松、同学怎么说。再按你的成绩和兴趣挑适合你的课，排好整个学位。",
     scope: "目前只有本科（Bachelor）。",

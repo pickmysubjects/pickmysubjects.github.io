@@ -1224,7 +1224,7 @@ export const zhTW: Messages = {
     startStep: "從第 {n} 步開始",
     stepsTitle: '三步上手',
     year: '第 {n} 年',
-    eyebrow: '為墨爾本大學學生打造',
+    eyebrow: '墨大學生的選課工具',
     title: "*30 秒*，|排好*整個*學位。",
     lede: "哪門課難、作業多不多、給分鬆不鬆、同學怎麼說。再依你的成績和興趣挑適合你的課，排好整個學位。",
     scope: "目前只有大學部（Bachelor）。",
