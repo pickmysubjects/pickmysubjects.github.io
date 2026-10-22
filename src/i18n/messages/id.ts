@@ -1163,9 +1163,9 @@ export const id: Messages = {
     },
     promisesTitle: "Beberapa hal yang perlu kamu tahu",
     p: {
-      free: "Gratis, tanpa iklan, dan tidak perlu membuat akun. Setelah dibuka sekali bisa dipakai offline, dan bisa ditambahkan ke layar utama.",
-      private: "Nilai dan rencanamu hanya tersimpan di browsermu sendiri, aku tidak bisa melihatnya. Penilaian anonim dan hanya rata-ratanya yang ditampilkan.",
-      unofficial: "Ini bukan situs resmi kampus, jadi bisa saja ada yang salah atau sudah lama. Sebelum mendaftar, cek lagi di Handbook dan My Course Planner.",
+      free: "Gratis, tanpa iklan, tanpa daftar. Setelah dibuka sekali, bisa dipakai tanpa internet dan bisa ditambahkan ke layar utama ponsel.",
+      private: "Nilai dan rencanamu hanya disimpan di perangkat ini dan tidak diunggah, jadi orang lain tidak bisa melihatnya. Penilaian bersifat anonim dan hanya rata-ratanya yang ditampilkan.",
+      unofficial: "Ini bukan situs resmi University of Melbourne, jadi beberapa info bisa salah atau sudah lama. Cek lagi di Handbook dan My Course Planner sebelum mendaftar mata kuliah.",
     },
     helpTitle: "Kalau kamu mau membantu",
     help: "Makin banyak yang memakai, makin berguna situs ini. Setelah selesai satu mata kuliah, luangkan semenit untuk menilainya supaya orang berikutnya punya gambaran. Kalau menemukan kesalahan, kabari aku.",

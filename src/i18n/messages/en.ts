@@ -1166,9 +1166,9 @@ export const en = {
     },
     promisesTitle: "A few things to know",
     p: {
-      free: "It's free, there are no ads, and you don't need an account. Once opened it works offline, and you can add it to your home screen.",
-      private: "Your marks and plans stay in your own browser, and I can't see them. Ratings are anonymous and only averages are shown.",
-      unofficial: "This isn't an official uni site, so things can be wrong or out of date. Before you enrol, double-check in the Handbook and My Course Planner.",
+      free: "Free, no ads, no sign-up. Works offline after your first visit, and you can add it to your phone's home screen.",
+      private: "Your marks and plans are saved only on this device. Nothing is uploaded, so no one else can see them. Ratings are anonymous, and only averages are shown.",
+      unofficial: "This isn't an official University of Melbourne site, so some details may be wrong or out of date. Check the Handbook and My Course Planner before you enrol.",
     },
     helpTitle: "If you want to help",
     help: "The site gets better the more people use it. When you finish a subject, take a minute to rate it so the next person has something to go on. If you spot a mistake, let me know.",

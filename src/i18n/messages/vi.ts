@@ -1163,9 +1163,9 @@ export const vi: Messages = {
     },
     promisesTitle: "Vài điều nên biết trước",
     p: {
-      free: "Miễn phí, không quảng cáo, không cần tạo tài khoản. Mở một lần là dùng được khi không có mạng, và có thể thêm vào màn hình chính.",
-      private: "Điểm và lộ trình bạn nhập chỉ lưu trong trình duyệt của bạn, mình không xem được. Đánh giá là ẩn danh và chỉ hiện điểm trung bình.",
-      unofficial: "Đây không phải trang chính thức của trường nên có thể có chỗ sai hoặc cũ. Trước khi đăng ký môn, hãy kiểm tra lại trên Handbook và My Course Planner.",
+      free: "Miễn phí, không quảng cáo, không cần đăng ký. Mở một lần là dùng được cả khi không có mạng, và có thể thêm vào màn hình chính điện thoại.",
+      private: "Điểm và lộ trình chỉ lưu trên thiết bị này, không tải lên đâu cả, nên người khác không xem được. Đánh giá là ẩn danh và chỉ hiện điểm trung bình.",
+      unofficial: "Đây không phải trang chính thức của Đại học Melbourne, nên có thể có thông tin sai hoặc cũ. Trước khi đăng ký môn, hãy kiểm tra lại trên Handbook và My Course Planner.",
     },
     helpTitle: "Nếu bạn muốn giúp",
     help: "Càng nhiều người dùng thì trang càng tốt hơn. Học xong một môn, bạn bỏ ra một phút đánh giá là người sau đã có thêm thông tin. Thấy chỗ nào sai thì báo mình nhé.",

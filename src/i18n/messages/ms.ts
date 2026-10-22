@@ -1163,9 +1163,9 @@ export const ms: Messages = {
     },
     promisesTitle: "Beberapa perkara yang perlu tahu",
     p: {
-      free: "Percuma, tiada iklan dan tak perlu buat akaun. Selepas dibuka sekali ia boleh digunakan luar talian, dan boleh ditambah ke skrin utama.",
-      private: "Markah dan rancangan anda hanya disimpan dalam pelayar anda sendiri, saya tak boleh lihat. Penilaian tanpa nama dan hanya purata dipaparkan.",
-      unofficial: "Ini bukan laman rasmi universiti, jadi mungkin ada yang salah atau lapuk. Sebelum mendaftar, semak semula di Handbook dan My Course Planner.",
+      free: "Percuma, tiada iklan, tak perlu daftar. Selepas dibuka sekali, boleh guna tanpa internet dan boleh ditambah ke skrin utama telefon.",
+      private: "Markah dan rancangan anda disimpan dalam peranti ini sahaja dan tidak dimuat naik, jadi orang lain tidak dapat melihatnya. Penilaian adalah tanpa nama dan hanya purata dipaparkan.",
+      unofficial: "Ini bukan laman rasmi University of Melbourne, jadi sesetengah maklumat mungkin salah atau lapuk. Semak Handbook dan My Course Planner sebelum mendaftar subjek.",
     },
     helpTitle: "Kalau anda nak membantu",
     help: "Makin ramai yang guna, makin baik laman ini. Bila habis satu subjek, ambil seminit untuk menilainya supaya orang seterusnya ada panduan. Kalau jumpa kesilapan, beritahu saya.",
