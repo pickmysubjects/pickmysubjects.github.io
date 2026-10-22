@@ -7,6 +7,7 @@ import GuideItem from '@/components/guide/GuideItem.vue'
 import { link } from '@/composables/useView'
 import { useProfile } from '@/composables/useProfile'
 import { useI18n } from '@/i18n'
+import { ACCREDITATION as ACC } from '@/utils/accreditation'
 
 const { t, locale } = useI18n()
 // The reader's own country first, the rest in the usual order.
@@ -55,8 +56,6 @@ const SPEC_DOCS = 'https://students.unimelb.edu.au/course-admin/assessment-adjus
 const RSL = 'https://students.unimelb.edu.au/support-and-wellbeing/international-student-support/reduced-study-load'
 const SKILLS = 'https://students.unimelb.edu.au/academic-skills'
 const EXAMS = 'https://library.unimelb.edu.au/examination_papers'
-const ACC_SCI = 'https://handbook.unimelb.edu.au/2026/courses/b-sci/attributes-outcomes-skills'
-const ACC_COM = 'https://handbook.unimelb.edu.au/2026/courses/b-com/attributes-outcomes-skills'
 const FAILING = 'https://students.unimelb.edu.au/course-admin/planning-your-course-and-subjects/failing-a-subject'
 </script>
 
@@ -354,14 +353,13 @@ const FAILING = 'https://students.unimelb.edu.au/course-admin/planning-your-cour
         </GuideItem>
 
         <GuideItem :title="t('guide.accTitle')" :short="t('guide.accShort')">
-          <ul class="plain">
-            <li>{{ t('guide.accSci') }}</li>
-            <li>{{ t('guide.accCom') }}</li>
-          </ul>
-          <p class="note">{{ t('guide.accCheck') }}</p>
-          <ul class="links">
-            <li><a :href="ACC_SCI" target="_blank" rel="noopener">{{ t('guide.accSciLink') }}<ExternalLink :size="14" aria-hidden="true" /></a></li>
-            <li><a :href="ACC_COM" target="_blank" rel="noopener">{{ t('guide.accComLink') }}<ExternalLink :size="14" aria-hidden="true" /></a></li>
+          <ul class="acc">
+            <li v-for="a in ACC" :key="a.href">
+              <p class="acc-head"><strong>{{ a.degree }}</strong> · {{ a.major ?? t('guide.accWhole') }}</p>
+              <p class="acc-body">{{ a.body }}</p>
+              <p>{{ t(`guide.${a.cond}`) }}</p>
+              <a :href="a.href" target="_blank" rel="noopener" class="ext">{{ t('guide.accLink') }}<ExternalLink :size="14" aria-hidden="true" /></a>
+            </li>
           </ul>
         </GuideItem>
       </div>
@@ -636,6 +634,31 @@ const FAILING = 'https://students.unimelb.edu.au/course-admin/planning-your-cour
   align-items: center;
   gap: 6px;
   color: var(--accent);
+}
+
+.acc {
+  display: grid;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.acc li {
+  display: grid;
+  gap: 2px;
+  padding-left: 12px;
+  border-left: 2px solid var(--line);
+}
+
+.acc p {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.acc-body {
+  font-size: 0.9375rem;
+  color: var(--ink-soft);
 }
 
 .ext {

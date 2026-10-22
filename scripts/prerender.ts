@@ -24,6 +24,7 @@ import { RANK_SLUGS, rankSubjects, type RankDirection, type RankReason } from '.
 import { forCourse } from '../src/engine/forCourse'
 import { majorOverview } from '../src/engine/roles'
 import { groupMajors } from '../src/utils/majorGroups'
+import { ACCREDITATION } from '../src/utils/accreditation'
 import { referencedSubjects } from '../src/engine/expr'
 import type { Dataset, Subject } from '../src/engine/schema'
 import { describeReq } from '../src/i18n/format'
@@ -530,7 +531,8 @@ function guideBody(code: LocaleCode, t: Translate): string {
     h2('abroadTitle'), p('abroadText'), li(['wes', 'enic', 'cscse', 'abroadJp', 'abroadKr', 'abroadVn', 'abroadMy', 'abroadId', 'abroadIn', 'abroadTw', 'abroadHk', 'umCalc']),
     h2('rankTitle'), p('rankText'), li(['qs', 'the', 'arwu']),
     h2('helpTitle'), li(['helpSkills', 'helpPass', 'helpExams']), ext('https://students.unimelb.edu.au/academic-skills', 'helpSkillsLink'), ext('https://library.unimelb.edu.au/examination_papers', 'helpExamsLink'),
-    h2('accTitle'), li(['accSci', 'accCom']), p('accCheck'), ext('https://handbook.unimelb.edu.au/2026/courses/b-sci/attributes-outcomes-skills', 'accSciLink'), ext('https://handbook.unimelb.edu.au/2026/courses/b-com/attributes-outcomes-skills', 'accComLink'),
+    h2('accTitle'), p('accShort'),
+    `<ul>${ACCREDITATION.map((a) => `<li><strong>${esc(a.degree)}</strong> · ${esc(a.major ?? t('guide.accWhole'))}: ${esc(a.body)}. ${esc(t(`guide.${a.cond}`))} <a href="${a.href}">${esc(t('guide.accLink'))}</a></li>`).join('')}</ul>`,
     h2('canTitle'), `<ul>${can.map((k) => `<li>${esc(t(`can.${k}`))}</li>`).join('')}</ul>`,
     p('sourcesText'),
   ].join('\n')
