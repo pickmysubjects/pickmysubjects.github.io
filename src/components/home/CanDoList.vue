@@ -23,7 +23,7 @@ const ITEMS = [
     <h2 id="can-title" class="can-title">{{ title ?? t('can.title') }}</h2>
     <ul class="can-list">
       <li v-for="i in ITEMS" :key="i.key">
-        <a class="can-item" :href="link(i.to)">
+        <a class="can-item glass" :href="link(i.to)">
           <component :is="i.icon" :size="16" aria-hidden="true" class="can-icon" />
           <span>{{ t(i.key) }}</span>
         </a>
@@ -45,7 +45,7 @@ const ITEMS = [
 
 .can-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 150px), 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 8px;
   margin: 0;
   padding: 0;
@@ -63,14 +63,27 @@ const ITEMS = [
   line-height: 1.35;
   color: var(--ink);
   text-decoration: none;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-sm);
+  text-wrap: pretty;
+  /* Background, border and shadow: the shared .glass tile. */
+  border-radius: var(--radius);
   transition: border-color 0.15s;
 }
 
 .can-item:hover {
   border-color: var(--accent);
+}
+
+/* Four by two on wide screens, two columns on tablets and phones. */
+@media (max-width: 900px) {
+  .can-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .can-item {
+    transition: none;
+  }
 }
 
 .can-item:focus-visible {

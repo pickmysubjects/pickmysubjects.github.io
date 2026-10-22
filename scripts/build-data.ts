@@ -6,6 +6,7 @@ import { mkdirSync, rmSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { buildDataset, ROOT } from './dataset'
 import { splitDataset } from '../src/engine/split'
+import { buildHomeDemo } from './homeDemo'
 const OUT = join(ROOT, 'src', 'generated')
 mkdirSync(OUT, { recursive: true })
 
@@ -32,6 +33,8 @@ for (const name of ['real', 'demo'] as const) {
     rmSync(dir, { recursive: true, force: true })
     mkdirSync(dir)
     for (const [area, part] of Object.entries(details)) writeFileSync(join(dir, `${area}.json`), JSON.stringify(part))
+    // The home page's worked examples: a real subject and a real generated plan.
+    writeFileSync(join(OUT, 'home-demo.json'), JSON.stringify(buildHomeDemo(dataset, new Date().getFullYear())))
   }
 }
 if (failed) process.exit(1)

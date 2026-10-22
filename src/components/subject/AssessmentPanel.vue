@@ -121,15 +121,7 @@ const otherTerms = computed(() => {
   border-radius: 3px;
 }
 
-/* One hue per kind; the exam gets the accent because it's what students check first. */
-.k-exam { background: var(--accent); }
-.k-test { background: #8b5cf6; }
-.k-quiz { background: #c4b5fd; }
-.k-assignment { background: #6366f1; }
-.k-project { background: #0ea5e9; }
-.k-report { background: #14b8a6; }
-.k-presentation { background: #f59e0b; }
-.k-participation { background: #a3a3ad; }
+/* The .k-* hues per kind live in main.css: the home page example uses them too. */
 
 .assess-facts,
 .assess-row {

@@ -4,19 +4,21 @@ import { computed } from 'vue'
 import { ArrowRight, Check, Route, Sparkles, User } from 'lucide-vue-next'
 import CanDoList from '@/components/home/CanDoList.vue'
 import SubjectSearch from '@/components/SubjectSearch.vue'
-import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
 import { useProfile } from '@/composables/useProfile'
 import { useI18n } from '@/i18n'
-import { exampleSubjects } from '@/utils/showcase'
+import DemoPlan from '@/components/home/DemoPlan.vue'
+import DemoSubject from '@/components/home/DemoSubject.vue'
+import demo from '@/generated/home-demo.json'
+import type { HomeDemo } from '@/utils/homeDemo'
 
 const { t, locale } = useI18n()
-const { subjectList } = useDataset()
 
 // The title is split into phrases that never break inside; languages written with spaces keep one between them.
 const titleParts = computed(() => t.value('home.title').split('|'))
 const spaced = computed(() => !['zh-CN', 'zh-TW', 'ja'].includes(locale.value))
-const examples = computed(() => exampleSubjects(subjectList.value, 3).map((s) => s.code))
+// Two real examples worked out at build time (scripts/homeDemo.ts): shown, not described.
+const { subject: demoSubject, plan: demoPlan } = demo as unknown as HomeDemo
 
 // Three steps for a new student. Each shows a tick and what's done once it is.
 const { profile } = useProfile()
@@ -53,8 +55,7 @@ const next = computed(() => {
 
 <template>
   <div class="home">
-    <div class="stage">
-    <section class="hero">
+    <section class="stage hero">
       <p class="eyebrow">{{ t('home.eyebrow') }}</p>
       <!-- "|" marks where the title may break, so a phrase is never split mid-word. -->
       <h1 class="hero-title">
@@ -64,20 +65,28 @@ const next = computed(() => {
           <template v-if="spaced && i < titleParts.length - 1">{{ ' ' }}</template>
         </template>
       </h1>
-      <p class="hero-lede">{{ t('home.lede') }}</p>
-      <p class="hero-scope">{{ t('home.scope') }}</p>
-      <a class="button button-accent hero-start" :href="next.href">
-        {{ t('home.startStep', { n: next.n }) }} <ArrowRight :size="18" aria-hidden="true" />
-      </a>
       <SubjectSearch class="hero-search" />
-      <p v-if="examples.length" class="hero-try">
-        {{ t('home.tryLabel') }}
-        <a v-for="c in examples" :key="c" class="code" :href="link(`subject/${c}`)">{{ c }}</a>
-      </p>
+      <p class="hero-scope">{{ t('home.scope') }}</p>
     </section>
 
+    <div class="demos">
+      <section class="demo-col fade" aria-labelledby="demo-subject">
+        <h2 id="demo-subject" class="demo-caption">{{ t('home.demoSubject') }}</h2>
+        <DemoSubject :subject="demoSubject" />
+      </section>
+      <section class="demo-col fade" aria-labelledby="demo-plan">
+        <h2 id="demo-plan" class="demo-caption">{{ t('home.demoPlan') }}</h2>
+        <DemoPlan :plan="demoPlan" />
+      </section>
+    </div>
+
     <section class="steps" aria-labelledby="steps-title">
-      <h2 id="steps-title" class="steps-title">{{ t('home.stepsTitle') }}</h2>
+      <div class="steps-head">
+        <h2 id="steps-title" class="steps-title">{{ t('home.stepsTitle') }}</h2>
+        <a class="button button-accent hero-start" :href="next.href">
+          {{ t('home.startStep', { n: next.n }) }} <ArrowRight :size="18" aria-hidden="true" />
+        </a>
+      </div>
       <ol class="steps-list">
         <li v-for="(s, i) in steps" :key="s.title">
           <a class="step surface" :class="{ 'step-done': s.done }" :href="s.href">
@@ -94,7 +103,6 @@ const next = computed(() => {
         </li>
       </ol>
     </section>
-    </div>
 
     <CanDoList class="home-can" />
   </div>
@@ -107,7 +115,7 @@ const next = computed(() => {
   padding-top: 24px;
 }
 
-/* A rounded "stage" with a soft gradient mesh: headline, search and the example route. */
+/* A rounded "stage" with a soft gradient mesh: headline and search. */
 .stage {
   display: grid;
   gap: 36px;
@@ -136,8 +144,10 @@ const next = computed(() => {
 }
 
 .hero {
-  display: grid;
   gap: 18px;
+}
+
+.hero > * {
   max-width: 820px;
 }
 
@@ -149,12 +159,12 @@ const next = computed(() => {
   display: inline-block;
 }
 
-
 .hero-scope {
   margin: 0.25rem 0 0;
   font-size: 0.875rem;
   color: var(--ink-soft);
 }
+
 .hero-title {
   max-width: 16em;
   font-size: clamp(2.3rem, 5.6vw, 4.2rem);
@@ -171,48 +181,28 @@ const next = computed(() => {
   line-height: 1.2;
 }
 
-.hero-lede {
-  max-width: 54ch;
-  font-size: clamp(1.05rem, 1.6vw, 1.18rem);
-  color: var(--ink-soft);
-}
-
 .hero-search {
   max-width: 620px;
   margin-top: 6px;
 }
 
-.hero-try {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.875rem;
-  color: var(--ink-faint);
-}
-
-.hero-try a {
-  padding: 3px 10px;
-  border-radius: 999px;
-  background: rgb(255 255 255 / 70%);
-  font-size: 0.8125rem;
-  color: var(--ink);
-  text-decoration: none;
-}
-
-.hero-try a:hover {
-  color: var(--accent);
-}
-
 .hero-start {
-  justify-self: start;
+  flex: none;
   min-height: 48px;
   padding: 0 22px;
   font-size: 1rem;
 }
 
-.steps-title {
+.steps-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 20px;
   margin-bottom: 18px;
+}
+
+.steps-title {
   font-size: clamp(1.5rem, 3vw, 2rem);
 }
 
@@ -323,7 +313,47 @@ li:nth-child(3) .step-icon {
   transform: translateX(4px);
 }
 
+/* The two examples: side by side on wide screens, one under the other on phones. */
+.demos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  margin-top: -24px;
+}
+
+.demo-col {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 10px;
+  min-width: 0;
+}
+
+.demo-caption {
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+/* A short fade on load, nothing more. */
+.fade {
+  animation: fade-in 0.4s ease-out both;
+}
+
+.fade + .fade {
+  animation-delay: 0.08s;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
 @media (max-width: 900px) {
+  .demos {
+    grid-template-columns: 1fr;
+  }
+
   .steps-list {
     grid-template-columns: 1fr;
   }
@@ -345,73 +375,13 @@ li:nth-child(3) .step-icon {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .fade {
+    animation: none;
+  }
+
   .step,
   .step-go {
     transition: none;
-  }
-}
-</style>
-
-<style scoped>
-/* The three steps sit beside the headline: what to do first is the first thing you see. */
-.stage .steps-list {
-  grid-template-columns: 1fr;
-  gap: 10px;
-}
-
-.stage .steps-title {
-  margin-bottom: 12px;
-  font-size: 1.15rem;
-}
-
-.stage .step {
-  gap: 4px;
-  padding: 14px 44px 14px 18px;
-}
-
-.stage .step-top {
-  gap: 8px;
-}
-
-.stage .step-name {
-  font-size: 1rem;
-}
-
-.stage .step-text {
-  font-size: 0.875rem;
-}
-
-.stage .step-go {
-  left: auto;
-  right: 16px;
-  bottom: auto;
-  top: 50%;
-  translate: 0 -50%;
-}
-
-@media (min-width: 1000px) {
-  .stage {
-    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
-    align-items: center;
-    column-gap: 48px;
-  }
-}
-
-@media (max-width: 560px) {
-  /* Phones: the three steps become a short list (number, name, status) so the hero ends on screen. */
-  .stage .step {
-    padding: 12px 40px 12px 14px;
-  }
-
-  .stage .step-icon,
-  .stage .step-text {
-    display: none;
-  }
-
-  .hero-try .code {
-    display: inline-flex;
-    align-items: center;
-    min-height: 40px;
   }
 }
 </style>
