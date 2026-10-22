@@ -915,6 +915,7 @@ export const ko: Messages = {
     footer: "비공식 도구예요. 수강 신청 전에 Handbook과 My Course Planner에서 확인하세요",
   },
   whatIf: {
+    noMarks: "'내 기록'에 이수한 과목의 성적을 넣으면, 이 과목 점수에 따라 WAM이 어떻게 바뀌는지 보여 드려요.",
     title: "만약…",
     subject: "과목",
     ifMark: "이 점수를 받으면",

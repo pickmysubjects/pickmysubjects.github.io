@@ -915,6 +915,7 @@ export const zhTW: Messages = {
     footer: "非官方工具，選課前請以 Handbook 和 My Course Planner 為準",
   },
   whatIf: {
+    noMarks: "先在「我的紀錄」裡填上已修課的成績，這裡就能算出這門課的分數會怎麼影響你的 WAM。",
     title: "如果……",
     subject: "課程",
     ifMark: "如果我拿",

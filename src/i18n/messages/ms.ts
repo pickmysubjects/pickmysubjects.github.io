@@ -915,6 +915,7 @@ export const ms: Messages = {
     footer: "Tidak rasmi. Semak Handbook dan My Course Planner sebelum mendaftar",
   },
   whatIf: {
+    noMarks: "Masukkan markah subjek yang sudah selesai dalam Rekod saya, dan di sini akan ditunjukkan kesan markah subjek ini pada WAM anda.",
     title: "Bagaimana jika…",
     subject: "Subjek",
     ifMark: "Jika saya dapat",

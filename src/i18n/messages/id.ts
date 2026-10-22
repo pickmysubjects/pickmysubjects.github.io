@@ -915,6 +915,7 @@ export const id: Messages = {
     footer: "Tidak resmi. Cek Handbook dan My Course Planner sebelum mendaftar",
   },
   whatIf: {
+    noMarks: "Isi nilai mata kuliah yang sudah selesai di Catatanku, lalu di sini akan terlihat bagaimana nilai mata kuliah ini mengubah WAM-mu.",
     title: "Bagaimana kalau…",
     subject: "Mata kuliah",
     ifMark: "Kalau saya dapat",

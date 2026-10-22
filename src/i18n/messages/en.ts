@@ -918,6 +918,7 @@ export const en = {
     footer: "Unofficial. Check the Handbook and My Course Planner before you enrol",
   },
   whatIf: {
+    noMarks: "Add marks for subjects you've finished in My record, and this will show how a mark here changes your WAM.",
     title: "What if…",
     subject: "Subject",
     ifMark: "If I get",

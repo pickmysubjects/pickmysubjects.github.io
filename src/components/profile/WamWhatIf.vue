@@ -33,6 +33,8 @@ function onMark(e: Event): void {
 <template>
   <div v-if="shown" class="whatif-sub">
     <p class="wi-title">{{ t('whatIf.title') }}</p>
+    <p v-if="wam === null" class="wi-answer wi-empty">{{ t('whatIf.noMarks') }}</p>
+    <template v-else>
     <div class="wi-row">
       <label v-if="!code" class="wi-field wi-pick">
         <span class="visually-hidden">{{ t('whatIf.subject') }}</span>
@@ -50,6 +52,7 @@ function onMark(e: Event): void {
       {{ t('whatIf.becomes', { wam: result ?? '–' }) }}
       <span v-if="deltaText" class="wi-delta" :class="{ down: (delta ?? 0) < 0 }">{{ deltaText }}</span>
     </p>
+    </template>
   </div>
 </template>
 

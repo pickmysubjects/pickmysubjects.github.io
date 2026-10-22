@@ -915,6 +915,7 @@ export const vi: Messages = {
     footer: "Không chính thức. Hãy kiểm tra Handbook và My Course Planner trước khi đăng ký",
   },
   whatIf: {
+    noMarks: "Nhập điểm các môn đã học trong Hồ sơ của tôi, rồi ở đây sẽ thấy điểm môn này làm WAM của bạn thay đổi thế nào.",
     title: "Nếu như…",
     subject: "Môn học",
     ifMark: "Nếu được",

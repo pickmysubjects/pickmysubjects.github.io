@@ -915,6 +915,7 @@ export const ja: Messages = {
     footer: "非公式ツールです。履修登録の前に Handbook と My Course Planner で確認してください",
   },
   whatIf: {
+    noMarks: "「マイ記録」に履修済み科目の点数を入れると、この科目の点数で WAM がどう変わるかがわかります。",
     title: "もしも…",
     subject: "科目",
     ifMark: "この点数なら",
