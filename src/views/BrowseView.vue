@@ -268,9 +268,14 @@ watch(filters, (f) => {
   gap: 12px;
 }
 
+/* Wide enough for every quick list on one row on desktop. */
 .top {
   display: grid;
   gap: 12px;
+  max-width: 880px;
+}
+
+.top .search {
   max-width: 720px;
 }
 

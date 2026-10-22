@@ -11,6 +11,12 @@ export function termLabel(t: Translate, term: Pick<PlanTerm, 'year' | 'period'>)
   return `${term.year} ${t(`periodShort.${term.period}`)}`
 }
 
+/** A category name standing on its own (a chip or tag): starts with a capital. */
+export function categoryTag(t: Translate, category: string | undefined): string {
+  const s = categoryLabel(t, category)
+  return s.charAt(0).toLocaleUpperCase() + s.slice(1)
+}
+
 export function categoryLabel(t: Translate, category: string | undefined): string {
   return category ? t(`category.${category}`) : ''
 }

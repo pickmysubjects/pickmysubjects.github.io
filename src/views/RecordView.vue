@@ -432,10 +432,14 @@ const filled = computed(() => [
 
   /* On a phone the summary is a compact strip; the plan link comes after the steps instead. */
   .summary {
-    grid-template-columns: auto minmax(0, 1fr);
-    align-items: center;
-    gap: var(--space-2) var(--space-5);
+    gap: var(--space-2);
     padding: var(--space-4);
+  }
+
+  .counts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px var(--space-4);
   }
 
   .summary-title,

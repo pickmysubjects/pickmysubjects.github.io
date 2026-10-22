@@ -8,7 +8,7 @@ import { usePlan } from '@/composables/usePlan'
 import { useProfile } from '@/composables/useProfile'
 import { useRated } from '@/composables/useRated'
 import { useI18n } from '@/i18n'
-import { categoryLabel, termLabel } from '@/i18n/format'
+import { categoryLabel, categoryTag, termLabel } from '@/i18n/format'
 import { localTitle } from '@/i18n/localized'
 import { subjectGist } from '@/i18n/gist'
 import { termsBetween } from '@/utils/pastTerms'
@@ -32,7 +32,7 @@ const local = computed(() => localTitle(props.subject, locale.value))
 const periods = computed(() => periodsFor(props.subject, props.year))
 const gone = computed(() => props.subject.discontinuedFrom !== undefined && props.year >= props.subject.discontinuedFrom)
 const closedForYou = computed(() => data.value.courses.some((c) => c.code === plan.setup.value.course && c.closed.includes(code.value)))
-const category = computed(() => (closedForYou.value ? t.value('browse.closedForYou') : categoryLabel(t.value, props.subject.categories[plan.setup.value.course])))
+const category = computed(() => (closedForYou.value ? t.value('browse.closedForYou') : categoryTag(t.value, props.subject.categories[plan.setup.value.course])))
 const runs = computed(() => {
   if (gone.value) return t.value('subject.discontinued', { year: props.subject.discontinuedFrom ?? '' })
   if (props.subject.offerings === 'unknown') return t.value('subject.runsUnknown')

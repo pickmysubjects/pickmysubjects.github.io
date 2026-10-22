@@ -12,7 +12,7 @@ import SubjectAbout from '@/components/subject/SubjectAbout.vue'
 import { useProfile } from '@/composables/useProfile'
 import { useSubjectDetail } from '@/composables/useDataset'
 import { useI18n } from '@/i18n'
-import { categoryLabel, describeReq } from '@/i18n/format'
+import { categoryLabel, categoryTag, describeReq } from '@/i18n/format'
 
 /** A quick look at a subject without leaving the planner. */
 const props = defineProps<{
@@ -63,7 +63,7 @@ const dialog = useTemplateRef<HTMLDialogElement>('dialog')
 onMounted(() => dialog.value?.showModal())
 
 const periods = computed(() => (props.subject ? periodsFor(props.subject, props.year) : []))
-const category = computed(() => categoryLabel(t.value, props.subject?.categories[props.course]))
+const category = computed(() => categoryTag(t.value, props.subject?.categories[props.course]))
 const ratings = computed(() => {
   const s = props.subject?.signals
   if (!s) return []

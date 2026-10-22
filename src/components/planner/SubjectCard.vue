@@ -2,7 +2,7 @@
 import { computed, nextTick, useTemplateRef, watch } from 'vue'
 import { ArrowRightLeft, BookOpen, CalendarRange, Info, Route, X } from 'lucide-vue-next'
 import type { Issue, Subject } from '@/engine'
-import { categoryLabel, issueText as issueTextFor } from '@/i18n/format'
+import { categoryLabel, categoryTag, issueText as issueTextFor } from '@/i18n/format'
 import { useI18n } from '@/i18n'
 import { handbookUrl } from '@/utils/links'
 import { localTitle } from '@/i18n/localized'
@@ -72,7 +72,7 @@ const worst = computed(() => {
   if (props.issues.some((i) => i.severity === 'warning')) return 'warning'
   return null
 })
-const category = computed(() => categoryLabel(t.value, props.subject?.categories[props.course]))
+const category = computed(() => categoryTag(t.value, props.subject?.categories[props.course]))
 const issueText = computed(() =>
   props.issues
     .filter((i) => i.severity !== 'info')

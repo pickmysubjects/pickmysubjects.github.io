@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, shallowRef } from 'vue'
 import { Check, ChevronDown, SlidersHorizontal } from 'lucide-vue-next'
-import { EMPTY_FILTERS, PERIODS, type BrowseFilters } from '@/engine'
+import { EMPTY_FILTERS, type BrowseFilters } from '@/engine'
 import { useI18n } from '@/i18n'
 
 const props = defineProps<{ categories: string[] }>()
@@ -11,7 +11,8 @@ const { t } = useI18n()
 // The current course's own categories (science/breadth for B-SCI, commerce/breadth for B-COM).
 const categories = computed(() => ['', ...props.categories])
 const LEVELS = [null, 1, 2, 3] as const
-const WHEN = [null, ...PERIODS] as const
+// Semesters first, then the short terms: "Any" on its own row and two even pairs below it.
+const WHEN = [null, 'semester-1', 'semester-2', 'summer', 'winter'] as const
 const TOGGLES = ['noPrereq', 'noExam', 'noGroup'] as const
 
 // On phones the list matters more, so the filters start folded there.
@@ -171,7 +172,12 @@ function clear(): void {
 }
 
 .seg-wrap {
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.seg-wrap button:first-child {
+  grid-column: 1 / -1;
 }
 
 .seg button {
