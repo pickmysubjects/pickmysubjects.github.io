@@ -1215,6 +1215,7 @@ export const zhTW: Messages = {
     contact: '有疑問？請使用「意見回饋」頁面。',
   },
   home: {
+    moreSubjects: "還有 {n} 門",
     sub: "每門課難不難、怎麼評分，再幫你排好整個學位的選課。",
     proofSubjects: "{n} 門課",
     proofDegrees: "{n} 個學士學位",

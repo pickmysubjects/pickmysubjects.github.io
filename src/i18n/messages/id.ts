@@ -1215,6 +1215,7 @@ export const id: Messages = {
     contact: 'Ada pertanyaan? Gunakan halaman Masukan.',
   },
   home: {
+    moreSubjects: "+{n} lainnya",
     sub: "Seberapa sulit tiap mata kuliah, cara penilaiannya, dan rencana untuk seluruh gelarmu.",
     proofSubjects: "{n} mata kuliah",
     proofDegrees: "{n} program sarjana",

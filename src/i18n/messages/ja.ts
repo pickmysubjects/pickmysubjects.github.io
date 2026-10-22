@@ -1215,6 +1215,7 @@ export const ja: Messages = {
     contact: 'ご質問は「フィードバック」ページからどうぞ。',
   },
   home: {
+    moreSubjects: "ほか {n} 科目",
     sub: "科目の難しさや評価方法がわかり、学位全体の履修プランも作れます。",
     proofSubjects: "{n} 科目",
     proofDegrees: "学士課程 {n} 種",

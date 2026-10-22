@@ -89,7 +89,7 @@ const next = computed(() => {
         </p>
       </div>
       <div class="hero-visual fade">
-        <DemoPlan :plan="demoPlan" :caption="t('home.demoPlan')" hide-rules />
+        <DemoPlan :plan="demoPlan" :aria-label="t('home.demoPlan')" hide-rules />
         <!-- Two small pieces of the real product floating over it: one subject's exam share, the plan's verdict. -->
         <a v-if="examChip" class="float float-subject glass" :href="link(`subject/${demoSubject.code}`)">
           <span class="float-code">{{ demoSubject.code }}</span> · {{ examChip }}
@@ -168,9 +168,9 @@ const next = computed(() => {
 
 .hero {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
   align-items: center;
-  gap: 56px;
+  gap: 48px;
 }
 
 .hero-text {
@@ -252,7 +252,7 @@ const next = computed(() => {
 .hero-visual {
   position: relative;
   min-width: 0;
-  padding: 28px 0 28px 28px;
+  padding: 32px 0 32px 24px;
 }
 
 .float {
@@ -261,9 +261,9 @@ const next = computed(() => {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 8px 14px;
+  padding: 10px 16px;
   border-radius: 999px;
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   font-weight: 600;
   color: var(--ink);
   text-decoration: none;
@@ -272,8 +272,8 @@ const next = computed(() => {
 }
 
 .float-subject {
-  top: 0;
-  right: 24px;
+  top: 6px;
+  right: -12px;
 }
 
 .float-code {
@@ -281,7 +281,7 @@ const next = computed(() => {
 }
 
 .float-ready {
-  bottom: 0;
+  bottom: 4px;
   left: 0;
   color: var(--good);
 }
@@ -456,16 +456,21 @@ const next = computed(() => {
     font-size: 1rem;
   }
 
+  /* No room to float on a phone: the two chips sit in a row under the card instead of covering it. */
   .hero-visual {
-    padding: 22px 0 22px 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    padding: 0;
   }
 
-  .float-subject {
-    right: 8px;
+  .hero-visual > :first-child {
+    flex: 1 1 100%;
   }
 
-  .float-ready {
-    left: 8px;
+  .float {
+    position: static;
+    white-space: normal;
   }
 
   .proof {

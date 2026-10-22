@@ -1215,6 +1215,7 @@ export const hi: Messages = {
     contact: 'कोई सवाल? फ़ीडबैक पेज का उपयोग करें।',
   },
   home: {
+    moreSubjects: "+{n} और",
     sub: "हर सब्जेक्ट कितना कठिन है, अंक कैसे मिलते हैं, और पूरी डिग्री का प्लान।",
     proofSubjects: "{n} सब्जेक्ट",
     proofDegrees: "{n} बैचलर डिग्रियाँ",

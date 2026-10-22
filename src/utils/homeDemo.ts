@@ -10,6 +10,8 @@ export interface HomeDemo {
     major: string
     majorTitle: string
     terms: { year: number; period: Period; subjects: string[] }[]
+    /** Each planned subject's card: title (and local titles), category, and whether the major needs it. */
+    cards: Record<string, { title: string; titles?: Subject['titles']; category?: string; major: boolean }>
     met: number
     total: number
   }

@@ -4,6 +4,7 @@
  */
 import { checkCourse } from '../src/engine/courseRules'
 import { generatePlan } from '../src/engine/generate'
+import { subjectRoles } from '../src/engine/roles'
 import type { Dataset } from '../src/engine/schema'
 import type { HomeDemo } from '../src/utils/homeDemo'
 
@@ -40,6 +41,23 @@ export function buildHomeDemo(data: Dataset, year: number): HomeDemo {
       major: DEMO_MAJOR,
       majorTitle: major?.title ?? DEMO_MAJOR,
       terms: plan.terms.map((x) => ({ year: x.year, period: x.period, subjects: x.subjects })),
+      // What each planned subject card shows: its title and whether it counts for the major.
+      cards: Object.fromEntries(
+        plan.terms.flatMap((x) =>
+          x.subjects.map((code) => {
+            const sub = data.subjects[code]
+            return [
+              code,
+              {
+                title: sub?.title ?? code,
+                titles: sub?.titles,
+                category: sub?.categories[DEMO_COURSE],
+                major: subjectRoles(data, code, DEMO_COURSE).some((r) => r.component === DEMO_MAJOR),
+              },
+            ]
+          }),
+        ),
+      ),
       met: statuses.filter((r) => r.status === 'ok').length,
       total: statuses.length,
     },

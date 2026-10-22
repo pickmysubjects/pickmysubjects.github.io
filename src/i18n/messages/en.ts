@@ -1218,6 +1218,7 @@ export const en = {
     contact: 'Questions? Use the Feedback page.',
   },
   home: {
+    moreSubjects: "+{n} more",
     sub: "How hard each subject is, how it’s marked, and a plan for your whole degree.",
     proofSubjects: "{n} subjects",
     proofDegrees: "{n} bachelor degrees",
