@@ -328,6 +328,10 @@ export const id: Messages = {
     eligibilityUnknown: 'Kelayakan belum bisa dipastikan: {needs}.',
   },
   record: {
+    markScaleLabel: "Nilai saya dalam:",
+    markScaleNote: "Panduan kasar, bukan konversi resmi. Tiap sekolah menilai berbeda.",
+    markScaleCn150: "Untuk mapel skala 150, kalikan 1,5.",
+    markScale: { unimelb: "Nilai UniMelb", vce: "Skor mata pelajaran VCE", ib: "IB (1–7)", alevel: "A-Level", us: "Nilai huruf AS", cn: "Tiongkok (skala 100)", tw: "Taiwan GSAT (level)", jp: "Jepang (skala 5)", kr9: "Korea (9 tingkat, sebelum 2025)", kr5: "Korea (5 tingkat, 2025 ke atas)", vn: "Vietnam (skala 10)", spm: "Malaysia SPM", id: "Indonesia (rapor)", cbse: "India CBSE" },
     skillFromMarks: "Nilaimu ({codes}: rata-rata {avg}) terlihat seperti “{level}”.",
     useIt: "Pakai ini",
     pfPass: "Lulus",

@@ -328,6 +328,10 @@ export const vi: Messages = {
     eligibilityUnknown: 'Chưa xác nhận được điều kiện học: {needs}.',
   },
   record: {
+    markScaleLabel: "Điểm của tôi theo:",
+    markScaleNote: "Chỉ để tham khảo, không phải quy đổi chính thức. Mỗi trường chấm khác nhau.",
+    markScaleCn150: "Môn thang 150 thì nhân 1,5.",
+    markScale: { unimelb: "Điểm UniMelb", vce: "Điểm môn VCE", ib: "IB (1–7)", alevel: "A-Level", us: "Điểm chữ kiểu Mỹ", cn: "Trung Quốc (thang 100)", tw: "Đài Loan GSAT (cấp)", jp: "Nhật Bản (thang 5)", kr9: "Hàn Quốc (9 bậc, trước 2025)", kr5: "Hàn Quốc (5 bậc, từ 2025)", vn: "Việt Nam (thang 10)", spm: "Malaysia SPM", id: "Indonesia (học bạ)", cbse: "Ấn Độ CBSE" },
     skillFromMarks: "Theo điểm của bạn ({codes}, trung bình {avg}) thì giống “{level}”.",
     useIt: "Dùng mức này",
     pfPass: "Đạt",

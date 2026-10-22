@@ -328,6 +328,10 @@ export const ja: Messages = {
     eligibilityUnknown: '履修条件を確認できません：{needs}。',
   },
   record: {
+    markScaleLabel: "成績の基準：",
+    markScaleNote: "おおよその目安で、公式な換算ではありません。学校によって評価は違います。",
+    markScaleCn150: "150 点満点の科目は 1.5 倍してください。",
+    markScale: { unimelb: "メルボルン大学の点数", vce: "VCE スタディスコア", ib: "IB（1–7）", alevel: "A レベル", us: "米国のレターグレード", cn: "中国（100 点満点）", tw: "台湾 学測（級分）", jp: "日本の 5 段階評定", kr9: "韓国 内申 9 等級（2025 年より前に入学）", kr5: "韓国 内申 5 等級（2025 年以降に入学）", vn: "ベトナム（10 点満点）", spm: "マレーシア SPM", id: "インドネシア（通知表）", cbse: "インド CBSE" },
     skillFromMarks: "成績（{codes}、平均 {avg}）からは「{level}」に見えます。",
     useIt: "これにする",
     pfPass: "合格",

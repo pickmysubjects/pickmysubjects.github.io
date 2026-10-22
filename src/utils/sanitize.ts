@@ -1,4 +1,5 @@
 import { PERIODS, SKILLS, TOPICS, type Profile } from '@/engine'
+import { isMarkScale } from './markScales'
 import type { PlanBook, PlanPrefs, PlanState, SavedPlan } from '@/composables/planStore'
 
 /**
@@ -46,7 +47,7 @@ export function cleanProfile(x: unknown): Profile {
       ratings[code] = { difficulty: scale(r.difficulty), interest: scale(r.interest), recommend: rec }
     }
   }
-  return { results, skills, interests: [...new Set(strings(p.interests).filter((t) => (TOPICS as readonly string[]).includes(t)))], goal, confirmed: strings(p.confirmed), ...(Object.keys(ratings).length ? { ratings } : {}), ...(typeof p.workHours === 'number' && p.workHours >= 0 && p.workHours <= 60 ? { workHours: p.workHours } : {}) }
+  return { results, skills, interests: [...new Set(strings(p.interests).filter((t) => (TOPICS as readonly string[]).includes(t)))], goal, confirmed: strings(p.confirmed), ...(Object.keys(ratings).length ? { ratings } : {}), ...(typeof p.workHours === 'number' && p.workHours >= 0 && p.workHours <= 60 ? { workHours: p.workHours } : {}), ...(isMarkScale(p.markScale) ? { markScale: p.markScale } : {}) }
 }
 
 export function cleanProfiles(x: unknown): Record<string, Profile> {

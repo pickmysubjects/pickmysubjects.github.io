@@ -328,6 +328,10 @@ export const zhCN: Messages = {
     eligibilityUnknown: '无法确认是否满足选课条件：{needs}。',
   },
   record: {
+    markScaleLabel: "我的成绩用：",
+    markScaleNote: "只是大致参考，不是官方换算。各校评分不一样。",
+    markScaleCn150: "满分 150 的科目，分数线乘以 1.5。",
+    markScale: { unimelb: "墨大分数", vce: "VCE 单科分", ib: "IB（1–7）", alevel: "A-Level", us: "美国字母成绩", cn: "中国百分制", tw: "台湾学测级分", jp: "日本五段评定", kr9: "韩国内申 9 等级（2025 年前入学）", kr5: "韩国内申 5 等级（2025 年起入学）", vn: "越南 10 分制", spm: "马来西亚 SPM", id: "印尼成绩单", cbse: "印度 CBSE" },
     skillFromMarks: "按你的成绩（{codes}，平均 {avg}）像是“{level}”。",
     useIt: "用这个",
     pfPass: "通过",

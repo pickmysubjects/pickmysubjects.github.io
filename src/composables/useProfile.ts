@@ -52,6 +52,8 @@ export function useProfile() {
         const { workHours: _old, ...rest } = p
         return workHours === undefined ? rest : { ...rest, workHours }
       }),
+    /** Which mark scale the strength levels are shown in (display only). */
+    setMarkScale: (markScale: string) => update((p) => ({ ...p, markScale })),
     /** Keep the student's own rating of a subject, to personalise their suggestions. */
     setOwnRating: (code: string, rating: OwnRating) => update((p) => ({ ...p, ratings: { ...(p.ratings ?? {}), [code]: rating } })),
     setConfirmed: (code: string, meets: boolean) =>

@@ -328,6 +328,10 @@ export const hi: Messages = {
     eligibilityUnknown: 'पात्रता की पुष्टि नहीं: {needs}।',
   },
   record: {
+    markScaleLabel: "मेरे अंक इसमें हैं:",
+    markScaleNote: "यह मोटा अंदाज़ा है, आधिकारिक रूपांतरण नहीं। हर स्कूल अलग ढंग से अंक देता है।",
+    markScaleCn150: "150 अंक वाले विषयों में 1.5 से गुणा करें।",
+    markScale: { unimelb: "UniMelb अंक", vce: "VCE स्टडी स्कोर", ib: "IB (1–7)", alevel: "A-Level", us: "अमेरिकी लेटर ग्रेड", cn: "चीन (100 अंक)", tw: "ताइवान GSAT (स्तर)", jp: "जापान (5-अंक ग्रेड)", kr9: "कोरिया (9 ग्रेड, 2025 से पहले)", kr5: "कोरिया (5 ग्रेड, 2025 से)", vn: "वियतनाम (10 अंक)", spm: "मलेशिया SPM", id: "इंडोनेशिया (रिपोर्ट कार्ड)", cbse: "भारत CBSE" },
     skillFromMarks: "आपके अंक ({codes}: औसत {avg}) “{level}” जैसे लगते हैं।",
     useIt: "यही रखें",
     pfPass: "पास",

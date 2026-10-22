@@ -328,6 +328,10 @@ export const ko: Messages = {
     eligibilityUnknown: '수강 자격을 확인할 수 없습니다: {needs}.',
   },
   record: {
+    markScaleLabel: "내 성적 기준:",
+    markScaleNote: "대략적인 참고용이며 공식 환산이 아닙니다. 학교마다 평가가 다릅니다.",
+    markScaleCn150: "150점 만점 과목은 1.5를 곱하세요.",
+    markScale: { unimelb: "멜버른대 점수", vce: "VCE 과목 점수", ib: "IB (1–7)", alevel: "A-Level", us: "미국 문자 등급", cn: "중국 (100점 만점)", tw: "대만 학측 (급분)", jp: "일본 5단계 평정", kr9: "내신 9등급 (2025년 전 입학)", kr5: "내신 5등급 (2025년 이후 입학)", vn: "베트남 (10점 만점)", spm: "말레이시아 SPM", id: "인도네시아 성적표", cbse: "인도 CBSE" },
     skillFromMarks: "성적({codes}, 평균 {avg})으로 보면 '{level}'이에요.",
     useIt: "이걸로",
     pfPass: "통과",

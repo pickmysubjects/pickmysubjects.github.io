@@ -5,14 +5,15 @@ import { skillsFromMarks } from '@/engine/skills'
 import { useProfile } from '@/composables/useProfile'
 import { useDataset } from '@/composables/useDataset'
 import { useI18n } from '@/i18n'
+import { MARK_SCALES, MARK_SCALE_IDS, defaultMarkScale, isMarkScale, type MarkScale } from '@/utils/markScales'
 
 const skills = defineModel<Partial<Record<Skill, number>>>('skills', { required: true })
-const { t } = useI18n()
+const { t, locale } = useI18n()
 const { data, course } = useDataset()
 // The skills the student's own degree leans on come first (business for B-COM, programming for B-SCI).
 const order = computed(() => courseFocus(data.value, course.value).skills)
 // What the student's marks say, per skill: shown where it differs from their own answer.
-const { profile } = useProfile()
+const { profile, setMarkScale } = useProfile()
 const fromMarks = computed(() => skillsFromMarks(profile.value.results, data.value))
 const suggestion = (k: Skill) => {
   const s = fromMarks.value[k]
@@ -26,8 +27,17 @@ const hidden = computed(() => order.value.length - shown.value.length)
 
 // Five steps, like a course survey: 1 = finds it hard … 5 = strong. Blank means "not sure".
 const LEVELS = [1, 2, 3, 4, 5] as const
-// The usual mark in that kind of subject for each level (UniMelb bands).
-const RANGES: Record<number, string> = { 1: '<60', 2: '60–69', 3: '70–74', 4: '75–79', 5: '80+' }
+// The usual mark in that kind of subject for each level, in the scale the student reads marks in
+// (UniMelb bands once they have uni results; their school system's before that). Labels only.
+const scale = computed<MarkScale>(() => {
+  const saved = profile.value.markScale
+  return isMarkScale(saved) ? saved : defaultMarkScale(locale.value, profile.value.results.length > 0)
+})
+const ranges = computed(() => MARK_SCALES[scale.value])
+function onScale(e: Event): void {
+  const v = (e.target as HTMLSelectElement).value
+  if (isMarkScale(v)) setMarkScale(v)
+}
 
 function useSuggestion(skill: Skill, level: number): void {
   skills.value = { ...skills.value, [skill]: level }
@@ -49,8 +59,19 @@ function pick(skill: Skill, level: number): void {
       <p class="card-hint">{{ t('record.levelLegend') }}</p>
       <!-- What each level means, in marks: more accurate than a feeling (see the research notes). -->
       <ul class="legend">
-        <li v-for="n in LEVELS" :key="n"><strong>{{ t(`record.level.${n}`) }}</strong> {{ RANGES[n] }}</li>
+        <li v-for="n in LEVELS" :key="n"><strong>{{ t(`record.level.${n}`) }}</strong> {{ ranges[n - 1] }}</li>
       </ul>
+      <div class="scale-pick">
+        <label class="scale-field">
+          <span>{{ t('record.markScaleLabel') }}</span>
+          <select :value="scale" @change="onScale">
+            <option v-for="id in MARK_SCALE_IDS" :key="id" :value="id">{{ t(`record.markScale.${id}`) }}</option>
+          </select>
+        </label>
+        <p class="scale-note">
+          {{ t('record.markScaleNote') }}<template v-if="scale === 'cn'"> {{ t('record.markScaleCn150') }}</template>
+        </p>
+      </div>
     </header>
     <ul class="skill-list">
       <li v-for="s in shown" :key="s" class="skill">
@@ -235,6 +256,36 @@ function pick(skill: Skill, level: number): void {
   margin-right: 4px;
   font-weight: 650;
   color: var(--ink);
+}
+.scale-pick {
+  margin-top: 10px;
+}
+
+.scale-field {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 8px;
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
+}
+
+.scale-field select {
+  max-width: 100%;
+  min-height: 32px;
+  padding: 4px 28px 4px 10px;
+  font: inherit;
+  font-size: 0.8125rem;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+}
+
+.scale-note {
+  margin-top: 4px;
+  font-size: 0.75rem;
+  color: var(--ink-faint);
 }
 .suggest {
   flex: 1 0 100%;

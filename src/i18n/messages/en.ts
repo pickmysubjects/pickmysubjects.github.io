@@ -331,6 +331,10 @@ export const en = {
     eligibilityUnknown: 'Eligibility not confirmed: {needs}.',
   },
   record: {
+    markScaleLabel: "My marks are in:",
+    markScaleNote: "A rough guide, not an official conversion. Schools grade differently.",
+    markScaleCn150: "For subjects out of 150, multiply by 1.5.",
+    markScale: { unimelb: "UniMelb marks", vce: "VCE study score", ib: "IB (1–7)", alevel: "A-Level", us: "US letter grades", cn: "China (100-point)", tw: "Taiwan GSAT (levels)", jp: "Japan (5-point grades)", kr9: "Korea (9 grades, before 2025)", kr5: "Korea (5 grades, 2025 on)", vn: "Vietnam (10-point)", spm: "Malaysia SPM", id: "Indonesia (report card)", cbse: "India CBSE" },
     skillFromMarks: "Your marks ({codes}: average {avg}) look like “{level}”.",
     useIt: "Use this",
     pfPass: "Passed",

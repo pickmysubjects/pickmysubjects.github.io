@@ -32,6 +32,8 @@ export interface Profile {
   ratings?: Record<string, OwnRating>
   /** Hours a week of paid work or other fixed commitments during semester (bucket middle), if given. */
   workHours?: number
+  /** Display only: which mark scale the strength levels are labelled in (see utils/markScales). */
+  markScale?: string
 }
 
 /** How the student themselves found a subject: difficulty and interest 1–5, would they recommend it. */

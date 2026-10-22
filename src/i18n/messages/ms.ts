@@ -328,6 +328,10 @@ export const ms: Messages = {
     eligibilityUnknown: 'Kelayakan belum disahkan: {needs}.',
   },
   record: {
+    markScaleLabel: "Markah saya dalam:",
+    markScaleNote: "Panduan kasar sahaja, bukan penukaran rasmi. Setiap sekolah menilai berbeza.",
+    markScaleCn150: "Untuk subjek 150 mata, darab dengan 1.5.",
+    markScale: { unimelb: "Markah UniMelb", vce: "Skor mata pelajaran VCE", ib: "IB (1–7)", alevel: "A-Level", us: "Gred huruf AS", cn: "China (100 mata)", tw: "Taiwan GSAT (tahap)", jp: "Jepun (gred 5 mata)", kr9: "Korea (9 gred, sebelum 2025)", kr5: "Korea (5 gred, 2025 dan selepas)", vn: "Vietnam (10 mata)", spm: "Malaysia SPM", id: "Indonesia (rapor)", cbse: "India CBSE" },
     skillFromMarks: "Markah anda ({codes}: purata {avg}) nampak seperti “{level}”.",
     useIt: "Guna ini",
     pfPass: "Lulus",
