@@ -229,9 +229,9 @@ function difficultyLine(t: Translate, code: LocaleCode, s: Subject): string {
   const d = subjectDifficulty(forCourse(data, 'B-SCI').subjects, s.code, 'B-SCI', YEAR)
   if (d.level === 'unknown') return t('fit.level.unknown')
   const note = d.place
-    ? t(`fit.place.${d.place.direction}`, { n: d.place.place, course: 'B-SCI' })
+    ? t(`fit.place.${d.place.direction}`, { n: d.place.place, course: 'Bachelor of Science' })
     : d.unranked
-      ? t(`fit.unranked.${d.unranked}`, { year: YEAR, course: 'B-SCI' })
+      ? t(`fit.unranked.${d.unranked}`, { year: YEAR, course: 'Bachelor of Science' })
       : ''
   const reasons = d.reasons.map((r) => reasonText(t, code, r)).join(listSep(code))
   const end = CJK.has(code) ? '。' : '.'

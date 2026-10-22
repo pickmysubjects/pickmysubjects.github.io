@@ -7,6 +7,7 @@ import RowWarnings from '@/components/browse/RowWarnings.vue'
 import { link } from '@/composables/useView'
 import { useSubjectFit } from '@/composables/useSubjectFit'
 import { useI18n } from '@/i18n'
+import { useDataset } from '@/composables/useDataset'
 import { describeReq, reasonText } from '@/i18n/format'
 
 /**
@@ -23,12 +24,15 @@ const { difficulty, hasProfile, fit, course } = useSubjectFit(
 const LEVELS = ['easier', 'average', 'harder'] as const
 const trim = (s: string) => s.replace(/[。.]\s*$/, '')
 
+// Lists name the degree by its title, not its code.
+const { data } = useDataset()
+const courseTitle = computed(() => data.value.courses.find((c) => c.code === course.value)?.title ?? course.value)
 const diffReasons = computed(() => difficulty.value.reasons.map((r) => t.value(`rank.reason.${r.key}`, r.params)))
 const diffNote = computed(() => {
   const d = difficulty.value
   if (d.level === 'unknown') return ''
-  if (d.place) return t.value(`fit.place.${d.place.direction}`, { n: d.place.place, course: course.value })
-  if (d.unranked) return t.value(`fit.unranked.${d.unranked}`, { year: props.year, course: course.value })
+  if (d.place) return t.value(`fit.place.${d.place.direction}`, { n: d.place.place, course: courseTitle.value })
+  if (d.unranked) return t.value(`fit.unranked.${d.unranked}`, { year: props.year, course: courseTitle.value })
   return ''
 })
 

@@ -15,10 +15,7 @@
     <!-- While the app starts, hide the build-time plain text (kept for search engines and no-JS
          readers) behind a quiet loader, so the page never flashes unstyled. If the app hasn't
          drawn after 8 s, show the plain text after all. -->
-    <script>
-      document.documentElement.classList.add('booting')
-      setTimeout(function () { if (document.querySelector('#app > .prerender')) document.documentElement.classList.remove('booting') }, 8000)
-    </script>
+    <script src="/boot.js"></script>
     <style>
       html.booting, html.booting body { background: #fbeaf3; }
       @media (prefers-color-scheme: dark) { html.booting, html.booting body { background: #0d0d0f; } }
