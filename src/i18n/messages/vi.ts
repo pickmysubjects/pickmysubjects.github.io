@@ -1310,6 +1310,7 @@ export const vi: Messages = {
     inPlanAt: "Có trong kế hoạch · {term}",
     openPlanner: "Mở trong kế hoạch",
     onPage: "Trên trang này",
+    sourceTitle: "Nguồn thông tin",
     similar: "Môn tương tự",
     fitsTitle: "Vị trí trong bằng",
   },

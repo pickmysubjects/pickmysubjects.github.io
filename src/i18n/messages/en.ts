@@ -1313,6 +1313,7 @@ export const en = {
     inPlanAt: "In your plan · {term}",
     openPlanner: "Open in planner",
     onPage: "On this page",
+    sourceTitle: "Sources",
     similar: "Similar subjects",
     fitsTitle: "Where it fits",
   },

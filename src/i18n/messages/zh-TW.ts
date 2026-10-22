@@ -1310,6 +1310,7 @@ export const zhTW: Messages = {
     inPlanAt: "已在計畫中 · {term}",
     openPlanner: "在排課裡開啟",
     onPage: "本頁內容",
+    sourceTitle: "資訊來源",
     similar: "相似課程",
     fitsTitle: "在學位裡的位置",
   },

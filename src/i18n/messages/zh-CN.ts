@@ -1310,6 +1310,7 @@ export const zhCN: Messages = {
     inPlanAt: "已在计划中 · {term}",
     openPlanner: "在排课里打开",
     onPage: "本页内容",
+    sourceTitle: "信息来源",
     similar: "相似课程",
     fitsTitle: "在学位里的位置",
   },

@@ -107,7 +107,7 @@ async function share(): Promise<void> {
         {{ t(`rank.onList.${onList.direction}`, { n: onList.place }) }}
       </a>
     </p>
-    <h1 class="head-title">{{ local || subject.title }}</h1>
+    <h1 class="page-title head-title">{{ local || subject.title }}</h1>
     <p v-if="local" class="head-title-en" lang="en">{{ subject.title }}</p>
 
     <ul class="facts">
@@ -201,8 +201,6 @@ async function share(): Promise<void> {
 }
 
 .head-title {
-  font-size: clamp(1.75rem, 3.6vw, 2.6rem);
-  font-weight: 700;
   line-height: 1.15;
   overflow-wrap: anywhere;
 }

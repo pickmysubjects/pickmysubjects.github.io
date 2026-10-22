@@ -1310,6 +1310,7 @@ export const ja: Messages = {
     inPlanAt: "プランに入っています · {term}",
     openPlanner: "プランナーで開く",
     onPage: "このページの内容",
+    sourceTitle: "情報源",
     similar: "似ている科目",
     fitsTitle: "学位の中での位置",
   },

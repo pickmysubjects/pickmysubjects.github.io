@@ -1310,6 +1310,7 @@ export const ko: Messages = {
     inPlanAt: "계획에 있음 · {term}",
     openPlanner: "플래너에서 열기",
     onPage: "이 페이지",
+    sourceTitle: "출처",
     similar: "비슷한 과목",
     fitsTitle: "학위에서의 위치",
   },

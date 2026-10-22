@@ -1310,6 +1310,7 @@ export const ms: Messages = {
     inPlanAt: "Dalam pelan anda · {term}",
     openPlanner: "Buka dalam perancang",
     onPage: "Dalam halaman ini",
+    sourceTitle: "Sumber maklumat",
     similar: "Subjek serupa",
     fitsTitle: "Kedudukannya dalam ijazah",
   },

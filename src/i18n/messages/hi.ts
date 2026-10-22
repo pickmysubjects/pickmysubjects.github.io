@@ -1310,6 +1310,7 @@ export const hi: Messages = {
     inPlanAt: "आपके प्लान में · {term}",
     openPlanner: "प्लानर में खोलें",
     onPage: "इस पेज पर",
+    sourceTitle: "जानकारी का स्रोत",
     similar: "मिलते-जुलते विषय",
     fitsTitle: "डिग्री में इसकी जगह",
   },

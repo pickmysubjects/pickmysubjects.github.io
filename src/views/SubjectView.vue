@@ -85,40 +85,40 @@ const sections = computed(() => {
 
       <div class="layout">
         <div class="main">
-          <section id="ratings" class="sec">
+          <section id="ratings" class="sec surface">
             <h2 class="sec-title">{{ t('subject.ratingsTitle') }}</h2>
             <SubjectVerdict v-model:form-open="rating" :subject="subject" :taken="taken" :thanks="thanks" :detail-ready="detailReady" @rated="onRated" />
           </section>
 
-          <section v-if="detailReady && subject.about" id="learn" class="sec sec-about">
+          <section v-if="detailReady && subject.about" id="learn" class="sec sec-about surface">
             <SubjectAbout :subject="subject" />
           </section>
 
-          <section id="assessment" class="sec">
+          <section id="assessment" class="sec surface">
             <AssessmentPanel :subject="subject" :year="year" />
           </section>
 
-          <section id="route" class="sec">
+          <section id="route" class="sec surface">
             <h2 class="sec-title">{{ t('subject.fitsTitle') }}</h2>
             <SubjectRoute :subject="subject" :year="year" :unlocks="unlocks" />
             <MajorRoles class="sec-roles" :code="code" />
           </section>
 
           <!-- The long lower sections fold on phones (FoldSection), so the page isn't a mile long. -->
-          <section id="faq" class="sec">
+          <section id="faq" class="sec surface">
             <FoldSection v-if="phone" :title="t('faq.title')">
               <SubjectFaq :subject="subject" :year="year" :course="plan.setup.value.course" :unlocks="unlocks" />
             </FoldSection>
             <SubjectFaq v-else :subject="subject" :year="year" :course="plan.setup.value.course" :unlocks="unlocks" />
           </section>
 
-          <section v-if="links.length" id="discuss" class="sec">
+          <section v-if="links.length" id="discuss" class="sec surface">
             <FoldSection :title="t('subject.discuss')">
               <OutsideLinks :links="links" />
             </FoldSection>
           </section>
 
-          <section v-if="similar.length" id="similar" class="sec">
+          <section v-if="similar.length" id="similar" class="sec surface">
             <FoldSection :title="t('subject.similar')">
               <SubjectLinks :codes="similar" :year="year" />
             </FoldSection>
@@ -126,15 +126,18 @@ const sections = computed(() => {
         </div>
 
         <aside class="side">
-          <nav class="toc" :aria-label="t('subject.onPage')">
-            <p class="toc-title">{{ t('subject.onPage') }}</p>
+          <nav class="toc side-card surface" :aria-label="t('subject.onPage')">
+            <h2 class="side-title">{{ t('subject.onPage') }}</h2>
             <a v-for="s in sections" :key="s.id" class="toc-link" :href="`#${s.id}`">{{ s.label }}</a>
           </nav>
-          <p class="verified">
-            {{ t('subject.source', { year: subject.sourceYear }) }}<br />
-            {{ subject.verifiedOn ? t('subject.verified', { date: subject.verifiedOn }) : t('subject.unverified') }}<br />
-            <a :href="link(`feedback?topic=data&subject=${subject.code}`)">{{ t('suggest.report') }}</a>
-          </p>
+          <section class="side-card surface" aria-labelledby="side-source">
+            <h2 id="side-source" class="side-title">{{ t('subject.sourceTitle') }}</h2>
+            <p class="verified">
+              {{ t('subject.source', { year: subject.sourceYear }) }}<br />
+              {{ subject.verifiedOn ? t('subject.verified', { date: subject.verifiedOn }) : t('subject.unverified') }}
+            </p>
+            <a class="report" :href="link(`feedback?topic=data&subject=${subject.code}`)">{{ t('suggest.report') }}</a>
+          </section>
         </aside>
       </div>
     </template>
@@ -151,7 +154,7 @@ const sections = computed(() => {
 .subject {
   display: grid;
   gap: var(--space-5);
-  padding-top: 28px;
+  padding-top: 32px;
   min-width: 0;
 }
 
@@ -170,39 +173,52 @@ const sections = computed(() => {
   color: var(--ink);
 }
 
-/* Reading column and a quiet side index; one column on phones and tablets. */
+/* Same frame as My record: a column of cards and a 320px side column of cards. */
 .layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 220px;
-  gap: var(--space-7);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 320px);
+  gap: var(--space-5) var(--space-6);
   align-items: start;
-  margin-top: var(--space-4);
 }
 
 .main {
   display: grid;
+  gap: var(--space-5);
   min-width: 0;
 }
 
-/* Sections are separated by a hairline and space, not boxes; every one opens with the same heading. */
+/* One card per section, one heading style (the same as My record's). */
 .sec {
   display: grid;
   gap: var(--space-4);
   min-width: 0;
-  padding: var(--space-6) 0;
-  border-top: 1px solid var(--line);
+  padding: var(--space-5);
   scroll-margin-top: 80px;
 }
 
-.sec:first-child {
-  padding-top: var(--space-5);
+.sec > :deep(*) {
+  min-width: 0;
+}
+
+/* Lists that come as their own card fold into the section: never a box in a box. */
+.sec :deep(.surface) {
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+.sec :deep(.links .row) {
+  padding-inline: 0;
 }
 
 .sec-title,
-.sec :deep(:is(.assess-title, .faq-title)),
+.sec :deep(:is(.sec-title, .assess-title, .faq-title)),
 .sec-about :deep(.about-row:first-child .about-label) {
   margin: 0;
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   font-weight: 700;
   line-height: 1.3;
   color: var(--ink);
@@ -220,7 +236,7 @@ const sections = computed(() => {
 
 .sec-about :deep(.about-row + .about-row .about-label) {
   margin-top: var(--space-3);
-  font-size: 0.9375rem;
+  font-size: 1rem;
   font-weight: 650;
   color: var(--ink);
 }
@@ -231,12 +247,13 @@ const sections = computed(() => {
 }
 
 .sec-roles {
-  margin-top: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--line);
 }
 
 .sec :deep(.roles-title) {
   margin: 0;
-  font-size: 0.9375rem;
+  font-size: 1rem;
   font-weight: 650;
 }
 
@@ -245,28 +262,35 @@ const sections = computed(() => {
   top: 88px;
   display: grid;
   gap: var(--space-5);
-  padding-top: var(--space-5);
+  min-width: 0;
+}
+
+.side-card {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-5);
+}
+
+.side-title {
+  margin: 0 0 var(--space-1);
+  font-size: 1rem;
+  font-weight: 650;
+  line-height: 1.3;
 }
 
 .toc {
-  display: grid;
-  gap: 2px;
-  padding-left: var(--space-3);
-  border-left: 2px solid var(--line);
-}
-
-.toc-title {
-  margin: 0 0 6px;
-  font-size: 0.8125rem;
-  font-weight: 650;
-  color: var(--ink-faint);
+  gap: 0;
 }
 
 .toc-link {
-  padding: 4px 0;
+  padding: 6px 0;
   font-size: 0.9375rem;
   color: var(--ink-soft);
   text-decoration: none;
+}
+
+.toc-link + .toc-link {
+  border-top: 1px solid var(--line);
 }
 
 .toc-link:hover {
@@ -275,9 +299,14 @@ const sections = computed(() => {
 
 .verified {
   margin: 0;
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   line-height: 1.6;
-  color: var(--ink-faint);
+  color: var(--ink-soft);
+}
+
+.report {
+  width: fit-content;
+  font-size: 0.875rem;
 }
 
 .missing {
@@ -287,16 +316,13 @@ const sections = computed(() => {
   padding: 32px;
 }
 
-@media (max-width: 1023px) {
+@media (max-width: 960px) {
   .layout {
     grid-template-columns: minmax(0, 1fr);
-    gap: 0;
   }
 
   .side {
     position: static;
-    padding-top: var(--space-4);
-    border-top: 1px solid var(--line);
   }
 
   .toc {
@@ -305,12 +331,13 @@ const sections = computed(() => {
 }
 
 @media (max-width: 560px) {
-  .sec {
-    padding: var(--space-5) 0;
+  .sec,
+  .side-card {
+    padding: var(--space-4);
   }
 
   .sec-title,
-  .sec :deep(:is(.assess-title, .faq-title)),
+  .sec :deep(:is(.sec-title, .assess-title, .faq-title)),
   .sec-about :deep(.about-row:first-child .about-label) {
     font-size: 1.125rem;
   }

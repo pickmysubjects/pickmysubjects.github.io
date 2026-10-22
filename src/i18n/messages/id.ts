@@ -1310,6 +1310,7 @@ export const id: Messages = {
     inPlanAt: "Ada di rencana · {term}",
     openPlanner: "Buka di perencana",
     onPage: "Di halaman ini",
+    sourceTitle: "Sumber informasi",
     similar: "Mata kuliah serupa",
     fitsTitle: "Posisinya dalam gelar",
   },
