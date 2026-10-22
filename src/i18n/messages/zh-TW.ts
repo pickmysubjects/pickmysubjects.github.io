@@ -1216,7 +1216,7 @@ export const zhTW: Messages = {
   },
   home: {
     moreSubjects: "還有 {n} 門",
-    sub: "每門課難不難、怎麼評分，再幫你排好整個學位的選課。",
+    sub: "墨大每門課的真實難度、評分方式和同學評價，都在這裡。",
     proofSubjects: "{n} 門課",
     proofDegrees: "{n} 個學士學位",
     proofLanguages: "9 種語言",
@@ -1225,7 +1225,7 @@ export const zhTW: Messages = {
     stepsTitle: '三步上手',
     year: '第 {n} 年',
     eyebrow: '為墨爾本大學學生打造',
-    title: '修什麼課、|什麼時候修，|一眼看清。',
+    title: "30 秒，|排好整個學位。",
     lede: "哪門課難、作業多不多、給分鬆不鬆、同學怎麼說。再依你的成績和興趣挑適合你的課，排好整個學位。",
     scope: "目前只有大學部（Bachelor）。",
     search: '搜尋課號或課名',

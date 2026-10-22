@@ -1216,7 +1216,7 @@ export const ms: Messages = {
   },
   home: {
     moreSubjects: "+{n} lagi",
-    sub: "Betapa sukar setiap subjek, cara ia dinilai, dan rancangan untuk seluruh ijazah anda.",
+    sub: "Tahap sukar sebenar, cara penilaian dan ulasan pelajar untuk setiap subjek UniMelb.",
     proofSubjects: "{n} subjek",
     proofDegrees: "{n} ijazah sarjana muda",
     proofLanguages: "9 bahasa",
@@ -1225,7 +1225,7 @@ export const ms: Messages = {
     stepsTitle: 'Mula dalam tiga langkah',
     year: 'Tahun {n}',
     eyebrow: 'Untuk pelajar University of Melbourne',
-    title: 'Tahu subjek apa nak ambil,|dan bila.',
+    title: "Seluruh ijazah anda,|dirancang dalam 30 saat.",
     lede: "Betapa sukar sesuatu subjek, banyak kerja atau tidak, pemarkahan ketat atau tidak, dan apa kata pelajar. Kemudian pilih subjek yang sesuai dengan markah dan minat anda, dan susun rancangan seluruh ijazah.",
     scope: "Buat masa ini ijazah sarjana muda (Bachelor) sahaja.",
     search: 'Cari kod atau nama subjek',
