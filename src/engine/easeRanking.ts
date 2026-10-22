@@ -221,14 +221,6 @@ function belongs(r: RankedSubject, direction: RankDirection): boolean {
 }
 
 /**
- * Which list a subject would be on by the lists' own rules, for one they leave out (a pass/fail
- * or not-running subject): the easy and hard RankedSubject of the same subject, or null for neither.
- */
-export function easeVerdictLists(easy: RankedSubject, hard: RankedSubject): RankDirection | null {
-  return belongs(easy, 'easy') ? 'easy' : belongs(hard, 'hard') ? 'hard' : null
-}
-
-/**
  * Subjects ranked for `direction`, easiest (or hardest) first. Only subjects that lean that way
  * and have at least one reason to show are listed.
  */
@@ -290,4 +282,59 @@ export function listPlace(subjects: Record<string, Subject>, code: string, cours
     byKey.set(key, places)
   }
   return places.get(code) ?? null
+}
+
+/** Where a subject falls in the full easy and hard orderings of every rankable subject. */
+export interface FullPlace {
+  /** 1-based places, in the easy and in the hard order (the lists' own sort, nothing left out). */
+  easy: number
+  hard: number
+  /** How many rankable subjects the orderings hold. */
+  n: number
+}
+
+interface OrderKey {
+  code: string
+  score: number
+  easyTier: number
+  hardTier: number
+}
+
+const keyOf = (r: RankedSubject): OrderKey => ({ code: r.subject.code, score: r.score, easyTier: tier(r.reviews, 'easy'), hardTier: tier(r.reviews, 'hard') })
+// The list pages' sort: reviews' tier first, then score, then code.
+const easyFirst = (a: OrderKey, b: OrderKey) => a.easyTier - b.easyTier || b.score - a.score || a.code.localeCompare(b.code)
+const hardFirst = (a: OrderKey, b: OrderKey) => a.hardTier - b.hardTier || a.score - b.score || a.code.localeCompare(b.code)
+
+const orderCache = new WeakMap<Record<string, Subject>, Map<string, OrderKey[]>>()
+
+/**
+ * A subject's places in the full easy and hard orderings for `course` in `year`: every rankable
+ * subject in the lists' own order, before the lists keep only those leaning their way. A subject
+ * the lists leave out (pass/fail, not running) gets the place it would take. Null with nothing
+ * to rank it on.
+ */
+export function fullPlace(subjects: Record<string, Subject>, code: string, course: string, year: number): FullPlace | null {
+  const s = subjects[code]
+  const r = s && rankSubject(s, 'easy')
+  if (!r) return null
+  let byKey = orderCache.get(subjects)
+  if (!byKey) orderCache.set(subjects, (byKey = new Map()))
+  const cacheKey = `${course}|${year}`
+  let keys = byKey.get(cacheKey)
+  if (!keys) {
+    keys = []
+    for (const x of Object.values(subjects)) {
+      if (!rankable(x, course, year)) continue
+      const rx = rankSubject(x, 'easy')
+      if (rx) keys.push(keyOf(rx))
+    }
+    byKey.set(cacheKey, keys)
+  }
+  const me = keyOf(r)
+  const others = keys.filter((k) => k.code !== code)
+  return {
+    easy: others.filter((k) => easyFirst(k, me) < 0).length + 1,
+    hard: others.filter((k) => hardFirst(k, me) < 0).length + 1,
+    n: others.length + 1,
+  }
 }

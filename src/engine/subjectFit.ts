@@ -1,8 +1,8 @@
 import { periodsFor } from './availability'
-import { easeVerdictLists, LIST_TOP, listPlace, rankable, rankSubject, type ListPlace, type RankDirection, type RankReason } from './easeRanking'
+import { fullPlace, listPlace, rankable, rankSubject, type ListPlace, type RankDirection, type RankReason } from './easeRanking'
 import type { Note } from './plan'
 import { recommend, type Exclusion, type Profile, type Recommendation, type RecommendOptions } from './recommend'
-import type { Dataset, Subject } from './schema'
+import { discussionCount, type Dataset, type Subject } from './schema'
 
 /**
  * The subject page's "Is it hard? Is it right for me?" card, from the engine's existing parts
@@ -18,12 +18,14 @@ export type Unranked = 'graduate' | 'passFail' | 'campus' | 'notRunning' | 'notI
 
 export interface Difficulty {
   level: DifficultyLevel
-  /** Its place on the easy or hard list for `course` (every place, not only the top), when it's on one. */
+  /** Its place on the easy or hard list for `course` when in the top LIST_TOP (the header chip's rule). */
   place: ListPlace | null
   /** Up to three reasons for the verdict, strongest first ('firstYear' only when nothing else). */
   reasons: RankReason[]
   /** Nobody has reviewed or rated it: the verdict rests on Handbook facts alone. */
   factsOnly: boolean
+  /** How many student reviews and ratings it rests on (0 when factsOnly). */
+  reviews: number
   /** Left off the lists, and why; the verdict is then what the lists' own rules would say. */
   unranked?: Unranked
 }
@@ -43,12 +45,13 @@ const notFirstYear = (r: RankReason) => r.key !== 'firstYear'
 /**
  * How hard a subject is, as the easy and hard lists for `course` in `year` see it. `subjects`
  * should be the course's view of the data (forCourse), as the list pages and the header chip use.
- * On the easy list: easier; on the hard list: harder; ranked but on neither: about average.
+ * In the top third of the full easy order: easier; of the hard order: harder; else about average.
+ * `place` is only set within the top LIST_TOP of the real list, exactly as the header chip shows it.
  * Nothing reviewed and no assessment recorded: not enough to say (never a guess).
  */
 export function subjectDifficulty(subjects: Record<string, Subject>, code: string, course: string, year: number): Difficulty {
   const s = subjects[code]
-  const unknown: Difficulty = { level: 'unknown', place: null, reasons: [], factsOnly: true }
+  const unknown: Difficulty = { level: 'unknown', place: null, reasons: [], factsOnly: true, reviews: 0 }
   if (!s) return unknown
   const easy = rankSubject(s, 'easy')
   const hard = rankSubject(s, 'hard')
@@ -69,13 +72,40 @@ export function subjectDifficulty(subjects: Record<string, Subject>, code: strin
         : // On neither list: what pulls each way, the strongest of each first.
           { level: 'average', reasons: interleave(easy.reasons.filter(notFirstYear), hard.reasons.filter(notFirstYear)).slice(0, MAX_DIFFICULTY_REASONS) }
 
-  if (!rankable(s, course, year)) {
-    const lean = easeVerdictLists(easy, hard)
-    return { ...verdict(lean), place: null, factsOnly, unranked: unrankedWhy(s, course) }
+  // Thirds of the full easy and hard orderings: the lists themselves have no cut-off (every
+  // subject leaning that way is on them), so the top third reads as easier, the top third of the
+  // hard order as harder, and the middle as about average.
+  const full = fullPlace(subjects, code, course, year)!
+  const third = Math.ceil(full.n / 3)
+  // The header chip's place (top LIST_TOP of the real list): shown, and the verdict follows it.
+  const listed = rankable(s, course, year) ? listPlace(subjects, code, course, year) : null
+  const easier = full.easy <= third
+  const harder = full.hard <= third
+  const direction: RankDirection | null = listed
+    ? listed.direction
+    : easier && harder
+      ? full.easy <= full.hard
+        ? 'easy'
+        : 'hard'
+      : easier
+        ? 'easy'
+        : harder
+          ? 'hard'
+          : null
+  return {
+    ...verdict(direction),
+    place: listed,
+    factsOnly,
+    reviews: factsOnly ? 0 : reviewCount(s),
+    ...(rankable(s, course, year) ? {} : { unranked: unrankedWhy(s, course) }),
   }
-  // Every place, so the verdict is exactly the lists' own (the header chip shows the top LIST_TOP).
-  const place = listPlace(subjects, code, course, year, Infinity)
-  return { ...verdict(place?.direction ?? null), place, factsOnly }
+}
+
+/** Student reviews and ratings behind the verdict: our ratings once 3+, shared grades once 5+, public summaries. */
+function reviewCount(s: Subject): number {
+  const own = s.signals && s.signals.reviews >= 3 ? s.signals.reviews : 0
+  const grades = s.gradeOffset && s.gradeOffset.n >= 5 ? s.gradeOffset.n : 0
+  return own + grades + (s.discussions ?? []).reduce((a, d) => a + discussionCount(d), 0)
 }
 
 function interleave<T>(a: T[], b: T[]): T[] {
@@ -87,16 +117,36 @@ function interleave<T>(a: T[], b: T[]): T[] {
   return out
 }
 
-/** Whether a list place is near enough the top for the subject page to call it out. */
-export const nearTop = (p: ListPlace | null) => p !== null && p.place <= LIST_TOP
-
 // ---------- fit for the student ----------
 
-export type FitBand = 'great' | 'good' | 'ok'
+export type FitBand = 'great' | 'good' | 'ok' | 'low'
 
-/** The fit badge's words for a betterThan share: the same cut-offs everywhere it's shown. */
+/**
+ * The fit badge's words for a betterThan share: the same cut-offs everywhere it's shown. Under
+ * 30 (most options suit them better) it says so plainly instead of "worth a look".
+ */
 export function fitBand(betterThan: number): FitBand {
-  return betterThan >= 90 ? 'great' : betterThan >= 60 ? 'good' : 'ok'
+  return betterThan >= 90 ? 'great' : betterThan >= 60 ? 'good' : betterThan >= 30 ? 'ok' : 'low'
+}
+
+/** What a fit rests on, from the open plan's profile, and the one thing that would firm it up most. */
+export interface FitBasis {
+  marks: number
+  skills: number
+  interests: number
+  /** Marks first (they drive predictions), then interests, then strengths; null when all are there. */
+  missing: 'marks' | 'interests' | 'skills' | null
+}
+
+/** Marks below this many: more of them still make a fit noticeably surer. */
+export const ENOUGH_MARKS = 3
+
+export function fitBasis(p: Pick<Profile, 'results' | 'skills' | 'interests'>): FitBasis {
+  const marks = p.results.filter((r) => r.mark !== undefined).length
+  const skills = Object.keys(p.skills).length
+  const interests = p.interests.length
+  const missing = marks < ENOUGH_MARKS ? 'marks' : interests === 0 ? 'interests' : skills === 0 ? 'skills' : null
+  return { marks, skills, interests, missing }
 }
 
 /** Has the student told us anything to sort by: marks, strengths or interests. */

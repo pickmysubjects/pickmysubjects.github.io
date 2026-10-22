@@ -80,6 +80,17 @@ const band = computed(() => fitBand(props.rec.betterThan))
   background: var(--ink-soft);
 }
 
+/* Most options suit them better: said plainly, quiet rather than alarming. */
+.fit-low {
+  color: var(--ink-faint);
+  background: color-mix(in srgb, var(--ink) 4%, transparent);
+  font-weight: 550;
+}
+
+.fit-low .num {
+  background: var(--ink-faint);
+}
+
 .thin {
   font-size: 0.75rem;
   color: var(--ink-faint);

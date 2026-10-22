@@ -1,10 +1,15 @@
 import { describe, expect, it } from 'vitest'
 import { buildDataset } from '../scripts/dataset'
 import { EMPTY_FILTERS, findRows } from '../src/engine/browse'
-import { listPlace, rankSubjects } from '../src/engine/easeRanking'
+import { LIST_TOP, listPlace, rankable, rankSubject, rankSubjects } from '../src/engine/easeRanking'
+import type { Subject } from '../src/engine/schema'
 import { forCourse } from '../src/engine/forCourse'
 import { recommend, yearLevel, type Profile, type RecommendOptions } from '../src/engine/recommend'
-import { fitBand, leadReasons, subjectDifficulty, subjectFit } from '../src/engine/subjectFit'
+import { fitBand, fitBasis, leadReasons, subjectDifficulty, subjectFit } from '../src/engine/subjectFit'
+import { discussionCount } from '../src/engine/schema'
+import { basisText } from '../src/i18n/fitText'
+import { interpolate } from '../src/i18n/interpolate'
+import { en as enMessages } from '../src/i18n/messages/en'
 import { dataset, subject } from './helpers'
 
 /**
@@ -13,6 +18,15 @@ import { dataset, subject } from './helpers'
  */
 const { dataset: real } = buildDataset('real')
 const YEAR = 2026
+
+/** The list pages' order: reviews' tier, then score, then code. */
+function cmp(a: Subject, b: Subject, direction: 'easy' | 'hard'): number {
+  const ra = rankSubject(a, 'easy')!
+  const rb = rankSubject(b, 'easy')!
+  const t = (r: typeof ra) => (r.reviews === null ? 1 : (direction === 'easy' ? r.reviews : -r.reviews) >= 0.25 ? 0 : (direction === 'easy' ? r.reviews : -r.reviews) <= -0.25 ? 2 : 1)
+  const sign = direction === 'easy' ? 1 : -1
+  return t(ra) - t(rb) || (rb.score - ra.score) * sign || a.code.localeCompare(b.code)
+}
 
 /** The options BrowseView's "sort for me" passes (no plan: nothing planned, no major). */
 const sortForMe = (data: typeof real, p: Profile, course: string): RecommendOptions => ({
@@ -159,24 +173,45 @@ describe('fit card = Find subjects "sort for me"', () => {
 
 describe('difficulty = the easy/hard lists', () => {
   for (const course of ['B-SCI', 'B-COM', 'B-ARTS']) {
-    it(`${course}: every listed subject's verdict and place are the list's own`, () => {
+    it(`${course}: thirds of the full orderings, and a place only within the header chip's top 30`, () => {
       const subjects = forCourse(real, course).subjects
-      const easy = rankSubjects(Object.values(subjects), { direction: 'easy', course, year: YEAR })
-      const hard = rankSubjects(Object.values(subjects), { direction: 'hard', course, year: YEAR })
-      expect(easy.length).toBeGreaterThan(5)
-      easy.forEach((r, i) => expect(subjectDifficulty(subjects, r.subject.code, course, YEAR)).toMatchObject({ level: 'easier', place: { direction: 'easy', place: i + 1 } }))
-      hard.forEach((r, i) => expect(subjectDifficulty(subjects, r.subject.code, course, YEAR)).toMatchObject({ level: 'harder', place: { direction: 'hard', place: i + 1 } }))
-      // The header chip (top 30) agrees with the card.
-      for (const r of easy.slice(0, 30)) expect(listPlace(subjects, r.subject.code, course, YEAR)).toEqual(subjectDifficulty(subjects, r.subject.code, course, YEAR).place)
-      // Ranked but on neither list: about average, never a place.
-      const listed = new Set([...easy, ...hard].map((r) => r.subject.code))
-      for (const s of Object.values(subjects).filter((x) => x.level <= 3 && !listed.has(x.code)).slice(0, 200)) {
+      const all = Object.values(subjects).filter((s) => rankable(s, course, YEAR) && rankSubject(s, 'easy'))
+      const n = all.length
+      const third = Math.ceil(n / 3)
+      // The full orderings, exactly as the list pages sort (tier, score, code), nothing filtered.
+      const byEasy = [...all].sort((a, b) => cmp(a, b, 'easy')).map((s) => s.code)
+      const byHard = [...all].sort((a, b) => cmp(a, b, 'hard')).map((s) => s.code)
+      const counts = { easier: 0, average: 0, harder: 0, unknown: 0 }
+      for (const s of all) {
         const d = subjectDifficulty(subjects, s.code, course, YEAR)
-        expect(d.place).toBeNull()
-        expect(d.level === 'average' || d.level === 'unknown' || d.unranked !== undefined).toBe(true)
+        counts[d.level]++
+        if (d.level === 'unknown') continue
+        const e = byEasy.indexOf(s.code) + 1
+        const h = byHard.indexOf(s.code) + 1
+        const chip = listPlace(subjects, s.code, course, YEAR)
+        // The place line is the header chip's, and never beyond the top 30.
+        expect(d.place).toEqual(chip)
+        if (d.place) expect(d.place.place).toBeLessThanOrEqual(LIST_TOP)
+        const want = chip ? (chip.direction === 'easy' ? 'easier' : 'harder') : e <= third && (h > third || e <= h) ? 'easier' : h <= third ? 'harder' : 'average'
+        expect([s.code, d.level]).toEqual([s.code, want])
       }
+      // Thirds: a real middle, not nearly everything "easier".
+      expect(counts.average).toBeGreaterThan(n / 5)
+      expect(counts.easier).toBeLessThan(n / 2)
+      // Every top-30 subject of each real list keeps its chip and verdict.
+      for (const direction of ['easy', 'hard'] as const)
+        rankSubjects(Object.values(subjects), { direction, course, year: YEAR, limit: LIST_TOP }).forEach((r, i) =>
+          expect(subjectDifficulty(subjects, r.subject.code, course, YEAR)).toMatchObject({ level: direction === 'easy' ? 'easier' : 'harder', place: { direction, place: i + 1 } }),
+        )
     })
   }
+
+  it('regression: a mid-ranked subject is about average, with no place line', () => {
+    const subjects = forCourse(real, 'B-SCI').subjects
+    const d = subjectDifficulty(subjects, 'ABPL10005', 'B-SCI', YEAR)
+    expect(d.level).toBe('average')
+    expect(d.place).toBeNull()
+  })
 
   it('reasons come from the list, at most three, first-year only when nothing else', () => {
     const subjects = forCourse(real, 'B-SCI').subjects
@@ -204,5 +239,46 @@ describe('difficulty = the easy/hard lists', () => {
     const gone = subject({ code: 'GONE10001', offerings: { 2026: [] }, categories: { 'B-SCI': 'breadth' }, assessment: [{ kind: 'assignment', weight: 100 }] })
     expect(subjectDifficulty({ GONE10001: gone }, 'GONE10001', 'B-SCI', YEAR)).toMatchObject({ level: 'easier', place: null, unranked: 'notRunning' })
     expect(subjectDifficulty({ GONE10001: { ...gone, offerings: { 2026: ['semester-1'] } } }, 'GONE10001', 'B-COM', YEAR)).toMatchObject({ unranked: 'notInCourse' })
+  })
+})
+
+describe('fit bands and what a fit rests on', () => {
+  it('band boundaries: great ≥90, good ≥60, ok 30–59, low under 30', () => {
+    expect([100, 90, 89, 60, 59, 30, 29, 11, 0].map(fitBand)).toEqual(['great', 'great', 'good', 'good', 'ok', 'ok', 'low', 'low', 'low'])
+  })
+
+  it('a low-band subject is low in Find subjects and on the card alike', () => {
+    const data = forCourse(real, 'B-SCI')
+    const recs = recommend(data, coder, sortForMe(data, coder, 'B-SCI'))
+    const low = recs.filter((r) => r.betterThan < 30).slice(0, 5)
+    expect(low.length).toBe(5)
+    for (const r of low) {
+      expect(browseSays(coder, 'B-SCI', r.code)?.band).toBe('low')
+      expect(cardSays(coder, 'B-SCI', r.code)).toMatchObject({ band: 'low', betterThan: r.betterThan })
+    }
+  })
+
+  const en = JSON.parse(JSON.stringify(enMessages)) as Record<string, unknown>
+  const lookup = (key: string) => key.split('.').reduce<unknown>((o, k) => (o as Record<string, unknown> | undefined)?.[k], en) as string | undefined
+  const t = (key: string, params?: Record<string, string | number>) => interpolate(lookup(key) ?? key, params)
+
+  it('counts marks, interests and rated strengths from the profile, and names only what is missing', () => {
+    expect(fitBasis({ results: [{ code: 'A', mark: 70 }, { code: 'B', mark: 80 }, { code: 'C' }], skills: {}, interests: ['ai'] })).toEqual({ marks: 2, skills: 0, interests: 1, missing: 'marks' })
+    expect(basisText(t, fitBasis({ results: [{ code: 'A', mark: 70 }, { code: 'B', mark: 80 }], skills: {}, interests: ['ai'] }))).toBe(
+      'Based on 2 marks, 1 interest — add more marks for a surer fit',
+    )
+    const three = [70, 75, 80].map((mark, i) => ({ code: `X${i}`, mark }))
+    expect(basisText(t, fitBasis({ results: three, skills: { programming: 5 }, interests: [] }))).toBe('Based on 3 marks, 1 rated strength — add your interests for a surer fit')
+    expect(basisText(t, fitBasis({ results: three, skills: {}, interests: ['ai', 'maths'] }))).toBe('Based on 3 marks, 2 interests — rate your strengths for a surer fit')
+    expect(basisText(t, fitBasis({ results: three, skills: { maths: 4, writing: 2 }, interests: ['ai'] }))).toBe('Based on 3 marks, 1 interest, 2 rated strengths')
+  })
+
+  it('difficulty says how many student reviews it rests on, or that it has none', () => {
+    const subjects = forCourse(real, 'B-SCI').subjects
+    const reviewed = Object.values(subjects).find((s) => (s.discussions ?? []).length && subjectDifficulty(subjects, s.code, 'B-SCI', YEAR).level !== 'unknown')!
+    const d = subjectDifficulty(subjects, reviewed.code, 'B-SCI', YEAR)
+    expect(d.factsOnly).toBe(false)
+    expect(d.reviews).toBeGreaterThanOrEqual(reviewed.discussions!.reduce((a, x) => a + discussionCount(x), 0))
+    expect(subjectDifficulty(subjects, 'ACCT20008', 'B-SCI', YEAR)).toMatchObject({ factsOnly: true, reviews: 0 })
   })
 })

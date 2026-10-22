@@ -9,6 +9,9 @@ import { useSubjectFit } from '@/composables/useSubjectFit'
 import { useI18n } from '@/i18n'
 import { useDataset } from '@/composables/useDataset'
 import { describeReq, reasonText } from '@/i18n/format'
+import { basisText } from '@/i18n/fitText'
+import { fitBasis } from '@/engine'
+import { useProfile } from '@/composables/useProfile'
 
 /**
  * "Is it hard? Is it right for me?": the easy/hard lists' verdict for everyone, then, once the
@@ -36,6 +39,9 @@ const diffNote = computed(() => {
   return ''
 })
 
+const { profile } = useProfile()
+// What the fit rests on, and the one thing that would make it surer.
+const basis = computed(() => basisText(t.value, fitBasis(profile.value)))
 const fitReasons = computed(() => (fit.value?.kind === 'fit' ? fit.value.reasons.map((n) => trim(reasonText(t.value, n))) : []))
 const outText = computed(() => {
   const f = fit.value
@@ -67,6 +73,7 @@ const cautions = computed(() =>
             <li v-for="r in diffReasons" :key="r">{{ r }}</li>
           </ul>
           <p v-if="difficulty.factsOnly" class="faint">{{ t('rank.factsOnly') }}</p>
+          <p v-else-if="difficulty.reviews > 0" class="faint">{{ t('fit.fromReviews', { n: difficulty.reviews }) }}</p>
         </template>
         <p v-else class="note">{{ t('fit.level.unknown') }}</p>
       </div>
@@ -80,12 +87,15 @@ const cautions = computed(() =>
         </template>
         <template v-else-if="fit?.kind === 'fit'">
           <FitBadge :rec="fit.rec" />
+          <!-- A weak match leads with what holds it back (the engine's own cautions). -->
+          <RowWarnings v-if="fit.band === 'low'" :rec="fit.rec" />
           <ul v-if="fitReasons.length" class="reasons">
             <li v-for="r in fitReasons" :key="r">{{ r }}</li>
           </ul>
-          <RowWarnings :rec="fit.rec" />
+          <RowWarnings v-if="fit.band !== 'low'" :rec="fit.rec" />
         </template>
         <p v-else-if="fit?.kind === 'out'" class="out">{{ outText }}</p>
+        <p v-if="fit?.kind === 'fit'" class="faint">{{ basis }}</p>
         <ul v-if="cautions.length" class="cautions">
           <li v-for="c in cautions" :key="c"><TriangleAlert :size="13" aria-hidden="true" />{{ c }}</li>
         </ul>
