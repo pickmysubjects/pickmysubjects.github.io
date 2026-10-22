@@ -384,11 +384,15 @@ onBeforeUnmount(() => {
   align-items: center;
   gap: 4px;
   min-height: 30px;
-  padding: 4px 10px;
-  border: 1px dashed var(--line);
+  padding: 4px 12px;
+  /* The shared glass button, small. */
+  border: 1px solid var(--glass-edge);
   border-radius: 999px;
-  background: none;
-  color: var(--ink-soft);
+  background: var(--glass-fill);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-shadow);
+  color: var(--ink);
   font: inherit;
   font-size: 0.75rem;
   font-weight: 600;
@@ -398,13 +402,17 @@ onBeforeUnmount(() => {
 
 .tool:hover,
 .tool:focus-visible {
-  border-color: var(--accent);
+  background: var(--glass-fill-hover);
   color: var(--accent);
 }
 
-.tool-short:hover {
-  border-color: var(--warn);
-  color: var(--warn);
+.tool-short {
+  color: var(--ink-soft);
+}
+
+/* "Add a term" first, then the summer and winter ones as their own group. */
+.board-tools > .tool:first-child {
+  margin-bottom: 6px;
 }
 
 /* Phones: terms stack top to bottom, no sideways swiping. */

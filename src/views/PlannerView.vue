@@ -353,7 +353,7 @@ const printTerms = computed<PrintTerm[]>(() => {
       </p>
 
       <!-- The plan's status and every note about it, as one slim line that opens. Problems open it by themselves. -->
-      <details v-if="onBoard" class="status" :class="problems ? 'status-bad' : unknowns ? 'status-warn' : 'status-good'" :open="problems > 0">
+      <details v-if="onBoard" class="status glass" :class="problems ? 'status-bad' : unknowns ? 'status-warn' : 'status-good'" :open="problems > 0">
         <summary class="status-line" role="status">
           <component :is="problems || unknowns ? TriangleAlert : CircleCheck" :size="18" aria-hidden="true" />
           <span class="status-title">
@@ -366,15 +366,15 @@ const printTerms = computed<PrintTerm[]>(() => {
         </summary>
         <div class="status-body">
           <ul v-if="problemTexts.length" class="status-list">
-            <li v-for="(p, i) in problemTexts.slice(0, 5)" :key="i">
-              {{ p.text }}
-              <button v-if="p.confirm" class="confirm" type="button" @click="setConfirmed(p.confirm, true)">
+            <li v-for="(p, i) in problemTexts.slice(0, 5)" :key="i" class="status-item">
+              <span>{{ p.text }}</span>
+              <button v-if="p.confirm" class="button button-quiet confirm" type="button" @click="setConfirmed(p.confirm, true)">
                 {{ t('plan.iMeetThis') }}
               </button>
             </li>
           </ul>
           <p v-if="hasConfirmable" class="status-hint">{{ t('plan.confirmHint') }}</p>
-          <p v-if="profileEmpty" class="started">
+          <p v-if="profileEmpty" class="status-hint">
             <Interp :text="t('plan.fillRecord')">
               <template #record>
                 <a :href="link('record')">{{ t('nav.record') }}</a>
@@ -597,9 +597,10 @@ const printTerms = computed<PrintTerm[]>(() => {
   color: var(--bad);
 }
 
+/* The shared glass card; only the icon and the one-line verdict carry the tone. */
 .status {
-  padding: 0 16px;
-  border-radius: var(--radius);
+  padding: 0 var(--space-4);
+  border-radius: var(--radius-lg);
 }
 
 .status-line {
@@ -635,8 +636,9 @@ const printTerms = computed<PrintTerm[]>(() => {
 
 .status-body {
   display: grid;
-  gap: 8px;
-  padding: 0 0 12px 28px;
+  gap: var(--space-3);
+  padding: var(--space-1) 0 var(--space-4) 28px;
+  color: var(--ink);
 }
 
 .status-body .started,
@@ -644,18 +646,15 @@ const printTerms = computed<PrintTerm[]>(() => {
   color: var(--ink);
 }
 
-.status-good {
-  background: var(--good-soft);
+.status-good .status-line {
   color: var(--good);
 }
 
-.status-warn {
-  background: var(--warn-soft);
+.status-warn .status-line {
   color: var(--warn);
 }
 
-.status-bad {
-  background: var(--bad-soft);
+.status-bad .status-line {
   color: var(--bad);
 }
 
@@ -670,11 +669,19 @@ const printTerms = computed<PrintTerm[]>(() => {
 
 .status-list {
   display: grid;
-  gap: 4px;
+  gap: var(--space-2);
   margin: 0;
-  padding-left: 18px;
+  padding: 0;
+  list-style: none;
   font-size: 0.9375rem;
   color: var(--ink);
+}
+
+.status-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
 }
 
 .status-text {
@@ -784,23 +791,19 @@ const printTerms = computed<PrintTerm[]>(() => {
 
 
 
+/* A standard quiet button, one size down. */
 .confirm {
-  margin-left: 6px;
-  padding: 1px 10px;
-  border: 1px solid currentColor;
-  border-radius: 999px;
-  background: none;
-  font: inherit;
+  min-height: 32px;
+  padding: 0 14px;
   font-size: 0.8125rem;
-  font-weight: 600;
-  color: inherit;
-  cursor: pointer;
 }
 
 .status-hint {
-  margin-top: 6px;
+  max-width: 60ch;
+  margin: 0;
   font-size: 0.875rem;
-  opacity: 0.85;
+  line-height: 1.5;
+  color: var(--ink-soft);
 }
 .shared {
   display: grid;

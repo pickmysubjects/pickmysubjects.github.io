@@ -99,7 +99,7 @@ function toggle(id: string): void {
           <span v-else class="ring-mid ring-count">{{ left }}</span>
         </span>
         <span class="health-text">
-          <span class="health-title">{{ health === 'ok' ? t('progress.allMet') : t('progress.left', { n: left }) }}</span>
+          <span class="health-title">{{ health === 'ok' ? t('progress.allMet') : (left === 1 ? t('progress.leftOne') : t('progress.left', { n: left })) }}</span>
           <span class="health-sub">{{ t('rules.progress', { met, total }) }}</span>
         </span>
       </span>
@@ -271,7 +271,13 @@ function toggle(id: string): void {
   margin-bottom: -2px;
 }
 
+/* Category names are lower case for use inside sentences; a label starts with a capital. */
+.meter-label::first-letter {
+  text-transform: uppercase;
+}
+
 .meter-label {
+  display: inline-block;
   font-size: 0.8125rem;
   color: var(--ink-soft);
 }
