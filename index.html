@@ -12,6 +12,25 @@
     <meta name="apple-mobile-web-app-title" content="PickMySubjects" />
     <meta name="description" content="Free, unofficial subject guide and degree planner for University of Melbourne students: subject reviews and difficulty, suggestions for your marks and interests, and a checked plan for your whole degree. In 9 languages. Not affiliated with the University." />
     <title>PickMySubjects</title>
+    <!-- While the app starts, hide the build-time plain text (kept for search engines and no-JS
+         readers) behind a quiet loader, so the page never flashes unstyled. If the app hasn't
+         drawn after 8 s, show the plain text after all. -->
+    <script>
+      document.documentElement.classList.add('booting')
+      setTimeout(function () { if (document.querySelector('#app > .prerender')) document.documentElement.classList.remove('booting') }, 8000)
+    </script>
+    <style>
+      html.booting, html.booting body { background: #fbeaf3; }
+      @media (prefers-color-scheme: dark) { html.booting, html.booting body { background: #0d0d0f; } }
+      html.booting #app > .prerender { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+      html.booting #app:has(> .prerender)::before {
+        content: ''; position: fixed; inset: 50% auto auto 50%; width: 28px; height: 28px; margin: -14px 0 0 -14px;
+        border: 3px solid rgb(194 34 122 / 20%); border-top-color: #c2227a; border-radius: 50%;
+        animation: boot-spin 0.8s linear infinite;
+      }
+      @keyframes boot-spin { to { transform: rotate(360deg); } }
+      @media (prefers-reduced-motion: reduce) { html.booting #app:has(> .prerender)::before { animation-duration: 2.4s; } }
+    </style>
   </head>
   <body>
     <div id="app"></div>

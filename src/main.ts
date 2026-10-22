@@ -33,10 +33,15 @@ function start(): void {
   Promise.all([loadDataset(), opening(), loadLocale(currentLocale())]).then(
     () => {
       createApp(App).mount('#app')
+      document.documentElement.classList.remove('booting')
       registerServiceWorker()
       const later = (f: () => void) => ('requestIdleCallback' in window ? requestIdleCallback(f, { timeout: 4000 }) : setTimeout(f, 2000))
       later(() => Object.values(VIEW_LOADERS).forEach((load) => void load().catch(() => {})))
     },
-    (e: unknown) => console.error(e),
+    (e: unknown) => {
+      // Starting failed: show the plain text page rather than a spinner forever.
+      document.documentElement.classList.remove('booting')
+      console.error(e)
+    },
   )
 }
