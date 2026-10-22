@@ -13,11 +13,12 @@ import {
   browseAddress,
   filtersFromQuery,
   findRows,
-  heldMajorIds,
+  hasFitProfile,
+  leadReasons,
   QUICK_CHOICES,
   quickChoice,
   recommend,
-  yearLevel,
+  SHOWN_AS_FACTS,
   type BrowseSort,
   type FoundRow,
   type QuickChoice,
@@ -26,6 +27,7 @@ import { link, replaceAddress, useView } from '@/composables/useView'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
 import { useProfile } from '@/composables/useProfile'
+import { useSortForMeOptions } from '@/composables/useSubjectFit'
 import { useI18n } from '@/i18n'
 import { reasonText } from '@/i18n/format'
 
@@ -56,23 +58,9 @@ watch(
 )
 
 // "Sort for me": the student's own suggestions, from whatever they've filled in so far.
-const hasProfile = computed(
-  () => profile.value.results.length > 0 || Object.keys(profile.value.skills).length > 0 || profile.value.interests.length > 0,
-)
-const recs = computed(() =>
-  filters.value.mine
-    ? recommend(data.value, profile.value, {
-        planned: plan.plannedCodes.value,
-        course: plan.setup.value.course,
-        maxLevel: yearLevel(profile.value.results, data.value),
-        programme: {
-          courseYear: plan.setup.value.courseYear,
-          components: heldMajorIds(plan.plan.value).filter((id): id is string => !!id),
-          minors: plan.setup.value.minors ?? [],
-        },
-      })
-    : undefined,
-)
+const hasProfile = computed(() => hasFitProfile(profile.value))
+const sortForMe = useSortForMeOptions()
+const recs = computed(() => (filters.value.mine ? recommend(data.value, profile.value, sortForMe.value) : undefined))
 
 const rows = computed(() =>
   findRows(subjectList.value, filters.value, {
@@ -111,15 +99,11 @@ function chipLabel(c: QuickChoice): string {
 }
 
 // Reasons the row's own fact pills already say (exam share, class hours) aren't repeated.
-const SHOWN_AS_FACTS = new Set(['noExam', 'smallExam', 'bigExam', 'fewHours', 'manyHours'])
 // Why a row is where it is: the list's reasons, or the first few reasons it suits the student.
 const trim = (x: string) => x.replace(/[。.]\s*$/, '')
 function reasons(r: FoundRow): string[] {
   if (r.rec)
-    return r.rec.reasons
-      .filter((n) => !SHOWN_AS_FACTS.has(n.key))
-      .slice(0, 3)
-      .map((n) => trim(reasonText(t.value, n)))
+    return leadReasons(r.rec).map((n) => trim(reasonText(t.value, n)))
   if (r.ranked) {
     const own = r.ranked.reasons.filter((x) => !SHOWN_AS_FACTS.has(x.key)).map((x) => t.value(`rank.reason.${x.key}`, x.params))
     return [...own, ...(r.ranked.reviews === null ? [t.value('rank.factsOnly')] : [])]

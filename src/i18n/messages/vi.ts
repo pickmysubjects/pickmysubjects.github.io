@@ -718,6 +718,43 @@ export const vi: Messages = {
     rateQ: "Tôi có thể đánh giá {code} không?",
     rateA: "Có. Nếu đã học, bạn đánh giá ẩn danh ngay trên trang này (độ khó, khối lượng, cách chấm điểm, có nên học không) và để lại lời khuyên cho sinh viên năm sau. Điểm trung bình hiện khi có 3 người đánh giá; lời khuyên được duyệt trước khi hiện.",
   },
+  fit: {
+    title: "Môn này có khó không? Có hợp với mình không?",
+    diffTitle: "Độ khó",
+    youTitle: "Với bạn",
+    level: {
+      easier: "Dễ hơn",
+      average: "Trung bình",
+      harder: "Khó hơn",
+      unknown: "Chưa đủ dữ liệu để đánh giá độ khó.",
+    },
+    place: {
+      easy: "Hạng {n} trong danh sách môn dễ của {course}",
+      hard: "Hạng {n} trong danh sách môn khó của {course}",
+    },
+    unranked: {
+      graduate: "Môn sau đại học nên không có trong danh sách.",
+      passFail: "Chỉ chấm đạt/không đạt nên không tính vào WAM và không có trong danh sách.",
+      campus: "Học ngoài Parkville nên không có trong danh sách.",
+      notRunning: "Không mở năm {year} nên không có trong danh sách.",
+      notInCourse: "{course} không tính môn này nên không có trong danh sách.",
+    },
+    out: {
+      done: "Bạn đã học môn này.",
+      planned: "Môn này đã có trong kế hoạch.",
+      behind: "Bạn đã học {codes}, môn học tiếp theo của môn này.",
+      nonAllowed: "Không được tính cùng {codes} mà bạn đã học hoặc đã lên kế hoạch.",
+      campus: "Học ngoài Parkville và không thuộc chuyên ngành của bạn.",
+      filtered: "Hiện chưa nằm trong các lựa chọn của bạn.",
+      aboveLevel: "Cấp độ cao hơn năm học của bạn (cấp {level}) nên chưa được gợi ý.",
+      notRunning: "Không mở trong hai năm tới.",
+      notInCourse: "Bằng của bạn không học được môn này.",
+      needsFirst: "Cần trước: {needs}.",
+    },
+    notThisYear: "Không mở năm {year}",
+    noProfile: "Thêm điểm và sở thích để xem môn này có hợp với bạn không",
+    seo: "{code}: {level}.",
+  },
   rank: {
     onList: { easy: "Trong danh sách môn dễ (#{n})", hard: "Trong danh sách môn khó nhất (#{n})" },
     title: {

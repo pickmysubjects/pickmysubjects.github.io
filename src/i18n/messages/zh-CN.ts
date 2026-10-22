@@ -718,6 +718,43 @@ export const zhCN: Messages = {
     rateQ: "我可以给 {code} 评分吗？",
     rateA: "可以。修过的话，在这个页面匿名打分（难度、作业量、给分、推不推荐），还可以给明年的同学留建议。满 3 人评分后显示平均分；建议经过审核才会显示。",
   },
+  fit: {
+    title: "难不难？适不适合我？",
+    diffTitle: "难度",
+    youTitle: "对你来说",
+    level: {
+      easier: "偏容易",
+      average: "中等",
+      harder: "偏难",
+      unknown: "数据还太少，暂时没法判断难度。",
+    },
+    place: {
+      easy: "在 {course} 水课榜第 {n} 名",
+      hard: "在 {course} 难课榜第 {n} 名",
+    },
+    unranked: {
+      graduate: "研究生课程，不在水课/难课榜上。",
+      passFail: "只记通过/不通过，不算进 WAM，也不在榜上。",
+      campus: "不在 Parkville 上课，不在榜上。",
+      notRunning: "{year} 年不开，不在榜上。",
+      notInCourse: "{course} 不承认这门课，不在它的榜上。",
+    },
+    out: {
+      done: "这门你已经修过了。",
+      planned: "已经在你的计划里了。",
+      behind: "你已经修过 {codes}，这门是它的前置课。",
+      nonAllowed: "和你已修或已计划的 {codes} 不能同时算学分。",
+      campus: "不在 Parkville 上课，也不属于你的专业。",
+      filtered: "目前不在你的可选范围内。",
+      aboveLevel: "级别高于你目前的年级（{level} 级），暂时不推荐。",
+      notRunning: "未来两年都不开。",
+      notInCourse: "你的学位不能选这门课。",
+      needsFirst: "需要先满足：{needs}。",
+    },
+    notThisYear: "{year} 年不开",
+    noProfile: "填上你的成绩和兴趣，看看这门适不适合你",
+    seo: "{code}：{level}。",
+  },
   rank: {
     onList: { easy: "在水课榜上（第 {n} 名）", hard: "在难课榜上（第 {n} 名）" },
     title: {

@@ -20,6 +20,7 @@ import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { periodsFor } from '../src/engine/availability'
 import { browse, EMPTY_FILTERS, PRESET_SLUGS, PRESETS, type PresetName } from '../src/engine/browse'
+import { subjectDifficulty } from '../src/engine/subjectFit'
 import { RANK_SLUGS, rankSubjects, type RankDirection, type RankReason } from '../src/engine/easeRanking'
 import { forCourse } from '../src/engine/forCourse'
 import { majorOverview } from '../src/engine/roles'
@@ -220,6 +221,30 @@ function assessment(t: Translate, s: Subject, sep: string): string | null {
   return [...byKind].map(([k, w]) => `${t(`assess.kind.${k}`)} ${Math.round(w)}%`).join(sep)
 }
 
+/**
+ * "Is it hard?" in one plain line, as the subject page's card says it: the B-SCI easy/hard
+ * lists' verdict, its place on one, and the reasons. Honest when there's too little to go on.
+ */
+function difficultyLine(t: Translate, code: LocaleCode, s: Subject): string {
+  const d = subjectDifficulty(forCourse(data, 'B-SCI').subjects, s.code, 'B-SCI', YEAR)
+  if (d.level === 'unknown') return t('fit.level.unknown')
+  const note = d.place
+    ? t(`fit.place.${d.place.direction}`, { n: d.place.place, course: 'B-SCI' })
+    : d.unranked
+      ? t(`fit.unranked.${d.unranked}`, { year: YEAR, course: 'B-SCI' })
+      : ''
+  const reasons = d.reasons.map((r) => reasonText(t, code, r)).join(listSep(code))
+  const end = CJK.has(code) ? '。' : '.'
+  return [
+    t('fit.seo', { code: s.code, level: t(`fit.level.${d.level}`) }),
+    note && !/[.。।]$/.test(note) ? note + end : note,
+    reasons ? reasons + end : '',
+    d.factsOnly ? t('rank.factsOnly') + end : '',
+  ]
+    .filter(Boolean)
+    .join(sentenceSep(code))
+}
+
 function subjectPage(code: LocaleCode, s: Subject): Page {
   const t = translator(code)
   const facts = { code: s.code, title: withLocalTitle(s.title, localTitle(s, code)), level: s.level, points: s.points }
@@ -231,11 +256,14 @@ function subjectPage(code: LocaleCode, s: Subject): Page {
   const assess = assessment(t, s, listSep(code))
   const sig = s.signals && s.signals.reviews >= 3 ? s.signals : undefined
   const gist = subjectGist(t, s)
+  const hard = difficultyLine(t, code, s)
   const parts = [
     `<h1>${esc(s.code)} ${esc(facts.title)}</h1>`,
     `<p>${esc(t('seo.facts', facts))} · ${esc(runs(t, s, listSep(code)))}</p>`,
     // The same at-a-glance lines the app shows under the title, so search engines quote them.
     ...(gist.length ? [`<ul>${gist.map((g) => `<li>${esc(g)}</li>`).join('')}</ul>`] : []),
+    // "Is it hard?" answered first, as the app's card does, for searches like "is COMP10001 hard".
+    `<h2>${esc(t('faq.hardQ', { code: s.code }))}</h2><p>${esc(hard)}</p>`,
     // Our own summary, in this page's language, so crawlers that don't run scripts see it too.
     ...(s.about
       ? [
@@ -281,6 +309,7 @@ function subjectPage(code: LocaleCode, s: Subject): Page {
   const firstPoint = ds[0]?.points[0] ? pickLocalized(ds[0].points[0], code) : ''
   const description = [
     firstPoint,
+    hard,
     // A sentence of its own: the gist lines carry no full stop.
     ...(gist.length ? [`${gist.join(listSep(code))}${CJK.has(code) ? '。' : '.'}`] : []),
     t('seo.rateDesc'),

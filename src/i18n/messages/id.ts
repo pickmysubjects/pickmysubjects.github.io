@@ -718,6 +718,43 @@ export const id: Messages = {
     rateQ: "Bisakah saya memberi rating {code}?",
     rateA: "Bisa. Kalau sudah mengambilnya, beri rating secara anonim di halaman ini (kesulitan, beban, cara penilaian, apakah kamu merekomendasikannya) dan tinggalkan tips untuk mahasiswa tahun depan. Rata-rata muncul setelah 3 mahasiswa memberi rating; tips ditinjau dulu sebelum muncul.",
   },
+  fit: {
+    title: "Susah nggak? Cocok buat saya?",
+    diffTitle: "Tingkat kesulitan",
+    youTitle: "Untukmu",
+    level: {
+      easier: "Lebih mudah",
+      average: "Rata-rata",
+      harder: "Lebih sulit",
+      unknown: "Datanya belum cukup untuk menilai tingkat kesulitannya.",
+    },
+    place: {
+      easy: "Peringkat {n} di daftar mata kuliah mudah {course}",
+      hard: "Peringkat {n} di daftar mata kuliah tersulit {course}",
+    },
+    unranked: {
+      graduate: "Mata kuliah pascasarjana, jadi tidak ada di daftar.",
+      passFail: "Hanya lulus/tidak lulus, jadi tidak dihitung dalam WAM dan tidak ada di daftar.",
+      campus: "Diajarkan di luar Parkville, jadi tidak ada di daftar.",
+      notRunning: "Tidak dibuka pada {year}, jadi tidak ada di daftar.",
+      notInCourse: "Tidak dihitung oleh {course}, jadi tidak ada di daftarnya.",
+    },
+    out: {
+      done: "Kamu sudah mengambil mata kuliah ini.",
+      planned: "Sudah ada di rencanamu.",
+      behind: "Kamu sudah mengambil {codes}, lanjutan dari mata kuliah ini.",
+      nonAllowed: "Tidak bisa dihitung bersama {codes} yang sudah kamu ambil atau rencanakan.",
+      campus: "Diajarkan di luar Parkville dan bukan bagian dari jurusanmu.",
+      filtered: "Belum termasuk pilihanmu saat ini.",
+      aboveLevel: "Levelnya di atas tahunmu (level {level}), jadi belum disarankan.",
+      notRunning: "Tidak dibuka dalam dua tahun ke depan.",
+      notInCourse: "Tidak terbuka untuk gelarmu.",
+      needsFirst: "Perlu lebih dulu: {needs}.",
+    },
+    notThisYear: "Tidak dibuka pada {year}",
+    noProfile: "Tambahkan nilai dan minatmu untuk melihat apakah cocok",
+    seo: "{code}: {level}.",
+  },
   rank: {
     onList: { easy: "Di daftar mudah (#{n})", hard: "Di daftar paling sulit (#{n})" },
     title: {

@@ -718,6 +718,43 @@ export const ko: Messages = {
     rateQ: "{code}를 평가할 수 있나요?",
     rateA: "네. 들은 과목이라면 이 페이지에서 익명으로 평가하고(난이도, 학습량, 채점, 추천 여부) 내년 학생들을 위한 팁을 남길 수 있습니다. 평균은 3명 이상 평가하면 표시되고, 팁은 검토 후 표시됩니다.",
   },
+  fit: {
+    title: "어려운가요? 나에게 맞을까요?",
+    diffTitle: "난이도",
+    youTitle: "나에게는",
+    level: {
+      easier: "쉬운 편",
+      average: "보통",
+      harder: "어려운 편",
+      unknown: "아직 데이터가 부족해 난이도를 판단할 수 없어요.",
+    },
+    place: {
+      easy: "{course} 쉬운 과목 목록 {n}위",
+      hard: "{course} 어려운 과목 목록 {n}위",
+    },
+    unranked: {
+      graduate: "대학원 과목이라 목록에 없어요.",
+      passFail: "Pass/Fail 과목이라 WAM에 들어가지 않고 목록에도 없어요.",
+      campus: "Parkville 밖에서 열려 목록에 없어요.",
+      notRunning: "{year}년에 열리지 않아 목록에 없어요.",
+      notInCourse: "{course}에서 학점으로 인정되지 않아 목록에 없어요.",
+    },
+    out: {
+      done: "이미 들은 과목이에요.",
+      planned: "이미 계획에 들어 있어요.",
+      behind: "이 과목을 바탕으로 하는 {codes}을(를) 이미 들었어요.",
+      nonAllowed: "이미 들었거나 계획한 {codes}와(과) 함께 학점 인정이 안 돼요.",
+      campus: "Parkville 밖에서 열리고 전공에도 속하지 않아요.",
+      filtered: "지금은 선택지에 들어 있지 않아요.",
+      aboveLevel: "지금 학년보다 높은 레벨(레벨 {level})이라 아직 추천하지 않아요.",
+      notRunning: "앞으로 2년 동안 열리지 않아요.",
+      notInCourse: "내 학위에서는 들을 수 없어요.",
+      needsFirst: "먼저 필요해요: {needs}.",
+    },
+    notThisYear: "{year}년 미개설",
+    noProfile: "성적과 관심사를 입력하면 나에게 맞는지 볼 수 있어요",
+    seo: "{code}: {level}.",
+  },
   rank: {
     onList: { easy: "꿀강 순위 {n}위", hard: "어려운 과목 순위 {n}위" },
     title: {

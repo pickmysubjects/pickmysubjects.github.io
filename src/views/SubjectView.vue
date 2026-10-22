@@ -8,6 +8,7 @@ import OutsideLinks from '@/components/subject/OutsideLinks.vue'
 import SubjectAbout from '@/components/subject/SubjectAbout.vue'
 import FoldSection from '@/components/subject/FoldSection.vue'
 import SubjectFaq from '@/components/subject/SubjectFaq.vue'
+import SubjectFitCard from '@/components/subject/SubjectFitCard.vue'
 import SubjectHeader from '@/components/subject/SubjectHeader.vue'
 import SubjectRoute from '@/components/subject/SubjectRoute.vue'
 import SubjectVerdict from '@/components/subject/SubjectVerdict.vue'
@@ -65,6 +66,7 @@ const sections = computed(() => {
   const s = subject.value
   if (!s) return []
   return [
+    { id: 'fit', label: t.value('fit.title'), show: true },
     { id: 'ratings', label: t.value('subject.ratingsTitle'), show: true },
     { id: 'learn', label: t.value('subject.aboutLearn'), show: detailReady.value && !!s.about },
     { id: 'assessment', label: t.value('assess.title'), show: true },
@@ -85,6 +87,8 @@ const sections = computed(() => {
 
       <div class="layout">
         <div class="main">
+          <SubjectFitCard id="fit" class="sec-fit" :subject="subject" :year="year" />
+
           <section id="ratings" class="sec surface">
             <h2 class="sec-title">{{ t('subject.ratingsTitle') }}</h2>
             <SubjectVerdict v-model:form-open="rating" :subject="subject" :taken="taken" :thanks="thanks" :detail-ready="detailReady" @rated="onRated" />
@@ -193,6 +197,10 @@ const sections = computed(() => {
   gap: var(--space-4);
   min-width: 0;
   padding: var(--space-5);
+  scroll-margin-top: 80px;
+}
+
+.sec-fit {
   scroll-margin-top: 80px;
 }
 

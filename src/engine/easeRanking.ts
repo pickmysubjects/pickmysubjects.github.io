@@ -211,6 +211,23 @@ export function easeKey(s: Subject): { tier: number; score: number } | null {
   return r && { tier: tier(r.reviews, 'easy'), score: r.score }
 }
 
+/** Whether a ranked subject leans far enough `direction` to be on that list (rankable aside). */
+function belongs(r: RankedSubject, direction: RankDirection): boolean {
+  const sign = direction === 'easy' ? 1 : -1
+  // Being first-year backs a place on the list but isn't a reason on its own.
+  if (!r.reasons.some((x) => x.key !== 'firstYear') || r.score * sign <= 0) return false
+  // Reviews that say the opposite: it doesn't belong on this list.
+  return tier(r.reviews, direction) !== 2
+}
+
+/**
+ * Which list a subject would be on by the lists' own rules, for one they leave out (a pass/fail
+ * or not-running subject): the easy and hard RankedSubject of the same subject, or null for neither.
+ */
+export function easeVerdictLists(easy: RankedSubject, hard: RankedSubject): RankDirection | null {
+  return belongs(easy, 'easy') ? 'easy' : belongs(hard, 'hard') ? 'hard' : null
+}
+
 /**
  * Subjects ranked for `direction`, easiest (or hardest) first. Only subjects that lean that way
  * and have at least one reason to show are listed.
@@ -224,11 +241,8 @@ export function rankSubjects(subjects: Subject[], o: RankOptions): RankedSubject
     if (o.breadthOnly && s.categories[o.course] !== 'breadth') continue
     if (o.period != null && !periodsFor(s, o.year).includes(o.period)) continue
     const r = rankSubject(s, o.direction)
-    // Being first-year backs a place on the list but isn't a reason on its own.
-    if (!r || !r.reasons.some((x) => x.key !== 'firstYear') || r.score * sign <= 0) continue
-    const t = tier(r.reviews, o.direction)
-    if (t === 2) continue // reviews say the opposite: it doesn't belong on this list
-    rows.push({ r, tier: t })
+    if (!r || !belongs(r, o.direction)) continue
+    rows.push({ r, tier: tier(r.reviews, o.direction) })
   }
   rows.sort((a, b) => a.tier - b.tier || (b.r.score - a.r.score) * sign || a.r.subject.code.localeCompare(b.r.subject.code))
   const out = rows.map((x) => x.r)

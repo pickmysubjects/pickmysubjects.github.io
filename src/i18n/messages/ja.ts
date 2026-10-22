@@ -718,6 +718,43 @@ export const ja: Messages = {
     rateQ: "{code} を評価できますか？",
     rateA: "はい。履修した人はこのページで匿名で評価でき（難しさ、課題の量、採点、おすすめか）、来年の学生へのアドバイスも残せます。平均は3人以上が評価すると表示され、アドバイスは確認後に表示されます。",
   },
+  fit: {
+    title: "難しい？自分に合ってる？",
+    diffTitle: "難しさ",
+    youTitle: "あなたにとって",
+    level: {
+      easier: "やさしめ",
+      average: "平均的",
+      harder: "難しめ",
+      unknown: "データが少なく、難しさはまだ判断できません。",
+    },
+    place: {
+      easy: "{course} の楽な科目リストで {n} 位",
+      hard: "{course} の難しい科目リストで {n} 位",
+    },
+    unranked: {
+      graduate: "大学院の科目なので、リストには載っていません。",
+      passFail: "合否のみの評価で WAM に入らないため、リストには載っていません。",
+      campus: "Parkville 以外で開講のため、リストには載っていません。",
+      notRunning: "{year}年は開講されないため、リストには載っていません。",
+      notInCourse: "{course} では単位にならないため、リストには載っていません。",
+    },
+    out: {
+      done: "この科目は履修済みです。",
+      planned: "すでにプランに入っています。",
+      behind: "この科目を前提とする {codes} を履修済みです。",
+      nonAllowed: "履修済み・予定の {codes} と同時に単位にできません。",
+      campus: "Parkville 以外で開講され、あなたの専攻にも含まれません。",
+      filtered: "今は選択肢に入っていません。",
+      aboveLevel: "今の学年（レベル {level}）より上の科目なので、まだおすすめしていません。",
+      notRunning: "今後2年間は開講されません。",
+      notInCourse: "あなたの学位では履修できません。",
+      needsFirst: "先に必要：{needs}。",
+    },
+    notThisYear: "{year}年は開講なし",
+    noProfile: "成績と興味を入力すると、合っているか分かります",
+    seo: "{code}：{level}。",
+  },
   rank: {
     onList: { easy: "楽単ランキング {n} 位", hard: "難関ランキング {n} 位" },
     title: {

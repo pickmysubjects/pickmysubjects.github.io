@@ -718,6 +718,43 @@ export const zhTW: Messages = {
     rateQ: "我可以幫 {code} 評分嗎？",
     rateA: "可以。修過的話，在這個頁面匿名評分（難度、作業量、給分、推不推薦），還可以給明年的同學留建議。滿 3 人評分後顯示平均分；建議經過審核才會顯示。",
   },
+  fit: {
+    title: "難不難？適不適合我？",
+    diffTitle: "難度",
+    youTitle: "對你來說",
+    level: {
+      easier: "偏容易",
+      average: "中等",
+      harder: "偏難",
+      unknown: "資料還太少，暫時無法判斷難度。",
+    },
+    place: {
+      easy: "在 {course} 涼課榜第 {n} 名",
+      hard: "在 {course} 難課榜第 {n} 名",
+    },
+    unranked: {
+      graduate: "研究所課程，不在涼課／難課榜上。",
+      passFail: "只記通過／不通過，不算進 WAM，也不在榜上。",
+      campus: "不在 Parkville 上課，不在榜上。",
+      notRunning: "{year} 年不開，不在榜上。",
+      notInCourse: "{course} 不承認這門課，不在它的榜上。",
+    },
+    out: {
+      done: "這門你已經修過了。",
+      planned: "已經在你的計畫裡了。",
+      behind: "你已經修過 {codes}，這門是它的先修課。",
+      nonAllowed: "和你已修或已計畫的 {codes} 不能同時採計學分。",
+      campus: "不在 Parkville 上課，也不屬於你的主修。",
+      filtered: "目前不在你的可選範圍內。",
+      aboveLevel: "級別高於你目前的年級（{level} 級），暫時不推薦。",
+      notRunning: "未來兩年都不開。",
+      notInCourse: "你的學位不能選這門課。",
+      needsFirst: "需要先滿足：{needs}。",
+    },
+    notThisYear: "{year} 年不開",
+    noProfile: "填上你的成績和興趣，看看這門適不適合你",
+    seo: "{code}：{level}。",
+  },
   rank: {
     onList: { easy: "在涼課榜上（第 {n} 名）", hard: "在硬課榜上（第 {n} 名）" },
     title: {

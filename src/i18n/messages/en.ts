@@ -721,6 +721,43 @@ export const en = {
     rateQ: "Can I rate {code}?",
     rateA: "Yes. If you've taken it, rate it anonymously on this page (difficulty, workload, marking, would you recommend it) and leave a tip for next year's students. Averages show once 3 students have rated it; tips are checked before they appear.",
   },
+  fit: {
+    title: "Is it hard? Is it right for me?",
+    diffTitle: "How hard it is",
+    youTitle: "For you",
+    level: {
+      easier: "Easier",
+      average: "About average",
+      harder: "Harder",
+      unknown: "Not enough data to rate its difficulty yet.",
+    },
+    place: {
+      easy: "#{n} on the easy list for {course}",
+      hard: "#{n} on the hardest list for {course}",
+    },
+    unranked: {
+      graduate: "A graduate subject, so it isn't on the easy and hard lists.",
+      passFail: "Pass/fail, so it doesn't count in your WAM and isn't on the lists.",
+      campus: "Taught away from Parkville, so it isn't on the lists.",
+      notRunning: "Not running in {year}, so it isn't on the lists.",
+      notInCourse: "Not counted by {course}, so it isn't on its lists.",
+    },
+    out: {
+      done: "You've done this.",
+      planned: "It's already in your plan.",
+      behind: "You've done {codes}, which builds on it.",
+      nonAllowed: "Can't count alongside {codes}, which you've done or planned.",
+      campus: "Taught away from Parkville and not part of your major.",
+      filtered: "Not among your options right now.",
+      aboveLevel: "A higher level than your year (level {level}), so it isn't suggested yet.",
+      notRunning: "Not running in the next two years.",
+      notInCourse: "Not open to your degree.",
+      needsFirst: "Needs {needs} first.",
+    },
+    notThisYear: "Not running in {year}",
+    noProfile: "Add your marks and interests to see if it suits you",
+    seo: "{code}: {level}.",
+  },
   rank: {
     onList: { easy: "On the easy list (#{n})", hard: "On the hardest list (#{n})" },
     title: {

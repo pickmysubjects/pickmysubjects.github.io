@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, shallowRef, useId } from 'vue'
-import type { Recommendation } from '@/engine'
+import { fitBand, type Recommendation } from '@/engine'
 import { useI18n } from '@/i18n'
 
 /** How well a suggestion fits: a number and a word; tap for what the number means. */
@@ -9,7 +9,7 @@ const { t } = useI18n()
 const open = shallowRef(false)
 const id = useId()
 // Relative to the student's other options (the raw score centres on 50 and read as a poor mark).
-const band = computed(() => (props.rec.betterThan >= 90 ? 'great' : props.rec.betterThan >= 60 ? 'good' : 'ok'))
+const band = computed(() => fitBand(props.rec.betterThan))
 </script>
 
 <template>

@@ -95,6 +95,21 @@ export interface RecommendOptions {
   majors?: readonly string[]
   /** Titles of the student's minors, for conditions a minor can meet; unknown when not given. */
   minors?: readonly string[]
+  /** When given, filled with why each subject left out of the list was left out (the subject page says so). */
+  skipped?: Map<string, Exclusion>
+}
+
+/**
+ * Why recommend() left a subject out: done, already planned, a step back from something done,
+ * can't count with something taken, a far campus, above the student's year, not running soon,
+ * not counted by the degree, or a prerequisite not met. 'filtered' is a caller's own filter.
+ */
+export interface Exclusion {
+  key: 'done' | 'planned' | 'behind' | 'nonAllowed' | 'campus' | 'filtered' | 'aboveLevel' | 'notRunning' | 'notInCourse' | 'needsFirst'
+  /** The subjects behind it: the done one it leads to (behind), the one it clashes with (nonAllowed). */
+  codes?: string[]
+  /** The student's year level (aboveLevel). */
+  level?: number
 }
 
 /** Points a suggestion gives up for making its semester heavier (the plan builder uses the same). */
@@ -206,6 +221,8 @@ export function marksForConditions(results: Profile['results'], data: Dataset): 
   return best
 }
 
+const noSkip = (_: Exclusion): void => {}
+
 export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions = {}): Recommendation[] {
   // Marks only: what a subject is about doesn't come into it, not even to break a tie.
   const asked = given.goal === 'easy' ? { ...given, interests: [] } : given
@@ -290,19 +307,54 @@ export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions =
   const termBefore = opts.termSubjects ? termStress(opts.termSubjects, data, profile, { course: opts.course }).level : null
   const recs: Recommendation[] = []
   for (const s of Object.values(data.subjects)) {
-    if (taken.has(s.code) || behind.has(s.code)) continue
-    if (blocked.has(s.code)) continue
+    const skip = opts.skipped ? (why: Exclusion) => void opts.skipped!.set(s.code, why) : noSkip
+    if (completed.has(s.code)) {
+      skip({ key: 'done' })
+      continue
+    }
+    if (taken.has(s.code)) {
+      skip({ key: 'planned' })
+      continue
+    }
+    if (behind.has(s.code)) {
+      skip({ key: 'behind', codes: [...completed].filter((c) => referencedSubjects(data.subjects[c]?.prerequisites ?? 'none').includes(s.code)) })
+      continue
+    }
+    if (blocked.has(s.code)) {
+      skip({ key: 'nonAllowed', codes: [...taken].filter((c) => { const t = data.subjects[c]; return !!t && t.nonAllowed !== 'unknown' && t.nonAllowed.includes(s.code) }) })
+      continue
+    }
     // Taught only at a far campus (Dookie): only when the student's own major leads there.
-    if (s.campus && !(roles && (roles.required.has(s.code) || roles.options.has(s.code) || towardMajor.has(s.code)))) continue
-    if (s.nonAllowed !== 'unknown' && s.nonAllowed.some((c) => taken.has(c))) continue
-    if (opts.course && opts.category && s.categories[opts.course] !== opts.category) continue
-    if (opts.level !== undefined && s.level !== opts.level) continue
-    if (opts.maxLevel !== undefined && s.level > opts.maxLevel) continue
-    if (opts.term && offeredIn(s, opts.term.year, opts.term.period).status === 'fail') continue
+    if (s.campus && !(roles && (roles.required.has(s.code) || roles.options.has(s.code) || towardMajor.has(s.code)))) {
+      skip({ key: 'campus' })
+      continue
+    }
+    if (s.nonAllowed !== 'unknown' && s.nonAllowed.some((c) => taken.has(c))) {
+      skip({ key: 'nonAllowed', codes: s.nonAllowed.filter((c) => taken.has(c)) })
+      continue
+    }
+    if ((opts.course && opts.category && s.categories[opts.course] !== opts.category) || (opts.level !== undefined && s.level !== opts.level)) {
+      skip({ key: 'filtered' })
+      continue
+    }
+    if (opts.maxLevel !== undefined && s.level > opts.maxLevel) {
+      skip({ key: 'aboveLevel', level: opts.maxLevel })
+      continue
+    }
+    if (opts.term && offeredIn(s, opts.term.year, opts.term.period).status === 'fail') {
+      skip({ key: 'notRunning' })
+      continue
+    }
     // Without a chosen term: skip subjects we know aren't running soon.
-    if (!opts.term && !runsSoon(s, opts.year ?? new Date().getFullYear())) continue
+    if (!opts.term && !runsSoon(s, opts.year ?? new Date().getFullYear())) {
+      skip({ key: 'notRunning' })
+      continue
+    }
     // In a course where other subjects are categorised, an uncategorised one doesn't count for credit.
-    if (opts.course && creditCourses.has(opts.course) && !s.categories[opts.course]) continue
+    if (opts.course && creditCourses.has(opts.course) && !s.categories[opts.course]) {
+      skip({ key: 'notInCourse' })
+      continue
+    }
 
     const eligibleWith = opts.eligibleWith ? new Set(opts.eligibleWith) : taken
     const pre = evaluateField(s.prerequisites, {
@@ -314,7 +366,10 @@ export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions =
       marks: markRecord,
       wam,
     })
-    if (pre.status === 'fail') continue
+    if (pre.status === 'fail') {
+      skip({ key: 'needsFirst' })
+      continue
+    }
     // A condition only the student can check (a VCE score) that they said they meet.
     const eligibility = pre.status === 'unknown' && profile.confirmed?.includes(s.code) ? 'ok' : pre.status
 
