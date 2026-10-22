@@ -57,11 +57,11 @@ const local = computed(() => (props.subject ? localTitle(props.subject, locale.v
 // Touch screens have no hover: a tap opens the sheet with every action instead.
 const touch = () => typeof window !== 'undefined' && window.matchMedia('(hover: none), (max-width: 720px)').matches
 
-// One click opens the details and selects the subject, so its timeline stays lit behind the window.
+// One click opens the details; the window shows the subject's chain itself, so nothing lights
+// up behind it (hovering a card still previews its route on the board).
 function onCardClick(event: MouseEvent): void {
   if ((event.target as Element).closest('.row-actions, .sheet')) return
   if (touch()) return emit('moveSheet', true)
-  if (!props.selected) emit('select')
   emit('open')
 }
 
