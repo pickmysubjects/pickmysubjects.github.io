@@ -719,6 +719,11 @@ export const id: Messages = {
     rateA: "Bisa. Kalau sudah mengambilnya, beri rating secara anonim di halaman ini (kesulitan, beban, cara penilaian, apakah kamu merekomendasikannya) dan tinggalkan tips untuk mahasiswa tahun depan. Rata-rata muncul setelah 3 mahasiswa memberi rating; tips ditinjau dulu sebelum muncul.",
   },
   fit: {
+    easierGroup: "Membuatnya lebih mudah",
+    harderGroup: "Membuatnya lebih sulit",
+    suitsGroup: "Kenapa cocok untukmu",
+    watchGroup: "Perhatikan",
+    betterThan: "Lebih cocok daripada {n}% pilihanmu",
     basis: {
       lead: "Berdasarkan {parts}",
       marks: "{n} nilai",

@@ -719,6 +719,11 @@ export const vi: Messages = {
     rateA: "Có. Nếu đã học, bạn đánh giá ẩn danh ngay trên trang này (độ khó, khối lượng, cách chấm điểm, có nên học không) và để lại lời khuyên cho sinh viên năm sau. Điểm trung bình hiện khi có 3 người đánh giá; lời khuyên được duyệt trước khi hiện.",
   },
   fit: {
+    easierGroup: "Làm môn dễ hơn",
+    harderGroup: "Làm môn khó hơn",
+    suitsGroup: "Vì sao hợp với bạn",
+    watchGroup: "Lưu ý",
+    betterThan: "Hợp hơn {n}% các môn bạn có thể chọn",
     basis: {
       lead: "Dựa trên {parts}",
       marks: "{n} điểm môn",

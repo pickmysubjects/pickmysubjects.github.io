@@ -719,6 +719,11 @@ export const ko: Messages = {
     rateA: "네. 들은 과목이라면 이 페이지에서 익명으로 평가하고(난이도, 학습량, 채점, 추천 여부) 내년 학생들을 위한 팁을 남길 수 있습니다. 평균은 3명 이상 평가하면 표시되고, 팁은 검토 후 표시됩니다.",
   },
   fit: {
+    easierGroup: "쉽게 만드는 점",
+    harderGroup: "어렵게 만드는 점",
+    suitsGroup: "나에게 맞는 이유",
+    watchGroup: "주의할 점",
+    betterThan: "선택 가능한 과목의 {n}%보다 잘 맞아요",
     basis: {
       lead: "근거: {parts}. ",
       marks: "성적 {n}개",

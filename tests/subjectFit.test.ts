@@ -172,39 +172,79 @@ describe('fit card = Find subjects "sort for me"', () => {
 })
 
 describe('difficulty = the easy/hard lists', () => {
-  for (const course of ['B-SCI', 'B-COM', 'B-ARTS']) {
-    it(`${course}: thirds of the full orderings, and a place only within the header chip's top 30`, () => {
+  for (const course of ['B-SCI', 'B-COM', 'B-ARTS', 'B-DES', 'B-MUS', 'B-FAVISART']) {
+    it(`${course}: easier/harder only for the top third of the list it leans to; place only within the chip's top 30`, () => {
       const subjects = forCourse(real, course).subjects
-      const all = Object.values(subjects).filter((s) => rankable(s, course, YEAR) && rankSubject(s, 'easy'))
-      const n = all.length
-      const third = Math.ceil(n / 3)
-      // The full orderings, exactly as the list pages sort (tier, score, code), nothing filtered.
-      const byEasy = [...all].sort((a, b) => cmp(a, b, 'easy')).map((s) => s.code)
-      const byHard = [...all].sort((a, b) => cmp(a, b, 'hard')).map((s) => s.code)
+      const lists = {
+        easy: rankSubjects(Object.values(subjects), { direction: 'easy', course, year: YEAR }),
+        hard: rankSubjects(Object.values(subjects), { direction: 'hard', course, year: YEAR }),
+      }
+      const cut = (d: 'easy' | 'hard') => lists[d][Math.ceil(lists[d].length / 3) - 1]!
+      const key = (d: 'easy' | 'hard', r: { reviews: number | null; score: number }) => {
+        const lean = r.reviews === null ? null : d === 'easy' ? r.reviews : -r.reviews
+        return { tier: lean === null ? 1 : lean >= 0.25 ? 0 : lean <= -0.25 ? 2 : 1, score: d === 'easy' ? r.score : -r.score }
+      }
+      const inTop = (d: 'easy' | 'hard', code: string) => {
+        const r = lists[d].find((x) => x.subject.code === code)
+        if (!r) return false
+        const [k, c] = [key(d, r), key(d, cut(d))]
+        return k.tier < c.tier || (k.tier === c.tier && k.score >= c.score)
+      }
       const counts = { easier: 0, average: 0, harder: 0, unknown: 0 }
-      for (const s of all) {
+      const ranked = Object.values(subjects).filter((s) => rankable(s, course, YEAR))
+      for (const s of ranked) {
         const d = subjectDifficulty(subjects, s.code, course, YEAR)
         counts[d.level]++
-        if (d.level === 'unknown') continue
-        const e = byEasy.indexOf(s.code) + 1
-        const h = byHard.indexOf(s.code) + 1
         const chip = listPlace(subjects, s.code, course, YEAR)
-        // The place line is the header chip's, and never beyond the top 30.
         expect(d.place).toEqual(chip)
         if (d.place) expect(d.place.place).toBeLessThanOrEqual(LIST_TOP)
-        const want = chip ? (chip.direction === 'easy' ? 'easier' : 'harder') : e <= third && (h > third || e <= h) ? 'easier' : h <= third ? 'harder' : 'average'
+        if (d.level === 'unknown') continue
+        const want = chip ? (chip.direction === 'easy' ? 'easier' : 'harder') : inTop('easy', s.code) ? 'easier' : inTop('hard', s.code) ? 'harder' : 'average'
         expect([s.code, d.level]).toEqual([s.code, want])
+        // Never against its own lean: an easier verdict leans easy, a harder one leans hard, with reasons.
+        const score = rankSubject(s, 'easy')!.score
+        if (d.level === 'easier') expect([s.code, score > 0, lists.hard.some((x) => x.subject.code === s.code)]).toEqual([s.code, true, false])
+        if (d.level === 'harder') expect([s.code, score < 0, lists.easy.some((x) => x.subject.code === s.code)]).toEqual([s.code, true, false])
+        if (d.level !== 'average') expect(d.reasons.length).toBeGreaterThan(0)
       }
-      // Thirds: a real middle, not nearly everything "easier".
-      expect(counts.average).toBeGreaterThan(n / 5)
-      expect(counts.easier).toBeLessThan(n / 2)
-      // Every top-30 subject of each real list keeps its chip and verdict.
+      expect(counts.average).toBeGreaterThan(ranked.length / 5)
       for (const direction of ['easy', 'hard'] as const)
         rankSubjects(Object.values(subjects), { direction, course, year: YEAR, limit: LIST_TOP }).forEach((r, i) =>
           expect(subjectDifficulty(subjects, r.subject.code, course, YEAR)).toMatchObject({ level: direction === 'easy' ? 'easier' : 'harder', place: { direction, place: i + 1 } }),
         )
     })
   }
+
+  it('regression: easy-leaning subjects are never "harder" (reviewer repros)', () => {
+    const cases: [string, string][] = [
+      ['B-ARTS', 'AGRI30048'], ['B-ARTS', 'AHIS30019'], ['B-ARTS', 'AHIS30020'], ['B-ARTS', 'CRIM30015'],
+      ['B-COM', 'FINA20044'], ['B-ARTS', 'GEOG30030'], ['B-ARTS', 'ARBC30004'],
+    ]
+    for (const [course, code] of cases) {
+      const subjects = forCourse(real, course).subjects
+      if (!subjects[code]) continue
+      const d = subjectDifficulty(subjects, code, course, YEAR)
+      if (rankSubject(subjects[code]!, 'easy')!.score >= 0) expect([code, d.level]).not.toEqual([code, 'harder'])
+    }
+  })
+
+  it('regression: a tie at the cut-off lands every tied subject on the same side', () => {
+    for (const course of ['B-SCI', 'B-ARTS', 'B-COM']) {
+      const subjects = forCourse(real, course).subjects
+      const groups = new Map<string, Set<string>>()
+      for (const s of Object.values(subjects).filter((x) => rankable(x, course, YEAR))) {
+        const r = rankSubject(s, 'easy')
+        if (!r || listPlace(subjects, s.code, course, YEAR)) continue
+        const d = subjectDifficulty(subjects, s.code, course, YEAR)
+        if (d.level === 'unknown') continue
+        // Same score, same reviews-or-not, same lean by the lists' rules: same verdict.
+        const lean = (['easy', 'hard'] as const).map((x) => rankSubjects([s], { direction: x, course, year: YEAR }).length).join('')
+        const k = `${r.score}|${r.reviews === null ? 'facts' : r.reviews}|${lean}`
+        groups.set(k, (groups.get(k) ?? new Set()).add(d.level))
+      }
+      for (const [k, levels] of groups) expect([course, k, levels.size]).toEqual([course, k, 1])
+    }
+  })
 
   it('regression: a mid-ranked subject is about average, with no place line', () => {
     const subjects = forCourse(real, 'B-SCI').subjects
@@ -280,5 +320,23 @@ describe('fit bands and what a fit rests on', () => {
     expect(d.factsOnly).toBe(false)
     expect(d.reviews).toBeGreaterThanOrEqual(reviewed.discussions!.reduce((a, x) => a + discussionCount(x), 0))
     expect(subjectDifficulty(subjects, 'ACCT20008', 'B-SCI', YEAR)).toMatchObject({ factsOnly: true, reviews: 0 })
+  })
+})
+
+describe('which way each difficulty reason pushes', () => {
+  it('easier items come from the easy ranking, harder ones from the hard ranking, together the shown reasons', () => {
+    const subjects = forCourse(real, 'B-SCI').subjects
+    let mixed = 0
+    for (const s of Object.values(subjects).slice(0, 600)) {
+      const d = subjectDifficulty(subjects, s.code, 'B-SCI', YEAR)
+      if (d.level === 'unknown') continue
+      const easyKeys = new Set(rankSubject(s, 'easy')!.reasons.map((r) => r.key))
+      const hardKeys = new Set(rankSubject(s, 'hard')!.reasons.map((r) => r.key))
+      for (const r of d.pushes.easier) expect(easyKeys.has(r.key)).toBe(true)
+      for (const r of d.pushes.harder) expect(hardKeys.has(r.key)).toBe(true)
+      expect([...d.pushes.easier, ...d.pushes.harder].length).toBe(d.reasons.length)
+      if (d.pushes.easier.length && d.pushes.harder.length) mixed++
+    }
+    expect(mixed).toBeGreaterThan(0)
   })
 })

@@ -284,57 +284,33 @@ export function listPlace(subjects: Record<string, Subject>, code: string, cours
   return places.get(code) ?? null
 }
 
-/** Where a subject falls in the full easy and hard orderings of every rankable subject. */
-export interface FullPlace {
-  /** 1-based places, in the easy and in the hard order (the lists' own sort, nothing left out). */
-  easy: number
-  hard: number
-  /** How many rankable subjects the orderings hold. */
-  n: number
-}
+/** The share of a list, from its top, that reads as clearly easier (or harder) on a subject page. */
+export const LEAN_SHARE = 1 / 3
 
-interface OrderKey {
-  code: string
-  score: number
-  easyTier: number
-  hardTier: number
-}
-
-const keyOf = (r: RankedSubject): OrderKey => ({ code: r.subject.code, score: r.score, easyTier: tier(r.reviews, 'easy'), hardTier: tier(r.reviews, 'hard') })
-// The list pages' sort: reviews' tier first, then score, then code.
-const easyFirst = (a: OrderKey, b: OrderKey) => a.easyTier - b.easyTier || b.score - a.score || a.code.localeCompare(b.code)
-const hardFirst = (a: OrderKey, b: OrderKey) => a.hardTier - b.hardTier || a.score - b.score || a.code.localeCompare(b.code)
-
-const orderCache = new WeakMap<Record<string, Subject>, Map<string, OrderKey[]>>()
+const cutoffCache = new WeakMap<Record<string, Subject>, Map<string, { tier: number; score: number } | null>>()
 
 /**
- * A subject's places in the full easy and hard orderings for `course` in `year`: every rankable
- * subject in the lists' own order, before the lists keep only those leaning their way. A subject
- * the lists leave out (pass/fail, not running) gets the place it would take. Null with nothing
- * to rank it on.
+ * Whether a subject is in the top third of the easy (or hard) list for `course` in `year`: it
+ * must lean that way by the list's own rule (belongs), and sit at or above the list's third by
+ * tier and score. Ties with the cut-off all count, whatever their codes. A subject the lists leave
+ * out (pass/fail, not running) is judged against the same cut-off.
  */
-export function fullPlace(subjects: Record<string, Subject>, code: string, course: string, year: number): FullPlace | null {
-  const s = subjects[code]
-  const r = s && rankSubject(s, 'easy')
-  if (!r) return null
-  let byKey = orderCache.get(subjects)
-  if (!byKey) orderCache.set(subjects, (byKey = new Map()))
-  const cacheKey = `${course}|${year}`
-  let keys = byKey.get(cacheKey)
-  if (!keys) {
-    keys = []
-    for (const x of Object.values(subjects)) {
-      if (!rankable(x, course, year)) continue
-      const rx = rankSubject(x, 'easy')
-      if (rx) keys.push(keyOf(rx))
-    }
-    byKey.set(cacheKey, keys)
+export function inTopShare(subjects: Record<string, Subject>, s: Subject, direction: RankDirection, course: string, year: number): boolean {
+  const r = rankSubject(s, direction)
+  if (!r || !belongs(r, direction)) return false
+  let byKey = cutoffCache.get(subjects)
+  if (!byKey) cutoffCache.set(subjects, (byKey = new Map()))
+  const key = `${direction}|${course}|${year}`
+  let cut = byKey.get(key)
+  if (cut === undefined) {
+    const list = rankSubjects(Object.values(subjects), { direction, course, year })
+    const last = list[Math.ceil(list.length * LEAN_SHARE) - 1]
+    cut = last ? { tier: tier(last.reviews, direction), score: last.score } : null
+    byKey.set(key, cut)
   }
-  const me = keyOf(r)
-  const others = keys.filter((k) => k.code !== code)
-  return {
-    easy: others.filter((k) => easyFirst(k, me) < 0).length + 1,
-    hard: others.filter((k) => hardFirst(k, me) < 0).length + 1,
-    n: others.length + 1,
-  }
+  // An empty list (a tiny data set): leaning that way is all there is to go on.
+  if (!cut) return true
+  const t = tier(r.reviews, direction)
+  const sign = direction === 'easy' ? 1 : -1
+  return t < cut.tier || (t === cut.tier && r.score * sign >= cut.score * sign)
 }

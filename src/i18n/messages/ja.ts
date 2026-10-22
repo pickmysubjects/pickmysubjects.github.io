@@ -719,6 +719,11 @@ export const ja: Messages = {
     rateA: "はい。履修した人はこのページで匿名で評価でき（難しさ、課題の量、採点、おすすめか）、来年の学生へのアドバイスも残せます。平均は3人以上が評価すると表示され、アドバイスは確認後に表示されます。",
   },
   fit: {
+    easierGroup: "やさしくする点",
+    harderGroup: "難しくする点",
+    suitsGroup: "合っている理由",
+    watchGroup: "注意点",
+    betterThan: "選べる科目の {n}% より合っています",
     basis: {
       lead: "判断材料：{parts}。",
       marks: "成績 {n} 件",

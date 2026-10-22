@@ -722,6 +722,11 @@ export const en = {
     rateA: "Yes. If you've taken it, rate it anonymously on this page (difficulty, workload, marking, would you recommend it) and leave a tip for next year's students. Averages show once 3 students have rated it; tips are checked before they appear.",
   },
   fit: {
+    easierGroup: "Makes it easier",
+    harderGroup: "Makes it harder",
+    suitsGroup: "Why it suits you",
+    watchGroup: "Watch out",
+    betterThan: "Better fit than {n}% of your options",
     basis: {
       lead: "Based on {parts}",
       marks: "{n} marks",

@@ -1,5 +1,5 @@
 import { periodsFor } from './availability'
-import { fullPlace, listPlace, rankable, rankSubject, type ListPlace, type RankDirection, type RankReason } from './easeRanking'
+import { inTopShare, listPlace, rankable, rankSubject, type ListPlace, type RankDirection, type RankReason } from './easeRanking'
 import type { Note } from './plan'
 import { recommend, type Exclusion, type Profile, type Recommendation, type RecommendOptions } from './recommend'
 import { discussionCount, type Dataset, type Subject } from './schema'
@@ -22,6 +22,8 @@ export interface Difficulty {
   place: ListPlace | null
   /** Up to three reasons for the verdict, strongest first ('firstYear' only when nothing else). */
   reasons: RankReason[]
+  /** The same reasons split by which way each pushes: from the easy ranking's reasons, or the hard one's. */
+  pushes: { easier: RankReason[]; harder: RankReason[] }
   /** Nobody has reviewed or rated it: the verdict rests on Handbook facts alone. */
   factsOnly: boolean
   /** How many student reviews and ratings it rests on (0 when factsOnly). */
@@ -51,7 +53,7 @@ const notFirstYear = (r: RankReason) => r.key !== 'firstYear'
  */
 export function subjectDifficulty(subjects: Record<string, Subject>, code: string, course: string, year: number): Difficulty {
   const s = subjects[code]
-  const unknown: Difficulty = { level: 'unknown', place: null, reasons: [], factsOnly: true, reviews: 0 }
+  const unknown: Difficulty = { level: 'unknown', place: null, reasons: [], pushes: { easier: [], harder: [] }, factsOnly: true, reviews: 0 }
   if (!s) return unknown
   const easy = rankSubject(s, 'easy')
   const hard = rankSubject(s, 'hard')
@@ -72,28 +74,23 @@ export function subjectDifficulty(subjects: Record<string, Subject>, code: strin
         : // On neither list: what pulls each way, the strongest of each first.
           { level: 'average', reasons: interleave(easy.reasons.filter(notFirstYear), hard.reasons.filter(notFirstYear)).slice(0, MAX_DIFFICULTY_REASONS) }
 
-  // Thirds of the full easy and hard orderings: the lists themselves have no cut-off (every
-  // subject leaning that way is on them), so the top third reads as easier, the top third of the
-  // hard order as harder, and the middle as about average.
-  const full = fullPlace(subjects, code, course, year)!
-  const third = Math.ceil(full.n / 3)
-  // The header chip's place (top LIST_TOP of the real list): shown, and the verdict follows it.
+  // The top third of each list: a subject must lean that way by the list's own rule, and sit in
+  // the list's top third (ties at the cut-off all in). Further down a list, or on neither: about
+  // average. The lists have no cut-off of their own, so a third is ours, the same for both.
+  // The header chip's place (top LIST_TOP of the real list) is shown, and the verdict follows it.
   const listed = rankable(s, course, year) ? listPlace(subjects, code, course, year) : null
-  const easier = full.easy <= third
-  const harder = full.hard <= third
   const direction: RankDirection | null = listed
     ? listed.direction
-    : easier && harder
-      ? full.easy <= full.hard
-        ? 'easy'
-        : 'hard'
-      : easier
-        ? 'easy'
-        : harder
-          ? 'hard'
-          : null
+    : inTopShare(subjects, s, 'easy', course, year)
+      ? 'easy'
+      : inTopShare(subjects, s, 'hard', course, year)
+        ? 'hard'
+        : null
+  const v = verdict(direction)
+  const fromEasy = new Set(easy.reasons)
   return {
-    ...verdict(direction),
+    ...v,
+    pushes: { easier: v.reasons.filter((r) => fromEasy.has(r)), harder: v.reasons.filter((r) => !fromEasy.has(r)) },
     place: listed,
     factsOnly,
     reviews: factsOnly ? 0 : reviewCount(s),

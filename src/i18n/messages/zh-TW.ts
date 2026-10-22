@@ -719,6 +719,11 @@ export const zhTW: Messages = {
     rateA: "可以。修過的話，在這個頁面匿名評分（難度、作業量、給分、推不推薦），還可以給明年的同學留建議。滿 3 人評分後顯示平均分；建議經過審核才會顯示。",
   },
   fit: {
+    easierGroup: "讓它更容易的",
+    harderGroup: "讓它更難的",
+    suitsGroup: "適合你的地方",
+    watchGroup: "需要注意",
+    betterThan: "比你 {n}% 的可選課程更適合",
     basis: {
       lead: "依據：{parts}。",
       marks: "{n} 門成績",

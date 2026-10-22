@@ -719,6 +719,11 @@ export const ms: Messages = {
     rateA: "Boleh. Jika pernah mengambilnya, beri rating tanpa nama di halaman ini (kesukaran, beban kerja, pemarkahan, adakah anda mengesyorkannya) dan tinggalkan tip untuk pelajar tahun depan. Purata dipaparkan selepas 3 pelajar memberi rating; tip disemak dahulu sebelum dipaparkan.",
   },
   fit: {
+    easierGroup: "Menjadikannya lebih mudah",
+    harderGroup: "Menjadikannya lebih susah",
+    suitsGroup: "Kenapa ia sesuai",
+    watchGroup: "Berhati-hati",
+    betterThan: "Lebih sesuai daripada {n}% pilihan anda",
     basis: {
       lead: "Berdasarkan {parts}",
       marks: "{n} markah",

@@ -233,7 +233,9 @@ function difficultyLine(t: Translate, code: LocaleCode, s: Subject): string {
     : d.unranked
       ? t(`fit.unranked.${d.unranked}`, { year: YEAR, course: 'Bachelor of Science' })
       : ''
-  const reasons = d.reasons.map((r) => reasonText(t, code, r)).join(listSep(code))
+  // Which way each reason pushes, said outright ("Makes it easier: …").
+  const group = (key: string, rows: RankReason[]) => (rows.length ? `${t(key)}${CJK.has(code) ? '：' : ': '}${rows.map((r) => reasonText(t, code, r)).join(listSep(code))}` : '')
+  const reasons = [group('fit.easierGroup', d.pushes.easier), group('fit.harderGroup', d.pushes.harder)].filter(Boolean).join(CJK.has(code) ? '。' : '. ')
   const end = CJK.has(code) ? '。' : '.'
   return [
     t('fit.seo', { code: s.code, level: t(`fit.level.${d.level}`) }),

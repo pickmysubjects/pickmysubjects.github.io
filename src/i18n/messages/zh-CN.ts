@@ -719,6 +719,11 @@ export const zhCN: Messages = {
     rateA: "可以。修过的话，在这个页面匿名打分（难度、作业量、给分、推不推荐），还可以给明年的同学留建议。满 3 人评分后显示平均分；建议经过审核才会显示。",
   },
   fit: {
+    easierGroup: "让它更容易的",
+    harderGroup: "让它更难的",
+    suitsGroup: "适合你的地方",
+    watchGroup: "需要注意",
+    betterThan: "比你 {n}% 的可选课程更适合",
     basis: {
       lead: "依据：{parts}。",
       marks: "{n} 门成绩",
