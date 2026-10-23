@@ -6,7 +6,7 @@ import { admissionCourses, namedComponents, referencedSubjects } from '../src/en
 import { MIN_GRADE_SHARES, type GradeOffset } from '../src/engine/grades'
 import { isRatingTag } from '../src/engine/ratingTags'
 import type { ReqExpr, ReqField } from '../src/engine/schema'
-import { assembleCareers, courseFurtherStudyFileSchema, jobsFileSchema, majorCareersFileSchema, occupationsFileSchema } from '../src/engine/careers'
+import { assembleCareers, careerTermsFileSchema, courseFurtherStudyFileSchema, jobsFileSchema, majorCareersFileSchema, occupationsFileSchema } from '../src/engine/careers'
 import { aboutFileSchema, componentFileSchema, courseFileSchema, diplomaFileSchema, DISCUSSION_SOURCES, discussionFileSchema, SKILLS, subjectFileSchema, subjectTitlesFileSchema, type Dataset, type DiscussionSummary, type Skill, type Subject } from '../src/engine/schema'
 
 export const ROOT = join(import.meta.dirname, '..')
@@ -227,9 +227,10 @@ export function buildDataset(name: Dataset['name']): BuildResult {
     const jobs = file('jobs.yaml', jobsFileSchema)
     const majors = file('majors.yaml', majorCareersFileSchema)
     const courseStudy = file('courses.yaml', courseFurtherStudyFileSchema)
-    if (occupations && jobs && majors && courseStudy) {
+    const terms = file('terms.yaml', careerTermsFileSchema)
+    if (occupations && jobs && majors && courseStudy && terms) {
       const r = assembleCareers(
-        { occupations, jobs, majors, courses: courseStudy },
+        { occupations, jobs, majors, courses: courseStudy, terms },
         { subjects: new Set(Object.keys(subjects)), components: new Map(components.map((c) => [c.id, c.course])), courses: new Set(courses.map((c) => c.code)) },
       )
       errors.push(...r.errors)

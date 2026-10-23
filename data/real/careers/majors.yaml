@@ -2,8 +2,8 @@
 # any professional accreditation route. One entry per Handbook component; `components` are our ids
 # for it (a major we split into streams has several). career_text: false = the page lists no careers.
 # related_fields are ours, not the Handbook's: official occupations matched by subject area only.
-# qualifier: direct | via-further-study | needs-qualification. Industries and further study stay in
-# the Handbook's English.
+# qualifier: direct | via-further-study | needs-qualification. Industries, further study and via stay
+# in the Handbook's English here; their translations are in terms.yaml.
 - handbook_id: b-com-spec-7
   course: B-COM
   title: "Human Resource Management"
@@ -174,7 +174,7 @@
   related_fields: ["software-engineer"]
   accreditation:
     body: "Australian Computer Society (ACS)"
-    summary: { en: "The major alone isn't enough: add the Artificial Intelligence or Advanced Computing specialisation.", zh: "只修这个专业不够：还要加 Artificial Intelligence 或 Advanced Computing 方向。" }
+    summary: { en: "The major alone isn't enough: add the Artificial Intelligence or Advanced Computing specialisation.", zh: "只修这个专业不够：还要加 Artificial Intelligence 或 Advanced Computing 方向。", zh-TW: "只修這個主修不夠：還要加上 Artificial Intelligence 或 Advanced Computing 專攻。", ja: "この専攻だけでは足りません。Artificial Intelligence または Advanced Computing の specialisation も必要です。", ko: "이 전공만으로는 부족합니다. Artificial Intelligence 또는 Advanced Computing 세부 전공(specialisation)을 추가해야 합니다.", vi: "Chỉ học ngành này thì chưa đủ: cần thêm chuyên ngành hẹp Artificial Intelligence hoặc Advanced Computing.", ms: "Major ini sahaja tidak mencukupi: tambah pengkhususan Artificial Intelligence atau Advanced Computing.", id: "Jurusan ini saja tidak cukup: tambahkan peminatan Artificial Intelligence atau Advanced Computing.", hi: "सिर्फ़ यह मेजर काफ़ी नहीं है: Artificial Intelligence या Advanced Computing स्पेशलाइज़ेशन भी जोड़ें।" }
     with_one_of: ["advanced-computing", "artificial-intelligence"]
     source: https://handbook.unimelb.edu.au/2026/components/b-sci-major-1
 - handbook_id: b-sci-major-8
@@ -444,7 +444,7 @@
   further_study: ["further study to become a practising psychologist"]
   accreditation:
     body: "Australian Psychology Accreditation Council (APAC)"
-    summary: { en: "The 125-point accredited major (8 compulsory subjects plus at least two Level 3 psychology electives) is the first step to registration and a prerequisite for further professional study.", zh: "125 学分的认证版专业（8 门必修课，加至少两门三年级心理学选修）是注册心理师的第一步，也是继续读专业学位的前提。" }
+    summary: { en: "The 125-point accredited major (8 compulsory subjects plus at least two Level 3 psychology electives) is the first step to registration and a prerequisite for further professional study.", zh: "125 学分的认证版专业（8 门必修课，加至少两门三年级心理学选修）是注册心理师的第一步，也是继续读专业学位的前提。", zh-TW: "125 學分的認證版主修（8 門必修課，加至少兩門三年級心理學選修）是註冊心理師的第一步，也是繼續讀專業學位的前提。", ja: "125単位の認定版専攻（必修8科目と3年次の心理学選択科目2つ以上）が登録への第一歩で、専門職課程に進むための前提条件です。", ko: "125학점짜리 인증 전공(필수 8과목과 3학년 심리학 선택 최소 2과목)이 등록을 향한 첫 단계이자, 전문 과정 진학의 선수 조건입니다.", vi: "Ngành 125 tín chỉ được kiểm định (8 môn bắt buộc và ít nhất hai môn tự chọn tâm lý học năm 3) là bước đầu để được đăng ký hành nghề và là điều kiện để học tiếp chương trình chuyên môn.", ms: "Major terakreditasi 125 mata (8 subjek wajib dan sekurang-kurangnya dua elektif psikologi Tahap 3) ialah langkah pertama ke arah pendaftaran dan prasyarat untuk pengajian profesional lanjut.", id: "Jurusan terakreditasi 125 poin (8 mata kuliah wajib plus minimal dua pilihan psikologi Level 3) adalah langkah pertama menuju registrasi dan prasyarat untuk studi profesional lanjutan.", hi: "125 पॉइंट वाला मान्यता प्राप्त मेजर (8 अनिवार्य विषय और कम से कम दो लेवल 3 मनोविज्ञान वैकल्पिक) पंजीकरण की पहली सीढ़ी है और आगे की पेशेवर पढ़ाई की पूर्व-शर्त है।" }
     required: ["PSYC10003", "PSYC10004", "PSYC20006", "PSYC20007", "PSYC20008", "PSYC20009", "PSYC30013", "PSYC30021"]
     source: https://handbook.unimelb.edu.au/2026/components/b-sci-major-36
 - handbook_id: b-sci-major-45
@@ -476,7 +476,7 @@
   industries: ["AI research", "software development", "data-driven decision-making"]
   accreditation:
     body: "Australian Computer Society (ACS)"
-    summary: { en: "Counts towards ACS accreditation when taken with the Computing and Software Systems major.", zh: "和 Computing and Software Systems 专业一起修，可以算进 ACS 认证。" }
+    summary: { en: "Counts towards ACS accreditation when taken with the Computing and Software Systems major.", zh: "和 Computing and Software Systems 专业一起修，可以算进 ACS 认证。", zh-TW: "和 Computing and Software Systems 主修一起修，可以算進 ACS 認證。", ja: "Computing and Software Systems 専攻と一緒に履修すると、ACS 認定の要件に数えられます。", ko: "Computing and Software Systems 전공과 함께 이수하면 ACS 인증에 포함됩니다.", vi: "Được tính vào kiểm định ACS khi học cùng ngành Computing and Software Systems.", ms: "Dikira untuk akreditasi ACS apabila diambil bersama major Computing and Software Systems.", id: "Dihitung untuk akreditasi ACS bila diambil bersama jurusan Computing and Software Systems.", hi: "Computing and Software Systems मेजर के साथ लेने पर ACS मान्यता में गिना जाता है।" }
     with_one_of: ["computing-and-software-systems"]
     source: https://handbook.unimelb.edu.au/2026/components/b-sci-spec-1
 - handbook_id: b-sci-spec-2
@@ -490,7 +490,7 @@
   related_fields: ["ict-security-specialist"]
   accreditation:
     body: "Australian Computer Society (ACS)"
-    summary: { en: "Counts towards ACS accreditation when taken with the Computing and Software Systems major.", zh: "和 Computing and Software Systems 专业一起修，可以算进 ACS 认证。" }
+    summary: { en: "Counts towards ACS accreditation when taken with the Computing and Software Systems major.", zh: "和 Computing and Software Systems 专业一起修，可以算进 ACS 认证。", zh-TW: "和 Computing and Software Systems 主修一起修，可以算進 ACS 認證。", ja: "Computing and Software Systems 専攻と一緒に履修すると、ACS 認定の要件に数えられます。", ko: "Computing and Software Systems 전공과 함께 이수하면 ACS 인증에 포함됩니다.", vi: "Được tính vào kiểm định ACS khi học cùng ngành Computing and Software Systems.", ms: "Dikira untuk akreditasi ACS apabila diambil bersama major Computing and Software Systems.", id: "Dihitung untuk akreditasi ACS bila diambil bersama jurusan Computing and Software Systems.", hi: "Computing and Software Systems मेजर के साथ लेने पर ACS मान्यता में गिना जाता है।" }
     with_one_of: ["computing-and-software-systems"]
     source: https://handbook.unimelb.edu.au/2026/components/b-sci-spec-2
 - handbook_id: b-bmed-major-12
@@ -514,7 +514,7 @@
   related_fields: ["biomedical-engineer"]
   helpful_subjects:
     codes: ["BMEN30006", "ENGR10004", "ENGR10006"]
-    note: { en: "Biomedicine students should expect to take BMEN30006, and are advised to use first-year breadth or electives for ENGR10004 and ENGR10006.", zh: "生物医学学士的学生基本都要修 BMEN30006；建议一年级用 breadth 或选修位修 ENGR10004 和 ENGR10006。" }
+    note: { en: "Biomedicine students should expect to take BMEN30006, and are advised to use first-year breadth or electives for ENGR10004 and ENGR10006.", zh: "生物医学学士的学生基本都要修 BMEN30006；建议一年级用 breadth 或选修位修 ENGR10004 和 ENGR10006。", zh-TW: "生物醫學學士的學生基本上都要修 BMEN30006；建議一年級用 breadth 或選修名額修 ENGR10004 和 ENGR10006。", ja: "Biomedicine の学生は BMEN30006 を履修する前提で考えてください。1年次の breadth か選択枠で ENGR10004 と ENGR10006 を取ることが勧められています。", ko: "Biomedicine 학생은 BMEN30006을 듣게 된다고 보면 되고, 1학년 breadth나 선택 과목으로 ENGR10004와 ENGR10006을 듣는 것이 권장됩니다.", vi: "Sinh viên Biomedicine nên dự tính học BMEN30006, và được khuyên dùng môn breadth hoặc tự chọn năm nhất cho ENGR10004 và ENGR10006.", ms: "Pelajar Biomedicine dijangka mengambil BMEN30006, dan dinasihatkan menggunakan breadth atau elektif tahun pertama untuk ENGR10004 dan ENGR10006.", id: "Mahasiswa Biomedicine sebaiknya bersiap mengambil BMEN30006, dan disarankan memakai breadth atau mata kuliah pilihan tahun pertama untuk ENGR10004 dan ENGR10006.", hi: "Biomedicine के छात्रों को BMEN30006 लेना होगा, और सलाह है कि पहले साल के breadth या वैकल्पिक विषयों में ENGR10004 और ENGR10006 लें।" }
 - handbook_id: b-bmed-major-5
   course: B-BMED
   title: "Biotechnology"
@@ -631,7 +631,7 @@
   further_study: ["further study to become a practising psychologist"]
   accreditation:
     body: "Australian Psychology Accreditation Council (APAC)"
-    summary: { en: "The 125-point accredited major (8 compulsory subjects plus two Level 3 psychology electives) is a prerequisite for further study to become a practising psychologist.", zh: "125 学分的认证版专业（8 门必修课，加两门三年级心理学选修）是之后继续读书、成为执业心理师的前提。" }
+    summary: { en: "The 125-point accredited major (8 compulsory subjects plus two Level 3 psychology electives) is a prerequisite for further study to become a practising psychologist.", zh: "125 学分的认证版专业（8 门必修课，加两门三年级心理学选修）是之后继续读书、成为执业心理师的前提。", zh-TW: "125 學分的認證版主修（8 門必修課，加兩門三年級心理學選修）是之後繼續讀書、成為執業心理師的前提。", ja: "125単位の認定版専攻（必修8科目と3年次の心理学選択科目2つ）は、開業心理士を目指して進学するための前提条件です。", ko: "125학점짜리 인증 전공(필수 8과목과 3학년 심리학 선택 2과목)은 임상 심리사가 되기 위한 추가 학업의 선수 조건입니다.", vi: "Ngành 125 tín chỉ được kiểm định (8 môn bắt buộc và hai môn tự chọn tâm lý học năm 3) là điều kiện để học tiếp và trở thành nhà tâm lý hành nghề.", ms: "Major terakreditasi 125 mata (8 subjek wajib dan dua elektif psikologi Tahap 3) ialah prasyarat untuk pengajian lanjut bagi menjadi ahli psikologi berdaftar.", id: "Jurusan terakreditasi 125 poin (8 mata kuliah wajib plus dua pilihan psikologi Level 3) adalah prasyarat studi lanjut untuk menjadi psikolog praktik.", hi: "125 पॉइंट वाला मान्यता प्राप्त मेजर (8 अनिवार्य विषय और दो लेवल 3 मनोविज्ञान वैकल्पिक) प्रैक्टिसिंग मनोवैज्ञानिक बनने की आगे की पढ़ाई की पूर्व-शर्त है।" }
     required: [["PSYC10003", "PSYC10006"], ["PSYC10004", "PSYC10007"], "PSYC20006", "PSYC20007", "PSYC20008", "PSYC20009", "PSYC30013", "PSYC30021"]
     source: https://handbook.unimelb.edu.au/2026/components/b-bmed-major-15
 - handbook_id: b-bmed-major-17
@@ -653,8 +653,8 @@
   industries: ["any industry and sector"]
   accreditation:
     body: "CPA Australia (CPA), Chartered Accountants ANZ (CA ANZ)"
-    summary: { en: "Take the accreditation version of the major: ECON10003, the major's two Level 3 core subjects and three business law breadth subjects. Full membership may also need work experience or further study.", zh: "要修这个专业的认证版本：ECON10003、专业的两门三年级核心课，加三门商法 breadth 课。成为正式会员可能还需要工作经验或进一步学习。" }
-    required: ["ECON10003"]
+    summary: { en: "Take the accreditation version of the major: ECON10003, the two Level 3 core subjects ACCT30002 and ACCT30004, and three business law breadth subjects. Full membership may also need work experience or further study.", zh: "要修这个专业的认证版本：ECON10003、两门三年级核心课 ACCT30002 和 ACCT30004，加三门商法 breadth 课。成为正式会员可能还需要工作经验或进一步学习。", zh-TW: "要修這個主修的認證版本：ECON10003、兩門三年級核心課 ACCT30002 和 ACCT30004，再加三門商法 breadth 課。成為正式會員可能還需要工作經驗或進一步進修。", ja: "専攻の認定版を履修します：ECON10003、3年次のコア科目 ACCT30002 と ACCT30004、それに商法の breadth 科目3つ。正会員になるには実務経験や追加の学修も必要な場合があります。", ko: "전공의 인증 버전을 이수하세요: ECON10003, 3학년 핵심 과목 ACCT30002와 ACCT30004, 그리고 상법 breadth 과목 3개. 정회원이 되려면 실무 경력이나 추가 학업이 필요할 수 있습니다.", vi: "Học phiên bản kiểm định của ngành: ECON10003, hai môn cốt lõi năm 3 ACCT30002 và ACCT30004, cùng ba môn breadth về luật kinh doanh. Để thành hội viên chính thức có thể cần thêm kinh nghiệm làm việc hoặc học tiếp.", ms: "Ambil versi akreditasi major ini: ECON10003, dua subjek teras Tahap 3 ACCT30002 dan ACCT30004, serta tiga subjek breadth undang-undang perniagaan. Keahlian penuh mungkin juga memerlukan pengalaman kerja atau pengajian lanjut.", id: "Ambil versi akreditasi jurusan ini: ECON10003, dua mata kuliah inti Level 3 ACCT30002 dan ACCT30004, serta tiga mata kuliah breadth hukum bisnis. Keanggotaan penuh mungkin juga memerlukan pengalaman kerja atau studi lanjut.", hi: "मेजर का मान्यता वाला संस्करण लें: ECON10003, लेवल 3 के दो कोर विषय ACCT30002 और ACCT30004, और बिज़नेस लॉ के तीन breadth विषय। पूर्ण सदस्यता के लिए कार्य अनुभव या आगे की पढ़ाई भी लग सकती है।" }
+    required: ["ECON10003", "ACCT30002", "ACCT30004"]
     required_breadth: ["BLAW10001", "BLAW20001", "BLAW30002"]
     source: https://handbook.unimelb.edu.au/2026/components/b-com-major-1
 - handbook_id: b-arts-major-26
@@ -671,7 +671,7 @@
   further_study: ["further professional training in Psychology"]
   accreditation:
     body: "Australian Psychology Accreditation Council (APAC)"
-    summary: { en: "The 125-point accredited major (not the 75-point minor) is the first step to registration. 25 points of its Level 2 and 3 psychology go in your breadth.", zh: "125 学分的认证版专业（不是 75 学分的辅修）是注册心理师的第一步。其中 25 学分的二、三年级心理学课算在 breadth 里。" }
+    summary: { en: "The 125-point accredited major (not the 75-point minor) is the first step to registration. 25 points of its Level 2 and 3 psychology go in your breadth.", zh: "125 学分的认证版专业（不是 75 学分的辅修）是注册心理师的第一步。其中 25 学分的二、三年级心理学课算在 breadth 里。", zh-TW: "125 學分的認證版主修（不是 75 學分的輔修）是註冊心理師的第一步。其中 25 學分的二、三年級心理學課算在 breadth 裡。", ja: "125単位の認定版専攻（75単位の副専攻ではない）が登録への第一歩です。そのうち2・3年次の心理学25単位は breadth に入ります。", ko: "125학점짜리 인증 전공(75학점 부전공이 아님)이 등록을 향한 첫 단계입니다. 그중 2·3학년 심리학 25학점은 breadth로 들어갑니다.", vi: "Ngành 125 tín chỉ được kiểm định (không phải ngành phụ 75 tín chỉ) là bước đầu để được đăng ký hành nghề. 25 tín chỉ tâm lý học năm 2 và 3 trong đó được tính vào phần breadth.", ms: "Major terakreditasi 125 mata (bukan minor 75 mata) ialah langkah pertama ke arah pendaftaran. 25 mata psikologi Tahap 2 dan 3 daripadanya dikira dalam breadth anda.", id: "Jurusan terakreditasi 125 poin (bukan minor 75 poin) adalah langkah pertama menuju registrasi. 25 poin psikologi Level 2 dan 3 di dalamnya masuk ke breadth Anda.", hi: "125 पॉइंट वाला मान्यता प्राप्त मेजर (75 पॉइंट का माइनर नहीं) पंजीकरण की पहली सीढ़ी है। इसके लेवल 2 और 3 मनोविज्ञान के 25 पॉइंट आपके breadth में जाते हैं।" }
     required: [["PSYC10003", "PSYC10006"], ["PSYC10004", "PSYC10007"], "PSYC20006", "PSYC20007", "PSYC20008", "PSYC20009", "PSYC30013", "PSYC30021"]
     source: https://handbook.unimelb.edu.au/2026/components/b-arts-major-26
 - handbook_id: b-com-major-2
@@ -687,7 +687,7 @@
   further_study: ["Honours/Master's (ACTL40012/ACTL90019)"]
   accreditation:
     body: "Actuaries Institute"
-    summary: { en: "High marks in the matching subjects earn exemptions from the Actuaries Institute Foundation Program (not full accreditation). The route needs two extra Level 2 electives and the Actuarial Risk Management specialisation.", zh: "相应科目成绩够高，可以免考精算师协会（Actuaries Institute）的 Foundation Program（不是完整认证）。这条路线要多修两门二年级选修课，并完成 Actuarial Risk Management 方向。" }
+    summary: { en: "High marks in the matching subjects earn exemptions from the Actuaries Institute Foundation Program (not full accreditation). The route needs two extra Level 2 electives and the Actuarial Risk Management specialisation.", zh: "相应科目成绩够高，可以免考精算师协会（Actuaries Institute）的 Foundation Program（不是完整认证）。这条路线要多修两门二年级选修课，并完成 Actuarial Risk Management 方向。", zh-TW: "相應科目成績夠高，可以免考精算師協會（Actuaries Institute）的 Foundation Program（不是完整認證）。這條路線要多修兩門二年級選修課，並完成 Actuarial Risk Management 專攻。", ja: "対応する科目で高得点を取ると、Actuaries Institute（アクチュアリー会）の Foundation Program が免除されます（完全な認定ではありません）。このルートでは2年次の選択科目を2つ追加し、Actuarial Risk Management の specialisation を修める必要があります。", ko: "해당 과목에서 높은 점수를 받으면 Actuaries Institute(보험계리사 협회) Foundation Program이 면제됩니다(완전한 인증은 아님). 이 경로는 2학년 선택 과목 2개를 추가로 듣고 Actuarial Risk Management 세부 전공을 이수해야 합니다.", vi: "Điểm cao ở các môn tương ứng giúp được miễn Foundation Program của Actuaries Institute (không phải kiểm định đầy đủ). Lộ trình này cần thêm hai môn tự chọn năm 2 và chuyên ngành hẹp Actuarial Risk Management.", ms: "Markah tinggi dalam subjek berkaitan memberi pengecualian daripada Foundation Program Actuaries Institute (bukan akreditasi penuh). Laluan ini memerlukan dua elektif Tahap 2 tambahan dan pengkhususan Actuarial Risk Management.", id: "Nilai tinggi di mata kuliah terkait memberi pembebasan dari Foundation Program Actuaries Institute (bukan akreditasi penuh). Jalur ini butuh dua mata kuliah pilihan Level 2 tambahan dan peminatan Actuarial Risk Management.", hi: "संबंधित विषयों में ऊँचे अंक लाने पर Actuaries Institute के Foundation Program से छूट मिलती है (पूर्ण मान्यता नहीं)। इस रास्ते के लिए दो अतिरिक्त लेवल 2 वैकल्पिक विषय और Actuarial Risk Management स्पेशलाइज़ेशन चाहिए।" }
     required: ["ACTL20005", "ACTL20006", "ACTL30002", "ACTL30004"]
     recommended: ["ACTL10001", "MAST10008", "ACTL30008"]
     source: https://handbook.unimelb.edu.au/2026/components/b-com-major-2
@@ -704,7 +704,7 @@
   related_fields: ["software-engineer"]
   accreditation:
     body: "Australian Computer Society (ACS)"
-    summary: { en: "The major alone isn't enough: add the Artificial Intelligence or Advanced Computing specialisation.", zh: "只修这个专业不够：还要加 Artificial Intelligence 或 Advanced Computing 方向。" }
+    summary: { en: "The major alone isn't enough: add the Artificial Intelligence or Advanced Computing specialisation.", zh: "只修这个专业不够：还要加 Artificial Intelligence 或 Advanced Computing 方向。", zh-TW: "只修這個主修不夠：還要加上 Artificial Intelligence 或 Advanced Computing 專攻。", ja: "この専攻だけでは足りません。Artificial Intelligence または Advanced Computing の specialisation も必要です。", ko: "이 전공만으로는 부족합니다. Artificial Intelligence 또는 Advanced Computing 세부 전공(specialisation)을 추가해야 합니다.", vi: "Chỉ học ngành này thì chưa đủ: cần thêm chuyên ngành hẹp Artificial Intelligence hoặc Advanced Computing.", ms: "Major ini sahaja tidak mencukupi: tambah pengkhususan Artificial Intelligence atau Advanced Computing.", id: "Jurusan ini saja tidak cukup: tambahkan peminatan Artificial Intelligence atau Advanced Computing.", hi: "सिर्फ़ यह मेजर काफ़ी नहीं है: Artificial Intelligence या Advanced Computing स्पेशलाइज़ेशन भी जोड़ें।" }
     with_one_of: ["des-spec-advanced-computing", "des-spec-artificial-intelligence"]
     source: https://handbook.unimelb.edu.au/2026/components/b-des-major-3
 - handbook_id: b-arts-major-10
@@ -834,7 +834,7 @@
   further_study: ["Master of Landscape Architecture (MC-LARCH)"]
   helpful_subjects:
     codes: ["LARC30002"]
-    note: { en: "Recommended for entry to the 200-point Master of Landscape Architecture; without it, ABPL90265 is needed in the masters.", zh: "想读 200 学分的景观建筑硕士（Master of Landscape Architecture）建议修；不修的话，硕士阶段要补 ABPL90265。" }
+    note: { en: "Recommended for entry to the 200-point Master of Landscape Architecture; without it, ABPL90265 is needed in the masters.", zh: "想读 200 学分的景观建筑硕士（Master of Landscape Architecture）建议修；不修的话，硕士阶段要补 ABPL90265。", zh-TW: "想讀 200 學分的景觀建築碩士（Master of Landscape Architecture）建議修；沒修的話，碩士階段要補 ABPL90265。", ja: "200単位の Master of Landscape Architecture（ランドスケープアーキテクチャー修士）への進学に推奨されています。履修しない場合は、修士課程で ABPL90265 が必要です。", ko: "200학점짜리 Master of Landscape Architecture(조경학 석사) 진학에 권장됩니다. 이수하지 않으면 석사 과정에서 ABPL90265를 들어야 합니다.", vi: "Được khuyến nghị để vào Master of Landscape Architecture 200 tín chỉ; nếu không học, bạn phải học ABPL90265 trong chương trình thạc sĩ.", ms: "Disyorkan untuk kemasukan ke Master of Landscape Architecture 200 mata; tanpanya, ABPL90265 perlu diambil semasa sarjana.", id: "Disarankan untuk masuk Master of Landscape Architecture 200 poin; tanpa ini, ABPL90265 harus diambil saat magister.", hi: "200 पॉइंट वाले Master of Landscape Architecture में प्रवेश के लिए सुझाया गया है; इसके बिना मास्टर में ABPL90265 लेना होगा।" }
 - handbook_id: b-des-major-8
   course: B-DES
   title: "Mechanical Engineering Systems"
@@ -906,7 +906,7 @@
   industries: ["AI research", "software development", "data-driven decision-making"]
   accreditation:
     body: "Australian Computer Society (ACS)"
-    summary: { en: "Counts towards ACS accreditation when taken with the Computing and Software Systems major.", zh: "和 Computing and Software Systems 专业一起修，可以算进 ACS 认证。" }
+    summary: { en: "Counts towards ACS accreditation when taken with the Computing and Software Systems major.", zh: "和 Computing and Software Systems 专业一起修，可以算进 ACS 认证。", zh-TW: "和 Computing and Software Systems 主修一起修，可以算進 ACS 認證。", ja: "Computing and Software Systems 専攻と一緒に履修すると、ACS 認定の要件に数えられます。", ko: "Computing and Software Systems 전공과 함께 이수하면 ACS 인증에 포함됩니다.", vi: "Được tính vào kiểm định ACS khi học cùng ngành Computing and Software Systems.", ms: "Dikira untuk akreditasi ACS apabila diambil bersama major Computing and Software Systems.", id: "Dihitung untuk akreditasi ACS bila diambil bersama jurusan Computing and Software Systems.", hi: "Computing and Software Systems मेजर के साथ लेने पर ACS मान्यता में गिना जाता है।" }
     with_one_of: ["des-computing-and-software-systems"]
     source: https://handbook.unimelb.edu.au/2026/components/b-des-spec-1
 - handbook_id: b-des-spec-2
@@ -920,7 +920,7 @@
   related_fields: ["ict-security-specialist"]
   accreditation:
     body: "Australian Computer Society (ACS)"
-    summary: { en: "Counts towards ACS accreditation when taken with the Computing and Software Systems major.", zh: "和 Computing and Software Systems 专业一起修，可以算进 ACS 认证。" }
+    summary: { en: "Counts towards ACS accreditation when taken with the Computing and Software Systems major.", zh: "和 Computing and Software Systems 专业一起修，可以算进 ACS 认证。", zh-TW: "和 Computing and Software Systems 主修一起修，可以算進 ACS 認證。", ja: "Computing and Software Systems 専攻と一緒に履修すると、ACS 認定の要件に数えられます。", ko: "Computing and Software Systems 전공과 함께 이수하면 ACS 인증에 포함됩니다.", vi: "Được tính vào kiểm định ACS khi học cùng ngành Computing and Software Systems.", ms: "Dikira untuk akreditasi ACS apabila diambil bersama major Computing and Software Systems.", id: "Dihitung untuk akreditasi ACS bila diambil bersama jurusan Computing and Software Systems.", hi: "Computing and Software Systems मेजर के साथ लेने पर ACS मान्यता में गिना जाता है।" }
     with_one_of: ["des-computing-and-software-systems"]
     source: https://handbook.unimelb.edu.au/2026/components/b-des-spec-2
 - handbook_id: b-mus-major-6

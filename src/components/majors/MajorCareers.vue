@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { BadgeCheck, ExternalLink } from 'lucide-vue-next'
-import { componentCareers } from '@/engine'
+import { careerText, componentCareers } from '@/engine'
 import { careerLabel } from '@/utils/careersHtml'
 import { link } from '@/composables/useView'
 import { useDataset } from '@/composables/useDataset'
 import { useI18n } from '@/i18n'
-import { pickLocalized } from '@/i18n/localized'
 
 // "Where it can lead": what the major's Handbook page says comes after it.
 const props = defineProps<{ id: string; course: string; title: string }>()
@@ -23,7 +22,7 @@ const jobs = computed(() =>
     const job = careers.value?.jobs[c.job]
     if (!job) return []
     const occ = job.occupation ? careers.value?.occupations[job.occupation] : undefined
-    const qualifier = c.qualifier === 'direct' ? '' : t.value(`careers.qualifier.${c.qualifier}`) + (c.via ? `: ${c.via}` : '')
+    const qualifier = c.qualifier === 'direct' ? '' : t.value(`careers.qualifier.${c.qualifier}`) + (c.via ? `: ${careerText(c.via, locale.value)}` : '')
     return [{ id: c.job, name: label(job.names), qualifier, occ }]
   }),
 )
@@ -33,7 +32,7 @@ const withOneOf = computed(() => (acc.value?.withOneOf ?? []).map((id) => ({ id,
 const courseStudy = computed(() => {
   const s = careers.value?.courses[props.course]?.summary
   const title = data.value.courses.find((c) => c.code === props.course)?.title ?? props.course
-  return s ? t.value('careers.courseStudy', { course: title, summary: pickLocalized(s, locale.value) }) : ''
+  return s ? t.value('careers.courseStudy', { course: title, summary: careerText(s, locale.value) }) : ''
 })
 const hasText = computed(() => entry.value?.careerText === true)
 </script>
@@ -71,13 +70,13 @@ const hasText = computed(() => entry.value?.careerText === true)
 
     <div v-if="hasText && entry.industries.length" class="part">
       <h3 class="part-title">{{ t('careers.industries') }}</h3>
-      <p class="chips"><span v-for="i in entry.industries" :key="i" class="chip">{{ i }}</span></p>
+      <p class="chips"><span v-for="i in entry.industries" :key="i.en" class="chip">{{ careerText(i, locale) }}</span></p>
     </div>
 
     <div v-if="hasText && (entry.furtherStudy.length || courseStudy)" class="part">
       <h3 class="part-title">{{ t('careers.furtherStudy') }}</h3>
       <ul class="plain">
-        <li v-for="f in entry.furtherStudy" :key="f">{{ f }}</li>
+        <li v-for="f in entry.furtherStudy" :key="f.en">{{ careerText(f, locale) }}</li>
         <li v-if="!entry.furtherStudy.length">{{ courseStudy }}</li>
       </ul>
     </div>
@@ -85,7 +84,7 @@ const hasText = computed(() => entry.value?.careerText === true)
     <div v-if="acc" class="acc surface">
       <h3 class="part-title acc-title"><BadgeCheck :size="17" aria-hidden="true" /> {{ t('careers.accTitle') }}</h3>
       <p class="acc-body">{{ acc.body }}</p>
-      <p>{{ pickLocalized(acc.summary, locale) }}</p>
+      <p>{{ careerText(acc.summary, locale) }}</p>
       <div v-if="acc.required.length" class="acc-group">
         <p class="acc-label">{{ t('careers.accRequired') }}</p>
         <p class="chips">
@@ -110,7 +109,7 @@ const hasText = computed(() => entry.value?.careerText === true)
 
     <div v-if="entry.helpfulSubjects" class="part">
       <h3 class="part-title">{{ t('careers.helpful') }}</h3>
-      <p class="part-hint">{{ pickLocalized(entry.helpfulSubjects.note, locale) }}</p>
+      <p class="part-hint">{{ careerText(entry.helpfulSubjects.note, locale) }}</p>
       <p class="chips"><a v-for="c in entry.helpfulSubjects.codes" :key="c" class="chip code" :href="link(`subject/${c}`)">{{ c }}</a></p>
     </div>
 

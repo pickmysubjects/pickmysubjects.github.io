@@ -1,9 +1,10 @@
 import { describe, expect, it } from 'vitest'
 import { buildDataset } from '../scripts/dataset'
-import { accreditationCodes, assembleCareers, CAREER_LANGS, componentCareers } from '../src/engine/careers'
+import { accreditationCodes, assembleCareers, CAREER_LANGS, careerText, componentCareers, type CareerText } from '../src/engine/careers'
 import { interpolate, type Params } from '../src/i18n/interpolate'
 import { en } from '../src/i18n/messages/en'
 import { zhCN } from '../src/i18n/messages/zh-CN'
+import { zhTW } from '../src/i18n/messages/zh-TW'
 import { careersHtml } from '../src/utils/careersHtml'
 
 const { dataset: real, errors } = buildDataset('real')
@@ -40,6 +41,55 @@ describe('careers data', () => {
     for (const n of [...Object.values(careers.jobs), ...Object.values(careers.occupations)].map((x) => x.names)) {
       for (const l of CAREER_LANGS) expect(n[l]).toBeTruthy()
     }
+  })
+
+  // Industries, further study, via, accreditation summaries, helpful notes and course further study.
+  const texts = (): [string, CareerText][] => [
+    ...Object.values(careers.majors).flatMap((m) => [
+      ...m.industries.map((x): [string, CareerText] => [`${m.handbookId} industry`, x]),
+      ...m.furtherStudy.map((x): [string, CareerText] => [`${m.handbookId} further study`, x]),
+      ...m.careers.flatMap((c): [string, CareerText][] => (c.via ? [[`${m.handbookId} via`, c.via]] : [])),
+      ...(m.accreditation ? [[`${m.handbookId} accreditation`, m.accreditation.summary] as [string, CareerText]] : []),
+      ...(m.helpfulSubjects ? [[`${m.handbookId} note`, m.helpfulSubjects.note] as [string, CareerText]] : []),
+    ]),
+    ...Object.entries(careers.courses).flatMap(([c, x]): [string, CareerText][] => (x.summary ? [[`${c} further study`, x.summary]] : [])),
+  ]
+
+  it('has careers text in every language', () => {
+    const list = texts()
+    expect(list.length).toBeGreaterThan(200)
+    for (const [where, t] of list) for (const l of CAREER_LANGS) expect(t[l], `${where} ${l}: ${t.en}`).toBeTruthy()
+  })
+
+  it('writes zh-TW in Traditional characters, not a copy of zh-CN', () => {
+    // Characters that only exist in Simplified Chinese (their Traditional forms differ).
+    const simplifiedOnly = /[业专门发学会们个为这说时实现经济国过动应对开关产务资术质钱让认识论设计软网络数据级师范规划营环农药医疗养护]/
+    const names = [...Object.values(careers.jobs), ...Object.values(careers.occupations)].map((x): [string, CareerText] => [x.id, x.names])
+    for (const [where, t] of [...texts(), ...names]) {
+      expect(t['zh-TW'], `${where}: ${t['zh-TW']}`).not.toMatch(simplifiedOnly)
+      if (simplifiedOnly.test(t.zh!)) expect(t['zh-TW'], where).not.toBe(t.zh)
+    }
+  })
+
+  it('falls back to English, never Simplified Chinese, for a missing zh-TW text', () => {
+    expect(careerText({ en: 'mining', zh: '采矿' }, 'zh-TW')).toBe('mining')
+    expect(careerText({ en: 'mining', zh: '采矿' }, 'zh-CN')).toBe('采矿')
+    expect(careerText({ en: 'mining', zh: '采矿', 'zh-TW': '礦業' }, 'zh-TW')).toBe('礦業')
+  })
+
+  it('warns about an untranslated phrase', () => {
+    const r = assembleCareers(
+      {
+        occupations: [],
+        jobs: [],
+        majors: [{ handbook_id: 'b-x-major-1', course: 'B-X', title: 'X', components: [], source: 'https://handbook.unimelb.edu.au/x', checked: '2026-01-01', career_text: true, careers: [], industries: ['mining'], further_study: [], related_fields: [] }],
+        courses: [],
+        terms: [],
+      },
+      { subjects: new Set(), components: new Map(), courses: new Set(['B-X']) },
+    )
+    expect(r.warnings.join('\n')).toMatch(/no translations for "mining"/)
+    expect(r.careers.majors['b-x-major-1']!.industries).toEqual([{ en: 'mining' }])
   })
 
   it('only names accreditation and helpful subjects that are in the data', () => {
@@ -84,6 +134,7 @@ describe('careers data', () => {
 describe('careers section', () => {
   it('lists jobs with official links, and the accreditation route (B-COM Accounting)', () => {
     const e = componentCareers(careers, 'accounting')!
+    expect(e.accreditation?.required).toEqual(['ECON10003', 'ACCT30002', 'ACCT30004'])
     expect(e.accreditation?.requiredBreadth).toEqual(['BLAW10001', 'BLAW20001', 'BLAW30002'])
     const out = html('accounting', 'B-COM')
     expect(out).toContain('Where it can lead')
@@ -98,6 +149,13 @@ describe('careers section', () => {
 
   it('keeps the English job name beside the translation', () => {
     expect(html('accounting', 'B-COM', zhCN, 'zh-CN')).toContain('会计师 (Accountant)')
+  })
+
+  it('shows Traditional Chinese on zh-TW (B-COM Accounting)', () => {
+    const out = html('accounting', 'B-COM', zhTW, 'zh-TW')
+    expect(out).toContain('任何產業與領域')
+    expect(out).toContain('認證版本')
+    expect(out).not.toContain('任何行业')
   })
 
   it('shows alternatives and qualifiers (B-ARTS Psychology)', () => {

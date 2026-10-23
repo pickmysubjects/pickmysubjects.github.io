@@ -50,6 +50,15 @@ export const jobsFileSchema = z.array(
 )
 export type Job = z.output<typeof jobsFileSchema>[number]
 
+/**
+ * Translations of the Handbook's industry, further study and "via" phrases (terms.yaml), one entry
+ * per English phrase. Every language is required; a phrase with no entry shows in English.
+ */
+export const careerTermsFileSchema = z.array(z.object(Object.fromEntries(CAREER_LANGS.map((l) => [l, z.string().min(1).max(240)]))).strict() as unknown as z.ZodType<Record<CareerLang, string>>)
+
+/** Text in the careers section, in as many languages as we have; English always. */
+export type CareerText = { en: string } & Partial<Record<CareerLang, string>>
+
 export const CAREER_QUALIFIERS = ['direct', 'via-further-study', 'needs-qualification'] as const
 export type CareerQualifier = (typeof CAREER_QUALIFIERS)[number]
 
@@ -115,9 +124,9 @@ export interface ComponentCareers {
   checked: string
   /** False: the Handbook page lists no careers. */
   careerText: boolean
-  careers: { job: string; qualifier: CareerQualifier; via?: string }[]
-  industries: string[]
-  furtherStudy: string[]
+  careers: { job: string; qualifier: CareerQualifier; via?: CareerText }[]
+  industries: CareerText[]
+  furtherStudy: CareerText[]
   relatedFields: string[]
   accreditation?: Accreditation
   helpfulSubjects?: { codes: string[]; note: Localized }
@@ -155,6 +164,8 @@ export function assembleCareers(
     jobs: z.output<typeof jobsFileSchema>
     majors: z.output<typeof majorCareersFileSchema>
     courses: z.output<typeof courseFurtherStudyFileSchema>
+    /** Translations of industries, further study and via phrases; none = all English (tests). */
+    terms?: z.output<typeof careerTermsFileSchema>
   },
   known: { subjects: Set<string>; components: Map<string, string /* course */>; courses: Set<string> },
 ): { careers: Careers; errors: string[]; warnings: string[] } {
@@ -172,6 +183,24 @@ export function assembleCareers(
     if (j.occupation && !careers.occupations[j.occupation]) errors.push(`careers/jobs: ${j.id} names unknown occupation ${j.occupation}`)
     if (j.occupation && careers.occupations[j.occupation]?.field) errors.push(`careers/jobs: ${j.id} links a field-level occupation`)
     careers.jobs[j.id] = j
+  }
+
+  const terms = new Map<string, Record<CareerLang, string>>()
+  for (const t of files.terms ?? []) {
+    if (terms.has(t.en)) errors.push(`careers/terms: "${t.en}" twice`)
+    terms.set(t.en, t)
+  }
+  const used = new Set<string>()
+  const term = (en: string, where: string): CareerText => {
+    used.add(en)
+    const t = terms.get(en)
+    if (!t && files.terms) warnings.push(`${where}: no translations for "${en}" (shown in English)`)
+    return t ?? { en }
+  }
+  // Summaries and notes: English and Simplified Chinese are required by the schema; the rest should be there.
+  const allLangs = (text: Localized, where: string) => {
+    const missing = CAREER_LANGS.filter((l) => l !== 'en' && l !== 'zh' && !(text as Record<string, string | undefined>)[l])
+    if (missing.length) warnings.push(`${where}: no ${missing.join(', ')} text (shown in English)`)
   }
 
   const seen = new Set<string>()
@@ -195,15 +224,17 @@ export function assembleCareers(
       source: m.source,
       checked: m.checked,
       careerText: m.career_text,
-      careers: m.careers.map((c) => ({ job: c.job, qualifier: c.qualifier, ...(c.via ? { via: c.via } : {}) })),
-      industries: m.industries,
-      furtherStudy: m.further_study,
+      careers: m.careers.map((c) => ({ job: c.job, qualifier: c.qualifier, ...(c.via ? { via: term(c.via, where) } : {}) })),
+      industries: m.industries.map((x) => term(x, where)),
+      furtherStudy: m.further_study.map((x) => term(x, where)),
       relatedFields: m.related_fields,
       ...(a
         ? { accreditation: { body: a.body, summary: a.summary, required: a.required, requiredBreadth: a.required_breadth, recommended: a.recommended, withOneOf: a.with_one_of, source: a.source } }
         : {}),
       ...(m.helpful_subjects ? { helpfulSubjects: m.helpful_subjects } : {}),
     }
+    if (a) allLangs(a.summary, `${where} accreditation summary`)
+    if (m.helpful_subjects) allLangs(m.helpful_subjects.note, `${where} helpful subjects note`)
     for (const id of m.components) {
       const course = known.components.get(id)
       if (course === undefined) errors.push(`${where}: unknown component ${id}`)
@@ -217,8 +248,10 @@ export function assembleCareers(
   for (const c of files.courses) {
     if (!known.courses.has(c.course)) warnings.push(`careers/courses: course ${c.course} not entered yet`)
     if (careers.courses[c.course]) errors.push(`careers/courses: ${c.course} twice`)
+    if (c.summary) allLangs(c.summary, `careers/courses: ${c.course}`)
     careers.courses[c.course] = { source: c.source, checked: c.checked, summary: c.summary }
   }
+  for (const en of terms.keys()) if (!used.has(en)) warnings.push(`careers/terms: "${en}" isn't used`)
   return { careers, errors, warnings }
 }
 
@@ -232,4 +265,13 @@ export function componentCareers(careers: Careers | undefined, componentId: stri
 export function careerName(n: Record<CareerLang, string>, locale: string): string {
   const key = (locale === 'zh-CN' ? 'zh' : locale) as CareerLang
   return key === 'en' || !n[key] ? '' : n[key]
+}
+
+/**
+ * Careers text in the reader's language, else English. Never Simplified Chinese for zh-TW: a
+ * Traditional reader gets English for a missing item (the build warns about it).
+ */
+export function careerText(text: CareerText | Localized, locale: string): string {
+  const key = locale === 'zh-CN' ? 'zh' : locale
+  return (text as Record<string, string | undefined>)[key] || text.en
 }
