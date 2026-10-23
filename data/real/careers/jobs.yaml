@@ -1,0 +1,600 @@
+# Jobs as the Handbook names them on major pages, each with its official occupation (occupations.yaml)
+# when one matches clearly, else none. names are our own translations; English stays the Handbook's words.
+- id: accountant
+  title: "accountant"
+  occupation: accountant-general
+  names:
+    en: "Accountant"
+    zh: "会计师"
+    zh-TW: "會計師"
+    ja: "会計士"
+    ko: "회계사"
+    vi: "Kế toán viên"
+    ms: "Akauntan"
+    id: "Akuntan"
+    hi: "लेखाकार"
+- id: actuary
+  title: "actuary"
+  occupation: actuary
+  names:
+    en: "Actuary"
+    zh: "精算师"
+    zh-TW: "精算師"
+    ja: "アクチュアリー"
+    ko: "보험계리사"
+    vi: "Chuyên viên định phí bảo hiểm"
+    ms: "Aktuari"
+    id: "Aktuaris"
+    hi: "बीमांकक"
+- id: architect
+  title: "architect"
+  occupation: architect
+  names:
+    en: "Architect"
+    zh: "建筑师"
+    zh-TW: "建築師"
+    ja: "建築家"
+    ko: "건축가"
+    vi: "Kiến trúc sư"
+    ms: "Arkitek"
+    id: "Arsitek"
+    hi: "वास्तुकार"
+- id: business-analyst
+  title: "business analyst"
+  occupation: ict-business-analyst
+  names:
+    en: "Business analyst"
+    zh: "商业分析师"
+    zh-TW: "商業分析師"
+    ja: "ビジネスアナリスト"
+    ko: "비즈니스 분석가"
+    vi: "Chuyên viên phân tích kinh doanh"
+    ms: "Penganalisis perniagaan"
+    id: "Analis bisnis"
+    hi: "व्यवसाय विश्लेषक"
+- id: business-process-designer
+  title: "business process designer"
+  occupation: null
+  names:
+    en: "Business process designer"
+    zh: "业务流程设计师"
+    zh-TW: "業務流程設計師"
+    ja: "業務プロセスデザイナー"
+    ko: "비즈니스 프로세스 디자이너"
+    vi: "Nhà thiết kế quy trình kinh doanh"
+    ms: "Pereka proses perniagaan"
+    id: "Perancang proses bisnis"
+    hi: "व्यावसायिक प्रक्रिया डिज़ाइनर"
+- id: change-management-specialist
+  title: "change management specialist"
+  occupation: null
+  names:
+    en: "Change management specialist"
+    zh: "变革管理专员"
+    zh-TW: "變革管理專員"
+    ja: "チェンジマネジメント専門家"
+    ko: "변화관리 전문가"
+    vi: "Chuyên viên quản lý thay đổi"
+    ms: "Pakar pengurusan perubahan"
+    id: "Spesialis manajemen perubahan"
+    hi: "परिवर्तन प्रबंधन विशेषज्ञ"
+- id: chemical-engineer
+  title: "chemical engineer"
+  occupation: chemical-engineer
+  names:
+    en: "Chemical engineer"
+    zh: "化学工程师"
+    zh-TW: "化學工程師"
+    ja: "化学エンジニア"
+    ko: "화학 엔지니어"
+    vi: "Kỹ sư hóa học"
+    ms: "Jurutera kimia"
+    id: "Insinyur kimia"
+    hi: "रासायनिक इंजीनियर"
+- id: civil-engineer
+  title: "civil engineer"
+  occupation: civil-engineer
+  names:
+    en: "Civil engineer"
+    zh: "土木工程师"
+    zh-TW: "土木工程師"
+    ja: "土木エンジニア"
+    ko: "토목 엔지니어"
+    vi: "Kỹ sư xây dựng dân dụng"
+    ms: "Jurutera awam"
+    id: "Insinyur sipil"
+    hi: "सिविल इंजीनियर"
+- id: computing-professional
+  title: "computing professional"
+  occupation: null
+  names:
+    en: "Computing professional"
+    zh: "计算机专业人员"
+    zh-TW: "電腦專業人員"
+    ja: "コンピューティング専門職"
+    ko: "컴퓨팅 전문가"
+    vi: "Chuyên gia máy tính"
+    ms: "Profesional pengkomputeran"
+    id: "Profesional komputasi"
+    hi: "कंप्यूटिंग पेशेवर"
+- id: construction-manager
+  title: "construction manager"
+  occupation: construction-project-manager
+  names:
+    en: "Construction manager"
+    zh: "施工经理"
+    zh-TW: "營建經理"
+    ja: "建設マネージャー"
+    ko: "건설 관리자"
+    vi: "Quản lý xây dựng"
+    ms: "Pengurus pembinaan"
+    id: "Manajer konstruksi"
+    hi: "निर्माण प्रबंधक"
+- id: dietitian
+  title: "dietitian"
+  occupation: dietitian
+  names:
+    en: "Dietitian"
+    zh: "营养师"
+    zh-TW: "營養師"
+    ja: "管理栄養士"
+    ko: "영양사"
+    vi: "Chuyên gia dinh dưỡng"
+    ms: "Pakar diet"
+    id: "Ahli gizi"
+    hi: "आहार विशेषज्ञ"
+- id: digital-infrastructure-engineer
+  title: "digital infrastructure engineer"
+  occupation: null
+  names:
+    en: "Digital infrastructure engineer"
+    zh: "数字基础设施工程师"
+    zh-TW: "數位基礎設施工程師"
+    ja: "デジタルインフラエンジニア"
+    ko: "디지털 인프라 엔지니어"
+    vi: "Kỹ sư hạ tầng số"
+    ms: "Jurutera infrastruktur digital"
+    id: "Insinyur infrastruktur digital"
+    hi: "डिजिटल इंफ्रास्ट्रक्चर इंजीनियर"
+- id: electrical-engineer
+  title: "electrical engineer"
+  occupation: electrical-engineer
+  names:
+    en: "Electrical engineer"
+    zh: "电气工程师"
+    zh-TW: "電機工程師"
+    ja: "電気エンジニア"
+    ko: "전기 엔지니어"
+    vi: "Kỹ sư điện"
+    ms: "Jurutera elektrik"
+    id: "Insinyur listrik"
+    hi: "विद्युत इंजीनियर"
+- id: environmental-engineer
+  title: "environmental engineer"
+  occupation: environmental-engineer
+  names:
+    en: "Environmental engineer"
+    zh: "环境工程师"
+    zh-TW: "環境工程師"
+    ja: "環境エンジニア"
+    ko: "환경 엔지니어"
+    vi: "Kỹ sư môi trường"
+    ms: "Jurutera alam sekitar"
+    id: "Insinyur lingkungan"
+    hi: "पर्यावरण इंजीनियर"
+- id: environmental-scientist
+  title: "environmental scientist"
+  occupation: null
+  names:
+    en: "Environmental scientist"
+    zh: "环境科学家"
+    zh-TW: "環境科學家"
+    ja: "環境科学者"
+    ko: "환경 과학자"
+    vi: "Nhà khoa học môi trường"
+    ms: "Saintis alam sekitar"
+    id: "Ilmuwan lingkungan"
+    hi: "पर्यावरण वैज्ञानिक"
+- id: equity-and-diversity-officer
+  title: "equity and diversity officer"
+  occupation: null
+  names:
+    en: "Equity and diversity officer"
+    zh: "平等与多元化专员"
+    zh-TW: "平等與多元化專員"
+    ja: "ダイバーシティ担当者"
+    ko: "다양성·형평성 담당자"
+    vi: "Cán bộ phụ trách bình đẳng và đa dạng"
+    ms: "Pegawai kesaksamaan dan kepelbagaian"
+    id: "Petugas kesetaraan dan keberagaman"
+    hi: "समानता और विविधता अधिकारी"
+- id: finance-specialist
+  title: "finance specialist"
+  occupation: null
+  names:
+    en: "Finance specialist"
+    zh: "金融专业人员"
+    zh-TW: "金融專業人員"
+    ja: "金融スペシャリスト"
+    ko: "금융 전문가"
+    vi: "Chuyên viên tài chính"
+    ms: "Pakar kewangan"
+    id: "Spesialis keuangan"
+    hi: "वित्त विशेषज्ञ"
+- id: graphic-designer
+  title: "graphic designer"
+  occupation: graphic-designer
+  names:
+    en: "Graphic designer"
+    zh: "平面设计师"
+    zh-TW: "平面設計師"
+    ja: "グラフィックデザイナー"
+    ko: "그래픽 디자이너"
+    vi: "Nhà thiết kế đồ họa"
+    ms: "Pereka grafik"
+    id: "Desainer grafis"
+    hi: "ग्राफ़िक डिज़ाइनर"
+- id: human-resources-manager
+  title: "human resources manager"
+  occupation: human-resource-manager
+  names:
+    en: "Human resources manager"
+    zh: "人力资源经理"
+    zh-TW: "人力資源經理"
+    ja: "人事マネージャー"
+    ko: "인사 관리자"
+    vi: "Quản lý nhân sự"
+    ms: "Pengurus sumber manusia"
+    id: "Manajer sumber daya manusia"
+    hi: "मानव संसाधन प्रबंधक"
+- id: interaction-designer
+  title: "interaction designer"
+  occupation: null
+  names:
+    en: "Interaction designer"
+    zh: "交互设计师"
+    zh-TW: "互動設計師"
+    ja: "インタラクションデザイナー"
+    ko: "인터랙션 디자이너"
+    vi: "Nhà thiết kế tương tác"
+    ms: "Pereka interaksi"
+    id: "Desainer interaksi"
+    hi: "इंटरैक्शन डिज़ाइनर"
+- id: journalist
+  title: "journalist"
+  occupation: print-journalist
+  names:
+    en: "Journalist"
+    zh: "记者"
+    zh-TW: "記者"
+    ja: "ジャーナリスト"
+    ko: "기자"
+    vi: "Nhà báo"
+    ms: "Wartawan"
+    id: "Jurnalis"
+    hi: "पत्रकार"
+- id: laboratory-scientist
+  title: "laboratory scientist"
+  occupation: medical-laboratory-scientist
+  names:
+    en: "Laboratory scientist"
+    zh: "实验室科学家"
+    zh-TW: "實驗室科學家"
+    ja: "ラボサイエンティスト"
+    ko: "실험실 과학자"
+    vi: "Nhà khoa học phòng thí nghiệm"
+    ms: "Saintis makmal"
+    id: "Ilmuwan laboratorium"
+    hi: "प्रयोगशाला वैज्ञानिक"
+- id: landscape-architect
+  title: "landscape architect"
+  occupation: landscape-architect
+  names:
+    en: "Landscape architect"
+    zh: "景观设计师"
+    zh-TW: "景觀建築師"
+    ja: "ランドスケープアーキテクト"
+    ko: "조경가"
+    vi: "Kiến trúc sư cảnh quan"
+    ms: "Arkitek landskap"
+    id: "Arsitek lanskap"
+    hi: "लैंडस्केप आर्किटेक्ट"
+- id: logistics-project-manager
+  title: "logistics/project manager"
+  occupation: null
+  names:
+    en: "Logistics/project manager"
+    zh: "物流/项目经理"
+    zh-TW: "物流／專案經理"
+    ja: "物流・プロジェクトマネージャー"
+    ko: "물류·프로젝트 관리자"
+    vi: "Quản lý hậu cần/dự án"
+    ms: "Pengurus logistik/projek"
+    id: "Manajer logistik/proyek"
+    hi: "लॉजिस्टिक्स/परियोजना प्रबंधक"
+- id: management-consultant
+  title: "management consultant"
+  occupation: management-consultant
+  names:
+    en: "Management consultant"
+    zh: "管理咨询顾问"
+    zh-TW: "管理顧問"
+    ja: "経営コンサルタント"
+    ko: "경영 컨설턴트"
+    vi: "Chuyên viên tư vấn quản lý"
+    ms: "Perunding pengurusan"
+    id: "Konsultan manajemen"
+    hi: "प्रबंधन सलाहकार"
+- id: manager-of-business-process-improvement
+  title: "manager of business process improvement"
+  occupation: null
+  names:
+    en: "Manager of business process improvement"
+    zh: "业务流程改进经理"
+    zh-TW: "業務流程改善經理"
+    ja: "業務改善マネージャー"
+    ko: "비즈니스 프로세스 개선 관리자"
+    vi: "Quản lý cải tiến quy trình kinh doanh"
+    ms: "Pengurus penambahbaikan proses perniagaan"
+    id: "Manajer perbaikan proses bisnis"
+    hi: "व्यावसायिक प्रक्रिया सुधार प्रबंधक"
+- id: market-research-consultant
+  title: "market research consultant"
+  occupation: null
+  names:
+    en: "Market research consultant"
+    zh: "市场调研顾问"
+    zh-TW: "市場調查顧問"
+    ja: "市場調査コンサルタント"
+    ko: "시장조사 컨설턴트"
+    vi: "Chuyên viên tư vấn nghiên cứu thị trường"
+    ms: "Perunding penyelidikan pasaran"
+    id: "Konsultan riset pasar"
+    hi: "बाज़ार अनुसंधान सलाहकार"
+- id: marketing-professional
+  title: "marketing professional"
+  occupation: null
+  names:
+    en: "Marketing professional"
+    zh: "市场营销专业人员"
+    zh-TW: "行銷專業人員"
+    ja: "マーケティング職"
+    ko: "마케팅 전문가"
+    vi: "Chuyên viên marketing"
+    ms: "Profesional pemasaran"
+    id: "Profesional pemasaran"
+    hi: "मार्केटिंग पेशेवर"
+- id: mechanical-engineer
+  title: "mechanical engineer"
+  occupation: mechanical-engineer
+  names:
+    en: "Mechanical engineer"
+    zh: "机械工程师"
+    zh-TW: "機械工程師"
+    ja: "機械エンジニア"
+    ko: "기계 엔지니어"
+    vi: "Kỹ sư cơ khí"
+    ms: "Jurutera mekanikal"
+    id: "Insinyur mesin"
+    hi: "मैकेनिकल इंजीनियर"
+- id: mechatronics-engineer
+  title: "mechatronics engineer"
+  occupation: null
+  names:
+    en: "Mechatronics engineer"
+    zh: "机电一体化工程师"
+    zh-TW: "機電整合工程師"
+    ja: "メカトロニクスエンジニア"
+    ko: "메카트로닉스 엔지니어"
+    vi: "Kỹ sư cơ điện tử"
+    ms: "Jurutera mekatronik"
+    id: "Insinyur mekatronika"
+    hi: "मेकाट्रॉनिक्स इंजीनियर"
+- id: mobile-app-designer
+  title: "mobile app designer"
+  occupation: null
+  names:
+    en: "Mobile app designer"
+    zh: "移动应用设计师"
+    zh-TW: "行動應用程式設計師"
+    ja: "モバイルアプリデザイナー"
+    ko: "모바일 앱 디자이너"
+    vi: "Nhà thiết kế ứng dụng di động"
+    ms: "Pereka aplikasi mudah alih"
+    id: "Desainer aplikasi seluler"
+    hi: "मोबाइल ऐप डिज़ाइनर"
+- id: performance-designer
+  title: "performance designer"
+  occupation: null
+  names:
+    en: "Performance designer"
+    zh: "表演设计师"
+    zh-TW: "表演設計師"
+    ja: "舞台美術デザイナー"
+    ko: "공연 디자이너"
+    vi: "Nhà thiết kế biểu diễn"
+    ms: "Pereka persembahan"
+    id: "Desainer pertunjukan"
+    hi: "प्रदर्शन डिज़ाइनर"
+- id: performing-artist
+  title: "performing artist"
+  occupation: musician
+  names:
+    en: "Performing artist"
+    zh: "表演艺术家"
+    zh-TW: "表演藝術家"
+    ja: "パフォーミングアーティスト"
+    ko: "공연 예술가"
+    vi: "Nghệ sĩ biểu diễn"
+    ms: "Artis persembahan"
+    id: "Seniman pertunjukan"
+    hi: "प्रदर्शन कलाकार"
+- id: project-manager
+  title: "project manager"
+  occupation: null
+  names:
+    en: "Project manager"
+    zh: "项目经理"
+    zh-TW: "專案經理"
+    ja: "プロジェクトマネージャー"
+    ko: "프로젝트 관리자"
+    vi: "Quản lý dự án"
+    ms: "Pengurus projek"
+    id: "Manajer proyek"
+    hi: "परियोजना प्रबंधक"
+- id: psychologist
+  title: "psychologist"
+  occupation: clinical-psychologist
+  names:
+    en: "Psychologist"
+    zh: "心理学家"
+    zh-TW: "心理師"
+    ja: "心理士"
+    ko: "심리학자"
+    vi: "Nhà tâm lý học"
+    ms: "Ahli psikologi"
+    id: "Psikolog"
+    hi: "मनोवैज्ञानिक"
+- id: quantity-surveyor
+  title: "quantity surveyor"
+  occupation: quantity-surveyor
+  names:
+    en: "Quantity surveyor"
+    zh: "工料测量师"
+    zh-TW: "工料測量師"
+    ja: "積算士"
+    ko: "적산사"
+    vi: "Kỹ sư dự toán"
+    ms: "Juruukur bahan"
+    id: "Juru ukur biaya"
+    hi: "मात्रा सर्वेक्षक"
+- id: recruitment-consultant
+  title: "recruitment consultant"
+  occupation: recruitment-consultant
+  names:
+    en: "Recruitment consultant"
+    zh: "招聘顾问"
+    zh-TW: "招聘顧問"
+    ja: "採用コンサルタント"
+    ko: "채용 컨설턴트"
+    vi: "Chuyên viên tư vấn tuyển dụng"
+    ms: "Perunding pengambilan pekerja"
+    id: "Konsultan rekrutmen"
+    hi: "भर्ती सलाहकार"
+- id: research-and-development-manager
+  title: "research and development manager"
+  occupation: null
+  names:
+    en: "Research and development manager"
+    zh: "研发经理"
+    zh-TW: "研發經理"
+    ja: "研究開発マネージャー"
+    ko: "연구개발 관리자"
+    vi: "Quản lý nghiên cứu và phát triển"
+    ms: "Pengurus penyelidikan dan pembangunan"
+    id: "Manajer riset dan pengembangan"
+    hi: "अनुसंधान एवं विकास प्रबंधक"
+- id: research-psychologist
+  title: "research psychologist"
+  occupation: null
+  names:
+    en: "Research psychologist"
+    zh: "研究型心理学家"
+    zh-TW: "研究心理學家"
+    ja: "研究心理学者"
+    ko: "연구 심리학자"
+    vi: "Nhà tâm lý học nghiên cứu"
+    ms: "Ahli psikologi penyelidikan"
+    id: "Psikolog riset"
+    hi: "शोध मनोवैज्ञानिक"
+- id: secondary-school-teacher
+  title: "secondary school teacher"
+  occupation: secondary-school-teacher
+  names:
+    en: "Secondary school teacher"
+    zh: "中学教师"
+    zh-TW: "中學教師"
+    ja: "中等学校教員"
+    ko: "중등학교 교사"
+    vi: "Giáo viên trung học"
+    ms: "Guru sekolah menengah"
+    id: "Guru sekolah menengah"
+    hi: "माध्यमिक विद्यालय शिक्षक"
+- id: senior-business-leader
+  title: "senior business leader"
+  occupation: null
+  names:
+    en: "Senior business leader"
+    zh: "企业高管"
+    zh-TW: "企業高階主管"
+    ja: "企業の上級リーダー"
+    ko: "기업 고위 리더"
+    vi: "Lãnh đạo doanh nghiệp cấp cao"
+    ms: "Pemimpin kanan perniagaan"
+    id: "Pemimpin senior bisnis"
+    hi: "वरिष्ठ व्यावसायिक नेता"
+- id: service-designer
+  title: "service designer"
+  occupation: null
+  names:
+    en: "Service designer"
+    zh: "服务设计师"
+    zh-TW: "服務設計師"
+    ja: "サービスデザイナー"
+    ko: "서비스 디자이너"
+    vi: "Nhà thiết kế dịch vụ"
+    ms: "Pereka perkhidmatan"
+    id: "Desainer layanan"
+    hi: "सर्विस डिज़ाइनर"
+- id: urban-planner
+  title: "urban planner"
+  occupation: urban-and-regional-planner
+  names:
+    en: "Urban planner"
+    zh: "城市规划师"
+    zh-TW: "都市規劃師"
+    ja: "都市計画家"
+    ko: "도시계획가"
+    vi: "Nhà quy hoạch đô thị"
+    ms: "Perancang bandar"
+    id: "Perencana kota"
+    hi: "शहरी योजनाकार"
+- id: user-experience-designer
+  title: "user experience designer"
+  occupation: null
+  names:
+    en: "User experience designer"
+    zh: "用户体验（UX）设计师"
+    zh-TW: "使用者經驗（UX）設計師"
+    ja: "UXデザイナー"
+    ko: "UX 디자이너"
+    vi: "Nhà thiết kế trải nghiệm người dùng (UX)"
+    ms: "Pereka pengalaman pengguna (UX)"
+    id: "Desainer pengalaman pengguna (UX)"
+    hi: "यूज़र एक्सपीरियंस (UX) डिज़ाइनर"
+- id: veterinarian
+  title: "veterinarian"
+  occupation: veterinarian
+  names:
+    en: "Veterinarian"
+    zh: "兽医"
+    zh-TW: "獸醫"
+    ja: "獣医師"
+    ko: "수의사"
+    vi: "Bác sĩ thú y"
+    ms: "Doktor veterinar"
+    id: "Dokter hewan"
+    hi: "पशु चिकित्सक"
+- id: web-and-social-media-developer
+  title: "web and social media developer"
+  occupation: web-designer
+  names:
+    en: "Web and social media developer"
+    zh: "网站与社交媒体开发者"
+    zh-TW: "網站與社群媒體開發者"
+    ja: "Web・ソーシャルメディア開発者"
+    ko: "웹·소셜미디어 개발자"
+    vi: "Nhà phát triển web và mạng xã hội"
+    ms: "Pembangun web dan media sosial"
+    id: "Pengembang web dan media sosial"
+    hi: "वेब और सोशल मीडिया डेवलपर"

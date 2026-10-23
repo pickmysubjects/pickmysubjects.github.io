@@ -2,6 +2,7 @@
 import { computed, shallowRef } from 'vue'
 import { ArrowLeft, ExternalLink, Route } from 'lucide-vue-next'
 import SubjectLinks from './SubjectLinks.vue'
+import MajorCareers from './MajorCareers.vue'
 import { componentCourse, heldAsMinor, majorOverview, minorClash, sharedSubjects } from '@/engine'
 import { go, link } from '@/composables/useView'
 import { useDataset } from '@/composables/useDataset'
@@ -138,6 +139,8 @@ function planWithIt(): void {
       </section>
 
     </template>
+
+    <MajorCareers :id="major.id" :course="major.course" :title="major.title" />
     </div>
 
     <aside class="side">

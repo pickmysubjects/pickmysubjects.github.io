@@ -12,12 +12,13 @@ mkdirSync(OUT, { recursive: true })
 
 let failed = false
 for (const name of ['real', 'demo'] as const) {
-  const { dataset, errors, missing } = buildDataset(name)
+  const { dataset, errors, warnings, missing } = buildDataset(name)
   if (errors.length > 0) {
     failed = true
     console.error(`✗ data/${name}: ${errors.length} error(s)\n\n${errors.join('\n\n')}\n`)
     continue
   }
+  if (warnings.length) console.warn(`! data/${name}: ${warnings.length} warning(s)\n  ${warnings.join('\n  ')}`)
   const gaps = missing.length ? ` — referenced but not curated yet: ${missing.join(', ')}` : ''
   console.log(
     `✓ data/${name}: ${Object.keys(dataset.subjects).length} subjects, ${dataset.courses.length} course(s), ${dataset.components.length} component(s)${gaps}`,

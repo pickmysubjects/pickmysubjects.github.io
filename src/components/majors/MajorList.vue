@@ -2,7 +2,8 @@
 import BrowseSwitch from '@/components/browse/BrowseSwitch.vue'
 import DegreeBadge from '@/components/browse/DegreeBadge.vue'
 import { computed, shallowRef } from 'vue'
-import { ChevronDown, ChevronRight, Search } from 'lucide-vue-next'
+import { BadgeCheck, ChevronDown, ChevronRight, Search } from 'lucide-vue-next'
+import { componentCareers } from '@/engine'
 import { link } from '@/composables/useView'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
@@ -57,6 +58,8 @@ const groups = computed(() => {
     })
     .filter((g) => g.majors.length > 0)
 })
+// Majors (and the rest) whose Handbook page gives a professional accreditation route.
+const accredited = computed(() => new Set(data.value.components.filter((c) => componentCareers(data.value.careers, c.id)?.accreditation).map((c) => c.id)))
 const courseTitle = computed(() => data.value.courses.find((c) => c.code === course.value)?.title ?? course.value)
 </script>
 
@@ -89,6 +92,7 @@ const courseTitle = computed(() => data.value.courses.find((c) => c.code === cou
       <div class="cards">
         <a v-for="m in g.majors" :key="m.id" class="card surface" :href="link(`majors/${m.id}`)">
           <span class="card-title">{{ m.title }}</span>
+          <span v-if="accredited.has(m.id)" class="acc-chip" :title="t('careers.accTitle')"><BadgeCheck :size="13" aria-hidden="true" /> {{ t('majors.accChip') }}</span>
           <ChevronRight :size="18" aria-hidden="true" class="go" />
         </a>
       </div>
@@ -100,6 +104,7 @@ const courseTitle = computed(() => data.value.courses.find((c) => c.code === cou
       <div class="cards">
         <a v-for="m in minors" :key="m.id" class="card surface" :href="link(`majors/${m.id}`)">
           <span class="card-title">{{ m.title }}</span>
+          <span v-if="accredited.has(m.id)" class="acc-chip" :title="t('careers.accTitle')"><BadgeCheck :size="13" aria-hidden="true" /> {{ t('majors.accChip') }}</span>
           <ChevronRight :size="18" aria-hidden="true" class="go" />
         </a>
       </div>
@@ -111,6 +116,7 @@ const courseTitle = computed(() => data.value.courses.find((c) => c.code === cou
       <div class="cards">
         <a v-for="m in specs" :key="m.id" class="card surface" :href="link(`majors/${m.id}`)">
           <span class="card-title">{{ m.title }}</span>
+          <span v-if="accredited.has(m.id)" class="acc-chip" :title="t('careers.accTitle')"><BadgeCheck :size="13" aria-hidden="true" /> {{ t('majors.accChip') }}</span>
           <ChevronRight :size="18" aria-hidden="true" class="go" />
         </a>
       </div>
@@ -122,6 +128,7 @@ const courseTitle = computed(() => data.value.courses.find((c) => c.code === cou
       <div class="cards">
         <a v-for="m in informals" :key="m.id" class="card surface" :href="link(`majors/${m.id}`)">
           <span class="card-title">{{ m.title }}</span>
+          <span v-if="accredited.has(m.id)" class="acc-chip" :title="t('careers.accTitle')"><BadgeCheck :size="13" aria-hidden="true" /> {{ t('majors.accChip') }}</span>
           <ChevronRight :size="18" aria-hidden="true" class="go" />
         </a>
       </div>
@@ -130,6 +137,19 @@ const courseTitle = computed(() => data.value.courses.find((c) => c.code === cou
 </template>
 
 <style scoped>
+.acc-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  flex-shrink: 0;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--accent);
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+}
+
 .list {
   display: grid;
   gap: 24px;

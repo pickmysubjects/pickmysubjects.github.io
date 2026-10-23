@@ -1,0 +1,69 @@
+# What each course's Handbook "further study" page says comes after it. none = the page lists nothing.
+- course: B-AGR
+  source: https://handbook.unimelb.edu.au/2026/courses/b-agr/further-study
+  checked: 2026-10-23
+  summary: { en: "An Honours year.", zh: "荣誉学位（Honours）一年。" }
+- course: B-ARTS
+  source: https://handbook.unimelb.edu.au/2026/courses/b-arts/further-study
+  checked: 2026-10-23
+  summary: null
+- course: B-BMED
+  source: https://handbook.unimelb.edu.au/2026/courses/b-bmed/further-study
+  checked: 2026-10-23
+  summary: null
+- course: B-COM
+  source: https://handbook.unimelb.edu.au/2026/courses/b-com/further-study
+  checked: 2026-10-23
+  summary: { en: "Graduate professional degrees (e.g. law, engineering, teaching) and graduate business programs open to any discipline.", zh: "任何专业背景都能读的研究生专业学位（例如法律、工程、教育）和研究生商科课程。" }
+- course: B-DES
+  source: https://handbook.unimelb.edu.au/2026/courses/b-des/further-study
+  checked: 2026-10-23
+  summary: { en: "Professional masters linked to majors: Architecture, Construction Management, Landscape Architecture, Urban Planning, Urban Design, Property, Design and Production, Civil Engineering, Digital Infrastructure Engineering, Mechanical Engineering, Software Engineering, Information Systems, Information Technology, Computer Science.", zh: "和各专业对应的专业硕士：Architecture、Construction Management、Landscape Architecture、Urban Planning、Urban Design、Property、Design and Production、Civil Engineering、Digital Infrastructure Engineering、Mechanical Engineering、Software Engineering、Information Systems、Information Technology、Computer Science。" }
+- course: B-FAACTING
+  source: https://handbook.unimelb.edu.au/2026/courses/b-faacting/further-study
+  checked: 2026-10-23
+  summary: null
+- course: B-FAANIM
+  source: https://handbook.unimelb.edu.au/2026/courses/b-faanim/further-study
+  checked: 2026-10-23
+  summary: { en: "Bachelor of Fine Arts (Honours) or Master of Film and Television (coursework).", zh: "美术荣誉学士（Bachelor of Fine Arts (Honours)）或影视硕士（Master of Film and Television，授课型）。" }
+- course: B-FADANCE
+  source: https://handbook.unimelb.edu.au/2026/courses/b-fadance/further-study
+  checked: 2026-10-23
+  summary: null
+- course: B-FAFILMTV
+  source: https://handbook.unimelb.edu.au/2026/courses/b-fafilmtv/further-study
+  checked: 2026-10-23
+  summary: null
+- course: B-FAMUSTH
+  source: https://handbook.unimelb.edu.au/2026/courses/b-famusth/further-study
+  checked: 2026-10-23
+  summary: null
+- course: B-FAPRO
+  source: https://handbook.unimelb.edu.au/2026/courses/b-fapro/further-study
+  checked: 2026-10-23
+  summary: null
+- course: B-FASCWRI
+  source: https://handbook.unimelb.edu.au/2026/courses/b-fascwri/further-study
+  checked: 2026-10-23
+  summary: null
+- course: B-FATH
+  source: https://handbook.unimelb.edu.au/2026/courses/b-fath/further-study
+  checked: 2026-10-23
+  summary: null
+- course: B-FAVISART
+  source: https://handbook.unimelb.edu.au/2026/courses/b-favisart/further-study
+  checked: 2026-10-23
+  summary: null
+- course: B-MUS
+  source: https://handbook.unimelb.edu.au/2026/courses/b-mus/further-study
+  checked: 2026-10-23
+  summary: null
+- course: B-SCI
+  source: https://handbook.unimelb.edu.au/2026/courses/b-sci/further-study
+  checked: 2026-10-23
+  summary: { en: "Honours (depending on the major; see BH-SCI), graduate professional entry degrees (some with research training), and research higher degrees (masters/doctoral) after research training in Honours, a Postgraduate Diploma or a Masters.", zh: "荣誉学位（视专业而定，见 BH-SCI）、研究生专业入门学位（部分含研究训练），以及在荣誉学位、研究生文凭或硕士阶段完成研究训练后的研究型硕士/博士。" }
+- course: B-SCIEXTD
+  source: https://handbook.unimelb.edu.au/2026/courses/b-sciextd/print
+  checked: 2026-10-23
+  summary: { en: "Honours (depending on the major; see BH-SCI), graduate professional entry degrees (some with research training), and research higher degrees (masters/doctoral) after research training in Honours, a Postgraduate Diploma or a Masters.", zh: "荣誉学位（视专业而定，见 BH-SCI）、研究生专业入门学位（部分含研究训练），以及在荣誉学位、研究生文凭或硕士阶段完成研究训练后的研究型硕士/博士。" }

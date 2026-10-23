@@ -1,0 +1,1256 @@
+# What each major's Handbook page says it leads to: jobs (jobs.yaml), industries, further study and
+# any professional accreditation route. One entry per Handbook component; `components` are our ids
+# for it (a major we split into streams has several). career_text: false = the page lists no careers.
+# related_fields are ours, not the Handbook's: official occupations matched by subject area only.
+# qualifier: direct | via-further-study | needs-qualification. Industries and further study stay in
+# the Handbook's English.
+- handbook_id: b-com-spec-7
+  course: B-COM
+  title: "Human Resource Management"
+  components: []
+  source: https://handbook.unimelb.edu.au/2026/components/b-com-spec-7
+  checked: 2026-10-23
+  career_text: true
+  industries: ["human resource management"]
+- handbook_id: b-com-spec-10
+  course: B-COM
+  title: "Strategic Marketing"
+  components: []
+  source: https://handbook.unimelb.edu.au/2026/components/b-com-spec-10
+  checked: 2026-10-23
+  career_text: true
+  careers:
+    - { job: marketing-professional }
+  related_fields: ["marketing-specialist"]
+- handbook_id: b-com-spec-8
+  course: B-COM
+  title: "Supply Chain Management"
+  components: []
+  source: https://handbook.unimelb.edu.au/2026/components/b-com-spec-8
+  checked: 2026-10-23
+  career_text: false
+- handbook_id: b-com-spec-6
+  course: B-COM
+  title: "Valuation and Modelling"
+  components: []
+  source: https://handbook.unimelb.edu.au/2026/components/b-com-spec-6
+  checked: 2026-10-23
+  career_text: false
+- handbook_id: b-agr-major-2
+  course: B-AGR
+  title: "Agricultural Economics"
+  components: ["agr-agricultural-economics"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-agr-major-2
+  checked: 2026-10-23
+  career_text: true
+  industries: ["agriculture"]
+- handbook_id: b-agr-major-1
+  course: B-AGR
+  title: "Plant and Soil Science"
+  components: ["agr-plant-and-soil-science"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-agr-major-1
+  checked: 2026-10-23
+  career_text: true
+  industries: ["plant production industries"]
+- handbook_id: b-agr-major-3
+  course: B-AGR
+  title: "Production Animal Science"
+  components: ["agr-production-animal-science"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-agr-major-3
+  checked: 2026-10-23
+  career_text: true
+  industries: ["animal production industries"]
+- handbook_id: b-sci-major-10
+  course: B-SCI
+  title: "Agricultural Science"
+  components: ["agricultural-science"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-sci-major-10
+  checked: 2026-10-23
+  career_text: true
+  industries: ["agribusiness", "research and development organisations", "environmental and business consulting firms", "government and policy agencies"]
+  further_study: ["Master of Agricultural Science"]
+  related_fields: ["agricultural-scientist"]
+- handbook_id: b-sci-major-11
+  course: B-SCI
+  title: "Animal Health and Disease"
+  components: ["animal-health-and-disease"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-sci-major-11
+  checked: 2026-10-23
+  career_text: true
+  industries: ["animal health", "wildlife", "production industries"]
+- handbook_id: b-sci-major-19
+  course: B-SCI
+  title: "Animal Science and Management"
+  components: ["animal-science-and-management"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-sci-major-19
+  checked: 2026-10-23
+  career_text: false
+- handbook_id: b-sci-major-39
+  course: B-SCI
+  title: "Biochemistry and Molecular Biology"
+  components: ["biochemistry-and-molecular-biology"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-sci-major-39
+  checked: 2026-10-23
+  career_text: true
+  careers:
+    - { job: laboratory-scientist }
+  industries: ["medical research", "biotechnology", "agricultural and medical support industries", "education"]
+  related_fields: ["biochemist"]
+- handbook_id: b-sci-major-13
+  course: B-SCI
+  title: "Biomedical Engineering Systems"
+  components: ["bioengineering-systems"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-sci-major-13
+  checked: 2026-10-23
+  career_text: false
+  related_fields: ["biomedical-engineer"]
+- handbook_id: b-sci-major-14
+  course: B-SCI
+  title: "Biotechnology"
+  components: ["biotechnology-agrifood", "biotechnology-biomedical-biochemistry", "biotechnology-biomedical-microbiology", "biotechnology-biomedical-pharmacology", "biotechnology-chemical", "biotechnology-molecular-cell", "biotechnology-molecular-genetics"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-sci-major-14
+  checked: 2026-10-23
+  career_text: true
+  industries: ["industry", "health", "agribusiness"]
+  further_study: ["Master of Biotechnology (entry not guaranteed by the major)"]
+  related_fields: ["biotechnologist"]
+- handbook_id: b-sci-major-15
+  course: B-SCI
+  title: "Cell and Developmental Biology"
+  components: ["cell-and-developmental-biology"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-sci-major-15
+  checked: 2026-10-23
+  career_text: true
+  industries: ["research", "biotechnology", "government agencies", "agriculture", "medico-legal", "journalism"]
+- handbook_id: b-sci-major-16
+  course: B-SCI
+  title: "Chemical Engineering Systems"
+  components: ["chemical-systems"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-sci-major-16
+  checked: 2026-10-23
+  career_text: true
+  careers:
+    - { job: chemical-engineer, qualifier: via-further-study, via: "accredited masters" }
+  industries: ["chemical and biochemical engineering industries"]
+  further_study: ["Master of Chemical Engineering"]
+- handbook_id: b-sci-major-17
+  course: B-SCI
+  title: "Chemistry"
+  components: ["chemistry-chemistry", "chemistry-medicinal"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-sci-major-17
+  checked: 2026-10-23
+  career_text: true
+  industries: ["research", "teaching", "government", "professional positions"]
+  further_study: ["MSc", "PhD"]
+- handbook_id: b-sci-major-18
+  course: B-SCI
+  title: "Civil Engineering Systems"
+  components: ["civil-systems"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-sci-major-18
+  checked: 2026-10-23
+  career_text: true
+  careers:
+    - { job: civil-engineer, qualifier: via-further-study }
+  further_study: ["Master of Engineering", "PhD", "professional masters in education, law or business"]
+- handbook_id: b-sci-major-12
+  course: B-SCI
+  title: "Climate and Weather"
+  components: ["climate-and-weather"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-sci-major-12
+  checked: 2026-10-23
+  career_text: true
+  industries: ["meteorology", "weather prediction", "climate change science", "environmental consulting", "research"]
+  related_fields: ["meteorologist"]
+- handbook_id: b-sci-major-1
+  course: B-SCI
+  title: "Computing and Software Systems"
+  components: ["computing-and-software-systems"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-sci-major-1
+  checked: 2026-10-23
+  career_text: true
+  careers:
+    - { job: computing-professional }
+  further_study: ["Master of Engineering (Software)", "Master of Science (Computer Science)", "Master of Data Science", "Master of Information Systems"]
+  related_fields: ["software-engineer"]
+  accreditation:
+    body: "Australian Computer Society (ACS)"
+    summary: { en: "The major alone isn't enough: add the Artificial Intelligence or Advanced Computing specialisation.", zh: "只修这个专业不够：还要加 Artificial Intelligence 或 Advanced Computing 方向。" }
+    with_one_of: ["advanced-computing", "artificial-intelligence"]
+    source: https://handbook.unimelb.edu.au/2026/components/b-sci-major-1
+- handbook_id: b-sci-major-8
+  course: B-SCI
+  title: "Data Science"
+  components: ["data-science"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-sci-major-8
+  checked: 2026-10-23
+  career_text: true
+  industries: ["government", "industry"]
+  further_study: ["specialised graduate study"]
+  related_fields: ["statistician"]
+- handbook_id: b-sci-major-46
+  course: B-SCI
+  title: "Digital Infrastructure Engineering Systems"
+  components: ["digital-infrastructure-engineering-systems"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-sci-major-46
+  checked: 2026-10-23
+  career_text: true
+  industries: ["digital infrastructure engineering"]
+  further_study: ["Master of Digital Infrastructure Engineering"]
+- handbook_id: b-sci-major-41
+  course: B-SCI
+  title: "Ecology and Evolutionary Biology"
+  components: ["ecology-and-evolutionary-biology"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-sci-major-41
+  checked: 2026-10-23
+  career_text: true
+  industries: ["ecology", "conservation biology", "evolutionary biology", "systematics and biodiversity", "environmental consulting", "natural resources management"]
+- handbook_id: b-sci-major-42
+  course: B-SCI
+  title: "Ecosystem Science"
+  components: ["ecosystem-science-forest", "ecosystem-science-urban"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-sci-major-42
+  checked: 2026-10-23
+  career_text: false
+- handbook_id: b-sci-major-20
+  course: B-SCI
+  title: "Electrical Engineering Systems"
+  components: ["electrical-systems"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-sci-major-20
+  checked: 2026-10-23
+  career_text: true
+  careers:
+    - { job: electrical-engineer, qualifier: via-further-study, via: "Master of Engineering" }
+  industries: ["applied mathematics", "applied science", "teaching", "management", "finance"]
+  further_study: ["Master of Engineering"]
+- handbook_id: b-sci-major-9
+  course: B-SCI
+  title: "Environmental Engineering Systems"
+  components: ["environmental-engineering-systems"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-sci-major-9
+  checked: 2026-10-23
+  career_text: true
+  careers:
+    - { job: environmental-engineer, qualifier: via-further-study }
+    - { job: environmental-scientist }
+  industries: ["industry"]
+  further_study: ["environmental engineering study"]
+- handbook_id: b-sci-major-21
+  course: B-SCI
+  title: "Environmental Science"
+  components: ["environmental-science-climate", "environmental-science-conservation", "environmental-science-energy", "environmental-science-resources", "environmental-science-sustainability"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-sci-major-21
+  checked: 2026-10-23
+  career_text: true
+  industries: ["environmental assessment", "consulting", "management"]
+  related_fields: ["environmental-consultant"]
+- handbook_id: b-sci-major-22
+  course: B-SCI
+  title: "Food Science"
+  components: ["food-science"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-sci-major-22
+  checked: 2026-10-23
+  career_text: true
+  industries: ["food industry"]
+  related_fields: ["food-technologist"]
+- handbook_id: b-sci-major-23
+  course: B-SCI
+  title: "Genetics"
+  components: ["genetics"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-sci-major-23
+  checked: 2026-10-23
+  career_text: true
+  industries: ["universities", "research institutes", "government departments", "hospitals", "biotechnology industry", "conservation", "teaching", "forensics", "publishing", "genetic counselling"]
+- handbook_id: b-sci-major-24
+  course: B-SCI
+  title: "Geography"
+  components: ["geography"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-sci-major-24
+  checked: 2026-10-23
+  career_text: false
+- handbook_id: b-sci-major-25
+  course: B-SCI
+  title: "Geology"
+  components: ["geology"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-sci-major-25
+  checked: 2026-10-23
+  career_text: true
+  industries: ["environmental consulting", "environmental management", "government", "minerals exploration", "energy industry", "mining", "petroleum"]
+  related_fields: ["geologist"]
+- handbook_id: b-sci-major-47
+  course: B-SCI
+  title: "Geoscience"
+  components: ["geoscience"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-sci-major-47
+  checked: 2026-10-23
+  career_text: true
+  industries: ["environmental consulting", "environmental management", "major infrastructure projects", "government", "research", "minerals exploration", "energy industry"]
+  related_fields: ["geologist"]
+- handbook_id: b-sci-major-43
+  course: B-SCI
+  title: "Human Nutrition"
+  components: ["human-nutrition"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-sci-major-43
+  checked: 2026-10-23
+  career_text: true
+  careers:
+    - { job: dietitian, qualifier: needs-qualification }
+    - { job: secondary-school-teacher, qualifier: needs-qualification }
+  industries: ["food industry", "government regulatory authorities", "nutrition research", "health-related fields"]
+  further_study: ["higher degrees in nutrition research"]
+- handbook_id: b-sci-major-26
+  course: B-SCI
+  title: "Human Structure and Function"
+  components: ["human-structure-and-function"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-sci-major-26
+  checked: 2026-10-23
+  career_text: true
+  industries: ["medical and health related sciences", "applied anatomy and physiology research", "university and hospital teaching and research", "pharmaceutical companies", "media liaison", "consultancies", "scientific journalism"]
+- handbook_id: b-sci-major-4
+  course: B-SCI
+  title: "Immunology"
+  components: ["immunology"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-sci-major-4
+  checked: 2026-10-23
+  career_text: true
+  industries: ["infectious diseases", "diagnostics", "molecular biology", "biotechnology", "vaccinology", "biosafety and regulation"]
+  further_study: ["postgraduate research", "medicine and other paramedical disciplines"]
+- handbook_id: b-sci-major-5
+  course: B-SCI
+  title: "Infection and Immunity"
+  components: ["infection-and-immunity"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-sci-major-5
+  checked: 2026-10-23
+  career_text: true
+  industries: ["infectious disease", "diagnostics", "molecular biology", "biotechnology", "vaccinology", "antimicrobial chemotherapeutics", "biosafety and regulation"]
+  further_study: ["postgraduate research"]
+- handbook_id: b-sci-major-2
+  course: B-SCI
+  title: "Informatics"
+  components: ["informatics"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-sci-major-2
+  checked: 2026-10-23
+  career_text: true
+  industries: ["information and data management", "medical and health informatics", "clinical research", "physical informatics", "social informatics"]
+- handbook_id: b-sci-major-27
+  course: B-SCI
+  title: "Marine Biology"
+  components: ["marine-biology"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-sci-major-27
+  checked: 2026-10-23
+  career_text: true
+  industries: ["marine ecology", "fisheries", "commercial aquaculture", "marine environmental monitoring and assessment", "marine science education", "tourism"]
+- handbook_id: b-sci-major-28
+  course: B-SCI
+  title: "Mathematical Physics"
+  components: ["mathematical-physics"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-sci-major-28
+  checked: 2026-10-23
+  career_text: false
+- handbook_id: b-sci-major-29
+  course: B-SCI
+  title: "Mathematics and Statistics"
+  components: ["mathematics-and-statistics-applied", "mathematics-and-statistics-operations-research", "mathematics-and-statistics-statistics", "mathematics-and-statistics"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-sci-major-29
+  checked: 2026-10-23
+  career_text: true
+  careers:
+    - { job: logistics-project-manager }
+    - { job: market-research-consultant }
+  industries: ["general sciences", "agriculture and environmental sciences", "banking, finance and commerce", "engineering", "government", "education", "IT and computing", "medicine"]
+  related_fields: ["statistician"]
+- handbook_id: b-sci-major-30
+  course: B-SCI
+  title: "Mechanical Engineering Systems"
+  components: ["mechanical-systems"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-sci-major-30
+  checked: 2026-10-23
+  career_text: false
+- handbook_id: b-sci-major-6
+  course: B-SCI
+  title: "Mechatronics Engineering Systems"
+  components: ["mechatronics-systems"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-sci-major-6
+  checked: 2026-10-23
+  career_text: true
+  industries: ["mechatronics", "automation science", "robotics", "technical enterprises"]
+  further_study: ["Master of Engineering"]
+- handbook_id: b-sci-major-44
+  course: B-SCI
+  title: "Microbiology"
+  components: ["microbiology"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-sci-major-44
+  checked: 2026-10-23
+  career_text: true
+  industries: ["infectious disease", "diagnostics", "molecular biology", "biotechnology", "vaccinology", "antimicrobial chemotherapeutics", "biosafety and regulation"]
+  further_study: ["postgraduate research"]
+  related_fields: ["microbiologist"]
+- handbook_id: b-sci-major-31
+  course: B-SCI
+  title: "Neuroscience"
+  components: ["neuroscience"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-sci-major-31
+  checked: 2026-10-23
+  career_text: false
+- handbook_id: b-sci-major-32
+  course: B-SCI
+  title: "Pathology"
+  components: ["pathology"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-sci-major-32
+  checked: 2026-10-23
+  career_text: false
+- handbook_id: b-sci-major-33
+  course: B-SCI
+  title: "Pharmacology"
+  components: ["pharmacology"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-sci-major-33
+  checked: 2026-10-23
+  career_text: true
+  industries: ["biomedical research"]
+- handbook_id: b-sci-major-34
+  course: B-SCI
+  title: "Physics"
+  components: ["physics-chemical", "physics-physics"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-sci-major-34
+  checked: 2026-10-23
+  career_text: true
+  industries: ["research and development", "education", "business", "teaching", "management"]
+- handbook_id: b-sci-major-40
+  course: B-SCI
+  title: "Physiology"
+  components: ["physiology"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-sci-major-40
+  checked: 2026-10-23
+  career_text: true
+  industries: ["health and medicine", "environmental science", "industry", "nutrition", "exercise", "reproductive biology"]
+- handbook_id: b-sci-major-35
+  course: B-SCI
+  title: "Plant Science"
+  components: ["plant-science"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-sci-major-35
+  checked: 2026-10-23
+  career_text: true
+  industries: ["fields requiring plant knowledge"]
+- handbook_id: b-sci-major-36
+  course: B-SCI
+  title: "Psychology"
+  components: ["psychology"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-sci-major-36
+  checked: 2026-10-23
+  career_text: true
+  careers:
+    - { job: psychologist, qualifier: needs-qualification }
+    - { job: research-psychologist }
+  industries: ["health", "education", "industry", "commerce", "welfare", "government"]
+  further_study: ["further study to become a practising psychologist"]
+  accreditation:
+    body: "Australian Psychology Accreditation Council (APAC)"
+    summary: { en: "The 125-point accredited major (8 compulsory subjects plus at least two Level 3 psychology electives) is the first step to registration and a prerequisite for further professional study.", zh: "125 学分的认证版专业（8 门必修课，加至少两门三年级心理学选修）是注册心理师的第一步，也是继续读专业学位的前提。" }
+    required: ["PSYC10003", "PSYC10004", "PSYC20006", "PSYC20007", "PSYC20008", "PSYC20009", "PSYC30013", "PSYC30021"]
+    source: https://handbook.unimelb.edu.au/2026/components/b-sci-major-36
+- handbook_id: b-sci-major-45
+  course: B-SCI
+  title: "Veterinary Bioscience"
+  components: ["veterinary-bioscience"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-sci-major-45
+  checked: 2026-10-23
+  career_text: true
+  careers:
+    - { job: veterinarian, qualifier: via-further-study, via: "DVM" }
+  further_study: ["Doctor of Veterinary Medicine (DVM)"]
+- handbook_id: b-sci-major-37
+  course: B-SCI
+  title: "Zoology"
+  components: ["zoology"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-sci-major-37
+  checked: 2026-10-23
+  career_text: true
+  industries: ["conservation", "wildlife management", "biotech industry", "biomedical industry", "bioinformatics industry"]
+  related_fields: ["zoologist"]
+- handbook_id: b-sci-spec-1
+  course: B-SCI
+  title: "Artificial Intelligence"
+  components: ["artificial-intelligence"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-sci-spec-1
+  checked: 2026-10-23
+  career_text: true
+  industries: ["AI research", "software development", "data-driven decision-making"]
+  accreditation:
+    body: "Australian Computer Society (ACS)"
+    summary: { en: "Counts towards ACS accreditation when taken with the Computing and Software Systems major.", zh: "和 Computing and Software Systems 专业一起修，可以算进 ACS 认证。" }
+    with_one_of: ["computing-and-software-systems"]
+    source: https://handbook.unimelb.edu.au/2026/components/b-sci-spec-1
+- handbook_id: b-sci-spec-2
+  course: B-SCI
+  title: "Advanced Computing"
+  components: ["advanced-computing"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-sci-spec-2
+  checked: 2026-10-23
+  career_text: true
+  industries: ["software engineering", "cybersecurity"]
+  related_fields: ["ict-security-specialist"]
+  accreditation:
+    body: "Australian Computer Society (ACS)"
+    summary: { en: "Counts towards ACS accreditation when taken with the Computing and Software Systems major.", zh: "和 Computing and Software Systems 专业一起修，可以算进 ACS 认证。" }
+    with_one_of: ["computing-and-software-systems"]
+    source: https://handbook.unimelb.edu.au/2026/components/b-sci-spec-2
+- handbook_id: b-bmed-major-12
+  course: B-BMED
+  title: "Biochemistry and Molecular Biology"
+  components: ["bmed-biochemistry-and-molecular-biology"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-bmed-major-12
+  checked: 2026-10-23
+  career_text: true
+  careers:
+    - { job: laboratory-scientist }
+  industries: ["medical research", "biotechnology", "agricultural and medical support industries", "education"]
+  related_fields: ["biochemist"]
+- handbook_id: b-bmed-major-4
+  course: B-BMED
+  title: "Biomedical Engineering Systems"
+  components: ["bmed-biomedical-engineering-systems"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-bmed-major-4
+  checked: 2026-10-23
+  career_text: false
+  related_fields: ["biomedical-engineer"]
+  helpful_subjects:
+    codes: ["BMEN30006", "ENGR10004", "ENGR10006"]
+    note: { en: "Biomedicine students should expect to take BMEN30006, and are advised to use first-year breadth or electives for ENGR10004 and ENGR10006.", zh: "生物医学学士的学生基本都要修 BMEN30006；建议一年级用 breadth 或选修位修 ENGR10004 和 ENGR10006。" }
+- handbook_id: b-bmed-major-5
+  course: B-BMED
+  title: "Biotechnology"
+  components: ["bmed-biotechnology-agrifood", "bmed-biotechnology-biomedical-biochemistry", "bmed-biotechnology-biomedical-microbiology", "bmed-biotechnology-biomedical-pharmacology", "bmed-biotechnology-chemical", "bmed-biotechnology-molecular-cell", "bmed-biotechnology-molecular-genetics"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-bmed-major-5
+  checked: 2026-10-23
+  career_text: true
+  industries: ["industry", "health", "agribusiness"]
+  related_fields: ["biotechnologist"]
+- handbook_id: b-bmed-major-6
+  course: B-BMED
+  title: "Cell and Developmental Biology"
+  components: ["bmed-cell-and-developmental-biology"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-bmed-major-6
+  checked: 2026-10-23
+  career_text: true
+  industries: ["research", "biotechnology", "government agencies"]
+- handbook_id: b-bmed-major-7
+  course: B-BMED
+  title: "Genetics"
+  components: ["bmed-genetics"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-bmed-major-7
+  checked: 2026-10-23
+  career_text: true
+  industries: ["universities", "research institutes", "government departments", "hospitals", "biotechnology industry"]
+- handbook_id: b-bmed-major-14
+  course: B-BMED
+  title: "Human Nutrition"
+  components: ["bmed-human-nutrition"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-bmed-major-14
+  checked: 2026-10-23
+  career_text: true
+  careers:
+    - { job: dietitian, qualifier: needs-qualification }
+    - { job: secondary-school-teacher, qualifier: needs-qualification }
+  industries: ["food industry", "government regulatory authorities", "nutrition research"]
+- handbook_id: b-bmed-major-8
+  course: B-BMED
+  title: "Human Structure and Function"
+  components: ["bmed-human-structure-and-function"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-bmed-major-8
+  checked: 2026-10-23
+  career_text: true
+  industries: ["medical and health related sciences", "university and hospital teaching and research", "pharmaceutical companies", "media liaison", "consultancies", "scientific journalism"]
+- handbook_id: b-bmed-major-2
+  course: B-BMED
+  title: "Immunology"
+  components: ["bmed-immunology"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-bmed-major-2
+  checked: 2026-10-23
+  career_text: true
+  industries: ["infectious diseases", "diagnostics", "molecular biology", "biotechnology", "vaccinology", "biosafety and regulation"]
+  further_study: ["postgraduate research", "medicine and paramedical disciplines"]
+- handbook_id: b-bmed-major-16
+  course: B-BMED
+  title: "Infection and Immunity"
+  components: ["bmed-infection-and-immunity"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-bmed-major-16
+  checked: 2026-10-23
+  career_text: true
+  industries: ["infectious disease", "diagnostics", "molecular biology", "biotechnology", "vaccinology", "antimicrobial chemotherapeutics", "biosafety and regulation"]
+  further_study: ["postgraduate research"]
+- handbook_id: b-bmed-major-3
+  course: B-BMED
+  title: "Microbiology"
+  components: ["bmed-microbiology"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-bmed-major-3
+  checked: 2026-10-23
+  career_text: true
+  industries: ["infectious disease", "diagnostics", "molecular biology", "biotechnology", "vaccinology", "antimicrobial chemotherapeutics", "biosafety and regulation"]
+  further_study: ["postgraduate research"]
+  related_fields: ["microbiologist"]
+- handbook_id: b-bmed-major-9
+  course: B-BMED
+  title: "Neuroscience"
+  components: ["bmed-neuroscience"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-bmed-major-9
+  checked: 2026-10-23
+  career_text: false
+- handbook_id: b-bmed-major-10
+  course: B-BMED
+  title: "Pathology"
+  components: ["bmed-pathology"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-bmed-major-10
+  checked: 2026-10-23
+  career_text: false
+- handbook_id: b-bmed-major-11
+  course: B-BMED
+  title: "Pharmacology"
+  components: ["bmed-pharmacology"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-bmed-major-11
+  checked: 2026-10-23
+  career_text: true
+  industries: ["biomedical research"]
+- handbook_id: b-bmed-major-13
+  course: B-BMED
+  title: "Physiology"
+  components: ["bmed-physiology"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-bmed-major-13
+  checked: 2026-10-23
+  career_text: true
+  industries: ["health and medicine", "environmental science", "industry", "nutrition", "exercise", "reproductive biology"]
+- handbook_id: b-bmed-major-15
+  course: B-BMED
+  title: "Psychology"
+  components: ["bmed-psychology"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-bmed-major-15
+  checked: 2026-10-23
+  career_text: true
+  careers:
+    - { job: psychologist, qualifier: needs-qualification }
+    - { job: research-psychologist }
+  industries: ["health", "education", "industry", "commerce", "welfare", "government"]
+  further_study: ["further study to become a practising psychologist"]
+  accreditation:
+    body: "Australian Psychology Accreditation Council (APAC)"
+    summary: { en: "The 125-point accredited major (8 compulsory subjects plus two Level 3 psychology electives) is a prerequisite for further study to become a practising psychologist.", zh: "125 学分的认证版专业（8 门必修课，加两门三年级心理学选修）是之后继续读书、成为执业心理师的前提。" }
+    required: [["PSYC10003", "PSYC10006"], ["PSYC10004", "PSYC10007"], "PSYC20006", "PSYC20007", "PSYC20008", "PSYC20009", "PSYC30013", "PSYC30021"]
+    source: https://handbook.unimelb.edu.au/2026/components/b-bmed-major-15
+- handbook_id: b-bmed-major-17
+  course: B-BMED
+  title: "Public Health and Epidemiology"
+  components: ["bmed-public-health-and-epidemiology"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-bmed-major-17
+  checked: 2026-10-23
+  career_text: false
+- handbook_id: b-com-major-1
+  course: B-COM
+  title: "Accounting"
+  components: ["accounting"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-com-major-1
+  checked: 2026-10-23
+  career_text: true
+  careers:
+    - { job: accountant }
+  industries: ["any industry and sector"]
+  accreditation:
+    body: "CPA Australia (CPA), Chartered Accountants ANZ (CA ANZ)"
+    summary: { en: "Take the accreditation version of the major: ECON10003, the major's two Level 3 core subjects and three business law breadth subjects. Full membership may also need work experience or further study.", zh: "要修这个专业的认证版本：ECON10003、专业的两门三年级核心课，加三门商法 breadth 课。成为正式会员可能还需要工作经验或进一步学习。" }
+    required: ["ECON10003"]
+    required_breadth: ["BLAW10001", "BLAW20001", "BLAW30002"]
+    source: https://handbook.unimelb.edu.au/2026/components/b-com-major-1
+- handbook_id: b-arts-major-26
+  course: B-ARTS
+  title: "Psychology"
+  components: ["arts-psychology"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-arts-major-26
+  checked: 2026-10-23
+  career_text: true
+  careers:
+    - { job: psychologist, qualifier: needs-qualification }
+    - { job: research-psychologist }
+  industries: ["health", "education", "industry", "commerce", "welfare", "government"]
+  further_study: ["further professional training in Psychology"]
+  accreditation:
+    body: "Australian Psychology Accreditation Council (APAC)"
+    summary: { en: "The 125-point accredited major (not the 75-point minor) is the first step to registration. 25 points of its Level 2 and 3 psychology go in your breadth.", zh: "125 学分的认证版专业（不是 75 学分的辅修）是注册心理师的第一步。其中 25 学分的二、三年级心理学课算在 breadth 里。" }
+    required: [["PSYC10003", "PSYC10006"], ["PSYC10004", "PSYC10007"], "PSYC20006", "PSYC20007", "PSYC20008", "PSYC20009", "PSYC30013", "PSYC30021"]
+    source: https://handbook.unimelb.edu.au/2026/components/b-arts-major-26
+- handbook_id: b-com-major-2
+  course: B-COM
+  title: "Actuarial Studies"
+  components: ["actuarial-studies"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-com-major-2
+  checked: 2026-10-23
+  career_text: true
+  careers:
+    - { job: actuary }
+  industries: ["general insurance", "life insurance", "reinsurance", "health insurance", "superannuation", "banking and financial services", "consulting", "government"]
+  further_study: ["Honours/Master's (ACTL40012/ACTL90019)"]
+  accreditation:
+    body: "Actuaries Institute"
+    summary: { en: "High marks in the matching subjects earn exemptions from the Actuaries Institute Foundation Program (not full accreditation). The route needs two extra Level 2 electives and the Actuarial Risk Management specialisation.", zh: "相应科目成绩够高，可以免考精算师协会（Actuaries Institute）的 Foundation Program（不是完整认证）。这条路线要多修两门二年级选修课，并完成 Actuarial Risk Management 方向。" }
+    required: ["ACTL20005", "ACTL20006", "ACTL30002", "ACTL30004"]
+    recommended: ["ACTL10001", "MAST10008", "ACTL30008"]
+    source: https://handbook.unimelb.edu.au/2026/components/b-com-major-2
+- handbook_id: b-des-major-3
+  course: B-DES
+  title: "Computing and Software Systems"
+  components: ["des-computing-and-software-systems"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-des-major-3
+  checked: 2026-10-23
+  career_text: true
+  careers:
+    - { job: computing-professional }
+  further_study: ["Master of Engineering (Software)", "Master of Computer Science", "Master of Data Science", "Master of Information Systems"]
+  related_fields: ["software-engineer"]
+  accreditation:
+    body: "Australian Computer Society (ACS)"
+    summary: { en: "The major alone isn't enough: add the Artificial Intelligence or Advanced Computing specialisation.", zh: "只修这个专业不够：还要加 Artificial Intelligence 或 Advanced Computing 方向。" }
+    with_one_of: ["des-spec-advanced-computing", "des-spec-artificial-intelligence"]
+    source: https://handbook.unimelb.edu.au/2026/components/b-des-major-3
+- handbook_id: b-arts-major-10
+  course: B-ARTS
+  title: "Criminology"
+  components: ["criminology"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-arts-major-10
+  checked: 2026-10-23
+  career_text: true
+  industries: ["crime prevention", "corporate and white-collar crime", "business regulation", "drug policy", "consumer and environmental protection", "policing", "prisons", "sentencing and offender treatment"]
+- handbook_id: b-arts-major-13
+  course: B-ARTS
+  title: "French Studies"
+  components: ["french-studies"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-arts-major-13
+  checked: 2026-10-23
+  career_text: true
+  industries: ["international relations", "development studies", "business", "science", "the arts"]
+- handbook_id: b-arts-major-27
+  course: B-ARTS
+  title: "Russian Studies"
+  components: ["russian-studies"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-arts-major-27
+  checked: 2026-10-23
+  career_text: true
+  industries: ["international relations", "development studies", "business", "science", "the arts"]
+- handbook_id: b-arts-major-17
+  course: B-ARTS
+  title: "History"
+  components: ["history"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-arts-major-17
+  checked: 2026-10-23
+  career_text: false
+- handbook_id: b-arts-major-23
+  course: B-ARTS
+  title: "Linguistics and Applied Linguistics"
+  components: ["linguistics-and-applied-linguistics"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-arts-major-23
+  checked: 2026-10-23
+  career_text: false
+- handbook_id: b-arts-major-32
+  course: B-ARTS
+  title: "Media and Communications"
+  components: ["media-and-communications"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-arts-major-32
+  checked: 2026-10-23
+  career_text: true
+  careers:
+    - { job: journalist }
+  industries: ["journalism", "media sectors", "media industries"]
+- handbook_id: b-arts-major-1
+  course: B-ARTS
+  title: "Ancient World Studies"
+  components: ["ancient-world-studies"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-arts-major-1
+  checked: 2026-10-23
+  career_text: false
+- handbook_id: b-des-major-1
+  course: B-DES
+  title: "Architecture"
+  components: ["des-architecture"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-des-major-1
+  checked: 2026-10-23
+  career_text: true
+  careers:
+    - { job: architect, qualifier: via-further-study, via: "Master of Architecture" }
+  industries: ["architecture profession"]
+  further_study: ["Master of Architecture (two-year, 200 points)"]
+- handbook_id: b-des-major-2
+  course: B-DES
+  title: "Civil Engineering Systems"
+  components: ["des-civil-engineering-systems"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-des-major-2
+  checked: 2026-10-23
+  career_text: true
+  careers:
+    - { job: civil-engineer, qualifier: via-further-study }
+  further_study: ["Civil and Structural Engineering professional masters (AQF 9)"]
+- handbook_id: b-des-major-4
+  course: B-DES
+  title: "Construction"
+  components: ["des-construction"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-des-major-4
+  checked: 2026-10-23
+  career_text: true
+  careers:
+    - { job: construction-manager }
+    - { job: quantity-surveyor }
+  industries: ["construction industry"]
+  further_study: ["accredited construction management and quantity surveying postgraduate degrees", "Master of Construction Management"]
+- handbook_id: b-des-major-5
+  course: B-DES
+  title: "User Experience Design"
+  components: ["des-user-experience-design"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-des-major-5
+  checked: 2026-10-23
+  career_text: true
+  careers:
+    - { job: interaction-designer }
+    - { job: service-designer }
+    - { job: user-experience-designer }
+    - { job: business-process-designer }
+    - { job: mobile-app-designer }
+    - { job: web-and-social-media-developer }
+  further_study: ["Master of Information Systems", "Master of Information Technology"]
+- handbook_id: b-des-major-6
+  course: B-DES
+  title: "Graphic Design"
+  components: ["des-graphic-design"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-des-major-6
+  checked: 2026-10-23
+  career_text: true
+  careers:
+    - { job: graphic-designer }
+  industries: ["print and digital media"]
+  further_study: ["further study in graphic design"]
+- handbook_id: b-des-major-7
+  course: B-DES
+  title: "Landscape Architecture"
+  components: ["des-landscape-architecture"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-des-major-7
+  checked: 2026-10-23
+  career_text: true
+  careers:
+    - { job: landscape-architect, qualifier: via-further-study, via: "accredited masters" }
+  industries: ["landscape architecture practice"]
+  further_study: ["Master of Landscape Architecture (MC-LARCH)"]
+  helpful_subjects:
+    codes: ["LARC30002"]
+    note: { en: "Recommended for entry to the 200-point Master of Landscape Architecture; without it, ABPL90265 is needed in the masters.", zh: "想读 200 学分的景观建筑硕士（Master of Landscape Architecture）建议修；不修的话，硕士阶段要补 ABPL90265。" }
+- handbook_id: b-des-major-8
+  course: B-DES
+  title: "Mechanical Engineering Systems"
+  components: ["des-mechanical-engineering-systems"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-des-major-8
+  checked: 2026-10-23
+  career_text: true
+  careers:
+    - { job: mechanical-engineer, qualifier: via-further-study }
+    - { job: mechatronics-engineer, qualifier: via-further-study }
+  industries: ["teaching", "project management", "finance industry"]
+  further_study: ["Master of Engineering", "PhD"]
+- handbook_id: b-des-major-9
+  course: B-DES
+  title: "Performance Design"
+  components: ["des-performance-design"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-des-major-9
+  checked: 2026-10-23
+  career_text: true
+  careers:
+    - { job: performance-designer }
+  further_study: ["Master of Design for Performance", "Master of Production Design for Screen"]
+- handbook_id: b-des-major-10
+  course: B-DES
+  title: "Property"
+  components: ["des-property"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-des-major-10
+  checked: 2026-10-23
+  career_text: true
+  industries: ["property industry"]
+  further_study: ["Master of Property"]
+- handbook_id: b-des-major-12
+  course: B-DES
+  title: "Urban Planning"
+  components: ["des-urban-planning"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-des-major-12
+  checked: 2026-10-23
+  career_text: true
+  careers:
+    - { job: urban-planner }
+  industries: ["land use", "urban form", "social infrastructure", "transport", "economic development", "public open space"]
+  further_study: ["Master of Urban Planning (accredited)"]
+- handbook_id: b-des-major-13
+  course: B-DES
+  title: "Digital Infrastructure Engineering Systems"
+  components: ["des-digital-infrastructure-engineering-systems"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-des-major-13
+  checked: 2026-10-23
+  career_text: true
+  careers:
+    - { job: digital-infrastructure-engineer }
+  further_study: ["Master of Digital Infrastructure Engineering"]
+- handbook_id: b-des-major-14
+  course: B-DES
+  title: "Interior Design"
+  components: ["des-interior-design"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-des-major-14
+  checked: 2026-10-23
+  career_text: true
+  industries: ["interior architecture", "sustainable design consulting", "creative fields"]
+  related_fields: ["interior-designer"]
+- handbook_id: b-des-spec-1
+  course: B-DES
+  title: "Artificial Intelligence"
+  components: ["des-spec-artificial-intelligence"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-des-spec-1
+  checked: 2026-10-23
+  career_text: true
+  industries: ["AI research", "software development", "data-driven decision-making"]
+  accreditation:
+    body: "Australian Computer Society (ACS)"
+    summary: { en: "Counts towards ACS accreditation when taken with the Computing and Software Systems major.", zh: "和 Computing and Software Systems 专业一起修，可以算进 ACS 认证。" }
+    with_one_of: ["des-computing-and-software-systems"]
+    source: https://handbook.unimelb.edu.au/2026/components/b-des-spec-1
+- handbook_id: b-des-spec-2
+  course: B-DES
+  title: "Advanced Computing"
+  components: ["des-spec-advanced-computing"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-des-spec-2
+  checked: 2026-10-23
+  career_text: true
+  industries: ["software engineering", "cybersecurity"]
+  related_fields: ["ict-security-specialist"]
+  accreditation:
+    body: "Australian Computer Society (ACS)"
+    summary: { en: "Counts towards ACS accreditation when taken with the Computing and Software Systems major.", zh: "和 Computing and Software Systems 专业一起修，可以算进 ACS 认证。" }
+    with_one_of: ["des-computing-and-software-systems"]
+    source: https://handbook.unimelb.edu.au/2026/components/b-des-spec-2
+- handbook_id: b-mus-major-6
+  course: B-MUS
+  title: "Performance"
+  components: ["mus-performance"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-mus-major-6
+  checked: 2026-10-23
+  career_text: true
+  careers:
+    - { job: performing-artist }
+- handbook_id: b-com-major-8
+  course: B-COM
+  title: "Business Analytics"
+  components: ["business-analytics"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-com-major-8
+  checked: 2026-10-23
+  career_text: true
+  careers:
+    - { job: business-analyst }
+  industries: ["public sector", "private sector"]
+- handbook_id: b-com-major-5
+  course: B-COM
+  title: "Finance"
+  components: ["finance"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-com-major-5
+  checked: 2026-10-23
+  career_text: true
+  careers:
+    - { job: finance-specialist }
+  industries: ["finance sector", "industry", "government"]
+  further_study: ["The major is a CFA Institute Program Partner (helps prepare for the CFA exams; not an accreditation)"]
+  related_fields: ["financial-investment-manager"]
+- handbook_id: b-com-major-6
+  course: B-COM
+  title: "Management"
+  components: ["management"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-com-major-6
+  checked: 2026-10-23
+  career_text: true
+  careers:
+    - { job: management-consultant }
+    - { job: senior-business-leader }
+    - { job: equity-and-diversity-officer }
+    - { job: human-resources-manager }
+    - { job: project-manager }
+    - { job: change-management-specialist }
+    - { job: recruitment-consultant }
+    - { job: manager-of-business-process-improvement }
+    - { job: research-and-development-manager }
+- handbook_id: b-com-major-7
+  course: B-COM
+  title: "Marketing"
+  components: ["marketing"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-com-major-7
+  checked: 2026-10-23
+  career_text: false
+  related_fields: ["marketing-specialist"]
+- handbook_id: b-arts-major-31
+  course: B-ARTS
+  title: "Anthropology"
+  components: ["anthropology"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-arts-major-31
+  checked: 2026-10-23
+  career_text: false
+- handbook_id: b-arts-major-2
+  course: B-ARTS
+  title: "Arabic Studies"
+  components: ["arabic-studies"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-arts-major-2
+  checked: 2026-10-23
+  career_text: false
+- handbook_id: b-arts-major-3
+  course: B-ARTS
+  title: "Art History"
+  components: ["art-history"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-arts-major-3
+  checked: 2026-10-23
+  career_text: false
+- handbook_id: b-arts-major-4
+  course: B-ARTS
+  title: "Asian Studies"
+  components: ["asian-studies"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-arts-major-4
+  checked: 2026-10-23
+  career_text: false
+- handbook_id: b-arts-major-6
+  course: B-ARTS
+  title: "Chinese Studies"
+  components: ["chinese-studies"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-arts-major-6
+  checked: 2026-10-23
+  career_text: false
+- handbook_id: b-arts-major-8
+  course: B-ARTS
+  title: "Classics (Ancient Greek and Latin)"
+  components: ["classics-ancient-greek-and-latin"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-arts-major-8
+  checked: 2026-10-23
+  career_text: false
+- handbook_id: b-arts-major-9
+  course: B-ARTS
+  title: "Creative Writing"
+  components: ["creative-writing"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-arts-major-9
+  checked: 2026-10-23
+  career_text: false
+- handbook_id: b-arts-major-11
+  course: B-ARTS
+  title: "Economics"
+  components: ["arts-economics"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-arts-major-11
+  checked: 2026-10-23
+  career_text: false
+  related_fields: ["economist"]
+- handbook_id: b-arts-major-12
+  course: B-ARTS
+  title: "English and Theatre Studies"
+  components: ["english-and-theatre-studies"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-arts-major-12
+  checked: 2026-10-23
+  career_text: false
+- handbook_id: b-arts-major-30
+  course: B-ARTS
+  title: "Gender Studies"
+  components: ["gender-studies"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-arts-major-30
+  checked: 2026-10-23
+  career_text: false
+- handbook_id: b-arts-major-14
+  course: B-ARTS
+  title: "Geography"
+  components: ["arts-geography"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-arts-major-14
+  checked: 2026-10-23
+  career_text: false
+- handbook_id: b-arts-major-15
+  course: B-ARTS
+  title: "German Studies"
+  components: ["german-studies"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-arts-major-15
+  checked: 2026-10-23
+  career_text: false
+- handbook_id: b-arts-major-16
+  course: B-ARTS
+  title: "Hebrew and Jewish Studies"
+  components: ["hebrew-and-jewish-studies"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-arts-major-16
+  checked: 2026-10-23
+  career_text: false
+- handbook_id: b-arts-major-18
+  course: B-ARTS
+  title: "History and Philosophy of Science"
+  components: ["history-and-philosophy-of-science"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-arts-major-18
+  checked: 2026-10-23
+  career_text: false
+- handbook_id: b-arts-major-5
+  course: B-ARTS
+  title: "Indigenous Studies"
+  components: ["indigenous-studies"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-arts-major-5
+  checked: 2026-10-23
+  career_text: false
+- handbook_id: b-arts-major-19
+  course: B-ARTS
+  title: "Indonesian Studies"
+  components: ["indonesian-studies"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-arts-major-19
+  checked: 2026-10-23
+  career_text: false
+- handbook_id: b-arts-major-20
+  course: B-ARTS
+  title: "Islamic Studies"
+  components: ["islamic-studies"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-arts-major-20
+  checked: 2026-10-23
+  career_text: false
+- handbook_id: b-arts-major-21
+  course: B-ARTS
+  title: "Italian Studies"
+  components: ["italian-studies"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-arts-major-21
+  checked: 2026-10-23
+  career_text: false
+- handbook_id: b-arts-major-22
+  course: B-ARTS
+  title: "Japanese Studies"
+  components: ["japanese-studies"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-arts-major-22
+  checked: 2026-10-23
+  career_text: false
+- handbook_id: b-arts-major-33
+  course: B-ARTS
+  title: "Korean Studies"
+  components: ["korean-studies"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-arts-major-33
+  checked: 2026-10-23
+  career_text: false
+- handbook_id: b-arts-major-24
+  course: B-ARTS
+  title: "Philosophy"
+  components: ["philosophy"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-arts-major-24
+  checked: 2026-10-23
+  career_text: false
+- handbook_id: b-arts-major-25
+  course: B-ARTS
+  title: "Politics and International Studies"
+  components: ["politics-and-international-studies"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-arts-major-25
+  checked: 2026-10-23
+  career_text: false
+- handbook_id: b-arts-major-7
+  course: B-ARTS
+  title: "Screen and Cultural Studies"
+  components: ["screen-and-cultural-studies"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-arts-major-7
+  checked: 2026-10-23
+  career_text: false
+- handbook_id: b-arts-major-28
+  course: B-ARTS
+  title: "Sociology"
+  components: ["sociology"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-arts-major-28
+  checked: 2026-10-23
+  career_text: false
+- handbook_id: b-arts-major-29
+  course: B-ARTS
+  title: "Spanish and Latin American Studies"
+  components: ["spanish-and-latin-american-studies"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-arts-major-29
+  checked: 2026-10-23
+  career_text: false
+- handbook_id: b-des-major-15
+  course: B-DES
+  title: "Game Design"
+  components: ["des-game-design"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-des-major-15
+  checked: 2026-10-23
+  career_text: false
+- handbook_id: b-mus-major-1
+  course: B-MUS
+  title: "Composition"
+  components: ["mus-composition"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-mus-major-1
+  checked: 2026-10-23
+  career_text: false
+- handbook_id: b-mus-major-2
+  course: B-MUS
+  title: "Interactive Composition"
+  components: ["mus-interactive-composition"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-mus-major-2
+  checked: 2026-10-23
+  career_text: false
+- handbook_id: b-mus-major-3
+  course: B-MUS
+  title: "Jazz & Improvisation"
+  components: ["mus-jazz-and-improvisation"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-mus-major-3
+  checked: 2026-10-23
+  career_text: false
+- handbook_id: b-mus-major-5
+  course: B-MUS
+  title: "Music Studies"
+  components: ["mus-music-studies"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-mus-major-5
+  checked: 2026-10-23
+  career_text: false
+- handbook_id: b-mus-major-4
+  course: B-MUS
+  title: "Musicology & Ethnomusicology"
+  components: ["mus-musicology-and-ethnomusicology"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-mus-major-4
+  checked: 2026-10-23
+  career_text: false
+- handbook_id: b-mus-major-7
+  course: B-MUS
+  title: "Performance (ANAM)"
+  components: ["mus-performance-anam"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-mus-major-7
+  checked: 2026-10-23
+  career_text: false
+- handbook_id: b-com-major-4
+  course: B-COM
+  title: "Economics"
+  components: ["economics"]
+  source: https://handbook.unimelb.edu.au/2026/components/b-com-major-4
+  checked: 2026-10-23
+  career_text: false
+  related_fields: ["economist"]
+- handbook_id: b-com-spec-2
+  course: B-COM
+  title: "Actuarial Risk Management"
+  components: []
+  source: https://handbook.unimelb.edu.au/2026/components/b-com-spec-2
+  checked: 2026-10-23
+  career_text: false
+- handbook_id: b-com-spec-5
+  course: B-COM
+  title: "Computational Finance"
+  components: []
+  source: https://handbook.unimelb.edu.au/2026/components/b-com-spec-5
+  checked: 2026-10-23
+  career_text: false
+- handbook_id: b-com-spec-9
+  course: B-COM
+  title: "Digital Marketing"
+  components: []
+  source: https://handbook.unimelb.edu.au/2026/components/b-com-spec-9
+  checked: 2026-10-23
+  career_text: false
+- handbook_id: b-com-spec-4
+  course: B-COM
+  title: "Econometrics"
+  components: []
+  source: https://handbook.unimelb.edu.au/2026/components/b-com-spec-4
+  checked: 2026-10-23
+  career_text: false
+- handbook_id: b-com-spec-3
+  course: B-COM
+  title: "Economic Policy"
+  components: []
+  source: https://handbook.unimelb.edu.au/2026/components/b-com-spec-3
+  checked: 2026-10-23
+  career_text: false
+- handbook_id: b-com-spec-11
+  course: B-COM
+  title: "Ethics and Sustainability"
+  components: []
+  source: https://handbook.unimelb.edu.au/2026/components/b-com-spec-11
+  checked: 2026-10-23
+  career_text: false

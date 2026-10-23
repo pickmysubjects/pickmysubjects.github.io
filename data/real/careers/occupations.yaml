@@ -1,0 +1,693 @@
+# Official occupations on yourcareer.gov.au (Australian Government), the job pages a major links to.
+# name, anzsco, url and skills ("Skills employers are looking for", in the page's order) are copied
+# from the page; names are our own translations. field: true marks an occupation linked to a major
+# by its subject area only, when the Handbook names the field but not this job.
+- id: accountant-general
+  name: "Accountant (General)"
+  anzsco: "221111"
+  url: https://www.yourcareer.gov.au/occupations/221111/accountant-general
+  skills: ["Accounting", "Communication Skills", "Budgeting", "Microsoft Excel", "Financial Accounting", "Account Reconciliation"]
+  checked: 2026-10-23
+  names:
+    en: "Accountant (General)"
+    zh: "会计师"
+    zh-TW: "會計師"
+    ja: "会計士"
+    ko: "회계사"
+    vi: "Kế toán viên"
+    ms: "Akauntan"
+    id: "Akuntan"
+    hi: "लेखाकार"
+- id: actuary
+  name: "Actuary"
+  anzsco: "224111"
+  url: https://www.yourcareer.gov.au/occupations/224111/actuary
+  skills: ["Communication Skills", "Microsoft Excel", "Building Relationships", "SAS", "Problem Solving", "Pricing"]
+  checked: 2026-10-23
+  names:
+    en: "Actuary"
+    zh: "精算师"
+    zh-TW: "精算師"
+    ja: "アクチュアリー"
+    ko: "보험계리사"
+    vi: "Chuyên viên định phí bảo hiểm"
+    ms: "Aktuari"
+    id: "Aktuaris"
+    hi: "बीमांकक"
+- id: agricultural-scientist
+  name: "Agricultural Scientist"
+  anzsco: "234112"
+  url: https://www.yourcareer.gov.au/occupations/234112/agricultural-scientist
+  skills: ["Agronomy", "Communication Skills", "Research", "Building Relationships", "Irrigation", "Sales"]
+  field: true
+  checked: 2026-10-23
+  names:
+    en: "Agricultural Scientist"
+    zh: "农业科学家"
+    zh-TW: "農業科學家"
+    ja: "農業科学者"
+    ko: "농업 과학자"
+    vi: "Nhà khoa học nông nghiệp"
+    ms: "Saintis pertanian"
+    id: "Ilmuwan pertanian"
+    hi: "कृषि वैज्ञानिक"
+- id: architect
+  name: "Architect"
+  anzsco: "232111"
+  url: https://www.yourcareer.gov.au/occupations/232111/architect
+  skills: ["Revit", "Project Architecture", "Communication Skills", "AutoCAD", "Project Management", "Planning"]
+  checked: 2026-10-23
+  names:
+    en: "Architect"
+    zh: "建筑师"
+    zh-TW: "建築師"
+    ja: "建築家"
+    ko: "건축가"
+    vi: "Kiến trúc sư"
+    ms: "Arkitek"
+    id: "Arsitek"
+    hi: "वास्तुकार"
+- id: biochemist
+  name: "Biochemist"
+  anzsco: "234513"
+  url: https://www.yourcareer.gov.au/occupations/234513/biochemist
+  skills: ["Biochemistry", "Pathology", "Communication Skills", "Haematology", "Toxicology", "Chemistry"]
+  field: true
+  checked: 2026-10-23
+  names:
+    en: "Biochemist"
+    zh: "生物化学家"
+    zh-TW: "生物化學家"
+    ja: "生化学者"
+    ko: "생화학자"
+    vi: "Nhà hóa sinh"
+    ms: "Ahli biokimia"
+    id: "Ahli biokimia"
+    hi: "जैव रसायनज्ञ"
+- id: biomedical-engineer
+  name: "Biomedical Engineer"
+  anzsco: "233913"
+  url: https://www.yourcareer.gov.au/occupations/233913/biomedical-engineer
+  skills: ["Biomedical Engineering", "Communication Skills", "Research", "Preventive Maintenance", "Problem Solving", "Predictive / Preventative Maintenance"]
+  field: true
+  checked: 2026-10-23
+  names:
+    en: "Biomedical Engineer"
+    zh: "生物医学工程师"
+    zh-TW: "生醫工程師"
+    ja: "医用工学エンジニア"
+    ko: "의공학 엔지니어"
+    vi: "Kỹ sư y sinh"
+    ms: "Jurutera bioperubatan"
+    id: "Insinyur biomedis"
+    hi: "बायोमेडिकल इंजीनियर"
+- id: biotechnologist
+  name: "Biotechnologist"
+  anzsco: "234514"
+  url: https://www.yourcareer.gov.au/occupations/234514/biotechnologist
+  skills: ["Technical Support", "Communication Skills", "Continuous Quality Improvement", "Commissioning", "Problem Solving", "Biomedical Engineering"]
+  field: true
+  checked: 2026-10-23
+  names:
+    en: "Biotechnologist"
+    zh: "生物技术专家"
+    zh-TW: "生物技術專家"
+    ja: "バイオテクノロジスト"
+    ko: "생명공학자"
+    vi: "Chuyên gia công nghệ sinh học"
+    ms: "Ahli bioteknologi"
+    id: "Ahli bioteknologi"
+    hi: "जैव प्रौद्योगिकीविद्"
+- id: chemical-engineer
+  name: "Chemical Engineer"
+  anzsco: "233111"
+  url: https://www.yourcareer.gov.au/occupations/233111/chemical-engineer
+  skills: ["Chemical Engineering", "Communication Skills", "Process Engineering", "Process Improvement", "Commissioning", "Process Control"]
+  checked: 2026-10-23
+  names:
+    en: "Chemical Engineer"
+    zh: "化学工程师"
+    zh-TW: "化學工程師"
+    ja: "化学エンジニア"
+    ko: "화학 엔지니어"
+    vi: "Kỹ sư hóa học"
+    ms: "Jurutera kimia"
+    id: "Insinyur kimia"
+    hi: "रासायनिक इंजीनियर"
+- id: civil-engineer
+  name: "Civil Engineer"
+  anzsco: "233211"
+  url: https://www.yourcareer.gov.au/occupations/233211/civil-engineer
+  skills: ["Civil Engineering", "Communication Skills", "Project Management", "Planning", "Land Development", "Building Relationships"]
+  checked: 2026-10-23
+  names:
+    en: "Civil Engineer"
+    zh: "土木工程师"
+    zh-TW: "土木工程師"
+    ja: "土木エンジニア"
+    ko: "토목 엔지니어"
+    vi: "Kỹ sư xây dựng dân dụng"
+    ms: "Jurutera awam"
+    id: "Insinyur sipil"
+    hi: "सिविल इंजीनियर"
+- id: clinical-psychologist
+  name: "Clinical Psychologist"
+  anzsco: "272311"
+  url: https://www.yourcareer.gov.au/occupations/272311/clinical-psychologist
+  skills: ["Psychology", "Clinical Psychology", "Working With Patient And/Or Condition: Mental Health", "Communication Skills", "Research", "Rehabilitation"]
+  checked: 2026-10-23
+  names:
+    en: "Clinical Psychologist"
+    zh: "临床心理学家"
+    zh-TW: "臨床心理師"
+    ja: "臨床心理士"
+    ko: "임상심리학자"
+    vi: "Nhà tâm lý học lâm sàng"
+    ms: "Ahli psikologi klinikal"
+    id: "Psikolog klinis"
+    hi: "नैदानिक मनोवैज्ञानिक"
+- id: construction-project-manager
+  name: "Construction Project Manager"
+  anzsco: "133111"
+  url: https://www.yourcareer.gov.au/occupations/133111/construction-project-manager
+  skills: ["Project Management", "Construction Management", "Communication Skills", "Budgeting", "Planning", "Building Relationships"]
+  checked: 2026-10-23
+  names:
+    en: "Construction Project Manager"
+    zh: "建筑项目经理"
+    zh-TW: "營建專案經理"
+    ja: "建設プロジェクトマネージャー"
+    ko: "건설 프로젝트 관리자"
+    vi: "Quản lý dự án xây dựng"
+    ms: "Pengurus projek pembinaan"
+    id: "Manajer proyek konstruksi"
+    hi: "निर्माण परियोजना प्रबंधक"
+- id: dietitian
+  name: "Dietitian"
+  anzsco: "251111"
+  url: https://www.yourcareer.gov.au/occupations/251111/dietitian
+  skills: ["Dietetics", "Communication Skills", "Research", "Medical Assistance", "Planning", "Nutrition"]
+  checked: 2026-10-23
+  names:
+    en: "Dietitian"
+    zh: "营养师"
+    zh-TW: "營養師"
+    ja: "管理栄養士"
+    ko: "영양사"
+    vi: "Chuyên gia dinh dưỡng"
+    ms: "Pakar diet"
+    id: "Ahli gizi"
+    hi: "आहार विशेषज्ञ"
+- id: economist
+  name: "Economist"
+  anzsco: "224311"
+  url: https://www.yourcareer.gov.au/occupations/224311/economist
+  skills: ["Research", "Communication Skills", "Economic Analysis", "Planning", "Organisational Skills", "Writing"]
+  field: true
+  checked: 2026-10-23
+  names:
+    en: "Economist"
+    zh: "经济学家"
+    zh-TW: "經濟學家"
+    ja: "エコノミスト"
+    ko: "경제학자"
+    vi: "Nhà kinh tế học"
+    ms: "Ahli ekonomi"
+    id: "Ekonom"
+    hi: "अर्थशास्त्री"
+- id: electrical-engineer
+  name: "Electrical Engineer"
+  anzsco: "233311"
+  url: https://www.yourcareer.gov.au/occupations/233311/electrical-engineer
+  skills: ["Communication Skills", "Project Management", "Electrical Design", "Planning", "Writing", "Organisational Skills"]
+  checked: 2026-10-23
+  names:
+    en: "Electrical Engineer"
+    zh: "电气工程师"
+    zh-TW: "電機工程師"
+    ja: "電気エンジニア"
+    ko: "전기 엔지니어"
+    vi: "Kỹ sư điện"
+    ms: "Jurutera elektrik"
+    id: "Insinyur listrik"
+    hi: "विद्युत इंजीनियर"
+- id: environmental-consultant
+  name: "Environmental Consultant"
+  anzsco: "234312"
+  url: https://www.yourcareer.gov.au/occupations/234312/environmental-consultant
+  skills: ["Environmental Management", "Environmental Science", "Environmental Consulting", "Communication Skills", "Planning", "Project Management"]
+  field: true
+  checked: 2026-10-23
+  names:
+    en: "Environmental Consultant"
+    zh: "环境顾问"
+    zh-TW: "環境顧問"
+    ja: "環境コンサルタント"
+    ko: "환경 컨설턴트"
+    vi: "Chuyên viên tư vấn môi trường"
+    ms: "Perunding alam sekitar"
+    id: "Konsultan lingkungan"
+    hi: "पर्यावरण सलाहकार"
+- id: environmental-engineer
+  name: "Environmental Engineer"
+  anzsco: "233915"
+  url: https://www.yourcareer.gov.au/occupations/233915/environmental-engineer
+  skills: ["Communication Skills", "Environmental Engineering", "Project Management", "Civil Engineering", "Planning", "Water Engineering"]
+  checked: 2026-10-23
+  names:
+    en: "Environmental Engineer"
+    zh: "环境工程师"
+    zh-TW: "環境工程師"
+    ja: "環境エンジニア"
+    ko: "환경 엔지니어"
+    vi: "Kỹ sư môi trường"
+    ms: "Jurutera alam sekitar"
+    id: "Insinyur lingkungan"
+    hi: "पर्यावरण इंजीनियर"
+- id: financial-investment-manager
+  name: "Financial Investment Manager"
+  anzsco: "222312"
+  url: https://www.yourcareer.gov.au/occupations/222312/financial-investment-manager
+  skills: ["Communication Skills", "Risk Management", "Asset Management", "Project Management", "Building Relationships", "Stakeholder Management"]
+  field: true
+  checked: 2026-10-23
+  names:
+    en: "Financial Investment Manager"
+    zh: "投资经理"
+    zh-TW: "投資經理"
+    ja: "投資マネージャー"
+    ko: "투자 매니저"
+    vi: "Quản lý đầu tư tài chính"
+    ms: "Pengurus pelaburan kewangan"
+    id: "Manajer investasi keuangan"
+    hi: "वित्तीय निवेश प्रबंधक"
+- id: food-technologist
+  name: "Food Technologist"
+  anzsco: "234212"
+  url: https://www.yourcareer.gov.au/occupations/234212/food-technologist
+  skills: ["Food Science", "Communication Skills", "Product Development", "Project Management", "New Product Development", "Research"]
+  field: true
+  checked: 2026-10-23
+  names:
+    en: "Food Technologist"
+    zh: "食品技术专家"
+    zh-TW: "食品技術專家"
+    ja: "食品技術者"
+    ko: "식품 기술자"
+    vi: "Kỹ sư công nghệ thực phẩm"
+    ms: "Teknologis makanan"
+    id: "Teknolog pangan"
+    hi: "खाद्य प्रौद्योगिकीविद्"
+- id: geologist
+  name: "Geologist"
+  anzsco: "234411"
+  url: https://www.yourcareer.gov.au/occupations/234411/geologist
+  skills: ["Geology", "Planning", "Communication Skills", "Mentoring", "Hydrogeology", "Project Management"]
+  field: true
+  checked: 2026-10-23
+  names:
+    en: "Geologist"
+    zh: "地质学家"
+    zh-TW: "地質學家"
+    ja: "地質学者"
+    ko: "지질학자"
+    vi: "Nhà địa chất học"
+    ms: "Ahli geologi"
+    id: "Ahli geologi"
+    hi: "भूविज्ञानी"
+- id: graphic-designer
+  name: "Graphic Designer"
+  anzsco: "232411"
+  url: https://www.yourcareer.gov.au/occupations/232411/graphic-designer
+  skills: ["Graphic Design", "Adobe Photoshop", "Adobe Indesign", "Adobe Acrobat", "Adobe Creative Suite", "Adobe Illustrator"]
+  checked: 2026-10-23
+  names:
+    en: "Graphic Designer"
+    zh: "平面设计师"
+    zh-TW: "平面設計師"
+    ja: "グラフィックデザイナー"
+    ko: "그래픽 디자이너"
+    vi: "Nhà thiết kế đồ họa"
+    ms: "Pereka grafik"
+    id: "Desainer grafis"
+    hi: "ग्राफ़िक डिज़ाइनर"
+- id: human-resource-manager
+  name: "Human Resource Manager"
+  anzsco: "132311"
+  url: https://www.yourcareer.gov.au/occupations/132311/human-resource-manager
+  skills: ["Communication Skills", "Organisational Skills", "Building Relationships", "Human Resource Management", "Business Management", "Employee Relations Monitoring"]
+  checked: 2026-10-23
+  names:
+    en: "Human Resource Manager"
+    zh: "人力资源经理"
+    zh-TW: "人力資源經理"
+    ja: "人事マネージャー"
+    ko: "인사 관리자"
+    vi: "Quản lý nhân sự"
+    ms: "Pengurus sumber manusia"
+    id: "Manajer sumber daya manusia"
+    hi: "मानव संसाधन प्रबंधक"
+- id: ict-business-analyst
+  name: "ICT Business Analyst"
+  anzsco: "261111"
+  url: https://www.yourcareer.gov.au/occupations/261111/ict-business-analyst
+  skills: ["Business Analysis", "Communication Skills", "SAP", "SQL", "Business Process", "Stakeholder Management"]
+  checked: 2026-10-23
+  names:
+    en: "ICT Business Analyst"
+    zh: "ICT 业务分析师"
+    zh-TW: "ICT 業務分析師"
+    ja: "ICTビジネスアナリスト"
+    ko: "ICT 비즈니스 분석가"
+    vi: "Chuyên viên phân tích nghiệp vụ CNTT"
+    ms: "Penganalisis perniagaan ICT"
+    id: "Analis bisnis TIK"
+    hi: "आईसीटी व्यवसाय विश्लेषक"
+- id: ict-security-specialist
+  name: "ICT Security Specialist"
+  anzsco: "262112"
+  url: https://www.yourcareer.gov.au/occupations/262112/ict-security-specialist
+  skills: ["Information Security", "Communication Skills", "Firewalls", "Network Security", "Cisco", "Problem Solving"]
+  field: true
+  checked: 2026-10-23
+  names:
+    en: "ICT Security Specialist"
+    zh: "信息安全专家"
+    zh-TW: "資訊安全專家"
+    ja: "情報セキュリティスペシャリスト"
+    ko: "정보보안 전문가"
+    vi: "Chuyên gia an ninh CNTT"
+    ms: "Pakar keselamatan ICT"
+    id: "Spesialis keamanan TIK"
+    hi: "आईसीटी सुरक्षा विशेषज्ञ"
+- id: interior-designer
+  name: "Interior Designer"
+  anzsco: "232511"
+  url: https://www.yourcareer.gov.au/occupations/232511/interior-designer
+  skills: ["Interior Design", "Revit", "Communication Skills", "Concept Development", "Interior Architecture", "Adobe Photoshop"]
+  field: true
+  checked: 2026-10-23
+  names:
+    en: "Interior Designer"
+    zh: "室内设计师"
+    zh-TW: "室內設計師"
+    ja: "インテリアデザイナー"
+    ko: "인테리어 디자이너"
+    vi: "Nhà thiết kế nội thất"
+    ms: "Pereka dalaman"
+    id: "Desainer interior"
+    hi: "इंटीरियर डिज़ाइनर"
+- id: landscape-architect
+  name: "Landscape Architect"
+  anzsco: "232112"
+  url: https://www.yourcareer.gov.au/occupations/232112/landscape-architect
+  skills: ["Landscape Architecture", "AutoCAD", "Adobe Photoshop", "Adobe Indesign", "Communication Skills", "Adobe Acrobat"]
+  checked: 2026-10-23
+  names:
+    en: "Landscape Architect"
+    zh: "景观设计师"
+    zh-TW: "景觀建築師"
+    ja: "ランドスケープアーキテクト"
+    ko: "조경가"
+    vi: "Kiến trúc sư cảnh quan"
+    ms: "Arkitek landskap"
+    id: "Arsitek lanskap"
+    hi: "लैंडस्केप आर्किटेक्ट"
+- id: management-consultant
+  name: "Management Consultant"
+  anzsco: "224711"
+  url: https://www.yourcareer.gov.au/occupations/224711/management-consultant
+  skills: ["Communication Skills", "Change Management", "Stakeholder Management", "Project Management", "Building Relationships", "Planning"]
+  checked: 2026-10-23
+  names:
+    en: "Management Consultant"
+    zh: "管理咨询顾问"
+    zh-TW: "管理顧問"
+    ja: "経営コンサルタント"
+    ko: "경영 컨설턴트"
+    vi: "Chuyên viên tư vấn quản lý"
+    ms: "Perunding pengurusan"
+    id: "Konsultan manajemen"
+    hi: "प्रबंधन सलाहकार"
+- id: marketing-specialist
+  name: "Marketing Specialist"
+  anzsco: "225113"
+  url: https://www.yourcareer.gov.au/occupations/225113/marketing-specialist
+  skills: ["Marketing", "Communication Skills", "Social Media", "Building Relationships", "Planning", "Budgeting"]
+  field: true
+  checked: 2026-10-23
+  names:
+    en: "Marketing Specialist"
+    zh: "市场营销专员"
+    zh-TW: "行銷專員"
+    ja: "マーケティングスペシャリスト"
+    ko: "마케팅 전문가"
+    vi: "Chuyên viên marketing"
+    ms: "Pakar pemasaran"
+    id: "Spesialis pemasaran"
+    hi: "मार्केटिंग विशेषज्ञ"
+- id: mechanical-engineer
+  name: "Mechanical Engineer"
+  anzsco: "233512"
+  url: https://www.yourcareer.gov.au/occupations/233512/mechanical-engineer
+  skills: ["Mechanical Engineering", "Communication Skills", "Mechanical Design", "Project Management", "HVAC", "Commissioning"]
+  checked: 2026-10-23
+  names:
+    en: "Mechanical Engineer"
+    zh: "机械工程师"
+    zh-TW: "機械工程師"
+    ja: "機械エンジニア"
+    ko: "기계 엔지니어"
+    vi: "Kỹ sư cơ khí"
+    ms: "Jurutera mekanikal"
+    id: "Insinyur mesin"
+    hi: "मैकेनिकल इंजीनियर"
+- id: medical-laboratory-scientist
+  name: "Medical Laboratory Scientist"
+  anzsco: "234611"
+  url: https://www.yourcareer.gov.au/occupations/234611/medical-laboratory-scientist
+  skills: ["Research", "Communication Skills", "Clinical Research", "Writing", "Organisational Skills", "Team Work/ Collaboration"]
+  checked: 2026-10-23
+  names:
+    en: "Medical Laboratory Scientist"
+    zh: "医学检验科学家"
+    zh-TW: "醫事檢驗師"
+    ja: "臨床検査技師"
+    ko: "임상병리사"
+    vi: "Nhà khoa học xét nghiệm y khoa"
+    ms: "Saintis makmal perubatan"
+    id: "Ilmuwan laboratorium medis"
+    hi: "चिकित्सा प्रयोगशाला वैज्ञानिक"
+- id: meteorologist
+  name: "Meteorologist"
+  anzsco: "234913"
+  url: https://www.yourcareer.gov.au/occupations/234913/meteorologist
+  skills: ["Meteorology", "Forecasting", "Research", "Communication Skills", "Weather Prediction", "Planning"]
+  field: true
+  checked: 2026-10-23
+  names:
+    en: "Meteorologist"
+    zh: "气象学家"
+    zh-TW: "氣象學家"
+    ja: "気象学者"
+    ko: "기상학자"
+    vi: "Nhà khí tượng học"
+    ms: "Ahli meteorologi"
+    id: "Ahli meteorologi"
+    hi: "मौसम विज्ञानी"
+- id: microbiologist
+  name: "Microbiologist"
+  anzsco: "234517"
+  url: https://www.yourcareer.gov.au/occupations/234517/microbiologist
+  skills: ["Microbiology", "Communication Skills", "Pathology", "Research", "Quality Assurance and Control", "Good Manufacturing Practices (GMP)"]
+  field: true
+  checked: 2026-10-23
+  names:
+    en: "Microbiologist"
+    zh: "微生物学家"
+    zh-TW: "微生物學家"
+    ja: "微生物学者"
+    ko: "미생물학자"
+    vi: "Nhà vi sinh vật học"
+    ms: "Ahli mikrobiologi"
+    id: "Ahli mikrobiologi"
+    hi: "सूक्ष्म जीवविज्ञानी"
+- id: musician
+  name: "Musician"
+  anzsco: "211213"
+  url: https://www.yourcareer.gov.au/occupations/211213/musician
+  skills: ["Guitar", "Music", "Singing", "Typing", "Piano", "Teamwork / Collaboration"]
+  checked: 2026-10-23
+  names:
+    en: "Musician"
+    zh: "音乐家"
+    zh-TW: "音樂家"
+    ja: "音楽家"
+    ko: "음악가"
+    vi: "Nhạc sĩ"
+    ms: "Pemuzik"
+    id: "Musisi"
+    hi: "संगीतकार"
+- id: print-journalist
+  name: "Print Journalist"
+  anzsco: "212413"
+  url: https://www.yourcareer.gov.au/occupations/212413/print-journalist
+  skills: []
+  checked: 2026-10-23
+  names:
+    en: "Print Journalist"
+    zh: "纸媒记者"
+    zh-TW: "平面媒體記者"
+    ja: "新聞・雑誌記者"
+    ko: "신문·잡지 기자"
+    vi: "Nhà báo báo in"
+    ms: "Wartawan media cetak"
+    id: "Jurnalis media cetak"
+    hi: "प्रिंट पत्रकार"
+- id: quantity-surveyor
+  name: "Quantity Surveyor"
+  anzsco: "233213"
+  url: https://www.yourcareer.gov.au/occupations/233213/quantity-surveyor
+  skills: ["Planning", "Communication Skills", "Contract Administration", "Construction Management", "Cost Control", "Contract Management"]
+  checked: 2026-10-23
+  names:
+    en: "Quantity Surveyor"
+    zh: "工料测量师"
+    zh-TW: "工料測量師"
+    ja: "積算士"
+    ko: "적산사"
+    vi: "Kỹ sư dự toán"
+    ms: "Juruukur bahan"
+    id: "Juru ukur biaya"
+    hi: "मात्रा सर्वेक्षक"
+- id: recruitment-consultant
+  name: "Recruitment Consultant"
+  anzsco: "223112"
+  url: https://www.yourcareer.gov.au/occupations/223112/recruitment-consultant
+  skills: ["Communication Skills", "Building Relationships", "Business Development", "Recruiting", "Organisational Skills", "Time Management"]
+  checked: 2026-10-23
+  names:
+    en: "Recruitment Consultant"
+    zh: "招聘顾问"
+    zh-TW: "招聘顧問"
+    ja: "採用コンサルタント"
+    ko: "채용 컨설턴트"
+    vi: "Chuyên viên tư vấn tuyển dụng"
+    ms: "Perunding pengambilan pekerja"
+    id: "Konsultan rekrutmen"
+    hi: "भर्ती सलाहकार"
+- id: secondary-school-teacher
+  name: "Secondary School Teacher"
+  anzsco: "241411"
+  url: https://www.yourcareer.gov.au/occupations/241411/secondary-school-teacher
+  skills: ["Teaching", "Communication Skills", "Building Relationships", "Organisational Skills", "Planning", "Organisational Development"]
+  checked: 2026-10-23
+  names:
+    en: "Secondary School Teacher"
+    zh: "中学教师"
+    zh-TW: "中學教師"
+    ja: "中等学校教員"
+    ko: "중등학교 교사"
+    vi: "Giáo viên trung học"
+    ms: "Guru sekolah menengah"
+    id: "Guru sekolah menengah"
+    hi: "माध्यमिक विद्यालय शिक्षक"
+- id: software-engineer
+  name: "Software Engineer"
+  anzsco: "261313"
+  url: https://www.yourcareer.gov.au/occupations/261313/software-engineer
+  skills: ["Communication Skills", "Software Development", "SQL", "Java", "Planning", "Microsoft C#"]
+  field: true
+  checked: 2026-10-23
+  names:
+    en: "Software Engineer"
+    zh: "软件工程师"
+    zh-TW: "軟體工程師"
+    ja: "ソフトウェアエンジニア"
+    ko: "소프트웨어 엔지니어"
+    vi: "Kỹ sư phần mềm"
+    ms: "Jurutera perisian"
+    id: "Insinyur perangkat lunak"
+    hi: "सॉफ़्टवेयर इंजीनियर"
+- id: statistician
+  name: "Statistician"
+  anzsco: "224113"
+  url: https://www.yourcareer.gov.au/occupations/224113/statistician
+  skills: ["Data Analysis", "SQL", "Communication Skills", "Microsoft Excel", "Research", "SAS"]
+  field: true
+  checked: 2026-10-23
+  names:
+    en: "Statistician"
+    zh: "统计师"
+    zh-TW: "統計師"
+    ja: "統計専門家"
+    ko: "통계학자"
+    vi: "Nhà thống kê"
+    ms: "Ahli statistik"
+    id: "Ahli statistik"
+    hi: "सांख्यिकीविद्"
+- id: urban-and-regional-planner
+  name: "Urban and Regional Planner"
+  anzsco: "232611"
+  url: https://www.yourcareer.gov.au/occupations/232611/urban-and-regional-planner
+  skills: ["Communication Skills", "Town Planning", "Transportation Planning", "Urban Design", "Writing", "Strategic Planning"]
+  checked: 2026-10-23
+  names:
+    en: "Urban and Regional Planner"
+    zh: "城市与区域规划师"
+    zh-TW: "都市及區域規劃師"
+    ja: "都市・地域計画家"
+    ko: "도시·지역 계획가"
+    vi: "Nhà quy hoạch đô thị và vùng"
+    ms: "Perancang bandar dan wilayah"
+    id: "Perencana kota dan wilayah"
+    hi: "शहरी और क्षेत्रीय योजनाकार"
+- id: veterinarian
+  name: "Veterinarian"
+  anzsco: "234711"
+  url: https://www.yourcareer.gov.au/occupations/234711/veterinarian
+  skills: ["Communication Skills", "Organisational Skills", "Surgery", "Team Building", "Ultrasound", "Building Relationships"]
+  checked: 2026-10-23
+  names:
+    en: "Veterinarian"
+    zh: "兽医"
+    zh-TW: "獸醫"
+    ja: "獣医師"
+    ko: "수의사"
+    vi: "Bác sĩ thú y"
+    ms: "Doktor veterinar"
+    id: "Dokter hewan"
+    hi: "पशु चिकित्सक"
+- id: web-designer
+  name: "Web Designer"
+  anzsco: "232414"
+  url: https://www.yourcareer.gov.au/occupations/232414/web-designer
+  skills: ["Web Site Design", "Adobe Photoshop", "JavaScript", "Communication Skills", "Adobe Indesign", "Adobe Acrobat"]
+  checked: 2026-10-23
+  names:
+    en: "Web Designer"
+    zh: "网页设计师"
+    zh-TW: "網頁設計師"
+    ja: "Webデザイナー"
+    ko: "웹 디자이너"
+    vi: "Nhà thiết kế web"
+    ms: "Pereka web"
+    id: "Desainer web"
+    hi: "वेब डिज़ाइनर"
+- id: zoologist
+  name: "Zoologist"
+  anzsco: "234518"
+  url: https://www.yourcareer.gov.au/occupations/234518/zoologist
+  skills: ["Research", "Communication Skills", "Zoology", "Environmental Science", "Project Management", "Planning"]
+  field: true
+  checked: 2026-10-23
+  names:
+    en: "Zoologist"
+    zh: "动物学家"
+    zh-TW: "動物學家"
+    ja: "動物学者"
+    ko: "동물학자"
+    vi: "Nhà động vật học"
+    ms: "Ahli zoologi"
+    id: "Ahli zoologi"
+    hi: "प्राणी विज्ञानी"

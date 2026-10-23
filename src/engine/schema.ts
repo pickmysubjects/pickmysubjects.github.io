@@ -130,7 +130,7 @@ const assessmentTask = z
 // Links rendered from data: only https on the Handbook's own site (no javascript: or data: URLs).
 const handbookUrl = z.url({ protocol: /^https$/, hostname: /^handbook\.unimelb\.edu\.au$/ })
 
-const SUBJECT_CODE = /^[A-Z]{4}\d{5}$/
+export const SUBJECT_CODE = /^[A-Z]{4}\d{5}$/
 const subjectCode = z.string().regex(SUBJECT_CODE, 'expected a code like COMP10001')
 
 /** Requirement expression used for prerequisites and corequisites. */
@@ -344,7 +344,7 @@ export const subjectTitlesFileSchema = z.record(subjectCode, subjectTitles)
  * together, the others translated from the English (left out until they are).
  */
 const OTHER_LANGS = ['zh-TW', 'ja', 'ko', 'vi', 'ms', 'id', 'hi'] as const
-const localized = (en: number, zh: number) =>
+export const localized = (en: number, zh: number) =>
   z
     .object({
       en: z.string().min(10).max(en),
@@ -754,4 +754,6 @@ export interface Dataset {
   components: Component[]
   /** Concurrent diplomas a plan can add (none in older bundles). */
   diplomas?: Diploma[]
+  /** Where majors lead: jobs, industries, further study, accreditation (none in older bundles). */
+  careers?: import('./careers').Careers
 }

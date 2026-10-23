@@ -6,6 +6,7 @@ import { admissionCourses, namedComponents, referencedSubjects } from '../src/en
 import { MIN_GRADE_SHARES, type GradeOffset } from '../src/engine/grades'
 import { isRatingTag } from '../src/engine/ratingTags'
 import type { ReqExpr, ReqField } from '../src/engine/schema'
+import { assembleCareers, courseFurtherStudyFileSchema, jobsFileSchema, majorCareersFileSchema, occupationsFileSchema } from '../src/engine/careers'
 import { aboutFileSchema, componentFileSchema, courseFileSchema, diplomaFileSchema, DISCUSSION_SOURCES, discussionFileSchema, SKILLS, subjectFileSchema, subjectTitlesFileSchema, type Dataset, type DiscussionSummary, type Skill, type Subject } from '../src/engine/schema'
 
 export const ROOT = join(import.meta.dirname, '..')
@@ -13,6 +14,8 @@ export const ROOT = join(import.meta.dirname, '..')
 export interface BuildResult {
   dataset: Dataset
   errors: string[]
+  /** Worth a look but not wrong (careers for a major not entered yet). */
+  warnings: string[]
   /** Subjects referenced by requirements but not curated yet. */
   missing: string[]
 }
@@ -214,8 +217,29 @@ export function buildDataset(name: Dataset['name']): BuildResult {
   for (const c of courses) for (const r of c.rules) if (r.kind === 'compulsory') r.subjects.forEach((code) => subjects[code] || missing.add(code))
   for (const c of courses) for (const r of c.rules) if (r.kind === 'requirement') for (const path of r.paths) for (const q of path) for (const code of 'all' in q ? q.all : q.choose.from) if (!subjects[code]) missing.add(code)
 
-  const dataset: Dataset = { name, generatedAt: new Date().toISOString(), subjects, courses, components, ...(diplomas.length ? { diplomas } : {}) }
-  return { dataset, errors, missing: [...missing].sort() }
+  // Where majors lead (data/<name>/careers/), checked against everything above.
+  const warnings: string[] = []
+  let careers: Dataset['careers']
+  const careersDir = join(base, 'careers')
+  if (existsSync(careersDir)) {
+    const file = <S extends z.ZodType>(n: string, schema: S) => load(join(careersDir, n), schema, errors)
+    const occupations = file('occupations.yaml', occupationsFileSchema)
+    const jobs = file('jobs.yaml', jobsFileSchema)
+    const majors = file('majors.yaml', majorCareersFileSchema)
+    const courseStudy = file('courses.yaml', courseFurtherStudyFileSchema)
+    if (occupations && jobs && majors && courseStudy) {
+      const r = assembleCareers(
+        { occupations, jobs, majors, courses: courseStudy },
+        { subjects: new Set(Object.keys(subjects)), components: new Map(components.map((c) => [c.id, c.course])), courses: new Set(courses.map((c) => c.code)) },
+      )
+      errors.push(...r.errors)
+      warnings.push(...r.warnings)
+      careers = r.careers
+    }
+  }
+
+  const dataset: Dataset = { name, generatedAt: new Date().toISOString(), subjects, courses, components, ...(diplomas.length ? { diplomas } : {}), ...(careers ? { careers } : {}) }
+  return { dataset, errors, warnings, missing: [...missing].sort() }
 }
 
 /** Minimum reviews before crowd skill tags are trusted (signals are shrunk by the engine instead). */

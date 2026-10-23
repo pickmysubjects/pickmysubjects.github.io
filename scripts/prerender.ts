@@ -26,6 +26,8 @@ import { forCourse } from '../src/engine/forCourse'
 import { majorOverview } from '../src/engine/roles'
 import { groupMajors } from '../src/utils/majorGroups'
 import { ACCREDITATION } from '../src/utils/accreditation'
+import { careerJobLabels, careersHtml } from '../src/utils/careersHtml'
+import { componentCareers } from '../src/engine/careers'
 import { referencedSubjects } from '../src/engine/expr'
 import type { Dataset, Subject } from '../src/engine/schema'
 import type { HomeDemo } from '../src/utils/homeDemo'
@@ -430,14 +432,20 @@ function majorPage(code: LocaleCode, m: (typeof majors)[number]): Page {
     parts.push(`<h2>${esc(t('majors.pathwayTitle'))}</h2>`)
     parts.push(o.pathway.length ? list(o.pathway.map((p) => p.code)) : `<p>${esc(t('majors.noPathway'))}</p>`)
   }
+  const careers = careersHtml(data, m.id, m.course, t, code, (c) => href(code, `subject/${c}`), (id) => href(code, `majors/${id}`))
+  if (careers) parts.push(careers)
   parts.push(`<p>${esc(t('majors.source'))}</p>`)
   const core = o?.core.join(', ') ?? ''
+  // Pages whose Handbook text names careers or accreditation say so in their title and description.
+  const ce = componentCareers(data.careers, m.id)
+  const jobs = careerJobLabels(data, m.id, code)
+  const withCareers = m.kind === 'major' && !m.informal && !!ce && (ce.careerText || !!ce.accreditation)
   const courseTitle = data.courses.find((c) => c.code === m.course)?.title ?? ''
   return {
     path: `majors/${m.id}`,
-    title: `${t(m.informal ? 'seo.informalTitle' : m.kind === 'minor' ? 'seo.minorTitle' : m.kind === 'specialisation' ? 'seo.specTitle' : 'seo.majorTitle', { title: m.title })} | PickMySubjects`,
+    title: `${t(m.informal ? 'seo.informalTitle' : m.kind === 'minor' ? 'seo.minorTitle' : m.kind === 'specialisation' ? 'seo.specTitle' : withCareers ? 'seo.majorTitleCareers' : 'seo.majorTitle', { title: m.title })} | PickMySubjects`,
     // No empty "compulsory:" when a minor or specialisation has no fixed core.
-    description: [`${heading} (${courseTitle}).`, core ? `${t('majors.coreTitle')} ${core}.` : '', t('majors.cardText')].filter(Boolean).join(' '),
+    description: [`${heading} (${courseTitle}).`, core ? `${t('majors.coreTitle')} ${core}.` : '', jobs.length ? `${t('careers.title')}: ${jobs.slice(0, 4).join(', ')}.` : '', ce?.accreditation ? `${t('careers.accTitle')}: ${ce.accreditation.body}.` : '', t('majors.cardText')].filter(Boolean).join(' '),
     body: parts.join('\n'),
   }
 }
