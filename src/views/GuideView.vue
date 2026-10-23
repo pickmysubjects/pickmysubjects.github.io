@@ -57,6 +57,16 @@ const RSL = 'https://students.unimelb.edu.au/support-and-wellbeing/international
 const SKILLS = 'https://students.unimelb.edu.au/academic-skills'
 const EXAMS = 'https://library.unimelb.edu.au/examination_papers'
 const FAILING = 'https://students.unimelb.edu.au/course-admin/planning-your-course-and-subjects/failing-a-subject'
+// Checked 2026-10-23 on the official pages.
+const ENROLLING = 'https://students.unimelb.edu.au/course-admin/enrolling-in-subjects'
+const PLANNER = 'https://students.unimelb.edu.au/course-admin/planning-your-course-and-subjects/faculty-course-planning-resources/my-course-planner'
+const FEES = 'https://students.unimelb.edu.au/course-admin/understanding-your-fees'
+const CENSUS = 'https://students.unimelb.edu.au/course-admin/census-dates'
+const INTEGRITY = 'https://academicintegrity.unimelb.edu.au/'
+const INTEGRITY_BREACHES = 'https://academicintegrity.unimelb.edu.au/plagiarism-and-collusion'
+const EXAM_DATES = 'https://students.unimelb.edu.au/course-admin/exams/exam-dates'
+const EXAM_TT = 'https://students.unimelb.edu.au/course-admin/exams/exams-timetable'
+const RESULTS = 'https://students.unimelb.edu.au/course-admin/results'
 </script>
 
 <template>
@@ -188,6 +198,22 @@ const FAILING = 'https://students.unimelb.edu.au/course-admin/planning-your-cour
           </ul>
         </GuideItem>
 
+        <GuideItem :title="t('guide.enrolTitle')" :short="t('guide.enrolShort')">
+          <ol class="steps">
+            <li>{{ t('guide.enrolStep1') }}</li>
+            <li>{{ t('guide.enrolStep2') }}</li>
+            <li>{{ t('guide.enrolStep3') }}</li>
+            <li>{{ t('guide.enrolStep4') }}</li>
+          </ol>
+          <p class="note">{{ t('guide.enrolDraft') }}</p>
+          <p class="note">{{ t('guide.enrolWhen') }}</p>
+          <ul class="links">
+            <li><a :href="ENROLLING" target="_blank" rel="noopener">{{ t('guide.enrolLink') }}<ExternalLink :size="14" aria-hidden="true" /></a></li>
+            <li><a :href="PLANNER" target="_blank" rel="noopener">{{ t('guide.plannerLink') }}<ExternalLink :size="14" aria-hidden="true" /></a></li>
+            <li><a :href="KEY_DATES" target="_blank" rel="noopener">{{ t('guide.datesLink') }}<ExternalLink :size="14" aria-hidden="true" /></a></li>
+          </ul>
+        </GuideItem>
+
         <GuideItem :title="t('guide.dropTitle')" :short="t('guide.dropShort')">
           <ol class="timeline">
             <li class="tl-good">{{ t('guide.dropBefore') }}</li>
@@ -203,6 +229,20 @@ const FAILING = 'https://students.unimelb.edu.au/course-admin/planning-your-cour
           <p>
             <a class="ext" :href="ENROL_POLICY" target="_blank" rel="noopener">{{ t('guide.enrolPolicyLink') }}<ExternalLink :size="14" aria-hidden="true" /></a>
           </p>
+        </GuideItem>
+
+        <GuideItem :title="t('guide.feesTitle')" :short="t('guide.feesShort')">
+          <ul class="plain">
+            <li>{{ t('guide.feesCsp') }}</li>
+            <li>{{ t('guide.feesHelp') }}</li>
+            <li>{{ t('guide.feesFull') }}</li>
+            <li>{{ t('guide.feesCensus') }}</li>
+          </ul>
+          <p class="note">{{ t('guide.feesSee') }}</p>
+          <ul class="links">
+            <li><a :href="FEES" target="_blank" rel="noopener">{{ t('guide.feesLink') }}<ExternalLink :size="14" aria-hidden="true" /></a></li>
+            <li><a :href="CENSUS" target="_blank" rel="noopener">{{ t('guide.censusLink') }}<ExternalLink :size="14" aria-hidden="true" /></a></li>
+          </ul>
         </GuideItem>
 
         <GuideItem :title="t('guide.datesTitle')" :short="t('guide.datesShort')">
@@ -278,6 +318,36 @@ const FAILING = 'https://students.unimelb.edu.au/course-admin/planning-your-cour
           <p>
             <a class="ext" :href="ASSESS_POLICY" target="_blank" rel="noopener">{{ t('guide.policyLink') }}<ExternalLink :size="14" aria-hidden="true" /></a>
           </p>
+        </GuideItem>
+
+        <GuideItem :title="t('guide.integrityTitle')" :short="t('guide.integrityShort')">
+          <ul class="plain">
+            <li>{{ t('guide.integrityAi') }}</li>
+            <li>{{ t('guide.integrityPlag') }}</li>
+            <li>{{ t('guide.integrityOther') }}</li>
+            <li>{{ t('guide.integrityContract') }}</li>
+          </ul>
+          <p class="note">{{ t('guide.integrityScam') }}</p>
+          <p class="note">{{ t('guide.integrityProcess') }}</p>
+          <ul class="links">
+            <li><a :href="INTEGRITY" target="_blank" rel="noopener">{{ t('guide.integrityLink') }}<ExternalLink :size="14" aria-hidden="true" /></a></li>
+            <li><a :href="INTEGRITY_BREACHES" target="_blank" rel="noopener">{{ t('guide.integrityBreachLink') }}<ExternalLink :size="14" aria-hidden="true" /></a></li>
+          </ul>
+        </GuideItem>
+
+        <GuideItem :title="t('guide.examsTitle')" :short="t('guide.examsShort')">
+          <ul class="plain">
+            <li>{{ t('guide.examsTimetable') }}</li>
+            <li>{{ t('guide.examsMelbourne') }}</li>
+            <li>{{ t('guide.examsResults') }}</li>
+            <li>{{ t('guide.examsReview') }}</li>
+          </ul>
+          <ul class="links">
+            <li><a :href="EXAM_DATES" target="_blank" rel="noopener">{{ t('guide.examDatesLink') }}<ExternalLink :size="14" aria-hidden="true" /></a></li>
+            <li><a :href="EXAM_TT" target="_blank" rel="noopener">{{ t('guide.examTtLink') }}<ExternalLink :size="14" aria-hidden="true" /></a></li>
+            <li><a :href="RESULTS" target="_blank" rel="noopener">{{ t('guide.resultsLink') }}<ExternalLink :size="14" aria-hidden="true" /></a></li>
+            <li><a :href="ASSESS_POLICY" target="_blank" rel="noopener">{{ t('guide.policyLink') }}<ExternalLink :size="14" aria-hidden="true" /></a></li>
+          </ul>
         </GuideItem>
       </div>
     </section>
