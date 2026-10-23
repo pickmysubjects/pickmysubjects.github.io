@@ -1,6 +1,7 @@
 import { forCourse } from './forCourse'
 import { offeredIn, periodsFor, termKey } from './availability'
 import { capExempt, categoryOf, matches, pointRules, sumPoints, withinCaps, type PointsRule, disciplineOf, checkCourse, componentNeeds, diplomaStream, findComponent, findCourse, findDiploma, inDiploma, heldMajorIds, majorTitles, minorTitles, planComponentIds, sharesAllowed, withBarredBreadth } from './courseRules'
+import { careerGoal } from './careerGoal'
 import { evaluateField, referencedSubjects, type EvalContext, type Tri } from './expr'
 import type { Note, Params, Plan, PlanTerm } from './plan'
 import { nextEntry, standardTerms } from './plan'
@@ -432,6 +433,11 @@ function majorsOf(input: GenerateInput): Held {
   return { majors: majorTitles(input.data, heldMajorIds(input)), minors: minorTitles(input.data, input.minors) }
 }
 
+/** The majors a career goal is read against (its accreditation route, when one of them leads there). */
+function goalMajors(input: GenerateInput): string[] {
+  return heldMajorIds(input).filter((id): id is string => !!id)
+}
+
 function note(key: string, params: Params, text: string): Note {
   return { key, params, text }
 }
@@ -522,9 +528,20 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
     if (common.length) notes.push(note('keptOpen', { codes: common.join(', '), n: input.keepOpen.length }, `Planned ${common.join(', ')}, which most of the ${input.keepOpen.length} majors you're deciding between start from.`))
   }
 
+  // A career goal the major leads to: its accreditation route's subjects are planned like the
+  // major's own (a "one of" list: the first still running, unless one is already in).
+  const route = input.profile.career ? careerGoal(data, input.profile.career, goalMajors(input))?.major?.accreditation : undefined
+  if (route) {
+    const running = (c: string) => !!data.subjects[c] && data.subjects[c]!.discontinuedFrom === undefined
+    for (const r of [...route.required, ...route.requiredBreadth]) {
+      const codes = (Array.isArray(r) ? r : [r]).filter(running)
+      if (codes.length && !codes.some((c) => done.has(c) || required.has(c))) required.add(codes[0]!)
+    }
+  }
+
   // "Choose N points from" groups, once every fixed subject is known. Ties in
   // score go to subjects that run in the least crowded teaching period.
-  const score = new Map(recommend(data, input.profile, { course: input.course, eligibleWith: [], year: input.startYear }).map((r) => [r.code, r.score]))
+  const score = new Map(recommend(data, input.profile, { course: input.course, eligibleWith: [], year: input.startYear, goalComponents: goalMajors(input) }).map((r) => [r.code, r.score]))
   for (const { title, req, used, others = [], limits = [] } of groups) {
     // Claimed by a component this one can't share subjects with (B-ARTS: one major or minor each).
     const taken = (c: string) => used.has(c) || others.some((o) => o.has(c))
@@ -1121,6 +1138,7 @@ function pickElective(ctx: PickCtx): { code: string; why: string; ruleId: string
       const recs = recommend(data, input.profile, {
         course: course.code,
         ...majorsOf(input),
+        goalComponents: goalMajors(input),
         category: rule.category,
         level,
         term: { year: term.year, period: term.period },
@@ -1298,6 +1316,7 @@ function trySwap(r: PointsRule, terms: PlanTerm[], all: string[], ctx: RepairCtx
       const candidates = recommend(data, input.profile, {
         course: course.code,
         ...majorsOf(input),
+        goalComponents: goalMajors(input),
         category: r.category,
         level: r.level,
         term: { year: term.year, period: term.period },

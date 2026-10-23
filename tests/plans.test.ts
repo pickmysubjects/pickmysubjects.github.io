@@ -124,4 +124,20 @@ describe('plans in the app', () => {
     expect(plans.active.value.id).not.toBe(idA)
     expect(plans.list.value).toHaveLength(2)
   })
+
+  it('keeps a career goal per plan: clearing it in one leaves the other’s', async () => {
+    const { usePlans } = await import('../src/composables/usePlans')
+    const { useProfile } = await import('../src/composables/useProfile')
+    books.value = {}
+    const plans = usePlans()
+    const me = useProfile()
+    me.setCareer('accountant')
+    const idA = plans.active.value.id
+    plans.create('copy')
+    expect(me.profile.value.career).toBe('accountant')
+    me.setCareer(undefined)
+    expect(me.profile.value.career).toBeUndefined()
+    plans.switchTo(idA)
+    expect(me.profile.value.career).toBe('accountant')
+  })
 })

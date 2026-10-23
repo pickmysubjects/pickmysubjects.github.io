@@ -1,7 +1,11 @@
 import { describe, expect, it } from 'vitest'
 import { buildDataset } from '../scripts/dataset'
 import { careerGap, careerGoal } from '../src/engine/careerGoal'
-import { findCourse, withinCaps } from '../src/engine/courseRules'
+import { checkCourse, findCourse, withinCaps } from '../src/engine/courseRules'
+import { generatePlan } from '../src/engine/generate'
+import { checkTerms } from '../src/engine/planCheck'
+import type { Plan } from '../src/engine/plan'
+import { relieveTerm } from '../src/engine/relieve'
 import { recommend, type Exclusion, type Profile, type RecommendOptions } from '../src/engine/recommend'
 import { cleanPlans, cleanProfile } from '../src/utils/sanitize'
 import { reasonText } from '../src/i18n/format'
@@ -114,5 +118,48 @@ describe('saved goal', () => {
     expect(cleanProfile({ career: '<script>' }).career).toBeUndefined()
     const book = cleanPlans({ x: { active: 'p1', plans: [{ id: 'p1', label: 'A', setup: { course: 'B-COM' }, terms: [], prefs: { goal: 'wam', career: 'accountant' } }] } })
     expect(book.x!.plans[0]!.prefs!.career).toBe('accountant')
+  })
+})
+
+describe('career goal: not counted twice', () => {
+  const first = { ...accounting, results: accounting.results.filter((r) => !['ACCT20001', 'ACCT20002', 'FNCE20005', 'MKTG20001'].includes(r.code)) }
+  const o: RecommendOptions = { ...accOpts, maxLevel: 2 }
+  const factor = (p: Profile, code: string) => recommend(real, p, o).find((r) => r.code === code)?.factors?.find((f) => f.key === 'career')?.effect
+  it('gives a subject the major makes compulsory no career nudge on top of the major’s (the reason still says it)', () => {
+    const rec = recommend(real, { ...first, career: 'accountant' }, o).find((r) => r.code === 'ACCT20002')!
+    expect(rec.reasons.map((n) => n.key)).toContain('careerHelps')
+    expect(rec.factors?.some((f) => f.key === 'career')).toBe(false)
+    // A choice in the major still gets it: the goal is what tells the choices apart.
+    expect(factor({ ...first, career: 'accountant' }, 'ACCT20001')).toBe(4)
+  })
+  it('gives no field nudge when every field it covers is already one of the student’s interests', () => {
+    expect(factor({ ...first, career: 'accountant', interests: ['accounting'] }, 'ACCT20001')).toBeUndefined()
+    // A route subject is more than an interest: it keeps its nudge.
+    expect(factor({ ...first, career: 'accountant', interests: ['accounting'] }, 'BLAW10001')).toBe(12)
+  })
+  it('puts a route subject above unrelated breadth that only scores on ease', () => {
+    const recs = recommend(real, { results: [], skills: {}, interests: [], goal: 'balanced', career: 'accountant' }, { course: 'B-COM', category: 'breadth', level: 1, term: { year: 2027, period: 'semester-1' }, goalComponents: ['accounting'], eligibleWith: [] })
+    expect(recs[0]!.code).toBe('BLAW10001')
+  })
+})
+
+describe('career goal in the plan builder and the heavy-term fix', () => {
+  const route = ['ECON10003', 'ACCT30002', 'ACCT30004', 'BLAW10001', 'BLAW20001', 'BLAW30002']
+  const build = (career?: string) =>
+    generatePlan({ data: real, profile: { results: [], skills: {}, interests: [], goal: 'balanced', ...(career ? { career } : {}) }, course: 'B-COM', courseYear: 2026, major: 'accounting', startYear: 2027, startPeriod: 'semester-1' })
+  it('plans the accreditation route when the major leads to the goal, and the plan still checks out', () => {
+    const { plan } = build('accountant')
+    const codes = plan.terms.flatMap((t) => t.subjects)
+    expect(codes).toEqual(expect.arrayContaining(route))
+    const unmet = (p: Plan) => checkCourse(p, real).statuses.filter((r) => r.status !== 'ok').map((r) => r.ruleId)
+    expect(unmet(plan)).toEqual(unmet(build().plan))
+    expect(checkTerms(plan, real).filter((i) => i.severity === 'error')).toEqual([])
+  })
+  it('never swaps a subject the route needs for one it doesn’t', () => {
+    const plan: Plan = { course: 'B-COM', courseYear: 2026, major: 'accounting', minors: [], completed: [], terms: [{ year: 2027, period: 'semester-1', subjects: ['BLAW10001', 'ACCT20001', 'ACCT20002', 'FNCE20005'] }, { year: 2027, period: 'semester-2', subjects: [] }] }
+    const student: Profile = { results: [], skills: { writing: 1 }, interests: [], goal: 'balanced' }
+    expect(relieveTerm(plan, real, 0, student)).toMatchObject({ kind: 'replace', code: 'BLAW10001' })
+    const r = relieveTerm(plan, real, 0, { ...student, career: 'accountant' })
+    if (r && r.kind === 'replace') expect(r.code).not.toBe('BLAW10001')
   })
 })

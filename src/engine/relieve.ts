@@ -2,6 +2,7 @@ import { offeredIn } from './availability'
 import { checkCourse, heldMajorIds, majorTitles, minorTitles, planComponentIds } from './courseRules'
 import type { Plan, PlanTerm } from './plan'
 import { evaluateField, referencedSubjects } from './expr'
+import { careerGoal } from './careerGoal'
 import { checkTerms } from './planCheck'
 import { passedCodes, recommend, type Profile } from './recommend'
 import { planRoles } from './roles'
@@ -274,16 +275,26 @@ function fixedSubjects(data: Dataset, plan: Plan): Set<string> {
   return out
 }
 
+/** Subjects the career goal's accreditation route needs (required, "one of", breadth), for this plan's majors. */
+function routeSubjects(data: Dataset, plan: Plan, profile: Profile | undefined): string[] {
+  const a = careerGoal(data, profile?.career, goalMajors(plan))?.major?.accreditation
+  return a ? [...a.required.flat(), ...a.requiredBreadth] : []
+}
+
+function goalMajors(plan: Plan): string[] {
+  return heldMajorIds(plan).filter((id): id is string => !!id)
+}
+
 const ALTERNATIVES = new WeakMap<Dataset, Map<string, string[]>>()
 
 /** Subjects that could fill a free-elective slot, best first for this student (the suggestions' ranking). */
-function alternatives(data: Dataset, profile: Profile, course: string, category: string, level: number, term: PlanTerm): string[] {
+function alternatives(data: Dataset, profile: Profile, course: string, category: string, level: number, term: PlanTerm, majors: string[]): string[] {
   let cache = ALTERNATIVES.get(data)
   if (!cache) ALTERNATIVES.set(data, (cache = new Map()))
-  const key = JSON.stringify([profile, course, category, level, term.year, term.period])
+  const key = JSON.stringify([profile, course, category, level, term.year, term.period, profile.career ? majors : []])
   let out = cache.get(key)
   if (!out) {
-    out = recommend(data, profile, { course, category, level, term: { year: term.year, period: term.period }, eligibleWith: [] })
+    out = recommend(data, profile, { course, category, level, term: { year: term.year, period: term.period }, eligibleWith: [], ...(profile.career ? { goalComponents: majors } : {}) })
       .filter((x) => x.eligibility !== 'fail')
       .map((x) => x.code)
     cache.set(key, out)
@@ -327,6 +338,8 @@ function replaceFor(
   // Nor a subject those lean on: a maths prerequisite that a VCE score could also stand in
   // for still has to stay, or the plan quietly relies on a score the student may not have.
   const fixed = requiredWithPrerequisites(fixedSubjects(data, plan), inPlan, data.subjects, plan.course)
+  // The career goal's accreditation route: a subject it needs is never swapped for one it doesn't.
+  for (const c of routeSubjects(data, plan, profile)) fixed.add(c)
   for (const c of inPlan) {
     const p = data.subjects[c]
     if (p) for (const r of [...referencedSubjects(p.prerequisites), ...referencedSubjects(p.corequisites)]) if (inPlan.includes(r)) fixed.add(r)
@@ -347,7 +360,7 @@ function replaceFor(
     if (!s || fixed.has(code) || !s.categories[plan.course] || leanedOn(plan, data, code)) continue
     // Ranked once per kind of slot (category, level, teaching period) and student; whether
     // the prerequisites are met where it would go is checked on the whole plan below.
-    const recs = alternatives(data, student, plan.course, s.categories[plan.course] as string, s.level, term)
+    const recs = alternatives(data, student, plan.course, s.categories[plan.course] as string, s.level, term, goalMajors(plan))
       .filter((x) => !inPlan.includes(x) && !done.includes(x) && data.subjects[x]?.points === s.points)
       .slice(0, REPLACE_TRIES)
     // Swapping a subject the student picked for their interests for one they don't care about

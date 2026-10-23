@@ -105,6 +105,11 @@ export interface RecommendOptions {
   /** The student's major and specialisation (component ids): their subjects get a nudge and say so. */
   programme?: { courseYear: number; components: string[]; minors?: string[] }
   /**
+   * The student's majors (component ids) for reading a career goal, when `programme` isn't given
+   * (the plan builder): the goal's accreditation route then applies without the major's own nudge.
+   */
+  goalComponents?: readonly string[]
+  /**
    * Titles of the student's major/specialisation, for conditions limited to a major. Defaults to
    * those of `programme`; unknown (left undecided) when neither is given.
    */
@@ -134,10 +139,11 @@ export const HEAVY_PICK_COST = 6
 export const PROGRAMME_BONUS = 12
 /**
  * A subject the career goal's accreditation route needs, and one that helps toward it (its main
- * field is the job's, or the route or Handbook recommends it). Smaller than the major's own nudge:
- * the goal orders subjects that fit, it doesn't override the degree. Somewhat related: nothing.
+ * field is the job's, or the route or Handbook recommends it). A required one is as needed as a
+ * major's own subject, so the same nudge (smaller, it lost to unrelated breadth on ease alone);
+ * one that helps orders subjects that fit, it doesn't override the degree. Somewhat related: nothing.
  */
-export const CAREER_REQUIRED_BONUS = 8
+export const CAREER_REQUIRED_BONUS = PROGRAMME_BONUS
 export const CAREER_HELPS_BONUS = 4
 /** Subjects done before the student's own choices start to count, and how much they move a score. */
 const PAST_CHOICES_MIN = 4
@@ -333,8 +339,10 @@ export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions =
 
   // The career goal: read against the student's major when it leads there. Its nudge never goes
   // to a subject that would take the plan over a points cap (breadth, level 1, one area).
-  const components = opts.programme?.components ?? []
+  const components = opts.programme?.components ?? opts.goalComponents ?? []
   const goal = profile.goal === 'easy' ? null : careerGoal(raw, profile.career, components)
+  // Cap exceptions can name a minor too (a major and minor in one discipline).
+  const capIds = [...components, ...(opts.programme?.minors ?? [])]
   const capCourse = goal && opts.course ? findCourse(raw, opts.course, opts.programme?.courseYear ?? opts.year ?? new Date().getFullYear()) : undefined
   const takenList = [...taken]
 
@@ -493,13 +501,19 @@ export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions =
     }
     if (goal) {
       const row = goalTier(goal, raw.subjects[s.code] ?? s, raw, taken)
-      const fits = !capCourse || withinCaps(s, takenList, capCourse, data, components)
+      const fits = !capCourse || withinCaps(s, takenList, capCourse, data, capIds)
       if (fits && (row.tier === 'required' || row.tier === 'helps')) {
         const names = careerNameParams(goal.target)
         const acc = row.reasons.find((r) => r.kind === 'acc')
         const field = row.reasons.find((r) => r.kind === 'field')
         const career = goal.target.names.en
-        shift(rec, 'career', row.tier === 'required' ? CAREER_REQUIRED_BONUS : CAREER_HELPS_BONUS, { career, ...names })
+        // Not counted twice: a subject the degree makes compulsory already has the major's nudge
+        // (there is nothing to choose), and one that helps only through its field, when the
+        // student named every such field as an interest, already scores for that interest.
+        const compulsory = roles?.required.has(s.code) ?? false
+        const onlyField = row.tier === 'helps' && !acc && !row.reasons.some((r) => r.kind === 'helpful')
+        const sameAsInterest = onlyField && field?.kind === 'field' && field.topics.every((x) => profile.interests.includes(x))
+        if (!compulsory && !sameAsInterest) shift(rec, 'career', row.tier === 'required' ? CAREER_REQUIRED_BONUS : CAREER_HELPS_BONUS, { career, ...names })
         // Said up front, after what the major says about it: it's why the subject moved up.
         const at = rec.reasons.findIndex((n) => !n.key.startsWith('major'))
         const said =
