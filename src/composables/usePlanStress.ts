@@ -31,9 +31,13 @@ export function usePlanStress() {
     return relieveTerm(plan.plan.value, data.value, termIndex, profile.value)
   }
 
-  /** The degree's own subjects in a term that no other term can take: why a heavy term stays heavy. */
+  /**
+   * The degree's own subjects behind a heavy term's reasons that no other term can take: why it
+   * stays heavy. Only subjects a reason names — a fixed subject that isn't adding to the load says nothing.
+   */
   function pinned(termIndex: number): string[] {
-    const codes = (plan.terms.value[termIndex]?.subjects ?? []).filter((c) => fixed.value.has(c))
+    const named = new Set((stress.value.terms[termIndex]?.reasons ?? []).flatMap((r) => String(r.params.codes ?? '').split(', ')))
+    const codes = (plan.terms.value[termIndex]?.subjects ?? []).filter((c) => fixed.value.has(c) && named.has(c))
     return pinnedIn(plan.plan.value, data.value, termIndex, codes)
   }
 
