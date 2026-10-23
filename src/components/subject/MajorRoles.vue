@@ -58,7 +58,7 @@ const shown = computed(() => (expanded.value ? roles.value : roles.value.slice(0
   border: 0;
   background: none;
   font: inherit;
-  font-size: 0.875rem;
+  font-size: var(--fs-small);
   font-weight: 600;
   color: var(--accent);
   cursor: pointer;
@@ -70,7 +70,7 @@ const shown = computed(() => (expanded.value ? roles.value : roles.value.slice(0
 }
 
 .roles-title {
-  font-size: 0.9375rem;
+  font-size: var(--fs-body);
   font-weight: 650;
 }
 
@@ -94,7 +94,7 @@ const shown = computed(() => (expanded.value ? roles.value : roles.value.slice(0
   margin: 0;
   padding: 0;
   list-style: none;
-  font-size: 0.9375rem;
+  font-size: var(--fs-body);
 }
 
 .role {
@@ -107,7 +107,7 @@ const shown = computed(() => (expanded.value ? roles.value : roles.value.slice(0
   margin: 0;
   padding: 2px 9px;
   border-radius: 999px;
-  font-size: 0.75rem;
+  font-size: var(--fs-meta);
   font-weight: 600;
   background: var(--surface-2);
   color: var(--ink-soft);
@@ -119,13 +119,13 @@ const shown = computed(() => (expanded.value ? roles.value : roles.value.slice(0
 }
 
 .role-mine {
-  font-size: 0.75rem;
+  font-size: var(--fs-meta);
   font-weight: 600;
   color: var(--accent);
 }
 
 .role-what {
-  font-size: 0.8125rem;
+  font-size: var(--fs-small);
   color: var(--ink-soft);
 }
 

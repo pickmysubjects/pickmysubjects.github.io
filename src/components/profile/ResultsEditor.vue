@@ -233,7 +233,7 @@ function remove(i: number): void {
     </div>
     <p v-if="results.some((x) => isFail(x))" class="fail-hint">
       {{ t('record.failHint') }}
-      <template v-if="failedTwice.length">{{ t('record.failedTwice', { codes: failedTwice.join(', ') }) }}</template>
+      <template v-if="failedTwice.length">{{ t('record.failedTwice', { codes: failedTwice.join(t('listSep')) }) }}</template>
       <a :href="link('guide')">{{ t('guide.failTitle') }}</a>
     </p>
     <RatePrompt v-if="rateNext && !rating && !rated.has(rateNext)" :key="rateNext" class="rating-form" :code="rateNext" @close="rateNext = null" />

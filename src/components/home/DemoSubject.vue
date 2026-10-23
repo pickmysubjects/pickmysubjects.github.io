@@ -19,7 +19,7 @@ const { t, locale } = useI18n()
 const local = computed(() => localTitle(props.subject, locale.value))
 const gist = computed(() => subjectGist(t.value, props.subject))
 const parts = computed(() => summariseAssessment(props.subject.assessment)?.parts ?? [])
-const barLabel = computed(() => parts.value.map((p) => `${t.value(`assess.kind.${p.kind}`)} ${p.weight}%`).join(', '))
+const barLabel = computed(() => parts.value.map((p) => `${t.value(`assess.kind.${p.kind}`)} ${p.weight}%`).join(t.value('listSep')))
 // What reviewers say about the work and the difficulty, in the easy/hard lists' words.
 const said = computed(() => {
   const out: string[] = []

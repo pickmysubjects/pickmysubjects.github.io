@@ -112,7 +112,7 @@ function go(c: string): void {
 <style scoped>
 .cols-summary {
   padding: 10px 0;
-  font-size: 0.9375rem;
+  font-size: var(--fs-body);
   font-weight: 650;
   color: var(--accent);
   cursor: pointer;
@@ -143,7 +143,7 @@ function go(c: string): void {
 
 .sub {
   margin: 0;
-  font-size: 0.9375rem;
+  font-size: var(--fs-body);
   font-weight: 650;
 }
 

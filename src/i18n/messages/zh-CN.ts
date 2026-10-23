@@ -1,6 +1,8 @@
 import type { Messages } from './en'
 
 export const zhCN: Messages = {
+  /** Between items of a list shown in text ("A, B" / "A、B"). */
+  listSep: "、",
   app: {
     footer: "学生做的非官方工具，与墨尔本大学无关。选课前请以 {handbook} 为准。",
     handbook: 'Handbook',
@@ -308,6 +310,10 @@ export const zhCN: Messages = {
     weakSkills: "比较依赖 {skills}，你评为偏弱。",
     goodAt: "用到你比较拿手的：{skills}。",
     struggleSkills: "很依赖 {skills}，你觉得这项吃力。",
+    examsGood: "你擅长考试，这门课期末占 {pct}%。",
+    teamworkGood: "你擅长小组合作，这门课小组作业占 {pct}%。",
+    examsWeak: "这门课期末占 {pct}%，而考试不是你的强项。",
+    teamworkWeak: "这门课小组作业占 {pct}%，而小组合作不是你的强项。",
     interests: '涉及 {topics}，是你感兴趣的方向。',
     averagedHigh: '按你在相近课程（{codes}）的成绩，预计约 {mark} 分。',
     likedBefore: "和你评价不错的 {codes} 方向相近。",
@@ -758,6 +764,7 @@ export const zhCN: Messages = {
     suitsGroup: "适合你的地方",
     watchGroup: "需要注意",
     ahead: "这是 {level} 级的课，一般第 {level} 年修，这里按你到那时能选的课来比较。",
+    aheadGraduate: "这是研究生（9 级）课程，本科生一般在第 3 年、满足先修和学院许可后才能选。",
     betterThan: "比你 {n}% 的可选课程更适合",
     basis: {
       lead: "依据：{parts}。",
@@ -790,7 +797,7 @@ export const zhCN: Messages = {
       hard: "在 {course} 难课榜第 {n} 名",
     },
     unranked: {
-      graduate: "研究生课程，不在水课/难课榜上。",
+      graduate: "研究生课程，不在水课/难课榜上；这里是和 {course} 的课比较的结果。",
       passFail: "只记通过/不通过，不算进 WAM，也不在榜上。",
       campus: "不在 Parkville 上课，不在榜上。",
       notRunning: "{year} 年不开，不在榜上。",

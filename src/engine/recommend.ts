@@ -5,7 +5,7 @@ import { evaluateField, referencedSubjects, type Tri } from './expr'
 import type { Note, Params } from './plan'
 import { discussionVerdict, type Dataset, type Period, type Skill, type Subject } from './schema'
 import { predictMark } from './predict'
-import { skillsOf } from './skills'
+import { MARKING_SKILLS, markingShare, skillsOf } from './skills'
 import { termStress } from './termStress'
 import { planRoles } from './roles'
 import { areaField, homeTopics, relatedTopics, topicsOf } from './topics'
@@ -357,7 +357,12 @@ export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions =
       skip({ key: 'filtered' })
       continue
     }
-    if (opts.maxLevel !== undefined && s.level > opts.maxLevel) {
+    // A graduate subject only when this degree counts it (its categories or the student's major).
+    if (s.level > 3 && !(opts.course && s.categories[opts.course]) && !(roles && (roles.required.has(s.code) || roles.options.has(s.code)))) {
+      skip({ key: 'notInCourse' })
+      continue
+    }
+    if (opts.maxLevel !== undefined && studyYear(s.level) > opts.maxLevel) {
       skip({ key: 'aboveLevel', level: opts.maxLevel })
       continue
     }
@@ -400,17 +405,20 @@ export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions =
     // A third-year student rarely gains from a first-year science subject (the degree wants
     // level-3 points), and a level below their year is a smaller step back; breadth is
     // different, since level-1 breadth is the usual way in.
-    const behindBy = opts.maxLevel === undefined ? 0 : opts.maxLevel - s.level
+    const behindBy = opts.maxLevel === undefined ? 0 : opts.maxLevel - studyYear(s.level)
     if (behindBy > 0 && opts.course && s.categories[opts.course] !== 'breadth') {
       shift(rec, 'behindLevel', -(behindBy >= 2 ? BEHIND_LEVEL_COST : BEHIND_LEVEL_COST / 2), { level: opts.maxLevel ?? 0 })
     }
     // Leaning on a skill the student finds hard, in a topic they didn't ask for: even
     // "challenge yourself" means a hard subject in something you care about, not this.
     if (!rec.reasons.some((x) => x.key === 'interests')) {
-      const hard = rec.warnings.find((x) => x.key === 'struggleSkills')
-      const weak = rec.warnings.find((x) => x.key === 'weakSkills')
-      if (hard) shift(rec, 'offTopicStruggle', -OFF_TOPIC_STRUGGLE_COST, { skills: hard.params.skills ?? '' })
-      else if (weak) shift(rec, 'offTopicStruggle', -OFF_TOPIC_STRUGGLE_COST / 2, { skills: weak.params.skills ?? '' })
+      // Exams or group work the student finds hard count the same as a subject skill.
+      const marking = (hardOnly: boolean) => MARKING_SKILLS.filter((k) => rec.warnings.some((x) => x.key === `${k}Weak` && (!hardOnly || x.params.hard)))
+      const named = (key: string, hardOnly: boolean) => [String(rec.warnings.find((x) => x.key === key)?.params.skills ?? ''), ...marking(hardOnly)].filter(Boolean).join(', ')
+      const hard = named('struggleSkills', true)
+      const weak = named('weakSkills', false)
+      if (hard) shift(rec, 'offTopicStruggle', -OFF_TOPIC_STRUGGLE_COST, { skills: hard })
+      else if (weak) shift(rec, 'offTopicStruggle', -OFF_TOPIC_STRUGGLE_COST / 2, { skills: weak })
     }
     // "Challenge yourself" is a hard subject that's useful to *you*: once interests are given,
     // one unrelated to all of them drops below the ones in the student's own direction.
@@ -418,14 +426,14 @@ export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions =
     // direction or on a strength of theirs come first: half the challenge drop, nothing for a match.
     if (profile.goal === 'wam' && profile.interests.length) {
       const exact = topicsOf(s).topics.some((t) => profile.interests.includes(t))
-      const strength = rec.reasons.some((x) => x.key === 'strengths' || x.key === 'goodAt')
+      const strength = rec.reasons.some((x) => STRENGTH_KEYS.has(x.key))
       if (!exact && !strength) shift(rec, 'offTopicWam', -OFF_TOPIC_CHALLENGE_COST / 2)
     }
     if (profile.goal === 'challenge' && profile.interests.length) {
       const topics = topicsOf(s).topics
       const exact = topics.some((t) => profile.interests.includes(t))
       // Not in their interests but built on a strength of theirs: half the drop.
-      const strength = rec.reasons.some((x) => x.key === 'strengths' || x.key === 'goodAt')
+      const strength = rec.reasons.some((x) => STRENGTH_KEYS.has(x.key))
       if (!exact) shift(rec, 'offTopicChallenge', -(strength ? OFF_TOPIC_CHALLENGE_COST / 2 : OFF_TOPIC_CHALLENGE_COST))
     }
     // What the student has actually chosen says what they like: more from a field they keep
@@ -504,6 +512,9 @@ interface ScoreCtx {
   blocked: Set<string>
 }
 
+/** Reasons that say the subject plays to something the student is good at. */
+const STRENGTH_KEYS = new Set(['strengths', 'goodAt', 'examsGood', 'teamworkGood'])
+
 function note(key: string, params: Params, text: string): Note {
   return { key, params, text }
 }
@@ -524,13 +535,21 @@ function score(s: Subject, ctx: ScoreCtx): Recommendation {
     const level = (k: Skill) => ctx.profile.skills[k] as number
     const fits = rated.map((k) => (level(k) - 1) / 4)
     parts.skillFit = 0.6 * avg(fits) + 0.4 * Math.min(...fits)
-    const at = (n: number) => rated.filter((k) => level(k) === n)
+    // Exams and group work come from how the subject is marked, not what it teaches: they are
+    // said as their own sentence with the share of the mark, not listed as subject skills.
+    const isMarking = (k: Skill) => MARKING_SKILLS.includes(k)
+    const at = (n: number) => rated.filter((k) => level(k) === n && !isMarking(k))
     const list = (ks: Skill[]) => ks.join(', ')
     detail.skillFit = { weak: list([...at(1), ...at(2)]), strong: list([...at(5), ...at(4)]), uses: list(rated) }
     if (at(5).length) reasons.push(note('strengths', { skills: list(at(5)) }, `Uses your strengths: ${list(at(5))}.`))
     if (at(4).length) reasons.push(note('goodAt', { skills: list(at(4)) }, `Uses what you're good at: ${list(at(4))}.`))
     if (at(2).length) warnings.push(note('weakSkills', { skills: list(at(2)) }, `Leans on ${list(at(2))}, which you rated as weaker.`))
     if (at(1).length) warnings.push(note('struggleSkills', { skills: list(at(1)) }, `Leans heavily on ${list(at(1))}, which you find hard.`))
+    for (const k of rated.filter(isMarking)) {
+      const pct = markingShare(s, k)
+      if (level(k) >= 4) reasons.push(note(`${k}Good`, { pct }, `You're good at ${k}, and ${k} make up ${pct}% of the mark.`))
+      else if (level(k) <= 2) warnings.push(note(`${k}Weak`, { pct, ...(level(k) === 1 ? { hard: 1 } : {}) }, `${k} make up ${pct}% of the mark, and you find ${k} harder.`))
+    }
   }
 
 
@@ -860,6 +879,14 @@ function diversify(recs: Recommendation[], data: Dataset): Recommendation[] {
     out.push(pool.splice(alt > 0 ? alt : 0, 1)[0] as Recommendation)
   }
   return [...out, ...later]
+}
+
+/**
+ * The year of a bachelor's degree a subject belongs to: its level, with graduate subjects
+ * (level 9, COMP90049) counted as final-year ones, which is when an undergraduate may take them.
+ */
+export function studyYear(level: number): number {
+  return Math.min(level, 3)
 }
 
 /** The highest level a student can usually take: year 1 until 100 points are done, and so on. */

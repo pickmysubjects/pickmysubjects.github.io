@@ -12,12 +12,12 @@ const copied = shallowRef(false)
 const offerings = computed(() =>
   props.parsed.offerings === 'unknown'
     ? t.value('contribute.notFound')
-    : props.parsed.offerings.map((p) => periodLabel(t.value, p)).join(', '),
+    : props.parsed.offerings.map((p) => periodLabel(t.value, p)).join(t.value('listSep')),
 )
 const nonAllowed = computed(() =>
   props.parsed.nonAllowed === 'unknown'
     ? t.value('contribute.notFound')
-    : props.parsed.nonAllowed.join(', ') || t.value('contribute.none'),
+    : props.parsed.nonAllowed.join(t.value('listSep')) || t.value('contribute.none'),
 )
 
 const assessment = computed(() => {

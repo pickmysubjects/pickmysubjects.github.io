@@ -68,7 +68,7 @@ const fixLabel = computed(() => {
     <ul v-if="open && reasons.length > 1" class="stress-rest">
       <li v-for="(r, i) in reasons.slice(1)" :key="i">{{ r }}</li>
     </ul>
-    <p v-if="stuck.length" class="stress-stuck">{{ t('stress.pinned', { codes: stuck.join(', ') }) }}</p>
+    <p v-if="stuck.length" class="stress-stuck">{{ t('stress.pinned', { codes: stuck.join(t('listSep')) }) }}</p>
     <div v-if="fix || reasons.length > 1" class="stress-actions">
       <button v-if="fix" type="button" class="stress-fix" @click="applyRelief(termIndex, fix)">{{ fixLabel }}</button>
       <button v-if="reasons.length > 1" type="button" class="stress-more" :aria-expanded="open" @click="open = !open">

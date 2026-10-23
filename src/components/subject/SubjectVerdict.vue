@@ -112,7 +112,7 @@ const discussions = computed(() => (props.detailReady ? (props.subject.discussio
 }
 
 .tile-label {
-  font-size: 0.875rem;
+  font-size: var(--fs-small);
   font-weight: 600;
   color: var(--ink-soft);
 }
@@ -127,7 +127,7 @@ const discussions = computed(() => (props.detailReady ? (props.subject.discussio
 
 .tile-value small {
   margin-left: 2px;
-  font-size: 0.875rem;
+  font-size: var(--fs-small);
   font-weight: 500;
   color: var(--ink-faint);
 }
@@ -149,7 +149,7 @@ const discussions = computed(() => (props.detailReady ? (props.subject.discussio
 }
 
 .tile-ends {
-  font-size: 0.8125rem;
+  font-size: var(--fs-meta);
   color: var(--ink-faint);
 }
 
@@ -162,13 +162,13 @@ const discussions = computed(() => (props.detailReady ? (props.subject.discussio
 }
 
 .tile-text {
-  font-size: 0.875rem;
+  font-size: var(--fs-small);
   color: var(--ink);
 }
 
 .meta {
   margin: 0;
-  font-size: 0.9375rem;
+  font-size: var(--fs-body);
   color: var(--ink-soft);
 }
 
@@ -187,7 +187,7 @@ const discussions = computed(() => (props.detailReady ? (props.subject.discussio
 }
 
 .rest-row dt {
-  font-size: 0.9375rem;
+  font-size: var(--fs-body);
 }
 
 .rest-row dd {
@@ -196,7 +196,7 @@ const discussions = computed(() => (props.detailReady ? (props.subject.discussio
 
 .rest-value {
   font-family: var(--font-code);
-  font-size: 0.875rem;
+  font-size: var(--fs-small);
   color: var(--ink-soft);
 }
 

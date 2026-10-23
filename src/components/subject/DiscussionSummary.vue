@@ -36,12 +36,12 @@ const blocks = computed(() => props.discussions.filter((d) => d.points.length).m
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 0.9375rem;
+  font-size: var(--fs-body);
   font-weight: 650;
 }
 
 .discussion-note {
-  font-size: 0.8125rem;
+  font-size: var(--fs-small);
   color: var(--ink-faint);
 }
 
@@ -64,13 +64,13 @@ const blocks = computed(() => props.discussions.filter((d) => d.points.length).m
 }
 
 .discussion-source {
-  font-size: 0.8125rem;
+  font-size: var(--fs-meta);
   font-weight: 600;
   color: var(--ink-soft);
 }
 
 .discussion-link {
   justify-self: start;
-  font-size: 0.8125rem;
+  font-size: var(--fs-small);
 }
 </style>

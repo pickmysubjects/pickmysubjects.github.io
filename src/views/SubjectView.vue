@@ -167,7 +167,7 @@ const sections = computed(() => {
   align-items: center;
   gap: 6px;
   width: fit-content;
-  font-size: 0.9375rem;
+  font-size: var(--fs-small);
   font-weight: 500;
   color: var(--ink-soft);
   text-decoration: none;
@@ -226,7 +226,7 @@ const sections = computed(() => {
 .sec :deep(:is(.sec-title, .assess-title, .faq-title)),
 .sec-about :deep(.about-row:first-child .about-label) {
   margin: 0;
-  font-size: 1.2rem;
+  font-size: var(--fs-section);
   font-weight: 700;
   line-height: 1.3;
   color: var(--ink);
@@ -291,8 +291,8 @@ const sections = computed(() => {
 }
 
 .toc-link {
-  padding: 6px 0;
-  font-size: 0.9375rem;
+  padding: var(--space-2) 0;
+  font-size: var(--fs-small);
   color: var(--ink-soft);
   text-decoration: none;
 }
@@ -307,14 +307,14 @@ const sections = computed(() => {
 
 .verified {
   margin: 0;
-  font-size: 0.875rem;
+  font-size: var(--fs-small);
   line-height: 1.6;
   color: var(--ink-soft);
 }
 
 .report {
   width: fit-content;
-  font-size: 0.875rem;
+  font-size: var(--fs-small);
 }
 
 .missing {
@@ -347,7 +347,7 @@ const sections = computed(() => {
   .sec-title,
   .sec :deep(:is(.sec-title, .assess-title, .faq-title)),
   .sec-about :deep(.about-row:first-child .about-label) {
-    font-size: 1.125rem;
+    font-size: var(--fs-section);
   }
 }
 </style>

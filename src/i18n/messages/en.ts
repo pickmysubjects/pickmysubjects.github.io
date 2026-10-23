@@ -4,6 +4,8 @@
  * second language.
  */
 export const en = {
+  /** Between items of a list shown in text ("A, B" / "A、B"). */
+  listSep: ", ",
   app: {
     footer: "Unofficial student tool, not linked to the University of Melbourne. Check the {handbook} before you enrol.",
     handbook: 'Handbook',
@@ -311,6 +313,10 @@ export const en = {
     weakSkills: "Leans on {skills}, which you rated as weaker.",
     goodAt: "Uses what you're good at: {skills}.",
     struggleSkills: "Leans heavily on {skills}, which you find hard.",
+    examsGood: "You're good at exams, and the exam is worth {pct}% here.",
+    teamworkGood: "You're good at group work, and group work is worth {pct}% here.",
+    examsWeak: "The exam is worth {pct}% here, and exams aren't your strong point.",
+    teamworkWeak: "Group work is worth {pct}% here, and it isn't your strong point.",
     interests: 'Covers {topics}, which you’re interested in.',
     averagedHigh: 'Your marks in similar subjects ({codes}) point to about {mark}.',
     likedBefore: "Close to {codes}, which you rated well.",
@@ -761,6 +767,7 @@ export const en = {
     suitsGroup: "Why it suits you",
     watchGroup: "Watch out",
     ahead: "A level-{level} subject, usually taken in year {level}: judged against what you could take by then.",
+    aheadGraduate: "A graduate (level-9) subject: undergraduates usually take it in year 3, once they meet the prerequisites and have the faculty's permission.",
     betterThan: "Better fit than {n}% of your options",
     basis: {
       lead: "Based on {parts}",
@@ -793,7 +800,7 @@ export const en = {
       hard: "#{n} on the hardest list for {course}",
     },
     unranked: {
-      graduate: "A graduate subject, so it isn't on the easy and hard lists.",
+      graduate: "A graduate subject, so it isn't on the easy and hard lists; this is how it compares with {course}'s subjects.",
       passFail: "Pass/fail, so it doesn't count in your WAM and isn't on the lists.",
       campus: "Taught away from Parkville, so it isn't on the lists.",
       notRunning: "Not running in {year}, so it isn't on the lists.",

@@ -2,7 +2,8 @@
 import { computed } from 'vue'
 import { ArrowRight, X } from 'lucide-vue-next'
 import { useI18n } from '@/i18n'
-import type { Edge } from '@/utils/planBoard'
+import { useDataset } from '@/composables/useDataset'
+import { chainNoneKey, type Edge } from '@/utils/planBoard'
 
 /**
  * A subject's place in the plan as a chain: what it needs (and when those are taken) → the
@@ -21,6 +22,9 @@ const emit = defineEmits<{ select: [code: string]; open: [code: string]; clear: 
 const { t } = useI18n()
 
 const needs = computed(() => [...new Set(props.edges.filter((e) => e.to === props.code && e.from !== props.code).map((e) => e.from))])
+// No prerequisites at all reads as that, not as "nothing in your plan".
+const { data } = useDataset()
+const noneKey = computed(() => chainNoneKey(data.value.subjects[props.code]?.prerequisites))
 const unlocks = computed(() => [...new Set(props.edges.filter((e) => e.from === props.code && e.to !== props.code).map((e) => e.to))])
 </script>
 
@@ -33,7 +37,7 @@ const unlocks = computed(() => [...new Set(props.edges.filter((e) => e.from === 
         <button v-for="c in needs" :key="c" class="chip-link" type="button" @click="emit('select', c)">
           <span class="code">{{ c }}</span><span class="when">{{ whereOf[c] }}</span>
         </button>
-        <span v-if="!needs.length" class="none">{{ t('plan.tlNone') }}</span>
+        <span v-if="!needs.length" class="none">{{ t(noneKey) }}</span>
       </span>
     </div>
     <ArrowRight :size="18" aria-hidden="true" class="arrow" />

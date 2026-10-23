@@ -1,6 +1,8 @@
 import type { Messages } from './en'
 
 export const id: Messages = {
+  /** Between items of a list shown in text ("A, B" / "A、B"). */
+  listSep: ", ",
   app: {
     footer: "Alat tidak resmi buatan mahasiswa, tidak terkait University of Melbourne. Cek {handbook} sebelum mendaftar.",
     handbook: 'Handbook',
@@ -308,6 +310,10 @@ export const id: Messages = {
     weakSkills: "Bergantung pada {skills}, yang kamu nilai agak lemah.",
     goodAt: "Memakai kemampuan yang cukup kamu kuasai: {skills}.",
     struggleSkills: "Sangat bergantung pada {skills}, yang kamu rasa sulit.",
+    examsGood: "Kamu jago ujian, dan ujian bernilai {pct}% di sini.",
+    teamworkGood: "Kamu jago kerja kelompok, dan tugas kelompok bernilai {pct}% di sini.",
+    examsWeak: "Ujian bernilai {pct}% di sini, dan ujian bukan kekuatanmu.",
+    teamworkWeak: "Tugas kelompok bernilai {pct}% di sini, dan kerja kelompok bukan kekuatanmu.",
     interests: 'Membahas {topics}, yang kamu minati.',
     averagedHigh: 'Dari nilaimu di mata kuliah serupa ({codes}), perkiraannya sekitar {mark}.',
     likedBefore: "Mirip dengan {codes}, yang kamu nilai bagus.",
@@ -758,6 +764,7 @@ export const id: Messages = {
     suitsGroup: "Kenapa cocok untukmu",
     watchGroup: "Perhatikan",
     ahead: "Mata kuliah level {level}, biasanya diambil di tahun ke-{level}: dibandingkan dengan pilihan yang bisa kamu ambil saat itu.",
+    aheadGraduate: "Mata kuliah pascasarjana (level 9): mahasiswa S1 biasanya mengambilnya di tahun 3, setelah memenuhi prasyarat dan mendapat izin fakultas.",
     betterThan: "Lebih cocok daripada {n}% pilihanmu",
     basis: {
       lead: "Berdasarkan {parts}",
@@ -790,7 +797,7 @@ export const id: Messages = {
       hard: "Peringkat {n} di daftar mata kuliah tersulit {course}",
     },
     unranked: {
-      graduate: "Mata kuliah pascasarjana, jadi tidak ada di daftar.",
+      graduate: "Mata kuliah pascasarjana, jadi tidak ada di daftar mudah dan sulit; ini perbandingannya dengan mata kuliah {course}.",
       passFail: "Hanya lulus/tidak lulus, jadi tidak dihitung dalam WAM dan tidak ada di daftar.",
       campus: "Diajarkan di luar Parkville, jadi tidak ada di daftar.",
       notRunning: "Tidak dibuka pada {year}, jadi tidak ada di daftar.",

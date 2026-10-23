@@ -19,7 +19,7 @@ const props = defineProps<{ subject: Subject; year: number }>()
 const { t } = useI18n()
 const { data } = useDataset()
 const { profile } = useProfile()
-const { difficulty, hasProfile, fit, course, ahead } = useSubjectFit(
+const { difficulty, hasProfile, fit, course, ahead, graduate } = useSubjectFit(
   computed(() => props.subject.code),
   toRef(props, 'year'),
 )
@@ -66,7 +66,7 @@ const fitHeadline = computed(() => {
   if (f.kind === 'fit') return t.value(`suggest.band.${f.band}`)
   const w = f.why
   if (w.key === 'needsFirst') return t.value('fit.out.needsFirst', { needs: trim(describeReq(t.value, props.subject.prerequisites, course.value)) })
-  return t.value(`fit.out.${w.key}`, { codes: (w.codes ?? []).join(', '), level: w.level ?? '' })
+  return t.value(`fit.out.${w.key}`, { codes: (w.codes ?? []).join(t.value('listSep')), level: w.level ?? '' })
 })
 const suitsItems = computed(() => (fit.value?.kind === 'fit' ? fit.value.reasons.map((n) => trim(reasonText(t.value, n))) : []))
 const cautions = computed(() =>
@@ -134,7 +134,8 @@ const hasLists = computed(() => easierItems.value.length + harderItems.value.len
           <span v-if="fitRec" class="sub">
             {{ t('fit.betterThan', { n: fitRec.betterThan }) }}<template v-if="fitRec.confidence === 'low'"> · {{ t('suggest.thinData') }}</template>
           </span>
-          <span v-if="ahead && fitRec" class="sub">{{ t('fit.ahead', { level: ahead }) }}</span>
+          <span v-if="graduate && fitRec" class="sub">{{ t('fit.aheadGraduate') }}</span>
+          <span v-else-if="ahead && fitRec" class="sub">{{ t('fit.ahead', { level: ahead }) }}</span>
         </template>
       </div>
     </div>
@@ -193,14 +194,14 @@ const hasLists = computed(() => easierItems.value.length + harderItems.value.len
 <style scoped>
 .fitcard {
   display: grid;
-  gap: var(--space-4);
+  gap: var(--space-5);
   padding: var(--space-5);
   min-width: 0;
 }
 
 .fit-title {
   margin: 0;
-  font-size: 1.2rem;
+  font-size: var(--fs-section);
   font-weight: 700;
   line-height: 1.3;
   color: var(--ink);
@@ -218,7 +219,7 @@ const hasLists = computed(() => easierItems.value.length + harderItems.value.len
   --tone-bg: color-mix(in srgb, var(--ink) 4%, transparent);
   display: grid;
   align-content: start;
-  gap: 4px;
+  gap: var(--space-1);
   min-width: 0;
   padding: var(--space-3) var(--space-4);
   border-radius: var(--radius);
@@ -237,7 +238,7 @@ const hasLists = computed(() => easierItems.value.length + harderItems.value.len
 }
 
 .label {
-  font-size: 0.75rem;
+  font-size: var(--fs-meta);
   font-weight: 650;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -248,7 +249,7 @@ const hasLists = computed(() => easierItems.value.length + harderItems.value.len
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 1.25rem;
+  font-size: 1.375rem;
   font-weight: 700;
   line-height: 1.25;
   color: var(--tone);
@@ -290,8 +291,8 @@ const hasLists = computed(() => easierItems.value.length + harderItems.value.len
 }
 
 .sub {
-  font-size: 0.8125rem;
-  line-height: 1.4;
+  font-size: var(--fs-small);
+  line-height: 1.5;
   color: var(--ink-soft);
 }
 
@@ -310,20 +311,20 @@ const hasLists = computed(() => easierItems.value.length + harderItems.value.len
 
 .group {
   display: grid;
-  gap: 6px;
+  gap: var(--space-2);
   min-width: 0;
 }
 
 .group-title {
   margin: 0;
-  font-size: 0.8125rem;
+  font-size: var(--fs-small);
   font-weight: 650;
   color: var(--ink);
 }
 
 .items {
   display: grid;
-  gap: 4px;
+  gap: var(--space-2);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -333,14 +334,14 @@ const hasLists = computed(() => easierItems.value.length + harderItems.value.len
   display: flex;
   align-items: flex-start;
   gap: 6px;
-  font-size: 0.875rem;
-  line-height: 1.45;
-  color: var(--ink-soft);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--ink);
 }
 
 .item svg {
   flex: none;
-  margin-top: 3px;
+  margin-top: 4px;
 }
 
 .item-good svg {
@@ -353,12 +354,12 @@ const hasLists = computed(() => easierItems.value.length + harderItems.value.len
 
 .watch {
   margin-top: 0;
-  font-size: 0.875rem;
+  font-size: var(--fs-body);
 }
 
 .note {
   margin: 0;
-  font-size: 0.8125rem;
+  font-size: var(--fs-small);
   color: var(--ink-soft);
 }
 
@@ -368,8 +369,8 @@ const hasLists = computed(() => easierItems.value.length + harderItems.value.len
   margin: 0;
   padding: 0;
   list-style: none;
-  font-size: 0.875rem;
-  line-height: 1.45;
+  font-size: var(--fs-small);
+  line-height: 1.55;
   color: var(--ink-soft);
 }
 
@@ -380,9 +381,9 @@ const hasLists = computed(() => easierItems.value.length + harderItems.value.len
   margin: 0;
   padding-top: var(--space-3);
   border-top: 1px solid var(--line);
-  font-size: 0.8125rem;
-  line-height: 1.45;
-  color: var(--ink-faint);
+  font-size: var(--fs-small);
+  line-height: 1.55;
+  color: var(--ink-soft);
 }
 
 .basis svg {
@@ -403,11 +404,11 @@ const hasLists = computed(() => easierItems.value.length + harderItems.value.len
   }
 
   .fit-title {
-    font-size: 1.125rem;
+    font-size: var(--fs-section);
   }
 
   .verdict {
-    font-size: 1.125rem;
+    font-size: var(--fs-section);
   }
 }
 </style>

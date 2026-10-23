@@ -11,7 +11,7 @@ import { useI18n } from '@/i18n'
 import { categoryLabel, categoryTag, termLabel } from '@/i18n/format'
 import { localTitle } from '@/i18n/localized'
 import { subjectGist } from '@/i18n/gist'
-import { termsBetween } from '@/utils/pastTerms'
+import { defaultTerm, termsBetween } from '@/utils/pastTerms'
 import { handbookUrl } from '@/utils/links'
 
 /**
@@ -54,14 +54,16 @@ const plannedAt = computed(() => plan.terms.value.find((x) => x.subjects.include
 
 /**
  * Where "Add to my plan" can put it: every term it runs in from the start of study to the plan's
- * last semester (at least three years on). The first planned semester it runs in is the default.
+ * last semester (at least three years on). The default is the first one still ahead (see defaultTerm).
  */
 const termChoices = computed(() => {
   const s = props.subject
   const start = { year: plan.setup.value.startYear, period: plan.setup.value.startPeriod }
   const last = plan.terms.value.at(-1)
   const floor = { year: start.year + 2, period: 'semester-2' as Period }
-  const end = last && termKey(last.year, last.period) > termKey(floor.year, floor.period) ? last : floor
+  // Reaches into next year too, so a plan that started years ago still has terms ahead to offer.
+  const soon = { year: new Date().getFullYear() + 1, period: 'semester-2' as Period }
+  const end = [last, floor, soon].reduce((a, b) => (b && termKey(b.year, b.period) > termKey(a!.year, a!.period) ? b : a), floor)!
   return termsBetween(start, end).filter((x) => periodsFor(s, x.year).includes(x.period))
 })
 const chosenTerm = shallowRef('')
@@ -70,8 +72,8 @@ const target = computed(() => {
   if (!all.length) return null
   const picked = all.find((x) => `${x.year}|${x.period}` === chosenTerm.value)
   if (picked) return picked
-  const firstPlanned = plan.terms.value[0]
-  return all.find((x) => !firstPlanned || termKey(x.year, x.period) >= termKey(firstPlanned.year, firstPlanned.period)) ?? all[0]!
+  // Never a term that has already started, unless the student picks one.
+  return defaultTerm(all, plan.terms.value[0]) ?? all[0]!
 })
 const addedAt = shallowRef<{ year: number; period: Period } | null>(null)
 function addToPlan(): void {
@@ -191,7 +193,7 @@ async function share(): Promise<void> {
   border-radius: 999px;
   background: var(--accent-soft);
   color: var(--accent);
-  font-size: 0.8125rem;
+  font-size: var(--fs-meta);
   font-weight: 600;
   text-decoration: none;
 }
@@ -207,7 +209,7 @@ async function share(): Promise<void> {
 
 .head-title-en {
   margin: 0;
-  font-size: 1.05rem;
+  font-size: var(--fs-body);
   color: var(--ink-soft);
 }
 
@@ -236,7 +238,7 @@ async function share(): Promise<void> {
   align-items: center;
   gap: 6px;
   margin: 0;
-  font-size: 0.9375rem;
+  font-size: var(--fs-body);
   color: var(--bad);
 }
 

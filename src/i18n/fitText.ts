@@ -1,5 +1,5 @@
 import type { FitBasis, FitFactor, RankReason } from '@/engine'
-import type { Translate } from './interpolate'
+import { localList, type Translate } from './interpolate'
 
 /**
  * What a fit rests on, in the reader's language ("Based on 2 marks, 1 interest — add more marks
@@ -12,12 +12,7 @@ export function basisText(t: Translate, b: FitBasis): string {
   return lead + (b.missing ? t(`fit.basis.more.${b.missing}`) : '')
 }
 
-const names = (t: Translate, prefix: string, list: unknown) =>
-  String(list ?? '')
-    .split(', ')
-    .filter(Boolean)
-    .map((x) => t(`${prefix}.${x}`))
-    .join(', ')
+const names = (t: Translate, prefix: string, list: unknown) => localList(t, list, (x) => t(`${prefix}.${x}`))
 
 /** One reason a suggestion scores low, in the student's terms (see whyNotFit). */
 export function whyText(t: Translate, f: FitFactor): string {
@@ -28,7 +23,7 @@ export function whyText(t: Translate, f: FitFactor): string {
     case 'interest':
       return p.topics ? t('fit.why.interest', { topics: names(t, 'topic', p.topics), mine: names(t, 'topic', p.mine) }) : t('fit.why.interestUnknown')
     case 'predicted':
-      return p.wam !== undefined ? t('fit.why.predictedWam', { wam: p.wam }) : p.codes ? t('fit.why.predicted', p) : t('fit.why.predictedWam', { wam: p.mark ?? '' })
+      return p.wam !== undefined ? t('fit.why.predictedWam', { wam: p.wam }) : p.codes ? t('fit.why.predicted', { ...p, codes: localList(t, p.codes) }) : t('fit.why.predictedWam', { wam: p.mark ?? '' })
     case 'ease': {
       const exam = Number(p.exam ?? -1)
       if (exam >= 50 && (p.goal === 'wam' || p.goal === 'easy')) return t('fit.why.easeExamWam', { exam })
@@ -42,11 +37,12 @@ export function whyText(t: Translate, f: FitFactor): string {
     case 'neutral':
       return t('fit.why.neutral', { skills: names(t, 'skill', p.skills) })
     default:
-      return t(`fit.why.${f.key}`, p)
+      return t(`fit.why.${f.key}`, typeof p.codes === 'string' ? { ...p, codes: localList(t, p.codes) } : p)
   }
 }
 
 /** A list reason in this language ("1 other hurdle task", not "1 other hurdle tasks"). */
 export function rankReasonText(t: Translate, r: RankReason): string {
-  return t(r.key === 'hurdles' && r.params?.n === 1 ? 'rank.reason.hurdlesOne' : `rank.reason.${r.key}`, r.params)
+  const p = r.params && typeof r.params.codes === 'string' ? { ...r.params, codes: localList(t, r.params.codes) } : r.params
+  return t(r.key === 'hurdles' && r.params?.n === 1 ? 'rank.reason.hurdlesOne' : `rank.reason.${r.key}`, p)
 }

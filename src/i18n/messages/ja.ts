@@ -1,6 +1,8 @@
 import type { Messages } from './en'
 
 export const ja: Messages = {
+  /** Between items of a list shown in text ("A, B" / "A、B"). */
+  listSep: "、",
   app: {
     footer: "学生が作った非公式ツールで、メルボルン大学とは関係ありません。履修登録の前に {handbook} で確認してください。",
     handbook: 'Handbook',
@@ -308,6 +310,10 @@ export const ja: Messages = {
     weakSkills: "{skills} をよく使います（やや苦手と回答した分野です）。",
     goodAt: "あなたの得意寄りの分野を使います：{skills}。",
     struggleSkills: "{skills} を大きく使います（苦手と回答した分野です）。",
+    examsGood: "試験が得意で、この科目は期末試験が {pct}% を占めます。",
+    teamworkGood: "グループワークが得意で、この科目はグループ課題が {pct}% を占めます。",
+    examsWeak: "この科目は期末試験が {pct}% を占めますが、試験は得意ではありません。",
+    teamworkWeak: "この科目はグループ課題が {pct}% を占めますが、グループワークは得意ではありません。",
     interests: '興味のある {topics} を扱います。',
     averagedHigh: '似た科目（{codes}）の成績から、約 {mark} 点の見込みです。',
     likedBefore: "あなたが高く評価した {codes} に近い内容です。",
@@ -758,6 +764,7 @@ export const ja: Messages = {
     suitsGroup: "合っている理由",
     watchGroup: "注意点",
     ahead: "レベル{level}の科目で、通常は{level}年目に履修します。その時点で取れる科目と比べています。",
+    aheadGraduate: "大学院（レベル 9）の科目です。学部生は通常 3 年目に、前提科目を満たし学部の許可を得てから履修します。",
     betterThan: "選べる科目の {n}% より合っています",
     basis: {
       lead: "判断材料：{parts}。",
@@ -790,7 +797,7 @@ export const ja: Messages = {
       hard: "{course} の難しい科目リストで {n} 位",
     },
     unranked: {
-      graduate: "大学院の科目なので、リストには載っていません。",
+      graduate: "大学院の科目なので、楽な科目・難しい科目のリストには載りません。ここでは {course} の科目と比べた結果です。",
       passFail: "合否のみの評価で WAM に入らないため、リストには載っていません。",
       campus: "Parkville 以外で開講のため、リストには載っていません。",
       notRunning: "{year}年は開講されないため、リストには載っていません。",

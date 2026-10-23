@@ -1,6 +1,8 @@
 import type { Messages } from './en'
 
 export const zhTW: Messages = {
+  /** Between items of a list shown in text ("A, B" / "A、B"). */
+  listSep: "、",
   app: {
     footer: "學生做的非官方工具，與墨爾本大學無關。選課前請以 {handbook} 為準。",
     handbook: 'Handbook',
@@ -308,6 +310,10 @@ export const zhTW: Messages = {
     weakSkills: "比較依賴 {skills}，你評為偏弱。",
     goodAt: "用到你比較拿手的：{skills}。",
     struggleSkills: "很依賴 {skills}，你覺得這項吃力。",
+    examsGood: "你擅長考試，這門課期末佔 {pct}%。",
+    teamworkGood: "你擅長小組合作，這門課小組作業佔 {pct}%。",
+    examsWeak: "這門課期末佔 {pct}%，而考試不是你的強項。",
+    teamworkWeak: "這門課小組作業佔 {pct}%，而小組合作不是你的強項。",
     interests: '涉及 {topics}，是你感興趣的方向。',
     averagedHigh: '依你在相近課程（{codes}）的成績，預計約 {mark} 分。',
     likedBefore: "和你評價不錯的 {codes} 方向相近。",
@@ -758,6 +764,7 @@ export const zhTW: Messages = {
     suitsGroup: "適合你的地方",
     watchGroup: "需要注意",
     ahead: "這是 {level} 級的課，一般第 {level} 年修，這裡按你到那時能選的課來比較。",
+    aheadGraduate: "這是研究生（9 級）課程，大學部學生一般在第 3 年、滿足先修和學院許可後才能選。",
     betterThan: "比你 {n}% 的可選課程更適合",
     basis: {
       lead: "依據：{parts}。",
@@ -790,7 +797,7 @@ export const zhTW: Messages = {
       hard: "在 {course} 難課榜第 {n} 名",
     },
     unranked: {
-      graduate: "研究所課程，不在涼課／難課榜上。",
+      graduate: "研究生課程，不在涼課/難課榜上；這裡是和 {course} 的課比較的結果。",
       passFail: "只記通過／不通過，不算進 WAM，也不在榜上。",
       campus: "不在 Parkville 上課，不在榜上。",
       notRunning: "{year} 年不開，不在榜上。",

@@ -1,6 +1,8 @@
 import type { Messages } from './en'
 
 export const ko: Messages = {
+  /** Between items of a list shown in text ("A, B" / "A、B"). */
+  listSep: ", ",
   app: {
     footer: "학생이 만든 비공식 도구로, 멜버른대학교와 관련이 없어요. 수강 신청 전에 {handbook}에서 확인하세요.",
     handbook: 'Handbook',
@@ -308,6 +310,10 @@ export const ko: Messages = {
     weakSkills: "{skills}에 꽤 의존해요(약한 편이라고 답한 분야예요).",
     goodAt: "꽤 잘하는 분야를 써요: {skills}.",
     struggleSkills: "{skills}에 많이 의존해요(어렵다고 답한 분야예요).",
+    examsGood: "시험에 강하고, 이 과목은 기말시험이 {pct}%입니다.",
+    teamworkGood: "팀 작업에 강하고, 이 과목은 팀 과제가 {pct}%입니다.",
+    examsWeak: "이 과목은 기말시험이 {pct}%인데, 시험은 강점이 아닙니다.",
+    teamworkWeak: "이 과목은 팀 과제가 {pct}%인데, 팀 작업은 강점이 아닙니다.",
     interests: '관심 있는 {topics}을(를) 다룹니다.',
     averagedHigh: '비슷한 과목({codes}) 성적으로 보면 약 {mark}점이 예상돼요.',
     likedBefore: "좋게 평가한 {codes}와 비슷한 분야예요.",
@@ -758,6 +764,7 @@ export const ko: Messages = {
     suitsGroup: "나에게 맞는 이유",
     watchGroup: "주의할 점",
     ahead: "레벨 {level} 과목으로 보통 {level}학년에 들어요. 그때 들을 수 있는 과목과 비교했어요.",
+    aheadGraduate: "대학원(9단계) 과목입니다. 학부생은 보통 3학년에 선수과목을 마치고 학부 허가를 받은 뒤 들을 수 있습니다.",
     betterThan: "선택 가능한 과목의 {n}%보다 잘 맞아요",
     basis: {
       lead: "근거: {parts}. ",
@@ -790,7 +797,7 @@ export const ko: Messages = {
       hard: "{course} 어려운 과목 목록 {n}위",
     },
     unranked: {
-      graduate: "대학원 과목이라 목록에 없어요.",
+      graduate: "대학원 과목이라 쉬운/어려운 과목 목록에는 없습니다. 여기서는 {course} 과목들과 비교한 결과입니다.",
       passFail: "Pass/Fail 과목이라 WAM에 들어가지 않고 목록에도 없어요.",
       campus: "Parkville 밖에서 열려 목록에 없어요.",
       notRunning: "{year}년에 열리지 않아 목록에 없어요.",

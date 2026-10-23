@@ -1,5 +1,5 @@
 import { simplifyFor, type CourseRule, type StressReason, type Issue, type Note, type Period, type PlanTerm, type ReqExpr, type ReqField, type RuleStatus, type Subject } from '@/engine'
-import type { Params, Translate } from './index'
+import { localList, type Params, type Translate } from './interpolate'
 
 /** Localised helpers for engine output. The engine stays language-neutral (keys + params). */
 
@@ -41,7 +41,7 @@ export function ruleText(t: Translate, rule: CourseRule | undefined, fallback = 
   }
   switch (rule.kind) {
     case 'compulsory':
-      return t(rule.firstSemester ? 'rule.compulsoryFirst' : 'rule.compulsory', { codes: rule.subjects.join(', ') })
+      return t(rule.firstSemester ? 'rule.compulsoryFirst' : 'rule.compulsory', { codes: rule.subjects.join(t('listSep')) })
     case 'points':
       if (rule.min !== undefined && rule.level === undefined && rule.category === undefined) {
         return t('rule.pointsTotal', { n: rule.min })
@@ -64,7 +64,7 @@ export function ruleText(t: Translate, rule: CourseRule | undefined, fallback = 
     case 'requirement': {
       const paths = rule.paths.map((path) =>
         path
-          .map((r) => ('all' in r ? t('rule.requirementAll', { codes: r.all.join(', ') }) : t('rule.requirementChoose', { n: r.choose.points, codes: r.choose.from.join(', ') })))
+          .map((r) => ('all' in r ? t('rule.requirementAll', { codes: r.all.join(t('listSep')) }) : t('rule.requirementChoose', { n: r.choose.points, codes: r.choose.from.join(t('listSep')) })))
           .join(' + '),
       )
       return paths.length === 1 ? paths[0]! : t('rule.requirementPaths', { paths: paths.join(t('rule.requirementOr')) })
@@ -85,19 +85,23 @@ export function ruleDetail(t: Translate, s: RuleStatus): string {
       .split('|')
       .map((part) => {
         const [kind, ...rest] = part.split(':')
-        if (kind === 'all') return t('ruleDetail.missingSubjects', { codes: rest[0]!.split(',').join(', ') })
+        if (kind === 'all') return t('ruleDetail.missingSubjects', { codes: rest[0]!.split(',').join(t('listSep')) })
         const [have, need, codes] = rest
-        return t('ruleDetail.choosePoints', { have: have!, need: need!, codes: codes!.split(',').join(', ') })
+        return t('ruleDetail.choosePoints', { have: have!, need: need!, codes: codes!.split(',').join(t('listSep')) })
       })
       .join('; ')
-    return t(`ruleDetail.${s.detailKey}`, { ...p, missing })
+    return t(`ruleDetail.${s.detailKey}`, { ...localiseParams(t, p), missing })
   }
-  return t(`ruleDetail.${s.detailKey}`, p)
+  return t(`ruleDetail.${s.detailKey}`, localiseParams(t, p))
 }
+
+const LIST_PARAMS = ['codes', 'needs', 'instead', 'missing', 'majors', 'over'] as const
 
 /** Replace period ids in params with localised labels and add a {term} label. */
 function localiseParams(t: Translate, params: Params): Params {
   const out: Params = { ...params }
+  // Lists the engine joins with ", " read with the reader's own separator.
+  for (const k of LIST_PARAMS) if (typeof params[k] === 'string') out[k] = localList(t, params[k])
   if (typeof params.period === 'string') {
     out.term = termLabel(t, { year: Number(params.year), period: params.period as Period })
     out.period = periodLabel(t, params.period as Period)
@@ -140,19 +144,9 @@ export function noteText(t: Translate, note: Note | string, rules: CourseRule[] 
 }
 
 export function reasonText(t: Translate, note: Note): string {
-  const params: Params = { ...note.params }
-  if (typeof params.skills === 'string') {
-    params.skills = params.skills
-      .split(', ')
-      .map((s) => t(`skill.${s}`))
-      .join(', ')
-  }
-  if (typeof params.topics === 'string') {
-    params.topics = params.topics
-      .split(', ')
-      .map((x) => t(`topic.${x}`))
-      .join(', ')
-  }
+  const params: Params = localiseParams(t, note.params)
+  if (typeof params.skills === 'string') params.skills = localList(t, params.skills, (s) => t(`skill.${s}`))
+  if (typeof params.topics === 'string') params.topics = localList(t, params.topics, (x) => t(`topic.${x}`))
   return t(`reason.${note.key}`, params)
 }
 
@@ -193,13 +187,13 @@ function describeExpr(t: Translate, e: ReqExpr): string {
     const lv = levels ?? (level !== undefined ? [level] : [])
     const what = [lv.length ? t('expr.level', { level: lv.join('/') }) : '', (areas ?? (area ? [area] : [])).join('/')].filter(Boolean).join(' ')
     const base = what ? t('expr.pointsOf', { n: min, what }) : t('expr.points', { n: min })
-    const text = from ? `${base} ${t('expr.from', { codes: from.join(', ') })}` : base
+    const text = from ? `${base} ${t('expr.from', { codes: from.join(t('listSep')) })}` : base
     return e.points.concurrent ? t('expr.concurrent', { what: text }) : text
   }
   if ('admission' in e) return t('expr.admission', { course: e.admission })
   if ('average' in e) {
     const { min, levels, areas, from } = e.average
-    const what = [levels?.length ? t('expr.level', { level: levels.join('/') }) : '', (areas ?? []).join('/'), (from ?? []).join(', ')].filter(Boolean).join(' ')
+    const what = [levels?.length ? t('expr.level', { level: levels.join('/') }) : '', (areas ?? []).join('/'), (from ?? []).join(t('listSep'))].filter(Boolean).join(' ')
     return what ? t('expr.average', { min, what }) : t('expr.averageAll', { min })
   }
   if ('wam' in e) return t('expr.wam', { min: e.wam.min })
@@ -218,7 +212,7 @@ function describeExpr(t: Translate, e: ReqExpr): string {
 
 /** One reason a semester looks heavy, with the skill named in the reader's language. */
 export function stressText(t: Translate, reason: StressReason): string {
-  const params: Params = { ...reason.params }
+  const params: Params = localiseParams(t, reason.params)
   if (typeof params.skill === 'string') params.skill = t(`skill.${params.skill}`)
   return t(`stress.${reason.key}`, params)
 }

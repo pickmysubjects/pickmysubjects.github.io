@@ -129,3 +129,8 @@ export function boardEdges(
   }
   return out
 }
+
+/** What the chain says when nothing it needs is in the plan: "no prerequisites" when it has none at all. */
+export function chainNoneKey(prerequisites: unknown): string {
+  return prerequisites === 'none' ? 'browse.noPrereq' : 'plan.tlNone'
+}

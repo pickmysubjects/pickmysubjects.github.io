@@ -112,13 +112,18 @@ export const MARKING_SKILLS: readonly Skill[] = ['exams', 'teamwork']
 const EXAM_SHARE = 50
 const GROUP_SHARE = 20
 
+/** How much of the mark a marking skill covers: exams' share, or group work's share (0–100). */
+export function markingShare(s: Subject, k: Skill): number {
+  const tasks = s.assessment ?? []
+  const pick = k === 'exams' ? (t: (typeof tasks)[number]) => t.kind === 'exam' : k === 'teamwork' ? (t: (typeof tasks)[number]) => t.group === true : () => false
+  return Math.round(tasks.filter(pick).reduce((a, t) => a + t.weight, 0))
+}
+
 /** What the way a subject is marked asks of you, from its assessment. */
 function markedBy(s: Subject): Skill[] {
-  const tasks = s.assessment ?? []
-  const share = (pick: (t: (typeof tasks)[number]) => boolean) => tasks.filter(pick).reduce((a, t) => a + t.weight, 0)
   const out: Skill[] = []
-  if (share((t) => t.kind === 'exam') >= EXAM_SHARE) out.push('exams')
-  if (share((t) => t.group === true) >= GROUP_SHARE) out.push('teamwork')
+  if (markingShare(s, 'exams') >= EXAM_SHARE) out.push('exams')
+  if (markingShare(s, 'teamwork') >= GROUP_SHARE) out.push('teamwork')
   return out
 }
 

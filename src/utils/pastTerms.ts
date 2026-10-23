@@ -50,3 +50,22 @@ export function termsBetween(from: { year: number; period: Period }, to: { year:
   }
   return out
 }
+
+/** Roughly when each teaching period starts (month 0–11, day): a term that has started is past for planning. */
+const STARTS: Record<Period, [number, number]> = { summer: [0, 1], 'semester-1': [1, 24], winter: [5, 30], 'semester-2': [6, 21] }
+
+/** Whether a term is still ahead of `today` (it hasn't started yet). */
+export function isUpcoming(term: { year: number; period: Period }, today: Date = new Date()): boolean {
+  const [m, d] = STARTS[term.period]
+  return new Date(term.year, m, d) > today
+}
+
+/**
+ * The term to suggest for adding a subject: the first one it runs in that is still ahead, from
+ * the plan's first semester on if that's later; a past term only when nothing else is left.
+ */
+export function defaultTerm<T extends { year: number; period: Period }>(choices: readonly T[], planStart?: { year: number; period: Period }, today: Date = new Date()): T | undefined {
+  const ahead = choices.filter((x) => isUpcoming(x, today))
+  const fromPlan = planStart ? ahead.find((x) => termKey(x.year, x.period) >= termKey(planStart.year, planStart.period)) : undefined
+  return fromPlan ?? ahead[0] ?? choices.at(-1)
+}

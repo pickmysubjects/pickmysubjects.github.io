@@ -40,7 +40,7 @@ const phone = usePhone()
 
 .fold-head .sec-title {
   margin: 0;
-  font-size: 1.125rem;
+  font-size: var(--fs-section);
   font-weight: 700;
   line-height: 1.3;
   color: var(--ink);

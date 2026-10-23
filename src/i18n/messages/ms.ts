@@ -1,6 +1,8 @@
 import type { Messages } from './en'
 
 export const ms: Messages = {
+  /** Between items of a list shown in text ("A, B" / "A、B"). */
+  listSep: ", ",
   app: {
     footer: "Alat tidak rasmi buatan pelajar, tiada kaitan dengan University of Melbourne. Semak {handbook} sebelum mendaftar.",
     handbook: 'Handbook',
@@ -308,6 +310,10 @@ export const ms: Messages = {
     weakSkills: "Bergantung pada {skills}, yang anda nilai agak lemah.",
     goodAt: "Menggunakan kemahiran yang anda agak bagus: {skills}.",
     struggleSkills: "Sangat bergantung pada {skills}, yang anda rasa sukar.",
+    examsGood: "Anda mahir dalam peperiksaan, dan peperiksaan bernilai {pct}% di sini.",
+    teamworkGood: "Anda mahir kerja berkumpulan, dan tugasan berkumpulan bernilai {pct}% di sini.",
+    examsWeak: "Peperiksaan bernilai {pct}% di sini, dan peperiksaan bukan kekuatan anda.",
+    teamworkWeak: "Tugasan berkumpulan bernilai {pct}% di sini, dan kerja berkumpulan bukan kekuatan anda.",
     interests: 'Merangkumi {topics}, yang anda minati.',
     averagedHigh: 'Berdasarkan markah subjek serupa ({codes}), dijangka kira-kira {mark}.',
     likedBefore: "Hampir dengan {codes}, yang anda nilai baik.",
@@ -758,6 +764,7 @@ export const ms: Messages = {
     suitsGroup: "Kenapa ia sesuai",
     watchGroup: "Berhati-hati",
     ahead: "Subjek tahap {level}, biasanya diambil pada tahun {level}: dibandingkan dengan subjek yang boleh anda ambil ketika itu.",
+    aheadGraduate: "Subjek pascasiswazah (tahap 9): pelajar sarjana muda biasanya mengambilnya pada tahun 3, selepas memenuhi prasyarat dan mendapat kebenaran fakulti.",
     betterThan: "Lebih sesuai daripada {n}% pilihan anda",
     basis: {
       lead: "Berdasarkan {parts}",
@@ -790,7 +797,7 @@ export const ms: Messages = {
       hard: "Tempat ke-{n} dalam senarai subjek susah {course}",
     },
     unranked: {
-      graduate: "Subjek pascasiswazah, jadi tiada dalam senarai.",
+      graduate: "Subjek pascasiswazah, jadi tiada dalam senarai mudah dan sukar; ini perbandingannya dengan subjek {course}.",
       passFail: "Lulus/gagal sahaja, jadi tidak dikira dalam WAM dan tiada dalam senarai.",
       campus: "Diajar di luar Parkville, jadi tiada dalam senarai.",
       notRunning: "Tidak ditawarkan pada {year}, jadi tiada dalam senarai.",

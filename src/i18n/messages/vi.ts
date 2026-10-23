@@ -1,6 +1,8 @@
 import type { Messages } from './en'
 
 export const vi: Messages = {
+  /** Between items of a list shown in text ("A, B" / "A、B"). */
+  listSep: ", ",
   app: {
     footer: "Công cụ không chính thức do sinh viên làm, không liên quan đến University of Melbourne. Hãy kiểm tra {handbook} trước khi đăng ký.",
     handbook: 'Handbook',
@@ -308,6 +310,10 @@ export const vi: Messages = {
     weakSkills: "Cần nhiều {skills}, kỹ năng bạn đánh giá hơi yếu.",
     goodAt: "Dùng kỹ năng bạn khá tốt: {skills}.",
     struggleSkills: "Cần rất nhiều {skills}, kỹ năng bạn thấy khó.",
+    examsGood: "Bạn giỏi thi cử, và bài thi chiếm {pct}% điểm môn này.",
+    teamworkGood: "Bạn giỏi làm việc nhóm, và bài nhóm chiếm {pct}% điểm môn này.",
+    examsWeak: "Bài thi chiếm {pct}% điểm môn này, mà thi cử không phải thế mạnh của bạn.",
+    teamworkWeak: "Bài nhóm chiếm {pct}% điểm môn này, mà làm việc nhóm không phải thế mạnh của bạn.",
     interests: 'Có nội dung {topics} mà bạn quan tâm.',
     averagedHigh: 'Theo điểm các môn tương tự ({codes}), dự kiến khoảng {mark}.',
     likedBefore: "Gần với {codes}, môn bạn đánh giá tốt.",
@@ -758,6 +764,7 @@ export const vi: Messages = {
     suitsGroup: "Vì sao hợp với bạn",
     watchGroup: "Lưu ý",
     ahead: "Môn cấp {level}, thường học năm {level}: so với các môn bạn có thể học vào lúc đó.",
+    aheadGraduate: "Đây là môn sau đại học (cấp 9): sinh viên đại học thường học vào năm 3, khi đã đủ môn tiên quyết và được khoa cho phép.",
     betterThan: "Hợp hơn {n}% các môn bạn có thể chọn",
     basis: {
       lead: "Dựa trên {parts}",
@@ -790,7 +797,7 @@ export const vi: Messages = {
       hard: "Hạng {n} trong danh sách môn khó của {course}",
     },
     unranked: {
-      graduate: "Môn sau đại học nên không có trong danh sách.",
+      graduate: "Môn sau đại học nên không có trong danh sách môn dễ/khó; đây là kết quả so với các môn của {course}.",
       passFail: "Chỉ chấm đạt/không đạt nên không tính vào WAM và không có trong danh sách.",
       campus: "Học ngoài Parkville nên không có trong danh sách.",
       notRunning: "Không mở năm {year} nên không có trong danh sách.",

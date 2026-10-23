@@ -24,7 +24,7 @@ const warnings = computed(() =>
 
 <template>
   <div v-if="warnings.length || rec.alternatives?.length" class="notes">
-    <p v-if="rec.alternatives?.length" class="alt">{{ t('suggest.orInstead', { codes: rec.alternatives.join(', ') }) }}</p>
+    <p v-if="rec.alternatives?.length" class="alt">{{ t('suggest.orInstead', { codes: rec.alternatives.join(t('listSep')) }) }}</p>
     <ul v-if="warnings.length" class="warnings">
       <li v-for="(w, i) in warnings" :key="i">
         <TriangleAlert :size="13" aria-hidden="true" />

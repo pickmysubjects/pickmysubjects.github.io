@@ -134,7 +134,7 @@ function toggle(id: string): void {
               <span class="rule-text">{{ r.text }}</span>
               <span v-if="r.status !== 'ok' || active === r.id" class="rule-detail">{{ r.detail }}</span>
               <span v-if="active === r.id" class="rule-members">
-                {{ r.members.length ? t('progress.counting', { codes: r.members.join(', ') }) : t('progress.countingNone') }}
+                {{ r.members.length ? t('progress.counting', { codes: r.members.join(t('listSep')) }) : t('progress.countingNone') }}
               </span>
             </span>
           </button>

@@ -18,7 +18,7 @@ const guessed = computed(() => props.subject.skills.length === 0)
 
 const info = computed(() => summariseAssessment(props.subject.assessment))
 const parts = computed(() => info.value?.parts ?? [])
-const summary = computed(() => parts.value.map((p) => `${t.value(`assess.kind.${p.kind}`)} ${p.weight}%`).join(', '))
+const summary = computed(() => parts.value.map((p) => `${t.value(`assess.kind.${p.kind}`)} ${p.weight}%`).join(t.value('listSep')))
 const examHurdle = computed(() => info.value?.examHurdle ?? false)
 const otherHurdle = computed(() => info.value?.otherHurdle ?? false)
 // Exam share, class hours and group work are in the summary under the title; here only the
@@ -83,7 +83,7 @@ const otherTerms = computed(() => {
 }
 
 .assess-title {
-  font-size: 0.9375rem;
+  font-size: var(--fs-body);
   font-weight: 650;
 }
 
@@ -106,7 +106,7 @@ const otherTerms = computed(() => {
   margin: 0;
   padding: 0;
   list-style: none;
-  font-size: 0.9375rem;
+  font-size: var(--fs-body);
 }
 
 .assess-legend li {
@@ -151,17 +151,17 @@ const otherTerms = computed(() => {
 
 .assess-label {
   min-width: 7.5em;
-  font-size: 0.875rem;
+  font-size: var(--fs-small);
   color: var(--ink-soft);
 }
 
 .assess-muted {
-  font-size: 0.9375rem;
+  font-size: var(--fs-body);
   color: var(--ink-soft);
 }
 
 .assess-small {
-  font-size: 0.8125rem;
+  font-size: var(--fs-small);
 }
 
 @media (max-width: 560px) {

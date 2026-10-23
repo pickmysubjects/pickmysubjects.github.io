@@ -93,7 +93,7 @@ function pick(skill: Skill, level: number): void {
           </button>
         </span>
         <p v-if="suggestion(s)" class="suggest">
-          {{ t('record.skillFromMarks', { codes: suggestion(s)!.codes.slice(0, 3).join(', '), avg: suggestion(s)!.avg, level: t(`record.level.${suggestion(s)!.level}`) }) }}
+          {{ t('record.skillFromMarks', { codes: suggestion(s)!.codes.slice(0, 3).join(t('listSep')), avg: suggestion(s)!.avg, level: t(`record.level.${suggestion(s)!.level}`) }) }}
           <button type="button" class="suggest-use" @click="useSuggestion(s, suggestion(s)!.level)">{{ t('record.useIt') }}</button>
         </p>
       </li>

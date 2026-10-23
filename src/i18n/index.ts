@@ -53,8 +53,8 @@ export function loadLocale(code: LocaleCode): Promise<void> {
 }
 
 export type { LocaleCode }
-import { interpolate, type Params, type Translate } from './interpolate'
-export { interpolate, type Params, type Translate }
+import { interpolate, joinList, localList, type Params, type Translate } from './interpolate'
+export { interpolate, joinList, localList, type Params, type Translate }
 
 function detect(): LocaleCode {
   try {

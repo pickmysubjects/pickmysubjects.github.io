@@ -41,14 +41,14 @@ const pick = (x: Localized) => pickLocalized(x, locale.value)
 
 .about-label {
   margin: 0;
-  font-size: 0.875rem;
+  font-size: var(--fs-small);
   font-weight: 600;
   color: var(--ink-soft);
 }
 
 .about-learn {
   margin: 0;
-  font-size: 1.05rem;
+  font-size: var(--fs-section);
   line-height: 1.55;
 }
 
@@ -57,7 +57,7 @@ const pick = (x: Localized) => pickLocalized(x, locale.value)
   gap: 4px;
   margin: 0;
   padding-left: 18px;
-  font-size: 0.9375rem;
+  font-size: var(--fs-body);
   line-height: 1.5;
 }
 

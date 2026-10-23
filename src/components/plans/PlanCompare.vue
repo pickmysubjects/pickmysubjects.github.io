@@ -95,7 +95,7 @@ function open(id: string): void {
             </div>
             <div>
               <dt>{{ t('plans.interests') }}</dt>
-              <dd class="soft">{{ c.entry.prefs.interests.length ? c.entry.prefs.interests.map((x) => t(`topic.${x}`)).join(', ') : t('plans.noInterests') }}</dd>
+              <dd class="soft">{{ c.entry.prefs.interests.length ? c.entry.prefs.interests.map((x) => t(`topic.${x}`)).join(t('listSep')) : t('plans.noInterests') }}</dd>
             </div>
           </dl>
           <ul v-if="c.open.length" class="rules">
