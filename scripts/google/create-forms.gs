@@ -152,7 +152,7 @@ const RATING_TAG_IDS = [
   'hands-on', 'maths-heavy', 'writing-heavy', 'good-for-wam', 'interesting'];
 
 // Run once on the existing ratings form: adds the optional "Tags" question (not required) and
-// logs a pre-filled link; its entry.<number> replaces RATING_TAGS_ENTRY_TODO in src/config.ts.
+// logs a pre-filled link; its entry.<number> goes in RATINGS_FORM.entries.tags in src/config.ts.
 function addTagsQuestion() {
   const form = FormApp.openByUrl(RATINGS_FORM_EDIT_URL);
   const title = 'Tags';

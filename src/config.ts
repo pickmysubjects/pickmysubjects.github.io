@@ -41,9 +41,6 @@ export type RatingField =
   | 'wamBand'
   | 'tags'
 
-/** Placeholder for the Tags question's entry id until the Google Form has the question. */
-export const RATING_TAGS_ENTRY_TODO = 'entry.TAGS_TODO'
-
 export const RATINGS_FORM: GoogleFormConfig<RatingField> = {
   formId: '1FAIpQLSfJcmsShsJlO8jOqAun_X4NksYJ2O0D8Vi0AVJJ5dwzoNzcRw',
   entries: {
@@ -66,13 +63,10 @@ export const RATINGS_FORM: GoogleFormConfig<RatingField> = {
     teaching: 'entry.1490820390',
     // "WAM range without this subject", added with addWamRangeQuestion(); sent only with a grade band.
     wamBand: 'entry.1922617865',
-    // "Overall" (1–5 scale), not on the form yet: paste its entry id here once added.
+    // "Overall" (1–5 scale).
     overall: 'entry.868171789',
-    // "Tags" (checkboxes, choice values = the ids in src/engine/ratingTags.ts), added with
-    // addTagsQuestion() in scripts/google/create-forms.gs. TODO: replace RATING_TAGS_ENTRY_TODO
-    // with the question's real entry id from the form's pre-filled link. Until then the app hides
-    // the question (it isn't a real entry id) and the rest of the form works as before.
-    tags: RATING_TAGS_ENTRY_TODO,
+    // "Tags" (checkboxes, choice values = the ids in src/engine/ratingTags.ts).
+    tags: 'entry.1493860873',
   },
   optional: ['examDifficulty', 'usefulness', 'interest', 'teaching', 'overall', 'wamBand', 'tags'],
 }

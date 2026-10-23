@@ -22,12 +22,10 @@ describe('ratings form submission', () => {
 })
 
 describe('rating tags question', () => {
-  it('waits for its real entry id without holding the form back', async () => {
-    const { RATING_TAGS_ENTRY_TODO } = await import('../src/config')
+  it('is on the form with a real entry id', () => {
     expect(isFormReady(RATINGS_FORM)).toBe(true)
-    // Still the placeholder: the question stays hidden. Once filled in, it shows.
-    if (RATINGS_FORM.entries.tags === RATING_TAGS_ENTRY_TODO) expect(hasQuestion(RATINGS_FORM, 'tags')).toBe(false)
-    else expect(hasQuestion(RATINGS_FORM, 'tags')).toBe(true)
+    expect(RATINGS_FORM.entries.tags).toMatch(/^entry\.\d+$/)
+    expect(hasQuestion(RATINGS_FORM, 'tags')).toBe(true)
   })
 
   it('sends each ticked tag as its own value', async () => {
