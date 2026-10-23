@@ -4,6 +4,7 @@ import { parse } from 'yaml'
 import { z } from 'zod'
 import { admissionCourses, namedComponents, referencedSubjects } from '../src/engine/expr'
 import { MIN_GRADE_SHARES, type GradeOffset } from '../src/engine/grades'
+import { isRatingTag } from '../src/engine/ratingTags'
 import type { ReqExpr, ReqField } from '../src/engine/schema'
 import { aboutFileSchema, componentFileSchema, courseFileSchema, diplomaFileSchema, DISCUSSION_SOURCES, discussionFileSchema, SKILLS, subjectFileSchema, subjectTitlesFileSchema, type Dataset, type DiscussionSummary, type Skill, type Subject } from '../src/engine/schema'
 
@@ -242,6 +243,7 @@ function mergeRatings(file: string, subjects: Dataset['subjects']): void {
       recommendRate?: number | null
       overall?: number | null
       overallCount?: number
+      tags?: Record<string, number>
     }
   >
   for (const [code, r] of Object.entries(ratings)) {
@@ -262,6 +264,9 @@ function mergeRatings(file: string, subjects: Dataset['subjects']): void {
       overall: extra(r.overall),
       overallCount: r.overall == null ? undefined : r.overallCount,
     }
+    // Tags come only from ratings, so they join curated signals too (known ids only).
+    const tags = Object.fromEntries(Object.entries(r.tags ?? {}).filter(([k, n]) => isRatingTag(k) && Number.isInteger(n) && n > 0))
+    if (Object.keys(tags).length && !s.signals.tags) s.signals.tags = tags
     if (s.skills.length === 0 && r.reviews >= MIN_REVIEWS_FOR_SKILLS) {
       s.skills = r.skills.filter((k): k is Skill => (SKILLS as readonly string[]).includes(k))
     }

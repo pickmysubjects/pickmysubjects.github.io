@@ -22,6 +22,7 @@ function createSubjectCompassForms() {
       'writing', 'presentation', 'languages', 'lab', 'fieldwork', 'music', 'design', 'business']),
     recommend: ratings.addMultipleChoiceItem().setTitle('Would you recommend it')
       .setChoiceValues(['Yes', 'Maybe', 'No']),
+    tags: ratings.addCheckboxItem().setTitle('Tags').setChoiceValues(RATING_TAG_IDS),
     wish: ratings.addParagraphTextItem().setTitle('What I wish I knew'),
     language: ratings.addTextItem().setTitle('App language'),
   };
@@ -39,6 +40,7 @@ function createSubjectCompassForms() {
     .withItemResponse(r.grade.createResponse('H1'))
     .withItemResponse(r.skills.createResponse(['maths']))
     .withItemResponse(r.recommend.createResponse('Yes'))
+    .withItemResponse(r.tags.createResponse(['interesting']))
     .withItemResponse(r.wish.createResponse('sample'))
     .withItemResponse(r.language.createResponse('en'));
   extra.forEach(function (item) { ratingsResponse.withItemResponse(item.createResponse(3)); });
@@ -141,4 +143,22 @@ function addWamRangeQuestion() {
   const item = existing ? existing.asTextItem() : form.addTextItem().setTitle(title);
   const link = form.createResponse().withItemResponse(item.createResponse('70–74')).toPrefilledUrl();
   Logger.log('WAM range question pre-filled link (the entry.<number> goes into wamBand): ' + link);
+}
+
+// The optional "Tags" checkboxes. Choice values are the tag ids in src/engine/ratingTags.ts
+// (keep the two lists the same); the app shows translated labels and only ever sends these ids.
+const RATING_TAG_IDS = [
+  'heavy-reading', 'group-work', 'clear-lectures', 'fair-marking', 'tough-exam',
+  'hands-on', 'maths-heavy', 'writing-heavy', 'good-for-wam', 'interesting'];
+
+// Run once on the existing ratings form: adds the optional "Tags" question (not required) and
+// logs a pre-filled link; its entry.<number> replaces RATING_TAGS_ENTRY_TODO in src/config.ts.
+function addTagsQuestion() {
+  const form = FormApp.openByUrl(RATINGS_FORM_EDIT_URL);
+  const title = 'Tags';
+  const existing = form.getItems(FormApp.ItemType.CHECKBOX).filter(function (i) { return i.getTitle() === title; })[0];
+  const item = existing ? existing.asCheckboxItem() : form.addCheckboxItem().setTitle(title);
+  item.setChoiceValues(RATING_TAG_IDS).setRequired(false);
+  const link = form.createResponse().withItemResponse(item.createResponse(['interesting'])).toPrefilledUrl();
+  Logger.log('Tags question pre-filled link (the entry.<number> goes into tags in src/config.ts): ' + link);
 }

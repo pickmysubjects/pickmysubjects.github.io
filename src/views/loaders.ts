@@ -19,4 +19,5 @@ export const VIEW_LOADERS: Record<View, () => Promise<Component>> = {
   guide: () => import('./GuideView.vue').then((m) => m.default),
   subjects: () => import('./BrowseView.vue').then((m) => m.default),
   majors: () => import('./MajorsView.vue').then((m) => m.default),
+  shortlist: () => import('./ShortlistView.vue').then((m) => m.default),
 }

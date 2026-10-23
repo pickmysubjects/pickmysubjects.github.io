@@ -241,6 +241,8 @@ const signals = z
     recommend: z.number().min(0).max(1).optional(), // share who would recommend it
     overall: z.number().min(1).max(5).optional(),
     overallCount: z.number().int().nonnegative().optional(), // how many gave an overall score
+    // How many reviewers ticked each rating tag (src/engine/ratingTags.ts), once 3+ rated it.
+    tags: z.record(z.string(), z.number().int().positive()).optional(),
   })
   .strict()
 

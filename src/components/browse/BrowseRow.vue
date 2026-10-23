@@ -3,6 +3,7 @@ import { computed } from 'vue'
 import { ChevronRight, Star } from 'lucide-vue-next'
 import type { BrowseRow, Recommendation } from '@/engine'
 import FitBadge from './FitBadge.vue'
+import ShortlistToggle from '@/components/shortlist/ShortlistToggle.vue'
 import RowWarnings from './RowWarnings.vue'
 import { link } from '@/composables/useView'
 import { useDataset } from '@/composables/useDataset'
@@ -53,6 +54,7 @@ const closed = computed(() => data.value.courses.some((c) => c.code === props.co
       </span>
       <RowWarnings v-if="rec" :rec="rec" class="notes" />
     </span>
+    <ShortlistToggle :code="s.code" compact />
     <ChevronRight :size="18" aria-hidden="true" class="go" />
   </div>
 </template>
