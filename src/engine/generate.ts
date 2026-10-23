@@ -1,6 +1,6 @@
 import { forCourse } from './forCourse'
 import { offeredIn, periodsFor, termKey } from './availability'
-import { capExempt, categoryOf, disciplineOf, checkCourse, componentNeeds, diplomaStream, findComponent, findCourse, findDiploma, inDiploma, heldMajorIds, majorTitles, minorTitles, planComponentIds, sharesAllowed, withBarredBreadth } from './courseRules'
+import { capExempt, categoryOf, matches, pointRules, sumPoints, withinCaps, type PointsRule, disciplineOf, checkCourse, componentNeeds, diplomaStream, findComponent, findCourse, findDiploma, inDiploma, heldMajorIds, majorTitles, minorTitles, planComponentIds, sharesAllowed, withBarredBreadth } from './courseRules'
 import { evaluateField, referencedSubjects, type EvalContext, type Tri } from './expr'
 import type { Note, Params, Plan, PlanTerm } from './plan'
 import { nextEntry, standardTerms } from './plan'
@@ -1227,61 +1227,12 @@ function pathwayCounter(data: Dataset, course: string, startYear: number): Pathw
   }
 }
 
-type PointsRule = Extract<CourseRule, { kind: 'points' }>
-
-function pointRules(course: Course): PointsRule[] {
-  return course.rules.filter((r): r is PointsRule => r.kind === 'points')
-}
 
 function specificity(r: PointsRule): number {
   return (r.level !== undefined ? 1 : 0) + (r.category !== undefined ? 1 : 0)
 }
 
-function matches(s: Subject, course: string, r: { level?: number; category?: string }): boolean {
-  if (r.level !== undefined && s.level !== r.level) return false
-  if (r.category !== undefined && categoryOf(s, course) !== r.category) return false
-  return true
-}
 
-function sumPoints(codes: string[], data: Dataset, course: string, r: { level?: number; category?: string }): number {
-  return codes.reduce((sum, c) => {
-    const s = data.subjects[c]
-    return s && matches(s, course, r) ? sum + s.points : sum
-  }, 0)
-}
-
-function withinCaps(s: Subject, taken: string[], course: Course, data: Dataset, components: readonly (string | undefined)[] = []): boolean {
-  for (const r of pointRules(course)) {
-    if (r.max === undefined || !matches(s, course.code, r)) continue
-    if (sumPoints(taken, data, course.code, r) + s.points > r.max) return false
-  }
-  for (const r of course.rules) {
-    if (r.kind !== 'level1-areas' || s.level !== 1) continue
-    if (r.category !== undefined && categoryOf(s, course.code) !== r.category) continue
-    const inArea = taken.reduce((sum, c) => {
-      const t = data.subjects[c]
-      return t && t.level === 1 && t.area === s.area ? sum + t.points : sum
-    }, 0)
-    if (inArea + s.points > r.maxPointsPerArea) return false
-  }
-  // At most so many points from one discipline (B-ARTS: 125), all levels together.
-  for (const r of course.rules) {
-    if (r.kind !== 'area-cap') continue
-    if (r.category !== undefined && categoryOf(s, course.code) !== r.category) continue
-    if ((r.areas && !r.areas.includes(s.area)) || (r.levels && !r.levels.includes(s.level))) continue
-    const exempt = capExempt(r, data, components)
-    if (exempt.has(s.code)) continue
-    const inArea = taken.reduce((sum, c) => {
-      const t = data.subjects[c]
-      if (!t || exempt.has(c) || disciplineOf(r, t.area) !== disciplineOf(r, s.area)) return sum
-      if (r.levels && !r.levels.includes(t.level)) return sum
-      if (r.category !== undefined && categoryOf(t, course.code) !== r.category) return sum
-      return sum + t.points
-    }, 0)
-    if (inArea + s.points > r.max) return false
-  }
-  return true
-}
 
 /**
  * Taking a subject uses up points that another minimum might need. Only allow it

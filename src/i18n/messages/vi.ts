@@ -3,6 +3,8 @@ import type { Messages } from './en'
 export const vi: Messages = {
   /** Between items of a list shown in text ("A, B" / "A、B"). */
   listSep: ", ",
+  /** Which career-name language this locale reads (career names come with the data). */
+  careerLang: "vi",
   app: {
     footer: "Công cụ không chính thức do sinh viên làm, không liên quan đến University of Melbourne. Hãy kiểm tra {handbook} trước khi đăng ký.",
     handbook: 'Handbook',
@@ -300,6 +302,9 @@ export const vi: Messages = {
     majorCore: "Môn bắt buộc của chuyên ngành bạn",
     majorOption: "Một môn tự chọn trong chuyên ngành bạn",
     majorPath: "Dẫn đến {codes} trong chuyên ngành của bạn",
+    careerRequired: "Bắt buộc để được {body} kiểm định ({career}).",
+    careerHelps: "Có ích cho nghề {career}: học về {topics}.",
+    careerRecommended: "Được khuyên học trên con đường trở thành {career}.",
     makesVeryHeavy: "Thêm vào kỳ này sẽ làm kỳ này rất nặng.",
     prereqNotCurated: "Điều kiện tiên quyết chưa được thêm: xem Handbook trước khi đăng ký.",
     eligibilityManual: "Có một điều kiện chúng tôi không kiểm tra giúp được: đọc nguyên văn bên dưới và xác nhận nếu bạn đáp ứng.",
@@ -936,6 +941,17 @@ export const vi: Messages = {
     source: "Theo Handbook",
     checked: "kiểm tra ngày {date}",
   },
+  careerGoal: {
+    title: "Mục tiêu nghề nghiệp",
+    hint: "Không bắt buộc. Gợi ý sẽ ưu tiên môn bắt buộc hoặc có ích cho nghề này. Các môn khác không bị trừ điểm.",
+    search: "Tìm nghề, ví dụ kế toán viên",
+    noMatch: "Không có nghề nào khớp.",
+    clear: "Xóa",
+    see: "Các môn cho nghề này",
+    none: "Chưa đặt mục tiêu",
+    gap: "Để làm {career} ({body}), bạn còn cần thêm: {codes}.",
+    gapLink: "Trang nghề nghiệp",
+  },
   careerPath: {
     title: "Tôi muốn làm…",
     lede: "Chọn một nghề để xem ngành nào dẫn tới đó và môn nào quan trọng nhất. Hữu ích trước khi vào đại học, khi chọn ngành, hay khi đang học giữa chừng.",
@@ -1273,7 +1289,7 @@ export const vi: Messages = {
     accLink: "Xem yêu cầu trên Handbook",
     careersTitle: "Từ nghề muốn làm đến ngành và môn học",
     careersShort: "Chọn một nghề để xem ngành nào dẫn tới đó và môn nào quan trọng.",
-    careersText: "Ở trang Nghề nghiệp, chọn một nghề, ví dụ kế toán viên hay kỹ sư phần mềm. Bạn sẽ thấy các ngành dẫn tới nghề đó, rồi từng môn được xếp thành Bắt buộc, Có ích, Hơi liên quan hoặc Ít liên quan, kèm lý do. Môn ít liên quan vẫn ghi rõ điểm hay của nó.",
+    careersText: "Ở trang Nghề nghiệp, chọn một nghề, ví dụ kế toán viên hay kỹ sư phần mềm. Bạn sẽ thấy các ngành dẫn tới nghề đó, rồi từng môn được xếp thành Bắt buộc, Có ích, Hơi liên quan hoặc Ít liên quan, kèm lý do. Môn ít liên quan vẫn ghi rõ điểm hay của nó. Bạn cũng có thể đặt mục tiêu nghề nghiệp ở trang Của tôi (mỗi kế hoạch một mục tiêu). Khi đó gợi ý sẽ ưu tiên môn bắt buộc hoặc có ích cho nghề đó, và kế hoạch sẽ nhắc bạn những môn bắt buộc chưa thêm.",
     careersLink: "Mở Nghề nghiệp",
     canTitle: "Những gì bạn làm được trên web này",
     majorsDiploma: "Văn bằng song song (concurrent diploma): văn bằng Languages, Computing hoặc Mathematical Sciences là 100 tín chỉ học thêm bên cạnh ngành cử nhân, thường lâu thêm một năm. Tối đa 50 tín chỉ được tính cho cả hai, nên có bạn xong sớm hơn. Một số ngành chính không được học Computing hoặc Mathematical Sciences. Sinh viên Thổ dân (Indigenous) còn có thể chọn Bachelor of Science (Extended): một năm nền tảng, rồi học các ngành chính của Science như bình thường, 350 tín chỉ trong ba năm rưỡi.",

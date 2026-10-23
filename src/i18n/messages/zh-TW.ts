@@ -3,6 +3,8 @@ import type { Messages } from './en'
 export const zhTW: Messages = {
   /** Between items of a list shown in text ("A, B" / "A、B"). */
   listSep: "、",
+  /** Which career-name language this locale reads (career names come with the data). */
+  careerLang: "zh-TW",
   app: {
     footer: "學生做的非官方工具，與墨爾本大學無關。選課前請以 {handbook} 為準。",
     handbook: 'Handbook',
@@ -300,6 +302,9 @@ export const zhTW: Messages = {
     majorCore: "你主修的必修課",
     majorOption: "你主修裡可選的課",
     majorPath: "通往你主修裡的 {codes}",
+    careerRequired: "{career}的 {body} 認證要求這門課。",
+    careerHelps: "對{career}有幫助：涵蓋{topics}。",
+    careerRecommended: "通往{career}的推薦課程。",
     makesVeryHeavy: "加進這個學期會讓它很重。",
     prereqNotCurated: "這門課的先修條件還沒收錄，選課前請看 Handbook。",
     eligibilityManual: "有一項條件我們沒法替你檢查：看下面的原文，符合的話點確認。",
@@ -936,6 +941,17 @@ export const zhTW: Messages = {
     source: "來自 Handbook",
     checked: "核對於 {date}",
   },
+  careerGoal: {
+    title: "職業目標",
+    hint: "選填。推薦會優先考慮這個工作必修或有幫助的課，其他課不會因此被扣分。",
+    search: "搜尋職業，例如會計師",
+    noMatch: "沒有符合的職業。",
+    clear: "清除",
+    see: "看這個職業的課",
+    none: "還沒設定目標",
+    gap: "想當{career}（{body}）還需要加：{codes}。",
+    gapLink: "職業頁",
+  },
   careerPath: {
     title: "我想當……",
     lede: "選一個職業，看哪些主修能通往它、哪些課對它最重要。還沒入學、正在選主修、已經讀到一半，都用得到。",
@@ -1273,7 +1289,7 @@ export const zhTW: Messages = {
     accLink: "在 Handbook 看要求",
     careersTitle: "從想做的工作回推主修和課程",
     careersShort: "選一個職業，看哪些主修能通往它、哪些課比較重要。",
-    careersText: "在「職業」頁選一個工作，例如會計師或軟體工程師。你會看到能通往它的主修，接著每門課會分成必修、錦上添花、有一點關係、關係不大，並寫出原因。關係不大的課也會列出它的其他優點。",
+    careersText: "在「職業」頁選一個工作，例如會計師或軟體工程師。你會看到能通往它的主修，接著每門課會分成必修、錦上添花、有一點關係、關係不大，並寫出原因。關係不大的課也會列出它的其他優點。你也可以在「我的」頁設定職業目標（每個方案各一個）。之後推薦會優先顯示它必修或有幫助的課，方案裡還沒加的必修課也會提醒你。",
     careersLink: "開啟職業頁",
     canTitle: "這個網站能做什麼",
     majorsDiploma: "並讀文憑（concurrent diploma）：語言、資訊（Computing）或數學科學文憑都是在學士之外多修 100 學分，通常多讀一年。最多 50 學分可以兩邊都算，所以有些人可以提早讀完。有些主修不能讀資訊（Computing）或數學科學文憑。原住民學生還可以選理學士延長版（Bachelor of Science (Extended)）：先讀一年基礎課，再讀一般理學士的主修，共 350 學分，三年半。",

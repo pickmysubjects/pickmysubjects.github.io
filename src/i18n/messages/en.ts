@@ -6,6 +6,8 @@
 export const en = {
   /** Between items of a list shown in text ("A, B" / "A、B"). */
   listSep: ", ",
+  /** Which career-name language this locale reads (career names come with the data). */
+  careerLang: "en",
   app: {
     footer: "Unofficial student tool, not linked to the University of Melbourne. Check the {handbook} before you enrol.",
     handbook: 'Handbook',
@@ -303,6 +305,9 @@ export const en = {
     majorCore: "Compulsory in your major",
     majorOption: "One of the choices in your major",
     majorPath: "Leads to {codes} in your major",
+    careerRequired: "Required for {body} accreditation ({career}).",
+    careerHelps: "Helps toward {career}: covers {topics}.",
+    careerRecommended: "Recommended on the way to {career}.",
     makesVeryHeavy: "Adding it makes that semester very heavy.",
     prereqNotCurated: "Prerequisites not added yet: check the Handbook before enrolling.",
     eligibilityManual: "A condition we can’t check for you: read it below and confirm if you meet it.",
@@ -939,6 +944,17 @@ export const en = {
     source: "From the Handbook",
     checked: "checked {date}",
   },
+  careerGoal: {
+    title: "Career goal",
+    hint: "Optional. Suggestions favour subjects that are required for this job or help toward it. Other subjects aren't marked down.",
+    search: "Search careers, e.g. accountant",
+    noMatch: "No career matches that.",
+    clear: "Clear",
+    see: "Subjects for this career",
+    none: "No goal set",
+    gap: "For {career} ({body}), still to add: {codes}.",
+    gapLink: "Career page",
+  },
   careerPath: {
     title: "I want to be…",
     lede: "Pick a job to see which majors lead there and which subjects matter most for it. Useful before uni, when choosing a major, or halfway through your degree.",
@@ -1276,7 +1292,7 @@ export const en = {
     accLink: "See the requirements on the Handbook",
     careersTitle: "From a job to majors and subjects",
     careersShort: "Pick a job and see which majors lead there and which subjects matter.",
-    careersText: "On the Careers page, pick a job, such as accountant or software engineer. You see the majors that lead there, then each subject sorted as Required, Helps, Somewhat related or Not much related, with the reason. Subjects that aren’t related still show what’s good about them.",
+    careersText: "On the Careers page, pick a job, such as accountant or software engineer. You see the majors that lead there, then each subject sorted as Required, Helps, Somewhat related or Not much related, with the reason. Subjects that aren’t related still show what’s good about them. You can also set a career goal on My page (one per plan). Suggestions then favour subjects that are required for it or help toward it, and the plan reminds you of required subjects you haven't added.",
     careersLink: "Open Careers",
     canTitle: "What you can do on this site",
     majorsDiploma: "Concurrent diplomas: the Diploma in Languages, Computing or Mathematical Sciences is 100 extra points taken next to your bachelor, usually one more year. Up to 50 points can count for both, so some students finish sooner. Some majors can’t take Computing or Mathematical Sciences. Indigenous students can also choose the Bachelor of Science (Extended): a foundation year, then the usual Science majors, 350 points over three and a half years.",

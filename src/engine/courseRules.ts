@@ -851,3 +851,58 @@ export function diplomaNeeds(data: Dataset, diploma: Diploma, streamId: string |
   }
   return out
 }
+
+// ---------- points caps ----------
+
+export type PointsRule = Extract<CourseRule, { kind: 'points' }>
+
+export function pointRules(course: Course): PointsRule[] {
+  return course.rules.filter((r): r is PointsRule => r.kind === 'points')
+}
+
+export function matches(s: Subject, course: string, r: { level?: number; category?: string }): boolean {
+  if (r.level !== undefined && s.level !== r.level) return false
+  if (r.category !== undefined && categoryOf(s, course) !== r.category) return false
+  return true
+}
+
+export function sumPoints(codes: string[], data: Dataset, course: string, r: { level?: number; category?: string }): number {
+  return codes.reduce((sum, c) => {
+    const s = data.subjects[c]
+    return s && matches(s, course, r) ? sum + s.points : sum
+  }, 0)
+}
+
+/** Would adding `s` to `taken` go over a points cap (level-1, breadth, one area)? */
+export function withinCaps(s: Subject, taken: string[], course: Course, data: Dataset, components: readonly (string | undefined)[] = []): boolean {
+  for (const r of pointRules(course)) {
+    if (r.max === undefined || !matches(s, course.code, r)) continue
+    if (sumPoints(taken, data, course.code, r) + s.points > r.max) return false
+  }
+  for (const r of course.rules) {
+    if (r.kind !== 'level1-areas' || s.level !== 1) continue
+    if (r.category !== undefined && categoryOf(s, course.code) !== r.category) continue
+    const inArea = taken.reduce((sum, c) => {
+      const t = data.subjects[c]
+      return t && t.level === 1 && t.area === s.area ? sum + t.points : sum
+    }, 0)
+    if (inArea + s.points > r.maxPointsPerArea) return false
+  }
+  // At most so many points from one discipline (B-ARTS: 125), all levels together.
+  for (const r of course.rules) {
+    if (r.kind !== 'area-cap') continue
+    if (r.category !== undefined && categoryOf(s, course.code) !== r.category) continue
+    if ((r.areas && !r.areas.includes(s.area)) || (r.levels && !r.levels.includes(s.level))) continue
+    const exempt = capExempt(r, data, components)
+    if (exempt.has(s.code)) continue
+    const inArea = taken.reduce((sum, c) => {
+      const t = data.subjects[c]
+      if (!t || exempt.has(c) || disciplineOf(r, t.area) !== disciplineOf(r, s.area)) return sum
+      if (r.levels && !r.levels.includes(t.level)) return sum
+      if (r.category !== undefined && categoryOf(t, course.code) !== r.category) return sum
+      return sum + t.points
+    }, 0)
+    if (inArea + s.points > r.max) return false
+  }
+  return true
+}

@@ -3,6 +3,8 @@ import type { Messages } from './en'
 export const ja: Messages = {
   /** Between items of a list shown in text ("A, B" / "A、B"). */
   listSep: "、",
+  /** Which career-name language this locale reads (career names come with the data). */
+  careerLang: "ja",
   app: {
     footer: "学生が作った非公式ツールで、メルボルン大学とは関係ありません。履修登録の前に {handbook} で確認してください。",
     handbook: 'Handbook',
@@ -300,6 +302,9 @@ export const ja: Messages = {
     majorCore: "あなたの専攻の必修科目",
     majorOption: "あなたの専攻の選択科目の一つ",
     majorPath: "メジャーの {codes} につながる",
+    careerRequired: "{career}の {body} 認定に必要です。",
+    careerHelps: "{career}に役立つ：{topics}を扱います。",
+    careerRecommended: "{career}への道で推奨されている科目です。",
     makesVeryHeavy: "この学期に加えるとかなり重くなります。",
     prereqNotCurated: "前提条件はまだ未登録です。履修前に Handbook を確認してください。",
     eligibilityManual: "こちらでは確認できない条件があります。下の原文を見て、満たしていれば確認してください。",
@@ -936,6 +941,17 @@ export const ja: Messages = {
     source: "Handbook より",
     checked: "{date} 確認",
   },
+  careerGoal: {
+    title: "キャリア目標",
+    hint: "任意。この仕事に必要な科目や役立つ科目を優先しておすすめします。ほかの科目が減点されることはありません。",
+    search: "キャリアを検索（例：会計士）",
+    noMatch: "一致するキャリアがありません。",
+    clear: "クリア",
+    see: "このキャリアの科目",
+    none: "目標は未設定",
+    gap: "{career}（{body}）には、あと {codes} が必要です。",
+    gapLink: "キャリアページ",
+  },
   careerPath: {
     title: "なりたい仕事は…",
     lede: "仕事を選ぶと、そこにつながる専攻と、特に大事な科目がわかります。入学前でも、専攻選びの時期でも、在学中でも使えます。",
@@ -1273,7 +1289,7 @@ export const ja: Messages = {
     accLink: "Handbook で要件を見る",
     careersTitle: "なりたい仕事から専攻と科目を逆算する",
     careersShort: "仕事を選ぶと、そこにつながる専攻と大事な科目がわかります。",
-    careersText: "「キャリア」ページで会計士やソフトウェアエンジニアなどの仕事を選ぶと、そこにつながる専攻が表示され、各科目が「必修」「役立つ」「少し関係あり」「あまり関係なし」に分けられ、理由も示されます。関係の薄い科目にも、その科目ならではの良さを載せています。",
+    careersText: "「キャリア」ページで会計士やソフトウェアエンジニアなどの仕事を選ぶと、そこにつながる専攻が表示され、各科目が「必修」「役立つ」「少し関係あり」「あまり関係なし」に分けられ、理由も示されます。関係の薄い科目にも、その科目ならではの良さを載せています。「マイページ」でキャリア目標も設定できます（プランごとに1つ）。すると、必要な科目や役立つ科目が優先しておすすめされ、プランにまだない必修科目もお知らせします。",
     careersLink: "キャリアを開く",
     canTitle: "このサイトでできること",
     majorsDiploma: "同時履修ディプロマ（concurrent diploma）：Languages、Computing、Mathematical Sciences のディプロマは、学士とは別に 100 ポイント取るもので、ふつうは 1 年延びます。最大 50 ポイントは両方に数えられるので、早く終える人もいます。一部の専攻は Computing や Mathematical Sciences を取れません。先住民の学生は Bachelor of Science (Extended) も選べます。基礎の 1 年のあと、ふつうの理学士の専攻を学び、350 ポイントを 3 年半で取ります。",

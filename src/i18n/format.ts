@@ -147,6 +147,8 @@ export function reasonText(t: Translate, note: Note): string {
   const params: Params = localiseParams(t, note.params)
   if (typeof params.skills === 'string') params.skills = localList(t, params.skills, (s) => t(`skill.${s}`))
   if (typeof params.topics === 'string') params.topics = localList(t, params.topics, (x) => t(`topic.${x}`))
+  // A career goal's name comes in every language with the note; this locale reads its own.
+  if (typeof params.career_en === 'string') params.career = params[`career_${t('careerLang')}`] ?? params.career_en
   return t(`reason.${note.key}`, params)
 }
 

@@ -47,6 +47,12 @@ export function useProfile() {
     setSkills: (skills: Partial<Record<Skill, number>>) => updatePrefs((p) => ({ ...p, skills })),
     setInterests: (interests: string[]) => updatePrefs((p) => ({ ...p, interests })),
     setGoal: (goal: Goal) => updatePrefs((p) => ({ ...p, goal })),
+    /** The open plan's career goal; undefined clears it. */
+    setCareer: (career: string | undefined) =>
+      updatePrefs((p) => {
+        const { career: _old, ...rest } = p
+        return career ? { ...rest, career } : rest
+      }),
     setWorkHours: (workHours: number | undefined) =>
       update((p) => {
         const { workHours: _old, ...rest } = p

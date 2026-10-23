@@ -1,6 +1,7 @@
 import { forCourse } from './forCourse'
 import { offeredIn, periodsFor } from './availability'
-import { majorTitles, minorTitles } from './courseRules'
+import { findCourse, majorTitles, minorTitles, withinCaps } from './courseRules'
+import { careerGoal, careerNameParams, goalTier } from './careerGoal'
 import { evaluateField, referencedSubjects, type Tri } from './expr'
 import type { Note, Params } from './plan'
 import { discussionVerdict, type Dataset, type Period, type Skill, type Subject } from './schema'
@@ -34,6 +35,8 @@ export interface Profile {
   workHours?: number
   /** Display only: which mark scale the strength levels are labelled in (see utils/markScales). */
   markScale?: string
+  /** A career the student is aiming for (a career id from /careers), if any. */
+  career?: string
 }
 
 /** How the student themselves found a subject: difficulty and interest 1–5, would they recommend it. */
@@ -129,6 +132,13 @@ export interface Exclusion {
 export const HEAVY_PICK_COST = 6
 /** Enough to put the major's own subjects and the way into them above unrelated ones of similar fit; no more than a real mismatch costs. */
 export const PROGRAMME_BONUS = 12
+/**
+ * A subject the career goal's accreditation route needs, and one that helps toward it (its main
+ * field is the job's, or the route or Handbook recommends it). Smaller than the major's own nudge:
+ * the goal orders subjects that fit, it doesn't override the degree. Somewhat related: nothing.
+ */
+export const CAREER_REQUIRED_BONUS = 8
+export const CAREER_HELPS_BONUS = 4
 /** Subjects done before the student's own choices start to count, and how much they move a score. */
 const PAST_CHOICES_MIN = 4
 const PAST_CHOICE_NUDGE = 4
@@ -321,6 +331,13 @@ export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions =
     }),
   )
 
+  // The career goal: read against the student's major when it leads there. Its nudge never goes
+  // to a subject that would take the plan over a points cap (breadth, level 1, one area).
+  const components = opts.programme?.components ?? []
+  const goal = profile.goal === 'easy' ? null : careerGoal(raw, profile.career, components)
+  const capCourse = goal && opts.course ? findCourse(raw, opts.course, opts.programme?.courseYear ?? opts.year ?? new Date().getFullYear()) : undefined
+  const takenList = [...taken]
+
   const creditCourses = new Set(Object.values(data.subjects).flatMap((x) => Object.keys(x.categories)))
   const ratingMean = siteRatingMean(data)
 
@@ -473,6 +490,26 @@ export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions =
       const codes = (towardMajor.get(s.code) as string[]).slice(0, 3).join(', ')
       shift(rec, 'major', bonus)
       rec.reasons.unshift(note('majorPath', { codes }, `Leads to ${codes} in your major.`))
+    }
+    if (goal) {
+      const row = goalTier(goal, raw.subjects[s.code] ?? s, raw, taken)
+      const fits = !capCourse || withinCaps(s, takenList, capCourse, data, components)
+      if (fits && (row.tier === 'required' || row.tier === 'helps')) {
+        const names = careerNameParams(goal.target)
+        const acc = row.reasons.find((r) => r.kind === 'acc')
+        const field = row.reasons.find((r) => r.kind === 'field')
+        const career = goal.target.names.en
+        shift(rec, 'career', row.tier === 'required' ? CAREER_REQUIRED_BONUS : CAREER_HELPS_BONUS, { career, ...names })
+        // Said up front, after what the major says about it: it's why the subject moved up.
+        const at = rec.reasons.findIndex((n) => !n.key.startsWith('major'))
+        const said =
+          row.tier === 'required' && acc?.kind === 'acc'
+            ? note('careerRequired', { body: acc.body, career, ...names }, `Required for ${acc.body} accreditation (${career}).`)
+            : field?.kind === 'field'
+              ? note('careerHelps', { topics: field.topics.join(', '), career, ...names }, `Helps toward ${career}: covers ${field.topics.join(', ')}.`)
+              : note('careerRecommended', { career, ...names }, `Recommended on the way to ${career}.`)
+        rec.reasons.splice(at < 0 ? rec.reasons.length : at, 0, said)
+      }
     }
     if (opts.termSubjects && termBefore) {
       const after = termStress([...opts.termSubjects, s.code], data, profile, { course: opts.course }).level

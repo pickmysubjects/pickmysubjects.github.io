@@ -3,6 +3,8 @@ import type { Messages } from './en'
 export const zhCN: Messages = {
   /** Between items of a list shown in text ("A, B" / "A、B"). */
   listSep: "、",
+  /** Which career-name language this locale reads (career names come with the data). */
+  careerLang: "zh",
   app: {
     footer: "学生做的非官方工具，与墨尔本大学无关。选课前请以 {handbook} 为准。",
     handbook: 'Handbook',
@@ -300,6 +302,9 @@ export const zhCN: Messages = {
     majorCore: "你专业的必修课",
     majorOption: "你专业里可选的课",
     majorPath: "通往你专业里的 {codes}",
+    careerRequired: "{career}的 {body} 认证要求这门课。",
+    careerHelps: "对{career}有帮助：涉及{topics}。",
+    careerRecommended: "通往{career}的推荐课程。",
     makesVeryHeavy: "加进这个学期会让它很重。",
     prereqNotCurated: "这门课的先修条件还没收录，选课前请看 Handbook。",
     eligibilityManual: "有一项条件我们没法替你检查：看下面的原文，满足的话点确认。",
@@ -936,6 +941,17 @@ export const zhCN: Messages = {
     source: "来自 Handbook",
     checked: "核对于 {date}",
   },
+  careerGoal: {
+    title: "职业目标",
+    hint: "选填。推荐会优先考虑这个工作必修或有帮助的课，其他课不会因此被扣分。",
+    search: "搜索职业，比如会计师",
+    noMatch: "没有符合的职业。",
+    clear: "清除",
+    see: "看这个职业的课",
+    none: "还没设定目标",
+    gap: "想当{career}（{body}）还需要加：{codes}。",
+    gapLink: "职业页",
+  },
   careerPath: {
     title: "我想当……",
     lede: "选一个职业，看哪些专业能通往它、哪些课对它最重要。还没入学、正在选专业、已经读到一半，都用得上。",
@@ -1273,7 +1289,7 @@ export const zhCN: Messages = {
     accLink: "在 Handbook 看要求",
     careersTitle: "从想做的工作倒推专业和课程",
     careersShort: "选一个职业，看哪些专业能通往它、哪些课更重要。",
-    careersText: "在「职业」页选一个工作，比如会计师或软件工程师。你会看到能通往它的专业，然后每门课被分成必修、锦上添花、有一点关系、关系不大，并写明原因。关系不大的课也会写出它的其他优点。",
+    careersText: "在「职业」页选一个工作，比如会计师或软件工程师。你会看到能通往它的专业，然后每门课被分成必修、锦上添花、有一点关系、关系不大，并写明原因。关系不大的课也会写出它的其他优点。你也可以在「我的」页设定职业目标（每个方案各一个）。之后推荐会优先显示它必修或有帮助的课，方案里还没加的必修课也会提醒你。",
     careersLink: "打开职业页",
     canTitle: "这个网站能做什么",
     majorsDiploma: "并读文凭（concurrent diploma）：语言、计算机或数学科学文凭都是在学士之外多读 100 学分，通常多读一年。最多 50 学分可以两边都算，所以有人能早点读完。有些主修不能读计算机或数学科学文凭。原住民学生还可以选理学士延长版（Bachelor of Science (Extended)）：先读一年基础课，再读普通理学士的主修，共 350 学分，三年半。",

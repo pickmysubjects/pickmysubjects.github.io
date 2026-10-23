@@ -3,6 +3,8 @@ import type { Messages } from './en'
 export const id: Messages = {
   /** Between items of a list shown in text ("A, B" / "A、B"). */
   listSep: ", ",
+  /** Which career-name language this locale reads (career names come with the data). */
+  careerLang: "id",
   app: {
     footer: "Alat tidak resmi buatan mahasiswa, tidak terkait University of Melbourne. Cek {handbook} sebelum mendaftar.",
     handbook: 'Handbook',
@@ -300,6 +302,9 @@ export const id: Messages = {
     majorCore: "Wajib di jurusanmu",
     majorOption: "Salah satu pilihan di jurusanmu",
     majorPath: "Mengarah ke {codes} di jurusanmu",
+    careerRequired: "Wajib untuk akreditasi {body} ({career}).",
+    careerHelps: "Membantu menuju {career}: membahas {topics}.",
+    careerRecommended: "Direkomendasikan di jalur menuju {career}.",
     makesVeryHeavy: "Menambahkannya membuat semester itu sangat berat.",
     prereqNotCurated: "Prasyarat belum ditambahkan: cek Handbook sebelum mendaftar.",
     eligibilityManual: "Ada syarat yang tidak bisa kami periksa: baca teks aslinya di bawah dan konfirmasi jika kamu memenuhinya.",
@@ -936,6 +941,17 @@ export const id: Messages = {
     source: "Dari Handbook",
     checked: "dicek {date}",
   },
+  careerGoal: {
+    title: "Tujuan karier",
+    hint: "Opsional. Saran akan mengutamakan mata kuliah yang wajib atau membantu untuk pekerjaan ini. Mata kuliah lain tidak dikurangi nilainya.",
+    search: "Cari karier, misalnya akuntan",
+    noMatch: "Tidak ada karier yang cocok.",
+    clear: "Hapus",
+    see: "Mata kuliah untuk karier ini",
+    none: "Belum ada tujuan",
+    gap: "Untuk {career} ({body}), masih perlu ditambahkan: {codes}.",
+    gapLink: "Halaman karier",
+  },
   careerPath: {
     title: "Saya ingin jadi…",
     lede: "Pilih pekerjaan untuk melihat jurusan yang mengarah ke sana dan mata kuliah yang paling penting. Berguna sebelum kuliah, saat memilih jurusan, atau di tengah studi.",
@@ -1273,7 +1289,7 @@ export const id: Messages = {
     accLink: "Lihat persyaratan di Handbook",
     careersTitle: "Dari pekerjaan ke jurusan dan mata kuliah",
     careersShort: "Pilih pekerjaan dan lihat jurusan yang mengarah ke sana serta mata kuliah yang penting.",
-    careersText: "Di halaman Karier, pilih pekerjaan, misalnya akuntan atau software engineer. Anda akan melihat jurusan yang mengarah ke sana, lalu setiap mata kuliah dikelompokkan sebagai Wajib, Membantu, Agak terkait atau Kurang terkait, beserta alasannya. Mata kuliah yang kurang terkait tetap menunjukkan kelebihannya.",
+    careersText: "Di halaman Karier, pilih pekerjaan, misalnya akuntan atau software engineer. Anda akan melihat jurusan yang mengarah ke sana, lalu setiap mata kuliah dikelompokkan sebagai Wajib, Membantu, Agak terkait atau Kurang terkait, beserta alasannya. Mata kuliah yang kurang terkait tetap menunjukkan kelebihannya. Anda juga bisa mengatur tujuan karier di halaman Saya (satu per rencana). Saran lalu mengutamakan mata kuliah yang wajib atau membantu untuk karier itu, dan rencana mengingatkan mata kuliah wajib yang belum ditambahkan.",
     careersLink: "Buka Karier",
     canTitle: "Yang bisa dilakukan di situs ini",
     majorsDiploma: "Diploma bersamaan (concurrent diploma): Diploma in Languages, Computing atau Mathematical Sciences adalah 100 poin tambahan yang diambil bersama gelar sarjana, biasanya tambah satu tahun. Sampai 50 poin bisa dihitung untuk keduanya, jadi ada yang lulus lebih cepat. Beberapa major tidak boleh mengambil Computing atau Mathematical Sciences. Mahasiswa Pribumi juga bisa memilih Bachelor of Science (Extended): satu tahun dasar, lalu major Science biasa, 350 poin dalam tiga setengah tahun.",

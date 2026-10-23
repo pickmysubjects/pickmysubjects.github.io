@@ -48,14 +48,16 @@ export interface PlanPrefs {
   skills: Partial<Record<Skill, number>>
   interests: string[]
   goal: Goal
+  /** A career the plan aims at (a career id), if any. */
+  career?: string
 }
 
 /**
  * A plan's strengths, interests and goal. A plan saved before each plan had its own has none:
  * it takes what the profile had, so nothing set earlier is lost.
  */
-export function prefsOf(plan: { prefs?: PlanPrefs } | undefined, profile: Pick<Profile, 'skills' | 'interests' | 'goal'>): PlanPrefs {
-  return plan?.prefs ?? { skills: { ...profile.skills }, interests: [...profile.interests], goal: profile.goal }
+export function prefsOf(plan: { prefs?: PlanPrefs } | undefined, profile: Pick<Profile, 'skills' | 'interests' | 'goal' | 'career'>): PlanPrefs {
+  return plan?.prefs ?? { skills: { ...profile.skills }, interests: [...profile.interests], goal: profile.goal, ...(profile.career ? { career: profile.career } : {}) }
 }
 
 /** A dataset's plans and which one is open. */

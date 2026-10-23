@@ -14,7 +14,7 @@ import PlanPrint, { type PrintTerm } from '@/components/planner/PlanPrint.vue'
 import Interp from '@/components/Interp.vue'
 import PlanSwitcher from '@/components/plans/PlanSwitcher.vue'
 import PlanCompare from '@/components/plans/PlanCompare.vue'
-import { informalPicks, isFail, passedCodes, planComponentIds, planRoles, planRules, recordedLoads, termLoad, type PlanTerm } from '@/engine'
+import { careerGap, careerGoal, careerName, heldMajorIds, informalPicks, isFail, passedCodes, planComponentIds, planRoles, planRules, recordedLoads, termLoad, type PlanTerm } from '@/engine'
 import { diplomaTitle } from '@/composables/usePlanCompare'
 import { Printer, Share2 } from 'lucide-vue-next'
 import { decodePlan, encodePlan } from '@/utils/sharePlan'
@@ -35,7 +35,7 @@ import { issueText, termLabel } from '@/i18n/format'
 const { data, subjectList, name: dataName } = useDataset()
 const plan = usePlan()
 const { profile, setConfirmed, setResults } = useProfile()
-const { t } = useI18n()
+const { t, locale } = useI18n()
 
 const STUDENT_SITE = 'https://students.unimelb.edu.au/'
 const editing = shallowRef(false)
@@ -115,6 +115,19 @@ const roles = computed(() => {
   for (const c of r.required) out[c] = 'required'
   for (const c of r.options) out[c] = 'option'
   return out
+})
+// A career goal whose accreditation route still needs subjects the plan doesn't have: one line,
+// leaving out the major's compulsory subjects (the course check already says when they're missing).
+const careerReminder = computed(() => {
+  const goal = careerGoal(data.value, profile.value.career, heldMajorIds(plan.plan.value).filter((id): id is string => !!id))
+  const body = goal?.major?.accreditation?.body
+  if (!goal || !body) return null
+  const have = new Set([...passedCodes(profile.value.results), ...plan.plannedCodes.value])
+  const gap = careerGap(data.value, goal, have, roleSets.value.required)
+  const codes = [...gap.required, ...gap.breadth]
+  if (!codes.length) return null
+  const career = careerName(goal.target.names, locale.value) || goal.target.names.en
+  return { id: goal.target.id, text: t.value('careerGoal.gap', { career, body, codes: codes.join(t.value('listSep')) }) }
 })
 // The degree's own rules (its progress meters), and those with the diploma's after them.
 const rules = computed(() => plan.course.value?.rules ?? [])
@@ -396,6 +409,10 @@ const printTerms = computed<PrintTerm[]>(() => {
           </ul>
         </div>
       </details>
+
+      <p v-if="onBoard && careerReminder" class="started career-gap">
+        {{ careerReminder.text }} <a :href="link(`careers/${careerReminder.id}`)">{{ t('careerGoal.gapLink') }}</a>
+      </p>
 
       <RatePrompt v-if="rateNext" :key="rateNext" :code="rateNext" @close="rateNext = null" />
 

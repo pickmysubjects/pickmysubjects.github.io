@@ -7,6 +7,7 @@ import SuggestionPreview from '@/components/profile/SuggestionPreview.vue'
 import WamGoal from '@/components/profile/WamGoal.vue'
 import DegreeCard from '@/components/profile/DegreeCard.vue'
 import GoalPicker from '@/components/profile/GoalPicker.vue'
+import CareerGoalPicker from '@/components/profile/CareerGoalPicker.vue'
 import GradeShare from '@/components/profile/GradeShare.vue'
 import WorkHours from '@/components/profile/WorkHours.vue'
 import PlanSwitcher from '@/components/plans/PlanSwitcher.vue'
@@ -115,6 +116,7 @@ const filled = computed(() => [
             <span class="for-plan">{{ forPlan }}</span>
           </header>
           <GoalPicker :note="t('record.goalNote')" />
+          <div class="sec-part"><CareerGoalPicker /></div>
           <div class="sec-part"><WorkHours /></div>
         </section>
 

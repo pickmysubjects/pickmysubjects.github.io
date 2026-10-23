@@ -3,6 +3,8 @@ import type { Messages } from './en'
 export const ko: Messages = {
   /** Between items of a list shown in text ("A, B" / "A、B"). */
   listSep: ", ",
+  /** Which career-name language this locale reads (career names come with the data). */
+  careerLang: "ko",
   app: {
     footer: "학생이 만든 비공식 도구로, 멜버른대학교와 관련이 없어요. 수강신청 전에 {handbook}에서 확인하세요.",
     handbook: 'Handbook',
@@ -300,6 +302,9 @@ export const ko: Messages = {
     majorCore: "내 전공 필수 과목",
     majorOption: "내 전공 선택 과목 중 하나",
     majorPath: "전공의 {codes}(으)로 이어짐",
+    careerRequired: "{career}의 {body} 인증에 필수입니다.",
+    careerHelps: "{career}에 도움이 됨: {topics}을(를) 다룹니다.",
+    careerRecommended: "{career}(으)로 가는 길에 추천되는 과목입니다.",
     makesVeryHeavy: "이 학기에 넣으면 매우 빡빡해져요.",
     prereqNotCurated: "선수 조건이 아직 등록되지 않았어요. 수강 전에 Handbook을 확인하세요.",
     eligibilityManual: "저희가 확인할 수 없는 조건이 있어요. 아래 원문을 보고 충족하면 확인해 주세요.",
@@ -936,6 +941,17 @@ export const ko: Messages = {
     source: "Handbook 출처",
     checked: "{date} 확인",
   },
+  careerGoal: {
+    title: "진로 목표",
+    hint: "선택 사항. 이 직업에 필수이거나 도움이 되는 과목을 먼저 추천합니다. 다른 과목은 감점되지 않습니다.",
+    search: "진로 검색 (예: 회계사)",
+    noMatch: "맞는 진로가 없습니다.",
+    clear: "지우기",
+    see: "이 진로의 과목 보기",
+    none: "목표 없음",
+    gap: "{career}({body})에 아직 추가할 과목: {codes}.",
+    gapLink: "진로 페이지",
+  },
   careerPath: {
     title: "되고 싶은 직업은…",
     lede: "직업을 고르면 이어지는 전공과 가장 중요한 과목을 볼 수 있습니다. 입학 전에도, 전공을 고를 때도, 학위 중간에도 쓸 수 있습니다.",
@@ -1273,7 +1289,7 @@ export const ko: Messages = {
     accLink: "Handbook에서 요건 보기",
     careersTitle: "원하는 직업에서 전공과 과목 거꾸로 찾기",
     careersShort: "직업을 고르면 이어지는 전공과 중요한 과목을 볼 수 있습니다.",
-    careersText: "진로 페이지에서 회계사나 소프트웨어 엔지니어 같은 직업을 고르세요. 그 직업으로 이어지는 전공이 나오고, 각 과목이 필수, 도움이 됨, 조금 관련 있음, 별로 관련 없음으로 이유와 함께 나뉩니다. 관련이 적은 과목도 그 과목만의 장점을 보여 줍니다.",
+    careersText: "진로 페이지에서 회계사나 소프트웨어 엔지니어 같은 직업을 고르세요. 그 직업으로 이어지는 전공이 나오고, 각 과목이 필수, 도움이 됨, 조금 관련 있음, 별로 관련 없음으로 이유와 함께 나뉩니다. 관련이 적은 과목도 그 과목만의 장점을 보여 줍니다. 내 정보 페이지에서 진로 목표도 정할 수 있습니다(계획마다 하나). 그러면 필수이거나 도움이 되는 과목이 먼저 추천되고, 계획에 아직 없는 필수 과목도 알려 줍니다.",
     careersLink: "진로 열기",
     canTitle: "이 사이트에서 할 수 있는 것",
     majorsDiploma: "동시 이수 디플로마(concurrent diploma): Languages, Computing, Mathematical Sciences 디플로마는 학사와 함께 100학점을 더 듣는 과정으로, 보통 1년이 더 걸려요. 최대 50학점은 양쪽에 다 인정돼서 더 일찍 끝내는 학생도 있어요. 일부 전공은 Computing이나 Mathematical Sciences를 들을 수 없어요. 원주민 학생은 Bachelor of Science (Extended)도 고를 수 있어요. 기초 1년 뒤 일반 이학사 전공을 듣고, 350학점을 3년 반 동안 들어요.",

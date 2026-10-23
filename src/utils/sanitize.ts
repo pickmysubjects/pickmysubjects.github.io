@@ -19,6 +19,11 @@ export function cleanGoal(x: unknown): Profile['goal'] {
   return GOALS.find((g) => g === x) ?? 'balanced'
 }
 
+/** A career id, as /careers/<id> spells it; anything else is dropped (an unknown id just matches nothing). */
+function cleanCareer(x: unknown): { career?: string } {
+  return typeof x === 'string' && /^[a-z0-9]+(-[a-z0-9]+)*$/.test(x) && x.length <= 80 ? { career: x } : {}
+}
+
 export function cleanProfile(x: unknown): Profile {
   const p = isObject(x) ? x : {}
   const results = (Array.isArray(p.results) ? p.results : [])
@@ -47,7 +52,7 @@ export function cleanProfile(x: unknown): Profile {
       ratings[code] = { difficulty: scale(r.difficulty), interest: scale(r.interest), recommend: rec }
     }
   }
-  return { results, skills, interests: [...new Set(strings(p.interests).filter((t) => (TOPICS as readonly string[]).includes(t)))], goal, confirmed: strings(p.confirmed), ...(Object.keys(ratings).length ? { ratings } : {}), ...(typeof p.workHours === 'number' && p.workHours >= 0 && p.workHours <= 60 ? { workHours: p.workHours } : {}), ...(isMarkScale(p.markScale) ? { markScale: p.markScale } : {}) }
+  return { results, skills, interests: [...new Set(strings(p.interests).filter((t) => (TOPICS as readonly string[]).includes(t)))], goal, confirmed: strings(p.confirmed), ...(Object.keys(ratings).length ? { ratings } : {}), ...(typeof p.workHours === 'number' && p.workHours >= 0 && p.workHours <= 60 ? { workHours: p.workHours } : {}), ...(isMarkScale(p.markScale) ? { markScale: p.markScale } : {}), ...cleanCareer(p.career) }
 }
 
 export function cleanProfiles(x: unknown): Record<string, Profile> {
@@ -88,8 +93,8 @@ function cleanKept(x: unknown): Record<string, PlanState> | undefined {
 }
 
 function cleanPrefs(x: Record<string, unknown>): PlanPrefs {
-  const { skills, interests, goal } = cleanProfile(x)
-  return { skills, interests, goal }
+  const { skills, interests, goal, career } = cleanProfile(x)
+  return { skills, interests, goal, ...(career ? { career } : {}) }
 }
 
 function cleanBook(v: Record<string, unknown>): PlanBook | null {

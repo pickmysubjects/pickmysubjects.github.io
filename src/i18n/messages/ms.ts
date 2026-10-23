@@ -3,6 +3,8 @@ import type { Messages } from './en'
 export const ms: Messages = {
   /** Between items of a list shown in text ("A, B" / "A、B"). */
   listSep: ", ",
+  /** Which career-name language this locale reads (career names come with the data). */
+  careerLang: "ms",
   app: {
     footer: "Alat tidak rasmi buatan pelajar, tiada kaitan dengan University of Melbourne. Semak {handbook} sebelum mendaftar.",
     handbook: 'Handbook',
@@ -300,6 +302,9 @@ export const ms: Messages = {
     majorCore: "Wajib dalam major anda",
     majorOption: "Salah satu pilihan dalam major anda",
     majorPath: "Membawa kepada {codes} dalam major anda",
+    careerRequired: "Wajib untuk akreditasi {body} ({career}).",
+    careerHelps: "Membantu ke arah {career}: merangkumi {topics}.",
+    careerRecommended: "Disyorkan dalam laluan ke {career}.",
     makesVeryHeavy: "Menambahnya menjadikan semester itu sangat berat.",
     prereqNotCurated: "Prasyarat belum ditambah: semak Handbook sebelum mendaftar.",
     eligibilityManual: "Ada syarat yang kami tidak dapat semak: baca teks asal di bawah dan sahkan jika anda memenuhinya.",
@@ -936,6 +941,17 @@ export const ms: Messages = {
     source: "Daripada Handbook",
     checked: "disemak {date}",
   },
+  careerGoal: {
+    title: "Matlamat kerjaya",
+    hint: "Pilihan. Cadangan akan mengutamakan subjek yang wajib atau membantu untuk pekerjaan ini. Subjek lain tidak ditolak markah.",
+    search: "Cari kerjaya, contohnya akauntan",
+    noMatch: "Tiada kerjaya yang sepadan.",
+    clear: "Kosongkan",
+    see: "Subjek untuk kerjaya ini",
+    none: "Belum ada matlamat",
+    gap: "Untuk {career} ({body}), masih perlu ditambah: {codes}.",
+    gapLink: "Halaman kerjaya",
+  },
   careerPath: {
     title: "Saya mahu jadi…",
     lede: "Pilih satu kerjaya untuk melihat major yang menuju ke sana dan subjek yang paling penting untuknya. Berguna sebelum masuk universiti, semasa memilih major, atau di pertengahan ijazah.",
@@ -1273,7 +1289,7 @@ export const ms: Messages = {
     accLink: "Lihat syarat di Handbook",
     careersTitle: "Dari kerjaya ke major dan subjek",
     careersShort: "Pilih satu kerjaya dan lihat major yang menuju ke sana serta subjek yang penting.",
-    careersText: "Di halaman Kerjaya, pilih satu pekerjaan, contohnya akauntan atau jurutera perisian. Anda akan nampak major yang menuju ke sana, kemudian setiap subjek disusun sebagai Wajib, Membantu, Agak berkaitan atau Kurang berkaitan, berserta sebabnya. Subjek yang kurang berkaitan tetap menunjukkan kelebihannya.",
+    careersText: "Di halaman Kerjaya, pilih satu pekerjaan, contohnya akauntan atau jurutera perisian. Anda akan nampak major yang menuju ke sana, kemudian setiap subjek disusun sebagai Wajib, Membantu, Agak berkaitan atau Kurang berkaitan, berserta sebabnya. Subjek yang kurang berkaitan tetap menunjukkan kelebihannya. Anda juga boleh menetapkan matlamat kerjaya di halaman Saya (satu bagi setiap pelan). Cadangan kemudian mengutamakan subjek yang wajib atau membantu untuknya, dan pelan mengingatkan anda tentang subjek wajib yang belum ditambah.",
     careersLink: "Buka Kerjaya",
     canTitle: "Apa yang boleh dibuat di laman ini",
     majorsDiploma: "Diploma serentak (concurrent diploma): Diploma in Languages, Computing atau Mathematical Sciences ialah 100 mata tambahan yang diambil bersama ijazah sarjana muda, biasanya setahun lagi. Sehingga 50 mata boleh dikira untuk kedua-duanya, jadi ada pelajar yang tamat lebih awal. Sesetengah major tidak boleh mengambil Computing atau Mathematical Sciences. Pelajar Orang Asli Australia (Indigenous) juga boleh memilih Bachelor of Science (Extended): satu tahun asas, kemudian major Science biasa, 350 mata dalam tiga tahun setengah.",
