@@ -13,6 +13,7 @@ import { useI18n } from './i18n'
 import { localTitle, withLocalTitle } from './i18n/localized'
 import { PRESET_TITLE_KEYS, subjectTitleKey } from '@/utils/seo'
 import { presetFromSlug, rankFromSlug } from '@/engine'
+import { guidePageOf } from '@/utils/guideSections'
 
 const lazy = (v: keyof typeof VIEW_LOADERS) => defineAsyncComponent(VIEW_LOADERS[v])
 const HomeView = lazy('home')
@@ -48,6 +49,7 @@ const TITLES: Partial<Record<string, string>> = {
 watchEffect(() => {
   const s = view.value === 'subject' ? data.value.subjects[param.value.toUpperCase()] : undefined
   const key = TITLES[view.value]
+  const guidePage = view.value === 'guide' ? guidePageOf(param.value) : ({ kind: 'overview' } as const)
   const major = view.value === 'majors' && param.value ? data.value.components.find((c) => c.id === param.value) : undefined
   // A quick pick's own page keeps the title its static page has, so search engines that run
   // the app see the same one.
@@ -65,6 +67,8 @@ watchEffect(() => {
         ? `${t.value(ranking === 'easy' ? 'seo.rankEasy' : 'seo.rankHard', { year })} | PickMySubjects`
       : preset
         ? `${breadthElsewhere ? t.value('seo.presetBreadthFor', { course: breadthElsewhere, year }) : t.value(PRESET_TITLE_KEYS[preset], { year })} | PickMySubjects`
+      : guidePage.kind !== 'overview'
+        ? `${t.value(guidePage.kind === 'category' ? `guide.cat.${guidePage.category}.title` : 'guide.kd.title')} | ${t.value('guide.title')} | PickMySubjects`
       : key
       ? `${t.value(key)} | PickMySubjects`
       : t.value('seo.homeTitle')

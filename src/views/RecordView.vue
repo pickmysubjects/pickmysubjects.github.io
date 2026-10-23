@@ -67,7 +67,7 @@ const filled = computed(() => [
           <span class="wam-label">WAM</span>
           <span v-if="wam !== null" class="wam-value">{{ wam }}</span>
           <span v-else class="wam-none">{{ t('record.noMarks') }}</span>
-          <a class="wam-what" :href="link('guide')">{{ t('guide.wamWhat') }}</a>
+          <a class="wam-what" :href="link('guide/basics/#wam')">{{ t('guide.wamWhat') }}</a>
         </p>
         <ul class="counts">
           <li v-for="f in filled" :key="f.key" :class="{ empty: !f.n }">{{ t(f.key, { n: f.n }) }}</li>

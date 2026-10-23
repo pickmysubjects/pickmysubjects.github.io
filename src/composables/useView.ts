@@ -134,7 +134,7 @@ function onClick(event: MouseEvent): void {
   // Same page, only a #fragment: let the browser scroll.
   if (url.pathname === location.pathname && url.search === location.search && url.hash) return
   event.preventDefault()
-  visit(url.pathname + url.search)
+  visit(url.pathname + url.search + url.hash)
 }
 
 // Listeners are installed once, however many components ask for the route
