@@ -392,7 +392,7 @@ const printTerms = computed<PrintTerm[]>(() => {
             <li v-for="f in failed" :key="f.code">
               {{ f.term ? t('plan.failedRetake', { code: f.code, term: f.term }) : t('plan.failedNotPlanned', { code: f.code }) }}
             </li>
-            <li class="failed-more"><a :href="link('guide')">{{ t('guide.failTitle') }}</a></li>
+            <li class="failed-more"><a :href="link('guide/semester/#fail')">{{ t('guide.failTitle') }}</a></li>
           </ul>
         </div>
       </details>
@@ -492,7 +492,7 @@ const printTerms = computed<PrintTerm[]>(() => {
             <p>{{ t('plan.hint') }} {{ t('plan.tagLegend') }}</p>
             <p>
               {{ t('plan.censusLine') }}
-              <a :href="link('guide')">{{ t('guide.datesTitle') }}</a>
+              <a :href="link('guide/key-dates/')">{{ t('guide.datesTitle') }}</a>
             </p>
           </div>
           <div class="details-pair">

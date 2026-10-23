@@ -1,18 +1,31 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import { ExternalLink } from 'lucide-vue-next'
-import GradeScale from '@/components/guide/GradeScale.vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, watch } from 'vue'
 import CanDoList from '@/components/home/CanDoList.vue'
-import GuideItem from '@/components/guide/GuideItem.vue'
-import { link } from '@/composables/useView'
-import { useProfile } from '@/composables/useProfile'
+import GuideSubnav from '@/components/guide/GuideSubnav.vue'
+import GuideOverview from '@/components/guide/GuideOverview.vue'
+import GuideBasics from '@/components/guide/GuideBasics.vue'
+import GuideEnrolling from '@/components/guide/GuideEnrolling.vue'
+import GuideSemester from '@/components/guide/GuideSemester.vue'
+import GuideInternational from '@/components/guide/GuideInternational.vue'
+import GuideHelp from '@/components/guide/GuideHelp.vue'
+import KeyDates from '@/components/guide/KeyDates.vue'
+import { link, replaceAddress, useView } from '@/composables/useView'
 import { useI18n } from '@/i18n'
-import { ACCREDITATION as ACC } from '@/utils/accreditation'
+import { URLS } from '@/utils/guideLinks'
+import { categoryOfTopic, guidePageOf } from '@/utils/guideSections'
 
-const { t, locale } = useI18n()
-// The reader's own country first, the rest in the usual order.
-const ABROAD = computed(() => [...ABROAD_ALL].sort((a, b) => Number(b.home === locale.value) - Number(a.home === locale.value)))
-const { wam } = useProfile()
+/** The basics guide: an overview at /guide/, one page per section, and the key dates page. */
+const { t } = useI18n()
+const { param } = useView()
+const page = computed(() => guidePageOf(param.value))
+const current = computed(() => (page.value.kind === 'overview' ? 'overview' : page.value.category))
+const SECTIONS = { basics: GuideBasics, enrolling: GuideEnrolling, semester: GuideSemester, international: GuideInternational, help: GuideHelp } as const
+const heading = computed(() => {
+  const p = page.value
+  if (p.kind === 'category') return { title: t.value(`guide.cat.${p.category}.title`), lede: t.value(`guide.cat.${p.category}.lede`) }
+  if (p.kind === 'extra') return { title: t.value('guide.kd.title'), lede: t.value('guide.kd.lede') }
+  return { title: t.value('guide.title'), lede: t.value('guide.lede') }
+})
 
 const FACTS = [
   { value: '12.5', key: 'guide.factPoints' },
@@ -21,442 +34,80 @@ const FACTS = [
   { value: '80+', key: 'guide.factH1' },
 ] as const
 
-// Official bodies (checked 2026-10-09). `home`: the site language whose readers most likely
-// need it, listed first for them. India moved from AIU to the UGC in April 2025.
-const ABROAD_ALL: { key: string; href: string; home?: string }[] = [
-  { key: 'guide.wes', href: 'https://www.wes.org/' },
-  { key: 'guide.enic', href: 'https://www.enic.org.uk/' },
-  { key: 'guide.cscse', href: 'https://zwfw.cscse.edu.cn/', home: 'zh-CN' },
-  { key: 'guide.abroadJp', href: 'https://www.nicjp.niad.ac.jp/en/', home: "ja" },
-  { key: 'guide.abroadKr', href: 'https://www.karic.kr', home: "ko" },
-  { key: 'guide.abroadVn', href: 'https://naric.edu.vn', home: "vi" },
-  { key: 'guide.abroadMy', href: 'https://www.mqa.gov.my', home: "ms" },
-  { key: 'guide.abroadId', href: 'https://piln.kemdiktisaintek.go.id', home: "id" },
-  { key: 'guide.abroadIn', href: 'https://equivalence.ugc.ac.in', home: "hi" },
-  { key: 'guide.abroadTw', href: 'https://www.fsedu.moe.gov.tw', home: "zh-TW" },
-  { key: 'guide.abroadHk', href: 'https://www.hkcaavq.edu.hk/en/services/qualifications-assessment/', home: "zh-TW" },
-  { key: 'guide.umCalc', href: 'https://study.unimelb.edu.au/how-to-apply/graduate-coursework-study/grade-conversion-eligibility-calculator' },
-]
-
-const RANKINGS = [
-  { key: 'guide.qs', href: 'https://www.topuniversities.com/world-university-rankings' },
-  { key: 'guide.the', href: 'https://www.timeshighereducation.com/world-university-rankings' },
-  { key: 'guide.arwu', href: 'https://www.shanghairanking.com/rankings/arwu/2025' },
-] as const
-
-const STUDENT_SITE = 'https://students.unimelb.edu.au/'
-const KEY_DATES = 'https://students.unimelb.edu.au/course-admin/key-dates'
-const ENROL_POLICY = 'https://policy.unimelb.edu.au/MPF1294/'
-const ASSESS_POLICY = 'https://policy.unimelb.edu.au/MPF1326/'
-const TT_HOW = 'https://students.unimelb.edu.au/course-admin/class-timetable/how-class-timetabling-works'
-const TT_CLASH = 'https://students.unimelb.edu.au/course-admin/class-timetable/swap-to-available-or-full-classes'
-const SPEC_APPLY = 'https://students.unimelb.edu.au/course-admin/assessment-adjustments/how-to-apply-for-an-assessment-adjustment'
-const SPEC_OUT = 'https://students.unimelb.edu.au/course-admin/assessment-adjustments/special-consideration'
-const SPEC_DOCS = 'https://students.unimelb.edu.au/course-admin/assessment-adjustments/eligibility-and-supporting-documentation'
-const RSL = 'https://students.unimelb.edu.au/support-and-wellbeing/international-student-support/reduced-study-load'
-const SKILLS = 'https://students.unimelb.edu.au/academic-skills'
-const EXAMS = 'https://library.unimelb.edu.au/examination_papers'
-const FAILING = 'https://students.unimelb.edu.au/course-admin/planning-your-course-and-subjects/failing-a-subject'
-// Checked 2026-10-23 on the official pages.
-const ENROLLING = 'https://students.unimelb.edu.au/course-admin/enrolling-in-subjects'
-const PLANNER = 'https://students.unimelb.edu.au/course-admin/planning-your-course-and-subjects/faculty-course-planning-resources/my-course-planner'
-const FEES = 'https://students.unimelb.edu.au/course-admin/understanding-your-fees'
-const CENSUS = 'https://students.unimelb.edu.au/course-admin/census-dates'
-const INTEGRITY = 'https://academicintegrity.unimelb.edu.au/'
-const INTEGRITY_BREACHES = 'https://academicintegrity.unimelb.edu.au/plagiarism-and-collusion'
-const EXAM_DATES = 'https://students.unimelb.edu.au/course-admin/exams/exam-dates'
-const EXAM_TT = 'https://students.unimelb.edu.au/course-admin/exams/exams-timetable'
-const RESULTS = 'https://students.unimelb.edu.au/course-admin/results'
+// A #topic link: on the overview (an old one-page link), move to the section that holds it;
+// on a section page, open that topic and bring it into view.
+async function followHash(): Promise<void> {
+  const id = decodeURIComponent(location.hash.slice(1))
+  if (!id) return
+  if (page.value.kind === 'overview') {
+    const c = categoryOfTopic(id)
+    if (c) replaceAddress(`guide/${c}/#${id}`)
+    return
+  }
+  await nextTick()
+  const el = document.getElementById(id)
+  if (el instanceof HTMLDetailsElement) el.open = true
+  el?.scrollIntoView({ block: 'start' })
+}
+const onHash = () => void followHash()
+onMounted(() => {
+  void followHash()
+  window.addEventListener('hashchange', onHash)
+})
+onBeforeUnmount(() => window.removeEventListener('hashchange', onHash))
+watch(param, () => void followHash())
 </script>
 
 <template>
   <article class="guide">
-    <header>
+    <header class="guide-head">
       <p class="guide-eyebrow">{{ t('guide.eyebrow') }}</p>
-      <h1 class="page-title">{{ t('guide.title') }}</h1>
-      <p class="page-lede">{{ t('guide.lede') }}</p>
+      <h1 class="page-title">{{ heading.title }}</h1>
+      <p class="page-lede">{{ heading.lede }}</p>
+      <GuideSubnav :current="current" />
     </header>
 
     <div class="layout">
-    <div class="main">
-    <section class="group">
-      <h2 class="group-title">{{ t('guide.groupPlan') }}</h2>
-      <div class="list surface">
-        <GuideItem :title="t('guide.firstTitle')" :short="t('guide.firstShort')" open>
-          <ol class="steps">
-            <li>{{ t('guide.firstStep1') }}</li>
-            <li>{{ t('guide.firstStep2') }}</li>
-            <li>{{ t('guide.firstStep3') }}</li>
-            <li>{{ t('guide.firstStep4') }}</li>
-          </ol>
-          <p class="aside">{{ t('guide.breadthText') }}</p>
-          <p class="aside">
-            {{ t('guide.easyHardText') }}
-            <a :href="link('subjects/easy/')">{{ t('browse.rankList.easy') }}</a> ·
-            <a :href="link('subjects/hard/')">{{ t('browse.rankList.hard') }}</a>
-          </p>
-          <p class="actions">
-            <a class="button button-accent" :href="link('subjects?preset=firstSemester')">{{ t('guide.firstFind') }}</a>
-            <a class="button button-quiet" :href="link('majors')">{{ t('guide.firstMajors') }}</a>
-            <a class="button button-quiet" :href="link('plan')">{{ t('guide.firstPlan') }}</a>
-          </p>
-        </GuideItem>
+      <div class="main content">
+        <template v-if="page.kind === 'overview'">
+          <GuideOverview />
+          <CanDoList :title="t('guide.canTitle')" class="guide-can" />
+        </template>
+        <KeyDates v-else-if="page.kind === 'extra'" />
+        <component :is="SECTIONS[page.category]" v-else />
 
-        <GuideItem :title="t('guide.pointsTitle')" :short="t('guide.pointsShort')">
-          <p>{{ t('guide.pointsText') }}</p>
-          <p>{{ t('guide.pointsYearLong') }}</p>
-        </GuideItem>
-
-        <GuideItem :title="t('guide.majorsTitle')" :short="t('guide.majorsShort')">
-          <ul class="plain">
-            <li>{{ t('guide.majorsOne') }}</li>
-            <li>{{ t('guide.majorsSecond') }}</li>
-            <li>{{ t('guide.majorsMinor') }}</li>
-            <li>{{ t('guide.majorsOnce') }}</li>
-          </ul>
-          <p class="note">{{ t('guide.majorsPairs') }}</p>
-          <p class="note">{{ t('guide.majorsDiploma') }}</p>
-          <p class="aside">{{ t('guide.majorsPlans') }}</p>
-          <p class="actions">
-            <a class="button button-quiet" :href="link('plan')">{{ t('guide.majorsPlansLink') }}</a>
-          </p>
-        </GuideItem>
-
-        <GuideItem :title="t('guide.capsTitle')" :short="t('guide.capsShort')">
-          <ul class="plain">
-            <li>{{ t('guide.capsDiscipline') }}</li>
-            <li>{{ t('guide.capsDesignBreadth') }}</li>
-            <li>{{ t('guide.capsDesignInformal') }}</li>
-          </ul>
-        </GuideItem>
-
-        <GuideItem :title="t('guide.loadTitle')" :short="t('guide.loadShort')">
-          <div class="who">
-            <div class="who-card">
-              <h3>{{ t('guide.localTitle') }}</h3>
-              <p>{{ t('guide.loadLocal') }}</p>
-            </div>
-            <div class="who-card">
-              <h3>{{ t('guide.intlTitle') }}</h3>
-              <p>{{ t('guide.loadIntl') }}</p>
-            </div>
-          </div>
-          <p>{{ t('guide.loadText') }}</p>
-          <ul class="plain">
-            <li>{{ t('guide.overloadWam') }}</li>
-            <li>{{ t('guide.overloadLast') }}</li>
-            <li>{{ t('guide.overloadFails') }}</li>
-          </ul>
-          <p class="note">{{ t('guide.overloadFinal') }}</p>
-          <p class="aside">
-            {{ t('guide.loadSummer') }}
-            <a :href="link('subjects/summer-winter/')">{{ t('guide.loadSummerLink') }}</a>
-          </p>
-          <p>
-            <a class="ext" :href="ENROL_POLICY" target="_blank" rel="noopener">{{ t('guide.enrolPolicyLink') }}<ExternalLink :size="14" aria-hidden="true" /></a>
-          </p>
-        </GuideItem>
-
-        <GuideItem :title="t('guide.rslTitle')" :short="t('guide.rslShort')">
-          <ul class="plain">
-            <li>{{ t('guide.rsl8202') }}</li>
-            <li>{{ t('guide.rslUnder') }}</li>
-            <li>{{ t('guide.rslGrounds') }}</li>
-            <li>{{ t('guide.rslNot') }}</li>
-          </ul>
-          <p class="note">{{ t('guide.rslStay') }}</p>
-          <p>
-            <a class="ext" :href="RSL" target="_blank" rel="noopener">{{ t('guide.officialPage') }}: {{ t('guide.rslLink') }}<ExternalLink :size="14" aria-hidden="true" /></a>
-          </p>
-        </GuideItem>
-
-        <GuideItem :title="t('guide.rulesTitle')" :short="t('guide.rulesShort')">
-          <dl class="terms">
-            <div>
-              <dt>{{ t('guide.prereqTerm') }}</dt>
-              <dd>{{ t('guide.prereqText') }}</dd>
-            </div>
-            <div>
-              <dt>{{ t('guide.coreqTerm') }}</dt>
-              <dd>{{ t('guide.coreqText') }}</dd>
-            </div>
-            <div>
-              <dt>{{ t('guide.nonTerm') }}</dt>
-              <dd>{{ t('guide.nonText') }}</dd>
-            </div>
-          </dl>
-          <p class="note">{{ t('guide.waiverText') }}</p>
-        </GuideItem>
-
-        <GuideItem :title="t('guide.checkTitle')" :short="t('guide.checkShort')">
-          <p>{{ t('guide.checkText') }}</p>
-          <ul class="plain">
-            <li>{{ t('guide.checkLanguage') }}</li>
-            <li>{{ t('guide.checkPermission') }}</li>
-            <li>{{ t('guide.checkVce') }}</li>
-            <li>{{ t('guide.checkAverage') }}</li>
-          </ul>
-        </GuideItem>
-
-        <GuideItem :title="t('guide.enrolTitle')" :short="t('guide.enrolShort')">
-          <ol class="steps">
-            <li>{{ t('guide.enrolStep1') }}</li>
-            <li>{{ t('guide.enrolStep2') }}</li>
-            <li>{{ t('guide.enrolStep3') }}</li>
-            <li>{{ t('guide.enrolStep4') }}</li>
-          </ol>
-          <p class="note">{{ t('guide.enrolDraft') }}</p>
-          <p class="note">{{ t('guide.enrolWhen') }}</p>
-          <ul class="links">
-            <li><a :href="ENROLLING" target="_blank" rel="noopener">{{ t('guide.enrolLink') }}<ExternalLink :size="14" aria-hidden="true" /></a></li>
-            <li><a :href="PLANNER" target="_blank" rel="noopener">{{ t('guide.plannerLink') }}<ExternalLink :size="14" aria-hidden="true" /></a></li>
-            <li><a :href="KEY_DATES" target="_blank" rel="noopener">{{ t('guide.datesLink') }}<ExternalLink :size="14" aria-hidden="true" /></a></li>
-          </ul>
-        </GuideItem>
-
-        <GuideItem :title="t('guide.dropTitle')" :short="t('guide.dropShort')">
-          <ol class="timeline">
-            <li class="tl-good">{{ t('guide.dropBefore') }}</li>
-            <li class="tl-warn">{{ t('guide.dropWd') }}</li>
-            <li class="tl-bad">{{ t('guide.dropFail') }}</li>
-          </ol>
-          <p class="note">{{ t('guide.dropLate') }}</p>
-          <div class="who">
-            <p class="who-card">{{ t('guide.dropLocal') }}</p>
-            <p class="who-card">{{ t('guide.dropIntl') }}</p>
-          </div>
-          <p class="note">{{ t('guide.dropWhere') }}</p>
-          <p>
-            <a class="ext" :href="ENROL_POLICY" target="_blank" rel="noopener">{{ t('guide.enrolPolicyLink') }}<ExternalLink :size="14" aria-hidden="true" /></a>
-          </p>
-        </GuideItem>
-
-        <GuideItem :title="t('guide.feesTitle')" :short="t('guide.feesShort')">
-          <ul class="plain">
-            <li>{{ t('guide.feesCsp') }}</li>
-            <li>{{ t('guide.feesHelp') }}</li>
-            <li>{{ t('guide.feesFull') }}</li>
-            <li>{{ t('guide.feesCensus') }}</li>
-          </ul>
-          <p class="note">{{ t('guide.feesSee') }}</p>
-          <ul class="links">
-            <li><a :href="FEES" target="_blank" rel="noopener">{{ t('guide.feesLink') }}<ExternalLink :size="14" aria-hidden="true" /></a></li>
-            <li><a :href="CENSUS" target="_blank" rel="noopener">{{ t('guide.censusLink') }}<ExternalLink :size="14" aria-hidden="true" /></a></li>
-          </ul>
-        </GuideItem>
-
-        <GuideItem :title="t('guide.datesTitle')" :short="t('guide.datesShort')">
-          <ul class="plain">
-            <li>{{ t('guide.datesStart') }}</li>
-            <li>{{ t('guide.datesS1') }}</li>
-            <li>{{ t('guide.datesS2') }}</li>
-            <li>{{ t('guide.datesOther') }}</li>
-          </ul>
-          <p>
-            <a class="ext" :href="KEY_DATES" target="_blank" rel="noopener">{{ t('guide.datesLink') }}<ExternalLink :size="14" aria-hidden="true" /></a>
-          </p>
-        </GuideItem>
+        <p v-if="page.kind !== 'overview'" class="next">
+          <a :href="link('guide/')">← {{ t('guide.overview') }}</a>
+        </p>
+        <p class="source">
+          {{ t('guide.sourcesText') }}
+          <a :href="URLS.STUDENT_SITE" target="_blank" rel="noopener">{{ t('guide.sourcesLink') }}</a>
+        </p>
       </div>
-    </section>
 
-    <section class="group">
-      <h2 class="group-title">{{ t('guide.groupTerm') }}</h2>
-      <div class="list surface">
-        <GuideItem :title="t('guide.ttTitle')" :short="t('guide.ttShort')">
-          <ol class="steps">
-            <li>{{ t('guide.ttStep1') }}</li>
-            <li>{{ t('guide.ttStep2') }}</li>
-            <li>{{ t('guide.ttStep3') }}</li>
-            <li>{{ t('guide.ttStep4') }}</li>
-          </ol>
-          <ul class="plain">
-            <li>{{ t('guide.ttRegister') }}</li>
-            <li>{{ t('guide.ttMissed') }}</li>
-            <li>{{ t('guide.ttTaf') }}</li>
-          </ul>
-          <div class="aside">
-            <h3 class="aside-title">{{ t('guide.clashTitle') }}</h3>
-            <ul class="plain">
-              <li>{{ t('guide.clashBackToBack') }}</li>
-              <li>{{ t('guide.clashSwap') }}</li>
-              <li>{{ t('guide.clashTaf') }}</li>
-              <li>{{ t('guide.clashAccept') }}</li>
-            </ul>
-          </div>
-          <p class="note">{{ t('guide.ttOther') }}</p>
-          <ul class="links">
-            <li><a :href="TT_HOW" target="_blank" rel="noopener">{{ t('guide.ttLink') }}<ExternalLink :size="14" aria-hidden="true" /></a></li>
-            <li><a :href="TT_CLASH" target="_blank" rel="noopener">{{ t('guide.clashLink') }}<ExternalLink :size="14" aria-hidden="true" /></a></li>
-          </ul>
-        </GuideItem>
-
-        <GuideItem :title="t('guide.specTitle')" :short="t('guide.specShort')">
-          <ul class="plain">
-            <li>{{ t('guide.specWhen') }}</li>
-            <li>{{ t('guide.specOne') }}</li>
-            <li>{{ t('guide.specDocs') }}</li>
-            <li>{{ t('guide.specOutcomes') }}</li>
-          </ul>
-          <p class="note">{{ t('guide.specNot') }}</p>
-          <ul class="links">
-            <li><a :href="SPEC_APPLY" target="_blank" rel="noopener">{{ t('guide.specLink') }}<ExternalLink :size="14" aria-hidden="true" /></a></li>
-            <li><a :href="SPEC_OUT" target="_blank" rel="noopener">{{ t('guide.specOutLink') }}<ExternalLink :size="14" aria-hidden="true" /></a></li>
-            <li><a :href="SPEC_DOCS" target="_blank" rel="noopener">{{ t('guide.specDocLink') }}<ExternalLink :size="14" aria-hidden="true" /></a></li>
-          </ul>
-        </GuideItem>
-
-        <GuideItem :title="t('guide.hurdleTitle')" :short="t('guide.hurdleShort')">
-          <p>{{ t('guide.hurdleText') }}</p>
-          <p class="note">{{ t('guide.hurdleTip') }}</p>
-          <p>
-            <a class="ext" :href="ASSESS_POLICY" target="_blank" rel="noopener">{{ t('guide.policyLink') }}<ExternalLink :size="14" aria-hidden="true" /></a>
-          </p>
-        </GuideItem>
-
-        <GuideItem :title="t('guide.lateTitle')" :short="t('guide.lateShort')">
-          <p>{{ t('guide.lateText') }}</p>
-          <p>
-            <a class="ext" :href="ASSESS_POLICY" target="_blank" rel="noopener">{{ t('guide.policyLink') }}<ExternalLink :size="14" aria-hidden="true" /></a>
-          </p>
-        </GuideItem>
-
-        <GuideItem :title="t('guide.integrityTitle')" :short="t('guide.integrityShort')">
-          <ul class="plain">
-            <li>{{ t('guide.integrityAi') }}</li>
-            <li>{{ t('guide.integrityPlag') }}</li>
-            <li>{{ t('guide.integrityOther') }}</li>
-            <li>{{ t('guide.integrityContract') }}</li>
-          </ul>
-          <p class="note">{{ t('guide.integrityScam') }}</p>
-          <p class="note">{{ t('guide.integrityProcess') }}</p>
-          <ul class="links">
-            <li><a :href="INTEGRITY" target="_blank" rel="noopener">{{ t('guide.integrityLink') }}<ExternalLink :size="14" aria-hidden="true" /></a></li>
-            <li><a :href="INTEGRITY_BREACHES" target="_blank" rel="noopener">{{ t('guide.integrityBreachLink') }}<ExternalLink :size="14" aria-hidden="true" /></a></li>
-          </ul>
-        </GuideItem>
-
-        <GuideItem :title="t('guide.examsTitle')" :short="t('guide.examsShort')">
-          <ul class="plain">
-            <li>{{ t('guide.examsTimetable') }}</li>
-            <li>{{ t('guide.examsMelbourne') }}</li>
-            <li>{{ t('guide.examsResults') }}</li>
-            <li>{{ t('guide.examsReview') }}</li>
-          </ul>
-          <ul class="links">
-            <li><a :href="EXAM_DATES" target="_blank" rel="noopener">{{ t('guide.examDatesLink') }}<ExternalLink :size="14" aria-hidden="true" /></a></li>
-            <li><a :href="EXAM_TT" target="_blank" rel="noopener">{{ t('guide.examTtLink') }}<ExternalLink :size="14" aria-hidden="true" /></a></li>
-            <li><a :href="RESULTS" target="_blank" rel="noopener">{{ t('guide.resultsLink') }}<ExternalLink :size="14" aria-hidden="true" /></a></li>
-            <li><a :href="ASSESS_POLICY" target="_blank" rel="noopener">{{ t('guide.policyLink') }}<ExternalLink :size="14" aria-hidden="true" /></a></li>
-          </ul>
-        </GuideItem>
-      </div>
-    </section>
-
-    <section class="group">
-      <h2 class="group-title">{{ t('guide.groupMarks') }}</h2>
-      <div class="list surface">
-        <GuideItem :title="t('guide.gradesTitle')" :short="t('guide.gradesShort')">
-          <GradeScale />
-        </GuideItem>
-
-        <GuideItem :title="t('guide.wamTitle')" :short="t('guide.wamShort')">
-          <p>{{ t('guide.wamText') }}</p>
-          <p class="formula">{{ t('guide.wamFormula') }}</p>
-          <p>{{ t('guide.wamExample') }}</p>
-          <ul class="plain">
-            <li>{{ t('guide.wamIn') }}</li>
-            <li>{{ t('guide.wamOut') }}</li>
-          </ul>
-          <p class="yours">
-            <span>{{ wam !== null ? t('guide.wamYours', { wam }) : t('guide.wamNone') }}</span>
-            <a class="button button-quiet" :href="link('record')">{{ t('guide.wamGo') }}</a>
-          </p>
-        </GuideItem>
-
-        <GuideItem :title="t('guide.failTitle')" :short="t('guide.failShort')">
-          <ul class="plain">
-            <li>{{ t('guide.failPoints') }}</li>
-            <li>{{ t('guide.failRepeat') }}</li>
-            <li>{{ t('guide.failProgress') }}</li>
-            <li>{{ t('guide.failSupp') }}</li>
-            <li>{{ t('guide.failSpecial') }}</li>
-            <li>{{ t('guide.failIntl') }}</li>
-          </ul>
-          <p>
-            <a class="ext" :href="FAILING" target="_blank" rel="noopener">{{ t('guide.failLink') }}<ExternalLink :size="14" aria-hidden="true" /></a>
-          </p>
-        </GuideItem>
-
-        <GuideItem :title="t('guide.abroadTitle')" :short="t('guide.abroadShort')">
-          <p>{{ t('guide.abroadText') }}</p>
-          <ul class="links">
-            <li v-for="l in ABROAD" :key="l.key">
-              <a :href="l.href" target="_blank" rel="noopener">{{ t(l.key) }}<ExternalLink :size="14" aria-hidden="true" /></a>
-            </li>
-          </ul>
-        </GuideItem>
-
-        <GuideItem :title="t('guide.rankTitle')" :short="t('guide.rankShort')">
-          <p>{{ t('guide.rankText') }}</p>
-          <ul class="links">
-            <li v-for="l in RANKINGS" :key="l.key">
-              <a :href="l.href" target="_blank" rel="noopener">{{ t(l.key) }}<ExternalLink :size="14" aria-hidden="true" /></a>
-            </li>
-          </ul>
-        </GuideItem>
-      </div>
-    </section>
-
-    <section class="group">
-      <h2 class="group-title">{{ t('guide.groupHelp') }}</h2>
-      <div class="list surface">
-        <GuideItem :title="t('guide.helpTitle')" :short="t('guide.helpShort')">
-          <ul class="plain">
-            <li>{{ t('guide.helpSkills') }}</li>
-            <li>{{ t('guide.helpPass') }}</li>
-            <li>{{ t('guide.helpExams') }}</li>
-          </ul>
-          <ul class="links">
-            <li><a :href="SKILLS" target="_blank" rel="noopener">{{ t('guide.helpSkillsLink') }}<ExternalLink :size="14" aria-hidden="true" /></a></li>
-            <li><a :href="EXAMS" target="_blank" rel="noopener">{{ t('guide.helpExamsLink') }}<ExternalLink :size="14" aria-hidden="true" /></a></li>
-          </ul>
-        </GuideItem>
-
-        <GuideItem :title="t('guide.accTitle')" :short="t('guide.accShort')">
-          <ul class="acc">
-            <li v-for="a in ACC" :key="a.href">
-              <p class="acc-head"><strong>{{ a.degree }}</strong> · {{ a.major ?? t('guide.accWhole') }}</p>
-              <p class="acc-body">{{ a.body }}</p>
-              <p>{{ t(`guide.${a.cond}`) }}</p>
-              <a :href="a.href" target="_blank" rel="noopener" class="ext">{{ t('guide.accLink') }}<ExternalLink :size="14" aria-hidden="true" /></a>
-            </li>
-          </ul>
-        </GuideItem>
-      </div>
-    </section>
-
-    <CanDoList :title="t('guide.canTitle')" class="guide-can" />
-
-    <p class="source">
-      {{ t('guide.sourcesText') }}
-      <a :href="STUDENT_SITE" target="_blank" rel="noopener">{{ t('guide.sourcesLink') }}</a>
-    </p>
-    </div>
-
-    <!-- The numbers people look up most, kept in view while reading. -->
-    <aside class="side">
-      <ul class="facts surface">
-        <li v-for="f in FACTS" :key="f.key" class="fact">
-          <span class="fact-value">{{ f.value }}</span>
-          <span class="fact-label">{{ t(f.key) }}</span>
-        </li>
-      </ul>
-    </aside>
+      <!-- The numbers people look up most, kept in view while reading. -->
+      <aside v-if="page.kind !== 'extra'" class="side">
+        <ul class="facts surface">
+          <li v-for="f in FACTS" :key="f.key" class="fact">
+            <span class="fact-value">{{ f.value }}</span>
+            <span class="fact-label">{{ t(f.key) }}</span>
+          </li>
+        </ul>
+      </aside>
     </div>
   </article>
 </template>
 
 <style scoped>
+.content {
+  display: grid;
+  gap: 18px;
+}
+
+.content :deep(.item) {
+  scroll-margin-top: 96px;
+}
+
 .guide {
   display: grid;
   gap: 28px;
@@ -491,6 +142,20 @@ const RESULTS = 'https://students.unimelb.edu.au/course-admin/results'
     position: static;
     order: -1;
   }
+}
+
+.guide-head {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.guide-head > :deep(nav) {
+  margin-top: 10px;
+}
+
+.next a {
+  color: var(--accent);
 }
 
 .guide-eyebrow {
@@ -547,44 +212,33 @@ const RESULTS = 'https://students.unimelb.edu.au/course-admin/results'
   color: var(--ink-soft);
 }
 
-.group {
-  display: grid;
-  gap: 10px;
-}
-
-.group-title {
-  padding-left: 4px;
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: var(--ink);
-}
 
 .list {
   overflow: hidden;
 }
 
-.note {
+.content :deep(.note) {
   font-size: 0.9375rem;
   color: var(--ink-soft);
 }
 
-.steps,
-.plain {
+.content :deep(.steps),
+.content :deep(.plain) {
   display: grid;
   gap: 6px;
   margin: 0;
   padding-left: 22px;
 }
 
-.aside,
-.formula,
-.who-card {
+.content :deep(.aside),
+.content :deep(.formula),
+.content :deep(.who-card) {
   padding: 12px 14px;
   background: var(--surface-2);
   border-radius: var(--radius-sm);
 }
 
-.aside-title {
+.content :deep(.aside-title) {
   margin-bottom: 6px;
   font-size: 0.9375rem;
   font-weight: 650;
@@ -594,34 +248,34 @@ const RESULTS = 'https://students.unimelb.edu.au/course-admin/results'
   padding-left: 4px;
 }
 
-.formula {
+.content :deep(.formula) {
   font-family: var(--font-code);
   font-size: 0.9375rem;
 }
 
-.actions {
+.content :deep(.actions) {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
 }
 
-.who {
+.content :deep(.who) {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
 }
 
-.who-card {
+.content :deep(.who-card) {
   font-size: 0.9375rem;
 }
 
-.who-card h3 {
+.content :deep(.who-card h3) {
   margin-bottom: 4px;
   font-size: 0.9375rem;
   font-weight: 650;
 }
 
-.yours {
+.content :deep(.yours) {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -632,35 +286,35 @@ const RESULTS = 'https://students.unimelb.edu.au/course-admin/results'
   border-radius: var(--radius-sm);
 }
 
-.terms {
+.content :deep(.terms) {
   display: grid;
   gap: 10px;
   margin: 0;
 }
 
-.terms dt {
+.content :deep(.terms dt) {
   font-weight: 650;
 }
 
-.terms dd {
+.content :deep(.terms dd) {
   margin: 2px 0 0;
   color: var(--ink-soft);
 }
 
 /* Dropping a subject, in time order: free, then WD, then a fail. */
-.timeline {
+.content :deep(.timeline) {
   display: grid;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.timeline li {
+.content :deep(.timeline li) {
   position: relative;
   padding: 0 0 14px 22px;
 }
 
-.timeline li::before {
+.content :deep(.timeline li::before) {
   content: '';
   position: absolute;
   top: 0.5em;
@@ -671,7 +325,7 @@ const RESULTS = 'https://students.unimelb.edu.au/course-admin/results'
   background: var(--dot);
 }
 
-.timeline li:not(:last-child)::after {
+.content :deep(.timeline li:not(:last-child)::after) {
   content: '';
   position: absolute;
   top: calc(0.5em + 12px);
@@ -681,17 +335,17 @@ const RESULTS = 'https://students.unimelb.edu.au/course-admin/results'
   background: var(--line);
 }
 
-.tl-good {
+.content :deep(.tl-good) {
   --dot: var(--good);
 }
-.tl-warn {
+.content :deep(.tl-warn) {
   --dot: var(--warn);
 }
-.tl-bad {
+.content :deep(.tl-bad) {
   --dot: var(--bad);
 }
 
-.links {
+.content :deep(.links) {
   display: grid;
   gap: 8px;
   margin: 0;
@@ -699,14 +353,14 @@ const RESULTS = 'https://students.unimelb.edu.au/course-admin/results'
   list-style: none;
 }
 
-.links a {
+.content :deep(.links a) {
   display: inline-flex;
   align-items: center;
   gap: 6px;
   color: var(--accent);
 }
 
-.acc {
+.content :deep(.acc) {
   display: grid;
   gap: 14px;
   margin: 0;
@@ -714,24 +368,24 @@ const RESULTS = 'https://students.unimelb.edu.au/course-admin/results'
   list-style: none;
 }
 
-.acc li {
+.content :deep(.acc li) {
   display: grid;
   gap: 2px;
   padding-left: 12px;
   border-left: 2px solid var(--line);
 }
 
-.acc p {
+.content :deep(.acc p) {
   margin: 0;
   overflow-wrap: anywhere;
 }
 
-.acc-body {
+.content :deep(.acc-body) {
   font-size: 0.9375rem;
   color: var(--ink-soft);
 }
 
-.ext {
+.content :deep(.ext) {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -764,7 +418,7 @@ const RESULTS = 'https://students.unimelb.edu.au/course-admin/results'
     border-top: 1px solid var(--glass-edge);
   }
 
-  .who {
+  .content :deep(.who) {
     grid-template-columns: 1fr;
   }
 }
