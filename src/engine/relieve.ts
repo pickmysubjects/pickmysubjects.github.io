@@ -335,10 +335,11 @@ function replaceFor(
   const named = stress.reasons.flatMap((r) => String(r.params.codes ?? '').split(', ')).filter((c) => term.subjects.includes(c))
   const done = [...plan.completed, ...passedCodes(profile?.results ?? [])]
   const student: Profile = profile ?? { results: [], skills: {}, interests: [], goal: 'balanced' }
-  const likes = (c: string) => {
+  // The student's interests a subject serves. An exact topic: "related" is too loose here
+  // (languages and ethics share a group).
+  const liked = (c: string): string[] => {
     const x = data.subjects[c]
-    // An exact topic: "related" is too loose here (languages and ethics share a group).
-    return !!x && student.interests.length > 0 && topicsOf(x).topics.some((t) => student.interests.includes(t))
+    return x ? topicsOf(x).topics.filter((t) => student.interests.includes(t)) : []
   }
   for (const code of onlyNamed ? [...new Set(named)] : [...new Set([...named, ...term.subjects])]) {
     const s = data.subjects[code]
@@ -351,7 +352,12 @@ function replaceFor(
       .slice(0, REPLACE_TRIES)
     // Swapping a subject the student picked for their interests for one they don't care about
     // makes a lighter semester nobody wants; then the heavy one stays and is flagged instead.
-    const keepsInterest = (c: string) => !likes(code) || likes(c)
+    // It has to serve one of the same interests: machine learning swapped for biotech isn't
+    // a like-for-like just because the student also ticked business.
+    const keepsInterest = (c: string) => {
+      const was = liked(code)
+      return was.length === 0 || liked(c).some((t) => was.includes(t))
+    }
     for (const rec of recs) {
       if (!keepsInterest(rec)) continue
       const terms = withTerm(plan.terms, termIndex, term.subjects.map((c) => (c === code ? rec : c)))

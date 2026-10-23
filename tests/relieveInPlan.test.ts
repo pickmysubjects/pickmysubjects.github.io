@@ -143,3 +143,26 @@ describe('nothing gets worse means no new problem, not the same number of them',
     expect(noWorse(before, made, data)).toBe(true)
   })
 })
+
+describe('a replacement keeps the interest the replaced subject served', () => {
+  it('never swaps a machine-learning subject for one that only matches another interest', () => {
+    const p: Plan = {
+      course: 'B-SCI', courseYear: 2026, major: 'computing-and-software-systems', minors: [], completed: [],
+      terms: [
+        { year: 2024, period: 'semester-1', subjects: ['SCIE10005', 'COMP10001', 'MAST10006', 'MAST10007'] },
+        { year: 2024, period: 'semester-2', subjects: ['COMP10002', 'INFO20003', 'ISYS10001', 'CMCE10002'] },
+        { year: 2025, period: 'semester-1', subjects: ['MAST20004', 'BMEN20003', 'MAST10005', 'ENGR20005'] },
+        { year: 2025, period: 'semester-2', subjects: ['COMP20003', 'FLTV20022', 'COMP20008', 'SWEN20003'] },
+        { year: 2026, period: 'semester-1', subjects: ['SWEN30006', 'COMP30023', 'COMP30027', 'GDES30002'] },
+        { year: 2026, period: 'semester-2', subjects: ['COMP30022', 'COMP30026', 'COMP30019', 'INFO30006'] },
+      ],
+    }
+    const student: Profile = { results: [], skills: { programming: 3, maths: 3 }, interests: ['machine-learning', 'ai', 'data-science', 'business'], goal: 'wam' }
+    const r = relieveTerm(p, data, 4, student)
+    if (r?.kind === 'replace' && r.code === 'COMP30027') {
+      const topics = data.subjects[r.with]?.topics ?? []
+      expect(topics.some((t) => ['machine-learning', 'ai', 'data-science'].includes(t))).toBe(true)
+    }
+    expect(r?.kind === 'replace' ? r.with : '').not.toBe('BTCH30003')
+  })
+})
