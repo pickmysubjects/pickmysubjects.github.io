@@ -14,6 +14,15 @@ export const CAREER_LANGS = ['en', 'zh', 'zh-TW', 'ja', 'ko', 'vi', 'ms', 'id', 
 export type CareerLang = (typeof CAREER_LANGS)[number]
 const names = z.object(Object.fromEntries(CAREER_LANGS.map((l) => [l, z.string().min(1).max(80)]))).strict() as unknown as z.ZodType<Record<CareerLang, string>>
 
+/**
+ * Everyday names students type for a job ("程序员", "coder"), per language, all optional. Search only:
+ * never shown as the job's name.
+ */
+const aliases = z
+  .object(Object.fromEntries(CAREER_LANGS.map((l) => [l, z.array(z.string().min(1).max(40)).min(1).optional()])))
+  .strict()
+  .optional() as unknown as z.ZodOptional<z.ZodType<Partial<Record<CareerLang, string[]>>>>
+
 const code = z.string().regex(SUBJECT_CODE, 'expected a code like COMP10001')
 const handbook = z.url({ protocol: /^https$/, hostname: /^handbook\.unimelb\.edu\.au$/ })
 const yourCareer = z.url({ protocol: /^https$/, hostname: /^www\.yourcareer\.gov\.au$/ })
@@ -33,6 +42,7 @@ export const occupationsFileSchema = z.array(
       field: z.boolean().default(false),
       checked: date,
       names,
+      aliases,
     })
     .strict(),
 )
@@ -45,6 +55,7 @@ export const jobsFileSchema = z.array(
       title: z.string().min(1), // the Handbook's words
       occupation: id.nullable(), // official occupation, when one matches clearly
       names,
+      aliases,
     })
     .strict(),
 )
@@ -55,6 +66,59 @@ export type Job = z.output<typeof jobsFileSchema>[number]
  * per English phrase. Every language is required; a phrase with no entry shows in English.
  */
 export const careerTermsFileSchema = z.array(z.object(Object.fromEntries(CAREER_LANGS.map((l) => [l, z.string().min(1).max(240)]))).strict() as unknown as z.ZodType<Record<CareerLang, string>>)
+
+/**
+ * A graduate-entry route (graduate.yaml): a job reached through a UniMelb graduate course (Doctor of
+ * Medicine, Juris Doctor…) after any bachelor degree. Copied from the course's Handbook entry
+ * requirements: `entry` says what the course asks for, `prerequisites` the undergraduate studies it
+ * names (null: none). `required` holds subject codes only where the Handbook names them.
+ * `covers` is ours: how to spot a major whose subjects include the named study areas (by discipline
+ * code or field, at a level), so the page can list majors that cover them. No `covers`: any degree.
+ */
+const coverArea = z
+  .object({
+    disciplines: z.array(z.string().regex(/^[A-Z]{4}$/)).min(1).optional(),
+    topic: z.string().min(1).optional(),
+    level: z.number().int().min(1).max(3).default(1),
+    count: z.number().int().min(1).default(1),
+  })
+  .strict()
+  .refine((a) => !!a.disciplines !== !!a.topic, { message: 'a study area is either disciplines or a topic' })
+
+export const graduateFileSchema = z.array(
+  z
+    .object({
+      job: id,
+      course: z.string().regex(/^[A-Z]{2}-[A-Z]+$/),
+      title: z.string().min(1), // the course's name, as the Handbook gives it
+      source: handbook,
+      checked: date,
+      entry: localized(400, 300),
+      prerequisites: localized(400, 300).nullable(),
+      required: z.array(code).default([]),
+      covers: z.array(coverArea).default([]),
+    })
+    .strict(),
+)
+
+export interface CoverArea {
+  disciplines?: string[]
+  topic?: string
+  level: number
+  count: number
+}
+
+export interface GraduateRoute {
+  job: string
+  course: string
+  title: string
+  source: string
+  checked: string
+  entry: Localized
+  prerequisites: Localized | null
+  required: string[]
+  covers: CoverArea[]
+}
 
 /** Text in the careers section, in as many languages as we have; English always. */
 export type CareerText = { en: string } & Partial<Record<CareerLang, string>>
@@ -147,6 +211,8 @@ export interface Careers {
   components: Record<string, string>
   /** By course code. */
   courses: Record<string, CourseFurtherStudy>
+  /** Graduate-entry routes, by job id. */
+  graduate: Record<string, GraduateRoute>
 }
 
 /** Every subject code an accreditation route names, required ones first. */
@@ -166,12 +232,13 @@ export function assembleCareers(
     courses: z.output<typeof courseFurtherStudyFileSchema>
     /** Translations of industries, further study and via phrases; none = all English (tests). */
     terms?: z.output<typeof careerTermsFileSchema>
+    graduate?: z.output<typeof graduateFileSchema>
   },
   known: { subjects: Set<string>; components: Map<string, string /* course */>; courses: Set<string> },
 ): { careers: Careers; errors: string[]; warnings: string[] } {
   const errors: string[] = []
   const warnings: string[] = []
-  const careers: Careers = { occupations: {}, jobs: {}, majors: {}, components: {}, courses: {} }
+  const careers: Careers = { occupations: {}, jobs: {}, majors: {}, components: {}, courses: {}, graduate: {} }
 
   for (const o of files.occupations) {
     if (careers.occupations[o.id]) errors.push(`careers/occupations: ${o.id} twice`)
@@ -250,6 +317,15 @@ export function assembleCareers(
     if (careers.courses[c.course]) errors.push(`careers/courses: ${c.course} twice`)
     if (c.summary) allLangs(c.summary, `careers/courses: ${c.course}`)
     careers.courses[c.course] = { source: c.source, checked: c.checked, summary: c.summary }
+  }
+  for (const g of files.graduate ?? []) {
+    const where = `careers/graduate: ${g.job}`
+    if (!careers.jobs[g.job]) errors.push(`${where}: unknown job`)
+    if (careers.graduate[g.job]) errors.push(`${where} twice`)
+    for (const c of g.required) if (!known.subjects.has(c)) errors.push(`${where}: subject ${c} isn't in the data`)
+    allLangs(g.entry, `${where} entry`)
+    if (g.prerequisites) allLangs(g.prerequisites, `${where} prerequisites`)
+    careers.graduate[g.job] = { job: g.job, course: g.course, title: g.title, source: g.source, checked: g.checked, entry: g.entry, prerequisites: g.prerequisites, required: g.required, covers: g.covers }
   }
   for (const en of terms.keys()) if (!used.has(en)) warnings.push(`careers/terms: "${en}" isn't used`)
   return { careers, errors, warnings }

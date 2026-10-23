@@ -12,10 +12,11 @@
  *   employers list (lab work for a lab scientist);
  * - little: none of the above. Never called useless: its other merits are listed instead.
  */
-import { componentCareers, type Accreditation, type CareerLang, type CareerQualifier, type CareerText, type Occupation } from './careers'
+import { CAREER_LANGS, componentCareers, type Accreditation, type CareerLang, type CareerQualifier, type CareerText, type GraduateRoute, type Occupation } from './careers'
 import { barsBreadth } from './courseRules'
 import { inTopShare } from './easeRanking'
 import { forCourse } from './forCourse'
+import { referencedSubjects } from './expr'
 import { majorOverview } from './roles'
 import type { Dataset, Skill, Subject, Topic } from './schema'
 import { skillsOf } from './skills'
@@ -26,30 +27,90 @@ export interface CareerTarget {
   id: string
   kind: 'job' | 'field'
   names: Record<CareerLang, string>
+  /** Everyday names students type for it (all languages), for search only. */
+  aliases: string[]
   /** The official occupation page, when there is one. */
   occupation?: Occupation
+  /** Reached through a UniMelb graduate course after any degree (graduate.yaml). */
+  graduate?: GraduateRoute
 }
 
-/** Every career some listed major leads to, jobs first (by English name), then fields no job already covers. */
+const allAliases = (...lists: (Partial<Record<CareerLang, string[]>> | undefined)[]) => [...new Set(lists.flatMap((a) => (a ? CAREER_LANGS.flatMap((l) => a[l] ?? []) : [])))]
+
+const TARGETS = new WeakMap<Dataset, CareerTarget[]>()
+
+/**
+ * Every career some listed major leads to (or a graduate course reaches), jobs first (by English
+ * name), then fields no job already covers.
+ */
 export function careerTargets(data: Dataset): CareerTarget[] {
+  const cached = TARGETS.get(data)
+  if (cached) return cached
   const c = data.careers
   if (!c) return []
-  const jobs: CareerTarget[] = Object.values(c.jobs).map((j) => ({
-    id: j.id,
-    kind: 'job',
-    names: j.names,
-    ...(j.occupation && c.occupations[j.occupation] ? { occupation: c.occupations[j.occupation] } : {}),
-  }))
+  const jobs: CareerTarget[] = Object.values(c.jobs).map((j) => {
+    const occ = j.occupation ? c.occupations[j.occupation] : undefined
+    return {
+      id: j.id,
+      kind: 'job',
+      names: j.names,
+      aliases: allAliases(j.aliases, occ?.aliases),
+      ...(occ ? { occupation: occ } : {}),
+      ...(c.graduate[j.id] ? { graduate: c.graduate[j.id] } : {}),
+    }
+  })
   const fields: CareerTarget[] = Object.values(c.occupations)
     .filter((o) => o.field && !c.jobs[o.id])
-    .map((o) => ({ id: o.id, kind: 'field', names: o.names, occupation: o }))
-  // Only careers some major students can pick leads to: a page with no majors would be a dead end.
+    .map((o) => ({ id: o.id, kind: 'field', names: o.names, aliases: allAliases(o.aliases), occupation: o }))
+  // Only careers a student can reach from here: a page with no majors (and no graduate course) would be a dead end.
   const byName = (a: CareerTarget, b: CareerTarget) => a.names.en.localeCompare(b.names.en)
-  return [...jobs.sort(byName), ...fields.sort(byName)].filter((t) => majorsForCareer(data, t.id).length > 0)
+  const all = [...jobs.sort(byName), ...fields.sort(byName)]
+  const out = all.filter((t) => t.graduate || listedMajors(data, t.id).length > 0)
+  TARGETS.set(data, out)
+  return out
 }
 
 export function careerTarget(data: Dataset, id: string): CareerTarget | undefined {
   return careerTargets(data).find((t) => t.id === id)
+}
+
+/** The careers list's two groups: jobs the Handbook (or a graduate course) names, then fields. */
+export function careerGroups<T extends { kind: CareerTarget['kind'] }>(items: T[]): { id: 'jobs' | 'fields'; items: T[] }[] {
+  return (['jobs', 'fields'] as const).map((id) => ({ id, items: items.filter((c) => (id === 'jobs') === (c.kind === 'job')) })).filter((g) => g.items.length)
+}
+
+/**
+ * Text folded for search: compatibility forms (full-width letters, half-width kana), case, and
+ * spaces don't count, so "ＩＴ", "it" and "I T" all match.
+ */
+export function foldSearch(text: string): string {
+  return text.normalize('NFKC').toLowerCase().replace(/[\s\u3000]+/g, '')
+}
+
+/** What a career is found by: its names in every language and the everyday names students type, folded, plus their words. */
+export interface CareerSearchTerms {
+  whole: string[]
+  words: string[]
+}
+
+export function careerSearchTerms(t: CareerTarget): CareerSearchTerms {
+  const raw = [...CAREER_LANGS.map((l) => t.names[l]), t.occupation?.name ?? '', ...t.aliases].filter(Boolean)
+  const words = raw.flatMap((x) => x.normalize('NFKC').split(/[\s()（）,，/、·-]+/u)).map(foldSearch).filter(Boolean)
+  return { whole: [...new Set(raw.map(foldSearch))], words: [...new Set(words)] }
+}
+
+/**
+ * How well a career matches what the student typed: 0 a whole name or alias, 1 the start of a
+ * word, 2 inside a name; -1 no match. A short Latin query ("IT") only counts as a whole word, or
+ * it would match every name with those letters in it. Empty query: 0 for everything.
+ */
+export function careerMatchRank(terms: CareerSearchTerms, query: string): number {
+  const q = foldSearch(query)
+  if (!q) return 0
+  if (terms.whole.includes(q) || terms.words.includes(q)) return 0
+  if (terms.words.some((w) => w.startsWith(q))) return 1
+  if (/^[\x00-\x7f]{1,2}$/.test(q)) return -1
+  return terms.whole.some((w) => w.includes(q)) ? 2 : -1
 }
 
 export type CareerHow = CareerQualifier | 'related-field'
@@ -62,21 +123,39 @@ export interface CareerMajor {
   how: CareerHow
   via?: CareerText
   accreditation?: Accreditation
+  /** Listed because a graduate course leads there: the major covers its prerequisite areas (or the job's field). */
+  route?: GraduateRoute
 }
 
 const HOW_ORDER: CareerHow[] = ['direct', 'via-further-study', 'needs-qualification', 'related-field']
 
+/** Majors students can pick now (listed course, not closed), with their own subjects. */
+function openComponents(data: Dataset) {
+  const listed = new Set(data.courses.filter((x) => x.listed).map((x) => x.code))
+  return data.components.filter((comp) => listed.has(comp.course) && !(comp.closedFrom !== undefined && new Date().getFullYear() >= comp.closedFrom))
+}
+
+/**
+ * A major's listed subjects, and (withPrereqs) the subjects their prerequisites name: what a student of it takes
+ * or can take on the way. Cheaper than majorOverview's pathway, which a scan over every major can't afford.
+ */
+function ownSubjects(data: Dataset, comp: Dataset['components'][number], withPrereqs: boolean): Set<string> {
+  if (comp.requirements === 'unknown') return new Set()
+  const listed = comp.requirements.flatMap((r) => ('all' in r ? r.all : r.choose.from))
+  if (!withPrereqs) return new Set(listed)
+  return new Set([...listed, ...listed.flatMap((c) => (data.subjects[c] ? referencedSubjects(data.subjects[c]!.prerequisites) : []))])
+}
+
 /** The majors whose Handbook page names this career (or, for a field, whose subject area matches it). */
-export function majorsForCareer(data: Dataset, id: string): CareerMajor[] {
+function listedMajors(data: Dataset, id: string): CareerMajor[] {
   const c = data.careers
   if (!c) return []
-  const listed = new Set(data.courses.filter((x) => x.listed).map((x) => x.code))
+  const open = new Map(openComponents(data).map((x) => [x.id, x]))
   const out: CareerMajor[] = []
   for (const [component, handbookId] of Object.entries(c.components)) {
     const m = c.majors[handbookId]
-    const comp = data.components.find((x) => x.id === component)
-    if (!m || !comp || !listed.has(comp.course)) continue
-    if (comp.closedFrom !== undefined && new Date().getFullYear() >= comp.closedFrom) continue
+    const comp = open.get(component)
+    if (!m || !comp) continue
     const job = m.careers.find((x) => x.job === id)
     const how: CareerHow | undefined = job ? job.qualifier : m.relatedFields.includes(id) ? 'related-field' : undefined
     if (!how) continue
@@ -89,7 +168,66 @@ export function majorsForCareer(data: Dataset, id: string): CareerMajor[] {
       ...(m.accreditation ? { accreditation: m.accreditation } : {}),
     })
   }
-  return out.sort((a, b) => HOW_ORDER.indexOf(a.how) - HOW_ORDER.indexOf(b.how) || Number(!!b.accreditation) - Number(!!a.accreditation) || a.title.localeCompare(b.title) || a.course.localeCompare(b.course))
+  return out
+}
+
+/** Majors listed for a graduate course: any degree is accepted, so these are only the closest fits. */
+export const ROUTE_MAJORS_SHOWN = 8
+
+/**
+ * Majors for a graduate-entry route, as a starting point (any degree is accepted). With
+ * prerequisite areas: the majors whose own subjects cover the most areas (enough subjects of that
+ * discipline or field, at that level), most matching subjects first. Without: the majors with the
+ * most subjects on the job's own field.
+ */
+function routeMajors(data: Dataset, target: CareerTarget, route: GraduateRoute): CareerMajor[] {
+  const via: CareerText = { en: `${route.title} (${route.course})` }
+  const rows: { m: CareerMajor; score: number; areas: number }[] = []
+  const needs = route.covers.length ? null : careerNeeds(target)
+  for (const comp of openComponents(data)) {
+    const own = [...ownSubjects(data, comp, route.covers.length > 0)].flatMap((code) => data.subjects[code] ?? [])
+    let score = 0
+    let areas = 0
+    if (route.covers.length) {
+      for (const a of route.covers) {
+        const n = own.filter((s) => s.level >= a.level && (a.disciplines ? a.disciplines.includes(s.area ?? s.code.slice(0, 4)) : topicsOf(s).topics.includes(a.topic!))).length
+        if (n >= a.count) areas++
+        score += n
+      }
+      if (!areas) continue
+    } else {
+      score = own.filter((s) => tierSubject(s, { needs: needs!, mainFieldOnly: true }).reasons.some((r) => r.kind === 'field')).length
+      if (score < 3) continue
+    }
+    rows.push({ m: { component: comp.id, course: comp.course, title: comp.title, how: 'via-further-study', via, route }, score, areas })
+  }
+  // Majors covering every area; if none does (the areas span several majors), those covering the most.
+  const best = Math.max(0, ...rows.map((r) => r.areas))
+  return rows
+    .filter((r) => r.areas === best)
+    .sort((a, b) => b.score - a.score || a.m.title.localeCompare(b.m.title) || a.m.course.localeCompare(b.m.course))
+    .slice(0, ROUTE_MAJORS_SHOWN)
+    .map((r) => r.m)
+}
+
+const MAJORS = new WeakMap<Dataset, Map<string, CareerMajor[]>>()
+
+/**
+ * The majors that lead to a career: those whose Handbook page names it (or whose subject area
+ * matches it), then for a graduate-entry job, the majors that fit its course.
+ */
+export function majorsForCareer(data: Dataset, id: string): CareerMajor[] {
+  let cache = MAJORS.get(data)
+  if (!cache) MAJORS.set(data, (cache = new Map()))
+  const hit = cache.get(id)
+  if (hit) return hit
+  const out = listedMajors(data, id)
+  const route = data.careers?.graduate[id]
+  const target = route ? careerTarget(data, id) : undefined
+  if (route && target) for (const m of routeMajors(data, target, route)) if (!out.some((x) => x.component === m.component)) out.push(m)
+  const sorted = out.sort((a, b) => HOW_ORDER.indexOf(a.how) - HOW_ORDER.indexOf(b.how) || Number(!!b.accreditation) - Number(!!a.accreditation) || Number(!!a.route) - Number(!!b.route) || a.title.localeCompare(b.title) || a.course.localeCompare(b.course))
+  cache.set(id, sorted)
+  return sorted
 }
 
 // ---------- what a career is about ----------
@@ -123,7 +261,8 @@ const FIELD_WORDS: [RegExp, Topic[]][] = [
   [/meteorolog|weather/i, ['earth-science', 'physics']],
   [/geolog/i, ['earth-science']],
   [/psycholog/i, ['psychology']],
-  [/nutrition|dietetic|dietitian|(?<!bio)medical|nurs|physiotherap|pharmac/i, ['health']],
+  [/nutrition|dietetic|dietitian|(?<!bio)medical|nurs|physiotherap|pharmac|dentist|dental|optometr|general practi/i, ['health']],
+  [/\blaw\b|lawyer|solicitor|litigation|legal/i, ['law']],
   [/veterin|animal (science|health|production)/i, ['biology', 'agriculture']],
   [/adobe|graphic|illustrat|indesign|photoshop|concept development|interior|interaction design|experience design|service design|performance design/i, ['design', 'visual-communication']],
   [/music|piano|singing|performing artist/i, ['music', 'performance']],
@@ -354,10 +493,13 @@ export function majorForCareer(data: Dataset, careerId: string, component: strin
   const needs = careerNeeds(target)
   const comp = data.components.find((x) => x.id === component)
   const isBreadth = (code: string) => data.subjects[code]?.categories[major.course] === 'breadth' && !(comp && barsBreadth(comp, code))
-  const ctx: TierContext = { needs, accreditation: major.accreditation, helpful: entry?.helpfulSubjects?.codes, easier, breadth: isBreadth }
+  // A graduate course that names prerequisite subjects by code makes them required, as an accreditation route would.
+  const r = major.route
+  const routeAcc: Accreditation | undefined = r?.required.length ? { body: r.title, summary: r.entry, required: r.required, requiredBreadth: [], recommended: [], withOneOf: [], source: r.source } : undefined
+  const ctx: TierContext = { needs, accreditation: major.accreditation ?? routeAcc, helpful: entry?.helpfulSubjects?.codes, easier, breadth: isBreadth }
 
   const o = majorOverview(data, component, major.course)
-  const a = major.accreditation
+  const a = ctx.accreditation
   const own = new Set([...(o?.core ?? []), ...(o?.choices.flatMap((x) => x.from) ?? []), ...(o?.pathway.map((p) => p.code) ?? [])])
   const named = [...(a ? [...a.required.flat(), ...a.recommended] : []), ...(ctx.helpful ?? [])]
   const codes = [...new Set([...own, ...named])].filter((c) => data.subjects[c] && !(a?.requiredBreadth.includes(c)))

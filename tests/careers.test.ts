@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { buildDataset } from '../scripts/dataset'
-import { accreditationCodes, assembleCareers, CAREER_LANGS, careerText, componentCareers, type CareerText } from '../src/engine/careers'
+import { accreditationCodes, assembleCareers, CAREER_LANGS, graduateFileSchema, jobsFileSchema, careerText, componentCareers, type CareerText } from '../src/engine/careers'
 import { interpolate, type Params } from '../src/i18n/interpolate'
 import { en } from '../src/i18n/messages/en'
 import { zhCN } from '../src/i18n/messages/zh-CN'
@@ -202,5 +202,29 @@ describe('careers section', () => {
 
   it('renders nothing for a component we have no entry for', () => {
     expect(html('no-such-major', 'B-SCI')).toBe('')
+  })
+})
+
+describe('aliases and graduate routes', () => {
+  const names = Object.fromEntries(CAREER_LANGS.map((l) => [l, 'X']))
+  it('takes optional per-language aliases, and rejects an unknown language or an empty list', () => {
+    expect(jobsFileSchema.safeParse([{ id: 'j', title: 'j', occupation: null, names, aliases: { en: ['coder'], zh: ['码农'] } }]).success).toBe(true)
+    expect(jobsFileSchema.safeParse([{ id: 'j', title: 'j', occupation: null, names }]).success).toBe(true)
+    expect(jobsFileSchema.safeParse([{ id: 'j', title: 'j', occupation: null, names, aliases: { fr: ['x'] } }]).success).toBe(false)
+    expect(jobsFileSchema.safeParse([{ id: 'j', title: 'j', occupation: null, names, aliases: { en: [] } }]).success).toBe(false)
+  })
+
+  const route = { job: 'j', course: 'MC-X', title: 'Doctor of X', source: 'https://handbook.unimelb.edu.au/x', checked: '2026-01-01', entry: { en: 'Any degree at all.', zh: '任何学位都行' }, prerequisites: null }
+  it('a study area is a discipline list or a field, not both', () => {
+    expect(graduateFileSchema.safeParse([{ ...route, covers: [{ disciplines: ['ANAT'], level: 2 }] }]).success).toBe(true)
+    expect(graduateFileSchema.safeParse([{ ...route, covers: [{ disciplines: ['ANAT'], topic: 'biology' }] }]).success).toBe(false)
+    expect(graduateFileSchema.safeParse([{ ...route, source: 'https://example.com/x' }]).success).toBe(false)
+  })
+
+  it('rejects a route for an unknown job or naming a subject not in the data', () => {
+    const g = graduateFileSchema.parse([{ ...route, job: 'ghost', required: ['ZZZZ99999'] }])
+    const r = assembleCareers({ occupations: [], jobs: [], majors: [], courses: [], graduate: g }, { subjects: new Set(), components: new Map(), courses: new Set() })
+    expect(r.errors.join('\n')).toMatch(/graduate: ghost: unknown job/)
+    expect(r.errors.join('\n')).toMatch(/ZZZZ99999 isn't in the data/)
   })
 })

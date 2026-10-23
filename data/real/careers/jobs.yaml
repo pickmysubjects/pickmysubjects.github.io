@@ -52,6 +52,16 @@
     ms: "Penganalisis perniagaan"
     id: "Analis bisnis"
     hi: "व्यवसाय विश्लेषक"
+  aliases:
+    en: ["data", "data analyst", "data analytics"]
+    zh: ["数据", "数据分析", "数据分析师"]
+    zh-TW: ["資料", "數據", "資料分析", "數據分析"]
+    ja: ["データ", "データ分析", "データアナリスト"]
+    ko: ["데이터", "데이터 분석", "데이터 분석가"]
+    vi: ["dữ liệu", "phân tích dữ liệu"]
+    ms: ["data", "penganalisis data"]
+    id: ["data", "analis data"]
+    hi: ["डेटा", "डेटा विश्लेषक"]
 - id: business-process-designer
   title: "business process designer"
   occupation: null
@@ -117,6 +127,16 @@
     ms: "Profesional pengkomputeran"
     id: "Profesional komputasi"
     hi: "कंप्यूटिंग पेशेवर"
+  aliases:
+    en: ["IT", "information technology", "computer science", "computers"]
+    zh: ["IT", "计算机", "电脑", "信息技术"]
+    zh-TW: ["IT", "資訊", "電腦", "資訊科技", "資工"]
+    ja: ["IT", "情報技術", "コンピューター"]
+    ko: ["IT", "정보기술", "컴퓨터"]
+    vi: ["IT", "công nghệ thông tin", "máy tính"]
+    ms: ["IT", "teknologi maklumat", "komputer"]
+    id: ["IT", "teknologi informasi", "komputer"]
+    hi: ["IT", "आईटी", "कंप्यूटर"]
 - id: construction-manager
   title: "construction manager"
   occupation: construction-project-manager
@@ -221,6 +241,16 @@
     ms: "Pakar kewangan"
     id: "Spesialis keuangan"
     hi: "वित्त विशेषज्ञ"
+  aliases:
+    en: ["bank", "banking", "banker"]
+    zh: ["银行", "金融"]
+    zh-TW: ["銀行", "金融"]
+    ja: ["銀行", "金融"]
+    ko: ["은행", "금융"]
+    vi: ["ngân hàng", "tài chính"]
+    ms: ["bank", "perbankan", "kewangan"]
+    id: ["bank", "perbankan", "keuangan"]
+    hi: ["बैंक", "बैंकिंग"]
 - id: graphic-designer
   title: "graphic designer"
   occupation: graphic-designer
@@ -598,3 +628,142 @@
     ms: "Pembangun web dan media sosial"
     id: "Pengembang web dan media sosial"
     hi: "वेब और सोशल मीडिया डेवलपर"
+# Graduate-entry jobs (graduate.yaml): reached through a UniMelb graduate course, not named on a major page.
+- id: medical-practitioner
+  title: "medical practitioner"
+  occupation: general-practitioner
+  names:
+    en: "Medical practitioner (doctor)"
+    zh: "医生（执业医师）"
+    zh-TW: "醫師"
+    ja: "医師"
+    ko: "의사"
+    vi: "Bác sĩ"
+    ms: "Doktor perubatan"
+    id: "Dokter"
+    hi: "चिकित्सक (डॉक्टर)"
+  aliases:
+    en: ["doctor", "GP", "physician", "medicine"]
+    zh: ["医生", "医师", "大夫", "学医"]
+    zh-TW: ["醫生", "醫師", "醫學"]
+    ja: ["医者", "医師", "医学"]
+    ko: ["의사", "의학"]
+    vi: ["bác sĩ", "y khoa"]
+    ms: ["doktor", "perubatan"]
+    id: ["dokter", "kedokteran"]
+    hi: ["डॉक्टर", "चिकित्सक"]
+- id: lawyer
+  title: "lawyer"
+  occupation: solicitor
+  names:
+    en: "Lawyer (solicitor)"
+    zh: "律师"
+    zh-TW: "律師"
+    ja: "弁護士"
+    ko: "변호사"
+    vi: "Luật sư"
+    ms: "Peguam"
+    id: "Pengacara"
+    hi: "वकील"
+  aliases:
+    en: ["attorney", "law", "solicitor", "legal"]
+    zh: ["律师", "法律", "法学"]
+    zh-TW: ["律師", "法律"]
+    ja: ["弁護士", "法律"]
+    ko: ["변호사", "법률", "법학"]
+    vi: ["luật sư", "luật"]
+    ms: ["peguam", "undang-undang"]
+    id: ["pengacara", "advokat", "hukum"]
+    hi: ["वकील", "कानून", "क़ानून"]
+- id: registered-nurse
+  title: "registered nurse"
+  occupation: registered-nurses-nec
+  names:
+    en: "Registered nurse"
+    zh: "注册护士"
+    zh-TW: "註冊護理師"
+    ja: "正看護師"
+    ko: "정규 간호사"
+    vi: "Điều dưỡng có đăng ký"
+    ms: "Jururawat berdaftar"
+    id: "Perawat teregistrasi"
+    hi: "पंजीकृत नर्स"
+  aliases:
+    en: ["nurse", "nursing", "RN"]
+    zh: ["护士", "护理"]
+    zh-TW: ["護理", "護理師", "護士"]
+    ja: ["看護師", "看護"]
+    ko: ["간호사", "간호"]
+    vi: ["y tá", "điều dưỡng"]
+    ms: ["jururawat", "kejururawatan"]
+    id: ["perawat", "keperawatan"]
+    hi: ["नर्स", "नर्सिंग"]
+- id: dentist
+  title: "dentist"
+  occupation: dentist
+  names:
+    en: "Dentist"
+    zh: "牙医"
+    zh-TW: "牙醫師"
+    ja: "歯科医師"
+    ko: "치과의사"
+    vi: "Nha sĩ"
+    ms: "Doktor gigi"
+    id: "Dokter gigi"
+    hi: "दंत चिकित्सक"
+  aliases:
+    en: ["dental", "dentistry"]
+    zh: ["牙医", "口腔医学", "牙科"]
+    zh-TW: ["牙醫", "牙科"]
+    ja: ["歯医者", "歯科"]
+    ko: ["치과", "치의학"]
+    vi: ["nha sĩ", "nha khoa"]
+    ms: ["doktor gigi", "pergigian"]
+    id: ["dokter gigi", "kedokteran gigi"]
+    hi: ["डेंटिस्ट", "दंत"]
+- id: physiotherapist
+  title: "physiotherapist"
+  occupation: physiotherapist
+  names:
+    en: "Physiotherapist"
+    zh: "物理治疗师"
+    zh-TW: "物理治療師"
+    ja: "理学療法士"
+    ko: "물리치료사"
+    vi: "Chuyên viên vật lý trị liệu"
+    ms: "Ahli fisioterapi"
+    id: "Fisioterapis"
+    hi: "फिज़ियोथेरेपिस्ट"
+  aliases:
+    en: ["physio", "physical therapist", "physiotherapy"]
+    zh: ["理疗师", "物理治疗", "康复"]
+    zh-TW: ["物理治療", "物理治療師", "復健"]
+    ja: ["理学療法士", "理学療法"]
+    ko: ["물리치료사", "물리치료"]
+    vi: ["vật lý trị liệu"]
+    ms: ["fisioterapi"]
+    id: ["fisioterapi"]
+    hi: ["फिज़ियो", "फिजियोथेरेपी"]
+- id: optometrist
+  title: "optometrist"
+  occupation: optometrist
+  names:
+    en: "Optometrist"
+    zh: "验光师（视光师）"
+    zh-TW: "驗光師"
+    ja: "検眼士（オプトメトリスト）"
+    ko: "검안사"
+    vi: "Chuyên viên đo khúc xạ (optometrist)"
+    ms: "Pakar optometri"
+    id: "Optometris"
+    hi: "ऑप्टोमेट्रिस्ट"
+  aliases:
+    en: ["optometry"]
+    zh: ["验光师", "视光", "眼视光"]
+    zh-TW: ["驗光", "視光"]
+    ja: ["検眼", "オプトメトリー"]
+    ko: ["검안", "안경사"]
+    vi: ["đo thị lực", "khúc xạ"]
+    ms: ["optometri"]
+    id: ["optometri"]
+    hi: ["ऑप्टोमेट्री"]

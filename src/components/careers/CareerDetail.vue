@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, shallowRef, watch } from 'vue'
-import { ArrowLeft, BadgeCheck, ExternalLink } from 'lucide-vue-next'
+import { ArrowLeft, BadgeCheck, ExternalLink, GraduationCap } from 'lucide-vue-next'
 import CareerTiers from './CareerTiers.vue'
 import { careerTarget, easierIn, majorForCareer, majorsForCareer, careerText, TIERS } from '@/engine'
 import { careerLabel } from '@/utils/careersHtml'
@@ -49,14 +49,30 @@ const hasBreadth = computed(() => !!result.value?.breadth && TIERS.some((x) => r
 
     <header class="head">
       <h1 class="page-title">{{ t('careerPath.heading', { job: careerLabel(target.names, locale) }) }}</h1>
-      <p class="page-lede">{{ t('careerPath.summary', { n: majors.length }) }}</p>
+      <p v-if="majors.length || !target.graduate" class="page-lede">{{ t('careerPath.summary', { n: majors.length }) }}</p>
       <p v-if="target.occupation?.skills.length" class="skills">{{ t('careers.skills', { list: target.occupation.skills.join(', ') }) }}</p>
       <a v-if="target.occupation" class="official" :href="target.occupation.url" target="_blank" rel="noopener">
         {{ t('careers.official') }} · {{ target.occupation.name }} <ExternalLink :size="13" aria-hidden="true" />
       </a>
     </header>
 
-    <section class="block" aria-labelledby="majors-title">
+    <section v-if="target.graduate" class="block route surface" aria-labelledby="route-title">
+      <h2 id="route-title" class="block-title route-title">
+        <GraduationCap :size="18" aria-hidden="true" class="acc-icon" />
+        {{ t('careerPath.graduateTitle', { course: `${target.graduate.title} (${target.graduate.course})` }) }}
+      </h2>
+      <p class="block-hint">{{ t('careerPath.graduateAny') }}</p>
+      <p><strong>{{ t('careerPath.graduateEntry') }}:</strong> {{ careerText(target.graduate.entry, locale) }}</p>
+      <p v-if="target.graduate.prerequisites">
+        <strong>{{ t('careerPath.graduatePrereq') }}:</strong> {{ careerText(target.graduate.prerequisites, locale) }}
+      </p>
+      <p v-if="target.graduate.prerequisites && !target.graduate.required.length" class="block-hint">{{ t('careerPath.graduateNoCodes') }}</p>
+      <a class="official" :href="target.graduate.source" target="_blank" rel="noopener">
+        {{ t('careerPath.graduateSource') }} · {{ target.graduate.checked }} <ExternalLink :size="13" aria-hidden="true" />
+      </a>
+    </section>
+
+    <section v-if="majors.length" class="block" aria-labelledby="majors-title">
       <h2 id="majors-title" class="block-title">{{ t('careerPath.majorsTitle') }}</h2>
       <div class="majors" role="group" :aria-label="t('careerPath.majorsTitle')">
         <button
@@ -70,7 +86,7 @@ const hasBreadth = computed(() => !!result.value?.breadth && TIERS.some((x) => r
           <span class="major-title">{{ m.title }}</span>
           <span class="major-meta">{{ courseTitle(m.course) }}</span>
           <span class="major-tags">
-            <span class="tag">{{ t(`careerPath.how.${m.how}`) }}<template v-if="m.via">: {{ careerText(m.via, locale) }}</template></span>
+            <span class="tag">{{ t(`careerPath.how.${m.how}`) }}<template v-if="m.via && !m.route">: {{ careerText(m.via, locale) }}</template></span>
             <span v-if="m.accreditation" class="acc-chip"><BadgeCheck :size="13" aria-hidden="true" /> {{ t('majors.accChip') }}</span>
           </span>
         </button>
@@ -226,6 +242,23 @@ const hasBreadth = computed(() => !!result.value?.breadth && TIERS.some((x) => r
   font-weight: 600;
   color: var(--accent);
   border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+}
+
+.route {
+  padding: 16px 18px;
+  border-radius: 16px;
+  font-size: 0.9375rem;
+}
+
+.route p {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.route-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .counts {

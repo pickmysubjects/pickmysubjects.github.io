@@ -1,0 +1,137 @@
+# Jobs reached through a UniMelb graduate course after a bachelor degree. entry and prerequisites
+# summarise the course's Handbook "Entry and participation requirements" page (source); prerequisites
+# is null when the page names none. required holds subject codes only where the Handbook names them
+# (none so far: these pages name study areas, not subjects). covers is ours: how to spot a major whose
+# own subjects include those areas, by discipline code or field, at a level. No covers: any degree.
+- job: medical-practitioner
+  course: MC-DMED
+  title: "Doctor of Medicine"
+  source: https://handbook.unimelb.edu.au/2026/courses/mc-dmed/entry-participation-requirements
+  checked: 2026-10-24
+  entry:
+    en: "A bachelor degree in any discipline (finished within the last 10 years, or an older one plus a graduate diploma or higher finished in the last 10 years), the GAMSAT with at least 50 in each section, and an interview if shortlisted."
+    zh: "任何专业的学士学位（10 年内完成；更早的学位需再加 10 年内完成的研究生文凭或更高学历），GAMSAT 每个部分至少 50 分，入围后参加面试。"
+    zh-TW: "任何科系的學士學位（10 年內完成；更早的學位需再加上 10 年內完成的研究所文憑或更高學歷），GAMSAT 每個部分至少 50 分，入圍後參加面試。"
+    ja: "分野を問わない学士号（10 年以内に修了。それより前なら 10 年以内に修了した Graduate Diploma 以上も必要）、各セクション 50 点以上の GAMSAT、書類選考通過後の面接。"
+    ko: "전공 무관 학사 학위(10년 이내 졸업, 그보다 오래됐다면 10년 이내 마친 대학원 디플로마 이상도 필요), 모든 영역 50점 이상의 GAMSAT, 서류 통과 시 면접."
+    vi: "Bằng cử nhân ngành bất kỳ (hoàn thành trong 10 năm gần đây, hoặc bằng cũ hơn kèm Graduate Diploma trở lên hoàn thành trong 10 năm), GAMSAT mỗi phần tối thiểu 50 điểm, và phỏng vấn nếu được chọn vào vòng trong."
+    ms: "Ijazah sarjana muda dalam apa-apa bidang (tamat dalam 10 tahun lepas, atau yang lebih lama berserta Graduate Diploma atau lebih tinggi dalam 10 tahun lepas), GAMSAT sekurang-kurangnya 50 bagi setiap bahagian, dan temu duga jika disenarai pendek."
+    id: "Gelar sarjana di bidang apa pun (selesai dalam 10 tahun terakhir, atau yang lebih lama ditambah Graduate Diploma atau lebih tinggi dalam 10 tahun terakhir), GAMSAT minimal 50 di setiap bagian, dan wawancara jika lolos seleksi awal."
+    hi: "किसी भी विषय में बैचलर डिग्री (पिछले 10 साल में पूरी, या पुरानी हो तो साथ में पिछले 10 साल में पूरा Graduate Diploma या उससे ऊपर), GAMSAT के हर हिस्से में कम से कम 50, और शॉर्टलिस्ट होने पर इंटरव्यू।"
+  prerequisites: null
+- job: lawyer
+  course: MC-JURISD
+  title: "Juris Doctor"
+  source: https://handbook.unimelb.edu.au/2026/courses/mc-jurisd/entry-participation-requirements
+  checked: 2026-10-24
+  entry:
+    en: "A tertiary degree in any discipline other than law (or a law degree from overseas). Applicants are ranked on their results in all tertiary study."
+    zh: "任何非法律专业的大学学位（或海外的法律学位）。按全部大学阶段的成绩排名录取。"
+    zh-TW: "任何非法律科系的大學學位（或海外的法律學位）。依全部大學階段的成績排名錄取。"
+    ja: "法学以外の分野の大学学位（または海外の法学学位）。大学での全成績で順位が決まります。"
+    ko: "법학 이외 전공의 대학 학위(또는 해외 법학 학위). 대학 전체 성적으로 순위를 매깁니다."
+    vi: "Bằng đại học ngành bất kỳ trừ luật (hoặc bằng luật ở nước ngoài). Xếp hạng theo kết quả toàn bộ quá trình học đại học."
+    ms: "Ijazah tertiari dalam apa-apa bidang selain undang-undang (atau ijazah undang-undang dari luar negara). Pemohon disusun mengikut keputusan semua pengajian tertiari."
+    id: "Gelar perguruan tinggi di bidang apa pun selain hukum (atau gelar hukum dari luar negeri). Pelamar diperingkat berdasarkan nilai seluruh studi perguruan tinggi."
+    hi: "क़ानून के अलावा किसी भी विषय में डिग्री (या विदेश की क़ानून डिग्री)। चयन पूरी उच्च शिक्षा के अंकों से रैंक करके होता है।"
+  prerequisites: null
+- job: registered-nurse
+  course: MC-NURSC
+  title: "Master of Nursing Science"
+  source: https://handbook.unimelb.edu.au/2026/courses/mc-nursc/entry-participation-requirements
+  checked: 2026-10-24
+  entry:
+    en: "An undergraduate degree in any discipline, finished within the last 10 years (or an older one plus more recent graduate study or five years of relevant work). Applicants are ranked on their results, and work experience where relevant."
+    zh: "任何专业的本科学位，10 年内完成（更早的学位需再加较近的研究生学习，或五年相关工作经验）。按成绩排名，必要时也看工作经验。"
+    zh-TW: "任何科系的大學學位，10 年內完成（更早的學位需再加上較近的研究所學習，或五年相關工作經驗）。依成績排名，必要時也看工作經驗。"
+    ja: "分野を問わない学士号で 10 年以内に修了したもの（それより前なら、より最近の大学院での学修か 5 年の関連職歴も必要）。成績と、該当する場合は職歴で順位が決まります。"
+    ko: "전공 무관 학사 학위, 10년 이내 졸업(그보다 오래됐다면 최근 대학원 공부나 5년의 관련 경력 필요). 성적과, 해당 시 경력으로 순위를 매깁니다."
+    vi: "Bằng cử nhân ngành bất kỳ, hoàn thành trong 10 năm gần đây (hoặc bằng cũ hơn kèm học sau đại học gần đây hay 5 năm kinh nghiệm liên quan). Xếp hạng theo kết quả học tập, và kinh nghiệm làm việc nếu có."
+    ms: "Ijazah sarjana muda dalam apa-apa bidang, tamat dalam 10 tahun lepas (atau yang lebih lama berserta pengajian siswazah yang lebih baharu atau lima tahun pengalaman kerja berkaitan). Disusun mengikut keputusan, dan pengalaman kerja jika berkaitan."
+    id: "Gelar sarjana di bidang apa pun, selesai dalam 10 tahun terakhir (atau yang lebih lama ditambah studi pascasarjana yang lebih baru atau lima tahun pengalaman kerja terkait). Diperingkat berdasarkan nilai, dan pengalaman kerja bila relevan."
+    hi: "किसी भी विषय में बैचलर डिग्री, पिछले 10 साल में पूरी (पुरानी हो तो हाल की स्नातकोत्तर पढ़ाई या पाँच साल का संबंधित कार्य अनुभव भी)। रैंकिंग अंकों से, और जहाँ लागू हो, कार्य अनुभव से।"
+  prerequisites: null
+- job: dentist
+  course: MC-DDENSUR
+  title: "Doctor of Dental Surgery"
+  source: https://handbook.unimelb.edu.au/2026/courses/mc-ddensur/entry-participation-requirements
+  checked: 2026-10-24
+  entry:
+    en: "An undergraduate degree in any discipline (finished within 10 years, or an older one plus recent graduate study), the prerequisite studies below, and the GAMSAT (applicants living overseas may use the US or Canadian DAT, UK GAMSAT or BMAT)."
+    zh: "任何专业的本科学位（10 年内完成，或更早的学位加近期研究生学习），下面的先修课程，以及 GAMSAT（住在海外的申请人可用美国或加拿大 DAT、英国 GAMSAT 或 BMAT）。"
+    zh-TW: "任何科系的大學學位（10 年內完成，或更早的學位加上近期研究所學習），下面的先修課程，以及 GAMSAT（住在海外的申請人可用美國或加拿大 DAT、英國 GAMSAT 或 BMAT）。"
+    ja: "分野を問わない学士号（10 年以内に修了、またはそれ以前の学位と最近の大学院での学修）、下記の前提科目、GAMSAT（海外在住者は米国・カナダの DAT、英国 GAMSAT、BMAT も可）。"
+    ko: "전공 무관 학사 학위(10년 이내 졸업, 또는 그 이전 학위와 최근 대학원 공부), 아래 선수 과목, GAMSAT(해외 거주자는 미국·캐나다 DAT, 영국 GAMSAT, BMAT도 가능)."
+    vi: "Bằng cử nhân ngành bất kỳ (hoàn thành trong 10 năm, hoặc bằng cũ hơn kèm học sau đại học gần đây), các môn tiên quyết bên dưới, và GAMSAT (người sống ở nước ngoài có thể dùng DAT Mỹ hoặc Canada, GAMSAT Anh hoặc BMAT)."
+    ms: "Ijazah sarjana muda dalam apa-apa bidang (tamat dalam 10 tahun, atau yang lebih lama berserta pengajian siswazah baru-baru ini), pengajian prasyarat di bawah, dan GAMSAT (pemohon di luar negara boleh guna DAT AS atau Kanada, GAMSAT UK atau BMAT)."
+    id: "Gelar sarjana di bidang apa pun (selesai dalam 10 tahun, atau yang lebih lama ditambah studi pascasarjana yang baru), studi prasyarat di bawah, dan GAMSAT (pelamar yang tinggal di luar negeri boleh memakai DAT AS atau Kanada, GAMSAT Inggris, atau BMAT)."
+    hi: "किसी भी विषय में बैचलर डिग्री (10 साल के भीतर पूरी, या पुरानी डिग्री के साथ हाल की स्नातकोत्तर पढ़ाई), नीचे दी गई पूर्व-आवश्यक पढ़ाई, और GAMSAT (विदेश में रहने वाले आवेदक अमेरिका या कनाडा का DAT, UK GAMSAT या BMAT दे सकते हैं)।"
+  prerequisites:
+    en: "Anatomy, physiology and biochemistry at second-year level or equivalent, finished within 10 years of starting."
+    zh: "二年级水平（或同等）的解剖学、生理学和生物化学，须在入学前 10 年内完成。"
+    zh-TW: "二年級程度（或同等）的解剖學、生理學和生物化學，須在入學前 10 年內完成。"
+    ja: "2 年次レベル（または同等）の解剖学・生理学・生化学。入学前 10 年以内に修了していること。"
+    ko: "2학년 수준(또는 동등)의 해부학·생리학·생화학, 입학 전 10년 이내 이수."
+    vi: "Giải phẫu, sinh lý và hóa sinh ở mức năm hai hoặc tương đương, hoàn thành trong vòng 10 năm trước khi nhập học."
+    ms: "Anatomi, fisiologi dan biokimia pada tahap tahun kedua atau setara, tamat dalam 10 tahun sebelum bermula."
+    id: "Anatomi, fisiologi, dan biokimia setingkat tahun kedua atau setara, selesai dalam 10 tahun sebelum mulai."
+    hi: "दूसरे साल के स्तर (या समकक्ष) की एनाटॉमी, फ़िज़ियोलॉजी और बायोकेमिस्ट्री, शुरू करने से 10 साल के भीतर पूरी।"
+  covers:
+    - { disciplines: [ANAT], level: 2 }
+    - { disciplines: [PHYS], level: 2 }
+    - { disciplines: [BCMB], level: 2 }
+- job: physiotherapist
+  course: MC-DPHYSIO
+  title: "Doctor of Physiotherapy"
+  source: https://handbook.unimelb.edu.au/2026/courses/mc-dphysio/entry-participation-requirements
+  checked: 2026-10-24
+  entry:
+    en: "An undergraduate degree in any discipline (finished within 10 years, or an older one plus recent graduate study), the prerequisite subjects below, and a situational judgement test (which may be for shortlisted applicants only)."
+    zh: "任何专业的本科学位（10 年内完成，或更早的学位加近期研究生学习），下面的先修科目，以及情境判断测试（可能只考入围者）。"
+    zh-TW: "任何科系的大學學位（10 年內完成，或更早的學位加上近期研究所學習），下面的先修科目，以及情境判斷測驗（可能只考入圍者）。"
+    ja: "分野を問わない学士号（10 年以内に修了、またはそれ以前の学位と最近の大学院での学修）、下記の前提科目、状況判断テスト（書類選考通過者のみの場合あり）。"
+    ko: "전공 무관 학사 학위(10년 이내 졸업, 또는 그 이전 학위와 최근 대학원 공부), 아래 선수 과목, 상황 판단 테스트(서류 통과자만 볼 수 있음)."
+    vi: "Bằng cử nhân ngành bất kỳ (hoàn thành trong 10 năm, hoặc bằng cũ hơn kèm học sau đại học gần đây), các môn tiên quyết bên dưới, và bài kiểm tra phán đoán tình huống (có thể chỉ dành cho người vào vòng trong)."
+    ms: "Ijazah sarjana muda dalam apa-apa bidang (tamat dalam 10 tahun, atau yang lebih lama berserta pengajian siswazah baru-baru ini), subjek prasyarat di bawah, dan ujian pertimbangan situasi (mungkin hanya untuk calon yang disenarai pendek)."
+    id: "Gelar sarjana di bidang apa pun (selesai dalam 10 tahun, atau yang lebih lama ditambah studi pascasarjana yang baru), mata kuliah prasyarat di bawah, dan tes penilaian situasional (mungkin hanya untuk pelamar yang lolos seleksi awal)."
+    hi: "किसी भी विषय में बैचलर डिग्री (10 साल के भीतर पूरी, या पुरानी डिग्री के साथ हाल की स्नातकोत्तर पढ़ाई), नीचे दिए पूर्व-आवश्यक विषय, और सिचुएशनल जजमेंट टेस्ट (शायद सिर्फ़ शॉर्टलिस्ट हुए आवेदकों के लिए)।"
+  prerequisites:
+    en: "One university subject in human anatomy and one in human physiology (or equivalent), finished within 10 years of starting."
+    zh: "人体解剖学和人体生理学的大学科目各一门（或同等），须在入学前 10 年内完成。"
+    zh-TW: "人體解剖學和人體生理學的大學科目各一門（或同等），須在入學前 10 年內完成。"
+    ja: "人体解剖学と人体生理学の大学科目を各 1 つ（または同等）。入学前 10 年以内に修了していること。"
+    ko: "인체 해부학과 인체 생리학 대학 과목 각 1개(또는 동등), 입학 전 10년 이내 이수."
+    vi: "Một môn đại học về giải phẫu người và một môn về sinh lý người (hoặc tương đương), hoàn thành trong vòng 10 năm trước khi nhập học."
+    ms: "Satu subjek universiti dalam anatomi manusia dan satu dalam fisiologi manusia (atau setara), tamat dalam 10 tahun sebelum bermula."
+    id: "Satu mata kuliah anatomi manusia dan satu fisiologi manusia (atau setara), selesai dalam 10 tahun sebelum mulai."
+    hi: "ह्यूमन एनाटॉमी और ह्यूमन फ़िज़ियोलॉजी में एक-एक यूनिवर्सिटी विषय (या समकक्ष), शुरू करने से 10 साल के भीतर पूरे।"
+  covers:
+    - { disciplines: [ANAT] }
+    - { disciplines: [PHYS] }
+- job: optometrist
+  course: MC-DOPTOM
+  title: "Doctor of Optometry"
+  source: https://handbook.unimelb.edu.au/2026/courses/mc-doptom/entry-participation-requirements
+  checked: 2026-10-24
+  entry:
+    en: "An undergraduate degree in any discipline (finished within 10 years, or an older one plus recent graduate study) and the prerequisite subjects below."
+    zh: "任何专业的本科学位（10 年内完成，或更早的学位加近期研究生学习），以及下面的先修科目。"
+    zh-TW: "任何科系的大學學位（10 年內完成，或更早的學位加上近期研究所學習），以及下面的先修科目。"
+    ja: "分野を問わない学士号（10 年以内に修了、またはそれ以前の学位と最近の大学院での学修）と、下記の前提科目。"
+    ko: "전공 무관 학사 학위(10년 이내 졸업, 또는 그 이전 학위와 최근 대학원 공부)와 아래 선수 과목."
+    vi: "Bằng cử nhân ngành bất kỳ (hoàn thành trong 10 năm, hoặc bằng cũ hơn kèm học sau đại học gần đây) và các môn tiên quyết bên dưới."
+    ms: "Ijazah sarjana muda dalam apa-apa bidang (tamat dalam 10 tahun, atau yang lebih lama berserta pengajian siswazah baru-baru ini) dan subjek prasyarat di bawah."
+    id: "Gelar sarjana di bidang apa pun (selesai dalam 10 tahun, atau yang lebih lama ditambah studi pascasarjana yang baru) dan mata kuliah prasyarat di bawah."
+    hi: "किसी भी विषय में बैचलर डिग्री (10 साल के भीतर पूरी, या पुरानी डिग्री के साथ हाल की स्नातकोत्तर पढ़ाई) और नीचे दिए पूर्व-आवश्यक विषय।"
+  prerequisites:
+    en: "Three subjects at level 2 or 3 (or equivalent) from one or more relevant biological science disciplines, finished within 10 years of starting."
+    zh: "三门二年级或三年级（或同等）的相关生物科学科目，可来自一个或多个学科，须在入学前 10 年内完成。"
+    zh-TW: "三門二年級或三年級（或同等）的相關生物科學科目，可來自一個或多個學科，須在入學前 10 年內完成。"
+    ja: "関連する生物科学分野（1 つでも複数でも可）のレベル 2 または 3（または同等）の科目を 3 つ。入学前 10 年以内に修了していること。"
+    ko: "관련 생명과학 분야(하나 이상)의 2·3학년 수준(또는 동등) 과목 3개, 입학 전 10년 이내 이수."
+    vi: "Ba môn năm hai hoặc năm ba (hoặc tương đương) thuộc một hay nhiều ngành khoa học sinh học liên quan, hoàn thành trong vòng 10 năm trước khi nhập học."
+    ms: "Tiga subjek tahap 2 atau 3 (atau setara) daripada satu atau lebih disiplin sains biologi yang berkaitan, tamat dalam 10 tahun sebelum bermula."
+    id: "Tiga mata kuliah level 2 atau 3 (atau setara) dari satu atau lebih disiplin ilmu biologi yang relevan, selesai dalam 10 tahun sebelum mulai."
+    hi: "एक या ज़्यादा संबंधित जीव विज्ञान विषयों से लेवल 2 या 3 (या समकक्ष) के तीन विषय, शुरू करने से 10 साल के भीतर पूरे।"
+  covers:
+    - { topic: biology, level: 2, count: 3 }

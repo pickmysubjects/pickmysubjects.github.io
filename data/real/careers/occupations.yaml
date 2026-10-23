@@ -281,6 +281,16 @@
     ms: "Pengurus pelaburan kewangan"
     id: "Manajer investasi keuangan"
     hi: "वित्तीय निवेश प्रबंधक"
+  aliases:
+    en: ["bank", "banking", "investment banker"]
+    zh: ["银行", "投行", "投资银行"]
+    zh-TW: ["銀行", "投資銀行"]
+    ja: ["銀行", "投資銀行"]
+    ko: ["은행", "투자은행"]
+    vi: ["ngân hàng", "ngân hàng đầu tư"]
+    ms: ["bank", "perbankan pelaburan"]
+    id: ["bank", "bank investasi"]
+    hi: ["बैंक", "इन्वेस्टमेंट बैंकिंग"]
 - id: food-technologist
   name: "Food Technologist"
   anzsco: "234212"
@@ -380,6 +390,16 @@
     ms: "Pakar keselamatan ICT"
     id: "Spesialis keamanan TIK"
     hi: "आईसीटी सुरक्षा विशेषज्ञ"
+  aliases:
+    en: ["cyber security", "cybersecurity", "information security"]
+    zh: ["网络安全", "信息安全"]
+    zh-TW: ["資安", "網路安全", "資訊安全"]
+    ja: ["サイバーセキュリティ", "情報セキュリティ"]
+    ko: ["사이버 보안", "정보보안"]
+    vi: ["an ninh mạng"]
+    ms: ["keselamatan siber"]
+    id: ["keamanan siber"]
+    hi: ["साइबर सुरक्षा"]
 - id: interior-designer
   name: "Interior Designer"
   anzsco: "232511"
@@ -609,6 +629,16 @@
     ms: "Jurutera perisian"
     id: "Insinyur perangkat lunak"
     hi: "सॉफ़्टवेयर इंजीनियर"
+  aliases:
+    en: ["programmer", "developer", "software developer", "coder", "coding"]
+    zh: ["程序员", "码农", "软件开发", "开发工程师", "写代码"]
+    zh-TW: ["程式設計師", "軟體開發", "碼農", "寫程式"]
+    ja: ["プログラマー", "開発者", "ソフトウェア開発"]
+    ko: ["프로그래머", "개발자", "코더"]
+    vi: ["lập trình viên", "coder", "developer"]
+    ms: ["pengaturcara", "pembangun perisian", "developer"]
+    id: ["programmer", "pengembang perangkat lunak", "developer"]
+    hi: ["प्रोग्रामर", "डेवलपर", "कोडर"]
 - id: statistician
   name: "Statistician"
   anzsco: "224113"
@@ -626,6 +656,16 @@
     ms: "Ahli statistik"
     id: "Ahli statistik"
     hi: "सांख्यिकीविद्"
+  aliases:
+    en: ["data", "data analyst", "data scientist", "data analytics"]
+    zh: ["数据", "数据分析", "数据分析师", "数据科学家"]
+    zh-TW: ["資料", "數據", "資料分析", "數據分析", "資料科學家"]
+    ja: ["データ", "データ分析", "データアナリスト", "データサイエンティスト"]
+    ko: ["데이터", "데이터 분석", "데이터 분석가", "데이터 사이언티스트"]
+    vi: ["dữ liệu", "phân tích dữ liệu", "nhà khoa học dữ liệu"]
+    ms: ["data", "penganalisis data", "saintis data"]
+    id: ["data", "analis data", "ilmuwan data"]
+    hi: ["डेटा", "डेटा विश्लेषक", "डेटा साइंटिस्ट"]
 - id: urban-and-regional-planner
   name: "Urban and Regional Planner"
   anzsco: "232611"
@@ -691,3 +731,99 @@
     ms: "Ahli zoologi"
     id: "Ahli zoologi"
     hi: "प्राणी विज्ञानी"
+- id: general-practitioner
+  name: "General Practitioner"
+  anzsco: "253111"
+  url: https://www.yourcareer.gov.au/occupations/253111/general-practitioner
+  skills: ["General Practice", "Pathology", "Family Medicine", "Communication Skills", "Working With Patient And/Or Condition: Chronic Disease", "Nursing Support"]
+  checked: 2026-10-24
+  names:
+    en: "General Practitioner"
+    zh: "全科医生"
+    zh-TW: "家庭醫師"
+    ja: "一般開業医（GP）"
+    ko: "일반의"
+    vi: "Bác sĩ đa khoa"
+    ms: "Pengamal am"
+    id: "Dokter umum"
+    hi: "सामान्य चिकित्सक (GP)"
+- id: solicitor
+  name: "Solicitor"
+  anzsco: "271311"
+  url: https://www.yourcareer.gov.au/occupations/271311/solicitor
+  skills: ["Communication Skills", "Litigation", "Building Relationships", "Mergers and Acquisitions", "Commercial Litigation", "Organisational Skills"]
+  checked: 2026-10-24
+  names:
+    en: "Solicitor"
+    zh: "律师（事务律师）"
+    zh-TW: "律師（事務律師）"
+    ja: "ソリシター（事務弁護士）"
+    ko: "사무변호사(솔리시터)"
+    vi: "Luật sư tư vấn (solicitor)"
+    ms: "Peguam cara"
+    id: "Pengacara (solicitor)"
+    hi: "सॉलिसिटर (वकील)"
+- id: registered-nurses-nec
+  name: "Registered Nurse (not covered elsewhere)"
+  anzsco: "254499"
+  url: https://www.yourcareer.gov.au/occupations/254499/registered-nurses-nec
+  skills: ["Communication Skills", "Midwifery", "Nursing", "Computer Literacy", "Teamwork / Collaboration", "Patient Care"]
+  checked: 2026-10-24
+  names:
+    en: "Registered Nurse"
+    zh: "注册护士"
+    zh-TW: "註冊護理師"
+    ja: "正看護師"
+    ko: "정규 간호사"
+    vi: "Điều dưỡng có đăng ký"
+    ms: "Jururawat berdaftar"
+    id: "Perawat teregistrasi"
+    hi: "पंजीकृत नर्स"
+- id: dentist
+  name: "Dentist"
+  anzsco: "252312"
+  url: https://www.yourcareer.gov.au/occupations/252312/dentist
+  skills: ["Dentistry", "Communication Skills", "Surgery", "Patient Care", "Dental Care", "Teamwork / Collaboration"]
+  checked: 2026-10-24
+  names:
+    en: "Dentist"
+    zh: "牙医"
+    zh-TW: "牙醫師"
+    ja: "歯科医師"
+    ko: "치과의사"
+    vi: "Nha sĩ"
+    ms: "Doktor gigi"
+    id: "Dokter gigi"
+    hi: "दंत चिकित्सक"
+- id: physiotherapist
+  name: "Physiotherapist"
+  anzsco: "252511"
+  url: https://www.yourcareer.gov.au/occupations/252511/physiotherapist
+  skills: ["Physiotherapy", "Communication Skills", "Pain Management", "Organisational Skills", "Time Management", "Team Work/ Collaboration"]
+  checked: 2026-10-24
+  names:
+    en: "Physiotherapist"
+    zh: "物理治疗师"
+    zh-TW: "物理治療師"
+    ja: "理学療法士"
+    ko: "물리치료사"
+    vi: "Chuyên viên vật lý trị liệu"
+    ms: "Ahli fisioterapi"
+    id: "Fisioterapis"
+    hi: "फिज़ियोथेरेपिस्ट"
+- id: optometrist
+  name: "Optometrist"
+  anzsco: "251411"
+  url: https://www.yourcareer.gov.au/occupations/251411/optometrist
+  skills: ["Optometry", "Customer Service", "Patient Care", "Communication Skills", "Retail Operations", "Teamwork / Collaboration"]
+  checked: 2026-10-24
+  names:
+    en: "Optometrist"
+    zh: "验光师（视光师）"
+    zh-TW: "驗光師"
+    ja: "検眼士（オプトメトリスト）"
+    ko: "검안사"
+    vi: "Chuyên viên đo khúc xạ (optometrist)"
+    ms: "Pakar optometri"
+    id: "Optometris"
+    hi: "ऑप्टोमेट्रिस्ट"

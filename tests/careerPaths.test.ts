@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 import { buildDataset } from '../scripts/dataset'
-import { careerNeeds, careerTarget, careerTargets, majorForCareer, majorsForCareer, subjectCareers, tierSubject, TIERS, type CareerTarget, type TierContext } from '../src/engine/careerPaths'
+import { careerGroups, careerMatchRank, careerNeeds, careerSearchTerms, careerTarget, careerTargets, foldSearch, majorForCareer, majorsForCareer, subjectCareers, tierSubject, TIERS, type CareerTarget, type TierContext } from '../src/engine/careerPaths'
 import { interpolate, type Params } from '../src/i18n/interpolate'
 import { en } from '../src/i18n/messages/en'
 import { zhTW } from '../src/i18n/messages/zh-TW'
@@ -25,6 +25,7 @@ const fakeTarget = (skills: string[], name = 'Widget Accountant'): CareerTarget 
   id: 'x',
   kind: 'job',
   names: names(name),
+  aliases: [],
   occupation: { id: 'x', name, anzsco: '000000', url: 'https://www.yourcareer.gov.au/occupations/000000/x', skills, field: false, checked: '2026-01-01', names: names(name) },
 })
 
@@ -137,7 +138,7 @@ describe('real data: accountant', () => {
     expect(all.length).toBeGreaterThan(40)
     expect(all.findIndex((c) => c.kind === 'field')).toBeGreaterThan(all.findIndex((c) => c.id === 'accountant'))
     expect(new Set(all.map((c) => c.id)).size).toBe(all.length)
-    for (const c of all) expect(majorsForCareer(real, c.id).length, c.id).toBeGreaterThan(0)
+    for (const c of all) expect(majorsForCareer(real, c.id).length > 0 || !!c.graduate, c.id).toBe(true)
   })
 
   it('B-COM Accounting: the accreditation core is required, the law breadth is required breadth, accounting subjects help', () => {
@@ -244,5 +245,96 @@ describe("a subject's careers", () => {
     expect(html).toContain('/careers/accountant?major=accounting')
     expect(subjectCareersHtml(real, 'FLTV20022', translator(en), 'en', href)).toBe('')
     expect(subjectCareersHtml(real, 'COMP30022', translator(en), 'en', href)).toContain('Helps toward: ')
+  })
+})
+
+describe('finding a career by what students type', () => {
+  const find = (q: string) =>
+    careerTargets(real)
+      .map((t) => ({ id: t.id, rank: careerMatchRank(careerSearchTerms(t), q) }))
+      .filter((x) => x.rank >= 0)
+      .sort((a, b) => a.rank - b.rank)
+      .map((x) => x.id)
+
+  it('folds full-width forms, case and spaces', () => {
+    expect(foldSearch('ＩＴ')).toBe('it')
+    expect(foldSearch(' Data  Analyst ')).toBe('dataanalyst')
+    expect(foldSearch('數　據')).toBe('數據')
+  })
+
+  it('matches everyday names in any language', () => {
+    expect(find('程序员')[0]).toBe('software-engineer')
+    expect(find('码农')).toContain('software-engineer')
+    expect(find('coder')).toContain('software-engineer')
+    expect(find('数据')).toEqual(expect.arrayContaining(['statistician', 'business-analyst']))
+    expect(find('Data Analyst')).toEqual(expect.arrayContaining(['statistician', 'business-analyst']))
+    expect(find('银行')).toEqual(expect.arrayContaining(['finance-specialist', 'financial-investment-manager']))
+    expect(find('医生')[0]).toBe('medical-practitioner')
+    expect(find('護理')[0]).toBe('registered-nurse')
+    expect(find('lawyer')[0]).toBe('lawyer')
+  })
+
+  it('a short Latin query only matches a whole word, so IT finds computing and not every name with "it" in it', () => {
+    expect(find('IT')).toEqual(['computing-professional'])
+    expect(find('ＩＴ')).toEqual(['computing-professional'])
+  })
+
+  it('matches nothing for an unrelated word', () => {
+    expect(find('zzqx')).toEqual([])
+  })
+
+  it('every alias list is in the language it is filed under (no duplicates of the job name itself)', () => {
+    for (const t of careerTargets(real)) {
+      const terms = careerSearchTerms(t)
+      expect(new Set(terms.whole).size, t.id).toBe(terms.whole.length)
+    }
+  })
+
+  it('groups careers the same way on the picker and the list: jobs, then fields', () => {
+    const groups = careerGroups(careerTargets(real))
+    expect(groups.map((g) => g.id)).toEqual(['jobs', 'fields'])
+    expect(groups[0]!.items.every((c) => c.kind === 'job')).toBe(true)
+  })
+})
+
+describe('graduate-entry careers', () => {
+  it('lists each one even when no major page names it', () => {
+    for (const id of ['medical-practitioner', 'lawyer', 'registered-nurse', 'dentist', 'physiotherapist', 'optometrist']) {
+      const t = careerTarget(real, id)
+      expect(t?.graduate, id).toBeDefined()
+      expect(t!.graduate!.source).toMatch(/^https:\/\/handbook\.unimelb\.edu\.au\/2026\/courses\/mc-/)
+      expect(t!.occupation, id).toBeDefined()
+    }
+  })
+
+  it('marks no subject Required when the Handbook names study areas, not codes', () => {
+    for (const id of ['dentist', 'physiotherapist']) {
+      for (const m of majorsForCareer(real, id)) expect(majorForCareer(real, id, m.component)!.subjects.required, `${id} ${m.component}`).toEqual([])
+    }
+  })
+
+  it('lists majors whose own subjects cover the prerequisite areas (anatomy and physiology for physio)', () => {
+    const majors = majorsForCareer(real, 'physiotherapist')
+    expect(majors.length).toBeGreaterThan(0)
+    for (const m of majors) {
+      expect(m.how).toBe('via-further-study')
+      expect(m.route?.course).toBe('MC-DPHYSIO')
+    }
+    expect(majors.map((m) => m.title)).toContain('Physiology')
+  })
+
+  it('keeps an any-degree course honest: the page says any degree and shows the entry text', () => {
+    const t = careerTarget(real, 'lawyer')!
+    const html = careerPageHtml(real, t, translator(en), 'en', (c) => `/subject/${c}`, (id) => `/majors/${id}`, '/careers')
+    expect(html).toContain('Juris Doctor (MC-JURISD)')
+    expect(html).toContain('Any bachelor degree can lead here')
+    expect(html).toContain('other than law')
+  })
+
+  it('shows the prerequisite text in Traditional Chinese', () => {
+    const t = careerTarget(real, 'dentist')!
+    const html = careerPageHtml(real, t, translator(zhTW), 'zh-TW', (c) => `/subject/${c}`, (id) => `/majors/${id}`, '/careers')
+    expect(html).toContain('解剖學、生理學和生物化學')
+    expect(html).toContain('牙醫師')
   })
 })

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, shallowRef } from 'vue'
-import { Search, X } from 'lucide-vue-next'
-import { CAREER_LANGS, careerTargets } from '@/engine'
+import { ChevronDown, Search, X } from 'lucide-vue-next'
+import { careerGroups, careerMatchRank, careerSearchTerms, careerTargets } from '@/engine'
 import { careerLabel } from '@/utils/careersHtml'
 import { link } from '@/composables/useView'
 import { useDataset } from '@/composables/useDataset'
@@ -9,8 +9,9 @@ import { useProfile } from '@/composables/useProfile'
 import { useI18n } from '@/i18n'
 
 /**
- * The open plan's career goal (optional): search a job by its name in any language, pick one,
- * clear it. Suggestions favour subjects the career page puts under Required or Helps.
+ * The open plan's career goal (optional): search a job by its name in any language or an everyday
+ * name (程序员, IT), or open the full list grouped like the careers page; pick one, clear it.
+ * Suggestions favour subjects the career page puts under Required or Helps.
  */
 const SHOWN = 6
 const { data } = useDataset()
@@ -21,15 +22,27 @@ const query = shallowRef('')
 const all = computed(() =>
   careerTargets(data.value).map((c) => ({
     id: c.id,
+    kind: c.kind,
     label: careerLabel(c.names, locale.value),
-    haystack: CAREER_LANGS.map((l) => c.names[l]).join(' ').toLowerCase(),
+    terms: careerSearchTerms(c),
   })),
 )
 const chosen = computed(() => all.value.find((c) => c.id === profile.value.career) ?? null)
 const matches = computed(() => {
-  const q = query.value.trim().toLowerCase()
-  return q ? all.value.filter((c) => c.haystack.includes(q)).slice(0, SHOWN) : []
+  if (!query.value.trim()) return []
+  return all.value
+    .map((c) => ({ c, rank: careerMatchRank(c.terms, query.value) }))
+    .filter((x) => x.rank >= 0)
+    .sort((a, b) => a.rank - b.rank)
+    .slice(0, SHOWN)
+    .map((x) => x.c)
 })
+const groups = computed(() =>
+  careerGroups([...all.value].sort((a, b) => a.label.localeCompare(b.label, locale.value))).map((g) => ({
+    ...g,
+    title: t.value(g.id === 'jobs' ? 'careerPath.jobsTitle' : 'careerPath.fieldsTitle'),
+  })),
+)
 
 function pick(id: string | undefined): void {
   setCareer(id)
@@ -57,7 +70,26 @@ function pick(id: string | undefined): void {
           <button class="match" type="button" @click="pick(c.id)">{{ c.label }}</button>
         </li>
       </ul>
-      <p v-else-if="query.trim()" class="career-hint">{{ t('careerGoal.noMatch') }}</p>
+      <p v-else-if="query.trim()" class="career-hint no-match">
+        {{ t('careerGoal.noMatch') }}
+        <a :href="link('careers')">{{ t('careerGoal.browseAll') }}</a>
+      </p>
+      <details v-else class="browse">
+        <summary class="browse-toggle">
+          {{ t('careerGoal.browse', { n: all.length }) }}
+          <ChevronDown :size="16" aria-hidden="true" class="browse-icon" />
+        </summary>
+        <div class="browse-list">
+          <section v-for="g in groups" :key="g.id" class="browse-group">
+            <h4 class="browse-title">{{ g.title }}</h4>
+            <ul class="matches">
+              <li v-for="c in g.items" :key="c.id">
+                <button class="match" type="button" @click="pick(c.id)">{{ c.label }}</button>
+              </li>
+            </ul>
+          </section>
+        </div>
+      </details>
     </template>
   </div>
 </template>
@@ -150,6 +182,63 @@ function pick(id: string | undefined): void {
   text-align: start;
   overflow-wrap: anywhere;
   cursor: pointer;
+}
+
+.no-match a {
+  color: var(--accent);
+}
+
+.browse {
+  max-width: 640px;
+  min-width: 0;
+}
+
+.browse-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.875rem;
+  color: var(--accent);
+  cursor: pointer;
+  list-style: none;
+}
+
+.browse-toggle::-webkit-details-marker {
+  display: none;
+}
+
+.browse-icon {
+  transition: transform 0.15s;
+}
+
+.browse[open] .browse-icon {
+  transform: rotate(180deg);
+}
+
+.browse-list {
+  display: grid;
+  gap: var(--space-3);
+  max-height: 300px;
+  margin-top: var(--space-2);
+  padding: var(--space-3);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--surface);
+}
+
+.browse-group {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.browse-title {
+  margin: 0;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--ink-soft);
 }
 
 .match:hover,

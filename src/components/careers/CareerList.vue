@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, shallowRef } from 'vue'
 import { ChevronRight, Search } from 'lucide-vue-next'
-import { careerTargets, majorsForCareer, CAREER_LANGS } from '@/engine'
+import { careerGroups, careerMatchRank, careerSearchTerms, careerTargets, majorsForCareer } from '@/engine'
 import { careerLabel } from '@/utils/careersHtml'
 import { link } from '@/composables/useView'
 import { useDataset } from '@/composables/useDataset'
@@ -16,19 +16,17 @@ const all = computed(() =>
     ...c,
     label: careerLabel(c.names, locale.value),
     majors: majorsForCareer(data.value, c.id).length,
-    // Search finds a job by its name in any language (a student may type 会计 or accountant).
-    haystack: CAREER_LANGS.map((l) => c.names[l]).join(' ').toLowerCase(),
+    // Search finds a job by its name in any language or an everyday name (会计, 程序员, IT).
+    terms: careerSearchTerms(c),
   })),
 )
-const shown = computed(() => {
-  const q = query.value.trim().toLowerCase()
-  return all.value.filter((c) => c.majors > 0 && (!q || c.haystack.includes(q)))
-})
+const shown = computed(() => all.value.filter((c) => (c.majors > 0 || c.graduate) && careerMatchRank(c.terms, query.value) >= 0))
 const groups = computed(() =>
-  [
-    { id: 'jobs', title: t.value('careerPath.jobsTitle'), hint: '', items: shown.value.filter((c) => c.kind === 'job') },
-    { id: 'fields', title: t.value('careerPath.fieldsTitle'), hint: t.value('careerPath.fieldsHint'), items: shown.value.filter((c) => c.kind === 'field') },
-  ].filter((g) => g.items.length),
+  careerGroups(shown.value).map((g) => ({
+    ...g,
+    title: t.value(g.id === 'jobs' ? 'careerPath.jobsTitle' : 'careerPath.fieldsTitle'),
+    hint: g.id === 'jobs' ? '' : t.value('careerPath.fieldsHint'),
+  })),
 )
 </script>
 
@@ -55,7 +53,7 @@ const groups = computed(() =>
         <a v-for="c in g.items" :key="c.id" class="card surface" :href="link(`careers/${c.id}`)">
           <span class="card-main">
             <span class="card-title">{{ c.label }}</span>
-            <span class="card-meta">{{ t('careerPath.majorCount', { n: c.majors }) }}</span>
+            <span class="card-meta">{{ c.graduate ? t('careerPath.graduateMeta', { course: c.graduate.title }) : t('careerPath.majorCount', { n: c.majors }) }}</span>
           </span>
           <ChevronRight :size="18" aria-hidden="true" class="go" />
         </a>
