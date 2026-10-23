@@ -26,6 +26,7 @@ const AboutView = lazy('about')
 const GuideView = lazy('guide')
 const BrowseView = lazy('subjects')
 const MajorsView = lazy('majors')
+const ShortlistView = lazy('shortlist')
 
 const { view, param } = useView()
 const { t, locale } = useI18n()
@@ -42,6 +43,7 @@ const TITLES: Partial<Record<string, string>> = {
   guide: 'guide.title',
   subjects: 'browse.title',
   majors: 'majors.title',
+  shortlist: 'shortlist.title',
 }
 watchEffect(() => {
   const s = view.value === 'subject' ? data.value.subjects[param.value.toUpperCase()] : undefined
@@ -90,6 +92,7 @@ watchEffect(() => {
     <GuideView v-else-if="view === 'guide'" />
     <BrowseView v-else-if="view === 'subjects'" />
     <MajorsView v-else-if="view === 'majors'" :id="param" />
+    <ShortlistView v-else-if="view === 'shortlist'" />
     <PrivacyView v-else />
   </main>
   <footer class="footer">

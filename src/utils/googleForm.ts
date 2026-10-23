@@ -2,12 +2,15 @@ import type { GoogleFormConfig } from '@/config'
 
 const ENTRY = /^entry\.\d+$/
 
-/** The form exists and every required question has an entry id. */
+/**
+ * The form exists and every required question has an entry id. An optional question without a
+ * real id yet (blank, or a TODO placeholder) doesn't hold the form back: it's just hidden.
+ */
 export function isFormReady<K extends string>(cfg: GoogleFormConfig<K>): boolean {
   return (
     cfg.formId !== '' &&
     (Object.entries(cfg.entries) as [K, string][]).every(
-      ([k, e]) => ENTRY.test(e) || (e === '' && (cfg.optional ?? []).includes(k)),
+      ([k, e]) => ENTRY.test(e) || (cfg.optional ?? []).includes(k),
     )
   )
 }

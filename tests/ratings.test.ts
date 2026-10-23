@@ -21,6 +21,7 @@ function row(over: Partial<Record<keyof typeof COLUMNS, string>> = {}): string[]
     teaching: '',
     overall: '',
     wamBand: '',
+    tags: '',
   }
   return (Object.keys(COLUMNS) as (keyof typeof COLUMNS)[]).map((k) => over[k] ?? base[k])
 }
@@ -207,4 +208,59 @@ it('fetch reads more than 26 columns', async () => {
   const { readFileSync } = await import('node:fs')
   const src = readFileSync(new URL('../scripts/ratings/fetch.ts', import.meta.url), 'utf8')
   expect(src).not.toMatch(/values\/A:Z`/)
+})
+
+describe('rating tags', () => {
+  const now = new Date('2026-10-07')
+  const only = { difficulty: '', workload: '', generosity: '', hours: '', skills: '', recommend: '', grade: '' }
+
+  it('counts known tags per subject, once per rating, and drops unknown ids', () => {
+    const values = [
+      header,
+      row({ tags: 'tough-exam, maths-heavy, tough-exam' }),
+      row({ year: '2024', tags: 'tough-exam, made-up-tag' }),
+      row({ year: '2023', tags: '' }),
+    ]
+    expect(aggregate(rowsToObjects(values), now).subjects.COMP30027?.tags).toEqual({ 'maths-heavy': 1, 'tough-exam': 2 })
+  })
+
+  it('publishes nothing below 3 valid ratings, with the same spam rules', () => {
+    // Two distinct ratings (the third is an identical resubmission): nothing published.
+    const twice = [header, row({ ...only, tags: 'clear-lectures' }), row({ ...only, tags: 'clear-lectures' }), row({ ...only, timestamp: 't2', tags: 'fair-marking' })]
+    expect(aggregate(rowsToObjects(twice), now).subjects.COMP30027).toBeUndefined()
+    // A tag alone counts as an answer: three tag-only ratings publish their counts.
+    const thrice = [header, ...['2023', '2024', '2025'].map((y) => row({ ...only, year: y, tags: 'clear-lectures' }))]
+    expect(aggregate(rowsToObjects(thrice), now).subjects.COMP30027?.tags).toEqual({ 'clear-lectures': 3 })
+    // Made-up subject codes are rejected whatever the tags.
+    const fake = [header, ...['2023', '2024', '2025'].map((y) => row({ code: 'NOPE', year: y, tags: 'interesting' }))]
+    expect(aggregate(rowsToObjects(fake), now).subjects).toEqual({})
+  })
+
+  it('leaves tags out when nobody ticked a known one', () => {
+    const values = [header, row(), row({ year: '2024', tags: 'whatever' }), row({ year: '2023' })]
+    expect(aggregate(rowsToObjects(values), now).subjects.COMP30027).not.toHaveProperty('tags')
+  })
+})
+
+describe('top tags', async () => {
+  const { topTags, RATING_TAGS } = await import('../src/engine/ratingTags')
+  it('most mentioned first, at most five, unknown ids ignored', () => {
+    expect(topTags({ interesting: 2, 'tough-exam': 5, junk: 9, 'hands-on': 2, 'group-work': 1, 'fair-marking': 3, 'clear-lectures': 1 }).map((x) => x.tag)).toEqual([
+      'tough-exam',
+      'fair-marking',
+      'hands-on',
+      'interesting',
+      'group-work',
+    ])
+    expect(topTags(undefined)).toEqual([])
+    expect(new Set(RATING_TAGS).size).toBe(RATING_TAGS.length)
+  })
+})
+
+it('the Google Form script offers exactly the app\'s tag ids', async () => {
+  const { readFileSync } = await import('node:fs')
+  const { RATING_TAGS } = await import('../src/engine/ratingTags')
+  const src = readFileSync(new URL('../scripts/google/create-forms.gs', import.meta.url), 'utf8')
+  const list = /const RATING_TAG_IDS = \[([^\]]*)\]/.exec(src)?.[1] ?? ''
+  expect([...list.matchAll(/'([^']+)'/g)].map((m) => m[1])).toEqual([...RATING_TAGS])
 })

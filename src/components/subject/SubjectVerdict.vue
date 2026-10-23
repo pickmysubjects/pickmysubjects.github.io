@@ -3,6 +3,7 @@ import { computed } from 'vue'
 import { Star } from 'lucide-vue-next'
 import type { Subject } from '@/engine'
 import RatingForm from '@/components/rating/RatingForm.vue'
+import RatingTagChips from '@/components/rating/RatingTagChips.vue'
 import DiscussionSummary from '@/components/subject/DiscussionSummary.vue'
 import { useRated } from '@/composables/useRated'
 import { useI18n } from '@/i18n'
@@ -65,6 +66,7 @@ const discussions = computed(() => (props.detailReady ? (props.subject.discussio
       <p class="meta">
         {{ t('subject.reviews', { n: subject.signals?.reviews ?? 0 }) }}<template v-if="hours"> · {{ t('subject.hoursWeek', { n: hours }) }}</template>
       </p>
+      <RatingTagChips :tags="subject.signals?.tags" />
       <dl v-if="rest.length" class="rest">
         <div v-for="m in rest" :key="m.key" class="rest-row">
           <dt>{{ t(m.key) }}</dt>

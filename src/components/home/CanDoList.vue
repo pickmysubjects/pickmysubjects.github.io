@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ArrowDownUp, Columns2, Gauge, Printer, Share2, Snowflake, Star, Scale } from 'lucide-vue-next'
+import { ArrowDownUp, Columns2, Gauge, Heart, Printer, Share2, Snowflake, Star, Scale } from 'lucide-vue-next'
 import { link } from '@/composables/useView'
 import { useI18n } from '@/i18n'
 
@@ -15,6 +15,7 @@ const ITEMS = [
   { key: 'can.easyHard', to: 'subjects/easy/', icon: Scale },
   { key: 'can.summerWinter', to: 'subjects/summer-winter/', icon: Snowflake },
   { key: 'can.rate', to: 'subjects', icon: Star },
+  { key: 'can.shortlist', to: 'shortlist', icon: Heart },
 ] as const
 </script>
 
@@ -46,7 +47,7 @@ const ITEMS = [
 
 .can-list {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--space-3);
   margin: 0;
   padding: 0;
@@ -74,7 +75,7 @@ const ITEMS = [
   border-color: var(--accent);
 }
 
-/* Four by two on wide screens, two columns on tablets and phones. */
+/* Three by three on wide screens, two columns on tablets and phones. */
 @media (max-width: 900px) {
   .can-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));

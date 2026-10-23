@@ -150,3 +150,9 @@ export function cleanPlans(x: unknown): Record<string, PlanBook> {
 }
 
 export const cleanRated = (x: unknown): string[] => strings(x)
+
+/** Most subjects a shortlist keeps: plenty to choose between, and a hand-edited copy stays small. */
+export const SHORTLIST_MAX = 40
+/** Subject codes as saved on the shortlist: well-formed, upper case, each once, oldest first. */
+export const cleanShortlist = (x: unknown): string[] =>
+  [...new Set(strings(x).map((c) => c.trim().toUpperCase()).filter((c) => /^[A-Z]{4}\d{5}$/.test(c)))].slice(0, SHORTLIST_MAX)

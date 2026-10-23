@@ -5,6 +5,7 @@
  */
 import { gradeOffsets } from '../../src/engine/grades'
 import { SKILLS } from '../../src/engine/schema'
+import { isRatingTag } from '../../src/engine/ratingTags'
 
 /** Form question titles, exactly as created in the Google Form (see docs/ratings-setup.md). */
 export const COLUMNS = {
@@ -27,6 +28,8 @@ export const COLUMNS = {
   overall: 'Overall',
   // Sent only with a grade band (rating form or the My page card); feeds grade-offsets.json.
   wamBand: 'WAM range without this subject',
+  // Optional checkboxes; the choices are the tag ids in src/engine/ratingTags.ts.
+  tags: 'Tags',
 } as const
 
 /** Questions whose answer makes a row count as a rating. */
@@ -42,6 +45,7 @@ const ANSWER_COLUMNS = [
   COLUMNS.interest,
   COLUMNS.teaching,
   COLUMNS.overall,
+  COLUMNS.tags,
 ] as const
 
 /** Answers an optional question needs before its average is published. */
@@ -74,6 +78,8 @@ export interface SubjectAggregate {
   /** Overall 1–5 score, and how many gave one (the count rating markup needs). */
   overall: number | null
   overallCount: number
+  /** How many reviewers ticked each tag (known tag ids only); left out when nobody ticked one. */
+  tags?: Record<string, number>
 }
 
 export interface AggregateResult {
@@ -153,6 +159,13 @@ export function aggregate(rows: Record<string, string>[], now = new Date(), know
         if ((SKILL_IDS as readonly string[]).includes(s)) skillCounts.set(s, (skillCounts.get(s) ?? 0) + 1)
       }
     }
+    // Tags: each known id counts once per rating; anything else (an old or made-up choice) is dropped.
+    const tagCounts = new Map<string, number>()
+    for (const r of list) {
+      for (const x of new Set((r[COLUMNS.tags] ?? '').split(',').map((y) => y.trim()))) {
+        if (isRatingTag(x)) tagCounts.set(x, (tagCounts.get(x) ?? 0) + 1)
+      }
+    }
     // Optional 1–5 answers: blanks and anything out of range are ignored.
     const scores = (c: string): number[] => list.map((r) => Number(r[c])).filter((x) => Number.isInteger(x) && x >= 1 && x <= 5)
     const optional = (c: string): number | null => {
@@ -173,6 +186,7 @@ export function aggregate(rows: Record<string, string>[], now = new Date(), know
       teaching: optional(COLUMNS.teaching),
       overall: optional(COLUMNS.overall),
       overallCount: scores(COLUMNS.overall).length,
+      ...(tagCounts.size ? { tags: Object.fromEntries([...tagCounts].sort(([a], [b]) => a.localeCompare(b))) } : {}),
     }
   }
   return { subjects, accepted: rows.length - rejected, rejected }

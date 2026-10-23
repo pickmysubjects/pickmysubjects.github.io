@@ -13,6 +13,7 @@ import { localTitle } from '@/i18n/localized'
 import { subjectGist } from '@/i18n/gist'
 import { defaultTerm, termsBetween } from '@/utils/pastTerms'
 import { handbookUrl } from '@/utils/links'
+import ShortlistToggle from '@/components/shortlist/ShortlistToggle.vue'
 
 /**
  * The top of a subject's page: code, title, the facts a student checks first as chips, and what
@@ -149,6 +150,7 @@ async function share(): Promise<void> {
         </button>
       </div>
       <span class="actions-quiet">
+        <ShortlistToggle :code="subject.code" />
         <button v-if="taken && !rated.has(subject.code) && !rateHidden" class="button button-quiet" type="button" @click="emit('rate')">
           <Star :size="17" aria-hidden="true" /> {{ t('rating.rate') }}
         </button>

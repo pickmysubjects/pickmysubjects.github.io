@@ -20,3 +20,21 @@ describe('ratings form submission', () => {
     expect(body.has(RATINGS_FORM.entries.teaching)).toBe(false)
   })
 })
+
+describe('rating tags question', () => {
+  it('is on the form with a real entry id', () => {
+    expect(isFormReady(RATINGS_FORM)).toBe(true)
+    expect(RATINGS_FORM.entries.tags).toMatch(/^entry\.\d+$/)
+    expect(hasQuestion(RATINGS_FORM, 'tags')).toBe(true)
+  })
+
+  it('sends each ticked tag as its own value', async () => {
+    const fetch = vi.fn().mockResolvedValue(new Response())
+    vi.stubGlobal('fetch', fetch)
+    const cfg = { ...RATINGS_FORM, entries: { ...RATINGS_FORM.entries, tags: 'entry.123' } }
+    await submitGoogleForm(cfg, { code: 'COMP30027', tags: ['tough-exam', 'interesting'] })
+    const body = fetch.mock.calls[0]?.[1]?.body as URLSearchParams
+    expect(body.getAll('entry.123')).toEqual(['tough-exam', 'interesting'])
+    vi.unstubAllGlobals()
+  })
+})

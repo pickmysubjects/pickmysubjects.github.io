@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, shallowRef } from 'vue'
 import { RATINGS_FORM } from '@/config'
-import { SKILLS, type Period, type Skill } from '@/engine'
+import { RATING_TAGS, SKILLS, type Period, type RatingTag, type Skill } from '@/engine'
 import { useI18n } from '@/i18n'
 import { hasQuestion, isFormReady, submitGoogleForm } from '@/utils/googleForm'
 import { useGradeShare } from '@/composables/useGradeShare'
@@ -30,6 +30,9 @@ const overall = shallowRef<number | null>(null)
 const hours = shallowRef<number | ''>('')
 const grade = shallowRef('')
 const skills = shallowRef<Skill[]>([])
+// Optional tags (shown once the form has the question). Nothing is prefilled.
+const tags = shallowRef<RatingTag[]>([])
+const hasTags = hasQuestion(RATINGS_FORM, 'tags')
 const recommend = shallowRef('')
 const wish = shallowRef('')
 const status = shallowRef<'idle' | 'sending' | 'failed'>('idle')
@@ -45,6 +48,7 @@ const complete = computed(
     [difficulty, workload, generosity, examDifficulty, usefulness, interest, teaching, overall].some((r) => r.value !== null) ||
     hours.value !== '' ||
     skills.value.length > 0 ||
+    tags.value.length > 0 ||
     recommend.value !== '' ||
     BANDS.includes(grade.value),
 )
@@ -74,6 +78,10 @@ const extras = extraScales.filter((s) => hasQuestion(RATINGS_FORM, s.key))
 const rateableSkills = SKILLS.filter((s) => s !== 'exams' && s !== 'teamwork')
 const asText = (n: number | null): string => (n === null ? '' : String(n))
 
+function toggleTag(x: RatingTag): void {
+  tags.value = tags.value.includes(x) ? tags.value.filter((y) => y !== x) : [...tags.value, x]
+}
+
 function toggleSkill(s: Skill): void {
   skills.value = skills.value.includes(s) ? skills.value.filter((x) => x !== s) : [...skills.value, s]
 }
@@ -99,6 +107,7 @@ async function send(): Promise<void> {
       grade: grade.value,
       wamBand: wamBand.value ?? '',
       skills: skills.value,
+      tags: hasTags ? tags.value : [],
       recommend: recommend.value,
       wish: wish.value.trim(),
       language: locale.value,
@@ -204,6 +213,20 @@ function value(event: Event): string {
               @click="toggleSkill(sk)"
             >
               {{ t(`skill.${sk}`) }}
+            </button>
+          </fieldset>
+
+          <fieldset v-if="hasTags" class="chips-field">
+            <legend class="field">{{ t('ratingTags.question') }}</legend>
+            <button
+              v-for="x in RATING_TAGS"
+              :key="x"
+              type="button"
+              class="chip"
+              :aria-pressed="tags.includes(x)"
+              @click="toggleTag(x)"
+            >
+              {{ t(`ratingTags.${x}`) }}
             </button>
           </fieldset>
 

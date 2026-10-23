@@ -607,13 +607,14 @@ ${homeDemoHtml(code, t)}
 <li><a href="${href(code, 'majors')}">${esc(t('majors.title'))}</a></li>
 <li><a href="${href(code, 'guide')}">${esc(t('guide.title'))}</a></li>
 <li><a href="${href(code, 'about')}">${esc(t('about.title'))}</a></li></ul>
-<h2>${esc(t('can.title'))}</h2><ul>${[['share', 'plan'], ['plans', 'plan'], ['print', 'plan'], ['wam', 'record'], ['mine', 'subjects'], ['easyHard', 'subjects/easy'], ['summerWinter', 'subjects/summer-winter'], ['rate', 'subjects']].map(([k, to]) => `<li><a href="${href(code, to!)}">${esc(t(`can.${k}`))}</a></li>`).join('')}</ul>
+<h2>${esc(t('can.title'))}</h2><ul>${[['share', 'plan'], ['plans', 'plan'], ['print', 'plan'], ['wam', 'record'], ['mine', 'subjects'], ['easyHard', 'subjects/easy'], ['summerWinter', 'subjects/summer-winter'], ['rate', 'subjects'], ['shortlist', 'shortlist']].map(([k, to]) => `<li><a href="${href(code, to!)}">${esc(t(`can.${k}`))}</a></li>`).join('')}</ul>
 <h2>${esc(SEARCH_PHRASES[code].heading)}</h2><ul>${SEARCH_PHRASES[code].items.map((i) => `<li><a href="${href(code, i.to)}">${esc(i.text)}</a></li>`).join('')}</ul>
 <h2>${esc(t('seo.subjects'))}</h2><ul>${subjects.map((s) => `<li>${subjectLink(code, s.code)}</li>`).join('')}</ul>`,
     },
     simple('plan', 'plan.title', 'plan.lede'),
     simple('recommend', 'suggest.title', 'suggest.lede'),
     simple('record', 'record.title', 'record.lede'),
+    simple('shortlist', 'shortlist.title', 'shortlist.lede'),
     {
       path: 'about',
       title: `${t('about.title')} | PickMySubjects`,
