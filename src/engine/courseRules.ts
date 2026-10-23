@@ -150,7 +150,7 @@ export function sharesAllowed(course: Course | undefined, aId: string, bId: stri
 }
 
 /** Whether a major's "non-allowed breadth" list covers this subject. */
-function barsBreadth(c: Component, code: string): boolean {
+export function barsBreadth(c: Component, code: string): boolean {
   const n = c.nonAllowedBreadth
   if (!n || n.except.includes(code)) return false
   return n.subjects.includes(code) || n.areas.includes(code.slice(0, 4))

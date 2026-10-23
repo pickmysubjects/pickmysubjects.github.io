@@ -1,5 +1,7 @@
 import { careerName, careerText, componentCareers, type CareerLang } from '../engine/careers'
 import type { Dataset } from '../engine/schema'
+import { careerShortName, subjectNote } from './careerPathText'
+import { careerTargets, easierIn, majorForCareer, majorsForCareer, TIERS, type CareerTarget, type Tiered } from '../engine/careerPaths'
 import type { Translate } from '../i18n/interpolate'
 
 function esc(text: string): string {
@@ -34,6 +36,7 @@ export function careersHtml(
   locale: string,
   subjectHref: (code: string) => string,
   componentHref: (id: string) => string,
+  careerHref?: (id: string) => string,
 ): string {
   const c = data.careers
   const e = componentCareers(c, componentId)
@@ -53,7 +56,8 @@ export function careersHtml(
       const occ = j.occupation ? c.occupations[j.occupation] : undefined
       const q = x.qualifier === 'direct' ? '' : ` (${esc(t(`careers.qualifier.${x.qualifier}`))}${x.via ? `: ${esc(careerText(x.via, locale))}` : ''})`
       const link = occ ? ` · <a href="${esc(occ.url)}" rel="noopener">${esc(t('careers.official'))}: ${esc(occ.name)}</a>` : ''
-      return [`<li>${esc(careerLabel(j.names, locale))}${q}${link}</li>`]
+      const reverse = careerHref ? ` · <a href="${careerHref(j.id)}">${esc(t('careerPath.fromMajor', { job: careerShortName(j.names, locale) }))}</a>` : ''
+      return [`<li>${esc(careerLabel(j.names, locale))}${q}${link}${reverse}</li>`]
     })
     if (jobs.length) parts.push(`<ul>${jobs.join('')}</ul>`)
   } else {
@@ -85,4 +89,76 @@ export function careersHtml(
   }
   parts.push(`<p><a href="${esc(e.source)}" rel="noopener">${esc(t('careers.source'))}</a> · ${esc(t('careers.checked', { date: e.checked }))}</p>`)
   return parts.filter(Boolean).join('\n')
+}
+
+/** The careers list ("I want to be…") as plain HTML for the prerendered page. */
+export function careerListHtml(data: Dataset, t: Translate, locale: string, careerHref: (id: string) => string): string {
+  const all = careerTargets(data).map((c) => ({ c, n: majorsForCareer(data, c.id).length })).filter((x) => x.n > 0)
+  const list = (items: typeof all) => `<ul>${items.map(({ c, n }) => `<li><a href="${careerHref(c.id)}">${esc(careerLabel(c.names, locale))}</a> (${esc(t('careerPath.majorCount', { n }))})</li>`).join('')}</ul>`
+  const jobs = all.filter((x) => x.c.kind === 'job')
+  const fields = all.filter((x) => x.c.kind === 'field')
+  return [
+    `<h1>${esc(t('careerPath.title'))}</h1>`,
+    `<p>${esc(t('careerPath.lede'))}</p>`,
+    jobs.length ? `<h2>${esc(t('careerPath.jobsTitle'))}</h2>${list(jobs)}` : '',
+    fields.length ? `<h2>${esc(t('careerPath.fieldsTitle'))}</h2><p>${esc(t('careerPath.fieldsHint'))}</p>${list(fields)}` : '',
+  ].join('\n')
+}
+
+/**
+ * One career's page as plain HTML: the majors that lead there, and for each, its subjects in
+ * tiers (the long "not much related" tail as a count). The app shows one major at a time.
+ */
+export function careerPageHtml(
+  data: Dataset,
+  target: CareerTarget,
+  t: Translate,
+  locale: string,
+  subjectHref: (code: string) => string,
+  componentHref: (id: string) => string,
+  listHref: string,
+): string {
+  const majors = majorsForCareer(data, target.id)
+  const courseTitle = (code: string) => data.courses.find((c) => c.code === code)?.title ?? code
+  const subj = (code: string) => `<a href="${subjectHref(code)}">${esc(code)} ${esc(data.subjects[code]?.title ?? '')}</a>`
+  const tiers = (x: Tiered) =>
+    TIERS.filter((tier) => x[tier].length)
+      .map((tier) =>
+        tier === 'little'
+          ? `<p>${esc(t(`careerPath.tier.${tier}`))}: ${x[tier].length}. ${esc(t(`careerPath.tierHint.${tier}`))}</p>`
+          : `<h4>${esc(t(`careerPath.tier.${tier}`))}</h4><ul>${x[tier].map((r) => `<li>${subj(r.code)}: ${esc(subjectNote(t, r))}</li>`).join('')}</ul>`,
+      )
+      .join('')
+  const parts = [
+    `<p><a href="${listHref}">${esc(t('careerPath.back'))}</a></p>`,
+    `<h1>${esc(t('careerPath.heading', { job: careerLabel(target.names, locale) }))}</h1>`,
+    `<p>${esc(t('careerPath.summary', { n: majors.length }))}</p>`,
+  ]
+  const o = target.occupation
+  if (o?.skills.length) parts.push(`<p>${esc(t('careers.skills', { list: o.skills.join(', ') }))}</p>`)
+  if (o) parts.push(`<p><a href="${esc(o.url)}" rel="noopener">${esc(t('careers.official'))}: ${esc(o.name)}</a></p>`)
+  parts.push(`<h2>${esc(t('careerPath.majorsTitle'))}</h2>`)
+  majors.forEach((m, i) => {
+    const r = majorForCareer(data, target.id, m.component, easierIn(data, m.course))
+    if (!r) return
+    const how = `${t(`careerPath.how.${m.how}`)}${m.via ? `: ${careerText(m.via, locale)}` : ''}`
+    parts.push(`<h3><a href="${componentHref(m.component)}">${esc(m.title)}</a> (${esc(courseTitle(m.course))})</h3><p>${esc(how)}${m.accreditation ? ` · ${esc(t('careers.accTitle'))}: ${esc(m.accreditation.body)}` : ''}</p>`)
+    parts.push(tiers(r.subjects))
+    // Breadth ideas for the first (default) major only: the same course's list repeats otherwise.
+    if (i === 0 && r.breadth && TIERS.some((x) => r.breadth![x].length)) parts.push(`<h4>${esc(t('careerPath.breadthTitle'))}</h4><p>${esc(t('careerPath.breadthHint'))}</p>${tiers(r.breadth)}`)
+    if (i === 0 && r.needs.generic.length) parts.push(`<p>${esc(t('careerPath.generic', { list: r.needs.generic.join(', ') }))}</p>`)
+  })
+  parts.push(`<p>${esc(t('careerPath.note'))}</p>`)
+  return parts.join('\n')
+}
+
+/** The search title and description for a career's page. */
+export function careerSeo(data: Dataset, target: CareerTarget, t: Translate, locale: string): { title: string; description: string } {
+  const majors = majorsForCareer(data, target.id)
+  const job = careerShortName(target.names, locale)
+  const names = [...new Set(majors.map((m) => m.title))].slice(0, 4).join(t('listSep'))
+  return {
+    title: `${t('careerPath.seoTitle', { job })} | PickMySubjects`,
+    description: [t('careerPath.seoDesc', { job }), names ? `${t('careerPath.majorsTitle')}: ${names}.` : ''].filter(Boolean).join(' '),
+  }
 }

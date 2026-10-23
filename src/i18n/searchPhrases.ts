@@ -6,7 +6,7 @@ import type { LocaleCode } from './codes'
  * quick links, and listed in llms.txt, so a search engine or AI assistant can tell which questions
  * the site answers. Every line must stay true: link only to a page that really answers it.
  */
-export type SearchTarget = 'plan' | 'recommend' | 'subjects' | 'subjects/easy' | 'subjects/hard' | 'subjects/no-exam' | 'subjects/breadth' | 'subjects/first-semester' | 'subjects/summer-winter' | 'majors' | 'guide'
+export type SearchTarget = 'plan' | 'recommend' | 'subjects' | 'subjects/easy' | 'subjects/hard' | 'subjects/no-exam' | 'subjects/breadth' | 'subjects/first-semester' | 'subjects/summer-winter' | 'majors' | 'careers' | 'guide'
 
 export interface SearchPhrases {
   heading: string
@@ -27,6 +27,7 @@ export const SEARCH_PHRASES: Record<LocaleCode, SearchPhrases> = {
       { text: 'UniMelb subject reviews, difficulty and prerequisites', to: 'subjects' },
       { text: 'UniMelb major, minor and double major requirements', to: 'majors' },
       { text: 'UniMelb majors: careers, jobs and accreditation', to: 'majors' },
+      { text: 'Want to be an accountant or engineer? Which UniMelb major and subjects to take', to: 'careers' },
       { text: 'How WAM, credit points and census dates work', to: 'guide' },
       { text: 'Special consideration, MyTimetable clashes and hurdles at UniMelb', to: 'guide' },
     ],
@@ -44,6 +45,7 @@ export const SEARCH_PHRASES: Record<LocaleCode, SearchPhrases> = {
       { text: '墨大课程评价、课程难度、先修课查询', to: 'subjects' },
       { text: '墨大主修要求和必修课、双主修、辅修', to: 'majors' },
       { text: '墨大各专业就业方向、毕业做什么、专业认证', to: 'majors' },
+      { text: '想当会计/工程师选什么专业、选什么课', to: 'careers' },
       { text: '墨大 WAM 怎么算、学分和 census date', to: 'guide' },
       { text: '墨大 special consideration 怎么申请、选课时间冲突、hurdle', to: 'guide' },
     ],
@@ -61,6 +63,7 @@ export const SEARCH_PHRASES: Record<LocaleCode, SearchPhrases> = {
       { text: '墨大課程評價、課程難度、先修課查詢', to: 'subjects' },
       { text: '墨大主修要求和必修課、雙主修、輔修', to: 'majors' },
       { text: '墨大各主修就業方向、畢業做什麼、專業認證', to: 'majors' },
+      { text: '想當會計師/工程師要選什麼主修、修什麼課', to: 'careers' },
       { text: '墨大 WAM 怎麼算、學分和 census date', to: 'guide' },
       { text: '墨大 special consideration 怎麼申請、衝堂、hurdle', to: 'guide' },
     ],
@@ -78,6 +81,7 @@ export const SEARCH_PHRASES: Record<LocaleCode, SearchPhrases> = {
       { text: '科目の評判・難易度・前提科目', to: 'subjects' },
       { text: 'メジャー・マイナーの要件、ダブルメジャー', to: 'majors' },
       { text: 'メルボルン大学の専攻別の進路・就職・資格認定', to: 'majors' },
+      { text: '会計士やエンジニアになるには何を専攻・履修する？', to: 'careers' },
       { text: 'WAM の計算方法、単位、センサス日', to: 'guide' },
       { text: 'メルボルン大学の special consideration、時間割の重複、ハードル', to: 'guide' },
     ],
@@ -95,6 +99,7 @@ export const SEARCH_PHRASES: Record<LocaleCode, SearchPhrases> = {
       { text: '과목 평가, 난이도, 선수 과목 확인', to: 'subjects' },
       { text: '전공·부전공 요건과 필수 과목, 복수전공', to: 'majors' },
       { text: '멜버른대 전공별 진로, 취업, 자격 인증', to: 'majors' },
+      { text: '회계사·엔지니어가 되려면 어떤 전공과 과목을?', to: 'careers' },
       { text: 'WAM 계산법, 학점, census date', to: 'guide' },
       { text: '멜번대 special consideration 신청, 시간표 겹침, 허들', to: 'guide' },
     ],
@@ -112,6 +117,7 @@ export const SEARCH_PHRASES: Record<LocaleCode, SearchPhrases> = {
       { text: 'Đánh giá môn học, độ khó, môn tiên quyết', to: 'subjects' },
       { text: 'Yêu cầu chuyên ngành, ngành phụ và song ngành ở UniMelb', to: 'majors' },
       { text: 'Chuyên ngành UniMelb: ra trường làm gì, việc làm, kiểm định', to: 'majors' },
+      { text: 'Muốn làm kế toán, kỹ sư thì học ngành gì, môn gì ở UniMelb', to: 'careers' },
       { text: 'Cách tính WAM, tín chỉ và census date', to: 'guide' },
       { text: 'Special consideration, trùng lịch MyTimetable và hurdle ở UniMelb', to: 'guide' },
     ],
@@ -129,6 +135,7 @@ export const SEARCH_PHRASES: Record<LocaleCode, SearchPhrases> = {
       { text: 'Ulasan, tingkat kesulitan, dan prasyarat mata kuliah', to: 'subjects' },
       { text: 'Syarat major, minor dan double major UniMelb', to: 'majors' },
       { text: 'Jurusan UniMelb: prospek kerja, karier, dan akreditasi', to: 'majors' },
+      { text: 'Ingin jadi akuntan atau insinyur? Jurusan dan mata kuliah di UniMelb', to: 'careers' },
       { text: 'Cara menghitung WAM, SKS, dan census date', to: 'guide' },
       { text: 'Special consideration, jadwal bentrok di MyTimetable dan hurdle di UniMelb', to: 'guide' },
     ],
@@ -146,6 +153,7 @@ export const SEARCH_PHRASES: Record<LocaleCode, SearchPhrases> = {
       { text: 'Ulasan, tahap kesukaran dan prasyarat subjek', to: 'subjects' },
       { text: 'Syarat major, minor dan major berganda UniMelb', to: 'majors' },
       { text: 'Major UniMelb: kerjaya, pekerjaan dan akreditasi', to: 'majors' },
+      { text: 'Mahu jadi akauntan atau jurutera? Major dan subjek di UniMelb', to: 'careers' },
       { text: 'Cara mengira WAM, mata kredit dan census date', to: 'guide' },
       { text: 'Special consideration, jadual bertembung di MyTimetable dan hurdle di UniMelb', to: 'guide' },
     ],
@@ -163,6 +171,7 @@ export const SEARCH_PHRASES: Record<LocaleCode, SearchPhrases> = {
       { text: 'सब्जेक्ट रिव्यू, कठिनाई और पूर्व-आवश्यक विषय', to: 'subjects' },
       { text: 'यूनिमेलब मेजर, माइनर और डबल मेजर की ज़रूरतें', to: 'majors' },
       { text: 'यूनिमेलब मेजर: करियर, नौकरी और मान्यता', to: 'majors' },
+      { text: 'अकाउंटेंट या इंजीनियर बनना है? यूनिमेलब में कौन सा मेजर और विषय', to: 'careers' },
       { text: 'WAM, क्रेडिट पॉइंट और census date कैसे काम करते हैं', to: 'guide' },
       { text: 'UniMelb में special consideration, MyTimetable क्लैश और हर्डल', to: 'guide' },
     ],

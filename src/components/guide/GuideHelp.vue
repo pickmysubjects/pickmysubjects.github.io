@@ -44,6 +44,13 @@ const RANKINGS = [
       </ul>
     </GuideItem>
 
+    <GuideItem id="careers" :title="t('guide.careersTitle')" :short="t('guide.careersShort')">
+      <p>{{ t('guide.careersText') }}</p>
+      <p>
+        <a class="button button-quiet" :href="link('careers/')">{{ t('guide.careersLink') }}</a>
+      </p>
+    </GuideItem>
+
     <GuideItem id="accreditation" :title="t('guide.accTitle')" :short="t('guide.accShort')">
       <ul class="acc">
         <li v-for="a in ACC" :key="a.href">

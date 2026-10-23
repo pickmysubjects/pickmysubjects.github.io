@@ -6,7 +6,7 @@ import type { View } from '@/composables/useView'
 export const NAV_ITEMS: { view: View; key: string; icon: typeof House; also?: View[] }[] = [
   { view: 'home', key: 'nav.home', icon: House },
   // Looking a subject up needs no setup: open to everyone, and where search visitors land.
-  { view: 'subjects', key: 'nav.browse', icon: ListFilter, also: ['majors'] },
+  { view: 'subjects', key: 'nav.browse', icon: ListFilter, also: ['majors', 'careers'] },
   // Everything personal in one place, as two steps: my record, then the plan.
   { view: 'record', key: 'nav.record', icon: User, also: ['plan', 'shortlist'] },
 ]

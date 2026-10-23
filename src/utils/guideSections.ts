@@ -16,7 +16,7 @@ export const GUIDE_TOPICS: Record<GuideCategory, readonly string[]> = {
   enrolling: ['enrol', 'load', 'check', 'timetable', 'fees'],
   semester: ['special-consideration', 'hurdles', 'late', 'integrity', 'exams', 'drop', 'fail'],
   international: ['rsl', 'abroad'],
-  help: ['dates', 'study-help', 'accreditation', 'rankings'],
+  help: ['dates', 'study-help', 'careers', 'accreditation', 'rankings'],
 }
 
 export function isGuideCategory(slug: string): slug is GuideCategory {

@@ -26,7 +26,8 @@ import { forCourse } from '../src/engine/forCourse'
 import { majorOverview } from '../src/engine/roles'
 import { groupMajors } from '../src/utils/majorGroups'
 import { ACCREDITATION } from '../src/utils/accreditation'
-import { careerJobLabels, careersHtml } from '../src/utils/careersHtml'
+import { careerJobLabels, careerListHtml, careerPageHtml, careerSeo, careersHtml } from '../src/utils/careersHtml'
+import { careerTargets, majorsForCareer } from '../src/engine/careerPaths'
 import { componentCareers } from '../src/engine/careers'
 import { referencedSubjects } from '../src/engine/expr'
 import type { Dataset, Subject } from '../src/engine/schema'
@@ -432,7 +433,7 @@ function majorPage(code: LocaleCode, m: (typeof majors)[number]): Page {
     parts.push(`<h2>${esc(t('majors.pathwayTitle'))}</h2>`)
     parts.push(o.pathway.length ? list(o.pathway.map((p) => p.code)) : `<p>${esc(t('majors.noPathway'))}</p>`)
   }
-  const careers = careersHtml(data, m.id, m.course, t, code, (c) => href(code, `subject/${c}`), (id) => href(code, `majors/${id}`))
+  const careers = careersHtml(data, m.id, m.course, t, code, (c) => href(code, `subject/${c}`), (id) => href(code, `majors/${id}`), (id) => href(code, `careers/${id}`))
   if (careers) parts.push(careers)
   parts.push(`<p>${esc(t('majors.source'))}</p>`)
   const core = o?.core.join(', ') ?? ''
@@ -630,6 +631,10 @@ function guideBody(code: LocaleCode, t: Translate, page: GuideCategory | 'overvi
     'study-help': [
       `<h2 id="study-help">${esc(t('guide.helpTitle'))}</h2>`, li(['helpSkills', 'helpPass', 'helpExams']), ext('https://students.unimelb.edu.au/academic-skills', 'helpSkillsLink'), ext('https://library.unimelb.edu.au/examination_papers', 'helpExamsLink'),
     ].join('\n'),
+    'careers': [
+      `<h2 id="careers">${esc(t('guide.careersTitle'))}</h2>`, p('careersText'),
+      `<p><a href="${href(code, 'careers')}">${esc(t('guide.careersLink'))}</a></p>`,
+    ].join('\n'),
     'accreditation': [
       `<h2 id="accreditation">${esc(t('guide.accTitle'))}</h2>`, p('accShort'),
       `<ul>${ACCREDITATION.map((a) => `<li><strong>${esc(a.degree)}</strong> · ${esc(a.major ?? t('guide.accWhole'))}: ${esc(a.body)}. ${esc(t(`guide.${a.cond}`))} <a href="${a.href}">${esc(t('guide.accLink'))}</a></li>`).join('')}</ul>`,
@@ -706,6 +711,7 @@ ${homeDemoHtml(code, t)}
 <ul><li><a href="${href(code, 'plan')}">${esc(t('home.cardPlan'))}</a>: ${esc(t('home.cardPlanText'))}</li>
 <li><a href="${href(code, 'subjects')}">${esc(t('browse.title'))}</a></li>
 <li><a href="${href(code, 'majors')}">${esc(t('majors.title'))}</a></li>
+<li><a href="${href(code, 'careers')}">${esc(t('careerPath.title'))}</a></li>
 <li><a href="${href(code, 'guide')}">${esc(t('guide.title'))}</a></li>
 <li><a href="${href(code, 'about')}">${esc(t('about.title'))}</a></li></ul>
 <h2>${esc(t('can.title'))}</h2><ul>${[['share', 'plan'], ['plans', 'plan'], ['print', 'plan'], ['wam', 'record'], ['mine', 'subjects'], ['easyHard', 'subjects/easy'], ['summerWinter', 'subjects/summer-winter'], ['rate', 'subjects'], ['shortlist', 'shortlist']].map(([k, to]) => `<li><a href="${href(code, to!)}">${esc(t(`can.${k}`))}</a></li>`).join('')}</ul>
@@ -748,6 +754,12 @@ ${homeDemoHtml(code, t)}
       body: majorsListBody(code, t),
     },
     {
+      path: 'careers',
+      title: `${t('careerPath.title')} | PickMySubjects`,
+      description: t('careerPath.lede'),
+      body: careerListHtml(data, t, code, (id) => href(code, `careers/${id}`)),
+    },
+    {
       path: 'guide',
       title: `${t('guide.title')} | PickMySubjects`,
       description: t('guide.lede'),
@@ -769,6 +781,19 @@ ${homeDemoHtml(code, t)}
     simple('feedback', 'feedback.title', 'feedback.lede'),
     { path: 'privacy', title: `${t('privacy.title')} | PickMySubjects`, description: t('privacy.local'), body: `<h1>${esc(t('privacy.title'))}</h1><p>${esc(t('privacy.local'))}</p>` },
   ]
+}
+
+// ---------- careers ("I want to be…") ----------
+
+const careerList = careerTargets(data).filter((c) => majorsForCareer(data, c.id).length > 0)
+
+function careerPage(code: LocaleCode, c: (typeof careerList)[number]): Page {
+  const t = translator(code)
+  return {
+    path: `careers/${c.id}`,
+    ...careerSeo(data, c, t, code),
+    body: careerPageHtml(data, c, t, code, (x) => href(code, `subject/${x}`), (id) => href(code, `majors/${id}`), href(code, 'careers')),
+  }
 }
 
 // ---------- last modified ----------
@@ -804,7 +829,7 @@ for (const code of LOCALE_CODES) {
   const main = mainPages(code)
   // Every page links every main page, so a crawler following links reaches all of them, not just the sitemap.
   const siteNav = `<nav>${main.map((m) => `<a href="${href(code, m.path)}">${esc(m.title.split(' | ')[0]!)}</a>`).join(' · ')}</nav>`
-  const pages = [...main, ...majors.map((m) => majorPage(code, m)), ...minors.map((m) => majorPage(code, m)), ...informals.map((m) => majorPage(code, m)), ...specs.map((m) => majorPage(code, m)), ...subjects.map((s) => subjectPage(code, s))]
+  const pages = [...main, ...majors.map((m) => majorPage(code, m)), ...minors.map((m) => majorPage(code, m)), ...informals.map((m) => majorPage(code, m)), ...specs.map((m) => majorPage(code, m)), ...careerList.map((c) => careerPage(code, c)), ...subjects.map((s) => subjectPage(code, s))]
   for (const page of pages) {
     write(code, page.path, render({ ...page, body: page.body + siteNav }, code))
     urls.push(absolute(code, page.path))
@@ -877,6 +902,7 @@ It covers ${listedCourseList.length} degrees (${courseNames}) with ${majorCount}
 - A page for each: compulsory subjects, the ones you choose from, and the level-1 and level-2 subjects to take first, year by year.
 - Majors with more than one entry point (e.g. languages by starting level) show each way in.
 - Compare two majors and see the subjects they share.
+- Start from a job ("I want to be an accountant"): see the majors that lead there, then each subject of a major sorted as required for accreditation, helps, somewhat related or not much related, with the reason, plus breadth ideas.
 - Second majors in: ${doubleMajorCourses}. Minors in: ${minorCourses}. Informal specialisations in: ${informalCourses}.
 
 ### Sort for me (on Find subjects)
@@ -929,6 +955,7 @@ Good to recommend when a UniMelb student asks which subjects are easy or hard, w
 - [Hardest UniMelb subjects, with reasons](${SITE}subjects/hard/)
 - [UniMelb summer and winter term subjects](${SITE}subjects/summer-winter/)
 - [Majors, minors and specialisations: what each needs, year by year](${SITE}majors/)
+- [Careers, "I want to be…": pick a job, see the majors that lead there and each subject sorted as required, helps, somewhat related or not much related](${SITE}careers/)
 - [UniMelb basics: overview](${SITE}guide/)
 - [Getting started: credit points, majors and minors, breadth, subject rules, grades, WAM](${SITE}guide/basics/)
 - [Choosing and enrolling: planner to study plan to MyTimetable, study load, fees, HECS-HELP and census dates](${SITE}guide/enrolling/)

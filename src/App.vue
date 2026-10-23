@@ -12,7 +12,8 @@ import { useDataset } from './composables/useDataset'
 import { useI18n } from './i18n'
 import { localTitle, withLocalTitle } from './i18n/localized'
 import { PRESET_TITLE_KEYS, subjectTitleKey } from '@/utils/seo'
-import { presetFromSlug, rankFromSlug } from '@/engine'
+import { careerTarget, presetFromSlug, rankFromSlug } from '@/engine'
+import { careerShortName } from '@/utils/careerPathText'
 import { guidePageOf } from '@/utils/guideSections'
 
 const lazy = (v: keyof typeof VIEW_LOADERS) => defineAsyncComponent(VIEW_LOADERS[v])
@@ -28,6 +29,7 @@ const GuideView = lazy('guide')
 const BrowseView = lazy('subjects')
 const MajorsView = lazy('majors')
 const ShortlistView = lazy('shortlist')
+const CareersView = lazy('careers')
 
 const { view, param } = useView()
 const { t, locale } = useI18n()
@@ -45,11 +47,13 @@ const TITLES: Partial<Record<string, string>> = {
   subjects: 'browse.title',
   majors: 'majors.title',
   shortlist: 'shortlist.title',
+  careers: 'careerPath.title',
 }
 watchEffect(() => {
   const s = view.value === 'subject' ? data.value.subjects[param.value.toUpperCase()] : undefined
   const key = TITLES[view.value]
   const guidePage = view.value === 'guide' ? guidePageOf(param.value) : ({ kind: 'overview' } as const)
+  const career = view.value === 'careers' && param.value ? careerTarget(data.value, param.value) : undefined
   const major = view.value === 'majors' && param.value ? data.value.components.find((c) => c.id === param.value) : undefined
   // A quick pick's own page keeps the title its static page has, so search engines that run
   // the app see the same one.
@@ -61,6 +65,8 @@ watchEffect(() => {
   const breadthElsewhere = preset === 'breadth' && course.value !== 'B-SCI' ? data.value.courses.find((c) => c.code === course.value)?.title : undefined
   document.title = s
     ? `${t.value(subjectTitleKey(s), { code: s.code, title: withLocalTitle(s.title, localTitle(s, locale.value)) })} | PickMySubjects`
+    : career
+      ? `${t.value('careerPath.seoTitle', { job: careerShortName(career.names, locale.value) })} | PickMySubjects`
     : major
       ? `${t.value(major.informal ? 'seo.informalTitle' : major.kind === 'minor' ? 'seo.minorTitle' : major.kind === 'specialisation' ? 'seo.specTitle' : 'seo.majorTitle', { title: major.title })} | PickMySubjects`
       : ranking
@@ -97,6 +103,7 @@ watchEffect(() => {
     <BrowseView v-else-if="view === 'subjects'" />
     <MajorsView v-else-if="view === 'majors'" :id="param" />
     <ShortlistView v-else-if="view === 'shortlist'" />
+    <CareersView v-else-if="view === 'careers'" :id="param" />
     <PrivacyView v-else />
   </main>
   <footer class="footer">
@@ -104,6 +111,7 @@ watchEffect(() => {
       <nav class="footer-links" :aria-label="t('nav.more')">
         <a :href="link('subjects')">{{ t('browse.title') }}</a>
         <a :href="link('majors')">{{ t('majors.title') }}</a>
+        <a :href="link('careers')">{{ t('careerPath.title') }}</a>
         <a :href="link('guide')">{{ t('guide.title') }}</a>
         <a :href="link('about')">{{ t('app.about') }}</a>
         <a :href="link('contribute')">{{ t('nav.contribute') }}</a>
