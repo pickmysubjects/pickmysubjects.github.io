@@ -40,14 +40,19 @@ export function useSubjectFit(code: Ref<string>, year: Ref<number>) {
   const difficulty = computed(() => subjectDifficulty(data.value.subjects, code.value, course.value, year.value))
   const hasProfile = computed(() => hasFitProfile(profile.value))
   // The whole list (as Find subjects builds it), so betterThan compares against the same options.
+  // A student planning their whole degree looks up later-year subjects too: on this page the
+  // year cap lifts to the subject's own level, so it is judged as the student would meet it then.
+  const level = computed(() => data.value.subjects[code.value]?.level ?? 1)
+  const ahead = computed(() => (options.value.maxLevel !== undefined && level.value > options.value.maxLevel ? level.value : null))
+  const cardOptions = computed<RecommendOptions>(() => (ahead.value ? { ...options.value, maxLevel: ahead.value } : options.value))
   const list = computed(() => {
     if (!hasProfile.value) return null
     const skipped = new Map<string, Exclusion>()
-    return { recs: recommend(data.value, profile.value, { ...options.value, skipped }), skipped }
+    return { recs: recommend(data.value, profile.value, { ...cardOptions.value, skipped }), skipped }
   })
   const fit = computed(() => {
     const l = list.value
-    return l ? subjectFit(data.value, profile.value, options.value, code.value, { year: year.value, ...l }) : null
+    return l ? subjectFit(data.value, profile.value, cardOptions.value, code.value, { year: year.value, ...l }) : null
   })
-  return { difficulty, hasProfile, fit, course }
+  return { difficulty, hasProfile, fit, course, ahead }
 }

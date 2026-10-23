@@ -757,6 +757,7 @@ export const ja: Messages = {
     harderGroup: "難しくする点",
     suitsGroup: "合っている理由",
     watchGroup: "注意点",
+    ahead: "レベル{level}の科目で、通常は{level}年目に履修します。その時点で取れる科目と比べています。",
     betterThan: "選べる科目の {n}% より合っています",
     basis: {
       lead: "判断材料：{parts}。",

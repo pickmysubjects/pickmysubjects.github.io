@@ -757,6 +757,7 @@ export const zhCN: Messages = {
     harderGroup: "让它更难的",
     suitsGroup: "适合你的地方",
     watchGroup: "需要注意",
+    ahead: "这是 {level} 级的课，一般第 {level} 年修，这里按你到那时能选的课来比较。",
     betterThan: "比你 {n}% 的可选课程更适合",
     basis: {
       lead: "依据：{parts}。",

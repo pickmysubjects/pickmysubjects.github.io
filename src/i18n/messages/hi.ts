@@ -757,6 +757,7 @@ export const hi: Messages = {
     harderGroup: "इसे कठिन बनाता है",
     suitsGroup: "यह आपके लिए क्यों सही है",
     watchGroup: "ध्यान दें",
+    ahead: "यह लेवल {level} का सब्जेक्ट है, आम तौर पर साल {level} में लिया जाता है: उस समय आपके पास मौजूद विकल्पों से तुलना की गई है।",
     betterThan: "आपके {n}% विकल्पों से बेहतर मेल",
     basis: {
       lead: "आधार: {parts}",

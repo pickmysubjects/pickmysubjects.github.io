@@ -757,6 +757,7 @@ export const ms: Messages = {
     harderGroup: "Menjadikannya lebih susah",
     suitsGroup: "Kenapa ia sesuai",
     watchGroup: "Berhati-hati",
+    ahead: "Subjek tahap {level}, biasanya diambil pada tahun {level}: dibandingkan dengan subjek yang boleh anda ambil ketika itu.",
     betterThan: "Lebih sesuai daripada {n}% pilihan anda",
     basis: {
       lead: "Berdasarkan {parts}",

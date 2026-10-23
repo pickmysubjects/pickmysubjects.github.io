@@ -757,6 +757,7 @@ export const ko: Messages = {
     harderGroup: "어렵게 만드는 점",
     suitsGroup: "나에게 맞는 이유",
     watchGroup: "주의할 점",
+    ahead: "레벨 {level} 과목으로 보통 {level}학년에 들어요. 그때 들을 수 있는 과목과 비교했어요.",
     betterThan: "선택 가능한 과목의 {n}%보다 잘 맞아요",
     basis: {
       lead: "근거: {parts}. ",

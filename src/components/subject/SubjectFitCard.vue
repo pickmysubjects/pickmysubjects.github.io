@@ -19,7 +19,7 @@ const props = defineProps<{ subject: Subject; year: number }>()
 const { t } = useI18n()
 const { data } = useDataset()
 const { profile } = useProfile()
-const { difficulty, hasProfile, fit, course } = useSubjectFit(
+const { difficulty, hasProfile, fit, course, ahead } = useSubjectFit(
   computed(() => props.subject.code),
   toRef(props, 'year'),
 )
@@ -134,6 +134,7 @@ const hasLists = computed(() => easierItems.value.length + harderItems.value.len
           <span v-if="fitRec" class="sub">
             {{ t('fit.betterThan', { n: fitRec.betterThan }) }}<template v-if="fitRec.confidence === 'low'"> · {{ t('suggest.thinData') }}</template>
           </span>
+          <span v-if="ahead && fitRec" class="sub">{{ t('fit.ahead', { level: ahead }) }}</span>
         </template>
       </div>
     </div>

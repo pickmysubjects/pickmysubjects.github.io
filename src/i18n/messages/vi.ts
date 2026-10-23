@@ -757,6 +757,7 @@ export const vi: Messages = {
     harderGroup: "Làm môn khó hơn",
     suitsGroup: "Vì sao hợp với bạn",
     watchGroup: "Lưu ý",
+    ahead: "Môn cấp {level}, thường học năm {level}: so với các môn bạn có thể học vào lúc đó.",
     betterThan: "Hợp hơn {n}% các môn bạn có thể chọn",
     basis: {
       lead: "Dựa trên {parts}",

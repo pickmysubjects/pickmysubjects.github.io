@@ -760,6 +760,7 @@ export const en = {
     harderGroup: "Makes it harder",
     suitsGroup: "Why it suits you",
     watchGroup: "Watch out",
+    ahead: "A level-{level} subject, usually taken in year {level}: judged against what you could take by then.",
     betterThan: "Better fit than {n}% of your options",
     basis: {
       lead: "Based on {parts}",
