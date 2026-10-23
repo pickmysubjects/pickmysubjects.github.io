@@ -235,12 +235,14 @@ function difficultyLine(t: Translate, code: LocaleCode, s: Subject): string {
       : ''
   // Which way each reason pushes, said outright ("Makes it easier: …").
   const group = (key: string, rows: RankReason[]) => (rows.length ? `${t(key)}${CJK.has(code) ? '：' : ': '}${rows.map((r) => reasonText(t, code, r)).join(listSep(code))}` : '')
-  const reasons = [group('fit.easierGroup', d.pushes.easier), group('fit.harderGroup', d.pushes.harder)].filter(Boolean).join(CJK.has(code) ? '。' : '. ')
+  const both = d.factors.easier.length > 0 && d.factors.harder.length > 0
+  const reasons = [group('fit.easierGroup', d.factors.easier), group('fit.harderGroup', d.factors.harder)].filter(Boolean).join(CJK.has(code) ? '。' : '. ')
   const end = CJK.has(code) ? '。' : '.'
   return [
     t('fit.seo', { code: s.code, level: t(`fit.level.${d.level}`) }),
     note && !/[.。।]$/.test(note) ? note + end : note,
     reasons ? reasons + end : '',
+    d.level === 'average' && both ? t('fit.balanced') : '',
     d.factsOnly ? t('rank.factsOnly') + end : '',
   ]
     .filter(Boolean)

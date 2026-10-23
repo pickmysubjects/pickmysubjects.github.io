@@ -59,6 +59,19 @@ export interface Recommendation {
   eligibility: Tri
   reasons: Note[]
   warnings: Note[]
+  /**
+   * What the score is made of, in points either side of neutral (50) and the adjustments after:
+   * each signal's share (skills, interests, predicted mark, ease…) and each nudge. They add up to
+   * the score; nothing here changes it.
+   */
+  factors?: FitFactor[]
+}
+
+/** One part of a suggestion's score: `effect` points (+ helps, − hurts) and the specifics behind it. */
+export interface FitFactor {
+  key: string
+  effect: number
+  params: Params
 }
 
 export interface RecommendOptions {
@@ -223,6 +236,13 @@ export function marksForConditions(results: Profile['results'], data: Dataset): 
 
 const noSkip = (_: Exclusion): void => {}
 
+/** Move a suggestion's score (kept within 0–100) and note by how much and why, for "why it fits". */
+function shift(rec: Recommendation, key: string, delta: number, params: Params = {}): void {
+  const before = rec.score
+  rec.score = Math.min(100, Math.max(0, before + delta))
+  if (rec.score !== before) (rec.factors ??= []).push({ key, effect: rec.score - before, params })
+}
+
 export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions = {}): Recommendation[] {
   // Marks only: what a subject is about doesn't come into it, not even to break a tie.
   const asked = given.goal === 'easy' ? { ...given, interests: [] } : given
@@ -382,13 +402,15 @@ export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions =
     // different, since level-1 breadth is the usual way in.
     const behindBy = opts.maxLevel === undefined ? 0 : opts.maxLevel - s.level
     if (behindBy > 0 && opts.course && s.categories[opts.course] !== 'breadth') {
-      rec.score = Math.max(0, rec.score - (behindBy >= 2 ? BEHIND_LEVEL_COST : BEHIND_LEVEL_COST / 2))
+      shift(rec, 'behindLevel', -(behindBy >= 2 ? BEHIND_LEVEL_COST : BEHIND_LEVEL_COST / 2), { level: opts.maxLevel ?? 0 })
     }
     // Leaning on a skill the student finds hard, in a topic they didn't ask for: even
     // "challenge yourself" means a hard subject in something you care about, not this.
     if (!rec.reasons.some((x) => x.key === 'interests')) {
-      if (rec.warnings.some((x) => x.key === 'struggleSkills')) rec.score = Math.max(0, rec.score - OFF_TOPIC_STRUGGLE_COST)
-      else if (rec.warnings.some((x) => x.key === 'weakSkills')) rec.score = Math.max(0, rec.score - OFF_TOPIC_STRUGGLE_COST / 2)
+      const hard = rec.warnings.find((x) => x.key === 'struggleSkills')
+      const weak = rec.warnings.find((x) => x.key === 'weakSkills')
+      if (hard) shift(rec, 'offTopicStruggle', -OFF_TOPIC_STRUGGLE_COST, { skills: hard.params.skills ?? '' })
+      else if (weak) shift(rec, 'offTopicStruggle', -OFF_TOPIC_STRUGGLE_COST / 2, { skills: weak.params.skills ?? '' })
     }
     // "Challenge yourself" is a hard subject that's useful to *you*: once interests are given,
     // one unrelated to all of them drops below the ones in the student's own direction.
@@ -397,14 +419,14 @@ export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions =
     if (profile.goal === 'wam' && profile.interests.length) {
       const exact = topicsOf(s).topics.some((t) => profile.interests.includes(t))
       const strength = rec.reasons.some((x) => x.key === 'strengths' || x.key === 'goodAt')
-      if (!exact && !strength) rec.score = Math.max(0, rec.score - OFF_TOPIC_CHALLENGE_COST / 2)
+      if (!exact && !strength) shift(rec, 'offTopicWam', -OFF_TOPIC_CHALLENGE_COST / 2)
     }
     if (profile.goal === 'challenge' && profile.interests.length) {
       const topics = topicsOf(s).topics
       const exact = topics.some((t) => profile.interests.includes(t))
       // Not in their interests but built on a strength of theirs: half the drop.
       const strength = rec.reasons.some((x) => x.key === 'strengths' || x.key === 'goodAt')
-      if (!exact) rec.score = Math.max(0, rec.score - (strength ? OFF_TOPIC_CHALLENGE_COST / 2 : OFF_TOPIC_CHALLENGE_COST))
+      if (!exact) shift(rec, 'offTopicChallenge', -(strength ? OFF_TOPIC_CHALLENGE_COST / 2 : OFF_TOPIC_CHALLENGE_COST))
     }
     // What the student has actually chosen says what they like: more from a field they keep
     // taking as breadth, less from a field they've never touched when only a skill links it.
@@ -416,38 +438,38 @@ export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions =
       // passed in the same area.
       const continues = referencedSubjects(s.prerequisites).filter((c) => completed.has(c) && data.subjects[c]?.area === s.area)
       if (continues.length && !inProgramme) {
-        rec.score = Math.min(100, rec.score + PAST_CHOICE_NUDGE)
+        shift(rec, 'continues', PAST_CHOICE_NUDGE)
         rec.reasons.push(note('continues', { codes: continues.slice(0, 2).join(', ') }, `The next step after ${continues.slice(0, 2).join(', ')}, which you've done.`))
       }
-      if (breadthFields.has(field) && s.categories[opts.course ?? ''] === 'breadth') rec.score = Math.min(100, rec.score + PAST_CHOICE_NUDGE)
-      else if (!fromInterest && !inProgramme && !takenFields.has(field)) rec.score = Math.max(0, rec.score - PAST_CHOICE_NUDGE)
+      if (breadthFields.has(field) && s.categories[opts.course ?? ''] === 'breadth') shift(rec, 'breadthField', PAST_CHOICE_NUDGE)
+      else if (!fromInterest && !inProgramme && !takenFields.has(field)) shift(rec, 'newField', -PAST_CHOICE_NUDGE)
     }
     // Protecting a WAM (or after marks only): an elective in an area where the student's own marks
     // run low goes further down. One the major needs stays; it's flagged, not avoided.
     if ((profile.goal === 'wam' || profile.goal === 'easy') && rec.warnings.some((x) => x.key === 'averagedLow')) {
       const needed = roles !== null && (roles.required.has(s.code) || roles.options.has(s.code) || towardMajor.has(s.code))
-      if (!needed) rec.score = Math.max(0, rec.score - OFF_TOPIC_STRUGGLE_COST / 2)
+      if (!needed) shift(rec, 'lowMarksArea', -OFF_TOPIC_STRUGGLE_COST / 2)
     }
     // A condition only the student can check (a VCE score) and haven't said they meet: for a WAM
     // that's a risk, so it sits a little lower than an otherwise equal subject open to them.
     if ((profile.goal === 'wam' || profile.goal === 'easy') && rec.warnings.some((x) => x.key === 'eligibilityUnknown')) {
-      rec.score = Math.max(0, rec.score - UNCONFIRMED_RISK)
+      shift(rec, 'unconfirmed', -UNCONFIRMED_RISK)
     }
     // Marks only: the major's subjects are still labelled, but not pushed up.
     const bonus = profile.goal === 'easy' ? 0 : PROGRAMME_BONUS
     if (roles && (roles.required.has(s.code) || roles.options.has(s.code))) {
       const core = roles.required.has(s.code)
-      rec.score = Math.min(100, rec.score + bonus)
+      shift(rec, 'major', bonus)
       rec.reasons.unshift(note(core ? 'majorCore' : 'majorOption', {}, core ? 'Compulsory in your major.' : 'One of the choices in your major.'))
     } else if (towardMajor.has(s.code)) {
       const codes = (towardMajor.get(s.code) as string[]).slice(0, 3).join(', ')
-      rec.score = Math.min(100, rec.score + bonus)
+      shift(rec, 'major', bonus)
       rec.reasons.unshift(note('majorPath', { codes }, `Leads to ${codes} in your major.`))
     }
     if (opts.termSubjects && termBefore) {
       const after = termStress([...opts.termSubjects, s.code], data, profile, { course: opts.course }).level
       if (STRESS_RANK[after] > STRESS_RANK[termBefore]) {
-        rec.score = Math.max(0, rec.score - HEAVY_PICK_COST)
+        shift(rec, 'heavyTerm', -HEAVY_PICK_COST)
         rec.warnings.push(note(after === 'veryHeavy' ? 'makesVeryHeavy' : 'makesHeavy', {}, 'Adding it makes that semester heavier.'))
       }
     }
@@ -490,6 +512,8 @@ function score(s: Subject, ctx: ScoreCtx): Recommendation {
   const reasons: Note[] = []
   const warnings: Note[] = []
   const parts: Partial<Record<Signal, number>> = {}
+  // The specifics behind each signal, for saying why it fits (or doesn't) in the student's terms.
+  const detail: Partial<Record<Signal, Params>> = {}
 
   // Skill fit: how well the student's self-rated skills cover what the subject uses (its tags,
   // or what we infer from its area, title and prerequisites). Each of the five steps reads
@@ -502,6 +526,7 @@ function score(s: Subject, ctx: ScoreCtx): Recommendation {
     parts.skillFit = 0.6 * avg(fits) + 0.4 * Math.min(...fits)
     const at = (n: number) => rated.filter((k) => level(k) === n)
     const list = (ks: Skill[]) => ks.join(', ')
+    detail.skillFit = { weak: list([...at(1), ...at(2)]), strong: list([...at(5), ...at(4)]), uses: list(rated) }
     if (at(5).length) reasons.push(note('strengths', { skills: list(at(5)) }, `Uses your strengths: ${list(at(5))}.`))
     if (at(4).length) reasons.push(note('goodAt', { skills: list(at(4)) }, `Uses what you're good at: ${list(at(4))}.`))
     if (at(2).length) warnings.push(note('weakSkills', { skills: list(at(2)) }, `Leans on ${list(at(2))}, which you rated as weaker.`))
@@ -557,6 +582,7 @@ function score(s: Subject, ctx: ScoreCtx): Recommendation {
     else if (topics.length) parts.interest = inferred ? INTEREST_INFERRED_MISS : 0
     // Nothing known about what it covers: a little under neutral, so it can't tie with a real match.
     else parts.interest = INTEREST_UNKNOWN
+    detail.interest = { hit: hit.join(', '), topics: topics.join(', '), mine: interests.join(', ') }
     if (hit.length) reasons.push(note('interests', { topics: hit.join(', ') }, `Covers ${hit.join(', ')}, which you're interested in.`))
   }
 
@@ -573,6 +599,7 @@ function score(s: Subject, ctx: ScoreCtx): Recommendation {
     const m = guess.mark
     parts.predicted = clamp((m - 50) / 50)
     const params = { mark: Math.round(m), low: Math.round(guess.low), high: Math.round(guess.high), codes: guess.basis.join(', ') }
+    detail.predicted = params
     const wam = ctx.wam ?? m
     // Nothing related to go on: it's the student's overall level, and said as that.
     if (!guess.basis.length) reasons.push(note('predictedWam', params, `Likely ${params.low}–${params.high}, from your marks so far.`))
@@ -581,6 +608,7 @@ function score(s: Subject, ctx: ScoreCtx): Recommendation {
     else reasons.push(note('predictedRange', params, `Likely ${params.low}–${params.high}, from your marks in similar subjects.`))
   } else if (ctx.wam !== null) {
     parts.predicted = clamp((ctx.wam - 50) / 50)
+    detail.predicted = { wam: ctx.wam }
   }
 
   // Ease from crowd signals, shrunk toward neutral when there are few reviews.
@@ -688,7 +716,20 @@ function score(s: Subject, ctx: ScoreCtx): Recommendation {
   const seenWeight = present.reduce((sum, k) => sum + weights[k], 0)
   const seen = seenWeight > 0 ? present.reduce((sum, k) => sum + weights[k] * (parts[k] as number), 0) / seenWeight : 0.5
   const coverage = seenWeight / totalWeight
-  const value = 0.5 + (seen - 0.5) * (SURE_BASE + (1 - SURE_BASE) * coverage)
+  const shrink = SURE_BASE + (1 - SURE_BASE) * coverage
+  const value = 0.5 + (seen - 0.5) * shrink
+
+  // Each signal's share of the distance from neutral, in score points (they add up to score − 50).
+  const exam = s.assessment ? Math.round(s.assessment.filter((x) => x.kind === 'exam').reduce((a, x) => a + x.weight, 0)) : -1
+  const hurdles = s.assessment ? s.assessment.filter((x) => x.hurdle).length : 0
+  const easeDetail: Params = { exam, hurdles, goal: ctx.profile.goal, ...(s.signals && s.signals.reviews >= MIN_REVIEWS && s.signals.difficulty !== undefined ? { rated: s.signals.difficulty, n: s.signals.reviews } : {}) }
+  const factors: FitFactor[] = present
+    .map((k) => ({
+      key: k,
+      effect: Math.round(1000 * shrink * (weights[k] * ((parts[k] as number) - 0.5)) / seenWeight) / 10,
+      params: k === 'ease' || k === 'hardness' ? easeDetail : k === 'opens' ? { n: builtOn } : k === 'unlocks' ? { codes: unlocks.slice(0, 3).join(', ') } : (detail[k] ?? {}),
+    }))
+    .filter((f) => f.effect !== 0)
 
   return {
     code: s.code,
@@ -699,6 +740,7 @@ function score(s: Subject, ctx: ScoreCtx): Recommendation {
     eligibility: ctx.eligibility,
     reasons,
     warnings,
+    factors,
   }
 }
 

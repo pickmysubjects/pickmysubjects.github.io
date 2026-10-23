@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, toRef } from 'vue'
 import { Check, CircleMinus, Info, Minus, Plus, ThumbsUp, TriangleAlert } from 'lucide-vue-next'
-import { fitBasis, type RankReason, type Subject } from '@/engine'
+import { fitBasis, whyNotFit, type Subject } from '@/engine'
 import RowWarnings from '@/components/browse/RowWarnings.vue'
 import { link } from '@/composables/useView'
 import { useDataset } from '@/composables/useDataset'
@@ -9,7 +9,7 @@ import { useProfile } from '@/composables/useProfile'
 import { useSubjectFit } from '@/composables/useSubjectFit'
 import { useI18n } from '@/i18n'
 import { describeReq, reasonText } from '@/i18n/format'
-import { basisText } from '@/i18n/fitText'
+import { basisText, rankReasonText, whyText } from '@/i18n/fitText'
 
 /**
  * "Is it hard? Is it right for me?": two plain answers first (difficulty from the easy/hard
@@ -36,11 +36,23 @@ const diffNote = computed(() => {
   if (d.level === 'unknown') return ''
   if (d.place) return t.value(`fit.place.${d.place.direction}`, { n: d.place.place, course: courseTitle.value })
   if (d.unranked) return t.value(`fit.unranked.${d.unranked}`, { year: props.year, course: courseTitle.value })
-  return ''
+  return t.value('fit.forCourse', { course: courseTitle.value })
 })
-const rankText = (r: RankReason) => t.value(`rank.reason.${r.key}`, r.params)
-const easierItems = computed(() => difficulty.value.pushes.easier.map(rankText))
-const harderItems = computed(() => difficulty.value.pushes.harder.map(rankText))
+// Everything behind the verdict, each way, with its numbers.
+const easierItems = computed(() => difficulty.value.factors.easier.map((r) => rankReasonText(t.value, r)))
+const harderItems = computed(() => difficulty.value.factors.harder.map((r) => rankReasonText(t.value, r)))
+// The facts any student checks: how it's marked, and what it needs first.
+const facts = computed(() => {
+  const s = props.subject
+  const out: string[] = []
+  if (s.assessment?.length) {
+    const byKind = new Map<string, number>()
+    for (const task of s.assessment) byKind.set(task.kind, (byKind.get(task.kind) ?? 0) + task.weight)
+    out.push(t.value('fit.markedBy', { parts: [...byKind].map(([k, w]) => `${t.value(`assess.kind.${k}`)} ${Math.round(w)}%`).join(t.value('fit.basis.sep')) }))
+  }
+  if (s.prerequisites !== 'none' && s.prerequisites !== 'unknown') out.push(t.value('fit.needs', { req: trim(describeReq(t.value, s.prerequisites, course.value)) }))
+  return out
+})
 
 // ---- fit ----
 const fitTone = computed<Tone>(() => {
@@ -62,8 +74,22 @@ const cautions = computed(() =>
     c.key === 'closed' ? t.value('browse.closedForYou') : t.value('fit.notThisYear', { year: c.year }),
   ),
 )
+// A weak or middling fit says what holds it back, from the score's own parts.
+const weak = computed(() => fit.value?.kind === 'fit' && (fit.value.band === 'low' || fit.value.band === 'ok'))
+const whyNotItems = computed(() => {
+  const f = fit.value
+  if (!weak.value || f?.kind !== 'fit') return []
+  return whyNotFit(f.rec, profile.value, props.subject, data.value).map((x) => whyText(t.value, x))
+})
 const fitRec = computed(() => (fit.value?.kind === 'fit' ? fit.value.rec : null))
-const hasWatch = computed(() => !!fitRec.value?.warnings.length || !!fitRec.value?.alternatives?.length || cautions.value.length > 0)
+// Watch out, without what "why it's not a strong match" already says about weak skills.
+const SAID_IN_WHY = new Set(['weakSkills', 'struggleSkills'])
+const watchRec = computed(() => {
+  const r = fitRec.value
+  if (!r) return null
+  return whyNotItems.value.length ? { ...r, warnings: r.warnings.filter((w) => !SAID_IN_WHY.has(w.key)) } : r
+})
+const hasWatch = computed(() => !!watchRec.value?.warnings.length || !!watchRec.value?.alternatives?.length || cautions.value.length > 0)
 
 // ---- what both rest on: one quiet line ----
 const source = computed(() => {
@@ -72,7 +98,7 @@ const source = computed(() => {
   return d.factsOnly ? t.value('rank.factsOnly') : d.reviews > 0 ? t.value('fit.fromReviews', { n: d.reviews }) : ''
 })
 const basis = computed(() => (fit.value?.kind === 'fit' ? basisText(t.value, fitBasis(profile.value)) : ''))
-const hasLists = computed(() => easierItems.value.length + harderItems.value.length + suitsItems.value.length > 0 || hasWatch.value)
+const hasLists = computed(() => easierItems.value.length + harderItems.value.length + suitsItems.value.length + whyNotItems.value.length > 0 || hasWatch.value)
 </script>
 
 <template>
@@ -127,23 +153,34 @@ const hasLists = computed(() => easierItems.value.length + harderItems.value.len
             <li v-for="r in harderItems" :key="r" class="item item-warn"><Minus :size="14" aria-hidden="true" />{{ r }}</li>
           </ul>
         </div>
+        <p v-if="difficulty.level === 'average' && easierItems.length && harderItems.length" class="note">{{ t('fit.balanced') }}</p>
       </div>
       <div class="side">
+        <div v-if="whyNotItems.length" class="group">
+          <h3 class="group-title">{{ fit?.kind === 'fit' && fit.band === 'low' ? t('fit.whyNotGroup') : t('fit.holdsBackGroup') }}</h3>
+          <ul class="items">
+            <li v-for="r in whyNotItems" :key="r" class="item item-warn"><CircleMinus :size="14" aria-hidden="true" />{{ r }}</li>
+          </ul>
+        </div>
         <div v-if="suitsItems.length" class="group">
-          <h3 class="group-title">{{ t('fit.suitsGroup') }}</h3>
+          <h3 class="group-title">{{ weak ? t('fit.worksGroup') : t('fit.suitsGroup') }}</h3>
           <ul class="items">
             <li v-for="r in suitsItems" :key="r" class="item item-good"><Check :size="14" aria-hidden="true" />{{ r }}</li>
           </ul>
         </div>
         <div v-if="hasWatch" class="group">
           <h3 class="group-title">{{ t('fit.watchGroup') }}</h3>
-          <RowWarnings v-if="fitRec" class="watch" :rec="fitRec" />
+          <RowWarnings v-if="watchRec" class="watch" :rec="watchRec" />
           <ul v-if="cautions.length" class="items">
             <li v-for="c in cautions" :key="c" class="item item-warn"><TriangleAlert :size="13" aria-hidden="true" />{{ c }}</li>
           </ul>
         </div>
       </div>
     </div>
+
+    <ul v-if="facts.length" class="facts">
+      <li v-for="f in facts" :key="f">{{ f }}</li>
+    </ul>
 
     <p v-if="source || basis" class="basis">
       <Info :size="13" aria-hidden="true" />
@@ -316,6 +353,23 @@ const hasLists = computed(() => easierItems.value.length + harderItems.value.len
 .watch {
   margin-top: 0;
   font-size: 0.875rem;
+}
+
+.note {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
+}
+
+.facts {
+  display: grid;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.875rem;
+  line-height: 1.45;
+  color: var(--ink-soft);
 }
 
 .basis {

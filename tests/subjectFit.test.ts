@@ -5,9 +5,10 @@ import { LIST_TOP, listPlace, rankable, rankSubject, rankSubjects } from '../src
 import type { Subject } from '../src/engine/schema'
 import { forCourse } from '../src/engine/forCourse'
 import { recommend, yearLevel, type Profile, type RecommendOptions } from '../src/engine/recommend'
-import { fitBand, fitBasis, leadReasons, subjectDifficulty, subjectFit } from '../src/engine/subjectFit'
+import { fitBand, fitBasis, leadReasons, subjectDifficulty, subjectFit, whyNotFit } from '../src/engine/subjectFit'
+import { SKILLS } from '../src/engine/schema'
 import { discussionCount } from '../src/engine/schema'
-import { basisText } from '../src/i18n/fitText'
+import { basisText, rankReasonText, whyText } from '../src/i18n/fitText'
 import { interpolate } from '../src/i18n/interpolate'
 import { en as enMessages } from '../src/i18n/messages/en'
 import { dataset, subject } from './helpers'
@@ -173,47 +174,55 @@ describe('fit card = Find subjects "sort for me"', () => {
 
 describe('difficulty = the easy/hard lists', () => {
   for (const course of ['B-SCI', 'B-COM', 'B-ARTS', 'B-DES', 'B-MUS', 'B-FAVISART']) {
-    it(`${course}: easier/harder only for the top third of the list it leans to; place only within the chip's top 30`, () => {
+    it(`${course}: easier/harder are a top block of the list they lean to, about a third of it, ties kept together`, () => {
       const subjects = forCourse(real, course).subjects
-      const lists = {
-        easy: rankSubjects(Object.values(subjects), { direction: 'easy', course, year: YEAR }),
-        hard: rankSubjects(Object.values(subjects), { direction: 'hard', course, year: YEAR }),
+      for (const [direction, level] of [['easy', 'easier'], ['hard', 'harder']] as const) {
+        const list = rankSubjects(Object.values(subjects), { direction, course, year: YEAR })
+        const levels = list.map((r) => subjectDifficulty(subjects, r.subject.code, course, YEAR).level)
+        // A top block: once a subject down the list isn't `level`, none below it is.
+        const firstOut = levels.findIndex((l) => l !== level)
+        const n = firstOut === -1 ? levels.length : firstOut
+        expect(levels.slice(n).includes(level)).toBe(false)
+        // About a third of the list (a tie block at the cut-off goes to the side nearer a third).
+        if (list.length >= 30) {
+          expect(n / list.length).toBeGreaterThanOrEqual(0.2)
+          expect(n / list.length).toBeLessThanOrEqual(0.45)
+        }
+        // Ties never split across the cut-off.
+        if (n > 0 && n < list.length) {
+          const [x, y] = [list[n - 1]!, list[n]!]
+          expect(x.score === y.score && x.reviews === null === (y.reviews === null)).toBe(false)
+        }
       }
-      const cut = (d: 'easy' | 'hard') => lists[d][Math.ceil(lists[d].length / 3) - 1]!
-      const key = (d: 'easy' | 'hard', r: { reviews: number | null; score: number }) => {
-        const lean = r.reviews === null ? null : d === 'easy' ? r.reviews : -r.reviews
-        return { tier: lean === null ? 1 : lean >= 0.25 ? 0 : lean <= -0.25 ? 2 : 1, score: d === 'easy' ? r.score : -r.score }
-      }
-      const inTop = (d: 'easy' | 'hard', code: string) => {
-        const r = lists[d].find((x) => x.subject.code === code)
-        if (!r) return false
-        const [k, c] = [key(d, r), key(d, cut(d))]
-        return k.tier < c.tier || (k.tier === c.tier && k.score >= c.score)
-      }
-      const counts = { easier: 0, average: 0, harder: 0, unknown: 0 }
-      const ranked = Object.values(subjects).filter((s) => rankable(s, course, YEAR))
-      for (const s of ranked) {
+      // Nothing off both lists' top blocks is easier or harder; easier never leans hard and vice versa.
+      for (const s of Object.values(subjects).filter((x) => rankable(x, course, YEAR))) {
         const d = subjectDifficulty(subjects, s.code, course, YEAR)
-        counts[d.level]++
-        const chip = listPlace(subjects, s.code, course, YEAR)
-        expect(d.place).toEqual(chip)
-        if (d.place) expect(d.place.place).toBeLessThanOrEqual(LIST_TOP)
         if (d.level === 'unknown') continue
-        const want = chip ? (chip.direction === 'easy' ? 'easier' : 'harder') : inTop('easy', s.code) ? 'easier' : inTop('hard', s.code) ? 'harder' : 'average'
-        expect([s.code, d.level]).toEqual([s.code, want])
-        // Never against its own lean: an easier verdict leans easy, a harder one leans hard, with reasons.
         const score = rankSubject(s, 'easy')!.score
-        if (d.level === 'easier') expect([s.code, score > 0, lists.hard.some((x) => x.subject.code === s.code)]).toEqual([s.code, true, false])
-        if (d.level === 'harder') expect([s.code, score < 0, lists.easy.some((x) => x.subject.code === s.code)]).toEqual([s.code, true, false])
+        if (d.level === 'easier') expect([s.code, score > 0]).toEqual([s.code, true])
+        if (d.level === 'harder') expect([s.code, score < 0]).toEqual([s.code, true])
         if (d.level !== 'average') expect(d.reasons.length).toBeGreaterThan(0)
+        // The place is display only, and is the header chip's.
+        expect(d.place).toEqual(listPlace(subjects, s.code, course, YEAR))
+        if (d.place) expect(d.place.place).toBeLessThanOrEqual(LIST_TOP)
       }
-      expect(counts.average).toBeGreaterThan(ranked.length / 5)
-      for (const direction of ['easy', 'hard'] as const)
-        rankSubjects(Object.values(subjects), { direction, course, year: YEAR, limit: LIST_TOP }).forEach((r, i) =>
-          expect(subjectDifficulty(subjects, r.subject.code, course, YEAR)).toMatchObject({ level: direction === 'easy' ? 'easier' : 'harder', place: { direction, place: i + 1 } }),
-        )
     })
   }
+
+  it('list places: tied subjects share a place, so a tie across #30 is all shown or none', () => {
+    for (const course of ['B-SCI', 'B-ARTS', 'B-MUS']) {
+      const subjects = forCourse(real, course).subjects
+      for (const direction of ['easy', 'hard'] as const) {
+        const list = rankSubjects(Object.values(subjects), { direction, course, year: YEAR })
+        for (let i = 1; i < list.length; i++) {
+          const [a, b] = [list[i - 1]!, list[i]!]
+          const pa = listPlace(subjects, a.subject.code, course, YEAR)
+          const pb = listPlace(subjects, b.subject.code, course, YEAR)
+          if (a.score === b.score && (a.reviews === null) === (b.reviews === null) && pa?.direction === direction) expect(pb).toEqual(pa)
+        }
+      }
+    }
+  })
 
   it('regression: easy-leaning subjects are never "harder" (reviewer repros)', () => {
     const cases: [string, string][] = [
@@ -338,5 +347,64 @@ describe('which way each difficulty reason pushes', () => {
       if (d.pushes.easier.length && d.pushes.harder.length) mixed++
     }
     expect(mixed).toBeGreaterThan(0)
+  })
+})
+
+describe('why a fit is low (recommend factors)', () => {
+  const en = JSON.parse(JSON.stringify(enMessages)) as Record<string, unknown>
+  const lookup = (key: string) => key.split('.').reduce<unknown>((o, k) => (o as Record<string, unknown> | undefined)?.[k], en) as string | undefined
+  const t = (key: string, params?: Record<string, string | number>) => interpolate(lookup(key) ?? key, params)
+  // Like the user's: every strength rated, no marks, no interests.
+  const levels = [5, 4, 2, 3, 1, 4, 2, 5, 3, 2, 4, 1, 3, 5, 2, 3]
+  const strengthsOnly: Profile = { results: [], skills: Object.fromEntries(SKILLS.map((k, i) => [k, levels[i % levels.length]!])), interests: [], goal: 'balanced' }
+
+  it('the factors add up to the score (they explain it, not change it), and scores still equal sort for me', () => {
+    const data = forCourse(real, 'B-SCI')
+    for (const p of [coder, strengthsOnly, marked]) {
+      const recs = recommend(data, p, sortForMe(data, p, 'B-SCI'))
+      for (const r of recs.slice(0, 200)) {
+        const sum = (r.factors ?? []).reduce((a, f) => a + f.effect, 0)
+        expect(Math.abs(50 + sum - r.score)).toBeLessThanOrEqual(2)
+      }
+      expect(cardSays(p, 'B-SCI', recs[150]!.code)).toMatchObject({ betterThan: recs[150]!.betterThan })
+    }
+  })
+
+  it('strengths only: a low-fit subject says why, naming the actual skills; and that no interests are picked', () => {
+    const data = forCourse(real, 'B-SCI')
+    const recs = recommend(data, strengthsOnly, sortForMe(data, strengthsOnly, 'B-SCI'))
+    const lows = recs.filter((r) => fitBand(r.betterThan) === 'low')
+    expect(lows.length).toBeGreaterThan(20)
+    let named = 0
+    for (const r of lows.slice(0, 40)) {
+      const why = whyNotFit(r, strengthsOnly, data.subjects[r.code]!, data)
+      const text = why.map((f) => whyText(t, f))
+      expect(text.length).toBeGreaterThan(0)
+      expect(text).toContain("Nothing in it matches your interests — you haven't picked any yet")
+      for (const line of text) expect(line).not.toMatch(/fit\.why|\{/)
+      // The skills it names are the student's own ratings of this subject's skills.
+      const skillLine = why.find((f) => f.key === 'skillFit' || f.key === 'neutral' || f.key === 'offTopicStruggle')
+      if (skillLine) {
+        const listed = String(skillLine.params.weak || skillLine.params.uses || skillLine.params.skills).split(', ')
+        expect(listed.length).toBeGreaterThan(0)
+        for (const k of listed) expect(SKILLS).toContain(k)
+        if (skillLine.params.weak || skillLine.key === 'offTopicStruggle') for (const k of listed) expect(strengthsOnly.skills[k as keyof typeof strengthsOnly.skills]!).toBeLessThanOrEqual(2)
+        named++
+      }
+    }
+    expect(named).toBeGreaterThan(10)
+  })
+
+  it('difficulty shows every factor each way with its numbers', () => {
+    const subjects = forCourse(real, 'B-SCI').subjects
+    const d = subjectDifficulty(subjects, 'ABPL10005', 'B-SCI', YEAR)
+    expect(d.factors.easier.map((r) => rankReasonText(t, r))).toContain('Only 2 class hours a week')
+    expect(d.factors.harder.map((r) => r.key)).toContain('examHurdle')
+    for (const s of Object.values(subjects).slice(0, 300)) {
+      const x = subjectDifficulty(subjects, s.code, 'B-SCI', YEAR)
+      expect(x.factors.easier.length).toBeLessThanOrEqual(4)
+      expect(x.factors.harder.length).toBeLessThanOrEqual(4)
+      for (const r of [...x.factors.easier, ...x.factors.harder]) expect(rankReasonText(t, r)).not.toMatch(/\{|rank\.reason/)
+    }
   })
 })

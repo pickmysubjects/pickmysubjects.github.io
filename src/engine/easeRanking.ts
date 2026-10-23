@@ -275,8 +275,14 @@ export function listPlace(subjects: Record<string, Subject>, code: string, cours
     places = new Map()
     const list = Object.values(subjects)
     for (const direction of ['easy', 'hard'] as const) {
-      rankSubjects(list, { direction, course, year, limit: top }).forEach((r, i) => {
-        if (!places!.has(r.subject.code)) places!.set(r.subject.code, { direction, place: i + 1 })
+      // Tied subjects (same tier and score) share a place, numbered as the first of them, so a
+      // tie across #30 is either all shown or none.
+      const rows = rankSubjects(list, { direction, course, year })
+      let place = 0
+      rows.forEach((r, i) => {
+        const prev = rows[i - 1]
+        if (!prev || !sameSpot(prev, r, direction)) place = i + 1
+        if (place <= top && !places!.has(r.subject.code)) places!.set(r.subject.code, { direction, place })
       })
     }
     byKey.set(key, places)
@@ -287,14 +293,35 @@ export function listPlace(subjects: Record<string, Subject>, code: string, cours
 /** The share of a list, from its top, that reads as clearly easier (or harder) on a subject page. */
 export const LEAN_SHARE = 1 / 3
 
-const cutoffCache = new WeakMap<Record<string, Subject>, Map<string, { tier: number; score: number } | null>>()
+/** Same tier and score on a list: a tie, whatever the codes. */
+function sameSpot(a: RankedSubject, b: RankedSubject, direction: RankDirection): boolean {
+  return tier(a.reviews, direction) === tier(b.reviews, direction) && a.score === b.score
+}
+
+/** The last (tier, score) still in a list's top share; null when nothing is. */
+type Cutoff = { tier: number; score: number } | null
+const cutoffCache = new WeakMap<Record<string, Subject>, Map<string, Cutoff>>()
 
 /**
- * Whether a subject is in the top third of the easy (or hard) list for `course` in `year`: it
- * must lean that way by the list's own rule (belongs), and sit at or above the list's third by
- * tier and score. Ties with the cut-off all count, whatever their codes. A subject the lists leave
- * out (pass/fail, not running) is judged against the same cut-off.
+ * Where a list's top share ends. The share's last place often falls inside a block of tied
+ * subjects (many unreviewed subjects score the same); the whole block then goes on whichever
+ * side leaves the share closer to LEAN_SHARE, and above it when that's a draw.
  */
+function cutoffFor(list: RankedSubject[], direction: RankDirection): Cutoff {
+  if (!list.length) return null
+  const want = list.length * LEAN_SHARE
+  const at = list[Math.ceil(want) - 1]!
+  const first = list.findIndex((r) => sameSpot(r, at, direction))
+  let last = first
+  while (last + 1 < list.length && sameSpot(list[last + 1]!, at, direction)) last++
+  const above = first // subjects strictly above the block
+  const through = last + 1 // subjects up to and including the block
+  const end = Math.abs(through - want) < Math.abs(above - want) ? last : first - 1
+  if (end < 0) return { tier: -1, score: 0 } // nothing above the block: no subject is in the share
+  const r = list[end]!
+  return { tier: tier(r.reviews, direction), score: r.score }
+}
+
 export function inTopShare(subjects: Record<string, Subject>, s: Subject, direction: RankDirection, course: string, year: number): boolean {
   const r = rankSubject(s, direction)
   if (!r || !belongs(r, direction)) return false
@@ -303,9 +330,7 @@ export function inTopShare(subjects: Record<string, Subject>, s: Subject, direct
   const key = `${direction}|${course}|${year}`
   let cut = byKey.get(key)
   if (cut === undefined) {
-    const list = rankSubjects(Object.values(subjects), { direction, course, year })
-    const last = list[Math.ceil(list.length * LEAN_SHARE) - 1]
-    cut = last ? { tier: tier(last.reviews, direction), score: last.score } : null
+    cut = cutoffFor(rankSubjects(Object.values(subjects), { direction, course, year }), direction)
     byKey.set(key, cut)
   }
   // An empty list (a tiny data set): leaning that way is all there is to go on.

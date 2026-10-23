@@ -1,7 +1,8 @@
 import { periodsFor } from './availability'
 import { inTopShare, listPlace, rankable, rankSubject, type ListPlace, type RankDirection, type RankReason } from './easeRanking'
 import type { Note } from './plan'
-import { recommend, type Exclusion, type Profile, type Recommendation, type RecommendOptions } from './recommend'
+import { skillsOf } from './skills'
+import { recommend, type Exclusion, type FitFactor, type Profile, type Recommendation, type RecommendOptions } from './recommend'
 import { discussionCount, type Dataset, type Subject } from './schema'
 
 /**
@@ -24,6 +25,8 @@ export interface Difficulty {
   reasons: RankReason[]
   /** The same reasons split by which way each pushes: from the easy ranking's reasons, or the hard one's. */
   pushes: { easier: RankReason[]; harder: RankReason[] }
+  /** Everything behind the verdict, each way (up to four each, with their numbers). */
+  factors: { easier: RankReason[]; harder: RankReason[] }
   /** Nobody has reviewed or rated it: the verdict rests on Handbook facts alone. */
   factsOnly: boolean
   /** How many student reviews and ratings it rests on (0 when factsOnly). */
@@ -53,7 +56,7 @@ const notFirstYear = (r: RankReason) => r.key !== 'firstYear'
  */
 export function subjectDifficulty(subjects: Record<string, Subject>, code: string, course: string, year: number): Difficulty {
   const s = subjects[code]
-  const unknown: Difficulty = { level: 'unknown', place: null, reasons: [], pushes: { easier: [], harder: [] }, factsOnly: true, reviews: 0 }
+  const unknown: Difficulty = { level: 'unknown', place: null, reasons: [], pushes: { easier: [], harder: [] }, factors: { easier: [], harder: [] }, factsOnly: true, reviews: 0 }
   if (!s) return unknown
   const easy = rankSubject(s, 'easy')
   const hard = rankSubject(s, 'hard')
@@ -74,23 +77,18 @@ export function subjectDifficulty(subjects: Record<string, Subject>, code: strin
         : // On neither list: what pulls each way, the strongest of each first.
           { level: 'average', reasons: interleave(easy.reasons.filter(notFirstYear), hard.reasons.filter(notFirstYear)).slice(0, MAX_DIFFICULTY_REASONS) }
 
-  // The top third of each list: a subject must lean that way by the list's own rule, and sit in
-  // the list's top third (ties at the cut-off all in). Further down a list, or on neither: about
-  // average. The lists have no cut-off of their own, so a third is ours, the same for both.
-  // The header chip's place (top LIST_TOP of the real list) is shown, and the verdict follows it.
+  // The top third of each list: a subject must lean that way by the list's own rule and sit in
+  // the list's top third (a tie block at the cut-off stays together). Further down a list, or on
+  // neither: about average. The lists have no cut-off of their own, so a third is ours.
+  const direction: RankDirection | null = inTopShare(subjects, s, 'easy', course, year) ? 'easy' : inTopShare(subjects, s, 'hard', course, year) ? 'hard' : null
+  // Display only: its place near the top of a list, as the header chip shows it.
   const listed = rankable(s, course, year) ? listPlace(subjects, code, course, year) : null
-  const direction: RankDirection | null = listed
-    ? listed.direction
-    : inTopShare(subjects, s, 'easy', course, year)
-      ? 'easy'
-      : inTopShare(subjects, s, 'hard', course, year)
-        ? 'hard'
-        : null
   const v = verdict(direction)
   const fromEasy = new Set(easy.reasons)
   return {
     ...v,
     pushes: { easier: v.reasons.filter((r) => fromEasy.has(r)), harder: v.reasons.filter((r) => !fromEasy.has(r)) },
+    factors: { easier: easy.reasons, harder: hard.reasons },
     place: listed,
     factsOnly,
     reviews: factsOnly ? 0 : reviewCount(s),
@@ -196,4 +194,33 @@ export function subjectFit(data: Dataset, profile: Profile, opts: RecommendOptio
   const rec = recs.find((r) => r.code === code)
   if (rec) return { kind: 'fit', rec, band: fitBand(rec.betterThan), reasons: leadReasons(rec), cautions }
   return { kind: 'out', why: skipped.get(code) ?? { key: 'filtered' }, cautions }
+}
+
+// ---------- why it does or doesn't fit ----------
+
+/** Factors smaller than this (in score points) are noise, not a reason. */
+const WHY_MIN_EFFECT = 1
+const MAX_WHY = 3
+
+/**
+ * Why a suggestion scores low, from what its score is made of (recommend's own factors): the
+ * biggest drags first, with the specifics behind each. With no interests given, says so. When
+ * nothing pulls it down, it's that nothing in the profile points to it: 'neutral', naming the
+ * strong skills it doesn't use.
+ */
+export function whyNotFit(rec: Recommendation, profile: Pick<Profile, 'skills' | 'interests'>, s: Subject, data: Dataset): FitFactor[] {
+  const drags = (rec.factors ?? []).filter((f) => f.effect <= -WHY_MIN_EFFECT).sort((a, b) => a.effect - b.effect)
+  // The weak-skill nudge and the skills signal name the same skills: say it once, as the nudge.
+  if (drags.some((f) => f.key === 'offTopicStruggle')) {
+    const i = drags.findIndex((f) => f.key === 'skillFit' && f.params.weak)
+    if (i >= 0) drags.splice(i, 1)
+  }
+  const out = drags.slice(0, MAX_WHY)
+  if (profile.interests.length === 0) out.push({ key: 'noInterests', effect: 0, params: {} })
+  if (!drags.length) {
+    const uses = new Set(skillsOf(s, data))
+    const strong = (Object.keys(profile.skills) as (keyof typeof profile.skills)[]).filter((k) => (profile.skills[k] ?? 0) >= 4 && !uses.has(k))
+    out.unshift({ key: strong.length ? 'neutral' : 'neutralNone', effect: 0, params: { skills: strong.slice(0, 3).join(', ') } })
+  }
+  return out
 }

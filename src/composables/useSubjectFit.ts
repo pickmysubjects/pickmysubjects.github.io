@@ -33,8 +33,11 @@ export function useSubjectFit(code: Ref<string>, year: Ref<number>) {
   const { data, course: listCourse } = useDataset()
   const { profile } = useProfile()
   const options = useSortForMeOptions()
+  const plan = usePlan()
+  // One degree for both halves: the plan's (as "sort for me" uses), else the one the data shows.
+  const course = computed(() => plan.setup.value.course || listCourse.value)
 
-  const difficulty = computed(() => subjectDifficulty(data.value.subjects, code.value, listCourse.value, year.value))
+  const difficulty = computed(() => subjectDifficulty(data.value.subjects, code.value, course.value, year.value))
   const hasProfile = computed(() => hasFitProfile(profile.value))
   // The whole list (as Find subjects builds it), so betterThan compares against the same options.
   const list = computed(() => {
@@ -46,5 +49,5 @@ export function useSubjectFit(code: Ref<string>, year: Ref<number>) {
     const l = list.value
     return l ? subjectFit(data.value, profile.value, options.value, code.value, { year: year.value, ...l }) : null
   })
-  return { difficulty, hasProfile, fit, course: listCourse }
+  return { difficulty, hasProfile, fit, course }
 }
