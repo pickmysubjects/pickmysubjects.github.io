@@ -1,12 +1,12 @@
 import { readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 import { buildDataset } from '../scripts/dataset'
-import { careerNeeds, careerTarget, careerTargets, majorForCareer, majorsForCareer, tierSubject, TIERS, type CareerTarget, type TierContext } from '../src/engine/careerPaths'
+import { careerNeeds, careerTarget, careerTargets, majorForCareer, majorsForCareer, subjectCareers, tierSubject, TIERS, type CareerTarget, type TierContext } from '../src/engine/careerPaths'
 import { interpolate, type Params } from '../src/i18n/interpolate'
 import { en } from '../src/i18n/messages/en'
 import { zhTW } from '../src/i18n/messages/zh-TW'
-import { subjectNote } from '../src/utils/careerPathText'
-import { careerPageHtml } from '../src/utils/careersHtml'
+import { careerPhrase, subjectNote } from '../src/utils/careerPathText'
+import { careerPageHtml, careerSeo, subjectCareersHtml } from '../src/utils/careersHtml'
 import { subject } from './helpers'
 
 const { dataset: real } = buildDataset('real')
@@ -30,10 +30,14 @@ const fakeTarget = (skills: string[], name = 'Widget Accountant'): CareerTarget 
 
 describe('what a career is about', () => {
   it('reads fields off the official key skills and the job name, and sets generic skills aside', () => {
-    const n = careerNeeds(fakeTarget(['Accounting', 'Communication Skills', 'Microsoft Excel']))
+    const n = careerNeeds(fakeTarget(['Accounting', 'Communication Skills', 'Microsoft Excel', 'Writing']))
     expect(n.fields.get('accounting')).toEqual(['Accounting', ''])
-    expect(n.skills.get('data')).toEqual(['Microsoft Excel'])
-    expect(n.generic).toEqual(['Communication Skills'])
+    expect(n.generic).toEqual(['Communication Skills', 'Writing'])
+  })
+
+  it('reads no hands-on skill off office tools or plain writing (almost every job asks for them)', () => {
+    expect(careerNeeds(fakeTarget(['Microsoft Excel', 'Spreadsheets', 'Writing'])).skills.size).toBe(0)
+    expect(careerNeeds(fakeTarget(['Laboratory Skills'], 'Lab Scientist')).skills.has('lab')).toBe(true)
   })
 
   it("doesn't read a software engineer as general engineering", () => {
@@ -45,7 +49,7 @@ describe('what a career is about', () => {
 })
 
 describe('tiers', () => {
-  const needs = careerNeeds(fakeTarget(['Accounting', 'Microsoft Excel']))
+  const needs = careerNeeds(fakeTarget(['Accounting', 'Laboratory Skills']))
   const ctx = (extra: Partial<TierContext> = {}): TierContext => ({ needs, ...extra })
   const acc = { body: 'Body', summary: { en: 'x', zh: 'x' }, required: ['AAAA10001', ['AAAA10002', 'AAAA10003']], requiredBreadth: ['AAAA10004'], recommended: ['AAAA10005'], withOneOf: [], source: 'https://handbook.unimelb.edu.au/x' }
 
@@ -62,8 +66,21 @@ describe('tiers', () => {
     expect(helps.tier).toBe('helps')
     expect(helps.reasons).toContainEqual({ kind: 'field', topics: ['accounting'], from: ['Accounting'] })
     expect(tierSubject(subject({ code: 'BBBB10002', topics: ['marketing'] }), ctx()).tier).toBe('some')
-    expect(tierSubject(subject({ code: 'BBBB10003', topics: ['history'], skills: ['data'] }), ctx()).tier).toBe('some')
+    expect(tierSubject(subject({ code: 'BBBB10003', topics: ['history'], skills: ['lab'] }), ctx()).tier).toBe('some')
+    expect(tierSubject(subject({ code: 'BBBB10005', topics: ['history'], skills: ['data'] }), ctx()).tier).toBe('little')
     expect(tierSubject(subject({ code: 'BBBB10004', topics: ['history'] }), ctx({ helpful: ['BBBB10004'] })).tier).toBe('helps')
+  })
+
+  it('outside the major, a field the subject only touches on is somewhat related, not helping', () => {
+    // A film subject tagged with accounting second: its main field is film.
+    const film = subject({ code: 'DDDD20001', area: 'DDDD', topics: ['film-and-screen', 'accounting'] })
+    const outside = tierSubject(film, ctx({ mainFieldOnly: true }))
+    expect(outside.tier).toBe('some')
+    expect(outside.reasons).toEqual([{ kind: 'touches', topics: ['accounting'] }])
+    expect(tierSubject(film, ctx()).tier).toBe('helps')
+    // Its first tag, or its discipline (area code), is its main field.
+    expect(tierSubject(subject({ code: 'DDDD20002', area: 'DDDD', topics: ['accounting', 'history'] }), ctx({ mainFieldOnly: true })).tier).toBe('helps')
+    expect(tierSubject(subject({ code: 'ACCT20009', area: 'ACCT', topics: ['history', 'accounting'] }), ctx({ mainFieldOnly: true })).tier).toBe('helps')
   })
 
   it('never calls a subject useless: an unrelated one lists its other merits', () => {
@@ -103,6 +120,14 @@ describe('real data: accountant', () => {
     for (const row of [...r.subjects.helps, ...r.subjects.some]) expect(row.reasons.length, row.code).toBeGreaterThan(0)
   })
 
+  it('breadth that helps is breadth whose main field is the job’s, and Excel alone relates nothing', () => {
+    for (const m of majorsForCareer(real, 'accountant')) {
+      const r = majorForCareer(real, 'accountant', m.component)!
+      for (const row of r.breadth?.helps ?? []) expect(row.reasons.some((x) => x.kind === 'field' || x.kind === 'acc' || x.kind === 'helpful'), row.code).toBe(true)
+      for (const row of [...r.subjects.some, ...(r.breadth?.some ?? [])]) expect(row.reasons.some((x) => x.kind === 'skill'), row.code).toBe(false)
+    }
+  })
+
   it('a software career reaches the computing majors by field and sorts programming subjects as helping', () => {
     const target = careerTarget(real, 'software-engineer')!
     expect(target.kind).toBe('field')
@@ -119,5 +144,53 @@ describe('real data: accountant', () => {
     expect(html).toContain('會計師')
     expect(html).toContain('必修')
     expect(html).toContain('/s/ACCT30002')
+  })
+})
+
+describe('a job name inside an English sentence', () => {
+  it('adds a or an, lower-cases it, drops a bracketed note and keeps acronyms', () => {
+    const p = (en: string) => careerPhrase({ ...names(en), zh: '会计师' }, 'en')
+    expect(p('Accountant')).toBe('an accountant')
+    expect(p('Accountant (General)')).toBe('an accountant')
+    expect(p('Software Engineer')).toBe('a software engineer')
+    expect(p('ICT Business Analyst')).toBe('an ICT business analyst')
+    expect(p('User experience designer')).toBe('a user experience designer')
+    expect(p('Urban planner')).toBe('an urban planner')
+    expect(careerPhrase({ ...names('Accountant'), zh: '会计师' }, 'zh-CN')).toBe('会计师')
+  })
+
+  it('reads naturally in the career page title', () => {
+    const seo = careerSeo(real, careerTarget(real, 'accountant')!, translator(en), 'en')
+    expect(seo.title).toMatch(/^Becoming an accountant: /)
+    expect(seo.description).toContain('work as an accountant')
+  })
+})
+
+describe("a subject's careers", () => {
+  it('names the accreditation route that needs it, in the major and as breadth', () => {
+    const own = subjectCareers(real, 'ACCT30002')
+    expect(own.required.map((r) => [r.career.id, r.component])).toContainEqual(['accountant', 'accounting'])
+    expect(subjectCareers(real, 'BLAW10001').required.map((r) => r.career.id)).toContain('accountant')
+    // One of several ("this or that") counts as needed too.
+    const oneOf = majorsForCareer(real, 'psychologist').flatMap((m) => m.accreditation?.required.filter(Array.isArray).flat() ?? [])
+    if (oneOf[0]) expect(subjectCareers(real, oneOf[0]).required.length).toBeGreaterThan(0)
+  })
+
+  it('else lists careers its main field helps toward, best first; a film subject touching on budgets helps none', () => {
+    expect(subjectCareers(real, 'COMP30022').required).toEqual([])
+    expect(subjectCareers(real, 'COMP30022').helps[0]?.id).toBe('software-engineer')
+    expect(subjectCareers(real, 'FLTV20022')).toEqual({ required: [], helps: [] })
+    // One incidental key skill doesn't tie a management subject to a zoologist.
+    expect(subjectCareers(real, 'MGMT10002').helps.map((c) => c.id)).not.toContain('zoologist')
+  })
+
+  it('prerenders the line in Traditional Chinese, and nothing for an unrelated subject', () => {
+    const href = (id: string, major?: string) => `/careers/${id}${major ? `?major=${major}` : ''}`
+    const html = subjectCareersHtml(real, 'ACCT30002', translator(zhTW), 'zh-TW', href)
+    expect(html).toContain('和就業的關係')
+    expect(html).toContain('會計師')
+    expect(html).toContain('/careers/accountant?major=accounting')
+    expect(subjectCareersHtml(real, 'FLTV20022', translator(en), 'en', href)).toBe('')
+    expect(subjectCareersHtml(real, 'COMP30022', translator(en), 'en', href)).toContain('Helps toward: ')
   })
 })

@@ -980,6 +980,7 @@ export const ko: Messages = {
       field: "{topics}을(를) 다룸",
       fieldFrom: "{topics}을(를) 다룸. 고용주가 찾는 것: {skills}",
       near: "가까운 분야: {topics}",
+      touches: "{topics}도 다룸",
       skill: "{skills} 연습. 고용주가 찾는 것: {from}",
     },
     merit: {
@@ -997,6 +998,10 @@ export const ko: Messages = {
     generic: "거의 모든 직업이 {list}도 봅니다. 에세이, 발표, 조별 과제가 있는 과목이면 연습이 됩니다.",
     note: "Handbook과 공식 직업 페이지를 바탕으로 저희 규칙에 따라 나눈 것이며, 학교의 분류가 아닙니다. 수강 신청 전에 Handbook을 확인하세요.",
     fromMajor: "{job}에게 중요한 과목은?",
+    subjectTitle: "진로와의 관계",
+    subjectRequired: "{major} 전공의 {body} 인증({job}) 필수 과목",
+    subjectHelps: "도움이 되는 직업",
+    subjectMore: "외 {n}개",
     nothingHere: "이 전공의 과목이 아직 없습니다.",
   },
   majors: {

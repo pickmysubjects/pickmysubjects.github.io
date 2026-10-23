@@ -980,6 +980,7 @@ export const zhCN: Messages = {
       field: "涉及{topics}",
       fieldFrom: "涉及{topics}；雇主看重 {skills}",
       near: "相邻领域：{topics}",
+      touches: "涉及{topics}",
       skill: "练{skills}；雇主看重 {from}",
     },
     merit: {
@@ -997,6 +998,10 @@ export const zhCN: Messages = {
     generic: "几乎每个职业都看重{list}。有论文、展示或小组作业的课都能练到。",
     note: "按我们自己的规则，根据 Handbook 和官方职业页面整理，不是学校的分类。选课前请以 Handbook 为准。",
     fromMajor: "想当{job}，哪些课更重要？",
+    subjectTitle: "和就业的关系",
+    subjectRequired: "{major} 专业走 {body} 认证（{job}）的必修课",
+    subjectHelps: "对这些职业有帮助",
+    subjectMore: "另外 {n} 个",
     nothingHere: "这个专业还没有列出课程。",
   },
   majors: {

@@ -13,7 +13,7 @@ import { useI18n } from './i18n'
 import { localTitle, withLocalTitle } from './i18n/localized'
 import { PRESET_TITLE_KEYS, subjectTitleKey } from '@/utils/seo'
 import { careerTarget, presetFromSlug, rankFromSlug } from '@/engine'
-import { careerShortName } from '@/utils/careerPathText'
+import { careerPhrase } from '@/utils/careerPathText'
 import { guidePageOf } from '@/utils/guideSections'
 
 const lazy = (v: keyof typeof VIEW_LOADERS) => defineAsyncComponent(VIEW_LOADERS[v])
@@ -66,7 +66,7 @@ watchEffect(() => {
   document.title = s
     ? `${t.value(subjectTitleKey(s), { code: s.code, title: withLocalTitle(s.title, localTitle(s, locale.value)) })} | PickMySubjects`
     : career
-      ? `${t.value('careerPath.seoTitle', { job: careerShortName(career.names, locale.value) })} | PickMySubjects`
+      ? `${t.value('careerPath.seoTitle', { job: careerPhrase(career.names, locale.value) })} | PickMySubjects`
     : major
       ? `${t.value(major.informal ? 'seo.informalTitle' : major.kind === 'minor' ? 'seo.minorTitle' : major.kind === 'specialisation' ? 'seo.specTitle' : 'seo.majorTitle', { title: major.title })} | PickMySubjects`
       : ranking

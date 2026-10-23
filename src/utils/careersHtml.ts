@@ -1,7 +1,7 @@
 import { careerName, careerText, componentCareers, type CareerLang } from '../engine/careers'
 import type { Dataset } from '../engine/schema'
-import { careerShortName, subjectNote } from './careerPathText'
-import { careerTargets, easierIn, majorForCareer, majorsForCareer, TIERS, type CareerTarget, type Tiered } from '../engine/careerPaths'
+import { careerPhrase, careerShortName, subjectNote } from './careerPathText'
+import { careerTargets, easierIn, majorForCareer, majorsForCareer, subjectCareers, TIERS, type CareerTarget, type SubjectRequiredFor, type Tiered } from '../engine/careerPaths'
 import type { Translate } from '../i18n/interpolate'
 
 function esc(text: string): string {
@@ -56,7 +56,7 @@ export function careersHtml(
       const occ = j.occupation ? c.occupations[j.occupation] : undefined
       const q = x.qualifier === 'direct' ? '' : ` (${esc(t(`careers.qualifier.${x.qualifier}`))}${x.via ? `: ${esc(careerText(x.via, locale))}` : ''})`
       const link = occ ? ` · <a href="${esc(occ.url)}" rel="noopener">${esc(t('careers.official'))}: ${esc(occ.name)}</a>` : ''
-      const reverse = careerHref ? ` · <a href="${careerHref(j.id)}">${esc(t('careerPath.fromMajor', { job: careerShortName(j.names, locale) }))}</a>` : ''
+      const reverse = careerHref ? ` · <a href="${careerHref(j.id)}">${esc(t('careerPath.fromMajor', { job: careerPhrase(j.names, locale) }))}</a>` : ''
       return [`<li>${esc(careerLabel(j.names, locale))}${q}${link}${reverse}</li>`]
     })
     if (jobs.length) parts.push(`<ul>${jobs.join('')}</ul>`)
@@ -155,10 +155,34 @@ export function careerPageHtml(
 /** The search title and description for a career's page. */
 export function careerSeo(data: Dataset, target: CareerTarget, t: Translate, locale: string): { title: string; description: string } {
   const majors = majorsForCareer(data, target.id)
-  const job = careerShortName(target.names, locale)
+  const job = careerPhrase(target.names, locale)
   const names = [...new Set(majors.map((m) => m.title))].slice(0, 4).join(t('listSep'))
   return {
     title: `${t('careerPath.seoTitle', { job })} | PickMySubjects`,
     description: [t('careerPath.seoDesc', { job }), names ? `${t('careerPath.majorsTitle')}: ${names}.` : ''].filter(Boolean).join(' '),
   }
+}
+
+/** Careers a subject page names before "more" (the rest open on a tap). */
+export const SUBJECT_CAREERS_SHOWN = 3
+
+/** "Required for CPA Australia accreditation (Accountant) in Accounting", in the reader's language. */
+export function subjectRequiredText(t: Translate, r: SubjectRequiredFor, locale: string): string {
+  return t('careerPath.subjectRequired', { body: r.body, job: careerShortName(r.career.names, locale), major: r.major })
+}
+
+/**
+ * A subject page's careers line as plain HTML, for the prerendered page (SubjectCareers.vue shows
+ * the same in the app): the accreditation routes that need it, else the careers it helps toward.
+ * '' when it isn't tied to any career: the page says nothing rather than "not related".
+ */
+export function subjectCareersHtml(data: Dataset, code: string, t: Translate, locale: string, careerHref: (id: string, major?: string) => string): string {
+  const c = subjectCareers(data, code)
+  if (c.required.length) {
+    const items = c.required.map((r) => `<li><a href="${careerHref(r.career.id, r.component)}">${esc(subjectRequiredText(t, r, locale))}</a></li>`)
+    return `<h2>${esc(t('careerPath.subjectTitle'))}</h2><ul>${items.join('')}</ul>`
+  }
+  if (!c.helps.length) return ''
+  const links = c.helps.map((x) => `<a href="${careerHref(x.id)}">${esc(careerShortName(x.names, locale))}</a>`)
+  return `<h2>${esc(t('careerPath.subjectTitle'))}</h2><p>${esc(t('careerPath.subjectHelps'))}: ${links.join(esc(t('listSep')))}</p>`
 }

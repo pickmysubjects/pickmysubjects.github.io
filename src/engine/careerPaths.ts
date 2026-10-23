@@ -4,9 +4,12 @@
  *
  * Tiers are worked out by general rules from the data, never by subject code:
  * - required: the major's accreditation route names it (required, one of several, or required breadth);
- * - helps: the route recommends it, the Handbook lists it as helpful, or it covers a field the job
- *   itself is about (read off the official key skills and the job's name);
- * - some: a neighbouring field (same topic group), or a hands-on skill employers list (Excel → data);
+ * - helps: the route recommends it, the Handbook lists it as helpful, or its main field is one the
+ *   job itself is about (read off the official key skills and the job's name). The main field is
+ *   what its discipline (area code) is about, or its first tag: a field it only touches on (a film
+ *   subject's budgets) doesn't make it a subject for accountants;
+ * - some: a field it touches on, a neighbouring field (same topic group), or a hands-on skill
+ *   employers list (lab work for a lab scientist);
  * - little: none of the above. Never called useless: its other merits are listed instead.
  */
 import { componentCareers, type Accreditation, type CareerLang, type CareerQualifier, type CareerText, type Occupation } from './careers'
@@ -16,7 +19,7 @@ import { forCourse } from './forCourse'
 import { majorOverview } from './roles'
 import type { Dataset, Skill, Subject, Topic } from './schema'
 import { skillsOf } from './skills'
-import { relatedTopics, topicsOf } from './topics'
+import { homeTopics, relatedTopics, topicsOf } from './topics'
 
 /** A career a student can pick: a job the Handbook names, or an official occupation linked by field. */
 export interface CareerTarget {
@@ -129,10 +132,13 @@ const FIELD_WORDS: [RegExp, Topic[]][] = [
   [/journalis/i, ['media']],
 ]
 
-/** Hands-on skills employers list, and the subject skills that practise them (a weaker link). */
+/**
+ * Hands-on skills a job is built on, and the subject skills that practise them (a weaker link).
+ * Only skills specific to the job: office tools (Excel) and plain writing are asked of almost
+ * everyone, and would mark most subjects as related.
+ */
 const SKILL_WORDS: [RegExp, Skill[]][] = [
-  [/excel|spreadsheet/i, ['data']],
-  [/^writing$|journalis/i, ['writing']],
+  [/journalis/i, ['writing']],
   [/laborator|pathology|microbiolog/i, ['lab']],
 ]
 
@@ -140,7 +146,7 @@ const SKILL_WORDS: [RegExp, Skill[]][] = [
  * Key skills almost every job lists (communication, planning…): any subject can practise them, so
  * they don't sort subjects. Shown once as a note instead.
  */
-const GENERIC = /communication|planning|building relationships|organisational skills|problem solving|team ?work|time management|research|mentoring|team building/i
+const GENERIC = /communication|^writing$|planning|building relationships|organisational skills|problem solving|team ?work|time management|research|mentoring|team building/i
 
 export interface CareerNeeds {
   /** Fields the career is about, each with the words that said so (official skills, or the job's name). */
@@ -185,6 +191,8 @@ export type TierReason =
   | { kind: 'helpful' }
   /** Covers fields the job is about; `from` are the official key skills that name them ('' for the job's name). */
   | { kind: 'field'; topics: Topic[]; from: string[] }
+  /** Touches on a field the job is about, though its main field is another. */
+  | { kind: 'touches'; topics: Topic[] }
   /** Next door to a field the job is about (same topic group). */
   | { kind: 'near'; topics: Topic[] }
   /** Practises a hands-on skill employers list. */
@@ -213,6 +221,11 @@ export interface TierContext {
   easier?: (code: string) => boolean
   /** Does it count as breadth for the student's course? */
   breadth?: (code: string) => boolean
+  /**
+   * Outside the major (breadth, or a subject seen on its own): only its main field counts as
+   * covering what the job is about. Inside a major, the major already says what it is for.
+   */
+  mainFieldOnly?: boolean
 }
 
 function accReason(a: Accreditation | undefined, code: string): TierReason | null {
@@ -248,18 +261,27 @@ export function tierSubject(s: Subject, ctx: TierContext, data?: Dataset): Tiere
   else if (acc || ctx.helpful?.includes(s.code)) tier = 'helps'
   if (ctx.helpful?.includes(s.code)) reasons.push({ kind: 'helpful' })
 
-  const own = topicsOf(s).topics as Topic[]
-  const fields = own.filter((x) => ctx.needs.fields.has(x))
+  const t = topicsOf(s)
+  const own = t.topics as Topic[]
+  // Its main fields: what its discipline is about, and its first tag (or what its title says).
+  const main = new Set([...homeTopics(s), ...(t.inferred ? t.specific : t.topics.slice(0, 1))])
+  const matched = own.filter((x) => ctx.needs.fields.has(x))
+  const fields = matched.filter((x) => !ctx.mainFieldOnly || main.has(x))
+  const touches = matched.filter((x) => !fields.includes(x))
   if (fields.length) {
     const from = [...new Set(fields.flatMap((x) => ctx.needs.fields.get(x)!))].filter(Boolean)
     reasons.push({ kind: 'field', topics: fields, from })
     if (tier === 'little') tier = 'helps'
     weight += fields.length * 2 + from.length
   }
+  if (!fields.length && touches.length) {
+    reasons.push({ kind: 'touches', topics: touches })
+    weight += touches.length
+  }
   const wanted = [...ctx.needs.fields.keys()]
-  const near = own.filter((x) => !fields.includes(x) && wanted.some((w) => relatedTopics(x, w)))
+  const near = own.filter((x) => !matched.includes(x) && wanted.some((w) => relatedTopics(x, w)))
   const skills = skillsOf(s, data).filter((k) => ctx.needs.skills.has(k))
-  if (!fields.length && near.length) {
+  if (!fields.length && !touches.length && near.length) {
     reasons.push({ kind: 'near', topics: near })
     weight += near.length
   }
@@ -267,7 +289,7 @@ export function tierSubject(s: Subject, ctx: TierContext, data?: Dataset): Tiere
     reasons.push({ kind: 'skill', skills, from: [...new Set(skills.flatMap((k) => ctx.needs.skills.get(k)!))] })
     weight += skills.length
   }
-  if (tier === 'little' && (near.length || skills.length)) tier = 'some'
+  if (tier === 'little' && (touches.length || near.length || skills.length)) tier = 'some'
   return { code: s.code, tier, reasons, merits: merits(s, ctx, data), weight }
 }
 
@@ -319,7 +341,8 @@ export function majorForCareer(data: Dataset, careerId: string, component: strin
   const reqBreadth = (a?.requiredBreadth ?? []).filter((c) => data.subjects[c] && !pool.some((s) => s.code === c)).map((c) => data.subjects[c]!)
   let breadth: Tiered | null = null
   if (pool.length || reqBreadth.length) {
-    const rows = [...pool, ...reqBreadth].map((s) => tierSubject(s, ctx, data)).filter((r) => r.tier !== 'little')
+    const outside = { ...ctx, mainFieldOnly: true }
+    const rows = [...pool, ...reqBreadth].map((s) => tierSubject(s, outside, data)).filter((r) => r.tier !== 'little')
     breadth = group(rows, data.subjects)
     breadth.helps = breadth.helps.slice(0, BREADTH_SHOWN)
     breadth.some = breadth.some.slice(0, BREADTH_SHOWN)
@@ -335,4 +358,78 @@ export function easierIn(data: Dataset, course: string): (code: string) => boole
     const s = view.subjects[code]
     return !!s && inTopShare(view.subjects, s, 'easy', course, year)
   }
+}
+
+// ---------- a subject's careers ----------
+
+/** An accreditation route that needs the subject (in the major, one of several, or as breadth). */
+export interface SubjectRequiredFor {
+  career: CareerTarget
+  component: string
+  /** The major's title. */
+  major: string
+  body: string
+}
+
+export interface SubjectCareers {
+  /** Accreditation routes that need it, one per body and major. */
+  required: SubjectRequiredFor[]
+  /** Careers it helps toward (its main field is one the job is about, or a route recommends it), best match first. */
+  helps: CareerTarget[]
+}
+
+/**
+ * How central the subject's field is to the job, for a subject's own page (0: not enough to
+ * name the job there). A route or the Handbook naming it counts most; then a field the job's own
+ * name says, or one at least two of its key skills ask for. One incidental key skill ("Project
+ * Management" on a zoologist's list) isn't enough to call a management subject a zoology one.
+ */
+function central(row: TieredSubject, needs: CareerNeeds): number {
+  let score = 0
+  for (const r of row.reasons) {
+    if (r.kind === 'acc' || r.kind === 'helpful') score = Math.max(score, 100)
+    if (r.kind !== 'field') continue
+    const byName = r.topics.some((x) => needs.fields.get(x)?.includes(''))
+    if (byName || r.from.length >= 2) score = Math.max(score, row.weight + (byName ? 10 : 0))
+  }
+  return score
+}
+
+const NEEDS = new WeakMap<Dataset, Map<string, { target: CareerTarget; needs: CareerNeeds; majors: CareerMajor[] }>>()
+
+function careerIndex(data: Dataset) {
+  let index = NEEDS.get(data)
+  if (!index) {
+    index = new Map(careerTargets(data).map((t) => [t.id, { target: t, needs: careerNeeds(t), majors: majorsForCareer(data, t.id) }]))
+    NEEDS.set(data, index)
+  }
+  return index
+}
+
+/**
+ * How a subject, seen on its own page, relates to careers: by the same tiers as a career's page.
+ * Required when an accreditation route needs it; else helps when its main field is the job's.
+ */
+export function subjectCareers(data: Dataset, code: string): SubjectCareers {
+  const s = data.subjects[code]
+  const out: SubjectCareers = { required: [], helps: [] }
+  if (!s || !data.careers) return out
+  const seen = new Set<string>()
+  const helps: { target: CareerTarget; weight: number }[] = []
+  for (const { target, needs, majors } of careerIndex(data).values()) {
+    let best: TieredSubject | null = null
+    for (const m of majors.length ? majors : [undefined]) {
+      const entry = m ? componentCareers(data.careers, m.component) : undefined
+      const row = tierSubject(s, { needs, accreditation: m?.accreditation, helpful: entry?.helpfulSubjects?.codes, mainFieldOnly: true }, data)
+      if (row.tier === 'required' && m?.accreditation) {
+        const key = `${m.accreditation.body}|${m.title}`
+        if (!seen.has(key)) out.required.push({ career: target, component: m.component, major: m.title, body: m.accreditation.body })
+        seen.add(key)
+      } else if (row.tier === 'helps' && central(row, needs) > (best ? central(best, needs) : 0)) best = row
+    }
+    if (best && !out.required.some((r) => r.career.id === target.id)) helps.push({ target, weight: central(best, needs) })
+  }
+  const kind = (t: CareerTarget) => Number(t.kind !== 'job')
+  out.helps = helps.sort((a, b) => b.weight - a.weight || kind(a.target) - kind(b.target) || a.target.names.en.localeCompare(b.target.names.en)).map((x) => x.target)
+  return out
 }

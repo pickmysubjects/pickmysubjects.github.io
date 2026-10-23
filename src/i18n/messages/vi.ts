@@ -980,6 +980,7 @@ export const vi: Messages = {
       field: "Học về {topics}",
       fieldFrom: "Học về {topics}; nhà tuyển dụng cần {skills}",
       near: "Lĩnh vực gần: {topics}",
+      touches: "Có đề cập {topics}",
       skill: "Rèn {skills}; nhà tuyển dụng cần {from}",
     },
     merit: {
@@ -997,6 +998,10 @@ export const vi: Messages = {
     generic: "Hầu như nghề nào cũng cần {list}. Môn nào có bài luận, thuyết trình hay làm nhóm đều rèn được.",
     note: "Xếp theo quy tắc của chúng tôi, dựa trên Handbook và trang nghề nghiệp chính thức, không phải của trường. Hãy kiểm tra Handbook trước khi đăng ký.",
     fromMajor: "Môn nào quan trọng cho {job}?",
+    subjectTitle: "Liên quan đến nghề nghiệp",
+    subjectRequired: "Bắt buộc để được {body} kiểm định ({job}) trong ngành {major}",
+    subjectHelps: "Có ích cho nghề",
+    subjectMore: "thêm {n}",
     nothingHere: "Ngành này chưa có môn nào được liệt kê.",
   },
   majors: {

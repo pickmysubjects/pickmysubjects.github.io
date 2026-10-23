@@ -980,6 +980,7 @@ export const id: Messages = {
       field: "Membahas {topics}",
       fieldFrom: "Membahas {topics}; pemberi kerja mencari {skills}",
       near: "Dekat dengan bidang: {topics}",
+      touches: "Menyinggung {topics}",
       skill: "Melatih {skills}; pemberi kerja mencari {from}",
     },
     merit: {
@@ -997,6 +998,10 @@ export const id: Messages = {
     generic: "Hampir semua pekerjaan juga mencari {list}. Mata kuliah apa pun dengan esai, presentasi atau kerja kelompok melatihnya.",
     note: "Dikelompokkan dengan aturan kami sendiri dari Handbook dan halaman pekerjaan resmi, bukan oleh universitas. Cek Handbook sebelum mendaftar.",
     fromMajor: "Mata kuliah mana yang penting untuk {job}?",
+    subjectTitle: "Kaitan dengan karier",
+    subjectRequired: "Wajib untuk akreditasi {body} ({job}) di jurusan {major}",
+    subjectHelps: "Membantu untuk karier",
+    subjectMore: "+{n} lagi",
     nothingHere: "Belum ada mata kuliah untuk jurusan ini.",
   },
   majors: {

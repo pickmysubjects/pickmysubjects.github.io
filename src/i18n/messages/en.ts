@@ -951,7 +951,7 @@ export const en = {
     back: "All careers",
     heading: "I want to be: {job}",
     seoTitle: "Becoming {job}: which UniMelb major and subjects to take",
-    seoDesc: "Which University of Melbourne majors lead to {job}, which subjects accreditation requires, which ones help, and breadth ideas.",
+    seoDesc: "Which University of Melbourne majors lead to work as {job}, which subjects accreditation requires, which ones help, and breadth ideas.",
     summary: "Majors that lead there: {n}. Pick one to see its subjects sorted for this job.",
     majorsTitle: "Majors that lead there",
     how: {
@@ -983,6 +983,7 @@ export const en = {
       field: "Covers {topics}",
       fieldFrom: "Covers {topics}; employers ask for {skills}",
       near: "Close to the field: {topics}",
+      touches: "Touches on {topics}",
       skill: "Practises {skills}; employers ask for {from}",
     },
     merit: {
@@ -1000,6 +1001,10 @@ export const en = {
     generic: "Almost every job also asks for {list}. Any subject with essays, talks or group work practises these.",
     note: "Sorted by our own rules from the Handbook and the official job page, not by the University. Check the Handbook before you enrol.",
     fromMajor: "Which subjects matter for {job}?",
+    subjectTitle: "Careers",
+    subjectRequired: "Required for {body} accreditation ({job}) in {major}",
+    subjectHelps: "Helps toward",
+    subjectMore: "+{n} more",
     nothingHere: "No subjects listed for this major yet.",
   },
   majors: {

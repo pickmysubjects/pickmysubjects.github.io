@@ -980,6 +980,7 @@ export const hi: Messages = {
       field: "{topics} सिखाता है",
       fieldFrom: "{topics} सिखाता है; नियोक्ता माँगते हैं {skills}",
       near: "पास का क्षेत्र: {topics}",
+      touches: "{topics} को भी छूता है",
       skill: "{skills} का अभ्यास; नियोक्ता माँगते हैं {from}",
     },
     merit: {
@@ -997,6 +998,10 @@ export const hi: Messages = {
     generic: "लगभग हर नौकरी {list} भी माँगती है। निबंध, प्रेज़ेंटेशन या ग्रुप वर्क वाला कोई भी विषय इनका अभ्यास कराता है।",
     note: "Handbook और आधिकारिक नौकरी पेज के आधार पर हमारे अपने नियमों से छाँटा गया है, यूनिवर्सिटी ने नहीं। एनरोल करने से पहले Handbook ज़रूर देखें।",
     fromMajor: "{job} के लिए कौन से विषय ज़रूरी हैं?",
+    subjectTitle: "करियर से संबंध",
+    subjectRequired: "{major} मेजर में {body} मान्यता ({job}) के लिए ज़रूरी",
+    subjectHelps: "इन करियर में मदद करता है",
+    subjectMore: "+{n} और",
     nothingHere: "इस मेजर के विषय अभी सूचीबद्ध नहीं हैं।",
   },
   majors: {

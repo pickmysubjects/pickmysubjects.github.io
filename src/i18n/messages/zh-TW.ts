@@ -980,6 +980,7 @@ export const zhTW: Messages = {
       field: "涵蓋{topics}",
       fieldFrom: "涵蓋{topics}；雇主重視 {skills}",
       near: "相鄰領域：{topics}",
+      touches: "涉及{topics}",
       skill: "練習{skills}；雇主重視 {from}",
     },
     merit: {
@@ -997,6 +998,10 @@ export const zhTW: Messages = {
     generic: "幾乎每個職業都重視{list}。有報告、簡報或小組作業的課都能練到。",
     note: "依我們自己的規則，根據 Handbook 和官方職業頁面整理，不是學校的分類。選課前請以 Handbook 為準。",
     fromMajor: "想當{job}，哪些課比較重要？",
+    subjectTitle: "和就業的關係",
+    subjectRequired: "{major} 主修走 {body} 認證（{job}）的必修課",
+    subjectHelps: "對這些職業有幫助",
+    subjectMore: "另外 {n} 個",
     nothingHere: "這個主修還沒有列出課程。",
   },
   majors: {

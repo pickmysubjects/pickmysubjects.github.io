@@ -26,7 +26,7 @@ import { forCourse } from '../src/engine/forCourse'
 import { majorOverview } from '../src/engine/roles'
 import { groupMajors } from '../src/utils/majorGroups'
 import { ACCREDITATION } from '../src/utils/accreditation'
-import { careerJobLabels, careerListHtml, careerPageHtml, careerSeo, careersHtml } from '../src/utils/careersHtml'
+import { careerJobLabels, careerListHtml, careerPageHtml, careerSeo, careersHtml, subjectCareersHtml } from '../src/utils/careersHtml'
 import { careerTargets, majorsForCareer } from '../src/engine/careerPaths'
 import { componentCareers } from '../src/engine/careers'
 import { referencedSubjects } from '../src/engine/expr'
@@ -289,6 +289,9 @@ function subjectPage(code: LocaleCode, s: Subject): Page {
   if (needLinks.length) parts.push(`<ul>${needLinks.map((c) => `<li>${subjectLink(code, c)}</li>`).join('')}</ul>`)
   if (leads.length) parts.push(`<h2>${esc(t('subject.unlocks'))}</h2><ul>${leads.map((c) => `<li>${subjectLink(code, c)}</li>`).join('')}</ul>`)
   if (blocks.length) parts.push(`<h2>${esc(t('subject.blocks'))}</h2><ul>${blocks.map((c) => `<li>${subjectLink(code, c)}</li>`).join('')}</ul>`)
+  // How it relates to careers (nothing when it isn't tied to one), linking to the career pages.
+  const careers = subjectCareersHtml(data, s.code, t, code, (id, major) => `${href(code, `careers/${id}`)}${major ? `?major=${encodeURIComponent(major)}` : ''}`)
+  if (careers) parts.push(careers)
   if (assess) parts.push(`<h2>${esc(t('assess.title'))}</h2><p>${esc(assess)}</p>`)
   // Class hours are in the gist lines above, as on the app's page.
   // One visible section for what students think: public review summaries, our own ratings (3+),

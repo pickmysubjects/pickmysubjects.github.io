@@ -4,6 +4,7 @@ import { computed, nextTick, shallowRef } from 'vue'
 import { ArrowLeft } from 'lucide-vue-next'
 import AssessmentPanel from '@/components/subject/AssessmentPanel.vue'
 import MajorRoles from '@/components/subject/MajorRoles.vue'
+import SubjectCareers from '@/components/subject/SubjectCareers.vue'
 import OutsideLinks from '@/components/subject/OutsideLinks.vue'
 import SubjectAbout from '@/components/subject/SubjectAbout.vue'
 import FoldSection from '@/components/subject/FoldSection.vue'
@@ -106,6 +107,7 @@ const sections = computed(() => {
             <h2 class="sec-title">{{ t('subject.fitsTitle') }}</h2>
             <SubjectRoute :subject="subject" :year="year" :unlocks="unlocks" />
             <MajorRoles class="sec-roles" :code="code" />
+            <SubjectCareers class="sec-roles" :code="code" />
           </section>
 
           <!-- The long lower sections fold on phones (FoldSection), so the page isn't a mile long. -->

@@ -20,6 +20,8 @@ export function reasonText(t: Translate, r: TierReason): string {
       const topics = r.topics.map((x) => t(`topic.${x}`)).join(sep)
       return r.from.length ? t('careerPath.reason.fieldFrom', { topics, skills: few(r.from) }) : t('careerPath.reason.field', { topics })
     }
+    case 'touches':
+      return t('careerPath.reason.touches', { topics: r.topics.map((x) => t(`topic.${x}`)).join(sep) })
     case 'near':
       return t('careerPath.reason.near', { topics: r.topics.map((x) => t(`topic.${x}`)).join(sep) })
     case 'skill':
@@ -46,4 +48,27 @@ export function subjectNote(t: Translate, row: TieredSubject): string {
 /** A career's name for titles: ours in the reader's language, else the English one. */
 export function careerShortName(names: Record<CareerLang, string>, locale: string): string {
   return careerName(names, locale) || names.en
+}
+
+/** "an" before a vowel sound: a vowel letter (not a "you" u: user, unit), or an acronym read as a vowel (an ICT…). */
+function article(word: string): 'a' | 'an' {
+  if (/^[A-Z]{2,}\b/.test(word)) return /^[AEFHILMNORSX]/.test(word) ? 'an' : 'a'
+  const w = word.toLowerCase()
+  if (/^u[^aeiou][aeiou]/.test(w) || /^(eu|one\b|uni)/.test(w)) return 'a'
+  return /^[aeiou]/.test(w) || /^hour/.test(w) ? 'an' : 'a'
+}
+
+/**
+ * A career's name to use inside a sentence. English: with "a"/"an", in lower case, without a
+ * bracketed note ("Accountant (General)" → "an accountant"), acronyms kept (an ICT business
+ * analyst). Other languages have no article to add: our own name, as in titles.
+ */
+export function careerPhrase(names: Record<CareerLang, string>, locale: string): string {
+  if (careerName(names, locale)) return careerName(names, locale)
+  const name = names.en.replace(/\s*\([^)]*\)\s*/g, ' ').trim()
+  const lower = name
+    .split(' ')
+    .map((w) => (/^[A-Z][a-z]/.test(w) ? w.toLowerCase() : w))
+    .join(' ')
+  return `${article(name)} ${lower}`
 }

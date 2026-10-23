@@ -3,7 +3,7 @@ import { computed } from 'vue'
 import { BadgeCheck, ExternalLink } from 'lucide-vue-next'
 import { careerText, componentCareers } from '@/engine'
 import { careerLabel } from '@/utils/careersHtml'
-import { careerShortName } from '@/utils/careerPathText'
+import { careerPhrase } from '@/utils/careerPathText'
 import { link } from '@/composables/useView'
 import { useDataset } from '@/composables/useDataset'
 import { useI18n } from '@/i18n'
@@ -24,7 +24,7 @@ const jobs = computed(() =>
     if (!job) return []
     const occ = job.occupation ? careers.value?.occupations[job.occupation] : undefined
     const qualifier = c.qualifier === 'direct' ? '' : t.value(`careers.qualifier.${c.qualifier}`) + (c.via ? `: ${careerText(c.via, locale.value)}` : '')
-    return [{ id: c.job, name: label(job.names), short: careerShortName(job.names, locale.value), qualifier, occ }]
+    return [{ id: c.job, name: label(job.names), short: careerPhrase(job.names, locale.value), qualifier, occ }]
   }),
 )
 const related = computed(() => (entry.value?.relatedFields ?? []).flatMap((id) => careers.value?.occupations[id] ?? []).map((o) => ({ ...o, label: label(o.names) })))
@@ -66,7 +66,7 @@ const hasText = computed(() => entry.value?.careerText === true)
       <h3 class="part-title">{{ t('careers.relatedTitle') }}</h3>
       <p class="part-hint">{{ t('careers.relatedHint') }}</p>
       <p class="chips">
-        <a v-for="o in related" :key="`in-${o.id}`" class="chip" :href="link(`careers/${o.id}?major=${id}`)">{{ t('careerPath.fromMajor', { job: careerShortName(o.names, locale) }) }}</a>
+        <a v-for="o in related" :key="`in-${o.id}`" class="chip" :href="link(`careers/${o.id}?major=${id}`)">{{ t('careerPath.fromMajor', { job: careerPhrase(o.names, locale) }) }}</a>
         <a v-for="o in related" :key="o.id" class="chip" :href="o.url" target="_blank" rel="noopener">{{ o.label }} <ExternalLink :size="12" aria-hidden="true" /></a>
       </p>
     </div>

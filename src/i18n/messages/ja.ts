@@ -980,6 +980,7 @@ export const ja: Messages = {
       field: "{topics}を扱う",
       fieldFrom: "{topics}を扱う。雇用主が求めるのは {skills}",
       near: "隣の分野：{topics}",
+      touches: "{topics}にも触れる",
       skill: "{skills}を練習。雇用主が求めるのは {from}",
     },
     merit: {
@@ -997,6 +998,10 @@ export const ja: Messages = {
     generic: "ほとんどの仕事で{list}も求められます。レポート、発表、グループワークのある科目ならどれでも練習になります。",
     note: "Handbook と公式の職業ページをもとに、当サイト独自のルールで分類しています（大学の分類ではありません）。履修前に Handbook を確認してください。",
     fromMajor: "{job}にはどの科目が大事？",
+    subjectTitle: "仕事とのつながり",
+    subjectRequired: "{major} 専攻で {body} の資格認定（{job}）に必須",
+    subjectHelps: "役立つ仕事",
+    subjectMore: "ほか {n} 件",
     nothingHere: "この専攻の科目はまだ載っていません。",
   },
   majors: {
