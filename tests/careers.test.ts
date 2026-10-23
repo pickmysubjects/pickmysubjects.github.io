@@ -100,6 +100,27 @@ describe('careers data', () => {
     }
   })
 
+  it('names only current subjects a student of that course can take, required breadth as breadth', () => {
+    for (const [comp, h] of Object.entries(careers.components)) {
+      const m = careers.majors[h]!
+      const course = real.components.find((c) => c.id === comp)!.course
+      const a = m.accreditation
+      for (const c of [...(a ? accreditationCodes(a) : []), ...(m.helpfulSubjects?.codes ?? [])]) {
+        const s = real.subjects[c]!
+        expect(s.discontinuedFrom, `${comp} ${c}`).toBeUndefined()
+        expect(s.categories[course], `${comp} ${c} in ${course}`).toBeDefined()
+      }
+      for (const c of a?.requiredBreadth ?? []) expect(real.subjects[c]!.categories[course], `${comp} ${c}`).toBe('breadth')
+    }
+  })
+
+  it('links every occupation to its yourcareer.gov.au page by its ANZSCO code', () => {
+    for (const o of Object.values(careers.occupations)) {
+      expect(o.url, o.id).toMatch(/^https:\/\/www\.yourcareer\.gov\.au\/occupations\/\d{6}\/[a-z0-9-]+$/)
+      expect(o.url, o.id).toContain(`/${o.anzsco}/`)
+    }
+  })
+
   it('maps each entry to components of its own course', () => {
     for (const [id, h] of Object.entries(careers.components)) {
       expect(real.components.find((c) => c.id === id)?.course).toBe(careers.majors[h]!.handbookId.split('-').slice(0, 2).join('-').toUpperCase())

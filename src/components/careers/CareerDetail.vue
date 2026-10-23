@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, shallowRef } from 'vue'
+import { computed, shallowRef, watch } from 'vue'
 import { ArrowLeft, BadgeCheck, ExternalLink } from 'lucide-vue-next'
 import CareerTiers from './CareerTiers.vue'
 import { careerTarget, easierIn, majorForCareer, majorsForCareer, careerText, TIERS } from '@/engine'
@@ -23,6 +23,8 @@ const year = computed(() => plan.terms.value[0]?.year ?? new Date().getFullYear(
 
 // The chosen major: from the address (?major=), else the plan's own major when it leads here, else the first.
 const picked = shallowRef(query.value.get('major') ?? '')
+// Back/forward (or a link to another major of the same job) changes ?major= without a remount.
+watch(() => query.value.get('major'), (m) => (picked.value = m ?? ''))
 const chosen = computed(() => {
   const ids = majors.value.map((m) => m.component)
   const own = plan.setup.value.major

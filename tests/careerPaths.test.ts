@@ -48,6 +48,37 @@ describe('what a career is about', () => {
   })
 })
 
+describe('cross-field key skills', () => {
+  it('reads project management, contracts, budgets and clinical work as a side link, not the job’s field', () => {
+    const n = careerNeeds(fakeTarget(['Civil Engineering', 'Project Management', 'Stakeholder Management', 'Contract Management', 'Budgeting', 'Clinical Research', 'Network Security'], 'Civil Engineer'))
+    for (const x of ['management', 'law', 'accounting', 'health', 'systems'] as const) {
+      expect(n.fields.has(x), x).toBe(false)
+      expect(n.side.has(x), x).toBe(true)
+    }
+    expect(n.fields.has('engineering')).toBe(true)
+    expect(n.fields.has('security')).toBe(true)
+  })
+
+  it('still gives the field in full when the job’s own name says it', () => {
+    const n = careerNeeds(fakeTarget(['Project Management'], 'Project Manager'))
+    expect(n.fields.has('management')).toBe(true)
+    expect(n.side.has('management')).toBe(false)
+  })
+
+  it('a subject on a side field is somewhat related, never helping', () => {
+    const needs = careerNeeds(fakeTarget(['Geology', 'Project Management'], 'Geologist'))
+    const mgmt = subject({ code: 'EEEE10001', area: 'EEEE', topics: ['management'] })
+    expect(tierSubject(mgmt, { needs }).tier).toBe('some')
+    expect(tierSubject(mgmt, { needs, mainFieldOnly: true }).tier).toBe('some')
+  })
+
+  it("doesn't read planning or research words as generic when they name a field", () => {
+    const n = careerNeeds(fakeTarget(['Town Planning', 'Planning', 'Research'], 'Planner'))
+    expect(n.fields.has('urban-planning')).toBe(true)
+    expect(n.generic).toEqual(['Planning', 'Research'])
+  })
+})
+
 describe('tiers', () => {
   const needs = careerNeeds(fakeTarget(['Accounting', 'Laboratory Skills']))
   const ctx = (extra: Partial<TierContext> = {}): TierContext => ({ needs, ...extra })
@@ -182,6 +213,27 @@ describe("a subject's careers", () => {
     expect(subjectCareers(real, 'FLTV20022')).toEqual({ required: [], helps: [] })
     // One incidental key skill doesn't tie a management subject to a zoologist.
     expect(subjectCareers(real, 'MGMT10002').helps.map((c) => c.id)).not.toContain('zoologist')
+  })
+
+  it('no engineer, scientist or psychologist gets a management or law subject as helping just from a cross-field key skill', () => {
+    for (const id of ['civil-engineer', 'geologist', 'zoologist', 'quantity-surveyor', 'psychologist', 'veterinarian', 'ict-security-specialist', 'secondary-school-teacher']) {
+      const t = careerTarget(real, id)
+      if (!t) continue
+      for (const m of majorsForCareer(real, id)) {
+        const r = majorForCareer(real, id, m.component)!
+        for (const row of [...r.subjects.helps, ...(r.breadth?.helps ?? [])]) {
+          const field = row.reasons.find((x) => x.kind === 'field')
+          if (field?.kind === 'field') expect(field.topics.filter((x) => ['management', 'law'].includes(x)), `${id} ${row.code}`).toEqual([])
+        }
+      }
+    }
+  })
+
+  it('a subject from a discipline with its own field (music) is not a health subject for a vet', () => {
+    for (const m of majorsForCareer(real, 'veterinarian')) {
+      const r = majorForCareer(real, 'veterinarian', m.component)!
+      for (const row of r.breadth?.helps ?? []) expect(row.code.startsWith('MUSI'), row.code).toBe(false)
+    }
   })
 
   it('prerenders the line in Traditional Chinese, and nothing for an unrelated subject', () => {

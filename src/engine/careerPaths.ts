@@ -100,20 +100,17 @@ export function majorsForCareer(data: Dataset, id: string): CareerMajor[] {
  */
 const FIELD_WORDS: [RegExp, Topic[]][] = [
   [/\baccount|audit|\btax/i, ['accounting']],
-  [/budget|cost control/i, ['accounting', 'finance']],
-  [/financ|pricing|investment|asset management/i, ['finance']],
+  [/financ|investment|asset management/i, ['finance']],
   [/econom/i, ['economics']],
   [/actuar/i, ['actuarial', 'statistics']],
   [/statistic|\bsas\b|data analysis|analytics/i, ['statistics', 'data-science']],
   [/\bsql\b|database/i, ['databases']],
   [/software|comput|\bjava\b|javascript|c#|python|programming|web site|web develop|\bapp\b|developer/i, ['programming', 'software-engineering']],
   [/security|cyber/i, ['security']],
-  [/cisco|network|technical support|infrastructure|\bict\b/i, ['systems']],
-  [/business (analysis|analyst|process|management|development)|process improvement|change management|strategic planning|organisational development|management consult/i, ['management', 'business']],
-  [/project manag|stakeholder/i, ['management']],
-  [/marketing|social media|\bsales\b|market research/i, ['marketing']],
+  [/network engineer|network admin|infrastructure|\bict\b/i, ['systems']],
+  [/business (analysis|analyst|process|management)|management consult|human resource management/i, ['management', 'business']],
+  [/marketing|social media|market research/i, ['marketing']],
   [/recruit|employee relations|human resource|equity and diversity/i, ['human-resources']],
-  [/contract/i, ['law']],
   [/construction|land development|quantity surveyor/i, ['construction', 'property']],
   [/\barchitect|revit|autocad/i, ['architecture', 'design']],
   [/landscape/i, ['architecture', 'environment']],
@@ -125,11 +122,29 @@ const FIELD_WORDS: [RegExp, Topic[]][] = [
   [/environment/i, ['environment']],
   [/meteorolog|weather/i, ['earth-science', 'physics']],
   [/geolog/i, ['earth-science']],
-  [/psycholog|mental health/i, ['psychology']],
-  [/nutrition|dietetic|dietitian|clinical|surgery|ultrasound|patient|medical|rehabilitation|veterin/i, ['health']],
+  [/psycholog/i, ['psychology']],
+  [/nutrition|dietetic|dietitian|(?<!bio)medical|nurs|physiotherap|pharmac/i, ['health']],
+  [/veterin|animal (science|health|production)/i, ['biology', 'agriculture']],
   [/adobe|graphic|illustrat|indesign|photoshop|concept development|interior|interaction design|experience design|service design|performance design/i, ['design', 'visual-communication']],
   [/music|piano|singing|performing artist/i, ['music', 'performance']],
   [/journalis/i, ['media']],
+]
+
+/**
+ * Key skills that name a field but are asked of people in many fields: project management and
+ * stakeholders (engineers, geologists), contracts (surveyors), budgets and pricing (most managers),
+ * business development (recruiters), clinical or mental-health work (psychologists), networks
+ * (anyone in IT). Read off a key skill they only make a subject "somewhat related"; a job whose
+ * own name says the field (project manager, management consultant) still gets it in full.
+ */
+const SIDE_WORDS: [RegExp, Topic[]][] = [
+  [/budget|cost control/i, ['accounting', 'finance']],
+  [/pricing|risk management/i, ['finance']],
+  [/project manag|stakeholder|change management|strategic planning|organisational development|process improvement|business development/i, ['management', 'business']],
+  [/\bsales\b/i, ['marketing']],
+  [/contract/i, ['law']],
+  [/network|cisco|technical support/i, ['systems']],
+  [/clinical|mental health|patient|rehabilitation|surgery|ultrasound|biomedical/i, ['health']],
 ]
 
 /**
@@ -146,11 +161,13 @@ const SKILL_WORDS: [RegExp, Skill[]][] = [
  * Key skills almost every job lists (communication, planning…): any subject can practise them, so
  * they don't sort subjects. Shown once as a note instead.
  */
-const GENERIC = /communication|^writing$|planning|building relationships|organisational skills|problem solving|team ?work|time management|research|mentoring|team building/i
+const GENERIC = /communication|^writing$|^planning$|building relationships|organisational skills|problem solving|team ?work|time management|^research$|mentoring|team building/i
 
 export interface CareerNeeds {
   /** Fields the career is about, each with the words that said so (official skills, or the job's name). */
   fields: Map<Topic, string[]>
+  /** Fields only a cross-field key skill names (project management, budgeting…): a weaker link. */
+  side: Map<Topic, string[]>
   /** Hands-on skills employers list, each with the skills that asked for it. */
   skills: Map<Skill, string[]>
   /** Key skills every job asks for (shown as a note). */
@@ -160,6 +177,7 @@ export interface CareerNeeds {
 /** What a career is about: read off its official key skills and its name, by the word lists above. */
 export function careerNeeds(t: CareerTarget): CareerNeeds {
   const fields = new Map<Topic, string[]>()
+  const side = new Map<Topic, string[]>()
   const skills = new Map<Skill, string[]>()
   const generic: string[] = []
   const add = <K>(map: Map<K, string[]>, key: K, from: string) => {
@@ -169,6 +187,8 @@ export function careerNeeds(t: CareerTarget): CareerNeeds {
   }
   const read = (text: string, label: string) => {
     for (const [rx, topics] of FIELD_WORDS) if (rx.test(text)) topics.forEach((x) => add(fields, x, label))
+    // The job's own name ('' label) is about its field in full; a key skill only on the side.
+    for (const [rx, topics] of SIDE_WORDS) if (rx.test(text)) topics.forEach((x) => add(label ? side : fields, x, label))
     for (const [rx, ks] of SKILL_WORDS) if (rx.test(text)) ks.forEach((x) => add(skills, x, label))
   }
   for (const s of t.occupation?.skills ?? []) {
@@ -178,7 +198,8 @@ export function careerNeeds(t: CareerTarget): CareerNeeds {
   // The job's own name ("accountant", "computing professional") says what field it is in;
   // '' marks a field read off the name rather than a listed skill.
   for (const n of new Set([t.names.en, t.occupation?.name ?? ''])) if (n) read(n, '')
-  return { fields, skills, generic }
+  for (const x of fields.keys()) side.delete(x)
+  return { fields, side, skills, generic }
 }
 
 // ---------- tiers ----------
@@ -264,10 +285,16 @@ export function tierSubject(s: Subject, ctx: TierContext, data?: Dataset): Tiere
   const t = topicsOf(s)
   const own = t.topics as Topic[]
   // Its main fields: what its discipline is about, and its first tag (or what its title says).
-  const main = new Set([...homeTopics(s), ...(t.inferred ? t.specific : t.topics.slice(0, 1))])
+  // A discipline with a known field (music, education) is about that field, whatever else it
+  // tags: Music and Health is a music subject, not one for vets. Only a cross-discipline area
+  // (university breadth) falls back to the first tag.
+  const home = homeTopics(s)
+  const main = new Set(home.length ? home : t.inferred ? t.specific : t.topics.slice(0, 1))
   const matched = own.filter((x) => ctx.needs.fields.has(x))
   const fields = matched.filter((x) => !ctx.mainFieldOnly || main.has(x))
-  const touches = matched.filter((x) => !fields.includes(x))
+  // A field the job only touches through a cross-field key skill (an engineer's project management).
+  const sideOnly = own.filter((x) => ctx.needs.side.has(x) && !matched.includes(x) && (!ctx.mainFieldOnly || main.has(x)))
+  const touches = [...matched.filter((x) => !fields.includes(x)), ...sideOnly]
   if (fields.length) {
     const from = [...new Set(fields.flatMap((x) => ctx.needs.fields.get(x)!))].filter(Boolean)
     reasons.push({ kind: 'field', topics: fields, from })
