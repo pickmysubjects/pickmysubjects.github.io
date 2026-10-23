@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import BrowseSwitch from '@/components/browse/BrowseSwitch.vue'
 import DegreeBadge from '@/components/browse/DegreeBadge.vue'
 import { computed, shallowRef } from 'vue'
 import { BadgeCheck, ChevronDown, ChevronRight, Search } from 'lucide-vue-next'
@@ -68,7 +67,6 @@ const courseTitle = computed(() => data.value.courses.find((c) => c.code === cou
     <header>
       <div class="head-row">
         <h1 class="page-title">{{ t('majors.title') }}</h1>
-        <BrowseSwitch current="majors" />
       </div>
       <p class="page-lede">{{ t('majors.lede', { course: courseTitle }) }}</p>
       <DegreeBadge :course="course" />

@@ -1,4 +1,4 @@
-import { Heart, House, ListFilter, Route, User } from 'lucide-vue-next'
+import { Briefcase, GraduationCap, Heart, House, Library, ListFilter, Route, User } from 'lucide-vue-next'
 import type { View } from '@/composables/useView'
 
 /** Shared by the header (desktop) and the bottom tab bar (phones). */
@@ -18,3 +18,17 @@ export const MY_STEPS: { view: View; key: string; icon: typeof House }[] = [
   // Subjects saved to look at again (and compare): a tap away from the plan they may go into.
   { view: 'shortlist', key: 'shortlist.title', icon: Heart },
 ]
+
+/** The ways in under "Browse": not a sequence, so shown without step numbers. */
+export const BROWSE_STEPS: { view: View; key: string; icon: typeof House }[] = [
+  { view: 'subjects', key: 'browse.switchSubjects', icon: Library },
+  { view: 'majors', key: 'browse.switchMajors', icon: GraduationCap },
+  { view: 'careers', key: 'browse.switchCareers', icon: Briefcase },
+]
+
+/** The sub-pages shown next to a top-level item while you're inside it, and whether they're numbered steps. */
+export function subNavFor(view: View): { parent: View; steps: typeof MY_STEPS; numbered: boolean } | null {
+  if (MY_STEPS.some((x) => x.view === view)) return { parent: 'record', steps: MY_STEPS, numbered: true }
+  if (BROWSE_STEPS.some((x) => x.view === view)) return { parent: 'subjects', steps: BROWSE_STEPS, numbered: false }
+  return null
+}

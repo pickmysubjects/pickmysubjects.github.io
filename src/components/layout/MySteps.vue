@@ -1,23 +1,25 @@
 <script setup lang="ts">
 import { link, useView } from '@/composables/useView'
 import { useI18n } from '@/i18n'
-import { MY_STEPS } from './nav'
+import { computed } from 'vue'
+import { subNavFor } from './nav'
 
 /** The two personal steps under "Me": where you are, and the next one a tap away. */
 const { view } = useView()
 const { t } = useI18n()
+const sub = computed(() => subNavFor(view.value))
 </script>
 
 <template>
-  <nav class="steps" :aria-label="t('nav.record')">
+  <nav v-if="sub" class="steps" :aria-label="t(sub.numbered ? 'nav.record' : 'browse.switchLabel')">
     <a
-      v-for="(s, i) in MY_STEPS"
+      v-for="(s, i) in sub.steps"
       :key="s.view"
       class="step"
       :href="link(s.view)"
       :aria-current="view === s.view ? 'page' : undefined"
     >
-      <span class="step-n" aria-hidden="true">{{ i + 1 }}</span>
+      <span v-if="sub.numbered" class="step-n" aria-hidden="true">{{ i + 1 }}</span>
       <component :is="s.icon" :size="16" aria-hidden="true" />
       <span>{{ t(s.key) }}</span>
     </a>

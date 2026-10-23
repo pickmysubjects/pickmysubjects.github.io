@@ -4,7 +4,6 @@ import BottomNav from './components/layout/BottomNav.vue'
 import Interp from './components/Interp.vue'
 import AppLogo from './components/AppLogo.vue'
 import MySteps from './components/layout/MySteps.vue'
-import { MY_STEPS } from './components/layout/nav'
 import { VIEW_LOADERS } from './views/loaders'
 import { defineAsyncComponent, watchEffect } from 'vue'
 import { useView, link } from './composables/useView'
@@ -91,7 +90,7 @@ watchEffect(() => {
   <AppHeader :view="view" />
   <main class="app-main shell" :class="{ 'shell-wide': view === 'plan' }">
     <!-- Narrow screens: Me's two steps as a slim switch in the page (wide screens: in the bar). -->
-    <MySteps v-if="MY_STEPS.some((x) => x.view === view)" class="page-steps" />
+    <MySteps class="page-steps" />
     <HomeView v-if="view === 'home'" />
     <SubjectView v-else-if="view === 'subject'" :key="param" :code="param" />
     <PlannerView v-else-if="view === 'plan'" />

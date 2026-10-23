@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import BrowseSwitch from '@/components/browse/BrowseSwitch.vue'
 import { computed, shallowRef } from 'vue'
 import { ChevronRight, Search } from 'lucide-vue-next'
 import { careerTargets, majorsForCareer, CAREER_LANGS } from '@/engine'
@@ -38,7 +37,6 @@ const groups = computed(() =>
     <header>
       <div class="head-row">
         <h1 class="page-title">{{ t('careerPath.title') }}</h1>
-        <BrowseSwitch current="careers" />
       </div>
       <p class="page-lede">{{ t('careerPath.lede') }}</p>
     </header>

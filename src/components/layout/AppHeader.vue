@@ -4,44 +4,49 @@ import { BookOpen } from 'lucide-vue-next'
 import LangMenu from './LangMenu.vue'
 import AppLogo from '../AppLogo.vue'
 import SubjectSearch from '../SubjectSearch.vue'
-import { MY_STEPS, NAV_ITEMS } from './nav'
+import { NAV_ITEMS, subNavFor } from './nav'
 import type { View } from '@/composables/useView'
 import { useI18n } from '@/i18n'
 
-defineProps<{ view: View }>()
+import { computed } from 'vue'
+
+const props = defineProps<{ view: View }>()
 const { t } = useI18n()
+const sub = computed(() => subNavFor(props.view))
 </script>
 
 <template>
-  <header class="header" :class="{ 'header-with-steps': MY_STEPS.some((x) => x.view === view) }">
+  <header class="header" :class="{ 'header-with-steps': sub }">
     <div class="header-inner shell">
       <a class="brand" :href="link('')">
         <AppLogo class="mark" />
         <span class="brand-name">PickMySubjects</span>
       </a>
       <nav class="nav" :aria-label="t('nav.main')">
-        <a
-          v-for="item in NAV_ITEMS"
-          :key="item.view"
-          class="nav-link"
-          :href="link(`${item.view === 'home' ? '' : item.view}`)"
-          :aria-current="view === item.view || item.also?.includes(view) ? 'page' : undefined"
-        >
-          <component :is="item.icon" :size="16" aria-hidden="true" />
-          {{ t(item.key) }}
-        </a>
-        <!-- Inside "Me": its three steps, right next to it. -->
-        <span v-if="MY_STEPS.some((x) => x.view === view)" class="nav-steps">
+        <template v-for="item in NAV_ITEMS" :key="item.view">
           <a
-            v-for="(s, i) in MY_STEPS"
-            :key="s.view"
-            class="nav-step"
-            :href="link(s.view)"
-            :aria-current="view === s.view ? 'step' : undefined"
+            class="nav-link"
+            :href="link(`${item.view === 'home' ? '' : item.view}`)"
+            :aria-current="view === item.view || item.also?.includes(view) ? 'page' : undefined"
           >
-            <span class="nav-step-n" aria-hidden="true">{{ i + 1 }}</span>{{ t(s.key) }}
+            <component :is="item.icon" :size="16" aria-hidden="true" />
+            {{ t(item.key) }}
           </a>
-        </span>
+          <!-- Inside a section: its pages, right next to it (numbered when they're steps). -->
+          <span v-if="sub && sub.parent === item.view" class="nav-steps">
+            <a
+              v-for="(s, i) in sub.steps"
+              :key="s.view"
+              class="nav-step"
+              :href="link(s.view)"
+              :aria-current="view === s.view ? 'step' : undefined"
+            >
+              <span v-if="sub.numbered" class="nav-step-n" aria-hidden="true">{{ i + 1 }}</span>
+              <component :is="s.icon" v-else :size="14" aria-hidden="true" />
+              {{ t(s.key) }}
+            </a>
+          </span>
+        </template>
       </nav>
       <div class="tools">
         <SubjectSearch v-if="view !== 'home'" class="header-search" compact />

@@ -5,7 +5,6 @@ import { computed, onMounted, shallowRef, useTemplateRef, watch } from 'vue'
 import { Info, Search } from 'lucide-vue-next'
 import BrowseFilters from '@/components/browse/BrowseFilters.vue'
 import BrowseRow from '@/components/browse/BrowseRow.vue'
-import BrowseSwitch from '@/components/browse/BrowseSwitch.vue'
 import GoalPicker from '@/components/profile/GoalPicker.vue'
 import Interp from '@/components/Interp.vue'
 import {
@@ -128,7 +127,6 @@ watch(filters, (f) => {
     <header class="head">
       <div class="head-row">
         <h1 class="page-title">{{ t('browse.title') }}</h1>
-        <BrowseSwitch current="subjects" />
       </div>
       <p class="page-lede head-lede">{{ t('browse.lede') }}</p>
     </header>
