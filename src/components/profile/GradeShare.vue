@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import InfoTip from '@/components/InfoTip.vue'
 import { shallowRef, watch } from 'vue'
 import { Check, Send } from 'lucide-vue-next'
 import { RATINGS_FORM } from '@/config'
@@ -42,9 +43,11 @@ async function send(): Promise<void> {
 <template>
   <section v-if="ready && (rows.length || shared.length)" class="share surface" aria-labelledby="share-title">
     <h2 id="share-title" class="share-title">{{ t('grades.title') }}</h2>
-    <p class="share-text">{{ t('grades.why') }}</p>
     <p class="share-text">
-      {{ t('grades.what') }} <a :href="link('privacy')">{{ t('grades.privacy') }}</a>
+      {{ t('grades.short') }}
+      <InfoTip>
+        {{ t('grades.why') }} {{ t('grades.what') }} <a :href="link('privacy')">{{ t('grades.privacy') }}</a>
+      </InfoTip>
     </p>
     <ul v-if="rows.length" class="share-list">
       <li v-for="r in rows" :key="r.code">

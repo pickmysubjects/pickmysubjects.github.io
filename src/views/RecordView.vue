@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import InfoTip from '@/components/InfoTip.vue'
 import { computed, shallowRef } from 'vue'
 import ResultsEditor from '@/components/profile/ResultsEditor.vue'
 import SkillsEditor from '@/components/profile/SkillsEditor.vue'
@@ -57,7 +58,7 @@ const filled = computed(() => [
   <div class="record">
     <header class="intro">
       <h1 class="page-title">{{ t('record.title') }}</h1>
-      <p class="lede">{{ t('record.lede') }}</p>
+      <p class="lede">{{ t('record.ledeShort') }}<InfoTip :text="t('record.lede')" /></p>
     </header>
 
     <div class="layout">
@@ -85,7 +86,7 @@ const filled = computed(() => [
           <DegreeCard />
           <div class="plans">
             <PlanSwitcher no-compare />
-            <p class="hint">{{ t('plans.prefsNote') }}</p>
+            <p class="hint">{{ t('plans.prefsNoteShort') }}<InfoTip :text="t('plans.prefsNote')" /></p>
           </div>
         </section>
 
@@ -136,7 +137,7 @@ const filled = computed(() => [
 
       <section class="backup surface" aria-labelledby="sec-backup">
         <h2 id="sec-backup" class="backup-title">{{ t('record.backupTitle') }}</h2>
-        <p class="hint">{{ t('record.backupText') }}</p>
+        <p class="hint">{{ t('record.backupTextShort') }}<InfoTip :text="t('record.backupText')" /></p>
         <p v-if="restoreFailed" class="bad" role="alert">{{ t('record.restoreFailed') }}</p>
         <div class="backup-actions">
           <button class="button button-quiet" type="button" @click="downloadBackup">

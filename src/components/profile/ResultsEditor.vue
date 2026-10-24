@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import InfoTip from '@/components/InfoTip.vue'
 import { computed, shallowRef, useId } from 'vue'
 import { Check, Plus, Search, Star, Trash2 } from 'lucide-vue-next'
 import { isFail, PASS_MARK, type Period, type Profile, type Subject } from '@/engine'
@@ -232,7 +233,7 @@ function remove(i: number): void {
       </section>
     </div>
     <p v-if="results.some((x) => isFail(x))" class="fail-hint">
-      {{ t('record.failHint') }}
+      {{ t('record.failHintShort') }}<InfoTip :text="t('record.failHint')" />
       <template v-if="failedTwice.length">{{ t('record.failedTwice', { codes: failedTwice.join(t('listSep')) }) }}</template>
       <a :href="link('guide/semester/#fail')">{{ t('guide.failTitle') }}</a>
     </p>

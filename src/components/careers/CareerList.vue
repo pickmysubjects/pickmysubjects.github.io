@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import InfoTip from '@/components/InfoTip.vue'
 import { computed, shallowRef } from 'vue'
 import { ChevronRight, Search } from 'lucide-vue-next'
 import { careerGroups, careerMatchRank, careerSearchTerms, careerTargets, majorsForCareer } from '@/engine'
@@ -36,7 +37,7 @@ const groups = computed(() =>
       <div class="head-row">
         <h1 class="page-title">{{ t('careerPath.title') }}</h1>
       </div>
-      <p class="page-lede">{{ t('careerPath.lede') }}</p>
+      <p class="page-lede">{{ t('careerPath.ledeShort') }}<InfoTip :text="t('careerPath.lede')" /></p>
     </header>
 
     <label class="search">

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import InfoTip from '@/components/InfoTip.vue'
 import { computed, shallowRef } from 'vue'
 import { ChevronDown, Search, X } from 'lucide-vue-next'
 import { careerGroups, careerMatchRank, careerSearchTerms, careerTargets } from '@/engine'
@@ -53,7 +54,7 @@ function pick(id: string | undefined): void {
 <template>
   <div class="career">
     <h3 id="career-goal-title" class="career-label">{{ t('careerGoal.title') }}</h3>
-    <p class="career-hint">{{ t('careerGoal.hint') }}</p>
+    <p class="career-hint">{{ t('careerGoal.hintShort') }}<InfoTip :text="t('careerGoal.hint')" /></p>
     <div v-if="chosen" class="chosen">
       <a class="chosen-name" :href="link(`careers/${chosen.id}`)" :title="t('careerGoal.see')">{{ chosen.label }}</a>
       <button class="button button-quiet clear" type="button" @click="pick(undefined)">

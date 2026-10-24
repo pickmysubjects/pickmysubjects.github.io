@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import InfoTip from '@/components/InfoTip.vue'
 import { computed, shallowRef } from 'vue'
 import { RATINGS_FORM } from '@/config'
 import { RATING_TAGS, SKILLS, type Period, type RatingTag, type Skill } from '@/engine'
@@ -147,7 +148,7 @@ function value(event: Event): string {
       <fieldset class="chips-field">
         <legend class="field">{{ t('rating.grade') }}</legend>
         <button v-for="g in BANDS" :key="g" type="button" class="chip" :aria-pressed="grade === g" @click="grade = grade === g ? '' : g">{{ g }}</button>
-        <p v-if="wamBand" class="rate-note">{{ t('rating.wamBandNote', { range: wamBand }) }}</p>
+        <p v-if="wamBand" class="rate-note">{{ t('rating.wamBandNoteShort', { range: wamBand }) }}<InfoTip :text="t('rating.wamBandNote', { range: wamBand })" /></p>
       </fieldset>
 
       <details class="rate-more">

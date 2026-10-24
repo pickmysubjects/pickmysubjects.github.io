@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import InfoTip from '@/components/InfoTip.vue'
 import { computed, shallowRef, watch } from 'vue'
 import { ArrowLeft, BadgeCheck, ExternalLink, GraduationCap } from 'lucide-vue-next'
 import CareerTiers from './CareerTiers.vue'
@@ -108,7 +109,7 @@ const hasBreadth = computed(() => !!result.value?.breadth && TIERS.some((x) => r
       <div class="breadth">
         <h2 class="block-title">{{ t('careerPath.breadthTitle') }}</h2>
         <template v-if="hasBreadth">
-          <p class="block-hint">{{ t('careerPath.breadthHint') }}</p>
+          <p class="block-hint">{{ t('careerPath.breadthHintShort') }}<InfoTip :text="t('careerPath.breadthHint')" /></p>
           <CareerTiers :tiers="result.breadth!" :year="year" />
           <a class="more-link" :href="link('subjects/breadth')">{{ t('careerPath.breadthAll') }}</a>
         </template>
@@ -116,7 +117,7 @@ const hasBreadth = computed(() => !!result.value?.breadth && TIERS.some((x) => r
       </div>
     </section>
 
-    <p class="source">{{ t('careerPath.note') }}</p>
+    <p class="source">{{ t('careerPath.noteShort') }}<InfoTip :text="t('careerPath.note')" /></p>
   </div>
 
   <div v-else class="detail">

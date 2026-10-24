@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import InfoTip from '@/components/InfoTip.vue'
 import DegreeBadge from '@/components/browse/DegreeBadge.vue'
 import DegreePick from '@/components/browse/DegreePick.vue'
 import { computed, onMounted, shallowRef, useTemplateRef, watch } from 'vue'
@@ -128,7 +129,7 @@ watch(filters, (f) => {
       <div class="head-row">
         <h1 class="page-title">{{ t('browse.title') }}</h1>
       </div>
-      <p class="page-lede head-lede">{{ t('browse.lede') }}</p>
+      <p class="page-lede head-lede">{{ t('browse.ledeShort') }}<InfoTip :text="t('browse.lede')" /></p>
     </header>
 
     <div class="top">

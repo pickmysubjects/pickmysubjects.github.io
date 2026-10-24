@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import InfoTip from '@/components/InfoTip.vue'
 import { computed, shallowRef, watch } from 'vue'
 import { Target } from 'lucide-vue-next'
 import { useDataset } from '@/composables/useDataset'
@@ -56,7 +57,7 @@ const num = (e: Event) => Number((e.target as HTMLInputElement).value)
   <section class="goal surface" aria-labelledby="goal-title">
     <h2 id="goal-title" class="goal-title"><Target :size="18" aria-hidden="true" /> {{ t('wamGoal.title') }}</h2>
     <!-- With no marks yet there's nothing to work out: the WAM will simply be whatever the rest averages. -->
-    <p v-if="donePoints === 0" class="goal-hint">{{ t('wamGoal.noMarks') }}</p>
+    <p v-if="donePoints === 0" class="goal-hint">{{ t('wamGoal.noMarksShort') }}<InfoTip :text="t('wamGoal.noMarks')" /></p>
     <template v-else>
     <p class="goal-hint">{{ t('wamGoal.fromMarks') }}</p>
 

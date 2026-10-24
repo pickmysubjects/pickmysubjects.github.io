@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import InfoTip from '@/components/InfoTip.vue'
 import { link } from '@/composables/useView'
 import { computed, onBeforeUnmount, shallowRef, useTemplateRef } from 'vue'
 import { CircleCheck, Pencil, RotateCcw, TriangleAlert, ChevronDown } from 'lucide-vue-next'
@@ -366,7 +367,7 @@ const printTerms = computed<PrintTerm[]>(() => {
 
       <!-- The record now reaches into the plan's own semesters (filled in after the plan was made). -->
       <p v-if="recordOverlap" class="started">
-        {{ t('plan.recordOverlap', { term: recordOverlap }) }}
+        {{ t('plan.recordOverlapShort', { term: recordOverlap }) }}<InfoTip :text="t('plan.recordOverlap', { term: recordOverlap })" />
         <button class="button button-quiet" type="button" @click="plan.generate()">{{ t('plan.rebuild') }}</button>
       </p>
 
@@ -393,11 +394,12 @@ const printTerms = computed<PrintTerm[]>(() => {
           </ul>
           <p v-if="hasConfirmable" class="status-hint">{{ t('plan.confirmHint') }}</p>
           <p v-if="profileEmpty" class="status-hint">
-            <Interp :text="t('plan.fillRecord')">
+            <Interp :text="t('plan.fillRecordShort')">
               <template #record>
                 <a :href="link('record')">{{ t('nav.record') }}</a>
               </template>
             </Interp>
+            <InfoTip :text="t('plan.fillRecord', { record: t('nav.record') })" />
           </p>
           <p v-for="u in unavoidable" :key="u" class="started">{{ u }}</p>
           <p v-if="extraTermsOnVisa" class="started">{{ t('plan.extraTermsVisa') }}</p>
@@ -428,8 +430,8 @@ const printTerms = computed<PrintTerm[]>(() => {
             @focus="focusRule"
           />
           <p class="draft">
-            {{ t('plan.draftNote') }}
-            <a :href="STUDENT_SITE" target="_blank" rel="noopener">{{ t('plan.draftLink') }}</a>
+            {{ t('plan.draftNoteShort') }}
+            <InfoTip>{{ t('plan.draftNote') }} <a :href="STUDENT_SITE" target="_blank" rel="noopener">{{ t('plan.draftLink') }}</a></InfoTip>
           </p>
           <SubjectTimeline
             v-if="selected"
@@ -508,7 +510,7 @@ const printTerms = computed<PrintTerm[]>(() => {
           <div class="details-info">
             <p>{{ t('plan.hint') }} {{ t('plan.tagLegend') }}</p>
             <p>
-              {{ t('plan.censusLine') }}
+              {{ t('plan.censusLineShort') }}<InfoTip :text="t('plan.censusLine')" />
               <a :href="link('guide/key-dates/')">{{ t('guide.datesTitle') }}</a>
             </p>
           </div>

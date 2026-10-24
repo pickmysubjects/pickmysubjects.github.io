@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import InfoTip from '@/components/InfoTip.vue'
 import { useProfile } from '@/composables/useProfile'
 import { useI18n } from '@/i18n'
 
@@ -22,7 +23,7 @@ const BUCKETS = [0, 5, 15, 25] as const
         {{ t(`record.work.${h}`) }}
       </button>
     </div>
-    <p class="work-hint">{{ t('record.workHint') }}</p>
+    <p class="work-hint">{{ t('record.workHintShort') }}<InfoTip :text="t('record.workHint')" /></p>
   </fieldset>
 </template>
 

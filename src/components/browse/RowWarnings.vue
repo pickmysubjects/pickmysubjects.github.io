@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import InfoTip from '@/components/InfoTip.vue'
 import { computed } from 'vue'
 import { TriangleAlert } from 'lucide-vue-next'
 import type { Recommendation } from '@/engine'
@@ -16,7 +17,7 @@ const trim = (s: string) => s.replace(/[。.]\s*$/, '')
 const warnings = computed(() =>
   props.rec.warnings.map((n) =>
     n.key === 'eligibilityUnknown'
-      ? { manual: true, text: t.value('reason.eligibilityManual'), original: String(n.params.needs ?? '') }
+      ? { manual: true, text: t.value('reason.eligibilityManualShort'), original: String(n.params.needs ?? '') }
       : { manual: false, text: trim(reasonText(t.value, n)), original: '' },
   ),
 )
@@ -29,7 +30,7 @@ const warnings = computed(() =>
       <li v-for="(w, i) in warnings" :key="i">
         <TriangleAlert :size="13" aria-hidden="true" />
         <span class="body">
-          <span>{{ w.text }}</span>
+          <span>{{ w.text }}<InfoTip v-if="w.manual" :text="t('reason.eligibilityManual')" /></span>
           <span v-if="w.manual" class="manual">
             <button type="button" class="meet" @click="setConfirmed(rec.code, true)">{{ t('suggest.iMeetIt') }}</button>
             <details class="original">

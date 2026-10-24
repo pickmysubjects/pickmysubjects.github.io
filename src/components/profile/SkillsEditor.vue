@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import InfoTip from '@/components/InfoTip.vue'
 import { computed, shallowRef } from 'vue'
 import { courseFocus, type Skill } from '@/engine'
 import { skillsFromMarks } from '@/engine/skills'
@@ -56,7 +57,7 @@ function pick(skill: Skill, level: number): void {
   <section class="card surface" aria-labelledby="skills-title">
     <header class="card-head">
       <h2 id="skills-title" class="card-title">{{ t('record.skillsTitle') }}</h2>
-      <p class="card-hint">{{ t('record.levelLegend') }}</p>
+      <p class="card-hint">{{ t('record.levelLegendShort') }}<InfoTip :text="t('record.levelLegend')" /></p>
       <!-- What each level means, in marks: more accurate than a feeling (see the research notes). -->
       <ul class="legend">
         <li v-for="n in LEVELS" :key="n"><strong>{{ t(`record.level.${n}`) }}</strong> {{ ranges[n - 1] }}</li>
@@ -69,7 +70,7 @@ function pick(skill: Skill, level: number): void {
           </select>
         </label>
         <p class="scale-note">
-          {{ t('record.markScaleNote') }}<template v-if="scale === 'cn'"> {{ t('record.markScaleCn150') }}</template>
+          {{ t('record.markScaleNoteShort') }}<InfoTip :text="t('record.markScaleNote') + (scale === 'cn' ? ' ' + t('record.markScaleCn150') : '')" />
         </p>
       </div>
     </header>

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import InfoTip from '@/components/InfoTip.vue'
 import { computed, shallowRef } from 'vue'
 import { Heart, Link2, Share2 } from 'lucide-vue-next'
 import CompareTable from '@/components/shortlist/CompareTable.vue'
@@ -52,7 +53,6 @@ async function share(): Promise<void> {
   <div class="shortlist">
     <header class="head">
       <h1 class="page-title">{{ t('shortlist.title') }}</h1>
-      <p class="page-lede">{{ t('shortlist.lede') }}</p>
     </header>
 
     <section v-if="picked.length >= 2" class="compare surface" aria-labelledby="compare-title">
@@ -84,7 +84,7 @@ async function share(): Promise<void> {
       <a class="button button-accent" :href="link('subjects')">{{ t('shortlist.browseLink') }}</a>
     </section>
 
-    <p class="local">{{ t('shortlist.local') }}</p>
+    <p class="local">{{ t('shortlist.localShort') }}<InfoTip :text="t('shortlist.local')" /></p>
   </div>
 </template>
 

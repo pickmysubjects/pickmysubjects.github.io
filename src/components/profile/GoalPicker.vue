@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import InfoTip from '@/components/InfoTip.vue'
 import { computed } from 'vue'
 import type { Goal } from '@/engine'
 import { useProfile } from '@/composables/useProfile'
@@ -39,7 +40,7 @@ const current = computed<Goal>(() => (own.value === 'easy' ? 'wam' : own.value))
       </button>
     </div>
     <p v-if="!compact" class="goal-hint">
-      {{ t(`suggest.goals.${current}Hint`) }}<template v-if="note">{{ ' ' }}{{ note }}</template>
+      {{ t(`suggest.goals.${current}Hint`) }}<InfoTip v-if="note" :text="note" />
     </p>
   </fieldset>
 </template>

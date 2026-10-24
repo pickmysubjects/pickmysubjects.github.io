@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import InfoTip from '@/components/InfoTip.vue'
 import { computed, shallowRef, watch } from 'vue'
 import { useDataset } from '@/composables/useDataset'
 import { useProfile } from '@/composables/useProfile'
@@ -33,7 +34,7 @@ function onMark(e: Event): void {
 <template>
   <div v-if="shown" class="whatif-sub">
     <p class="wi-title">{{ t('whatIf.title') }}</p>
-    <p v-if="wam === null" class="wi-answer wi-empty">{{ t('whatIf.noMarks') }}</p>
+    <p v-if="wam === null" class="wi-answer wi-empty">{{ t('whatIf.noMarksShort') }}<InfoTip :text="t('whatIf.noMarks')" /></p>
     <template v-else>
     <div class="wi-row">
       <label v-if="!code" class="wi-field wi-pick">

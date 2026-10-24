@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import InfoTip from '@/components/InfoTip.vue'
 import { computed, shallowRef } from 'vue'
 import { ArrowLeft, ExternalLink, Route } from 'lucide-vue-next'
 import SubjectLinks from './SubjectLinks.vue'
@@ -118,7 +119,7 @@ function planWithIt(): void {
 
       <section class="block">
         <h2 class="block-title">{{ t('majors.pathwayTitle') }}</h2>
-        <p class="block-hint">{{ t('majors.pathwayHint') }}</p>
+        <p class="block-hint">{{ t('majors.pathwayHintShort') }}<InfoTip :text="t('majors.pathwayHint')" /></p>
         <template v-if="pathwayByLevel.length">
           <div v-for="g in pathwayByLevel" :key="g.level" class="level">
             <h3 class="level-title">{{ t('majors.level', { n: g.level }) }}</h3>

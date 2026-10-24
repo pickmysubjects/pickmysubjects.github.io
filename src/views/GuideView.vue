@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import InfoTip from '@/components/InfoTip.vue'
 import { computed, nextTick, onBeforeUnmount, onMounted, watch } from 'vue'
 import CanDoList from '@/components/home/CanDoList.vue'
 import GuideSubnav from '@/components/guide/GuideSubnav.vue'
@@ -24,7 +25,7 @@ const heading = computed(() => {
   const p = page.value
   if (p.kind === 'category') return { title: t.value(`guide.cat.${p.category}.title`), lede: t.value(`guide.cat.${p.category}.lede`) }
   if (p.kind === 'extra') return { title: t.value('guide.kd.title'), lede: t.value('guide.kd.lede') }
-  return { title: t.value('guide.title'), lede: t.value('guide.lede') }
+  return { title: t.value('guide.title'), lede: t.value('guide.ledeShort'), full: t.value('guide.lede') }
 })
 
 const FACTS = [
@@ -63,7 +64,7 @@ watch(param, () => void followHash())
     <header class="guide-head">
       <p class="guide-eyebrow">{{ t('guide.eyebrow') }}</p>
       <h1 class="page-title">{{ heading.title }}</h1>
-      <p class="page-lede">{{ heading.lede }}</p>
+      <p class="page-lede">{{ heading.lede }}<InfoTip v-if="'full' in heading" :text="heading.full" /></p>
       <GuideSubnav :current="current" />
     </header>
 
@@ -80,7 +81,7 @@ watch(param, () => void followHash())
           <a :href="link('guide/')">← {{ t('guide.overview') }}</a>
         </p>
         <p class="source">
-          {{ t('guide.sourcesText') }}
+          {{ t('guide.sourcesTextShort') }}<InfoTip :text="t('guide.sourcesText')" />
           <a :href="URLS.STUDENT_SITE" target="_blank" rel="noopener">{{ t('guide.sourcesLink') }}</a>
         </p>
       </div>

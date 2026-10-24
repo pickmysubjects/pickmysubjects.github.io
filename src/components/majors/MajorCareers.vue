@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import InfoTip from '@/components/InfoTip.vue'
 import { computed } from 'vue'
 import { BadgeCheck, ExternalLink } from 'lucide-vue-next'
 import { careerText, componentCareers } from '@/engine'
@@ -43,7 +44,7 @@ const hasText = computed(() => entry.value?.careerText === true)
     <h2 id="careers-title" class="block-title">{{ t('careers.title') }}</h2>
 
     <template v-if="hasText">
-      <p class="block-hint">{{ t('careers.lede', { title }) }}</p>
+      <p class="block-hint">{{ t('careers.ledeShort', { title }) }}<InfoTip :text="t('careers.lede', { title })" /></p>
       <ul v-if="jobs.length" class="jobs surface">
         <li v-for="j in jobs" :key="j.id" class="job">
           <span class="job-main">

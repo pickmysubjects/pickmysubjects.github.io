@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import InfoTip from '@/components/InfoTip.vue'
 import { computed, onMounted, shallowRef, useTemplateRef } from 'vue'
 import { CircleCheck, Search, TriangleAlert, X } from 'lucide-vue-next'
 import { categoryOf, doneBefore, heldMajorIds, previewAdd, recommend, type Plan, type Subject } from '@/engine'
@@ -127,7 +128,7 @@ function onClick(event: MouseEvent): void {
       <header class="slot-head">
         <div>
           <h2 class="slot-title">{{ replacing ? t('plan.swapTitle', { code: replacing }) : t('plan.addTitle', { term: where }) }}</h2>
-          <p class="slot-hint">{{ replacing ? t('plan.swapHint', { term: where }) : t('plan.addHint', { term: where }) }}</p>
+          <p class="slot-hint"><template v-if="replacing">{{ t('plan.swapHintShort', { term: where }) }}<InfoTip :text="t('plan.swapHint', { term: where })" /></template><template v-else>{{ t('plan.addHint', { term: where }) }}</template></p>
         </div>
         <button class="slot-close" type="button" :aria-label="t('subject.close')" @click="dialog?.close()">
           <X :size="18" aria-hidden="true" />

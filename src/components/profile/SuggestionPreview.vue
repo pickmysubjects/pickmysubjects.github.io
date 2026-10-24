@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import InfoTip from '@/components/InfoTip.vue'
 import { link } from '@/composables/useView'
 import { computed } from 'vue'
 import { Sparkles } from 'lucide-vue-next'
@@ -36,7 +37,7 @@ const top = computed(() =>
 <template>
   <section class="preview surface" aria-live="polite">
     <h2 class="preview-title"><Sparkles :size="16" aria-hidden="true" /> {{ t('record.previewTitle') }}</h2>
-    <p v-if="!hasInput" class="preview-empty">{{ t('record.previewEmpty') }}</p>
+    <p v-if="!hasInput" class="preview-empty">{{ t('record.previewEmptyShort') }}<InfoTip :text="t('record.previewEmpty')" /></p>
     <ol v-else class="preview-list">
       <li v-for="(r, i) in top" :key="r.code">
         <span class="n" aria-hidden="true">{{ i + 1 }}.</span>

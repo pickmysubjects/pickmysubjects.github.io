@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import InfoTip from '@/components/InfoTip.vue'
 import { shallowRef, useTemplateRef, watch } from 'vue'
 import PainPointList from '@/components/feedback/PainPointList.vue'
 import FeedbackForm from '@/components/feedback/FeedbackForm.vue'
@@ -41,7 +42,7 @@ function choose(id: string): void {
   <div class="fb">
     <section>
       <h1 class="fb-title">{{ t('feedback.title') }}</h1>
-      <p class="fb-lede">{{ t('feedback.lede') }}</p>
+      <p class="fb-lede">{{ t('feedback.ledeShort') }}<InfoTip :text="t('feedback.lede')" /></p>
       <!-- The form sits below a long status list; this gets there in one tap. -->
       <button class="button button-accent fb-jump" type="button" @click="form?.scrollIntoView({ behavior: 'smooth', block: 'start' })">
         <PenLine :size="16" aria-hidden="true" /> {{ t('feedback.yours') }}

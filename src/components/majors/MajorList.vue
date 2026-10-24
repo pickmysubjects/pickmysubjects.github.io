@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import InfoTip from '@/components/InfoTip.vue'
 import DegreeBadge from '@/components/browse/DegreeBadge.vue'
 import { computed, shallowRef } from 'vue'
 import { BadgeCheck, ChevronDown, ChevronRight, Search } from 'lucide-vue-next'
@@ -68,7 +69,7 @@ const courseTitle = computed(() => data.value.courses.find((c) => c.code === cou
       <div class="head-row">
         <h1 class="page-title">{{ t('majors.title') }}</h1>
       </div>
-      <p class="page-lede">{{ t('majors.lede', { course: courseTitle }) }}</p>
+      <p class="page-lede">{{ t('majors.ledeShort', { course: courseTitle }) }}<InfoTip :text="t('majors.lede', { course: courseTitle })" /></p>
       <DegreeBadge :course="course" />
       <p v-if="basedNote" class="page-lede">{{ basedNote }}</p>
     </header>
