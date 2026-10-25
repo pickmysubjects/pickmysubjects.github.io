@@ -88,8 +88,10 @@ goes in the same ratings form, as one extra optional question. Marks never leave
    ratings work as before and the My page card stays hidden.
 
 The weekly job also writes `data/real/grade-offsets.json`: for each subject with at least 5 bands
-that carry a WAM range, how far grades sit above or below the sharers' WAM, shrunk toward 0 when
-few have shared. Rows are never published. The likely-mark estimate and "ease" use it.
+that carry a WAM range, how far grades sit above or below the sharers' WAM, with how sure that is
+(`sd`). Each band is read as the range of marks it covers (an H1 is anywhere from 80 up), not as one
+typical mark, and bands from earlier years count a little less (0.8 per year). With few shares the
+estimate stays close to 0. Rows are never published. The likely-mark estimate and "ease" use it.
 
 ## 3. Daily aggregation
 

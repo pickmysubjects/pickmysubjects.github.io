@@ -26,6 +26,23 @@ describe('shared grade bands', () => {
     expect(out.COMP10001!.n).toBe(MIN_GRADE_SHARES)
     expect(out.COMP10001!.offset).toBeGreaterThan(0)
     expect(out.COMP10001!.offset).toBeLessThan(13)
+    expect(out.COMP10001!.sd).toBeGreaterThan(0)
+  })
+
+  it('reads a band as the interval it is: an H1 from a 90–94 student is no sign of a hard subject', () => {
+    const rows = Array.from({ length: 12 }, () => ({ code: 'COMP10001', band: 'H1', wamBand: '90–94' }))
+    // The old midpoint (H1 = 85) read this as 7 marks below their WAM.
+    expect(gradeOffsets(rows).COMP10001!.offset).toBeGreaterThan(0)
+  })
+
+  it('more shares make the estimate surer, and older shares count for less', () => {
+    const rows = (n: number, band: string, year: number) => Array.from({ length: n }, () => ({ code: 'COMP10001', band, wamBand: '70–74', year }))
+    const few = gradeOffsets(rows(6, 'H2A', 2026))!.COMP10001!
+    const many = gradeOffsets(rows(30, 'H2A', 2026))!.COMP10001!
+    expect(many.sd!).toBeLessThan(few.sd!)
+    // Ten fresh H1s and ten five-year-old Ps: the fresh ones lead.
+    const mixed = [...rows(10, 'H1', 2026), ...rows(10, 'P', 2021)]
+    expect(gradeOffsets(mixed, undefined, { year: 2026 }).COMP10001!.offset).toBeGreaterThan(gradeOffsets(mixed).COMP10001!.offset)
   })
 
   it('a known offset moves the likely mark', () => {

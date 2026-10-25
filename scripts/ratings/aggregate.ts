@@ -206,8 +206,10 @@ export function buildRatingFiles(values: string[][], known?: Set<string>, now = 
     code: r[COLUMNS.code] ?? '',
     band: r[COLUMNS.grade] ?? '',
     wamBand: r[COLUMNS.wamBand] ?? '',
+    year: r[COLUMNS.year] ?? '',
   }))
-  return { ratings: result.subjects, offsets: gradeOffsets(graded, known), accepted: result.accepted, rejected: result.rejected }
+  // Older bands count for less (see AGE_WEIGHT): assessment changes over the years.
+  return { ratings: result.subjects, offsets: gradeOffsets(graded, known, { year: now.getFullYear() }), accepted: result.accepted, rejected: result.rejected }
 }
 
 function mean(xs: number[]): number {
