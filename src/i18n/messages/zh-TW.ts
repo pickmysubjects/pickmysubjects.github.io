@@ -1169,6 +1169,7 @@ export const zhTW: Messages = {
     shortlist: "收藏課程、放一起比較",
   },
   guide: {
+    majorsRelated: "每個科目頁下面還有「相關科目」：修完它之後能修什麼，以及同主修的同學常在同一學期一起修哪些課。",
     overview: "總覽",
     subnav: "指南分區",
     cat: {
@@ -1577,6 +1578,12 @@ export const zhTW: Messages = {
     group: "有小組作業",
   },
   subject: {
+    relatedTitle: "相關科目",
+    relatedLeads: "之後可以修",
+    relatedWith: "常一起修",
+    relatedBefore: "先修這些",
+    relatedMore: "還有 {n} 門",
+    relatedTip: "之後可以修：把這門課列為先修條件的科目。常一起修：同一主修裡、同一年級、同一學期開的科目。",
     fullRoute: "完整的先修要求和後續課程",
     recommendedFirst: "建議先修（非必須）",
     chooseDegreeFirst: "先選學位和主修",

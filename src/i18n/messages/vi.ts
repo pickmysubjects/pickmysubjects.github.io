@@ -1169,6 +1169,7 @@ export const vi: Messages = {
     shortlist: "Lưu và so sánh môn học",
   },
   guide: {
+    majorsRelated: "Mỗi trang môn học còn có mục môn liên quan: học xong môn này thì học tiếp được môn nào, và sinh viên cùng chuyên ngành thường học cùng môn nào trong cùng học kỳ.",
     overview: "Tổng quan",
     subnav: "Các phần hướng dẫn",
     cat: {
@@ -1577,6 +1578,12 @@ export const vi: Messages = {
     group: "Có bài nhóm",
   },
   subject: {
+    relatedTitle: "Môn liên quan",
+    relatedLeads: "Học tiếp được",
+    relatedWith: "Thường học cùng",
+    relatedBefore: "Cần học trước",
+    relatedMore: "+{n} môn nữa",
+    relatedTip: "Học tiếp được: các môn cần môn này trước. Thường học cùng: các môn cùng cấp, cùng học kỳ, trong cùng chuyên ngành.",
     fullRoute: "Điều kiện đầy đủ và các môn học tiếp theo",
     recommendedFirst: "Nên học trước (không bắt buộc)",
     chooseDegreeFirst: "Chọn bằng và ngành trước",

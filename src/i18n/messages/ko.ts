@@ -1169,6 +1169,7 @@ export const ko: Messages = {
     shortlist: "과목 저장하고 비교하기",
   },
   guide: {
+    majorsRelated: "각 과목 페이지에는 '관련 과목'도 있습니다. 이 과목 다음에 들을 수 있는 과목과, 같은 전공 학생들이 같은 학기에 자주 함께 듣는 과목입니다.",
     overview: "개요",
     subnav: "가이드 목차",
     cat: {
@@ -1577,6 +1578,12 @@ export const ko: Messages = {
     group: "조별 과제 있음",
   },
   subject: {
+    relatedTitle: "관련 과목",
+    relatedLeads: "다음에 들을 수 있는 과목",
+    relatedWith: "함께 많이 듣는 과목",
+    relatedBefore: "먼저 들을 과목",
+    relatedMore: "{n}개 더",
+    relatedTip: "다음에 들을 수 있는 과목: 이 과목을 선수 과목으로 요구하는 과목. 함께 많이 듣는 과목: 같은 전공의 같은 레벨, 같은 학기 과목.",
     fullRoute: "전체 선수 조건과 이후 과목",
     recommendedFirst: "먼저 들으면 좋은 과목 (필수 아님)",
     chooseDegreeFirst: "먼저 학위와 전공 선택",

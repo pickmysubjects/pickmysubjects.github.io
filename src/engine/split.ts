@@ -5,6 +5,8 @@ export interface SubjectDetail {
   about?: SubjectAbout
   discussions?: DiscussionSummary[]
   breadthFor?: string[]
+  /** Subjects often taken with it (see buildTakenWith), worked out at build. */
+  takenWith?: string[]
 }
 
 /** The part of a subject code that groups detail files: COMP30027 → COMP. */
@@ -19,7 +21,7 @@ export function detailArea(code: string): string {
  * workload / difficulty verdicts (semester check) — with the rest left empty, so core subjects
  * are only complete once merged with their detail (see `withDetail`).
  */
-export function splitDataset(data: Dataset): { core: Dataset; details: Record<string, Record<string, SubjectDetail>> } {
+export function splitDataset(data: Dataset, takenWith: Record<string, string[]> = {}): { core: Dataset; details: Record<string, Record<string, SubjectDetail>> } {
   const subjects: Record<string, Subject> = {}
   const details: Record<string, Record<string, SubjectDetail>> = {}
   for (const [code, s] of Object.entries(data.subjects)) {
@@ -28,8 +30,10 @@ export function splitDataset(data: Dataset): { core: Dataset; details: Record<st
     if (about) lean.about = { ...about, learn: { en: about.learn.en, zh: '' }, outcomes: [] }
     if (discussions) lean.discussions = discussions.map((d) => ({ ...d, points: [] }))
     subjects[code] = lean
-    if (about || discussions || breadthFor) {
+    const tw = takenWith[code]
+    if (about || discussions || breadthFor || tw) {
       const d: SubjectDetail = {}
+      if (tw) d.takenWith = tw
       if (about) d.about = about
       if (discussions) d.discussions = discussions
       if (breadthFor) d.breadthFor = breadthFor
@@ -41,5 +45,7 @@ export function splitDataset(data: Dataset): { core: Dataset; details: Record<st
 
 /** A core subject with its long text put back. */
 export function withDetail(s: Subject, d: SubjectDetail | undefined): Subject {
-  return d ? { ...s, ...d } : s
+  if (!d) return s
+  const { takenWith: _, ...text } = d
+  return { ...s, ...text }
 }

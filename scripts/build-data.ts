@@ -6,6 +6,7 @@ import { mkdirSync, rmSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { buildDataset, ROOT } from './dataset'
 import { splitDataset } from '../src/engine/split'
+import { buildTakenWith } from '../src/engine/related'
 import { buildHomeDemo } from './homeDemo'
 const OUT = join(ROOT, 'src', 'generated')
 mkdirSync(OUT, { recursive: true })
@@ -28,7 +29,8 @@ for (const name of ['real', 'demo'] as const) {
     // What the browser loads: a lean core before the app starts, and each area's long text
     // (about, discussion summaries, breadth lists) only when one of its subjects is opened.
     // Node-side scripts and tests keep reading the full real.json above.
-    const { core, details } = splitDataset(dataset)
+    // "Often taken with" for each subject page, worked out once here rather than in the browser.
+    const { core, details } = splitDataset(dataset, buildTakenWith(dataset, new Date().getFullYear()))
     writeFileSync(join(OUT, 'real-core.json'), JSON.stringify(core))
     const dir = join(OUT, 'detail')
     rmSync(dir, { recursive: true, force: true })

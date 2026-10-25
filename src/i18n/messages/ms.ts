@@ -1169,6 +1169,7 @@ export const ms: Messages = {
     shortlist: "Simpan dan bandingkan subjek",
   },
   guide: {
+    majorsRelated: "Setiap halaman subjek juga menyenaraikan subjek berkaitan: subjek yang boleh diambil selepasnya, dan subjek yang selalu diambil bersama oleh pelajar major yang sama dalam semester yang sama.",
     overview: "Gambaran",
     subnav: "Bahagian panduan",
     cat: {
@@ -1577,6 +1578,12 @@ export const ms: Messages = {
     group: "Ada kerja berkumpulan",
   },
   subject: {
+    relatedTitle: "Subjek berkaitan",
+    relatedLeads: "Membawa kepada",
+    relatedWith: "Selalu diambil bersama",
+    relatedBefore: "Sebelum ini",
+    relatedMore: "+{n} lagi",
+    relatedTip: "Membawa kepada: subjek yang memerlukan subjek ini dahulu. Selalu diambil bersama: subjek pada tahap dan semester yang sama, dalam major yang sama.",
     fullRoute: "Syarat penuh dan subjek seterusnya",
     recommendedFirst: "Disyorkan dahulu (tidak wajib)",
     chooseDegreeFirst: "Pilih ijazah dahulu",

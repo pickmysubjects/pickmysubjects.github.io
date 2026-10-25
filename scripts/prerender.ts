@@ -28,7 +28,7 @@ import { ACCREDITATION } from '../src/utils/accreditation'
 import { careerJobLabels, careerListHtml, careerPageHtml, careerSeo, careersHtml, subjectCareersHtml } from '../src/utils/careersHtml'
 import { careerTargets, majorsForCareer } from '../src/engine/careerPaths'
 import { componentCareers } from '../src/engine/careers'
-import { referencedSubjects } from '../src/engine/expr'
+import { buildLeadsTo, buildTakenWith, relatedSubjects } from '../src/engine/related'
 import type { Dataset, Subject } from '../src/engine/schema'
 import type { HomeDemo } from '../src/utils/homeDemo'
 import { describeReq } from '../src/i18n/format'
@@ -199,10 +199,10 @@ function write(code: LocaleCode, path: string, html: string): void {
 
 // ---------- subject pages ----------
 
-const unlocks = new Map<string, string[]>()
-for (const s of subjects) {
-  for (const r of referencedSubjects(s.prerequisites)) unlocks.set(r, [...(unlocks.get(r) ?? []), s.code])
-}
+// Worked out once for every page: what each subject leads to and what's often taken with it.
+const relatedIndex = { leadsTo: buildLeadsTo(data.subjects), takenWith: buildTakenWith(data, YEAR) }
+/** How many of each related list show before "+N more". */
+const RELATED_SHOWN = 6
 
 const runs = (t: Translate, s: Subject, sep: string): string => runsLine(t, s, YEAR, sep)
 
@@ -246,7 +246,6 @@ function subjectPage(code: LocaleCode, s: Subject): Page {
   // Static pages are written for Bachelor of Science students, as the app's default course is.
   const prereq = describeReq(t, s.prerequisites, 'B-SCI')
   const coreq = s.corequisites !== 'none' && s.corequisites !== 'unknown' ? describeReq(t, s.corequisites, 'B-SCI') : ''
-  const leads = (unlocks.get(s.code) ?? []).sort()
   const blocks = s.nonAllowed === 'unknown' ? [] : s.nonAllowed
   const assess = assessment(t, s, listSep(code))
   const sig = s.signals && s.signals.reviews >= 3 ? s.signals : undefined
@@ -270,11 +269,19 @@ function subjectPage(code: LocaleCode, s: Subject): Page {
     `<h2>${esc(t('subject.needs'))}</h2><p>${esc(prereq)}</p>`,
     ...(coreq ? [`<h3>${esc(t('subject.coreqTitle'))}</h3><p>${esc(coreq)}</p>`] : []),
   ]
-  // The subjects named in the prerequisites, as links (only ones that have a page).
-  const needLinks = referencedSubjects(s.prerequisites).filter((c) => data.subjects[c])
-  if (needLinks.length) parts.push(`<ul>${needLinks.map((c) => `<li>${subjectLink(code, c)}</li>`).join('')}</ul>`)
-  if (leads.length) parts.push(`<h2>${esc(t('subject.unlocks'))}</h2><ul>${leads.map((c) => `<li>${subjectLink(code, c)}</li>`).join('')}</ul>`)
   if (blocks.length) parts.push(`<h2>${esc(t('subject.blocks'))}</h2><ul>${blocks.map((c) => `<li>${subjectLink(code, c)}</li>`).join('')}</ul>`)
+  // Related subjects: what it leads to, what's taken with it, what comes before. Every link is in
+  // the HTML (the rest of a long list behind a fold), and none repeats one already on the page.
+  const rel = relatedSubjects(s, data.subjects, relatedIndex, blocks)
+  const relList = (key: string, codes: string[]) => {
+    if (!codes.length) return ''
+    const li = (cs: string[]) => cs.map((c) => `<li>${subjectLink(code, c)}</li>`).join('')
+    const rest = codes.slice(RELATED_SHOWN)
+    const more = rest.length ? `<details><summary>${esc(t('subject.relatedMore', { n: rest.length }))}</summary><ul>${li(rest)}</ul></details>` : ''
+    return `<h3>${esc(t(key))}</h3><ul>${li(codes.slice(0, RELATED_SHOWN))}</ul>${more}`
+  }
+  const relHtml = relList('subject.relatedLeads', rel.leadsTo) + relList('subject.relatedWith', rel.takenWith) + relList('subject.relatedBefore', rel.before)
+  if (relHtml) parts.push(`<section class="related"><h2>${esc(t('subject.relatedTitle'))}</h2>${relHtml}</section>`)
   // How it relates to careers (nothing when it isn't tied to one), linking to the career pages.
   const careers = subjectCareersHtml(data, s.code, t, code, (id, major) => `${href(code, `careers/${id}`)}${major ? `?major=${encodeURIComponent(major)}` : ''}`)
   if (careers) parts.push(careers)
@@ -528,7 +535,7 @@ function guideBody(code: LocaleCode, t: Translate, page: GuideCategory | 'overvi
       `<h2 id="points">${esc(t('guide.pointsTitle'))}</h2>`, p('pointsText'),
     ].join('\n'),
     'majors': [
-      `<h2 id="majors">${esc(t('guide.majorsTitle'))}</h2>`, li(['majorsOne', 'majorsSecond', 'majorsMinor', 'majorsOnce']), p('majorsPairs'), p('majorsDiploma'), p('majorsPlans'),
+      `<h2 id="majors">${esc(t('guide.majorsTitle'))}</h2>`, li(['majorsOne', 'majorsSecond', 'majorsMinor', 'majorsOnce']), p('majorsPairs'), p('majorsDiploma'), p('majorsRelated'), p('majorsPlans'),
     ].join('\n'),
     'caps': [
       `<h2 id="caps">${esc(t('guide.capsTitle'))}</h2>`, li(['capsDiscipline', 'capsDesignBreadth', 'capsDesignInformal']),

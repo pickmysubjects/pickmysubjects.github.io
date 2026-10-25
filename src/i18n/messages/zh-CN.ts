@@ -1169,6 +1169,7 @@ export const zhCN: Messages = {
     shortlist: "收藏课程、放一起比较",
   },
   guide: {
+    majorsRelated: "每个科目页下面还有“相关科目”：修完它之后能修什么，以及同专业的同学常在同一学期一起修哪些课。",
     overview: "概览",
     subnav: "指南分区",
     cat: {
@@ -1577,6 +1578,12 @@ export const zhCN: Messages = {
     group: "有小组作业",
   },
   subject: {
+    relatedTitle: "相关科目",
+    relatedLeads: "之后可以修",
+    relatedWith: "常一起修",
+    relatedBefore: "先修这些",
+    relatedMore: "还有 {n} 门",
+    relatedTip: "之后可以修：把这门课列为先修要求的科目。常一起修：同一专业里、同一年级、同一学期开的科目。",
     fullRoute: "完整的先修要求和后续课程",
     recommendedFirst: "建议先修（非必须）",
     chooseDegreeFirst: "先选学位和专业",

@@ -1172,6 +1172,7 @@ export const en = {
     shortlist: "Shortlist and compare subjects",
   },
   guide: {
+    majorsRelated: "Each subject page also lists related subjects: what it leads to, and what students in the same major often take in the same semester.",
     overview: "Overview",
     subnav: "Guide sections",
     cat: {
@@ -1580,6 +1581,12 @@ export const en = {
     group: "Has group work",
   },
   subject: {
+    relatedTitle: "Related subjects",
+    relatedLeads: "Leads to",
+    relatedWith: "Often taken with",
+    relatedBefore: "Before this",
+    relatedMore: "+{n} more",
+    relatedTip: "Leads to: subjects that need this one first. Often taken with: subjects at the same level, in the same semester, from the same majors.",
     fullRoute: "Full requirements and what it leads to",
     recommendedFirst: "Recommended first (not required)",
     chooseDegreeFirst: "Choose your degree first",

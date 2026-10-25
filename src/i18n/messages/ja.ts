@@ -1169,6 +1169,7 @@ export const ja: Messages = {
     shortlist: "科目を保存して比べる",
   },
   guide: {
+    majorsRelated: "各科目のページには「関連科目」もあります。この後に取れる科目と、同じメジャーの学生が同じ学期によく一緒に取る科目です。",
     overview: "概要",
     subnav: "ガイドの項目",
     cat: {
@@ -1577,6 +1578,12 @@ export const ja: Messages = {
     group: "グループ課題あり",
   },
   subject: {
+    relatedTitle: "関連科目",
+    relatedLeads: "この後に取れる科目",
+    relatedWith: "一緒に取られる科目",
+    relatedBefore: "先に取る科目",
+    relatedMore: "ほか {n} 件",
+    relatedTip: "この後に取れる科目：この科目を履修条件にしている科目。一緒に取られる科目：同じメジャーで、同じレベル・同じ学期の科目。",
     fullRoute: "履修条件と次の科目の詳細",
     recommendedFirst: "推奨される事前履修（必須ではない）",
     chooseDegreeFirst: "まず学位と専攻を選ぶ",

@@ -1169,6 +1169,7 @@ export const id: Messages = {
     shortlist: "Simpan dan bandingkan mata kuliah",
   },
   guide: {
+    majorsRelated: "Setiap halaman mata kuliah juga mencantumkan mata kuliah terkait: apa yang bisa diambil sesudahnya, dan apa yang sering diambil bersamaan oleh mahasiswa major yang sama di semester yang sama.",
     overview: "Ringkasan",
     subnav: "Bagian panduan",
     cat: {
@@ -1577,6 +1578,12 @@ export const id: Messages = {
     group: "Ada tugas kelompok",
   },
   subject: {
+    relatedTitle: "Mata kuliah terkait",
+    relatedLeads: "Membuka jalan ke",
+    relatedWith: "Sering diambil bersama",
+    relatedBefore: "Ambil dulu",
+    relatedMore: "+{n} lagi",
+    relatedTip: "Membuka jalan ke: mata kuliah yang mensyaratkan yang ini lebih dulu. Sering diambil bersama: mata kuliah di level dan semester yang sama, dari major yang sama.",
     fullRoute: "Syarat lengkap dan mata kuliah lanjutannya",
     recommendedFirst: "Disarankan lebih dulu (tidak wajib)",
     chooseDegreeFirst: "Pilih gelar dulu",
