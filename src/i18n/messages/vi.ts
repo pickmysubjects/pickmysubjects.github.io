@@ -305,6 +305,7 @@ export const vi: Messages = {
     opensMany: "Là môn tiên quyết của {n} môn sau, nên sau này rất hữu ích.",
     makesHeavy: "Thêm vào kỳ này sẽ làm kỳ này nặng.",
     retake: "Lần trước bạn được {mark} điểm và chưa qua: lần này là học lại.",
+    retakeFailed: "Lần trước bạn chưa qua môn này: lần này là học lại.",
     majorCore: "Môn bắt buộc của chuyên ngành bạn",
     majorOption: "Một môn tự chọn trong chuyên ngành bạn",
     majorPath: "Dẫn đến {codes} trong chuyên ngành của bạn",

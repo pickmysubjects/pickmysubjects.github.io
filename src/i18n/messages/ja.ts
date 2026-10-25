@@ -305,6 +305,7 @@ export const ja: Messages = {
     opensMany: "{n} 科目の前提科目で、後々役立ちます。",
     makesHeavy: "この学期に加えると重めになります。",
     retake: "前回は {mark} 点で不合格でした。今回は再履修になります。",
+    retakeFailed: "前回は不合格でした。今回は再履修になります。",
     majorCore: "あなたの専攻の必修科目",
     majorOption: "あなたの専攻の選択科目の一つ",
     majorPath: "メジャーの {codes} につながる",

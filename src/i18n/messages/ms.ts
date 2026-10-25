@@ -305,6 +305,7 @@ export const ms: Messages = {
     opensMany: "{n} subjek kemudian memerlukannya, jadi berguna kelak.",
     makesHeavy: "Menambahnya menjadikan semester itu berat.",
     retake: "Kali lepas anda dapat {mark} dan gagal: kali ini ulang subjek.",
+    retakeFailed: "Kali lepas anda gagal: kali ini ulang subjek.",
     majorCore: "Wajib dalam major anda",
     majorOption: "Salah satu pilihan dalam major anda",
     majorPath: "Membawa kepada {codes} dalam major anda",

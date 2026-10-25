@@ -191,6 +191,20 @@ describe('recommend after a fail', () => {
     const passed = recommend(real, { ...profile, results: [{ code: 'COMP10001', mark: 70 }] }, { course: 'B-SCI', year: 2026, planned: ['COMP10002'] })
     expect(passed.some((r) => r.code === 'COMP10001' || r.code === 'COMP10002')).toBe(false)
   })
+
+  it('a pass/fail subject not passed is a retake too, said without a mark', async () => {
+    const { dataset, subject } = await import('./helpers')
+    const { recommend } = await import('../src/engine/recommend')
+    const runs = { prerequisites: 'none', offerings: { 2026: ['semester-1'] } }
+    const data = dataset([subject({ code: 'AAAA10001', pass_fail: true, ...runs }), subject({ code: 'BBBB10001', ...runs })])
+    const warn = (results: { code: string; mark?: number; failed?: boolean }[], code: string) =>
+      recommend(data, { results, skills: {}, interests: [], goal: 'balanced' }, { year: 2026 }).find((r) => r.code === code)?.warnings[0]
+    expect(warn([{ code: 'AAAA10001', failed: true }], 'AAAA10001')).toMatchObject({ key: 'retakeFailed', params: {} })
+    // A marked subject ticked as not passed, with no mark entered: the same.
+    expect(warn([{ code: 'BBBB10001', failed: true }], 'BBBB10001')).toMatchObject({ key: 'retakeFailed' })
+    // With a mark, the mark is said, as before.
+    expect(warn([{ code: 'BBBB10001', mark: 40 }], 'BBBB10001')).toMatchObject({ key: 'retake', params: { mark: 40 } })
+  })
 })
 
 describe('recommend and how a subject is marked', () => {

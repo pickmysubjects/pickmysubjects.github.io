@@ -305,6 +305,7 @@ export const id: Messages = {
     opensMany: "{n} mata kuliah lanjutan memerlukannya, jadi berguna nanti.",
     makesHeavy: "Menambahkannya membuat semester itu berat.",
     retake: "Terakhir kamu dapat {mark} dan belum lulus: kali ini mengulang.",
+    retakeFailed: "Terakhir kamu belum lulus: kali ini mengulang.",
     majorCore: "Wajib di jurusanmu",
     majorOption: "Salah satu pilihan di jurusanmu",
     majorPath: "Mengarah ke {codes} di jurusanmu",

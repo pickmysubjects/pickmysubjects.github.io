@@ -305,6 +305,7 @@ export const ko: Messages = {
     opensMany: "{n}개 과목의 선수과목이라 나중에 쓸모가 많아요.",
     makesHeavy: "이 학기에 넣으면 빡빡해져요.",
     retake: "지난번에 {mark}점으로 통과하지 못했어요. 이번에는 재수강이에요.",
+    retakeFailed: "지난번에 통과하지 못했어요. 이번에는 재수강이에요.",
     majorCore: "내 전공 필수 과목",
     majorOption: "내 전공 선택 과목 중 하나",
     majorPath: "전공의 {codes}(으)로 이어짐",

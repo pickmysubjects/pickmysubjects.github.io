@@ -305,6 +305,7 @@ export const zhTW: Messages = {
     opensMany: "有 {n} 門後續課以它為先修，以後用得上。",
     makesHeavy: "加進這個學期會讓它偏重。",
     retake: "你上次這門得了 {mark} 分沒過，這次是重修。",
+    retakeFailed: "你上次這門沒過，這次是重修。",
     majorCore: "你主修的必修課",
     majorOption: "你主修裡可選的課",
     majorPath: "通往你主修裡的 {codes}",

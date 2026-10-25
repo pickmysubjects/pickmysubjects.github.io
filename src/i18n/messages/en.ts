@@ -308,6 +308,7 @@ export const en = {
     opensMany: "{n} later subjects build on it, so it pays off later.",
     makesHeavy: "Adding it makes that semester heavy.",
     retake: "You got {mark} last time: this would be a retake.",
+    retakeFailed: "You didn't pass this last time: this would be a retake.",
     majorCore: "Compulsory in your major",
     majorOption: "One of the choices in your major",
     majorPath: "Leads to {codes} in your major",

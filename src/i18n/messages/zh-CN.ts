@@ -305,6 +305,7 @@ export const zhCN: Messages = {
     opensMany: "有 {n} 门后续课以它为先修，以后用得上。",
     makesHeavy: "加进这个学期会让它偏重。",
     retake: "你上次这门得了 {mark} 分没过，这次是重修。",
+    retakeFailed: "你上次这门没过，这次是重修。",
     majorCore: "你专业的必修课",
     majorOption: "你专业里可选的课",
     majorPath: "通往你专业里的 {codes}",

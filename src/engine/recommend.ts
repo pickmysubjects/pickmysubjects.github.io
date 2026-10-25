@@ -451,6 +451,8 @@ export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions =
     // A fail on My page: this would be a retake, which the student should know before adding it.
     const failed = lastMark.get(s.code)?.mark
     if (failed !== undefined && failed < PASS_MARK) rec.warnings.unshift(note('retake', { mark: failed }, `You got ${failed} last time: this would be a retake.`))
+    // Not passed without a mark to show (a pass/fail subject, or ticked as not passed): still a retake.
+    else if (profile.results.some((r) => r.code === s.code && isFail(r))) rec.warnings.unshift(note('retakeFailed', {}, "You didn't pass this last time: this would be a retake."))
     // A third-year student rarely gains from a first-year science subject (the degree wants
     // level-3 points), and a level below their year is a smaller step back; breadth is
     // different, since level-1 breadth is the usual way in.
