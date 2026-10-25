@@ -1228,7 +1228,7 @@ export const zhTW: Messages = {
         results: "成績公布",
         supp: "特殊考試和補考",
         reenrol: "下一學年註冊",
-        reenrolLate: "逾期註冊（會留 sanction 紀錄）",
+        reenrolLate: "逾期註冊（會留處分紀錄）",
       },
     },
     enrolTitle: "從排課到正式選課",

@@ -1228,7 +1228,7 @@ export const zhCN: Messages = {
         results: "出分",
         supp: "特殊考试和补考",
         reenrol: "注册下一学年",
-        reenrolLate: "逾期注册（记入 sanction）",
+        reenrolLate: "逾期注册（会留处分记录）",
       },
     },
     enrolTitle: "墨大选课流程：从排课方案到正式选课",
