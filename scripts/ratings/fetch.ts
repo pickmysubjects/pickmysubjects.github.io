@@ -13,6 +13,7 @@ import { join } from 'node:path'
 import { buildDataset, ROOT } from '../dataset'
 import { buildRatingFiles } from './aggregate'
 import { fitReviewPrior } from '../../src/engine/easeRanking'
+import { offsetFeatures } from '../../src/engine/gradeModel'
 
 const credentials = process.env.GOOGLE_SERVICE_ACCOUNT_JSON
 const sheetId = process.env.RATINGS_SHEET_ID
@@ -71,9 +72,11 @@ async function readSheet(id: string): Promise<string[][]> {
 }
 const values = await readSheet(sheetId)
 
-const known = new Set(Object.keys(buildDataset('real').dataset.subjects))
+const subjects = buildDataset('real').dataset.subjects
+const known = new Set(Object.keys(subjects))
 // Only aggregates are written: per-subject numbers from 3+ ratings, grade offsets from 5+ shares.
-const out = buildRatingFiles(values, known)
+// Handbook facts feed the offsets' feature prior once 40+ subjects have offsets.
+const out = buildRatingFiles(values, known, new Date(), (code) => (subjects[code] ? offsetFeatures(subjects[code]) : null))
 writeFileSync(join(ROOT, 'data', 'real', 'ratings.json'), `${JSON.stringify(out.ratings, null, 2)}\n`)
 console.log(`Ratings: ${out.accepted} accepted, ${out.rejected} rejected, ${Object.keys(out.ratings).length} subjects.`)
 writeFileSync(join(ROOT, 'data', 'real', 'grade-offsets.json'), `${JSON.stringify(out.offsets, null, 2)}\n`)

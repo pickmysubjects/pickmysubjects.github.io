@@ -1,5 +1,6 @@
 import { referencedSubjects } from './expr'
 import { FITTED } from './fitted'
+import { priorOffset } from './gradeModel'
 import type { Dataset, Subject } from './schema'
 
 export interface MarkPrediction {
@@ -27,9 +28,19 @@ const USUAL_SPREAD = FITTED.spread ?? 8
 /** A student's own spread counts as if the usual one came with this many marks of its own. */
 const SPREAD_PRIOR_MARKS = 4
 
-/** How a subject grades next to its students' own level (shared grades), 0 when unknown. */
+/**
+ * How a subject grades next to its students' own level: its shared grades; else, once the feature
+ * prior is fitted, what its Handbook facts predict; else 0. With its uncertainty (sd).
+ */
+export function gradingOf(s: Subject): { offset: number; sd: number } {
+  if (s.gradeOffset) return { offset: s.gradeOffset.offset, sd: s.gradeOffset.sd ?? 0 }
+  const fp = FITTED.featurePrior
+  const prior = priorOffset(s, fp)
+  return prior === null || !fp ? { offset: 0, sd: 0 } : { offset: prior, sd: fp.tau }
+}
+
 export function offsetOf(s: Subject): number {
-  return s.gradeOffset?.offset ?? 0
+  return gradingOf(s).offset
 }
 
 /**
@@ -62,7 +73,8 @@ export function predictMark(s: Subject, marks: Map<string, number>, data: Datase
   // shrunk by how much there is to go on): own·w + wam·2 over w + 2 is wam + (own − wam)·w/(w + 2).
   const own = w > 0 ? related.reduce((sum, x) => sum + x.w * x.mark, 0) / w : wam
   // How the subject grades next to its students' own level, once enough have shared their bands.
-  const offset = offsetOf(s)
+  const grading = gradingOf(s)
+  const offset = grading.offset
   const mark = Math.max(0, Math.min(100, (own * w + wam * WAM_WEIGHT) / (w + WAM_WEIGHT) + offset))
 
   // Range: where a new mark lands RANGE_SHARE of the time. A new mark varies however much is
@@ -72,7 +84,7 @@ export function predictMark(s: Subject, marks: Map<string, number>, data: Datase
   const n = level.length
   const own2 = level.reduce((sum, [, m]) => sum + (m - wam) ** 2, 0)
   const spread2 = (own2 + SPREAD_PRIOR_MARKS * USUAL_SPREAD ** 2) / (n + SPREAD_PRIOR_MARKS)
-  const se2 = spread2 / (n + w) + (s.gradeOffset?.sd ?? 0) ** 2
+  const se2 = spread2 / (n + w) + grading.sd ** 2
   const half = RANGE_Z * Math.sqrt(spread2 + se2)
   const basis = related.sort((a, b) => b.w - a.w).slice(0, 3).map((x) => x.code)
   return { mark, low: Math.max(0, mark - half), high: Math.min(100, mark + half), basis }

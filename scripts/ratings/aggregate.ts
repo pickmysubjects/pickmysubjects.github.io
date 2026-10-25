@@ -238,7 +238,7 @@ export function aggregate(rows: Record<string, string>[], now = new Date(), know
  * there is enough of each (only summary numbers, never rows). Free text ("What I wish I knew", app
  * language) never reaches either output. Pure, so it's tested without the sheet.
  */
-export function buildRatingFiles(values: string[][], known?: Set<string>, now = new Date()) {
+export function buildRatingFiles(values: string[][], known?: Set<string>, now = new Date(), features?: (code: string) => number[] | null) {
   const rows = rowsToObjects(values)
   const result = aggregate(rows, now, known)
   // A band can come alone (the My page card), so these rows skip the "answered a rating" rule,
@@ -251,9 +251,10 @@ export function buildRatingFiles(values: string[][], known?: Set<string>, now = 
   }))
   // Older bands count for less (see AGE_WEIGHT): assessment changes over the years. With enough
   // bands the grade model's own numbers are fitted from them (gradeModel.ts).
-  const grades = fitGrades(graded, known, { year: now.getFullYear() })
+  const grades = fitGrades(graded, known, { year: now.getFullYear(), features })
   const model: FittedModel = {}
   if (grades.fitted) model.grade = { ...grades.model, rows: grades.rows }
+  if (grades.featurePrior) model.featurePrior = grades.featurePrior
   const ratingPrior = fitRatingPrior(screenRows(rows, now, known, rated))
   if (ratingPrior !== undefined) model.ratingPrior = ratingPrior
   return { ratings: result.subjects, offsets: grades.offsets, model, accepted: result.accepted, rejected: result.rejected }

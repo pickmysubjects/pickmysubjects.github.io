@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { DEFAULT_GRADE_MODEL, gradeOffsets, wamBandMid, type GradeOffset, type GradeRow } from '../src/engine/grades'
-import { fitGrades, MIN_MODEL_ROWS } from '../src/engine/gradeModel'
+import { fitGrades, MIN_MODEL_ROWS, priorOffset } from '../src/engine/gradeModel'
 import { readFitted } from '../src/engine/fitted'
 import { fitReviewPrior, MIN_RATED_SUBJECTS } from '../src/engine/easeRanking'
 import { fitRatingPrior, MIN_PRIOR_SUBJECTS } from '../scripts/ratings/aggregate'
@@ -204,5 +204,52 @@ describe('fitting the model from the data (weekly job)', () => {
     const k = fitReviewPrior(rated)
     expect(k).toBeGreaterThanOrEqual(0.25)
     expect(k).toBeLessThanOrEqual(10)
+  })
+})
+
+describe('the feature prior: offsets borrowed from subjects with similar facts', () => {
+  // Facts per synthetic subject: exam share and an exam hurdle; the rest left at neutral values.
+  const facts = (i: number) => {
+    const r = rng(1000 + i)
+    const exam = Math.round(r() * 8) / 10
+    return [1, exam, r() < 0.3 ? 1 : 0, 0, 0, 0, 0, 0, 0]
+  }
+  // Truth: exam-heavy subjects grade about 2 marks harder, a hurdle 1 more, plus noise of 1.5.
+  const truthOf = (i: number) => {
+    const x = facts(i)
+    return -5 * (x[1]! - 0.4) - x[2]! + 1.5 * normal(rng(2000 + i))
+  }
+  const features = (code: string) => facts(Number(code.slice(4)) - 10000)
+
+  it('below 40 subjects with offsets it has no effect at all', () => {
+    const world = makeWorld({ seed: 21, subjects: 30, advanced: 0, students: 1500, noise: 8, fixed: (_, i) => truthOf(i) })
+    const rows = shareRows(world, 22, 0.2)
+    const withFacts = fitGrades(rows, undefined, { features })
+    expect(withFacts.featurePrior).toBeUndefined()
+    expect(withFacts.offsets).toEqual(fitGrades(rows).offsets)
+  })
+
+  it('with enough subjects it learns which facts matter, and helps subjects with few shares', () => {
+    const world = makeWorld({ seed: 23, subjects: 120, advanced: 0, students: 2000, noise: 8, fixed: (_, i) => truthOf(i) })
+    const truth = centred(world)
+    // Few shares: most subjects end up with only 5–15 bands.
+    const rows = shareRows(world, 24, 0.03)
+    const plain = fitGrades(rows)
+    const borrowed = fitGrades(rows, undefined, { features })
+    expect(borrowed.featurePrior).toBeDefined()
+    expect(borrowed.featurePrior!.weights[1]).toBeLessThan(0) // exam share: harder
+    expect(borrowed.featurePrior!.tau).toBeGreaterThanOrEqual(1)
+    const mae = (o: Record<string, GradeOffset>) => {
+      const errs = Object.entries(o).map(([c, g]) => Math.abs(g.offset - truth.get(c)!))
+      return errs.reduce((a, b) => a + b, 0) / errs.length
+    }
+    expect(mae(borrowed.offsets)).toBeLessThan(mae(plain.offsets))
+  })
+
+  it('a subject with no shares gets a prior only once one is fitted', () => {
+    const s = subject({ code: 'AAAA10001', assessment: [{ kind: 'exam', weight: 70 }, { kind: 'assignment', weight: 30 }] })
+    expect(priorOffset(s, undefined)).toBeNull()
+    expect(priorOffset(s, { weights: [0, -5, 0, 0, 0, 0, 0, 0, 0] })).toBeCloseTo(-3.5, 5)
+    expect(priorOffset(subject({ code: 'BBBB10001' }), { weights: [0, -5, 0, 0, 0, 0, 0, 0, 0] })).toBeNull()
   })
 })

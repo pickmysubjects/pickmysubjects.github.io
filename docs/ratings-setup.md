@@ -95,7 +95,10 @@ estimate stays close to 0. Rows are never published. The likely-mark estimate an
 
 It also writes `data/real/model.json`, the numbers the engine would otherwise assume, once there is
 enough data for each: the grade model's spread, slope and how much subjects differ (from 200+ bands),
-and how strongly ratings and reviews are pulled toward average (from 30+ subjects with 3+ ratings).
+how strongly ratings and reviews are pulled toward average (from 30+ subjects with 3+ ratings), and
+how Handbook facts (exam share, hurdles, class hours, level, the review verdict) predict a subject's
+offset (from 40+ subjects with offsets), so a subject nobody has shared grades for borrows from
+similar ones in its likely-mark estimate.
 Until then the file is `{}` and the engine keeps its hand-set values exactly (`src/engine/fitted.ts`).
 
 ## 3. Daily aggregation

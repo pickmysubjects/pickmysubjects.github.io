@@ -6,7 +6,7 @@ import { evaluateField, referencedSubjects, type Tri } from './expr'
 import type { Note, Params } from './plan'
 import { discussionVerdict, type Dataset, type Period, type Skill, type Subject } from './schema'
 import { FITTED } from './fitted'
-import { predictMark } from './predict'
+import { offsetOf, predictMark } from './predict'
 import { MARKING_SKILLS, markingShare, skillsOf } from './skills'
 import { termStress } from './termStress'
 import { planRoles } from './roles'
@@ -694,7 +694,7 @@ function score(s: Subject, ctx: ScoreCtx): Recommendation {
     const m = guess.mark
     // The subject's own grading (shared grades) is already in ease below: the signal here is the
     // student's level, so the same evidence isn't counted twice. What's said keeps the full mark.
-    parts.predicted = clamp((m - (s.gradeOffset?.offset ?? 0) - 50) / 50)
+    parts.predicted = clamp((m - offsetOf(s) - 50) / 50)
     const params = { mark: Math.round(m), low: Math.round(guess.low), high: Math.round(guess.high), codes: guess.basis.join(', ') }
     detail.predicted = params
     const wam = ctx.wam ?? m
