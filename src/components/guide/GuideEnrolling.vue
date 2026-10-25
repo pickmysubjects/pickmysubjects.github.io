@@ -2,6 +2,7 @@
 import { ExternalLink } from 'lucide-vue-next'
 import { useI18n } from '@/i18n'
 import GuideItem from './GuideItem.vue'
+import InfoTip from '@/components/InfoTip.vue'
 import { URLS } from '@/utils/guideLinks'
 import { link } from '@/composables/useView'
 
@@ -21,6 +22,9 @@ const { t } = useI18n()
       </ol>
       <p class="note">{{ t('guide.enrolDraft') }}</p>
       <p class="note">{{ t('guide.enrolWhen') }}</p>
+      <p class="note">
+        {{ t('guide.reenrolShort') }}<InfoTip>{{ t('guide.reenrolMore') }} <a :href="URLS.REENROL" target="_blank" rel="noopener">{{ t('guide.reenrolLink') }}<ExternalLink :size="13" aria-hidden="true" /></a></InfoTip>
+      </p>
       <ul class="links">
         <li><a :href="URLS.ENROLLING" target="_blank" rel="noopener">{{ t('guide.enrolLink') }}<ExternalLink :size="14" aria-hidden="true" /></a></li>
         <li><a :href="URLS.PLANNER" target="_blank" rel="noopener">{{ t('guide.plannerLink') }}<ExternalLink :size="14" aria-hidden="true" /></a></li>

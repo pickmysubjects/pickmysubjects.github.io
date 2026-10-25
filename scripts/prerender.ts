@@ -570,7 +570,8 @@ function guideBody(code: LocaleCode, t: Translate, page: GuideCategory | 'overvi
       `<h2 id="check">${esc(t('guide.checkTitle'))}</h2>`, p('checkText'), li(['checkLanguage', 'checkPermission', 'checkVce', 'checkAverage']),
     ].join('\n'),
     'enrol': [
-      `<h2 id="enrol">${esc(t('guide.enrolTitle'))}</h2>`, `<ol>${['enrolStep1', 'enrolStep2', 'enrolStep3', 'enrolStep4'].map((k) => `<li>${esc(t(`guide.${k}`))}</li>`).join('')}</ol>`, p('enrolDraft'), p('enrolWhen'),
+      `<h2 id="enrol">${esc(t('guide.enrolTitle'))}</h2>`, `<ol>${['enrolStep1', 'enrolStep2', 'enrolStep3', 'enrolStep4'].map((k) => `<li>${esc(t(`guide.${k}`))}</li>`).join('')}</ol>`, p('enrolDraft'), p('enrolWhen'), p('reenrolShort'), p('reenrolMore'),
+      ext('https://students.unimelb.edu.au/course-admin/re-enrol-in-your-course', 'reenrolLink'),
       ext('https://students.unimelb.edu.au/course-admin/enrolling-in-subjects', 'enrolLink'), ext('https://students.unimelb.edu.au/course-admin/planning-your-course-and-subjects/faculty-course-planning-resources/my-course-planner', 'plannerLink'),
     ].join('\n'),
     'drop': [

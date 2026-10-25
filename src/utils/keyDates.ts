@@ -6,10 +6,12 @@
  */
 export const KEY_DATES_SOURCE = 'https://students.unimelb.edu.au/course-admin/key-dates'
 export const EMPLOYABILITY_SOURCE = 'https://students.unimelb.edu.au/careers/employability-week'
+/** Re-enrolment periods for 2027, copied from the re-enrol page on 2026-10-26. */
+export const REENROL_SOURCE = 'https://students.unimelb.edu.au/course-admin/re-enrol-in-your-course'
 /** When the dates were copied; also the DTSTAMP of the calendar file, so it's stable. */
 export const KEY_DATES_CHECKED = '2026-10-23'
 
-export const KEY_DATE_KINDS = ['teaching', 'orientation', 'selfEnrol', 'employability', 'census', 'break', 'withdraw', 'swotvac', 'exams', 'results', 'supp'] as const
+export const KEY_DATE_KINDS = ['teaching', 'orientation', 'selfEnrol', 'employability', 'census', 'break', 'withdraw', 'swotvac', 'exams', 'results', 'supp', 'reenrol', 'reenrolLate'] as const
 export type KeyDateKind = (typeof KEY_DATE_KINDS)[number]
 export const KEY_DATE_TERMS = ['summer', 'semester-1', 'winter', 'semester-2'] as const
 export type KeyDateTerm = (typeof KEY_DATE_TERMS)[number]
@@ -30,6 +32,7 @@ export interface KeyDate {
 type Row = [KeyDateKind, KeyDateTerm, string, string?]
 const A = KEY_DATES_SOURCE
 const E = EMPLOYABILITY_SOURCE
+const R = REENROL_SOURCE
 
 function rows(year: number, list: Row[]): KeyDate[] {
   return list.map(([kind, term, start, end]) => ({
@@ -39,7 +42,7 @@ function rows(year: number, list: Row[]): KeyDate[] {
     term,
     start,
     end: end ?? start,
-    url: kind === 'employability' ? E : A,
+    url: kind === 'employability' ? E : kind === 'reenrol' || kind === 'reenrolLate' ? R : A,
   }))
 }
 
@@ -72,6 +75,9 @@ export const KEY_DATES: KeyDate[] = [
     ['supp', 'semester-2', '2026-12-10', '2026-12-17'],
   ]),
   ...rows(2027, [
+    // Re-enrolling for 2027 happens before Summer Term 2027 starts, so it sits in that group.
+    ['reenrol', 'summer', '2026-11-16', '2026-12-14'],
+    ['reenrolLate', 'summer', '2026-12-15', '2027-01-13'],
     ['teaching', 'summer', '2026-11-23', '2027-02-28'],
     ['exams', 'summer', '2027-02-15', '2027-02-22'],
     ['orientation', 'semester-1', '2027-02-22', '2027-02-26'],

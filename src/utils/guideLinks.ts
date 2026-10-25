@@ -22,5 +22,6 @@ export const URLS = {
   EXAM_DATES: 'https://students.unimelb.edu.au/course-admin/exams/exam-dates',
   EXAM_TT: 'https://students.unimelb.edu.au/course-admin/exams/exams-timetable',
   RESULTS: 'https://students.unimelb.edu.au/course-admin/results',
+  REENROL: 'https://students.unimelb.edu.au/course-admin/re-enrol-in-your-course',
   EMPLOYABILITY: 'https://students.unimelb.edu.au/careers/employability-week',
 } as const

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { buildIcs, groupKeyDates, KEY_DATE_KINDS, KEY_DATE_TERMS, KEY_DATES, nextDay } from '@/utils/keyDates'
+import { buildIcs, groupKeyDates, KEY_DATE_KINDS, KEY_DATE_TERMS, KEY_DATES, nextDay, REENROL_SOURCE } from '@/utils/keyDates'
 
 const ISO = /^\d{4}-\d{2}-\d{2}$/
 
@@ -26,6 +26,33 @@ describe('key dates data', () => {
     const e = KEY_DATES.filter((d) => d.kind === 'employability')
     expect(e.map((d) => d.start)).toEqual(['2026-03-16', '2026-08-10', '2027-03-15', '2027-08-09'])
     expect(e.every((d) => d.url.endsWith('/careers/employability-week'))).toBe(true)
+  })
+})
+
+describe('2027 re-enrolment', () => {
+  const re = KEY_DATES.filter((d) => d.kind === 'reenrol' || d.kind === 'reenrolLate')
+  it('has the on-time and late periods from the re-enrol page, in the Summer Term 2027 group', () => {
+    expect(re.map((d) => [d.kind, d.start, d.end])).toEqual([
+      ['reenrol', '2026-11-16', '2026-12-14'],
+      ['reenrolLate', '2026-12-15', '2027-01-13'],
+    ])
+    expect(re.every((d) => d.year === 2027 && d.term === 'summer')).toBe(true)
+    expect(re.every((d) => d.url === REENROL_SOURCE)).toBe(true)
+  })
+  it('the late period starts the day after the on-time one ends', () => {
+    expect(nextDay(re[0]!.end)).toBe(re[1]!.start)
+  })
+  it('sits in date order in the Summer Term 2027 group', () => {
+    const g = groupKeyDates(KEY_DATES, '2026-10-26').upcoming.find((x) => x.year === 2027 && x.term === 'summer')!
+    expect(g.items.map((i) => i.kind)).toEqual(['reenrol', 'teaching', 'reenrolLate', 'exams'])
+  })
+  it('goes into the calendar file as all-day events with the re-enrol link', () => {
+    const ics = buildIcs(re, (d) => d.kind)
+    expect(ics).toContain('UID:2027-summer-reenrol@pickmysubjects.github.io')
+    expect(ics).toContain('DTSTART;VALUE=DATE:20261116\r\nDTEND;VALUE=DATE:20261215')
+    expect(ics).toContain('UID:2027-summer-reenrolLate@pickmysubjects.github.io')
+    expect(ics).toContain('DTSTART;VALUE=DATE:20261215\r\nDTEND;VALUE=DATE:20270114')
+    expect(ics).toContain(`URL:${REENROL_SOURCE}`)
   })
 })
 

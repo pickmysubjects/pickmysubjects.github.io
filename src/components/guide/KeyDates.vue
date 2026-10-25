@@ -46,7 +46,7 @@ function download(): void {
         <li v-for="i in g.items" :key="i.id" class="kd-item" :class="{ past: i.past, [i.kind]: true }">
           <span class="kd-date">{{ range(i) }}</span>
           <span class="kd-what">
-            <a v-if="i.kind === 'employability'" :href="i.url" target="_blank" rel="noopener">{{ t(`guide.kd.kind.${i.kind}`) }}<ExternalLink :size="13" aria-hidden="true" /></a>
+            <a v-if="i.url !== URLS.KEY_DATES" :href="i.url" target="_blank" rel="noopener">{{ t(`guide.kd.kind.${i.kind}`) }}<ExternalLink :size="13" aria-hidden="true" /></a>
             <template v-else>{{ t(`guide.kd.kind.${i.kind}`) }}</template>
           </span>
         </li>
