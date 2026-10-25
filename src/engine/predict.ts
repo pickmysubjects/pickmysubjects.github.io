@@ -1,4 +1,5 @@
 import { referencedSubjects } from './expr'
+import { FITTED } from './fitted'
 import type { Dataset, Subject } from './schema'
 
 export interface MarkPrediction {
@@ -21,8 +22,8 @@ const SAME_AREA_WEIGHT = 0.6
  */
 export const RANGE_SHARE = 0.5
 const RANGE_Z = 0.6745
-/** How far marks usually stray from a student's own level, in marks (the grade model's spread). */
-const USUAL_SPREAD = 8
+/** How far marks usually stray from a student's own level, in marks: the grade model's sigma once fitted. */
+const USUAL_SPREAD = FITTED.spread ?? 8
 /** A student's own spread counts as if the usual one came with this many marks of its own. */
 const SPREAD_PRIOR_MARKS = 4
 

@@ -154,23 +154,37 @@ export function truncatedMoments(mean: number, sigma: number, lo: number, hi: nu
 /**
  * One subject's offset: the most likely value given its bands (each band's probability for the
  * sharer's WAM, weighted by age) and a normal prior, with its standard deviation from the
- * curvature there. The log-likelihood is concave in the offset, so halving the search interval
- * on the sign of its slope finds the top.
+ * curvature there. The log-likelihood is concave in the offset, so Newton steps find the top,
+ * kept inside a bracket that halves whenever a step would leave it.
  */
 export function fitOffset(obs: BandObs[], model: GradeModel = DEFAULT_GRADE_MODEL, priorMean = 0): { offset: number; sd: number } {
   const { a, beta, sigma, tau } = model
-  const meanOf = (o: BandObs, delta: number) => a + beta * (o.wam - 70) + delta
-  const slope = (delta: number) => obs.reduce((g, o) => g + o.w * bandTerms(meanOf(o, delta), o.lo, o.hi, sigma).d1, -(delta - priorMean) / (tau * tau))
+  const at = (delta: number) => {
+    let slope = -(delta - priorMean) / (tau * tau)
+    let info = 1 / (tau * tau)
+    for (const o of obs) {
+      const t = bandTerms(a + beta * (o.wam - 70) + delta, o.lo, o.hi, sigma)
+      slope += o.w * t.d1
+      info -= o.w * t.d2
+    }
+    return { slope, info }
+  }
   let lo = -60
   let hi = 60
-  for (let i = 0; i < 60; i++) {
-    const mid = (lo + hi) / 2
-    if (slope(mid) > 0) lo = mid
-    else hi = mid
+  let delta = Math.max(lo, Math.min(hi, priorMean))
+  for (let i = 0; i < 100; i++) {
+    const { slope, info } = at(delta)
+    if (slope > 0) lo = delta
+    else hi = delta
+    let next = delta + slope / info
+    if (!(next > lo && next < hi)) next = (lo + hi) / 2
+    if (Math.abs(next - delta) < 1e-10 || hi - lo < 1e-10) {
+      delta = next
+      break
+    }
+    delta = next
   }
-  const offset = (lo + hi) / 2
-  const info = obs.reduce((h, o) => h - o.w * bandTerms(meanOf(o, offset), o.lo, o.hi, sigma).d2, 1 / (tau * tau))
-  return { offset, sd: 1 / Math.sqrt(info) }
+  return { offset: delta, sd: 1 / Math.sqrt(at(delta).info) }
 }
 
 const round1 = (x: number) => Math.round(x * 10) / 10

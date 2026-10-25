@@ -93,6 +93,11 @@ that carry a WAM range, how far grades sit above or below the sharers' WAM, with
 typical mark, and bands from earlier years count a little less (0.8 per year). With few shares the
 estimate stays close to 0. Rows are never published. The likely-mark estimate and "ease" use it.
 
+It also writes `data/real/model.json`, the numbers the engine would otherwise assume, once there is
+enough data for each: the grade model's spread, slope and how much subjects differ (from 200+ bands),
+and how strongly ratings and reviews are pulled toward average (from 30+ subjects with 3+ ratings).
+Until then the file is `{}` and the engine keeps its hand-set values exactly (`src/engine/fitted.ts`).
+
 ## 3. Daily aggregation
 
 1. Google Cloud Console (free):

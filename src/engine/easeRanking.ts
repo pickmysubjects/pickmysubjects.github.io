@@ -1,4 +1,5 @@
 import { periodsFor } from './availability'
+import { FITTED } from './fitted'
 import { discussionVerdict, type Period, type Subject } from './schema'
 
 /**
@@ -54,13 +55,16 @@ const MIN_GRADES = 5
 /** A review lean this far either side of neutral counts as "reviews say easy / hard". */
 const VERDICT = 0.25
 const MAX_REASONS = 4
-const REVIEW_PRIOR = 1
+/** The neutral prior the review score is pulled toward, in units of evidence: fitted once 30+ subjects are rated (fitted.ts). */
+const REVIEW_PRIOR = FITTED.reviewPrior ?? 1
 
 interface Evidence {
   /** -1 … +1 from Handbook facts; null when nothing is recorded. */
   facts: number | null
   /** -1 … +1 from what students say; null when nobody has. */
   reviews: number | null
+  /** Each piece of what students say, on -1 … +1, with its weight (for fitting REVIEW_PRIOR). */
+  parts: { value: number; weight: number }[]
   easy: RankReason[]
   hard: RankReason[]
 }
@@ -166,7 +170,7 @@ function evidence(s: Subject): Evidence {
     } else if (s.level === 3) facts -= 0.05
     facts = clamp(facts)
   }
-  return { facts, reviews, easy, hard }
+  return { facts, reviews, parts, easy, hard }
 }
 
 /**
@@ -338,4 +342,35 @@ export function inTopShare(subjects: Record<string, Subject>, s: Subject, direct
   const t = tier(r.reviews, direction)
   const sign = direction === 'easy' ? 1 : -1
   return t < cut.tier || (t === cut.tier && r.score * sign >= cut.score * sign)
+}
+
+/** Subjects rated here by MIN_RATINGS+ students needed before REVIEW_PRIOR is estimated. */
+export const MIN_RATED_SUBJECTS = 30
+
+/**
+ * REVIEW_PRIOR from the data (normal–normal empirical Bayes): how much the pieces of evidence for
+ * one subject disagree (noise per unit of weight) against how much subjects really differ. Run by
+ * the weekly ratings job; undefined until MIN_RATED_SUBJECTS subjects have our own ratings, so
+ * public review summaries alone never change it.
+ */
+export function fitReviewPrior(subjects: Subject[]): number | undefined {
+  if (subjects.filter((s) => s.signals && s.signals.reviews >= MIN_RATINGS).length < MIN_RATED_SUBJECTS) return undefined
+  const groups = subjects.map((s) => evidence(s).parts).filter((p) => p.length >= 2)
+  if (groups.length < MIN_RATED_SUBJECTS) return undefined
+  let within = 0
+  let dof = 0
+  const means = groups.map((parts) => {
+    const w = parts.reduce((a, p) => a + p.weight, 0)
+    const mean = parts.reduce((a, p) => a + p.weight * p.value, 0) / w
+    within += parts.reduce((a, p) => a + p.weight * (p.value - mean) ** 2, 0)
+    dof += parts.length - 1
+    return { mean, w }
+  })
+  const noise = within / dof
+  if (!(noise > 0)) return undefined
+  // Between subjects, centred on neutral (0), each mean counted by its precision.
+  const prec = means.map((m) => m.w / noise)
+  const q = means.reduce((a, m, i) => a + prec[i]! * m.mean ** 2, 0)
+  const between = Math.max(0.01, (q - means.length) / prec.reduce((a, x) => a + x, 0))
+  return Math.round(Math.max(0.25, Math.min(10, noise / between)) * 100) / 100
 }

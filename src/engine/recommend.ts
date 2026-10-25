@@ -5,6 +5,7 @@ import { careerGoal, careerNameParams, goalTier } from './careerGoal'
 import { evaluateField, referencedSubjects, type Tri } from './expr'
 import type { Note, Params } from './plan'
 import { discussionVerdict, type Dataset, type Period, type Skill, type Subject } from './schema'
+import { FITTED } from './fitted'
 import { predictMark } from './predict'
 import { MARKING_SKILLS, markingShare, skillsOf } from './skills'
 import { termStress } from './termStress'
@@ -192,8 +193,11 @@ const INTEREST_RELATED = 0.55
 /** No match: nothing known about it, a broad area-implied mismatch, a tagged mismatch. */
 const INTEREST_UNKNOWN = 0.3
 const INTEREST_INFERRED_MISS = 0.2
-/** Ratings are averaged with the site-wide average as if it were this many extra reviews. */
-const RATING_PRIOR_REVIEWS = 5
+/**
+ * Ratings are averaged with the site-wide average as if it were this many extra reviews: estimated
+ * from the ratings themselves once 30+ subjects have them (see fitted.ts), 5 until then.
+ */
+const RATING_PRIOR_REVIEWS = FITTED.ratingPrior ?? 5
 const MIN_RATED_FOR_PRIOR = 10
 /** Re-ranking only swaps near-ties: subjects within this many points of each other. */
 const TIE_POINTS = 3

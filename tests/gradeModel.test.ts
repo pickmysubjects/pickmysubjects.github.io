@@ -1,8 +1,13 @@
 import { describe, expect, it } from 'vitest'
-import { gradeOffsets, wamBandMid, type GradeOffset, type GradeRow } from '../src/engine/grades'
+import { DEFAULT_GRADE_MODEL, gradeOffsets, wamBandMid, type GradeOffset, type GradeRow } from '../src/engine/grades'
+import { fitGrades, MIN_MODEL_ROWS } from '../src/engine/gradeModel'
+import { readFitted } from '../src/engine/fitted'
+import { fitReviewPrior, MIN_RATED_SUBJECTS } from '../src/engine/easeRanking'
+import { fitRatingPrior, MIN_PRIOR_SUBJECTS } from '../scripts/ratings/aggregate'
+import { buildDataset } from '../scripts/dataset'
 import { predictMark, RANGE_SHARE } from '../src/engine/predict'
 import { dataset, subject } from './helpers'
-import { makeWorld, shareRows, type World } from './synthetic'
+import { makeWorld, normal, rng, shareRows, type World } from './synthetic'
 
 /**
  * Synthetic students with a known ability and subjects with a known difficulty: do the published
@@ -125,5 +130,79 @@ describe('likely marks on synthetic students', () => {
       const r = run(known)
       expect(Math.abs(r.coverage - RANGE_SHARE)).toBeLessThan(0.07)
     }
+  })
+})
+
+describe('fitting the model from the data (weekly job)', () => {
+  it('below 200 bands nothing is fitted: the defaults, and exactly the plain offsets', () => {
+    const world = makeWorld({ seed: 3, students: 60, noise: 8 })
+    const rows = shareRows(world, 4, 0.1)
+    expect(rows.length).toBeLessThan(MIN_MODEL_ROWS)
+    const fit = fitGrades(rows, undefined, { year: 2026 })
+    expect(fit.fitted).toBe(false)
+    expect(fit.model).toEqual(DEFAULT_GRADE_MODEL)
+    expect(fit.offsets).toEqual(gradeOffsets(rows, undefined, { year: 2026 }))
+  })
+
+  it('with enough bands, recovers the spread and how much subjects differ, and fixes a wrong default spread', () => {
+    // Marks stray 10 from ability here, not the default 8: the defaults then make strong
+    // students' subjects look harder; the fitted model doesn't.
+    const fitted: number[] = []
+    const plain: number[] = []
+    for (const seed of [1, 2, 3]) {
+      const world = makeWorld({ seed, deltaSd: 3, students: 3000, advanced: 10, strongShare: 0.05, noise: 10 })
+      const truth = centred(world)
+      const rows = shareRows(world, seed + 100, 0.2)
+      const fit = fitGrades(rows)
+      expect(fit.fitted).toBe(true)
+      expect(Math.abs(fit.model.sigma - 10)).toBeLessThan(0.8)
+      expect(fit.model.beta).toBeGreaterThan(0.8)
+      expect(fit.model.beta).toBeLessThan(1)
+      expect(Math.abs(fit.model.tau - 3)).toBeLessThan(1)
+      const defaults = gradeOffsets(rows)
+      for (const code of world.advanced) {
+        if (!fit.offsets[code]) continue
+        fitted.push(fit.offsets[code]!.offset - truth.get(code)!)
+        plain.push(defaults[code]!.offset - truth.get(code)!)
+      }
+    }
+    const mean = (xs: number[]) => xs.reduce((a, b) => a + b, 0) / xs.length
+    expect(Math.abs(mean(fitted))).toBeLessThan(0.6)
+    expect(mean(plain)).toBeLessThan(-0.9)
+  })
+
+  it('an empty model file changes nothing: every consumer keeps its constant', () => {
+    expect(readFitted({})).toEqual({ spread: undefined, ratingPrior: undefined, reviewPrior: undefined, featurePrior: undefined })
+    // Nonsense values are ignored rather than trusted.
+    expect(readFitted({ ratingPrior: -3, reviewPrior: Number.NaN, grade: { a: 70, beta: 1, sigma: 400, tau: 4, rows: 300 } }).spread).toBeUndefined()
+  })
+
+  it('the rating prior is estimated only from 30+ rated subjects, and lands near the truth', () => {
+    const rand = rng(5)
+    const rows = (subjects: number) =>
+      Array.from({ length: subjects }, (_, j) => {
+        // Each subject's true difficulty (1–5 scale) spreads 0.6 between subjects; one rating strays 0.9.
+        const level = 3 + 0.6 * normal(rand)
+        return Array.from({ length: 8 }, () => {
+          const d = Math.max(1, Math.min(5, Math.round(level + 0.9 * normal(rand))))
+          return { 'Subject code': `SYNT${10000 + j}`, Difficulty: String(d) }
+        })
+      }).flat()
+    expect(fitRatingPrior(rows(MIN_PRIOR_SUBJECTS - 1))).toBeUndefined()
+    // Truth: (0.9/4)² / (0.6/4)² ≈ 2.25 reviews (rounding to whole ratings blurs it a little).
+    const k = fitRatingPrior(rows(200))!
+    expect(k).toBeGreaterThan(1.2)
+    expect(k).toBeLessThan(4.5)
+  })
+
+  it('the review prior waits for our own ratings: public summaries alone never set it', () => {
+    const { dataset: data } = buildDataset('real')
+    expect(fitReviewPrior(Object.values(data.subjects))).toBeUndefined()
+    const rated = Array.from({ length: MIN_RATED_SUBJECTS }, (_, i) =>
+      subject({ code: `SYNT${10000 + i}`, signals: { reviews: 5, difficulty: 2 + (i % 3), workload: 2 + ((i * 7) % 3), grading: 2 + ((i * 5) % 3) } }),
+    )
+    const k = fitReviewPrior(rated)
+    expect(k).toBeGreaterThanOrEqual(0.25)
+    expect(k).toBeLessThanOrEqual(10)
   })
 })
