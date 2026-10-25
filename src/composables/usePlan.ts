@@ -333,7 +333,8 @@ export function usePlan() {
   function importPlan(setup: PlanSetup, terms: PlanTerm[]): void {
     // Whether you're on a student visa is about you, not the plan: a shared link keeps yours.
     const international = state.value.setup.international
-    save(() => ({ setup: { ...setup, ...(international !== undefined ? { international } : {}) }, terms, notes: [], unplaced: [] }))
+    // A shared plan is a finished one: show it, not the setup questions (a fresh browser has no setup yet).
+    save(() => ({ setup: { ...setup, confirmed: true, ...(international !== undefined ? { international } : {}) }, terms, notes: [], unplaced: [] }))
   }
 
   /** Make a heavy semester lighter: take the spread-out arrangement, or move one subject to a summer/winter term. */
