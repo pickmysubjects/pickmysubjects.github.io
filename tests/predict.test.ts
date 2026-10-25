@@ -1,6 +1,8 @@
 import { describe, expect, it } from 'vitest'
 import { buildDataset } from '../scripts/dataset'
 import { predictMark } from '../src/engine/predict'
+import { referencedSubjects } from '../src/engine/expr'
+import { rng } from './synthetic'
 import { personalise, recommend } from '../src/engine/recommend'
 
 /** Predicting from similar subjects, the "marks only" goal, and past choices (real data). */
@@ -115,5 +117,53 @@ describe('shared grades count once in a suggestion', () => {
     // What it tells the student is still the likely mark, grading included.
     const said = (code: string) => recs.find((r) => r.code === code)?.reasons.find((x) => x.key === 'predictedWam')?.params.mark
     expect(Number(said('AAAA10002'))).toBe(Number(said('AAAA10001')) + 6)
+  })
+})
+
+describe('marks read less how their subject grades', () => {
+  const { dataset: data } = buildDataset('real')
+
+  /** predictMark's likely mark as of a07316c (2026-10-25), before marks were adjusted for grading. */
+  function legacyMark(s: import('../src/engine/schema').Subject, marks: Map<string, number>): number | null {
+    const others = [...marks].filter(([c]) => c !== s.code && data.subjects[c])
+    if (others.length === 0) return null
+    const pts = (c: string) => data.subjects[c]!.points
+    const wam = others.reduce((sum, [c, m]) => sum + m * pts(c), 0) / others.reduce((sum, [c]) => sum + pts(c), 0)
+    const prereqs = new Set(referencedSubjects(s.prerequisites))
+    const related = others.filter(([c]) => prereqs.has(c) || data.subjects[c]!.area === s.area).map(([code, mark]) => ({ code, mark, w: prereqs.has(code) ? 1 : 0.6 }))
+    const w = related.reduce((sum, x) => sum + x.w, 0)
+    const own = w > 0 ? related.reduce((sum, x) => sum + x.w * x.mark, 0) / w : wam
+    return Math.max(0, Math.min(100, (own * w + wam * 2) / (w + 2) + (s.gradeOffset?.offset ?? 0)))
+  }
+
+  it('with no shared grades, gives exactly the mark it gave before', () => {
+    const rand = rng(7)
+    const codes = Object.keys(data.subjects).sort()
+    const pick = () => codes[Math.floor(rand() * codes.length)]!
+    let checked = 0
+    for (let i = 0; i < 400; i++) {
+      // A target with prerequisites half the time, so related marks come into it.
+      const target = data.subjects[pick()]!
+      const done = [...referencedSubjects(target.prerequisites).slice(0, 2), ...Array.from({ length: 1 + Math.floor(rand() * 12) }, pick)]
+      const marks = new Map(done.map((c) => [c, 40 + Math.round(rand() * 60)]))
+      const now = predictMark(target, marks, data)
+      expect(now?.mark ?? null).toBe(legacyMark(target, marks))
+      if (now) checked++
+    }
+    expect(checked).toBeGreaterThan(300)
+  })
+
+  it('a prerequisite that grades generously no longer lifts the prediction by its generosity', async () => {
+    const { dataset: make, subject } = await import('./helpers')
+    const pre = subject({ code: 'AAAA10001', area: 'AAAA', prerequisites: 'none' })
+    const next = subject({ code: 'AAAA20001', area: 'AAAA', level: 2, prerequisites: { subject: 'AAAA10001' } })
+    const other = subject({ code: 'BBBB10001', area: 'BBBB', prerequisites: 'none' })
+    const marks = new Map([['AAAA10001', 80], ['BBBB10001', 70]])
+    const plain = predictMark(next, marks, make([pre, next, other]))!.mark
+    const generous = predictMark(next, marks, make([{ ...pre, gradeOffset: { offset: 6, n: 20 } }, next, other]))!.mark
+    // The 80 was partly the subject's doing: the student's level there is 74, which lowers both
+    // the related mark (6) and the WAM (3): (6·1 + 3·2) / (1 + 2) = 4.
+    expect(generous).toBeLessThan(plain)
+    expect(plain - generous).toBeCloseTo(4, 5)
   })
 })

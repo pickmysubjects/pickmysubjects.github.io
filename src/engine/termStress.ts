@@ -3,7 +3,7 @@ import { componentCourse } from './courseRules'
 import { discussionVerdict, type Dataset, type Skill, type Subject } from './schema'
 import { prerequisiteRoute } from './expr'
 import { planRoles } from './roles'
-import { MARKING_SKILLS, skillsOf } from './skills'
+import { MARKING_SKILLS, skillsOf, WEAK_MARK } from './skills'
 
 import { termsWithCarried } from './yearLong'
 import type { PlanTerm } from './plan'
@@ -63,10 +63,11 @@ export interface TermStress {
 const STACKING: Skill[] = ['maths', 'programming', 'statistics', 'writing', 'lab']
 
 /**
- * A past average below this in a skill's subjects counts as a weakness — from two or more
- * marks; a single mark only when it's clearly low (one bad semester says little).
+ * A past average below WEAK_MARK (skills.ts, shared with My page's levels) in a skill's subjects
+ * counts as a weakness — from two or more marks; a single mark only when it's clearly low (one
+ * bad semester says little).
  */
-export const WEAK_MARK = 65
+export { WEAK_MARK }
 const WEAK_SINGLE_MARK = 55
 /** Typical weekly class hours when a subject's aren't recorded. */
 const DEFAULT_HOURS = 3.5

@@ -3,7 +3,8 @@
  * Only numbers and counts leave this function — free text ("What I wish I knew")
  * and anything that could identify a person are never published.
  */
-import { gradeOffsets } from '../../src/engine/grades'
+import { fitGrades } from '../../src/engine/gradeModel'
+import type { FittedModel } from '../../src/engine/fitted'
 import { SKILLS } from '../../src/engine/schema'
 import { isRatingTag } from '../../src/engine/ratingTags'
 
@@ -133,6 +134,45 @@ export function screenRows(
   return out
 }
 
+/** A row that answers at least one rating question. */
+function rated(row: Record<string, string>): boolean {
+  return ANSWER_COLUMNS.some((c) => (row[c] ?? '') !== '')
+}
+
+/** Rated subjects needed before the rating prior is estimated from the ratings. */
+export const MIN_PRIOR_SUBJECTS = 30
+
+/**
+ * How many reviews the site-wide average should count as (RATING_PRIOR_REVIEWS in recommend.ts),
+ * by normal–normal empirical Bayes: the spread of single ratings within a subject over the real
+ * spread between subjects. Ease per rating is read as recommend.ts reads it (difficulty, workload
+ * and generosity on 0–1). Undefined until MIN_PRIOR_SUBJECTS subjects have MIN_REVIEWS ratings.
+ */
+export function fitRatingPrior(kept: Record<string, string>[]): number | undefined {
+  const one = (r: Record<string, string>, c: string) => {
+    const x = Number(r[c])
+    return Number.isInteger(x) && x >= 1 && x <= 5 ? x : undefined
+  }
+  const bySubject = new Map<string, number[]>()
+  for (const r of kept) {
+    const d = one(r, COLUMNS.difficulty)
+    const w = one(r, COLUMNS.workload)
+    const g = one(r, COLUMNS.generosity)
+    const parts = [d === undefined ? undefined : 5 - d, w === undefined ? undefined : 5 - w, g === undefined ? undefined : g - 1].filter((x): x is number => x !== undefined)
+    if (!parts.length) continue
+    const code = r[COLUMNS.code] as string
+    bySubject.set(code, [...(bySubject.get(code) ?? []), parts.reduce((a, b) => a + b, 0) / (4 * parts.length)])
+  }
+  const groups = [...bySubject.values()].filter((xs) => xs.length >= MIN_REVIEWS)
+  if (groups.length < MIN_PRIOR_SUBJECTS) return undefined
+  const means = groups.map((xs) => mean(xs))
+  const within = groups.reduce((a, xs, i) => a + xs.reduce((b, x) => b + (x - means[i]!) ** 2, 0), 0) / groups.reduce((a, xs) => a + xs.length - 1, 0)
+  const grand = mean(means)
+  const spread = means.reduce((a, m) => a + (m - grand) ** 2, 0) / (means.length - 1)
+  const between = Math.max(1e-4, spread - mean(groups.map((xs) => within / xs.length)))
+  return Math.round(Math.max(0.25, Math.min(50, within / between)) * 10) / 10
+}
+
 /**
  * `known` limits output to subjects in the dataset, so spam with made-up codes
  * can't bloat the published file. Grade bands are never published.
@@ -140,7 +180,7 @@ export function screenRows(
 export function aggregate(rows: Record<string, string>[], now = new Date(), known?: Set<string>): AggregateResult {
   const bySubject = new Map<string, Record<string, string>[]>()
 
-  const kept = screenRows(rows, now, known, (row) => ANSWER_COLUMNS.some((c) => (row[c] ?? '') !== ''))
+  const kept = screenRows(rows, now, known, rated)
   for (const row of kept) {
     const code = row[COLUMNS.code] as string
     bySubject.set(code, [...(bySubject.get(code) ?? []), row])
@@ -194,10 +234,11 @@ export function aggregate(rows: Record<string, string>[], now = new Date(), know
 
 /**
  * Everything the daily job publishes, from the sheet's raw values: per-subject rating aggregates,
- * and grade offsets from bands sent with a WAM range. Free text ("What I wish I knew", app
+ * grade offsets from bands sent with a WAM range, and the model numbers fitted from both once
+ * there is enough of each (only summary numbers, never rows). Free text ("What I wish I knew", app
  * language) never reaches either output. Pure, so it's tested without the sheet.
  */
-export function buildRatingFiles(values: string[][], known?: Set<string>, now = new Date()) {
+export function buildRatingFiles(values: string[][], known?: Set<string>, now = new Date(), features?: (code: string) => number[] | null) {
   const rows = rowsToObjects(values)
   const result = aggregate(rows, now, known)
   // A band can come alone (the My page card), so these rows skip the "answered a rating" rule,
@@ -206,8 +247,17 @@ export function buildRatingFiles(values: string[][], known?: Set<string>, now = 
     code: r[COLUMNS.code] ?? '',
     band: r[COLUMNS.grade] ?? '',
     wamBand: r[COLUMNS.wamBand] ?? '',
+    year: r[COLUMNS.year] ?? '',
   }))
-  return { ratings: result.subjects, offsets: gradeOffsets(graded, known), accepted: result.accepted, rejected: result.rejected }
+  // Older bands count for less (see AGE_WEIGHT): assessment changes over the years. With enough
+  // bands the grade model's own numbers are fitted from them (gradeModel.ts).
+  const grades = fitGrades(graded, known, { year: now.getFullYear(), features })
+  const model: FittedModel = {}
+  if (grades.fitted) model.grade = { ...grades.model, rows: grades.rows }
+  if (grades.featurePrior) model.featurePrior = grades.featurePrior
+  const ratingPrior = fitRatingPrior(screenRows(rows, now, known, rated))
+  if (ratingPrior !== undefined) model.ratingPrior = ratingPrior
+  return { ratings: result.subjects, offsets: grades.offsets, model, accepted: result.accepted, rejected: result.rejected }
 }
 
 function mean(xs: number[]): number {

@@ -7,12 +7,17 @@
  * For each student and each semester after their first, it replays what they had done before and
  * asks: (1) do the top-10 suggestions include what they actually took next (precision/recall@10),
  * with only skills and interests, then with marks too; (2) how close is the likely mark to the real
- * one (mean absolute error), next to just predicting their WAM so far.
+ * one (mean absolute error), next to just predicting their WAM so far, with a bootstrap 95% interval
+ * on the difference; (3) whether the likely range means what it says: how often the real mark
+ * lands inside (coverage, against RANGE_SHARE) and the interval score (width, plus a penalty for
+ * each miss by how far it missed; lower is better).
+ *
+ * One transcript can veto a change (it got clearly worse) but never pick a parameter.
  */
 import { existsSync, readdirSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { buildDataset, ROOT } from './dataset'
-import { predictMark } from '../src/engine/predict'
+import { predictMark, RANGE_SHARE } from '../src/engine/predict'
 import { recommend, type Profile } from '../src/engine/recommend'
 import type { Period, Skill } from '../src/engine/schema'
 
@@ -61,6 +66,26 @@ const se = (xs: number[]) => {
 }
 const pm = (xs: number[]) => `${fmt(avg(xs))}±${fmt(se(xs))}`
 const all = { pCold: [] as number[], rCold: [] as number[], pMarks: [] as number[], rMarks: [] as number[], mae: [] as number[], maeWam: [] as number[] }
+/** Every prediction from every student, for the pooled range and bootstrap figures. */
+const pooled = { err: [] as number[], errWam: [] as number[], inside: [] as number[], score: [] as number[], width: [] as number[] }
+/** Interval score of a central (1 − alpha) range (Gneiting & Raftery 2007). */
+const intervalScore = (low: number, high: number, y: number, alpha: number) => high - low + (2 / alpha) * (Math.max(0, low - y) + Math.max(0, y - high))
+/** A seeded generator, so the bootstrap gives the same interval every run. */
+function seeded(seed: number) {
+  let a = seed >>> 0
+  return () => {
+    a = (a + 0x6d2b79f5) >>> 0
+    let t = Math.imul(a ^ (a >>> 15), a | 1)
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61)
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296
+  }
+}
+/** 95% bootstrap interval for the mean of xs (resampling predictions). */
+function bootstrap(xs: number[], reps = 2000): [number, number] {
+  const rand = seeded(1)
+  const means = Array.from({ length: reps }, () => avg(Array.from(xs, () => xs[Math.floor(rand() * xs.length)]!))).sort((a, b) => a - b)
+  return [means[Math.floor(reps * 0.025)]!, means[Math.ceil(reps * 0.975) - 1]!]
+}
 
 for (const file of readdirSync(dir).filter((f) => f.endsWith('.txt')).sort()) {
   const st = read(join(dir, file))
@@ -69,7 +94,7 @@ for (const file of readdirSync(dir).filter((f) => f.endsWith('.txt')).sort()) {
     const [yb, pb] = b.split('|')
     return Number(ya) - Number(yb) || ORDER.indexOf(pa as Period) - ORDER.indexOf(pb as Period)
   })
-  const per = { pCold: [] as number[], rCold: [] as number[], pMarks: [] as number[], rMarks: [] as number[], err: [] as number[], errWam: [] as number[] }
+  const per = { pCold: [] as number[], rCold: [] as number[], pMarks: [] as number[], rMarks: [] as number[], err: [] as number[], errWam: [] as number[], inside: [] as number[], score: [] as number[], width: [] as number[] }
   terms.forEach((key, i) => {
     if (i === 0) return
     const [y, p] = key.split('|')
@@ -108,11 +133,22 @@ for (const file of readdirSync(dir).filter((f) => f.endsWith('.txt')).sort()) {
       if (!guess) continue
       per.err.push(Math.abs(guess.mark - t.mark))
       per.errWam.push(Math.abs(wam - t.mark))
+      // The range as the student sees it: rounded ends.
+      const low = Math.round(guess.low)
+      const high = Math.round(guess.high)
+      per.inside.push(t.mark >= low && t.mark <= high ? 1 : 0)
+      per.score.push(intervalScore(low, high, t.mark, 1 - RANGE_SHARE))
+      per.width.push(high - low)
     }
   })
   console.log(
-    `${file.padEnd(10)} ${st.course} ${(st.major || '-').padEnd(32)} recall@10 cold ${pm(per.rCold)} with marks ${pm(per.rMarks)} (${per.rCold.length} semesters) | precision ${fmt(avg(per.pCold))}/${fmt(avg(per.pMarks))} | mark MAE ${pm(per.err)} vs WAM ${pm(per.errWam)} (n=${per.err.length})`,
+    `${file.padEnd(10)} ${st.course} ${(st.major || '-').padEnd(32)} recall@10 cold ${pm(per.rCold)} with marks ${pm(per.rMarks)} (${per.rCold.length} semesters) | precision ${fmt(avg(per.pCold))}/${fmt(avg(per.pMarks))} | mark MAE ${pm(per.err)} vs WAM ${pm(per.errWam)} (n=${per.err.length}) | range coverage ${fmt(avg(per.inside))} (stated ${RANGE_SHARE}), width ${fmt(avg(per.width))}, interval score ${fmt(avg(per.score))}`,
   )
+  pooled.err.push(...per.err)
+  pooled.errWam.push(...per.errWam)
+  pooled.inside.push(...per.inside)
+  pooled.score.push(...per.score)
+  pooled.width.push(...per.width)
   all.pCold.push(avg(per.pCold))
   all.rCold.push(avg(per.rCold))
   all.pMarks.push(avg(per.pMarks))
@@ -124,5 +160,11 @@ for (const file of readdirSync(dir).filter((f) => f.endsWith('.txt')).sort()) {
 }
 console.log(
   `\nAll ${all.rCold.length} students: recall@10 cold ${pm(all.rCold)}, with marks ${pm(all.rMarks)}; precision@10 ${fmt(avg(all.pCold))}/${fmt(avg(all.pMarks))}; mark MAE ${pm(all.mae)} vs WAM ${pm(all.maeWam)}` +
+    (pooled.err.length
+      ? (() => {
+          const [lo, hi] = bootstrap(pooled.err.map((e, i) => e - pooled.errWam[i]!))
+          return `\nAll ${pooled.err.length} predictions: MAE − WAM's MAE ${fmt(avg(pooled.err) - avg(pooled.errWam))} (bootstrap 95% ${fmt(lo)} to ${fmt(hi)}); range coverage ${fmt(avg(pooled.inside))} (stated ${RANGE_SHARE}), width ${fmt(avg(pooled.width))}, interval score ${fmt(avg(pooled.score))}`
+        })()
+      : '') +
     (all.rCold.length < 5 ? '\nFewer than 5 students: treat these as a direction, not a measure.' : ''),
 )

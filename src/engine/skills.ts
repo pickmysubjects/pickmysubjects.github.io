@@ -127,9 +127,19 @@ function markedBy(s: Subject): Skill[] {
   return out
 }
 
-/** A level (1–5) from a usual mark, on the same bands My record shows (UniMelb grades). */
+/**
+ * A usual mark below this in a skill's subjects is a weak spot: the semester check reads it so
+ * (termStress, from two or more marks), and My page's suggested level calls it "Weak" or below.
+ */
+export const WEAK_MARK = 65
+
+/**
+ * A level (1–5) from a usual mark, on the same bands My record shows (UniMelb grades). Level 3
+ * ("OK") starts at WEAK_MARK, so the level a student is offered and the semester check agree on
+ * what counts as weak.
+ */
 export function levelFromMark(mark: number): number {
-  return mark >= 80 ? 5 : mark >= 75 ? 4 : mark >= 70 ? 3 : mark >= 60 ? 2 : 1
+  return mark >= 80 ? 5 : mark >= 75 ? 4 : mark >= WEAK_MARK ? 3 : mark >= 60 ? 2 : 1
 }
 
 /**

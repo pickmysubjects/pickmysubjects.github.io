@@ -5,7 +5,9 @@ import { careerGoal, careerNameParams, goalTier } from './careerGoal'
 import { evaluateField, referencedSubjects, type Tri } from './expr'
 import type { Note, Params } from './plan'
 import { discussionVerdict, type Dataset, type Period, type Skill, type Subject } from './schema'
-import { predictMark } from './predict'
+import { FITTED } from './fitted'
+import { sharedOffset } from './grades'
+import { offsetOf, predictMark } from './predict'
 import { MARKING_SKILLS, markingShare, skillsOf } from './skills'
 import { termStress } from './termStress'
 import { planRoles } from './roles'
@@ -192,8 +194,11 @@ const INTEREST_RELATED = 0.55
 /** No match: nothing known about it, a broad area-implied mismatch, a tagged mismatch. */
 const INTEREST_UNKNOWN = 0.3
 const INTEREST_INFERRED_MISS = 0.2
-/** Ratings are averaged with the site-wide average as if it were this many extra reviews. */
-const RATING_PRIOR_REVIEWS = 5
+/**
+ * Ratings are averaged with the site-wide average as if it were this many extra reviews: estimated
+ * from the ratings themselves once 30+ subjects have them (see fitted.ts), 5 until then.
+ */
+const RATING_PRIOR_REVIEWS = FITTED.ratingPrior ?? 5
 const MIN_RATED_FOR_PRIOR = 10
 /** Re-ranking only swaps near-ties: subjects within this many points of each other. */
 const TIE_POINTS = 3
@@ -447,6 +452,8 @@ export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions =
     // A fail on My page: this would be a retake, which the student should know before adding it.
     const failed = lastMark.get(s.code)?.mark
     if (failed !== undefined && failed < PASS_MARK) rec.warnings.unshift(note('retake', { mark: failed }, `You got ${failed} last time: this would be a retake.`))
+    // Not passed without a mark to show (a pass/fail subject, or ticked as not passed): still a retake.
+    else if (profile.results.some((r) => r.code === s.code && isFail(r))) rec.warnings.unshift(note('retakeFailed', {}, "You didn't pass this last time: this would be a retake."))
     // A third-year student rarely gains from a first-year science subject (the degree wants
     // level-3 points), and a level below their year is a smaller step back; breadth is
     // different, since level-1 breadth is the usual way in.
@@ -683,21 +690,22 @@ function score(s: Subject, ctx: ScoreCtx): Recommendation {
   }
 
   // Predicted performance from the student's own marks in similar subjects (see predict.ts),
-  // else their overall WAM. Always said as a range once there are marks to go on.
+  // else their overall WAM. Always said as a range once there are marks to go on: the mark lands
+  // inside it about 1 time in 2 (RANGE_SHARE).
   const guess = ctx.marks.size ? predictMark(s, ctx.marks, ctx.data) : null
   if (guess) {
     const m = guess.mark
     // The subject's own grading (shared grades) is already in ease below: the signal here is the
     // student's level, so the same evidence isn't counted twice. What's said keeps the full mark.
-    parts.predicted = clamp((m - (s.gradeOffset?.offset ?? 0) - 50) / 50)
+    parts.predicted = clamp((m - offsetOf(s) - 50) / 50)
     const params = { mark: Math.round(m), low: Math.round(guess.low), high: Math.round(guess.high), codes: guess.basis.join(', ') }
     detail.predicted = params
     const wam = ctx.wam ?? m
     // Nothing related to go on: it's the student's overall level, and said as that.
-    if (!guess.basis.length) reasons.push(note('predictedWam', params, `Likely ${params.low}–${params.high}, from your marks so far.`))
+    if (!guess.basis.length) reasons.push(note('predictedWam', params, `1 in 2 chance of ${params.low}–${params.high}, from your marks so far.`))
     else if (m >= 75 || m >= wam + 3) reasons.push(note('averagedHigh', params, `Your marks in similar subjects (${params.codes}) point to about ${params.mark}.`))
     else if (m < 55 || m <= wam - 5) warnings.push(note('averagedLow', params, `Your marks in similar subjects (${params.codes}) point to about ${params.mark}, so this may be tough.`))
-    else reasons.push(note('predictedRange', params, `Likely ${params.low}–${params.high}, from your marks in similar subjects.`))
+    else reasons.push(note('predictedRange', params, `1 in 2 chance of ${params.low}–${params.high}, from your marks in similar subjects.`))
   } else if (ctx.wam !== null) {
     parts.predicted = clamp((ctx.wam - 50) / 50)
     detail.predicted = { wam: ctx.wam }
@@ -753,12 +761,15 @@ function score(s: Subject, ctx: ScoreCtx): Recommendation {
   if (parts.ease === undefined && s.assessment) parts.ease = structuralEase(s)
   // Real grades beat impressions: once enough students shared their bands, how far they did above
   // or below their own WAM here counts for half of ease (±10 marks spans the whole scale).
+  // What the shared grades alone say (not pulled toward the facts-based prior: the facts and
+  // review verdicts already count above, and the line below quotes the sharers).
   if (s.gradeOffset) {
-    const fromGrades = clamp(0.5 + s.gradeOffset.offset / 20)
+    const shared = sharedOffset(s.gradeOffset)
+    const fromGrades = clamp(0.5 + shared / 20)
     parts.ease = parts.ease === undefined ? fromGrades : (parts.ease + fromGrades) / 2
-    const params = { n: s.gradeOffset.n, by: Math.abs(Math.round(s.gradeOffset.offset)) }
-    if (s.gradeOffset.offset >= 3) reasons.push(note('gradesAbove', params, `${params.n} students who shared their grades did about ${params.by} marks better here than their WAM.`))
-    else if (s.gradeOffset.offset <= -3) warnings.push(note('gradesBelow', params, `${params.n} students who shared their grades did about ${params.by} marks worse here than their WAM.`))
+    const params = { n: s.gradeOffset.n, by: Math.abs(Math.round(shared)) }
+    if (shared >= 3) reasons.push(note('gradesAbove', params, `${params.n} students who shared their grades did about ${params.by} marks better here than their WAM.`))
+    else if (shared <= -3) warnings.push(note('gradesBelow', params, `${params.n} students who shared their grades did about ${params.by} marks worse here than their WAM.`))
   }
   if (parts.ease !== undefined) parts.hardness = 1 - parts.ease
 

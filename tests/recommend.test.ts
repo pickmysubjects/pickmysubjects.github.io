@@ -191,6 +191,33 @@ describe('recommend after a fail', () => {
     const passed = recommend(real, { ...profile, results: [{ code: 'COMP10001', mark: 70 }] }, { course: 'B-SCI', year: 2026, planned: ['COMP10002'] })
     expect(passed.some((r) => r.code === 'COMP10001' || r.code === 'COMP10002')).toBe(false)
   })
+
+  it('"students did N marks better" says what the shared grades alone say', async () => {
+    const { dataset, subject } = await import('./helpers')
+    const { recommend } = await import('../src/engine/recommend')
+    const runs = { prerequisites: 'none', offerings: { 2026: ['semester-1'] } }
+    const s = (gradeOffset: { offset: number; shared?: number; n: number }) => ({ ...subject({ code: 'AAAA10001', ...runs }), gradeOffset })
+    const rec = (g: { offset: number; shared?: number; n: number }) =>
+      recommend(dataset([s(g)]), { results: [], skills: {}, interests: [], goal: 'balanced' }, { year: 2026 }).find((r) => r.code === 'AAAA10001')!
+    const borrowed = rec({ offset: 5, shared: 1, n: 5 })
+    expect(borrowed.reasons.map((r) => r.key)).not.toContain('gradesAbove')
+    expect(borrowed.score).toBe(rec({ offset: 1, n: 5 }).score)
+    expect(rec({ offset: 5, n: 5 }).reasons.find((r) => r.key === 'gradesAbove')?.params).toEqual({ n: 5, by: 5 })
+  })
+
+  it('a pass/fail subject not passed is a retake too, said without a mark', async () => {
+    const { dataset, subject } = await import('./helpers')
+    const { recommend } = await import('../src/engine/recommend')
+    const runs = { prerequisites: 'none', offerings: { 2026: ['semester-1'] } }
+    const data = dataset([subject({ code: 'AAAA10001', pass_fail: true, ...runs }), subject({ code: 'BBBB10001', ...runs })])
+    const warn = (results: { code: string; mark?: number; failed?: boolean }[], code: string) =>
+      recommend(data, { results, skills: {}, interests: [], goal: 'balanced' }, { year: 2026 }).find((r) => r.code === code)?.warnings[0]
+    expect(warn([{ code: 'AAAA10001', failed: true }], 'AAAA10001')).toMatchObject({ key: 'retakeFailed', params: {} })
+    // A marked subject ticked as not passed, with no mark entered: the same.
+    expect(warn([{ code: 'BBBB10001', failed: true }], 'BBBB10001')).toMatchObject({ key: 'retakeFailed' })
+    // With a mark, the mark is said, as before.
+    expect(warn([{ code: 'BBBB10001', mark: 40 }], 'BBBB10001')).toMatchObject({ key: 'retake', params: { mark: 40 } })
+  })
 })
 
 describe('recommend and how a subject is marked', () => {
@@ -334,5 +361,18 @@ describe('skills from marks', () => {
     // 82, and the retake's attempts averaged (40, 78 → 59): about 71, the 70–74 band.
     expect(s.programming).toMatchObject({ level: 3, avg: 71 })
     expect(s.maths).toBeUndefined()
+  })
+
+  it('calls marks weak exactly where the semester check does', async () => {
+    const { levelFromMark, WEAK_MARK } = await import('../src/engine/skills')
+    const { weakSkills } = await import('../src/engine/termStress')
+    const data = dataset([subject({ code: 'AAAA10001', skills: ['maths'] }), subject({ code: 'AAAA10002', skills: ['maths'] })])
+    for (const avg of [55, 60, 63, 64, 65, 66, 69, 70, 75]) {
+      const results = [{ code: 'AAAA10001', mark: avg }, { code: 'AAAA10002', mark: avg }]
+      // My page offers level 1–2 ("Hard"/"Weak") exactly when the check treats maths as weak…
+      expect(levelFromMark(avg) <= 2, String(avg)).toBe(weakSkills(data, { results, skills: {}, interests: [], goal: 'balanced' }).has('maths'))
+      // …and taking the offered level keeps that verdict.
+      expect(weakSkills(data, { results, skills: { maths: levelFromMark(avg) }, interests: [], goal: 'balanced' }).has('maths')).toBe(avg < WEAK_MARK)
+    }
   })
 })

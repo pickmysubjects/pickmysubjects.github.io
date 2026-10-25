@@ -38,6 +38,11 @@ function judgeFor(plan: Plan, data: Dataset, profile?: Profile): Judge {
   }
 }
 
+/** Each term's stress score as balanceTerms judges it (for checking it from outside). */
+export function termScores(plan: Plan, data: Dataset, profile?: Profile): number[] {
+  return judgeFor(plan, data, profile).all(plan.terms).map((t) => t.score)
+}
+
 /** Whether a whole arrangement of terms is good enough (e.g. one term got lighter). */
 type Test = (terms: readonly PlanTerm[]) => boolean
 
@@ -76,8 +81,8 @@ function guard(plan: Plan, data: Dataset): () => boolean {
 
 /**
  * Swap equal-points subjects between semesters while that evens out the load (sum of squared
- * stress scores goes down) and nothing gets worse. Greedy, best swap first. Changes
- * plan.terms in place and returns the swaps made.
+ * stress scores goes down) and nothing gets worse. Greedy, best swap first; on a tie, the swap that
+ * leaves the lighter peak. Changes plan.terms in place and returns the swaps made.
  */
 export function balanceTerms(plan: Plan, data: Dataset, profile?: Profile): { a: string; b: string }[] {
   const { terms } = plan
@@ -87,6 +92,9 @@ export function balanceTerms(plan: Plan, data: Dataset, profile?: Profile): { a:
   // The first semester weighs more: students are still finding their feet, and measured by
   // real load rather than credit points it is among the heaviest (Borchers & Pardos, LAK 2023).
   const cost = (xs: number[]) => xs.reduce((sum, x, i) => sum + (i === 0 ? FIRST_TERM_WEIGHT : 1) * x * x, 0)
+  // The worst semester, the first counted the same way: of two swaps that even out the total
+  // equally, the one with the lighter peak wins (the min-max side of balancing).
+  const worst = (xs: number[]) => Math.max(...xs.map((x, i) => (i === 0 ? Math.sqrt(FIRST_TERM_WEIGHT) : 1) * x))
   const made: { a: string; b: string }[] = []
   let current = scores()
   for (let round = 0; round < BALANCE_ROUNDS; round++) {
@@ -109,7 +117,10 @@ export function balanceTerms(plan: Plan, data: Dataset, profile?: Profile): { a:
             if (inverts(sa.level, sb.level, fromIndex, to)) continue
             swap(from, other, a, b)
             const next = scores()
-            if (cost(next) < cost(best?.scores ?? current) - 1e-6 && safe()) best = { from: fromIndex, to, a, b, scores: next }
+            const better =
+              cost(next) < cost(current) - 1e-6 &&
+              (!best || cost(next) < cost(best.scores) - 1e-6 || (cost(next) <= cost(best.scores) + 1e-6 && worst(next) < worst(best.scores) - 1e-9))
+            if (better && safe()) best = { from: fromIndex, to, a, b, scores: next }
             swap(from, other, b, a)
           }
         }

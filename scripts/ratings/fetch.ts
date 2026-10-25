@@ -3,7 +3,8 @@
  * service account, aggregate, and write data/real/ratings.json.
  *
  * Env (GitHub secrets): GOOGLE_SERVICE_ACCOUNT_JSON, RATINGS_SHEET_ID. Grade bands sent with a
- * WAM range in the same sheet also give data/real/grade-offsets.json.
+ * WAM range in the same sheet also give data/real/grade-offsets.json, and data/real/model.json
+ * holds the numbers fitted from both once there is enough data (see src/engine/fitted.ts).
  * If they are missing, it exits quietly so CI stays green before setup.
  */
 import { createSign } from 'node:crypto'
@@ -11,6 +12,8 @@ import { writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { buildDataset, ROOT } from '../dataset'
 import { buildRatingFiles } from './aggregate'
+import { fitReviewPrior } from '../../src/engine/easeRanking'
+import { offsetFeatures } from '../../src/engine/gradeModel'
 
 const credentials = process.env.GOOGLE_SERVICE_ACCOUNT_JSON
 const sheetId = process.env.RATINGS_SHEET_ID
@@ -69,10 +72,17 @@ async function readSheet(id: string): Promise<string[][]> {
 }
 const values = await readSheet(sheetId)
 
-const known = new Set(Object.keys(buildDataset('real').dataset.subjects))
+const subjects = buildDataset('real').dataset.subjects
+const known = new Set(Object.keys(subjects))
 // Only aggregates are written: per-subject numbers from 3+ ratings, grade offsets from 5+ shares.
-const out = buildRatingFiles(values, known)
+// Handbook facts feed the offsets' feature prior once 40+ subjects have offsets.
+const out = buildRatingFiles(values, known, new Date(), (code) => (subjects[code] ? offsetFeatures(subjects[code]) : null))
 writeFileSync(join(ROOT, 'data', 'real', 'ratings.json'), `${JSON.stringify(out.ratings, null, 2)}\n`)
 console.log(`Ratings: ${out.accepted} accepted, ${out.rejected} rejected, ${Object.keys(out.ratings).length} subjects.`)
 writeFileSync(join(ROOT, 'data', 'real', 'grade-offsets.json'), `${JSON.stringify(out.offsets, null, 2)}\n`)
 console.log(`Grade bands: ${Object.keys(out.offsets).length} subjects with 5+ shares.`)
+// The review score's prior, fitted from the subjects as they now stand (new ratings included).
+const reviewPrior = fitReviewPrior(Object.values(buildDataset('real').dataset.subjects))
+const model = { ...out.model, ...(reviewPrior === undefined ? {} : { reviewPrior }) }
+writeFileSync(join(ROOT, 'data', 'real', 'model.json'), `${JSON.stringify(model, null, 2)}\n`)
+console.log(`Model: ${Object.keys(model).length ? Object.keys(model).join(', ') : 'nothing fitted yet (too little data)'}.`)

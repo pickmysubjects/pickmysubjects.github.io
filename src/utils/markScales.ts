@@ -4,7 +4,7 @@
  * A rough guide, not an official conversion (see docs research notes on high-school scales).
  */
 export const MARK_SCALES = {
-  unimelb: ['<60', '60–69', '70–74', '75–79', '80+'],
+  unimelb: ['<60', '60–64', '65–74', '75–79', '80+'],
   vce: ['<25', '25–29', '30–33', '34–37', '38+'],
   ib: ['1–3', '4', '5', '6', '7'],
   alevel: ['D–E', 'C', 'B', 'A', 'A*'],

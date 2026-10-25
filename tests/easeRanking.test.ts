@@ -85,6 +85,24 @@ describe('ease ranking (synthetic subjects)', () => {
     expect(rankSubject(three, 'easy')!.reasons.map((r) => r.key)).toEqual(['ratedEasy', 'generous', 'firstYear'])
   })
 
+  it('the number of tasks is workload, not difficulty: it leaves ease alone', () => {
+    const many = Array.from({ length: 8 }, () => ({ kind: 'assignment', weight: 12.5 }))
+    const few = [{ kind: 'assignment', weight: 50 }, { kind: 'assignment', weight: 50 }]
+    const a = rankSubject(base('TASK10001', { assessment: many }), 'hard')!
+    const b = rankSubject(base('TASK10002', { assessment: few }), 'hard')!
+    expect(a.score).toBe(b.score)
+    expect(a.reasons.map((r) => r.key)).not.toContain('manyTasks')
+  })
+
+  it('shared grades count as the sharers said, not as the facts-based prior moved them', () => {
+    // offset: pulled toward what the Handbook facts predict; shared: the bands alone.
+    const borrowed = { ...base('GRAD10001', { assessment: middling }), gradeOffset: { offset: 4, shared: 0.5, n: 5 } }
+    const own = { ...base('GRAD10002', { assessment: middling }), gradeOffset: { offset: 0.5, n: 5 } }
+    const a = rankSubject(borrowed, 'easy')!
+    expect(a.score).toBe(rankSubject(own, 'easy')!.score)
+    expect(a.reasons.map((r) => r.key)).not.toContain('gradesAbove')
+  })
+
   it('nothing known: not ranked at all', () => {
     expect(rankSubject(base('LLLL10001'), 'easy')).toBeNull()
   })
