@@ -15,7 +15,9 @@
 import { localTitle, pickLocalized, withLocalTitle } from '../src/i18n/localized'
 import { aggregateRatingLd, listPageDescription, listPageTitle, PRESET_TITLE_KEYS, runsLine, subjectPageDescription, subjectPageTitle } from '../src/utils/seo'
 import { execFileSync } from 'node:child_process'
-import { mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs'
+import type { YearDiff } from '../src/engine/yearDiff'
+import { changeSections, changesSummary, type ChangeItem } from '../src/utils/changesText'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { browse, EMPTY_FILTERS, PRESET_SLUGS, PRESETS, type PresetName } from '../src/engine/browse'
@@ -760,7 +762,43 @@ ${homeDemoHtml(code, t)}
     simple('contribute', 'contribute.title', 'contribute.lede'),
     simple('feedback', 'feedback.title', 'feedback.lede'),
     { path: 'privacy', title: `${t('privacy.title')} | PickMySubjects`, description: t('privacy.local'), body: `<h1>${esc(t('privacy.title'))}</h1><p>${esc(t('privacy.local'))}</p>` },
+    ...(yearChanges ? [changesPage(code, yearChanges)] : []),
   ]
+}
+
+// ---------- what changed in the new Handbook year ----------
+
+// Only there once the next year is entered and differs from the last frozen one (build-data):
+// otherwise no page, no link and no sitemap entry.
+const changesFile = join(ROOT, 'src', 'generated', 'changes.json')
+const yearChanges = existsSync(changesFile) ? (JSON.parse(readFileSync(changesFile, 'utf8')) as YearDiff) : null
+
+function changesPage(code: LocaleCode, d: YearDiff): Page {
+  const t = translator(code)
+  const summary = changesSummary(t, d, listSep(code))
+  const sections = changeSections(t, d, {
+    subjectTitle: (c) => (data.subjects[c] ? withLocalTitle(data.subjects[c]!.title, localTitle(data.subjects[c]!, code)) : undefined),
+    componentTitle: (id) => data.components.find((c) => c.id === id)?.title,
+    listSep: listSep(code),
+  })
+  const item = (i: ChangeItem) => {
+    const has = i.kind === 'subject' ? !!data.subjects[i.id] : data.components.some((c) => c.id === i.id)
+    const label = has ? `<a href="${href(code, `${i.kind === 'subject' ? 'subject' : 'majors'}/${i.id}`)}">${esc(i.label)}</a>` : esc(i.label)
+    return `<li>${label}${i.details.length ? `: ${esc(i.details.join(sentenceSep(code) || ' '))}` : ''}</li>`
+  }
+  const heading = t('changes.heading', { year: d.to })
+  return {
+    path: `changes/${d.to}`,
+    title: `${t('changes.seoTitle', { year: d.to })} | PickMySubjects`,
+    description: t('changes.seoDesc', { year: d.to, from: d.from, summary }),
+    body: [
+      `<h1>${esc(heading)}</h1>`,
+      `<p>${esc(summary)}</p>`,
+      `<p>${esc(t('changes.lede', { from: d.from }))}</p>`,
+      ...sections.map((s) => `<h2>${esc(s.title)}</h2><ul>${s.items.map(item).join('')}</ul>`),
+      `<p><a href="${href(code, '')}">${esc(t('seo.made'))}</a></p>`,
+    ].join('\n'),
+  }
 }
 
 // ---------- careers ("I want to be…") ----------
