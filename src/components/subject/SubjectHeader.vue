@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, shallowRef } from 'vue'
 import { BookOpen, CalendarRange, ChartNoAxesColumn, Check, Link2, MapPin, Plus, Share2, Star } from 'lucide-vue-next'
-import { isFail, listPlace, periodsFor, RANK_SLUGS, termKey, type Period, type Subject } from '@/engine'
+import { isFail, knownNotRunning, listPlace, periodsFor, thisYear, RANK_SLUGS, termKey, type Period, type Subject } from '@/engine'
 import { link } from '@/composables/useView'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
@@ -12,7 +12,8 @@ import { categoryLabel, categoryTag, termLabel } from '@/i18n/format'
 import { localTitle } from '@/i18n/localized'
 import { subjectGist } from '@/i18n/gist'
 import { defaultTerm, termsBetween } from '@/utils/pastTerms'
-import { handbookUrl } from '@/utils/links'
+import { useDataYear } from '@/composables/useDataYear'
+import FactsYearNote from './FactsYearNote.vue'
 import ShortlistToggle from '@/components/shortlist/ShortlistToggle.vue'
 
 /**
@@ -31,13 +32,17 @@ const { t, locale } = useI18n()
 const code = computed(() => props.subject.code)
 const local = computed(() => localTitle(props.subject, locale.value))
 const periods = computed(() => periodsFor(props.subject, props.year))
+// The Handbook year the facts come from; a line says so when a newer one is out but not entered yet.
+const { facts, handbookFor } = useDataYear()
+const factsFrom = computed(() => facts(props.subject, props.year))
 const gone = computed(() => props.subject.discontinuedFrom !== undefined && props.year >= props.subject.discontinuedFrom)
 const closedForYou = computed(() => data.value.courses.some((c) => c.code === plan.setup.value.course && c.closed.includes(code.value)))
 const category = computed(() => (closedForYou.value ? t.value('browse.closedForYou') : categoryTag(t.value, props.subject.categories[plan.setup.value.course])))
 const runs = computed(() => {
   if (gone.value) return t.value('subject.discontinued', { year: props.subject.discontinuedFrom ?? '' })
   if (props.subject.offerings === 'unknown') return t.value('subject.runsUnknown')
-  if (periods.value.length === 0) return t.value('subject.notRunning')
+  // "Not running" only when that year's data says so; a year not entered yet is just unknown.
+  if (periods.value.length === 0) return knownNotRunning(props.subject, props.year) ? t.value('subject.notRunning') : t.value('subject.runsUnknown')
   if (props.subject.yearLong) return t.value('plan.yearLongRuns')
   return periods.value.map((p) => t.value(`period.${p}`)).join(' · ')
 })
@@ -63,7 +68,7 @@ const termChoices = computed(() => {
   const last = plan.terms.value.at(-1)
   const floor = { year: start.year + 2, period: 'semester-2' as Period }
   // Reaches into next year too, so a plan that started years ago still has terms ahead to offer.
-  const soon = { year: new Date().getFullYear() + 1, period: 'semester-2' as Period }
+  const soon = { year: thisYear() + 1, period: 'semester-2' as Period }
   const end = [last, floor, soon].reduce((a, b) => (b && termKey(b.year, b.period) > termKey(a!.year, a!.period) ? b : a), floor)!
   return termsBetween(start, end).filter((x) => periodsFor(s, x.year).includes(x.period))
 })
@@ -121,6 +126,7 @@ async function share(): Promise<void> {
       <li v-if="subject.campus" class="chip"><MapPin :size="14" aria-hidden="true" />{{ subject.campus }}</li>
       <li v-for="g in gist" :key="g" class="chip">{{ g }}</li>
     </ul>
+    <FactsYearNote v-if="factsFrom.older && !gone" :year="factsFrom.year" />
     <p v-if="gone && subject.replacedBy.length" class="instead">
       {{ t('subject.insteadTake') }}
       <a v-for="c in subject.replacedBy" :key="c" class="chip code" :href="link(`subject/${c}`)">{{ c }}</a>
@@ -154,7 +160,7 @@ async function share(): Promise<void> {
         <button v-if="taken && !rated.has(subject.code) && !rateHidden" class="button button-quiet" type="button" @click="emit('rate')">
           <Star :size="17" aria-hidden="true" /> {{ t('rating.rate') }}
         </button>
-        <a class="button button-quiet" :href="subject.handbook || handbookUrl(subject.code)" target="_blank" rel="noopener">
+        <a class="button button-quiet" :href="handbookFor(subject.code, year)" target="_blank" rel="noopener">
           <BookOpen :size="17" aria-hidden="true" /> {{ t('subject.handbook') }}
         </a>
         <button class="button button-quiet" type="button" @click="share">

@@ -12,7 +12,6 @@ import { ROOT } from './dataset'
 
 const BASE = join(ROOT, 'data', 'real')
 const SHOW_ALL = process.argv.includes('--all')
-const YEAR = '2026'
 const CODE = /^[A-Z]{4}\d{5}$/
 
 type Raw = Record<string, any>
@@ -35,6 +34,9 @@ for (const f of yamlFiles(join(BASE, 'subjects'))) {
   const s = read(f)
   subjects.set(s.code, s)
 }
+// The newest Handbook year in the data (as engine/dataYear's latestDataYear): checks are about it, and
+// during the yearly update "no <year> key" lists the subjects still to enter.
+const YEAR = String(Math.max(...[...subjects.values()].flatMap((s) => (s.offerings && s.offerings !== 'unknown' ? Object.keys(s.offerings).map(Number) : []))))
 const abouts = new Map<string, Raw>()
 for (const f of yamlFiles(join(BASE, 'about'))) {
   const a = read(f)

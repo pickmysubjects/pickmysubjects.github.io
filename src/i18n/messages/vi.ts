@@ -6,6 +6,18 @@ export const vi: Messages = {
   /** Which career-name language this locale reads (career names come with the data). */
   careerLang: "vi",
   infoTip: "Thêm thông tin",
+  /** Which Handbook year a subject's facts come from, when it's older than the one looked at. */
+  dataYear: {
+    from: "Theo Handbook {year}",
+    short: "Handbook {year}",
+    tip: "Thông tin Handbook mới của môn này chưa được nhập, nên đang dùng thông tin năm {year}. Sẽ tự cập nhật khi có dữ liệu mới.",
+  },
+  /** Site-wide line while a new Handbook is out but most subjects aren't updated yet. */
+  rollover: {
+    text: "Handbook {year} đã ra, đang cập nhật. Môn chưa cập nhật ghi {old}.",
+    tip: "Các môn được cập nhật từng môn một. Môn chưa cập nhật thì học kỳ và quy định lấy theo Handbook {old}. Hãy kiểm tra Handbook chính thức trước khi đăng ký.",
+    dismiss: "Ẩn",
+  },
   changes: {
     heading: "Những gì thay đổi năm {year}",
     lede: "So với Handbook năm {from}. Hãy kiểm tra lại Handbook trước khi đăng ký môn.",
@@ -1239,6 +1251,7 @@ export const vi: Messages = {
     enrolStep4: "Chọn lớp: đăng ký môn xong thì chọn giờ học trong MyTimetable (xem phần Thời khóa biểu bên dưới).",
     enrolDraft: "Kế hoạch trên web này là bản nháp của riêng bạn. Nó không đăng ký môn nào cho bạn, và trường cũng không thấy được.",
     enrolWhen: "Thời điểm mở đăng ký môn cho năm sau thay đổi theo từng năm, nên hãy xem lịch chính thức (key dates).",
+    newHandbook: "Handbook năm sau thường ra vào giữa tháng 11. Môn nào chưa được cập nhật ở đây sẽ ghi rõ đang theo Handbook năm nào.",
     reenrolShort: "Gia hạn năm 2027: 16/11 – 14/12/2026; trễ mất $145.",
     reenrolMore: "Gia hạn (re-enrol) đúng hạn thì không bị phí trễ hay bị hủy, xem được thời khóa biểu, đăng ký được Summer Term và môn bắt đầu sớm, dễ vào môn có giới hạn chỗ hơn, và được tư vấn trước mùa cao điểm. Từ 15/12/2026 đến 13/1/2027 vẫn gia hạn được, nhưng hồ sơ sẽ có một re-enrolment sanction. Nếu không gia hạn và không có Leave of Absence được duyệt thì mất $145 phí gia hạn trễ, còn xin khôi phục (reinstatement) là $414.",
     reenrolLink: "Chính thức: Re-enrol in your course",
@@ -1516,6 +1529,8 @@ export const vi: Messages = {
     helpTitle: "Nếu bạn muốn giúp",
     help: "Càng nhiều người dùng thì trang càng tốt hơn. Học xong một môn, bạn bỏ ra một phút đánh giá là người sau đã có thêm thông tin. Thấy chỗ nào sai thì báo mình nhé.",
     helpRate: "Đánh giá một môn",
+    updatesTitle: "Cập nhật",
+    dataYear: "Dữ liệu: Handbook {year}, kiểm tra lần cuối {date}.",
     dataTitle: "Thông tin lấy từ đâu",
     dataFacts: "Thông tin môn học (học kỳ, môn tiên quyết, cách đánh giá, giờ học) lấy từ Handbook chính thức của University of Melbourne, mình kiểm tra từng môn một.",
     dataRatings: "Đánh giá đến từ sinh viên dùng trang này.",

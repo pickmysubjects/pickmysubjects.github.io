@@ -1,3 +1,4 @@
+import { thisYear } from './dataYear'
 import { admissionCourses, namedComponents } from './expr'
 import type { AssessmentKind, Period, ReqExpr, ReqField } from './schema'
 
@@ -228,7 +229,7 @@ function scienceOnly(lines: string[], warnings: string[]): string[] {
 
 /** The Handbook year the page is from ("You’re viewing the 2026 Handbook"), else this year. */
 function handbookYear(text: string): number {
-  return Number(/viewing the (\d{4}) Handbook/i.exec(text)?.[1] ?? /\bYear: (\d{4})\b/.exec(text)?.[1] ?? new Date().getFullYear())
+  return Number(/viewing the (\d{4}) Handbook/i.exec(text)?.[1] ?? /\bYear: (\d{4})\b/.exec(text)?.[1] ?? thisYear())
 }
 
 /** "For 2020, students must … From 2021, students must …": only the rule in force now applies. */

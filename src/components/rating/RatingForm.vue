@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { thisYear as calendarYear } from '@/engine/dataYear'
 import InfoTip from '@/components/InfoTip.vue'
 import { computed, shallowRef } from 'vue'
 import { RATINGS_FORM } from '@/config'
@@ -12,7 +13,7 @@ const props = defineProps<{ code: string }>()
 const emit = defineEmits<{ done: [sent: boolean] }>()
 const { t, locale } = useI18n()
 
-const thisYear = new Date().getFullYear()
+const thisYear = calendarYear()
 // Every question is optional: students send whatever they remember ('' = not sure). When and
 // where they took it comes from My page if it's there; otherwise blank rather than a guess that
 // would quietly go out with every rating.

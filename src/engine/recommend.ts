@@ -1,3 +1,4 @@
+import { thisYear } from './dataYear'
 import { forCourse } from './forCourse'
 import { offeredIn, periodsFor, termKey } from './availability'
 import { findCourse, majorTitles, minorTitles, withinCaps } from './courseRules'
@@ -368,7 +369,7 @@ export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions =
   const goal = profile.goal === 'easy' ? null : careerGoal(raw, profile.career, components)
   // Cap exceptions can name a minor too (a major and minor in one discipline).
   const capIds = [...components, ...(opts.programme?.minors ?? [])]
-  const capCourse = goal && opts.course ? findCourse(raw, opts.course, opts.programme?.courseYear ?? opts.year ?? new Date().getFullYear()) : undefined
+  const capCourse = goal && opts.course ? findCourse(raw, opts.course, opts.programme?.courseYear ?? opts.year ?? thisYear()) : undefined
   const takenList = [...taken]
 
   const creditCourses = new Set(Object.values(data.subjects).flatMap((x) => Object.keys(x.categories)))
@@ -421,7 +422,7 @@ export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions =
       continue
     }
     // Without a chosen term: skip subjects we know aren't running soon.
-    if (!opts.term && !runsSoon(s, opts.year ?? new Date().getFullYear())) {
+    if (!opts.term && !runsSoon(s, opts.year ?? thisYear())) {
       skip({ key: 'notRunning' })
       continue
     }

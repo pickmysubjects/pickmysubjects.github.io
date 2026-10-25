@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { thisYear as calendarYear } from '@/engine/dataYear'
 import { link } from '@/composables/useView'
 import { computed, shallowRef } from 'vue'
 import { ArrowLeft, ArrowRight, Check } from 'lucide-vue-next'
@@ -40,7 +41,7 @@ const start0 =
     : {}
 const draft = shallowRef<PlanSetup>({ ...props.setup, ...start0 })
 const step = shallowRef(0)
-const thisYear = new Date().getFullYear()
+const thisYear = calendarYear()
 const firstYear = Math.min(thisYear - 2, fromRecord.value?.year ?? thisYear)
 const years = Array.from({ length: thisYear + 1 - firstYear + 1 }, (_, i) => firstYear + i)
 const startFromRecord = computed(

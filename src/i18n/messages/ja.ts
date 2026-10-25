@@ -6,6 +6,18 @@ export const ja: Messages = {
   /** Which career-name language this locale reads (career names come with the data). */
   careerLang: "ja",
   infoTip: "詳しく",
+  /** Which Handbook year a subject's facts come from, when it's older than the one looked at. */
+  dataYear: {
+    from: "{year}年版Handbookの情報",
+    short: "{year}年版",
+    tip: "この科目は新しいHandbookの情報がまだ入っていないため、{year}年の情報で表示しています。入力されしだい自動で更新されます。",
+  },
+  /** Site-wide line while a new Handbook is out but most subjects aren't updated yet. */
+  rollover: {
+    text: "{year}年版Handbookが公開、更新中です。未更新の科目は{old}年版と表示",
+    tip: "科目は一つずつ更新しています。未更新の科目の開講学期やルールは{old}年版Handbookのものです。履修登録の前に公式Handbookで確認してください。",
+    dismiss: "閉じる",
+  },
   changes: {
     heading: "{year}年の変更点",
     lede: "{from}年の Handbook との比較です。履修登録の前に Handbook で確認してください。",
@@ -1239,6 +1251,7 @@ export const ja: Messages = {
     enrolStep4: "授業の時間：登録が済んだら、MyTimetable で授業の時間を選びます（下の「クラスの時間割」を参照）。",
     enrolDraft: "このサイトのプランはあなた用の下書きです。これで何かに登録されることはなく、大学に見られることもありません。",
     enrolWhen: "翌年の履修登録が始まる時期は年によって変わります。公式の日程（key dates）で確認してください。",
+    newHandbook: "翌年のHandbookは例年11月中旬に公開。このサイトで未更新の科目には、どの年のHandbookの情報かを表示します。",
     reenrolShort: "2027年の継続登録：2026年11月16日〜12月14日、遅れると$145",
     reenrolMore: "期限内に継続登録（re-enrol）すれば、延滞料や在籍取り消しを避けられ、時間割が見られ、Summer Termや早く始まる科目に登録でき、定員のある科目も取りやすく、混む前に履修相談もできます。2026年12月15日〜2027年1月13日でも登録はできますが、記録にre-enrolment sanctionが残ります。登録せず、承認された休学（Leave of Absence）もない場合は延滞料$145、復学（reinstatement）の申請は$414です。",
     reenrolLink: "公式：Re-enrol in your course",
@@ -1516,6 +1529,8 @@ export const ja: Messages = {
     helpTitle: "手伝ってくれるなら",
     help: "このサイトは使う人が増えるほど良くなります。科目を取り終えたら、1分だけ評価してもらえると次の人の参考になります。間違いを見つけたら教えてください。",
     helpRate: "科目を評価する",
+    updatesTitle: "更新履歴",
+    dataYear: "データ：{year}年版Handbook、最終確認 {date}。",
     dataTitle: "情報の出どころ",
     dataFacts: "科目の情報（開講学期、前提科目、評価方法、授業時間）はメルボルン大学の公式 Handbook からで、一つずつ確認しています。",
     dataRatings: "評価はこのサイトを使う学生からのものです。",

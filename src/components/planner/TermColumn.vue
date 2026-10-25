@@ -143,6 +143,7 @@ const tone = (code: string): CardTone | null => props.tones?.get(code) ?? null
         :only-in="onlyIn(code)"
         :role="roles[code]"
         :term-index="termIndex"
+        :year="term.year"
         :tone="tone(code)"
         :selected="selected === code"
         :dimmed="tones !== null && tone(code) === null"

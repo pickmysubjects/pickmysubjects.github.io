@@ -6,6 +6,18 @@ export const zhTW: Messages = {
   /** Which career-name language this locale reads (career names come with the data). */
   careerLang: "zh-TW",
   infoTip: "詳細說明",
+  /** Which Handbook year a subject's facts come from, when it's older than the one looked at. */
+  dataYear: {
+    from: "依 {year} Handbook",
+    short: "{year} Handbook",
+    tip: "這門課的新版 Handbook 資料還沒輸入，暫時依 {year} 年的資料顯示，輸入後會自動更新。",
+  },
+  /** Site-wide line while a new Handbook is out but most subjects aren't updated yet. */
+  rollover: {
+    text: "{year} Handbook 已發布，更新中；尚未更新的課標註 {old}",
+    tip: "課程是一門一門更新的。還沒更新的課，開課學期和規定都依 {old} Handbook。選課前請以官方 Handbook 為準。",
+    dismiss: "關閉",
+  },
   changes: {
     heading: "{year} 年有哪些變化",
     lede: "和 {from} 年的 Handbook 對照。選課前請再到 Handbook 確認。",
@@ -1239,6 +1251,7 @@ export const zhTW: Messages = {
     enrolStep4: "排上課時段：選上課之後，到 MyTimetable 選上課時間（見下面的「課表」）。",
     enrolDraft: "本站的排課方案只是給你自己看的草稿，不會幫你選任何課，學校也看不到。",
     enrolWhen: "下一學年的選課開放時間每年不同，請看官方的重要日期。",
+    newHandbook: "下一年的 Handbook 通常 11 月中發布。本站某門課還沒更新時，會標出用的是哪一年的 Handbook。",
     reenrolShort: "2027 年註冊：11 月 16 日–12 月 14 日，逾期要罰 $145",
     reenrolMore: "準時註冊（re-enrol）可以避免滯納金和學籍被取消，能看課表，能選 Summer Term 和提早開課的課，搶有名額限制的課機會比較大，還能在尖峰期前找人諮詢課程。2026 年 12 月 15 日到 2027 年 1 月 13 日之間還是可以註冊，但學籍上會留一筆 re-enrolment sanction。如果沒註冊、也沒有核准的休學（Leave of Absence），要繳 $145 逾期註冊費；申請恢復學籍（reinstatement）要 $414。",
     reenrolLink: "官方：Re-enrol in your course",
@@ -1516,6 +1529,8 @@ export const zhTW: Messages = {
     helpTitle: "想幫忙的話",
     help: "這個網站要靠大家一起完善。修完一門課，花一分鐘給它評個分，下一個選這門課的人就多一份參考。發現哪裡寫錯了，也歡迎告訴我。",
     helpRate: "給課程評分",
+    updatesTitle: "更新紀錄",
+    dataYear: "資料：{year} Handbook，最近核對 {date}。",
     dataTitle: "資訊是哪來的",
     dataFacts: "課程資訊（開課學期、先修、考核、上課時數）來自墨大官方的 Handbook，我一門一門整理、核對過。",
     dataRatings: "評分來自使用本站的同學。",

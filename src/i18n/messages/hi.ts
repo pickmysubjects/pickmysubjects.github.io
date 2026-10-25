@@ -6,6 +6,18 @@ export const hi: Messages = {
   /** Which career-name language this locale reads (career names come with the data). */
   careerLang: "hi",
   infoTip: "और जानकारी",
+  /** Which Handbook year a subject's facts come from, when it's older than the one looked at. */
+  dataYear: {
+    from: "{year} Handbook के अनुसार",
+    short: "{year} Handbook",
+    tip: "इस सब्जेक्ट की नई Handbook जानकारी अभी डाली नहीं गई है, इसलिए {year} की जानकारी दिखाई जा रही है। नया डेटा आते ही यह अपने-आप अपडेट हो जाएगा।",
+  },
+  /** Site-wide line while a new Handbook is out but most subjects aren't updated yet. */
+  rollover: {
+    text: "{year} Handbook आ गई है, अपडेट जारी है। बाक़ी सब्जेक्ट पर {old} लिखा है।",
+    tip: "सब्जेक्ट एक-एक करके अपडेट होते हैं। जब तक कोई सब्जेक्ट अपडेट नहीं होता, उसके सेमेस्टर और नियम {old} Handbook से हैं। एनरोल करने से पहले आधिकारिक Handbook ज़रूर देखें।",
+    dismiss: "बंद करें",
+  },
   changes: {
     heading: "{year} में क्या बदला",
     lede: "{from} की Handbook से तुलना। एनरोल करने से पहले Handbook ज़रूर देखें।",
@@ -1239,6 +1251,7 @@ export const hi: Messages = {
     enrolStep4: "क्लास: enrol होने के बाद MyTimetable में अपनी क्लास के टाइम चुनें (नीचे क्लास टाइमटेबल देखें)।",
     enrolDraft: "इस साइट के प्लान सिर्फ़ आपके लिए ड्राफ़्ट हैं। इनसे किसी चीज़ में enrolment नहीं होता, और यूनिवर्सिटी इन्हें कभी नहीं देखती।",
     enrolWhen: "अगले साल का enrolment कब खुलता है, यह हर साल बदलता है, इसलिए आधिकारिक key dates देख लें।",
+    newHandbook: "अगले साल की Handbook आमतौर पर नवंबर के बीच में आती है। जब तक कोई सब्जेक्ट यहाँ अपडेट नहीं होता, उस पर लिखा रहता है कि किस साल की Handbook से है।",
     reenrolShort: "2027 re-enrolment: 16 नवंबर – 14 दिसंबर 2026; देर होने पर $145.",
     reenrolMore: "समय पर re-enrol करने से late fee या cancellation नहीं होता, timetable मिल जाता है, Summer Term और जल्दी शुरू होने वाले subjects में enrol कर सकते हैं, quota वाले subjects में मौका बेहतर रहता है, और भीड़ से पहले course advice मिल जाती है। 15 दिसंबर 2026 से 13 जनवरी 2027 तक भी re-enrol कर सकते हैं, पर आपके रिकॉर्ड पर re-enrolment sanction लग जाता है। अगर re-enrol नहीं किया और कोई approved Leave of Absence नहीं है, तो $145 late re-enrolment fee है, और reinstatement के लिए आवेदन $414 का है।",
     reenrolLink: "आधिकारिक: Re-enrol in your course",
@@ -1516,6 +1529,8 @@ export const hi: Messages = {
     helpTitle: "अगर आप मदद करना चाहें",
     help: "जितने ज़्यादा लोग इस्तेमाल करेंगे, साइट उतनी बेहतर होगी। सब्जेक्ट पूरा होने पर एक मिनट निकालकर उसे रेट कर दें, ताकि अगले व्यक्ति को अंदाज़ा मिले। कोई गलती दिखे तो बताइए।",
     helpRate: "सब्जेक्ट रेट करें",
+    updatesTitle: "अपडेट",
+    dataYear: "डेटा: {year} Handbook, आख़िरी जाँच {date}।",
     dataTitle: "जानकारी कहाँ से आती है",
     dataFacts: "सब्जेक्ट की जानकारी (सेमेस्टर, प्रीरिक्विज़िट, असेसमेंट, क्लास के घंटे) University of Melbourne की आधिकारिक Handbook से है, और मैं हर एक को जाँचता हूँ।",
     dataRatings: "रेटिंग इस साइट का इस्तेमाल करने वाले छात्रों से आती हैं।",

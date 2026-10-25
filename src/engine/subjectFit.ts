@@ -1,4 +1,4 @@
-import { periodsFor } from './availability'
+import { knownNotRunning } from './dataYear'
 import { inTopShare, listPlace, rankable, rankSubject, type ListPlace, type RankDirection, type RankReason } from './easeRanking'
 import type { Note } from './plan'
 import { skillsOf } from './skills'
@@ -190,7 +190,8 @@ export function subjectFit(data: Dataset, profile: Profile, opts: RecommendOptio
   }
   const cautions: FitCaution[] = []
   if (opts.course && data.courses.some((c) => c.code === opts.course && c.closed.includes(code))) cautions.push({ key: 'closed' })
-  if (s.offerings !== 'unknown' && periodsFor(s, ctx.year).length === 0) cautions.push({ key: 'notThisYear', year: ctx.year })
+  // Only when that year's data says so: a year not entered yet isn't "not running".
+  if (knownNotRunning(s, ctx.year)) cautions.push({ key: 'notThisYear', year: ctx.year })
   const rec = recs.find((r) => r.code === code)
   if (rec) return { kind: 'fit', rec, band: fitBand(rec.betterThan), reasons: leadReasons(rec), cautions }
   return { kind: 'out', why: skipped.get(code) ?? { key: 'filtered' }, cautions }

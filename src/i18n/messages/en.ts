@@ -9,6 +9,18 @@ export const en = {
   /** Which career-name language this locale reads (career names come with the data). */
   careerLang: "en",
   infoTip: "More info",
+  /** Which Handbook year a subject's facts come from, when it's older than the one looked at. */
+  dataYear: {
+    from: "From the {year} Handbook",
+    short: "{year} Handbook",
+    tip: "The newer Handbook isn't entered for this subject yet, so this uses the {year} facts. It updates once the new data is in.",
+  },
+  /** Site-wide line while a new Handbook is out but most subjects aren't updated yet. */
+  rollover: {
+    text: "The {year} Handbook is out and we're updating. Subjects not updated yet are marked {old}.",
+    tip: "Subjects are updated one by one. Until a subject is updated, its semesters and rules come from the {old} Handbook. Check the official Handbook before you enrol.",
+    dismiss: "Hide",
+  },
   changes: {
     heading: "What changed in {year}",
     lede: "Compared with the {from} Handbook. Check the Handbook before you enrol.",
@@ -1242,6 +1254,7 @@ export const en = {
     enrolStep4: "Classes: once you're enrolled, pick your class times in MyTimetable (see Class timetable below).",
     enrolDraft: "Plans on this site are drafts for you only. They don't enrol you in anything, and the University never sees them.",
     enrolWhen: "When enrolment opens for the next year changes from year to year, so check the official key dates.",
+    newHandbook: "Next year's Handbook comes out around mid-November. Until a subject is updated here, it says which year's Handbook it uses.",
     reenrolShort: "2027 re-enrolment: 16 Nov – 14 Dec 2026; late costs $145.",
     reenrolMore: "Re-enrolling on time means no late fee or cancellation, access to your timetable, a place in Summer Term and early-start subjects, a better chance at subjects with quotas, and course advice before the busy period. From 15 December 2026 to 13 January 2027 you can still re-enrol, but a re-enrolment sanction goes on your record. If you don't re-enrol and have no approved Leave of Absence, there's a $145 late re-enrolment fee, and applying for reinstatement costs $414.",
     reenrolLink: "Re-enrol in your course",
@@ -1519,6 +1532,8 @@ export const en = {
     helpTitle: "If you want to help",
     help: "The site gets better the more people use it. When you finish a subject, take a minute to rate it so the next person has something to go on. If you spot a mistake, let me know.",
     helpRate: "Rate a subject",
+    updatesTitle: "Updates",
+    dataYear: "Data: {year} Handbook, last checked {date}.",
     dataTitle: "Where the information comes from",
     dataFacts: "Subject details (semesters, prerequisites, assessment, class hours) come from the official University of Melbourne Handbook. I go through and check them one by one.",
     dataRatings: "Ratings come from students using this site.",

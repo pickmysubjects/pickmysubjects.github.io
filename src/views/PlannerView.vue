@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { viewYear } from '@/engine/dataYear'
 import InfoTip from '@/components/InfoTip.vue'
 import { link } from '@/composables/useView'
 import { computed, onBeforeUnmount, shallowRef, useTemplateRef } from 'vue'
@@ -526,7 +527,7 @@ const printTerms = computed<PrintTerm[]>(() => {
         :subjects="data.subjects"
         :have="[...plan.plannedCodes.value, ...plan.plan.value.completed]"
         :course="plan.setup.value.course"
-        :year="plan.terms.value[0]?.year ?? new Date().getFullYear()"
+        :year="viewYear(plan.terms.value[0]?.year)"
         :done="plan.plan.value.completed"
         @close="closePeek"
         @open="peek = $event"

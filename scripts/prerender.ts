@@ -32,6 +32,8 @@ import { careerTargets, majorsForCareer } from '../src/engine/careerPaths'
 import { componentCareers } from '../src/engine/careers'
 import { buildLeadsTo, buildTakenWith, relatedSubjects } from '../src/engine/related'
 import type { Dataset, Subject } from '../src/engine/schema'
+import { factsYear, latestDataYear, publishedYear, thisYear } from '../src/engine/dataYear'
+import { handbookUrl } from '../src/utils/links'
 import type { HomeDemo } from '../src/utils/homeDemo'
 import { describeReq } from '../src/i18n/format'
 import { subjectGist } from '../src/i18n/gist'
@@ -53,10 +55,16 @@ import { ms } from '../src/i18n/messages/ms'
 import { hi } from '../src/i18n/messages/hi'
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
+const data = JSON.parse(readFileSync(join(ROOT, 'src', 'generated', 'real.json'), 'utf8')) as Dataset
 const DIST = join(ROOT, 'dist')
 const SITE = 'https://pickmysubjects.github.io/'
 const BASE = '/'
-const YEAR = 2026
+// The newest Handbook year in the data: lists, rankings and their titles are about this year.
+// Each subject's own facts come from its own newest year (factsYear), marked when that's older.
+const YEAR = latestDataYear(data.subjects)
+const PUBLISHED = publishedYear(data.subjects)
+// The year a reader is most likely looking at: the data's year, or the calendar's once it's later.
+const WANTED = Math.max(YEAR, thisYear())
 const MESSAGES: Record<LocaleCode, unknown> = { en, 'zh-CN': zhCN, 'zh-TW': zhTW, ja, ko, vi, id, ms, hi }
 
 const shell = readFileSync(join(DIST, 'index.html'), 'utf8')
@@ -66,7 +74,6 @@ const messagesChunk = (code: LocaleCode): string | undefined => {
   const hits = assetFiles.filter((f) => new RegExp(`^${code}-[\\w-]{8}\\.js$`).test(f))
   return hits.length === 1 ? `${BASE}assets/${hits[0]}` : undefined
 }
-const data = JSON.parse(readFileSync(join(ROOT, 'src', 'generated', 'real.json'), 'utf8')) as Dataset
 const homeDemo = JSON.parse(readFileSync(join(ROOT, 'src', 'generated', 'home-demo.json'), 'utf8')) as HomeDemo
 const subjects = Object.values(data.subjects).sort((a, b) => a.code.localeCompare(b.code))
 
@@ -304,8 +311,10 @@ function subjectPage(code: LocaleCode, s: Subject): Page {
   if (!ds.length && !ratedHere) reviews.push(`<p>${esc(t('seo.noReviews'))}</p>`)
   reviews.push(`<p>${esc(t('seo.rateCta'))} <a href="${href(code, `subject/${s.code}`)}#ratings">${esc(t('seo.rateLink', { code: s.code }))}</a></p>`)
   parts.push(reviews.join(''))
+  const hbYear = factsYear(s, WANTED, PUBLISHED)
+  if (hbYear.older) parts.push(`<p>${esc(t('dataYear.from', { year: hbYear.year }))} ${esc(t('dataYear.tip', { year: hbYear.year }))}</p>`)
   parts.push(`<p>${esc(t('subject.source', { year: s.sourceYear }))}</p>`)
-  if (s.handbook) parts.push(`<p><a href="${esc(s.handbook)}">${esc(t('seo.confirm'))}</a></p>`)
+  parts.push(`<p><a href="${esc(handbookUrl(s.code, hbYear.year))}">${esc(t('seo.confirm'))}</a></p>`)
   parts.push(`<p><a href="${href(code, '')}">${esc(t('seo.made'))}</a></p>`)
 
   const firstPoint = ds[0]?.points[0] ? pickLocalized(ds[0].points[0], code) : ''
@@ -374,7 +383,7 @@ function majorsListBody(code: LocaleCode, t: Translate): string {
     .filter((c) => majors.some((m) => m.course === c.code))
     .map((c) => {
       // Closed majors stay reachable for earlier students but aren't listed, as in the app.
-      const own = majors.filter((m) => m.course === c.code && (m.closedFrom === undefined || new Date().getFullYear() < m.closedFrom))
+      const own = majors.filter((m) => m.course === c.code && (m.closedFrom === undefined || thisYear() < m.closedFrom))
       const groups = groupMajors(own)
       const list = (ms: typeof own) => `<ul>${ms.map((m) => `<li><a href="${href(code, `majors/${m.id}`)}">${esc(m.title)}</a></li>`).join('')}</ul>`
       const body = groups.length === 1 ? list(groups[0]!.majors) : groups.map((g) => `<h3>${esc(t(`majorGroup.${g.id}`))}</h3>${list(g.majors)}`).join('')
@@ -431,7 +440,7 @@ function majorPage(code: LocaleCode, m: (typeof majors)[number]): Page {
 
 /** The find-subjects page as plain HTML: the three quick picks, each as a list of links. */
 function browseBody(code: LocaleCode, t: Translate): string {
-  const year = new Date().getFullYear()
+  const year = YEAR
   const section = (preset: PresetName) => {
     const rows = browse(subjects, { ...EMPTY_FILTERS, ...PRESETS[preset] }, 'B-SCI', year)
     if (rows.length === 0) return ''
@@ -565,7 +574,7 @@ function guideBody(code: LocaleCode, t: Translate, page: GuideCategory | 'overvi
       `<h2 id="check">${esc(t('guide.checkTitle'))}</h2>`, p('checkText'), li(['checkLanguage', 'checkPermission', 'checkVce', 'checkAverage']),
     ].join('\n'),
     'enrol': [
-      `<h2 id="enrol">${esc(t('guide.enrolTitle'))}</h2>`, `<ol>${['enrolStep1', 'enrolStep2', 'enrolStep3', 'enrolStep4'].map((k) => `<li>${esc(t(`guide.${k}`))}</li>`).join('')}</ol>`, p('enrolDraft'), p('enrolWhen'), p('reenrolShort'), p('reenrolMore'),
+      `<h2 id="enrol">${esc(t('guide.enrolTitle'))}</h2>`, `<ol>${['enrolStep1', 'enrolStep2', 'enrolStep3', 'enrolStep4'].map((k) => `<li>${esc(t(`guide.${k}`))}</li>`).join('')}</ol>`, p('enrolDraft'), p('enrolWhen'), p('newHandbook'), p('reenrolShort'), p('reenrolMore'),
       ext('https://students.unimelb.edu.au/course-admin/re-enrol-in-your-course', 'reenrolLink'),
       ext('https://students.unimelb.edu.au/course-admin/enrolling-in-subjects', 'enrolLink'), ext('https://students.unimelb.edu.au/course-admin/planning-your-course-and-subjects/faculty-course-planning-resources/my-course-planner', 'plannerLink'),
     ].join('\n'),

@@ -4,7 +4,7 @@ import { ArrowRightLeft, BookOpen, CalendarRange, Info, Route, X } from 'lucide-
 import type { Issue, Subject } from '@/engine'
 import { categoryLabel, categoryTag, issueText as issueTextFor } from '@/i18n/format'
 import { useI18n } from '@/i18n'
-import { handbookUrl } from '@/utils/links'
+import { useDataYear } from '@/composables/useDataYear'
 import { localTitle } from '@/i18n/localized'
 import type { DropVerdict } from '@/utils/planBoard'
 
@@ -29,6 +29,8 @@ const props = defineProps<{
   /** required: the degree or major insists on it; option: one of a major's lists. */
   role?: 'required' | 'option'
   termIndex: number
+  /** The year of the term it's planned in. */
+  year: number
   /** How it relates to the selected subject or rule; null when nothing is selected. */
   tone: CardTone | null
   /** Selected (not just hovered): a second tap opens the details. */
@@ -53,6 +55,10 @@ const emit = defineEmits<{
 const { t, locale } = useI18n()
 // The title in the reader's language where we have one, with the English after it, small.
 const local = computed(() => (props.subject ? localTitle(props.subject, locale.value) : ''))
+// Planned in a year whose Handbook is out but not entered for it yet: say which year's facts it uses.
+const { facts, handbookFor } = useDataYear()
+const factsFrom = computed(() => (props.subject ? facts(props.subject, props.year) : null))
+const hbHref = computed(() => handbookFor(props.code, props.year))
 
 // Touch screens have no hover: a tap opens the sheet with every action instead.
 const touch = () => typeof window !== 'undefined' && window.matchMedia('(hover: none), (max-width: 720px)').matches
@@ -80,7 +86,7 @@ const issueText = computed(() =>
     .join('\n'),
 )
 // The full facts in the tooltip; the line itself keeps one or two tags.
-const tooltip = computed(() => [`${props.code} ${props.subject?.title ?? ''}`, category.value, props.onlyIn, issueText.value].filter(Boolean).join('\n'))
+const tooltip = computed(() => [`${props.code} ${props.subject?.title ?? ''}`, category.value, props.onlyIn, factsFrom.value?.older ? t.value('dataYear.tip', { year: factsFrom.value.year }) : '', issueText.value].filter(Boolean).join('\n'))
 const rowClasses = computed(() => ({
   row: true,
   [`row-${worst.value}`]: worst.value !== null,
@@ -143,6 +149,7 @@ function onDragStart(event: DragEvent): void {
       <span v-else-if="role === 'required'" class="tag tag-required">{{ t('plan.tagRequired') }}</span>
       <span v-else-if="role === 'option'" class="tag tag-option">{{ t('plan.tagOption') }}</span>
       <span v-if="onlyIn && !worst" class="tag tag-only">{{ onlyIn }}</span>
+      <span v-if="factsFrom?.older" class="tag tag-old">{{ t('dataYear.short', { year: factsFrom.year }) }}</span>
     </span>
     <span v-if="subject" class="row-points">{{ subject.points }}</span>
 
@@ -154,7 +161,7 @@ function onDragStart(event: DragEvent): void {
       <button class="act" type="button" :aria-label="t('plan.moveCode', { code })" :title="t('plan.moveCode', { code })" @click="emit('moveSheet', true)">
         <CalendarRange :size="14" aria-hidden="true" />
       </button>
-      <a class="act" :href="handbookUrl(code)" target="_blank" rel="noopener" :aria-label="t('plan.handbookCode', { code })" :title="t('plan.handbookCode', { code })">
+      <a class="act" :href="hbHref" target="_blank" rel="noopener" :aria-label="t('plan.handbookCode', { code })" :title="t('plan.handbookCode', { code })">
         <BookOpen :size="14" aria-hidden="true" />
       </a>
       <button class="act act-remove" type="button" :aria-label="t('plan.remove', { code })" :title="t('plan.remove', { code })" @click="emit('remove')">
@@ -167,7 +174,7 @@ function onDragStart(event: DragEvent): void {
       <div class="sheet-actions">
         <button class="sheet-act" type="button" @click="fromSheet(() => emit('select'))"><Route :size="16" aria-hidden="true" />{{ t('plan.tlShow') }}</button>
         <button class="sheet-act" type="button" @click="fromSheet(() => emit('swap'))"><ArrowRightLeft :size="16" aria-hidden="true" />{{ t('plan.swap') }}</button>
-        <a class="sheet-act" :href="handbookUrl(code)" target="_blank" rel="noopener"><BookOpen :size="16" aria-hidden="true" />Handbook</a>
+        <a class="sheet-act" :href="hbHref" target="_blank" rel="noopener"><BookOpen :size="16" aria-hidden="true" />Handbook</a>
         <button class="sheet-act" type="button" @click="fromSheet(() => emit('open'))"><Info :size="16" aria-hidden="true" />{{ t('plan.detailsShort') }}</button>
         <button class="sheet-act sheet-remove" type="button" @click="fromSheet(() => emit('remove'))"><X :size="16" aria-hidden="true" />{{ t('plan.removeShort') }}</button>
       </div>
@@ -293,6 +300,10 @@ function onDragStart(event: DragEvent): void {
 .tag-option {
   color: var(--accent);
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 45%, transparent);
+}
+
+.tag-old {
+  color: var(--ink-soft);
 }
 
 .tag-only {

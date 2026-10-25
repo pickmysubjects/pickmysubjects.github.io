@@ -6,6 +6,18 @@ export const ko: Messages = {
   /** Which career-name language this locale reads (career names come with the data). */
   careerLang: "ko",
   infoTip: "자세히",
+  /** Which Handbook year a subject's facts come from, when it's older than the one looked at. */
+  dataYear: {
+    from: "{year} Handbook 기준",
+    short: "{year} 기준",
+    tip: "이 과목은 새 Handbook 정보가 아직 입력되지 않아 {year}년 정보로 보여 줘요. 입력되면 자동으로 업데이트돼요.",
+  },
+  /** Site-wide line while a new Handbook is out but most subjects aren't updated yet. */
+  rollover: {
+    text: "{year} Handbook 공개, 업데이트 중이에요. 아직인 과목은 {old} 기준으로 표시",
+    tip: "과목은 하나씩 업데이트해요. 아직 업데이트되지 않은 과목의 개설 학기와 규정은 {old} Handbook 기준이에요. 수강 신청 전에 공식 Handbook을 꼭 확인하세요.",
+    dismiss: "닫기",
+  },
   changes: {
     heading: "{year}년에 바뀐 점",
     lede: "{from}년 Handbook과 비교했습니다. 수강 신청 전에 Handbook에서 확인하세요.",
@@ -1239,6 +1251,7 @@ export const ko: Messages = {
     enrolStep4: "수업 시간: 신청이 끝나면 MyTimetable에서 수업 시간을 고르세요(아래 수업 시간표 참고).",
     enrolDraft: "이 사이트의 계획은 나만 보는 초안이에요. 실제로 신청되는 건 없고, 학교에도 전달되지 않아요.",
     enrolWhen: "다음 해 수강신청이 열리는 시기는 해마다 달라요. 공식 주요 일정(key dates)을 확인하세요.",
+    newHandbook: "다음 해 Handbook은 보통 11월 중순에 나와요. 이 사이트에서 아직 업데이트 안 된 과목은 몇 년도 Handbook 기준인지 표시해요.",
     reenrolShort: "2027년 재등록: 2026년 11월 16일–12월 14일, 늦으면 $145",
     reenrolMore: "기한 안에 재등록(re-enrol)하면 연체료나 학적 취소를 피하고, 시간표를 볼 수 있고, Summer Term과 일찍 시작하는 과목을 신청할 수 있고, 정원 있는 과목도 잡기 쉬우며, 바쁜 시기 전에 수강 상담도 받을 수 있어요. 2026년 12월 15일–2027년 1월 13일에도 재등록은 되지만 기록에 re-enrolment sanction이 남아요. 재등록을 안 하고 승인된 휴학(Leave of Absence)도 없으면 늦은 재등록비 $145, 복학(reinstatement) 신청은 $414예요.",
     reenrolLink: "공식: Re-enrol in your course",
@@ -1516,6 +1529,8 @@ export const ko: Messages = {
     helpTitle: "도와주고 싶다면",
     help: "쓰는 사람이 많을수록 사이트가 좋아져요. 과목을 다 들었으면 1분만 내서 평가해 주세요. 다음 사람에게 큰 도움이 돼요. 틀린 곳을 발견하면 알려 주세요.",
     helpRate: "과목 평가하기",
+    updatesTitle: "업데이트",
+    dataYear: "데이터: {year} Handbook, 마지막 확인 {date}.",
     dataTitle: "정보는 어디서 오나요",
     dataFacts: "과목 정보(개설 학기, 선수 과목, 평가, 수업 시간)는 멜버른대 공식 Handbook에서 가져와 하나씩 확인했어요.",
     dataRatings: "평가는 이 사이트를 쓰는 학생들이 남긴 거예요.",

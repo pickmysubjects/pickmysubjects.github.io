@@ -2,8 +2,16 @@
 import { link } from '@/composables/useView'
 import { BookOpen, Calculator, Compass, GitCompare, GraduationCap, Route, Sparkles, Star } from 'lucide-vue-next'
 import { useI18n } from '@/i18n'
+import { latestDataYear, lastVerified } from '@/engine/dataYear'
+import { useDataset } from '@/composables/useDataset'
+import { SITE_UPDATES } from '@/content/updates'
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
+// Which Handbook year the data is from and when it was last checked, then what changed lately.
+const { all } = useDataset()
+const dataYear = latestDataYear(all.subjects)
+const checked = lastVerified(all.subjects)
+const day = (iso: string) => new Date(`${iso}T00:00:00`).toLocaleDateString(locale.value, { day: 'numeric', month: 'short', year: 'numeric' })
 // Every main part of the site. Majors and the guide reuse their own page's title and lede.
 const features = [
   { key: 'lookup', icon: BookOpen, href: link(''), name: 'about.f.lookup', text: 'about.f.lookupText' },
@@ -49,6 +57,17 @@ const features = [
         <li>{{ t('about.dataRatings') }}</li>
         <li>{{ t('about.dataDiscuss') }}</li>
         <li>{{ t('about.dataSuggest') }}</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2 class="about-h2">{{ t('about.updatesTitle') }}</h2>
+      <p v-if="checked" class="about-data-year">{{ t('about.dataYear', { year: dataYear, date: day(checked) }) }}</p>
+      <ul class="about-updates">
+        <li v-for="(u, i) in SITE_UPDATES" :key="i">
+          <time :datetime="u.date">{{ day(u.date) }}</time>
+          <span>{{ u.text[locale] }}</span>
+        </li>
       </ul>
     </section>
 
@@ -141,6 +160,30 @@ const features = [
   margin-top: 4px;
   font-size: 0.9375rem;
   color: var(--ink-soft);
+}
+
+.about-data-year {
+  margin: 0 0 var(--space-2);
+  color: var(--ink-soft);
+}
+
+.about-updates {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.about-updates li {
+  display: grid;
+  grid-template-columns: 7.5em minmax(0, 1fr);
+  gap: var(--space-2);
+}
+
+.about-updates time {
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
 }
 
 .about-list {

@@ -2,6 +2,7 @@
  * Validates every curated YAML file and writes one JSON bundle per dataset to
  * src/generated/. Exits non-zero on any schema error, so bad data never reaches the app.
  */
+import { latestDataYear, thisYear } from '../src/engine/dataYear'
 import { mkdirSync, rmSync, writeFileSync } from 'node:fs'
 import { buildChanges, SNAPSHOT_DIR } from './changes'
 import { join } from 'node:path'
@@ -31,7 +32,7 @@ for (const name of ['real', 'demo'] as const) {
     // (about, discussion summaries, breadth lists) only when one of its subjects is opened.
     // Node-side scripts and tests keep reading the full real.json above.
     // "Often taken with" for each subject page, worked out once here rather than in the browser.
-    const { core, details } = splitDataset(dataset, buildTakenWith(dataset, new Date().getFullYear()))
+    const { core, details } = splitDataset(dataset, buildTakenWith(dataset, latestDataYear(dataset.subjects)))
     writeFileSync(join(OUT, 'real-core.json'), JSON.stringify(core))
     const dir = join(OUT, 'detail')
     rmSync(dir, { recursive: true, force: true })
@@ -42,7 +43,7 @@ for (const name of ['real', 'demo'] as const) {
     const changes = buildChanges(dataset, SNAPSHOT_DIR(ROOT))
     if (changes) writeFileSync(join(OUT, 'changes.json'), JSON.stringify(changes))
     else rmSync(join(OUT, 'changes.json'), { force: true })
-    writeFileSync(join(OUT, 'home-demo.json'), JSON.stringify(buildHomeDemo(dataset, new Date().getFullYear())))
+    writeFileSync(join(OUT, 'home-demo.json'), JSON.stringify(buildHomeDemo(dataset, thisYear())))
   }
 }
 if (failed) process.exit(1)

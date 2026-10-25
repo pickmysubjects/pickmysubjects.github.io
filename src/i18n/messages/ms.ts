@@ -6,6 +6,18 @@ export const ms: Messages = {
   /** Which career-name language this locale reads (career names come with the data). */
   careerLang: "ms",
   infoTip: "Maklumat lanjut",
+  /** Which Handbook year a subject's facts come from, when it's older than the one looked at. */
+  dataYear: {
+    from: "Daripada Handbook {year}",
+    short: "Handbook {year}",
+    tip: "Maklumat Handbook baharu untuk subjek ini belum dimasukkan, jadi ini guna maklumat {year}. Ia dikemas kini sendiri bila data baharu masuk.",
+  },
+  /** Site-wide line while a new Handbook is out but most subjects aren't updated yet. */
+  rollover: {
+    text: "Handbook {year} sudah keluar, sedang dikemas kini. Subjek yang belum ditanda {old}.",
+    tip: "Subjek dikemas kini satu demi satu. Selagi belum, semester dan peraturannya ikut Handbook {old}. Semak Handbook rasmi sebelum mendaftar.",
+    dismiss: "Tutup",
+  },
   changes: {
     heading: "Apa yang berubah pada {year}",
     lede: "Dibandingkan dengan Handbook {from}. Semak Handbook sebelum anda mendaftar.",
@@ -1239,6 +1251,7 @@ export const ms: Messages = {
     enrolStep4: "Kelas: selepas berdaftar, pilih waktu kelas di MyTimetable (lihat Jadual kelas di bawah).",
     enrolDraft: "Rancangan di laman ini draf untuk anda seorang. Ia tidak mendaftarkan anda dalam apa-apa, dan pihak universiti tidak nampak pun.",
     enrolWhen: "Bila pendaftaran untuk tahun depan dibuka berubah setiap tahun, jadi semak key dates rasmi.",
+    newHandbook: "Handbook tahun depan biasanya keluar pertengahan November. Selagi subjek belum dikemas kini di sini, ia menyatakan Handbook tahun mana yang digunakan.",
     reenrolShort: "Daftar semula 2027: 16 Nov – 14 Dis 2026; lewat kena $145.",
     reenrolMore: "Daftar semula (re-enrol) tepat masa bermakna tiada yuran lewat atau pembatalan, boleh lihat jadual waktu, boleh daftar Summer Term dan subjek yang mula awal, peluang lebih baik untuk subjek berkuota, dan nasihat kursus sebelum musim sibuk. Dari 15 Disember 2026 hingga 13 Januari 2027 anda masih boleh daftar semula, tetapi re-enrolment sanction dicatat dalam rekod anda. Jika tidak daftar semula dan tiada Leave of Absence yang diluluskan, yuran daftar semula lewat ialah $145, dan permohonan reinstatement $414.",
     reenrolLink: "Rasmi: Re-enrol in your course",
@@ -1516,6 +1529,8 @@ export const ms: Messages = {
     helpTitle: "Kalau anda nak membantu",
     help: "Makin ramai yang guna, makin baik laman ini. Bila habis satu subjek, ambil seminit untuk menilainya supaya orang seterusnya ada panduan. Kalau jumpa kesilapan, beritahu saya.",
     helpRate: "Nilai subjek",
+    updatesTitle: "Kemas kini",
+    dataYear: "Data: Handbook {year}, kali terakhir disemak {date}.",
     dataTitle: "Dari mana maklumat ini",
     dataFacts: "Butiran subjek (semester, prasyarat, penilaian, jam kelas) diambil daripada Handbook rasmi University of Melbourne dan saya semak satu demi satu.",
     dataRatings: "Penilaian datang daripada pelajar yang menggunakan laman ini.",

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useDataYear } from '@/composables/useDataYear'
 import { computed, shallowRef, watch } from 'vue'
 import { Send } from 'lucide-vue-next'
 import { parseHandbookPaste, subjectYaml } from '@/engine'
@@ -13,7 +14,8 @@ const code = shallowRef('')
 const title = shallowRef('')
 const level = shallowRef(1)
 const points = shallowRef(12.5)
-const year = shallowRef(new Date().getFullYear())
+// The newest Handbook that's out (never one that isn't published yet).
+const year = shallowRef(useDataYear().published)
 const text = shallowRef('')
 
 const cleanCode = computed(() => code.value.trim().toUpperCase())

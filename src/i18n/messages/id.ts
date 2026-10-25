@@ -6,6 +6,18 @@ export const id: Messages = {
   /** Which career-name language this locale reads (career names come with the data). */
   careerLang: "id",
   infoTip: "Info lebih lanjut",
+  /** Which Handbook year a subject's facts come from, when it's older than the one looked at. */
+  dataYear: {
+    from: "Dari Handbook {year}",
+    short: "Handbook {year}",
+    tip: "Info Handbook baru untuk mata kuliah ini belum dimasukkan, jadi masih memakai info {year}. Akan diperbarui otomatis begitu data baru masuk.",
+  },
+  /** Site-wide line while a new Handbook is out but most subjects aren't updated yet. */
+  rollover: {
+    text: "Handbook {year} sudah terbit, sedang diperbarui. Yang belum diperbarui ditandai {old}.",
+    tip: "Mata kuliah diperbarui satu per satu. Selama belum, semester dan aturannya mengikuti Handbook {old}. Cek Handbook resmi sebelum mendaftar.",
+    dismiss: "Tutup",
+  },
   changes: {
     heading: "Yang berubah di {year}",
     lede: "Dibandingkan dengan Handbook {from}. Cek Handbook sebelum mendaftar.",
@@ -1239,6 +1251,7 @@ export const id: Messages = {
     enrolStep4: "Kelas: setelah terdaftar, pilih jam kelas di MyTimetable (lihat Jadwal kelas di bawah).",
     enrolDraft: "Rencana di situs ini cuma draf untukmu sendiri. Tidak mendaftarkanmu ke apa pun, dan kampus tidak bisa melihatnya.",
     enrolWhen: "Kapan enrolment untuk tahun berikutnya dibuka berubah tiap tahun, jadi cek key dates resminya.",
+    newHandbook: "Handbook tahun depan biasanya terbit pertengahan November. Selama mata kuliah belum diperbarui di sini, tertulis Handbook tahun berapa yang dipakai.",
     reenrolShort: "Daftar ulang 2027: 16 Nov – 14 Des 2026; telat kena $145.",
     reenrolMore: "Daftar ulang (re-enrol) tepat waktu artinya tidak kena denda telat atau pembatalan, bisa lihat jadwal kuliah, bisa ambil Summer Term dan mata kuliah yang mulai lebih awal, peluang lebih besar di mata kuliah berkuota, dan bisa konsultasi studi sebelum masa sibuk. Dari 15 Desember 2026 sampai 13 Januari 2027 masih bisa daftar ulang, tapi re-enrolment sanction tercatat di rekammu. Kalau tidak daftar ulang dan tidak punya Leave of Absence yang disetujui, biaya daftar ulang telat $145, dan mengajukan reinstatement $414.",
     reenrolLink: "Resmi: Re-enrol in your course",
@@ -1516,6 +1529,8 @@ export const id: Messages = {
     helpTitle: "Kalau kamu mau membantu",
     help: "Makin banyak yang memakai, makin berguna situs ini. Setelah selesai satu mata kuliah, luangkan semenit untuk menilainya supaya orang berikutnya punya gambaran. Kalau menemukan kesalahan, kabari aku.",
     helpRate: "Nilai mata kuliah",
+    updatesTitle: "Pembaruan",
+    dataYear: "Data: Handbook {year}, terakhir dicek {date}.",
     dataTitle: "Dari mana informasinya",
     dataFacts: "Detail mata kuliah (semester, prasyarat, penilaian, jam kelas) diambil dari Handbook resmi University of Melbourne dan aku cek satu per satu.",
     dataRatings: "Penilaian berasal dari mahasiswa yang memakai situs ini.",

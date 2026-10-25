@@ -1,10 +1,11 @@
+import { thisYear } from '@/engine/dataYear'
 import { defaultCourse, standardTerms, type Dataset } from '@/engine'
 import type { PlanSetup, PlanState } from './planStore'
 
 function defaultSetup(data: Dataset): PlanSetup {
   const course = data.courses.find((c) => c.code === defaultCourse(data))
   // Only a starting suggestion (the wizard asks): semester 1 of the Handbook year we have.
-  const year = course?.year ?? new Date().getFullYear()
+  const year = course?.year ?? thisYear()
   return {
     course: course?.code ?? '',
     courseYear: year,
