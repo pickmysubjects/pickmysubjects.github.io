@@ -784,7 +784,7 @@ function changesPage(code: LocaleCode, d: YearDiff): Page {
   const item = (i: ChangeItem) => {
     const has = i.kind === 'subject' ? !!data.subjects[i.id] : data.components.some((c) => c.id === i.id)
     const label = has ? `<a href="${href(code, `${i.kind === 'subject' ? 'subject' : 'majors'}/${i.id}`)}">${esc(i.label)}</a>` : esc(i.label)
-    return `<li>${label}${i.details.length ? `: ${esc(i.details.join(sentenceSep(code) || ' '))}` : ''}</li>`
+    return `<li>${label}${i.details.length ? `${CJK.has(code) ? '：' : ': '}${esc(i.details.join(CJK.has(code) ? '；' : '; '))}` : ''}</li>`
   }
   const heading = t('changes.heading', { year: d.to })
   return {
