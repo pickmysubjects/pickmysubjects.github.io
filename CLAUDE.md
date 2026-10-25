@@ -17,7 +17,8 @@ Notes for AI coding agents (and anyone else) working in this repo. CONTRIBUTING.
 
 ## Checks
 
-- While working: `npm run test:fast` (or single test files). The full suite is heavy; don't run it repeatedly or from several agents at once.
+- While working: single test files, or `npx vitest related <changed files>`; `npm run test:fast` at most once per change. The full suite and the build are heavy (the build prerenders ~19,500 pages): run them once, never from several agents at once, and never while another session is running its own tests. Tests use 3 workers locally (`TEST_WORKERS=<n>` to change) so the laptop stays cool; CI uses all cores.
+- This runs on a 16 GB laptop that also hosts other AI tools and Docker: at most one background agent running tests or builds at a time.
 - Before merging or pushing, once, and read the results before the next step:
   1. `npm run typecheck`
   2. `npm test` (if a planner test times out under load, rerun that file alone)

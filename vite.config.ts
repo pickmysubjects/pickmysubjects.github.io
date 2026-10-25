@@ -89,5 +89,8 @@ export default defineConfig({
     include: ['tests/**/*.test.ts'],
     // Many tests plan on the real data; on shared CI runners they run past the 5s default.
     testTimeout: 30_000,
+    // Locally, leave most cores free so the laptop stays cool; CI uses all of its runner.
+    // Override with TEST_WORKERS=<n>.
+    maxWorkers: process.env.CI ? undefined : Number(process.env.TEST_WORKERS) || 3,
   },
 })
