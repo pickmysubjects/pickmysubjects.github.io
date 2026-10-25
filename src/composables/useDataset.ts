@@ -74,5 +74,6 @@ export function useSubjectDetail(code: Readonly<Ref<string>>) {
     const s = data.value.subjects[code.value]
     return s && withDetail(s, areas.get(detailArea(code.value))?.[code.value])
   })
-  return { subject, ready }
+  const takenWith = computed(() => areas.get(detailArea(code.value))?.[code.value]?.takenWith ?? [])
+  return { subject, ready, takenWith }
 }

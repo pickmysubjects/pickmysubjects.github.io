@@ -8,13 +8,13 @@ import SubjectCareers from '@/components/subject/SubjectCareers.vue'
 import OutsideLinks from '@/components/subject/OutsideLinks.vue'
 import SubjectAbout from '@/components/subject/SubjectAbout.vue'
 import FoldSection from '@/components/subject/FoldSection.vue'
-import SubjectFaq from '@/components/subject/SubjectFaq.vue'
 import SubjectFitCard from '@/components/subject/SubjectFitCard.vue'
 import SubjectHeader from '@/components/subject/SubjectHeader.vue'
 import SubjectRoute from '@/components/subject/SubjectRoute.vue'
 import SubjectVerdict from '@/components/subject/SubjectVerdict.vue'
+import RelatedSubjects from '@/components/subject/RelatedSubjects.vue'
 import SubjectLinks from '@/components/majors/SubjectLinks.vue'
-import { referencedSubjects } from '@/engine'
+import { prerequisiteRoute, referencedSubjects, relatedSubjects, simplifyFor } from '@/engine'
 import { useDataset, useSubjectDetail } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
 import { useProfile } from '@/composables/useProfile'
@@ -33,7 +33,7 @@ const { t, locale } = useI18n()
 
 const code = computed(() => props.code.toUpperCase())
 // With its long text (about, discussion) once that has loaded; the rest shows straight away.
-const { subject, ready: detailReady } = useSubjectDetail(code)
+const { subject, ready: detailReady, takenWith } = useSubjectDetail(code)
 const year = computed(() => plan.terms.value[0]?.year ?? new Date().getFullYear())
 const have = computed(() => new Set([...plan.plannedCodes.value, ...plan.plan.value.completed]))
 // What it leads to, the ones in the student's plan first, then by level and code.
@@ -46,6 +46,21 @@ const unlocks = computed(() =>
 const taken = computed(() => profile.value.results.some((r) => r.code === code.value))
 const similar = useSimilar(subject, year)
 const phone = usePhone()
+// Subject links the page already has, so the related block doesn't repeat them.
+const shown = computed(() => {
+  const s = subject.value
+  if (!s) return []
+  const course = plan.setup.value.course
+  const needs = referencedSubjects(simplifyFor(s.prerequisites, course))
+  const route = prerequisiteRoute(s.code, data.value.subjects, course, have.value)
+  return [...unlocks.value, ...similar.value, ...s.recommended, ...(s.nonAllowed === 'unknown' ? [] : s.nonAllowed), ...(route.length > needs.length ? route : [])]
+})
+const related = computed(() =>
+  subject.value
+    ? relatedSubjects(subject.value, data.value.subjects, { leadsTo: { [code.value]: unlocks.value }, takenWith: { [code.value]: takenWith.value } }, shown.value)
+    : { leadsTo: [], takenWith: [], before: [] },
+)
+const hasRelated = computed(() => Object.values(related.value).some((l) => l.length > 0))
 const links = computed(() => (name.value === 'real' ? discussionLinks(code.value, locale.value) : []))
 
 const rating = shallowRef(false)
@@ -72,7 +87,7 @@ const sections = computed(() => {
     { id: 'learn', label: t.value('subject.aboutLearn'), show: detailReady.value && !!s.about },
     { id: 'assessment', label: t.value('assess.title'), show: true },
     { id: 'route', label: t.value('subject.fitsTitle'), show: true },
-    { id: 'faq', label: t.value('faq.title'), show: true },
+    { id: 'related', label: t.value('subject.relatedTitle'), show: hasRelated.value },
     { id: 'discuss', label: t.value('subject.discuss'), show: links.value.length > 0 },
     { id: 'similar', label: t.value('subject.similar'), show: similar.value.length > 0 },
   ].filter((x) => x.show)
@@ -111,11 +126,9 @@ const sections = computed(() => {
           </section>
 
           <!-- The long lower sections fold on phones (FoldSection), so the page isn't a mile long. -->
-          <section id="faq" class="sec surface">
-            <FoldSection v-if="phone" :title="t('faq.title')">
-              <SubjectFaq :subject="subject" :year="year" :course="plan.setup.value.course" :unlocks="unlocks" />
-            </FoldSection>
-            <SubjectFaq v-else :subject="subject" :year="year" :course="plan.setup.value.course" :unlocks="unlocks" />
+
+          <section v-if="hasRelated" id="related" class="sec surface">
+            <RelatedSubjects :related="related" :year="year" />
           </section>
 
           <section v-if="links.length" id="discuss" class="sec surface">
@@ -225,17 +238,13 @@ const sections = computed(() => {
 }
 
 .sec-title,
-.sec :deep(:is(.sec-title, .assess-title, .faq-title)),
+.sec :deep(:is(.sec-title, .assess-title)),
 .sec-about :deep(.about-row:first-child .about-label) {
   margin: 0;
   font-size: var(--fs-section);
   font-weight: 700;
   line-height: 1.3;
   color: var(--ink);
-}
-
-.sec :deep(.faq-title svg) {
-  display: none;
 }
 
 /* What you learn reads top to bottom: the paragraph, then what you can do after it. */
@@ -347,7 +356,7 @@ const sections = computed(() => {
   }
 
   .sec-title,
-  .sec :deep(:is(.sec-title, .assess-title, .faq-title)),
+  .sec :deep(:is(.sec-title, .assess-title)),
   .sec-about :deep(.about-row:first-child .about-label) {
     font-size: var(--fs-section);
   }

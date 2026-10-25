@@ -16,7 +16,9 @@
     "paste": "tsx scripts/paste-handbook.ts",
     "import-batch": "tsx scripts/import-batch.ts",
     "indexnow": "tsx scripts/indexnow.ts",
-    "audit": "tsx scripts/audit-data.ts"
+    "audit": "tsx scripts/audit-data.ts",
+    "snapshot-year": "tsx scripts/snapshot-year.ts",
+    "changes": "tsx scripts/changes.ts"
   },
   "dependencies": {
     "@fontsource-variable/noto-sans-devanagari": "^5.3.0",

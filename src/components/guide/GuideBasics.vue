@@ -46,7 +46,9 @@ const { wam } = useProfile()
       </ul>
       <p class="note">{{ t('guide.majorsPairs') }}</p>
       <p class="note">{{ t('guide.majorsDiploma') }}</p>
+      <p class="note">{{ t('guide.majorsRelated') }}</p>
       <p class="aside">{{ t('guide.majorsPlans') }}</p>
+      <p class="note">{{ t('guide.majorsPlansImage') }}</p>
       <p class="actions">
         <a class="button button-quiet" :href="link('plan')">{{ t('guide.majorsPlansLink') }}</a>
       </p>

@@ -28,6 +28,7 @@ const BrowseView = lazy('subjects')
 const MajorsView = lazy('majors')
 const ShortlistView = lazy('shortlist')
 const CareersView = lazy('careers')
+const ChangesView = lazy('changes')
 
 const { view, param } = useView()
 const { t, locale } = useI18n()
@@ -71,6 +72,8 @@ watchEffect(() => {
         ? `${breadthElsewhere ? t.value('seo.presetBreadthFor', { course: breadthElsewhere, year }) : t.value(PRESET_TITLE_KEYS[preset], { year })} | PickMySubjects`
       : guidePage.kind !== 'overview'
         ? `${t.value(guidePage.kind === 'category' ? `guide.cat.${guidePage.category}.title` : 'guide.kd.title')} | ${t.value('guide.title')} | PickMySubjects`
+      : view.value === 'changes' && param.value
+        ? `${t.value('changes.seoTitle', { year: param.value })} | PickMySubjects`
       : view.value === 'subjects' || view.value === 'guide'
         ? listPageTitle(t.value, view.value)
       : key
@@ -102,6 +105,7 @@ watchEffect(() => {
     <MajorsView v-else-if="view === 'majors'" :id="param" />
     <ShortlistView v-else-if="view === 'shortlist'" />
     <CareersView v-else-if="view === 'careers'" :id="param" />
+    <ChangesView v-else-if="view === 'changes'" :key="param" :year="param" />
     <PrivacyView v-else />
   </main>
   <footer class="footer">

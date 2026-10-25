@@ -17,7 +17,9 @@ import PlanSwitcher from '@/components/plans/PlanSwitcher.vue'
 import PlanCompare from '@/components/plans/PlanCompare.vue'
 import { careerGap, careerGoal, careerName, heldMajorIds, informalPicks, isFail, passedCodes, planComponentIds, planRoles, planRules, recordedLoads, termLoad, type PlanTerm } from '@/engine'
 import { diplomaTitle } from '@/composables/usePlanCompare'
-import { Printer, Share2 } from 'lucide-vue-next'
+import { ImageDown, Printer, Share2 } from 'lucide-vue-next'
+import { sharePlanImage } from '@/utils/planImage'
+import { localTitle } from '@/i18n/localized'
 import { decodePlan, encodePlan } from '@/utils/sharePlan'
 import { boardEdges, countsToward } from '@/utils/planBoard'
 import { cloneJson } from '@/utils/clone'
@@ -72,6 +74,43 @@ async function share(): Promise<void> {
 
 function printPlan(): void {
   window.print()
+}
+
+// The plan as a picture (for 小红书 and the like): made in the browser, never uploaded. Only the
+// planned semesters go in it, none of My record (marks, WAM).
+const imaging = shallowRef(false)
+async function saveImage(): Promise<void> {
+  if (imaging.value) return
+  imaging.value = true
+  try {
+    const status = problems.value
+      ? { text: t.value('plan.statusProblems', { n: problems.value }), tone: 'bad' as const }
+      : unknowns.value
+        ? { text: t.value('plan.statusUnknown', { n: unknowns.value }), tone: 'warn' as const }
+        : { text: t.value('plan.statusOk'), tone: 'good' as const }
+    const site = new URL(link(''), location.href)
+    await sharePlanImage(
+      {
+        site: 'PickMySubjects',
+        url: `${site.host}${site.pathname}`.replace(/\/$/, ''),
+        course: plan.course.value?.title ?? plan.setup.value.course,
+        major: majorTitle.value,
+        status,
+        terms: plan.terms.value
+          .filter((term) => term.subjects.length > 0)
+          .map((term) => ({
+            label: termLabel(t.value, term),
+            subjects: term.subjects.map((c) => {
+              const s = data.value.subjects[c]
+              return { code: c, title: s ? localTitle(s, locale.value) || s.title : '' }
+            }),
+          })),
+      },
+      `pickmysubjects-plan-${locale.value}.png`,
+    )
+  } finally {
+    imaging.value = false
+  }
 }
 const extraTermsOnVisa = computed(
   () => plan.setup.value.international === true && plan.notes.value.some((n) => typeof n !== 'string' && n.key === 'extraTerms'),
@@ -355,6 +394,9 @@ const printTerms = computed<PrintTerm[]>(() => {
           </button>
           <button class="button button-quiet" type="button" @click="share">
             <Share2 :size="16" aria-hidden="true" /> {{ copied ? t('plan.copied') : t('plan.share') }}
+          </button>
+          <button class="button button-quiet" type="button" :disabled="imaging" @click="saveImage">
+            <ImageDown :size="16" aria-hidden="true" /> {{ t('plan.saveImage') }}
           </button>
           <button class="button button-quiet" type="button" @click="printPlan">
             <Printer :size="16" aria-hidden="true" /> {{ t('plan.print') }}
