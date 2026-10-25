@@ -5,7 +5,10 @@ import { cleanPlans } from '@/utils/sanitize'
 /** The saved plans, on their own so the dataset can follow the planned course without a cycle. */
 export interface PlanSetup {
   course: string
+  /** Handbook year whose rules apply: the year the student started (see commencementYear). */
   courseYear: number
+  /** The year the student started the degree, as the setup questions gave it (older plans lack it). */
+  commencementYear?: number
   startYear: number
   startPeriod: Period
   major: string
@@ -58,6 +61,16 @@ export interface PlanPrefs {
  */
 export function prefsOf(plan: { prefs?: PlanPrefs } | undefined, profile: Pick<Profile, 'skills' | 'interests' | 'goal' | 'career'>): PlanPrefs {
   return plan?.prefs ?? { skills: { ...profile.skills }, interests: [...profile.interests], goal: profile.goal, ...(profile.career ? { career: profile.career } : {}) }
+}
+
+/**
+ * The year the student started, whose Handbook rules they follow. Plans saved before this was
+ * stored take the plan's start or the first semester on the record, whichever is earlier.
+ */
+export function commencementYear(setup: Pick<PlanSetup, 'startYear' | 'commencementYear'>, results: Profile['results'] = []): number {
+  if (Number.isInteger(setup.commencementYear)) return setup.commencementYear as number
+  const dated = results.map((r) => r.year).filter((y): y is number => Number.isInteger(y) && (y as number) >= 1990)
+  return Math.min(setup.startYear, ...dated)
 }
 
 /** A dataset's plans and which one is open. */

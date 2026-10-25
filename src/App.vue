@@ -1,9 +1,11 @@
 <script setup lang="ts">
+import { latestDataYear } from '@/engine/dataYear'
 import AppHeader from './components/layout/AppHeader.vue'
 import BottomNav from './components/layout/BottomNav.vue'
 import Interp from './components/Interp.vue'
 import AppLogo from './components/AppLogo.vue'
 import MySteps from './components/layout/MySteps.vue'
+import RolloverNotice from './components/RolloverNotice.vue'
 import { VIEW_LOADERS } from './views/loaders'
 import { defineAsyncComponent, watchEffect } from 'vue'
 import { useView, link } from './composables/useView'
@@ -56,7 +58,7 @@ watchEffect(() => {
   // the app see the same one.
   const preset = view.value === 'subjects' ? presetFromSlug(param.value) : undefined
   const ranking = view.value === 'subjects' ? rankFromSlug(param.value) : undefined
-  const year = Math.max(...Object.values(data.value.subjects).map((x) => x.sourceYear))
+  const year = latestDataYear(data.value.subjects)
   // Breadth depends on the degree: the static page names the Bachelor of Science, but a student
   // planning another degree sees that degree's breadth list, so the title names it instead.
   const breadthElsewhere = preset === 'breadth' && course.value !== 'B-SCI' ? data.value.courses.find((c) => c.code === course.value)?.title : undefined
@@ -93,6 +95,7 @@ watchEffect(() => {
   <main class="app-main shell" :class="{ 'shell-wide': view === 'plan' }">
     <!-- Narrow screens: Me's two steps as a slim switch in the page (wide screens: in the bar). -->
     <MySteps class="page-steps" />
+    <RolloverNotice />
     <HomeView v-if="view === 'home'" />
     <SubjectView v-else-if="view === 'subject'" :key="param" :code="param" />
     <PlannerView v-else-if="view === 'plan'" />

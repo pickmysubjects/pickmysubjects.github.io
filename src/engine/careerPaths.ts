@@ -12,6 +12,7 @@
  *   employers list (lab work for a lab scientist);
  * - little: none of the above. Never called useless: its other merits are listed instead.
  */
+import { latestDataYear, thisYear } from './dataYear'
 import { CAREER_LANGS, componentCareers, type Accreditation, type CareerLang, type CareerQualifier, type CareerText, type GraduateRoute, type Occupation } from './careers'
 import { barsBreadth } from './courseRules'
 import { inTopShare } from './easeRanking'
@@ -132,7 +133,7 @@ const HOW_ORDER: CareerHow[] = ['direct', 'via-further-study', 'needs-qualificat
 /** Majors students can pick now (listed course, not closed), with their own subjects. */
 function openComponents(data: Dataset) {
   const listed = new Set(data.courses.filter((x) => x.listed).map((x) => x.code))
-  return data.components.filter((comp) => listed.has(comp.course) && !(comp.closedFrom !== undefined && new Date().getFullYear() >= comp.closedFrom))
+  return data.components.filter((comp) => listed.has(comp.course) && !(comp.closedFrom !== undefined && thisYear() >= comp.closedFrom))
 }
 
 /**
@@ -522,7 +523,7 @@ export function majorForCareer(data: Dataset, careerId: string, component: strin
 /** "Is it on the easier side?" for a course, as subject pages say it (the easy list's top third). */
 export function easierIn(data: Dataset, course: string): (code: string) => boolean {
   const view = forCourse(data, course)
-  const year = Math.max(...Object.values(data.subjects).map((s) => s.sourceYear))
+  const year = latestDataYear(data.subjects)
   return (code) => {
     const s = view.subjects[code]
     return !!s && inTopShare(view.subjects, s, 'easy', course, year)

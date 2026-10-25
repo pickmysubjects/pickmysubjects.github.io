@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { viewYear } from '@/engine/dataYear'
 import InfoTip from '@/components/InfoTip.vue'
 import { computed, shallowRef } from 'vue'
 import { ArrowLeft, ExternalLink, Route } from 'lucide-vue-next'
@@ -17,7 +18,7 @@ const { t } = useI18n()
 
 const major = computed(() => data.value.components.find((c) => c.id === props.id))
 const overview = computed(() => (major.value ? majorOverview(data.value, major.value.id, major.value.course) : null))
-const year = computed(() => plan.terms.value[0]?.year ?? new Date().getFullYear())
+const year = computed(() => viewYear(plan.terms.value[0]?.year))
 const courseTitle = computed(() => data.value.courses.find((c) => c.code === major.value?.course)?.title ?? major.value?.course ?? '')
 
 /** Earlier subjects, split by level, each noting which level-3 subject it leads to. */

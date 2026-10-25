@@ -1,4 +1,4 @@
-import { periodsFor, type PresetName, type Subject } from '@/engine'
+import { factsYear, periodsFor, type PresetName, type Subject } from '@/engine'
 import type { DifficultyLevel } from '@/engine/subjectFit'
 import type { LocaleCode } from '@/i18n/codes'
 import { describeReq } from '@/i18n/format'
@@ -99,9 +99,13 @@ export function subjectPageTitle(t: Translate, s: Subject, locale: string): stri
   return firstThatFits(candidates)
 }
 
-/** "Runs in 2026: Summer, Semester 1." or why it doesn't, as the subject page says it. */
-export function runsLine(t: Translate, s: Subject, year: number, listSep: string): string {
+/**
+ * "Runs in 2026: Summer, Semester 1." or why it doesn't, as the subject page says it. The year
+ * named is the one the facts come from (factsYear), so 2026 timetables never read as 2027's.
+ */
+export function runsLine(t: Translate, s: Subject, wanted: number, listSep: string): string {
   if (s.offerings === 'unknown') return t('seo.notRecorded')
+  const year = factsYear(s, wanted).year
   const periods = periodsFor(s, year)
   return periods.length ? t('seo.runs', { year, periods: periods.map((p) => t(`period.${p}`)).join(listSep) }) : t('seo.notRunning', { year })
 }

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { thisYear as calendarYear } from '@/engine/dataYear'
 import { link } from '@/composables/useView'
 import { computed, shallowRef } from 'vue'
 import { ArrowLeft, ArrowRight, Check } from 'lucide-vue-next'
@@ -40,7 +41,7 @@ const start0 =
     : {}
 const draft = shallowRef<PlanSetup>({ ...props.setup, ...start0 })
 const step = shallowRef(0)
-const thisYear = new Date().getFullYear()
+const thisYear = calendarYear()
 const firstYear = Math.min(thisYear - 2, fromRecord.value?.year ?? thisYear)
 const years = Array.from({ length: thisYear + 1 - firstYear + 1 }, (_, i) => firstYear + i)
 const startFromRecord = computed(
@@ -125,13 +126,13 @@ function finish(): void {
   // And a diploma (or stream) the final choices rule out.
   const dip = diploma.value?.code ?? ''
   const stream = dip && streams.value.some((s) => s.id === draft.value.diplomaStream) ? (draft.value.diplomaStream ?? '') : ''
-  emit('done', { ...draft.value, major2, specialisation: spec, minors: kept, diploma: dip, diplomaStream: stream })
+  emit('done', { ...draft.value, courseYear: draft.value.startYear, commencementYear: draft.value.startYear, major2, specialisation: spec, minors: kept, diploma: dip, diplomaStream: stream })
 }
 
 function chooseCourse(c: Course): void {
   // A new student's start moves to the next term the course takes new students in.
   const start = fromRecord.value ? { year: draft.value.startYear, period: draft.value.startPeriod } : nextEntry(c, { year: draft.value.startYear, period: draft.value.startPeriod })
-  set({ course: c.code, courseYear: c.year, startYear: start.year, startPeriod: start.period, major: '', major2: '', specialisation: '', minors: [], field: '', diploma: '', diplomaStream: '' })
+  set({ course: c.code, courseYear: start.year, startYear: start.year, startPeriod: start.period, major: '', major2: '', specialisation: '', minors: [], field: '', diploma: '', diplomaStream: '' })
 }
 </script>
 

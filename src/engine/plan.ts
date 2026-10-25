@@ -1,4 +1,5 @@
 import type { Period } from './schema'
+import { today } from './dataYear'
 
 export interface PlanTerm {
   year: number
@@ -109,6 +110,43 @@ export function planStart(
   }
   const after = semesterAfter(latest)
   return termOrder(after) > termOrder(start) ? after : start
+}
+
+/** Roughly when each teaching period starts and ends (month 0–11, day). */
+const STARTS: Record<Period, [number, number]> = { summer: [0, 1], 'semester-1': [1, 24], winter: [5, 30], 'semester-2': [6, 21] }
+const ENDS: Record<Period, [number, number]> = { summer: [1, 15], 'semester-1': [5, 25], winter: [6, 18], 'semester-2': [10, 25] }
+
+/** Whether a term is still ahead of `now` (it hasn't started yet). */
+export function isUpcoming(term: { year: number; period: Period }, now: Date = today()): boolean {
+  const [m, d] = STARTS[term.period]
+  return new Date(term.year, m, d) > now
+}
+
+/** Whether a term is over by `now` (its exams are done). */
+export function hasEnded(term: { year: number; period: Period }, now: Date = today()): boolean {
+  const [m, d] = ENDS[term.period]
+  return new Date(term.year, m, d) < now
+}
+
+/** The first semester (1 or 2) that hasn't started yet. */
+export function firstUpcomingSemester(now: Date = today()): { year: number; period: Period } {
+  const y = now.getFullYear()
+  const choices: { year: number; period: Period }[] = [
+    { year: y, period: 'semester-1' },
+    { year: y, period: 'semester-2' },
+    { year: y + 1, period: 'semester-1' },
+  ]
+  return choices.find((t) => isUpcoming(t, now)) ?? choices[2]!
+}
+
+/**
+ * Where new subjects can go: `start`, or the first semester still ahead if `start` has already
+ * begun. A plan never puts new subjects into a semester that is under way or over.
+ */
+export function upcomingStart(start: { year: number; period: Period }, now: Date = today()): { year: number; period: Period } {
+  if (isUpcoming(start, now)) return start
+  const next = firstUpcomingSemester(now)
+  return termOrder(next) > termOrder(start) ? next : start
 }
 
 export function termLabel(term: Pick<PlanTerm, 'year' | 'period'>): string {

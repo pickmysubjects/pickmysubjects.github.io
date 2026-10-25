@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { viewYear } from '@/engine/dataYear'
 import InfoTip from '@/components/InfoTip.vue'
 import { computed, shallowRef, watch } from 'vue'
 import { ArrowLeft, BadgeCheck, ExternalLink, GraduationCap } from 'lucide-vue-next'
@@ -20,7 +21,7 @@ const { t, locale } = useI18n()
 const target = computed(() => careerTarget(data.value, props.id))
 const majors = computed(() => majorsForCareer(data.value, props.id))
 const courseTitle = (code: string) => data.value.courses.find((c) => c.code === code)?.title ?? code
-const year = computed(() => plan.terms.value[0]?.year ?? new Date().getFullYear())
+const year = computed(() => viewYear(plan.terms.value[0]?.year))
 
 // The chosen major: from the address (?major=), else the plan's own major when it leads here, else the first.
 const picked = shallowRef(query.value.get('major') ?? '')

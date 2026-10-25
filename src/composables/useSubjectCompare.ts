@@ -1,3 +1,4 @@
+import { viewYear } from '@/engine/dataYear'
 import { computed, type Ref } from 'vue'
 import {
   exactWam,
@@ -51,7 +52,7 @@ export function useSubjectCompare(codes: Ref<string[]>) {
   const plan = usePlan()
   // As the subject page: the plan's degree (else the one the data shows) and first planned year.
   const course = computed(() => plan.setup.value.course || listCourse.value)
-  const year = computed(() => plan.terms.value[0]?.year ?? new Date().getFullYear())
+  const year = computed(() => viewYear(plan.terms.value[0]?.year))
   const hasProfile = computed(() => hasFitProfile(profile.value))
 
   const columns = computed<CompareColumn[]>(() =>

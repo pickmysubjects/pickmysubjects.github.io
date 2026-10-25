@@ -5,7 +5,7 @@ import { careerGoal } from './careerGoal'
 import { evaluateField, referencedSubjects, type EvalContext, type Tri } from './expr'
 import type { Note, Params, Plan, PlanTerm } from './plan'
 import { nextEntry, standardTerms } from './plan'
-import { HEAVY_PICK_COST, exactWam, marksForConditions, passedCodes, recommend, type Profile } from './recommend'
+import { HEAVY_PICK_COST, exactWam, isFail, marksForConditions, passedCodes, recommend, type Profile } from './recommend'
 import { checkTerms } from './planCheck'
 import { balanceTerms, fixHeavyTerms } from './relieve'
 import { skillsOf, termStress, weakSkills, type StressLevel } from './termStress'
@@ -74,6 +74,16 @@ export function generatePlan(given: GenerateInput): GenerateResult {
   const moved = entry.year !== given.startYear || entry.period !== given.startPeriod
   const result = generateFrom({ ...given, startYear: entry.year, startPeriod: entry.period })
   if (moved) result.notes.unshift(note('entryMoved', { year: entry.year, period: entry.period }, `This degree takes new students only in some semesters, so the plan starts in ${entry.period} ${entry.year}.`))
+  // More points than the degree's total: surplus electives were already trimmed (buildPlan), so
+  // what's left is needed by a rule or as a prerequisite. Say why, so it doesn't look like a mistake.
+  if (course) {
+    const pointsOf = (c: string) => given.data.subjects[c]?.points ?? 12.5
+    const total = [...result.plan.completed, ...result.plan.terms.flatMap((t) => t.subjects)].reduce((sum, c) => sum + pointsOf(c), 0)
+    const extra = total - course.totalPoints
+    if (extra > 0 && result.plan.terms.some((t) => t.subjects.length)) {
+      result.notes.push(note('overTotal', { points: total, extra, total: course.totalPoints }, `This plan comes to ${total} points, ${extra} over the usual ${course.totalPoints}: some subjects already done don't count towards these rules, so every planned subject is needed.`))
+    }
+  }
   return result
 }
 
@@ -390,6 +400,17 @@ function buildPlan(given: GenerateInput): GenerateResult {
     n.text = n.text.replace(was, `${where.year} ${where.period}`)
   }
   const placed = allPlaced()
+  // A subject failed on the record and planned again is a retake, not something new.
+  const failedBefore = new Set(profile.results.filter((r) => isFail(r) && !done.has(r.code)).map((r) => r.code))
+  for (const code of placed.filter((c) => failedBefore.has(c))) {
+    const at = notes.findIndex((n) => n.key === 'prereqAdded' && n.params.code === code)
+    const why = at >= 0 ? (notes[at]!.params.for as string) : undefined
+    const retake = why
+      ? note('retakeFor', { code, for: why }, `Retake ${code} (not passed last time): ${why} needs it.`)
+      : note('retake', { code }, `Retake ${code} (not passed last time).`)
+    if (at >= 0) notes.splice(at, 1, retake)
+    else notes.push(retake)
+  }
   // A required subject whose mark condition the record already fails ("75 in MUSI10221" with a
   // 60): it's still the way the degree goes, so it stays planned, with a warning to talk to the
   // coordinator (or retake) first.

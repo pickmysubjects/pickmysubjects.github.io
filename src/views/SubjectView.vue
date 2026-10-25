@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { viewYear } from '@/engine/dataYear'
 import { link } from '@/composables/useView'
 import { computed, nextTick, shallowRef } from 'vue'
 import { ArrowLeft } from 'lucide-vue-next'
@@ -34,7 +35,7 @@ const { t, locale } = useI18n()
 const code = computed(() => props.code.toUpperCase())
 // With its long text (about, discussion) once that has loaded; the rest shows straight away.
 const { subject, ready: detailReady, takenWith } = useSubjectDetail(code)
-const year = computed(() => plan.terms.value[0]?.year ?? new Date().getFullYear())
+const year = computed(() => viewYear(plan.terms.value[0]?.year))
 const have = computed(() => new Set([...plan.plannedCodes.value, ...plan.plan.value.completed]))
 // What it leads to, the ones in the student's plan first, then by level and code.
 const unlocks = computed(() =>

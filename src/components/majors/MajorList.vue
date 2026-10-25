@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { thisYear } from '@/engine/dataYear'
 import InfoTip from '@/components/InfoTip.vue'
 import DegreeBadge from '@/components/browse/DegreeBadge.vue'
 import { computed, shallowRef } from 'vue'
@@ -26,26 +27,26 @@ const basedNote = computed(() => {
 })
 // Majors closed to new students aren't listed (their pages still open from an existing plan).
 const majors = computed(() =>
-  data.value.components.filter((c) => c.course === course.value && c.kind === 'major' && (c.closedFrom === undefined || new Date().getFullYear() < c.closedFrom)),
+  data.value.components.filter((c) => c.course === course.value && c.kind === 'major' && (c.closedFrom === undefined || thisYear() < c.closedFrom)),
 )
 // The course's minors (a smaller, optional study area), listed under the majors.
 const minors = computed(() =>
   data.value.components
-    .filter((c) => c.course === course.value && c.kind === 'minor' && (c.closedFrom === undefined || new Date().getFullYear() < c.closedFrom))
+    .filter((c) => c.course === course.value && c.kind === 'minor' && (c.closedFrom === undefined || thisYear() < c.closedFrom))
     .filter((c) => !query.value.trim() || c.title.toLowerCase().includes(query.value.trim().toLowerCase()))
     .sort((a, b) => a.title.localeCompare(b.title)),
 )
 // Its informal specialisations (B-DES), listed the same way under their own heading.
 const informals = computed(() =>
   data.value.components
-    .filter((c) => c.course === course.value && c.informal && (c.closedFrom === undefined || new Date().getFullYear() < c.closedFrom))
+    .filter((c) => c.course === course.value && c.informal && (c.closedFrom === undefined || thisYear() < c.closedFrom))
     .filter((c) => !query.value.trim() || c.title.toLowerCase().includes(query.value.trim().toLowerCase()))
     .sort((a, b) => a.title.localeCompare(b.title)),
 )
 // Its formal specialisations (taken with a major that allows them), likewise.
 const specs = computed(() =>
   data.value.components
-    .filter((c) => c.course === course.value && c.kind === 'specialisation' && !c.informal && (c.closedFrom === undefined || new Date().getFullYear() < c.closedFrom))
+    .filter((c) => c.course === course.value && c.kind === 'specialisation' && !c.informal && (c.closedFrom === undefined || thisYear() < c.closedFrom))
     .filter((c) => !query.value.trim() || c.title.toLowerCase().includes(query.value.trim().toLowerCase()))
     .sort((a, b) => a.title.localeCompare(b.title)),
 )

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { viewYear } from '@/engine/dataYear'
 import InfoTip from '@/components/InfoTip.vue'
 import { computed, shallowRef } from 'vue'
 import { Heart, Link2, Share2 } from 'lucide-vue-next'
@@ -16,7 +17,7 @@ const { query } = useView()
 const { data } = useDataset()
 const plan = usePlan()
 const shortlist = useShortlist()
-const year = computed(() => plan.terms.value[0]?.year ?? new Date().getFullYear())
+const year = computed(() => viewYear(plan.terms.value[0]?.year))
 
 // Picked subjects live in the address, so a comparison can be shared as a link.
 const picked = computed(() => compareFromQuery(query.value.get('compare')).filter((c) => data.value.subjects[c]))

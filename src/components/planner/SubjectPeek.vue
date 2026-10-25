@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { link } from '@/composables/useView'
-import { handbookUrl } from '@/utils/links'
+import { useDataYear } from '@/composables/useDataYear'
+import FactsYearNote from '@/components/subject/FactsYearNote.vue'
 import { computed, onMounted, shallowRef, toRef, useTemplateRef } from 'vue'
 import { ArrowRightLeft, BookOpen, CalendarRange, CheckCheck, ExternalLink, X } from 'lucide-vue-next'
 import { localTitle } from '@/i18n/localized'
-import { alternativeGroups, periodsFor, prerequisiteRoute, referencedSubjects, simplifyFor, type Subject } from '@/engine'
+import { alternativeGroups, knownNotRunning, periodsFor, prerequisiteRoute, referencedSubjects, simplifyFor, type Subject } from '@/engine'
 import AssessmentPanel from '@/components/subject/AssessmentPanel.vue'
 import MajorRoles from '@/components/subject/MajorRoles.vue'
 import WamWhatIf from '@/components/profile/WamWhatIf.vue'
@@ -63,6 +64,8 @@ const dialog = useTemplateRef<HTMLDialogElement>('dialog')
 onMounted(() => dialog.value?.showModal())
 
 const periods = computed(() => (props.subject ? periodsFor(props.subject, props.year) : []))
+const { facts, handbookFor } = useDataYear()
+const factsFrom = computed(() => (props.subject ? facts(props.subject, props.year) : null))
 const category = computed(() => categoryTag(t.value, props.subject?.categories[props.course]))
 const ratings = computed(() => {
   const s = props.subject?.signals
@@ -135,7 +138,7 @@ function onClick(event: MouseEvent): void {
         <div class="peek-head-main">
           <p class="peek-code-row">
             <span class="code peek-code">{{ code }}</span>
-            <a class="peek-hb" :href="handbookUrl(code)" target="_blank" rel="noopener"><BookOpen :size="14" aria-hidden="true" /> Handbook</a>
+            <a class="peek-hb" :href="handbookFor(code, year)" target="_blank" rel="noopener"><BookOpen :size="14" aria-hidden="true" /> Handbook</a>
           </p>
           <h2 class="peek-title">{{ local || subject?.title || t('plan.notInDataset') }}</h2>
           <p v-if="local" class="peek-title-en">{{ subject?.title }}</p>
@@ -146,11 +149,12 @@ function onClick(event: MouseEvent): void {
             <span class="chip">
               <CalendarRange :size="14" aria-hidden="true" />
               <template v-if="subject.offerings === 'unknown'">{{ t('subject.runsUnknown') }}</template>
-              <template v-else-if="periods.length === 0">{{ t('subject.notRunning') }}</template>
+              <template v-else-if="periods.length === 0">{{ knownNotRunning(subject, year) ? t('subject.notRunning') : t('subject.runsUnknown') }}</template>
               <template v-else-if="subject.yearLong">{{ t('plan.yearLongRuns') }}</template>
               <template v-else>{{ periods.map((p) => t(`period.${p}`)).join(' · ') }}</template>
             </span>
           </p>
+          <FactsYearNote v-if="factsFrom?.older" :year="factsFrom.year" />
         </div>
         <button class="peek-close" type="button" :aria-label="t('subject.close')" @click="dialog?.close()">
           <X :size="18" aria-hidden="true" />
@@ -173,7 +177,7 @@ function onClick(event: MouseEvent): void {
             <p>{{ describeReq(t, subject.prerequisites, course) }}</p>
             <ul v-if="needCodes.length" class="peek-list">
               <li v-for="c in needCodes" :key="c">
-                <a v-if="!subjects[c]" class="peek-row" :href="handbookUrl(c)" target="_blank" rel="noopener">
+                <a v-if="!subjects[c]" class="peek-row" :href="handbookFor(c, year)" target="_blank" rel="noopener">
                   <span class="code">{{ c }}</span>
                   <span class="peek-row-title muted">{{ t('subject.notYetAdded') }}</span>
                 </a>
@@ -195,7 +199,7 @@ function onClick(event: MouseEvent): void {
                 <h4 class="peek-route-level">{{ level ? t('subject.level', { level }) : t('plan.notInDataset') }}</h4>
                 <ul class="peek-list">
                   <li v-for="c in codes" :key="c">
-                    <a v-if="!subjects[c]" class="peek-row" :href="handbookUrl(c)" target="_blank" rel="noopener">
+                    <a v-if="!subjects[c]" class="peek-row" :href="handbookFor(c, year)" target="_blank" rel="noopener">
                       <span class="code">{{ c }}</span>
                       <span class="peek-row-title muted">{{ t('subject.notYetAdded') }}</span>
                     </a>

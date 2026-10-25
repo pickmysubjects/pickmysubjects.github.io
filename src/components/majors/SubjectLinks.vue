@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, shallowRef } from 'vue'
 import { ChevronRight, ExternalLink } from 'lucide-vue-next'
-import { handbookUrl } from '@/utils/links'
+import { useDataYear } from '@/composables/useDataYear'
 import { periodsFor } from '@/engine'
 import { link } from '@/composables/useView'
 import { useDataset } from '@/composables/useDataset'
@@ -13,6 +13,7 @@ const props = defineProps<{ codes: string[]; year: number; notes?: Record<string
 // A long list starts short; the rest is one tap away.
 const expanded = shallowRef(false)
 const { data } = useDataset()
+const { handbookFor } = useDataYear()
 const { t, locale } = useI18n()
 
 const visible = computed(() => (props.limit && !expanded.value ? props.codes.slice(0, props.limit) : props.codes))
@@ -38,7 +39,7 @@ const rows = computed(() =>
       <a
         class="row"
         :class="{ 'row-missing': r.missing }"
-        :href="r.missing ? handbookUrl(r.code) : link(`subject/${r.code}`)"
+        :href="r.missing ? handbookFor(r.code, year) : link(`subject/${r.code}`)"
         :target="r.missing ? '_blank' : undefined"
         :rel="r.missing ? 'noopener' : undefined"
       >

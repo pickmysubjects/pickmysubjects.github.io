@@ -66,7 +66,10 @@ export function discussionLinks(code: string, locale = 'en'): OutboundLink[] {
   return [...(BY_LOCALE[locale]?.(code) ?? []), ...english]
 }
 
-/** A subject's page in the University's Handbook (the current year's). */
-export function handbookUrl(code: string, year = new Date().getFullYear()): string {
+/**
+ * A subject's page in the University's Handbook for a given year: the year its facts come from
+ * (see factsYear in engine/dataYear), never a Handbook year that isn't out yet.
+ */
+export function handbookUrl(code: string, year: number): string {
   return `https://handbook.unimelb.edu.au/${year}/subjects/${code.toLowerCase()}`
 }

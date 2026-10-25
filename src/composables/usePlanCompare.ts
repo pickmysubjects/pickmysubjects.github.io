@@ -1,6 +1,6 @@
 import { computed, type Ref } from 'vue'
 import { checkCourse, comparePlans, findDiploma, informalPicks, planComponentIds, planRules, findCourse, forCourse, planRoles, planStress, requiredWithPrerequisites, termLoad, termsWithCarried, type Dataset, type RuleStatus } from '@/engine'
-import type { PlanSetup } from './planStore'
+import { commencementYear, type PlanSetup } from './planStore'
 import { useDataset } from './useDataset'
 import { useProfile } from './useProfile'
 import { planFor } from './usePlan'
@@ -51,7 +51,7 @@ export function usePlanCompare(a: Ref<PlanEntry | undefined>, b: Ref<PlanEntry |
     const data = forCourse(all, setup.course)
     const plan = planFor(entry.state, profile, data)
     const codes = terms.flatMap((t) => t.subjects)
-    const roles = planRoles(data, setup.course, setup.courseYear, planComponentIds(setup).filter((id): id is string => !!id))
+    const roles = planRoles(data, setup.course, commencementYear(setup, stored.value.results), planComponentIds(setup).filter((id): id is string => !!id))
     const fixed = requiredWithPrerequisites(new Set([...roles.required, ...roles.options]), codes, data.subjects, setup.course)
     const levels = planStress(termsWithCarried(terms, data), data, profile, fixed, setup.course).terms.map((s) => s.level)
     const statuses = checkCourse(plan, data).statuses
@@ -59,7 +59,7 @@ export function usePlanCompare(a: Ref<PlanEntry | undefined>, b: Ref<PlanEntry |
     const diploma = diplomaTitle(data, setup)
     const summary: CompareSummary = {
       entry,
-      courseTitle: findCourse(data, setup.course, setup.courseYear)?.title ?? setup.course,
+      courseTitle: findCourse(data, setup.course, commencementYear(setup, stored.value.results))?.title ?? setup.course,
       major,
       minor,
       minorInformal,

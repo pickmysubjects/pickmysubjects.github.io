@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { viewYear } from '@/engine/dataYear'
 import InfoTip from '@/components/InfoTip.vue'
 import DegreeBadge from '@/components/browse/DegreeBadge.vue'
 import DegreePick from '@/components/browse/DegreePick.vue'
@@ -41,7 +42,7 @@ const { profile } = useProfile()
 const plan = usePlan()
 
 const course = computed(() => plan.setup.value.course || 'B-SCI')
-const year = computed(() => plan.terms.value[0]?.year ?? new Date().getFullYear())
+const year = computed(() => viewYear(plan.terms.value[0]?.year))
 
 // A quick choice's own address (/subjects/no-exam/, /subjects/easy/) opens with it chosen.
 const filters = shallowRef(filtersFromQuery(query.value, param.value))

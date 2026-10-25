@@ -22,6 +22,7 @@ const { t } = useI18n()
       </ol>
       <p class="note">{{ t('guide.enrolDraft') }}</p>
       <p class="note">{{ t('guide.enrolWhen') }}</p>
+      <p class="note">{{ t('guide.newHandbook') }}</p>
       <p class="note">
         {{ t('guide.reenrolShort') }}<InfoTip>{{ t('guide.reenrolMore') }} <a :href="URLS.REENROL" target="_blank" rel="noopener">{{ t('guide.reenrolLink') }}<ExternalLink :size="13" aria-hidden="true" /></a></InfoTip>
       </p>
