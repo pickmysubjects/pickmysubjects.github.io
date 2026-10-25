@@ -331,8 +331,8 @@ export const zhTW: Messages = {
     likedBefore: "和你評價不錯的 {codes} 方向相近。",
     averagedLow: '依你在相近課程（{codes}）的成績，預計只有 {mark} 分左右，可能會比較吃力。',
     recommendedFirst: "Handbook 建議先修 {codes}（不是硬性要求）。",
-    predictedRange: '依你在相近課程（{codes}）的成績，預計 {low}–{high} 分。',
-    predictedWam: "按你目前的成績，預計 {low}–{high} 分。",
+    predictedRange: '依你在相近課程（{codes}）的成績，有一半把握在 {low}–{high} 分。',
+    predictedWam: "按你目前的成績，有一半把握在 {low}–{high} 分。",
     continues: "接著你修過的 {codes} 往下學。",
     gradesAbove: '{n} 位分享成績的同學在這門課比自己的 WAM 平均高約 {by} 分。',
     gradesBelow: '{n} 位分享成績的同學在這門課比自己的 WAM 平均低約 {by} 分。',
@@ -788,6 +788,7 @@ export const zhTW: Messages = {
     ahead: "這是 {level} 級的課，一般第 {level} 年修，這裡按你到那時能選的課來比較。",
     aheadGraduate: "這是研究生（9 級）課程，大學部學生一般在第 3 年、滿足先修和學院許可後才能選。",
     betterThan: "比你 {n}% 的可選課程更適合",
+    rangeInfo: "依你自己成績的起伏估算：大約一半時候分數落在這個範圍裡，一半在外面。僅供參考，不是保證。",
     basis: {
       lead: "依據：{parts}。",
       marks: "{n} 門成績",

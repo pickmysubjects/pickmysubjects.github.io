@@ -331,8 +331,8 @@ export const vi: Messages = {
     likedBefore: "Gần với {codes}, môn bạn đánh giá tốt.",
     averagedLow: 'Theo điểm các môn tương tự ({codes}), dự kiến chỉ khoảng {mark}, nên môn này có thể khó.',
     recommendedFirst: "Handbook khuyên học {codes} trước (không bắt buộc).",
-    predictedRange: 'Theo điểm các môn tương tự ({codes}), dự kiến {low}–{high}.',
-    predictedWam: "Theo điểm của bạn đến nay, dự kiến {low}–{high}.",
+    predictedRange: 'Theo điểm các môn tương tự ({codes}), khả năng 1/2 bạn được {low}–{high}.',
+    predictedWam: "Theo điểm của bạn đến nay, khả năng 1/2 bạn được {low}–{high}.",
     continues: "Bước tiếp theo sau {codes} mà bạn đã học.",
     gradesAbove: '{n} sinh viên chia sẻ điểm đạt cao hơn WAM của họ khoảng {by} điểm ở môn này.',
     gradesBelow: '{n} sinh viên chia sẻ điểm đạt thấp hơn WAM của họ khoảng {by} điểm ở môn này.',
@@ -788,6 +788,7 @@ export const vi: Messages = {
     ahead: "Môn cấp {level}, thường học năm {level}: so với các môn bạn có thể học vào lúc đó.",
     aheadGraduate: "Đây là môn sau đại học (cấp 9): sinh viên đại học thường học vào năm 3, khi đã đủ môn tiên quyết và được khoa cho phép.",
     betterThan: "Hợp hơn {n}% các môn bạn có thể chọn",
+    rangeInfo: "Tính theo độ dao động điểm của chính bạn: khoảng một nửa số lần điểm rơi vào khoảng này, một nửa nằm ngoài. Chỉ để tham khảo, không phải cam kết.",
     basis: {
       lead: "Dựa trên {parts}",
       marks: "{n} điểm môn",

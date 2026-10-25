@@ -334,8 +334,8 @@ export const en = {
     likedBefore: "Close to {codes}, which you rated well.",
     averagedLow: 'Your marks in similar subjects ({codes}) point to about {mark}, so this may be tough.',
     recommendedFirst: "The Handbook recommends {codes} first (not required).",
-    predictedRange: 'Likely {low}–{high}, from your marks in similar subjects ({codes}).',
-    predictedWam: "Likely {low}–{high}, from your marks so far.",
+    predictedRange: '1 in 2 chance of {low}–{high}, from your marks in similar subjects ({codes}).',
+    predictedWam: "1 in 2 chance of {low}–{high}, from your marks so far.",
     continues: "The next step after {codes}, which you've done.",
     gradesAbove: '{n} students who shared their grades did about {by} marks better here than their WAM.',
     gradesBelow: '{n} students who shared their grades did about {by} marks worse here than their WAM.',
@@ -791,6 +791,7 @@ export const en = {
     ahead: "A level-{level} subject, usually taken in year {level}: judged against what you could take by then.",
     aheadGraduate: "A graduate (level-9) subject: undergraduates usually take it in year 3, once they meet the prerequisites and have the faculty's permission.",
     betterThan: "Better fit than {n}% of your options",
+    rangeInfo: "Going by how much your own marks vary, about half the time a mark lands in this range and half the time outside it. Guidance, not a promise.",
     basis: {
       lead: "Based on {parts}",
       marks: "{n} marks",

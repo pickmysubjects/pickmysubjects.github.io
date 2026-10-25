@@ -2,6 +2,7 @@
 import { computed, toRef } from 'vue'
 import { Check, CircleMinus, Info, Minus, Plus, ThumbsUp, TriangleAlert } from 'lucide-vue-next'
 import { fitBasis, whyNotFit, type Subject } from '@/engine'
+import InfoTip from '@/components/InfoTip.vue'
 import RowWarnings from '@/components/browse/RowWarnings.vue'
 import { link } from '@/composables/useView'
 import { useDataset } from '@/composables/useDataset'
@@ -25,6 +26,8 @@ const { difficulty, hasProfile, fit, course, ahead, graduate } = useSubjectFit(
 )
 
 type Tone = 'good' | 'neutral' | 'warn'
+// Reasons that give the likely-mark range: an ⓘ says what the range means.
+const RANGE_KEYS = new Set(['predictedRange', 'predictedWam'])
 const trim = (s: string) => s.replace(/[。.]\s*$/, '')
 const courseTitle = computed(() => data.value.courses.find((c) => c.code === course.value)?.title ?? course.value)
 
@@ -68,7 +71,7 @@ const fitHeadline = computed(() => {
   if (w.key === 'needsFirst') return t.value('fit.out.needsFirst', { needs: trim(describeReq(t.value, props.subject.prerequisites, course.value)) })
   return t.value(`fit.out.${w.key}`, { codes: (w.codes ?? []).join(t.value('listSep')), level: w.level ?? '' })
 })
-const suitsItems = computed(() => (fit.value?.kind === 'fit' ? fit.value.reasons.map((n) => trim(reasonText(t.value, n))) : []))
+const suitsItems = computed(() => (fit.value?.kind === 'fit' ? fit.value.reasons.map((n) => ({ text: trim(reasonText(t.value, n)), range: RANGE_KEYS.has(n.key) })) : []))
 const cautions = computed(() =>
   (fit.value && fit.value.kind !== 'missing' ? fit.value.cautions : []).map((c) =>
     c.key === 'closed' ? t.value('browse.closedForYou') : t.value('fit.notThisYear', { year: c.year }),
@@ -167,7 +170,9 @@ const hasLists = computed(() => easierItems.value.length + harderItems.value.len
         <div v-if="suitsItems.length" class="group">
           <h3 class="group-title">{{ weak ? t('fit.worksGroup') : t('fit.suitsGroup') }}</h3>
           <ul class="items">
-            <li v-for="r in suitsItems" :key="r" class="item item-good"><Check :size="14" aria-hidden="true" />{{ r }}</li>
+            <li v-for="r in suitsItems" :key="r.text" class="item item-good">
+              <Check :size="14" aria-hidden="true" /><span>{{ r.text }}<InfoTip v-if="r.range" :text="t('fit.rangeInfo')" /></span>
+            </li>
           </ul>
         </div>
         <div v-if="hasWatch" class="group">

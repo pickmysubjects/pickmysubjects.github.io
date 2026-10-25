@@ -331,8 +331,8 @@ export const id: Messages = {
     likedBefore: "Mirip dengan {codes}, yang kamu nilai bagus.",
     averagedLow: 'Dari nilaimu di mata kuliah serupa ({codes}), perkiraannya hanya sekitar {mark}, jadi ini mungkin berat.',
     recommendedFirst: "Handbook menyarankan {codes} terlebih dahulu (tidak wajib).",
-    predictedRange: 'Dari nilaimu di mata kuliah serupa ({codes}), perkiraannya {low}–{high}.',
-    predictedWam: "Dari nilaimu sejauh ini, perkiraan {low}–{high}.",
+    predictedRange: 'Dari nilaimu di mata kuliah serupa ({codes}), peluangnya 1 dari 2 untuk dapat {low}–{high}.',
+    predictedWam: "Dari nilaimu sejauh ini, peluangnya 1 dari 2 untuk dapat {low}–{high}.",
     continues: "Langkah berikutnya setelah {codes} yang sudah kamu ambil.",
     gradesAbove: '{n} mahasiswa yang berbagi nilai mendapat sekitar {by} poin lebih tinggi dari WAM mereka di sini.',
     gradesBelow: '{n} mahasiswa yang berbagi nilai mendapat sekitar {by} poin lebih rendah dari WAM mereka di sini.',
@@ -788,6 +788,7 @@ export const id: Messages = {
     ahead: "Mata kuliah level {level}, biasanya diambil di tahun ke-{level}: dibandingkan dengan pilihan yang bisa kamu ambil saat itu.",
     aheadGraduate: "Mata kuliah pascasarjana (level 9): mahasiswa S1 biasanya mengambilnya di tahun 3, setelah memenuhi prasyarat dan mendapat izin fakultas.",
     betterThan: "Lebih cocok daripada {n}% pilihanmu",
+    rangeInfo: "Dihitung dari naik-turunnya nilaimu sendiri: kira-kira separuh kali nilaimu jatuh di rentang ini, separuh lagi di luar. Hanya panduan, bukan janji.",
     basis: {
       lead: "Berdasarkan {parts}",
       marks: "{n} nilai",

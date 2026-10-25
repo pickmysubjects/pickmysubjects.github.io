@@ -331,8 +331,8 @@ export const ms: Messages = {
     likedBefore: "Hampir dengan {codes}, yang anda nilai baik.",
     averagedLow: 'Berdasarkan markah subjek serupa ({codes}), dijangka sekitar {mark} sahaja, jadi ini mungkin mencabar.',
     recommendedFirst: "Handbook mengesyorkan {codes} dahulu (tidak wajib).",
-    predictedRange: 'Berdasarkan markah subjek serupa ({codes}), dijangka {low}–{high}.',
-    predictedWam: "Berdasarkan markah anda setakat ini, dijangka {low}–{high}.",
+    predictedRange: 'Berdasarkan markah subjek serupa ({codes}), peluang 1 dalam 2 untuk dapat {low}–{high}.',
+    predictedWam: "Berdasarkan markah anda setakat ini, peluang 1 dalam 2 untuk dapat {low}–{high}.",
     continues: "Langkah seterusnya selepas {codes} yang sudah anda ambil.",
     gradesAbove: '{n} pelajar yang berkongsi gred mendapat kira-kira {by} markah lebih tinggi daripada WAM mereka di sini.',
     gradesBelow: '{n} pelajar yang berkongsi gred mendapat kira-kira {by} markah lebih rendah daripada WAM mereka di sini.',
@@ -788,6 +788,7 @@ export const ms: Messages = {
     ahead: "Subjek tahap {level}, biasanya diambil pada tahun {level}: dibandingkan dengan subjek yang boleh anda ambil ketika itu.",
     aheadGraduate: "Subjek pascasiswazah (tahap 9): pelajar sarjana muda biasanya mengambilnya pada tahun 3, selepas memenuhi prasyarat dan mendapat kebenaran fakulti.",
     betterThan: "Lebih sesuai daripada {n}% pilihan anda",
+    rangeInfo: "Dikira daripada turun naik markah anda sendiri: kira-kira separuh masa markah jatuh dalam julat ini, separuh lagi di luar. Panduan sahaja, bukan janji.",
     basis: {
       lead: "Berdasarkan {parts}",
       marks: "{n} markah",

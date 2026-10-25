@@ -683,7 +683,8 @@ function score(s: Subject, ctx: ScoreCtx): Recommendation {
   }
 
   // Predicted performance from the student's own marks in similar subjects (see predict.ts),
-  // else their overall WAM. Always said as a range once there are marks to go on.
+  // else their overall WAM. Always said as a range once there are marks to go on: the mark lands
+  // inside it about 1 time in 2 (RANGE_SHARE).
   const guess = ctx.marks.size ? predictMark(s, ctx.marks, ctx.data) : null
   if (guess) {
     const m = guess.mark
@@ -694,10 +695,10 @@ function score(s: Subject, ctx: ScoreCtx): Recommendation {
     detail.predicted = params
     const wam = ctx.wam ?? m
     // Nothing related to go on: it's the student's overall level, and said as that.
-    if (!guess.basis.length) reasons.push(note('predictedWam', params, `Likely ${params.low}–${params.high}, from your marks so far.`))
+    if (!guess.basis.length) reasons.push(note('predictedWam', params, `1 in 2 chance of ${params.low}–${params.high}, from your marks so far.`))
     else if (m >= 75 || m >= wam + 3) reasons.push(note('averagedHigh', params, `Your marks in similar subjects (${params.codes}) point to about ${params.mark}.`))
     else if (m < 55 || m <= wam - 5) warnings.push(note('averagedLow', params, `Your marks in similar subjects (${params.codes}) point to about ${params.mark}, so this may be tough.`))
-    else reasons.push(note('predictedRange', params, `Likely ${params.low}–${params.high}, from your marks in similar subjects.`))
+    else reasons.push(note('predictedRange', params, `1 in 2 chance of ${params.low}–${params.high}, from your marks in similar subjects.`))
   } else if (ctx.wam !== null) {
     parts.predicted = clamp((ctx.wam - 50) / 50)
     detail.predicted = { wam: ctx.wam }

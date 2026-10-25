@@ -331,8 +331,8 @@ export const ko: Messages = {
     likedBefore: "좋게 평가한 {codes}와 비슷한 분야예요.",
     averagedLow: '비슷한 과목({codes}) 성적으로 보면 {mark}점 정도라 어려울 수 있어요.',
     recommendedFirst: "Handbook은 {codes}를 먼저 듣길 권장해요(필수 아님).",
-    predictedRange: '비슷한 과목({codes}) 성적으로 보면 {low}–{high}점이 예상돼요.',
-    predictedWam: "지금까지 성적으로 보면 {low}–{high}점 정도예요.",
+    predictedRange: '비슷한 과목({codes}) 성적으로 보면 두 번에 한 번은 {low}–{high}점이에요.',
+    predictedWam: "지금까지 성적으로 보면 두 번에 한 번은 {low}–{high}점이에요.",
     continues: "이미 들은 {codes}의 다음 단계예요.",
     gradesAbove: '성적을 공유한 {n}명은 이 과목에서 자기 WAM보다 평균 약 {by}점 높았어요.',
     gradesBelow: '성적을 공유한 {n}명은 이 과목에서 자기 WAM보다 평균 약 {by}점 낮았어요.',
@@ -788,6 +788,7 @@ export const ko: Messages = {
     ahead: "레벨 {level} 과목으로 보통 {level}학년에 들어요. 그때 들을 수 있는 과목과 비교했어요.",
     aheadGraduate: "대학원(9단계) 과목입니다. 학부생은 보통 3학년에 선수과목을 마치고 학부 허가를 받은 뒤 들을 수 있습니다.",
     betterThan: "선택 가능한 과목의 {n}%보다 잘 맞아요",
+    rangeInfo: "내 성적이 얼마나 오르내리는지로 계산했어요. 절반 정도는 이 범위 안에, 절반은 밖에 나와요. 참고용이지 보장은 아니에요.",
     basis: {
       lead: "근거: {parts}. ",
       marks: "성적 {n}개",

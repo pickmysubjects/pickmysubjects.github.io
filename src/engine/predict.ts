@@ -4,7 +4,7 @@ import type { Dataset, Subject } from './schema'
 export interface MarkPrediction {
   /** Expected mark, 0–100. */
   mark: number
-  /** Likely range: wider when the evidence is thin or the student's marks vary. */
+  /** Likely range: the mark lands inside it about RANGE_SHARE of the time; wider when the student's marks vary or there are few. */
   low: number
   high: number
   /** The marked subjects it is based on. */
@@ -15,6 +15,16 @@ export interface MarkPrediction {
 const WAM_WEIGHT = 2
 /** A same-area subject counts for this much of a prerequisite. */
 const SAME_AREA_WEIGHT = 0.6
+/**
+ * What the likely range means: the actual mark lands inside it about this often ("1 in 2"), and
+ * the z that gives it for a normal error (the 75th percentile). Set by that meaning, not tuned.
+ */
+export const RANGE_SHARE = 0.5
+const RANGE_Z = 0.6745
+/** How far marks usually stray from a student's own level, in marks (the grade model's spread). */
+const USUAL_SPREAD = 8
+/** A student's own spread counts as if the usual one came with this many marks of its own. */
+const SPREAD_PRIOR_MARKS = 4
 
 /** How a subject grades next to its students' own level (shared grades), 0 when unknown. */
 export function offsetOf(s: Subject): number {
@@ -54,11 +64,15 @@ export function predictMark(s: Subject, marks: Map<string, number>, data: Datase
   const offset = offsetOf(s)
   const mark = Math.max(0, Math.min(100, (own * w + wam * WAM_WEIGHT) / (w + WAM_WEIGHT) + offset))
 
-  // Range: the spread of the student's marks, narrower with more related evidence.
-  const all = level.map(([, m]) => m)
-  const sd = Math.sqrt(all.reduce((sum, m) => sum + (m - wam) ** 2, 0) / all.length) || 8
-  // Shared grades narrow it a little: the subject's own grading is then known, not assumed.
-  const half = Math.min(15, Math.max(4, sd / Math.sqrt(1 + w / 2 + (s.gradeOffset ? Math.min(s.gradeOffset.n, 20) / 10 : 0))))
+  // Range: where a new mark lands RANGE_SHARE of the time. A new mark varies however much is
+  // known (spread), and the estimate itself is uncertain too (se): over how many marks it rests on,
+  // plus how sure the subject's shared grading is. The spread is the student's own, around their
+  // level, pulled toward the usual spread when there are only a few marks to judge it from.
+  const n = level.length
+  const own2 = level.reduce((sum, [, m]) => sum + (m - wam) ** 2, 0)
+  const spread2 = (own2 + SPREAD_PRIOR_MARKS * USUAL_SPREAD ** 2) / (n + SPREAD_PRIOR_MARKS)
+  const se2 = spread2 / (n + w) + (s.gradeOffset?.sd ?? 0) ** 2
+  const half = RANGE_Z * Math.sqrt(spread2 + se2)
   const basis = related.sort((a, b) => b.w - a.w).slice(0, 3).map((x) => x.code)
   return { mark, low: Math.max(0, mark - half), high: Math.min(100, mark + half), basis }
 }
