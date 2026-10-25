@@ -18,6 +18,7 @@ export const ko: Messages = {
   periodShort: { summer: '여름', 'semester-1': 'S1', winter: '겨울', 'semester-2': 'S2' },
   category: { science: '이학', commerce: '상경', arts: '인문', design: '디자인', music: '음악', 'fine-arts': '예술', agriculture: '농업', 'oral-health': '구강보건', breadth: '교양(Breadth)', core: '필수' },
   plan: {
+    saveImage: "이미지로 저장",
     pastTag: "이수함",
     pastUndated: "이수함 · 학기 미입력",
     pastRetake: "미통과 · {term} 재수강",
@@ -1169,6 +1170,7 @@ export const ko: Messages = {
     shortlist: "과목 저장하고 비교하기",
   },
   guide: {
+    majorsPlansImage: "친구에게 계획을 보여 주고 싶으면 계획 페이지에서 '이미지로 저장'을 누르세요. 이미지에는 학기별 과목만 들어가고 성적이나 WAM은 들어가지 않으며, 휴대폰에서 만들어져 업로드되지 않습니다.",
     majorsRelated: "각 과목 페이지에는 '관련 과목'도 있습니다. 이 과목 다음에 들을 수 있는 과목과, 같은 전공 학생들이 같은 학기에 자주 함께 듣는 과목입니다.",
     overview: "개요",
     subnav: "가이드 목차",

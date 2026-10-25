@@ -18,6 +18,7 @@ export const zhCN: Messages = {
   periodShort: { summer: '夏季', 'semester-1': 'S1', winter: '冬季', 'semester-2': 'S2' },
   category: { science: '理科', commerce: '商科', arts: '文科', design: '设计', music: '音乐', 'fine-arts': '艺术', agriculture: '农业', 'oral-health': '口腔健康', breadth: 'Breadth', core: '必修' },
   plan: {
+    saveImage: "存为图片",
     pastTag: "已修",
     pastUndated: "已修 · 学期未填",
     pastRetake: "未通过 · {term} 重修",
@@ -1169,6 +1170,7 @@ export const zhCN: Messages = {
     shortlist: "收藏课程、放一起比较",
   },
   guide: {
+    majorsPlansImage: "想把选课计划发给朋友或发小红书，可以在“排课”页点“存为图片”。图片里只有各学期的科目，没有成绩和 WAM，而且是在你手机上生成的，不会上传。",
     majorsRelated: "每个科目页下面还有“相关科目”：修完它之后能修什么，以及同专业的同学常在同一学期一起修哪些课。",
     overview: "概览",
     subnav: "指南分区",

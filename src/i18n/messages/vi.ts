@@ -18,6 +18,7 @@ export const vi: Messages = {
   periodShort: { summer: 'Hè', 'semester-1': 'HK1', winter: 'Đông', 'semester-2': 'HK2' },
   category: { science: 'khoa học', commerce: 'kinh doanh', arts: 'nhân văn', design: 'thiết kế', music: 'âm nhạc', 'fine-arts': 'nghệ thuật', agriculture: 'nông nghiệp', 'oral-health': 'sức khỏe răng miệng', breadth: 'breadth (ngoài ngành)', core: 'bắt buộc' },
   plan: {
+    saveImage: "Lưu thành ảnh",
     pastTag: "Đã học",
     pastUndated: "Đã học · chưa điền học kỳ",
     pastRetake: "Chưa qua · học lại {term}",
@@ -1169,6 +1170,7 @@ export const vi: Messages = {
     shortlist: "Lưu và so sánh môn học",
   },
   guide: {
+    majorsPlansImage: "Muốn gửi kế hoạch cho bạn bè, hãy dùng Lưu thành ảnh ở trang Kế hoạch. Ảnh chỉ có các học kỳ và môn học, không có điểm hay WAM, và được tạo ngay trên máy bạn, không tải lên đâu cả.",
     majorsRelated: "Mỗi trang môn học còn có mục môn liên quan: học xong môn này thì học tiếp được môn nào, và sinh viên cùng chuyên ngành thường học cùng môn nào trong cùng học kỳ.",
     overview: "Tổng quan",
     subnav: "Các phần hướng dẫn",

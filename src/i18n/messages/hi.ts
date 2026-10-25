@@ -18,6 +18,7 @@ export const hi: Messages = {
   periodShort: { summer: 'समर', 'semester-1': 'सेम 1', winter: 'विंटर', 'semester-2': 'सेम 2' },
   category: { science: 'साइंस', commerce: 'कॉमर्स', arts: 'आर्ट्स', design: 'डिज़ाइन', music: 'संगीत', 'fine-arts': 'ललित कला', agriculture: 'कृषि', 'oral-health': 'ओरल हेल्थ', breadth: 'ब्रेड्थ', core: 'अनिवार्य' },
   plan: {
+    saveImage: "इमेज के रूप में सेव करें",
     pastTag: "पूरा",
     pastUndated: "पूरा · सेमेस्टर नहीं भरा",
     pastRetake: "पास नहीं · {term} में दोबारा",
@@ -1169,6 +1170,7 @@ export const hi: Messages = {
     shortlist: "विषय सहेजें और तुलना करें",
   },
   guide: {
+    majorsPlansImage: "अपना प्लान दोस्तों को दिखाना हो तो प्लान पेज पर 'इमेज के रूप में सेव करें' दबाएँ। इमेज में सिर्फ़ सेमेस्टर और विषय होते हैं, कोई अंक या WAM नहीं, और यह आपके फ़ोन पर ही बनती है, अपलोड नहीं होती।",
     majorsRelated: "हर विषय के पेज पर संबंधित विषय भी दिखते हैं: इसके बाद कौन-से विषय ले सकते हैं, और उसी मेजर के छात्र उसी सेमेस्टर में अक्सर कौन-से विषय साथ लेते हैं।",
     overview: "ओवरव्यू",
     subnav: "गाइड के सेक्शन",

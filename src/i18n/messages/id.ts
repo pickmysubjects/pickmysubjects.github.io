@@ -18,6 +18,7 @@ export const id: Messages = {
   periodShort: { summer: 'Musim panas', 'semester-1': 'Sem 1', winter: 'Musim dingin', 'semester-2': 'Sem 2' },
   category: { science: 'sains', commerce: 'bisnis', arts: 'humaniora', design: 'desain', music: 'musik', 'fine-arts': 'seni', agriculture: 'pertanian', 'oral-health': 'kesehatan gigi dan mulut', breadth: 'breadth', core: 'inti' },
   plan: {
+    saveImage: "Simpan sebagai gambar",
     pastTag: "Sudah diambil",
     pastUndated: "Sudah diambil · semester belum diisi",
     pastRetake: "Tidak lulus · ulang di {term}",
@@ -1169,6 +1170,7 @@ export const id: Messages = {
     shortlist: "Simpan dan bandingkan mata kuliah",
   },
   guide: {
+    majorsPlansImage: "Untuk menunjukkan rencanamu ke teman, pakai Simpan sebagai gambar di halaman Rencana. Gambarnya hanya berisi semester dan mata kuliah, tanpa nilai atau WAM, dan dibuat di perangkatmu, tidak diunggah.",
     majorsRelated: "Setiap halaman mata kuliah juga mencantumkan mata kuliah terkait: apa yang bisa diambil sesudahnya, dan apa yang sering diambil bersamaan oleh mahasiswa major yang sama di semester yang sama.",
     overview: "Ringkasan",
     subnav: "Bagian panduan",

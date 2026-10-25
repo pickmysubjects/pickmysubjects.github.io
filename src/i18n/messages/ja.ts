@@ -18,6 +18,7 @@ export const ja: Messages = {
   periodShort: { summer: '夏', 'semester-1': 'S1', winter: '冬', 'semester-2': 'S2' },
   category: { science: '理系科目', commerce: '商学系科目', arts: '文系科目', design: 'デザイン系科目', music: '音楽系科目', 'fine-arts': '芸術系科目', agriculture: '農学系科目', 'oral-health': '口腔保健系科目', breadth: 'Breadth（専攻外科目）', core: '必修' },
   plan: {
+    saveImage: "画像で保存",
     pastTag: "履修済み",
     pastUndated: "履修済み・学期未入力",
     pastRetake: "不合格・{term} に再履修",
@@ -1169,6 +1170,7 @@ export const ja: Messages = {
     shortlist: "科目を保存して比べる",
   },
   guide: {
+    majorsPlansImage: "友だちにプランを見せたいときは、プランのページで「画像で保存」を使えます。画像には各学期の科目だけが入り、成績や WAM は入りません。端末の中で作られ、アップロードはされません。",
     majorsRelated: "各科目のページには「関連科目」もあります。この後に取れる科目と、同じメジャーの学生が同じ学期によく一緒に取る科目です。",
     overview: "概要",
     subnav: "ガイドの項目",

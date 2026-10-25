@@ -21,6 +21,7 @@ export const en = {
   periodShort: { summer: 'Summer', 'semester-1': 'Sem 1', winter: 'Winter', 'semester-2': 'Sem 2' },
   category: { science: 'science', commerce: 'commerce', arts: 'arts', design: 'design', music: 'music', 'fine-arts': 'fine arts', agriculture: 'agriculture', 'oral-health': 'oral health', breadth: 'breadth', core: 'core' },
   plan: {
+    saveImage: "Save as image",
     pastTag: "Done",
     pastUndated: "Done · semester not given",
     pastRetake: "Not passed · again in {term}",
@@ -1172,6 +1173,7 @@ export const en = {
     shortlist: "Shortlist and compare subjects",
   },
   guide: {
+    majorsPlansImage: "To show friends your plan, use Save as image on the Plan page. The picture has your semesters and subjects only, no marks or WAM, and it's made on your phone, not uploaded.",
     majorsRelated: "Each subject page also lists related subjects: what it leads to, and what students in the same major often take in the same semester.",
     overview: "Overview",
     subnav: "Guide sections",

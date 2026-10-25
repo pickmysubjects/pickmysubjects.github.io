@@ -18,6 +18,7 @@ export const zhTW: Messages = {
   periodShort: { summer: '夏季', 'semester-1': 'S1', winter: '冬季', 'semester-2': 'S2' },
   category: { science: '理科', commerce: '商科', arts: '文科', design: '設計', music: '音樂', 'fine-arts': '藝術', agriculture: '農業', 'oral-health': '口腔健康', breadth: 'Breadth', core: '必修' },
   plan: {
+    saveImage: "存成圖片",
     pastTag: "已修",
     pastUndated: "已修 · 學期未填",
     pastRetake: "未通過 · {term} 重修",
@@ -1169,6 +1170,7 @@ export const zhTW: Messages = {
     shortlist: "收藏課程、放一起比較",
   },
   guide: {
+    majorsPlansImage: "想把選課計畫傳給朋友或發到社群，可以在「排課」頁按「存成圖片」。圖片裡只有各學期的科目，沒有成績和 WAM，而且是在你手機上產生的，不會上傳。",
     majorsRelated: "每個科目頁下面還有「相關科目」：修完它之後能修什麼，以及同主修的同學常在同一學期一起修哪些課。",
     overview: "總覽",
     subnav: "指南分區",

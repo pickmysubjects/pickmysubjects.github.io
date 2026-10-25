@@ -535,7 +535,7 @@ function guideBody(code: LocaleCode, t: Translate, page: GuideCategory | 'overvi
       `<h2 id="points">${esc(t('guide.pointsTitle'))}</h2>`, p('pointsText'),
     ].join('\n'),
     'majors': [
-      `<h2 id="majors">${esc(t('guide.majorsTitle'))}</h2>`, li(['majorsOne', 'majorsSecond', 'majorsMinor', 'majorsOnce']), p('majorsPairs'), p('majorsDiploma'), p('majorsRelated'), p('majorsPlans'),
+      `<h2 id="majors">${esc(t('guide.majorsTitle'))}</h2>`, li(['majorsOne', 'majorsSecond', 'majorsMinor', 'majorsOnce']), p('majorsPairs'), p('majorsDiploma'), p('majorsRelated'), p('majorsPlans'), p('majorsPlansImage'),
     ].join('\n'),
     'caps': [
       `<h2 id="caps">${esc(t('guide.capsTitle'))}</h2>`, li(['capsDiscipline', 'capsDesignBreadth', 'capsDesignInformal']),
