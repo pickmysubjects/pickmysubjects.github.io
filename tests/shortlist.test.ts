@@ -94,6 +94,21 @@ describe('compare table', () => {
     expect(compare.columns.value[1]!.fit).toMatchObject({ kind: 'out', why: { key: 'done' } })
   })
 
+  it('reads a mark condition the way the plan does: the best attempt, whatever order they were entered in', async () => {
+    const { useProfile } = await import('../src/composables/useProfile')
+    const { useSubjectCompare } = await import('../src/composables/useSubjectCompare')
+    const me = useProfile()
+    // MUSI30213 needs 65 or more in MUSI20056: passed with 80, after a fail entered later.
+    me.setResults([
+      { code: 'MUSI20056', mark: 80 },
+      { code: 'MUSI20056', mark: 40 },
+    ])
+    await nextTick()
+    const [col] = useSubjectCompare(ref(['MUSI30213'])).columns.value
+    expect(col!.prereq).toBe('ok')
+    me.setResults([])
+  })
+
   it('reads the facts each row shows from the subject', async () => {
     const { useSubjectCompare } = await import('../src/composables/useSubjectCompare')
     const { useDataset } = await import('../src/composables/useDataset')

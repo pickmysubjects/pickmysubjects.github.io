@@ -333,3 +333,34 @@ describe('generatePlan (real B-ARTS data, capstones limited to a major)', () => 
     expect(unmet('chinese-studies')).toEqual([])
   })
 })
+
+describe('generatePlan picks a major’s choice by fit', () => {
+  // Every option of Computing's choice needs a subject first; they still have to be scored, or
+  // the "best match among its options" is whichever comes first in the list.
+  const chose = (interests: string[]) =>
+    generate({ major: 'ex-computing', profile: { results: [], skills: {}, interests, goal: 'balanced' } }).notes.filter((n) => n.key === 'chose').map((n) => n.params.code)
+
+  it('takes the option on the student’s own interest, though all of them have prerequisites', () => {
+    expect(chose(['systems'])).toEqual(['EXCS30003'])
+    expect(chose(['design'])).toEqual(['EXCS30006'])
+    expect(['EXCS30001', 'EXCS30007']).toContain(chose(['machine-learning'])[0])
+  })
+})
+
+describe('generatePlan counts a done subject it has no data for', () => {
+  it('as a 12.5-point option of a choice, as the course check does, so it adds no second one', () => {
+    // A choice met by a subject on the record that isn't curated yet (ZZZZ30001).
+    const computing = data.components.find((c) => c.id === 'ex-computing')!
+    const withUncurated = {
+      ...computing,
+      id: 'ex-computing-uncurated',
+      requirements: [{ all: ['EXCS30002', 'EXCS30004', 'EXCS30005'] }, { choose: { points: 12.5, from: ['ZZZZ30001', 'EXCS30001', 'EXCS30003', 'EXCS30006', 'EXCS30007'] } }],
+    } as typeof computing
+    const r = generate({
+      data: { ...data, components: [...data.components, withUncurated] },
+      major: 'ex-computing-uncurated',
+      profile: { ...profile, results: [{ code: 'ZZZZ30001', mark: 75 }] },
+    })
+    expect(r.notes.filter((n) => n.key === 'chose')).toEqual([])
+  })
+})

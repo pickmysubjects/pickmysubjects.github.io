@@ -395,6 +395,32 @@ describe('why a fit is low (recommend factors)', () => {
     expect(named).toBeGreaterThan(10)
   })
 
+  it('for marks only, interests and strengths are never given as what holds a subject back', () => {
+    const data = forCourse(real, 'B-SCI')
+    const easy: Profile = { ...strengthsOnly, goal: 'easy' }
+    const recs = recommend(data, easy, sortForMe(data, easy, 'B-SCI'))
+    for (const r of recs.filter((x) => fitBand(x.betterThan) === 'low').slice(0, 40)) {
+      const keys = whyNotFit(r, easy, data.subjects[r.code]!, data).map((f) => f.key)
+      expect(keys).not.toContain('noInterests')
+      expect(keys).not.toContain('neutral')
+    }
+  })
+
+  it('a modest WAM isn\'t given as what holds one subject back: every option shares it', () => {
+    const data = forCourse(real, 'B-SCI')
+    // Marks only in music: for a science subject the likely mark is just the overall average (66).
+    const p: Profile = { ...strengthsOnly, results: [{ code: 'MUSI10023', mark: 64 }, { code: 'MUSI10047', mark: 68 }, { code: 'MUSI10204', mark: 66 }] }
+    const recs = recommend(data, p, sortForMe(data, p, 'B-SCI'))
+    let seen = 0
+    for (const r of recs.filter((x) => fitBand(x.betterThan) === 'low').slice(0, 60)) {
+      const predicted = r.factors?.find((f) => f.key === 'predicted')
+      if (!predicted || predicted.effect > -1 || predicted.params.codes) continue
+      seen++
+      expect(whyNotFit(r, p, data.subjects[r.code]!, data).map((f) => f.key)).not.toContain('predicted')
+    }
+    expect(seen).toBeGreaterThan(5)
+  })
+
   it('difficulty shows every factor each way with its numbers', () => {
     const subjects = forCourse(real, 'B-SCI').subjects
     const d = subjectDifficulty(subjects, 'ABPL10005', 'B-SCI', YEAR)

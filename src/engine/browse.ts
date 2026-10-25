@@ -22,6 +22,11 @@ export interface BrowseFilters {
   mine: boolean
   /** Only subjects offered in summer or winter term that year. */
   offTerm: boolean
+  /**
+   * The degree an easy/hard list was opened for from a link (a subject page's "#5 on the easy
+   * list" chip names its degree's list), until the student has chosen a degree of their own.
+   */
+  listCourse?: string
 }
 
 export const EMPTY_FILTERS: BrowseFilters = {
@@ -156,6 +161,7 @@ export function filtersToQuery(f: BrowseFilters): string {
   if (f.rank) q.set('list', f.rank)
   if (f.mine) q.set('mine', '1')
   if (f.offTerm) q.set('offterm', '1')
+  if (f.rank && f.listCourse) q.set('course', f.listCourse)
   return q.toString()
 }
 
@@ -189,7 +195,19 @@ export function filtersFromQuery(q: URLSearchParams, slug = ''): BrowseFilters {
     rank: rankFromSlug(q.get('list') ?? '') ?? rankFromSlug(slug) ?? null,
     mine: q.get('mine') === '1',
     offTerm: q.get('offterm') === '1' || base.offTerm,
+    ...(COURSE_CODE.test(q.get('course') ?? '') ? { listCourse: q.get('course')! } : {}),
   }
+}
+
+/** A degree's code as links write it (B-SCI, B-FADANCE). */
+const COURSE_CODE = /^[A-Z]+(?:-[A-Z0-9]+)+$/
+
+/**
+ * The degree the easy and hard lists go by: the student's own once chosen; before that the one a
+ * link opened the list for (what a subject page's place on it counted), else every degree.
+ */
+export function rankCourseOf(f: Pick<BrowseFilters, 'listCourse'>, chosen: string | null): string {
+  return chosen ?? f.listCourse ?? ''
 }
 
 /** The one row of quick choices on Find subjects: one at a time, or all. */
@@ -210,7 +228,8 @@ export function quickChoice(f: BrowseFilters): QuickChoice {
 export function applyQuick(f: BrowseFilters, choice: QuickChoice): BrowseFilters {
   const base: BrowseFilters = { ...EMPTY_FILTERS, text: f.text, mine: f.mine }
   if (choice === 'all') return base
-  if (choice === 'easy' || choice === 'hard') return { ...base, rank: choice }
+  // Easy to hard and back stays on the same degree's lists.
+  if (choice === 'easy' || choice === 'hard') return { ...base, rank: choice, ...(f.listCourse ? { listCourse: f.listCourse } : {}) }
   return { ...base, ...PRESETS[choice] }
 }
 
@@ -221,11 +240,15 @@ export function applyQuick(f: BrowseFilters, choice: QuickChoice): BrowseFilters
  */
 export function browseAddress(f: BrowseFilters): string {
   const choice = quickChoice(f)
-  const q = filtersToQuery(f)
+  const { listCourse, ...rest } = f
+  const q = filtersToQuery(rest)
   if (choice !== 'all' && q === filtersToQuery(applyQuick(EMPTY_FILTERS, choice))) {
-    return `subjects/${choice === 'easy' || choice === 'hard' ? RANK_SLUGS[choice] : PRESET_SLUGS[choice]}/`
+    // A list opened for a degree keeps it in its address, so it stays that degree's list.
+    const course = listCourse && f.rank ? `?course=${encodeURIComponent(listCourse)}` : ''
+    return `subjects/${choice === 'easy' || choice === 'hard' ? RANK_SLUGS[choice] : PRESET_SLUGS[choice]}/${course}`
   }
-  return `subjects/${q ? `?${q}` : ''}`
+  const all = filtersToQuery(f)
+  return `subjects/${all ? `?${all}` : ''}`
 }
 
 /** A row on Find subjects, with why it's there when a list or "sort for me" put it there. */

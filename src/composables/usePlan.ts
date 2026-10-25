@@ -12,7 +12,7 @@ import {
   referencedSubjects,
   passedCodes,
   marksForConditions,
-  computeWam,
+  exactWam,
   planStart,
   termKey,
   standardTerms,
@@ -56,7 +56,7 @@ export function planFor(state: PlanState, profile: Profile, data: Dataset): Plan
     confirmed: profile.confirmed ?? [],
     recordedLoad: recordedLoads(profile.results, data),
     marks: marksForConditions(profile.results, data),
-    wam: computeWam(profile.results, data),
+    wam: exactWam(profile.results, data),
   }
 }
 
