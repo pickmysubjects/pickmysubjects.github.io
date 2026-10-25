@@ -14,6 +14,7 @@ import {
   marksForConditions,
   exactWam,
   planStart,
+  upcomingStart,
   termKey,
   standardTerms,
   type Dataset,
@@ -25,7 +26,7 @@ import {
   type Relief,
   type Profile,
 } from '@/engine'
-import { activePlan, books, type PlanSetup, type PlanState, type SavedPlan } from './planStore'
+import { activePlan, books, commencementYear, type PlanSetup, type PlanState, type SavedPlan } from './planStore'
 import { bookOf, planBody } from '@/utils/planBook'
 import { useDataset } from './useDataset'
 import { useProfile } from './useProfile'
@@ -42,7 +43,7 @@ export type { PlanSetup } from './planStore'
 export function planFor(state: PlanState, profile: Profile, data: Dataset): Plan {
   return {
     course: state.setup.course,
-    courseYear: state.setup.courseYear,
+    courseYear: commencementYear(state.setup, profile.results),
     major: state.setup.major || undefined,
     // A second major only alongside a first.
     major2: (state.setup.major && state.setup.major2) || undefined,
@@ -139,7 +140,7 @@ export function usePlan() {
     if (current.value !== undefined && setupChosen.value) return
     const c = data.value.courses.find((x) => x.code === code)
     if (!c) return
-    save((s) => ({ ...s, setup: { ...s.setup, course: c.code, courseYear: c.year, major: '', major2: '', specialisation: '', minors: [], diploma: '', diplomaStream: '' } }))
+    save((s) => ({ ...s, setup: { ...s.setup, course: c.code, courseYear: s.setup.startYear, major: '', major2: '', specialisation: '', minors: [], diploma: '', diplomaStream: '' } }))
   }
 
   // A part-done semester on the record is carried on in (its done subjects share the column).
@@ -155,12 +156,13 @@ export function usePlan() {
     const { setup } = state.value
     // Students who started already are planned from the next semester on; what
     // they've done comes from their record.
-    const start = planStart({ year: setup.startYear, period: setup.startPeriod }, profile.value.results, startFill())
+    // Never into a semester that has already begun: undated subjects on the record count as done.
+    const start = upcomingStart(planStart({ year: setup.startYear, period: setup.startPeriod }, profile.value.results, startFill()))
     const result = generatePlan({
       data: data.value,
       profile: profile.value,
       course: setup.course,
-      courseYear: setup.courseYear,
+      courseYear: commencementYear(setup, profile.value.results),
       major: setup.major || undefined,
       major2: (setup.major && setup.major2) || undefined,
       specialisation: setup.specialisation || undefined,
@@ -178,7 +180,7 @@ export function usePlan() {
 
   function startEmpty(): void {
     const { setup } = state.value
-    const start = planStart({ year: setup.startYear, period: setup.startPeriod }, profile.value.results, startFill())
+    const start = upcomingStart(planStart({ year: setup.startYear, period: setup.startPeriod }, profile.value.results, startFill()))
     save((s) => ({ ...s, terms: standardTerms(start.year, start.period, 6), notes: [], unplaced: [] }))
   }
 
@@ -303,7 +305,7 @@ export function usePlan() {
         ? standardTerms(last.year, last.period, 2)[1]
         : (() => {
             // No semesters yet: the one after the record (or the start of study).
-            const from = planStart({ year: s.setup.startYear, period: s.setup.startPeriod }, profile.value.results, startFill())
+            const from = upcomingStart(planStart({ year: s.setup.startYear, period: s.setup.startPeriod }, profile.value.results, startFill()))
             return standardTerms(from.year, from.period, 1)[0]
           })()
       if (next) s.terms.push({ ...next, subjects: [] })
@@ -367,7 +369,8 @@ export function usePlan() {
   }
 
   return {
-    setup: computed(() => state.value.setup),
+    // courseYear as the rules see it: the year the student started.
+    setup: computed<PlanSetup>(() => ({ ...state.value.setup, courseYear: plan.value.courseYear })),
     terms: computed(() => state.value.terms),
     notes: computed(() => state.value.notes),
     unplaced: computed(() => state.value.unplaced),

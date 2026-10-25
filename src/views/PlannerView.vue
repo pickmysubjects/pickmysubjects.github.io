@@ -16,7 +16,7 @@ import PlanPrint, { type PrintTerm } from '@/components/planner/PlanPrint.vue'
 import Interp from '@/components/Interp.vue'
 import PlanSwitcher from '@/components/plans/PlanSwitcher.vue'
 import PlanCompare from '@/components/plans/PlanCompare.vue'
-import { careerGap, careerGoal, careerName, heldMajorIds, informalPicks, isFail, passedCodes, planComponentIds, planRoles, planRules, recordedLoads, termLoad, type PlanTerm } from '@/engine'
+import { careerGap, careerGoal, careerName, hasEnded, heldMajorIds, informalPicks, isFail, passedCodes, planComponentIds, planRoles, planRules, recordedLoads, termLoad, type PlanTerm } from '@/engine'
 import { diplomaTitle } from '@/composables/usePlanCompare'
 import { ImageDown, Printer, Share2 } from 'lucide-vue-next'
 import { sharePlanImage } from '@/utils/planImage'
@@ -318,6 +318,18 @@ function onMove(code: string, from: number, to: number): void {
 // The plan and My record disagree: a planned subject is already passed, or a semester holds
 // more than its load once its recorded subjects are counted. (A part-done semester the plan
 // carries on in is fine: its done and planned subjects share the column.) Names the semester.
+// A semester that is over but still holds planned subjects the record doesn't have (made earlier).
+const pastPlanned = computed(() => {
+  const passed = new Set(passedCodes(profile.value.results))
+  const term = plan.terms.value.find((x) => hasEnded(x) && x.subjects.some((c) => !passed.has(c)))
+  return term ? termLabel(t.value, term) : null
+})
+// The Handbook year whose rules the plan uses, when it isn't the year the student started.
+const rulesFrom = computed(() => {
+  const c = plan.course.value
+  const start = plan.plan.value.courseYear
+  return plan.setupChosen.value && c && c.year !== start ? { year: c.year, start } : null
+})
 const recordOverlap = computed(() => {
   const passed = new Set(passedCodes(profile.value.results))
   const load = plan.course.value?.standardLoad ?? 50
@@ -407,6 +419,14 @@ const printTerms = computed<PrintTerm[]>(() => {
           </button>
         </div>
       </section>
+
+      <p v-if="pastPlanned" class="started">
+        {{ t('plan.pastPlannedShort', { term: pastPlanned }) }}<InfoTip :text="t('plan.pastPlanned', { term: pastPlanned })" />
+        <button class="button button-quiet" type="button" @click="plan.generate()">{{ t('plan.rebuild') }}</button>
+      </p>
+      <p v-if="rulesFrom" class="started">
+        {{ t('plan.rulesYearShort', { year: rulesFrom.year }) }}<InfoTip :text="t('plan.rulesYear', rulesFrom)" />
+      </p>
 
       <!-- The record now reaches into the plan's own semesters (filled in after the plan was made). -->
       <p v-if="recordOverlap" class="started">

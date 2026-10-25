@@ -126,13 +126,13 @@ function finish(): void {
   // And a diploma (or stream) the final choices rule out.
   const dip = diploma.value?.code ?? ''
   const stream = dip && streams.value.some((s) => s.id === draft.value.diplomaStream) ? (draft.value.diplomaStream ?? '') : ''
-  emit('done', { ...draft.value, major2, specialisation: spec, minors: kept, diploma: dip, diplomaStream: stream })
+  emit('done', { ...draft.value, courseYear: draft.value.startYear, commencementYear: draft.value.startYear, major2, specialisation: spec, minors: kept, diploma: dip, diplomaStream: stream })
 }
 
 function chooseCourse(c: Course): void {
   // A new student's start moves to the next term the course takes new students in.
   const start = fromRecord.value ? { year: draft.value.startYear, period: draft.value.startPeriod } : nextEntry(c, { year: draft.value.startYear, period: draft.value.startPeriod })
-  set({ course: c.code, courseYear: c.year, startYear: start.year, startPeriod: start.period, major: '', major2: '', specialisation: '', minors: [], field: '', diploma: '', diplomaStream: '' })
+  set({ course: c.code, courseYear: start.year, startYear: start.year, startPeriod: start.period, major: '', major2: '', specialisation: '', minors: [], field: '', diploma: '', diplomaStream: '' })
 }
 </script>
 
