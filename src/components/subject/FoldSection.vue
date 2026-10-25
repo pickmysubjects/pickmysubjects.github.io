@@ -62,11 +62,6 @@ const phone = usePhone()
   padding-top: var(--space-4);
 }
 
-/* The FAQ brings its own heading; inside a fold the summary already says it. */
-.fold-body :deep(.faq-title) {
-  display: none;
-}
-
 @media (prefers-reduced-motion: reduce) {
   .fold-chev {
     transition: none;

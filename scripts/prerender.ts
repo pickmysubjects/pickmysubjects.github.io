@@ -33,7 +33,6 @@ import type { Dataset, Subject } from '../src/engine/schema'
 import type { HomeDemo } from '../src/utils/homeDemo'
 import { describeReq } from '../src/i18n/format'
 import { subjectGist } from '../src/i18n/gist'
-import { subjectFaq, type FaqItem } from '../src/i18n/faq'
 import { discussionLabels } from '../src/i18n/discussion'
 import { interpolate, type Params, type Translate } from '../src/i18n/interpolate'
 import { LOCALE_CODES, type LocaleCode } from '../src/i18n/codes'
@@ -93,8 +92,6 @@ interface Page {
   title: string
   description: string
   body: string
-  /** Question-and-answer pairs shown on the page, also given to search engines as FAQPage data. */
-  faq?: FaqItem[]
   /** More schema.org items about the page's subject: the course and its breadcrumb. */
   ld?: object[]
 }
@@ -162,14 +159,8 @@ function structured(page: Page, code: LocaleCode, url: string): object {
     }
   }
   const webPage = { '@type': 'WebPage', name: page.title, description: page.description, url, inLanguage: code, isPartOf: site, isAccessibleForFree: true }
-  if (!page.faq?.length && !page.ld?.length) return { '@context': 'https://schema.org', ...webPage }
-  const faq = page.faq?.length && {
-    '@type': 'FAQPage',
-    url,
-    inLanguage: code,
-    mainEntity: page.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
-  }
-  return { '@context': 'https://schema.org', '@graph': [webPage, ...(faq ? [faq] : []), ...(page.ld ?? [])] }
+  if (!page.ld?.length) return { '@context': 'https://schema.org', ...webPage }
+  return { '@context': 'https://schema.org', '@graph': [webPage, ...page.ld] }
 }
 
 function render(page: Page, code: LocaleCode): string {
@@ -268,7 +259,7 @@ function subjectPage(code: LocaleCode, s: Subject): Page {
     // The same at-a-glance lines the app shows under the title, so search engines quote them.
     ...(gist.length ? [`<ul>${gist.map((g) => `<li>${esc(g)}</li>`).join('')}</ul>`] : []),
     // "Is it hard?" answered first, as the app's card does, for searches like "is COMP10001 hard".
-    `<h2>${esc(t('faq.hardQ', { code: s.code }))}</h2><p>${esc(hard)}</p>`,
+    `<h2>${esc(t('seo.hardQ', { code: s.code }))}</h2><p>${esc(hard)}</p>`,
     // Our own summary, in this page's language, so crawlers that don't run scripts see it too.
     ...(s.about
       ? [
@@ -304,10 +295,6 @@ function subjectPage(code: LocaleCode, s: Subject): Page {
   if (!ds.length && !ratedHere) reviews.push(`<p>${esc(t('seo.noReviews'))}</p>`)
   reviews.push(`<p>${esc(t('seo.rateCta'))} <a href="${href(code, `subject/${s.code}`)}#ratings">${esc(t('seo.rateLink', { code: s.code }))}</a></p>`)
   parts.push(reviews.join(''))
-  const faq = subjectFaq(t, s, { year: YEAR, course: 'B-SCI', unlocks: leads, listSep: listSep(code), sentenceSep: sentenceSep(code), locale: code })
-  if (faq.length) {
-    parts.push(`<h2>${esc(t('faq.title'))}</h2><dl>${faq.map((f) => `<dt>${esc(f.q)}</dt><dd>${esc(f.a)}</dd>`).join('')}</dl>`)
-  }
   parts.push(`<p>${esc(t('subject.source', { year: s.sourceYear }))}</p>`)
   if (s.handbook) parts.push(`<p><a href="${esc(s.handbook)}">${esc(t('seo.confirm'))}</a></p>`)
   parts.push(`<p><a href="${href(code, '')}">${esc(t('seo.made'))}</a></p>`)
@@ -319,7 +306,6 @@ function subjectPage(code: LocaleCode, s: Subject): Page {
     title: subjectPageTitle(t, s, code),
     description: subjectPageDescription(t, s, code, { level: difficulty.level, year: YEAR }),
     body: parts.join('\n'),
-    faq,
     ld: courseLd(code, s, facts.title, s.prerequisites !== 'unknown' && s.prerequisites !== 'none' ? prereq : undefined, [gist.length ? `${gist.join(listSep(code))}${CJK.has(code) ? '。' : '.'}` : '', firstPoint].filter(Boolean).join(sentenceSep(code))),
   }
 }

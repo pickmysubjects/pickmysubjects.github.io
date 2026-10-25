@@ -8,7 +8,6 @@ import SubjectCareers from '@/components/subject/SubjectCareers.vue'
 import OutsideLinks from '@/components/subject/OutsideLinks.vue'
 import SubjectAbout from '@/components/subject/SubjectAbout.vue'
 import FoldSection from '@/components/subject/FoldSection.vue'
-import SubjectFaq from '@/components/subject/SubjectFaq.vue'
 import SubjectFitCard from '@/components/subject/SubjectFitCard.vue'
 import SubjectHeader from '@/components/subject/SubjectHeader.vue'
 import SubjectRoute from '@/components/subject/SubjectRoute.vue'
@@ -72,7 +71,6 @@ const sections = computed(() => {
     { id: 'learn', label: t.value('subject.aboutLearn'), show: detailReady.value && !!s.about },
     { id: 'assessment', label: t.value('assess.title'), show: true },
     { id: 'route', label: t.value('subject.fitsTitle'), show: true },
-    { id: 'faq', label: t.value('faq.title'), show: true },
     { id: 'discuss', label: t.value('subject.discuss'), show: links.value.length > 0 },
     { id: 'similar', label: t.value('subject.similar'), show: similar.value.length > 0 },
   ].filter((x) => x.show)
@@ -111,12 +109,6 @@ const sections = computed(() => {
           </section>
 
           <!-- The long lower sections fold on phones (FoldSection), so the page isn't a mile long. -->
-          <section id="faq" class="sec surface">
-            <FoldSection v-if="phone" :title="t('faq.title')">
-              <SubjectFaq :subject="subject" :year="year" :course="plan.setup.value.course" :unlocks="unlocks" />
-            </FoldSection>
-            <SubjectFaq v-else :subject="subject" :year="year" :course="plan.setup.value.course" :unlocks="unlocks" />
-          </section>
 
           <section v-if="links.length" id="discuss" class="sec surface">
             <FoldSection :title="t('subject.discuss')">
@@ -225,17 +217,13 @@ const sections = computed(() => {
 }
 
 .sec-title,
-.sec :deep(:is(.sec-title, .assess-title, .faq-title)),
+.sec :deep(:is(.sec-title, .assess-title)),
 .sec-about :deep(.about-row:first-child .about-label) {
   margin: 0;
   font-size: var(--fs-section);
   font-weight: 700;
   line-height: 1.3;
   color: var(--ink);
-}
-
-.sec :deep(.faq-title svg) {
-  display: none;
 }
 
 /* What you learn reads top to bottom: the paragraph, then what you can do after it. */
@@ -347,7 +335,7 @@ const sections = computed(() => {
   }
 
   .sec-title,
-  .sec :deep(:is(.sec-title, .assess-title, .faq-title)),
+  .sec :deep(:is(.sec-title, .assess-title)),
   .sec-about :deep(.about-row:first-child .about-label) {
     font-size: var(--fs-section);
   }
