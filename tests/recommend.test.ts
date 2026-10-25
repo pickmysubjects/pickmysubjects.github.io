@@ -335,4 +335,17 @@ describe('skills from marks', () => {
     expect(s.programming).toMatchObject({ level: 3, avg: 71 })
     expect(s.maths).toBeUndefined()
   })
+
+  it('calls marks weak exactly where the semester check does', async () => {
+    const { levelFromMark, WEAK_MARK } = await import('../src/engine/skills')
+    const { weakSkills } = await import('../src/engine/termStress')
+    const data = dataset([subject({ code: 'AAAA10001', skills: ['maths'] }), subject({ code: 'AAAA10002', skills: ['maths'] })])
+    for (const avg of [55, 60, 63, 64, 65, 66, 69, 70, 75]) {
+      const results = [{ code: 'AAAA10001', mark: avg }, { code: 'AAAA10002', mark: avg }]
+      // My page offers level 1–2 ("Hard"/"Weak") exactly when the check treats maths as weak…
+      expect(levelFromMark(avg) <= 2, String(avg)).toBe(weakSkills(data, { results, skills: {}, interests: [], goal: 'balanced' }).has('maths'))
+      // …and taking the offered level keeps that verdict.
+      expect(weakSkills(data, { results, skills: { maths: levelFromMark(avg) }, interests: [], goal: 'balanced' }).has('maths')).toBe(avg < WEAK_MARK)
+    }
+  })
 })
