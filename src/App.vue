@@ -9,8 +9,7 @@ import { defineAsyncComponent, watchEffect } from 'vue'
 import { useView, link } from './composables/useView'
 import { useDataset } from './composables/useDataset'
 import { useI18n } from './i18n'
-import { localTitle, withLocalTitle } from './i18n/localized'
-import { PRESET_TITLE_KEYS, subjectTitleKey } from '@/utils/seo'
+import { listPageTitle, PRESET_TITLE_KEYS, subjectPageTitle } from '@/utils/seo'
 import { careerTarget, presetFromSlug, rankFromSlug } from '@/engine'
 import { careerPhrase } from '@/utils/careerPathText'
 import { guidePageOf } from '@/utils/guideSections'
@@ -42,8 +41,6 @@ const TITLES: Partial<Record<string, string>> = {
   feedback: 'feedback.title',
   privacy: 'privacy.title',
   about: 'about.title',
-  guide: 'guide.title',
-  subjects: 'browse.title',
   majors: 'majors.title',
   shortlist: 'shortlist.title',
   careers: 'careerPath.title',
@@ -63,7 +60,7 @@ watchEffect(() => {
   // planning another degree sees that degree's breadth list, so the title names it instead.
   const breadthElsewhere = preset === 'breadth' && course.value !== 'B-SCI' ? data.value.courses.find((c) => c.code === course.value)?.title : undefined
   document.title = s
-    ? `${t.value(subjectTitleKey(s), { code: s.code, title: withLocalTitle(s.title, localTitle(s, locale.value)) })} | PickMySubjects`
+    ? subjectPageTitle(t.value, s, locale.value)
     : career
       ? `${t.value('careerPath.seoTitle', { job: careerPhrase(career.names, locale.value) })} | PickMySubjects`
     : major
@@ -74,6 +71,8 @@ watchEffect(() => {
         ? `${breadthElsewhere ? t.value('seo.presetBreadthFor', { course: breadthElsewhere, year }) : t.value(PRESET_TITLE_KEYS[preset], { year })} | PickMySubjects`
       : guidePage.kind !== 'overview'
         ? `${t.value(guidePage.kind === 'category' ? `guide.cat.${guidePage.category}.title` : 'guide.kd.title')} | ${t.value('guide.title')} | PickMySubjects`
+      : view.value === 'subjects' || view.value === 'guide'
+        ? listPageTitle(t.value, view.value)
       : key
       ? `${t.value(key)} | PickMySubjects`
       : t.value('seo.homeTitle')

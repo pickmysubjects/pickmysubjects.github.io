@@ -13,14 +13,13 @@
  * robots.txt and llms.txt. Everything is static: GitHub Pages serves it for free.
  */
 import { localTitle, pickLocalized, withLocalTitle } from '../src/i18n/localized'
-import { aggregateRatingLd, PRESET_TITLE_KEYS, subjectTitleKey } from '../src/utils/seo'
+import { aggregateRatingLd, listPageDescription, listPageTitle, PRESET_TITLE_KEYS, runsLine, subjectPageDescription, subjectPageTitle } from '../src/utils/seo'
 import { execFileSync } from 'node:child_process'
 import { mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { periodsFor } from '../src/engine/availability'
 import { browse, EMPTY_FILTERS, PRESET_SLUGS, PRESETS, type PresetName } from '../src/engine/browse'
-import { subjectDifficulty } from '../src/engine/subjectFit'
+import { subjectDifficulty, type Difficulty } from '../src/engine/subjectFit'
 import { RANK_SLUGS, rankSubjects, type RankDirection, type RankReason } from '../src/engine/easeRanking'
 import { forCourse } from '../src/engine/forCourse'
 import { majorOverview } from '../src/engine/roles'
@@ -214,11 +213,7 @@ for (const s of subjects) {
   for (const r of referencedSubjects(s.prerequisites)) unlocks.set(r, [...(unlocks.get(r) ?? []), s.code])
 }
 
-function runs(t: Translate, s: Subject, sep: string): string {
-  if (s.offerings === 'unknown') return t('seo.notRecorded')
-  const periods = periodsFor(s, YEAR)
-  return periods.length ? t('seo.runs', { year: YEAR, periods: periods.map((p) => t(`period.${p}`)).join(sep) }) : t('seo.notRunning', { year: YEAR })
-}
+const runs = (t: Translate, s: Subject, sep: string): string => runsLine(t, s, YEAR, sep)
 
 function assessment(t: Translate, s: Subject, sep: string): string | null {
   if (!s.assessment) return null
@@ -231,8 +226,7 @@ function assessment(t: Translate, s: Subject, sep: string): string | null {
  * "Is it hard?" in one plain line, as the subject page's card says it: the B-SCI easy/hard
  * lists' verdict, its place on one, and the reasons. Honest when there's too little to go on.
  */
-function difficultyLine(t: Translate, code: LocaleCode, s: Subject): string {
-  const d = subjectDifficulty(forCourse(data, 'B-SCI').subjects, s.code, 'B-SCI', YEAR)
+function difficultyLine(t: Translate, code: LocaleCode, s: Subject, d: Difficulty): string {
   if (d.level === 'unknown') return t('fit.level.unknown')
   const note = d.place
     ? t(`fit.place.${d.place.direction}`, { n: d.place.place, course: 'Bachelor of Science' })
@@ -266,7 +260,8 @@ function subjectPage(code: LocaleCode, s: Subject): Page {
   const assess = assessment(t, s, listSep(code))
   const sig = s.signals && s.signals.reviews >= 3 ? s.signals : undefined
   const gist = subjectGist(t, s)
-  const hard = difficultyLine(t, code, s)
+  const difficulty = subjectDifficulty(sciSubjectMap, s.code, 'B-SCI', YEAR)
+  const hard = difficultyLine(t, code, s, difficulty)
   const parts = [
     `<h1>${esc(s.code)} ${esc(facts.title)}</h1>`,
     `<p>${esc(t('seo.facts', facts))} · ${esc(runs(t, s, listSep(code)))}</p>`,
@@ -317,27 +312,12 @@ function subjectPage(code: LocaleCode, s: Subject): Page {
   if (s.handbook) parts.push(`<p><a href="${esc(s.handbook)}">${esc(t('seo.confirm'))}</a></p>`)
   parts.push(`<p><a href="${href(code, '')}">${esc(t('seo.made'))}</a></p>`)
 
-  // Lead with what students say (the first summary point), else the at-a-glance facts, then the
-  // invitation to rate it: that's what a student searching "<code> review" wants to see first.
   const firstPoint = ds[0]?.points[0] ? pickLocalized(ds[0].points[0], code) : ''
-  const description = [
-    firstPoint,
-    hard,
-    // A sentence of its own: the gist lines carry no full stop.
-    ...(gist.length ? [`${gist.join(listSep(code))}${CJK.has(code) ? '。' : '.'}`] : []),
-    t('seo.rateDesc'),
-    t('seo.subjectDesc', facts),
-    ...(s.about ? [pickLocalized(s.about.learn, code)] : []),
-    runs(t, s, listSep(code)),
-    s.prerequisites === 'none' ? t('seo.noPrereq') : s.prerequisites === 'unknown' ? '' : t('seo.needs', { needs: prereq }),
-    assess ? t('seo.assessment', { parts: assess }) : '',
-  ]
-    .filter(Boolean)
-    .join(sentenceSep(code))
   return {
     path: `subject/${s.code}`,
-    title: `${t(subjectTitleKey(s), facts)} | PickMySubjects`,
-    description: description.length > 300 ? `${description.slice(0, 297)}…` : description,
+    // The same title the app sets; the description is whole sentences of facts that fit a search result.
+    title: subjectPageTitle(t, s, code),
+    description: subjectPageDescription(t, s, code, { level: difficulty.level, year: YEAR }),
     body: parts.join('\n'),
     faq,
     ld: courseLd(code, s, facts.title, s.prerequisites !== 'unknown' && s.prerequisites !== 'none' ? prereq : undefined, [gist.length ? `${gist.join(listSep(code))}${CJK.has(code) ? '。' : '.'}` : '', firstPoint].filter(Boolean).join(sentenceSep(code))),
@@ -473,7 +453,8 @@ const RANKS: RankDirection[] = ['easy', 'hard']
 const RANK_TOP = 30
 const RANK_TOP_BREADTH = 15
 // Static pages are written for Bachelor of Science students, as the rest are.
-const sciSubjects = Object.values(forCourse(data, 'B-SCI').subjects)
+const sciSubjectMap = forCourse(data, 'B-SCI').subjects
+const sciSubjects = Object.values(sciSubjectMap)
 
 /** A reason in this page's language ("1 other hurdle task", not "1 other hurdle tasks"). */
 function reasonText(t: Translate, code: LocaleCode, r: RankReason): string {
@@ -695,6 +676,9 @@ function homeDemoHtml(code: LocaleCode, t: Translate): string {
 <h2>${esc(t('home.demoPlan'))}</h2><p><a href="${href(code, 'plan')}">${esc(homeDemo.plan.courseTitle)} · ${esc(homeDemo.plan.majorTitle)}</a>: ${esc(t('rules.progress', { met: homeDemo.plan.met, total: homeDemo.plan.total }))}</p><ol>${terms}</ol>`
 }
 
+// The search titles and descriptions of these pages are shared with the app (src/utils/seo.ts).
+const counts = { subjects: subjects.length, reviewed }
+
 function mainPages(code: LocaleCode): Page[] {
   const t = translator(code)
   const intro = `<p>${esc(t('seo.made'))}</p>`
@@ -707,8 +691,8 @@ function mainPages(code: LocaleCode): Page[] {
   return [
     {
       path: '',
-      title: t('seo.homeTitle'),
-      description: t('seo.homeDesc', { n: reviewed }),
+      title: listPageTitle(t, 'home'),
+      description: listPageDescription(t, 'home', counts),
       body: `<h1>${esc(t('home.title').replaceAll('*', '').replaceAll('|', ['zh-CN', 'zh-TW', 'ja'].includes(code) ? '' : ' '))}</h1><p>${esc(t('home.lede'))}</p><p>${esc(t('home.scope'))}</p>${intro}
 ${homeDemoHtml(code, t)}
 <ul><li><a href="${href(code, 'plan')}">${esc(t('home.cardPlan'))}</a>: ${esc(t('home.cardPlanText'))}</li>
@@ -744,8 +728,8 @@ ${homeDemoHtml(code, t)}
     },
     {
       path: 'subjects',
-      title: `${t('browse.title')} | PickMySubjects`,
-      description: t('browse.lede'),
+      title: listPageTitle(t, 'subjects'),
+      description: listPageDescription(t, 'subjects', counts),
       body: browseBody(code, t),
     },
     ...presetPages(code, t),
@@ -758,14 +742,14 @@ ${homeDemoHtml(code, t)}
     },
     {
       path: 'careers',
-      title: `${t('careerPath.title')} | PickMySubjects`,
-      description: t('careerPath.lede'),
+      title: listPageTitle(t, 'careers'),
+      description: listPageDescription(t, 'careers', counts),
       body: careerListHtml(data, t, code, (id) => href(code, `careers/${id}`)),
     },
     {
       path: 'guide',
-      title: `${t('guide.title')} | PickMySubjects`,
-      description: t('guide.lede'),
+      title: listPageTitle(t, 'guide'),
+      description: listPageDescription(t, 'guide', counts),
       body: guideBody(code, t, 'overview'),
     },
     ...GUIDE_CATEGORIES.map((c) => ({

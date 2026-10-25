@@ -85,7 +85,8 @@ npm run dev        # validates data, then starts the app at http://localhost:518
 npm test           # engine tests
 npm run typecheck
 npm run build      # app + one static page per subject and language, sitemap, robots.txt, llms.txt
-npm run indexnow   # tell Bing/IndexNow about every URL in the live sitemap (sends to an outside service)
+npm run indexnow   # tell Bing/IndexNow about every URL in the live sitemap (sends to an outside service;
+                   # the deploy workflow already does this once a day; --dry-run to only count)
 ```
 
 There are two datasets:
