@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { gradeOffsets, wamBandMid, type GradeOffset, type GradeRow } from '../src/engine/grades'
+import { predictMark, RANGE_SHARE } from '../src/engine/predict'
+import { dataset, subject } from './helpers'
 import { makeWorld, shareRows, type World } from './synthetic'
 
 /**
@@ -73,5 +75,55 @@ describe('grade offsets on synthetic students', () => {
 
   it('the old midpoint estimator fails the same check: strong students’ subjects look harder than they are', () => {
     for (const sd of [0, 3]) expect(recovery(seeds, sd, midpointOffsets).advanced).toBeLessThan(-1)
+  })
+})
+
+describe('likely marks on synthetic students', () => {
+  // Every student's last subject is held out and predicted from the rest.
+  const world = makeWorld({ seed: 11, deltaSd: 3, students: 400, noise: 8 })
+  const truth = centred(world)
+  const codes = [...world.delta.keys()]
+  const build = (known: boolean) =>
+    dataset(
+      codes.map((code, i) => {
+        const s = subject({ code, area: `AREA${i % 6}`, prerequisites: 'none' })
+        return known ? { ...s, gradeOffset: { offset: truth.get(code)!, sd: 0.5, n: 20 } } : s
+      }),
+    )
+
+  function run(known: boolean) {
+    const data = build(known)
+    const err: number[] = []
+    const errWam: number[] = []
+    const inside: number[] = []
+    for (const st of world.students) {
+      const all = [...st.marks]
+      const [code, actual] = all[all.length - 1]!
+      const marks = new Map(all.slice(0, -1))
+      const guess = predictMark(data.subjects[code]!, marks, data)!
+      const wam = [...marks.values()].reduce((a, b) => a + b, 0) / marks.size
+      err.push(Math.abs(guess.mark - actual))
+      errWam.push(Math.abs(wam - actual))
+      inside.push(actual >= guess.low && actual <= guess.high ? 1 : 0)
+    }
+    const mean = (xs: number[]) => xs.reduce((a, b) => a + b, 0) / xs.length
+    return { mae: mean(err), maeWam: mean(errWam), coverage: mean(inside) }
+  }
+
+  it('once each subject’s grading is known, beats the plain WAM', () => {
+    const r = run(true)
+    expect(r.mae).toBeLessThan(r.maeWam - 0.2)
+  })
+
+  it('with no shared grades, is never much worse than the plain WAM', () => {
+    const r = run(false)
+    expect(r.mae).toBeLessThan(r.maeWam + 0.2)
+  })
+
+  it(`the range holds the mark about ${RANGE_SHARE * 100}% of the time, as it says`, () => {
+    for (const known of [false, true]) {
+      const r = run(known)
+      expect(Math.abs(r.coverage - RANGE_SHARE)).toBeLessThan(0.07)
+    }
   })
 })
