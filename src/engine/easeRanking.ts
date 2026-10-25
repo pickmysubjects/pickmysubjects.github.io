@@ -8,7 +8,7 @@ import { discussionVerdict, type Period, type Subject } from './schema'
  *
  * Two kinds of evidence, kept apart:
  * - Handbook facts, known for almost every subject: final-exam share, hurdles, weekly class
- *   hours, number of assessment tasks, level.
+ *   hours, level.
  * - What students say: the verdict tagged on a public review summary (difficulty, workload),
  *   our own ratings once 3 or more students gave them, and how shared grades sit against WAMs.
  *
@@ -149,11 +149,9 @@ function evidence(s: Subject): Evidence {
       f -= Math.min(2, otherHurdles) * 0.05
       hard.push({ key: 'hurdles', params: { n: otherHurdles } })
     }
-    // Many separate tasks mean steady work all semester.
-    if (tasks.length >= 7) {
-      f -= 0.1
-      hard.push({ key: 'manyTasks', params: { n: tasks.length } })
-    }
+    // The number of tasks isn't counted here: many small tasks spread the risk rather than add to
+    // it (reviews lean slightly easier with more of them). They're workload, which the semester
+    // check counts (termStress, DEADLINES_RULE).
     facts = f
   }
   const h = s.weeklyContactHours

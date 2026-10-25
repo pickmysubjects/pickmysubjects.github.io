@@ -85,6 +85,15 @@ describe('ease ranking (synthetic subjects)', () => {
     expect(rankSubject(three, 'easy')!.reasons.map((r) => r.key)).toEqual(['ratedEasy', 'generous', 'firstYear'])
   })
 
+  it('the number of tasks is workload, not difficulty: it leaves ease alone', () => {
+    const many = Array.from({ length: 8 }, () => ({ kind: 'assignment', weight: 12.5 }))
+    const few = [{ kind: 'assignment', weight: 50 }, { kind: 'assignment', weight: 50 }]
+    const a = rankSubject(base('TASK10001', { assessment: many }), 'hard')!
+    const b = rankSubject(base('TASK10002', { assessment: few }), 'hard')!
+    expect(a.score).toBe(b.score)
+    expect(a.reasons.map((r) => r.key)).not.toContain('manyTasks')
+  })
+
   it('nothing known: not ranked at all', () => {
     expect(rankSubject(base('LLLL10001'), 'easy')).toBeNull()
   })
