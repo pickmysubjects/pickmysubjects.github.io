@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { evaluate } from '../src/engine/expr'
-import { computeWam, marksForConditions, recommend, type Profile } from '../src/engine/recommend'
+import { computeWam, exactWam, marksForConditions, recommend, type Profile } from '../src/engine/recommend'
 import { checkTerms } from '../src/engine/planCheck'
 import { planFor } from '../src/composables/usePlan'
 import type { PlanState } from '../src/composables/planStore'
@@ -63,5 +63,17 @@ describe('average and WAM conditions count the whole marked record', () => {
     const wam = computeWam(results, data)
     expect(wam).toBe(65)
     expect(evaluate({ wam: { min: 70 } }, ctx(['AAAA10001'], marksForConditions(results, data), wam)).status).toBe('fail')
+  })
+
+  it('compares the WAM unrounded: 74.95 doesn’t meet a WAM of 75', () => {
+    // Twenty 12.5-point subjects, nineteen at 75 and one at 74.
+    const codes = Array.from({ length: 20 }, (_, i) => `CCCC1${String(i).padStart(4, '0')}`)
+    const many = dataset([...codes.map((code) => subject({ code, prerequisites: 'none' })), subject({ code: 'DDDD30001', prerequisites: { wam: { min: 75 } }, offerings: { 2026: ['semester-1'] } })])
+    const results = codes.map((code, i) => ({ code, mark: i === 0 ? 74 : 75 }))
+    expect(computeWam(results, many)).toBe(75) // shown to one decimal
+    const r = evaluate({ wam: { min: 75 } }, { completed: new Set(codes), subjects: many.subjects, wam: exactWam(results, many) })
+    expect(r).toEqual({ status: 'fail', unmet: ['a WAM of 75 or more (have 74.9)'] })
+    // Suggestions read it the same way.
+    expect(recommend(many, { results, skills: {}, interests: [], goal: 'balanced' }, { year: 2026 }).some((x) => x.code === 'DDDD30001')).toBe(false)
   })
 })

@@ -417,15 +417,18 @@ function weakAverage(skill: Skill, data: Dataset, profile?: Profile): number | n
   return avg < (marks.length >= 2 ? WEAK_MARK : WEAK_SINGLE_MARK) ? avg : null
 }
 
-/** The student's marks in past subjects that lean on this skill. */
+/**
+ * The student's marks in past subjects that lean on this skill: one per subject, a retake as the
+ * average of its attempts (as skillsFromMarks and the predictions read them).
+ */
 function pastMarks(skill: Skill, data: Dataset, profile?: Profile): number[] {
-  return (profile?.results ?? [])
-    .filter((r) => r.mark !== undefined)
-    .filter((r) => {
-      const s = data.subjects[r.code]
-      return s !== undefined && !s.passFail && skillsOf(s, data).includes(skill)
-    })
-    .map((r) => r.mark as number)
+  const attempts = new Map<string, number[]>()
+  for (const r of profile?.results ?? []) {
+    const s = data.subjects[r.code]
+    if (r.mark === undefined || s === undefined || s.passFail || !skillsOf(s, data).includes(skill)) continue
+    attempts.set(r.code, [...(attempts.get(r.code) ?? []), r.mark])
+  }
+  return [...attempts.values()].map((ms) => ms.reduce((a, b) => a + b, 0) / ms.length)
 }
 
 /**

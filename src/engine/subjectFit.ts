@@ -208,18 +208,23 @@ const MAX_WHY = 3
  * nothing pulls it down, it's that nothing in the profile points to it: 'neutral', naming the
  * strong skills it doesn't use.
  */
-export function whyNotFit(rec: Recommendation, profile: Pick<Profile, 'skills' | 'interests'>, s: Subject, data: Dataset): FitFactor[] {
-  const drags = (rec.factors ?? []).filter((f) => f.effect <= -WHY_MIN_EFFECT).sort((a, b) => a.effect - b.effect)
+export function whyNotFit(rec: Recommendation, profile: Pick<Profile, 'skills' | 'interests'> & { goal?: Profile['goal'] }, s: Subject, data: Dataset): FitFactor[] {
+  // Marks only ("easy"): interests and strengths don't count, so they are no reason either way.
+  const marksOnly = profile.goal === 'easy'
+  // A likely mark that is only the student's overall average pulls every option down alike: it
+  // can't be why this one fits less well than the others (the fit is a share of the others).
+  const sameForAll = (f: FitFactor) => f.key === 'predicted' && !f.params.codes
+  const drags = (rec.factors ?? []).filter((f) => f.effect <= -WHY_MIN_EFFECT && !sameForAll(f)).sort((a, b) => a.effect - b.effect)
   // The weak-skill nudge and the skills signal name the same skills: say it once, as the nudge.
   if (drags.some((f) => f.key === 'offTopicStruggle')) {
     const i = drags.findIndex((f) => f.key === 'skillFit' && f.params.weak)
     if (i >= 0) drags.splice(i, 1)
   }
   const out = drags.slice(0, MAX_WHY)
-  if (profile.interests.length === 0) out.push({ key: 'noInterests', effect: 0, params: {} })
+  if (profile.interests.length === 0 && !marksOnly) out.push({ key: 'noInterests', effect: 0, params: {} })
   if (!drags.length) {
     const uses = new Set(skillsOf(s, data))
-    const strong = (Object.keys(profile.skills) as (keyof typeof profile.skills)[]).filter((k) => (profile.skills[k] ?? 0) >= 4 && !uses.has(k))
+    const strong = marksOnly ? [] : (Object.keys(profile.skills) as (keyof typeof profile.skills)[]).filter((k) => (profile.skills[k] ?? 0) >= 4 && !uses.has(k))
     out.unshift({ key: strong.length ? 'neutral' : 'neutralNone', effect: 0, params: { skills: strong.slice(0, 3).join(', ') } })
   }
   return out

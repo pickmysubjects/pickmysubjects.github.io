@@ -1,5 +1,5 @@
 import { forCourse } from './forCourse'
-import { offeredIn, periodsFor } from './availability'
+import { offeredIn, periodsFor, termKey } from './availability'
 import { findCourse, majorTitles, minorTitles, withinCaps } from './courseRules'
 import { careerGoal, careerNameParams, goalTier } from './careerGoal'
 import { evaluateField, referencedSubjects, type Tri } from './expr'
@@ -219,8 +219,17 @@ export function passedCodes(results: Profile['results']): string[] {
   return results.filter((r) => !isFail(r)).map((r) => r.code)
 }
 
-/** Credit-point weighted average of marked results, fails included (UniMelb WAM is points-weighted). */
+/** Credit-point weighted average of marked results, fails included (UniMelb WAM is points-weighted), to one decimal for showing. */
 export function computeWam(results: Profile['results'], data: Dataset): number | null {
+  const wam = exactWam(results, data)
+  return wam === null ? null : Math.round(wam * 10) / 10
+}
+
+/**
+ * The same WAM unrounded, for what it is compared against: a WAM condition ("a WAM of 75") or a
+ * five-point band. Rounded first, 74.95 read as 75 and met a condition it doesn't.
+ */
+export function exactWam(results: Profile['results'], data: Dataset): number | null {
   let weighted = 0
   let points = 0
   for (const r of results) {
@@ -230,7 +239,7 @@ export function computeWam(results: Profile['results'], data: Dataset): number |
     weighted += r.mark * pts
     points += pts
   }
-  return points > 0 ? Math.round((weighted / points) * 10) / 10 : null
+  return points > 0 ? weighted / points : null
 }
 
 /**
@@ -263,11 +272,14 @@ export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions =
   // Marks only: what a subject is about doesn't come into it, not even to break a tie.
   const asked = given.goal === 'easy' ? { ...given, interests: [] } : given
   // The student's own ratings of subjects they took fill in what they didn't say outright.
-  const { profile, liked } = personalise(asked, raw)
+  const { profile, liked: likedTopics } = personalise(asked, raw)
+  // Marks only: topics of subjects they liked don't count either.
+  const liked = given.goal === 'easy' ? new Map<string, string>() : likedTopics
   const data = opts.course ? forCourse(raw, opts.course) : raw
   const completed = new Set(passedCodes(profile.results))
   const taken = new Set([...completed, ...(opts.planned ?? [])])
   const wam = computeWam(profile.results, data)
+  const wamExact = exactWam(profile.results, data)
   // Taken twice (a fail, then a pass): the better mark says how they now go in it.
   const marks = new Map<string, number>()
   // Retaken subjects: the average of the attempts, so an earlier fail still says something
@@ -275,6 +287,14 @@ export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions =
   const attempts = new Map<string, number[]>()
   for (const r of profile.results) if (r.mark !== undefined && !raw.subjects[r.code]?.passFail) attempts.set(r.code, [...(attempts.get(r.code) ?? []), r.mark])
   for (const [code, ms] of attempts) marks.set(code, ms.reduce((a, b) => a + b, 0) / ms.length)
+  // The latest attempt, for "you got … last time": by semester when both are dated, else the one entered last.
+  const lastMark = new Map<string, Profile['results'][number]>()
+  for (const r of profile.results) {
+    if (r.mark === undefined || raw.subjects[r.code]?.passFail) continue
+    const was = lastMark.get(r.code)
+    const earlier = was && was.year !== undefined && was.period && r.year !== undefined && r.period && termKey(r.year, r.period) < termKey(was.year, was.period)
+    if (!earlier) lastMark.set(r.code, r)
+  }
   // Conditions on marks read the best attempt (and the WAM over every attempt, as the University does).
   const markRecord = marksForConditions(profile.results, raw)
   const majors = opts.majors ?? (opts.programme ? majorTitles(data, opts.programme.components) : undefined)
@@ -414,7 +434,7 @@ export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions =
       majors,
       minors,
       marks: markRecord,
-      wam,
+      wam: wamExact,
     })
     if (pre.status === 'fail') {
       skip({ key: 'needsFirst' })
@@ -425,7 +445,7 @@ export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions =
 
     const rec = score(s, { profile, data, wam, marks, dependents, eligibility, unmet: pre.unmet, ratingMean, taken, blocked, liked })
     // A fail on My page: this would be a retake, which the student should know before adding it.
-    const failed = marks.get(s.code)
+    const failed = lastMark.get(s.code)?.mark
     if (failed !== undefined && failed < PASS_MARK) rec.warnings.unshift(note('retake', { mark: failed }, `You got ${failed} last time: this would be a retake.`))
     // A third-year student rarely gains from a first-year science subject (the degree wants
     // level-3 points), and a level below their year is a smaller step back; breadth is
@@ -667,7 +687,9 @@ function score(s: Subject, ctx: ScoreCtx): Recommendation {
   const guess = ctx.marks.size ? predictMark(s, ctx.marks, ctx.data) : null
   if (guess) {
     const m = guess.mark
-    parts.predicted = clamp((m - 50) / 50)
+    // The subject's own grading (shared grades) is already in ease below: the signal here is the
+    // student's level, so the same evidence isn't counted twice. What's said keeps the full mark.
+    parts.predicted = clamp((m - (s.gradeOffset?.offset ?? 0) - 50) / 50)
     const params = { mark: Math.round(m), low: Math.round(guess.low), high: Math.round(guess.high), codes: guess.basis.join(', ') }
     detail.predicted = params
     const wam = ctx.wam ?? m

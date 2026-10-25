@@ -96,3 +96,24 @@ describe('the WAM a prediction leans back to', () => {
     expect(guess?.mark).toBe(80)
   })
 })
+
+describe('shared grades count once in a suggestion', () => {
+  it('in how easy a subject is, not again in the student’s likely mark', async () => {
+    const { dataset, subject } = await import('./helpers')
+    const run = { prerequisites: 'none', offerings: { 2026: ['semester-1'] }, assessment: [{ kind: 'exam', weight: 50 }, { kind: 'assignment', weight: 50 }] }
+    const plain = subject({ code: 'AAAA10001', ...run })
+    const generous = { ...subject({ code: 'AAAA10002', ...run }), gradeOffset: { offset: 6, n: 12 } }
+    const done = ['BBBB10001', 'BBBB10002', 'BBBB10003'].map((code) => subject({ code, prerequisites: 'none' }))
+    const data = dataset([plain, generous, ...done])
+    const results = [{ code: 'BBBB10001', mark: 70 }, { code: 'BBBB10002', mark: 74 }, { code: 'BBBB10003', mark: 72 }]
+    const recs = recommend(data, { results, skills: {}, interests: [], goal: 'wam' }, { year: 2026 })
+    const factor = (code: string, key: string) => recs.find((r) => r.code === code)?.factors?.find((f) => f.key === key)?.effect ?? 0
+    // The generous one is easier to do well in…
+    expect(factor('AAAA10002', 'ease')).toBeGreaterThan(factor('AAAA10001', 'ease'))
+    // …and that's said once: the likely-mark part is the student's own level for both.
+    expect(factor('AAAA10002', 'predicted')).toBe(factor('AAAA10001', 'predicted'))
+    // What it tells the student is still the likely mark, grading included.
+    const said = (code: string) => recs.find((r) => r.code === code)?.reasons.find((x) => x.key === 'predictedWam')?.params.mark
+    expect(Number(said('AAAA10002'))).toBe(Number(said('AAAA10001')) + 6)
+  })
+})

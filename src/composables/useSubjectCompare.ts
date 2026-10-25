@@ -1,8 +1,10 @@
 import { computed, type Ref } from 'vue'
 import {
+  exactWam,
   evaluateField,
   hasFitProfile,
   isFail,
+  marksForConditions,
   periodsFor,
   simplifyFor,
   subjectDifficulty,
@@ -65,7 +67,10 @@ export function useSubjectCompare(codes: Ref<string[]>) {
     for (const task of tasks ?? []) byKind.set(task.kind, (byKind.get(task.kind) ?? 0) + task.weight)
     const needs = simplifyFor(s.prerequisites, course.value)
     const passed = profile.value.results.filter((r) => !isFail(r))
-    const marks = Object.fromEntries(profile.value.results.filter((r) => r.mark !== undefined).map((r) => [r.code, r.mark as number]))
+    // As the plan and suggestions read them: each subject's best attempt (pass/fail ones have no
+    // mark), and the WAM over every attempt.
+    const marks = marksForConditions(profile.value.results, data.value)
+    const wam = exactWam(profile.value.results, data.value)
     const sig = s.signals
     const closed = data.value.courses.some((c) => c.code === course.value && c.closed.includes(s.code))
     return {
@@ -83,7 +88,7 @@ export function useSubjectCompare(codes: Ref<string[]>) {
       prereq:
         needs === 'none'
           ? 'none'
-          : evaluateField(needs, { completed: new Set(passed.map((r) => r.code)), subjects: data.value.subjects, admittedCourse: course.value, marks }).status,
+          : evaluateField(needs, { completed: new Set(passed.map((r) => r.code)), subjects: data.value.subjects, admittedCourse: course.value, marks, wam }).status,
       ratings: sig && sig.reviews > 0 ? { reviews: sig.reviews, overall: sig.overall, recommend: sig.recommend } : null,
       category: closed ? 'closed' : s.categories[course.value],
     }

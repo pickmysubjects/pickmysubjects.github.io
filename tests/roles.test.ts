@@ -29,3 +29,22 @@ describe('subjectRoles (real data)', () => {
     expect(() => subjectRoles(demo(), 'AAAA10001', 'X')).not.toThrow()
   })
 })
+
+describe('a major’s overview is worked out once', () => {
+  // Every suggestion list with a major, the plan's stress check (every major of the student's
+  // course and of B-SCI) and the plan builder ask for it: uncached, a non-Science student's first
+  // planner view spent seconds on it, the page frozen.
+  it('returns the same overview again without working it out anew, and the same answer', async () => {
+    const { majorOverview, planRoles } = await import('../src/engine/roles')
+    const { dataset: data } = buildDataset('real')
+    const first = majorOverview(data, 'computing-and-software-systems', 'B-SCI')
+    expect(first?.core).toContain('COMP30023')
+    expect(majorOverview(data, 'computing-and-software-systems', 'B-SCI')).toBe(first)
+    // Another view of the data (another degree's) is its own.
+    const other = { ...data, subjects: { ...data.subjects } }
+    expect(majorOverview(other, 'computing-and-software-systems', 'B-SCI')).toEqual(first)
+    expect(majorOverview(other, 'computing-and-software-systems', 'B-SCI')).not.toBe(first)
+    const roles = planRoles(data, 'B-SCI', 2026, ['computing-and-software-systems'])
+    expect([...roles.required]).toEqual(expect.arrayContaining(first!.core))
+  })
+})

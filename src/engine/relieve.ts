@@ -287,14 +287,19 @@ function goalMajors(plan: Plan): string[] {
 
 const ALTERNATIVES = new WeakMap<Dataset, Map<string, string[]>>()
 
-/** Subjects that could fill a free-elective slot, best first for this student (the suggestions' ranking). */
-function alternatives(data: Dataset, profile: Profile, course: string, category: string, level: number, term: PlanTerm, majors: string[]): string[] {
+/**
+ * Subjects that could fill a free-elective slot, best first for this student (the suggestions'
+ * ranking), among those whose prerequisites what comes before the slot (`before`) meets.
+ */
+function alternatives(data: Dataset, profile: Profile, course: string, category: string, level: number, term: PlanTerm, majors: string[], before: Set<string>): string[] {
   let cache = ALTERNATIVES.get(data)
   if (!cache) ALTERNATIVES.set(data, (cache = new Map()))
-  const key = JSON.stringify([profile, course, category, level, term.year, term.period, profile.career ? majors : []])
+  const key = JSON.stringify([profile, course, category, level, term.year, term.period, profile.career ? majors : [], [...before].sort()])
   let out = cache.get(key)
   if (!out) {
-    out = recommend(data, profile, { course, category, level, term: { year: term.year, period: term.period }, eligibleWith: [], ...(profile.career ? { goalComponents: majors } : {}) })
+    // An empty list here meant no prerequisite counted as met, so only subjects needing nothing
+    // first could ever stand in (never a level-2 elective after its level-1 one).
+    out = recommend(data, profile, { course, category, level, term: { year: term.year, period: term.period }, eligibleWith: [...before], ...(profile.career ? { goalComponents: majors } : {}) })
       .filter((x) => x.eligibility !== 'fail')
       .map((x) => x.code)
     cache.set(key, out)
@@ -347,6 +352,8 @@ function replaceFor(
   const stress = judge.at(plan.terms, termIndex)
   const named = stress.reasons.flatMap((r) => String(r.params.codes ?? '').split(', ')).filter((c) => term.subjects.includes(c))
   const done = [...plan.completed, ...passedCodes(profile?.results ?? [])]
+  // What a stand-in's prerequisites can rest on: everything finished before this semester.
+  const before = doneBefore(plan.completed, plan.terms, termIndex, data)
   const student: Profile = profile ?? { results: [], skills: {}, interests: [], goal: 'balanced' }
   // The student's interests a subject serves. An exact topic: "related" is too loose here
   // (languages and ethics share a group).
@@ -360,7 +367,7 @@ function replaceFor(
     if (!s || fixed.has(code) || !s.categories[plan.course] || leanedOn(plan, data, code)) continue
     // Ranked once per kind of slot (category, level, teaching period) and student; whether
     // the prerequisites are met where it would go is checked on the whole plan below.
-    const recs = alternatives(data, student, plan.course, s.categories[plan.course] as string, s.level, term, goalMajors(plan))
+    const recs = alternatives(data, student, plan.course, s.categories[plan.course] as string, s.level, term, goalMajors(plan), before)
       .filter((x) => !inPlan.includes(x) && !done.includes(x) && data.subjects[x]?.points === s.points)
       .slice(0, REPLACE_TRIES)
     // Swapping a subject the student picked for their interests for one they don't care about

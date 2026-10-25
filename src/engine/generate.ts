@@ -5,7 +5,7 @@ import { careerGoal } from './careerGoal'
 import { evaluateField, referencedSubjects, type EvalContext, type Tri } from './expr'
 import type { Note, Params, Plan, PlanTerm } from './plan'
 import { nextEntry, standardTerms } from './plan'
-import { HEAVY_PICK_COST, computeWam, marksForConditions, passedCodes, recommend, type Profile } from './recommend'
+import { HEAVY_PICK_COST, exactWam, marksForConditions, passedCodes, recommend, type Profile } from './recommend'
 import { checkTerms } from './planCheck'
 import { balanceTerms, fixHeavyTerms } from './relieve'
 import { skillsOf, termStress, weakSkills, type StressLevel } from './termStress'
@@ -110,6 +110,8 @@ function generateFrom(raw: GenerateInput): GenerateResult {
 
 /** Most semesters a plan runs to. */
 const MAX_TERMS = 10
+/** Points a choice option gives up for each prerequisite subject it adds to the plan. */
+const EXTRA_SUBJECT_COST = HEAVY_PICK_COST
 
 function semesters(r: GenerateResult): number {
   return r.plan.terms.filter((t) => t.period === 'semester-1' || t.period === 'semester-2').length
@@ -393,7 +395,7 @@ function buildPlan(given: GenerateInput): GenerateResult {
   // coordinator (or retake) first.
   const marks = marksForConditions(profile.results, data)
   if (Object.keys(marks).length) {
-    const wam = computeWam(profile.results, data)
+    const wam = exactWam(profile.results, data)
     terms.forEach((t, i) => {
       const before = doneBefore(completed, terms, i, data)
       for (const code of t.subjects.filter((c) => required.has(c))) {
@@ -541,7 +543,9 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
 
   // "Choose N points from" groups, once every fixed subject is known. Ties in
   // score go to subjects that run in the least crowded teaching period.
-  const score = new Map(recommend(data, input.profile, { course: input.course, eligibleWith: [], year: input.startYear, goalComponents: goalMajors(input) }).map((r) => [r.code, r.score]))
+  // Every option is scored as if its prerequisites were met: the plan adds them (closePrereqs),
+  // and an empty list here left out every option that needs something first (most of a major's).
+  const score = new Map(recommend(data, input.profile, { course: input.course, eligibleWith: Object.keys(data.subjects), year: input.startYear, goalComponents: goalMajors(input) }).map((r) => [r.code, r.score]))
   for (const { title, req, used, others = [], limits = [] } of groups) {
     // Claimed by a component this one can't share subjects with (B-ARTS: one major or minor each).
     const taken = (c: string) => used.has(c) || others.some((o) => o.has(c))
@@ -557,7 +561,8 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
       if (have >= req.choose.points) break
       if ((done.has(c) || required.has(c)) && !taken(c) && fits(c, data.subjects[c]?.points ?? 12.5)) {
         used.add(c)
-        have += data.subjects[c]?.points ?? 0
+        // A subject we have no data for counts as a standard 12.5 points, as the course check counts it.
+        have += data.subjects[c]?.points ?? 12.5
       }
     }
     const crowd = periodCrowding(required, data, input.startYear)
@@ -579,14 +584,22 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
     }
     // An option whose prerequisites would bring in three or more subjects not otherwise planned (a
     // finance elective resting on three more maths subjects) after the ones that don't.
-    const extra = (c: string) => {
-      const sub = data.subjects[c]
-      if (!sub || sub.prerequisites === 'none' || sub.prerequisites === 'unknown') return 0
-      const adds = resolvePrereqs(sub.prerequisites, done, required, data, input.course, c, majorsOf(input)).filter((x) => !required.has(x)).length
-      return adds >= 3 ? adds : 0
+    const addsOf = new Map<string, number>()
+    const adds = (c: string) => {
+      let n = addsOf.get(c)
+      if (n === undefined) {
+        const sub = data.subjects[c]
+        n = !sub || sub.prerequisites === 'none' || sub.prerequisites === 'unknown' ? 0 : resolvePrereqs(sub.prerequisites, done, required, data, input.course, c, majorsOf(input)).filter((x) => !required.has(x)).length
+        addsOf.set(c, n)
+      }
+      return n
     }
+    const extra = (c: string) => (adds(c) >= 3 ? adds(c) : 0)
+    // Each subject an option brings in first takes an elective's place (and, in a full plan, can
+    // push a cap over): it has to fit clearly better than an option that needs nothing more.
+    const fit = (c: string) => (score.get(c) ?? -1) - EXTRA_SUBJECT_COST * adds(c)
     const order = [...req.choose.from].sort(
-      (a, b) => off(a) - off(b) || byHand(a) - byHand(b) || Number(named.has(b)) - Number(named.has(a)) || extra(a) - extra(b) || (score.get(b) ?? -1) - (score.get(a) ?? -1) || busy(a) - busy(b),
+      (a, b) => off(a) - off(b) || byHand(a) - byHand(b) || Number(named.has(b)) - Number(named.has(a)) || extra(a) - extra(b) || fit(b) - fit(a) || busy(a) - busy(b),
     )
     for (const c of order) {
       if (have >= req.choose.points) break

@@ -45,6 +45,14 @@ describe('termStress', () => {
     expect(termStress(calcAndAlgebra, twoData, withMarks(50)).reasons[0]).toMatchObject({ key: 'stackMarks', params: { mark: 50 } })
   })
 
+  it('reads a retaken subject as the average of its attempts, one subject, as My page does', () => {
+    const more = dataset([...Object.values(data.subjects), plain('MAST10009'), plain('MAST10010')])
+    // 30 then 80 in MAST10005 (55), and 72 twice: about 66 a subject, not a weakness. Counting
+    // each attempt as its own mark made it 64, under the line.
+    const p = profile({ results: [{ code: 'MAST10005', mark: 30 }, { code: 'MAST10005', mark: 80 }, { code: 'MAST10009', mark: 72 }, { code: 'MAST10010', mark: 72 }] })
+    expect(termStress(calcAndAlgebra, more, p)).toMatchObject({ level: 'ok', reasons: [] })
+  })
+
   const four = ['AAAA10001', 'AAAA10002', 'AAAA10003', 'AAAA10004']
   const term = (extra: (i: number) => Record<string, unknown>) => dataset(four.map((code, i) => plain(code, extra(i))))
 
@@ -226,6 +234,36 @@ describe('relieveTerm offers a different elective', () => {
     ])
     const plan: Plan = { course: 'NONE', courseYear: 2026, completed: [], terms: [{ year: 2027, period: 'semester-1', subjects: ['MAST10006', 'ECON10003', 'BIOL10001', 'BIOL10002'] }] }
     expect(relieveTerm(plan, data, 0)).toMatchObject({ kind: 'replace', code: 'ECON10003', with: 'MKTG10001' })
+  })
+})
+
+describe('relieveTerm offers a different elective with prerequisites', () => {
+  it('considers a later-year elective whose prerequisite the plan already has', () => {
+    const s1 = { offerings: { 2027: ['semester-1'] } }
+    const s2 = { offerings: { 2027: ['semester-2'] } }
+    const hard = { signals: { reviews: 5, difficulty: 4.5 } }
+    const breadth = { categories: { NONE: 'breadth' } }
+    const data = dataset([
+      plain('MKTG10001', { ...breadth, ...s1 }),
+      plain('BIOL10001', s1),
+      plain('BIOL10002', s1),
+      plain('MAST20006', { level: 2, ...s2, ...hard }),
+      plain('ECON20003', { level: 2, ...breadth, ...s2, ...hard }),
+      // The only lighter breadth elective at level 2 needs MKTG10001, done the semester before.
+      plain('MKTG20001', { level: 2, ...breadth, ...s2, prerequisites: 'MKTG10001' }),
+      plain('BIOL20001', { level: 2, ...s2 }),
+      plain('BIOL20002', { level: 2, ...s2 }),
+    ])
+    const plan: Plan = {
+      course: 'NONE',
+      courseYear: 2026,
+      completed: [],
+      terms: [
+        { year: 2027, period: 'semester-1', subjects: ['MKTG10001', 'BIOL10001', 'BIOL10002'] },
+        { year: 2027, period: 'semester-2', subjects: ['MAST20006', 'ECON20003', 'BIOL20001', 'BIOL20002'] },
+      ],
+    }
+    expect(relieveTerm(plan, data, 1)).toMatchObject({ kind: 'replace', code: 'ECON20003', with: 'MKTG20001' })
   })
 })
 

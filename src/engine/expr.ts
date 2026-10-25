@@ -260,14 +260,19 @@ function evaluateAverage(req: { min: number; levels?: number[]; areas?: string[]
   if (!codes.length) return { status: 'fail', unmet }
   const mean = meanMark(codes, ctx)
   if (mean === null) return { status: 'unknown', unmet }
-  return mean >= req.min ? ok() : { status: 'fail', unmet: [`${unmet[0]} (have ${Math.round(mean * 10) / 10})`] }
+  return mean >= req.min ? ok() : { status: 'fail', unmet: [`${unmet[0]} (have ${below(mean)})`] }
+}
+
+/** A short average to one decimal, rounded down: 74.95 short of 75 reads 74.9, never "have 75". */
+function below(mean: number): number {
+  return Math.floor(mean * 10) / 10
 }
 
 function evaluateWam(min: number, ctx: EvalContext): EvalResult {
   const unmet = [describe({ wam: { min } })]
   const mean = ctx.wam !== undefined ? ctx.wam : ctx.completed.size ? meanMark([...ctx.completed], ctx) : null
   if (mean === null) return { status: 'unknown', unmet }
-  return mean >= min ? ok() : { status: 'fail', unmet: [`${unmet[0]} (have ${Math.round(mean * 10) / 10})`] }
+  return mean >= min ? ok() : { status: 'fail', unmet: [`${unmet[0]} (have ${below(mean)})`] }
 }
 
 function combineAll(statuses: Tri[]): Tri {

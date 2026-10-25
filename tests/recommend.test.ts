@@ -264,6 +264,30 @@ describe('WAM with a pass/fail subject', () => {
   })
 })
 
+describe('recommend after two fails', () => {
+  it('names the latest attempt as "last time", not the average of both', () => {
+    const data = dataset([subject({ code: 'AAAA10001', prerequisites: 'none', offerings: { 2026: ['semester-1'] } })])
+    const retake = (results: Profile['results']) => recommend(data, { ...base, results }, { year: 2026 }).find((r) => r.code === 'AAAA10001')?.warnings.find((w) => w.key === 'retake')?.params.mark
+    // Entered in order: the second is the latest.
+    expect(retake([{ code: 'AAAA10001', mark: 40 }, { code: 'AAAA10001', mark: 45 }])).toBe(45)
+    // Dated: the later semester is the latest, whatever order they were entered in.
+    expect(retake([{ code: 'AAAA10001', mark: 45, year: 2025, period: 'semester-2' }, { code: 'AAAA10001', mark: 40, year: 2025, period: 'semester-1' }])).toBe(45)
+  })
+})
+
+describe('recommend for marks only (easy goal)', () => {
+  it('gives no topic reasons, not even from a subject the student rated well', () => {
+    const data = dataset([
+      subject({ code: 'AAAA10001', prerequisites: 'none', topics: ['biology'], offerings: { 2026: ['semester-1'] } }),
+      subject({ code: 'AAAA10002', prerequisites: 'none', topics: ['biology'], offerings: { 2026: ['semester-1'] } }),
+    ])
+    const p: Profile = { ...base, results: [{ code: 'AAAA10001', mark: 80 }], ratings: { AAAA10001: { recommend: 'Yes', interest: 5 } } }
+    const reasons = (goal: Profile['goal']) => recommend(data, { ...p, goal }, { year: 2026 }).find((r) => r.code === 'AAAA10002')?.reasons.map((x) => x.key)
+    expect(reasons('balanced')).toContain('likedBefore')
+    expect(reasons('easy')).not.toContain('likedBefore')
+  })
+})
+
 describe('fails and retakes', () => {
   it('counts both attempts of a retaken subject in the WAM, and the pass as done', () => {
     const data = dataset([subject({ code: 'AAAA10001', points: 12.5 }), subject({ code: 'AAAA10002', points: 12.5 })])

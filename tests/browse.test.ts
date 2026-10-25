@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { applyQuick, browse, browseAddress, EMPTY_FILTERS, filtersFromQuery, filtersToQuery, findRows, quickChoice, QUICK_CHOICES, type BrowseFilters } from '../src/engine/browse'
+import { applyQuick, browse, browseAddress, EMPTY_FILTERS, filtersFromQuery, filtersToQuery, findRows, quickChoice, QUICK_CHOICES, rankCourseOf, type BrowseFilters } from '../src/engine/browse'
 import { rankSubjects } from '../src/engine/easeRanking'
 import { recommend } from '../src/engine/recommend'
 import { buildDataset } from '../scripts/dataset'
@@ -169,5 +169,45 @@ describe('quick choices on Find subjects', () => {
 
   it('"sort for me" off: the ordinary filtered list', () => {
     expect(findRows(all, EMPTY_FILTERS, opts).map((r) => r.subject.code)).toEqual(browse(all, EMPTY_FILTERS, 'B-SCI', 2026).map((r) => r.subject.code))
+  })
+})
+
+describe('a subject page’s place on a list is the place on the list it links to', () => {
+  it('keeps the degree the link names, through the address and between easy and hard', () => {
+    const f = filtersFromQuery(new URLSearchParams('course=B-SCI'), 'easy')
+    expect(f).toMatchObject({ rank: 'easy', listCourse: 'B-SCI' })
+    expect(browseAddress(f)).toBe('subjects/easy/?course=B-SCI')
+    expect(filtersFromQuery(new URLSearchParams('course=B-SCI'), 'easy')).toEqual(filtersFromQuery(new URLSearchParams(browseAddress(f).split('?')[1]), 'easy'))
+    expect(applyQuick(f, 'hard')).toMatchObject({ rank: 'hard', listCourse: 'B-SCI' })
+    expect(applyQuick(f, 'noExam').listCourse).toBeUndefined()
+    expect(filtersFromQuery(new URLSearchParams('course=<script>'), 'easy').listCourse).toBeUndefined()
+    // The student's own degree, once chosen, wins; nothing chosen and no link: every degree.
+    expect(rankCourseOf(f, 'B-COM')).toBe('B-COM')
+    expect(rankCourseOf(f, null)).toBe('B-SCI')
+    expect(rankCourseOf(EMPTY_FILTERS, null)).toBe('')
+  })
+
+  it('a new visitor sees the same list the header counted the place on', async () => {
+    const { buildDataset } = await import('../scripts/dataset')
+    const { defaultCourse, forCourse } = await import('../src/engine/forCourse')
+    const { listPlace } = await import('../src/engine/easeRanking')
+    const { dataset: real } = buildDataset('real')
+    const course = defaultCourse(real)
+    const data = forCourse(real, course)
+    const subjects = Object.values(data.subjects).sort((a, b) => a.code.localeCompare(b.code))
+    // The header's link: /subjects/easy/?course=<the degree it counted for>.
+    const f = filtersFromQuery(new URLSearchParams(`course=${course}`), 'easy')
+    const rows = findRows(subjects, f, { course, rankCourse: rankCourseOf(f, null), year: 2027 })
+    let checked = 0
+    for (const r of rows.slice(0, 30)) {
+      const place = listPlace(data.subjects, r.subject.code, course, 2027)
+      expect(place?.direction).toBe('easy')
+      // A tie shares the place of its first subject: the row sits at that place or just below it.
+      const at = rows.indexOf(r) + 1
+      expect(place!.place).toBeLessThanOrEqual(at)
+      expect(rows[place!.place - 1]!.ranked!.score).toBe(r.ranked!.score)
+      checked++
+    }
+    expect(checked).toBe(30)
   })
 })

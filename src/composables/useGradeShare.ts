@@ -1,6 +1,6 @@
 import { computed } from 'vue'
 import { RATINGS_FORM } from '@/config'
-import { bandOf, computeWam, wamBandOf, type GradeBand } from '@/engine'
+import { bandOf, exactWam, wamBandOf, type GradeBand } from '@/engine'
 import { useDataset } from './useDataset'
 import { usePersisted } from './usePersisted'
 import { useProfile } from './useProfile'
@@ -22,7 +22,8 @@ export function useGradeShare() {
   function wamBandFor(code: string): string | null {
     const others = profile.value.results.filter((r) => r.code !== code && r.mark !== undefined)
     if (others.length < MIN_OTHER_MARKS) return null
-    const wam = computeWam(others, data.value)
+    // Unrounded: 74.96 is in the 70–74 band, not 75–79.
+    const wam = exactWam(others, data.value)
     return wam === null ? null : wamBandOf(wam)
   }
 

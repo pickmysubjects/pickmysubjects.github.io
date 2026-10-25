@@ -14,6 +14,7 @@ import {
   filtersFromQuery,
   findRows,
   hasFitProfile,
+  rankCourseOf,
   leadReasons,
   QUICK_CHOICES,
   quickChoice,
@@ -65,8 +66,9 @@ const recs = computed(() => (filters.value.mine ? recommend(data.value, profile.
 const rows = computed(() =>
   findRows(subjectList.value, filters.value, {
     course: course.value,
-    // The easy and hard lists cover every degree until one is chosen.
-    rankCourse: plan.courseChosen.value ? course.value : '',
+    // The easy and hard lists cover every degree until one is chosen, or the degree a subject
+    // page's place on the list was counted for, when that's what opened it.
+    rankCourse: rankCourseOf(filters.value, plan.courseChosen.value ? course.value : null),
     year: year.value,
     recs: recs.value,
   }),

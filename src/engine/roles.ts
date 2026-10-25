@@ -98,12 +98,21 @@ function ancestors(data: Dataset, target: string): Map<string, number> {
   return seen
 }
 
+const BLOCKED = new WeakMap<Dataset, Map<string, Set<string>>>()
+
 /**
  * Subjects that can't be taken at all without `code`: their prerequisites fail
  * when it (and anything that itself needs it) is missing. Unknown or manual
  * conditions count as passable, so this errs towards "not required".
  */
 function blockedWithout(data: Dataset, code: string, course: string): Set<string> {
+  // Worked out once per dataset, subject and course: every major's overview asks again for the
+  // same earlier subjects, and the stress check reads every major of two courses (seconds, uncached).
+  let cache = BLOCKED.get(data)
+  if (!cache) BLOCKED.set(data, (cache = new Map()))
+  const key = `${course}|${code}`
+  const hit = cache.get(key)
+  if (hit) return hit
   const blocked = new Set([code])
   let changed = true
   while (changed) {
@@ -118,6 +127,7 @@ function blockedWithout(data: Dataset, code: string, course: string): Set<string
     }
   }
   blocked.delete(code)
+  cache.set(key, blocked)
   return blocked
 }
 
@@ -134,8 +144,20 @@ export interface MajorOverview {
   entryRoutes: { title: string; note?: string }[]
 }
 
+const OVERVIEWS = new WeakMap<Dataset, Map<string, MajorOverview | null>>()
+
 /** What a major or specialisation asks for, including the earlier subjects on the way in. */
 export function majorOverview(data: Dataset, id: string, course: string): MajorOverview | null {
+  // Read by every suggestion list (the major's nudge), the plan's stress check and the plan
+  // builder: worked out once per dataset. Callers only read it.
+  let cache = OVERVIEWS.get(data)
+  if (!cache) OVERVIEWS.set(data, (cache = new Map()))
+  const key = `${course}|${id}`
+  if (!cache.has(key)) cache.set(key, overviewOf(data, id, course))
+  return cache.get(key)!
+}
+
+function overviewOf(data: Dataset, id: string, course: string): MajorOverview | null {
   const c = data.components.find((x) => x.id === id && x.course === componentCourse(data, course))
   if (!c || c.requirements === 'unknown') return null
   const core = [...new Set(c.requirements.flatMap((r) => ('all' in r ? r.all : [])))].sort()
