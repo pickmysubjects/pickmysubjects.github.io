@@ -204,5 +204,11 @@ export function fitGrades(rows: GradeRow[], known?: Set<string>, o: FitOptions =
   } : undefined
   const prior = featurePrior ? { ...model, tau: featurePrior.tau } : model
   const offsets = gradeOffsets(rows, known, { year: o.year, model: prior, priorMean })
+  // Ease counts the facts and reviews the prior reads on its own, so it keeps what the shared
+  // grades alone say (otherwise they would count twice there).
+  if (featurePrior) {
+    const plain = gradeOffsets(rows, known, { year: o.year, model })
+    for (const [code, g] of Object.entries(offsets)) if (plain[code] && plain[code].offset !== g.offset) g.shared = plain[code].offset
+  }
   return { offsets, model, fitted, rows: count, ...(featurePrior ? { featurePrior } : {}) }
 }

@@ -1,5 +1,6 @@
 import { periodsFor } from './availability'
 import { FITTED } from './fitted'
+import { sharedOffset } from './grades'
 import { discussionVerdict, type Period, type Subject } from './schema'
 
 /**
@@ -100,7 +101,9 @@ function evidence(s: Subject): Evidence {
       if (sig.workload >= 3.5) hard.push({ key: 'ratedHeavy', params: { score: round1(sig.workload), n } })
     }
   }
-  const g = s.gradeOffset && s.gradeOffset.n >= MIN_GRADES ? s.gradeOffset : undefined
+  // What the shared grades alone say: an offset moved by the feature prior would count the
+  // Handbook facts and review verdicts below a second time.
+  const g = s.gradeOffset && s.gradeOffset.n >= MIN_GRADES ? { n: s.gradeOffset.n, offset: sharedOffset(s.gradeOffset) } : undefined
   if (g) {
     parts.push({ value: clamp(g.offset / 8), weight: 3 })
     const params = { n: g.n, by: Math.abs(Math.round(g.offset)) }

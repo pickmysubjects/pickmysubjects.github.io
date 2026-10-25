@@ -244,6 +244,10 @@ describe('the feature prior: offsets borrowed from subjects with similar facts',
       return errs.reduce((a, b) => a + b, 0) / errs.length
     }
     expect(mae(borrowed.offsets)).toBeLessThan(mae(plain.offsets))
+    // What the shared grades alone say stays published next to it: ease and its "students did
+    // N marks better" line read that, since they count the Handbook facts and reviews themselves.
+    for (const [code, g] of Object.entries(borrowed.offsets)) expect(g.shared ?? g.offset, code).toBe(plain.offsets[code]!.offset)
+    expect(Object.values(borrowed.offsets).some((g) => g.shared !== undefined)).toBe(true)
   })
 
   it('a subject with no shares gets a prior only once one is fitted', () => {

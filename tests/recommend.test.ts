@@ -192,6 +192,19 @@ describe('recommend after a fail', () => {
     expect(passed.some((r) => r.code === 'COMP10001' || r.code === 'COMP10002')).toBe(false)
   })
 
+  it('"students did N marks better" says what the shared grades alone say', async () => {
+    const { dataset, subject } = await import('./helpers')
+    const { recommend } = await import('../src/engine/recommend')
+    const runs = { prerequisites: 'none', offerings: { 2026: ['semester-1'] } }
+    const s = (gradeOffset: { offset: number; shared?: number; n: number }) => ({ ...subject({ code: 'AAAA10001', ...runs }), gradeOffset })
+    const rec = (g: { offset: number; shared?: number; n: number }) =>
+      recommend(dataset([s(g)]), { results: [], skills: {}, interests: [], goal: 'balanced' }, { year: 2026 }).find((r) => r.code === 'AAAA10001')!
+    const borrowed = rec({ offset: 5, shared: 1, n: 5 })
+    expect(borrowed.reasons.map((r) => r.key)).not.toContain('gradesAbove')
+    expect(borrowed.score).toBe(rec({ offset: 1, n: 5 }).score)
+    expect(rec({ offset: 5, n: 5 }).reasons.find((r) => r.key === 'gradesAbove')?.params).toEqual({ n: 5, by: 5 })
+  })
+
   it('a pass/fail subject not passed is a retake too, said without a mark', async () => {
     const { dataset, subject } = await import('./helpers')
     const { recommend } = await import('../src/engine/recommend')

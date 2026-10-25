@@ -98,7 +98,9 @@ enough data for each: the grade model's spread, slope and how much subjects diff
 how strongly ratings and reviews are pulled toward average (from 30+ subjects with 3+ ratings), and
 how Handbook facts (exam share, hurdles, class hours, level, the review verdict) predict a subject's
 offset (from 40+ subjects with offsets), so a subject nobody has shared grades for borrows from
-similar ones in its likely-mark estimate.
+similar ones in its likely-mark estimate. Once that prior is in, an offset it moved also keeps
+`shared`, what the bands alone say: ease and the "did N marks better" line read that, since they
+count the Handbook facts and review verdicts themselves.
 Until then the file is `{}` and the engine keeps its hand-set values exactly (`src/engine/fitted.ts`).
 
 ## 3. Daily aggregation

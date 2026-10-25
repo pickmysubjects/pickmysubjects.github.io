@@ -50,8 +50,17 @@ export interface GradeOffset {
   offset: number
   /** How sure: the standard deviation of that estimate, in marks (absent in files from before it was kept). */
   sd?: number
+  /**
+   * What the shared grades alone say (pulled toward 0, not toward the feature prior): present only
+   * once a feature prior moved `offset`. Ease and its "did N marks better" line read this, since
+   * they count the Handbook facts and review verdicts the prior is built from themselves.
+   */
+  shared?: number
   n: number
 }
+
+/** The offset as the shared grades alone put it (see GradeOffset.shared). */
+export const sharedOffset = (g: GradeOffset): number => g.shared ?? g.offset
 
 /**
  * Shares needed before a subject's offset is published at all. A privacy floor (one or two
