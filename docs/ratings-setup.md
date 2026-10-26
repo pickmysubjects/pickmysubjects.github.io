@@ -7,7 +7,8 @@ App ──POST──▶ Google Form ──▶ private Google Sheet
                                       │  read-only service account (GitHub secret)
                                       ▼
               GitHub Actions (weekly) → scripts/ratings/fetch.ts → data/real/ratings.json
-                                      │  weekly; aggregates only (3+ ratings): trimmed means, counts, median hours
+                                      │  weekly; aggregates only (3+ ratings): trimmed means, counts, median hours,
+                                      │  plus "What I wish I knew" tips the maintainer approved (3+ per subject) → comments.json
                                       ▼
                          npm run data merges them into subjects → app shows them
 ```
@@ -16,7 +17,8 @@ App ──POST──▶ Google Form ──▶ private Google Sheet
 
 - The forms **do not collect email addresses** and do not require sign-in.
 - The sheet is **never published to the web or shared**. Only the service account can read it, and only read-only.
-- Only aggregates are committed. Free text ("What I wish I knew") and contact details stay in the private sheet. Free text could be shown later, but only after moderation.
+- Only aggregates are committed, plus approved "What I wish I knew" tips (see [Tips from students](#tips-from-students)). Every other free-text answer, the Feedback form and all contact details stay in the private sheet.
+- A tip is published only after the maintainer ticks it, passes the automatic filter, and its subject has 3 such tips. It is published with its text, term and app language only, never with the rest of its row, so it can't be tied to a grade band or a rating.
 - Aggregates need at least 3 reviews before the engine trusts them (it shrinks scores toward neutral below that).
 
 ## 1. Create the two forms
@@ -103,6 +105,29 @@ similar ones in its likely-mark estimate. Once that prior is in, an offset it mo
 count the Handbook facts and review verdicts themselves.
 Until then the file is `{}` and the engine keeps its hand-set values exactly (`src/engine/fitted.ts`).
 
+## Tips from students
+
+The ratings form's "What I wish I knew" answers can be shown on subject pages as "Tips from students". Nothing is shown until you approve it.
+
+**One-time setup**
+
+1. Open the ratings responses sheet.
+2. In the first empty column to the right of the form's columns, type the header `Show` (exactly that, in row 1).
+3. Select the rest of that column and choose Insert → Checkbox.
+
+The service account stays **Viewer** (read-only); it only reads the new column. Don't rename the column, and don't put it between the form's columns.
+
+**Approving**
+
+- Read new answers in "What I wish I knew" and tick `Show` for the ones that are useful and don't name or describe anyone. Leave everything else unticked.
+- The weekly job publishes a ticked tip only if it also passes the automatic filter (`scripts/ratings/comments.ts`): it drops, never edits, any tip with an email, phone number, link, a 6+ digit number (student numbers), an @handle, a named member of staff ("Dr Smith", "tutor John", "王老师"), or more than 400 characters.
+- A subject shows tips only once it has 3 that are ticked and pass the filter (`MIN_COMMENTS`). Below that nothing about its tips is written to `data/real/comments.json`.
+- Each tip is published with its text, the year and semester, and the app language. Order: newest term first, then a fixed order from a hash of the text, so the order doesn't show when each arrived.
+
+**Reports**
+
+Each shown tip has a small "Report" link. It sends a Feedback response with topic `comment-report`, the subject code and `comment <id>`. The id is a hash of the subject and text (`commentId` in `scripts/ratings/comments.ts`), not a row number. A reported tip stays up until you untick `Show`; it disappears at the next weekly run (or run the workflow by hand). To find the row, filter the sheet by the subject code and compare the text shown on the site.
+
 ## 3. Daily aggregation
 
 1. Google Cloud Console (free):
@@ -113,6 +138,6 @@ Until then the file is `{}` and the engine keeps its hand-set values exactly (`s
 3. GitHub repo → Settings → Secrets and variables → Actions. Add these two secrets:
    - `GOOGLE_SERVICE_ACCOUNT_JSON`: the whole JSON key.
    - `RATINGS_SHEET_ID`: the long id in the sheet's URL.
-4. The **Aggregate ratings** workflow then runs weekly, and can also be run by hand. Without the secrets it skips quietly.
+4. The **Aggregate ratings** workflow then runs weekly, and can also be run by hand. Without the secrets it skips quietly. It commits `ratings.json`, `grade-offsets.json`, `model.json` and `comments.json` only; weekly, not daily, because a daily diff could single out one person's rating or tip.
 
 Keep the JSON key only in GitHub secrets. Delete the downloaded file after adding it, and never commit it.

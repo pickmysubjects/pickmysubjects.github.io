@@ -235,7 +235,7 @@ function value(event: Event): string {
           <label class="field">
             {{ t('rating.wish') }}
             <textarea v-model="wish" class="textarea" rows="3" maxlength="1000" />
-            <span class="hint">{{ t('rating.wishHint') }}</span>
+            <span class="hint">{{ t('rating.wishHint') }}<InfoTip :text="t('rating.wishInfo')" /></span>
           </label>
         </div>
       </details>

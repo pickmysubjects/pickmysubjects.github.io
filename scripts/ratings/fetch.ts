@@ -11,7 +11,8 @@ import { createSign } from 'node:crypto'
 import { writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { buildDataset, ROOT } from '../dataset'
-import { buildRatingFiles } from './aggregate'
+import { buildRatingFiles, rowsToObjects } from './aggregate'
+import { buildComments } from './comments'
 import { fitReviewPrior } from '../../src/engine/easeRanking'
 import { offsetFeatures } from '../../src/engine/gradeModel'
 
@@ -80,6 +81,10 @@ const out = buildRatingFiles(values, known, new Date(), (code) => (subjects[code
 writeFileSync(join(ROOT, 'data', 'real', 'ratings.json'), `${JSON.stringify(out.ratings, null, 2)}\n`)
 console.log(`Ratings: ${out.accepted} accepted, ${out.rejected} rejected, ${Object.keys(out.ratings).length} subjects.`)
 writeFileSync(join(ROOT, 'data', 'real', 'grade-offsets.json'), `${JSON.stringify(out.offsets, null, 2)}\n`)
+// "What I wish I knew" comments the maintainer approved (Show = TRUE), filtered, 3+ per subject.
+const comments = buildComments(rowsToObjects(values), new Date(), known)
+writeFileSync(join(ROOT, 'data', 'real', 'comments.json'), `${JSON.stringify(comments, null, 2)}\n`)
+console.log(`Comments: ${Object.values(comments).reduce((n, l) => n + l.length, 0)} shown, ${Object.keys(comments).length} subjects.`)
 console.log(`Grade bands: ${Object.keys(out.offsets).length} subjects with 5+ shares.`)
 // The review score's prior, fitted from the subjects as they now stand (new ratings included).
 const reviewPrior = fitReviewPrior(Object.values(buildDataset('real').dataset.subjects))

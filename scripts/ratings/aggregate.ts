@@ -1,7 +1,7 @@
 /**
  * Turns raw rating rows (one per form response) into per-subject aggregates.
- * Only numbers and counts leave this function — free text ("What I wish I knew")
- * and anything that could identify a person are never published.
+ * Only numbers and counts leave this function — free text ("What I wish I knew", handled
+ * separately in comments.ts) and anything that could identify a person never leave it.
  */
 import { fitGrades } from '../../src/engine/gradeModel'
 import type { FittedModel } from '../../src/engine/fitted'

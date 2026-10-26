@@ -1,7 +1,7 @@
 name: Aggregate ratings
 on:
   schedule:
-    - cron: '17 18 * * 0' # weekly (Monday early morning Melbourne time); a daily diff could single out one person's rating
+    - cron: '17 18 * * 0' # weekly (Monday early morning Melbourne time); a daily diff could single out one person's rating or comment
   workflow_dispatch:
 permissions:
   contents: write
@@ -31,10 +31,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          if [ -n "$(git status --porcelain data/real/ratings.json data/real/grade-offsets.json data/real/model.json)" ]; then
+          if [ -n "$(git status --porcelain data/real/ratings.json data/real/grade-offsets.json data/real/model.json data/real/comments.json)" ]; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add data/real/ratings.json $(ls data/real/grade-offsets.json data/real/model.json 2>/dev/null)
-            git commit -m "data: update aggregated ratings and grade offsets"
+            git add data/real/ratings.json $(ls data/real/grade-offsets.json data/real/model.json data/real/comments.json 2>/dev/null)
+            git commit -m "data: update aggregated ratings, grade offsets and approved comments"
             git push "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:main
           fi

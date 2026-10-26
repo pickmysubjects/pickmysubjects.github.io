@@ -5,6 +5,7 @@ import type { Subject } from '@/engine'
 import RatingForm from '@/components/rating/RatingForm.vue'
 import RatingTagChips from '@/components/rating/RatingTagChips.vue'
 import DiscussionSummary from '@/components/subject/DiscussionSummary.vue'
+import SubjectTips from '@/components/subject/SubjectTips.vue'
 import { useRated } from '@/composables/useRated'
 import { useI18n } from '@/i18n'
 
@@ -87,6 +88,7 @@ const discussions = computed(() => (props.detailReady ? (props.subject.discussio
     <RatingForm v-if="formOpen" :code="subject.code" @done="emit('rated', $event)" />
 
     <DiscussionSummary v-if="discussions.length" class="reviews" :discussions="discussions" />
+    <SubjectTips v-if="detailReady && subject.comments" :code="subject.code" :comments="subject.comments" />
   </div>
 </template>
 
