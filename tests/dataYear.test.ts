@@ -4,7 +4,7 @@ import { periodsFor } from '../src/engine/availability'
 import { factsYear, knownNotRunning, latestDataYear, publishedYear, setToday, shareUpdated, thisYear } from '../src/engine/dataYear'
 import { forCourse } from '../src/engine/forCourse'
 import { generatePlan } from '../src/engine/generate'
-import { checkTerms } from '../src/engine/planCheck'
+import { assumedOfferings, checkTerms } from '../src/engine/planCheck'
 import type { Profile } from '../src/engine/recommend'
 import type { Dataset, Subject } from '../src/engine/schema'
 import { subjectDifficulty } from '../src/engine/subjectFit'
@@ -110,8 +110,9 @@ describe('January 2027, data still from the 2026 Handbook only', () => {
     for (const p of plansFrom(data, 2027)) {
       const issues = checkTerms(p, data)
       expect(issues.filter((i) => i.kind === 'not-offered')).toEqual([])
-      // Each 2027 subject is planned on its 2026 timetable, said as an assumption (a note).
-      expect(issues.some((i) => i.kind === 'offering-assumed' && i.params?.assumed === 2026)).toBe(true)
+      // Each 2027 subject is planned on its 2026 timetable, said once for the plan, not per subject.
+      expect(issues.some((i) => i.kind === 'offering-assumed')).toBe(false)
+      expect(assumedOfferings(p, data)).toEqual({ year: 2027, from: 2026 })
     }
   })
 
@@ -150,5 +151,23 @@ describe('one subject already has 2027 data', () => {
   it('looking at 2026 still shows 2026 facts for the updated subject', () => {
     setToday('2026-12-01')
     expect(factsYear(mixed.subjects[updatedCode]!, 2026, 2027)).toEqual({ year: 2026, older: false })
+  })
+})
+
+describe('the plan’s one line about assumed teaching periods', () => {
+  const own = subject({ code: 'TEST10002', offerings: { 2026: ['semester-1', 'semester-2'] } })
+  const d: Dataset = { ...data, subjects: { ...data.subjects, TEST10002: own } }
+  it('says nothing while every planned subject has its own year’s data', () => {
+    expect(assumedOfferings({ terms: [{ year: 2026, period: 'semester-2', subjects: ['TEST10002'] }] }, d)).toBeNull()
+  })
+  it('names the first planned year on an earlier timetable, and which year', () => {
+    const terms = [
+      { year: 2026, period: 'semester-2' as const, subjects: ['TEST10002'] },
+      { year: 2028, period: 'semester-1' as const, subjects: ['TEST10002'] },
+      { year: 2027, period: 'semester-2' as const, subjects: ['TEST10002'] },
+    ]
+    expect(assumedOfferings({ terms }, d)).toEqual({ year: 2027, from: 2026 })
+    // Not one note per subject any more.
+    expect(checkTerms({ course: 'B-SCI', courseYear: 2026, completed: [], terms }, d).some((i) => i.kind === 'offering-assumed')).toBe(false)
   })
 })

@@ -7,6 +7,7 @@ import { canEnterIn, cannotCombine, componentCourse, findCourse, nextEntry, dipl
 import { useDataset } from '@/composables/useDataset'
 import type { PlanSetup } from '@/composables/usePlan'
 import MajorPicker from './MajorPicker.vue'
+import InfoTip from '@/components/InfoTip.vue'
 import { useI18n } from '@/i18n'
 import { useProfile } from '@/composables/useProfile'
 import { termLabel } from '@/i18n/format'
@@ -163,6 +164,8 @@ function chooseCourse(c: Course): void {
           <Check v-if="draft.course === c.code" :size="18" aria-hidden="true" />
         </button>
       </div>
+      <p class="scope-note">{{ t('wizard.scopeShort') }}<InfoTip :text="t('wizard.scope')" /></p>
+      <p class="scope-note">{{ t('wizard.doubleShort') }}<InfoTip :text="t('wizard.double')" /></p>
     </div>
 
     <div v-else-if="step === 1" class="q">
@@ -463,6 +466,16 @@ function chooseCourse(c: Course): void {
   font-size: 0.9375rem;
   color: var(--accent);
 }
+.scope-note {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
+}
+
+.scope-note:first-of-type {
+  margin-top: 4px;
+}
+
 .from-record {
   margin: -4px 0 4px;
   font-size: 0.875rem;

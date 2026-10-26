@@ -22,12 +22,18 @@ const prereqs = computed(() =>
 )
 
 const byRule = computed(() => {
-  const groups = new Map<string, { title: string; items: { code: string; term: string }[] }>()
+  const groups = new Map<string, { title: string; items: { code: string; term: string }[]; why: string[] }>()
   for (const n of structured.value) {
     if (n.key !== 'added') continue
     const id = String(n.params.rule)
-    const g = groups.get(id) ?? { title: ruleText(t.value, props.rules.find((r) => r.id === id), id), items: [] }
-    g.items.push({ code: String(n.params.code), term: termLabel(t.value, { year: Number(n.params.year), period: n.params.period as Period }) })
+    const g = groups.get(id) ?? { title: ruleText(t.value, props.rules.find((r) => r.id === id), id), items: [], why: [] }
+    const code = String(n.params.code)
+    g.items.push({ code, term: termLabel(t.value, { year: Number(n.params.year), period: n.params.period as Period }) })
+    // Picked for the career goal: say so, with the career's name in the reader's language.
+    if (typeof n.params.career_en === 'string') {
+      const career = String(n.params[`career_${t.value('careerLang')}`] ?? n.params.career_en)
+      g.why.push(t.value(n.params.related ? 'plan.howCareerRelated' : 'plan.howCareer', { code, career }))
+    }
     groups.set(id, g)
   }
   return [...groups.values()]
@@ -72,6 +78,7 @@ const others = computed(() =>
               {{ i.code }} <span class="code-term">{{ i.term }}</span>
             </button>
           </div>
+          <p v-for="w in g.why" :key="w" class="rule-why">{{ w }}</p>
         </div>
       </div>
     </section>
@@ -175,6 +182,12 @@ const others = computed(() =>
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: 6px;
+}
+
+.rule-why {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
 }
 
 .code-btn {

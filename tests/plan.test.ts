@@ -329,3 +329,31 @@ describe('discontinued subjects', () => {
     expect(checkTerms(plan, data).filter((i) => i.severity === 'error')).toEqual([])
   })
 })
+
+describe('a subject taught at a far campus', () => {
+  const data = realData()
+  // Ones open to B-SCI students and still running (a closed one is an error already).
+  const closed = new Set(data.courses.find((c) => c.code === 'B-SCI')?.closed ?? [])
+  const far = Object.values(data.subjects).filter((s) => s.campus && !closed.has(s.code) && s.discontinuedFrom === undefined).map((s) => s.code)
+  const plan = (major: string | undefined, course: string, code: string): Plan => ({ course, courseYear: 2026, major, completed: [], terms: [{ year: 2027, period: 'semester-1', subjects: [code] }] })
+  it('is flagged when added by hand, naming the campus', () => {
+    expect(far.length).toBeGreaterThan(0)
+    for (const code of far) {
+      const issue = checkTerms(plan('computing-and-software-systems', 'B-SCI', code), data).find((i) => i.kind === 'far-campus')
+      expect(issue, code).toMatchObject({ severity: 'warning', subject: code, params: { code, campus: data.subjects[code]!.campus } })
+    }
+    // The add preview says it too, before the subject is added.
+    const empty: Plan = { course: 'B-SCI', courseYear: 2026, major: 'computing-and-software-systems', completed: [], terms: [{ year: 2027, period: 'semester-1', subjects: [] }] }
+    expect(previewAdd(empty, data, 0, far[0]!).map((i) => i.kind)).toContain('far-campus')
+  })
+  it('is not flagged when the student’s own major needs it', () => {
+    // Agricultural Science (B-SCI) names AGRI30016, taught at Dookie.
+    expect(data.subjects.AGRI30016?.campus).toBeTruthy()
+    expect(checkTerms(plan('agricultural-science', 'B-SCI', 'AGRI30016'), data).some((i) => i.kind === 'far-campus')).toBe(false)
+  })
+  it('leaves Parkville subjects alone', () => {
+    for (const p of [plan('computing-and-software-systems', 'B-SCI', 'COMP10001'), plan('finance', 'B-COM', 'FNCE10002')]) {
+      expect(checkTerms(p, data).some((i) => i.kind === 'far-campus')).toBe(false)
+    }
+  })
+})

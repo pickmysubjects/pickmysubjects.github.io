@@ -16,7 +16,7 @@ import PlanPrint, { type PrintTerm } from '@/components/planner/PlanPrint.vue'
 import Interp from '@/components/Interp.vue'
 import PlanSwitcher from '@/components/plans/PlanSwitcher.vue'
 import PlanCompare from '@/components/plans/PlanCompare.vue'
-import { careerGap, careerGoal, careerName, hasEnded, heldMajorIds, informalPicks, isFail, passedCodes, planComponentIds, planRoles, planRules, recordedLoads, termLoad, type PlanTerm } from '@/engine'
+import { assumedOfferings, careerGap, careerGoal, careerName, hasEnded, heldMajorIds, informalPicks, isFail, passedCodes, planComponentIds, planRoles, planRules, recordedLoads, termLoad, type PlanTerm } from '@/engine'
 import { diplomaTitle } from '@/composables/usePlanCompare'
 import { ImageDown, Printer, Share2 } from 'lucide-vue-next'
 import { sharePlanImage } from '@/utils/planImage'
@@ -330,6 +330,8 @@ const rulesFrom = computed(() => {
   const start = plan.plan.value.courseYear
   return plan.setupChosen.value && c && c.year !== start ? { year: c.year, start } : null
 })
+// A later year planned on an earlier Handbook's teaching periods: said once, at the top.
+const assumed = computed(() => assumedOfferings(plan.plan.value, data.value))
 const recordOverlap = computed(() => {
   const passed = new Set(passedCodes(profile.value.results))
   const load = plan.course.value?.standardLoad ?? 50
@@ -426,6 +428,9 @@ const printTerms = computed<PrintTerm[]>(() => {
       </p>
       <p v-if="rulesFrom" class="started">
         {{ t('plan.rulesYearShort', { year: rulesFrom.year }) }}<InfoTip :text="t('plan.rulesYear', rulesFrom)" />
+      </p>
+      <p v-if="assumed" class="started">
+        {{ t('plan.assumedShort', assumed) }}<InfoTip :text="t('plan.assumed', assumed)" />
       </p>
 
       <!-- The record now reaches into the plan's own semesters (filled in after the plan was made). -->

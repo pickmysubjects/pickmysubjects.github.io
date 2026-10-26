@@ -47,9 +47,13 @@ const { wam } = useProfile()
       <p class="note">{{ t('guide.majorsRulesYear') }}</p>
       <p class="note">{{ t('guide.majorsPairs') }}</p>
       <p class="note">{{ t('guide.majorsDiploma') }}</p>
+      <p class="note">{{ t('guide.majorsDouble') }}</p>
+      <p class="note">{{ t('guide.majorsScope') }}</p>
       <p class="note">{{ t('guide.majorsRelated') }}</p>
       <p class="aside">{{ t('guide.majorsPlans') }}</p>
       <p class="note">{{ t('guide.majorsPlansImage') }}</p>
+      <p class="note">{{ t('guide.plansAssumed') }}</p>
+      <p class="note">{{ t('guide.plansCampus') }}</p>
       <p class="actions">
         <a class="button button-quiet" :href="link('plan')">{{ t('guide.majorsPlansLink') }}</a>
       </p>

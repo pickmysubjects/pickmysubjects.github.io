@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it } from 'vitest'
 import { setToday } from '../../src/engine/dataYear'
 import { generatePlan } from '../../src/engine/generate'
-import { checkTerms } from '../../src/engine/planCheck'
+import { assumedOfferings, checkTerms } from '../../src/engine/planCheck'
 import type { Profile } from '../../src/engine/recommend'
 import { realData } from '../realData'
 
@@ -35,8 +35,9 @@ describe('the year rollover on real plans, data from the 2026 Handbook only', ()
     for (const p of plansFrom(2027)) {
       const issues = checkTerms(p, data)
       expect(issues.filter((i) => i.kind === 'not-offered')).toEqual([])
-      // Each 2027 subject is planned on its 2026 timetable, said as an assumption (a note).
-      expect(issues.some((i) => i.kind === 'offering-assumed' && i.params?.assumed === 2026)).toBe(true)
+      // Each 2027 subject is planned on its 2026 timetable, said once for the plan, not per subject.
+      expect(issues.some((i) => i.kind === 'offering-assumed')).toBe(false)
+      expect(assumedOfferings(p, data)).toEqual({ year: 2027, from: 2026 })
     }
   }, 60_000)
 })

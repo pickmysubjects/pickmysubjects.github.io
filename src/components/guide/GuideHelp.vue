@@ -47,6 +47,7 @@ const RANKINGS = [
 
     <GuideItem id="careers" :title="t('guide.careersTitle')" :short="t('guide.careersShort')">
       <p>{{ t('guide.careersText') }}</p>
+      <p>{{ t('guide.careersPlan') }}</p>
       <p>
         <a class="button button-quiet" :href="link('careers/')">{{ t('guide.careersLink') }}</a>
       </p>

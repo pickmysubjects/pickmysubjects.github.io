@@ -1,5 +1,6 @@
 import { offeredIn } from './availability'
-import { heldMajorIds, majorTitles, minorTitles } from './courseRules'
+import { heldMajorIds, majorTitles, minorTitles, planComponentIds } from './courseRules'
+import { planRoles } from './roles'
 import { evaluateField, referencedSubjects } from './expr'
 import type { Issue, Plan } from './plan'
 import { termLabel } from './plan'
@@ -21,6 +22,15 @@ export function checkTerms(plan: Plan, data: Dataset, standardLoad = 50): Issue[
   // Subjects the student's course has closed to them (B-COM's ACCT10002).
   const closed = new Set(data.courses.find((c) => c.code === plan.course)?.closed ?? [])
   const reportedPairs = new Set<string>()
+  // The subjects the plan's major, specialisation and minors name (worked out only when needed).
+  let own: Set<string> | undefined
+  const ownSubjects = (): Set<string> => {
+    if (!own) {
+      const roles = planRoles(data, plan.course, plan.courseYear, planComponentIds(plan).filter((id): id is string => !!id))
+      own = new Set([...roles.required, ...roles.options])
+    }
+    return own
+  }
 
   plan.terms.forEach((term, termIndex) => {
     // A year-long subject begun in this year's Semester 1 is still running: not done yet, but
@@ -55,8 +65,14 @@ export function checkTerms(plan: Plan, data: Dataset, standardLoad = 50): Issue[
         issues.push({ severity: 'error', kind: 'not-offered', subject: code, termIndex, params: { code, year: term.year, period: term.period, assumed: avail.assumedFromYear ?? '' }, message: `${code} is not offered in ${PERIOD_LABELS[term.period]}${avail.assumedFromYear ? ` (based on ${avail.assumedFromYear} data)` : ` ${term.year}`}.` })
       } else if (avail.status === 'unknown') {
         issues.push({ severity: 'info', kind: 'offering-unknown', subject: code, termIndex, params: { code }, message: `When ${code} runs hasn't been curated yet — check the Handbook.` })
-      } else if (avail.assumedFromYear) {
-        issues.push({ severity: 'info', kind: 'offering-assumed', subject: code, termIndex, params: { code, year: term.year, period: term.period, assumed: avail.assumedFromYear ?? '' }, message: `${code} in ${where} assumes the ${avail.assumedFromYear} timetable repeats.` })
+      }
+      // A later year planned on an earlier year's timetable is said once for the whole plan
+      // (assumedOfferings), not on every subject.
+
+      // Taught only at a far campus (Dookie): the plan builder never picks one unless the major
+      // needs it, so one added by hand gets a warning (the major's own subjects don't).
+      if (s.campus && !ownSubjects().has(code)) {
+        issues.push({ severity: 'warning', kind: 'far-campus', subject: code, termIndex, params: { code, campus: s.campus }, message: `${code} is taught at ${s.campus}, far from Parkville. Check you can get there before enrolling.` })
       }
 
       const ctx = { completed: before, sameTerm, subjects: data.subjects, admittedCourse: plan.course, majors: majorTitles(data, heldMajorIds(plan)), minors: minorTitles(data, plan.minors), marks: plan.marks, wam: plan.wam }
@@ -100,6 +116,22 @@ export function checkTerms(plan: Plan, data: Dataset, standardLoad = 50): Issue[
 
   if (plan.international) issues.push(...visaLoadIssues(plan, data))
   return issues
+}
+
+/**
+ * The first planned year whose subjects are planned on an earlier year's teaching periods (that
+ * year's Handbook isn't in yet), and which year's: one line at the top of the plan says so.
+ */
+export function assumedOfferings(plan: Pick<Plan, 'terms'>, data: Dataset): { year: number; from: number } | null {
+  let out: { year: number; from: number } | null = null
+  for (const term of plan.terms) {
+    for (const code of term.subjects) {
+      const s = data.subjects[code]
+      const avail = s ? offeredIn(s, term.year, term.period) : undefined
+      if (avail?.status === 'ok' && avail.assumedFromYear !== undefined && (!out || term.year < out.year)) out = { year: term.year, from: avail.assumedFromYear }
+    }
+  }
+  return out
 }
 
 /** Points a student-visa holder normally needs each half-year (Jan–Jun, Jul–Dec). */

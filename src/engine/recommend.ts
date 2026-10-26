@@ -148,6 +148,16 @@ export const PROGRAMME_BONUS = 12
  */
 export const CAREER_REQUIRED_BONUS = PROGRAMME_BONUS
 export const CAREER_HELPS_BONUS = 4
+/**
+ * Breadth is the student's own choice outside the major, and nothing else there lifts the subjects
+ * that serve the goal (inside the major, the major's nudge does): one whose main field is the job's
+ * gets twice the nudge, about half what naming that field as an interest gives. One that covers the
+ * job's field on the side or uses a skill the job asks for (the career page's "somewhat related",
+ * not a merely nearby field) gets a small one, so among breadth that fits about as well, the goal
+ * decides. Neither goes past a cap or the course's rules: the nudge is only for what fits.
+ */
+export const CAREER_BREADTH_HELPS_BONUS = CAREER_HELPS_BONUS * 2
+export const CAREER_RELATED_BONUS = 2
 /** Subjects done before the student's own choices start to count, and how much they move a score. */
 const PAST_CHOICES_MIN = 4
 const PAST_CHOICE_NUDGE = 4
@@ -530,6 +540,8 @@ export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions =
     if (goal) {
       const row = goalTier(goal, raw.subjects[s.code] ?? s, raw, taken)
       const fits = !capCourse || withinCaps(s, takenList, capCourse, data, capIds)
+      // Breadth for this course, outside the student's major.
+      const breadth = !!opts.course && s.categories[opts.course] === 'breadth' && !(roles && (roles.required.has(s.code) || roles.options.has(s.code)))
       if (fits && (row.tier === 'required' || row.tier === 'helps')) {
         const names = careerNameParams(goal.target)
         const acc = row.reasons.find((r) => r.kind === 'acc')
@@ -541,7 +553,7 @@ export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions =
         const compulsory = roles?.required.has(s.code) ?? false
         const onlyField = row.tier === 'helps' && !acc && !row.reasons.some((r) => r.kind === 'helpful')
         const sameAsInterest = onlyField && field?.kind === 'field' && field.topics.every((x) => profile.interests.includes(x))
-        if (!compulsory && !sameAsInterest) shift(rec, 'career', row.tier === 'required' ? CAREER_REQUIRED_BONUS : CAREER_HELPS_BONUS, { career, ...names })
+        if (!compulsory && !sameAsInterest) shift(rec, 'career', row.tier === 'required' ? CAREER_REQUIRED_BONUS : breadth ? CAREER_BREADTH_HELPS_BONUS : CAREER_HELPS_BONUS, { career, ...names })
         // Said up front, after what the major says about it: it's why the subject moved up.
         const at = rec.reasons.findIndex((n) => !n.key.startsWith('major'))
         const said =
@@ -551,6 +563,11 @@ export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions =
               ? note('careerHelps', { topics: field.topics.join(', '), career, ...names }, `Helps toward ${career}: covers ${field.topics.join(', ')}.`)
               : note('careerRecommended', { career, ...names }, `Recommended on the way to ${career}.`)
         rec.reasons.splice(at < 0 ? rec.reasons.length : at, 0, said)
+      } else if (fits && breadth && row.tier === 'some' && row.reasons.some((r) => r.kind === 'touches' || r.kind === 'skill')) {
+        const names = careerNameParams(goal.target)
+        const career = goal.target.names.en
+        shift(rec, 'career', CAREER_RELATED_BONUS, { career, ...names, related: 1 })
+        rec.reasons.push(note('careerRelated', { career, ...names }, `Related to ${career}, your career goal.`))
       }
     }
     if (opts.termSubjects && termBefore) {

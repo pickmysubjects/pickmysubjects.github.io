@@ -252,7 +252,11 @@ function buildPlan(given: GenerateInput): GenerateResult {
       term.subjects.push(pick.code)
       electives.add(pick.code)
       used += termShare(data.subjects[pick.code])
-      notes.push(note('added', { code: pick.code, year: term.year, period: term.period, rule: pick.ruleId }, `${pick.code} added in ${term.year} ${term.period} for: ${pick.why}.`))
+      // Picked for the career goal (another subject would have come first without it): the note
+      // says so, with the career's names (the reader's language picks one).
+      const goal = pick.career
+      const towards = goal ? `; it ${goal.related ? 'relates to' : 'helps toward'} ${goal.career}` : ''
+      notes.push(note('added', { code: pick.code, year: term.year, period: term.period, rule: pick.ruleId, ...(goal ?? {}) }, `${pick.code} added in ${term.year} ${term.period} for: ${pick.why}${towards}.`))
     }
   }
   const allPlaced = (): string[] => terms.flatMap((t) => t.subjects)
@@ -389,8 +393,10 @@ function buildPlan(given: GenerateInput): GenerateResult {
     if (n.key === 'added' && typeof n.params.code === 'string') {
       const now = swappedTo.get(n.params.code)
       if (now) {
-        n.text = n.text.replace(n.params.code, now)
+        n.text = n.text.replace(n.params.code, now).replace(/; it (?:helps toward|relates to) .*\.$/, '.')
         n.params.code = now
+        // The career goal chose the subject that was replaced, not this one.
+        for (const k of Object.keys(n.params)) if (k === 'career' || k === 'related' || k.startsWith('career_')) delete n.params[k]
       }
     }
     const where = typeof n.params.code === 'string' && 'year' in n.params ? terms.find((t) => t.subjects.includes(n.params.code as string)) : undefined
@@ -1143,7 +1149,7 @@ interface PickCtx {
   relaxed?: boolean
 }
 
-function pickElective(ctx: PickCtx): { code: string; why: string; ruleId: string } | null {
+function pickElective(ctx: PickCtx): { code: string; why: string; ruleId: string; career?: Params } | null {
   const { input, course, term } = ctx
   const data = input.data
   // Required subjects not placed yet still count: they will use their share of
@@ -1183,22 +1189,40 @@ function pickElective(ctx: PickCtx): { code: string; why: string; ruleId: string
         eligibleWith: [...ctx.before],
       })
       const loadsUp = (c: string) => heavierWith(term.subjects, c, data, input.profile, input.course)
-      for (const rec of rankElectives(recs, ctx.focus, data, (c) => ctx.opens(c, rule.category), input.profile, needsPath, loadsUp)) {
-        const s = data.subjects[rec.code]
-        if (!s || termShare(s) > ctx.room) continue
-        if (isYearLong(s) && termShare(s) > ctx.secondRoom) continue
-        if (offeredIn(s, term.year, term.period).status !== 'ok') continue
-        if (!withinCaps(s, all, course, data, planComponentIds(input))) continue
-        if (!ctx.relaxed && !leavesRoomForOthers(s, all, course, data)) continue
-        if (!progressionAllows(s.code, course, [...ctx.before], data)) continue
+      const valid = (code: string): boolean => {
+        const s = data.subjects[code]
+        if (!s || termShare(s) > ctx.room) return false
+        if (isYearLong(s) && termShare(s) > ctx.secondRoom) return false
+        if (offeredIn(s, term.year, term.period).status !== 'ok') return false
+        if (!withinCaps(s, all, course, data, planComponentIds(input))) return false
+        if (!ctx.relaxed && !leavesRoomForOthers(s, all, course, data)) return false
+        if (!progressionAllows(s.code, course, [...ctx.before], data)) return false
         // A corequisite must already be in the plan (this term or earlier).
         const co = evaluateField(s.corequisites, { completed: new Set([...ctx.before, ...term.subjects]), subjects: data.subjects, admittedCourse: course.code, ...majorsOf(input) })
-        if (co.status === 'fail') continue
-        return { code: s.code, why: rule.description.toLowerCase(), ruleId: rule.id }
+        return co.status !== 'fail'
       }
+      const rank = (list: typeof recs) => rankElectives(list, ctx.focus, data, (c) => ctx.opens(c, rule.category), input.profile, needsPath, loadsUp)
+      const pick = rank(recs).find((r) => valid(r.code))
+      if (pick) return { code: pick.code, why: rule.description.toLowerCase(), ruleId: rule.id, career: careerDecided(pick, recs, rank, valid) }
     }
   }
   return null
+}
+
+/** The career goal's part in a suggestion's score (0 when it has none). */
+function careerEffect(r: { factors?: { key: string; effect: number }[] }): number {
+  return (r.factors ?? []).filter((f) => f.key === 'career').reduce((sum, f) => sum + f.effect, 0)
+}
+
+/**
+ * The career goal's names when it is what chose this pick: ranked without the goal's nudge, another
+ * subject would have come first. Otherwise (the pick wins anyway, or has no nudge) nothing.
+ */
+function careerDecided<T extends { code: string; score: number; factors?: { key: string; effect: number; params: Params }[] }>(pick: T, recs: T[], rank: (list: T[]) => T[], valid: (code: string) => boolean): Params | undefined {
+  const factor = pick.factors?.find((f) => f.key === 'career')
+  if (!factor || careerEffect(pick) <= 0) return undefined
+  const plain = rank(recs.map((r) => (careerEffect(r) ? { ...r, score: r.score - careerEffect(r) } : r))).find((r) => valid(r.code))
+  return plain && plain.code !== pick.code ? factor.params : undefined
 }
 
 /**
