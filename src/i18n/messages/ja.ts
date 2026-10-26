@@ -521,6 +521,8 @@ export const ja: Messages = {
     teamwork: "グループワーク",
   },
   assess: {
+    semesterTests: "学期中のテスト：計 {n}%",
+    semesterTestsTip: "Handbook に載っている期末試験以外のテストの合計。何週目かは載っていないこともあります。",
     guessedTags: "科目の情報から推測したもので、まだ人手で確認していません。",
     title: '評価方法',
     group: 'グループワーク {n}%',
@@ -1706,6 +1708,8 @@ export const ja: Messages = {
     group: "グループ課題あり",
   },
   subject: {
+    quota: "定員あり",
+    quotaTip: "定員があります。早めに登録し、選考方法は Handbook で確認してください。",
     relatedTitle: "関連科目",
     relatedLeads: "この後に取れる科目",
     relatedWith: "一緒に取られる科目",

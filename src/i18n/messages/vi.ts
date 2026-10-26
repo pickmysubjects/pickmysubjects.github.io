@@ -521,6 +521,8 @@ export const vi: Messages = {
     teamwork: "Làm nhóm",
   },
   assess: {
+    semesterTests: "Bài kiểm tra trong kỳ: {n}%",
+    semesterTestsTip: "Tổng các bài kiểm tra ngoài thi cuối kỳ mà Handbook liệt kê. Handbook không phải lúc nào cũng ghi tuần nào.",
     guessedTags: "Suy ra từ thông tin môn học, chưa được kiểm tra thủ công.",
     title: 'Cách đánh giá',
     group: '{n}% làm việc nhóm',
@@ -1706,6 +1708,8 @@ export const vi: Messages = {
     group: "Có bài nhóm",
   },
   subject: {
+    quota: "Giới hạn chỗ",
+    quotaTip: "Số chỗ có hạn. Hãy đăng ký sớm và xem Handbook để biết cách xét chỗ.",
     relatedTitle: "Môn liên quan",
     relatedLeads: "Học tiếp được",
     relatedWith: "Thường học cùng",

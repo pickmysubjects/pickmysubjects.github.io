@@ -521,6 +521,8 @@ export const hi: Messages = {
     teamwork: "ग्रुप वर्क",
   },
   assess: {
+    semesterTests: "सेमेस्टर के दौरान टेस्ट: {n}%",
+    semesterTestsTip: "फ़ाइनल परीक्षा के अलावा Handbook में दिए टेस्ट का कुल हिस्सा। किस हफ़्ते होंगे, Handbook हमेशा नहीं बताती।",
     guessedTags: "सब्जेक्ट की जानकारी से अनुमान, अभी हाथ से जाँचा नहीं गया।",
     title: 'मूल्यांकन कैसे होता है',
     group: '{n}% समूह कार्य',
@@ -1706,6 +1708,8 @@ export const hi: Messages = {
     group: "ग्रुप वर्क है",
   },
   subject: {
+    quota: "सीमित सीटें",
+    quotaTip: "सीटें सीमित हैं। जल्दी एनरोल करें और Handbook में देखें कि सीटें कैसे दी जाती हैं।",
     relatedTitle: "संबंधित विषय",
     relatedLeads: "इसके बाद ले सकते हैं",
     relatedWith: "अक्सर साथ लिए जाते हैं",

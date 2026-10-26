@@ -521,6 +521,8 @@ export const zhTW: Messages = {
     teamwork: "小組合作",
   },
   assess: {
+    semesterTests: "學期中小考：共 {n}%",
+    semesterTestsTip: "Handbook 列出期末考以外的小考，比重加總。哪一週考，Handbook 不一定有寫。",
     guessedTags: "根據課程資料推測，還沒人工核對。",
     title: '考核方式',
     group: '小組作業占 {n}%',
@@ -1706,6 +1708,8 @@ export const zhTW: Messages = {
     group: "有小組作業",
   },
   subject: {
+    quota: "名額有限",
+    quotaTip: "名額有限。請盡早選課，並到 Handbook 查看名額如何分配。",
     relatedTitle: "相關科目",
     relatedLeads: "之後可以修",
     relatedWith: "常一起修",

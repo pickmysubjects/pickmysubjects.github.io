@@ -524,6 +524,8 @@ export const en = {
     teamwork: "Group work",
   },
   assess: {
+    semesterTests: "Tests during semester: {n}%",
+    semesterTestsTip: "Class tests the Handbook lists besides the final exam, added up. The Handbook does not always say which week they are.",
     guessedTags: "Worked out from the subject's facts, not checked by hand yet.",
     title: 'How it’s assessed',
     group: '{n}% group work',
@@ -1709,6 +1711,8 @@ export const en = {
     group: "Has group work",
   },
   subject: {
+    quota: "Limited places",
+    quotaTip: "Places are limited. Enrol early and check the Handbook for how places are given.",
     relatedTitle: "Related subjects",
     relatedLeads: "Leads to",
     relatedWith: "Often taken with",

@@ -521,6 +521,8 @@ export const ms: Messages = {
     teamwork: "Kerja berkumpulan",
   },
   assess: {
+    semesterTests: "Ujian semasa semester: {n}%",
+    semesterTestsTip: "Jumlah ujian selain peperiksaan akhir yang disenaraikan Handbook. Handbook tidak selalu menyatakan minggunya.",
     guessedTags: "Dianggarkan daripada maklumat subjek, belum disemak secara manual.",
     title: 'Cara penilaian',
     group: '{n}% kerja berkumpulan',
@@ -1706,6 +1708,8 @@ export const ms: Messages = {
     group: "Ada kerja berkumpulan",
   },
   subject: {
+    quota: "Tempat terhad",
+    quotaTip: "Tempat terhad. Daftar awal dan semak Handbook tentang cara tempat diberi.",
     relatedTitle: "Subjek berkaitan",
     relatedLeads: "Membawa kepada",
     relatedWith: "Selalu diambil bersama",

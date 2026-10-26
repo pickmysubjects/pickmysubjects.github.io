@@ -521,6 +521,8 @@ export const zhCN: Messages = {
     teamwork: "小组合作",
   },
   assess: {
+    semesterTests: "学期中小测：共 {n}%",
+    semesterTestsTip: "Handbook 里除期末考试外的测验，权重加总。具体第几周考，Handbook 不一定写。",
     guessedTags: "根据课程资料推测，还没人工核对。",
     title: '考核方式',
     group: '小组作业占 {n}%',
@@ -1706,6 +1708,8 @@ export const zhCN: Messages = {
     group: "有小组作业",
   },
   subject: {
+    quota: "限额课",
+    quotaTip: "名额有限。尽早选课，并在 Handbook 查看名额怎么分配。",
     relatedTitle: "相关科目",
     relatedLeads: "之后可以修",
     relatedWith: "常一起修",

@@ -521,6 +521,8 @@ export const id: Messages = {
     teamwork: "Kerja kelompok",
   },
   assess: {
+    semesterTests: "Tes selama semester: {n}%",
+    semesterTestsTip: "Total tes selain ujian akhir yang tercantum di Handbook. Handbook tidak selalu menyebut minggu ke berapa.",
     guessedTags: "Diperkirakan dari informasi mata kuliah, belum dicek manual.",
     title: 'Cara penilaian',
     group: '{n}% kerja kelompok',
@@ -1706,6 +1708,8 @@ export const id: Messages = {
     group: "Ada tugas kelompok",
   },
   subject: {
+    quota: "Kuota terbatas",
+    quotaTip: "Tempat terbatas. Daftar lebih awal dan cek Handbook soal cara pembagian tempat.",
     relatedTitle: "Mata kuliah terkait",
     relatedLeads: "Membuka jalan ke",
     relatedWith: "Sering diambil bersama",

@@ -521,6 +521,8 @@ export const ko: Messages = {
     teamwork: "팀 과제",
   },
   assess: {
+    semesterTests: "학기 중 시험: 총 {n}%",
+    semesterTestsTip: "Handbook에 나온 기말시험 외 시험 비중의 합계예요. 몇 주차인지는 안 나올 때도 있어요.",
     guessedTags: "과목 정보로 추정한 것이며 아직 직접 확인하지 않았어요.",
     title: '평가 방식',
     group: '조별 과제 {n}%',
@@ -1706,6 +1708,8 @@ export const ko: Messages = {
     group: "조별 과제 있음",
   },
   subject: {
+    quota: "정원 제한",
+    quotaTip: "정원이 정해져 있어요. 일찍 신청하고, 자리 배정 방식은 Handbook에서 확인하세요.",
     relatedTitle: "관련 과목",
     relatedLeads: "다음에 들을 수 있는 과목",
     relatedWith: "함께 많이 듣는 과목",
