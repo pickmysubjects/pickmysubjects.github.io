@@ -2044,7 +2044,7 @@ export const en = {
       none: "No group work",
     },
     cost: {
-      yes: "Textbook or paid homework access needed",
+      yes: "Extra cost: textbook or online homework",
       no: "No extra cost",
     },
     q: {

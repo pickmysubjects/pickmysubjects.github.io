@@ -2041,7 +2041,7 @@ export const vi: Messages = {
       none: "Không làm nhóm",
     },
     cost: {
-      yes: "Phải mua sách hoặc trang bài tập",
+      yes: "Tốn thêm tiền: sách hoặc bài tập online",
       no: "Không tốn thêm",
     },
     q: {

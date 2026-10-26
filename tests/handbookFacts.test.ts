@@ -14,6 +14,8 @@ describe('attendance from Handbook text', () => {
     expect(extractAttendance('Hurdle requirement: Attendance at 75% of tutorials throughout the teaching period')?.value).toBe(75)
     expect(extractAttendance('Hurdle requirement: Students must attend a minimum of 70% of all scheduled classes.')?.value).toBe(70)
     expect(extractAttendance('Hurdle requirement: Less than 80% attendance will result in a fail.')?.value).toBe(80)
+    // The fail line is the requirement, not the share that is "expected".
+    expect(extractAttendance('Hurdle requirement: 100% attendance is expected. Less than 75% will result in a fail in this subject.')?.value).toBe(75)
     expect(extractAttendance('It is a hurdle that students attend a minimum of 10 (80% ) of laboratory practicals')?.value).toBe(80)
   })
 

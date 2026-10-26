@@ -2041,7 +2041,7 @@ export const ko: Messages = {
       none: "팀플 없음",
     },
     cost: {
-      yes: "교재나 과제 사이트 구매 필요",
+      yes: "추가 비용: 교재나 온라인 과제 이용권",
       no: "추가 비용 없음",
     },
     q: {

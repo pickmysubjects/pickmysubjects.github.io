@@ -2041,7 +2041,7 @@ export const ms: Messages = {
       none: "Tiada kerja berkumpulan",
     },
     cost: {
-      yes: "Perlu beli buku teks atau akses kerja rumah",
+      yes: "Kos tambahan: buku teks atau kerja rumah dalam talian",
       no: "Tiada kos tambahan",
     },
     q: {

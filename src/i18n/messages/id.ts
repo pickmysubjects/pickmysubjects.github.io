@@ -2041,7 +2041,7 @@ export const id: Messages = {
       none: "Tidak ada kerja kelompok",
     },
     cost: {
-      yes: "Harus beli buku atau akses tugas online",
+      yes: "Biaya tambahan: buku teks atau PR online",
       no: "Tidak ada biaya tambahan",
     },
     q: {

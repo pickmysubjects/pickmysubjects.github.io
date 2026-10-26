@@ -2041,7 +2041,7 @@ export const zhTW: Messages = {
       none: "沒有分組作業",
     },
     cost: {
-      yes: "要買課本或作業平台",
+      yes: "要額外花錢：教科書或線上作業系統",
       no: "沒有額外花費",
     },
     q: {

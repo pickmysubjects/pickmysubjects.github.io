@@ -44,6 +44,12 @@ function sentences(text: string): string[] {
 
 /** "Attendance at 80% of tutorials", "a minimum requirement of 80% attendance": one percentage only. */
 export function extractAttendance(text: string): { value: number; sentence: string; appliesTo?: AttendClass[] } | undefined {
+  // "100% attendance is expected. Less than 75% will result in a fail": the fail line is the requirement.
+  for (const line of text.split(/\r?\n/)) {
+    if (!/attend/i.test(line) || /\b[A-Z]{4}\d{5}\b/.test(line)) continue
+    const fail = /less than (\d{2,3})\s?%[^.]{0,40}\bfail/i.exec(line)
+    if (fail) return { value: Number(fail[1]), sentence: line.split('\t')[0]!.trim() }
+  }
   const found = new Map<number, string>()
   for (const s of sentences(text)) {
     if (!/attend/i.test(s)) continue

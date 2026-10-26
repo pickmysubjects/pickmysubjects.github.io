@@ -167,11 +167,15 @@ describe('student facts in the app', () => {
     }
     const row = factsRow(t, { studentFacts, examBook: 'closed', prescribedTexts: true, languages: ['Python'] })
     expect(row.handbook).toEqual(['Closed-book exam', 'Prescribed textbook', 'Python'])
-    // Exam, cost and languages are answered by the Handbook; only the recordings item is left.
-    expect(row.students).toEqual(['Lectures recorded'])
+    // Exam and languages are the same question, so the Handbook answers them. What students
+    // paid for (textbook or online homework access) is a different question and still shows.
+    expect(row.students).toEqual(['Lectures recorded', 'No extra cost'])
     expect(row.n).toBe(6)
     // Students fill in what the Handbook doesn't answer.
-    expect(factsRow(t, { studentFacts, prescribedTexts: false }).students).toEqual(['Open-book exam', 'Lectures recorded', 'R'])
+    expect(factsRow(t, { studentFacts, prescribedTexts: false }).students).toEqual(['Open-book exam', 'Lectures recorded', 'No extra cost', 'R'])
+    // "No prescribed textbook" next to students' paid homework access: both shown, no contradiction in wording.
+    const paid = factsRow(t, { studentFacts: { n: 4, cost: { value: 'yes', count: 3 } }, prescribedTexts: false })
+    expect(paid).toEqual({ handbook: ['No prescribed textbook'], students: ['Extra cost: textbook or online homework'], n: 4 })
     // Handbook alone: no student count.
     const only = studentFactsHtml(t, { prescribedTexts: false })
     expect(only).toContain('<strong>Handbook:</strong> No prescribed textbook')

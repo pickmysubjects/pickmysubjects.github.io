@@ -25,8 +25,9 @@ export type FactsSource = Partial<Pick<Subject, 'studentFacts' | 'prescribedText
 
 /**
  * One facts row from two sources. The Handbook's facts always show; a student fact shows only
- * for an item the Handbook doesn't answer, so where they disagree the Handbook wins. Prescribed
- * texts answer the students' "had to buy a textbook" item.
+ * for an item the Handbook doesn't answer (exam format, languages), so there the Handbook wins.
+ * Prescribed texts are a different question from the students' "paid for a textbook or online
+ * homework access", so both show.
  */
 export function factsRow(t: Translate, s: FactsSource): { handbook: string[]; students: string[]; n: number } {
   const handbook: string[] = []
@@ -37,7 +38,6 @@ export function factsRow(t: Translate, s: FactsSource): { handbook: string[]; st
   }
   if (s.prescribedTexts !== undefined) {
     handbook.push(t(`studentFacts.texts.${s.prescribedTexts ? 'yes' : 'no'}`))
-    skip.add('cost')
   }
   if (s.languages?.length) {
     handbook.push(...s.languages)

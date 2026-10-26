@@ -2041,7 +2041,7 @@ export const zhCN: Messages = {
       none: "没有小组作业",
     },
     cost: {
-      yes: "要买课本或作业平台",
+      yes: "要额外花钱：教材或网上作业系统",
       no: "没有额外花费",
     },
     q: {
