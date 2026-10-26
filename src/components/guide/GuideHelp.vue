@@ -2,6 +2,7 @@
 import { ExternalLink } from 'lucide-vue-next'
 import { useI18n } from '@/i18n'
 import GuideItem from './GuideItem.vue'
+import GuideServiceList from './GuideServiceList.vue'
 import { URLS } from '@/utils/guideLinks'
 import { ACCREDITATION as ACC } from '@/utils/accreditation'
 import { link } from '@/composables/useView'
@@ -49,6 +50,10 @@ const RANKINGS = [
       <p>
         <a class="button button-quiet" :href="link('careers/')">{{ t('guide.careersLink') }}</a>
       </p>
+    </GuideItem>
+
+    <GuideItem id="uni-careers" :title="t('guide.svcTopic.uni-careers.title')" :short="t('guide.svcTopic.uni-careers.short')">
+      <GuideServiceList topic="uni-careers" />
     </GuideItem>
 
     <GuideItem id="accreditation" :title="t('guide.accTitle')" :short="t('guide.accShort')">

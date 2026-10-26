@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import InfoTip from '@/components/InfoTip.vue'
-import { computed, nextTick, onBeforeUnmount, onMounted, watch } from 'vue'
+import { computed, nextTick, type Component, onBeforeUnmount, onMounted, watch } from 'vue'
 import CanDoList from '@/components/home/CanDoList.vue'
 import GuideSubnav from '@/components/guide/GuideSubnav.vue'
 import GuideOverview from '@/components/guide/GuideOverview.vue'
@@ -10,17 +10,19 @@ import GuideSemester from '@/components/guide/GuideSemester.vue'
 import GuideInternational from '@/components/guide/GuideInternational.vue'
 import GuideHelp from '@/components/guide/GuideHelp.vue'
 import KeyDates from '@/components/guide/KeyDates.vue'
+import GuideServices from '@/components/guide/GuideServices.vue'
 import { link, replaceAddress, useView } from '@/composables/useView'
 import { useI18n } from '@/i18n'
 import { URLS } from '@/utils/guideLinks'
-import { categoryOfTopic, guidePageOf } from '@/utils/guideSections'
+import { categoryOfTopic, guidePageOf, type GuideCategory } from '@/utils/guideSections'
 
 /** The basics guide: an overview at /guide/, one page per section, and the key dates page. */
 const { t } = useI18n()
 const { param } = useView()
 const page = computed(() => guidePageOf(param.value))
 const current = computed(() => (page.value.kind === 'overview' ? 'overview' : page.value.category))
-const SECTIONS = { basics: GuideBasics, enrolling: GuideEnrolling, semester: GuideSemester, international: GuideInternational, help: GuideHelp } as const
+// Categories without their own component (systems, life) are plain service lists.
+const SECTIONS: Partial<Record<GuideCategory, Component>> = { basics: GuideBasics, enrolling: GuideEnrolling, semester: GuideSemester, international: GuideInternational, help: GuideHelp }
 const heading = computed(() => {
   const p = page.value
   if (p.kind === 'category') return { title: t.value(`guide.cat.${p.category}.title`), lede: t.value(`guide.cat.${p.category}.lede`) }
@@ -75,7 +77,8 @@ watch(param, () => void followHash())
           <CanDoList :title="t('guide.canTitle')" class="guide-can" />
         </template>
         <KeyDates v-else-if="page.kind === 'extra'" />
-        <component :is="SECTIONS[page.category]" v-else />
+        <component :is="SECTIONS[page.category]" v-else-if="SECTIONS[page.category]" />
+        <GuideServices v-else :key="page.category" :category="page.category" />
 
         <p v-if="page.kind !== 'overview'" class="next">
           <a :href="link('guide/')">← {{ t('guide.overview') }}</a>
