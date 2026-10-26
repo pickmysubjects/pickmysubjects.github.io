@@ -35,6 +35,10 @@ assessment:
   - kind: presentation
     weight: 15
     group: true
+attendance_applies_to:
+  - tutorials
+  - practicals
+prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2026/subjects/bcmb20005
 source_year: 2026
 verified_on: 2026-10-13

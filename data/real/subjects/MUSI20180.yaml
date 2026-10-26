@@ -27,6 +27,9 @@ assessment:
 weekly_contact_hours: 4
 min_attendance: 75
 breadth_for: []
+attendance_applies_to:
+  - workshops
+  - lectures
 handbook: https://handbook.unimelb.edu.au/2026/subjects/musi20180
 source_year: 2026
 verified_on: 2026-10-21

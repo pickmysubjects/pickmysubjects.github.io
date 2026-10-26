@@ -27,6 +27,7 @@ weekly_contact_hours: 5
 categories:
   B-SCIEXTD: core
 breadth_for: []
+prescribed_texts: true
 handbook: https://handbook.unimelb.edu.au/2026/subjects/scie10008
 source_year: 2026
 verified_on: 2026-10-21

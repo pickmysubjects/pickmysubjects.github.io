@@ -24,6 +24,7 @@ assessment:
     weight: 55
 weekly_contact_hours: 4.5
 min_attendance: 80
+prescribed_texts: true
 handbook: https://handbook.unimelb.edu.au/2026/subjects/miim20002
 source_year: 2026
 verified_on: 2026-10-13

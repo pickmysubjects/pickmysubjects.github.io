@@ -30,6 +30,7 @@ assessment:
   - kind: participation
     weight: 10
 weekly_contact_hours: 3
+prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2026/subjects/larc10001
 source_year: 2026
 verified_on: 2026-10-13

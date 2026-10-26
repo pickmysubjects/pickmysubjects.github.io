@@ -40,6 +40,9 @@ recommended:
   - PSYC10004
   - PSYC10007
   - PSYC90098
+attendance_applies_to:
+  - labs
+prescribed_texts: false
 handbook: "https://handbook.unimelb.edu.au/2026/subjects/psyc40014"
 source_year: 2026
 verified_on: 2026-10-21

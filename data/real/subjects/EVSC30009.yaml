@@ -28,6 +28,7 @@ assessment:
   - kind: exam
     weight: 50
     hurdle: true
+prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2026/subjects/evsc30009
 source_year: 2026
 verified_on: 2026-10-10

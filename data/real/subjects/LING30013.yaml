@@ -38,6 +38,12 @@ breadth_for:
 recommended:
   - LING20006
   - LING10001
+min_attendance: 80
+attendance_applies_to:
+  - tutorials
+  - workshops
+  - seminars
+prescribed_texts: true
 handbook: https://handbook.unimelb.edu.au/2026/subjects/ling30013
 source_year: 2026
 verified_on: 2026-10-17

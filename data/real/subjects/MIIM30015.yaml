@@ -39,6 +39,7 @@ assessment:
   - kind: exam
     weight: 50
 min_attendance: 80
+prescribed_texts: true
 handbook: https://handbook.unimelb.edu.au/2026/subjects/miim30015
 source_year: 2026
 verified_on: 2026-10-13

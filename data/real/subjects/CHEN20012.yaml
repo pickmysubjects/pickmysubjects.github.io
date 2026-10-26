@@ -38,6 +38,8 @@ assessment:
     weight: 50
     hurdle: true
 weekly_contact_hours: 4.5
+prescribed_texts: false
+exam_book: closed
 handbook: https://handbook.unimelb.edu.au/2026/subjects/chen20012
 source_year: 2026
 verified_on: 2026-10-10

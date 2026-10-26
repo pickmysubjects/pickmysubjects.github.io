@@ -25,6 +25,7 @@ assessment:
     weight: 10
     group: true
 weekly_contact_hours: 5
+prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2026/subjects/ansc30001
 source_year: 2026
 verified_on: 2026-10-10

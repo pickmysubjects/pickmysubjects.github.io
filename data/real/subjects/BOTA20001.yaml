@@ -40,6 +40,10 @@ assessment:
     weight: 50
 weekly_contact_hours: 5
 min_attendance: 80
+attendance_applies_to:
+  - labs
+  - practicals
+prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2026/subjects/bota20001
 source_year: 2026
 verified_on: 2026-10-13

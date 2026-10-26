@@ -30,6 +30,10 @@ assessment:
     weight: 0
     hurdle: true
 breadth_for: []
+min_attendance: 75
+attendance_applies_to:
+  - studios
+prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2026/subjects/abpl20057
 source_year: 2026
 verified_on: 2026-10-19

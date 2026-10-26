@@ -26,6 +26,10 @@ assessment:
     weight: 15
   - kind: participation
     weight: 10
+min_attendance: 80
+attendance_applies_to:
+  - labs
+prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2026/subjects/phyc30021
 source_year: 2026
 verified_on: 2026-10-10

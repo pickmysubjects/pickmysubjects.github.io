@@ -35,6 +35,9 @@ assessment:
 weekly_contact_hours: 3.5
 min_attendance: 80
 breadth_for: []
+attendance_applies_to:
+  - seminars
+prescribed_texts: false
 handbook: "https://handbook.unimelb.edu.au/2026/subjects/psyc40013"
 source_year: 2026
 verified_on: 2026-10-21

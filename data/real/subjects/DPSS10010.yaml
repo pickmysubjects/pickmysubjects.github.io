@@ -34,6 +34,8 @@ assessment:
     weight: 10
 weekly_contact_hours: 12
 breadth_for: []
+min_attendance: 75
+prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2026/subjects/dpss10010
 source_year: 2026
 verified_on: 2026-10-21

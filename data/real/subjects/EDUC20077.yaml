@@ -36,6 +36,8 @@ breadth_for:
   - Bachelor of Fine Arts (Theatre)
   - Bachelor of Music
   - Bachelor of Science
+min_attendance: 80
+prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2026/subjects/educ20077
 source_year: 2026
 verified_on: 2026-10-19

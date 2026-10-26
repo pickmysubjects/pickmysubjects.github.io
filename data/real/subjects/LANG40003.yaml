@@ -34,6 +34,10 @@ assessment:
 weekly_contact_hours: 2
 min_attendance: 80
 breadth_for: []
+attendance_applies_to:
+  - tutorials
+  - workshops
+  - seminars
 handbook: https://handbook.unimelb.edu.au/2026/subjects/lang40003
 source_year: 2026
 verified_on: 2026-10-21

@@ -21,6 +21,9 @@ assessment:
     weight: 40
 min_attendance: 80
 breadth_for: []
+attendance_applies_to:
+  - tutorials
+prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2026/subjects/mgmt30022
 source_year: 2026
 verified_on: 2026-10-14

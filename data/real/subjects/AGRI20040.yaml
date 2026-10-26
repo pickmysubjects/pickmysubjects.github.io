@@ -39,6 +39,9 @@ weekly_contact_hours: 7
 min_attendance: 80
 campus: Dookie
 breadth_for: []
+attendance_applies_to:
+  - practicals
+prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2026/subjects/agri20040
 source_year: 2026
 verified_on: 2026-10-21

@@ -29,6 +29,7 @@ assessment:
     weight: 45
 weekly_contact_hours: 4.5
 breadth_for: []
+prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2026/subjects/agri10045
 source_year: 2026
 verified_on: 2026-10-17

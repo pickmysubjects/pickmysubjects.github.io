@@ -26,6 +26,11 @@ assessment:
 breadth_for: []
 recommended:
   - POLS20008
+min_attendance: 80
+attendance_applies_to:
+  - tutorials
+  - workshops
+  - seminars
 handbook: https://handbook.unimelb.edu.au/2026/subjects/pols30035
 source_year: 2026
 verified_on: 2026-10-17

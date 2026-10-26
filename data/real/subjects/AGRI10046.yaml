@@ -21,6 +21,7 @@ assessment:
   - kind: exam
     weight: 45
 weekly_contact_hours: 5.5
+prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2026/subjects/agri10046
 source_year: 2026
 verified_on: 2026-10-13

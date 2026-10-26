@@ -16,6 +16,10 @@ assessment:
   - kind: exam
     weight: 40
 weekly_contact_hours: 4
+min_attendance: 80
+attendance_applies_to:
+  - tutorials
+prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2026/subjects/psyc30023
 source_year: 2026
 verified_on: 2026-10-09

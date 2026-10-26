@@ -51,6 +51,8 @@ assessment:
     weight: 15
   - kind: exam
     weight: 65
+languages:
+  - MATLAB
 handbook: https://handbook.unimelb.edu.au/2026/subjects/mast20029
 source_year: 2026
 verified_on: 2026-10-10

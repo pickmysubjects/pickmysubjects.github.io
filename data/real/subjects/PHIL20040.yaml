@@ -34,6 +34,12 @@ breadth_for:
 recommended:
   - PHIL10002
   - PHIL10003
+min_attendance: 80
+attendance_applies_to:
+  - tutorials
+  - workshops
+  - seminars
+prescribed_texts: true
 handbook: https://handbook.unimelb.edu.au/2026/subjects/phil20040
 source_year: 2026
 verified_on: 2026-10-17

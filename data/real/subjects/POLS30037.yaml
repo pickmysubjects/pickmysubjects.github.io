@@ -28,6 +28,9 @@ assessment:
     weight: 50
 weekly_contact_hours: 2
 breadth_for: []
+min_attendance: 80
+attendance_applies_to:
+  - tutorials
 handbook: https://handbook.unimelb.edu.au/2026/subjects/pols30037
 source_year: 2026
 verified_on: 2026-10-17

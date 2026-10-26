@@ -20,6 +20,7 @@ assessment:
     weight: 25
   - kind: exam
     weight: 45
+prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2026/subjects/mast10014
 source_year: 2026
 weekly_contact_hours: 6

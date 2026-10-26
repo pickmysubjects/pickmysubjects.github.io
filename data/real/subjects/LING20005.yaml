@@ -39,6 +39,12 @@ breadth_for:
   - Bachelor of Science
 recommended:
   - LING10001
+min_attendance: 80
+attendance_applies_to:
+  - tutorials
+  - workshops
+  - seminars
+prescribed_texts: true
 handbook: https://handbook.unimelb.edu.au/2026/subjects/ling20005
 source_year: 2026
 verified_on: 2026-10-17

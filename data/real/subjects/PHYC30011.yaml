@@ -29,6 +29,7 @@ assessment:
   - kind: exam
     weight: 80
 weekly_contact_hours: 3
+prescribed_texts: true
 handbook: https://handbook.unimelb.edu.au/2026/subjects/phyc30011
 source_year: 2026
 verified_on: 2026-10-13

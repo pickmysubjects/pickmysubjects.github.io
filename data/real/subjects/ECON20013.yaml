@@ -22,6 +22,7 @@ assessment:
     weight: 50
     hurdle: true
 breadth_for: []
+prescribed_texts: true
 handbook: https://handbook.unimelb.edu.au/2026/subjects/econ20013
 source_year: 2026
 verified_on: 2026-10-14

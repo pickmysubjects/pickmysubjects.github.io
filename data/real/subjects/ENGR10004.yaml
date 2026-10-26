@@ -37,6 +37,7 @@ assessment:
     weight: 35
     group: true
 weekly_contact_hours: 6
+prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2026/subjects/engr10004
 source_year: 2026
 verified_on: 2026-10-13

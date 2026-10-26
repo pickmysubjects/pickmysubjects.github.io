@@ -24,6 +24,8 @@ assessment:
     weight: 30
   - kind: exam
     weight: 30
+prescribed_texts: false
+exam_book: open
 handbook: https://handbook.unimelb.edu.au/2026/subjects/zool30004
 source_year: 2026
 verified_on: 2026-10-10

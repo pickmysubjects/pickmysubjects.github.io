@@ -27,6 +27,7 @@ assessment:
     weight: 30
   - kind: project
     weight: 10
+prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2026/subjects/biom30003
 source_year: 2026
 verified_on: 2026-10-09

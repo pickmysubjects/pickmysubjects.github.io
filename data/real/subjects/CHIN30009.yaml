@@ -46,6 +46,12 @@ breadth_for:
   - Bachelor of Fine Arts (Visual Art)
   - Bachelor of Music
   - Bachelor of Science
+min_attendance: 80
+attendance_applies_to:
+  - tutorials
+  - workshops
+  - seminars
+prescribed_texts: true
 handbook: https://handbook.unimelb.edu.au/2026/subjects/chin30009
 source_year: 2026
 verified_on: 2026-10-17

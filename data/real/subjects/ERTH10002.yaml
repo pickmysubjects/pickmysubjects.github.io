@@ -21,6 +21,10 @@ assessment:
     weight: 45
     hurdle: true
 weekly_contact_hours: 5
+min_attendance: 80
+attendance_applies_to:
+  - labs
+  - practicals
 handbook: https://handbook.unimelb.edu.au/2026/subjects/erth10002
 source_year: 2026
 verified_on: 2026-10-10

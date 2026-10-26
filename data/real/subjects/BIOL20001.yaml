@@ -28,6 +28,7 @@ assessment:
     group: true
   - kind: exam
     weight: 40
+prescribed_texts: true
 handbook: https://handbook.unimelb.edu.au/2026/subjects/biol20001
 source_year: 2026
 verified_on: 2026-10-09

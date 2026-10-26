@@ -24,6 +24,8 @@ assessment:
   - kind: exam
     weight: 40
 weekly_contact_hours: 3
+prescribed_texts: true
+exam_book: closed
 handbook: https://handbook.unimelb.edu.au/2026/subjects/zool30006
 source_year: 2026
 verified_on: 2026-10-10

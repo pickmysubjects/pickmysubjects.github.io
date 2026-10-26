@@ -34,6 +34,8 @@ weekly_contact_hours: 4
 breadth_for:
   - Bachelor of Commerce
   - Bachelor of Design
+min_attendance: 80
+prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2026/subjects/chin30026
 source_year: 2026
 verified_on: 2026-10-17

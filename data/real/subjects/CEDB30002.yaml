@@ -28,6 +28,9 @@ assessment:
     weight: 45
 weekly_contact_hours: 5
 min_attendance: 70
+attendance_applies_to:
+  - workshops
+prescribed_texts: true
 handbook: https://handbook.unimelb.edu.au/2026/subjects/cedb30002
 source_year: 2026
 verified_on: 2026-10-13

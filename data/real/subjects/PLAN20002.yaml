@@ -27,6 +27,7 @@ assessment:
 weekly_contact_hours: 1.5
 breadth_for:
   - Bachelor of Design
+prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2026/subjects/plan20002
 source_year: 2026
 verified_on: 2026-10-19

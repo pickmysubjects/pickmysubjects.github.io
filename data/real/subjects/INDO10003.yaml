@@ -33,6 +33,7 @@ assessment:
     weight: 10
 weekly_contact_hours: 4
 breadth_for: []
+min_attendance: 80
 handbook: https://handbook.unimelb.edu.au/2026/subjects/indo10003
 source_year: 2026
 verified_on: 2026-10-17

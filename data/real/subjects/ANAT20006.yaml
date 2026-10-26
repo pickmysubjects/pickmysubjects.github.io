@@ -42,6 +42,7 @@ assessment:
     weight: 10
   - kind: exam
     weight: 60
+prescribed_texts: true
 handbook: https://handbook.unimelb.edu.au/2026/subjects/anat20006
 source_year: 2026
 verified_on: 2026-10-09

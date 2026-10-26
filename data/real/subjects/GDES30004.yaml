@@ -32,6 +32,8 @@ categories:
   B-DES: design
   B-FAPRO: fine-arts
 breadth_for: []
+min_attendance: 75
+prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2026/subjects/gdes30004
 source_year: 2026
 verified_on: 2026-10-19

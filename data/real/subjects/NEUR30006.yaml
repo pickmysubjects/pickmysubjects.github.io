@@ -18,6 +18,9 @@ assessment:
     weight: 20
   - kind: report
     weight: 60
+prescribed_texts: false
+languages:
+  - Python
 handbook: https://handbook.unimelb.edu.au/2026/subjects/neur30006
 source_year: 2026
 verified_on: 2026-10-09

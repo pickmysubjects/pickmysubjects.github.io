@@ -30,6 +30,7 @@ assessment:
   - kind: report
     weight: 45
 weekly_contact_hours: 7
+prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2026/subjects/evsc20008
 source_year: 2026
 verified_on: 2026-10-13

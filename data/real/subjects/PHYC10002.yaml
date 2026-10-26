@@ -42,6 +42,7 @@ assessment:
   - kind: exam
     weight: 60
 weekly_contact_hours: 5.5
+prescribed_texts: true
 handbook: https://handbook.unimelb.edu.au/2026/subjects/phyc10002
 source_year: 2026
 verified_on: 2026-10-13

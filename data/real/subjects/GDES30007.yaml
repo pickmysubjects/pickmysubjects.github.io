@@ -22,6 +22,7 @@ weekly_contact_hours: 3
 categories:
   B-DES: design
 breadth_for: []
+prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2026/subjects/gdes30007
 source_year: 2026
 verified_on: 2026-10-19

@@ -36,6 +36,7 @@ assessment:
 weekly_contact_hours: 2.5
 min_attendance: 100
 breadth_for: []
+prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2026/subjects/musi30020
 source_year: 2026
 verified_on: 2026-10-21

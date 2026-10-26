@@ -42,6 +42,11 @@ breadth_for:
   - Bachelor of Science
 recommended:
   - CLAS10020
+min_attendance: 80
+attendance_applies_to:
+  - tutorials
+  - workshops
+  - seminars
 handbook: https://handbook.unimelb.edu.au/2026/subjects/clas10021
 source_year: 2026
 verified_on: 2026-10-17

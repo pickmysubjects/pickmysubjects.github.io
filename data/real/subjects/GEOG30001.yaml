@@ -51,6 +51,7 @@ assessment:
   - kind: exam
     weight: 50
 weekly_contact_hours: 5
+prescribed_texts: true
 handbook: https://handbook.unimelb.edu.au/2026/subjects/geog30001
 source_year: 2026
 verified_on: 2026-10-13

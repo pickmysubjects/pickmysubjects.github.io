@@ -47,6 +47,7 @@ breadth_for:
 recommended:
   - ARCH10004
   - ABPL10007
+prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2026/subjects/arch10003
 source_year: 2026
 verified_on: 2026-10-19

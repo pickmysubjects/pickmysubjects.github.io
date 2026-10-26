@@ -24,6 +24,7 @@ assessment:
     weight: 20
   - kind: exam
     weight: 40
+prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2026/subjects/ansc30008
 source_year: 2026
 verified_on: 2026-10-10

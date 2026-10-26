@@ -26,6 +26,7 @@ assessment:
   - kind: assignment
     weight: 50
 weekly_contact_hours: 3.5
+prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2026/subjects/evsc30003
 source_year: 2026
 verified_on: 2026-10-13

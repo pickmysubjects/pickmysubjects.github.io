@@ -24,6 +24,8 @@ assessment:
     weight: 70
 weekly_contact_hours: 9
 breadth_for: []
+min_attendance: 75
+prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2026/subjects/fina10034
 source_year: 2026
 verified_on: 2026-10-21

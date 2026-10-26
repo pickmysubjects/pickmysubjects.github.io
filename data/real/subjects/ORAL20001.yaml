@@ -42,6 +42,7 @@ assessment:
     weight: 5
 weekly_contact_hours: 3.5
 breadth_for: []
+prescribed_texts: true
 handbook: https://handbook.unimelb.edu.au/2026/subjects/oral20001
 source_year: 2026
 verified_on: 2026-10-21
