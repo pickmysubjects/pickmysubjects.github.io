@@ -58,7 +58,7 @@ const otherTerms = computed(() => {
     <p v-if="hasFacts" class="assess-facts">
       <span v-if="examHurdle" class="chip chip-warn"><TriangleAlert :size="14" aria-hidden="true" /> {{ t('assess.mustPassExam') }}</span>
       <span v-if="otherHurdle" class="chip chip-warn"><TriangleAlert :size="14" aria-hidden="true" /> {{ t('assess.hurdles') }}</span>
-      <span v-if="testShare" class="chip">{{ t('assess.semesterTests', { n: testShare }) }}<InfoTip :text="t('assess.semesterTestsTip')" /></span>
+      <span v-if="testShare" class="chip chip-tip">{{ t('assess.semesterTests', { n: testShare }) }}<InfoTip :text="t('assess.semesterTestsTip')" /></span>
       <span v-if="subject.minAttendance" class="chip chip-warn">
         <TriangleAlert :size="14" aria-hidden="true" /> {{ t('assess.attendance', { n: subject.minAttendance }) }}
       </span>
@@ -80,6 +80,23 @@ const otherTerms = computed(() => {
 </template>
 
 <style scoped>
+/* A chip with an ⓘ: the opened text goes on its own full-width line under the label. */
+.chip-tip {
+  flex-wrap: wrap;
+}
+
+.chip-tip:has([aria-expanded='true']) {
+  border-radius: var(--radius-sm);
+}
+
+.chip-tip :deep(.infotip) {
+  display: contents;
+}
+
+.chip-tip :deep(.infotip-panel) {
+  flex-basis: 100%;
+}
+
 .assess {
   display: grid;
   align-content: start;

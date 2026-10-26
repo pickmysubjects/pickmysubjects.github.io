@@ -127,7 +127,7 @@ async function share(): Promise<void> {
       <li class="chip" :class="{ 'chip-bad': gone }"><CalendarRange :size="14" aria-hidden="true" />{{ runs }}</li>
       <li v-if="subject.campus" class="chip"><MapPin :size="14" aria-hidden="true" />{{ subject.campus }}</li>
       <li v-for="g in gist" :key="g" class="chip">{{ g }}</li>
-      <li v-if="quota" class="chip">{{ t('subject.quota') }}<InfoTip :text="t('subject.quotaTip')" /></li>
+      <li v-if="quota" class="chip chip-tip">{{ t('subject.quota') }}<InfoTip :text="t('subject.quotaTip')" /></li>
     </ul>
     <FactsYearNote v-if="factsFrom.older && !gone" :year="factsFrom.year" />
     <p v-if="gone && subject.replacedBy.length" class="instead">
@@ -176,6 +176,23 @@ async function share(): Promise<void> {
 </template>
 
 <style scoped>
+/* A chip with an ⓘ: the opened text goes on its own full-width line under the label. */
+.chip-tip {
+  flex-wrap: wrap;
+}
+
+.chip-tip:has([aria-expanded='true']) {
+  border-radius: var(--radius-sm);
+}
+
+.chip-tip :deep(.infotip) {
+  display: contents;
+}
+
+.chip-tip :deep(.infotip-panel) {
+  flex-basis: 100%;
+}
+
 .head {
   display: grid;
   gap: var(--space-2);
