@@ -25,6 +25,8 @@ import { subjectDifficulty, type Difficulty } from '../src/engine/subjectFit'
 import { RANK_SLUGS, rankSubjects, type RankDirection, type RankReason } from '../src/engine/easeRanking'
 import { forCourse } from '../src/engine/forCourse'
 import { majorOverview } from '../src/engine/roles'
+import { majorRoute } from '../src/engine/majorRoute'
+import { routeLines } from '../src/engine/majorRouteText'
 import { groupMajors } from '../src/utils/majorGroups'
 import { ACCREDITATION } from '../src/utils/accreditation'
 import { careerJobLabels, careerListHtml, careerPageHtml, careerSeo, careersHtml, subjectCareersHtml } from '../src/utils/careersHtml'
@@ -424,6 +426,20 @@ function majorPage(code: LocaleCode, m: (typeof majors)[number]): Page {
     for (const c of o.choices) parts.push(`<h2>${esc(t('majors.choiceTitle', { n: c.points / 12.5 }))}</h2>${list(c.from)}`)
     parts.push(`<h2>${esc(t('majors.pathwayTitle'))}</h2>`)
     parts.push(o.pathway.length ? list(o.pathway.map((p) => p.code)) : `<p>${esc(t('majors.noPathway'))}</p>`)
+    // The prerequisite route as text: the same thing the app draws.
+    if (o.core.length || o.choices.length) {
+      const say = (key: string, cs: string[]) => (cs.length ? esc(t(key, { list: cs.join(t('listSep')) })) : '')
+      const levels = routeLines(majorRoute(data, o, m.course)).map(
+        (col) =>
+          `<h3>${esc(t('majors.level', { n: col.level }))}</h3><ul>${col.lines
+            .map((l) => {
+              const bits = [say('majors.routeNeeds', l.needs), say('majors.routeOneOf', l.oneOf), say('majors.routeLeads', l.leads)]
+              return `<li>${[subjectLink(code, l.code), ...bits.filter(Boolean)].join('. ')}</li>`
+            })
+            .join('')}</ul>`,
+      )
+      parts.push(`<h2>${esc(t('majors.routeTitle'))}</h2>${levels.join('')}`)
+    }
   }
   const careers = careersHtml(data, m.id, m.course, t, code, (c) => href(code, `subject/${c}`), (id) => href(code, `majors/${id}`), (id) => href(code, `careers/${id}`))
   if (careers) parts.push(careers)
