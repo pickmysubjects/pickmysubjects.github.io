@@ -44,6 +44,7 @@ const { wam } = useProfile()
         <li>{{ t('guide.majorsSecond') }}</li>
         <li>{{ t('guide.majorsMinor') }}</li>
         <li>{{ t('guide.majorsOnce') }}</li>
+        <li>{{ t('guide.majorsRoute') }}</li>
       </ul>
       <p class="note">{{ t('guide.majorsRulesYear') }}</p>
       <p class="note">{{ t('guide.majorsPairs') }}</p>
