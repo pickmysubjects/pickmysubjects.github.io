@@ -16,7 +16,7 @@ export function useSortForMeOptions() {
   return computed<RecommendOptions>(() => ({
     planned: plan.plannedCodes.value,
     course: plan.setup.value.course,
-    maxLevel: yearLevel(profile.value.results, data.value),
+    maxLevel: yearLevel(profile.value.results, data.value, profile.value.credit),
     programme: {
       courseYear: plan.setup.value.courseYear,
       components: heldMajorIds(plan.plan.value).filter((id): id is string => !!id),

@@ -51,6 +51,7 @@ const { t } = useI18n()
         <li>{{ t('guide.overloadFails') }}</li>
       </ul>
       <p class="note">{{ t('guide.overloadFinal') }}</p>
+      <p class="note">{{ t('guide.loadPartTime') }}</p>
       <p class="aside">
         {{ t('guide.loadSummer') }}
         <a :href="link('subjects/summer-winter/')">{{ t('guide.loadSummerLink') }}</a>

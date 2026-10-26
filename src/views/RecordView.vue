@@ -23,9 +23,10 @@ import { useProfile } from '@/composables/useProfile'
 import { useI18n } from '@/i18n'
 
 const { data, subjectList, topics } = useDataset()
-const { profile, wam, setResults, setSkills, setInterests } = useProfile()
+const { profile, wam, setResults, setCredit, setSkills, setInterests } = useProfile()
 
 const results = computed({ get: () => profile.value.results, set: setResults })
+const credit = computed({ get: () => profile.value.credit ?? [], set: setCredit })
 const skills = computed({ get: () => profile.value.skills, set: setSkills })
 const interests = computed({ get: () => profile.value.interests, set: setInterests })
 const { t } = useI18n()
@@ -95,7 +96,7 @@ const filled = computed(() => [
             <h2 id="sec-results" class="sec-title">{{ t('record.step2') }}</h2>
             <span v-if="wam !== null" class="sec-badge">{{ t('record.sumWam', { wam }) }}</span>
           </header>
-          <ResultsEditor v-model="results" :subjects="data.subjects" :options="options" />
+          <ResultsEditor v-model="results" v-model:credit="credit" :subjects="data.subjects" :options="options" />
           <GradeShare class="sec-part" />
         </section>
 

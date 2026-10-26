@@ -31,7 +31,7 @@ const donePoints = computed(() =>
 // Start from the student's own numbers; they can change any of them.
 const current = shallowRef(wam.value ?? 70)
 const done = shallowRef(donePoints.value)
-const remaining = computed(() => pointsLeft(profile.value.results, data.value, degreePoints.value))
+const remaining = computed(() => pointsLeft(profile.value.results, data.value, degreePoints.value, profile.value.credit))
 const left = shallowRef(remaining.value)
 const target = shallowRef(Math.min(100, Math.ceil((wam.value ?? 70) + 3)))
 const average = shallowRef(75)

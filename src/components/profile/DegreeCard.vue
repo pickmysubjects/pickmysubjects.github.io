@@ -48,7 +48,7 @@ function done(setup: PlanSetup): void {
       <div class="degree-text">
         <h2 id="degree-title" class="degree-title">{{ t('record.degreeTitle') }}</h2>
         <p v-if="chosen" class="degree-line">
-          <strong>{{ course }}</strong> · {{ major }}<template v-if="major2"> + {{ major2 }}</template><template v-if="spec"> + {{ spec }}</template><template v-if="minor"> · {{ t(minorKey, { title: minor }) }}</template><template v-if="diploma"> · {{ t('plans.diplomaLine', { title: diploma }) }}</template> · {{ t('record.degreeStart', { term: start }) }}
+          <strong>{{ course }}</strong> · {{ major }}<template v-if="major2"> + {{ major2 }}</template><template v-if="spec"> + {{ spec }}</template><template v-if="minor"> · {{ t(minorKey, { title: minor }) }}</template><template v-if="diploma"> · {{ t('plans.diplomaLine', { title: diploma }) }}</template> · {{ t('record.degreeStart', { term: start }) }}<template v-if="plan.setup.value.load"> · {{ t('record.degreeLoad', { n: plan.setup.value.load }) }}</template>
         </p>
         <p v-else class="degree-line">{{ t('record.degreeNone') }}</p>
       </div>

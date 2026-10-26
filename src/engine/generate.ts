@@ -1,4 +1,5 @@
 import { forCourse } from './forCourse'
+import { creditCodes, creditPoints, isCreditCode, withCredit } from './credit'
 import { offeredIn, periodsFor, termKey } from './availability'
 import { capExempt, categoryOf, matches, pointRules, sumPoints, withinCaps, type PointsRule, disciplineOf, checkCourse, componentNeeds, diplomaStream, findComponent, findCourse, findDiploma, inDiploma, heldMajorIds, majorTitles, minorTitles, planComponentIds, sharesAllowed, withBarredBreadth } from './courseRules'
 import { careerGoal } from './careerGoal'
@@ -29,6 +30,8 @@ export interface GenerateInput {
   diplomaStream?: string
   startYear: number
   startPeriod: Period
+  /** Points a semester the student chose (part-time: 25 or 37.5); missing: the course's standard load. */
+  load?: number
   /** Upper bound on terms to plan. Defaults to what the remaining points need, capped at 10. */
   /** With useShortTerms: electives may also go in summer and winter when points are short. */
   fillShortTerms?: boolean
@@ -76,9 +79,12 @@ export function generatePlan(given: GenerateInput): GenerateResult {
   if (moved) result.notes.unshift(note('entryMoved', { year: entry.year, period: entry.period }, `This degree takes new students only in some semesters, so the plan starts in ${entry.period} ${entry.year}.`))
   // More points than the degree's total: surplus electives were already trimmed (buildPlan), so
   // what's left is needed by a rule or as a prerequisite. Say why, so it doesn't look like a mistake.
+  // Credit stood in as subjects while planning; the plan keeps it as credit, as the student entered it.
+  result.plan.completed = result.plan.completed.filter((c) => !isCreditCode(c))
+  if (given.profile.credit?.length) result.plan.credit = given.profile.credit
   if (course) {
     const pointsOf = (c: string) => given.data.subjects[c]?.points ?? 12.5
-    const total = [...result.plan.completed, ...result.plan.terms.flatMap((t) => t.subjects)].reduce((sum, c) => sum + pointsOf(c), 0)
+    const total = [...result.plan.completed, ...result.plan.terms.flatMap((t) => t.subjects)].reduce((sum, c) => sum + pointsOf(c), 0) + creditPoints(given.profile.credit)
     const extra = total - course.totalPoints
     if (extra > 0 && result.plan.terms.some((t) => t.subjects.length)) {
       result.notes.push(note('overTotal', { points: total, extra, total: course.totalPoints }, `This plan comes to ${total} points, ${extra} over the usual ${course.totalPoints}: some subjects already done don't count towards these rules, so every planned subject is needed.`))
@@ -90,7 +96,8 @@ export function generatePlan(given: GenerateInput): GenerateResult {
 function generateFrom(raw: GenerateInput): GenerateResult {
   // Periods as this course's students see them (breadth-only periods for breadth subjects).
   // A subject the student's major won't let count as breadth is never picked to fill breadth.
-  const input = { ...raw, data: withBarredBreadth(forCourse(raw.data, raw.course), raw.course, planComponentIds(raw)) }
+  // Credit from elsewhere stands in as completed subjects, so every sum and cap counts it.
+  const input = { ...raw, data: withCredit(withBarredBreadth(forCourse(raw.data, raw.course), raw.course, planComponentIds(raw)), raw.profile.credit, raw.course) }
   // Unplaced subjects weigh most; then course rules the plan fails (e.g. breadth
   // squeezed out by a heavy major + specialisation).
   const shortfall = (r: GenerateResult) =>
@@ -106,7 +113,7 @@ function generateFrom(raw: GenerateInput): GenerateResult {
   // (or a course rule still fails, for at most two extra): a student takes longer rather than
   // drop part of the degree.
   const base = semesters(result)
-  for (let terms = base + 1; terms <= Math.max(MAX_TERMS, base + 2) && shortfall(result) > 0; terms++) {
+  for (let terms = base + 1; terms <= Math.max(maxTerms(input), base + 2) && shortfall(result) > 0; terms++) {
     if (terms > base + 2 && result.unplaced.length === 0) break
     const longer = buildPlan({ ...input, maxTerms: terms })
     if (shortfall(longer) >= shortfall(result)) continue
@@ -118,8 +125,22 @@ function generateFrom(raw: GenerateInput): GenerateResult {
   return shortfall(result) === 0 ? finishEarlier(input, result, shortfall) : result
 }
 
-/** Most semesters a plan runs to. */
+/** Most semesters a full-time plan runs to; part-time, as many more as the lighter load needs. */
 const MAX_TERMS = 10
+const FULL_LOAD = 50
+
+/** Points a semester a plan is built with: the student's (part-time) choice, never above the course's standard load. */
+export function chosenLoad(load: number | undefined, course: Pick<Course, 'standardLoad'> | undefined): number {
+  const standard = course?.standardLoad ?? FULL_LOAD
+  return load !== undefined && load > 0 ? Math.min(load, standard) : standard
+}
+
+const loadOf = (input: GenerateInput, course: Course | undefined): number => chosenLoad(input.load, course)
+
+function maxTerms(input: GenerateInput): number {
+  const load = loadOf(input, findCourse(input.data, input.course, input.courseYear))
+  return Math.ceil((MAX_TERMS * FULL_LOAD) / load)
+}
 /** Points a choice option gives up for each prerequisite subject it adds to the plan. */
 const EXTRA_SUBJECT_COST = HEAVY_PICK_COST
 
@@ -189,9 +210,9 @@ function diplomaOnlyAsCore(input: GenerateInput, required: Set<string>): Generat
 function buildPlan(given: GenerateInput): GenerateResult {
   const course = plannedCourse(given)
   const notes: Note[] = []
-  const completed = passedCodes(given.profile.results)
+  const completed = [...passedCodes(given.profile.results), ...creditCodes(given.profile.credit)]
   const done = new Set(completed)
-  const load = course?.standardLoad ?? 50
+  const load = loadOf(given, course)
 
   // needs: subjects the generator added as prerequisites for each required subject.
   const needs = new Map<string, string[]>()
@@ -214,7 +235,7 @@ function buildPlan(given: GenerateInput): GenerateResult {
   )
   // Nothing left to plan (the degree is all on the record): no semesters at all.
   const nothingLeft = remainingPoints === 0 && [...required].every((c) => done.has(c))
-  const termCount = input.maxTerms ?? (nothingLeft ? 0 : Math.min(10, Math.max(1, Math.ceil(remainingPoints / load))))
+  const termCount = input.maxTerms ?? (nothingLeft ? 0 : Math.min(maxTerms(input), Math.max(1, Math.ceil(remainingPoints / load))))
   const terms = standardTerms(input.startYear, input.startPeriod, termCount)
   if (input.useShortTerms) {
     // Winter between Semester 1 and 2, summer between Semester 2 and the next Semester 1.

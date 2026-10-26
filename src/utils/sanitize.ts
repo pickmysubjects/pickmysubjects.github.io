@@ -1,4 +1,4 @@
-import { PERIODS, SKILLS, TOPICS, type Profile } from '@/engine'
+import { CREDIT_MAX_POINTS, PERIODS, SKILLS, STUDY_LOADS, TOPICS, type Credit, type Profile } from '@/engine'
 import { isMarkScale } from './markScales'
 import type { PlanBook, PlanPrefs, PlanState, SavedPlan } from '@/composables/planStore'
 
@@ -24,14 +24,33 @@ function cleanCareer(x: unknown): { career?: string } {
   return typeof x === 'string' && /^[a-z0-9]+(-[a-z0-9]+)*$/.test(x) && x.length <= 80 ? { career: x } : {}
 }
 
+/**
+ * Credit lines (points, level, maybe a category and a name): points in 12.5 steps up to a cap,
+ * level 1–3. Profiles saved before credit existed have none.
+ */
+function cleanCredit(x: unknown): Credit[] {
+  if (!Array.isArray(x)) return []
+  return x
+    .filter(isObject)
+    .filter((c) => typeof c.points === 'number' && c.points > 0 && c.points <= CREDIT_MAX_POINTS && Number.isInteger(c.points / 12.5) && (c.level === 1 || c.level === 2 || c.level === 3))
+    .map((c) => ({
+      points: c.points as number,
+      level: c.level as Credit['level'],
+      ...(typeof c.category === 'string' && /^[a-z-]{1,24}$/.test(c.category) ? { category: c.category } : {}),
+      ...(typeof c.label === 'string' && c.label.trim() ? { label: c.label.trim().slice(0, 60) } : {}),
+    }))
+    .slice(0, 20)
+}
+
 export function cleanProfile(x: unknown): Profile {
   const p = isObject(x) ? x : {}
   const results = (Array.isArray(p.results) ? p.results : [])
     .filter((r): r is Record<string, unknown> => isObject(r) && typeof r.code === 'string')
     .map((r) => ({
       code: r.code as string,
-      ...(typeof r.mark === 'number' && r.mark >= 0 && r.mark <= 100 ? { mark: r.mark } : {}),
-      ...(r.failed === true ? { failed: true } : {}),
+      // Credit for a named subject has no mark (and isn't failed).
+      ...(r.credit === true ? { credit: true } : typeof r.mark === 'number' && r.mark >= 0 && r.mark <= 100 ? { mark: r.mark } : {}),
+      ...(r.failed === true && r.credit !== true ? { failed: true } : {}),
       ...(typeof r.year === 'number' ? { year: r.year } : {}),
       ...(typeof r.period === 'string' && (PERIODS as readonly string[]).includes(r.period) ? { period: r.period as Profile['results'][number]['period'] } : {}),
     }))
@@ -52,7 +71,8 @@ export function cleanProfile(x: unknown): Profile {
       ratings[code] = { difficulty: scale(r.difficulty), interest: scale(r.interest), recommend: rec }
     }
   }
-  return { results, skills, interests: [...new Set(strings(p.interests).filter((t) => (TOPICS as readonly string[]).includes(t)))], goal, confirmed: strings(p.confirmed), ...(Object.keys(ratings).length ? { ratings } : {}), ...(typeof p.workHours === 'number' && p.workHours >= 0 && p.workHours <= 60 ? { workHours: p.workHours } : {}), ...(isMarkScale(p.markScale) ? { markScale: p.markScale } : {}), ...cleanCareer(p.career) }
+  const credit = cleanCredit(p.credit)
+  return { results, ...(credit.length ? { credit } : {}), skills, interests: [...new Set(strings(p.interests).filter((t) => (TOPICS as readonly string[]).includes(t)))], goal, confirmed: strings(p.confirmed), ...(Object.keys(ratings).length ? { ratings } : {}), ...(typeof p.workHours === 'number' && p.workHours >= 0 && p.workHours <= 60 ? { workHours: p.workHours } : {}), ...(isMarkScale(p.markScale) ? { markScale: p.markScale } : {}), ...cleanCareer(p.career) }
 }
 
 export function cleanProfiles(x: unknown): Record<string, Profile> {
@@ -69,8 +89,10 @@ function cleanState(v: unknown): PlanState | null {
   return {
     // A plan saved before second majors existed has none; anything but a string is dropped.
     // Likewise a diploma and its stream.
-    setup: (({ major2, diploma, diplomaStream, ...rest }) => ({
+    setup: (({ major2, diploma, diplomaStream, load, ...rest }) => ({
       ...rest,
+      // A part-time load, only one of those offered; full-time (or anything else) is left out.
+      ...(typeof load === 'number' && (STUDY_LOADS as readonly number[]).includes(load) && load < 50 ? { load } : {}),
       minors: strings(v.setup.minors),
       ...(typeof major2 === 'string' ? { major2 } : {}),
       ...(typeof diploma === 'string' && diploma ? { diploma } : {}),

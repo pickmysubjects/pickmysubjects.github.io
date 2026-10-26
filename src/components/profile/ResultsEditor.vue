@@ -2,7 +2,8 @@
 import InfoTip from '@/components/InfoTip.vue'
 import { computed, shallowRef, useId } from 'vue'
 import { Check, Plus, Search, Star, Trash2 } from 'lucide-vue-next'
-import { isFail, PASS_MARK, type Period, type Profile, type Subject } from '@/engine'
+import { isFail, PASS_MARK, type Credit, type Period, type Profile, type Subject } from '@/engine'
+import CreditEditor from './CreditEditor.vue'
 import { termLabel } from '@/i18n/format'
 import { recordTermChoices } from '@/utils/pastTerms'
 import { usePlan } from '@/composables/usePlan'
@@ -14,6 +15,8 @@ import RatePrompt from '@/components/rating/RatePrompt.vue'
 import { useRated } from '@/composables/useRated'
 
 const results = defineModel<Profile['results']>({ required: true })
+// Credit for study elsewhere with no named subject (see CreditEditor).
+const credit = defineModel<Credit[]>('credit', { default: () => [] })
 const props = defineProps<{ subjects: Record<string, Subject>; options: { code: string; title: string }[] }>()
 
 const listId = useId()
@@ -196,8 +199,12 @@ function remove(i: number): void {
                 <option v-for="x in TERMS" :key="`${x.year}|${x.period}`" :value="`${x.year}|${x.period}`">{{ termLabel(t, x) }}</option>
               </select>
             </label>
+            <!-- Credit for a named subject: passed, with no mark (it isn't in the WAM). -->
+            <div v-if="r.credit" class="mark-cell">
+              <span class="credit-chip" :title="t('record.creditChipHint')">{{ t('record.creditChip') }}</span>
+            </div>
             <!-- Pass/fail: no mark, just whether it was passed. -->
-            <div v-if="subjects[r.code]?.passFail" class="mark-cell pf-seg" role="group" :aria-label="t('record.passFailHint')" :title="t('record.passFailHint')">
+            <div v-else-if="subjects[r.code]?.passFail" class="mark-cell pf-seg" role="group" :aria-label="t('record.passFailHint')" :title="t('record.passFailHint')">
               <button type="button" :aria-pressed="!r.failed" @click="setFailed(r.i, false)">{{ t('record.pfPass') }}</button>
               <button type="button" :aria-pressed="r.failed === true" @click="setFailed(r.i, true)">{{ t('record.pfFail') }}</button>
             </div>
@@ -216,7 +223,8 @@ function remove(i: number): void {
             </div>
             </div>
             <div class="row-actions">
-              <span v-if="rated.has(r.code)" class="rated"><Check :size="14" aria-hidden="true" /> {{ t('rating.rated') }}</span>
+              <template v-if="r.credit" />
+              <span v-else-if="rated.has(r.code)" class="rated"><Check :size="14" aria-hidden="true" /> {{ t('rating.rated') }}</span>
               <button v-else class="act act-rate" type="button" @click="rating = r.code"><Star :size="14" aria-hidden="true" /> <span class="act-label">{{ t('rating.rate') }}</span></button>
               <button class="act act-remove" type="button" :aria-label="`${t('record.remove')} ${r.code}`" :title="t('record.remove')" @click="remove(r.i)">
                 <Trash2 :size="15" aria-hidden="true" />
@@ -226,6 +234,7 @@ function remove(i: number): void {
         </ul>
       </section>
     </div>
+    <CreditEditor v-model:credit="credit" v-model:results="results" :options="options" />
     <p v-if="results.some((x) => isFail(x))" class="fail-hint">
       {{ t('record.failHintShort') }}<InfoTip :text="t('record.failHint')" />
       <template v-if="failedTwice.length">{{ t('record.failedTwice', { codes: failedTwice.join(t('listSep')) }) }}</template>
@@ -411,6 +420,15 @@ function remove(i: number): void {
   text-align: center;
   color: var(--ink-soft);
   background: color-mix(in srgb, var(--ink) 6%, transparent);
+}
+
+.credit-chip {
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--accent);
+  background: var(--accent-soft);
 }
 
 .grade-h1 {

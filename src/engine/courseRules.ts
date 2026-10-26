@@ -1,3 +1,4 @@
+import { CREDIT_AREA, creditCodes, withCredit } from './credit'
 import type { Tri } from './expr'
 import type { Issue, Params, Plan } from './plan'
 import type { Component, ComponentLimit, ComponentReq, Course, CourseRule, Dataset, Diploma, Subject } from './schema'
@@ -256,12 +257,14 @@ function checkBachelor(plan: Plan, given: Dataset): CourseCheck {
     }
   }
 
+  // Credit for study elsewhere counts as completed stand-in subjects (its points, level, category).
+  const credit = creditCodes(plan.credit)
   // Each subject once, even if it's both completed and planned again (counted twice otherwise).
-  const codes = [...new Set([...plan.completed, ...plan.terms.flatMap((t) => t.subjects)])]
+  const codes = [...new Set([...plan.completed, ...credit, ...plan.terms.flatMap((t) => t.subjects)])]
   const barred = barredBreadth(given, plan.course, planComponentIds(plan))
-  const data = withBarredBreadth(given, plan.course, planComponentIds(plan))
+  const data = withCredit(withBarredBreadth(given, plan.course, planComponentIds(plan)), plan.credit, plan.course)
   const known = codes.map((c) => data.subjects[c]).filter((s): s is Subject => s !== undefined)
-  const ctx: RuleCtx = { plan, data, course, known, codes, blocked: new Map(), contested: new Map() }
+  const ctx: RuleCtx = { plan: credit.length ? { ...plan, completed: [...plan.completed, ...credit] } : plan, data, course, known, codes, blocked: new Map(), contested: new Map() }
   allocate(ctx)
   const statuses = course.rules.map((rule) => checkRule(rule, ctx))
   const issues: Issue[] = statuses
@@ -466,7 +469,8 @@ function checkRule(rule: CourseRule, ctx: RuleCtx): RuleStatus {
       // Areas that uncategorised or unknown subjects might still add.
       const maybeAreas = new Set<string>()
       for (const s of ctx.known) {
-        if (s.level !== 1) continue
+        // Credit from elsewhere has no area of its own here.
+        if (s.level !== 1 || s.area === CREDIT_AREA) continue
         const cat = categoryOf(s, ctx.course.code)
         if (rule.category !== undefined && cat === undefined) maybeAreas.add(s.area)
         if (rule.category !== undefined && cat !== rule.category) continue
@@ -490,6 +494,7 @@ function checkRule(rule: CourseRule, ctx: RuleCtx): RuleStatus {
       for (const c of ctx.codes) {
         if (exempt.has(c)) continue
         const s = ctx.data.subjects[c]
+        if (s?.area === CREDIT_AREA) continue
         if (rule.category !== undefined && (!s || categoryOf(s, ctx.course.code) !== rule.category)) continue
         // A subject we have no data for still has its area and level in its code, at the usual 12.5.
         const area = s?.area ?? c.slice(0, 4)

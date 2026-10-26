@@ -11,6 +11,7 @@ import { sharedOffset } from './grades'
 import { offsetOf, predictMark } from './predict'
 import { MARKING_SKILLS, markingShare, skillsOf } from './skills'
 import { termStress } from './termStress'
+import { creditPoints, isCreditCode, type Credit } from './credit'
 import { planRoles } from './roles'
 import { areaField, homeTopics, relatedTopics, topicsOf } from './topics'
 
@@ -24,7 +25,10 @@ export interface Profile {
    * semester on the plan board; nothing is worked out from it).
    */
   // `failed`: a pass/fail subject not passed (it has no mark to show it).
-  results: { code: string; mark?: number; failed?: boolean; year?: number; period?: Period }[]
+  // `credit`: granted as credit for study elsewhere (specified credit): passed, never a mark.
+  results: { code: string; mark?: number; failed?: boolean; credit?: boolean; year?: number; period?: Period }[]
+  /** Credit for study elsewhere without a named subject (unspecified credit): points only, never in the WAM. */
+  credit?: Credit[]
   /** Self-rated skill levels, 1 (weak) – 5 (strong). Missing = not rated. */
   skills: Partial<Record<Skill, number>>
   /** Topic tags the student is interested in, e.g. "machine-learning". */
@@ -386,6 +390,8 @@ export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions =
   const termBefore = opts.termSubjects ? termStress(opts.termSubjects, data, profile, { course: opts.course }).level : null
   const recs: Recommendation[] = []
   for (const s of Object.values(data.subjects)) {
+    // Credit stands in as a subject only for the plan builder's sums; it is never a suggestion.
+    if (isCreditCode(s.code)) continue
     const skip = opts.skipped ? (why: Exclusion) => void opts.skipped!.set(s.code, why) : noSkip
     if (completed.has(s.code)) {
       skip({ key: 'done' })
@@ -985,8 +991,8 @@ export function studyYear(level: number): number {
 }
 
 /** The highest level a student can usually take: year 1 until 100 points are done, and so on. */
-export function yearLevel(results: Profile['results'], data: Dataset): number {
-  const done = passedCodes(results).reduce((sum, c) => sum + (data.subjects[c]?.points ?? 12.5), 0)
+export function yearLevel(results: Profile['results'], data: Dataset, credit?: readonly Credit[]): number {
+  const done = passedCodes(results).reduce((sum, c) => sum + (data.subjects[c]?.points ?? 12.5), 0) + creditPoints(credit)
   return Math.min(3, Math.floor(done / 100) + 1)
 }
 

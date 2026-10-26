@@ -1,4 +1,5 @@
 import type { Period } from './schema'
+import type { Credit } from './credit'
 import { today } from './dataYear'
 
 export interface PlanTerm {
@@ -22,9 +23,13 @@ export interface Plan {
   diplomaStream?: string
   /** Subjects already completed before the first planned term (with or without marks). */
   completed: string[]
+  /** Credit for study elsewhere with no named subject: counts in the course rules, done before the plan. */
+  credit?: Credit[]
   terms: PlanTerm[]
   /** On a student visa: each half-year normally needs 50 points. */
   international?: boolean
+  /** Points a semester the student chose to study (part-time: 25 or 37.5); missing: the course's standard load. */
+  load?: number
   /**
    * Points already on the record per semester ("2027|semester-2"), passed or failed: enrolled
    * either way, so they count towards that semester's load.
@@ -37,6 +42,9 @@ export interface Plan {
   /** Subjects whose prerequisites the student says they meet where we can't check (e.g. a VCE score). */
   confirmed?: string[]
 }
+
+/** Points a semester a student can choose to study: part-time (25, 37.5) or full-time (50). */
+export const STUDY_LOADS = [25, 37.5, 50] as const
 
 export type Severity = 'error' | 'warning' | 'info'
 

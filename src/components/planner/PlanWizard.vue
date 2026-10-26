@@ -3,7 +3,7 @@ import { thisYear as calendarYear } from '@/engine/dataYear'
 import { link } from '@/composables/useView'
 import { computed, shallowRef } from 'vue'
 import { ArrowLeft, ArrowRight, Check } from 'lucide-vue-next'
-import { canEnterIn, cannotCombine, componentCourse, findCourse, nextEntry, diplomaClash, heldAsMinor, majorClash, maxMajors, minorClash, type Component, type Course, type Period } from '@/engine'
+import { STUDY_LOADS, canEnterIn, cannotCombine, componentCourse, findCourse, nextEntry, diplomaClash, heldAsMinor, majorClash, maxMajors, minorClash, type Component, type Course, type Period } from '@/engine'
 import { useDataset } from '@/composables/useDataset'
 import type { PlanSetup } from '@/composables/usePlan'
 import MajorPicker from './MajorPicker.vue'
@@ -117,6 +117,13 @@ function set(patch: Partial<PlanSetup>): void {
   draft.value = { ...draft.value, ...patch }
 }
 
+const FULL_LOAD = 50
+// Full-time is the default, so it isn't stored.
+function setLoad(load: number): void {
+  const { load: _old, ...rest } = draft.value
+  draft.value = load < FULL_LOAD ? { ...rest, load } : rest
+}
+
 // A specialisation that doesn't go with the final major choice is dropped.
 function finish(): void {
   const spec = specs.value.some((sp) => sp.id === draft.value.specialisation) ? draft.value.specialisation : ''
@@ -193,6 +200,17 @@ function chooseCourse(c: Course): void {
           <span class="intl-hint">{{ t('wizard.internationalHint') }}</span>
         </span>
       </label>
+      <!-- Part-time (optional): the plan then runs over more semesters. -->
+      <label class="minor">
+        <span class="spec-title">{{ t('wizard.load') }}</span>
+        <select class="select-glass minor-select" data-testid="load-select" :value="draft.load ?? FULL_LOAD" @change="setLoad(Number(($event.target as HTMLSelectElement).value))">
+          <option v-for="l in [...STUDY_LOADS].reverse()" :key="l" :value="l">{{ t(l === FULL_LOAD ? 'wizard.loadFull' : 'wizard.loadPart', { n: l }) }}</option>
+        </select>
+        <span class="intl-hint">{{ t('wizard.loadHint') }}</span>
+      </label>
+      <p v-if="draft.international && draft.load !== undefined && draft.load < FULL_LOAD" class="visa-note" role="note" data-testid="load-visa">
+        {{ t('wizard.loadVisaShort') }}<InfoTip>{{ t('guide.rsl8202') }} {{ t('guide.rslUnder') }} <a :href="link('guide/international/#rsl')">{{ t('guide.rslTitle') }}</a></InfoTip>
+      </p>
     </div>
 
     <div v-else class="q">
@@ -412,6 +430,15 @@ function chooseCourse(c: Course): void {
   height: 18px;
   margin-top: 2px;
   accent-color: var(--accent);
+}
+
+.visa-note {
+  margin: 10px 0 0;
+  padding: 10px 12px;
+  font-size: 0.875rem;
+  color: var(--ink);
+  background: var(--warn-soft);
+  border-radius: var(--radius-sm);
 }
 
 .intl-hint {

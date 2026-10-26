@@ -518,7 +518,7 @@ const printTerms = computed<PrintTerm[]>(() => {
             :subjects="data.subjects"
             :issues="plan.termIssues.value"
             :course="plan.setup.value.course"
-            :load="plan.course.value?.standardLoad ?? 50"
+            :load="plan.load.value"
             :roles="roles"
             :option-set="roleSets.options"
             :past="past"

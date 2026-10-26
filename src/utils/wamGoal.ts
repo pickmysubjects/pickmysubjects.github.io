@@ -1,10 +1,14 @@
 import { computeWam, passedCodes, type Profile } from '@/engine/recommend'
 import type { Dataset } from '@/engine/schema'
+import { creditPoints } from '@/engine/credit'
 
-/** Points still to take in a degree of `degreePoints`: passed subjects only count as progress (a fail still counts in the WAM). */
-export function pointsLeft(results: Profile['results'], data: Dataset, degreePoints: number): number {
+/**
+ * Points still to take in a degree of `degreePoints`: passed subjects and credit count as progress
+ * (a fail still counts in the WAM; credit never does, it has no mark).
+ */
+export function pointsLeft(results: Profile['results'], data: Dataset, degreePoints: number, credit?: Profile['credit']): number {
   const passed = new Set(passedCodes(results))
-  const done = [...passed].reduce((sum, c) => sum + (data.subjects[c]?.points ?? 12.5), 0)
+  const done = [...passed].reduce((sum, c) => sum + (data.subjects[c]?.points ?? 12.5), 0) + creditPoints(credit)
   return Math.max(0, degreePoints - done)
 }
 

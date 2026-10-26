@@ -2,6 +2,7 @@ import { computed } from 'vue'
 import {
   checkCourse,
   checkTerms,
+  chosenLoad,
   componentCourse,
   findCourse,
   generatePlan,
@@ -39,6 +40,9 @@ import { majorGroupOf } from '@/utils/majorGroups'
 export type { PlanSetup } from './planStore'
 
 
+/** Points a semester: full-time unless the student chose part-time. */
+const FULL_LOAD = 50
+
 /** A saved plan as the engine reads it, with the student's record (shared by every plan). */
 export function planFor(state: PlanState, profile: Profile, data: Dataset): Plan {
   return {
@@ -52,8 +56,10 @@ export function planFor(state: PlanState, profile: Profile, data: Dataset): Plan
     diploma: state.setup.diploma || undefined,
     diplomaStream: (state.setup.diploma && state.setup.diplomaStream) || undefined,
     completed: passedCodes(profile.results),
+    ...(profile.credit?.length ? { credit: profile.credit } : {}),
     terms: state.terms,
     international: state.setup.international === true,
+    ...(state.setup.load !== undefined ? { load: state.setup.load } : {}),
     confirmed: profile.confirmed ?? [],
     recordedLoad: recordedLoads(profile.results, data),
     marks: marksForConditions(profile.results, data),
@@ -73,6 +79,8 @@ export function usePlan() {
   const plan = computed<Plan>(() => planFor(state.value, profile.value, data.value))
 
   const course = computed(() => findCourse(data.value, plan.value.course, plan.value.courseYear))
+  // Points a semester this plan is built for: the student's part-time choice, else the course's standard.
+  const load = computed(() => chosenLoad(state.value.setup.load, course.value))
   const termIssues = computed(() => checkTerms(plan.value, data.value, course.value?.standardLoad))
   const courseCheck = computed(() => checkCourse(plan.value, data.value))
   const plannedCodes = computed(() => state.value.terms.flatMap((t) => t.subjects))
@@ -121,7 +129,8 @@ export function usePlan() {
         (a.diplomaStream ?? '') === (b.diplomaStream ?? '') &&
         a.startYear === b.startYear &&
         a.startPeriod === b.startPeriod &&
-        (a.international === true) === (b.international === true)
+        (a.international === true) === (b.international === true) &&
+        (a.load ?? FULL_LOAD) === (b.load ?? FULL_LOAD)
       if (back && built(back) && same(back.setup, setup)) {
         put({ ...back, setup: { ...setup, confirmed: true } }, kept)
         return true
@@ -148,7 +157,7 @@ export function usePlan() {
     return {
       // Enrolled points, a fail included: the semester was that full either way.
       pointsOf: (c: string) => data.value.subjects[c]?.points ?? 12.5,
-      load: course.value?.standardLoad ?? 50,
+      load: load.value,
     }
   }
 
@@ -171,6 +180,7 @@ export function usePlan() {
       diplomaStream: (setup.diploma && setup.diplomaStream) || undefined,
       startYear: start.year,
       startPeriod: start.period,
+      ...(setup.load !== undefined ? { load: setup.load } : {}),
       keepOpen: !setup.major && setup.field
         ? data.value.components.filter((c) => c.kind === 'major' && c.course === componentCourse(data.value, setup.course) && majorGroupOf(c.id) === setup.field && (c.closedFrom === undefined || start.year < c.closedFrom)).map((c) => c.id)
         : undefined,
@@ -218,7 +228,7 @@ export function usePlan() {
     const subject = data.value.subjects[to]
     if (at < 0 || !subject) return null
     const pts = (c: string) => data.value.subjects[c]?.points ?? 12.5
-    const load = course.value?.standardLoad ?? 50
+    const cap = load.value
     // It has to come before anything planned that lists `from` or `to` as a prerequisite.
     const needers = terms.flatMap((t, i) =>
       t.subjects.filter((c) => {
@@ -237,7 +247,7 @@ export function usePlan() {
       // Year-long subjects put half their points on each of their semesters (and need room in Semester 2).
       const without = terms.map((x, j) => ({ ...x, subjects: j === i ? others : x.subjects.filter((c) => c !== from && c !== to) }))
       let trade: string | undefined
-      if (!fitsLoad(without, i, to, data.value, load)) {
+      if (!fitsLoad(without, i, to, data.value, cap)) {
         const home = terms[at]!
         trade = others.find((c) => free(c) && termShare(data.value.subjects[c]) === termShare(subject) && !data.value.subjects[c]?.yearLong && !subject.yearLong && data.value.subjects[c] && offeredIn(data.value.subjects[c]!, home.year, home.period).status !== 'fail')
         if (!trade) continue
@@ -333,10 +343,11 @@ export function usePlan() {
 
   /** Take a plan someone shared (setup and terms); this replaces the current one. */
   function importPlan(setup: PlanSetup, terms: PlanTerm[]): void {
-    // Whether you're on a student visa is about you, not the plan: a shared link keeps yours.
-    const international = state.value.setup.international
+    // Whether you're on a student visa, and how much you study a semester, are about you, not
+    // the plan: a shared link keeps yours.
+    const { international, load } = state.value.setup
     // A shared plan is a finished one: show it, not the setup questions (a fresh browser has no setup yet).
-    save(() => ({ setup: { ...setup, confirmed: true, ...(international !== undefined ? { international } : {}) }, terms, notes: [], unplaced: [] }))
+    save(() => ({ setup: { ...setup, confirmed: true, ...(international !== undefined ? { international } : {}), ...(load !== undefined ? { load } : {}) }, terms, notes: [], unplaced: [] }))
   }
 
   /** Make a heavy semester lighter: take the spread-out arrangement, or move one subject to a summer/winter term. */
@@ -376,6 +387,7 @@ export function usePlan() {
     unplaced: computed(() => state.value.unplaced),
     plan,
     course,
+    load,
     termIssues,
     courseCheck,
     plannedCodes,

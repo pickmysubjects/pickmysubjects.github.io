@@ -17,6 +17,8 @@ export const SHORT_TERM_LOAD = 25
 
 export function checkTerms(plan: Plan, data: Dataset, standardLoad = 50): Issue[] {
   const issues: Issue[] = []
+  // A lighter load the student chose (part-time); the course's standard one says nothing new.
+  const chosen = plan.load !== undefined && plan.load < standardLoad ? plan.load : undefined
   const seen = new Set(plan.completed)
   const everywhere = new Set([...plan.completed, ...plan.terms.flatMap((t) => t.subjects)])
   // Subjects the student's course has closed to them (B-COM's ACCT10002).
@@ -40,6 +42,7 @@ export function checkTerms(plan: Plan, data: Dataset, standardLoad = 50): Issue[
     const sameTerm = new Set([...before, ...running, ...term.subjects])
     const where = termLabel(term)
     const load = termLoad(plan.terms, termIndex, data)
+    const short = term.period === 'summer' || term.period === 'winter'
 
     for (const code of term.subjects) {
       const s = data.subjects[code]
@@ -108,9 +111,12 @@ export function checkTerms(plan: Plan, data: Dataset, standardLoad = 50): Issue[
 
 
     // Summer and winter terms are short: 25 points is the usual most.
-    const max = term.period === 'summer' || term.period === 'winter' ? Math.min(SHORT_TERM_LOAD, standardLoad) : standardLoad
+    const max = short ? Math.min(SHORT_TERM_LOAD, standardLoad) : standardLoad
     if (load > max) {
       issues.push({ severity: 'warning', kind: 'overload', termIndex, params: { year: term.year, period: term.period, load, max }, message: `${where} has ${load} points; more than ${max} is an overload and needs approval.` })
+    } else if (chosen !== undefined && !short && load > chosen) {
+      // Part-time by choice: more than that is allowed, only not what the student planned for.
+      issues.push({ severity: 'info', kind: 'above-load', termIndex, params: { year: term.year, period: term.period, load, chosen }, message: `${where} has ${load} points, more than the ${chosen} a semester you chose.` })
     }
   })
 
@@ -156,15 +162,21 @@ function visaLoadIssues(plan: Plan, data: Dataset): Issue[] {
   })
   const withStudy = [...halves.values()].filter((h) => h.load > 0)
   const last = withStudy.at(-1)
-  return withStudy
-    .filter((h) => h !== last && h.load < VISA_HALF_YEAR_LOAD)
+  // A lighter load chosen on purpose is said once for the whole plan, not on every half-year;
+  // a half-year below even that still gets its own line.
+  const reduced = plan.load !== undefined && plan.load < VISA_HALF_YEAR_LOAD
+  const once: Issue[] = reduced
+    ? [{ severity: 'warning', kind: 'visa-reduced-load', params: { load: plan.load as number, min: VISA_HALF_YEAR_LOAD }, message: `You chose ${plan.load} points a semester. A student visa usually needs ${VISA_HALF_YEAR_LOAD} each half-year; studying less needs approval first.` }]
+    : []
+  return [...once, ...withStudy
+    .filter((h) => h !== last && h.load < (reduced ? (plan.load as number) : VISA_HALF_YEAR_LOAD))
     .map((h) => ({
       severity: 'warning' as const,
       kind: `visa-underload-h${h.half}`,
       termIndex: h.termIndex,
       params: { year: h.year, half: h.half, load: h.load, min: VISA_HALF_YEAR_LOAD },
       message: `${h.year} half ${h.half}: ${h.load} points. On a student visa you normally need ${VISA_HALF_YEAR_LOAD} per half-year (summer/winter count); less needs approval unless it's your final half-year — check with Stop 1.`,
-    }))
+    }))]
 }
 
 /**

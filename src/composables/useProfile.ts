@@ -44,6 +44,12 @@ export function useProfile() {
     stored,
     wam,
     setResults: (results: Profile['results']) => update((p) => ({ ...p, results })),
+    /** Credit for study elsewhere with no named subject; an empty list removes it. */
+    setCredit: (credit: NonNullable<Profile['credit']>) =>
+      update((p) => {
+        const { credit: _old, ...rest } = p
+        return credit.length ? { ...rest, credit } : rest
+      }),
     setSkills: (skills: Partial<Record<Skill, number>>) => updatePrefs((p) => ({ ...p, skills })),
     setInterests: (interests: string[]) => updatePrefs((p) => ({ ...p, interests })),
     setGoal: (goal: Goal) => updatePrefs((p) => ({ ...p, goal })),

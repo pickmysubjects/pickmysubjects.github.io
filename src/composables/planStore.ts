@@ -22,6 +22,8 @@ export interface PlanSetup {
   diplomaStream?: string
   /** On a student visa (optional; changes the load warnings). */
   international?: boolean
+  /** Points a semester (optional): 25 or 37.5 for part-time; missing means full-time (the course's standard load). */
+  load?: number
   /** No major yet, but a field in mind (a major group id): keeps its majors open. */
   field?: string
   /** The student answered the setup questions (until then it's only the default). */

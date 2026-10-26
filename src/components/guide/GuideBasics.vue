@@ -35,6 +35,7 @@ const { wam } = useProfile()
     <GuideItem id="points" :title="t('guide.pointsTitle')" :short="t('guide.pointsShort')">
       <p>{{ t('guide.pointsText') }}</p>
       <p>{{ t('guide.pointsYearLong') }}</p>
+      <p>{{ t('guide.pointsCredit') }}</p>
     </GuideItem>
 
     <GuideItem id="majors" :title="t('guide.majorsTitle')" :short="t('guide.majorsShort')">
