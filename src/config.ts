@@ -72,14 +72,12 @@ export const RATINGS_FORM: GoogleFormConfig<RatingField> = {
     overall: 'entry.868171789',
     // "Tags" (checkboxes, choice values = the ids in src/engine/ratingTags.ts).
     tags: 'entry.1493860873',
-    // TODO: not on the Google Form yet. Add the six questions exactly as in docs/ratings-setup.md
-    // ("Facts the Handbook doesn't give"), then replace each placeholder with its entry.<number>.
-    // Until then the rating form hides that question (hasQuestion needs a real entry id).
-    exam: 'TODO-entry-final-exam',
-    lectures: 'TODO-entry-lectures-recorded',
-    groups: 'TODO-entry-group-work',
-    cost: 'TODO-entry-extra-cost',
-    languages: 'TODO-entry-programming-languages',
+    // Facts the Handbook doesn't give (docs/ratings-setup.md); added to the form 2026-10-27.
+    exam: 'entry.1965984829',
+    lectures: 'entry.351350240',
+    groups: 'entry.1373690995',
+    cost: 'entry.659192873',
+    languages: 'entry.262982733',
   },
   optional: ['examDifficulty', 'usefulness', 'interest', 'teaching', 'overall', 'wamBand', 'tags', 'exam', 'lectures', 'groups', 'cost', 'languages'],
 }
