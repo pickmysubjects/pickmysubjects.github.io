@@ -1,3 +1,4 @@
+import type { StudentComment } from './comments'
 import type { Dataset, DiscussionSummary, Subject, SubjectAbout } from './schema'
 
 /** The long text of one subject, loaded only when its page is opened. */
@@ -5,6 +6,7 @@ export interface SubjectDetail {
   about?: SubjectAbout
   discussions?: DiscussionSummary[]
   breadthFor?: string[]
+  comments?: StudentComment[]
   /** Subjects often taken with it (see buildTakenWith), worked out at build. */
   takenWith?: string[]
 }
@@ -25,18 +27,19 @@ export function splitDataset(data: Dataset, takenWith: Record<string, string[]> 
   const subjects: Record<string, Subject> = {}
   const details: Record<string, Record<string, SubjectDetail>> = {}
   for (const [code, s] of Object.entries(data.subjects)) {
-    const { about, discussions, breadthFor, ...rest } = s
+    const { about, discussions, breadthFor, comments, ...rest } = s
     const lean: Subject = { ...rest } as Subject
     if (about) lean.about = { ...about, learn: { en: about.learn.en, zh: '' }, outcomes: [] }
     if (discussions) lean.discussions = discussions.map((d) => ({ ...d, points: [] }))
     subjects[code] = lean
     const tw = takenWith[code]
-    if (about || discussions || breadthFor || tw) {
+    if (about || discussions || breadthFor || comments || tw) {
       const d: SubjectDetail = {}
       if (tw) d.takenWith = tw
       if (about) d.about = about
       if (discussions) d.discussions = discussions
       if (breadthFor) d.breadthFor = breadthFor
+      if (comments) d.comments = comments
       ;(details[detailArea(code)] ??= {})[code] = d
     }
   }

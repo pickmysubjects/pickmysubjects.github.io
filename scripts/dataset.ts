@@ -1,3 +1,4 @@
+import { commentsFileSchema } from '../src/engine/comments'
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs'
 import { dirname, join, relative } from 'node:path'
 import { parse } from 'yaml'
@@ -152,6 +153,13 @@ export function buildDataset(name: Dataset['name']): BuildResult {
   }
 
   mergeRatings(join(base, 'ratings.json'), subjects)
+  // Approved "What I wish I knew" comments (scripts/ratings/comments.ts), MIN_COMMENTS+ per subject.
+  const commentsFile = join(base, 'comments.json')
+  if (existsSync(commentsFile)) {
+    const parsed = commentsFileSchema.safeParse(JSON.parse(readFileSync(commentsFile, 'utf8')))
+    if (!parsed.success) errors.push(`${relative(ROOT, commentsFile)}: ${parsed.error.message}`)
+    else for (const [code, list] of Object.entries(parsed.data)) if (subjects[code]) subjects[code].comments = list
+  }
   // Grading next to students' own level, from shared grade bands (absent until enough have shared).
   const offsets = join(base, 'grade-offsets.json')
   if (existsSync(offsets)) {

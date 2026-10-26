@@ -1,4 +1,5 @@
 import type { GradeOffset } from './grades'
+import type { StudentComment } from './comments'
 import { z } from 'zod'
 
 /**
@@ -324,6 +325,8 @@ export const subjectFileSchema = z
     replacedBy: s.replaced_by,
     // Filled in from data/<set>/discussions/ (StudentVIP) and discussions/reddit/, in DISCUSSION_SOURCES order.
     discussions: undefined as DiscussionSummary[] | undefined,
+    // Approved "What I wish I knew" comments (comments.json), only when a subject has MIN_COMMENTS.
+    comments: undefined as StudentComment[] | undefined,
     // How its grades sit against sharers' WAMs (scripts/ratings → grade-offsets.json), once 5+ shared.
     gradeOffset: undefined as GradeOffset | undefined,
     // Filled in from data/<set>/about/ when there is one.
