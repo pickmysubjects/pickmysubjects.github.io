@@ -966,6 +966,8 @@ export const ko: Messages = {
     noPrereq: "선수 과목 없음",
     noExam: "기말시험 없음",
     noGroup: "조별 과제 없음",
+    noHurdle: "기말이 hurdle 아님",
+    noTest: "학기 중 시험 없음",
     sort: "정렬",
     sortCode: "과목 코드",
     sortEasy: "쉬운 순",

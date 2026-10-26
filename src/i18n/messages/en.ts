@@ -969,6 +969,8 @@ export const en = {
     noPrereq: "No prerequisites",
     noExam: "No final exam",
     noGroup: "No group work",
+    noHurdle: "Exam not a hurdle",
+    noTest: "No test in semester",
     sort: "Sort by",
     sortCode: "Code",
     sortEasy: "Easiest first",

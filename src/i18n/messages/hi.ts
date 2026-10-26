@@ -966,6 +966,8 @@ export const hi: Messages = {
     noPrereq: "कोई प्रीरिक्विज़िट नहीं",
     noExam: "फ़ाइनल परीक्षा नहीं",
     noGroup: "ग्रुप वर्क नहीं",
+    noHurdle: "फ़ाइनल परीक्षा hurdle नहीं",
+    noTest: "सेमेस्टर में टेस्ट नहीं",
     sort: "क्रम",
     sortCode: "कोड",
     sortEasy: "सबसे आसान पहले",

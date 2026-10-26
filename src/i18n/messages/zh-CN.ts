@@ -966,6 +966,8 @@ export const zhCN: Messages = {
     noPrereq: "不需要先修课",
     noExam: "没有期末考试",
     noGroup: "没有小组作业",
+    noHurdle: "期末考试不是 hurdle",
+    noTest: "学期中没有小测",
     sort: "排序",
     sortCode: "课程代码",
     sortEasy: "最好拿分的在前",

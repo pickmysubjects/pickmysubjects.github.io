@@ -13,13 +13,13 @@ const categories = computed(() => ['', ...props.categories])
 const LEVELS = [null, 1, 2, 3] as const
 // Semesters first, then the short terms: "Any" on its own row and two even pairs below it.
 const WHEN = [null, 'semester-1', 'semester-2', 'summer', 'winter'] as const
-const TOGGLES = ['noPrereq', 'noExam', 'noGroup'] as const
+const TOGGLES = ['noPrereq', 'noExam', 'noGroup', 'noHurdle', 'noTest'] as const
 
 // On phones the list matters more, so the filters start folded there.
 const open = shallowRef(typeof matchMedia === 'undefined' || matchMedia('(min-width: 721px)').matches)
 const active = computed(() => {
   const f = filters.value
-  return [f.category, f.level !== null, f.period, f.noPrereq, f.noExam, f.noGroup].filter(Boolean).length
+  return [f.category, f.level !== null, f.period, f.noPrereq, f.noExam, f.noGroup, f.noHurdle, f.noTest].filter(Boolean).length
 })
 
 function set<K extends keyof BrowseFilters>(key: K, value: BrowseFilters[K]): void {

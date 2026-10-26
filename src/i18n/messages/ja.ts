@@ -966,6 +966,8 @@ export const ja: Messages = {
     noPrereq: "前提科目なし",
     noExam: "期末試験なし",
     noGroup: "グループ課題なし",
+    noHurdle: "期末試験がハードルでない",
+    noTest: "学期中のテストなし",
     sort: "並び順",
     sortCode: "科目コード",
     sortEasy: "取りやすい順",

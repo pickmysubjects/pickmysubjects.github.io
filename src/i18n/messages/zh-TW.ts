@@ -966,6 +966,8 @@ export const zhTW: Messages = {
     noPrereq: "不需要先修課",
     noExam: "沒有期末考",
     noGroup: "沒有小組作業",
+    noHurdle: "期末考不是 hurdle",
+    noTest: "學期中沒有小考",
     sort: "排序",
     sortCode: "課程代碼",
     sortEasy: "最好拿分的在前",

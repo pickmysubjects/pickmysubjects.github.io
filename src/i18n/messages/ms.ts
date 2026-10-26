@@ -966,6 +966,8 @@ export const ms: Messages = {
     noPrereq: "Tiada prasyarat",
     noExam: "Tiada peperiksaan akhir",
     noGroup: "Tiada kerja berkumpulan",
+    noHurdle: "Peperiksaan bukan hurdle",
+    noTest: "Tiada ujian semester",
     sort: "Susun",
     sortCode: "Kod",
     sortEasy: "Paling mudah dahulu",

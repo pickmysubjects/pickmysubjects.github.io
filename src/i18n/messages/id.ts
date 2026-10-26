@@ -966,6 +966,8 @@ export const id: Messages = {
     noPrereq: "Tanpa prasyarat",
     noExam: "Tanpa ujian akhir",
     noGroup: "Tanpa kerja kelompok",
+    noHurdle: "Ujian akhir bukan hurdle",
+    noTest: "Tanpa tes tengah semester",
     sort: "Urutkan",
     sortCode: "Kode",
     sortEasy: "Termudah dulu",

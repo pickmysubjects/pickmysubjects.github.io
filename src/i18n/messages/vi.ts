@@ -966,6 +966,8 @@ export const vi: Messages = {
     noPrereq: "Không cần môn tiên quyết",
     noExam: "Không thi cuối kỳ",
     noGroup: "Không làm nhóm",
+    noHurdle: "Thi cuối kỳ không bắt buộc đậu",
+    noTest: "Không kiểm tra giữa kỳ",
     sort: "Sắp xếp",
     sortCode: "Mã môn",
     sortEasy: "Dễ nhất trước",

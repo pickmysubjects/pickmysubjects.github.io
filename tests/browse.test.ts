@@ -53,6 +53,26 @@ describe('browse (real data)', () => {
     }
   })
 
+  it('"exam not a hurdle" leaves out subjects whose final exam is a hurdle, and unknown assessments', () => {
+    const rows = run({ noHurdle: true })
+    expect(rows.length).toBeGreaterThan(0)
+    for (const r of rows) {
+      expect(r.subject.assessment).toBeDefined()
+      expect(r.subject.assessment!.some((t) => t.kind === 'exam' && t.hurdle)).toBe(false)
+    }
+    const hurdles = all.filter((s) => s.assessment?.some((t) => t.kind === 'exam' && t.hurdle))
+    expect(hurdles.length).toBeGreaterThan(0)
+    expect(rows.length).toBe(all.filter((s) => s.assessment).length - hurdles.length)
+    expect(filtersToQuery({ ...EMPTY_FILTERS, noHurdle: true })).toBe('nohurdle=1')
+  })
+
+  it('"no in-semester test" keeps only subjects whose recorded assessment has no test', () => {
+    const rows = run({ noTest: true })
+    expect(rows.length).toBeGreaterThan(0)
+    for (const r of rows) expect(r.subject.assessment!.some((t) => t.kind === 'test')).toBe(false)
+    expect(run({}).some((r) => (r.test ?? 0) > 0)).toBe(true)
+  })
+
   it('"no exam" keeps only subjects whose recorded assessment has no exam', () => {
     const rows = run({ noExam: true })
     expect(rows.length).toBeGreaterThan(0)
@@ -77,7 +97,7 @@ describe('browse (real data)', () => {
 
 describe('browse filters in the address', () => {
   it('round-trips', () => {
-    const f: BrowseFilters = { text: 'maths', category: 'breadth', level: 2, period: 'semester-2', noPrereq: true, noExam: true, noGroup: true, sort: 'hours', rank: 'easy', mine: true, offTerm: true }
+    const f: BrowseFilters = { text: 'maths', category: 'breadth', level: 2, period: 'semester-2', noPrereq: true, noExam: true, noGroup: true, noHurdle: true, noTest: true, sort: 'hours', rank: 'easy', mine: true, offTerm: true }
     expect(filtersFromQuery(new URLSearchParams(filtersToQuery(f)))).toEqual(f)
   })
 
