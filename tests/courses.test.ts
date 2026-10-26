@@ -71,8 +71,9 @@ describe('per-course rules (B-SCI and B-COM)', () => {
     expect(p.terms[i]!.subjects).toContain('SWEN20003')
     expect(pinnedIn(p, data, i, ['COMP20003', 'SWEN20003'])).toEqual(['COMP20003', 'SWEN20003'])
   })
-  it('every B-COM major plans without clashes, Actuarial on the mathematics path', () => {
-    for (const major of data.components.filter((c) => c.course === 'B-COM' && c.kind === 'major').map((c) => c.id)) {
+  it('B-COM majors plan without clashes, Actuarial on the mathematics path', () => {
+    // Two representative majors; tests/stress/commerceArts.test.ts runs every one.
+    for (const major of ['actuarial-studies', 'accounting']) {
       for (const startPeriod of ['semester-1', 'semester-2'] as const) {
         const { plan: p } = generatePlan({ data, profile: { results: [], skills: {}, interests: [], goal: 'balanced' }, course: 'B-COM', courseYear: 2026, major, startYear: 2027, startPeriod })
         expect(checkTerms(p, data).filter((i) => i.severity === 'error').map((i) => i.message), `${major} ${startPeriod}`).toEqual([])

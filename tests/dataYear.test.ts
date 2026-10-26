@@ -26,10 +26,10 @@ const t: Translate = (key: string, params?: Params) => {
   return interpolate(typeof node === 'string' ? node : key, params)
 }
 const profile: Profile = { results: [], skills: {}, interests: [], goal: 'balanced' }
+// Two representative plans; tests/stress/dataYear.test.ts runs the same checks on more.
 const PLANS: [string, string | undefined][] = [
   ['B-SCI', undefined],
   ['B-SCIEXTD', 'chemistry'],
-  ['B-ARTS', 'spanish-and-latin-american-studies'],
 ]
 const plansFrom = (d: Dataset, startYear: number) =>
   PLANS.map(([course, major]) => generatePlan({ data: d, profile, course, courseYear: 2026, major, startYear, startPeriod: 'semester-1' }).plan)

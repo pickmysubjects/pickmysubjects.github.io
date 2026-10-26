@@ -1,10 +1,11 @@
 import { describe, expect, it } from 'vitest'
-import { checkCourse } from '../src/engine/courseRules'
+import { cannotCombine, checkCourse } from '../src/engine/courseRules'
 import { generatePlan } from '../src/engine/generate'
 import { checkTerms } from '../src/engine/planCheck'
 import type { Profile } from '../src/engine/recommend'
 import { realData } from './realData'
 import { demo } from './helpers'
+import { farCampusPlanned, majorsByFarCampusDistance, scienceCombos, wholeDegreeProblems } from './sciencePlans'
 
 const data = demo()
 const profile: Profile = {
@@ -26,18 +27,6 @@ function generate(over: Partial<Parameters<typeof generatePlan>[0]> = {}) {
     ...over,
   })
 }
-
-/**
- * Majors whose required subjects aren't fully curated yet (no study periods or
- * prerequisites, or not in the data at all), so a whole-degree plan can't be built
- * for them. Remove each one once its subjects are in (subject batches 7-19).
- * Informatics: the Handbook's third core subject, INFO30004, is no longer available.
- * Agri-food Biotechnology: its core subject BTCH30002 is not running in 2026.
- */
-const DATA_PENDING = new Set([
-  'biotechnology-agrifood',
-  'informatics',
-])
 
 describe('generatePlan (demo course)', () => {
   it('builds a complete three-year plan with no term errors and every course rule met', () => {
@@ -121,37 +110,24 @@ describe('generatePlan (demo course)', () => {
 })
 
 describe('generatePlan (real B-SCI data, whole degree)', () => {
+  // A few representative combinations; tests/stress/scienceMajors.test.ts and
+  // scienceSpecialisations.test.ts plan every major and specialisation the same way.
   const real = realData()
-  const majors = real.components.filter(
-    (c) => c.course === 'B-SCI' && c.kind === 'major' && c.requirements !== 'unknown' && !DATA_PENDING.has(c.id),
-  )
-  // Maths streams with a computing specialisation are too tight for the greedy planner today.
   const combos = [
-    ...majors.map((m) => [m.id, undefined] as const),
-    ...['computing-and-software-systems', 'data-science'].flatMap((m) =>
-      ['artificial-intelligence', 'advanced-computing'].map((s) => [m, s] as const),
-    ),
-  ]
+    ['genetics', undefined],
+    ['computing-and-software-systems', 'artificial-intelligence'],
+    ['data-science', 'advanced-computing'],
+  ] as const
 
-  // Physics (Chemical Physics) uses 20 of 24 slots on its chain; the last breadth chain
-  // (level 1 then level 2) needs breadth subjects the dataset doesn't have yet.
-  const breadthTooThin = new Set(['physics-chemical'])
-  it.each(combos)('%s + %s meets every course rule, including breadth', (major, specialisation) => {
-    const { plan, unplaced } = generatePlan({
-      data: real,
-      profile: { results: [], skills: {}, interests: [], goal: 'balanced' },
-      course: 'B-SCI',
-      courseYear: 2026,
-      major,
-      specialisation,
-      startYear: 2027,
-      startPeriod: 'semester-1',
-    })
-    expect(unplaced).toEqual([])
-    const notOk = checkCourse(plan, real).statuses
-      .filter((s) => s.status !== 'ok' && !(breadthTooThin.has(major) && s.ruleId === 'breadth'))
-      .map((s) => `${s.ruleId}: ${s.detail}`)
-    expect(notOk).toEqual([])
+  it.each(combos)('%s + %s: a whole degree with every course rule met and no term errors', (major, specialisation) => {
+    expect(scienceCombos(real)).toContainEqual([major, specialisation])
+    expect(wholeDegreeProblems(real, major, specialisation)).toEqual([])
+  })
+
+  it('knows when a major and a specialisation can never be combined', () => {
+    // ENGR30004 (Mechatronics) is non-allowed with both COMP20003 and COMP20007.
+    expect(cannotCombine(real, 'mechatronics-systems', 'artificial-intelligence')).toMatch(/ENGR30004/)
+    expect(cannotCombine(real, 'computing-and-software-systems', 'artificial-intelligence')).toBeNull()
   })
 })
 
@@ -276,13 +252,12 @@ describe('generatePlan keeps chains to the usual length', () => {
     expect(r.notes.some((n) => n.key === 'shortTermChain')).toBe(true)
   })
   it('never plans a far-campus subject (Dookie) that no requirement needs', () => {
-    for (const m of real.components.filter((c) => c.course === 'B-SCI' && c.kind === 'major' && c.closedFrom === undefined)) {
-      for (const sp of ['semester-1', 'semester-2'] as const) {
-        const remote = plan(m.id, sp).plan.terms.flatMap((t) => t.subjects).filter((c) => real.subjects[c]?.campus)
-        expect(remote, `${m.id} ${sp}`).toEqual([])
-      }
-    }
-  }, 120_000)
+    // The majors with a Dookie subject fewest prerequisite steps away; every major runs in
+    // tests/stress/scienceMajors.test.ts.
+    const near = majorsByFarCampusDistance(real).slice(0, 3)
+    expect(near).toHaveLength(3)
+    for (const m of near) for (const sp of ['semester-1', 'semester-2'] as const) expect(farCampusPlanned(real, m, sp), `${m} ${sp}`).toEqual([])
+  }, 60_000)
 })
 
 describe('one subject short after a fail', () => {

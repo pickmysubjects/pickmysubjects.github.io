@@ -14,13 +14,10 @@ const plan = (course: string, major: string | undefined, startPeriod: Period, p 
 const points = (codes: string[]) => codes.reduce((sum, c) => sum + (data.subjects[c]?.points ?? 12.5), 0)
 
 describe('a mid-year start places every required subject', () => {
-  // Each a Semester 2-only subject after a Semester 1-only one, or a chain of them.
+  // Each a Semester 2-only subject after a Semester 1-only one. Two representative courses;
+  // tests/stress/starts.test.ts runs the full list.
   const cases: [string, string | undefined][] = [
-    ['B-FATH', undefined],
     ['B-FAANIM', undefined],
-    ['B-FAFILMTV', undefined],
-    ['B-FASCWRI', undefined],
-    ['B-ARTS', 'spanish-and-latin-american-studies'],
     ['B-SCIEXTD', 'chemistry'],
   ]
   for (const [course, major] of cases) {
