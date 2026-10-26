@@ -521,8 +521,6 @@ export const id: Messages = {
     teamwork: "Kerja kelompok",
   },
   assess: {
-    semesterTests: "Tes selama semester: {n}%",
-    semesterTestsTip: "Total tes selain ujian akhir yang tercantum di Handbook. Handbook tidak selalu menyebut minggu ke berapa.",
     guessedTags: "Diperkirakan dari informasi mata kuliah, belum dicek manual.",
     title: 'Cara penilaian',
     group: '{n}% kerja kelompok',
@@ -1532,7 +1530,7 @@ export const id: Messages = {
     coreqText: "Mata kuliah yang harus diambil di semester yang sama dengan yang ini.",
     nonTerm: "Tidak boleh bersamaan (Non-allowed)",
     nonText: "Mata kuliah yang isinya terlalu mirip. Kamu tidak bisa dapat kredit dari keduanya.",
-    waiverText: "Belum punya prasyarat tapi sudah paham materinya? Kamu bisa minta waiver ke koordinator mata kuliah.",
+    waiverText: "Belum punya prasyarat tapi pernah belajar materi serupa? Kamu bisa mengajukan waiver secara online (lihat bagian Pendaftaran).",
     dropTitle: "Membatalkan mata kuliah",
     dropBefore: "Sebelum census date: drop gratis. Tidak bayar dan tidak muncul di transkrip.",
     dropWd: "Setelah census, sampai batas akhir mundur tanpa gagal: tetap bayar, dan transkrip menunjukkan WD (mundur). Tidak memengaruhi WAM.",

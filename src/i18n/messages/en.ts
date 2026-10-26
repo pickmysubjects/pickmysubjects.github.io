@@ -524,8 +524,6 @@ export const en = {
     teamwork: "Group work",
   },
   assess: {
-    semesterTests: "Tests during semester: {n}%",
-    semesterTestsTip: "Class tests the Handbook lists besides the final exam, added up. The Handbook does not always say which week they are.",
     guessedTags: "Worked out from the subject's facts, not checked by hand yet.",
     title: 'How it’s assessed',
     group: '{n}% group work',
@@ -1535,7 +1533,7 @@ export const en = {
     coreqText: "Subjects you have to take in the same semester as this one.",
     nonTerm: "Non-allowed subjects",
     nonText: "Subjects that cover too much of the same stuff. You can’t get credit for both.",
-    waiverText: "Missing a prerequisite but already know the material? You can ask the subject coordinator for a waiver.",
+    waiverText: "Missing a prerequisite but already did similar study? You can apply online for a requisite waiver (see Enrolling).",
     dropTitle: "Dropping a subject",
     dropBefore: "Before the census date: drop it for free. You don’t pay and it’s not on your transcript.",
     dropWd: "After census, up to the last day to withdraw without fail: you still pay, and your transcript shows WD (withdrawn). It doesn’t affect your WAM.",

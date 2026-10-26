@@ -5,7 +5,6 @@ import { periodsFor, skillsOf, topicsOf, type Subject } from '@/engine'
 import { useDataset } from '@/composables/useDataset'
 import { useI18n } from '@/i18n'
 import { summariseAssessment } from '@/utils/assessment'
-import InfoTip from '@/components/InfoTip.vue'
 
 const props = defineProps<{ subject: Subject; year: number }>()
 const { t } = useI18n()
@@ -25,8 +24,7 @@ const otherHurdle = computed(() => info.value?.otherHurdle ?? false)
 // Exam share, class hours and group work are in the summary under the title; here only the
 // warnings it doesn't carry.
 // Tests the Handbook lists besides the final exam, all held during the semester.
-const testShare = computed(() => parts.value.find((p) => p.kind === 'test')?.weight ?? 0)
-const hasFacts = computed(() => examHurdle.value || otherHurdle.value || !!props.subject.minAttendance || testShare.value > 0)
+const hasFacts = computed(() => examHurdle.value || otherHurdle.value || !!props.subject.minAttendance)
 // The Handbook lists summer/winter versions separately; we keep the semester one.
 // Only worth saying when it runs both in a semester and outside one; a summer-only subject's
 // assessment *is* the summer one.
@@ -58,7 +56,6 @@ const otherTerms = computed(() => {
     <p v-if="hasFacts" class="assess-facts">
       <span v-if="examHurdle" class="chip chip-warn"><TriangleAlert :size="14" aria-hidden="true" /> {{ t('assess.mustPassExam') }}</span>
       <span v-if="otherHurdle" class="chip chip-warn"><TriangleAlert :size="14" aria-hidden="true" /> {{ t('assess.hurdles') }}</span>
-      <span v-if="testShare" class="chip chip-tip">{{ t('assess.semesterTests', { n: testShare }) }}<InfoTip :text="t('assess.semesterTestsTip')" /></span>
       <span v-if="subject.minAttendance" class="chip chip-warn">
         <TriangleAlert :size="14" aria-hidden="true" /> {{ t('assess.attendance', { n: subject.minAttendance }) }}
       </span>
@@ -80,23 +77,6 @@ const otherTerms = computed(() => {
 </template>
 
 <style scoped>
-/* A chip with an ⓘ: the opened text goes on its own full-width line under the label. */
-.chip-tip {
-  flex-wrap: wrap;
-}
-
-.chip-tip:has([aria-expanded='true']) {
-  border-radius: var(--radius-sm);
-}
-
-.chip-tip :deep(.infotip) {
-  display: contents;
-}
-
-.chip-tip :deep(.infotip-panel) {
-  flex-basis: 100%;
-}
-
 .assess {
   display: grid;
   align-content: start;

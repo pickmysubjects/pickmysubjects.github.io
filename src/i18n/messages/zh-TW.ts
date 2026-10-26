@@ -521,8 +521,6 @@ export const zhTW: Messages = {
     teamwork: "小組合作",
   },
   assess: {
-    semesterTests: "學期中小考：共 {n}%",
-    semesterTestsTip: "Handbook 列出期末考以外的小考，比重加總。哪一週考，Handbook 不一定有寫。",
     guessedTags: "根據課程資料推測，還沒人工核對。",
     title: '考核方式',
     group: '小組作業占 {n}%',
@@ -1532,7 +1530,7 @@ export const zhTW: Messages = {
     coreqText: "必須和這門課在同一學期一起修的課。",
     nonTerm: "不可同修（Non-allowed）",
     nonText: "內容重複太多的課，兩門只能拿一門的學分。",
-    waiverText: "差一門先修課，但內容其實已經會了？可以向這門課的負責人（coordinator）申請免修先修（waiver）。",
+    waiverText: "差一門先修課，但以前修過類似內容？可以在網路上申請先修豁免（見「選課與註冊」）。",
     dropTitle: "退課",
     dropBefore: "census date（學費結算日）之前：免費退，不用付學費，成績單上也不會留下紀錄。",
     dropWd: "census 之後，到「最後不被當的退課日」之前：學費照付，成績單上會顯示 WD（已退課），但不影響 WAM。",

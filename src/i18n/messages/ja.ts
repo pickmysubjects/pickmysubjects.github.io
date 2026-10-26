@@ -521,8 +521,6 @@ export const ja: Messages = {
     teamwork: "グループワーク",
   },
   assess: {
-    semesterTests: "学期中のテスト：計 {n}%",
-    semesterTestsTip: "Handbook に載っている期末試験以外のテストの合計。何週目かは載っていないこともあります。",
     guessedTags: "科目の情報から推測したもので、まだ人手で確認していません。",
     title: '評価方法',
     group: 'グループワーク {n}%',
@@ -1532,7 +1530,7 @@ export const ja: Messages = {
     coreqText: "この科目と同じ学期に取る必要がある科目。",
     nonTerm: "併修不可（Non-allowed）",
     nonText: "内容がかなり重なる科目。両方の単位はもらえません。",
-    waiverText: "前提科目が足りないけど内容はもう分かっている場合は、科目のコーディネーターに免除（waiver）を頼めます。",
+    waiverText: "前提科目が足りなくても、似た内容を以前に学んでいれば、オンラインで免除（requisite waiver）を申請できます（「履修登録」を参照）。",
     dropTitle: "科目の取り消し",
     dropBefore: "census date より前：無料で取り消せます。学費もかからず、成績証明書にも残りません。",
     dropWd: "census の後、「不合格にならずに取り消せる最終日」まで：学費はかかり、成績証明書に WD（取り消し）と残ります。WAM には影響しません。",

@@ -521,8 +521,6 @@ export const ko: Messages = {
     teamwork: "팀 과제",
   },
   assess: {
-    semesterTests: "학기 중 시험: 총 {n}%",
-    semesterTestsTip: "Handbook에 나온 기말시험 외 시험 비중의 합계예요. 몇 주차인지는 안 나올 때도 있어요.",
     guessedTags: "과목 정보로 추정한 것이며 아직 직접 확인하지 않았어요.",
     title: '평가 방식',
     group: '조별 과제 {n}%',
@@ -1532,7 +1530,7 @@ export const ko: Messages = {
     coreqText: "이 과목과 같은 학기에 함께 들어야 하는 과목.",
     nonTerm: "중복 불가 과목 (Non-allowed)",
     nonText: "내용이 너무 겹치는 과목. 둘 다 학점을 받을 수는 없어요.",
-    waiverText: "선수 과목이 없지만 내용은 이미 알고 있다면, 과목 코디네이터에게 면제(waiver)를 요청할 수 있어요.",
+    waiverText: "선수 과목이 없어도 비슷한 내용을 이전에 공부했다면 온라인으로 면제(requisite waiver)를 신청할 수 있어요('수강신청' 참고).",
     dropTitle: "과목 취소",
     dropBefore: "census date 전: 무료로 취소돼요. 학비도 안 내고 성적표에도 안 남아요.",
     dropWd: "census 후, “낙제 없이 취소할 수 있는 마지막 날”까지: 학비는 그대로 내고 성적표에 WD(취소)가 남아요. WAM에는 영향이 없어요.",

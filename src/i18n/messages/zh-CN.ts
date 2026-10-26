@@ -521,8 +521,6 @@ export const zhCN: Messages = {
     teamwork: "小组合作",
   },
   assess: {
-    semesterTests: "学期中小测：共 {n}%",
-    semesterTestsTip: "Handbook 里除期末考试外的测验，权重加总。具体第几周考，Handbook 不一定写。",
     guessedTags: "根据课程资料推测，还没人工核对。",
     title: '考核方式',
     group: '小组作业占 {n}%',
@@ -1532,7 +1530,7 @@ export const zhCN: Messages = {
     coreqText: "必须和这门课在同一学期一起修的课。",
     nonTerm: "不可同修（Non-allowed）",
     nonText: "内容重复太多的课，两门只能拿一门的学分。",
-    waiverText: "差一门先修课，但内容其实已经会了？可以找这门课的 coordinator 申请豁免（waiver）。",
+    waiverText: "差一门先修课，但以前学过类似内容？可以在网上申请先修豁免（见“选课与注册”）。",
     dropTitle: "退课",
     dropBefore: "census date（免费退课截止日）之前：免费退，不用交钱，成绩单上也不会有记录。",
     dropWd: "census 之后，到“最后不挂科退课日”之前：钱照交，成绩单上会显示 WD（已退课），但不影响 WAM。",

@@ -521,8 +521,6 @@ export const vi: Messages = {
     teamwork: "Làm nhóm",
   },
   assess: {
-    semesterTests: "Bài kiểm tra trong kỳ: {n}%",
-    semesterTestsTip: "Tổng các bài kiểm tra ngoài thi cuối kỳ mà Handbook liệt kê. Handbook không phải lúc nào cũng ghi tuần nào.",
     guessedTags: "Suy ra từ thông tin môn học, chưa được kiểm tra thủ công.",
     title: 'Cách đánh giá',
     group: '{n}% làm việc nhóm',
@@ -1532,7 +1530,7 @@ export const vi: Messages = {
     coreqText: "Môn bạn phải học cùng kỳ với môn này.",
     nonTerm: "Môn không được học cùng (Non-allowed)",
     nonText: "Môn có nội dung trùng nhiều. Bạn không được tính tín chỉ cho cả hai.",
-    waiverText: "Thiếu môn tiên quyết nhưng đã nắm nội dung rồi? Bạn có thể xin người phụ trách môn (subject coordinator) miễn điều kiện (waiver).",
+    waiverText: "Thiếu môn tiên quyết nhưng đã học nội dung tương tự? Bạn có thể nộp đơn xin miễn (requisite waiver) trực tuyến (xem phần Đăng ký môn).",
     dropTitle: "Rút môn",
     dropBefore: "Trước census date: rút miễn phí. Không mất tiền và không hiện trên bảng điểm.",
     dropWd: "Sau census, đến hạn cuối rút môn không bị trượt: vẫn phải trả tiền, bảng điểm ghi WD (đã rút). Không ảnh hưởng WAM.",

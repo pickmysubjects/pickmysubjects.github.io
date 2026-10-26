@@ -521,8 +521,6 @@ export const ms: Messages = {
     teamwork: "Kerja berkumpulan",
   },
   assess: {
-    semesterTests: "Ujian semasa semester: {n}%",
-    semesterTestsTip: "Jumlah ujian selain peperiksaan akhir yang disenaraikan Handbook. Handbook tidak selalu menyatakan minggunya.",
     guessedTags: "Dianggarkan daripada maklumat subjek, belum disemak secara manual.",
     title: 'Cara penilaian',
     group: '{n}% kerja berkumpulan',
@@ -1532,7 +1530,7 @@ export const ms: Messages = {
     coreqText: "Subjek yang mesti diambil dalam semester yang sama dengan subjek ini.",
     nonTerm: "Tidak dibenarkan bersama (Non-allowed)",
     nonText: "Subjek yang kandungannya terlalu sama. Anda tidak boleh dapat kredit untuk kedua-duanya.",
-    waiverText: "Tiada prasyarat tapi sudah tahu isinya? Anda boleh minta pengecualian (waiver) daripada penyelaras subjek.",
+    waiverText: "Tiada prasyarat tetapi pernah belajar kandungan yang serupa? Anda boleh memohon pengecualian (requisite waiver) secara dalam talian (lihat Pendaftaran).",
     dropTitle: "Gugurkan subjek",
     dropBefore: "Sebelum census date: gugur percuma. Tak perlu bayar dan tak keluar dalam transkrip.",
     dropWd: "Selepas census, hingga tarikh akhir tarik diri tanpa gagal: masih perlu bayar, dan transkrip tunjuk WD (tarik diri). Tidak jejaskan WAM.",
