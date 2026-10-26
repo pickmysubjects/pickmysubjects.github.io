@@ -9,15 +9,18 @@ import vue from '@vitejs/plugin-vue'
  * GitHub Pages can't send headers, so the Content-Security-Policy goes in a
  * meta tag — on the built site only (the dev server needs inline scripts and a
  * websocket). Scripts come only from this site; the only other host the page
- * talks to is Google Forms, for ratings and feedback.
+ * talks to is Google Forms, for ratings and feedback, plus GoatCounter's count endpoint
+ * (anonymous visit counts; count.js itself is a copy served from this site).
  */
-const CSP = [
+export const GOATCOUNTER = 'https://pickmysubjects.goatcounter.com'
+
+export const CSP = [
   "default-src 'self'",
   "script-src 'self'",
   "style-src 'self' 'unsafe-inline'", // Vue :style bindings
-  "img-src 'self' data:",
+  `img-src 'self' data: ${GOATCOUNTER}`, // count.js falls back to an image if sendBeacon fails
   "font-src 'self' data:", // small font files are inlined by the build
-  "connect-src 'self' https://docs.google.com",
+  `connect-src 'self' https://docs.google.com ${GOATCOUNTER}`, // navigator.sendBeacon
   "worker-src 'self'", // the offline service worker (/sw.js)
   "manifest-src 'self'",
   "object-src 'none'",

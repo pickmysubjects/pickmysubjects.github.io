@@ -1,3 +1,4 @@
+import { trackEvent } from '@/utils/analytics'
 import { computed } from 'vue'
 import {
   checkCourse,
@@ -186,6 +187,7 @@ export function usePlan() {
         : undefined,
     })
     save((s) => ({ ...s, terms: result.plan.terms, notes: result.notes, unplaced: result.unplaced }))
+    trackEvent('plan-generate')
   }
 
   function startEmpty(): void {

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { trackEvent } from '@/utils/analytics'
 import { viewYear } from '@/engine/dataYear'
 import InfoTip from '@/components/InfoTip.vue'
 import { computed, shallowRef } from 'vue'
@@ -27,7 +28,11 @@ function setPicked(codes: string[]): void {
 function pick(code: string): void {
   const now = picked.value
   if (now.includes(code)) setPicked(now.filter((c) => c !== code))
-  else if (now.length < COMPARE_MAX) setPicked([...now, code])
+  else if (now.length < COMPARE_MAX) {
+    setPicked([...now, code])
+    // Counted once, when the second subject opens the side-by-side table.
+    if (now.length === 1) trackEvent('compare-open')
+  }
 }
 function remove(code: string): void {
   shortlist.remove(code)

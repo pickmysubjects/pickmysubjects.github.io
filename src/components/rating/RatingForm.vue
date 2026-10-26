@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { trackEvent } from '@/utils/analytics'
 import { thisYear as calendarYear } from '@/engine/dataYear'
 import InfoTip from '@/components/InfoTip.vue'
 import { computed, shallowRef } from 'vue'
@@ -151,6 +152,7 @@ async function send(): Promise<void> {
       wish: wish.value.trim(),
       language: locale.value,
     })
+    trackEvent('rating-submit')
     if (wamBand.value) markShared([props.code])
     // Kept in this browser too: how they found it shapes their own suggestions.
     const rec = recommend.value === 'Yes' || recommend.value === 'Maybe' || recommend.value === 'No' ? recommend.value : undefined
