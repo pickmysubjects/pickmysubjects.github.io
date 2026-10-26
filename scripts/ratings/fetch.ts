@@ -80,6 +80,8 @@ const known = new Set(Object.keys(subjects))
 const out = buildRatingFiles(values, known, new Date(), (code) => (subjects[code] ? offsetFeatures(subjects[code]) : null))
 writeFileSync(join(ROOT, 'data', 'real', 'ratings.json'), `${JSON.stringify(out.ratings, null, 2)}\n`)
 console.log(`Ratings: ${out.accepted} accepted, ${out.rejected} rejected, ${Object.keys(out.ratings).length} subjects.`)
+// Student-reported facts (exam format, recordings, …) ride in ratings.json, read by question title.
+console.log(`Student facts: ${Object.values(out.ratings).filter((r) => r.facts).length} subjects.`)
 writeFileSync(join(ROOT, 'data', 'real', 'grade-offsets.json'), `${JSON.stringify(out.offsets, null, 2)}\n`)
 // "What I wish I knew" comments the maintainer approved (Show = TRUE), filtered, 3+ per subject.
 const comments = buildComments(rowsToObjects(values), new Date(), known)

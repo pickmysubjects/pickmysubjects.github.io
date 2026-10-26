@@ -6,6 +6,7 @@ import { z } from 'zod'
 import { admissionCourses, namedComponents, referencedSubjects } from '../src/engine/expr'
 import { MIN_GRADE_SHARES, type GradeOffset } from '../src/engine/grades'
 import { isRatingTag } from '../src/engine/ratingTags'
+import { studentFactsSchema } from '../src/engine/studentFacts'
 import type { ReqExpr, ReqField } from '../src/engine/schema'
 import { assembleCareers, careerTermsFileSchema, courseFurtherStudyFileSchema, graduateFileSchema, jobsFileSchema, majorCareersFileSchema, occupationsFileSchema } from '../src/engine/careers'
 import { aboutFileSchema, componentFileSchema, courseFileSchema, diplomaFileSchema, DISCUSSION_SOURCES, discussionFileSchema, SKILLS, subjectFileSchema, subjectTitlesFileSchema, type Dataset, type DiscussionSummary, type Skill, type Subject } from '../src/engine/schema'
@@ -152,7 +153,7 @@ export function buildDataset(name: Dataset['name']): BuildResult {
     }
   }
 
-  mergeRatings(join(base, 'ratings.json'), subjects)
+  mergeRatings(join(base, 'ratings.json'), subjects, errors)
   // Approved "What I wish I knew" comments (scripts/ratings/comments.ts), MIN_COMMENTS+ per subject.
   const commentsFile = join(base, 'comments.json')
   if (existsSync(commentsFile)) {
@@ -259,7 +260,7 @@ const MIN_REVIEWS_FOR_SKILLS = 3
  * Fold aggregated crowd ratings (written daily by scripts/ratings/fetch.ts) into the
  * subjects. Curated values win: a subject's own `signals`/`skills` are never overwritten.
  */
-function mergeRatings(file: string, subjects: Dataset['subjects']): void {
+function mergeRatings(file: string, subjects: Dataset['subjects'], errors: string[]): void {
   if (!existsSync(file)) return
   const ratings = JSON.parse(readFileSync(file, 'utf8')) as Record<
     string,
@@ -278,6 +279,7 @@ function mergeRatings(file: string, subjects: Dataset['subjects']): void {
       overall?: number | null
       overallCount?: number
       tags?: Record<string, number>
+      facts?: unknown
     }
   >
   for (const [code, r] of Object.entries(ratings)) {
@@ -297,6 +299,12 @@ function mergeRatings(file: string, subjects: Dataset['subjects']): void {
       recommend: extra(r.recommendRate),
       overall: extra(r.overall),
       overallCount: r.overall == null ? undefined : r.overallCount,
+    }
+    // Student-reported facts (exam format, recordings, …), kept apart from curated signals.
+    if (r.facts !== undefined) {
+      const facts = studentFactsSchema.safeParse(r.facts)
+      if (facts.success) s.studentFacts = facts.data
+      else errors.push(`${relative(ROOT, file)}: ${code}.facts: ${facts.error.message}`)
     }
     // Tags come only from ratings, so they join curated signals too (known ids only).
     const tags = Object.fromEntries(Object.entries(r.tags ?? {}).filter(([k, n]) => isRatingTag(k) && Number.isInteger(n) && n > 0))

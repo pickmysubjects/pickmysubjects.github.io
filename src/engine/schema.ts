@@ -1,5 +1,6 @@
 import type { GradeOffset } from './grades'
 import type { StudentComment } from './comments'
+import type { StudentFacts } from './studentFacts'
 import { z } from 'zod'
 
 /**
@@ -327,6 +328,8 @@ export const subjectFileSchema = z
     discussions: undefined as DiscussionSummary[] | undefined,
     // Approved "What I wish I knew" comments (comments.json), only when a subject has MIN_COMMENTS.
     comments: undefined as StudentComment[] | undefined,
+    // What students agree on that the Handbook doesn't say (ratings.json facts), once 3+ agree.
+    studentFacts: undefined as StudentFacts | undefined,
     // How its grades sit against sharers' WAMs (scripts/ratings → grade-offsets.json), once 5+ shared.
     gradeOffset: undefined as GradeOffset | undefined,
     // Filled in from data/<set>/about/ when there is one.

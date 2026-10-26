@@ -6,6 +6,7 @@ import RatingForm from '@/components/rating/RatingForm.vue'
 import RatingTagChips from '@/components/rating/RatingTagChips.vue'
 import DiscussionSummary from '@/components/subject/DiscussionSummary.vue'
 import SubjectTips from '@/components/subject/SubjectTips.vue'
+import StudentFactsRow from '@/components/subject/StudentFactsRow.vue'
 import { useRated } from '@/composables/useRated'
 import { useI18n } from '@/i18n'
 
@@ -79,6 +80,7 @@ const discussions = computed(() => (props.detailReady ? (props.subject.discussio
       </dl>
     </template>
     <p v-else class="muted">{{ t('subject.noRatings') }}</p>
+    <StudentFactsRow v-if="detailReady" :facts="subject.studentFacts" />
 
     <p v-if="thanks" class="good" role="status">{{ t('rating.sent') }}</p>
     <p v-else-if="rated.has(subject.code)" class="muted">{{ t('rating.rated') }}</p>
