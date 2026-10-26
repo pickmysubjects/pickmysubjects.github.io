@@ -1,13 +1,13 @@
 import { describe, expect, it } from 'vitest'
-import { readFileSync } from 'node:fs'
 import { ref } from 'vue'
 import { books } from '../src/composables/planStore'
 import { provideDataset } from '../src/composables/useDataset'
-import { recommend, type Dataset } from '../src/engine'
+import { recommend } from '../src/engine'
+import { realData } from './realData'
 
 /** The card's composable: per-plan strengths/interests/goal, the shared record, and Find subjects' own list. */
 describe('useSubjectFit', () => {
-  provideDataset(JSON.parse(readFileSync(new URL('../src/generated/real.json', import.meta.url), 'utf8')) as Dataset)
+  provideDataset(realData())
 
   it('no profile: difficulty only; each plan its own fit; same as sort for me', async () => {
     const { usePlan } = await import('../src/composables/usePlan')

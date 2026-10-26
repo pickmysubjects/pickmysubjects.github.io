@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { buildLeadsTo, buildTakenWith, relatedSubjects } from '../src/engine/related'
 import { componentFileSchema } from '../src/engine/schema'
-import { buildDataset } from '../scripts/dataset'
+import { realData } from './realData'
 import { dataset, subject } from './helpers'
 
 const s1 = { offerings: { 2026: ['semester-1'] } }
@@ -65,7 +65,7 @@ describe('relatedSubjects', () => {
 })
 
 describe('related subjects on real data', () => {
-  const { dataset: real } = buildDataset('real')
+  const real = realData()
   it('works out the whole dataset at once, quickly', () => {
     const t0 = performance.now()
     const tw = buildTakenWith(real, 2026)

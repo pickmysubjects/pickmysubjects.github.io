@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { buildDataset } from '../scripts/dataset'
+import { realData } from './realData'
 import { checkCourse } from '../src/engine/courseRules'
 import { defaultCourse, forCourse } from '../src/engine/forCourse'
 import { generatePlan } from '../src/engine/generate'
@@ -10,7 +10,7 @@ import { planStress } from '../src/engine/termStress'
 
 /** More than one bachelor: categories, breadth and rules follow the student's own course. */
 describe('per-course rules (B-SCI and B-COM)', () => {
-  const { dataset: data } = buildDataset('real')
+  const data = realData()
   const plan = (course: string, subjects: string[], completed: string[] = []) =>
     ({ course, courseYear: 2026, completed, terms: [{ year: 2027, period: 'semester-1', subjects }] }) as never
 

@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest'
 import { majorOverview, sharedSubjects } from '../src/engine/roles'
-import { buildDataset } from '../scripts/dataset'
+import { realData } from './realData'
 
 describe('majorOverview (real data)', () => {
-  const { dataset: data } = buildDataset('real')
+  const data = realData()
 
   it('lists the core level-3 subjects', () => {
     expect(majorOverview(data, 'data-science', 'B-SCI')?.core).toEqual(['COMP30027', 'MAST30025', 'MAST30027', 'MAST30034'])
@@ -42,7 +42,7 @@ describe('majorOverview (real data)', () => {
 })
 
 describe('planRoles', () => {
-  const { dataset: data } = buildDataset('real')
+  const data = realData()
   it('marks the course-compulsory subject and the major core as required', async () => {
     const { planRoles } = await import('../src/engine/roles')
     const r = planRoles(data, 'B-SCI', 2026, ['data-science'])

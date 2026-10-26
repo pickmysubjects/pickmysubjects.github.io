@@ -1,11 +1,11 @@
 import { describe, expect, it } from 'vitest'
 import { recommend, type Profile } from '../src/engine'
-import { buildDataset } from '../scripts/dataset'
+import { realData } from './realData'
 import { dataset, subject } from './helpers'
 
 /** Simulated students on the real data: does the top of the list make sense for them? */
 describe('recommendation quality (real data)', () => {
-  const { dataset: real } = buildDataset('real')
+  const real = realData()
   const base: Profile = { results: [], skills: {}, interests: [], goal: 'balanced' }
   const top = (p: Partial<Profile>, opts: Parameters<typeof recommend>[2] = {}) =>
     recommend(real, { ...base, ...p }, { course: 'B-SCI', limit: 6, year: 2026, ...opts }).map((r) => r.code)

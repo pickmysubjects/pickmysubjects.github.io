@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { buildDataset } from '../scripts/dataset'
+import { realData } from './realData'
 import { careerGap, careerGoal } from '../src/engine/careerGoal'
 import { checkCourse, findCourse, withinCaps } from '../src/engine/courseRules'
 import { generatePlan } from '../src/engine/generate'
@@ -13,7 +13,7 @@ import { interpolate, type Params } from '../src/i18n/interpolate'
 import { en } from '../src/i18n/messages/en'
 import { zhTW } from '../src/i18n/messages/zh-TW'
 
-const { dataset: real } = buildDataset('real')
+const real = realData()
 
 function translator(messages: unknown) {
   return (key: string, params?: Params) => {

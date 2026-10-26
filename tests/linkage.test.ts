@@ -2,12 +2,12 @@ import { describe, expect, it } from 'vitest'
 import { generatePlan } from '../src/engine/generate'
 import { recommend, type Profile } from '../src/engine/recommend'
 import { checkTerms } from '../src/engine/planCheck'
-import { buildDataset } from '../scripts/dataset'
+import { realData } from './realData'
 import { dataset, subject } from './helpers'
 
 /** What the student enters under Me reaches the plan and the suggestions the same way. */
 describe('Me → Plan → Suggestions (real data)', () => {
-  const { dataset: d } = buildDataset('real')
+  const d = realData()
   const P = (p: Partial<Profile> = {}): Profile => ({ results: [], skills: {}, interests: [], goal: 'balanced', ...p })
   const plan = (p: Profile) =>
     generatePlan({ data: d, profile: p, course: 'B-SCI', courseYear: 2026, major: 'data-science', startYear: 2027, startPeriod: 'semester-1' }).plan

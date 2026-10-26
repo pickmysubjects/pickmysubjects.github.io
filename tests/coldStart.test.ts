@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { buildDataset } from '../scripts/dataset'
+import { realData } from './realData'
 import { recommend } from '../src/engine/recommend'
 import { skillsOf } from '../src/engine/skills'
 import { topicsOf } from '../src/engine/topics'
@@ -22,7 +22,7 @@ const STUDENTS: { name: string; interests: Topic[]; skills: Partial<Record<Skill
 ]
 
 describe('cold start (real data, no ratings needed)', () => {
-  const { dataset: data } = buildDataset('real')
+  const data = realData()
   const fitShare = (s: (typeof STUDENTS)[number], goal: 'balanced' | 'wam' | 'challenge', maxLevel: number, course = 'B-SCI') => {
     const recs = recommend(data, { results: [], skills: s.skills, interests: s.interests, goal }, { course, year: 2026, maxLevel }).slice(0, 10)
     const fits = recs.filter((r) => {

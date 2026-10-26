@@ -1,12 +1,11 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { readFileSync } from 'node:fs'
 import { nextTick, ref } from 'vue'
 import { books } from '../src/composables/planStore'
 import { provideDataset } from '../src/composables/useDataset'
-import type { Dataset } from '../src/engine'
 import { cleanShortlist, SHORTLIST_MAX } from '../src/utils/sanitize'
 import { makeBackup, restoreBackup } from '../src/utils/backup'
 import { compareFromQuery } from '../src/composables/useShortlist'
+import { realData } from './realData'
 
 describe('shortlist storage', () => {
   it('is put back in shape: well-formed codes, upper case, each once, capped', () => {
@@ -43,7 +42,7 @@ describe('shortlist storage', () => {
 })
 
 describe('compare table', () => {
-  provideDataset(JSON.parse(readFileSync(new URL('../src/generated/real.json', import.meta.url), 'utf8')) as Dataset)
+  provideDataset(realData())
 
   it('toggles subjects on and off the shortlist', async () => {
     const { useShortlist } = await import('../src/composables/useShortlist')

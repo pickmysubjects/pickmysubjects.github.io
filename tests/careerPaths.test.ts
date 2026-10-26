@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
-import { buildDataset } from '../scripts/dataset'
+import { realData } from './realData'
 import { careerGroups, careerMatchRank, careerNeeds, careerSearchTerms, careerTarget, careerTargets, foldSearch, majorForCareer, majorsForCareer, subjectCareers, tierSubject, TIERS, type CareerTarget, type TierContext } from '../src/engine/careerPaths'
 import { interpolate, type Params } from '../src/i18n/interpolate'
 import { en } from '../src/i18n/messages/en'
@@ -9,7 +9,7 @@ import { careerPhrase, subjectNote } from '../src/utils/careerPathText'
 import { careerPageHtml, careerSeo, subjectCareersHtml } from '../src/utils/careersHtml'
 import { subject } from './helpers'
 
-const { dataset: real } = buildDataset('real')
+const real = realData()
 
 function translator(messages: unknown) {
   return (key: string, params?: Params) => {

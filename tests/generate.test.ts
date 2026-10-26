@@ -3,7 +3,7 @@ import { checkCourse } from '../src/engine/courseRules'
 import { generatePlan } from '../src/engine/generate'
 import { checkTerms } from '../src/engine/planCheck'
 import type { Profile } from '../src/engine/recommend'
-import { buildDataset } from '../scripts/dataset'
+import { realData } from './realData'
 import { demo } from './helpers'
 
 const data = demo()
@@ -121,7 +121,7 @@ describe('generatePlan (demo course)', () => {
 })
 
 describe('generatePlan (real B-SCI data, whole degree)', () => {
-  const { dataset: real } = buildDataset('real')
+  const real = realData()
   const majors = real.components.filter(
     (c) => c.course === 'B-SCI' && c.kind === 'major' && c.requirements !== 'unknown' && !DATA_PENDING.has(c.id),
   )
@@ -157,7 +157,7 @@ describe('generatePlan (real B-SCI data, whole degree)', () => {
 
 describe('generatePlan (repair keeps points prerequisites)', () => {
   it('does not swap out a subject a later "25 points of level 2" prerequisite relies on', () => {
-    const { dataset: real } = buildDataset('real')
+    const real = realData()
     const { plan } = generatePlan({
       data: real,
       profile: {
@@ -186,8 +186,7 @@ describe('generatePlan (repair keeps points prerequisites)', () => {
 
 describe('generatePlan with a field but no major yet', () => {
   it('plans the first-year subjects most of the field’s majors need, so they all stay open', async () => {
-    const { buildDataset } = await import('../scripts/dataset')
-    const { dataset: real } = buildDataset('real')
+    const real = realData()
     const biomed = ['biochemistry-and-molecular-biology', 'genetics', 'immunology', 'microbiology', 'pathology', 'pharmacology', 'physiology'].filter((id) =>
       real.components.some((c) => c.id === id),
     )
@@ -205,8 +204,7 @@ describe('generatePlan with a field but no major yet', () => {
 
 describe('generatePlan with summer- or winter-only compulsory subjects', () => {
   it('adds a summer or winter term for them instead of leaving them out', async () => {
-    const { buildDataset } = await import('../scripts/dataset')
-    const { dataset: real } = buildDataset('real')
+    const real = realData()
     // FRST30001 runs February–May (Semester 1), so the forest major no longer needs one.
     for (const major of ['marine-biology']) {
       const { plan, unplaced } = generatePlan({
@@ -228,8 +226,7 @@ describe('generatePlan with summer- or winter-only compulsory subjects', () => {
 
 describe('generatePlan never takes a graduate route', () => {
   it('plans Informatics the undergraduate way, with nothing from a master’s degree', async () => {
-    const { buildDataset } = await import('../scripts/dataset')
-    const { dataset: real } = buildDataset('real')
+    const real = realData()
     const { plan, unplaced } = generatePlan({
       data: real,
       profile: { results: [], skills: {}, interests: [], goal: 'balanced' },
@@ -250,7 +247,7 @@ describe('generatePlan never takes a graduate route', () => {
 })
 
 describe('generatePlan keeps chains to the usual length', () => {
-  const { dataset: real } = buildDataset('real')
+  const real = realData()
   const plan = (major: string, startPeriod: 'semester-1' | 'semester-2') =>
     generatePlan({ data: real, profile: { results: [], skills: {}, interests: [], goal: 'balanced' }, course: 'B-SCI', courseYear: 2026, major, startYear: 2027, startPeriod })
   const semesters = (r: ReturnType<typeof plan>) => r.plan.terms.filter((t) => t.period.startsWith('semester')).length
@@ -290,8 +287,7 @@ describe('generatePlan keeps chains to the usual length', () => {
 
 describe('one subject short after a fail', () => {
   it('uses a summer or winter term instead of a whole extra semester', async () => {
-    const { buildDataset } = await import('../scripts/dataset')
-    const { dataset } = buildDataset('real')
+    const dataset = realData()
     const row = (code: string, year: number, period: 'semester-1' | 'semester-2', mark?: number) => ({ code, year, period, ...(mark === undefined ? {} : { mark }) })
     const results = [
       row('COMP10001', 2023, 'semester-1', 81), row('ECON10004', 2023, 'semester-1', 81), row('MAST10005', 2023, 'semester-1', 81), row('SCIE10005', 2023, 'semester-1'),
@@ -309,7 +305,7 @@ describe('one subject short after a fail', () => {
 })
 
 describe('generatePlan (real B-ARTS data, capstones limited to a major)', () => {
-  const { dataset: real } = buildDataset('real')
+  const real = realData()
   const planFor = (major: string) =>
     generatePlan({
       data: real,

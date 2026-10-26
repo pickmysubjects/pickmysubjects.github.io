@@ -3,7 +3,7 @@ import { planStress, termStress } from '../src/engine/termStress'
 import { relieveTerm } from '../src/engine/relieve'
 import type { Plan } from '../src/engine/plan'
 import type { Profile } from '../src/engine/recommend'
-import { buildDataset } from '../scripts/dataset'
+import { realData } from './realData'
 import { dataset, subject } from './helpers'
 
 const profile = (p: Partial<Profile> = {}): Profile => ({ results: [], skills: {}, interests: [], goal: 'balanced', ...p })
@@ -268,7 +268,7 @@ describe('relieveTerm offers a different elective with prerequisites', () => {
 })
 
 describe('lightening a semester keeps what later subjects lean on (real data)', () => {
-  const { dataset: real } = buildDataset('real')
+  const real = realData()
   // Weak at maths, the heavy-semester fix used to drop MAST10006/MAST10007 for an easier
   // elective, though BMEN20003 and COMP20003 ("25 points of MAST") need them.
   it.each([

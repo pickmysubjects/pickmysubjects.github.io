@@ -3,10 +3,10 @@ import { checkCourse, componentCourse, diplomaClash, findDiploma, planRules } fr
 import { evaluateField } from '../src/engine/expr'
 import { generatePlan } from '../src/engine/generate'
 import { checkTerms } from '../src/engine/planCheck'
-import { buildDataset } from '../scripts/dataset'
+import { realData } from './realData'
 import { decodePlan, encodePlan } from '../src/utils/sharePlan'
 
-const { dataset: real, errors } = buildDataset('real')
+const real = realData()
 const profile = { results: [], skills: {}, interests: [], goal: 'balanced' as const }
 const plan = (course: string, major: string, diploma?: string, diplomaStream?: string) =>
   generatePlan({ data: real, profile, course, courseYear: 2026, major, minors: [], diploma, diplomaStream, startYear: 2026, startPeriod: 'semester-1' })
@@ -15,7 +15,6 @@ const points = (p: ReturnType<typeof plan>['plan']) => p.terms.flatMap((t) => t.
 
 describe('Bachelor of Science (Extended)', () => {
   it('loads cleanly and runs on B-SCI majors and categories', () => {
-    expect(errors).toEqual([])
     expect(componentCourse(real, 'B-SCIEXTD')).toBe('B-SCI')
     expect(componentCourse(real, 'B-ARTS')).toBe('B-ARTS')
     // Science and breadth as B-SCI counts them; its own foundation subjects count towards the total only.

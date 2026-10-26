@@ -4,7 +4,7 @@ import { fitGrades, MIN_MODEL_ROWS, priorOffset } from '../src/engine/gradeModel
 import { readFitted } from '../src/engine/fitted'
 import { fitReviewPrior, MIN_RATED_SUBJECTS } from '../src/engine/easeRanking'
 import { fitRatingPrior, MIN_PRIOR_SUBJECTS } from '../scripts/ratings/aggregate'
-import { buildDataset } from '../scripts/dataset'
+import { realData } from './realData'
 import { predictMark, RANGE_SHARE } from '../src/engine/predict'
 import { dataset, subject } from './helpers'
 import { makeWorld, normal, rng, shareRows, type World } from './synthetic'
@@ -196,7 +196,7 @@ describe('fitting the model from the data (weekly job)', () => {
   })
 
   it('the review prior waits for our own ratings: public summaries alone never set it', () => {
-    const { dataset: data } = buildDataset('real')
+    const data = realData()
     expect(fitReviewPrior(Object.values(data.subjects))).toBeUndefined()
     const rated = Array.from({ length: MIN_RATED_SUBJECTS }, (_, i) =>
       subject({ code: `SYNT${10000 + i}`, signals: { reviews: 5, difficulty: 2 + (i % 3), workload: 2 + ((i * 7) % 3), grading: 2 + ((i * 5) % 3) } }),

@@ -18,6 +18,7 @@ Notes for AI coding agents (and anyone else) working in this repo. CONTRIBUTING.
 ## Checks
 
 - While working: only the test files related to the change (`npx vitest related <changed files> --run`, or named files) and `npm run typecheck`. Don't run `npm test`, `npm run test:fast` or `npm run build` while working — the full suite and the build (~19,500 prerendered pages) run once, in the release check, for the whole batch. Tests use 3 workers locally (`TEST_WORKERS=<n>` to change) so the laptop stays cool; CI uses all cores.
+- Tests get the real dataset from `realData()` (`tests/realData.ts`, reads `src/generated/real.json`), never `buildDataset('real')`: a build is ~4 s of CPU per call. `tests/realData.test.ts` keeps the two the same. Treat it as read-only (copy before changing).
 - This runs on a 16 GB laptop that also hosts other AI tools and Docker: at most one background agent running tests or builds at a time.
 - Before merging or pushing, once, and read the results before the next step:
   1. `npm run typecheck`

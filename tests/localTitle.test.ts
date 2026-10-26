@@ -1,12 +1,11 @@
 import { describe, expect, it } from 'vitest'
-import { buildDataset } from '../scripts/dataset'
+import { realData } from './realData'
 import { localTitle, withLocalTitle } from '../src/i18n/localized'
 
 describe('Chinese subject titles', () => {
-  const { dataset, errors } = buildDataset('real')
+  const dataset = realData()
 
   it('loads a Simplified and Traditional title for every subject', () => {
-    expect(errors).toEqual([])
     for (const s of Object.values(dataset.subjects)) {
       expect(s.titles?.zh, s.code).toBeTruthy()
       expect(s.titles?.['zh-TW'], s.code).toBeTruthy()

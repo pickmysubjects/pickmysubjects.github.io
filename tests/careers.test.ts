@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { buildDataset } from '../scripts/dataset'
+import { realData } from './realData'
 import { accreditationCodes, assembleCareers, CAREER_LANGS, graduateFileSchema, jobsFileSchema, careerText, componentCareers, type CareerText } from '../src/engine/careers'
 import { interpolate, type Params } from '../src/i18n/interpolate'
 import { en } from '../src/i18n/messages/en'
@@ -7,7 +7,7 @@ import { zhCN } from '../src/i18n/messages/zh-CN'
 import { zhTW } from '../src/i18n/messages/zh-TW'
 import { careersHtml } from '../src/utils/careersHtml'
 
-const { dataset: real, errors } = buildDataset('real')
+const real = realData()
 const careers = real.careers!
 
 function translator(messages: unknown) {
@@ -22,8 +22,7 @@ const html = (id: string, course: string, messages: unknown = en, locale = 'en')
   careersHtml(real, id, course, translator(messages), locale, (c) => `/subject/${c}/`, (x) => `/majors/${x}/`)
 
 describe('careers data', () => {
-  it('loads with no errors', () => {
-    expect(errors).toEqual([])
+  it('has careers for every major', () => {
     expect(Object.keys(careers.majors).length).toBeGreaterThan(100)
   })
 

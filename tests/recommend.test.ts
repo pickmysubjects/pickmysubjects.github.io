@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { computeWam, isFail, passedCodes, recommend, type Profile } from '../src/engine/recommend'
-import { buildDataset } from '../scripts/dataset'
+import { realData } from './realData'
 import { dataset, demo, subject } from './helpers'
 
 const base: Profile = { results: [], skills: {}, interests: [], goal: 'balanced' }
@@ -127,7 +127,7 @@ describe('subject facts', () => {
   })
 
   it('uses curated topics on real data: machine learning first-years see the way in, not unrated filler', () => {
-    const { dataset: real } = buildDataset('real')
+    const real = realData()
     // Level 1 only, as the For-you page shows a first-year.
     const fresh = recommend(real, { ...base, interests: ['machine-learning'] }, { course: 'B-SCI', limit: 6, maxLevel: 1 }).map((r) => r.code)
     // The way to COMP30027: programming plus the first-year maths it needs.
@@ -164,9 +164,8 @@ describe('the five skill steps read differently', () => {
 
 describe('recommend with the student’s major', () => {
   it('nudges the major’s own subjects up and says why', async () => {
-    const { buildDataset } = await import('../scripts/dataset')
     const { recommend, PROGRAMME_BONUS } = await import('../src/engine/recommend')
-    const { dataset: real } = buildDataset('real')
+    const real = realData()
     const profile = { results: [], skills: {}, interests: [], goal: 'balanced' as const }
     const base = recommend(real, profile, { course: 'B-SCI', year: 2026 })
     const mine = recommend(real, profile, { course: 'B-SCI', year: 2026, programme: { courseYear: 2026, components: ['geography'] } })
@@ -181,9 +180,8 @@ describe('recommend with the student’s major', () => {
 
 describe('recommend after a fail', () => {
   it('can suggest the subject again, and says it would be a retake', async () => {
-    const { buildDataset } = await import('../scripts/dataset')
     const { recommend } = await import('../src/engine/recommend')
-    const { dataset: real } = buildDataset('real')
+    const real = realData()
     const profile = { results: [{ code: 'COMP10001', mark: 42 }], skills: {}, interests: [], goal: 'balanced' as const }
     const rec = recommend(real, profile, { course: 'B-SCI', year: 2026 }).find((r) => r.code === 'COMP10001')
     expect(rec?.warnings[0]).toMatchObject({ key: 'retake', params: { mark: 42 } })
@@ -222,9 +220,8 @@ describe('recommend after a fail', () => {
 
 describe('recommend and how a subject is marked', () => {
   it('a student who finds exams hard sees fewer exam-heavy subjects near the top', async () => {
-    const { buildDataset } = await import('../scripts/dataset')
     const { recommend } = await import('../src/engine/recommend')
-    const { dataset: real } = buildDataset('real')
+    const real = realData()
     const examHeavy = (code: string) => {
       const a = real.subjects[code]?.assessment
       return Array.isArray(a) && a.filter((t) => t.kind === 'exam').reduce((s, t) => s + t.weight, 0) >= 50
@@ -239,9 +236,8 @@ describe('recommend and how a subject is marked', () => {
 
 describe('recommend: two bugs found in review', () => {
   it('still suggests a subject the major needs, even when a passed subject listed it as one way in', async () => {
-    const { buildDataset } = await import('../scripts/dataset')
     const { recommend } = await import('../src/engine/recommend')
-    const { dataset: real } = buildDataset('real')
+    const real = realData()
     // PHYC10002 needs PHYC10001 *or* a VCE score; passing it on the VCE score doesn't make
     // PHYC10001 "behind" you when the physics major requires it.
     const recs = recommend(real, { results: [{ code: 'PHYC10002', mark: 75 }], skills: {}, interests: ['physics'], goal: 'balanced' }, {

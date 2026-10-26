@@ -4,7 +4,7 @@ import { generatePlan } from '../../src/engine/generate'
 import { checkTerms } from '../../src/engine/planCheck'
 import type { Profile } from '../../src/engine/recommend'
 import type { Period } from '../../src/engine/schema'
-import { buildDataset } from '../../scripts/dataset'
+import { realData } from '../realData'
 
 /**
  * Every course, with no major chosen, from each start (real data): a whole-degree plan with every
@@ -16,7 +16,7 @@ import { buildDataset } from '../../scripts/dataset'
  * them as early as it can and says so.
  */
 const EXPECTED = new Set(['B-SCIEXTD semester-2 foundation'])
-const { dataset: data } = buildDataset('real')
+const data = realData()
 const profile: Profile = { results: [], skills: {}, interests: [], goal: 'balanced' }
 
 describe('every course plans from every start (real data)', () => {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { buildDataset } from '../scripts/dataset'
+import { realData } from './realData'
 import { forCourse } from '../src/engine/forCourse'
 import { subjectDifficulty } from '../src/engine/subjectFit'
 import { LOCALE_CODES, type LocaleCode } from '../src/i18n/codes'
@@ -44,7 +44,7 @@ const translator =
   (key: string, params?: Params) =>
     interpolate(lookup(MESSAGES[code], key) ?? lookup(en, key) ?? key, params)
 
-const { dataset: data } = buildDataset('real')
+const data = realData()
 const subjects = Object.values(data.subjects)
 const counts = { subjects: subjects.length, reviewed: subjects.filter((s) => s.discussions?.length).length }
 const sci = forCourse(data, 'B-SCI').subjects

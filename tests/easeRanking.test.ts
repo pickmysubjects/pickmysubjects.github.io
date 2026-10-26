@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { listPlace, rankSubject, rankSubjects, type RankOptions } from '../src/engine/easeRanking'
 import type { DiscussionSummary, Subject } from '../src/engine/schema'
-import { buildDataset } from '../scripts/dataset'
+import { realData } from './realData'
 import { subject } from './helpers'
 
 const RUNS = { 2026: ['semester-1'] }
@@ -129,7 +129,7 @@ describe('ease ranking (synthetic subjects)', () => {
 })
 
 describe('ease ranking (real data)', () => {
-  const { dataset } = buildDataset('real')
+  const dataset = realData()
   const all = Object.values(dataset.subjects)
 
   for (const direction of ['easy', 'hard'] as const) {

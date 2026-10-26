@@ -6,7 +6,7 @@ import { offeredIn } from '../src/engine/availability'
 import { termStress } from '../src/engine/termStress'
 import { doneBefore, fitsLoad, recordedLoads, termLoad } from '../src/engine/yearLong'
 import type { Plan } from '../src/engine/plan'
-import { buildDataset } from '../scripts/dataset'
+import { realData } from './realData'
 import { dataset, subject } from './helpers'
 
 const both = { '2026': ['semester-1', 'semester-2'] }
@@ -103,7 +103,7 @@ describe('year-long subjects on the record and in swaps', () => {
 
 describe('Bachelor of Oral Health (real data)', () => {
   it('plans each year of year-long subjects in its own year, with every rule met', () => {
-    const { dataset: real } = buildDataset('real')
+    const real = realData()
     const { plan: p, unplaced } = generatePlan({ data: real, profile: { results: [], skills: {}, interests: [], goal: 'balanced' }, course: '841AC', courseYear: 2026, startYear: 2027, startPeriod: 'semester-1' })
     expect(unplaced).toEqual([])
     const s1 = p.terms.filter((t) => t.period === 'semester-1').map((t) => [...t.subjects].sort())

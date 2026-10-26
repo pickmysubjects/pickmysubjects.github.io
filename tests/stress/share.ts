@@ -4,7 +4,7 @@ import { planStress, requiredWithPrerequisites } from '../../src/engine/termStre
 import { relieveTerm } from '../../src/engine/relieve'
 import { planRoles } from '../../src/engine/roles'
 import type { Profile } from '../../src/engine/recommend'
-import { buildDataset } from '../../scripts/dataset'
+import { realData } from '../realData'
 
 /**
  * The plan builder spreads the load (real data): the share of a degree's planned semesters that
@@ -13,7 +13,7 @@ import { buildDataset } from '../../scripts/dataset'
  */
 export function heavyShare(course: string, p: Partial<Profile> = {}): number {
   const profile: Profile = { results: [], skills: {}, interests: [], goal: 'balanced', ...p }
-  const { dataset: real } = buildDataset('real')
+  const real = realData()
   let terms = 0
   let heavy = 0
   const fixable: string[] = []

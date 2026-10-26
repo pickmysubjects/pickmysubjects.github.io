@@ -4,7 +4,7 @@ import { checkCourse } from '../src/engine/courseRules'
 import type { Plan } from '../src/engine/plan'
 import { planStart, standardTerms } from '../src/engine/plan'
 import { checkTerms, previewAdd } from '../src/engine/planCheck'
-import { buildDataset } from '../scripts/dataset'
+import { realData } from './realData'
 import { dataset, demo, subject } from './helpers'
 
 describe('offeredIn', () => {
@@ -110,7 +110,7 @@ describe('checkCourse (demo course)', () => {
 })
 
 describe('checkCourse (one subject fills one requirement)', () => {
-  const { dataset: real } = buildDataset('real')
+  const real = realData()
   const status = (codes: string[]) => {
     const plan: Plan = {
       course: 'B-SCI',
@@ -166,7 +166,7 @@ describe('checkTerms (non-allowed listed on one side only)', () => {
 })
 
 describe('checkCourse (unknowns near a cap)', () => {
-  const { dataset: real } = buildDataset('real')
+  const real = realData()
   const status = (completed: string[], ruleId: string) =>
     checkCourse({ course: 'B-SCI', courseYear: 2026, major: 'data-science', completed, terms: [] }, real).statuses.find((s) => s.ruleId === ruleId)?.status
 

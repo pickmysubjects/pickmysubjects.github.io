@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { skillsOf } from '../src/engine/skills'
 import { prerequisiteRoute } from '../src/engine/expr'
 import type { Skill, Subject } from '../src/engine/schema'
-import { buildDataset } from '../scripts/dataset'
+import { realData } from './realData'
 import { dataset, subject } from './helpers'
 
 describe('skillsOf', () => {
@@ -33,7 +33,7 @@ describe('skillsOf', () => {
   })
 
   it('agrees with the hand-tagged subjects when it has to guess them blind (real data)', () => {
-    const { dataset: real } = buildDataset('real')
+    const real = realData()
     const tagged = Object.values(real.subjects).filter((s) => s.skills.length)
     for (const skill of ['maths', 'programming', 'statistics', 'writing', 'lab'] as Skill[]) {
       let tp = 0

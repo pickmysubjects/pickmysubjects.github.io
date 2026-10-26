@@ -1,10 +1,10 @@
 import { describe, expect, it } from 'vitest'
+import { realData } from './realData'
 
 describe('rule fixes from the code review', () => {
   it('first-semester rule skips a summer term in front; points never count a subject twice', async () => {
-    const { buildDataset } = await import('../scripts/dataset')
     const { checkCourse } = await import('../src/engine/courseRules')
-    const { dataset: real } = buildDataset('real')
+    const real = realData()
     const plan = (terms: { year: number; period: string; subjects: string[] }[], completed: string[] = []) =>
       ({ course: 'B-SCI', courseYear: 2026, completed, terms }) as never
     const first = checkCourse(plan([{ year: 2026, period: 'summer', subjects: [] }, { year: 2026, period: 'semester-1', subjects: ['SCIE10005'] }]), real)
@@ -14,18 +14,16 @@ describe('rule fixes from the code review', () => {
   })
 
   it('a condition naming a major in the course is not met just by being in the course', async () => {
-    const { buildDataset } = await import('../scripts/dataset')
     const { evaluateField } = await import('../src/engine/expr')
-    const { dataset: real } = buildDataset('real')
+    const real = realData()
     const s = real.subjects.BMEN30008!
     const r = evaluateField(s.prerequisites, { completed: new Set(['BMEN30006']), subjects: real.subjects, admittedCourse: 'B-SCI' })
     expect(r.status).not.toBe('ok')
   })
 
   it('a subject not in our data counts 12.5 towards the total, and only its own level elsewhere', async () => {
-    const { buildDataset } = await import('../scripts/dataset')
     const { checkCourse } = await import('../src/engine/courseRules')
-    const { dataset: real } = buildDataset('real')
+    const real = realData()
     const code = 'ZZZZ20001' // level 2, not in the data
     const r = checkCourse({ course: 'B-SCI', courseYear: 2026, completed: ['MAST10006', code], terms: [] } as never, real)
     expect(r.statuses.find((s) => s.ruleId === 'total')?.detail).toMatch(/^25 /)
@@ -35,9 +33,8 @@ describe('rule fixes from the code review', () => {
   })
 
   it('an unknown subject counts towards a category when its prefix is all that category', async () => {
-    const { buildDataset } = await import('../scripts/dataset')
     const { checkCourse } = await import('../src/engine/courseRules')
-    const { dataset: real } = buildDataset('real')
+    const real = realData()
     const { forCourse } = await import('../src/engine/forCourse')
     const r = checkCourse({ course: 'B-SCI', courseYear: 2026, completed: ['MAST29999'], terms: [] } as never, forCourse(real, 'B-SCI'))
     expect(r.statuses.find((s) => s.ruleId === 'science')?.detail).toMatch(/^12\.5 /)
@@ -86,9 +83,8 @@ describe('majors with entry points (routes)', () => {
 
 describe('rule fixes from the second review', () => {
   it('a year-long level-1 subject started in Semester 1 is not finished before a level-2 subject that Semester 2', async () => {
-    const { buildDataset } = await import('../scripts/dataset')
     const { checkCourse } = await import('../src/engine/courseRules')
-    const { dataset: real } = buildDataset('real')
+    const real = realData()
     const data = { ...real, subjects: { ...real.subjects, MAST10006: { ...real.subjects.MAST10006!, yearLong: true } } }
     const plan = {
       course: 'B-SCI',
@@ -106,9 +102,8 @@ describe('rule fixes from the second review', () => {
   })
 
   it('an unknown subject above level 1 cannot add a level-1 area', async () => {
-    const { buildDataset } = await import('../scripts/dataset')
     const { checkCourse } = await import('../src/engine/courseRules')
-    const { dataset: real } = buildDataset('real')
+    const real = realData()
     const check = (code: string) =>
       checkCourse({ course: 'B-SCI', courseYear: 2026, completed: ['MAST10006', code], terms: [] } as never, real).statuses.find((s) => s.ruleId === 'level1-areas')?.status
     expect(check('ZZZZ20001')).toBe('fail')

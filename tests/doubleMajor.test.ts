@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { buildDataset } from '../scripts/dataset'
+import { realData } from './realData'
 import { courseFileSchema, type Dataset } from '../src/engine/schema'
 import { checkCourse, majorClash, maxMajors, minorClash, planComponentIds } from '../src/engine/courseRules'
 import { generatePlan } from '../src/engine/generate'
@@ -8,7 +8,7 @@ import { decodePlan, encodePlan } from '../src/utils/sharePlan'
 import { setupTitles } from '../src/composables/usePlanCompare'
 import type { Plan } from '../src/engine/plan'
 
-const { dataset: real } = buildDataset('real')
+const real = realData()
 const profile = { results: [], skills: {}, interests: [], goal: 'balanced' as const }
 
 function plan(course: string, major: string, major2?: string, minors: string[] = []) {

@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it } from 'vitest'
-import { buildDataset } from '../scripts/dataset'
+import { realData } from './realData'
 import { periodsFor } from '../src/engine/availability'
 import { factsYear, knownNotRunning, latestDataYear, publishedYear, setToday, shareUpdated, thisYear } from '../src/engine/dataYear'
 import { forCourse } from '../src/engine/forCourse'
@@ -18,7 +18,7 @@ import { subject } from './helpers'
  * The year rollover: the 2027 Handbook comes out in November and is entered subject by subject.
  * The clock is injected (setToday), never the real date.
  */
-const { dataset: data } = buildDataset('real')
+const data = realData()
 const sci = forCourse(data, 'B-SCI').subjects
 const t: Translate = (key: string, params?: Params) => {
   let node: unknown = en

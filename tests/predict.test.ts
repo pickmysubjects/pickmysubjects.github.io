@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { buildDataset } from '../scripts/dataset'
+import { realData } from './realData'
 import { predictMark } from '../src/engine/predict'
 import { referencedSubjects } from '../src/engine/expr'
 import { rng } from './synthetic'
@@ -7,7 +7,7 @@ import { personalise, recommend } from '../src/engine/recommend'
 
 /** Predicting from similar subjects, the "marks only" goal, and past choices (real data). */
 describe('marks and choices', () => {
-  const { dataset: data } = buildDataset('real')
+  const data = realData()
   const marks = new Map([
     ['COMP10001', 88],
     ['COMP10002', 85],
@@ -75,7 +75,7 @@ describe('marks and choices', () => {
 describe('paid work hours', () => {
   it('a busy job makes a term with ordinary class hours count as busy; none leaves it alone', async () => {
     const { termStress } = await import('../src/engine/termStress')
-    const { dataset: data } = buildDataset('real')
+    const data = realData()
     const subjects = ['COMP10001', 'MAST10006', 'MAST10007', 'ECON10004']
     const base = { results: [], skills: {}, interests: [], goal: 'balanced' as const }
     const without = termStress(subjects, data, base).reasons.map((r) => r.key)
@@ -121,7 +121,7 @@ describe('shared grades count once in a suggestion', () => {
 })
 
 describe('marks read less how their subject grades', () => {
-  const { dataset: data } = buildDataset('real')
+  const data = realData()
 
   /** predictMark's likely mark as of a07316c (2026-10-25), before marks were adjusted for grading. */
   function legacyMark(s: import('../src/engine/schema').Subject, marks: Map<string, number>): number | null {

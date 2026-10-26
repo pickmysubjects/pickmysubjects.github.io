@@ -2,10 +2,10 @@ import { describe, expect, it } from 'vitest'
 import { applyQuick, browse, browseAddress, EMPTY_FILTERS, filtersFromQuery, filtersToQuery, findRows, quickChoice, QUICK_CHOICES, rankCourseOf, type BrowseFilters } from '../src/engine/browse'
 import { rankSubjects } from '../src/engine/easeRanking'
 import { recommend } from '../src/engine/recommend'
-import { buildDataset } from '../scripts/dataset'
+import { realData } from './realData'
 
 describe('browse (real data)', () => {
-  const { dataset: data } = buildDataset('real')
+  const data = realData()
   const all = Object.values(data.subjects)
   const run = (f: Partial<BrowseFilters>) => browse(all, { ...EMPTY_FILTERS, ...f }, 'B-SCI', 2026)
 
@@ -103,7 +103,7 @@ describe('browse filters in the address', () => {
 })
 
 describe('quick choices on Find subjects', () => {
-  const { dataset: data } = buildDataset('real')
+  const data = realData()
   const all = Object.values(data.subjects)
   const opts = { course: 'B-SCI', rankCourse: 'B-SCI', year: 2026 }
 
@@ -188,10 +188,9 @@ describe('a subject page’s place on a list is the place on the list it links t
   })
 
   it('a new visitor sees the same list the header counted the place on', async () => {
-    const { buildDataset } = await import('../scripts/dataset')
     const { defaultCourse, forCourse } = await import('../src/engine/forCourse')
     const { listPlace } = await import('../src/engine/easeRanking')
-    const { dataset: real } = buildDataset('real')
+    const real = realData()
     const course = defaultCourse(real)
     const data = forCourse(real, course)
     const subjects = Object.values(data.subjects).sort((a, b) => a.code.localeCompare(b.code))

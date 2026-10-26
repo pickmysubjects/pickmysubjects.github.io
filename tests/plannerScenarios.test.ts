@@ -1,15 +1,15 @@
 import { afterEach, beforeAll, describe, expect, it } from 'vitest'
-import { readFileSync } from 'node:fs'
 import { usePlan } from '../src/composables/usePlan'
 import { useProfile } from '../src/composables/useProfile'
 import { provideDataset } from '../src/composables/useDataset'
 import { books, commencementYear } from '../src/composables/planStore'
 import { setToday } from '../src/engine/dataYear'
-import { checkCourse, checkTerms, generatePlan, hasEnded, passedCodes, upcomingStart, type Dataset, type Period, type Profile } from '../src/engine'
+import { checkCourse, checkTerms, generatePlan, hasEnded, passedCodes, upcomingStart, type Period, type Profile } from '../src/engine'
 import { recordTermChoices } from '../src/utils/pastTerms'
+import { realData } from './realData'
 
 // Scenarios from a planner audit: a student part-way through a degree, planned on from today.
-const data = JSON.parse(readFileSync(new URL('../src/generated/real.json', import.meta.url), 'utf8')) as Dataset
+const data = realData()
 beforeAll(() => provideDataset(data))
 afterEach(() => setToday(undefined))
 

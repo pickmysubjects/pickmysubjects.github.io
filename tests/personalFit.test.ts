@@ -1,12 +1,12 @@
 import { describe, expect, it } from 'vitest'
-import { buildDataset } from '../scripts/dataset'
+import { realData } from './realData'
 import { recommend, type Profile, type RecommendOptions } from '../src/engine/recommend'
 import { cardFit } from '../src/composables/useSubjectFit'
 import { hasFitProfile } from '../src/engine/subjectFit'
 
 // The personal side of suggestions and the fit card: self-rated skills and past marks move a
 // subject the right way, by a sensible amount, and every screen reads the same number.
-const { dataset: real } = buildDataset('real')
+const real = realData()
 const opts: RecommendOptions = { course: 'B-SCI', maxLevel: 2 }
 const blank: Profile = { results: [], skills: {}, interests: [], goal: 'balanced' }
 const CODE = 'COMP20003'

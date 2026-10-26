@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { bandOf, gradeOffsets, MIN_GRADE_SHARES, wamBandMid, wamBandOf } from '../src/engine/grades'
-import { buildDataset } from '../scripts/dataset'
+import { realData } from './realData'
 import { predictMark } from '../src/engine/predict'
 
 describe('shared grade bands', () => {
@@ -46,7 +46,7 @@ describe('shared grade bands', () => {
   })
 
   it('a known offset moves the likely mark', () => {
-    const { dataset: data } = buildDataset('real')
+    const data = realData()
     const marks = new Map([['COMP10001', 75], ['MAST10006', 75], ['BIOL10004', 75]])
     const s = data.subjects.COMP10002!
     const plain = predictMark(s, marks, data)!.mark

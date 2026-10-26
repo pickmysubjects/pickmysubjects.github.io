@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { buildDataset } from '../scripts/dataset'
+import { realData } from './realData'
 import { offeredIn } from '../src/engine/availability'
 import { easeKey, rankSubject } from '../src/engine/easeRanking'
 import { referencedSubjects } from '../src/engine/expr'
@@ -15,7 +15,7 @@ import { rng } from './synthetic'
  * Properties that must hold whatever the data: checked over seeded random cases on the real
  * subjects, so a change that breaks one shows up even where no hand-written case looks.
  */
-const { dataset: data } = buildDataset('real')
+const data = realData()
 const all = Object.values(data.subjects).sort((a, b) => a.code.localeCompare(b.code))
 
 describe('the likely mark', () => {

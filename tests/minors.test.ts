@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { readFileSync } from 'node:fs'
 import { parse } from 'yaml'
-import { buildDataset } from '../scripts/dataset'
+import { realData } from './realData'
 import { componentFileSchema, courseFileSchema, type Dataset } from '../src/engine/schema'
 import { checkCourse } from '../src/engine/courseRules'
 import { generatePlan } from '../src/engine/generate'
@@ -12,7 +12,7 @@ import { setupTitles } from '../src/composables/usePlanCompare'
 import type { Plan } from '../src/engine/plan'
 
 const fixture = componentFileSchema.parse(parse(readFileSync(new URL('./fixtures/philosophy-minor.yaml', import.meta.url), 'utf8')))
-const { dataset: real } = buildDataset('real')
+const real = realData()
 const data: Dataset = { ...real, components: [...real.components, fixture] }
 
 describe('minors in the schema', () => {

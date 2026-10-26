@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { buildDataset } from '../scripts/dataset'
+import { realData } from './realData'
 import { EMPTY_FILTERS, findRows } from '../src/engine/browse'
 import { LIST_TOP, listPlace, rankable, rankSubject, rankSubjects } from '../src/engine/easeRanking'
 import type { Subject } from '../src/engine/schema'
@@ -17,7 +17,7 @@ import { dataset, subject } from './helpers'
  * The subject page's "Is it hard? Is it right for me?" card must say exactly what Find subjects
  * says: the fit of "sort for me" and the place on the easy/hard lists (real data).
  */
-const { dataset: real } = buildDataset('real')
+const real = realData()
 const YEAR = 2026
 
 /** The list pages' order: reviews' tier, then score, then code. */

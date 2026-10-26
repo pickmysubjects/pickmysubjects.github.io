@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { buildDataset } from '../scripts/dataset'
+import { realData } from './realData'
 import { rankable } from '../src/engine/easeRanking'
 import { subjectDifficulty } from '../src/engine/subjectFit'
 import { recommend, studyYear, type Profile } from '../src/engine/recommend'
@@ -114,7 +114,7 @@ describe('graduate (level-9) subjects', () => {
   })
   it('the card notes never say "year 9"', () => {
     for (const m of [en, zhCN, ja]) expect(m.fit.aheadGraduate).not.toMatch(/9 ?年|year 9/)
-    const { dataset: real } = buildDataset('real')
+    const real = realData()
     for (const s of Object.values(real.subjects)) expect(studyYear(s.level)).toBeLessThanOrEqual(3)
   })
 })

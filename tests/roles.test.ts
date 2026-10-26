@@ -1,10 +1,10 @@
 import { describe, expect, it } from 'vitest'
 import { subjectRoles } from '../src/engine/roles'
 import { demo } from './helpers'
-import { buildDataset } from '../scripts/dataset'
+import { realData } from './realData'
 
 describe('subjectRoles (real data)', () => {
-  const { dataset: data } = buildDataset('real')
+  const data = realData()
   const roles = (code: string) => subjectRoles(data, code, 'B-SCI').map((r) => `${r.component}:${r.role}${r.via ? `>${r.via}` : ''}`)
 
   it('marks compulsory subjects of a major', () => {
@@ -36,7 +36,7 @@ describe('a major’s overview is worked out once', () => {
   // planner view spent seconds on it, the page frozen.
   it('returns the same overview again without working it out anew, and the same answer', async () => {
     const { majorOverview, planRoles } = await import('../src/engine/roles')
-    const { dataset: data } = buildDataset('real')
+    const data = realData()
     const first = majorOverview(data, 'computing-and-software-systems', 'B-SCI')
     expect(first?.core).toContain('COMP30023')
     expect(majorOverview(data, 'computing-and-software-systems', 'B-SCI')).toBe(first)

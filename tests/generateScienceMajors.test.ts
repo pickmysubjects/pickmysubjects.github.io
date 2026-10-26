@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { cannotCombine, checkCourse } from '../src/engine/courseRules'
 import { generatePlan } from '../src/engine/generate'
 import { checkTerms } from '../src/engine/planCheck'
-import { buildDataset } from '../scripts/dataset'
+import { realData } from './realData'
 
 // Every Bachelor of Science major (with and without a specialisation) on the real data. Its own
 // file so it runs alongside generate.test.ts instead of after it.
@@ -13,7 +13,7 @@ const DATA_PENDING = new Set([
 
 
 describe('generatePlan (real B-SCI data)', () => {
-  const { dataset: real, errors } = buildDataset('real')
+  const real = realData()
   const majors = real.components.filter(
     (c) => c.course === 'B-SCI' && c.kind === 'major' && c.requirements !== 'unknown' && !DATA_PENDING.has(c.id),
   )
@@ -24,8 +24,6 @@ describe('generatePlan (real B-SCI data)', () => {
       .filter((s) => (s.requiresMajor.length === 0 || s.requiresMajor.includes(m.id)) && !cannotCombine(real, m.id, s.id))
       .map((s) => [m.id, s.id] as const),
   ])
-
-  it('loads cleanly', () => expect(errors).toEqual([]))
 
   it('knows when a major and a specialisation can never be combined', () => {
     // ENGR30004 (Mechatronics) is non-allowed with both COMP20003 and COMP20007.

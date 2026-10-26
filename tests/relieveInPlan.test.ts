@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { buildDataset } from '../scripts/dataset'
+import { realData } from './realData'
 import { planComponentIds } from '../src/engine/courseRules'
 import type { Plan } from '../src/engine/plan'
 import type { Profile } from '../src/engine/recommend'
@@ -10,7 +10,7 @@ import { planRoles } from '../src/engine/roles'
 import { courseStressFactors, planStress, requiredWithPrerequisites, termStress } from '../src/engine/termStress'
 import { termsWithCarried } from '../src/engine/yearLong'
 
-const { dataset: data } = buildDataset('real')
+const data = realData()
 const profile = (skills: Profile['skills']): Profile => ({ results: [], skills, interests: [], goal: 'balanced' })
 
 /** A term's level the way the planner page shows it (usePlanStress). */

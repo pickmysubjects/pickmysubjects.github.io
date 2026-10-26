@@ -4,10 +4,10 @@ import { generatePlan } from '../src/engine/generate'
 import { checkTerms } from '../src/engine/planCheck'
 import type { Profile } from '../src/engine/recommend'
 import type { Period } from '../src/engine/schema'
-import { buildDataset } from '../scripts/dataset'
+import { realData } from './realData'
 
 /** Whole-degree plans for other starts than Semester 1, and required subjects the course closes (real data). */
-const { dataset: data } = buildDataset('real')
+const data = realData()
 const profile: Profile = { results: [], skills: {}, interests: [], goal: 'balanced' }
 const plan = (course: string, major: string | undefined, startPeriod: Period, p = profile) =>
   generatePlan({ data, profile: p, course, courseYear: 2026, major, startYear: 2027, startPeriod })

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { buildDataset } from '../scripts/dataset'
+import { realData } from './realData'
 import { componentFileSchema, type Dataset } from '../src/engine/schema'
 import { checkCourse, heldAsMinor, informalPicks } from '../src/engine/courseRules'
 import { generatePlan } from '../src/engine/generate'
@@ -7,7 +7,7 @@ import { checkTerms } from '../src/engine/planCheck'
 import { setupTitles } from '../src/composables/usePlanCompare'
 import type { Plan } from '../src/engine/plan'
 
-const { dataset: real } = buildDataset('real')
+const real = realData()
 // PLAN30004 isn't curated yet: stand in a copy of a level 3 Design subject with no prerequisites.
 const stub = { ...real.subjects.ABPL30051!, code: 'PLAN30004', title: 'Transport Planning and Urban Mobilities', prerequisites: 'none' as const, corequisites: 'none' as const }
 const data: Dataset = { ...real, subjects: { ...real.subjects, PLAN30004: stub } }
