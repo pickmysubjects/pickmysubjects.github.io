@@ -693,7 +693,8 @@ export function diplomaStream(data: Dataset, diploma: Diploma, id: string | unde
  * Why a plan can't add this diploma, or null: a major the diploma rules out, or a stream that is
  * already the plan's major or minor (the same study twice).
  */
-export function diplomaClash(data: Dataset, diploma: Diploma, plan: PlanComponents & { diplomaStream?: string }): string | null {
+export function diplomaClash(data: Dataset, diploma: Diploma, plan: PlanComponents & { diplomaStream?: string; course?: string }): string | null {
+  if (plan.course && diploma.notInCourses.includes(plan.course)) return `The ${diploma.title} isn't open to ${data.courses.find((c) => c.code === plan.course)?.title ?? plan.course} students.`
   for (const id of [plan.major, plan.major2, plan.specialisation]) {
     if (id && diploma.notWith.includes(id)) return `The ${diploma.title} can't be taken with the ${findComponent(data, id)?.title ?? id} major.`
   }

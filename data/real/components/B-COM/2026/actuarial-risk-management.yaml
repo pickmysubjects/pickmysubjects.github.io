@@ -1,0 +1,14 @@
+id: actuarial-risk-management
+course: B-COM
+year: 2026
+kind: specialisation
+title: Actuarial Risk Management
+points: 50
+requirements:
+  # Level 2 (25 points); may be the same subjects as the major's.
+  - all: [ACTL20001, ACTL20003]
+  # Level 3 core. Designed to go with the Actuarial Studies major (recommended, not required).
+  - all: [ACTL30002, ACTL30004]
+# The level-3 subjects can't also count towards the major's level-3 subjects.
+handbook: https://handbook.unimelb.edu.au/2026/components/b-com-spec-2
+verified_on: 2026-10-26 # structure; source: 2026 Handbook specialisation page

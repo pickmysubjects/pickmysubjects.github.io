@@ -7,7 +7,7 @@
 - handbook_id: b-com-spec-7
   course: B-COM
   title: "Human Resource Management"
-  components: []
+  components: ["human-resource-management"]
   source: https://handbook.unimelb.edu.au/2026/components/b-com-spec-7
   checked: 2026-10-23
   career_text: true
@@ -15,7 +15,7 @@
 - handbook_id: b-com-spec-10
   course: B-COM
   title: "Strategic Marketing"
-  components: []
+  components: ["strategic-marketing"]
   source: https://handbook.unimelb.edu.au/2026/components/b-com-spec-10
   checked: 2026-10-23
   career_text: true
@@ -25,14 +25,14 @@
 - handbook_id: b-com-spec-8
   course: B-COM
   title: "Supply Chain Management"
-  components: []
+  components: ["supply-chain-management"]
   source: https://handbook.unimelb.edu.au/2026/components/b-com-spec-8
   checked: 2026-10-23
   career_text: false
 - handbook_id: b-com-spec-6
   course: B-COM
   title: "Valuation and Modelling"
-  components: []
+  components: ["valuation-and-modelling"]
   source: https://handbook.unimelb.edu.au/2026/components/b-com-spec-6
   checked: 2026-10-23
   career_text: false
@@ -1215,42 +1215,42 @@
 - handbook_id: b-com-spec-2
   course: B-COM
   title: "Actuarial Risk Management"
-  components: []
+  components: ["actuarial-risk-management"]
   source: https://handbook.unimelb.edu.au/2026/components/b-com-spec-2
   checked: 2026-10-23
   career_text: false
 - handbook_id: b-com-spec-5
   course: B-COM
   title: "Computational Finance"
-  components: []
+  components: ["computational-finance"]
   source: https://handbook.unimelb.edu.au/2026/components/b-com-spec-5
   checked: 2026-10-23
   career_text: false
 - handbook_id: b-com-spec-9
   course: B-COM
   title: "Digital Marketing"
-  components: []
+  components: ["digital-marketing"]
   source: https://handbook.unimelb.edu.au/2026/components/b-com-spec-9
   checked: 2026-10-23
   career_text: false
 - handbook_id: b-com-spec-4
   course: B-COM
   title: "Econometrics"
-  components: []
+  components: ["econometrics"]
   source: https://handbook.unimelb.edu.au/2026/components/b-com-spec-4
   checked: 2026-10-23
   career_text: false
 - handbook_id: b-com-spec-3
   course: B-COM
   title: "Economic Policy"
-  components: []
+  components: ["economic-policy"]
   source: https://handbook.unimelb.edu.au/2026/components/b-com-spec-3
   checked: 2026-10-23
   career_text: false
 - handbook_id: b-com-spec-11
   course: B-COM
   title: "Ethics and Sustainability"
-  components: []
+  components: ["ethics-and-sustainability"]
   source: https://handbook.unimelb.edu.au/2026/components/b-com-spec-11
   checked: 2026-10-23
   career_text: false

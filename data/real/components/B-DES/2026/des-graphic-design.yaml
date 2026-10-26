@@ -12,6 +12,7 @@ requirements:
 # Subjects the page says students in this major can't take as breadth.
 non_allowed_breadth:
   areas: [FINA, AHIS]
-  subjects: [ABPL20028, ABPL30067, ABPL30037, ABPL30048, ARCH10003, ARCH20001, ARCH20002, ARCH30001, COMP30019, EDUC20077]
+  # Dropped ABPL20028, ABPL30067, ABPL30037, ABPL30048: not in the 2026 Handbook (checked 2026-10-26).
+  subjects: [ARCH10003, ARCH20001, ARCH20002, ARCH30001, COMP30019, EDUC20077]
 handbook: https://handbook.unimelb.edu.au/2026/courses/b-des/majors-minors-specialisations
 verified_on: 2026-10-19 # structure; source: 2026 Handbook major page

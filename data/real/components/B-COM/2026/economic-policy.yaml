@@ -1,0 +1,14 @@
+id: economic-policy
+course: B-COM
+year: 2026
+kind: specialisation
+title: Economic Policy
+points: 50
+requirements:
+  # Level 2 (25 points); may be the same subjects as the major's.
+  - all: [ECON20001, ECON20002]
+  # Level 3 electives.
+  - choose: { points: 25, from: [ECON30003, ECON30005, ECON30006, ECON30013, ECON30016, ECON30018, ECON30023] }
+# The level-3 subjects can't also count towards the major's level-3 subjects.
+handbook: https://handbook.unimelb.edu.au/2026/components/b-com-spec-3
+verified_on: 2026-10-26 # structure; source: 2026 Handbook specialisation page

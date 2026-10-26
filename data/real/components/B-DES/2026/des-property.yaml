@@ -10,6 +10,7 @@ requirements:
 # Subjects the page says students in this major can't take as breadth.
 non_allowed_breadth:
   areas: [ACCT, ECON, FNCE, MGMT]
-  subjects: [ABPL20036, ABPL20053, ABPL30039, ABPL30040, ABPL30044, ABPL30055, ABPL30046]
+  # Dropped ABPL30040: not in the 2026 Handbook (checked 2026-10-26).
+  subjects: [ABPL20036, ABPL20053, ABPL30039, ABPL30044, ABPL30055, ABPL30046]
 handbook: https://handbook.unimelb.edu.au/2026/courses/b-des/majors-minors-specialisations
 verified_on: 2026-10-19 # structure; source: 2026 Handbook major page

@@ -1,0 +1,14 @@
+id: ethics-and-sustainability
+course: B-COM
+year: 2026
+kind: specialisation
+title: Ethics and Sustainability
+points: 50
+requirements:
+  # Level 2 (25 points); may be the same subjects as the major's.
+  - choose: { points: 25, from: [ECON20002, FNCE20005, MGMT20001] }
+  # Level 3 electives (CMCE30002, ACCT30014 and MKTG30007 are not available in 2026).
+  - choose: { points: 25, from: [ACCT30012, CMCE30002, ECON30011, ECON30031, FNCE30009, FNCE30013, MGMT30008, MKTG30012, ACCT30014, MKTG30007] }
+# The level-3 subjects can't also count towards the major's level-3 subjects.
+handbook: https://handbook.unimelb.edu.au/2026/components/b-com-spec-11
+verified_on: 2026-10-26 # structure; source: 2026 Handbook specialisation page

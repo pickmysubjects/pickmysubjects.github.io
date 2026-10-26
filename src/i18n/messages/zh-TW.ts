@@ -186,6 +186,7 @@ export const zhTW: Messages = {
     dlang: "持學生簽證不能讀",
     dcomp: "要求 WAM 65、已修 50 學分且修過 COMP10001；持學生簽證不能讀",
     dmathsc: "要求 VCE Specialist Maths 30 分或同等；持學生簽證不能讀",
+    dmusic: "依已有成績擇優錄取；持學生簽證不能讀",
   },
   rule: {
     diploma: "{title}：{rule}",

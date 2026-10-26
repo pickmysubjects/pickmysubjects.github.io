@@ -7,8 +7,9 @@ offerings:
     - semester-2
 prerequisites:
   all:
-    - all:
-        - FNCE30001
+    - subject: FNCE30001
+      concurrent: true
+    - any:
         - ECOM20001
         - ECON20003
         - MAST20004
@@ -54,5 +55,5 @@ breadth_for:
   - Bachelor of Science
 handbook: https://handbook.unimelb.edu.au/2026/subjects/fnce30010
 source_year: 2026
-verified_on: 2026-10-14
+verified_on: 2026-10-26
 notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
