@@ -590,6 +590,10 @@ function guideBody(code: LocaleCode, t: Translate, page: GuideCategory | 'overvi
       `<h2 id="fees">${esc(t('guide.feesTitle'))}</h2>`, li(['feesCsp', 'feesHelp', 'feesFull', 'feesCensus']), p('feesSee'),
       ext('https://students.unimelb.edu.au/course-admin/understanding-your-fees', 'feesLink'), ext('https://students.unimelb.edu.au/course-admin/census-dates', 'censusLink'),
     ].join('\n'),
+    'waiver': [
+      `<h2 id="waiver">${esc(t('guide.waiverTitle'))}</h2>`, p('waiverWhat'), `<ol>${['waiverStep1', 'waiverStep2', 'waiverStep3'].map((k) => `<li>${esc(t(`guide.${k}`))}</li>`).join('')}</ol>`, p('waiverTime'), p('waiverNot'), p('quotaText'),
+      ext('https://students.unimelb.edu.au/course-admin/subject-requisite-waivers', 'waiverLink'), ext('https://students.unimelb.edu.au/course-admin/subject-requisite-waivers/faculty-or-school-restrictions-on-requisite-waivers', 'waiverLimitsLink'), ext('https://students.unimelb.edu.au/course-admin/quota-subjects', 'quotaLink'),
+    ].join('\n'),
     'timetable': [
       `<h2 id="timetable">${esc(t('guide.ttTitle'))}</h2>`, `<ol>${['ttStep1', 'ttStep2', 'ttStep3', 'ttStep4'].map((k) => `<li>${esc(t(`guide.${k}`))}</li>`).join('')}</ol>`, li(['ttRegister', 'ttMissed', 'ttTaf']),
       `<h3>${esc(t('guide.clashTitle'))}</h3>`, li(['clashBackToBack', 'clashSwap', 'clashTaf', 'clashAccept']), p('ttOther'),

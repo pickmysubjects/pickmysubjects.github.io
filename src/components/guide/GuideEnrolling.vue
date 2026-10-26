@@ -71,6 +71,23 @@ const { t } = useI18n()
       </ul>
     </GuideItem>
 
+    <GuideItem id="waiver" :title="t('guide.waiverTitle')" :short="t('guide.waiverShort')">
+      <p>{{ t('guide.waiverWhat') }}</p>
+      <ol class="steps">
+        <li>{{ t('guide.waiverStep1') }}</li>
+        <li>{{ t('guide.waiverStep2') }}</li>
+        <li>{{ t('guide.waiverStep3') }}</li>
+      </ol>
+      <p class="note">{{ t('guide.waiverTime') }}</p>
+      <p class="note">{{ t('guide.waiverNot') }}</p>
+      <p class="aside">{{ t('guide.quotaText') }}</p>
+      <ul class="links">
+        <li><a :href="URLS.WAIVER" target="_blank" rel="noopener">{{ t('guide.waiverLink') }}<ExternalLink :size="14" aria-hidden="true" /></a></li>
+        <li><a :href="URLS.WAIVER_LIMITS" target="_blank" rel="noopener">{{ t('guide.waiverLimitsLink') }}<ExternalLink :size="14" aria-hidden="true" /></a></li>
+        <li><a :href="URLS.QUOTA" target="_blank" rel="noopener">{{ t('guide.quotaLink') }}<ExternalLink :size="14" aria-hidden="true" /></a></li>
+      </ul>
+    </GuideItem>
+
     <GuideItem id="timetable" :title="t('guide.ttTitle')" :short="t('guide.ttShort')">
       <ol class="steps">
         <li>{{ t('guide.ttStep1') }}</li>
