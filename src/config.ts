@@ -40,6 +40,12 @@ export type RatingField =
   | 'overall'
   | 'wamBand'
   | 'tags'
+  | 'exam'
+  | 'lectures'
+  | 'attendance'
+  | 'groups'
+  | 'cost'
+  | 'languages'
 
 export const RATINGS_FORM: GoogleFormConfig<RatingField> = {
   formId: '1FAIpQLSfJcmsShsJlO8jOqAun_X4NksYJ2O0D8Vi0AVJJ5dwzoNzcRw',
@@ -67,8 +73,17 @@ export const RATINGS_FORM: GoogleFormConfig<RatingField> = {
     overall: 'entry.868171789',
     // "Tags" (checkboxes, choice values = the ids in src/engine/ratingTags.ts).
     tags: 'entry.1493860873',
+    // TODO: not on the Google Form yet. Add the six questions exactly as in docs/ratings-setup.md
+    // ("Facts the Handbook doesn't give"), then replace each placeholder with its entry.<number>.
+    // Until then the rating form hides that question (hasQuestion needs a real entry id).
+    exam: 'TODO-entry-final-exam',
+    lectures: 'TODO-entry-lectures-recorded',
+    attendance: 'TODO-entry-attendance-checked',
+    groups: 'TODO-entry-group-work',
+    cost: 'TODO-entry-extra-cost',
+    languages: 'TODO-entry-programming-languages',
   },
-  optional: ['examDifficulty', 'usefulness', 'interest', 'teaching', 'overall', 'wamBand', 'tags'],
+  optional: ['examDifficulty', 'usefulness', 'interest', 'teaching', 'overall', 'wamBand', 'tags', 'exam', 'lectures', 'attendance', 'groups', 'cost', 'languages'],
 }
 
 export type FeedbackField = 'topic' | 'rating' | 'subject' | 'message' | 'contact' | 'language'

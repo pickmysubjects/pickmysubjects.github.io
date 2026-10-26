@@ -22,6 +22,12 @@ function row(over: Partial<Record<keyof typeof COLUMNS, string>> = {}): string[]
     overall: '',
     wamBand: '',
     tags: '',
+    exam: '',
+    lectures: '',
+    attendance: '',
+    groups: '',
+    cost: '',
+    languages: '',
   }
   return (Object.keys(COLUMNS) as (keyof typeof COLUMNS)[]).map((k) => over[k] ?? base[k])
 }

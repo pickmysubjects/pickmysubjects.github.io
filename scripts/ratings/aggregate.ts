@@ -7,6 +7,16 @@ import { fitGrades } from '../../src/engine/gradeModel'
 import type { FittedModel } from '../../src/engine/fitted'
 import { SKILLS } from '../../src/engine/schema'
 import { isRatingTag } from '../../src/engine/ratingTags'
+import {
+  FACT_KEYS,
+  FACT_MAJORITY,
+  FACT_QUESTIONS,
+  LANGUAGES,
+  LANGUAGES_TITLE,
+  MIN_FACT_AGREE,
+  NO_LANGUAGE,
+  type StudentFacts,
+} from '../../src/engine/studentFacts'
 
 /** Form question titles, exactly as created in the Google Form (see docs/ratings-setup.md). */
 export const COLUMNS = {
@@ -31,6 +41,14 @@ export const COLUMNS = {
   wamBand: 'WAM range without this subject',
   // Optional checkboxes; the choices are the tag ids in src/engine/ratingTags.ts.
   tags: 'Tags',
+  // Optional facts the Handbook doesn't give (src/engine/studentFacts.ts). A sheet without these
+  // columns yet simply has no facts.
+  exam: FACT_QUESTIONS.exam.title,
+  lectures: FACT_QUESTIONS.lectures.title,
+  attendance: FACT_QUESTIONS.attendance.title,
+  groups: FACT_QUESTIONS.groups.title,
+  cost: FACT_QUESTIONS.cost.title,
+  languages: LANGUAGES_TITLE,
 } as const
 
 /** Questions whose answer makes a row count as a rating. */
@@ -47,6 +65,12 @@ const ANSWER_COLUMNS = [
   COLUMNS.teaching,
   COLUMNS.overall,
   COLUMNS.tags,
+  COLUMNS.exam,
+  COLUMNS.lectures,
+  COLUMNS.attendance,
+  COLUMNS.groups,
+  COLUMNS.cost,
+  COLUMNS.languages,
 ] as const
 
 /** Answers an optional question needs before its average is published. */
@@ -81,6 +105,8 @@ export interface SubjectAggregate {
   overallCount: number
   /** How many reviewers ticked each tag (known tag ids only); left out when nobody ticked one. */
   tags?: Record<string, number>
+  /** What students agree on that the Handbook doesn't say; left out when nothing meets the bar. */
+  facts?: StudentFacts
 }
 
 export interface AggregateResult {
@@ -226,6 +252,7 @@ export function aggregate(rows: Record<string, string>[], now = new Date(), know
       teaching: optional(COLUMNS.teaching),
       overall: optional(COLUMNS.overall),
       overallCount: scores(COLUMNS.overall).length,
+      ...withFacts(list),
       ...(tagCounts.size ? { tags: Object.fromEntries([...tagCounts].sort(([a], [b]) => a.localeCompare(b))) } : {}),
     }
   }
@@ -258,6 +285,42 @@ export function buildRatingFiles(values: string[][], known?: Set<string>, now = 
   const ratingPrior = fitRatingPrior(screenRows(rows, now, known, rated))
   if (ratingPrior !== undefined) model.ratingPrior = ratingPrior
   return { ratings: result.subjects, offsets: grades.offsets, model, accepted: result.accepted, rejected: result.rejected }
+}
+
+/**
+ * Student-reported facts for one subject's screened rows. A single-choice answer is published
+ * when MIN_FACT_AGREE students gave it and it is at least FACT_MAJORITY of the sure answers
+ * ("Not sure" and unknown labels don't count); a language when MIN_FACT_AGREE students ticked it.
+ */
+export function studentFacts(list: Record<string, string>[]): StudentFacts | undefined {
+  const facts: StudentFacts = { n: 0 }
+  for (const key of FACT_KEYS) {
+    const options = FACT_QUESTIONS[key].options as Record<string, string | null>
+    const counts = new Map<string, number>()
+    for (const r of list) {
+      const id = options[r[FACT_QUESTIONS[key].title] ?? '']
+      if (id) counts.set(id, (counts.get(id) ?? 0) + 1)
+    }
+    const total = [...counts.values()].reduce((a, b) => a + b, 0)
+    const [value, count] = [...counts].sort((a, b) => b[1] - a[1])[0] ?? ['', 0]
+    if (count >= MIN_FACT_AGREE && count / total >= FACT_MAJORITY) Object.assign(facts, { [key]: { value, count } })
+  }
+  const langCounts = new Map<string, number>()
+  for (const r of list) {
+    for (const x of new Set((r[LANGUAGES_TITLE] ?? '').split(',').map((y) => y.trim()))) {
+      if ((LANGUAGES as readonly string[]).includes(x)) langCounts.set(x, (langCounts.get(x) ?? 0) + 1)
+    }
+  }
+  const langs = [...langCounts].filter(([, c]) => c >= MIN_FACT_AGREE).sort((a, b) => b[1] - a[1] || LANGUAGES.indexOf(a[0] as never) - LANGUAGES.indexOf(b[0] as never))
+  if (langs.length) facts.languages = Object.fromEntries(langs)
+  // Everyone who answered any of these (a "None" language answer included).
+  facts.n = list.filter((r) => FACT_KEYS.some((k) => (r[FACT_QUESTIONS[k].title] ?? '') !== '') || (r[LANGUAGES_TITLE] ?? '').split(',').some((x) => x.trim() === NO_LANGUAGE || (LANGUAGES as readonly string[]).includes(x.trim()))).length
+  return Object.keys(facts).length > 1 ? facts : undefined
+}
+
+function withFacts(list: Record<string, string>[]): { facts?: StudentFacts } {
+  const facts = studentFacts(list)
+  return facts ? { facts } : {}
 }
 
 function mean(xs: number[]): number {

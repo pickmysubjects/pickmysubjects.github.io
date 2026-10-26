@@ -68,6 +68,7 @@ function standIn(code: string, c: Credit, course: string): Subject {
     replacedBy: [],
     discussions: undefined,
     comments: undefined,
+    studentFacts: undefined,
     gradeOffset: undefined,
     about: undefined,
     titles: undefined,

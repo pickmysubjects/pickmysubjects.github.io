@@ -37,6 +37,7 @@ import { handbookUrl } from '../src/utils/links'
 import type { HomeDemo } from '../src/utils/homeDemo'
 import { describeReq } from '../src/i18n/format'
 import { tipsHtml } from '../src/utils/tipsHtml'
+import { studentFactsHtml } from '../src/utils/studentFactsHtml'
 import { subjectGist } from '../src/i18n/gist'
 import { discussionLabels } from '../src/i18n/discussion'
 import { interpolate, type Params, type Translate } from '../src/i18n/interpolate'
@@ -305,6 +306,9 @@ function subjectPage(code: LocaleCode, s: Subject): Page {
   const [rd, rw, rg] = [sig?.difficulty, sig?.workload, sig?.grading]
   const ratedHere = sig !== undefined && rd !== undefined && rw !== undefined && rg !== undefined
   if (ratedHere) reviews.push(`<p>${esc(t('seo.ratings', { d: rd, w: rw, g: rg, n: sig.reviews }))}</p>`)
+  // What students agree on that the Handbook doesn't say (3+ agreeing), as in the app.
+  const factsRow = studentFactsHtml(t, s.studentFacts)
+  if (factsRow) reviews.push(factsRow)
   for (const d of ds) {
     const l = discussionLabels(t, d)
     reviews.push(`<h3>${esc(l.source)}</h3><ul>${d.points.map((p) => `<li>${esc(pickLocalized(p, code))}</li>`).join('')}</ul><p><a href="${esc(d.url)}" rel="nofollow">${esc(l.read)}</a></p>`)
@@ -313,7 +317,7 @@ function subjectPage(code: LocaleCode, s: Subject): Page {
   // Approved "What I wish I knew" tips, only for subjects with MIN_COMMENTS of them (as in the app).
   const tips = tipsHtml(t, s.comments)
   if (tips) reviews.push(tips)
-  if (!ds.length && !ratedHere && !tips) reviews.push(`<p>${esc(t('seo.noReviews'))}</p>`)
+  if (!ds.length && !ratedHere && !tips && !factsRow) reviews.push(`<p>${esc(t('seo.noReviews'))}</p>`)
   reviews.push(`<p>${esc(t('seo.rateCta'))} <a href="${href(code, `subject/${s.code}`)}#ratings">${esc(t('seo.rateLink', { code: s.code }))}</a></p>`)
   parts.push(reviews.join(''))
   const hbYear = factsYear(s, WANTED, PUBLISHED)

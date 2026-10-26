@@ -5,6 +5,7 @@ import { computed, shallowRef } from 'vue'
 import { RATINGS_FORM } from '@/config'
 import { RATING_TAGS, SKILLS, type Period, type RatingTag, type Skill } from '@/engine'
 import { useI18n } from '@/i18n'
+import { FACT_KEYS, FACT_QUESTIONS, LANGUAGES, NO_LANGUAGE, type FactKey } from '@/engine/studentFacts'
 import { hasQuestion, isFormReady, submitGoogleForm } from '@/utils/googleForm'
 import { useGradeShare } from '@/composables/useGradeShare'
 import { useProfile } from '@/composables/useProfile'
@@ -36,6 +37,36 @@ const skills = shallowRef<Skill[]>([])
 const tags = shallowRef<RatingTag[]>([])
 const hasTags = hasQuestion(RATINGS_FORM, 'tags')
 const recommend = shallowRef('')
+// Facts the Handbook doesn't give (exam format, recordings, …). Each shows only once the Google
+// Form has that question; the value sent is the form's English option label.
+const facts = shallowRef<Partial<Record<FactKey, string>>>({})
+const languages = shallowRef<string[]>([])
+const hasLanguages = hasQuestion(RATINGS_FORM, 'languages')
+const OPTION_TEXT: Record<FactKey, Record<string, string>> = {
+  exam: { open: 'studentFacts.q.examOpen', closed: 'studentFacts.q.examClosed', none: 'studentFacts.q.examNone' },
+  lectures: { yes: 'rating.yes', some: 'studentFacts.q.some', no: 'rating.no' },
+  attendance: { yes: 'rating.yes', no: 'rating.no' },
+  groups: { assigned: 'studentFacts.q.groupsAssigned', choose: 'studentFacts.q.groupsChoose', none: 'studentFacts.q.groupsNone' },
+  cost: { yes: 'rating.yes', no: 'rating.no' },
+}
+const factQuestions = FACT_KEYS.filter((k) => hasQuestion(RATINGS_FORM, k)).map((k) => ({
+  key: k,
+  options: Object.entries(FACT_QUESTIONS[k].options as Record<string, string | null>).map(([label, id]) => ({
+    label,
+    text: id === null ? 'rating.notSure' : (OPTION_TEXT[k][id] as string),
+  })),
+}))
+const languageOptions = [...LANGUAGES, NO_LANGUAGE]
+
+function setFact(k: FactKey, label: string): void {
+  facts.value = { ...facts.value, [k]: facts.value[k] === label ? undefined : label }
+}
+
+function toggleLanguage(x: string): void {
+  // "None" and a language exclude each other.
+  if (languages.value.includes(x)) languages.value = languages.value.filter((y) => y !== x)
+  else languages.value = x === NO_LANGUAGE ? [x] : [...languages.value.filter((y) => y !== NO_LANGUAGE), x]
+}
 const wish = shallowRef('')
 const status = shallowRef<'idle' | 'sending' | 'failed'>('idle')
 // With a grade band, the student's WAM range without this subject goes too (when the form has the
@@ -51,6 +82,8 @@ const complete = computed(
     hours.value !== '' ||
     skills.value.length > 0 ||
     tags.value.length > 0 ||
+    Object.values(facts.value).some(Boolean) ||
+    languages.value.length > 0 ||
     recommend.value !== '' ||
     BANDS.includes(grade.value),
 )
@@ -110,6 +143,12 @@ async function send(): Promise<void> {
       wamBand: wamBand.value ?? '',
       skills: skills.value,
       tags: hasTags ? tags.value : [],
+      exam: facts.value.exam ?? '',
+      lectures: facts.value.lectures ?? '',
+      attendance: facts.value.attendance ?? '',
+      groups: facts.value.groups ?? '',
+      cost: facts.value.cost ?? '',
+      languages: hasLanguages ? languages.value : [],
       recommend: recommend.value,
       wish: wish.value.trim(),
       language: locale.value,
@@ -229,6 +268,34 @@ function value(event: Event): string {
               @click="toggleTag(x)"
             >
               {{ t(`ratingTags.${x}`) }}
+            </button>
+          </fieldset>
+
+          <fieldset v-for="q in factQuestions" :key="q.key" class="chips-field">
+            <legend class="field">{{ t(`studentFacts.q.${q.key}`) }}</legend>
+            <button
+              v-for="o in q.options"
+              :key="o.label"
+              type="button"
+              class="chip"
+              :aria-pressed="facts[q.key] === o.label"
+              @click="setFact(q.key, o.label)"
+            >
+              {{ t(o.text) }}
+            </button>
+          </fieldset>
+
+          <fieldset v-if="hasLanguages" class="chips-field">
+            <legend class="field">{{ t('studentFacts.q.languages') }}</legend>
+            <button
+              v-for="x in languageOptions"
+              :key="x"
+              type="button"
+              class="chip"
+              :aria-pressed="languages.includes(x)"
+              @click="toggleLanguage(x)"
+            >
+              {{ x === NO_LANGUAGE ? t('studentFacts.q.langNone') : x }}
             </button>
           </fieldset>
 
