@@ -1,4 +1,4 @@
-/** Official pages the guide links to (checked 2026-10-09; enrolment, fees, integrity and exams 2026-10-23; advanced standing 2026-10-26). */
+/** Official pages the guide links to (checked 2026-10-09; enrolment, fees, integrity and exams 2026-10-23; advanced standing 2026-10-26; requisite waivers and quota subjects 2026-10-27). */
 export const URLS = {
   STUDENT_SITE: 'https://students.unimelb.edu.au/',
   KEY_DATES: 'https://students.unimelb.edu.au/course-admin/key-dates',
@@ -24,5 +24,8 @@ export const URLS = {
   RESULTS: 'https://students.unimelb.edu.au/course-admin/results',
   REENROL: 'https://students.unimelb.edu.au/course-admin/re-enrol-in-your-course',
   ADVANCED_STANDING: 'https://study.unimelb.edu.au/how-to-apply/advanced-standing',
+  WAIVER: 'https://students.unimelb.edu.au/course-admin/subject-requisite-waivers',
+  WAIVER_LIMITS: 'https://students.unimelb.edu.au/course-admin/subject-requisite-waivers/faculty-or-school-restrictions-on-requisite-waivers',
+  QUOTA: 'https://students.unimelb.edu.au/course-admin/quota-subjects',
   EMPLOYABILITY: 'https://students.unimelb.edu.au/careers/employability-week',
 } as const

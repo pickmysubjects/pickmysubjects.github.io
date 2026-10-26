@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, shallowRef } from 'vue'
 import { BookOpen, CalendarRange, ChartNoAxesColumn, Check, Link2, MapPin, Plus, Share2, Star } from 'lucide-vue-next'
-import { isFail, knownNotRunning, listPlace, periodsFor, thisYear, RANK_SLUGS, termKey, type Period, type Subject } from '@/engine'
+import { isFail, isQuotaSubject, knownNotRunning, listPlace, periodsFor, thisYear, RANK_SLUGS, termKey, type Period, type Subject } from '@/engine'
 import { link } from '@/composables/useView'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
@@ -14,6 +14,7 @@ import { subjectGist } from '@/i18n/gist'
 import { defaultTerm, termsBetween } from '@/utils/pastTerms'
 import { useDataYear } from '@/composables/useDataYear'
 import FactsYearNote from './FactsYearNote.vue'
+import InfoTip from '@/components/InfoTip.vue'
 import ShortlistToggle from '@/components/shortlist/ShortlistToggle.vue'
 
 /**
@@ -52,6 +53,7 @@ const onList = computed(() => {
   return place && { ...place, href: link(`subjects/${RANK_SLUGS[place.direction]}/`) + `?course=${encodeURIComponent(listCourse.value)}` }
 })
 // What students ask first, in their words: exam share, class hours, group work.
+const quota = computed(() => isQuotaSubject(props.subject))
 const gist = computed(() => subjectGist(t.value, props.subject))
 
 const taken = computed(() => profile.value.results.some((r) => r.code === code.value))
@@ -125,6 +127,7 @@ async function share(): Promise<void> {
       <li class="chip" :class="{ 'chip-bad': gone }"><CalendarRange :size="14" aria-hidden="true" />{{ runs }}</li>
       <li v-if="subject.campus" class="chip"><MapPin :size="14" aria-hidden="true" />{{ subject.campus }}</li>
       <li v-for="g in gist" :key="g" class="chip">{{ g }}</li>
+      <li v-if="quota" class="chip chip-tip">{{ t('subject.quota') }}<InfoTip :text="t('subject.quotaTip')" /></li>
     </ul>
     <FactsYearNote v-if="factsFrom.older && !gone" :year="factsFrom.year" />
     <p v-if="gone && subject.replacedBy.length" class="instead">
@@ -173,6 +176,23 @@ async function share(): Promise<void> {
 </template>
 
 <style scoped>
+/* A chip with an ⓘ: the opened text goes on its own full-width line under the label. */
+.chip-tip {
+  flex-wrap: wrap;
+}
+
+.chip-tip:has([aria-expanded='true']) {
+  border-radius: var(--radius-sm);
+}
+
+.chip-tip :deep(.infotip) {
+  display: contents;
+}
+
+.chip-tip :deep(.infotip-panel) {
+  flex-basis: 100%;
+}
+
 .head {
   display: grid;
   gap: var(--space-2);

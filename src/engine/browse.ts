@@ -15,6 +15,10 @@ export interface BrowseFilters {
   noPrereq: boolean
   noExam: boolean
   noGroup: boolean
+  /** Leave out subjects whose final exam is a hurdle (must be passed on its own). */
+  noHurdle: boolean
+  /** Only subjects whose recorded assessment has no test during semester. */
+  noTest: boolean
   sort: BrowseSort
   /** Only the easy (or hard) list, in its order; null for no list. */
   rank: RankDirection | null
@@ -37,6 +41,8 @@ export const EMPTY_FILTERS: BrowseFilters = {
   noPrereq: false,
   noExam: false,
   noGroup: false,
+  noHurdle: false,
+  noTest: false,
   sort: 'code',
   rank: null,
   mine: false,
@@ -57,6 +63,20 @@ export type PresetName = keyof typeof PRESETS
 /** Each quick pick's own address (/subjects/no-exam/), a page search engines can show on its own. */
 export const PRESET_SLUGS: Record<PresetName, string> = { firstSemester: 'first-semester', breadth: 'breadth', noExam: 'no-exam', summerWinter: 'summer-winter' }
 
+/**
+ * Lists cut from the easy list that students search for by name, each with its own address:
+ * the easy list with the filters below (breadth for the student's degree, B-SCI on static pages).
+ */
+export const EASY_CUTS = {
+  level3Breadth: { slug: 'easy-level-3-breadth', filters: { rank: 'easy', level: 3, category: 'breadth' } },
+} as const satisfies Record<string, { slug: string; filters: Partial<BrowseFilters> }>
+
+export type EasyCut = keyof typeof EASY_CUTS
+
+export function easyCutFromSlug(slug: string): EasyCut | undefined {
+  return (Object.keys(EASY_CUTS) as EasyCut[]).find((c) => EASY_CUTS[c].slug === slug)
+}
+
 export function presetFromSlug(slug: string): PresetName | undefined {
   return (Object.keys(PRESET_SLUGS) as PresetName[]).find((p) => PRESET_SLUGS[p] === slug)
 }
@@ -70,6 +90,10 @@ export interface BrowseRow {
   group: number | null
   hours: number | null
   rating: number | null
+  /** Whether a final exam is a hurdle; null when the assessment isn't recorded. */
+  examHurdle: boolean | null
+  /** Share of tests during semester; null when the assessment isn't recorded. */
+  test: number | null
 }
 
 function share(subject: Subject, pick: (t: NonNullable<Subject['assessment']>[number]) => boolean): number | null {
@@ -95,6 +119,8 @@ function browseRow(subject: Subject, year: number): BrowseRow {
     group: share(subject, (t) => t.group === true),
     hours: subject.weeklyContactHours ?? null,
     rating: overall(subject),
+    test: share(subject, (t) => t.kind === 'test'),
+    examHurdle: subject.assessment ? subject.assessment.some((t) => t.kind === 'exam' && t.hurdle === true) : null,
   }
 }
 
@@ -137,6 +163,8 @@ export function browse(subjects: Subject[], f: BrowseFilters, course: string, ye
     .filter((r) => !f.offTerm || r.periods.includes('summer') || r.periods.includes('winter'))
     .filter((r) => !f.noExam || r.exam === 0)
     .filter((r) => !f.noGroup || r.group === 0)
+    .filter((r) => !f.noHurdle || r.examHurdle === false)
+    .filter((r) => !f.noTest || r.test === 0)
   const sorts: Record<BrowseSort, (a: BrowseRow, b: BrowseRow) => number> = {
     code: (a, b) => a.subject.code.localeCompare(b.subject.code),
     easy: easiest(),
@@ -157,6 +185,8 @@ export function filtersToQuery(f: BrowseFilters): string {
   if (f.noPrereq) q.set('noprereq', '1')
   if (f.noExam) q.set('noexam', '1')
   if (f.noGroup) q.set('nogroup', '1')
+  if (f.noHurdle) q.set('nohurdle', '1')
+  if (f.noTest) q.set('notest', '1')
   if (f.sort !== 'code') q.set('sort', f.sort)
   if (f.rank) q.set('list', f.rank)
   if (f.mine) q.set('mine', '1')
@@ -169,7 +199,7 @@ const PERIOD_SET = new Set<string>(['summer', 'semester-1', 'winter', 'semester-
 const SORT_SET = new Set<string>(['code', 'easy', 'exam', 'hours', 'rating'])
 
 /** The query keys that set filters; anything else (fbclid, utm_source from a shared link) is ignored. */
-const FILTER_KEYS = new Set(['q', 'type', 'level', 'when', 'noprereq', 'noexam', 'nogroup', 'sort', 'preset', 'list', 'mine', 'breadth', 'offterm'])
+const FILTER_KEYS = new Set(['q', 'type', 'level', 'when', 'noprereq', 'noexam', 'nogroup', 'nohurdle', 'notest', 'sort', 'preset', 'list', 'mine', 'breadth', 'offterm'])
 
 /**
  * `slug` is the quick pick in the path (/subjects/no-exam/, /subjects/easy/); filters in the query
@@ -179,7 +209,8 @@ const FILTER_KEYS = new Set(['q', 'type', 'level', 'when', 'noprereq', 'noexam',
 export function filtersFromQuery(q: URLSearchParams, slug = ''): BrowseFilters {
   const setsFilters = [...q.keys()].some((k) => FILTER_KEYS.has(k))
   const preset = q.get('preset') ?? (setsFilters ? undefined : presetFromSlug(slug))
-  const base = { ...EMPTY_FILTERS, ...(preset && preset in PRESETS ? PRESETS[preset as PresetName] : {}) }
+  const cut = setsFilters ? undefined : easyCutFromSlug(slug)
+  const base: BrowseFilters = { ...EMPTY_FILTERS, ...(preset && preset in PRESETS ? PRESETS[preset as PresetName] : {}), ...(cut ? EASY_CUTS[cut].filters : {}) }
   const level = Number(q.get('level'))
   const when = q.get('when') ?? ''
   const sort = q.get('sort') ?? ''
@@ -191,8 +222,10 @@ export function filtersFromQuery(q: URLSearchParams, slug = ''): BrowseFilters {
     noPrereq: q.get('noprereq') === '1' || base.noPrereq,
     noExam: q.get('noexam') === '1' || base.noExam,
     noGroup: q.get('nogroup') === '1' || base.noGroup,
+    noHurdle: q.get('nohurdle') === '1',
+    noTest: q.get('notest') === '1',
     sort: SORT_SET.has(sort) ? (sort as BrowseSort) : base.sort,
-    rank: rankFromSlug(q.get('list') ?? '') ?? rankFromSlug(slug) ?? null,
+    rank: rankFromSlug(q.get('list') ?? '') ?? rankFromSlug(slug) ?? base.rank,
     mine: q.get('mine') === '1',
     offTerm: q.get('offterm') === '1' || base.offTerm,
     ...(COURSE_CODE.test(q.get('course') ?? '') ? { listCourse: q.get('course')! } : {}),
@@ -246,6 +279,11 @@ export function browseAddress(f: BrowseFilters): string {
     // A list opened for a degree keeps it in its address, so it stays that degree's list.
     const course = listCourse && f.rank ? `?course=${encodeURIComponent(listCourse)}` : ''
     return `subjects/${choice === 'easy' || choice === 'hard' ? RANK_SLUGS[choice] : PRESET_SLUGS[choice]}/${course}`
+  }
+  for (const cut of Object.values(EASY_CUTS)) {
+    if (filtersToQuery(rest) === filtersToQuery({ ...EMPTY_FILTERS, ...cut.filters })) {
+      return `subjects/${cut.slug}/${listCourse ? `?course=${encodeURIComponent(listCourse)}` : ''}`
+    }
   }
   const all = filtersToQuery(f)
   return `subjects/${all ? `?${all}` : ''}`

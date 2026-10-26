@@ -23,6 +23,7 @@ const examHurdle = computed(() => info.value?.examHurdle ?? false)
 const otherHurdle = computed(() => info.value?.otherHurdle ?? false)
 // Exam share, class hours and group work are in the summary under the title; here only the
 // warnings it doesn't carry.
+// Tests the Handbook lists besides the final exam, all held during the semester.
 const hasFacts = computed(() => examHurdle.value || otherHurdle.value || !!props.subject.minAttendance)
 // The Handbook lists summer/winter versions separately; we keep the semester one.
 // Only worth saying when it runs both in a semester and outside one; a summer-only subject's

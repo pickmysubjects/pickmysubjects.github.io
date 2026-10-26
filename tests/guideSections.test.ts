@@ -21,6 +21,10 @@ describe('guide sections', () => {
     expect(topicPath('fail')).toBe('guide/semester/#fail')
     expect(topicPath('nope')).toBe('guide/')
   })
+  it('puts the requisite waiver topic in Enrolling, in every language', () => {
+    expect(categoryOfTopic('waiver')).toBe('enrolling')
+    for (const m of [en, zhCN, zhTW, ja, ko, vi, id, ms, hi]) for (const k of ['waiverTitle', 'waiverWhat', 'waiverStep2', 'quotaText'] as const) expect(m.guide[k]).toBeTruthy()
+  })
   it('reads the page from the address', () => {
     expect(guidePageOf('')).toEqual({ kind: 'overview' })
     expect(guidePageOf('enrolling')).toEqual({ kind: 'category', category: 'enrolling' })
