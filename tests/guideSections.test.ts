@@ -62,3 +62,19 @@ describe('guide service lists (systems, life, uni careers)', () => {
     expect(JSON.stringify(get(zhTW, 'guide.svc'))).not.toMatch(/[们说学门这]/)
   })
 })
+
+describe('guide: late enrolment, cross-institutional, exchange, online limit', () => {
+  const MESSAGES = { en, 'zh-CN': zhCN, 'zh-TW': zhTW, ja, ko, vi, id, ms, hi }
+  it('puts each topic on its page', () => {
+    for (const t of ['late-enrol', 'cross-institutional', 'exchange']) expect(categoryOfTopic(t)).toBe('enrolling')
+    expect(categoryOfTopic('online')).toBe('international')
+  })
+  it('has every line in all nine languages', () => {
+    for (const [loc, m] of Object.entries(MESSAGES)) {
+      for (const k of ['lateEnrol', 'cross', 'exchange', 'online']) {
+        for (const part of ['Title', 'Short', 'Line', 'More', 'Link']) expect((m.guide as Record<string, unknown>)[`${k}${part}`], `${loc} ${k}${part}`).toBeTruthy()
+      }
+    }
+    expect(zhTW.guide.onlineShort).not.toBe(zhCN.guide.onlineShort)
+  })
+})

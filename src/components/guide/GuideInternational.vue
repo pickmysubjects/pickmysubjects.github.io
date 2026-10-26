@@ -3,6 +3,7 @@ import { computed } from 'vue'
 import { ExternalLink } from 'lucide-vue-next'
 import { useI18n } from '@/i18n'
 import GuideItem from './GuideItem.vue'
+import InfoTip from '@/components/InfoTip.vue'
 import { URLS } from '@/utils/guideLinks'
 
 // The "international" category of the basics guide (see utils/guideSections).
@@ -39,6 +40,12 @@ const ABROAD = computed(() => [...ABROAD_ALL].sort((a, b) => Number(b.home === l
       <p class="note">{{ t('guide.rslStay') }}</p>
       <p>
         <a class="ext" :href="URLS.RSL" target="_blank" rel="noopener">{{ t('guide.officialPage') }}: {{ t('guide.rslLink') }}<ExternalLink :size="14" aria-hidden="true" /></a>
+      </p>
+    </GuideItem>
+
+    <GuideItem id="online" :title="t('guide.onlineTitle')" :short="t('guide.onlineShort')">
+      <p class="note">
+        {{ t('guide.onlineLine') }}<InfoTip>{{ t('guide.onlineMore') }} <a :href="URLS.ONLINE_LIMIT" target="_blank" rel="noopener">{{ t('guide.onlineLink') }}<ExternalLink :size="13" aria-hidden="true" /></a></InfoTip>
       </p>
     </GuideItem>
 

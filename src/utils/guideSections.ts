@@ -14,10 +14,10 @@ export type GuideExtraPage = keyof typeof GUIDE_EXTRA_PAGES
 export const GUIDE_TOPICS: Record<GuideCategory, readonly string[]> = {
   basics: ['first', 'points', 'majors', 'caps', 'rules', 'grades', 'wam'],
   systems: ['systems', 'it-help'],
-  enrolling: ['enrol', 'load', 'check', 'timetable', 'fees'],
+  enrolling: ['enrol', 'load', 'check', 'timetable', 'late-enrol', 'cross-institutional', 'exchange', 'fees'],
   semester: ['special-consideration', 'hurdles', 'late', 'integrity', 'exams', 'drop', 'fail'],
   life: ['wellbeing', 'safety', 'community', 'advocacy'],
-  international: ['rsl', 'abroad'],
+  international: ['rsl', 'online', 'abroad'],
   help: ['dates', 'study-help', 'careers', 'uni-careers', 'accreditation', 'rankings'],
 }
 
