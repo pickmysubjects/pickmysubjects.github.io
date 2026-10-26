@@ -7,7 +7,8 @@ import { GUIDE_CATEGORIES, type GuideCategory } from '@/utils/guideSections'
 /** The guide's sections as a slim switch, the same look as the steps under "Me". */
 const props = defineProps<{ current: GuideCategory | 'overview' }>()
 const { t } = useI18n()
-// On a phone the bar scrolls sideways: keep the current section in view.
+// On a wide screen that's still narrow for every section the bar scrolls sideways:
+// keep the current section in view. (Phones wrap instead; see the style.)
 const nav = useTemplateRef<HTMLElement>('nav')
 async function reveal(): Promise<void> {
   await nextTick()
@@ -73,9 +74,18 @@ watch(() => props.current, reveal)
   box-shadow: var(--glass-shadow);
 }
 
-@media (max-width: 420px) {
+/* On a phone the sections wrap onto a second row rather than scrolling sideways:
+   a bar cut off at the edge looked broken and hid the last sections. */
+@media (max-width: 640px) {
+  .steps {
+    flex-wrap: wrap;
+    width: 100%;
+    overflow-x: visible;
+  }
+
   .step {
-    padding: 6px 10px;
+    min-height: 34px;
+    padding: 5px 10px;
   }
 }
 </style>
