@@ -439,6 +439,7 @@ export const vi: Messages = {
     creditAdd: "Thêm tín chỉ được công nhận",
     creditShort: "Có tín chỉ chuyển từ TAFE hay trường khác?",
     creditHint: "Tín chỉ công nhận (advanced standing / credit) là phần trường cộng cho bạn vì đã học ở nơi khác, như TAFE, đại học khác hoặc Trinity College Foundation. Điền theo quyết định công nhận của bạn. Chỉ có tín chỉ (unspecified / general credit): số tín chỉ ở một bậc, không gắn với môn nào. Môn cụ thể (specified credit): một môn của UniMelb bạn được miễn. Tín chỉ công nhận được tính vào tổng tín chỉ và yêu cầu khóa học, nhưng không tính vào WAM.",
+    creditLink: "Trang công nhận tín chỉ của trường",
     creditPointsOnly: "Chỉ tín chỉ",
     creditNamed: "Môn cụ thể",
     creditPoints: "Tín chỉ",

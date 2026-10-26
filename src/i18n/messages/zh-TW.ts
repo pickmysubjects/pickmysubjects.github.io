@@ -439,6 +439,7 @@ export const zhTW: Messages = {
     creditAdd: "新增學分抵免",
     creditShort: "有 TAFE 或其他學校抵免的學分？",
     creditHint: "學分抵免（advanced standing / credit）是學校依你在別處的學習給的學分，例如 TAFE、其他大學或 Trinity College Foundation。照著你的抵免結果填。只有學分（unspecified / general credit）：某個年級的學分，不對應特定課程。指定課程（specified credit）：免修一門墨大的課。抵免的學分算進總學分和課程規定，但不算 WAM。",
+    creditLink: "學校的學分抵免說明",
     creditPointsOnly: "只有學分",
     creditNamed: "指定課程",
     creditPoints: "學分",

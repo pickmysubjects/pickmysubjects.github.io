@@ -442,6 +442,7 @@ export const en = {
     creditAdd: "Add credit",
     creditShort: "Credit from TAFE or another uni?",
     creditHint: "Credit (advanced standing) is what the University grants for study elsewhere, like TAFE, another uni or Trinity College Foundation. Copy it from your credit decision. Points only (unspecified or general credit): points at a level, no subject named. A named subject (specified credit): a UniMelb subject you no longer take. Credit counts towards your points and course rules, never your WAM.",
+    creditLink: "How advanced standing works",
     creditPointsOnly: "Points only",
     creditNamed: "A named subject",
     creditPoints: "Points",

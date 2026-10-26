@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { realData } from './realData'
 import { predictMark } from '../src/engine/predict'
 import { referencedSubjects } from '../src/engine/expr'
+import { MARKING_SKILLS, skillsOf } from '../src/engine/skills'
 import { rng } from './synthetic'
 import { personalise, recommend } from '../src/engine/recommend'
 
@@ -136,7 +137,15 @@ describe('marks read less how their subject grades', () => {
     return Math.max(0, Math.min(100, (own * w + wam * 2) / (w + 2) + (s.gradeOffset?.offset ?? 0)))
   }
 
-  it('with no shared grades, gives exactly the mark it gave before', () => {
+  /** Marked subjects outside the target's prerequisites and area that share a skill with it: the only new evidence since. */
+  const content = (s: import('../src/engine/schema').Subject) => skillsOf(s, data).filter((k) => !MARKING_SKILLS.includes(k))
+  const skillOnly = (s: import('../src/engine/schema').Subject, c: string) => {
+    const other = data.subjects[c]
+    if (!other || c === s.code || other.area === s.area || referencedSubjects(s.prerequisites).includes(c)) return false
+    return content(other).some((k) => content(s).includes(k))
+  }
+
+  it('with no shared grades and no same-skill marks from other areas, gives exactly the mark it gave before', () => {
     const rand = rng(7)
     const codes = Object.keys(data.subjects).sort()
     const pick = () => codes[Math.floor(rand() * codes.length)]!
@@ -145,12 +154,35 @@ describe('marks read less how their subject grades', () => {
       // A target with prerequisites half the time, so related marks come into it.
       const target = data.subjects[pick()]!
       const done = [...referencedSubjects(target.prerequisites).slice(0, 2), ...Array.from({ length: 1 + Math.floor(rand() * 12) }, pick)]
-      const marks = new Map(done.map((c) => [c, 40 + Math.round(rand() * 60)]))
+      const marks = new Map(done.map((c) => [c, 40 + Math.round(rand() * 60)] as [string, number]).filter(([c]) => !skillOnly(target, c)))
       const now = predictMark(target, marks, data)
       expect(now?.mark ?? null).toBe(legacyMark(target, marks))
       if (now) checked++
     }
     expect(checked).toBeGreaterThan(300)
+  })
+
+  it('on whole records: every subject with no same-skill mark from another area keeps its mark exactly; no marks, still nothing', () => {
+    const records = [
+      { MAST10006: 90, MAST10007: 88, ENGL10001: 55 },
+      { MAST10006: 52, MAST10007: 55, ENGL10001: 88 },
+      { COMP10001: 84, COMP10002: 78, MAST10006: 66, MAST10007: 71, PHYC10003: 62 },
+      { BIOL10008: 81, BIOL10001: 77, CHEM10003: 68, CHEM10004: 72, PSYC10003: 85, SCIE10005: 79 },
+      { ECON10004: 74, ECON10005: 70, ACCT10001: 63, MGMT10002: 80, FNCE10002: 58 },
+    ]
+    const all = Object.values(data.subjects).sort((a, b) => a.code.localeCompare(b.code))
+    for (const rec of records) {
+      const marks = new Map(Object.entries(rec).filter(([c]) => data.subjects[c]))
+      expect(marks.size, JSON.stringify(rec)).toBe(Object.keys(rec).length)
+      let same = 0
+      for (const s of all) {
+        if (s.gradeOffset || [...marks.keys()].some((c) => skillOnly(s, c))) continue
+        expect(predictMark(s, marks, data)?.mark ?? null, s.code).toBe(legacyMark(s, marks))
+        same++
+      }
+      expect(same).toBeGreaterThan(100)
+    }
+    for (const s of all.slice(0, 50)) expect(predictMark(s, new Map(), data)).toBeNull()
   })
 
   it('a prerequisite that grades generously no longer lifts the prediction by its generosity', async () => {

@@ -133,6 +133,64 @@ describe('likely marks on synthetic students', () => {
   })
 })
 
+describe('likely marks when students lean by skill', () => {
+  /**
+   * Students whose level differs by skill (or by area, or neither), every subject tagged with
+   * its skills. "Before" is the same prediction with the tags left off, which is exactly how it
+   * worked before skill-matched marks counted: it uses prerequisites and the area only.
+   */
+  const cache = new Map<string, { wam: number; before: number; after: number; coverage: number }>()
+  function run(skillSd: number, areaSd: number) {
+    const key = `${skillSd}/${areaSd}`
+    if (!cache.has(key)) cache.set(key, measure(skillSd, areaSd))
+    return cache.get(key)!
+  }
+  function measure(skillSd: number, areaSd: number) {
+    const err = { wam: [] as number[], before: [] as number[], after: [] as number[] }
+    const inside: number[] = []
+    for (const seed of [41, 42]) {
+      const world = makeWorld({ seed, deltaSd: 3, students: 1000, noise: 8, skillSd, areaSd })
+      const codes = [...world.delta.keys()]
+      const build = (tags: boolean) => dataset(codes.map((code) => subject({ code, area: world.area.get(code), prerequisites: 'none', skills: tags ? world.skills.get(code) : [] })))
+      const before = build(false)
+      const after = build(true)
+      for (const st of world.students) {
+        const all = [...st.marks]
+        // Each of the last four held out in turn, predicted from the rest.
+        for (let h = all.length - 4; h < all.length; h++) {
+          const [code, actual] = all[h]!
+          const marks = new Map(all.filter((_, i) => i !== h))
+          const b = predictMark(before.subjects[code]!, marks, before)!
+          const a = predictMark(after.subjects[code]!, marks, after)!
+          err.wam.push(Math.abs([...marks.values()].reduce((x, y) => x + y, 0) / marks.size - actual))
+          err.before.push(Math.abs(b.mark - actual))
+          err.after.push(Math.abs(a.mark - actual))
+          inside.push(actual >= a.low && actual <= a.high ? 1 : 0)
+        }
+      }
+    }
+    const mean = (xs: number[]) => xs.reduce((a, b) => a + b, 0) / xs.length
+    return { wam: mean(err.wam), before: mean(err.before), after: mean(err.after), coverage: mean(inside) }
+  }
+
+  it('when students do lean by skill, same-skill marks from other areas make it more accurate', () => {
+    const r = run(4, 0)
+    expect(r.after).toBeLessThan(r.before - 0.05)
+    expect(r.after).toBeLessThan(r.wam)
+  })
+
+  it('when they don’t, it costs nothing beyond noise: no lean at all, or a lean by area only', () => {
+    for (const [skillSd, areaSd] of [[0, 0], [0, 4]] as const) {
+      const r = run(skillSd, areaSd)
+      expect(r.after, `area lean ${areaSd}`).toBeLessThan(r.before + 0.04)
+    }
+  })
+
+  it(`the range still holds the mark about ${RANGE_SHARE * 100}% of the time`, () => {
+    for (const [skillSd, areaSd] of [[4, 0], [4, 4], [0, 4]] as const) expect(Math.abs(run(skillSd, areaSd).coverage - RANGE_SHARE)).toBeLessThan(0.07)
+  })
+})
+
 describe('fitting the model from the data (weekly job)', () => {
   it('below 200 bands nothing is fitted: the defaults, and exactly the plain offsets', () => {
     const world = makeWorld({ seed: 3, students: 60, noise: 8 })

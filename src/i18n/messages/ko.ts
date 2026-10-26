@@ -439,6 +439,7 @@ export const ko: Messages = {
     creditAdd: "학점 인정 추가",
     creditShort: "TAFE나 다른 대학에서 인정받은 학점이 있나요?",
     creditHint: "학점 인정(advanced standing / credit)은 TAFE, 다른 대학, Trinity College Foundation 등에서 공부한 것에 대해 대학이 인정해 주는 학점이에요. 인정 결과에 적힌 대로 넣으세요. 학점만(unspecified / general credit): 특정 과목 없이 레벨별 학점. 특정 과목(specified credit): 면제받은 멜버른대 과목. 인정 학점은 총 학점과 코스 요건에 들어가지만 WAM에는 들어가지 않아요.",
+    creditLink: "학교의 학점 인정 안내",
     creditPointsOnly: "학점만",
     creditNamed: "특정 과목",
     creditPoints: "학점",

@@ -439,6 +439,7 @@ export const hi: Messages = {
     creditAdd: "क्रेडिट जोड़ें",
     creditShort: "TAFE या दूसरी यूनिवर्सिटी से क्रेडिट मिला है?",
     creditHint: "क्रेडिट (advanced standing) वह है जो यूनिवर्सिटी कहीं और की पढ़ाई के लिए देती है, जैसे TAFE, दूसरी यूनिवर्सिटी या Trinity College Foundation। अपने क्रेडिट फ़ैसले से वैसा ही भरें। सिर्फ़ पॉइंट (unspecified / general credit): किसी लेवल पर पॉइंट, कोई सब्जेक्ट तय नहीं। तय सब्जेक्ट (specified credit): UniMelb का कोई सब्जेक्ट जो अब आपको नहीं लेना। क्रेडिट आपके पॉइंट और कोर्स नियमों में गिना जाता है, WAM में कभी नहीं।",
+    creditLink: "Advanced standing कैसे काम करता है",
     creditPointsOnly: "सिर्फ़ पॉइंट",
     creditNamed: "तय सब्जेक्ट",
     creditPoints: "पॉइंट",

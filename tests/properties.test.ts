@@ -9,6 +9,7 @@ import { predictMark } from '../src/engine/predict'
 import type { Profile } from '../src/engine/recommend'
 import { balanceTerms, termScores } from '../src/engine/relieve'
 import type { Subject } from '../src/engine/schema'
+import { MARKING_SKILLS, skillsOf } from '../src/engine/skills'
 import { rng } from './synthetic'
 
 /**
@@ -31,6 +32,27 @@ describe('the likely mark', () => {
       marks.set(pre, marks.get(pre)! + 1 + Math.round(rand() * 9))
       expect(predictMark(s, marks, data)!.mark, `${s.code} after ${pre}`).toBeGreaterThanOrEqual(before)
     }
+  })
+
+  it('a higher mark in a subject from another area that uses the same skills never lowers it', () => {
+    const rand = rng(33)
+    const content = (s: Subject) => skillsOf(s, data).filter((k) => !MARKING_SKILLS.includes(k))
+    let checked = 0
+    for (let i = 0; i < 300; i++) {
+      const s = all[Math.floor(rand() * all.length)]!
+      const skills = content(s)
+      const peers = all.filter((x) => x.area !== s.area && content(x).some((k) => skills.includes(k)))
+      if (!peers.length) continue
+      const peer = peers[Math.floor(rand() * peers.length)]!.code
+      const others = Array.from({ length: Math.floor(rand() * 8) }, () => all[Math.floor(rand() * all.length)]!.code)
+      const marks = new Map([...others.map((c) => [c, 40 + Math.round(rand() * 60)] as [string, number]), [peer, 40 + Math.round(rand() * 50)]])
+      const before = predictMark(s, marks, data)!.mark
+      marks.set(peer, marks.get(peer)! + 1 + Math.round(rand() * 9))
+      const after = predictMark(s, marks, data)!.mark
+      expect(after, `${s.code} after ${peer}`).toBeGreaterThanOrEqual(before)
+      if (after > before) checked++
+    }
+    expect(checked).toBeGreaterThan(200)
   })
 })
 

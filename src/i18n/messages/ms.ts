@@ -439,6 +439,7 @@ export const ms: Messages = {
     creditAdd: "Tambah kredit",
     creditShort: "Ada kredit dari TAFE atau universiti lain?",
     creditHint: "Kredit (advanced standing) ialah mata yang universiti beri untuk pengajian di tempat lain, seperti TAFE, universiti lain atau Trinity College Foundation. Salin daripada keputusan kredit anda. Mata sahaja (unspecified / general credit): mata pada satu tahap, tiada subjek dinamakan. Subjek dinamakan (specified credit): subjek UniMelb yang anda dikecualikan. Kredit dikira dalam jumlah mata dan peraturan kursus, tetapi tidak dalam WAM.",
+    creditLink: "Cara advanced standing berfungsi",
     creditPointsOnly: "Mata sahaja",
     creditNamed: "Subjek dinamakan",
     creditPoints: "Mata",

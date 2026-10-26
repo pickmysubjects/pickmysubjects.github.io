@@ -439,6 +439,7 @@ export const ja: Messages = {
     creditAdd: "単位認定を追加",
     creditShort: "TAFE や他大学の単位認定がある？",
     creditHint: "単位認定（advanced standing / credit）は、TAFE・他大学・Trinity College Foundation など他での学習に対して大学が認める単位です。認定結果の通りに入力してください。ポイントのみ（unspecified / general credit）：レベルごとのポイントで、科目の指定なし。科目指定（specified credit）：メルボルン大学の科目が免除になるもの。認定単位は卒業ポイントやコース条件に数えますが、WAM には入りません。",
+    creditLink: "大学の単位認定ページ",
     creditPointsOnly: "ポイントのみ",
     creditNamed: "科目指定",
     creditPoints: "ポイント",

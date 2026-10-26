@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import InfoTip from '@/components/InfoTip.vue'
 import { computed, shallowRef, useId } from 'vue'
-import { GraduationCap, Plus, Trash2 } from 'lucide-vue-next'
+import { ExternalLink, GraduationCap, Plus, Trash2 } from 'lucide-vue-next'
 import { CREDIT_MAX_POINTS, isFail, type Credit, type Profile } from '@/engine'
 import { usePlan } from '@/composables/usePlan'
 import { useI18n } from '@/i18n'
+import { URLS } from '@/utils/guideLinks'
 
 /**
  * Credit (advanced standing) for study elsewhere: points at a level with no subject named
@@ -78,7 +79,7 @@ const lineText = (c: Credit) =>
 
     <p class="hint">
       <button v-if="!open" class="add-link" type="button" data-testid="credit-open" @click="open = true"><Plus :size="15" aria-hidden="true" /> {{ t('record.creditAdd') }}</button>
-      <span>{{ t('record.creditShort') }}</span><InfoTip :text="t('record.creditHint')" />
+      <span>{{ t('record.creditShort') }}</span><InfoTip>{{ t('record.creditHint') }} <a :href="URLS.ADVANCED_STANDING" target="_blank" rel="noopener">{{ t('record.creditLink') }}<ExternalLink :size="13" aria-hidden="true" /></a></InfoTip>
     </p>
 
     <form v-if="open" class="form" data-testid="credit-form" @submit.prevent="add">

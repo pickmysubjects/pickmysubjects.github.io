@@ -439,6 +439,7 @@ export const id: Messages = {
     creditAdd: "Tambah kredit",
     creditShort: "Punya kredit dari TAFE atau kampus lain?",
     creditHint: "Kredit (advanced standing) adalah poin yang diberikan universitas untuk studi di tempat lain, seperti TAFE, kampus lain, atau Trinity College Foundation. Salin dari keputusan kreditmu. Poin saja (unspecified / general credit): poin di satu level, tanpa mata kuliah tertentu. Mata kuliah tertentu (specified credit): mata kuliah UniMelb yang tidak perlu kamu ambil. Kredit dihitung dalam total poin dan aturan program, tapi tidak dalam WAM.",
+    creditLink: "Cara kerja advanced standing",
     creditPointsOnly: "Poin saja",
     creditNamed: "Mata kuliah tertentu",
     creditPoints: "Poin",
