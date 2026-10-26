@@ -20,7 +20,7 @@ import type { YearDiff } from '../src/engine/yearDiff'
 import { changeSections, changesSummary, type ChangeItem } from '../src/utils/changesText'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { browse, EMPTY_FILTERS, PRESET_SLUGS, PRESETS, type PresetName } from '../src/engine/browse'
+import { browse, EASY_CUTS, EMPTY_FILTERS, PRESET_SLUGS, PRESETS, type PresetName } from '../src/engine/browse'
 import { subjectDifficulty, type Difficulty } from '../src/engine/subjectFit'
 import { RANK_SLUGS, rankSubjects, type RankDirection, type RankReason } from '../src/engine/easeRanking'
 import { forCourse } from '../src/engine/forCourse'
@@ -493,6 +493,7 @@ function rankPages(code: LocaleCode, t: Translate): Page[] {
       `<h2>${esc(t('rank.howTitle'))}</h2><ul>${['how1', 'how2', 'how3', 'how4', 'how5'].map((k) => `<li>${esc(t(`rank.${k}`, { year: YEAR }))}</li>`).join('')}</ul>`,
       `<ol>${all.slice(0, RANK_TOP).map(item).join('')}</ol>`,
       ...(breadth.length ? [`<h2>${esc(t('rank.breadthSection'))}</h2><ol>${breadth.map(item).join('')}</ol>`] : []),
+      ...(direction === 'easy' ? [`<p><a href="${href(code, `subjects/${EASY_CUTS.level3Breadth.slug}`)}">${esc(t('rank.l3Breadth'))}</a></p>`] : []),
       `<p><a href="${href(code, `subjects/${RANK_SLUGS[other]}`)}">${esc(t(`rank.other.${direction}`))}</a> · <a href="${href(code, 'subjects')}">${esc(t('browse.title'))}</a></p>`,
       `<p><a href="${href(code, '')}">${esc(t('seo.made'))}</a></p>`,
     ].join('\n')
@@ -512,15 +513,40 @@ function presetPages(code: LocaleCode, t: Translate): Page[] {
     const facts = { n: rows.length, year: YEAR }
     const title = t(PRESET_TITLE_KEYS[preset], facts)
     const description = t(`${PRESET_TITLE_KEYS[preset]}Desc`, facts)
-    const body = [
+    const body: string[] = [
       `<h1>${esc(title)}</h1>`,
       `<p>${esc(description)}</p>`,
       `<ul>${rows.map((r) => `<li>${subjectLink(code, r.subject.code)}</li>`).join('')}</ul>`,
       `<p><a href="${href(code, 'subjects')}">${esc(t('browse.title'))}</a> · <a href="${href(code, 'plan')}">${esc(t('plan.title'))}</a></p>`,
       `<p><a href="${href(code, '')}">${esc(t('seo.made'))}</a></p>`,
-    ].join('\n')
-    return [{ path: `subjects/${PRESET_SLUGS[preset]}`, title: `${title} | PickMySubjects`, description, body }]
+    ]
+    if (preset === 'breadth') body.splice(3, 0, `<p><a href="${href(code, `subjects/${EASY_CUTS.level3Breadth.slug}`)}">${esc(t('rank.l3Breadth'))}</a></p>`)
+    return [{ path: `subjects/${PRESET_SLUGS[preset]}`, title: `${title} | PickMySubjects`, description, body: body.join('\n') }]
   })
+}
+
+/** /subjects/easy-level-3-breadth/: the easy list cut to level 3 breadth for B-SCI, with reasons. */
+function easyL3BreadthRows() {
+  return rankSubjects(sciSubjects, { direction: 'easy', course: 'B-SCI', year: YEAR, breadthOnly: true, level: 3 })
+}
+
+function easyCutPages(code: LocaleCode, t: Translate): Page[] {
+  const rows = easyL3BreadthRows()
+  if (rows.length === 0) return []
+  const facts = { n: rows.length, year: YEAR }
+  const title = t('seo.rankEasyL3Breadth', facts)
+  const description = t('seo.rankEasyL3BreadthDesc', facts)
+  const item = (r: (typeof rows)[number]) =>
+    `<li>${subjectLink(code, r.subject.code)}: ${esc([...r.reasons.map((x) => reasonText(t, code, x)), ...(r.reviews === null ? [t('rank.factsOnly')] : [])].join(listSep(code)))}</li>`
+  const body = [
+    `<h1>${esc(title)}</h1>`,
+    `<p>${esc(description)}</p>`,
+    `<ol>${rows.map(item).join('')}</ol>`,
+    `<h2>${esc(t('rank.howTitle'))}</h2><ul>${['how1', 'how2', 'how3', 'how4', 'how5'].map((k) => `<li>${esc(t(`rank.${k}`, { year: YEAR }))}</li>`).join('')}</ul>`,
+    `<p><a href="${href(code, `subjects/${RANK_SLUGS.easy}`)}">${esc(t('rank.title.easy'))}</a> · <a href="${href(code, `subjects/${PRESET_SLUGS.breadth}`)}">${esc(t('browse.preset.breadth'))}</a></p>`,
+    `<p><a href="${href(code, '')}">${esc(t('seo.made'))}</a></p>`,
+  ].join('\n')
+  return [{ path: `subjects/${EASY_CUTS.level3Breadth.slug}`, title: `${title} | PickMySubjects`, description, body }]
 }
 
 /** The UniMelb basics page as plain HTML: the same facts as the app, readable without JavaScript. */
@@ -755,6 +781,7 @@ ${homeDemoHtml(code, t)}
     },
     ...presetPages(code, t),
     ...rankPages(code, t),
+    ...easyCutPages(code, t),
     {
       path: 'majors',
       title: `${t('majors.title')} | PickMySubjects`,

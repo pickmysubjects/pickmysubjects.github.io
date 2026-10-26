@@ -783,6 +783,8 @@ export const ms: Messages = {
     presetFirstSemesterDesc: "{n} subjek tahap 1 University of Melbourne pada Semester 1 {year}, dengan prasyarat, peratus peperiksaan akhir dan jam kelas seminggu: permulaan semester pertama anda.",
     rankEasy: "Subjek UniMelb yang mudah, baik untuk WAM ({year})",
     rankEasyDesc: "{n} subjek University of Melbourne disusun dari yang paling mudah mengikut ulasan awam pelajar dan Handbook (peratus peperiksaan akhir, hurdle, jam kelas), dengan sebabnya. Panduan, bukan janji.",
+    rankEasyL3Breadth: "Subjek breadth tahap 3 paling mudah di UniMelb ({year})",
+    rankEasyL3BreadthDesc: "{n} subjek breadth tahap 3 paling mudah untuk pelajar Bachelor of Science UniMelb pada {year}, disusun ikut ulasan awam pelajar dan Handbook (peratus peperiksaan akhir, hurdle, jam kelas), dengan sebabnya. Panduan, bukan janji.",
     rankHard: "Subjek UniMelb paling sukar ({year}): ulasan, peperiksaan dan beban",
     rankHardDesc: "{n} subjek University of Melbourne disusun dari yang paling sukar mengikut ulasan awam pelajar dan Handbook (peratus peperiksaan akhir, hurdle, jam kelas), dengan sebabnya. Panduan, bukan janji.",
     specTitle: "Pengkhususan {title} di UniMelb: subjek dan perancangan",
@@ -922,6 +924,7 @@ export const ms: Messages = {
     },
     factsOnly: "Belum ada ulasan pelajar — berdasarkan Handbook sahaja",
     breadthSection: "Breadth untuk pelajar Bachelor of Science",
+    l3Breadth: "Breadth tahap 3 paling mudah",
     reason: {
       reviewsEasy: "Pengulas kata tidak berat ({n} ulasan)",
       reviewsLight: "Pengulas kata bebannya ringan",

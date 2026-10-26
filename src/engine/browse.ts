@@ -63,6 +63,20 @@ export type PresetName = keyof typeof PRESETS
 /** Each quick pick's own address (/subjects/no-exam/), a page search engines can show on its own. */
 export const PRESET_SLUGS: Record<PresetName, string> = { firstSemester: 'first-semester', breadth: 'breadth', noExam: 'no-exam', summerWinter: 'summer-winter' }
 
+/**
+ * Lists cut from the easy list that students search for by name, each with its own address:
+ * the easy list with the filters below (breadth for the student's degree, B-SCI on static pages).
+ */
+export const EASY_CUTS = {
+  level3Breadth: { slug: 'easy-level-3-breadth', filters: { rank: 'easy', level: 3, category: 'breadth' } },
+} as const satisfies Record<string, { slug: string; filters: Partial<BrowseFilters> }>
+
+export type EasyCut = keyof typeof EASY_CUTS
+
+export function easyCutFromSlug(slug: string): EasyCut | undefined {
+  return (Object.keys(EASY_CUTS) as EasyCut[]).find((c) => EASY_CUTS[c].slug === slug)
+}
+
 export function presetFromSlug(slug: string): PresetName | undefined {
   return (Object.keys(PRESET_SLUGS) as PresetName[]).find((p) => PRESET_SLUGS[p] === slug)
 }
@@ -195,7 +209,8 @@ const FILTER_KEYS = new Set(['q', 'type', 'level', 'when', 'noprereq', 'noexam',
 export function filtersFromQuery(q: URLSearchParams, slug = ''): BrowseFilters {
   const setsFilters = [...q.keys()].some((k) => FILTER_KEYS.has(k))
   const preset = q.get('preset') ?? (setsFilters ? undefined : presetFromSlug(slug))
-  const base = { ...EMPTY_FILTERS, ...(preset && preset in PRESETS ? PRESETS[preset as PresetName] : {}) }
+  const cut = setsFilters ? undefined : easyCutFromSlug(slug)
+  const base: BrowseFilters = { ...EMPTY_FILTERS, ...(preset && preset in PRESETS ? PRESETS[preset as PresetName] : {}), ...(cut ? EASY_CUTS[cut].filters : {}) }
   const level = Number(q.get('level'))
   const when = q.get('when') ?? ''
   const sort = q.get('sort') ?? ''
@@ -210,7 +225,7 @@ export function filtersFromQuery(q: URLSearchParams, slug = ''): BrowseFilters {
     noHurdle: q.get('nohurdle') === '1',
     noTest: q.get('notest') === '1',
     sort: SORT_SET.has(sort) ? (sort as BrowseSort) : base.sort,
-    rank: rankFromSlug(q.get('list') ?? '') ?? rankFromSlug(slug) ?? null,
+    rank: rankFromSlug(q.get('list') ?? '') ?? rankFromSlug(slug) ?? base.rank,
     mine: q.get('mine') === '1',
     offTerm: q.get('offterm') === '1' || base.offTerm,
     ...(COURSE_CODE.test(q.get('course') ?? '') ? { listCourse: q.get('course')! } : {}),
@@ -264,6 +279,11 @@ export function browseAddress(f: BrowseFilters): string {
     // A list opened for a degree keeps it in its address, so it stays that degree's list.
     const course = listCourse && f.rank ? `?course=${encodeURIComponent(listCourse)}` : ''
     return `subjects/${choice === 'easy' || choice === 'hard' ? RANK_SLUGS[choice] : PRESET_SLUGS[choice]}/${course}`
+  }
+  for (const cut of Object.values(EASY_CUTS)) {
+    if (filtersToQuery(rest) === filtersToQuery({ ...EMPTY_FILTERS, ...cut.filters })) {
+      return `subjects/${cut.slug}/${listCourse ? `?course=${encodeURIComponent(listCourse)}` : ''}`
+    }
   }
   const all = filtersToQuery(f)
   return `subjects/${all ? `?${all}` : ''}`

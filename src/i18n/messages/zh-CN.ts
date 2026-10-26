@@ -783,6 +783,8 @@ export const zhCN: Messages = {
     presetFirstSemesterDesc: "{year} 年第一学期开课的 {n} 门墨尔本大学一年级课，附先修课、期末占比和每周课时，适合新生排第一个学期。",
     rankEasy: "墨大水课推荐：好拿分的课排行（{year}）",
     rankEasyDesc: "按公开学生评价和 Handbook（期末考试占比、hurdle、每周课时）排出的 {n} 门墨大比较好拿分的课，每门都写明原因。仅供参考，不是保证。",
+    rankEasyL3Breadth: "墨大最轻松的 Level 3 breadth 课（{year}）",
+    rankEasyL3BreadthDesc: "{year} 年墨大理学士（BSc）可选的 {n} 门 Level 3 breadth 水课，按公开学生评价和 Handbook（期末占比、hurdle、上课时长）排序，每门都写了理由。仅供参考，不是保证。",
     rankHard: "墨大难课排行（{year}）：评价、考试和工作量",
     rankHardDesc: "按公开学生评价和 Handbook（期末考试占比、hurdle、每周课时）排出的 {n} 门墨大比较难的课，每门都写明原因。仅供参考，不是保证。",
     specTitle: "墨大 {title} 专业方向（specialisation）：课程和规划",
@@ -922,6 +924,7 @@ export const zhCN: Messages = {
     },
     factsOnly: "还没有同学评价，只根据 Handbook 判断",
     breadthSection: "理学士可选的 Breadth",
+    l3Breadth: "最轻松的 Level 3 breadth",
     reason: {
       reviewsEasy: "评价说不难（{n} 条评价）",
       reviewsLight: "评价说工作量小",

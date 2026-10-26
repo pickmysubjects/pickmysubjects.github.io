@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { applyQuick, browse, browseAddress, EMPTY_FILTERS, filtersFromQuery, filtersToQuery, findRows, quickChoice, QUICK_CHOICES, rankCourseOf, type BrowseFilters } from '../src/engine/browse'
+import { applyQuick, browse, browseAddress, EASY_CUTS, EMPTY_FILTERS, filtersFromQuery, filtersToQuery, findRows, quickChoice, QUICK_CHOICES, rankCourseOf, type BrowseFilters } from '../src/engine/browse'
 import { rankSubjects } from '../src/engine/easeRanking'
 import { recommend } from '../src/engine/recommend'
 import { realData } from './realData'
@@ -228,5 +228,31 @@ describe('a subject page’s place on a list is the place on the list it links t
       checked++
     }
     expect(checked).toBe(30)
+  })
+})
+
+describe('easiest level 3 breadth list', () => {
+  const all = Object.values(realData().subjects)
+  const slug = EASY_CUTS.level3Breadth.slug
+
+  it('opens from its own address and keeps it', () => {
+    const f = filtersFromQuery(new URLSearchParams(''), slug)
+    expect(f).toMatchObject({ rank: 'easy', level: 3, category: 'breadth' })
+    expect(browseAddress(f)).toBe(`subjects/${slug}/`)
+    // Changing another filter moves it to the query.
+    expect(browseAddress({ ...f, noExam: true })).toContain('subjects/?')
+  })
+
+  it('lists level 3 B-SCI breadth subjects in easy-list order, with reasons', () => {
+    const f = filtersFromQuery(new URLSearchParams(''), slug)
+    const rows = findRows(all, f, { course: 'B-SCI', rankCourse: 'B-SCI', year: 2026 })
+    expect(rows.length).toBeGreaterThan(0)
+    for (const r of rows) {
+      expect(r.subject.level).toBe(3)
+      expect(r.subject.categories['B-SCI']).toBe('breadth')
+      expect(r.ranked?.reasons.length).toBeGreaterThan(0)
+    }
+    const ranked = rankSubjects(all, { direction: 'easy', course: 'B-SCI', year: 2026, breadthOnly: true, level: 3 }).map((r) => r.subject.code)
+    expect(rows.map((r) => r.subject.code)).toEqual(ranked)
   })
 })

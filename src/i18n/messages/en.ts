@@ -786,6 +786,8 @@ export const en = {
     presetFirstSemesterDesc: "{n} level-1 University of Melbourne subjects running in Semester 1 {year}, each with its prerequisites, exam share and weekly hours: a starting point for your first semester.",
     rankEasy: "Easy UniMelb subjects: WAM boosters and bludgy breadth ({year})",
     rankEasyDesc: "{n} University of Melbourne subjects ranked easiest, the WAM boosters students look for, from public student reviews and the Handbook (final-exam share, hurdles, class hours), each with its reasons. Guidance, not a promise.",
+    rankEasyL3Breadth: "Easiest level 3 breadth subjects at UniMelb ({year})",
+    rankEasyL3BreadthDesc: "The {n} easiest level 3 breadth subjects for UniMelb Bachelor of Science students in {year}, ranked from public student reviews and the Handbook (final-exam share, hurdles, class hours), each with its reasons. Guidance, not a promise.",
     rankHard: "Hardest UniMelb subjects ({year}): reviews, exams and workload",
     rankHardDesc: "{n} University of Melbourne subjects ranked hardest from public student reviews and the Handbook (final-exam share, hurdles, class hours), each with its reasons. Guidance, not a promise.",
     specTitle: "{title} specialisation at UniMelb: subjects and planning",
@@ -925,6 +927,7 @@ export const en = {
     },
     factsOnly: "No student reviews yet — based on the Handbook only",
     breadthSection: "Breadth for Bachelor of Science students",
+    l3Breadth: "Easiest level 3 breadth",
     reason: {
       reviewsEasy: "Reviewers say it’s manageable ({n} reviews)",
       reviewsLight: "Reviewers say the workload is light",

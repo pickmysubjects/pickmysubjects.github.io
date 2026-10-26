@@ -783,6 +783,8 @@ export const id: Messages = {
     presetFirstSemesterDesc: "{n} mata kuliah level 1 University of Melbourne di Semester 1 {year}, lengkap dengan prasyarat, porsi ujian akhir, dan jam kelas per minggu: titik awal semester pertamamu.",
     rankEasy: "Mata kuliah UniMelb yang mudah, bagus untuk WAM ({year})",
     rankEasyDesc: "{n} mata kuliah University of Melbourne diurutkan dari yang paling mudah menurut ulasan publik mahasiswa dan Handbook (porsi ujian akhir, hurdle, jam kelas), lengkap dengan alasannya. Panduan, bukan janji.",
+    rankEasyL3Breadth: "Mata kuliah breadth level 3 paling mudah di UniMelb ({year})",
+    rankEasyL3BreadthDesc: "{n} mata kuliah breadth level 3 paling mudah untuk mahasiswa Bachelor of Science UniMelb tahun {year}, diurutkan dari ulasan publik mahasiswa dan Handbook (porsi ujian akhir, hurdle, jam kelas), lengkap dengan alasannya. Panduan, bukan janji.",
     rankHard: "Mata kuliah UniMelb paling sulit ({year}): ulasan, ujian, dan beban",
     rankHardDesc: "{n} mata kuliah University of Melbourne diurutkan dari yang paling sulit menurut ulasan publik mahasiswa dan Handbook (porsi ujian akhir, hurdle, jam kelas), lengkap dengan alasannya. Panduan, bukan janji.",
     specTitle: "Spesialisasi {title} di UniMelb: mata kuliah dan rencana",
@@ -922,6 +924,7 @@ export const id: Messages = {
     },
     factsOnly: "Belum ada ulasan mahasiswa — hanya berdasarkan Handbook",
     breadthSection: "Breadth untuk mahasiswa Bachelor of Science",
+    l3Breadth: "Breadth level 3 paling mudah",
     reason: {
       reviewsEasy: "Pengulas bilang tidak berat ({n} ulasan)",
       reviewsLight: "Pengulas bilang bebannya ringan",

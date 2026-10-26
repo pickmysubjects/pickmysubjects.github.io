@@ -783,6 +783,8 @@ export const ko: Messages = {
     presetFirstSemesterDesc: "{year}년 1학기에 개설되는 멜버른대 레벨 1 과목 {n}개. 선수 과목, 기말시험 비중, 주당 수업 시간이 있어 첫 학기 계획에 도움이 됩니다.",
     rankEasy: "멜버른대 학점 잘 나오는 쉬운 과목 순위 ({year})",
     rankEasyDesc: "공개 학생 리뷰와 Handbook(기말시험 비중, hurdle, 수업 시간)으로 쉬운 순서대로 정리한 멜버른대 {n}개 과목, 이유와 함께. 참고용이며 보장은 아닙니다.",
+    rankEasyL3Breadth: "멜버른대 제일 쉬운 Level 3 breadth 과목 ({year})",
+    rankEasyL3BreadthDesc: "{year}년 이학사(BSc) 학생이 들을 수 있는 Level 3 breadth 꿀강 {n}개. 공개 수강평과 Handbook(기말 비중, hurdle, 수업 시간)으로 순위를 매기고 이유를 달았어요. 참고용이며 보장은 아니에요.",
     rankHard: "멜버른대 어려운 과목 순위 ({year}): 리뷰, 시험, 공부량",
     rankHardDesc: "공개 학생 리뷰와 Handbook(기말시험 비중, hurdle, 수업 시간)으로 어려운 순서대로 정리한 멜버른대 {n}개 과목, 이유와 함께. 참고용이며 보장은 아닙니다.",
     specTitle: "멜버른대 {title} 세부전공(specialisation): 과목과 계획",
@@ -922,6 +924,7 @@ export const ko: Messages = {
     },
     factsOnly: "아직 학생 리뷰가 없어 Handbook 정보로만 판단했어요",
     breadthSection: "이학사 학생이 들을 수 있는 Breadth",
+    l3Breadth: "제일 쉬운 Level 3 breadth",
     reason: {
       reviewsEasy: "리뷰에서 할 만하다고 함 ({n}개 리뷰)",
       reviewsLight: "리뷰에서 공부량이 적다고 함",

@@ -10,6 +10,7 @@ import BrowseRow from '@/components/browse/BrowseRow.vue'
 import GoalPicker from '@/components/profile/GoalPicker.vue'
 import Interp from '@/components/Interp.vue'
 import {
+  EASY_CUTS,
   applyQuick,
   browseAddress,
   filtersFromQuery,
@@ -217,6 +218,10 @@ watch(filters, (f) => {
           </ul>
         </details>
 
+        <p v-if="choice === 'easy' || choice === 'breadth'" class="cut-link">
+          <a :href="link(`subjects/${EASY_CUTS.level3Breadth.slug}/`)">{{ t('rank.l3Breadth') }}</a>
+        </p>
+
         <div v-if="rows.length" class="list surface">
           <BrowseRow v-for="r in visible" :key="r.subject.code" :row="r" :course="course" :reasons="reasons(r)" :rec="r.rec" :fit="hasProfile" />
         </div>
@@ -234,6 +239,11 @@ watch(filters, (f) => {
 </template>
 
 <style scoped>
+.cut-link {
+  margin: 0;
+  font-size: 0.875rem;
+}
+
 .browse {
   display: grid;
   gap: 24px;

@@ -783,6 +783,8 @@ export const vi: Messages = {
     presetFirstSemesterDesc: "{n} môn level 1 của Đại học Melbourne mở vào học kỳ 1 năm {year}, kèm môn tiên quyết, tỷ lệ thi cuối kỳ và số giờ học mỗi tuần, để bắt đầu học kỳ đầu tiên.",
     rankEasy: "Các môn dễ ở UniMelb, dễ lấy điểm WAM ({year})",
     rankEasyDesc: "{n} môn của Đại học Melbourne xếp từ dễ nhất theo đánh giá công khai của sinh viên và Handbook (tỷ lệ thi cuối kỳ, hurdle, giờ học), kèm lý do. Chỉ để tham khảo, không phải cam kết.",
+    rankEasyL3Breadth: "Môn breadth level 3 dễ nhất ở UniMelb ({year})",
+    rankEasyL3BreadthDesc: "{n} môn breadth level 3 dễ nhất cho sinh viên Bachelor of Science UniMelb năm {year}, xếp theo đánh giá công khai và Handbook (tỷ lệ thi cuối kỳ, hurdle, giờ học), kèm lý do. Chỉ để tham khảo, không phải cam kết.",
     rankHard: "Các môn khó nhất ở UniMelb ({year}): đánh giá, thi và khối lượng",
     rankHardDesc: "{n} môn của Đại học Melbourne xếp từ khó nhất theo đánh giá công khai của sinh viên và Handbook (tỷ lệ thi cuối kỳ, hurdle, giờ học), kèm lý do. Chỉ để tham khảo, không phải cam kết.",
     specTitle: "Chuyên ngành hẹp {title} ở UniMelb: môn học và kế hoạch",
@@ -922,6 +924,7 @@ export const vi: Messages = {
     },
     factsOnly: "Chưa có sinh viên nào đánh giá — chỉ dựa trên Handbook",
     breadthSection: "Breadth cho sinh viên Bachelor of Science",
+    l3Breadth: "Breadth level 3 dễ nhất",
     reason: {
       reviewsEasy: "Đánh giá nói là vừa sức ({n} đánh giá)",
       reviewsLight: "Đánh giá nói khối lượng nhẹ",

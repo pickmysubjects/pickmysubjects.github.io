@@ -783,6 +783,8 @@ export const ja: Messages = {
     presetFirstSemesterDesc: "{year}年第1学期に開講されるメルボルン大学のレベル1科目{n}件。前提科目・期末試験の割合・週あたりの授業時間つきで、最初の学期の計画に使えます。",
     rankEasy: "メルボルン大学の単位・成績を取りやすい科目ランキング（{year}）",
     rankEasyDesc: "公開されている学生レビューと Handbook（期末試験の割合・hurdle・授業時間）から、取りやすい順に並べたメルボルン大学の {n} 科目。理由つき。目安であって保証ではありません。",
+    rankEasyL3Breadth: "メルボルン大学の楽な Level 3 breadth 科目（{year}）",
+    rankEasyL3BreadthDesc: "{year}年、理学士（BSc）の学生が取れる Level 3 breadth の楽単 {n} 科目。公開レビューと Handbook（期末試験の割合、ハードル、授業時間）で並べ、理由つき。目安であり、保証ではありません。",
     rankHard: "メルボルン大学の難しい科目ランキング（{year}）：レビュー・試験・課題量",
     rankHardDesc: "公開されている学生レビューと Handbook（期末試験の割合・hurdle・授業時間）から、難しい順に並べたメルボルン大学の {n} 科目。理由つき。目安であって保証ではありません。",
     specTitle: "メルボルン大学 {title} スペシャライゼーション：科目と計画",
@@ -922,6 +924,7 @@ export const ja: Messages = {
     },
     factsOnly: "学生のレビューはまだなく、Handbook の情報だけで判断しています",
     breadthSection: "理学士が取れる Breadth",
+    l3Breadth: "楽な Level 3 breadth",
     reason: {
       reviewsEasy: "レビューでは難しくない（{n} 件）",
       reviewsLight: "レビューでは課題が少ない",
