@@ -9,6 +9,7 @@ requirements:
   - all: [ABPL30041, ARCH30001, ARCH30002]
 # Subjects the page says students in this major can't take as breadth.
 non_allowed_breadth:
-  subjects: [ABPL20042, ABPL30037, ABPL30042, ABPL30046, ABPL30048, ABPL30061, GDES10001, GDES20001, GDES20002, ARCH20002, ABPL30076, ABPL30074]
+  # Dropped ABPL30037, ABPL30048: not in the 2026 Handbook (checked 2026-10-26).
+  subjects: [ABPL20042, ABPL30042, ABPL30046, ABPL30061, GDES10001, GDES20001, GDES20002, ARCH20002, ABPL30076, ABPL30074]
 handbook: https://handbook.unimelb.edu.au/2026/courses/b-des/majors-minors-specialisations
 verified_on: 2026-10-19 # structure; source: 2026 Handbook major page

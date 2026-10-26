@@ -1,0 +1,15 @@
+id: digital-marketing
+course: B-COM
+year: 2026
+kind: specialisation
+title: Digital Marketing
+points: 50
+requirements:
+  # Level 2 (25 points); may be the same subjects as the major's.
+  - all: [MKTG20001, MKTG20006]
+  # Level 3 core plus one elective (both electives are not available in 2026).
+  - all: [MKTG30009]
+  - choose: { points: 12.5, from: [MKTG30008, MKTG30014] }
+# The level-3 subjects can't also count towards the major's level-3 subjects.
+handbook: https://handbook.unimelb.edu.au/2026/components/b-com-spec-9
+verified_on: 2026-10-26 # structure; source: 2026 Handbook specialisation page

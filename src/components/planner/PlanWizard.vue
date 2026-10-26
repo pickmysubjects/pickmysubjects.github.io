@@ -102,7 +102,7 @@ const informal = computed(() => minors.value.some((c) => c.informal))
 
 // A concurrent diploma (optional): the ones the chosen majors don't rule out, and its streams
 // that aren't already the major or minor.
-const diplomas = computed(() => (data.value.diplomas ?? []).filter((d) => !diplomaClash(data.value, d, { major: draft.value.major, major2: chosenMajors.value[1], specialisation: draft.value.specialisation })))
+const diplomas = computed(() => (data.value.diplomas ?? []).filter((d) => !diplomaClash(data.value, d, { course: draft.value.course, major: draft.value.major, major2: chosenMajors.value[1], specialisation: draft.value.specialisation })))
 const diploma = computed(() => diplomas.value.find((d) => d.code === draft.value.diploma))
 const streams = computed(() =>
   (diploma.value?.streams ?? [])

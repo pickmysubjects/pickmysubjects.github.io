@@ -54,12 +54,17 @@ describe('concurrent diplomas', () => {
     const lang = findDiploma(real, 'D-LANG')!
     // The same language as the degree's own major isn't a diploma on top of it.
     expect(diplomaClash(real, lang, { major: 'french-studies', diplomaStream: 'french-studies' })).not.toBeNull()
+    // A diploma closed to a whole course (Music for Bachelor of Music students).
+    const music = findDiploma(real, 'D-MUSIC')!
+    expect(diplomaClash(real, music, { course: 'B-MUS' })).toMatch(/Bachelor of Music/)
+    expect(diplomaClash(real, music, { course: 'B-COM' })).toBeNull()
   })
 
   it.each([
     ['B-ARTS', 'history', 'D-LANG', 'french-studies'],
     ['B-SCI', 'genetics', 'D-COMP', undefined],
     ['B-COM', 'finance', 'D-MATHSC', 'mathematics-and-statistics-statistics'],
+    ['B-SCI', 'genetics', 'D-MUSIC', undefined],
   ])('%s %s + %s %s: a year longer, every rule met', (course, major, diploma, stream) => {
     const { plan: p, unplaced } = plan(course, major, diploma, stream)
     expect(unplaced).toEqual([])

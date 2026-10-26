@@ -10,6 +10,7 @@ requirements:
 # Subjects the page says students in this major can't take as breadth.
 non_allowed_breadth:
   areas: [GEOG]
-  subjects: [ABPL30042, ABPL30051, ECON30021, EVSC30006, HORT10015]
+  # Dropped ECON30021, HORT10015: not in the 2026 Handbook (checked 2026-10-26).
+  subjects: [ABPL30042, ABPL30051, EVSC30006]
 handbook: https://handbook.unimelb.edu.au/2026/courses/b-des/majors-minors-specialisations
 verified_on: 2026-10-19 # structure; source: 2026 Handbook major page

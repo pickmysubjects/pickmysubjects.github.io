@@ -1,0 +1,15 @@
+id: human-resource-management
+course: B-COM
+year: 2026
+kind: specialisation
+title: Human Resource Management
+points: 50
+requirements:
+  # Level 2 (25 points); may be the same subjects as the major's.
+  # The page lists three level-2 core subjects for 25 points.
+  - choose: { points: 25, from: [MGMT20001, MGMT20002, MGMT20004] }
+  # Level 3 electives.
+  - choose: { points: 25, from: [MGMT30015, MGMT30019, MGMT30021, MGMT30023] }
+# The level-3 subjects can't also count towards the major's level-3 subjects.
+handbook: https://handbook.unimelb.edu.au/2026/components/b-com-spec-7
+verified_on: 2026-10-26 # structure; source: 2026 Handbook specialisation page

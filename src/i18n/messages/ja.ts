@@ -170,6 +170,7 @@ export const ja: Messages = {
     dlang: "学生ビザでは取れません",
     dcomp: "WAM 65、50 ポイント修了、COMP10001 修了が必要。学生ビザでは取れません",
     dmathsc: "Specialist Maths のスタディスコア 30 以上（または同等）が必要。学生ビザでは取れません",
+    dmusic: "これまでの成績で選考。学生ビザでは取れません",
   },
   rule: {
     diploma: "{title}：{rule}",

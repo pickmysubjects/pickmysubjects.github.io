@@ -630,6 +630,9 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
     const mine = () => [...required, ...done].filter((c) => inDiploma(data, diploma, stream, c))
     const levelRules = diploma.rules.filter((r): r is Extract<CourseRule, { kind: 'points' }> => r.kind === 'points' && r.min !== undefined && r.category === undefined)
     const short = (r: { level?: number; min?: number }) => (r.min ?? 0) - mine().filter((c) => r.level === undefined || data.subjects[c]?.level === r.level).reduce((sum, c) => sum + pts(c), 0)
+    // Caps on a level (Music: at most 50 points of level 1): a subject that would go over is skipped.
+    const capRules = diploma.rules.filter((r): r is Extract<CourseRule, { kind: 'points' }> => r.kind === 'points' && r.max !== undefined && r.category === undefined && r.level !== undefined)
+    const fits = (c: string) => capRules.every((r) => data.subjects[c]?.level !== r.level || mine().filter((x) => data.subjects[x]?.level === r.level).reduce((sum, x) => sum + pts(x), 0) + pts(c) <= r.max!)
     const pool = Object.values(data.subjects).filter((s) => s.level <= 3 && inDiploma(data, diploma, stream, s.code) && !s.campus)
     for (const rule of [...levelRules].sort((a, b) => (b.level ?? 0) - (a.level ?? 0))) {
       const order = pool
@@ -639,7 +642,7 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
         .sort((a, b) => a.adds - b.adds || (score.get(b.s.code) ?? -1) - (score.get(a.s.code) ?? -1) || a.s.code.localeCompare(b.s.code))
       for (const { s } of order) {
         if (short(rule) <= 0) break
-        if (required.has(s.code)) continue
+        if (required.has(s.code) || !fits(s.code)) continue
         required.add(s.code)
         notes.push(note('chose', { code: s.code, title: diploma.title }, `Chose ${s.code} for ${diploma.title} (best match among its options).`))
         closePrereqs(input, required, done, notes, needs)

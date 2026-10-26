@@ -170,6 +170,7 @@ export const ko: Messages = {
     dlang: "학생 비자로는 들을 수 없어요",
     dcomp: "WAM 65, 50학점 이수, COMP10001 이수 필요. 학생 비자로는 들을 수 없어요",
     dmathsc: "Specialist Maths 30점 이상(또는 동등) 필요. 학생 비자로는 들을 수 없어요",
+    dmusic: "지금까지의 성적으로 선발해요. 학생 비자로는 들을 수 없어요",
   },
   rule: {
     diploma: "{title}: {rule}",

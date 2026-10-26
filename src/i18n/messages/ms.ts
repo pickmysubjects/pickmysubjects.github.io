@@ -170,6 +170,7 @@ export const ms: Messages = {
     dlang: "Tidak dibuka untuk visa pelajar",
     dcomp: "Perlu WAM 65, 50 mata selesai dan COMP10001; tidak dibuka untuk visa pelajar",
     dmathsc: "Perlu skor Specialist Maths 30 atau setara; tidak dibuka untuk visa pelajar",
+    dmusic: "Dipilih berdasarkan keputusan setakat ini; tidak dibuka untuk visa pelajar",
   },
   rule: {
     diploma: "{title}: {rule}",
