@@ -52,8 +52,8 @@ describe('counting', () => {
     countPage('/zh-CN/guide')
     expect(count.mock.calls.map((c) => c[0].path)).toEqual(['/plan', '/zh-CN/guide'])
     // Inside the site the referrer is us: only the first page keeps the real one.
-    expect(count.mock.calls[0][0].referrer).toBeUndefined()
-    expect(count.mock.calls[1][0].referrer).toBe('')
+    expect(count.mock.calls[0]?.[0].referrer).toBeUndefined()
+    expect(count.mock.calls[1]?.[0].referrer).toBe('')
   })
 
   it('sends events as named events', () => {
