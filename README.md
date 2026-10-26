@@ -75,7 +75,7 @@ English, 简体中文, 繁體中文, 日本語, 한국어, Tiếng Việt, Bahas
 
 ## Privacy
 
-No account, no analytics, no ads. Your record and plans stay in your browser. Ratings and feedback go anonymously to a private Google Form and Sheet; only aggregates are published, and only once a subject has at least 3 ratings. The full statement is on the app's *Privacy* page.
+No account, no ads, no cookies. Page visits and a few anonymous actions (plan made, language switched) are counted with [GoatCounter](https://www.goatcounter.com), which keeps no IP addresses and nothing about you. Your record and plans stay in your browser. Ratings and feedback go anonymously to a private Google Form and Sheet; only aggregates are published, and only once a subject has at least 3 ratings. The full statement is on the app's *Privacy* page.
 
 ## Run it locally
 

@@ -2,6 +2,7 @@ import { computed, shallowRef, watch } from 'vue'
 import { localeInPath } from '@/i18n/codes'
 import { currentLocale, useI18n } from '@/i18n'
 import { newVersionReady } from '@/utils/serviceWorker'
+import { countPage } from '@/utils/analytics'
 
 export const VIEWS = ['home', 'subject', 'plan', 'recommend', 'record', 'contribute', 'feedback', 'privacy', 'about', 'guide', 'subjects', 'majors', 'shortlist', 'careers', 'changes'] as const
 export type View = (typeof VIEWS)[number]
@@ -103,6 +104,7 @@ const route = shallowRef<Route | null>(null)
 
 function sync(): void {
   route.value = current()
+  countPage()
   window.scrollTo({ top: 0 })
 }
 
@@ -159,6 +161,7 @@ function install(): void {
   })
   document.addEventListener('click', onClick)
   route.value = current()
+  countPage()
 }
 
 /**

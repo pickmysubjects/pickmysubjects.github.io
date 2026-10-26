@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { trackEvent } from '@/utils/analytics'
 import InfoTip from '@/components/InfoTip.vue'
 import { shallowRef, watch } from 'vue'
 import { Check, Send } from 'lucide-vue-next'
@@ -36,6 +37,7 @@ async function send(): Promise<void> {
     status.value = 'failed'
   } finally {
     markShared(sent)
+    if (sent.length) trackEvent('grades-share')
   }
 }
 </script>

@@ -1,3 +1,4 @@
+import { trackEvent } from '@/utils/analytics'
 import { computed } from 'vue'
 import { usePersisted } from './usePersisted'
 import { cleanShortlist, SHORTLIST_MAX } from '@/utils/sanitize'
@@ -20,6 +21,7 @@ export function useShortlist() {
   function add(code: string): void {
     if (has(code) || saved.value.length >= SHORTLIST_MAX) return
     saved.value = [...saved.value, code]
+    trackEvent('shortlist-add')
   }
   function remove(code: string): void {
     saved.value = saved.value.filter((c) => c !== code)

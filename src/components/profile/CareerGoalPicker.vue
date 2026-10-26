@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { trackEvent } from '@/utils/analytics'
 import InfoTip from '@/components/InfoTip.vue'
 import { computed, shallowRef } from 'vue'
 import { ChevronDown, Search, X } from 'lucide-vue-next'
@@ -47,6 +48,7 @@ const groups = computed(() =>
 
 function pick(id: string | undefined): void {
   setCareer(id)
+  if (id) trackEvent('career-goal-set')
   query.value = ''
 }
 </script>

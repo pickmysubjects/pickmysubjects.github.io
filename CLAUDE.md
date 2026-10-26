@@ -12,7 +12,7 @@ Notes for AI coding agents (and anyone else) working in this repo. CONTRIBUTING.
 - **Every student input is optional.** Nothing a student fills in may be required.
 - **Guide too.** New rules or features students should know about also get a line in the 墨大入门 guide (`src/components/guide/`, 9 languages).
 - **Plans own their profile.** Plan A/B each keep their own skills, interests, goal and career; only the record (subjects and marks) is shared.
-- **Privacy.** Nothing about a student leaves the browser except what they explicitly send (ratings, grade bands). No analytics.
+- **Privacy.** Nothing about a student leaves the browser except what they explicitly send (ratings, grade bands). The one exception is GoatCounter (`src/utils/analytics.ts`, `public/count.js`): page paths without query strings, plus named anonymous events. Never send a subject code from a student's record, marks, WAM or anything else personal to it.
 - Comments in English.
 
 ## Checks

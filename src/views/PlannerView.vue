@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { trackEvent } from '@/utils/analytics'
 import { viewYear } from '@/engine/dataYear'
 import InfoTip from '@/components/InfoTip.vue'
 import { link } from '@/composables/useView'
@@ -61,6 +62,7 @@ function importShared(): void {
 
 const copied = shallowRef(false)
 async function share(): Promise<void> {
+  trackEvent('plan-share')
   const url = new URL(link(`plan?share=${encodePlan(plan.setup.value, plan.terms.value)}`), location.href).href
   try {
     if (navigator.share) await navigator.share({ title: 'PickMySubjects', url })
@@ -74,6 +76,7 @@ async function share(): Promise<void> {
 }
 
 function printPlan(): void {
+  trackEvent('plan-print')
   window.print()
 }
 
@@ -90,7 +93,7 @@ async function saveImage(): Promise<void> {
         ? { text: t.value('plan.statusUnknown', { n: unknowns.value }), tone: 'warn' as const }
         : { text: t.value('plan.statusOk'), tone: 'good' as const }
     const site = new URL(link(''), location.href)
-    await sharePlanImage(
+    const result = await sharePlanImage(
       {
         site: 'PickMySubjects',
         url: `${site.host}${site.pathname}`.replace(/\/$/, ''),
@@ -109,6 +112,7 @@ async function saveImage(): Promise<void> {
       },
       `pickmysubjects-plan-${locale.value}.png`,
     )
+    if (result !== 'cancelled') trackEvent('plan-image-save')
   } finally {
     imaging.value = false
   }
@@ -377,7 +381,7 @@ const printTerms = computed<PrintTerm[]>(() => {
       </template>
     </section>
 
-    <PlanSwitcher v-if="!shared && !comparing" @compare="comparing = true; editing = false" />
+    <PlanSwitcher v-if="!shared && !comparing" @compare="comparing = true; editing = false; trackEvent('compare-open')" />
     <PlanCompare v-if="comparing && !shared" @close="comparing = false" />
 
     <PlanWizard

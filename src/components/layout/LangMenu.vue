@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { trackEvent } from '@/utils/analytics'
 import { Languages } from 'lucide-vue-next'
 import { LOCALES, loadLocale, useI18n, type LocaleCode } from '@/i18n'
 
@@ -8,6 +9,7 @@ function onChange(event: Event): void {
   const code = (event.target as HTMLSelectElement).value as LocaleCode
   // Switch once the new language has downloaded, so the page doesn't flash English first.
   void loadLocale(code).then(() => setLocale(code))
+  trackEvent(`language-${code}`)
 }
 </script>
 
