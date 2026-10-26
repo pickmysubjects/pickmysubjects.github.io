@@ -47,6 +47,7 @@ import { zhCN } from '../src/i18n/messages/zh-CN'
 import { zhTW } from '../src/i18n/messages/zh-TW'
 import { hreflangsFor } from '../src/utils/hreflang'
 import { GUIDE_CATEGORIES, GUIDE_TOPICS, type GuideCategory } from '../src/utils/guideSections'
+import { SERVICE_TOPICS } from '../src/utils/guideServices'
 import { groupKeyDates, KEY_DATES, KEY_DATES_SOURCE, EMPLOYABILITY_SOURCE } from '../src/utils/keyDates'
 import { ja } from '../src/i18n/messages/ja'
 import { ko } from '../src/i18n/messages/ko'
@@ -639,6 +640,13 @@ function guideBody(code: LocaleCode, t: Translate, page: GuideCategory | 'overvi
       ext('https://students.unimelb.edu.au/course-admin/key-dates', 'datesLink'),
     ].join('\n'),
   }
+  // Topics that are lists of official systems or services: name, one line, and the ⓘ text.
+  for (const [id, items] of Object.entries(SERVICE_TOPICS))
+    topics[id] = [
+      `<h2 id="${id}">${esc(t(`guide.svcTopic.${id}.title`))}</h2>`,
+      p(`svcTopic.${id}.short`),
+      `<ul>${items.map((s) => `<li><a href="${s.href}">${esc(t(`guide.svc.${s.id}.name`))}</a>: ${esc(t(`guide.svc.${s.id}.text`))}${'more' in s && s.more ? ` ${esc(t(`guide.svc.${s.id}.more`))}` : ''}</li>`).join('')}</ul>`,
+    ].join('\n')
   const sub = `<p>${[`<a href="${href(code, 'guide')}">${esc(t('guide.overview'))}</a>`, ...GUIDE_CATEGORIES.map((c) => `<a href="${href(code, `guide/${c}`)}">${esc(t(`guide.cat.${c}.nav`))}</a>`)].join(' · ')}</p>`
   const tail = p('sourcesText')
   if (page === 'overview')

@@ -3,7 +3,7 @@
  * overview at /guide/ and the key dates page. Every topic keeps a stable anchor id, so an old
  * /guide/#<id> link can be sent to the page that now holds it.
  */
-export const GUIDE_CATEGORIES = ['basics', 'enrolling', 'semester', 'international', 'help'] as const
+export const GUIDE_CATEGORIES = ['basics', 'systems', 'enrolling', 'semester', 'life', 'international', 'help'] as const
 export type GuideCategory = (typeof GUIDE_CATEGORIES)[number]
 
 /** Extra pages under /guide/ that aren't categories, and the category they sit in. */
@@ -13,10 +13,12 @@ export type GuideExtraPage = keyof typeof GUIDE_EXTRA_PAGES
 /** Topic anchors in page order, per category. */
 export const GUIDE_TOPICS: Record<GuideCategory, readonly string[]> = {
   basics: ['first', 'points', 'majors', 'caps', 'rules', 'grades', 'wam'],
+  systems: ['systems', 'it-help'],
   enrolling: ['enrol', 'load', 'check', 'timetable', 'fees'],
   semester: ['special-consideration', 'hurdles', 'late', 'integrity', 'exams', 'drop', 'fail'],
+  life: ['wellbeing', 'safety', 'community', 'advocacy'],
   international: ['rsl', 'abroad'],
-  help: ['dates', 'study-help', 'careers', 'accreditation', 'rankings'],
+  help: ['dates', 'study-help', 'careers', 'uni-careers', 'accreditation', 'rankings'],
 }
 
 export function isGuideCategory(slug: string): slug is GuideCategory {
