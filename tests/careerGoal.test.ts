@@ -6,7 +6,7 @@ import { generatePlan } from '../src/engine/generate'
 import { checkTerms } from '../src/engine/planCheck'
 import type { Plan } from '../src/engine/plan'
 import { relieveTerm } from '../src/engine/relieve'
-import { CAREER_BREADTH_HELPS_BONUS, CAREER_HELPS_BONUS, CAREER_RELATED_BONUS, recommend, type Exclusion, type Profile, type RecommendOptions } from '../src/engine/recommend'
+import { CAREER_BREADTH_HELPS_BONUS, CAREER_HELPS_BONUS, recommend, type Exclusion, type Profile, type RecommendOptions } from '../src/engine/recommend'
 import { cleanPlans, cleanProfile } from '../src/utils/sanitize'
 import { reasonText } from '../src/i18n/format'
 import { interpolate, type Params } from '../src/i18n/interpolate'
@@ -169,15 +169,11 @@ describe('career goal and breadth', () => {
   // have the job's field as their main one, so the goal used to leave breadth as it was.
   const empty: Profile = { results: [], skills: {}, interests: [], goal: 'balanced' }
   const goal = careerGoal(real, 'management-consultant', ['finance'])!
-  const related = (code: string) => {
-    const row = goalTier(goal, real.subjects[code]!, real)
-    return row.tier === 'helps' || (row.tier === 'some' && row.reasons.some((r) => r.kind === 'touches' || r.kind === 'skill'))
-  }
   const build = (career?: string) =>
     generatePlan({ data: real, profile: { ...empty, ...(career ? { career } : {}) }, course: 'B-COM', courseYear: 2026, major: 'finance', startYear: 2027, startPeriod: 'semester-1' })
   const breadthOf = (plan: Plan) => plan.terms.flatMap((t) => t.subjects).filter((c) => real.subjects[c]?.categories['B-COM'] === 'breadth')
 
-  it('nudges breadth that relates to the job, more for its own field, never what only sits nearby', () => {
+  it('nudges breadth only when its main field is the job’s, never one that only touches it', () => {
     const opts: RecommendOptions = { course: 'B-COM', category: 'breadth', level: 2, term: { year: 2027, period: 'semester-1' }, goalComponents: ['finance'], eligibleWith: [] }
     const recs = recommend(real, { ...empty, career: 'management-consultant' }, opts)
     const effect = (code: string) => recs.find((r) => r.code === code)?.factors?.find((f) => f.key === 'career')?.effect
@@ -185,36 +181,48 @@ describe('career goal and breadth', () => {
     const some = recs.filter((r) => goalTier(goal, real.subjects[r.code]!, real).tier === 'some')
     expect(helps.length).toBeGreaterThan(0)
     for (const r of helps) expect(effect(r.code), r.code).toBe(CAREER_BREADTH_HELPS_BONUS)
-    expect(some.some((r) => effect(r.code) === CAREER_RELATED_BONUS)).toBe(true)
-    for (const r of some) expect(effect(r.code), r.code).toBe(related(r.code) ? CAREER_RELATED_BONUS : undefined)
-    expect(recs.find((r) => effect(r.code) === CAREER_RELATED_BONUS)!.reasons.map((n) => n.key)).toContain('careerRelated')
+    // Touching the job's field on the side, or using a skill it asks for, isn't enough.
+    const touching = some.filter((r) => goalTier(goal, real.subjects[r.code]!, real).reasons.some((x) => x.kind === 'touches' || x.kind === 'skill'))
+    expect(touching.length).toBeGreaterThan(0)
+    for (const r of some) expect(effect(r.code), r.code).toBeUndefined()
+    for (const r of touching) expect(r.reasons.map((n) => n.key), r.code).not.toContain('careerHelps')
     // Inside the degree the nudge is as before.
     const major = recommend(real, { ...empty, career: 'management-consultant' }, { ...opts, category: 'commerce' })
     const m = major.find((r) => r.factors?.some((f) => f.key === 'career'))!
     expect(m.factors!.find((f) => f.key === 'career')!.effect).toBe(CAREER_HELPS_BONUS)
   })
 
+  // A plan's breadth: B-SCI Computing and Software Systems aiming at UX design has breadth whose
+  // main field is the job's (a Finance student aiming at consulting has none, so gets no nudge there).
+  const ux = careerGoal(real, 'user-experience-designer', ['computing-and-software-systems'])!
+  const servesUx = (code: string) => goalTier(ux, real.subjects[code]!, real).tier === 'helps'
+  const buildSci = (career?: string) =>
+    generatePlan({ data: real, profile: { ...empty, ...(career ? { career } : {}) }, course: 'B-SCI', courseYear: 2026, major: 'computing-and-software-systems', startYear: 2027, startPeriod: 'semester-1' })
+  const sciBreadth = (plan: Plan) => plan.terms.flatMap((t) => t.subjects).filter((c) => real.subjects[c]?.categories['B-SCI'] === 'breadth')
+
   it('steers the plan’s breadth toward the job, and the plan still checks out', () => {
-    const base = build().plan
-    const plan = build('management-consultant').plan
-    expect(breadthOf(plan).filter(related).length).toBeGreaterThan(breadthOf(base).filter(related).length)
+    const base = buildSci().plan
+    const plan = buildSci('user-experience-designer').plan
+    expect(sciBreadth(plan).filter(servesUx).length).toBeGreaterThan(sciBreadth(base).filter(servesUx).length)
     const unmet = (p: Plan) => checkCourse(p, real).statuses.filter((r) => r.status !== 'ok').map((r) => r.ruleId)
     expect(unmet(plan)).toEqual(unmet(base))
     expect(checkTerms(plan, real).filter((i) => i.severity === 'error')).toEqual([])
+    // Finance aiming at consulting: no breadth has the job's main field, so breadth stays as it was.
+    expect(breadthOf(build('management-consultant').plan)).toEqual(breadthOf(build().plan))
   })
 
   it('says when the goal is why an elective was picked, in the reader’s language', () => {
-    const { plan, notes } = build('management-consultant')
+    const { plan, notes } = buildSci('user-experience-designer')
     const forGoal = notes.filter((n) => n.key === 'added' && typeof n.params.career_en === 'string')
     expect(forGoal.length).toBeGreaterThan(0)
     for (const n of forGoal) {
       expect(plan.terms.flatMap((t) => t.subjects), String(n.params.code)).toContain(n.params.code)
-      expect(n.text).toMatch(n.params.related ? /; it relates to Management consultant\.$/ : /; it helps toward Management consultant\.$/)
+      expect(n.text).toMatch(/; it helps toward User experience designer\.$/)
     }
-    expect(forGoal.some((n) => breadthOf(plan).includes(String(n.params.code)))).toBe(true)
+    expect(forGoal.some((n) => sciBreadth(plan).includes(String(n.params.code)))).toBe(true)
     const zh = forGoal[0]!.params.career_zh
     expect(typeof zh === 'string' && zh.length > 0).toBe(true)
     // No goal, no such note.
-    expect(build().notes.some((n) => 'career_en' in n.params)).toBe(false)
+    expect(buildSci().notes.some((n) => 'career_en' in n.params)).toBe(false)
   })
 })

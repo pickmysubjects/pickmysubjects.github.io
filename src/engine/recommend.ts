@@ -151,13 +151,11 @@ export const CAREER_HELPS_BONUS = 4
 /**
  * Breadth is the student's own choice outside the major, and nothing else there lifts the subjects
  * that serve the goal (inside the major, the major's nudge does): one whose main field is the job's
- * gets twice the nudge, about half what naming that field as an interest gives. One that covers the
- * job's field on the side or uses a skill the job asks for (the career page's "somewhat related",
- * not a merely nearby field) gets a small one, so among breadth that fits about as well, the goal
- * decides. Neither goes past a cap or the course's rules: the nudge is only for what fits.
+ * gets twice the nudge, about half what naming that field as an interest gives. Breadth that only
+ * touches the job's field on the side, or uses a skill the job asks for, gets nothing: that picked
+ * film and art subjects for a finance career. The nudge never goes past a cap or the course's rules.
  */
 export const CAREER_BREADTH_HELPS_BONUS = CAREER_HELPS_BONUS * 2
-export const CAREER_RELATED_BONUS = 2
 /** Subjects done before the student's own choices start to count, and how much they move a score. */
 const PAST_CHOICES_MIN = 4
 const PAST_CHOICE_NUDGE = 4
@@ -563,11 +561,6 @@ export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions =
               ? note('careerHelps', { topics: field.topics.join(', '), career, ...names }, `Helps toward ${career}: covers ${field.topics.join(', ')}.`)
               : note('careerRecommended', { career, ...names }, `Recommended on the way to ${career}.`)
         rec.reasons.splice(at < 0 ? rec.reasons.length : at, 0, said)
-      } else if (fits && breadth && row.tier === 'some' && row.reasons.some((r) => r.kind === 'touches' || r.kind === 'skill')) {
-        const names = careerNameParams(goal.target)
-        const career = goal.target.names.en
-        shift(rec, 'career', CAREER_RELATED_BONUS, { career, ...names, related: 1 })
-        rec.reasons.push(note('careerRelated', { career, ...names }, `Related to ${career}, your career goal.`))
       }
     }
     if (opts.termSubjects && termBefore) {

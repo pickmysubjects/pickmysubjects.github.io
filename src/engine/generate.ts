@@ -255,7 +255,7 @@ function buildPlan(given: GenerateInput): GenerateResult {
       // Picked for the career goal (another subject would have come first without it): the note
       // says so, with the career's names (the reader's language picks one).
       const goal = pick.career
-      const towards = goal ? `; it ${goal.related ? 'relates to' : 'helps toward'} ${goal.career}` : ''
+      const towards = goal ? `; it helps toward ${goal.career}` : ''
       notes.push(note('added', { code: pick.code, year: term.year, period: term.period, rule: pick.ruleId, ...(goal ?? {}) }, `${pick.code} added in ${term.year} ${term.period} for: ${pick.why}${towards}.`))
     }
   }
@@ -393,10 +393,10 @@ function buildPlan(given: GenerateInput): GenerateResult {
     if (n.key === 'added' && typeof n.params.code === 'string') {
       const now = swappedTo.get(n.params.code)
       if (now) {
-        n.text = n.text.replace(n.params.code, now).replace(/; it (?:helps toward|relates to) .*\.$/, '.')
+        n.text = n.text.replace(n.params.code, now).replace(/; it helps toward .*\.$/, '.')
         n.params.code = now
         // The career goal chose the subject that was replaced, not this one.
-        for (const k of Object.keys(n.params)) if (k === 'career' || k === 'related' || k.startsWith('career_')) delete n.params[k]
+        for (const k of Object.keys(n.params)) if (k === 'career' || k.startsWith('career_')) delete n.params[k]
       }
     }
     const where = typeof n.params.code === 'string' && 'year' in n.params ? terms.find((t) => t.subjects.includes(n.params.code as string)) : undefined

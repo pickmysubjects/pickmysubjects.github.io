@@ -32,7 +32,7 @@ const byRule = computed(() => {
     // Picked for the career goal: say so, with the career's name in the reader's language.
     if (typeof n.params.career_en === 'string') {
       const career = String(n.params[`career_${t.value('careerLang')}`] ?? n.params.career_en)
-      g.why.push(t.value(n.params.related ? 'plan.howCareerRelated' : 'plan.howCareer', { code, career }))
+      g.why.push(t.value('plan.howCareer', { code, career }))
     }
     groups.set(id, g)
   }
