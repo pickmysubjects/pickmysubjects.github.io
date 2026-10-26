@@ -42,7 +42,6 @@ export type RatingField =
   | 'tags'
   | 'exam'
   | 'lectures'
-  | 'attendance'
   | 'groups'
   | 'cost'
   | 'languages'
@@ -78,12 +77,11 @@ export const RATINGS_FORM: GoogleFormConfig<RatingField> = {
     // Until then the rating form hides that question (hasQuestion needs a real entry id).
     exam: 'TODO-entry-final-exam',
     lectures: 'TODO-entry-lectures-recorded',
-    attendance: 'TODO-entry-attendance-checked',
     groups: 'TODO-entry-group-work',
     cost: 'TODO-entry-extra-cost',
     languages: 'TODO-entry-programming-languages',
   },
-  optional: ['examDifficulty', 'usefulness', 'interest', 'teaching', 'overall', 'wamBand', 'tags', 'exam', 'lectures', 'attendance', 'groups', 'cost', 'languages'],
+  optional: ['examDifficulty', 'usefulness', 'interest', 'teaching', 'overall', 'wamBand', 'tags', 'exam', 'lectures', 'groups', 'cost', 'languages'],
 }
 
 export type FeedbackField = 'topic' | 'rating' | 'subject' | 'message' | 'contact' | 'language'

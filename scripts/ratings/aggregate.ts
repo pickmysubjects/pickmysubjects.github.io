@@ -45,7 +45,6 @@ export const COLUMNS = {
   // columns yet simply has no facts.
   exam: FACT_QUESTIONS.exam.title,
   lectures: FACT_QUESTIONS.lectures.title,
-  attendance: FACT_QUESTIONS.attendance.title,
   groups: FACT_QUESTIONS.groups.title,
   cost: FACT_QUESTIONS.cost.title,
   languages: LANGUAGES_TITLE,
@@ -67,7 +66,6 @@ const ANSWER_COLUMNS = [
   COLUMNS.tags,
   COLUMNS.exam,
   COLUMNS.lectures,
-  COLUMNS.attendance,
   COLUMNS.groups,
   COLUMNS.cost,
   COLUMNS.languages,

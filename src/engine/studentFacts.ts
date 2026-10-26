@@ -1,8 +1,8 @@
 import { z } from 'zod'
 
 /**
- * Facts students report that the Handbook doesn't say (exam format, recordings, attendance,
- * group work, extra cost, programming languages). Collected by optional questions on the ratings
+ * Facts students report that the Handbook doesn't say (exam format, recordings, group work,
+ * extra cost, programming languages). Collected by optional questions on the ratings
  * form and published per subject only once enough students agree (scripts/ratings/aggregate.ts).
  *
  * Question titles and option labels are exactly as on the Google Form (docs/ratings-setup.md):
@@ -23,10 +23,6 @@ export const FACT_QUESTIONS = {
   lectures: {
     title: 'Lectures recorded',
     options: { Yes: 'yes', Some: 'some', No: 'no' },
-  },
-  attendance: {
-    title: 'Tutorial or lab attendance checked',
-    options: { Yes: 'yes', No: 'no' },
   },
   groups: {
     title: 'Group work',
@@ -50,7 +46,6 @@ export const NO_LANGUAGE = 'None'
 const IDS = {
   exam: ['open', 'closed', 'none'],
   lectures: ['yes', 'some', 'no'],
-  attendance: ['yes', 'no'],
   groups: ['assigned', 'choose', 'none'],
   cost: ['yes', 'no'],
 } as const satisfies Record<FactKey, readonly [string, ...string[]]>
@@ -64,7 +59,6 @@ export const studentFactsSchema = z
     n: z.number().int().min(MIN_FACT_AGREE),
     exam: agreed(IDS.exam).optional(),
     lectures: agreed(IDS.lectures).optional(),
-    attendance: agreed(IDS.attendance).optional(),
     groups: agreed(IDS.groups).optional(),
     cost: agreed(IDS.cost).optional(),
     languages: z.partialRecord(z.enum(LANGUAGES), z.number().int().min(MIN_FACT_AGREE)).optional(),

@@ -9,6 +9,10 @@ export interface SubjectDetail {
   breadthFor?: string[]
   comments?: StudentComment[]
   studentFacts?: StudentFacts
+  /** Handbook facts shown only in the subject page's facts row. */
+  prescribedTexts?: boolean
+  examBook?: 'open' | 'closed'
+  languages?: Subject['languages']
   /** Subjects often taken with it (see buildTakenWith), worked out at build. */
   takenWith?: string[]
 }
@@ -29,13 +33,14 @@ export function splitDataset(data: Dataset, takenWith: Record<string, string[]> 
   const subjects: Record<string, Subject> = {}
   const details: Record<string, Record<string, SubjectDetail>> = {}
   for (const [code, s] of Object.entries(data.subjects)) {
-    const { about, discussions, breadthFor, comments, studentFacts, ...rest } = s
+    const { about, discussions, breadthFor, comments, studentFacts, prescribedTexts, examBook, languages, ...rest } = s
     const lean: Subject = { ...rest } as Subject
     if (about) lean.about = { ...about, learn: { en: about.learn.en, zh: '' }, outcomes: [] }
     if (discussions) lean.discussions = discussions.map((d) => ({ ...d, points: [] }))
     subjects[code] = lean
     const tw = takenWith[code]
-    if (about || discussions || breadthFor || comments || studentFacts || tw) {
+    const hb = prescribedTexts !== undefined || examBook !== undefined || languages !== undefined
+    if (about || discussions || breadthFor || comments || studentFacts || hb || tw) {
       const d: SubjectDetail = {}
       if (tw) d.takenWith = tw
       if (about) d.about = about
@@ -43,6 +48,9 @@ export function splitDataset(data: Dataset, takenWith: Record<string, string[]> 
       if (breadthFor) d.breadthFor = breadthFor
       if (comments) d.comments = comments
       if (studentFacts) d.studentFacts = studentFacts
+      if (prescribedTexts !== undefined) d.prescribedTexts = prescribedTexts
+      if (examBook) d.examBook = examBook
+      if (languages) d.languages = languages
       ;(details[detailArea(code)] ??= {})[code] = d
     }
   }

@@ -45,7 +45,6 @@ const hasLanguages = hasQuestion(RATINGS_FORM, 'languages')
 const OPTION_TEXT: Record<FactKey, Record<string, string>> = {
   exam: { open: 'studentFacts.q.examOpen', closed: 'studentFacts.q.examClosed', none: 'studentFacts.q.examNone' },
   lectures: { yes: 'rating.yes', some: 'studentFacts.q.some', no: 'rating.no' },
-  attendance: { yes: 'rating.yes', no: 'rating.no' },
   groups: { assigned: 'studentFacts.q.groupsAssigned', choose: 'studentFacts.q.groupsChoose', none: 'studentFacts.q.groupsNone' },
   cost: { yes: 'rating.yes', no: 'rating.no' },
 }
@@ -145,7 +144,6 @@ async function send(): Promise<void> {
       tags: hasTags ? tags.value : [],
       exam: facts.value.exam ?? '',
       lectures: facts.value.lectures ?? '',
-      attendance: facts.value.attendance ?? '',
       groups: facts.value.groups ?? '',
       cost: facts.value.cost ?? '',
       languages: hasLanguages ? languages.value : [],

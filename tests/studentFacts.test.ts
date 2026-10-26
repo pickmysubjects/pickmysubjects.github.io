@@ -8,7 +8,7 @@ import { FACT_QUESTIONS, LANGUAGES, LANGUAGES_TITLE, studentFactsSchema } from '
 import { interpolate, type Translate } from '../src/i18n/interpolate'
 import { en } from '../src/i18n/messages/en'
 import { hasQuestion, isFormReady } from '../src/utils/googleForm'
-import { factLabels, studentFactsHtml } from '../src/utils/studentFactsHtml'
+import { factLabels, factsRow, studentFactsHtml } from '../src/utils/studentFactsHtml'
 import { realData } from './realData'
 
 const now = new Date('2026-10-27')
@@ -17,7 +17,7 @@ const t: Translate = (key, params) => {
   return typeof v === 'string' ? interpolate(v, params) : key
 }
 
-type Fact = 'exam' | 'lectures' | 'attendance' | 'groups' | 'cost' | 'languages'
+type Fact = 'exam' | 'lectures' | 'groups' | 'cost' | 'languages'
 let n = 0
 /**
  * One form response with only the given facts answered. Identical answers count once (spam
@@ -83,9 +83,9 @@ describe('student facts aggregation', () => {
   })
 
   it('counts a facts-only response as a rating, and nothing below 3 rows is published', () => {
-    const three = aggregate([row({ attendance: 'No' }), row({ attendance: 'No' }), row({ attendance: 'No' })], now)
-    expect(three.subjects.COMP30027?.facts?.attendance).toEqual({ value: 'no', count: 3 })
-    expect(aggregate([row({ attendance: 'No' }), row({ attendance: 'No' })], now).subjects).toEqual({})
+    const three = aggregate([row({ lectures: 'No' }), row({ lectures: 'No' }), row({ lectures: 'No' })], now)
+    expect(three.subjects.COMP30027?.facts?.lectures).toEqual({ value: 'no', count: 3 })
+    expect(aggregate([row({ lectures: 'No' }), row({ lectures: 'No' })], now).subjects).toEqual({})
   })
 
   it('writes facts that pass the schema', () => {
@@ -130,7 +130,7 @@ describe('student facts schema', () => {
 describe('student facts in the app', () => {
   it('keeps the form working while the questions are placeholders', () => {
     expect(isFormReady(RATINGS_FORM)).toBe(true)
-    for (const k of ['exam', 'lectures', 'attendance', 'groups', 'cost', 'languages'] as const) {
+    for (const k of ['exam', 'lectures', 'groups', 'cost', 'languages'] as const) {
       expect(RATINGS_FORM.optional).toContain(k)
       if (!/^entry\.\d+$/.test(RATINGS_FORM.entries[k])) expect(hasQuestion(RATINGS_FORM, k)).toBe(false)
     }
@@ -148,12 +148,45 @@ describe('student facts in the app', () => {
   })
 
   it('prerenders the row with the count and the explanation, or nothing', () => {
-    const html = studentFactsHtml(t, { n: 5, lectures: { value: 'yes', count: 4 }, languages: { 'C++': 3 } })
+    const html = studentFactsHtml(t, { studentFacts: { n: 5, lectures: { value: 'yes', count: 4 }, languages: { 'C++': 3 } } })
     expect(html).toContain('From students')
     expect(html).toContain('Lectures recorded · C++')
     expect(html).toContain('(5 students)')
-    expect(html).toContain('anonymous student ratings')
-    expect(studentFactsHtml(t, undefined)).toBe('')
+    expect(html).toContain('anonymous ratings')
+    expect(html).not.toContain('Handbook:')
+    expect(studentFactsHtml(t, {})).toBe('')
+  })
+
+  it('shows Handbook facts first and lets them win over what students say', () => {
+    const studentFacts = {
+      n: 6,
+      exam: { value: 'open' as const, count: 4 },
+      lectures: { value: 'yes' as const, count: 4 },
+      cost: { value: 'no' as const, count: 3 },
+      languages: { R: 3 },
+    }
+    const row = factsRow(t, { studentFacts, examBook: 'closed', prescribedTexts: true, languages: ['Python'] })
+    expect(row.handbook).toEqual(['Closed-book exam', 'Prescribed textbook', 'Python'])
+    // Exam, cost and languages are answered by the Handbook; only the recordings item is left.
+    expect(row.students).toEqual(['Lectures recorded'])
+    expect(row.n).toBe(6)
+    // Students fill in what the Handbook doesn't answer.
+    expect(factsRow(t, { studentFacts, prescribedTexts: false }).students).toEqual(['Open-book exam', 'Lectures recorded', 'R'])
+    // Handbook alone: no student count.
+    const only = studentFactsHtml(t, { prescribedTexts: false })
+    expect(only).toContain('<strong>Handbook:</strong> No prescribed textbook')
+    expect(only).not.toContain('students)')
+    expect(factsRow(t, { studentFacts: { n: 3, exam: { value: 'closed', count: 3 } }, examBook: 'open' })).toEqual({ handbook: ['Open-book exam'], students: [], n: 0 })
+  })
+
+  it('no longer asks whether attendance was checked', () => {
+    expect(Object.keys(FACT_QUESTIONS)).toEqual(['exam', 'lectures', 'groups', 'cost'])
+    expect(RATINGS_FORM.optional).not.toContain('attendance')
+    expect('attendance' in RATINGS_FORM.entries).toBe(false)
+    expect(COLUMNS).not.toHaveProperty('attendance')
+    expect(studentFactsSchema.safeParse({ n: 3, attendance: { value: 'yes', count: 3 } }).success).toBe(false)
+    expect(readFileSync(join(__dirname, '..', 'docs', 'ratings-setup.md'), 'utf8')).not.toContain('attendance checked')
+    expect(t('studentFacts.q.attendance')).toBe('studentFacts.q.attendance')
   })
 
   it('travels in the detail chunk and comes back with it', () => {

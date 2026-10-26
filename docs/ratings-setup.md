@@ -80,24 +80,23 @@ Each one is published only once at least 3 people have answered it.
 
 ### Facts the Handbook doesn't give
 
-Six more optional questions ask what the Handbook doesn't say. Add them to the ratings form by hand, with the titles and option labels **exactly** as below (same spelling, capitals and punctuation): the weekly job matches answers by these words, and the app sends these labels as the answers. None of them is required.
+Five more optional questions ask what the Handbook doesn't say. Add them to the ratings form by hand, with the titles and option labels **exactly** as below (same spelling, capitals and punctuation): the weekly job matches answers by these words, and the app sends these labels as the answers. None of them is required.
 
 | Question title | Type | Options |
 |---|---|---|
 | `Final exam` | multiple choice | `Open book`, `Closed book`, `No final exam`, `Not sure` |
 | `Lectures recorded` | multiple choice | `Yes`, `Some`, `No` |
-| `Tutorial or lab attendance checked` | multiple choice | `Yes`, `No` |
 | `Group work` | multiple choice | `Groups assigned`, `Choose your own group`, `No group work` |
 | `Had to buy a textbook or online homework access` | multiple choice | `Yes`, `No` |
 | `Programming languages used` | checkboxes | `Python`, `R`, `Java`, `C`, `C++`, `JavaScript`, `SQL`, `MATLAB`, `None` |
 
-Then take a pre-filled link (as in step 2) and put each `entry.<number>` into `exam`, `lectures`, `attendance`, `groups`, `cost` and `languages` in `RATINGS_FORM` (`src/config.ts`), replacing the `TODO-entry-…` placeholders. The app hides each question until its entry id is real, so nothing breaks before then; a sheet without these columns just has no facts.
+Then take a pre-filled link (as in step 2) and put each `entry.<number>` into `exam`, `lectures`, `groups`, `cost` and `languages` in `RATINGS_FORM` (`src/config.ts`), replacing the `TODO-entry-…` placeholders. The app hides each question until its entry id is real, so nothing breaks before then; a sheet without these columns just has no facts.
 
 What gets published (in `data/real/ratings.json`, as `facts` on a subject, see `src/engine/studentFacts.ts`):
 
 - A single-choice answer shows once at least 3 students gave it and it is at least 60% of the answers to that question. `Not sure` doesn't count as an answer.
 - A language shows once at least 3 students ticked it. `None` is never shown.
-- `n` is how many students answered any of the six. Rows go through the same spam filter as ratings.
+- `n` is how many students answered any of the five. Rows go through the same spam filter as ratings.
 
 The subject page shows them as one "From students" line, e.g. "Closed-book exam · Lectures recorded · Python (5 students)".
 

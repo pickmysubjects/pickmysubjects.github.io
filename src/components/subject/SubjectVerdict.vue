@@ -80,7 +80,7 @@ const discussions = computed(() => (props.detailReady ? (props.subject.discussio
       </dl>
     </template>
     <p v-else class="muted">{{ t('subject.noRatings') }}</p>
-    <StudentFactsRow v-if="detailReady" :facts="subject.studentFacts" />
+    <StudentFactsRow v-if="detailReady" :subject="subject" />
 
     <p v-if="thanks" class="good" role="status">{{ t('rating.sent') }}</p>
     <p v-else-if="rated.has(subject.code)" class="muted">{{ t('rating.rated') }}</p>

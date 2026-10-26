@@ -308,8 +308,8 @@ function subjectPage(code: LocaleCode, s: Subject): Page {
   const [rd, rw, rg] = [sig?.difficulty, sig?.workload, sig?.grading]
   const ratedHere = sig !== undefined && rd !== undefined && rw !== undefined && rg !== undefined
   if (ratedHere) reviews.push(`<p>${esc(t('seo.ratings', { d: rd, w: rw, g: rg, n: sig.reviews }))}</p>`)
-  // What students agree on that the Handbook doesn't say (3+ agreeing), as in the app.
-  const factsRow = studentFactsHtml(t, s.studentFacts)
+  // Handbook facts, then what students agree on that the Handbook doesn't answer (3+ agreeing), as in the app.
+  const factsRow = studentFactsHtml(t, s)
   if (factsRow) reviews.push(factsRow)
   for (const d of ds) {
     const l = discussionLabels(t, d)

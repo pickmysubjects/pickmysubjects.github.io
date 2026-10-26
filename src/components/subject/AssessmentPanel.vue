@@ -5,6 +5,7 @@ import { periodsFor, skillsOf, topicsOf, type Subject } from '@/engine'
 import { useDataset } from '@/composables/useDataset'
 import { useI18n } from '@/i18n'
 import { summariseAssessment } from '@/utils/assessment'
+import { attendanceText } from '@/utils/attendance'
 
 const props = defineProps<{ subject: Subject; year: number }>()
 const { t } = useI18n()
@@ -57,7 +58,7 @@ const otherTerms = computed(() => {
       <span v-if="examHurdle" class="chip chip-warn"><TriangleAlert :size="14" aria-hidden="true" /> {{ t('assess.mustPassExam') }}</span>
       <span v-if="otherHurdle" class="chip chip-warn"><TriangleAlert :size="14" aria-hidden="true" /> {{ t('assess.hurdles') }}</span>
       <span v-if="subject.minAttendance" class="chip chip-warn">
-        <TriangleAlert :size="14" aria-hidden="true" /> {{ t('assess.attendance', { n: subject.minAttendance }) }}
+        <TriangleAlert :size="14" aria-hidden="true" /> {{ attendanceText(t, subject.minAttendance, subject.attendanceAppliesTo) }}
       </span>
     </p>
     <p v-if="otherTerms" class="assess-muted assess-small">{{ t('assess.otherTerms') }}</p>

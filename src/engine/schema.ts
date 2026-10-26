@@ -1,6 +1,7 @@
 import type { GradeOffset } from './grades'
 import type { StudentComment } from './comments'
-import type { StudentFacts } from './studentFacts'
+import { LANGUAGES, type StudentFacts } from './studentFacts'
+import { ATTEND_CLASSES } from './handbookFacts'
 import { z } from 'zod'
 
 /**
@@ -282,6 +283,13 @@ export const subjectFileSchema = z
     // Marked pass/fail only: no mark, and it doesn't count in the WAM.
     pass_fail: z.boolean().optional(),
     min_attendance: z.number().min(1).max(100).optional(), // % of classes you must attend
+    // Which classes that share is of, when the Handbook names them; absent = classes in general.
+    attendance_applies_to: z.array(z.enum(ATTEND_CLASSES)).min(1).optional(),
+    // From the Handbook page (scripts/extract-handbook-facts.ts), only where it says so plainly:
+    // whether it lists prescribed texts, an open- or closed-book final exam, programming languages named.
+    prescribed_texts: z.boolean().optional(),
+    exam_book: z.enum(['open', 'closed']).optional(),
+    languages: z.array(z.enum(LANGUAGES)).min(1).optional(),
     signals: signals.optional(),
     handbook: handbookUrl.optional(),
     source_year: z.number().int(),
@@ -316,6 +324,10 @@ export const subjectFileSchema = z
     weeklyContactHours: s.weekly_contact_hours,
     passFail: s.pass_fail === true,
     minAttendance: s.min_attendance,
+    attendanceAppliesTo: s.attendance_applies_to,
+    prescribedTexts: s.prescribed_texts,
+    examBook: s.exam_book,
+    languages: s.languages,
     signals: s.signals,
     handbook: s.handbook,
     sourceYear: s.source_year,

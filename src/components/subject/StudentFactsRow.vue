@@ -1,21 +1,30 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import InfoTip from '@/components/InfoTip.vue'
-import type { StudentFacts } from '@/engine/studentFacts'
 import { useI18n } from '@/i18n'
-import { factLabels } from '@/utils/studentFactsHtml'
+import { factsRow, type FactsSource } from '@/utils/studentFactsHtml'
 
-/** "From students: Closed-book exam · Lectures recorded · Python (N students)". Hidden when empty. */
-const props = defineProps<{ facts?: StudentFacts }>()
+/**
+ * "Handbook: Closed-book exam · Python  From students: Lectures recorded (N students) ⓘ".
+ * Student facts show only for items the Handbook doesn't answer. Hidden when empty.
+ */
+const props = defineProps<{ subject: FactsSource }>()
 const { t } = useI18n()
-const labels = computed(() => factLabels(t.value, props.facts))
+const row = computed(() => factsRow(t.value, props.subject))
 </script>
 
 <template>
-  <p v-if="facts && labels.length" class="facts">
-    <span class="facts-title">{{ t('studentFacts.title') }}</span>
-    <span class="facts-list">{{ labels.join(' · ') }}</span>
-    <span class="facts-n">{{ t('studentFacts.count', { n: facts.n }) }}<InfoTip :text="t('studentFacts.info')" /></span>
+  <p v-if="row.handbook.length || row.students.length" class="facts">
+    <template v-if="row.handbook.length">
+      <span class="facts-title">{{ t('studentFacts.handbook') }}</span>
+      <span class="facts-list">{{ row.handbook.join(' · ') }}</span>
+    </template>
+    <template v-if="row.students.length">
+      <span class="facts-title">{{ t('studentFacts.title') }}</span>
+      <span class="facts-list">{{ row.students.join(' · ') }}</span>
+      <span class="facts-n">{{ t('studentFacts.count', { n: row.n }) }}</span>
+    </template>
+    <InfoTip :text="t('studentFacts.info')" />
   </p>
 </template>
 

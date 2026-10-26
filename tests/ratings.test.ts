@@ -24,7 +24,6 @@ function row(over: Partial<Record<keyof typeof COLUMNS, string>> = {}): string[]
     tags: '',
     exam: '',
     lectures: '',
-    attendance: '',
     groups: '',
     cost: '',
     languages: '',
