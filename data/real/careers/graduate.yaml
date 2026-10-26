@@ -135,3 +135,174 @@
     hi: "एक या ज़्यादा संबंधित जीव विज्ञान विषयों से लेवल 2 या 3 (या समकक्ष) के तीन विषय, शुरू करने से 10 साल के भीतर पूरे।"
   covers:
     - { topic: biology, level: 2, count: 3 }
+- job: computing-professional
+  course: MC-IT
+  title: "Master of Information Technology"
+  source: https://handbook.unimelb.edu.au/2026/courses/mc-it/entry-participation-requirements
+  checked: 2026-10-27
+  entry:
+    en: "A bachelor degree in any discipline with a weighted average mark (WAM) of at least 65%, plus the prerequisite below."
+    zh: "任何专业的学士学位，加权平均分（WAM）至少 65%，再加下面的先修课。"
+    zh-TW: "任何科系的學士學位，加權平均（WAM）至少 65%，再加上下面的先修科目。"
+    ja: "分野を問わない学士号で WAM（加重平均点）65% 以上、さらに下記の前提科目。"
+    ko: "전공 무관 학사 학위와 WAM(가중 평균) 65% 이상, 그리고 아래 선수 과목."
+    vi: "Bằng cử nhân ngành bất kỳ với điểm trung bình có trọng số (WAM) tối thiểu 65%, cộng môn tiên quyết bên dưới."
+    ms: "Ijazah sarjana muda dalam apa-apa bidang dengan purata wajaran (WAM) sekurang-kurangnya 65%, serta prasyarat di bawah."
+    id: "Gelar sarjana di bidang apa pun dengan nilai rata-rata tertimbang (WAM) minimal 65%, ditambah prasyarat di bawah."
+    hi: "किसी भी विषय में बैचलर डिग्री, कम से कम 65% WAM (भारित औसत अंक) के साथ, और नीचे दी गई पूर्व-आवश्यक पढ़ाई।"
+  prerequisites:
+    en: "One technical subject focused on computer programming, at any university year level."
+    zh: "一门以编程为主的技术类课程，大学任何年级都可以。"
+    zh-TW: "一門以程式設計為主的技術類科目，大學任何年級都可以。"
+    ja: "プログラミング中心の技術系科目 1 つ（大学の何年次でも可）。"
+    ko: "프로그래밍 중심의 기술 과목 1개(대학 어느 학년이든 가능)."
+    vi: "Một môn kỹ thuật tập trung vào lập trình máy tính, ở bất kỳ năm học đại học nào."
+    ms: "Satu subjek teknikal yang berfokus pada pengaturcaraan komputer, pada mana-mana tahun pengajian universiti."
+    id: "Satu mata kuliah teknis yang berfokus pada pemrograman komputer, di tingkat tahun kuliah mana pun."
+    hi: "कंप्यूटर प्रोग्रामिंग पर केंद्रित एक तकनीकी विषय, विश्वविद्यालय के किसी भी साल के स्तर पर।"
+  covers:
+    - { topic: programming }
+- job: business-analyst
+  course: MC-DATASC
+  title: "Master of Data Science"
+  source: https://handbook.unimelb.edu.au/2026/courses/mc-datasc/entry-participation-requirements
+  checked: 2026-10-27
+  entry:
+    en: "An undergraduate degree in any discipline with a weighted average mark of at least 65%, plus the prerequisites below. Applicants are ranked on their results."
+    zh: "任何专业的本科学位，加权平均分至少 65%，再加下面的先修课。按成绩排名录取。"
+    zh-TW: "任何科系的大學學位，加權平均至少 65%，再加上下面的先修科目。依成績排名錄取。"
+    ja: "分野を問わない学士号で加重平均点 65% 以上、さらに下記の前提科目。成績で順位が決まります。"
+    ko: "전공 무관 학사 학위와 가중 평균 65% 이상, 그리고 아래 선수 과목. 성적으로 순위를 매깁니다."
+    vi: "Bằng cử nhân ngành bất kỳ với điểm trung bình có trọng số tối thiểu 65%, cộng các môn tiên quyết bên dưới. Xếp hạng theo kết quả học tập."
+    ms: "Ijazah sarjana muda dalam apa-apa bidang dengan purata wajaran sekurang-kurangnya 65%, serta prasyarat di bawah. Pemohon disusun mengikut keputusan."
+    id: "Gelar sarjana di bidang apa pun dengan nilai rata-rata tertimbang minimal 65%, ditambah prasyarat di bawah. Pelamar diperingkat berdasarkan nilai."
+    hi: "किसी भी विषय में बैचलर डिग्री, कम से कम 65% भारित औसत अंक के साथ, और नीचे दी गई पूर्व-आवश्यक पढ़ाई। चयन अंकों की रैंकिंग से होता है।"
+  prerequisites:
+    en: "One 12.5-point subject focused on computer programming (any year level), plus MAST10006 Calculus 2 and MAST10007 Linear Algebra, or equivalents."
+    zh: "一门 12.5 学分、以编程为主的课（任何年级），以及 MAST10006 Calculus 2 和 MAST10007 Linear Algebra，或同等课程。"
+    zh-TW: "一門 12.5 學分、以程式設計為主的科目（任何年級），以及 MAST10006 Calculus 2 和 MAST10007 Linear Algebra，或同等科目。"
+    ja: "プログラミング中心の 12.5 単位の科目 1 つ（何年次でも可）と、MAST10006 Calculus 2・MAST10007 Linear Algebra またはその同等科目。"
+    ko: "프로그래밍 중심의 12.5학점 과목 1개(어느 학년이든), 그리고 MAST10006 Calculus 2와 MAST10007 Linear Algebra 또는 동등 과목."
+    vi: "Một môn 12.5 tín chỉ tập trung vào lập trình (năm học bất kỳ), cùng MAST10006 Calculus 2 và MAST10007 Linear Algebra, hoặc môn tương đương."
+    ms: "Satu subjek 12.5 mata yang berfokus pada pengaturcaraan (mana-mana tahun), serta MAST10006 Calculus 2 dan MAST10007 Linear Algebra, atau yang setara."
+    id: "Satu mata kuliah 12.5 poin yang berfokus pada pemrograman (tahun mana pun), ditambah MAST10006 Calculus 2 dan MAST10007 Linear Algebra, atau yang setara."
+    hi: "प्रोग्रामिंग पर केंद्रित 12.5 पॉइंट का एक विषय (किसी भी साल का), साथ में MAST10006 Calculus 2 और MAST10007 Linear Algebra, या इनके समकक्ष।"
+  required: [MAST10006, MAST10007]
+  covers:
+    - { topic: programming }
+    - { disciplines: [MAST] }
+- job: civil-engineer
+  course: MC-CIVENG
+  title: "Master of Civil Engineering"
+  source: https://handbook.unimelb.edu.au/2026/courses/mc-civeng/entry-participation-requirements
+  checked: 2026-10-27
+  entry:
+    en: "A bachelor degree in any discipline with a weighted average mark (WAM) of at least 65%, plus the prerequisites below. Applicants are ranked on their results."
+    zh: "任何专业的学士学位，加权平均分（WAM）至少 65%，再加下面的先修课。按成绩排名录取。"
+    zh-TW: "任何科系的學士學位，加權平均（WAM）至少 65%，再加上下面的先修科目。依成績排名錄取。"
+    ja: "分野を問わない学士号で WAM（加重平均点）65% 以上、さらに下記の前提科目。成績で順位が決まります。"
+    ko: "전공 무관 학사 학위와 WAM(가중 평균) 65% 이상, 그리고 아래 선수 과목. 성적으로 순위를 매깁니다."
+    vi: "Bằng cử nhân ngành bất kỳ với điểm trung bình có trọng số (WAM) tối thiểu 65%, cộng các môn tiên quyết bên dưới. Xếp hạng theo kết quả học tập."
+    ms: "Ijazah sarjana muda dalam apa-apa bidang dengan purata wajaran (WAM) sekurang-kurangnya 65%, serta prasyarat di bawah. Pemohon disusun mengikut keputusan."
+    id: "Gelar sarjana di bidang apa pun dengan nilai rata-rata tertimbang (WAM) minimal 65%, ditambah prasyarat di bawah. Pelamar diperingkat berdasarkan nilai."
+    hi: "किसी भी विषय में बैचलर डिग्री, कम से कम 65% WAM (भारित औसत अंक) के साथ, और नीचे दी गई पूर्व-आवश्यक पढ़ाई। चयन अंकों की रैंकिंग से होता है।"
+  prerequisites:
+    en: "At least 25 points of maths equivalent to MAST10006 Calculus 2 and MAST10007 Linear Algebra, and at least 25 points of physics, chemistry, biology or computer science."
+    zh: "至少 25 学分的数学，相当于 MAST10006 Calculus 2 和 MAST10007 Linear Algebra；再加至少 25 学分的物理、化学、生物或计算机科学。"
+    zh-TW: "至少 25 學分的數學，相當於 MAST10006 Calculus 2 和 MAST10007 Linear Algebra；再加上至少 25 學分的物理、化學、生物或資訊科學。"
+    ja: "MAST10006 Calculus 2・MAST10007 Linear Algebra 相当の数学 25 単位以上と、物理・化学・生物・コンピュータサイエンスのいずれか 25 単位以上。"
+    ko: "MAST10006 Calculus 2와 MAST10007 Linear Algebra에 해당하는 수학 25학점 이상, 그리고 물리·화학·생물·컴퓨터 과학 중 하나 25학점 이상."
+    vi: "Ít nhất 25 tín chỉ toán tương đương MAST10006 Calculus 2 và MAST10007 Linear Algebra, cùng ít nhất 25 tín chỉ vật lý, hóa học, sinh học hoặc khoa học máy tính."
+    ms: "Sekurang-kurangnya 25 mata matematik setara MAST10006 Calculus 2 dan MAST10007 Linear Algebra, serta sekurang-kurangnya 25 mata fizik, kimia, biologi atau sains komputer."
+    id: "Minimal 25 poin matematika setara MAST10006 Calculus 2 dan MAST10007 Linear Algebra, serta minimal 25 poin fisika, kimia, biologi, atau ilmu komputer."
+    hi: "कम से कम 25 पॉइंट गणित, MAST10006 Calculus 2 और MAST10007 Linear Algebra के बराबर, और कम से कम 25 पॉइंट फ़िज़िक्स, केमिस्ट्री, बायोलॉजी या कंप्यूटर साइंस।"
+  required: [MAST10006, MAST10007]
+  covers:
+    - { disciplines: [MAST] }
+- job: mechanical-engineer
+  course: MC-MECHENG
+  title: "Master of Mechanical Engineering"
+  source: https://handbook.unimelb.edu.au/2026/courses/mc-mecheng/entry-participation-requirements
+  checked: 2026-10-27
+  entry:
+    en: "A bachelor degree in any discipline with a weighted average mark (WAM) of at least 65%, plus the prerequisites below. Applicants are ranked on their results."
+    zh: "任何专业的学士学位，加权平均分（WAM）至少 65%，再加下面的先修课。按成绩排名录取。"
+    zh-TW: "任何科系的學士學位，加權平均（WAM）至少 65%，再加上下面的先修科目。依成績排名錄取。"
+    ja: "分野を問わない学士号で WAM（加重平均点）65% 以上、さらに下記の前提科目。成績で順位が決まります。"
+    ko: "전공 무관 학사 학위와 WAM(가중 평균) 65% 이상, 그리고 아래 선수 과목. 성적으로 순위를 매깁니다."
+    vi: "Bằng cử nhân ngành bất kỳ với điểm trung bình có trọng số (WAM) tối thiểu 65%, cộng các môn tiên quyết bên dưới. Xếp hạng theo kết quả học tập."
+    ms: "Ijazah sarjana muda dalam apa-apa bidang dengan purata wajaran (WAM) sekurang-kurangnya 65%, serta prasyarat di bawah. Pemohon disusun mengikut keputusan."
+    id: "Gelar sarjana di bidang apa pun dengan nilai rata-rata tertimbang (WAM) minimal 65%, ditambah prasyarat di bawah. Pelamar diperingkat berdasarkan nilai."
+    hi: "किसी भी विषय में बैचलर डिग्री, कम से कम 65% WAM (भारित औसत अंक) के साथ, और नीचे दी गई पूर्व-आवश्यक पढ़ाई। चयन अंकों की रैंकिंग से होता है।"
+  prerequisites:
+    en: "At least 25 points of maths equivalent to MAST10006 Calculus 2 and MAST10007 Linear Algebra, and at least 25 points of physics equivalent to PHYC10003 Physics 1 and PHYC10004 Physics 2."
+    zh: "至少 25 学分的数学，相当于 MAST10006 Calculus 2 和 MAST10007 Linear Algebra；再加至少 25 学分的物理，相当于 PHYC10003 Physics 1 and PHYC10004 Physics 2。"
+    zh-TW: "至少 25 學分的數學，相當於 MAST10006 Calculus 2 和 MAST10007 Linear Algebra；再加上至少 25 學分的物理，相當於 PHYC10003 Physics 1 and PHYC10004 Physics 2。"
+    ja: "MAST10006 Calculus 2・MAST10007 Linear Algebra 相当の数学 25 単位以上と、PHYC10003 Physics 1 and PHYC10004 Physics 2 相当の物理 25 単位以上。"
+    ko: "MAST10006 Calculus 2와 MAST10007 Linear Algebra에 해당하는 수학 25학점 이상, 그리고 PHYC10003 Physics 1 and PHYC10004 Physics 2에 해당하는 물리 25학점 이상."
+    vi: "Ít nhất 25 tín chỉ toán tương đương MAST10006 Calculus 2 và MAST10007 Linear Algebra, cùng ít nhất 25 tín chỉ vật lý tương đương PHYC10003 Physics 1 and PHYC10004 Physics 2."
+    ms: "Sekurang-kurangnya 25 mata matematik setara MAST10006 Calculus 2 dan MAST10007 Linear Algebra, serta sekurang-kurangnya 25 mata fizik setara PHYC10003 Physics 1 and PHYC10004 Physics 2."
+    id: "Minimal 25 poin matematika setara MAST10006 Calculus 2 dan MAST10007 Linear Algebra, serta minimal 25 poin fisika setara PHYC10003 Physics 1 and PHYC10004 Physics 2."
+    hi: "कम से कम 25 पॉइंट गणित, MAST10006 Calculus 2 और MAST10007 Linear Algebra के बराबर, और कम से कम 25 पॉइंट फ़िज़िक्स, PHYC10003 Physics 1 and PHYC10004 Physics 2 के बराबर।"
+  required: [MAST10006, MAST10007, PHYC10003, PHYC10004]
+  covers:
+    - { disciplines: [MAST] }
+    - { disciplines: [PHYC] }
+- job: electrical-engineer
+  course: MC-ELECENG
+  title: "Master of Electrical Engineering"
+  source: https://handbook.unimelb.edu.au/2026/courses/mc-eleceng/entry-participation-requirements
+  checked: 2026-10-27
+  entry:
+    en: "A bachelor degree in any discipline with a weighted average mark (WAM) of at least 65%, plus the prerequisites below. Applicants are ranked on their results."
+    zh: "任何专业的学士学位，加权平均分（WAM）至少 65%，再加下面的先修课。按成绩排名录取。"
+    zh-TW: "任何科系的學士學位，加權平均（WAM）至少 65%，再加上下面的先修科目。依成績排名錄取。"
+    ja: "分野を問わない学士号で WAM（加重平均点）65% 以上、さらに下記の前提科目。成績で順位が決まります。"
+    ko: "전공 무관 학사 학위와 WAM(가중 평균) 65% 이상, 그리고 아래 선수 과목. 성적으로 순위를 매깁니다."
+    vi: "Bằng cử nhân ngành bất kỳ với điểm trung bình có trọng số (WAM) tối thiểu 65%, cộng các môn tiên quyết bên dưới. Xếp hạng theo kết quả học tập."
+    ms: "Ijazah sarjana muda dalam apa-apa bidang dengan purata wajaran (WAM) sekurang-kurangnya 65%, serta prasyarat di bawah. Pemohon disusun mengikut keputusan."
+    id: "Gelar sarjana di bidang apa pun dengan nilai rata-rata tertimbang (WAM) minimal 65%, ditambah prasyarat di bawah. Pelamar diperingkat berdasarkan nilai."
+    hi: "किसी भी विषय में बैचलर डिग्री, कम से कम 65% WAM (भारित औसत अंक) के साथ, और नीचे दी गई पूर्व-आवश्यक पढ़ाई। चयन अंकों की रैंकिंग से होता है।"
+  prerequisites:
+    en: "At least 25 points of maths equivalent to MAST10006 Calculus 2 and MAST10007 Linear Algebra, and at least 25 points of physics equivalent to PHYC10003 Physics 1 and PHYC10004 Physics 2."
+    zh: "至少 25 学分的数学，相当于 MAST10006 Calculus 2 和 MAST10007 Linear Algebra；再加至少 25 学分的物理，相当于 PHYC10003 Physics 1 and PHYC10004 Physics 2。"
+    zh-TW: "至少 25 學分的數學，相當於 MAST10006 Calculus 2 和 MAST10007 Linear Algebra；再加上至少 25 學分的物理，相當於 PHYC10003 Physics 1 and PHYC10004 Physics 2。"
+    ja: "MAST10006 Calculus 2・MAST10007 Linear Algebra 相当の数学 25 単位以上と、PHYC10003 Physics 1 and PHYC10004 Physics 2 相当の物理 25 単位以上。"
+    ko: "MAST10006 Calculus 2와 MAST10007 Linear Algebra에 해당하는 수학 25학점 이상, 그리고 PHYC10003 Physics 1 and PHYC10004 Physics 2에 해당하는 물리 25학점 이상."
+    vi: "Ít nhất 25 tín chỉ toán tương đương MAST10006 Calculus 2 và MAST10007 Linear Algebra, cùng ít nhất 25 tín chỉ vật lý tương đương PHYC10003 Physics 1 and PHYC10004 Physics 2."
+    ms: "Sekurang-kurangnya 25 mata matematik setara MAST10006 Calculus 2 dan MAST10007 Linear Algebra, serta sekurang-kurangnya 25 mata fizik setara PHYC10003 Physics 1 and PHYC10004 Physics 2."
+    id: "Minimal 25 poin matematika setara MAST10006 Calculus 2 dan MAST10007 Linear Algebra, serta minimal 25 poin fisika setara PHYC10003 Physics 1 and PHYC10004 Physics 2."
+    hi: "कम से कम 25 पॉइंट गणित, MAST10006 Calculus 2 और MAST10007 Linear Algebra के बराबर, और कम से कम 25 पॉइंट फ़िज़िक्स, PHYC10003 Physics 1 and PHYC10004 Physics 2 के बराबर।"
+  required: [MAST10006, MAST10007, PHYC10003, PHYC10004]
+  covers:
+    - { disciplines: [MAST] }
+    - { disciplines: [PHYC] }
+- job: chemical-engineer
+  course: MC-CHEMENG
+  title: "Master of Chemical Engineering"
+  source: https://handbook.unimelb.edu.au/2026/courses/mc-chemeng/entry-participation-requirements
+  checked: 2026-10-27
+  entry:
+    en: "A bachelor degree in any discipline with a weighted average mark (WAM) of at least 65%, plus the prerequisites below. Applicants are ranked on their results."
+    zh: "任何专业的学士学位，加权平均分（WAM）至少 65%，再加下面的先修课。按成绩排名录取。"
+    zh-TW: "任何科系的學士學位，加權平均（WAM）至少 65%，再加上下面的先修科目。依成績排名錄取。"
+    ja: "分野を問わない学士号で WAM（加重平均点）65% 以上、さらに下記の前提科目。成績で順位が決まります。"
+    ko: "전공 무관 학사 학위와 WAM(가중 평균) 65% 이상, 그리고 아래 선수 과목. 성적으로 순위를 매깁니다."
+    vi: "Bằng cử nhân ngành bất kỳ với điểm trung bình có trọng số (WAM) tối thiểu 65%, cộng các môn tiên quyết bên dưới. Xếp hạng theo kết quả học tập."
+    ms: "Ijazah sarjana muda dalam apa-apa bidang dengan purata wajaran (WAM) sekurang-kurangnya 65%, serta prasyarat di bawah. Pemohon disusun mengikut keputusan."
+    id: "Gelar sarjana di bidang apa pun dengan nilai rata-rata tertimbang (WAM) minimal 65%, ditambah prasyarat di bawah. Pelamar diperingkat berdasarkan nilai."
+    hi: "किसी भी विषय में बैचलर डिग्री, कम से कम 65% WAM (भारित औसत अंक) के साथ, और नीचे दी गई पूर्व-आवश्यक पढ़ाई। चयन अंकों की रैंकिंग से होता है।"
+  prerequisites:
+    en: "At least 25 points of maths equivalent to MAST10006 Calculus 2 and MAST10007 Linear Algebra, and at least 25 points of chemistry equivalent to CHEM10003 Chemistry 1 and CHEM10004 Chemistry 2."
+    zh: "至少 25 学分的数学，相当于 MAST10006 Calculus 2 和 MAST10007 Linear Algebra；再加至少 25 学分的化学，相当于 CHEM10003 Chemistry 1 and CHEM10004 Chemistry 2。"
+    zh-TW: "至少 25 學分的數學，相當於 MAST10006 Calculus 2 和 MAST10007 Linear Algebra；再加上至少 25 學分的化學，相當於 CHEM10003 Chemistry 1 and CHEM10004 Chemistry 2。"
+    ja: "MAST10006 Calculus 2・MAST10007 Linear Algebra 相当の数学 25 単位以上と、CHEM10003 Chemistry 1 and CHEM10004 Chemistry 2 相当の化学 25 単位以上。"
+    ko: "MAST10006 Calculus 2와 MAST10007 Linear Algebra에 해당하는 수학 25학점 이상, 그리고 CHEM10003 Chemistry 1 and CHEM10004 Chemistry 2에 해당하는 화학 25학점 이상."
+    vi: "Ít nhất 25 tín chỉ toán tương đương MAST10006 Calculus 2 và MAST10007 Linear Algebra, cùng ít nhất 25 tín chỉ hóa học tương đương CHEM10003 Chemistry 1 and CHEM10004 Chemistry 2."
+    ms: "Sekurang-kurangnya 25 mata matematik setara MAST10006 Calculus 2 dan MAST10007 Linear Algebra, serta sekurang-kurangnya 25 mata kimia setara CHEM10003 Chemistry 1 and CHEM10004 Chemistry 2."
+    id: "Minimal 25 poin matematika setara MAST10006 Calculus 2 dan MAST10007 Linear Algebra, serta minimal 25 poin kimia setara CHEM10003 Chemistry 1 and CHEM10004 Chemistry 2."
+    hi: "कम से कम 25 पॉइंट गणित, MAST10006 Calculus 2 और MAST10007 Linear Algebra के बराबर, और कम से कम 25 पॉइंट केमिस्ट्री, CHEM10003 Chemistry 1 and CHEM10004 Chemistry 2 के बराबर।"
+  required: [MAST10006, MAST10007, CHEM10003, CHEM10004]
+  covers:
+    - { disciplines: [MAST] }
+    - { disciplines: [CHEM] }

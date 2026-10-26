@@ -331,6 +331,31 @@ describe('graduate-entry careers', () => {
     expect(html).toContain('other than law')
   })
 
+  it('adds the IT, data science and engineering masters from the 2026 Handbook', () => {
+    const want: Record<string, string> = { 'computing-professional': 'MC-IT', 'business-analyst': 'MC-DATASC', 'civil-engineer': 'MC-CIVENG', 'mechanical-engineer': 'MC-MECHENG', 'electrical-engineer': 'MC-ELECENG', 'chemical-engineer': 'MC-CHEMENG' }
+    for (const [id, course] of Object.entries(want)) {
+      const t = careerTarget(real, id)
+      expect(t?.graduate?.course, id).toBe(course)
+      expect(t!.graduate!.source).toContain(`/2026/courses/${course.toLowerCase()}/`)
+    }
+  })
+
+  it('marks the subjects the Handbook names as Required on majors listed through the course', () => {
+    const route = majorsForCareer(real, 'mechanical-engineer').filter((m) => m.route?.course === 'MC-MECHENG')
+    expect(route.length).toBeGreaterThan(0)
+    for (const m of route) {
+      const req = majorForCareer(real, 'mechanical-engineer', m.component)!.subjects.required.map((s) => s.code)
+      for (const c of ['MAST10006', 'MAST10007', 'PHYC10003', 'PHYC10004']) expect(req, m.component).toContain(c)
+    }
+  })
+
+  it('keeps a study-area prerequisite as text with no Required subjects (Master of IT)', () => {
+    const route = majorsForCareer(real, 'computing-professional').filter((m) => m.route?.course === 'MC-IT')
+    for (const m of route) expect(majorForCareer(real, 'computing-professional', m.component)!.subjects.required, m.component).toEqual([])
+    const html = careerPageHtml(real, careerTarget(real, 'computing-professional')!, translator(en), 'en', (c) => `/subject/${c}`, (id) => `/majors/${id}`, '/careers')
+    expect(html).toContain('focused on computer programming')
+  })
+
   it('shows the prerequisite text in Traditional Chinese', () => {
     const t = careerTarget(real, 'dentist')!
     const html = careerPageHtml(real, t, translator(zhTW), 'zh-TW', (c) => `/subject/${c}`, (id) => `/majors/${id}`, '/careers')

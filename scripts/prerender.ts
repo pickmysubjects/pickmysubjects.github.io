@@ -632,6 +632,18 @@ function guideBody(code: LocaleCode, t: Translate, page: GuideCategory | 'overvi
     'drop': [
       `<h2 id="drop">${esc(t('guide.dropTitle'))}</h2>`, li(['dropBefore', 'dropWd', 'dropFail']), p('dropLate'), p('dropLocal'), p('dropIntl'), p('dropWhere'),
     ].join('\n'),
+    'late-enrol': [
+      `<h2 id="late-enrol">${esc(t('guide.lateEnrolTitle'))}</h2>`, p('lateEnrolShort'), p('lateEnrolLine'), p('lateEnrolMore'), ext('https://students.unimelb.edu.au/course-admin/census-dates', 'lateEnrolLink'),
+    ].join('\n'),
+    'cross-institutional': [
+      `<h2 id="cross-institutional">${esc(t('guide.crossTitle'))}</h2>`, p('crossShort'), p('crossLine'), p('crossMore'), ext('https://students.unimelb.edu.au/course-admin/cross-institutional-study', 'crossLink'),
+    ].join('\n'),
+    'exchange': [
+      `<h2 id="exchange">${esc(t('guide.exchangeTitle'))}</h2>`, p('exchangeShort'), p('exchangeLine'), p('exchangeMore'), ext('https://students.unimelb.edu.au/course-admin/study-overseas/step-by-step-guides/semester-and-year-long-programs', 'exchangeLink'),
+    ].join('\n'),
+    'online': [
+      `<h2 id="online">${esc(t('guide.onlineTitle'))}</h2>`, p('onlineShort'), p('onlineLine'), p('onlineMore'), ext('https://students.unimelb.edu.au/support-and-wellbeing/international-student-support/visas/understand-your-online-study-allowance', 'onlineLink'),
+    ].join('\n'),
     'fees': [
       `<h2 id="fees">${esc(t('guide.feesTitle'))}</h2>`, li(['feesCsp', 'feesHelp', 'feesFull', 'feesCensus']), p('feesSee'),
       ext('https://students.unimelb.edu.au/course-admin/understanding-your-fees', 'feesLink'), ext('https://students.unimelb.edu.au/course-admin/census-dates', 'censusLink'),
@@ -1017,7 +1029,7 @@ It covers ${listedCourseList.length} degrees (${courseNames}) with ${majorCount}
 - Backup to a file and restore on another device. Optional anonymous sharing of grade bands.
 
 ### Guide (UniMelb basics)
-- Credit points, majors, double majors and minors, discipline and breadth limits, study load and overloading, grades (H1 to N), WAM and how it's calculated, prerequisites and corequisites, things to check yourself, census dates and dropping subjects (late withdrawal), class timetabling in MyTimetable and fixing clashes, special consideration, hurdles (NH), late submission penalties, reduced study load for student visas, free study help (Academic Skills, PASS, Library past exam papers), professional accreditation, failing and repeating, how the degree is recognised abroad, and university rankings. Split into five sections (getting started, choosing and enrolling, during semester, international students, help and next steps), plus enrolment steps from planner to study plan to MyTimetable, fees, HECS-HELP and the census date, academic integrity and generative AI rules, exams and results (including asking for a review), and a key dates page with a calendar (.ics) download.
+- Credit points, majors, double majors and minors, discipline and breadth limits, study load and overloading, grades (H1 to N), WAM and how it's calculated, prerequisites and corequisites, things to check yourself, census dates and dropping subjects (late withdrawal), class timetabling in MyTimetable and fixing clashes, special consideration, hurdles (NH), late submission penalties, reduced study load for student visas, free study help (Academic Skills, PASS, Library past exam papers), professional accreditation, failing and repeating, how the degree is recognised abroad, university rankings, adding subjects after semester starts, cross-institutional study, getting exchange subjects approved for credit, and the online study limit on a student visa. Split into five sections (getting started, choosing and enrolling, during semester, international students, help and next steps), plus enrolment steps from planner to study plan to MyTimetable, fees, HECS-HELP and the census date, academic integrity and generative AI rules, exams and results (including asking for a review), and a key dates page with a calendar (.ics) download.
 
 ### Other
 - Add a subject that's missing by pasting its Handbook page; send feedback or report wrong data.

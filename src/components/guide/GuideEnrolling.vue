@@ -116,6 +116,24 @@ const { t } = useI18n()
       </ul>
     </GuideItem>
 
+    <GuideItem id="late-enrol" :title="t('guide.lateEnrolTitle')" :short="t('guide.lateEnrolShort')">
+      <p class="note">
+        {{ t('guide.lateEnrolLine') }}<InfoTip>{{ t('guide.lateEnrolMore') }} <a :href="URLS.CENSUS" target="_blank" rel="noopener">{{ t('guide.lateEnrolLink') }}<ExternalLink :size="13" aria-hidden="true" /></a></InfoTip>
+      </p>
+    </GuideItem>
+
+    <GuideItem id="cross-institutional" :title="t('guide.crossTitle')" :short="t('guide.crossShort')">
+      <p class="note">
+        {{ t('guide.crossLine') }}<InfoTip>{{ t('guide.crossMore') }} <a :href="URLS.CROSS_INST" target="_blank" rel="noopener">{{ t('guide.crossLink') }}<ExternalLink :size="13" aria-hidden="true" /></a></InfoTip>
+      </p>
+    </GuideItem>
+
+    <GuideItem id="exchange" :title="t('guide.exchangeTitle')" :short="t('guide.exchangeShort')">
+      <p class="note">
+        {{ t('guide.exchangeLine') }}<InfoTip>{{ t('guide.exchangeMore') }} <a :href="URLS.EXCHANGE" target="_blank" rel="noopener">{{ t('guide.exchangeLink') }}<ExternalLink :size="13" aria-hidden="true" /></a></InfoTip>
+      </p>
+    </GuideItem>
+
     <GuideItem id="fees" :title="t('guide.feesTitle')" :short="t('guide.feesShort')">
       <ul class="plain">
         <li>{{ t('guide.feesCsp') }}</li>
