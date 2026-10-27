@@ -80,6 +80,18 @@ const closed = computed(() => data.value.courses.some((c) => c.code === props.co
   color: var(--ink-faint);
 }
 
+/* Phones: one reason per line, so a wrapped line never starts with a stray dot. */
+@media (max-width: 720px) {
+  .reasons {
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .reason + .reason::before {
+    content: none;
+  }
+}
+
 .row {
   position: relative;
   display: flex;
