@@ -155,7 +155,7 @@ function chooseCourse(c: Course): void {
 
     <div v-if="step === 0" class="q">
       <h2 class="q-title">{{ t('wizard.qCourse') }}</h2>
-      <div class="options">
+      <div class="options options-courses">
         <button
           v-for="c in courses"
           :key="`${c.code}-${c.year}`"
@@ -374,6 +374,17 @@ function chooseCourse(c: Course): void {
   text-align: left;
   cursor: pointer;
   transition: border-color 0.15s, background 0.15s;
+}
+
+/* Degrees: two columns on a wide screen, so the long list doesn't run off the page. */
+.options-courses {
+  grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+  gap: 8px;
+}
+
+.options-courses .option {
+  min-height: 52px;
+  padding: 8px 16px;
 }
 
 .option:hover {

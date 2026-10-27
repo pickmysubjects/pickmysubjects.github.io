@@ -51,8 +51,8 @@ const hasBreadth = computed(() => !!result.value?.breadth && TIERS.some((x) => r
 
     <header class="head">
       <h1 class="page-title">{{ t('careerPath.heading', { job: careerLabel(target.names, locale) }) }}</h1>
-      <p v-if="majors.length || !target.graduate" class="page-lede">{{ t('careerPath.summary', { n: majors.length }) }}</p>
-      <p v-if="target.occupation?.skills.length" class="skills">{{ t('careers.skills', { list: target.occupation.skills.join(', ') }) }}</p>
+      <p v-if="majors.length > 1 || !target.graduate" class="page-lede">{{ t('careerPath.summary', { n: majors.length }) }}</p>
+      <p v-if="target.occupation?.skills.length" class="skills">{{ t('careers.skills', { list: target.occupation.skills.join(' · ') }) }}</p>
       <a v-if="target.occupation" class="official" :href="target.occupation.url" target="_blank" rel="noopener">
         {{ t('careers.official') }} · {{ target.occupation.name }} <ExternalLink :size="13" aria-hidden="true" />
       </a>
@@ -64,11 +64,14 @@ const hasBreadth = computed(() => !!result.value?.breadth && TIERS.some((x) => r
         {{ t('careerPath.graduateTitle', { course: `${target.graduate.title} (${target.graduate.course})` }) }}
       </h2>
       <p class="block-hint">{{ t('careerPath.graduateAny') }}</p>
-      <p><strong>{{ t('careerPath.graduateEntry') }}:</strong> {{ careerText(target.graduate.entry, locale) }}</p>
-      <p v-if="target.graduate.prerequisites">
-        <strong>{{ t('careerPath.graduatePrereq') }}:</strong> {{ careerText(target.graduate.prerequisites, locale) }}
-      </p>
-      <p v-if="target.graduate.prerequisites && !target.graduate.required.length" class="block-hint">{{ t('careerPath.graduateNoCodes') }}</p>
+      <details class="route-more">
+        <summary>{{ t('careerPath.graduateEntry') }}<template v-if="target.graduate.prerequisites"> · {{ t('careerPath.graduatePrereq') }}</template></summary>
+        <p>{{ careerText(target.graduate.entry, locale) }}</p>
+        <p v-if="target.graduate.prerequisites">
+          <strong>{{ t('careerPath.graduatePrereq') }}:</strong> {{ careerText(target.graduate.prerequisites, locale) }}
+        </p>
+        <p v-if="target.graduate.prerequisites && !target.graduate.required.length" class="block-hint">{{ t('careerPath.graduateNoCodes') }}</p>
+      </details>
       <a class="official" :href="target.graduate.source" target="_blank" rel="noopener">
         {{ t('careerPath.graduateSource') }} · {{ target.graduate.checked }} <ExternalLink :size="13" aria-hidden="true" />
       </a>
@@ -145,7 +148,7 @@ const hasBreadth = computed(() => !!result.value?.breadth && TIERS.some((x) => r
 }
 
 .back:hover {
-  color: var(--accent);
+  color: color-mix(in srgb, var(--accent) 80%, var(--ink)); /* darker in light, lighter in dark: 4.5:1 on glass */
 }
 
 .head {
@@ -169,7 +172,7 @@ const hasBreadth = computed(() => !!result.value?.breadth && TIERS.some((x) => r
   gap: 4px;
   justify-self: start;
   font-size: 0.875rem;
-  color: var(--accent);
+  color: color-mix(in srgb, var(--accent) 80%, var(--ink)); /* darker in light, lighter in dark: 4.5:1 on glass */
 }
 
 .block {
@@ -242,7 +245,7 @@ const hasBreadth = computed(() => !!result.value?.breadth && TIERS.some((x) => r
   border-radius: 999px;
   font-size: 0.75rem;
   font-weight: 600;
-  color: var(--accent);
+  color: color-mix(in srgb, var(--accent) 80%, var(--ink)); /* darker in light, lighter in dark: 4.5:1 on glass */
   border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
 }
 
@@ -263,6 +266,29 @@ const hasBreadth = computed(() => !!result.value?.breadth && TIERS.some((x) => r
   gap: 8px;
 }
 
+.route {
+  gap: 10px;
+}
+
+.route-more summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: color-mix(in srgb, var(--accent) 80%, var(--ink)); /* darker in light, lighter in dark: 4.5:1 on glass */
+}
+
+.route-more[open] summary {
+  margin-bottom: 8px;
+}
+
+.route-more {
+  display: grid;
+  gap: 8px;
+}
+
+.route-more > p + p {
+  margin-top: 8px;
+}
+
 .counts {
   font-size: 0.9375rem;
   color: var(--ink-soft);
@@ -279,7 +305,7 @@ const hasBreadth = computed(() => !!result.value?.breadth && TIERS.some((x) => r
 .acc-icon {
   flex-shrink: 0;
   margin-top: 3px;
-  color: var(--accent);
+  color: color-mix(in srgb, var(--accent) 80%, var(--ink)); /* darker in light, lighter in dark: 4.5:1 on glass */
 }
 
 .generic {
@@ -290,13 +316,38 @@ const hasBreadth = computed(() => !!result.value?.breadth && TIERS.some((x) => r
 .more-link {
   justify-self: start;
   font-size: 0.9375rem;
-  color: var(--accent);
+  color: color-mix(in srgb, var(--accent) 80%, var(--ink)); /* darker in light, lighter in dark: 4.5:1 on glass */
 }
 
 .breadth {
   display: grid;
   gap: 12px;
-  margin-top: 12px;
+  margin-top: 20px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line, color-mix(in srgb, var(--ink) 12%, transparent));
+}
+
+.skills {
+  line-height: 1.6;
+}
+
+@media (max-width: 600px) {
+  .detail {
+    gap: 22px;
+  }
+
+  .majors {
+    gap: 8px;
+  }
+
+  .major {
+    padding: 10px 14px;
+    gap: 2px;
+  }
+
+  .route {
+    padding: 14px;
+  }
 }
 
 .note {
@@ -311,6 +362,6 @@ const hasBreadth = computed(() => !!result.value?.breadth && TIERS.some((x) => r
 
 .source {
   font-size: 0.8125rem;
-  color: var(--ink-faint);
+  color: var(--ink-soft);
 }
 </style>

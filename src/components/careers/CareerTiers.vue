@@ -85,7 +85,7 @@ details .tier-name::after {
 }
 
 .tier-name[data-tier='required'] {
-  color: var(--accent);
+  color: color-mix(in srgb, var(--accent) 80%, var(--ink)); /* darker in light, lighter in dark: 4.5:1 on glass */
 }
 
 .count {
@@ -94,7 +94,7 @@ details .tier-name::after {
   background: var(--accent-soft);
   font-size: 0.8125rem;
   font-weight: 600;
-  color: var(--accent);
+  color: color-mix(in srgb, var(--accent) 80%, var(--ink)); /* darker in light, lighter in dark: 4.5:1 on glass */
 }
 
 .tier-hint {
