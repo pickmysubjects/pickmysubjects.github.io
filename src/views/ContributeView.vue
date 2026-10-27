@@ -293,4 +293,11 @@ function onCode(): void {
     padding: 16px;
   }
 }
+
+/* Phones: the title a size down, like the guide's, so long languages keep it to two lines. */
+@media (max-width: 640px) {
+  .contribute-title {
+    font-size: 1.9rem;
+  }
+}
 </style>

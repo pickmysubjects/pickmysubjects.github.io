@@ -138,4 +138,11 @@ function choose(id: string): void {
 .fb-code p {
   margin: 6px 0 0;
 }
+
+/* Phones: the title a size down, like the guide's, so long languages keep it to two lines. */
+@media (max-width: 640px) {
+  .fb-title {
+    font-size: 1.9rem;
+  }
+}
 </style>
