@@ -4,7 +4,7 @@ import InfoTip from '@/components/InfoTip.vue'
 import DegreeBadge from '@/components/browse/DegreeBadge.vue'
 import DegreePick from '@/components/browse/DegreePick.vue'
 import { computed, onMounted, shallowRef, useTemplateRef, watch } from 'vue'
-import { Info, Search } from 'lucide-vue-next'
+import { Info, Search, SearchX, X } from 'lucide-vue-next'
 import BrowseFilters from '@/components/browse/BrowseFilters.vue'
 import BrowseRow from '@/components/browse/BrowseRow.vue'
 import GoalPicker from '@/components/profile/GoalPicker.vue'
@@ -119,6 +119,23 @@ function set<K extends keyof typeof filters.value>(key: K, value: (typeof filter
   filters.value = { ...filters.value, [key]: value }
 }
 
+// What is narrowing the list right now, each removable on its own (desktop and phone alike).
+const ONLY = ['noPrereq', 'noExam', 'noGroup', 'noHurdle', 'noTest'] as const
+const activeChips = computed(() => {
+  const f = filters.value
+  const tr = t.value
+  const out: { key: string; label: string; off: () => void }[] = []
+  if (f.text.trim()) out.push({ key: 'text', label: `“${f.text.trim()}”`, off: () => set('text', '') })
+  if (f.category) out.push({ key: 'cat', label: tr(`browse.cat.${f.category}`), off: () => set('category', '') })
+  if (f.level !== null) out.push({ key: 'level', label: tr('subject.level', { level: f.level }), off: () => set('level', null) })
+  if (f.period) out.push({ key: 'period', label: tr(`periodShort.${f.period}`), off: () => set('period', null) })
+  for (const k of ONLY) if (f[k]) out.push({ key: k, label: tr(`browse.${k}`), off: () => set(k, false) })
+  return out
+})
+function clearAll(): void {
+  filters.value = { ...filters.value, text: '', category: '', level: null, period: null, noPrereq: false, noExam: false, noGroup: false, noHurdle: false, noTest: false }
+}
+
 // Keep the address in step, so a list can be shared. replaceState, not a new history entry:
 // every tap on a filter shouldn't need its own Back press.
 watch(filters, (f) => {
@@ -163,7 +180,7 @@ watch(filters, (f) => {
     </div>
 
     <div class="layout">
-      <BrowseFilters v-model="filters" :categories="categories" class="side" />
+      <BrowseFilters v-model="filters" :categories="categories" :count="rows.length" class="side" />
 
       <section class="results">
         <!-- A degree-dependent list (breadth) waits for the degree rather than guessing one;
@@ -198,6 +215,15 @@ watch(filters, (f) => {
           </div>
         </div>
 
+        <ul v-if="activeChips.length" class="active" :aria-label="t('browse.filters')">
+          <li v-for="c in activeChips" :key="c.key">
+            <button type="button" class="active-chip" :aria-label="t('browse.removeFilter', { x: c.label })" @click="c.off()">
+              {{ c.label }}<X :size="14" aria-hidden="true" />
+            </button>
+          </li>
+          <li v-if="activeChips.length > 1"><button type="button" class="active-clear" @click="clearAll">{{ t('browse.clear') }}</button></li>
+        </ul>
+
         <div v-if="filters.mine" class="mine-bar">
           <GoalPicker compact />
           <p v-if="!hasProfile" class="nudge">
@@ -225,7 +251,14 @@ watch(filters, (f) => {
         <div v-if="rows.length" class="list surface">
           <BrowseRow v-for="r in visible" :key="r.subject.code" :row="r" :course="course" :reasons="reasons(r)" :rec="r.rec" :fit="hasProfile" />
         </div>
-        <p v-else class="empty surface">{{ t('browse.empty') }}</p>
+        <div v-else class="empty surface">
+          <SearchX :size="28" aria-hidden="true" class="empty-icon" />
+          <p class="empty-title">{{ activeChips.length ? t('browse.emptyFiltered') : t('browse.empty') }}</p>
+          <div v-if="activeChips.length" class="empty-actions">
+            <button v-if="filters.text.trim()" type="button" class="button button-quiet" @click="set('text', '')">{{ t('browse.clearSearch') }}</button>
+            <button type="button" class="button button-accent" @click="clearAll">{{ t('browse.clear') }}</button>
+          </div>
+        </div>
 
         <button v-if="rows.length > shown" type="button" class="button button-quiet more" @click="shown += PAGE">
           {{ t('browse.more', { n: rows.length - shown }) }}
@@ -443,8 +476,72 @@ watch(filters, (f) => {
 }
 
 .empty {
-  padding: 20px;
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+  padding: 40px 20px;
+  text-align: center;
   color: var(--ink-soft);
+}
+
+.empty-icon {
+  color: var(--accent);
+}
+
+.empty-title {
+  margin: 0;
+  max-width: 34ch;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.empty-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* Active filters: removable pills right above the list. */
+.active {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.active-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 32px;
+  padding: 4px 10px 4px 12px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.active-chip:hover {
+  border-color: var(--accent);
+}
+
+.active-clear {
+  min-height: 32px;
+  padding: 4px 8px;
+  font-size: 0.875rem;
+  color: var(--ink-soft);
+  background: none;
+  border: 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
 }
 
 .more {

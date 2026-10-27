@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { computed, shallowRef } from 'vue'
-import { Check, ChevronDown, SlidersHorizontal } from 'lucide-vue-next'
+import { computed, onBeforeUnmount, onMounted, shallowRef, watch } from 'vue'
+import { Check, ChevronDown, SlidersHorizontal, X } from 'lucide-vue-next'
 import { EMPTY_FILTERS, type BrowseFilters } from '@/engine'
 import { useI18n } from '@/i18n'
 
-const props = defineProps<{ categories: string[] }>()
+const props = defineProps<{ categories: string[]; count: number }>()
 const filters = defineModel<BrowseFilters>({ required: true })
 const { t } = useI18n()
 
@@ -15,8 +15,31 @@ const LEVELS = [null, 1, 2, 3] as const
 const WHEN = [null, 'semester-1', 'semester-2', 'summer', 'winter'] as const
 const TOGGLES = ['noPrereq', 'noExam', 'noGroup', 'noHurdle', 'noTest'] as const
 
-// On phones the list matters more, so the filters start folded there.
-const open = shallowRef(typeof matchMedia === 'undefined' || matchMedia('(min-width: 721px)').matches)
+// Phones: the filters live in a bottom sheet, opened by the Filters button. Wide screens: a sidebar.
+const PHONE = '(max-width: 720px)'
+const phone = shallowRef(typeof matchMedia !== 'undefined' && matchMedia(PHONE).matches)
+const open = shallowRef(false)
+let mq: MediaQueryList | null = null
+const onChange = (e: MediaQueryListEvent): void => {
+  phone.value = e.matches
+  if (!e.matches) open.value = false
+}
+onMounted(() => {
+  mq = matchMedia(PHONE)
+  phone.value = mq.matches
+  mq.addEventListener('change', onChange)
+})
+onBeforeUnmount(() => {
+  mq?.removeEventListener('change', onChange)
+  document.documentElement.style.overflow = ''
+})
+// The page behind the sheet stays still while it is open.
+watch(open, (v) => {
+  document.documentElement.style.overflow = v && phone.value ? 'hidden' : ''
+})
+function onKey(e: KeyboardEvent): void {
+  if (e.key === 'Escape') open.value = false
+}
 const active = computed(() => {
   const f = filters.value
   return [f.category, f.level !== null, f.period, f.noPrereq, f.noExam, f.noGroup, f.noHurdle, f.noTest].filter(Boolean).length
@@ -39,7 +62,24 @@ function clear(): void {
       <ChevronDown :size="16" aria-hidden="true" class="toggle-icon" />
     </button>
 
-    <div v-show="open" id="browse-more" class="groups">
+    <Teleport to="body" :disabled="!phone">
+    <div v-if="phone && open" class="scrim" aria-hidden="true" @click="open = false" />
+    <div
+      v-show="!phone || open"
+      id="browse-more"
+      class="groups surface"
+      :class="{ sheet: phone }"
+      :role="phone ? 'dialog' : undefined"
+      :aria-modal="phone ? 'true' : undefined"
+      :aria-label="phone ? t('browse.filters') : undefined"
+      @keydown="onKey"
+    >
+      <div v-if="phone" class="sheet-head">
+        <span class="sheet-grip" aria-hidden="true" />
+        <h2 class="sheet-title">{{ t('browse.filters') }}</h2>
+        <button type="button" class="sheet-close" :aria-label="t('subject.close')" @click="open = false"><X :size="20" aria-hidden="true" /></button>
+      </div>
+      <div class="sheet-body">
       <fieldset class="group">
         <legend>{{ t('browse.type') }}</legend>
         <div class="seg">
@@ -95,8 +135,15 @@ function clear(): void {
         </div>
       </fieldset>
 
-      <button v-if="active" type="button" class="clear" @click="clear">{{ t('browse.clear') }}</button>
+      <button v-if="active && !phone" type="button" class="clear" @click="clear">{{ t('browse.clear') }}</button>
+      </div>
+      <!-- Phone: one clear way back to the list, with the number it will show. -->
+      <div v-if="phone" class="sheet-foot">
+        <button v-if="active" type="button" class="clear" @click="clear">{{ t('browse.clear') }}</button>
+        <button type="button" class="button button-accent show" @click="open = false">{{ t('browse.showResults', { n: count }) }}</button>
+      </div>
     </div>
+    </Teleport>
   </aside>
 </template>
 
@@ -141,6 +188,12 @@ function clear(): void {
 }
 
 .groups {
+  display: grid;
+  gap: 20px;
+  padding: 18px 16px;
+}
+
+.sheet-body {
   display: grid;
   gap: 20px;
 }
@@ -235,6 +288,95 @@ function clear(): void {
   cursor: pointer;
 }
 
+/* Phone bottom sheet: glass, rounded top, sticky action at the bottom. */
+.scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background: rgb(20 10 25 / 38%);
+}
+
+.sheet {
+  position: fixed;
+  inset: auto 0 0;
+  z-index: 91;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  max-height: 86dvh;
+  padding: 0;
+  border-radius: 24px 24px 0 0;
+  background: var(--glass-shine), var(--sheet-fill);
+  -webkit-backdrop-filter: var(--glass-blur-strong);
+  backdrop-filter: var(--glass-blur-strong);
+}
+
+.sheet .sheet-body {
+  overflow-y: auto;
+  padding: 4px 16px 16px;
+  overscroll-behavior: contain;
+}
+
+.sheet-head {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 16px 8px;
+}
+
+.sheet-grip {
+  position: absolute;
+  top: 7px;
+  left: 50%;
+  width: 36px;
+  height: 5px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--ink) 22%, transparent);
+  transform: translateX(-50%);
+}
+
+.sheet-title {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+
+.sheet-close {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  color: var(--ink-soft);
+  background: color-mix(in srgb, var(--ink) 7%, transparent);
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.sheet-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+  border-top: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
+}
+
+.sheet-foot .show {
+  flex: 1;
+  justify-content: center;
+  min-height: 48px;
+}
+
+.sheet .seg button {
+  min-height: 42px;
+}
+
+.sheet .only {
+  min-height: 40px;
+}
+
 /* Wide screens always show the filters, even if they were folded on a narrower window. */
 @media (min-width: 721px) {
   .groups {
@@ -245,13 +387,6 @@ function clear(): void {
 @media (max-width: 720px) {
   .toggle {
     display: inline-flex;
-  }
-
-  .groups {
-    padding: 16px;
-    background: var(--glass-shine), var(--sheet-fill);
-    border: 1px solid var(--line);
-    border-radius: var(--radius-lg);
   }
 }
 </style>
