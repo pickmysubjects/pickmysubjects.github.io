@@ -299,7 +299,8 @@ watch(filters, (f) => {
   width: 100%;
   padding: 14px 18px 14px 48px;
   font-size: 1rem;
-  background: var(--surface);
+  background: var(--glass-shine), var(--glass-fill);
+  box-shadow: var(--glass-shadow);
   border: 1px solid var(--line);
   border-radius: 999px;
   box-shadow: var(--shadow-1);

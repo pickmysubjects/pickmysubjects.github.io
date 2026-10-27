@@ -154,7 +154,7 @@ function pick(id: string | undefined): void {
   width: 100%;
   padding: 10px 14px 10px 40px;
   font-size: 1rem;
-  background: var(--surface);
+  background: var(--field-fill);
   border: 1px solid var(--line);
   border-radius: 999px;
 }
@@ -178,7 +178,7 @@ function pick(id: string | undefined): void {
   padding: 6px 12px;
   border: 1px solid var(--line);
   border-radius: 999px;
-  background: var(--surface);
+  background: var(--field-fill);
   color: var(--ink);
   font: inherit;
   font-size: 0.875rem;
@@ -228,7 +228,7 @@ function pick(id: string | undefined): void {
   overscroll-behavior: contain;
   border: 1px solid var(--line);
   border-radius: 14px;
-  background: var(--surface);
+  background: var(--field-fill);
 }
 
 .browse-group {

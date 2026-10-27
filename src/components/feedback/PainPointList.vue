@@ -10,7 +10,7 @@ const { t } = useI18n()
 
 <template>
   <ul class="pains">
-    <li v-for="p in PAIN_POINTS" :key="p.id" class="pain surface" :class="{ 'pain-selected': selected === p.id }">
+    <li v-for="p in PAIN_POINTS" :key="p.id" class="pain surface tile" :class="{ 'pain-selected': selected === p.id }">
       <span class="status" :class="`status-${p.status}`">{{ t(`feedback.status.${p.status}`) }}</span>
       <h3 class="pain-question">{{ t(`pain.${p.id}.q`) }}</h3>
       <p class="pain-answer">{{ t(`pain.${p.id}.a`) }}</p>

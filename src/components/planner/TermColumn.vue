@@ -180,10 +180,19 @@ const tone = (code: string): CardTone | null => props.tones?.get(code) ?? null
   gap: 8px;
   min-width: 180px;
   padding: 10px;
-  border: 1px solid transparent;
+  border: 1px solid var(--card-edge);
   border-radius: var(--radius);
-  background: color-mix(in srgb, var(--ink) 2.5%, transparent);
+  background: var(--glass-shine), var(--card-fill);
+  box-shadow: var(--card-shadow);
   transition: background 0.15s, border-color 0.15s, opacity 0.15s;
+}
+
+/* One blur per semester column, wide screens only; phones keep the see-through fill. */
+@media (min-width: 721px) {
+  .term {
+    -webkit-backdrop-filter: var(--card-blur);
+    backdrop-filter: var(--card-blur);
+  }
 }
 
 .term-short {
@@ -230,7 +239,7 @@ const tone = (code: string): CardTone | null => props.tones?.get(code) ?? null
   padding: 8px 10px;
   border-radius: var(--radius);
   border: 1px dashed var(--line);
-  background: var(--paper-raised);
+  background: var(--glass-shine), var(--tile-fill);
   color: inherit;
   font: inherit;
   text-align: left;

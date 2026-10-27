@@ -72,7 +72,7 @@ function open(id: string): void {
 
     <template v-if="diff">
       <div class="pair">
-        <article v-for="(c, i) in cards" :key="c.entry.id" class="card surface">
+        <article v-for="(c, i) in cards" :key="c.entry.id" class="card surface tile">
           <p class="card-name"><span class="side">{{ i === 0 ? '1' : '2' }}</span>{{ c.name }}</p>
           <p class="card-degree">{{ c.courseTitle }}</p>
           <p class="card-major">{{ c.major || t('plans.noMajor') }}</p>

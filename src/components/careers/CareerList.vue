@@ -51,7 +51,7 @@ const groups = computed(() =>
       <h2 :id="`careers-${g.id}`" class="group-title">{{ g.title }} <span class="group-count">{{ g.items.length }}</span></h2>
       <p v-if="g.hint" class="group-hint">{{ g.hint }}</p>
       <div class="cards">
-        <a v-for="c in g.items" :key="c.id" class="card surface" :href="link(`careers/${c.id}`)">
+        <a v-for="c in g.items" :key="c.id" class="card surface tile" :href="link(`careers/${c.id}`)">
           <span class="card-main">
             <span class="card-title">{{ c.label }}</span>
             <span class="card-meta">{{ c.graduate ? t('careerPath.graduateMeta', { course: c.graduate.title }) : t('careerPath.majorCount', { n: c.majors }) }}</span>
@@ -100,7 +100,8 @@ const groups = computed(() =>
   width: 100%;
   padding: 13px 18px 13px 48px;
   font-size: 1rem;
-  background: var(--surface);
+  background: var(--glass-shine), var(--glass-fill);
+  box-shadow: var(--glass-shadow);
   border: 1px solid var(--line);
   border-radius: 999px;
   box-shadow: var(--shadow-1);

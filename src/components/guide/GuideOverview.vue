@@ -11,14 +11,14 @@ const { t } = useI18n()
 <template>
   <ul class="cats">
     <li v-for="c in GUIDE_CATEGORIES" :key="c">
-      <a class="cat surface" :href="link(`guide/${c}/`)">
+      <a class="cat surface tile" :href="link(`guide/${c}/`)">
         <span class="cat-title">{{ t(`guide.cat.${c}.title`) }}</span>
         <span class="cat-lede">{{ t(`guide.cat.${c}.lede`) }}</span>
         <ArrowRight :size="16" aria-hidden="true" class="cat-go" />
       </a>
     </li>
     <li>
-      <a class="cat surface" :href="link('guide/key-dates/')">
+      <a class="cat surface tile" :href="link('guide/key-dates/')">
         <span class="cat-title"><CalendarDays :size="16" aria-hidden="true" /> {{ t('guide.kd.title') }}</span>
         <span class="cat-lede">{{ t('guide.kd.lede') }}</span>
         <ArrowRight :size="16" aria-hidden="true" class="cat-go" />

@@ -195,7 +195,7 @@ const allMet = computed(() => props.plan.met === props.plan.total)
   border: 1px solid var(--line);
   border-left: 3px solid var(--k);
   border-radius: 10px;
-  background: var(--surface);
+  background: var(--glass-shine), color-mix(in srgb, var(--k) 8%, var(--tile-fill));
 }
 
 .card-code {

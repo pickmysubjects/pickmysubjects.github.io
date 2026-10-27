@@ -93,6 +93,7 @@ const rowClasses = computed(() => ({
   [`row-tone-${props.tone}`]: props.tone !== null,
   'row-dimmed': props.dimmed,
   'row-unknown': !props.subject,
+  [`row-role-${props.role}`]: !!props.role,
 }))
 const others = computed(() => props.moveTargets.filter((m) => m.index !== props.termIndex))
 
@@ -210,11 +211,21 @@ function onDragStart(event: DragEvent): void {
   gap: 2px 6px;
   min-width: 0;
   padding: 6px 8px 6px 9px;
-  border: 1px solid var(--line);
+  border: 1px solid var(--card-edge);
   border-radius: 10px;
-  background: var(--paper-raised);
+  /* Glass look without a blur of its own: the column's glass shows through. */
+  background: var(--glass-shine), var(--row-fill, var(--tile-fill));
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 70%), 0 2px 8px -4px rgb(80 40 90 / 20%);
   cursor: grab;
   transition: opacity 0.15s, border-color 0.15s, box-shadow 0.15s;
+}
+
+.row-role-required {
+  --row-fill: color-mix(in srgb, var(--accent) 7%, var(--tile-fill));
+}
+
+.row-role-option {
+  --row-fill: color-mix(in srgb, #6d5dfc 7%, var(--tile-fill));
 }
 
 .row:hover {

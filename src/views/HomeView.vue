@@ -151,23 +151,23 @@ const next = computed(() => {
   padding: 64px 56px;
   border-radius: 36px;
   isolation: isolate;
+  /* Glass over the page's colour field, tinted toward the brand at one corner. */
   background:
-    radial-gradient(60% 80% at 0% 0%, #ffd6e8 0%, transparent 60%),
-    radial-gradient(55% 70% at 100% 10%, #dcd8ff 0%, transparent 60%),
-    radial-gradient(60% 80% at 80% 100%, #ffe6d2 0%, transparent 60%),
-    linear-gradient(180deg, #fff7fb, #f6f4ff);
-  border: 1px solid rgb(255 255 255 / 80%);
-  box-shadow: 0 40px 80px -40px rgb(90 30 90 / 30%);
+    radial-gradient(60% 80% at 0% 0%, rgb(194 34 122 / 12%), transparent 60%),
+    var(--glass-shine),
+    var(--card-fill);
+  -webkit-backdrop-filter: var(--card-blur);
+  backdrop-filter: var(--card-blur);
+  border: 1px solid var(--card-edge);
+  box-shadow: var(--card-shadow), 0 40px 80px -40px rgb(90 30 90 / 30%);
 }
 
 @media (prefers-color-scheme: dark) {
   .stage {
     background:
-      radial-gradient(60% 80% at 0% 0%, #4a1a3a 0%, transparent 60%),
-      radial-gradient(55% 70% at 100% 10%, #24255a 0%, transparent 60%),
-      radial-gradient(60% 80% at 80% 100%, #3d2617 0%, transparent 60%),
-      linear-gradient(180deg, #17121a, #121320);
-    border-color: rgb(255 255 255 / 8%);
+      radial-gradient(60% 80% at 0% 0%, rgb(240 107 176 / 14%), transparent 60%),
+      var(--glass-shine),
+      var(--card-fill);
   }
 }
 
@@ -375,7 +375,7 @@ const next = computed(() => {
   padding: var(--space-4);
   border: 1px solid var(--card-edge);
   border-radius: var(--radius);
-  background: var(--card-fill);
+  background: var(--glass-shine), var(--tile-fill);
   box-shadow: var(--card-shadow);
   color: var(--ink);
   text-decoration: none;

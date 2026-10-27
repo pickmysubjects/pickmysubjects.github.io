@@ -71,7 +71,7 @@ function retake(code: string): string | null {
   padding: 8px 10px;
   border-radius: var(--radius);
   border: 1px dashed var(--glass-edge);
-  background: var(--paper-raised);
+  background: var(--glass-shine), var(--tile-fill);
   color: inherit;
   font: inherit;
   text-align: left;

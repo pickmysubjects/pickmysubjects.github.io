@@ -161,7 +161,7 @@ function pick(skill: Skill, level: number): void {
   padding: 6px 8px;
   border: 0;
   border-left: 1px solid var(--line);
-  background: var(--surface);
+  background: var(--field-fill);
   font: inherit;
   font-size: 0.8125rem;
   line-height: 1.25;
@@ -278,7 +278,7 @@ function pick(skill: Skill, level: number): void {
   font: inherit;
   font-size: 0.8125rem;
   color: var(--ink);
-  background: var(--surface);
+  background: var(--field-fill);
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
 }

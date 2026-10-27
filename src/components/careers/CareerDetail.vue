@@ -81,7 +81,7 @@ const hasBreadth = computed(() => !!result.value?.breadth && TIERS.some((x) => r
           v-for="m in majors"
           :key="m.component"
           type="button"
-          class="major surface"
+          class="major surface tile"
           :aria-pressed="m.component === chosen"
           @click="pick(m.component)"
         >

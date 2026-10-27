@@ -39,7 +39,7 @@ const features = [
       <h2 class="about-h2">{{ t('about.whatTitle') }}</h2>
       <ul class="about-features">
         <li v-for="f in features" :key="f.key">
-          <a class="feature surface" :href="f.href">
+          <a class="feature surface tile" :href="f.href">
             <component :is="f.icon" :size="18" aria-hidden="true" class="feature-icon" />
             <span>
               <strong class="feature-name">{{ t(f.name) }}</strong>

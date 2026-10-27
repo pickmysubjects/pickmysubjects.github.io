@@ -90,7 +90,7 @@ const courseTitle = computed(() => data.value.courses.find((c) => c.code === cou
         <ChevronDown :size="18" aria-hidden="true" class="group-chevron" />
       </summary>
       <div class="cards">
-        <a v-for="m in g.majors" :key="m.id" class="card surface" :href="link(`majors/${m.id}`)">
+        <a v-for="m in g.majors" :key="m.id" class="card surface tile" :href="link(`majors/${m.id}`)">
           <span class="card-title">{{ m.title }}</span>
           <span v-if="accredited.has(m.id)" class="acc-chip" :title="t('careers.accTitle')"><BadgeCheck :size="13" aria-hidden="true" /> {{ t('majors.accChip') }}</span>
           <ChevronRight :size="18" aria-hidden="true" class="go" />
@@ -102,7 +102,7 @@ const courseTitle = computed(() => data.value.courses.find((c) => c.code === cou
       <h2 id="minors-title" class="minors-title">{{ t('majors.minorsTitle') }} <span class="group-count">{{ minors.length }}</span></h2>
       <p class="minors-hint">{{ t('majors.minorsHint') }}</p>
       <div class="cards">
-        <a v-for="m in minors" :key="m.id" class="card surface" :href="link(`majors/${m.id}`)">
+        <a v-for="m in minors" :key="m.id" class="card surface tile" :href="link(`majors/${m.id}`)">
           <span class="card-title">{{ m.title }}</span>
           <span v-if="accredited.has(m.id)" class="acc-chip" :title="t('careers.accTitle')"><BadgeCheck :size="13" aria-hidden="true" /> {{ t('majors.accChip') }}</span>
           <ChevronRight :size="18" aria-hidden="true" class="go" />
@@ -114,7 +114,7 @@ const courseTitle = computed(() => data.value.courses.find((c) => c.code === cou
       <h2 id="specs-title" class="minors-title">{{ t('majors.specsTitle') }} <span class="group-count">{{ specs.length }}</span></h2>
       <p class="minors-hint">{{ t('majors.specsHint') }}</p>
       <div class="cards">
-        <a v-for="m in specs" :key="m.id" class="card surface" :href="link(`majors/${m.id}`)">
+        <a v-for="m in specs" :key="m.id" class="card surface tile" :href="link(`majors/${m.id}`)">
           <span class="card-title">{{ m.title }}</span>
           <span v-if="accredited.has(m.id)" class="acc-chip" :title="t('careers.accTitle')"><BadgeCheck :size="13" aria-hidden="true" /> {{ t('majors.accChip') }}</span>
           <ChevronRight :size="18" aria-hidden="true" class="go" />
@@ -126,7 +126,7 @@ const courseTitle = computed(() => data.value.courses.find((c) => c.code === cou
       <h2 id="informals-title" class="minors-title">{{ t('majors.informalsTitle') }} <span class="group-count">{{ informals.length }}</span></h2>
       <p class="minors-hint">{{ t('majors.informalsHint') }}</p>
       <div class="cards">
-        <a v-for="m in informals" :key="m.id" class="card surface" :href="link(`majors/${m.id}`)">
+        <a v-for="m in informals" :key="m.id" class="card surface tile" :href="link(`majors/${m.id}`)">
           <span class="card-title">{{ m.title }}</span>
           <span v-if="accredited.has(m.id)" class="acc-chip" :title="t('careers.accTitle')"><BadgeCheck :size="13" aria-hidden="true" /> {{ t('majors.accChip') }}</span>
           <ChevronRight :size="18" aria-hidden="true" class="go" />
@@ -188,7 +188,8 @@ const courseTitle = computed(() => data.value.courses.find((c) => c.code === cou
   width: 100%;
   padding: 13px 18px 13px 48px;
   font-size: 1rem;
-  background: var(--surface);
+  background: var(--glass-shine), var(--glass-fill);
+  box-shadow: var(--glass-shadow);
   border: 1px solid var(--line);
   border-radius: 999px;
   box-shadow: var(--shadow-1);

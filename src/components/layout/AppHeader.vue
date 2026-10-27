@@ -78,6 +78,18 @@ const sub = computed(() => subNavFor(props.view))
   backdrop-filter: var(--chrome-blur);
 }
 
+/* A soft fade under the bar so content slides under it instead of being cut. */
+.header::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  right: 0;
+  left: 0;
+  height: 14px;
+  pointer-events: none;
+  background: linear-gradient(to bottom, color-mix(in srgb, var(--chrome-fill) 70%, transparent), transparent);
+}
+
 .header-inner {
   display: flex;
   align-items: center;
@@ -182,9 +194,10 @@ const sub = computed(() => subNavFor(props.view))
 }
 
 .nav-link[aria-current='page'] {
-  background: var(--glass-shine), color-mix(in srgb, var(--ink) 88%, transparent);
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / 30%), 0 4px 12px -6px rgb(16 16 20 / 45%);
-  color: var(--bg);
+  /* A raised glass pill, like the step switch. */
+  background: var(--glass-shine), var(--glass-fill-hover);
+  box-shadow: var(--pill-raised);
+  color: var(--ink);
 }
 
 .tools {
@@ -207,10 +220,13 @@ const sub = computed(() => subNavFor(props.view))
   color: var(--ink-soft);
   text-decoration: none;
   white-space: nowrap;
+  border: 1px solid var(--glass-edge);
   border-radius: 999px;
+  background: var(--glass-fill);
+  box-shadow: var(--glass-shadow);
 }
 
-/* A plain link, not a second pill next to the nav. */
+
 .guide:hover,
 .guide[aria-current='page'] {
   color: var(--ink);
