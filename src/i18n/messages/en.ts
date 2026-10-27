@@ -1723,6 +1723,13 @@ export const en = {
     contact: 'Questions? Use the Feedback page.',
   },
   home: {
+    release: {
+      label: "v{v} · Updated {date}",
+      title: "What's new",
+      line1: "A fresh Liquid Glass look, easier on the eyes.",
+      line2: "Clearer plan board: prerequisite lines and a subject sheet.",
+      line3: "Simpler filters, and faster on phones.",
+    },
     moreSubjects: "+{n} more",
     sub: "Personalised picks, hidden high-scorers, surprise workloads to dodge, and what students really say about every UniMelb subject.",
     proofSubjects: "{n} subjects",

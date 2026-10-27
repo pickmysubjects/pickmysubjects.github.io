@@ -1720,6 +1720,13 @@ export const ko: Messages = {
     contact: '궁금한 점은 "피드백" 페이지를 이용하세요.',
   },
   home: {
+    release: {
+      label: "v{v} · {date} 업데이트",
+      title: "이번 업데이트",
+      line1: "새 Liquid Glass 디자인으로 더 깔끔하게",
+      line2: "플랜 보드가 더 명확해짐: 선수과목 선과 과목 시트",
+      line3: "필터가 쉬워지고 폰에서 더 빨라짐",
+    },
     moreSubjects: "외 {n}과목",
     sub: "나에게 맞춘 과목 추천. 숨은 고득점 과목을 찾고, 예상 밖의 과제 폭탄을 피하고, 멜버른대 모든 과목의 진짜 후기를 확인하세요.",
     proofSubjects: "과목 {n}개",

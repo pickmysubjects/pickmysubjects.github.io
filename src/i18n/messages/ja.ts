@@ -1720,6 +1720,13 @@ export const ja: Messages = {
     contact: 'ご質問は「フィードバック」ページからどうぞ。',
   },
   home: {
+    release: {
+      label: "v{v} · {date}更新",
+      title: "今回のアップデート",
+      line1: "Liquid Glass の新しいデザインで見やすく",
+      line2: "プランボードが分かりやすく：前提科目の線と科目シート",
+      line3: "フィルターが使いやすく、スマホで速く",
+    },
     moreSubjects: "ほか {n} 科目",
     sub: "あなたに合わせた科目選び。隠れた高得点科目を見つけ、思わぬ重い科目を避け、メルボルン大学の全科目の本当の評判がわかります。",
     proofSubjects: "{n} 科目",

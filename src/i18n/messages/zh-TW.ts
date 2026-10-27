@@ -1720,6 +1720,13 @@ export const zhTW: Messages = {
     contact: '有疑問？請使用「意見回饋」頁面。',
   },
   home: {
+    release: {
+      label: "v{v} · 更新於 {date}",
+      title: "這次更新",
+      line1: "全新 Liquid Glass 介面，看起來更清爽",
+      line2: "規劃板更清楚：擋修連線 + 科目資訊卡",
+      line3: "篩選更好用，手機上更順",
+    },
     moreSubjects: "還有 {n} 門",
     sub: "為你量身挑課：找出被忽略的高分課，避開意外的重課，看看同學對墨大每門課的真實評價。",
     proofSubjects: "{n} 門課",
