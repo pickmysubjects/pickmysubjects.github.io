@@ -137,7 +137,7 @@ const discussionSources = [...new Set(subjects.flatMap((x) => x.discussions ?? [
 
 /** schema.org data, so search engines and AI assistants know what the page is about. */
 function structured(page: Page, code: LocaleCode, url: string): object {
-  const site = { '@type': 'WebSite', name: BRAND, url: `${SITE}/` }
+  const site = { '@type': 'WebSite', name: BRAND, url: SITE }
   if (page.path === '') {
     // Who we are, said once and plainly, so search engines and AI assistants name the site right
     // (it was called Subject Compass until October 2026) and list what it actually does.
