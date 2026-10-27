@@ -690,6 +690,13 @@ button.chip {
   box-shadow: none;
 }
 
+/* Solid accent buttons keep the brand pink: their white text sits on the button, not the glass. */
+@media (prefers-color-scheme: light) {
+  :is(.surface, .flat) .button-accent {
+    --accent: #c2227a;
+  }
+}
+
 /* Straight on the colour field: a slightly deeper accent keeps links at AA. */
 @media (prefers-color-scheme: light) {
   .flat {
