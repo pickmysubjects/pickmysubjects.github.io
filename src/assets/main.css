@@ -41,7 +41,7 @@
   --stop-tint: var(--bad-soft);
 
   --font-ui: 'Geist Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-code: 'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  --font-code: 'Geist Mono', ui-monospace, 'SF Mono', Menlo, Consolas, 'Cascadia Mono', monospace;
 
   --radius-sm: 10px;
   --radius: 14px;
@@ -220,11 +220,12 @@
 
 /* Geist has no Vietnamese tone marks: one face for the whole line instead of a patchwork. */
 :root:lang(vi) {
-  --font-ui: 'Be Vietnam Pro', system-ui, sans-serif;
+  --font-ui: 'Be Vietnam Pro', system-ui, 'Segoe UI', Roboto, sans-serif;
 }
 
 :root:lang(hi) {
-  --font-ui: 'Geist Sans', 'Noto Sans Devanagari Variable', 'Kohinoor Devanagari', 'Nirmala UI', sans-serif;
+  --font-ui: 'Geist Sans', 'Noto Sans Devanagari Variable', 'Kohinoor Devanagari', 'Nirmala UI', 'Nirmala Text',
+    'Mangal', system-ui, 'Segoe UI', sans-serif;
 }
 
 *,
@@ -1048,6 +1049,84 @@ button.chip {
     --glass-fill: var(--surface);
     --chrome-fill: var(--surface);
     --float-fill: var(--surface);
+  }
+}
+
+/* ---------- Cross-platform ---------- */
+
+/* Phones: a tap shows the control's own :active state, not a grey flash. */
+html {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Landscape on notched phones (viewport-fit=cover): keep content out of the notch. */
+#app {
+  padding-inline: env(safe-area-inset-left) env(safe-area-inset-right);
+}
+
+/* iOS Safari zooms the page into any text field under 16px; keep fields at 16px on touch screens. */
+@media (pointer: coarse) {
+  input:not([type='checkbox'], [type='radio'], [type='range'], [type='button'], [type='submit']),
+  select,
+  textarea {
+    font-size: max(16px, 1em) !important;
+  }
+}
+
+/* Touch screens: small icon buttons and compact links keep their look but get a 44px hit area. */
+@media (pointer: coarse) {
+  :is(.infotip-button, .brand, .back, .guide-link, .discussion-link, .role-link) {
+    position: relative;
+  }
+
+  :is(.infotip-button, .brand, .back, .guide-link, .discussion-link, .role-link)::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: max(100%, 44px);
+    height: max(100%, 44px);
+    transform: translate(-50%, -50%);
+  }
+}
+
+/* Windows High Contrast (forced colours): glass, shadows and tinted fills vanish, so give every
+   panel, control and divider a real system-colour border and keep focus rings visible. */
+@media (forced-colors: active) {
+  .surface,
+  .glass,
+  .card,
+  .button,
+  .chip,
+  .select-glass,
+  .seg-option,
+  .switch,
+  dialog,
+  [role='dialog'],
+  nav {
+    border: 1px solid CanvasText;
+  }
+
+  .chip:is([aria-pressed='true'], [aria-selected='true'], .is-on),
+  [aria-current='page'] {
+    border-color: Highlight;
+    outline: 2px solid Highlight;
+    outline-offset: -2px;
+  }
+
+  :focus-visible {
+    outline: 3px solid Highlight;
+    outline-offset: 2px;
+  }
+
+  hr {
+    border-color: CanvasText;
+  }
+
+  .backdrop {
+    display: none;
   }
 }
 

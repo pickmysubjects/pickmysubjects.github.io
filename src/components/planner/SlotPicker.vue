@@ -165,8 +165,9 @@ function onClick(event: MouseEvent): void {
 
 <style scoped>
 .slot {
-  width: min(560px, calc(100vw - 24px));
+  width: min(560px, calc(100% - 24px));
   max-height: min(86vh, 720px);
+  max-height: min(86dvh, 720px);
   padding: 0;
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
