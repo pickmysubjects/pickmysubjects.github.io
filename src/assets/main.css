@@ -772,12 +772,17 @@ button.chip {
    full-page capture, behind iOS's rubber-band scroll, or wherever the fixed layer isn't drawn. */
 :root {
   background-color: #eedff2;
+  /* The same patches and strength as the fixed field, so a long page never turns into a pale band
+     below the first screen. Every patch ends inside its tile (centres 20–80%, reach ~15%). */
   background-image:
-    radial-gradient(48% 22% at 0% 20%, rgb(243 154 196 / 55%), transparent 70%),
-    radial-gradient(44% 22% at 100% 50%, rgb(169 163 255 / 50%), transparent 70%),
-    radial-gradient(48% 22% at 12% 80%, rgb(255 194 158 / 55%), transparent 70%),
-    linear-gradient(180deg, #f4dcec 0%, #e6def8 50%, #f4dcec 100%);
-  background-size: 100% 1400px;
+    radial-gradient(55% 24% at 0% 20%, rgb(243 154 196 / 75%), transparent 65%),
+    radial-gradient(50% 24% at 100% 32%, rgb(169 163 255 / 70%), transparent 65%),
+    radial-gradient(40% 20% at 40% 48%, rgb(139 124 246 / 42%), transparent 65%),
+    radial-gradient(45% 22% at 74% 64%, rgb(196 90 154 / 38%), transparent 65%),
+    radial-gradient(55% 24% at 6% 80%, rgb(255 194 158 / 75%), transparent 65%),
+    radial-gradient(45% 22% at 96% 82%, rgb(217 166 240 / 62%), transparent 65%),
+    linear-gradient(180deg, #f4dcec 0%, #e6def8 35%, #f9e2d6 70%, #f4dcec 100%);
+  background-size: 100% 1600px;
   background-repeat: repeat-y;
 }
 
@@ -785,10 +790,13 @@ button.chip {
   :root {
     background-color: #140c1e;
     background-image:
-      radial-gradient(48% 22% at 0% 20%, rgb(176 54 126 / 40%), transparent 70%),
-      radial-gradient(44% 22% at 100% 50%, rgb(91 70 200 / 40%), transparent 70%),
-      radial-gradient(48% 22% at 12% 80%, rgb(130 60 40 / 35%), transparent 70%),
-      linear-gradient(180deg, #170c1c 0%, #110d24 50%, #170c1c 100%);
+      radial-gradient(55% 24% at 0% 20%, rgb(176 54 126 / 55%), transparent 65%),
+      radial-gradient(50% 24% at 100% 32%, rgb(91 70 200 / 55%), transparent 65%),
+      radial-gradient(40% 20% at 40% 48%, rgb(120 60 180 / 35%), transparent 65%),
+      radial-gradient(45% 22% at 74% 64%, rgb(176 54 126 / 35%), transparent 65%),
+      radial-gradient(55% 24% at 6% 80%, rgb(130 60 40 / 45%), transparent 65%),
+      radial-gradient(45% 22% at 96% 82%, rgb(91 70 200 / 45%), transparent 65%),
+      linear-gradient(180deg, #170c1c 0%, #110d24 35%, #170d12 70%, #170c1c 100%);
   }
 }
 
@@ -798,6 +806,10 @@ button.chip {
   z-index: -1;
   overflow: hidden;
   pointer-events: none;
+  /* The lower part fades into the page's own colours (on <html>), so there is no edge where the
+     fixed layer stops: in full-page captures, or behind iOS's rubber-band scroll. */
+  -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent);
+  mask-image: linear-gradient(to bottom, #000 55%, transparent);
   /* Large, saturated patches with light and dark between them, so glass always has edges to bend. */
   background:
     radial-gradient(55% 45% at 0% 0%, rgb(243 154 196 / 75%), transparent 70%),
