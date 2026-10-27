@@ -11,7 +11,7 @@ import { IS_BETA } from '@/release'
  */
 defineProps<{ slim?: boolean }>()
 const { t } = useI18n()
-const KEY = 'pms.notice.hidden'
+const KEY = 'sc:notice-hidden'
 // The English line identifies the notice whatever language the student reads it in.
 // Quotes and backslashes dropped so public/boot.js can match it in a CSS selector.
 const stamp = en.home.notice.title.replace(/["\\\n]/g, '')
@@ -60,10 +60,14 @@ function hide(): void {
 }
 
 .slim .notice-text strong {
-  flex: none;
+  flex: 0 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .slim .notice-sub {
+  flex: 0 1000 auto;
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;

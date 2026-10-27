@@ -1729,7 +1729,7 @@ export const vi: Messages = {
   },
   home: {
     notice: {
-      title: "Bản chính thức ra mắt trước cuối tháng 11",
+      title: "Bản chính thức: cuối tháng 11",
       sub: "Có Handbook 2027",
       close: "Đóng",
     },
