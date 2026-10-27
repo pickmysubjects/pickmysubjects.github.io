@@ -27,12 +27,26 @@ const entry = computed(() => (props.code ? saved.value[props.code] : undefined))
 const rows = computed<CalcRow[]>(() => entry.value?.rows ?? handbookRows.value)
 const custom = computed(() => entry.value?.custom === true)
 
-function save(next: CalcRow[], structural: boolean): void {
+// Custom while the parts differ from the Handbook's (changing a weight back undoes it).
+const sameParts = (a: readonly CalcRow[], b: readonly CalcRow[]) =>
+  a.length === b.length && a.every((r, i) => r.kind === b[i]!.kind && r.weight === b[i]!.weight && !!r.hurdle === !!b[i]!.hurdle)
+function save(next: CalcRow[]): void {
   if (!props.code) return
-  saved.value = { ...saved.value, [props.code]: { rows: next, ...(structural || custom.value ? { custom: true } : {}) } }
+  saved.value = { ...saved.value, [props.code]: { rows: next, ...(sameParts(next, handbookRows.value) ? {} : { custom: true }) } }
 }
 function setField(i: number, field: keyof CalcRow, value: unknown): void {
-  save(rows.value.map((r, j) => (j === i ? { ...r, [field]: value } : r)), field === 'kind' || field === 'weight' || field === 'hurdle')
+  save(rows.value.map((r, j) => (j === i ? { ...r, [field]: value } : r)))
+}
+// A weight cleared to type a new one stays empty while editing: nothing is saved until there's a
+// number, and leaving it empty puts the old weight back.
+function setWeight(i: number, e: Event): void {
+  const n = numberOf(e)
+  if (n === '' || n === rows.value[i]?.weight) return
+  setField(i, 'weight', Math.min(100, n))
+}
+function weightDone(i: number, e: Event): void {
+  const el = e.target as HTMLInputElement
+  if (el.value === '' || !Number.isFinite(Number(el.value))) el.value = String(rows.value[i]?.weight ?? '')
 }
 // A negative mark is kept as typed so it shows as wrong instead of quietly counting as "not done".
 const numberOf = (e: Event, allowNegative = false): number | '' => {
@@ -41,10 +55,10 @@ const numberOf = (e: Event, allowNegative = false): number | '' => {
   return raw === '' || !Number.isFinite(n) || (n < 0 && !allowNegative) ? '' : n
 }
 function addRow(): void {
-  save([...rows.value, { kind: 'assignment', weight: 0, score: '', outOf: '' }], true)
+  save([...rows.value, { kind: 'assignment', weight: 0, score: '', outOf: '' }])
 }
 function removeRow(i: number): void {
-  save(rows.value.filter((_, j) => j !== i), true)
+  save(rows.value.filter((_, j) => j !== i))
 }
 function reset(): void {
   // Back to the Handbook's list, keeping marks typed for parts still in the same place.
@@ -114,7 +128,7 @@ function pick(code: string): void {
             </label>
             <label class="f f-weight">
               <span class="f-label">{{ t('calc.weight') }}</span>
-              <input class="input" type="number" inputmode="decimal" min="0" max="100" :value="r.weight" @input="setField(i, 'weight', Math.min(100, numberOf($event) || 0))" />
+              <input class="input" type="number" inputmode="decimal" min="0" max="100" :value="r.weight" @input="setWeight(i, $event)" @change="weightDone(i, $event)" />
             </label>
             <label class="f f-score">
               <span class="f-label">{{ t('calc.score') }}</span>
