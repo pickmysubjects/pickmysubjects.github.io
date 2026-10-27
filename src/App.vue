@@ -198,23 +198,7 @@ watchEffect(() => {
 }
 
 .app-main > .page-steps {
-  display: none;
-}
-
-@media (max-width: 1100px) {
-  .app-main > .page-steps {
-    display: flex;
-    margin-top: 12px;
-  }
-
-  .app-main > .page-steps :deep(.step) {
-    min-height: 34px;
-    font-size: 0.875rem;
-  }
-
-  .app-main > .page-steps :deep(svg) {
-    display: none;
-  }
+  margin-top: 14px;
 }
 
 /* The plan board uses the whole width; its page keeps text at the usual width (PlannerView). */
