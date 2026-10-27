@@ -715,29 +715,45 @@ button.chip {
 }
 
 /* Accessibility settings for the glass (Apple: Reduce Transparency, Increase Contrast). */
+/* Reduce Transparency: frostier, fully opaque glass (Apple's behaviour), not plain white.
+   The colour field stays; surfaces are solid tints of it with the same glass edge and shine. */
 @media (prefers-reduced-transparency: reduce) {
   :root {
-    --glass-fill: var(--surface);
-    --glass-fill-hover: var(--surface-2);
-    --chrome-fill: var(--surface);
+    --card-fill: #f9f2f8;
+    --tile-fill: #fbf6fb;
+    --field-fill: #fdf9fc;
+    --chrome-fill: #f6edf5;
+    --glass-fill: #fbf6fb;
+    --glass-fill-hover: #f3e8f2;
+    --float-fill: #f9f2f8;
+    --seg-fill: #f1e6f1;
+    --sheet-fill: #f9f2f8;
     --chrome-blur: none;
     --glass-blur: none;
-    --float-fill: var(--surface);
     --float-blur: none;
-    --seg-fill: var(--surface-2);
     --glass-blur-strong: none;
-    --sheet-fill: var(--surface);
-    --card-fill: var(--surface);
-    --tile-fill: var(--surface);
-    --field-fill: var(--surface);
     --card-blur: none;
   }
 
   .surface,
   .glass {
-    background: var(--surface);
+    background: var(--glass-shine), var(--card-fill);
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) and (prefers-color-scheme: dark) {
+  :root {
+    --card-fill: #1f1828;
+    --tile-fill: #241c2e;
+    --field-fill: #2a2234;
+    --chrome-fill: #1a1522;
+    --glass-fill: #2a2234;
+    --glass-fill-hover: #33293f;
+    --float-fill: #1f1828;
+    --seg-fill: #241c2e;
+    --sheet-fill: #1f1828;
   }
 }
 
