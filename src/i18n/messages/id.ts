@@ -1986,7 +1986,7 @@ export const id: Messages = {
     },
   },
   shortlist: {
-    title: "Daftar simpanan",
+    title: "Disimpan",
     lede: "Mata kuliah yang kamu simpan untuk dilihat lagi. Pilih dua atau tiga untuk dibandingkan berdampingan.",
     local: "Hanya disimpan di browser ini, seperti profilmu yang lain (dan ikut di file cadangan).",
     localShort: "Hanya disimpan di browser ini",

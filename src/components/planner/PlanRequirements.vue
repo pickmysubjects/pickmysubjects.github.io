@@ -420,7 +420,7 @@ function toggle(id: string): void {
   height: 20px;
   margin-top: 1px;
   border-radius: 50%;
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   font-weight: 700;
   color: #fff;
   background: var(--good);

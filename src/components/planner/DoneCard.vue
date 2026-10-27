@@ -3,6 +3,7 @@ import { computed } from 'vue'
 import { Check, X } from 'lucide-vue-next'
 import type { Subject } from '@/engine'
 import { useI18n } from '@/i18n'
+import { localTitle } from '@/i18n/localized'
 import type { PastResult } from '@/utils/pastTerms'
 
 /**
@@ -12,7 +13,9 @@ import type { PastResult } from '@/utils/pastTerms'
  */
 const props = defineProps<{ result: PastResult; subject?: Subject; note?: string; highlighted?: boolean; dimmed?: boolean }>()
 const emit = defineEmits<{ open: []; hover: [on: boolean] }>()
-const { t } = useI18n()
+const { t, locale } = useI18n()
+// The title in the reader's language where we have one, with the English after it, small (as on a planned card).
+const local = computed(() => (props.subject ? localTitle(props.subject, locale.value) : ''))
 const label = computed(() => (props.result.failed ? t.value('plan.pastNotPassed') : t.value('plan.pastTag')))
 </script>
 
@@ -36,7 +39,10 @@ const label = computed(() => (props.result.failed ? t.value('plan.pastNotPassed'
       <span class="code">{{ result.code }}</span>
       <span v-if="result.mark !== undefined" class="mark">{{ result.mark }}</span>
     </span>
-    <span class="title">{{ subject?.title ?? t('subject.notYetAdded') }}</span>
+    <span class="title">
+      {{ local || subject?.title || t('subject.notYetAdded') }}
+      <span v-if="local" class="title-en">{{ subject?.title }}</span>
+    </span>
     <span class="foot">
       <span class="tag tag-state">{{ label }}</span>
       <span v-if="subject" class="tag">L{{ subject.level }}</span>
@@ -109,6 +115,13 @@ const label = computed(() => (props.result.failed ? t.value('plan.pastNotPassed'
   font-weight: 700;
 }
 
+.title-en {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--ink-faint);
+}
+
 .title {
   font-size: 0.875rem;
   line-height: 1.35;
@@ -126,7 +139,8 @@ const label = computed(() => (props.result.failed ? t.value('plan.pastNotPassed'
 .tag {
   padding: 0 6px;
   border-radius: 999px;
-  background: rgb(255 255 255 / 60%);
+  /* The card's own surface, lifted a little: readable in light, dark and Reduce Transparency. */
+  background: color-mix(in srgb, var(--surface) 60%, transparent);
   font-size: 0.75rem;
   color: var(--ink-soft);
 }

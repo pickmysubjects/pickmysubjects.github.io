@@ -423,10 +423,11 @@ onBeforeUnmount(() => io?.disconnect())
     width: 100%;
   }
 
+  /* Grow to share the row, but never break a label: a button that doesn't fit moves down a row. */
   .actions-quiet .button {
-    flex: 1 1 0;
-    min-width: 0;
+    flex: 1 1 auto;
     padding-inline: 10px;
+    white-space: nowrap;
   }
 }
 </style>

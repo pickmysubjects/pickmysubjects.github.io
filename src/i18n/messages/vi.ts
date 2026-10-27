@@ -1986,7 +1986,7 @@ export const vi: Messages = {
     },
   },
   shortlist: {
-    title: "Danh sách đã lưu",
+    title: "Môn đã lưu",
     lede: "Các môn bạn lưu lại để xem tiếp. Chọn hai hoặc ba môn để so sánh cạnh nhau.",
     local: "Chỉ lưu trong trình duyệt này, như phần còn lại của hồ sơ (và có trong tệp sao lưu).",
     localShort: "Chỉ lưu trên trình duyệt này",

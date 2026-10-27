@@ -173,7 +173,7 @@ function onDragStart(event: DragEvent): void {
     </span>
 
     <dialog v-if="moveOpen" ref="sheet" class="sheet" :aria-label="code" @close="emit('moveSheet', false)" @click="onSheetClick">
-      <p class="sheet-title"><span class="code">{{ code }}</span> {{ subject?.title }}</p>
+      <p class="sheet-title"><span class="code">{{ code }}</span> {{ local || subject?.title }}</p>
       <div class="sheet-actions">
         <button class="sheet-act" type="button" @click="fromSheet(() => emit('select'))"><Route :size="16" aria-hidden="true" />{{ t('plan.tlShow') }}</button>
         <button class="sheet-act" type="button" @click="fromSheet(() => emit('swap'))"><ArrowRightLeft :size="16" aria-hidden="true" />{{ t('plan.swap') }}</button>
@@ -547,7 +547,7 @@ function onDragStart(event: DragEvent): void {
 }
 
 .sheet-why {
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   color: var(--good);
   text-align: right;
 }
