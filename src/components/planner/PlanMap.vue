@@ -593,7 +593,7 @@ onBeforeUnmount(() => {
   border-radius: 999px;
   background: var(--glass-shine), var(--sheet-fill);
   box-shadow: inset 0 1px 0 rgb(255 255 255 / 60%), 0 2px 6px -3px rgb(60 20 80 / 40%);
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   font-weight: 650;
   line-height: 1.5;
   color: var(--ink-soft);
