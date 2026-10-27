@@ -12,6 +12,7 @@ import PlanRequirements from '@/components/planner/PlanRequirements.vue'
 import SubjectTimeline from '@/components/planner/SubjectTimeline.vue'
 import PlanHowBuilt from '@/components/planner/PlanHowBuilt.vue'
 import PlanIssues from '@/components/planner/PlanIssues.vue'
+import PlanCalendar from '@/components/planner/PlanCalendar.vue'
 import PlanPrint, { type PrintTerm } from '@/components/planner/PlanPrint.vue'
 import Interp from '@/components/Interp.vue'
 import PlanSwitcher from '@/components/plans/PlanSwitcher.vue'
@@ -638,6 +639,7 @@ const printTerms = computed<PrintTerm[]>(() => {
               {{ t('plan.censusLineShort') }}<InfoTip :text="t('plan.censusLine')" />
               <a :href="link('guide/key-dates/')">{{ t('guide.datesTitle') }}</a>
             </p>
+            <PlanCalendar />
           </div>
           <div class="details-pair">
             <PlanIssues class="details-card" :issues="allIssues" :rules="allRules" :statuses="plan.courseCheck.value.statuses" />

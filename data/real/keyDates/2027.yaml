@@ -1,0 +1,29 @@
+# UniMelb key dates for the 2027 academic year (Summer Term 2027 through Semester 2 2027).
+# Copied by hand from the official pages; every row has its source. Only dates the pages
+# state are here: anything not published yet is left out, never guessed.
+# Dates are Melbourne dates, first and last day inclusive.
+year: 2027
+checked: 2026-10-23
+dates:
+  # Re-enrolling for 2027 happens before Summer Term 2027 starts, so it sits in that group.
+  - { kind: reenrol, term: summer, start: '2026-11-16', end: '2026-12-14', source: https://students.unimelb.edu.au/course-admin/re-enrol-in-your-course }
+  - { kind: reenrolLate, term: summer, start: '2026-12-15', end: '2027-01-13', source: https://students.unimelb.edu.au/course-admin/re-enrol-in-your-course }
+  - { kind: teaching, term: summer, start: '2026-11-23', end: '2027-02-28', source: https://students.unimelb.edu.au/course-admin/key-dates }
+  - { kind: exams, term: summer, start: '2027-02-15', end: '2027-02-22', source: https://students.unimelb.edu.au/course-admin/key-dates }
+  - { kind: orientation, term: semester-1, start: '2027-02-22', end: '2027-02-26', source: https://students.unimelb.edu.au/course-admin/key-dates }
+  - { kind: teaching, term: semester-1, start: '2027-03-01', end: '2027-05-30', source: https://students.unimelb.edu.au/course-admin/key-dates }
+  - { kind: employability, term: semester-1, start: '2027-03-15', end: '2027-03-19', source: https://students.unimelb.edu.au/careers/employability-week }
+  - { kind: break, term: semester-1, start: '2027-03-26', end: '2027-04-04', source: https://students.unimelb.edu.au/course-admin/key-dates }
+  - { kind: swotvac, term: semester-1, start: '2027-05-31', end: '2027-06-04', source: https://students.unimelb.edu.au/course-admin/key-dates }
+  - { kind: exams, term: semester-1, start: '2027-06-07', end: '2027-06-25', source: https://students.unimelb.edu.au/course-admin/key-dates }
+  - { kind: results, term: semester-1, start: '2027-07-09', source: https://students.unimelb.edu.au/course-admin/key-dates }
+  - { kind: supp, term: semester-1, start: '2027-07-16', end: '2027-07-23', source: https://students.unimelb.edu.au/course-admin/key-dates }
+  - { kind: teaching, term: winter, start: '2027-06-28', end: '2027-07-25', source: https://students.unimelb.edu.au/course-admin/key-dates }
+  - { kind: orientation, term: semester-2, start: '2027-07-19', end: '2027-07-23', source: https://students.unimelb.edu.au/course-admin/key-dates }
+  - { kind: teaching, term: semester-2, start: '2027-07-26', end: '2027-10-24', source: https://students.unimelb.edu.au/course-admin/key-dates }
+  - { kind: employability, term: semester-2, start: '2027-08-09', end: '2027-08-13', source: https://students.unimelb.edu.au/careers/employability-week }
+  - { kind: break, term: semester-2, start: '2027-09-27', end: '2027-10-03', source: https://students.unimelb.edu.au/course-admin/key-dates }
+  - { kind: swotvac, term: semester-2, start: '2027-10-25', end: '2027-10-29', source: https://students.unimelb.edu.au/course-admin/key-dates }
+  - { kind: exams, term: semester-2, start: '2027-11-01', end: '2027-11-19', source: https://students.unimelb.edu.au/course-admin/key-dates }
+  - { kind: results, term: semester-2, start: '2027-12-03', source: https://students.unimelb.edu.au/course-admin/key-dates }
+  - { kind: supp, term: semester-2, start: '2027-12-10', end: '2027-12-17', source: https://students.unimelb.edu.au/course-admin/key-dates }

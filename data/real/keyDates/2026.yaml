@@ -1,0 +1,32 @@
+# UniMelb key dates for the 2026 academic year (Summer Term 2026 through Semester 2 2026).
+# Copied by hand from the official pages; every row has its source. Only dates the pages
+# state are here: anything not published yet is left out, never guessed.
+# Dates are Melbourne dates, first and last day inclusive.
+year: 2026
+checked: 2026-10-23
+dates:
+  - { kind: teaching, term: summer, start: '2026-01-05', end: '2026-03-01', source: https://students.unimelb.edu.au/course-admin/key-dates }
+  - { kind: exams, term: summer, start: '2026-02-16', end: '2026-02-23', source: https://students.unimelb.edu.au/course-admin/key-dates }
+  - { kind: orientation, term: semester-1, start: '2026-02-23', end: '2026-02-27', source: https://students.unimelb.edu.au/course-admin/key-dates }
+  - { kind: teaching, term: semester-1, start: '2026-03-02', end: '2026-05-31', source: https://students.unimelb.edu.au/course-admin/key-dates }
+  - { kind: selfEnrol, term: semester-1, start: '2026-03-13', source: https://students.unimelb.edu.au/course-admin/key-dates }
+  - { kind: employability, term: semester-1, start: '2026-03-16', end: '2026-03-20', source: https://students.unimelb.edu.au/careers/employability-week }
+  - { kind: census, term: semester-1, start: '2026-03-31', source: https://students.unimelb.edu.au/course-admin/key-dates }
+  - { kind: break, term: semester-1, start: '2026-04-03', end: '2026-04-12', source: https://students.unimelb.edu.au/course-admin/key-dates }
+  - { kind: withdraw, term: semester-1, start: '2026-05-08', source: https://students.unimelb.edu.au/course-admin/key-dates }
+  - { kind: swotvac, term: semester-1, start: '2026-06-01', end: '2026-06-05', source: https://students.unimelb.edu.au/course-admin/key-dates }
+  - { kind: exams, term: semester-1, start: '2026-06-09', end: '2026-06-26', source: https://students.unimelb.edu.au/course-admin/key-dates }
+  - { kind: results, term: semester-1, start: '2026-07-10', source: https://students.unimelb.edu.au/course-admin/key-dates }
+  - { kind: supp, term: semester-1, start: '2026-07-16', end: '2026-07-23', source: https://students.unimelb.edu.au/course-admin/key-dates }
+  - { kind: teaching, term: winter, start: '2026-06-29', end: '2026-07-26', source: https://students.unimelb.edu.au/course-admin/key-dates }
+  - { kind: orientation, term: semester-2, start: '2026-07-20', end: '2026-07-24', source: https://students.unimelb.edu.au/course-admin/key-dates }
+  - { kind: teaching, term: semester-2, start: '2026-07-27', end: '2026-10-25', source: https://students.unimelb.edu.au/course-admin/key-dates }
+  - { kind: selfEnrol, term: semester-2, start: '2026-08-07', source: https://students.unimelb.edu.au/course-admin/key-dates }
+  - { kind: employability, term: semester-2, start: '2026-08-10', end: '2026-08-14', source: https://students.unimelb.edu.au/careers/employability-week }
+  - { kind: census, term: semester-2, start: '2026-08-31', source: https://students.unimelb.edu.au/course-admin/key-dates }
+  - { kind: withdraw, term: semester-2, start: '2026-09-25', source: https://students.unimelb.edu.au/course-admin/key-dates }
+  - { kind: break, term: semester-2, start: '2026-09-28', end: '2026-10-04', source: https://students.unimelb.edu.au/course-admin/key-dates }
+  - { kind: swotvac, term: semester-2, start: '2026-10-26', end: '2026-10-30', source: https://students.unimelb.edu.au/course-admin/key-dates }
+  - { kind: exams, term: semester-2, start: '2026-11-02', end: '2026-11-20', source: https://students.unimelb.edu.au/course-admin/key-dates }
+  - { kind: results, term: semester-2, start: '2026-12-04', source: https://students.unimelb.edu.au/course-admin/key-dates }
+  - { kind: supp, term: semester-2, start: '2026-12-10', end: '2026-12-17', source: https://students.unimelb.edu.au/course-admin/key-dates }

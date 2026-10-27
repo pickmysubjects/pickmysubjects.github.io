@@ -1,20 +1,16 @@
+import generated from '@/generated/key-dates.json'
+import { KEY_DATE_TERMS, type KeyDateKind, type KeyDateTerm } from './keyDatesSchema'
+export { KEY_DATE_KINDS, KEY_DATE_TERMS, type KeyDateKind, type KeyDateTerm } from './keyDatesSchema'
+
 /**
- * University key dates, copied by hand from the official key dates page (and the Employability
- * Week page) on 2026-10-23. Only dates the pages state are here; anything the pages didn't list
- * (for example 2027 census and withdrawal dates) is left out rather than guessed.
+ * University key dates, from data/real/keyDates/<year>.yaml (each row with its official source,
+ * validated when the data is built). Only dates the pages state are there; anything not
+ * published yet (for example 2027 census and withdrawal dates) is left out rather than guessed.
  * Census and withdrawal dates are the standard ones; each subject's own are on its Handbook page.
  */
 export const KEY_DATES_SOURCE = 'https://students.unimelb.edu.au/course-admin/key-dates'
 export const EMPLOYABILITY_SOURCE = 'https://students.unimelb.edu.au/careers/employability-week'
-/** Re-enrolment periods for 2027, copied from the re-enrol page on 2026-10-26. */
 export const REENROL_SOURCE = 'https://students.unimelb.edu.au/course-admin/re-enrol-in-your-course'
-/** When the dates were copied; also the DTSTAMP of the calendar file, so it's stable. */
-export const KEY_DATES_CHECKED = '2026-10-23'
-
-export const KEY_DATE_KINDS = ['teaching', 'orientation', 'selfEnrol', 'employability', 'census', 'break', 'withdraw', 'swotvac', 'exams', 'results', 'supp', 'reenrol', 'reenrolLate'] as const
-export type KeyDateKind = (typeof KEY_DATE_KINDS)[number]
-export const KEY_DATE_TERMS = ['summer', 'semester-1', 'winter', 'semester-2'] as const
-export type KeyDateTerm = (typeof KEY_DATE_TERMS)[number]
 
 export interface KeyDate {
   /** Stable id, also the calendar UID. */
@@ -29,76 +25,10 @@ export interface KeyDate {
   url: string
 }
 
-type Row = [KeyDateKind, KeyDateTerm, string, string?]
-const A = KEY_DATES_SOURCE
-const E = EMPLOYABILITY_SOURCE
-const R = REENROL_SOURCE
-
-function rows(year: number, list: Row[]): KeyDate[] {
-  return list.map(([kind, term, start, end]) => ({
-    id: `${year}-${term}-${kind}`,
-    kind,
-    year,
-    term,
-    start,
-    end: end ?? start,
-    url: kind === 'employability' ? E : kind === 'reenrol' || kind === 'reenrolLate' ? R : A,
-  }))
-}
-
-export const KEY_DATES: KeyDate[] = [
-  ...rows(2026, [
-    ['teaching', 'summer', '2026-01-05', '2026-03-01'],
-    ['exams', 'summer', '2026-02-16', '2026-02-23'],
-    ['orientation', 'semester-1', '2026-02-23', '2026-02-27'],
-    ['teaching', 'semester-1', '2026-03-02', '2026-05-31'],
-    ['selfEnrol', 'semester-1', '2026-03-13'],
-    ['employability', 'semester-1', '2026-03-16', '2026-03-20'],
-    ['census', 'semester-1', '2026-03-31'],
-    ['break', 'semester-1', '2026-04-03', '2026-04-12'],
-    ['withdraw', 'semester-1', '2026-05-08'],
-    ['swotvac', 'semester-1', '2026-06-01', '2026-06-05'],
-    ['exams', 'semester-1', '2026-06-09', '2026-06-26'],
-    ['results', 'semester-1', '2026-07-10'],
-    ['supp', 'semester-1', '2026-07-16', '2026-07-23'],
-    ['teaching', 'winter', '2026-06-29', '2026-07-26'],
-    ['orientation', 'semester-2', '2026-07-20', '2026-07-24'],
-    ['teaching', 'semester-2', '2026-07-27', '2026-10-25'],
-    ['selfEnrol', 'semester-2', '2026-08-07'],
-    ['employability', 'semester-2', '2026-08-10', '2026-08-14'],
-    ['census', 'semester-2', '2026-08-31'],
-    ['withdraw', 'semester-2', '2026-09-25'],
-    ['break', 'semester-2', '2026-09-28', '2026-10-04'],
-    ['swotvac', 'semester-2', '2026-10-26', '2026-10-30'],
-    ['exams', 'semester-2', '2026-11-02', '2026-11-20'],
-    ['results', 'semester-2', '2026-12-04'],
-    ['supp', 'semester-2', '2026-12-10', '2026-12-17'],
-  ]),
-  ...rows(2027, [
-    // Re-enrolling for 2027 happens before Summer Term 2027 starts, so it sits in that group.
-    ['reenrol', 'summer', '2026-11-16', '2026-12-14'],
-    ['reenrolLate', 'summer', '2026-12-15', '2027-01-13'],
-    ['teaching', 'summer', '2026-11-23', '2027-02-28'],
-    ['exams', 'summer', '2027-02-15', '2027-02-22'],
-    ['orientation', 'semester-1', '2027-02-22', '2027-02-26'],
-    ['teaching', 'semester-1', '2027-03-01', '2027-05-30'],
-    ['employability', 'semester-1', '2027-03-15', '2027-03-19'],
-    ['break', 'semester-1', '2027-03-26', '2027-04-04'],
-    ['swotvac', 'semester-1', '2027-05-31', '2027-06-04'],
-    ['exams', 'semester-1', '2027-06-07', '2027-06-25'],
-    ['results', 'semester-1', '2027-07-09'],
-    ['supp', 'semester-1', '2027-07-16', '2027-07-23'],
-    ['teaching', 'winter', '2027-06-28', '2027-07-25'],
-    ['orientation', 'semester-2', '2027-07-19', '2027-07-23'],
-    ['teaching', 'semester-2', '2027-07-26', '2027-10-24'],
-    ['employability', 'semester-2', '2027-08-09', '2027-08-13'],
-    ['break', 'semester-2', '2027-09-27', '2027-10-03'],
-    ['swotvac', 'semester-2', '2027-10-25', '2027-10-29'],
-    ['exams', 'semester-2', '2027-11-01', '2027-11-19'],
-    ['results', 'semester-2', '2027-12-03'],
-    ['supp', 'semester-2', '2027-12-10', '2027-12-17'],
-  ]),
-]
+const data = generated as { checked: string; dates: KeyDate[] }
+/** When the dates were last checked; also the DTSTAMP of the calendar file, so it's stable. */
+export const KEY_DATES_CHECKED: string = data.checked
+export const KEY_DATES: KeyDate[] = data.dates
 
 export interface KeyDateGroup {
   year: number
@@ -141,8 +71,35 @@ export function nextDay(date: string): string {
   return d.toISOString().slice(0, 10)
 }
 
-function escapeText(text: string): string {
-  return text.replace(/\\/g, '\\\\').replace(/;/g, '\;').replace(/,/g, '\\,').replace(/\n/g, '\\n')
+/** RFC 5545 TEXT escaping: backslash, semicolon, comma and newlines. */
+export function escapeText(text: string): string {
+  return text.replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\r?\n/g, '\\n')
+}
+
+/** RFC 5545 line folding: at most 75 octets a line, continued lines start with a space. */
+export function foldLine(line: string): string {
+  const enc = new TextEncoder()
+  const out: string[] = []
+  let cur = ''
+  let size = 0
+  for (const ch of line) {
+    const n = enc.encode(ch).length
+    if (size + n > (out.length ? 74 : 75)) {
+      out.push(cur)
+      cur = ''
+      size = 0
+    }
+    cur += ch
+    size += n
+  }
+  out.push(cur)
+  return out.join('\r\n ')
+}
+
+/** The census, exam and results dates of the given terms (e.g. the terms in a student's plan). */
+export function datesForTerms(items: KeyDate[], terms: { year: number; period: string }[]): KeyDate[] {
+  const wanted = new Set(terms.map((t) => `${t.year}-${t.period}`))
+  return items.filter((d) => wanted.has(`${d.year}-${d.term}`) && (d.kind === 'census' || d.kind === 'exams' || d.kind === 'results'))
 }
 
 /** An iCalendar file of all-day events. `label` names each item (in the reader's language). */
@@ -163,5 +120,15 @@ export function buildIcs(items: KeyDate[], label: (d: KeyDate) => string): strin
     )
   }
   lines.push('END:VCALENDAR')
-  return lines.join('\r\n') + '\r\n'
+  return lines.map(foldLine).join('\r\n') + '\r\n'
+}
+
+/** Saves an .ics on the device (no network). */
+export function downloadIcs(ics: string, filename: string): void {
+  const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' })
+  const a = document.createElement('a')
+  a.href = URL.createObjectURL(blob)
+  a.download = filename
+  a.click()
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000)
 }

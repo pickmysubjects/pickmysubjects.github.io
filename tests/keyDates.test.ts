@@ -91,3 +91,47 @@ describe('buildIcs', () => {
     expect(nextDay('2028-02-28')).toBe('2028-02-29')
   })
 })
+
+describe('key dates source files', () => {
+  it('the app reads exactly what data/real/keyDates/*.yaml says', async () => {
+    const { buildKeyDates } = await import('../scripts/keyDates')
+    const built = buildKeyDates(process.cwd())
+    expect(built.errors).toEqual([])
+    expect(built.dates).toEqual(KEY_DATES)
+  })
+  it('rejects a row without a source, a reversed range or an impossible day', async () => {
+    const { keyDatesFileSchema } = await import('@/utils/keyDatesSchema')
+    const row = { kind: 'census', term: 'semester-1', start: '2026-03-31', source: 'https://students.unimelb.edu.au/x' }
+    const file = (d: object) => ({ year: 2026, checked: '2026-10-23', dates: [d] })
+    expect(keyDatesFileSchema.safeParse(file(row)).success).toBe(true)
+    expect(keyDatesFileSchema.safeParse(file({ ...row, source: undefined })).success).toBe(false)
+    expect(keyDatesFileSchema.safeParse(file({ ...row, end: '2026-03-01' })).success).toBe(false)
+    expect(keyDatesFileSchema.safeParse(file({ ...row, start: '2026-02-30' })).success).toBe(false)
+  })
+})
+
+describe('calendar file (RFC 5545)', () => {
+  it('escapes text, folds long lines at 75 octets and ends every line with CRLF', async () => {
+    const { escapeText, foldLine } = await import('@/utils/keyDates')
+    expect(escapeText('a\\b;c,d\ne')).toBe('a\\\\b\\;c\\,d\\ne')
+    const long = 'SUMMARY:' + '考试'.repeat(40)
+    const folded = foldLine(long).split('\r\n')
+    expect(folded.length).toBeGreaterThan(1)
+    for (const l of folded) expect(new TextEncoder().encode(l).length).toBeLessThanOrEqual(75)
+    expect(folded.slice(1).every((l) => l.startsWith(' '))).toBe(true)
+    expect(folded.map((l, i) => (i ? l.slice(1) : l)).join('')).toBe(long)
+  })
+  it('the plan export has census, exams and results of the plan terms only, as valid all-day events', async () => {
+    const { datesForTerms } = await import('@/utils/keyDates')
+    const items = datesForTerms(KEY_DATES, [{ year: 2026, period: 'semester-2' }])
+    expect(items.map((d) => d.kind).sort()).toEqual(['census', 'exams', 'results'])
+    const ics = buildIcs(items, (d) => `${d.kind}, ${d.term}`)
+    expect(ics.startsWith('BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:')).toBe(true)
+    expect(ics.endsWith('END:VCALENDAR\r\n')).toBe(true)
+    expect(ics.split('\r\n').filter((l) => l === 'BEGIN:VEVENT')).toHaveLength(3)
+    expect(ics).toMatch(/DTSTAMP:\d{8}T\d{6}Z/)
+    expect(ics).toContain('DTSTART;VALUE=DATE:20261102\r\nDTEND;VALUE=DATE:20261121')
+    expect(ics).toContain('SUMMARY:census\\, semester-2')
+    expect(ics.replace(/\r\n/g, '')).not.toMatch(/[\r\n]/)
+  })
+})

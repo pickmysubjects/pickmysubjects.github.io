@@ -10,6 +10,7 @@ import { buildDataset, ROOT } from './dataset'
 import { splitDataset } from '../src/engine/split'
 import { buildTakenWith } from '../src/engine/related'
 import { buildHomeDemo } from './homeDemo'
+import { buildKeyDates } from './keyDates'
 const OUT = join(ROOT, 'src', 'generated')
 mkdirSync(OUT, { recursive: true })
 
@@ -45,5 +46,14 @@ for (const name of ['real', 'demo'] as const) {
     else rmSync(join(OUT, 'changes.json'), { force: true })
     writeFileSync(join(OUT, 'home-demo.json'), JSON.stringify(buildHomeDemo(dataset, thisYear())))
   }
+}
+// The University's key dates (guide page, home strip, calendar files).
+const keyDates = buildKeyDates(ROOT)
+if (keyDates.errors.length) {
+  failed = true
+  console.error(`✗ data/real/keyDates: ${keyDates.errors.length} error(s)\n\n${keyDates.errors.join('\n\n')}\n`)
+} else {
+  writeFileSync(join(OUT, 'key-dates.json'), JSON.stringify({ checked: keyDates.checked, dates: keyDates.dates }))
+  console.log(`✓ data/real/keyDates: ${keyDates.dates.length} dates`)
 }
 if (failed) process.exit(1)
