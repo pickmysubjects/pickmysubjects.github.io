@@ -242,7 +242,9 @@ function move(delta: number): void {
   list-style: none;
   border: 1px solid var(--glass-edge);
   border-radius: var(--radius);
-  background: var(--glass-shine), var(--sheet-fill);
+  /* Near-opaque: inside a glass card (the home hero) its own blur can't reach the page behind,
+     so a see-through list would show the hero's text through it. */
+  background: var(--glass-shine), color-mix(in srgb, var(--sheet-fill) 20%, var(--bg));
   -webkit-backdrop-filter: var(--glass-blur-strong);
   backdrop-filter: var(--glass-blur-strong);
   box-shadow: var(--glass-shadow), var(--shadow-2);

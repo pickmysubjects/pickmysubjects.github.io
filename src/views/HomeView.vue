@@ -153,6 +153,8 @@ const next = computed(() => {
 
 .hero-panel {
   position: relative;
+  /* Above the illustration, so the search's list of matches isn't covered by it. */
+  z-index: 2;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   justify-items: start;
