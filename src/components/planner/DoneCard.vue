@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, inject } from 'vue'
 import { Check, X } from 'lucide-vue-next'
 import type { Subject } from '@/engine'
 import { useI18n } from '@/i18n'
 import { localTitle } from '@/i18n/localized'
 import type { PastResult } from '@/utils/pastTerms'
+import { LINK_COUNTS } from '@/utils/planBoard'
 
 /**
  * A subject from My record on the plan board: the same card as a planned one, in green with a
@@ -14,6 +15,8 @@ import type { PastResult } from '@/utils/pastTerms'
 const props = defineProps<{ result: PastResult; subject?: Subject; note?: string; highlighted?: boolean; dimmed?: boolean }>()
 const emit = defineEmits<{ open: []; hover: [on: boolean] }>()
 const { t, locale } = useI18n()
+const linkCounts = inject(LINK_COUNTS, null)
+const links = computed(() => linkCounts?.value.get(props.result.code))
 // The title in the reader's language where we have one, with the English after it, small (as on a planned card).
 const local = computed(() => (props.subject ? localTitle(props.subject, locale.value) : ''))
 const label = computed(() => (props.result.failed ? t.value('plan.pastNotPassed') : t.value('plan.pastTag')))
@@ -47,11 +50,26 @@ const label = computed(() => (props.result.failed ? t.value('plan.pastNotPassed'
       <span class="tag tag-state">{{ label }}</span>
       <span v-if="subject" class="tag">L{{ subject.level }}</span>
       <span v-if="note" class="note">{{ note }}</span>
+      <span v-if="links" class="link-mark" aria-hidden="true"><template v-if="links.needs">← {{ links.needs }}</template><template v-if="links.needs && links.unlocks"> · </template><template v-if="links.unlocks">→ {{ links.unlocks }}</template></span>
     </span>
   </button>
 </template>
 
 <style scoped>
+/* "← 1 · → 2": how many of its prerequisites and follow-ons are on the board. */
+.link-mark {
+  margin-left: auto;
+  padding: 0 7px;
+  border: 1px solid var(--card-edge, var(--line));
+  border-radius: 999px;
+  background: var(--glass-shine), var(--sheet-fill);
+  font-size: 0.75rem;
+  font-weight: 650;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
 .done {
   /* Above the prerequisite lines, like a planned card. */
   position: relative;

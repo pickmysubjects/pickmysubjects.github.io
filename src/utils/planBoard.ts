@@ -1,3 +1,4 @@
+import type { InjectionKey, Ref } from 'vue'
 import {
   categoryOf,
   offeredIn,
@@ -10,6 +11,13 @@ import {
   type Plan,
   type Subject,
 } from '@/engine'
+
+/**
+ * How many of each card's prerequisites (needs) and follow-ons (unlocks) are on the board, for the
+ * small "← 1 · → 2" on the card. The board provides it; cards read it. Empty while a subject or
+ * rule is selected (its lines say it then).
+ */
+export const LINK_COUNTS: InjectionKey<Readonly<Ref<ReadonlyMap<string, { needs: number; unlocks: number }>>>> = Symbol('linkCounts')
 
 /** A prerequisite link on the board: `from` is needed by `to`, and comes before it. */
 export interface Edge {

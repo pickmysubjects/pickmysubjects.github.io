@@ -75,7 +75,9 @@ function onlyIn(code: string): string | null {
   if (!s) return null
   if (s.yearLong) return t.value('plan.yearLong')
   const sems = periodsFor(s, props.term.year).filter((p) => p === 'semester-1' || p === 'semester-2')
-  if (sems.length !== 1) return null
+  // Only worth saying where it could be misread: in its own semester's column it says nothing new
+  // (moving it elsewhere says "not offered then" anyway).
+  if (sems.length !== 1 || sems[0] === props.term.period) return null
   return t.value(sems[0] === 'semester-1' ? 'plan.s1Only' : 'plan.s2Only')
 }
 

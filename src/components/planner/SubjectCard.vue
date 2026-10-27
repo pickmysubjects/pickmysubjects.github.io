@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { computed, nextTick, useTemplateRef, watch } from 'vue'
+import { computed, inject, nextTick, useTemplateRef, watch } from 'vue'
 import { ArrowRightLeft, BookOpen, CalendarRange, Info, Route, X } from 'lucide-vue-next'
 import type { Issue, Subject } from '@/engine'
 import { categoryLabel, categoryTag, issueText as issueTextFor } from '@/i18n/format'
 import { useI18n } from '@/i18n'
 import { useDataYear } from '@/composables/useDataYear'
 import { localTitle } from '@/i18n/localized'
-import type { DropVerdict } from '@/utils/planBoard'
+import { LINK_COUNTS, type DropVerdict } from '@/utils/planBoard'
 
 export type CardTone = 'self' | 'need' | 'unlock' | 'rule'
 export interface MoveTarget {
@@ -53,6 +53,8 @@ const emit = defineEmits<{
 }>()
 
 const { t, locale } = useI18n()
+const linkCounts = inject(LINK_COUNTS, null)
+const links = computed(() => linkCounts?.value.get(props.code))
 // The title in the reader's language where we have one, with the English after it, small.
 const local = computed(() => (props.subject ? localTitle(props.subject, locale.value) : ''))
 // Planned in a year whose Handbook is out but not entered for it yet: say which year's facts it uses.
@@ -153,6 +155,7 @@ function onDragStart(event: DragEvent): void {
       <span v-else-if="role === 'option'" class="tag tag-option">{{ t('plan.tagOption') }}</span>
       <span v-if="onlyIn && !worst" class="tag tag-only">{{ onlyIn }}</span>
       <span v-if="factsFrom?.older" class="tag tag-old">{{ t('dataYear.short', { year: factsFrom.year }) }}</span>
+      <span v-if="links" class="link-mark" aria-hidden="true"><template v-if="links.needs">← {{ links.needs }}</template><template v-if="links.needs && links.unlocks"> · </template><template v-if="links.unlocks">→ {{ links.unlocks }}</template></span>
     </span>
     <span v-if="subject" class="row-points">{{ subject.points }}</span>
 
@@ -295,6 +298,20 @@ function onDragStart(event: DragEvent): void {
   display: flex;
   flex-wrap: wrap;
   gap: 4px;
+}
+
+/* "← 1 · → 2": how many of its prerequisites and follow-ons are on the board. */
+.link-mark {
+  margin-left: auto;
+  padding: 0 7px;
+  border: 1px solid var(--card-edge, var(--line));
+  border-radius: 999px;
+  background: var(--glass-shine), var(--sheet-fill);
+  font-size: 0.75rem;
+  font-weight: 650;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  white-space: nowrap;
 }
 
 .tag,

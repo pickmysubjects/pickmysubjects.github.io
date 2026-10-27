@@ -196,6 +196,9 @@ const fixLabel = computed(() => {
   line-clamp: 2;
   font-size: 0.75rem;
   line-height: 1.25;
+  /* Chinese and Korean break between words (at the spaces), not inside one ("论文写 / 作");
+     a run too long for the line still wraps rather than overflowing. */
+  word-break: keep-all;
   overflow-wrap: break-word;
 }
 

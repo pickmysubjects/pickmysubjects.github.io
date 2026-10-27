@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, nextTick, onBeforeUnmount, onMounted, shallowRef, useTemplateRef, watch } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, provide, shallowRef, useTemplateRef, watch } from 'vue'
 import { Plus } from 'lucide-vue-next'
 import { carriedInto, SHORT_TERM_LOAD, termKey, type Issue, type Period, type PlanTerm, type Subject } from '@/engine'
 import { termLabel } from '@/i18n/format'
@@ -8,7 +8,7 @@ import PastTermColumn from './PastTermColumn.vue'
 import SlotPicker from './SlotPicker.vue'
 import type { CardTone, MoveTarget } from './SubjectCard.vue'
 import type { PastResult, PastTerm } from '@/utils/pastTerms'
-import { dropVerdict, type DropVerdict, type Edge } from '@/utils/planBoard'
+import { dropVerdict, LINK_COUNTS, type DropVerdict, type Edge } from '@/utils/planBoard'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
 import { useI18n } from '@/i18n'
@@ -53,15 +53,6 @@ interface Route {
   d: string
   /** Upstream of the focused subject (its prerequisites) or downstream (what it unlocks). */
   dir: 'need' | 'unlock'
-}
-
-/** A small "← 2 / → 1" pill on a card that has links inside the plan. */
-interface Marker {
-  code: string
-  x: number
-  y: number
-  needs: number
-  unlocks: number
 }
 
 const { t } = useI18n()
@@ -299,11 +290,11 @@ function drawRoutes(): void {
   overflow.value = more && more.n > 0 ? more : null
 }
 
-const markers = computed<Marker[]>(() => {
-  const lay = layout.value
-  if (!lay) return []
-  // How many of each card's prerequisites and follow-ons are in the plan.
+// How many of each card's prerequisites and follow-ons are on the board: the cards show it in
+// their own tag row (never over a neighbour's text). Not while something is selected.
+const linkCounts = computed(() => {
   const count = new Map<string, { needs: number; unlocks: number }>()
+  if (tones.value !== null) return count
   for (const e of props.edges) {
     const from = count.get(e.from) ?? { needs: 0, unlocks: 0 }
     from.unlocks++
@@ -312,13 +303,9 @@ const markers = computed<Marker[]>(() => {
     to.needs++
     count.set(e.to, to)
   }
-  const out: Marker[] = []
-  for (const [code, n] of count) {
-    const r = lay.cards.get(code)
-    if (r) out.push({ code, x: r.right - 8, y: r.top - 9, ...n })
-  }
-  return out
+  return count
 })
+provide(LINK_COUNTS, linkCounts)
 
 function measure(): void {
   readLayout()
@@ -423,14 +410,6 @@ onBeforeUnmount(() => {
       @mouseenter="keepHover"
       @mouseleave="onHover(null)"
     >{{ t('stress.more', { n: overflow.n }) }}</button>
-    <span
-      v-for="m in markers"
-      :key="m.code"
-      class="link-mark"
-      :class="{ 'link-mark-hidden': tones !== null }"
-      :style="{ left: `${m.x}px`, top: `${m.y}px` }"
-      aria-hidden="true"
-    ><template v-if="m.needs">← {{ m.needs }}</template><template v-if="m.needs && m.unlocks"> · </template><template v-if="m.unlocks">→ {{ m.unlocks }}</template></span>
 
     <div class="track" @scroll.passive="measure">
       <PastTermColumn
@@ -585,26 +564,6 @@ onBeforeUnmount(() => {
 }
 
 /* "← 2 · → 1": the card has links inside the plan; hover or tap it to see them. */
-.link-mark {
-  position: absolute;
-  z-index: 3;
-  padding: 1px 7px;
-  border: 1px solid var(--card-edge);
-  border-radius: 999px;
-  background: var(--glass-shine), var(--sheet-fill);
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / 60%), 0 2px 6px -3px rgb(60 20 80 / 40%);
-  font-size: 0.75rem;
-  font-weight: 650;
-  line-height: 1.5;
-  color: var(--ink-soft);
-  white-space: nowrap;
-  transform: translateX(-100%);
-  pointer-events: none;
-}
-
-.link-mark-hidden {
-  display: none;
-}
 
 .route-more {
   position: absolute;
