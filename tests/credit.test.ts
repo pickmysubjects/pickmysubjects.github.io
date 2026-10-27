@@ -36,6 +36,13 @@ describe('credit for study elsewhere', () => {
     expect(unmet({ ...plan, credit: undefined })).toEqual(expect.arrayContaining(['total', 'science-l1']))
   })
 
+  it('meets a points prerequisite ("50 points at level 2") on the plan board, as the plan builder counts it', () => {
+    // PHYC30025 needs 50 points of level 2, in any area: level-2 credit is exactly that.
+    const plan: Plan = { course: 'B-SCI', courseYear: 2026, completed: [], credit: [{ points: 50, level: 2 }], terms: [{ year: 2027, period: 'semester-1', subjects: ['PHYC30025'] }] }
+    expect(checkTerms(plan, data).filter((i) => i.kind === 'prereq-unmet')).toEqual([])
+    expect(checkTerms({ ...plan, credit: undefined }, data).filter((i) => i.kind === 'prereq-unmet')).toHaveLength(1)
+  })
+
   it('counts towards points, level and category rules, but no area', () => {
     const plan: Plan = { course: 'B-SCI', courseYear: 2026, completed: [], terms: [], credit }
     const status = (pick: (r: { kind: string; level?: number; category?: string }) => boolean) => {
