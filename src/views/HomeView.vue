@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { link } from '@/composables/useView'
 import { computed } from 'vue'
-import { ArrowRight, CalendarCheck, Check, Gauge, Globe } from 'lucide-vue-next'
+import { ArrowRight, CalendarCheck, Gauge, Globe } from 'lucide-vue-next'
 import ReleasePill from '@/components/home/ReleasePill.vue'
 import CanDoList from '@/components/home/CanDoList.vue'
 import WhatsNext from '@/components/home/WhatsNext.vue'
+import StartSteps from '@/components/home/StartSteps.vue'
 import HeroCampus from '@/components/home/HeroCampus.vue'
 import Interp from '@/components/Interp.vue'
 import SubjectSearch from '@/components/SubjectSearch.vue'
@@ -27,37 +28,10 @@ const spaced = computed(() => !['zh-CN', 'zh-TW', 'ja'].includes(locale.value))
 // How many subjects the site knows, counted from the data itself.
 const subjectCount = computed(() => Object.keys(data.value.subjects).length.toLocaleString(locale.value))
 
-// Three steps for a new student. Each shows a tick and what's done once it is.
 const { profile, wam } = useProfile()
 const plan = usePlan()
 // Someone who has been here before (a degree, a record or a plan): the hero sends them back to it.
 const returning = computed(() => plan.courseChosen.value || !plan.isEmpty.value || profile.value.results.length > 0)
-const steps = computed(() => {
-  const p = profile.value
-  const filled = p.results.length + Object.keys(p.skills).length + p.interests.length
-  return [
-    {
-      title: 'home.step1',
-      text: 'home.step1Text',
-      href: link('record'),
-      done: filled > 0,
-      status: filled > 0 ? t.value('home.step1Done', { results: p.results.length, interests: p.interests.length }) : t.value('home.optional'),
-    },
-    {
-      title: 'home.step2',
-      text: 'home.step2Text',
-      href: link('plan'),
-      done: !plan.isEmpty.value,
-      status: plan.isEmpty.value ? '' : t.value('home.step2Done', { n: plan.plannedCodes.value.length }),
-    },
-    { title: 'home.step3', text: 'home.step3Text', href: link('subjects/?mine=1'), done: false, status: '' },
-  ]
-})
-// The one button that says where to go next: the first step not done yet.
-const next = computed(() => {
-  const i = steps.value.findIndex((s) => !s.done)
-  return { n: i + 1, href: steps.value[i]?.href ?? link('subjects/?mine=1') }
-})
 </script>
 
 <template>
@@ -97,28 +71,8 @@ const next = computed(() => {
 
     <WhatsNext />
 
-    <!-- The three steps (the path). -->
-    <section class="tile-steps" aria-labelledby="steps-title">
-      <div class="tile-head">
-        <h2 id="steps-title" class="tile-title">{{ t('home.stepsTitle') }}</h2>
-        <a class="button button-accent steps-start" :href="next.href">
-          {{ t('home.startStep', { n: next.n }) }} <ArrowRight :size="18" aria-hidden="true" />
-        </a>
-      </div>
-      <ol class="steps-list">
-        <li v-for="(s, i) in steps" :key="s.title">
-          <a class="step surface" :class="{ 'step-done': s.done }" :href="s.href">
-            <span class="step-num">
-              <Check v-if="s.done" :size="16" :stroke-width="3" :aria-label="t('home.done')" />
-              <template v-else>{{ i + 1 }}</template>
-            </span>
-            <span class="step-name">{{ t(s.title) }}</span>
-            <span class="step-text">{{ t(s.text) }}</span>
-            <span v-if="s.status" class="step-status">{{ s.status }}</span>
-          </a>
-        </li>
-      </ol>
-    </section>
+    <!-- The three steps for a new student. -->
+    <StartSteps />
 
     <CanDoList short />
   </div>
@@ -318,97 +272,6 @@ const next = computed(() => {
   min-width: 0;
 }
 
-/* The steps are the glass cards themselves (on the colour field), not cards inside a card. */
-.tile-steps {
-  display: grid;
-  align-content: start;
-  gap: var(--space-4);
-}
-
-.tile-head {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-3) var(--space-4);
-}
-
-/* The single heading style below the hero (CanDoList uses the same). */
-.tile-title {
-  font-size: 1.375rem;
-  font-weight: 700;
-}
-
-.steps-list {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--space-3);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-/* A step: number, title, one line. The whole step is the link. */
-.step {
-  display: grid;
-  align-content: start;
-  gap: var(--space-2);
-  height: 100%;
-  padding: var(--space-5);
-  border-radius: var(--radius-lg);
-  color: var(--ink);
-  text-decoration: none;
-  transition: border-color 0.15s, transform 0.15s;
-}
-
-.step:hover {
-  border-color: var(--accent);
-  transform: translateY(-2px);
-}
-
-.step:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-
-.step-num {
-  display: inline-grid;
-  place-items: center;
-  width: 28px;
-  height: 28px;
-  font-size: 0.8125rem;
-  font-weight: 700;
-  color: var(--accent-ink);
-  background: var(--accent-fill);
-  border-radius: 999px;
-}
-
-.step-done .step-num {
-  background: var(--good);
-}
-
-.step-name {
-  font-size: 1rem;
-  font-weight: 700;
-  line-height: 1.3;
-}
-
-.step-text {
-  font-size: 0.875rem;
-  color: var(--ink-soft);
-}
-
-.step-status {
-  font-size: 0.8125rem;
-  font-weight: 600;
-  color: var(--good);
-}
-
-.steps-start {
-  min-height: 44px;
-  padding: 0 20px;
-}
-
 @media (max-width: 1100px) {
   .hero {
     grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
@@ -494,45 +357,9 @@ const next = computed(() => {
   .hero-scene {
     width: 80%;
   }
-
-  /* One line a step on a phone: number, name and status; the longer line is for wider screens. */
-  .tile-steps {
-    gap: var(--space-3);
-  }
-
-  .steps-list {
-    grid-template-columns: 1fr;
-    gap: var(--space-2);
-  }
-
-  .step {
-    grid-template-columns: auto minmax(0, 1fr);
-    align-items: center;
-    column-gap: var(--space-3);
-    row-gap: 2px;
-    padding: 10px 12px;
-  }
-
-  .step-num {
-    grid-row: span 2;
-  }
-
-  .step-text {
-    display: none;
-  }
-
-  .step-status {
-    grid-column: 2;
-  }
-
-  .steps-start {
-    flex: 1 1 100%;
-    justify-content: center;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .step,
   .hero-second,
   .hero-wam {
     transition: none;
