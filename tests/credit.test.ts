@@ -2,7 +2,7 @@ import { beforeAll, describe, expect, it } from 'vitest'
 import { provideDataset } from '../src/composables/useDataset'
 import { usePlan } from '../src/composables/usePlan'
 import { useProfile } from '../src/composables/useProfile'
-import { checkCourse, checkTerms, computeWam, generatePlan, recordedLoads, VISA_HALF_YEAR_LOAD, type Credit, type Plan, type Profile } from '../src/engine'
+import { checkCourse, checkTerms, computeWam, generatePlan, recommend, recordedLoads, VISA_HALF_YEAR_LOAD, type Credit, type Plan, type Profile } from '../src/engine'
 import { cleanPlans, cleanProfile } from '../src/utils/sanitize'
 import { pointsLeft } from '../src/utils/wamGoal'
 import { realData } from './realData'
@@ -41,6 +41,16 @@ describe('credit for study elsewhere', () => {
     const plan: Plan = { course: 'B-SCI', courseYear: 2026, completed: [], credit: [{ points: 50, level: 2 }], terms: [{ year: 2027, period: 'semester-1', subjects: ['PHYC30025'] }] }
     expect(checkTerms(plan, data).filter((i) => i.kind === 'prereq-unmet')).toEqual([])
     expect(checkTerms({ ...plan, credit: undefined }, data).filter((i) => i.kind === 'prereq-unmet')).toHaveLength(1)
+  })
+
+  it('meets a points prerequisite in suggestions too', () => {
+    const why = (profile: Profile) => {
+      const skipped = new Map<string, unknown>()
+      recommend(data, profile, { course: 'B-SCI', skipped: skipped as never })
+      return (skipped.get('PHYC30025') as { key?: string } | undefined)?.key
+    }
+    expect(why(empty)).toBe('needsFirst')
+    expect(why({ ...empty, credit: [{ points: 50, level: 2 }] })).not.toBe('needsFirst')
   })
 
   it('counts towards points, level and category rules, but no area', () => {

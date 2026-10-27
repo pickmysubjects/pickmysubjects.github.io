@@ -11,7 +11,7 @@ import { sharedOffset } from './grades'
 import { offsetOf, predictMark } from './predict'
 import { MARKING_SKILLS, markingShare, skillsOf } from './skills'
 import { termStress } from './termStress'
-import { creditPoints, isCreditCode, type Credit } from './credit'
+import { creditCodes, creditPoints, isCreditCode, withCredit, type Credit } from './credit'
 import { planRoles } from './roles'
 import { areaField, homeTopics, relatedTopics, topicsOf } from './topics'
 
@@ -293,8 +293,9 @@ export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions =
   const { profile, liked: likedTopics } = personalise(asked, raw)
   // Marks only: topics of subjects they liked don't count either.
   const liked = given.goal === 'easy' ? new Map<string, string>() : likedTopics
-  const data = opts.course ? forCourse(raw, opts.course) : raw
-  const completed = new Set(passedCodes(profile.results))
+  // Credit for study elsewhere stands in as completed subjects, so a points prerequisite counts it.
+  const data = withCredit(opts.course ? forCourse(raw, opts.course) : raw, profile.credit, opts.course ?? '')
+  const completed = new Set([...passedCodes(profile.results), ...creditCodes(profile.credit)])
   const taken = new Set([...completed, ...(opts.planned ?? [])])
   const wam = computeWam(profile.results, data)
   const wamExact = exactWam(profile.results, data)
