@@ -373,9 +373,10 @@ const next = computed(() => {
   gap: var(--space-2);
   height: 100%;
   padding: var(--space-4);
-  border: 1px solid var(--line);
+  border: 1px solid var(--card-edge);
   border-radius: var(--radius);
-  background: var(--surface);
+  background: var(--card-fill);
+  box-shadow: var(--card-shadow);
   color: var(--ink);
   text-decoration: none;
   transition: border-color 0.15s, transform 0.15s;
@@ -460,6 +461,11 @@ const next = computed(() => {
 }
 
 @media (max-width: 640px) {
+  .home {
+    gap: var(--space-5);
+    padding-top: var(--space-3);
+  }
+
   .stage {
     padding: 28px 16px 20px;
     border-radius: 26px;

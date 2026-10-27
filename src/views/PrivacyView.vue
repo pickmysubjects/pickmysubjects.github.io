@@ -21,7 +21,7 @@ const sections = ['local', 'ratings', 'grades', 'feedback', 'noTracking', 'googl
 
 <style scoped>
 .privacy {
-  padding-top: 32px;
+  padding-top: var(--page-top);
   display: grid;
   gap: 12px;
   max-width: 72ch;

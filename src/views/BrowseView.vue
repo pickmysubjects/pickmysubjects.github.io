@@ -247,7 +247,7 @@ watch(filters, (f) => {
 .browse {
   display: grid;
   gap: 24px;
-  padding-top: 32px;
+  padding-top: var(--page-top);
 }
 
 .head {

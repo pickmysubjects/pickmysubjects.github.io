@@ -616,7 +616,7 @@ const printTerms = computed<PrintTerm[]>(() => {
 .planner {
   display: grid;
   gap: 20px;
-  padding-top: 32px;
+  padding-top: var(--page-top);
 }
 
 /* Everything but the board stays at the usual reading width; the board takes the full screen. */

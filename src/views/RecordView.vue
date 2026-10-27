@@ -64,7 +64,7 @@ const filled = computed(() => [
 
     <div class="layout">
       <!-- At a glance: the WAM (from the marks here; UniMelb's transcript is the official one) and what's filled in. -->
-      <section class="summary surface" :aria-label="t('record.summaryTitle')">
+      <section class="summary flat" :aria-label="t('record.summaryTitle')">
         <p class="summary-title">{{ t('record.summaryTitle') }}</p>
         <p class="wam">
           <span class="wam-label">WAM</span>
@@ -158,7 +158,7 @@ const filled = computed(() => [
 .record {
   display: grid;
   gap: var(--space-5);
-  padding-top: 32px;
+  padding-top: var(--page-top);
   min-width: 0;
 }
 
@@ -209,6 +209,12 @@ const filled = computed(() => [
   gap: var(--space-4);
   min-width: 0;
   padding: var(--space-5);
+}
+
+@media (max-width: 640px) {
+  .sec {
+    padding: var(--space-4);
+  }
 }
 
 .sec-head {
@@ -332,6 +338,10 @@ const filled = computed(() => [
   display: grid;
   gap: var(--space-3);
   padding: var(--space-5);
+}
+
+.summary.flat {
+  padding: var(--space-4) 0 0;
 }
 
 /* The three sidebar cards share one padding and one title style. */

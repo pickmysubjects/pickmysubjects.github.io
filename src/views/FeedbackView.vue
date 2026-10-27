@@ -72,7 +72,7 @@ function choose(id: string): void {
 
 <style scoped>
 .fb {
-  padding-top: 32px;
+  padding-top: var(--page-top);
   display: grid;
   gap: 24px;
   max-width: 1100px;

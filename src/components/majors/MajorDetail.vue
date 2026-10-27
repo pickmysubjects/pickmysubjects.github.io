@@ -100,11 +100,11 @@ function planWithIt(): void {
 
     <div class="layout">
     <div class="main">
-    <p v-if="!overview" class="note surface">{{ t('majors.notCurated') }}</p>
+    <p v-if="!overview" class="note flat">{{ t('majors.notCurated') }}</p>
 
     <template v-else>
       <!-- Entry points (a language major): the first is shown; the plan follows the student's. -->
-      <p v-if="overview.entryRoutes.length" class="note surface">
+      <p v-if="overview.entryRoutes.length" class="note flat">
         {{ t('majors.entryRoutes', { n: overview.entryRoutes.length, first: overview.entryRoutes[0]?.title ?? '' }) }}
         <span class="route-names">{{ overview.entryRoutes.map((r) => r.title).join(' · ') }}</span>
       </p>
@@ -128,7 +128,7 @@ function planWithIt(): void {
             <SubjectLinks :codes="g.codes" :year="year" :notes="g.notes" />
           </div>
         </template>
-        <p v-else class="note surface">{{ t('majors.noPathway') }}</p>
+        <p v-else class="note flat">{{ t('majors.noPathway') }}</p>
 
         <details v-if="routeGroups.length" class="routes">
           <summary>{{ t('majors.routesTitle', { n: routeGroups.length }) }}</summary>
@@ -198,7 +198,7 @@ function planWithIt(): void {
 
   <div v-else class="detail">
     <a class="back" :href="link('majors')"><ArrowLeft :size="16" aria-hidden="true" /> {{ t('majors.all') }}</a>
-    <p class="note surface">{{ t('majors.notFound') }}</p>
+    <p class="note flat">{{ t('majors.notFound') }}</p>
   </div>
 </template>
 
@@ -349,6 +349,10 @@ function planWithIt(): void {
 
 .note {
   padding: 14px 16px;
+}
+
+.note.flat {
+  padding: var(--space-3) 0 0;
   font-size: 0.9375rem;
   color: var(--ink-soft);
 }

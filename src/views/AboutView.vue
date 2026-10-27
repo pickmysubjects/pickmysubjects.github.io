@@ -100,7 +100,7 @@ const features = [
 
 <style scoped>
 .about {
-  padding-top: 32px;
+  padding-top: var(--page-top);
   display: grid;
   gap: 32px;
   max-width: 760px;

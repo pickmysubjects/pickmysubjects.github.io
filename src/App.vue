@@ -139,7 +139,7 @@ watchEffect(() => {
 <style scoped>
 .app-main {
   min-height: 70vh;
-  padding-bottom: 72px;
+  padding-bottom: var(--space-7);
 }
 
 .footer {

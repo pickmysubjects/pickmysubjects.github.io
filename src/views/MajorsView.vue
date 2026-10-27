@@ -15,6 +15,6 @@ defineProps<{ id: string }>()
 
 <style scoped>
 .majors {
-  padding-top: 32px;
+  padding-top: var(--page-top);
 }
 </style>

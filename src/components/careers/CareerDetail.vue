@@ -103,7 +103,7 @@ const hasBreadth = computed(() => !!result.value?.breadth && TIERS.some((x) => r
         <span><strong>{{ result.major.accreditation.body }}</strong> · {{ careerText(result.major.accreditation.summary, locale) }}</span>
       </p>
       <CareerTiers v-if="TIERS.some((x) => result!.subjects[x].length)" :tiers="result.subjects" :year="year" />
-      <p v-else class="note surface">{{ t('careerPath.nothingHere') }}</p>
+      <p v-else class="note flat">{{ t('careerPath.nothingHere') }}</p>
       <p v-if="result.needs.generic.length" class="generic">{{ t('careerPath.generic', { list: result.needs.generic.join(', ') }) }}</p>
       <a class="more-link" :href="link(`majors/${result.major.component}`)">{{ t('majors.title') }} · {{ result.major.title }}</a>
 
@@ -114,7 +114,7 @@ const hasBreadth = computed(() => !!result.value?.breadth && TIERS.some((x) => r
           <CareerTiers :tiers="result.breadth!" :year="year" />
           <a class="more-link" :href="link('subjects/breadth')">{{ t('careerPath.breadthAll') }}</a>
         </template>
-        <p v-else class="note surface">{{ t('careerPath.breadthNone') }}</p>
+        <p v-else class="note flat">{{ t('careerPath.breadthNone') }}</p>
       </div>
     </section>
 
@@ -123,7 +123,7 @@ const hasBreadth = computed(() => !!result.value?.breadth && TIERS.some((x) => r
 
   <div v-else class="detail">
     <a class="back" :href="link('careers')"><ArrowLeft :size="16" aria-hidden="true" /> {{ t('careerPath.back') }}</a>
-    <p class="note surface">{{ t('careerPath.noMatch') }}</p>
+    <p class="note flat">{{ t('careerPath.noMatch') }}</p>
   </div>
 </template>
 
@@ -301,6 +301,10 @@ const hasBreadth = computed(() => !!result.value?.breadth && TIERS.some((x) => r
 
 .note {
   padding: 14px 16px;
+}
+
+.note.flat {
+  padding: var(--space-3) 0 0;
   font-size: 0.9375rem;
   color: var(--ink-soft);
 }

@@ -150,7 +150,7 @@ function onCode(): void {
 
 <style scoped>
 .contribute {
-  padding-top: 32px;
+  padding-top: var(--page-top);
   display: grid;
   gap: var(--space-5);
 }

@@ -98,7 +98,7 @@ async function share(): Promise<void> {
 .shortlist {
   display: grid;
   gap: var(--space-5);
-  padding-top: 32px;
+  padding-top: var(--page-top);
   min-width: 0;
 }
 

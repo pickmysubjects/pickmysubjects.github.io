@@ -60,7 +60,7 @@ const hasText = computed(() => entry.value?.careerText === true)
       </ul>
     </template>
     <template v-else>
-      <p class="note surface">{{ t('careers.none') }}<template v-if="courseStudy"> {{ courseStudy }}</template></p>
+      <p class="note flat">{{ t('careers.none') }}<template v-if="courseStudy"> {{ courseStudy }}</template></p>
     </template>
 
     <div v-if="related.length" class="part">
@@ -280,7 +280,7 @@ const hasText = computed(() => entry.value?.careerText === true)
 }
 
 .note {
-  padding: 14px 16px;
+  padding: var(--space-3) 0 0;
   font-size: 0.9375rem;
   color: var(--ink-soft);
 }

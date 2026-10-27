@@ -115,7 +115,7 @@ watch(param, () => void followHash())
 .guide {
   display: grid;
   gap: 28px;
-  padding-top: 32px;
+  padding-top: var(--page-top);
 }
 
 .layout {

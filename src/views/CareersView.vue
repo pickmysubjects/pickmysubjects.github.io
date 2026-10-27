@@ -15,6 +15,6 @@ defineProps<{ id: string }>()
 
 <style scoped>
 .careers-view {
-  padding-top: 32px;
+  padding-top: var(--page-top);
 }
 </style>

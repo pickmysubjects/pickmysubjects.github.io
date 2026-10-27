@@ -106,20 +106,20 @@ const sections = computed(() => {
         <div class="main">
           <SubjectFitCard id="fit" class="sec-fit" :subject="subject" :year="year" />
 
-          <section id="ratings" class="sec surface">
+          <section id="ratings" class="sec flat">
             <h2 class="sec-title">{{ t('subject.ratingsTitle') }}</h2>
             <SubjectVerdict v-model:form-open="rating" :subject="subject" :taken="taken" :thanks="thanks" :detail-ready="detailReady" @rated="onRated" />
           </section>
 
-          <section v-if="detailReady && subject.about" id="learn" class="sec sec-about surface">
+          <section v-if="detailReady && subject.about" id="learn" class="sec sec-about flat">
             <SubjectAbout :subject="subject" />
           </section>
 
-          <section id="assessment" class="sec surface">
+          <section id="assessment" class="sec flat">
             <AssessmentPanel :subject="subject" :year="year" />
           </section>
 
-          <section id="route" class="sec surface">
+          <section id="route" class="sec flat">
             <h2 class="sec-title">{{ t('subject.fitsTitle') }}</h2>
             <SubjectRoute :subject="subject" :year="year" :unlocks="unlocks" />
             <MajorRoles class="sec-roles" :code="code" />
@@ -128,17 +128,17 @@ const sections = computed(() => {
 
           <!-- The long lower sections fold on phones (FoldSection), so the page isn't a mile long. -->
 
-          <section v-if="hasRelated" id="related" class="sec surface">
+          <section v-if="hasRelated" id="related" class="sec flat">
             <RelatedSubjects :related="related" :year="year" />
           </section>
 
-          <section v-if="links.length" id="discuss" class="sec surface">
+          <section v-if="links.length" id="discuss" class="sec flat">
             <FoldSection :title="t('subject.discuss')">
               <OutsideLinks :links="links" />
             </FoldSection>
           </section>
 
-          <section v-if="similar.length" id="similar" class="sec surface">
+          <section v-if="similar.length" id="similar" class="sec flat">
             <FoldSection :title="t('subject.similar')">
               <SubjectLinks :codes="similar" :year="year" />
             </FoldSection>
@@ -174,7 +174,7 @@ const sections = computed(() => {
 .subject {
   display: grid;
   gap: var(--space-5);
-  padding-top: 32px;
+  padding-top: var(--page-top);
   min-width: 0;
 }
 
@@ -214,6 +214,20 @@ const sections = computed(() => {
   min-width: 0;
   padding: var(--space-5);
   scroll-margin-top: 80px;
+}
+
+.sec.flat {
+  padding: var(--space-5) 0 0;
+}
+
+@media (max-width: 640px) {
+  .sec {
+    padding: var(--space-4);
+  }
+
+  .sec.flat {
+    padding: var(--space-4) 0 0;
+  }
 }
 
 .sec-fit {
