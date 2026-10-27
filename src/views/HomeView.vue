@@ -4,6 +4,7 @@ import { computed } from 'vue'
 import { ArrowRight, Check, CircleCheck } from 'lucide-vue-next'
 import ReleasePill from '@/components/home/ReleasePill.vue'
 import CanDoList from '@/components/home/CanDoList.vue'
+import WhatsNext from '@/components/home/WhatsNext.vue'
 import SubjectSearch from '@/components/SubjectSearch.vue'
 import { usePlan } from '@/composables/usePlan'
 import { useProfile } from '@/composables/useProfile'
@@ -108,6 +109,8 @@ const next = computed(() => {
         </span>
       </div>
     </section>
+
+    <WhatsNext />
 
     <ul class="proof" :aria-label="t('home.eyebrow')">
       <li v-for="p in proof" :key="p">{{ p }}</li>
