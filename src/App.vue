@@ -50,6 +50,7 @@ const TITLES: Partial<Record<string, string>> = {
   majors: 'majors.title',
   shortlist: 'shortlist.title',
   careers: 'careerPath.title',
+  changes: 'menu.changes',
 }
 watchEffect(() => {
   const s = view.value === 'subject' ? data.value.subjects[param.value.toUpperCase()] : undefined
