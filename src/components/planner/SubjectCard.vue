@@ -173,7 +173,10 @@ function onDragStart(event: DragEvent): void {
     </span>
 
     <dialog v-if="moveOpen" ref="sheet" class="sheet" :aria-label="code" @close="emit('moveSheet', false)" @click="onSheetClick">
-      <p class="sheet-title"><span class="code">{{ code }}</span> {{ local || subject?.title }}</p>
+      <header class="sheet-head">
+        <p class="sheet-title"><span class="code">{{ code }}</span> {{ local || subject?.title }}</p>
+        <button type="button" class="sheet-x" :aria-label="t('menu.close')" @click="emit('moveSheet', false)"><X :size="16" aria-hidden="true" /></button>
+      </header>
       <div class="sheet-actions">
         <button class="sheet-act" type="button" @click="fromSheet(() => emit('select'))"><Route :size="16" aria-hidden="true" />{{ t('plan.tlShow') }}</button>
         <button class="sheet-act" type="button" @click="fromSheet(() => emit('swap'))"><ArrowRightLeft :size="16" aria-hidden="true" />{{ t('plan.swap') }}</button>
@@ -460,7 +463,10 @@ function onDragStart(event: DragEvent): void {
   padding: 14px;
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
-  background: var(--glass-shine), var(--sheet-fill);
+  /* As solid as the heavy-semester sheet: the board must not show through (Glass included). */
+  background: var(--glass-shine), color-mix(in srgb, var(--sheet-fill) 40%, var(--bg));
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  backdrop-filter: blur(24px) saturate(1.4);
   color: var(--ink);
   box-shadow: var(--shadow-2);
   cursor: default;
@@ -472,7 +478,28 @@ function onDragStart(event: DragEvent): void {
 }
 
 .sheet::backdrop {
-  background: rgb(16 16 20 / 30%);
+  background: rgb(16 16 20 / 40%);
+}
+
+.sheet-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.sheet-x {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin: -12px -10px -6px 0;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: var(--ink-soft);
+  cursor: pointer;
 }
 
 .sheet-title {

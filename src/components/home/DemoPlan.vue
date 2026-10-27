@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { ArrowRight, Check } from 'lucide-vue-next'
+import { Check } from 'lucide-vue-next'
 import { link } from '@/composables/useView'
 import { useI18n } from '@/i18n'
 import { categoryTag } from '@/i18n/format'
@@ -86,7 +86,6 @@ const allMet = computed(() => props.plan.met === props.plan.total)
         <span v-for="l in legend" :key="l.kind" class="legend-item"><span class="dot" :class="`k-${l.kind}`" aria-hidden="true" />{{ l.label }}</span>
       </span>
       <span v-if="!hideRules" class="rules">{{ t('rules.progress', { met: plan.met, total: plan.total }) }}</span>
-      <span class="go">{{ t('home.cardPlan') }} <ArrowRight :size="16" aria-hidden="true" /></span>
     </span>
   </a>
 </template>
@@ -275,16 +274,8 @@ const allMet = computed(() => props.plan.met === props.plan.total)
   color: var(--ink-faint);
 }
 
-.go {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--accent);
-}
-
-/* Phones: the years scroll sideways inside the card, one and a bit in view. */
+/* Phones: the years scroll sideways inside the card. Two years in view and the edge of the
+   third, fading out at the card's edge, so it's plain there is more to the side. */
 @media (max-width: 560px) {
   .demo {
     gap: 16px;
@@ -293,13 +284,20 @@ const allMet = computed(() => props.plan.met === props.plan.total)
 
   .years {
     grid-template-columns: none;
-    grid-auto-columns: 72%;
+    grid-auto-columns: 42%;
     grid-auto-flow: column;
+    gap: 10px;
     margin-right: -16px;
     padding-right: 16px;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     scrollbar-width: none;
+    -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 32px), transparent);
+    mask-image: linear-gradient(90deg, #000 calc(100% - 32px), transparent);
+  }
+
+  .years::-webkit-scrollbar {
+    display: none;
   }
 
   .year {

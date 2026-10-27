@@ -120,7 +120,7 @@ watch(() => [props.view, param.value], close)
     <div class="header-inner shell">
       <a class="brand" :href="link('')" :aria-current="view === 'home' ? 'page' : undefined" :title="t('nav.home')">
         <AppLogo class="mark" small />
-        <span class="brand-name">PickMySubjects<span v-if="IS_BETA" class="beta-chip">Beta</span></span>
+        <span class="brand-name">PickMySubjects<span v-if="IS_BETA && view !== 'home'" class="beta-chip">Beta</span></span>
       </a>
       <nav class="nav" :aria-label="t('nav.main')">
         <ul class="nav-list">
