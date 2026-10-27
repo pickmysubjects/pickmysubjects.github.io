@@ -1971,7 +1971,7 @@ export const ms: Messages = {
     },
   },
   shortlist: {
-    title: "Senarai simpanan",
+    title: "Disimpan",
     lede: "Subjek yang anda simpan untuk dilihat semula. Pilih dua atau tiga untuk dibandingkan sebelah-menyebelah.",
     local: "Disimpan dalam pelayar ini sahaja, seperti profil anda yang lain (dan dalam fail sandaran).",
     localShort: "Disimpan dalam pelayar ini sahaja",
