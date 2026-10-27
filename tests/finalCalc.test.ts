@@ -21,24 +21,25 @@ describe('finalNeeds', () => {
   ]
 
   it('works out the exam mark for each band from the weights', () => {
-    // 16 + 14 = 30 banked; H1 needs 50 more out of 60.
+    // 16 + 14 = 30 banked; H1 starts at 79.5 (rounds to 80), so 49.5 more out of 60.
     const r = finalNeeds(parts)!
     expect(r.earned).toBe(30)
     expect(r.leftWeight).toBe(60)
-    expect(need(parts, 'H1')).toMatchObject({ needed: 84, status: 'possible' })
-    expect(need(parts, 'P')).toMatchObject({ needed: 34, status: 'possible' })
+    expect(need(parts, 'H1')).toMatchObject({ needed: 83, status: 'possible' })
+    expect(need(parts, 'P')).toMatchObject({ needed: 33, status: 'possible' })
+    expect(r.roundingMatters).toBe(true)
   })
 
   it('rounds the needed mark up, so it is always enough', () => {
     const p: CalcPart[] = [{ kind: 'test', weight: 30, score: 71 }, { kind: 'exam', weight: 70 }]
-    // (80 − 21.3) / 70 = 83.857… → 84
+    // (79.5 − 21.3) / 70 = 83.14… → 84
     expect(need(p, 'H1').needed).toBe(84)
   })
 
   it('says not possible past 100% and already secured at or below 0', () => {
     const low: CalcPart[] = [{ kind: 'assignment', weight: 50, score: 20 }, { kind: 'exam', weight: 50 }]
     expect(need(low, 'H1').status).toBe('impossible')
-    expect(need(low, 'P')).toMatchObject({ needed: 80, status: 'possible' })
+    expect(need(low, 'P')).toMatchObject({ needed: 79, status: 'possible' })
     const high: CalcPart[] = [{ kind: 'assignment', weight: 70, score: 100 }, { kind: 'exam', weight: 30 }]
     expect(need(high, 'P')).toMatchObject({ needed: 0, status: 'secured' })
     expect(finalNeeds(high)!.best).toBe(100)
@@ -54,12 +55,15 @@ describe('finalNeeds', () => {
     const done: CalcPart[] = [{ kind: 'assignment', weight: 40, score: 75 }, { kind: 'exam', weight: 60, score: 75 }]
     expect(need(done, 'H2A')).toMatchObject({ needed: null, status: 'secured' })
     expect(need(done, 'H1')).toMatchObject({ needed: null, status: 'impossible' })
+    // 79.6 rounds to 80: an H1, as on the rest of the site.
+    const edge: CalcPart[] = [{ kind: 'assignment', weight: 40, score: 79 }, { kind: 'exam', weight: 60, score: 80 }]
+    expect(need(edge, 'H1').status).toBe('secured')
   })
 
   it('scales typed weights that do not add up to 100', () => {
     const p: CalcPart[] = [{ kind: 'assignment', weight: 1, score: 50 }, { kind: 'exam', weight: 1 }]
     expect(finalNeeds(p)!.earned).toBe(25)
-    expect(need(p, 'P').needed).toBe(50)
+    expect(need(p, 'P').needed).toBe(49)
   })
 
   it('handles missing data', () => {
@@ -105,7 +109,7 @@ describe('calc text', () => {
 
 describe('cleanCalc', () => {
   it('keeps good saved rows and drops broken ones', async () => {
-    const { cleanCalc } = await import('../src/composables/useFinalCalc')
+    const { cleanCalc } = await import('../src/engine/finalCalc')
     expect(
       cleanCalc({
         COMP10001: { rows: [{ kind: 'exam', weight: 60, hurdle: true, score: 'x', outOf: 50 }, { kind: 'nope', weight: 1 }], custom: true },

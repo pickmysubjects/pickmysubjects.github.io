@@ -1295,6 +1295,7 @@ export const vi: Messages = {
     wamSeoDesc: "Công cụ tính WAM Đại học Melbourne miễn phí: tính WAM từ điểm của bạn, điểm trung bình cần cho WAM mục tiêu, và một môn sẽ làm WAM thay đổi ra sao. Điểm chỉ lưu trên máy.",
   },
   calc: {
+    roundInfo: "Điểm tổng kết được làm tròn thành số nguyên, nên 79.5 tính là 80 (H1). Mỗi mức ở đây tính từ thấp hơn nửa điểm.",
     title: "Thi cuối kỳ cần bao nhiêu điểm?",
     lede: "Chọn môn, nhập điểm đã có, xem cuối kỳ còn cần bao nhiêu.",
     pick: "Môn học",

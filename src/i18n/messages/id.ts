@@ -1295,6 +1295,7 @@ export const id: Messages = {
     wamSeoDesc: "Kalkulator WAM University of Melbourne gratis: hitung WAM dari nilaimu, rata-rata yang dibutuhkan untuk target WAM, dan pengaruh nilai satu mata kuliah. Nilai tetap di perangkatmu.",
   },
   calc: {
+    roundInfo: "Nilai akhir dibulatkan ke bilangan bulat, jadi 79,5 dihitung 80 (H1). Tiap grade di sini dihitung mulai setengah poin lebih rendah.",
     title: "Berapa nilai ujian akhir yang aku butuhkan?",
     lede: "Pilih mata kuliah, isi nilai yang sudah ada, lihat sisa yang perlu dikejar.",
     pick: "Mata kuliah",

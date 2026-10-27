@@ -1,4 +1,5 @@
-import type { AssessmentKind } from './schema'
+import { ASSESSMENT_KINDS, type AssessmentKind } from './schema'
+import { BAND_EDGES } from './grades'
 import type { AssessmentTask } from './handbookPaste'
 
 /**
@@ -31,6 +32,8 @@ export type NeedStatus = 'secured' | 'possible' | 'impossible'
 export interface BandNeed {
   band: CalcBand
   target: number
+  /** Where the band starts once the final mark is rounded (79.5 for H1), as everywhere on the site. */
+  from: number
   /** Average needed on the parts still to come, rounded up to a whole mark; null when nothing is left. */
   needed: number | null
   status: NeedStatus
@@ -48,6 +51,8 @@ export interface CalcResult {
   bands: BandNeed[]
   /** Parts not done yet that must be passed on their own. */
   hurdlesLeft: CalcPart[]
+  /** True when counting 79.5 as 80 changes a shown result: only then is the rounding explained. */
+  roundingMatters: boolean
 }
 
 /** The parts of a subject from its Handbook assessment, nothing filled in yet. */
@@ -76,12 +81,17 @@ export function finalNeeds(parts: readonly CalcPart[]): CalcResult | null {
   const leftWeight = totalWeight - doneWeight
   const earned = done.reduce((s, p) => s + (Math.max(0, Math.min(100, p.score as number)) * p.weight) / 100, 0) * scale
   const leftShare = leftWeight * scale
-  const bands = CALC_TARGETS.map(({ band, mark }): BandNeed => {
-    if (leftShare <= 0) return { band, target: mark, needed: null, status: earned + 1e-9 >= mark ? 'secured' : 'impossible' }
+  const need = (mark: number, from: number) => {
+    if (leftShare <= 0) return { needed: null, status: (earned + 1e-9 >= from ? 'secured' : 'impossible') as NeedStatus }
     // Rounded up: the mark shown must be enough on its own. The 1e-9 keeps 70.0000001 at 70.
-    const needed = Math.ceil(((mark - earned) / leftShare) * 100 - 1e-9)
-    if (needed <= 0) return { band, target: mark, needed: 0, status: 'secured' }
-    return { band, target: mark, needed, status: needed > 100 ? 'impossible' : 'possible' }
+    const needed = Math.ceil(((from - earned) / leftShare) * 100 - 1e-9)
+    if (needed <= 0) return { needed: 0, status: 'secured' as NeedStatus }
+    return { needed, status: (needed > 100 ? 'impossible' : 'possible') as NeedStatus }
+  }
+  const bands = CALC_TARGETS.map(({ band, mark }): BandNeed => ({ band, target: mark, from: BAND_EDGES[band][0], ...need(mark, BAND_EDGES[band][0]) }))
+  const roundingMatters = CALC_TARGETS.some(({ band, mark }, i) => {
+    const plain = need(mark, mark)
+    return plain.needed !== bands[i]!.needed || plain.status !== bands[i]!.status
   })
   return {
     totalWeight: tenth(totalWeight),
@@ -91,5 +101,38 @@ export function finalNeeds(parts: readonly CalcPart[]): CalcResult | null {
     best: tenth(earned + leftShare),
     bands,
     hurdlesLeft: left.filter((p) => p.hurdle),
+    roundingMatters,
   }
+}
+
+/** A calculator row as saved: raw score and what it's out of, as typed ('' when not done yet). */
+export interface CalcRow {
+  kind: AssessmentKind
+  weight: number
+  hurdle?: boolean
+  score: number | ''
+  outOf: number | ''
+}
+
+export interface CalcEntry {
+  rows: CalcRow[]
+  /** True once the rows differ from the Handbook's (edited, added or removed). */
+  custom?: boolean
+}
+
+const savedNum = (x: unknown): number | '' => (typeof x === 'number' && Number.isFinite(x) && x >= 0 && x <= 1000 ? x : '')
+
+/** Puts a saved copy (browser storage or a backup file) back in shape, dropping anything broken. */
+export function cleanCalc(raw: unknown): Record<string, CalcEntry> {
+  const out: Record<string, CalcEntry> = {}
+  if (!raw || typeof raw !== 'object') return out
+  for (const [code, v] of Object.entries(raw as Record<string, unknown>)) {
+    if (!/^[A-Z]{4}\d{5}$/.test(code) || !v || typeof v !== 'object' || !Array.isArray((v as CalcEntry).rows)) continue
+    const rows = (v as CalcEntry).rows
+      .filter((r) => r && (ASSESSMENT_KINDS as readonly string[]).includes(r.kind))
+      .slice(0, 30)
+      .map((r): CalcRow => ({ kind: r.kind, weight: typeof r.weight === 'number' && r.weight >= 0 && r.weight <= 100 ? r.weight : 0, ...(r.hurdle ? { hurdle: true } : {}), score: savedNum(r.score), outOf: savedNum(r.outOf) }))
+    out[code] = { rows, ...((v as CalcEntry).custom ? { custom: true } : {}) }
+  }
+  return out
 }

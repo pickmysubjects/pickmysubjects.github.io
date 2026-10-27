@@ -136,14 +136,14 @@ function pick(code: string): void {
 
       <section v-if="result" class="surface calc-result" aria-labelledby="calc-result" aria-live="polite">
         <h2 id="calc-result" class="sec-title">{{ allDone ? t('calc.resultAll') : t('calc.resultTitle') }}</h2>
-        <p v-if="allDone" class="final">{{ t('calc.finalMark', { mark: result.earned, band: gradeOf(result.earned) }) }}</p>
+        <p v-if="allDone" class="final">{{ t('calc.finalMark', { mark: result.earned, band: gradeOf(Math.round(result.earned)) }) }}</p>
         <ul v-else class="bands">
           <li v-for="b in result.bands" :key="b.band" class="band" :class="`s-${b.status}`">
             <span class="band-name">{{ b.band }} <small>{{ b.target }}+</small></span>
             <strong class="band-need">{{ b.status === 'possible' ? `${b.needed}%` : b.status === 'secured' ? t('calc.secured') : t('calc.impossible') }}</strong>
           </li>
         </ul>
-        <p v-if="!allDone" class="maths">{{ t('calc.maths', { earned: result.earned, left: Math.round(result.leftWeight * (100 / result.totalWeight) * 10) / 10 }) }}</p>
+        <p v-if="!allDone" class="maths">{{ t('calc.maths', { earned: result.earned, left: Math.round(result.leftWeight * (100 / result.totalWeight) * 10) / 10 }) }}<InfoTip v-if="result.roundingMatters" :text="t('calc.roundInfo')" /></p>
         <p v-if="!anyDone" class="calc-hint">{{ t('calc.nothingDone') }}</p>
 
         <div v-if="result.hurdlesLeft.length || subject.minAttendance" class="hurdles">

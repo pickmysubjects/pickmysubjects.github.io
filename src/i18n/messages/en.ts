@@ -1298,6 +1298,7 @@ export const en = {
     wamSeoDesc: "Free University of Melbourne WAM calculator: work out your WAM from your marks, what average you need for a target WAM, and what one subject's mark would do to it. Marks stay on your device.",
   },
   calc: {
+    roundInfo: "Final marks are rounded to whole numbers, so 79.5 counts as 80 (H1). Each band here starts half a mark lower.",
     title: "What do I need on the final?",
     lede: "Pick any subject, type the marks you have, see what's left to get.",
     pick: "Subject",

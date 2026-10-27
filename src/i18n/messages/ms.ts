@@ -1295,6 +1295,7 @@ export const ms: Messages = {
     wamSeoDesc: "Kalkulator WAM University of Melbourne percuma: kira WAM daripada markah anda, purata yang perlu untuk sasaran WAM, dan kesan markah satu subjek. Markah kekal di peranti anda.",
   },
   calc: {
+    roundInfo: "Markah akhir dibundarkan kepada nombor bulat, jadi 79.5 dikira 80 (H1). Setiap gred di sini bermula setengah markah lebih rendah.",
     title: "Berapa markah peperiksaan akhir yang perlu?",
     lede: "Pilih subjek, isi markah yang ada, lihat baki yang perlu dicapai.",
     pick: "Subjek",
