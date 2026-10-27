@@ -4,6 +4,7 @@ import { computed, shallowRef, watch } from 'vue'
 import { useDataset } from '@/composables/useDataset'
 import { useProfile } from '@/composables/useProfile'
 import { useI18n } from '@/i18n'
+import { localTitle } from '@/i18n/localized'
 import { gradeOf, wamIf } from '@/utils/wamGoal'
 
 /**
@@ -13,7 +14,7 @@ import { gradeOf, wamIf } from '@/utils/wamGoal'
 const props = defineProps<{ code?: string; choices?: string[] }>()
 const { data } = useDataset()
 const { profile, wam } = useProfile()
-const { t } = useI18n()
+const { t, locale } = useI18n()
 
 const options = computed(() => (props.choices ?? []).filter((c) => !data.value.subjects[c]?.passFail))
 const picked = shallowRef(props.code ?? options.value[0] ?? '')
@@ -40,7 +41,7 @@ function onMark(e: Event): void {
       <label v-if="!code" class="wi-field wi-pick">
         <span class="visually-hidden">{{ t('whatIf.subject') }}</span>
         <select v-model="picked" class="input wi-select">
-          <option v-for="c in options" :key="c" :value="c">{{ c }} {{ data.subjects[c]?.title ?? '' }}</option>
+          <option v-for="c in options" :key="c" :value="c">{{ c }} {{ data.subjects[c] ? localTitle(data.subjects[c], locale) || data.subjects[c].title : '' }}</option>
         </select>
       </label>
       <label class="wi-field">
