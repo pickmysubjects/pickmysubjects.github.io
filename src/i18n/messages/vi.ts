@@ -2058,6 +2058,7 @@ export const vi: Messages = {
     build: 'Lập kế hoạch của tôi',
     edit: 'Đổi',
     summary: '{course} · từ {term} · {major}',
+    summaryLater: '{course} · bắt đầu {start} · kế hoạch từ {term} · {major}',
     majorSearch: 'Tìm chuyên ngành, ví dụ psychology hoặc hoá học',
     noMajorMatch: 'Không có chuyên ngành phù hợp. Thử từ khác, hoặc chọn “Chưa quyết định”.',
     allFields: "Tất cả lĩnh vực",

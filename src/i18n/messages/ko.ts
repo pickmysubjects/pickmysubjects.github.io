@@ -2058,6 +2058,7 @@ export const ko: Messages = {
     build: '내 계획 만들기',
     edit: '변경',
     summary: '{course} · {term} 입학 · {major}',
+    summaryLater: '{course} · {start} 입학 · {term}부터 계획 · {major}',
     majorSearch: '전공 검색 (예: psychology, 화학)',
     noMajorMatch: '맞는 전공이 없어요. 다른 단어로 찾거나 “아직 모르겠어요”를 고르세요.',
     allFields: "전체 분야",

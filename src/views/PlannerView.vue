@@ -17,7 +17,7 @@ import PlanPrint, { type PrintTerm } from '@/components/planner/PlanPrint.vue'
 import Interp from '@/components/Interp.vue'
 import PlanSwitcher from '@/components/plans/PlanSwitcher.vue'
 import PlanCompare from '@/components/plans/PlanCompare.vue'
-import { assumedOfferings, careerGap, careerGoal, careerName, hasEnded, heldMajorIds, informalPicks, isFail, passedCodes, planComponentIds, planRoles, planRules, recordedLoads, termLoad, type PlanTerm } from '@/engine'
+import { assumedOfferings, careerGap, careerGoal, careerName, hasEnded, heldMajorIds, informalPicks, isFail, passedCodes, planComponentIds, planRoles, planRules, recordedLoads, termKey, termLoad, type PlanTerm } from '@/engine'
 import { diplomaTitle } from '@/composables/usePlanCompare'
 import { ImageDown, Printer, Share2, Sparkles, X } from 'lucide-vue-next'
 import { usePlans } from '@/composables/usePlans'
@@ -250,13 +250,19 @@ const majorTitle = computed(() => {
   const diploma = diplomaTitle(data.value, plan.setup.value)
   return [main, minor ? t.value(key, { title: minor }) : '', diploma ? t.value('plans.diplomaLine', { title: diploma }) : ''].filter(Boolean).join(' · ')
 })
-const summary = computed(() =>
-  t.value('wizard.summary', {
+// When the board starts later than the student did (past semesters have no subjects planned),
+// the line says both, so it doesn't contradict the first column.
+const summary = computed(() => {
+  const start = { year: plan.setup.value.startYear, period: plan.setup.value.startPeriod }
+  const first = plan.terms.value[0]
+  const later = first && (first.year !== start.year || first.period !== start.period) && termKey(first.year, first.period) > termKey(start.year, start.period)
+  return t.value(later ? 'wizard.summaryLater' : 'wizard.summary', {
     course: plan.course.value?.title ?? plan.setup.value.course,
-    term: termLabel(t.value, { year: plan.setup.value.startYear, period: plan.setup.value.startPeriod }),
+    start: termLabel(t.value, start),
+    term: termLabel(t.value, later ? first : start),
     major: majorTitle.value,
-  }),
-)
+  })
+})
 
 function finishWizard(setup: PlanSetup): void {
   if (!plan.updateSetup(setup)) plan.generate()

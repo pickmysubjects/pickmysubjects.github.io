@@ -2058,6 +2058,7 @@ export const hi: Messages = {
     build: 'मेरा प्लान बनाएँ',
     edit: 'बदलें',
     summary: '{course} · {term} से · {major}',
+    summaryLater: '{course} · {start} से शुरू · {term} से प्लान · {major}',
     majorSearch: 'मेजर खोजें, जैसे psychology या रसायन',
     noMajorMatch: 'कोई मेजर नहीं मिला। दूसरा शब्द आज़माएँ, या “अभी तय नहीं” चुनें।',
     allFields: "सभी क्षेत्र",

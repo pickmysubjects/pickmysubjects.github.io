@@ -2058,6 +2058,7 @@ export const ja: Messages = {
     build: 'プランを作る',
     edit: '変更',
     summary: '{course} · {term} 入学 · {major}',
+    summaryLater: '{course} · {start} 入学 · {term} から計画 · {major}',
     majorSearch: '専攻を検索（例：psychology、化学）',
     noMajorMatch: '一致する専攻がありません。別の言葉で試すか、「まだ決めていない」を選んでください。',
     allFields: "すべての分野",

@@ -2061,6 +2061,7 @@ export const en = {
     build: 'Build my plan',
     edit: 'Change',
     summary: '{course} · from {term} · {major}',
+    summaryLater: '{course} · started {start} · planned from {term} · {major}',
     majorSearch: 'Search a major, e.g. psychology or chemistry',
     noMajorMatch: 'No major matches that. Try another word, or pick "Not sure yet".',
     allFields: "All fields",

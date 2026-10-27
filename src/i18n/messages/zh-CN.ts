@@ -2058,6 +2058,7 @@ export const zhCN: Messages = {
     build: '生成我的方案',
     edit: '修改',
     summary: '{course} · {term} 入学 · {major}',
+    summaryLater: '{course} · {start} 入学 · 从 {term} 开始排 · {major}',
     majorSearch: '搜索专业，例如 psychology、化学',
     noMajorMatch: '没有找到匹配的专业。换个词试试，或者选“还没决定”。',
     allFields: "全部方向",

@@ -79,7 +79,7 @@ const fixLabel = computed(() => {
   <div v-if="here && here.level !== 'ok'" class="stress" :class="`stress-${here.level}`" :data-stress-term="termIndex">
     <button ref="chip" type="button" class="stress-chip" aria-haspopup="dialog" @click="show">
       <span class="stress-level">{{ t(`stress.${here.level}`) }}</span>
-      <span v-if="short" class="stress-short">· {{ short }}</span>
+      <span v-if="short" class="stress-short" :title="short">· {{ short }}</span>
       <Lock v-if="stuck.length" :size="12" class="stress-lock" :aria-label="t('stress.short.stuck')" />
     </button>
     <dialog
@@ -127,15 +127,16 @@ const fixLabel = computed(() => {
   --tone-soft: var(--bad-soft);
 }
 
-/* One fixed-height line, the same in every column; the tap area reaches 44px around it. */
+/* A fixed height, the same in every column: the reason wraps to a second line in a narrow
+   column instead of being cut off; the tap area reaches 44px around it. */
 .stress-chip {
   position: relative;
   display: flex;
   align-items: center;
   gap: 4px;
   width: 100%;
-  height: 32px;
-  padding: 0 10px;
+  height: 40px;
+  padding: 0 12px;
   border: 1px solid color-mix(in srgb, var(--tone) 28%, var(--glass-edge));
   border-radius: 999px;
   background: var(--glass-shine), color-mix(in srgb, var(--tone-soft) 75%, transparent);
@@ -150,7 +151,7 @@ const fixLabel = computed(() => {
 .stress-chip::before {
   content: '';
   position: absolute;
-  inset: -6px 0;
+  inset: -2px 0;
 }
 
 .stress-chip:hover {
@@ -171,10 +172,15 @@ const fixLabel = computed(() => {
 }
 
 .stress-short {
+  display: -webkit-box;
   min-width: 0;
   overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  font-size: 0.75rem;
+  line-height: 1.2;
+  overflow-wrap: break-word;
 }
 
 .stress-lock {

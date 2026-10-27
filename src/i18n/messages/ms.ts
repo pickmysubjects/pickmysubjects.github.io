@@ -2058,6 +2058,7 @@ export const ms: Messages = {
     build: 'Bina rancangan saya',
     edit: 'Ubah',
     summary: '{course} · mula {term} · {major}',
+    summaryLater: '{course} · mula {start} · dirancang dari {term} · {major}',
     majorSearch: 'Cari major, cth. psychology atau kimia',
     noMajorMatch: 'Tiada major yang sepadan. Cuba perkataan lain, atau pilih “Belum pasti”.',
     allFields: "Semua bidang",
