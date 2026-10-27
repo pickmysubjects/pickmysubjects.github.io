@@ -34,10 +34,11 @@ function save(next: CalcRow[], structural: boolean): void {
 function setField(i: number, field: keyof CalcRow, value: unknown): void {
   save(rows.value.map((r, j) => (j === i ? { ...r, [field]: value } : r)), field === 'kind' || field === 'weight' || field === 'hurdle')
 }
-const numberOf = (e: Event): number | '' => {
+// A negative mark is kept as typed so it shows as wrong instead of quietly counting as "not done".
+const numberOf = (e: Event, allowNegative = false): number | '' => {
   const raw = (e.target as HTMLInputElement).value
   const n = Number(raw)
-  return raw === '' || !Number.isFinite(n) || n < 0 ? '' : n
+  return raw === '' || !Number.isFinite(n) || (n < 0 && !allowNegative) ? '' : n
 }
 function addRow(): void {
   save([...rows.value, { kind: 'assignment', weight: 0, score: '', outOf: '' }], true)
@@ -118,7 +119,7 @@ function pick(code: string): void {
             <label class="f f-score">
               <span class="f-label">{{ t('calc.score') }}</span>
               <span class="score">
-                <input class="input" :class="{ bad: badScore(r) }" type="number" inputmode="decimal" min="0" :placeholder="t('calc.notDone')" :value="r.score" @input="setField(i, 'score', numberOf($event))" />
+                <input class="input" :class="{ bad: badScore(r) }" type="number" inputmode="decimal" min="0" :placeholder="t('calc.notDone')" :value="r.score" @input="setField(i, 'score', numberOf($event, true))" />
                 <span class="slash" aria-hidden="true">/</span>
                 <input class="input" type="number" inputmode="decimal" min="1" placeholder="100" :aria-label="t('calc.outOf')" :value="r.outOf" @input="setField(i, 'outOf', numberOf($event))" />
               </span>
