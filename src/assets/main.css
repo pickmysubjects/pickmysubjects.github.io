@@ -548,14 +548,15 @@ button.chip {
   z-index: -1;
   overflow: hidden;
   pointer-events: none;
+  /* Large, saturated patches with light and dark between them, so glass always has edges to bend. */
   background:
-    radial-gradient(42% 38% at 8% 4%, rgb(243 154 196 / 62%), transparent 70%),
-    radial-gradient(40% 42% at 96% 30%, rgb(169 163 255 / 58%), transparent 70%),
-    radial-gradient(44% 40% at 18% 88%, rgb(255 194 158 / 60%), transparent 70%),
-    radial-gradient(38% 36% at 82% 96%, rgb(217 166 240 / 55%), transparent 70%),
-    radial-gradient(34% 30% at 30% 45%, rgb(169 163 255 / 40%), transparent 70%),
-    radial-gradient(30% 28% at 62% 62%, rgb(243 154 196 / 40%), transparent 70%),
-    linear-gradient(160deg, #f6e4f0 0%, #ece6fa 55%, #fbe9e0 100%);
+    radial-gradient(55% 45% at 0% 0%, rgb(243 154 196 / 75%), transparent 70%),
+    radial-gradient(50% 50% at 100% 22%, rgb(169 163 255 / 70%), transparent 70%),
+    radial-gradient(40% 36% at 38% 42%, rgb(139 124 246 / 45%), transparent 70%),
+    radial-gradient(45% 40% at 72% 66%, rgb(196 90 154 / 40%), transparent 70%),
+    radial-gradient(55% 45% at 10% 95%, rgb(255 194 158 / 75%), transparent 70%),
+    radial-gradient(45% 40% at 95% 100%, rgb(217 166 240 / 65%), transparent 70%),
+    linear-gradient(160deg, #f4dcec 0%, #e6def8 50%, #f9e2d6 100%);
 }
 
 .blob {
@@ -607,11 +608,13 @@ button.chip {
 @media (prefers-color-scheme: dark) {
   .backdrop {
     background:
-      radial-gradient(42% 38% at 8% 4%, rgb(122 37 87 / 60%), transparent 70%),
-      radial-gradient(40% 42% at 96% 30%, rgb(47 53 144 / 60%), transparent 70%),
-      radial-gradient(44% 40% at 18% 88%, rgb(96 48 26 / 55%), transparent 70%),
-      radial-gradient(38% 36% at 82% 96%, rgb(74 42 106 / 60%), transparent 70%),
-      linear-gradient(160deg, #170e1a 0%, #100f20 55%, #170f10 100%);
+      radial-gradient(55% 45% at 0% 0%, rgb(176 54 126 / 55%), transparent 70%),
+      radial-gradient(50% 50% at 100% 22%, rgb(91 70 200 / 55%), transparent 70%),
+      radial-gradient(40% 36% at 38% 42%, rgb(120 60 180 / 35%), transparent 70%),
+      radial-gradient(45% 40% at 72% 66%, rgb(176 54 126 / 35%), transparent 70%),
+      radial-gradient(55% 45% at 10% 95%, rgb(130 60 40 / 45%), transparent 70%),
+      radial-gradient(45% 40% at 95% 100%, rgb(91 70 200 / 45%), transparent 70%),
+      linear-gradient(160deg, #170c1c 0%, #110d24 50%, #170d12 100%);
   }
 
   .blob {
@@ -690,6 +693,13 @@ button.chip {
   box-shadow: none;
 }
 
+/* Dark: links straight on the brighter patches get a lighter pink. */
+@media (prefers-color-scheme: dark) {
+  .flat {
+    --accent: #ff8cc6;
+  }
+}
+
 /* Solid accent buttons keep the brand pink: their white text sits on the button, not the glass. */
 @media (prefers-color-scheme: light) {
   :is(.surface, .flat) .button-accent {
@@ -700,7 +710,7 @@ button.chip {
 /* Straight on the colour field: a slightly deeper accent keeps links at AA. */
 @media (prefers-color-scheme: light) {
   .flat {
-    --accent: #981a60;
+    --accent: #861552;
   }
 }
 
