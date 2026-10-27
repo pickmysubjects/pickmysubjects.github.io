@@ -187,14 +187,8 @@ const tone = (code: string): CardTone | null => props.tones?.get(code) ?? null
   transition: background 0.15s, border-color 0.15s, opacity 0.15s;
 }
 
-/* One blur per semester column, wide screens only; phones keep the see-through fill. */
-@media (min-width: 721px) {
-  .term {
-    -webkit-backdrop-filter: var(--card-blur);
-    backdrop-filter: var(--card-blur);
-  }
-}
-
+/* No backdrop blur on the columns: a blur makes each column its own layer, which would paint
+   over the prerequisite lines (PlanMap's .routes). The see-through fill keeps the glass look. */
 .term-short {
   flex-grow: 0.7;
   min-width: 150px;
