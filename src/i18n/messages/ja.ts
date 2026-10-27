@@ -1812,6 +1812,8 @@ export const ja: Messages = {
     notRunning: '計画期間中は開講なし',
     addToPlan: 'プランに追加',
     addWhen: "どの学期に入れるか",
+    termNotOffered: "{term}（開講なし）",
+    addNotOffered: "{year}年のHandbookではこの学期に開講なし。履修前に確認を。",
     inPlan: 'プランに追加済み',
     rateAsk: '履修しましたか？評価する',
     recommendShare: '評価した学生の {pct}% がおすすめしています。',

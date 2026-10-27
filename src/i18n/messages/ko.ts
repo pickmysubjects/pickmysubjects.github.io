@@ -1812,6 +1812,8 @@ export const ko: Messages = {
     notRunning: '계획한 연도에 개설되지 않음',
     addToPlan: '내 계획에 추가',
     addWhen: "어느 학기에 넣을지",
+    termNotOffered: "{term} (개설 안 됨)",
+    addNotOffered: "{year} Handbook 기준 이 학기엔 개설 안 됨. 수강신청 전 확인하세요.",
     inPlan: '계획에 있음',
     rateAsk: '수강하셨나요? 평가하기',
     recommendShare: '평가한 학생의 {pct}%가 추천해요.',

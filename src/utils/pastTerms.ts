@@ -1,5 +1,5 @@
 import { today as clock } from '@/engine/dataYear'
-import { isFail, isUpcoming, termKey, type Period, type Profile } from '@/engine'
+import { isFail, isUpcoming, periodsFor, termKey, type Period, type Profile, type Subject } from '@/engine'
 
 export interface PastResult {
   code: string
@@ -79,4 +79,38 @@ export function recordTermChoices(known: readonly { year: number; period: Period
   // At least three years from the start of study, so a fresh setup still has semesters to pick.
   const floor = { year: start.year + 2, period: 'semester-2' as Period }
   return termsBetween(first, order(last) > order(floor) ? last : floor)
+}
+
+export interface AddTermChoice {
+  year: number
+  period: Period
+  /** Whether the Handbook timetable has the subject running then; false is a warning, not a block. */
+  offered: boolean
+}
+
+/**
+ * Where "Add to my plan" can put a subject: every semester from the start of study to the plan's
+ * last term (at least three years on, and into next year), past ones included so a student can
+ * record what they took. Terms the subject doesn't run in stay, flagged. Summer and winter show
+ * only when the subject runs then or the plan already has that term, so the list stays short.
+ */
+export function addTermChoices(
+  subject: Subject,
+  start: { year: number; period: Period },
+  planTerms: readonly { year: number; period: Period }[],
+  now: Date = clock(),
+): AddTermChoice[] {
+  const key = (x: { year: number; period: Period }) => termKey(x.year, x.period)
+  const floor = { year: start.year + 2, period: 'semester-2' as Period }
+  const soon = { year: now.getFullYear() + 1, period: 'semester-2' as Period }
+  const end = [...planTerms, soon].reduce((a, b) => (key(b) > key(a) ? b : a), floor)
+  const inPlan = new Set(planTerms.map(key))
+  return termsBetween(start, end)
+    .map((x) => ({ ...x, offered: periodsFor(subject, x.year).includes(x.period) }))
+    .filter((x) => x.offered || x.period === 'semester-1' || x.period === 'semester-2' || inPlan.has(key(x)))
+}
+
+/** The suggested term: the first offered one still ahead (see defaultTerm), else any term ahead. */
+export function defaultAddTerm<T extends AddTermChoice>(choices: readonly T[], planStart?: { year: number; period: Period }, today: Date = clock()): T | undefined {
+  return defaultTerm(choices.filter((x) => x.offered), planStart, today) ?? defaultTerm(choices, planStart, today)
 }

@@ -1812,6 +1812,8 @@ export const zhTW: Messages = {
     notRunning: '規劃的年份裡不開',
     addToPlan: '加入我的方案',
     addWhen: "放在哪個學期",
+    termNotOffered: "{term}（未開課）",
+    addNotOffered: "{year} 年 Handbook 這學期沒開，選課前再確認。",
     inPlan: '已在方案中',
     rateAsk: '修過這門課？來評個分',
     recommendShare: '{pct}% 評過分的同學會推薦這門課。',

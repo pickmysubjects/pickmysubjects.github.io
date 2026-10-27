@@ -1812,6 +1812,8 @@ export const hi: Messages = {
     notRunning: 'प्लान किए सालों में नहीं चलता',
     addToPlan: 'मेरे प्लान में जोड़ें',
     addWhen: "किस सेमेस्टर में",
+    termNotOffered: "{term} (उपलब्ध नहीं)",
+    addNotOffered: "{year} Handbook में उस सेमेस्टर में नहीं। नामांकन से पहले जाँच लें।",
     inPlan: 'प्लान में है',
     rateAsk: 'यह विषय पढ़ा है? रेटिंग दें',
     recommendShare: 'रेटिंग देने वाले {pct}% छात्र इसकी सलाह देंगे।',

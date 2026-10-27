@@ -1815,6 +1815,8 @@ export const en = {
     notRunning: 'Not running in the planned years',
     addToPlan: 'Add to my plan',
     addWhen: "Which semester",
+    termNotOffered: "{term} (not offered)",
+    addNotOffered: "Not in the {year} Handbook timetable then. Check before you enrol.",
     inPlan: 'In your plan',
     rateAsk: 'Taken it? Rate it',
     recommendShare: '{pct}% of students who rated it would recommend it.',

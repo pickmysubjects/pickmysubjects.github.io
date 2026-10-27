@@ -1812,6 +1812,8 @@ export const id: Messages = {
     notRunning: 'Tidak dibuka pada tahun yang direncanakan',
     addToPlan: 'Tambahkan ke rencanaku',
     addWhen: "Semester mana",
+    termNotOffered: "{term} (tidak dibuka)",
+    addNotOffered: "Tidak dibuka semester itu di Handbook {year}. Cek sebelum mendaftar.",
     inPlan: 'Sudah di rencana',
     rateAsk: 'Pernah mengambilnya? Beri nilai',
     recommendShare: '{pct}% mahasiswa yang menilai akan merekomendasikannya.',

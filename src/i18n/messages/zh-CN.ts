@@ -1812,6 +1812,8 @@ export const zhCN: Messages = {
     notRunning: '规划的年份里不开',
     addToPlan: '加入我的方案',
     addWhen: "放在哪个学期",
+    termNotOffered: "{term}（未开课）",
+    addNotOffered: "{year} 年 Handbook 这学期没开，选课前再确认。",
     inPlan: '已在方案中',
     rateAsk: '上过这门课？来打个分',
     recommendShare: '{pct}% 打过分的同学会推荐这门课。',

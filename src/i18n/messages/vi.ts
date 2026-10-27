@@ -1812,6 +1812,8 @@ export const vi: Messages = {
     notRunning: 'Không mở trong các năm đã chọn',
     addToPlan: 'Thêm vào kế hoạch',
     addWhen: "Học kỳ nào",
+    termNotOffered: "{term} (không mở)",
+    addNotOffered: "Handbook {year} không mở môn này kỳ đó. Kiểm tra trước khi đăng ký.",
     inPlan: 'Đã có trong kế hoạch',
     rateAsk: 'Đã học môn này? Đánh giá ngay',
     recommendShare: '{pct}% sinh viên đã đánh giá sẽ giới thiệu môn này.',

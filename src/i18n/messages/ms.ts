@@ -1812,6 +1812,8 @@ export const ms: Messages = {
     notRunning: 'Tidak ditawarkan pada tahun yang dirancang',
     addToPlan: 'Tambah ke rancangan saya',
     addWhen: "Semester mana",
+    termNotOffered: "{term} (tidak ditawarkan)",
+    addNotOffered: "Tiada dalam jadual Handbook {year} semester itu. Semak sebelum mendaftar.",
     inPlan: 'Sudah dalam rancangan',
     rateAsk: 'Pernah mengambilnya? Beri penilaian',
     recommendShare: '{pct}% pelajar yang menilai akan mengesyorkannya.',
