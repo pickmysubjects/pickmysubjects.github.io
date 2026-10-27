@@ -248,7 +248,7 @@ function planWithIt(): void {
   align-items: baseline;
   gap: 12px;
   padding: 10px 0;
-  border-bottom: 1px solid var(--glass-edge);
+  border-bottom: 1px solid var(--divider);
 }
 
 .stat dt {

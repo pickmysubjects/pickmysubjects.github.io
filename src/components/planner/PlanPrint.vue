@@ -274,7 +274,7 @@ const subline = computed(() => parts.value.slice(0, -1))
 }
 
 .tag-required {
-  background: var(--accent);
+  background: var(--accent-fill);
   color: #fff;
 }
 

@@ -90,7 +90,7 @@ const rows = [...GRADES].reverse()
   background: color-mix(in srgb, var(--accent) 75%, transparent);
 }
 .g-H1 {
-  background: var(--accent);
+  background: var(--accent-fill);
 }
 
 /* Tick positions match the bar: 50 and 80 sit where those marks start. */

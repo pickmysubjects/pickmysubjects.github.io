@@ -401,7 +401,7 @@ const next = computed(() => {
   font-size: 0.8125rem;
   font-weight: 700;
   color: var(--accent-ink);
-  background: var(--accent);
+  background: var(--accent-fill);
   border-radius: 999px;
 }
 

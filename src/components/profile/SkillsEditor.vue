@@ -179,7 +179,7 @@ function pick(skill: Skill, level: number): void {
 }
 
 .step[aria-checked='true'] {
-  background: var(--accent);
+  background: var(--accent-fill);
   color: var(--accent-ink);
   font-weight: 600;
 }

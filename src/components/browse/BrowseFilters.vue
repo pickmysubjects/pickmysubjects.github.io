@@ -183,7 +183,7 @@ function clear(): void {
   line-height: 20px;
   text-align: center;
   color: var(--accent-ink);
-  background: var(--accent);
+  background: var(--accent-fill);
   border-radius: 999px;
 }
 

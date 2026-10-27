@@ -67,7 +67,7 @@ const band = computed(() => fitBand(props.rec.betterThan))
   padding: 0 4px;
   border-radius: 999px;
   color: var(--surface);
-  background: var(--accent);
+  background: var(--accent-fill);
   font-variant-numeric: tabular-nums;
 }
 

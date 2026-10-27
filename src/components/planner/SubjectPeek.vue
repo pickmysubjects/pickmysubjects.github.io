@@ -655,7 +655,7 @@ function onClick(event: MouseEvent): void {
   gap: var(--space-3);
   margin: 0 calc(-1 * var(--space-5));
   padding: var(--space-4) var(--space-5) var(--space-5);
-  border-top: 1px solid var(--card-edge);
+  border-top: 1px solid var(--divider);
   border-radius: 0 0 28px 28px;
   /* A glass toolbar: the one blurred layer here, so text scrolling under it stays out of the way. */
   background: var(--glass-shine), var(--sheet-fill);

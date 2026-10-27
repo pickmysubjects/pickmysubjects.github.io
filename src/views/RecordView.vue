@@ -250,7 +250,7 @@ const doneCount = computed(() => filled.value.filter((f) => f.done).length)
 }
 
 .sec-state {
-  background: var(--accent);
+  background: var(--accent-fill);
   color: var(--accent-ink);
 }
 

@@ -334,7 +334,7 @@ function chooseCourse(c: Course): void {
 }
 
 .dot-on {
-  background: var(--accent);
+  background: var(--accent-fill);
 }
 
 .q {

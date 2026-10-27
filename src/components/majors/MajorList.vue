@@ -219,7 +219,7 @@ const courseTitle = computed(() => data.value.courses.find((c) => c.code === cou
   font-size: 1.05rem;
   font-weight: 650;
   color: var(--ink);
-  border-bottom: 1px solid var(--glass-edge);
+  border-bottom: 1px solid var(--divider);
   cursor: pointer;
   list-style: none;
 }

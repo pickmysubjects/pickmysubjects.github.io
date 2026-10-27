@@ -224,7 +224,7 @@ watch(param, () => void followHash())
 }
 
 .fact + .fact {
-  border-top: 1px solid var(--glass-edge);
+  border-top: 1px solid var(--divider);
 }
 
 /* Between phone and desktop: one strip of four above the guide. */
@@ -235,7 +235,7 @@ watch(param, () => void followHash())
 
   .fact + .fact {
     border-top: 0;
-    border-left: 1px solid var(--glass-edge);
+    border-left: 1px solid var(--divider);
   }
 }
 
@@ -456,7 +456,7 @@ watch(param, () => void followHash())
   }
 
   .fact:nth-child(n + 3) {
-    border-top: 1px solid var(--glass-edge);
+    border-top: 1px solid var(--divider);
   }
 
   .content :deep(.who) {

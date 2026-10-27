@@ -141,7 +141,7 @@ function pick(id: string | undefined): void {
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  background: var(--accent);
+  background: var(--accent-fill);
   color: var(--accent-ink);
 }
 

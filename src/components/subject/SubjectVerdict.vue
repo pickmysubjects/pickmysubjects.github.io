@@ -151,7 +151,7 @@ const discussions = computed(() => (props.detailReady ? (props.subject.discussio
   display: block;
   height: 100%;
   border-radius: 999px;
-  background: var(--accent);
+  background: var(--accent-fill);
 }
 
 .tile-ends {

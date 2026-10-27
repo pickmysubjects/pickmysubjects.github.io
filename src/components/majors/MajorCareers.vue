@@ -156,7 +156,7 @@ const hasText = computed(() => entry.value?.careerText === true)
 }
 
 .job + .job {
-  border-top: 1px solid var(--glass-edge);
+  border-top: 1px solid var(--divider);
 }
 
 .job-main {

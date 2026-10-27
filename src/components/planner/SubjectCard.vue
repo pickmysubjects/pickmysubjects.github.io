@@ -306,7 +306,7 @@ function onDragStart(event: DragEvent): void {
 .tag-required {
   font-weight: 650;
   color: var(--accent-ink);
-  background: var(--accent);
+  background: var(--accent-fill);
 }
 
 .tag-option {
