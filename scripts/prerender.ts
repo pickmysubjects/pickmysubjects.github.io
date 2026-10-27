@@ -53,6 +53,7 @@ import { zhTW } from '../src/i18n/messages/zh-TW'
 import { hreflangsFor } from '../src/utils/hreflang'
 import { GUIDE_CATEGORIES, GUIDE_TOPICS, type GuideCategory } from '../src/utils/guideSections'
 import { SERVICE_TOPICS } from '../src/utils/guideServices'
+import { TOOL_GROUPS, TOOLS } from '../src/utils/tools'
 import { groupKeyDates, KEY_DATES, KEY_DATES_SOURCE, EMPLOYABILITY_SOURCE } from '../src/utils/keyDates'
 import { ja } from '../src/i18n/messages/ja'
 import { ko } from '../src/i18n/messages/ko'
@@ -786,7 +787,7 @@ ${homeDemoHtml(code, t)}
 <li><a href="${href(code, 'careers')}">${esc(t('careerPath.title'))}</a></li>
 <li><a href="${href(code, 'guide')}">${esc(t('guide.title'))}</a></li>
 <li><a href="${href(code, 'about')}">${esc(t('about.title'))}</a></li></ul>
-<h2>${esc(t('can.title'))}</h2><ul>${[['share', 'plan'], ['plans', 'plan'], ['print', 'plan'], ['wam', 'record'], ['mine', 'subjects'], ['easyHard', 'subjects/easy'], ['summerWinter', 'subjects/summer-winter'], ['rate', 'subjects'], ['shortlist', 'shortlist']].map(([k, to]) => `<li><a href="${href(code, to!)}">${esc(t(`can.${k}`))}</a></li>`).join('')}</ul>
+<h2>${esc(t('can.title'))}</h2><ul>${[['finalCalc', 'tools/final'], ['wam', 'tools/wam'], ['share', 'plan'], ['plans', 'plan'], ['print', 'plan'], ['mine', 'subjects'], ['easyHard', 'subjects/easy'], ['rate', 'subjects'], ['shortlist', 'shortlist']].map(([k, to]) => `<li><a href="${href(code, to!)}">${esc(t(`can.${k}`))}</a></li>`).join('')}</ul>
 <h2>${esc(SEARCH_PHRASES[code].heading)}</h2><ul>${SEARCH_PHRASES[code].items.map((i) => `<li><a href="${href(code, i.to)}">${esc(i.text)}</a></li>`).join('')}</ul>
 <h2>${esc(t('seo.subjects'))}</h2><ul>${subjects.map((s) => `<li>${subjectLink(code, s.code)}</li>`).join('')}</ul>`,
     },
@@ -850,10 +851,34 @@ ${homeDemoHtml(code, t)}
       description: t('guide.kd.lede'),
       body: keyDatesBody(code, t),
     },
+    ...toolPages(code, t),
     simple('contribute', 'contribute.title', 'contribute.lede'),
     simple('feedback', 'feedback.title', 'feedback.lede'),
     { path: 'privacy', title: `${t('privacy.title')} | PickMySubjects`, description: t('privacy.local'), body: `<h1>${esc(t('privacy.title'))}</h1><p>${esc(t('privacy.local'))}</p>` },
     ...(yearChanges ? [changesPage(code, yearChanges)] : []),
+  ]
+}
+
+// ---------- tools ----------
+
+// One page per tool, not one per subject: the final calculator's per-subject address
+// (/tools/final/?subject=CODE) would only repeat the subject page's assessment, so it isn't prerendered.
+function toolPages(code: LocaleCode, t: Translate): Page[] {
+  const toolHref = (to: string) => href(code, to.replace(/\/+$/, ''))
+  const groups = TOOL_GROUPS.map(
+    (g) => `<h2>${esc(t(g.key))}</h2><ul>${TOOLS.filter((x) => x.group === g.group)
+      .map((x) => `<li><a href="${toolHref(x.to)}">${esc(t(x.key))}</a>${x.text ? `: ${esc(t(x.text))}` : ''}</li>`)
+      .join('')}</ul>`,
+  ).join('')
+  return [
+    { path: 'tools', title: `${t('tools.seoTitle')} | PickMySubjects`, description: t('tools.seoDesc'), body: `<h1>${esc(t('tools.title'))}</h1><p>${esc(t('tools.lede'))}</p>${groups}` },
+    {
+      path: 'tools/final',
+      title: `${t('seo.calcTitle')} | PickMySubjects`,
+      description: t('seo.calcDesc'),
+      body: `<h1>${esc(t('calc.title'))}</h1><p>${esc(t('calc.lede'))}</p><p>${esc(t('calc.maths', { earned: 30, left: 60 }))}</p><ul>${['H1 80', 'H2A 75', 'H2B 70', 'H3 65', 'P 50'].map((b) => `<li>${b}</li>`).join('')}</ul><h2>${esc(t('calc.hurdle'))}</h2><p>${esc(t('calc.hurdleInfo'))}</p><p>${esc(t('calc.privacyInfo'))}</p>`,
+    },
+    { path: 'tools/wam', title: `${t('tools.wamSeoTitle')} | PickMySubjects`, description: t('tools.wamSeoDesc'), body: `<h1>${esc(t('tools.wam'))}</h1><p>${esc(t('tools.wamLede'))}</p><p>${esc(t('guide.wamText'))}</p><p>${esc(t('guide.wamFormula'))}</p>` },
   ]
 }
 
