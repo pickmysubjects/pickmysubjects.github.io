@@ -135,3 +135,13 @@ describe('calendar file (RFC 5545)', () => {
     expect(ics.replace(/\r\n/g, '')).not.toMatch(/[\r\n]/)
   })
 })
+
+describe('melbourneToday', () => {
+  it('is the Melbourne date as YYYY-MM-DD, across the day line', async () => {
+    const { melbourneToday } = await import('@/utils/keyDates')
+    // 14:30 UTC on 31 Dec is already 1 Jan in Melbourne (UTC+11 in summer).
+    expect(melbourneToday(new Date('2026-12-31T14:30:00Z'))).toBe('2027-01-01')
+    expect(melbourneToday(new Date('2026-07-01T13:59:00Z'))).toBe('2026-07-01')
+    expect(melbourneToday(new Date('2026-07-01T14:00:00Z'))).toBe('2026-07-02')
+  })
+})

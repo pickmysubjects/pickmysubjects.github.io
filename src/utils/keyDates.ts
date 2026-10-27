@@ -36,9 +36,14 @@ export interface KeyDateGroup {
   items: (KeyDate & { past: boolean })[]
 }
 
-/** Today in Melbourne as YYYY-MM-DD (the dates are Melbourne dates). */
+/**
+ * Today in Melbourne as YYYY-MM-DD (the dates are Melbourne dates). Built from the date's parts,
+ * not from a locale's format, which browsers are free to change (en-CA has not always been ISO).
+ */
 export function melbourneToday(now = new Date()): string {
-  return new Intl.DateTimeFormat('en-CA', { timeZone: 'Australia/Melbourne', year: 'numeric', month: '2-digit', day: '2-digit' }).format(now)
+  const parts = new Intl.DateTimeFormat('en-US', { timeZone: 'Australia/Melbourne', year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(now)
+  const part = (type: Intl.DateTimeFormatPartTypes) => parts.find((p) => p.type === type)?.value ?? ''
+  return `${part('year')}-${part('month')}-${part('day')}`
 }
 
 /**
