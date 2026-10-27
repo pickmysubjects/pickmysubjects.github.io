@@ -27,6 +27,16 @@ if (import.meta.env.VITE_FORCE_GLASS === '1' || (import.meta.env.DEV && new URLS
   document.documentElement.classList.add('force-glass')
 }
 
+// Local preview only: a floating light/dark and Reduce Transparency switch. Same gating as above
+// (dev server or `npm run local`); the real build drops this branch and the component with it.
+if (import.meta.env.VITE_FORCE_GLASS === '1' || import.meta.env.DEV) {
+  void Promise.all([import('vue'), import('./components/ThemePreview.vue')]).then(([{ createApp }, m]) => {
+    const host = document.createElement('div')
+    document.body.append(host)
+    createApp(m.default).mount(host)
+  })
+}
+
 // A saved language other than English, on an English address: open that language's own page
 // straight away instead of drawing the English one and switching it over.
 // #toggle-goatcounter first, so neither the redirect nor the first page is counted.

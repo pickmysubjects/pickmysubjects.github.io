@@ -4,6 +4,7 @@ import { readFileSync } from 'node:fs'
 import { fileURLToPath, URL } from 'node:url'
 import { defineConfig, type Plugin } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import { themePreview } from './scripts/themePreview'
 
 /**
  * GitHub Pages can't send headers, so the Content-Security-Policy goes in a
@@ -75,7 +76,11 @@ const serviceWorker = (): Plugin => ({
   },
 })
 
+// The light/dark/RT preview switch: dev server and `npm run local` only, never the real build.
+const PREVIEW = process.env.VITE_FORCE_GLASS === '1' || process.argv.every((a) => a !== 'build')
+
 export default defineConfig({
+  css: { postcss: { plugins: PREVIEW ? [themePreview()] : [] } },
   plugins: [vue(), contentSecurityPolicy(), preloadCoreData(), serviceWorker()],
   // The site is served from / on GitHub Pages. Pages have real
   // addresses (/subject/COMP30027), so assets need an absolute base.
