@@ -42,6 +42,10 @@ describe('myTerm', () => {
     expect(m.subjects).toEqual(['COMP10001', 'MAST10006', 'ECON10004'])
     expect(m.exams?.start).toBe('2026-11-02')
   })
+  it('counts only subjects we know about', () => {
+    const m = myTerm(KEY_DATES, '2026-09-10', plan, [...results, { code: 'XYZW10001', year: 2026, period: 'semester-2' }], (c) => c !== 'XYZW10001')!
+    expect(m.subjects).toEqual(['COMP10001', 'MAST10006', 'ECON10004'])
+  })
   it('no subjects in the current term: nothing personal', () => {
     expect(myTerm(KEY_DATES, '2026-04-10', plan, results)).toBeNull()
     expect(currentTerms(KEY_DATES, '2026-04-10')).toEqual([{ year: 2026, term: 'semester-1' }])

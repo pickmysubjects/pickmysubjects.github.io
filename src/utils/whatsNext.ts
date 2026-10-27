@@ -81,9 +81,10 @@ export function subjectsIn(year: number, term: KeyDateTerm, planTerms: TermSubje
 }
 
 /** The term under way that has the student's subjects in it, with those subjects and its exams. */
-export function myTerm(dates: KeyDate[], today: string, planTerms: TermSubjects[], results: { code: string; year?: number; period?: string }[]): { year: number; term: KeyDateTerm; subjects: string[]; exams?: KeyDate } | null {
+export function myTerm(dates: KeyDate[], today: string, planTerms: TermSubjects[], results: { code: string; year?: number; period?: string }[], known: (code: string) => boolean = () => true): { year: number; term: KeyDateTerm; subjects: string[]; exams?: KeyDate } | null {
   for (const t of currentTerms(dates, today)) {
-    const subjects = subjectsIn(t.year, t.term, planTerms, results)
+    // Codes not in our data (typos, other universities) aren't counted as the student's subjects.
+    const subjects = subjectsIn(t.year, t.term, planTerms, results).filter(known)
     if (!subjects.length) continue
     const exams = dates.find((d) => d.kind === 'exams' && d.year === t.year && d.term === t.term && d.end >= today)
     return { ...t, subjects, ...(exams ? { exams } : {}) }

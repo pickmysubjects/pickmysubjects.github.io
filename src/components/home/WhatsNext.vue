@@ -33,7 +33,7 @@ onMounted(() => {
 })
 
 const items = computed(() => (today.value ? upcomingDates(KEY_DATES, today.value) : []))
-const mine = computed(() => (today.value ? myTerm(KEY_DATES, today.value, plan.terms.value, profile.value.results) : null))
+const mine = computed(() => (today.value ? myTerm(KEY_DATES, today.value, plan.terms.value, profile.value.results, (code) => code in data.value.subjects) : null))
 const exam = computed(() => (today.value ? examWindow(KEY_DATES, today.value) : null))
 
 const fmt = computed(() => new Intl.DateTimeFormat(locale.value, { day: 'numeric', month: 'short', timeZone: 'UTC' }))
