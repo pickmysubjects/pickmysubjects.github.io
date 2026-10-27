@@ -6,7 +6,9 @@ import { go, link } from '@/composables/useView'
 import { useI18n } from '@/i18n'
 import { localTitle } from '@/i18n/localized'
 
-const props = defineProps<{ compact?: boolean }>()
+// `select`: hand the picked code to the parent (a picker) instead of opening its page.
+const props = defineProps<{ compact?: boolean; select?: boolean; placeholder?: string }>()
+const emit = defineEmits<{ pick: [code: string] }>()
 const { subjectList } = useDataset()
 const { t, locale } = useI18n()
 
@@ -27,7 +29,8 @@ const results = computed(() => {
 function pick(code: string): void {
   query.value = ''
   open.value = false
-  go(`subject/${code}`)
+  if (props.select) emit('pick', code)
+  else go(`subject/${code}`)
 }
 
 function onEnter(): void {
@@ -72,7 +75,7 @@ function move(delta: number): void {
       :aria-expanded="open && results.length > 0"
       :aria-controls="listId"
       :aria-label="t('home.searchLabel')"
-      :placeholder="compact ? t('home.searchShort') : t('home.search')"
+      :placeholder="placeholder ?? (compact ? t('home.searchShort') : t('home.search'))"
       @focus="open = true"
       @blur="open = false"
       :aria-activedescendant="open && results[active] ? `${listId}-${active}` : undefined"

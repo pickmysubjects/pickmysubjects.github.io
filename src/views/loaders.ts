@@ -22,4 +22,5 @@ export const VIEW_LOADERS: Record<View, () => Promise<Component>> = {
   shortlist: () => import('./ShortlistView.vue').then((m) => m.default),
   careers: () => import('./CareersView.vue').then((m) => m.default),
   changes: () => import('./ChangesView.vue').then((m) => m.default),
+  tools: () => import('./ToolsView.vue').then((m) => m.default),
 }

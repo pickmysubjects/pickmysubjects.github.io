@@ -31,6 +31,7 @@ const MajorsView = lazy('majors')
 const ShortlistView = lazy('shortlist')
 const CareersView = lazy('careers')
 const ChangesView = lazy('changes')
+const ToolsView = lazy('tools')
 
 const { view, param } = useView()
 const { t, locale } = useI18n()
@@ -74,6 +75,8 @@ watchEffect(() => {
         ? `${breadthElsewhere ? t.value('seo.presetBreadthFor', { course: breadthElsewhere, year }) : t.value(PRESET_TITLE_KEYS[preset], { year })} | PickMySubjects`
       : guidePage.kind !== 'overview'
         ? `${t.value(guidePage.kind === 'category' ? `guide.cat.${guidePage.category}.title` : 'guide.kd.title')} | ${t.value('guide.title')} | PickMySubjects`
+      : view.value === 'tools'
+        ? `${t.value(param.value === 'final' ? 'seo.calcTitle' : param.value === 'wam' ? 'tools.wamSeoTitle' : 'tools.seoTitle')} | PickMySubjects`
       : view.value === 'changes' && param.value
         ? `${t.value('changes.seoTitle', { year: param.value })} | PickMySubjects`
       : view.value === 'subjects' || view.value === 'guide' || view.value === 'careers' || view.value === 'majors'
@@ -108,6 +111,7 @@ watchEffect(() => {
     <ShortlistView v-else-if="view === 'shortlist'" />
     <CareersView v-else-if="view === 'careers'" :id="param" />
     <ChangesView v-else-if="view === 'changes'" :key="param" :year="param" />
+    <ToolsView v-else-if="view === 'tools'" :tool="param" />
     <PrivacyView v-else />
   </main>
   <footer class="footer">
@@ -117,6 +121,7 @@ watchEffect(() => {
         <a :href="link('majors')">{{ t('majors.title') }}</a>
         <a :href="link('careers')">{{ t('careerPath.title') }}</a>
         <a :href="link('guide')">{{ t('guide.title') }}</a>
+        <a :href="link('tools/')">{{ t('tools.title') }}</a>
         <a :href="link('about')">{{ t('app.about') }}</a>
         <a :href="link('contribute')">{{ t('nav.contribute') }}</a>
         <a :href="link('feedback')">{{ t('nav.feedback') }}</a>

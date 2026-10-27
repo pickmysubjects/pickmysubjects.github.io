@@ -4,7 +4,7 @@ import { currentLocale, useI18n } from '@/i18n'
 import { newVersionReady } from '@/utils/serviceWorker'
 import { countPage } from '@/utils/analytics'
 
-export const VIEWS = ['home', 'subject', 'plan', 'recommend', 'record', 'contribute', 'feedback', 'privacy', 'about', 'guide', 'subjects', 'majors', 'shortlist', 'careers', 'changes'] as const
+export const VIEWS = ['home', 'subject', 'plan', 'recommend', 'record', 'contribute', 'feedback', 'privacy', 'about', 'guide', 'subjects', 'majors', 'shortlist', 'careers', 'changes', 'tools'] as const
 export type View = (typeof VIEWS)[number]
 
 interface Route {
