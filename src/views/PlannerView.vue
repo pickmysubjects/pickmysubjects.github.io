@@ -406,20 +406,23 @@ const printTerms = computed<PrintTerm[]>(() => {
 
     <template v-else-if="!showWizard && !comparing">
       <section class="bar">
-        <p class="bar-summary">{{ summary }}</p>
+        <!-- The setup line is itself the way to change it: one obvious target instead of a separate button. -->
+        <button class="bar-summary" type="button" @click="editing = true">
+          <span class="bar-summary-text">{{ summary }}</span>
+          <span class="bar-edit"><Pencil :size="15" aria-hidden="true" /> {{ t('wizard.edit') }}</span>
+        </button>
         <div class="bar-actions">
-          <button class="button button-quiet" type="button" @click="editing = true">
-            <Pencil :size="16" aria-hidden="true" /> {{ t('wizard.edit') }}
-          </button>
-          <button class="button button-quiet" type="button" @click="share">
-            <Share2 :size="16" aria-hidden="true" /> {{ copied ? t('plan.copied') : t('plan.share') }}
-          </button>
-          <button class="button button-quiet" type="button" :disabled="imaging" @click="saveImage">
-            <ImageDown :size="16" aria-hidden="true" /> {{ t('plan.saveImage') }}
-          </button>
-          <button class="button button-quiet" type="button" @click="printPlan">
-            <Printer :size="16" aria-hidden="true" /> {{ t('plan.print') }}
-          </button>
+          <div class="bar-group" role="group">
+            <button class="bar-tool" type="button" :aria-label="copied ? t('plan.copied') : t('plan.share')" :title="t('plan.share')" @click="share">
+              <Share2 :size="16" aria-hidden="true" /> <span class="bar-label">{{ copied ? t('plan.copied') : t('plan.share') }}</span>
+            </button>
+            <button class="bar-tool" type="button" :disabled="imaging" :aria-label="t('plan.saveImage')" :title="t('plan.saveImage')" @click="saveImage">
+              <ImageDown :size="16" aria-hidden="true" /> <span class="bar-label">{{ t('plan.saveImage') }}</span>
+            </button>
+            <button class="bar-tool" type="button" :aria-label="t('plan.print')" :title="t('plan.print')" @click="printPlan">
+              <Printer :size="16" aria-hidden="true" /> <span class="bar-label">{{ t('plan.print') }}</span>
+            </button>
+          </div>
           <button class="button button-quiet" type="button" @click="plan.generate()">
             <RotateCcw :size="16" aria-hidden="true" /> {{ t('plan.rebuild') }}
           </button>
@@ -635,17 +638,90 @@ const printTerms = computed<PrintTerm[]>(() => {
 }
 
 .bar-summary {
-  font-size: 1.05rem;
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+  min-width: 0;
+  padding: 6px 0;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.bar-summary-text {
+  font-size: 1.125rem;
+  font-weight: 650;
+  overflow-wrap: anywhere;
+}
+
+.bar-edit {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.9375rem;
   font-weight: 600;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.bar-summary:hover .bar-edit,
+.bar-summary:focus-visible .bar-edit {
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .bar-actions {
   display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   gap: 8px;
 }
 
 .bar-actions .button {
   white-space: nowrap;
+}
+
+/* Share, image and print sit together as one glass pill: they all send the plan somewhere. */
+.bar-group {
+  display: inline-flex;
+  padding: 3px;
+  border: 1px solid var(--glass-edge);
+  border-radius: 999px;
+  background: var(--glass-shine), var(--glass-fill);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-shadow);
+}
+
+.bar-tool {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.bar-tool:hover:not(:disabled) {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.bar-tool:disabled {
+  opacity: 0.55;
+  cursor: default;
 }
 
 .intro {
@@ -658,12 +734,27 @@ const printTerms = computed<PrintTerm[]>(() => {
   color: var(--accent);
 }
 
-/* Phones: the four actions as a tidy 2 × 2 grid instead of squeezed pills. */
+/* Phones: the send-out tools become icons (named for screen readers), so all actions fit one row. */
 @media (max-width: 720px) {
   .bar-actions {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
     width: 100%;
+    justify-content: space-between;
+  }
+
+  .bar-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .bar-tool {
+    min-width: 44px;
+    min-height: 40px;
+    justify-content: center;
+    padding: 0 12px;
   }
 }
 
