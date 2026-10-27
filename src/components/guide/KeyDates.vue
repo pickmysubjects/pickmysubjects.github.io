@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import InfoTip from '@/components/InfoTip.vue'
 import { computed } from 'vue'
 import { CalendarPlus, ExternalLink } from 'lucide-vue-next'
 import { useI18n } from '@/i18n'
@@ -29,10 +30,9 @@ function download(): void {
       <button type="button" class="button button-accent" @click="download">
         <CalendarPlus :size="16" aria-hidden="true" />{{ t('guide.kd.add') }}
       </button>
-      <span class="note">{{ t('guide.kd.addHint') }}</span>
+      <!-- Dates first: what the file holds and where the dates come from, behind one ⓘ. -->
+      <InfoTip :text="[t('guide.kd.addHint'), t('guide.kd.note'), t('guide.kd.notYet'), t('guide.kd.yearRound')].join(' ')" />
     </div>
-    <p class="note">{{ t('guide.kd.note') }} {{ t('guide.kd.notYet') }}</p>
-    <p class="note">{{ t('guide.kd.yearRound') }}</p>
 
     <section v-for="g in [...groups.upcoming, ...groups.past]" :key="`${g.year}-${g.term}`" class="kd-group surface" :class="{ 'kd-done': groups.past.includes(g) }">
       <h2 class="kd-term">

@@ -5,7 +5,7 @@ import { useI18n } from '@/i18n'
 import { GUIDE_CATEGORIES, type GuideCategory } from '@/utils/guideSections'
 
 /** The guide's sections as a slim switch, the same look as the steps under "Me". */
-const props = defineProps<{ current: GuideCategory | 'overview' }>()
+const props = defineProps<{ current: GuideCategory | 'overview' | 'key-dates' }>()
 const { t } = useI18n()
 // When the sections don't fit (phones, narrow windows) the bar is one row that scrolls sideways:
 // keep the current section in view, with faded edges hinting there is more.
@@ -29,6 +29,7 @@ watch(() => props.current, reveal)
       :href="link(`guide/${c}/`)"
       :aria-current="current === c ? 'page' : undefined"
     >{{ t(`guide.cat.${c}.nav`) }}</a>
+    <a class="step" :href="link('guide/key-dates/')" :aria-current="current === 'key-dates' ? 'page' : undefined">{{ t('guide.datesTitle') }}</a>
   </nav>
 </template>
 

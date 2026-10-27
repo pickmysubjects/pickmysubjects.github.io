@@ -20,7 +20,8 @@ import { categoryOfTopic, GUIDE_CATEGORIES, guidePageOf, type GuideCategory } fr
 const { t } = useI18n()
 const { param } = useView()
 const page = computed(() => guidePageOf(param.value))
-const current = computed(() => (page.value.kind === 'overview' ? 'overview' : page.value.category))
+// Key dates has its own step in the switch (it lives with Help, but isn't Help).
+const current = computed(() => (page.value.kind === 'overview' ? 'overview' : page.value.kind === 'extra' ? 'key-dates' : page.value.category))
 // Categories without their own component (systems, life) are plain service lists.
 const SECTIONS: Partial<Record<GuideCategory, Component>> = { basics: GuideBasics, enrolling: GuideEnrolling, semester: GuideSemester, international: GuideInternational, help: GuideHelp }
 const heading = computed(() => {
