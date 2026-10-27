@@ -10,7 +10,7 @@ export function copyright(updated: string = APP_UPDATED): string {
   return `© ${year > FIRST_YEAR ? `${FIRST_YEAR}–${year}` : FIRST_YEAR} PickMySubjects`
 }
 
-/** "27 Oct" / "10月27日" in the student's language, on Melbourne's calendar. */
+/** "27 October" (en-AU for English: the site is for Melbourne students) / "10月27日" in the student's language, on Melbourne's calendar. */
 export function releaseDate(locale: string, updated: string = APP_UPDATED): string {
-  return new Intl.DateTimeFormat(locale, { month: 'long', day: 'numeric', timeZone: 'Australia/Melbourne' }).format(new Date(updated))
+  return new Intl.DateTimeFormat(locale === 'en' ? 'en-AU' : locale, { month: 'long', day: 'numeric', timeZone: 'Australia/Melbourne' }).format(new Date(updated))
 }
