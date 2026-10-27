@@ -227,7 +227,7 @@ function toggle(id: string): void {
 
 .ring-mid {
   position: relative;
-  color: var(--tone);
+  color: color-mix(in srgb, var(--tone) 80%, var(--ink)); /* darker in light, lighter in dark: 4.5:1 on glass */
 }
 
 .ring-count {
@@ -244,7 +244,7 @@ function toggle(id: string): void {
 .health-title {
   font-size: 1rem;
   font-weight: 700;
-  color: var(--tone);
+  color: color-mix(in srgb, var(--tone) 80%, var(--ink)); /* darker in light, lighter in dark: 4.5:1 on glass */
   white-space: nowrap;
 }
 
@@ -304,7 +304,7 @@ function toggle(id: string): void {
 
 .meter-need {
   font-weight: 500;
-  color: var(--ink-faint);
+  color: var(--ink-soft);
 }
 
 .meter-bar {
@@ -335,7 +335,7 @@ function toggle(id: string): void {
   font-size: 0.75rem;
   font-weight: 650;
   background: var(--warn-soft);
-  color: var(--warn);
+  color: color-mix(in srgb, var(--warn) 80%, var(--ink)); /* darker in light, lighter in dark: 4.5:1 on glass */
 }
 
 .meter-ok .chip-state {
@@ -355,7 +355,7 @@ function toggle(id: string): void {
 
 .head:hover .toggle,
 .head:focus-visible .toggle {
-  color: var(--accent);
+  color: color-mix(in srgb, var(--accent) 80%, var(--ink)); /* darker in light, lighter in dark: 4.5:1 on glass */
 }
 
 .chevron {
@@ -376,7 +376,7 @@ function toggle(id: string): void {
 .hint {
   padding: 8px 4px 0;
   font-size: 0.8125rem;
-  color: var(--ink-faint);
+  color: var(--ink-soft);
 }
 
 .rules {

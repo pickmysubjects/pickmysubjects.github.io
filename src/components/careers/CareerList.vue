@@ -134,7 +134,7 @@ const groups = computed(() =>
   border-radius: 999px;
   background: var(--accent-soft);
   font-size: 0.8125rem;
-  color: var(--accent);
+  color: color-mix(in srgb, var(--accent) 80%, var(--ink)); /* darker in light, lighter in dark: 4.5:1 on glass */
 }
 
 .group-hint {

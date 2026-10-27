@@ -696,7 +696,7 @@ const printTerms = computed<PrintTerm[]>(() => {
   gap: 4px;
   font-size: 0.9375rem;
   font-weight: 600;
-  color: var(--accent);
+  color: color-mix(in srgb, var(--accent) 80%, var(--ink)); /* darker in light, lighter in dark: 4.5:1 on glass */
   white-space: nowrap;
 }
 
@@ -748,7 +748,7 @@ const printTerms = computed<PrintTerm[]>(() => {
 
 .bar-tool:hover:not(:disabled) {
   background: var(--accent-soft);
-  color: var(--accent);
+  color: color-mix(in srgb, var(--accent) 80%, var(--ink)); /* darker in light, lighter in dark: 4.5:1 on glass */
 }
 
 .bar-tool:disabled {
@@ -763,7 +763,7 @@ const printTerms = computed<PrintTerm[]>(() => {
 
 .guide-link {
   white-space: nowrap;
-  color: var(--accent);
+  color: color-mix(in srgb, var(--accent) 80%, var(--ink)); /* darker in light, lighter in dark: 4.5:1 on glass */
 }
 
 /* Phones: the send-out tools become icons (named for screen readers), so all actions fit one row. */
@@ -810,7 +810,7 @@ const printTerms = computed<PrintTerm[]>(() => {
 }
 
 .tone-warn .status-icon {
-  color: var(--warn);
+  color: color-mix(in srgb, var(--warn) 80%, var(--ink)); /* darker in light, lighter in dark: 4.5:1 on glass */
 }
 
 .tone-bad .status-item,
@@ -892,7 +892,7 @@ const printTerms = computed<PrintTerm[]>(() => {
 }
 
 .status-warn .status-line {
-  color: var(--warn);
+  color: color-mix(in srgb, var(--warn) 80%, var(--ink)); /* darker in light, lighter in dark: 4.5:1 on glass */
 }
 
 .status-bad .status-line {
@@ -1058,7 +1058,7 @@ const printTerms = computed<PrintTerm[]>(() => {
 
 .shared-warn {
   font-size: 0.9375rem;
-  color: var(--warn);
+  color: color-mix(in srgb, var(--warn) 80%, var(--ink)); /* darker in light, lighter in dark: 4.5:1 on glass */
 }
 
 .shared-actions {
@@ -1107,7 +1107,7 @@ const printTerms = computed<PrintTerm[]>(() => {
 
 .draft {
   font-size: 0.8125rem;
-  color: var(--ink-faint);
+  color: var(--ink-soft);
 }
 
 .draft a {

@@ -148,7 +148,7 @@ const hasBreadth = computed(() => !!result.value?.breadth && TIERS.some((x) => r
 }
 
 .back:hover {
-  color: var(--accent);
+  color: color-mix(in srgb, var(--accent) 80%, var(--ink)); /* darker in light, lighter in dark: 4.5:1 on glass */
 }
 
 .head {
@@ -172,7 +172,7 @@ const hasBreadth = computed(() => !!result.value?.breadth && TIERS.some((x) => r
   gap: 4px;
   justify-self: start;
   font-size: 0.875rem;
-  color: var(--accent);
+  color: color-mix(in srgb, var(--accent) 80%, var(--ink)); /* darker in light, lighter in dark: 4.5:1 on glass */
 }
 
 .block {
@@ -245,7 +245,7 @@ const hasBreadth = computed(() => !!result.value?.breadth && TIERS.some((x) => r
   border-radius: 999px;
   font-size: 0.75rem;
   font-weight: 600;
-  color: var(--accent);
+  color: color-mix(in srgb, var(--accent) 80%, var(--ink)); /* darker in light, lighter in dark: 4.5:1 on glass */
   border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
 }
 
@@ -273,7 +273,7 @@ const hasBreadth = computed(() => !!result.value?.breadth && TIERS.some((x) => r
 .route-more summary {
   cursor: pointer;
   font-weight: 600;
-  color: var(--accent);
+  color: color-mix(in srgb, var(--accent) 80%, var(--ink)); /* darker in light, lighter in dark: 4.5:1 on glass */
 }
 
 .route-more[open] summary {
@@ -305,7 +305,7 @@ const hasBreadth = computed(() => !!result.value?.breadth && TIERS.some((x) => r
 .acc-icon {
   flex-shrink: 0;
   margin-top: 3px;
-  color: var(--accent);
+  color: color-mix(in srgb, var(--accent) 80%, var(--ink)); /* darker in light, lighter in dark: 4.5:1 on glass */
 }
 
 .generic {
@@ -316,7 +316,7 @@ const hasBreadth = computed(() => !!result.value?.breadth && TIERS.some((x) => r
 .more-link {
   justify-self: start;
   font-size: 0.9375rem;
-  color: var(--accent);
+  color: color-mix(in srgb, var(--accent) 80%, var(--ink)); /* darker in light, lighter in dark: 4.5:1 on glass */
 }
 
 .breadth {
@@ -362,6 +362,6 @@ const hasBreadth = computed(() => !!result.value?.breadth && TIERS.some((x) => r
 
 .source {
   font-size: 0.8125rem;
-  color: var(--ink-faint);
+  color: var(--ink-soft);
 }
 </style>
