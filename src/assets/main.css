@@ -235,6 +235,19 @@ body {
   background: transparent;
 }
 
+/* App shell: a full-height column, so on short pages the footer band sits at the bottom. */
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+#app > main {
+  flex: 1 0 auto;
+  width: 100%;
+}
+
 h1,
 h2,
 h3 {
