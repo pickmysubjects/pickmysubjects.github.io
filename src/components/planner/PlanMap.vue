@@ -216,13 +216,11 @@ function measure(): void {
       const bend = Math.max(16, (x2 - x1) / 2)
       d = `M ${x1} ${y1} C ${x1 + bend} ${y1}, ${x2 - bend} ${y2}, ${x2} ${y2}`
     } else {
-      // Stacked (phones): bottom of the earlier card to the top of the later one.
-      const x1 = a.left + a.width / 2 - base.left
-      const y1 = a.bottom - base.top
-      const x2 = b.left + b.width / 2 - base.left
-      const y2 = b.top - base.top - 3
-      const bend = Math.max(16, (y2 - y1) / 2)
-      d = `M ${x1} ${y1} C ${x1} ${y1 + bend}, ${x2} ${y2 - bend}, ${x2} ${y2}`
+      // Stacked (phones): out of the left edge, down the strip beside the cards, into the later card's left edge.
+      const xg = Math.min(a.left, b.left) - base.left - 6
+      const y1 = a.top + a.height / 2 - base.top
+      const y2 = b.top + b.height / 2 - base.top
+      d = rounded([[a.left - base.left, y1], [xg, y1], [xg, y2], [b.left - base.left - 3, y2]])
     }
     const toTone = tone?.get(e.to)
     next.push({ key: `${e.from}-${e.to}`, d, dir: toTone === 'need' || toTone === 'self' ? 'need' : 'unlock' })
