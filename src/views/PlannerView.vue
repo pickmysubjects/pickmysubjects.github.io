@@ -14,6 +14,7 @@ import PlanHowBuilt from '@/components/planner/PlanHowBuilt.vue'
 import PlanIssues from '@/components/planner/PlanIssues.vue'
 import PlanCalendar from '@/components/planner/PlanCalendar.vue'
 import PlanPrint, { type PrintTerm } from '@/components/planner/PlanPrint.vue'
+import SharedPlanView from '@/components/planner/SharedPlanView.vue'
 import Interp from '@/components/Interp.vue'
 import PlanSwitcher from '@/components/plans/PlanSwitcher.vue'
 import PlanCompare from '@/components/plans/PlanCompare.vue'
@@ -479,6 +480,7 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
         <button class="button button-quiet" type="button" @click="go('plan')">{{ t('plan.sharedDismiss') }}</button>
       </div>
     </section>
+    <SharedPlanView v-if="shared" :setup="shared.setup" :terms="shared.terms" />
 
     <template v-else-if="!showWizard && !comparing">
       <section class="bar">
