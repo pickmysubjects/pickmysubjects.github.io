@@ -1223,6 +1223,7 @@ export const ms: Messages = {
   wamGoal: {
     title: "Sasaran WAM",
     fromMarks: "Ubah mana-mana nombor untuk mencuba.",
+    typeYours: "Masukkan WAM anda dan mata yang sudah diambil.",
     noMarks: "Isi markah subjek yang sudah selesai di atas, dan bahagian ini mengira purata yang anda perlukan untuk subjek berbaki bagi mencapai sasaran WAM.",
     noMarksShort: "Isi markah di atas untuk lihat purata yang diperlukan",
     current: "WAM sekarang",
@@ -1294,7 +1295,7 @@ export const ms: Messages = {
     wam: "Kalkulator WAM",
     wamText: "WAM semasa, sasaran WAM dan andaian satu subjek.",
     wamLede: "WAM daripada rekod anda, purata yang perlu untuk sasaran, dan kesan satu subjek pada WAM.",
-    wamEmpty: "Isi markah anda di Saya untuk melihat WAM.",
+    wamEmpty: "Atau masukkan markah di halaman Saya, ia diisi sendiri.",
     wamGo: "Isi markah",
     easy: "Subjek mudah (penaik WAM)",
     hard: "Subjek paling sukar",

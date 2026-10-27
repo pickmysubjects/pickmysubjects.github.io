@@ -1,18 +1,20 @@
 <script setup lang="ts">
-import { computed, shallowRef, useId } from 'vue'
-import { Search } from 'lucide-vue-next'
+import { computed, shallowRef, useId, useTemplateRef } from 'vue'
+import { ArrowRight, Search } from 'lucide-vue-next'
 import { useDataset } from '@/composables/useDataset'
 import { go, link } from '@/composables/useView'
 import { useI18n } from '@/i18n'
 import { localTitle } from '@/i18n/localized'
 
 // `select`: hand the picked code to the parent (a picker) instead of opening its page.
-const props = defineProps<{ compact?: boolean; select?: boolean; placeholder?: string }>()
+// `hero`: the home page's big capsule, with a round go button instead of the search icon.
+const props = defineProps<{ compact?: boolean; select?: boolean; hero?: boolean; placeholder?: string }>()
 const emit = defineEmits<{ pick: [code: string] }>()
 const { subjectList } = useDataset()
 const { t, locale } = useI18n()
 
 const listId = useId()
+const input = useTemplateRef<HTMLInputElement>('input')
 const query = shallowRef('')
 const open = shallowRef(false)
 const active = shallowRef(0)
@@ -58,15 +60,22 @@ function onInput(): void {
   open.value = true
 }
 
+// The go button: the highlighted result, or back to the box when there is nothing to open.
+function submit(): void {
+  if (query.value.trim() && (results.value.length || /^[A-Za-z]{4}\d{5}$/.test(query.value.trim()))) onEnter()
+  else input.value?.focus()
+}
+
 function move(delta: number): void {
   if (results.value.length) active.value = (active.value + delta + results.value.length) % results.value.length
 }
 </script>
 
 <template>
-  <div class="search" :class="{ 'search-compact': compact }">
-    <Search class="search-icon" :size="compact ? 16 : 20" aria-hidden="true" />
+  <div class="search" :class="{ 'search-compact': compact, 'search-hero': hero }">
+    <Search v-if="!hero" class="search-icon" :size="compact ? 16 : 20" aria-hidden="true" />
     <input
+      ref="input"
       v-model="query"
       class="search-input"
       type="search"
@@ -84,6 +93,9 @@ function move(delta: number): void {
       @keydown.down.prevent="move(1)"
       @keydown.up.prevent="move(-1)"
     />
+    <button v-if="hero" class="search-go" type="button" :aria-label="t('home.searchLabel')" @mousedown.prevent @click="submit">
+      <ArrowRight :size="22" :stroke-width="2.4" aria-hidden="true" />
+    </button>
     <ul v-if="open && query.trim()" :id="listId" class="results" role="listbox">
       <li
         v-for="(s, i) in results"
@@ -149,6 +161,66 @@ function move(delta: number): void {
   padding-left: 36px;
   box-shadow: var(--glass-shadow);
   font-size: 0.875rem;
+}
+
+/* The home capsule: taller, a bright top edge, and a round pink go button inside its right end. */
+.search-hero .search-input {
+  height: 64px;
+  padding: 0 64px 0 24px;
+  font-size: 1.0625rem;
+  box-shadow: var(--glass-shadow), 0 22px 44px -22px rgb(91 42 107 / 45%);
+}
+
+.search-hero .search-input::placeholder {
+  color: var(--ink-faint);
+}
+
+.search-go {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  color: #fff;
+  background: radial-gradient(120% 90% at 30% 15%, #f17ab8 0%, var(--accent-fill) 55%, #a81866 100%);
+  border: 0;
+  border-radius: 50%;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 45%), 0 8px 18px -6px rgb(194 34 122 / 60%);
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+
+.search-go:active {
+  transform: scale(var(--press-scale));
+}
+
+.search-go:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (max-width: 640px) {
+  .search-hero .search-input {
+    height: 58px;
+    padding-left: 20px;
+    padding-right: 58px;
+  }
+
+  .search-go {
+    top: 7px;
+    right: 7px;
+    width: 44px;
+    height: 44px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .search-go {
+    transition: none;
+  }
 }
 
 .results {

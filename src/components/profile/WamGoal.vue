@@ -10,7 +10,12 @@ import WamWhatIf from '@/components/profile/WamWhatIf.vue'
 import { passedCodes } from '@/engine'
 import { gradeOf, neededAverage, pointsLeft, projectedWam } from '@/utils/wamGoal'
 
-/** "What do I need on the rest to reach my target WAM?", from the marks on this page. */
+/**
+ * "What do I need on the rest to reach my target WAM?", from the marks on this page. On the
+ * WAM tool (`quick`) it also works with no marks in My record: the student types their WAM and
+ * points so far.
+ */
+const props = defineProps<{ quick?: boolean }>()
 const { data } = useDataset()
 const { profile, wam } = useProfile()
 const { course, plannedCodes } = usePlan()
@@ -30,16 +35,21 @@ const donePoints = computed(() =>
 
 // Start from the student's own numbers; they can change any of them.
 const current = shallowRef(wam.value ?? 70)
-const done = shallowRef(donePoints.value)
+// No marks to start from: a year's worth (100 points) as a starting point to change.
+const done = shallowRef(donePoints.value || (props.quick ? 100 : 0))
 const remaining = computed(() => pointsLeft(profile.value.results, data.value, degreePoints.value, profile.value.credit))
-const left = shallowRef(remaining.value)
+// The typed starting points come out of what's left.
+const left = shallowRef(donePoints.value === 0 && props.quick ? Math.max(0, remaining.value - done.value) : remaining.value)
 const target = shallowRef(Math.min(100, Math.ceil((wam.value ?? 70) + 3)))
 const average = shallowRef(75)
 watch([wam, donePoints, remaining], ([w, d, r]) => {
   if (w !== null) current.value = w
-  done.value = d
-  left.value = r
+  if (d > 0 || !props.quick) {
+    done.value = d
+    left.value = r
+  }
 })
+const typed = computed(() => props.quick && donePoints.value === 0)
 
 const need = computed(() => neededAverage(current.value, done.value, target.value, left.value))
 const projected = computed(() => projectedWam(current.value, done.value, average.value, left.value))
@@ -57,9 +67,9 @@ const num = (e: Event) => Number((e.target as HTMLInputElement).value)
   <section class="goal surface" aria-labelledby="goal-title">
     <h2 id="goal-title" class="goal-title"><Target :size="18" aria-hidden="true" /> {{ t('wamGoal.title') }}</h2>
     <!-- With no marks yet there's nothing to work out: the WAM will simply be whatever the rest averages. -->
-    <p v-if="donePoints === 0" class="goal-hint">{{ t('wamGoal.noMarksShort') }}<InfoTip :text="t('wamGoal.noMarks')" /></p>
+    <p v-if="donePoints === 0 && !quick" class="goal-hint">{{ t('wamGoal.noMarksShort') }}<InfoTip :text="t('wamGoal.noMarks')" /></p>
     <template v-else>
-    <p class="goal-hint">{{ t('wamGoal.fromMarks') }}</p>
+    <p class="goal-hint">{{ typed ? t('wamGoal.typeYours') : t('wamGoal.fromMarks') }}</p>
 
     <div class="fields">
       <label class="field">

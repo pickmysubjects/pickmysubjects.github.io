@@ -1223,6 +1223,7 @@ export const vi: Messages = {
   wamGoal: {
     title: "WAM mục tiêu",
     fromMarks: "Thử đổi bất kỳ số nào xem sao.",
+    typeYours: "Nhập WAM hiện tại và số điểm tín chỉ đã học.",
     noMarks: "Nhập điểm các môn đã học ở trên, phần này sẽ tính các môn còn lại cần trung bình bao nhiêu để đạt WAM mục tiêu.",
     noMarksShort: "Nhập điểm ở trên để xem điểm trung bình cần đạt",
     current: "WAM hiện tại",
@@ -1294,7 +1295,7 @@ export const vi: Messages = {
     wam: "Tính WAM",
     wamText: "WAM hiện tại, WAM mục tiêu và nếu một môn được X điểm.",
     wamLede: "WAM từ bảng điểm của bạn, điểm trung bình cần để đạt mục tiêu, và một môn sẽ làm WAM thay đổi thế nào.",
-    wamEmpty: "Nhập điểm ở mục Của tôi để xem WAM.",
+    wamEmpty: "Hoặc nhập điểm ở trang Của tôi, ở đây sẽ tự điền.",
     wamGo: "Nhập điểm",
     easy: "Môn dễ (kéo WAM)",
     hard: "Môn khó nhất",

@@ -1223,6 +1223,7 @@ export const zhTW: Messages = {
   wamGoal: {
     title: "目標 WAM",
     fromMarks: "改任一個數字試試看。",
+    typeYours: "填上你現在的 WAM 和已修學分。",
     noMarks: "在上面填上已修課的成績後，這裡會算出剩下的課平均要考多少分，才能達到你的目標 WAM。",
     noMarksShort: "填上成績後，這裡算出你還要考多少",
     current: "現在的 WAM",
@@ -1294,7 +1295,7 @@ export const zhTW: Messages = {
     wam: "WAM 計算機",
     wamText: "現在的 WAM、目標 WAM，和某門課考幾分會怎樣。",
     wamLede: "用你的成績紀錄算 WAM、達到目標要多少平均，以及某門課的分數會帶來什麼變化。",
-    wamEmpty: "先在「我的」填上分數，才能算 WAM。",
+    wamEmpty: "也可以在「我的」裡填分數，這裡會自動帶出來。",
     wamGo: "去填分數",
     easy: "涼課榜（好拿分的課）",
     hard: "難課榜",

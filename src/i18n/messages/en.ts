@@ -1226,6 +1226,7 @@ export const en = {
   wamGoal: {
     title: "Target WAM",
     fromMarks: "Change any number to try things out.",
+    typeYours: "Type your WAM and the points you've done.",
     noMarks: "Add the marks of subjects you’ve finished above, and this works out what you need to average on the rest to reach a target WAM.",
     noMarksShort: "Add marks above to see the average you need",
     current: "Current WAM",
@@ -1297,7 +1298,7 @@ export const en = {
     wam: "WAM calculator",
     wamText: "Your WAM, a target WAM and what-if for one subject.",
     wamLede: "Your WAM from your record, what you need to reach a target, and what one subject would do to it.",
-    wamEmpty: "Add your marks on Me to see your WAM.",
+    wamEmpty: "Or add your marks on Me and it fills in by itself.",
     wamGo: "Add marks",
     easy: "Easy subjects (WAM boosters)",
     hard: "Hardest subjects",

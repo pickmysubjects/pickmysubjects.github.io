@@ -1223,6 +1223,7 @@ export const id: Messages = {
   wamGoal: {
     title: "Target WAM",
     fromMarks: "Ubah angka mana saja untuk mencoba.",
+    typeYours: "Isi WAM-mu dan poin yang sudah diambil.",
     noMarks: "Isi nilai mata kuliah yang sudah selesai di atas, lalu bagian ini menghitung rata-rata yang kamu perlukan di sisa mata kuliah untuk mencapai target WAM.",
     noMarksShort: "Isi nilai di atas untuk melihat rata-rata yang perlu",
     current: "WAM sekarang",
@@ -1294,7 +1295,7 @@ export const id: Messages = {
     wam: "Kalkulator WAM",
     wamText: "WAM sekarang, target WAM, dan simulasi satu mata kuliah.",
     wamLede: "WAM dari catatanmu, rata-rata yang dibutuhkan untuk target, dan pengaruh satu mata kuliah ke WAM.",
-    wamEmpty: "Isi nilaimu di Saya untuk melihat WAM.",
+    wamEmpty: "Atau isi nilaimu di halaman Saya, ini terisi sendiri.",
     wamGo: "Isi nilai",
     easy: "Mata kuliah mudah (pendongkrak WAM)",
     hard: "Mata kuliah tersulit",

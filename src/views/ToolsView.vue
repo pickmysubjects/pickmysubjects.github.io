@@ -26,10 +26,10 @@ const code = computed(() => (query.value.get('subject') ?? '').trim().toUpperCas
       <p class="lede">{{ page === 'final' ? t('calc.lede') : page === 'wam' ? t('tools.wamLede') : t('tools.lede') }}</p>
     </header>
     <FinalCalc v-if="page === 'final'" :code="code" />
-    <section v-else-if="page === 'wam'" class="surface wam">
+    <div v-else-if="page === 'wam'" class="wam">
+      <WamGoal quick />
       <p v-if="wam === null" class="empty">{{ t('tools.wamEmpty') }} <a class="button button-quiet" :href="link('record#sec-results')">{{ t('tools.wamGo') }}</a></p>
-      <WamGoal />
-    </section>
+    </div>
     <ToolCards v-else />
   </div>
 </template>
@@ -60,7 +60,8 @@ const code = computed(() => (query.value.get('subject') ?? '').trim().toUpperCas
 }
 
 .wam {
-  padding: var(--space-5);
+  display: grid;
+  gap: var(--space-3);
 }
 
 .empty {
@@ -68,7 +69,6 @@ const code = computed(() => (query.value.get('subject') ?? '').trim().toUpperCas
   align-items: center;
   flex-wrap: wrap;
   gap: var(--space-3);
-  margin-bottom: var(--space-3);
   color: var(--ink-soft);
 }
 </style>

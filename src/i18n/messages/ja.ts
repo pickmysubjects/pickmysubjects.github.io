@@ -1223,6 +1223,7 @@ export const ja: Messages = {
   wamGoal: {
     title: "目標 WAM",
     fromMarks: "数字を変えて試してみてください。",
+    typeYours: "今の WAM と修得済みの単位を入力してください。",
     noMarks: "上に履修済み科目の成績を入れると、目標 WAM に届くために残りの科目で平均何点必要かを計算します。",
     noMarksShort: "上に成績を入れると必要な平均点が出ます",
     current: "今の WAM",
@@ -1294,7 +1295,7 @@ export const ja: Messages = {
     wam: "WAM 計算",
     wamText: "今の WAM、目標 WAM、1 科目の点でどう変わるか。",
     wamLede: "成績記録から WAM、目標に必要な平均、1 科目の点で WAM がどう変わるかを計算します。",
-    wamEmpty: "「マイページ」で点数を入れると WAM が出ます。",
+    wamEmpty: "「マイページ」に成績を入れると、ここに自動で入ります。",
     wamGo: "点数を入れる",
     easy: "楽単リスト（点を取りやすい科目）",
     hard: "難しい科目",

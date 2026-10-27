@@ -1223,6 +1223,7 @@ export const ko: Messages = {
   wamGoal: {
     title: "목표 WAM",
     fromMarks: "숫자를 바꿔 가며 시험해 보세요.",
+    typeYours: "지금 WAM과 이수한 학점을 입력하세요.",
     noMarks: "위에 들은 과목의 성적을 넣으면, 목표 WAM에 도달하려면 남은 과목에서 평균 몇 점이 필요한지 계산해 줘요.",
     noMarksShort: "위에 성적을 넣으면 필요한 평균이 나와요",
     current: "현재 WAM",
@@ -1294,7 +1295,7 @@ export const ko: Messages = {
     wam: "WAM 계산기",
     wamText: "지금 WAM, 목표 WAM, 한 과목 점수에 따른 변화.",
     wamLede: "성적 기록으로 WAM, 목표까지 필요한 평균, 한 과목 점수가 WAM을 어떻게 바꾸는지 계산해요.",
-    wamEmpty: "'내 정보'에 점수를 넣으면 WAM이 나와요.",
+    wamEmpty: "'내 정보'에 성적을 넣으면 여기 자동으로 채워져요.",
     wamGo: "점수 넣기",
     easy: "꿀강 목록 (점수 받기 쉬운 과목)",
     hard: "어려운 과목",
