@@ -69,4 +69,11 @@ const sections = ['local', 'ratings', 'grades', 'feedback', 'noTracking', 'googl
 .privacy-pills .chip {
   color: var(--good);
 }
+
+/* Phones: the title a size down, like the guide's, so long languages keep it to two lines. */
+@media (max-width: 640px) {
+  .privacy-title {
+    font-size: 1.9rem;
+  }
+}
 </style>
