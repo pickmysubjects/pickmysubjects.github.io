@@ -8,6 +8,7 @@
   "scripts": {
     "data": "tsx scripts/build-data.ts",
     "dev": "npm run data && vite",
+    "local": "npm run data && VITE_FORCE_GLASS=1 vite build --outDir .local-site && vite preview --outDir .local-site --port 4300 --strictPort",
     "build": "npm run data && vue-tsc --noEmit && vite build && tsx scripts/prerender.ts",
     "preview": "vite preview",
     "test": "npm run data && vitest run",

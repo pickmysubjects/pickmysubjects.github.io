@@ -651,7 +651,7 @@ button.chip {
 }
 
 /* Over the thinner glass, accent text is a step deeper so links stay AA. */
-@media (prefers-color-scheme: light) and (prefers-reduced-transparency: no-preference) {
+@media (prefers-color-scheme: light) {
   .surface {
     --accent: #a51d68;
   }
@@ -728,7 +728,7 @@ button.chip {
 /* Reduce Transparency: frostier, fully opaque glass (Apple's behaviour), not plain white.
    The colour field stays; surfaces are solid tints of it with the same glass edge and shine. */
 @media (prefers-reduced-transparency: reduce) {
-  :root {
+  :root:not(.force-glass) {
     --card-fill: #f9f2f8;
     --tile-fill: #fbf6fb;
     --field-fill: #fdf9fc;
@@ -746,8 +746,7 @@ button.chip {
     --card-blur: none;
   }
 
-  .surface,
-  .glass {
+  :root:not(.force-glass) :is(.surface, .glass) {
     background: var(--glass-shine), var(--card-fill);
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
@@ -755,7 +754,7 @@ button.chip {
 }
 
 @media (prefers-reduced-transparency: reduce) and (prefers-color-scheme: dark) {
-  :root {
+  :root:not(.force-glass) {
     --card-fill: #1f1828;
     --tile-fill: #241c2e;
     --field-fill: #2a2234;

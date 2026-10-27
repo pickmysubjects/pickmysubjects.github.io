@@ -21,6 +21,12 @@ import '@fontsource/be-vietnam-pro/700.css'
 import '@fontsource-variable/noto-sans-devanagari/wght.css'
 import './assets/main.css'
 
+// Local preview only: show the full glass even when the Mac has Reduce Transparency on.
+// The flag is set by `npm run local`; production builds never set it, so this is dropped there.
+if (import.meta.env.VITE_FORCE_GLASS === '1' || (import.meta.env.DEV && new URLSearchParams(location.search).has('glass'))) {
+  document.documentElement.classList.add('force-glass')
+}
+
 // A saved language other than English, on an English address: open that language's own page
 // straight away instead of drawing the English one and switching it over.
 // #toggle-goatcounter first, so neither the redirect nor the first page is counted.
