@@ -1862,7 +1862,7 @@ export const id: Messages = {
     demoOpen: "Lihat halaman lengkap",
     tryLabel: 'Coba',
     cardPlan: 'Rencanakan studiku',
-    searchHero: "Cari kode mata kuliah, sulit atau tidak",
+    searchHero: "Cari matkul, susah nggak?",
     sigSubjects: "Tingkat kesulitan dan ulasan mahasiswa untuk {n} mata kuliah",
     sigPlan: "Rencana otomatis, semua aturan gelar dicek",
     continuePlan: "Lanjutkan rencanaku",

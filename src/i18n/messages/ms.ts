@@ -1862,7 +1862,7 @@ export const ms: Messages = {
     demoOpen: "Lihat halaman penuh",
     tryLabel: 'Cuba',
     cardPlan: 'Rancang ijazah saya',
-    searchHero: "Cari kod subjek, susah atau tidak",
+    searchHero: "Cari subjek, susah ke tak?",
     sigSubjects: "Tahap kesukaran dan ulasan pelajar untuk {n} subjek",
     sigPlan: "Dirancang automatik, semua peraturan ijazah disemak",
     continuePlan: "Teruskan rancangan saya",

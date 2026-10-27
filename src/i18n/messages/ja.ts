@@ -1862,7 +1862,7 @@ export const ja: Messages = {
     demoOpen: "詳しいページを見る",
     tryLabel: '例',
     cardPlan: '履修プランを作る',
-    searchHero: "科目コードで検索、難しさをチェック",
+    searchHero: "科目コードで難易度チェック",
     sigSubjects: "{n}科目の難易度と学生の評価",
     sigPlan: "自動で履修プラン、学位ルールも全チェック",
     continuePlan: "自分のプランを続ける",
