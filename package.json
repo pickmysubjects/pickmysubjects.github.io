@@ -8,10 +8,9 @@
   "scripts": {
     "data": "tsx scripts/build-data.ts",
     "dev": "npm run data && vite",
-    "local": "npm run data && VITE_FORCE_GLASS=1 vite build --outDir .local-site && vite preview --outDir .local-site --port 4300 --strictPort",
+    "local": "npm run data && VITE_FORCE_GLASS=1 vite build --outDir .local-site --emptyOutDir && vite preview --outDir .local-site --port 4300 --strictPort",
     "build": "npm run data && vue-tsc --noEmit && vite build && tsx scripts/prerender.ts",
     "preview": "vite preview",
-    "local": "npm run data && vite build --outDir .local-site --emptyOutDir && vite preview --outDir .local-site",
     "test": "npm run data && vitest run",
     "test:fast": "vitest run --exclude 'tests/stress/**'",
     "typecheck": "vue-tsc --noEmit",
