@@ -214,18 +214,18 @@ function onDragStart(event: DragEvent): void {
   border: 1px solid var(--card-edge);
   border-radius: 10px;
   /* Glass look without a blur of its own: the column's glass shows through. */
-  background: var(--glass-shine), var(--row-fill, var(--tile-fill));
+  background: var(--glass-shine), var(--row-fill, var(--sheet-fill));
   box-shadow: inset 0 1px 0 rgb(255 255 255 / 70%), 0 2px 8px -4px rgb(80 40 90 / 20%);
   cursor: grab;
   transition: opacity 0.15s, border-color 0.15s, box-shadow 0.15s;
 }
 
 .row-role-required {
-  --row-fill: color-mix(in srgb, var(--accent) 7%, var(--tile-fill));
+  --row-fill: color-mix(in srgb, var(--accent) 7%, var(--sheet-fill));
 }
 
 .row-role-option {
-  --row-fill: color-mix(in srgb, #6d5dfc 7%, var(--tile-fill));
+  --row-fill: color-mix(in srgb, #6d5dfc 7%, var(--sheet-fill));
 }
 
 .row:hover {
