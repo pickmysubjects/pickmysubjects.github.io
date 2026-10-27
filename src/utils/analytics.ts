@@ -19,6 +19,8 @@ export type AnalyticsEvent =
   | 'compare-open'
   | `language-${string}`
 
+import { LOCALE_CODES } from '@/i18n/codes'
+
 interface GoatCounter {
   count?: (vars: { path: string; title?: string; event?: boolean; referrer?: string }) => void
 }
@@ -32,6 +34,12 @@ function counter(): GoatCounter['count'] | undefined {
 /** The address to count: the path only (with its language part), never a query string or #fragment. */
 export function countedPath(pathname: string): string {
   return pathname.split(/[?#]/)[0] || '/'
+}
+
+/** The site language a path is in: its first segment when that is a locale, else English (served at /). */
+export function pathLocale(path: string): string {
+  const first = path.split('/')[1] ?? ''
+  return (LOCALE_CODES as readonly string[]).includes(first) ? first : 'en'
 }
 
 const SKIP_KEY = 'skipgc'
@@ -78,7 +86,10 @@ export function countPage(pathname: string = typeof location === 'undefined' ? '
   lastPath = path
   try {
     // The referrer only matters on the first page (where the visit came from); inside the site it's us.
-    counter()?.({ path, referrer: counted++ === 0 ? undefined : '' })
+    const first = counted++ === 0
+    counter()?.({ path, referrer: first ? undefined : '' })
+    // Once per visit, the site language it started in, so the dashboard shows visits per language.
+    if (first) counter()?.({ path: `visit-lang-${pathLocale(path)}`, title: 'visit language', event: true })
   } catch {
     // Counting must never break the page.
   }

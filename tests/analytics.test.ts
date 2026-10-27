@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { CSP, GOATCOUNTER } from '../vite.config'
-import { countPage, countedPath, optOutToggle, resetAnalytics, trackEvent } from '@/utils/analytics'
+import { countPage, countedPath, optOutToggle, pathLocale, resetAnalytics, trackEvent } from '@/utils/analytics'
 
 const root = new URL('../', import.meta.url)
 
@@ -50,10 +50,19 @@ describe('counting', () => {
     countPage('/plan?share=XYZ')
     countPage('/plan')
     countPage('/zh-CN/guide')
-    expect(count.mock.calls.map((c) => c[0].path)).toEqual(['/plan', '/zh-CN/guide'])
+    // The first page is followed once by the visit's language event.
+    expect(count.mock.calls.map((c) => c[0].path)).toEqual(['/plan', 'visit-lang-en', '/zh-CN/guide'])
+    expect(count.mock.calls[1]?.[0].event).toBe(true)
     // Inside the site the referrer is us: only the first page keeps the real one.
     expect(count.mock.calls[0]?.[0].referrer).toBeUndefined()
-    expect(count.mock.calls[1]?.[0].referrer).toBe('')
+    expect(count.mock.calls[2]?.[0].referrer).toBe('')
+  })
+
+  it('reads the site language from the path', () => {
+    expect(pathLocale('/')).toBe('en')
+    expect(pathLocale('/subject/COMP10001')).toBe('en')
+    expect(pathLocale('/zh-TW/plan')).toBe('zh-TW')
+    expect(pathLocale('/hi/')).toBe('hi')
   })
 
   it('sends events as named events', () => {
