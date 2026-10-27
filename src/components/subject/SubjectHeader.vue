@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, shallowRef } from 'vue'
+import { computed, onBeforeUnmount, onMounted, shallowRef, useTemplateRef } from 'vue'
 import { BookOpen, CalendarRange, ChartNoAxesColumn, Check, Link2, MapPin, Plus, Share2, Star } from 'lucide-vue-next'
 import { isFail, isQuotaSubject, knownNotRunning, listPlace, periodsFor, thisYear, RANK_SLUGS, termKey, type Period, type Subject } from '@/engine'
 import { link } from '@/composables/useView'
@@ -106,6 +106,19 @@ async function share(): Promise<void> {
     // Cancelled or blocked: nothing to say.
   }
 }
+
+// Phones: once the actions scroll out of view, a slim glass bar keeps "add" and "save" in reach.
+const actionsEl = useTemplateRef<HTMLElement>('actionsEl')
+const actionsGone = shallowRef(false)
+let io: IntersectionObserver | null = null
+onMounted(() => {
+  if (typeof IntersectionObserver === 'undefined' || !actionsEl.value) return
+  io = new IntersectionObserver(([e]) => {
+    actionsGone.value = !!e && !e.isIntersecting && e.boundingClientRect.bottom < 0
+  })
+  io.observe(actionsEl.value)
+})
+onBeforeUnmount(() => io?.disconnect())
 </script>
 
 <template>
@@ -135,7 +148,7 @@ async function share(): Promise<void> {
       <a v-for="c in subject.replacedBy" :key="c" class="chip code" :href="link(`subject/${c}`)">{{ c }}</a>
     </p>
 
-    <div class="actions">
+    <div ref="actionsEl" class="actions">
       <span v-if="passed" class="state state-good" role="status">
         <Check :size="18" aria-hidden="true" />
         {{ passed.mark === undefined ? t('subject.passed') : t('subject.passedMark', { mark: passed.mark }) }}
@@ -172,6 +185,20 @@ async function share(): Promise<void> {
       </span>
     </div>
     <p v-if="addedAt" class="added" role="status">{{ t('subject.added', { term: termLabel(t, addedAt) }) }}</p>
+
+    <Teleport to="body">
+      <div v-if="actionsGone" class="dock">
+        <span class="dock-name"><span class="code dock-code">{{ subject.code }}</span><span class="dock-title">{{ local || subject.title }}</span></span>
+        <ShortlistToggle :code="subject.code" compact />
+        <a v-if="!passed && !plannedAt && !plan.setupChosen.value" class="button button-accent dock-go" :href="link('plan')">
+          <Plus :size="18" aria-hidden="true" /> {{ t('subject.addToPlan') }}
+        </a>
+        <button v-else-if="!passed && !plannedAt && target" class="button button-accent dock-go" type="button" @click="addToPlan">
+          <Plus :size="18" aria-hidden="true" /> {{ t('subject.addToPlan') }}
+        </button>
+        <span v-else-if="plannedAt || passed" class="state state-good dock-state"><Check :size="18" aria-hidden="true" /></span>
+      </div>
+    </Teleport>
   </header>
 </template>
 
@@ -314,6 +341,70 @@ async function share(): Promise<void> {
   margin: 0;
   color: var(--good);
   font-weight: 600;
+}
+
+/* The phone dock: only on narrow screens, floating above the tab bar. */
+.dock {
+  display: none;
+}
+
+@media (max-width: 720px) {
+  .dock {
+    position: fixed;
+    inset: auto 12px calc(88px + env(safe-area-inset-bottom)) 12px;
+    z-index: 40;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 8px 8px 16px;
+    border: 1px solid var(--glass-edge);
+    border-radius: 999px;
+    background: var(--glass-shine), var(--float-fill);
+    -webkit-backdrop-filter: var(--float-blur);
+    backdrop-filter: var(--float-blur);
+    box-shadow: var(--float-rim), var(--float-shadow);
+  }
+
+  .dock-name {
+    display: grid;
+    flex: 1;
+    min-width: 0;
+    line-height: 1.25;
+  }
+
+  .dock-code {
+    font-size: 0.75rem;
+    font-weight: 650;
+    color: var(--ink-soft);
+  }
+
+  .dock-title {
+    overflow: hidden;
+    font-size: 0.9375rem;
+    font-weight: 650;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .dock-go {
+    flex: none;
+    min-height: 44px;
+  }
+
+  .dock-state {
+    min-height: 44px;
+    padding-inline: 10px;
+  }
+
+  /* Facts: tighter chips so they take fewer rows. */
+  .facts {
+    gap: 6px;
+  }
+
+  .facts .chip {
+    padding: 3px 9px;
+    font-size: 0.8125rem;
+  }
 }
 
 @media (max-width: 560px) {
