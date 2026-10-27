@@ -1203,6 +1203,7 @@ export const ko: Messages = {
     routeJump: "선수과목 경로 보기",
     onPage: "이 페이지",
     routeHint: "무엇을 먼저 들어야 하는지",
+    routeSwipe: "옆으로 밀어서 전체 학년 보기",
     routeTip: "실선: 꼭 먼저 들어야 함. 점선: 여러 과목 중 하나면 됨. 과목에 마우스를 올리거나 탭하면 필요한 과목과 열리는 과목이 표시돼요. 클릭하면 과목 페이지로 가요.",
     routePick: "{n}과목 선택",
     routeNeeds: "선수: {list}",

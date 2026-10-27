@@ -1203,6 +1203,7 @@ export const id: Messages = {
     routeJump: "Lihat jalur prasyarat",
     onPage: "Di halaman ini",
     routeHint: "Mata kuliah mana yang diambil dulu",
+    routeSwipe: "Geser ke samping untuk semua tingkat",
     routeTip: "Garis penuh: wajib diambil dulu. Garis putus-putus: cukup salah satu dari beberapa. Arahkan kursor atau ketuk mata kuliah untuk melihat yang dibutuhkan dan yang dibukanya; klik untuk membuka.",
     routePick: "Pilih {n}",
     routeNeeds: "butuh {list}",

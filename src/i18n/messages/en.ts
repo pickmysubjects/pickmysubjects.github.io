@@ -1206,6 +1206,7 @@ export const en = {
     routeJump: "See the prerequisite route",
     onPage: "On this page",
     routeHint: "What to take before what",
+    routeSwipe: "Swipe sideways for every year",
     routeTip: "Solid line: you need it. Dashed: one of several ways in. Hover or tap a subject to see what it needs and what it opens; click to open it.",
     routePick: "Pick {n}",
     routeNeeds: "needs {list}",

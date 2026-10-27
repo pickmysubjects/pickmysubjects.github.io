@@ -1203,6 +1203,7 @@ export const zhTW: Messages = {
     routeJump: "看先修路線圖",
     onPage: "本頁內容",
     routeHint: "哪門課要先修",
+    routeSwipe: "左右滑動看全部年級",
     routeTip: "實線：必須先修。虛線：幾門裡修一門就可以。滑鼠移到或點一下科目，看它需要什麼、能解鎖什麼；再點開啟科目頁。",
     routePick: "選 {n} 門",
     routeNeeds: "需要 {list}",

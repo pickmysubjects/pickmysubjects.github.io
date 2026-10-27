@@ -1203,6 +1203,7 @@ export const ja: Messages = {
     routeJump: "履修ルート図を見る",
     onPage: "このページの内容",
     routeHint: "どの科目を先に取るか",
+    routeSwipe: "横にスワイプで全学年",
     routeTip: "実線：必須の前提科目。点線：いくつかのうち1つでOK。科目にカーソルを合わせるかタップすると、必要な科目と次に取れる科目が光ります。クリックで科目ページへ。",
     routePick: "{n}科目を選択",
     routeNeeds: "前提：{list}",

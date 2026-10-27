@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, shallowRef, useTemplateRef } from 'vue'
 import InfoTip from '@/components/InfoTip.vue'
+import { MoveHorizontal } from 'lucide-vue-next'
 import { majorRoute, routeChain } from '@/engine/majorRoute'
 import { routeLines } from '@/engine/majorRouteText'
 import type { MajorOverview } from '@/engine/roles'
@@ -21,14 +22,12 @@ const route = computed(() => majorRoute(data.value, props.overview, props.course
 const lines = computed(() => routeLines(route.value))
 
 // Layout: fixed-size boxes in columns, a "pick N" label above each choice list.
-// Columns widen to fill the card (names stop being cut off), never below the old 156px.
-const MIN_COL_W = 156
+// Columns widen to fill the card (names stop being cut off), never below the old 156px. On a
+// phone they're narrower with tighter gaps, so two whole columns fit and the rest scrolls.
 const MAX_COL_W = 260
-const COL_GAP = 56
 const NODE_H = 46
 const GAP = 8
 const HEAD_H = 26
-const PAD = 24
 
 const scroller = useTemplateRef<HTMLElement>('scroller')
 const avail = shallowRef(0)
@@ -40,7 +39,14 @@ onMounted(() => {
   ro.observe(el)
 })
 onBeforeUnmount(() => ro?.disconnect())
+const narrow = computed(() => avail.value > 0 && avail.value < 480)
+const MIN_COL_W_ = computed(() => (narrow.value ? 128 : 156))
+const COL_GAP_ = computed(() => (narrow.value ? 32 : 56))
+const PAD_ = computed(() => (narrow.value ? 12 : 24))
 const COL_W_ = computed(() => {
+  const COL_GAP = COL_GAP_.value
+  const PAD = PAD_.value
+  const MIN_COL_W = MIN_COL_W_.value
   const n = Math.max(1, route.value.columns.length)
   const fit = Math.floor((avail.value - 2 * PAD - (n - 1) * COL_GAP) / n)
   return Math.min(MAX_COL_W, Math.max(MIN_COL_W, fit || MIN_COL_W))
@@ -50,6 +56,8 @@ interface Box { code: string; x: number; y: number; title: string; role: string 
 interface Label { x: number; y: number; text: string }
 const layout = computed(() => {
   const COL_W = COL_W_.value
+  const COL_GAP = COL_GAP_.value
+  const PAD = PAD_.value
   const boxes: Record<string, Box> = {}
   const labels: Label[] = []
   let height = 0
@@ -78,6 +86,8 @@ const layout = computed(() => {
 const paths = computed(() =>
   route.value.edges.map((e) => {
     const COL_W = COL_W_.value
+    const COL_GAP = COL_GAP_.value
+    const PAD = PAD_.value
     const a = layout.value.boxes[e.from]!
     const b = layout.value.boxes[e.to]!
     const ay = a.y + NODE_H / 2
@@ -112,6 +122,17 @@ const titleOf = (c: string) => {
   return s ? `${c} ${localTitle(s, locale.value) || s.title}` : c
 }
 const join = (codes: string[]) => codes.join(t.value('listSep'))
+
+// Wider than the card (a phone): a fade on the side with more, and one line saying it scrolls.
+const more = shallowRef<{ left: boolean; right: boolean }>({ left: false, right: false })
+function onScroll(): void {
+  const el = scroller.value
+  if (!el) return
+  more.value = { left: el.scrollLeft > 4, right: el.scrollLeft + el.clientWidth < el.scrollWidth - 4 }
+}
+onMounted(() => requestAnimationFrame(onScroll))
+// Each column's left edge, for snapping: the diagram stops on whole columns, not mid-box.
+const snaps = computed(() => route.value.columns.map((_, i) => PAD_.value + i * (COL_W_.value + COL_GAP_.value) - PAD_.value / 2))
 </script>
 
 <template>
@@ -119,8 +140,10 @@ const join = (codes: string[]) => codes.join(t.value('listSep'))
     <h2 class="block-title">{{ t('majors.routeTitle') }}</h2>
     <p class="block-hint">{{ t('majors.routeHint') }}<InfoTip :text="t('majors.routeTip')" /></p>
 
-    <div ref="scroller" class="scroller surface" aria-hidden="true" @pointerleave="active = ''">
+    <p v-if="more.left || more.right" class="swipe" aria-hidden="true"><MoveHorizontal :size="15" /> {{ t('majors.routeSwipe') }}</p>
+    <div ref="scroller" class="scroller surface" :class="{ 'more-left': more.left, 'more-right': more.right }" aria-hidden="true" @pointerleave="active = ''" @scroll.passive="onScroll">
       <div class="graph" :style="{ width: `${layout.width}px`, height: `${layout.height}px` }">
+        <span v-for="(x, i) in snaps" :key="`snap${i}`" class="snap" :style="{ left: `${Math.max(0, x)}px` }" />
         <svg class="edges" :width="layout.width" :height="layout.height" focusable="false">
           <path
             v-for="p in paths"
@@ -185,13 +208,47 @@ const join = (codes: string[]) => codes.join(t.value('listSep'))
   color: var(--ink-soft);
 }
 
-/* Only the diagram scrolls sideways, never the page. */
+/* Only the diagram scrolls sideways, never the page; it stops on whole columns. */
 .scroller {
   max-width: 100%;
   overflow-x: auto;
   padding: 14px 12px;
   border-radius: 20px;
   overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+}
+
+.snap {
+  position: absolute;
+  top: 0;
+  width: 1px;
+  height: 1px;
+  scroll-snap-align: start;
+}
+
+/* A fade on the side that has more. */
+.more-right {
+  -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 36px), transparent);
+  mask-image: linear-gradient(90deg, #000 calc(100% - 36px), transparent);
+}
+
+.more-left {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 36px);
+  mask-image: linear-gradient(90deg, transparent, #000 36px);
+}
+
+.more-left.more-right {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 36px, #000 calc(100% - 36px), transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 36px, #000 calc(100% - 36px), transparent);
+}
+
+.swipe {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 6px;
+  font-size: var(--fs-meta);
+  color: var(--ink-soft);
 }
 
 .graph {

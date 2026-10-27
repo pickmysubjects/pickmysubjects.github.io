@@ -1203,6 +1203,7 @@ export const zhCN: Messages = {
     routeJump: "看先修路线图",
     onPage: "本页内容",
     routeHint: "哪门课要先修",
+    routeSwipe: "左右滑动看全部年级",
     routeTip: "实线：必须先修。虚线：几门里修一门就行。鼠标移到或点一下课程，看它需要什么、能解锁什么；再点打开课程页。",
     routePick: "选 {n} 门",
     routeNeeds: "需要 {list}",

@@ -1203,6 +1203,7 @@ export const vi: Messages = {
     routeJump: "Xem lộ trình môn tiên quyết",
     onPage: "Trong trang này",
     routeHint: "Môn nào phải học trước",
+    routeSwipe: "Vuốt ngang để xem mọi năm",
     routeTip: "Nét liền: bắt buộc học trước. Nét đứt: chỉ cần một trong vài môn. Rê chuột hoặc chạm vào một môn để xem nó cần gì và mở ra môn nào; bấm để mở trang môn.",
     routePick: "Chọn {n}",
     routeNeeds: "cần {list}",

@@ -1203,6 +1203,7 @@ export const ms: Messages = {
     routeJump: "Lihat laluan prasyarat",
     onPage: "Dalam halaman ini",
     routeHint: "Subjek mana perlu diambil dulu",
+    routeSwipe: "Leret ke sisi untuk semua tahun",
     routeTip: "Garis penuh: wajib diambil dulu. Garis putus: salah satu daripada beberapa subjek. Halakan tetikus atau ketik subjek untuk lihat keperluan dan subjek yang dibukanya; klik untuk buka.",
     routePick: "Pilih {n}",
     routeNeeds: "perlu {list}",
