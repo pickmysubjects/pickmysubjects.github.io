@@ -6,19 +6,49 @@ import AppLogo from '../AppLogo.vue'
 import SubjectSearch from '../SubjectSearch.vue'
 import MySteps from './MySteps.vue'
 import { NAV_ITEMS, subNavFor } from './nav'
-import { computed } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, shallowRef, useTemplateRef, watch } from 'vue'
 import type { View } from '@/composables/useView'
 import { useI18n } from '@/i18n'
 
 
 const props = defineProps<{ view: View }>()
 const sub = computed(() => subNavFor(props.view))
-const { t } = useI18n()
+const { t, locale } = useI18n()
+
+// Wide screens show the section's pages with labels, unless they don't fit in this language
+// (Hindi's Browse row at 1440, say): then only those rows shrink to icons. Measured, not guessed:
+// show the labelled row, see if it's clipped, and fall back to the compact one if so.
+const inner = useTemplateRef<HTMLElement>('inner')
+const tight = shallowRef(false)
+let timer = 0
+// After the row's 0.32 s opening animation, which clips it on purpose while it runs.
+function measure(): void {
+  clearTimeout(timer)
+  timer = window.setTimeout(async () => {
+    tight.value = false
+    await nextTick()
+    const wide = inner.value?.querySelector<HTMLElement>('.nav-sub-wide')
+    tight.value = !!wide && wide.offsetParent !== null && wide.scrollWidth > wide.clientWidth + 1
+  }, 360)
+}
+let observer: ResizeObserver | undefined
+onMounted(() => {
+  if (typeof ResizeObserver !== 'undefined' && inner.value) {
+    observer = new ResizeObserver(measure)
+    observer.observe(inner.value)
+  }
+  measure()
+})
+onBeforeUnmount(() => {
+  observer?.disconnect()
+  clearTimeout(timer)
+})
+watch([locale, () => props.view], measure)
 </script>
 
 <template>
   <header class="header">
-    <div class="header-inner shell">
+    <div ref="inner" class="header-inner shell" :class="{ 'sub-tight': tight }">
       <a class="brand" :href="link('')">
         <AppLogo class="mark" small />
         <span class="brand-name">PickMySubjects</span>
@@ -259,8 +289,7 @@ const { t } = useI18n()
 }
 
 /* Tight rows (and long languages on mid-size screens): other pages shrink to number or icon. */
-/* Browse has four ways in: long languages need the compact row up to 1440. */
-@media (max-width: 1440px) {
+@media (max-width: 1280px) {
   .nav-sub-wide {
     display: none;
   }
@@ -268,6 +297,14 @@ const { t } = useI18n()
   .nav-sub-tight {
     display: block;
   }
+}
+
+.sub-tight .nav-sub-wide {
+  display: none;
+}
+
+.sub-tight .nav-sub-tight {
+  display: block;
 }
 
 @media (max-width: 720px) {
