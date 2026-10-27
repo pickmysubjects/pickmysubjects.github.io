@@ -423,4 +423,11 @@ function planWithIt(): void {
   font-size: 0.8125rem;
   color: var(--ink-soft);
 }
+
+/* Straight on the colour field: the deeper pink keeps the degree line at AA. */
+@media (prefers-color-scheme: light) {
+  .eyebrow-line {
+    color: #861552;
+  }
+}
 </style>

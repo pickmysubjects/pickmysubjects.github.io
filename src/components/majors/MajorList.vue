@@ -262,9 +262,13 @@ const courseTitle = computed(() => data.value.courses.find((c) => c.code === cou
 }
 
 .card {
-  display: flex;
+  /* Name on top, accreditation under it, chevron on the right: long names keep the full width. */
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 6px 10px;
+  min-height: 64px;
   padding: 14px 16px;
   color: var(--ink);
   text-decoration: none;
@@ -276,8 +280,20 @@ const courseTitle = computed(() => data.value.courses.find((c) => c.code === cou
 }
 
 .card-title {
-  flex: 1;
+  grid-column: 1;
   font-weight: 600;
+  line-height: 1.3;
+}
+
+.card .acc-chip {
+  grid-column: 1;
+  justify-self: start;
+}
+
+.card .go {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  color: var(--ink-soft);
 }
 
 .minors {
