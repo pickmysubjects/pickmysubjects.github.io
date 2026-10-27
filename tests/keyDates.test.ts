@@ -91,3 +91,21 @@ describe('buildIcs', () => {
     expect(nextDay('2028-02-28')).toBe('2028-02-29')
   })
 })
+
+describe('key dates source files', () => {
+  it('the app reads exactly what data/real/keyDates/*.yaml says', async () => {
+    const { buildKeyDates } = await import('../scripts/keyDates')
+    const built = buildKeyDates(process.cwd())
+    expect(built.errors).toEqual([])
+    expect(built.dates).toEqual(KEY_DATES)
+  })
+  it('rejects a row without a source, a reversed range or an impossible day', async () => {
+    const { keyDatesFileSchema } = await import('@/utils/keyDatesSchema')
+    const row = { kind: 'census', term: 'semester-1', start: '2026-03-31', source: 'https://students.unimelb.edu.au/x' }
+    const file = (d: object) => ({ year: 2026, checked: '2026-10-23', dates: [d] })
+    expect(keyDatesFileSchema.safeParse(file(row)).success).toBe(true)
+    expect(keyDatesFileSchema.safeParse(file({ ...row, source: undefined })).success).toBe(false)
+    expect(keyDatesFileSchema.safeParse(file({ ...row, end: '2026-03-01' })).success).toBe(false)
+    expect(keyDatesFileSchema.safeParse(file({ ...row, start: '2026-02-30' })).success).toBe(false)
+  })
+})
