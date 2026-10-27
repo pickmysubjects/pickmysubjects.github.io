@@ -18,6 +18,12 @@ const { profile } = useProfile()
 const plan = usePlan()
 const { codes: saved } = useShortlist()
 
+// Singular forms for one subject or one interest ("1 interest", not "1 interests").
+function step1Key(results: number, interests: number): string {
+  if (results === 1) return interests === 1 ? 'home.step1DoneOne' : 'home.step1DoneOneSubject'
+  return interests === 1 ? 'home.step1DoneOneInterest' : 'home.step1Done'
+}
+
 const steps = computed(() => {
   const p = profile.value
   const filled = p.results.length + Object.keys(p.skills).length + p.interests.length
@@ -27,7 +33,7 @@ const steps = computed(() => {
       text: 'home.step1Text',
       href: link('record'),
       done: filled > 0,
-      status: filled > 0 ? t.value('home.step1Done', { results: p.results.length, interests: p.interests.length }) : '',
+      status: filled > 0 ? t.value(step1Key(p.results.length, p.interests.length), { results: p.results.length, interests: p.interests.length }) : '',
     },
     {
       title: 'home.step2',
