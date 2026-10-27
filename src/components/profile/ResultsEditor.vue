@@ -17,6 +17,7 @@ import { useRated } from '@/composables/useRated'
 const results = defineModel<Profile['results']>({ required: true })
 // Credit for study elsewhere with no named subject (see CreditEditor).
 const credit = defineModel<Credit[]>('credit', { default: () => [] })
+const creditOpen = defineModel<boolean>('creditOpen', { default: false })
 const props = defineProps<{ subjects: Record<string, Subject>; options: { code: string; title: string }[] }>()
 
 const listId = useId()
@@ -242,7 +243,7 @@ function remove(i: number): void {
         </ul>
       </section>
     </div>
-    <CreditEditor v-model:credit="credit" v-model:results="results" :options="options" />
+    <CreditEditor v-model:credit="credit" v-model:open="creditOpen" v-model:results="results" :options="options" />
     <p v-if="results.some((x) => isFail(x))" class="fail-hint">
       {{ t('record.failHintShort') }}<InfoTip :text="t('record.failHint')" />
       <template v-if="failedTwice.length">{{ t('record.failedTwice', { codes: failedTwice.join(t('listSep')) }) }}</template>
@@ -352,7 +353,7 @@ function remove(i: number): void {
   display: grid;
   /* Semester, mark and actions line up from row to row: every select holds the same
      options, so its natural width is the same in every row. */
-  grid-template-columns: minmax(0, 1fr) auto 112px minmax(140px, auto);
+  grid-template-columns: minmax(0, 1fr) auto 120px minmax(140px, auto);
   grid-template-areas: 'main when mark actions';
   align-items: center;
   gap: 12px;
@@ -427,9 +428,18 @@ function remove(i: number): void {
 }
 
 .mark {
-  width: 64px;
-  padding: 6px 8px;
+  /* Wide enough for "Markah" / "Điểm" as the placeholder; no spinner eating the space. */
+  width: 76px;
+  padding: 6px 4px;
   text-align: center;
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+.mark::-webkit-inner-spin-button,
+.mark::-webkit-outer-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
 }
 
 .grade {

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, toRef } from 'vue'
-import { Check, CircleMinus, Info, Minus, Plus, ThumbsUp, TriangleAlert } from 'lucide-vue-next'
+import { ArrowRight, Check, CircleMinus, Info, Minus, Plus, ThumbsUp, TriangleAlert } from 'lucide-vue-next'
 import { fitBasis, whyNotFit, type Subject } from '@/engine'
 import InfoTip from '@/components/InfoTip.vue'
 import RowWarnings from '@/components/browse/RowWarnings.vue'
@@ -101,6 +101,9 @@ const source = computed(() => {
   return d.factsOnly ? t.value('rank.factsOnly') : d.reviews > 0 ? t.value('fit.fromReviews', { n: d.reviews }) : ''
 })
 const basis = computed(() => (fit.value?.kind === 'fit' ? basisText(t.value, fitBasis(profile.value)) : ''))
+// No marks yet: the likely-mark part can't be worked out, so say what unlocks it.
+const noMarks = computed(() => !profile.value.results.some((r) => r.mark !== undefined))
+const marksLink = link('record') + '#sec-results'
 const hasLists = computed(() => easierItems.value.length + harderItems.value.length + suitsItems.value.length + whyNotItems.value.length > 0 || hasWatch.value)
 </script>
 
@@ -126,7 +129,10 @@ const hasLists = computed(() => easierItems.value.length + harderItems.value.len
 
       <div class="answer" :class="`tone-${fitTone}`">
         <span class="label">{{ t('fit.youTitle') }}</span>
-        <a v-if="!hasProfile" class="verdict verdict-link" :href="link('record')">{{ t('fit.noProfile') }}</a>
+        <template v-if="!hasProfile">
+          <span class="sub">{{ t('fit.teaser') }}</span>
+          <a class="button button-quiet teaser-go" :href="marksLink">{{ t('fit.teaserGo') }} <ArrowRight :size="15" aria-hidden="true" /></a>
+        </template>
         <template v-else-if="fitHeadline">
           <span class="verdict" :class="{ 'verdict-quiet': fit?.kind === 'out' }">
             <ThumbsUp v-if="fitTone === 'good'" :size="18" aria-hidden="true" />
@@ -142,6 +148,12 @@ const hasLists = computed(() => easierItems.value.length + harderItems.value.len
         </template>
       </div>
     </div>
+
+    <!-- Some profile but no marks: the mark estimate is one step away. -->
+    <p v-if="hasProfile && noMarks" class="teaser">
+      <span>{{ t('fit.teaser') }}</span>
+      <a class="button button-quiet teaser-go" :href="marksLink">{{ t('fit.teaserGo') }} <ArrowRight :size="15" aria-hidden="true" /></a>
+    </p>
 
     <!-- What pushes each way: only the groups that have something. -->
     <div v-if="hasLists" class="lists">
@@ -197,6 +209,26 @@ const hasLists = computed(() => easierItems.value.length + harderItems.value.len
 </template>
 
 <style scoped>
+.teaser {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-3);
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--accent) 7%, transparent);
+  color: var(--ink);
+}
+
+.teaser-go {
+  justify-self: start;
+  min-height: 34px;
+  padding: 0 12px;
+  font-size: 0.875rem;
+}
+
 .fitcard {
   display: grid;
   gap: var(--space-5);
@@ -269,12 +301,6 @@ const hasLists = computed(() => easierItems.value.length + harderItems.value.len
   font-size: 1rem;
   font-weight: 600;
   color: var(--ink);
-}
-
-.verdict-link {
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--accent);
 }
 
 /* A small, static three-dot scale: easier · average · harder. */

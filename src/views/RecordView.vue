@@ -18,6 +18,7 @@ import { ArrowRight, Check, Download, Upload } from 'lucide-vue-next'
 import { usePlan } from '@/composables/usePlan'
 import { link } from '@/composables/useView'
 import { downloadBackup, restoreBackup } from '@/utils/backup'
+import { useGradeShare } from '@/composables/useGradeShare'
 import { useDataset } from '@/composables/useDataset'
 import { useProfile } from '@/composables/useProfile'
 import { useI18n } from '@/i18n'
@@ -37,6 +38,10 @@ const { setupChosen } = usePlan()
 const { active: activePlan } = usePlans()
 const forPlan = computed(() => t.value('plans.forPlan', { name: planName(t.value, activePlan.value) }))
 const restoreFailed = shallowRef(false)
+// Opened from "Credit or exemptions?" in the results header.
+const creditOpen = shallowRef(false)
+// Subjects with a mark not yet shared: a quiet nudge in the summary, beside where they were entered.
+const gradeShare = useGradeShare()
 async function onRestore(event: Event): Promise<void> {
   const input = event.target as HTMLInputElement
   const file = input.files?.[0]
@@ -85,8 +90,9 @@ const doneCount = computed(() => filled.value.filter((f) => f.done).length)
           <header class="sec-head">
             <h2 id="sec-results" class="sec-title">{{ t('record.step2') }}</h2>
             <span v-if="wam !== null" class="sec-badge">{{ t('record.sumWam', { wam }) }}</span>
+            <button class="sec-link" type="button" data-testid="credit-entry" @click="creditOpen = true">{{ t('record.creditEntry') }}</button>
           </header>
-          <ResultsEditor v-model="results" v-model:credit="credit" :subjects="data.subjects" :options="options" />
+          <ResultsEditor v-model="results" v-model:credit="credit" v-model:credit-open="creditOpen" :subjects="data.subjects" :options="options" />
           <GradeShare class="sec-part" />
         </section>
 
@@ -142,6 +148,11 @@ const doneCount = computed(() => filled.value.filter((f) => f.done).length)
             </a>
           </li>
         </ul>
+        <p v-if="gradeShare.ready.value && gradeShare.shareable.value.length" class="summary-extra">
+          <a href="#share-title">{{ t('record.shareNudge') }}</a>
+          <InfoTip>{{ t('grades.what') }} <a :href="link('privacy')">{{ t('grades.privacy') }}</a></InfoTip>
+        </p>
+        <p class="summary-extra"><a href="#sec-backup">{{ t('record.backupLink') }}</a></p>
         <a class="button button-accent summary-next" :href="link('plan')">{{ t('record.next') }} <ArrowRight :size="16" aria-hidden="true" /></a>
       </section>
 
@@ -229,6 +240,37 @@ const doneCount = computed(() => filled.value.filter((f) => f.done).length)
   flex-wrap: wrap;
   align-items: center;
   gap: var(--space-2) var(--space-3);
+}
+
+.sec-link {
+  margin-inline-start: auto;
+  padding: 4px 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--accent);
+  cursor: pointer;
+}
+
+.sec-link:hover {
+  text-decoration: underline;
+}
+
+.summary-extra {
+  margin: 0;
+  font-size: 0.875rem;
+}
+
+.summary-extra a {
+  color: var(--accent);
+}
+
+/* Jump targets from the summary clear the sticky header. */
+:deep(#share-title),
+#sec-backup {
+  scroll-margin-top: 96px;
 }
 
 .sec-title {

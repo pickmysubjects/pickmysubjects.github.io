@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import InfoTip from '@/components/InfoTip.vue'
-import { computed, shallowRef, useId } from 'vue'
+import { computed, nextTick, shallowRef, useId, useTemplateRef, watch } from 'vue'
 import { ExternalLink, GraduationCap, Plus, Trash2 } from 'lucide-vue-next'
 import { CREDIT_MAX_POINTS, isFail, type Credit, type Profile } from '@/engine'
 import { usePlan } from '@/composables/usePlan'
@@ -22,7 +22,15 @@ const { course } = usePlan()
 // The course's own subject categories ("science", "breadth"); none before a degree is chosen.
 const categories = computed(() => (course.value?.categories ?? []).filter((c) => c !== 'core'))
 
-const open = shallowRef(false)
+// Opened here, or from "Credit or exemptions?" in the section header: bring the form into view.
+const open = defineModel<boolean>('open', { default: false })
+const form = useTemplateRef<HTMLFormElement>('form')
+watch(open, async (v) => {
+  if (!v) return
+  await nextTick()
+  form.value?.scrollIntoView({ block: 'nearest' })
+  form.value?.querySelector('button')?.focus({ preventScroll: true })
+})
 const kind = shallowRef<'points' | 'named'>('points')
 const points = shallowRef(50)
 const level = shallowRef<1 | 2 | 3>(1)
@@ -82,7 +90,7 @@ const lineText = (c: Credit) =>
       <span>{{ t('record.creditShort') }}</span><InfoTip>{{ t('record.creditHint') }} <a :href="URLS.ADVANCED_STANDING" target="_blank" rel="noopener">{{ t('record.creditLink') }}<ExternalLink :size="13" aria-hidden="true" /></a></InfoTip>
     </p>
 
-    <form v-if="open" class="form" data-testid="credit-form" @submit.prevent="add">
+    <form v-if="open" ref="form" class="form" data-testid="credit-form" @submit.prevent="add">
       <div class="seg" role="group" :aria-label="t('record.creditAdd')">
         <button type="button" :aria-pressed="kind === 'points'" @click="kind = 'points'">{{ t('record.creditPointsOnly') }}</button>
         <button type="button" :aria-pressed="kind === 'named'" @click="kind = 'named'">{{ t('record.creditNamed') }}</button>

@@ -44,6 +44,7 @@ const routeGroups = computed(() => {
 })
 
 // Comparing with another major: what the two share.
+const hasRoute = computed(() => !!overview.value && (overview.value.core.length > 0 || overview.value.choices.length > 0))
 const otherId = shallowRef('')
 const others = computed(() =>
   data.value.components
@@ -98,6 +99,13 @@ function planWithIt(): void {
       <h1 class="page-title">{{ major.title }}</h1>
     </header>
 
+    <!-- The page runs long: a short index, with the prerequisite route as the one to notice. -->
+    <nav v-if="overview && hasRoute" class="jump" :aria-label="t('majors.onPage')">
+      <a class="button button-quiet jump-route" href="#m-route"><Route :size="15" aria-hidden="true" /> {{ t('majors.routeJump') }}</a>
+      <a v-if="overview.core.length" class="jump-link" href="#m-core">{{ t('majors.coreTitle') }}</a>
+      <a class="jump-link" href="#m-pathway">{{ t('majors.pathwayTitle') }}</a>
+    </nav>
+
     <div class="layout">
     <div class="main">
     <p v-if="!overview" class="note flat">{{ t('majors.notCurated') }}</p>
@@ -108,7 +116,7 @@ function planWithIt(): void {
         {{ t('majors.entryRoutes', { n: overview.entryRoutes.length, first: overview.entryRoutes[0]?.title ?? '' }) }}
         <span class="route-names">{{ overview.entryRoutes.map((r) => r.title).join(' · ') }}</span>
       </p>
-      <section v-if="overview.core.length" class="block">
+      <section v-if="overview.core.length" id="m-core" class="block">
         <h2 class="block-title">{{ t('majors.coreTitle') }}</h2>
         <SubjectLinks :codes="overview.core" :year="year" />
       </section>
@@ -119,7 +127,7 @@ function planWithIt(): void {
         <SubjectLinks :codes="c.from" :year="year" :limit="4" />
       </section>
 
-      <section class="block">
+      <section id="m-pathway" class="block">
         <h2 class="block-title">{{ t('majors.pathwayTitle') }}</h2>
         <p class="block-hint">{{ t('majors.pathwayHintShort') }}<InfoTip :text="t('majors.pathwayHint')" /></p>
         <template v-if="pathwayByLevel.length">
@@ -141,7 +149,7 @@ function planWithIt(): void {
         </details>
       </section>
 
-      <MajorRoute v-if="overview.core.length || overview.choices.length" :overview="overview" :course="major.course" />
+      <MajorRoute v-if="hasRoute" id="m-route" :overview="overview" :course="major.course" />
     </template>
 
     <MajorCareers :id="major.id" :course="major.course" :title="major.title" />
@@ -203,6 +211,36 @@ function planWithIt(): void {
 </template>
 
 <style scoped>
+.jump {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  margin-top: -8px;
+}
+
+.jump-route {
+  min-height: 36px;
+  padding: 0 14px;
+  font-size: 0.875rem;
+}
+
+.jump-link {
+  font-size: 0.875rem;
+  color: var(--ink-soft);
+}
+
+.jump-link:hover {
+  color: var(--accent);
+}
+
+/* Jumped-to sections clear the sticky header. */
+#m-core,
+#m-pathway,
+#m-route {
+  scroll-margin-top: 88px;
+}
+
 .detail {
   display: grid;
   gap: 24px;
