@@ -34,11 +34,45 @@ export function countedPath(pathname: string): string {
   return pathname.split(/[?#]/)[0] || '/'
 }
 
+const SKIP_KEY = 'skipgc'
+
+/** True when this browser turned counting off with #toggle-goatcounter. */
+export function countingOff(): boolean {
+  try {
+    return localStorage.getItem(SKIP_KEY) === 't'
+  } catch {
+    return false
+  }
+}
+
+/**
+ * Opening the site with #toggle-goatcounter turns counting off in this browser, or back on
+ * (the same 'skipgc' flag count.js checks). Runs before the language redirect and before the
+ * first count; the hash is then dropped so the redirected page doesn't toggle it back.
+ * Returns true when it toggled.
+ */
+export function optOutToggle(): boolean {
+  if (typeof location === 'undefined' || location.hash !== '#toggle-goatcounter') return false
+  try {
+    if (localStorage.getItem(SKIP_KEY) === 't') localStorage.removeItem(SKIP_KEY)
+    else localStorage.setItem(SKIP_KEY, 't')
+  } catch {
+    // Storage blocked: nothing to remember the choice in.
+  }
+  try {
+    history.replaceState(history.state, '', location.pathname + location.search)
+  } catch {
+    // Leave the address as it is.
+  }
+  return true
+}
+
 let lastPath: string | null = null
 let counted = 0
 
 /** Count a page view. A repeat of the page just counted (same path) is skipped. */
 export function countPage(pathname: string = typeof location === 'undefined' ? '/' : location.pathname): void {
+  if (countingOff()) return
   const path = countedPath(pathname)
   if (path === lastPath) return
   lastPath = path
@@ -51,6 +85,7 @@ export function countPage(pathname: string = typeof location === 'undefined' ? '
 }
 /** Count an anonymous action, e.g. trackEvent('plan-share'). */
 export function trackEvent(name: AnalyticsEvent): void {
+  if (countingOff()) return
   try {
     counter()?.({ path: name, title: name, event: true })
   } catch {

@@ -5,6 +5,7 @@ import { parsePath, savedLocaleAddress } from './composables/useView'
 import { VIEW_LOADERS } from './views/loaders'
 import { currentLocale, loadLocale } from './i18n'
 import { registerServiceWorker } from './utils/serviceWorker'
+import { optOutToggle } from './utils/analytics'
 // Fonts are bundled (not loaded from Google Fonts) so visitors' IPs aren't sent to a third party.
 import '@fontsource/geist-sans/400.css'
 import '@fontsource/geist-sans/500.css'
@@ -22,6 +23,8 @@ import './assets/main.css'
 
 // A saved language other than English, on an English address: open that language's own page
 // straight away instead of drawing the English one and switching it over.
+// #toggle-goatcounter first, so neither the redirect nor the first page is counted.
+optOutToggle()
 const moveTo = savedLocaleAddress()
 if (moveTo) location.replace(moveTo)
 else start()
