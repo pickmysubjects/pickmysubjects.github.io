@@ -1122,7 +1122,7 @@ const printTerms = computed<PrintTerm[]>(() => {
   display: flex;
   align-items: center;
   gap: 14px;
-  max-width: calc(100vw - 32px);
+  max-width: calc(100% - 32px);
   padding: 10px 12px 10px 18px;
   border-radius: 999px;
   background: var(--ink);

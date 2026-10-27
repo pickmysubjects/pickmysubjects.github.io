@@ -324,8 +324,9 @@ function onClick(event: MouseEvent): void {
 }
 
 .peek {
-  width: min(600px, calc(100vw - 32px));
+  width: min(600px, calc(100% - 32px));
   max-height: min(88vh, 800px);
+  max-height: min(88dvh, 800px);
   padding: 0;
   border: 1px solid var(--card-edge);
   border-radius: 28px;
@@ -352,13 +353,20 @@ function onClick(event: MouseEvent): void {
     width: 100%;
     max-width: 100%;
     max-height: 56vh;
+    max-height: 56dvh;
     margin: auto 0 0;
     border-radius: 28px 28px 0 0;
     transition: max-height 0.25s ease;
   }
 
+  /* Clear the home indicator on phones without a home button. */
+  .peek-actions {
+    padding-bottom: calc(var(--space-5) + env(safe-area-inset-bottom));
+  }
+
   .peek-expanded {
     max-height: 92vh;
+    max-height: 92dvh;
     background: var(--glass-shine), var(--sheet-fill);
   }
 

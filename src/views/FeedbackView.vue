@@ -98,6 +98,7 @@ function choose(id: string): void {
     position: sticky;
     top: 88px;
     max-height: calc(100vh - 104px);
+    max-height: calc(100dvh - 104px);
     overflow-y: auto;
   }
 

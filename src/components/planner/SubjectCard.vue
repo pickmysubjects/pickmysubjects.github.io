@@ -439,8 +439,9 @@ function onDragStart(event: DragEvent): void {
 }
 
 .sheet {
-  width: min(360px, calc(100vw - 24px));
+  width: min(360px, calc(100% - 24px));
   max-height: min(80vh, 560px);
+  max-height: min(80dvh, 560px);
   padding: 14px;
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
@@ -563,8 +564,8 @@ function onDragStart(event: DragEvent): void {
 
 @media (max-width: 720px) {
   .sheet {
-    width: calc(100vw - 24px);
-    margin: auto auto 12px;
+    width: calc(100% - 24px);
+    margin: auto auto calc(12px + env(safe-area-inset-bottom));
   }
 }
 
