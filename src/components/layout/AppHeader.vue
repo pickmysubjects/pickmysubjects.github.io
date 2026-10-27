@@ -70,18 +70,11 @@ const sub = computed(() => subNavFor(props.view))
   position: sticky;
   top: 0;
   z-index: 20;
-  border-bottom: 1px solid rgb(255 255 255 / 55%);
-  background: rgb(255 255 255 / 62%);
-  box-shadow: 0 6px 24px -18px rgb(80 40 90 / 35%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  backdrop-filter: blur(24px) saturate(180%);
-}
-
-@media (prefers-color-scheme: dark) {
-  .header {
-    border-bottom-color: rgb(255 255 255 / 8%);
-    background: rgb(20 18 26 / 72%);
-  }
+  border-bottom: 1px solid var(--chrome-edge);
+  background: var(--chrome-shine), var(--chrome-fill);
+  box-shadow: var(--chrome-highlight), var(--chrome-shadow);
+  -webkit-backdrop-filter: var(--chrome-blur);
+  backdrop-filter: var(--chrome-blur);
 }
 
 .header-inner {

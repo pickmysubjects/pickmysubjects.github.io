@@ -36,11 +36,11 @@ const { t } = useI18n()
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     padding: 6px 8px calc(6px + env(safe-area-inset-bottom));
-    border-top: 1px solid rgb(255 255 255 / 60%);
-    background: rgb(255 255 255 / 70%);
-    box-shadow: 0 -6px 24px -18px rgb(80 40 90 / 35%);
-    -webkit-backdrop-filter: blur(24px) saturate(180%);
-    backdrop-filter: blur(24px) saturate(180%);
+    border-top: 1px solid var(--chrome-edge);
+    background: var(--chrome-shine), var(--chrome-fill);
+    box-shadow: var(--chrome-highlight), 0 -6px 24px -16px rgb(80 40 90 / 30%);
+    -webkit-backdrop-filter: var(--chrome-blur);
+    backdrop-filter: var(--chrome-blur);
   }
 
   .tab {
@@ -62,12 +62,6 @@ const { t } = useI18n()
   .tab-label {
     font-size: 0.75rem;
     font-weight: 600;
-  }
-}
-@media (max-width: 720px) and (prefers-color-scheme: dark) {
-  .tabs {
-    border-top-color: rgb(255 255 255 / 8%);
-    background: rgb(20 18 26 / 75%);
   }
 }
 </style>
