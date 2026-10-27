@@ -191,15 +191,14 @@ watch(locale, remeasure)
   width: max-content;
   max-width: min(340px, calc(100vw - 32px));
   padding: 12px 16px;
-  color: var(--ink-soft);
+  color: var(--ink);
   font-size: var(--fs-small);
   line-height: var(--lh-body);
-  background: var(--glass-shine), var(--chrome-fill);
+  /* Opaque tinted surface like the header menus: the hero scene behind never shows through the words. */
+  background: linear-gradient(180deg, color-mix(in srgb, var(--accent-fill) 6%, var(--surface)), var(--surface) 70%);
   border: 1px solid var(--glass-edge);
   border-radius: var(--radius-sm);
-  box-shadow: var(--glass-shadow);
-  backdrop-filter: var(--glass-blur-strong);
-  -webkit-backdrop-filter: var(--glass-blur-strong);
+  box-shadow: var(--float-rim), 0 18px 48px -12px rgb(0 0 0 / 28%), 0 4px 12px -4px rgb(0 0 0 / 12%);
 }
 
 .release-title {
@@ -210,6 +209,7 @@ watch(locale, remeasure)
 
 .release-when {
   margin: 0 0 4px;
+  color: var(--ink-soft);
   font-size: var(--fs-meta);
 }
 
