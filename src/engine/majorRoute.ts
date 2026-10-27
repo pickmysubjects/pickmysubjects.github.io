@@ -55,6 +55,9 @@ function refs(field: ReqField): Map<string, boolean> {
   return out
 }
 
+/** Forward-and-back passes that reorder columns to cut line crossings (more barely helps). */
+const SWEEPS = 3
+
 export function majorRoute(data: Dataset, overview: MajorOverview, course: string): MajorRoute {
   const nodes: Record<string, RouteNode> = {}
   const put = (code: string, role: RouteRole, group?: number) => {
@@ -84,17 +87,33 @@ export function majorRoute(data: Dataset, overview: MajorOverview, course: strin
   const row = new Map<string, number>()
   const order = (list: RouteNode[], score: (n: RouteNode) => number) =>
     [...list].sort((a, b) => rank(a) - rank(b) || score(a) - score(b) || a.code.localeCompare(b.code))
-  const columns: RouteColumn[] = []
+  const mean = (rows: number[]) => (rows.length ? rows.reduce((a, b) => a + b, 0) / rows.length : Number.MAX_SAFE_INTEGER)
+  // Where a subject's links go (later columns) or come from (earlier ones), as a mean row.
+  const toward = (n: RouteNode) => mean(edges.filter((e) => e.from === n.code && nodes[e.to]!.level > n.level).map((e) => row.get(e.to)!))
+  const from = (n: RouteNode) => mean(edges.filter((e) => e.to === n.code && nodes[e.from]!.level < n.level).map((e) => row.get(e.from)!))
+  const place = (codes: string[]) => codes.forEach((c, i) => row.set(c, i))
+  const byCol = new Map<number, string[]>()
   for (const level of [...levels].reverse()) {
     const list = byLevel.get(level)!
-    const score = (n: RouteNode) => {
-      const rows = edges.filter((e) => e.from === n.code && nodes[e.to]!.level > level).map((e) => row.get(e.to)!)
-      return rows.length ? rows.reduce((a, b) => a + b, 0) / rows.length : Number.MAX_SAFE_INTEGER
-    }
-    const codes = level === levels[levels.length - 1] ? order(list, () => 0).map((n) => n.code) : order(list, score).map((n) => n.code)
-    codes.forEach((c, i) => row.set(c, i))
-    columns.unshift({ level, codes })
+    const codes = level === levels[levels.length - 1] ? order(list, () => 0).map((n) => n.code) : order(list, toward).map((n) => n.code)
+    place(codes)
+    byCol.set(level, codes)
   }
+  // Then sweeps forward and back: the last column follows where its links come from (within
+  // its role order), and the earlier ones settle again, so fewer lines cross.
+  for (let sweep = 0; sweep < SWEEPS; sweep++) {
+    for (const level of levels.slice(1)) {
+      const codes = order(byLevel.get(level)!, from).map((n) => n.code)
+      place(codes)
+      byCol.set(level, codes)
+    }
+    for (const level of [...levels].reverse().slice(1)) {
+      const codes = order(byLevel.get(level)!, toward).map((n) => n.code)
+      place(codes)
+      byCol.set(level, codes)
+    }
+  }
+  const columns: RouteColumn[] = levels.map((level) => ({ level, codes: byCol.get(level)! }))
   return { nodes, edges, columns, groups: overview.choices.map((c) => ({ pick: c.points / 12.5 })) }
 }
 
