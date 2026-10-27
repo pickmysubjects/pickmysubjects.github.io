@@ -2,7 +2,7 @@
 import { link, useView } from '@/composables/useView'
 import type { View } from '@/composables/useView'
 import { useI18n } from '@/i18n'
-import { X } from 'lucide-vue-next'
+import { LayoutGrid, X } from 'lucide-vue-next'
 import { computed, onBeforeUnmount, onMounted, shallowRef, useTemplateRef, watch } from 'vue'
 import { MENUS, TABS, areaOf, isHere } from './nav'
 
@@ -12,16 +12,19 @@ const { t } = useI18n()
 const active = computed(() => areaOf(props.view))
 
 /*
- * The Tools tab opens a sheet with every feature, grouped like the desktop menus (tools first,
- * since that's the tab that opened it). A native modal <dialog>: focus stays inside, Esc closes.
+ * The Tools tab opens a short sheet with the tools; "More" at its foot turns it into every
+ * feature, grouped like the desktop menus (tools first). A native modal <dialog>: focus stays
+ * inside, Esc closes.
  */
 const sheet = useTemplateRef<HTMLDialogElement>('sheet')
 const sheetOpen = shallowRef(false)
-const groups = computed(() => [...MENUS.filter((m) => m.area === 'tools'), ...MENUS.filter((m) => m.area !== 'tools')])
+const everything = shallowRef(false)
+const groups = computed(() => (everything.value ? [...MENUS.filter((m) => m.area === 'tools'), ...MENUS.filter((m) => m.area !== 'tools')] : MENUS.filter((m) => m.area === 'tools')))
 
 function openSheet(): void {
   const d = sheet.value
   if (!d || d.open) return
+  everything.value = false
   if (typeof d.showModal === 'function') d.showModal()
   else d.setAttribute('open', '')
   sheetOpen.value = true
@@ -75,14 +78,14 @@ onBeforeUnmount(() => wide?.removeEventListener('change', onWide))
     <div class="sheet-body">
       <div class="sheet-head">
         <span class="sheet-grip" aria-hidden="true" />
-        <h2 id="all-features-title" class="sheet-title">{{ t('menu.all') }}</h2>
+        <h2 id="all-features-title" class="sheet-title">{{ everything ? t('menu.all') : t('tools.nav') }}</h2>
         <button class="sheet-close" type="button" :aria-label="t('menu.close')" @click="closeSheet">
           <X :size="18" aria-hidden="true" />
         </button>
       </div>
       <div class="sheet-scroll">
         <section v-for="g in groups" :key="g.area" class="sheet-group" :aria-labelledby="`sheet-${g.area}`">
-          <h3 :id="`sheet-${g.area}`" class="sheet-group-title">
+          <h3 v-if="everything" :id="`sheet-${g.area}`" class="sheet-group-title">
             <component :is="g.icon" :size="15" aria-hidden="true" />
             {{ t(g.key) }}
           </h3>
@@ -98,6 +101,9 @@ onBeforeUnmount(() => wide?.removeEventListener('change', onWide))
             </li>
           </ul>
         </section>
+        <button v-if="!everything" class="sheet-more" type="button" @click="everything = true">
+          <LayoutGrid :size="17" aria-hidden="true" /> {{ t('nav.more') }} · {{ t('menu.all') }}
+        </button>
       </div>
     </div>
   </dialog>
@@ -237,6 +243,24 @@ onBeforeUnmount(() => wide?.removeEventListener('change', onWide))
 
   .sheet-group + .sheet-group {
     margin-top: 10px;
+  }
+
+  .sheet-more {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    min-height: 48px;
+    margin-top: 6px;
+    padding: 0 12px;
+    border: 0;
+    border-top: 1px solid var(--line);
+    background: none;
+    color: var(--accent);
+    font: inherit;
+    font-weight: 650;
+    text-align: left;
+    cursor: pointer;
   }
 
   .sheet-group-title {

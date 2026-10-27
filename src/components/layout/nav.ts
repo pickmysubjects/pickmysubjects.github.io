@@ -65,7 +65,6 @@ export const MENUS: MenuArea[] = [
       { key: 'calc.title', desc: 'menu.d.final', to: 'tools/final/', icon: Calculator },
       { key: 'tools.wam', desc: 'menu.d.wam', to: 'tools/wam/', icon: Gauge },
       { key: 'tools.compare', desc: 'menu.d.compare', to: 'shortlist/#compare-title', icon: Columns2 },
-      { key: 'tools.routes', desc: 'menu.d.routes', to: 'majors/', icon: Route },
       { key: 'menu.allTools', desc: 'menu.d.allTools', to: 'tools/', icon: Layers },
     ],
   },
@@ -112,7 +111,7 @@ export function isHere(item: MenuItem, view: View, param: string): boolean {
   return item.to.replace(/\/$/, '') === [view, param].filter(Boolean).join('/')
 }
 
-/** The phone tab bar: five places; Tools opens the sheet with every feature. */
+/** The phone tab bar: five places; Tools opens a sheet with the tools, and "More" there has every feature. */
 export const TABS: { key: string; icon: Icon; to: string | null; area: Area | null }[] = [
   { key: 'nav.home', icon: House, to: '', area: null },
   { key: 'nav.browse', icon: ListFilter, to: 'subjects/', area: 'browse' },
