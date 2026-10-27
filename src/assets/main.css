@@ -89,7 +89,7 @@
   --tile-fill: rgb(255 255 255 / 55%);
   --field-fill: rgb(255 255 255 / 50%);
   --card-edge: rgb(255 255 255 / 60%);
-  --card-shadow: inset 0 1px 0 rgb(255 255 255 / 95%), inset 0 0 0 1px rgb(255 255 255 / 22%), 0 10px 30px -16px rgb(80 40 90 / 30%);
+  --card-shadow: inset 1px 1px 0 rgb(255 255 255 / 95%), inset 0 0 0 1px rgb(255 255 255 / 28%), inset 0 -1px 0 rgb(80 40 90 / 12%), 0 10px 30px -16px rgb(80 40 90 / 30%);
   /* Space above a page's title, under the bar. */
   --page-top: 32px;
 
@@ -145,7 +145,7 @@
     --tile-fill: rgb(30 24 44 / 55%);
     --field-fill: rgb(255 255 255 / 6%);
     --card-edge: rgb(255 255 255 / 9%);
-    --card-shadow: inset 0 1px 0 rgb(255 255 255 / 12%), inset 0 0 0 1px rgb(255 255 255 / 4%), 0 10px 30px -16px rgb(0 0 0 / 70%);
+    --card-shadow: inset 1px 1px 0 rgb(255 255 255 / 18%), inset 0 0 0 1px rgb(255 255 255 / 6%), inset 0 -1px 0 rgb(0 0 0 / 35%), 0 10px 30px -16px rgb(0 0 0 / 70%);
     color-scheme: dark;
   }
 }
