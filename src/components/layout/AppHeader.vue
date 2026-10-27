@@ -3,6 +3,7 @@ import { link } from '@/composables/useView'
 import { BookOpen } from 'lucide-vue-next'
 import LangMenu from './LangMenu.vue'
 import AppLogo from '../AppLogo.vue'
+import { IS_BETA } from '@/release'
 import SubjectSearch from '../SubjectSearch.vue'
 import MySteps from './MySteps.vue'
 import { NAV_ITEMS, subNavFor } from './nav'
@@ -21,7 +22,7 @@ const { t } = useI18n()
     <div class="header-inner shell">
       <a class="brand" :href="link('')">
         <AppLogo class="mark" small />
-        <span class="brand-name">PickMySubjects</span>
+        <span class="brand-name">PickMySubjects<span v-if="IS_BETA" class="beta-chip">Beta</span></span>
       </a>
       <nav class="nav" :aria-label="t('nav.main')">
         <template v-for="item in NAV_ITEMS" :key="item.view">
@@ -109,6 +110,19 @@ const { t } = useI18n()
   font-weight: 700;
   font-size: 1.05rem;
   letter-spacing: -0.02em;
+}
+
+/* Small and quiet, so the one-row header keeps its room. */
+.beta-chip {
+  margin-left: 6px;
+  padding: 1px 6px;
+  color: var(--ink-soft);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  vertical-align: 2px;
+  border: 1px solid var(--glass-edge);
+  border-radius: 999px;
 }
 
 .mark {

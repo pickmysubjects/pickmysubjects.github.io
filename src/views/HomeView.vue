@@ -3,6 +3,7 @@ import { link } from '@/composables/useView'
 import { computed } from 'vue'
 import { ArrowRight, Check, CircleCheck } from 'lucide-vue-next'
 import ReleasePill from '@/components/home/ReleasePill.vue'
+import ComingNotice from '@/components/home/ComingNotice.vue'
 import CanDoList from '@/components/home/CanDoList.vue'
 import SubjectSearch from '@/components/SubjectSearch.vue'
 import { usePlan } from '@/composables/usePlan'
@@ -78,6 +79,7 @@ const next = computed(() => {
     <!-- The hero: headline, one line, search; a real planned degree beside it. -->
     <section class="stage hero">
       <div class="hero-text">
+        <ComingNotice />
         <ReleasePill />
         <p class="eyebrow">{{ t('home.eyebrow') }}</p>
         <!-- "|" marks where the title may break, so a phrase is never split mid-word. -->

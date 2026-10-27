@@ -1728,12 +1728,17 @@ export const ms: Messages = {
     contact: 'Ada soalan? Gunakan halaman Maklum balas.',
   },
   home: {
+    notice: {
+      title: "Versi penuh dijangka akhir November",
+      sub: "Termasuk Handbook 2027",
+      close: "Tutup",
+    },
     release: {
-      label: "v{v} · Dikemas kini {date}",
+      label: "{v} · Dikemas kini {date}",
       title: "Apa yang baharu",
-      line1: "Rupa Liquid Glass baharu, lebih selesa dilihat",
-      line2: "Papan pelan lebih jelas: garis prasyarat dan helaian subjek",
-      line3: "Penapis lebih mudah, lebih laju di telefon",
+      line1: "Tambah ke pelan: pilih mana-mana semester, termasuk yang sudah lepas",
+      line2: "Subjek yang tidak ditawarkan kini diberi amaran, tidak hilang",
+      line3: "Ini versi beta. Versi penuh (Handbook 2027) dijangka sebelum akhir November",
     },
     moreSubjects: "+{n} lagi",
     sub: "Pilihan subjek peribadi untuk anda: cari subjek markah tinggi yang tersembunyi, elak beban kerja mengejut, dan lihat ulasan sebenar pelajar bagi setiap subjek UniMelb.",

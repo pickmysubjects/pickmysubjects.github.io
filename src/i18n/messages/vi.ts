@@ -1728,12 +1728,17 @@ export const vi: Messages = {
     contact: 'Có câu hỏi? Hãy dùng trang Góp ý.',
   },
   home: {
+    notice: {
+      title: "Bản chính thức ra mắt trước cuối tháng 11",
+      sub: "Có Handbook 2027",
+      close: "Đóng",
+    },
     release: {
-      label: "v{v} · Cập nhật {date}",
+      label: "{v} · Cập nhật {date}",
       title: "Có gì mới",
-      line1: "Giao diện Liquid Glass mới, nhìn dễ chịu hơn",
-      line2: "Bảng kế hoạch rõ hơn: đường môn tiên quyết và thẻ môn học",
-      line3: "Bộ lọc dễ dùng hơn, chạy nhanh hơn trên điện thoại",
+      line1: "Thêm vào kế hoạch: chọn được mọi học kỳ, kể cả học kỳ đã qua",
+      line2: "Môn không mở trong học kỳ đó giờ hiện cảnh báo thay vì biến mất",
+      line3: "Đây là bản beta. Bản chính thức (Handbook 2027) ra mắt trước cuối tháng 11",
     },
     moreSubjects: "+{n} môn nữa",
     sub: "Gợi ý môn học dành riêng cho bạn: tìm môn dễ lấy điểm cao, tránh môn nặng bất ngờ, và xem sinh viên thật sự nói gì về mọi môn ở UniMelb.",

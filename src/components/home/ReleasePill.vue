@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, shallowRef, useId } from 'vue'
 import { useI18n } from '@/i18n'
-import { APP_VERSION, releaseDate } from '@/release'
+import { releaseDate, versionLabel } from '@/release'
 
 /**
  * A small glass pill in the hero: the site version and when it last changed. Tapping it shows
@@ -11,7 +11,7 @@ import { APP_VERSION, releaseDate } from '@/release'
 const { t, locale } = useI18n()
 const open = shallowRef(false)
 const id = useId()
-const label = computed(() => t.value('home.release.label', { v: APP_VERSION, date: releaseDate(locale.value) }))
+const label = computed(() => t.value('home.release.label', { v: versionLabel(), date: releaseDate(locale.value) }))
 </script>
 
 <template>

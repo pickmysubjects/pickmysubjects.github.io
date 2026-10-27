@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { APP_VERSION, copyright } from '@/release'
+import { copyright, versionLabel } from '@/release'
 import { latestDataYear } from '@/engine/dataYear'
 import AppHeader from './components/layout/AppHeader.vue'
+import ComingNotice from './components/home/ComingNotice.vue'
 import BottomNav from './components/layout/BottomNav.vue'
 import Interp from './components/Interp.vue'
 import AppLogo from './components/AppLogo.vue'
@@ -94,6 +95,7 @@ watchEffect(() => {
   <AppHeader :view="view" />
   <main class="app-main shell" :class="{ 'shell-wide': view === 'plan' }">
     <!-- Narrow screens: Me's two steps as a slim switch in the page (wide screens: in the bar). -->
+    <ComingNotice v-if="view !== 'home'" slim />
     <RolloverNotice />
     <HomeView v-if="view === 'home'" />
     <SubjectView v-else-if="view === 'subject'" :key="param" :code="param" />
@@ -129,7 +131,7 @@ watchEffect(() => {
             <a href="https://handbook.unimelb.edu.au/" target="_blank" rel="noopener">{{ t('app.handbook') }}</a>
           </template>
         </Interp>
-        <span class="footer-meta">{{ copyright() }} · v{{ APP_VERSION }}</span>
+        <span class="footer-meta">{{ copyright() }} · {{ versionLabel() }}</span>
       </p>
     </div>
   </footer>

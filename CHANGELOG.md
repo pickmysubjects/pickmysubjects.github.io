@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.9.1 — 2026-10-27
+
+A hotfix. The site is labelled Beta until 1.0.0.
+
+- Add to my plan: any semester of your plan can be picked, past ones too. Semesters the subject doesn't run in show a warning instead of being left out.
+- Beta label on the header, the version pill and the footer.
+- Home page notice: the full version with the 2027 Handbook is coming by end of November.
+
 ## 0.9.0 — 2026-10-27
 
 A redesign. Version 1.0.0 follows in November with the 2027 Handbook.

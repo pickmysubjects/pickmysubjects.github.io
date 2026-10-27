@@ -1731,12 +1731,17 @@ export const en = {
     contact: 'Questions? Use the Feedback page.',
   },
   home: {
+    notice: {
+      title: "Full version coming by end of November",
+      sub: "Includes the 2027 Handbook",
+      close: "Hide",
+    },
     release: {
-      label: "v{v} · Updated {date}",
+      label: "{v} · Updated {date}",
       title: "What's new",
-      line1: "A fresh Liquid Glass look, easier on the eyes.",
-      line2: "Clearer plan board: prerequisite lines and a subject sheet.",
-      line3: "Simpler filters, and faster on phones.",
+      line1: "Add to my plan: pick any semester of your plan, past ones too.",
+      line2: "Subjects not offered in a semester now show a warning instead of disappearing.",
+      line3: "This is the beta. Full version with the 2027 Handbook coming by end of November.",
     },
     moreSubjects: "+{n} more",
     sub: "Personalised picks, hidden high-scorers, surprise workloads to dodge, and what students really say about every UniMelb subject.",

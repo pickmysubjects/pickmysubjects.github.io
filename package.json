@@ -1,6 +1,6 @@
 {
   "name": "pickmysubjects",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "private": true,
   "license": "AGPL-3.0-only",
   "description": "Unofficial, student-built subject planner and recommender for University of Melbourne students. Not affiliated with the University.",
