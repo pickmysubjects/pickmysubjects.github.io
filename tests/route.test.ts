@@ -24,4 +24,10 @@ describe('moved pages', () => {
     expect(movedTo('recommend')).toBe('subjects/?mine=1')
     expect(movedTo('subjects')).toBeNull()
   })
+
+  it('opens a subject code typed after subjects/ as that subject page', () => {
+    expect(movedTo('subjects', 'easy')).toBeNull()
+    expect(movedTo('subjects', 'POLS30011')).toBe('subject/POLS30011')
+    expect(movedTo('subjects', 'comp10001')).toBe('subject/COMP10001')
+  })
 })

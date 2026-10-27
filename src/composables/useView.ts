@@ -57,15 +57,18 @@ export function parsePath(path: string, search = ''): Route {
 
 /**
  * Old pages that now live inside another one: where they go (after the site and language part).
- * Suggestions became "sort for me" on Find subjects. Exported for tests.
+ * Suggestions became "sort for me" on Find subjects, and a subject code typed after
+ * "subjects/" (one letter too many) opens that subject's page. Exported for tests.
  */
-export function movedTo(view: View): string | null {
-  return view === 'recommend' ? 'subjects/?mine=1' : null
+export function movedTo(view: View, param = ''): string | null {
+  if (view === 'recommend') return 'subjects/?mine=1'
+  if (view === 'subjects' && /^[a-z]{4}\d{5}$/i.test(param)) return `subject/${param.toUpperCase()}`
+  return null
 }
 
 function current(): Route {
   const r = parsePath(pagePath(), location.search)
-  const to = movedTo(r.view)
+  const to = movedTo(r.view, r.param)
   if (!to) return r
   history.replaceState(null, '', link(to) + location.hash)
   return parsePath(pagePath(), location.search)
