@@ -6,8 +6,6 @@ import { ref, watchEffect } from 'vue'
 type Theme = 'auto' | 'light' | 'dark'
 const order: Theme[] = ['auto', 'light', 'dark']
 const root = document.documentElement
-const hadGlass = root.classList.contains('force-glass')
-const hadMotion = root.classList.contains('force-motion')
 
 function read(key: string): string | null {
   try {
@@ -32,7 +30,7 @@ const rt = ref(read('preview-rt') === '1')
 type Motion = 'auto' | 'on' | 'off'
 const motions: Motion[] = ['auto', 'on', 'off']
 const savedMotion = read('preview-motion')
-const motion = ref<Motion>(motions.includes(savedMotion as Motion) ? (savedMotion as Motion) : hadMotion ? 'on' : 'auto')
+const motion = ref<Motion>(motions.includes(savedMotion as Motion) ? (savedMotion as Motion) : 'on')
 
 watchEffect(() => {
   if (theme.value === 'auto') root.removeAttribute('data-theme')
@@ -41,7 +39,8 @@ watchEffect(() => {
 })
 watchEffect(() => {
   root.classList.toggle('preview-rt', rt.value)
-  root.classList.toggle('force-glass', hadGlass && !rt.value)
+  // Glass ignores the Mac's Reduce Transparency; RT shows that look whatever the Mac says.
+  root.classList.toggle('force-glass', !rt.value)
   write('preview-rt', rt.value ? '1' : '0')
 })
 

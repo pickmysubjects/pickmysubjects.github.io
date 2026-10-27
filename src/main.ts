@@ -21,16 +21,11 @@ import '@fontsource/be-vietnam-pro/700.css'
 import '@fontsource-variable/noto-sans-devanagari/wght.css'
 import './assets/main.css'
 
-// Local preview only: show the full glass even when the Mac has Reduce Transparency on.
-// The flag is set by `npm run local`; production builds never set it, so this is dropped there.
-if (import.meta.env.VITE_FORCE_GLASS === '1' || (import.meta.env.DEV && new URLSearchParams(location.search).has('glass'))) {
-  document.documentElement.classList.add('force-glass')
-}
-
-// Local preview only: animations run even when the Mac has Reduce Motion on (the preview pill can
-// switch this to the system setting or to reduced motion). Dropped from the real build like above.
+// Local preview only (dev server and `npm run local`): the full glass and the animations show
+// even when the Mac has Reduce Transparency / Reduce Motion on; the preview pill switches to the
+// RT look or reduced motion (ThemePreview.vue). Production builds drop this branch.
 if (import.meta.env.VITE_FORCE_GLASS === '1' || import.meta.env.DEV) {
-  document.documentElement.classList.add('force-motion')
+  document.documentElement.classList.add('force-glass', 'force-motion')
 }
 
 // Local preview only: a floating light/dark and Reduce Transparency switch. Same gating as above

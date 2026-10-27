@@ -6,7 +6,8 @@ import postcss, { type AtRule, type Root, type Rule, type PluginCreator } from '
  *
  * Every `@media (prefers-color-scheme: …)` / `(prefers-reduced-transparency: reduce)` block is
  * kept, guarded so a forced theme wins, and copied outside the media query under
- * `:root[data-theme="dark"]` / `:root.preview-rt`. `(prefers-reduced-motion: reduce)` blocks get the
+ * `:root[data-theme="dark"]` / `:root.preview-rt`. The Mac's own Reduce Transparency is ignored
+ * under `:root.force-glass` (the local default), so the switch decides between Glass and RT. `(prefers-reduced-motion: reduce)` blocks get the
  * same treatment (see rewriteMotion). Production builds never run this.
  */
 const DARK = /\(prefers-color-scheme:\s*dark\)/
@@ -73,11 +74,10 @@ function rewrite(root: Root): void {
       at.after(auto)
     }
     for (const f of forced.reverse()) at.after(f)
-    // The original: a forced opposite theme turns it off.
-    if (theme) {
-      const guard = dark ? ':not([data-theme="light"])' : ':not([data-theme="dark"])'
-      for (const r of rules) r.selector = prefix(r.selector, guard)
-    }
+    // The original: a forced opposite theme turns it off, and the Glass switch (force-glass)
+    // turns off the Mac's Reduce Transparency.
+    const guard = (theme ? (dark ? ':not([data-theme="light"])' : ':not([data-theme="dark"])') : '') + (rt ? ':not(.force-glass)' : '')
+    if (guard) for (const r of rules) r.selector = prefix(r.selector, guard)
   })
 }
 

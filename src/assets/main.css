@@ -1003,7 +1003,7 @@ button.chip {
 /* Reduce Transparency: frostier, fully opaque glass (Apple's behaviour), not plain white.
    The colour field stays; surfaces are solid tints of it with the same glass edge and shine. */
 @media (prefers-reduced-transparency: reduce) {
-  :root:not(.force-glass) {
+  :root {
     --card-fill: #f9f2f8;
     --tile-fill: #fbf6fb;
     --field-fill: #fdf9fc;
@@ -1022,7 +1022,7 @@ button.chip {
     --card-blur: none;
   }
 
-  :root:not(.force-glass) :is(.surface, .glass) {
+  :root :is(.surface, .glass) {
     background: var(--glass-shine), var(--card-fill);
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
@@ -1030,7 +1030,7 @@ button.chip {
 }
 
 @media (prefers-reduced-transparency: reduce) and (prefers-color-scheme: dark) {
-  :root:not(.force-glass) {
+  :root {
     /* Opaque plum tints, not grey: the same family as the colour field behind. */
     --card-fill: #22192f;
     --tile-fill: #271d36;
