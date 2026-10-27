@@ -52,6 +52,10 @@ function act(e: 'swapIt' | 'moveIt' | 'removeIt'): void {
 // The plan's subjects carry only the English gist; load the full about (every language, outcomes).
 const { subject: detailed, ready: detailReady } = useSubjectDetail(toRef(props, 'code'))
 const doneMark = shallowRef<number | ''>('')
+// The gist first: one outcome shows, the rest on request.
+const aboutOpen = shallowRef(false)
+// Phones: the sheet opens at half height (glass) and goes full (opaque) on a tap of its handle or a scroll.
+const full = shallowRef(false)
 function markDone(): void {
   const m = doneMark.value === '' ? undefined : Math.max(0, Math.min(100, Number(doneMark.value)))
   emit('markDone', m)
@@ -132,7 +136,8 @@ function onClick(event: MouseEvent): void {
 </script>
 
 <template>
-  <dialog ref="dialog" class="peek" :aria-label="code" @close="emit('close')" @click="onClick">
+  <dialog ref="dialog" class="peek" :class="{ 'peek-full': full }" :aria-label="code" @close="emit('close')" @click="onClick" @scroll.passive="full = true">
+    <button type="button" class="peek-handle" :aria-label="code" :aria-expanded="full" @click="full = !full"><span aria-hidden="true" /></button>
     <div class="peek-body">
       <header class="peek-head">
         <div class="peek-head-main">
@@ -165,7 +170,12 @@ function onClick(event: MouseEvent): void {
       <slot />
 
       <template v-if="subject">
-        <SubjectAbout v-if="detailReady && detailed" class="peek-section" :subject="detailed" />
+        <div v-if="detailReady && detailed?.about" class="peek-about" :class="{ 'peek-about-open': aboutOpen }">
+          <SubjectAbout class="peek-section" :subject="detailed" />
+          <button v-if="detailed.about.outcomes.length > 1" type="button" class="peek-more" :aria-expanded="aboutOpen" @click="aboutOpen = !aboutOpen">
+            {{ aboutOpen ? t('stress.less') : t('stress.more', { n: detailed.about.outcomes.length - 1 }) }}
+          </button>
+        </div>
 
         <div class="peek-grid">
         <section class="peek-section peek-card" :class="{ 'peek-inline': needCodes.length === 0 && route.length === 0 && !hasManual }">
@@ -332,16 +342,76 @@ function onClick(event: MouseEvent): void {
   background: rgb(40 20 50 / 22%);
 }
 
-/* Phones: a bottom sheet; opaque, since it fills most of the screen. */
+.peek-handle {
+  display: none;
+}
+
+/* Phones: a bottom sheet. Half height and glass at first; full height and opaque once expanded. */
 @media (max-width: 640px) {
   .peek {
     width: 100%;
     max-width: 100%;
-    max-height: 90vh;
+    max-height: 56vh;
     margin: auto 0 0;
     border-radius: 28px 28px 0 0;
+    transition: max-height 0.25s ease;
+  }
+
+  .peek-full {
+    max-height: 92vh;
     background: var(--glass-shine), var(--sheet-fill);
   }
+
+  .peek-handle {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 22px;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+  }
+
+  .peek-handle span {
+    width: 40px;
+    height: 5px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--ink) 25%, transparent);
+  }
+}
+
+@media (max-width: 640px) and (prefers-reduced-motion: reduce) {
+  .peek {
+    transition: none;
+  }
+}
+
+/* What you learn: the paragraph and the first outcome; the rest behind "N more". */
+.peek-about:not(.peek-about-open) :deep(.about-learn) {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.peek-about:not(.peek-about-open) :deep(.about-list li:nth-child(n + 2)) {
+  display: none;
+}
+
+.peek-more {
+  margin-top: var(--space-2);
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: var(--fs-small);
+  font-weight: 600;
+  color: var(--accent);
+  cursor: pointer;
 }
 
 .peek-body {

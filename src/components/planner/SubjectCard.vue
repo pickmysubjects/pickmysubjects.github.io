@@ -135,6 +135,8 @@ function onDragStart(event: DragEvent): void {
     @dragend="emit('dragEnd')"
     @mouseenter="emit('hover', true)"
     @mouseleave="emit('hover', false)"
+    @focusin="emit('hover', true)"
+    @focusout="emit('hover', false)"
     @click="onCardClick"
   >
     <span class="control" aria-hidden="true" />

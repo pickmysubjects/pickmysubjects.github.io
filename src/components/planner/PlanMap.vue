@@ -152,6 +152,24 @@ const shownEdges = computed(() => {
   return props.edges.filter((e) => set.has(e.from) && set.has(e.to))
 })
 
+/** A polyline with rounded corners (radius 10, smaller where a leg is short). */
+function rounded(pts: [number, number][]): string {
+  let d = `M ${pts[0]![0]} ${pts[0]![1]}`
+  for (let i = 1; i < pts.length - 1; i++) {
+    const [px, py] = pts[i - 1]!
+    const [x, y] = pts[i]!
+    const [nx, ny] = pts[i + 1]!
+    const r = Math.min(10, Math.hypot(x - px, y - py) / 2, Math.hypot(nx - x, ny - y) / 2)
+    const ax = x - Math.sign(x - px) * r
+    const ay = y - Math.sign(y - py) * r
+    const bx = x + Math.sign(nx - x) * r
+    const by = y + Math.sign(ny - y) * r
+    d += ` L ${ax} ${ay} Q ${x} ${y} ${bx} ${by}`
+  }
+  const [lx, ly] = pts[pts.length - 1]!
+  return `${d} L ${lx} ${ly}`
+}
+
 function measure(): void {
   const el = board.value
   if (!el) return
@@ -160,13 +178,37 @@ function measure(): void {
     (el.querySelector<HTMLElement>(`[data-code="${code}"]`) ?? el.querySelector<HTMLElement>(`[data-past-code="${code}"]`))?.getBoundingClientRect()
   const next: Route[] = []
   const tone = tones.value
+  // Columns, left to right: lines run in the gutters between them, never across a card.
+  const cols = [...el.querySelectorAll<HTMLElement>('.term, .past')].map((c) => c.getBoundingClientRect())
+  const colOf = (r: DOMRect) => cols.findIndex((c) => r.left >= c.left - 1 && r.right <= c.right + 1)
   for (const e of shownEdges.value) {
     const a = box(e.from)
     const b = box(e.to)
     if (!a || !b) continue
     let d: string
-    if (b.left >= a.right - 4) {
-      // A later column: from the right edge at mid-height, through the gap, into the left edge.
+    const ca = colOf(a)
+    const cb = colOf(b)
+    if (b.left >= a.right - 4 && ca >= 0 && cb > ca) {
+      const x1 = a.right - base.left
+      const y1 = a.top + a.height / 2 - base.top
+      const x2 = b.left - base.left - 3
+      const y2 = b.top + b.height / 2 - base.top
+      const g1 = (cols[ca]!.right + cols[ca + 1]!.left) / 2 - base.left
+      if (cb === ca + 1) {
+        // Next column: across the one gutter.
+        d = rounded([[x1, y1], [g1, y1], [g1, y2], [x2, y2]])
+      } else {
+        // Further on: down the first gutter, along the free space under the cards in between, up the last gutter.
+        const g2 = (cols[cb - 1]!.right + cols[cb]!.left) / 2 - base.left
+        let lane = 0
+        for (let i = ca + 1; i < cb; i++) {
+          const cards = [...el.querySelectorAll<HTMLElement>('[data-code]')].map((x) => x.getBoundingClientRect()).filter((r) => colOf(r) === i)
+          lane = Math.max(lane, ...cards.map((r) => r.bottom), cols[i]!.top + 40)
+        }
+        const yl = lane - base.top + 12
+        d = rounded([[x1, y1], [g1, y1], [g1, yl], [g2, yl], [g2, y2], [x2, y2]])
+      }
+    } else if (b.left >= a.right - 4) {
       const x1 = a.right - base.left
       const y1 = a.top + a.height / 2 - base.top
       const x2 = b.left - base.left - 3
@@ -422,6 +464,18 @@ onBeforeUnmount(() => {
 
 .route-head-need {
   stroke: #7a63f0;
+}
+
+/* Dark: a lighter violet keeps the line at 3:1 or more on the dark glass. */
+@media (prefers-color-scheme: dark) {
+  .route-need,
+  .route-head-need {
+    stroke: #a796ff;
+  }
+
+  .legend-need::before {
+    background: #a796ff;
+  }
 }
 
 .route-head-unlock {
