@@ -2,8 +2,8 @@
 import { trackEvent } from '@/utils/analytics'
 import { viewYear } from '@/engine/dataYear'
 import InfoTip from '@/components/InfoTip.vue'
-import { computed, shallowRef } from 'vue'
-import { Heart, Link2, Share2 } from 'lucide-vue-next'
+import { computed, nextTick, shallowRef } from 'vue'
+import { Columns2, Heart, Link2, Share2 } from 'lucide-vue-next'
 import CompareTable from '@/components/shortlist/CompareTable.vue'
 import ShortlistList from '@/components/shortlist/ShortlistList.vue'
 import { COMPARE_MAX, compareFromQuery, useShortlist } from '@/composables/useShortlist'
@@ -39,6 +39,14 @@ function remove(code: string): void {
   if (picked.value.includes(code)) setPicked(picked.value.filter((c) => c !== code))
 }
 const saved = computed(() => shortlist.codes.value.filter((c) => data.value.subjects[c]))
+// The main action once there's something to compare: the first saved ones (any already picked first), side by side.
+async function compareSaved(): Promise<void> {
+  const codes = [...new Set([...picked.value, ...saved.value])].slice(0, COMPARE_MAX)
+  setPicked(codes)
+  trackEvent('compare-open')
+  await nextTick()
+  document.getElementById('compare-title')?.scrollIntoView({ block: 'start' })
+}
 
 const copied = shallowRef(false)
 async function share(): Promise<void> {
@@ -79,6 +87,9 @@ async function share(): Promise<void> {
         <p class="hint" role="status">
           {{ picked.length >= COMPARE_MAX ? t('shortlist.full') : picked.length >= 2 ? t('shortlist.compare', { n: picked.length }) : t('shortlist.pickHint') }}
         </p>
+        <button v-if="saved.length >= 2 && picked.length < 2" type="button" class="button button-accent compare-go" @click="compareSaved">
+          <Columns2 :size="16" aria-hidden="true" /> {{ t('shortlist.compareGo') }}
+        </button>
         <button v-if="picked.length" type="button" class="link-button" @click="setPicked([])">{{ t('shortlist.clearPick') }}</button>
       </div>
       <ShortlistList :codes="saved" :picked="picked" :max="COMPARE_MAX" :year="year" @pick="pick" @remove="remove" />
@@ -95,6 +106,11 @@ async function share(): Promise<void> {
 </template>
 
 <style scoped>
+.compare-go {
+  min-height: 38px;
+  padding: 0 16px;
+}
+
 .shortlist {
   display: grid;
   gap: var(--space-5);
