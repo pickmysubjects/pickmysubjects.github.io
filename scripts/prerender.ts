@@ -153,7 +153,7 @@ function structured(page: Page, code: LocaleCode, url: string): object {
       inLanguage: [...LOCALE_CODES],
       about: { '@type': 'CollegeOrUniversity', name: 'The University of Melbourne', sameAs: 'https://www.unimelb.edu.au/' },
       description:
-        `Free, unofficial subject guide and degree planner for University of Melbourne students (${courseNames}), made by a graduate (formerly called Subject Compass). No ads, no sign-in; works offline.`,
+        `Free, unofficial subject guide and degree planner for University of Melbourne undergraduates (bachelor's degrees: ${courseNames}), made by a graduate (formerly called Subject Compass). No ads, no sign-in; works offline.`,
       featureList: [
         `A page for each of ${subjects.length} subjects: semesters, prerequisites, what it leads to, assessment (final-exam share, hurdles), weekly class hours`,
         `Summaries of public student reviews for ${reviewed} subjects, with links to the source, plus anonymous ratings from the site's own students`,
