@@ -93,7 +93,7 @@ const band = computed(() => fitBand(props.rec.betterThan))
 
 .thin {
   font-size: 0.75rem;
-  color: var(--ink-faint);
+  color: var(--ink-soft);
 }
 
 /* Placed against the row (the nearest positioned box), so it never runs off a phone screen. */

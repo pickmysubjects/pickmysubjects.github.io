@@ -100,7 +100,7 @@ async function report(c: StudentComment): Promise<void> {
 .tip-meta {
   margin: 0;
   font-size: var(--fs-meta);
-  color: var(--ink-faint);
+  color: var(--ink-soft);
 }
 
 .tip-report {

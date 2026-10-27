@@ -135,7 +135,7 @@ const discussions = computed(() => (props.detailReady ? (props.subject.discussio
   margin-left: 2px;
   font-size: var(--fs-small);
   font-weight: 500;
-  color: var(--ink-faint);
+  color: var(--ink-soft);
 }
 
 .tile-track,
@@ -156,7 +156,7 @@ const discussions = computed(() => (props.detailReady ? (props.subject.discussio
 
 .tile-ends {
   font-size: var(--fs-meta);
-  color: var(--ink-faint);
+  color: var(--ink-soft);
 }
 
 .tile-accent {

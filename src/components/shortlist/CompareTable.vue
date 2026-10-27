@@ -218,7 +218,7 @@ tbody tr:last-child > * {
   margin-top: 4px;
   font-size: 0.75rem;
   font-weight: 500;
-  color: var(--ink-faint);
+  color: var(--ink-soft);
 }
 
 .row-head {
@@ -244,7 +244,7 @@ tbody tr:last-child > * {
   margin-top: 2px;
   font-size: 0.8125rem;
   line-height: 1.4;
-  color: var(--ink-faint);
+  color: var(--ink-soft);
   overflow-wrap: anywhere;
 }
 
@@ -277,6 +277,68 @@ td.tone-warn .cell-text {
   th,
   td {
     padding: 10px;
+  }
+}
+
+/* Phones: no sideways scrolling. Each fact is a labelled band with the subjects side by side under it,
+   so every column stays in view and the eye compares straight across. */
+@media (max-width: 600px) {
+  .scroll {
+    overflow-x: visible;
+  }
+
+  .table,
+  .table thead,
+  .table tbody {
+    display: block;
+    min-width: 0;
+    font-size: 0.875rem;
+  }
+
+  .table tr {
+    display: grid;
+    grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+    column-gap: 10px;
+    padding: 10px 2px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .table tbody tr:last-child {
+    border-bottom: 0;
+  }
+
+  .table th,
+  .table td {
+    display: block;
+    padding: 0;
+    border: 0;
+  }
+
+  .corner {
+    display: none !important;
+  }
+
+  .row-head {
+    position: static;
+    grid-column: 1 / -1;
+    width: auto;
+    margin-bottom: 4px;
+    background: none;
+    font-size: 0.75rem;
+    letter-spacing: 0.02em;
+  }
+
+  .table thead tr {
+    position: sticky;
+    top: 64px;
+    z-index: 2;
+    border-bottom: 2px solid var(--line);
+    background: var(--glass-shine), var(--sheet-fill);
+    border-radius: 12px;
+  }
+
+  .col-head .title {
+    font-size: 0.875rem;
   }
 }
 </style>

@@ -171,7 +171,7 @@ async function share(): Promise<void> {
 
 .local {
   font-size: 0.8125rem;
-  color: var(--ink-faint);
+  color: var(--ink-soft);
 }
 
 @media (max-width: 720px) {

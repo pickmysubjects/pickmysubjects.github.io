@@ -42,7 +42,7 @@ const blocks = computed(() => props.discussions.filter((d) => d.points.length).m
 
 .discussion-note {
   font-size: var(--fs-small);
-  color: var(--ink-faint);
+  color: var(--ink-soft);
 }
 
 .discussion-points {
