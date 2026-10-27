@@ -49,6 +49,8 @@ export const zhTW: Messages = {
     language: '語言',
   },
   nav: { home: '首頁', browse: '找課', more: '更多', plan: '排課', record: '我的', contribute: '新增資料', feedback: '意見回饋', main: '主選單' },
+  /** The header menus and the phone sheet: each feature's name and one short line. */
+  menu: {"all":"全部功能","close":"關閉","allSubjects":"全部課程","careers":"我想當……","myPlan":"我的排課","compareAB":"方案 A / B 比較","rules":"學位規定檢查","heavy":"學期太重提醒","calendar":"匯出到行事曆","allTools":"全部工具","guideHome":"入門總覽","grades":"學分和成績","backup":"備份 / 換裝置","gradeShare":"成績分享","d":{"allSubjects":"依條件搜尋和篩選所有課","easy":"好拿分、拉 WAM 的課","hard":"大家覺得最難的課","noExam":"不用考期末的課","summerWinter":"利用寒暑假修課","breadth":"本科系以外的選修","firstSem":"第一學期適合選的課","majors":"每個主修要修哪些課","careers":"通往理想職業的課","myPlan":"整個學位，一學期一學期排","compareAB":"兩個方案並排比較","rules":"你的方案符合所有規定嗎","heavy":"找出課太多的學期","calendar":"census、考試和出成績日期","final":"每個等第期末要考幾分","wam":"你的 WAM、目標和假設","compare":"收藏的課並排比較","routes":"每個主修的先修鏈","allTools":"計算機和現成榜單","guideHome":"新生從這裡看起","basics":"學分、major、breadth、規定","enrolling":"從排課到正式選課","semester":"特殊考量、考試、成績","international":"簽證修課量等","grades":"H1–N 和 WAM 怎麼算","keyDates":"census、考試、出成績","record":"學位、成績和目標","shortlist":"你收藏的課","backup":"把資料搬到另一個瀏覽器","gradeShare":"匿名分享成績等第幫別人"}},
   period: { summer: '夏季學期', 'semester-1': '第一學期', winter: '冬季學期', 'semester-2': '第二學期' },
   periodShort: { summer: '夏季', 'semester-1': 'S1', winter: '冬季', 'semester-2': 'S2' },
   category: { science: '理科', commerce: '商科', arts: '文科', design: '設計', music: '音樂', 'fine-arts': '藝術', agriculture: '農業', 'oral-health': '口腔健康', breadth: 'Breadth', core: '必修' },

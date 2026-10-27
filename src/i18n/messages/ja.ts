@@ -49,6 +49,8 @@ export const ja: Messages = {
     language: '言語',
   },
   nav: { home: 'ホーム', browse: '科目', more: 'その他', plan: 'プラン', record: 'マイ', contribute: 'データを追加', feedback: 'フィードバック', main: 'メインメニュー' },
+  /** The header menus and the phone sheet: each feature's name and one short line. */
+  menu: {"all":"すべての機能","close":"閉じる","allSubjects":"すべての科目","careers":"なりたい仕事から","myPlan":"マイプラン","compareAB":"プラン A / B を比較","rules":"学位ルールのチェック","heavy":"重い学期のお知らせ","calendar":"カレンダーに追加","allTools":"すべてのツール","guideHome":"概要","grades":"単位と成績","backup":"バックアップ / 端末の移行","gradeShare":"成績をシェア","d":{"allSubjects":"全科目を検索・絞り込み","easy":"WAM を上げやすい楽単","hard":"みんなが一番難しいと言う科目","noExam":"期末試験なしの科目","summerWinter":"夏休み・冬休みに履修","breadth":"専攻外の選択科目","firstSem":"最初の学期におすすめ","majors":"各専攻に必要な科目","careers":"仕事につながる科目","myPlan":"学位を学期ごとに","compareAB":"2つのプランを並べて","rules":"ルールをすべて満たす？","heavy":"詰め込みすぎの学期を発見","calendar":"Census・試験・成績発表日","final":"成績ごとに期末で必要な点","wam":"WAM、目標、もしもの計算","compare":"保存した科目を並べて","routes":"専攻ごとの前提科目の流れ","allTools":"計算ツールと科目リスト","guideHome":"初めての人はここから","basics":"単位、専攻、breadth、ルール","enrolling":"プランから実際の履修登録へ","semester":"特別配慮、試験、成績","international":"ビザと履修量など","grades":"H1–N と WAM の仕組み","keyDates":"Census・試験・成績発表","record":"学位、成績、目標","shortlist":"保存した科目","backup":"データを別のブラウザへ","gradeShare":"成績帯を匿名でシェア"}},
   period: { summer: '夏学期', 'semester-1': '第1セメスター', winter: '冬学期', 'semester-2': '第2セメスター' },
   periodShort: { summer: '夏', 'semester-1': 'S1', winter: '冬', 'semester-2': 'S2' },
   category: { science: '理系科目', commerce: '商学系科目', arts: '文系科目', design: 'デザイン系科目', music: '音楽系科目', 'fine-arts': '芸術系科目', agriculture: '農学系科目', 'oral-health': '口腔保健系科目', breadth: 'Breadth（専攻外科目）', core: '必修' },
