@@ -9,7 +9,8 @@ import { localTitle, pickLocalized, withLocalTitle } from '@/i18n/localized'
 /** Roughly what a search result shows of a title and of a description before cutting it off. */
 export const TITLE_WIDTH = 60
 export const DESC_WIDTH = 155
-const BRAND = 'PickMySubjects'
+/** The site's one name, as search results should show it. */
+export const BRAND = 'PickMySubjects'
 
 // Chinese, Japanese and Korean characters (and full-width punctuation) take about twice the room
 // of a Latin letter in a search result; combining marks (Hindi vowel signs and the like) take none.
@@ -57,20 +58,18 @@ export function fitSentences(sentences: string[], sep: string, max = DESC_WIDTH)
 }
 
 /** Pages whose search title and description are fixed text in each language. */
-export type ListPage = 'home' | 'subjects' | 'guide' | 'careers'
+export type ListPage = 'home' | 'subjects' | 'guide' | 'careers' | 'majors'
 
 export function listPageTitle(t: Translate, page: ListPage): string {
   if (page === 'home') return t('seo.homeTitle')
-  if (page === 'careers') return `${t('careerPath.title')} | ${BRAND}`
-  return withBrand(t(page === 'subjects' ? 'seo.subjectsTitle' : 'seo.guideTitle'))
+  return withBrand(t(`seo.${page}Title`))
 }
 
 /** `subjects` is how many subjects have a page, `reviewed` how many have review summaries. */
 export function listPageDescription(t: Translate, page: ListPage, counts: { subjects: number; reviewed: number }): string {
   if (page === 'home') return t('seo.homeDesc', { n: counts.reviewed })
   if (page === 'subjects') return t('seo.subjectsDesc', { n: counts.subjects, r: counts.reviewed })
-  if (page === 'guide') return t('seo.guideDesc')
-  return t('careerPath.lede')
+  return t(`seo.${page}Desc`)
 }
 
 /** Whether a subject's page shows what students say: our own ratings (3+) or review summaries. */
@@ -78,23 +77,48 @@ export function hasReviews(s: Subject): boolean {
   return (s.signals !== undefined && s.signals.reviews >= 3) || !!s.discussions?.length
 }
 
+/** What the title and description may say about difficulty: the verdict and whether students back it. */
+export type TitleDifficulty = { level: DifficultyLevel; factsOnly: boolean }
+
+/** The final exam's share from the recorded assessment; undefined when none is recorded. */
+export function examShare(s: Subject): number | undefined {
+  if (!s.assessment?.length) return undefined
+  return Math.round(s.assessment.filter((x) => x.kind === 'exam').reduce((sum, x) => sum + x.weight, 0))
+}
+
+/** A difficulty verdict a search result may state: only one students' reviews back. */
+function backedLevel(d?: TitleDifficulty): Exclude<DifficultyLevel, 'unknown'> | undefined {
+  return d && !d.factsOnly && d.level !== 'unknown' ? d.level : undefined
+}
+
 /**
- * A subject page's search title: the code first, then the name, then what a student searching
- * the code wants to know ("is it hard? reviews, workload, exams"), in that page's language. It
- * says "reviews" only when the page has some. The longest wording that fits is used, trying the
- * name with and without its translation; past that, the university's name goes, then words.
+ * A subject page's search title: the code first (what students type), then the name, then the
+ * answer they want: how hard it is (only when students' reviews back the verdict, otherwise the
+ * question itself), the final exam's share (only when the assessment is recorded) and "reviews"
+ * (only when the page has some). The longest wording that fits is used: the site name goes first,
+ * then "reviews", then the exam; the code, a name and the verdict always stay.
  */
-export function subjectPageTitle(t: Translate, s: Subject, locale: string): string {
+export function subjectPageTitle(t: Translate, s: Subject, locale: string, difficulty?: TitleDifficulty): string {
   const local = localTitle(s, locale)
   const names = [...new Set([withLocalTitle(s.title, local), local, s.title].filter(Boolean))]
-  const tiers = hasReviews(s)
-    ? ['seo.subjectTitleReviews.long', 'seo.subjectTitleReviews.mid', 'seo.subjectTitle.short']
-    : ['seo.subjectTitle.long', 'seo.subjectTitle.mid', 'seo.subjectTitle.short']
-  const uni = t('seo.uni')
-  const candidates = tiers.flatMap((key) => {
-    const forms = names.map((title) => t(key, { code: s.code, title }))
-    return [...forms.map((f) => `${f} | ${uni}`), ...forms]
-  })
+  const level = backedLevel(difficulty)
+  const lead = level ? t(`seo.titleLevel.${level}`) : t('seo.titleHard')
+  const share = examShare(s)
+  const exam = share === undefined ? '' : share === 0 ? t('seo.titleNoExam') : t('seo.titleExam', { n: share })
+  const reviews = hasReviews(s) ? t('seo.titleReviews') : ''
+  const sep = t('seo.titleSep')
+  // After a question mark the facts follow with a space ("is it hard? 50% exam"), not a comma.
+  const join = (parts: string[]) => {
+    const rest = parts.filter(Boolean).join(sep)
+    return rest ? lead + (/？$/.test(lead) ? '' : /\?$/.test(lead) ? ' ' : sep) + rest : lead
+  }
+  const rests = [...new Set([join([exam, reviews]), join([exam]), lead])]
+  const candidates = rests.flatMap((rest) =>
+    names.flatMap((title) => {
+      const form = t('seo.titleForm', { code: s.code, title, rest })
+      return [`${form} | ${BRAND}`, form]
+    }),
+  )
   // A very long name runs past the width rather than lose the words in the page's language.
   return firstThatFits(candidates)
 }
@@ -113,34 +137,47 @@ export function runsLine(t: Translate, s: Subject, wanted: number, listSep: stri
 const CJK = new Set(['zh-CN', 'zh-TW', 'ja'])
 
 /**
- * A subject page's search description: whole sentences of concrete facts, most useful first
- * (is it hard, the exam's share, when it runs, what students say), as many as fit. `level` is the
- * page's own "is it hard?" verdict for Bachelor of Science students.
+ * The plain fact sentences a subject page leads with, most useful first: is it hard (only when
+ * students' reviews back it), the exam's share, class hours, hurdles, when it runs, what students
+ * say, prerequisites. Only what the data records; nothing about what it doesn't.
  */
-export function subjectPageDescription(t: Translate, s: Subject, locale: LocaleCode, opts: { level: DifficultyLevel; year: number }): string {
+export function subjectFactSentences(t: Translate, s: Subject, locale: LocaleCode, opts: { difficulty: TitleDifficulty; year: number }): string[] {
   const cjk = CJK.has(locale)
   const listSep = cjk ? '、' : ', '
   const end = cjk ? '。' : locale === 'hi' ? '।' : '.'
-  const gist = subjectGist(t, s)
+  const level = backedLevel(opts.difficulty)
   const sig = s.signals && s.signals.reviews >= 3 ? s.signals : undefined
   const rated = sig && sig.difficulty !== undefined && sig.workload !== undefined && sig.grading !== undefined
-  const firstPoint = s.discussions?.find((d) => d.points.length)?.points[0]
+  const tasks = s.assessment ?? []
+  const hurdle = tasks.some((x) => x.kind === 'exam' && x.hurdle) ? t('assess.mustPassExam') : tasks.some((x) => x.hurdle) ? t('assess.hurdles') : ''
+  return [
+    level ? t(`seo.verdict.${level}`, { code: s.code }) : '',
+    // Each at-a-glance line (exam share first, then class hours, group work) as its own sentence.
+    ...subjectGist(t, s).map((g) => `${g}${end}`),
+    hurdle ? `${hurdle}${end}` : '',
+    runsLine(t, s, opts.year, listSep),
+    rated ? t('seo.ratings', { d: sig.difficulty!, w: sig.workload!, g: sig.grading!, n: sig.reviews }) : '',
+    s.discussions?.length ? t('seo.reviewsHere') : '',
+    s.prerequisites === 'none' ? t('seo.noPrereq') : s.prerequisites === 'unknown' ? '' : t('seo.needs', { needs: describeReq(t, s.prerequisites, 'B-SCI') }),
+  ].filter(Boolean)
+}
+
+/**
+ * A subject page's search description: whole sentences of concrete facts (subjectFactSentences,
+ * then what it teaches and what the subject is), as many as fit.
+ */
+export function subjectPageDescription(t: Translate, s: Subject, locale: LocaleCode, opts: { difficulty: TitleDifficulty; year: number }): string {
   const title = withLocalTitle(s.title, localTitle(s, locale))
+  const firstPoint = s.discussions?.find((d) => d.points.length)?.points[0]
   return fitSentences(
     [
-      opts.level === 'unknown' ? '' : t(`seo.verdict.${opts.level}`, { code: s.code }),
-      // Each at-a-glance line (exam share first, then class hours, group work) as its own sentence.
-      ...gist.map((g) => `${g}${end}`),
-      runsLine(t, s, opts.year, listSep),
-      rated ? t('seo.ratings', { d: sig.difficulty!, w: sig.workload!, g: sig.grading!, n: sig.reviews }) : '',
-      s.discussions?.length ? t('seo.reviewsHere') : '',
+      ...subjectFactSentences(t, s, locale, opts),
       firstPoint ? pickLocalized(firstPoint, locale) : '',
-      s.prerequisites === 'none' ? t('seo.noPrereq') : s.prerequisites === 'unknown' ? '' : t('seo.needs', { needs: describeReq(t, s.prerequisites, 'B-SCI') }),
       s.about ? pickLocalized(s.about.learn, locale) : '',
       t('seo.subjectDesc', { code: s.code, title, level: s.level, points: s.points }),
       t('seo.rateDesc'),
     ],
-    cjk ? '' : ' ',
+    CJK.has(locale) ? '' : ' ',
   )
 }
 

@@ -13,7 +13,7 @@
  * robots.txt and llms.txt. Everything is static: GitHub Pages serves it for free.
  */
 import { localTitle, pickLocalized, withLocalTitle } from '../src/i18n/localized'
-import { aggregateRatingLd, listPageDescription, listPageTitle, PRESET_TITLE_KEYS, runsLine, subjectPageDescription, subjectPageTitle } from '../src/utils/seo'
+import { aggregateRatingLd, BRAND, listPageDescription, listPageTitle, PRESET_TITLE_KEYS, runsLine, subjectFactSentences, subjectPageDescription, subjectPageTitle } from '../src/utils/seo'
 import { execFileSync } from 'node:child_process'
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs'
 import type { YearDiff } from '../src/engine/yearDiff'
@@ -136,7 +136,7 @@ const discussionSources = [...new Set(subjects.flatMap((x) => x.discussions ?? [
 
 /** schema.org data, so search engines and AI assistants know what the page is about. */
 function structured(page: Page, code: LocaleCode, url: string): object {
-  const site = { '@type': 'WebSite', name: 'PickMySubjects', url: SITE }
+  const site = { '@type': 'WebSite', name: BRAND, url: `${SITE}/` }
   if (page.path === '') {
     // Who we are, said once and plainly, so search engines and AI assistants name the site right
     // (it was called Subject Compass until October 2026) and list what it actually does.
@@ -167,7 +167,8 @@ function structured(page: Page, code: LocaleCode, url: string): object {
     return {
       '@context': 'https://schema.org',
       '@graph': [
-        { ...site, inLanguage: code, description: page.description, audience: { '@type': 'EducationalAudience', educationalRole: 'student' }, isAccessibleForFree: true },
+        // Google's site name: the WebSite on the home page, with the one name and how else people write it.
+        { ...site, alternateName: ['Pick My Subjects', 'PickMySubjects UniMelb', 'PickMySubjects 墨大选课'], inLanguage: code, description: page.description, audience: { '@type': 'EducationalAudience', educationalRole: 'student' }, isAccessibleForFree: true },
         app,
       ],
     }
@@ -187,7 +188,7 @@ function render(page: Page, code: LocaleCode): string {
     ...alternates,
     `<link rel="alternate" hreflang="x-default" href="${absolute('en', page.path)}" />`,
     `<meta property="og:type" content="website" />`,
-    `<meta property="og:site_name" content="PickMySubjects" />`,
+    `<meta property="og:site_name" content="${BRAND}" />`,
     `<meta property="og:locale" content="${code.replace('-', '_')}" />`,
     `<meta property="og:title" content="${esc(page.title)}" />`,
     `<meta property="og:description" content="${esc(page.description)}" />`,
@@ -271,6 +272,8 @@ function subjectPage(code: LocaleCode, s: Subject): Page {
     `<p>${esc(t('seo.facts', facts))} · ${esc(runs(t, s, listSep(code)))}</p>`,
     // The same at-a-glance lines the app shows under the title, so search engines quote them.
     ...(gist.length ? [`<ul>${gist.map((g) => `<li>${esc(g)}</li>`).join('')}</ul>`] : []),
+    // The key facts again as plain sentences near the top, the way search summaries quote a page.
+    `<p>${esc(subjectFactSentences(t, s, code, { difficulty, year: YEAR }).join(sentenceSep(code)))}</p>`,
     // "Is it hard?" answered first, as the app's card does, for searches like "is COMP10001 hard".
     `<h2>${esc(t('seo.hardQ', { code: s.code }))}</h2><p>${esc(hard)}</p>`,
     // Our own summary, in this page's language, so crawlers that don't run scripts see it too.
@@ -332,8 +335,8 @@ function subjectPage(code: LocaleCode, s: Subject): Page {
   return {
     path: `subject/${s.code}`,
     // The same title the app sets; the description is whole sentences of facts that fit a search result.
-    title: subjectPageTitle(t, s, code),
-    description: subjectPageDescription(t, s, code, { level: difficulty.level, year: YEAR }),
+    title: subjectPageTitle(t, s, code, difficulty),
+    description: subjectPageDescription(t, s, code, { difficulty, year: YEAR }),
     body: parts.join('\n'),
     ld: courseLd(code, s, facts.title, s.prerequisites !== 'unknown' && s.prerequisites !== 'none' ? prereq : undefined, [gist.length ? `${gist.join(listSep(code))}${CJK.has(code) ? '。' : '.'}` : '', firstPoint].filter(Boolean).join(sentenceSep(code))),
   }
@@ -352,7 +355,8 @@ function courseLd(code: LocaleCode, s: Subject, title: string, prereq: string | 
       name: `${s.code} ${s.title}`,
       courseCode: s.code,
       description: s.about ? pickLocalized(s.about.learn, code) : t('seo.subjectDesc', { code: s.code, title, level: s.level, points: s.points }),
-      provider: { '@type': 'CollegeOrUniversity', name: 'The University of Melbourne', sameAs: 'https://www.unimelb.edu.au/' },
+      // Who teaches it, by name only: this site isn't the university's and doesn't speak for it.
+      provider: { '@type': 'CollegeOrUniversity', name: 'The University of Melbourne' },
       numberOfCredits: { '@type': 'StructuredValue', value: s.points, unitText: 'credit points' },
       educationalLevel: `Level ${s.level}`,
       inLanguage: 'en',
@@ -366,7 +370,7 @@ function courseLd(code: LocaleCode, s: Subject, title: string, prereq: string | 
     {
       '@type': 'BreadcrumbList',
       itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'PickMySubjects', item: absolute(code, '') },
+        { '@type': 'ListItem', position: 1, name: BRAND, item: absolute(code, '') },
         { '@type': 'ListItem', position: 2, name: t('browse.title'), item: absolute(code, 'subjects') },
         { '@type': 'ListItem', position: 3, name: `${s.code} ${title}`, item: url },
       ],
@@ -816,8 +820,8 @@ ${homeDemoHtml(code, t)}
     ...easyCutPages(code, t),
     {
       path: 'majors',
-      title: `${t('majors.title')} | PickMySubjects`,
-      description: t('majors.cardText'),
+      title: listPageTitle(t, 'majors'),
+      description: listPageDescription(t, 'majors', counts),
       body: majorsListBody(code, t),
     },
     {

@@ -11,7 +11,7 @@ import { useView, link } from './composables/useView'
 import { useDataset } from './composables/useDataset'
 import { useI18n } from './i18n'
 import { listPageTitle, PRESET_TITLE_KEYS, subjectPageTitle } from '@/utils/seo'
-import { careerTarget, presetFromSlug, rankFromSlug } from '@/engine'
+import { careerTarget, presetFromSlug, rankFromSlug, subjectDifficulty } from '@/engine'
 import { careerPhrase } from '@/utils/careerPathText'
 import { guidePageOf } from '@/utils/guideSections'
 
@@ -62,7 +62,7 @@ watchEffect(() => {
   // planning another degree sees that degree's breadth list, so the title names it instead.
   const breadthElsewhere = preset === 'breadth' && course.value !== 'B-SCI' ? data.value.courses.find((c) => c.code === course.value)?.title : undefined
   document.title = s
-    ? subjectPageTitle(t.value, s, locale.value)
+    ? subjectPageTitle(t.value, s, locale.value, subjectDifficulty(data.value.subjects, s.code, course.value, year))
     : career
       ? `${t.value('careerPath.seoTitle', { job: careerPhrase(career.names, locale.value) })} | PickMySubjects`
     : major
@@ -75,7 +75,7 @@ watchEffect(() => {
         ? `${t.value(guidePage.kind === 'category' ? `guide.cat.${guidePage.category}.title` : 'guide.kd.title')} | ${t.value('guide.title')} | PickMySubjects`
       : view.value === 'changes' && param.value
         ? `${t.value('changes.seoTitle', { year: param.value })} | PickMySubjects`
-      : view.value === 'subjects' || view.value === 'guide'
+      : view.value === 'subjects' || view.value === 'guide' || view.value === 'careers' || view.value === 'majors'
         ? listPageTitle(t.value, view.value)
       : key
       ? `${t.value(key)} | PickMySubjects`

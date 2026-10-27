@@ -53,7 +53,8 @@ const YEAR = 2026
 function subjectMeta(code: LocaleCode, c: string): { title: string; description: string } {
   const s = data.subjects[c]!
   const t = translator(code)
-  return { title: subjectPageTitle(t, s, code), description: subjectPageDescription(t, s, code, { level: subjectDifficulty(sci, c, 'B-SCI', YEAR).level, year: YEAR }) }
+  const difficulty = subjectDifficulty(sci, c, 'B-SCI', YEAR)
+  return { title: subjectPageTitle(t, s, code, difficulty), description: subjectPageDescription(t, s, code, { difficulty, year: YEAR }) }
 }
 
 describe('search widths', () => {
@@ -79,12 +80,12 @@ describe('search widths', () => {
 })
 
 describe('page titles and descriptions', () => {
-  const PAGES: ListPage[] = ['home', 'subjects', 'guide', 'careers']
+  const PAGES: ListPage[] = ['home', 'subjects', 'guide', 'careers', 'majors']
 
   for (const code of LOCALE_CODES) {
     const t = translator(code)
     it(`${code}: home, subjects and guide fit a search result`, () => {
-      for (const page of ['home', 'subjects', 'guide'] as const) {
+      for (const page of PAGES) {
         expect(textWidth(listPageTitle(t, page)), `${page} title: ${listPageTitle(t, page)}`).toBeLessThanOrEqual(TITLE_WIDTH)
         const d = listPageDescription(t, page, counts)
         expect(textWidth(d), `${page} description: ${d}`).toBeLessThanOrEqual(DESC_WIDTH)
@@ -121,7 +122,7 @@ describe('page titles and descriptions', () => {
       const t = translator(code)
       let fit = 0
       for (const s of subjects) {
-        const title = subjectPageTitle(t, s, code)
+        const title = subjectPageTitle(t, s, code, sci[s.code] ? subjectDifficulty(sci, s.code, 'B-SCI', YEAR) : undefined)
         expect(title.startsWith(`${s.code} `)).toBe(true)
         if (code === 'en' && !hasReviews(s)) expect(title).not.toMatch(/review/i)
         // A long name may run past the width, but never at the cost of the page's own language.
@@ -141,8 +142,38 @@ describe('page titles and descriptions', () => {
       }
     }
     const { description } = subjectMeta('en', 'COMP10001')
-    expect(description).toMatch(/^Is COMP10001 hard\?/)
     expect(description).toMatch(/Final exam 50%/)
     expect(description).toMatch(/Runs in 2026/)
+  })
+
+  it('every title and description says only what the data backs', () => {
+    for (const s of subjects) {
+      const d = sci[s.code] ? subjectDifficulty(sci, s.code, 'B-SCI', YEAR) : undefined
+      const backed = d !== undefined && !d.factsOnly && d.level !== 'unknown'
+      const { title, description } = subjectMeta('en', s.code)
+      // A difficulty verdict only when students' reviews back it.
+      if (!backed) {
+        expect(title, s.code).not.toMatch(/fairly easy|fairly hard|average difficulty/)
+        expect(description, s.code).not.toMatch(/On the easier side|About average|On the harder side/)
+      }
+      // The exam share only from the recorded assessment, and the same number.
+      const exam = s.assessment?.length ? Math.round(s.assessment.filter((x) => x.kind === 'exam').reduce((a, x) => a + x.weight, 0)) : undefined
+      const shown = title.match(/(\d+)% exam/)
+      if (shown) expect(Number(shown[1]), s.code).toBe(exam)
+      if (exam === undefined) expect(title, s.code).not.toMatch(/exam/)
+      if (!hasReviews(s)) expect(title, s.code).not.toMatch(/review/i)
+    }
+  })
+
+  it('a subject title keeps code, name and verdict, and drops the site name before the facts', () => {
+    const { title } = subjectMeta('en', 'COMP10001')
+    expect(title).toMatch(/^COMP10001 Foundations of Computing: /)
+    expect(title).toMatch(/50% exam/)
+    expect(textWidth(title)).toBeLessThanOrEqual(TITLE_WIDTH)
+  })
+
+  it('every locale has every title word the subject titles use', () => {
+    const keys = ['seo.titleForm', 'seo.titleSep', 'seo.titleHard', 'seo.titleExam', 'seo.titleNoExam', 'seo.titleReviews', 'seo.titleLevel.easier', 'seo.titleLevel.average', 'seo.titleLevel.harder', 'seo.careersTitle', 'seo.careersDesc', 'seo.majorsTitle', 'seo.majorsDesc']
+    for (const code of LOCALE_CODES) for (const key of keys) expect(lookup(MESSAGES[code], key), `${code} ${key}`).toBeDefined()
   })
 })

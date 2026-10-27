@@ -68,8 +68,8 @@ describe('today (October 2026), data from the 2026 Handbook only', () => {
     for (const code of changed) expect(runsLine(t, data.subjects[code]!, year, ', ')).not.toContain('2026')
     const sample = Object.values(sci).slice(0, 40)
     for (const s of sample) {
-      const level = subjectDifficulty(sci, s.code, 'B-SCI', year).level
-      expect(subjectPageDescription(t, s, 'en', { level, year })).toBe(subjectPageDescription(t, s, 'en', { level, year: 2026 }))
+      const difficulty = subjectDifficulty(sci, s.code, 'B-SCI', year)
+      expect(subjectPageDescription(t, s, 'en', { difficulty, year })).toBe(subjectPageDescription(t, s, 'en', { difficulty, year: 2026 }))
     }
   })
 
