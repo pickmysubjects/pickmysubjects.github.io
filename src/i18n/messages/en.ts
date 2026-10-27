@@ -1345,6 +1345,7 @@ export const en = {
     passFail: "Pass/fail subject: you only need to pass.",
     open: "What do I need on the final?",
     openShort: "Final calculator",
+    unknown: "No subject {code} in our data. Search for it above.",
     subjectPage: "Subject page",
   },
   can: {

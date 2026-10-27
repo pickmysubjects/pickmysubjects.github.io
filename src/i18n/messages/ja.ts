@@ -1342,6 +1342,7 @@ export const ja: Messages = {
     passFail: "合否だけの科目なので、合格すれば大丈夫です。",
     open: "期末で何点取ればいい？",
     openShort: "期末点数計算",
+    unknown: "科目 {code} は見つかりません。上で検索してください。",
     subjectPage: "科目ページ",
   },
   can: {

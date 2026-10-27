@@ -1342,6 +1342,7 @@ export const vi: Messages = {
     passFail: "Môn chỉ chấm đạt/không đạt: chỉ cần qua.",
     open: "Thi cuối kỳ cần bao nhiêu điểm?",
     openShort: "Tính điểm thi cuối kỳ",
+    unknown: "Không tìm thấy môn {code}. Hãy tìm ở ô phía trên.",
     subjectPage: "Trang môn học",
   },
   can: {

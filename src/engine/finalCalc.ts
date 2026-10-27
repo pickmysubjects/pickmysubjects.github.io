@@ -105,6 +105,15 @@ export function finalNeeds(parts: readonly CalcPart[]): CalcResult | null {
   }
 }
 
+/**
+ * The grade of a finished subject, from the bands it secured (so 79.45 is H2A even though it
+ * shows as 79.5). A pass/fail subject only has P or N.
+ */
+export function finalBand(result: CalcResult, passFail = false): CalcBand | 'N' {
+  const got = result.bands.find((b) => b.status === 'secured' && (!passFail || b.band === 'P'))
+  return got ? (passFail ? 'P' : got.band) : 'N'
+}
+
 /** A calculator row as saved: raw score and what it's out of, as typed ('' when not done yet). */
 export interface CalcRow {
   kind: AssessmentKind

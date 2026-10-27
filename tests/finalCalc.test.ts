@@ -119,3 +119,20 @@ describe('cleanCalc', () => {
     expect(cleanCalc(null)).toEqual({})
   })
 })
+
+describe('finalBand', () => {
+  it('grades a finished subject from the exact mark, not the one-decimal display', async () => {
+    const { finalBand } = await import('../src/engine/finalCalc')
+    // 79.45 shows as 79.5 but rounds to 79: H2A, not H1.
+    const r = finalNeeds([{ kind: 'exam', weight: 100, score: 79.45 }])!
+    expect(r.earned).toBe(79.5)
+    expect(finalBand(r)).toBe('H2A')
+    expect(finalBand(finalNeeds([{ kind: 'exam', weight: 100, score: 79.5 }])!)).toBe('H1')
+    expect(finalBand(finalNeeds([{ kind: 'exam', weight: 100, score: 49.4 }])!)).toBe('N')
+  })
+  it('only knows P or N for a pass/fail subject', async () => {
+    const { finalBand } = await import('../src/engine/finalCalc')
+    expect(finalBand(finalNeeds([{ kind: 'exam', weight: 100, score: 90 }])!, true)).toBe('P')
+    expect(finalBand(finalNeeds([{ kind: 'exam', weight: 100, score: 40 }])!, true)).toBe('N')
+  })
+})

@@ -1342,6 +1342,7 @@ export const zhCN: Messages = {
     passFail: "这是只记通过/不通过的课，及格就行。",
     open: "期末要考几分？",
     openShort: "期末分数计算器",
+    unknown: "没找到科目 {code}，在上面搜一下吧。",
     subjectPage: "课程页面",
   },
   can: {

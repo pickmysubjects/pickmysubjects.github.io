@@ -1342,6 +1342,7 @@ export const ko: Messages = {
     passFail: "통과/불통과만 있는 과목이라 통과만 하면 돼요.",
     open: "기말 몇 점 받아야 할까?",
     openShort: "기말 점수 계산기",
+    unknown: "{code} 과목을 찾을 수 없어요. 위에서 검색해 보세요.",
     subjectPage: "과목 페이지",
   },
   can: {

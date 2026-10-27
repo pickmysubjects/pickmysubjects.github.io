@@ -1342,6 +1342,7 @@ export const id: Messages = {
     passFail: "Mata kuliah lulus/tidak lulus: cukup lulus.",
     open: "Berapa nilai ujian akhir yang aku butuhkan?",
     openShort: "Kalkulator ujian akhir",
+    unknown: "Mata kuliah {code} tidak ada di data kami. Cari di atas.",
     subjectPage: "Halaman mata kuliah",
   },
   can: {

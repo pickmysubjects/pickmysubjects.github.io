@@ -1342,6 +1342,7 @@ export const ms: Messages = {
     passFail: "Subjek lulus/gagal: cukup sekadar lulus.",
     open: "Berapa markah peperiksaan akhir yang perlu?",
     openShort: "Kalkulator peperiksaan akhir",
+    unknown: "Subjek {code} tiada dalam data kami. Cari di atas.",
     subjectPage: "Halaman subjek",
   },
   can: {

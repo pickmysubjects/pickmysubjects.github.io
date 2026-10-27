@@ -1342,6 +1342,7 @@ export const zhTW: Messages = {
     passFail: "這是只看通過與否的課，及格就好。",
     open: "期末要考幾分？",
     openShort: "期末分數計算機",
+    unknown: "找不到科目 {code}，在上面搜尋看看。",
     subjectPage: "課程頁面",
   },
   can: {

@@ -8,7 +8,7 @@ import { useProfile } from '@/composables/useProfile'
 import { useFinalCalc, type CalcRow } from '@/composables/useFinalCalc'
 import { link, replaceAddress } from '@/composables/useView'
 import { ASSESSMENT_KINDS } from '@/engine/schema'
-import { finalNeeds, partsFromAssessment, percentOf, type CalcPart } from '@/engine/finalCalc'
+import { finalBand, finalNeeds, partsFromAssessment, percentOf, type CalcPart } from '@/engine/finalCalc'
 import { useI18n } from '@/i18n'
 import { localTitle } from '@/i18n/localized'
 import { attendanceText } from '@/utils/attendance'
@@ -60,6 +60,8 @@ const parts = computed<CalcPart[]>(() =>
 )
 const badScore = (r: CalcRow) => r.score !== '' && percentOf(r.score, r.outOf === '' ? 100 : r.outOf) === null
 const result = computed(() => finalNeeds(parts.value))
+// A pass/fail subject has only one grade worth aiming for.
+const shownBands = computed(() => (subject.value?.passFail ? result.value?.bands.filter((b) => b.band === 'P') : result.value?.bands) ?? [])
 const weightsOff = computed(() => result.value && Math.abs(result.value.totalWeight - 100) > 0.01)
 const anyDone = computed(() => (result.value?.doneWeight ?? 0) > 0)
 const allDone = computed(() => result.value !== null && result.value.leftWeight <= 0)
@@ -87,6 +89,7 @@ function pick(code: string): void {
       </label>
     </section>
 
+    <p v-if="code && !subject" class="calc-note warn" role="status">{{ t('calc.unknown', { code }) }}</p>
     <template v-if="subject">
       <p v-if="subject.passFail" class="calc-note chip">{{ t('calc.passFail') }}</p>
       <p v-if="recordMark !== undefined" class="calc-note">{{ t('calc.fromRecord', { mark: recordMark, band: gradeOf(recordMark) }) }}</p>
@@ -110,7 +113,7 @@ function pick(code: string): void {
             </label>
             <label class="f f-weight">
               <span class="f-label">{{ t('calc.weight') }}</span>
-              <input class="input" type="number" inputmode="decimal" min="0" max="100" :value="r.weight" @input="setField(i, 'weight', numberOf($event) || 0)" />
+              <input class="input" type="number" inputmode="decimal" min="0" max="100" :value="r.weight" @input="setField(i, 'weight', Math.min(100, numberOf($event) || 0))" />
             </label>
             <label class="f f-score">
               <span class="f-label">{{ t('calc.score') }}</span>
@@ -136,9 +139,9 @@ function pick(code: string): void {
 
       <section v-if="result" class="surface calc-result" aria-labelledby="calc-result" aria-live="polite">
         <h2 id="calc-result" class="sec-title">{{ allDone ? t('calc.resultAll') : t('calc.resultTitle') }}</h2>
-        <p v-if="allDone" class="final">{{ t('calc.finalMark', { mark: result.earned, band: gradeOf(Math.round(result.earned)) }) }}</p>
+        <p v-if="allDone" class="final">{{ t('calc.finalMark', { mark: result.earned, band: finalBand(result, subject.passFail === true) }) }}</p>
         <ul v-else class="bands">
-          <li v-for="b in result.bands" :key="b.band" class="band" :class="`s-${b.status}`">
+          <li v-for="b in shownBands" :key="b.band" class="band" :class="`s-${b.status}`">
             <span class="band-name">{{ b.band }} <small>{{ b.target }}+</small></span>
             <strong class="band-need">{{ b.status === 'possible' ? `${b.needed}%` : b.status === 'secured' ? t('calc.secured') : t('calc.impossible') }}</strong>
           </li>
@@ -287,15 +290,15 @@ function pick(code: string): void {
   display: flex;
   align-items: center;
   gap: 6px;
-  min-height: 40px;
+  min-height: var(--control-h);
   font-size: var(--fs-small);
 }
 
 .icon-btn {
   display: grid;
   place-items: center;
-  width: 36px;
-  height: 40px;
+  width: var(--control-h);
+  height: var(--control-h);
   border: 0;
   border-radius: var(--radius-sm);
   background: transparent;
@@ -409,7 +412,7 @@ function pick(code: string): void {
   .f-kind { grid-area: kind; }
   .f-weight { grid-area: weight; }
   .f-score { grid-area: score; }
-  .f-hurdle { grid-area: hurdle; min-height: 0; }
+  .f-hurdle { grid-area: hurdle; }
   .icon-btn { grid-area: x; }
 
   .bands {
