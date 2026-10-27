@@ -1879,6 +1879,7 @@ export const vi: Messages = {
     notPlanned: "Chưa có môn",
   },
   wizard: {
+    searchCourse: "Tìm bằng, ví dụ Science",
     qDiploma: "Học thêm một văn bằng song song? (không bắt buộc)",
     noDiploma: "Không học văn bằng",
     diplomaHint: "Thêm 100 tín chỉ ngoài ngành chính, thường lâu thêm một năm.",

@@ -1882,6 +1882,7 @@ export const en = {
     notPlanned: "Nothing planned",
   },
   wizard: {
+    searchCourse: "Search degrees, e.g. Science",
     qDiploma: "Adding a concurrent diploma? (optional)",
     noDiploma: "No diploma",
     diplomaHint: "100 more points next to your degree, usually one more year.",

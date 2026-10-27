@@ -1879,6 +1879,7 @@ export const ms: Messages = {
     notPlanned: "Tiada dirancang",
   },
   wizard: {
+    searchCourse: "Cari ijazah, cth. Science",
     qDiploma: "Tambah diploma serentak? (pilihan)",
     noDiploma: "Tiada diploma",
     diplomaHint: "100 mata lagi di sebelah ijazah anda, biasanya setahun lagi.",
