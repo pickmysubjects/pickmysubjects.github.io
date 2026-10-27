@@ -15,6 +15,12 @@ Notes for AI coding agents (and anyone else) working in this repo. CONTRIBUTING.
 - **Privacy.** Nothing about a student leaves the browser except what they explicitly send (ratings, grade bands). The one exception is GoatCounter (`src/utils/analytics.ts`, `public/count.js`): page paths without query strings, plus named anonymous events. Never send a subject code from a student's record, marks, WAM or anything else personal to it.
 - Comments in English.
 
+## Running it locally
+
+- `npm run local`: builds a copy like the live site and serves it at **http://localhost:4300** (e.g. http://localhost:4300/zh-CN/). This is the address to give the maintainer to look at changes; stop any other server on 4300 first.
+- `npm run dev`: live-reload dev server at http://localhost:5180.
+- Both ports are fixed (`strictPort`); agents testing in a worktree use other ports so they don't take 4300 from the maintainer.
+
 ## Checks
 
 - While working: only the test files related to the change (`npx vitest related <changed files> --run`, or named files) and `npm run typecheck`. Don't run `npm test`, `npm run test:fast` or `npm run build` while working — the full suite and the build (~19,500 prerendered pages) run once, in the release check, for the whole batch. Tests use 3 workers locally (`TEST_WORKERS=<n>` to change) so the laptop stays cool; CI uses all cores.
