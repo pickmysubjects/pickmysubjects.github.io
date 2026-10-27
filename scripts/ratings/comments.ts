@@ -74,8 +74,10 @@ export function buildComments(rows: Record<string, string>[], now: Date, known?:
   const bySubject = new Map<string, StudentComment[]>()
   for (const r of kept) {
     const text = screenComment(r[COMMENT_COLUMNS.wish] ?? '')
-    const year = Number(r[COLUMNS.year])
-    if (text === null || !Number.isInteger(year)) continue
+    // The year is optional on the form; a blank one would read as 0 and fail the file's schema.
+    const yearText = (r[COLUMNS.year] ?? '').trim()
+    const year = Number(yearText)
+    if (text === null || yearText === '' || !Number.isInteger(year)) continue
     const code = r[COLUMNS.code] as string
     const id = commentId(code, text)
     const list = bySubject.get(code) ?? []

@@ -72,6 +72,12 @@ describe('screenComment (automatic filter)', () => {
 })
 
 describe('buildComments', () => {
+  it('drops a comment with no year (blank is not year 0), so the file still validates', () => {
+    const out = build(row({ year: '' }), row(), row(), row())
+    expect(out.COMP30027).toHaveLength(3)
+    expect(commentsFileSchema.safeParse(out).success).toBe(true)
+  })
+
   it('publishes only approved rows (Show = TRUE)', () => {
     const out = build(row(), row(), row(), row({ show: 'FALSE', wish: 'Not approved yet.' }), row({ show: '', wish: 'No tick.' }))
     expect(out.COMP30027).toHaveLength(3)
