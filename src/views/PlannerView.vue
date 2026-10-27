@@ -518,7 +518,7 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
         <div class="bar-actions">
           <div class="bar-group" role="group">
             <button class="bar-tool" type="button" :aria-label="copied ? t('plan.copied') : t('plan.share')" :title="t('plan.share')" @click="share">
-              <Share2 :size="16" aria-hidden="true" /> <span class="bar-label">{{ copied ? t('plan.copied') : t('plan.share') }}</span>
+              <Share2 :size="16" aria-hidden="true" /> <span class="bar-label bar-swap"><span :class="{ 'swap-off': copied }">{{ t('plan.share') }}</span><span :class="{ 'swap-off': !copied }" aria-hidden="true">{{ t('plan.copied') }}</span></span>
             </button>
             <button class="bar-tool" type="button" :disabled="imaging" :aria-label="t('plan.saveImage')" :title="t('plan.saveImage')" @click="saveImage">
               <ImageDown :size="16" aria-hidden="true" /> <span class="bar-label">{{ t('plan.saveImage') }}</span>
@@ -779,10 +779,11 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
   margin-inline: auto;
 }
 
+/* The setup line on the left (wrapping within its column), the tools always at the right: the
+   toolbar stays in the same place whatever the plan's line says. */
 .bar {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
   gap: 12px;
 }
@@ -833,6 +834,20 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
 
 .bar-actions .button {
   white-space: nowrap;
+}
+
+/* Two labels in one cell, one shown: the button is as wide as the longer and never resizes. */
+.bar-swap {
+  display: inline-grid;
+  justify-items: start;
+}
+
+.bar-swap > span {
+  grid-area: 1 / 1;
+}
+
+.bar-swap > .swap-off {
+  visibility: hidden;
 }
 
 /* Share, image and print sit together as one glass pill: they all send the plan somewhere. */
@@ -886,6 +901,10 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
 
 /* Phones: the send-out tools become icons (named for screen readers), so all actions fit one row. */
 @media (max-width: 720px) {
+  .bar {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
   .bar-actions {
     width: 100%;
     justify-content: space-between;
