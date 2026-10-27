@@ -9,7 +9,7 @@ import { useI18n } from '@/i18n'
 const { all } = useDataset()
 const plan = usePlan()
 const { t } = useI18n()
-const courses = computed(() => all.courses.filter((c) => c.listed))
+const courses = computed(() => all.courses.filter((c) => c.listed).sort((a, b) => a.title.localeCompare(b.title, 'en')))
 </script>
 
 <template>

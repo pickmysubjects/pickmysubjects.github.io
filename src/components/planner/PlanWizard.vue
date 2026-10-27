@@ -44,7 +44,9 @@ const start0 =
 const courseQuery = shallowRef('')
 const shownCourses = computed(() => {
   const q = courseQuery.value.trim().toLowerCase()
-  return q ? props.courses.filter((c) => c.title.toLowerCase().includes(q) || c.code.toLowerCase().includes(q) || c.code === draft.value.course) : props.courses
+  // In alphabetical order, so a degree is where a student looks for it.
+  const sorted = [...props.courses].sort((a, b) => a.title.localeCompare(b.title, 'en'))
+  return q ? sorted.filter((c) => c.title.toLowerCase().includes(q) || c.code.toLowerCase().includes(q) || c.code === draft.value.course) : sorted
 })
 const draft = shallowRef<PlanSetup>({ ...props.setup, ...start0 })
 const step = shallowRef(0)
