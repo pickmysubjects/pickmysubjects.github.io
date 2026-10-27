@@ -44,13 +44,23 @@ export interface CalcResult {
   totalWeight: number
   doneWeight: number
   leftWeight: number
-  /** Marks banked so far, out of the total weight scaled to 100. */
+  /** Marks banked so far, out of the total weight scaled to 100 (to one decimal, for the working). */
   earned: number
+  /**
+   * With every part done: the final mark as UniMelb gives it, a whole number (79.5 → 80, 79.45 →
+   * 79). Null while parts are still to come.
+   */
+  mark: number | null
   /** Best final mark still reachable (100% on everything left). */
   best: number
   bands: BandNeed[]
   /** Parts not done yet that must be passed on their own. */
   hurdlesLeft: CalcPart[]
+  /**
+   * Hurdles already marked under 50%. The Handbook doesn't give a hurdle's pass mark, but 50% is
+   * the usual one: below it the subject is likely failed (NH, 49 on the transcript) whatever the total.
+   */
+  hurdlesMissed: CalcPart[]
   /** True when counting 79.5 as 80 changes a shown result: only then is the rounding explained. */
   roundingMatters: boolean
 }
@@ -68,6 +78,9 @@ export function percentOf(score: number, outOf = 100): number | null {
 }
 
 const tenth = (x: number) => Math.round(x * 10) / 10
+
+/** The usual pass mark of a hurdle, when the subject guide doesn't say otherwise. */
+export const HURDLE_PASS = 50
 
 export function finalNeeds(parts: readonly CalcPart[]): CalcResult | null {
   const usable = parts.filter((p) => Number.isFinite(p.weight) && p.weight > 0)
@@ -98,19 +111,24 @@ export function finalNeeds(parts: readonly CalcPart[]): CalcResult | null {
     doneWeight: tenth(doneWeight),
     leftWeight: tenth(leftWeight),
     earned: tenth(earned),
+    // The 1e-9 keeps a sum like 79.4999999 (really 79.5) from rounding down.
+    mark: leftShare <= 0 ? Math.round(earned + 1e-9) : null,
     best: tenth(earned + leftShare),
     bands,
     hurdlesLeft: left.filter((p) => p.hurdle),
+    hurdlesMissed: done.filter((p) => p.hurdle && (p.score as number) < HURDLE_PASS),
     roundingMatters,
   }
 }
 
 /**
  * The grade of a finished subject, from the bands it secured (so 79.45 is H2A even though it
- * shows as 79.5). A pass/fail subject only has P or N.
+ * shows as 79.5). A pass/fail subject only has P or N. A hurdle marked under 50% caps it: NH
+ * (a fail, 49 on the transcript) when the total would have passed, N when it wouldn't.
  */
-export function finalBand(result: CalcResult, passFail = false): CalcBand | 'N' {
+export function finalBand(result: CalcResult, passFail = false): CalcBand | 'N' | 'NH' {
   const got = result.bands.find((b) => b.status === 'secured' && (!passFail || b.band === 'P'))
+  if (got && result.hurdlesMissed.length) return 'NH'
   return got ? (passFail ? 'P' : got.band) : 'N'
 }
 

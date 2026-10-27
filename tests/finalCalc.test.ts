@@ -130,6 +130,29 @@ describe('finalBand', () => {
     expect(finalBand(finalNeeds([{ kind: 'exam', weight: 100, score: 79.5 }])!)).toBe('H1')
     expect(finalBand(finalNeeds([{ kind: 'exam', weight: 100, score: 49.4 }])!)).toBe('N')
   })
+  it('gives the whole mark UniMelb uses once every part is done', () => {
+    // 79.45 shows as 79.5 in the working, but the final mark is 79 (H2A); 79.5 is 80.
+    expect(finalNeeds([{ kind: 'exam', weight: 100, score: 79.45 }])!.mark).toBe(79)
+    expect(finalNeeds([{ kind: 'exam', weight: 100, score: 79.5 }])!.mark).toBe(80)
+    expect(finalNeeds([{ kind: 'assignment', weight: 30, score: 75 }, { kind: 'exam', weight: 70, score: 84.5 }])!.mark).toBe(82)
+    // Parts still to come: no final mark yet.
+    expect(finalNeeds([{ kind: 'assignment', weight: 30, score: 75 }, { kind: 'exam', weight: 70 }])!.mark).toBeNull()
+  })
+  it('a hurdle marked under 50% caps the grade at NH, or N when the total fails anyway', async () => {
+    const { finalBand } = await import('../src/engine/finalCalc')
+    const missed = finalNeeds([{ kind: 'assignment', weight: 50, score: 95 }, { kind: 'exam', weight: 50, hurdle: true, score: 45 }])!
+    expect(missed.mark).toBe(70)
+    expect(missed.hurdlesMissed.map((h) => h.kind)).toEqual(['exam'])
+    expect(finalBand(missed)).toBe('NH')
+    expect(finalBand(missed, true)).toBe('NH')
+    const both = finalNeeds([{ kind: 'assignment', weight: 50, score: 40 }, { kind: 'exam', weight: 50, hurdle: true, score: 30 }])!
+    expect(finalBand(both)).toBe('N')
+    // Passed at 50%, or not a hurdle: nothing changes.
+    expect(finalBand(finalNeeds([{ kind: 'assignment', weight: 50, score: 95 }, { kind: 'exam', weight: 50, hurdle: true, score: 50 }])!)).toBe('H2B')
+    expect(finalBand(finalNeeds([{ kind: 'assignment', weight: 50, score: 95 }, { kind: 'exam', weight: 50, score: 45 }])!)).toBe('H2B')
+    // Still to come: the miss is known before the end.
+    expect(finalNeeds([{ kind: 'test', weight: 20, hurdle: true, score: 30 }, { kind: 'exam', weight: 80 }])!.hurdlesMissed).toHaveLength(1)
+  })
   it('only knows P or N for a pass/fail subject', async () => {
     const { finalBand } = await import('../src/engine/finalCalc')
     expect(finalBand(finalNeeds([{ kind: 'exam', weight: 100, score: 90 }])!, true)).toBe('P')

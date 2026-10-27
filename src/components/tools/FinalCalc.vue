@@ -140,13 +140,20 @@ function pick(code: string): void {
 
       <section v-if="result" class="surface calc-result" aria-labelledby="calc-result" aria-live="polite">
         <h2 id="calc-result" class="sec-title">{{ allDone ? t('calc.resultAll') : t('calc.resultTitle') }}</h2>
-        <p v-if="allDone" class="final">{{ t('calc.finalMark', { mark: result.earned, band: finalBand(result, subject.passFail === true) }) }}</p>
+        <p v-if="allDone && result.mark !== null" class="final">
+          <template v-if="finalBand(result, subject.passFail === true) === 'NH'">{{ t('calc.finalMarkNH', { mark: result.mark }) }}<InfoTip :text="t('calc.hurdleInfo')" /></template>
+          <template v-else>{{ t('calc.finalMark', { mark: result.mark, band: finalBand(result, subject.passFail === true) }) }}</template>
+        </p>
         <ul v-else class="bands">
           <li v-for="b in shownBands" :key="b.band" class="band" :class="`s-${b.status}`">
             <span class="band-name">{{ b.band }} <small>{{ b.target }}+</small></span>
             <strong class="band-need">{{ b.status === 'possible' ? `${b.needed}%` : b.status === 'secured' ? t('calc.secured') : t('calc.impossible') }}</strong>
           </li>
         </ul>
+        <p v-for="(h, i) in allDone ? [] : result.hurdlesMissed" :key="`m${i}`" class="hurdle hurdle-missed" role="alert">
+          <TriangleAlert :size="15" aria-hidden="true" />
+          <span>{{ t('calc.hurdleUnder', { part: kindName(h.kind) }) }}<InfoTip :text="t('calc.hurdleInfo')" /></span>
+        </p>
         <p v-if="!allDone" class="maths">{{ t('calc.maths', { earned: result.earned, left: Math.round(result.leftWeight * (100 / result.totalWeight) * 10) / 10 }) }}<InfoTip v-if="result.roundingMatters" :text="t('calc.roundInfo')" /></p>
         <p v-if="!anyDone" class="calc-hint">{{ t('calc.nothingDone') }}</p>
 
