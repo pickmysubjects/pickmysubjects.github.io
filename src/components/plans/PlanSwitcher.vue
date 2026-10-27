@@ -81,7 +81,7 @@ function confirmDelete(): void {
         </button>
       </div>
       <div class="tools">
-        <button v-if="!props.noCompare && plans.list.value.length > 1" class="link" type="button" @click="emit('compare')">
+        <button v-if="!props.noCompare && plans.list.value.length > 1" class="button button-quiet compare" type="button" @click="emit('compare')">
           <Columns2 :size="16" aria-hidden="true" /> {{ t('plans.compare') }}
         </button>
         <button class="icon" type="button" :aria-label="planName(t, plans.active.value)" :aria-expanded="panel === 'menu'" @click="toggle('menu')">
@@ -222,24 +222,14 @@ function confirmDelete(): void {
   cursor: pointer;
 }
 
-.link {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  min-height: 34px;
-  padding: 0 8px;
-  border: 0;
-  background: none;
-  color: var(--accent);
-  font: inherit;
+.compare {
+  min-height: 40px;
+  padding: 0 14px;
   font-size: 0.875rem;
-  font-weight: 600;
-  cursor: pointer;
 }
 
 .tab:focus-visible,
-.icon:focus-visible,
-.link:focus-visible {
+.icon:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }

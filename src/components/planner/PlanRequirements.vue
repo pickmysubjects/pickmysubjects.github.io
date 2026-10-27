@@ -123,6 +123,11 @@ function toggle(id: string): void {
       </span>
     </button>
 
+    <!-- One-line headlines that jump elsewhere on the page (e.g. heavy semesters). -->
+    <div v-if="$slots.alerts" class="alerts">
+      <slot name="alerts" />
+    </div>
+
     <!-- The plan's other status (subject problems, notes) lives in the same card, not a second banner. -->
     <div v-if="$slots.notes" class="notes">
       <slot name="notes" />
@@ -163,6 +168,14 @@ function toggle(id: string): void {
 
 .health-fail {
   --tone: var(--bad);
+}
+
+.alerts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px 20px;
+  border-top: 1px solid var(--line);
 }
 
 .notes {
@@ -478,9 +491,24 @@ function toggle(id: string): void {
     border-top: 1px solid var(--line);
   }
 
-  .health-title,
-  .health-sub {
+  .health-title {
     white-space: normal;
+  }
+}
+
+/* Phones: the rules toggle gets its own line under the meters, so the headline and
+   "12/14 rules met" never squeeze into a broken wrap beside it. */
+@media (max-width: 560px) {
+  .head {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .toggle {
+    grid-row: 3;
+  }
+
+  .alerts {
+    padding: 10px 16px;
   }
 }
 

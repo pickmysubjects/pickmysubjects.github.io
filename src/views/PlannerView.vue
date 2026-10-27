@@ -156,6 +156,14 @@ const { stress } = usePlanStress()
 const unavoidable = computed(() =>
   stress.value.unavoidable.map((u) => t.value('stress.unavoidable', { skill: t.value(`skill.${u.skill}`), total: u.total, perTerm: u.perTerm })),
 )
+// Heavy semesters, counted for the status card; the line jumps to the first one's note and fix.
+const heavyTerms = computed(() => stress.value.terms.filter((x) => x && x.level !== 'ok').length)
+function showHeavy(): void {
+  const note = document.querySelector<HTMLElement>('[data-stress-term]')
+  if (!note) return
+  note.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'center' })
+  note.focus({ preventScroll: true })
+}
 // A first visit shows only the questions; the board and its checks come once there's a plan.
 // A shared link shows its import banner instead.
 // Subjects the student failed: where the plan repeats them, or that it doesn't (an elective can be swapped).
@@ -533,6 +541,11 @@ const printTerms = computed<PrintTerm[]>(() => {
             :active="ruleFocus"
             @focus="focusRule"
           >
+            <template v-if="heavyTerms" #alerts>
+              <button class="heavy-link" type="button" @click="showHeavy">
+                <TriangleAlert :size="15" aria-hidden="true" /> {{ t('plan.heavySummary', { n: heavyTerms }) }}
+              </button>
+            </template>
             <template v-if="hasNotes" #notes>
               <ul v-if="planProblems.length" class="status-list" :class="problems ? 'tone-bad' : 'tone-warn'" role="status">
                 <li v-for="(p, i) in planProblems.slice(0, 5)" :key="i" class="status-item">
@@ -665,6 +678,27 @@ const printTerms = computed<PrintTerm[]>(() => {
 </template>
 
 <style scoped>
+.heavy-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 32px;
+  padding: 0 12px;
+  border: 1px solid color-mix(in srgb, var(--warn) 35%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--warn) 10%, transparent);
+  color: color-mix(in srgb, var(--warn) 75%, var(--ink));
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.heavy-link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
 .planner {
   display: grid;
   gap: 20px;

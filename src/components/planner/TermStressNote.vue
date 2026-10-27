@@ -60,7 +60,7 @@ const fixLabel = computed(() => {
 </script>
 
 <template>
-  <div v-if="here && here.level !== 'ok'" class="stress" :class="`stress-${here.level}`" role="note">
+  <div v-if="here && here.level !== 'ok'" class="stress" :class="`stress-${here.level}`" role="note" :data-stress-term="termIndex" tabindex="-1">
     <p class="stress-line">
       <span class="stress-level">{{ t(`stress.${here.level}`) }}</span>
       {{ reasons[0] }}
@@ -101,6 +101,12 @@ const fixLabel = computed(() => {
   box-shadow: var(--glass-shadow);
   font-size: 0.8125rem;
   line-height: 1.45;
+}
+
+/* Reached from the plan's "heavy semesters" line: show which note it landed on. */
+.stress:focus {
+  outline: 2px solid var(--tone);
+  outline-offset: 2px;
 }
 
 .stress-veryHeavy {
