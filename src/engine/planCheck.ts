@@ -1,4 +1,5 @@
 import { offeredIn } from './availability'
+import { creditCodes, withCredit } from './credit'
 import { heldMajorIds, majorTitles, minorTitles, planComponentIds } from './courseRules'
 import { planRoles } from './roles'
 import { evaluateField, referencedSubjects } from './expr'
@@ -15,11 +16,14 @@ import { termLoad, unfinishedIn } from './yearLong'
 /** Usual most points in a summer or winter term. */
 export const SHORT_TERM_LOAD = 25
 
-export function checkTerms(plan: Plan, data: Dataset, standardLoad = 50): Issue[] {
+export function checkTerms(plan: Plan, given: Dataset, standardLoad = 50): Issue[] {
   const issues: Issue[] = []
+  // Credit for study elsewhere counts as completed stand-in subjects, so a points prerequisite
+  // ("50 points at level 2") sees it, as the plan builder and course rules do.
+  const data = withCredit(given, plan.credit, plan.course)
   // A lighter load the student chose (part-time); the course's standard one says nothing new.
   const chosen = plan.load !== undefined && plan.load < standardLoad ? plan.load : undefined
-  const seen = new Set(plan.completed)
+  const seen = new Set([...plan.completed, ...creditCodes(plan.credit)])
   const everywhere = new Set([...plan.completed, ...plan.terms.flatMap((t) => t.subjects)])
   // Subjects the student's course has closed to them (B-COM's ACCT10002).
   const closed = new Set(data.courses.find((c) => c.code === plan.course)?.closed ?? [])
