@@ -42,8 +42,13 @@ watch(() => props.current, reveal)
   padding: 3px;
   overflow-x: auto;
   scrollbar-width: none;
-  background: color-mix(in srgb, var(--ink) 6%, transparent);
-  border-radius: 12px;
+  border: 1px solid var(--glass-edge);
+  background: var(--seg-fill);
+  box-shadow: var(--float-rim);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  /* Not a full capsule: on a phone the sections wrap onto two rows. 22px = pill radius + 3px padding. */
+  border-radius: 22px;
 }
 
 .steps::-webkit-scrollbar {
@@ -60,7 +65,7 @@ watch(() => props.current, reveal)
   color: var(--ink-soft);
   white-space: nowrap;
   text-decoration: none;
-  border-radius: 9px;
+  border-radius: 999px;
 }
 
 .step:hover {
@@ -71,7 +76,7 @@ watch(() => props.current, reveal)
   font-weight: 650;
   color: var(--ink);
   background: var(--glass-fill-hover);
-  box-shadow: var(--glass-shadow);
+  box-shadow: var(--pill-raised);
 }
 
 /* On a phone the sections wrap onto a second row rather than scrolling sideways:

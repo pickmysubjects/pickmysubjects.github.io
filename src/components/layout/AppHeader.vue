@@ -72,7 +72,8 @@ const sub = computed(() => subNavFor(props.view))
   z-index: 20;
   border-bottom: 1px solid var(--chrome-edge);
   background: var(--chrome-shine), var(--chrome-fill);
-  box-shadow: var(--chrome-highlight), var(--chrome-shadow);
+  /* Specular line along the bottom edge, where content slides under. */
+  box-shadow: var(--chrome-highlight), inset 0 -1px 0 rgb(255 255 255 / 45%), var(--chrome-shadow);
   -webkit-backdrop-filter: var(--chrome-blur);
   backdrop-filter: var(--chrome-blur);
 }

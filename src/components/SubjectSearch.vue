@@ -121,10 +121,12 @@ function move(delta: number): void {
   width: 100%;
   height: 60px;
   padding: 0 20px 0 54px;
-  border: 1px solid var(--line);
+  border: 1px solid var(--glass-edge);
   border-radius: 999px;
-  background: var(--surface);
-  box-shadow: var(--shadow-2);
+  background: var(--glass-shine), var(--glass-fill);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-shadow), var(--shadow-2);
   font-size: 1.05rem;
   color: var(--ink);
 }
@@ -142,7 +144,7 @@ function move(delta: number): void {
 .search-compact .search-input {
   height: 38px;
   padding-left: 36px;
-  box-shadow: none;
+  box-shadow: var(--glass-shadow);
   font-size: 0.875rem;
 }
 
@@ -155,10 +157,12 @@ function move(delta: number): void {
   margin: 0;
   padding: 6px;
   list-style: none;
-  border: 1px solid var(--line);
+  border: 1px solid var(--glass-edge);
   border-radius: var(--radius);
-  background: var(--surface);
-  box-shadow: var(--shadow-2);
+  background: var(--glass-shine), var(--sheet-fill);
+  -webkit-backdrop-filter: var(--glass-blur-strong);
+  backdrop-filter: var(--glass-blur-strong);
+  box-shadow: var(--glass-shadow), var(--shadow-2);
 }
 
 .result {

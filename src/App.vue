@@ -176,9 +176,9 @@ watchEffect(() => {
 }
 
 @media (max-width: 720px) {
-  /* Clear the fixed bottom tabs, including the home-indicator inset. */
+  /* Clear the floating bottom tab bar (and its 12px inset), including the home-indicator inset. */
   .footer {
-    padding-bottom: calc(104px + env(safe-area-inset-bottom));
+    padding-bottom: calc(116px + env(safe-area-inset-bottom));
   }
 
   .footer-links {

@@ -67,12 +67,22 @@
     inset 0 -1px 1px rgb(255 255 255 / 40%), 0 4px 14px -6px rgb(80 40 90 / 22%);
   --glass-shine: linear-gradient(180deg, rgb(255 255 255 / 34%), rgb(255 255 255 / 0%) 50%, rgb(255 255 255 / 8%));
   /* The floating chrome (top bar, phone tab bar): the functional layer above content. */
-  --chrome-fill: rgb(255 255 255 / 58%);
+  --chrome-fill: rgb(255 255 255 / 46%);
   --chrome-edge: rgb(255 255 255 / 70%);
   --chrome-blur: blur(22px) saturate(190%);
   --chrome-shine: linear-gradient(180deg, rgb(255 255 255 / 30%), rgb(255 255 255 / 0%) 60%);
   --chrome-highlight: inset 0 1px 0 rgb(255 255 255 / 90%), inset 0 -1px 0 rgb(255 255 255 / 35%);
   --chrome-shadow: 0 6px 24px -16px rgb(80 40 90 / 38%);
+  /* Floating glass (phone tab bar, segmented switches, popovers): clearer fill, bright rim, lifted. */
+  --float-fill: rgb(255 255 255 / 40%);
+  --float-blur: blur(22px) saturate(180%);
+  --float-rim: inset 0 1px 0 rgb(255 255 255 / 95%), inset 0 0 0 1px rgb(255 255 255 / 38%), inset 0 -1px 1px rgb(255 255 255 / 30%);
+  --float-shadow: 0 12px 32px -12px rgb(80 40 90 / 38%), 0 2px 6px -2px rgb(80 40 90 / 14%);
+  --seg-fill: rgb(255 255 255 / 34%);
+  --pill-raised: var(--glass-shadow), 0 3px 10px -3px rgb(80 40 90 / 30%);
+  --glass-blur-strong: blur(28px) saturate(200%);
+  /* Popovers and sheets: glass, but mostly opaque so their text reads easily. */
+  --sheet-fill: color-mix(in srgb, var(--surface) 84%, transparent);
 
   color-scheme: light;
   font-family: var(--font-ui);
@@ -112,11 +122,16 @@
       inset 0 -1px 1px rgb(255 255 255 / 6%), 0 4px 14px -6px rgb(0 0 0 / 60%);
     --glass-shine: linear-gradient(180deg, rgb(255 255 255 / 16%), rgb(255 255 255 / 0%) 50%, rgb(255 255 255 / 3%));
     /* Tinted toward the plum/indigo field behind, not neutral grey. */
-    --chrome-fill: rgb(24 20 32 / 68%);
+    --chrome-fill: rgb(24 20 32 / 56%);
     --chrome-edge: rgb(255 255 255 / 10%);
     --chrome-shine: linear-gradient(180deg, rgb(255 255 255 / 7%), rgb(255 255 255 / 0%) 60%);
     --chrome-highlight: inset 0 1px 0 rgb(255 255 255 / 12%), inset 0 -1px 0 rgb(255 255 255 / 4%);
     --chrome-shadow: 0 6px 24px -16px rgb(0 0 0 / 70%);
+    --float-fill: rgb(30 26 42 / 50%);
+    --float-rim: inset 0 1px 0 rgb(255 255 255 / 22%), inset 0 0 0 1px rgb(255 255 255 / 8%), inset 0 -1px 1px rgb(255 255 255 / 5%);
+    --float-shadow: 0 12px 32px -10px rgb(0 0 0 / 70%);
+    --seg-fill: rgb(255 255 255 / 6%);
+    --pill-raised: var(--glass-shadow), 0 3px 10px -3px rgb(0 0 0 / 60%);
     color-scheme: dark;
   }
 }
@@ -388,7 +403,7 @@ textarea {
   background: var(--glass-shine), color-mix(in srgb, var(--ink) 88%, transparent);
   -webkit-backdrop-filter: var(--glass-blur);
   backdrop-filter: var(--glass-blur);
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / 30%), 0 6px 16px -8px rgb(16 16 20 / 45%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 42%), inset 0 0 0 1px rgb(255 255 255 / 10%), 0 6px 16px -8px rgb(16 16 20 / 45%);
   color: var(--bg);
   font-weight: 600;
   font-size: 0.9375rem;
@@ -631,6 +646,11 @@ button.chip {
     --chrome-fill: var(--surface);
     --chrome-blur: none;
     --glass-blur: none;
+    --float-fill: var(--surface);
+    --float-blur: none;
+    --seg-fill: var(--surface-2);
+    --glass-blur-strong: none;
+    --sheet-fill: var(--surface);
   }
 
   .surface,
@@ -650,6 +670,10 @@ button.chip {
     --chrome-edge: var(--ink-faint);
     --glass-shine: none;
     --chrome-shine: none;
+    --float-fill: var(--surface);
+    --float-rim: inset 0 0 0 1px var(--ink-faint);
+    --seg-fill: var(--surface-2);
+    --sheet-fill: var(--surface);
   }
 
   .surface,
@@ -664,6 +688,7 @@ button.chip {
   :root {
     --glass-fill: var(--surface);
     --chrome-fill: var(--surface);
+    --float-fill: var(--surface);
   }
 }
 

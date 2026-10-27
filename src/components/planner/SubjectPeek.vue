@@ -314,11 +314,14 @@ function onClick(event: MouseEvent): void {
   width: min(560px, calc(100vw - 32px));
   max-height: min(86vh, 760px);
   padding: 0;
-  border: 1px solid var(--line);
+  border: 1px solid var(--glass-edge);
   border-radius: var(--radius-lg);
-  background: var(--surface);
+  /* A sheet: glass, but mostly opaque so its text stays easy to read. */
+  background: var(--glass-shine), var(--sheet-fill);
+  -webkit-backdrop-filter: var(--glass-blur-strong);
+  backdrop-filter: var(--glass-blur-strong);
   color: var(--ink);
-  box-shadow: var(--shadow-2);
+  box-shadow: var(--glass-shadow), var(--shadow-2);
 }
 
 .peek::backdrop {

@@ -35,8 +35,12 @@ const sub = computed(() => subNavFor(view.value))
   max-width: 100%;
   padding: 3px;
   overflow-x: auto;
-  background: color-mix(in srgb, var(--ink) 6%, transparent);
-  border-radius: 12px;
+  border: 1px solid var(--glass-edge);
+  background: var(--seg-fill);
+  box-shadow: var(--float-rim);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  border-radius: 999px;
 }
 
 .step {
@@ -49,7 +53,7 @@ const sub = computed(() => subNavFor(view.value))
   color: var(--ink-soft);
   white-space: nowrap;
   text-decoration: none;
-  border-radius: 9px;
+  border-radius: 999px;
 }
 
 .step:hover {
@@ -60,7 +64,7 @@ const sub = computed(() => subNavFor(view.value))
   font-weight: 650;
   color: var(--ink);
   background: var(--glass-fill-hover);
-  box-shadow: var(--glass-shadow);
+  box-shadow: var(--pill-raised);
 }
 
 .step-n {
