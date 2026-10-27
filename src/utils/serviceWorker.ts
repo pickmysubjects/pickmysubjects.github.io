@@ -12,6 +12,13 @@ export function newVersionReady(): boolean {
 
 export function registerServiceWorker(): void {
   if (!import.meta.env.PROD || !('serviceWorker' in navigator)) return
+  // A local preview build: never cache it, and drop any worker an earlier local build left behind,
+  // so a rebuild shows up on a plain reload.
+  if (['localhost', '127.0.0.1'].includes(location.hostname)) {
+    void navigator.serviceWorker.getRegistrations().then((all) => all.forEach((r) => void r.unregister()))
+    if ('caches' in window) void caches.keys().then((keys) => keys.forEach((k) => void caches.delete(k)))
+    return
+  }
   const hadController = !!navigator.serviceWorker.controller
   navigator.serviceWorker.addEventListener('controllerchange', () => {
     // The first install also claims the page; that isn't an update.

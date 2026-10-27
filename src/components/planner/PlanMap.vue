@@ -51,6 +51,8 @@ const emit = defineEmits<{
 interface Route {
   key: string
   d: string
+  /** Part of the focused subject's route (drawn strong); the rest are drawn faint. */
+  strong: boolean
 }
 
 const { t } = useI18n()
@@ -147,7 +149,10 @@ function measure(): void {
   const box = (code: string) =>
     (el.querySelector<HTMLElement>(`[data-code="${code}"]`) ?? el.querySelector<HTMLElement>(`[data-past-code="${code}"]`))?.getBoundingClientRect()
   const next: Route[] = []
-  for (const e of shownEdges.value) {
+  const strong = new Set(shownEdges.value.map((e) => `${e.from}-${e.to}`))
+  // Every in-plan prerequisite link is drawn, faint; the focused route on top, strong.
+  const all = [...props.edges].sort((x, y) => Number(strong.has(`${x.from}-${x.to}`)) - Number(strong.has(`${y.from}-${y.to}`)))
+  for (const e of all) {
     const a = box(e.from)
     const b = box(e.to)
     if (!a || !b) continue
@@ -169,12 +174,12 @@ function measure(): void {
       const bend = Math.max(20, (y2 - y1) / 2)
       d = `M ${x1} ${y1} C ${x1} ${y1 + bend}, ${x2} ${y2 - bend}, ${x2} ${y2}`
     }
-    next.push({ key: `${e.from}-${e.to}`, d })
+    next.push({ key: `${e.from}-${e.to}`, d, strong: strong.has(`${e.from}-${e.to}`) })
   }
   routes.value = next
 }
 
-watch([shownEdges, () => props.terms], () => nextTick(measure), { flush: 'post' })
+watch([shownEdges, () => props.edges, () => props.terms], () => nextTick(measure), { flush: 'post' })
 
 // While dragging: where the card may go (green) and where it can't, with the reason.
 const verdicts = computed<DropVerdict[] | null>(() => {
@@ -252,7 +257,7 @@ onBeforeUnmount(() => {
           <path d="M0 0 L8 4 L0 8 z" class="route-head" />
         </marker>
       </defs>
-      <path v-for="r in routes" :key="r.key" class="route" :d="r.d" marker-end="url(#route-arrow)" />
+      <path v-for="r in routes" :key="r.key" class="route" :class="{ 'route-faint': !r.strong }" :d="r.d" :marker-end="r.strong ? 'url(#route-arrow)' : undefined" />
     </svg>
 
     <div class="track" @scroll.passive="measure">
@@ -356,6 +361,16 @@ onBeforeUnmount(() => {
   stroke: var(--overprint);
   stroke-width: 2.2;
   stroke-dasharray: 6 4;
+}
+
+.route-faint {
+  stroke-width: 1.4;
+  opacity: 0.35;
+}
+
+/* While a route is in focus, the other links step back further. */
+.routes:has(.route:not(.route-faint)) .route-faint {
+  opacity: 0.15;
 }
 
 .route-head {
