@@ -1888,6 +1888,7 @@ export const ja: Messages = {
     until: "{date}まで",
     censusWhy: "学費なしで履修を取り消せる最終日",
     mine: "あなたの{n}科目：試験 {range}",
+    mineOne: "あなたの1科目：試験 {range}",
     all: "重要日程をすべて見る",
     examTitle: "{term} 試験期間",
     examLine: "期末試験 {n}%",

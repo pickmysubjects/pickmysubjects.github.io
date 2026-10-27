@@ -1888,6 +1888,7 @@ export const zhCN: Messages = {
     until: "到 {date}",
     censusWhy: "退课不交学费的最后一天",
     mine: "你的 {n} 门课：考试 {range}",
+    mineOne: "你的 1 门课：考试 {range}",
     all: "全部重要日期",
     examTitle: "{term} 考试季",
     examLine: "期末考 {n}%",

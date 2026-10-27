@@ -50,7 +50,7 @@ function when(i: StripItem): string {
 
 const mineLine = computed(() => {
   const m = mine.value
-  return m?.exams ? t.value('next.mine', { n: m.subjects.length, range: range(m.exams) }) : ''
+  return m?.exams ? t.value(m.subjects.length === 1 ? 'next.mineOne' : 'next.mine', { n: m.subjects.length, range: range(m.exams) }) : ''
 })
 
 // Exam mode: the student's subjects in the term whose exams are on, with what's recorded.
