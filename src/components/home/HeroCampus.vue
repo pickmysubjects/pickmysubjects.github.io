@@ -141,12 +141,20 @@ onBeforeUnmount(() => io?.disconnect())
   font-variant-numeric: tabular-nums;
   color: var(--ink);
   white-space: nowrap;
-  background: var(--glass-shine), var(--glass-fill);
+  /* Over the building: a fuller glass than usual so the code always reads. */
+  background: var(--glass-shine), var(--sheet-fill);
   border: 1px solid var(--glass-edge);
   border-radius: 0.9em;
   box-shadow: var(--glass-shadow);
   translate: -50% -100%;
   animation: hc-float 5s ease-in-out infinite alternate;
+}
+
+/* A small scene has room for two codes; the chips keep a readable size, so the third steps out. */
+@container (max-width: 480px) {
+  .hc-chip:nth-of-type(2) {
+    display: none;
+  }
 }
 
 .hc-chip i {
@@ -226,18 +234,26 @@ onBeforeUnmount(() => io?.disconnect())
 
 @keyframes hc-out{0%,55%{transform:translate(60.37cqw,44.11cqw);opacity:0}58%{transform:translate(61.5cqw,44.76cqw);opacity:1}96.5%{opacity:1}100%{transform:translate(79.91cqw,55.39cqw);opacity:0}}
 
-/* Off screen: nothing runs. Reduced motion: one still frame with people on the paths. */
+/* Off screen: nothing runs. */
 .hc-off * {
   animation-play-state: paused !important;
 }
 
+/* Reduced motion: one still frame with people on the paths. The site turns every animation off
+   then; the walkers keep theirs, paused, only to be placed. */
 @media (prefers-reduced-motion: reduce) {
   .hc {
     --o: 0.7s;
   }
 
-  .hc * {
-    animation-play-state: paused !important;
+  .hc .wi {
+    animation: hc-in var(--T) linear infinite paused !important;
+    animation-delay: calc(var(--d) - var(--o)) !important;
+  }
+
+  .hc .wo {
+    animation: hc-out var(--T) linear infinite paused !important;
+    animation-delay: calc(var(--d) - var(--o)) !important;
   }
 }
 

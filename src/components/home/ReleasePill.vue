@@ -17,17 +17,18 @@ const updated = computed(() => t.value('home.release.label', { v: versionLabel()
 /*
  * One line, as much as fits: 0 everything, 1 without the sub-line, 2 also without the version
  * number, 3 the announcement wraps (never cut mid-word). Widths are measured with everything
- * shown, again after a language change.
+ * shown, again once the fonts are in and after a language change.
  */
 const fit = shallowRef(0)
 const root = useTemplateRef<HTMLElement>('root')
-let widths: { pill: number; text: number; sub: number; num: number } | null = null
+// chrome: the pill's padding, dot and gap around the words.
+let widths: { chrome: number; text: number; sub: number; num: number } | null = null
 function measure(): void {
   const el = root.value
   const text = el?.querySelector<HTMLElement>('.release-text')
   if (!el || !text) return
   widths = {
-    pill: el.querySelector<HTMLElement>('.release-pill')!.offsetWidth,
+    chrome: el.querySelector<HTMLElement>('.release-pill')!.offsetWidth - text.clientWidth,
     text: text.scrollWidth,
     sub: el.querySelector<HTMLElement>('.release-sub')?.offsetWidth ?? 0,
     num: el.querySelector<HTMLElement>('.release-num')?.offsetWidth ?? 0,
@@ -37,23 +38,25 @@ function measure(): void {
 function place(): void {
   const el = root.value
   if (!el || !widths) return
-  const room = el.clientWidth - (widths.pill - widths.text) - 1
+  const room = el.clientWidth - widths.chrome - 1
   fit.value = widths.text <= room ? 0 : widths.text - widths.sub <= room ? 1 : widths.text - widths.sub - widths.num <= room ? 2 : 3
+}
+async function remeasure(): Promise<void> {
+  fit.value = 0
+  await nextTick()
+  measure()
 }
 let ro: ResizeObserver | undefined
 onMounted(() => {
   measure()
+  void document.fonts?.ready.then(remeasure)
   if ('ResizeObserver' in window && root.value) {
     ro = new ResizeObserver(place)
     ro.observe(root.value)
   }
 })
 onBeforeUnmount(() => ro?.disconnect())
-watch(locale, async () => {
-  fit.value = 0
-  await nextTick()
-  measure()
-})
+watch(locale, remeasure)
 </script>
 
 <template>
@@ -129,6 +132,12 @@ watch(locale, async () => {
 
 .fit-3 .release-pill {
   border-radius: 16px;
+}
+
+@media (max-width: 640px) {
+  .release-pill {
+    font-size: var(--fs-caption);
+  }
 }
 
 .release-beta {

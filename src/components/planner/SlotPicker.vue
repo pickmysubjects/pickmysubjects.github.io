@@ -9,6 +9,8 @@ import { useProfile } from '@/composables/useProfile'
 import { useI18n } from '@/i18n'
 import { issueText, reasonText, termLabel } from '@/i18n/format'
 import { slotEligible } from '@/utils/planBoard'
+import { localTitle } from '@/i18n/localized'
+import { searchSubjects } from '@/utils/subjectSearch'
 
 /**
  * Add a subject to a term, or swap one for another, in one sheet. Lists only subjects that run
@@ -25,7 +27,12 @@ const props = defineProps<{
 }>()
 const emit = defineEmits<{ pick: [code: string]; close: [] }>()
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
+// In Chinese the Chinese title leads, the English one after it.
+const titleOf = (s: Subject) => {
+  const local = locale.value === 'zh-CN' || locale.value === 'zh-TW' ? localTitle(s, locale.value) : ''
+  return local ? `${local} · ${s.title}` : s.title
+}
 const { data, subjectList } = useDataset()
 const plan = usePlan()
 const { profile } = useProfile()
@@ -100,21 +107,26 @@ const suggested = computed<Row[]>(() => {
     if (!s || r.eligibility === 'fail' || !eligible(s)) continue
     if (props.role === 'option' && !props.optionSet.has(r.code)) continue
     if (problem(r.code)) continue
-    out.push({ code: r.code, title: s.title, why: r.reasons[0] ? reasonText(t.value, r.reasons[0]) : null, problem: null })
+    out.push({ code: r.code, title: titleOf(s), why: r.reasons[0] ? reasonText(t.value, r.reasons[0]) : null, problem: null })
   }
   return out
 })
 
 // Search: by code or title, still only subjects that could run in this term.
 const found = computed<Row[]>(() => {
-  const q = text.value.trim().toLowerCase()
+  const q = text.value.trim()
   if (!q) return []
-  return subjectList.value
-    .filter((s) => s.code.toLowerCase().includes(q) || s.title.toLowerCase().includes(q))
+  // The search box's matching (code, English and Chinese titles, topics), running ones first.
+  return searchSubjects(subjectList.value, q, {
+    topicNames: (id) => [t.value(`topic.${id}`), id.replace(/-/g, ' ')],
+    groupNames: (id) => [t.value(`topicGroup.${id}`)],
+    year: term.value?.year ?? new Date().getFullYear(),
+    limit: 400,
+  })
     .map((s) => data.value.subjects[s.code])
     .filter((s): s is Subject => !!s && eligible(s, true))
     .slice(0, 30)
-    .map((s) => ({ code: s.code, title: s.title, why: null, problem: problem(s.code) }))
+    .map((s) => ({ code: s.code, title: titleOf(s), why: null, problem: problem(s.code) }))
 })
 const rows = computed(() => (text.value.trim() ? found.value : suggested.value))
 

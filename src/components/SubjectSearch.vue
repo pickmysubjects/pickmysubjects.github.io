@@ -5,12 +5,14 @@ import { useDataset } from '@/composables/useDataset'
 import { go, link } from '@/composables/useView'
 import { useI18n } from '@/i18n'
 import { localTitle } from '@/i18n/localized'
+import { latestDataYear } from '@/engine'
+import { searchSubjects } from '@/utils/subjectSearch'
 
 // `select`: hand the picked code to the parent (a picker) instead of opening its page.
 // `hero`: the home page's big capsule, with a round go button instead of the search icon.
 const props = defineProps<{ compact?: boolean; select?: boolean; hero?: boolean; placeholder?: string }>()
 const emit = defineEmits<{ pick: [code: string] }>()
-const { subjectList } = useDataset()
+const { subjectList, data } = useDataset()
 const { t, locale } = useI18n()
 
 const listId = useId()
@@ -19,14 +21,19 @@ const query = shallowRef('')
 const open = shallowRef(false)
 const active = shallowRef(0)
 
-const results = computed(() => {
-  const q = query.value.trim().toLowerCase()
-  if (!q) return []
-  return subjectList.value
-    // Chinese titles match in every language: students often search in Chinese whatever the page language.
-    .filter((s) => s.code.toLowerCase().includes(q) || s.title.toLowerCase().includes(q) || (s.titles && (s.titles.zh.includes(q) || (s.titles['zh-TW'] ?? '').includes(q))))
-    .slice(0, props.compact ? 6 : 8)
-})
+// Chinese titles match in every language (students often search in Chinese whatever the page
+// language); topics match by their name in the page's language; running subjects come first.
+const year = computed(() => latestDataYear(data.value.subjects))
+const results = computed(() =>
+  searchSubjects(subjectList.value, query.value, {
+    topicNames: (id) => [t.value(`topic.${id}`), id.replace(/-/g, ' ')],
+    groupNames: (id) => [t.value(`topicGroup.${id}`)],
+    year: year.value,
+    limit: props.compact ? 6 : 8,
+  }),
+)
+// In Chinese the Chinese title leads, the English one after it.
+const localFirst = computed(() => locale.value === 'zh-CN' || locale.value === 'zh-TW')
 
 function pick(code: string): void {
   query.value = ''
@@ -108,7 +115,8 @@ function move(delta: number): void {
         @mouseenter="active = i"
       >
         <span class="code result-code">{{ s.code }}</span>
-        <span class="result-title">{{ s.title }}<template v-if="localTitle(s, locale)"> · {{ localTitle(s, locale) }}</template></span>
+        <span v-if="localFirst && localTitle(s, locale)" class="result-title">{{ localTitle(s, locale) }}<span class="result-en" lang="en"> · {{ s.title }}</span></span>
+        <span v-else class="result-title">{{ s.title }}<template v-if="localTitle(s, locale)"> · {{ localTitle(s, locale) }}</template></span>
       </li>
       <li v-if="results.length === 0" class="result result-empty">
         {{ t('home.noResults', { q: query.trim() }) }}
@@ -261,6 +269,10 @@ function move(delta: number): void {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.result-en {
+  color: var(--ink-soft);
 }
 
 .result-missing {
