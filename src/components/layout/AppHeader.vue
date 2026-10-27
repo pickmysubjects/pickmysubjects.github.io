@@ -3,34 +3,42 @@ import { link, useView } from '@/composables/useView'
 import { ChevronDown } from 'lucide-vue-next'
 import LangMenu from './LangMenu.vue'
 import AppLogo from '../AppLogo.vue'
+import GlobalSearch from './GlobalSearch.vue'
 import { IS_BETA } from '@/release'
-import SubjectSearch from '../SubjectSearch.vue'
 import { MENUS, areaOf, isHere, pageTitleKey, type Area } from './nav'
-import { computed, nextTick, onBeforeUnmount, onMounted, shallowRef, watch } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, shallowRef, useTemplateRef, watch } from 'vue'
 import type { View } from '@/composables/useView'
 import { useI18n } from '@/i18n'
 
 const props = defineProps<{ view: View }>()
 const { param } = useView()
-const { t } = useI18n()
+const { t, locale } = useI18n()
 const active = computed(() => areaOf(props.view))
 const title = computed(() => pageTitleKey(props.view, param.value))
 
 /*
- * Each area is a disclosure button with its menu. A mouse opens it after a short pause on the
- * button (so passing over the bar doesn't flash menus) and closes it on leaving; a click, Enter
- * or Space opens it and keeps it open until Esc, a click elsewhere, focus leaving or a page change.
+ * Each area is its name, a link to the area's landing page, and a ▾ disclosure button with its
+ * menu. A mouse opens the menu after a short pause anywhere on the area (so passing over the bar
+ * doesn't flash menus) and closes it on leaving; a click on ▾, Enter or Space opens it and keeps
+ * it open until Esc, a click elsewhere, focus leaving or a page change. ↓ on either opens it.
  */
 const open = shallowRef<Area | null>(null)
+/** Menus that would run off the right edge open leftwards from their area instead. */
+const flipped = shallowRef<Area | null>(null)
 let pinned = false
 let timer = 0
-const HOVER_OPEN = 160
+const HOVER_OPEN = 200
 const HOVER_CLOSE = 220
 
 function show(area: Area, byClick: boolean): void {
   clearTimeout(timer)
   open.value = area
   pinned = byClick
+  flipped.value = null
+  void nextTick(() => {
+    const r = document.getElementById(`menu-${area}`)?.getBoundingClientRect()
+    if (r && r.right > window.innerWidth - 8) flipped.value = area
+  })
 }
 function close(): void {
   clearTimeout(timer)
@@ -49,7 +57,7 @@ function onLeave(e: PointerEvent): void {
   clearTimeout(timer)
   if (open.value && !pinned) timer = window.setTimeout(close, HOVER_CLOSE)
 }
-function onClick(area: Area): void {
+function onCaret(area: Area): void {
   // Opened by hovering a moment ago: the click keeps it open rather than shutting it.
   if (open.value === area && !pinned) pinned = true
   else if (open.value === area) close()
@@ -62,7 +70,7 @@ function items(area: Area): HTMLElement[] {
 function button(area: Area): HTMLElement | null {
   return document.getElementById(`menu-btn-${area}`)
 }
-async function onButtonKey(area: Area, e: KeyboardEvent): Promise<void> {
+async function onAreaKey(area: Area, e: KeyboardEvent): Promise<void> {
   if (e.key === 'ArrowDown') {
     e.preventDefault()
     show(area, true)
@@ -103,55 +111,96 @@ function onDocKey(e: KeyboardEvent): void {
     if (document.activeElement?.closest('.nav-item')) button(area)?.focus()
   }
 }
+
+/*
+ * One row at every width and in every language: when the bar's contents don't fit, it gives up
+ * room step by step (fit-1 … fit-7, each keeping the ones before): the search becomes an icon,
+ * the menu icons go, the language name goes, the site name goes, everything tightens, then the
+ * last two areas and finally all areas show their icon instead of their name. Measured, not
+ * guessed per language, so a long translation can never push the bar onto two lines.
+ */
+const headerEl = useTemplateRef<HTMLElement>('headerEl')
+const innerEl = useTemplateRef<HTMLElement>('innerEl')
+const navEl = useTemplateRef<HTMLElement>('navEl')
+const FIT_STEPS = 7
+function overflows(): boolean {
+  const inner = innerEl.value
+  const nav = navEl.value
+  if (!inner) return false
+  return inner.scrollWidth > inner.clientWidth + 1 || (!!nav && nav.scrollWidth > nav.clientWidth + 1)
+}
+function fit(): void {
+  const h = headerEl.value
+  if (!h) return
+  for (let i = 1; i <= FIT_STEPS; i++) h.classList.remove(`fit-${i}`)
+  for (let i = 1; i <= FIT_STEPS && overflows(); i++) h.classList.add(`fit-${i}`)
+}
+let resize: ResizeObserver | undefined
+
 onMounted(() => {
   document.addEventListener('pointerdown', onDocPointer)
   document.addEventListener('keydown', onDocKey)
+  fit()
+  resize = new ResizeObserver(() => fit())
+  if (innerEl.value) resize.observe(innerEl.value)
+  void document.fonts?.ready.then(fit)
 })
 onBeforeUnmount(() => {
   document.removeEventListener('pointerdown', onDocPointer)
   document.removeEventListener('keydown', onDocKey)
+  resize?.disconnect()
   clearTimeout(timer)
 })
 watch(() => [props.view, param.value], close)
+// A new language (or a page with/without the beta chip) changes the widths.
+watch([locale, () => props.view === 'home', t], () => void nextTick(fit))
 </script>
 
 <template>
-  <header class="header">
-    <div class="header-inner shell">
+  <header ref="headerEl" class="header">
+    <div ref="innerEl" class="header-inner shell">
       <a class="brand" :href="link('')" :aria-current="view === 'home' ? 'page' : undefined" :title="t('nav.home')">
         <AppLogo class="mark" small />
         <span class="brand-name">PickMySubjects<span v-if="IS_BETA && view !== 'home'" class="beta-chip">Beta</span></span>
       </a>
-      <nav class="nav" :aria-label="t('nav.main')">
+      <nav ref="navEl" class="nav" :aria-label="t('nav.main')">
         <ul class="nav-list">
           <li
-            v-for="(m, i) in MENUS"
+            v-for="m in MENUS"
             :key="m.area"
             class="nav-item"
+            :class="[`area-${m.area}`, { active: active === m.area, open: open === m.area }]"
             @pointerenter="onEnter(m.area, $event)"
             @pointerleave="onLeave"
             @focusout="onFocusOut"
           >
+            <a
+              class="nav-link"
+              :href="link(m.to)"
+              :title="t(m.key)"
+              :aria-current="active === m.area ? 'true' : undefined"
+              @keydown="onAreaKey(m.area, $event)"
+            >
+              <component :is="m.icon" class="nav-icon" :size="16" aria-hidden="true" />
+              <span class="nav-label">{{ t(m.key) }}</span>
+            </a>
             <button
               :id="`menu-btn-${m.area}`"
-              class="nav-link"
-              :class="{ active: active === m.area }"
+              class="nav-caret"
               type="button"
               :aria-expanded="open === m.area"
               :aria-controls="`menu-${m.area}`"
-              :aria-current="active === m.area ? 'true' : undefined"
-              @click="onClick(m.area)"
-              @keydown="onButtonKey(m.area, $event)"
+              :aria-label="t('menu.openMenu', { name: t(m.key) })"
+              @click="onCaret(m.area)"
+              @keydown="onAreaKey(m.area, $event)"
             >
-              <component :is="m.icon" class="nav-icon" :size="16" aria-hidden="true" />
-              <span>{{ t(m.key) }}</span>
-              <ChevronDown class="nav-caret" :size="14" aria-hidden="true" />
+              <ChevronDown :size="14" aria-hidden="true" />
             </button>
             <div
               v-show="open === m.area"
               :id="`menu-${m.area}`"
               class="menu"
-              :class="{ wide: m.items.length > 6, end: i === MENUS.length - 1 }"
+              :class="{ wide: m.items.length > 6, end: flipped === m.area }"
               @keydown="onMenuKey(m.area, $event)"
             >
               <ul class="menu-list">
@@ -177,7 +226,7 @@ watch(() => [props.view, param.value], close)
       <!-- Phones: the menus live in the tab bar and its sheet; the bar says where you are. -->
       <span v-if="title" class="phone-title">{{ t(title) }}</span>
       <div class="tools">
-        <SubjectSearch v-if="view !== 'home'" class="header-search" compact />
+        <GlobalSearch />
         <LangMenu />
       </div>
     </div>
@@ -269,46 +318,89 @@ watch(() => [props.view, param.value], close)
 
 .nav-item {
   position: relative;
+  display: flex;
+  align-items: center;
+  border-radius: 999px;
+  transition: background 0.15s, box-shadow 0.15s;
 }
 
+/* The area's name (a link to its landing page) and its ▾ (the menu) share one pill. */
 .nav-link {
   display: inline-flex;
   align-items: center;
   gap: 6px;
   min-height: 36px;
-  padding: 0 10px 0 14px;
-  border: 0;
-  border-radius: 999px;
-  background: none;
-  font: inherit;
+  padding: 0 4px 0 14px;
+  border-radius: 999px 0 0 999px;
   font-size: 1rem;
   font-weight: 600;
   color: var(--ink-soft);
+  text-decoration: none;
   white-space: nowrap;
-  cursor: pointer;
-  transition: background 0.15s, color 0.15s;
-}
-
-.nav-link:hover,
-.nav-link[aria-expanded='true'] {
-  color: var(--ink);
-  background: var(--glass-fill-hover);
-}
-
-.nav-link.active {
-  /* The current area: a brand-pink pill, so "where am I" is obvious at a glance. */
-  background: var(--accent-fill);
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / 38%), 0 4px 12px -4px color-mix(in srgb, var(--accent-fill) 55%, transparent);
-  color: var(--accent-fill-ink);
+  transition: color 0.15s;
 }
 
 .nav-caret {
-  opacity: 0.7;
-  transition: transform 0.2s var(--ease-spring);
+  display: inline-grid;
+  place-items: center;
+  width: 26px;
+  min-height: 36px;
+  padding: 0 6px 0 2px;
+  border: 0;
+  border-radius: 0 999px 999px 0;
+  background: none;
+  color: var(--ink-soft);
+  cursor: pointer;
 }
 
-.nav-link[aria-expanded='true'] .nav-caret {
+.nav-caret svg {
+  opacity: 0.7;
+  transition: transform 0.2s var(--ease-spring), opacity 0.15s;
+}
+
+.nav-item:hover,
+.nav-item.open {
+  background: var(--glass-fill-hover);
+}
+
+.nav-item:hover :is(.nav-link, .nav-caret),
+.nav-item.open :is(.nav-link, .nav-caret) {
+  color: var(--ink);
+}
+
+.nav-caret:hover svg,
+.nav-caret[aria-expanded='true'] svg {
+  opacity: 1;
+}
+
+.nav-caret[aria-expanded='true'] svg {
   transform: rotate(180deg);
+}
+
+/* A faint divider between the name and ▾ while the pointer is on the pill. */
+.nav-item:hover .nav-caret,
+.nav-item.open .nav-caret {
+  box-shadow: inset 1px 0 0 color-mix(in srgb, currentColor 12%, transparent);
+}
+
+.nav-link:focus-visible,
+.nav-caret:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.nav-item.active {
+  /* The current area: a brand-pink pill, so "where am I" is obvious at a glance. */
+  background: var(--accent-fill);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 38%), 0 4px 12px -4px color-mix(in srgb, var(--accent-fill) 55%, transparent);
+}
+
+.nav-item.active :is(.nav-link, .nav-caret) {
+  color: var(--accent-fill-ink);
+}
+
+.nav-item.active :is(.nav-link, .nav-caret):focus-visible {
+  outline-color: var(--accent-fill-ink);
 }
 
 /* The menu: a floating glass panel under its button, over the page (no layout shift). */
@@ -426,7 +518,7 @@ watch(() => [props.view, param.value], close)
     animation: none;
   }
 
-  .nav-caret {
+  .nav-caret svg {
     transition: none;
   }
 }
@@ -440,41 +532,73 @@ watch(() => [props.view, param.value], close)
   margin-left: auto;
 }
 
-.header-search {
-  flex: 0 1 220px;
-  min-width: 140px;
-}
-
 .phone-title {
   display: none;
 }
 
-/* The header search needs room beside the five menus; below that, Browse has its own search. */
-@media (max-width: 1440px) {
-  .header-search {
-    display: none;
-  }
+/* Giving up room step by step when the bar is too full (see fit() in the script). */
+.fit-1 :deep(.search-trigger) {
+  justify-content: center;
+  width: 36px;
+  min-width: 0;
+  padding: 0;
 }
 
-/* Tighter screens: the menus keep their names, the icons go first. */
-@media (max-width: 1280px) {
-  .nav-icon {
-    display: none;
-  }
-
-  .nav-link {
-    padding: 0 8px 0 12px;
-  }
+.fit-1 :deep(.search-trigger) > :is(span, kbd) {
+  display: none;
 }
 
-@media (max-width: 1060px) {
-  .brand-name {
-    display: none;
-  }
+.fit-2 .nav-icon {
+  display: none;
+}
 
-  .header-inner {
-    gap: 12px;
-  }
+.fit-3 :deep(.lang-name) {
+  display: none;
+}
+
+.fit-3 :deep(.lang) {
+  width: 36px;
+  padding: 0;
+  justify-content: center;
+}
+
+.fit-4 .brand-name {
+  display: none;
+}
+
+.fit-5 .header-inner {
+  gap: 10px;
+}
+
+.fit-5 .nav-list {
+  gap: 0;
+  padding: 3px;
+}
+
+.fit-5 .nav-link {
+  padding-left: 11px;
+  font-size: 0.9375rem;
+}
+
+.fit-5 .nav-caret {
+  width: 22px;
+  padding-right: 4px;
+}
+
+/* The last steps: an area shows its icon; its name stays for screen readers and as a tooltip. */
+.fit-6 :is(.area-me, .area-about) .nav-icon,
+.fit-7 .nav-icon {
+  display: inline;
+}
+
+.fit-6 :is(.area-me, .area-about) .nav-label,
+.fit-7 .nav-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }
 
 @media (max-width: 720px) {

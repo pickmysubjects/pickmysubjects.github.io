@@ -1,7 +1,7 @@
 import {
-  BookOpen, Briefcase, Calculator, CalendarDays, CalendarPlus, ClipboardList, Columns2, Compass, FileX, Flame, Gauge, GraduationCap, Heart,
-  HeartPulse, House, Laptop, Layers, Library, LifeBuoy, ListChecks, ListFilter, NotebookPen, Plane, Route, Save, Scale, Share2, Shapes,
-  Snowflake, Sprout, TriangleAlert, User, Wrench,
+  BookOpen, Briefcase, Calculator, CalendarDays, CalendarPlus, ClipboardList, Columns2, Compass, DatabaseZap, FileX, Flame, Gauge, GraduationCap,
+  Heart, HeartPulse, History, House, Info, Laptop, Layers, Library, LifeBuoy, ListChecks, ListFilter, MessageSquare, NotebookPen, Plane, Route,
+  Save, Scale, Share2, Shapes, ShieldCheck, Snowflake, Sprout, TriangleAlert, User, Wrench,
 } from 'lucide-vue-next'
 import type { View } from '@/composables/useView'
 
@@ -16,12 +16,14 @@ export interface MenuItem {
   icon: Icon
 }
 
-export type Area = 'browse' | 'plan' | 'tools' | 'guide' | 'me'
+export type Area = 'browse' | 'plan' | 'tools' | 'guide' | 'me' | 'about'
 
 export interface MenuArea {
   area: Area
   key: string
   icon: Icon
+  /** The area's own landing page: where its name in the header goes. */
+  to: string
   items: MenuItem[]
 }
 
@@ -34,6 +36,7 @@ export const MENUS: MenuArea[] = [
     area: 'browse',
     key: 'nav.browse',
     icon: ListFilter,
+    to: 'subjects/',
     items: [
       { key: 'menu.allSubjects', desc: 'menu.d.allSubjects', to: 'subjects/', icon: Library },
       { key: 'tools.easy', desc: 'menu.d.easy', to: 'subjects/easy/', icon: Scale },
@@ -50,6 +53,7 @@ export const MENUS: MenuArea[] = [
     area: 'plan',
     key: 'nav.plan',
     icon: Route,
+    to: 'plan/',
     items: [
       { key: 'menu.myPlan', desc: 'menu.d.myPlan', to: 'plan/', icon: Route },
       { key: 'menu.compareAB', desc: 'menu.d.compareAB', to: 'plan/?compare=1', icon: Columns2 },
@@ -62,6 +66,7 @@ export const MENUS: MenuArea[] = [
     area: 'tools',
     key: 'tools.nav',
     icon: Wrench,
+    to: 'tools/',
     items: [
       { key: 'calc.title', desc: 'menu.d.final', to: 'tools/final/', icon: Calculator },
       { key: 'tools.wam', desc: 'menu.d.wam', to: 'tools/wam/', icon: Gauge },
@@ -73,6 +78,7 @@ export const MENUS: MenuArea[] = [
     area: 'guide',
     key: 'guide.nav',
     icon: BookOpen,
+    to: 'guide/',
     items: [
       { key: 'menu.guideHome', desc: 'menu.d.guideHome', to: 'guide/', icon: Compass },
       { key: 'guide.cat.basics.nav', desc: 'menu.d.basics', to: 'guide/basics/', icon: BookOpen },
@@ -89,11 +95,25 @@ export const MENUS: MenuArea[] = [
     area: 'me',
     key: 'nav.record',
     icon: User,
+    to: 'record/',
     items: [
       { key: 'record.title', desc: 'menu.d.record', to: 'record/', icon: User },
       { key: 'shortlist.title', desc: 'menu.d.shortlist', to: 'shortlist/', icon: Heart },
       { key: 'menu.backup', desc: 'menu.d.backup', to: 'record/#sec-backup', icon: Save },
       { key: 'menu.gradeShare', desc: 'menu.d.gradeShare', to: 'record/#share-title', icon: Share2 },
+    ],
+  },
+  {
+    area: 'about',
+    key: 'nav.about',
+    icon: Info,
+    to: 'about/',
+    items: [
+      { key: 'menu.aboutSite', desc: 'menu.d.aboutSite', to: 'about/', icon: Info },
+      { key: 'menu.feedback', desc: 'menu.d.feedback', to: 'feedback/', icon: MessageSquare },
+      { key: 'menu.contribute', desc: 'menu.d.contribute', to: 'contribute/', icon: DatabaseZap },
+      { key: 'menu.changes', desc: 'menu.d.changes', to: 'changes/', icon: History },
+      { key: 'menu.privacy', desc: 'menu.d.privacy', to: 'privacy/', icon: ShieldCheck },
     ],
   },
 ]
@@ -105,6 +125,7 @@ export function areaOf(view: View): Area | null {
   if (view === 'tools') return 'tools'
   if (view === 'guide') return 'guide'
   if (view === 'record' || view === 'shortlist') return 'me'
+  if (view === 'about' || view === 'feedback' || view === 'contribute' || view === 'changes' || view === 'privacy') return 'about'
   return null
 }
 
@@ -123,13 +144,10 @@ export const TABS: { key: string; icon: Icon; to: string | null; area: Area | nu
   { key: 'nav.record', icon: User, to: 'record/', area: 'me' },
 ]
 
-const OTHER_TITLES: Partial<Record<View, string>> = { about: 'app.about', privacy: 'app.privacy', feedback: 'nav.feedback', contribute: 'nav.contribute' }
-
 /** The name of the page being shown, for the phone top bar; null on home (the logo says it). */
 export function pageTitleKey(view: View, param: string): string | null {
   if (view === 'home') return null
   for (const m of MENUS) for (const item of m.items) if (isHere(item, view, param)) return item.key
   const area = areaOf(view)
-  if (area) return MENUS.find((m) => m.area === area)?.key ?? null
-  return OTHER_TITLES[view] ?? null
+  return area ? (MENUS.find((m) => m.area === area)?.key ?? null) : null
 }

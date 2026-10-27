@@ -12,6 +12,7 @@ import CareerGoalPicker from '@/components/profile/CareerGoalPicker.vue'
 import GradeShare from '@/components/profile/GradeShare.vue'
 import WorkHours from '@/components/profile/WorkHours.vue'
 import PlanSwitcher from '@/components/plans/PlanSwitcher.vue'
+import PhoneMoreLinks from '@/components/layout/PhoneMoreLinks.vue'
 import { planName } from '@/components/plans/planName'
 import { usePlans } from '@/composables/usePlans'
 import { ArrowRight, Check, Download, Upload } from 'lucide-vue-next'
@@ -179,6 +180,7 @@ const doneCount = computed(() => filled.value.filter((f) => f.done).length)
       </section>
       </aside>
     </div>
+    <PhoneMoreLinks />
   </div>
 </template>
 
