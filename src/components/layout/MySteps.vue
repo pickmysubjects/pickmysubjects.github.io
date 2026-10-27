@@ -2,32 +2,38 @@
 import { link, useView } from '@/composables/useView'
 import { useI18n } from '@/i18n'
 import { computed } from 'vue'
-import { NAV_ITEMS, subNavFor } from './nav'
+import { subNavFor } from './nav'
 
 /**
- * The second level of the navigation, under the top bar: the pages inside the current section
- * ("Me": record → plan → shortlist, a real sequence, drawn as a numbered stepper; "Browse": three
- * ways in, drawn as plain tabs). Led by the section's name so it reads as belonging to it.
+ * The pages inside the current section, drawn inside the top bar: nested in the active main
+ * item on wide screens, centred in the bar on phones. "Me" is a real sequence (numbered,
+ * joined by thin lines); "Browse" is three ways in (icons). `compact`: only the current page
+ * keeps its label, the others shrink to their number or icon.
  */
+defineProps<{ compact?: boolean }>()
 const { view } = useView()
 const { t } = useI18n()
 const sub = computed(() => subNavFor(view.value))
-const parent = computed(() => NAV_ITEMS.find((n) => n.view === sub.value?.parent))
 </script>
 
 <template>
-  <nav v-if="sub" class="steps" :class="{ numbered: sub.numbered }" :aria-label="t(sub.numbered ? 'nav.record' : 'browse.switchLabel')">
-    <span v-if="parent" class="steps-parent" aria-hidden="true">
-      <component :is="parent.icon" :size="14" />
-      {{ t(parent.key) }}
-      <svg class="steps-chev" viewBox="0 0 24 24" width="14" height="14"><path d="m9 6 6 6-6 6" /></svg>
-    </span>
-    <ol class="steps-list">
+  <nav
+    v-if="sub"
+    class="sub"
+    :class="{ numbered: sub.numbered, compact }"
+    :aria-label="t(sub.numbered ? 'nav.record' : 'browse.switchLabel')"
+  >
+    <ol class="sub-list">
       <li v-for="(s, i) in sub.steps" :key="s.view">
-        <a class="step" :href="link(s.view)" :aria-current="view === s.view ? 'page' : undefined">
-          <span v-if="sub.numbered" class="step-n" aria-hidden="true">{{ i + 1 }}</span>
-          <component :is="s.icon" v-else class="step-icon" :size="15" aria-hidden="true" />
-          <span class="step-label">{{ t(s.key) }}</span>
+        <a
+          class="sub-item"
+          :href="link(s.view)"
+          :aria-current="view === s.view ? 'page' : undefined"
+          :title="t(s.key)"
+        >
+          <span v-if="sub.numbered" class="sub-n" aria-hidden="true">{{ i + 1 }}</span>
+          <component :is="s.icon" v-else class="sub-icon" :size="15" aria-hidden="true" />
+          <span class="sub-label">{{ t(s.key) }}</span>
         </a>
       </li>
     </ol>
@@ -35,70 +41,55 @@ const parent = computed(() => NAV_ITEMS.find((n) => n.view === sub.value?.parent
 </template>
 
 <style scoped>
-.steps {
+.sub {
+  min-width: 0;
+  overflow: hidden;
+  animation: sub-open 0.32s var(--ease-spring);
+}
+
+@keyframes sub-open {
+  from {
+    max-width: 0;
+    opacity: 0;
+  }
+
+  to {
+    max-width: 640px;
+    opacity: 1;
+  }
+}
+
+.sub-list {
   display: flex;
   align-items: center;
-  gap: 10px;
-  min-width: 0;
-  max-width: 100%;
-}
-
-/* "Me ›": names the section these pages belong to. */
-.steps-parent {
-  display: inline-flex;
-  flex: none;
-  align-items: center;
-  gap: 5px;
-  font-size: var(--fs-meta);
-  font-weight: 600;
-  color: var(--ink-faint);
-  white-space: nowrap;
-}
-
-.steps-chev {
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.steps-list {
-  display: flex;
-  align-items: center;
-  min-width: 0;
+  gap: 2px;
   margin: 0;
   padding: 0;
-  overflow-x: auto;
   list-style: none;
-  scrollbar-width: none;
 }
 
-.steps-list li {
+.sub-list li {
   display: flex;
   flex: none;
   align-items: center;
 }
 
 /* A real sequence: a thin line joins the steps. */
-.numbered .steps-list li + li::before {
+.numbered .sub-list li + li::before {
   content: '';
-  width: 18px;
+  width: 12px;
   height: 1.5px;
+  margin-right: 2px;
   border-radius: 1px;
   background: var(--divider);
 }
 
-.steps:not(.numbered) .steps-list {
-  gap: 4px;
-}
-
-.step {
+.sub-item {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  min-height: var(--control-h-sm);
-  padding: 0 12px 0 8px;
+  height: 32px;
+  padding: 0 10px 0 6px;
   border: 1px solid transparent;
   border-radius: 999px;
   font-size: 0.875rem;
@@ -109,26 +100,26 @@ const parent = computed(() => NAV_ITEMS.find((n) => n.view === sub.value?.parent
   transition: background 0.15s, color 0.15s;
 }
 
-.steps:not(.numbered) .step {
-  padding: 0 12px;
+.sub:not(.numbered) .sub-item {
+  padding: 0 10px 0 8px;
 }
 
-.step:hover {
+.sub-item:hover {
   color: var(--ink);
   background: var(--inset-fill);
 }
 
-/* The current page: a tinted glass pill (never the solid pink of the main nav). */
-.step[aria-current='page'] {
+/* The current page: a light pink tinted pill, never the solid pink of the main item. */
+.sub-item[aria-current='page'] {
   border-color: color-mix(in srgb, var(--accent) 22%, transparent);
-  background: color-mix(in srgb, var(--accent-fill) 10%, var(--glass-fill));
-  box-shadow: var(--glass-shadow);
+  background: color-mix(in srgb, var(--accent-fill) 11%, var(--glass-fill));
   font-weight: 650;
   color: var(--accent);
 }
 
-.step-n {
+.sub-n {
   display: inline-grid;
+  flex: none;
   place-items: center;
   width: 20px;
   height: 20px;
@@ -140,37 +131,33 @@ const parent = computed(() => NAV_ITEMS.find((n) => n.view === sub.value?.parent
   color: var(--ink-soft);
 }
 
-.step[aria-current='page'] .step-n {
+.sub-item[aria-current='page'] .sub-n {
   border-color: transparent;
   background: var(--accent-fill);
   color: var(--accent-fill-ink);
 }
 
-@media (max-width: 720px) {
-  .steps-parent {
-    display: none;
-  }
-
-  .step-icon {
-    display: none;
-  }
+/* Tight rows: the other pages keep only their number or icon (their name is in the title). */
+.compact .sub-item:not([aria-current='page']) {
+  padding: 0 6px;
 }
 
-@media (max-width: 420px) {
-  .numbered .steps-list li + li::before {
-    width: 10px;
-  }
+.compact .sub-item:not([aria-current='page']) .sub-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
 
-  .step {
-    padding: 0 8px 0 5px;
-    font-size: 0.8125rem;
-  }
+.compact.numbered .sub-list li + li::before {
+  width: 8px;
+}
 
-  /* Phones: the other steps keep their number and a short label, so all three stay on screen. */
-  .numbered .step:not([aria-current='page']) .step-label {
-    max-width: 5.5em;
-    overflow: hidden;
-    text-overflow: ellipsis;
+@media (prefers-reduced-motion: reduce) {
+  .sub {
+    animation: none;
   }
 }
 </style>

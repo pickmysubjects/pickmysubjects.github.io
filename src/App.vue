@@ -4,7 +4,6 @@ import AppHeader from './components/layout/AppHeader.vue'
 import BottomNav from './components/layout/BottomNav.vue'
 import Interp from './components/Interp.vue'
 import AppLogo from './components/AppLogo.vue'
-import MySteps from './components/layout/MySteps.vue'
 import RolloverNotice from './components/RolloverNotice.vue'
 import { VIEW_LOADERS } from './views/loaders'
 import { defineAsyncComponent, watchEffect } from 'vue'
@@ -94,7 +93,6 @@ watchEffect(() => {
   <AppHeader :view="view" />
   <main class="app-main shell" :class="{ 'shell-wide': view === 'plan' }">
     <!-- Narrow screens: Me's two steps as a slim switch in the page (wide screens: in the bar). -->
-    <MySteps class="page-steps" />
     <RolloverNotice />
     <HomeView v-if="view === 'home'" />
     <SubjectView v-else-if="view === 'subject'" :key="param" :code="param" />
@@ -195,10 +193,6 @@ watchEffect(() => {
     align-items: center;
     min-height: var(--control-h);
   }
-}
-
-.app-main > .page-steps {
-  margin-top: 14px;
 }
 
 /* The plan board uses the whole width; its page keeps text at the usual width (PlannerView). */

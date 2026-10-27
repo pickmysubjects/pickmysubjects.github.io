@@ -4,17 +4,20 @@ import { BookOpen } from 'lucide-vue-next'
 import LangMenu from './LangMenu.vue'
 import AppLogo from '../AppLogo.vue'
 import SubjectSearch from '../SubjectSearch.vue'
-import { NAV_ITEMS } from './nav'
+import MySteps from './MySteps.vue'
+import { NAV_ITEMS, subNavFor } from './nav'
+import { computed } from 'vue'
 import type { View } from '@/composables/useView'
 import { useI18n } from '@/i18n'
 
 
-defineProps<{ view: View }>()
+const props = defineProps<{ view: View }>()
+const sub = computed(() => subNavFor(props.view))
 const { t } = useI18n()
 </script>
 
 <template>
-  <header class="header" >
+  <header class="header">
     <div class="header-inner shell">
       <a class="brand" :href="link('')">
         <AppLogo class="mark" small />
@@ -22,7 +25,17 @@ const { t } = useI18n()
       </a>
       <nav class="nav" :aria-label="t('nav.main')">
         <template v-for="item in NAV_ITEMS" :key="item.view">
+          <!-- Inside a section: the main item opens into a nested capsule holding its pages. -->
+          <span v-if="sub?.parent === item.view" class="nav-group">
+            <a class="nav-link" :href="link(item.view)" aria-current="page">
+              <component :is="item.icon" :size="16" aria-hidden="true" />
+              {{ t(item.key) }}
+            </a>
+            <MySteps class="nav-sub nav-sub-wide" />
+            <MySteps class="nav-sub nav-sub-tight" compact />
+          </span>
           <a
+            v-else
             class="nav-link"
             :href="link(`${item.view === 'home' ? '' : item.view}`)"
             :aria-current="view === item.view || item.also?.includes(view) ? 'page' : undefined"
@@ -32,6 +45,8 @@ const { t } = useI18n()
           </a>
         </template>
       </nav>
+      <!-- Phones: the main items live in the tab bar; the section's pages sit here, centred. -->
+      <MySteps class="phone-sub" compact />
       <div class="tools">
         <SubjectSearch v-if="view !== 'home'" class="header-search" compact />
         <a
@@ -223,6 +238,52 @@ const { t } = useI18n()
 
   .header-inner {
     height: 56px;
+  }
+}
+
+/* The open section: the pink main item, then its pages, inside one nested capsule. */
+.nav-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  padding-right: 4px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent-fill) 7%, var(--glass-fill));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 16%, transparent);
+}
+
+.nav-sub-tight,
+.phone-sub {
+  display: none;
+}
+
+/* Tight rows (and long languages on mid-size screens): other pages shrink to number or icon. */
+@media (max-width: 1280px) {
+  .nav-sub-wide {
+    display: none;
+  }
+
+  .nav-sub-tight {
+    display: block;
+  }
+}
+
+@media (max-width: 720px) {
+  .phone-sub {
+    display: block;
+    margin-inline: auto;
+  }
+
+  .header-inner {
+    gap: 8px;
+  }
+}
+
+/* Very narrow phones: the logo alone, so the steps keep the middle. */
+@media (max-width: 480px) {
+  .header:has(.phone-sub) .brand-name {
+    display: none;
   }
 }
 </style>
