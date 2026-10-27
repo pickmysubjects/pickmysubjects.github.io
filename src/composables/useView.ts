@@ -3,6 +3,7 @@ import { localeInPath } from '@/i18n/codes'
 import { currentLocale, useI18n } from '@/i18n'
 import { newVersionReady } from '@/utils/serviceWorker'
 import { countPage } from '@/utils/analytics'
+import { VIEW_LOADERS } from '@/views/loaders'
 
 export const VIEWS = ['home', 'subject', 'plan', 'recommend', 'record', 'contribute', 'feedback', 'privacy', 'about', 'guide', 'subjects', 'majors', 'shortlist', 'careers', 'changes', 'tools'] as const
 export type View = (typeof VIEWS)[number]
@@ -109,30 +110,41 @@ function sync(): void {
   revealHash()
 }
 
-/**
- * A link into part of a page (/plan/#calendar, /record/#sec-backup): once that part is drawn,
- * open any folded section around it and bring it into view. Pages load and draw in steps,
- * so this looks again for a moment before giving up.
- */
 /** The #anchor of the last link whose part of the page isn't there (no plan, no grades yet). */
 export const missedAnchor = shallowRef<string | null>(null)
 
+// Each look for an anchor belongs to one visit: moving on cancels it, so an old page's anchor
+// never scrolls the new page or flags it as missing.
+let anchorVisit = 0
+
+/**
+ * A link into part of a page (/plan/#calendar, /record/#sec-backup): once that part is drawn,
+ * open any folded section around it and bring it into view. The page's code is loaded first
+ * (the first visit downloads it), then the page draws in steps, so this looks again for a
+ * moment before giving up.
+ */
 function revealHash(): void {
   missedAnchor.value = null
+  const visit = ++anchorVisit
   const id = safeDecode(location.hash.slice(1))
   if (!id) return
-  let tries = 0
-  const look = () => {
-    const el = document.getElementById(id)
-    if (!el) {
-      if (++tries < 40) window.setTimeout(look, 50)
-      else missedAnchor.value = id
-      return
+  const view = route.value?.view
+  const loaded = view ? VIEW_LOADERS[view]().then(() => undefined, () => undefined) : Promise.resolve()
+  void loaded.then(() => {
+    let tries = 0
+    const look = () => {
+      if (visit !== anchorVisit) return
+      const el = document.getElementById(id)
+      if (!el) {
+        if (++tries < 40) window.setTimeout(look, 50)
+        else missedAnchor.value = id
+        return
+      }
+      for (let d = el.closest('details'); d; d = d.parentElement?.closest('details') ?? null) d.open = true
+      el.scrollIntoView({ block: 'start' })
     }
-    for (let d = el.closest('details'); d; d = d.parentElement?.closest('details') ?? null) d.open = true
-    el.scrollIntoView({ block: 'start' })
-  }
-  window.setTimeout(look, 0)
+    window.setTimeout(look, 0)
+  })
 }
 
 function visit(address: string): void {
