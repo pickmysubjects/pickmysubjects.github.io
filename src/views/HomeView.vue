@@ -154,6 +154,7 @@ const next = computed(() => {
 .hero-panel {
   position: relative;
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   justify-items: start;
   min-width: 0;
   padding: 40px 44px 42px;
@@ -206,7 +207,7 @@ const next = computed(() => {
 }
 
 .hero-title {
-  font-size: clamp(2.4rem, 4vw, 3.6rem);
+  font-size: clamp(2.4rem, 3.4vw, 3rem);
   font-weight: 800;
   line-height: 1.06;
   letter-spacing: -0.03em;
@@ -515,7 +516,7 @@ const next = computed(() => {
   }
 
   .hero-scene {
-    width: 88%;
+    width: 80%;
   }
 
   /* One line a step on a phone: number, name and status; the longer line is for wider screens. */

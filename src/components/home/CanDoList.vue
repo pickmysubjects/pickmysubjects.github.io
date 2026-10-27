@@ -129,6 +129,32 @@ const items = computed(() => (props.short ? ITEMS.filter((i) => SHORT.has(i.key)
   font-size: var(--fs-small);
 }
 
+/* Phones: one row that scrolls sideways, fading at the edge so the rest is clearly there. */
+@media (max-width: 640px) {
+  .can-short .can-list {
+    flex-wrap: nowrap;
+    /* Room inside the scroller for the pills' shadows and focus rings. */
+    margin: -6px -20px -10px -4px;
+    padding: 6px 20px 10px 4px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 36px), transparent);
+    mask-image: linear-gradient(90deg, #000 calc(100% - 36px), transparent);
+  }
+
+  .can-short .can-list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .can-short li {
+    flex: none;
+  }
+
+  .can-short .can-item {
+    white-space: nowrap;
+  }
+}
+
 .can-item:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;

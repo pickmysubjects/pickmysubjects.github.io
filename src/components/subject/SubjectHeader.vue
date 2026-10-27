@@ -61,9 +61,13 @@ const passed = computed(() => profile.value.results.find((r) => r.code === code.
 const plannedAt = computed(() => plan.terms.value.find((x) => x.subjects.includes(code.value)))
 
 // Where "Add to my plan" can put it: any semester of the plan, past ones too; terms it doesn't run in are flagged.
+// A subject that stops running offers only the years before it stops; none left, no add button.
 const termChoices = computed(() =>
-  addTermChoices(props.subject, { year: plan.setup.value.startYear, period: plan.setup.value.startPeriod }, plan.terms.value),
+  addTermChoices(props.subject, { year: plan.setup.value.startYear, period: plan.setup.value.startPeriod }, plan.terms.value).filter(
+    (x) => props.subject.discontinuedFrom === undefined || x.year < props.subject.discontinuedFrom,
+  ),
 )
+const canAdd = computed(() => !gone.value || termChoices.value.some((x) => x.offered))
 const chosenTerm = shallowRef('')
 const target = computed(() => {
   const all = termChoices.value
@@ -143,14 +147,14 @@ onBeforeUnmount(() => io?.disconnect())
         <Check :size="18" aria-hidden="true" />
         {{ passed.mark === undefined ? t('subject.passed') : t('subject.passedMark', { mark: passed.mark }) }}
       </span>
-      <a v-else-if="!plan.setupChosen.value" class="button button-accent" :href="link(`plan?add=${subject.code}`)">
-        <Plus :size="18" aria-hidden="true" /> {{ t('subject.chooseDegreeFirst') }}
+      <a v-else-if="!plan.setupChosen.value && canAdd" class="button button-accent" :href="link(`plan?add=${subject.code}`)">
+        <Plus :size="18" aria-hidden="true" /> {{ t('subject.addToPlan') }}
       </a>
       <template v-else-if="plannedAt">
         <span class="state state-good" role="status"><Check :size="18" aria-hidden="true" /> {{ t('subject.inPlanAt', { term: termLabel(t, plannedAt) }) }}</span>
         <a class="button button-quiet" :href="link('plan')">{{ t('subject.openPlanner') }}</a>
       </template>
-      <div v-else-if="target" class="add">
+      <div v-else-if="target && canAdd" class="add">
         <label>
           <span class="visually-hidden">{{ t('subject.addWhen') }}</span>
           <select class="select-glass" :value="`${target.year}|${target.period}`" @change="chosenTerm = ($event.target as HTMLSelectElement).value">
@@ -174,17 +178,17 @@ onBeforeUnmount(() => io?.disconnect())
         </button>
       </span>
     </div>
-    <p v-if="target && !target.offered && !plannedAt && !passed && plan.setupChosen.value" class="added added-warn" role="status">{{ t('subject.addNotOffered', { year }) }}</p>
+    <p v-if="target && canAdd && !target.offered && !plannedAt && !passed && plan.setupChosen.value" class="added added-warn" role="status">{{ t('subject.addNotOffered', { year }) }}</p>
     <p v-if="addedAt" class="added" role="status">{{ t('subject.added', { term: termLabel(t, addedAt) }) }}</p>
 
     <Teleport to="body">
       <div v-if="actionsGone" class="dock">
         <span class="dock-name"><span class="code dock-code">{{ subject.code }}</span><span class="dock-title">{{ local || subject.title }}</span></span>
         <ShortlistToggle :code="subject.code" compact />
-        <a v-if="!passed && !plannedAt && !plan.setupChosen.value" class="button button-accent dock-go" :href="link(`plan?add=${subject.code}`)">
+        <a v-if="!passed && !plannedAt && !plan.setupChosen.value && canAdd" class="button button-accent dock-go" :href="link(`plan?add=${subject.code}`)">
           <Plus :size="18" aria-hidden="true" /> {{ t('subject.addToPlan') }}
         </a>
-        <button v-else-if="!passed && !plannedAt && target" class="button button-accent dock-go" type="button" @click="addToPlan">
+        <button v-else-if="!passed && !plannedAt && target && canAdd" class="button button-accent dock-go" type="button" @click="addToPlan">
           <Plus :size="18" aria-hidden="true" /> {{ t('subject.addToPlan') }}
         </button>
         <span v-else-if="plannedAt || passed" class="state state-good dock-state"><Check :size="18" aria-hidden="true" /></span>

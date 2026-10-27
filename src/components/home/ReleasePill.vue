@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, shallowRef, useId } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, shallowRef, useId, useTemplateRef, watch } from 'vue'
 import { useI18n } from '@/i18n'
 import { APP_VERSION, IS_BETA, releaseDate, versionLabel } from '@/release'
 
@@ -13,19 +13,58 @@ const { t, locale } = useI18n()
 const open = shallowRef(false)
 const id = useId()
 const updated = computed(() => t.value('home.release.label', { v: versionLabel(), date: releaseDate(locale.value) }))
+
+/*
+ * One line, as much as fits: 0 everything, 1 without the sub-line, 2 also without the version
+ * number, 3 the announcement wraps (never cut mid-word). Widths are measured with everything
+ * shown, again after a language change.
+ */
+const fit = shallowRef(0)
+const root = useTemplateRef<HTMLElement>('root')
+let widths: { pill: number; text: number; sub: number; num: number } | null = null
+function measure(): void {
+  const el = root.value
+  const text = el?.querySelector<HTMLElement>('.release-text')
+  if (!el || !text) return
+  widths = {
+    pill: el.querySelector<HTMLElement>('.release-pill')!.offsetWidth,
+    text: text.scrollWidth,
+    sub: el.querySelector<HTMLElement>('.release-sub')?.offsetWidth ?? 0,
+    num: el.querySelector<HTMLElement>('.release-num')?.offsetWidth ?? 0,
+  }
+  place()
+}
+function place(): void {
+  const el = root.value
+  if (!el || !widths) return
+  const room = el.clientWidth - (widths.pill - widths.text) - 1
+  fit.value = widths.text <= room ? 0 : widths.text - widths.sub <= room ? 1 : widths.text - widths.sub - widths.num <= room ? 2 : 3
+}
+let ro: ResizeObserver | undefined
+onMounted(() => {
+  measure()
+  if ('ResizeObserver' in window && root.value) {
+    ro = new ResizeObserver(place)
+    ro.observe(root.value)
+  }
+})
+onBeforeUnmount(() => ro?.disconnect())
+watch(locale, async () => {
+  fit.value = 0
+  await nextTick()
+  measure()
+})
 </script>
 
 <template>
-  <div class="release" @keydown.esc="open = false">
+  <div ref="root" class="release" :class="`fit-${fit}`" @keydown.esc="open = false">
     <button class="release-pill" type="button" :aria-expanded="open" :aria-controls="id" @click="open = !open">
       <span class="release-dot" aria-hidden="true" />
       <span v-if="IS_BETA" class="release-text">
-        <span class="release-beta">Beta<span class="release-num"> v{{ APP_VERSION }}</span></span>
-        <span class="release-sep" aria-hidden="true">·</span>
-        <strong>{{ t('home.notice.title') }}</strong>
-        <span class="release-sub"><span class="release-sep" aria-hidden="true">·</span> {{ t('home.notice.sub') }}</span>
+        <span class="release-main"><span class="release-beta">Beta<span class="release-num"> v{{ APP_VERSION }}</span></span><span class="release-sep" aria-hidden="true">·</span><strong>{{ t('home.notice.title') }}</strong></span>
+        <span class="release-sub"><span class="release-sep" aria-hidden="true">·</span>{{ t('home.notice.sub') }}</span>
       </span>
-      <span v-else class="release-text">{{ updated }}</span>
+      <span v-else class="release-text"><span class="release-main">{{ updated }}</span></span>
     </button>
     <div v-show="open" :id="id" class="release-panel" role="region" :aria-label="t('home.release.title')">
       <p class="release-title">{{ t('home.release.title') }}</p>
@@ -40,11 +79,12 @@ const updated = computed(() => t.value('home.release.label', { v: versionLabel()
 </template>
 
 <style scoped>
+/* Full width of its column (that's the room the pill measures); the pill itself is only as wide as its words. */
 .release {
   position: relative;
-  justify-self: start;
+  justify-self: stretch;
   z-index: 5;
-  max-width: 100%;
+  min-width: 0;
 }
 
 .release-pill {
@@ -68,12 +108,27 @@ const updated = computed(() => t.value('home.release.label', { v: versionLabel()
   cursor: pointer;
 }
 
-/* One line always: the version number and the sub-line step aside first, then an ellipsis. */
 .release-text {
   min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  line-height: 1.4;
+  text-align: left;
   white-space: nowrap;
+}
+
+.fit-1 .release-sub,
+.fit-2 .release-sub,
+.fit-3 .release-sub,
+.fit-2 .release-num,
+.fit-3 .release-num {
+  display: none;
+}
+
+.fit-3 .release-text {
+  white-space: normal;
+}
+
+.fit-3 .release-pill {
+  border-radius: 16px;
 }
 
 .release-beta {
@@ -89,18 +144,6 @@ const updated = computed(() => t.value('home.release.label', { v: versionLabel()
 .release-text strong {
   font-weight: var(--fw-semibold);
   color: var(--ink);
-}
-
-@media (max-width: 1100px) and (min-width: 641px), (max-width: 480px) {
-  .release-sub {
-    display: none;
-  }
-}
-
-@media (max-width: 400px) {
-  .release-num {
-    display: none;
-  }
 }
 
 /* A 44px tap target on touch without making the pill look bigger. */

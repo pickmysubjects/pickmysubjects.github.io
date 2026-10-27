@@ -14,15 +14,15 @@ const blocks = computed(() => props.discussions.filter((d) => d.points.length).m
 
 <template>
   <section v-if="blocks.length" class="discussion">
-    <h2 class="discussion-title"><MessagesSquare :size="18" aria-hidden="true" /> {{ t('subject.discussTitle') }}</h2>
-    <p class="discussion-note">{{ t('subject.discussNote') }}</p>
+    <!-- Inside "What students say": each source's own line is the heading, no second title. -->
     <div v-for="b in blocks" :key="b.d.source" class="discussion-block">
-      <h3 class="discussion-source">{{ b.source }}</h3>
+      <h3 class="discussion-source"><MessagesSquare :size="16" aria-hidden="true" /> {{ b.source }}</h3>
       <ul class="discussion-points">
         <li v-for="(p, i) in b.d.points" :key="i">{{ pickLocalized(p, locale) }}</li>
       </ul>
       <a class="discussion-link" :href="b.d.url" target="_blank" rel="noopener nofollow">{{ b.read }}</a>
     </div>
+    <p class="discussion-note">{{ t('subject.discussNote') }}</p>
   </section>
 </template>
 
@@ -30,14 +30,6 @@ const blocks = computed(() => props.discussions.filter((d) => d.points.length).m
 .discussion {
   display: grid;
   gap: 10px;
-}
-
-.discussion-title {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: var(--fs-body);
-  font-weight: 650;
 }
 
 .discussion-note {
@@ -64,6 +56,9 @@ const blocks = computed(() => props.discussions.filter((d) => d.points.length).m
 }
 
 .discussion-source {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   font-size: var(--fs-meta);
   font-weight: 600;
   color: var(--ink-soft);

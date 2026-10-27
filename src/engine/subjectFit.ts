@@ -96,11 +96,22 @@ export function subjectDifficulty(subjects: Record<string, Subject>, code: strin
   }
 }
 
-/** Student reviews and ratings behind the verdict: our ratings once 3+, shared grades once 5+, public summaries. */
+/**
+ * Student reviews and ratings behind the verdict, by where they come from: our ratings once 3+,
+ * shared grades once 5+, and the public discussions summarised on the page. The fit card names
+ * each, so its count matches what "What students say" shows (no ratings here, 10 online).
+ */
+export function reviewSources(s: Subject): { ratings: number; grades: number; online: number } {
+  return {
+    ratings: s.signals && s.signals.reviews >= 3 ? s.signals.reviews : 0,
+    grades: s.gradeOffset && s.gradeOffset.n >= 5 ? s.gradeOffset.n : 0,
+    online: (s.discussions ?? []).reduce((a, d) => a + discussionCount(d), 0),
+  }
+}
+
 function reviewCount(s: Subject): number {
-  const own = s.signals && s.signals.reviews >= 3 ? s.signals.reviews : 0
-  const grades = s.gradeOffset && s.gradeOffset.n >= 5 ? s.gradeOffset.n : 0
-  return own + grades + (s.discussions ?? []).reduce((a, d) => a + discussionCount(d), 0)
+  const r = reviewSources(s)
+  return r.ratings + r.grades + r.online
 }
 
 function interleave<T>(a: T[], b: T[]): T[] {

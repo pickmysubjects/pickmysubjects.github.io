@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, toRef } from 'vue'
 import { ArrowRight, Check, CircleMinus, Info, Minus, Plus, ThumbsUp, TriangleAlert } from 'lucide-vue-next'
-import { fitBasis, whyNotFit, type Subject } from '@/engine'
+import { fitBasis, reviewSources, whyNotFit, type Subject } from '@/engine'
 import InfoTip from '@/components/InfoTip.vue'
 import RowWarnings from '@/components/browse/RowWarnings.vue'
 import { link } from '@/composables/useView'
@@ -48,11 +48,7 @@ const harderItems = computed(() => difficulty.value.factors.harder.map((r) => ra
 const facts = computed(() => {
   const s = props.subject
   const out: string[] = []
-  if (s.assessment?.length) {
-    const byKind = new Map<string, number>()
-    for (const task of s.assessment) byKind.set(task.kind, (byKind.get(task.kind) ?? 0) + task.weight)
-    out.push(t.value('fit.markedBy', { parts: [...byKind].map(([k, w]) => `${t.value(`assess.kind.${k}`)} ${Math.round(w)}%`).join(t.value('fit.basis.sep')) }))
-  }
+  // How it's marked is in the header's chips and in Assessment below: not said a third time here.
   if (s.prerequisites !== 'none' && s.prerequisites !== 'unknown') out.push(t.value('fit.needs', { req: trim(describeReq(t.value, s.prerequisites, course.value)) }))
   return out
 })
@@ -98,7 +94,17 @@ const hasWatch = computed(() => !!watchRec.value?.warnings.length || !!watchRec.
 const source = computed(() => {
   const d = difficulty.value
   if (d.level === 'unknown') return ''
-  return d.factsOnly ? t.value('rank.factsOnly') : d.reviews > 0 ? t.value('fit.fromReviews', { n: d.reviews }) : ''
+  if (d.factsOnly) return t.value('rank.factsOnly')
+  if (d.reviews <= 0) return ''
+  // Named by where they come from, so it matches "What students say" (no ratings here yet, but
+  // ten reviews summarised from elsewhere).
+  const r = reviewSources(props.subject)
+  const parts = [
+    r.ratings ? t.value('fit.srcRatings', { n: r.ratings }) : '',
+    r.grades ? t.value('fit.srcGrades', { n: r.grades }) : '',
+    r.online ? t.value('fit.srcOnline', { n: r.online }) : '',
+  ].filter(Boolean)
+  return t.value('fit.fromSources', { list: parts.join(t.value('fit.basis.sep')) })
 })
 const basis = computed(() => (fit.value?.kind === 'fit' ? basisText(t.value, fitBasis(profile.value)) : ''))
 // No marks yet: the likely-mark part can't be worked out, so say what unlocks it.
