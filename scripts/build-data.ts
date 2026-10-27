@@ -2,14 +2,13 @@
  * Validates every curated YAML file and writes one JSON bundle per dataset to
  * src/generated/. Exits non-zero on any schema error, so bad data never reaches the app.
  */
-import { latestDataYear, thisYear } from '../src/engine/dataYear'
+import { latestDataYear } from '../src/engine/dataYear'
 import { mkdirSync, rmSync, writeFileSync } from 'node:fs'
 import { buildChanges, SNAPSHOT_DIR } from './changes'
 import { join } from 'node:path'
 import { buildDataset, ROOT } from './dataset'
 import { splitDataset } from '../src/engine/split'
 import { buildTakenWith } from '../src/engine/related'
-import { buildHomeDemo } from './homeDemo'
 import { buildKeyDates } from './keyDates'
 const OUT = join(ROOT, 'src', 'generated')
 mkdirSync(OUT, { recursive: true })
@@ -39,12 +38,10 @@ for (const name of ['real', 'demo'] as const) {
     rmSync(dir, { recursive: true, force: true })
     mkdirSync(dir)
     for (const [area, part] of Object.entries(details)) writeFileSync(join(dir, `${area}.json`), JSON.stringify(part))
-    // The home page's worked examples: a real subject and a real generated plan.
     // "What changed in <year>", only once the next year is entered and differs (no empty page).
     const changes = buildChanges(dataset, SNAPSHOT_DIR(ROOT))
     if (changes) writeFileSync(join(OUT, 'changes.json'), JSON.stringify(changes))
     else rmSync(join(OUT, 'changes.json'), { force: true })
-    writeFileSync(join(OUT, 'home-demo.json'), JSON.stringify(buildHomeDemo(dataset, thisYear())))
   }
 }
 // The University's key dates (guide page, home strip, calendar files).

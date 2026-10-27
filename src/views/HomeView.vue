@@ -12,10 +12,6 @@ import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
 import { useProfile } from '@/composables/useProfile'
 import { useI18n } from '@/i18n'
-import DemoPlan from '@/components/home/DemoPlan.vue'
-import DemoSubject from '@/components/home/DemoSubject.vue'
-import demo from '@/generated/home-demo.json'
-import type { HomeDemo } from '@/utils/homeDemo'
 
 const { t, locale } = useI18n()
 const { data } = useDataset()
@@ -28,8 +24,6 @@ const titleParts = computed(() =>
     .map((part) => part.split('*').map((text, i) => ({ text, em: i % 2 === 1 })).filter((x) => x.text)),
 )
 const spaced = computed(() => !['zh-CN', 'zh-TW', 'ja'].includes(locale.value))
-// Two real examples worked out at build time (scripts/homeDemo.ts): shown, not described.
-const { subject: demoSubject, plan: demoPlan } = demo as unknown as HomeDemo
 // How many subjects the site knows, counted from the data itself.
 const subjectCount = computed(() => Object.keys(data.value.subjects).length.toLocaleString(locale.value))
 
@@ -103,7 +97,7 @@ const next = computed(() => {
 
     <WhatsNext />
 
-    <!-- The three steps (the path), then a real plan and a real subject: shown, not described. -->
+    <!-- The three steps (the path). -->
     <section class="tile-steps" aria-labelledby="steps-title">
       <div class="tile-head">
         <h2 id="steps-title" class="tile-title">{{ t('home.stepsTitle') }}</h2>
@@ -125,11 +119,6 @@ const next = computed(() => {
         </li>
       </ol>
     </section>
-
-    <div class="demos">
-      <DemoPlan class="demo-plan" :plan="demoPlan" :caption="t('home.demoPlan')" />
-      <DemoSubject class="demo-subject" :subject="demoSubject" :caption="t('home.demoSubject')" />
-    </div>
 
     <CanDoList short />
   </div>
@@ -420,13 +409,6 @@ const next = computed(() => {
   padding: 0 20px;
 }
 
-/* A real plan beside a real subject. */
-.demos {
-  display: grid;
-  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-  gap: var(--space-5);
-}
-
 @media (max-width: 1100px) {
   .hero {
     grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
@@ -434,10 +416,6 @@ const next = computed(() => {
 
   .hero-panel {
     padding: 32px 30px;
-  }
-
-  .demos {
-    grid-template-columns: 1fr;
   }
 }
 

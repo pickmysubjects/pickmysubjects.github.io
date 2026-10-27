@@ -38,7 +38,6 @@ import { buildLeadsTo, buildTakenWith, relatedSubjects } from '../src/engine/rel
 import type { Dataset, Subject } from '../src/engine/schema'
 import { factsYear, latestDataYear, publishedYear, thisYear } from '../src/engine/dataYear'
 import { handbookUrl } from '../src/utils/links'
-import type { HomeDemo } from '../src/utils/homeDemo'
 import { describeReq } from '../src/i18n/format'
 import { tipsHtml } from '../src/utils/tipsHtml'
 import { studentFactsHtml } from '../src/utils/studentFactsHtml'
@@ -82,7 +81,6 @@ const messagesChunk = (code: LocaleCode): string | undefined => {
   const hits = assetFiles.filter((f) => new RegExp(`^${code}-[\\w-]{8}\\.js$`).test(f))
   return hits.length === 1 ? `${BASE}assets/${hits[0]}` : undefined
 }
-const homeDemo = JSON.parse(readFileSync(join(ROOT, 'src', 'generated', 'home-demo.json'), 'utf8')) as HomeDemo
 const subjects = Object.values(data.subjects).sort((a, b) => a.code.localeCompare(b.code))
 
 function lookup(messages: unknown, key: string): string | undefined {
@@ -749,19 +747,6 @@ function keyDatesBody(code: LocaleCode, t: Translate): string {
   ].join('\n')
 }
 
-/** The home page's two worked examples as plain HTML: a real subject and a real generated plan. */
-function homeDemoHtml(code: LocaleCode, t: Translate): string {
-  const s = homeDemo.subject
-  const local = localTitle(s, code)
-  const facts = subjectGist(t, s).map((g) => `<li>${esc(g)}</li>`).join('')
-  const first = homeDemo.plan.terms[0]?.year ?? 0
-  const terms = homeDemo.plan.terms
-    .map((x) => `<li>${esc(t('home.year', { n: x.year - first + 1 }))} ${esc(t(`periodShort.${x.period}`))}: ${x.subjects.join(', ')}</li>`)
-    .join('')
-  return `<h2>${esc(t('home.demoSubject'))}</h2><p><a href="${href(code, `subject/${s.code}`)}">${s.code} ${esc(local || s.title)}</a></p><ul>${facts}</ul>
-<h2>${esc(t('home.demoPlan'))}</h2><p><a href="${href(code, 'plan')}">${esc(homeDemo.plan.courseTitle)} · ${esc(homeDemo.plan.majorTitle)}</a>: ${esc(t('rules.progress', { met: homeDemo.plan.met, total: homeDemo.plan.total }))}</p><ol>${terms}</ol>`
-}
-
 // The search titles and descriptions of these pages are shared with the app (src/utils/seo.ts).
 const counts = { subjects: subjects.length, reviewed }
 
@@ -780,7 +765,6 @@ function mainPages(code: LocaleCode): Page[] {
       title: listPageTitle(t, 'home'),
       description: listPageDescription(t, 'home', counts),
       body: `<p>${esc(t('home.release.label', { v: APP_VERSION, date: releaseDate(code) }))}</p><h1>${esc(t('home.title').replaceAll('*', '').replaceAll('|', ['zh-CN', 'zh-TW', 'ja'].includes(code) ? '' : ' '))}</h1><p>${esc(t('home.lede'))}</p><p>${esc(t('home.scope'))}</p>${intro}
-${homeDemoHtml(code, t)}
 <ul><li><a href="${href(code, 'plan')}">${esc(t('home.cardPlan'))}</a>: ${esc(t('home.cardPlanText'))}</li>
 <li><a href="${href(code, 'subjects')}">${esc(t('browse.title'))}</a></li>
 <li><a href="${href(code, 'majors')}">${esc(t('majors.title'))}</a></li>
