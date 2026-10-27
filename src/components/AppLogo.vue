@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useId } from 'vue'
 
-/** The mark: a white mortarboard on a pink glass tile. Small sizes drop the tassel and the rim. */
+/** The mark: a white mortarboard on a pink glass tile. Small sizes drop only the rim. */
 withDefaults(defineProps<{ small?: boolean }>(), { small: false })
 const id = useId()
 </script>
@@ -28,9 +28,8 @@ const id = useId()
     <rect v-if="!small" x="2.75" y="2.75" width="66.5" height="66.5" rx="19.25" fill="none" :stroke="`url(#${id}-rim)`" stroke-width="1.5" />
     <path d="M22 34v9c0 4 6 8 14 8s14-4 14-8v-9" fill="#fff" opacity="0.85" />
     <path d="M36 16l25 11-25 11-25-11z" fill="#fff" />
-    <template v-if="!small">
-      <path d="M36 27l18 4v12" stroke="#ffd6ea" stroke-width="2.5" stroke-linecap="round" fill="none" />
-      <circle cx="54" cy="45" r="3.5" fill="#ffd6ea" />
-    </template>
+    <!-- The tassel stays at every size so the mark matches everywhere; small sizes draw it a touch bolder. -->
+    <path d="M36 27l18 4v12" stroke="#ffd6ea" :stroke-width="small ? 3.5 : 2.5" stroke-linecap="round" fill="none" />
+    <circle cx="54" cy="45" :r="small ? 4.5 : 3.5" fill="#ffd6ea" />
   </svg>
 </template>
