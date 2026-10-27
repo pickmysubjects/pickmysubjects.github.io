@@ -114,7 +114,11 @@ function sync(): void {
  * open any folded section around it and bring it into view. Pages load and draw in steps,
  * so this looks again for a moment before giving up.
  */
+/** The #anchor of the last link whose part of the page isn't there (no plan, no grades yet). */
+export const missedAnchor = shallowRef<string | null>(null)
+
 function revealHash(): void {
+  missedAnchor.value = null
   const id = safeDecode(location.hash.slice(1))
   if (!id) return
   let tries = 0
@@ -122,6 +126,7 @@ function revealHash(): void {
     const el = document.getElementById(id)
     if (!el) {
       if (++tries < 40) window.setTimeout(look, 50)
+      else missedAnchor.value = id
       return
     }
     for (let d = el.closest('details'); d; d = d.parentElement?.closest('details') ?? null) d.open = true

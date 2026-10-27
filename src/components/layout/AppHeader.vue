@@ -309,10 +309,11 @@ watch(() => [props.view, param.value], close)
   padding: 8px;
   border: 1px solid var(--chrome-edge);
   border-radius: 22px;
-  /* Nearly solid: inside the header's own glass a backdrop blur can't reach the page below,
-     so a see-through panel would let the page's text show through the menu's. */
-  background: var(--chrome-shine), color-mix(in srgb, var(--surface) 98%, transparent);
-  box-shadow: var(--float-rim), var(--float-shadow);
+  /* Opaque tinted glass: inside the header's own glass a backdrop blur can't reach the page
+     below, so any see-through fill lets the page's text show through the menu's. */
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--accent-fill) 6%, var(--surface)), var(--surface) 70%);
+  box-shadow: var(--float-rim), 0 18px 48px -12px rgb(0 0 0 / 28%), 0 4px 12px -4px rgb(0 0 0 / 12%);
   animation: menu-in 0.18s var(--ease-spring);
 }
 

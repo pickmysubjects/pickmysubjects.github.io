@@ -6,6 +6,7 @@ import BottomNav from './components/layout/BottomNav.vue'
 import Interp from './components/Interp.vue'
 import AppLogo from './components/AppLogo.vue'
 import RolloverNotice from './components/RolloverNotice.vue'
+import MissedAnchor from './components/layout/MissedAnchor.vue'
 import { VIEW_LOADERS } from './views/loaders'
 import { defineAsyncComponent, watchEffect } from 'vue'
 import { useView, link } from './composables/useView'
@@ -96,8 +97,8 @@ watchEffect(() => {
   </div>
   <AppHeader :view="view" />
   <main class="app-main shell" :class="{ 'shell-wide': view === 'plan' }">
-    <!-- Narrow screens: Me's two steps as a slim switch in the page (wide screens: in the bar). -->
     <RolloverNotice />
+    <MissedAnchor />
     <HomeView v-if="view === 'home'" />
     <SubjectView v-else-if="view === 'subject'" :key="param" :code="param" />
     <PlannerView v-else-if="view === 'plan'" />
