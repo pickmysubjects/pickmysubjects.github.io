@@ -67,7 +67,8 @@ function eligible(s: Subject, anyTerm = false): boolean {
 function problem(code: string): string | null {
   // A swap is judged against the plan with the old subject still in (its load included).
   const issues = previewAdd(plan.plan.value, data.value, props.termIndex, code, load.value, props.replacing)
-  const worst = issues.find((i) => i.severity === 'error') ?? issues[0]
+  // The most telling problem: an error other than the timetable's (a missing prerequisite says more).
+  const worst = issues.find((i) => i.severity === 'error' && i.kind !== 'not-offered') ?? issues.find((i) => i.severity === 'error') ?? issues[0]
   if (worst?.kind === 'not-offered') return t.value('subject.addNotOffered', { year: worst.params?.assumed || worst.params?.year || '' })
   return worst ? issueText(t.value, worst, [], [], data.value.subjects, course.value) : null
 }
