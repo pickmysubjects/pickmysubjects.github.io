@@ -1303,6 +1303,7 @@ export const id: Messages = {
       official: "Key dates resmi",
       employabilityText: "Employability Week: acara, workshop dan Volunteering and Experience Fair, untuk bertemu pemberi kerja dan mencari pengalaman. Tiap acara harus daftar sendiri.",
       employabilityLink: "Employability Week",
+      yearRound: "Beranda menampilkan tanggal yang akan datang, dan bobot ujian akhir tiap mata kuliahmu saat masa ujian. Dari rencanamu, tanggal census, ujian, dan pengumuman nilai bisa ditambahkan ke kalender.",
       kind: {
         teaching: "Periode kuliah",
         orientation: "Orientasi",

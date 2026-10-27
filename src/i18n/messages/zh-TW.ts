@@ -1303,6 +1303,7 @@ export const zhTW: Messages = {
       official: "官方重要日期",
       employabilityText: "Employability Week：有活動、工作坊和 Volunteering and Experience Fair，可以認識雇主、找實務經驗。每場活動都要個別報名。",
       employabilityLink: "Employability Week",
+      yearRound: "首頁會提醒接下來的重要日期，期末考週還會列出你每門課的期末考占比。計畫頁可以把 census、考試和成績公布日期加到行事曆。",
       kind: {
         teaching: "授課期間",
         orientation: "Orientation 新生週",

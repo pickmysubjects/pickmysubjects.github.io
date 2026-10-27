@@ -1303,6 +1303,7 @@ export const zhCN: Messages = {
       official: "官方重要日期",
       employabilityText: "Employability Week：有活动、工作坊和 Volunteering and Experience Fair，可以认识雇主、找实践经验。每个活动要单独报名。",
       employabilityLink: "Employability Week",
+      yearRound: "首页会提示接下来的重要日期，考试季还会列出你每门课的期末考占比。计划页可以把 census、考试和出分日期加到日历。",
       kind: {
         teaching: "教学期",
         orientation: "Orientation 迎新",

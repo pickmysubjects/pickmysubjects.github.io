@@ -1303,6 +1303,7 @@ export const ja: Messages = {
       official: "公式の日程（key dates）",
       employabilityText: "Employability Week：イベントやワークショップ、Volunteering and Experience Fair があり、雇用主と会ったり経験の機会を探したりできます。イベントごとに申し込みが必要です。",
       employabilityLink: "Employability Week",
+      yearRound: "ホームに次の重要日程が出て、試験期間には各科目の期末試験の割合も表示されます。プランから census・試験・成績発表の日をカレンダーに追加できます。",
       kind: {
         teaching: "授業期間",
         orientation: "オリエンテーション",

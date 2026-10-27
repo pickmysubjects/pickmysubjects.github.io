@@ -1303,6 +1303,7 @@ export const hi: Messages = {
       official: "आधिकारिक key dates",
       employabilityText: "Employability Week: इवेंट, वर्कशॉप और Volunteering and Experience Fair, जहां एम्प्लॉयर से मिल सकते हैं और अनुभव ढूंढ सकते हैं। हर इवेंट के लिए अलग से रजिस्टर करना होता है।",
       employabilityLink: "Employability Week",
+      yearRound: "होम पेज पर आगे की ज़रूरी तारीख़ें दिखती हैं, और परीक्षा के समय आपके हर सब्जेक्ट की फ़ाइनल परीक्षा का हिस्सा भी। अपने प्लान से census, परीक्षा और रिज़ल्ट की तारीख़ें कैलेंडर में जोड़ सकते हैं।",
       kind: {
         teaching: "पढ़ाई का समय",
         orientation: "ओरिएंटेशन",

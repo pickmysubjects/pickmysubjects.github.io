@@ -1306,6 +1306,7 @@ export const en = {
       official: "Official key dates",
       employabilityText: "Employability Week: events, workshops and the Volunteering and Experience Fair, to meet employers and find experience. You register for each event.",
       employabilityLink: "Employability Week",
+      yearRound: "The home page shows what's coming up, and your subjects' exam weights in exam season. Your plan can add its census, exam and results dates to your calendar.",
       kind: {
         teaching: "Teaching period",
         orientation: "Orientation",

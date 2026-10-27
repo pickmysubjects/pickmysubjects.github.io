@@ -1303,6 +1303,7 @@ export const vi: Messages = {
       official: "Lịch chính thức (key dates)",
       employabilityText: "Employability Week: sự kiện, workshop và Volunteering and Experience Fair, để gặp nhà tuyển dụng và tìm cơ hội trải nghiệm. Mỗi sự kiện bạn phải đăng ký riêng.",
       employabilityLink: "Employability Week",
+      yearRound: "Trang chủ cho biết sắp tới có gì, mùa thi thì hiện tỷ trọng thi cuối kỳ của từng môn. Trong kế hoạch, bạn có thể thêm ngày census, thi và công bố điểm vào lịch.",
       kind: {
         teaching: "Thời gian học",
         orientation: "Orientation (tuần định hướng)",

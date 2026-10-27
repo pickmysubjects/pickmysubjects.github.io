@@ -31,6 +31,7 @@ function download(): void {
       <span class="note">{{ t('guide.kd.addHint') }}</span>
     </div>
     <p class="note">{{ t('guide.kd.note') }} {{ t('guide.kd.notYet') }}</p>
+    <p class="note">{{ t('guide.kd.yearRound') }}</p>
 
     <section v-for="g in [...groups.upcoming, ...groups.past]" :key="`${g.year}-${g.term}`" class="kd-group surface" :class="{ 'kd-done': groups.past.includes(g) }">
       <h2 class="kd-term">

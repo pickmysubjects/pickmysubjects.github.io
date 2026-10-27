@@ -1303,6 +1303,7 @@ export const ko: Messages = {
       official: "공식 주요 일정",
       employabilityText: "Employability Week: 행사, 워크숍, Volunteering and Experience Fair가 열려서 고용주를 만나고 경험을 쌓을 기회를 찾을 수 있어요. 행사마다 따로 신청해야 해요.",
       employabilityLink: "Employability Week",
+      yearRound: "홈에서 다가오는 일정을 보여 주고, 시험 기간엔 내 과목별 기말고사 비중도 보여 줘요. 플랜에서 census·시험·성적 발표일을 캘린더에 추가할 수 있어요.",
       kind: {
         teaching: "수업 기간",
         orientation: "오리엔테이션",
