@@ -122,7 +122,7 @@ onBeforeUnmount(() => io?.disconnect())
   --gap: 12px;
 }
 
-/* The heading style below the hero (CanDoList uses the same). */
+/* The heading style below the hero (HomeTools uses the same). */
 .start-title {
   font-size: 1.375rem;
   font-weight: 700;

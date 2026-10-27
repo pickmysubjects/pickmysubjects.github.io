@@ -1362,6 +1362,7 @@ export const vi: Messages = {
     subjectPage: "Trang môn học",
   },
   can: {
+    tiles: {"final":"Điểm thi cần đạt","finalLine":"Tính từ mức muốn đạt","wamLine":"Mục tiêu và “nếu như”","easy":"Môn dễ","easyLine":"Kèm cả môn khó nhất","compare":"So sánh A và B","compareLine":"Đặt cạnh nhau để xem","share":"Chia sẻ kế hoạch","shareLine":"Gửi bằng một link"},
     finalCalc: "Cuối kỳ cần bao nhiêu điểm",
     title: "Bạn làm được gì ở đây",
     share: "Chia sẻ kế hoạch bằng đường link",

@@ -1362,6 +1362,7 @@ export const zhCN: Messages = {
     subjectPage: "课程页面",
   },
   can: {
+    tiles: {"final":"期末要考几分","finalLine":"按想要的等级倒推","wamLine":"目标和“如果”都能算","easy":"水课榜","easyLine":"好拿分，也看难课","compare":"对比 A 和 B","compareLine":"两个计划并排看","share":"分享计划","shareLine":"一个链接发给朋友"},
     finalCalc: "期末要考几分",
     title: "这里能做什么",
     share: "用链接分享你的计划",

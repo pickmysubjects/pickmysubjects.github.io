@@ -1362,6 +1362,7 @@ export const ko: Messages = {
     subjectPage: "과목 페이지",
   },
   can: {
+    tiles: {"final":"기말 필요 점수","finalLine":"원하는 등급에서 거꾸로 계산","wamLine":"목표와 만약 계산","easy":"꿀강 목록","easyLine":"쉬운 과목과 어려운 과목","compare":"A와 B 비교","compareLine":"두 플랜 나란히 보기","share":"플랜 공유","shareLine":"링크 하나로 보내기"},
     finalCalc: "기말에 필요한 점수",
     title: "여기서 할 수 있는 것",
     share: "플랜을 링크로 공유",

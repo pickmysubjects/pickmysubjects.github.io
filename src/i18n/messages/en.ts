@@ -1365,6 +1365,7 @@ export const en = {
     subjectPage: "Subject page",
   },
   can: {
+    tiles: {"final":"Final calculator","finalLine":"From the grade you want","wamLine":"Targets and what-ifs","easy":"Easy subjects","easyLine":"And the hardest ones","compare":"Compare A and B","compareLine":"Two plans side by side","share":"Share your plan","shareLine":"Send it as one link"},
     finalCalc: "What you need on the final",
     title: "What you can do here",
     share: "Share your plan as a link",

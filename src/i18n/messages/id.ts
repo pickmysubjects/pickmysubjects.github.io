@@ -1362,6 +1362,7 @@ export const id: Messages = {
     subjectPage: "Halaman mata kuliah",
   },
   can: {
+    tiles: {"final":"Nilai ujian akhir","finalLine":"Dari grade incaranmu","wamLine":"Target dan simulasi","easy":"Mata kuliah mudah","easyLine":"Dan yang paling sulit","compare":"Rencana A vs B","compareLine":"Dua rencana sejajar","share":"Bagikan rencana","shareLine":"Kirim lewat satu tautan"},
     finalCalc: "Nilai ujian akhir yang dibutuhkan",
     title: "Yang bisa kamu lakukan di sini",
     share: "Bagikan rencanamu lewat tautan",

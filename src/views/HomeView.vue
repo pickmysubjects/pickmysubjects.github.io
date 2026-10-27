@@ -3,8 +3,8 @@ import { link } from '@/composables/useView'
 import { computed } from 'vue'
 import { ArrowRight, CalendarCheck, Gauge, Globe } from 'lucide-vue-next'
 import ReleasePill from '@/components/home/ReleasePill.vue'
-import CanDoList from '@/components/home/CanDoList.vue'
 import WhatsNext from '@/components/home/WhatsNext.vue'
+import HomeTools from '@/components/home/HomeTools.vue'
 import StartSteps from '@/components/home/StartSteps.vue'
 import HeroCampus from '@/components/home/HeroCampus.vue'
 import Interp from '@/components/Interp.vue'
@@ -74,7 +74,7 @@ const returning = computed(() => plan.courseChosen.value || !plan.isEmpty.value 
     <!-- The three steps for a new student. -->
     <StartSteps />
 
-    <CanDoList short />
+    <HomeTools />
   </div>
 </template>
 

@@ -1362,6 +1362,7 @@ export const zhTW: Messages = {
     subjectPage: "課程頁面",
   },
   can: {
+    tiles: {"final":"期末要考幾分","finalLine":"按想要的等級倒推","wamLine":"目標和「如果」都能算","easy":"涼課榜","easyLine":"好拿分，也看硬課","compare":"比較 A 和 B","compareLine":"兩個計畫並排看","share":"分享計畫","shareLine":"一個連結傳給朋友"},
     finalCalc: "期末要考幾分",
     title: "這裡能做什麼",
     share: "用連結分享你的計畫",

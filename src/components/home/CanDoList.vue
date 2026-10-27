@@ -1,14 +1,10 @@
 <script setup lang="ts">
 import { ArrowDownUp, ArrowRight, Calculator, Columns2, Gauge, Heart, Printer, Share2, Star, Scale } from 'lucide-vue-next'
-import { computed } from 'vue'
 import { link } from '@/composables/useView'
 import { useI18n } from '@/i18n'
 
-/**
- * Features that are easy to miss, each one tap from where it lives. `short`: one row of the
- * most-used few as small pills (home), the rest one tap away on the tools page.
- */
-const props = defineProps<{ title?: string; short?: boolean }>()
+/** Features that are easy to miss, each one tap from where it lives (the guide's list). */
+defineProps<{ title?: string }>()
 const { t } = useI18n()
 const ITEMS = [
   { key: 'can.finalCalc', to: 'tools/final/', icon: Calculator },
@@ -21,18 +17,16 @@ const ITEMS = [
   { key: 'can.rate', to: 'subjects', icon: Star },
   { key: 'can.shortlist', to: 'shortlist', icon: Heart },
 ] as const
-const SHORT = new Set(['can.finalCalc', 'can.wam', 'can.easyHard', 'can.share', 'can.plans'])
-const items = computed(() => (props.short ? ITEMS.filter((i) => SHORT.has(i.key)) : ITEMS))
 </script>
 
 <template>
-  <section class="can" :class="{ 'can-short': short }" aria-labelledby="can-title">
+  <section class="can" aria-labelledby="can-title">
     <div class="can-head">
       <h2 id="can-title" class="can-title">{{ title ?? t('can.title') }}</h2>
       <a class="can-all" :href="link('tools/')">{{ t('menu.allTools') }} <ArrowRight :size="15" aria-hidden="true" /></a>
     </div>
     <ul class="can-list">
-      <li v-for="i in items" :key="i.key">
+      <li v-for="i in ITEMS" :key="i.key">
         <a class="can-item glass" :href="link(i.to)">
           <component :is="i.icon" :size="16" aria-hidden="true" class="can-icon" />
           <span>{{ t(i.key) }}</span>
@@ -108,50 +102,6 @@ const items = computed(() => (props.short ? ITEMS.filter((i) => SHORT.has(i.key)
 @media (prefers-reduced-motion: reduce) {
   .can-item {
     transition: none;
-  }
-}
-
-/* Short: pills that wrap, as small as a tap target allows. */
-.can-short {
-  gap: var(--space-3);
-}
-
-.can-short .can-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
-}
-
-.can-short .can-item {
-  min-height: 44px;
-  padding: 8px 14px;
-  border-radius: 999px;
-  font-size: var(--fs-small);
-}
-
-/* Phones: one row that scrolls sideways, fading at the edge so the rest is clearly there. */
-@media (max-width: 640px) {
-  .can-short .can-list {
-    flex-wrap: nowrap;
-    /* Room inside the scroller for the pills' shadows and focus rings. */
-    margin: -6px -20px -10px -4px;
-    padding: 6px 20px 10px 4px;
-    overflow-x: auto;
-    scrollbar-width: none;
-    -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 36px), transparent);
-    mask-image: linear-gradient(90deg, #000 calc(100% - 36px), transparent);
-  }
-
-  .can-short .can-list::-webkit-scrollbar {
-    display: none;
-  }
-
-  .can-short li {
-    flex: none;
-  }
-
-  .can-short .can-item {
-    white-space: nowrap;
   }
 }
 

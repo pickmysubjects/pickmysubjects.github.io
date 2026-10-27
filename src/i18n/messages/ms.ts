@@ -1362,6 +1362,7 @@ export const ms: Messages = {
     subjectPage: "Halaman subjek",
   },
   can: {
+    tiles: {"final":"Markah akhir perlu","finalLine":"Dari gred yang dimahu","wamLine":"Sasaran dan andaian","easy":"Subjek mudah","easyLine":"Dan yang paling susah","compare":"Banding A dan B","compareLine":"Sebelah-menyebelah","share":"Kongsi rancangan","shareLine":"Hantar satu pautan"},
     finalCalc: "Markah akhir yang perlu",
     title: "Apa yang boleh dibuat di sini",
     share: "Kongsi pelan anda sebagai pautan",

@@ -1362,6 +1362,7 @@ export const ja: Messages = {
     subjectPage: "科目ページ",
   },
   can: {
+    tiles: {"final":"期末の必要点","finalLine":"目標の成績から逆算","wamLine":"目標ともしもの計算","easy":"楽単リスト","easyLine":"難しい科目も一緒に","compare":"A と B を比較","compareLine":"2つのプランを並べて","share":"プランを共有","shareLine":"リンク1つで送れる"},
     finalCalc: "期末で必要な点",
     title: "ここでできること",
     share: "プランをリンクで共有",
