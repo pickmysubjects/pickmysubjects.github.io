@@ -1,21 +1,36 @@
 <script setup lang="ts">
 import { useId } from 'vue'
 
-/** The mark: a graduation cap whose tassel ends in a compass star. */
+/** The mark: a white mortarboard on a pink glass tile. Small sizes drop the tassel and the rim. */
+withDefaults(defineProps<{ small?: boolean }>(), { small: false })
 const id = useId()
 </script>
 
 <template>
-  <svg viewBox="0 0 32 32" aria-hidden="true">
+  <svg viewBox="0 0 72 72" aria-hidden="true">
     <defs>
-      <linearGradient :id="`${id}-g`" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0" stop-color="#f472b6" />
-        <stop offset="1" stop-color="#8b5cf6" />
+      <linearGradient :id="`${id}-glass`" x1="0" y1="0" x2="0.6" y2="1">
+        <stop offset="0" stop-color="#e2509b" stop-opacity="0.82" />
+        <stop offset="1" stop-color="#a81a68" stop-opacity="0.92" />
+      </linearGradient>
+      <linearGradient :id="`${id}-sheen`" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#fff" stop-opacity="0.55" />
+        <stop offset="0.45" stop-color="#fff" stop-opacity="0" />
+      </linearGradient>
+      <linearGradient v-if="!small" :id="`${id}-rim`" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#fff" stop-opacity="0.95" />
+        <stop offset="0.5" stop-color="#fff" stop-opacity="0.2" />
+        <stop offset="1" stop-color="#fff" stop-opacity="0.6" />
       </linearGradient>
     </defs>
-    <path d="M8.5 14.6v5.3c0 2.3 3.4 4.1 7.5 4.1s7.5-1.8 7.5-4.1v-5.3L16 18.3z" :fill="`url(#${id}-g)`" opacity="0.75" />
-    <path d="M16 5 29 11.5 16 18 3 11.5z" :fill="`url(#${id}-g)`" />
-    <path d="M27 12.5v7.2" stroke="#c2227a" stroke-width="1.6" stroke-linecap="round" fill="none" />
-    <path d="M27 20.2l1.1 2.7 2.7 1.1-2.7 1.1-1.1 2.7-1.1-2.7-2.7-1.1 2.7-1.1z" fill="#c2227a" />
+    <rect x="2" y="2" width="68" height="68" rx="20" :fill="`url(#${id}-glass)`" />
+    <rect x="2" y="2" width="68" height="68" rx="20" :fill="`url(#${id}-sheen)`" />
+    <rect v-if="!small" x="2.75" y="2.75" width="66.5" height="66.5" rx="19.25" fill="none" :stroke="`url(#${id}-rim)`" stroke-width="1.5" />
+    <path d="M22 34v9c0 4 6 8 14 8s14-4 14-8v-9" fill="#fff" opacity="0.85" />
+    <path d="M36 16l25 11-25 11-25-11z" fill="#fff" />
+    <template v-if="!small">
+      <path d="M36 27l18 4v12" stroke="#ffd6ea" stroke-width="2.5" stroke-linecap="round" fill="none" />
+      <circle cx="54" cy="45" r="3.5" fill="#ffd6ea" />
+    </template>
   </svg>
 </template>

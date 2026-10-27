@@ -19,7 +19,7 @@ const sub = computed(() => subNavFor(props.view))
   <header class="header" :class="{ 'header-with-steps': sub }">
     <div class="header-inner shell">
       <a class="brand" :href="link('')">
-        <AppLogo class="mark" />
+        <AppLogo class="mark" small />
         <span class="brand-name">PickMySubjects</span>
       </a>
       <nav class="nav" :aria-label="t('nav.main')">
