@@ -488,20 +488,23 @@ watch(filters, (f) => {
     min-height: 40px;
   }
 
-  /* Count and sort on one line, the degree under them. */
+  /* Count (and degree) on the first line; "for me" and the sort share the next, edge to edge. */
   .toolbar {
     display: grid;
-    grid-template-columns: 1fr auto;
+    gap: 6px;
   }
 
-  .count-line {
-    display: contents;
+  .count {
+    white-space: nowrap;
   }
 
-  .count-line :deep(.degree) {
-    grid-column: 1 / -1;
-    grid-row: 2;
-    justify-self: start;
+  .order {
+    flex-wrap: nowrap;
+    justify-content: space-between;
+  }
+
+  .mine {
+    min-width: 0;
   }
 
   .sort > span {

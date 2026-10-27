@@ -213,6 +213,13 @@ async function share(): Promise<void> {
   color: var(--accent);
 }
 
+/* Straight on the pink colour field: the deeper accent keeps the code at AA. */
+@media (prefers-color-scheme: light) {
+  .head-code {
+    color: #861552;
+  }
+}
+
 .list-badge {
   display: inline-flex;
   align-items: center;
