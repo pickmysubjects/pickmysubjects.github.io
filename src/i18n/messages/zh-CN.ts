@@ -53,6 +53,10 @@ export const zhCN: Messages = {
   periodShort: { summer: '夏季', 'semester-1': 'S1', winter: '冬季', 'semester-2': 'S2' },
   category: { science: '理科', commerce: '商科', arts: '文科', design: '设计', music: '音乐', 'fine-arts': '艺术', agriculture: '农业', 'oral-health': '口腔健康', breadth: 'Breadth', core: '必修' },
   plan: {
+    profileHint: "先在「我的」填兴趣和强项，排课更准",
+    profileHintGo: "去填写",
+    profileHintInfo: "推荐和选修会参考这个计划的兴趣、强项和职业目标。都可以不填，每个计划各自保存。",
+    profileHintHide: "隐藏",
     saveImage: "存为图片",
     pastTag: "已修",
     pastUndated: "已修 · 学期未填",
@@ -123,8 +127,6 @@ export const zhCN: Messages = {
     statusUnknown: '看起来没问题，但有 {n} 项暂时无法检查',
     statusUnknownOne: '看起来没问题，但有 1 项暂时无法检查',
     details: '详情：学位规则与检查',
-    fillRecord: "可选：填好「{record}」，选修课会更适合你，难的课也会分散开。",
-    fillRecordShort: "填好「{record}」，选修更适合你",
     share: '分享',
     copied: '链接已复制',
     print: '打印 / PDF',
@@ -1266,6 +1268,7 @@ export const zhCN: Messages = {
     shortlist: "收藏课程、放一起比较",
   },
   guide: {
+    planProfile: "排课会按「我的」里当前计划的兴趣、强项和职业目标挑选修课。每个计划各存一份，都可以不填。",
     majorsPlansImage: "想把选课计划发给朋友或发小红书，可以在“排课”页点“存为图片”。图片里只有各学期的科目，没有成绩和 WAM，而且是在你手机上生成的，不会上传。",
     plansAssumed: "规划到最新 Handbook 之后的年份？新的出来之前，之后的学期按最新一年的开课时间排，方案顶部会写明。",
     plansCampus: "有些课只在 Dookie 校区上，离 Parkville 很远。除非你的专业需要，方案不会自动排这些课；你自己加了也会提醒你。",

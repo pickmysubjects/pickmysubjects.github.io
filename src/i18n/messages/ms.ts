@@ -53,6 +53,10 @@ export const ms: Messages = {
   periodShort: { summer: 'Musim panas', 'semester-1': 'Sem 1', winter: 'Musim sejuk', 'semester-2': 'Sem 2' },
   category: { science: 'sains', commerce: 'perdagangan', arts: 'sastera', design: 'reka bentuk', music: 'muzik', 'fine-arts': 'seni', agriculture: 'pertanian', 'oral-health': 'kesihatan oral', breadth: 'breadth', core: 'teras' },
   plan: {
+    profileHint: "Isi minat dan kekuatan dalam Saya untuk padanan lebih baik",
+    profileHintGo: "Isi sekarang",
+    profileHintInfo: "Cadangan dan elektif menggunakan minat, kekuatan dan matlamat kerjaya pelan ini. Semuanya pilihan; setiap pelan simpan sendiri.",
+    profileHintHide: "Sembunyi",
     saveImage: "Simpan sebagai imej",
     pastTag: "Sudah diambil",
     pastUndated: "Sudah diambil · semester belum diisi",
@@ -123,8 +127,6 @@ export const ms: Messages = {
     statusUnknown: 'Nampak baik, tetapi {n} perkara belum boleh disemak',
     statusUnknownOne: 'Nampak baik, tetapi 1 perkara belum boleh disemak',
     details: 'Butiran: peraturan kursus dan semakan',
-    fillRecord: "Pilihan: isi {record} supaya elektif lebih sesuai dan subjek sukar diagihkan.",
-    fillRecordShort: "Isi {record} untuk elektif yang lebih sesuai",
     share: 'Kongsi',
     copied: 'Pautan disalin',
     print: 'Cetak / PDF',
@@ -1266,6 +1268,7 @@ export const ms: Messages = {
     shortlist: "Simpan dan bandingkan subjek",
   },
   guide: {
+    planProfile: "Perancang memilih elektif berdasarkan minat, kekuatan dan matlamat kerjaya pelan yang dibuka dalam Saya. Setiap pelan simpan sendiri, dan semua soalan adalah pilihan.",
     majorsPlansImage: "Untuk tunjuk pelan anda kepada kawan, gunakan Simpan sebagai imej di halaman Rancangan. Imej itu hanya ada semester dan subjek anda, tiada markah atau WAM, dan dibuat dalam peranti anda, tidak dimuat naik.",
     plansAssumed: "Merancang melepasi Handbook terbaharu? Semester kemudian menggunakan waktu tawaran tahun terbaharu sehingga Handbook seterusnya keluar, dan bahagian atas rancangan menyatakannya.",
     plansCampus: "Sesetengah subjek diajar hanya di Dookie, jauh dari Parkville. Rancangan tidak memilihnya melainkan major anda memerlukannya, dan memberi amaran jika anda menambahnya.",

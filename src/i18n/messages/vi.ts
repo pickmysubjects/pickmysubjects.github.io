@@ -53,6 +53,10 @@ export const vi: Messages = {
   periodShort: { summer: 'Hè', 'semester-1': 'HK1', winter: 'Đông', 'semester-2': 'HK2' },
   category: { science: 'khoa học', commerce: 'kinh doanh', arts: 'nhân văn', design: 'thiết kế', music: 'âm nhạc', 'fine-arts': 'nghệ thuật', agriculture: 'nông nghiệp', 'oral-health': 'sức khỏe răng miệng', breadth: 'breadth (ngoài ngành)', core: 'bắt buộc' },
   plan: {
+    profileHint: "Điền sở thích và thế mạnh ở mục Của tôi để gợi ý sát hơn",
+    profileHintGo: "Điền ngay",
+    profileHintInfo: "Gợi ý và môn tự chọn dựa vào sở thích, thế mạnh và nghề mục tiêu của kế hoạch này. Không bắt buộc; mỗi kế hoạch lưu riêng.",
+    profileHintHide: "Ẩn",
     saveImage: "Lưu thành ảnh",
     pastTag: "Đã học",
     pastUndated: "Đã học · chưa điền học kỳ",
@@ -123,8 +127,6 @@ export const vi: Messages = {
     statusUnknown: 'Có vẻ ổn, nhưng {n} mục chưa kiểm tra được',
     statusUnknownOne: 'Có vẻ ổn, nhưng 1 mục chưa kiểm tra được',
     details: 'Chi tiết: quy định và kiểm tra',
-    fillRecord: "Không bắt buộc: điền {record} để môn tự chọn hợp với bạn hơn và các môn khó được dàn đều.",
-    fillRecordShort: "Điền {record} để có môn tự chọn hợp hơn",
     share: 'Chia sẻ',
     copied: 'Đã sao chép liên kết',
     print: 'In / PDF',
@@ -1266,6 +1268,7 @@ export const vi: Messages = {
     shortlist: "Lưu và so sánh môn học",
   },
   guide: {
+    planProfile: "Trình lập kế hoạch chọn môn tự chọn theo sở thích, thế mạnh và nghề mục tiêu của kế hoạch đang mở trong mục Của tôi. Mỗi kế hoạch lưu riêng, và câu nào cũng không bắt buộc.",
     majorsPlansImage: "Muốn gửi kế hoạch cho bạn bè, hãy dùng Lưu thành ảnh ở trang Kế hoạch. Ảnh chỉ có các học kỳ và môn học, không có điểm hay WAM, và được tạo ngay trên máy bạn, không tải lên đâu cả.",
     plansAssumed: "Lập kế hoạch xa hơn Handbook mới nhất? Các học kỳ sau dùng lịch mở môn của năm mới nhất cho tới khi có Handbook mới, và đầu kế hoạch sẽ ghi rõ.",
     plansCampus: "Một số môn chỉ dạy ở cơ sở Dookie, cách xa Parkville. Kế hoạch không tự chọn các môn này trừ khi ngành của bạn cần, và sẽ nhắc nếu bạn tự thêm.",

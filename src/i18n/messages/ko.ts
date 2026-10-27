@@ -53,6 +53,10 @@ export const ko: Messages = {
   periodShort: { summer: '여름', 'semester-1': 'S1', winter: '겨울', 'semester-2': 'S2' },
   category: { science: '이학', commerce: '상경', arts: '인문', design: '디자인', music: '음악', 'fine-arts': '예술', agriculture: '농업', 'oral-health': '구강보건', breadth: '교양(Breadth)', core: '필수' },
   plan: {
+    profileHint: "'내 정보'에 관심사·강점을 넣으면 더 잘 맞아요",
+    profileHintGo: "입력하기",
+    profileHintInfo: "추천과 선택 과목은 이 플랜의 관심사, 강점, 진로 목표를 참고해요. 모두 선택 사항이고 플랜마다 따로 저장돼요.",
+    profileHintHide: "숨기기",
     saveImage: "이미지로 저장",
     pastTag: "이수함",
     pastUndated: "이수함 · 학기 미입력",
@@ -123,8 +127,6 @@ export const ko: Messages = {
     statusUnknown: '괜찮아 보이지만 {n}개 항목은 아직 확인할 수 없습니다',
     statusUnknownOne: '괜찮아 보이지만 1개 항목은 아직 확인할 수 없습니다',
     details: '자세히: 학위 요건과 검사',
-    fillRecord: "선택 사항: '{record}'를 채우면 선택 과목이 더 잘 맞고 어려운 과목은 나눠서 배치돼요.",
-    fillRecordShort: "「{record}」을 채우면 선택 과목이 더 잘 맞아요",
     share: '공유',
     copied: '링크를 복사했어요',
     print: '인쇄 / PDF',
@@ -1266,6 +1268,7 @@ export const ko: Messages = {
     shortlist: "과목 저장하고 비교하기",
   },
   guide: {
+    planProfile: "플래너는 '내 정보'에 있는 현재 플랜의 관심사, 강점, 진로 목표로 선택 과목을 골라요. 플랜마다 따로 저장되고 모두 선택 사항이에요.",
     majorsPlansImage: "친구에게 계획을 보여 주고 싶으면 계획 페이지에서 '이미지로 저장'을 누르세요. 이미지에는 학기별 과목만 들어가고 성적이나 WAM은 들어가지 않으며, 휴대폰에서 만들어져 업로드되지 않습니다.",
     plansAssumed: "최신 Handbook 이후 연도까지 계획하나요? 다음 Handbook이 나오기 전까지는 최신 연도의 개설 학기로 배치하고, 계획 맨 위에 그렇게 표시합니다.",
     plansCampus: "일부 과목은 Parkville에서 먼 Dookie 캠퍼스에서만 열립니다. 전공에 필요하지 않으면 계획에 자동으로 넣지 않고, 직접 추가하면 알려 줍니다.",
