@@ -3,6 +3,7 @@ import { computed } from 'vue'
 import { ArrowRight, X } from 'lucide-vue-next'
 import { useI18n } from '@/i18n'
 import { useDataset } from '@/composables/useDataset'
+import { referencedSubjects } from '@/engine'
 import { chainNoneKey, type Edge } from '@/utils/planBoard'
 
 /**
@@ -26,6 +27,11 @@ const needs = computed(() => [...new Set(props.edges.filter((e) => e.to === prop
 const { data } = useDataset()
 const noneKey = computed(() => chainNoneKey(data.value.subjects[props.code]?.prerequisites))
 const unlocks = computed(() => [...new Set(props.edges.filter((e) => e.from === props.code && e.to !== props.code).map((e) => e.to))])
+// None in the plan, but some exist (the window's list below shows them): say "none in your plan",
+// so the chain and the list don't seem to disagree. "Nothing later needs it" only when that's so.
+const unlocksNoneKey = computed(() =>
+  Object.values(data.value.subjects).some((s) => s.code !== props.code && referencedSubjects(s.prerequisites).includes(props.code)) ? 'plan.tlNone' : 'plan.tlNoUnlocks',
+)
 </script>
 
 <template>
@@ -51,7 +57,7 @@ const unlocks = computed(() => [...new Set(props.edges.filter((e) => e.from === 
         <button v-for="c in unlocks" :key="c" class="chip-link" type="button" @click="emit('select', c)">
           <span class="code">{{ c }}</span><span class="when">{{ whereOf[c] }}</span>
         </button>
-        <span v-if="!unlocks.length" class="none">{{ t('plan.tlNoUnlocks') }}</span>
+        <span v-if="!unlocks.length" class="none">{{ t(unlocksNoneKey) }}</span>
       </span>
     </div>
     <div v-if="bar" class="bar-actions">
