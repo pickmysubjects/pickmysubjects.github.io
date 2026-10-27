@@ -101,3 +101,12 @@ describe('counts of one', () => {
     expect(t.value('plan.statusUnknown', { n: 2 })).toBe('Looks fine, but 2 things can’t be checked yet')
   })
 })
+
+import { cjkSpace } from '../src/i18n/format'
+describe('cjkSpace', () => {
+  it('puts a space between Chinese and a following Latin word only', () => {
+    expect(cjkSpace('至少 62.5 学分的Level 1 理科课程')).toBe('至少 62.5 学分的 Level 1 理科课程')
+    expect(cjkSpace('最多 50 學分的 Level 1 課程')).toBe('最多 50 學分的 Level 1 課程')
+    expect(cjkSpace('At least 62.5 points of Level 1')).toBe('At least 62.5 points of Level 1')
+  })
+})

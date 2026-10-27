@@ -21,6 +21,11 @@ export function categoryLabel(t: Translate, category: string | undefined): strin
   return category ? t(`category.${category}`) : ''
 }
 
+/** Chinese text runs straight into a Latin word ("的Level 1") when a phrase is built from parts: add the space. */
+export function cjkSpace(text: string): string {
+  return text.replace(/([\u3400-\u9fff])([A-Za-z0-9])/g, '$1 $2')
+}
+
 function what(t: Translate, level?: number, category?: string): string {
   const cat = categoryLabel(t, category)
   if (level !== undefined && category) return t('rule.whatLevelCategory', { level, category: cat })
@@ -46,9 +51,11 @@ export function ruleText(t: Translate, rule: CourseRule | undefined, fallback = 
       if (rule.min !== undefined && rule.level === undefined && rule.category === undefined) {
         return t('rule.pointsTotal', { n: rule.min })
       }
-      return rule.min !== undefined
-        ? t('rule.pointsMin', { n: rule.min, what: what(t, rule.level, rule.category) })
-        : t('rule.pointsMax', { n: rule.max ?? 0, what: what(t, rule.level, rule.category) })
+      return cjkSpace(
+        rule.min !== undefined
+          ? t('rule.pointsMin', { n: rule.min, what: what(t, rule.level, rule.category) })
+          : t('rule.pointsMax', { n: rule.max ?? 0, what: what(t, rule.level, rule.category) }),
+      )
     case 'major':
       return (rule.max ?? rule.count) > rule.count ? t('rule.majorUpTo', { count: rule.count, max: rule.max }) : t('rule.major', { count: rule.count })
     case 'area-cap':
