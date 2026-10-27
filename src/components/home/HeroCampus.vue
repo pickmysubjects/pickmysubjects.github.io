@@ -135,9 +135,10 @@ onBeforeUnmount(() => io?.disconnect())
   align-items: center;
   gap: 0.5em;
   padding: 0.5em 0.8em;
-  font-family: var(--font-code);
   font-size: clamp(10px, 1.7cqw, 13px);
-  font-weight: 500;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
   color: var(--ink);
   white-space: nowrap;
   background: var(--glass-shine), var(--glass-fill);

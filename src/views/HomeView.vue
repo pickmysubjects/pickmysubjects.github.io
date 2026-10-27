@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import { link } from '@/composables/useView'
 import { computed } from 'vue'
-import { ArrowRight, Check, CircleCheck } from 'lucide-vue-next'
+import { ArrowRight, CalendarCheck, Check, Gauge, Globe } from 'lucide-vue-next'
 import ReleasePill from '@/components/home/ReleasePill.vue'
-import ComingNotice from '@/components/home/ComingNotice.vue'
 import CanDoList from '@/components/home/CanDoList.vue'
 import WhatsNext from '@/components/home/WhatsNext.vue'
+import HeroCampus from '@/components/home/HeroCampus.vue'
+import Interp from '@/components/Interp.vue'
 import SubjectSearch from '@/components/SubjectSearch.vue'
+import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
 import { useProfile } from '@/composables/useProfile'
 import { useI18n } from '@/i18n'
@@ -14,9 +16,9 @@ import DemoPlan from '@/components/home/DemoPlan.vue'
 import DemoSubject from '@/components/home/DemoSubject.vue'
 import demo from '@/generated/home-demo.json'
 import type { HomeDemo } from '@/utils/homeDemo'
-import { summariseAssessment } from '@/utils/assessment'
 
 const { t, locale } = useI18n()
+const { data } = useDataset()
 
 // The title is split into phrases that never break inside; languages written with spaces keep one between them.
 // "|" marks where the title may break; "*…*" marks the words to emphasise.
@@ -27,26 +29,15 @@ const titleParts = computed(() =>
 )
 const spaced = computed(() => !['zh-CN', 'zh-TW', 'ja'].includes(locale.value))
 // Two real examples worked out at build time (scripts/homeDemo.ts): shown, not described.
-const { subject: demoSubject, plan: demoPlan, stats } = demo as unknown as HomeDemo
-// The final exam's share, for the small subject chip floating over the plan.
-const examChip = computed(() => {
-  const exam = summariseAssessment(demoSubject.assessment)?.parts.find((p) => p.kind === 'exam')
-  return exam ? t.value('gist.exam', { n: exam.weight }) : ''
-})
-// A quiet row of plain facts under the hero, counted from the data at build time.
-const proof = computed(() => {
-  const n = (x: number) => x.toLocaleString(locale.value)
-  return [
-    t.value('home.proofSubjects', { n: n(stats.subjects) }),
-    t.value('home.proofDegrees', { n: n(stats.degrees) }),
-    t.value('home.proofLanguages'),
-    t.value('home.proofFree'),
-  ]
-})
+const { subject: demoSubject, plan: demoPlan } = demo as unknown as HomeDemo
+// How many subjects the site knows, counted from the data itself.
+const subjectCount = computed(() => Object.keys(data.value.subjects).length.toLocaleString(locale.value))
 
 // Three steps for a new student. Each shows a tick and what's done once it is.
-const { profile } = useProfile()
+const { profile, wam } = useProfile()
 const plan = usePlan()
+// Someone who has been here before (a degree, a record or a plan): the hero sends them back to it.
+const returning = computed(() => plan.courseChosen.value || !plan.isEmpty.value || profile.value.results.length > 0)
 const steps = computed(() => {
   const p = profile.value
   const filled = p.results.length + Object.keys(p.skills).length + p.interests.length
@@ -77,10 +68,9 @@ const next = computed(() => {
 
 <template>
   <div class="home">
-    <!-- The hero: headline, one line, search; a real planned degree beside it. -->
-    <section class="stage hero">
-      <div class="hero-text">
-        <ComingNotice />
+    <!-- The hero: the promise, the search, one quiet second step and three facts; the campus beside it. -->
+    <section class="hero">
+      <div class="hero-panel">
         <ReleasePill />
         <p class="eyebrow">{{ t('home.eyebrow') }}</p>
         <!-- "|" marks where the title may break, so a phrase is never split mid-word. -->
@@ -91,74 +81,83 @@ const next = computed(() => {
             <template v-if="spaced && i < titleParts.length - 1">{{ ' ' }}</template>
           </template>
         </h1>
-        <p class="hero-sub">{{ t('home.sub') }}</p>
-        <SubjectSearch class="hero-search" />
-        <!-- One obvious next move: plan the degree; browsing is the quieter second choice. -->
+        <SubjectSearch class="hero-search" hero :placeholder="t('home.searchHero')" />
+        <!-- Second to the search: plan a degree, or, for someone who has, go back to it. -->
         <div class="hero-actions">
-          <a class="button button-accent hero-cta" :href="link('plan')">{{ t('home.cardPlan') }} <ArrowRight :size="18" aria-hidden="true" /></a>
-          <a class="button button-quiet hero-second" :href="link('subjects')">{{ t('browse.title') }}</a>
+          <a class="hero-second" :href="link('plan')">
+            {{ returning ? t('home.continuePlan') : t('home.cardPlan') }} <ArrowRight :size="17" aria-hidden="true" />
+          </a>
+          <a v-if="returning && wam !== null" class="hero-wam" :href="link('tools/wam/')">{{ t('record.sumWam', { wam }) }}</a>
         </div>
-        <p class="hero-scope">{{ t('home.scope') }}</p>
+        <ul class="sig">
+          <li>
+            <Gauge :size="17" aria-hidden="true" />
+            <span><Interp :text="t('home.sigSubjects')"><template #n><b>{{ subjectCount }}</b></template></Interp></span>
+          </li>
+          <li><CalendarCheck :size="17" aria-hidden="true" /><span>{{ t('home.sigPlan') }}</span></li>
+          <li><Globe :size="17" aria-hidden="true" /><span>{{ t('home.proofLanguages') }}</span></li>
+        </ul>
       </div>
-      <div class="hero-visual fade">
-        <DemoPlan :plan="demoPlan" :aria-label="t('home.demoPlan')" hide-rules />
-        <!-- Two small pieces of the real product floating over it: one subject's exam share, the plan's verdict. -->
-        <a v-if="examChip" class="float float-subject glass" :href="link(`subject/${demoSubject.code}`)">
-          <span class="float-code">{{ demoSubject.code }}</span> · {{ examChip }}
-        </a>
-        <span v-if="demoPlan.met === demoPlan.total" class="float float-ready glass">
-          <CircleCheck :size="16" aria-hidden="true" /> {{ t('rules.progress', { met: demoPlan.met, total: demoPlan.total }) }}
-        </span>
-      </div>
+      <HeroCampus class="hero-scene" />
     </section>
 
     <WhatsNext />
 
-    <ul class="proof" :aria-label="t('home.eyebrow')">
-      <li v-for="p in proof" :key="p">{{ p }}</li>
-    </ul>
-
-    <!-- The three steps first (the path), then a real subject card beside the easy-to-miss features. -->
-    <div class="bento">
-      <section class="tile-steps glass" aria-labelledby="steps-title">
-        <div class="tile-head">
-          <h2 id="steps-title" class="tile-title">{{ t('home.stepsTitle') }}</h2>
-          <a class="button button-accent steps-start" :href="next.href">
-            {{ t('home.startStep', { n: next.n }) }} <ArrowRight :size="18" aria-hidden="true" />
+    <!-- The three steps (the path), then a real plan and a real subject: shown, not described. -->
+    <section class="tile-steps glass" aria-labelledby="steps-title">
+      <div class="tile-head">
+        <h2 id="steps-title" class="tile-title">{{ t('home.stepsTitle') }}</h2>
+        <a class="button button-accent steps-start" :href="next.href">
+          {{ t('home.startStep', { n: next.n }) }} <ArrowRight :size="18" aria-hidden="true" />
+        </a>
+      </div>
+      <ol class="steps-list">
+        <li v-for="(s, i) in steps" :key="s.title">
+          <a class="step" :class="{ 'step-done': s.done }" :href="s.href">
+            <span class="step-num">
+              <Check v-if="s.done" :size="16" :stroke-width="3" :aria-label="t('home.done')" />
+              <template v-else>{{ i + 1 }}</template>
+            </span>
+            <span class="step-name">{{ t(s.title) }}</span>
+            <span class="step-text">{{ t(s.text) }}</span>
+            <span v-if="s.status" class="step-status">{{ s.status }}</span>
           </a>
-        </div>
-        <ol class="steps-list">
-          <li v-for="(s, i) in steps" :key="s.title">
-            <a class="step" :class="{ 'step-done': s.done }" :href="s.href">
-              <span class="step-num">
-                <Check v-if="s.done" :size="16" :stroke-width="3" :aria-label="t('home.done')" />
-                <template v-else>{{ i + 1 }}</template>
-              </span>
-              <span class="step-name">{{ t(s.title) }}</span>
-              <span class="step-text">{{ t(s.text) }}</span>
-              <span v-if="s.status" class="step-status">{{ s.status }}</span>
-            </a>
-          </li>
-        </ol>
-      </section>
-      <DemoSubject class="tile-subject fade" :subject="demoSubject" :caption="t('home.demoSubject')" />
-      <CanDoList class="tile-can" />
+        </li>
+      </ol>
+    </section>
+
+    <div class="demos">
+      <DemoPlan class="demo-plan" :plan="demoPlan" :caption="t('home.demoPlan')" />
+      <DemoSubject class="demo-subject" :subject="demoSubject" :caption="t('home.demoSubject')" />
     </div>
+
+    <CanDoList short />
   </div>
 </template>
 
 <style scoped>
-/* One rhythm between the hero, the proof row and the grid. */
+/* One rhythm between the hero, the dates strip and the sections below. */
 .home {
   display: grid;
   gap: var(--space-6);
-  padding-top: var(--space-5);
+  padding-top: var(--space-4);
 }
 
-/* A rounded "stage" with a soft gradient mesh. */
-.stage {
-  padding: 64px 56px;
-  border-radius: 36px;
+/* The hero: a glass panel with the words, the campus scene beside it. */
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 6fr) minmax(0, 5.6fr);
+  align-items: center;
+  gap: clamp(16px, 3vw, 40px);
+}
+
+.hero-panel {
+  position: relative;
+  display: grid;
+  justify-items: start;
+  min-width: 0;
+  padding: 40px 44px 42px;
+  border-radius: 40px;
   isolation: isolate;
   /* Glass over the page's colour field, tinted toward the brand at one corner. */
   background:
@@ -168,11 +167,11 @@ const next = computed(() => {
   -webkit-backdrop-filter: var(--card-blur);
   backdrop-filter: var(--card-blur);
   border: 1px solid var(--card-edge);
-  box-shadow: var(--card-shadow), 0 40px 80px -40px rgb(90 30 90 / 30%);
+  box-shadow: var(--card-shadow), 0 40px 80px -40px rgb(91 42 107 / 40%);
 }
 
 @media (prefers-color-scheme: dark) {
-  .stage {
+  .hero-panel {
     background:
       radial-gradient(60% 80% at 0% 0%, rgb(240 107 176 / 14%), transparent 60%),
       var(--glass-shine),
@@ -180,48 +179,50 @@ const next = computed(() => {
   }
 }
 
-.hero {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  align-items: center;
-  gap: 48px;
-}
-
-.hero-text {
-  display: grid;
-  gap: var(--space-4);
-  min-width: 0;
-}
-
 .hero .eyebrow {
-  margin: 0;
+  margin: 18px 0 10px;
+  font-size: 0.9375rem;
+  letter-spacing: 0.06em;
   color: var(--accent);
 }
 
 .hero-part {
   display: inline-block;
+  max-width: 100%;
 }
 
 .hero-em {
   font-style: normal;
-  background: linear-gradient(100deg, var(--accent), #8b5cf6);
+  background: linear-gradient(100deg, var(--accent-fill) 10%, #8f7bf5 95%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
-.hero-title {
-  font-size: clamp(2.2rem, 3.9vw, 3.4rem);
-  line-height: 1.02;
+@media (prefers-color-scheme: dark) {
+  .hero-em {
+    background-image: linear-gradient(100deg, #f06bb0 10%, #b3a6ff 95%);
+  }
 }
 
-/* Characters are wider than Latin letters: a size down reads the same weight. */
+.hero-title {
+  font-size: clamp(2.4rem, 4vw, 3.6rem);
+  font-weight: 800;
+  line-height: 1.06;
+  letter-spacing: -0.03em;
+}
+
+/* Characters are wider than Latin letters, and the Chinese title is only two short lines. */
 :lang(zh-CN) .hero-title,
-:lang(zh-TW) .hero-title,
+:lang(zh-TW) .hero-title {
+  font-size: clamp(2.6rem, 4.3vw, 3.875rem);
+  line-height: 1.12;
+}
+
 :lang(ja) .hero-title,
 :lang(ko) .hero-title {
-  font-size: clamp(2rem, 3.8vw, 3.2rem);
-  line-height: 1.2;
+  font-size: clamp(2.2rem, 4vw, 3.5rem);
+  line-height: 1.18;
 }
 
 /* Longer words (Hindi, Vietnamese, Malay, Indonesian): a step smaller so the title stays short. */
@@ -229,126 +230,108 @@ const next = computed(() => {
 :lang(vi) .hero-title,
 :lang(ms) .hero-title,
 :lang(id) .hero-title {
-  font-size: clamp(2.1rem, 3.8vw, 3.2rem);
+  font-size: clamp(2.1rem, 3.6vw, 3.1rem);
+  line-height: 1.12;
 }
 
-.hero-sub {
-  margin: 0;
-  max-width: 34em;
-  font-size: 1.125rem;
-  line-height: 1.5;
-  color: var(--ink-soft);
+:lang(hi) .hero-title {
+  line-height: 1.3;
 }
 
 .hero-search {
-  margin-top: var(--space-3);
+  justify-self: stretch;
+  margin-top: 30px;
 }
 
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-3);
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: 14px;
 }
 
-.hero-cta,
-.hero-second {
-  min-height: 48px;
-  padding: 0 22px;
-  font-size: 1rem;
-}
-
-.hero-scope {
-  margin: 0;
-  font-size: 0.875rem;
-  color: var(--ink-soft);
-}
-
-/* The product visual: the plan card with two chips layered over its corners. */
-.hero-visual {
-  position: relative;
-  min-width: 0;
-  padding: 32px 0 32px 24px;
-}
-
-.float {
-  position: absolute;
-  z-index: 1;
+/* Quieter than the search: a glass pill with pink text. */
+.hero-second,
+.hero-wam {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 10px 16px;
-  border-radius: 999px;
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--ink);
+  min-height: 44px;
+  padding: 0 20px;
+  font-size: 0.9375rem;
+  font-weight: var(--fw-semibold);
+  color: var(--accent);
   text-decoration: none;
-  white-space: nowrap;
-  box-shadow: 0 14px 32px -12px rgb(80 40 90 / 35%);
+  background: var(--glass-shine), var(--glass-fill);
+  border: 1px solid var(--glass-edge);
+  border-radius: 999px;
+  box-shadow: var(--glass-shadow);
+  transition: background-color 0.15s;
 }
 
-.float-subject {
-  top: 6px;
-  right: -12px;
+.hero-wam {
+  padding: 0 16px;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
 }
 
-.float-code {
+.hero-second:hover,
+.hero-wam:hover {
+  background: var(--glass-shine), var(--glass-fill-hover);
+}
+
+.hero-second:focus-visible,
+.hero-wam:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* The three things only this site does, as small glass chips. */
+.sig {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: 26px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sig li {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 14px 6px 10px;
+  font-size: 0.875rem;
+  font-weight: var(--fw-medium);
+  color: var(--ink-soft);
+  background: var(--glass-shine), var(--glass-fill);
+  border: 1px solid var(--glass-edge);
+  border-radius: 999px;
+  box-shadow: var(--glass-shadow);
+}
+
+.sig svg {
+  flex: none;
   color: var(--accent);
 }
 
-.float-ready {
-  bottom: 4px;
-  left: 0;
-  color: var(--good);
+.sig b {
+  font-weight: var(--fw-bold);
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
 }
 
-/* Plain facts, quiet: one line, dots between. */
-.proof {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: var(--space-2) var(--space-5);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  font-size: 0.9375rem;
-  font-weight: 600;
-  color: var(--ink-soft);
-}
-
-.proof li + li::before {
-  content: '·';
-  margin-right: var(--space-5);
-  color: var(--ink-faint);
-}
-
-/* Bento: subject card on the left, steps on the right, features across the bottom. */
-.bento {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: var(--space-5);
-}
-
-.tile-subject {
-  grid-column: span 5;
+.hero-scene {
+  min-width: 0;
 }
 
 .tile-steps {
-  grid-column: 1 / -1;
   display: grid;
   align-content: start;
   gap: var(--space-5);
   padding: var(--space-5);
   border-radius: var(--radius-lg);
-}
-
-.tile-can {
-  grid-column: span 7;
-  align-content: start;
-}
-
-/* Beside the subject card the feature list has room for two columns. */
-.tile-can :deep(.can-list) {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .tile-head {
@@ -438,107 +421,144 @@ const next = computed(() => {
   padding: 0 20px;
 }
 
-/* A short fade on load, nothing more. */
-.fade {
-  animation: fade-in 0.4s ease-out both;
-}
-
-@keyframes fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(6px);
-  }
+/* A real plan beside a real subject. */
+.demos {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: var(--space-5);
 }
 
 @media (max-width: 1100px) {
   .hero {
-    grid-template-columns: 1fr;
-    gap: var(--space-6);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
   }
 
-  .tile-subject,
-  .tile-can {
-    grid-column: 1 / -1;
+  .hero-panel {
+    padding: 32px 30px;
+  }
+
+  .demos {
+    grid-template-columns: 1fr;
   }
 }
 
-@media (max-width: 900px) {
-  .stage {
-    padding: 40px 28px 28px;
+/* Tablets and phones: words first, the scene under them, smaller. */
+@media (max-width: 860px) {
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .hero-scene {
+    justify-self: center;
+    width: min(100%, 560px);
+    margin-top: 4px;
   }
 }
 
 @media (max-width: 640px) {
   .home {
     gap: var(--space-5);
-    padding-top: var(--space-3);
+    padding-top: var(--space-2);
   }
 
-  .stage {
-    padding: 22px 16px 20px;
-    border-radius: 26px;
+  .hero-panel {
+    padding: 20px 18px 22px;
+    border-radius: 30px;
   }
 
-  .hero-sub {
-    font-size: 0.9375rem;
-  }
-
-  .hero-search {
-    margin-top: 0;
-  }
-
-  /* No room to float on a phone, and the card already says it's ready: the two chips step aside. */
-  .float {
-    display: none;
-  }
-
-  .proof {
-    justify-content: flex-start;
-    gap: var(--space-2) var(--space-4);
+  .hero .eyebrow {
+    margin: 14px 0 8px;
     font-size: 0.875rem;
   }
 
-  .proof li + li::before {
-    display: none;
+  .hero-title,
+  :lang(ja) .hero-title,
+  :lang(ko) .hero-title {
+    font-size: clamp(2rem, 9.4vw, 2.75rem);
   }
 
-  .proof li {
-    padding: 4px 12px;
-    border: 1px solid var(--line);
-    border-radius: 999px;
+  :lang(zh-CN) .hero-title,
+  :lang(zh-TW) .hero-title {
+    font-size: clamp(2.25rem, 11.4vw, 3.25rem);
+  }
+
+  :lang(hi) .hero-title,
+  :lang(vi) .hero-title,
+  :lang(ms) .hero-title,
+  :lang(id) .hero-title {
+    font-size: clamp(1.75rem, 8.2vw, 2.4rem);
+  }
+
+  .hero-search {
+    margin-top: 20px;
+  }
+
+  .hero-actions {
+    margin-top: 10px;
+  }
+
+  .hero-second {
+    padding: 0 16px;
+    font-size: 0.875rem;
+  }
+
+  .sig {
+    gap: 6px;
+    margin-top: 14px;
+  }
+
+  .sig li {
+    padding: 5px 10px 5px 8px;
+    font-size: 0.8125rem;
+    gap: 5px;
+  }
+
+  .hero-scene {
+    width: 88%;
+  }
+
+  /* One line a step on a phone: number, name and status; the longer line is for wider screens. */
+  .tile-steps {
+    gap: var(--space-4);
+    padding: var(--space-4);
   }
 
   .steps-list {
     grid-template-columns: 1fr;
+    gap: var(--space-2);
   }
 
-  .tile-steps {
-    padding: var(--space-4);
+  .step {
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    column-gap: var(--space-3);
+    row-gap: 2px;
+    padding: 10px 12px;
+  }
+
+  .step-num {
+    grid-row: span 2;
+  }
+
+  .step-text {
+    display: none;
+  }
+
+  .step-status {
+    grid-column: 2;
   }
 
   .steps-start {
     flex: 1 1 100%;
     justify-content: center;
   }
-
-  /* Side by side when both labels fit, so search and both buttons stay above the tab bar. */
-  .hero-actions {
-    gap: var(--space-2);
-  }
-
-  .hero-actions > .button {
-    flex: 1 1 auto;
-    justify-content: center;
-    padding: 0 16px;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .fade {
-    animation: none;
-  }
-
-  .step {
+  .step,
+  .hero-second,
+  .hero-wam {
     transition: none;
   }
 }

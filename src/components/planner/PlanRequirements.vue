@@ -19,12 +19,16 @@ const props = defineProps<{
   /** For each rule, the planned or done subjects that count toward it (where that can be told). */
   members: Record<string, string[]>
   active: string | null
+  /** Problems with the plan's subjects (errors): every rule met isn't "ready to graduate" while there are any. */
+  problems?: number
+  /** False: start folded even with rules unmet (a plan just built). */
+  startOpen?: boolean
 }>()
 const emit = defineEmits<{ focus: [ruleId: string | null] }>()
 const { t } = useI18n()
 
-// Closed until asked, unless a rule isn't met (or can't be told yet).
-const open = shallowRef(props.statuses.some((s) => s.status !== 'ok'))
+// Closed until asked, unless a rule isn't met (or can't be told yet) on a plan that wasn't just built.
+const open = shallowRef(props.startOpen !== false && props.statuses.some((s) => s.status !== 'ok'))
 
 interface Meter {
   id: string
@@ -75,7 +79,9 @@ const met = computed(() => rows.value.filter((r) => r.status === 'ok').length)
 const left = computed(() => total.value - met.value)
 // Unmet first: what still needs doing is what the student came to see.
 const ordered = computed(() => [...rows.value].sort((a, b) => Number(a.status === 'ok') - Number(b.status === 'ok')))
-const health = computed(() => (left.value === 0 ? 'ok' : rows.value.some((r) => r.status === 'fail') ? 'fail' : 'unknown'))
+// Every rule met but subjects with problems (planned twice, a missing prerequisite): not "ready".
+const blocked = computed(() => left.value === 0 && (props.problems ?? 0) > 0)
+const health = computed(() => (left.value === 0 ? (blocked.value ? 'unknown' : 'ok') : rows.value.some((r) => r.status === 'fail') ? 'fail' : 'unknown'))
 // The ring: a circle filled by the share of rules met.
 const RING = 2 * Math.PI * 17
 const ringOffset = computed(() => RING * (1 - (total.value ? met.value / total.value : 0)))
@@ -96,10 +102,11 @@ function toggle(id: string): void {
             <circle class="ring-fill" cx="20" cy="20" r="17" :stroke-dasharray="RING" :stroke-dashoffset="ringOffset" />
           </svg>
           <Check v-if="health === 'ok'" class="ring-mid" :size="18" :stroke-width="3" />
+          <span v-else-if="blocked" class="ring-mid ring-count">!</span>
           <span v-else class="ring-mid ring-count">{{ left }}</span>
         </span>
         <span class="health-text">
-          <span class="health-title">{{ health === 'ok' ? t('progress.allMet') : (left === 1 ? t('progress.leftOne') : t('progress.left', { n: left })) }}</span>
+          <span class="health-title">{{ health === 'ok' ? t('progress.allMet') : blocked ? t('progress.metButProblems', { n: problems ?? 0 }) : (left === 1 ? t('progress.leftOne') : t('progress.left', { n: left })) }}</span>
           <span class="health-sub">{{ t('rules.progress', { met, total }) }}</span>
         </span>
       </span>

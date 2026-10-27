@@ -18,7 +18,7 @@ import SharedPlanView from '@/components/planner/SharedPlanView.vue'
 import Interp from '@/components/Interp.vue'
 import PlanSwitcher from '@/components/plans/PlanSwitcher.vue'
 import PlanCompare from '@/components/plans/PlanCompare.vue'
-import { assumedOfferings, careerGap, careerGoal, careerName, hasEnded, heldMajorIds, informalPicks, isFail, passedCodes, planComponentIds, planRoles, planRules, recordedLoads, termKey, termLoad, type PlanTerm } from '@/engine'
+import { assumedOfferings, careerGap, careerGoal, careerName, hasEnded, heldMajorIds, informalPicks, isFail, passedCodes, planComponentIds, planRoles, planRules, recordedLoads, termKey, termLoad, type Issue, type PlanTerm } from '@/engine'
 import { diplomaTitle } from '@/composables/usePlanCompare'
 import { ImageDown, Printer, Share2, Sparkles, X } from 'lucide-vue-next'
 import { usePlans } from '@/composables/usePlans'
@@ -217,13 +217,17 @@ const rules = computed(() => plan.course.value?.rules ?? [])
 const allRules = computed(() => planRules(data.value, plan.plan.value))
 const allIssues = computed(() => [...plan.termIssues.value, ...plan.courseCheck.value.issues])
 
-const problems = computed(() => allIssues.value.filter((i) => i.severity === 'error').length)
+// A subject planned again though My record has it passed: the one record line above says so
+// and its Rebuild fixes them all, so they aren't listed one by one.
+const passedNow = computed(() => new Set(passedCodes(profile.value.results)))
+const onRecord = (i: Issue) => i.kind === 'duplicate' && !!i.subject && passedNow.value.has(i.subject)
+const problems = computed(() => allIssues.value.filter((i) => i.severity === 'error' && !onRecord(i)).length)
 // Say what the problems are right under the status, not only in the collapsed details.
 // Problems if there are any, otherwise the things that can't be checked yet.
 const problemTexts = computed(() => {
   const severity = problems.value ? 'error' : 'warning'
   return allIssues.value
-    .filter((i) => i.severity === severity)
+    .filter((i) => i.severity === severity && !onRecord(i))
     .map((i) => ({
       text: issueText(t.value, i, allRules.value, plan.courseCheck.value.statuses, data.value.subjects, plan.setup.value.course),
       // Conditions only the student can check (a VCE score, a test): let them say they meet it.
@@ -294,7 +298,10 @@ function placePending(): void {
   )
 }
 
+// Just built from the questions: the rules card starts folded, so the board is near the top.
+const justBuilt = shallowRef(false)
 function finishWizard(setup: PlanSetup): void {
+  justBuilt.value = true
   if (!plan.updateSetup(setup)) plan.generate()
   editing.value = false
   placePending()
@@ -412,6 +419,16 @@ const rulesFrom = computed(() => {
 })
 // A later year planned on an earlier Handbook's teaching periods: said once, at the top.
 const assumed = computed(() => assumedOfferings(plan.plan.value, data.value))
+// The plan's notes as one line: the short text of the most pressing, every note behind the ⓘ.
+const recordFix = computed(() => recordOverlap.value !== null || pastPlanned.value !== null)
+const metaLine = computed(() => {
+  const notes: { short: string; info: string }[] = []
+  if (recordOverlap.value) notes.push({ short: t.value('plan.recordOverlapShort', { term: recordOverlap.value }), info: t.value('plan.recordOverlap', { term: recordOverlap.value }) })
+  else if (pastPlanned.value) notes.push({ short: t.value('plan.pastPlannedShort', { term: pastPlanned.value }), info: t.value('plan.pastPlanned', { term: pastPlanned.value }) })
+  if (rulesFrom.value) notes.push({ short: t.value('plan.rulesYearShort', { year: rulesFrom.value.year }), info: t.value('plan.rulesYear', rulesFrom.value) })
+  if (assumed.value) notes.push({ short: t.value('plan.assumedShort', assumed.value), info: t.value('plan.assumed', assumed.value) })
+  return notes[0] ? { short: notes[0].short, info: notes.map((n) => n.info).join(' ') } : null
+})
 const recordOverlap = computed(() => {
   const passed = new Set(passedCodes(profile.value.results))
   const load = plan.course.value?.standardLoad ?? 50
@@ -529,21 +546,12 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
         <template v-if="addNote.term">{{ t('plan.addPendingThere', { code: addNote.code, term: addNote.term }) }}</template>
         <template v-else>{{ t('plan.addPendingFailed', { code: addNote.code }) }}<InfoTip :text="t('plan.addPendingWhy')" /></template>
       </p>
-      <p v-if="pastPlanned" class="started">
-        {{ t('plan.pastPlannedShort', { term: pastPlanned }) }}<InfoTip :text="t('plan.pastPlanned', { term: pastPlanned })" />
-        <button class="button button-quiet" type="button" @click="plan.generate()">{{ t('plan.rebuild') }}</button>
-      </p>
-      <p v-if="rulesFrom" class="started">
-        {{ t('plan.rulesYearShort', { year: rulesFrom.year }) }}<InfoTip :text="t('plan.rulesYear', rulesFrom)" />
-      </p>
-      <p v-if="assumed" class="started">
-        {{ t('plan.assumedShort', assumed) }}<InfoTip :text="t('plan.assumed', assumed)" />
-      </p>
-
-      <!-- The record now reaches into the plan's own semesters (filled in after the plan was made). -->
-      <p v-if="recordOverlap" class="started">
-        {{ t('plan.recordOverlapShort', { term: recordOverlap }) }}<InfoTip :text="t('plan.recordOverlap', { term: recordOverlap })" />
-        <button class="button button-quiet" type="button" @click="plan.generate()">{{ t('plan.rebuild') }}</button>
+      <!-- Notes about the plan itself, folded into one line: the plan and My record disagreeing
+           comes first (with its one fix), then which Handbook years the plan leans on. Every
+           detail is behind the ⓘ. -->
+      <p v-if="metaLine" class="started meta-line" :role="recordFix ? 'status' : undefined">
+        <span>{{ metaLine.short }}<InfoTip :text="metaLine.info" /></span>
+        <button v-if="recordFix" class="button button-quiet" type="button" @click="plan.generate()">{{ t('plan.rebuild') }}</button>
       </p>
 
       <!-- The plan's status and every note about it, as one slim line that opens. Problems open it by themselves. -->
@@ -590,6 +598,8 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
           <PlanRequirements
             v-if="onBoard"
             id="rules"
+            :problems="problems + Number(recordFix)"
+            :start-open="!justBuilt"
             :statuses="plan.courseCheck.value.statuses"
             :rules="allRules"
             :degree-rules="rules"
@@ -1190,9 +1200,29 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
 
 /* A standard quiet button, one size down. */
 .confirm {
+  flex: none;
   min-height: 32px;
   padding: 0 14px;
   font-size: 0.8125rem;
+  white-space: nowrap;
+}
+
+.status-item > span {
+  flex: 1 1 14em;
+  min-width: 0;
+}
+
+/* The plan's notes line: text and ⓘ together, its one fix at the end. */
+.meta-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 10px;
+}
+
+.meta-line .button {
+  min-height: 36px;
+  margin-left: auto;
 }
 
 .status-hint {
