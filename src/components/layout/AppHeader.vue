@@ -259,7 +259,8 @@ const { t } = useI18n()
 }
 
 /* Tight rows (and long languages on mid-size screens): other pages shrink to number or icon. */
-@media (max-width: 1280px) {
+/* Browse has four ways in: long languages need the compact row up to 1440. */
+@media (max-width: 1440px) {
   .nav-sub-wide {
     display: none;
   }

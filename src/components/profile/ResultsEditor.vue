@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import InfoTip from '@/components/InfoTip.vue'
 import { computed, shallowRef, useId } from 'vue'
-import { Check, Plus, Search, Star, Trash2 } from 'lucide-vue-next'
+import { Calculator, Check, Plus, Search, Star, Trash2 } from 'lucide-vue-next'
 import { isFail, PASS_MARK, type Credit, type Period, type Profile, type Subject } from '@/engine'
 import CreditEditor from './CreditEditor.vue'
 import { termLabel } from '@/i18n/format'
@@ -224,6 +224,14 @@ function remove(i: number): void {
             </div>
             <div class="row-actions">
               <template v-if="r.credit" />
+              <!-- No mark yet (taking it now): what the final needs, from this subject's assessment. -->
+              <a
+                v-if="!r.credit && r.mark === undefined && !subjects[r.code]?.passFail"
+                class="act act-calc"
+                :href="link(`tools/final/?subject=${r.code}`)"
+                :aria-label="`${t('calc.openShort')} ${r.code}`"
+                :title="t('calc.open')"
+              ><Calculator :size="14" aria-hidden="true" /></a>
               <span v-else-if="rated.has(r.code)" class="rated"><Check :size="14" aria-hidden="true" /> {{ t('rating.rated') }}</span>
               <button v-else class="act act-rate" type="button" @click="rating = r.code"><Star :size="14" aria-hidden="true" /> <span class="act-label">{{ t('rating.rate') }}</span></button>
               <button class="act act-remove" type="button" :aria-label="`${t('record.remove')} ${r.code}`" :title="t('record.remove')" @click="remove(r.i)">
@@ -491,6 +499,11 @@ function remove(i: number): void {
 .act-rate {
   color: var(--accent);
   background: var(--accent-soft);
+}
+
+.act-calc {
+  padding: 0 8px;
+  color: var(--accent);
 }
 
 .act-remove {

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ExternalLink } from 'lucide-vue-next'
 import { useI18n } from '@/i18n'
+import { link } from '@/composables/useView'
 import GuideItem from './GuideItem.vue'
 import { URLS } from '@/utils/guideLinks'
 
@@ -29,6 +30,7 @@ const { t } = useI18n()
     <GuideItem id="hurdles" :title="t('guide.hurdleTitle')" :short="t('guide.hurdleShort')">
       <p>{{ t('guide.hurdleText') }}</p>
       <p class="note">{{ t('guide.hurdleTip') }}</p>
+      <p><a :href="link('tools/final/')">{{ t('guide.hurdleCalc') }}</a></p>
       <p>
         <a class="ext" :href="URLS.ASSESS_POLICY" target="_blank" rel="noopener">{{ t('guide.policyLink') }}<ExternalLink :size="14" aria-hidden="true" /></a>
       </p>

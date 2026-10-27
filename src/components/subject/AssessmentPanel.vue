@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { TriangleAlert } from 'lucide-vue-next'
+import { Calculator, TriangleAlert } from 'lucide-vue-next'
+import { link } from '@/composables/useView'
 import { periodsFor, skillsOf, topicsOf, type Subject } from '@/engine'
 import { useDataset } from '@/composables/useDataset'
 import { useI18n } from '@/i18n'
@@ -39,7 +40,10 @@ const otherTerms = computed(() => {
 
 <template>
   <section class="assess">
-    <h2 class="assess-title">{{ t('assess.title') }}</h2>
+    <div class="assess-head">
+      <h2 class="assess-title">{{ t('assess.title') }}</h2>
+      <a v-if="!subject.passFail" class="assess-calc" :href="link(`tools/final/?subject=${subject.code}`)"><Calculator :size="15" aria-hidden="true" /> {{ t('calc.open') }}</a>
+    </div>
 
     <template v-if="parts.length">
       <div class="assess-bar" role="img" :aria-label="summary">
@@ -82,6 +86,22 @@ const otherTerms = computed(() => {
   display: grid;
   align-content: start;
   gap: 12px;
+}
+
+.assess-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px 12px;
+}
+
+.assess-calc {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: var(--fs-small);
+  font-weight: var(--fw-semibold);
 }
 
 .assess-title {

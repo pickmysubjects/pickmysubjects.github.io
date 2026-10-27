@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ArrowDownUp, Columns2, Gauge, Heart, Printer, Share2, Snowflake, Star, Scale } from 'lucide-vue-next'
+import { ArrowDownUp, ArrowRight, Calculator, Columns2, Gauge, Heart, Printer, Share2, Star, Scale } from 'lucide-vue-next'
 import { link } from '@/composables/useView'
 import { useI18n } from '@/i18n'
 
@@ -7,13 +7,13 @@ import { useI18n } from '@/i18n'
 defineProps<{ title?: string }>()
 const { t } = useI18n()
 const ITEMS = [
+  { key: 'can.finalCalc', to: 'tools/final/', icon: Calculator },
   { key: 'can.share', to: 'plan', icon: Share2 },
   { key: 'can.plans', to: 'plan', icon: Columns2 },
   { key: 'can.print', to: 'plan', icon: Printer },
-  { key: 'can.wam', to: 'record', icon: Gauge },
+  { key: 'can.wam', to: 'tools/wam/', icon: Gauge },
   { key: 'can.mine', to: 'subjects/?mine=1', icon: ArrowDownUp },
   { key: 'can.easyHard', to: 'subjects/easy/', icon: Scale },
-  { key: 'can.summerWinter', to: 'subjects/summer-winter/', icon: Snowflake },
   { key: 'can.rate', to: 'subjects', icon: Star },
   { key: 'can.shortlist', to: 'shortlist', icon: Heart },
 ] as const
@@ -21,7 +21,10 @@ const ITEMS = [
 
 <template>
   <section class="can" aria-labelledby="can-title">
-    <h2 id="can-title" class="can-title">{{ title ?? t('can.title') }}</h2>
+    <div class="can-head">
+      <h2 id="can-title" class="can-title">{{ title ?? t('can.title') }}</h2>
+      <a class="can-all" :href="link('tools/')">{{ t('tools.title') }} <ArrowRight :size="15" aria-hidden="true" /></a>
+    </div>
     <ul class="can-list">
       <li v-for="i in ITEMS" :key="i.key">
         <a class="can-item glass" :href="link(i.to)">
@@ -37,6 +40,20 @@ const ITEMS = [
 .can {
   display: grid;
   gap: var(--space-4);
+}
+
+.can-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.can-all {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: var(--fw-semibold);
 }
 
 /* Same as the home page's section titles. */

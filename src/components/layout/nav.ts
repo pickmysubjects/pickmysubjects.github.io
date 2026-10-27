@@ -1,4 +1,4 @@
-import { Briefcase, GraduationCap, Heart, House, Library, ListFilter, Route, User } from 'lucide-vue-next'
+import { Briefcase, Calculator, GraduationCap, Heart, House, Library, ListFilter, Route, User } from 'lucide-vue-next'
 import type { View } from '@/composables/useView'
 
 /** Shared by the header (desktop) and the bottom tab bar (phones). */
@@ -6,7 +6,7 @@ import type { View } from '@/composables/useView'
 export const NAV_ITEMS: { view: View; key: string; icon: typeof House; also?: View[] }[] = [
   { view: 'home', key: 'nav.home', icon: House },
   // Looking a subject up needs no setup: open to everyone, and where search visitors land.
-  { view: 'subjects', key: 'nav.browse', icon: ListFilter, also: ['majors', 'careers'] },
+  { view: 'subjects', key: 'nav.browse', icon: ListFilter, also: ['majors', 'careers', 'tools'] },
   // Everything personal in one place, as two steps: my record, then the plan.
   { view: 'record', key: 'nav.record', icon: User, also: ['plan', 'shortlist'] },
 ]
@@ -24,6 +24,8 @@ export const BROWSE_STEPS: { view: View; key: string; icon: typeof House }[] = [
   { view: 'subjects', key: 'browse.switchSubjects', icon: Library },
   { view: 'majors', key: 'browse.switchMajors', icon: GraduationCap },
   { view: 'careers', key: 'browse.switchCareers', icon: Briefcase },
+  // Calculators and ready-made lists, each a tap from the others.
+  { view: 'tools', key: 'tools.nav', icon: Calculator },
 ]
 
 /** The sub-pages shown next to a top-level item while you're inside it, and whether they're numbered steps. */
