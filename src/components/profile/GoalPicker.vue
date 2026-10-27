@@ -80,14 +80,13 @@ const current = computed<Goal>(() => (own.value === 'easy' ? 'wam' : own.value))
   color: var(--ink-soft);
 }
 
-/* Narrow screens: the choices share the width instead of pushing it wider. */
 @media (max-width: 480px) {
+  /* Each choice stays on one line; they share the row, wrapping to a second when needed. */
   .seg button {
-    flex: 1 1 0;
-    min-width: 0;
-    padding: 6px 4px;
+    flex: 1 1 auto;
+    padding: 6px 10px;
     font-size: 0.875rem;
-    white-space: normal;
+    white-space: nowrap;
   }
 }
 </style>
