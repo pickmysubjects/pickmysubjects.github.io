@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { link, missedAnchor, useView } from '@/composables/useView'
+import { usePlan } from '@/composables/usePlan'
 import { useI18n } from '@/i18n'
 import { X } from 'lucide-vue-next'
 import { computed } from 'vue'
@@ -18,7 +19,13 @@ const HINTS: Record<string, { key: string; to: string; go: string }> = {
 }
 const { view } = useView()
 const dismiss = () => (missedAnchor.value = null)
-const hint = computed(() => (missedAnchor.value ? HINTS[missedAnchor.value] ?? null : null))
+const plan = usePlan()
+const hint = computed(() => {
+  if (!missedAnchor.value) return null
+  // With a plan, a missing heavy-semester alert means there's nothing heavy, not that a plan is needed.
+  if (missedAnchor.value === 'heavy' && !plan.isEmpty.value) return { key: 'menu.miss.noHeavy', to: 'plan/', go: 'menu.myPlan' }
+  return HINTS[missedAnchor.value] ?? null
+})
 </script>
 
 <template>

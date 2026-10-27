@@ -28,6 +28,15 @@ describe('backup', () => {
     expect(store.has('sc:locale')).toBe(false)
   })
 
+  it('round-trips final-calculator marks', () => {
+    const calc = { COMP10001: { rows: [{ kind: 'exam', weight: 50, hurdle: true, score: 18, outOf: 20 }], custom: true } }
+    store.set('sc:finalCalc', JSON.stringify(calc))
+    const file = makeBackup()
+    store.clear()
+    expect(restoreBackup(file)).toBe(true)
+    expect(JSON.parse(store.get('sc:finalCalc') ?? '')).toEqual(calc)
+  })
+
   it('restores backups saved under the old name', () => {
     const file = JSON.stringify({ app: 'subject-compass', version: 1, savedAt: '', data: { 'sc:rated': ['COMP10001'] } })
     expect(restoreBackup(file)).toBe(true)
