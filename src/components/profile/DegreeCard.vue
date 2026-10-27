@@ -9,6 +9,8 @@ import { termLabel } from '@/i18n/format'
 import { informalPicks } from '@/engine'
 import { useI18n } from '@/i18n'
 import { diplomaTitle } from '@/composables/usePlanCompare'
+import { useProfile } from '@/composables/useProfile'
+import { creditPoints } from '@/engine/credit'
 
 /**
  * Your degree, major and start, on My page: the same three questions as the plan page and the
@@ -35,6 +37,28 @@ const minor = computed(() => (plan.setup.value.minors ?? []).map(title).filter(B
 const diploma = computed(() => diplomaTitle(data.value, plan.setup.value))
 const start = computed(() => termLabel(t.value, { year: plan.setup.value.startYear, period: plan.setup.value.startPeriod }))
 
+// Points so far: passed (or not yet marked) subjects plus credit, against the degree's total.
+const { profile } = useProfile()
+const totalPoints = computed(() => data.value.courses.find((c) => c.code === plan.setup.value.course)?.totalPoints ?? 0)
+const pointsDone = computed(
+  () =>
+    profile.value.results.filter((r) => r.mark === undefined || r.mark === null || r.mark >= 50).reduce((n, r) => n + (data.value.subjects[r.code]?.points ?? 0), 0) +
+    creditPoints(profile.value.credit),
+)
+const pct = computed(() => (totalPoints.value ? Math.min(100, (pointsDone.value / totalPoints.value) * 100) : 0))
+// The picks beyond the degree itself, each as its own chip.
+const picks = computed(() =>
+  [
+    major.value,
+    major2.value,
+    spec.value,
+    minor.value ? t.value(minorKey.value, { title: minor.value }) : undefined,
+    diploma.value ? t.value('plans.diplomaLine', { title: diploma.value }) : undefined,
+    t.value('record.degreeStart', { term: start.value }),
+    plan.setup.value.load ? t.value('record.degreeLoad', { n: plan.setup.value.load }) : undefined,
+  ].filter((x): x is string => Boolean(x)),
+)
+
 function done(setup: PlanSetup): void {
   if (!plan.updateSetup(setup)) plan.generate()
   editing.value = false
@@ -47,9 +71,12 @@ function done(setup: PlanSetup): void {
       <GraduationCap :size="20" aria-hidden="true" class="degree-icon" />
       <div class="degree-text">
         <h2 id="degree-title" class="degree-title">{{ t('record.degreeTitle') }}</h2>
-        <p v-if="chosen" class="degree-line">
-          <strong>{{ course }}</strong> · {{ major }}<template v-if="major2"> + {{ major2 }}</template><template v-if="spec"> + {{ spec }}</template><template v-if="minor"> · {{ t(minorKey, { title: minor }) }}</template><template v-if="diploma"> · {{ t('plans.diplomaLine', { title: diploma }) }}</template> · {{ t('record.degreeStart', { term: start }) }}<template v-if="plan.setup.value.load"> · {{ t('record.degreeLoad', { n: plan.setup.value.load }) }}</template>
-        </p>
+        <template v-if="chosen">
+          <p class="degree-course">{{ course }}</p>
+          <ul class="degree-picks">
+            <li v-for="(x, i) in picks" :key="i" :class="{ main: i === 0 }">{{ x }}</li>
+          </ul>
+        </template>
         <p v-else class="degree-line">{{ t('record.degreeNone') }}</p>
       </div>
       <button v-if="!editing" type="button" class="button degree-edit" :class="chosen ? 'button-quiet' : 'button-accent'" @click="editing = true">
@@ -57,6 +84,10 @@ function done(setup: PlanSetup): void {
         {{ chosen ? t('record.degreeEdit') : t('record.degreeChoose') }}
       </button>
     </header>
+    <div v-if="chosen && totalPoints && !editing" class="degree-progress">
+      <div class="bar" aria-hidden="true"><span :style="{ width: `${pct}%` }" /></div>
+      <span class="bar-text">{{ t('ruleDetail.pointsMin', { have: pointsDone, need: totalPoints }) }}</span>
+    </div>
     <p v-if="editing && !plan.isEmpty.value" class="degree-warn">{{ t('record.degreeRebuild') }}</p>
     <PlanWizard
       v-if="editing"
@@ -104,6 +135,68 @@ function done(setup: PlanSetup): void {
   font-weight: 650;
 }
 
+.degree-course {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+.degree-picks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 4px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.degree-picks li {
+  padding: 4px 12px;
+  border: 1px solid var(--glass-edge);
+  border-radius: 999px;
+  background: var(--glass-shine), color-mix(in srgb, var(--glass-fill) 60%, transparent);
+  font-size: 0.875rem;
+  color: var(--ink-soft);
+}
+
+.degree-picks li.main {
+  border-color: color-mix(in srgb, var(--accent) 40%, transparent);
+  background: var(--accent-soft);
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.degree-progress {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.bar {
+  flex: 1;
+  height: 8px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--ink) 9%, transparent);
+  overflow: hidden;
+}
+
+.bar span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--accent), #8b5cf6);
+}
+
+.bar-text {
+  flex: none;
+  font-family: var(--font-code);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
 .degree-line {
   margin: 0;
   color: var(--ink);
@@ -122,8 +215,8 @@ function done(setup: PlanSetup): void {
 
 .degree-edit {
   flex: none;
-  min-height: 36px;
-  padding: 0 14px;
+  min-height: 44px;
+  padding: 0 16px;
   font-size: 0.875rem;
 }
 
