@@ -405,6 +405,10 @@ onBeforeUnmount(() => io?.disconnect())
     padding: 3px 9px;
     font-size: 0.8125rem;
   }
+
+  .facts .chip:not(.chip-bad, .chip-strong) {
+    color: color-mix(in srgb, var(--ink-soft) 55%, var(--ink));
+  }
 }
 
 @media (max-width: 560px) {

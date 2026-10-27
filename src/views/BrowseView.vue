@@ -365,6 +365,13 @@ watch(filters, (f) => {
   cursor: pointer;
 }
 
+/* Dark: the soft grey falls under AA over the brighter glass; use a lighter one. */
+@media (prefers-color-scheme: dark) {
+  .preset {
+    color: color-mix(in srgb, var(--ink-soft) 55%, var(--ink));
+  }
+}
+
 .preset:hover {
   color: var(--ink);
   background: var(--glass-fill-hover);
