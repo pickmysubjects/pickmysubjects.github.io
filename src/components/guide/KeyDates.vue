@@ -3,7 +3,7 @@ import { computed } from 'vue'
 import { CalendarPlus, ExternalLink } from 'lucide-vue-next'
 import { useI18n } from '@/i18n'
 import { URLS } from '@/utils/guideLinks'
-import { buildIcs, groupKeyDates, KEY_DATES, melbourneToday, type KeyDate, type KeyDateGroup } from '@/utils/keyDates'
+import { buildIcs, downloadIcs, groupKeyDates, KEY_DATES, melbourneToday, type KeyDate, type KeyDateGroup } from '@/utils/keyDates'
 
 /** The University's key dates as a timeline, still-to-come first, with a calendar download. */
 const { t, locale } = useI18n()
@@ -18,12 +18,7 @@ const label = (d: KeyDate) => `${t.value(`guide.kd.kind.${d.kind}`)} · ${t.valu
 
 function download(): void {
   const items = groups.value.upcoming.flatMap((g) => g.items.filter((i) => !i.past))
-  const blob = new Blob([buildIcs(items, label)], { type: 'text/calendar;charset=utf-8' })
-  const a = document.createElement('a')
-  a.href = URL.createObjectURL(blob)
-  a.download = 'unimelb-key-dates.ics'
-  a.click()
-  setTimeout(() => URL.revokeObjectURL(a.href), 1000)
+  downloadIcs(buildIcs(items, label), 'unimelb-key-dates.ics')
 }
 </script>
 

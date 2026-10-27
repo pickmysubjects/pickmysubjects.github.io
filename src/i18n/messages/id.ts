@@ -1787,6 +1787,11 @@ export const id: Messages = {
     examsOn: "Ujian {range}",
     assess: "Penilaian",
   },
+  cal: {
+    add: "Tambahkan tanggal penting ke kalenderku",
+    info: "Membuat file kalender (.ics) di perangkatmu berisi {n} tanggal census, ujian, dan pengumuman nilai untuk semester di rencanamu. Tidak ada yang dikirim.",
+    event: { census: "Tanggal census · {term}", exams: "Ujian · {term}", results: "Nilai keluar · {term}" },
+  },
   gist: {
     passFail: "Hanya lulus/gagal, tidak masuk WAM",
     noExam: "Tanpa ujian akhir: semua tugas",

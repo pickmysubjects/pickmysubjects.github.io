@@ -1787,6 +1787,11 @@ export const zhTW: Messages = {
     examsOn: "考試 {range}",
     assess: "評分方式",
   },
+  cal: {
+    add: "把重要日期加到我的行事曆",
+    info: "在你的裝置上產生行事曆檔（.ics），包含計畫中各學期的 {n} 個 census、考試和成績公布日期。不會上傳任何資料。",
+    event: { census: "Census 退選截止日 · {term}", exams: "考試 · {term}", results: "成績公布 · {term}" },
+  },
   gist: {
     passFail: "只記通過/不通過，不算進 WAM",
     noExam: "沒有期末考試，全是平時作業",

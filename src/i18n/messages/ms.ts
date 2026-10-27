@@ -1787,6 +1787,11 @@ export const ms: Messages = {
     examsOn: "Peperiksaan {range}",
     assess: "Penilaian",
   },
+  cal: {
+    add: "Tambah tarikh penting ke kalendar saya",
+    info: "Membuat fail kalendar (.ics) pada peranti anda dengan {n} tarikh census, peperiksaan dan keputusan bagi penggal dalam pelan. Tiada apa-apa dihantar.",
+    event: { census: "Tarikh census · {term}", exams: "Peperiksaan · {term}", results: "Keputusan keluar · {term}" },
+  },
   gist: {
     passFail: "Lulus/gagal sahaja, tidak dalam WAM",
     noExam: "Tiada peperiksaan akhir: semua kerja kursus",

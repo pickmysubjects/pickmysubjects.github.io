@@ -1787,6 +1787,11 @@ export const ko: Messages = {
     examsOn: "시험 {range}",
     assess: "평가 방식",
   },
+  cal: {
+    add: "학사일정을 내 캘린더에 추가",
+    info: "플랜에 있는 학기의 census·시험·성적 발표 {n}개를 캘린더 파일(.ics)로 기기에서 만들어요. 아무것도 전송되지 않아요.",
+    event: { census: "Census 날짜 · {term}", exams: "시험 · {term}", results: "성적 발표 · {term}" },
+  },
   gist: {
     passFail: "통과/낙제만, WAM 미반영",
     noExam: "기말고사 없음: 전부 과제",

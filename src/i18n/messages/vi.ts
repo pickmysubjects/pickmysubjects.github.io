@@ -1787,6 +1787,11 @@ export const vi: Messages = {
     examsOn: "Thi {range}",
     assess: "Cách tính điểm",
   },
+  cal: {
+    add: "Thêm ngày quan trọng vào lịch",
+    info: "Tạo tệp lịch (.ics) ngay trên máy bạn với {n} ngày census, thi và công bố điểm của các kỳ trong kế hoạch. Không gửi gì đi cả.",
+    event: { census: "Ngày census · {term}", exams: "Thi · {term}", results: "Công bố điểm · {term}" },
+  },
   gist: {
     passFail: "Chỉ Đạt/Không đạt, không tính WAM",
     noExam: "Không thi cuối kỳ: toàn bài tập",

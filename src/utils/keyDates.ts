@@ -71,8 +71,35 @@ export function nextDay(date: string): string {
   return d.toISOString().slice(0, 10)
 }
 
-function escapeText(text: string): string {
-  return text.replace(/\\/g, '\\\\').replace(/;/g, '\;').replace(/,/g, '\\,').replace(/\n/g, '\\n')
+/** RFC 5545 TEXT escaping: backslash, semicolon, comma and newlines. */
+export function escapeText(text: string): string {
+  return text.replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\r?\n/g, '\\n')
+}
+
+/** RFC 5545 line folding: at most 75 octets a line, continued lines start with a space. */
+export function foldLine(line: string): string {
+  const enc = new TextEncoder()
+  const out: string[] = []
+  let cur = ''
+  let size = 0
+  for (const ch of line) {
+    const n = enc.encode(ch).length
+    if (size + n > (out.length ? 74 : 75)) {
+      out.push(cur)
+      cur = ''
+      size = 0
+    }
+    cur += ch
+    size += n
+  }
+  out.push(cur)
+  return out.join('\r\n ')
+}
+
+/** The census, exam and results dates of the given terms (e.g. the terms in a student's plan). */
+export function datesForTerms(items: KeyDate[], terms: { year: number; period: string }[]): KeyDate[] {
+  const wanted = new Set(terms.map((t) => `${t.year}-${t.period}`))
+  return items.filter((d) => wanted.has(`${d.year}-${d.term}`) && (d.kind === 'census' || d.kind === 'exams' || d.kind === 'results'))
 }
 
 /** An iCalendar file of all-day events. `label` names each item (in the reader's language). */
@@ -93,5 +120,15 @@ export function buildIcs(items: KeyDate[], label: (d: KeyDate) => string): strin
     )
   }
   lines.push('END:VCALENDAR')
-  return lines.join('\r\n') + '\r\n'
+  return lines.map(foldLine).join('\r\n') + '\r\n'
+}
+
+/** Saves an .ics on the device (no network). */
+export function downloadIcs(ics: string, filename: string): void {
+  const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' })
+  const a = document.createElement('a')
+  a.href = URL.createObjectURL(blob)
+  a.download = filename
+  a.click()
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000)
 }

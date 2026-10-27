@@ -1790,6 +1790,11 @@ export const en = {
     examsOn: "Exams {range}",
     assess: "Assessment",
   },
+  cal: {
+    add: "Add key dates to my calendar",
+    info: "Makes a calendar file (.ics) on your device with {n} census, exam and results dates for the terms in your plan. Nothing is sent anywhere.",
+    event: { census: "Census date · {term}", exams: "Exams · {term}", results: "Results released · {term}" },
+  },
   gist: {
     passFail: "Pass/fail only, not in the WAM",
     noExam: "No final exam: all coursework",

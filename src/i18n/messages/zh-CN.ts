@@ -1787,6 +1787,11 @@ export const zhCN: Messages = {
     examsOn: "考试 {range}",
     assess: "考核方式",
   },
+  cal: {
+    add: "把重要日期加到我的日历",
+    info: "在你的设备上生成日历文件（.ics），含计划里各学期的 {n} 个 census、考试和出分日期。不会上传任何内容。",
+    event: { census: "Census 退课截止日 · {term}", exams: "考试 · {term}", results: "出成绩 · {term}" },
+  },
   gist: {
     passFail: "只记通过/不通过，不算进 WAM",
     noExam: "没有期末考试，全是平时作业",

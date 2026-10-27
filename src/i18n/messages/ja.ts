@@ -1787,6 +1787,11 @@ export const ja: Messages = {
     examsOn: "試験 {range}",
     assess: "評価方法",
   },
+  cal: {
+    add: "重要日程をカレンダーに追加",
+    info: "プランの学期の census・試験・成績発表 {n} 件をカレンダーファイル（.ics）として端末内で作ります。どこにも送信しません。",
+    event: { census: "センサス日 · {term}", exams: "試験 · {term}", results: "成績発表 · {term}" },
+  },
   gist: {
     passFail: "合否のみ、WAM に入らない",
     noExam: "期末試験なし：すべて課題で評価",
