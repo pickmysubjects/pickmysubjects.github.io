@@ -381,8 +381,23 @@ function onDragStart(event: DragEvent): void {
   visibility: visible;
 }
 
+/* The toolbar takes the tag line's place while it shows: the tags fade out (space kept), so
+   neither covers the other and nothing moves. */
+.row-tags {
+  transition: opacity 0.12s ease, visibility 0.12s;
+}
+
+@media (hover: hover) and (min-width: 721px) {
+  .row:hover .row-tags,
+  .row:focus-within .row-tags {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .row-actions {
+  .row-actions,
+  .row-tags {
     transition: none;
   }
 }
