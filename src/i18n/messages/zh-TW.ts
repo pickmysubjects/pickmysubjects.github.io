@@ -2011,6 +2011,7 @@ export const zhTW: Messages = {
     deleteConfirm: "刪除{name}？刪除後無法復原。",
     max: "最多可以儲存 {n} 個計畫。",
     compare: "比較",
+    compareNeedsTwo: "要比較，先用上面的 + 再建一份計畫。",
     compareTitle: "比較計畫",
     vs: "比較",
     back: "回到計畫",

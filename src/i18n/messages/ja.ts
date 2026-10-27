@@ -2011,6 +2011,7 @@ export const ja: Messages = {
     deleteConfirm: "{name}を削除しますか？元に戻せません。",
     max: "プランは {n} 個まで保存できます。",
     compare: "比べる",
+    compareNeedsTwo: "比べるには、上の + で2つ目のプランを作ってください。",
     compareTitle: "プランを比べる",
     vs: "対",
     back: "プランに戻る",

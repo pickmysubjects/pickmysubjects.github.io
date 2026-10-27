@@ -2011,6 +2011,7 @@ export const zhCN: Messages = {
     deleteConfirm: "删除{name}？删除后无法恢复。",
     max: "最多可以保存 {n} 个计划。",
     compare: "对比",
+    compareNeedsTwo: "要对比，先用上面的 + 再建一份计划。",
     compareTitle: "对比计划",
     vs: "对比",
     back: "返回计划",

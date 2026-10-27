@@ -2011,6 +2011,7 @@ export const id: Messages = {
     deleteConfirm: "Hapus {name}? Ini tidak bisa dibatalkan.",
     max: "Kamu bisa menyimpan hingga {n} rencana.",
     compare: "Bandingkan",
+    compareNeedsTwo: "Untuk membandingkan, buat rencana kedua dengan + di atas.",
     compareTitle: "Bandingkan rencana",
     vs: "vs",
     back: "Kembali ke rencana",

@@ -2011,6 +2011,7 @@ export const ko: Messages = {
     deleteConfirm: "{name}을(를) 삭제할까요? 되돌릴 수 없어요.",
     max: "계획은 {n}개까지 저장할 수 있어요.",
     compare: "비교",
+    compareNeedsTwo: "비교하려면 위의 +로 두 번째 계획을 만드세요.",
     compareTitle: "계획 비교",
     vs: "대",
     back: "계획으로 돌아가기",

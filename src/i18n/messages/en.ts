@@ -2014,6 +2014,7 @@ export const en = {
     deleteConfirm: "Delete {name}? This can’t be undone.",
     max: "You can keep up to {n} plans.",
     compare: "Compare",
+    compareNeedsTwo: "To compare, make a second plan with + above.",
     compareTitle: "Compare plans",
     vs: "vs",
     back: "Back to the plan",

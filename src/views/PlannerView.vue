@@ -52,8 +52,10 @@ const comparing = shallowRef(false)
 
 // A plan someone shared: /plan?share=… (packed into the link, no server).
 const { query } = useView()
-// The header's "Compare Plan A and B" lands here with ?compare=1.
-watch(() => query.value.get('compare'), (v) => { if (v) comparing.value = true }, { immediate: true })
+// The header's "Compare Plan A and B" lands here with ?compare=1: only with two plans to compare
+// (otherwise one line says how to make a second), and never in place of the setup questions.
+const compareWanted = shallowRef(false)
+watch(() => query.value.get('compare'), (v) => { compareWanted.value = !!v }, { immediate: true })
 const shared = computed(() => {
   const code = query.value.get('share')
   return code ? decodePlan(code) : null
@@ -444,6 +446,12 @@ const printTerms = computed<PrintTerm[]>(() => {
   // An empty semester left at the end of the plan prints as nothing.
   return [...by.values()].filter((x) => x.items.length > 0).sort((a, b) => (a.year === null ? -1 : b.year === null ? 1 : order(a.year, a.period as string) - order(b.year, b.period as string)))
 })
+watch([compareWanted, () => plans.list.value.length, showWizard], ([want, n, wizard]) => {
+  if (!want) return
+  if (n > 1 && !wizard) comparing.value = true
+  compareWanted.value = false
+}, { immediate: true })
+const compareNeedsTwo = computed(() => !!query.value.get('compare') && plans.list.value.length < 2)
 // Arriving with ?add= when the plan is already set up: it goes in straight away.
 watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.value && !editing.value) placePending() }, { immediate: true })
 </script>
@@ -458,11 +466,12 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
       </template>
     </section>
 
-    <PlanSwitcher v-if="!shared && !comparing" @compare="comparing = true; editing = false; trackEvent('compare-open')" />
-    <PlanCompare v-if="comparing && !shared" @close="comparing = false" />
+    <PlanSwitcher v-if="!shared && (!comparing || showWizard)" @compare="comparing = true; editing = false; trackEvent('compare-open')" />
+    <p v-if="compareNeedsTwo && !comparing && !shared" class="started" role="status">{{ t('plans.compareNeedsTwo') }}</p>
+    <PlanCompare v-if="comparing && !shared && !showWizard" @close="comparing = false" />
 
     <PlanWizard
-      v-if="showWizard && !comparing"
+      v-if="showWizard"
       :key="dataName"
       :setup="plan.setup.value"
       :courses="data.courses.filter((c) => c.listed)"

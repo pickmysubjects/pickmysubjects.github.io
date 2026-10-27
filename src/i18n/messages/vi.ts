@@ -2011,6 +2011,7 @@ export const vi: Messages = {
     deleteConfirm: "Xóa {name}? Không thể hoàn tác.",
     max: "Bạn có thể giữ tối đa {n} kế hoạch.",
     compare: "So sánh",
+    compareNeedsTwo: "Để so sánh, hãy tạo kế hoạch thứ hai bằng nút + ở trên.",
     compareTitle: "So sánh kế hoạch",
     vs: "và",
     back: "Quay lại kế hoạch",

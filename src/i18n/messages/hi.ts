@@ -2011,6 +2011,7 @@ export const hi: Messages = {
     deleteConfirm: "{name} हटाएँ? इसे वापस नहीं लाया जा सकता।",
     max: "आप {n} प्लान तक रख सकते हैं।",
     compare: "तुलना करें",
+    compareNeedsTwo: "तुलना के लिए ऊपर + से दूसरा प्लान बनाएँ।",
     compareTitle: "प्लान की तुलना",
     vs: "बनाम",
     back: "प्लान पर वापस जाएँ",

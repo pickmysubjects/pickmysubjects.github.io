@@ -2011,6 +2011,7 @@ export const ms: Messages = {
     deleteConfirm: "Padam {name}? Ini tidak boleh dibatalkan.",
     max: "Anda boleh simpan sehingga {n} rancangan.",
     compare: "Banding",
+    compareNeedsTwo: "Untuk membanding, buat rancangan kedua dengan + di atas.",
     compareTitle: "Banding rancangan",
     vs: "lwn",
     back: "Kembali ke rancangan",
