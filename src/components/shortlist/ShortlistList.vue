@@ -137,7 +137,7 @@ const full = computed(() => props.picked.length >= props.max)
   padding: 1px 9px;
   font-size: 0.8125rem;
   color: var(--ink-soft);
-  background: var(--surface-2);
+  background: var(--inset-fill);
   border-radius: 999px;
 }
 
@@ -156,7 +156,7 @@ const full = computed(() => props.picked.length >= props.max)
 
 .remove:hover {
   color: var(--ink);
-  background: var(--surface-2);
+  background: var(--inset-fill);
 }
 
 .remove:focus-visible {

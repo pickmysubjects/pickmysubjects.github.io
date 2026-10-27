@@ -92,7 +92,7 @@ const closed = computed(() => data.value.courses.some((c) => c.code === props.co
 }
 
 .row:hover {
-  background: var(--surface-2);
+  background: var(--inset-fill);
 }
 
 .main {

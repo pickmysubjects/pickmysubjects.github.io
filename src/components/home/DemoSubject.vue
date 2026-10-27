@@ -187,7 +187,7 @@ const source = computed(() => {
   gap: 6px;
   padding: 10px 12px;
   border-radius: var(--radius);
-  background: var(--surface-2);
+  background: var(--inset-fill);
 }
 
 .said-line {

@@ -107,7 +107,7 @@ const band = computed(() => fitBand(props.rec.betterThan))
   padding: 10px 12px;
   border: 1px solid var(--line);
   border-radius: 12px;
-  background: var(--surface);
+  background: var(--glass-shine), var(--sheet-fill);
   box-shadow: var(--shadow-2, 0 6px 24px rgb(0 0 0 / 0.12));
   font-size: 0.8125rem;
   font-weight: 400;

@@ -238,7 +238,7 @@ watch(param, () => void followHash())
 .content :deep(.formula),
 .content :deep(.who-card) {
   padding: 12px 14px;
-  background: var(--surface-2);
+  background: var(--inset-fill);
   border-radius: var(--radius-sm);
 }
 

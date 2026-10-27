@@ -97,7 +97,7 @@ const warnings = computed(() =>
   padding: 1px 10px;
   border: 1px solid var(--line);
   border-radius: 999px;
-  background: var(--surface);
+  background: var(--glass-shine), var(--sheet-fill);
   font: inherit;
   font-weight: 600;
   color: var(--ink);

@@ -84,10 +84,12 @@
   /* Popovers and sheets: glass, but mostly opaque so their text reads easily. */
   --sheet-fill: color-mix(in srgb, var(--surface) 84%, transparent);
   /* Content cards: a tinted see-through fill with the chrome's hairline and top highlight, no blur. */
-  --card-fill: rgb(255 255 255 / 62%);
-  --card-blur: blur(18px) saturate(170%);
+  --card-fill: rgb(255 255 255 / 42%);
+  --card-blur: blur(24px) saturate(180%);
   --tile-fill: rgb(255 255 255 / 55%);
   --field-fill: rgb(255 255 255 / 50%);
+  /* Hover and inset areas inside glass: a soft tinted wash, not grey. */
+  --inset-fill: color-mix(in srgb, #c2227a 5%, rgb(255 255 255 / 45%));
   --card-edge: rgb(255 255 255 / 60%);
   --card-shadow: inset 1px 1px 0 rgb(255 255 255 / 95%), inset 0 0 0 1px rgb(255 255 255 / 28%), inset 0 -1px 0 rgb(80 40 90 / 12%), 0 10px 30px -16px rgb(80 40 90 / 30%);
   /* Space above a page's title, under the bar. */
@@ -141,9 +143,10 @@
     --float-shadow: 0 12px 32px -10px rgb(0 0 0 / 70%);
     --seg-fill: rgb(255 255 255 / 6%);
     --pill-raised: var(--glass-shadow), 0 3px 10px -3px rgb(0 0 0 / 60%);
-    --card-fill: rgb(30 24 44 / 52%);
+    --card-fill: rgb(30 24 44 / 44%);
     --tile-fill: rgb(30 24 44 / 55%);
     --field-fill: rgb(255 255 255 / 6%);
+    --inset-fill: rgb(255 255 255 / 7%);
     --card-edge: rgb(255 255 255 / 9%);
     --card-shadow: inset 1px 1px 0 rgb(255 255 255 / 18%), inset 0 0 0 1px rgb(255 255 255 / 6%), inset 0 -1px 0 rgb(0 0 0 / 35%), 0 10px 30px -16px rgb(0 0 0 / 70%);
     color-scheme: dark;
@@ -647,6 +650,13 @@ button.chip {
   box-shadow: var(--card-shadow);
 }
 
+/* Over the thinner glass, accent text is a step deeper so links stay AA. */
+@media (prefers-color-scheme: light) and (prefers-reduced-transparency: no-preference) {
+  .surface {
+    --accent: #a51d68;
+  }
+}
+
 /* Repeated items (list cards, tiles) and anything inside a glass card: no blur of their own. */
 .surface .surface,
 .tile {
@@ -722,6 +732,7 @@ button.chip {
     --card-fill: #f9f2f8;
     --tile-fill: #fbf6fb;
     --field-fill: #fdf9fc;
+    --inset-fill: #f3e8f2;
     --chrome-fill: #f6edf5;
     --glass-fill: #fbf6fb;
     --glass-fill-hover: #f3e8f2;
@@ -748,6 +759,7 @@ button.chip {
     --card-fill: #1f1828;
     --tile-fill: #241c2e;
     --field-fill: #2a2234;
+    --inset-fill: #2a2234;
     --chrome-fill: #1a1522;
     --glass-fill: #2a2234;
     --glass-fill-hover: #33293f;

@@ -88,7 +88,7 @@ async function report(c: StudentComment): Promise<void> {
   gap: 4px;
   padding: 10px 14px;
   border-radius: var(--radius);
-  background: var(--surface-2);
+  background: var(--inset-fill);
 }
 
 .tip-text {

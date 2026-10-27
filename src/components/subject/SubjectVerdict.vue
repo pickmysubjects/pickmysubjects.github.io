@@ -114,7 +114,7 @@ const discussions = computed(() => (props.detailReady ? (props.subject.discussio
   min-width: 0;
   padding: 14px 16px;
   border-radius: var(--radius);
-  background: var(--surface-2);
+  background: var(--inset-fill);
 }
 
 .tile-label {

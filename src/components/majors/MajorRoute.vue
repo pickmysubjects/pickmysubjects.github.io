@@ -224,7 +224,7 @@ const join = (codes: string[]) => codes.join(t.value('listSep'))
   padding: 0 10px;
   border: 1px solid var(--glass-edge);
   border-radius: var(--radius-sm);
-  background: var(--surface);
+  background: var(--glass-shine), var(--sheet-fill);
   color: var(--ink);
   text-decoration: none;
   line-height: 1.2;

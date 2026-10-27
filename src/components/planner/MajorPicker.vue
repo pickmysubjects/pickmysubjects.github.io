@@ -188,7 +188,7 @@ const shown = computed(() => (searching.value || single.value ? groups.value : g
   padding: 8px 14px;
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  background: var(--surface);
+  background: var(--glass-shine), var(--sheet-fill);
   font: inherit;
   font-size: 0.9375rem;
   text-align: left;

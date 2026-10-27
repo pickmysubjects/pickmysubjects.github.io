@@ -174,7 +174,7 @@ function pick(skill: Skill, level: number): void {
 }
 
 .step:hover {
-  background: var(--surface-2);
+  background: var(--inset-fill);
 }
 
 .step[aria-checked='true'] {

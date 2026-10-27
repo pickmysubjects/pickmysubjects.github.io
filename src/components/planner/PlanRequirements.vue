@@ -391,7 +391,7 @@ function toggle(id: string): void {
 }
 
 .rule:hover {
-  background: var(--surface-2);
+  background: var(--inset-fill);
 }
 
 .rule-active {

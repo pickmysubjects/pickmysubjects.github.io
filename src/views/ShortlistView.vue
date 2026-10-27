@@ -137,7 +137,7 @@ async function share(): Promise<void> {
 .saved-bar {
   padding: var(--space-3) var(--space-4);
   border-bottom: 1px solid var(--line);
-  background: var(--surface-2);
+  background: var(--inset-fill);
 }
 
 .hint {

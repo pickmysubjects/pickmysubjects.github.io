@@ -249,7 +249,7 @@ function clear(): void {
 
   .groups {
     padding: 16px;
-    background: var(--surface);
+    background: var(--glass-shine), var(--sheet-fill);
     border: 1px solid var(--line);
     border-radius: var(--radius-lg);
   }

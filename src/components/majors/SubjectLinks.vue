@@ -105,7 +105,7 @@ const rows = computed(() =>
 }
 
 .row:hover {
-  background: var(--surface-2);
+  background: var(--inset-fill);
 }
 
 .main {

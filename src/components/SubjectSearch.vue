@@ -174,7 +174,7 @@ function move(delta: number): void {
 }
 
 .result[aria-selected='true'] {
-  background: var(--surface-2);
+  background: var(--inset-fill);
 }
 
 .result-code {

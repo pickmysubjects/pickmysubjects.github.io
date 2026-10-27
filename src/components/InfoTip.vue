@@ -70,7 +70,7 @@ const id = useId()
   color: var(--ink-soft);
   font-size: var(--fs-small);
   line-height: var(--lh-body);
-  background: var(--surface-2);
+  background: var(--inset-fill);
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
   overflow-wrap: anywhere;

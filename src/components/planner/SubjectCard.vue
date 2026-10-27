@@ -381,7 +381,7 @@ function onDragStart(event: DragEvent): void {
 }
 
 .act:hover {
-  background: var(--surface-2);
+  background: var(--inset-fill);
   color: var(--ink);
 }
 
@@ -420,7 +420,7 @@ function onDragStart(event: DragEvent): void {
   padding: 14px;
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
-  background: var(--surface);
+  background: var(--glass-shine), var(--sheet-fill);
   color: var(--ink);
   box-shadow: var(--shadow-2);
   cursor: default;
@@ -457,7 +457,7 @@ function onDragStart(event: DragEvent): void {
   padding: 0 10px;
   border: 1px solid var(--line);
   border-radius: 10px;
-  background: var(--surface);
+  background: var(--glass-shine), var(--sheet-fill);
   color: var(--ink);
   font: inherit;
   font-size: 0.8125rem;
@@ -496,7 +496,7 @@ function onDragStart(event: DragEvent): void {
 }
 
 .sheet-term:hover {
-  background: var(--surface-2);
+  background: var(--inset-fill);
 }
 
 .sheet-dot {

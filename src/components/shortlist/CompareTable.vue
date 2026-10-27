@@ -168,7 +168,7 @@ const rows = computed(() => [
   left: 0;
   z-index: 1;
   width: 128px;
-  background: var(--surface);
+  background: var(--glass-shine), var(--sheet-fill);
 }
 
 th,

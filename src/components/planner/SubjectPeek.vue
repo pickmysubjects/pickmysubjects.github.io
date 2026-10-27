@@ -554,7 +554,7 @@ function onClick(event: MouseEvent): void {
   margin: 0 calc(-1 * var(--space-5));
   padding: var(--space-4) var(--space-5) var(--space-5);
   border-top: 1px solid var(--line);
-  background: var(--surface);
+  background: var(--glass-shine), var(--sheet-fill);
 }
 
 .peek-buttons {

@@ -109,7 +109,7 @@ const shown = computed(() => (expanded.value ? roles.value : roles.value.slice(0
   border-radius: 999px;
   font-size: var(--fs-meta);
   font-weight: 600;
-  background: var(--surface-2);
+  background: var(--inset-fill);
   color: var(--ink-soft);
 }
 

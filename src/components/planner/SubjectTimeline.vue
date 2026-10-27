@@ -131,7 +131,7 @@ const unlocks = computed(() => [...new Set(props.edges.filter((e) => e.from === 
 
 .chip-link {
   border: 1px solid color-mix(in srgb, var(--overprint) 50%, transparent);
-  background: var(--surface);
+  background: var(--glass-shine), var(--sheet-fill);
   color: var(--ink);
   font: inherit;
   font-size: 0.8125rem;

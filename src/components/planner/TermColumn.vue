@@ -285,7 +285,7 @@ const tone = (code: string): CardTone | null => props.tones?.get(code) ?? null
   height: 24px;
   border-radius: 999px;
   border: 1px solid var(--line);
-  background: var(--surface);
+  background: var(--glass-shine), var(--sheet-fill);
   color: var(--ink-soft);
   cursor: pointer;
 }

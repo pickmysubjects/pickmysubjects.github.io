@@ -416,7 +416,7 @@ function value(event: Event): string {
   padding: 5px 11px;
   border: 1px solid var(--contour);
   border-radius: 999px;
-  background: var(--paper-raised);
+  background: var(--glass-shine), var(--sheet-fill);
   font-size: 0.875rem;
   cursor: pointer;
 }

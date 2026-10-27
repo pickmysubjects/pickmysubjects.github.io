@@ -49,7 +49,7 @@ const top = computed(() => topTags(props.tags))
   font-size: 0.875rem;
   font-weight: 550;
   color: var(--ink);
-  background: var(--surface-2);
+  background: var(--inset-fill);
   border: 1px solid var(--line);
   border-radius: 999px;
 }
