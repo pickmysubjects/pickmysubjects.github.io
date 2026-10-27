@@ -90,7 +90,6 @@ function pick(skill: Skill, level: number): void {
             @click="pick(s, n)"
           >
             <span class="step-label">{{ t(`record.level.${n}`) }}</span>
-            <span class="step-num" aria-hidden="true">{{ n }}</span>
           </button>
         </span>
         <p v-if="suggestion(s)" class="suggest">
@@ -102,7 +101,6 @@ function pick(skill: Skill, level: number): void {
     <button v-if="hidden > 0 || showAll" type="button" class="more" @click="showAll = !showAll">
       {{ showAll ? t('record.fewerSkills') : t('record.moreSkills', { n: hidden }) }}
     </button>
-    <p class="scale-ends"><span>1 = {{ t('record.level.1') }}</span><span>5 = {{ t('record.level.5') }}</span></p>
   </section>
 </template>
 
@@ -128,6 +126,8 @@ function pick(skill: Skill, level: number): void {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(330px, 100%), 1fr));
   gap: 0 24px;
+  /* A row that grows (a "use this" hint under its scale) doesn't stretch its neighbour. */
+  align-items: start;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -202,35 +202,19 @@ function pick(skill: Skill, level: number): void {
   color: var(--bg);
 }
 
-.step-num {
-  display: none;
-}
-
-/* Narrow screens: numbers only, with the two ends labelled below the list. */
+/* Narrow screens: the same words, smaller, so every step says what it means. */
 @media (max-width: 640px) {
-  .step-label {
-    display: none;
-  }
-
-  .step-num {
-    display: inline;
+  .scale {
+    width: 100%;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 
   .step {
-    min-width: 36px;
+    min-width: 0;
     min-height: 44px;
-  }
-}
-.scale-ends {
-  display: none;
-  justify-content: space-between;
-  font-size: 0.8125rem;
-  color: var(--ink-soft);
-}
-
-@media (max-width: 640px) {
-  .scale-ends {
-    display: flex;
+    padding: 4px 2px;
+    font-size: 0.75rem;
+    overflow-wrap: anywhere;
   }
 }
 .more {

@@ -80,10 +80,6 @@ const doneCount = computed(() => filled.value.filter((f) => f.done).length)
             <span v-if="!setupChosen" class="sec-state">{{ t('record.stepFirst') }}</span>
           </header>
           <DegreeCard />
-          <div class="plans">
-            <PlanSwitcher no-compare />
-            <p class="hint">{{ t('plans.prefsNoteShort') }}<InfoTip :text="t('plans.prefsNote')" /></p>
-          </div>
         </section>
 
         <section class="sec surface" aria-labelledby="sec-results">
@@ -95,6 +91,12 @@ const doneCount = computed(() => filled.value.filter((f) => f.done).length)
           <ResultsEditor v-model="results" v-model:credit="credit" v-model:credit-open="creditOpen" :subjects="data.subjects" :options="options" />
           <GradeShare class="sec-part" />
         </section>
+
+        <!-- Plan A/B: right above what each plan keeps for itself (strengths, interests, goal). -->
+        <div class="plans">
+          <PlanSwitcher no-compare />
+          <p class="hint">{{ t('plans.prefsNoteShort') }}<InfoTip :text="t('plans.prefsNote')" /></p>
+        </div>
 
         <section class="sec surface" aria-labelledby="sec-strengths">
           <header class="sec-head">
@@ -376,8 +378,6 @@ const doneCount = computed(() => filled.value.filter((f) => f.done).length)
 .plans {
   display: grid;
   gap: var(--space-2);
-  padding-top: var(--space-4);
-  border-top: 1px solid var(--line);
 }
 
 .hint {
