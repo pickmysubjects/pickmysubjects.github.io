@@ -21,7 +21,7 @@ export type GuidePageSlug = (typeof GUIDE_PAGES)[number]
  */
 export const GUIDE_TOPICS: Record<GuidePageSlug, readonly string[]> = {
   basics: ['first', 'points', 'majors', 'caps', 'rules', 'grades', 'wam'],
-  systems: ['systems'],
+  systems: ['systems', 'systems-class', 'systems-lookup'],
   enrolling: ['enrol', 'plans', 'load', 'check', 'waiver', 'timetable', 'late-enrol', 'cross-institutional', 'exchange', 'fees'],
   semester: ['special-consideration', 'hurdles', 'late', 'integrity', 'exams', 'drop', 'fail'],
   life: ['wellbeing', 'safety', 'community', 'advocacy'],
@@ -72,22 +72,21 @@ export function topicTitleKey(id: string): string {
 }
 
 /**
- * Two or three tags under each page's title: the topics students come for most, each a jump to
- * it on the page (systems: the three systems they use from day one; key dates: the kinds of date).
+ * When the guide's facts were last checked against the official pages. Not shown on the page;
+ * kept up to date for search data (a page's last-modified date).
  */
-export const GUIDE_TAGS: Record<GuidePageSlug, readonly { key: string; anchor?: string }[]> = {
-  basics: [{ key: 'guide.pointsTitle', anchor: 'points' }, { key: 'guide.gradesTitle', anchor: 'grades' }, { key: 'guide.wamTitle', anchor: 'wam' }],
-  systems: [{ key: 'guide.svc.myUnimelb.name', anchor: 'svc-myUnimelb' }, { key: 'guide.svc.canvas.name', anchor: 'svc-canvas' }, { key: 'guide.svc.myTimetable.name', anchor: 'svc-myTimetable' }],
-  enrolling: [{ key: 'guide.loadTitle', anchor: 'load' }, { key: 'guide.ttTitle', anchor: 'timetable' }, { key: 'guide.waiverTitle', anchor: 'waiver' }],
-  semester: [{ key: 'guide.hurdleTitle', anchor: 'hurdles' }, { key: 'guide.dropTitle', anchor: 'drop' }, { key: 'guide.failTitle', anchor: 'fail' }],
-  life: [{ key: 'guide.svcTopic.wellbeing.title', anchor: 'wellbeing' }, { key: 'guide.svcTopic.safety.title', anchor: 'safety' }, { key: 'guide.svcTopic.community.title', anchor: 'community' }],
-  international: [{ key: 'guide.rslTitle', anchor: 'rsl' }, { key: 'guide.onlineTitle', anchor: 'online' }, { key: 'guide.abroadTitle', anchor: 'abroad' }],
-  help: [{ key: 'guide.svcTopic.it-help.title', anchor: 'it-help' }, { key: 'guide.helpTitle', anchor: 'study-help' }, { key: 'guide.svcTopic.uni-careers.title', anchor: 'uni-careers' }],
-  'key-dates': [{ key: 'guide.kd.kind.census' }, { key: 'guide.kd.kind.exams' }, { key: 'guide.kd.kind.results' }],
-}
+export const GUIDE_CHECKED = '2026-10-28'
 
-/** When the guide's facts were last checked against the official pages (the "updated" line). */
-export const GUIDE_CHECKED = '2026-10-26'
+/**
+ * "On this page" earns its place from four headed sections up: with fewer, the whole page is
+ * about a screen or two of reading, and a list of two or three links only repeats the headings
+ * the reader can already see. The page then gives the article the full width.
+ */
+export const TOC_MIN_SECTIONS = 4
+
+export function showToc(sections: number): boolean {
+  return sections >= TOC_MIN_SECTIONS
+}
 
 export function isGuideCategory(slug: string): slug is GuideCategory {
   return (GUIDE_CATEGORIES as readonly string[]).includes(slug)

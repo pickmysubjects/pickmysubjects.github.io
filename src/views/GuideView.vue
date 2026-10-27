@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import InfoTip from '@/components/InfoTip.vue'
+import Interp from '@/components/Interp.vue'
 import { computed, nextTick, shallowRef, type Component, useTemplateRef, watch } from 'vue'
 import { ArrowLeft, ArrowRight } from 'lucide-vue-next'
 import GuideHero from '@/components/guide/GuideHero.vue'
@@ -15,12 +15,12 @@ import GuideServices from '@/components/guide/GuideServices.vue'
 import { link, useView } from '@/composables/useView'
 import { useI18n } from '@/i18n'
 import { URLS } from '@/utils/guideLinks'
-import { guidePageOf, neighbours, slugOf, type GuideCategory, type GuidePageSlug } from '@/utils/guideSections'
+import { guidePageOf, neighbours, showToc, slugOf, topicPath, type GuideCategory, type GuidePageSlug } from '@/utils/guideSections'
 
 /**
  * The basics guide: an overview at /guide/, then one article per section and the key dates page.
- * Each article: a hero band, "On this page" (left on desktop, a fold on phones), the topics in
- * glass cards, then the previous and next section.
+ * Each article: a hero band, "On this page" when the page is long enough to need it (left on
+ * desktop, a fold on phones), the topics in glass cards, then the previous and next section.
  */
 const { t, locale } = useI18n()
 const { param } = useView()
@@ -29,11 +29,11 @@ const slug = computed(() => slugOf(page.value))
 // Categories without their own component (systems, life) are plain service lists.
 const SECTIONS: Partial<Record<GuideCategory, Component>> = { basics: GuideBasics, enrolling: GuideEnrolling, semester: GuideSemester, international: GuideInternational, help: GuideHelp }
 
-const heading = computed(() => {
+const title = computed(() => {
   const p = page.value
-  if (p.kind === 'category') return { title: t.value(`guide.cat.${p.category}.title`), lede: t.value(`guide.cat.${p.category}.lede`) }
-  if (p.kind === 'extra') return { title: t.value('guide.kd.title'), lede: t.value('guide.kd.lede') }
-  return { title: t.value('guide.title'), lede: t.value('guide.ledeShort'), full: t.value('guide.lede') }
+  if (p.kind === 'category') return t.value(`guide.cat.${p.category}.title`)
+  if (p.kind === 'extra') return t.value('guide.kd.title')
+  return t.value('guide.title')
 })
 
 const navName = (s: GuidePageSlug) => t.value(s === 'key-dates' ? 'guide.datesTitle' : `guide.cat.${s}.nav`)
@@ -61,23 +61,26 @@ watch(
   },
   { immediate: true, flush: 'post' },
 )
+const hasToc = computed(() => showToc(toc.value.length))
 </script>
 
 <template>
-  <article class="guide">
-    <GuideHero :key="slug ?? 'overview'" :slug="slug" :title="heading.title" :lede="heading.lede" :full="heading.full" />
+  <article class="guide" :class="{ narrow: page.kind !== 'overview' && !hasToc }">
+    <GuideHero :key="slug ?? 'overview'" :slug="slug" :title="title" />
 
     <template v-if="page.kind === 'overview'">
       <GuideOverview />
       <p class="source">
-        {{ t('guide.sourcesTextShort') }}<InfoTip :text="t('guide.sourcesText')" />
-        <a :href="URLS.STUDENT_SITE" target="_blank" rel="noopener">{{ t('guide.sourcesLink') }}</a>
+        <Interp :text="t('guide.sourcesLine')">
+          <template #site><a :href="URLS.STUDENT_SITE" target="_blank" rel="noopener">{{ t('guide.sourcesLink') }}</a></template>
+          <template #stop1><a :href="link(topicPath('it-help'))">Stop 1</a></template>
+        </Interp>
       </p>
     </template>
 
     <div v-else class="article">
-      <div class="article-toc">
-        <GuideToc v-if="toc.length > 1" :items="toc" />
+      <div v-if="hasToc" class="article-toc">
+        <GuideToc :items="toc" />
       </div>
       <div ref="body" class="article-body content">
         <KeyDates v-if="page.kind === 'extra'" />
@@ -96,8 +99,10 @@ watch(
           </a>
         </nav>
         <p class="source">
-          {{ t('guide.sourcesTextShort') }}<InfoTip :text="t('guide.sourcesText')" />
-          <a :href="URLS.STUDENT_SITE" target="_blank" rel="noopener">{{ t('guide.sourcesLink') }}</a>
+          <Interp :text="t('guide.sourcesLine')">
+            <template #site><a :href="URLS.STUDENT_SITE" target="_blank" rel="noopener">{{ t('guide.sourcesLink') }}</a></template>
+            <template #stop1><a :href="link(topicPath('it-help'))">Stop 1</a></template>
+          </Interp>
         </p>
       </div>
     </div>
@@ -111,12 +116,24 @@ watch(
   padding-top: var(--page-top);
 }
 
-/* The article: "On this page" on the left, a reading column on the right. */
+/* A page without "On this page": hero and article one centred column, edges lined up. */
+.guide.narrow {
+  width: 100%;
+  max-width: 880px;
+  margin-inline: auto;
+}
+
+/* The article: "On this page" on the left, a reading column on the right, together as wide as
+   the hero so their edges line up. */
 .article {
   display: grid;
-  grid-template-columns: 232px minmax(0, 800px);
+  grid-template-columns: 232px minmax(0, 1fr);
   gap: 48px;
   align-items: start;
+}
+
+.guide.narrow .article {
+  grid-template-columns: minmax(0, 1fr);
 }
 
 .article-toc {
@@ -134,10 +151,6 @@ watch(
   .article {
     grid-template-columns: minmax(0, 1fr);
     gap: 20px;
-  }
-
-  .article-toc:empty {
-    display: none;
   }
 }
 

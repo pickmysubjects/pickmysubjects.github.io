@@ -51,7 +51,7 @@ import { zhCN } from '../src/i18n/messages/zh-CN'
 import { zhTW } from '../src/i18n/messages/zh-TW'
 import { hreflangsFor } from '../src/utils/hreflang'
 import { GUIDE_CATEGORIES, GUIDE_TOPICS, type GuideCategory } from '../src/utils/guideSections'
-import { SERVICE_TOPICS } from '../src/utils/guideServices'
+import { SERVICE_TOPICS, type GuideService } from '../src/utils/guideServices'
 import { TOOL_GROUPS, TOOLS } from '../src/utils/tools'
 import { groupKeyDates, KEY_DATES, KEY_DATES_SOURCE, EMPLOYABILITY_SOURCE } from '../src/utils/keyDates'
 import { ja } from '../src/i18n/messages/ja'
@@ -703,15 +703,29 @@ function guideBody(code: LocaleCode, t: Translate, page: GuideCategory | 'overvi
       `<ul>${ACCREDITATION.map((a) => `<li><strong>${esc(a.degree)}</strong> · ${esc(a.major ?? t('guide.accWhole'))}: ${esc(a.body)}. ${esc(t(`guide.${a.cond}`))} <a href="${a.href}">${esc(t('guide.accLink'))}</a></li>`).join('')}</ul>`,
     ].join('\n'),
   }
-  // Topics that are lists of official systems or services: name, one line, and the ⓘ text.
-  for (const [id, items] of Object.entries(SERVICE_TOPICS))
+  // Topics that are lists of official systems or services. A service with a section of its own:
+  // its heading, what it is, what you do there and the tip; the rest: name, one line and the ⓘ text.
+  const svcText = (s: GuideService) => `${esc(t(`guide.svc.${s.id}.text`))}${s.more ? ` ${esc(t(`guide.svc.${s.id}.more`))}` : ''}`
+  for (const [id, items] of Object.entries(SERVICE_TOPICS) as [string, readonly GuideService[]][])
     topics[id] = [
       `<h2 id="${id}">${esc(t(`guide.svcTopic.${id}.title`))}</h2>`,
       p(`svcTopic.${id}.short`),
-      `<ul>${items.map((s) => `<li><a href="${s.href}">${esc(t(`guide.svc.${s.id}.name`))}</a>: ${esc(t(`guide.svc.${s.id}.text`))}${'more' in s && s.more ? ` ${esc(t(`guide.svc.${s.id}.more`))}` : ''}</li>`).join('')}</ul>`,
-    ].join('\n')
+      ...items
+        .filter((s) => s.section)
+        .map((s) =>
+          [
+            `<h3 id="svc-${s.id}"><a href="${s.href}">${esc(t(`guide.svc.${s.id}.name`))}</a></h3>`,
+            `<p>${svcText(s)}</p>`,
+            `<ul>${Array.from({ length: s.section!.does }, (_, i) => `<li>${esc(t(`guide.svc.${s.id}.does.${i}`))}</li>`).join('')}</ul>`,
+            s.section!.tip ? p(`svc.${s.id}.tip`) : '',
+          ].join(''),
+        ),
+      items.some((s) => !s.section) ? `<ul>${items.filter((s) => !s.section).map((s) => `<li><a href="${s.href}">${esc(t(`guide.svc.${s.id}.name`))}</a>: ${svcText(s)}</li>`).join('')}</ul>` : '',
+    ]
+      .filter(Boolean)
+      .join('\n')
   const sub = `<p>${[`<a href="${href(code, 'guide')}">${esc(t('guide.overview'))}</a>`, ...GUIDE_CATEGORIES.map((c) => `<a href="${href(code, `guide/${c}`)}">${esc(t(`guide.cat.${c}.nav`))}</a>`), `<a href="${href(code, 'guide/key-dates')}">${esc(t('guide.datesTitle'))}</a>`].join(' · ')}</p>`
-  const tail = p('sourcesText')
+  const tail = `<p>${esc(t('guide.sourcesLine', { site: t('guide.sourcesLink'), stop1: 'Stop 1' }))}</p>`
   if (page === 'overview')
     return [
       `<h1>${esc(t('guide.title'))}</h1>`,

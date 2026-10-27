@@ -5,7 +5,7 @@ import { parsePath, VIEWS } from '../src/composables/useView'
 import { MENUS } from '../src/components/layout/nav'
 import { FEATURE_INDEX, fold, searchFeatures, type Texts } from '../src/components/layout/featureIndex'
 import { GUIDE_PAGES, GUIDE_TOPICS } from '../src/utils/guideSections'
-import { SERVICE_TOPICS } from '../src/utils/guideServices'
+import { SYSTEMS } from '../src/utils/guideServices'
 import { presetFromSlug } from '../src/engine/browse'
 import { rankFromSlug } from '../src/engine/easeRanking'
 import { en } from '../src/i18n/messages/en'
@@ -60,7 +60,7 @@ function resolves(to: string): string | true {
   if (anchor) {
     if (r.view === 'guide') {
       const page = r.param as (typeof GUIDE_PAGES)[number]
-      const ok = GUIDE_TOPICS[page]?.includes(anchor) || (page === 'systems' && SERVICE_TOPICS.systems.some((s) => `svc-${s.id}` === anchor))
+      const ok = GUIDE_TOPICS[page]?.includes(anchor) || (page === 'systems' && SYSTEMS.some((s) => `svc-${s.id}` === anchor))
       if (!ok) return `${to}: no such topic on that page`
     } else if (!ANCHORS.has(anchor)) return `${to}: no element with id="${anchor}"`
   }
@@ -111,6 +111,11 @@ describe('feature search index', () => {
     expect(top('census', 'en', 5)).toEqual(expect.arrayContaining(['guide/key-dates/', 'guide/semester/#drop']))
     expect(top('hurdle')).toContain('guide/semester/#hurdles')
     expect(top('Canvas')).toContain('guide/systems/#svc-canvas')
+    expect(top('MFA')).toContain('guide/systems/#svc-okta')
+    expect(top('outlook')).toContain('guide/systems/#svc-email')
+    expect(top('两步验证', 'zh-CN')).toContain('guide/systems/#svc-okta')
+    expect(top('学生门户', 'zh-CN')).toContain('guide/systems/#svc-myUnimelb')
+    expect(top('Gradescope')).toContain('guide/systems/#svc-gradescope')
     expect(top('visa')).toContain('guide/international/#rsl')
     expect(top('changelog')).toContain('changes/')
     expect(top('签证', 'zh-CN')).toContain('guide/international/#rsl')

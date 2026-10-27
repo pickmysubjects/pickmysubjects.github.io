@@ -1,20 +1,16 @@
 <script setup lang="ts">
-import { computed, defineAsyncComponent, shallowRef, type Component } from 'vue'
-import { ArrowLeft, Check, Link } from 'lucide-vue-next'
-import InfoTip from '@/components/InfoTip.vue'
+import { computed, defineAsyncComponent, type Component } from 'vue'
+import { ArrowLeft } from 'lucide-vue-next'
 import { link } from '@/composables/useView'
 import { useI18n } from '@/i18n'
-import { GUIDE_CHECKED, GUIDE_TAGS, type GuidePageSlug } from '@/utils/guideSections'
-import { KEY_DATES_CHECKED } from '@/utils/keyDates'
+import type { GuidePageSlug } from '@/utils/guideSections'
 
 /**
- * The top of every guide page: a wide glass band with the title and a short lede on one side and
- * the section's own illustration on the other, then a meta row (when the facts were last checked,
- * two or three tags that jump to the topics students come for, and a copy-link button).
- * The overview has no back link and no tags.
+ * The top of every guide page: a wide glass band with the title on one side and the section's
+ * own illustration on the other. The overview has no back link.
  */
-const props = defineProps<{ slug: GuidePageSlug | null; title: string; lede: string; full?: string }>()
-const { t, locale } = useI18n()
+const props = defineProps<{ slug: GuidePageSlug | null; title: string }>()
+const { t } = useI18n()
 
 // Each illustration is its own small chunk, loaded with the page that shows it.
 const ART: Record<GuidePageSlug | 'overview', () => Promise<Component>> = {
@@ -29,25 +25,6 @@ const ART: Record<GuidePageSlug | 'overview', () => Promise<Component>> = {
   'key-dates': () => import('./art/ArtKeyDates.vue'),
 }
 const art = computed(() => defineAsyncComponent(ART[props.slug ?? 'overview']))
-const tags = computed(() => (props.slug ? GUIDE_TAGS[props.slug] : []))
-
-const checked = computed(() => {
-  const d = new Date(`${props.slug === 'key-dates' ? KEY_DATES_CHECKED : GUIDE_CHECKED}T00:00:00Z`)
-  return new Intl.DateTimeFormat(locale.value === 'en' ? 'en-AU' : locale.value, { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' }).format(d)
-})
-
-const copied = shallowRef(false)
-let timer = 0
-async function copy(): Promise<void> {
-  try {
-    await navigator.clipboard.writeText(location.origin + location.pathname)
-    copied.value = true
-    clearTimeout(timer)
-    timer = window.setTimeout(() => (copied.value = false), 2000)
-  } catch {
-    // No clipboard (an old browser or a blocked permission): the address bar still has the link.
-  }
-}
 </script>
 
 <template>
@@ -56,20 +33,6 @@ async function copy(): Promise<void> {
       <a v-if="slug" class="hero-back" :href="link('guide/')"><ArrowLeft :size="15" aria-hidden="true" />{{ t('guide.nav') }}</a>
       <p v-else class="hero-back hero-eyebrow">{{ t('guide.nav') }}</p>
       <h1 class="hero-title">{{ title }}</h1>
-      <p class="hero-lede">{{ lede }}<InfoTip v-if="full" :text="full" /></p>
-      <div class="hero-meta">
-        <span class="meta-date">{{ t('guide.updated', { date: checked }) }}</span>
-        <ul v-if="tags.length" class="meta-tags">
-          <li v-for="tag in tags" :key="tag.key">
-            <a v-if="tag.anchor" class="tag" :href="`#${tag.anchor}`">{{ t(tag.key) }}</a>
-            <span v-else class="tag">{{ t(tag.key) }}</span>
-          </li>
-        </ul>
-        <button type="button" class="meta-copy" @click="copy">
-          <component :is="copied ? Check : Link" :size="14" aria-hidden="true" />
-          <span aria-live="polite">{{ copied ? t('shortlist.copied') : t('shortlist.copyLink') }}</span>
-        </button>
-      </div>
     </div>
     <div class="hero-art" aria-hidden="true">
       <component :is="art" />
@@ -126,70 +89,6 @@ a.hero-back:hover {
   overflow-wrap: anywhere;
 }
 
-.hero-lede {
-  max-width: 52ch;
-  font-size: 1.0625rem;
-  line-height: 1.6;
-  color: var(--ink-soft);
-  text-wrap: pretty;
-}
-
-.hero-meta {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px 12px;
-  margin-top: 6px;
-  font-size: var(--fs-meta);
-  color: var(--ink-faint);
-}
-
-.meta-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.tag {
-  display: inline-flex;
-  align-items: center;
-  min-height: 28px;
-  padding: 3px 11px;
-  font-weight: var(--fw-medium);
-  color: var(--ink-soft);
-  text-decoration: none;
-  border: 1px solid var(--card-edge);
-  border-radius: 999px;
-  background: var(--tile-fill);
-}
-
-a.tag:hover {
-  color: var(--accent);
-  background: var(--glass-fill-hover);
-}
-
-.meta-copy {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  min-height: 28px;
-  padding: 3px 11px;
-  font-size: var(--fs-meta);
-  font-weight: var(--fw-medium);
-  color: var(--accent);
-  cursor: pointer;
-  border: 1px solid transparent;
-  border-radius: 999px;
-  background: none;
-}
-
-.meta-copy:hover {
-  background: var(--glass-fill-hover);
-}
-
 .hero-art {
   position: relative;
   align-self: stretch;
@@ -230,10 +129,6 @@ a.tag:hover {
 
   .hero-text {
     gap: 10px;
-  }
-
-  .hero-lede {
-    font-size: 1rem;
   }
 }
 </style>

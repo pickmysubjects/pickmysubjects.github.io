@@ -4,28 +4,24 @@ import { ExternalLink } from 'lucide-vue-next'
 import InfoTip from '@/components/InfoTip.vue'
 import { useI18n } from '@/i18n'
 import { SERVICE_TOPICS, type GuideService, type ServiceTopic } from '@/utils/guideServices'
+import GuideServiceSection from './GuideServiceSection.vue'
 
 /**
- * One guide topic that is a list of official systems or services: a tile each with the name
- * (linked), one line, and ⓘ for more. `pull` marks the one service the page most wants a student
- * to remember; `toc` gives each tile an anchor and a line in "On this page".
+ * One guide topic that is a list of official systems or services: first the ones with a section
+ * of their own, then a tile each for the rest (the name, linked, one line, and ⓘ for more).
+ * `toc` lists each section in "On this page".
  */
-const props = defineProps<{ topic: ServiceTopic; pull?: string; toc?: boolean }>()
+const props = defineProps<{ topic: ServiceTopic; toc?: boolean }>()
 const { t } = useI18n()
 const items = computed<readonly GuideService[]>(() => SERVICE_TOPICS[props.topic])
+const sections = computed(() => items.value.filter((s) => s.section))
+const tiles = computed(() => items.value.filter((s) => !s.section))
 </script>
 
 <template>
-  <ul class="services">
-    <li
-      v-for="s in items"
-      :id="toc ? `svc-${s.id}` : undefined"
-      :key="s.id"
-      class="service"
-      :class="{ pulled: s.id === pull }"
-      :data-toc="toc ? t(`guide.svc.${s.id}.name`) : undefined"
-      :data-toc-sub="toc ? '' : undefined"
-    >
+  <GuideServiceSection v-for="s in sections" :key="s.id" :service="s" :toc="toc" />
+  <ul v-if="tiles.length" class="services">
+    <li v-for="s in tiles" :key="s.id" class="service">
       <a class="name" :href="s.href" target="_blank" rel="noopener">{{ t(`guide.svc.${s.id}.name`) }}<ExternalLink :size="13" aria-hidden="true" class="name-icon" /></a>
       <p class="what">{{ t(`guide.svc.${s.id}.text`) }}<InfoTip v-if="s.more" :text="t(`guide.svc.${s.id}.more`)" /></p>
     </li>
@@ -50,7 +46,11 @@ const items = computed<readonly GuideService[]>(() => SERVICE_TOPICS[props.topic
   border: 1px solid var(--card-edge);
   border-radius: 16px;
   background: var(--tile-fill);
-  scroll-margin-top: 96px;
+}
+
+/* Tiles after a section: a little air above them. */
+.svc + .services {
+  margin-top: 8px;
 }
 
 .name {
@@ -77,22 +77,5 @@ const items = computed<readonly GuideService[]>(() => SERVICE_TOPICS[props.topic
   font-size: var(--fs-small);
   line-height: 1.6;
   color: var(--ink-soft);
-}
-
-/* The page's key service: across the whole row, its line set large on an accent rule. */
-.pulled {
-  grid-column: 1 / -1;
-  padding: 16px 20px 18px;
-  border-color: transparent;
-  border-left: 3px solid var(--accent-fill);
-  border-radius: 4px 16px 16px 4px;
-  background: var(--inset-fill);
-}
-
-.pulled .what {
-  font-size: 1.125rem;
-  font-weight: var(--fw-semibold);
-  line-height: 1.5;
-  color: var(--ink);
 }
 </style>

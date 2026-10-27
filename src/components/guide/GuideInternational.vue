@@ -58,7 +58,7 @@ const ELSEWHERE = ['load', 'drop', 'exams', 'fail'] as const
     <GuideLinks :links="ABROAD.map((l) => ({ href: l.href, label: t(l.key) }))" />
   </GuideItem>
 
-  <section id="elsewhere" class="elsewhere surface" aria-labelledby="intl-also" :data-toc="t('guide.intlAlso')">
+  <section id="elsewhere" class="elsewhere surface" aria-labelledby="intl-also">
     <h2 id="intl-also" class="elsewhere-title">{{ t('guide.intlAlso') }}</h2>
     <ul class="elsewhere-list">
       <li v-for="id in ELSEWHERE" :key="id"><GuideSee :to="id" /></li>

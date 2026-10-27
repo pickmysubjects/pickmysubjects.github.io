@@ -1,7 +1,7 @@
 import { BookOpen, Laptop } from 'lucide-vue-next'
 import { MENUS, type MenuItem } from './nav'
 import { GUIDE_EXTRA_PAGES, GUIDE_TOPICS, GUIDE_PAGES, isGuideExtraPage, topicTitleKey } from '@/utils/guideSections'
-import { SERVICE_TOPICS } from '@/utils/guideServices'
+import { SYSTEMS } from '@/utils/guideServices'
 
 type Icon = MenuItem['icon']
 
@@ -75,6 +75,14 @@ const TOPIC_SYN: Record<string, string> = {
   'uni-careers': 'uniCareers',
 }
 
+/** Extra words for the official systems, by system id (search.syn.<key>). */
+const SYSTEM_SYN: Record<string, string> = {
+  okta: 'okta',
+  email: 'studentEmail',
+  myUnimelb: 'myUnimelb',
+  canvas: 'canvas',
+}
+
 function build(): FeatureEntry[] {
   const out: FeatureEntry[] = []
   for (const m of MENUS) {
@@ -90,8 +98,8 @@ function build(): FeatureEntry[] {
       })
     }
   }
-  // Every guide topic, as a jump to its place on its page. A page that is a single topic (the
-  // systems page, key dates) is already in the menu.
+  // Every guide topic, as a jump to its place on its page. A page that is a single topic (key
+  // dates) is already in the menu.
   for (const page of GUIDE_PAGES) {
     const topics = GUIDE_TOPICS[page]
     if (topics.length < 2) continue
@@ -102,8 +110,8 @@ function build(): FeatureEntry[] {
     }
   }
   // The official systems (Canvas, my.unimelb, Okta…), each with its own place on the systems page.
-  for (const s of SERVICE_TOPICS.systems) {
-    out.push({ id: `svc:${s.id}`, group: 'guide', to: `guide/systems/#svc-${s.id}`, title: `guide.svc.${s.id}.name`, desc: `guide.svc.${s.id}.text`, icon: Laptop })
+  for (const s of SYSTEMS) {
+    out.push({ id: `svc:${s.id}`, group: 'guide', to: `guide/systems/#svc-${s.id}`, title: `guide.svc.${s.id}.name`, desc: `guide.svc.${s.id}.text`, syn: SYSTEM_SYN[s.id], icon: Laptop })
   }
   return out
 }

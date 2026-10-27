@@ -19,7 +19,7 @@ const RANKINGS = [
 
 <template>
   <GuideItem id="it-help" :title="t('guide.svcTopic.it-help.title')" :short="t('guide.svcTopic.it-help.short')">
-    <GuideServiceList topic="it-help" pull="stop1" />
+    <GuideServiceList topic="it-help" />
   </GuideItem>
 
   <GuideItem id="study-help" :title="t('guide.helpTitle')" :short="t('guide.helpShort')">

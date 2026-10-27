@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
-import { categoryOfTopic, GUIDE_CATEGORIES, GUIDE_PAGES, GUIDE_TAGS, GUIDE_TOPICS, guidePageOf, movedGuideAnchor, neighbours, pageOfTopic, topicPath, topicTitleKey } from '@/utils/guideSections'
+import { categoryOfTopic, GUIDE_CATEGORIES, GUIDE_PAGES, GUIDE_TOPICS, guidePageOf, movedGuideAnchor, neighbours, pageOfTopic, showToc, topicPath, topicTitleKey } from '@/utils/guideSections'
 import { MENUS } from '@/components/layout/nav'
-import { SERVICE_TOPICS, type GuideService } from '@/utils/guideServices'
+import { SERVICE_TOPICS, SYSTEM_TOPICS, SYSTEMS, type GuideService } from '@/utils/guideServices'
 import { en } from '@/i18n/messages/en'
 import { zhCN } from '@/i18n/messages/zh-CN'
 import { zhTW } from '@/i18n/messages/zh-TW'
@@ -46,8 +46,8 @@ describe('guide service lists (systems, life, uni careers)', () => {
     for (const t of Object.keys(SERVICE_TOPICS)) expect(categoryOfTopic(t)).not.toBeNull()
   })
   it('lists the systems a new student needs, each with an official link', () => {
-    const ids = SERVICE_TOPICS.systems.map((s) => s.id)
-    for (const id of ['myUnimelb', 'canvas', 'ed', 'myTimetable', 'email', 'okta']) expect(ids).toContain(id)
+    const ids = SYSTEMS.map((s) => s.id)
+    for (const id of ['myUnimelb', 'canvas', 'ed', 'myTimetable', 'email', 'okta', 'gradescope', 'handbook', 'library']) expect(ids).toContain(id)
     expect(ids.length).toBeLessThanOrEqual(10)
     for (const s of Object.values(SERVICE_TOPICS).flat()) expect(s.href).toMatch(/^https:\/\/([a-z-]+\.)*(unimelb\.edu\.au|safezoneapp\.com)\//)
   })
@@ -59,8 +59,25 @@ describe('guide service lists (systems, life, uni careers)', () => {
         expect(get(m, `guide.svc.${s.id}.name`), `${code} ${s.id}`).toBeTypeOf('string')
         expect(get(m, `guide.svc.${s.id}.text`), `${code} ${s.id}`).toBeTypeOf('string')
         expect(get(m, `guide.svc.${s.id}.more`) !== undefined, `${code} ${s.id}.more`).toBe(Boolean(s.more))
+        // A section of its own: exactly as many "what you do there" lines as the data says, and a tip if it has one.
+        const does = get(m, `guide.svc.${s.id}.does`)
+        expect(Array.isArray(does) ? does.length : 0, `${code} ${s.id}.does`).toBe(s.section?.does ?? 0)
+        if (Array.isArray(does)) for (const d of does) expect(d, `${code} ${s.id}.does`).toBeTypeOf('string')
+        expect(get(m, `guide.svc.${s.id}.tip`) !== undefined, `${code} ${s.id}.tip`).toBe(Boolean(s.section?.tip))
       }
+      for (const k of ['svcLink', 'sourcesLink']) expect(get(m, `guide.${k}`), `${code} ${k}`).toBeTypeOf('string')
+      expect(get(m, 'guide.sourcesLine'), `${code} sourcesLine`).toMatch(/\{site\}.*\{stop1\}|\{stop1\}.*\{site\}/)
     }
+  })
+  it('gives every system on the systems page its own section with its old anchor', () => {
+    expect(GUIDE_TOPICS.systems).toEqual(SYSTEM_TOPICS)
+    for (const s of SYSTEMS) expect(s.section, s.id).toBeDefined()
+    // svc-<id> anchors that older links, the search and the old tags used.
+    for (const id of ['myUnimelb', 'okta', 'email', 'canvas', 'ed', 'myTimetable', 'gradescope', 'handbook', 'library']) expect(SYSTEMS.some((s) => s.id === id)).toBe(true)
+    expect(topicPath('systems')).toBe('guide/systems/#systems')
+  })
+  it('sends a system\'s "See" link to a topic on another page', () => {
+    for (const s of Object.values(SERVICE_TOPICS).flat() as readonly GuideService[]) if (s.see) expect(pageOfTopic(s.see), s.id).not.toBeNull()
   })
   it('writes zh-TW in Traditional characters, not copied Simplified', () => {
     expect(get(zhTW, 'guide.svc.email.text')).not.toBe(get(zhCN, 'guide.svc.email.text'))
@@ -113,22 +130,31 @@ describe('guide: one place per topic', () => {
     const guide = MENUS.find((m) => m.area === 'guide')!
     expect(guide.items.map((i) => i.to)).toEqual(['guide/', ...GUIDE_PAGES.map((p) => `guide/${p}/`)])
   })
-  it('has every topic title, tag and menu line in all nine languages', () => {
+  it('has every topic title and menu line in all nine languages', () => {
     const guide = MENUS.find((m) => m.area === 'guide')!
     for (const [code, m] of Object.entries(MESSAGES)) {
       for (const p of GUIDE_PAGES) {
         for (const tId of GUIDE_TOPICS[p]) expect(get(m, topicTitleKey(tId)), `${code} ${tId}`).toBeTypeOf('string')
-        for (const tag of GUIDE_TAGS[p]) expect(get(m, tag.key), `${code} ${tag.key}`).toBeTypeOf('string')
       }
       for (const i of guide.items) {
         expect(get(m, i.key), `${code} ${i.key}`).toBeTypeOf('string')
         expect(get(m, i.desc), `${code} ${i.desc}`).toBeTypeOf('string')
       }
-      for (const k of ['plansTitle', 'plansShort', 'see', 'feesSeeDrop', 'intlAlso', 'structTitle', 'updated']) expect(get(m, `guide.${k}`), `${code} ${k}`).toBeTypeOf('string')
+      for (const k of ['plansTitle', 'plansShort', 'see', 'feesSeeDrop', 'intlAlso', 'structTitle']) expect(get(m, `guide.${k}`), `${code} ${k}`).toBeTypeOf('string')
       expect(get(m, 'guide.kd.upcoming'), code).toBeTypeOf('string')
     }
   })
-  it('tags jump to a topic or a service on their own page', () => {
-    for (const p of GUIDE_PAGES) for (const tag of GUIDE_TAGS[p]) if (tag.anchor && !tag.anchor.startsWith('svc-')) expect(pageOfTopic(tag.anchor)).toBe(p)
+})
+
+describe('guide: "On this page"', () => {
+  it('shows only from four headed sections up', () => {
+    expect(showToc(0)).toBe(false)
+    expect(showToc(3)).toBe(false)
+    expect(showToc(4)).toBe(true)
+    expect(showToc(12)).toBe(true)
+  })
+  it('shows on the systems page, which has a section per system', () => {
+    const sections = SYSTEM_TOPICS.length + SYSTEMS.length
+    expect(showToc(sections)).toBe(true)
   })
 })
