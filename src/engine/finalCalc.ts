@@ -1,4 +1,5 @@
-import type { AssessmentKind, AssessmentTask } from './schema'
+import type { AssessmentKind } from './schema'
+import type { AssessmentTask } from './handbookPaste'
 
 /**
  * "What do I need on the final?": from the marks a student has for the parts already done, the
