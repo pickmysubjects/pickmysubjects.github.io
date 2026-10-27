@@ -11,7 +11,7 @@ import { useI18n } from '@/i18n'
 import { categoryLabel, categoryTag, termLabel } from '@/i18n/format'
 import { localTitle } from '@/i18n/localized'
 import { subjectGist } from '@/i18n/gist'
-import { defaultTerm, termsBetween } from '@/utils/pastTerms'
+import { addTermChoices, defaultAddTerm } from '@/utils/pastTerms'
 import { useDataYear } from '@/composables/useDataYear'
 import FactsYearNote from './FactsYearNote.vue'
 import InfoTip from '@/components/InfoTip.vue'
@@ -60,20 +60,10 @@ const taken = computed(() => profile.value.results.some((r) => r.code === code.v
 const passed = computed(() => profile.value.results.find((r) => r.code === code.value && !isFail(r)))
 const plannedAt = computed(() => plan.terms.value.find((x) => x.subjects.includes(code.value)))
 
-/**
- * Where "Add to my plan" can put it: every term it runs in from the start of study to the plan's
- * last semester (at least three years on). The default is the first one still ahead (see defaultTerm).
- */
-const termChoices = computed(() => {
-  const s = props.subject
-  const start = { year: plan.setup.value.startYear, period: plan.setup.value.startPeriod }
-  const last = plan.terms.value.at(-1)
-  const floor = { year: start.year + 2, period: 'semester-2' as Period }
-  // Reaches into next year too, so a plan that started years ago still has terms ahead to offer.
-  const soon = { year: thisYear() + 1, period: 'semester-2' as Period }
-  const end = [last, floor, soon].reduce((a, b) => (b && termKey(b.year, b.period) > termKey(a!.year, a!.period) ? b : a), floor)!
-  return termsBetween(start, end).filter((x) => periodsFor(s, x.year).includes(x.period))
-})
+// Where "Add to my plan" can put it: any semester of the plan, past ones too; terms it doesn't run in are flagged.
+const termChoices = computed(() =>
+  addTermChoices(props.subject, { year: plan.setup.value.startYear, period: plan.setup.value.startPeriod }, plan.terms.value),
+)
 const chosenTerm = shallowRef('')
 const target = computed(() => {
   const all = termChoices.value
@@ -81,7 +71,7 @@ const target = computed(() => {
   const picked = all.find((x) => `${x.year}|${x.period}` === chosenTerm.value)
   if (picked) return picked
   // Never a term that has already started, unless the student picks one.
-  return defaultTerm(all, plan.terms.value[0]) ?? all[0]!
+  return defaultAddTerm(all, plan.terms.value[0]) ?? all[0]!
 })
 const addedAt = shallowRef<{ year: number; period: Period } | null>(null)
 function addToPlan(): void {
@@ -164,7 +154,7 @@ onBeforeUnmount(() => io?.disconnect())
         <label>
           <span class="visually-hidden">{{ t('subject.addWhen') }}</span>
           <select class="select-glass" :value="`${target.year}|${target.period}`" @change="chosenTerm = ($event.target as HTMLSelectElement).value">
-            <option v-for="x in termChoices" :key="`${x.year}|${x.period}`" :value="`${x.year}|${x.period}`">{{ termLabel(t, x) }}</option>
+            <option v-for="x in termChoices" :key="`${x.year}|${x.period}`" :value="`${x.year}|${x.period}`">{{ x.offered ? termLabel(t, x) : t('subject.termNotOffered', { term: termLabel(t, x) }) }}</option>
           </select>
         </label>
         <button class="button button-accent" type="button" @click="addToPlan">
@@ -184,6 +174,7 @@ onBeforeUnmount(() => io?.disconnect())
         </button>
       </span>
     </div>
+    <p v-if="target && !target.offered && !plannedAt && !passed && plan.setupChosen.value" class="added added-warn" role="status">{{ t('subject.addNotOffered', { year }) }}</p>
     <p v-if="addedAt" class="added" role="status">{{ t('subject.added', { term: termLabel(t, addedAt) }) }}</p>
 
     <Teleport to="body">
@@ -341,6 +332,9 @@ onBeforeUnmount(() => io?.disconnect())
   margin: 0;
   color: var(--good);
   font-weight: 600;
+}
+.added-warn {
+  color: var(--warn);
 }
 
 /* The phone dock: only on narrow screens, floating above the tab bar. */

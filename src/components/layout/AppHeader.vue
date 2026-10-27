@@ -3,6 +3,7 @@ import { link, useView } from '@/composables/useView'
 import { ChevronDown } from 'lucide-vue-next'
 import LangMenu from './LangMenu.vue'
 import AppLogo from '../AppLogo.vue'
+import { IS_BETA } from '@/release'
 import SubjectSearch from '../SubjectSearch.vue'
 import { MENUS, areaOf, isHere, pageTitleKey, type Area } from './nav'
 import { computed, nextTick, onBeforeUnmount, onMounted, shallowRef, watch } from 'vue'
@@ -119,7 +120,7 @@ watch(() => [props.view, param.value], close)
     <div class="header-inner shell">
       <a class="brand" :href="link('')" :aria-current="view === 'home' ? 'page' : undefined" :title="t('nav.home')">
         <AppLogo class="mark" small />
-        <span class="brand-name">PickMySubjects</span>
+        <span class="brand-name">PickMySubjects<span v-if="IS_BETA" class="beta-chip">Beta</span></span>
       </a>
       <nav class="nav" :aria-label="t('nav.main')">
         <ul class="nav-list">
@@ -230,6 +231,19 @@ watch(() => [props.view, param.value], close)
   font-weight: 700;
   font-size: 1.05rem;
   letter-spacing: -0.02em;
+}
+
+/* Small and quiet, so the one-row header keeps its room. */
+.beta-chip {
+  margin-left: 6px;
+  padding: 1px 6px;
+  color: var(--ink-soft);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  vertical-align: 2px;
+  border: 1px solid var(--glass-edge);
+  border-radius: 999px;
 }
 
 .mark {
