@@ -762,6 +762,31 @@ button.chip {
 }
 
 /* ---------- Depth: a soft colour field behind every page, seen through frosted glass ---------- */
+/* Under the fixed field, the page itself carries the same colours all the way down (tiles of soft
+   patches that join without a seam), so no part of a long page is ever plain white: in a
+   full-page capture, behind iOS's rubber-band scroll, or wherever the fixed layer isn't drawn. */
+:root {
+  background-color: #eedff2;
+  background-image:
+    radial-gradient(48% 22% at 0% 20%, rgb(243 154 196 / 55%), transparent 70%),
+    radial-gradient(44% 22% at 100% 50%, rgb(169 163 255 / 50%), transparent 70%),
+    radial-gradient(48% 22% at 12% 80%, rgb(255 194 158 / 55%), transparent 70%),
+    linear-gradient(180deg, #f4dcec 0%, #e6def8 50%, #f4dcec 100%);
+  background-size: 100% 1400px;
+  background-repeat: repeat-y;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    background-color: #140c1e;
+    background-image:
+      radial-gradient(48% 22% at 0% 20%, rgb(176 54 126 / 40%), transparent 70%),
+      radial-gradient(44% 22% at 100% 50%, rgb(91 70 200 / 40%), transparent 70%),
+      radial-gradient(48% 22% at 12% 80%, rgb(130 60 40 / 35%), transparent 70%),
+      linear-gradient(180deg, #170c1c 0%, #110d24 50%, #170c1c 100%);
+  }
+}
+
 .backdrop {
   position: fixed;
   inset: 0;

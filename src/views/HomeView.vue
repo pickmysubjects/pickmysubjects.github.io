@@ -104,7 +104,7 @@ const next = computed(() => {
     <WhatsNext />
 
     <!-- The three steps (the path), then a real plan and a real subject: shown, not described. -->
-    <section class="tile-steps glass" aria-labelledby="steps-title">
+    <section class="tile-steps" aria-labelledby="steps-title">
       <div class="tile-head">
         <h2 id="steps-title" class="tile-title">{{ t('home.stepsTitle') }}</h2>
         <a class="button button-accent steps-start" :href="next.href">
@@ -113,7 +113,7 @@ const next = computed(() => {
       </div>
       <ol class="steps-list">
         <li v-for="(s, i) in steps" :key="s.title">
-          <a class="step" :class="{ 'step-done': s.done }" :href="s.href">
+          <a class="step surface" :class="{ 'step-done': s.done }" :href="s.href">
             <span class="step-num">
               <Check v-if="s.done" :size="16" :stroke-width="3" :aria-label="t('home.done')" />
               <template v-else>{{ i + 1 }}</template>
@@ -327,12 +327,11 @@ const next = computed(() => {
   min-width: 0;
 }
 
+/* The steps are the glass cards themselves (on the colour field), not cards inside a card. */
 .tile-steps {
   display: grid;
   align-content: start;
-  gap: var(--space-5);
-  padding: var(--space-5);
-  border-radius: var(--radius-lg);
+  gap: var(--space-4);
 }
 
 .tile-head {
@@ -364,11 +363,8 @@ const next = computed(() => {
   align-content: start;
   gap: var(--space-2);
   height: 100%;
-  padding: var(--space-4);
-  border: 1px solid var(--card-edge);
-  border-radius: var(--radius);
-  background: var(--glass-shine), var(--tile-fill);
-  box-shadow: var(--card-shadow);
+  padding: var(--space-5);
+  border-radius: var(--radius-lg);
   color: var(--ink);
   text-decoration: none;
   transition: border-color 0.15s, transform 0.15s;
@@ -521,8 +517,7 @@ const next = computed(() => {
 
   /* One line a step on a phone: number, name and status; the longer line is for wider screens. */
   .tile-steps {
-    gap: var(--space-4);
-    padding: var(--space-4);
+    gap: var(--space-3);
   }
 
   .steps-list {
