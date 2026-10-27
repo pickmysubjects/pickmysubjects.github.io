@@ -161,17 +161,19 @@ const sub = computed(() => subNavFor(props.view))
 .nav-step-n {
   display: inline-grid;
   place-items: center;
-  width: 16px;
-  height: 16px;
-  font-size: 0.6875rem;
+  min-width: 18px;
+  height: 18px;
+  font-size: 0.75rem;
   font-weight: 700;
-  color: #fff;
+  font-variant-numeric: tabular-nums;
+  color: var(--bg);
   background: var(--ink-soft);
   border-radius: 999px;
 }
 
 .nav-step[aria-current='step'] .nav-step-n {
   background: var(--overprint);
+  color: var(--accent-ink);
 }
 
 .nav-link {

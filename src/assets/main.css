@@ -5,17 +5,18 @@
   --surface: #ffffff;
   --surface-2: #f4f4f2;
   --ink: #0b0b0c;
-  --ink-soft: #48484e;
-  --ink-faint: #8f8f96;
+  /* Secondary and faint ink are tuned to stay 4.5:1 over the thinnest glass on the brightest patch. */
+  --ink-soft: #3d3843;
+  --ink-faint: #544e5c;
   --line: #e8e8e4;
-  --accent: #c2227a;
+  --accent: #a01a66;
   --accent-ink: #ffffff;
   --accent-soft: #fbe9f2;
-  --good: #1f8a52;
+  --good: #16703f;
   --good-soft: #e5f4ec;
-  --warn: #a96a00;
+  --warn: #855300;
   --warn-soft: #fdf2dc;
-  --bad: #c0352b;
+  --bad: #b02a21;
   --bad-soft: #fbe7e5;
   --signal: #ffd166;
 
@@ -113,10 +114,10 @@
     --surface: #161619;
     --surface-2: #1d1d21;
     --ink: #f3f3f4;
-    --ink-soft: #a6a6ad;
-    --ink-faint: #74747c;
+    --ink-soft: #c2bfcb;
+    --ink-faint: #a29eae;
     --line: #2a2a2f;
-    --accent: #f06bb0;
+    --accent: #f580bf;
     --accent-ink: #1a0610;
     --accent-soft: #33152a;
     --good: #5fd398;
@@ -346,6 +347,14 @@ textarea {
   letter-spacing: 0;
 }
 
+/* Credits, marks, counts: digits line up in columns. */
+.num,
+.code,
+time,
+td {
+  font-variant-numeric: tabular-nums;
+}
+
 /* Layout helpers */
 .shell {
   max-width: var(--shell);
@@ -409,7 +418,13 @@ textarea {
 .textarea:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 4px var(--accent-soft);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 30%, transparent);
+}
+
+/* Placeholders: faint ink, which still clears 4.5:1 on field glass. */
+::placeholder {
+  color: var(--ink-faint);
+  opacity: 1;
 }
 
 .button {
@@ -439,8 +454,13 @@ textarea {
 }
 
 .button-accent {
-  background: var(--glass-shine), color-mix(in srgb, var(--accent) 90%, transparent);
+  border-color: rgb(255 255 255 / 28%);
+  background: var(--glass-shine), var(--accent);
   color: var(--accent-ink);
+}
+
+.button-accent:hover {
+  filter: brightness(1.06);
 }
 
 .button-quiet {
@@ -518,7 +538,7 @@ textarea {
 .select-glass:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: var(--glass-shadow), 0 0 0 4px var(--accent-soft);
+  box-shadow: var(--glass-shadow), 0 0 0 3px color-mix(in srgb, var(--accent) 30%, transparent);
 }
 
 button.chip {
@@ -706,7 +726,7 @@ button.chip {
 /* Solid accent buttons keep the brand pink: their white text sits on the button, not the glass. */
 @media (prefers-color-scheme: light) {
   :is(.surface, .flat) .button-accent {
-    --accent: #c2227a;
+    --accent: #a01a66;
   }
 }
 
