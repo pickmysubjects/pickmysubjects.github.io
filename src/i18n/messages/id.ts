@@ -1846,9 +1846,10 @@ export const id: Messages = {
     release: {
       label: "{v} · Diperbarui {date}",
       title: "Yang baru",
-      line1: "Tambah ke rencana: pilih semester mana saja, termasuk yang sudah lewat",
-      line2: "Mata kuliah yang tidak dibuka kini diberi peringatan, tidak hilang",
-      line3: "Ini versi beta. Versi penuh (Handbook 2027) rilis paling lambat akhir November",
+      line1: "Tampilan dan navigasi baru: semua fitur ada di menu.",
+      line2: "Alat: nilai yang dibutuhkan di ujian akhir, dan kalkulator WAM.",
+      line3: "Tanggal penting di beranda, tampilan masa ujian, dan ekspor ke kalender.",
+      line4: "Papan rencana lebih jelas: link di satu tempat, tanda semester berat, perbaikan tukar dan tambah.",
     },
     moreSubjects: "+{n} lainnya",
     proofLanguages: "9 bahasa",

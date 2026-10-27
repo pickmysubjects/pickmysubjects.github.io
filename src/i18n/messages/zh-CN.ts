@@ -1846,9 +1846,10 @@ export const zhCN: Messages = {
     release: {
       label: "{v} · 更新于 {date}",
       title: "这次更新",
-      line1: "加入排课时可选规划里的任意学期，包括已过去的",
-      line2: "某学期没开的科目会提示，不再直接消失",
-      line3: "现在是测试版，正式版（含 2027 Handbook）预计 11 月底上线",
+      line1: "新外观和导航，所有功能都在菜单里",
+      line2: "新工具：期末要考几分、WAM 计算器",
+      line3: "首页显示重要日期，考试季一览，还能导出到日历",
+      line4: "排课页更清楚：链接集中、学期太重提醒，换课和加课修好了",
     },
     moreSubjects: "还有 {n} 门",
     proofLanguages: "9 种语言",

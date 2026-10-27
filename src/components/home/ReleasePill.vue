@@ -12,6 +12,8 @@ import { APP_VERSION, IS_BETA, releaseDate, versionLabel } from '@/release'
 const { t, locale } = useI18n()
 const open = shallowRef(false)
 const id = useId()
+// This release's lines (home.release.*, in every language); add a key here for one more.
+const LINES = ['line1', 'line2', 'line3', 'line4'] as const
 const updated = computed(() => t.value('home.release.label', { v: versionLabel(), date: releaseDate(locale.value) }))
 
 /*
@@ -73,9 +75,7 @@ watch(locale, remeasure)
       <p class="release-title">{{ t('home.release.title') }}</p>
       <p v-if="IS_BETA" class="release-when">{{ updated }}</p>
       <ul>
-        <li>{{ t('home.release.line1') }}</li>
-        <li>{{ t('home.release.line2') }}</li>
-        <li>{{ t('home.release.line3') }}</li>
+        <li v-for="key in LINES" :key="key">{{ t(`home.release.${key}`) }}</li>
       </ul>
     </div>
   </div>

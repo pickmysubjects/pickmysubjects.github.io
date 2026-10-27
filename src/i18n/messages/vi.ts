@@ -1846,9 +1846,10 @@ export const vi: Messages = {
     release: {
       label: "{v} · Cập nhật {date}",
       title: "Có gì mới",
-      line1: "Thêm vào kế hoạch: chọn được mọi học kỳ, kể cả học kỳ đã qua",
-      line2: "Môn không mở trong học kỳ đó giờ hiện cảnh báo thay vì biến mất",
-      line3: "Đây là bản beta. Bản chính thức (Handbook 2027) ra mắt trước cuối tháng 11",
+      line1: "Giao diện và điều hướng mới: mọi tính năng đều nằm trong menu.",
+      line2: "Công cụ: điểm thi cuối kỳ cần đạt và tính WAM.",
+      line3: "Ngày quan trọng ngay trang chủ, xem mùa thi và xuất ra lịch.",
+      line4: "Bảng kế hoạch rõ hơn: liên kết gom một chỗ, nhãn học kỳ nặng, sửa lỗi đổi và thêm môn.",
     },
     moreSubjects: "+{n} môn nữa",
     proofLanguages: "9 ngôn ngữ",

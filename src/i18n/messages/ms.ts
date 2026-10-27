@@ -1846,9 +1846,10 @@ export const ms: Messages = {
     release: {
       label: "{v} · Dikemas kini {date}",
       title: "Apa yang baharu",
-      line1: "Tambah ke pelan: pilih mana-mana semester, termasuk yang sudah lepas",
-      line2: "Subjek yang tidak ditawarkan kini diberi amaran, tidak hilang",
-      line3: "Ini versi beta. Versi penuh (Handbook 2027) dijangka sebelum akhir November",
+      line1: "Rupa dan navigasi baharu: semua ciri ada dalam menu.",
+      line2: "Alatan: markah yang perlu untuk peperiksaan akhir, dan kalkulator WAM.",
+      line3: "Tarikh penting di halaman utama, paparan musim peperiksaan dan eksport ke kalendar.",
+      line4: "Papan rancangan lebih jelas: pautan di satu tempat, cip semester berat, pembaikan tukar dan tambah.",
     },
     moreSubjects: "+{n} lagi",
     proofLanguages: "9 bahasa",

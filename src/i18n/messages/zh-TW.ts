@@ -1846,9 +1846,10 @@ export const zhTW: Messages = {
     release: {
       label: "{v} · 更新於 {date}",
       title: "這次更新",
-      line1: "加入課表時可選規劃裡的任何學期，包含已經過去的",
-      line2: "某學期沒開的科目會提醒，不會直接消失",
-      line3: "目前是測試版，正式版（含 2027 Handbook）預計 11 月底上線",
+      line1: "新外觀和導覽，所有功能都在選單裡",
+      line2: "新工具：期末要考幾分、WAM 計算機",
+      line3: "首頁顯示重要日期、考試期間一覽，還能匯出到行事曆",
+      line4: "排課頁更清楚：連結集中、學期太重提醒，換課和加課修好了",
     },
     moreSubjects: "還有 {n} 門",
     proofLanguages: "9 種語言",

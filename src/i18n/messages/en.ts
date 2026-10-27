@@ -1849,9 +1849,10 @@ export const en = {
     release: {
       label: "{v} · Updated {date}",
       title: "What's new",
-      line1: "Add to my plan: pick any semester of your plan, past ones too.",
-      line2: "Subjects not offered in a semester now show a warning instead of disappearing.",
-      line3: "This is the beta. Full version with the 2027 Handbook coming by end of November.",
+      line1: "New look and navigation: every feature is in the menus.",
+      line2: "Tools: what you need on the final exam, and a WAM calculator.",
+      line3: "Key dates on the home page, an exam-time view and calendar export.",
+      line4: "A clearer plan board: links in one place, heavy-semester chips, fixes to swap and add.",
     },
     moreSubjects: "+{n} more",
     proofLanguages: "9 languages",
