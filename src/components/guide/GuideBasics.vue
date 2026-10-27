@@ -20,6 +20,7 @@ const { wam } = useProfile()
         <li>{{ t('guide.firstStep4') }}</li>
       </ol>
       <p class="aside">{{ t('guide.breadthText') }}</p>
+      <p class="aside">{{ t('guide.findShortlist') }}</p>
       <p class="aside">
         {{ t('guide.easyHardText') }}
         <a :href="link('subjects/easy/')">{{ t('browse.rankList.easy') }}</a> ·
@@ -36,6 +37,7 @@ const { wam } = useProfile()
       <p>{{ t('guide.pointsText') }}</p>
       <p>{{ t('guide.pointsYearLong') }}</p>
       <p>{{ t('guide.pointsCredit') }}</p>
+      <p class="note">{{ t('guide.findCredit') }}</p>
     </GuideItem>
 
     <GuideItem id="majors" :title="t('guide.majorsTitle')" :short="t('guide.majorsShort')">
@@ -57,6 +59,7 @@ const { wam } = useProfile()
       <p class="note">{{ t('guide.majorsPlansImage') }}</p>
       <p class="note">{{ t('guide.plansAssumed') }}</p>
       <p class="note">{{ t('guide.plansCampus') }}</p>
+      <p class="note">{{ t('guide.findPlan') }}</p>
       <p class="actions">
         <a class="button button-quiet" :href="link('plan')">{{ t('guide.majorsPlansLink') }}</a>
       </p>
@@ -100,6 +103,7 @@ const { wam } = useProfile()
         <li>{{ t('guide.wamIn') }}</li>
         <li>{{ t('guide.wamOut') }}</li>
       </ul>
+      <p class="note">{{ t('guide.findMarks') }}</p>
       <p class="yours">
         <span>{{ wam !== null ? t('guide.wamYours', { wam }) : t('guide.wamNone') }}</span>
         <a class="button button-quiet" :href="link('record')">{{ t('guide.wamGo') }}</a>
