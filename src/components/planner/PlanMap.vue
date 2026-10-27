@@ -8,7 +8,7 @@ import PastTermColumn from './PastTermColumn.vue'
 import SlotPicker from './SlotPicker.vue'
 import type { CardTone, MoveTarget } from './SubjectCard.vue'
 import type { PastResult, PastTerm } from '@/utils/pastTerms'
-import { chainOf, dropVerdict, type DropVerdict, type Edge } from '@/utils/planBoard'
+import { dropVerdict, type DropVerdict, type Edge } from '@/utils/planBoard'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
 import { useI18n } from '@/i18n'
@@ -70,7 +70,6 @@ const plan = usePlan()
 
 const board = useTemplateRef<HTMLElement>('board')
 const routes = shallowRef<Route[]>([])
-const markers = shallowRef<Marker[]>([])
 const hovered = shallowRef<string | null>(null)
 const moveFor = shallowRef<string | null>(null)
 const dragging = shallowRef<{ code: string; from: number } | null>(null)
@@ -136,7 +135,9 @@ const tones = computed<Map<string, CardTone> | null>(() => {
   if (props.ruleCodes) return new Map([...props.ruleCodes].map((c) => [c, 'rule' as const]))
   const code = focus.value
   if (!code) return null
-  const { needs, unlocks } = chainOf(code, props.edges)
+  // Direct links only (one hop): a long chain on a busy board is unreadable.
+  const needs = new Set(props.edges.filter((e) => e.to === code).map((e) => e.from))
+  const unlocks = new Set(props.edges.filter((e) => e.from === code).map((e) => e.to))
   // A hover only previews a route there is: a subject with no links leaves the board as it is.
   if (!props.selected && needs.size + unlocks.size === 0) return null
   const out = new Map<string, CardTone>([[code, 'self']])
@@ -149,7 +150,8 @@ const toneSet = computed(() => (tones.value ? new Set(tones.value.keys()) : null
 const shownEdges = computed(() => {
   const set = tones.value
   if (!set || props.ruleCodes) return []
-  return props.edges.filter((e) => set.has(e.from) && set.has(e.to))
+  const f = focus.value
+  return props.edges.filter((e) => e.from === f || e.to === f)
 })
 
 /** A polyline with rounded corners (radius 10, smaller where a leg is short). */
@@ -170,62 +172,105 @@ function rounded(pts: [number, number][]): string {
   return `${d} L ${lx} ${ly}`
 }
 
-function measure(): void {
+/** Where everything is on the board, read once per layout change (not on every hover). */
+interface Layout {
+  cards: Map<string, DOMRect>
+  cols: DOMRect[]
+}
+const layout = shallowRef<Layout | null>(null)
+/** At most this many links per direction are drawn; the rest are counted on a pill. */
+const MAX_DRAWN = 6
+
+function readLayout(): void {
   const el = board.value
   if (!el) return
   const base = el.getBoundingClientRect()
-  const box = (code: string) =>
-    (el.querySelector<HTMLElement>(`[data-code="${code}"]`) ?? el.querySelector<HTMLElement>(`[data-past-code="${code}"]`))?.getBoundingClientRect()
-  const next: Route[] = []
-  const tone = tones.value
-  // Columns, left to right: lines run in the gutters between them, never across a card.
-  const cols = [...el.querySelectorAll<HTMLElement>('.term, .past')].map((c) => c.getBoundingClientRect())
-  const colOf = (r: DOMRect) => cols.findIndex((c) => r.left >= c.left - 1 && r.right <= c.right + 1)
-  for (const e of shownEdges.value) {
-    const a = box(e.from)
-    const b = box(e.to)
-    if (!a || !b) continue
-    let d: string
-    const ca = colOf(a)
-    const cb = colOf(b)
-    if (b.left >= a.right - 4 && ca >= 0 && cb > ca) {
-      const x1 = a.right - base.left
-      const y1 = a.top + a.height / 2 - base.top
-      const x2 = b.left - base.left - 3
-      const y2 = b.top + b.height / 2 - base.top
-      const g1 = (cols[ca]!.right + cols[ca + 1]!.left) / 2 - base.left
-      if (cb === ca + 1) {
-        // Next column: across the one gutter.
-        d = rounded([[x1, y1], [g1, y1], [g1, y2], [x2, y2]])
-      } else {
-        // Further on: down the first gutter, along the free space under the cards in between, up the last gutter.
-        const g2 = (cols[cb - 1]!.right + cols[cb]!.left) / 2 - base.left
-        let lane = 0
-        for (let i = ca + 1; i < cb; i++) {
-          const cards = [...el.querySelectorAll<HTMLElement>('[data-code]')].map((x) => x.getBoundingClientRect()).filter((r) => colOf(r) === i)
-          lane = Math.max(lane, ...cards.map((r) => r.bottom), cols[i]!.top + 40)
-        }
-        const yl = lane - base.top + 12
-        d = rounded([[x1, y1], [g1, y1], [g1, yl], [g2, yl], [g2, y2], [x2, y2]])
-      }
-    } else if (b.left >= a.right - 4) {
-      const x1 = a.right - base.left
-      const y1 = a.top + a.height / 2 - base.top
-      const x2 = b.left - base.left - 3
-      const y2 = b.top + b.height / 2 - base.top
-      const bend = Math.max(16, (x2 - x1) / 2)
-      d = `M ${x1} ${y1} C ${x1 + bend} ${y1}, ${x2 - bend} ${y2}, ${x2} ${y2}`
-    } else {
-      // Stacked (phones): out of the left edge, down the strip beside the cards, into the later card's left edge.
-      const xg = Math.min(a.left, b.left) - base.left - 6
-      const y1 = a.top + a.height / 2 - base.top
-      const y2 = b.top + b.height / 2 - base.top
-      d = rounded([[a.left - base.left, y1], [xg, y1], [xg, y2], [b.left - base.left - 3, y2]])
-    }
-    const toTone = tone?.get(e.to)
-    next.push({ key: `${e.from}-${e.to}`, d, dir: toTone === 'need' || toTone === 'self' ? 'need' : 'unlock' })
+  const rel = (r: DOMRect) => new DOMRect(r.left - base.left, r.top - base.top, r.width, r.height)
+  const cards = new Map<string, DOMRect>()
+  for (const c of el.querySelectorAll<HTMLElement>('[data-code], [data-past-code]')) {
+    const code = c.dataset.code ?? c.dataset.pastCode
+    if (code && !cards.has(code)) cards.set(code, rel(c.getBoundingClientRect()))
   }
-  // Markers: how many of each card's prerequisites and follow-ons are in the plan.
+  const cols = [...el.querySelectorAll<HTMLElement>('.term, .past')].map((c) => rel(c.getBoundingClientRect()))
+  layout.value = { cards, cols }
+}
+
+const overflow = shallowRef<{ n: number; x: number; y: number } | null>(null)
+
+function drawRoutes(): void {
+  const lay = layout.value
+  const f = focus.value
+  if (!lay || !f) {
+    routes.value = []
+    overflow.value = null
+    return
+  }
+  const { cards, cols } = lay
+  const colOf = (r: DOMRect) => cols.findIndex((c) => r.left >= c.left - 1 && r.right <= c.right + 1)
+  const gutter = (i: number) => (cols[i]!.right + cols[i + 1]!.left) / 2
+  const next: Route[] = []
+  let more: { n: number; x: number; y: number } | null = null
+  for (const dir of ['need', 'unlock'] as const) {
+    let list = shownEdges.value.filter((e) => (dir === 'need' ? e.to === f : e.from === f))
+    const other = (e: Edge) => (dir === 'need' ? e.from : e.to)
+    // Many links: draw the nearest column's only; the rest go on a "N more" pill.
+    if (list.length > MAX_DRAWN) {
+      const cs = list.map((e) => colOf(cards.get(other(e)) ?? new DOMRect()))
+      const near = dir === 'need' ? Math.max(...cs) : Math.min(...cs.filter((c) => c >= 0))
+      const keep = list.filter((_, i) => cs[i] === near).slice(0, MAX_DRAWN)
+      if (dir === 'unlock') more = { n: list.length - keep.length, x: 0, y: 0 }
+      list = keep
+    }
+    const self = cards.get(f)
+    if (!self) continue
+    const cf = colOf(self)
+    const far = list.map((e) => colOf(cards.get(other(e)) ?? new DOMRect()))
+    // One shared lane under the cards between this column and the farthest target: links bundle into a trunk.
+    const lo = dir === 'need' ? Math.min(...far, cf) : cf
+    const hi = dir === 'need' ? cf : Math.max(...far, cf)
+    let lane = 0
+    for (const r of cards.values()) {
+      const c = colOf(r)
+      if (c > lo && c < hi) lane = Math.max(lane, r.bottom)
+    }
+    for (let i = lo + 1; i < hi; i++) lane = Math.max(lane, cols[i]!.top + 40)
+    const yl = lane + (dir === 'need' ? 10 : 18)
+    for (const e of list) {
+      const a = cards.get(e.from)
+      const b = cards.get(e.to)
+      if (!a || !b) continue
+      const ca = colOf(a)
+      const cb = colOf(b)
+      let d: string
+      const y1 = a.top + a.height / 2
+      const y2 = b.top + b.height / 2
+      if (ca >= 0 && cb > ca && cols.length > cb && b.left >= a.right - 4) {
+        const x1 = a.right
+        const x2 = b.left - 3
+        const g1 = gutter(ca)
+        if (cb === ca + 1) d = rounded([[x1, y1], [g1, y1], [g1, y2], [x2, y2]])
+        else {
+          const g2 = gutter(cb - 1)
+          d = rounded([[x1, y1], [g1, y1], [g1, yl], [g2, yl], [g2, y2], [x2, y2]])
+        }
+        if (more && dir === 'unlock') more = { n: more.n, x: gutter(cb - 1), y: cb === ca + 1 ? Math.max(y1, y2) : yl }
+      } else {
+        // Stacked (phones): out of the left edge, down the strip beside the cards, into the later card's left edge.
+        const xg = Math.min(a.left, b.left) - 6
+        d = rounded([[a.left, y1], [xg, y1], [xg, y2], [b.left - 3, y2]])
+        if (more && dir === 'unlock') more = { n: more.n, x: xg, y: Math.max(y1, y2) }
+      }
+      next.push({ key: `${e.from}-${e.to}`, d, dir })
+    }
+  }
+  routes.value = next
+  overflow.value = more && more.n > 0 ? more : null
+}
+
+const markers = computed<Marker[]>(() => {
+  const lay = layout.value
+  if (!lay) return []
+  // How many of each card's prerequisites and follow-ons are in the plan.
   const count = new Map<string, { needs: number; unlocks: number }>()
   for (const e of props.edges) {
     const from = count.get(e.from) ?? { needs: 0, unlocks: 0 }
@@ -235,16 +280,21 @@ function measure(): void {
     to.needs++
     count.set(e.to, to)
   }
-  const marks: Marker[] = []
+  const out: Marker[] = []
   for (const [code, n] of count) {
-    const r = el.querySelector<HTMLElement>(`[data-code="${code}"]`)?.getBoundingClientRect()
-    if (r) marks.push({ code, x: r.right - base.left - 8, y: r.top - base.top - 9, ...n })
+    const r = lay.cards.get(code)
+    if (r) out.push({ code, x: r.right - 8, y: r.top - 9, ...n })
   }
-  markers.value = marks
-  routes.value = next
+  return out
+})
+
+function measure(): void {
+  readLayout()
+  drawRoutes()
 }
 
-watch([shownEdges, () => props.edges, () => props.terms], () => nextTick(measure), { flush: 'post' })
+watch(shownEdges, drawRoutes)
+watch([() => props.edges, () => props.terms], () => nextTick(measure), { flush: 'post' })
 
 // While dragging: where the card may go (green) and where it can't, with the reason.
 const verdicts = computed<DropVerdict[] | null>(() => {
@@ -331,6 +381,13 @@ onBeforeUnmount(() => {
       </defs>
       <path v-for="r in routes" :key="r.key" pathLength="1" class="route" :class="`route-${r.dir}`" :d="r.d" :marker-end="`url(#route-arrow-${r.dir})`" />
     </svg>
+    <button
+      v-if="overflow && focus"
+      type="button"
+      class="route-more"
+      :style="{ left: `${overflow.x}px`, top: `${overflow.y}px` }"
+      @click="emit('open', focus)"
+    >{{ t('stress.more', { n: overflow.n }) }}</button>
     <span
       v-for="m in markers"
       :key="m.code"
@@ -512,6 +569,22 @@ onBeforeUnmount(() => {
 
 .link-mark-hidden {
   display: none;
+}
+
+.route-more {
+  position: absolute;
+  z-index: 5;
+  padding: 2px 10px;
+  border: 1px solid var(--card-edge);
+  border-radius: 999px;
+  background: var(--glass-shine), var(--sheet-fill);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 60%), 0 4px 12px -6px rgb(60 20 80 / 45%);
+  font: inherit;
+  font-size: var(--fs-meta);
+  font-weight: 650;
+  color: var(--accent);
+  transform: translate(-50%, -50%);
+  cursor: pointer;
 }
 
 .route-legend {
