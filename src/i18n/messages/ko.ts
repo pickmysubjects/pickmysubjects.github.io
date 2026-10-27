@@ -1640,7 +1640,6 @@ export const ko: Messages = {
     },
   },
   about: {
-    storyTitle: "만든 이유",
     eyebrow: '소개',
     title: "이 사이트를 만든 이유",
     me: "저는 멜버른대를 졸업했어요. 학교 다닐 때 수강 신청 때마다 머리가 아팠어요.",

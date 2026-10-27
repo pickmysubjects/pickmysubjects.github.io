@@ -34,7 +34,9 @@ watch(
 
 function choose(id: string): void {
   draft.value = { ...draft.value, topic: id, rating: null }
-  form.value?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  // Beside the list (wide screens) the form is already in view; below it, bring it up.
+  const top = form.value?.getBoundingClientRect().top ?? 0
+  if (top > window.innerHeight * 0.6 || top < 0) form.value?.scrollIntoView({ behavior: 'smooth', block: 'start' })
 }
 </script>
 
@@ -49,12 +51,15 @@ function choose(id: string): void {
       </button>
     </section>
 
-    <PainPointList :selected="draft.topic" @choose="choose" />
+    <!-- Wide screens: the form stays in view beside the list, so picking a card fills it in place. -->
+    <div class="fb-body">
+      <PainPointList :selected="draft.topic" @choose="choose" />
 
-    <section ref="formSection" class="fb-form">
-      <h2 class="fb-form-title">{{ t('feedback.yours') }}</h2>
-      <FeedbackForm v-model="draft" />
-    </section>
+      <section ref="formSection" class="fb-form">
+        <h2 class="fb-form-title">{{ t('feedback.yours') }}</h2>
+        <FeedbackForm v-model="draft" />
+      </section>
+    </div>
 
     <section class="fb-code">
       <h2 class="fb-form-title">{{ t('feedback.codeTitle') }}</h2>
@@ -75,7 +80,31 @@ function choose(id: string): void {
   padding-top: var(--page-top);
   display: grid;
   gap: 24px;
-  max-width: 1100px;
+}
+
+.fb-body {
+  display: grid;
+  gap: 24px;
+}
+
+@media (min-width: 1100px) {
+  .fb-body {
+    grid-template-columns: minmax(0, 1fr) minmax(360px, 420px);
+    align-items: start;
+    gap: 32px;
+  }
+
+  .fb-body .fb-form {
+    position: sticky;
+    top: 88px;
+    max-height: calc(100vh - 104px);
+    overflow-y: auto;
+  }
+
+  /* The form is already beside the list. */
+  .fb-jump {
+    display: none;
+  }
 }
 
 

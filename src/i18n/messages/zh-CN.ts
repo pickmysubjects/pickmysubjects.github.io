@@ -1640,7 +1640,6 @@ export const zhCN: Messages = {
     },
   },
   about: {
-    storyTitle: "我为什么做这个",
     eyebrow: '关于',
     title: "为什么做这个网站",
     me: "我是墨大毕业的。读书那几年，每到选课我都挺头疼的。",

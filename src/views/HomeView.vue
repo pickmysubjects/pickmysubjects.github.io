@@ -88,10 +88,12 @@ const next = computed(() => {
         </h1>
         <p class="hero-sub">{{ t('home.sub') }}</p>
         <SubjectSearch class="hero-search" />
-        <p class="hero-more">
-          <a class="hero-link" :href="link('subjects')">{{ t('browse.title') }} <ArrowRight :size="16" aria-hidden="true" /></a>
-          <span class="hero-scope">{{ t('home.scope') }}</span>
-        </p>
+        <!-- One obvious next move: plan the degree; browsing is the quieter second choice. -->
+        <div class="hero-actions">
+          <a class="button button-accent hero-cta" :href="link('plan')">{{ t('home.cardPlan') }} <ArrowRight :size="18" aria-hidden="true" /></a>
+          <a class="button button-quiet hero-second" :href="link('subjects')">{{ t('browse.title') }}</a>
+        </div>
+        <p class="hero-scope">{{ t('home.scope') }}</p>
       </div>
       <div class="hero-visual fade">
         <DemoPlan :plan="demoPlan" :aria-label="t('home.demoPlan')" hide-rules />
@@ -109,9 +111,8 @@ const next = computed(() => {
       <li v-for="p in proof" :key="p">{{ p }}</li>
     </ul>
 
-    <!-- One tidy grid: the subject example, the three steps, and the easy-to-miss features. -->
+    <!-- The three steps first (the path), then a real subject card beside the easy-to-miss features. -->
     <div class="bento">
-      <DemoSubject class="tile-subject fade" :subject="demoSubject" :caption="t('home.demoSubject')" />
       <section class="tile-steps glass" aria-labelledby="steps-title">
         <div class="tile-head">
           <h2 id="steps-title" class="tile-title">{{ t('home.stepsTitle') }}</h2>
@@ -133,6 +134,7 @@ const next = computed(() => {
           </li>
         </ol>
       </section>
+      <DemoSubject class="tile-subject fade" :subject="demoSubject" :caption="t('home.demoSubject')" />
       <CanDoList class="tile-can" />
     </div>
   </div>
@@ -235,30 +237,23 @@ const next = computed(() => {
   margin-top: var(--space-3);
 }
 
-.hero-more {
+.hero-actions {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-2) var(--space-5);
-  margin: 0;
+  gap: var(--space-3);
 }
 
-.hero-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-weight: 600;
-  color: var(--accent);
-  text-decoration: none;
-}
-
-.hero-link:hover {
-  text-decoration: underline;
+.hero-cta,
+.hero-second {
+  min-height: 48px;
+  padding: 0 22px;
+  font-size: 1rem;
 }
 
 .hero-scope {
+  margin: 0;
   font-size: 0.875rem;
-  color: var(--ink-faint);
+  color: var(--ink-soft);
 }
 
 /* The product visual: the plan card with two chips layered over its corners. */
@@ -331,7 +326,7 @@ const next = computed(() => {
 }
 
 .tile-steps {
-  grid-column: span 7;
+  grid-column: 1 / -1;
   display: grid;
   align-content: start;
   gap: var(--space-5);
@@ -340,7 +335,13 @@ const next = computed(() => {
 }
 
 .tile-can {
-  grid-column: 1 / -1;
+  grid-column: span 7;
+  align-content: start;
+}
+
+/* Beside the subject card the feature list has room for two columns. */
+.tile-can :deep(.can-list) {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .tile-head {
@@ -399,7 +400,7 @@ const next = computed(() => {
   height: 28px;
   font-size: 0.8125rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--accent-ink);
   background: var(--accent);
   border-radius: 999px;
 }
@@ -449,7 +450,7 @@ const next = computed(() => {
   }
 
   .tile-subject,
-  .tile-steps {
+  .tile-can {
     grid-column: 1 / -1;
   }
 }
@@ -467,29 +468,21 @@ const next = computed(() => {
   }
 
   .stage {
-    padding: 28px 16px 20px;
+    padding: 22px 16px 20px;
     border-radius: 26px;
   }
 
   .hero-sub {
-    font-size: 1rem;
+    font-size: 0.9375rem;
   }
 
-  /* No room to float on a phone: the two chips sit in a row under the card instead of covering it. */
-  .hero-visual {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
-    padding: 0;
+  .hero-search {
+    margin-top: 0;
   }
 
-  .hero-visual > :first-child {
-    flex: 1 1 100%;
-  }
-
+  /* No room to float on a phone, and the card already says it's ready: the two chips step aside. */
   .float {
-    position: static;
-    white-space: normal;
+    display: none;
   }
 
   .proof {
@@ -519,6 +512,17 @@ const next = computed(() => {
   .steps-start {
     flex: 1 1 100%;
     justify-content: center;
+  }
+
+  /* Side by side when both labels fit, so search and both buttons stay above the tab bar. */
+  .hero-actions {
+    gap: var(--space-2);
+  }
+
+  .hero-actions > .button {
+    flex: 1 1 auto;
+    justify-content: center;
+    padding: 0 16px;
   }
 }
 

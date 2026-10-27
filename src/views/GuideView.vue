@@ -14,7 +14,7 @@ import GuideServices from '@/components/guide/GuideServices.vue'
 import { link, replaceAddress, useView } from '@/composables/useView'
 import { useI18n } from '@/i18n'
 import { URLS } from '@/utils/guideLinks'
-import { categoryOfTopic, guidePageOf, type GuideCategory } from '@/utils/guideSections'
+import { categoryOfTopic, GUIDE_CATEGORIES, guidePageOf, type GuideCategory } from '@/utils/guideSections'
 
 /** The basics guide: an overview at /guide/, one page per section, and the key dates page. */
 const { t } = useI18n()
@@ -28,6 +28,15 @@ const heading = computed(() => {
   if (p.kind === 'category') return { title: t.value(`guide.cat.${p.category}.title`), lede: t.value(`guide.cat.${p.category}.lede`) }
   if (p.kind === 'extra') return { title: t.value('guide.kd.title'), lede: t.value('guide.kd.lede') }
   return { title: t.value('guide.title'), lede: t.value('guide.ledeShort'), full: t.value('guide.lede') }
+})
+
+// The sections before and after this one, so a student can read the guide straight through.
+const pager = computed(() => {
+  const p = page.value
+  if (p.kind !== 'category') return null
+  const i = GUIDE_CATEGORIES.indexOf(p.category)
+  const at = (c: GuideCategory | undefined) => (c ? { href: link(`guide/${c}/`), title: t.value(`guide.cat.${c}.nav`) } : null)
+  return { prev: at(GUIDE_CATEGORIES[i - 1]), next: at(GUIDE_CATEGORIES[i + 1]) }
 })
 
 const FACTS = [
@@ -80,9 +89,11 @@ watch(param, () => void followHash())
         <component :is="SECTIONS[page.category]" v-else-if="SECTIONS[page.category]" />
         <GuideServices v-else :key="page.category" :category="page.category" />
 
-        <p v-if="page.kind !== 'overview'" class="next">
-          <a :href="link('guide/')">← {{ t('guide.overview') }}</a>
-        </p>
+        <nav v-if="page.kind !== 'overview'" class="pager" :aria-label="t('guide.overview')">
+          <a v-if="pager?.prev" class="pager-link glass" :href="pager.prev.href"><span aria-hidden="true">←</span> {{ pager.prev.title }}</a>
+          <a v-else class="pager-link glass" :href="link('guide/')"><span aria-hidden="true">←</span> {{ t('guide.overview') }}</a>
+          <a v-if="pager?.next" class="pager-link pager-next glass" :href="pager.next.href">{{ pager.next.title }} <span aria-hidden="true">→</span></a>
+        </nav>
         <p class="source">
           {{ t('guide.sourcesTextShort') }}<InfoTip :text="t('guide.sourcesText')" />
           <a :href="URLS.STUDENT_SITE" target="_blank" rel="noopener">{{ t('guide.sourcesLink') }}</a>
@@ -90,7 +101,7 @@ watch(param, () => void followHash())
       </div>
 
       <!-- The numbers people look up most, kept in view while reading. -->
-      <aside v-if="page.kind !== 'extra'" class="side">
+      <aside v-if="page.kind !== 'extra'" class="side" :class="{ 'side-first': page.kind === 'overview' }">
         <ul class="facts surface">
           <li v-for="f in FACTS" :key="f.key" class="fact">
             <span class="fact-value">{{ f.value }}</span>
@@ -141,9 +152,12 @@ watch(param, () => void followHash())
     grid-template-columns: 1fr;
   }
 
-  /* On narrow screens the numbers come first, as a strip. */
+  /* On narrow screens the numbers sit after the reading, except on the overview where they lead. */
   .side {
     position: static;
+  }
+
+  .side-first {
     order: -1;
   }
 }
@@ -158,8 +172,31 @@ watch(param, () => void followHash())
   margin-top: 10px;
 }
 
-.next a {
+/* Previous / next section: two glass pills, the next one pushed to the right. */
+.pager {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.pager-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 18px;
+  border-radius: 999px;
+  font-weight: 600;
   color: var(--accent);
+  text-decoration: none;
+}
+
+.pager-link:hover {
+  text-decoration: underline;
+}
+
+.pager-next {
+  margin-left: auto;
 }
 
 .guide-eyebrow {

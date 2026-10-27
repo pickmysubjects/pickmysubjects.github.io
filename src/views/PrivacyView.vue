@@ -15,7 +15,10 @@ const sections = ['local', 'ratings', 'grades', 'feedback', 'noTracking', 'googl
         <ShieldCheck :size="15" aria-hidden="true" /> {{ t(`privacy.pills.${k}`) }}
       </li>
     </ul>
-    <p v-for="s in sections" :key="s" class="privacy-text">{{ t(`privacy.${s}`) }}</p>
+    <!-- One readable panel over the colour field, a hairline between topics. -->
+    <div class="privacy-body surface">
+      <p v-for="s in sections" :key="s" class="privacy-text">{{ t(`privacy.${s}`) }}</p>
+    </div>
   </article>
 </template>
 
@@ -34,9 +37,25 @@ const sections = ['local', 'ratings', 'grades', 'feedback', 'noTracking', 'googl
   color: var(--ink-soft);
 }
 
+.privacy-body {
+  display: grid;
+  padding: 8px 24px;
+}
+
 .privacy-text {
   margin: 0;
-  line-height: 1.6;
+  padding: 14px 0;
+  line-height: 1.65;
+}
+
+.privacy-text + .privacy-text {
+  border-top: 1px solid var(--line);
+}
+
+@media (max-width: 640px) {
+  .privacy-body {
+    padding: 4px 16px;
+  }
 }
 .privacy-pills {
   display: flex;

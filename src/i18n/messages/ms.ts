@@ -1640,7 +1640,6 @@ export const ms: Messages = {
     },
   },
   about: {
-    storyTitle: "Kenapa saya buat ini",
     eyebrow: 'Perihal',
     title: "Kenapa saya buat laman ini",
     me: "Saya graduan University of Melbourne. Masa belajar dulu, setiap kali pilih subjek memang memeningkan.",
