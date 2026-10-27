@@ -102,3 +102,16 @@ describe('calc text', () => {
     }
   })
 })
+
+describe('cleanCalc', () => {
+  it('keeps good saved rows and drops broken ones', async () => {
+    const { cleanCalc } = await import('../src/composables/useFinalCalc')
+    expect(
+      cleanCalc({
+        COMP10001: { rows: [{ kind: 'exam', weight: 60, hurdle: true, score: 'x', outOf: 50 }, { kind: 'nope', weight: 1 }], custom: true },
+        bad: { rows: [] },
+      }),
+    ).toEqual({ COMP10001: { rows: [{ kind: 'exam', weight: 60, hurdle: true, score: '', outOf: 50 }], custom: true } })
+    expect(cleanCalc(null)).toEqual({})
+  })
+})
