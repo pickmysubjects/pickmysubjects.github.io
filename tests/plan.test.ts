@@ -258,6 +258,22 @@ describe('previewAdd', () => {
   it('ignores a subject already in that term', () => {
     expect(kinds(0, 'AAAA10001')).toEqual([])
   })
+
+  it('a swap in a term already over the load is not flagged for it', () => {
+    const many = dataset([
+      ...['AAAA10001', 'AAAA10002', 'AAAA10003', 'AAAA10004', 'AAAA10005', 'BBBB10001'].map((code) => subject({ code, offerings: { 2026: ['semester-1'] }, prerequisites: 'none', non_allowed: [] })),
+    ])
+    const heavy: Plan = { course: 'X', courseYear: 2026, completed: [], terms: [{ year: 2026, period: 'semester-1', subjects: ['AAAA10001', 'AAAA10002', 'AAAA10003', 'AAAA10004', 'AAAA10005'] }] }
+    // Swapping one 12.5-point subject for another keeps the load where it was.
+    expect(previewAdd(heavy, many, 0, 'BBBB10001', 50, 'AAAA10005').map((i) => i.kind)).toEqual([])
+    // The old way (judged against the term with the old subject gone) flagged every candidate.
+    const without: Plan = { ...heavy, terms: [{ ...heavy.terms[0]!, subjects: heavy.terms[0]!.subjects.slice(0, 4) }] }
+    expect(previewAdd(without, many, 0, 'BBBB10001').map((i) => i.kind)).toEqual(['overload'])
+    // A term at the load: swapping is fine, adding a fifth one is an overload.
+    const full: Plan = { ...heavy, terms: [{ ...heavy.terms[0]!, subjects: ['AAAA10001', 'AAAA10002', 'AAAA10003', 'AAAA10004'] }] }
+    expect(previewAdd(full, many, 0, 'BBBB10001', 50, 'AAAA10004').map((i) => i.kind)).toEqual([])
+    expect(previewAdd(full, many, 0, 'BBBB10001').map((i) => i.kind)).toEqual(['overload'])
+  })
 })
 
 describe('prerequisites left to "or equivalent"', () => {

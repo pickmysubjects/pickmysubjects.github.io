@@ -65,7 +65,8 @@ function eligible(s: Subject, anyTerm = false): boolean {
 
 /** The first thing stopping it here, or null when it fits. */
 function problem(code: string): string | null {
-  const issues = previewAdd(base.value, data.value, props.termIndex, code, load.value)
+  // A swap is judged against the plan with the old subject still in (its load included).
+  const issues = previewAdd(plan.plan.value, data.value, props.termIndex, code, load.value, props.replacing)
   const worst = issues.find((i) => i.severity === 'error') ?? issues[0]
   if (worst?.kind === 'not-offered') return t.value('subject.addNotOffered', { year: worst.params?.assumed || worst.params?.year || '' })
   return worst ? issueText(t.value, worst, [], [], data.value.subjects, course.value) : null

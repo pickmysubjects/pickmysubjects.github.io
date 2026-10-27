@@ -186,12 +186,14 @@ function visaLoadIssues(plan: Plan, data: Dataset): Issue[] {
 /**
  * What adding `code` to a term would flag, before it's added: availability,
  * prerequisites met by earlier terms, corequisites, non-allowed clashes and the
- * term's load. Issues the plan already has are left out.
+ * term's load. Issues the plan already has are left out. With `replacing`, `code` takes that
+ * subject's place (a swap): the term's load is judged against the plan with the old subject still
+ * in, so a swap in a term that was already over the usual load isn't flagged for it.
  */
-export function previewAdd(plan: Plan, data: Dataset, termIndex: number, code: string, standardLoad = 50): Issue[] {
+export function previewAdd(plan: Plan, data: Dataset, termIndex: number, code: string, standardLoad = 50, replacing?: string): Issue[] {
   const term = plan.terms[termIndex]
   if (!term || term.subjects.includes(code)) return []
-  const terms = plan.terms.map((t, i) => (i === termIndex ? { ...t, subjects: [...t.subjects, code] } : t))
+  const terms = plan.terms.map((t, i) => (i === termIndex ? { ...t, subjects: [...t.subjects.filter((c) => c !== replacing), code] } : t))
   const before = checkTerms(plan, data, standardLoad)
   const hadOverload = before.some((i) => i.kind === 'overload' && i.termIndex === termIndex)
   return checkTerms({ ...plan, terms }, data, standardLoad).filter((i) => {
