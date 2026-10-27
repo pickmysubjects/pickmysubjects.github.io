@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, onBeforeUnmount, shallowRef, useTemplateRef, watch } from 'vue'
 import { Lock, Plus, RotateCcw, TriangleAlert, X } from 'lucide-vue-next'
 import InfoTip from '@/components/InfoTip.vue'
 import SubjectSearch from '@/components/SubjectSearch.vue'
@@ -83,6 +83,29 @@ const allDone = computed(() => result.value !== null && result.value.leftWeight 
 const recordMark = computed(() => profile.value.results.filter((r) => r.code === props.code && r.mark !== undefined).at(-1)?.mark)
 const kindName = (k: string) => t.value(`assess.kind.${k}`)
 
+// What each marked part adds to the total, so a mark typed without its "out of" (24 meant as
+// 24/30 but read as 24/100) shows up as a small contribution right away.
+const contribution = (r: CalcRow) => {
+  const pct = r.score === '' ? null : percentOf(r.score, r.outOf === '' ? 100 : r.outOf)
+  if (pct === null || !r.weight) return null
+  return { got: Math.round(((pct * r.weight) / 100) * 10) / 10, weight: r.weight }
+}
+
+// Phones: while the result is out of view (typing marks above it), a slim bar keeps it in sight.
+const resultEl = useTemplateRef<HTMLElement>('resultEl')
+const resultHidden = shallowRef(false)
+let io: IntersectionObserver | null = null
+watch(resultEl, (el) => {
+  io?.disconnect()
+  if (!el || typeof IntersectionObserver === 'undefined') return
+  io = new IntersectionObserver(([e]) => {
+    // Only while it's below the screen: once scrolled past, the student has seen it.
+    resultHidden.value = !!e && !e.isIntersecting && e.boundingClientRect.top > 0
+  })
+  io.observe(el)
+})
+onBeforeUnmount(() => io?.disconnect())
+
 function pick(code: string): void {
   replaceAddress(`tools/final/?subject=${code}`)
 }
@@ -109,6 +132,7 @@ function pick(code: string): void {
       <p v-if="subject.passFail" class="calc-note chip">{{ t('calc.passFail') }}</p>
       <p v-if="recordMark !== undefined" class="calc-note">{{ t('calc.fromRecord', { mark: recordMark, band: gradeOf(recordMark) }) }}</p>
 
+      <div class="calc-work">
       <section class="surface calc-parts" aria-labelledby="calc-parts">
         <div class="calc-head">
           <h2 id="calc-parts" class="sec-title">{{ t('calc.parts') }}</h2>
@@ -131,12 +155,13 @@ function pick(code: string): void {
               <input class="input" type="number" inputmode="decimal" min="0" max="100" :value="r.weight" @input="setWeight(i, $event)" @change="weightDone(i, $event)" />
             </label>
             <label class="f f-score">
-              <span class="f-label">{{ t('calc.score') }}</span>
+              <span class="f-label">{{ t('calc.score') }} / {{ t('calc.outOf') }}</span>
               <span class="score">
                 <input class="input" :class="{ bad: badScore(r) }" type="number" inputmode="decimal" min="0" :placeholder="t('calc.notDone')" :value="r.score" @input="setField(i, 'score', numberOf($event, true))" />
                 <span class="slash" aria-hidden="true">/</span>
                 <input class="input" type="number" inputmode="decimal" min="1" placeholder="100" :aria-label="t('calc.outOf')" :value="r.outOf" @input="setField(i, 'outOf', numberOf($event))" />
               </span>
+              <span v-if="contribution(r)" class="f-counts">{{ t('calc.counts', contribution(r)!) }}</span>
             </label>
             <label class="f f-hurdle">
               <input type="checkbox" :checked="!!r.hurdle" @change="setField(i, 'hurdle', ($event.target as HTMLInputElement).checked)" />
@@ -152,7 +177,7 @@ function pick(code: string): void {
         <p v-if="weightsOff && result" class="calc-hint warn">{{ t('calc.weightsOff', { n: result.totalWeight }) }}</p>
       </section>
 
-      <section v-if="result" class="surface calc-result" aria-labelledby="calc-result" aria-live="polite">
+      <section v-if="result" ref="resultEl" class="surface calc-result" aria-labelledby="calc-result" aria-live="polite">
         <h2 id="calc-result" class="sec-title">{{ allDone ? t('calc.resultAll') : t('calc.resultTitle') }}</h2>
         <p v-if="allDone && result.mark !== null" class="final">
           <template v-if="finalBand(result, subject.passFail === true) === 'NH'">{{ t('calc.finalMarkNH', { mark: result.mark }) }}<InfoTip :text="t('calc.hurdleInfo')" /></template>
@@ -182,6 +207,21 @@ function pick(code: string): void {
           </p>
         </div>
       </section>
+      </div>
+
+      <Teleport to="body">
+        <a v-if="result && resultHidden" class="calc-dock" href="#calc-result" @click.prevent="resultEl?.scrollIntoView({ block: 'start', behavior: 'smooth' })">
+          <template v-if="allDone && result.mark !== null">
+            <span class="dock-final">{{ result.mark }} · {{ finalBand(result, subject.passFail === true) }}</span>
+          </template>
+          <template v-else>
+            <span v-for="b in shownBands" :key="b.band" class="dock-band" :class="`s-${b.status}`">
+              <span class="dock-band-name">{{ b.band }}</span>
+              <strong>{{ b.status === 'possible' ? `${b.needed}%` : b.status === 'secured' ? '✓' : '–' }}</strong>
+            </span>
+          </template>
+        </a>
+      </Teleport>
     </template>
   </div>
 </template>
@@ -273,7 +313,9 @@ function pick(code: string): void {
 .row {
   display: grid;
   grid-template-columns: minmax(0, 1.4fr) 6.5em minmax(0, 1.5fr) auto auto;
-  align-items: end;
+  /* Top-aligned, so a "counts 7/10" line under a mark doesn't push the row's other fields down;
+     the controls without a label line up with the inputs below the labels. */
+  align-items: start;
   gap: var(--space-2) var(--space-3);
   padding-bottom: var(--space-2);
   border-bottom: 1px solid var(--divider);
@@ -417,6 +459,98 @@ function pick(code: string): void {
 .hurdle svg {
   flex: none;
   margin-top: 3px;
+}
+
+.f-counts {
+  font-size: var(--fs-meta);
+  color: var(--ink-soft);
+}
+
+/* Labels on one fixed line height, so the unlabelled controls can line up with the inputs. */
+.f-label {
+  line-height: 20px;
+}
+
+@media (min-width: 641px) {
+  .f-kind {
+    margin-top: 24px;
+  }
+
+  .f-hurdle,
+  .icon-btn {
+    margin-top: calc(24px + (var(--control-h) - 44px) / 2);
+  }
+}
+
+/* Wide screens: the result sits beside the parts and stays in view while marks are typed. */
+@media (min-width: 1024px) {
+  .calc-work {
+    display: grid;
+    grid-template-columns: minmax(0, 1.75fr) minmax(300px, 1fr);
+    align-items: start;
+    gap: var(--space-4);
+  }
+
+  .calc-result {
+    position: sticky;
+    top: 96px;
+  }
+
+  .bands {
+    grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
+  }
+}
+
+@media (max-width: 1023px) {
+  .calc-work {
+    display: grid;
+    gap: var(--space-4);
+  }
+}
+
+.calc-dock {
+  display: none;
+}
+
+@media (max-width: 720px) {
+  .calc-dock {
+    position: fixed;
+    inset: auto 12px calc(88px + env(safe-area-inset-bottom)) 12px;
+    z-index: 40;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 4px;
+    min-height: 48px;
+    padding: 6px 10px;
+    border: 1px solid var(--glass-edge);
+    border-radius: 999px;
+    background: var(--glass-shine), var(--float-fill);
+    -webkit-backdrop-filter: var(--float-blur);
+    backdrop-filter: var(--float-blur);
+    box-shadow: var(--float-rim), var(--float-shadow);
+    color: var(--ink);
+    text-decoration: none;
+    font-size: var(--fs-small);
+  }
+
+  .dock-band {
+    display: grid;
+    justify-items: center;
+    line-height: 1.2;
+    padding: 0 4px;
+    border-radius: var(--radius-sm);
+    background: none;
+  }
+
+  .dock-band-name {
+    font-size: var(--fs-meta);
+    color: var(--ink-soft);
+  }
+
+  .dock-final {
+    font-weight: var(--fw-semibold);
+  }
 }
 
 @media (max-width: 640px) {

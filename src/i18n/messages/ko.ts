@@ -1326,6 +1326,7 @@ export const ko: Messages = {
     weight: "비중 %",
     score: "내 점수",
     outOf: "만점",
+    counts: "{weight} 중 {got} 반영",
     notDone: "아직",
     hurdle: "허들",
     add: "항목 추가",

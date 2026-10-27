@@ -1326,6 +1326,7 @@ export const ms: Messages = {
     weight: "Wajaran %",
     score: "Markah anda",
     outOf: "daripada",
+    counts: "dikira {got}/{weight}",
     notDone: "belum",
     hurdle: "Hurdle",
     add: "Tambah bahagian",

@@ -1326,6 +1326,7 @@ export const ja: Messages = {
     weight: "配分 %",
     score: "自分の点",
     outOf: "満点",
+    counts: "{weight} 中 {got} を算入",
     notDone: "まだ",
     hurdle: "ハードル",
     add: "項目を追加",

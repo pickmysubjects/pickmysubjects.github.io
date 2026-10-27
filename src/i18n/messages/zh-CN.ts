@@ -1326,6 +1326,7 @@ export const zhCN: Messages = {
     weight: "占比 %",
     score: "你的分数",
     outOf: "满分",
+    counts: "计入 {got}/{weight}",
     notDone: "还没考",
     hurdle: "Hurdle",
     add: "加一项",

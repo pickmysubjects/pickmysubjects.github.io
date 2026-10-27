@@ -1326,6 +1326,7 @@ export const hi: Messages = {
     weight: "वेटेज %",
     score: "आपके नंबर",
     outOf: "में से",
+    counts: "{weight} में से {got} गिना",
     notDone: "अभी बाकी",
     hurdle: "Hurdle",
     add: "हिस्सा जोड़ें",

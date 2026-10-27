@@ -1329,6 +1329,7 @@ export const en = {
     weight: "Weight %",
     score: "Your mark",
     outOf: "out of",
+    counts: "counts {got} of {weight}",
     notDone: "not done",
     hurdle: "Hurdle",
     add: "Add a part",

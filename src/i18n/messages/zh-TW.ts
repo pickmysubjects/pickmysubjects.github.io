@@ -1326,6 +1326,7 @@ export const zhTW: Messages = {
     weight: "比重 %",
     score: "你的分數",
     outOf: "滿分",
+    counts: "計入 {got}/{weight}",
     notDone: "還沒考",
     hurdle: "Hurdle",
     add: "新增一項",

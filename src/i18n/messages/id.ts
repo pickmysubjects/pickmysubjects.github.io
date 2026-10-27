@@ -1326,6 +1326,7 @@ export const id: Messages = {
     weight: "Bobot %",
     score: "Nilaimu",
     outOf: "dari",
+    counts: "dihitung {got}/{weight}",
     notDone: "belum",
     hurdle: "Hurdle",
     add: "Tambah bagian",

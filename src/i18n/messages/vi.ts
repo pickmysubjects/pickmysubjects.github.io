@@ -1326,6 +1326,7 @@ export const vi: Messages = {
     weight: "Tỉ trọng %",
     score: "Điểm của bạn",
     outOf: "trên",
+    counts: "tính {got}/{weight}",
     notDone: "chưa làm",
     hurdle: "Hurdle",
     add: "Thêm một phần",
