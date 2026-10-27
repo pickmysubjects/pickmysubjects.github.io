@@ -137,7 +137,7 @@ function onClick(event: MouseEvent): void {
       <header class="peek-head">
         <div class="peek-head-main">
           <p class="peek-code-row">
-            <span class="code peek-code">{{ code }}</span>
+            <span class="code peek-code chip">{{ code }}</span>
             <a class="peek-hb" :href="handbookFor(code, year)" target="_blank" rel="noopener"><BookOpen :size="14" aria-hidden="true" /> Handbook</a>
           </p>
           <h2 class="peek-title">{{ local || subject?.title || t('plan.notInDataset') }}</h2>
@@ -167,9 +167,8 @@ function onClick(event: MouseEvent): void {
       <template v-if="subject">
         <SubjectAbout v-if="detailReady && detailed" class="peek-section" :subject="detailed" />
 
-        <MajorRoles class="peek-section" :code="code" />
-
-        <section class="peek-section" :class="{ 'peek-inline': needCodes.length === 0 && route.length === 0 && !hasManual }">
+        <div class="peek-grid">
+        <section class="peek-section peek-card" :class="{ 'peek-inline': needCodes.length === 0 && route.length === 0 && !hasManual }">
           <h3 class="peek-label">{{ t('subject.needs') }}</h3>
           <p v-if="subject.prerequisites === 'none'">{{ t('subject.needsNone') }}</p>
           <p v-else-if="subject.prerequisites === 'unknown'" class="muted">{{ t('subject.notRecorded') }}</p>
@@ -219,11 +218,11 @@ function onClick(event: MouseEvent): void {
           </label>
         </section>
 
-        <section v-if="leadsTo.length === 0" class="peek-section peek-inline">
+        <section v-if="leadsTo.length === 0" class="peek-section peek-card peek-inline">
           <h3 class="peek-label">{{ t('subject.unlocks') }}</h3>
           <p class="muted">{{ t('subject.unlocksNone') }}</p>
         </section>
-        <section v-else class="peek-section">
+        <section v-else class="peek-section peek-card">
           <h3 class="peek-label">{{ t('subject.unlocks') }}</h3>
           <p class="peek-codes">
             <button v-for="c in leadsTo" :key="c" type="button" class="chip code peek-code-chip" @click="emit('open', c)">
@@ -232,7 +231,7 @@ function onClick(event: MouseEvent): void {
           </p>
         </section>
 
-        <section v-if="clashes.length" class="peek-section">
+        <section v-if="clashes.length" class="peek-section peek-card">
           <h3 class="peek-label">{{ t('subject.blocks') }}</h3>
           <p class="peek-codes">
             <button
@@ -248,9 +247,13 @@ function onClick(event: MouseEvent): void {
           </p>
         </section>
 
-        <AssessmentPanel class="peek-section" :subject="subject" :year="year" />
+        </div>
 
-        <section class="peek-section" :class="{ 'peek-inline': ratings.length === 0 }">
+        <AssessmentPanel class="peek-section peek-card" :subject="subject" :year="year" />
+
+        <MajorRoles class="peek-section peek-card" :code="code" />
+
+        <section class="peek-section peek-card" :class="{ 'peek-inline': ratings.length === 0 }">
           <h3 class="peek-label">{{ t('subject.ratingsTitle') }}</h3>
           <p v-if="ratings.length === 0" class="muted">{{ t('subject.noRatings') }}</p>
           <template v-else>
@@ -262,7 +265,7 @@ function onClick(event: MouseEvent): void {
         </section>
 
         <!-- Not passed yet: what a mark in it would do to the WAM. -->
-        <WamWhatIf v-if="!doneSet.has(code)" class="peek-section" :code="code" />
+        <WamWhatIf v-if="!doneSet.has(code)" class="peek-section peek-card" :code="code" />
       </template>
 
       <!-- Everything to do with it, at the foot of the window: change it in the plan, record it, read more. -->
@@ -282,7 +285,7 @@ function onClick(event: MouseEvent): void {
             <button class="button button-quiet peek-btn" type="button" @click="act('moveIt')"><CalendarRange :size="15" aria-hidden="true" /> {{ t('plan.move') }}</button>
             <button class="button button-quiet peek-btn peek-remove" type="button" @click="act('removeIt')"><X :size="15" aria-hidden="true" /> {{ t('plan.removeShort') }}</button>
           </template>
-          <a class="button button-quiet peek-btn peek-full" :href="link(`subject/${code}`)">
+          <a class="button button-accent peek-btn peek-full" :href="link(`subject/${code}`)">
             {{ t('subject.fullPage') }} <ExternalLink :size="15" aria-hidden="true" />
           </a>
         </div>
@@ -311,26 +314,39 @@ function onClick(event: MouseEvent): void {
 }
 
 .peek {
-  width: min(560px, calc(100vw - 32px));
-  max-height: min(86vh, 760px);
+  width: min(600px, calc(100vw - 32px));
+  max-height: min(88vh, 800px);
   padding: 0;
-  border: 1px solid var(--glass-edge);
-  border-radius: var(--radius-lg);
-  /* A sheet: glass, but mostly opaque so its text stays easy to read. */
-  background: var(--glass-shine), var(--sheet-fill);
+  border: 1px solid var(--card-edge);
+  border-radius: 28px;
+  /* A floating Liquid Glass sheet: the page's colour shows through, the text sits on a frosted fill. */
+  background: linear-gradient(180deg, rgb(255 255 255 / 34%), rgb(255 255 255 / 0%) 120px), var(--peek-fill);
   -webkit-backdrop-filter: var(--glass-blur-strong);
   backdrop-filter: var(--glass-blur-strong);
   color: var(--ink);
-  box-shadow: var(--glass-shadow), var(--shadow-2);
+  box-shadow: var(--card-shadow), 0 30px 80px -30px rgb(60 20 80 / 55%);
+  overscroll-behavior: contain;
 }
 
 .peek::backdrop {
-  background: rgb(16 16 20 / 40%);
+  background: rgb(40 20 50 / 22%);
+}
+
+/* Phones: a bottom sheet; opaque, since it fills most of the screen. */
+@media (max-width: 640px) {
+  .peek {
+    width: 100%;
+    max-width: 100%;
+    max-height: 90vh;
+    margin: auto 0 0;
+    border-radius: 28px 28px 0 0;
+    background: var(--glass-shine), var(--sheet-fill);
+  }
 }
 
 .peek-body {
   display: grid;
-  gap: var(--space-6);
+  gap: var(--space-4);
   padding: var(--space-5) var(--space-5) 0;
 }
 
@@ -356,9 +372,28 @@ function onClick(event: MouseEvent): void {
 }
 
 .peek-code {
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   font-weight: 650;
   color: var(--accent);
+}
+
+/* Grouped like an iOS inset list: soft tinted cards instead of dividers. */
+.peek-card {
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--card-edge);
+  border-radius: 18px;
+  background: var(--inset-fill);
+  box-shadow: inset 1px 1px 0 rgb(255 255 255 / 50%);
+}
+
+.peek-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-3);
+}
+
+.peek-grid > .peek-card:first-child:not(.peek-inline) {
+  grid-column: 1 / -1;
 }
 
 .peek-hb {
@@ -430,9 +465,6 @@ function onClick(event: MouseEvent): void {
   gap: var(--space-1) var(--space-3);
 }
 
-.peek-inline + .peek-inline {
-  margin-top: calc(var(--space-3) - var(--space-6));
-}
 
 .peek-rating {
   display: flex;
@@ -553,8 +585,13 @@ function onClick(event: MouseEvent): void {
   gap: var(--space-3);
   margin: 0 calc(-1 * var(--space-5));
   padding: var(--space-4) var(--space-5) var(--space-5);
-  border-top: 1px solid var(--line);
+  border-top: 1px solid var(--card-edge);
+  border-radius: 0 0 28px 28px;
+  /* A glass toolbar: the one blurred layer here, so text scrolling under it stays out of the way. */
   background: var(--glass-shine), var(--sheet-fill);
+  -webkit-backdrop-filter: var(--glass-blur-strong);
+  backdrop-filter: var(--glass-blur-strong);
+  box-shadow: 0 -10px 24px -18px rgb(60 20 80 / 35%);
 }
 
 .peek-buttons {
@@ -571,6 +608,10 @@ function onClick(event: MouseEvent): void {
 
 .peek-remove {
   color: var(--bad);
+}
+
+.peek-remove:hover {
+  border-color: color-mix(in srgb, var(--bad) 40%, transparent);
 }
 
 .peek-full {

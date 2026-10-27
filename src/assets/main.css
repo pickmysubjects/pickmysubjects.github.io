@@ -83,6 +83,8 @@
   --glass-blur-strong: blur(28px) saturate(200%);
   /* Popovers and sheets: glass, but mostly opaque so their text reads easily. */
   --sheet-fill: color-mix(in srgb, var(--surface) 84%, transparent);
+  /* The subject sheet: frosted, a little more opaque than cards since it carries a lot of text. */
+  --peek-fill: rgb(255 255 255 / 62%);
   /* Content cards: a tinted see-through fill with the chrome's hairline and top highlight, no blur. */
   --card-fill: rgb(255 255 255 / 34%);
   --card-blur: blur(24px) saturate(195%);
@@ -147,6 +149,7 @@
     --tile-fill: rgb(30 24 44 / 55%);
     --field-fill: rgb(255 255 255 / 6%);
     --inset-fill: rgb(255 255 255 / 7%);
+    --peek-fill: rgb(30 24 44 / 70%);
     --card-edge: rgb(255 255 255 / 9%);
     --card-shadow: inset 1px 1px 0 rgb(255 255 255 / 18%), inset 0 0 0 1px rgb(255 255 255 / 6%), inset 0 -1px 0 rgb(0 0 0 / 35%), 0 10px 30px -16px rgb(0 0 0 / 70%);
     color-scheme: dark;
@@ -764,6 +767,7 @@ button.chip {
     --float-fill: #f9f2f8;
     --seg-fill: #f1e6f1;
     --sheet-fill: #f9f2f8;
+    --peek-fill: #f9f2f8;
     --chrome-blur: none;
     --glass-blur: none;
     --float-blur: none;
@@ -790,12 +794,14 @@ button.chip {
     --float-fill: #1f1828;
     --seg-fill: #241c2e;
     --sheet-fill: #1f1828;
+    --peek-fill: #1f1828;
   }
 }
 
 @media (prefers-contrast: more) {
   :root {
     --glass-fill: var(--surface);
+    --peek-fill: var(--surface);
     --glass-fill-hover: var(--surface-2);
     --glass-edge: var(--ink-faint);
     --chrome-fill: var(--surface);
