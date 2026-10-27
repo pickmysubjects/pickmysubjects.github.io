@@ -136,7 +136,7 @@ function onClick(event: MouseEvent): void {
 </script>
 
 <template>
-  <dialog ref="dialog" class="peek" :class="{ 'peek-full': full }" :aria-label="code" @close="emit('close')" @click="onClick" @scroll.passive="full = true">
+  <dialog ref="dialog" class="peek" :class="{ 'peek-expanded': full }" :aria-label="code" @close="emit('close')" @click="onClick" @scroll.passive="full = true">
     <button type="button" class="peek-handle" :aria-label="code" :aria-expanded="full" @click="full = !full"><span aria-hidden="true" /></button>
     <div class="peek-body">
       <header class="peek-head">
@@ -357,7 +357,7 @@ function onClick(event: MouseEvent): void {
     transition: max-height 0.25s ease;
   }
 
-  .peek-full {
+  .peek-expanded {
     max-height: 92vh;
     background: var(--glass-shine), var(--sheet-fill);
   }
