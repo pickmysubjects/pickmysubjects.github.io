@@ -1232,6 +1232,7 @@ export const hi: Messages = {
     note: "यह यहाँ के नंबरों से अंदाज़ा है। आधिकारिक WAM my.unimelb में देखें।",
   },
   stress: {
+    short: {"stack": "{n} विषय {skill} पर", "hours": "{hours} घंटे क्लास", "hoursWork": "{hours} घंटे क्लास + {work} घंटे काम", "workload": "{n} भारी वर्कलोड", "coursework": "{n} ज़्यादा कोर्सवर्क", "exams": "{n} बड़े फ़ाइनल", "projects": "{n} बड़े प्रोजेक्ट", "deadlines": "{n} असेसमेंट", "hard": "{n} कठिन माने गए", "stuck": "अलग नहीं हो सकते", "details": "विवरण"},
     heavy: "भारी",
     veryHeavy: "बहुत भारी",
     stackWeak: "{codes} सब {skill} पर टिके हैं, और आपने {skill} को कमज़ोर बताया है।",

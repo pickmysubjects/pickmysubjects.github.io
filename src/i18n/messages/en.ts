@@ -1235,6 +1235,7 @@ export const en = {
     note: "An estimate from the numbers here. Your official WAM is in my.unimelb.",
   },
   stress: {
+    short: {"stack": "{n} lean on {skill}", "hours": "{hours} h of class", "hoursWork": "{hours} h class + {work} h work", "workload": "{n} heavy workloads", "coursework": "{n} coursework-heavy", "exams": "{n} big finals", "projects": "{n} big projects", "deadlines": "{n} tasks due", "hard": "{n} rated hard", "stuck": "Can't be split", "details": "Details"},
     heavy: "Heavy",
     veryHeavy: "Very heavy",
     stackWeak: "{codes} all lean on {skill}, which you rated weak.",

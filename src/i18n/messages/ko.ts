@@ -1232,6 +1232,7 @@ export const ko: Messages = {
     note: "여기 숫자로 계산한 추정치예요. 공식 WAM은 my.unimelb에서 확인하세요.",
   },
   stress: {
+    short: {"stack": "{n}과목이 {skill} 중심", "hours": "주 {hours}시간 수업", "hoursWork": "수업 {hours}시간 + 일 {work}시간", "workload": "{n}과목 과제량 많음", "coursework": "{n}과목 과제 위주", "exams": "{n}과목 기말 비중 큼", "projects": "{n}과목 큰 프로젝트", "deadlines": "과제 {n}개", "hard": "{n}과목 어려움", "stuck": "나눌 수 없음", "details": "자세히"},
     heavy: "빡빡함",
     veryHeavy: "매우 빡빡함",
     stackWeak: "{codes} 모두 {skill}을(를) 써요. {skill}은(는) 약하다고 답했어요.",

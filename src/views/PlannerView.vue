@@ -162,7 +162,7 @@ const unavoidable = computed(() =>
 // Heavy semesters, counted for the status card; the line jumps to the first one's note and fix.
 const heavyTerms = computed(() => stress.value.terms.filter((x) => x && x.level !== 'ok').length)
 function showHeavy(): void {
-  const note = document.querySelector<HTMLElement>('[data-stress-term]')
+  const note = document.querySelector<HTMLElement>('[data-stress-term] button')
   if (!note) return
   note.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'center' })
   note.focus({ preventScroll: true })

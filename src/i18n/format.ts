@@ -220,6 +220,16 @@ function describeExpr(t: Translate, e: ReqExpr): string {
 }
 
 /** One reason a semester looks heavy, with the skill named in the reader's language. */
+/**
+ * A heavy semester's reason in a few words, for the chip on the plan board: the kind of load and
+ * how many subjects, never the subject codes (those are in the full sentence behind it).
+ */
+export function stressShort(t: Translate, reason: StressReason): string {
+  const key = reason.key === 'stackWeak' || reason.key === 'stackStruggle' || reason.key === 'stackMarks' ? 'stack' : reason.key
+  const p = reason.params
+  return t(`stress.short.${key}`, { n: p.n ?? 0, hours: p.hours ?? 0, work: p.work ?? 0, skill: typeof p.skill === 'string' ? t(`skill.${p.skill}`) : '' })
+}
+
 export function stressText(t: Translate, reason: StressReason): string {
   const params: Params = localiseParams(t, reason.params)
   if (typeof params.skill === 'string') params.skill = t(`skill.${params.skill}`)

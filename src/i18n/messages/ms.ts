@@ -1232,6 +1232,7 @@ export const ms: Messages = {
     note: "Ini anggaran daripada nombor di sini. WAM rasmi ada di my.unimelb.",
   },
   stress: {
+    short: {"stack": "{n} subjek perlu {skill}", "hours": "{hours} jam kelas", "hoursWork": "{hours} jam kelas + {work} jam kerja", "workload": "{n} beban berat", "coursework": "{n} banyak kerja kursus", "exams": "{n} peperiksaan akhir besar", "projects": "{n} projek besar", "deadlines": "{n} tugasan", "hard": "{n} dinilai sukar", "stuck": "Tak boleh dipisah", "details": "Butiran"},
     heavy: "Berat",
     veryHeavy: "Sangat berat",
     stackWeak: "{codes} semuanya bergantung pada {skill}, yang anda nilai lemah.",

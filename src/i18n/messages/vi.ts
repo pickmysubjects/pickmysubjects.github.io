@@ -1232,6 +1232,7 @@ export const vi: Messages = {
     note: "Đây là ước tính từ các con số ở đây. WAM chính thức xem trên my.unimelb.",
   },
   stress: {
+    short: {"stack": "{n} môn cần {skill}", "hours": "{hours} giờ học", "hoursWork": "{hours} giờ học + {work} giờ làm", "workload": "{n} môn nặng", "coursework": "{n} môn nhiều bài tập", "exams": "{n} môn thi cuối nặng", "projects": "{n} đồ án lớn", "deadlines": "{n} bài phải nộp", "hard": "{n} môn khó", "stuck": "Không tách được", "details": "Chi tiết"},
     heavy: "Nặng",
     veryHeavy: "Rất nặng",
     stackWeak: "{codes} đều dùng nhiều {skill}, mà bạn tự đánh giá {skill} là yếu.",

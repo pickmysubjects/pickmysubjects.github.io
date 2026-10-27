@@ -1232,6 +1232,7 @@ export const zhCN: Messages = {
     note: "这是按这里的数字估算的，正式 WAM 以 my.unimelb 为准。",
   },
   stress: {
+    short: {"stack": "{n} 门都靠{skill}", "hours": "每周 {hours} 小时课", "hoursWork": "{hours} 小时课 + {work} 小时工作", "workload": "{n} 门工作量大", "coursework": "{n} 门平时作业多", "exams": "{n} 门期末占大头", "projects": "{n} 门大项目", "deadlines": "{n} 项考核", "hard": "{n} 门公认难", "stuck": "拆不开", "details": "详情"},
     heavy: "偏重",
     veryHeavy: "很重",
     stackWeak: "{codes} 都要用{skill}，你把{skill}评为偏弱。",
