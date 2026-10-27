@@ -150,9 +150,10 @@ function pick(skill: Skill, level: number): void {
   grid-template-columns: repeat(5, minmax(44px, 1fr));
   flex: 0 1 auto;
   max-width: 100%;
-  border: 1px solid var(--line);
+  border: 1px solid var(--glass-edge);
   border-radius: var(--radius-sm);
   overflow: hidden;
+  background: var(--glass-shine);
 }
 
 .step {
@@ -160,12 +161,12 @@ function pick(skill: Skill, level: number): void {
   min-height: 32px;
   padding: 6px 8px;
   border: 0;
-  border-left: 1px solid var(--line);
-  background: var(--field-fill);
+  border-left: 1px solid color-mix(in srgb, var(--ink) 8%, transparent);
+  background: color-mix(in srgb, var(--glass-fill) 55%, transparent);
   font: inherit;
   font-size: 0.8125rem;
   line-height: 1.25;
-  color: var(--ink-soft);
+  color: var(--ink);
   cursor: pointer;
 }
 
@@ -187,6 +188,13 @@ function pick(skill: Skill, level: number): void {
 .step-2[aria-checked='true'] {
   background: var(--warn);
   color: #fff;
+}
+
+@media (prefers-color-scheme: dark) {
+  .step-1[aria-checked='true'],
+  .step-2[aria-checked='true'] {
+    color: #1d1300;
+  }
 }
 
 .step-3[aria-checked='true'] {
@@ -217,7 +225,7 @@ function pick(skill: Skill, level: number): void {
   display: none;
   justify-content: space-between;
   font-size: 0.8125rem;
-  color: var(--ink-faint);
+  color: var(--ink-soft);
 }
 
 @media (max-width: 640px) {
@@ -286,7 +294,7 @@ function pick(skill: Skill, level: number): void {
 .scale-note {
   margin-top: 4px;
   font-size: 0.75rem;
-  color: var(--ink-faint);
+  color: var(--ink-soft);
 }
 .suggest {
   flex: 1 0 100%;

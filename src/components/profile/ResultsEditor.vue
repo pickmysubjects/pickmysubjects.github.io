@@ -269,7 +269,7 @@ function remove(i: number): void {
   position: absolute;
   top: 50%;
   left: 12px;
-  color: var(--ink-faint);
+  color: var(--ink-soft);
   transform: translateY(-50%);
 }
 
@@ -329,7 +329,7 @@ function remove(i: number): void {
 
 .group-avg {
   font-weight: 500;
-  color: var(--ink-faint);
+  color: var(--ink-soft);
 }
 
 .rows {
@@ -350,8 +350,15 @@ function remove(i: number): void {
   gap: 12px;
   padding: 10px 12px;
   border: 1px solid var(--glass-edge);
-  border-radius: 14px;
-  background: var(--glass-fill);
+  border-radius: 16px;
+  /* A thin pane of the section's glass, not a white box: shine on top, mostly see-through. */
+  background: var(--glass-shine), color-mix(in srgb, var(--glass-fill) 45%, transparent);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--glass-edge) 80%, transparent);
+  transition: background-color 0.2s ease;
+}
+
+.row:hover {
+  background-color: color-mix(in srgb, var(--glass-fill) 70%, transparent);
 }
 
 .row-fail {
@@ -375,6 +382,12 @@ function remove(i: number): void {
 
 .when-select {
   width: 100%;
+}
+
+@media (prefers-color-scheme: dark) {
+  .row {
+    --accent: #ff8cc6;
+  }
 }
 
 .code {
@@ -482,7 +495,7 @@ function remove(i: number): void {
 
 .act-remove {
   padding: 0 8px;
-  color: var(--ink-faint);
+  color: var(--ink-soft);
 }
 
 .act-remove:hover {
@@ -606,5 +619,12 @@ function remove(i: number): void {
   color: var(--ink);
   background: var(--glass-fill-hover);
   box-shadow: var(--glass-shadow);
+}
+
+/* Light glass: a deeper green keeps the badge at AA. */
+@media (prefers-color-scheme: light) {
+  .grade-h1 {
+    color: #146c3e;
+  }
 }
 </style>
