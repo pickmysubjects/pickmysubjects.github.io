@@ -1011,6 +1011,7 @@ export const ko: Messages = {
     noGroup: "조별 과제 없음",
     noHurdle: "기말이 허들 아님",
     noTest: "학기 중 시험 없음",
+    running: "올해 개설",
     sort: "정렬",
     sortCode: "과목 코드",
     sortEasy: "쉬운 순",
@@ -1035,6 +1036,7 @@ export const ko: Messages = {
     coverage: "지금까지 {n}개 과목, 그중 Breadth {breadth}개예요.",
     preset: { summerWinter: "여름·겨울", firstSemester: "첫 학기", breadth: "Breadth", noExam: "기말시험 없음" },
     rankLabel: "순위",
+    heading: { easy: "멜번대 꿀강", hard: "멜번대 어려운 과목", noExam: "기말시험 없는 과목", firstSemester: "신입생 1학기 과목", breadth: "브레드스 과목", summerWinter: "여름·겨울 학기 과목" },
     rankList: {
       easy: "쉬운 과목",
       hard: "어려운 과목",

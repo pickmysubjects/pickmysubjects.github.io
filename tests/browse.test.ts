@@ -3,6 +3,7 @@ import { applyQuick, browse, browseAddress, EASY_CUTS, EMPTY_FILTERS, filtersFro
 import { rankSubjects } from '../src/engine/easeRanking'
 import { recommend } from '../src/engine/recommend'
 import { realData } from './realData'
+import { subject } from './helpers'
 
 describe('browse (real data)', () => {
   const data = realData()
@@ -97,8 +98,18 @@ describe('browse (real data)', () => {
 
 describe('browse filters in the address', () => {
   it('round-trips', () => {
-    const f: BrowseFilters = { text: 'maths', category: 'breadth', level: 2, period: 'semester-2', noPrereq: true, noExam: true, noGroup: true, noHurdle: true, noTest: true, sort: 'hours', rank: 'easy', mine: true, offTerm: true }
+    const f: BrowseFilters = { text: 'maths', category: 'breadth', level: 2, period: 'semester-2', noPrereq: true, noExam: true, noGroup: true, noHurdle: true, noTest: true, sort: 'hours', rank: 'easy', mine: true, offTerm: true, running: true }
     expect(filtersFromQuery(new URLSearchParams(filtersToQuery(f)))).toEqual(f)
+  })
+
+  it('the no-exam list is what runs this year, easiest first; a subject not running is left out', () => {
+    const f = applyQuick(EMPTY_FILTERS, 'noExam')
+    expect(f).toMatchObject({ noExam: true, running: true, sort: 'easy' })
+    const notRunning = subject({ code: 'ZZZZ10001', offerings: { 2026: [] }, assessment: [{ kind: 'assignment', weight: 100 }] })
+    const runs = subject({ code: 'ZZZZ10002', offerings: { 2026: ['semester-1'] }, assessment: [{ kind: 'assignment', weight: 100 }] })
+    const codes = browse([notRunning, runs], f, 'B-SCI', 2026).map((r) => r.subject.code)
+    expect(codes).toEqual(['ZZZZ10002'])
+    expect(browse([notRunning, runs], { ...f, running: false }, 'B-SCI', 2026).map((r) => r.subject.code).sort()).toEqual(['ZZZZ10001', 'ZZZZ10002'])
   })
 
   it('leaves defaults out', () => {

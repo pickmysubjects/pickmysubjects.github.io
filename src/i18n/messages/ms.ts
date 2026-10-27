@@ -1011,6 +1011,7 @@ export const ms: Messages = {
     noGroup: "Tiada kerja berkumpulan",
     noHurdle: "Peperiksaan bukan hurdle",
     noTest: "Tiada ujian semester",
+    running: "Ditawarkan tahun ini",
     sort: "Susun",
     sortCode: "Kod",
     sortEasy: "Paling mudah dahulu",
@@ -1035,6 +1036,7 @@ export const ms: Messages = {
     coverage: "{n} subjek setakat ini, {breadth} daripadanya breadth.",
     preset: { summerWinter: "Musim panas & sejuk", firstSemester: "Semester pertama", breadth: "Breadth", noExam: "Tiada peperiksaan akhir" },
     rankLabel: "Kedudukan",
+    heading: { easy: "Subjek mudah di UniMelb", hard: "Subjek paling sukar di UniMelb", noExam: "Subjek tanpa peperiksaan akhir", firstSemester: "Subjek semester pertama", breadth: "Subjek breadth", summerWinter: "Subjek musim panas dan sejuk" },
     rankList: {
       easy: "Subjek mudah",
       hard: "Subjek sukar",

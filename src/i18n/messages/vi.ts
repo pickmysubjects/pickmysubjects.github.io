@@ -1011,6 +1011,7 @@ export const vi: Messages = {
     noGroup: "Không làm nhóm",
     noHurdle: "Thi cuối kỳ không bắt buộc đậu",
     noTest: "Không kiểm tra giữa kỳ",
+    running: "Năm nay có mở",
     sort: "Sắp xếp",
     sortCode: "Mã môn",
     sortEasy: "Dễ nhất trước",
@@ -1035,6 +1036,7 @@ export const vi: Messages = {
     coverage: "Hiện có {n} môn, trong đó {breadth} môn breadth.",
     preset: { summerWinter: "Kỳ hè & kỳ đông", firstSemester: "Học kỳ đầu", breadth: "Breadth", noExam: "Không thi cuối kỳ" },
     rankLabel: "Xếp hạng",
+    heading: { easy: "Môn dễ ở UniMelb", hard: "Môn khó nhất ở UniMelb", noExam: "Môn không thi cuối kỳ", firstSemester: "Môn cho học kỳ đầu", breadth: "Môn breadth", summerWinter: "Môn kỳ hè và kỳ đông" },
     rankList: {
       easy: "Môn dễ",
       hard: "Môn khó",

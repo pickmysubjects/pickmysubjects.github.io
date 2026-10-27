@@ -26,6 +26,8 @@ export interface BrowseFilters {
   mine: boolean
   /** Only subjects offered in summer or winter term that year. */
   offTerm: boolean
+  /** Leave out subjects the year's timetable says don't run (when it runs isn't known: kept). */
+  running: boolean
   /**
    * The degree an easy/hard list was opened for from a link (a subject page's "#5 on the easy
    * list" chip names its degree's list), until the student has chosen a degree of their own.
@@ -47,6 +49,7 @@ export const EMPTY_FILTERS: BrowseFilters = {
   rank: null,
   mine: false,
   offTerm: false,
+  running: false,
 }
 
 /** Starting points for the questions new students ask most. */
@@ -54,7 +57,8 @@ export const PRESETS = {
   firstSemester: { level: 1, period: 'semester-1' },
   // Breadth is picked for an easy mark more than anything: easiest first.
   breadth: { category: 'breadth', sort: 'easy' },
-  noExam: { noExam: true },
+  // No exam is asked for this semester's choices: what runs this year, easiest first.
+  noExam: { noExam: true, running: true, sort: 'easy' },
   summerWinter: { offTerm: true },
 } as const satisfies Record<string, Partial<BrowseFilters>>
 
@@ -165,6 +169,7 @@ export function browse(subjects: Subject[], f: BrowseFilters, course: string, ye
     .filter((r) => !f.noGroup || r.group === 0)
     .filter((r) => !f.noHurdle || r.examHurdle === false)
     .filter((r) => !f.noTest || r.test === 0)
+    .filter((r) => !f.running || r.periods.length > 0 || r.subject.offerings === 'unknown')
   const sorts: Record<BrowseSort, (a: BrowseRow, b: BrowseRow) => number> = {
     code: (a, b) => a.subject.code.localeCompare(b.subject.code),
     easy: easiest(),
@@ -191,6 +196,7 @@ export function filtersToQuery(f: BrowseFilters): string {
   if (f.rank) q.set('list', f.rank)
   if (f.mine) q.set('mine', '1')
   if (f.offTerm) q.set('offterm', '1')
+  if (f.running) q.set('running', '1')
   if (f.rank && f.listCourse) q.set('course', f.listCourse)
   return q.toString()
 }
@@ -199,7 +205,7 @@ const PERIOD_SET = new Set<string>(['summer', 'semester-1', 'winter', 'semester-
 const SORT_SET = new Set<string>(['code', 'easy', 'exam', 'hours', 'rating'])
 
 /** The query keys that set filters; anything else (fbclid, utm_source from a shared link) is ignored. */
-const FILTER_KEYS = new Set(['q', 'type', 'level', 'when', 'noprereq', 'noexam', 'nogroup', 'nohurdle', 'notest', 'sort', 'preset', 'list', 'mine', 'breadth', 'offterm'])
+const FILTER_KEYS = new Set(['q', 'type', 'level', 'when', 'noprereq', 'noexam', 'nogroup', 'nohurdle', 'notest', 'sort', 'preset', 'list', 'mine', 'breadth', 'offterm', 'running'])
 
 /**
  * `slug` is the quick pick in the path (/subjects/no-exam/, /subjects/easy/); filters in the query
@@ -228,6 +234,7 @@ export function filtersFromQuery(q: URLSearchParams, slug = ''): BrowseFilters {
     rank: rankFromSlug(q.get('list') ?? '') ?? rankFromSlug(slug) ?? base.rank,
     mine: q.get('mine') === '1',
     offTerm: q.get('offterm') === '1' || base.offTerm,
+    running: q.get('running') === '1' || base.running,
     ...(COURSE_CODE.test(q.get('course') ?? '') ? { listCourse: q.get('course')! } : {}),
   }
 }

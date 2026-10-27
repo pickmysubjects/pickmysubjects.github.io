@@ -1011,6 +1011,7 @@ export const ja: Messages = {
     noGroup: "グループ課題なし",
     noHurdle: "期末試験がハードルでない",
     noTest: "学期中のテストなし",
+    running: "今年開講",
     sort: "並び順",
     sortCode: "科目コード",
     sortEasy: "取りやすい順",
@@ -1035,6 +1036,7 @@ export const ja: Messages = {
     coverage: "いまは {n} 科目、そのうち Breadth は {breadth} 科目です。",
     preset: { summerWinter: "夏・冬学期", firstSemester: "1学期目", breadth: "Breadth", noExam: "期末試験なし" },
     rankLabel: "ランキング",
+    heading: { easy: "メルボルン大学の楽単", hard: "メルボルン大学の難しい科目", noExam: "期末試験がない科目", firstSemester: "1年目第1学期の科目", breadth: "ブレッドス科目", summerWinter: "夏学期・冬学期の科目" },
     rankList: {
       easy: "取りやすい科目",
       hard: "難しい科目",

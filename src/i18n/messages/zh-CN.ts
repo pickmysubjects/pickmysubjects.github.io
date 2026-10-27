@@ -1011,6 +1011,7 @@ export const zhCN: Messages = {
     noGroup: "没有小组作业",
     noHurdle: "期末考试不是必过项（hurdle）",
     noTest: "学期中没有小测",
+    running: "今年开课",
     sort: "排序",
     sortCode: "课程代码",
     sortEasy: "最好拿分的在前",
@@ -1035,6 +1036,7 @@ export const zhCN: Messages = {
     coverage: "目前有 {n} 门课，其中 Breadth 课 {breadth} 门。",
     preset: { summerWinter: "暑期 / 冬季课", firstSemester: "新生第一学期", breadth: "Breadth 课", noExam: "没有期末考试" },
     rankLabel: "排行",
+    heading: { easy: "墨大水课榜", hard: "墨大难课榜", noExam: "没有期末考试的课", firstSemester: "新生第一学期的课", breadth: "Breadth 课", summerWinter: "暑期和冬季课" },
     rankList: {
       easy: "水课",
       hard: "难课",

@@ -1011,6 +1011,7 @@ export const zhTW: Messages = {
     noGroup: "沒有小組作業",
     noHurdle: "期末考不是必過項（hurdle）",
     noTest: "學期中沒有小考",
+    running: "今年有開",
     sort: "排序",
     sortCode: "課程代碼",
     sortEasy: "最好拿分的在前",
@@ -1035,6 +1036,7 @@ export const zhTW: Messages = {
     coverage: "目前有 {n} 門課，其中 Breadth 課 {breadth} 門。",
     preset: { summerWinter: "暑期 / 冬季課", firstSemester: "新生第一學期", breadth: "Breadth 課", noExam: "沒有期末考" },
     rankLabel: "排行",
+    heading: { easy: "墨大涼課榜", hard: "墨大難課榜", noExam: "沒有期末考的課", firstSemester: "新生第一學期的課", breadth: "Breadth 課", summerWinter: "暑期和冬季課" },
     rankList: {
       easy: "涼課",
       hard: "難課",

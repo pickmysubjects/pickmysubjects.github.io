@@ -1014,6 +1014,7 @@ export const en = {
     noGroup: "No group work",
     noHurdle: "Exam not a hurdle",
     noTest: "No test in semester",
+    running: "Running this year",
     sort: "Sort by",
     sortCode: "Code",
     sortEasy: "Easiest first",
@@ -1038,6 +1039,7 @@ export const en = {
     coverage: "{n} subjects so far, {breadth} of them breadth.",
     preset: { summerWinter: "Summer & winter", firstSemester: "First semester", breadth: "Breadth", noExam: "No final exam" },
     rankLabel: "Ranked lists",
+    heading: { easy: "Easy subjects at UniMelb", hard: "Hardest subjects at UniMelb", noExam: "Subjects with no final exam", firstSemester: "First-semester subjects", breadth: "Breadth subjects", summerWinter: "Summer and winter subjects" },
     rankList: {
       easy: "Easy subjects",
       hard: "Hard subjects",

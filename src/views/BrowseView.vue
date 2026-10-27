@@ -18,6 +18,7 @@ import {
   hasFitProfile,
   rankCourseOf,
   leadReasons,
+  PRESETS,
   QUICK_CHOICES,
   quickChoice,
   recommend,
@@ -120,20 +121,26 @@ function set<K extends keyof typeof filters.value>(key: K, value: (typeof filter
 }
 
 // What is narrowing the list right now, each removable on its own (desktop and phone alike).
-const ONLY = ['noPrereq', 'noExam', 'noGroup', 'noHurdle', 'noTest'] as const
+const ONLY = ['noPrereq', 'noExam', 'noGroup', 'noHurdle', 'noTest', 'running'] as const
+// A filter the chosen quick pick sets is shown once, by that pick (pressed), not again as a chip.
+const implied = computed(() => {
+  const c = choice.value
+  return new Set<string>(c === 'all' || c === 'easy' || c === 'hard' ? [] : Object.keys(PRESETS[c]))
+})
 const activeChips = computed(() => {
   const f = filters.value
   const tr = t.value
   const out: { key: string; label: string; off: () => void }[] = []
   if (f.text.trim()) out.push({ key: 'text', label: `“${f.text.trim()}”`, off: () => set('text', '') })
-  if (f.category) out.push({ key: 'cat', label: tr(`browse.cat.${f.category}`), off: () => set('category', '') })
-  if (f.level !== null) out.push({ key: 'level', label: tr('subject.level', { level: f.level }), off: () => set('level', null) })
-  if (f.period) out.push({ key: 'period', label: tr(`periodShort.${f.period}`), off: () => set('period', null) })
-  for (const k of ONLY) if (f[k]) out.push({ key: k, label: tr(`browse.${k}`), off: () => set(k, false) })
+  const shown = (k: string) => !implied.value.has(k)
+  if (f.category && shown('category')) out.push({ key: 'cat', label: tr(`browse.cat.${f.category}`), off: () => set('category', '') })
+  if (f.level !== null && shown('level')) out.push({ key: 'level', label: tr('subject.level', { level: f.level }), off: () => set('level', null) })
+  if (f.period && shown('period')) out.push({ key: 'period', label: tr(`periodShort.${f.period}`), off: () => set('period', null) })
+  for (const k of ONLY) if (f[k] && shown(k)) out.push({ key: k, label: tr(`browse.${k}`), off: () => set(k, false) })
   return out
 })
 function clearAll(): void {
-  filters.value = { ...filters.value, text: '', category: '', level: null, period: null, noPrereq: false, noExam: false, noGroup: false, noHurdle: false, noTest: false }
+  filters.value = { ...filters.value, text: '', category: '', level: null, period: null, noPrereq: false, noExam: false, noGroup: false, noHurdle: false, noTest: false, running: false }
 }
 
 // Keep the address in step, so a list can be shared. replaceState, not a new history entry:
@@ -148,7 +155,7 @@ watch(filters, (f) => {
   <div class="browse">
     <header class="head">
       <div class="head-row">
-        <h1 class="page-title">{{ t('browse.title') }}</h1>
+        <h1 class="page-title">{{ choice === 'all' ? t('browse.title') : t(`browse.heading.${choice}`) }}</h1>
       </div>
       <p class="page-lede head-lede">{{ t('browse.ledeShort') }}<InfoTip :text="t('browse.lede')" /></p>
     </header>

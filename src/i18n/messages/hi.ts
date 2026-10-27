@@ -1011,6 +1011,7 @@ export const hi: Messages = {
     noGroup: "ग्रुप वर्क नहीं",
     noHurdle: "फ़ाइनल परीक्षा hurdle नहीं",
     noTest: "सेमेस्टर में टेस्ट नहीं",
+    running: "इस साल चलते हैं",
     sort: "क्रम",
     sortCode: "कोड",
     sortEasy: "सबसे आसान पहले",
@@ -1035,6 +1036,7 @@ export const hi: Messages = {
     coverage: "अब तक {n} सब्जेक्ट, जिनमें {breadth} breadth हैं।",
     preset: { summerWinter: "समर और विंटर", firstSemester: "पहला सेमेस्टर", breadth: "Breadth", noExam: "फ़ाइनल परीक्षा नहीं" },
     rankLabel: "रैंकिंग",
+    heading: { easy: "UniMelb के आसान सब्जेक्ट", hard: "UniMelb के सबसे कठिन सब्जेक्ट", noExam: "बिना फ़ाइनल एग्ज़ाम वाले सब्जेक्ट", firstSemester: "पहले सेमेस्टर के सब्जेक्ट", breadth: "ब्रेड्थ सब्जेक्ट", summerWinter: "समर और विंटर सब्जेक्ट" },
     rankList: {
       easy: "आसान सब्जेक्ट",
       hard: "कठिन सब्जेक्ट",

@@ -13,7 +13,7 @@ const categories = computed(() => ['', ...props.categories])
 const LEVELS = [null, 1, 2, 3] as const
 // Semesters first, then the short terms: "Any" on its own row and two even pairs below it.
 const WHEN = [null, 'semester-1', 'semester-2', 'summer', 'winter'] as const
-const TOGGLES = ['noPrereq', 'noExam', 'noGroup', 'noHurdle', 'noTest'] as const
+const TOGGLES = ['noPrereq', 'noExam', 'noGroup', 'noHurdle', 'noTest', 'running'] as const
 
 // Phones: the filters live in a bottom sheet, opened by the Filters button. Wide screens: a sidebar.
 const PHONE = '(max-width: 720px)'
@@ -42,7 +42,7 @@ function onKey(e: KeyboardEvent): void {
 }
 const active = computed(() => {
   const f = filters.value
-  return [f.category, f.level !== null, f.period, f.noPrereq, f.noExam, f.noGroup, f.noHurdle, f.noTest].filter(Boolean).length
+  return [f.category, f.level !== null, f.period, f.noPrereq, f.noExam, f.noGroup, f.noHurdle, f.noTest, f.running].filter(Boolean).length
 })
 
 function set<K extends keyof BrowseFilters>(key: K, value: BrowseFilters[K]): void {
