@@ -1,12 +1,13 @@
 <script setup lang="ts">
-// Local preview only (dev server and `npm run local`): force light/dark and a Reduce Transparency
-// look to review the design. main.ts never loads this in the real build.
+// Local preview only (dev server and `npm run local`): force light/dark, a Reduce Transparency
+// look and motion on/off to review the design. main.ts never loads this in the real build.
 import { ref, watchEffect } from 'vue'
 
 type Theme = 'auto' | 'light' | 'dark'
 const order: Theme[] = ['auto', 'light', 'dark']
 const root = document.documentElement
 const hadGlass = root.classList.contains('force-glass')
+const hadMotion = root.classList.contains('force-motion')
 
 function read(key: string): string | null {
   try {
@@ -27,6 +28,12 @@ const saved = read('preview-theme')
 const theme = ref<Theme>(order.includes(saved as Theme) ? (saved as Theme) : 'auto')
 const rt = ref(read('preview-rt') === '1')
 
+// Motion: Auto follows the Mac's Reduce Motion; On ignores it (the local default); Off forces it.
+type Motion = 'auto' | 'on' | 'off'
+const motions: Motion[] = ['auto', 'on', 'off']
+const savedMotion = read('preview-motion')
+const motion = ref<Motion>(motions.includes(savedMotion as Motion) ? (savedMotion as Motion) : hadMotion ? 'on' : 'auto')
+
 watchEffect(() => {
   if (theme.value === 'auto') root.removeAttribute('data-theme')
   else root.setAttribute('data-theme', theme.value)
@@ -37,6 +44,13 @@ watchEffect(() => {
   root.classList.toggle('force-glass', hadGlass && !rt.value)
   write('preview-rt', rt.value ? '1' : '0')
 })
+
+watchEffect(() => {
+  root.classList.toggle('force-motion', motion.value === 'on')
+  root.classList.toggle('preview-rm', motion.value === 'off')
+  write('preview-motion', motion.value)
+})
+const nextMotion = () => (motion.value = motions[(motions.indexOf(motion.value) + 1) % motions.length] ?? 'auto')
 
 const next = () => (theme.value = order[(order.indexOf(theme.value) + 1) % order.length] ?? 'auto')
 </script>
@@ -51,6 +65,9 @@ const next = () => (theme.value = order[(order.indexOf(theme.value) + 1) % order
     </button>
     <button type="button" :aria-pressed="rt" :title="rt ? 'Reduce Transparency look' : 'Glass look'" @click="rt = !rt">
       <span>{{ rt ? 'RT' : 'Glass' }}</span>
+    </button>
+    <button type="button" :aria-label="`Motion: ${motion}`" :title="`Motion: ${motion === 'auto' ? 'Auto (system Reduce Motion)' : motion === 'on' ? 'On' : 'Off (reduced)'}`" @click="nextMotion">
+      <span>{{ motion === 'auto' ? 'Motion: Auto' : motion === 'on' ? 'Motion: On' : 'Motion: Off' }}</span>
     </button>
   </div>
 </template>

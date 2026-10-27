@@ -27,6 +27,12 @@ if (import.meta.env.VITE_FORCE_GLASS === '1' || (import.meta.env.DEV && new URLS
   document.documentElement.classList.add('force-glass')
 }
 
+// Local preview only: animations run even when the Mac has Reduce Motion on (the preview pill can
+// switch this to the system setting or to reduced motion). Dropped from the real build like above.
+if (import.meta.env.VITE_FORCE_GLASS === '1' || import.meta.env.DEV) {
+  document.documentElement.classList.add('force-motion')
+}
+
 // Local preview only: a floating light/dark and Reduce Transparency switch. Same gating as above
 // (dev server or `npm run local`); the real build drops this branch and the component with it.
 if (import.meta.env.VITE_FORCE_GLASS === '1' || import.meta.env.DEV) {

@@ -38,6 +38,7 @@ import RatePrompt from '@/components/rating/RatePrompt.vue'
 import { useRated } from '@/composables/useRated'
 import { useI18n } from '@/i18n'
 import { issueText, termLabel } from '@/i18n/format'
+import { reducedMotion } from '@/utils/motion'
 
 // The wizard copies the setup once, so it restarts when the dataset is switched.
 const { data, subjectList, name: dataName } = useDataset()
@@ -168,7 +169,7 @@ const heavyTerms = computed(() => stress.value.terms.filter((x) => x && x.level 
 function showHeavy(): void {
   const note = document.querySelector<HTMLElement>('[data-stress-term] button')
   if (!note) return
-  note.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'center' })
+  note.scrollIntoView({ behavior: reducedMotion() ? 'auto' : 'smooth', block: 'center' })
   note.focus({ preventScroll: true })
 }
 // A first visit shows only the questions; the board and its checks come once there's a plan.
