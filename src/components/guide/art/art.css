@@ -1,0 +1,123 @@
+/* Shared palette of the guide's isometric scenes (pearl white and the site's pastels), light then dark.
+   Not scoped: every scene's class names live under .art. */
+.art {
+  --a-t: #fffdff;
+  --a-l: #f1e8f6;
+  --a-r: #e0d4eb;
+  --a-g: #f7f1fa;
+  --a-gl: #e9dff0;
+  --a-gr: #d9cbe5;
+  --a-pk: #c2227a;
+  --a-good: #16703f;
+  --a-steam: #cdbcd8;
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.art .t { fill: var(--a-t); }
+.art .l { fill: var(--a-l); }
+.art .r { fill: var(--a-r); }
+.art .g { fill: var(--a-g); }
+.art .gl { fill: var(--a-gl); }
+.art .gr { fill: var(--a-gr); }
+.art .sh { fill: #6b3a85; opacity: 0.1; }
+.art .sh2 { fill: #3a2050; opacity: 0.16; }
+.art .skin { fill: #f2cfae; }
+.art .leg { fill: #4b4f63; }
+.art .trunk { fill: #b49a86; }
+.art .grass { fill: #e4f0e6; }
+.art .pa { fill: #fbf3ea; }
+.art .win { fill: #d9cbe5; }
+.art .hl { fill: #fff; opacity: 0.4; }
+
+.art .pk, .art .pkt { fill: #e0559f; }
+.art .pkl { fill: #c2227a; }
+.art .pkr { fill: #a01a66; }
+.art .pks { fill: #f5bcd6; }
+.art .li, .art .lit { fill: #bfaef3; }
+.art .lil { fill: #a795e6; }
+.art .lir { fill: #8f7bf5; }
+.art .sk, .art .skt { fill: #bcd8f2; }
+.art .skl { fill: #a7c6ea; }
+.art .skr { fill: #8badd6; }
+.art .mi, .art .mit { fill: #bfe3cc; }
+.art .mil { fill: #9fc9ad; }
+.art .mir { fill: #7aa58a; }
+.art .wa, .art .wat { fill: #f7e3a6; }
+.art .wal { fill: #f2d98d; }
+.art .war { fill: #ddc372; }
+
+.art .bk { fill: #fff; }
+.art .ln { fill: none; stroke: #e7a2c2; stroke-width: 1.5; }
+.art .key { fill: #e9dff0; }
+.art .scr { fill: #fbf8fd; }
+.art .lnf { fill: #e3d8ec; }
+.art .slot { fill: #efe6f4; }
+.art .big { fill: #f3ecf8; }
+.art .ring { fill: #a893b7; }
+.art .box { fill: #fff; stroke: #cdbcd8; stroke-width: 1; }
+.art .cell { fill: #f6f0fa; }
+.art .litc { fill: #e0559f; }
+
+/* Floating glass (app windows, code chips, bubbles). */
+.art .gls { fill: rgb(255 255 255 / 62%); stroke: #fff; stroke-width: 1.2; filter: drop-shadow(0 6px 10px rgb(80 40 90 / 14%)); }
+.art .gly { fill: none; stroke: #8a7ca1; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Life */
+.art .glow0 { stop-color: #f5bcd6; stop-opacity: 0.85; }
+.art .glow1 { stop-color: #f5bcd6; stop-opacity: 0; }
+.art .cup { fill: #fff; stroke: #cdbcd8; stroke-width: 0.8; }
+.art .coffee { fill: #8a5a3c; }
+.art .cupband { fill: #e0559f; }
+
+/* International */
+.art .globe { fill: #dcebf8; }
+.art .mer { fill: none; stroke: #fff; stroke-width: 1.2; opacity: 0.9; }
+.art .land { fill: #bfe3cc; }
+.art .shine { fill: none; stroke: rgb(255 255 255 / 80%); stroke-width: 2; }
+.art .stand { stroke: #a893b7; stroke-width: 3; stroke-linecap: round; }
+.art .route { fill: none; stroke: #c2227a; stroke-width: 1.6; stroke-dasharray: 4 5; opacity: 0.7; }
+.art .pin { fill: #c2227a; }
+.art .pinhole { fill: #fff; }
+.art .planef { fill: #fff; stroke: #8a7ca1; stroke-width: 0.8; }
+.art .planeb { display: none; }
+.art .pass { fill: #6d7aa6; }
+.art .passl { fill: #5a6590; }
+.art .passr { fill: #4b557c; }
+.art .emblem { fill: none; stroke: #f2d98d; stroke-width: 1.4; }
+
+/* Help */
+.art .bubp { fill: #e0559f; }
+.art .bubg { fill: rgb(255 255 255 / 85%); stroke: #e9dcf1; stroke-width: 1; }
+.art .bubp ~ .dot { fill: #fff; }
+.art .dot { fill: #a893b7; }
+
+@media (prefers-color-scheme: dark) {
+  .art {
+    --a-t: #d3c8e2;
+    --a-l: #b2a5c6;
+    --a-r: #8a7ca1;
+    --a-g: #3b3049;
+    --a-gl: #30273e;
+    --a-gr: #251d31;
+    --a-pk: #fbaed5;
+    --a-good: #5fd398;
+    --a-steam: #8a7ca1;
+  }
+
+  .art .sh { fill: #000; opacity: 0.35; }
+  .art .grass { fill: #2d3d36; }
+  .art .pa { fill: #4a3e5c; }
+  .art .win, .art .lnf, .art .key { fill: #8f81a6; }
+  .art .scr, .art .big, .art .cell, .art .slot { fill: #c2b6d3; }
+  .art .gls { fill: rgb(40 34 54 / 62%); stroke: rgb(255 255 255 / 22%); filter: drop-shadow(0 6px 10px rgb(0 0 0 / 40%)); }
+  .art .gly { stroke: #d3c8e2; }
+  .art .globe { fill: #4d6a86; }
+  .art .land { fill: #5f8f74; }
+  .art .mer { opacity: 0.35; }
+  .art .bubg { fill: rgb(40 34 54 / 85%); stroke: rgb(255 255 255 / 18%); }
+  .art .dot { fill: #d3c8e2; }
+  .art .box, .art .cup { fill: #d3c8e2; }
+}
