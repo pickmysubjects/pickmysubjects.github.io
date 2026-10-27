@@ -252,6 +252,11 @@ body {
 #app > main {
   flex: 1 0 auto;
   width: 100%;
+  /* At least a screen tall (less the top bar): while a page's code loads, main is briefly empty,
+     and the footer would jump up into view and back down (layout shift). It starts just below
+     the fold instead. */
+  min-height: calc(100vh - 64px);
+  min-height: calc(100dvh - 64px);
 }
 
 h1,
