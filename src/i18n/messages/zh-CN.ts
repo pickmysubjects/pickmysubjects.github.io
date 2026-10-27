@@ -53,6 +53,7 @@ export const zhCN: Messages = {
   menu: {"all":"全部功能","close":"关闭","allSubjects":"全部课程","careers":"我想当……","myPlan":"我的排课","compareAB":"方案 A / B 对比","rules":"学位规则检查","heavy":"学期太重提醒","calendar":"导出到日历","allTools":"全部工具","guideHome":"入门总览","grades":"学分和成绩","backup":"备份 / 换设备","gradeShare":"成绩分享","d":{"allSubjects":"按条件搜索和筛选所有课","easy":"好拿分、拉 WAM 的课","hard":"大家觉得最难的课","noExam":"不用考期末的课","summerWinter":"利用寒暑假修课","breadth":"本专业以外的选修","firstSem":"第一学期适合选的课","majors":"每个专业要修哪些课","careers":"通往心仪职业的课","myPlan":"整个学位，一学期一学期排","compareAB":"两个方案并排比较","rules":"你的方案满足所有规则吗","heavy":"找出课太多的学期","calendar":"census、考试和出分日期","final":"每个等级期末要考几分","wam":"你的 WAM、目标和假设","compare":"收藏的课并排比较","routes":"每个专业的先修链","allTools":"计算器和现成榜单","guideHome":"新生从这里看起","basics":"学分、major、breadth、规则","enrolling":"从排课到正式选课","semester":"特殊考虑、考试、成绩","international":"签证修课量等","grades":"H1–N 和 WAM 怎么算","keyDates":"census、考试、出分","record":"学位、成绩和目标","shortlist":"你收藏的课","backup":"把数据搬到另一个浏览器","gradeShare":"匿名分享成绩等级帮别人"},"miss":{"noHeavy": "这个方案没有太重的学期", "plan": "先建一个排课方案", "grades": "先在我的记录里加上成绩", "shortlist": "先收藏几门课"}},
   period: { summer: '夏季学期', 'semester-1': '第一学期', winter: '冬季学期', 'semester-2': '第二学期' },
   periodShort: { summer: '夏季', 'semester-1': 'S1', winter: '冬季', 'semester-2': 'S2' },
+  termFull: '{year} {period}',
   category: { science: '理科', commerce: '商科', arts: '文科', design: '设计', music: '音乐', 'fine-arts': '艺术', agriculture: '农业', 'oral-health': '口腔健康', breadth: 'Breadth', core: '必修' },
   plan: {
     profileHint: "先在「我的」填兴趣和强项，排课更准",

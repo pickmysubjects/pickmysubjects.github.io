@@ -11,6 +11,11 @@ export function termLabel(t: Translate, term: Pick<PlanTerm, 'year' | 'period'>)
   return `${term.year} ${t(`periodShort.${term.period}`)}`
 }
 
+/** A term in full ("Semester 2 2026", "2026 第二学期", "2026년 2학기"): word order follows the locale. */
+export function termFullLabel(t: Translate, term: Pick<PlanTerm, 'year' | 'period'>): string {
+  return t('termFull', { year: term.year, period: periodLabel(t, term.period) })
+}
+
 /** A category name standing on its own (a chip or tag): starts with a capital. */
 export function categoryTag(t: Translate, category: string | undefined): string {
   const s = categoryLabel(t, category)

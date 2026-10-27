@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import { CalendarPlus, ExternalLink } from 'lucide-vue-next'
 import { useI18n } from '@/i18n'
+import { termFullLabel } from '@/i18n/format'
 import { URLS } from '@/utils/guideLinks'
 import { buildIcs, downloadIcs, groupKeyDates, KEY_DATES, melbourneToday, type KeyDate, type KeyDateGroup } from '@/utils/keyDates'
 
@@ -13,8 +14,8 @@ const groups = computed(() => groupKeyDates(KEY_DATES, today))
 const fmt = computed(() => new Intl.DateTimeFormat(locale.value, { day: 'numeric', month: 'short', weekday: 'short', timeZone: 'UTC' }))
 const day = (d: string) => fmt.value.format(new Date(`${d}T00:00:00Z`))
 const range = (d: KeyDate) => (d.start === d.end ? day(d.start) : `${day(d.start)} – ${day(d.end)}`)
-const groupName = (g: KeyDateGroup) => `${t.value(`period.${g.term}`)} ${g.year}`
-const label = (d: KeyDate) => `${t.value(`guide.kd.kind.${d.kind}`)} · ${t.value(`period.${d.term}`)} ${d.year}`
+const groupName = (g: KeyDateGroup) => termFullLabel(t.value, { year: g.year, period: g.term })
+const label = (d: KeyDate) => `${t.value(`guide.kd.kind.${d.kind}`)} · ${termFullLabel(t.value, { year: d.year, period: d.term })}`
 
 function download(): void {
   const items = groups.value.upcoming.flatMap((g) => g.items.filter((i) => !i.past))

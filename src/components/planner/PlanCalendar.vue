@@ -5,6 +5,7 @@ import InfoTip from '@/components/InfoTip.vue'
 import { usePlan } from '@/composables/usePlan'
 import { useProfile } from '@/composables/useProfile'
 import { useI18n } from '@/i18n'
+import { termFullLabel } from '@/i18n/format'
 import { buildIcs, datesForTerms, downloadIcs, KEY_DATES, melbourneToday, type KeyDate } from '@/utils/keyDates'
 
 /**
@@ -23,7 +24,7 @@ const items = computed(() => {
   ]
   return datesForTerms(KEY_DATES, terms).filter((d) => d.end >= today)
 })
-const label = (d: KeyDate) => t.value(`cal.event.${d.kind}`, { term: `${t.value(`period.${d.term}`)} ${d.year}` })
+const label = (d: KeyDate) => t.value(`cal.event.${d.kind}`, { term: termFullLabel(t.value, { year: d.year, period: d.term }) })
 
 function save(): void {
   downloadIcs(buildIcs(items.value, label), 'my-unimelb-dates.ics')

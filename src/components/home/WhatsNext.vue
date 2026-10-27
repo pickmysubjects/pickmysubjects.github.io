@@ -7,6 +7,8 @@ import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
 import { useProfile } from '@/composables/useProfile'
 import { useI18n } from '@/i18n'
+import { termFullLabel } from '@/i18n/format'
+import type { Period } from '@/engine'
 import { localTitle } from '@/i18n/localized'
 import { summariseAssessment } from '@/utils/assessment'
 import { KEY_DATES, melbourneToday, type KeyDate } from '@/utils/keyDates'
@@ -37,7 +39,7 @@ const exam = computed(() => (today.value ? examWindow(KEY_DATES, today.value) : 
 const fmt = computed(() => new Intl.DateTimeFormat(locale.value, { day: 'numeric', month: 'short', timeZone: 'UTC' }))
 const day = (d: string) => fmt.value.format(new Date(`${d}T00:00:00Z`))
 const range = (d: KeyDate) => (d.start === d.end ? day(d.start) : fmt.value.formatRange(new Date(`${d.start}T00:00:00Z`), new Date(`${d.end}T00:00:00Z`)))
-const termName = (year: number, term: string) => `${t.value(`period.${term}`)} ${year}`
+const termName = (year: number, term: string) => termFullLabel(t.value, { year, period: term as Period })
 
 function when(i: StripItem): string {
   if (i.running) return t.value('next.until', { date: day(i.date.end) })
