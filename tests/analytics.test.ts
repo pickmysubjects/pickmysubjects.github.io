@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { CSP, GOATCOUNTER } from '../vite.config'
-import { countPage, countedPath, resetAnalytics, trackEvent } from '@/utils/analytics'
+import { countPage, countedPath, optOutToggle, resetAnalytics, trackEvent } from '@/utils/analytics'
 
 const root = new URL('../', import.meta.url)
 
@@ -75,5 +75,62 @@ describe('counting', () => {
     vi.stubGlobal('window', { goatcounter: { count: () => { throw new Error('blocked') } } })
     resetAnalytics()
     expect(() => countPage('/x')).not.toThrow()
+  })
+})
+
+function fakeStorage(init: Record<string, string> = {}) {
+  const m = new Map(Object.entries(init))
+  return { getItem: (k: string) => m.get(k) ?? null, setItem: (k: string, v: string) => void m.set(k, String(v)), removeItem: (k: string) => void m.delete(k), map: m }
+}
+
+describe('#toggle-goatcounter opt-out', () => {
+  it('countPage and trackEvent send nothing while skipgc is t, from the very first page', () => {
+    const count = vi.fn()
+    vi.stubGlobal('window', { goatcounter: { count } })
+    vi.stubGlobal('localStorage', fakeStorage({ skipgc: 't' }))
+    countPage('/')
+    trackEvent('plan-share')
+    expect(count).not.toHaveBeenCalled()
+  })
+
+  it('toggles skipgc and drops the hash so a language redirect cannot toggle it back', () => {
+    const store = fakeStorage()
+    const replaceState = vi.fn()
+    vi.stubGlobal('localStorage', store)
+    vi.stubGlobal('history', { state: null, replaceState })
+    vi.stubGlobal('location', { hash: '#toggle-goatcounter', pathname: '/', search: '' })
+    expect(optOutToggle()).toBe(true)
+    expect(store.map.get('skipgc')).toBe('t')
+    expect(replaceState).toHaveBeenCalledWith(null, '', '/')
+    expect(optOutToggle()).toBe(true)
+    expect(store.map.has('skipgc')).toBe(false)
+    vi.stubGlobal('location', { hash: '#other', pathname: '/', search: '' })
+    expect(optOutToggle()).toBe(false)
+  })
+
+  it('survives blocked storage', () => {
+    vi.stubGlobal('localStorage', { getItem: () => { throw new Error('blocked') }, setItem: () => { throw new Error('blocked') } })
+    vi.stubGlobal('history', { state: null, replaceState: () => {} })
+    vi.stubGlobal('location', { hash: '#toggle-goatcounter', pathname: '/', search: '' })
+    expect(() => optOutToggle()).not.toThrow()
+    expect(() => countPage('/x')).not.toThrow()
+  })
+
+  it('count.js no longer toggles (or alerts) on its own, and the app toggles before the language redirect', () => {
+    const js = readFileSync(new URL('public/count.js', root), 'utf8')
+    expect(js).not.toMatch(/alert\(/)
+    expect(js).not.toMatch(/setItem\('skipgc'/)
+    const main = readFileSync(new URL('src/main.ts', root), 'utf8')
+    expect(main.indexOf('optOutToggle()')).toBeLessThan(main.indexOf('savedLocaleAddress()'))
+  })
+})
+
+describe('language redirect keeps the address', () => {
+  it('carries the query string and hash over to the saved language', async () => {
+    vi.resetModules()
+    vi.stubGlobal('localStorage', fakeStorage({ 'sc:locale': JSON.stringify('zh-CN') }))
+    vi.stubGlobal('location', { pathname: '/subject/COMP10001', search: '?a=1', hash: '#exam' })
+    const { savedLocaleAddress } = await import('@/composables/useView')
+    expect(savedLocaleAddress()).toBe('/zh-CN/subject/COMP10001?a=1#exam')
   })
 })

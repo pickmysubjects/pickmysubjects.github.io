@@ -2,7 +2,7 @@ import { computed } from 'vue'
 import { computeWam, type Goal, type OwnRating, type Profile, type Skill } from '@/engine'
 import { useDataset } from './useDataset'
 import { usePersisted } from './usePersisted'
-import { activePlan, books, prefsOf, type PlanPrefs } from './planStore'
+import { activePlan, books, prefsOf, withPrefs, type PlanPrefs } from './planStore'
 import { defaultState } from './planDefaults'
 import { bookOf } from '@/utils/planBook'
 import { cloneJson } from '@/utils/clone'
@@ -23,7 +23,7 @@ export function useProfile() {
   // What's saved on the profile itself (the record, and the pre-plans strengths/interests/goal).
   const stored = computed<Profile>(() => profiles.value[name.value] ?? emptyProfile())
   const prefs = computed<PlanPrefs>(() => prefsOf(activePlan(books.value[name.value]), stored.value))
-  const profile = computed<Profile>(() => ({ ...stored.value, ...prefs.value }))
+  const profile = computed<Profile>(() => withPrefs(stored.value, prefs.value))
   const wam = computed(() => computeWam(profile.value.results, data.value))
 
   function update(change: (p: Profile) => Profile): void {

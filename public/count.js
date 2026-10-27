@@ -1,6 +1,7 @@
 // Pinned copy of GoatCounter's count.js, served from this site so the CSP can keep script-src 'self'.
 // Source: https://gc.zgo.at/count.js, downloaded 2026-10-27 (9213 bytes, unversioned upstream).
-// One change: get_data() no longer sends location.search as `q` (a ?share= link carries a plan).
+// Changes: get_data() no longer sends location.search as `q` (a ?share= link carries a plan);
+// the #toggle-goatcounter block is removed (the app handles it, see src/utils/analytics.ts).
 // The app (src/utils/analytics.ts) does all counting; data-goatcounter-settings sets no_onload.
 // GoatCounter: https://www.goatcounter.com
 // This file is released under the ISC license: https://opensource.org/licenses/ISC
@@ -238,17 +239,8 @@
 		})
 	}
 
-	// Make it easy to skip your own views.
-	if (location.hash === '#toggle-goatcounter') {
-		if (localStorage.getItem('skipgc') === 't') {
-			localStorage.removeItem('skipgc', 't')
-			alert('GoatCounter tracking is now ENABLED in this browser.')
-		}
-		else {
-			localStorage.setItem('skipgc', 't')
-			alert('GoatCounter tracking is now DISABLED in this browser until ' + location + ' is loaded again.')
-		}
-	}
+	// PickMySubjects: #toggle-goatcounter is handled by the app (src/utils/analytics.ts,
+	// optOutToggle) before any language redirect, with no pop-up.
 
 	if (!goatcounter.no_onload)
 		on_load(function() {

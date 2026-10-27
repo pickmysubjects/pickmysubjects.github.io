@@ -66,6 +66,15 @@ export function prefsOf(plan: { prefs?: PlanPrefs } | undefined, profile: Pick<P
 }
 
 /**
+ * The profile as one plan sees it: the shared record with that plan's prefs. The record's own
+ * pre-plans career is dropped, so a plan with no career (or one cleared) doesn't show it.
+ */
+export function withPrefs<P extends Profile>(stored: P, prefs: PlanPrefs): P {
+  const { career: _old, ...record } = stored
+  return { ...record, ...prefs } as P
+}
+
+/**
  * The year the student started, whose Handbook rules they follow. Plans saved before this was
  * stored take the plan's start or the first semester on the record, whichever is earlier.
  */

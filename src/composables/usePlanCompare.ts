@@ -1,6 +1,6 @@
 import { computed, type Ref } from 'vue'
 import { checkCourse, comparePlans, findDiploma, informalPicks, planComponentIds, planRules, findCourse, forCourse, planRoles, planStress, requiredWithPrerequisites, termLoad, termsWithCarried, type Dataset, type RuleStatus } from '@/engine'
-import { commencementYear, type PlanSetup } from './planStore'
+import { commencementYear, withPrefs, type PlanSetup } from './planStore'
 import { useDataset } from './useDataset'
 import { useProfile } from './useProfile'
 import { planFor } from './usePlan'
@@ -47,7 +47,7 @@ export function usePlanCompare(a: Ref<PlanEntry | undefined>, b: Ref<PlanEntry |
   function side(entry: PlanEntry) {
     const { setup, terms } = entry.state
     // Judged with this plan's own strengths and goal, on the shared record.
-    const profile = { ...stored.value, ...entry.prefs }
+    const profile = withPrefs(stored.value, entry.prefs)
     const data = forCourse(all, setup.course)
     const plan = planFor(entry.state, profile, data)
     const codes = terms.flatMap((t) => t.subjects)
