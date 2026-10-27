@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs'
 import { cleanPlans } from '../src/utils/sanitize'
 import { addPlan, bookOf, MAX_PLANS, removePlan, renamePlan, switchPlan } from '../src/utils/planBook'
 import { comparePlans, type PlanTerm } from '../src/engine'
-import { activePlan, books, prefsOf, type PlanState } from '../src/composables/planStore'
+import { activePlan, books, prefsOf, withPrefs, type PlanState } from '../src/composables/planStore'
 import { provideDataset } from '../src/composables/useDataset'
 import type { Dataset } from '../src/engine'
 
@@ -139,5 +139,16 @@ describe('plans in the app', () => {
     expect(me.profile.value.career).toBeUndefined()
     plans.switchTo(idA)
     expect(me.profile.value.career).toBe('accountant')
+  })
+})
+
+describe('a plan sees its own career, never the record\'s old one', () => {
+  it('a cleared career stays cleared even when the record still has a pre-plans career', () => {
+    const stored = { results: [], skills: {}, interests: [], goal: 'balanced' as const, career: 'accountant' }
+    const prefs = prefsOf({}, stored)
+    expect(withPrefs(stored, prefs).career).toBe('accountant')
+    const { career: _c, ...cleared } = prefs
+    expect(withPrefs(stored, cleared).career).toBeUndefined()
+    expect(withPrefs(stored, { ...cleared, career: 'nurse' }).career).toBe('nurse')
   })
 })

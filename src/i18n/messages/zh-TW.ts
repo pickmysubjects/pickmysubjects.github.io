@@ -1579,7 +1579,7 @@ export const zhTW: Messages = {
     abroadText: "別的大學、公司、政府換算墨大成績的方法都不一樣。誰要你的成績，就用誰的官方工具，別相信網路上隨便找到的換算表。",
     wes: "WES：美國和加拿大（4.0 GPA）",
     enic: "UK ENIC：英國",
-    cscse: "中国留学服务中心（CSCSE）：中國大陸學歷認證",
+    cscse: "中國留學服務中心（CSCSE）：中國大陸學歷認證",
     abroadJp: "NIC-Japan：日本（資訊中心，由各大學或雇主自行認定）",
     abroadKr: "KARIC：韓國（資訊中心，由使用學歷的機構認定）",
     abroadVn: "VN-NARIC：越南（官方學歷認證）",
