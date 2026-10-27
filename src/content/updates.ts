@@ -12,6 +12,20 @@ export interface SiteUpdate {
 
 export const SITE_UPDATES: SiteUpdate[] = [
   {
+    date: '2026-10-28',
+    text: {
+      en: 'Search the whole site from the top bar (⌘K): subjects, tools and guide topics.',
+      'zh-CN': '顶栏可以全站搜索（⌘K）：课程、工具和入门话题都能搜到。',
+      'zh-TW': '頂端列可以全站搜尋（⌘K）：課程、工具和入門主題都搜得到。',
+      ja: '上のバーからサイト全体を検索（⌘K）：科目、ツール、ガイドの項目。',
+      ko: '상단 바에서 사이트 전체 검색(⌘K): 과목, 도구, 기본 정보.',
+      vi: 'Tìm cả trang từ thanh trên cùng (⌘K): môn học, công cụ và hướng dẫn.',
+      ms: 'Cari seluruh laman dari bar atas (⌘K): subjek, alatan dan topik panduan.',
+      id: 'Cari di seluruh situs dari bar atas (⌘K): matkul, alat, dan topik panduan.',
+      hi: 'ऊपर की बार से पूरी साइट खोजें (⌘K): सब्जेक्ट, टूल्स और गाइड के विषय।',
+    },
+  },
+  {
     date: '2026-10-26',
     text: {
       en: 'The site moves to the 2027 Handbook by itself as subjects are updated.',
