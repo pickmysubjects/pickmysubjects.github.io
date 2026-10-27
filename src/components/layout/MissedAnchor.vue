@@ -56,9 +56,9 @@ const hint = computed(() => {
 .missed-x {
   display: inline-grid;
   place-items: center;
-  width: 28px;
-  height: 28px;
-  margin-left: auto;
+  width: 44px;
+  height: 44px;
+  margin: -8px -4px -8px auto;
   border: 0;
   border-radius: 999px;
   background: none;
