@@ -57,9 +57,9 @@ const { t } = useI18n()
   }
 
   .tab[aria-current='page'] {
-    color: var(--accent);
-    background: var(--glass-fill-hover);
-    box-shadow: var(--pill-raised);
+    color: var(--accent-fill-ink);
+    background: var(--accent-fill);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 38%), 0 4px 12px -4px color-mix(in srgb, var(--accent-fill) 55%, transparent);
   }
 
   .tab-label {

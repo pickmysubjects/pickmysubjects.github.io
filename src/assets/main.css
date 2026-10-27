@@ -5,17 +5,22 @@
   --surface: #ffffff;
   --surface-2: #f4f4f2;
   --ink: #0b0b0c;
-  --ink-soft: #48484e;
-  --ink-faint: #8f8f96;
+  /* Secondary and faint ink are tuned to stay 4.5:1 over the thinnest glass on the brightest patch. */
+  --ink-soft: #3d3843;
+  --ink-faint: #4b4553;
   --line: #e8e8e4;
-  --accent: #c2227a;
+  /* Accent TEXT (links, eyebrows, codes): a deeper pink that stays AA on the glass. */
+  --accent: #a01a66;
+  /* Accent FILLS (primary buttons, active pills, selected chips): the brand pink, white text on it. */
+  --accent-fill: #c2227a;
+  --accent-fill-ink: #ffffff;
   --accent-ink: #ffffff;
   --accent-soft: #fbe9f2;
-  --good: #1f8a52;
+  --good: #16703f;
   --good-soft: #e5f4ec;
-  --warn: #a96a00;
+  --warn: #855300;
   --warn-soft: #fdf2dc;
-  --bad: #c0352b;
+  --bad: #b02a21;
   --bad-soft: #fbe7e5;
   --signal: #ffd166;
 
@@ -50,11 +55,33 @@
   --space-6: 32px;
   --space-7: 48px;
   /* Type scale for reading pages: section titles, body, secondary lines, labels. */
+  /* One type scale for the whole site. Nothing below 12px (caption). */
+  --fs-display: clamp(2.25rem, 1.6rem + 3vw, 3.5rem);
+  --fs-h1: clamp(1.75rem, 1.4rem + 1.6vw, 2.5rem);
+  --fs-h2: clamp(1.25rem, 1.1rem + 0.7vw, 1.5rem);
+  --fs-h3: 1.125rem;
   --fs-section: clamp(1.125rem, 1rem + 0.45vw, 1.25rem);
   --fs-body: 1rem;
   --fs-small: 0.9375rem;
   --fs-meta: 0.8125rem;
+  --fs-caption: 0.75rem;
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+  /* Line heights; each script below sets its own. */
+  --lh-tight: 1.08;
+  --lh-heading: 1.2;
   --lh-body: 1.6;
+  --track-display: -0.035em;
+  --track-heading: -0.02em;
+  /* Controls: one height, touch-sized, and radii that nest (outer = inner + padding). */
+  --control-h: 44px;
+  --control-h-sm: 34px;
+  --control-pad: 4px;
+  --radius-control: 999px;
+  --press-scale: 0.96;
+  --ease-spring: cubic-bezier(0.32, 0.72, 0, 1);
   /* Glass buttons: see-through fill, light top edge, soft lift. */
   --glass-fill: rgb(255 255 255 / 50%);
   --glass-fill-hover: rgb(255 255 255 / 72%);
@@ -113,10 +140,12 @@
     --surface: #161619;
     --surface-2: #1d1d21;
     --ink: #f3f3f4;
-    --ink-soft: #a6a6ad;
-    --ink-faint: #74747c;
+    --ink-soft: #c2bfcb;
+    --ink-faint: #a29eae;
     --line: #2a2a2f;
-    --accent: #f06bb0;
+    --accent: #fbaed5;
+    --accent-fill: #c2227a;
+    --accent-fill-ink: #ffffff;
     --accent-ink: #1a0610;
     --accent-soft: #33152a;
     --good: #5fd398;
@@ -206,6 +235,19 @@ body {
   background: transparent;
 }
 
+/* App shell: a full-height column, so on short pages the footer band sits at the bottom. */
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+#app > main {
+  flex: 1 0 auto;
+  width: 100%;
+}
+
 h1,
 h2,
 h3 {
@@ -262,8 +304,16 @@ select {
 
 /* Devanagari stacks marks above and below the letters; tight title leading makes them collide.
    :root adds weight so a component's own heading leading (one scoped class) doesn't win. */
+:root:lang(hi) {
+  --lh-tight: 1.3;
+  --lh-heading: 1.4;
+  --lh-body: 1.8;
+  --track-display: 0;
+  --track-heading: 0;
+}
+
 :root:lang(hi) :is(h1, h2, h3) {
-  line-height: 1.35;
+  line-height: var(--lh-heading);
 }
 
 /*
@@ -290,11 +340,22 @@ select {
 }
 
 :root:lang(vi) {
+  --lh-tight: 1.22;
+  --lh-heading: 1.32;
+  --lh-body: 1.7;
   line-height: 1.6;
 }
 
 :root:lang(vi) :is(h1, h2, h3) {
   line-height: 1.3;
+}
+
+:root:is(:lang(zh-CN), :lang(zh-TW), :lang(ja), :lang(ko)) {
+  --lh-tight: 1.25;
+  --lh-heading: 1.4;
+  --lh-body: 1.8;
+  --track-display: 0;
+  --track-heading: 0;
 }
 
 :root:is(:lang(zh-CN), :lang(zh-TW), :lang(ja), :lang(ko)) :is(h1, h2, h3) {
@@ -308,10 +369,26 @@ select {
 
 /* Every page title the same size and weight. */
 h1 {
-  font-size: clamp(2.2rem, 5vw, 3.4rem);
-  font-weight: 700;
-  line-height: 1.02;
-  letter-spacing: -0.035em;
+  font-size: var(--fs-display);
+  font-weight: var(--fw-bold);
+  line-height: max(1.02, var(--lh-tight));
+  letter-spacing: var(--track-display);
+}
+
+h2 {
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-bold);
+}
+
+h3 {
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-semibold);
+}
+
+.text-caption {
+  font-size: var(--fs-caption);
+  line-height: 1.4;
+  color: var(--ink-faint);
 }
 
 .display {
@@ -346,6 +423,14 @@ textarea {
   letter-spacing: 0;
 }
 
+/* Credits, marks, counts: digits line up in columns. */
+.num,
+.code,
+time,
+td {
+  font-variant-numeric: tabular-nums;
+}
+
 /* Layout helpers */
 .shell {
   max-width: var(--shell);
@@ -361,8 +446,9 @@ textarea {
 }
 
 .page-title {
-  font-size: clamp(1.75rem, 3.4vw, 2.5rem);
-  font-weight: 700;
+  font-size: var(--fs-h1);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-heading);
 }
 
 .page-lede {
@@ -409,7 +495,13 @@ textarea {
 .textarea:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 4px var(--accent-soft);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 30%, transparent);
+}
+
+/* Placeholders: faint ink, which still clears 4.5:1 on field glass. */
+::placeholder {
+  color: var(--ink-faint);
+  opacity: 1;
 }
 
 .button {
@@ -417,8 +509,8 @@ textarea {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  min-height: 42px;
-  padding: 0 18px;
+  min-height: var(--control-h);
+  padding: 0 20px;
   border: 1px solid rgb(255 255 255 / 18%);
   border-radius: 999px;
   background: var(--glass-shine), color-mix(in srgb, var(--ink) 88%, transparent);
@@ -430,7 +522,7 @@ textarea {
   font-size: 0.9375rem;
   text-decoration: none;
   cursor: pointer;
-  transition: transform 0.15s, background 0.15s, box-shadow 0.15s;
+  transition: transform 0.2s var(--ease-spring), background 0.15s, box-shadow 0.15s, filter 0.15s;
 }
 
 .button:hover {
@@ -439,8 +531,13 @@ textarea {
 }
 
 .button-accent {
-  background: var(--glass-shine), color-mix(in srgb, var(--accent) 90%, transparent);
-  color: var(--accent-ink);
+  border-color: rgb(255 255 255 / 28%);
+  background: var(--accent-fill);
+  color: var(--accent-fill-ink);
+}
+
+.button-accent:hover {
+  filter: brightness(1.06);
 }
 
 .button-quiet {
@@ -455,8 +552,8 @@ textarea {
   box-shadow: var(--glass-shadow);
 }
 
-.button:active {
-  transform: scale(0.97);
+:is(.button, button.chip, a.chip, .select-glass, .seg-option, .switch):active:not(:disabled) {
+  transform: scale(var(--press-scale));
 }
 
 .button:disabled {
@@ -479,13 +576,22 @@ textarea {
   box-shadow: inset 0 1px 0 rgb(255 255 255 / 60%);
   font-size: 0.875rem;
   color: var(--ink-soft);
+  transition: transform 0.2s var(--ease-spring), background 0.15s;
+}
+
+/* A chosen chip (filter on, tag picked): brand pink fill. */
+.chip:is([aria-pressed='true'], [aria-selected='true'], .is-on) {
+  border-color: transparent;
+  background: var(--accent-fill);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 35%);
+  color: var(--accent-fill-ink);
 }
 
 /* Fingers need a bigger target than a mouse pointer. */
 @media (pointer: coarse) {
   :is(button, a, label).chip {
-    min-height: 40px;
-    padding: 6px 14px;
+    min-height: var(--control-h);
+    padding: 6px 16px;
   }
 }
 
@@ -493,7 +599,7 @@ textarea {
 .select-glass {
   width: auto;
   max-width: 100%;
-  min-height: 42px;
+  min-height: var(--control-h);
   padding: 0 36px 0 18px;
   border: 1px solid var(--glass-edge);
   border-radius: 999px;
@@ -518,7 +624,7 @@ textarea {
 .select-glass:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: var(--glass-shadow), 0 0 0 4px var(--accent-soft);
+  box-shadow: var(--glass-shadow), 0 0 0 3px color-mix(in srgb, var(--accent) 30%, transparent);
 }
 
 button.chip {
@@ -526,6 +632,107 @@ button.chip {
   background: var(--glass-fill);
   box-shadow: var(--glass-shadow);
   cursor: pointer;
+}
+
+/*
+ * Segmented control: a glass track with a raised pill that slides to the chosen option.
+ * Markup (see SegmentedControl.vue): .seg-track[style=--seg-count,--seg-index] > .seg-thumb + .seg-option*.
+ */
+.seg-track {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(var(--seg-count, 2), minmax(0, 1fr));
+  min-height: var(--control-h);
+  padding: var(--control-pad);
+  border: 1px solid var(--glass-edge);
+  border-radius: var(--radius-control);
+  background: var(--seg-fill);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--float-rim);
+  isolation: isolate;
+}
+
+.seg-thumb {
+  position: absolute;
+  z-index: -1;
+  top: var(--control-pad);
+  bottom: var(--control-pad);
+  left: var(--control-pad);
+  width: calc((100% - 2 * var(--control-pad)) / var(--seg-count, 2));
+  border-radius: var(--radius-control);
+  background: var(--glass-shine), var(--surface);
+  box-shadow: var(--pill-raised);
+  transform: translateX(calc(100% * var(--seg-index, 0)));
+  transition: transform 0.35s var(--ease-spring);
+}
+
+.seg-option {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 0;
+  padding: 0 14px;
+  border: 0;
+  border-radius: var(--radius-control);
+  background: none;
+  font-size: var(--fs-small);
+  font-weight: var(--fw-semibold);
+  color: var(--ink-soft);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  transition: color 0.2s, transform 0.2s var(--ease-spring);
+}
+
+.seg-option[aria-checked='true'] {
+  color: var(--ink);
+}
+
+/* Switch: a native checkbox drawn as a track with a sliding knob; pink when on. */
+.switch {
+  position: relative;
+  flex: none;
+  width: 46px;
+  height: 28px;
+  margin: 0;
+  border: 1px solid var(--glass-edge);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--ink) 14%, var(--field-fill));
+  box-shadow: inset 0 1px 2px rgb(0 0 0 / 12%);
+  appearance: none;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s var(--ease-spring);
+}
+
+.switch::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 2px 6px rgb(0 0 0 / 22%), inset 0 0 0 0.5px rgb(0 0 0 / 6%);
+  transition: transform 0.3s var(--ease-spring);
+}
+
+.switch:checked {
+  border-color: transparent;
+  background: var(--accent-fill);
+}
+
+.switch:checked::after {
+  transform: translateX(18px);
+}
+
+.switch:disabled,
+.seg-option:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
 }
 
 .visually-hidden {
@@ -538,6 +745,10 @@ button.chip {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  :root {
+    --press-scale: 1;
+  }
+
   * {
     transition: none !important;
     animation: none !important;
@@ -706,7 +917,7 @@ button.chip {
 /* Solid accent buttons keep the brand pink: their white text sits on the button, not the glass. */
 @media (prefers-color-scheme: light) {
   :is(.surface, .flat) .button-accent {
-    --accent: #c2227a;
+    --accent: #a01a66;
   }
 }
 

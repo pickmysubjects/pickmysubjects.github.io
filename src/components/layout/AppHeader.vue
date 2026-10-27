@@ -161,24 +161,27 @@ const sub = computed(() => subNavFor(props.view))
 .nav-step-n {
   display: inline-grid;
   place-items: center;
-  width: 16px;
-  height: 16px;
-  font-size: 0.6875rem;
+  min-width: 18px;
+  height: 18px;
+  font-size: 0.75rem;
   font-weight: 700;
-  color: #fff;
+  font-variant-numeric: tabular-nums;
+  color: var(--bg);
   background: var(--ink-soft);
   border-radius: 999px;
 }
 
 .nav-step[aria-current='step'] .nav-step-n {
   background: var(--overprint);
+  color: var(--accent-ink);
 }
 
 .nav-link {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 14px;
+  min-height: 36px;
+  padding: 0 14px;
   border-radius: 999px;
   font-size: 0.9375rem;
   font-weight: 500;
@@ -194,10 +197,11 @@ const sub = computed(() => subNavFor(props.view))
 }
 
 .nav-link[aria-current='page'] {
-  /* A raised glass pill, like the step switch. */
-  background: var(--glass-shine), var(--glass-fill-hover);
-  box-shadow: var(--pill-raised);
-  color: var(--ink);
+  /* The current section: a brand-pink pill, so "where am I" is obvious at a glance. */
+  background: var(--accent-fill);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 38%), 0 4px 12px -4px color-mix(in srgb, var(--accent-fill) 55%, transparent);
+  color: var(--accent-fill-ink);
+  font-weight: 600;
 }
 
 .tools {

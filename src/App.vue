@@ -143,13 +143,16 @@ watchEffect(() => {
 }
 
 .footer {
-  border-top: 1px solid var(--line);
-  padding: 28px 0 40px;
+  /* A frosted band, the same glass as the top bar, so the page ends as cleanly as it starts. */
+  border-top: 1px solid var(--chrome-edge);
+  padding: 32px 0 44px;
+  background: var(--chrome-shine), var(--chrome-fill);
+  box-shadow: var(--chrome-highlight);
 }
 
 .footer-inner {
   display: grid;
-  gap: 12px;
+  gap: 16px;
 }
 
 .footer-links {
@@ -190,7 +193,7 @@ watchEffect(() => {
   .footer-links a {
     display: flex;
     align-items: center;
-    min-height: 40px;
+    min-height: var(--control-h);
   }
 }
 
