@@ -104,7 +104,6 @@ const groups = computed(() =>
   box-shadow: var(--glass-shadow);
   border: 1px solid var(--line);
   border-radius: 999px;
-  box-shadow: var(--shadow-1);
 }
 
 .search-input:focus {
@@ -179,6 +178,20 @@ const groups = computed(() =>
 .card-meta {
   font-size: 0.8125rem;
   color: var(--ink-soft);
+}
+
+@media (max-width: 600px) {
+  .list {
+    gap: 20px;
+  }
+
+  .cards {
+    gap: 8px;
+  }
+
+  .card {
+    padding: 11px 14px;
+  }
 }
 
 .go {
