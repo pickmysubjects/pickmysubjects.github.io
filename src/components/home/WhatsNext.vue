@@ -80,7 +80,7 @@ const examSubjects = computed(() => {
           </template>
           <template v-else>{{ t('next.noExam') }}</template>
         </span>
-        <a class="exam-link" :href="link(`subject/${s.code}#assessment`)">{{ t('next.assess') }}<ArrowRight :size="14" aria-hidden="true" /></a>
+        <a class="exam-link" :href="link(`tools/final/?subject=${s.code}`)">{{ t('calc.open') }}<ArrowRight :size="14" aria-hidden="true" /></a>
       </li>
     </ul>
   </section>
