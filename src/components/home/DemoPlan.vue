@@ -114,6 +114,8 @@ const allMet = computed(() => props.plan.met === props.plan.total)
     --k-core: #a99bff;
     --k-elective: #5cc4f0;
     --k-breadth: #f0b06a;
+    --k-text-mix: 80%;
+    --k-text-base: #ffffff;
   }
 }
 
@@ -201,7 +203,8 @@ const allMet = computed(() => props.plan.met === props.plan.total)
 .card-code {
   font-size: 0.75rem;
   font-weight: 700;
-  color: var(--k);
+  /* Same hue as the bar, darkened (lightened in dark mode) so the code reads at 4.5:1. */
+  color: color-mix(in srgb, var(--k) var(--k-text-mix, 62%), var(--k-text-base, #1a0b14));
   font-variant-numeric: tabular-nums;
 }
 

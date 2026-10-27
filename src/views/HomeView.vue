@@ -400,7 +400,7 @@ const next = computed(() => {
   height: 28px;
   font-size: 0.8125rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--accent-ink);
   background: var(--accent);
   border-radius: 999px;
 }
