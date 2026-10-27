@@ -615,7 +615,9 @@ function remove(i: number): void {
 
 @media (pointer: coarse) {
   .act {
-    min-height: 40px;
+    min-width: 44px;
+    min-height: 44px;
+    justify-content: center;
   }
 }
 .pf-seg {

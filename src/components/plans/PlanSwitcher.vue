@@ -76,7 +76,7 @@ function confirmDelete(): void {
           {{ planName(t, p) }}
         </button>
         </div>
-        <button class="icon" type="button" :aria-label="t('plans.new')" :title="t('plans.new')" :aria-expanded="panel === 'new'" @click="toggle('new')">
+        <button class="icon plan-icon-hit" type="button" :aria-label="t('plans.new')" :title="t('plans.new')" :aria-expanded="panel === 'new'" @click="toggle('new')">
           <Plus :size="16" aria-hidden="true" />
         </button>
       </div>
@@ -84,7 +84,7 @@ function confirmDelete(): void {
         <button v-if="!props.noCompare && plans.list.value.length > 1" class="button button-quiet compare" type="button" @click="emit('compare')">
           <Columns2 :size="16" aria-hidden="true" /> {{ t('plans.compare') }}
         </button>
-        <button class="icon" type="button" :aria-label="planName(t, plans.active.value)" :aria-expanded="panel === 'menu'" @click="toggle('menu')">
+        <button class="icon plan-icon-hit" type="button" :aria-label="planName(t, plans.active.value)" :aria-expanded="panel === 'menu'" @click="toggle('menu')">
           <Ellipsis :size="16" aria-hidden="true" />
         </button>
       </div>
