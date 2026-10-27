@@ -75,14 +75,10 @@ function ratings(c: CompareColumn): Cell {
 
 const rows = computed(() => [
   { key: 'difficulty', cells: columns.value.map(difficulty) },
-  { key: 'fit', cells: columns.value.map(fit) },
+  // Nothing filled in yet: the same invitation for every subject is said once, across the row.
+  { key: 'fit', cells: hasProfile.value ? columns.value.map(fit) : columns.value.slice(0, 1).map(fit), span: !hasProfile.value },
+  // The exam's share is in the assessment line: no second row for it.
   { key: 'assessment', cells: columns.value.map(assessment) },
-  {
-    key: 'exam',
-    cells: columns.value.map<Cell>((c) => ({
-      text: c.exam === null ? t.value('shortlist.unknown') : c.exam === 0 ? t.value('shortlist.noExam') : t.value('shortlist.examPct', { n: c.exam }),
-    })),
-  },
   {
     key: 'hours',
     cells: columns.value.map<Cell>((c) => ({
@@ -128,7 +124,7 @@ const rows = computed(() => [
       <tbody>
         <tr v-for="r in rows" :key="r.key">
           <th scope="row" class="row-head">{{ t(`shortlist.row.${r.key}`) }}</th>
-          <td v-for="(cell, i) in r.cells" :key="i" :class="cell.tone && `tone-${cell.tone}`">
+          <td v-for="(cell, i) in r.cells" :key="i" :colspan="'span' in r && r.span ? columns.length : undefined" :class="cell.tone && `tone-${cell.tone}`">
             <a v-if="cell.href" :href="cell.href" class="cell-link">{{ cell.text }}</a>
             <span v-else class="cell-text">{{ cell.text }}</span>
             <span v-if="cell.sub" class="cell-sub">{{ cell.sub }}</span>
