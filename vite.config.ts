@@ -99,7 +99,9 @@ export default defineConfig({
     // Data files are fetched, and the CSP only allows fetching from this site: never inline them as data: URLs.
     assetsInlineLimit: (file) => (file.endsWith('.json') ? false : undefined),
   },
-  server: { port: 5180 },
+  // Fixed local addresses: `npm run dev` (live reload) and `npm run local` (a built copy, like the live site).
+  server: { port: 5180, strictPort: true },
+  preview: { port: 4300, strictPort: true },
   test: {
     include: ['tests/**/*.test.ts'],
     // Many tests plan on the real data; on shared CI runners they run past the 5s default.
