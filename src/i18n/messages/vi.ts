@@ -175,6 +175,10 @@ export const vi: Messages = {
     didSwap: "Đã đổi {from} sang {to}",
     didRemove: "Đã bỏ {code}",
     didMove: "Đã chuyển {code} sang {term}",
+    addPending: "Chọn xong, {code} sẽ được đưa vào kế hoạch.",
+    addPendingThere: "{code} đã có trong kế hoạch: {term}",
+    addPendingFailed: "Chưa thêm được {code} vào kế hoạch",
+    addPendingWhy: "Môn này không mở ở học kỳ nào trong kế hoạch, hoặc môn tiên quyết chưa có trong kế hoạch. Hãy thêm môn tiên quyết trước, hoặc tự thêm vào bảng.",
     why: {ok: "Đặt được ở đây", same: "Đang ở đây", notOffered: "Kỳ đó không mở", prereqLater: "Lúc đó chưa xong tiên quyết", unlocksEarlier: "Môn sau cần nó trước"},
   },
   rules: {

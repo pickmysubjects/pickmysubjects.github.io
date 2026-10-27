@@ -175,6 +175,10 @@ export const hi: Messages = {
     didSwap: "{from} की जगह {to} लिया",
     didRemove: "{code} हटाया",
     didMove: "{code} को {term} में ले गए",
+    addPending: "चुनने के बाद {code} प्लान में जुड़ जाएगा।",
+    addPendingThere: "{code} पहले से प्लान में है: {term}",
+    addPendingFailed: "{code} प्लान में नहीं जुड़ पाया",
+    addPendingWhy: "यह प्लान के किसी सेमेस्टर में नहीं चलता, या इसके prerequisites अभी प्लान में नहीं हैं। पहले prerequisites जोड़ें, या इसे खुद बोर्ड पर रखें।",
     why: {ok: "यहाँ रख सकते हैं", same: "अभी यहीं है", notOffered: "तब नहीं चलता", prereqLater: "तब तक prerequisites पूरे नहीं", unlocksEarlier: "बाद वाले विषय को पहले इसकी ज़रूरत है"},
   },
   rules: {

@@ -175,6 +175,10 @@ export const ms: Messages = {
     didSwap: "{from} ditukar dengan {to}",
     didRemove: "{code} dibuang",
     didMove: "{code} dialih ke {term}",
+    addPending: "Selepas selesai, {code} dimasukkan ke dalam rancangan.",
+    addPendingThere: "{code} sudah ada dalam rancangan: {term}",
+    addPendingFailed: "{code} tidak dapat ditambah ke rancangan",
+    addPendingWhy: "Ia tidak ditawarkan dalam mana-mana semester rancangan, atau prasyaratnya belum ada dalam rancangan. Tambah prasyarat dahulu, atau letakkannya sendiri pada papan.",
     why: {ok: "Boleh diletak di sini", same: "Di sini sekarang", notOffered: "Tidak ditawarkan ketika itu", prereqLater: "Prasyarat belum selesai ketika itu", unlocksEarlier: "Subjek kemudian memerlukannya dahulu"},
   },
   rules: {

@@ -143,7 +143,7 @@ onBeforeUnmount(() => io?.disconnect())
         <Check :size="18" aria-hidden="true" />
         {{ passed.mark === undefined ? t('subject.passed') : t('subject.passedMark', { mark: passed.mark }) }}
       </span>
-      <a v-else-if="!plan.setupChosen.value" class="button button-accent" :href="link('plan')">
+      <a v-else-if="!plan.setupChosen.value" class="button button-accent" :href="link(`plan?add=${subject.code}`)">
         <Plus :size="18" aria-hidden="true" /> {{ t('subject.chooseDegreeFirst') }}
       </a>
       <template v-else-if="plannedAt">
@@ -181,7 +181,7 @@ onBeforeUnmount(() => io?.disconnect())
       <div v-if="actionsGone" class="dock">
         <span class="dock-name"><span class="code dock-code">{{ subject.code }}</span><span class="dock-title">{{ local || subject.title }}</span></span>
         <ShortlistToggle :code="subject.code" compact />
-        <a v-if="!passed && !plannedAt && !plan.setupChosen.value" class="button button-accent dock-go" :href="link('plan')">
+        <a v-if="!passed && !plannedAt && !plan.setupChosen.value" class="button button-accent dock-go" :href="link(`plan?add=${subject.code}`)">
           <Plus :size="18" aria-hidden="true" /> {{ t('subject.addToPlan') }}
         </a>
         <button v-else-if="!passed && !plannedAt && target" class="button button-accent dock-go" type="button" @click="addToPlan">

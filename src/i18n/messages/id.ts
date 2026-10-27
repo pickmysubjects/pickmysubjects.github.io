@@ -175,6 +175,10 @@ export const id: Messages = {
     didSwap: "{from} ditukar dengan {to}",
     didRemove: "{code} dihapus",
     didMove: "{code} dipindah ke {term}",
+    addPending: "Setelah selesai, {code} masuk ke rencanamu.",
+    addPendingThere: "{code} sudah ada di rencana: {term}",
+    addPendingFailed: "{code} belum bisa dimasukkan ke rencana",
+    addPendingWhy: "Mata kuliah ini tidak dibuka di semester mana pun dalam rencana, atau prasyaratnya belum ada di rencana. Tambahkan prasyaratnya dulu, atau taruh sendiri di papan.",
     why: {ok: "Bisa ditaruh di sini", same: "Di sini sekarang", notOffered: "Tidak dibuka saat itu", prereqLater: "Prasyarat belum selesai saat itu", unlocksEarlier: "Mata kuliah berikutnya butuh ini lebih dulu"},
   },
   rules: {

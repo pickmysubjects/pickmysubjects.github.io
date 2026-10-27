@@ -175,6 +175,10 @@ export const ja: Messages = {
     didSwap: "{from} を {to} に入れ替えました",
     didRemove: "{code} を削除しました",
     didMove: "{code} を {term} に移動しました",
+    addPending: "選び終えると、{code} がプランに入ります。",
+    addPendingThere: "{code} はもうプランにあります：{term}",
+    addPendingFailed: "{code} はプランに入れられませんでした",
+    addPendingWhy: "プランのどの学期にも開講がないか、前提科目がまだプランにありません。先に前提科目を入れるか、ボードに自分で追加してください。",
     why: {ok: "ここに置けます", same: "今ここ", notOffered: "その学期は開講なし", prereqLater: "その時点で前提科目が未修", unlocksEarlier: "後の科目が先に必要とします"},
   },
   rules: {

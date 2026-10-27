@@ -175,6 +175,10 @@ export const zhCN: Messages = {
     didSwap: "已把 {from} 换成 {to}",
     didRemove: "已删除 {code}",
     didMove: "已把 {code} 移到 {term}",
+    addPending: "选好后，{code} 会放进计划里。",
+    addPendingThere: "{code} 已在计划里：{term}",
+    addPendingFailed: "没能把 {code} 放进计划",
+    addPendingWhy: "计划里的学期它都不开，或者先修课还没排进计划。可以先加先修课，或者自己在计划里加。",
     why: {ok: "可以放这里", same: "现在在这里", notOffered: "那时不开课", prereqLater: "那时先修课还没修完", unlocksEarlier: "后面有课要先用到它"},
   },
   rules: {

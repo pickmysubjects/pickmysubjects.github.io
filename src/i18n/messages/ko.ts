@@ -175,6 +175,10 @@ export const ko: Messages = {
     didSwap: "{from}를 {to}로 교체했어요",
     didRemove: "{code}를 뺐어요",
     didMove: "{code}를 {term}로 옮겼어요",
+    addPending: "다 고르면 {code}가 계획에 들어가요.",
+    addPendingThere: "{code}는 이미 계획에 있어요: {term}",
+    addPendingFailed: "{code}를 계획에 넣지 못했어요",
+    addPendingWhy: "계획의 어느 학기에도 개설되지 않거나, 선수과목이 아직 계획에 없어요. 선수과목을 먼저 넣거나 보드에 직접 추가하세요.",
     why: {ok: "넣을 수 있음", same: "지금 여기", notOffered: "그때 개설 안 됨", prereqLater: "그때 선수 과목 미완료", unlocksEarlier: "뒤 과목이 먼저 필요로 함"},
   },
   rules: {

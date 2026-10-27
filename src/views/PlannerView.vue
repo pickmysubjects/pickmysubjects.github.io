@@ -25,6 +25,7 @@ import { sharePlanImage } from '@/utils/planImage'
 import { localTitle } from '@/i18n/localized'
 import { decodePlan, encodePlan } from '@/utils/sharePlan'
 import { boardEdges, countsToward } from '@/utils/planBoard'
+import { pinSpot } from '@/utils/pendingAdd'
 import { cloneJson } from '@/utils/clone'
 import { go, useView } from '@/composables/useView'
 import { useProfile } from '@/composables/useProfile'
@@ -264,9 +265,36 @@ const summary = computed(() => {
   })
 })
 
+// "Add to plan" on a subject's page before there was a plan: /plan?add=CODE. The subject waits
+// through the questions and goes into the plan they build (or the page says why it didn't).
+const pendingAdd = shallowRef<string | null>(null)
+watch(() => query.value.get('add'), (code) => { if (code && data.value.subjects[code]) pendingAdd.value = code }, { immediate: true })
+const addNote = shallowRef<{ code: string; term?: string } | null>(null)
+function placePending(): void {
+  const code = pendingAdd.value
+  pendingAdd.value = null
+  if (!code) return
+  if (query.value.get('add')) go('plan')
+  const at = plan.terms.value.find((x) => x.subjects.includes(code))
+  if (at) {
+    addNote.value = { code, term: termLabel(t.value, at) }
+    return
+  }
+  const keep = new Set([...roleSets.value.required, ...roleSets.value.options])
+  const spot = pinSpot(plan.plan.value, data.value, code, keep, plan.load.value)
+  if (!spot) {
+    addNote.value = { code }
+    return
+  }
+  change(t.value('plan.didAdd', { code, term: labelAt(spot.termIndex) }), () =>
+    spot.replace ? plan.replaceSubject(spot.termIndex, spot.replace, code) : plan.addSubject(spot.termIndex, code),
+  )
+}
+
 function finishWizard(setup: PlanSetup): void {
   if (!plan.updateSetup(setup)) plan.generate()
   editing.value = false
+  placePending()
 }
 // The plan's semester for the subject open in the peek, if it's in the plan.
 const peekTerm = computed(() => {
@@ -415,6 +443,8 @@ const printTerms = computed<PrintTerm[]>(() => {
   // An empty semester left at the end of the plan prints as nothing.
   return [...by.values()].filter((x) => x.items.length > 0).sort((a, b) => (a.year === null ? -1 : b.year === null ? 1 : order(a.year, a.period as string) - order(b.year, b.period as string)))
 })
+// Arriving with ?add= when the plan is already set up: it goes in straight away.
+watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.value && !editing.value) placePending() }, { immediate: true })
 </script>
 
 <template>
@@ -423,6 +453,7 @@ const printTerms = computed<PrintTerm[]>(() => {
       <h1 class="page-title">{{ t('plan.title') }}</h1>
       <template v-if="showWizard">
         <p class="page-lede">{{ t('plan.ledeShort') }} <a class="guide-link" :href="link('guide')">{{ t('guide.nav') }} →</a></p>
+        <p v-if="pendingAdd" class="started" role="status">{{ t('plan.addPending', { code: pendingAdd }) }}</p>
       </template>
     </section>
 
@@ -483,6 +514,10 @@ const printTerms = computed<PrintTerm[]>(() => {
         </button>
       </div>
 
+      <p v-if="addNote" class="started" role="status">
+        <template v-if="addNote.term">{{ t('plan.addPendingThere', { code: addNote.code, term: addNote.term }) }}</template>
+        <template v-else>{{ t('plan.addPendingFailed', { code: addNote.code }) }}<InfoTip :text="t('plan.addPendingWhy')" /></template>
+      </p>
       <p v-if="pastPlanned" class="started">
         {{ t('plan.pastPlannedShort', { term: pastPlanned }) }}<InfoTip :text="t('plan.pastPlanned', { term: pastPlanned })" />
         <button class="button button-quiet" type="button" @click="plan.generate()">{{ t('plan.rebuild') }}</button>

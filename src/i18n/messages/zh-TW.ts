@@ -175,6 +175,10 @@ export const zhTW: Messages = {
     didSwap: "已把 {from} 換成 {to}",
     didRemove: "已刪除 {code}",
     didMove: "已把 {code} 移到 {term}",
+    addPending: "選好後，{code} 會放進計畫裡。",
+    addPendingThere: "{code} 已在計畫裡：{term}",
+    addPendingFailed: "沒能把 {code} 放進計畫",
+    addPendingWhy: "計畫裡的學期它都沒開，或者先修課還沒排進計畫。可以先加先修課，或者自己在計畫裡加。",
     why: {ok: "可以放這裡", same: "現在在這裡", notOffered: "那時不開課", prereqLater: "那時先修課還沒修完", unlocksEarlier: "後面有課要先用到它"},
   },
   rules: {

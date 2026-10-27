@@ -178,6 +178,10 @@ export const en = {
     didSwap: "Swapped {from} for {to}",
     didRemove: "Removed {code}",
     didMove: "Moved {code} to {term}",
+    addPending: "Once you're done, {code} goes into the plan.",
+    addPendingThere: "{code} is already in the plan: {term}",
+    addPendingFailed: "{code} wasn't added to the plan",
+    addPendingWhy: "It doesn't run in any planned semester, or its prerequisites aren't in the plan yet. Add its prerequisites first, or put it on the board yourself.",
     why: {ok: "Can go here", same: "Here now", notOffered: "Not offered then", prereqLater: "Prerequisites not done by then", unlocksEarlier: "A later subject needs it first"},
   },
   rules: {
