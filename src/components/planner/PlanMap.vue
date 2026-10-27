@@ -51,8 +51,17 @@ const emit = defineEmits<{
 interface Route {
   key: string
   d: string
-  /** Part of the focused subject's route (drawn strong); the rest are drawn faint. */
-  strong: boolean
+  /** Upstream of the focused subject (its prerequisites) or downstream (what it unlocks). */
+  dir: 'need' | 'unlock'
+}
+
+/** A small "← 2 / → 1" pill on a card that has links inside the plan. */
+interface Marker {
+  code: string
+  x: number
+  y: number
+  needs: number
+  unlocks: number
 }
 
 const { t } = useI18n()
@@ -61,6 +70,7 @@ const plan = usePlan()
 
 const board = useTemplateRef<HTMLElement>('board')
 const routes = shallowRef<Route[]>([])
+const markers = shallowRef<Marker[]>([])
 const hovered = shallowRef<string | null>(null)
 const moveFor = shallowRef<string | null>(null)
 const dragging = shallowRef<{ code: string; from: number } | null>(null)
@@ -149,33 +159,48 @@ function measure(): void {
   const box = (code: string) =>
     (el.querySelector<HTMLElement>(`[data-code="${code}"]`) ?? el.querySelector<HTMLElement>(`[data-past-code="${code}"]`))?.getBoundingClientRect()
   const next: Route[] = []
-  const strong = new Set(shownEdges.value.map((e) => `${e.from}-${e.to}`))
-  // Every in-plan prerequisite link is drawn, faint; the focused route on top, strong.
-  const all = [...props.edges].sort((x, y) => Number(strong.has(`${x.from}-${x.to}`)) - Number(strong.has(`${y.from}-${y.to}`)))
-  for (const e of all) {
+  const tone = tones.value
+  for (const e of shownEdges.value) {
     const a = box(e.from)
     const b = box(e.to)
     if (!a || !b) continue
     let d: string
     if (b.left >= a.right - 4) {
-      // A later column: right edge to left edge.
+      // A later column: from the right edge at mid-height, through the gap, into the left edge.
       const x1 = a.right - base.left
       const y1 = a.top + a.height / 2 - base.top
-      const x2 = b.left - base.left
+      const x2 = b.left - base.left - 3
       const y2 = b.top + b.height / 2 - base.top
-      const bend = Math.max(20, (x2 - x1) / 2)
+      const bend = Math.max(16, (x2 - x1) / 2)
       d = `M ${x1} ${y1} C ${x1 + bend} ${y1}, ${x2 - bend} ${y2}, ${x2} ${y2}`
     } else {
       // Stacked (phones): bottom of the earlier card to the top of the later one.
       const x1 = a.left + a.width / 2 - base.left
       const y1 = a.bottom - base.top
       const x2 = b.left + b.width / 2 - base.left
-      const y2 = b.top - base.top
-      const bend = Math.max(20, (y2 - y1) / 2)
+      const y2 = b.top - base.top - 3
+      const bend = Math.max(16, (y2 - y1) / 2)
       d = `M ${x1} ${y1} C ${x1} ${y1 + bend}, ${x2} ${y2 - bend}, ${x2} ${y2}`
     }
-    next.push({ key: `${e.from}-${e.to}`, d, strong: strong.has(`${e.from}-${e.to}`) })
+    const toTone = tone?.get(e.to)
+    next.push({ key: `${e.from}-${e.to}`, d, dir: toTone === 'need' || toTone === 'self' ? 'need' : 'unlock' })
   }
+  // Markers: how many of each card's prerequisites and follow-ons are in the plan.
+  const count = new Map<string, { needs: number; unlocks: number }>()
+  for (const e of props.edges) {
+    const from = count.get(e.from) ?? { needs: 0, unlocks: 0 }
+    from.unlocks++
+    count.set(e.from, from)
+    const to = count.get(e.to) ?? { needs: 0, unlocks: 0 }
+    to.needs++
+    count.set(e.to, to)
+  }
+  const marks: Marker[] = []
+  for (const [code, n] of count) {
+    const r = el.querySelector<HTMLElement>(`[data-code="${code}"]`)?.getBoundingClientRect()
+    if (r) marks.push({ code, x: r.right - base.left - 8, y: r.top - base.top - 9, ...n })
+  }
+  markers.value = marks
   routes.value = next
 }
 
@@ -251,14 +276,29 @@ onBeforeUnmount(() => {
 
 <template>
   <div ref="board" class="board" :class="{ 'board-dragging': dragging }">
+    <p v-if="edges.length" class="route-legend" aria-hidden="true">
+      <span class="legend-need">{{ t('subject.needs') }}</span>
+      <span class="legend-unlock">{{ t('subject.unlocks') }}</span>
+    </p>
     <svg class="routes" aria-hidden="true">
       <defs>
-        <marker id="route-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-          <path d="M0 0 L8 4 L0 8 z" class="route-head" />
+        <marker id="route-arrow-need" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M1.5 1.5 L8.5 5 L1.5 8.5" class="route-head route-head-need" />
+        </marker>
+        <marker id="route-arrow-unlock" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M1.5 1.5 L8.5 5 L1.5 8.5" class="route-head route-head-unlock" />
         </marker>
       </defs>
-      <path v-for="r in routes" :key="r.key" class="route" :class="{ 'route-faint': !r.strong }" :d="r.d" :marker-end="r.strong ? 'url(#route-arrow)' : undefined" />
+      <path v-for="r in routes" :key="r.key" pathLength="1" class="route" :class="`route-${r.dir}`" :d="r.d" :marker-end="`url(#route-arrow-${r.dir})`" />
     </svg>
+    <span
+      v-for="m in markers"
+      :key="m.code"
+      class="link-mark"
+      :class="{ 'link-mark-hidden': tones !== null }"
+      :style="{ left: `${m.x}px`, top: `${m.y}px` }"
+      aria-hidden="true"
+    ><template v-if="m.needs">← {{ m.needs }}</template><template v-if="m.needs && m.unlocks"> · </template><template v-if="m.unlocks">→ {{ m.unlocks }}</template></span>
 
     <div class="track" @scroll.passive="measure">
       <PastTermColumn
@@ -358,23 +398,94 @@ onBeforeUnmount(() => {
 
 .route {
   fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+  animation: route-draw 150ms ease-out;
+}
+
+.route-need {
+  stroke: #7a63f0;
+}
+
+.route-unlock {
   stroke: var(--overprint);
-  stroke-width: 2.2;
-  stroke-dasharray: 6 4;
-}
-
-.route-faint {
-  stroke-width: 1.4;
-  opacity: 0.35;
-}
-
-/* While a route is in focus, the other links step back further. */
-.routes:has(.route:not(.route-faint)) .route-faint {
-  opacity: 0.15;
 }
 
 .route-head {
-  fill: var(--overprint);
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.route-head-need {
+  stroke: #7a63f0;
+}
+
+.route-head-unlock {
+  stroke: var(--overprint);
+}
+
+@keyframes route-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .route {
+    animation: none;
+  }
+}
+
+/* "← 2 · → 1": the card has links inside the plan; hover or tap it to see them. */
+.link-mark {
+  position: absolute;
+  z-index: 3;
+  padding: 1px 7px;
+  border: 1px solid var(--card-edge);
+  border-radius: 999px;
+  background: var(--glass-shine), var(--sheet-fill);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 60%), 0 2px 6px -3px rgb(60 20 80 / 40%);
+  font-size: 0.6875rem;
+  font-weight: 650;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  white-space: nowrap;
+  transform: translateX(-100%);
+  pointer-events: none;
+}
+
+.link-mark-hidden {
+  display: none;
+}
+
+.route-legend {
+  display: flex;
+  gap: var(--space-4);
+  margin: 0;
+  font-size: var(--fs-meta);
+  color: var(--ink-soft);
+}
+
+.route-legend span::before {
+  content: '';
+  display: inline-block;
+  width: 14px;
+  height: 2px;
+  margin-right: 6px;
+  vertical-align: middle;
+  border-radius: 2px;
+}
+
+.legend-need::before {
+  background: #7a63f0;
+}
+
+.legend-unlock::before {
+  background: var(--overprint);
 }
 
 .track {

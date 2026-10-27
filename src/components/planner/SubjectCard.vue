@@ -399,10 +399,14 @@ function onDragStart(event: DragEvent): void {
   background: var(--overprint);
 }
 
-.row-tone-need,
+.row-tone-need {
+  border-color: #7a63f0;
+  box-shadow: 0 0 0 1.5px #7a63f0;
+}
+
 .row-tone-unlock {
   border-color: var(--overprint);
-  background: color-mix(in srgb, var(--overprint-tint) 55%, var(--paper-raised));
+  box-shadow: 0 0 0 1.5px var(--overprint);
 }
 
 .row-tone-rule {
@@ -411,7 +415,7 @@ function onDragStart(event: DragEvent): void {
 }
 
 .row-dimmed {
-  opacity: 0.38;
+  opacity: 0.45;
 }
 
 .sheet {
