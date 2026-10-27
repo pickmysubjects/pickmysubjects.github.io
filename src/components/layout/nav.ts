@@ -1,6 +1,7 @@
 import {
-  BookOpen, Briefcase, Calculator, CalendarDays, CalendarPlus, Columns2, Compass, FileX, Flame, Gauge, GraduationCap, Heart, House,
-  Layers, Library, ListChecks, ListFilter, Plane, Route, Save, Scale, Search, Share2, Shapes, Snowflake, Sprout, TriangleAlert, User, Wrench,
+  BookOpen, Briefcase, Calculator, CalendarDays, CalendarPlus, ClipboardList, Columns2, Compass, FileX, Flame, Gauge, GraduationCap, Heart,
+  HeartPulse, House, Laptop, Layers, Library, LifeBuoy, ListChecks, ListFilter, NotebookPen, Plane, Route, Save, Scale, Share2, Shapes,
+  Snowflake, Sprout, TriangleAlert, User, Wrench,
 } from 'lucide-vue-next'
 import type { View } from '@/composables/useView'
 
@@ -75,11 +76,13 @@ export const MENUS: MenuArea[] = [
     items: [
       { key: 'menu.guideHome', desc: 'menu.d.guideHome', to: 'guide/', icon: Compass },
       { key: 'guide.cat.basics.nav', desc: 'menu.d.basics', to: 'guide/basics/', icon: BookOpen },
-      { key: 'menu.grades', desc: 'menu.d.grades', to: 'guide/basics/#grades', icon: GraduationCap },
-      { key: 'guide.cat.enrolling.nav', desc: 'menu.d.enrolling', to: 'guide/enrolling/', icon: Search },
-      { key: 'guide.cat.semester.nav', desc: 'menu.d.semester', to: 'guide/semester/', icon: CalendarDays },
+      { key: 'guide.cat.systems.nav', desc: 'menu.d.systems', to: 'guide/systems/', icon: Laptop },
+      { key: 'guide.cat.enrolling.nav', desc: 'menu.d.enrolling', to: 'guide/enrolling/', icon: ClipboardList },
+      { key: 'guide.cat.semester.nav', desc: 'menu.d.semester', to: 'guide/semester/', icon: NotebookPen },
+      { key: 'guide.cat.life.nav', desc: 'menu.d.life', to: 'guide/life/', icon: HeartPulse },
       { key: 'guide.cat.international.nav', desc: 'menu.d.international', to: 'guide/international/', icon: Plane },
-      { key: 'guide.datesTitle', desc: 'menu.d.keyDates', to: 'guide/key-dates/', icon: CalendarPlus },
+      { key: 'guide.cat.help.nav', desc: 'menu.d.help', to: 'guide/help/', icon: LifeBuoy },
+      { key: 'guide.datesTitle', desc: 'menu.d.keyDates', to: 'guide/key-dates/', icon: CalendarDays },
     ],
   },
   {

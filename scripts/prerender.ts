@@ -591,7 +591,6 @@ function guideBody(code: LocaleCode, t: Translate, page: GuideCategory | 'overvi
     .join('')}</tbody></table>`
   const h2 = (k: string) => `<h2>${esc(t(`guide.${k}`))}</h2>`
   const ext = (url: string, k: string) => `<p><a href="${url}">${esc(t(`guide.${k}`))}</a></p>`
-  const can = ['share', 'plans', 'print', 'wam', 'mine', 'easyHard', 'summerWinter', 'rate']
   // Each topic's HTML, keyed by its anchor (the same ids the app uses).
   const topics: Record<string, string> = {
     'first': [
@@ -602,7 +601,10 @@ function guideBody(code: LocaleCode, t: Translate, page: GuideCategory | 'overvi
       `<h2 id="points">${esc(t('guide.pointsTitle'))}</h2>`, p('pointsText'),
     ].join('\n'),
     'majors': [
-      `<h2 id="majors">${esc(t('guide.majorsTitle'))}</h2>`, li(['majorsOne', 'majorsSecond', 'majorsMinor', 'majorsOnce']), p('majorsPairs'), p('majorsDiploma'), p('majorsRelated'), p('majorsPlans'), p('majorsPlansImage'),
+      `<h2 id="majors">${esc(t('guide.majorsTitle'))}</h2>`, li(['majorsOne', 'majorsSecond', 'majorsMinor', 'majorsOnce']), p('majorsPairs'), p('majorsDiploma'), p('majorsRelated'),
+    ].join('\n'),
+    'plans': [
+      `<h2 id="plans">${esc(t('guide.plansTitle'))}</h2>`, p('plansShort'), p('majorsPlans'), p('planProfile'), p('majorsPlansImage'),
     ].join('\n'),
     'caps': [
       `<h2 id="caps">${esc(t('guide.capsTitle'))}</h2>`, li(['capsDiscipline', 'capsDesignBreadth', 'capsDesignInformal']),
@@ -700,12 +702,6 @@ function guideBody(code: LocaleCode, t: Translate, page: GuideCategory | 'overvi
       `<h2 id="accreditation">${esc(t('guide.accTitle'))}</h2>`, p('accShort'),
       `<ul>${ACCREDITATION.map((a) => `<li><strong>${esc(a.degree)}</strong> · ${esc(a.major ?? t('guide.accWhole'))}: ${esc(a.body)}. ${esc(t(`guide.${a.cond}`))} <a href="${a.href}">${esc(t('guide.accLink'))}</a></li>`).join('')}</ul>`,
     ].join('\n'),
-    'dates': [
-      `<h2 id="dates">${esc(t('guide.datesTitle'))}</h2>`,
-      li(['datesStart', 'datesS1', 'datesS2', 'datesOther']),
-      `<p><a href="${href(code, 'guide/key-dates')}">${esc(t('guide.kd.title'))}</a></p>`,
-      ext('https://students.unimelb.edu.au/course-admin/key-dates', 'datesLink'),
-    ].join('\n'),
   }
   // Topics that are lists of official systems or services: name, one line, and the ⓘ text.
   for (const [id, items] of Object.entries(SERVICE_TOPICS))
@@ -714,7 +710,7 @@ function guideBody(code: LocaleCode, t: Translate, page: GuideCategory | 'overvi
       p(`svcTopic.${id}.short`),
       `<ul>${items.map((s) => `<li><a href="${s.href}">${esc(t(`guide.svc.${s.id}.name`))}</a>: ${esc(t(`guide.svc.${s.id}.text`))}${'more' in s && s.more ? ` ${esc(t(`guide.svc.${s.id}.more`))}` : ''}</li>`).join('')}</ul>`,
     ].join('\n')
-  const sub = `<p>${[`<a href="${href(code, 'guide')}">${esc(t('guide.overview'))}</a>`, ...GUIDE_CATEGORIES.map((c) => `<a href="${href(code, `guide/${c}`)}">${esc(t(`guide.cat.${c}.nav`))}</a>`)].join(' · ')}</p>`
+  const sub = `<p>${[`<a href="${href(code, 'guide')}">${esc(t('guide.overview'))}</a>`, ...GUIDE_CATEGORIES.map((c) => `<a href="${href(code, `guide/${c}`)}">${esc(t(`guide.cat.${c}.nav`))}</a>`), `<a href="${href(code, 'guide/key-dates')}">${esc(t('guide.datesTitle'))}</a>`].join(' · ')}</p>`
   const tail = p('sourcesText')
   if (page === 'overview')
     return [
@@ -722,7 +718,6 @@ function guideBody(code: LocaleCode, t: Translate, page: GuideCategory | 'overvi
       p('lede'),
       sub,
       `<ul>${GUIDE_CATEGORIES.map((c) => `<li><a href="${href(code, `guide/${c}`)}">${esc(t(`guide.cat.${c}.title`))}</a>: ${esc(t(`guide.cat.${c}.lede`))} (${GUIDE_TOPICS[c].map((id) => topics[id]!.match(/<h2[^>]*>(.*?)<\/h2>/)![1]).join(' · ')})</li>`).join('')}<li><a href="${href(code, 'guide/key-dates')}">${esc(t('guide.kd.title'))}</a>: ${esc(t('guide.kd.lede'))}</li></ul>`,
-      h2('canTitle'), `<ul>${can.map((k) => `<li>${esc(t(`can.${k}`))}</li>`).join('')}</ul>`,
       tail,
     ].join('\n')
   return [`<h1>${esc(t(`guide.cat.${page}.title`))}</h1>`, `<p>${esc(t(`guide.cat.${page}.lede`))}</p>`, sub, ...GUIDE_TOPICS[page].map((id) => topics[id]!), tail].join('\n')
@@ -742,8 +737,11 @@ function keyDatesBody(code: LocaleCode, t: Translate): string {
     `<p>${esc(t('guide.kd.lede'))}</p>`,
     `<p>${esc(t('guide.kd.note'))} ${esc(t('guide.kd.notYet'))}</p>`,
     groups,
+    // The usual dates in words (the "dates" topic lives on this page).
+    `<h2 id="dates">${esc(t('guide.datesTitle'))}</h2>`,
+    `<ul>${['datesStart', 'datesS1', 'datesS2', 'datesOther'].map((k) => `<li>${esc(t(`guide.${k}`))}</li>`).join('')}</ul>`,
     `<p>${esc(t('guide.kd.employabilityText'))} <a href="${EMPLOYABILITY_SOURCE}">${esc(t('guide.kd.employabilityLink'))}</a></p>`,
-    `<p><a href="${KEY_DATES_SOURCE}">${esc(t('guide.kd.official'))}</a> · <a href="${href(code, 'guide/help')}">${esc(t('guide.cat.help.title'))}</a></p>`,
+    `<p><a href="${KEY_DATES_SOURCE}">${esc(t('guide.kd.official'))}</a> · <a href="${href(code, 'guide')}">${esc(t('guide.title'))}</a></p>`,
   ].join('\n')
 }
 

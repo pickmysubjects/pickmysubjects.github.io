@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import InfoTip from '@/components/InfoTip.vue'
-import { computed, nextTick, type Component, onBeforeUnmount, onMounted, watch } from 'vue'
-import CanDoList from '@/components/home/CanDoList.vue'
-import GuideSubnav from '@/components/guide/GuideSubnav.vue'
+import { computed, nextTick, shallowRef, type Component, useTemplateRef, watch } from 'vue'
+import { ArrowLeft, ArrowRight } from 'lucide-vue-next'
+import GuideHero from '@/components/guide/GuideHero.vue'
+import GuideToc from '@/components/guide/GuideToc.vue'
 import GuideOverview from '@/components/guide/GuideOverview.vue'
 import GuideBasics from '@/components/guide/GuideBasics.vue'
 import GuideEnrolling from '@/components/guide/GuideEnrolling.vue'
@@ -11,19 +12,23 @@ import GuideInternational from '@/components/guide/GuideInternational.vue'
 import GuideHelp from '@/components/guide/GuideHelp.vue'
 import KeyDates from '@/components/guide/KeyDates.vue'
 import GuideServices from '@/components/guide/GuideServices.vue'
-import { link, replaceAddress, useView } from '@/composables/useView'
+import { link, useView } from '@/composables/useView'
 import { useI18n } from '@/i18n'
 import { URLS } from '@/utils/guideLinks'
-import { categoryOfTopic, GUIDE_CATEGORIES, guidePageOf, type GuideCategory } from '@/utils/guideSections'
+import { guidePageOf, neighbours, slugOf, type GuideCategory, type GuidePageSlug } from '@/utils/guideSections'
 
-/** The basics guide: an overview at /guide/, one page per section, and the key dates page. */
-const { t } = useI18n()
+/**
+ * The basics guide: an overview at /guide/, then one article per section and the key dates page.
+ * Each article: a hero band, "On this page" (left on desktop, a fold on phones), the topics in
+ * glass cards, then the previous and next section.
+ */
+const { t, locale } = useI18n()
 const { param } = useView()
 const page = computed(() => guidePageOf(param.value))
-// Key dates has its own step in the switch (it lives with Help, but isn't Help).
-const current = computed(() => (page.value.kind === 'overview' ? 'overview' : page.value.kind === 'extra' ? 'key-dates' : page.value.category))
+const slug = computed(() => slugOf(page.value))
 // Categories without their own component (systems, life) are plain service lists.
 const SECTIONS: Partial<Record<GuideCategory, Component>> = { basics: GuideBasics, enrolling: GuideEnrolling, semester: GuideSemester, international: GuideInternational, help: GuideHelp }
+
 const heading = computed(() => {
   const p = page.value
   if (p.kind === 'category') return { title: t.value(`guide.cat.${p.category}.title`), lede: t.value(`guide.cat.${p.category}.lede`) }
@@ -31,290 +36,346 @@ const heading = computed(() => {
   return { title: t.value('guide.title'), lede: t.value('guide.ledeShort'), full: t.value('guide.lede') }
 })
 
-// The sections before and after this one, so a student can read the guide straight through.
+const navName = (s: GuidePageSlug) => t.value(s === 'key-dates' ? 'guide.datesTitle' : `guide.cat.${s}.nav`)
+const navDesc = (s: GuidePageSlug) => t.value(`menu.d.${s === 'key-dates' ? 'keyDates' : s}`)
+// The sections before and after this one, so a student can read the guide straight through;
+// the ends lead back to the overview.
 const pager = computed(() => {
-  const p = page.value
-  if (p.kind !== 'category') return null
-  const i = GUIDE_CATEGORIES.indexOf(p.category)
-  const at = (c: GuideCategory | undefined) => (c ? { href: link(`guide/${c}/`), title: t.value(`guide.cat.${c}.nav`) } : null)
-  return { prev: at(GUIDE_CATEGORIES[i - 1]), next: at(GUIDE_CATEGORIES[i + 1]) }
-})
-
-const FACTS = [
-  { value: '12.5', key: 'guide.factPoints' },
-  { value: '50', key: 'guide.factLoad' },
-  { value: '300', key: 'guide.factDegree' },
-  { value: '80+', key: 'guide.factH1' },
-] as const
-
-// A #topic link: on the overview (an old one-page link), move to the section that holds it;
-// on a section page, open that topic and bring it into view.
-async function followHash(): Promise<void> {
-  const id = decodeURIComponent(location.hash.slice(1))
-  if (!id) return
-  if (page.value.kind === 'overview') {
-    const c = categoryOfTopic(id)
-    if (c) replaceAddress(`guide/${c}/#${id}`)
-    return
+  if (!slug.value) return null
+  const { prev, next } = neighbours(slug.value)
+  return {
+    prev: prev ? { href: link(`guide/${prev}/`), title: navName(prev) } : { href: link('guide/'), title: t.value('guide.overview') },
+    next: next ? { href: link(`guide/${next}/`), title: navName(next), desc: navDesc(next) } : { href: link('guide/'), title: t.value('guide.overview'), desc: t.value('menu.d.guideHome') },
   }
-  await nextTick()
-  const el = document.getElementById(id)
-  if (el instanceof HTMLDetailsElement) el.open = true
-  el?.scrollIntoView({ block: 'start' })
-}
-const onHash = () => void followHash()
-onMounted(() => {
-  void followHash()
-  window.addEventListener('hashchange', onHash)
 })
-onBeforeUnmount(() => window.removeEventListener('hashchange', onHash))
-watch(param, () => void followHash())
+
+// "On this page": every titled part of the article, read from the page once it's drawn.
+const body = useTemplateRef<HTMLElement>('body')
+const toc = shallowRef<{ id: string; title: string; sub: boolean }[]>([])
+watch(
+  [page, locale],
+  async () => {
+    await nextTick()
+    const els = body.value ? [...body.value.querySelectorAll<HTMLElement>('[data-toc][id]')] : []
+    toc.value = els.map((el) => ({ id: el.id, title: el.dataset.toc ?? '', sub: 'tocSub' in el.dataset }))
+  },
+  { immediate: true, flush: 'post' },
+)
 </script>
 
 <template>
   <article class="guide">
-    <header class="guide-head">
-      <p class="guide-eyebrow">{{ t('guide.eyebrow') }}</p>
-      <h1 class="page-title">{{ heading.title }}</h1>
-      <p class="page-lede">{{ heading.lede }}<InfoTip v-if="'full' in heading" :text="heading.full" /></p>
-      <GuideSubnav :current="current" />
-    </header>
+    <GuideHero :key="slug ?? 'overview'" :slug="slug" :title="heading.title" :lede="heading.lede" :full="heading.full" />
 
-    <div class="layout">
-      <div class="main content">
-        <template v-if="page.kind === 'overview'">
-          <GuideOverview />
-          <CanDoList :title="t('guide.canTitle')" class="guide-can" />
-        </template>
-        <KeyDates v-else-if="page.kind === 'extra'" />
+    <template v-if="page.kind === 'overview'">
+      <GuideOverview />
+      <p class="source">
+        {{ t('guide.sourcesTextShort') }}<InfoTip :text="t('guide.sourcesText')" />
+        <a :href="URLS.STUDENT_SITE" target="_blank" rel="noopener">{{ t('guide.sourcesLink') }}</a>
+      </p>
+    </template>
+
+    <div v-else class="article">
+      <div class="article-toc">
+        <GuideToc v-if="toc.length > 1" :items="toc" />
+      </div>
+      <div ref="body" class="article-body content">
+        <KeyDates v-if="page.kind === 'extra'" />
         <component :is="SECTIONS[page.category]" v-else-if="SECTIONS[page.category]" />
         <GuideServices v-else :key="page.category" :category="page.category" />
 
-        <nav v-if="page.kind !== 'overview'" class="pager" :aria-label="t('guide.overview')">
-          <a v-if="pager?.prev" class="pager-link glass" :href="pager.prev.href"><span aria-hidden="true">←</span> {{ pager.prev.title }}</a>
-          <a v-else class="pager-link glass" :href="link('guide/')"><span aria-hidden="true">←</span> {{ t('guide.overview') }}</a>
-          <a v-if="pager?.next" class="pager-link pager-next glass" :href="pager.next.href">{{ pager.next.title }} <span aria-hidden="true">→</span></a>
+        <!-- What to read next: the next section, large; the previous one, small. -->
+        <nav v-if="pager" class="pager" :aria-label="t('guide.nav')">
+          <a class="pager-prev" :href="pager.prev.href"><ArrowLeft :size="16" aria-hidden="true" />{{ pager.prev.title }}</a>
+          <a class="pager-next surface" :href="pager.next.href">
+            <span class="pager-next-text">
+              <span class="pager-next-title">{{ pager.next.title }}</span>
+              <span class="pager-next-desc">{{ pager.next.desc }}</span>
+            </span>
+            <span class="pager-next-go"><ArrowRight :size="20" aria-hidden="true" /></span>
+          </a>
         </nav>
         <p class="source">
           {{ t('guide.sourcesTextShort') }}<InfoTip :text="t('guide.sourcesText')" />
           <a :href="URLS.STUDENT_SITE" target="_blank" rel="noopener">{{ t('guide.sourcesLink') }}</a>
         </p>
       </div>
-
-      <!-- The numbers people look up most, kept in view while reading. -->
-      <aside v-if="page.kind !== 'extra'" class="side" :class="{ 'side-first': page.kind === 'overview' }">
-        <ul class="facts surface">
-          <li v-for="f in FACTS" :key="f.key" class="fact">
-            <span class="fact-value">{{ f.value }}</span>
-            <span class="fact-label">{{ t(f.key) }}</span>
-          </li>
-        </ul>
-      </aside>
     </div>
   </article>
 </template>
 
 <style scoped>
-.content {
-  display: grid;
-  gap: 18px;
-}
-
-.content :deep(.item) {
-  scroll-margin-top: 96px;
-}
-
 .guide {
   display: grid;
-  gap: 28px;
+  gap: 32px;
   padding-top: var(--page-top);
 }
 
-.layout {
+/* The article: "On this page" on the left, a reading column on the right. */
+.article {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 300px;
-  gap: 32px;
+  grid-template-columns: 232px minmax(0, 800px);
+  gap: 48px;
   align-items: start;
 }
 
-.main {
-  display: grid;
-  gap: 28px;
-  min-width: 0;
+.article-toc {
+  align-self: stretch;
 }
 
-.side {
-  position: sticky;
-  top: 88px;
+.article-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 24px;
+  min-width: 0;
 }
 
 @media (max-width: 960px) {
-  .layout {
-    grid-template-columns: 1fr;
+  .article {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
   }
 
-  /* On narrow screens the numbers sit after the reading, except on the overview where they lead. */
-  .side {
-    position: static;
-  }
-
-  .side-first {
-    order: -1;
+  .article-toc:empty {
+    display: none;
   }
 }
 
-.guide-head {
-  display: grid;
-  gap: 6px;
-  min-width: 0;
-}
-
-.guide-head > :deep(nav) {
-  margin-top: 10px;
-}
-
-/* Previous / next section: two glass pills, the next one pushed to the right. */
+/* Previous / next: the next section is the obvious step (a card with its one-liner). */
 .pager {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
   gap: 12px;
-}
-
-.pager-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  min-height: 44px;
-  padding: 0 18px;
-  border-radius: 999px;
-  font-weight: 600;
-  color: var(--accent);
-  text-decoration: none;
-}
-
-.pager-link:hover {
-  text-decoration: underline;
+  margin-top: 16px;
 }
 
 .pager-next {
-  margin-left: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 24px;
+  color: inherit;
+  text-decoration: none;
+  transition: transform 0.2s var(--ease-spring);
 }
 
-.guide-eyebrow {
-  margin-bottom: 6px;
-  font-size: 0.8125rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+.pager-next:hover {
+  transform: translateY(-2px);
+}
+
+.pager-next-text {
+  display: grid;
+  gap: 2px;
+}
+
+.pager-next-title {
+  font-size: 1.125rem;
+  font-weight: var(--fw-bold);
+}
+
+.pager-next:hover .pager-next-title {
   color: var(--accent);
 }
 
-/* Four numbers in one strip, split by hairlines. */
-.facts {
+.pager-next-desc {
+  font-size: var(--fs-small);
+  color: var(--ink-soft);
+}
+
+.pager-next-go {
   display: grid;
+  flex: none;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  color: var(--accent-fill-ink);
+  border-radius: 50%;
+  background: var(--accent-fill);
+}
+
+.pager-prev {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  order: 1;
+  width: fit-content;
+  min-height: 44px;
+  padding: 0 4px;
+  font-weight: var(--fw-semibold);
+  text-decoration: none;
+}
+
+.pager-prev:hover {
+  text-decoration: underline;
+}
+
+.source {
+  font-size: var(--fs-small);
+  color: var(--ink-faint);
+}
+
+/* ---------- Shared pieces inside the topic cards ---------- */
+
+/* Readable lines however wide the card. */
+.content :deep(.topic-body) > :is(p:not(.yours, .actions), .plain, .steps, .checks, .timeline, .terms) {
+  max-width: 68ch;
+}
+
+.content :deep(.note) {
+  font-size: var(--fs-small);
+  color: var(--ink-soft);
+}
+
+/* Numbered steps: a filled number on a thin rail. */
+.content :deep(.steps) {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: step;
+}
+
+.content :deep(.steps li) {
+  position: relative;
+  min-height: 28px;
+  padding-left: 42px;
+  counter-increment: step;
+}
+
+.content :deep(.steps li::before) {
+  content: counter(step);
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  font-family: var(--font-code);
+  font-size: var(--fs-meta);
+  font-weight: 700;
+  color: var(--accent-fill-ink);
+  border-radius: 50%;
+  background: var(--accent-fill);
+}
+
+.content :deep(.steps li:not(:last-child)::after) {
+  content: '';
+  position: absolute;
+  top: 32px;
+  bottom: -10px;
+  left: 13px;
+  width: 2px;
+  background: var(--divider);
+}
+
+/* Bullets: a small accent dot. */
+.content :deep(.plain),
+.content :deep(.checks) {
+  display: grid;
+  gap: 10px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.fact {
-  display: grid;
-  align-content: start;
-  gap: 4px;
-  padding: 18px 20px;
-}
-
-.fact + .fact {
-  border-top: 1px solid var(--divider);
-}
-
-/* Between phone and desktop: one strip of four above the guide. */
-@media (max-width: 960px) {
-  .facts {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-
-  .fact + .fact {
-    border-top: 0;
-    border-left: 1px solid var(--divider);
-  }
-}
-
-.fact-value {
-  font-family: var(--font-code);
-  font-size: 1.5rem;
-  font-weight: 650;
-  letter-spacing: -0.03em;
-  color: var(--accent);
-}
-
-.fact-label {
-  font-size: 0.8125rem;
-  line-height: 1.45;
-  color: var(--ink-soft);
-}
-
-
-.list {
-  overflow: hidden;
-}
-
-.content :deep(.note) {
-  font-size: 0.9375rem;
-  color: var(--ink-soft);
-}
-
-.content :deep(.steps),
-.content :deep(.plain) {
-  display: grid;
-  gap: 6px;
-  margin: 0;
+.content :deep(.plain li),
+.content :deep(.checks li) {
+  position: relative;
   padding-left: 22px;
 }
 
-.content :deep(.aside),
-.content :deep(.formula),
-.content :deep(.who-card) {
-  padding: 12px 14px;
-  background: var(--inset-fill);
-  border-radius: var(--radius-sm);
+.content :deep(.plain li::before) {
+  content: '';
+  position: absolute;
+  top: 0.7em;
+  left: 4px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-fill);
+  opacity: 0.75;
 }
 
-.content :deep(.aside-title) {
-  margin-bottom: 6px;
-  font-size: 0.9375rem;
-  font-weight: 650;
+/* A list of conditions: each one ticked. */
+.content :deep(.checks li) {
+  padding-left: 28px;
 }
 
-.guide-can :deep(.can-title) {
-  padding-left: 4px;
+.content :deep(.checks li::before) {
+  content: '';
+  position: absolute;
+  top: 0.35em;
+  left: 0;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--good-soft)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2316703f' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E")
+    center / 12px no-repeat;
+}
+
+.content :deep(.box) {
+  display: grid;
+  gap: 10px;
+  padding: 16px 18px;
+  border: 1px solid var(--divider);
+  border-radius: 14px;
+}
+
+.content :deep(.box-title) {
+  font-size: 1rem;
+  font-weight: var(--fw-bold);
 }
 
 .content :deep(.formula) {
+  width: fit-content;
+  max-width: 100%;
+  padding: 12px 16px;
   font-family: var(--font-code);
-  font-size: 0.9375rem;
+  font-size: var(--fs-small);
+  border-radius: 12px;
+  background: var(--inset-fill);
 }
 
 .content :deep(.actions) {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+  max-width: none;
 }
 
+/* Two sides of one rule (local / international, can / can't): two cards side by side. */
 .content :deep(.who) {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
+  gap: 12px;
 }
 
 .content :deep(.who-card) {
-  font-size: 0.9375rem;
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  padding: 16px 18px;
+  font-size: var(--fs-small);
+  line-height: 1.6;
+  border: 1px solid var(--card-edge);
+  border-radius: 16px;
+  background: var(--tile-fill);
+}
+
+.content :deep(.who-yes) {
+  border-top: 3px solid var(--good);
+}
+
+.content :deep(.who-no) {
+  border-top: 3px solid var(--bad);
 }
 
 .content :deep(.who-card h3) {
-  margin-bottom: 4px;
-  font-size: 0.9375rem;
-  font-weight: 650;
+  font-size: 1rem;
+  font-weight: var(--fw-bold);
 }
 
 .content :deep(.yours) {
@@ -323,23 +384,38 @@ watch(param, () => void followHash())
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  padding: 12px 14px;
+  max-width: none;
+  padding: 14px 16px;
+  font-weight: var(--fw-medium);
+  border-radius: 14px;
   background: var(--accent-soft);
-  border-radius: var(--radius-sm);
 }
 
 .content :deep(.terms) {
   display: grid;
-  gap: 10px;
+  gap: 0;
   margin: 0;
 }
 
+.content :deep(.terms > div) {
+  display: grid;
+  grid-template-columns: minmax(0, 14em) minmax(0, 1fr);
+  gap: 4px 20px;
+  padding: 12px 0;
+  border-top: 1px solid var(--divider);
+}
+
+.content :deep(.terms > div:first-child) {
+  border-top: 0;
+  padding-top: 0;
+}
+
 .content :deep(.terms dt) {
-  font-weight: 650;
+  font-weight: var(--fw-bold);
 }
 
 .content :deep(.terms dd) {
-  margin: 2px 0 0;
+  margin: 0;
   color: var(--ink-soft);
 }
 
@@ -353,58 +429,47 @@ watch(param, () => void followHash())
 
 .content :deep(.timeline li) {
   position: relative;
-  padding: 0 0 14px 22px;
+  padding: 0 0 18px 28px;
 }
 
 .content :deep(.timeline li::before) {
   content: '';
   position: absolute;
-  top: 0.5em;
+  top: 0.45em;
   left: 0;
-  width: 10px;
-  height: 10px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
   background: var(--dot);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--dot) 18%, transparent);
 }
 
 .content :deep(.timeline li:not(:last-child)::after) {
   content: '';
   position: absolute;
-  top: calc(0.5em + 12px);
-  bottom: 2px;
-  left: 4px;
+  top: calc(0.45em + 20px);
+  bottom: 4px;
+  left: 6px;
   width: 2px;
-  background: var(--line);
+  background: var(--divider);
 }
 
 .content :deep(.tl-good) {
   --dot: var(--good);
 }
+
 .content :deep(.tl-warn) {
   --dot: var(--warn);
 }
+
 .content :deep(.tl-bad) {
   --dot: var(--bad);
 }
 
-.content :deep(.links) {
-  display: grid;
-  gap: 8px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.content :deep(.links a) {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  color: var(--accent);
-}
-
 .content :deep(.acc) {
   display: grid;
-  gap: 14px;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+  gap: 12px;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -412,9 +477,13 @@ watch(param, () => void followHash())
 
 .content :deep(.acc li) {
   display: grid;
-  gap: 2px;
-  padding-left: 12px;
-  border-left: 2px solid var(--line);
+  align-content: start;
+  gap: 6px;
+  padding: 16px 18px;
+  font-size: var(--fs-small);
+  border: 1px solid var(--card-edge);
+  border-radius: 16px;
+  background: var(--tile-fill);
 }
 
 .content :deep(.acc p) {
@@ -422,8 +491,11 @@ watch(param, () => void followHash())
   overflow-wrap: anywhere;
 }
 
+.content :deep(.acc-head) {
+  font-size: 1rem;
+}
+
 .content :deep(.acc-body) {
-  font-size: 0.9375rem;
   color: var(--ink-soft);
 }
 
@@ -431,37 +503,31 @@ watch(param, () => void followHash())
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  width: fit-content;
+  font-weight: var(--fw-semibold);
   color: var(--accent);
 }
 
-.source {
-  font-size: 0.875rem;
-  color: var(--ink-faint);
-}
-
-@media (max-width: 720px) {
+@media (max-width: 640px) {
   .guide {
-    gap: 22px;
+    gap: 20px;
   }
 
-  .facts {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .fact {
-    padding: 14px 16px;
-  }
-
-  .fact:nth-child(3) {
-    border-left: 0;
-  }
-
-  .fact:nth-child(n + 3) {
-    border-top: 1px solid var(--divider);
+  .article-body {
+    gap: 16px;
   }
 
   .content :deep(.who) {
     grid-template-columns: 1fr;
+  }
+
+  .content :deep(.terms > div) {
+    grid-template-columns: 1fr;
+  }
+
+  .pager-next {
+    padding: 16px 18px;
+    border-radius: 20px;
   }
 }
 </style>

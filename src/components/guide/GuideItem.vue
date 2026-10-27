@@ -1,88 +1,73 @@
 <script setup lang="ts">
-import { ChevronDown } from 'lucide-vue-next'
-
-// One topic on the basics page: the short answer always shows, the detail opens on tap.
-defineProps<{ title: string; short: string; open?: boolean }>()
+// One topic of a guide page: a glass card with its heading, the short answer, then the detail.
+// The id (an anchor other pages link to) is set by the parent; data-toc puts it in "On this page".
+defineProps<{ title: string; short: string }>()
 </script>
 
 <template>
-  <details class="item" :open="open">
-    <summary class="head">
-      <span class="text">
-        <span class="title">{{ title }}</span>
-        <span class="short">{{ short }}</span>
-      </span>
-      <ChevronDown :size="18" aria-hidden="true" class="chev" />
-    </summary>
-    <div class="body">
+  <section class="topic surface" :data-toc="title">
+    <header class="topic-head">
+      <h2 class="topic-title">{{ title }}</h2>
+      <p class="topic-short">{{ short }}</p>
+    </header>
+    <div class="topic-body">
       <slot />
     </div>
-  </details>
+  </section>
 </template>
 
 <style scoped>
-.item + .item {
-  border-top: 1px solid var(--line);
-}
-
-.head {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 16px 20px;
-  list-style: none;
-  cursor: pointer;
-}
-
-.head::-webkit-details-marker {
-  display: none;
-}
-
-.head:hover .title {
-  color: var(--accent);
-}
-
-.text {
-  display: grid;
-  flex: 1;
-  gap: 2px;
+.topic {
   min-width: 0;
+  padding: 28px 32px 32px;
+  scroll-margin-top: 96px;
 }
 
-.title {
-  font-weight: 650;
-  transition: color 0.15s;
-}
-
-.short {
-  font-size: 0.9375rem;
-  color: var(--ink-soft);
-}
-
-.chev {
-  flex: none;
-  color: var(--ink-faint);
-  transition: transform 0.2s;
-}
-
-.item[open] .chev {
-  transform: rotate(180deg);
-}
-
-.body {
+.topic-head {
   display: grid;
-  gap: 12px;
-  padding: 0 20px 20px;
-  line-height: 1.65;
+  gap: 8px;
+  padding-bottom: 20px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--divider);
 }
 
-@media (max-width: 720px) {
-  .head {
-    padding: 14px 16px;
+.topic-title {
+  font-size: var(--fs-section);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-heading);
+  letter-spacing: var(--track-heading);
+  text-wrap: balance;
+}
+
+/* The short answer: what most readers came for, a step bigger than the body. */
+.topic-short {
+  max-width: 62ch;
+  font-size: 1.0625rem;
+  font-weight: var(--fw-medium);
+  line-height: 1.55;
+  color: var(--ink);
+}
+
+.topic-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+  line-height: var(--lh-body);
+}
+
+@media (max-width: 640px) {
+  .topic {
+    padding: 22px 18px 24px;
+    border-radius: 20px;
   }
 
-  .body {
-    padding: 0 16px 18px;
+  .topic-head {
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+  }
+
+  .topic-short {
+    font-size: 1rem;
   }
 }
 </style>

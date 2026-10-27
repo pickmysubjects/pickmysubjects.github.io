@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { categoryOfTopic, GUIDE_CATEGORIES, GUIDE_TOPICS, guidePageOf, topicPath } from '@/utils/guideSections'
+import { categoryOfTopic, GUIDE_CATEGORIES, GUIDE_PAGES, GUIDE_TAGS, GUIDE_TOPICS, guidePageOf, movedGuideAnchor, neighbours, pageOfTopic, topicPath, topicTitleKey } from '@/utils/guideSections'
+import { MENUS } from '@/components/layout/nav'
 import { SERVICE_TOPICS, type GuideService } from '@/utils/guideServices'
 import { en } from '@/i18n/messages/en'
 import { zhCN } from '@/i18n/messages/zh-CN'
@@ -80,5 +81,54 @@ describe('guide: late enrolment, cross-institutional, exchange, online limit', (
       }
     }
     expect(zhTW.guide.onlineShort).not.toBe(zhCN.guide.onlineShort)
+  })
+})
+
+describe('guide: one place per topic', () => {
+  const MESSAGES = { en, 'zh-CN': zhCN, 'zh-TW': zhTW, ja, ko, vi, id, ms, hi }
+  const get = (m: unknown, key: string): unknown => key.split('.').reduce<unknown>((n, k) => (n && typeof n === 'object' ? (n as Record<string, unknown>)[k] : undefined), m)
+
+  it('puts every topic on exactly one page, key dates included', () => {
+    const all = GUIDE_PAGES.flatMap((p) => GUIDE_TOPICS[p])
+    expect(new Set(all).size).toBe(all.length)
+    expect(pageOfTopic('dates')).toBe('key-dates')
+    expect(topicPath('dates')).toBe('guide/key-dates/#dates')
+    expect(topicPath('it-help')).toBe('guide/help/#it-help')
+    expect(topicPath('plans')).toBe('guide/enrolling/#plans')
+  })
+  it('sends a link to a topic that moved section to its new page', () => {
+    expect(movedGuideAnchor('help', 'dates')).toBe('guide/key-dates/#dates')
+    expect(movedGuideAnchor('systems', 'it-help')).toBe('guide/help/#it-help')
+    expect(movedGuideAnchor('', 'wam')).toBe('guide/basics/#wam')
+    expect(movedGuideAnchor('basics', 'wam')).toBeNull()
+    expect(movedGuideAnchor('key-dates', 'term-2026-semester-2')).toBeNull()
+    expect(movedGuideAnchor('basics', '')).toBeNull()
+  })
+  it('reads straight through: overview, the seven sections, key dates, back to the overview', () => {
+    expect(GUIDE_PAGES).toEqual(['basics', 'systems', 'enrolling', 'semester', 'life', 'international', 'help', 'key-dates'])
+    expect(neighbours('basics')).toEqual({ prev: null, next: 'systems' })
+    expect(neighbours('key-dates')).toEqual({ prev: 'help', next: null })
+  })
+  it('lists the overview and every page in the 墨大入门 menu, in reading order', () => {
+    const guide = MENUS.find((m) => m.area === 'guide')!
+    expect(guide.items.map((i) => i.to)).toEqual(['guide/', ...GUIDE_PAGES.map((p) => `guide/${p}/`)])
+  })
+  it('has every topic title, tag and menu line in all nine languages', () => {
+    const guide = MENUS.find((m) => m.area === 'guide')!
+    for (const [code, m] of Object.entries(MESSAGES)) {
+      for (const p of GUIDE_PAGES) {
+        for (const tId of GUIDE_TOPICS[p]) expect(get(m, topicTitleKey(tId)), `${code} ${tId}`).toBeTypeOf('string')
+        for (const tag of GUIDE_TAGS[p]) expect(get(m, tag.key), `${code} ${tag.key}`).toBeTypeOf('string')
+      }
+      for (const i of guide.items) {
+        expect(get(m, i.key), `${code} ${i.key}`).toBeTypeOf('string')
+        expect(get(m, i.desc), `${code} ${i.desc}`).toBeTypeOf('string')
+      }
+      for (const k of ['plansTitle', 'plansShort', 'see', 'feesSeeDrop', 'intlAlso', 'structTitle', 'updated']) expect(get(m, `guide.${k}`), `${code} ${k}`).toBeTypeOf('string')
+      expect(get(m, 'guide.kd.upcoming'), code).toBeTypeOf('string')
+    }
+  })
+  it('tags jump to a topic or a service on their own page', () => {
+    for (const p of GUIDE_PAGES) for (const tag of GUIDE_TAGS[p]) if (tag.anchor && !tag.anchor.startsWith('svc-')) expect(pageOfTopic(tag.anchor)).toBe(p)
   })
 })

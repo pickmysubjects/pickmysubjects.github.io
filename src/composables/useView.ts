@@ -4,6 +4,7 @@ import { currentLocale, useI18n } from '@/i18n'
 import { newVersionReady } from '@/utils/serviceWorker'
 import { countPage } from '@/utils/analytics'
 import { VIEW_LOADERS } from '@/views/loaders'
+import { movedGuideAnchor } from '@/utils/guideSections'
 
 export const VIEWS = ['home', 'subject', 'plan', 'recommend', 'record', 'contribute', 'feedback', 'privacy', 'about', 'guide', 'subjects', 'majors', 'shortlist', 'careers', 'changes', 'tools'] as const
 export type View = (typeof VIEWS)[number]
@@ -69,8 +70,14 @@ export function movedTo(view: View, param = ''): string | null {
 function current(): Route {
   const r = parsePath(pagePath(), location.search)
   const to = movedTo(r.view, r.param)
-  if (!to) return r
-  history.replaceState(null, '', link(to) + location.hash)
+  if (to) {
+    history.replaceState(null, '', link(to) + location.hash)
+    return parsePath(pagePath(), location.search)
+  }
+  // A guide topic that now lives on another page (old one-page links, topics that moved section).
+  const moved = r.view === 'guide' ? movedGuideAnchor(r.param, safeDecode(location.hash.slice(1))) : null
+  if (!moved) return r
+  history.replaceState(null, '', link(moved))
   return parsePath(pagePath(), location.search)
 }
 

@@ -3,6 +3,9 @@ import { computed } from 'vue'
 import { ExternalLink } from 'lucide-vue-next'
 import { useI18n } from '@/i18n'
 import GuideItem from './GuideItem.vue'
+import GuideCallout from './GuideCallout.vue'
+import GuideLinks from './GuideLinks.vue'
+import GuideSee from './GuideSee.vue'
 import InfoTip from '@/components/InfoTip.vue'
 import { URLS } from '@/utils/guideLinks'
 
@@ -26,36 +29,71 @@ const ABROAD_ALL: { key: string; href: string; home?: string }[] = [
 ]
 // The reader's own country first, the rest in the usual order.
 const ABROAD = computed(() => [...ABROAD_ALL].sort((a, b) => Number(b.home === locale.value) - Number(a.home === locale.value)))
+// What international students need from other pages: linked, not repeated here.
+const ELSEWHERE = ['load', 'drop', 'exams', 'fail'] as const
 </script>
 
 <template>
-  <div class="list surface">
-    <GuideItem id="rsl" :title="t('guide.rslTitle')" :short="t('guide.rslShort')">
-      <ul class="plain">
-        <li>{{ t('guide.rsl8202') }}</li>
-        <li>{{ t('guide.rslUnder') }}</li>
-        <li>{{ t('guide.rslGrounds') }}</li>
-        <li>{{ t('guide.rslNot') }}</li>
-      </ul>
-      <p class="note">{{ t('guide.rslStay') }}</p>
-      <p>
-        <a class="ext" :href="URLS.RSL" target="_blank" rel="noopener">{{ t('guide.officialPage') }}: {{ t('guide.rslLink') }}<ExternalLink :size="14" aria-hidden="true" /></a>
-      </p>
-    </GuideItem>
+  <GuideItem id="rsl" :title="t('guide.rslTitle')" :short="t('guide.rslShort')">
+    <ul class="plain">
+      <li>{{ t('guide.rsl8202') }}</li>
+      <li>{{ t('guide.rslUnder') }}</li>
+    </ul>
+    <div class="who">
+      <p class="who-card who-yes">{{ t('guide.rslGrounds') }}</p>
+      <p class="who-card who-no">{{ t('guide.rslNot') }}</p>
+    </div>
+    <GuideCallout kind="pull">{{ t('guide.rslStay') }}</GuideCallout>
+    <GuideLinks :links="[{ href: URLS.RSL, label: t('guide.rslLink') }]" />
+  </GuideItem>
 
-    <GuideItem id="online" :title="t('guide.onlineTitle')" :short="t('guide.onlineShort')">
-      <p class="note">
-        {{ t('guide.onlineLine') }}<InfoTip>{{ t('guide.onlineMore') }} <a :href="URLS.ONLINE_LIMIT" target="_blank" rel="noopener">{{ t('guide.onlineLink') }}<ExternalLink :size="13" aria-hidden="true" /></a></InfoTip>
-      </p>
-    </GuideItem>
+  <GuideItem id="online" :title="t('guide.onlineTitle')" :short="t('guide.onlineShort')">
+    <p>
+      {{ t('guide.onlineLine') }}<InfoTip>{{ t('guide.onlineMore') }} <a :href="URLS.ONLINE_LIMIT" target="_blank" rel="noopener">{{ t('guide.onlineLink') }}<ExternalLink :size="13" aria-hidden="true" /></a></InfoTip>
+    </p>
+  </GuideItem>
 
-    <GuideItem id="abroad" :title="t('guide.abroadTitle')" :short="t('guide.abroadShort')">
-      <p>{{ t('guide.abroadText') }}</p>
-      <ul class="links">
-        <li v-for="l in ABROAD" :key="l.key">
-          <a :href="l.href" target="_blank" rel="noopener">{{ t(l.key) }}<ExternalLink :size="14" aria-hidden="true" /></a>
-        </li>
-      </ul>
-    </GuideItem>
-  </div>
+  <GuideItem id="abroad" :title="t('guide.abroadTitle')" :short="t('guide.abroadShort')">
+    <p>{{ t('guide.abroadText') }}</p>
+    <GuideLinks :links="ABROAD.map((l) => ({ href: l.href, label: t(l.key) }))" />
+  </GuideItem>
+
+  <section id="elsewhere" class="elsewhere surface" aria-labelledby="intl-also" :data-toc="t('guide.intlAlso')">
+    <h2 id="intl-also" class="elsewhere-title">{{ t('guide.intlAlso') }}</h2>
+    <ul class="elsewhere-list">
+      <li v-for="id in ELSEWHERE" :key="id"><GuideSee :to="id" /></li>
+    </ul>
+  </section>
 </template>
+
+<style scoped>
+.elsewhere {
+  display: grid;
+  scroll-margin-top: 96px;
+  gap: 12px;
+  padding: 22px 28px 24px;
+}
+
+.elsewhere-title {
+  font-size: var(--fs-meta);
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.elsewhere-list {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (max-width: 640px) {
+  .elsewhere {
+    padding: 20px 18px;
+    border-radius: 20px;
+  }
+}
+</style>
