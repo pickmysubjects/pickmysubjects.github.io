@@ -1234,7 +1234,7 @@ export const ja: Messages = {
     note: "ここの数字からの見積もりです。正式な WAM は my.unimelb で確認してください。",
   },
   stress: {
-    short: {"stack": "{n} 科目が{skill}中心", "hours": "週 {hours} 時間の授業", "hoursWork": "授業 {hours} 時間 + 仕事 {work} 時間", "workload": "{n} 科目が高負荷", "coursework": "{n} 科目が課題中心", "exams": "{n} 科目で期末の比重大", "projects": "{n} 科目に大型課題", "deadlines": "課題 {n} 件", "hard": "{n} 科目が難しめ", "stuck": "分けられません", "details": "詳細"},
+    short: {"stack": "{n} 科目で{skill}", "hours": "週 {hours} 時間の授業", "hoursWork": "授業 {hours} 時間 + 仕事 {work} 時間", "workload": "{n} 科目が高負荷", "coursework": "{n} 科目が課題中心", "exams": "{n} 科目で期末の比重大", "projects": "{n} 科目に大型課題", "deadlines": "課題 {n} 件", "hard": "{n} 科目が難しめ", "stuck": "分けられません", "details": "詳細"},
     heavy: "重め",
     veryHeavy: "かなり重い",
     stackWeak: "{codes} はどれも{skill}を使います。{skill}は苦手と回答済みです。",

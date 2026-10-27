@@ -1234,7 +1234,7 @@ export const id: Messages = {
     note: "Ini perkiraan dari angka di sini. WAM resmi ada di my.unimelb.",
   },
   stress: {
-    short: {"stack": "{n} mata kuliah butuh {skill}", "hours": "{hours} jam kuliah", "hoursWork": "{hours} jam kuliah + {work} jam kerja", "workload": "{n} beban berat", "coursework": "{n} banyak tugas", "exams": "{n} ujian akhir besar", "projects": "{n} proyek besar", "deadlines": "{n} tugas", "hard": "{n} dinilai sulit", "stuck": "Tak bisa dipisah", "details": "Detail"},
+    short: {"stack": "{n} butuh {skill}", "hours": "{hours} jam kuliah", "hoursWork": "{hours} jam kuliah + {work} jam kerja", "workload": "{n} beban berat", "coursework": "{n} banyak tugas", "exams": "{n} ujian akhir besar", "projects": "{n} proyek besar", "deadlines": "{n} tugas", "hard": "{n} dinilai sulit", "stuck": "Tak bisa dipisah", "details": "Detail"},
     heavy: "Berat",
     veryHeavy: "Sangat berat",
     stackWeak: "{codes} semuanya mengandalkan {skill}, yang kamu nilai lemah.",

@@ -78,8 +78,7 @@ const fixLabel = computed(() => {
 <template>
   <div v-if="here && here.level !== 'ok'" class="stress" :class="`stress-${here.level}`" :data-stress-term="termIndex">
     <button ref="chip" type="button" class="stress-chip" aria-haspopup="dialog" @click="show">
-      <span class="stress-level">{{ t(`stress.${here.level}`) }}</span>
-      <span v-if="short" class="stress-short" :title="short">· {{ short }}</span>
+      <span class="stress-text" :title="short || undefined"><span class="stress-level">{{ t(`stress.${here.level}`) }}</span><span v-if="short" class="stress-short"> · {{ short }}</span></span>
       <Lock v-if="stuck.length" :size="12" class="stress-lock" :aria-label="t('stress.short.stuck')" />
     </button>
     <dialog
@@ -171,15 +170,17 @@ const fixLabel = computed(() => {
   color: var(--tone);
 }
 
-.stress-short {
+/* Level and reason flow as one text, up to two lines (a narrow column wraps instead of cutting). */
+.stress-text {
   display: -webkit-box;
+  flex: 1;
   min-width: 0;
   overflow: hidden;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   line-clamp: 2;
   font-size: 0.75rem;
-  line-height: 1.2;
+  line-height: 1.25;
   overflow-wrap: break-word;
 }
 
