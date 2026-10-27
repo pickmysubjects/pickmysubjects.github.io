@@ -1639,7 +1639,6 @@ export const en = {
     },
   },
   about: {
-    storyTitle: "Why I made this",
     eyebrow: 'About',
     title: "Why I made this",
     me: "I graduated from the University of Melbourne, and picking subjects every semester was a headache.",

@@ -1636,7 +1636,6 @@ export const zhTW: Messages = {
     },
   },
   about: {
-    storyTitle: "我為什麼做這個",
     eyebrow: '關於',
     title: "為什麼做這個網站",
     me: "我是墨大畢業的。讀書那幾年，每到選課我都挺頭痛的。",

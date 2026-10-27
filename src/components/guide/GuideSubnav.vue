@@ -7,8 +7,8 @@ import { GUIDE_CATEGORIES, type GuideCategory } from '@/utils/guideSections'
 /** The guide's sections as a slim switch, the same look as the steps under "Me". */
 const props = defineProps<{ current: GuideCategory | 'overview' }>()
 const { t } = useI18n()
-// On a wide screen that's still narrow for every section the bar scrolls sideways:
-// keep the current section in view. (Phones wrap instead; see the style.)
+// When the sections don't fit (phones, narrow windows) the bar is one row that scrolls sideways:
+// keep the current section in view, with faded edges hinting there is more.
 const nav = useTemplateRef<HTMLElement>('nav')
 async function reveal(): Promise<void> {
   await nextTick()
@@ -79,18 +79,27 @@ watch(() => props.current, reveal)
   box-shadow: var(--pill-raised);
 }
 
-/* On a phone the sections wrap onto a second row rather than scrolling sideways:
-   a bar cut off at the edge looked broken and hid the last sections. */
+/* Phones: still one row, scrolling sideways, with the edges faded so the cut-off reads as "more". */
 @media (max-width: 640px) {
   .steps {
-    flex-wrap: wrap;
     width: 100%;
-    overflow-x: visible;
+    border-radius: 999px;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 18px, #000 calc(100% - 18px), transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 0, #000 18px, #000 calc(100% - 18px), transparent 100%);
+    scroll-padding-inline: 24px;
   }
 
   .step {
-    min-height: 34px;
-    padding: 5px 10px;
+    min-height: 36px;
+    padding: 5px 12px;
+  }
+
+  .step:first-child {
+    margin-left: 10px;
+  }
+
+  .step:last-child {
+    margin-right: 10px;
   }
 }
 </style>

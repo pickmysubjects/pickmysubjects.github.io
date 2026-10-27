@@ -1636,7 +1636,6 @@ export const ja: Messages = {
     },
   },
   about: {
-    storyTitle: "作った理由",
     eyebrow: 'このサイトについて',
     title: "このサイトを作った理由",
     me: "私はメルボルン大学の卒業生です。在学中、履修登録のたびに頭を抱えていました。",

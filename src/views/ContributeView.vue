@@ -275,9 +275,18 @@ function onCode(): void {
     grid-column: auto;
   }
 
-  .contribute-body,
-  .meta {
+  .contribute-body {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Code and title full width; the three short numbers two to a row. */
+  .meta {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .meta > .meta-title,
+  .meta > .field:first-child {
+    grid-column: 1 / -1;
   }
 
   .contribute-body {

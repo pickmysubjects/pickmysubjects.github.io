@@ -1636,7 +1636,6 @@ export const vi: Messages = {
     },
   },
   about: {
-    storyTitle: "Vì sao mình làm trang này",
     eyebrow: 'Giới thiệu',
     title: "Vì sao mình làm trang này",
     me: "Mình tốt nghiệp University of Melbourne. Hồi còn đi học, mỗi lần chọn môn là một lần đau đầu.",

@@ -1636,7 +1636,6 @@ export const id: Messages = {
     },
   },
   about: {
-    storyTitle: "Kenapa saya membuat ini",
     eyebrow: 'Tentang',
     title: "Kenapa aku membuat situs ini",
     me: "Aku lulusan University of Melbourne. Waktu kuliah, setiap kali memilih mata kuliah rasanya pusing.",

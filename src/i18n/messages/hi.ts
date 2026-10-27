@@ -1636,7 +1636,6 @@ export const hi: Messages = {
     },
   },
   about: {
-    storyTitle: "मैंने यह क्यों बनाया",
     eyebrow: 'परिचय',
     title: "मैंने यह साइट क्यों बनाई",
     me: "मैं University of Melbourne से पढ़ा हूँ। पढ़ाई के दिनों में हर बार सब्जेक्ट चुनना सिरदर्द होता था।",
