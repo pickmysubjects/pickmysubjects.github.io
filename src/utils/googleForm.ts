@@ -20,6 +20,16 @@ export function hasQuestion<K extends string>(cfg: GoogleFormConfig<K>, key: K):
   return ENTRY.test(cfg.entries[key])
 }
 
+/** The only origin whose answers go to the real forms. */
+export const LIVE_HOST = 'pickmysubjects.github.io'
+let warned = false
+
+/** True only on the deployed site in a production build (not dev, tests or prerendering). */
+export function liveSite(): boolean {
+  if (import.meta.env.DEV || import.meta.env.MODE === 'test' || import.meta.env.SSR) return false
+  return typeof location !== 'undefined' && location.hostname === LIVE_HOST
+}
+
 /**
  * Submit straight to a Google Form's public response endpoint, so people can send
  * ratings and feedback without an account or leaving the app. The request is
@@ -30,6 +40,14 @@ export async function submitGoogleForm<K extends string>(
   values: Partial<Record<K, string | string[]>>,
 ): Promise<void> {
   if (!isFormReady(cfg)) throw new Error('form not configured')
+  if (!liveSite()) {
+    // Local, preview and test runs never reach the real forms: answers there are counted.
+    if (import.meta.env.DEV && !warned) {
+      warned = true
+      console.info('[googleForm] not the live site: form submissions are skipped')
+    }
+    return
+  }
   const body = new URLSearchParams()
   for (const [field, value] of Object.entries(values) as [K, string | string[] | undefined][]) {
     const entry = cfg.entries[field]
