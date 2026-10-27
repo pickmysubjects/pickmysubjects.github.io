@@ -21,14 +21,29 @@ const { data } = useDataset()
 const { stress, relief, pinned, applyRelief } = usePlanStress()
 const sheet = useTemplateRef<HTMLDialogElement>('sheet')
 const chip = useTemplateRef<HTMLButtonElement>('chip')
-// Wide screens: the popover sits under the chip, kept inside the window.
-const at = shallowRef<{ top: number; left: number } | null>(null)
+// Wide screens: the popover sits under the chip, kept inside the window. With too little room
+// below (a chip near the bottom of the screen) it opens above instead; either way it never runs
+// past the window's edge (it scrolls inside).
+const at = shallowRef<{ top: number; left: number; maxHeight: number } | null>(null)
+const EDGE = 12
 async function show(): Promise<void> {
   const r = chip.value?.getBoundingClientRect()
   const wide = matchMedia('(min-width: 641px)').matches
-  at.value = r && wide ? { top: Math.min(r.bottom + 6, innerHeight - 40), left: Math.max(12, Math.min(r.left, innerWidth - 372)) } : null
+  const left = r ? Math.max(EDGE, Math.min(r.left, innerWidth - 372)) : 0
+  const below = r ? r.bottom + 6 : 0
+  at.value = r && wide ? { top: below, left, maxHeight: innerHeight - below - EDGE } : null
   sheet.value?.showModal()
   await nextTick()
+  const el = sheet.value
+  if (!r || !wide || !el || !at.value) return
+  // The popover's full height, measured once it's open.
+  const height = el.scrollHeight
+  const roomBelow = innerHeight - below - EDGE
+  const roomAbove = r.top - 6 - EDGE
+  if (height > roomBelow && roomAbove > roomBelow) {
+    const h = Math.min(height, roomAbove)
+    at.value = { top: r.top - 6 - h, left, maxHeight: roomAbove }
+  }
 }
 function onSheetClick(e: MouseEvent): void {
   if (e.target === sheet.value) sheet.value?.close()
@@ -85,7 +100,7 @@ const fixLabel = computed(() => {
       ref="sheet"
       class="stress-sheet"
       :class="[`stress-${here.level}`, { 'stress-pop': at }]"
-      :style="at ? { top: `${at.top}px`, left: `${at.left}px` } : undefined"
+      :style="at ? { top: `${at.top}px`, left: `${at.left}px`, maxHeight: `${at.maxHeight}px` } : undefined"
       :aria-label="`${t(`stress.${here.level}`)} · ${termLabel(t, plan.terms.value[termIndex] ?? { year: 0, period: 'semester-1' })}`"
       @click="onSheetClick"
     >
