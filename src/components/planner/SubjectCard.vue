@@ -207,8 +207,7 @@ function onDragStart(event: DragEvent): void {
   grid-template-areas:
     'dot code pts'
     'title title title'
-    'tags tags tags'
-    'acts acts acts';
+    'tags tags tags';
   align-items: center;
   gap: 2px 6px;
   min-width: 0;
@@ -219,7 +218,7 @@ function onDragStart(event: DragEvent): void {
   background: var(--glass-shine), var(--row-fill, var(--sheet-fill));
   box-shadow: inset 0 1px 0 rgb(255 255 255 / 70%), 0 2px 8px -4px rgb(80 40 90 / 20%);
   cursor: grab;
-  transition: opacity 0.15s, border-color 0.15s, box-shadow 0.15s;
+  transition: opacity 0.12s, border-color 0.12s, box-shadow 0.12s;
 }
 
 .row-role-required {
@@ -351,22 +350,41 @@ function onDragStart(event: DragEvent): void {
   color: var(--ink-faint);
 }
 
-/* The actions get their own line under the title on hover or keyboard focus, so they never sit
-   over the code or the title. The row only grows for the hovered card. */
+/* The actions float as a small glass toolbar over the card's lower edge on hover or keyboard focus.
+   They take no space in the layout, so hovering never moves a card or the column. */
 .row-actions {
-  grid-area: acts;
-  display: none;
-  justify-content: flex-end;
+  position: absolute;
+  right: 6px;
+  bottom: -24px;
+  z-index: 2;
+  display: flex;
   gap: 2px;
-  height: 26px;
-  margin-top: 2px;
-  padding-top: 2px;
-  border-top: 1px dashed var(--line);
+  height: 28px;
+  padding: 0 3px;
+  border: 1px solid var(--card-edge);
+  border-radius: 999px;
+  background: var(--glass-shine), var(--sheet-fill);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 60%), 0 6px 16px -8px rgb(60 20 80 / 45%);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.12s ease, visibility 0.12s;
+}
+
+.row:hover,
+.row:focus-within {
+  z-index: 4;
 }
 
 .row:hover .row-actions,
 .row:focus-within .row-actions {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .row-actions {
+    transition: none;
+  }
 }
 
 .act {
