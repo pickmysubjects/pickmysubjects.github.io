@@ -18,7 +18,8 @@ import PlanSwitcher from '@/components/plans/PlanSwitcher.vue'
 import PlanCompare from '@/components/plans/PlanCompare.vue'
 import { assumedOfferings, careerGap, careerGoal, careerName, hasEnded, heldMajorIds, informalPicks, isFail, passedCodes, planComponentIds, planRoles, planRules, recordedLoads, termLoad, type PlanTerm } from '@/engine'
 import { diplomaTitle } from '@/composables/usePlanCompare'
-import { ImageDown, Printer, Share2 } from 'lucide-vue-next'
+import { ImageDown, Printer, Share2, Sparkles, X } from 'lucide-vue-next'
+import { usePlans } from '@/composables/usePlans'
 import { sharePlanImage } from '@/utils/planImage'
 import { localTitle } from '@/i18n/localized'
 import { decodePlan, encodePlan } from '@/utils/sharePlan'
@@ -120,10 +121,33 @@ const extraTermsOnVisa = computed(
   () => plan.setup.value.international === true && plan.notes.value.some((n) => typeof n !== 'string' && n.key === 'extraTerms'),
 )
 const peek = shallowRef<string | null>(null)
-// Nothing in "Me" says what the student finds hard (no skills rated, no marks): the plan
-// can't keep their weak spots apart, so point there (it's optional).
-const profileEmpty = computed(
-  () => Object.keys(profile.value.skills).length === 0 && !profile.value.results.some((r) => r.mark !== undefined),
+// The open plan says nothing about the student yet (no strengths, interests or career):
+// one optional nudge toward "Me". Hidden for good per plan once dismissed.
+const plans = usePlans()
+const hintKey = computed(() => `sc:profileHint:${plans.active.value.id}`)
+const hintHidden = shallowRef(new Set<string>())
+function readHidden(key: string): boolean {
+  try {
+    return localStorage.getItem(key) === '1'
+  } catch {
+    return false
+  }
+}
+function hideHint(): void {
+  try {
+    localStorage.setItem(hintKey.value, '1')
+  } catch {
+    /* private mode: hidden for this visit only */
+  }
+  hintHidden.value = new Set([...hintHidden.value, hintKey.value])
+}
+const showProfileHint = computed(
+  () =>
+    Object.keys(profile.value.skills).length === 0 &&
+    profile.value.interests.length === 0 &&
+    !profile.value.career &&
+    !hintHidden.value.has(hintKey.value) &&
+    !readHidden(hintKey.value),
 )
 // The student's completed subjects, in the semesters they were taken, shown before the plan.
 const past = computed(() => pastTerms(profile.value.results))
@@ -233,7 +257,7 @@ const peekTerm = computed(() => {
   return i >= 0 ? { index: i, term: plan.terms.value[i] as PlanTerm } : null
 })
 // Notes beside the status (shown when the line is opened).
-const noteCount = computed(() => Number(profileEmpty.value) + unavoidable.value.length + Number(extraTermsOnVisa.value) + failed.value.length)
+const noteCount = computed(() => unavoidable.value.length + Number(extraTermsOnVisa.value) + failed.value.length)
 // A term has begun once its first month has: only then can a subject in it be marked done.
 const START_MONTH = { summer: 0, 'semester-1': 2, winter: 5, 'semester-2': 6 } as const
 const begun = (term: PlanTerm) => new Date() >= new Date(term.year, START_MONTH[term.period], 1)
@@ -433,6 +457,15 @@ const printTerms = computed<PrintTerm[]>(() => {
         </div>
       </section>
 
+      <div v-if="onBoard && showProfileHint" class="profile-hint" role="note">
+        <Sparkles :size="18" aria-hidden="true" class="profile-hint-icon" />
+        <p class="profile-hint-text">{{ t('plan.profileHint') }}<InfoTip :text="t('plan.profileHintInfo')" /></p>
+        <a class="button button-quiet profile-hint-go" :href="link('record') + '#sec-strengths'">{{ t('plan.profileHintGo') }}</a>
+        <button class="profile-hint-x" type="button" :aria-label="t('plan.profileHintHide')" :title="t('plan.profileHintHide')" @click="hideHint">
+          <X :size="16" aria-hidden="true" />
+        </button>
+      </div>
+
       <p v-if="pastPlanned" class="started">
         {{ t('plan.pastPlannedShort', { term: pastPlanned }) }}<InfoTip :text="t('plan.pastPlanned', { term: pastPlanned })" />
         <button class="button button-quiet" type="button" @click="plan.generate()">{{ t('plan.rebuild') }}</button>
@@ -472,14 +505,6 @@ const printTerms = computed<PrintTerm[]>(() => {
             </li>
           </ul>
           <p v-if="hasConfirmable" class="status-hint">{{ t('plan.confirmHint') }}</p>
-          <p v-if="profileEmpty" class="status-hint">
-            <Interp :text="t('plan.fillRecordShort')">
-              <template #record>
-                <a :href="link('record')">{{ t('nav.record') }}</a>
-              </template>
-            </Interp>
-            <InfoTip :text="t('plan.fillRecord', { record: t('nav.record') })" />
-          </p>
           <p v-for="u in unavoidable" :key="u" class="started">{{ u }}</p>
           <p v-if="extraTermsOnVisa" class="started">{{ t('plan.extraTermsVisa') }}</p>
           <ul v-if="failed.length" class="failed">
@@ -519,14 +544,6 @@ const printTerms = computed<PrintTerm[]>(() => {
                 </li>
               </ul>
               <p v-if="hasConfirmable" class="status-hint">{{ t('plan.confirmHint') }}</p>
-              <p v-if="profileEmpty" class="status-hint">
-                <Interp :text="t('plan.fillRecordShort')">
-                  <template #record>
-                    <a :href="link('record')">{{ t('nav.record') }}</a>
-                  </template>
-                </Interp>
-                <InfoTip :text="t('plan.fillRecord', { record: t('nav.record') })" />
-              </p>
               <p v-for="u in unavoidable" :key="u" class="started">{{ u }}</p>
               <p v-if="extraTermsOnVisa" class="started">{{ t('plan.extraTermsVisa') }}</p>
               <ul v-if="failed.length" class="failed">
@@ -798,6 +815,54 @@ const printTerms = computed<PrintTerm[]>(() => {
   background: color-mix(in srgb, var(--accent) 8%, var(--glass-fill));
   color: var(--ink);
   font-size: 0.9375rem;
+}
+
+.profile-hint {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  padding: 10px 10px 10px 16px;
+  border: 1px solid var(--glass-edge);
+  border-radius: var(--radius-lg);
+  background: var(--glass-shine), color-mix(in srgb, var(--accent) 7%, var(--glass-fill));
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-shadow);
+}
+
+.profile-hint-icon {
+  flex: none;
+  color: color-mix(in srgb, var(--accent) 80%, var(--ink));
+}
+
+.profile-hint-text {
+  flex: 1 1 16em;
+  margin: 0;
+  font-size: 0.9375rem;
+  font-weight: 550;
+}
+
+.profile-hint-go {
+  white-space: nowrap;
+}
+
+.profile-hint-x {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+
+.profile-hint-x:hover {
+  background: color-mix(in srgb, var(--ink) 7%, transparent);
+  color: var(--ink);
 }
 
 .status-icon {

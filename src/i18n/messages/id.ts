@@ -53,6 +53,10 @@ export const id: Messages = {
   periodShort: { summer: 'Musim panas', 'semester-1': 'Sem 1', winter: 'Musim dingin', 'semester-2': 'Sem 2' },
   category: { science: 'sains', commerce: 'bisnis', arts: 'humaniora', design: 'desain', music: 'musik', 'fine-arts': 'seni', agriculture: 'pertanian', 'oral-health': 'kesehatan gigi dan mulut', breadth: 'breadth', core: 'inti' },
   plan: {
+    profileHint: "Isi minat dan kekuatanmu di Saya agar lebih pas",
+    profileHintGo: "Isi sekarang",
+    profileHintInfo: "Saran dan mata kuliah pilihan memakai minat, kekuatan, dan target karier rencana ini. Semuanya opsional; tiap rencana menyimpan sendiri.",
+    profileHintHide: "Sembunyikan",
     saveImage: "Simpan sebagai gambar",
     pastTag: "Sudah diambil",
     pastUndated: "Sudah diambil · semester belum diisi",
@@ -123,8 +127,6 @@ export const id: Messages = {
     statusUnknown: 'Tampak baik, tetapi {n} hal belum bisa dicek',
     statusUnknownOne: 'Tampak baik, tetapi 1 hal belum bisa dicek',
     details: 'Detail: aturan program dan pengecekan',
-    fillRecord: "Opsional: isi {record} supaya pilihan elektif lebih cocok dan mata kuliah sulit tersebar.",
-    fillRecordShort: "Isi {record} agar mata kuliah pilihan lebih cocok",
     share: 'Bagikan',
     copied: 'Tautan disalin',
     print: 'Cetak / PDF',
@@ -1262,6 +1264,7 @@ export const id: Messages = {
     shortlist: "Simpan dan bandingkan mata kuliah",
   },
   guide: {
+    planProfile: "Perencana memilih mata kuliah pilihan dari minat, kekuatan, dan target karier rencana yang terbuka di Saya. Tiap rencana menyimpan sendiri, dan semua pertanyaan opsional.",
     majorsPlansImage: "Untuk menunjukkan rencanamu ke teman, pakai Simpan sebagai gambar di halaman Rencana. Gambarnya hanya berisi semester dan mata kuliah, tanpa nilai atau WAM, dan dibuat di perangkatmu, tidak diunggah.",
     plansAssumed: "Merencanakan melewati Handbook terbaru? Semester berikutnya memakai jadwal buka tahun terbaru sampai Handbook berikutnya keluar, dan bagian atas rencana menyebutkannya.",
     plansCampus: "Beberapa mata kuliah hanya diajar di Dookie, jauh dari Parkville. Rencana tidak memilihnya kecuali jurusanmu membutuhkannya, dan memberi peringatan kalau kamu menambahkannya.",

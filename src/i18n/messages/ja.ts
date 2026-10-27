@@ -53,6 +53,10 @@ export const ja: Messages = {
   periodShort: { summer: '夏', 'semester-1': 'S1', winter: '冬', 'semester-2': 'S2' },
   category: { science: '理系科目', commerce: '商学系科目', arts: '文系科目', design: 'デザイン系科目', music: '音楽系科目', 'fine-arts': '芸術系科目', agriculture: '農学系科目', 'oral-health': '口腔保健系科目', breadth: 'Breadth（専攻外科目）', core: '必修' },
   plan: {
+    profileHint: "「マイ」で興味と得意を入れると精度アップ",
+    profileHintGo: "入力する",
+    profileHintInfo: "おすすめや選択科目は、このプランの興味・得意・目指す職業をもとに選びます。すべて任意で、プランごとに保存されます。",
+    profileHintHide: "閉じる",
     saveImage: "画像で保存",
     pastTag: "履修済み",
     pastUndated: "履修済み・学期未入力",
@@ -123,8 +127,6 @@ export const ja: Messages = {
     statusUnknown: '問題はなさそうですが、{n} 件はまだ確認できません',
     statusUnknownOne: '問題はなさそうですが、1 件はまだ確認できません',
     details: '詳細：学位要件とチェック',
-    fillRecord: "任意：「{record}」を入力すると、選択科目があなたに合ったものになり、難しい科目も分散されます。",
-    fillRecordShort: "「{record}」を入れると選択科目が合いやすく",
     share: '共有',
     copied: 'リンクをコピーしました',
     print: '印刷 / PDF',
@@ -1262,6 +1264,7 @@ export const ja: Messages = {
     shortlist: "科目を保存して比べる",
   },
   guide: {
+    planProfile: "プランは「マイ」にある、開いているプランの興味・得意・目指す職業から選択科目を選びます。プランごとに別々で、どれも任意です。",
     majorsPlansImage: "友だちにプランを見せたいときは、プランのページで「画像で保存」を使えます。画像には各学期の科目だけが入り、成績や WAM は入りません。端末の中で作られ、アップロードはされません。",
     plansAssumed: "最新の Handbook より先の年まで計画する場合、次の Handbook が出るまでは最新年の開講時期で組み、プランの上部にそう表示します。",
     plansCampus: "Parkville から遠い Dookie キャンパスだけで開講される科目もあります。専攻で必要でない限りプランが選ぶことはなく、自分で追加すると注意が表示されます。",

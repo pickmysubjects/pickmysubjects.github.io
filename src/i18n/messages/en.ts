@@ -56,6 +56,10 @@ export const en = {
   periodShort: { summer: 'Summer', 'semester-1': 'Sem 1', winter: 'Winter', 'semester-2': 'Sem 2' },
   category: { science: 'science', commerce: 'commerce', arts: 'arts', design: 'design', music: 'music', 'fine-arts': 'fine arts', agriculture: 'agriculture', 'oral-health': 'oral health', breadth: 'breadth', core: 'core' },
   plan: {
+    profileHint: "Add your interests and strengths in Me for a better fit",
+    profileHintGo: "Fill in",
+    profileHintInfo: "Suggestions and electives use this plan's interests, strengths and career goal. All optional; each plan keeps its own.",
+    profileHintHide: "Hide",
     saveImage: "Save as image",
     pastTag: "Done",
     pastUndated: "Done · semester not given",
@@ -126,8 +130,6 @@ export const en = {
     statusUnknown: 'Looks fine, but {n} things can’t be checked yet',
     statusUnknownOne: 'Looks fine, but 1 thing can’t be checked yet',
     details: 'Details: course rules and checks',
-    fillRecord: "Optional: fill in {record} so electives suit you and hard subjects are spread out.",
-    fillRecordShort: "Fill in {record} for better electives",
     share: 'Share',
     copied: 'Link copied',
     print: 'Print / PDF',
@@ -1265,6 +1267,7 @@ export const en = {
     shortlist: "Shortlist and compare subjects",
   },
   guide: {
+    planProfile: "The planner picks electives from the open plan's interests, strengths and career goal in Me. Each plan keeps its own, and every question is optional.",
     majorsPlansImage: "To show friends your plan, use Save as image on the Plan page. The picture has your semesters and subjects only, no marks or WAM, and it's made on your phone, not uploaded.",
     plansAssumed: "Planning past the newest Handbook? Later semesters use its teaching periods until the next one is out, and the plan says so at the top.",
     plansCampus: "Some subjects are taught only at Dookie, far from Parkville. The plan never picks one unless your major needs it, and warns you if you add one.",
