@@ -402,6 +402,7 @@ export const ja: Messages = {
     eligibilityUnknown: '履修条件を確認できません：{needs}。',
   },
   record: {
+    prompt: {"interestsPrompt": "興味のある分野をタップ（複数可）", "skillsPrompt": "わかるスキルのレベルをタップ", "goalPrompt": "いちばん大事なものをタップ", "picked": "{n} 個選択中", "rated": "{n} 個評価済み", "noneYet": "未選択（すべて任意）"},
     markScaleLabel: "成績の基準：",
     markScaleNote: "おおよその目安で、公式な換算ではありません。学校によって評価は違います。",
     markScaleNoteShort: "目安です。公式の換算ではありません",

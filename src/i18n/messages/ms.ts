@@ -402,6 +402,7 @@ export const ms: Messages = {
     eligibilityUnknown: 'Kelayakan belum disahkan: {needs}.',
   },
   record: {
+    prompt: {"interestsPrompt": "Ketik bidang yang anda minat. Pilih seberapa banyak.", "skillsPrompt": "Ketik tahap untuk kemahiran yang anda tahu.", "goalPrompt": "Ketik perkara paling penting bagi anda.", "picked": "{n} dipilih", "rated": "{n} dinilai", "noneYet": "Belum ada, semua pilihan"},
     markScaleLabel: "Markah saya dalam:",
     markScaleNote: "Panduan kasar sahaja, bukan penukaran rasmi. Setiap sekolah menilai berbeza.",
     markScaleNoteShort: "Panduan kasar, bukan rasmi",

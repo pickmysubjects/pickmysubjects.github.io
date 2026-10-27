@@ -402,6 +402,7 @@ export const zhTW: Messages = {
     eligibilityUnknown: '無法確認是否符合選課條件：{needs}。',
   },
   record: {
+    prompt: {"interestsPrompt": "點選你有興趣的方向，可複選", "skillsPrompt": "幫你熟悉的技能點一個程度", "goalPrompt": "點選你最在意的一項", "picked": "已選 {n} 個", "rated": "已評 {n} 項", "noneYet": "還沒選，全部選填"},
     markScaleLabel: "我的成績用：",
     markScaleNote: "只是大致參考，不是官方換算。各校評分不一樣。",
     markScaleNoteShort: "僅供參考，不是官方換算",

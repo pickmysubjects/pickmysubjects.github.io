@@ -150,7 +150,7 @@ function pick(skill: Skill, level: number): void {
   grid-template-columns: repeat(5, minmax(44px, 1fr));
   flex: 0 1 auto;
   max-width: 100%;
-  border: 1px solid var(--glass-edge);
+  border: 1.5px solid color-mix(in srgb, var(--accent) 45%, var(--glass-edge));
   border-radius: var(--radius-sm);
   overflow: hidden;
   background: var(--glass-shine);
@@ -158,7 +158,7 @@ function pick(skill: Skill, level: number): void {
 
 .step {
   min-width: 44px;
-  min-height: 32px;
+  min-height: 44px;
   padding: 6px 8px;
   border: 0;
   border-left: 1px solid color-mix(in srgb, var(--ink) 8%, transparent);
@@ -180,7 +180,7 @@ function pick(skill: Skill, level: number): void {
 
 .step[aria-checked='true'] {
   background: var(--accent-fill);
-  color: var(--accent-ink);
+  color: var(--accent-fill-ink);
   font-weight: 600;
 }
 
@@ -218,7 +218,7 @@ function pick(skill: Skill, level: number): void {
 
   .step {
     min-width: 36px;
-    min-height: 36px;
+    min-height: 44px;
   }
 }
 .scale-ends {

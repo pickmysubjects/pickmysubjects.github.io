@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, shallowRef } from 'vue'
+import { Check, Plus } from 'lucide-vue-next'
 import { courseFocus } from '@/engine'
 import { TOPIC_GROUPS } from '@/utils/topicGroups'
 import { useDataset } from '@/composables/useDataset'
@@ -46,10 +47,11 @@ function toggle(topic: string): void {
           v-for="topic in g.topics"
           :key="topic"
           type="button"
-          class="pick"
+          class="pick toggle-chip"
           :aria-pressed="interests.includes(topic)"
           @click="toggle(topic)"
         >
+          <component :is="interests.includes(topic) ? Check : Plus" :size="15" :stroke-width="2.5" class="toggle-icon" aria-hidden="true" />
           {{ t(`topic.${topic}`) }}
         </button>
       </div>
@@ -82,34 +84,9 @@ function toggle(topic: string): void {
 .chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 8px;
 }
 
-.pick {
-  padding: 5px 12px;
-  border-radius: 999px;
-  border: 1px solid var(--glass-edge);
-  /* No blur of its own: the card behind is already glass, and dozens of blurred chips stall
-     scrolling on ordinary laptops. */
-  background: var(--glass-fill);
-  box-shadow: var(--glass-shadow);
-  font: inherit;
-  font-size: 0.875rem;
-  color: var(--ink);
-  cursor: pointer;
-  transition: border-color 0.15s, background 0.15s;
-}
-
-.pick:hover {
-  border-color: var(--ink-faint);
-}
-
-.pick[aria-pressed='true'] {
-  border-color: var(--accent);
-  background: var(--accent-soft);
-  color: var(--accent);
-  font-weight: 600;
-}
 
 .more {
   justify-self: start;

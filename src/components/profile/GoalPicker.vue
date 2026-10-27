@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Check, Circle } from 'lucide-vue-next'
 import InfoTip from '@/components/InfoTip.vue'
 import { computed } from 'vue'
 import type { Goal } from '@/engine'
@@ -32,10 +33,12 @@ const current = computed<Goal>(() => (own.value === 'easy' ? 'wam' : own.value))
         v-for="g in goals"
         :key="g"
         type="button"
+        class="toggle-chip"
         :aria-pressed="current === g"
         :title="t(`suggest.goals.${g}Hint`)"
         @click="choose(g)"
       >
+        <component :is="current === g ? Check : Circle" :size="15" :stroke-width="2.5" class="toggle-icon" aria-hidden="true" />
         {{ t(`suggest.goals.${g}`) }}
       </button>
     </div>
@@ -65,40 +68,7 @@ const current = computed<Goal>(() => (own.value === 'easy' ? 'wam' : own.value))
 .seg {
   display: flex;
   flex-wrap: wrap;
-  gap: 2px;
-  padding: 3px;
-  background: color-mix(in srgb, var(--ink) 6%, transparent);
-  border-radius: 12px;
-}
-
-.seg button {
-  flex: 1 0 auto;
-  min-height: 38px;
-  padding: 6px 14px;
-  font: inherit;
-  font-size: 0.9375rem;
-  color: var(--ink-soft);
-  white-space: nowrap;
-  background: none;
-  border: 0;
-  border-radius: 9px;
-  cursor: pointer;
-}
-
-.seg button:hover {
-  color: var(--ink);
-}
-
-.seg button[aria-pressed='true'] {
-  font-weight: 650;
-  color: var(--ink);
-  background: var(--glass-fill-hover);
-  box-shadow: var(--glass-shadow);
-}
-
-.seg button:focus-visible {
-  outline: 2px solid var(--overprint);
-  outline-offset: 1px;
+  gap: 8px;
 }
 
 /* The one helper-text style for form sections. */

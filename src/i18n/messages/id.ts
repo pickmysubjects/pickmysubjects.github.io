@@ -402,6 +402,7 @@ export const id: Messages = {
     eligibilityUnknown: 'Kelayakan belum bisa dipastikan: {needs}.',
   },
   record: {
+    prompt: {"interestsPrompt": "Ketuk bidang yang kamu minati. Boleh pilih banyak.", "skillsPrompt": "Ketuk level untuk skill yang kamu tahu.", "goalPrompt": "Ketuk hal yang paling penting buatmu.", "picked": "{n} dipilih", "rated": "{n} dinilai", "noneYet": "Belum ada, semua opsional"},
     markScaleLabel: "Nilai saya dalam:",
     markScaleNote: "Panduan kasar, bukan konversi resmi. Tiap sekolah menilai berbeda.",
     markScaleNoteShort: "Perkiraan kasar, bukan resmi",

@@ -405,6 +405,7 @@ export const en = {
     eligibilityUnknown: 'Eligibility not confirmed: {needs}.',
   },
   record: {
+    prompt: {"interestsPrompt": "Tap the areas you like. Pick as many as you want.", "skillsPrompt": "Tap a level for the skills you know.", "goalPrompt": "Tap what matters most to you.", "picked": "{n} picked", "rated": "{n} rated", "noneYet": "None yet, all optional"},
     markScaleLabel: "My marks are in:",
     markScaleNote: "A rough guide, not an official conversion. Schools grade differently.",
     markScaleNoteShort: "A rough guide, not official",

@@ -402,6 +402,7 @@ export const vi: Messages = {
     eligibilityUnknown: 'Chưa xác nhận được điều kiện học: {needs}.',
   },
   record: {
+    prompt: {"interestsPrompt": "Chạm chọn lĩnh vực bạn thích, chọn bao nhiêu cũng được", "skillsPrompt": "Chạm chọn mức cho kỹ năng bạn biết", "goalPrompt": "Chạm chọn điều bạn coi trọng nhất", "picked": "Đã chọn {n}", "rated": "Đã đánh giá {n}", "noneYet": "Chưa chọn, đều không bắt buộc"},
     markScaleLabel: "Điểm của tôi theo:",
     markScaleNote: "Chỉ để tham khảo, không phải quy đổi chính thức. Mỗi trường chấm khác nhau.",
     markScaleNoteShort: "Chỉ để tham khảo, không phải quy đổi chính thức",

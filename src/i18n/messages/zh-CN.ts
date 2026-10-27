@@ -402,6 +402,7 @@ export const zhCN: Messages = {
     eligibilityUnknown: '无法确认是否满足选课条件：{needs}。',
   },
   record: {
+    prompt: {"interestsPrompt": "点选你感兴趣的方向，可多选", "skillsPrompt": "给你了解的技能点一个水平", "goalPrompt": "点选你最看重的一项", "picked": "已选 {n} 个", "rated": "已评 {n} 项", "noneYet": "还没选，都是选填"},
     markScaleLabel: "我的成绩用：",
     markScaleNote: "只是大致参考，不是官方换算。各校评分不一样。",
     markScaleNoteShort: "仅供参考，不是官方换算",

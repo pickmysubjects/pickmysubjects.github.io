@@ -1181,3 +1181,61 @@ html {
 .k-report { background: #14b8a6; }
 .k-presentation { background: #f59e0b; }
 .k-participation { background: #a3a3ad; }
+
+/*
+ * A choice the student taps on and off (interest topics, goals, career picks): reads as a
+ * control at a glance. Off: outlined glass with a "+"; on: solid brand fill with a tick.
+ * 44px tall for touch. The icon goes in a .toggle-icon child.
+ */
+.toggle-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 6px 14px 6px 10px;
+  border: 1.5px solid color-mix(in srgb, var(--accent) 45%, var(--glass-edge));
+  border-radius: 999px;
+  background: var(--glass-shine), var(--glass-fill);
+  box-shadow: var(--glass-shadow);
+  font: inherit;
+  font-size: 0.875rem;
+  color: var(--ink);
+  cursor: pointer;
+  transition: border-color 0.15s, background-color 0.15s, transform 0.1s;
+}
+
+.toggle-chip .toggle-icon {
+  flex: none;
+  color: var(--accent);
+}
+
+.toggle-chip:hover {
+  border-color: var(--accent);
+  background: var(--glass-shine), var(--glass-fill-hover);
+}
+
+.toggle-chip:active {
+  transform: scale(0.97);
+}
+
+.toggle-chip:focus-visible {
+  outline: 2px solid var(--overprint);
+  outline-offset: 2px;
+}
+
+.toggle-chip[aria-pressed='true'] {
+  border-color: var(--accent-fill);
+  background: var(--accent-fill);
+  color: var(--accent-fill-ink);
+  font-weight: 600;
+}
+
+.toggle-chip[aria-pressed='true'] .toggle-icon {
+  color: var(--accent-fill-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toggle-chip:active {
+    transform: none;
+  }
+}

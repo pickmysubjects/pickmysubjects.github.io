@@ -101,9 +101,11 @@ const doneCount = computed(() => filled.value.filter((f) => f.done).length)
             <h2 id="sec-strengths" class="sec-title">{{ t('record.secStrengths') }}</h2>
             <span class="for-plan">{{ forPlan }}</span>
           </header>
+          <p class="prompt">{{ t('record.prompt.skillsPrompt') }} <span class="prompt-count">{{ ratedSkills ? t('record.prompt.rated', { n: ratedSkills }) : t('record.prompt.noneYet') }}</span></p>
           <SkillsEditor v-model:skills="skills" />
           <div class="sec-part">
             <h3 class="sub">{{ t('record.step4') }}</h3>
+            <p class="prompt">{{ t('record.prompt.interestsPrompt') }} <span class="prompt-count">{{ interests.length ? t('record.prompt.picked', { n: interests.length }) : t('record.prompt.noneYet') }}</span></p>
             <TopicChips v-model="interests" :topics="topics" :first-groups="3" />
           </div>
         </section>
@@ -113,6 +115,7 @@ const doneCount = computed(() => filled.value.filter((f) => f.done).length)
             <h2 id="sec-goal" class="sec-title">{{ t('record.secGoal') }}</h2>
             <span class="for-plan">{{ forPlan }}</span>
           </header>
+          <p class="prompt">{{ t('record.prompt.goalPrompt') }}</p>
           <GoalPicker :note="t('record.goalNote')" />
           <div class="sec-part"><CareerGoalPicker /></div>
           <div class="sec-part"><WorkHours /></div>
@@ -592,5 +595,25 @@ const doneCount = computed(() => filled.value.filter((f) => f.done).length)
   .sec-badge {
     color: #146c3e;
   }
+}
+
+/* What to do in a section, with how much is picked so far. */
+.prompt {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 10px;
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--ink-soft);
+}
+
+.prompt-count {
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 0.8125rem;
 }
 </style>

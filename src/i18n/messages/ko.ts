@@ -402,6 +402,7 @@ export const ko: Messages = {
     eligibilityUnknown: '수강 자격을 확인할 수 없습니다: {needs}.',
   },
   record: {
+    prompt: {"interestsPrompt": "관심 있는 분야를 눌러 주세요 (여러 개 가능)", "skillsPrompt": "아는 기술의 수준을 눌러 주세요", "goalPrompt": "가장 중요한 것을 눌러 주세요", "picked": "{n}개 선택", "rated": "{n}개 평가", "noneYet": "아직 없음, 모두 선택 사항"},
     markScaleLabel: "내 성적 기준:",
     markScaleNote: "대략적인 참고용이며 공식 환산이 아닙니다. 학교마다 평가가 다릅니다.",
     markScaleNoteShort: "참고용이며 공식 환산이 아니에요",

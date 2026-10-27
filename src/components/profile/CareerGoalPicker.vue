@@ -2,7 +2,7 @@
 import { trackEvent } from '@/utils/analytics'
 import InfoTip from '@/components/InfoTip.vue'
 import { computed, shallowRef } from 'vue'
-import { Check, ChevronDown, Search, X } from 'lucide-vue-next'
+import { Check, ChevronDown, Plus, Search, X } from 'lucide-vue-next'
 import { careerGroups, careerMatchRank, careerSearchTerms, careerTargets } from '@/engine'
 import { careerLabel } from '@/utils/careersHtml'
 import { link } from '@/composables/useView'
@@ -71,7 +71,7 @@ function pick(id: string | undefined): void {
       </label>
       <ul v-if="matches.length" class="matches">
         <li v-for="c in matches" :key="c.id">
-          <button class="match" type="button" @click="pick(c.id)">{{ c.label }}</button>
+          <button class="match toggle-chip" type="button" @click="pick(c.id)"><Plus :size="15" :stroke-width="2.5" class="toggle-icon" aria-hidden="true" />{{ c.label }}</button>
         </li>
       </ul>
       <p v-else-if="query.trim()" class="career-hint no-match">
@@ -88,7 +88,7 @@ function pick(id: string | undefined): void {
             <h4 class="browse-title">{{ g.title }}</h4>
             <ul class="matches">
               <li v-for="c in g.items" :key="c.id">
-                <button class="match" type="button" @click="pick(c.id)">{{ c.label }}</button>
+                <button class="match toggle-chip" type="button" @click="pick(c.id)"><Plus :size="15" :stroke-width="2.5" class="toggle-icon" aria-hidden="true" />{{ c.label }}</button>
               </li>
             </ul>
           </section>
@@ -198,17 +198,8 @@ function pick(id: string | undefined): void {
 }
 
 .match {
-  min-height: 44px;
-  padding: 6px 14px;
-  border: 1px solid var(--glass-edge);
-  border-radius: 999px;
-  background: var(--glass-shine), color-mix(in srgb, var(--glass-fill) 70%, transparent);
-  color: var(--ink);
-  font: inherit;
-  font-size: 0.875rem;
   text-align: start;
   overflow-wrap: anywhere;
-  cursor: pointer;
 }
 
 .no-match a {
@@ -269,8 +260,4 @@ function pick(id: string | undefined): void {
   color: var(--ink-soft);
 }
 
-.match:hover,
-.match:focus-visible {
-  border-color: var(--accent);
-}
 </style>

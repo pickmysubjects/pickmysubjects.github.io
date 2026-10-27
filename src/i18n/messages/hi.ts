@@ -402,6 +402,7 @@ export const hi: Messages = {
     eligibilityUnknown: 'पात्रता की पुष्टि नहीं: {needs}।',
   },
   record: {
+    prompt: {"interestsPrompt": "जिन क्षेत्रों में रुचि है उन पर टैप करें, कई चुन सकते हैं", "skillsPrompt": "जो स्किल आप जानते हैं उनका स्तर टैप करें", "goalPrompt": "जो सबसे ज़रूरी है उस पर टैप करें", "picked": "{n} चुने", "rated": "{n} रेट किए", "noneYet": "अभी कुछ नहीं, सब वैकल्पिक"},
     markScaleLabel: "मेरे अंक इसमें हैं:",
     markScaleNote: "यह मोटा अंदाज़ा है, आधिकारिक रूपांतरण नहीं। हर स्कूल अलग ढंग से अंक देता है।",
     markScaleNoteShort: "सिर्फ़ अंदाज़ा, आधिकारिक नहीं",
