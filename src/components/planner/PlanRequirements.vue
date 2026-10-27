@@ -123,6 +123,11 @@ function toggle(id: string): void {
       </span>
     </button>
 
+    <!-- The plan's other status (subject problems, notes) lives in the same card, not a second banner. -->
+    <div v-if="$slots.notes" class="notes">
+      <slot name="notes" />
+    </div>
+
     <div v-if="open" class="body">
       <p class="hint">{{ t('progress.tapHint') }}</p>
       <ul class="rules">
@@ -158,6 +163,14 @@ function toggle(id: string): void {
 
 .health-fail {
   --tone: var(--bad);
+}
+
+.notes {
+  display: grid;
+  gap: 8px;
+  padding: 12px 20px 14px;
+  border-top: 1px solid var(--line);
+  font-size: 0.9375rem;
 }
 
 .head {

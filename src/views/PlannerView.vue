@@ -8,7 +8,6 @@ import { CircleCheck, Pencil, RotateCcw, TriangleAlert, ChevronDown } from 'luci
 import PlanWizard from '@/components/planner/PlanWizard.vue'
 import PlanMap from '@/components/planner/PlanMap.vue'
 import SubjectPeek from '@/components/planner/SubjectPeek.vue'
-import RuleLegend from '@/components/planner/RuleLegend.vue'
 import PlanRequirements from '@/components/planner/PlanRequirements.vue'
 import SubjectTimeline from '@/components/planner/SubjectTimeline.vue'
 import PlanHowBuilt from '@/components/planner/PlanHowBuilt.vue'
@@ -190,8 +189,13 @@ const problemTexts = computed(() => {
       text: issueText(t.value, i, allRules.value, plan.courseCheck.value.statuses, data.value.subjects, plan.setup.value.course),
       // Conditions only the student can check (a VCE score, a test): let them say they meet it.
       confirm: i.kind === 'prereq-unknown' ? i.subject : undefined,
+      // Course-rule issues are already listed by the requirements card.
+      rule: 'ruleId' in i && !!i.ruleId,
     }))
 })
+// What the requirements card doesn't already say: subject-level problems.
+const planProblems = computed(() => problemTexts.value.filter((p) => !p.rule))
+const hasNotes = computed(() => planProblems.value.length > 0 || noteCount.value > 0)
 const hasConfirmable = computed(() => problemTexts.value.some((p) => p.confirm))
 const unknowns = computed(
   () =>
@@ -447,7 +451,7 @@ const printTerms = computed<PrintTerm[]>(() => {
       </p>
 
       <!-- The plan's status and every note about it, as one slim line that opens. Problems open it by themselves. -->
-      <details v-if="onBoard" class="status glass" :class="problems ? 'status-bad' : unknowns ? 'status-warn' : 'status-good'" :open="problems > 0">
+      <details v-if="onBoard && !plan.courseCheck.value.statuses.length" class="status glass" :class="problems ? 'status-bad' : unknowns ? 'status-warn' : 'status-good'" :open="problems > 0">
         <summary class="status-line" role="status">
           <component :is="problems || unknowns ? TriangleAlert : CircleCheck" :size="18" aria-hidden="true" />
           <span class="status-title">
@@ -503,7 +507,36 @@ const printTerms = computed<PrintTerm[]>(() => {
             :members="members"
             :active="ruleFocus"
             @focus="focusRule"
-          />
+          >
+            <template v-if="hasNotes" #notes>
+              <ul v-if="planProblems.length" class="status-list" :class="problems ? 'tone-bad' : 'tone-warn'" role="status">
+                <li v-for="(p, i) in planProblems.slice(0, 5)" :key="i" class="status-item">
+                  <component :is="TriangleAlert" :size="16" aria-hidden="true" class="status-icon" />
+                  <span>{{ p.text }}</span>
+                  <button v-if="p.confirm" class="button button-quiet confirm" type="button" @click="setConfirmed(p.confirm, true)">
+                    {{ t('plan.iMeetThis') }}
+                  </button>
+                </li>
+              </ul>
+              <p v-if="hasConfirmable" class="status-hint">{{ t('plan.confirmHint') }}</p>
+              <p v-if="profileEmpty" class="status-hint">
+                <Interp :text="t('plan.fillRecordShort')">
+                  <template #record>
+                    <a :href="link('record')">{{ t('nav.record') }}</a>
+                  </template>
+                </Interp>
+                <InfoTip :text="t('plan.fillRecord', { record: t('nav.record') })" />
+              </p>
+              <p v-for="u in unavoidable" :key="u" class="started">{{ u }}</p>
+              <p v-if="extraTermsOnVisa" class="started">{{ t('plan.extraTermsVisa') }}</p>
+              <ul v-if="failed.length" class="failed">
+                <li v-for="f in failed" :key="f.code">
+                  {{ f.term ? t('plan.failedRetake', { code: f.code, term: f.term }) : t('plan.failedNotPlanned', { code: f.code }) }}
+                </li>
+                <li class="failed-more"><a :href="link('guide/semester/#fail')">{{ t('guide.failTitle') }}</a></li>
+              </ul>
+            </template>
+          </PlanRequirements>
           <p class="draft">
             {{ t('plan.draftNoteShort') }}
             <InfoTip>{{ t('plan.draftNote') }} <a :href="STUDENT_SITE" target="_blank" rel="noopener">{{ t('plan.draftLink') }}</a></InfoTip>
@@ -590,7 +623,6 @@ const printTerms = computed<PrintTerm[]>(() => {
             </p>
           </div>
           <div class="details-pair">
-            <RuleLegend class="details-card" :statuses="plan.courseCheck.value.statuses" :rules="allRules" :title="plan.course.value?.title ?? ''" />
             <PlanIssues class="details-card" :issues="allIssues" :rules="allRules" :statuses="plan.courseCheck.value.statuses" />
           </div>
           <PlanHowBuilt
@@ -758,11 +790,33 @@ const printTerms = computed<PrintTerm[]>(() => {
   }
 }
 
+/* Notes about the plan: a light tinted glass strip, readable in light and dark. */
 .started {
-  padding: 12px 16px;
+  padding: 10px 14px;
+  border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
   border-radius: var(--radius);
-  background: var(--accent-soft);
+  background: color-mix(in srgb, var(--accent) 8%, var(--glass-fill));
+  color: var(--ink);
   font-size: 0.9375rem;
+}
+
+.status-icon {
+  flex: none;
+  margin-top: 2px;
+}
+
+.tone-bad .status-icon {
+  color: var(--bad);
+}
+
+.tone-warn .status-icon {
+  color: var(--warn);
+}
+
+.tone-bad .status-item,
+.tone-warn .status-item {
+  flex-wrap: nowrap;
+  align-items: flex-start;
 }
 
 .failed {
