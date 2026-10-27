@@ -468,12 +468,16 @@ const next = computed(() => {
   }
 
   .stage {
-    padding: 28px 16px 20px;
+    padding: 22px 16px 20px;
     border-radius: 26px;
   }
 
   .hero-sub {
-    font-size: 1rem;
+    font-size: 0.9375rem;
+  }
+
+  .hero-search {
+    margin-top: 0;
   }
 
   /* No room to float on a phone, and the card already says it's ready: the two chips step aside. */
@@ -510,9 +514,15 @@ const next = computed(() => {
     justify-content: center;
   }
 
+  /* Side by side when both labels fit, so search and both buttons stay above the tab bar. */
+  .hero-actions {
+    gap: var(--space-2);
+  }
+
   .hero-actions > .button {
-    flex: 1 1 100%;
+    flex: 1 1 auto;
     justify-content: center;
+    padding: 0 16px;
   }
 }
 
