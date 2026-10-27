@@ -207,6 +207,11 @@ watchEffect(() => {
 .shell-wide {
   max-width: none;
 }
+/* Notices above a wide page keep the reading width, lined up with the page's text. */
+.shell-wide > :not(.planner) {
+  max-width: calc(var(--shell) - 40px);
+  margin-inline: auto;
+}
 .footer-meta {
   margin-left: 0.5em;
   font-variant-numeric: tabular-nums;

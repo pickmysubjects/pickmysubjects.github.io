@@ -155,7 +155,7 @@ onBeforeUnmount(() => wide?.removeEventListener('change', onWide))
   .tab-label {
     max-width: 100%;
     overflow: hidden;
-    font-size: 0.6875rem;
+    font-size: 0.75rem;
     font-weight: 600;
     white-space: nowrap;
     text-overflow: ellipsis;
