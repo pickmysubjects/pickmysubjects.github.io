@@ -106,6 +106,28 @@ function sync(): void {
   route.value = current()
   countPage()
   window.scrollTo({ top: 0 })
+  revealHash()
+}
+
+/**
+ * A link into part of a page (/plan/#calendar, /record/#sec-backup): once that part is drawn,
+ * open any folded section around it and bring it into view. Pages load and draw in steps,
+ * so this looks again for a moment before giving up.
+ */
+function revealHash(): void {
+  const id = safeDecode(location.hash.slice(1))
+  if (!id) return
+  let tries = 0
+  const look = () => {
+    const el = document.getElementById(id)
+    if (!el) {
+      if (++tries < 40) window.setTimeout(look, 50)
+      return
+    }
+    for (let d = el.closest('details'); d; d = d.parentElement?.closest('details') ?? null) d.open = true
+    el.scrollIntoView({ block: 'start' })
+  }
+  window.setTimeout(look, 0)
 }
 
 function visit(address: string): void {
@@ -160,8 +182,10 @@ function install(): void {
     sync()
   })
   document.addEventListener('click', onClick)
+  window.addEventListener('hashchange', revealHash)
   route.value = current()
   countPage()
+  revealHash()
 }
 
 /**

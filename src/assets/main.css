@@ -1059,6 +1059,8 @@ html {
   -webkit-tap-highlight-color: transparent;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+  /* A jump to part of a page (#anchor) lands below the sticky header, not under it. */
+  scroll-padding-top: 84px;
 }
 
 /* Landscape on notched phones (viewport-fit=cover): keep content out of the notch. */

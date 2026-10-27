@@ -3,7 +3,7 @@ import { trackEvent } from '@/utils/analytics'
 import { viewYear } from '@/engine/dataYear'
 import InfoTip from '@/components/InfoTip.vue'
 import { link } from '@/composables/useView'
-import { computed, onBeforeUnmount, shallowRef, useTemplateRef } from 'vue'
+import { computed, onBeforeUnmount, shallowRef, useTemplateRef, watch } from 'vue'
 import { CircleCheck, Pencil, RotateCcw, TriangleAlert, ChevronDown } from 'lucide-vue-next'
 import PlanWizard from '@/components/planner/PlanWizard.vue'
 import PlanMap from '@/components/planner/PlanMap.vue'
@@ -50,6 +50,8 @@ const comparing = shallowRef(false)
 
 // A plan someone shared: /plan?share=… (packed into the link, no server).
 const { query } = useView()
+// The header's "Compare Plan A and B" lands here with ?compare=1.
+watch(() => query.value.get('compare'), (v) => { if (v) comparing.value = true }, { immediate: true })
 const shared = computed(() => {
   const code = query.value.get('share')
   return code ? decodePlan(code) : null
@@ -535,6 +537,7 @@ const printTerms = computed<PrintTerm[]>(() => {
         <div class="workspace-main">
           <PlanRequirements
             v-if="onBoard"
+            id="rules"
             :statuses="plan.courseCheck.value.statuses"
             :rules="allRules"
             :degree-rules="rules"
@@ -543,7 +546,7 @@ const printTerms = computed<PrintTerm[]>(() => {
             @focus="focusRule"
           >
             <template v-if="heavyTerms" #alerts>
-              <button class="heavy-link" type="button" @click="showHeavy">
+              <button id="heavy" class="heavy-link" type="button" @click="showHeavy">
                 <TriangleAlert :size="15" aria-hidden="true" /> {{ t('plan.heavySummary', { n: heavyTerms }) }}
               </button>
             </template>
@@ -652,7 +655,7 @@ const printTerms = computed<PrintTerm[]>(() => {
               {{ t('plan.censusLineShort') }}<InfoTip :text="t('plan.censusLine')" />
               <a :href="link('guide/key-dates/')">{{ t('guide.datesTitle') }}</a>
             </p>
-            <PlanCalendar />
+            <PlanCalendar id="calendar" />
           </div>
           <div class="details-pair">
             <PlanIssues class="details-card" :issues="allIssues" :rules="allRules" :statuses="plan.courseCheck.value.statuses" />
