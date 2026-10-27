@@ -32,8 +32,14 @@ const features = [
       <h1 class="about-title">{{ t('about.title') }}</h1>
     </header>
 
-    <!-- One-line lead first; the backstory folds away for whoever wants it. -->
-    <p class="about-lead">{{ t('about.aim') }}</p>
+    <!-- The story reads in order: who made it, why it exists, then the details behind it. -->
+    <div class="about-intro">
+      <p class="about-lead">{{ t('about.me') }} {{ t('about.aim') }}</p>
+      <p class="about-why">{{ t('about.why') }}</p>
+    </div>
+
+    <div class="about-body">
+    <div class="about-main">
 
     <section>
       <h2 class="about-h2">{{ t('about.whatTitle') }}</h2>
@@ -71,6 +77,10 @@ const features = [
       </ul>
     </section>
 
+    </div>
+
+    <!-- The promises and the ways to help, kept beside the reading on wide screens. -->
+    <aside class="about-side">
     <section class="about-promises surface">
       <h2 class="about-h2">{{ t('about.promisesTitle') }}</h2>
       <ul>
@@ -80,13 +90,7 @@ const features = [
       </ul>
     </section>
 
-    <details class="about-story surface">
-      <summary class="about-h2">{{ t('about.storyTitle') }}</summary>
-      <p>{{ t('about.me') }}</p>
-      <p>{{ t('about.why') }}</p>
-    </details>
-
-    <section>
+    <section class="about-helpbox surface">
       <h2 class="about-h2">{{ t('about.helpTitle') }}</h2>
       <p class="about-help">{{ t('about.help') }}</p>
       <p class="about-actions">
@@ -95,6 +99,8 @@ const features = [
         <a class="button button-quiet" :href="link('feedback')">{{ t('nav.feedback') }}</a>
       </p>
     </section>
+    </aside>
+    </div>
   </article>
 </template>
 
@@ -103,7 +109,50 @@ const features = [
   padding-top: var(--page-top);
   display: grid;
   gap: 32px;
+}
+
+.about-intro,
+.about-main,
+.about-side {
+  display: grid;
+  align-content: start;
+  gap: 32px;
+  min-width: 0;
+}
+
+.about-intro {
+  gap: 12px;
   max-width: 760px;
+}
+
+.about-why {
+  max-width: 62ch;
+  margin: 0;
+  color: var(--ink-soft);
+}
+
+.about-body {
+  display: grid;
+  gap: 32px;
+}
+
+.about-helpbox {
+  padding: 20px 22px;
+}
+
+/* Wide screens: reading on the left, promises and ways to help in a column that stays in view. */
+@media (min-width: 1100px) {
+  .about-body {
+    grid-template-columns: minmax(0, 1fr) 340px;
+    gap: 40px;
+    align-items: start;
+  }
+
+  .about-side {
+    position: sticky;
+    top: 88px;
+    gap: 20px;
+  }
 }
 
 .about-eyebrow {
@@ -222,21 +271,4 @@ const features = [
   color: var(--ink-soft);
 }
 
-.about-story {
-  padding: 4px 20px;
-}
-
-.about-story summary {
-  margin: 0;
-  display: flex;
-  align-items: center;
-  min-height: 48px;
-  cursor: pointer;
-}
-
-.about-story p {
-  margin: 0 0 14px;
-  line-height: 1.7;
-  color: var(--ink-soft);
-}
 </style>
