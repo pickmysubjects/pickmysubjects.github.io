@@ -84,7 +84,7 @@ function onCode(): void {
       <p class="small">{{ t('contribute.onlyFacts') }}</p>
     </section>
 
-    <div class="contribute-body">
+    <div class="contribute-body surface">
       <form class="paste" @submit.prevent>
         <label class="field">
           {{ t('contribute.pasted') }}
@@ -225,6 +225,12 @@ function onCode(): void {
 .contribute-body {
   display: grid;
   max-width: 760px;
+  padding: 20px 22px;
+}
+
+/* The send bar lines up with the form above it. */
+.send {
+  max-width: 760px;
 }
 
 .dev {
@@ -272,6 +278,10 @@ function onCode(): void {
   .contribute-body,
   .meta {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  .contribute-body {
+    padding: 16px;
   }
 }
 </style>
