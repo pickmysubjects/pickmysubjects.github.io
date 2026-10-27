@@ -8,7 +8,7 @@ import { usePlan } from '@/composables/usePlan'
 import { useProfile } from '@/composables/useProfile'
 import { useI18n } from '@/i18n'
 import { issueText, reasonText, termLabel } from '@/i18n/format'
-import { runsIn } from '@/utils/planBoard'
+import { slotEligible } from '@/utils/planBoard'
 
 /**
  * Add a subject to a term, or swap one for another, in one sheet. Lists only subjects that run
@@ -52,19 +52,22 @@ const base = computed<Plan>(() => {
 })
 const taken = computed(() => new Set([...base.value.terms.flatMap((x) => x.subjects), ...base.value.completed]))
 
-/** Could go in this term at all: runs then, counts in the degree, not planned or done already. */
-function eligible(s: Subject): boolean {
+/**
+ * Could go in this term at all: counts in the degree, not planned or done already, and (for the
+ * suggestions) runs then. A search may pick a subject the timetable doesn't have then, with a
+ * warning, so past subjects can be recorded where they were really taken.
+ */
+function eligible(s: Subject, anyTerm = false): boolean {
   const at = term.value
-  if (!at || taken.value.has(s.code) || s.code === props.replacing) return false
-  if (categoryOf(s, course.value) === undefined) return false
-  if (s.discontinuedFrom !== undefined && at.year >= s.discontinuedFrom) return false
-  return runsIn(s, at.year, at.period)
+  if (!at || s.code === props.replacing) return false
+  return slotEligible(s, at, course.value, taken.value, anyTerm)
 }
 
 /** The first thing stopping it here, or null when it fits. */
 function problem(code: string): string | null {
   const issues = previewAdd(base.value, data.value, props.termIndex, code, load.value)
   const worst = issues.find((i) => i.severity === 'error') ?? issues[0]
+  if (worst?.kind === 'not-offered') return t.value('subject.addNotOffered', { year: worst.params?.assumed || worst.params?.year || '' })
   return worst ? issueText(t.value, worst, [], [], data.value.subjects, course.value) : null
 }
 
@@ -107,7 +110,7 @@ const found = computed<Row[]>(() => {
   return subjectList.value
     .filter((s) => s.code.toLowerCase().includes(q) || s.title.toLowerCase().includes(q))
     .map((s) => data.value.subjects[s.code])
-    .filter((s): s is Subject => !!s && eligible(s))
+    .filter((s): s is Subject => !!s && eligible(s, true))
     .slice(0, 30)
     .map((s) => ({ code: s.code, title: s.title, why: null, problem: problem(s.code) }))
 })

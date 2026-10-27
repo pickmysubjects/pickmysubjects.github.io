@@ -43,15 +43,18 @@ export function chainOf(code: string, edges: readonly Edge[]): { needs: Set<stri
   return { needs, unlocks }
 }
 
-/** Whether a planned subject can go into another term, and if not, the main reason. */
-export type DropVerdict = { ok: true } | { ok: false; reason: 'same' | 'notOffered' | 'prereqLater' | 'unlocksEarlier' }
+/**
+ * Whether a planned subject can go into another term, and if not, the main reason. A term the
+ * subject isn't timetabled in is allowed with a warning (a past subject is recorded where it was
+ * really taken; timetables change), so `notOffered` only ever comes as `warn`.
+ */
+export type DropVerdict = { ok: true; warn?: 'notOffered' } | { ok: false; reason: 'same' | 'prereqLater' | 'unlocksEarlier' }
 
 export function dropVerdict(plan: Plan, data: Dataset, code: string, from: number, to: number, load = 50): DropVerdict {
   if (from === to) return { ok: false, reason: 'same' }
   const target = plan.terms[to]
   const subject = data.subjects[code]
   if (!target) return { ok: false, reason: 'same' }
-  if (subject && offeredIn(subject, target.year, target.period).status === 'fail') return { ok: false, reason: 'notOffered' }
   // A subject in the plan that needs this one would now come at the same time or earlier.
   for (let i = 0; i <= to; i++) {
     const t = plan.terms[i]
@@ -63,12 +66,24 @@ export function dropVerdict(plan: Plan, data: Dataset, code: string, from: numbe
   const without = { ...plan, terms: plan.terms.map((t, i) => (i === from ? { ...t, subjects: t.subjects.filter((c) => c !== code) } : t)) }
   const issues = previewAdd(without, data, to, code, load)
   if (issues.some((i) => i.kind === 'prereq-unmet' || i.kind === 'coreq-unmet')) return { ok: false, reason: 'prereqLater' }
+  if (subject && offeredIn(subject, target.year, target.period).status === 'fail') return { ok: true, warn: 'notOffered' }
   return { ok: true }
 }
 
 /** Subjects offered in a term (the year's timetable, or an assumed one), for the add and swap lists. */
 export function runsIn(subject: Subject, year: number, period: Period): boolean {
   return offeredIn(subject, year, period).status !== 'fail'
+}
+
+/**
+ * Whether a subject can be offered for a slot in a term: counts in the degree, not planned or
+ * done already, not discontinued by then, and runs then (unless `anyTerm`: a search may pick a
+ * term the timetable doesn't have, with a warning, to record where a subject was really taken).
+ */
+export function slotEligible(s: Subject, at: { year: number; period: Period }, course: string, taken: ReadonlySet<string>, anyTerm = false): boolean {
+  if (taken.has(s.code) || categoryOf(s, course) === undefined) return false
+  if (s.discontinuedFrom !== undefined && at.year >= s.discontinuedFrom) return false
+  return anyTerm || runsIn(s, at.year, at.period)
 }
 
 /**

@@ -33,10 +33,24 @@ describe('plan board', () => {
   })
 
   it('says why a subject cannot be dropped into a term', () => {
-    expect(dropVerdict(plan, data, 'BBBB10001', 0, 1)).toEqual({ ok: false, reason: 'notOffered' })
+    // Not timetabled then: allowed with a warning (past subjects are recorded where they were taken).
+    expect(dropVerdict(plan, data, 'BBBB10001', 0, 1)).toEqual({ ok: true, warn: 'notOffered' })
     expect(dropVerdict(plan, data, 'AAAA20001', 1, 2)).toEqual({ ok: false, reason: 'unlocksEarlier' })
     expect(dropVerdict(plan, data, 'AAAA30001', 2, 1)).toEqual({ ok: false, reason: 'prereqLater' })
     expect(dropVerdict(plan, data, 'AAAA30001', 2, 3)).toEqual({ ok: true })
     expect(dropVerdict(plan, data, 'AAAA30001', 2, 2)).toEqual({ ok: false, reason: 'same' })
+  })
+})
+
+describe('slotEligible', () => {
+  it('suggests only terms a subject runs in, but a search may pick any term (with a warning)', async () => {
+    const { slotEligible } = await import('../src/utils/planBoard')
+    const s = subject({ code: 'BBBB10001', offerings: s1, prerequisites: 'none', categories: { X: 'science' } })
+    const s2 = { year: 2026, period: 'semester-2' as const }
+    expect(slotEligible(s, s2, 'X', new Set())).toBe(false)
+    expect(slotEligible(s, s2, 'X', new Set(), true)).toBe(true)
+    // Still never one already in the plan, or one that doesn't count in the degree.
+    expect(slotEligible(s, s2, 'X', new Set(['BBBB10001']), true)).toBe(false)
+    expect(slotEligible(s, s2, 'Y', new Set(), true)).toBe(false)
   })
 })

@@ -115,7 +115,7 @@ function fromSheet(act: () => void): void {
 }
 
 function reasonOf(v: DropVerdict): string {
-  return v.ok ? t.value('plan.why.ok') : t.value(`plan.why.${v.reason}`)
+  return v.ok ? t.value(v.warn ? `plan.why.${v.warn}` : 'plan.why.ok') : t.value(`plan.why.${v.reason}`)
 }
 
 function onDragStart(event: DragEvent): void {

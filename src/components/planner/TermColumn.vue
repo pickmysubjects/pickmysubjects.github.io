@@ -62,7 +62,12 @@ const dropClass = computed(() => {
   if (!v || (!v.ok && v.reason === 'same')) return null
   return v.ok ? (dragOver.value ? 'drop-ok drop-over' : 'drop-ok') : 'drop-no'
 })
-const dropReason = computed(() => (props.dropVerdict && !props.dropVerdict.ok && props.dropVerdict.reason !== 'same' ? t.value(`plan.why.${props.dropVerdict.reason}`) : null))
+const dropReason = computed(() => {
+  const v = props.dropVerdict
+  if (!v) return null
+  if (v.ok) return v.warn ? t.value(`plan.why.${v.warn}`) : null
+  return v.reason !== 'same' ? t.value(`plan.why.${v.reason}`) : null
+})
 
 /** "S1 only" / "S2 only" for subjects that run in a single semester. */
 function onlyIn(code: string): string | null {
