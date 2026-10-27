@@ -32,13 +32,21 @@ function save(): void {
 </script>
 
 <template>
-  <p v-if="items.length" class="plan-cal">
-    <button type="button" class="button button-quiet" @click="save"><CalendarPlus :size="16" aria-hidden="true" />{{ t('cal.add') }}</button>
-    <InfoTip :text="t('cal.info', { n: items.length })" />
-  </p>
+  <!-- Always there, so a link to #calendar lands here even before any dates are out. -->
+  <div class="plan-cal-wrap">
+    <p v-if="items.length" class="plan-cal">
+      <button type="button" class="button button-quiet" @click="save"><CalendarPlus :size="16" aria-hidden="true" />{{ t('cal.add') }}</button>
+      <InfoTip :text="t('cal.info', { n: items.length })" />
+    </p>
+    <p v-else class="plan-cal-none">{{ t('menu.miss.noDates') }}</p>
+  </div>
 </template>
 
 <style scoped>
+.plan-cal-none {
+  color: var(--ink-soft);
+}
+
 .plan-cal {
   display: flex;
   align-items: center;

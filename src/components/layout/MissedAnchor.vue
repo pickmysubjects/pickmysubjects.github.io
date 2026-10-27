@@ -24,6 +24,8 @@ const hint = computed(() => {
   if (!missedAnchor.value) return null
   // With a plan, a missing heavy-semester alert means there's nothing heavy, not that a plan is needed.
   if (missedAnchor.value === 'heavy' && !plan.isEmpty.value) return { key: 'menu.miss.noHeavy', to: 'plan/', go: 'menu.myPlan' }
+  // With a plan, a missing calendar means none of its semesters has published dates yet.
+  if (missedAnchor.value === 'calendar' && !plan.isEmpty.value) return { key: 'menu.miss.noDates', to: 'guide/key-dates/', go: 'guide.datesTitle' }
   return HINTS[missedAnchor.value] ?? null
 })
 </script>
