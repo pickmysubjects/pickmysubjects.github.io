@@ -174,7 +174,7 @@ const lineText = (c: Credit) =>
   border: 0;
   border-radius: 999px;
   background: none;
-  color: var(--ink-faint);
+  color: var(--ink-soft);
   cursor: pointer;
 }
 

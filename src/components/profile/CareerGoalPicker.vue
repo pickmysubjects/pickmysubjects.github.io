@@ -2,7 +2,7 @@
 import { trackEvent } from '@/utils/analytics'
 import InfoTip from '@/components/InfoTip.vue'
 import { computed, shallowRef } from 'vue'
-import { ChevronDown, Search, X } from 'lucide-vue-next'
+import { Check, ChevronDown, Search, X } from 'lucide-vue-next'
 import { careerGroups, careerMatchRank, careerSearchTerms, careerTargets } from '@/engine'
 import { careerLabel } from '@/utils/careersHtml'
 import { link } from '@/composables/useView'
@@ -58,6 +58,7 @@ function pick(id: string | undefined): void {
     <h3 id="career-goal-title" class="career-label">{{ t('careerGoal.title') }}</h3>
     <p class="career-hint">{{ t('careerGoal.hintShort') }}<InfoTip :text="t('careerGoal.hint')" /></p>
     <div v-if="chosen" class="chosen">
+      <span class="chosen-tick" aria-hidden="true"><Check :size="14" :stroke-width="3" /></span>
       <a class="chosen-name" :href="link(`careers/${chosen.id}`)" :title="t('careerGoal.see')">{{ chosen.label }}</a>
       <button class="button button-quiet clear" type="button" @click="pick(undefined)">
         <X :size="16" aria-hidden="true" /> {{ t('careerGoal.clear') }}
@@ -120,20 +121,41 @@ function pick(id: string | undefined): void {
 }
 
 .chosen {
+  /* The picked career as one clear row: tick, name, clear. */
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  gap: var(--space-2) var(--space-3);
+  gap: var(--space-3);
+  max-width: 560px;
   min-width: 0;
+  min-height: 56px;
+  padding: 6px 6px 6px 14px;
+  border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+  border-radius: 16px;
+  background: var(--glass-shine), var(--accent-soft);
+}
+
+.chosen-tick {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--accent-ink);
 }
 
 .chosen-name {
-  padding: 6px 14px;
-  border-radius: 999px;
-  background: var(--accent-soft);
+  flex: 1;
+  min-width: 0;
   color: var(--ink);
-  font-weight: 600;
+  font-weight: 650;
   overflow-wrap: anywhere;
+}
+
+.chosen .clear {
+  flex: none;
+  min-height: 44px;
 }
 
 .search {
@@ -146,16 +168,17 @@ function pick(id: string | undefined): void {
   position: absolute;
   top: 50%;
   left: 14px;
-  color: var(--ink-faint);
+  color: var(--ink-soft);
   transform: translateY(-50%);
 }
 
 .search-input {
   width: 100%;
+  min-height: 44px;
   padding: 10px 14px 10px 40px;
   font-size: 1rem;
   background: var(--field-fill);
-  border: 1px solid var(--line);
+  border: 1px solid var(--glass-edge);
   border-radius: 999px;
 }
 
@@ -175,10 +198,11 @@ function pick(id: string | undefined): void {
 }
 
 .match {
-  padding: 6px 12px;
-  border: 1px solid var(--line);
+  min-height: 44px;
+  padding: 6px 14px;
+  border: 1px solid var(--glass-edge);
   border-radius: 999px;
-  background: var(--field-fill);
+  background: var(--glass-shine), color-mix(in srgb, var(--glass-fill) 70%, transparent);
   color: var(--ink);
   font: inherit;
   font-size: 0.875rem;
@@ -200,6 +224,7 @@ function pick(id: string | undefined): void {
   display: inline-flex;
   align-items: center;
   gap: 4px;
+  min-height: 44px;
   font-size: 0.875rem;
   color: var(--accent);
   cursor: pointer;
@@ -226,9 +251,9 @@ function pick(id: string | undefined): void {
   padding: var(--space-3);
   overflow-y: auto;
   overscroll-behavior: contain;
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  background: var(--field-fill);
+  border: 1px solid var(--glass-edge);
+  border-radius: 16px;
+  background: var(--glass-shine), color-mix(in srgb, var(--glass-fill) 50%, transparent);
 }
 
 .browse-group {

@@ -344,7 +344,7 @@ function planWithIt(): void {
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--ink-faint);
+  color: var(--ink-soft);
 }
 
 .note {
@@ -415,12 +415,19 @@ function planWithIt(): void {
 
 .source {
   font-size: 0.875rem;
-  color: var(--ink-faint);
+  color: var(--ink-soft);
 }
 .route-names {
   display: block;
   margin-top: 4px;
   font-size: 0.8125rem;
-  color: var(--ink-faint);
+  color: var(--ink-soft);
+}
+
+/* Straight on the colour field: the deeper pink keeps the degree line at AA. */
+@media (prefers-color-scheme: light) {
+  .eyebrow-line {
+    color: #861552;
+  }
 }
 </style>

@@ -76,7 +76,7 @@ function toggle(topic: string): void {
 .group-name {
   font-size: 0.875rem;
   font-weight: 600;
-  color: var(--ink-faint);
+  color: var(--ink-soft);
 }
 
 .chips {

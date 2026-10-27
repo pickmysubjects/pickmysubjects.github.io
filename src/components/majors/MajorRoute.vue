@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, shallowRef } from 'vue'
+import { computed, onBeforeUnmount, onMounted, shallowRef, useTemplateRef } from 'vue'
 import InfoTip from '@/components/InfoTip.vue'
 import { majorRoute, routeChain } from '@/engine/majorRoute'
 import { routeLines } from '@/engine/majorRouteText'
@@ -21,16 +21,35 @@ const route = computed(() => majorRoute(data.value, props.overview, props.course
 const lines = computed(() => routeLines(route.value))
 
 // Layout: fixed-size boxes in columns, a "pick N" label above each choice list.
-const COL_W = 156
+// Columns widen to fill the card (names stop being cut off), never below the old 156px.
+const MIN_COL_W = 156
+const MAX_COL_W = 260
 const COL_GAP = 56
-const NODE_H = 40
+const NODE_H = 46
 const GAP = 8
 const HEAD_H = 26
 const PAD = 24
 
+const scroller = useTemplateRef<HTMLElement>('scroller')
+const avail = shallowRef(0)
+let ro: ResizeObserver | undefined
+onMounted(() => {
+  const el = scroller.value
+  if (!el || typeof ResizeObserver === 'undefined') return
+  ro = new ResizeObserver(() => (avail.value = el.clientWidth - 24))
+  ro.observe(el)
+})
+onBeforeUnmount(() => ro?.disconnect())
+const COL_W_ = computed(() => {
+  const n = Math.max(1, route.value.columns.length)
+  const fit = Math.floor((avail.value - 2 * PAD - (n - 1) * COL_GAP) / n)
+  return Math.min(MAX_COL_W, Math.max(MIN_COL_W, fit || MIN_COL_W))
+})
+
 interface Box { code: string; x: number; y: number; title: string; role: string }
 interface Label { x: number; y: number; text: string }
 const layout = computed(() => {
+  const COL_W = COL_W_.value
   const boxes: Record<string, Box> = {}
   const labels: Label[] = []
   let height = 0
@@ -58,6 +77,7 @@ const layout = computed(() => {
 
 const paths = computed(() =>
   route.value.edges.map((e) => {
+    const COL_W = COL_W_.value
     const a = layout.value.boxes[e.from]!
     const b = layout.value.boxes[e.to]!
     const ay = a.y + NODE_H / 2
@@ -99,7 +119,7 @@ const join = (codes: string[]) => codes.join(t.value('listSep'))
     <h2 class="block-title">{{ t('majors.routeTitle') }}</h2>
     <p class="block-hint">{{ t('majors.routeHint') }}<InfoTip :text="t('majors.routeTip')" /></p>
 
-    <div class="scroller surface" aria-hidden="true" @pointerleave="active = ''">
+    <div ref="scroller" class="scroller surface" aria-hidden="true" @pointerleave="active = ''">
       <div class="graph" :style="{ width: `${layout.width}px`, height: `${layout.height}px` }">
         <svg class="edges" :width="layout.width" :height="layout.height" focusable="false">
           <path
@@ -116,7 +136,7 @@ const join = (codes: string[]) => codes.join(t.value('listSep'))
           :key="b.code"
           class="node"
           :class="[`role-${b.role}`, { on: chain?.has(b.code), off: chain && !chain.has(b.code) }]"
-          :style="{ left: `${b.x}px`, top: `${b.y}px`, width: `${COL_W}px`, height: `${NODE_H}px` }"
+          :style="{ left: `${b.x}px`, top: `${b.y}px`, width: `${COL_W_}px`, height: `${NODE_H}px` }"
           :href="link(`subject/${b.code}`)"
           tabindex="-1"
           :title="b.title"
@@ -213,7 +233,7 @@ const join = (codes: string[]) => codes.join(t.value('listSep'))
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--ink-faint);
+  color: var(--ink-soft);
   white-space: nowrap;
 }
 
@@ -224,7 +244,8 @@ const join = (codes: string[]) => codes.join(t.value('listSep'))
   padding: 0 10px;
   border: 1px solid var(--glass-edge);
   border-radius: var(--radius-sm);
-  background: var(--glass-shine), var(--sheet-fill);
+  background: var(--glass-shine), color-mix(in srgb, var(--glass-fill) 70%, transparent);
+  box-shadow: inset 0 1px 0 var(--glass-edge);
   color: var(--ink);
   text-decoration: none;
   line-height: 1.2;
@@ -232,14 +253,14 @@ const join = (codes: string[]) => codes.join(t.value('listSep'))
 }
 
 .node .code {
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   font-weight: 650;
   font-family: var(--font-code);
 }
 
 .node .name {
   overflow: hidden;
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   color: var(--ink-soft);
   white-space: nowrap;
   text-overflow: ellipsis;

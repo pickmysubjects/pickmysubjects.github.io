@@ -129,7 +129,7 @@ const rows = computed(() =>
 
 .when {
   font-size: 0.8125rem;
-  color: var(--ink-faint);
+  color: var(--ink-soft);
 }
 
 .title {
@@ -144,6 +144,6 @@ const rows = computed(() =>
 
 .go {
   flex: none;
-  color: var(--ink-faint);
+  color: var(--ink-soft);
 }
 </style>
