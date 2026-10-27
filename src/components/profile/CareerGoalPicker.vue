@@ -146,7 +146,7 @@ function pick(id: string | undefined): void {
   position: absolute;
   top: 50%;
   left: 14px;
-  color: var(--ink-faint);
+  color: var(--ink-soft);
   transform: translateY(-50%);
 }
 

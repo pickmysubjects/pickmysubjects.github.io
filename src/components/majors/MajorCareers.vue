@@ -241,7 +241,7 @@ const hasText = computed(() => entry.value?.careerText === true)
 
 .or {
   font-size: 0.8125rem;
-  color: var(--ink-faint);
+  color: var(--ink-soft);
 }
 
 .plain {
@@ -287,7 +287,7 @@ const hasText = computed(() => entry.value?.careerText === true)
 
 .source {
   font-size: 0.8125rem;
-  color: var(--ink-faint);
+  color: var(--ink-soft);
 }
 
 .source a {

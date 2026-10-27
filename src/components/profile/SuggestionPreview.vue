@@ -86,7 +86,7 @@ const top = computed(() =>
 .n {
   flex: none;
   min-width: 1.2em;
-  color: var(--ink-faint);
+  color: var(--ink-soft);
 }
 
 .preview-list a {

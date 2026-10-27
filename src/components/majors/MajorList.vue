@@ -180,7 +180,7 @@ const courseTitle = computed(() => data.value.courses.find((c) => c.code === cou
   position: absolute;
   top: 50%;
   left: 18px;
-  color: var(--ink-faint);
+  color: var(--ink-soft);
   transform: translateY(-50%);
 }
 
@@ -243,7 +243,7 @@ const courseTitle = computed(() => data.value.courses.find((c) => c.code === cou
 
 .group-chevron {
   margin-left: auto;
-  color: var(--ink-faint);
+  color: var(--ink-soft);
   transition: transform 0.15s;
 }
 
@@ -301,6 +301,6 @@ const courseTitle = computed(() => data.value.courses.find((c) => c.code === cou
 
 .go {
   flex: none;
-  color: var(--ink-faint);
+  color: var(--ink-soft);
 }
 </style>

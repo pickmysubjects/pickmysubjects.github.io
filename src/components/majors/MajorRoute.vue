@@ -213,7 +213,7 @@ const join = (codes: string[]) => codes.join(t.value('listSep'))
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--ink-faint);
+  color: var(--ink-soft);
   white-space: nowrap;
 }
 
