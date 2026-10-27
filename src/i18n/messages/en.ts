@@ -1299,7 +1299,7 @@ export const en = {
     calcGroup: "Calculators",
     listGroup: "Subject lists",
     planGroup: "Planning",
-    final: "Work out what you need on the exam for each grade, with hurdles.",
+    final: "What you need on the exam for each grade, with hurdles.",
     wam: "WAM calculator",
     wamText: "Your WAM, a target WAM and what-if for one subject.",
     wamLede: "Your WAM from your record, what you need to reach a target, and what one subject would do to it.",
@@ -1319,7 +1319,7 @@ export const en = {
     seoTitle: "UniMelb tools: final exam and WAM calculators, easy subjects",
     seoDesc: "Free tools for UniMelb students: what you need on the final, a WAM calculator, easy, hard and no-exam subjects, major routes, key dates. No login.",
     wamSeoTitle: "UniMelb WAM calculator: target WAM and what-if",
-    wamSeoDesc: "Free University of Melbourne WAM calculator: work out your WAM from your marks, what average you need for a target WAM, and what one subject's mark would do to it. Marks stay on your device.",
+    wamSeoDesc: "Free UniMelb WAM calculator: your WAM from your marks, the average you need for a target, and what one subject would do. Stays on your device.",
   },
   calc: {
     roundInfo: "Final marks are rounded to whole numbers, so 79.5 counts as 80 (H1). Each band here starts half a mark lower.",
