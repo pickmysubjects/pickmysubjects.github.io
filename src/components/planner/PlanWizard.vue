@@ -2,7 +2,7 @@
 import { thisYear as calendarYear } from '@/engine/dataYear'
 import { link } from '@/composables/useView'
 import { computed, shallowRef } from 'vue'
-import { ArrowLeft, ArrowRight, Check } from 'lucide-vue-next'
+import { ArrowLeft, ArrowRight, Check, Search } from 'lucide-vue-next'
 import { STUDY_LOADS, canEnterIn, cannotCombine, componentCourse, findCourse, nextEntry, diplomaClash, heldAsMinor, majorClash, maxMajors, minorClash, type Component, type Course, type Period } from '@/engine'
 import { useDataset } from '@/composables/useDataset'
 import type { PlanSetup } from '@/composables/usePlan'
@@ -40,6 +40,12 @@ const start0 =
   fromRecord.value && key(fromRecord.value.year, fromRecord.value.period) < key(props.setup.startYear, props.setup.startPeriod)
     ? { startYear: fromRecord.value.year, startPeriod: fromRecord.value.period }
     : {}
+// Long degree lists get a filter; the chosen degree always stays visible.
+const courseQuery = shallowRef('')
+const shownCourses = computed(() => {
+  const q = courseQuery.value.trim().toLowerCase()
+  return q ? props.courses.filter((c) => c.title.toLowerCase().includes(q) || c.code.toLowerCase().includes(q) || c.code === draft.value.course) : props.courses
+})
 const draft = shallowRef<PlanSetup>({ ...props.setup, ...start0 })
 const step = shallowRef(0)
 const thisYear = calendarYear()
@@ -155,9 +161,13 @@ function chooseCourse(c: Course): void {
 
     <div v-if="step === 0" class="q">
       <h2 class="q-title">{{ t('wizard.qCourse') }}</h2>
+      <label v-if="courses.length > 8" class="course-search">
+        <Search :size="18" aria-hidden="true" class="course-search-icon" />
+        <input v-model="courseQuery" type="search" class="course-search-input" :placeholder="t('wizard.searchCourse')" :aria-label="t('wizard.searchCourse')" />
+      </label>
       <div class="options options-courses">
         <button
-          v-for="c in courses"
+          v-for="c in shownCourses"
           :key="`${c.code}-${c.year}`"
           type="button"
           class="option"
@@ -374,6 +384,38 @@ function chooseCourse(c: Course): void {
   text-align: left;
   cursor: pointer;
   transition: border-color 0.15s, background 0.15s;
+}
+
+.course-search {
+  position: relative;
+  display: block;
+}
+
+.course-search-icon {
+  position: absolute;
+  top: 50%;
+  left: 16px;
+  color: var(--ink-soft);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.course-search-input {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 16px 0 46px;
+  border: 1px solid var(--glass-edge);
+  border-radius: 999px;
+  background: var(--glass-shine), var(--glass-fill);
+  color: var(--ink);
+  font: inherit;
+  font-size: 1rem;
+}
+
+.course-search-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-soft);
 }
 
 /* Degrees: two columns on a wide screen, so the long list doesn't run off the page. */

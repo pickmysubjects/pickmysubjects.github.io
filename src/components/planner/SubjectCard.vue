@@ -350,17 +350,17 @@ function onDragStart(event: DragEvent): void {
   color: var(--ink-faint);
 }
 
-/* The actions float as a small glass toolbar over the card's lower edge on hover or keyboard focus.
-   They take no space in the layout, so hovering never moves a card or the column. */
+/* The actions float as a small glass toolbar in the card's bottom-right corner on hover or keyboard
+   focus, clear of the code and title. They take no space in the layout and never cover another card. */
 .row-actions {
   position: absolute;
-  right: 6px;
-  bottom: -24px;
+  right: 3px;
+  bottom: 3px;
   z-index: 2;
   display: flex;
-  gap: 2px;
-  height: 28px;
-  padding: 0 3px;
+  gap: 0;
+  height: 26px;
+  padding: 0 2px;
   border: 1px solid var(--card-edge);
   border-radius: 999px;
   background: var(--glass-shine), var(--sheet-fill);
@@ -381,8 +381,23 @@ function onDragStart(event: DragEvent): void {
   visibility: visible;
 }
 
+/* The toolbar takes the tag line's place while it shows: the tags fade out (space kept), so
+   neither covers the other and nothing moves. */
+.row-tags {
+  transition: opacity 0.12s ease, visibility 0.12s;
+}
+
+@media (hover: hover) and (min-width: 721px) {
+  .row:hover .row-tags,
+  .row:focus-within .row-tags {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .row-actions {
+  .row-actions,
+  .row-tags {
     transition: none;
   }
 }
@@ -390,7 +405,7 @@ function onDragStart(event: DragEvent): void {
 .act {
   display: inline-grid;
   place-items: center;
-  width: 28px;
+  width: 25px;
   height: 100%;
   padding: 0;
   border: 0;

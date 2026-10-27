@@ -1882,6 +1882,7 @@ export const zhCN: Messages = {
     notPlanned: "没有安排",
   },
   wizard: {
+    searchCourse: "搜索学位，比如 Science",
     qDiploma: "加读一个并读文凭吗？（可选）",
     noDiploma: "不加文凭",
     diplomaHint: "在学位之外多读 100 学分，通常多读一年。",

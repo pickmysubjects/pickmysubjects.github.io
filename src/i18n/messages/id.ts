@@ -1882,6 +1882,7 @@ export const id: Messages = {
     notPlanned: "Belum ada",
   },
   wizard: {
+    searchCourse: "Cari gelar, mis. Science",
     qDiploma: "Tambah diploma bersamaan? (opsional)",
     noDiploma: "Tanpa diploma",
     diplomaHint: "100 poin lagi di samping gelarmu, biasanya tambah satu tahun.",

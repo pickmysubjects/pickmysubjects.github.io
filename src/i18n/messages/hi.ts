@@ -1882,6 +1882,7 @@ export const hi: Messages = {
     notPlanned: "कुछ प्लान नहीं",
   },
   wizard: {
+    searchCourse: "डिग्री खोजें, जैसे Science",
     qDiploma: "साथ में एक डिप्लोमा जोड़ें? (वैकल्पिक)",
     noDiploma: "कोई डिप्लोमा नहीं",
     diplomaHint: "डिग्री के साथ 100 पॉइंट और, आमतौर पर एक साल ज़्यादा।",

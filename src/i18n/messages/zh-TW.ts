@@ -1882,6 +1882,7 @@ export const zhTW: Messages = {
     notPlanned: "沒有安排",
   },
   wizard: {
+    searchCourse: "搜尋學位，例如 Science",
     qDiploma: "加讀一個並讀文憑嗎？（可選）",
     noDiploma: "不加文憑",
     diplomaHint: "在學位之外多讀 100 學分，通常多讀一年。",

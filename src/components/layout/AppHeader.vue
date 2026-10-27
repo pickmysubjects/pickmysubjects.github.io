@@ -4,19 +4,17 @@ import { BookOpen } from 'lucide-vue-next'
 import LangMenu from './LangMenu.vue'
 import AppLogo from '../AppLogo.vue'
 import SubjectSearch from '../SubjectSearch.vue'
-import { NAV_ITEMS, subNavFor } from './nav'
+import { NAV_ITEMS } from './nav'
 import type { View } from '@/composables/useView'
 import { useI18n } from '@/i18n'
 
-import { computed } from 'vue'
 
-const props = defineProps<{ view: View }>()
+defineProps<{ view: View }>()
 const { t } = useI18n()
-const sub = computed(() => subNavFor(props.view))
 </script>
 
 <template>
-  <header class="header" :class="{ 'header-with-steps': sub }">
+  <header class="header" >
     <div class="header-inner shell">
       <a class="brand" :href="link('')">
         <AppLogo class="mark" small />
@@ -32,20 +30,6 @@ const sub = computed(() => subNavFor(props.view))
             <component :is="item.icon" :size="16" aria-hidden="true" />
             {{ t(item.key) }}
           </a>
-          <!-- Inside a section: its pages, right next to it (numbered when they're steps). -->
-          <span v-if="sub && sub.parent === item.view" class="nav-steps">
-            <a
-              v-for="(s, i) in sub.steps"
-              :key="s.view"
-              class="nav-step"
-              :href="link(s.view)"
-              :aria-current="view === s.view ? 'step' : undefined"
-            >
-              <span v-if="sub.numbered" class="nav-step-n" aria-hidden="true">{{ i + 1 }}</span>
-              <component :is="s.icon" v-else :size="14" aria-hidden="true" />
-              {{ t(s.key) }}
-            </a>
-          </span>
         </template>
       </nav>
       <div class="tools">
@@ -127,55 +111,6 @@ const sub = computed(() => subNavFor(props.view))
   box-shadow: var(--glass-shadow);
 }
 
-.nav-steps {
-  display: inline-flex;
-  align-items: center;
-  gap: 2px;
-  margin-left: 4px;
-  padding-left: 6px;
-  border-left: 1px solid var(--glass-edge);
-}
-
-.nav-step {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  padding: 6px 10px;
-  font-size: 0.875rem;
-  color: var(--ink-soft);
-  white-space: nowrap;
-  text-decoration: none;
-  border-radius: 999px;
-}
-
-.nav-step:hover {
-  color: var(--ink);
-}
-
-.nav-step[aria-current='step'] {
-  font-weight: 650;
-  color: var(--ink);
-  background: var(--glass-fill-hover);
-}
-
-.nav-step-n {
-  display: inline-grid;
-  place-items: center;
-  min-width: 18px;
-  height: 18px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-  color: var(--bg);
-  background: var(--ink-soft);
-  border-radius: 999px;
-}
-
-.nav-step[aria-current='step'] .nav-step-n {
-  background: var(--overprint);
-  color: var(--accent-ink);
-}
-
 .nav-link {
   display: inline-flex;
   align-items: center;
@@ -183,8 +118,8 @@ const sub = computed(() => subNavFor(props.view))
   min-height: 36px;
   padding: 0 14px;
   border-radius: 999px;
-  font-size: 0.9375rem;
-  font-weight: 500;
+  font-size: 1rem;
+  font-weight: 600;
   color: var(--ink-soft);
   text-decoration: none;
   white-space: nowrap;
@@ -288,27 +223,6 @@ const sub = computed(() => subNavFor(props.view))
 
   .header-inner {
     height: 56px;
-  }
-}
-
-/* The three My steps sit in the bar on wide screens; below that they're a slim switch at the top
-   of the page itself (App.vue), so there's only ever one bar. */
-@media (max-width: 1100px) {
-  .nav-steps {
-    display: none;
-  }
-}
-/* With the three My steps in the bar there's less room: the language button keeps only its
-   icon a little earlier, so a long language name (Tiếng Việt) can't push it off the edge. */
-@media (max-width: 1400px) {
-  .header-with-steps :deep(.lang-name) {
-    display: none;
-  }
-
-  .header-with-steps :deep(.lang) {
-    width: 36px;
-    padding: 0;
-    justify-content: center;
   }
 }
 </style>

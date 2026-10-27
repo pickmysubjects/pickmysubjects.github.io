@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { nextTick, shallowRef, useTemplateRef } from 'vue'
+import { nextTick, onBeforeUnmount, onMounted, shallowRef, useTemplateRef, watch } from 'vue'
 import { Columns2, Copy, Ellipsis, FilePlus, Pencil, Plus, Trash2 } from 'lucide-vue-next'
 import { usePlans } from '@/composables/usePlans'
 import { MAX_PLANS } from '@/utils/planBook'
@@ -16,6 +16,24 @@ type Panel = 'new' | 'menu' | 'rename' | 'delete' | null
 const panel = shallowRef<Panel>(null)
 const draft = shallowRef('')
 const input = useTemplateRef<HTMLInputElement>('input')
+
+// The sliding pill under the active plan: measured from the active button, so any name length works.
+const track = useTemplateRef<HTMLElement>('track')
+const pill = shallowRef<{ left: number; width: number } | null>(null)
+function place(): void {
+  const on = track.value?.querySelector<HTMLElement>('.tab-on')
+  pill.value = on ? { left: on.offsetLeft, width: on.offsetWidth } : null
+}
+let ro: ResizeObserver | undefined
+onMounted(() => {
+  place()
+  if (typeof ResizeObserver !== 'undefined' && track.value) {
+    ro = new ResizeObserver(place)
+    ro.observe(track.value)
+  }
+})
+onBeforeUnmount(() => ro?.disconnect())
+watch(() => [plans.active.value.id, plans.list.value.map((p) => planName(t.value, p)).join('|')], () => nextTick(place))
 
 function toggle(next: Panel): void {
   panel.value = panel.value === next ? null : next
@@ -43,7 +61,9 @@ function confirmDelete(): void {
 <template>
   <section class="switcher" :aria-label="t('plans.label')">
     <div class="row">
-      <div class="tabs" role="group" :aria-label="t('plans.label')">
+      <div class="tabs">
+        <div ref="track" class="seg" role="group" :aria-label="t('plans.label')">
+        <span v-if="pill" class="seg-pill" aria-hidden="true" :style="{ transform: `translateX(${pill.left}px)`, width: `${pill.width}px` }" />
         <button
           v-for="p in plans.list.value"
           :key="p.id"
@@ -55,6 +75,7 @@ function confirmDelete(): void {
         >
           {{ planName(t, p) }}
         </button>
+        </div>
         <button class="icon" type="button" :aria-label="t('plans.new')" :title="t('plans.new')" :aria-expanded="panel === 'new'" @click="toggle('new')">
           <Plus :size="16" aria-hidden="true" />
         </button>
@@ -129,34 +150,71 @@ function confirmDelete(): void {
   min-width: 0;
 }
 
+/* Plan A / Plan B as one segmented control; a glass pill slides to the active plan. */
+.seg {
+  position: relative;
+  display: inline-flex;
+  max-width: 100%;
+  padding: 3px;
+  overflow-x: auto;
+  border: 1px solid var(--glass-edge);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--ink) 6%, transparent);
+  scrollbar-width: none;
+}
+
+.seg-pill {
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  left: 0;
+  border-radius: 999px;
+  background: var(--glass-shine), var(--surface);
+  box-shadow: 0 1px 3px rgb(16 16 20 / 14%), inset 0 0 0 1px var(--glass-edge);
+  transition: transform 0.25s cubic-bezier(0.3, 0.7, 0.2, 1), width 0.25s cubic-bezier(0.3, 0.7, 0.2, 1);
+}
+
 .tab {
+  position: relative;
+  flex: none;
   max-width: 14em;
   overflow: hidden;
-  min-height: 34px;
-  padding: 0 14px;
-  border: 1px solid var(--line);
+  min-height: 36px;
+  padding: 0 16px;
+  border: 0;
   border-radius: 999px;
   background: transparent;
   color: var(--ink-soft);
   font: inherit;
-  font-size: 0.875rem;
+  font-size: 0.9375rem;
+  font-weight: 500;
   white-space: nowrap;
   text-overflow: ellipsis;
   cursor: pointer;
+  transition: color 0.15s;
+}
+
+.tab:hover {
+  color: var(--ink);
 }
 
 .tab-on {
-  border-color: var(--accent);
-  background: var(--accent-soft);
   color: var(--ink);
-  font-weight: 600;
+  font-weight: 650;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .seg-pill {
+    transition: none;
+  }
 }
 
 .icon {
   display: inline-grid;
+  flex: none;
   place-items: center;
-  width: 34px;
-  height: 34px;
+  width: 40px;
+  height: 40px;
   border: 1px solid var(--line);
   border-radius: 999px;
   background: transparent;

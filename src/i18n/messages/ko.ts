@@ -1882,6 +1882,7 @@ export const ko: Messages = {
     notPlanned: "계획 없음",
   },
   wizard: {
+    searchCourse: "학위 검색 (예: Science)",
     qDiploma: "동시 이수 디플로마를 추가할까요? (선택)",
     noDiploma: "디플로마 없음",
     diplomaHint: "학위 외에 100학점을 더 들어요. 보통 1년 더 걸려요.",

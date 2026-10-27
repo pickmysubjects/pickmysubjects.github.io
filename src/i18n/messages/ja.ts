@@ -1882,6 +1882,7 @@ export const ja: Messages = {
     notPlanned: "予定なし",
   },
   wizard: {
+    searchCourse: "学位を検索（例：Science）",
     qDiploma: "同時履修のディプロマを加えますか？（任意）",
     noDiploma: "ディプロマなし",
     diplomaHint: "学位とは別に 100 ポイント、ふつうは 1 年延びます。",
