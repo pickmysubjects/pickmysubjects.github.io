@@ -79,7 +79,14 @@ const serviceWorker = (): Plugin => ({
 // The light/dark/RT preview switch: dev server and `npm run local` only, never the real build.
 const PREVIEW = process.env.VITE_FORCE_GLASS === '1' || process.argv.every((a) => a !== 'build')
 
+// The site version (package.json) and build date, shown in the home hero and the footer.
+const pkg = JSON.parse(readFileSync(fileURLToPath(new URL('./package.json', import.meta.url)), 'utf8')) as { version: string }
+
 export default defineConfig({
+  define: {
+    __APP_VERSION__: JSON.stringify(pkg.version),
+    __APP_UPDATED__: JSON.stringify(new Date().toISOString()),
+  },
   css: { postcss: { plugins: PREVIEW ? [themePreview()] : [] } },
   plugins: [vue(), contentSecurityPolicy(), preloadCoreData(), serviceWorker()],
   // The site is served from / on GitHub Pages. Pages have real

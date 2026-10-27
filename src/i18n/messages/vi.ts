@@ -1728,6 +1728,13 @@ export const vi: Messages = {
     contact: 'Có câu hỏi? Hãy dùng trang Góp ý.',
   },
   home: {
+    release: {
+      label: "v{v} · Cập nhật {date}",
+      title: "Có gì mới",
+      line1: "Giao diện Liquid Glass mới, nhìn dễ chịu hơn",
+      line2: "Bảng kế hoạch rõ hơn: đường môn tiên quyết và thẻ môn học",
+      line3: "Bộ lọc dễ dùng hơn, chạy nhanh hơn trên điện thoại",
+    },
     moreSubjects: "+{n} môn nữa",
     sub: "Gợi ý môn học dành riêng cho bạn: tìm môn dễ lấy điểm cao, tránh môn nặng bất ngờ, và xem sinh viên thật sự nói gì về mọi môn ở UniMelb.",
     proofSubjects: "{n} môn học",

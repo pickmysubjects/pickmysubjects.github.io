@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { APP_VERSION, copyright } from '@/release'
 import { latestDataYear } from '@/engine/dataYear'
 import AppHeader from './components/layout/AppHeader.vue'
 import BottomNav from './components/layout/BottomNav.vue'
@@ -128,6 +129,7 @@ watchEffect(() => {
             <a href="https://handbook.unimelb.edu.au/" target="_blank" rel="noopener">{{ t('app.handbook') }}</a>
           </template>
         </Interp>
+        <span class="footer-meta">{{ copyright() }} · v{{ APP_VERSION }}</span>
       </p>
     </div>
   </footer>
@@ -198,5 +200,10 @@ watchEffect(() => {
 /* The plan board uses the whole width; its page keeps text at the usual width (PlannerView). */
 .shell-wide {
   max-width: none;
+}
+.footer-meta {
+  margin-left: 0.5em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 </style>

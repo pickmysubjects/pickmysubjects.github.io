@@ -1728,6 +1728,13 @@ export const zhCN: Messages = {
     contact: '有疑问？请使用“反馈”页面。',
   },
   home: {
+    release: {
+      label: "v{v} · 更新于 {date}",
+      title: "这次更新",
+      line1: "全新 Liquid Glass 界面，看着更清爽",
+      line2: "规划板更清楚：先修连线 + 科目详情卡",
+      line3: "筛选更好用，手机上更快",
+    },
     moreSubjects: "还有 {n} 门",
     sub: "为你量身挑课：找出被忽略的高分课，避开意外的重课，看看同学对墨大每门课的真实评价。",
     proofSubjects: "{n} 门课",

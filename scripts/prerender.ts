@@ -12,6 +12,8 @@
  * Also writes 404.html (so any other address still opens the app), sitemap.xml,
  * robots.txt and llms.txt. Everything is static: GitHub Pages serves it for free.
  */
+import './releaseGlobals'
+import { APP_VERSION, copyright, releaseDate } from '../src/release'
 import { localTitle, pickLocalized, withLocalTitle } from '../src/i18n/localized'
 import { aggregateRatingLd, BRAND, listPageDescription, listPageTitle, PRESET_TITLE_KEYS, runsLine, subjectFactSentences, subjectPageDescription, subjectPageTitle } from '../src/utils/seo'
 import { execFileSync } from 'node:child_process'
@@ -776,7 +778,7 @@ function mainPages(code: LocaleCode): Page[] {
       path: '',
       title: listPageTitle(t, 'home'),
       description: listPageDescription(t, 'home', counts),
-      body: `<h1>${esc(t('home.title').replaceAll('*', '').replaceAll('|', ['zh-CN', 'zh-TW', 'ja'].includes(code) ? '' : ' '))}</h1><p>${esc(t('home.lede'))}</p><p>${esc(t('home.scope'))}</p>${intro}
+      body: `<p>${esc(t('home.release.label', { v: APP_VERSION, date: releaseDate(code) }))}</p><h1>${esc(t('home.title').replaceAll('*', '').replaceAll('|', ['zh-CN', 'zh-TW', 'ja'].includes(code) ? '' : ' '))}</h1><p>${esc(t('home.lede'))}</p><p>${esc(t('home.scope'))}</p>${intro}
 ${homeDemoHtml(code, t)}
 <ul><li><a href="${href(code, 'plan')}">${esc(t('home.cardPlan'))}</a>: ${esc(t('home.cardPlanText'))}</li>
 <li><a href="${href(code, 'subjects')}">${esc(t('browse.title'))}</a></li>
@@ -935,7 +937,7 @@ for (const code of LOCALE_CODES) {
   byLocale.set(code, entries)
   const main = mainPages(code)
   // Every page links every main page, so a crawler following links reaches all of them, not just the sitemap.
-  const siteNav = `<nav>${main.map((m) => `<a href="${href(code, m.path)}">${esc(m.title.split(' | ')[0]!)}</a>`).join(' · ')}</nav>`
+  const siteNav = `<nav>${main.map((m) => `<a href="${href(code, m.path)}">${esc(m.title.split(' | ')[0]!)}</a>`).join(' · ')}</nav><footer><p>${esc(copyright())} · v${APP_VERSION}</p></footer>`
   const pages = [...main, ...majors.map((m) => majorPage(code, m)), ...minors.map((m) => majorPage(code, m)), ...informals.map((m) => majorPage(code, m)), ...specs.map((m) => majorPage(code, m)), ...careerList.map((c) => careerPage(code, c)), ...subjects.map((s) => subjectPage(code, s))]
   for (const page of pages) {
     write(code, page.path, render({ ...page, body: page.body + siteNav }, code))

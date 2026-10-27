@@ -1728,6 +1728,13 @@ export const id: Messages = {
     contact: 'Ada pertanyaan? Gunakan halaman Masukan.',
   },
   home: {
+    release: {
+      label: "v{v} · Diperbarui {date}",
+      title: "Yang baru",
+      line1: "Tampilan Liquid Glass baru, lebih enak dilihat",
+      line2: "Papan rencana lebih jelas: garis prasyarat dan lembar mata kuliah",
+      line3: "Filter lebih gampang, lebih cepat di HP",
+    },
     moreSubjects: "+{n} lainnya",
     sub: "Pilihan mata kuliah yang dipersonalisasi: temukan mata kuliah nilai tinggi yang tersembunyi, hindari beban tugas tak terduga, dan lihat ulasan nyata mahasiswa untuk setiap mata kuliah UniMelb.",
     proofSubjects: "{n} mata kuliah",

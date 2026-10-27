@@ -1728,6 +1728,13 @@ export const ms: Messages = {
     contact: 'Ada soalan? Gunakan halaman Maklum balas.',
   },
   home: {
+    release: {
+      label: "v{v} · Dikemas kini {date}",
+      title: "Apa yang baharu",
+      line1: "Rupa Liquid Glass baharu, lebih selesa dilihat",
+      line2: "Papan pelan lebih jelas: garis prasyarat dan helaian subjek",
+      line3: "Penapis lebih mudah, lebih laju di telefon",
+    },
     moreSubjects: "+{n} lagi",
     sub: "Pilihan subjek peribadi untuk anda: cari subjek markah tinggi yang tersembunyi, elak beban kerja mengejut, dan lihat ulasan sebenar pelajar bagi setiap subjek UniMelb.",
     proofSubjects: "{n} subjek",
