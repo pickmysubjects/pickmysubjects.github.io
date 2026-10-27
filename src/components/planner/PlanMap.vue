@@ -71,6 +71,18 @@ const plan = usePlan()
 const board = useTemplateRef<HTMLElement>('board')
 const routes = shallowRef<Route[]>([])
 const hovered = shallowRef<string | null>(null)
+// Hover intent: leaving a card waits a moment, so the pointer can reach the "N more" pill.
+let leaveTimer: ReturnType<typeof setTimeout> | undefined
+function onHover(code: string | null): void {
+  clearTimeout(leaveTimer)
+  // The first card shows at once; moving on to another (or off the board) waits, so crossing
+  // cards on the way to the pill doesn't swap the chain away.
+  if (code && !hovered.value) hovered.value = code
+  else leaveTimer = setTimeout(() => (hovered.value = code), 250)
+}
+function keepHover(): void {
+  clearTimeout(leaveTimer)
+}
 const moveFor = shallowRef<string | null>(null)
 const dragging = shallowRef<{ code: string; from: number } | null>(null)
 const picker = shallowRef<{ termIndex: number; replacing?: string } | null>(null)
@@ -253,15 +265,35 @@ function drawRoutes(): void {
           const g2 = gutter(cb - 1)
           d = rounded([[x1, y1], [g1, y1], [g1, yl], [g2, yl], [g2, y2], [x2, y2]])
         }
-        if (more && dir === 'unlock') more = { n: more.n, x: gutter(cb - 1), y: cb === ca + 1 ? Math.max(y1, y2) : yl }
+        if (more && dir === 'unlock') {
+          // The pill sits in the gutter below the lowest card on either side, so it never covers one.
+          const g = gutter(ca)
+          let low = 0
+          for (const r of cards.values()) {
+            const c = colOf(r)
+            if (c === ca || c === ca + 1) low = Math.max(low, r.bottom)
+          }
+          more = { n: more.n, x: g, y: low + 18 }
+        }
       } else {
         // Stacked (phones): out of the left edge, down the strip beside the cards, into the later card's left edge.
         const xg = Math.min(a.left, b.left) - 6
         d = rounded([[a.left, y1], [xg, y1], [xg, y2], [b.left - 3, y2]])
-        if (more && dir === 'unlock') more = { n: more.n, x: xg, y: Math.max(y1, y2) }
+        if (more && dir === 'unlock') {
+          let low = 0
+          for (const r of cards.values()) low = Math.max(low, r.bottom)
+          more = { n: more.n, x: xg + 40, y: low + 18 }
+        }
       }
       next.push({ key: `${e.from}-${e.to}`, d, dir })
     }
+  }
+  // A stub from the trunk down to the pill, so it reads as the rest of the same bundle.
+  const self = cards.get(f)
+  if (more && more.n > 0 && self) {
+    const c = colOf(self)
+    const x = c >= 0 && cols.length > c + 1 && more.x > self.right ? more.x : self.left - 6
+    next.push({ key: 'more', d: rounded([[x, self.top + self.height / 2], [x, more.y - 12]]), dir: 'unlock' })
   }
   routes.value = next
   overflow.value = more && more.n > 0 ? more : null
@@ -358,6 +390,7 @@ onMounted(() => {
   document.addEventListener('pointerdown', onPointer)
 })
 onBeforeUnmount(() => {
+  clearTimeout(leaveTimer)
   observer?.disconnect()
   document.removeEventListener('keydown', onKey)
   document.removeEventListener('pointerdown', onPointer)
@@ -387,6 +420,8 @@ onBeforeUnmount(() => {
       class="route-more"
       :style="{ left: `${overflow.x}px`, top: `${overflow.y}px` }"
       @click="emit('open', focus)"
+      @mouseenter="keepHover"
+      @mouseleave="onHover(null)"
     >{{ t('stress.more', { n: overflow.n }) }}</button>
     <span
       v-for="m in markers"
@@ -407,7 +442,7 @@ onBeforeUnmount(() => {
         :load="load"
         :related="toneSet"
         @open="onSelect"
-        @hover="hovered = $event"
+        @hover="onHover($event)"
       />
       <template v-for="col in columns" :key="col.key">
         <PastTermColumn
@@ -420,7 +455,7 @@ onBeforeUnmount(() => {
           :load="termLoadFor(col.p.period)"
           :related="toneSet"
           @open="onSelect"
-          @hover="hovered = $event"
+          @hover="onHover($event)"
         />
         <TermColumn
           v-else
@@ -446,7 +481,7 @@ onBeforeUnmount(() => {
           @move-to="(code, to) => onMoveTo(code, col.i, to)"
           @select="onSelect"
           @open="emit('open', $event)"
-          @hover="hovered = $event"
+          @hover="onHover($event)"
           @drag-start="(code) => (dragging = { code, from: col.i })"
           @drag-end="dragging = null"
           @remove-term="emit('removeTerm', col.i)"
@@ -584,6 +619,7 @@ onBeforeUnmount(() => {
   font-weight: 650;
   color: var(--accent);
   transform: translate(-50%, -50%);
+  white-space: nowrap;
   cursor: pointer;
 }
 
