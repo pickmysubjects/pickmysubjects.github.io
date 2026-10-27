@@ -4,6 +4,7 @@ import { checkCourse } from '../src/engine/courseRules'
 import type { Plan } from '../src/engine/plan'
 import { planStart, standardTerms } from '../src/engine/plan'
 import { checkTerms, previewAdd } from '../src/engine/planCheck'
+import { setToday } from '../src/engine/dataYear'
 import { realData } from './realData'
 import { dataset, demo, subject } from './helpers'
 
@@ -62,6 +63,19 @@ describe('checkTerms', () => {
   it('flags subjects placed in a period they do not run', () => {
     const p = plan([{ year: 2026, period: 'semester-1', subjects: ['AAAA20001'] }], ['AAAA10001'])
     expect(kinds(p)).toEqual(['not-offered'])
+  })
+
+  it('a period it does not run in is a problem only for a semester still ahead with a known timetable', () => {
+    const severity = (year: number) => checkTerms(plan([{ year, period: 'semester-1', subjects: ['AAAA20001'] }], ['AAAA10001']), data).find((i) => i.kind === 'not-offered')?.severity
+    setToday('2025-11-01')
+    // 2026 Semester 1 is ahead and 2026's timetable is in: an error.
+    expect(severity(2026)).toBe('error')
+    // 2027 is planned on 2026's timetable (assumed): a warning.
+    expect(severity(2027)).toBe('warning')
+    setToday('2026-04-01')
+    // Running now (or over): recorded where it was really taken, a warning only.
+    expect(severity(2026)).toBe('warning')
+    setToday(undefined)
   })
 
   it('flags non-allowed pairs once, including against completed subjects', () => {

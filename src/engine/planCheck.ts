@@ -4,7 +4,7 @@ import { heldMajorIds, majorTitles, minorTitles, planComponentIds } from './cour
 import { planRoles } from './roles'
 import { evaluateField, referencedSubjects } from './expr'
 import type { Issue, Plan } from './plan'
-import { termLabel } from './plan'
+import { isUpcoming, termLabel } from './plan'
 import { PERIOD_LABELS } from './schema'
 import type { Dataset } from './schema'
 import { termLoad, unfinishedIn } from './yearLong'
@@ -69,7 +69,12 @@ export function checkTerms(plan: Plan, given: Dataset, standardLoad = 50): Issue
       }
       const avail = offeredIn(s, term.year, term.period)
       if (avail.status === 'fail') {
-        issues.push({ severity: 'error', kind: 'not-offered', subject: code, termIndex, params: { code, year: term.year, period: term.period, assumed: avail.assumedFromYear ?? '' }, message: `${code} is not offered in ${PERIOD_LABELS[term.period]}${avail.assumedFromYear ? ` (based on ${avail.assumedFromYear} data)` : ` ${term.year}`}.` })
+        // Placing a subject where the timetable doesn't have it is allowed (warn, don't block): a
+        // past or running semester is recorded where it was really taken, and a later year's
+        // timetable is only assumed from an earlier one. Only a semester still ahead in a year
+        // whose timetable is out counts it as a problem.
+        const firm = isUpcoming(term) && avail.assumedFromYear === undefined
+        issues.push({ severity: firm ? 'error' : 'warning', kind: 'not-offered', subject: code, termIndex, params: { code, year: term.year, period: term.period, assumed: avail.assumedFromYear ?? '' }, message: `${code} is not offered in ${PERIOD_LABELS[term.period]}${avail.assumedFromYear ? ` (based on ${avail.assumedFromYear} data)` : ` ${term.year}`}.` })
       } else if (avail.status === 'unknown') {
         issues.push({ severity: 'info', kind: 'offering-unknown', subject: code, termIndex, params: { code }, message: `When ${code} runs hasn't been curated yet — check the Handbook.` })
       }
