@@ -431,7 +431,7 @@ watch(filters, (f) => {
   align-items: center;
   gap: 8px;
   font-size: 0.875rem;
-  color: var(--ink-faint);
+  color: var(--ink-soft);
 }
 
 .list {
@@ -453,7 +453,7 @@ watch(filters, (f) => {
 
 .coverage {
   font-size: 0.875rem;
-  color: var(--ink-faint);
+  color: var(--ink-soft);
 }
 
 @media (max-width: 720px) {

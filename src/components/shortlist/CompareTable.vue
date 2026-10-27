@@ -218,7 +218,7 @@ tbody tr:last-child > * {
   margin-top: 4px;
   font-size: 0.75rem;
   font-weight: 500;
-  color: var(--ink-faint);
+  color: var(--ink-soft);
 }
 
 .row-head {
@@ -244,7 +244,7 @@ tbody tr:last-child > * {
   margin-top: 2px;
   font-size: 0.8125rem;
   line-height: 1.4;
-  color: var(--ink-faint);
+  color: var(--ink-soft);
   overflow-wrap: anywhere;
 }
 

@@ -117,6 +117,7 @@ const closed = computed(() => data.value.courses.some((c) => c.code === props.co
 .tag {
   padding: 1px 8px;
   font-size: 0.75rem;
+  font-weight: 600;
   border-radius: 999px;
 }
 
@@ -126,7 +127,8 @@ const closed = computed(() => data.value.courses.some((c) => c.code === props.co
 }
 
 .tag-breadth {
-  color: var(--warn);
+  /* Pulled toward the ink so it stays AA over the thin glass in both themes. */
+  color: color-mix(in srgb, var(--warn) 72%, var(--ink));
   background: var(--warn-soft);
 }
 
@@ -158,7 +160,7 @@ const closed = computed(() => data.value.courses.some((c) => c.code === props.co
   overflow: hidden;
   font-size: 0.8125rem;
   font-weight: 500;
-  color: var(--ink-faint);
+  color: var(--ink-soft);
   white-space: nowrap;
   text-overflow: ellipsis;
 }
@@ -199,7 +201,7 @@ const closed = computed(() => data.value.courses.some((c) => c.code === props.co
   flex-wrap: wrap;
   gap: 6px;
   margin-top: var(--space-2);
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   color: var(--ink-soft);
 }
 
@@ -208,7 +210,8 @@ const closed = computed(() => data.value.courses.some((c) => c.code === props.co
   align-items: center;
   padding: 2px 8px;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--ink) 6%, transparent);
+  background: color-mix(in srgb, var(--ink) 7%, transparent);
+  line-height: 1.45;
   white-space: nowrap;
 }
 
@@ -219,13 +222,13 @@ const closed = computed(() => data.value.courses.some((c) => c.code === props.co
 }
 
 .pill-off {
-  color: var(--ink-faint);
+  color: var(--ink-soft);
   background: none;
   border: 1px dashed var(--line);
 }
 
 .pill-good {
-  color: var(--good);
+  color: color-mix(in srgb, var(--good) 78%, var(--ink));
   background: var(--good-soft);
 }
 
