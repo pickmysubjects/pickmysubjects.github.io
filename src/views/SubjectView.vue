@@ -207,6 +207,11 @@ const sections = computed(() => {
   min-width: 0;
 }
 
+/* Prose keeps a readable line length on the wide page; rows and tiles still use the full column. */
+.main :deep(:is(p, .about-list > li, .discussion-points > li)) {
+  max-width: 78ch;
+}
+
 /* One card per section, one heading style (the same as My record's). */
 .sec {
   display: grid;

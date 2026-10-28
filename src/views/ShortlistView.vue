@@ -174,6 +174,8 @@ async function share(): Promise<void> {
 }
 
 .empty {
+  /* A short message: no need for the full page width. */
+  max-width: 720px;
   display: grid;
   justify-items: start;
   gap: var(--space-3);

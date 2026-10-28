@@ -48,7 +48,8 @@
   --radius-lg: 22px;
   --shadow-1: 0 1px 2px rgb(16 16 20 / 5%), 0 1px 1px rgb(16 16 20 / 3%);
   --shadow-2: 0 10px 30px -12px rgb(16 16 20 / 18%), 0 2px 6px rgb(16 16 20 / 5%);
-  --shell: 1180px;
+  /* One page width site-wide: header, page and footer share the same edges on every page. */
+  --shell: 1440px;
   /* Spacing rhythm: one scale for gaps between items, groups and sections. */
   --space-1: 4px;
   --space-2: 8px;
@@ -446,7 +447,19 @@ td {
 .shell {
   max-width: var(--shell);
   margin: 0 auto;
-  padding: 0 20px;
+  padding-inline: 40px;
+}
+
+@media (max-width: 960px) {
+  .shell {
+    padding-inline: 24px;
+  }
+}
+
+@media (max-width: 640px) {
+  .shell {
+    padding-inline: 12px;
+  }
 }
 
 .surface {

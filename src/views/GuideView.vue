@@ -113,7 +113,7 @@ const hasToc = computed(() => showToc(toc.value.filter((i) => !i.sub).length))
 <style scoped>
 /*
  * Every paragraph, list, callout, tile grid and table in a topic runs to the card's edges, so
- * they line up; the guide's wide page (App.vue, .shell-guide) caps the line length. Cards are
+ * they line up; the page width (.shell) caps the line length. Cards are
  * frostier than elsewhere on the site (the sheet fill), so the colour field stays calm under text.
  */
 .guide {

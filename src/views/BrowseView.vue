@@ -585,11 +585,12 @@ watch(filters, (f) => {
     display: none;
   }
 
-  /* Quick picks scroll sideways in one line instead of stacking. */
+  /* Quick picks scroll sideways in one line instead of stacking, out to the screen's edges
+     (the page gutter is 12px on phones). */
   .presets {
     flex-wrap: nowrap;
-    margin: 0 -16px;
-    padding: 2px 16px 6px;
+    margin: 0 -12px;
+    padding: 2px 12px 6px;
     overflow-x: auto;
     scrollbar-width: none;
   }

@@ -17,7 +17,6 @@ import { listPageTitle, PRESET_TITLE_KEYS, subjectPageTitle } from '@/utils/seo'
 import { careerTarget, presetFromSlug, rankFromSlug, subjectDifficulty } from '@/engine'
 import { careerPhrase } from '@/utils/careerPathText'
 import { guidePageOf } from '@/utils/guideSections'
-import { wideReading } from './components/layout/shell'
 
 const lazy = (v: keyof typeof VIEW_LOADERS) => defineAsyncComponent(VIEW_LOADERS[v])
 const HomeView = lazy('home')
@@ -99,7 +98,7 @@ watchEffect(() => {
     <AppLogo class="backdrop-mark" />
   </div>
   <AppHeader :view="view" />
-  <main class="app-main shell" :class="{ 'shell-wide': view === 'plan', 'shell-guide': wideReading(view) }">
+  <main class="app-main shell" :class="{ 'shell-wide': view === 'plan' }">
     <ComingNotice v-if="view !== 'home'" slim />
     <RolloverNotice />
     <MissedAnchor />
@@ -120,7 +119,7 @@ watchEffect(() => {
     <PrivacyView v-else />
   </main>
   <footer class="footer">
-    <div class="footer-inner shell" :class="{ 'shell-guide': wideReading(view) }">
+    <div class="footer-inner shell">
       <nav class="footer-links" :aria-label="t('nav.more')">
         <a :href="link('subjects')">{{ t('browse.title') }}</a>
         <a :href="link('majors')">{{ t('majors.title') }}</a>
@@ -207,33 +206,13 @@ watchEffect(() => {
   }
 }
 
-/* The guide reads wide: hero, "On this page" and article use most of the window, lined up with
-   the header and footer, which widen with it on guide pages (AppHeader). */
-:global(.shell.shell-guide) {
-  --shell: 1440px;
-
-  padding-inline: 40px;
-}
-
-@media (max-width: 960px) {
-  :global(.shell.shell-guide) {
-    padding-inline: 24px;
-  }
-}
-
-@media (max-width: 640px) {
-  :global(.shell.shell-guide) {
-    padding-inline: 12px;
-  }
-}
-
 /* The plan board uses the whole width; its page keeps text at the usual width (PlannerView). */
 .shell-wide {
   max-width: none;
 }
 /* Notices above a wide page keep the reading width, lined up with the page's text. */
 .shell-wide > :not(.planner) {
-  max-width: calc(var(--shell) - 40px);
+  max-width: calc(var(--shell) - 80px);
   margin-inline: auto;
 }
 .footer-meta {

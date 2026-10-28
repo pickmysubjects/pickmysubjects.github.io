@@ -776,7 +776,7 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
 /* Everything but the board stays at the usual reading width; the board takes the full screen. */
 .planner > :not(.workspace, dialog) {
   width: 100%;
-  max-width: calc(var(--shell) - 40px);
+  max-width: calc(var(--shell) - 80px);
   margin-inline: auto;
 }
 

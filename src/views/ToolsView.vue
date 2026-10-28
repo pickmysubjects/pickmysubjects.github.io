@@ -19,7 +19,7 @@ const code = computed(() => (query.value.get('subject') ?? '').trim().toUpperCas
 </script>
 
 <template>
-  <div class="tools">
+  <div class="tools" :class="{ single: page !== 'hub' }">
     <a v-if="page !== 'hub'" class="back" :href="link('tools/')"><ArrowLeft :size="15" aria-hidden="true" /> {{ t('tools.title') }}</a>
     <header class="head">
       <h1 class="page-title">{{ page === 'final' ? t('calc.title') : page === 'wam' ? t('tools.wam') : t('tools.title') }}</h1>
@@ -39,6 +39,11 @@ const code = computed(() => (query.value.get('subject') ?? '').trim().toUpperCas
   display: grid;
   gap: var(--space-5);
   padding-top: var(--space-4);
+}
+
+/* One calculator: a form, so it keeps a form's width on the wide page, from the left edge. */
+.single {
+  max-width: 960px;
 }
 
 .head {
