@@ -1137,11 +1137,11 @@ html {
 
 /* Touch screens: small icon buttons and compact links keep their look but get a 44px hit area. */
 @media (pointer: coarse) {
-  :is(.infotip-button, .brand, .back, .guide-link, .discussion-link, .role-link, .wam-what, .sec-link, .add-link, .preview-more, .next-all, .can-all, .suggest-use, .profile-hint-x, .plan-icon-hit) {
+  :is(.infotip-button, .brand, .back, .guide-link, .discussion-link, .role-link, .wam-what, .sec-link, .add-link, .preview-more, .next-all, .can-all, .suggest-use, .profile-hint-x, .plan-icon-hit, .search-trigger, .hero-back, .dhero-back) {
     position: relative;
   }
 
-  :is(.infotip-button, .brand, .back, .guide-link, .discussion-link, .role-link, .wam-what, .sec-link, .add-link, .preview-more, .next-all, .can-all, .suggest-use, .profile-hint-x, .plan-icon-hit)::after {
+  :is(.infotip-button, .brand, .back, .guide-link, .discussion-link, .role-link, .wam-what, .sec-link, .add-link, .preview-more, .next-all, .can-all, .suggest-use, .profile-hint-x, .plan-icon-hit, .search-trigger, .hero-back, .dhero-back)::after {
     content: '';
     position: absolute;
     top: 50%;
@@ -1149,6 +1149,22 @@ html {
     width: max(100%, 44px);
     height: max(100%, 44px);
     transform: translate(-50%, -50%);
+  }
+
+  /* Already placed (absolute) inside its card: only the hit area. */
+  .preset-x::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 44px;
+    height: 44px;
+    transform: translate(-50%, -50%);
+  }
+
+  /* The language menu's real control is the invisible select over the round button. */
+  .lang-select {
+    inset: -4px !important;
   }
 }
 

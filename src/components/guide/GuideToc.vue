@@ -175,6 +175,13 @@ watch(() => props.items, () => {
   transition: background 0.15s, color 0.15s;
 }
 
+/* Touch screens: each row a full 40px tap. */
+@media (pointer: coarse) {
+  .toc-list a {
+    padding-block: 10px;
+  }
+}
+
 .toc-list .sub a {
   padding-left: 28px;
   font-size: var(--fs-meta);
