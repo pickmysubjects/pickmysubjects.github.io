@@ -84,10 +84,6 @@ const does = computed(() => Array.from({ length: s.value.section?.does ?? 0 }, (
   line-height: 1.55;
 }
 
-.svc-does {
-  max-width: 68ch;
-}
-
 .svc-links {
   display: flex;
   flex-wrap: wrap;

@@ -41,7 +41,6 @@ defineProps<{ title: string; short: string }>()
 
 /* The short answer: what most readers came for, a step bigger than the body. */
 .topic-short {
-  max-width: 62ch;
   font-size: 1.0625rem;
   font-weight: var(--fw-medium);
   line-height: 1.55;
@@ -57,8 +56,8 @@ defineProps<{ title: string; short: string }>()
 
 @media (max-width: 640px) {
   .topic {
-    padding: 22px 18px 24px;
-    border-radius: 20px;
+    padding: 20px 14px 22px;
+    border-radius: 18px;
   }
 
   .topic-head {

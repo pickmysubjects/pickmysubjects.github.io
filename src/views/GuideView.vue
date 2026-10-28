@@ -61,11 +61,12 @@ watch(
   },
   { immediate: true, flush: 'post' },
 )
-const hasToc = computed(() => showToc(toc.value.length))
+// Topics only: a system or another part inside a topic adds a line, not a reason for the list.
+const hasToc = computed(() => showToc(toc.value.filter((i) => !i.sub).length))
 </script>
 
 <template>
-  <article class="guide" :class="{ narrow: page.kind !== 'overview' && !hasToc }">
+  <article class="guide">
     <GuideHero :key="slug ?? 'overview'" :slug="slug" :title="title" />
 
     <template v-if="page.kind === 'overview'">
@@ -78,9 +79,9 @@ const hasToc = computed(() => showToc(toc.value.length))
       </p>
     </template>
 
-    <div v-else class="article">
+    <div v-else class="article" :class="{ 'no-toc': !hasToc }">
       <div v-if="hasToc" class="article-toc">
-        <GuideToc :items="toc" />
+        <GuideToc v-if="slug" :items="toc" :slug="slug" />
       </div>
       <div ref="body" class="article-body content">
         <KeyDates v-if="page.kind === 'extra'" />
@@ -110,17 +111,17 @@ const hasToc = computed(() => showToc(toc.value.length))
 </template>
 
 <style scoped>
+/*
+ * Every paragraph, list, callout, tile grid and table in a topic runs to the card's edges, so
+ * they line up; the guide's wide page (App.vue, .shell-guide) caps the line length. Cards are
+ * frostier than elsewhere on the site (the sheet fill), so the colour field stays calm under text.
+ */
 .guide {
-  display: grid;
-  gap: 32px;
-  padding-top: var(--page-top);
-}
+  --card-fill: var(--peek-fill);
 
-/* A page without "On this page": hero and article one centred column, edges lined up. */
-.guide.narrow {
-  width: 100%;
-  max-width: 880px;
-  margin-inline: auto;
+  display: grid;
+  gap: 24px;
+  padding-top: 20px;
 }
 
 /* The article: "On this page" on the left, a reading column on the right, together as wide as
@@ -132,7 +133,7 @@ const hasToc = computed(() => showToc(toc.value.length))
   align-items: start;
 }
 
-.guide.narrow .article {
+.article.no-toc {
   grid-template-columns: minmax(0, 1fr);
 }
 
@@ -213,26 +214,32 @@ const hasToc = computed(() => showToc(toc.value.length))
   order: 1;
   width: fit-content;
   min-height: 44px;
-  padding: 0 4px;
+  padding: 0 16px;
   font-weight: var(--fw-semibold);
   text-decoration: none;
+  border: 1px solid var(--card-edge);
+  border-radius: 999px;
+  background: var(--card-fill);
 }
 
 .pager-prev:hover {
   text-decoration: underline;
 }
 
+/* The sources note sits on its own frosted strip, never straight on the colour field. */
 .source {
+  width: fit-content;
+  max-width: 100%;
+  padding: 10px 16px;
   font-size: var(--fs-small);
-  color: var(--ink-faint);
+  color: var(--ink-soft);
+  border: 1px solid var(--card-edge);
+  border-radius: 14px;
+  background: var(--card-fill);
 }
 
 /* ---------- Shared pieces inside the topic cards ---------- */
 
-/* Readable lines however wide the card. */
-.content :deep(.topic-body) > :is(p:not(.yours, .actions), .plain, .steps, .checks, .timeline, .terms) {
-  max-width: 68ch;
-}
 
 .content :deep(.note) {
   font-size: var(--fs-small);
@@ -523,7 +530,8 @@ const hasToc = computed(() => showToc(toc.value.length))
 
 @media (max-width: 640px) {
   .guide {
-    gap: 20px;
+    gap: 14px;
+    padding-top: 12px;
   }
 
   .article-body {

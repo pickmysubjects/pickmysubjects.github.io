@@ -257,16 +257,14 @@ function download(): void {
   background: var(--accent-fill);
 }
 
-.past {
+/* Dates that have passed: quieter, but every line still easy to read (no see-through text). */
+.past :is(.kd-day, .kd-what) {
+  font-weight: var(--fw-regular);
+  color: var(--ink-soft);
+}
+
+.past .kd-dot {
   opacity: 0.5;
-}
-
-.kd-done {
-  opacity: 0.7;
-}
-
-.kd-done .past {
-  opacity: 1;
 }
 
 @media (max-width: 640px) {

@@ -41,21 +41,23 @@ const art = computed(() => defineAsyncComponent(ART[props.slug ?? 'overview']))
 </template>
 
 <style scoped>
+/* A low band: the title on the left, the page's scene across the right, fading out under the title. */
 .hero {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 360px);
   align-items: center;
-  gap: 32px;
-  padding: 32px 40px 32px 48px;
+  min-height: 150px;
+  padding: 18px 36px;
   overflow: hidden;
 }
 
 .hero-text {
+  position: relative;
+  z-index: 1;
   display: grid;
   align-content: center;
-  gap: 14px;
-  min-width: 0;
+  gap: 8px;
+  max-width: min(100%, 680px);
 }
 
 .hero-back {
@@ -79,7 +81,7 @@ a.hero-back:hover {
 }
 
 .hero-title {
-  font-size: clamp(1.75rem, 1.35rem + 1.5vw, 2.5rem);
+  font-size: clamp(1.5rem, 1.2rem + 1.1vw, 2.125rem);
   font-weight: var(--fw-bold);
   line-height: var(--lh-tight);
   letter-spacing: var(--track-display);
@@ -89,46 +91,48 @@ a.hero-back:hover {
   overflow-wrap: anywhere;
 }
 
+/* The scene keeps its proportions, anchored bottom right; its left end fades to nothing, so
+   nothing busy ever sits behind the words. */
 .hero-art {
-  position: relative;
-  align-self: stretch;
-  display: grid;
-  place-items: center;
-  min-height: 200px;
+  position: absolute;
+  top: 4px;
+  right: 20px;
+  bottom: 2px;
+  width: min(58%, 640px);
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 34%);
+  mask-image: linear-gradient(to right, transparent, #000 34%);
 }
 
 .hero-art > :deep(*) {
   width: 100%;
-  max-width: 360px;
+  height: 100%;
 }
 
 @media (max-width: 960px) {
-  .hero {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 280px);
-    gap: 20px;
-    padding: 32px 28px;
+  .hero-art {
+    width: 52%;
   }
 }
 
-/* Phones: the picture on top, smaller, then the words. */
+/* Phones: a shorter band; the scene smaller, still behind the right end only. */
 @media (max-width: 640px) {
   .hero {
-    grid-template-columns: 1fr;
-    gap: 8px;
-    min-height: 0;
-    padding: 20px 20px 22px;
-    border-radius: 24px;
-  }
-
-  .hero-art {
-    order: -1;
-    min-height: 0;
-    margin: -8px auto -4px;
-    width: min(100%, 230px);
+    min-height: 96px;
+    padding: 14px 16px;
+    border-radius: 20px;
   }
 
   .hero-text {
-    gap: 10px;
+    gap: 4px;
+    max-width: 72%;
+  }
+
+  .hero-art {
+    top: 18px;
+    right: 4px;
+    width: 46%;
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 45%);
+    mask-image: linear-gradient(to right, transparent, #000 45%);
   }
 }
 </style>

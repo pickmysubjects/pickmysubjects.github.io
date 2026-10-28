@@ -1784,7 +1784,7 @@ export const vi: Messages = {
     the: "Times Higher Education World University Rankings",
     arwu: "ShanghaiRanking (ARWU)",
     sourcesLink: "Trang sinh viên UniMelb",
-    sourcesLine: "Quy định có thể thay đổi. Trước khi quyết định, hãy kiểm tra trên {site} hoặc hỏi {stop1}.",
+    sourcesLine: "Quy định có thể đổi. Trước khi quyết định, hãy xem {site} hoặc hỏi {stop1}.",
     svcLink: "Trang chính thức",
     /** Lists of official systems and services (see utils/guideServices). */
     svcTopic: {

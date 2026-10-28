@@ -1784,7 +1784,7 @@ export const ms: Messages = {
     the: "Times Higher Education World University Rankings",
     arwu: "ShanghaiRanking (ARWU)",
     sourcesLink: "Laman pelajar UniMelb",
-    sourcesLine: "Peraturan boleh berubah. Sebelum membuat keputusan, semak di {site} atau tanya {stop1}.",
+    sourcesLine: "Peraturan boleh berubah. Semak {site} atau tanya {stop1} dahulu.",
     svcLink: "Laman rasmi",
     /** Lists of official systems and services (see utils/guideServices). */
     svcTopic: {

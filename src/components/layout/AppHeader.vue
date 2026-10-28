@@ -158,7 +158,7 @@ watch([locale, () => props.view === 'home', t], () => void nextTick(fit))
 
 <template>
   <header ref="headerEl" class="header">
-    <div ref="innerEl" class="header-inner shell">
+    <div ref="innerEl" class="header-inner shell" :class="{ 'shell-guide': view === 'guide' }">
       <a class="brand" :href="link('')" :aria-current="view === 'home' ? 'page' : undefined" :title="t('nav.home')">
         <AppLogo class="mark" small />
         <span class="brand-name">PickMySubjects<span v-if="IS_BETA && view !== 'home'" class="beta-chip">Beta</span></span>

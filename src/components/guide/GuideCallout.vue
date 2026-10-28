@@ -68,6 +68,11 @@ const icon = computed(() => (props.kind === 'warn' ? TriangleAlert : props.kind 
 }
 
 @media (max-width: 640px) {
+  .callout:not(.pull) {
+    gap: 10px;
+    padding: 12px;
+  }
+
   .pull {
     font-size: 1.0625rem;
     padding-left: 16px;

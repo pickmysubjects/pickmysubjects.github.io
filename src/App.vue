@@ -98,7 +98,7 @@ watchEffect(() => {
     <AppLogo class="backdrop-mark" />
   </div>
   <AppHeader :view="view" />
-  <main class="app-main shell" :class="{ 'shell-wide': view === 'plan' }">
+  <main class="app-main shell" :class="{ 'shell-wide': view === 'plan', 'shell-guide': view === 'guide' }">
     <ComingNotice v-if="view !== 'home'" slim />
     <RolloverNotice />
     <MissedAnchor />
@@ -119,7 +119,7 @@ watchEffect(() => {
     <PrivacyView v-else />
   </main>
   <footer class="footer">
-    <div class="footer-inner shell">
+    <div class="footer-inner shell" :class="{ 'shell-guide': view === 'guide' }">
       <nav class="footer-links" :aria-label="t('nav.more')">
         <a :href="link('subjects')">{{ t('browse.title') }}</a>
         <a :href="link('majors')">{{ t('majors.title') }}</a>
@@ -203,6 +203,26 @@ watchEffect(() => {
     display: flex;
     align-items: center;
     min-height: var(--control-h);
+  }
+}
+
+/* The guide reads wide: hero, "On this page" and article use most of the window, lined up with
+   the header and footer, which widen with it on guide pages (AppHeader). */
+:global(.shell.shell-guide) {
+  --shell: 1440px;
+
+  padding-inline: 40px;
+}
+
+@media (max-width: 960px) {
+  :global(.shell.shell-guide) {
+    padding-inline: 24px;
+  }
+}
+
+@media (max-width: 640px) {
+  :global(.shell.shell-guide) {
+    padding-inline: 12px;
   }
 }
 
