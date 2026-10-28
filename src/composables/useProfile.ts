@@ -64,6 +64,12 @@ export function useProfile() {
         const { workHours: _old, ...rest } = p
         return workHours === undefined ? rest : { ...rest, workHours }
       }),
+    /** The target WAM on the record (the record page and the WAM calculator both set it); undefined clears it. */
+    setTargetWam: (targetWam: number | undefined) =>
+      update((p) => {
+        const { targetWam: _old, ...rest } = p
+        return targetWam === undefined || !Number.isFinite(targetWam) ? rest : { ...rest, targetWam: Math.max(0, Math.min(100, targetWam)) }
+      }),
     /** Which mark scale the strength levels are shown in (display only). */
     setMarkScale: (markScale: string) => update((p) => ({ ...p, markScale })),
     /** Keep the student's own rating of a subject, to personalise their suggestions. */

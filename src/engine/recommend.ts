@@ -44,6 +44,8 @@ export interface Profile {
   markScale?: string
   /** A career the student is aiming for (a career id from /careers), if any. */
   career?: string
+  /** The WAM the student is aiming for (0–100): part of the record, read and set by the WAM calculator too. */
+  targetWam?: number
 }
 
 /** How the student themselves found a subject: difficulty and interest 1–5, would they recommend it. */

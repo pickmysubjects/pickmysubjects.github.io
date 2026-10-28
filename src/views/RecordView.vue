@@ -5,7 +5,6 @@ import ResultsEditor from '@/components/profile/ResultsEditor.vue'
 import SkillsEditor from '@/components/profile/SkillsEditor.vue'
 import TopicChips from '@/components/profile/TopicChips.vue'
 import SuggestionPreview from '@/components/profile/SuggestionPreview.vue'
-import WamGoal from '@/components/profile/WamGoal.vue'
 import DegreeCard from '@/components/profile/DegreeCard.vue'
 import GoalPicker from '@/components/profile/GoalPicker.vue'
 import CareerGoalPicker from '@/components/profile/CareerGoalPicker.vue'
@@ -25,7 +24,13 @@ import { useProfile } from '@/composables/useProfile'
 import { useI18n } from '@/i18n'
 
 const { data, subjectList, topics } = useDataset()
-const { profile, wam, setResults, setCredit, setSkills, setInterests } = useProfile()
+const { profile, wam, setResults, setCredit, setSkills, setInterests, setTargetWam } = useProfile()
+// The target WAM lives here, on the record; the WAM calculator reads and sets the same one.
+function onTarget(e: Event): void {
+  const raw = (e.target as HTMLInputElement).value
+  const n = Number(raw)
+  setTargetWam(raw === '' || !Number.isFinite(n) ? undefined : n)
+}
 
 const results = computed({ get: () => profile.value.results, set: setResults })
 const credit = computed({ get: () => profile.value.credit ?? [], set: setCredit })
@@ -128,7 +133,16 @@ const doneCount = computed(() => filled.value.filter((f) => f.done).length)
           <header class="sec-head">
             <h2 id="sec-wam" class="sec-title">{{ t('wamGoal.title') }}</h2>
           </header>
-          <WamGoal />
+          <div class="target">
+            <label class="target-field">
+              <span class="visually-hidden">{{ t('wamGoal.target') }}</span>
+              <input class="input" type="number" inputmode="decimal" min="0" max="100" step="1" :value="profile.targetWam ?? ''" @change="onTarget" />
+            </label>
+            <p class="target-now">
+              <span>{{ wam !== null ? t('record.sumWam', { wam }) : t('record.noMarks') }}</span>
+              <a :href="link('tools/wam/')">{{ t('wamCalc.open') }}</a>
+            </p>
+          </div>
         </section>
 
         <p class="next-phone">
@@ -617,5 +631,34 @@ const doneCount = computed(() => filled.value.filter((f) => f.done).length)
   color: var(--accent);
   font-weight: 600;
   font-size: 0.8125rem;
+}
+.target {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: var(--space-3) var(--space-5);
+}
+
+.target-field {
+  display: grid;
+  gap: 6px;
+}
+
+.target-field .input {
+  width: 8em;
+}
+
+.target-now {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px var(--space-3);
+  min-height: var(--control-h);
+  margin: 0;
+}
+
+.target-now a {
+  font-weight: var(--fw-semibold);
+  color: var(--accent);
 }
 </style>

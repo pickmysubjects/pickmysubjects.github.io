@@ -72,7 +72,7 @@ export function cleanProfile(x: unknown): Profile {
     }
   }
   const credit = cleanCredit(p.credit)
-  return { results, ...(credit.length ? { credit } : {}), skills, interests: [...new Set(strings(p.interests).filter((t) => (TOPICS as readonly string[]).includes(t)))], goal, confirmed: strings(p.confirmed), ...(Object.keys(ratings).length ? { ratings } : {}), ...(typeof p.workHours === 'number' && p.workHours >= 0 && p.workHours <= 60 ? { workHours: p.workHours } : {}), ...(isMarkScale(p.markScale) ? { markScale: p.markScale } : {}), ...cleanCareer(p.career) }
+  return { results, ...(credit.length ? { credit } : {}), skills, interests: [...new Set(strings(p.interests).filter((t) => (TOPICS as readonly string[]).includes(t)))], goal, confirmed: strings(p.confirmed), ...(Object.keys(ratings).length ? { ratings } : {}), ...(typeof p.workHours === 'number' && p.workHours >= 0 && p.workHours <= 60 ? { workHours: p.workHours } : {}), ...(isMarkScale(p.markScale) ? { markScale: p.markScale } : {}), ...cleanCareer(p.career), ...(typeof p.targetWam === 'number' && Number.isFinite(p.targetWam) && p.targetWam >= 0 && p.targetWam <= 100 ? { targetWam: p.targetWam } : {}) }
 }
 
 export function cleanProfiles(x: unknown): Record<string, Profile> {
