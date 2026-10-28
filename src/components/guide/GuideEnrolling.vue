@@ -56,7 +56,7 @@ const { t } = useI18n()
       <p>{{ t('guide.findSharePreview') }}</p>
     </GuideCallout>
     <p class="actions">
-      <a class="button button-quiet" :href="link('plan')">{{ t('guide.majorsPlansLink') }}</a>
+      <a class="button button-quiet" :href="link('plan/compare/')">{{ t('guide.majorsPlansLink') }}</a>
     </p>
   </GuideItem>
 

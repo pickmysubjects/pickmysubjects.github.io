@@ -27,7 +27,7 @@ export interface MenuArea {
   items: MenuItem[]
   /**
    * Places the site search finds under this area but the menu doesn't list: Find subjects'
-   * ready-made lists, which live as cards on its page.
+   * ready-made lists, which live as cards on its page, and the parts of the plan page.
    */
   searchOnly?: MenuItem[]
 }
@@ -64,7 +64,10 @@ export const MENUS: MenuArea[] = [
     to: 'plan/',
     items: [
       { key: 'menu.myPlan', desc: 'menu.d.myPlan', to: 'plan/', icon: Route },
-      { key: 'menu.compareAB', desc: 'menu.d.compareAB', to: 'plan/?compare=1', icon: Columns2 },
+      { key: 'menu.compareAB', desc: 'menu.d.compareAB', to: 'plan/compare/', icon: Columns2 },
+    ],
+    // Parts of the plan page: found by the site search, landing on their place on the page.
+    searchOnly: [
       { key: 'menu.rules', desc: 'menu.d.rules', to: 'plan/#rules', icon: ListChecks },
       { key: 'menu.heavy', desc: 'menu.d.heavy', to: 'plan/#heavy', icon: TriangleAlert },
       { key: 'menu.calendar', desc: 'menu.d.calendar', to: 'plan/#calendar', icon: CalendarPlus },

@@ -15,7 +15,7 @@ const TOOLS = [
   { name: 'can.tiles.final', line: 'can.tiles.finalLine', to: 'tools/final/', icon: Calculator },
   { name: 'tools.wam', line: 'can.tiles.wamLine', to: 'tools/wam/', icon: Gauge },
   { name: 'can.tiles.easy', line: 'can.tiles.easyLine', to: 'subjects/easy/', icon: Scale },
-  { name: 'can.tiles.compare', line: 'can.tiles.compareLine', to: 'plan/?compare=1', icon: Columns2 },
+  { name: 'can.tiles.compare', line: 'can.tiles.compareLine', to: 'plan/compare/', icon: Columns2 },
   { name: 'can.tiles.share', line: 'can.tiles.shareLine', to: 'plan', icon: Share2 },
 ] as const
 

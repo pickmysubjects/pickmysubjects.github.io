@@ -37,7 +37,7 @@ const MENU_SYN: Record<string, string> = {
   'majors/': 'majors',
   'careers/': 'careers',
   'plan/': 'plan',
-  'plan/?compare=1': 'compareAB',
+  'plan/compare/': 'compareAB',
   'plan/#rules': 'rules',
   'plan/#heavy': 'heavy',
   'plan/#calendar': 'calendar',
