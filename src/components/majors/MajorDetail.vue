@@ -3,7 +3,6 @@ import { viewYear } from '@/engine/dataYear'
 import { computed, shallowRef } from 'vue'
 import { ExternalLink, Route } from 'lucide-vue-next'
 import MajorCareers from './MajorCareers.vue'
-import MajorRoute from './MajorRoute.vue'
 import MajorStructure from './MajorStructure.vue'
 import DetailHero from '@/components/browse/DetailHero.vue'
 import GuideToc from '@/components/guide/GuideToc.vue'
@@ -16,8 +15,8 @@ import { useI18n } from '@/i18n'
 
 /**
  * One major, minor or specialisation, laid out like a subject page: the hero with what it adds
- * up to and what to do with it, "On this page" on the left, then its structure as a path by
- * level, the prerequisite route, where it leads and a comparison with another.
+ * up to and what to do with it, "On this page" on the left, then its structure by level with the
+ * prerequisite links on it, where it leads and a comparison with another.
  */
 const props = defineProps<{ id: string }>()
 const { data } = useDataset()
@@ -51,17 +50,7 @@ const structureShort = computed(() => {
 const hasCareers = computed(() => !!componentCareers(data.value.careers, props.id))
 const tocArt = () => import('@/components/browse/art/MiniMajor.vue')
 const heroArt = () => import('@/components/browse/art/ArtMajor.vue')
-/** "One of these" routes, grouped by the subject they lead to. */
-const routeGroups = computed(() => {
-  const o = overview.value
-  if (!o) return []
-  const by = new Map<string, string[]>()
-  for (const r of o.routes) by.set(r.via, [...(by.get(r.via) ?? []), r.code])
-  return [...by.entries()].sort(([a], [b]) => a.localeCompare(b)).map(([via, codes]) => ({ via, codes }))
-})
-
 // Comparing with another major: what the two share.
-const hasRoute = computed(() => !!overview.value && (overview.value.core.length > 0 || overview.value.choices.length > 0))
 const otherId = shallowRef('')
 const others = computed(() =>
   data.value.components
@@ -78,7 +67,6 @@ const shared = computed(() => {
 const sections = computed(() =>
   [
     { id: 'm-core', title: t.value('majors.structureTitle'), show: !!overview.value },
-    { id: 'm-route', title: t.value('majors.routeTitle'), show: hasRoute.value },
     { id: 'm-careers', title: t.value('careers.title'), show: hasCareers.value },
     { id: 'm-compare', title: t.value('majors.compareTitle'), show: !!overview.value && others.value.length > 0 },
   ]
@@ -162,28 +150,17 @@ function planWithIt(): void {
 
         <template v-else>
           <SubjectSection id="m-core" :title="t('majors.structureTitle')" :short="structureShort">
+            <!-- The old addresses of the pathway and the route land here: both are in this view now. -->
             <span id="m-pathway" class="anchor" aria-hidden="true" />
+            <span id="m-route" class="anchor" aria-hidden="true" />
             <!-- Entry points (a language major): the first is shown; the plan follows the student's. -->
             <p v-if="overview.entryRoutes.length" class="note-line">
               {{ t('majors.entryRoutes', { n: overview.entryRoutes.length, first: overview.entryRoutes[0]?.title ?? '' }) }}
               <span class="route-names">{{ overview.entryRoutes.map((r) => r.title).join(' · ') }}</span>
             </p>
-            <MajorStructure :overview="overview" :year="year" />
+            <MajorStructure :overview="overview" :year="year" :course="major.course" />
             <p v-if="!overview.pathway.length" class="note-line">{{ t('majors.noPathway') }}</p>
-            <details v-if="routeGroups.length" class="routes">
-              <summary>{{ t('majors.routesTitle', { n: routeGroups.length }) }}</summary>
-              <div v-for="g in routeGroups" :key="g.via" class="route">
-                <p class="route-for">{{ t('majors.routesFor', { code: g.via }) }}</p>
-                <p class="chips">
-                  <a v-for="c in g.codes" :key="c" class="chip code" :href="link(`subject/${c}`)">{{ c }}</a>
-                </p>
-              </div>
-            </details>
           </SubjectSection>
-
-          <div v-if="hasRoute" id="m-route" class="card surface">
-            <MajorRoute :overview="overview" :course="major.course" />
-          </div>
         </template>
 
         <div v-if="hasCareers" id="m-careers" class="card surface">
@@ -300,8 +277,9 @@ function planWithIt(): void {
   backdrop-filter: none;
 }
 
+/* Old link targets inside the structure: out of the flow, so they add no gap of their own. */
 .anchor {
-  display: block;
+  position: absolute;
   scroll-margin-top: 96px;
 }
 
@@ -322,23 +300,6 @@ function planWithIt(): void {
   display: block;
   margin-top: 4px;
   font-size: var(--fs-meta);
-}
-
-.routes summary {
-  font-weight: var(--fw-semibold);
-  cursor: pointer;
-}
-
-.route {
-  display: grid;
-  gap: 6px;
-  margin-top: 12px;
-}
-
-.route-for {
-  margin: 0;
-  font-size: var(--fs-small);
-  color: var(--ink-soft);
 }
 
 .chips {
