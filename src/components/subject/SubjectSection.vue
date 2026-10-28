@@ -17,7 +17,11 @@ const phone = usePhone()
     <details v-if="fold && phone" class="sec-fold">
       <summary class="sec-head sec-summary">
         <span class="sec-line">
-          <h2 class="sec-title">{{ title }}</h2>
+          <span class="sec-name">
+            <h2 class="sec-title">{{ title }}</h2>
+            <!-- Taps on the aside (an ⓘ and its text) don't fold or open the section. -->
+            <span v-if="$slots.aside" class="sec-aside" @click.prevent><slot name="aside" /></span>
+          </span>
           <ChevronDown :size="18" aria-hidden="true" class="sec-chev" />
         </span>
         <p v-if="short" class="sec-short">{{ short }}</p>
@@ -109,6 +113,14 @@ const phone = usePhone()
   padding-bottom: 0;
   margin-bottom: 0;
   border-bottom: 0;
+}
+
+.sec-name {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 12px;
+  min-width: 0;
 }
 
 .sec-chev {
