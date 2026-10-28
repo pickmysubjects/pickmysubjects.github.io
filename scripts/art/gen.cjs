@@ -13,6 +13,7 @@
 const fs = require('fs')
 const path = require('path')
 const { origin, P, box, flat, wallY, person, r } = require('./iso.cjs')
+const { bounds } = require('./bounds.cjs')
 const OUT = path.join(__dirname, '../../src/components/guide/art/')
 
 // ---------- shared pieces ----------
@@ -64,7 +65,7 @@ heroes.Overview = () => {
   })
   const css = `.art-overview .tile{animation:ao-wave 5.4s ease-in-out infinite;animation-delay:calc(var(--i) * -0.5s)}
 @keyframes ao-wave{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}`
-  return { s, css }
+  return { s, css, motion: [8, 0, 0, 0] }
 }
 
 // Basics: credit points stacking up (four 12.5-point blocks make a 50-point semester), the campus
@@ -82,10 +83,10 @@ heroes.Basics = () => {
   const css = `.art-basics .drop{animation:ab-drop 4.8s cubic-bezier(.3,.7,.2,1) infinite}
 .art-basics .walk{animation:ab-walk 7s linear infinite}
 .art-basics .sway{transform-origin:0 -10px;animation:ab-sway 6s ease-in-out infinite}
-@keyframes ab-drop{0%{transform:translateY(-40px);opacity:0}15%{opacity:1}35%,85%{transform:translateY(0);opacity:1}100%{transform:translateY(0);opacity:0}}
+@keyframes ab-drop{0%{transform:translateY(-24px);opacity:0}15%{opacity:1}35%,85%{transform:translateY(0);opacity:1}100%{transform:translateY(0);opacity:0}}
 @keyframes ab-walk{0%{transform:translate(0,0);opacity:0}10%,85%{opacity:1}100%{transform:translate(${r(bx - ax)}px,${r(by - ay)}px);opacity:0}}
 @keyframes ab-sway{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}`
-  return { s, css }
+  return { s, css, motion: [26, 0, 0, 0] }
 }
 
 // Systems: a laptop and a phone, the systems' windows floating in a line above them.
@@ -100,7 +101,7 @@ heroes.Systems = () => {
   ws.forEach(([x, y, c, g], i) => (s += win(x, y, 52, 38, c, g, -i * 0.8)))
   const css = `.art-systems .fw{animation:as-float 5.6s ease-in-out infinite;animation-delay:var(--d)}
 @keyframes as-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}`
-  return { s, css }
+  return { s, css, motion: [7, 0, 0, 0] }
 }
 
 // Enrolling: subject codes drifting in, and cards dropping into the free slots of a semester board.
@@ -119,9 +120,9 @@ heroes.Enrolling = () => {
   const css = `.art-enrolling .drop{animation:ae-drop 6s cubic-bezier(.3,.7,.2,1) infinite;animation-delay:var(--d)}
 .art-enrolling .chip{animation:ae-chip 6s ease-in-out infinite;animation-delay:var(--d)}
 .art-enrolling .code{font:600 9.5px var(--font-code);fill:var(--ink-soft)}
-@keyframes ae-drop{0%{transform:translate(18px,-36px);opacity:0}12%{opacity:1}30%,80%{transform:translate(0,0);opacity:1}92%,100%{transform:translate(0,0);opacity:0}}
+@keyframes ae-drop{0%{transform:translate(10px,-20px);opacity:0}12%{opacity:1}30%,80%{transform:translate(0,0);opacity:1}92%,100%{transform:translate(0,0);opacity:0}}
 @keyframes ae-chip{0%,100%{transform:translateX(0)}50%{transform:translateX(8px)}}`
-  return { s, css }
+  return { s, css, motion: [22, 10, 0, 0] }
 }
 
 // During semester: an exam clock, a checklist ticking off, a desk calendar turning its pages.
@@ -151,7 +152,7 @@ heroes.Semester = () => {
 @keyframes asm-min{to{transform:rotate(360deg)}}
 @keyframes asm-flip{0%,45%{transform:scaleY(1);opacity:1}70%{transform:scaleY(0.04) translateY(-40px);opacity:.2}71%,100%{transform:scaleY(1);opacity:0}}
 @keyframes asm-tick{0%,20%{stroke-dashoffset:22}35%,85%{stroke-dashoffset:0}100%{stroke-dashoffset:0;opacity:0}}`
-  return { s, css }
+  return { s, css, motion: [12, 0, 0, 0] }
 }
 
 // Wellbeing & life: small trees along the way to a bench, a coffee steaming, a slow breathing glow.
@@ -176,7 +177,7 @@ heroes.Life = () => {
 @keyframes al-steam{0%{transform:translateY(4px);opacity:0}30%{opacity:.9}100%{transform:translateY(-8px);opacity:0}}
 @keyframes al-sway{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}`
   const defs = `<defs><radialGradient id="al-glow"><stop offset="0" class="glow0"/><stop offset="1" class="glow1"/></radialGradient></defs>`
-  return { s: defs + s, css }
+  return { s: defs + s, css, motion: [6, 0, 0, 0] }
 }
 
 // International: a plane flying a long arc across the band to Melbourne on a globe; a passport.
@@ -197,7 +198,7 @@ heroes.International = () => {
   s += `<g class="plane" style="offset-path:path('${route}')"><path class="planef" d="M10 0 L-8 -2.2 L-8 2.2z"/><path class="planef" d="M1 0 L-5 -9 L-2 -9 L5 0 L-2 9 L-5 9z"/></g>`
   const css = `.art-international .plane{offset-rotate:auto;offset-distance:52%;animation:ai-fly 8s ease-in-out infinite}
 @keyframes ai-fly{0%{offset-distance:0%;opacity:0}8%{opacity:1}88%{opacity:1}100%{offset-distance:100%;opacity:0}}`
-  return { s, css }
+  return { s, css, motion: [4, 0, 0, 0] }
 }
 
 // Help: students and a help desk, answers popping up in speech bubbles.
@@ -215,7 +216,7 @@ heroes.Help = () => {
   const css = `.art-help .bub{animation:ah-pop 4.8s cubic-bezier(.3,1.4,.5,1) infinite;animation-delay:var(--d)}
 .art-help .q{font:700 13px var(--font-ui);fill:var(--a-pk);text-anchor:middle}
 @keyframes ah-pop{0%,8%{transform:scale(0);opacity:0}18%,60%{transform:scale(1);opacity:1}72%,100%{transform:scale(.9);opacity:0}}`
-  return { s, css }
+  return { s, css, motion: [6, 0, 0, 0] }
 }
 
 // Key dates: a run of date cards lifting in turn, ending at a desk calendar.
@@ -239,7 +240,7 @@ heroes.KeyDates = () => {
 .art-keydates .day{animation:ak-day 4.5s ease-in-out infinite;animation-delay:var(--d)}
 @keyframes ak-light{0%,10%{opacity:.12}22%,60%{opacity:1}80%,100%{opacity:.12}}
 @keyframes ak-day{0%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}`
-  return { s, css }
+  return { s, css, motion: [7, 0, 0, 0] }
 }
 
 // ================= Minis (200 × 150) =================
@@ -252,7 +253,7 @@ minis.Systems = () => {
 .mini-systems .fill{transform-box:fill-box;transform-origin:0 50%;animation:ms-fill 4.6s ease-in-out infinite}
 @keyframes ms-sway{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
 @keyframes ms-fill{0%{transform:scaleX(.3)}70%,100%{transform:scaleX(1)}}`
-  return { s, css }
+  return { s, css, motion: [0, 8, 0, 8] }
 }
 
 // Basics: credit points stacking, the top block bobbing into place.
@@ -262,7 +263,7 @@ minis.Basics = () => {
   s += `<g class="bob">${box(13, 13, 39, 28, 28, 13, COLS[3])}</g>`
   const css = `.mini-basics .bob{animation:mb-bob 3.6s ease-in-out infinite}
 @keyframes mb-bob{0%,100%{transform:translateY(-8px)}50%{transform:translateY(0)}}`
-  return { s, css }
+  return { s, css, motion: [9, 0, 0, 0] }
 }
 
 // Enrolling: a timetable card sliding into its slot.
@@ -275,7 +276,7 @@ minis.Enrolling = () => {
   s += `<g class="slide">${box(34, 33, 5, 17, 16, 3, COLS[1])}</g>`
   const css = `.mini-enrolling .slide{animation:me-slide 4.4s cubic-bezier(.3,.7,.2,1) infinite}
 @keyframes me-slide{0%{transform:translate(14px,-30px);opacity:0}15%{opacity:1}40%,85%{transform:translate(0,0);opacity:1}100%{transform:translate(0,0);opacity:0}}`
-  return { s, css }
+  return { s, css, motion: [32, 14, 0, 0] }
 }
 
 // During semester: an exam paper with a clock ticking at its corner.
@@ -285,7 +286,7 @@ minis.Semester = () => {
   s += `</g><circle cx="132" cy="104" r="22" class="face"/><circle cx="132" cy="104" r="22" class="rim"/><line x1="132" y1="104" x2="132" y2="94" class="hand hour"/><g class="min" style="transform-origin:132px 104px"><line x1="132" y1="104" x2="132" y2="89" class="hand"/></g><circle cx="132" cy="104" r="2" class="pin"/>`
   const css = `.mini-semester .min{animation:msm-min 8s linear infinite}
 @keyframes msm-min{to{transform:rotate(360deg)}}`
-  return { s, css }
+  return { s, css, motion: [0, 0, 0, 0] }
 }
 
 // Wellbeing & life: a cup of coffee, steam curling up.
@@ -293,7 +294,7 @@ minis.Life = () => {
   const s = `<ellipse class="sh" cx="100" cy="136" rx="46" ry="8"/><ellipse cx="100" cy="124" rx="44" ry="10" class="saucer"/><path class="cup" d="M70 76 h60 l-6 44 q-24 8 -48 0z"/><path class="cupband" d="M71.6 88 h56.8 l-1.4 10 h-54z"/><path class="handle" d="M129 84 q18 0 16 14 q-2 12 -18 10"/><ellipse cx="100" cy="76" rx="30" ry="7" class="coffee"/><path class="steam" style="--d:0s" d="M90 64 q-6 -8 0 -16 q6 -8 0 -16"/><path class="steam" style="--d:-1s" d="M102 64 q-6 -8 0 -16 q6 -8 0 -16"/><path class="steam" style="--d:-2s" d="M114 64 q-6 -8 0 -16 q6 -8 0 -16"/>`
   const css = `.mini-life .steam{fill:none;stroke:var(--a-steam);stroke-width:3;stroke-linecap:round;animation:ml-steam 3s ease-out infinite;animation-delay:var(--d)}
 @keyframes ml-steam{0%{transform:translateY(6px);opacity:0}30%{opacity:.9}100%{transform:translateY(-10px);opacity:0}}`
-  return { s, css }
+  return { s, css, motion: [44, 0, 0, 0] }
 }
 
 // International: a suitcase, its luggage tag swinging.
@@ -301,7 +302,7 @@ minis.International = () => {
   const s = `<ellipse class="sh" cx="100" cy="142" rx="50" ry="7"/><path class="handle2" d="M86 50 v-14 q0 -6 6 -6 h16 q6 0 6 6 v14"/><rect x="54" y="48" width="92" height="84" rx="12" class="case"/><rect x="74" y="48" width="6" height="84" class="strap"/><rect x="120" y="48" width="6" height="84" class="strap"/><circle cx="70" cy="134" r="5" class="wheel"/><circle cx="130" cy="134" r="5" class="wheel"/><g class="tag" style="transform-origin:112px 36px"><path class="string" d="M112 36 L120 62"/><rect x="110" y="60" width="22" height="30" rx="4" transform="rotate(-12 121 75)" class="label"/><circle cx="119" cy="66" r="2" class="pinhole"/></g>`
   const css = `.mini-international .tag{animation:mi-swing 3.4s ease-in-out infinite}
 @keyframes mi-swing{0%,100%{transform:rotate(-10deg)}50%{transform:rotate(12deg)}}`
-  return { s, css }
+  return { s, css, motion: [0, 10, 0, 0] }
 }
 
 /** A ring segment between radii ri and ro from angle a to b (degrees, 0 = up). */
@@ -317,7 +318,7 @@ minis.Help = () => {
   const s = `<path class="water" d="M30 122 q17 -8 35 0 t35 0 t35 0 t35 0 v20 h-140z"/><g class="float"><path class="buoy" d="${arc(100, 78, 38, 24, 0, 359.9)}"/>${ring}<circle cx="100" cy="78" r="38" class="buoyrim"/><circle cx="100" cy="78" r="24" class="buoyrim"/></g>`
   const css = `.mini-help .float{animation:mh-bob 3.2s ease-in-out infinite}
 @keyframes mh-bob{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(6px) rotate(3deg)}}`
-  return { s, css }
+  return { s, css, motion: [0, 0, 8, 0] }
 }
 
 // Key dates: a desk calendar, its top page flipping over.
@@ -328,10 +329,17 @@ minis.KeyDates = () => {
   const s = `<ellipse class="sh" cx="100" cy="140" rx="46" ry="7"/><g>${page('lit', grid)}</g><g class="flip">${page('pkt', '<rect x="80" y="76" width="40" height="34" rx="6" class="big"/>')}</g><rect x="76" y="32" width="5" height="14" rx="2.5" class="ring"/><rect x="119" y="32" width="5" height="14" rx="2.5" class="ring"/>`
   const css = `.mini-keydates .flip{transform-origin:100px 42px;animation:mk-flip 5s ease-in infinite}
 @keyframes mk-flip{0%,50%{transform:scaleY(1);opacity:1}75%{transform:scaleY(-.1);opacity:.3}76%,100%{transform:scaleY(1);opacity:0}}`
-  return { s, css }
+  return { s, css, motion: [0, 0, 0, 0] }
 }
 
 // ---------- write ----------
+// Each viewBox is fitted to its scene: the drawn shapes (bounds.cjs), plus how far its loop moves
+// things (`motion`: top, right, bottom, left), plus a little air, so nothing is ever clipped.
+function fitBox(s, [top, right, bottom, left] = [0, 0, 0, 0], air = 6) {
+  const b = bounds(s)
+  const x = Math.floor(b.x0 - left - air), y = Math.floor(b.y0 - top - air)
+  return `${x} ${y} ${Math.ceil(b.x1 + right + air) - x} ${Math.ceil(b.y1 + bottom + air) - y}`
+}
 function write(file, cls, vb, s, css, what, align = 'xMidYMid') {
   const sfc = `<!-- Generated by scripts/art/gen.cjs: ${what}. Decorative. -->
 <template>
@@ -344,13 +352,13 @@ ${css}
 </style>
 `
   fs.writeFileSync(`${OUT}${file}.vue`, sfc)
-  console.log(file, Buffer.byteLength(sfc), 'bytes')
+  console.log(file, vb, Buffer.byteLength(sfc), 'bytes')
 }
 for (const [name, fn] of Object.entries(heroes)) {
-  const { s, css } = fn()
-  write(`Art${name}`, `art-${name.toLowerCase()}`, '220 10 500 170', s, css, `the wide hero band of the guide's ${name} page`, 'xMaxYMax')
+  const { s, css, motion } = fn()
+  write(`Art${name}`, `art-${name.toLowerCase()}`, fitBox(s, motion), s, css, `the wide hero band of the guide's ${name} page`, 'xMaxYMax')
 }
 for (const [name, fn] of Object.entries(minis)) {
-  const { s, css } = fn()
-  write(`Mini${name}`, `mini-${name.toLowerCase()}`, '0 0 200 150', s, css, `the small ${name} illustration (its "On this page" panel and overview card)`)
+  const { s, css, motion } = fn()
+  write(`Mini${name}`, `mini-${name.toLowerCase()}`, fitBox(s, motion), s, css, `the small ${name} illustration (its "On this page" panel and overview card)`)
 }
