@@ -1925,6 +1925,8 @@ export const id: Messages = {
     continueStep: "Lanjut ke langkah {n}",
     viewPlan: "Lihat rencanaku",
     stepsTitle: 'Mulai dalam tiga langkah',
+    guideTitle: 'Baru di UniMelb? Mulai dari sini',
+    guideAll: 'Semua panduan dasar',
     year: 'Tahun {n}',
     eyebrow: "Perencana kuliah untuk mahasiswa S1 UniMelb",
     title: "Seluruh kuliahmu,|direncanakan dalam *30 detik*.",

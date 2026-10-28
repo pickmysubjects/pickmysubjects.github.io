@@ -10,6 +10,7 @@ import { latestDataYear } from '@/engine'
 import { searchSubjects } from '@/utils/subjectSearch'
 import { MENUS } from './nav'
 import { searchFeatures, type FeatureGroup } from './featureIndex'
+import { registerSiteSearch, searchShortcut } from '@/composables/useSiteSearch'
 
 /**
  * The site search: a field-like button in the header (an icon when the bar is tight, and on
@@ -26,8 +27,7 @@ const query = shallowRef('')
 const active = shallowRef(0)
 const isOpen = shallowRef(false)
 
-const mac = typeof navigator !== 'undefined' && /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent)
-const shortcut = mac ? '⌘K' : 'Ctrl K'
+const shortcut = searchShortcut
 
 function lookup(messages: unknown, key: string): string | undefined {
   let node: unknown = messages
@@ -170,8 +170,16 @@ function onDocKey(e: KeyboardEvent): void {
     else open()
   }
 }
-onMounted(() => document.addEventListener('keydown', onDocKey))
-onBeforeUnmount(() => document.removeEventListener('keydown', onDocKey))
+// Other places (the home page) open this same dialog through useSiteSearch.
+let unregister: (() => void) | undefined
+onMounted(() => {
+  document.addEventListener('keydown', onDocKey)
+  unregister = registerSiteSearch(open)
+})
+onBeforeUnmount(() => {
+  document.removeEventListener('keydown', onDocKey)
+  unregister?.()
+})
 watch(() => [view.value, param.value], close)
 
 defineExpose({ open })

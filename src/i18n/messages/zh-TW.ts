@@ -1925,6 +1925,8 @@ export const zhTW: Messages = {
     continueStep: "繼續第 {n} 步",
     viewPlan: "查看我的計畫",
     stepsTitle: '三步上手',
+    guideTitle: '剛來墨大？從這裡看起',
+    guideAll: '全部入門主題',
     year: '第 {n} 年',
     eyebrow: "墨大大學部學生的選課工具",
     title: "*30 秒，*|排好整個學位。",

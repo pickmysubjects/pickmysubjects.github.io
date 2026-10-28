@@ -1929,6 +1929,8 @@ export const en = {
     continueStep: "Continue with step {n}",
     viewPlan: "See my plan",
     stepsTitle: 'Get started in three steps',
+    guideTitle: 'New to UniMelb? Start here',
+    guideAll: 'All basics topics',
     year: 'Year {n}',
     eyebrow: "Subject planner for UniMelb undergrads",
     title: "Your whole degree,|planned in *30 seconds*.",

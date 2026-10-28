@@ -1925,6 +1925,8 @@ export const vi: Messages = {
     continueStep: "Tiếp tục bước {n}",
     viewPlan: "Xem kế hoạch của tôi",
     stepsTitle: 'Bắt đầu với ba bước',
+    guideTitle: 'Mới vào UniMelb? Bắt đầu từ đây',
+    guideAll: 'Xem tất cả hướng dẫn cơ bản',
     year: 'Năm {n}',
     eyebrow: "Chọn môn cho sinh viên cử nhân UniMelb",
     title: "Cả tấm bằng,|lên kế hoạch trong *30 giây*.",

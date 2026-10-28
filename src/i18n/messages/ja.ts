@@ -1925,6 +1925,8 @@ export const ja: Messages = {
     continueStep: "ステップ {n} へ進む",
     viewPlan: "自分のプランを見る",
     stepsTitle: '3ステップで始める',
+    guideTitle: 'メルボルン大学が初めてなら、ここから',
+    guideAll: '基本ガイドをすべて見る',
     year: '{n}年次',
     eyebrow: "メルボルン大学の学部生向け履修ツール",
     title: "学位まるごと、|*30秒*で計画。",

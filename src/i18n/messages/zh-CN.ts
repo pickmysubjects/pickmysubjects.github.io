@@ -1925,6 +1925,8 @@ export const zhCN: Messages = {
     continueStep: "继续第 {n} 步",
     viewPlan: "查看我的计划",
     stepsTitle: '三步上手',
+    guideTitle: '刚来墨大？从这里看起',
+    guideAll: '全部入门话题',
     year: '第 {n} 年',
     eyebrow: "墨大本科生的选课工具",
     title: "*30 秒，*|排好整个学位。",

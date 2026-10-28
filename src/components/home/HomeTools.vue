@@ -6,9 +6,9 @@ import { useI18n } from '@/i18n'
 import { reducedMotion } from '@/utils/motion'
 
 /**
- * The home page's most-used tools, in the same slim glass card as the three steps above: a tinted
- * circle, a short name and one line each, the whole tile a link straight to the tool. The rest
- * are one tap away on the tools page.
+ * The home page's most-used tools, in the same slim glass card as the three steps beside it: a
+ * tinted circle, a short name and one line each, the whole tile a link straight to the tool. The
+ * last tile is the tools page, where the rest are.
  */
 const { t } = useI18n()
 const TOOLS = [
@@ -57,12 +57,8 @@ onBeforeUnmount(() => io?.disconnect())
             </span>
           </a>
         </li>
-        <li class="all" :style="{ '--i': TOOLS.length }">
-          <a class="button button-quiet tools-all" :href="link('tools/')">
-            {{ t('menu.allTools') }} <ArrowRight :size="18" aria-hidden="true" />
-          </a>
-          <!-- Phones: the same link as a sixth tile, so the grid stays even. -->
-          <a class="tool tool-all" :href="link('tools/')">
+        <li :style="{ '--i': TOOLS.length }">
+          <a class="tool" :href="link('tools/')">
             <span class="dot dot-all"><ArrowRight :size="16" :stroke-width="2.25" aria-hidden="true" /></span>
             <span class="words">
               <span class="name">{{ t('menu.allTools') }}</span>
@@ -78,7 +74,10 @@ onBeforeUnmount(() => io?.disconnect())
 <style scoped>
 /* Same measures as StartSteps, so the two cards read as one family. */
 .home-tools {
+  /* Lays itself out by its own width: one row when wide, three or two columns beside the steps. */
+  container: tools / inline-size;
   display: grid;
+  grid-template-rows: auto 1fr;
   gap: var(--space-4);
   --dot: 34px;
   --pad: 10px;
@@ -91,13 +90,15 @@ onBeforeUnmount(() => io?.disconnect())
 }
 
 .tools-card {
-  padding: 14px 20px 14px 14px;
+  display: grid;
+  align-content: center;
+  padding: 14px;
 }
 
-/* Wide screens: five tiles in a row, "All tools" at the right like the steps' button. */
+/* Five tools and "All tools" as the sixth tile: one row, or an even grid of three or two. */
 .tiles {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr)) auto;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   align-items: stretch;
   gap: var(--gap);
   margin: 0;
@@ -107,12 +108,6 @@ onBeforeUnmount(() => io?.disconnect())
 
 .tiles li {
   min-width: 0;
-}
-
-.all {
-  display: grid;
-  align-items: center;
-  margin-left: calc(var(--space-5) - var(--gap));
 }
 
 /* A tile: circle, then name and one line. The whole tile is the link. */
@@ -172,21 +167,11 @@ onBeforeUnmount(() => io?.disconnect())
   text-wrap: pretty;
 }
 
-/* "All tools" as a tile: the steps' outlined "later" circle, since it isn't a tool itself. */
-.tool-all {
-  display: none;
-}
-
+/* "All tools": the steps' outlined "later" circle, since it isn't a tool itself. */
 .dot-all {
   color: var(--ink-soft);
   background: color-mix(in srgb, var(--surface) 94%, var(--accent-fill));
   border-color: color-mix(in srgb, var(--ink-faint) 55%, transparent);
-}
-
-.tools-all {
-  min-height: 44px;
-  padding: 0 20px;
-  white-space: nowrap;
 }
 
 /* Entrance: each tile rises a few pixels into place, a beat after the one before. */
@@ -204,21 +189,19 @@ onBeforeUnmount(() => io?.disconnect())
   transform: none;
 }
 
-/* Tablets: the tiles keep their row, the button goes under them. */
-@media (max-width: 1000px) {
+@container tools (max-width: 899px) {
   .tiles {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    row-gap: var(--space-3);
-  }
-
-  .all {
-    grid-column: 1 / -1;
-    justify-items: start;
-    margin-left: 0;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
-/* Phones: two columns, "All tools" filling the sixth cell. */
+@container tools (max-width: 520px) {
+  .tiles {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Phones: a little tighter. */
 @media (max-width: 640px) {
   .home-tools {
     gap: var(--space-3);
@@ -229,24 +212,6 @@ onBeforeUnmount(() => io?.disconnect())
 
   .tools-card {
     padding: 10px 12px 12px;
-  }
-
-  .tiles {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    row-gap: var(--gap);
-  }
-
-  .all {
-    display: block;
-    grid-column: auto;
-  }
-
-  .tools-all {
-    display: none;
-  }
-
-  .tool-all {
-    display: grid;
   }
 }
 

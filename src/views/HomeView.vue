@@ -7,6 +7,7 @@ import WhatsNext from '@/components/home/WhatsNext.vue'
 import HomeTools from '@/components/home/HomeTools.vue'
 import StartSteps from '@/components/home/StartSteps.vue'
 import HeroCampus from '@/components/home/HeroCampus.vue'
+import HomeGuide from '@/components/home/HomeGuide.vue'
 import Interp from '@/components/Interp.vue'
 import SubjectSearch from '@/components/SubjectSearch.vue'
 import { useDataset } from '@/composables/useDataset'
@@ -71,10 +72,13 @@ const returning = computed(() => plan.courseChosen.value || !plan.isEmpty.value 
 
     <WhatsNext />
 
-    <!-- The three steps for a new student. -->
-    <StartSteps />
+    <!-- The three steps for a new student, and the tools beside them. -->
+    <div class="duo">
+      <StartSteps />
+      <HomeTools />
+    </div>
 
-    <HomeTools />
+    <HomeGuide />
   </div>
 </template>
 
@@ -89,7 +93,8 @@ const returning = computed(() => plan.courseChosen.value || !plan.isEmpty.value 
 /* The hero: a glass panel with the words, the campus scene beside it. */
 .hero {
   display: grid;
-  grid-template-columns: minmax(0, 6fr) minmax(0, 5.6fr);
+  /* Half and half on the wide page: the panel's left edge and the scene's right one line up with the header. */
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   align-items: center;
   gap: clamp(16px, 3vw, 40px);
 }
@@ -270,6 +275,20 @@ const returning = computed(() => plan.courseChosen.value || !plan.isEmpty.value 
 
 .hero-scene {
   min-width: 0;
+}
+
+/* The steps and the tools side by side, the same height; stacked below 1100px. */
+.duo {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: var(--space-5);
+}
+
+@media (max-width: 1100px) {
+  .duo {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-6);
+  }
 }
 
 @media (max-width: 1100px) {

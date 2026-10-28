@@ -120,7 +120,10 @@ onBeforeUnmount(() => io?.disconnect())
 
 <style scoped>
 .start {
+  /* Lays itself out by its own width: a row of steps when wide, a list beside the tools. */
+  container: start / inline-size;
   display: grid;
+  grid-template-rows: auto 1fr;
   gap: var(--space-4);
   /* Circle size and the step's own padding: the track runs between circle centres. */
   --dot: 34px;
@@ -340,11 +343,24 @@ onBeforeUnmount(() => io?.disconnect())
   white-space: nowrap;
 }
 
-/* Tablets: the button goes under the steps. */
-@media (max-width: 1000px) {
+@keyframes start-sweep-down {
+  from {
+    opacity: 1;
+    transform: translateY(-100%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(100%);
+  }
+}
+
+/* Narrower: the button goes under the steps. */
+@container start (max-width: 1000px) {
   .start-card {
     grid-template-columns: 1fr;
-    gap: var(--space-3);
+    align-content: space-between;
+    gap: var(--space-4);
   }
 
   .start-go {
@@ -352,19 +368,8 @@ onBeforeUnmount(() => io?.disconnect())
   }
 }
 
-/* Phones: a vertical list, the track running down between the circles. */
-@media (max-width: 640px) {
-  .start {
-    gap: var(--space-3);
-    --dot: 30px;
-    --pad: 8px;
-    --gap: 4px;
-  }
-
-  .start-card {
-    padding: 10px 12px 14px;
-  }
-
+/* Narrow (beside the tools, or a phone): a vertical list, the track running down between the circles. */
+@container start (max-width: 719px) {
   .stepper {
     grid-template-columns: 1fr;
   }
@@ -386,18 +391,6 @@ onBeforeUnmount(() => io?.disconnect())
     transform: translateY(-100%);
   }
 
-  @keyframes start-sweep-down {
-    from {
-      opacity: 1;
-      transform: translateY(-100%);
-    }
-
-    to {
-      opacity: 1;
-      transform: translateY(100%);
-    }
-  }
-
   .fresh.seen .seg::after {
     animation-name: start-sweep-down;
   }
@@ -406,6 +399,20 @@ onBeforeUnmount(() => io?.disconnect())
     grid-template-columns: auto minmax(0, 1fr);
     align-items: start;
     column-gap: var(--space-3);
+  }
+}
+
+/* Phones: a little tighter, the button full width. */
+@media (max-width: 640px) {
+  .start {
+    gap: var(--space-3);
+    --dot: 30px;
+    --pad: 8px;
+    --gap: 4px;
+  }
+
+  .start-card {
+    padding: 10px 12px 14px;
   }
 
   .start-go {

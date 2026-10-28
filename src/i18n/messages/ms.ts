@@ -1925,6 +1925,8 @@ export const ms: Messages = {
     continueStep: "Teruskan langkah {n}",
     viewPlan: "Lihat rancangan saya",
     stepsTitle: 'Mula dalam tiga langkah',
+    guideTitle: 'Baru di UniMelb? Mula di sini',
+    guideAll: 'Semua panduan asas',
     year: 'Tahun {n}',
     eyebrow: "Perancang subjek untuk prasiswazah UniMelb",
     title: "Seluruh ijazah anda,|dirancang dalam *30 saat*.",

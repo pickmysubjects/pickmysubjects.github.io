@@ -1925,6 +1925,8 @@ export const ko: Messages = {
     continueStep: "{n}단계 이어서 하기",
     viewPlan: "내 계획 보기",
     stepsTitle: '3단계로 시작하기',
+    guideTitle: '멜버른대가 처음이라면 여기서부터',
+    guideAll: '기본 정보 전체 보기',
     year: '{n}학년',
     eyebrow: "멜버른대 학부생을 위한 수강 플래너",
     title: "학위 전체를|*30초* 만에 계획하세요.",

@@ -1925,6 +1925,8 @@ export const hi: Messages = {
     continueStep: "चरण {n} पर आगे बढ़ें",
     viewPlan: "मेरा प्लान देखें",
     stepsTitle: 'तीन चरणों में शुरू करें',
+    guideTitle: 'UniMelb में नए हैं? यहाँ से शुरू करें',
+    guideAll: 'सारी बुनियादी बातें देखें',
     year: 'साल {n}',
     eyebrow: "UniMelb के अंडरग्रेजुएट छात्रों के लिए",
     title: "पूरी डिग्री का प्लान,|सिर्फ़ *30 सेकंड* में।",
