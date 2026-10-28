@@ -1589,7 +1589,7 @@ export const ja: Messages = {
     integrityContract: "契約不正（contract cheating）：有償・無償を問わず、課題の一部でも他人にやってもらうこと。自分の課題を Studocu や Course Hero などにアップロードしたり、他の学生の課題を代わりにやったりするのも含まれます。オーストラリアでは違法です。",
     integrityScam: "Instagram、WeChat、Telegram の「家庭教師」「課題サポート」グループや、キャンパスで配られる QR コードには注意してください。課題を代わりにやると持ちかけるものは、どれも契約不正です。",
     integrityProcess: "課題について説明を求められても、疑われているという意味ではありません。違反の申し立てがあれば本人に知らされ、証拠を見たうえで反論できます。不正と判断されると、学業に重い影響が出ることがあります。",
-    integrityLink: "Academic integrity",
+    integrityLink: "学業上の誠実さ（Academic integrity）",
     integrityBreachLink: "違反の種類",
     examsTitle: "試験と成績",
     examsShort: "試験日程と成績は my.unimelb で見られます。成績の見直しは10営業日以内に申請できます。",
