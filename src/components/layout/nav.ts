@@ -79,11 +79,15 @@ export const MENUS: MenuArea[] = [
     key: 'tools.nav',
     icon: Wrench,
     to: 'tools/',
+    // Only tools that exist nowhere else on the site.
     items: [
       { key: 'calc.title', desc: 'menu.d.final', to: 'tools/final/', icon: Calculator },
       { key: 'tools.wam', desc: 'menu.d.wam', to: 'tools/wam/', icon: Gauge },
-      { key: 'tools.compare', desc: 'menu.d.compare', to: 'shortlist/#compare-title', icon: Columns2 },
+    ],
+    // Found by the site search: the tools page itself, and comparing saved subjects on the shortlist.
+    searchOnly: [
       { key: 'menu.allTools', desc: 'menu.d.allTools', to: 'tools/', icon: Layers },
+      { key: 'tools.compare', desc: 'menu.d.compare', to: 'shortlist/#compare-title', icon: Columns2 },
     ],
   },
   {
@@ -111,6 +115,9 @@ export const MENUS: MenuArea[] = [
     items: [
       { key: 'record.title', desc: 'menu.d.record', to: 'record/', icon: User },
       { key: 'shortlist.title', desc: 'menu.d.shortlist', to: 'shortlist/', icon: Heart },
+    ],
+    // Sections of My record, not pages of their own: found by the site search, landing on their place.
+    searchOnly: [
       { key: 'menu.backup', desc: 'menu.d.backup', to: 'record/#sec-backup', icon: Save },
       { key: 'menu.gradeShare', desc: 'menu.d.gradeShare', to: 'record/#share-title', icon: Share2 },
     ],

@@ -158,3 +158,14 @@ describe('feature search index', () => {
     expect(fold('Đăng ký')).toBe('dang ky')
   })
 })
+
+describe('menus hold destinations only', () => {
+  it('lists just the two calculators under Tools and no record sections under Me', async () => {
+    const { MENUS } = await import('../src/components/layout/nav')
+    expect(MENUS.find((m) => m.area === 'tools')!.items.map((i) => i.to)).toEqual(['tools/final/', 'tools/wam/'])
+    expect(MENUS.find((m) => m.area === 'me')!.items.map((i) => i.to)).toEqual(['record/', 'shortlist/'])
+    // Still found by the site search.
+    const all = MENUS.flatMap((m) => [...m.items, ...(m.searchOnly ?? [])]).map((i) => i.to)
+    expect(all).toEqual(expect.arrayContaining(['tools/', 'shortlist/#compare-title', 'record/#sec-backup', 'record/#share-title']))
+  })
+})
