@@ -8,7 +8,8 @@ import { useI18n } from '@/i18n'
 import { summariseAssessment } from '@/utils/assessment'
 import { attendanceText } from '@/utils/attendance'
 
-const props = defineProps<{ subject: Subject; year: number }>()
+// `titled: false`: the heading and the calculator link come from the page around it (the subject page's section).
+const props = withDefaults(defineProps<{ subject: Subject; year: number; titled?: boolean }>(), { titled: true })
 const { t } = useI18n()
 
 // The skills and topics the suggestions and the semester check use: hand-tagged, or else
@@ -40,7 +41,7 @@ const otherTerms = computed(() => {
 
 <template>
   <section class="assess">
-    <div class="assess-head">
+    <div v-if="titled" class="assess-head">
       <h2 class="assess-title">{{ t('assess.title') }}</h2>
       <a v-if="!subject.passFail" class="assess-calc" :href="link(`tools/final/?subject=${subject.code}`)"><Calculator :size="15" aria-hidden="true" /> {{ t('calc.open') }}</a>
     </div>

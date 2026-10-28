@@ -2,10 +2,9 @@
 import { computed } from 'vue'
 import type { RelatedSubjects } from '@/engine'
 import SubjectLinks from '@/components/majors/SubjectLinks.vue'
-import InfoTip from '@/components/InfoTip.vue'
 import { useI18n } from '@/i18n'
 
-/** Related subjects (see relatedSubjects): what it leads to, what's taken with it, what comes before. */
+/** Related subjects (see relatedSubjects): what it leads to, what's taken with it, what comes before. The heading is the page's. */
 const props = defineProps<{ related: RelatedSubjects; year: number }>()
 const { t } = useI18n()
 const rel = computed(() => props.related)
@@ -20,7 +19,6 @@ const groups = computed(() =>
 
 <template>
   <div v-if="groups.length" class="related">
-    <h2 class="sec-title">{{ t('subject.relatedTitle') }} <InfoTip :text="t('subject.relatedTip')" /></h2>
     <div class="cols">
       <section v-for="g in groups" :key="g.key" class="col">
         <h3 class="sub">{{ t(g.key) }}</h3>

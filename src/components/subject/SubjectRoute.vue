@@ -64,7 +64,8 @@ function go(c: string): void {
     <component :is="phone ? 'details' : 'div'" class="cols-wrap" :class="{ 'cols-fold': phone }">
     <summary v-if="phone" class="cols-summary">{{ t('subject.fullRoute') }}</summary>
     <div class="cols">
-      <section class="col">
+      <!-- Nothing needed first: the chain and the page's facts already say so. -->
+      <section v-if="needs !== 'none' || coreq || subject.recommended.length" class="col">
         <h3 class="sub">{{ t('subject.needs') }}</h3>
         <p v-if="needs === 'none'" class="text">{{ t('subject.needsNone') }}</p>
         <p v-else-if="needs === 'unknown'" class="text muted">{{ t('subject.notRecorded') }}</p>

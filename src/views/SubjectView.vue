@@ -2,14 +2,16 @@
 import { viewYear } from '@/engine/dataYear'
 import { link } from '@/composables/useView'
 import { computed, nextTick, shallowRef } from 'vue'
-import { ArrowLeft } from 'lucide-vue-next'
+import { Calculator } from 'lucide-vue-next'
 import AssessmentPanel from '@/components/subject/AssessmentPanel.vue'
 import MajorRoles from '@/components/subject/MajorRoles.vue'
 import SubjectCareers from '@/components/subject/SubjectCareers.vue'
 import OutsideLinks from '@/components/subject/OutsideLinks.vue'
 import SubjectAbout from '@/components/subject/SubjectAbout.vue'
-import FoldSection from '@/components/subject/FoldSection.vue'
 import SubjectFitCard from '@/components/subject/SubjectFitCard.vue'
+import SubjectSection from '@/components/subject/SubjectSection.vue'
+import GuideToc from '@/components/guide/GuideToc.vue'
+import InfoTip from '@/components/InfoTip.vue'
 import SubjectHeader from '@/components/subject/SubjectHeader.vue'
 import SubjectRoute from '@/components/subject/SubjectRoute.vue'
 import SubjectVerdict from '@/components/subject/SubjectVerdict.vue'
@@ -21,9 +23,9 @@ import { usePlan } from '@/composables/usePlan'
 import { useProfile } from '@/composables/useProfile'
 import { useRated } from '@/composables/useRated'
 import { useSimilar } from '@/composables/useSimilar'
-import { usePhone } from '@/composables/usePhone'
 import { useI18n } from '@/i18n'
 import { discussionLinks } from '@/utils/links'
+import { pickLocalized } from '@/i18n/localized'
 
 const props = defineProps<{ code: string }>()
 const { name, data } = useDataset()
@@ -46,7 +48,6 @@ const unlocks = computed(() =>
 )
 const taken = computed(() => profile.value.results.some((r) => r.code === code.value))
 const similar = useSimilar(subject, year)
-const phone = usePhone()
 // Subject links the page already has, so the related block doesn't repeat them.
 const shown = computed(() => {
   const s = subject.value
@@ -78,87 +79,100 @@ function onRated(sent: boolean): void {
   thanks.value = true
 }
 
-// The page's sections in reading order, for the side index on wide screens.
+// Summary lines. Ratings: how many and the hours; none yet, said there unless reviews from
+// elsewhere fill the section. What you learn: its one paragraph.
+const ratingsShort = computed(() => {
+  const g = subject.value?.signals
+  if (g?.reviews) return [g.reviews === 1 ? t.value('subject.reviewsOne') : t.value('subject.reviews', { n: g.reviews }), g.hours ? t.value('subject.hoursWeek', { n: g.hours }) : ''].filter(Boolean).join(' · ')
+  return detailReady.value && subject.value?.discussions?.length ? undefined : t.value('subject.noRatings')
+})
+const about = computed(() => (detailReady.value ? subject.value?.about : undefined))
+const learnShort = computed(() => (about.value ? pickLocalized(about.value.learn, locale.value) : ''))
+
+// The small illustration at the foot of "On this page" (shown only when the panel has room).
+const tocArt = () => import('@/components/subject/art/MiniSubject.vue')
+
+// The page's sections in reading order, for "On this page" (ids are anchors other pages link to).
 const sections = computed(() => {
   const s = subject.value
   if (!s) return []
   return [
-    { id: 'fit', label: t.value('fit.title'), show: true },
-    { id: 'ratings', label: t.value('subject.ratingsTitle'), show: true },
-    { id: 'learn', label: t.value('subject.aboutLearn'), show: detailReady.value && !!s.about },
-    { id: 'assessment', label: t.value('assess.title'), show: true },
-    { id: 'route', label: t.value('subject.fitsTitle'), show: true },
-    { id: 'related', label: t.value('subject.relatedTitle'), show: hasRelated.value },
-    { id: 'discuss', label: t.value('subject.discuss'), show: links.value.length > 0 },
-    { id: 'similar', label: t.value('subject.similar'), show: similar.value.length > 0 },
-  ].filter((x) => x.show)
+    { id: 'fit', title: t.value('fit.title'), show: true },
+    { id: 'ratings', title: t.value('subject.ratingsTitle'), show: true },
+    { id: 'learn', title: t.value('subject.aboutLearn'), show: !!about.value },
+    { id: 'assessment', title: t.value('assess.title'), show: true },
+    { id: 'route', title: t.value('subject.fitsTitle'), show: true },
+    { id: 'related', title: t.value('subject.relatedTitle'), show: hasRelated.value },
+    { id: 'discuss', title: t.value('subject.discuss'), show: links.value.length > 0 },
+    { id: 'similar', title: t.value('subject.similar'), show: similar.value.length > 0 },
+  ]
+    .filter((x) => x.show)
+    .map(({ id, title }) => ({ id, title, sub: false }))
 })
 </script>
 
 <template>
   <div class="subject">
-    <a class="back" :href="link('')"><ArrowLeft :size="16" aria-hidden="true" /> {{ t('subject.back') }}</a>
-
     <template v-if="subject">
       <SubjectHeader :subject="subject" :year="year" :rate-hidden="rating || thanks" @rate="openRating" />
 
-      <div class="layout">
-        <div class="main">
-          <SubjectFitCard id="fit" class="sec-fit" :subject="subject" :year="year" />
-
-          <section id="ratings" class="sec flat">
-            <h2 class="sec-title">{{ t('subject.ratingsTitle') }}</h2>
-            <SubjectVerdict v-model:form-open="rating" :subject="subject" :taken="taken" :thanks="thanks" :detail-ready="detailReady" @rated="onRated" />
-          </section>
-
-          <section v-if="detailReady && subject.about" id="learn" class="sec sec-about flat">
-            <SubjectAbout :subject="subject" />
-          </section>
-
-          <section id="assessment" class="sec flat">
-            <AssessmentPanel :subject="subject" :year="year" />
-          </section>
-
-          <section id="route" class="sec flat">
-            <h2 class="sec-title">{{ t('subject.fitsTitle') }}</h2>
-            <SubjectRoute :subject="subject" :year="year" :unlocks="unlocks" />
-            <MajorRoles class="sec-roles" :code="code" />
-            <SubjectCareers class="sec-roles" :code="code" />
-          </section>
-
-          <!-- The long lower sections fold on phones (FoldSection), so the page isn't a mile long. -->
-
-          <section v-if="hasRelated" id="related" class="sec flat">
-            <RelatedSubjects :related="related" :year="year" />
-          </section>
-
-          <section v-if="links.length" id="discuss" class="sec flat">
-            <FoldSection :title="t('subject.discuss')">
-              <OutsideLinks :links="links" />
-            </FoldSection>
-          </section>
-
-          <section v-if="similar.length" id="similar" class="sec flat">
-            <FoldSection :title="t('subject.similar')">
-              <SubjectLinks :codes="similar" :year="year" />
-            </FoldSection>
-          </section>
+      <!-- "On this page" on the left, the sections on the right, as on the guide's pages. -->
+      <div class="article">
+        <div class="article-toc">
+          <GuideToc :items="sections" :art="tocArt" />
         </div>
 
-        <aside class="side">
-          <nav class="toc side-card surface" :aria-label="t('subject.onPage')">
-            <h2 class="side-title">{{ t('subject.onPage') }}</h2>
-            <a v-for="s in sections" :key="s.id" class="toc-link" :href="`#${s.id}`">{{ s.label }}</a>
-          </nav>
-          <section class="side-card surface" aria-labelledby="side-source">
-            <h2 id="side-source" class="side-title">{{ t('subject.sourceTitle') }}</h2>
-            <p class="verified">
-              {{ t('subject.source', { year: subject.sourceYear }) }}<br />
-              {{ subject.verifiedOn ? t('subject.verified', { date: subject.verifiedOn }) : t('subject.unverified') }}
-            </p>
-            <a class="report" :href="link(`feedback?topic=data&subject=${subject.code}`)">{{ t('suggest.report') }}</a>
-          </section>
-        </aside>
+        <div class="body">
+          <SubjectSection id="fit" :title="t('fit.title')">
+            <SubjectFitCard :subject="subject" :year="year" />
+          </SubjectSection>
+
+          <SubjectSection id="ratings" :title="t('subject.ratingsTitle')" :short="ratingsShort">
+            <SubjectVerdict v-model:form-open="rating" :subject="subject" :taken="taken" :thanks="thanks" :detail-ready="detailReady" @rated="onRated" />
+          </SubjectSection>
+
+          <SubjectSection v-if="about" id="learn" :title="t('subject.aboutLearn')" :short="learnShort">
+            <div class="outcomes">
+              <h3 class="sub-title">{{ t('subject.aboutOutcomes') }}</h3>
+              <ul class="about-list">
+                <li v-for="(o, i) in about.outcomes" :key="i">{{ pickLocalized(o, locale) }}</li>
+              </ul>
+            </div>
+          </SubjectSection>
+
+          <SubjectSection id="assessment" :title="t('assess.title')">
+            <template v-if="!subject.passFail" #aside>
+              <a class="aside-link" :href="link(`tools/final/?subject=${subject.code}`)"><Calculator :size="15" aria-hidden="true" /> {{ t('calc.open') }}</a>
+            </template>
+            <AssessmentPanel :subject="subject" :year="year" :titled="false" />
+          </SubjectSection>
+
+          <SubjectSection id="route" :title="t('subject.fitsTitle')">
+            <SubjectRoute :subject="subject" :year="year" :unlocks="unlocks" />
+            <MajorRoles class="part" :code="code" />
+            <SubjectCareers class="part" :code="code" />
+          </SubjectSection>
+
+          <!-- The lower sections fold on phones, so the page isn't a mile long. -->
+          <SubjectSection v-if="hasRelated" id="related" :title="t('subject.relatedTitle')" fold>
+            <template #aside><InfoTip :text="t('subject.relatedTip')" /></template>
+            <RelatedSubjects :related="related" :year="year" />
+          </SubjectSection>
+
+          <SubjectSection v-if="links.length" id="discuss" :title="t('subject.discuss')" fold>
+            <OutsideLinks :links="links" />
+          </SubjectSection>
+
+          <SubjectSection v-if="similar.length" id="similar" :title="t('subject.similar')" fold>
+            <SubjectLinks :codes="similar" :year="year" />
+          </SubjectSection>
+
+          <p class="foot">
+            <span>{{ t('subject.source', { year: subject.sourceYear }) }}</span>
+            <span>{{ subject.verifiedOn ? t('subject.verified', { date: subject.verifiedOn }) : t('subject.unverified') }}</span>
+            <a :href="link(`feedback?topic=data&subject=${subject.code}`)">{{ t('suggest.report') }}</a>
+          </p>
+        </div>
       </div>
     </template>
 
@@ -171,80 +185,42 @@ const sections = computed(() => {
 </template>
 
 <style scoped>
+/* The guide's measures (GuideView, InfoPage): frostier cards, the hero and the article sharing
+   their edges, so the colour field stays calm under text. */
 .subject {
+  --card-fill: var(--peek-fill);
+
   display: grid;
-  gap: var(--space-5);
-  padding-top: var(--page-top);
+  gap: 24px;
+  padding-top: 20px;
   min-width: 0;
 }
 
-.back {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  width: fit-content;
-  font-size: var(--fs-small);
-  font-weight: 500;
-  color: var(--ink-soft);
-  text-decoration: none;
-}
-
-.back:hover {
-  color: var(--ink);
-}
-
-/* Same frame as My record: a column of cards and a 320px side column of cards. */
-.layout {
+.article {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 320px);
-  gap: var(--space-5) var(--space-6);
+  grid-template-columns: 232px minmax(0, 1fr);
+  gap: 48px;
   align-items: start;
 }
 
-.main {
+.article-toc {
+  align-self: stretch;
+}
+
+.body {
   display: grid;
-  gap: var(--space-5);
+  grid-template-columns: minmax(0, 1fr);
+  gap: 24px;
   min-width: 0;
 }
 
-/* Prose keeps a readable line length on the wide page; rows and tiles still use the full column. */
-.main :deep(:is(p, .about-list > li, .discussion-points > li)) {
+/* Prose keeps a readable line length; rows and tiles still use the full column. */
+.body :deep(:is(p:not(.basis), .about-list > li, .discussion-points > li)) {
   max-width: 78ch;
 }
 
-/* One card per section, one heading style (the same as My record's). */
-.sec {
-  display: grid;
-  gap: var(--space-4);
-  min-width: 0;
-  padding: var(--space-5);
-  scroll-margin-top: 80px;
-}
-
-.sec.flat {
-  padding: var(--space-5) 0 0;
-}
-
-@media (max-width: 640px) {
-  .sec {
-    padding: var(--space-4);
-  }
-
-  .sec.flat {
-    padding: var(--space-4) 0 0;
-  }
-}
-
-.sec-fit {
-  scroll-margin-top: 80px;
-}
-
-.sec > :deep(*) {
-  min-width: 0;
-}
-
 /* Lists that come as their own card fold into the section: never a box in a box. */
-.sec :deep(.surface) {
+.body :deep(.sec .surface) {
   border: 0;
   border-radius: 0;
   background: none;
@@ -253,99 +229,62 @@ const sections = computed(() => {
   backdrop-filter: none;
 }
 
-.sec :deep(.links .row) {
+.body :deep(.links .row) {
   padding-inline: 0;
 }
 
-.sec-title,
-.sec :deep(:is(.sec-title, .assess-title)),
-.sec-about :deep(.about-row:first-child .about-label) {
+.sub-title,
+.body :deep(.roles-title) {
   margin: 0;
-  font-size: var(--fs-section);
-  font-weight: 700;
-  line-height: 1.3;
-  color: var(--ink);
-}
-
-/* What you learn reads top to bottom: the paragraph, then what you can do after it. */
-.sec-about :deep(.about) {
-  grid-template-columns: minmax(0, 1fr);
-  row-gap: var(--space-3);
-}
-
-.sec-about :deep(.about-row + .about-row .about-label) {
-  margin-top: var(--space-3);
   font-size: 1rem;
   font-weight: 650;
   color: var(--ink);
 }
 
-.sec-about :deep(.about-list) {
-  font-size: 1rem;
+.outcomes {
+  display: grid;
+  gap: 10px;
+}
+
+.about-list {
+  display: grid;
   gap: 6px;
-}
-
-.sec-roles {
-  padding-top: var(--space-4);
-  border-top: 1px solid var(--line);
-}
-
-.sec :deep(.roles-title) {
   margin: 0;
+  padding-left: 18px;
   font-size: 1rem;
-  font-weight: 650;
+  line-height: 1.55;
 }
 
-.side {
-  position: sticky;
-  top: 88px;
-  display: grid;
-  gap: var(--space-5);
-  min-width: 0;
+/* A part of "Where it fits" after the chain: majors, then careers. */
+.part {
+  padding-top: 20px;
+  border-top: 1px solid var(--divider);
 }
 
-.side-card {
-  display: grid;
-  gap: var(--space-2);
-  padding: var(--space-5);
-}
-
-.side-title {
-  margin: 0 0 var(--space-1);
-  font-size: 1rem;
-  font-weight: 650;
-  line-height: 1.3;
-}
-
-.toc {
-  gap: 0;
-}
-
-.toc-link {
-  padding: var(--space-2) 0;
+.aside-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-left: auto;
+  min-height: 32px;
   font-size: var(--fs-small);
-  color: var(--ink-soft);
-  text-decoration: none;
+  font-weight: var(--fw-semibold);
 }
 
-.toc-link + .toc-link {
-  border-top: 1px solid var(--line);
-}
-
-.toc-link:hover {
-  color: var(--accent);
-}
-
-.verified {
-  margin: 0;
-  font-size: var(--fs-small);
-  line-height: 1.6;
-  color: var(--ink-soft);
-}
-
-.report {
+/* Where the facts come from: one frosted strip at the end, never straight on the colour field. */
+.foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
   width: fit-content;
+  max-width: 100%;
+  margin: 0;
+  padding: 10px 16px;
   font-size: var(--fs-small);
+  color: var(--ink-soft);
+  border: 1px solid var(--card-edge);
+  border-radius: 14px;
+  background: var(--card-fill);
 }
 
 .missing {
@@ -356,29 +295,25 @@ const sections = computed(() => {
 }
 
 @media (max-width: 960px) {
-  .layout {
+  .article {
     grid-template-columns: minmax(0, 1fr);
-  }
-
-  .side {
-    position: static;
-  }
-
-  .toc {
-    display: none;
+    gap: 14px;
   }
 }
 
-@media (max-width: 560px) {
-  .sec,
-  .side-card {
-    padding: var(--space-4);
+@media (max-width: 640px) {
+  .subject {
+    gap: 14px;
+    padding-top: 12px;
   }
 
-  .sec-title,
-  .sec :deep(:is(.sec-title, .assess-title)),
-  .sec-about :deep(.about-row:first-child .about-label) {
-    font-size: var(--fs-section);
+  .body {
+    gap: 14px;
+  }
+
+  /* Room under the last section for the action bar above the tab bar. */
+  .foot {
+    margin-bottom: 64px;
   }
 }
 </style>

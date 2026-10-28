@@ -13,7 +13,7 @@ import { describeReq, reasonText } from '@/i18n/format'
 import { basisText, rankReasonText, whyText } from '@/i18n/fitText'
 
 /**
- * "Is it hard? Is it right for me?": two plain answers first (difficulty from the easy/hard
+ * The body of "Is it hard? Is it right for me?" (its heading is the section's): two plain answers first (difficulty from the easy/hard
  * lists, fit from Find subjects' "sort for me"), then what pushes each way, then what it rests on.
  */
 const props = defineProps<{ subject: Subject; year: number }>()
@@ -44,14 +44,6 @@ const diffNote = computed(() => {
 // Everything behind the verdict, each way, with its numbers.
 const easierItems = computed(() => difficulty.value.factors.easier.map((r) => rankReasonText(t.value, r)))
 const harderItems = computed(() => difficulty.value.factors.harder.map((r) => rankReasonText(t.value, r)))
-// The facts any student checks: how it's marked, and what it needs first.
-const facts = computed(() => {
-  const s = props.subject
-  const out: string[] = []
-  // How it's marked is in the header's chips and in Assessment below: not said a third time here.
-  if (s.prerequisites !== 'none' && s.prerequisites !== 'unknown') out.push(t.value('fit.needs', { req: trim(describeReq(t.value, s.prerequisites, course.value)) }))
-  return out
-})
 
 // ---- fit ----
 const fitTone = computed<Tone>(() => {
@@ -114,9 +106,7 @@ const hasLists = computed(() => easierItems.value.length + harderItems.value.len
 </script>
 
 <template>
-  <section class="fitcard surface" aria-labelledby="fit-title">
-    <h2 id="fit-title" class="fit-title">{{ t('fit.title') }}</h2>
-
+  <div class="fitcard">
     <!-- The two answers, side by side (stacked on phones). -->
     <div class="answers">
       <div class="answer" :class="`tone-${diffTone}`">
@@ -203,15 +193,11 @@ const hasLists = computed(() => easierItems.value.length + harderItems.value.len
       </div>
     </div>
 
-    <ul v-if="facts.length" class="facts">
-      <li v-for="f in facts" :key="f">{{ f }}</li>
-    </ul>
-
     <p v-if="source || basis" class="basis">
       <Info :size="13" aria-hidden="true" />
       <span>{{ [source, basis].filter(Boolean).join(' · ') }}</span>
     </p>
-  </section>
+  </div>
 </template>
 
 <style scoped>
@@ -238,16 +224,7 @@ const hasLists = computed(() => easierItems.value.length + harderItems.value.len
 .fitcard {
   display: grid;
   gap: var(--space-5);
-  padding: var(--space-5);
   min-width: 0;
-}
-
-.fit-title {
-  margin: 0;
-  font-size: var(--fs-section);
-  font-weight: 700;
-  line-height: 1.3;
-  color: var(--ink);
 }
 
 .answers {
@@ -400,17 +377,6 @@ const hasLists = computed(() => easierItems.value.length + harderItems.value.len
   color: var(--ink-soft);
 }
 
-.facts {
-  display: grid;
-  gap: 2px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  font-size: var(--fs-small);
-  line-height: 1.55;
-  color: var(--ink-soft);
-}
-
 .basis {
   display: flex;
   align-items: flex-start;
@@ -436,14 +402,6 @@ const hasLists = computed(() => easierItems.value.length + harderItems.value.len
 }
 
 @media (max-width: 560px) {
-  .fitcard {
-    padding: var(--space-4);
-  }
-
-  .fit-title {
-    font-size: var(--fs-section);
-  }
-
   .verdict {
     font-size: var(--fs-section);
   }

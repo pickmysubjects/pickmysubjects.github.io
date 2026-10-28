@@ -11,8 +11,9 @@ import { useRated } from '@/composables/useRated'
 import { useI18n } from '@/i18n'
 
 /**
- * Should I take it? Students' ratings first (the four that decide most: overall, difficulty,
- * workload, would recommend), then the rest, then what reviews elsewhere say.
+ * The body of "What students say" (the count and hours are the section's summary line). Should
+ * I take it? Students' ratings first (the four that decide most: overall, difficulty, workload,
+ * would recommend), then the rest, then what reviews elsewhere say.
  */
 const props = defineProps<{ subject: Subject; taken: boolean; thanks: boolean; detailReady: boolean }>()
 const formOpen = defineModel<boolean>('formOpen', { required: true })
@@ -65,9 +66,6 @@ const discussions = computed(() => (props.detailReady ? (props.subject.discussio
           <span class="tile-text">{{ t('subject.recommendShare', { pct: recommend }) }}</span>
         </div>
       </div>
-      <p class="meta">
-        {{ t('subject.reviews', { n: subject.signals?.reviews ?? 0 }) }}<template v-if="hours"> · {{ t('subject.hoursWeek', { n: hours }) }}</template>
-      </p>
       <RatingTagChips :tags="subject.signals?.tags" />
       <dl v-if="rest.length" class="rest">
         <div v-for="m in rest" :key="m.key" class="rest-row">
@@ -79,7 +77,8 @@ const discussions = computed(() => (props.detailReady ? (props.subject.discussio
         </div>
       </dl>
     </template>
-    <p v-else class="muted">{{ t('subject.noRatings') }}</p>
+    <!-- With no ratings the section's summary line says so, unless reviews from elsewhere fill it. -->
+    <p v-else-if="discussions.length" class="muted">{{ t('subject.noRatings') }}</p>
     <StudentFactsRow v-if="detailReady" :subject="subject" />
 
     <p v-if="thanks" class="good" role="status">{{ t('rating.sent') }}</p>
@@ -170,12 +169,6 @@ const discussions = computed(() => (props.detailReady ? (props.subject.discussio
 .tile-text {
   font-size: var(--fs-small);
   color: var(--ink);
-}
-
-.meta {
-  margin: 0;
-  font-size: var(--fs-body);
-  color: var(--ink-soft);
 }
 
 .rest {
