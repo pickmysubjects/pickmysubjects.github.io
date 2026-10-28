@@ -279,6 +279,9 @@ function optionName(g: ListGroup, v: string | number): string {
     grid-column: 2;
     grid-row: 1;
     justify-self: end;
+    /* A long order name ("Jam kelas paling sedikit") shortens in the box, never widens the page. */
+    max-width: 100%;
+    min-width: 0;
   }
 
   .sort-label {
@@ -287,6 +290,8 @@ function optionName(g: ListGroup, v: string | number): string {
 
   .sort .select-glass {
     min-height: 44px;
+    min-width: 0;
+    max-width: 100%;
   }
 
   .count {
