@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useImeGuard } from '@/utils/ime'
 import InfoTip from '@/components/InfoTip.vue'
 import { computed, nextTick, shallowRef, useId, useTemplateRef, watch } from 'vue'
 import { ExternalLink, GraduationCap, Plus, Trash2 } from 'lucide-vue-next'
@@ -18,6 +19,8 @@ defineProps<{ options: { code: string; title: string }[] }>()
 
 const { t } = useI18n()
 const listId = useId()
+// An input method's Enter (confirming a Chinese or Japanese word) doesn't add the entry yet.
+const ime = useImeGuard()
 const { course } = usePlan()
 // The course's own subject categories ("science", "breadth"); none before a degree is chosen.
 const categories = computed(() => (course.value?.categories ?? []).filter((c) => c !== 'core'))
@@ -117,12 +120,12 @@ const lineText = (c: Credit) =>
         </label>
         <label class="field field-wide">
           <span class="field-label">{{ t('record.creditLabel') }}</span>
-          <input v-model="label" class="input" maxlength="60" :placeholder="t('record.creditLabelPlaceholder')" />
+          <input v-model="label" class="input" maxlength="60" :placeholder="t('record.creditLabelPlaceholder')" @keydown.enter="ime.holdImeEnter" @compositionstart="ime.onCompositionstart" @compositionend="ime.onCompositionend" />
         </label>
       </div>
       <label v-else class="field field-wide">
         <span class="field-label">{{ t('record.subject') }}</span>
-        <input v-model="code" class="input" :list="listId" :placeholder="t('record.subjectPlaceholder')" />
+        <input v-model="code" class="input" :list="listId" :placeholder="t('record.subjectPlaceholder')" @keydown.enter="ime.holdImeEnter" @compositionstart="ime.onCompositionstart" @compositionend="ime.onCompositionend" />
         <datalist :id="listId">
           <option v-for="o in options" :key="o.code" :value="`${o.code} ${o.title}`" />
         </datalist>

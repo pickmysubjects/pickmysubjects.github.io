@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useImeGuard } from '@/utils/ime'
 import { computed, nextTick, onBeforeUnmount, onMounted, shallowRef, useId, useTemplateRef, watch } from 'vue'
 import { ArrowLeft, BookOpen, CornerDownLeft, Search, X } from 'lucide-vue-next'
 import { go, link, useView } from '@/composables/useView'
@@ -149,6 +150,8 @@ function openRow(r: Row | undefined): void {
   }
 }
 
+// Enter that confirms an input method's word (Chinese, Japanese…) isn't a pick.
+const ime = useImeGuard()
 function onKey(e: KeyboardEvent): void {
   if (e.key === 'ArrowDown') {
     e.preventDefault()
@@ -156,7 +159,7 @@ function onKey(e: KeyboardEvent): void {
   } else if (e.key === 'ArrowUp') {
     e.preventDefault()
     move(-1)
-  } else if (e.key === 'Enter' && !e.isComposing) {
+  } else if (e.key === 'Enter' && !ime.isImeEnter(e)) {
     e.preventDefault()
     openRow(rows.value[active.value])
   }
@@ -222,6 +225,8 @@ defineExpose({ open })
           :aria-label="t('search.label')"
           :placeholder="t('search.placeholder')"
           @keydown="onKey"
+          @compositionstart="ime.onCompositionstart"
+          @compositionend="ime.onCompositionend"
         />
         <button class="field-close" type="button" :aria-label="t('menu.close')" @click="close">
           <X :size="18" aria-hidden="true" />

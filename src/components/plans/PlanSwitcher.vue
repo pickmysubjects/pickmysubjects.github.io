@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useImeGuard } from '@/utils/ime'
 import { nextTick, onBeforeUnmount, onMounted, shallowRef, useTemplateRef, watch } from 'vue'
 import { Columns2, Copy, Ellipsis, FilePlus, Pencil, Plus, Trash2 } from 'lucide-vue-next'
 import { usePlans } from '@/composables/usePlans'
@@ -15,6 +16,8 @@ const { t } = useI18n()
 type Panel = 'new' | 'menu' | 'rename' | 'delete' | null
 const panel = shallowRef<Panel>(null)
 const draft = shallowRef('')
+// An input method's Enter (confirming a Chinese or Japanese word) doesn't save the name yet.
+const ime = useImeGuard()
 const input = useTemplateRef<HTMLInputElement>('input')
 
 // The sliding pill under the active plan: measured from the active button, so any name length works.
@@ -114,6 +117,9 @@ function confirmDelete(): void {
         :aria-label="t('plans.renameLabel')"
         :placeholder="t('plans.named', { letter: plans.active.value.label })"
         @keydown.esc="panel = null"
+        @keydown.enter="ime.holdImeEnter"
+        @compositionstart="ime.onCompositionstart"
+        @compositionend="ime.onCompositionend"
       />
       <button class="button button-accent" type="submit">{{ t('plans.save') }}</button>
       <button class="button button-quiet" type="button" @click="panel = null">{{ t('plans.cancel') }}</button>

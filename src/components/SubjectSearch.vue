@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useImeGuard } from '@/utils/ime'
 import { computed, shallowRef, useId, useTemplateRef } from 'vue'
 import { ArrowRight, Search } from 'lucide-vue-next'
 import { useDataset } from '@/composables/useDataset'
@@ -46,6 +47,14 @@ function onEnter(): void {
   const hit = results.value[active.value]
   if (hit) pick(hit.code)
   else if (/^[A-Za-z]{4}\d{5}$/.test(query.value.trim())) pick(query.value.trim().toUpperCase())
+}
+
+// Enter that confirms an input method's word (Chinese, Japanese…) isn't a pick.
+const ime = useImeGuard()
+function onEnterKey(e: KeyboardEvent): void {
+  if (ime.isImeEnter(e)) return
+  e.preventDefault()
+  onEnter()
 }
 
 // Sends a missing subject to the feedback form, with the code filled in when it looks like one.
@@ -96,7 +105,9 @@ function move(delta: number): void {
       @blur="open = false"
       :aria-activedescendant="open && results[active] ? `${listId}-${active}` : undefined"
       @input="onInput"
-      @keydown.enter.prevent="onEnter"
+      @keydown.enter="onEnterKey"
+      @compositionstart="ime.onCompositionstart"
+      @compositionend="ime.onCompositionend"
       @keydown.down.prevent="move(1)"
       @keydown.up.prevent="move(-1)"
     />

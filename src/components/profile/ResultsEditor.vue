@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useImeGuard } from '@/utils/ime'
 import InfoTip from '@/components/InfoTip.vue'
 import { computed, shallowRef, useId } from 'vue'
 import { Calculator, Check, Plus, Search, Star, Trash2 } from 'lucide-vue-next'
@@ -19,6 +20,8 @@ const credit = defineModel<Credit[]>('credit', { default: () => [] })
 const creditOpen = defineModel<boolean>('creditOpen', { default: false })
 const props = defineProps<{ subjects: Record<string, Subject>; options: { code: string; title: string }[] }>()
 
+// An input method's Enter (confirming a Chinese or Japanese word) doesn't add the entry yet.
+const ime = useImeGuard()
 const listId = useId()
 const { t, locale } = useI18n()
 const { rated, markRated } = useRated()
@@ -154,7 +157,7 @@ function remove(i: number): void {
       <label class="add-code">
         <span class="visually-hidden">{{ t('record.subject') }}</span>
         <Search :size="16" aria-hidden="true" class="add-icon" />
-        <input v-model="code" class="input add-input" :list="listId" :placeholder="t('record.subjectPlaceholder')" />
+        <input v-model="code" class="input add-input" :list="listId" :placeholder="t('record.subjectPlaceholder')" @keydown.enter="ime.holdImeEnter" @compositionstart="ime.onCompositionstart" @compositionend="ime.onCompositionend" />
         <datalist :id="listId">
           <option v-for="o in options" :key="o.code" :value="`${o.code} ${o.title}`" />
         </datalist>
