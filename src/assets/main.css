@@ -552,8 +552,8 @@ td {
   transition: transform 0.2s var(--ease-spring), background 0.15s, box-shadow 0.15s, filter 0.15s;
 }
 
+/* Hover changes colour and shadow only: nothing moves or changes size under the pointer. */
 .button:hover {
-  transform: translateY(-1px);
   box-shadow: var(--shadow-2);
 }
 

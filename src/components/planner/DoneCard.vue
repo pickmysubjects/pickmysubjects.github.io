@@ -16,7 +16,8 @@ const props = defineProps<{ result: PastResult; subject?: Subject; note?: string
 const emit = defineEmits<{ open: []; hover: [on: boolean] }>()
 const { t, locale } = useI18n()
 const linkCounts = inject(LINK_COUNTS, null)
-const links = computed(() => linkCounts?.value.get(props.result.code))
+const links = computed(() => linkCounts?.value.counts.get(props.result.code))
+const linksQuiet = computed(() => linkCounts?.value.quiet ?? false)
 // The title in the reader's language where we have one, with the English after it, small (as on a planned card).
 const local = computed(() => (props.subject ? localTitle(props.subject, locale.value) : ''))
 const label = computed(() => (props.result.failed ? t.value('plan.pastNotPassed') : t.value('plan.pastTag')))
@@ -50,13 +51,17 @@ const label = computed(() => (props.result.failed ? t.value('plan.pastNotPassed'
       <span class="tag tag-state">{{ label }}</span>
       <span v-if="subject" class="tag">L{{ subject.level }}</span>
       <span v-if="note" class="note">{{ note }}</span>
-      <span v-if="links" class="link-mark" aria-hidden="true"><template v-if="links.needs">← {{ links.needs }}</template><template v-if="links.needs && links.unlocks"> · </template><template v-if="links.unlocks">→ {{ links.unlocks }}</template></span>
+      <span v-if="links" class="link-mark" :class="{ 'link-mark-quiet': linksQuiet }" aria-hidden="true"><template v-if="links.needs">← {{ links.needs }}</template><template v-if="links.needs && links.unlocks"> · </template><template v-if="links.unlocks">→ {{ links.unlocks }}</template></span>
     </span>
   </button>
 </template>
 
 <style scoped>
 /* "← 1 · → 2": how many of its prerequisites and follow-ons are on the board. */
+.link-mark-quiet {
+  visibility: hidden;
+}
+
 .link-mark {
   margin-left: auto;
   padding: 0 7px;

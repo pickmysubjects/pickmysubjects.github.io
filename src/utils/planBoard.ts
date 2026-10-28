@@ -14,10 +14,11 @@ import {
 
 /**
  * How many of each card's prerequisites (needs) and follow-ons (unlocks) are on the board, for the
- * small "← 1 · → 2" on the card. The board provides it; cards read it. Empty while a subject or
- * rule is selected (its lines say it then).
+ * small "← 1 · → 2" on the card. The board provides it; cards read it. `quiet` while a subject or
+ * rule is selected or hovered (its lines say it then): the marks are hidden but keep their space,
+ * so no card changes size when the pointer moves over the board.
  */
-export const LINK_COUNTS: InjectionKey<Readonly<Ref<ReadonlyMap<string, { needs: number; unlocks: number }>>>> = Symbol('linkCounts')
+export const LINK_COUNTS: InjectionKey<Readonly<Ref<{ counts: ReadonlyMap<string, { needs: number; unlocks: number }>; quiet: boolean }>>> = Symbol('linkCounts')
 
 /** A prerequisite link on the board: `from` is needed by `to`, and comes before it. */
 export interface Edge {

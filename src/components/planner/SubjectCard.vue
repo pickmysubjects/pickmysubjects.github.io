@@ -54,7 +54,8 @@ const emit = defineEmits<{
 
 const { t, locale } = useI18n()
 const linkCounts = inject(LINK_COUNTS, null)
-const links = computed(() => linkCounts?.value.get(props.code))
+const links = computed(() => linkCounts?.value.counts.get(props.code))
+const linksQuiet = computed(() => linkCounts?.value.quiet ?? false)
 // The title in the reader's language where we have one, with the English after it, small.
 const local = computed(() => (props.subject ? localTitle(props.subject, locale.value) : ''))
 // Planned in a year whose Handbook is out but not entered for it yet: say which year's facts it uses.
@@ -155,7 +156,7 @@ function onDragStart(event: DragEvent): void {
       <span v-else-if="role === 'option'" class="tag tag-option">{{ t('plan.tagOption') }}</span>
       <span v-if="onlyIn && !worst" class="tag tag-only">{{ onlyIn }}</span>
       <span v-if="factsFrom?.older" class="tag tag-old">{{ t('dataYear.short', { year: factsFrom.year }) }}</span>
-      <span v-if="links" class="link-mark" aria-hidden="true"><template v-if="links.needs">← {{ links.needs }}</template><template v-if="links.needs && links.unlocks"> · </template><template v-if="links.unlocks">→ {{ links.unlocks }}</template></span>
+      <span v-if="links" class="link-mark" :class="{ 'link-mark-quiet': linksQuiet }" aria-hidden="true"><template v-if="links.needs">← {{ links.needs }}</template><template v-if="links.needs && links.unlocks"> · </template><template v-if="links.unlocks">→ {{ links.unlocks }}</template></span>
     </span>
     <span v-if="subject" class="row-points">{{ subject.points }}</span>
 
@@ -467,6 +468,10 @@ function onDragStart(event: DragEvent): void {
 .row-tone-rule {
   border-color: var(--good);
   background: color-mix(in srgb, var(--good-soft) 60%, var(--paper-raised));
+}
+
+.link-mark-quiet {
+  visibility: hidden;
 }
 
 .row-dimmed {

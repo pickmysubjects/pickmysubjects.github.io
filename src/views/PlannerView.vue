@@ -19,9 +19,10 @@ import Interp from '@/components/Interp.vue'
 import PlanSwitcher from '@/components/plans/PlanSwitcher.vue'
 import PlanHero from '@/components/planner/PlanHero.vue'
 import SubjectSection from '@/components/subject/SubjectSection.vue'
-import { assumedOfferings, creditPoints, findDiploma, careerGap, careerGoal, careerName, hasEnded, heldMajorIds, informalPicks, isFail, passedCodes, planComponentIds, planRoles, planRules, recordedLoads, termKey, termLoad, type Issue, type PlanTerm } from '@/engine'
+import { assumedOfferings, creditPoints, findDiploma, careerGap, careerGoal, careerName, hasEnded, heldMajorIds, informalPicks, isFail, isPassedDuplicate, passedCodes, planProblems as countedProblems, planComponentIds, planRoles, planRules, recordedLoads, termKey, termLoad, type Issue, type PlanTerm } from '@/engine'
 import { diplomaTitle } from '@/composables/usePlanCompare'
-import { ImageDown, Printer, Share2, Sparkles, X } from 'lucide-vue-next'
+import { ImageDown, Plus, Printer, Share2, Sparkles, X } from 'lucide-vue-next'
+import { usePhone } from '@/composables/usePhone'
 import { usePlans } from '@/composables/usePlans'
 import { sharePlanImage } from '@/utils/planImage'
 import { localTitle } from '@/i18n/localized'
@@ -225,8 +226,9 @@ const allIssues = computed(() => [...plan.termIssues.value, ...plan.courseCheck.
 // A subject planned again though My record has it passed: the one record line above says so
 // and its Rebuild fixes them all, so they aren't listed one by one.
 const passedNow = computed(() => new Set(passedCodes(profile.value.results)))
-const onRecord = (i: Issue) => i.kind === 'duplicate' && !!i.subject && passedNow.value.has(i.subject)
-const problems = computed(() => allIssues.value.filter((i) => i.severity === 'error' && !onRecord(i)).length)
+const onRecord = (i: Issue) => isPassedDuplicate(i, passedNow.value)
+// Counted the same way as the compare page's "Subject problems" row.
+const problems = computed(() => countedProblems(allIssues.value, passedNow.value).length)
 // Say what the problems are right under the status, not only in the collapsed details.
 // Problems if there are any, otherwise the things that can't be checked yet.
 const problemTexts = computed(() => {
@@ -498,11 +500,19 @@ const lastTerm = computed(() => [...plan.terms.value].reverse().find((x) => x.su
 const boardShort = computed(() => (lastTerm.value ? t.value('planPage.boardShort', { term: termLabel(t.value, lastTerm.value), n: plan.plannedCodes.value.length }) : undefined))
 const rulesShort = computed(() => (problems.value ? t.value('plan.statusProblems', { n: problems.value }) : unknowns.value ? t.value('plan.statusUnknown', { n: unknowns.value }) : t.value('plan.statusOk')))
 // The board may reach past the page's width to the window's edge on wide screens: the window's
-// width (without its scrollbar), for that.
+// width (without its scrollbar), for that. Watched with a ResizeObserver, not the window's
+// resize event: a vertical scrollbar coming or going changes it too, and a stale width made the
+// page scroll sideways.
 const pageW = shallowRef(typeof document === 'undefined' ? 0 : document.documentElement.clientWidth)
-const onResize = () => (pageW.value = document.documentElement.clientWidth)
-window.addEventListener('resize', onResize)
-onBeforeUnmount(() => window.removeEventListener('resize', onResize))
+const pageObserver = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(() => (pageW.value = document.documentElement.clientWidth))
+pageObserver?.observe(document.documentElement)
+onBeforeUnmount(() => pageObserver?.disconnect())
+
+// Phones: one clear "Add a subject" button above the tab bar (hidden while the undo note shows).
+const phone = usePhone()
+function addOnPhone(): void {
+  board.value?.openAdd()
+}
 
 // Arriving from the compare page's Edit (?plan=B&term=2027-semester-1): open that plan, then bring
 // that semester into view. The address goes back to plain /plan/, so Back returns to the compare.
@@ -514,14 +524,25 @@ watch(
     const p = plans.list.value.find((x) => x.label === label.toUpperCase())
     if (p && p.id !== plans.active.value.id) plans.switchTo(p.id)
     focusTerm.value = query.value.get('term') ?? 'board'
-    replaceAddress(`plan/${location.hash}`)
+    // Only ?plan= and ?term= go; anything else (?add=, ?share=) and the #fragment stay.
+    const rest = new URLSearchParams(query.value)
+    rest.delete('plan')
+    rest.delete('term')
+    const q = rest.toString()
+    replaceAddress(`plan/${q ? `?${q}` : ''}${location.hash}`)
   },
   { immediate: true },
 )
 watch(
   [focusTerm, showWizard],
   async ([key, wizard]) => {
-    if (!key || wizard) return
+    if (!key) return
+    // The plan opened needs setting up first: nothing to bring into view, and the semester
+    // mustn't jump into view later, once the setup is done.
+    if (wizard) {
+      focusTerm.value = null
+      return
+    }
     await nextTick()
     window.setTimeout(() => {
       const el = key === 'board' ? document.getElementById('board') : document.querySelector<HTMLElement>(`[data-term-key="${CSS.escape(key)}"]`)
@@ -725,7 +746,11 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
           </div>
         </SubjectSection>
 
-        <SubjectSection v-if="onBoard" id="heavy" :title="t('planPage.tocHeavy')" :short="heavyTerms ? t('planPage.heavyCount', { n: heavyTerms }) : t('planPage.heavyNone')" fold>
+        <!-- Nothing heavy: one compact line, not a card with nothing in it. -->
+        <p v-if="onBoard && !heavyTerms && !unavoidable.length" id="heavy" class="heavy-none surface">
+          <strong>{{ t('planPage.tocHeavy') }}</strong><span>{{ t('planPage.heavyNone') }}</span>
+        </p>
+        <SubjectSection v-else-if="onBoard" id="heavy" :title="t('planPage.tocHeavy')" :short="heavyTerms ? t('planPage.heavyCount', { n: heavyTerms }) : t('planPage.heavyNone')" fold>
           <ul v-if="heavyList.length" class="heavy-list">
             <li v-for="h in heavyList" :key="h.index" class="heavy-item">
               <TriangleAlert :size="16" aria-hidden="true" class="heavy-icon" />
@@ -759,6 +784,9 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
     </div>
 
     <template v-if="!shared && !showWizard">
+      <button v-if="phone && onBoard && !undo && !peek" class="add-fab" type="button" @click="addOnPhone">
+        <Plus :size="18" aria-hidden="true" />{{ t('plan.addFab') }}
+      </button>
       <div v-if="undo" class="undo" role="status">
         <span>{{ undo.text }}</span>
         <button class="undo-button" type="button" @click="undoLast">{{ t('plan.undo') }}</button>
@@ -784,9 +812,9 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
         @swap-it="board?.openSwap(peek as string)"
         @move-it="board?.openMove(peek as string)"
         @remove-it="peekTerm && onRemove(peekTerm.index, peek as string)"
-      >
-        <SubjectTimeline :code="peek" :edges="edges" :where-of="whereOf" @select="peek = $event" />
-      </SubjectPeek>
+        :where-of="whereOf"
+        :term="peekTerm?.term"
+      />
     </template>
     <PlanPrint
       v-if="!showWizard && onBoard"
@@ -1233,6 +1261,52 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
   font-size: 0.875rem;
   box-shadow: var(--shadow-2);
   transform: translateX(-50%);
+}
+
+/* Phones: a clear way to add a subject, floating above the tab bar where the undo note goes. */
+.add-fab {
+  position: fixed;
+  z-index: 40;
+  right: 16px;
+  bottom: calc(100px + env(safe-area-inset-bottom));
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 48px;
+  padding: 0 18px 0 14px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--accent-fill);
+  color: var(--accent-fill-ink);
+  font: inherit;
+  font-weight: var(--fw-semibold);
+  box-shadow: var(--shadow-2);
+  cursor: pointer;
+}
+
+.add-fab:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.heavy-none {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+  margin: 0;
+  padding: 16px 32px;
+  scroll-margin-top: 96px;
+}
+
+.heavy-none span {
+  color: var(--ink-soft);
+}
+
+@media (max-width: 640px) {
+  .heavy-none {
+    padding: 14px 16px;
+  }
 }
 
 .undo-button {

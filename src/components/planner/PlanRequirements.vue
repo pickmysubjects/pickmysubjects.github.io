@@ -116,7 +116,8 @@ function toggle(id: string): void {
           <span class="meter-top">
             <span class="meter-label">{{ m.label }}</span>
             <span v-if="m.kind === 'major'" class="chip-state">{{ m.status === 'ok' ? t('progress.done') : t('progress.notYet') }}</span>
-            <span v-else class="meter-value">{{ fmt(m.have) }}<span class="meter-need"> / {{ fmt(m.need) }}</span></span>
+            <!-- A minimum met (more than enough counts too: the extra points still go to the total): a tick, not a warning. -->
+            <span v-else class="meter-value"><Check v-if="m.status === 'ok'" class="meter-tick" :size="13" :stroke-width="3" aria-hidden="true" />{{ fmt(m.have) }}<span class="meter-need"> / {{ fmt(m.need) }}</span><span v-if="m.status === 'ok'" class="visually-hidden"> ({{ t('progress.done') }})</span></span>
           </span>
           <span v-if="m.kind === 'points'" class="meter-bar" aria-hidden="true">
             <span class="meter-fill" :style="{ width: `${Math.min(100, (m.have / m.need) * 100)}%` }" />
@@ -320,6 +321,12 @@ function toggle(id: string): void {
   font-weight: 700;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
+}
+
+.meter-tick {
+  margin-right: 3px;
+  vertical-align: -1px;
+  color: var(--good);
 }
 
 .meter-need {

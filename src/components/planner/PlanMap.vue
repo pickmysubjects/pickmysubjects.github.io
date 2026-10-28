@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, nextTick, onBeforeUnmount, onMounted, provide, shallowRef, useTemplateRef, watch } from 'vue'
-import { Plus } from 'lucide-vue-next'
+import { ChevronLeft, ChevronRight, Plus } from 'lucide-vue-next'
 import { carriedInto, SHORT_TERM_LOAD, termKey, type Issue, type Period, type PlanTerm, type Subject } from '@/engine'
 import { termLabel } from '@/i18n/format'
 import TermColumn from './TermColumn.vue'
@@ -74,6 +74,18 @@ function onTrackScroll(): void {
   edges()
   measure()
 }
+// The ‹ › buttons: most of a screen's width each way.
+function scrollBy(dir: -1 | 1): void {
+  const el = track.value
+  if (!el) return
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches
+  el.scrollBy({ left: dir * Math.max(200, el.clientWidth * 0.8), behavior: reduce ? 'auto' : 'smooth' })
+}
+// Terms added or emptied change how far the board scrolls without changing its size.
+watch(
+  () => props.terms.map((x) => x.subjects.length).join(),
+  () => nextTick(edges),
+)
 const routes = shallowRef<Route[]>([])
 const hovered = shallowRef<string | null>(null)
 // Hover intent: leaving a card waits a moment, so the pointer can reach the "N more" pill.
@@ -305,10 +317,10 @@ function drawRoutes(): void {
 }
 
 // How many of each card's prerequisites and follow-ons are on the board: the cards show it in
-// their own tag row (never over a neighbour's text). Not while something is selected.
+// their own tag row (never over a neighbour's text). Hidden (space kept) while something is
+// selected or hovered: removing them made cards whose only tag it was shrink under the pointer.
 const linkCounts = computed(() => {
   const count = new Map<string, { needs: number; unlocks: number }>()
-  if (tones.value !== null) return count
   for (const e of props.edges) {
     const from = count.get(e.from) ?? { needs: 0, unlocks: 0 }
     from.unlocks++
@@ -317,7 +329,7 @@ const linkCounts = computed(() => {
     to.needs++
     count.set(e.to, to)
   }
-  return count
+  return { counts: count, quiet: tones.value !== null }
 })
 provide(LINK_COUNTS, linkCounts)
 
@@ -370,6 +382,13 @@ defineExpose({
   },
   openMove(code: string): void {
     moveFor.value = code
+  },
+  /** The add-a-subject picker for the first planned semester with room left (else the last). */
+  openAdd(): void {
+    const points = (x: PlanTerm) => x.subjects.reduce((sum, c) => sum + (props.subjects[c]?.points ?? 12.5), 0)
+    const main = props.terms.findIndex((x) => !isShort(x.period) && points(x) < termLoadFor(x.period))
+    const i = main >= 0 ? main : props.terms.length - 1
+    if (i >= 0) picker.value = { termIndex: i }
   },
 })
 
@@ -426,6 +445,9 @@ onBeforeUnmount(() => {
       @mouseleave="onHover(null)"
     >{{ t('stress.more', { n: overflow.n }) }}</button>
 
+ <div class="track-wrap">
+    <button v-if="edgeStart" class="track-nav track-prev" type="button" :aria-label="t('plan.scrollBack')" @click="scrollBy(-1)"><ChevronLeft :size="18" aria-hidden="true" /></button>
+    <button v-if="edgeEnd" class="track-nav track-next" type="button" :aria-label="t('plan.scrollMore')" @click="scrollBy(1)"><ChevronRight :size="18" aria-hidden="true" /></button>
     <div ref="track" class="track" :class="{ 'fade-start': edgeStart, 'fade-end': edgeEnd }" @scroll.passive="onTrackScroll">
       <PastTermColumn
         v-if="past?.undated.length"
@@ -489,6 +511,7 @@ onBeforeUnmount(() => {
         </button>
         <button v-if="terms.length > 0 && terms.at(-1)?.subjects.length === 0" class="tool" type="button" @click="emit('removeLastTerm')">{{ t('plan.removeTerm') }}</button>
       </div>
+    </div>
     </div>
 
     <SlotPicker
@@ -630,7 +653,9 @@ onBeforeUnmount(() => {
   overflow-x: auto;
   padding-bottom: 8px;
   scroll-padding-inline: 24px;
+  /* A thin scrollbar that stays visible, so the board plainly scrolls sideways. */
   scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--ink) 28%, transparent) transparent;
   --fade-start: 0px;
   --fade-end: 0px;
   -webkit-mask-image: linear-gradient(to right, transparent, #000 var(--fade-start), #000 calc(100% - var(--fade-end)), transparent);
@@ -643,6 +668,52 @@ onBeforeUnmount(() => {
 
 .track.fade-end {
   --fade-end: 48px;
+}
+
+.track::-webkit-scrollbar {
+  height: 6px;
+}
+
+.track::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--ink) 28%, transparent);
+}
+
+/* The ‹ › buttons sit over the faded edges, only while there's more that way. */
+.track-wrap {
+  position: relative;
+  min-width: 0;
+}
+
+.track-nav {
+  position: absolute;
+  z-index: 6;
+  top: 50%;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 1px solid var(--glass-edge);
+  border-radius: 999px;
+  background: var(--glass-shine), var(--sheet-fill);
+  box-shadow: var(--glass-shadow);
+  color: var(--ink);
+  cursor: pointer;
+  transform: translateY(-50%);
+}
+
+.track-nav:hover,
+.track-nav:focus-visible {
+  color: var(--accent);
+}
+
+.track-prev {
+  left: 4px;
+}
+
+.track-next {
+  right: 4px;
 }
 
 .board-tools {
@@ -692,6 +763,10 @@ onBeforeUnmount(() => {
 
 /* Phones: terms stack top to bottom, no sideways swiping. */
 @media (max-width: 640px) {
+  .track-nav {
+    display: none;
+  }
+
   .track {
     flex-direction: column;
     overflow: visible;
@@ -719,6 +794,10 @@ onBeforeUnmount(() => {
   .track {
     flex-wrap: wrap;
     overflow: visible;
+  }
+
+  .track-nav {
+    display: none;
   }
 }
 </style>
