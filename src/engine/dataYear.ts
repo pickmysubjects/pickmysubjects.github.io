@@ -24,6 +24,17 @@ export function setToday(d: Date | string | undefined): void {
 }
 export const thisYear = (): number => today().getFullYear()
 
+/**
+ * The date in Melbourne as YYYY-MM-DD: the University's dates are Melbourne dates, whatever time
+ * zone the device is in. Built from the date's parts, not from a locale's format, which browsers
+ * are free to change (en-CA has not always been ISO).
+ */
+export function melbourneDay(now: Date = today()): string {
+  const parts = new Intl.DateTimeFormat('en-US', { timeZone: 'Australia/Melbourne', year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(now)
+  const part = (type: Intl.DateTimeFormatPartTypes) => parts.find((p) => p.type === type)?.value ?? ''
+  return `${part('year')}-${part('month')}-${part('day')}`
+}
+
 type Subjects = Record<string, Subject> | readonly Subject[]
 const list = (s: Subjects): readonly Subject[] => (Array.isArray(s) ? s : Object.values(s))
 

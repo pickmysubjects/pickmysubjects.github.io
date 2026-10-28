@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { offeredIn } from '../src/engine/availability'
 import { checkCourse } from '../src/engine/courseRules'
 import type { Plan } from '../src/engine/plan'
-import { planStart, standardTerms } from '../src/engine/plan'
+import { firstUpcomingSemester, hasEnded, isUpcoming, planStart, standardTerms } from '../src/engine/plan'
 import { checkTerms, previewAdd } from '../src/engine/planCheck'
 import { setToday } from '../src/engine/dataYear'
 import { realData } from './realData'
@@ -385,5 +385,26 @@ describe('a subject taught at a far campus', () => {
     for (const p of [plan('computing-and-software-systems', 'B-SCI', 'COMP10001'), plan('finance', 'B-COM', 'FNCE10002')]) {
       expect(checkTerms(p, data).some((i) => i.kind === 'far-campus')).toBe(false)
     }
+  })
+})
+
+describe('term dates are Melbourne dates, whatever the device\'s time zone', () => {
+  it('a semester has started once it is its first day in Melbourne', () => {
+    // 23 Feb 14:00 UTC is already 24 Feb 01:00 in Melbourne (AEDT): semester 1 has started there,
+    // though a device in UTC or the Americas still says the 23rd.
+    const justAfter = new Date('2026-02-23T14:00:00Z')
+    expect(isUpcoming({ year: 2026, period: 'semester-1' }, justAfter)).toBe(false)
+    expect(isUpcoming({ year: 2026, period: 'semester-1' }, new Date('2026-02-23T12:00:00Z'))).toBe(true) // 23:00 the 23rd there
+  })
+
+  it('a semester is over once its last day has begun in Melbourne', () => {
+    // 24 Nov 14:00 UTC is 25 Nov 01:00 in Melbourne: semester 2's last day has begun.
+    expect(hasEnded({ year: 2026, period: 'semester-2' }, new Date('2026-11-24T14:00:00Z'))).toBe(true)
+    expect(hasEnded({ year: 2026, period: 'semester-2' }, new Date('2026-11-24T12:00:00Z'))).toBe(false)
+  })
+
+  it('the next semester\'s year is Melbourne\'s year on New Year\'s Eve UTC', () => {
+    // 31 Dec 14:00 UTC is 1 Jan 2027 in Melbourne: the next semester to start is 2027's first.
+    expect(firstUpcomingSemester(new Date('2026-12-31T14:00:00Z'))).toEqual({ year: 2027, period: 'semester-1' })
   })
 })

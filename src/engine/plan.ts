@@ -1,6 +1,6 @@
 import type { Period } from './schema'
 import type { Credit } from './credit'
-import { today } from './dataYear'
+import { melbourneDay, today } from './dataYear'
 
 export interface PlanTerm {
   year: number
@@ -124,21 +124,22 @@ export function planStart(
 const STARTS: Record<Period, [number, number]> = { summer: [0, 1], 'semester-1': [1, 24], winter: [5, 30], 'semester-2': [6, 21] }
 const ENDS: Record<Period, [number, number]> = { summer: [1, 15], 'semester-1': [5, 25], winter: [6, 18], 'semester-2': [10, 25] }
 
-/** Whether a term is still ahead of `now` (it hasn't started yet). */
+/** A term's day as YYYY-MM-DD, to compare with melbourneDay(). */
+const dayOf = (year: number, [m, d]: [number, number]) => `${year}-${String(m + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`
+
+/** Whether a term is still ahead of `now` in Melbourne (it hasn't started there yet). */
 export function isUpcoming(term: { year: number; period: Period }, now: Date = today()): boolean {
-  const [m, d] = STARTS[term.period]
-  return new Date(term.year, m, d) > now
+  return dayOf(term.year, STARTS[term.period]) > melbourneDay(now)
 }
 
-/** Whether a term is over by `now` (its exams are done). */
+/** Whether a term is over by `now` in Melbourne (its last day has begun there: exams are done). */
 export function hasEnded(term: { year: number; period: Period }, now: Date = today()): boolean {
-  const [m, d] = ENDS[term.period]
-  return new Date(term.year, m, d) < now
+  return dayOf(term.year, ENDS[term.period]) <= melbourneDay(now)
 }
 
-/** The first semester (1 or 2) that hasn't started yet. */
+/** The first semester (1 or 2) that hasn't started yet in Melbourne. */
 export function firstUpcomingSemester(now: Date = today()): { year: number; period: Period } {
-  const y = now.getFullYear()
+  const y = Number(melbourneDay(now).slice(0, 4))
   const choices: { year: number; period: Period }[] = [
     { year: y, period: 'semester-1' },
     { year: y, period: 'semester-2' },
