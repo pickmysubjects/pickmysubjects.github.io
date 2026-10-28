@@ -32,7 +32,7 @@ import { routeLines } from '../src/engine/majorRouteText'
 import { groupMajors } from '../src/utils/majorGroups'
 import { ACCREDITATION } from '../src/utils/accreditation'
 import { careerJobLabels, careerListHtml, careerPageHtml, careerSeo, careersHtml, subjectCareersHtml } from '../src/utils/careersHtml'
-import { careerTargets, majorsForCareer } from '../src/engine/careerPaths'
+import { careerTargets } from '../src/engine/careerPaths'
 import { componentCareers } from '../src/engine/careers'
 import { buildLeadsTo, buildTakenWith, relatedSubjects } from '../src/engine/related'
 import type { Dataset, Subject } from '../src/engine/schema'
@@ -922,7 +922,8 @@ function changesPage(code: LocaleCode, d: YearDiff): Page {
 
 // ---------- careers ("I want to be…") ----------
 
-const careerList = careerTargets(data).filter((c) => majorsForCareer(data, c.id).length > 0)
+// Every career the list offers (careerTargets keeps only reachable ones), graduate-entry ones included.
+const careerList = careerTargets(data)
 
 function careerPage(code: LocaleCode, c: (typeof careerList)[number]): Page {
   const t = translator(code)

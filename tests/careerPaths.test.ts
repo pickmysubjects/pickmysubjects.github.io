@@ -6,7 +6,7 @@ import { interpolate, type Params } from '../src/i18n/interpolate'
 import { en } from '../src/i18n/messages/en'
 import { zhTW } from '../src/i18n/messages/zh-TW'
 import { careerPhrase, subjectNote } from '../src/utils/careerPathText'
-import { careerPageHtml, careerSeo, subjectCareersHtml } from '../src/utils/careersHtml'
+import { careerListHtml, careerPageHtml, careerSeo, subjectCareersHtml } from '../src/utils/careersHtml'
 import { subject } from './helpers'
 
 const real = realData()
@@ -139,6 +139,16 @@ describe('real data: accountant', () => {
     expect(all.findIndex((c) => c.kind === 'field')).toBeGreaterThan(all.findIndex((c) => c.id === 'accountant'))
     expect(new Set(all.map((c) => c.id)).size).toBe(all.length)
     for (const c of all) expect(majorsForCareer(real, c.id).length > 0 || !!c.graduate, c.id).toBe(true)
+  })
+
+  it('every career the list links gets its own prerendered page, graduate-entry ones too', () => {
+    const ids = new Set(careerTargets(real).map((c) => c.id))
+    const linked = [...careerListHtml(real, translator(en), 'en', (id) => `/careers/${id}/`).matchAll(/href="\/careers\/([^/"]+)\/"/g)].map((m) => m[1]!)
+    expect(linked).toContain('lawyer')
+    for (const id of linked) expect(ids.has(id), id).toBe(true)
+    // The prerender makes a page for each of careerTargets, unfiltered: a filter there left /careers/lawyer/ a dead link.
+    const prerender = readFileSync(new URL('../scripts/prerender.ts', import.meta.url), 'utf8')
+    expect(prerender).toMatch(/const careerList = careerTargets\(data\)\n/)
   })
 
   it('B-COM Accounting: the accreditation core is required, the law breadth is required breadth, accounting subjects help', () => {
