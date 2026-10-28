@@ -122,6 +122,11 @@ const next = () => (theme.value = order[(order.indexOf(theme.value) + 1) % order
     bottom: calc(88px + env(safe-area-inset-bottom));
   }
 
+  /* A subject page's action dock sits on the same line: go above it. */
+  :global(body:has(.dock)) .preview-pill {
+    bottom: calc(158px + env(safe-area-inset-bottom));
+  }
+
   /* Phone: icon and a short tag only, so it covers as little as possible. */
   .preview-pill button:first-child span {
     display: none;
