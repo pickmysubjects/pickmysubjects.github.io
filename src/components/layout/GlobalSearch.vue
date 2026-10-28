@@ -302,6 +302,13 @@ defineExpose({ open })
   text-align: left;
 }
 
+/* A touch tablet has no keyboard to press it with: no shortcut hint there. */
+@media (hover: none) and (pointer: coarse) {
+  .trigger-kbd {
+    display: none;
+  }
+}
+
 .trigger-kbd {
   padding: 1px 6px;
   border: 1px solid var(--divider);
