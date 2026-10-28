@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { movedTo, parsePath } from '../src/composables/useView'
+import { keepsScroll, movedTo, parsePath } from '../src/composables/useView'
 
 describe('parsePath', () => {
   it('reads a subject address, with or without a trailing slash', () => {
@@ -31,3 +31,20 @@ describe('moved pages', () => {
     expect(movedTo('subjects', 'comp10001')).toBe('subject/COMP10001')
   })
 })
+
+describe('scroll on Back and Forward', () => {
+  it('keeps the place when only the query changes on the same page', () => {
+    expect(keepsScroll(parsePath('subjects/', '?level=1'), parsePath('subjects/', '?level=1&exam=0'))).toBe(true)
+    expect(keepsScroll(parsePath('subjects/easy/'), parsePath('subjects/easy/', '?q=data'))).toBe(true)
+    // A ready-made list is Find subjects with filters set, so stepping to or from one keeps it too.
+    expect(keepsScroll(parsePath('subjects/', '?exam=0&level=1'), parsePath('subjects/no-exam/'))).toBe(true)
+  })
+
+  it('starts another page at the top', () => {
+    expect(keepsScroll(parsePath('subjects/'), parsePath('subject/COMP10001'))).toBe(false)
+    expect(keepsScroll(parsePath('subject/COMP10001'), parsePath('subject/COMP20003'))).toBe(false)
+    expect(keepsScroll(parsePath('majors/'), parsePath('majors/arts-history'))).toBe(false)
+    expect(keepsScroll(null, parsePath('subjects/'))).toBe(false)
+  })
+})
+

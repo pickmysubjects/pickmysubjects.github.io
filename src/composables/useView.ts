@@ -9,7 +9,7 @@ import { movedGuideAnchor } from '@/utils/guideSections'
 export const VIEWS = ['home', 'subject', 'plan', 'recommend', 'record', 'contribute', 'feedback', 'privacy', 'about', 'guide', 'subjects', 'majors', 'shortlist', 'careers', 'changes', 'tools'] as const
 export type View = (typeof VIEWS)[number]
 
-interface Route {
+export interface Route {
   view: View
   /** Path parameter, e.g. the code in /subject/COMP30027. */
   param: string
@@ -119,10 +119,24 @@ function upgradeHashLink(): void {
 // One route for the whole app; every useView() reads the same one.
 const route = shallowRef<Route | null>(null)
 
-function sync(): void {
+// Pages whose path part is one of their own filters, not another page: Find subjects' ready-made
+// lists (/subjects/no-exam/ is the list with "no final exam" ticked).
+const FILTER_PARAM: ReadonlySet<View> = new Set(['subjects'])
+
+/**
+ * Back or forward that stays on the same page and only changes its filters (a step on Find
+ * subjects) keeps the student's place; anything else is a new page and starts at the top.
+ * Exported for tests.
+ */
+export function keepsScroll(before: Route | null, after: Route): boolean {
+  return before !== null && before.view === after.view && (before.param === after.param || FILTER_PARAM.has(after.view))
+}
+
+function sync(fromHistory = false): void {
+  const before = route.value
   route.value = current()
   countPage()
-  window.scrollTo({ top: 0 })
+  if (!(fromHistory && keepsScroll(before, route.value))) window.scrollTo({ top: 0 })
   revealHash()
 }
 
@@ -212,7 +226,7 @@ function install(): void {
     const rest = location.pathname.startsWith(BASE) ? location.pathname.slice(BASE.length) : ''
     const inUrl = localeInPath(rest) ?? 'en'
     if (inUrl !== locale.value) setLocale(inUrl)
-    sync()
+    sync(true)
   })
   document.addEventListener('click', onClick)
   window.addEventListener('hashchange', revealHash)
