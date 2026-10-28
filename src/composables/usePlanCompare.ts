@@ -1,6 +1,6 @@
 import { computed, type Ref } from 'vue'
-import { alignTimeline, checkCourse, checkTerms, creditPoints, exactWam, findDiploma, informalPicks, marksForConditions, passedCodes, planComponentIds, planRules, findCourse, forCourse, planRoles, planStress, requiredWithPrerequisites, termLoad, termsWithCarried, type CourseRule, type Dataset, type PlanFacts, type RuleStatus } from '@/engine'
-import { predictMark } from '@/engine/predict'
+import { alignTimeline, checkCourse, checkTerms, creditPoints, exactWam, findDiploma, informalPicks, marksForConditions, passedCodes, planComponentIds, planProblems, planRules, findCourse, forCourse, planRoles, planStress, requiredWithPrerequisites, termLoad, termsWithCarried, type CourseRule, type Dataset, type PlanFacts, type RuleStatus } from '@/engine'
+import { predictMark, RANGE_Z } from '@/engine/predict'
 import { summariseAssessment } from '@/utils/assessment'
 import { careerJobLabels } from '@/utils/careersHtml'
 import { commencementYear, withPrefs, type PlanSetup } from './planStore'
@@ -67,6 +67,7 @@ export function useComparePlans(entries: Ref<PlanEntry[]>, locale: Ref<string>) 
     const titles = setupTitles(data, setup)
     const pts = (c: string) => data.subjects[c]?.points ?? 12.5
     const passed = passedCodes(stored.value.results)
+    const passedSet = new Set(passed)
     const points = [...new Set([...passed, ...codes])].reduce((sum, c) => sum + pts(c), 0) + creditPoints(stored.value.credit)
     const required = (course?.totalPoints ?? 0) + (findDiploma(data, setup.diploma)?.totalPoints ?? 0)
     // The heaviest semester: the most points, and of those the heaviest for this student.
@@ -77,18 +78,20 @@ export function useComparePlans(entries: Ref<PlanEntry[]>, locale: Ref<string>) 
       const level = levels[i] ?? 'ok'
       if (p > 0 && (!heaviest || p > heaviest.points || (p === heaviest.points && rank[level] > rank[heaviest.level]))) heaviest = { year: t.year, period: t.period, points: p, level }
     })
-    const problems = checkTerms(plan, data, course?.standardLoad).filter((i) => i.severity === 'error')
+    // Counted as the planner counts them (planProblems), so the two pages never disagree.
+    const problems = planProblems([...checkTerms(plan, data, course?.standardLoad), ...check.issues], passedSet)
     const at = problems.find((i) => i.termIndex !== undefined)
     const used = terms.filter((t) => t.subjects.length)
     const assessed = codes.map((c) => summariseAssessment(data.subjects[c]?.assessment)).filter((a) => a !== null)
     // Predicted WAM: the record's marks, plus each planned subject at its predicted mark (and at
-    // the low and high ends of its likely range). Only with marks to go on.
+    // the low and high ends of its likely range). Only with marks to go on. A subject planned twice
+    // counts once, and one already passed on the record not at all (the plan has it by mistake).
     const marks = new Map(Object.entries(marksForConditions(stored.value.results, data)))
     let wam: PlanFacts['wam'] = null
     if (marks.size) {
-      const guesses = codes.flatMap((c) => {
+      const guesses = [...new Set(codes)].flatMap((c) => {
         const s = data.subjects[c]
-        const g = s && !s.passFail ? predictMark(s, marks, data) : null
+        const g = s && !s.passFail && !passedSet.has(c) ? predictMark(s, marks, data) : null
         return g ? [{ code: c, g }] : []
       })
       const at = (pick: (g: { mark: number; low: number; high: number }) => number) =>
@@ -96,7 +99,12 @@ export function useComparePlans(entries: Ref<PlanEntry[]>, locale: Ref<string>) 
       const mark = at((g) => g.mark)
       const low = at((g) => g.low)
       const high = at((g) => g.high)
-      if (mark !== null && low !== null && high !== null) wam = { mark, low, high }
+      // Each planned subject's share of the WAM and its error (its likely range is ±RANGE_Z sd),
+      // for telling two plans' WAMs apart (wamGapSd).
+      const counted = stored.value.results.filter((r) => r.mark !== undefined && !data.subjects[r.code]?.passFail).reduce((sum, r) => sum + pts(r.code), 0)
+      const total = counted + guesses.reduce((sum, x) => sum + pts(x.code), 0)
+      const planned = guesses.map(({ code, g }) => ({ code, share: pts(code) / total, sd: (g.high - g.low) / 2 / RANGE_Z }))
+      if (mark !== null && low !== null && high !== null) wam = { mark, low, high, planned }
     }
     const careers = [...new Set(components.flatMap((id) => careerJobLabels(data, id, locale.value)))]
     const facts: PlanFacts = {

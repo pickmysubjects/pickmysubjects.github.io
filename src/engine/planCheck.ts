@@ -209,3 +209,19 @@ export function previewAdd(plan: Plan, data: Dataset, termIndex: number, code: s
     return (i.subject === code && i.termIndex === termIndex) || (i.kind === 'non-allowed' && i.params.other === code)
   })
 }
+
+/**
+ * A subject planned again though the record already has it passed. The planner says so once, on
+ * the record line (with one fix for all of them), so it isn't counted as a problem of its own.
+ */
+export function isPassedDuplicate(issue: Issue, passed: ReadonlySet<string>): boolean {
+  return issue.kind === 'duplicate' && !!issue.subject && passed.has(issue.subject)
+}
+
+/**
+ * The plan's problems, as the planner and the compare page both count them: every error from the
+ * semester checks and the course check, less subjects re-planned though already passed.
+ */
+export function planProblems(issues: Issue[], passed: ReadonlySet<string>): Issue[] {
+  return issues.filter((i) => i.severity === 'error' && !isPassedDuplicate(i, passed))
+}

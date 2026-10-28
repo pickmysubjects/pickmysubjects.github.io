@@ -18,8 +18,11 @@ export interface Cell {
   tag?: string
   /** A link to fix it in the planner. */
   fix?: string
-  /** A list in place of the text (careers): each item, and whether only this plan has it. */
-  items?: { text: string; only: boolean }[]
+  /**
+   * A list in place of the text (careers): each item, and how it stands next to the other plans:
+   * 'only' this plan has it, 'notAll' some other plans have it but not every one; none, all do.
+   */
+  items?: { text: string; mark?: 'only' | 'notAll' }[]
 }
 
 export interface Row {
@@ -54,7 +57,8 @@ function row(id: string, label: string, cells: Cell[], plans: ComparedPlan[], ma
     id,
     label,
     cells,
-    same: allSame(cells, (c) => `${c.text}|${(c.sub ?? []).join('|')}|${c.tag ?? ''}|${(c.items ?? []).map((i) => i.text).join('|')}`),
+    // A list (careers) is compared as a set: the same jobs in another order are the same.
+    same: allSame(cells, (c) => `${c.text}|${(c.sub ?? []).join('|')}|${c.tag ?? ''}|${(c.items ?? []).map((i) => i.text).sort().join('|')}`),
     better: marked ? betterOn(marked, plans.map((p) => p.facts)) : [],
     ...(info ? { info } : {}),
   }
@@ -126,13 +130,18 @@ export function compareGroups(plans: ComparedPlan[], ctx: RowContext): Group[] {
       ),
     )
   }
-  // Jobs every plan leads to are quiet; the ones only this plan leads to are marked.
-  const inAll = (job: string) => plans.every((p) => p.careers.includes(job))
+  // Jobs every plan leads to are quiet; the ones only this plan leads to, and the ones some
+  // other plans share but not all, are marked differently.
+  const markOf = (p: ComparedPlan, job: string): 'only' | 'notAll' | undefined => {
+    const elsewhere = plans.filter((q) => q !== p && q.careers.includes(job)).length
+    if (elsewhere === 0) return 'only'
+    return elsewhere < plans.length - 1 ? 'notAll' : undefined
+  }
   outcomes.push(
     row(
       'careers',
       t('cmp.rowCareers'),
-      plans.map((p) => (p.careers.length ? { text: '', items: p.careers.map((job) => ({ text: job, only: !inAll(job) })) } : { text: none })),
+      plans.map((p) => (p.careers.length ? { text: '', items: p.careers.map((job) => { const mark = markOf(p, job); return { text: job, ...(mark ? { mark } : {}) } }) } : { text: none })),
       plans,
     ),
   )

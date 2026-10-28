@@ -8,29 +8,54 @@ import { useI18n } from '@/i18n'
 import type { Group } from './compareRows'
 
 /**
- * The plain facts that differ, at the top: degree rules, last semester, heaviest semester and
- * predicted WAM, each plan's value side by side and a link down to its row. No verdict.
+ * The plain facts that differ, at the top: first what makes the plans different (majors, jobs,
+ * subjects), then degree rules, last semester, heaviest semester and predicted WAM, each plan's
+ * value side by side (or one line for the whole set) and a link down to its row. No verdict.
  */
 const props = defineProps<{ lines: SummaryLine[]; plans: ComparedPlan[]; names: string[]; groups: Group[] }>()
 const emit = defineEmits<{ reveal: [rowId: string] }>()
 const { t } = useI18n()
 
-const ROW: Record<SummaryLine['kind'], string> = { rules: 'rules', finish: 'finish', heaviest: 'heaviest', wam: 'wam' }
-const LABEL: Record<SummaryLine['kind'], string> = { rules: 'cmp.sumRules', finish: 'cmp.sumFinish', heaviest: 'cmp.sumHeaviest', wam: 'cmp.sumWam' }
+const ROW: Record<SummaryLine['kind'], string> = {
+  majors: 'majors',
+  careers: 'careers',
+  subjects: 'timeline',
+  rules: 'rules',
+  finish: 'finish',
+  heaviest: 'heaviest',
+  wam: 'wam',
+}
+const LABEL: Record<SummaryLine['kind'], string> = {
+  majors: 'cmp.rowMajors',
+  careers: 'cmp.rowCareers',
+  subjects: 'cmp.sumSubjects',
+  rules: 'cmp.sumRules',
+  finish: 'cmp.sumFinish',
+  heaviest: 'cmp.sumHeaviest',
+  wam: 'cmp.sumWam',
+}
 
 const items = computed(() =>
   props.lines.map((line) => {
     const rowId = ROW[line.kind]
+    const label = t.value(LABEL[line.kind])
+    // One line for the whole set: how many jobs or subjects differ.
+    if (line.kind === 'careers') return { kind: line.kind, rowId, label, values: [], text: t.value('cmp.careersDiffer', { n: line.n }), note: '' }
+    if (line.kind === 'subjects') {
+      const text = [line.differ ? t.value('cmp.differ', { n: line.differ }) : '', line.moved ? t.value('cmp.moved', { n: line.moved }) : ''].filter(Boolean).join(t.value('listSep'))
+      return { kind: line.kind, rowId, label, values: [], text, note: '' }
+    }
     const cells = props.groups.flatMap((g) => g.rows).find((r) => r.id === rowId)?.cells ?? []
     const values = props.plans.map((p, i) => {
       let value: string
       if (line.kind === 'rules') value = p.facts.rules.failed ? t.value('cmp.notMet', { n: p.facts.rules.failed }) : t.value('cmp.allMet')
       else if (line.kind === 'wam') value = `${cells[i]?.text ?? ''} (${cells[i]?.sub?.[0] ?? ''})`
+      else if (line.kind === 'majors') value = [cells[i]?.text ?? '', ...(cells[i]?.sub ?? [])].join(' · ')
       else value = cells[i]?.tag ? `${cells[i]?.text} (${cells[i]?.tag})` : (cells[i]?.text ?? '')
       return { name: props.names[i] ?? '', value }
     })
     const note = line.kind === 'wam' ? t.value(line.aboutSame ? 'cmp.wamSame' : 'cmp.wamApart') : ''
-    return { kind: line.kind, rowId, label: t.value(LABEL[line.kind]), values, note }
+    return { kind: line.kind, rowId, label, values, text: '', note }
   }),
 )
 </script>
@@ -43,7 +68,8 @@ const items = computed(() =>
         <a class="sum-label" :href="`#cmp-${item.rowId}`" @click="emit('reveal', item.rowId)">
           {{ item.label }}<ArrowDown :size="14" aria-hidden="true" />
         </a>
-        <p class="sum-values">
+        <p v-if="item.text" class="sum-values">{{ item.text }}</p>
+        <p v-else class="sum-values">
           <span v-for="(v, i) in item.values" :key="i" class="sum-value"><strong>{{ v.name }}</strong> {{ v.value }}</span>
         </p>
         <p v-if="item.note" class="sum-note">

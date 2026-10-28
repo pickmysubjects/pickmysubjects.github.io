@@ -75,9 +75,7 @@ const cols = computed(() => ({ '--n': props.plans.length }))
     <!-- The header row stays under the site's top bar while the rows scroll. -->
     <div class="head" role="rowgroup">
       <div v-if="!phone" class="head-row" role="row">
-        <div class="head-label" role="columnheader">
-          <span class="legend"><span class="dot" aria-hidden="true" />{{ t('cmp.better') }}</span>
-        </div>
+        <div class="head-label" role="columnheader" />
         <div v-for="(p, i) in plans" :key="p.entry.id" class="col" role="columnheader">
           <p class="col-name">{{ names[i] }}</p>
           <p class="col-sub">{{ majorLine(p) }}</p>
@@ -139,8 +137,8 @@ const cols = computed(() => ({ '--n': props.plans.length }))
             <span v-if="phone" class="cell-plan">{{ names[i] }}</span>
             <span v-if="c.text" class="cell-text">{{ c.text }}<span v-if="c.tag" class="tag">{{ c.tag }}</span></span>
             <ul v-if="c.items" class="cell-items">
-              <li v-for="(it, k) in c.items" :key="k" :class="{ 'item-only': it.only }">
-                <span v-if="it.only" class="item-plus" aria-hidden="true">+</span>{{ it.text }}<span v-if="it.only" class="visually-hidden"> ({{ t('cmp.onlyHere') }})</span>
+              <li v-for="(it, k) in c.items" :key="k" :class="it.mark && `item-${it.mark}`">
+                <span v-if="it.mark === 'only'" class="item-plus" aria-hidden="true">+</span>{{ it.text }}<span v-if="it.mark" class="visually-hidden"> ({{ t(it.mark === 'only' ? 'cmp.onlyHere' : 'cmp.notInAll') }})</span>
               </li>
             </ul>
             <ul v-if="c.sub" class="cell-sub">
@@ -193,12 +191,6 @@ const cols = computed(() => ({ '--n': props.plans.length }))
 .head-label {
   font-size: var(--fs-small);
   color: var(--ink-soft);
-}
-
-.legend {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
 }
 
 .col {
@@ -435,7 +427,8 @@ const cols = computed(() => ({ '--n': props.plans.length }))
   color: var(--ink-soft);
 }
 
-.cell-items .item-only {
+.cell-items .item-only,
+.cell-items .item-notAll {
   color: var(--ink);
   font-weight: var(--fw-medium);
 }
@@ -521,17 +514,12 @@ const cols = computed(() => ({ '--n': props.plans.length }))
   cursor: pointer;
 }
 
+/* The jump chips wrap onto a second line rather than run off the right edge. */
 .jump {
   display: flex;
+  flex-wrap: wrap;
   gap: 6px;
-  margin: 0 -12px;
-  padding: 0 12px 2px;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-
-.jump::-webkit-scrollbar {
-  display: none;
+  padding: 0 0 2px;
 }
 
 .jump-chip {

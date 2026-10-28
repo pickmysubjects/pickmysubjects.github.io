@@ -2,7 +2,9 @@ import { describe, expect, it } from 'vitest'
 import { readFileSync } from 'node:fs'
 import { cleanPlans } from '../src/utils/sanitize'
 import { addPlan, bookOf, MAX_PLANS, removePlan, renamePlan, switchPlan } from '../src/utils/planBook'
-import { alignTimeline, betterOn, compareQuery, readCompareAddress, summaryLines, type PlanFacts, type PlanTerm } from '../src/engine'
+import { alignTimeline, betterOn, careersNotInAll, compareQuery, planProblems, readCompareAddress, summaryLines, wamAboutSame, wamGapSd, type Issue, type PlanFacts, type PlanTerm } from '../src/engine'
+import { compareGroups } from '../src/components/compare/compareRows'
+import type { ComparedPlan } from '../src/composables/usePlanCompare'
 import { compareMoved, parsePath } from '../src/composables/useView'
 import { activePlan, books, prefsOf, withPrefs, type PlanState } from '../src/composables/planStore'
 import { provideDataset } from '../src/composables/useDataset'
@@ -86,6 +88,46 @@ describe('comparing two plans', () => {
   })
 })
 
+describe('comparing plans: retakes, three plans, careers', () => {
+  const t = (year: number, period: PlanTerm['period'], subjects: string[]): PlanTerm => ({ year, period, subjects })
+  const pts = (ts: PlanTerm[], i: number) => ts[i]!.subjects.length * 12.5
+  it('a subject planned twice is matched copy by copy: the retake the other plan lacks is "only", not "moved"', () => {
+    const a = [t(2027, 'semester-1', ['X']), t(2027, 'semester-2', ['X'])]
+    const b = [t(2027, 'semester-1', ['X'])]
+    const d = alignTimeline([a, b], pts)
+    expect(d.rows[0]!.cells[0]!.chips).toEqual([{ code: 'X', state: 'same' }])
+    expect(d.rows[1]!.cells[0]!.chips).toEqual([{ code: 'X', state: 'only' }])
+    expect([d.differ, d.moved]).toEqual([1, 0])
+  })
+  it('with three plans, "moved" only when no other plan has it in that semester, and "some" when some do', () => {
+    const a = [t(2027, 'semester-1', ['X'])]
+    const b = [t(2027, 'semester-1', ['X'])]
+    const c = [t(2027, 'semester-2', ['X'])]
+    const d = alignTimeline([a, b, c], pts)
+    expect(d.rows[0]!.cells[0]!.chips[0]).toEqual({ code: 'X', state: 'some' })
+    expect(d.rows[1]!.cells[2]!.chips[0]).toEqual({ code: 'X', state: 'moved', from: { year: 2027, period: 'semester-1' } })
+    // The second plan's X was "moved" before (it was only compared with the first one's).
+    const e = alignTimeline([c, a, b], pts)
+    expect(e.rows[0]!.cells[1]!.chips[0]).toEqual({ code: 'X', state: 'some' })
+  })
+  it('jobs: "only" when no other plan has it, "not in every plan" when some do; the same jobs in another order are the same', () => {
+    const plan = (label: string, careers: string[]) =>
+      ({ entry: { label, prefs: { goal: 'wam', interests: [] } }, careers, facts: { rules: { total: 0, failed: 0 }, problems: 0, short: 0, heavy: 0, exams: { known: 0 }, hurdles: 0, wam: null }, statuses: [], rules: [] }) as unknown as ComparedPlan
+    const ctx = { t: ((k: string) => k) as never, editLink: () => '', careerName: (id: string) => id }
+    const careersRow = (plans: ComparedPlan[]) => compareGroups(plans, ctx).flatMap((g) => g.rows).find((r) => r.id === 'careers')!
+    const three = careersRow([plan('A', ['Analyst', 'Actuary']), plan('B', ['Analyst', 'Banker']), plan('C', ['Banker', 'Analyst'])])
+    expect(three.cells[0]!.items).toEqual([{ text: 'Analyst' }, { text: 'Actuary', mark: 'only' }])
+    expect(three.cells[1]!.items).toEqual([{ text: 'Analyst' }, { text: 'Banker', mark: 'notAll' }])
+    expect(careersRow([plan('A', ['Analyst', 'Banker']), plan('B', ['Banker', 'Analyst'])]).same).toBe(true)
+    expect(careersNotInAll([['Analyst', 'Actuary'], ['Analyst', 'Banker'], ['Banker', 'Analyst']])).toEqual(['Actuary', 'Banker'])
+  })
+  it('counts problems the way the planner does: course-check errors too, not a passed subject planned again', () => {
+    const issue = (o: Partial<Issue>): Issue => ({ severity: 'error', kind: 'prereq-unmet', message: '', params: {}, ...o })
+    const issues = [issue({}), issue({ kind: 'duplicate', subject: 'X' }), issue({ kind: 'duplicate', subject: 'Y' }), issue({ ruleId: 'r1', kind: 'rule' }), issue({ severity: 'warning' })]
+    expect(planProblems(issues, new Set(['X']))).toHaveLength(3)
+  })
+})
+
 describe('comparing plans', () => {
   const facts = (o: Partial<PlanFacts>): PlanFacts => ({
     points: 300, required: 300, short: 0, rules: { total: 14, failed: 0, unknown: 0 }, finish: { year: 2028, period: 'semester-2' },
@@ -100,6 +142,28 @@ describe('comparing plans', () => {
     expect(summaryLines([facts({}), facts({})])).toEqual([])
     expect(summaryLines([facts({}), facts({ wam: { mark: 71, low: 67, high: 75 } })])).toEqual([{ kind: 'wam', aboutSame: true }])
     expect(summaryLines([facts({}), facts({ wam: { mark: 60, low: 57, high: 63 }, finish: { year: 2029, period: 'semester-1' } })])).toEqual([{ kind: 'finish' }, { kind: 'wam', aboutSame: false }])
+  })
+  it('WAMs are about the same only within the uncertainty of the subjects that differ', () => {
+    // Same 20 shared subjects, one different subject each: the shared error cancels.
+    const shared = Array.from({ length: 20 }, (_, i) => ({ code: `S${i}`, share: 1 / 24, sd: 6 }))
+    const a = { mark: 74, low: 70, high: 78, planned: [...shared, { code: 'A1', share: 1 / 24, sd: 6 }] }
+    const b = { mark: 73, low: 69, high: 77, planned: [...shared, { code: 'B1', share: 1 / 24, sd: 6 }] }
+    expect(wamGapSd(a, b)).toBeCloseTo(Math.sqrt(2) * 6 / 24, 5)
+    // A gap of 1 is inside each plan's own range (old rule: "about the same"), but plainly apart here.
+    expect(wamAboutSame([facts({ wam: a }), facts({ wam: b })])).toBe(false)
+    expect(wamAboutSame([facts({ wam: a }), facts({ wam: { ...b, mark: 73.8 } })])).toBe(true)
+    // With no planned subjects given, each plan's own range still decides.
+    expect(wamAboutSame([facts({}), facts({ wam: { mark: 71, low: 67, high: 75 } })])).toBe(true)
+  })
+  it('the summary leads with majors, jobs and subjects when they differ', () => {
+    const lines = summaryLines([facts({}), facts({ wam: { mark: 60, low: 57, high: 63 } })], {
+      majors: ['Data Science|', 'Finance|'],
+      careers: [['Analyst'], ['Analyst', 'Banker']],
+      subjects: { differ: 16, moved: 1 },
+    })
+    expect(lines.map((l) => l.kind)).toEqual(['majors', 'careers', 'subjects', 'wam'])
+    expect(lines[1]).toEqual({ kind: 'careers', n: 1 })
+    expect(summaryLines([facts({}), facts({})], { majors: ['M|', 'M|'], careers: [['A'], ['A']], subjects: { differ: 0, moved: 0 } })).toEqual([])
   })
   it('keeps the plans, their order and the switch in the address', () => {
     const q = compareQuery({ plans: ['B', 'A'], diff: false })

@@ -36,10 +36,16 @@ const state = computed(() => {
   const rest = letters.value.filter((l) => l !== open && !asked.plans.includes(l))
   return { ...asked, plans: [...new Set([...asked.plans, open, ...rest])].slice(0, MAX_PLANS) }
 })
+// The address keeps its #fragment (a link straight to a row) whatever changes.
 function write(next: { plans: string[]; diff: boolean }): void {
   const q = compareQuery(next)
-  replaceAddress(`plan/compare/${q ? `?${q}` : ''}`)
+  replaceAddress(`plan/compare/${q ? `?${q}` : ''}${location.hash}`)
 }
+// Opened without plans named: the columns picked from the open plan go into the address, so
+// Edit and then Back (the open plan has changed by then) brings back the same columns.
+onMounted(() => {
+  if (readCompareAddress(query.value, letters.value).plans.length < 2 && state.value.plans.length >= 2) write(state.value)
+})
 
 const shown = computed(() => state.value.plans.map((l) => plans.list.value.find((p) => p.label === l)!).filter(Boolean))
 
@@ -67,7 +73,16 @@ const careerName = (id: string) => {
   return c ? nameOf(c.names, locale.value) || c.names.en : id
 }
 const groups = computed(() => compareGroups(compared.value, { t: t.value, editLink, careerName }))
-const lines = computed(() => summaryLines(compared.value.map((p) => p.facts)))
+const lines = computed(() =>
+  summaryLines(
+    compared.value.map((p) => p.facts),
+    {
+      majors: compared.value.map((p) => `${p.major}|${p.minor}`),
+      careers: compared.value.map((p) => p.careers),
+      subjects: timeline.value,
+    },
+  ),
+)
 const edits = computed(() => compared.value.map((p) => editLink(p)))
 
 const open = reactive<Record<GroupId, boolean>>({ progress: true, load: true, outcomes: true, profile: true })

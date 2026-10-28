@@ -38,7 +38,21 @@ export interface PlanFacts {
   /** Planned subjects with a hurdle. */
   hurdles: number
   /** Predicted WAM at the end (record marks plus each planned subject's predicted mark), or null with no marks. */
-  wam: { mark: number; low: number; high: number } | null
+  wam: PlanWam | null
+}
+
+/** A plan's predicted WAM and what it rests on. */
+export interface PlanWam {
+  mark: number
+  /** Every planned subject at the low (high) end of its likely range at once: the plan's own range. */
+  low: number
+  high: number
+  /**
+   * Each planned subject with a predicted mark: its share of the WAM (its points over all the
+   * points the WAM counts) and how uncertain its mark is (one standard deviation). For telling
+   * whether two plans' WAMs are apart; left out, the plans' own ranges are used instead.
+   */
+  planned?: { code: string; share: number; sd: number }[]
 }
 
 /** Rows whose "better" is objective, and which way: fewer is better for all of them. */
@@ -71,30 +85,84 @@ export function allSame<T>(values: T[], key: (v: T) => string = (v) => JSON.stri
 const halfRange = (w: { low: number; high: number }) => (w.high - w.low) / 2
 
 /**
- * Whether two or more predicted WAMs are about the same: the gap between the highest and the
- * lowest is inside the widest likely range. Null when any plan has no prediction.
+ * How uncertain the gap between two plans' predicted WAMs is (one standard deviation).
+ *
+ * Each plan's own range moves every planned subject to its low or high end together, which is
+ * right for one plan on its own: much of a prediction's error is how well we know the student,
+ * and that is shared by every subject. Between two plans that shared part cancels: a subject in
+ * both plans with the same share of the WAM is off by the same amount in both. What is left is
+ * the subjects that differ (or weigh differently, when the plans count different points), each
+ * with its own independent error, so the gap's uncertainty is the root-sum-square of those
+ * subjects' errors, each weighted by the difference in its share of the two WAMs.
+ */
+export function wamGapSd(a: PlanWam, b: PlanWam): number {
+  const of = (w: PlanWam) => new Map((w.planned ?? []).map((x) => [x.code, x]))
+  const ma = of(a)
+  const mb = of(b)
+  let variance = 0
+  for (const code of new Set([...ma.keys(), ...mb.keys()])) {
+    const x = ma.get(code)
+    const y = mb.get(code)
+    const sd = Math.max(x?.sd ?? 0, y?.sd ?? 0)
+    variance += ((x?.share ?? 0) - (y?.share ?? 0)) ** 2 * sd ** 2
+  }
+  return Math.sqrt(variance)
+}
+
+/**
+ * Whether two or more predicted WAMs are about the same: every pair's gap is within one standard
+ * deviation of that gap's uncertainty (wamGapSd), which comes only from the subjects the two
+ * plans don't share. Plans without the planned subjects fall back to the widest of their own
+ * ranges. Null when any plan has no prediction.
  */
 export function wamAboutSame(facts: PlanFacts[]): boolean | null {
   const wams = facts.map((f) => f.wam)
   if (wams.some((w) => w === null)) return null
-  const marks = (wams as NonNullable<PlanFacts['wam']>[]).map((w) => w.mark)
-  const widest = Math.max(...(wams as NonNullable<PlanFacts['wam']>[]).map(halfRange))
-  return Math.max(...marks) - Math.min(...marks) <= widest
+  const ws = wams as PlanWam[]
+  if (ws.some((w) => !w.planned)) {
+    const marks = ws.map((w) => w.mark)
+    return Math.max(...marks) - Math.min(...marks) <= Math.max(...ws.map(halfRange))
+  }
+  return ws.every((a, i) => ws.every((b, j) => j <= i || Math.abs(a.mark - b.mark) <= wamGapSd(a, b)))
 }
 
 /** What the summary says, in order; each line's row is where it links. Text is the page's job. */
 export type SummaryLine =
+  | { kind: 'majors' }
+  | { kind: 'careers'; n: number }
+  | { kind: 'subjects'; differ: number; moved: number }
   | { kind: 'rules' }
   | { kind: 'finish' }
   | { kind: 'heaviest' }
   | { kind: 'wam'; aboutSame: boolean }
 
+/** What differs between the plans beyond their facts: majors, jobs and subjects. */
+export interface SummaryExtra {
+  /** Each plan's major and minor, as shown. */
+  majors?: string[]
+  /** Each plan's jobs. */
+  careers?: string[][]
+  /** From the timeline. */
+  subjects?: { differ: number; moved: number }
+}
+
+/** Jobs some plans lead to but not all of them. */
+export function careersNotInAll(careers: string[][]): string[] {
+  const all = new Set(careers.flat())
+  return [...all].filter((job) => !careers.every((c) => c.includes(job)))
+}
+
 /**
- * The summary's facts: rule failures, finish, heaviest semester, predicted WAM. A fact is left out
- * when every plan has the same value or a plan has none. Never a verdict on the whole plan.
+ * The summary's facts: the real differences first (majors, jobs, subjects), then rule failures,
+ * finish, heaviest semester and predicted WAM. A fact is left out when every plan has the same
+ * value or a plan has none. Never a verdict on the whole plan.
  */
-export function summaryLines(facts: PlanFacts[]): SummaryLine[] {
+export function summaryLines(facts: PlanFacts[], extra: SummaryExtra = {}): SummaryLine[] {
   const out: SummaryLine[] = []
+  if (extra.majors && !allSame(extra.majors)) out.push({ kind: 'majors' })
+  const jobs = extra.careers ? careersNotInAll(extra.careers).length : 0
+  if (jobs) out.push({ kind: 'careers', n: jobs })
+  if (extra.subjects && (extra.subjects.differ || extra.subjects.moved)) out.push({ kind: 'subjects', ...extra.subjects })
   if (!allSame(facts.map((f) => f.rules.failed))) out.push({ kind: 'rules' })
   if (facts.every((f) => f.finish) && !allSame(facts.map((f) => termKey(f.finish!.year, f.finish!.period)))) out.push({ kind: 'finish' })
   if (facts.every((f) => f.heaviest) && !allSame(facts.map((f) => `${f.heaviest!.points}|${f.heaviest!.level}`))) out.push({ kind: 'heaviest' })
@@ -113,13 +181,13 @@ export type ChipState =
   | 'only'
   /** In another plan too, but in a different semester there. */
   | 'moved'
-  /** In some other plans (same semester), not all. */
+  /** In this same semester in some other plans, not all. */
   | 'some'
 
 export interface TimelineChip {
   code: string
   state: ChipState
-  /** For 'moved': where it is in the plan it's compared with. */
+  /** For 'moved': where another plan has it (the first plan, or the second for the first). */
   from?: TermRef
 }
 
@@ -144,29 +212,55 @@ export interface Timeline {
 }
 
 /**
- * Every semester any plan uses, in order, with each plan's subjects there. A plan is compared
- * with the first plan; the first plan with the second. Semesters no plan uses are left out.
+ * Every semester any plan uses, in order, with each plan's subjects there. Semesters no plan
+ * uses are left out. A subject planned twice (a retake) is matched copy by copy: copies in the
+ * same semester pair up first, then the rest in order, so a second copy another plan doesn't
+ * have is "only", not "moved". A copy is "moved" only when no other plan has it in this
+ * semester; "from" is where the first plan has it (the second, for the first plan), else where
+ * another plan does.
  */
 export function alignTimeline(plans: PlanTerm[][], termPoints: (terms: PlanTerm[], i: number) => number): Timeline {
+  const keyOf = (t: TermRef) => termKey(t.year, t.period)
   const where = plans.map((terms) => {
-    const m = new Map<string, TermRef>()
-    for (const t of terms) for (const c of t.subjects) if (!m.has(c)) m.set(c, { year: t.year, period: t.period })
+    const m = new Map<string, TermRef[]>()
+    for (const t of terms) for (const c of t.subjects) m.set(c, [...(m.get(c) ?? []), { year: t.year, period: t.period }])
     return m
   })
-  const keyOf = (t: TermRef) => termKey(t.year, t.period)
+  // For each copy of a subject in plan p, the copy it pairs with in plan q (null: q has no copy left).
+  const pairs = new Map<string, (TermRef | null)[]>()
+  function pair(p: number, q: number, code: string): (TermRef | null)[] {
+    const id = `${p}|${q}|${code}`
+    const known = pairs.get(id)
+    if (known) return known
+    const mine = where[p]!.get(code) ?? []
+    const theirs = [...(where[q]!.get(code) ?? [])]
+    const out: (TermRef | null)[] = mine.map(() => null)
+    mine.forEach((t, j) => {
+      const k = theirs.findIndex((x) => keyOf(x) === keyOf(t))
+      if (k >= 0) out[j] = theirs.splice(k, 1)[0]!
+    })
+    mine.forEach((_, j) => {
+      if (!out[j] && theirs.length) out[j] = theirs.shift()!
+    })
+    pairs.set(id, out)
+    return out
+  }
   const rows = new Map<number, TimelineRow>()
   plans.forEach((terms, p) => {
+    const seen = new Map<string, number>()
     terms.forEach((t, i) => {
       if (t.subjects.length === 0) return
       const k = keyOf(t)
       const row = rows.get(k) ?? { year: t.year, period: t.period, cells: plans.map(() => null), same: false }
       const ref = p === 0 ? 1 : 0
       const chips = t.subjects.map((code): TimelineChip => {
-        const others = where.filter((_, q) => q !== p).map((m) => m.get(code))
-        if (others.every((o) => !o)) return { code, state: 'only' }
-        const there = where[ref]?.get(code) ?? others.find((o) => o)!
-        if (keyOf(there) !== k) return { code, state: 'moved', from: there }
-        return { code, state: others.every((o) => o && keyOf(o) === k) ? 'same' : 'some' }
+        const j = seen.get(code) ?? 0
+        seen.set(code, j + 1)
+        const others = plans.flatMap((_, q) => (q === p ? [] : [{ q, at: pair(p, q, code)[j] ?? null }]))
+        if (others.every((o) => !o.at)) return { code, state: 'only' }
+        if (others.some((o) => o.at && keyOf(o.at) === k)) return { code, state: others.every((o) => o.at && keyOf(o.at) === k) ? 'same' : 'some' }
+        const from = others.find((o) => o.q === ref && o.at)?.at ?? others.find((o) => o.at)!.at!
+        return { code, state: 'moved', from }
       })
       row.cells[p] = { chips, points: termPoints(terms, i) }
       rows.set(k, row)
@@ -176,13 +270,16 @@ export function alignTimeline(plans: PlanTerm[][], termPoints: (terms: PlanTerm[
     const sets = row.cells.map((c) => (c ? [...c.chips.map((x) => x.code)].sort().join() : ''))
     row.same = sets.every((s) => s !== '' && s === sets[0])
   }
+  // A subject differs when the plans don't all have it the same number of times; it moved when
+  // they do but not in the same semesters.
   const all = new Set(where.flatMap((m) => [...m.keys()]))
   let differ = 0
   let moved = 0
   for (const code of all) {
-    const at = where.map((m) => m.get(code))
-    if (at.some((x) => !x)) differ++
-    else if (!allSame(at.map((x) => keyOf(x!)))) moved++
+    const at = where.map((m) => (m.get(code) ?? []).map(keyOf).sort((x, y) => x - y).join())
+    const counts = where.map((m) => m.get(code)?.length ?? 0)
+    if (!allSame(counts)) differ++
+    else if (!allSame(at)) moved++
   }
   return { rows: [...rows.entries()].sort((a, b) => a[0] - b[0]).map(([, r]) => r), differ, moved }
 }
