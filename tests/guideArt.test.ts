@@ -3,7 +3,7 @@ import { createRequire } from 'node:module'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 
-// The generated illustrations (scripts/art/gen.cjs) of the guide and the About pages must draw
+// The generated illustrations (scripts/art/gen.cjs) of the guide, the About pages and the subject page must draw
 // nothing outside their viewBox, or the hero band and the small panels clip them.
 const require = createRequire(import.meta.url)
 const { bounds } = require('../scripts/art/bounds.cjs') as { bounds: (svg: string) => { x0: number; y0: number; x1: number; y1: number } }
@@ -11,6 +11,8 @@ const DIR = join(__dirname, '../src/components/guide/art')
 const ABOUT_DIR = join(__dirname, '../src/components/about/art')
 const FILES = readdirSync(DIR).filter((f) => /^(Art|Mini)\w+\.vue$/.test(f))
 const ABOUT_FILES = readdirSync(ABOUT_DIR).filter((f) => /^(Art|Mini)\w+\.vue$/.test(f))
+const SUBJECT_DIR = join(__dirname, '../src/components/subject/art')
+const SUBJECT_FILES = readdirSync(SUBJECT_DIR).filter((f) => /^Mini\w+\.vue$/.test(f))
 
 describe('guide illustrations', () => {
   it('has a hero scene and a small one for every page', () => {
@@ -23,7 +25,11 @@ describe('guide illustrations', () => {
     expect(ABOUT_FILES.filter((f) => f.startsWith('Mini')).length).toBe(5)
   })
 
-  it.each([...FILES.map((f) => join(DIR, f)), ...ABOUT_FILES.map((f) => join(ABOUT_DIR, f))])('%s keeps every shape inside its viewBox, with some air', (file) => {
+  it('has the small one for the subject page', () => {
+    expect(SUBJECT_FILES).toEqual(['MiniSubject.vue'])
+  })
+
+  it.each([...FILES.map((f) => join(DIR, f)), ...ABOUT_FILES.map((f) => join(ABOUT_DIR, f)), ...SUBJECT_FILES.map((f) => join(SUBJECT_DIR, f))])('%s keeps every shape inside its viewBox, with some air', (file) => {
     const src = readFileSync(file, 'utf8')
     const svg = /<svg[\s\S]*<\/svg>/.exec(src)![0]
     const [x, y, w, h] = /viewBox="([^"]+)"/.exec(svg)![1]!.split(' ').map(Number) as [number, number, number, number]

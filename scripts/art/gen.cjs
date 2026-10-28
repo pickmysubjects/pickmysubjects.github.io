@@ -1,5 +1,6 @@
 // Generates the guide's illustrations in src/components/guide/art/ (and the About pages' in
-// src/components/about/art/, the same two kinds):
+// src/components/about/art/, the same two kinds; and the subject page's small one in
+// src/components/subject/art/):
 //   Art<Page>.vue   the hero band at the top of each 墨大入门 page: a wide, low scene (500×180)
 //                   that sits on the right of the title and fades out under it;
 //   Mini<Page>.vue  one small object about the page (200×150), at the foot of its "On this page"
@@ -526,6 +527,21 @@ aboutMinis.Changes = () => {
   return { s, css, motion: [2, 0, 2, 2] }
 }
 
+// ================= Subject pages (src/components/subject/art/) =================
+// The foot of a subject page's "On this page" panel: the subject as a book, its code on the
+// cover's label, a pink bookmark ribbon swaying under it.
+const subjectMinis = {}
+subjectMinis.Subject = () => {
+  let s = `<ellipse class="sh" cx="100" cy="136" rx="44" ry="7"/><g transform="rotate(-4 100 80)">`
+  s += `<rect x="70" y="30" width="72" height="98" rx="4" class="sheet"/><path class="lnf" d="M138 36 v86 h-2 v-86z"/>`
+  s += `<rect x="60" y="28" width="76" height="100" rx="7" class="lit"/><rect x="60" y="28" width="14" height="100" rx="5" class="lil"/><rect x="60" y="28" width="76" height="22" rx="7" class="hl"/>`
+  s += `<rect x="82" y="50" width="44" height="30" rx="6" class="sheet"/><rect x="89" y="57" width="22" height="6" rx="3" class="pkt"/><rect x="89" y="68" width="30" height="4" rx="2" class="lnf"/>`
+  s += `<g class="ribbon"><path class="pkt" d="M110 120 h9 v28 l-4.5 -5 l-4.5 5z"/></g></g>`
+  const css = `.mini-subject .ribbon{transform-origin:114.5px 120px;animation:msu-sway 3.8s ease-in-out infinite}
+@keyframes msu-sway{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(7deg)}}`
+  return { s, css, motion: [0, 6, 2, 6] }
+}
+
 // ---------- write ----------
 // Each viewBox is fitted to its scene: the drawn shapes (bounds.cjs), plus how far its loop moves
 // things (`motion`: top, right, bottom, left), plus a little air, so nothing is ever clipped.
@@ -565,4 +581,10 @@ for (const [name, fn] of Object.entries(aboutHeroes)) {
 for (const [name, fn] of Object.entries(aboutMinis)) {
   const { s, css, motion } = fn()
   write(`Mini${name}`, `mini-${name.toLowerCase()}`, fitBox(s, motion), s, css, `the small ${name} illustration (its "On this page" panel)`, 'xMidYMid', ABOUT, '../../guide/art/art.css')
+}
+const SUBJECT = path.join(__dirname, '../../src/components/subject/art/')
+fs.mkdirSync(SUBJECT, { recursive: true })
+for (const [name, fn] of Object.entries(subjectMinis)) {
+  const { s, css, motion } = fn()
+  write(`Mini${name}`, `mini-${name.toLowerCase()}`, fitBox(s, motion), s, css, `the small illustration of a subject page's "On this page" panel`, 'xMidYMid', SUBJECT, '../../guide/art/art.css')
 }

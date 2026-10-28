@@ -19,7 +19,7 @@ interface TocItem {
   title: string
   sub: boolean
 }
-// A guide page names its slug; another page (the About group) passes its own illustration.
+// A guide page names its slug; another page (the About group, a subject page) passes its own illustration.
 const props = defineProps<{ items: TocItem[]; slug?: GuidePageSlug; art?: () => Promise<Component> }>()
 const { t } = useI18n()
 const active = shallowRef<string | null>(null)
