@@ -94,6 +94,35 @@
 .art .bubp ~ .dot { fill: #fff; }
 .art .dot { fill: #a893b7; }
 
+/* Clocks (semester) */
+.art .face { fill: #fff; }
+.art .rim { fill: none; stroke: #cdbcd8; stroke-width: 2; }
+.art .tickm { fill: #a893b7; }
+.art .hand { stroke: #4b4553; stroke-width: 2.2; stroke-linecap: round; }
+.art .hand.hour { stroke-width: 3; }
+
+/* Small objects for "On this page" and the overview cards */
+.art .cable { fill: none; stroke: #a893b7; stroke-width: 2.4; stroke-linecap: round; }
+.art .plug { fill: #8a7ca1; }
+.art .dev { fill: #fffdff; stroke: #d9cbe5; stroke-width: 1.5; }
+.art .bat { fill: none; stroke: #a893b7; stroke-width: 1.6; }
+.art .batcap { fill: #a893b7; }
+.art .fill { fill: #3fae6f; }
+.art .bolt { fill: #e0559f; }
+.art .sheet { fill: #fffdff; stroke: #e0d4eb; stroke-width: 1.2; }
+.art .saucer { fill: #f1e8f6; }
+.art .handle { fill: none; stroke: #e0d4eb; stroke-width: 6; stroke-linecap: round; }
+.art .handle2 { fill: none; stroke: #a893b7; stroke-width: 5; stroke-linecap: round; }
+.art .case { fill: #bfaef3; }
+.art .strap { fill: #a795e6; }
+.art .wheel { fill: #6d6080; }
+.art .string { stroke: #8a7ca1; stroke-width: 1.4; }
+.art .label { fill: #f7e3a6; stroke: #ddc372; stroke-width: 1; }
+.art .water { fill: #dcebf8; }
+.art .buoy { fill: #fffdff; }
+.art .buoyp { fill: #e0559f; }
+.art .buoyrim { fill: none; stroke: #e0d4eb; stroke-width: 1.2; }
+
 @media (prefers-color-scheme: dark) {
   .art {
     --a-t: #d3c8e2;
@@ -120,4 +149,12 @@
   .art .bubg { fill: rgb(40 34 54 / 85%); stroke: rgb(255 255 255 / 18%); }
   .art .dot { fill: #d3c8e2; }
   .art .box, .art .cup { fill: #d3c8e2; }
+  .art .face, .art .sheet, .art .dev, .art .buoy { fill: #d3c8e2; }
+  .art .rim, .art .buoyrim { stroke: #8a7ca1; }
+  .art .hand { stroke: #2a2236; }
+  .art .saucer { fill: #8f81a6; }
+  .art .handle { stroke: #b2a5c6; }
+  .art .water { fill: #4d6a86; }
+  .art .case { fill: #8f7bf5; }
+  .art .strap { fill: #7a66de; }
 }
