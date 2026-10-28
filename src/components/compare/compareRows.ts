@@ -18,6 +18,8 @@ export interface Cell {
   tag?: string
   /** A link to fix it in the planner. */
   fix?: string
+  /** A list in place of the text (careers): each item, and whether only this plan has it. */
+  items?: { text: string; only: boolean }[]
 }
 
 export interface Row {
@@ -52,7 +54,7 @@ function row(id: string, label: string, cells: Cell[], plans: ComparedPlan[], ma
     id,
     label,
     cells,
-    same: allSame(cells, (c) => `${c.text}|${(c.sub ?? []).join('|')}|${c.tag ?? ''}`),
+    same: allSame(cells, (c) => `${c.text}|${(c.sub ?? []).join('|')}|${c.tag ?? ''}|${(c.items ?? []).map((i) => i.text).join('|')}`),
     better: marked ? betterOn(marked, plans.map((p) => p.facts)) : [],
     ...(info ? { info } : {}),
   }
@@ -124,7 +126,16 @@ export function compareGroups(plans: ComparedPlan[], ctx: RowContext): Group[] {
       ),
     )
   }
-  outcomes.push(row('careers', t('cmp.rowCareers'), plans.map((p) => ({ text: p.careers.length ? p.careers.join(t('listSep')) : none })), plans))
+  // Jobs every plan leads to are quiet; the ones only this plan leads to are marked.
+  const inAll = (job: string) => plans.every((p) => p.careers.includes(job))
+  outcomes.push(
+    row(
+      'careers',
+      t('cmp.rowCareers'),
+      plans.map((p) => (p.careers.length ? { text: '', items: p.careers.map((job) => ({ text: job, only: !inAll(job) })) } : { text: none })),
+      plans,
+    ),
+  )
 
   const profile: Row[] = [
     row('degree', t('cmp.rowDegree'), plans.map((p) => ({ text: p.courseTitle, ...(p.diploma ? { sub: [t('plans.diplomaLine', { title: p.diploma })] } : {}) })), plans),

@@ -2207,7 +2207,6 @@ export const ko: Messages = {
     wamAbout: "약 {mark}",
     wamRange: "{low}–{high} 예상",
     better: "더 나음",
-    betterInfo: "‘적을수록 좋다’가 분명한 줄에만 표시해요: 미충족 요건, 모자란 학점, 빡빡한 학기, 과목 문제.",
     sameRows: "{n}줄은 모든 계획이 같아요",
     sameRowsOne: "1줄은 모든 계획이 같아요",
     timelineTitle: "학기별",

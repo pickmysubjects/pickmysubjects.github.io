@@ -2211,7 +2211,6 @@ export const en = {
     wamAbout: "about {mark}",
     wamRange: "likely {low}–{high}",
     better: "Better",
-    betterInfo: "Marked only where fewer is plainly better: rules not met, missing points, heavy semesters and subject problems.",
     sameRows: "{n} rows are the same in every plan",
     sameRowsOne: "1 row is the same in every plan",
     timelineTitle: "Semester by semester",

@@ -2207,7 +2207,6 @@ export const zhTW: Messages = {
     wamAbout: "約 {mark}",
     wamRange: "可能 {low}–{high}",
     better: "較好",
-    betterInfo: "只在「越少越好」很明確的列標出：未符合的規則、還差的學分、偏重的學期和課程問題。",
     sameRows: "有 {n} 列各計畫一樣",
     sameRowsOne: "有 1 列各計畫一樣",
     timelineTitle: "逐學期比較",

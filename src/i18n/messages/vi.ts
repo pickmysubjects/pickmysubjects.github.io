@@ -2207,7 +2207,6 @@ export const vi: Messages = {
     wamAbout: "khoảng {mark}",
     wamRange: "có thể {low}–{high}",
     better: "Tốt hơn",
-    betterInfo: "Chỉ đánh dấu ở dòng mà ít hơn rõ ràng là tốt hơn: quy định chưa đạt, tín chỉ còn thiếu, học kỳ nặng và vấn đề với môn học.",
     sameRows: "{n} dòng giống nhau ở mọi kế hoạch",
     sameRowsOne: "1 dòng giống nhau ở mọi kế hoạch",
     timelineTitle: "Từng học kỳ",

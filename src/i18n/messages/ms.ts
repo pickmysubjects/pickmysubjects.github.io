@@ -2207,7 +2207,6 @@ export const ms: Messages = {
     wamAbout: "kira-kira {mark}",
     wamRange: "mungkin {low}–{high}",
     better: "Lebih baik",
-    betterInfo: "Ditanda hanya di baris yang lebih sedikit jelas lebih baik: peraturan belum dipenuhi, mata yang kurang, semester berat dan masalah subjek.",
     sameRows: "{n} baris sama dalam semua rancangan",
     sameRowsOne: "1 baris sama dalam semua rancangan",
     timelineTitle: "Semester demi semester",

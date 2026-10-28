@@ -2207,7 +2207,6 @@ export const ja: Messages = {
     wamAbout: "約 {mark}",
     wamRange: "{low}〜{high} の見込み",
     better: "良い",
-    betterInfo: "「少ないほど良い」がはっきりしている行だけに印：満たしていないルール、足りない単位、重めの学期、科目の問題。",
     sameRows: "{n} 行はどのプランも同じ",
     sameRowsOne: "1 行はどのプランも同じ",
     timelineTitle: "学期ごと",

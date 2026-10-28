@@ -2207,7 +2207,6 @@ export const id: Messages = {
     wamAbout: "sekitar {mark}",
     wamRange: "kemungkinan {low}–{high}",
     better: "Lebih baik",
-    betterInfo: "Hanya ditandai di baris yang lebih sedikit jelas lebih baik: aturan belum terpenuhi, poin yang kurang, semester berat, dan masalah mata kuliah.",
     sameRows: "{n} baris sama di semua rencana",
     sameRowsOne: "1 baris sama di semua rencana",
     timelineTitle: "Per semester",

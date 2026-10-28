@@ -2207,7 +2207,6 @@ export const zhCN: Messages = {
     wamAbout: "约 {mark}",
     wamRange: "可能 {low}–{high}",
     better: "更好",
-    betterInfo: "只在「越少越好」很明确的行标出：没满足的规则、还差的学分、偏重的学期和课程问题。",
     sameRows: "有 {n} 行各计划一样",
     sameRowsOne: "有 1 行各计划一样",
     timelineTitle: "逐学期对比",

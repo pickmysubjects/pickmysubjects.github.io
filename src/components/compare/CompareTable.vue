@@ -76,7 +76,7 @@ const cols = computed(() => ({ '--n': props.plans.length }))
     <div class="head" role="rowgroup">
       <div v-if="!phone" class="head-row" role="row">
         <div class="head-label" role="columnheader">
-          <span class="legend"><span class="dot" aria-hidden="true" />{{ t('cmp.better') }}<InfoTip :text="t('cmp.betterInfo')" /></span>
+          <span class="legend"><span class="dot" aria-hidden="true" />{{ t('cmp.better') }}</span>
         </div>
         <div v-for="(p, i) in plans" :key="p.entry.id" class="col" role="columnheader">
           <p class="col-name">{{ names[i] }}</p>
@@ -137,7 +137,12 @@ const cols = computed(() => ({ '--n': props.plans.length }))
           </div>
           <div v-for="(c, i) in r.cells" :key="i" class="cell" role="cell">
             <span v-if="phone" class="cell-plan">{{ names[i] }}</span>
-            <span class="cell-text">{{ c.text }}<span v-if="c.tag" class="tag">{{ c.tag }}</span></span>
+            <span v-if="c.text" class="cell-text">{{ c.text }}<span v-if="c.tag" class="tag">{{ c.tag }}</span></span>
+            <ul v-if="c.items" class="cell-items">
+              <li v-for="(it, k) in c.items" :key="k" :class="{ 'item-only': it.only }">
+                <span v-if="it.only" class="item-plus" aria-hidden="true">+</span>{{ it.text }}<span v-if="it.only" class="visually-hidden"> ({{ t('cmp.onlyHere') }})</span>
+              </li>
+            </ul>
             <ul v-if="c.sub" class="cell-sub">
               <li v-for="(s, k) in c.sub" :key="k">{{ s }}</li>
             </ul>
@@ -167,9 +172,9 @@ const cols = computed(() => ({ '--n': props.plans.length }))
   z-index: 6;
   border-bottom: 1px solid var(--divider);
   border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-  background: var(--glass-shine), var(--peek-fill);
-  -webkit-backdrop-filter: var(--glass-blur);
-  backdrop-filter: var(--glass-blur);
+  /* Solid enough that rows sliding under it never show through. */
+  background: var(--glass-shine), linear-gradient(var(--sheet-fill), var(--sheet-fill)), var(--bg);
+  box-shadow: 0 6px 14px -10px rgb(60 20 80 / 35%);
 }
 
 .head-row,
@@ -416,6 +421,33 @@ const cols = computed(() => ({ '--n': props.plans.length }))
   list-style: none;
   font-size: var(--fs-small);
   color: var(--ink-soft);
+}
+
+.cell-items {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cell-items li {
+  color: var(--ink-soft);
+}
+
+.cell-items .item-only {
+  color: var(--ink);
+  font-weight: var(--fw-medium);
+}
+
+.item-plus {
+  margin-right: 4px;
+  font-weight: var(--fw-bold);
+  color: color-mix(in srgb, var(--accent) 80%, var(--ink));
+}
+
+.cell-sub li {
+  overflow-wrap: anywhere;
 }
 
 .tag {
