@@ -1450,6 +1450,7 @@ export const vi: Messages = {
     change: "Đổi môn",
     parts: "Cách chấm điểm",
     fromHandbook: "Theo Handbook. Năm nay khác? Sửa lại theo subject guide.",
+    handbookChanged: "Handbook đã thay đổi kể từ khi bạn lưu.",
     noData: "Chưa có dữ liệu chấm điểm cho môn này. Thêm các phần theo subject guide.",
     part: "Phần",
     weight: "Tỷ trọng %",

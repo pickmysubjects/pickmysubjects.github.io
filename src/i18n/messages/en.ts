@@ -1454,6 +1454,7 @@ export const en = {
     change: "Change subject",
     parts: "Assessment",
     fromHandbook: "From the Handbook. Different this year? Edit it to match your subject guide.",
+    handbookChanged: "The Handbook changed since you saved this.",
     noData: "No assessment in our data for this subject. Add the parts from your subject guide.",
     part: "Part",
     weight: "Weight %",

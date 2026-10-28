@@ -1450,6 +1450,7 @@ export const hi: Messages = {
     change: "सब्जेक्ट बदलें",
     parts: "असेसमेंट",
     fromHandbook: "Handbook से। इस साल अलग है? subject guide के हिसाब से बदलें।",
+    handbookChanged: "आपके सहेजने के बाद Handbook बदल गई है।",
     noData: "इस सब्जेक्ट का असेसमेंट डेटा नहीं है। subject guide से हिस्से जोड़ें।",
     part: "हिस्सा",
     weight: "वेटेज %",

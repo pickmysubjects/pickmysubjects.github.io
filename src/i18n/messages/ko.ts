@@ -1450,6 +1450,7 @@ export const ko: Messages = {
     change: "과목 바꾸기",
     parts: "평가 방식",
     fromHandbook: "Handbook 기준이에요. 올해 다르면 subject guide에 맞게 고치세요.",
+    handbookChanged: "저장한 뒤에 Handbook이 바뀌었어요.",
     noData: "이 과목의 평가 데이터가 없어요. subject guide를 보고 직접 추가하세요.",
     part: "항목",
     weight: "비중 %",

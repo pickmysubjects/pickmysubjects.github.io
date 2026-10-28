@@ -163,3 +163,18 @@ export function cleanCalc(raw: unknown): Record<string, CalcEntry> {
   }
   return out
 }
+
+type PartShape = Pick<CalcRow, 'kind' | 'weight' | 'hurdle'>
+
+/** Same parts in the same order (kind, weight, hurdle); marks don't count. */
+export function sameCalcParts(a: readonly PartShape[], b: readonly PartShape[]): boolean {
+  return a.length === b.length && a.every((r, i) => r.kind === b[i]!.kind && r.weight === b[i]!.weight && !!r.hurdle === !!b[i]!.hurdle)
+}
+
+/**
+ * A saved entry the student never changed whose parts no longer match the Handbook's: the
+ * Handbook changed after it was saved (new weights, a part added or dropped).
+ */
+export function handbookChanged(entry: CalcEntry | undefined, handbook: readonly PartShape[]): boolean {
+  return !!entry && !entry.custom && handbook.length > 0 && !sameCalcParts(entry.rows, handbook)
+}

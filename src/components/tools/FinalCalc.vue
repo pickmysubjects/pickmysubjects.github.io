@@ -8,7 +8,7 @@ import { useProfile } from '@/composables/useProfile'
 import { useFinalCalc, type CalcRow } from '@/composables/useFinalCalc'
 import { link, replaceAddress } from '@/composables/useView'
 import { ASSESSMENT_KINDS } from '@/engine/schema'
-import { finalBand, finalNeeds, partsFromAssessment, percentOf, type CalcPart } from '@/engine/finalCalc'
+import { finalBand, finalNeeds, handbookChanged, partsFromAssessment, percentOf, sameCalcParts, type CalcPart } from '@/engine/finalCalc'
 import { useI18n } from '@/i18n'
 import { localTitle } from '@/i18n/localized'
 import { attendanceText } from '@/utils/attendance'
@@ -27,12 +27,12 @@ const entry = computed(() => (props.code ? saved.value[props.code] : undefined))
 const rows = computed<CalcRow[]>(() => entry.value?.rows ?? handbookRows.value)
 const custom = computed(() => entry.value?.custom === true)
 
+// Saved before the Handbook's parts changed: offer its new list (Reset), saying why.
+const changed = computed(() => handbookChanged(entry.value, handbookRows.value))
 // Custom while the parts differ from the Handbook's (changing a weight back undoes it).
-const sameParts = (a: readonly CalcRow[], b: readonly CalcRow[]) =>
-  a.length === b.length && a.every((r, i) => r.kind === b[i]!.kind && r.weight === b[i]!.weight && !!r.hurdle === !!b[i]!.hurdle)
 function save(next: CalcRow[]): void {
   if (!props.code) return
-  saved.value = { ...saved.value, [props.code]: { rows: next, ...(sameParts(next, handbookRows.value) ? {} : { custom: true }) } }
+  saved.value = { ...saved.value, [props.code]: { rows: next, ...(sameCalcParts(next, handbookRows.value) ? {} : { custom: true }) } }
 }
 function setField(i: number, field: keyof CalcRow, value: unknown): void {
   save(rows.value.map((r, j) => (j === i ? { ...r, [field]: value } : r)))
@@ -136,11 +136,11 @@ function pick(code: string): void {
       <section class="surface calc-parts" aria-labelledby="calc-parts">
         <div class="calc-head">
           <h2 id="calc-parts" class="sec-title">{{ t('calc.parts') }}</h2>
-          <button v-if="custom && handbookRows.length" type="button" class="button button-quiet" @click="reset">
+          <button v-if="(custom || changed) && handbookRows.length" type="button" class="button button-quiet" @click="reset">
             <RotateCcw :size="15" aria-hidden="true" /> {{ t('calc.reset') }}
           </button>
         </div>
-        <p class="calc-hint">{{ handbookRows.length ? t('calc.fromHandbook') : t('calc.noData') }}</p>
+        <p class="calc-hint" :class="{ warn: changed }">{{ changed ? t('calc.handbookChanged') : handbookRows.length ? t('calc.fromHandbook') : t('calc.noData') }}</p>
 
         <ul v-if="rows.length" class="rows">
           <li v-for="(r, i) in rows" :key="i" class="row">

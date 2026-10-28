@@ -1450,6 +1450,7 @@ export const zhCN: Messages = {
     change: "换一门课",
     parts: "考核方式",
     fromHandbook: "来自 Handbook。今年不一样？照你的 subject guide 改。",
+    handbookChanged: "你保存之后 Handbook 改了。",
     noData: "我们没有这门课的考核数据，照 subject guide 自己加上。",
     part: "项目",
     weight: "占比 %",

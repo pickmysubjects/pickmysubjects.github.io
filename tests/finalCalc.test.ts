@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { finalNeeds, partsFromAssessment, percentOf, type CalcPart } from '../src/engine/finalCalc'
+import { finalNeeds, handbookChanged, partsFromAssessment, percentOf, type CalcPart, type CalcRow } from '../src/engine/finalCalc'
 import { LOCALE_CODES } from '../src/i18n/codes'
 import { en } from '../src/i18n/messages/en'
 import { zhCN } from '../src/i18n/messages/zh-CN'
@@ -157,5 +157,22 @@ describe('finalBand', () => {
     const { finalBand } = await import('../src/engine/finalCalc')
     expect(finalBand(finalNeeds([{ kind: 'exam', weight: 100, score: 90 }])!, true)).toBe('P')
     expect(finalBand(finalNeeds([{ kind: 'exam', weight: 100, score: 40 }])!, true)).toBe('N')
+  })
+})
+
+describe('handbookChanged', () => {
+  const row = (weight: number, over: Partial<CalcRow> = {}): CalcRow => ({ kind: 'assignment', weight, score: '', outOf: '', ...over })
+  const handbook = [row(40), row(60, { kind: 'exam', hurdle: true })]
+
+  it('flags an untouched entry saved before the Handbook weights changed', () => {
+    expect(handbookChanged({ rows: [row(30, { score: 25 }), row(70, { kind: 'exam', hurdle: true })] }, handbook)).toBe(true)
+    expect(handbookChanged({ rows: [row(40)] }, handbook)).toBe(true)
+  })
+
+  it('leaves alone an entry that matches (marks typed or not), one the student changed, and none', () => {
+    expect(handbookChanged({ rows: [row(40, { score: 30, outOf: 40 }), row(60, { kind: 'exam', hurdle: true })] }, handbook)).toBe(false)
+    expect(handbookChanged({ rows: [row(50)], custom: true }, handbook)).toBe(false)
+    expect(handbookChanged(undefined, handbook)).toBe(false)
+    expect(handbookChanged({ rows: [row(50)] }, [])).toBe(false)
   })
 })

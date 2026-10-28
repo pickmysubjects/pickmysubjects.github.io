@@ -1450,6 +1450,7 @@ export const ja: Messages = {
     change: "科目を変える",
     parts: "評価方法",
     fromHandbook: "Handbook より。今年は違う？subject guide に合わせて直せます。",
+    handbookChanged: "保存したあとに Handbook が変わりました。",
     noData: "この科目の評価データがありません。subject guide を見て追加してください。",
     part: "項目",
     weight: "配分 %",

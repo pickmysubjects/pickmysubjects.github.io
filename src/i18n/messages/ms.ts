@@ -1450,6 +1450,7 @@ export const ms: Messages = {
     change: "Tukar subjek",
     parts: "Penilaian",
     fromHandbook: "Daripada Handbook. Tahun ini berbeza? Ubah ikut subject guide.",
+    handbookChanged: "Handbook telah berubah sejak anda simpan.",
     noData: "Tiada data penilaian untuk subjek ini. Tambah bahagian daripada subject guide.",
     part: "Bahagian",
     weight: "Wajaran %",

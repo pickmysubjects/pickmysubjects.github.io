@@ -1450,6 +1450,7 @@ export const zhTW: Messages = {
     change: "換一門課",
     parts: "評分方式",
     fromHandbook: "來自 Handbook。今年不一樣？照你的 subject guide 改。",
+    handbookChanged: "你儲存之後 Handbook 改了。",
     noData: "我們沒有這門課的評分資料，照 subject guide 自己加上。",
     part: "項目",
     weight: "比重 %",

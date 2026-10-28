@@ -1450,6 +1450,7 @@ export const id: Messages = {
     change: "Ganti mata kuliah",
     parts: "Penilaian",
     fromHandbook: "Dari Handbook. Tahun ini beda? Ubah sesuai subject guide.",
+    handbookChanged: "Handbook sudah berubah sejak kamu simpan.",
     noData: "Belum ada data penilaian untuk mata kuliah ini. Tambahkan dari subject guide.",
     part: "Bagian",
     weight: "Bobot %",
