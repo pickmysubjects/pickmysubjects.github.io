@@ -542,6 +542,109 @@ subjectMinis.Subject = () => {
   return { s, css, motion: [0, 6, 2, 6] }
 }
 
+// ================= Find subjects (src/components/browse/art/) =================
+// The hero of Find subjects, Majors and Careers: loose subject cards on the left, one travelling
+// along a dashed path to a shelf where the rest already stand sorted by colour, with a student
+// beside it. The small one at the foot of the filter panel: cards dropping through a sieve.
+const browseHeroes = {}
+const browseMinis = {}
+browseHeroes.Browse = () => {
+  let s = `<ellipse class="sh" cx="306" cy="152" rx="70" ry="9"/>`
+  ;[[262, 112, -9, 'skt', 0], [300, 84, 7, 'pkt', -1.6], [326, 124, -4, 'mit', -3.1], [356, 96, 10, 'wat', -0.8]].forEach(([x, y, rot, c, d]) => {
+    s += `<g class="pg" style="--d:${d}s">${sheet(x, y, rot, c)}</g>`
+  })
+  const route = 'M384 92 C 420 58, 470 52, 534 74'
+  s += `<path class="route" d="${route}"/>`
+  s += `<g class="fly" style="offset-path:path('${route}')"><rect x="-8" y="-10" width="16" height="20" rx="2.5" class="sheet"/><rect x="-5" y="-6" width="8" height="3" rx="1.5" class="lit"/></g>`
+  // The shelf: a base board, the cards standing on it sorted by colour, a top board; one slot
+  // near the end fills as the travelling card arrives.
+  s += isle(612, 150, 112, 58)
+  s += box(4, 14, 0, 104, 30, 5, ['sheett', 'sheetl', 'sheetr'])
+  const spines = [COLS[0], COLS[0], COLS[1], COLS[1], COLS[1], COLS[2], COLS[2], COLS[3], COLS[3], COLS[4]]
+  spines.forEach((c, k) => {
+    const h = 30 + ((k * 7) % 4) * 3
+    s += box(8 + k * 10, 20, 5, 8, 20, h, c, k === 4 ? ' class="new"' : '')
+  })
+  s += person(118, 44, '#bfaef3', '#3a2a22')
+  const css = `.art-browse .pg{animation:abr-bob 6s ease-in-out infinite;animation-delay:var(--d)}
+.art-browse .fly{offset-rotate:0deg;offset-distance:70%;animation:abr-fly 6s ease-in-out infinite}
+.art-browse .new{animation:abr-new 6s ease-in-out infinite}
+@keyframes abr-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@keyframes abr-fly{0%{offset-distance:0%;opacity:0}10%{opacity:1}75%{opacity:1}90%,100%{offset-distance:100%;opacity:0}}
+@keyframes abr-new{0%,80%{opacity:.3}92%,100%{opacity:1}}`
+  return { s, css, motion: [6, 0, 0, 0] }
+}
+
+// Filters: three cards above a glass sieve; one card has come through and rests below it.
+browseMinis.Browse = () => {
+  let s = `<ellipse class="sh" cx="100" cy="138" rx="40" ry="6"/>`
+  s += `<g transform="translate(78 36) rotate(-10)"><rect x="-12" y="-15" width="24" height="30" rx="3" class="sheet"/><rect x="-8" y="-10" width="12" height="3.5" rx="1.75" class="skt"/></g>`
+  s += `<g transform="translate(122 34) rotate(9)"><rect x="-12" y="-15" width="24" height="30" rx="3" class="sheet"/><rect x="-8" y="-10" width="12" height="3.5" rx="1.75" class="mit"/></g>`
+  s += `<g class="drop"><rect x="88" y="16" width="24" height="30" rx="3" class="sheet"/><rect x="92" y="21" width="12" height="3.5" rx="1.75" class="pkt"/></g>`
+  s += `<path class="gls" d="M52 56 H148 L116 92 V108 H84 V92 Z"/><path class="ln" d="M64 64 H136"/>`
+  s += `<g transform="translate(100 124)"><rect x="-14" y="-12" width="28" height="22" rx="4" class="pkt"/><rect x="-14" y="-12" width="28" height="8" rx="4" class="hl"/></g>`
+  const css = `.mini-browse .drop{animation:mbr-drop 4.8s ease-in-out infinite}
+@keyframes mbr-drop{0%,15%{transform:translateY(0);opacity:1}55%{transform:translateY(30px);opacity:0}56%{transform:translateY(0);opacity:0}75%,100%{transform:translateY(0);opacity:1}}`
+  return { s, css, motion: [0, 0, 30, 0] }
+}
+
+// A major's page: three steps rising left to right (levels 1, 2, 3), subject blocks on each,
+// a flag on the top step and a student on the way up.
+browseHeroes.Major = () => {
+  let s = ''
+  const steps = [[300, 154, 10, COLS[2]], [410, 138, 26, COLS[1]], [520, 122, 42, COLS[0]]]
+  steps.forEach(([cx, cy, h, c], i) => {
+    s += isle(cx, cy, 70, 52, h)
+    s += box(8, 10, 0, 16, 16, 12, COLS[(i + 2) % 5]) + box(30, 12, 0, 16, 16, 12, c)
+    if (i === 1) s += person(56, 34, '#9d8bf2', '#3a2a22', 'climb')
+    if (i === 2) {
+      const [fx, fy] = P(52, 30, 0)
+      s += `<line x1="${fx}" y1="${fy}" x2="${fx}" y2="${r(fy - 44)}" class="stand"/><g class="flag" style="transform-origin:${fx}px ${r(fy - 44)}px"><path class="pkt" d="M${fx} ${r(fy - 44)} l24 6 l-24 7z"/></g>`
+    }
+  })
+  const css = `.art-major .flag{animation:ama-wave 3.6s ease-in-out infinite}
+.art-major .climb{animation:ama-bob 3.6s ease-in-out infinite}
+@keyframes ama-wave{0%,100%{transform:skewY(0)}50%{transform:skewY(-6deg)}}
+@keyframes ama-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}`
+  return { s, css, motion: [4, 0, 0, 0] }
+}
+
+// A career's page: a dashed path from a stack of subject cards to a briefcase on its own
+// island, the briefcase lifting a little.
+browseHeroes.Career = () => {
+  let s = isle(310, 150, 60, 48)
+  for (let k = 0; k < 3; k++) s += box(14, 12, k * 6, 32, 26, 6, k === 2 ? COLS[0] : ['sheett', 'sheetl', 'sheetr'])
+  s += person(50, 34, '#7aa58a', '#1d1514')
+  const route = 'M360 112 C 410 80, 470 78, 540 98'
+  s += `<path class="route" d="${route}"/>`
+  s += isle(590, 148, 96, 60)
+  s += `<g class="case-lift"><rect x="556" y="70" width="70" height="50" rx="9" class="case"/><rect x="556" y="70" width="70" height="16" rx="8" class="hl"/><path class="handle2" d="M578 70 v-8 a5 5 0 0 1 5 -5 h16 a5 5 0 0 1 5 5 v8"/><rect x="584" y="92" width="14" height="8" rx="2" class="wat"/></g>`
+  s += `<g class="spark" style="transform-origin:640px 58px"><path class="wat" d="M640 48 l3 7 l7 3 l-7 3 l-3 7 l-3 -7 l-7 -3 l7 -3z"/></g>`
+  const css = `.art-career .case-lift{animation:aca-lift 5s ease-in-out infinite}
+.art-career .spark{animation:aca-spark 5s ease-in-out infinite}
+@keyframes aca-lift{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes aca-spark{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(.6);opacity:.4}}`
+  return { s, css, motion: [6, 0, 0, 0] }
+}
+
+// The foot of a major's "On this page": three blocks as steps, the top one pink.
+browseMinis.Major = () => {
+  let s = `<ellipse class="sh" cx="100" cy="134" rx="54" ry="8"/>`
+  origin(64, 88)
+  s += box(0, 0, 0, 22, 22, 14, COLS[2]) + box(22, 0, 0, 22, 22, 28, COLS[1]) + `<g class="top">${box(44, 0, 0, 22, 22, 42, COLS[0])}</g>`
+  const css = `.mini-major .top{animation:mma-bob 4s ease-in-out infinite}
+@keyframes mma-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}`
+  return { s, css, motion: [4, 0, 0, 0] }
+}
+
+// The foot of a career's "On this page": a briefcase, floating.
+browseMinis.Career = () => {
+  const s = `<ellipse class="sh" cx="100" cy="136" rx="38" ry="6"/><g class="float"><rect x="62" y="58" width="76" height="56" rx="10" class="case"/><rect x="62" y="58" width="76" height="18" rx="9" class="hl"/><path class="handle2" d="M86 58 v-9 a6 6 0 0 1 6 -6 h16 a6 6 0 0 1 6 6 v9"/><rect x="92" y="82" width="16" height="9" rx="2" class="wat"/></g>`
+  const css = `.mini-career .float{animation:mca-float 4.4s ease-in-out infinite}
+@keyframes mca-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}`
+  return { s, css, motion: [6, 0, 0, 0] }
+}
+
 // ---------- write ----------
 // Each viewBox is fitted to its scene: the drawn shapes (bounds.cjs), plus how far its loop moves
 // things (`motion`: top, right, bottom, left), plus a little air, so nothing is ever clipped.
@@ -587,4 +690,14 @@ fs.mkdirSync(SUBJECT, { recursive: true })
 for (const [name, fn] of Object.entries(subjectMinis)) {
   const { s, css, motion } = fn()
   write(`Mini${name}`, `mini-${name.toLowerCase()}`, fitBox(s, motion), s, css, `the small illustration of a subject page's "On this page" panel`, 'xMidYMid', SUBJECT, '../../guide/art/art.css')
+}
+const BROWSE = path.join(__dirname, '../../src/components/browse/art/')
+fs.mkdirSync(BROWSE, { recursive: true })
+for (const [name, fn] of Object.entries(browseHeroes)) {
+  const { s, css, motion } = fn()
+  write(`Art${name}`, `art-${name.toLowerCase()}`, fitBox(s, motion), s, css, name === 'Browse' ? 'the wide hero band of Find subjects, Majors and Careers' : `the wide hero band of a ${name.toLowerCase()}'s page`, 'xMaxYMax', BROWSE, '../../guide/art/art.css')
+}
+for (const [name, fn] of Object.entries(browseMinis)) {
+  const { s, css, motion } = fn()
+  write(`Mini${name}`, `mini-${name.toLowerCase()}`, fitBox(s, motion), s, css, name === 'Browse' ? "the small illustration at the foot of Find subjects' filter panel" : `the small illustration at the foot of a ${name.toLowerCase()}'s "On this page" panel`, 'xMidYMid', BROWSE, '../../guide/art/art.css')
 }
