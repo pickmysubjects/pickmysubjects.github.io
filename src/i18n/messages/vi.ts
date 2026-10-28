@@ -1341,6 +1341,7 @@ export const vi: Messages = {
     compareOpen: "Mở chuyên ngành đó",
     source: "Nguồn: Handbook 2026 của University of Melbourne. Hãy kiểm tra lại trước khi đăng ký.",
     notFound: "Không tìm thấy chuyên ngành này.",
+    didYouMean: "Có phải bạn muốn tìm",
     majorTitle: "Chuyên ngành {title}",
     cardText: "Mỗi chuyên ngành, ngành phụ và hướng chuyên sâu cần học gì qua từng năm, và hai chuyên ngành có môn nào chung.",
   },

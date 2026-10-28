@@ -7,7 +7,7 @@ import MajorStructure from './MajorStructure.vue'
 import DetailHero from '@/components/browse/DetailHero.vue'
 import GuideToc from '@/components/guide/GuideToc.vue'
 import SubjectSection from '@/components/subject/SubjectSection.vue'
-import { componentCareers, componentCourse, heldAsMinor, majorOverview, minorClash, sharedSubjects } from '@/engine'
+import { closeComponents, componentCareers, componentCourse, heldAsMinor, majorOverview, minorClash, sharedSubjects } from '@/engine'
 import { go, link } from '@/composables/useView'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
@@ -24,6 +24,8 @@ const plan = usePlan()
 const { t } = useI18n()
 
 const major = computed(() => data.value.components.find((c) => c.id === props.id))
+// Not found (a mistyped or shortened address): the closest by name, to go on from.
+const close = computed(() => (major.value ? [] : closeComponents(data.value.components, props.id)))
 const overview = computed(() => (major.value ? majorOverview(data.value, major.value.id, major.value.course) : null))
 const year = computed(() => viewYear(plan.terms.value[0]?.year))
 const courseTitle = computed(() => data.value.courses.find((c) => c.code === major.value?.course)?.title ?? major.value?.course ?? '')
@@ -193,6 +195,12 @@ function planWithIt(): void {
 
   <div v-else class="detail">
     <DetailHero :back="{ href: link('majors'), label: t('majors.all') }" :title="t('majors.notFound')" :art="heroArt" />
+    <nav v-if="close.length" class="close surface" :aria-label="t('majors.didYouMean')">
+      <p class="close-title">{{ t('majors.didYouMean') }}</p>
+      <ul class="close-list">
+        <li v-for="c in close" :key="c.id"><a :href="link(`majors/${c.id}`)">{{ c.title }}</a></li>
+      </ul>
+    </nav>
   </div>
 </template>
 
@@ -335,6 +343,27 @@ function planWithIt(): void {
 }
 
 /* Where the facts come from: one frosted strip at the end, never straight on the colour field. */
+/* Not found: the closest majors by name. */
+.close {
+  display: grid;
+  gap: 8px;
+  padding: 16px 20px;
+}
+
+.close-title {
+  margin: 0;
+  font-weight: var(--fw-bold);
+}
+
+.close-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
 .foot {
   width: fit-content;
   max-width: 100%;

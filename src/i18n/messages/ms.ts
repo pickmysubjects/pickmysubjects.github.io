@@ -1341,6 +1341,7 @@ export const ms: Messages = {
     compareOpen: "Buka major itu",
     source: "Daripada Handbook University of Melbourne 2026. Semak semula sebelum mendaftar.",
     notFound: "Major itu tidak dijumpai.",
+    didYouMean: "Adakah anda maksudkan",
     majorTitle: "Major {title}",
     cardText: "Apa yang diperlukan setiap major, minor dan pengkhususan, tahun demi tahun, dan subjek yang sama dalam dua major.",
   },

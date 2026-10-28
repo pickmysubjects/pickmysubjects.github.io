@@ -1341,6 +1341,7 @@ export const zhTW: Messages = {
     compareOpen: "打開那個主修",
     source: "資料來源：墨爾本大學 2026 Handbook。選課前請再核對一次。",
     notFound: "找不到這個主修。",
+    didYouMean: "你是不是要找",
     majorTitle: "{title} 主修",
     cardText: "每個主修、輔修和方向一二三年級要修什麼，還能看兩個主修有哪些課重疊。",
   },

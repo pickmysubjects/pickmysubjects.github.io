@@ -1341,6 +1341,7 @@ export const zhCN: Messages = {
     compareOpen: "打开那个专业",
     source: "信息来源：墨尔本大学 2026 Handbook。选课前请再核对一次。",
     notFound: "找不到这个专业。",
+    didYouMean: "你是不是要找",
     majorTitle: "{title} 专业",
     cardText: "每个主修、辅修和方向一二三年级要修什么，还能看两个主修有哪些课重合。",
   },

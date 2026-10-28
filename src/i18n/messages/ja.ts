@@ -1341,6 +1341,7 @@ export const ja: Messages = {
     compareOpen: "その専攻を開く",
     source: "出典：メルボルン大学 2026 Handbook。履修登録の前にもう一度確認してください。",
     notFound: "その専攻が見つかりません。",
+    didYouMean: "もしかして",
     majorTitle: "{title} 専攻",
     cardText: "各メジャー、マイナー、専門分野で何年に何を取るか。2つのメジャーの共通科目も見られます。",
   },

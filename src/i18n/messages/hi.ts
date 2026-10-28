@@ -1341,6 +1341,7 @@ export const hi: Messages = {
     compareOpen: "वह मेजर खोलें",
     source: "University of Melbourne की 2026 Handbook से। एनरोल करने से पहले फिर से जाँच लें।",
     notFound: "यह मेजर नहीं मिला।",
+    didYouMean: "क्या आप इसे ढूंढ रहे थे",
     majorTitle: "{title} मेजर",
     cardText: "हर मेजर, माइनर और स्पेशलाइज़ेशन में किस साल क्या लेना है, और दो मेजर में कौन से सब्जेक्ट एक जैसे हैं।",
   },

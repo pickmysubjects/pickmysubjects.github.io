@@ -1345,6 +1345,7 @@ export const en = {
     compareOpen: "Open that major",
     source: "From the 2026 University of Melbourne Handbook. Check it before you enrol.",
     notFound: "We can't find that major.",
+    didYouMean: "Did you mean",
     majorTitle: "{title} major",
     cardText: "What each major, minor and specialisation needs, year by year, and what two majors share.",
   },

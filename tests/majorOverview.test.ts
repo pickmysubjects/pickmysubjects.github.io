@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { majorOverview, sharedSubjects } from '../src/engine/roles'
+import { closeComponents, majorOverview, sharedSubjects } from '../src/engine/roles'
 import { realData } from './realData'
 
 describe('majorOverview (real data)', () => {
@@ -62,4 +62,19 @@ describe('planRoles', () => {
     expect([...r.required]).toEqual(['SCIE10005'])
     expect(r.options.size).toBe(0)
   })
+})
+
+describe('a major address that matches nothing', () => {
+  const data = realData()
+  it('offers the majors whose id or title shares a word with it, best first', () => {
+    // /majors/chemistry: the real ids are chemistry-chemistry and chemistry-medicinal, and nothing
+    // on the site links to the short one, so the page offers them instead of a dead end.
+    expect(data.components.some((c) => c.id === 'chemistry')).toBe(false)
+    const ids = closeComponents(data.components, 'chemistry').map((c) => c.id)
+    expect(ids).toContain('chemistry-chemistry')
+    expect(ids).toContain('chemistry-medicinal')
+    expect(ids.length).toBeLessThanOrEqual(6)
+    expect(closeComponents(data.components, 'zz-qq')).toEqual([])
+  })
+
 })

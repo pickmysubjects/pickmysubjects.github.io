@@ -210,3 +210,22 @@ export function planRoles(
   for (const s of required) options.delete(s)
   return { required, options }
 }
+
+/**
+ * Majors, minors and specialisations whose id or title shares a word with `id`, best first: what a
+ * mistyped or shortened address (/majors/chemistry) most likely meant. Empty when nothing shares one.
+ */
+export function closeComponents<T extends { id: string; title: string }>(components: readonly T[], id: string, limit = 6): T[] {
+  const words = (x: string) => x.toLowerCase().split(/[^a-z0-9]+/).filter((w) => w.length > 2)
+  const want = new Set(words(id))
+  if (!want.size) return []
+  return components
+    .map((c) => {
+      const have = new Set([...words(c.id), ...words(c.title)])
+      return { c, n: [...want].filter((w) => have.has(w)).length }
+    })
+    .filter((x) => x.n > 0)
+    .sort((a, b) => b.n - a.n || a.c.id.length - b.c.id.length || a.c.title.localeCompare(b.c.title))
+    .slice(0, limit)
+    .map((x) => x.c)
+}

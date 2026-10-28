@@ -1341,6 +1341,7 @@ export const ko: Messages = {
     compareOpen: "그 전공 열기",
     source: "출처: 멜버른대 2026 Handbook. 수강 신청 전에 다시 확인하세요.",
     notFound: "그 전공을 찾을 수 없어요.",
+    didYouMean: "혹시 이 전공인가요",
     majorTitle: "{title} 전공",
     cardText: "전공, 부전공, 세부전공별로 학년마다 무엇을 들어야 하는지, 두 전공의 겹치는 과목까지.",
   },
