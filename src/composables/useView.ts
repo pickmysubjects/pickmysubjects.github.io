@@ -87,6 +87,12 @@ export function replaceAddress(path: string): void {
   route.value = current()
 }
 
+/** A new address for the same page, as its own history entry (Back returns to the last one). */
+export function pushAddress(path: string): void {
+  history.pushState(null, '', link(path))
+  route.value = current()
+}
+
 /** A cut-off link like /subject/COMP%3 must not take the whole page down. */
 function safeDecode(text: string): string {
   try {

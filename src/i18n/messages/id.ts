@@ -1063,7 +1063,6 @@ export const id: Messages = {
     forMeNudge: "Isi nilai atau minatmu di {link} supaya urutannya lebih pas.",
     lede: "Saring sesuai kebutuhanmu: breadth, level, semester, tanpa ujian.",
     ledeShort: "Saring menurut breadth, level, semester, ujian",
-    presets: "Pilihan cepat",
     searchLabel: "Cari mata kuliah",
     searchPlaceholder: "Kode atau nama, misalnya COMP10001",
     type: "Jenis",

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { Flame, GraduationCap, Scale, SlidersHorizontal, Sparkles, X } from 'lucide-vue-next'
-import { chooseOrder, LIST_GROUPS, PRESETS, type BrowseFilters, type BrowseSort, type PresetName } from '@/engine'
+import { activeFilters, chooseOrder, type ListGroup, type BrowseFilters, type BrowseSort } from '@/engine'
 import { link } from '@/composables/useView'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
@@ -13,7 +13,7 @@ import { categoryTag } from '@/i18n/format'
  * change it), the order; under it every filter that's on, each removable. Phones: the Filters
  * button (with how many are on) opens the sheet.
  */
-const props = defineProps<{ count: number; course: string; preset: PresetName | null; active: number; anyRated: boolean }>()
+const props = defineProps<{ count: number; course: string; active: number; anyRated: boolean }>()
 const filters = defineModel<BrowseFilters>({ required: true })
 const emit = defineEmits<{ openFilters: []; clear: [] }>()
 const { t } = useI18n()
@@ -26,37 +26,39 @@ function set<K extends keyof BrowseFilters>(key: K, value: BrowseFilters[K]): vo
   filters.value = { ...filters.value, [key]: value }
 }
 
-// Filters a lit shortcut sets are shown once, by that shortcut's chip, not again here.
-const implied = computed(() => new Set<string>(props.preset ? Object.keys(PRESETS[props.preset]) : []))
 // The order the chips set, shown where the sort menu goes, with a way to turn it off.
 const order = computed(() => {
   const f = filters.value
   return f.mine ? { icon: Sparkles, label: t.value('browse.preset.mine') } : f.rank ? { icon: f.rank === 'easy' ? Scale : Flame, label: t.value(`browse.rankList.${f.rank}`) } : null
 })
+// Every filter that's on, each with its own ✕ (an old /subjects/no-exam/ address included).
 const chips = computed(() => {
-  const f = filters.value
   const tr = t.value
-  const out: { key: string; label: string; off: () => void }[] = []
-  if (f.text.trim()) out.push({ key: 'text', label: `“${f.text.trim()}”`, off: () => set('text', '') })
-  const name = (g: (typeof LIST_GROUPS)[number], v: string | number): string => {
-    if (g === 'category') return categoryTag(tr, String(v))
-    if (g === 'topics') return tr(`topic.${v}`)
-    if (g === 'level') return tr('subject.level', { level: v })
-    if (g === 'period') return tr(`periodShort.${v}`)
-    if (g === 'points') return tr('majors.points', { n: v })
-    if (g === 'exam') return tr(`browse.examBand.${v}`)
-    if (g === 'hours') return tr(`browse.hoursBand.${v}`)
-    return tr(`browse.easeOpt.${v}`)
-  }
-  for (const g of LIST_GROUPS) {
-    if (implied.value.has(g)) continue
-    for (const v of f[g]) out.push({ key: `${g}:${v}`, label: name(g, v), off: () => set(g, (f[g] as readonly (string | number)[]).filter((x) => x !== v) as never) })
-  }
-  if (f.prereq !== 'any') out.push({ key: 'prereq', label: tr(f.prereq === 'none' ? 'browse.noPrereq' : 'browse.prereqMet'), off: () => set('prereq', 'any') })
-  for (const k of ['noGroup', 'noHurdle', 'noTest', 'reviewed'] as const) if (f[k]) out.push({ key: k, label: tr(`browse.${k}`), off: () => set(k, false) })
-  if (!f.running) out.push({ key: 'running', label: tr('browse.showOff'), off: () => set('running', true) })
-  return out
+  return activeFilters(filters.value).map((c) => {
+    const f = filters.value
+    if (c.group === 'text') return { key: c.key, label: `“${f.text.trim()}”`, off: () => set('text', '') }
+    if (c.group === 'prereq') return { key: c.key, label: tr(f.prereq === 'none' ? 'browse.noPrereq' : 'browse.prereqMet'), off: () => set('prereq', 'any') }
+    if (c.group === 'running') return { key: c.key, label: tr('browse.showOff'), off: () => set('running', true) }
+    if (c.group === 'noGroup' || c.group === 'noHurdle' || c.group === 'noTest' || c.group === 'reviewed') {
+      const k = c.group
+      return { key: c.key, label: tr(`browse.${k}`), off: () => set(k, false) }
+    }
+    const g = c.group
+    const v = c.value!
+    return { key: c.key, label: optionName(g, v), off: () => set(g, (f[g] as readonly (string | number)[]).filter((x) => x !== v) as never) }
+  })
 })
+function optionName(g: ListGroup, v: string | number): string {
+  const tr = t.value
+  if (g === 'category') return categoryTag(tr, String(v))
+  if (g === 'topics') return tr(`topic.${v}`)
+  if (g === 'level') return tr('subject.level', { level: v })
+  if (g === 'period') return tr(`periodShort.${v}`)
+  if (g === 'points') return tr('majors.points', { n: v })
+  if (g === 'exam') return tr(`browse.examBand.${v}`)
+  if (g === 'hours') return tr(`browse.hoursBand.${v}`)
+  return tr(`browse.easeOpt.${v}`)
+}
 </script>
 
 <template>
@@ -260,8 +262,17 @@ const chips = computed(() => {
     background: none;
   }
 
+  /* With the filters folded into a sheet, their button is the one to find: pink, like the
+     order chips above it. */
   .ftoggle {
     display: inline-flex;
+    color: var(--accent);
+    border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+    background: var(--accent-soft);
+  }
+
+  .ftoggle svg {
+    color: var(--accent);
   }
 
   .sort {

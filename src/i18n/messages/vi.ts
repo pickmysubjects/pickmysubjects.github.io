@@ -1063,7 +1063,6 @@ export const vi: Messages = {
     forMeNudge: "Thêm điểm hoặc sở thích ở {link} để thứ tự sát với bạn hơn.",
     lede: "Lọc theo điều bạn cần: breadth, level, học kỳ, không thi.",
     ledeShort: "Lọc theo breadth, cấp độ, học kỳ hoặc thi",
-    presets: "Lọc nhanh",
     searchLabel: "Tìm môn học",
     searchPlaceholder: "Mã hoặc tên môn, ví dụ COMP10001",
     type: "Loại",

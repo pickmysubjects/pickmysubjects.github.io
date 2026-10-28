@@ -83,9 +83,9 @@ export const EMPTY_FILTERS: BrowseFilters = {
 }
 
 /**
- * Shortcuts for the questions new students ask most. Each one only sets ordinary filters (the
- * same controls the filter panel shows), so the shortcut and the panel can never disagree: the
- * shortcut is lit while those filters are exactly its values.
+ * Lists for the questions new students ask most, each with its own address (/subjects/no-exam/)
+ * and search page. Each one only sets ordinary filters (the same controls the filter panel
+ * shows), so the address opens with those filters on in the panel and as toolbar chips.
  */
 export const PRESETS = {
   firstSemester: { level: [1], period: ['semester-1'] },
@@ -350,6 +350,25 @@ export function activeCount(f: BrowseFilters): number {
   )
 }
 
+/** One filter that's on, as the toolbar shows it: a chosen option, a switch, or the search text. */
+export type ActiveFilter =
+  | { key: string; group: ListGroup; value: string | number }
+  | { key: string; group: 'text' | 'prereq' | 'running' | (typeof SWITCHES)[number]; value?: undefined }
+
+/**
+ * Every filter that's on, in the toolbar's order, each removable on its own. A list opened from
+ * its own address (/subjects/no-exam/) shows its filters here like any others.
+ */
+export function activeFilters(f: BrowseFilters): ActiveFilter[] {
+  const out: ActiveFilter[] = []
+  if (f.text.trim()) out.push({ key: 'text', group: 'text' })
+  for (const g of LIST_GROUPS) for (const v of f[g]) out.push({ key: `${g}:${v}`, group: g, value: v })
+  if (f.prereq !== 'any') out.push({ key: 'prereq', group: 'prereq' })
+  for (const k of SWITCHES) if (f[k]) out.push({ key: k, group: k })
+  if (!f.running) out.push({ key: 'running', group: 'running' })
+  return out
+}
+
 /** Every filter off; the search text, order, list and "sort for me" stay. */
 export function clearFilters(f: BrowseFilters): BrowseFilters {
   const { text, sort, rank, mine, listCourse } = f
@@ -516,13 +535,17 @@ export function choosePreset(f: BrowseFilters, p: PresetName): BrowseFilters {
   return { ...EMPTY_FILTERS, text, sort, rank, mine, ...(listCourse ? { listCourse } : {}), ...PRESETS[p] }
 }
 
-/** Takes a shortcut's filters off again, leaving any others. */
-export function removePreset(f: BrowseFilters, p: PresetName): BrowseFilters {
-  const off = Object.fromEntries(Object.keys(PRESETS[p]).map((k) => [k, EMPTY_FILTERS[k as keyof BrowseFilters]]))
-  return { ...f, ...off }
+/**
+ * How a change of filters goes into the browser's history: its own entry (Back undoes it), or in
+ * place while a search is being typed (the first letter starts an entry; the next ones, and
+ * clearing it, don't each need their own Back press).
+ */
+export function historyStep(before: BrowseFilters, after: BrowseFilters): 'push' | 'replace' {
+  const typing = before.text.trim() !== '' && browseAddress({ ...before, text: after.text }) === browseAddress(after)
+  return typing ? 'replace' : 'push'
 }
 
-/** Which chip the filters amount to: an order first, then a shortcut; 'all' for neither. */
+/** Which list the filters amount to: an order first, then a preset list; 'all' for neither. */
 export function quickChoice(f: BrowseFilters): QuickChoice {
   return f.rank ?? activePreset(f) ?? 'all'
 }

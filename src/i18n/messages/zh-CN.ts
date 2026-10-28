@@ -1063,7 +1063,6 @@ export const zhCN: Messages = {
     forMeNudge: "在「{link}」里填上成绩或兴趣，排得更准。",
     lede: "按你需要的条件筛：Breadth、年级、学期、没有考试。",
     ledeShort: "按 Breadth、年级、学期、考试筛选",
-    presets: "常用筛选",
     searchLabel: "搜索课程",
     searchPlaceholder: "课程代码或名字，比如 COMP10001",
     type: "类型",

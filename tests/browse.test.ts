@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { activeCount, activePreset, applyQuick, chooseOrder, choosePreset, orderOf, PRESETS, removePreset, browse, browseAddress, browseIndex, clearFilters, EASY_CUTS, EMPTY_FILTERS, facetCounts, filterIndex, filtersFromQuery, filtersToQuery, findRows, quickChoice, QUICK_CHOICES, rankCourseOf, type BrowseFilters } from '../src/engine/browse'
+import { activeCount, activePreset, applyQuick, chooseOrder, choosePreset, orderOf, PRESETS, PRESET_SLUGS, activeFilters, historyStep, browse, browseAddress, browseIndex, clearFilters, EASY_CUTS, EMPTY_FILTERS, facetCounts, filterIndex, filtersFromQuery, filtersToQuery, findRows, quickChoice, QUICK_CHOICES, rankCourseOf, type BrowseFilters } from '../src/engine/browse'
 import { rankSubjects, rankTier } from '../src/engine/easeRanking'
 import { simplifyFor } from '../src/engine/expr'
 import { recommend } from '../src/engine/recommend'
@@ -406,27 +406,60 @@ describe('filter groups and their live counts', () => {
   })
 })
 
-describe('chips: orders and shortcuts, one model with the filter panel', () => {
+describe('lists by address and order chips, one model with the filter panel', () => {
   const data = realData()
   const all = Object.values(data.subjects)
   const opts = { course: 'B-SCI', rankCourse: 'B-SCI', year: 2026 }
   const index = browseIndex(all, { course: 'B-SCI', year: 2026 })
   const names = Object.keys(PRESETS) as (keyof typeof PRESETS)[]
 
-  it('each shortcut is exactly its filters: lit when they are set by hand too, unlit when one changes', () => {
+  it('each old list address opens with exactly its filters on, in the panel and as removable toolbar chips', () => {
     for (const p of names) {
-      const f = choosePreset(EMPTY_FILTERS, p)
+      const f = filtersFromQuery(new URLSearchParams(''), PRESET_SLUGS[p])
+      // The panel reads these filters, so it shows them checked.
+      expect(f, p).toEqual({ ...EMPTY_FILTERS, ...PRESETS[p] })
+      const want = Object.entries(PRESETS[p]).flatMap(([g, vs]) => (vs as readonly (string | number)[]).map((v) => `${g}:${v}`))
+      expect(activeFilters(f).map((c) => c.key), p).toEqual(want)
+      expect(activeCount(f), p).toBe(want.length)
+      // The heading still names the list; the address stays its own page.
       expect(activePreset(f), p).toBe(p)
-      // The same state reached through the panel, not the chip.
-      expect(activePreset({ ...EMPTY_FILTERS, ...PRESETS[p] }), p).toBe(p)
-      // Changing one of its own controls: no longer that shortcut.
-      const [k] = Object.keys(PRESETS[p]) as (keyof BrowseFilters)[]
-      expect(activePreset({ ...f, [k!]: [] }), p).toBeNull()
-      // Another group on top keeps it lit (it's still exactly those values).
-      expect(activePreset({ ...f, noGroup: true }), p).toBe(p)
-      // Off again: exactly its filters go, anything else stays.
-      expect(removePreset({ ...f, noGroup: true }, p)).toEqual({ ...EMPTY_FILTERS, noGroup: true })
+      expect(browseAddress(f), p).toBe(`subjects/${PRESET_SLUGS[p]}/`)
+      // Taking one chip off leaves the others, and the address says so.
+      const [first] = activeFilters(f)
+      const g = first!.group as keyof BrowseFilters
+      const less = { ...f, [g]: (f[g] as readonly unknown[]).filter((v) => v !== first!.value) } as BrowseFilters
+      expect(activeFilters(less).length, p).toBe(want.length - 1)
+      expect(filtersFromQuery(new URLSearchParams(browseAddress(less).split('?')[1] ?? ''))).toEqual(less)
     }
+  })
+
+  it('the same filters set by query or by hand are the same state as the list address', () => {
+    for (const p of names) {
+      const q = filtersToQuery({ ...EMPTY_FILTERS, ...PRESETS[p] })
+      expect(filtersFromQuery(new URLSearchParams(q)), p).toEqual(filtersFromQuery(new URLSearchParams(''), PRESET_SLUGS[p]))
+      expect(activePreset({ ...EMPTY_FILTERS, ...PRESETS[p] }), p).toBe(p)
+      // Another group on top: still those filters, both shown.
+      expect(activeFilters({ ...EMPTY_FILTERS, ...PRESETS[p], noGroup: true }).map((c) => c.key)).toContain('noGroup')
+      // One of its own values changed: no longer that list.
+      const [k] = Object.keys(PRESETS[p]) as (keyof BrowseFilters)[]
+      expect(activePreset({ ...EMPTY_FILTERS, ...PRESETS[p], [k!]: [] }), p).toBeNull()
+    }
+  })
+
+  it('every filter or order change is its own Back step; a search is one step, not one per letter', () => {
+    const start = EMPTY_FILTERS
+    expect(historyStep(start, { ...start, level: [1] })).toBe('push')
+    expect(historyStep(start, chooseOrder(start, 'easy'))).toBe('push')
+    expect(historyStep(start, chooseOrder(start, 'mine'))).toBe('push')
+    expect(historyStep(start, { ...start, noTest: true })).toBe('push')
+    expect(historyStep(start, { ...start, text: 'b' })).toBe('push')
+    expect(historyStep({ ...start, text: 'b' }, { ...start, text: 'bi' })).toBe('replace')
+    expect(historyStep({ ...start, text: 'bio' }, { ...start, text: '' })).toBe('replace')
+    expect(historyStep({ ...start, text: 'bio' }, { ...start, text: 'bio', level: [2] })).toBe('push')
+    // A step back opens exactly the state before it.
+    const before = { ...start, level: [1], text: 'x' }
+    const [path = '', query = ''] = browseAddress(before).split('?')
+    expect(filtersFromQuery(new URLSearchParams(query), path.replace(/^subjects\/?/, '').replace(/\/$/, ''))).toEqual(before)
   })
 
   it('each shortcut lists exactly what its filters list, alone, with search text, with an order and with other filters', () => {

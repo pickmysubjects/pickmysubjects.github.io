@@ -1067,7 +1067,6 @@ export const en = {
     forMeNudge: "Add your marks or interests in {link} and this order fits you better.",
     lede: "Narrow the list down to what you need: breadth, a level, a semester, no exam.",
     ledeShort: "Filter by breadth, level, semester or exam",
-    presets: "Quick picks",
     searchLabel: "Search subjects",
     searchPlaceholder: "Code or name, e.g. COMP10001",
     type: "Type",

@@ -1063,7 +1063,6 @@ export const ms: Messages = {
     forMeNudge: "Isi markah atau minat anda di {link} supaya susunan lebih tepat.",
     lede: "Tapis ikut apa yang anda perlukan: breadth, tahap, semester, tanpa peperiksaan.",
     ledeShort: "Tapis ikut breadth, tahap, semester atau peperiksaan",
-    presets: "Pilihan pantas",
     searchLabel: "Cari subjek",
     searchPlaceholder: "Kod atau nama, contohnya COMP10001",
     type: "Jenis",

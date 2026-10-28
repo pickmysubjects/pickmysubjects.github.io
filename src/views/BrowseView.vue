@@ -19,8 +19,8 @@ import { useI18n } from '@/i18n'
 import { reasonText } from '@/i18n/format'
 
 /**
- * Find subjects: the hero (title, search, the subjects/majors/careers switch), the ready-made
- * lists as cards, then the filters beside the results. Filters, lists and the order all live in
+ * Find subjects: the hero (title, search, the subjects/majors/careers switch), the order chips
+ * (fits me, easiest, hardest), then the filters beside the results. Filters, lists and the order all live in
  * the address (useBrowse), so every list can be shared and every old address still opens.
  */
 const PAGE = 20
@@ -28,7 +28,7 @@ const PAGE = 20
 const { t } = useI18n()
 const { subjectList } = useDataset()
 const plan = usePlan()
-const { filters, course, year, rows, facets, active, choice, order, preset, hasProfile, hasRecord, index, set, choose, setOrder, setPreset } = useBrowse()
+const { filters, course, year, rows, facets, active, choice, order, hasProfile, hasRecord, index, set, choose, setOrder } = useBrowse()
 const aboutOf = useLearnLines()
 
 const shown = shallowRef(PAGE)
@@ -76,7 +76,7 @@ const searching = computed(() => filters.value.text.trim() !== '')
       </label>
     </BrowseHero>
 
-    <PresetCards :order="order" :preset="preset" @order="setOrder" @preset="setPreset" />
+    <PresetCards :order="order" @order="setOrder" />
 
     <div class="layout">
       <BrowseFilters v-model="filters" v-model:open="sheetOpen" :index="index" :facets="facets" :count="rows.length" :has-record="hasRecord" class="side" />
@@ -86,7 +86,7 @@ const searching = computed(() => filters.value.text.trim() !== '')
              other lists don't need it, so they don't ask. -->
         <DegreePick v-if="askDegree" />
         <template v-else>
-          <BrowseToolbar v-model="filters" :count="rows.length" :course="course" :preset="preset" :active="active" :any-rated="anyRated" @open-filters="sheetOpen = true" @clear="clearAll" />
+          <BrowseToolbar v-model="filters" :count="rows.length" :course="course" :active="active" :any-rated="anyRated" @open-filters="sheetOpen = true" @clear="clearAll" />
 
           <div v-if="filters.mine" class="mine-bar">
             <GoalPicker compact />

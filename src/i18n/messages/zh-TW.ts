@@ -1063,7 +1063,6 @@ export const zhTW: Messages = {
     forMeNudge: "在「{link}」裡填上成績或興趣，排得更準。",
     lede: "按你需要的條件篩：Breadth、年級、學期、沒有考試。",
     ledeShort: "依 Breadth、年級、學期、考試篩選",
-    presets: "常用篩選",
     searchLabel: "搜尋課程",
     searchPlaceholder: "課程代碼或名稱，例如 COMP10001",
     type: "類型",

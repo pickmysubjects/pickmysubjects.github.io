@@ -1063,7 +1063,6 @@ export const ja: Messages = {
     forMeNudge: "{link}で成績や興味を入れると、もっと合う順になります。",
     lede: "Breadth、レベル、学期、試験なしなど、必要な条件でしぼり込めます。",
     ledeShort: "Breadth・レベル・学期・試験で絞り込み",
-    presets: "よく使う条件",
     searchLabel: "科目を検索",
     searchPlaceholder: "科目コードか名前（例：COMP10001）",
     type: "種類",

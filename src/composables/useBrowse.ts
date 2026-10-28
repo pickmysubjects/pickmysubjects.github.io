@@ -1,13 +1,11 @@
-import { computed, shallowRef, watch } from 'vue'
+import { computed, nextTick, shallowRef, watch } from 'vue'
 import { viewYear } from '@/engine/dataYear'
 import {
   activeCount,
   activePreset,
   applyQuick,
   chooseOrder,
-  choosePreset,
   orderOf,
-  removePreset,
   browseAddress,
   browseIndex,
   clearFilters,
@@ -15,16 +13,16 @@ import {
   filtersFromQuery,
   findRows,
   hasFitProfile,
+  historyStep,
   isFail,
   quickChoice,
   rankCourseOf,
   recommend,
   type BrowseFilters,
   type Order,
-  type PresetName,
   type QuickChoice,
 } from '@/engine'
-import { replaceAddress, useView } from './useView'
+import { link, pushAddress, replaceAddress, useView } from './useView'
 import { useDataset } from './useDataset'
 import { usePlan } from './usePlan'
 import { useProfile } from './useProfile'
@@ -83,23 +81,29 @@ export function useBrowse() {
   function setOrder(o: Order): void {
     filters.value = chooseOrder(filters.value, o)
   }
-  // A shortcut sets its filters; off again, it takes exactly those off.
-  function setPreset(p: PresetName | null): void {
-    const on = preset.value
-    filters.value = p ? choosePreset(filters.value, p) : on ? removePreset(filters.value, on) : filters.value
-  }
   function clear(): void {
     filters.value = clearFilters(filters.value)
   }
 
-  // Keep the address in step, so a list can be shared. replaceState, not a new history entry:
-  // every tap on a filter shouldn't need its own Back press.
-  watch(filters, (f) => replaceAddress(browseAddress(f)))
+  // Keep the address in step, so a list can be shared. Each change of filters or order is its
+  // own history entry, so Back steps through them; typing in the search box only swaps the
+  // address in place (a letter shouldn't need its own Back press). Filters set from the
+  // address (Back, Forward, a link) only tidy it, never add an entry.
+  let following = false
+  watch(filters, (f, old) => {
+    const next = browseAddress(f)
+    if (link(next) === location.pathname + location.search) return
+    if (following || historyStep(old, f) === 'replace') replaceAddress(next)
+    else pushAddress(next)
+  })
   // Back and forward (or a link to another list) change the address under the page: follow it.
   watch([query, param], ([q, p]) => {
     const next = filtersFromQuery(q, p)
-    if (browseAddress(next) !== browseAddress(filters.value)) filters.value = next
+    if (browseAddress(next) === browseAddress(filters.value)) return
+    following = true
+    filters.value = next
+    void nextTick(() => (following = false))
   })
 
-  return { filters, course, year, rows, facets, active, choice, order, preset, hasProfile, hasRecord, index, set, choose, setOrder, setPreset, clear }
+  return { filters, course, year, rows, facets, active, choice, order, preset, hasProfile, hasRecord, index, set, choose, setOrder, clear }
 }

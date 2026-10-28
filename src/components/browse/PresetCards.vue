@@ -1,33 +1,25 @@
 <script setup lang="ts">
 import { onMounted, useTemplateRef, type Component } from 'vue'
-import { FileX, Flame, Scale, Shapes, Snowflake, Sparkles, Sprout, X } from 'lucide-vue-next'
-import type { Order, PresetName } from '@/engine'
+import { Flame, Scale, Sparkles, X } from 'lucide-vue-next'
+import type { Order } from '@/engine'
 import { useI18n } from '@/i18n'
 
 /**
- * One row of chips under the hero, in two kinds. Orders (one at a time, instead of the sort
- * menu): "Fits me" first and set apart (the student's own interests and strengths), then easiest
- * first (水课) and hardest first (难课). Shortcuts: each sets ordinary filters (the same ones the
- * filter panel shows) and is lit while those filters are exactly its values. A lit chip is pink
- * and has its own ✕; tapping it again also turns it off. Where the row scrolls sideways, the lit
- * chip is brought into view.
+ * One row of order chips under the hero (one at a time, instead of the sort menu): "Fits me"
+ * first and set apart (the student's own interests and strengths), then easiest first (水课)
+ * and hardest first (难课). Filters live in the panel beside the results, never here. A lit chip
+ * is pink and has its own ✕; tapping it again also turns it off. Where the row scrolls
+ * sideways, the lit chip is brought into view.
  */
-const props = defineProps<{ order: Order; preset: PresetName | null }>()
-const emit = defineEmits<{ order: [o: Order]; preset: [p: PresetName | null] }>()
+const props = defineProps<{ order: Order }>()
+const emit = defineEmits<{ order: [o: Order] }>()
 const { t } = useI18n()
 
 const ORDERS: { id: Exclude<Order, 'mine' | null>; icon: Component; name: string }[] = [
   { id: 'easy', icon: Scale, name: 'browse.rankList.easy' },
   { id: 'hard', icon: Flame, name: 'browse.rankList.hard' },
 ]
-const SHORTCUTS: { id: PresetName; icon: Component; name: string }[] = [
-  { id: 'noExam', icon: FileX, name: 'browse.preset.noExam' },
-  { id: 'summerWinter', icon: Snowflake, name: 'browse.preset.summerWinter' },
-  { id: 'firstSemester', icon: Sprout, name: 'browse.preset.firstSemester' },
-  { id: 'breadth', icon: Shapes, name: 'browse.preset.breadth' },
-]
 const toggleOrder = (o: Order) => emit('order', props.order === o ? null : o)
-const togglePreset = (p: PresetName) => emit('preset', props.preset === p ? null : p)
 
 const row = useTemplateRef<HTMLElement>('row')
 onMounted(() => {
@@ -41,7 +33,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div ref="row" class="presets" role="group" :aria-label="t('browse.presets')">
+  <div ref="row" class="presets" role="group" :aria-label="t('browse.sort')">
     <div class="preset preset-mine" :class="{ on: order === 'mine' }">
       <button type="button" class="preset-btn" :aria-pressed="order === 'mine'" :title="t('browse.presetDesc.mine')" @click="toggleOrder('mine')">
         <Sparkles :size="16" aria-hidden="true" class="preset-icon" />{{ t('browse.preset.mine') }}
@@ -58,22 +50,12 @@ onMounted(() => {
         <X :size="14" aria-hidden="true" />
       </button>
     </div>
-    <span class="preset-sep" aria-hidden="true" />
-    <div v-for="l in SHORTCUTS" :key="l.id" class="preset" :class="{ on: preset === l.id }">
-      <button type="button" class="preset-btn" :aria-pressed="preset === l.id" @click="togglePreset(l.id)">
-        <component :is="l.icon" :size="16" aria-hidden="true" class="preset-icon" />{{ t(l.name) }}
-      </button>
-      <button v-if="preset === l.id" type="button" class="preset-x" :aria-label="t('browse.removeFilter', { x: t(l.name) })" @click="emit('preset', null)">
-        <X :size="14" aria-hidden="true" />
-      </button>
-    </div>
   </div>
 </template>
 
 <style scoped>
-/* One row of compact chips: the name and its icon; the orders, then a hairline, then the
-   shortcuts. Where the row doesn't fit (phones, long languages) it scrolls sideways out to the
-   screen's edges. */
+/* One row of compact chips: the name and its icon. Where the row doesn't fit (phones, long
+   languages) it scrolls sideways out to the screen's edges. */
 .presets {
   display: flex;
   align-items: center;
@@ -91,14 +73,6 @@ onMounted(() => {
 .preset {
   position: relative;
   flex: none;
-}
-
-.preset-sep {
-  flex: none;
-  width: 1px;
-  height: 24px;
-  margin: 0 4px;
-  background: var(--divider);
 }
 
 .preset-btn {
