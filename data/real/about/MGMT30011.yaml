@@ -3,7 +3,7 @@ year: 2026
 learn:
   en: "How supply chains and networks work, and the data and systems used to run them better."
   zh: "供应链和网络如何运作，以及用来改进它们的数据和系统。"
-  zh-TW: "供應鏈和網絡如何運作，以及用來改善它們的資料和系統。"
+  zh-TW: "供應鏈和網路如何運作，以及用來改善它們的資料和系統。"
   ja: "サプライチェーンとネットワークの仕組みと、それを改善するデータやシステム。"
   ko: "공급망과 네트워크의 작동 방식과 이를 개선하는 데이터·시스템."
   vi: "Chuỗi cung ứng và mạng lưới vận hành ra sao, cùng dữ liệu và hệ thống để cải thiện chúng."
@@ -13,7 +13,7 @@ learn:
 outcomes:
   - en: "Describe the role of supply chains and networks"
     zh: "描述供应链和网络的作用"
-    zh-TW: "描述供應鏈和網絡的作用"
+    zh-TW: "描述供應鏈和網路的作用"
     ja: "サプライチェーンとネットワークの役割を説明する"
     ko: "공급망과 네트워크의 역할 설명하기"
     vi: "Mô tả vai trò của chuỗi cung ứng và mạng lưới"
