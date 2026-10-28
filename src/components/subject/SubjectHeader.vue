@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, shallowRef, useTemplateRef } from 'vue'
 import { ArrowLeft, BookOpen, ChartNoAxesColumn, Check, Link2, MapPin, Plus, Share2, Star } from 'lucide-vue-next'
-import { evaluateField, isFail, isQuotaSubject, knownNotRunning, listPlace, periodsFor, simplifyFor, RANK_SLUGS, type Period, type Subject } from '@/engine'
+import { isFail, isQuotaSubject, knownNotRunning, listPlace, periodsFor, prereqStatus, simplifyFor, standingOf, RANK_SLUGS, type Period, type Subject } from '@/engine'
 import { link } from '@/composables/useView'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
@@ -65,13 +65,14 @@ const exam = computed(() => {
 // Prerequisites in a word or two; the full rule is under "Where it fits" (#route), which it links to.
 const needs = computed(() => simplifyFor(props.subject.prerequisites, plan.setup.value.course))
 const prereq = computed(() => prereqGist(t.value, needs.value))
-// Met by what the student has done: said only when it's certain.
+// Met by what the student has done or planned (or a condition they said they meet), checked as
+// suggestions and Find subjects check it: said only when it's certain.
 const prereqMet = computed(() => {
   const n = needs.value
   if (n === 'none' || n === 'unknown') return false
-  const done = new Set([...profile.value.results.filter((r) => !isFail(r)).map((r) => r.code), ...plan.plan.value.completed])
-  if (done.size === 0) return false
-  return evaluateField(n, { completed: done, subjects: data.value.subjects, admittedCourse: plan.setup.value.course }).status === 'ok'
+  const standing = standingOf(profile.value, data.value, plan.plannedCodes.value)
+  if (standing.completed.size === 0 && standing.confirmed.length === 0) return false
+  return prereqStatus(props.subject, standing, { subjects: data.value.subjects, course: plan.setup.value.course }).status === 'ok'
 })
 
 const taken = computed(() => profile.value.results.some((r) => r.code === code.value))

@@ -427,6 +427,9 @@ export const zhCN: Messages = {
   },
   reason: {
     opensMany: "有 {n} 门后续课以它为先修，以后用得上。",
+    degreeCore: "你的学位必修。",
+    manyMajors: "你的学位里有 {n} 个专业要用到它。",
+    wayInto: "要上 {codes}，得先修这门。",
     makesHeavy: "加进这个学期会让它偏重。",
     retake: "你上次这门得了 {mark} 分没过，这次是重修。",
     retakeFailed: "你上次这门没过，这次是重修。",
@@ -1919,7 +1922,7 @@ export const zhCN: Messages = {
     dataFacts: "课程信息（开课学期、先修、考核、课时）来自墨大官方的 Handbook，我一门一门整理、核对过。",
     dataRatings: "评分来自使用本站的同学。",
     dataDiscuss: "有些课下面有“网上讨论摘要”，是我从其他网站的公开评价里总结的，附了原文链接。它不打分，也不算进这里的评分。",
-    dataSuggest: "推荐主要看你的兴趣、强项和成绩，评分多了以后也会参考评分。只会推荐你现在能修、近期会开的课。",
+    dataSuggest: "推荐主要看你的兴趣、强项和成绩，评分多了以后也会参考评分。只会推荐你现在能修、近期会开的课。什么都没填时，先列你学位里多数专业都会用到的课；一门课总排在它的先修课后面。",
   },
   grades: {
     title: "分享你的成绩等级（可选）",

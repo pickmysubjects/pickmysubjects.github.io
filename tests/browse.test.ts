@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest'
 import { activeCount, activePreset, applyQuick, chooseOrder, choosePreset, orderOf, PRESETS, PRESET_SLUGS, activeFilters, historyStep, browse, browseAddress, browseIndex, clearFilters, EASY_CUTS, EMPTY_FILTERS, facetCounts, filterIndex, filtersFromQuery, filtersToQuery, findRows, quickChoice, QUICK_CHOICES, rankCourseOf, type BrowseFilters } from '../src/engine/browse'
-import { rankSubjects, rankTier } from '../src/engine/easeRanking'
+import { rankSubjects } from '../src/engine/easeRanking'
 import { simplifyFor } from '../src/engine/expr'
-import { recommend } from '../src/engine/recommend'
+import { prereqStatus, recommend, standingOf, type Profile } from '../src/engine/recommend'
 import { realData } from './realData'
 import { subject } from './helpers'
 
@@ -183,7 +183,7 @@ describe('browse filters in the address', () => {
 describe('quick choices on Find subjects', () => {
   const data = realData()
   const all = Object.values(data.subjects)
-  const opts = { course: 'B-SCI', rankCourse: 'B-SCI', year: 2026 }
+  const opts = { course: 'B-SCI', year: 2026 }
 
   it('each choice opens from its old address and keeps that address when nothing else is set', () => {
     const slugs: Record<string, string> = { easy: 'easy', hard: 'hard', noExam: 'no-exam', firstSemester: 'first-semester', breadth: 'breadth', summerWinter: 'summer-winter' }
@@ -219,33 +219,43 @@ describe('quick choices on Find subjects', () => {
     expect(f).toMatchObject({ rank: 'easy', level: [1], category: ['breadth'] })
   })
 
-  it('easiest first keeps every subject, the easy list in its own order first, nothing-to-go-on last', () => {
+  it('easiest first is the easy list exactly, then every subject it leaves out, by code', () => {
     const rows = findRows(all, applyQuick(EMPTY_FILTERS, 'easy'), opts)
     expect(rows.length).toBe(findRows(all, EMPTY_FILTERS, opts).length)
-    const at = new Map(rows.map((r, i) => [r.subject.code, i]))
-    // The easy list (subjects that lean easy) keeps its order inside the sorted whole.
     const list = rankSubjects(all, { direction: 'easy', course: 'B-SCI', year: 2026 }).map((r) => r.subject.code)
-    const positions = list.map((c) => at.get(c)!)
-    expect(positions).toEqual([...positions].sort((a, b) => a - b))
-    // Its top is the list's top: the subject pages' "#n on the easy list" counts the same places.
-    expect(rows.slice(0, 10).map((r) => r.subject.code)).toEqual(list.slice(0, 10))
-    const firstUnranked = rows.findIndex((r) => !r.ranked)
-    expect(firstUnranked).toBeGreaterThan(0)
-    expect(rows.slice(firstUnranked).every((r) => !r.ranked)).toBe(true)
+    // Same members, same order, from the top: card n is "#n on the easy list".
+    expect(rows.slice(0, list.length).map((r) => r.subject.code)).toEqual(list)
+    expect(rows.slice(0, list.length).every((r) => r.ranked)).toBe(true)
+    const tail = rows.slice(list.length)
+    expect(tail.every((r) => !r.ranked)).toBe(true)
+    expect(tail.map((r) => r.subject.code)).toEqual(tail.map((r) => r.subject.code).sort())
   })
 
-  it('easiest first and hardest first are exact reverses over the same subjects; no data stays last in both', () => {
+  it('regression: a subject the list leaves out (only "first-year" going for it) never sits among its members', () => {
+    // Reviewer repro: CLAS10020, CRIM10002, GERM10008 scored 0.1 with only "firstYear" and were
+    // numbered among the easy list in Find subjects below #30.
+    const rows = findRows(all, applyQuick(EMPTY_FILTERS, 'easy'), opts)
+    const list = new Set(rankSubjects(all, { direction: 'easy', course: 'B-SCI', year: 2026 }).map((r) => r.subject.code))
+    const firstOut = rows.findIndex((r) => !list.has(r.subject.code))
+    expect(rows.slice(firstOut).some((r) => list.has(r.subject.code))).toBe(false)
+    for (const r of rows.filter((x) => x.ranked)) expect(r.ranked!.reasons.some((x) => x.key !== 'firstYear')).toBe(true)
+  })
+
+  it('the sort menu\'s "easiest first" is the same order as the easy list', () => {
+    const bySort = findRows(all, { ...EMPTY_FILTERS, sort: 'easy' }, opts).map((r) => r.subject.code)
+    const byList = findRows(all, applyQuick(EMPTY_FILTERS, 'easy'), opts).map((r) => r.subject.code)
+    expect(bySort).toEqual(byList)
+  })
+
+  it('hardest first is the hard list exactly, over the same subjects as easiest first', () => {
     const easy = findRows(all, applyQuick(EMPTY_FILTERS, 'easy'), opts)
     const hard = findRows(all, applyQuick(EMPTY_FILTERS, 'hard'), opts)
     expect(new Set(easy.map((r) => r.subject.code))).toEqual(new Set(hard.map((r) => r.subject.code)))
-    // Same tier and score are ties (ordered by code both ways), so compare the sort keys.
-    const key = (r: (typeof easy)[number], d: 'easy' | 'hard') => `${d === 'easy' ? rankTier(r.ranked!.reviews, 'easy') : 2 - rankTier(r.ranked!.reviews, 'hard')}|${r.ranked!.score.toFixed(3)}`
-    const ek = easy.filter((r) => r.ranked).map((r) => key(r, 'easy'))
-    const hk = hard.filter((r) => r.ranked).map((r) => key(r, 'hard'))
-    expect(hk).toEqual([...ek].reverse())
-    const tail = (rows: typeof easy) => rows.filter((r) => !r.ranked).map((r) => r.subject.code)
-    expect(tail(easy)).toEqual(tail(hard))
-    expect(tail(easy)).toEqual([...tail(easy)].sort())
+    const list = rankSubjects(all, { direction: 'hard', course: 'B-SCI', year: 2026 }).map((r) => r.subject.code)
+    expect(hard.slice(0, list.length).map((r) => r.subject.code)).toEqual(list)
+    // Nothing is on both lists.
+    const easyList = new Set(rankSubjects(all, { direction: 'easy', course: 'B-SCI', year: 2026 }).map((r) => r.subject.code))
+    expect(list.some((c) => easyList.has(c))).toBe(false)
   })
 
   it('other filters narrow the easy list without reordering it', () => {
@@ -285,10 +295,11 @@ describe('a subject page’s place on a list is the place on the list it links t
     expect(applyQuick(f, 'noExam')).toMatchObject({ rank: 'easy', listCourse: 'B-SCI' })
     expect(chooseOrder(f, null).listCourse).toBeUndefined()
     expect(filtersFromQuery(new URLSearchParams('course=<script>'), 'easy').listCourse).toBeUndefined()
-    // The student's own degree, once chosen, wins; nothing chosen and no link: every degree.
-    expect(rankCourseOf(f, 'B-COM')).toBe('B-COM')
-    expect(rankCourseOf(f, null)).toBe('B-SCI')
-    expect(rankCourseOf(EMPTY_FILTERS, null)).toBe('')
+    // The student's own degree, once chosen, wins; nothing chosen and no link: the default degree
+    // (never "every degree": the filter and the list would then disagree).
+    expect(rankCourseOf(f, 'B-COM', 'B-ARTS')).toBe('B-COM')
+    expect(rankCourseOf(f, null, 'B-ARTS')).toBe('B-SCI')
+    expect(rankCourseOf(EMPTY_FILTERS, null, 'B-ARTS')).toBe('B-ARTS')
   })
 
   it('a new visitor sees the same list the header counted the place on', async () => {
@@ -300,18 +311,17 @@ describe('a subject page’s place on a list is the place on the list it links t
     const subjects = Object.values(data.subjects).sort((a, b) => a.code.localeCompare(b.code))
     // The header's link: /subjects/easy/?course=<the degree it counted for>.
     const f = filtersFromQuery(new URLSearchParams(`course=${course}`), 'easy')
-    const rows = findRows(subjects, f, { course, rankCourse: rankCourseOf(f, null), year: 2027 })
+    const rows = findRows(subjects, f, { course: rankCourseOf(f, null, course), year: 2027 })
     let checked = 0
-    for (const r of rows.slice(0, 30)) {
-      const place = listPlace(data.subjects, r.subject.code, course, 2027)
-      expect(place?.direction).toBe('easy')
-      // A tie shares the place of its first subject: the row sits at that place or just below it.
-      const at = rows.indexOf(r) + 1
-      expect(place!.place).toBeLessThanOrEqual(at)
-      expect(rows[place!.place - 1]!.ranked!.score).toBe(r.ranked!.score)
-      checked++
+    for (const direction of ['easy', 'hard'] as const) {
+      const list = direction === 'easy' ? rows : findRows(subjects, { ...f, rank: 'hard' }, { course, year: 2027 })
+      // "#n" on the subject page is card n on the list it links to, ties included.
+      list.slice(0, 30).forEach((r, i) => {
+        expect(listPlace(data.subjects, r.subject.code, course, 2027)).toEqual({ direction, place: i + 1 })
+        checked++
+      })
     }
-    expect(checked).toBe(30)
+    expect(checked).toBe(60)
   })
 })
 
@@ -329,7 +339,7 @@ describe('easiest level 3 breadth list', () => {
 
   it('lists level 3 B-SCI breadth subjects easiest first', () => {
     const f = filtersFromQuery(new URLSearchParams(''), slug)
-    const rows = findRows(all, f, { course: 'B-SCI', rankCourse: 'B-SCI', year: 2026 })
+    const rows = findRows(all, f, { course: 'B-SCI', year: 2026 })
     expect(rows.length).toBeGreaterThan(0)
     for (const r of rows) {
       expect(r.subject.level).toBe(3)
@@ -394,9 +404,32 @@ describe('filter groups and their live counts', () => {
   it('"prerequisites I meet" goes by what the student has done', () => {
     const later = subject({ code: 'ZZZZ20001', prerequisites: { subject: 'ZZZZ10001' } })
     const first = subject({ code: 'ZZZZ10001', prerequisites: 'none' })
-    const met = (done: string[]) => filterIndex(browseIndex([first, later], { course: 'B-SCI', year: 2026, done: new Set(done) }), { ...EMPTY_FILTERS, prereq: 'met', running: false }).map((r) => r.subject.code)
+    const met = (done: string[]) => filterIndex(browseIndex([first, later], { course: 'B-SCI', year: 2026, standing: { completed: new Set(done), marks: {}, wam: null, confirmed: [] } }), { ...EMPTY_FILTERS, prereq: 'met', running: false }).map((r) => r.subject.code)
     expect(met([])).toEqual(['ZZZZ10001'])
     expect(met(['ZZZZ10001'])).toEqual(['ZZZZ10001', 'ZZZZ20001'])
+  })
+
+  it('"prerequisites I meet" reads planned subjects and confirmed conditions the way suggestions do', () => {
+    const later = subject({ code: 'ZZZZ20001', prerequisites: { subject: 'ZZZZ10001' } })
+    const first = subject({ code: 'ZZZZ10001', prerequisites: 'none' })
+    const vce = subject({ code: 'ZZZZ10002', prerequisites: { manual: 'VCE Maths study score 25+' } })
+    const data = { ...realData(), subjects: { ZZZZ10001: first, ZZZZ20001: later, ZZZZ10002: vce } }
+    const meets = (p: Partial<Profile>, planned: string[] = []) => {
+      const profile: Profile = { results: [], skills: {}, interests: [], goal: 'balanced', ...p }
+      const index = browseIndex([first, later, vce], { course: 'B-SCI', year: 2026, standing: standingOf(profile, data, planned) })
+      const browseSays = filterIndex(index, { ...EMPTY_FILTERS, prereq: 'met', running: false }).map((r) => r.subject.code).sort()
+      // The same answer as the shared rule suggestions use.
+      const shared = [first, later, vce].filter((s) => prereqStatus(s, standingOf(profile, data, planned), { subjects: data.subjects, course: 'B-SCI' }).status === 'ok').map((s) => s.code).sort()
+      expect(browseSays).toEqual(shared)
+      return browseSays
+    }
+    expect(meets({})).toEqual(['ZZZZ10001'])
+    // Planned (not yet done) counts, as it does for suggestions.
+    expect(meets({}, ['ZZZZ10001'])).toEqual(['ZZZZ10001', 'ZZZZ20001'])
+    // A condition the student said they meet counts.
+    expect(meets({ confirmed: ['ZZZZ10002'] })).toEqual(['ZZZZ10001', 'ZZZZ10002'])
+    // A failed attempt doesn't.
+    expect(meets({ results: [{ code: 'ZZZZ10001', mark: 40 }] })).toEqual(['ZZZZ10001'])
   })
 
   it('counts and clears active filters, keeping the search, list and order', () => {
@@ -409,7 +442,7 @@ describe('filter groups and their live counts', () => {
 describe('lists by address and order chips, one model with the filter panel', () => {
   const data = realData()
   const all = Object.values(data.subjects)
-  const opts = { course: 'B-SCI', rankCourse: 'B-SCI', year: 2026 }
+  const opts = { course: 'B-SCI', year: 2026 }
   const index = browseIndex(all, { course: 'B-SCI', year: 2026 })
   const names = Object.keys(PRESETS) as (keyof typeof PRESETS)[]
 

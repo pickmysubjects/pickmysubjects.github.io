@@ -226,24 +226,37 @@ function belongs(r: RankedSubject, direction: RankDirection): boolean {
 }
 
 /**
+ * A subject's row on the `direction` list for `course` in `year`, or null when it isn't on it
+ * (can't be ranked there, nothing to rank on, or doesn't lean that way). The one membership rule
+ * the list pages, Find subjects' order and the subject page's place all use.
+ */
+export function listMember(s: Subject, direction: RankDirection, course: string, year: number): RankedSubject | null {
+  if (!rankable(s, course, year)) return null
+  const r = rankSubject(s, direction)
+  return r && belongs(r, direction) ? r : null
+}
+
+/** The lists' order: reviews that agree first, then by score that way, then by code. */
+export function compareListed(a: RankedSubject, b: RankedSubject, direction: RankDirection): number {
+  const sign = direction === 'easy' ? 1 : -1
+  return rankTier(a.reviews, direction) - rankTier(b.reviews, direction) || (b.score - a.score) * sign || a.subject.code.localeCompare(b.subject.code)
+}
+
+/**
  * Subjects ranked for `direction`, easiest (or hardest) first. Only subjects that lean that way
  * and have at least one reason to show are listed.
  */
 export function rankSubjects(subjects: Subject[], o: RankOptions): RankedSubject[] {
-  const sign = o.direction === 'easy' ? 1 : -1
-  const rows: { r: RankedSubject; tier: number }[] = []
+  const rows: RankedSubject[] = []
   for (const s of subjects) {
-    if (!rankable(s, o.course, o.year)) continue
     if (o.level != null && s.level !== o.level) continue
     if (o.breadthOnly && s.categories[o.course] !== 'breadth') continue
     if (o.period != null && !periodsFor(s, o.year).includes(o.period)) continue
-    const r = rankSubject(s, o.direction)
-    if (!r || !belongs(r, o.direction)) continue
-    rows.push({ r, tier: rankTier(r.reviews, o.direction) })
+    const r = listMember(s, o.direction, o.course, o.year)
+    if (r) rows.push(r)
   }
-  rows.sort((a, b) => a.tier - b.tier || (b.r.score - a.r.score) * sign || a.r.subject.code.localeCompare(b.r.subject.code))
-  const out = rows.map((x) => x.r)
-  return o.limit === undefined ? out : out.slice(0, o.limit)
+  rows.sort((a, b) => compareListed(a, b, o.direction))
+  return o.limit === undefined ? rows : rows.slice(0, o.limit)
 }
 
 /** Each list's own address (/subjects/easy/, /subjects/hard/). */
@@ -280,14 +293,10 @@ export function listPlace(subjects: Record<string, Subject>, code: string, cours
     places = new Map()
     const list = Object.values(subjects)
     for (const direction of ['easy', 'hard'] as const) {
-      // Tied subjects (same tier and score) share a place, numbered as the first of them, so a
-      // tie across #30 is either all shown or none.
-      const rows = rankSubjects(list, { direction, course, year })
-      let place = 0
-      rows.forEach((r, i) => {
-        const prev = rows[i - 1]
-        if (!prev || !sameSpot(prev, r, direction)) place = i + 1
-        if (place <= top && !places!.has(r.subject.code)) places!.set(r.subject.code, { direction, place })
+      // The place is the row's position on the list (ties go by code, as the list shows them),
+      // so "#12" on a subject page is the 12th card on the list it links to.
+      rankSubjects(list, { direction, course, year }).forEach((r, i) => {
+        if (i < top && !places!.has(r.subject.code)) places!.set(r.subject.code, { direction, place: i + 1 })
       })
     }
     byKey.set(key, places)
@@ -327,7 +336,21 @@ function cutoffFor(list: RankedSubject[], direction: RankDirection): Cutoff {
   return { tier: rankTier(r.reviews, direction), score: r.score }
 }
 
+/**
+ * Whether `s` is in the top share (LEAN_SHARE) of the `direction` list for `course` in `year`:
+ * Find subjects' "easier / harder than most" filter. A subject the list leaves out (another
+ * degree's, pass/fail, graduate, far campus, not running) is never in it.
+ */
 export function inTopShare(subjects: Record<string, Subject>, s: Subject, direction: RankDirection, course: string, year: number): boolean {
+  return rankable(s, course, year) && comparesInTopShare(subjects, s, direction, course, year)
+}
+
+/**
+ * Whether `s` would sit in the list's top share by the list's own rules (leaning that way, at or
+ * above the cut-off), whether or not the list can include it. Only the subject page uses it on
+ * its own, for a subject off the lists, and says there that it isn't on them.
+ */
+export function comparesInTopShare(subjects: Record<string, Subject>, s: Subject, direction: RankDirection, course: string, year: number): boolean {
   const r = rankSubject(s, direction)
   if (!r || !belongs(r, direction)) return false
   let byKey = cutoffCache.get(subjects)

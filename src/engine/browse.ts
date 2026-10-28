@@ -1,7 +1,7 @@
 import { periodsFor } from './availability'
-import { easeKey, inTopShare, RANK_SLUGS, rankable, rankFromSlug, rankSubject, rankTier, type RankDirection, type RankedSubject } from './easeRanking'
-import { evaluateField, simplifyFor } from './expr'
-import type { Recommendation } from './recommend'
+import { compareListed, inTopShare, listMember, RANK_SLUGS, rankFromSlug, type RankDirection, type RankedSubject } from './easeRanking'
+import { simplifyFor } from './expr'
+import { prereqStatus, type Recommendation, type Standing } from './recommend'
 import type { Period, Subject } from './schema'
 
 export type BrowseSort = 'code' | 'easy' | 'exam' | 'hours' | 'rating'
@@ -168,20 +168,6 @@ const byNumber = (pick: (r: BrowseRow) => number | null, dir: 1 | -1) => (a: Bro
   return (x - y) * dir || a.subject.code.localeCompare(b.subject.code)
 }
 
-// Easiest first, as the easy list orders them; subjects with nothing to rank on go last.
-function easiest() {
-  const keys = new Map<string, ReturnType<typeof easeKey>>()
-  const key = (r: BrowseRow) => {
-    if (!keys.has(r.subject.code)) keys.set(r.subject.code, easeKey(r.subject))
-    return keys.get(r.subject.code)!
-  }
-  return (a: BrowseRow, b: BrowseRow) => {
-    const x = key(a)
-    const y = key(b)
-    if (!x || !y) return x === y ? a.subject.code.localeCompare(b.subject.code) : x ? -1 : 1
-    return x.tier - y.tier || y.score - x.score || a.subject.code.localeCompare(b.subject.code)
-  }
-}
 
 /** What the filters need to know beyond the subjects themselves. */
 export interface BrowseContext {
@@ -190,8 +176,11 @@ export interface BrowseContext {
   year: number
   /** Every subject by code (prerequisites and the easy/hard cut-offs look across them). */
   all?: Readonly<Record<string, Subject>>
-  /** Subjects the student has passed or planned before now, for "prerequisites I meet". */
-  done?: ReadonlySet<string>
+  /**
+   * What the student's prerequisites are checked against, for "prerequisites I meet": the same
+   * standing suggestions use (standingOf: passed, planned, marks, confirmed conditions).
+   */
+  standing?: Standing
 }
 
 /** The groups of filters; within one, options are alternatives; across them, all apply. */
@@ -234,7 +223,7 @@ function dictOf(subjects: readonly Subject[]): Record<string, Subject> {
 /** Every subject's row and options, once per data set, degree, year and record. */
 export function browseIndex(subjects: readonly Subject[], ctx: BrowseContext): IndexedRow[] {
   const all = ctx.all ?? dictOf(subjects)
-  const done = ctx.done ?? new Set<string>()
+  const standing: Standing = ctx.standing ?? { completed: new Set(), marks: {}, wam: null, confirmed: [] }
   return subjects.map((s) => {
     const row = browseRow(s, ctx.year)
     const kinds = new Set<string>(Object.values(s.categories).filter((c) => c !== 'breadth'))
@@ -258,7 +247,7 @@ export function browseIndex(subjects: readonly Subject[], ctx: BrowseContext): I
         ease,
       },
       prereqNone: needs === 'none',
-      prereqMet: needs === 'none' || (needs !== 'unknown' && evaluateField(needs, { completed: done, subjects: all, admittedCourse: ctx.course }).status === 'ok'),
+      prereqMet: needs === 'none' || (needs !== 'unknown' && prereqStatus(s, standing, { subjects: all, course: ctx.course }).status === 'ok'),
       reviewed: (s.discussions?.length ?? 0) > 0 || (s.signals?.reviews ?? 0) >= MIN_REVIEWS,
       words: [s.code, s.title, ...Object.values(s.titles ?? {})].join(' ').toLowerCase(),
     }
@@ -375,11 +364,14 @@ export function clearFilters(f: BrowseFilters): BrowseFilters {
   return { ...EMPTY_FILTERS, text, sort, rank, mine, ...(listCourse ? { listCourse } : {}) }
 }
 
-/** Sorts rows in place by the chosen order. */
-function sortRows<T extends BrowseRow>(rows: T[], sort: BrowseSort): T[] {
-  const sorts: Record<BrowseSort, (a: BrowseRow, b: BrowseRow) => number> = {
+/**
+ * Rows in the chosen order. "Easiest first" is the easy list's own order for `course` in `year`
+ * (easeOrder), the same as the 水课 list, not an order of its own.
+ */
+function sortRows<T extends BrowseRow>(rows: T[], sort: BrowseSort, course: string, year: number): T[] {
+  if (sort === 'easy') return easeOrder(rows, 'easy', course, year).map(({ ranked: _, ...r }) => r as unknown as T)
+  const sorts: Record<Exclude<BrowseSort, 'easy'>, (a: BrowseRow, b: BrowseRow) => number> = {
     code: (a, b) => a.subject.code.localeCompare(b.subject.code),
-    easy: easiest(),
     exam: byNumber((r) => r.exam, 1),
     hours: byNumber((r) => r.hours, 1),
     rating: byNumber((r) => r.rating, -1),
@@ -392,12 +384,12 @@ function sortRows<T extends BrowseRow>(rows: T[], sort: BrowseSort): T[] {
  * record (no assessment, unknown prerequisites) leaves the subject out rather than guessing.
  */
 export function browse(subjects: Subject[], f: BrowseFilters, course: string, year: number, ctx: Partial<BrowseContext> = {}): IndexedRow[] {
-  return sortRows(filterIndex(browseIndex(subjects, { ...ctx, course, year }), f), f.sort)
+  return sortRows(filterIndex(browseIndex(subjects, { ...ctx, course, year }), f), f.sort, course, year)
 }
 
 /** Sorts already-filtered rows (the page keeps one index and filters it on every change). */
-export function sortedRows(rows: IndexedRow[], sort: BrowseSort): IndexedRow[] {
-  return sortRows([...rows], sort)
+export function sortedRows(rows: IndexedRow[], sort: BrowseSort, course: string, year: number): IndexedRow[] {
+  return sortRows([...rows], sort, course, year)
 }
 
 const list = <T extends string | number>(xs: readonly T[]) => [...xs].join(',')
@@ -491,11 +483,13 @@ export function filtersFromQuery(q: URLSearchParams, slug = ''): BrowseFilters {
 const COURSE_CODE = /^[A-Z]+(?:-[A-Z0-9]+)+$/
 
 /**
- * The degree the easy and hard lists go by: the student's own once chosen; before that the one a
- * link opened the list for (what a subject page's place on it counted), else every degree.
+ * The one degree Find subjects goes by (breadth, prerequisites, the easy and hard lists and the
+ * "easier / harder than most" filter alike), shown in its toolbar: the student's own once chosen;
+ * before that the one a link opened a list for (what a subject page's place on it counted), else
+ * the default degree the rest of the site shows.
  */
-export function rankCourseOf(f: Pick<BrowseFilters, 'listCourse'>, chosen: string | null): string {
-  return chosen ?? f.listCourse ?? ''
+export function rankCourseOf(f: Pick<BrowseFilters, 'listCourse'>, chosen: string | null, fallback: string): string {
+  return chosen ?? f.listCourse ?? fallback
 }
 
 /**
@@ -587,9 +581,8 @@ export interface FoundRow extends IndexedRow {
 }
 
 export interface FindOptions {
+  /** The degree everything goes by, the easy/hard lists included (rankCourseOf). */
   course: string
-  /** The degree the easy/hard lists go by; '' for any degree. */
-  rankCourse: string
   year: number
   /** The student's suggestions, best first: used when "sort for me" is on. */
   recs?: Recommendation[]
@@ -598,22 +591,23 @@ export interface FindOptions {
 }
 
 /**
- * Easiest first (or hardest first) over the rows given: what students say first, then the
- * Handbook facts (the easy list's own measure, rankSubject). The two directions are exact
- * reverses of each other. Subjects with nothing to rank on, or that can't be ranked (graduate,
- * pass/fail, not running that year, not part of the degree), go last, by code, in both.
+ * Easiest first (or hardest first) over the rows given: exactly the easy (or hard) list for
+ * `course` in `year` (rankSubjects: same members, same order), then every subject the list
+ * leaves out (doesn't lean that way, nothing to rank on, or can't be ranked: graduate,
+ * pass/fail, not running, not part of the degree), by code. With no other filters, a subject's
+ * position here is its place on the list ("#12" on its page).
  */
 export function easeOrder<T extends BrowseRow>(rows: readonly T[], direction: RankDirection, course: string, year: number): (T & { ranked?: RankedSubject })[] {
-  const sign = direction === 'easy' ? 1 : -1
-  const keyed = rows.map((r) => {
-    const ranked = rankable(r.subject, course, year) ? rankSubject(r.subject, direction) : null
-    return { r, ranked, tier: ranked ? rankTier(ranked.reviews, direction) : 0 }
-  })
-  keyed.sort((a, b) => {
-    if (!a.ranked || !b.ranked) return a.ranked === b.ranked ? a.r.subject.code.localeCompare(b.r.subject.code) : a.ranked ? -1 : 1
-    return a.tier - b.tier || (b.ranked.score - a.ranked.score) * sign || a.r.subject.code.localeCompare(b.r.subject.code)
-  })
-  return keyed.map(({ r, ranked }) => (ranked ? { ...r, ranked } : r))
+  const members: { r: T; ranked: RankedSubject }[] = []
+  const rest: T[] = []
+  for (const r of rows) {
+    const ranked = listMember(r.subject, direction, course, year)
+    if (ranked) members.push({ r, ranked })
+    else rest.push(r)
+  }
+  members.sort((a, b) => compareListed(a.ranked, b.ranked, direction))
+  rest.sort((a, b) => a.subject.code.localeCompare(b.subject.code))
+  return [...members.map(({ r, ranked }) => ({ ...r, ranked })), ...rest]
 }
 
 /**
@@ -621,8 +615,8 @@ export function easeOrder<T extends BrowseRow>(rows: readonly T[], direction: Ra
  * (easeOrder); with "Fits me", only the student's suggestions, in their order.
  */
 export function findRows(subjects: Subject[], f: BrowseFilters, o: FindOptions): FoundRow[] {
-  let rows: FoundRow[] = o.index ? sortedRows(filterIndex(o.index, f), f.sort) : browse(subjects, f, o.course, o.year)
-  if (f.rank) rows = easeOrder(rows, f.rank, o.rankCourse, o.year)
+  let rows: FoundRow[] = o.index ? sortedRows(filterIndex(o.index, f), f.sort, o.course, o.year) : browse(subjects, f, o.course, o.year)
+  if (f.rank) rows = easeOrder(rows, f.rank, o.course, o.year)
   if (f.mine && o.recs) {
     const byCode = new Map(rows.map((r) => [r.subject.code, r]))
     rows = o.recs.flatMap((rec) => {

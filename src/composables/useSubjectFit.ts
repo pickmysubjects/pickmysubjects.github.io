@@ -22,6 +22,7 @@ export function useSortForMeOptions() {
       components: heldMajorIds(plan.plan.value).filter((id): id is string => !!id),
       minors: plan.setup.value.minors ?? [],
     },
+    startHere: true,
   }))
 }
 

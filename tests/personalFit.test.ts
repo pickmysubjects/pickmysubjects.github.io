@@ -41,7 +41,17 @@ describe('past marks', () => {
 describe('no profile', () => {
   it('is neutral: no fit card, and a mid score rather than a penalty', () => {
     expect(hasFitProfile(blank)).toBe(false)
-    expect(scoreOf({})).toBe(50)
+    // Neutral apart from its unconfirmed condition (a VCE route), which costs a little in every goal.
+    const rec = recommend(real, blank, opts).find((r) => r.code === CODE)!
+    const unconfirmed = rec.factors?.find((f) => f.key === 'unconfirmed')?.effect ?? 0
+    expect(rec.score - unconfirmed).toBe(50)
+  })
+
+  it('a career goal or the student\'s own ratings alone count as a profile (suggestions read both)', () => {
+    expect(hasFitProfile({ ...blank, career: 'software-engineer' })).toBe(true)
+    expect(hasFitProfile({ ...blank, ratings: { COMP10001: { difficulty: 2 } } })).toBe(true)
+    expect(hasFitProfile({ ...blank, ratings: {} })).toBe(false)
+    expect(hasFitProfile({ ...blank, career: '' })).toBe(false)
   })
 })
 

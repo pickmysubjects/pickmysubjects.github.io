@@ -1,18 +1,18 @@
 import { thisYear } from './dataYear'
 import { forCourse } from './forCourse'
 import { offeredIn, periodsFor, termKey } from './availability'
-import { findCourse, majorTitles, minorTitles, withinCaps } from './courseRules'
+import { componentCourse, findCourse, majorTitles, minorTitles, withinCaps } from './courseRules'
 import { careerGoal, careerNameParams, goalTier } from './careerGoal'
-import { evaluateField, referencedSubjects, type Tri } from './expr'
+import { evaluateField, referencedSubjects, type EvalResult, type Tri } from './expr'
 import type { Note, Params } from './plan'
-import { discussionVerdict, type Dataset, type Period, type Skill, type Subject } from './schema'
+import { discussionVerdict, type Dataset, type Period, type ReqExpr, type ReqField, type Skill, type Subject } from './schema'
 import { FITTED } from './fitted'
 import { sharedOffset } from './grades'
 import { offsetOf, predictMark } from './predict'
 import { MARKING_SKILLS, markingShare, skillsOf } from './skills'
 import { termStress } from './termStress'
 import { creditCodes, creditPoints, isCreditCode, withCredit, type Credit } from './credit'
-import { planRoles } from './roles'
+import { majorOverview, planRoles } from './roles'
 import { areaField, homeTopics, relatedTopics, topicsOf } from './topics'
 
 
@@ -125,6 +125,12 @@ export interface RecommendOptions {
   minors?: readonly string[]
   /** When given, filled with why each subject left out of the list was left out (the subject page says so). */
   skipped?: Map<string, Exclusion>
+  /**
+   * A list for the student to read ("sort for me"): with nothing filled in, start with the
+   * subjects most of the degree's majors use. The plan builder and the semester relief pick by
+   * score and leave it off.
+   */
+  startHere?: boolean
 }
 
 /**
@@ -277,6 +283,50 @@ export function marksForConditions(results: Profile['results'], data: Dataset): 
   return best
 }
 
+/**
+ * What a student's prerequisites are checked against: subjects passed (or credited) and planned,
+ * their marks and WAM for mark conditions, and the conditions they said they meet. Built the same
+ * way for suggestions, Find subjects' "prerequisites I meet" and a subject page's header.
+ */
+export interface Standing {
+  completed: ReadonlySet<string>
+  marks: Record<string, number>
+  wam: number | null
+  /** Subjects whose uncheckable condition (a VCE score) the student says they meet. */
+  confirmed: readonly string[]
+}
+
+export function standingOf(profile: Pick<Profile, 'results' | 'credit' | 'confirmed'>, data: Dataset, planned: readonly string[] = []): Standing {
+  return {
+    completed: new Set([...passedCodes(profile.results), ...creditCodes(profile.credit), ...planned]),
+    marks: marksForConditions(profile.results, data),
+    wam: exactWam(profile.results, data),
+    confirmed: profile.confirmed ?? [],
+  }
+}
+
+/**
+ * Whether a student meets `s`'s prerequisites: 'ok', 'fail', or 'unknown' when it rests on
+ * something we can't check (a VCE score, a placement test). One the student said they meet counts
+ * as met. Majors and minors, when known, let conditions about them be read.
+ */
+export function prereqStatus(
+  s: Subject,
+  standing: Standing,
+  ctx: { subjects: Readonly<Record<string, Subject>>; course?: string; majors?: readonly string[]; minors?: readonly string[] },
+): EvalResult {
+  const r = evaluateField(s.prerequisites, {
+    completed: standing.completed,
+    subjects: ctx.subjects,
+    admittedCourse: ctx.course,
+    majors: ctx.majors,
+    minors: ctx.minors,
+    marks: standing.marks,
+    wam: standing.wam,
+  })
+  return r.status === 'unknown' && standing.confirmed.includes(s.code) ? { ...r, status: 'ok' } : r
+}
+
 const noSkip = (_: Exclusion): void => {}
 
 /** Move a suggestion's score (kept within 0–100) and note by how much and why, for "why it fits". */
@@ -388,6 +438,15 @@ export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions =
   const creditCourses = new Set(Object.values(data.subjects).flatMap((x) => Object.keys(x.categories)))
   const ratingMean = siteRatingMean(data)
 
+  // Prerequisites are checked against what's done and planned (the plan builder narrows it to
+  // earlier terms), with the marks, WAM and confirmed conditions behind mark and VCE conditions.
+  const standing: Standing = {
+    completed: opts.eligibleWith ? new Set(opts.eligibleWith) : taken,
+    marks: markRecord,
+    wam: wamExact,
+    confirmed: profile.confirmed ?? [],
+  }
+
   const termBefore = opts.termSubjects ? termStress(opts.termSubjects, data, profile, { course: opts.course }).level : null
   const recs: Recommendation[] = []
   for (const s of Object.values(data.subjects)) {
@@ -447,22 +506,12 @@ export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions =
       continue
     }
 
-    const eligibleWith = opts.eligibleWith ? new Set(opts.eligibleWith) : taken
-    const pre = evaluateField(s.prerequisites, {
-      completed: eligibleWith,
-      subjects: data.subjects,
-      admittedCourse: opts.course,
-      majors,
-      minors,
-      marks: markRecord,
-      wam: wamExact,
-    })
+    const pre = prereqStatus(s, standing, { subjects: data.subjects, course: opts.course, majors, minors })
     if (pre.status === 'fail') {
       skip({ key: 'needsFirst' })
       continue
     }
-    // A condition only the student can check (a VCE score) that they said they meet.
-    const eligibility = pre.status === 'unknown' && profile.confirmed?.includes(s.code) ? 'ok' : pre.status
+    const eligibility = pre.status
 
     const rec = score(s, { profile, data, wam, marks, dependents, eligibility, unmet: pre.unmet, ratingMean, taken, blocked, liked })
     // A fail on My page: this would be a retake, which the student should know before adding it.
@@ -526,9 +575,10 @@ export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions =
       const needed = roles !== null && (roles.required.has(s.code) || roles.options.has(s.code) || towardMajor.has(s.code))
       if (!needed) shift(rec, 'lowMarksArea', -OFF_TOPIC_STRUGGLE_COST / 2)
     }
-    // A condition only the student can check (a VCE score) and haven't said they meet: for a WAM
-    // that's a risk, so it sits a little lower than an otherwise equal subject open to them.
-    if ((profile.goal === 'wam' || profile.goal === 'easy') && rec.warnings.some((x) => x.key === 'eligibilityUnknown')) {
+    // A condition only the student can check (a VCE score) and haven't said they meet: in every
+    // goal it may not be open to them yet, so it sits a little lower than an otherwise equal
+    // subject that is (and after its own prerequisites, below).
+    if (rec.warnings.some((x) => x.key === 'eligibilityUnknown')) {
       shift(rec, 'unconfirmed', -UNCONFIRMED_RISK)
     }
     // Marks only: the major's subjects are still labelled, but not pushed up.
@@ -583,11 +633,109 @@ export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions =
   // Equal scores (common when a student has told us little): the subject more of the degree
   // builds on comes first, a better first step than whichever code sorts first.
   const builtOn = (r: Recommendation) => usefulLater(r.code, dependents, data, profile.interests)
-  recs.sort((a, b) => b.score - a.score || builtOn(b) - builtOn(a) || a.code.localeCompare(b.code))
-  const ranked = diversify(recs, data)
+  // Nothing to go on about the student (no record, strengths, interests, career, ratings, major
+  // or the plan builder's majors) and a goal that isn't about marks: a fit score would only be the subjects' ease, so
+  // they go in the order the degree's own majors start with: subjects more of its majors need or
+  // offer first (compulsory for the degree: all of them), each saying so. The score stays as it
+  // is; the cards don't show one without a profile.
+  const blank =
+    (profile.goal === 'balanced' || profile.goal === 'challenge') &&
+    !profile.results.length && !Object.keys(profile.skills).length && !profile.interests.length && !liked.size && !goal && !roles && !components.length && !profile.credit?.length
+  const common = opts.startHere && blank && opts.course ? majorsUsing(raw, opts.course, opts.programme?.courseYear ?? opts.year ?? thisYear()) : null
+  if (common) {
+    for (const r of recs) {
+      const n = common.counts.get(r.code) ?? 0
+      if (n) r.reasons.unshift(n >= common.majors ? note('degreeCore', {}, 'Compulsory in your degree.') : note('manyMajors', { n }, `A way into ${n} of your degree's majors.`))
+    }
+  }
+  const usedBy = (r: Recommendation) => common?.counts.get(r.code) ?? 0
+  recs.sort((a, b) => usedBy(b) - usedBy(a) || b.score - a.score || builtOn(b) - builtOn(a) || a.code.localeCompare(b.code))
+  const ranked = afterPrerequisites(diversify(recs, data), data, taken)
   const others = Math.max(1, recs.length - 1)
   for (const r of ranked) r.betterThan = Math.round((100 * recs.filter((x) => x.score < r.score).length) / others)
   return opts.limit ? ranked.slice(0, opts.limit) : ranked
+}
+
+const MAJORS_USING = new WeakMap<Dataset, Map<string, { majors: number; counts: Map<string, number> }>>()
+
+/**
+ * For each subject, how many of `course`'s majors list it or lead through it (core, choices, the
+ * subjects on the way in); the degree's compulsory subjects count for every major.
+ */
+function majorsUsing(data: Dataset, course: string, year: number): { majors: number; counts: Map<string, number> } {
+  let byCourse = MAJORS_USING.get(data)
+  if (!byCourse) MAJORS_USING.set(data, (byCourse = new Map()))
+  const key = `${course}|${year}`
+  const hit = byCourse.get(key)
+  if (hit) return hit
+  const home = componentCourse(data, course)
+  const majors = data.components.filter((c) => c.course === home && c.kind === 'major')
+  const counts = new Map<string, number>()
+  for (const m of majors) {
+    const o = majorOverview(data, m.id, course)
+    if (!o) continue
+    for (const c of new Set([...o.core, ...o.choices.flatMap((x) => x.from), ...o.pathway.map((p) => p.code), ...o.routes.map((p) => p.code)])) counts.set(c, (counts.get(c) ?? 0) + 1)
+  }
+  const rules = findCourse(data, course, year)?.rules ?? []
+  for (const rule of rules) if (rule.kind === 'compulsory') for (const c of rule.subjects) counts.set(c, majors.length)
+  const out = { majors: majors.length, counts }
+  byCourse.set(key, out)
+  return out
+}
+
+/**
+ * Whatever the goal, a suggestion never comes before a way into it that is also suggested: one
+ * whose prerequisite isn't confirmed (a test score we can't check, or a subject the student hasn't
+ * done or planned) has its in-data way in shown just before it (the best-placed one of a "one of"
+ * list, all of an "all of"), so the step comes first and the subject keeps its place near the
+ * top. Conditions we can't check don't count either way; two subjects that each accept the other
+ * (MAST10008 and MAST10009) don't pull each other up.
+ */
+function afterPrerequisites(recs: Recommendation[], data: Dataset, taken: ReadonlySet<string>): Recommendation[] {
+  const at = new Map(recs.map((r, i) => [r.code, i]))
+  const byCode = new Map(recs.map((r) => [r.code, r]))
+  const placed = new Set<string>()
+  const out: Recommendation[] = []
+  const ways = (code: string) => referencedSubjects(data.subjects[code]?.prerequisites ?? 'none')
+  // What must be shown first for `code`: [] when met (done, planned or already shown), the codes
+  // of one way in still to come, or null when nothing on the list or the record bears on it.
+  const first = (e: ReqExpr, code: string): string[] | null => {
+    const leaf = (c: string): string[] | null => (taken.has(c) || placed.has(c) ? [] : at.has(c) && !ways(c).includes(code) ? [c] : null)
+    const parts: (string[] | null)[] =
+      'subject' in e ? [leaf(e.subject)]
+      : 'all' in e ? e.all.map((x) => first(x, code))
+      : 'any' in e ? e.any.map((x) => first(x, code))
+      : 'points' in e && e.points.from ? e.points.from.map(leaf)
+      : 'average' in e && e.average.from ? e.average.from.map(leaf)
+      : [null]
+    const known = parts.filter((x): x is string[] => x !== null)
+    if (!known.length) return null
+    if ('all' in e) return [...new Set(known.flat())]
+    // "One of" (and a points or average condition over a list): met by any; else the way whose
+    // subjects already sit highest.
+    if (known.some((x) => !x.length)) return []
+    const worst = (xs: string[]) => Math.max(...xs.map((c) => at.get(c)!))
+    return known.reduce((a, b) => (worst(b) < worst(a) ? b : a))
+  }
+  const visiting = new Set<string>()
+  const show = (r: Recommendation): void => {
+    if (placed.has(r.code) || visiting.has(r.code)) return
+    visiting.add(r.code)
+    const field: ReqField = data.subjects[r.code]?.prerequisites ?? 'none'
+    if (r.eligibility !== 'ok' && field !== 'none' && field !== 'unknown') {
+      for (const c of first(field, r.code) ?? []) {
+        const way = byCode.get(c)!
+        // Moved up for it: says why it's here, above what it scored.
+        if (!placed.has(c) && at.get(c)! > at.get(r.code)!) way.reasons.unshift(note('wayInto', { codes: r.code }, `The way into ${r.code}: take it first.`))
+        show(way)
+      }
+    }
+    visiting.delete(r.code)
+    out.push(r)
+    placed.add(r.code)
+  }
+  for (const r of recs) show(r)
+  return out
 }
 
 interface ScoreCtx {

@@ -427,6 +427,9 @@ export const vi: Messages = {
   },
   reason: {
     opensMany: "Là môn tiên quyết của {n} môn sau, nên sau này rất hữu ích.",
+    degreeCore: "Môn bắt buộc của bằng bạn đang học.",
+    manyMajors: "Dẫn vào {n} chuyên ngành trong bằng của bạn.",
+    wayInto: "Là môn tiên quyết của {codes}: học môn này trước.",
     makesHeavy: "Thêm vào kỳ này sẽ làm kỳ này nặng.",
     retake: "Lần trước bạn được {mark} điểm và chưa qua: lần này là học lại.",
     retakeFailed: "Lần trước bạn chưa qua môn này: lần này là học lại.",
@@ -1919,7 +1922,7 @@ export const vi: Messages = {
     dataFacts: "Thông tin môn học (học kỳ, môn tiên quyết, cách đánh giá, giờ học) lấy từ Handbook chính thức của University of Melbourne, mình kiểm tra từng môn một.",
     dataRatings: "Đánh giá đến từ sinh viên dùng trang này.",
     dataDiscuss: "Một số môn có phần tóm tắt đánh giá công khai từ các trang khác, kèm link gốc. Phần này không chấm điểm và không tính vào đánh giá ở đây.",
-    dataSuggest: "Gợi ý dựa vào sở thích, thế mạnh và điểm số của bạn, khi đủ đánh giá thì tính cả đánh giá. Chỉ gợi ý môn bạn học được và sắp mở.",
+    dataSuggest: "Gợi ý dựa vào sở thích, thế mạnh và điểm số của bạn, khi đủ đánh giá thì tính cả đánh giá. Chỉ gợi ý môn bạn học được và sắp mở. Khi bạn chưa điền gì, gợi ý bắt đầu từ các môn mà nhiều chuyên ngành trong bằng của bạn dùng; một môn luôn đứng sau môn tiên quyết của nó.",
   },
   grades: {
     title: "Chia sẻ mức điểm của bạn (không bắt buộc)",

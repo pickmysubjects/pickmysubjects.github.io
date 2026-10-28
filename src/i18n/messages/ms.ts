@@ -427,6 +427,9 @@ export const ms: Messages = {
   },
   reason: {
     opensMany: "{n} subjek kemudian memerlukannya, jadi berguna kelak.",
+    degreeCore: "Wajib dalam ijazah anda.",
+    manyMajors: "Laluan ke {n} major dalam ijazah anda.",
+    wayInto: "Prasyarat untuk {codes}: ambil yang ini dahulu.",
     makesHeavy: "Menambahnya menjadikan semester itu berat.",
     retake: "Kali lepas anda dapat {mark} dan gagal: kali ini ulang subjek.",
     retakeFailed: "Kali lepas anda gagal: kali ini ulang subjek.",
@@ -1919,7 +1922,7 @@ export const ms: Messages = {
     dataFacts: "Butiran subjek (semester, prasyarat, penilaian, jam kelas) diambil daripada Handbook rasmi University of Melbourne dan saya semak satu demi satu.",
     dataRatings: "Penilaian datang daripada pelajar yang menggunakan laman ini.",
     dataDiscuss: "Sesetengah subjek ada ringkasan ulasan awam dari laman lain, berserta pautan sumber. Ia tiada skor dan tidak dikira dalam penilaian di sini.",
-    dataSuggest: "Cadangan ikut minat, kekuatan dan markah anda, dan guna penilaian bila sudah cukup. Hanya subjek yang anda boleh ambil dan akan dibuka tidak lama lagi dipaparkan.",
+    dataSuggest: "Cadangan ikut minat, kekuatan dan markah anda, dan guna penilaian bila sudah cukup. Hanya subjek yang anda boleh ambil dan akan dibuka tidak lama lagi dipaparkan. Jika belum diisi apa-apa, cadangan bermula dengan subjek yang digunakan oleh kebanyakan major dalam ijazah anda; subjek sentiasa datang selepas prasyaratnya.",
   },
   grades: {
     title: "Kongsi gred anda (pilihan)",

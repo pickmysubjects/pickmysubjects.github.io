@@ -427,6 +427,9 @@ export const zhTW: Messages = {
   },
   reason: {
     opensMany: "有 {n} 門後續課以它為先修，以後用得上。",
+    degreeCore: "你的學位必修。",
+    manyMajors: "你的學位裡有 {n} 個主修會用到它。",
+    wayInto: "要上 {codes}，得先修這門。",
     makesHeavy: "加進這個學期會讓它偏重。",
     retake: "你上次這門得了 {mark} 分沒過，這次是重修。",
     retakeFailed: "你上次這門沒過，這次是重修。",
@@ -1919,7 +1922,7 @@ export const zhTW: Messages = {
     dataFacts: "課程資訊（開課學期、先修、考核、上課時數）來自墨大官方的 Handbook，我一門一門整理、核對過。",
     dataRatings: "評分來自使用本站的同學。",
     dataDiscuss: "有些課下面有「網路討論摘要」，是我從其他網站的公開評價裡整理的，附了原文連結。它不打分，也不算進這裡的評分。",
-    dataSuggest: "推薦主要看你的興趣、強項和成績，評分多了以後也會參考評分。只會推薦你現在能修、近期會開的課。",
+    dataSuggest: "推薦主要看你的興趣、強項和成績，評分多了以後也會參考評分。只會推薦你現在能修、近期會開的課。什麼都沒填時，先列你學位裡多數主修都會用到的課；一門課總排在它的先修課後面。",
   },
   grades: {
     title: "分享你的成績等級（選填）",

@@ -1,5 +1,5 @@
 import { knownNotRunning } from './dataYear'
-import { inTopShare, listPlace, rankable, rankSubject, type ListPlace, type RankDirection, type RankReason } from './easeRanking'
+import { comparesInTopShare, listPlace, rankable, rankSubject, type ListPlace, type RankDirection, type RankReason } from './easeRanking'
 import type { Note } from './plan'
 import { skillsOf } from './skills'
 import { recommend, type Exclusion, type FitFactor, type Profile, type Recommendation, type RecommendOptions } from './recommend'
@@ -80,7 +80,9 @@ export function subjectDifficulty(subjects: Record<string, Subject>, code: strin
   // The top third of each list: a subject must lean that way by the list's own rule and sit in
   // the list's top third (a tie block at the cut-off stays together). Further down a list, or on
   // neither: about average. The lists have no cut-off of their own, so a third is ours.
-  const direction: RankDirection | null = inTopShare(subjects, s, 'easy', course, year) ? 'easy' : inTopShare(subjects, s, 'hard', course, year) ? 'hard' : null
+  // A subject the lists leave out is compared with them by the same rules, and the card says it
+  // isn't on them (`unranked`); Find subjects' filter, which is the list, leaves it out.
+  const direction: RankDirection | null = comparesInTopShare(subjects, s, 'easy', course, year) ? 'easy' : comparesInTopShare(subjects, s, 'hard', course, year) ? 'hard' : null
   // Display only: its place near the top of a list, as the header chip shows it.
   const listed = rankable(s, course, year) ? listPlace(subjects, code, course, year) : null
   const v = verdict(direction)
@@ -155,9 +157,12 @@ export function fitBasis(p: Pick<Profile, 'results' | 'skills' | 'interests'>): 
   return { marks, skills, interests, missing }
 }
 
-/** Has the student told us anything to sort by: marks, strengths or interests. */
-export function hasFitProfile(p: Pick<Profile, 'results' | 'skills' | 'interests'>): boolean {
-  return p.results.length > 0 || Object.keys(p.skills).length > 0 || p.interests.length > 0
+/**
+ * Has the student told us anything to sort by: marks, strengths, interests, a career goal, or
+ * their own ratings of subjects they took (recommend() reads all of them).
+ */
+export function hasFitProfile(p: Pick<Profile, 'results' | 'skills' | 'interests' | 'career' | 'ratings'>): boolean {
+  return p.results.length > 0 || Object.keys(p.skills).length > 0 || p.interests.length > 0 || !!p.career || Object.keys(p.ratings ?? {}).length > 0
 }
 
 /** Reasons a Find subjects row already shows as its own fact pills (exam share, class hours). */

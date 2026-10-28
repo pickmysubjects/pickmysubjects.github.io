@@ -427,6 +427,9 @@ export const id: Messages = {
   },
   reason: {
     opensMany: "{n} mata kuliah lanjutan memerlukannya, jadi berguna nanti.",
+    degreeCore: "Wajib di program studimu.",
+    manyMajors: "Jalan masuk ke {n} major di program studimu.",
+    wayInto: "Prasyarat untuk {codes}: ambil ini dulu.",
     makesHeavy: "Menambahkannya membuat semester itu berat.",
     retake: "Terakhir kamu dapat {mark} dan belum lulus: kali ini mengulang.",
     retakeFailed: "Terakhir kamu belum lulus: kali ini mengulang.",
@@ -1919,7 +1922,7 @@ export const id: Messages = {
     dataFacts: "Detail mata kuliah (semester, prasyarat, penilaian, jam kelas) diambil dari Handbook resmi University of Melbourne dan aku cek satu per satu.",
     dataRatings: "Penilaian berasal dari mahasiswa yang memakai situs ini.",
     dataDiscuss: "Beberapa mata kuliah punya ringkasan ulasan publik dari situs lain, lengkap dengan tautan sumbernya. Ringkasan ini tidak memberi skor dan tidak dihitung dalam penilaian di sini.",
-    dataSuggest: "Saran didasarkan pada minat, kekuatan, dan nilaimu, dan memakai penilaian kalau sudah cukup banyak. Hanya mata kuliah yang bisa kamu ambil dan akan segera dibuka yang ditampilkan.",
+    dataSuggest: "Saran didasarkan pada minat, kekuatan, dan nilaimu, dan memakai penilaian kalau sudah cukup banyak. Hanya mata kuliah yang bisa kamu ambil dan akan segera dibuka yang ditampilkan. Kalau belum ada yang diisi, saran dimulai dari mata kuliah yang dipakai sebagian besar major di program studimu; mata kuliah selalu muncul setelah prasyaratnya.",
   },
   grades: {
     title: "Bagikan tingkat nilaimu (opsional)",

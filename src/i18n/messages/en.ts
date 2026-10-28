@@ -431,6 +431,9 @@ export const en = {
   },
   reason: {
     opensMany: "{n} later subjects build on it, so it pays off later.",
+    degreeCore: "Compulsory in your degree.",
+    manyMajors: "A way into {n} of your degree's majors.",
+    wayInto: "The way into {codes}: take it first.",
     makesHeavy: "Adding it makes that semester heavy.",
     retake: "You got {mark} last time: this would be a retake.",
     retakeFailed: "You didn't pass this last time: this would be a retake.",
@@ -1923,7 +1926,7 @@ export const en = {
     dataFacts: "Subject details (semesters, prerequisites, assessment, class hours) come from the official University of Melbourne Handbook. I go through and check them one by one.",
     dataRatings: "Ratings come from students using this site.",
     dataDiscuss: "Some subjects have a short summary of public reviews from other websites, with a link to the source. It has no score and isn't counted in the ratings here.",
-    dataSuggest: "Suggestions go by your interests, strengths and marks, and use ratings once there are enough. You only see subjects you can take that run soon.",
+    dataSuggest: "Suggestions go by your interests, strengths and marks, and use ratings once there are enough. You only see subjects you can take that run soon. With nothing filled in, they start with the subjects most of your degree's majors use, and a subject comes after the subjects that lead into it.",
   },
   grades: {
     title: "Share your grade bands (optional)",

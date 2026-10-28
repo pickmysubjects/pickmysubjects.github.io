@@ -14,10 +14,10 @@ import {
   findRows,
   hasFitProfile,
   historyStep,
-  isFail,
   quickChoice,
   rankCourseOf,
   recommend,
+  standingOf,
   type BrowseFilters,
   type Order,
   type QuickChoice,
@@ -36,19 +36,23 @@ import { useSortForMeOptions } from './useSubjectFit'
  */
 export function useBrowse() {
   const { query, param } = useView()
-  const { data, subjectList } = useDataset()
+  const { data, subjectList, course: dataCourse } = useDataset()
   const { profile } = useProfile()
   const plan = usePlan()
 
-  const course = computed(() => plan.setup.value.course || 'B-SCI')
   const year = computed(() => viewYear(plan.terms.value[0]?.year))
   // A quick choice's own address (/subjects/no-exam/, /subjects/easy/) opens with it chosen.
   const filters = shallowRef<BrowseFilters>(filtersFromQuery(query.value, param.value))
+  // One degree for the whole page (breadth, prerequisites, the lists and the "easier than most"
+  // filter), named in the toolbar: the student's own once chosen; before that the one a subject
+  // page's link counted its place for, else the default degree the subject pages use.
+  const course = computed(() => rankCourseOf(filters.value, plan.courseChosen.value ? plan.setup.value.course || null : null, dataCourse.value))
 
-  // What the student has passed (or the plan has before now): "prerequisites I meet".
-  const done = computed(() => new Set([...profile.value.results.filter((r) => !isFail(r)).map((r) => r.code), ...plan.plan.value.completed]))
-  const hasRecord = computed(() => done.value.size > 0)
-  const index = computed(() => browseIndex(subjectList.value, { course: course.value, year: year.value, all: data.value.subjects, done: done.value }))
+  // Passed, credited and planned subjects, marks and confirmed conditions, as suggestions read
+  // them: "prerequisites I meet".
+  const standing = computed(() => standingOf(profile.value, data.value, plan.plannedCodes.value))
+  const hasRecord = computed(() => standing.value.completed.size > 0 || standing.value.confirmed.length > 0)
+  const index = computed(() => browseIndex(subjectList.value, { course: course.value, year: year.value, all: data.value.subjects, standing: standing.value }))
 
   // "Sort for me": the student's own suggestions, from whatever they've filled in so far.
   const hasProfile = computed(() => hasFitProfile(profile.value))
@@ -58,9 +62,6 @@ export function useBrowse() {
   const rows = computed(() =>
     findRows(subjectList.value, filters.value, {
       course: course.value,
-      // The easy and hard lists cover every degree until one is chosen, or the degree a subject
-      // page's place on the list was counted for, when that's what opened it.
-      rankCourse: rankCourseOf(filters.value, plan.courseChosen.value ? course.value : null),
       year: year.value,
       recs: recs.value,
       index: index.value,

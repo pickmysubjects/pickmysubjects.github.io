@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { realData } from './realData'
-import { EMPTY_FILTERS, findRows } from '../src/engine/browse'
+import { browseIndex, EMPTY_FILTERS, filterIndex, findRows } from '../src/engine/browse'
 import { LIST_TOP, listPlace, rankable, rankSubject, rankSubjects } from '../src/engine/easeRanking'
 import type { Subject } from '../src/engine/schema'
 import { forCourse } from '../src/engine/forCourse'
@@ -41,7 +41,7 @@ const sortForMe = (data: typeof real, p: Profile, course: string): RecommendOpti
 function browseSays(p: Profile, course: string, code: string) {
   const data = forCourse(real, course)
   const recs = recommend(data, p, sortForMe(data, p, course))
-  const rows = findRows(Object.values(data.subjects), { ...EMPTY_FILTERS, mine: true }, { course, rankCourse: course, year: YEAR, recs })
+  const rows = findRows(Object.values(data.subjects), { ...EMPTY_FILTERS, mine: true }, { course, year: YEAR, recs })
   const row = rows.find((r) => r.subject.code === code)
   return row?.rec ? { betterThan: row.rec.betterThan, band: fitBand(row.rec.betterThan), reasons: leadReasons(row.rec).map((n) => n.key), rank: rows.indexOf(row) } : null
 }
@@ -209,19 +209,39 @@ describe('difficulty = the easy/hard lists', () => {
     })
   }
 
-  it('list places: tied subjects share a place, so a tie across #30 is all shown or none', () => {
+  it('list places: a subject\'s place is its position on the list, ties included, top 30 only', () => {
     for (const course of ['B-SCI', 'B-ARTS', 'B-MUS']) {
       const subjects = forCourse(real, course).subjects
       for (const direction of ['easy', 'hard'] as const) {
         const list = rankSubjects(Object.values(subjects), { direction, course, year: YEAR })
-        for (let i = 1; i < list.length; i++) {
-          const [a, b] = [list[i - 1]!, list[i]!]
-          const pa = listPlace(subjects, a.subject.code, course, YEAR)
-          const pb = listPlace(subjects, b.subject.code, course, YEAR)
-          if (a.score === b.score && (a.reviews === null) === (b.reviews === null) && pa?.direction === direction) expect(pb).toEqual(pa)
-        }
+        list.forEach((r, i) => {
+          const p = listPlace(subjects, r.subject.code, course, YEAR)
+          if (i < LIST_TOP) expect([r.subject.code, p]).toEqual([r.subject.code, { direction, place: i + 1 }])
+          else if (p) expect(p.direction).not.toBe(direction)
+        })
       }
     }
+  })
+
+  it('"easier / harder than most" in Find subjects only ever picks subjects on that degree\'s list', () => {
+    // Reviewer repro: a B-SCI ease=easy filter showed 378 subjects, 138 of them never on the B-SCI
+    // easy list (other degrees', pass/fail, graduate, far campus), e.g. CHIN10009 and BIOM10001.
+    const course = 'B-SCI'
+    const data = forCourse(real, course)
+    const index = browseIndex(Object.values(data.subjects), { course, year: YEAR, all: data.subjects })
+    for (const direction of ['easy', 'hard'] as const) {
+      const listed = new Set(rankSubjects(Object.values(data.subjects), { direction, course, year: YEAR }).map((r) => r.subject.code))
+      const shown = filterIndex(index, { ...EMPTY_FILTERS, ease: [direction] })
+      expect(shown.length).toBeGreaterThan(0)
+      for (const r of shown) expect([r.subject.code, rankable(r.subject, course, YEAR), listed.has(r.subject.code)]).toEqual([r.subject.code, true, true])
+      // The top part of the list (about a third), not the whole of it.
+      expect(shown.length).toBeLessThan(listed.size)
+    }
+    const codes = new Set(filterIndex(index, { ...EMPTY_FILTERS, ease: ['easy'] }).map((r) => r.subject.code))
+    expect(codes.has('CHIN10009')).toBe(false)
+    expect(codes.has('BIOM10001')).toBe(false)
+    // Their pages still compare them with the degree's subjects, and say they aren't on its lists.
+    expect(subjectDifficulty(data.subjects, 'CHIN10009', course, YEAR)).toMatchObject({ unranked: 'notInCourse', place: null })
   })
 
   it('regression: easy-leaning subjects are never "harder" (reviewer repros)', () => {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { recommend, type Profile } from '../src/engine'
+import { recommend, referencedSubjects, type Profile } from '../src/engine'
 import { realData } from './realData'
 import { dataset, subject } from './helpers'
 
@@ -156,5 +156,78 @@ describe('recommendation statistics', () => {
       subject({ code: 'AAAA30001', level: 3, prerequisites: 'none', non_allowed: [] }),
     ])
     expect(recommend(data, base, { maxLevel: 1 }).map((r) => r.code)).toEqual(['AAAA10001'])
+  })
+})
+
+describe('order: prerequisites first, and with nothing filled in', () => {
+  const real = realData()
+  const base: Profile = { results: [], skills: {}, interests: [], goal: 'balanced' }
+
+  it('a subject never ranks above an in-data way into it the student hasn\'t done, in any goal', () => {
+    // Reviewer repro: COMP10002 (COMP10001, COMP10003 or a programming test we can't check) came
+    // first, above COMP10001; MAST10007 and MAST10006 above MAST10005.
+    const p = { skills: { programming: 5, maths: 2 }, interests: ['machine-learning'] }
+    for (const goal of ['balanced', 'challenge', 'wam', 'easy'] as const) {
+      const codes = recommend(real, { ...base, ...p, goal }, { course: 'B-SCI', maxLevel: 1, year: 2026 }).map((r) => r.code)
+      const at = (c: string) => codes.indexOf(c)
+      expect([goal, at('COMP10001') < at('COMP10002')]).toEqual([goal, true])
+      expect([goal, at('MAST10005') < at('MAST10007'), at('MAST10005') < at('MAST10006')]).toEqual([goal, true, true])
+    }
+    // The rule in general: across degrees, goals and years, one of the in-data ways in comes first
+    // (two subjects that each accept the other aside: one of them has to go first).
+    const profiles: Partial<Profile>[] = [{}, p, { skills: { lab: 5 }, interests: ['chemistry', 'biology'] }, { results: [{ code: 'COMP10001', mark: 80 }], interests: ['finance'] }]
+    let checked = 0
+    for (const course of ['B-SCI', 'B-COM', 'B-DES']) for (const goal of ['balanced', 'challenge', 'wam', 'easy'] as const) for (const prof of profiles) {
+      const recs = recommend(real, { ...base, ...prof, goal }, { course, maxLevel: 2, year: 2026 })
+      const pos = new Map(recs.map((r, i) => [r.code, i]))
+      recs.forEach((r, i) => {
+        if (r.eligibility !== 'unknown') return
+        const ways = referencedSubjects(real.subjects[r.code]!.prerequisites).filter((c) => pos.has(c) && !referencedSubjects(real.subjects[c]!.prerequisites).includes(r.code))
+        if (!ways.length) return
+        checked++
+        expect([course, goal, r.code, ways.some((c) => pos.get(c)! < i)]).toEqual([course, goal, r.code, true])
+      })
+    }
+    expect(checked).toBeGreaterThan(100)
+  }, 60_000)
+
+  it('an unconfirmed condition (a VCE score) costs a little in every goal, not only for a WAM', () => {
+    const data = dataset([
+      subject({ code: 'AAAA10001', prerequisites: { manual: 'VCE Maths study score 25+' }, non_allowed: [] }),
+      subject({ code: 'BBBB10001', prerequisites: 'none', non_allowed: [] }),
+    ])
+    for (const goal of ['balanced', 'challenge', 'wam', 'easy'] as const) {
+      const recs = recommend(data, { ...base, goal })
+      const score = (c: string) => recs.find((r) => r.code === c)!.score
+      expect([goal, score('AAAA10001') < score('BBBB10001')]).toEqual([goal, true])
+      expect(recs.find((r) => r.code === 'AAAA10001')!.factors?.some((f) => f.key === 'unconfirmed')).toBe(true)
+      // Said they meet it: no cost.
+      const ok = recommend(data, { ...base, goal, confirmed: ['AAAA10001'] })
+      expect(ok.find((r) => r.code === 'AAAA10001')!.score).toBe(ok.find((r) => r.code === 'BBBB10001')!.score)
+    }
+  })
+
+  it('nothing filled in: the degree\'s own common first subjects, each saying why, not a tie broken by chance', () => {
+    // Reviewer repro: 74 of 202 tied at 55 and Latin 3/4, Italian 7 led the list.
+    const recs = recommend(real, base, { course: 'B-SCI', maxLevel: 1, year: 2026, startHere: true })
+    const n = (r: (typeof recs)[number]) => {
+      const why = r.reasons.find((x) => x.key === 'degreeCore' || x.key === 'manyMajors')
+      return why ? (why.key === 'degreeCore' ? Infinity : Number(why.params.n)) : 0
+    }
+    const top = recs.slice(0, 10)
+    // Every one of the top ten is something the degree's majors use, and says so.
+    expect(top.every((r) => n(r) > 0)).toBe(true)
+    // Ordered by how many of the degree's majors use it (prerequisite order aside).
+    const free = top.filter((r) => r.eligibility === 'ok').map(n)
+    expect(free).toEqual([...free].sort((a, b) => b - a))
+    // No subject only a placement test or a VCE language score lets in.
+    for (const r of top) expect(real.subjects[r.code]!.area).not.toMatch(/^(CLAS|ITAL|SPAN|FREN|GERM|CHIN|JAPN)$/)
+    // A goal about marks keeps its own order (easy to do well in), and anything filled in turns it off.
+    expect(recommend(real, { ...base, goal: 'wam' }, { course: 'B-SCI', maxLevel: 1, year: 2026, startHere: true }).some((r) => r.reasons.some((x) => x.key === 'manyMajors'))).toBe(false)
+    expect(recommend(real, { ...base, interests: ['biology'] }, { course: 'B-SCI', maxLevel: 1, year: 2026, startHere: true }).some((r) => r.reasons.some((x) => x.key === 'manyMajors'))).toBe(false)
+    // No course: nothing to read the majors from, the ordinary order; nor for the plan builder,
+    // which picks by score and doesn't ask for it.
+    expect(recommend(real, base, { maxLevel: 1, year: 2026, startHere: true }).some((r) => r.reasons.some((x) => x.key === 'manyMajors'))).toBe(false)
+    expect(recommend(real, base, { course: 'B-SCI', maxLevel: 1, year: 2026 }).some((r) => r.reasons.some((x) => x.key === 'manyMajors'))).toBe(false)
   })
 })
