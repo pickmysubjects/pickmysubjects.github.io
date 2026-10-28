@@ -17,15 +17,15 @@ const { all } = useDataset()
 const dataYear = latestDataYear(all.subjects)
 const checked = lastVerified(all.subjects)
 const day = (iso: string) => new Date(`${iso}T00:00:00`).toLocaleDateString(locale.value, { day: 'numeric', month: 'short', year: 'numeric' })
-// Every main part of the site. Majors and the guide reuse their own page's title and lede.
+// Every main part of the site. Majors and the guide go by their menu names, with their page's lede.
 const features = [
   { key: 'lookup', icon: BookOpen, href: link(''), name: 'about.f.lookup', text: 'about.f.lookupText' },
   { key: 'plan', icon: Route, href: link('plan'), name: 'about.f.plan', text: 'about.f.planText' },
   { key: 'plans', icon: GitCompare, href: link('plan'), name: 'about.f.plans', text: 'about.f.plansText' },
   { key: 'suggest', icon: Sparkles, href: link('subjects/?mine=1'), name: 'about.f.suggest', text: 'about.f.suggestText' },
-  { key: 'majors', icon: GraduationCap, href: link('majors'), name: 'majors.title', text: 'majors.cardText' },
+  { key: 'majors', icon: GraduationCap, href: link('majors'), name: 'browse.switchMajors', text: 'majors.cardText' },
   { key: 'record', icon: Calculator, href: link('record'), name: 'about.f.record', text: 'about.f.recordText' },
-  { key: 'guide', icon: Compass, href: link('guide'), name: 'guide.title', text: 'guide.lede' },
+  { key: 'guide', icon: Compass, href: link('guide'), name: 'guide.nav', text: 'guide.lede' },
   { key: 'rate', icon: Star, href: link('record'), name: 'about.f.rate', text: 'about.f.rateText' },
 ] as const
 </script>

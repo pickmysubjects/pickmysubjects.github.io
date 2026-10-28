@@ -120,12 +120,13 @@ watchEffect(() => {
   </main>
   <footer class="footer">
     <div class="footer-inner shell">
+      <!-- Link names are the header menu's short names; long titles belong to each page itself. -->
       <nav class="footer-links" :aria-label="t('nav.more')">
-        <a :href="link('subjects')">{{ t('browse.title') }}</a>
-        <a :href="link('majors')">{{ t('majors.title') }}</a>
-        <a :href="link('careers')">{{ t('careerPath.title') }}</a>
-        <a :href="link('guide')">{{ t('guide.title') }}</a>
-        <a :href="link('tools/')">{{ t('tools.title') }}</a>
+        <a :href="link('subjects')">{{ t('browse.switchSubjects') }}</a>
+        <a :href="link('majors')">{{ t('browse.switchMajors') }}</a>
+        <a :href="link('careers')">{{ t('browse.switchCareers') }}</a>
+        <a :href="link('guide')">{{ t('guide.nav') }}</a>
+        <a :href="link('tools/')">{{ t('tools.nav') }}</a>
         <a :href="link('about')">{{ t('app.about') }}</a>
         <a :href="link('contribute')">{{ t('nav.contribute') }}</a>
         <a :href="link('feedback')">{{ t('nav.feedback') }}</a>

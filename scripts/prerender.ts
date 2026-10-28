@@ -525,7 +525,7 @@ function rankPages(code: LocaleCode, t: Translate): Page[] {
       `<ol>${all.slice(0, RANK_TOP).map(item).join('')}</ol>`,
       ...(breadth.length ? [`<h2>${esc(t('rank.breadthSection'))}</h2><ol>${breadth.map(item).join('')}</ol>`] : []),
       ...(direction === 'easy' ? [`<p><a href="${href(code, `subjects/${EASY_CUTS.level3Breadth.slug}`)}">${esc(t('rank.l3Breadth'))}</a></p>`] : []),
-      `<p><a href="${href(code, `subjects/${RANK_SLUGS[other]}`)}">${esc(t(`rank.other.${direction}`))}</a> · <a href="${href(code, 'subjects')}">${esc(t('browse.title'))}</a></p>`,
+      `<p><a href="${href(code, `subjects/${RANK_SLUGS[other]}`)}">${esc(t(`rank.other.${direction}`))}</a> · <a href="${href(code, 'subjects')}">${esc(t('browse.switchSubjects'))}</a></p>`,
       `<p><a href="${href(code, '')}">${esc(t('seo.made'))}</a></p>`,
     ].join('\n')
     return { path: `subjects/${RANK_SLUGS[direction]}`, title: `${title} | PickMySubjects`, description, body }
@@ -548,7 +548,7 @@ function presetPages(code: LocaleCode, t: Translate): Page[] {
       `<h1>${esc(title)}</h1>`,
       `<p>${esc(description)}</p>`,
       `<ul>${rows.map((r) => `<li>${subjectLink(code, r.subject.code)}</li>`).join('')}</ul>`,
-      `<p><a href="${href(code, 'subjects')}">${esc(t('browse.title'))}</a> · <a href="${href(code, 'plan')}">${esc(t('plan.title'))}</a></p>`,
+      `<p><a href="${href(code, 'subjects')}">${esc(t('browse.switchSubjects'))}</a> · <a href="${href(code, 'plan')}">${esc(t('nav.plan'))}</a></p>`,
       `<p><a href="${href(code, '')}">${esc(t('seo.made'))}</a></p>`,
     ]
     if (preset === 'breadth') body.splice(3, 0, `<p><a href="${href(code, `subjects/${EASY_CUTS.level3Breadth.slug}`)}">${esc(t('rank.l3Breadth'))}</a></p>`)
@@ -761,7 +761,7 @@ function keyDatesBody(code: LocaleCode, t: Translate): string {
     `<h2 id="dates">${esc(t('guide.datesTitle'))}</h2>`,
     `<ul>${['datesStart', 'datesS1', 'datesS2', 'datesOther'].map((k) => `<li>${esc(t(`guide.${k}`))}</li>`).join('')}</ul>`,
     `<p>${esc(t('guide.kd.employabilityText'))} <a href="${EMPLOYABILITY_SOURCE}">${esc(t('guide.kd.employabilityLink'))}</a></p>`,
-    `<p><a href="${KEY_DATES_SOURCE}">${esc(t('guide.kd.official'))}</a> · <a href="${href(code, 'guide')}">${esc(t('guide.title'))}</a></p>`,
+    `<p><a href="${KEY_DATES_SOURCE}">${esc(t('guide.kd.official'))}</a> · <a href="${href(code, 'guide')}">${esc(t('guide.nav'))}</a></p>`,
   ].join('\n')
 }
 
@@ -784,11 +784,11 @@ function mainPages(code: LocaleCode): Page[] {
       description: listPageDescription(t, 'home', counts),
       body: `<p>${esc(t('home.release.label', { v: APP_VERSION, date: releaseDate(code) }))}</p><h1>${esc(t('home.title').replaceAll('*', '').replaceAll('|', ['zh-CN', 'zh-TW', 'ja'].includes(code) ? '' : ' '))}</h1><p>${esc(t('home.lede'))}</p><p>${esc(t('home.scope'))}</p>${intro}
 <ul><li><a href="${href(code, 'plan')}">${esc(t('home.cardPlan'))}</a>: ${esc(t('home.cardPlanText'))}</li>
-<li><a href="${href(code, 'subjects')}">${esc(t('browse.title'))}</a></li>
-<li><a href="${href(code, 'majors')}">${esc(t('majors.title'))}</a></li>
-<li><a href="${href(code, 'careers')}">${esc(t('careerPath.title'))}</a></li>
-<li><a href="${href(code, 'guide')}">${esc(t('guide.title'))}</a></li>
-<li><a href="${href(code, 'about')}">${esc(t('about.title'))}</a></li></ul>
+<li><a href="${href(code, 'subjects')}">${esc(t('browse.switchSubjects'))}</a></li>
+<li><a href="${href(code, 'majors')}">${esc(t('browse.switchMajors'))}</a></li>
+<li><a href="${href(code, 'careers')}">${esc(t('browse.switchCareers'))}</a></li>
+<li><a href="${href(code, 'guide')}">${esc(t('guide.nav'))}</a></li>
+<li><a href="${href(code, 'about')}">${esc(t('nav.about'))}</a></li></ul>
 <h2>${esc(t('can.title'))}</h2><ul>${[['finalCalc', 'tools/final'], ['wam', 'tools/wam'], ['share', 'plan'], ['plans', 'plan'], ['print', 'plan'], ['mine', 'subjects'], ['easyHard', 'subjects/easy'], ['rate', 'subjects'], ['shortlist', 'shortlist']].map(([k, to]) => `<li><a href="${href(code, to!)}">${esc(t(`can.${k}`))}</a></li>`).join('')}</ul>
 <h2>${esc(SEARCH_PHRASES[code].heading)}</h2><ul>${SEARCH_PHRASES[code].items.map((i) => `<li><a href="${href(code, i.to)}">${esc(i.text)}</a></li>`).join('')}</ul>
 <h2>${esc(t('seo.subjects'))}</h2><ul>${subjects.map((s) => `<li>${subjectLink(code, s.code)}</li>`).join('')}</ul>`,
@@ -806,9 +806,9 @@ function mainPages(code: LocaleCode): Page[] {
         ['about.f.plan', 'about.f.planText'],
         ['about.f.plans', 'about.f.plansText'],
         ['about.f.suggest', 'about.f.suggestText'],
-        ['majors.title', 'majors.cardText'],
+        ['browse.switchMajors', 'majors.cardText'],
         ['about.f.record', 'about.f.recordText'],
-        ['guide.title', 'guide.lede'],
+        ['guide.nav', 'guide.lede'],
         ['about.f.rate', 'about.f.rateText'],
       ]
         .map(([n, x]) => `<li><strong>${esc(t(n!))}</strong>: ${esc(t(x!))}</li>`)
