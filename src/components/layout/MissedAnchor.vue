@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { link, missedAnchor, useView } from '@/composables/useView'
 import { usePlan } from '@/composables/usePlan'
+import { useShortlist } from '@/composables/useShortlist'
+import { missedHint } from './missedHint'
 import { useI18n } from '@/i18n'
 import { X } from 'lucide-vue-next'
 import { computed } from 'vue'
@@ -10,24 +12,11 @@ import { computed } from 'vue'
  * one line saying how to get it, instead of silently showing the top of the page.
  */
 const { t } = useI18n()
-const HINTS: Record<string, { key: string; to: string; go: string }> = {
-  rules: { key: 'menu.miss.plan', to: 'plan/', go: 'menu.myPlan' },
-  heavy: { key: 'menu.miss.plan', to: 'plan/', go: 'menu.myPlan' },
-  calendar: { key: 'menu.miss.plan', to: 'plan/', go: 'menu.myPlan' },
-  'share-title': { key: 'menu.miss.grades', to: 'record/#sec-results', go: 'record.title' },
-  'compare-title': { key: 'menu.miss.shortlist', to: 'subjects/', go: 'menu.allSubjects' },
-}
 const { view } = useView()
 const dismiss = () => (missedAnchor.value = null)
 const plan = usePlan()
-const hint = computed(() => {
-  if (!missedAnchor.value) return null
-  // With a plan, a missing heavy-semester alert means there's nothing heavy, not that a plan is needed.
-  if (missedAnchor.value === 'heavy' && !plan.isEmpty.value) return { key: 'menu.miss.noHeavy', to: 'plan/', go: 'menu.myPlan' }
-  // With a plan, a missing calendar means none of its semesters has published dates yet.
-  if (missedAnchor.value === 'calendar' && !plan.isEmpty.value) return { key: 'menu.miss.noDates', to: 'guide/key-dates/', go: 'guide.datesTitle' }
-  return HINTS[missedAnchor.value] ?? null
-})
+const shortlist = useShortlist()
+const hint = computed(() => missedHint(missedAnchor.value, { plan: !plan.isEmpty.value, saved: shortlist.codes.value.length }))
 </script>
 
 <template>

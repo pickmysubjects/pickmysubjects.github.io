@@ -2,7 +2,7 @@
 import { trackEvent } from '@/utils/analytics'
 import { viewYear } from '@/engine/dataYear'
 import InfoTip from '@/components/InfoTip.vue'
-import { computed, nextTick, shallowRef } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, shallowRef, watch } from 'vue'
 import { Columns2, Heart, Link2, Share2 } from 'lucide-vue-next'
 import CompareTable from '@/components/shortlist/CompareTable.vue'
 import ShortlistList from '@/components/shortlist/ShortlistList.vue'
@@ -47,6 +47,19 @@ async function compareSaved(): Promise<void> {
   await nextTick()
   document.getElementById('compare-title')?.scrollIntoView({ block: 'start' })
 }
+
+// A link to the comparison (Tools → Compare subjects, search) before any are picked: compare the
+// saved ones. With fewer than two saved, the missing-anchor line says what's short.
+function openAskedCompare(): void {
+  if (location.hash === '#compare-title' && picked.value.length < 2 && saved.value.length >= 2) void compareSaved()
+}
+onMounted(() => {
+  openAskedCompare()
+  window.addEventListener('hashchange', openAskedCompare)
+})
+onBeforeUnmount(() => window.removeEventListener('hashchange', openAskedCompare))
+// Followed from this same page with another address (/shortlist/?compare=X → #compare-title).
+watch(query, openAskedCompare)
 
 const copied = shallowRef(false)
 async function share(): Promise<void> {
