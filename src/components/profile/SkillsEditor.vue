@@ -107,6 +107,9 @@ function pick(skill: Skill, level: number): void {
 <style scoped>
 .card {
   display: grid;
+  /* One column no wider than the card: the mark-scale menu's longest option
+     (e.g. 韓国 内申 9 等級…) shortens in its box instead of widening the page. */
+  grid-template-columns: minmax(0, 1fr);
   gap: 14px;
   padding: 20px 22px;
 }
