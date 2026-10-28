@@ -139,6 +139,9 @@ export function issueText(
     const status = statuses.find((s) => s.ruleId === issue.ruleId)
     return `${ruleText(t, rule, issue.message)} — ${status ? ruleDetail(t, status) : ''}`
   }
+  // The engine names unmet corequisites in English ("one of: A / B"): say them in the reader's language.
+  const co = issue.kind === 'coreq-unmet' && issue.subject ? subjects[issue.subject] : undefined
+  if (co && co.corequisites !== 'none' && co.corequisites !== 'unknown') return t('issue.coreq-unmet', { code: co.code, needs: describeReq(t, co.corequisites, course) })
   if (issue.kind === 'discontinued') {
     return t(issue.params.instead ? 'issue.discontinuedInstead' : 'issue.discontinued', issue.params)
   }

@@ -21,6 +21,12 @@ const linksQuiet = computed(() => linkCounts?.value.quiet ?? false)
 // The title in the reader's language where we have one, with the English after it, small (as on a planned card).
 const local = computed(() => (props.subject ? localTitle(props.subject, locale.value) : ''))
 const label = computed(() => (props.result.failed ? t.value('plan.pastNotPassed') : t.value('plan.pastTag')))
+// "← 1 · → 2" in words: 需要先修 1 · 修完能解锁 2.
+const linkLabel = computed(() => {
+  const l = links.value
+  if (!l) return undefined
+  return [l.needs ? `${t.value('subject.needs')} ${l.needs}` : '', l.unlocks ? `${t.value('subject.unlocks')} ${l.unlocks}` : ''].filter(Boolean).join(' · ')
+})
 </script>
 
 <template>
@@ -51,7 +57,7 @@ const label = computed(() => (props.result.failed ? t.value('plan.pastNotPassed'
       <span class="tag tag-state">{{ label }}</span>
       <span v-if="subject" class="tag">L{{ subject.level }}</span>
       <span v-if="note" class="note">{{ note }}</span>
-      <span v-if="links" class="link-mark" :class="{ 'link-mark-quiet': linksQuiet }" aria-hidden="true"><template v-if="links.needs">← {{ links.needs }}</template><template v-if="links.needs && links.unlocks"> · </template><template v-if="links.unlocks">→ {{ links.unlocks }}</template></span>
+      <span v-if="links" class="link-mark" :class="{ 'link-mark-quiet': linksQuiet }" role="img" :aria-label="linkLabel" :title="linkLabel"><template v-if="links.needs">← {{ links.needs }}</template><template v-if="links.needs && links.unlocks"> · </template><template v-if="links.unlocks">→ {{ links.unlocks }}</template></span>
     </span>
   </button>
 </template>

@@ -12,7 +12,7 @@ import PlanRequirements from '@/components/planner/PlanRequirements.vue'
 import SubjectTimeline from '@/components/planner/SubjectTimeline.vue'
 import PlanHowBuilt from '@/components/planner/PlanHowBuilt.vue'
 import PlanIssues from '@/components/planner/PlanIssues.vue'
-import PlanCalendar from '@/components/planner/PlanCalendar.vue'
+import PlanActions from '@/components/planner/PlanActions.vue'
 import PlanPrint, { type PrintTerm } from '@/components/planner/PlanPrint.vue'
 import SharedPlanView from '@/components/planner/SharedPlanView.vue'
 import Interp from '@/components/Interp.vue'
@@ -21,7 +21,7 @@ import PlanHero from '@/components/planner/PlanHero.vue'
 import SubjectSection from '@/components/subject/SubjectSection.vue'
 import { assumedOfferings, creditPoints, findDiploma, careerGap, careerGoal, careerName, hasEnded, heldMajorIds, informalPicks, isFail, isPassedDuplicate, passedCodes, planProblems as countedProblems, planComponentIds, planRoles, planRules, recordedLoads, termKey, termLoad, type Issue, type PlanTerm } from '@/engine'
 import { diplomaTitle } from '@/composables/usePlanCompare'
-import { ImageDown, Plus, Printer, Share2, Sparkles, X } from 'lucide-vue-next'
+import { Plus, Sparkles, X } from 'lucide-vue-next'
 import { usePhone } from '@/composables/usePhone'
 import { usePlans } from '@/composables/usePlans'
 import { sharePlanImage } from '@/utils/planImage'
@@ -243,8 +243,31 @@ const problemTexts = computed(() => {
       rule: 'ruleId' in i && !!i.ruleId,
     }))
 })
-// What the requirements card doesn't already say: subject-level problems.
-const planProblems = computed(() => problemTexts.value.filter((p) => !p.rule))
+// What the requirements card doesn't already say: subject-level problems. The same condition on
+// several subjects (two maths subjects needing one VCE score) is one line naming them all.
+const planProblems = computed(() => {
+  const out: { text: string; confirm?: string[] }[] = []
+  const byCondition = new Map<string, { codes: string[]; item: { text: string; confirm?: string[] } }>()
+  for (const p of problemTexts.value) {
+    if (p.rule) continue
+    if (!p.confirm) {
+      out.push({ text: p.text })
+      continue
+    }
+    const key = p.text.split(p.confirm).join('\u0000')
+    const seen = byCondition.get(key)
+    if (seen) {
+      seen.codes.push(p.confirm)
+      seen.item.text = key.split('\u0000').join(seen.codes.join(' / '))
+      seen.item.confirm = [...seen.codes]
+      continue
+    }
+    const item = { text: p.text, confirm: [p.confirm] }
+    byCondition.set(key, { codes: [p.confirm], item })
+    out.push(item)
+  }
+  return out
+})
 const hasNotes = computed(() => planProblems.value.length > 0 || noteCount.value > 0)
 const hasConfirmable = computed(() => problemTexts.value.some((p) => p.confirm))
 const unknowns = computed(
@@ -498,7 +521,6 @@ const nextStep = computed(() => {
 })
 const lastTerm = computed(() => [...plan.terms.value].reverse().find((x) => x.subjects.length))
 const boardShort = computed(() => (lastTerm.value ? t.value('planPage.boardShort', { term: termLabel(t.value, lastTerm.value), n: plan.plannedCodes.value.length }) : undefined))
-const rulesShort = computed(() => (problems.value ? t.value('plan.statusProblems', { n: problems.value }) : unknowns.value ? t.value('plan.statusUnknown', { n: unknowns.value }) : t.value('plan.statusOk')))
 // The board may reach past the page's width to the window's edge on wide screens: the window's
 // width (without its scrollbar), for that. Watched with a ResizeObserver, not the window's
 // resize event: a vertical scrollbar coming or going changes it too, and a stale width made the
@@ -570,7 +592,10 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
       :next="!showWizard && !shared && onBoard ? nextStep : undefined"
       @edit="editing = true"
     >
-      <PlanSwitcher v-if="!shared" class="hero-switcher" />
+      <div v-if="!shared" class="hero-row">
+        <PlanSwitcher class="hero-switcher" />
+        <PlanActions v-if="!showWizard && onBoard" :copied="copied" :imaging="imaging" @share="share" @save-image="saveImage" @print="printPlan" />
+      </div>
       <template v-if="showWizard">
         <p class="page-lede">{{ t('plan.ledeShort') }} <a class="guide-link" :href="link('guide')">{{ t('guide.nav') }} →</a></p>
         <p v-if="pendingAdd" class="started" role="status">{{ t('plan.addPending', { code: pendingAdd }) }}</p>
@@ -603,8 +628,65 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
       <div class="body">
         <RatePrompt v-if="rateNext" :key="rateNext" :code="rateNext" @close="rateNext = null" />
 
+        <div v-if="onBoard" id="rules" class="rules-strip">
+          <PlanRequirements
+            v-if="plan.courseCheck.value.statuses.length"
+            :problems="problems + Number(recordFix)"
+            :unconfirmed="unknowns"
+            :start-open="!justBuilt"
+            :statuses="plan.courseCheck.value.statuses"
+            :rules="allRules"
+            :degree-rules="rules"
+            :members="members"
+            :active="ruleFocus"
+            @focus="focusRule"
+          >
+            <template v-if="hasNotes" #notes>
+              <ul v-if="planProblems.length" class="status-list" :class="problems ? 'tone-bad' : 'tone-warn'" role="status">
+                <li v-for="(p, i) in planProblems.slice(0, 5)" :key="i" class="status-item">
+                  <component :is="TriangleAlert" :size="16" aria-hidden="true" class="status-icon" />
+                  <span>{{ p.text }}</span>
+                  <button v-if="p.confirm" class="button button-quiet confirm" type="button" @click="p.confirm.forEach((c) => setConfirmed(c, true))">
+                    {{ t('plan.iMeetThis') }}
+                  </button>
+                  <InfoTip v-if="p.confirm" :text="t('plan.confirmHint')" />
+                </li>
+              </ul>
+              <p v-for="u in unavoidable" :key="u" class="started">{{ u }}</p>
+              <p v-if="extraTermsOnVisa" class="started">{{ t('plan.extraTermsVisa') }}</p>
+              <ul v-if="failed.length" class="failed">
+                <li v-for="f in failed" :key="f.code">
+                  {{ f.term ? t('plan.failedRetake', { code: f.code, term: f.term }) : t('plan.failedNotPlanned', { code: f.code }) }}
+                </li>
+                <li class="failed-more"><a :href="link('guide/semester/#fail')">{{ t('guide.failTitle') }}</a></li>
+              </ul>
+            </template>
+          </PlanRequirements>
+          <!-- A degree with no rules we know: the problems and notes as a list. -->
+          <div v-else class="status-body">
+            <ul v-if="problemTexts.length" class="status-list">
+              <li v-for="(p, i) in problemTexts.slice(0, 5)" :key="i" class="status-item">
+                <span>{{ p.text }}</span>
+                <button v-if="p.confirm" class="button button-quiet confirm" type="button" @click="setConfirmed(p.confirm, true)">
+                  {{ t('plan.iMeetThis') }}
+                </button>
+              </li>
+            </ul>
+            <p v-if="hasConfirmable" class="status-hint">{{ t('plan.confirmHint') }}</p>
+            <p v-for="u in unavoidable" :key="u" class="started">{{ u }}</p>
+            <p v-if="extraTermsOnVisa" class="started">{{ t('plan.extraTermsVisa') }}</p>
+            <ul v-if="failed.length" class="failed">
+              <li v-for="f in failed" :key="f.code">
+                {{ f.term ? t('plan.failedRetake', { code: f.code, term: f.term }) : t('plan.failedNotPlanned', { code: f.code }) }}
+              </li>
+              <li class="failed-more"><a :href="link('guide/semester/#fail')">{{ t('guide.failTitle') }}</a></li>
+            </ul>
+          </div>
+        </div>
+
         <SubjectSection id="board" class="board-sec" :style="{ '--page-w': `${pageW}px` }" :title="t('planPage.tocBoard')" :short="boardShort">
           <template #aside>
+            <InfoTip :text="t('plan.hint')" />
             <button class="button button-quiet rebuild" type="button" @click="plan.generate()">
               <RotateCcw :size="16" aria-hidden="true" /> {{ t('plan.rebuild') }}
             </button>
@@ -691,60 +773,6 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
           </button>
         </div>
 
-        <SubjectSection v-if="onBoard" id="rules" :title="t('planPage.tocRules')" :short="rulesShort">
-          <PlanRequirements
-            v-if="plan.courseCheck.value.statuses.length"
-            :problems="problems + Number(recordFix)"
-            :start-open="!justBuilt"
-            :statuses="plan.courseCheck.value.statuses"
-            :rules="allRules"
-            :degree-rules="rules"
-            :members="members"
-            :active="ruleFocus"
-            @focus="focusRule"
-          >
-            <template v-if="hasNotes" #notes>
-              <ul v-if="planProblems.length" class="status-list" :class="problems ? 'tone-bad' : 'tone-warn'" role="status">
-                <li v-for="(p, i) in planProblems.slice(0, 5)" :key="i" class="status-item">
-                  <component :is="TriangleAlert" :size="16" aria-hidden="true" class="status-icon" />
-                  <span>{{ p.text }}</span>
-                  <button v-if="p.confirm" class="button button-quiet confirm" type="button" @click="setConfirmed(p.confirm, true)">
-                    {{ t('plan.iMeetThis') }}
-                  </button>
-                </li>
-              </ul>
-              <p v-if="hasConfirmable" class="status-hint">{{ t('plan.confirmHint') }}</p>
-              <p v-for="u in unavoidable" :key="u" class="started">{{ u }}</p>
-              <p v-if="extraTermsOnVisa" class="started">{{ t('plan.extraTermsVisa') }}</p>
-              <ul v-if="failed.length" class="failed">
-                <li v-for="f in failed" :key="f.code">
-                  {{ f.term ? t('plan.failedRetake', { code: f.code, term: f.term }) : t('plan.failedNotPlanned', { code: f.code }) }}
-                </li>
-                <li class="failed-more"><a :href="link('guide/semester/#fail')">{{ t('guide.failTitle') }}</a></li>
-              </ul>
-            </template>
-          </PlanRequirements>
-          <!-- A degree with no rules we know: the problems and notes as a list. -->
-          <div v-else class="status-body">
-            <ul v-if="problemTexts.length" class="status-list">
-              <li v-for="(p, i) in problemTexts.slice(0, 5)" :key="i" class="status-item">
-                <span>{{ p.text }}</span>
-                <button v-if="p.confirm" class="button button-quiet confirm" type="button" @click="setConfirmed(p.confirm, true)">
-                  {{ t('plan.iMeetThis') }}
-                </button>
-              </li>
-            </ul>
-            <p v-if="hasConfirmable" class="status-hint">{{ t('plan.confirmHint') }}</p>
-            <p v-for="u in unavoidable" :key="u" class="started">{{ u }}</p>
-            <p v-if="extraTermsOnVisa" class="started">{{ t('plan.extraTermsVisa') }}</p>
-            <ul v-if="failed.length" class="failed">
-              <li v-for="f in failed" :key="f.code">
-                {{ f.term ? t('plan.failedRetake', { code: f.code, term: f.term }) : t('plan.failedNotPlanned', { code: f.code }) }}
-              </li>
-              <li class="failed-more"><a :href="link('guide/semester/#fail')">{{ t('guide.failTitle') }}</a></li>
-            </ul>
-          </div>
-        </SubjectSection>
 
         <!-- Nothing heavy: one compact line, not a card with nothing in it. -->
         <p v-if="onBoard && !heavyTerms && !unavoidable.length" id="heavy" class="heavy-none surface">
@@ -761,25 +789,6 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
           <p v-for="u in unavoidable" :key="u" class="started">{{ u }}</p>
         </SubjectSection>
 
-        <SubjectSection id="calendar" :title="t('planPage.tocCalendar')" :short="t('planPage.calendarShort')" fold>
-          <p class="cal-line">
-            {{ t('plan.censusLineShort') }}<InfoTip :text="t('plan.censusLine')" />
-            <a :href="link('guide/key-dates/')">{{ t('guide.datesTitle') }}</a>
-          </p>
-          <PlanCalendar />
-        </SubjectSection>
-
-        <SubjectSection v-if="onBoard" id="share" :title="t('planPage.tocShare')" :short="t('planPage.shareShort')" fold>
-          <div class="share-tools">
-            <button class="button button-quiet" type="button" @click="share">
-              <Share2 :size="16" aria-hidden="true" />
-              <span class="swap-label"><span :class="{ 'swap-off': copied }">{{ t('plan.share') }}</span><span :class="{ 'swap-off': !copied }" aria-hidden="true">{{ t('plan.copied') }}</span></span>
-              <span class="visually-hidden" role="status">{{ copied ? t('plan.copied') : '' }}</span>
-            </button>
-            <button class="button button-quiet" type="button" :disabled="imaging" @click="saveImage"><ImageDown :size="16" aria-hidden="true" /> {{ t('plan.saveImage') }}</button>
-            <button class="button button-quiet" type="button" @click="printPlan"><Printer :size="16" aria-hidden="true" /> {{ t('plan.print') }}</button>
-          </div>
-        </SubjectSection>
       </div>
     </div>
 
@@ -814,6 +823,7 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
         @remove-it="peekTerm && onRemove(peekTerm.index, peek as string)"
         :where-of="whereOf"
         :term="peekTerm?.term"
+        :terms="plan.terms.value"
       />
     </template>
     <PlanPrint
@@ -840,8 +850,20 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
   padding-top: 20px;
 }
 
-.hero-switcher {
+.hero-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   width: 100%;
+}
+
+.hero-switcher {
+  flex: 1;
+  min-width: 0;
+}
+
+.rules-strip {
+  min-width: 0;
 }
 
 .article {
@@ -1213,38 +1235,6 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
   min-height: 36px;
 }
 
-.cal-line {
-  margin: 0;
-  overflow-wrap: anywhere;
-  font-size: 0.9375rem;
-  color: var(--ink-soft);
-}
-
-.cal-line a {
-  margin-left: 8px;
-  color: color-mix(in srgb, var(--accent) 80%, var(--ink));
-}
-
-.share-tools {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-/* Two labels in one cell, one shown: the button is as wide as the longer and never resizes. */
-.swap-label {
-  display: inline-grid;
-  justify-items: start;
-}
-
-.swap-label > span {
-  grid-area: 1 / 1;
-}
-
-.swap-label > .swap-off {
-  visibility: hidden;
-}
-
 .undo {
   position: fixed;
   z-index: 50;
@@ -1332,8 +1322,7 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
   .heavy-show,
   .rebuild,
   .confirm,
-  .meta-line .button,
-  .share-tools .button {
+  .meta-line .button {
     min-height: 44px;
   }
 

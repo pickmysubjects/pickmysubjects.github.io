@@ -71,6 +71,7 @@ export const MENUS: MenuArea[] = [
       { key: 'menu.rules', desc: 'menu.d.rules', to: 'plan/#rules', icon: ListChecks },
       { key: 'menu.heavy', desc: 'menu.d.heavy', to: 'plan/#heavy', icon: TriangleAlert },
       { key: 'menu.calendar', desc: 'menu.d.calendar', to: 'plan/#calendar', icon: CalendarPlus },
+      { key: 'menu.sharePlan', desc: 'menu.d.sharePlan', to: 'plan/#share', icon: Share2 },
     ],
   },
   {

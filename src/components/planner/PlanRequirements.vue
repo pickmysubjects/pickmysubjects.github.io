@@ -23,12 +23,15 @@ const props = defineProps<{
   problems?: number
   /** False: start folded even with rules unmet (a plan just built). */
   startOpen?: boolean
+  /** Conditions we can't check (a VCE score, a test) the student still has to confirm. */
+  unconfirmed?: number
 }>()
 const emit = defineEmits<{ focus: [ruleId: string | null] }>()
 const { t } = useI18n()
 
-// Closed until asked, unless a rule isn't met (or can't be told yet) on a plan that wasn't just built.
-const open = shallowRef(props.startOpen !== false && props.statuses.some((s) => s.status !== 'ok'))
+// Folded: the status line and meters say it; the full list is one tap away. Opened only when a rule
+// fails on a plan that wasn't just built.
+const open = shallowRef(props.startOpen !== false && props.statuses.some((s) => s.status === 'fail'))
 
 interface Meter {
   id: string
@@ -106,8 +109,8 @@ function toggle(id: string): void {
           <span v-else class="ring-mid ring-count">{{ left }}</span>
         </span>
         <span class="health-text">
-          <span class="health-title">{{ health === 'ok' ? t('progress.allMet') : blocked ? t('progress.metButProblems', { n: problems ?? 0 }) : (left === 1 ? t('progress.leftOne') : t('progress.left', { n: left })) }}</span>
-          <span class="health-sub">{{ t('rules.progress', { met, total }) }}</span>
+          <span class="health-title">{{ health === 'ok' ? (unconfirmed ? t('progress.allMetConfirm', { n: unconfirmed }) : t('progress.allMet')) : blocked ? t('progress.metButProblems', { n: problems ?? 0 }) : (left === 1 ? t('progress.leftOne') : t('progress.left', { n: left })) }}</span>
+          <span class="health-sub"><span class="health-dot" aria-hidden="true">·</span>{{ t('rules.progress', { met, total }) }}</span>
         </span>
       </span>
 
@@ -198,9 +201,9 @@ function toggle(id: string): void {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
-  gap: 28px;
+  gap: 24px;
   width: 100%;
-  padding: 14px 20px;
+  padding: 10px 18px;
   border: 0;
   background: none;
   color: var(--ink);
@@ -258,8 +261,14 @@ function toggle(id: string): void {
 }
 
 .health-text {
-  display: grid;
-  gap: 1px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 1px 6px;
+}
+
+.health-dot {
+  margin-right: 6px;
 }
 
 .health-title {

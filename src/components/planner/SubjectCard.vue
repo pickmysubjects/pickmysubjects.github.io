@@ -126,6 +126,12 @@ function onDragStart(event: DragEvent): void {
   if (event.dataTransfer) event.dataTransfer.effectAllowed = 'move'
   emit('dragStart')
 }
+// "← 1 · → 2" in words: 需要先修 1 · 修完能解锁 2.
+const linkLabel = computed(() => {
+  const l = links.value
+  if (!l) return undefined
+  return [l.needs ? `${t.value('subject.needs')} ${l.needs}` : '', l.unlocks ? `${t.value('subject.unlocks')} ${l.unlocks}` : ''].filter(Boolean).join(' · ')
+})
 </script>
 
 <template>
@@ -156,7 +162,7 @@ function onDragStart(event: DragEvent): void {
       <span v-else-if="role === 'option'" class="tag tag-option">{{ t('plan.tagOption') }}</span>
       <span v-if="onlyIn && !worst" class="tag tag-only">{{ onlyIn }}</span>
       <span v-if="factsFrom?.older" class="tag tag-old">{{ t('dataYear.short', { year: factsFrom.year }) }}</span>
-      <span v-if="links" class="link-mark" :class="{ 'link-mark-quiet': linksQuiet }" aria-hidden="true"><template v-if="links.needs">← {{ links.needs }}</template><template v-if="links.needs && links.unlocks"> · </template><template v-if="links.unlocks">→ {{ links.unlocks }}</template></span>
+      <span v-if="links" class="link-mark" :class="{ 'link-mark-quiet': linksQuiet }" role="img" :aria-label="linkLabel" :title="linkLabel"><template v-if="links.needs">← {{ links.needs }}</template><template v-if="links.needs && links.unlocks"> · </template><template v-if="links.unlocks">→ {{ links.unlocks }}</template></span>
     </span>
     <span v-if="subject" class="row-points">{{ subject.points }}</span>
 

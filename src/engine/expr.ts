@@ -360,14 +360,15 @@ export function simplifyFor(field: ReqField, course: string): ReqField {
     if ('any' in e) {
       const kept = e.any.map(walk)
       if (kept.includes(MET)) return MET
-      const open = kept.filter((x): x is ReqExpr => x !== null && x !== MET)
+      // "(A or B) or a test" is three ways in, said and counted as one list.
+      const open = kept.filter((x): x is ReqExpr => x !== null && x !== MET).flatMap((x) => ('any' in x ? x.any : [x]))
       if (open.length === 0) return null
       return open.length === 1 ? (open[0] as ReqExpr) : { any: open }
     }
     if ('all' in e) {
       const kept = e.all.map(walk)
       if (kept.includes(null)) return null
-      const open = kept.filter((x): x is ReqExpr => x !== null && x !== MET)
+      const open = kept.filter((x): x is ReqExpr => x !== null && x !== MET).flatMap((x) => ('all' in x ? x.all : [x]))
       if (open.length === 0) return MET
       return open.length === 1 ? (open[0] as ReqExpr) : { all: open }
     }

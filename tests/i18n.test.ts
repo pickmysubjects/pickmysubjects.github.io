@@ -97,8 +97,8 @@ describe('counts of one', () => {
     const { useI18n } = await import('../src/i18n')
     const { t, setLocale } = useI18n()
     setLocale('en')
-    expect(t.value('plan.statusUnknown', { n: 1 })).toBe('Looks fine, but 1 thing can’t be checked yet')
-    expect(t.value('plan.statusUnknown', { n: 2 })).toBe('Looks fine, but 2 things can’t be checked yet')
+    expect(t.value('plan.statusUnknown', { n: 1 })).toBe('No problems; 1 condition for you to confirm')
+    expect(t.value('plan.statusUnknown', { n: 2 })).toBe('No problems; 2 conditions for you to confirm')
   })
 })
 

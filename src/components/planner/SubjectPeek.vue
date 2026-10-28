@@ -3,7 +3,7 @@ import { link } from '@/composables/useView'
 import { useDataYear } from '@/composables/useDataYear'
 import FactsYearNote from '@/components/subject/FactsYearNote.vue'
 import { computed, onBeforeUnmount, onMounted, shallowRef, toRef, useTemplateRef } from 'vue'
-import { ArrowRightLeft, BookOpen, CalendarRange, Check, CheckCheck, ChevronDown, ExternalLink, TriangleAlert, X } from 'lucide-vue-next'
+import { ArrowRightLeft, BookOpen, CalendarRange, Check, CheckCheck, ChevronDown, Ellipsis, ExternalLink, TriangleAlert, X } from 'lucide-vue-next'
 import { localTitle, pickLocalized } from '@/i18n/localized'
 import {
   alternativeGroups,
@@ -14,6 +14,8 @@ import {
   referencedSubjects,
   simplifyFor,
   standingOf,
+  unlockList,
+  type PlanTerm,
   type Period,
   type Subject,
 } from '@/engine'
@@ -54,6 +56,8 @@ const props = defineProps<{
   whereOf?: Record<string, string>
   /** The plan's semester for it, to say when it isn't offered then. */
   term?: { year: number; period: Period }
+  /** The plan's semesters, to tell which subjects this one opens and which are placed too early. */
+  terms?: readonly PlanTerm[]
 }>()
 const emit = defineEmits<{
   close: []
@@ -130,11 +134,21 @@ const where = (c: string) => (doneSet.value.has(c) ? t.value('plan.doneIt') : (p
 const needs = computed(() => (props.subject ? simplifyFor(props.subject.prerequisites, props.course) : 'unknown'))
 const needCodes = computed(() => referencedSubjects(needs.value))
 const prereq = computed(() => prereqGist(t.value, needs.value))
+// What counts as taken before this one: passed, plus what the plan has in earlier semesters (a
+// prerequisite in the same semester doesn't count, as the planner's own check says).
+const ownTerm = computed(() => props.terms?.findIndex((x) => x.subjects.includes(props.code)) ?? -1)
+const earlier = computed(() => {
+  if (!props.terms || ownTerm.value < 0) return new Set(props.have)
+  const planned = new Set(props.terms.flatMap((x) => x.subjects))
+  return new Set([...props.have.filter((c) => !planned.has(c)), ...props.terms.slice(0, ownTerm.value).flatMap((x) => x.subjects)])
+})
+// Planned, but not before this one: the same semester or later.
+const tooLate = (c: string) => haveSet.value.has(c) && !doneSet.value.has(c) && !earlier.value.has(c)
 const { profile, setConfirmed } = useProfile()
 const prereqMet = computed(() => {
   const n = needs.value
   if (!props.subject || n === 'none' || n === 'unknown') return null
-  return prereqStatus(props.subject, standingOf(profile.value, data.value, props.have), { subjects: props.subjects, course: props.course }).status === 'ok'
+  return prereqStatus(props.subject, standingOf(profile.value, data.value, [...earlier.value]), { subjects: props.subjects, course: props.course }).status === 'ok'
 })
 const swapFrom = (c: string) => {
   if (haveSet.value.has(c) || !props.subjects[c]) return null
@@ -147,17 +161,31 @@ const swapFrom = (c: string) => {
 }
 const route = computed(() => prerequisiteRoute(props.code, props.subjects, props.course, haveSet.value))
 const routeMissing = computed(() => route.value.filter((c) => !haveSet.value.has(c)).length)
-const hasManual = computed(() => /"(?:manual|placement|permission|school|average|wam)"/.test(JSON.stringify(props.subject?.prerequisites ?? '')))
+// Asking "I meet this" only makes sense while the plan doesn't meet it already.
+const hasManual = computed(() => prereqMet.value !== true && /"(?:manual|placement|permission|school|average|wam)"/.test(JSON.stringify(props.subject?.prerequisites ?? '')))
+// The listed subject the plan meets it with (passed, or planned): shown first, the others folded.
+// Only for a choice ("A or B or a test"): with "A and B" every one is needed and all are listed.
+const metBy = computed(() => {
+  const n = needs.value
+  if (!prereqMet.value || (typeof n === 'object' && 'all' in n)) return undefined
+  return needCodes.value.find((c) => doneSet.value.has(c)) ?? needCodes.value.find((c) => earlier.value.has(c))
+})
+const otherNeeds = computed(() => needCodes.value.filter((c) => c !== metBy.value))
+// Ways in besides the one met: the other options of a top-level "or", tests included.
+const otherCount = computed(() => {
+  const n = needs.value
+  return typeof n === 'object' && 'any' in n ? n.any.length - 1 : otherNeeds.value.length
+})
+const moreOpen = shallowRef(false)
 const confirmed = computed(() => profile.value.confirmed?.includes(props.code) ?? false)
 
-// Leads to, and can't be taken with: the ones in the plan first.
+// Leads to: problems (planned too early) first, then the ones in the plan, then the rest folded.
 const inPlanFirst = (a: string, b: string) => Number(haveSet.value.has(b)) - Number(haveSet.value.has(a)) || a.localeCompare(b)
-const leadsTo = computed(() =>
-  Object.values(props.subjects)
-    .filter((s) => referencedSubjects(s.prerequisites).includes(props.code))
-    .map((s) => s.code)
-    .sort(inPlanFirst),
-)
+const unlocks = computed(() => unlockList(props.code, data.value, { course: props.course, terms: props.terms ?? [], completed: props.done ?? [] }))
+const unlocksMine = computed(() => unlocks.value.filter((e) => e.problem || e.done || e.termIndex !== null || haveSet.value.has(e.code)))
+const unlocksRest = computed(() => unlocks.value.filter((e) => !unlocksMine.value.includes(e)))
+const UNLOCK_SHOWN = 6
+const unlocksAll = shallowRef(false)
 const clashes = computed(() => {
   const own = props.subject && props.subject.nonAllowed !== 'unknown' ? props.subject.nonAllowed : []
   const listed = Object.values(props.subjects)
@@ -226,18 +254,23 @@ function onClick(event: MouseEvent): void {
         <div class="kf">
           <dt>{{ t('subject.factPrereq') }}</dt>
           <dd>
-            {{ prereq }}<span v-if="prereqMet" class="kf-met"><Check :size="14" aria-hidden="true" />{{ t('subject.prereqDone') }}</span>
+            {{ prereq }}
           </dd>
         </div>
       </dl>
       <div class="peek-buttons">
         <a class="button button-accent peek-btn" :href="link(`subject/${code}`)">{{ t('subject.fullPage') }} <ExternalLink :size="15" aria-hidden="true" /></a>
-        <a class="button button-quiet peek-btn" :href="handbookFor(code, year)" target="_blank" rel="noopener"><BookOpen :size="15" aria-hidden="true" /> Handbook</a>
         <template v-if="planned">
           <button class="button button-quiet peek-btn" type="button" @click="act('swapIt')"><ArrowRightLeft :size="15" aria-hidden="true" /> {{ t('plan.swap') }}</button>
-          <button class="button button-quiet peek-btn" type="button" @click="act('moveIt')"><CalendarRange :size="15" aria-hidden="true" /> {{ t('plan.move') }}</button>
-          <button class="button button-quiet peek-btn peek-remove" type="button" @click="act('removeIt')"><X :size="15" aria-hidden="true" /> {{ t('plan.removeShort') }}</button>
+          <div class="peek-more">
+            <button class="button button-quiet peek-btn peek-more-btn" type="button" :aria-label="t('peek.moreActions')" :aria-expanded="moreOpen" @click="moreOpen = !moreOpen"><Ellipsis :size="18" aria-hidden="true" /></button>
+            <div v-if="moreOpen" class="peek-menu" role="menu">
+              <button role="menuitem" type="button" class="peek-menu-item" @click="act('moveIt')"><CalendarRange :size="15" aria-hidden="true" /> {{ t('plan.move') }}</button>
+              <button role="menuitem" type="button" class="peek-menu-item peek-remove" @click="act('removeIt')"><X :size="15" aria-hidden="true" /> {{ t('plan.removeShort') }}</button>
+            </div>
+          </div>
         </template>
+        <a class="peek-handbook" :href="handbookFor(code, year)" target="_blank" rel="noopener"><BookOpen :size="14" aria-hidden="true" /> Handbook</a>
       </div>
     </header>
 
@@ -273,22 +306,38 @@ function onClick(event: MouseEvent): void {
               <p v-if="subject.prerequisites === 'none'" class="muted">{{ t('subject.needsNone') }}</p>
               <p v-else-if="subject.prerequisites === 'unknown'" class="muted">{{ t('subject.notRecorded') }}</p>
               <template v-else>
-                <p class="peek-rule">{{ describeReq(t, subject.prerequisites, course) }}</p>
-                <ul v-if="needCodes.length" class="peek-list">
-                  <li v-for="c in needCodes" :key="c" class="peek-item">
-                    <a v-if="!subjects[c]" class="peek-row" :href="handbookFor(c, year)" target="_blank" rel="noopener">
-                      <span class="code">{{ c }}</span><span class="peek-row-title muted">{{ t('subject.notYetAdded') }}</span>
-                    </a>
-                    <button v-else type="button" class="peek-row" @click="emit('open', c)">
-                      <span class="code">{{ c }}</span>
-                      <span class="peek-row-title">{{ subjects[c]?.title }}</span>
-                      <span v-if="where(c)" class="peek-when" :class="{ 'peek-when-done': doneSet.has(c) }">{{ where(c) }}</span>
-                    </button>
-                    <button v-if="swapFrom(c)" type="button" class="button button-quiet peek-swap" @click="emit('swap', swapFrom(c)!, c)">
-                      {{ t('plan.swapTo', { code: swapFrom(c)! }) }}
+                <p v-if="!metBy" class="peek-rule">{{ describeReq(t, subject.prerequisites, course) }}</p>
+                <ul v-if="metBy" class="peek-list">
+                  <li class="peek-item">
+                    <button type="button" class="peek-row peek-row-met" @click="emit('open', metBy)">
+                      <Check :size="15" aria-hidden="true" class="peek-row-icon" />
+                      <span class="code">{{ metBy }}</span>
+                      <span class="peek-row-title">{{ subjects[metBy]?.title }}</span>
+                      <span class="peek-when" :class="{ 'peek-when-done': doneSet.has(metBy) }">{{ doneSet.has(metBy) ? where(metBy) : `${where(metBy)} · ${t('peek.inPlanTag')}` }}</span>
                     </button>
                   </li>
                 </ul>
+                <component :is="metBy ? 'details' : 'div'" v-if="otherNeeds.length || metBy" class="peek-others">
+                  <summary v-if="metBy" class="peek-others-head">{{ t('peek.otherWays', { n: otherCount }) }}</summary>
+                  <p v-if="metBy" class="peek-rule muted">{{ describeReq(t, subject.prerequisites, course) }}</p>
+                  <ul v-if="otherNeeds.length" class="peek-list">
+                    <li v-for="c in otherNeeds" :key="c" class="peek-item">
+                      <a v-if="!subjects[c]" class="peek-row" :href="handbookFor(c, year)" target="_blank" rel="noopener">
+                        <span class="code">{{ c }}</span><span class="peek-row-title muted">{{ t('subject.notYetAdded') }}</span>
+                      </a>
+                      <button v-else type="button" class="peek-row" @click="emit('open', c)">
+                        <span class="code">{{ c }}</span>
+                        <span class="peek-row-title">{{ subjects[c]?.title }}</span>
+                        <span v-if="where(c)" class="peek-when" :class="{ 'peek-when-done': doneSet.has(c), 'peek-when-bad': tooLate(c) }">
+                          <TriangleAlert v-if="tooLate(c)" :size="13" aria-hidden="true" />{{ where(c) }}
+                        </span>
+                      </button>
+                      <button v-if="swapFrom(c)" type="button" class="peek-swap" :title="t('plan.swapTo', { code: swapFrom(c)! })" @click="emit('swap', swapFrom(c)!, c)">
+                        {{ t('peek.useThis') }}
+                      </button>
+                    </li>
+                  </ul>
+                </component>
                 <details v-if="route.length > needCodes.length" class="peek-route">
                   <summary>{{ t('subject.routeTitle', { n: route.length, missing: routeMissing }) }}</summary>
                   <p class="peek-codes">
@@ -306,12 +355,22 @@ function onClick(event: MouseEvent): void {
 
             <div class="peek-col">
               <h4 class="peek-sub">{{ t('subject.unlocks') }}</h4>
-              <p v-if="!leadsTo.length" class="muted">{{ t('subject.unlocksNone') }}</p>
-              <p v-else class="peek-codes">
-                <button v-for="c in leadsTo" :key="c" type="button" class="chip code peek-code-chip" :class="{ 'peek-in': haveSet.has(c) }" @click="emit('open', c)">
-                  {{ c }}<span v-if="where(c)" class="peek-when">{{ where(c) }}</span>
-                </button>
-              </p>
+              <p v-if="!unlocks.length" class="muted">{{ t('subject.unlocksNone') }}</p>
+              <ul v-if="unlocksMine.length" class="peek-unlocks">
+                <li v-for="e in unlocksMine" :key="e.code">
+                  <button type="button" class="chip code peek-code-chip" :class="e.problem ? 'peek-clash' : 'peek-in'" @click="emit('open', e.code)">
+                    <TriangleAlert v-if="e.problem" :size="13" aria-hidden="true" />{{ e.code }}<span v-if="where(e.code)" class="peek-when">{{ where(e.code) }}</span>
+                  </button>
+                  <span v-if="e.problem" class="peek-bad peek-reason">{{ t(e.problem === 'same-term' ? 'peek.sameTermUnmet' : 'peek.beforeUnmet') }}</span>
+                </li>
+              </ul>
+              <template v-if="unlocksRest.length">
+                <p class="peek-minor">{{ t('peek.notPlannedYet') }}</p>
+                <p class="peek-codes">
+                  <button v-for="e in unlocksAll ? unlocksRest : unlocksRest.slice(0, UNLOCK_SHOWN)" :key="e.code" type="button" class="chip code peek-code-chip peek-quiet" @click="emit('open', e.code)">{{ e.code }}</button>
+                  <button v-if="!unlocksAll && unlocksRest.length > UNLOCK_SHOWN" type="button" class="chip peek-code-chip peek-quiet" @click="unlocksAll = true">{{ t('peek.moreN', { n: unlocksRest.length - UNLOCK_SHOWN }) }}</button>
+                </p>
+              </template>
             </div>
           </div>
 
@@ -600,8 +659,8 @@ function onClick(event: MouseEvent): void {
 
 .peek-links {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
-  gap: 14px 20px;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 18px;
 }
 
 .peek-col {
@@ -628,6 +687,7 @@ function onClick(event: MouseEvent): void {
 
 .peek-list {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 6px;
   margin: 0;
   padding: 0;
@@ -636,17 +696,15 @@ function onClick(event: MouseEvent): void {
 
 .peek-item {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   gap: 6px 8px;
 }
 
 .peek-row {
-  display: grid;
-  flex: 1 1 200px;
-  grid-template-columns: auto minmax(0, 1fr) auto;
-  align-items: baseline;
-  gap: 2px 10px;
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  gap: 10px;
   min-width: 0;
   min-height: 40px;
   padding: 8px 12px;
@@ -670,15 +728,143 @@ function onClick(event: MouseEvent): void {
 .peek-row-title {
   flex: 1;
   min-width: 0;
+  overflow: hidden;
+  font-size: 0.875rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* The option the plan meets it with: tinted, with a tick. */
+.peek-row-met {
+  border-color: color-mix(in srgb, var(--good) 45%, transparent);
+  background: color-mix(in srgb, var(--good) 9%, var(--glass-fill));
+}
+
+.peek-row-icon {
+  flex: none;
+  color: var(--good);
+}
+
+.peek-others {
+  display: grid;
+  gap: 8px;
+}
+
+.peek-others-head {
+  font-size: 0.875rem;
+  font-weight: var(--fw-semibold);
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+
+.peek-others .peek-rule {
+  margin: 0;
   font-size: 0.875rem;
 }
 
+.peek-unlocks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.peek-unlocks li {
+  display: flex;
+  min-width: 0;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 10px;
+}
+
+.peek-unlocks li:has(.peek-reason) {
+  flex-basis: 100%;
+}
+
+.peek-reason {
+  font-size: var(--fs-small);
+}
+
+.peek-minor {
+  margin: 4px 0 0;
+  font-size: var(--fs-small);
+  font-weight: var(--fw-semibold);
+  color: var(--ink-soft);
+}
+
+.peek-quiet {
+  color: var(--ink-soft);
+}
+
+.peek-handbook {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
+}
+
+.peek-more {
+  position: relative;
+}
+
+.peek-more-btn {
+  padding: 0 10px;
+}
+
+.peek-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 5;
+  display: grid;
+  min-width: 140px;
+  padding: 6px;
+  border: 1px solid var(--card-edge);
+  border-radius: 14px;
+  background: var(--surface);
+  box-shadow: var(--card-shadow);
+}
+
+.peek-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 10px;
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.875rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.peek-menu-item:hover,
+.peek-menu-item:focus-visible {
+  background: var(--glass-fill-hover);
+}
+
 .peek-when {
+  flex: none;
   margin-left: 6px;
+  white-space: nowrap;
   font-family: var(--font-ui);
   font-size: 0.75rem;
   font-weight: var(--fw-semibold);
   color: var(--ink-soft);
+}
+
+.peek-when-bad {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  color: var(--bad);
 }
 
 .peek-when-done {
@@ -686,9 +872,22 @@ function onClick(event: MouseEvent): void {
 }
 
 .peek-swap {
+  flex: none;
   min-height: 36px;
-  padding: 0 12px;
+  padding: 0 4px;
+  border: 0;
+  background: none;
+  color: color-mix(in srgb, var(--accent) 80%, var(--ink));
+  font: inherit;
   font-size: 0.8125rem;
+  font-weight: var(--fw-semibold);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.peek-swap:hover,
+.peek-swap:focus-visible {
+  text-decoration: underline;
 }
 
 .peek-codes {
