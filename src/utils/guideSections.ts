@@ -66,6 +66,27 @@ const TITLE_KEYS: Record<string, string> = {
   dates: 'guide.datesTitle',
 }
 
+/**
+ * The few places on each page students look for most, linked straight from the page's card on
+ * the overview: topic anchors, or a system on the systems page (svc-<id>). Short titles only.
+ * Key dates has none: the overview shows the next dates themselves.
+ */
+export const GUIDE_FEATURED: Record<GuidePageSlug, readonly string[]> = {
+  basics: ['points', 'rules', 'grades', 'wam'],
+  systems: ['svc-myUnimelb', 'svc-canvas', 'svc-email', 'svc-myTimetable'],
+  enrolling: ['load', 'timetable', 'waiver', 'fees'],
+  semester: ['special-consideration', 'hurdles', 'drop', 'fail'],
+  life: ['wellbeing', 'safety', 'community', 'advocacy'],
+  international: ['rsl', 'online', 'abroad'],
+  help: ['it-help', 'study-help', 'uni-careers', 'rankings'],
+  'key-dates': [],
+}
+
+/** The message key naming an anchor on a guide page: a topic's title, or a system's name. */
+export function anchorTitleKey(anchor: string): string {
+  return anchor.startsWith('svc-') ? `guide.svc.${anchor.slice(4)}.name` : topicTitleKey(anchor)
+}
+
 /** The message key of a topic's title; service-list topics keep theirs under guide.svcTopic. */
 export function topicTitleKey(id: string): string {
   return TITLE_KEYS[id] ?? `guide.svcTopic.${id}.title`
@@ -78,14 +99,15 @@ export function topicTitleKey(id: string): string {
 export const GUIDE_CHECKED = '2026-10-28'
 
 /**
- * "On this page" earns its place from four headed sections up: with fewer, the whole page is
- * about a screen or two of reading, and a list of two or three links only repeats the headings
- * the reader can already see. The page then gives the article the full width.
+ * "On this page" earns its place once a page is made of real sections: two or more topics, each
+ * under its own heading (the parts inside a topic only add lines under it). A page that is one
+ * block, say a single topic of one-line tiles, has nothing to jump between, so it has none; its
+ * article then takes the sidebar's place, at the same width as every other guide page.
  */
-export const TOC_MIN_SECTIONS = 4
+export const TOC_MIN_TOPICS = 2
 
-export function showToc(sections: number): boolean {
-  return sections >= TOC_MIN_SECTIONS
+export function showToc(topics: number): boolean {
+  return topics >= TOC_MIN_TOPICS
 }
 
 export function isGuideCategory(slug: string): slug is GuideCategory {

@@ -1,23 +1,32 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, defineAsyncComponent } from 'vue'
 import { ArrowRight, CalendarDays } from 'lucide-vue-next'
 import { link } from '@/composables/useView'
 import { useI18n } from '@/i18n'
 import { termFullLabel } from '@/i18n/format'
 import { MENUS } from '@/components/layout/nav'
+import { anchorTitleKey, GUIDE_FEATURED, type GuidePageSlug } from '@/utils/guideSections'
 import { KEY_DATES, melbourneToday } from '@/utils/keyDates'
 import { upcomingDates, type StripItem } from '@/utils/whatsNext'
+import { MINI_ART } from './art/minis'
 
 /**
- * /guide/: one glass card per section (the same icons and one-liners as the 墨大入门 menu), then
- * the next few key dates.
+ * /guide/: an index of the guide. Each page is a card with its small illustration, its short name
+ * (the 墨大入门 menu's; a page's long title is only its own heading) and direct links to the
+ * places students look for most. The three pages a new student starts with come first, larger.
+ * Key dates is the panel of the next few dates at the end.
  */
 const { t, locale } = useI18n()
-const SECTIONS = MENUS.find((m) => m.area === 'guide')!.items.filter((i) => i.to !== 'guide/')
-const title = (to: string) => {
-  const slug = to.split('/')[1]!
-  return slug === 'key-dates' ? t.value('guide.kd.title') : t.value(`guide.cat.${slug}.title`)
-}
+const START: readonly GuidePageSlug[] = ['basics', 'systems', 'enrolling']
+const pages = MENUS.find((m) => m.area === 'guide')!
+  .items.filter((i) => i.to !== 'guide/' && i.to !== 'guide/key-dates/')
+  .map((i) => {
+    const slug = i.to.split('/')[1] as GuidePageSlug
+    return { slug, to: i.to, name: i.key, art: defineAsyncComponent(MINI_ART[slug]), links: GUIDE_FEATURED[slug].map((a) => ({ to: `${i.to}#${a}`, key: anchorTitleKey(a) })) }
+  })
+const start = pages.filter((p) => START.includes(p.slug))
+const rest = pages.filter((p) => !START.includes(p.slug))
+const datesArt = defineAsyncComponent(MINI_ART['key-dates'])
 
 // The next dates within about four months (a running exam period or re-enrolment shows "until …").
 const dates = computed(() => upcomingDates(KEY_DATES, melbourneToday(), 4, 120))
@@ -32,23 +41,33 @@ function when(i: StripItem): string {
 </script>
 
 <template>
-  <ul class="cards">
-    <li v-for="s in SECTIONS" :key="s.to">
-      <a class="card surface" :href="link(s.to)">
-        <span class="card-icon"><component :is="s.icon" :size="20" aria-hidden="true" /></span>
-        <span class="card-title">{{ title(s.to) }}</span>
-        <span class="card-desc">{{ t(s.desc) }}</span>
-        <ArrowRight :size="16" aria-hidden="true" class="card-go" />
-      </a>
+  <ul class="cards cards-start">
+    <li v-for="p in start" :key="p.slug" class="card surface">
+      <span class="card-art" aria-hidden="true"><component :is="p.art" /></span>
+      <a class="card-name" :href="link(p.to)">{{ t(p.name) }}<ArrowRight :size="18" aria-hidden="true" /></a>
+      <ul class="card-links">
+        <li v-for="l in p.links" :key="l.to"><a :href="link(l.to)">{{ t(l.key) }}</a></li>
+      </ul>
     </li>
   </ul>
 
-  <section v-if="dates.length" class="upcoming surface" aria-labelledby="upcoming-title">
+  <ul class="cards cards-rest">
+    <li v-for="p in rest" :key="p.slug" class="card surface">
+      <span class="card-art" aria-hidden="true"><component :is="p.art" /></span>
+      <a class="card-name" :href="link(p.to)">{{ t(p.name) }}<ArrowRight :size="18" aria-hidden="true" /></a>
+      <ul class="card-links">
+        <li v-for="l in p.links" :key="l.to"><a :href="link(l.to)">{{ t(l.key) }}</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <section class="upcoming surface" aria-labelledby="upcoming-title">
     <header class="up-head">
-      <h2 id="upcoming-title" class="up-title"><CalendarDays :size="18" aria-hidden="true" />{{ t('guide.kd.upcoming') }}</h2>
+      <span class="up-art" aria-hidden="true"><component :is="datesArt" /></span>
+      <h2 id="upcoming-title" class="up-title"><CalendarDays :size="18" aria-hidden="true" />{{ dates.length ? t('guide.kd.upcoming') : t('guide.datesTitle') }}</h2>
       <a class="up-all" :href="link('guide/key-dates/')">{{ t('next.all') }}<ArrowRight :size="15" aria-hidden="true" /></a>
     </header>
-    <ol class="up-list">
+    <ol v-if="dates.length" class="up-list">
       <li v-for="i in dates" :key="i.date.id" class="up-item">
         <span class="up-when">{{ when(i) }}</span>
         <span class="up-what">{{ t(`guide.kd.kind.${i.date.kind}`) }}</span>
@@ -61,71 +80,117 @@ function when(i: StripItem): string {
 <style scoped>
 .cards {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 16px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
+.cards-start {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.cards-rest {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+/* A page: its illustration in the top right, the name (a link to the page), then the places
+   students look for most, each a link straight to it. */
 .card {
   position: relative;
   display: grid;
-  grid-template-rows: auto auto 1fr;
-  gap: 8px;
-  height: 100%;
-  padding: 22px 22px 24px;
-  color: inherit;
-  text-decoration: none;
-  transition: transform 0.2s var(--ease-spring), box-shadow 0.2s;
+  align-content: start;
+  gap: 12px;
+  min-width: 0;
+  padding: 20px 22px 22px;
 }
 
-.card:hover {
-  transform: translateY(-2px);
-}
-
-.card-icon {
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  margin-bottom: 8px;
-  color: var(--accent);
-  border-radius: 14px;
-  background: var(--accent-soft);
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / 50%);
-}
-
-.card-title {
-  padding-right: 20px;
-  font-size: 1.0625rem;
-  font-weight: var(--fw-bold);
-  line-height: 1.35;
-  text-wrap: balance;
-  transition: color 0.15s;
-}
-
-.card:hover .card-title {
-  color: var(--accent);
-}
-
-.card-desc {
-  font-size: var(--fs-small);
-  line-height: 1.5;
-  color: var(--ink-soft);
-}
-
-.card-go {
+.card-art {
   position: absolute;
-  top: 24px;
-  right: 20px;
-  color: var(--ink-faint);
-  transition: transform 0.2s, color 0.2s;
+  top: 10px;
+  right: 12px;
+  width: 92px;
+  height: 69px;
+  pointer-events: none;
 }
 
-.card:hover .card-go {
+.card-art > :deep(*) {
+  width: 100%;
+  height: 100%;
+}
+
+.card-name {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  min-height: 44px;
+  padding-right: 96px;
+  font-size: 1.125rem;
+  font-weight: var(--fw-bold);
+  line-height: 1.3;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.card-name svg {
+  flex: none;
   color: var(--accent);
+  transition: transform 0.2s;
+}
+
+.card-name:hover {
+  color: var(--accent);
+}
+
+.card-name:hover svg {
   transform: translateX(3px);
+}
+
+.card-links {
+  display: grid;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.card-links a {
+  display: block;
+  padding: 6px 10px;
+  margin-inline: -10px;
+  font-size: var(--fs-small);
+  font-weight: var(--fw-medium);
+  line-height: 1.4;
+  color: var(--ink-soft);
+  text-decoration: none;
+  border-radius: 10px;
+}
+
+.card-links a:hover {
+  color: var(--accent);
+  background: var(--inset-fill);
+}
+
+/* The three to start with: larger, the illustration a size up and the links in two columns. */
+.cards-start .card {
+  padding: 24px 26px 24px;
+}
+
+.cards-start .card-art {
+  width: 128px;
+  height: 96px;
+}
+
+.cards-start .card-name {
+  min-height: 72px;
+  padding-right: 132px;
+  font-size: 1.375rem;
+}
+
+.cards-start .card-links {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 16px;
 }
 
 .upcoming {
@@ -138,12 +203,22 @@ function when(i: StripItem): string {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
   gap: 8px 16px;
+}
+
+.up-art {
+  width: 64px;
+  height: 48px;
+}
+
+.up-art > :deep(*) {
+  width: 100%;
+  height: 100%;
 }
 
 .up-title {
   display: inline-flex;
+  flex: 1;
   align-items: center;
   gap: 8px;
   font-size: var(--fs-section);
@@ -197,62 +272,54 @@ function when(i: StripItem): string {
 
 .up-meta {
   font-size: var(--fs-meta);
-  color: var(--ink-faint);
+  color: var(--ink-soft);
 }
 
 @media (max-width: 1100px) {
-  .cards {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .cards-start {
+    grid-template-columns: 1fr;
   }
 
+  .cards-rest,
   .up-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-/* Phones: each section a compact row, icon on the left. */
 @media (max-width: 640px) {
   .cards {
-    grid-template-columns: 1fr;
-    gap: 10px;
+    gap: 12px;
   }
 
-  .card {
-    grid-template-columns: 40px minmax(0, 1fr);
-    grid-template-rows: auto auto;
-    column-gap: 14px;
-    row-gap: 2px;
-    padding: 14px 40px 14px 14px;
+  .cards-rest,
+  .up-list {
+    grid-template-columns: 1fr;
+  }
+
+  .card,
+  .cards-start .card {
+    padding: 14px 14px 16px;
     border-radius: 18px;
   }
 
-  .card-icon {
-    grid-row: 1 / 3;
-    width: 40px;
-    height: 40px;
-    margin: 0;
-    border-radius: 12px;
+  .card-art,
+  .cards-start .card-art {
+    top: 6px;
+    right: 8px;
+    width: 76px;
+    height: 57px;
   }
 
-  .card-title {
-    padding-right: 0;
-    font-size: 1rem;
-  }
-
-  .card-go {
-    top: 50%;
-    margin-top: -8px;
-    right: 14px;
+  .card-name,
+  .cards-start .card-name {
+    min-height: 48px;
+    padding-right: 84px;
+    font-size: 1.125rem;
   }
 
   .upcoming {
-    padding: 20px 16px;
-    border-radius: 20px;
-  }
-
-  .up-list {
-    grid-template-columns: 1fr;
-    gap: 8px;
+    padding: 18px 14px;
+    border-radius: 18px;
   }
 
   .up-item {

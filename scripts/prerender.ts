@@ -731,7 +731,7 @@ function guideBody(code: LocaleCode, t: Translate, page: GuideCategory | 'overvi
       `<h1>${esc(t('guide.title'))}</h1>`,
       p('lede'),
       sub,
-      `<ul>${GUIDE_CATEGORIES.map((c) => `<li><a href="${href(code, `guide/${c}`)}">${esc(t(`guide.cat.${c}.title`))}</a>: ${esc(t(`guide.cat.${c}.lede`))} (${GUIDE_TOPICS[c].map((id) => topics[id]!.match(/<h2[^>]*>(.*?)<\/h2>/)![1]).join(' · ')})</li>`).join('')}<li><a href="${href(code, 'guide/key-dates')}">${esc(t('guide.kd.title'))}</a>: ${esc(t('guide.kd.lede'))}</li></ul>`,
+      `<ul>${GUIDE_CATEGORIES.map((c) => `<li><a href="${href(code, `guide/${c}`)}">${esc(t(`guide.cat.${c}.nav`))}</a>: ${esc(t(`guide.cat.${c}.lede`))} (${GUIDE_TOPICS[c].map((id) => topics[id]!.match(/<h2[^>]*>(.*?)<\/h2>/)![1]).join(' · ')})</li>`).join('')}<li><a href="${href(code, 'guide/key-dates')}">${esc(t('guide.datesTitle'))}</a>: ${esc(t('guide.kd.lede'))}</li></ul>`,
       tail,
     ].join('\n')
   return [`<h1>${esc(t(`guide.cat.${page}.title`))}</h1>`, `<p>${esc(t(`guide.cat.${page}.lede`))}</p>`, sub, ...GUIDE_TOPICS[page].map((id) => topics[id]!), tail].join('\n')

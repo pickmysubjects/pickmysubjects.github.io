@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { categoryOfTopic, GUIDE_CATEGORIES, GUIDE_PAGES, GUIDE_TOPICS, guidePageOf, movedGuideAnchor, neighbours, pageOfTopic, showToc, topicPath, topicTitleKey } from '@/utils/guideSections'
+import { anchorTitleKey, categoryOfTopic, GUIDE_CATEGORIES, GUIDE_FEATURED, GUIDE_PAGES, GUIDE_TOPICS, guidePageOf, movedGuideAnchor, neighbours, pageOfTopic, showToc, topicPath, topicTitleKey } from '@/utils/guideSections'
 import { MENUS } from '@/components/layout/nav'
 import { SERVICE_TOPICS, SYSTEM_TOPICS, SYSTEMS, type GuideService } from '@/utils/guideServices'
 import { en } from '@/i18n/messages/en'
@@ -147,14 +147,30 @@ describe('guide: one place per topic', () => {
 })
 
 describe('guide: "On this page"', () => {
-  it('shows only from four headed sections up', () => {
+  it('shows once a page has two or more topics', () => {
     expect(showToc(0)).toBe(false)
-    expect(showToc(3)).toBe(false)
-    expect(showToc(4)).toBe(true)
-    expect(showToc(12)).toBe(true)
+    expect(showToc(1)).toBe(false)
+    expect(showToc(2)).toBe(true)
+    expect(showToc(7)).toBe(true)
   })
-  it('shows on the systems page, which has a section per system', () => {
-    const sections = SYSTEM_TOPICS.length + SYSTEMS.length
-    expect(showToc(sections)).toBe(true)
+  it('shows on every guide page, the three-topic International page and the systems page included', () => {
+    for (const p of GUIDE_PAGES.filter((x) => x !== 'key-dates')) expect(showToc(GUIDE_TOPICS[p].length), p).toBe(true)
+    expect(GUIDE_TOPICS.international.length).toBe(3)
+    expect(GUIDE_TOPICS.systems.length).toBeGreaterThan(1)
+  })
+})
+
+describe('guide overview: the places linked from each page card', () => {
+  const MESSAGES = { en, 'zh-CN': zhCN, 'zh-TW': zhTW, ja, ko, vi, id, ms, hi }
+  const get = (m: unknown, key: string): unknown => key.split('.').reduce<unknown>((n, k) => (n && typeof n === 'object' ? (n as Record<string, unknown>)[k] : undefined), m)
+  it('links only to places that exist on that page, with a name in all nine languages', () => {
+    for (const p of GUIDE_PAGES) {
+      expect(GUIDE_FEATURED[p].length, p).toBeLessThanOrEqual(4)
+      for (const a of GUIDE_FEATURED[p]) {
+        const ok = a.startsWith('svc-') ? p === 'systems' && SYSTEMS.some((s) => `svc-${s.id}` === a) : GUIDE_TOPICS[p].includes(a)
+        expect(ok, `${p} ${a}`).toBe(true)
+        for (const [code, m] of Object.entries(MESSAGES)) expect(get(m, anchorTitleKey(a)), `${code} ${a}`).toBeTypeOf('string')
+      }
+    }
   })
 })

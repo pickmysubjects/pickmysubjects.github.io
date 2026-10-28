@@ -1,20 +1,25 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, shallowRef, watch } from 'vue'
+import { computed, defineAsyncComponent, nextTick, onBeforeUnmount, onMounted, shallowRef, useTemplateRef, watch } from 'vue'
 import { ChevronDown } from 'lucide-vue-next'
 import { useI18n } from '@/i18n'
 import { reducedMotion } from '@/utils/motion'
+import type { GuidePageSlug } from '@/utils/guideSections'
+import { MINI_ART } from './art/minis'
 
 /**
  * "On this page": the page's topics, the one being read highlighted. Desktop: a sticky list in
  * the left column. Phones: a small fold at the top of the page. A tap scrolls smoothly and
  * keeps the #anchor in the address, so the link can be shared.
+ * On desktop the panel never grows past the window: a long list scrolls inside it (soft fades
+ * show there's more, and the topic being read is kept in view), and when the list leaves room
+ * the page's small illustration sits under it.
  */
 interface TocItem {
   id: string
   title: string
   sub: boolean
 }
-const props = defineProps<{ items: TocItem[] }>()
+const props = defineProps<{ items: TocItem[]; slug: GuidePageSlug }>()
 const { t } = useI18n()
 const active = shallowRef<string | null>(null)
 const open = shallowRef(false)
@@ -43,27 +48,78 @@ function jump(id: string, event: MouseEvent): void {
   el.scrollIntoView({ behavior: reducedMotion() ? 'auto' : 'smooth', block: 'start' })
 }
 
+// ---- Desktop panel: the list scrolls inside it; the illustration only where it fits. ----
+const art = computed(() => defineAsyncComponent(MINI_ART[props.slug]))
+const scroller = useTemplateRef<HTMLElement>('scroller')
+const side = useTemplateRef<HTMLElement>('side')
+const fadeTop = shallowRef(false)
+const fadeBottom = shallowRef(false)
+const showArt = shallowRef(false)
+// The illustration's height (CSS .toc-art) plus the gap above it.
+const ART_SPACE = 132
+
+function edges(): void {
+  const el = scroller.value
+  if (!el) return
+  fadeTop.value = el.scrollTop > 2
+  fadeBottom.value = el.scrollTop + el.clientHeight < el.scrollHeight - 2
+}
+
+// Room for the illustration: the panel's height limit minus the label and the whole list.
+function fit(): void {
+  const el = scroller.value
+  const box = side.value
+  if (!el || !box) return
+  const limit = parseFloat(getComputedStyle(box).maxHeight) || window.innerHeight
+  const label = box.firstElementChild?.getBoundingClientRect().height ?? 0
+  showArt.value = label + el.scrollHeight + ART_SPACE + 32 <= limit
+  nextTick(edges)
+}
+
+// Keep the topic being read in view inside the list, without moving the page.
+watch(active, (id) => {
+  const el = scroller.value
+  const link = id ? el?.querySelector<HTMLElement>(`a[href="#${CSS.escape(id)}"]`) : null
+  if (!el || !link || el.scrollHeight <= el.clientHeight) return
+  const top = link.offsetTop - el.offsetTop
+  const want = top < el.scrollTop + 24 ? top - 24 : top + link.offsetHeight > el.scrollTop + el.clientHeight - 24 ? top + link.offsetHeight - el.clientHeight + 24 : null
+  if (want !== null) el.scrollTo({ top: want, behavior: reducedMotion() ? 'auto' : 'smooth' })
+})
+
+let ro: ResizeObserver | null = null
 onMounted(() => {
   window.addEventListener('scroll', spy, { passive: true })
   spy()
+  ro = new ResizeObserver(fit)
+  if (scroller.value) ro.observe(scroller.value)
+  window.addEventListener('resize', fit)
+  fit()
 })
 onBeforeUnmount(() => {
   window.removeEventListener('scroll', spy)
+  window.removeEventListener('resize', fit)
+  ro?.disconnect()
   cancelAnimationFrame(frame)
 })
-watch(() => props.items, spy)
+watch(() => props.items, () => {
+  spy()
+  nextTick(fit)
+})
 </script>
 
 <template>
   <nav class="toc" :aria-label="t('subject.onPage')">
     <!-- Desktop -->
-    <div class="toc-side surface">
+    <div ref="side" class="toc-side surface">
       <p class="toc-label">{{ t('subject.onPage') }}</p>
-      <ol class="toc-list">
-        <li v-for="i in items" :key="i.id" :class="{ sub: i.sub }">
-          <a :href="`#${i.id}`" :aria-current="active === i.id ? 'location' : undefined" @click="jump(i.id, $event)">{{ i.title }}</a>
-        </li>
-      </ol>
+      <div ref="scroller" class="toc-scroll" :class="{ 'fade-top': fadeTop, 'fade-bottom': fadeBottom }" @scroll.passive="edges">
+        <ol class="toc-list">
+          <li v-for="i in items" :key="i.id" :class="{ sub: i.sub }">
+            <a :href="`#${i.id}`" :aria-current="active === i.id ? 'location' : undefined" @click="jump(i.id, $event)">{{ i.title }}</a>
+          </li>
+        </ol>
+      </div>
+      <div v-if="showArt" class="toc-art" aria-hidden="true"><component :is="art" /></div>
     </div>
     <!-- Phones -->
     <details class="toc-drop surface" :open="open" @toggle="open = ($event.target as HTMLDetailsElement).open">
@@ -167,13 +223,59 @@ watch(() => props.items, spy)
 .toc-side {
   position: sticky;
   top: 88px;
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 8px;
   max-height: calc(100vh - 112px);
   padding: 16px 10px 12px;
-  overflow-y: auto;
   border-radius: 22px;
+}
+
+/* The list scrolls inside the panel when it's taller than the window; thin scrollbar, and a
+   soft fade at an edge that has more beyond it. */
+.toc-scroll {
+  flex: 0 1 auto;
+  min-height: 0;
+  margin: 0 -4px;
+  padding: 0 4px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--ink) 22%, transparent) transparent;
+  --fade-top: 0px;
+  --fade-bottom: 0px;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 var(--fade-top), #000 calc(100% - var(--fade-bottom)), transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 var(--fade-top), #000 calc(100% - var(--fade-bottom)), transparent);
+}
+
+.toc-scroll.fade-top {
+  --fade-top: 28px;
+}
+
+.toc-scroll.fade-bottom {
+  --fade-bottom: 28px;
+}
+
+.toc-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.toc-scroll::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--ink) 22%, transparent);
+}
+
+/* The page's small illustration, under the list when there's room. */
+.toc-art {
+  flex: none;
+  height: 100px;
+  margin-top: 12px;
+  padding: 0 12px;
+}
+
+.toc-art > :deep(*) {
+  width: 100%;
+  height: 100%;
 }
 
 .toc-side .toc-label {
