@@ -26,7 +26,6 @@ const pages = MENUS.find((m) => m.area === 'guide')!
   })
 const start = pages.filter((p) => START.includes(p.slug))
 const rest = pages.filter((p) => !START.includes(p.slug))
-const datesArt = defineAsyncComponent(MINI_ART['key-dates'])
 
 // The next dates within about four months (a running exam period or re-enrolment shows "until …").
 const dates = computed(() => upcomingDates(KEY_DATES, melbourneToday(), 4, 120))
@@ -63,7 +62,6 @@ function when(i: StripItem): string {
 
   <section class="upcoming surface" aria-labelledby="upcoming-title">
     <header class="up-head">
-      <span class="up-art" aria-hidden="true"><component :is="datesArt" /></span>
       <h2 id="upcoming-title" class="up-title"><CalendarDays :size="18" aria-hidden="true" />{{ dates.length ? t('guide.kd.upcoming') : t('guide.datesTitle') }}</h2>
       <a class="up-all" :href="link('guide/key-dates/')">{{ t('next.all') }}<ArrowRight :size="15" aria-hidden="true" /></a>
     </header>
@@ -204,16 +202,6 @@ function when(i: StripItem): string {
   flex-wrap: wrap;
   align-items: center;
   gap: 8px 16px;
-}
-
-.up-art {
-  width: 64px;
-  height: 48px;
-}
-
-.up-art > :deep(*) {
-  width: 100%;
-  height: 100%;
 }
 
 .up-title {
