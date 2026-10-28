@@ -10,6 +10,8 @@ import { buildDataset, ROOT } from './dataset'
 import { splitDataset } from '../src/engine/split'
 import { buildTakenWith } from '../src/engine/related'
 import { buildKeyDates } from './keyDates'
+import { pickLocalized } from '../src/i18n/localized'
+import { LOCALE_CODES } from '../src/i18n/codes'
 const OUT = join(ROOT, 'src', 'generated')
 mkdirSync(OUT, { recursive: true })
 
@@ -38,6 +40,15 @@ for (const name of ['real', 'demo'] as const) {
     rmSync(dir, { recursive: true, force: true })
     mkdirSync(dir)
     for (const [area, part] of Object.entries(details)) writeFileSync(join(dir, `${area}.json`), JSON.stringify(part))
+    // Each subject's one-line summary in each language but English (core has the English), for
+    // the rows on Find subjects: one small file per language, loaded with that page.
+    const learn = join(OUT, 'learn')
+    rmSync(learn, { recursive: true, force: true })
+    mkdirSync(learn)
+    for (const locale of LOCALE_CODES.filter((l) => l !== 'en')) {
+      const lines = Object.fromEntries(Object.values(dataset.subjects).flatMap((s) => (s.about ? [[s.code, pickLocalized(s.about.learn, locale)]] : [])))
+      writeFileSync(join(learn, `${locale}.json`), JSON.stringify(lines))
+    }
     // "What changed in <year>", only once the next year is entered and differs (no empty page).
     const changes = buildChanges(dataset, SNAPSHOT_DIR(ROOT))
     if (changes) writeFileSync(join(OUT, 'changes.json'), JSON.stringify(changes))

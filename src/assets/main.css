@@ -445,20 +445,23 @@ td {
 
 /* Layout helpers */
 .shell {
+  /* The page's side gutter, also for rows that scroll out to the screen's edges. */
+  --gutter: 40px;
+
   max-width: var(--shell);
   margin: 0 auto;
-  padding-inline: 40px;
+  padding-inline: var(--gutter);
 }
 
 @media (max-width: 960px) {
   .shell {
-    padding-inline: 24px;
+    --gutter: 24px;
   }
 }
 
 @media (max-width: 640px) {
   .shell {
-    padding-inline: 12px;
+    --gutter: 12px;
   }
 }
 

@@ -1,7 +1,7 @@
 import {
   BookOpen, Briefcase, Calculator, CalendarDays, CalendarPlus, ClipboardList, Columns2, Compass, DatabaseZap, FileX, Flame, Gauge, GraduationCap,
   Heart, HeartPulse, History, House, Info, Laptop, Layers, Library, LifeBuoy, ListChecks, ListFilter, MessageSquare, NotebookPen, Plane, Route,
-  Save, Scale, Share2, Shapes, ShieldCheck, Snowflake, Sprout, TriangleAlert, User, Wrench,
+  Save, Scale, Share2, Shapes, ShieldCheck, Snowflake, Sparkles, Sprout, TriangleAlert, User, Wrench,
 } from 'lucide-vue-next'
 import type { View } from '@/composables/useView'
 
@@ -25,6 +25,11 @@ export interface MenuArea {
   /** The area's own landing page: where its name in the header goes. */
   to: string
   items: MenuItem[]
+  /**
+   * Places the site search finds under this area but the menu doesn't list: Find subjects'
+   * ready-made lists, which live as cards on its page.
+   */
+  searchOnly?: MenuItem[]
 }
 
 /**
@@ -38,15 +43,18 @@ export const MENUS: MenuArea[] = [
     icon: ListFilter,
     to: 'subjects/',
     items: [
-      { key: 'menu.allSubjects', desc: 'menu.d.allSubjects', to: 'subjects/', icon: Library },
+      { key: 'browse.switchSubjects', desc: 'menu.d.allSubjects', to: 'subjects/', icon: Library },
+      { key: 'browse.switchMajors', desc: 'menu.d.majors', to: 'majors/', icon: GraduationCap },
+      { key: 'browse.switchCareers', desc: 'menu.d.careers', to: 'careers/', icon: Briefcase },
+    ],
+    searchOnly: [
       { key: 'tools.easy', desc: 'menu.d.easy', to: 'subjects/easy/', icon: Scale },
       { key: 'tools.hard', desc: 'menu.d.hard', to: 'subjects/hard/', icon: Flame },
       { key: 'tools.noExam', desc: 'menu.d.noExam', to: 'subjects/no-exam/', icon: FileX },
       { key: 'tools.summerWinter', desc: 'menu.d.summerWinter', to: 'subjects/summer-winter/', icon: Snowflake },
       { key: 'tools.breadth', desc: 'menu.d.breadth', to: 'subjects/breadth/', icon: Shapes },
       { key: 'tools.firstSem', desc: 'menu.d.firstSem', to: 'subjects/first-semester/', icon: Sprout },
-      { key: 'browse.switchMajors', desc: 'menu.d.majors', to: 'majors/', icon: GraduationCap },
-      { key: 'menu.careers', desc: 'menu.d.careers', to: 'careers/', icon: Briefcase },
+      { key: 'browse.preset.mine', desc: 'browse.presetDesc.mine', to: 'subjects/?mine=1', icon: Sparkles },
     ],
   },
   {

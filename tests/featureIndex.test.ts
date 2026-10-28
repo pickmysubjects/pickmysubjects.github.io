@@ -6,7 +6,7 @@ import { MENUS } from '../src/components/layout/nav'
 import { FEATURE_INDEX, fold, searchFeatures, type Texts } from '../src/components/layout/featureIndex'
 import { GUIDE_PAGES, GUIDE_TOPICS } from '../src/utils/guideSections'
 import { SYSTEMS } from '../src/utils/guideServices'
-import { presetFromSlug } from '../src/engine/browse'
+import { applyQuick, browseAddress, EMPTY_FILTERS, presetFromSlug, QUICK_CHOICES } from '../src/engine/browse'
 import { rankFromSlug } from '../src/engine/easeRanking'
 import { en } from '../src/i18n/messages/en'
 import { zhCN } from '../src/i18n/messages/zh-CN'
@@ -71,8 +71,21 @@ describe('menus', () => {
   it('every menu item and every area landing page is a real place', () => {
     for (const m of MENUS) {
       expect(resolves(m.to)).toBe(true)
-      for (const item of m.items) expect(resolves(item.to)).toBe(true)
+      for (const item of [...m.items, ...(m.searchOnly ?? [])]) expect(resolves(item.to)).toBe(true)
     }
+  })
+
+  it('Find subjects: its menu has the three ways in (subjects, majors, careers) and nothing else', () => {
+    const browse = MENUS.find((m) => m.area === 'browse')!
+    expect(browse.items.map((i) => i.to)).toEqual(['subjects/', 'majors/', 'careers/'])
+  })
+
+  it('every ready-made list on Find subjects is in the site search, landing on that list', () => {
+    const lists = new Set(MENUS.find((m) => m.area === 'browse')!.searchOnly!.map((i) => i.to))
+    for (const c of QUICK_CHOICES) if (c !== 'all') expect(lists.has(browseAddress(applyQuick(EMPTY_FILTERS, c))), c).toBe(true)
+    expect(lists.has(browseAddress({ ...EMPTY_FILTERS, mine: true }))).toBe(true)
+    // ...and in the index the search reads.
+    for (const to of lists) expect(FEATURE_INDEX.some((e) => e.to === to)).toBe(true)
   })
 
   it('every page is reachable from the menus (detail pages and redirects aside)', () => {
@@ -125,6 +138,9 @@ describe('feature search index', () => {
     expect(top('楽単', 'ja')).toContain('subjects/easy/')
     expect(top('꿀강', 'ko')).toContain('subjects/easy/')
     expect(top('mon de', 'vi')).toContain('subjects/easy/')
+    expect(top('没有期末', 'zh-CN')).toContain('subjects/no-exam/')
+    expect(top('为我推荐', 'zh-CN')).toContain('subjects/?mine=1')
+    expect(top('majors', 'en')).toContain('majors/')
     expect(top('वीज़ा', 'hi')).toContain('guide/international/#rsl')
     // English words work whatever the page's language.
     expect(top('special consideration', 'ko')).toContain('guide/semester/#special-consideration')

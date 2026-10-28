@@ -178,7 +178,7 @@ function evidence(s: Subject): Evidence {
  * Where a subject sits on the list for `direction`: 0 when reviews agree, 1 when they're neutral
  * or there are none, 2 when they say the opposite.
  */
-function tier(reviews: number | null, direction: RankDirection): number {
+export function rankTier(reviews: number | null, direction: RankDirection): number {
   if (reviews === null) return 1
   const lean = direction === 'easy' ? reviews : -reviews
   return lean >= VERDICT ? 0 : lean <= -VERDICT ? 2 : 1
@@ -213,7 +213,7 @@ export function rankSubject(s: Subject, direction: RankDirection): RankedSubject
  */
 export function easeKey(s: Subject): { tier: number; score: number } | null {
   const r = rankSubject(s, 'easy')
-  return r && { tier: tier(r.reviews, 'easy'), score: r.score }
+  return r && { tier: rankTier(r.reviews, 'easy'), score: r.score }
 }
 
 /** Whether a ranked subject leans far enough `direction` to be on that list (rankable aside). */
@@ -222,7 +222,7 @@ function belongs(r: RankedSubject, direction: RankDirection): boolean {
   // Being first-year backs a place on the list but isn't a reason on its own.
   if (!r.reasons.some((x) => x.key !== 'firstYear') || r.score * sign <= 0) return false
   // Reviews that say the opposite: it doesn't belong on this list.
-  return tier(r.reviews, direction) !== 2
+  return rankTier(r.reviews, direction) !== 2
 }
 
 /**
@@ -239,7 +239,7 @@ export function rankSubjects(subjects: Subject[], o: RankOptions): RankedSubject
     if (o.period != null && !periodsFor(s, o.year).includes(o.period)) continue
     const r = rankSubject(s, o.direction)
     if (!r || !belongs(r, o.direction)) continue
-    rows.push({ r, tier: tier(r.reviews, o.direction) })
+    rows.push({ r, tier: rankTier(r.reviews, o.direction) })
   }
   rows.sort((a, b) => a.tier - b.tier || (b.r.score - a.r.score) * sign || a.r.subject.code.localeCompare(b.r.subject.code))
   const out = rows.map((x) => x.r)
@@ -300,7 +300,7 @@ export const LEAN_SHARE = 1 / 3
 
 /** Same tier and score on a list: a tie, whatever the codes. */
 function sameSpot(a: RankedSubject, b: RankedSubject, direction: RankDirection): boolean {
-  return tier(a.reviews, direction) === tier(b.reviews, direction) && a.score === b.score
+  return rankTier(a.reviews, direction) === rankTier(b.reviews, direction) && a.score === b.score
 }
 
 /** The last (tier, score) still in a list's top share; null when nothing is. */
@@ -324,7 +324,7 @@ function cutoffFor(list: RankedSubject[], direction: RankDirection): Cutoff {
   const end = Math.abs(through - want) < Math.abs(above - want) ? last : first - 1
   if (end < 0) return { tier: -1, score: 0 } // nothing above the block: no subject is in the share
   const r = list[end]!
-  return { tier: tier(r.reviews, direction), score: r.score }
+  return { tier: rankTier(r.reviews, direction), score: r.score }
 }
 
 export function inTopShare(subjects: Record<string, Subject>, s: Subject, direction: RankDirection, course: string, year: number): boolean {
@@ -340,7 +340,7 @@ export function inTopShare(subjects: Record<string, Subject>, s: Subject, direct
   }
   // An empty list (a tiny data set): leaning that way is all there is to go on.
   if (!cut) return true
-  const t = tier(r.reviews, direction)
+  const t = rankTier(r.reviews, direction)
   const sign = direction === 'easy' ? 1 : -1
   return t < cut.tier || (t === cut.tier && r.score * sign >= cut.score * sign)
 }

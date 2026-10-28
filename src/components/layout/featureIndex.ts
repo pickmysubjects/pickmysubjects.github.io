@@ -33,6 +33,7 @@ const MENU_SYN: Record<string, string> = {
   'subjects/summer-winter/': 'summerWinter',
   'subjects/breadth/': 'breadth',
   'subjects/first-semester/': 'firstSem',
+  'subjects/?mine=1': 'forYou',
   'majors/': 'majors',
   'careers/': 'careers',
   'plan/': 'plan',
@@ -86,7 +87,7 @@ const SYSTEM_SYN: Record<string, string> = {
 function build(): FeatureEntry[] {
   const out: FeatureEntry[] = []
   for (const m of MENUS) {
-    for (const item of m.items) {
+    for (const item of [...m.items, ...(m.searchOnly ?? [])]) {
       out.push({
         id: `menu:${item.to}`,
         group: m.area === 'guide' ? 'guide' : 'feature',

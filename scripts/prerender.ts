@@ -22,7 +22,7 @@ import type { YearDiff } from '../src/engine/yearDiff'
 import { changeSections, changesSummary, type ChangeItem } from '../src/utils/changesText'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { browse, EASY_CUTS, EMPTY_FILTERS, PRESET_SLUGS, PRESETS, type PresetName } from '../src/engine/browse'
+import { browse, EASY_CUTS, EMPTY_FILTERS, PRESET_SLUGS, PRESETS, type BrowseSort, type PresetName } from '../src/engine/browse'
 import { subjectDifficulty, type Difficulty } from '../src/engine/subjectFit'
 import { RANK_SLUGS, rankSubjects, type RankDirection, type RankReason } from '../src/engine/easeRanking'
 import { forCourse } from '../src/engine/forCourse'
@@ -468,11 +468,17 @@ function majorPage(code: LocaleCode, m: (typeof majors)[number]): Page {
   }
 }
 
+/**
+ * The order each shortcut's static page lists its subjects in: breadth and no-exam lists are
+ * read for an easy mark, so easiest first, as those pages always have.
+ */
+const PRESET_ORDER: Record<PresetName, BrowseSort> = { firstSemester: 'code', breadth: 'easy', noExam: 'easy', summerWinter: 'code' }
+
 /** The find-subjects page as plain HTML: the three quick picks, each as a list of links. */
 function browseBody(code: LocaleCode, t: Translate): string {
   const year = YEAR
   const section = (preset: PresetName) => {
-    const rows = browse(subjects, { ...EMPTY_FILTERS, ...PRESETS[preset] }, 'B-SCI', year)
+    const rows = browse(subjects, { ...EMPTY_FILTERS, ...PRESETS[preset], sort: PRESET_ORDER[preset] }, 'B-SCI', year)
     if (rows.length === 0) return ''
     return `<h2><a href="${href(code, `subjects/${PRESET_SLUGS[preset]}`)}">${esc(t(`browse.preset.${preset}`))}</a></h2><ul>${rows.map((r) => `<li>${subjectLink(code, r.subject.code)}</li>`).join('')}</ul>`
   }
@@ -533,7 +539,7 @@ function rankPages(code: LocaleCode, t: Translate): Page[] {
  */
 function presetPages(code: LocaleCode, t: Translate): Page[] {
   return (Object.keys(PRESETS) as PresetName[]).flatMap((preset) => {
-    const rows = browse(subjects, { ...EMPTY_FILTERS, ...PRESETS[preset] }, 'B-SCI', YEAR)
+    const rows = browse(subjects, { ...EMPTY_FILTERS, ...PRESETS[preset], sort: PRESET_ORDER[preset] }, 'B-SCI', YEAR)
     if (rows.length === 0) return []
     const facts = { n: rows.length, year: YEAR }
     const title = t(PRESET_TITLE_KEYS[preset], facts)
