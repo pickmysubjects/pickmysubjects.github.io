@@ -753,11 +753,14 @@ export const ms: Messages = {
     step3: 'Tekan Hantar. Kami semak dahulu sebelum menambahkannya ke laman.',
     onlyFacts: 'Teks halaman itu sendiri tidak disimpan atau dihantar.',
     devDetails: 'Butiran untuk pembangun',
+    addTitle: "Tambah subjek yang tiada",
+    fixTitle: "Ada fakta yang salah",
+    fixText: "Beritahu kami kod subjek dan apa yang salah.",
+    fixLink: "Lapor data salah",
   },
   feedback: {
     title: 'Bantu jadikannya lebih baik',
     lede: 'PickMySubjects bermula daripada perkara yang menyukarkan pemilihan subjek di UniMelb. Inilah setiap masalah dan sejauh mana kami telah capai. Beritahu kami apa yang berkesan, apa yang tidak, dan apa yang kurang — tidak perlu tahu menulis kod.',
-    ledeShort: "Beritahu apa yang berguna, tidak, dan yang kurang",
     status: { works: 'Sudah berfungsi', partly: 'Separa', planned: 'Belum' },
     tryIt: 'Cuba',
     give: 'Beri maklum balas tentang ini',
@@ -1827,7 +1830,6 @@ export const ms: Messages = {
     },
   },
   about: {
-    eyebrow: 'Perihal',
     title: "Kenapa saya buat laman ini",
     me: "Saya graduan University of Melbourne. Masa belajar dulu, setiap kali pilih subjek memang memeningkan.",
     why: "Maklumat bertaburan di banyak halaman Handbook, dan prasyarat mudah terlepas pandang. Ada subjek yang dibuka setahun sekali sahaja, jadi kalau terlepas kena tunggu setahun lagi. Susah atau tidak sesuatu subjek pula, hanya boleh tanya senior atau cari di Reddit.",
@@ -1892,8 +1894,8 @@ export const ms: Messages = {
     countingNone: "Belum ada subjek dalam pelan yang dikira untuk syarat ini.",
   },
   privacy: {
-    pills: { account: "Tiada pendaftaran", local: "Data kekal pada peranti anda", anon: "Penilaian tanpa nama" },
     title: 'Privasi',
+    h: { local: "Data yang kekal pada peranti anda", ratings: "Menilai subjek", grades: "Berkongsi gred", feedback: "Maklum balas yang anda hantar", noTracking: "Kiraan lawatan", google: "Borang Google dan GitHub", removal: "Membuang sesuatu yang anda hantar" },
     updated: "Kemas kini terakhir: 26 Oktober 2026",
     local: 'Rekod, kemahiran, minat dan rancangan anda hanya disimpan dalam pelayar ini (localStorage). Tiada akaun dan ia tidak pernah dimuat naik. Memadam data pelayar akan memadamnya. Satu-satunya pengecualian ialah gred yang anda pilih untuk dikongsi (di bawah).',
     ratings: "Apabila anda menilai subjek, jawapan anda dihantar tanpa nama ke Google Form/Sheet peribadi yang hanya boleh dibuka oleh penyelenggara. Tiada e-mel atau log masuk dikumpul. Hanya data agregat (purata dan bilangan, dipaparkan apabila subjek mempunyai sekurang-kurangnya 3 penilaian) diterbitkan. Jawapan “Apa yang anda harap anda tahu lebih awal” boleh dipaparkan di halaman subjek sebagai tip, tetapi hanya selepas penyelenggara meluluskannya secara manual, hanya apabila subjek ada 3 tip yang diluluskan, dan hanya teks, semester dan bahasanya, bukan jawapan anda yang lain. Tip yang ada nama, e-mel, nombor telefon, nombor pelajar atau pautan tidak dipaparkan. Sesiapa boleh melaporkan tip, dan ia dibuang selepas disemak.",

@@ -1,13 +1,18 @@
 <script setup lang="ts">
 import { link } from '@/composables/useView'
-import { BookOpen, Calculator, Compass, GitCompare, GraduationCap, Route, Sparkles, Star } from 'lucide-vue-next'
+import { ArrowRight, BookOpen, Calculator, Compass, GitCompare, GraduationCap, Route, Sparkles, Star } from 'lucide-vue-next'
+import InfoPage from '@/components/about/InfoPage.vue'
+import GuideItem from '@/components/guide/GuideItem.vue'
 import { useI18n } from '@/i18n'
 import { latestDataYear, lastVerified } from '@/engine/dataYear'
 import { useDataset } from '@/composables/useDataset'
-import { SITE_UPDATES } from '@/content/updates'
 
+/**
+ * /about/: why the site exists, what it does, where its information comes from, what it promises
+ * and how to help. The update log lives on /changes/ (linked from "Where the information comes
+ * from"); privacy details on /privacy/.
+ */
 const { t, locale } = useI18n()
-// Which Handbook year the data is from and when it was last checked, then what changed lately.
 const { all } = useDataset()
 const dataYear = latestDataYear(all.subjects)
 const checked = lastVerified(all.subjects)
@@ -26,26 +31,16 @@ const features = [
 </script>
 
 <template>
-  <article class="about">
-    <header>
-      <p class="about-eyebrow">{{ t('about.eyebrow') }}</p>
-      <h1 class="about-title">{{ t('about.title') }}</h1>
-    </header>
+  <InfoPage page="about" :title="t('menu.aboutSite')">
+    <GuideItem id="why" :title="t('about.title')" :short="t('about.me')">
+      <p>{{ t('about.why') }}</p>
+      <p>{{ t('about.aim') }}</p>
+    </GuideItem>
 
-    <!-- The story reads in order: who made it, why it exists, then the details behind it. -->
-    <div class="about-intro">
-      <p class="about-lead">{{ t('about.me') }} {{ t('about.aim') }}</p>
-      <p class="about-why">{{ t('about.why') }}</p>
-    </div>
-
-    <div class="about-body">
-    <div class="about-main">
-
-    <section>
-      <h2 class="about-h2">{{ t('about.whatTitle') }}</h2>
-      <ul class="about-features">
+    <GuideItem id="features" :title="t('about.whatTitle')">
+      <ul class="features">
         <li v-for="f in features" :key="f.key">
-          <a class="feature surface tile" :href="f.href">
+          <a class="feature tile" :href="f.href">
             <component :is="f.icon" :size="18" aria-hidden="true" class="feature-icon" />
             <span>
               <strong class="feature-name">{{ t(f.name) }}</strong>
@@ -54,125 +49,41 @@ const features = [
           </a>
         </li>
       </ul>
-    </section>
+    </GuideItem>
 
-    <section>
-      <h2 class="about-h2">{{ t('about.dataTitle') }}</h2>
-      <ul class="about-list">
+    <GuideItem id="data" :title="t('about.dataTitle')">
+      <ul class="plain">
         <li>{{ t('about.dataFacts') }}</li>
         <li>{{ t('about.dataRatings') }}</li>
         <li>{{ t('about.dataDiscuss') }}</li>
         <li>{{ t('about.dataSuggest') }}</li>
       </ul>
-    </section>
+      <p v-if="checked" class="note">{{ t('about.dataYear', { year: dataYear, date: day(checked) }) }}</p>
+      <a class="ext" :href="link('changes/#changes-site')">{{ t('about.updatesTitle') }}<ArrowRight :size="16" aria-hidden="true" /></a>
+    </GuideItem>
 
-    <section>
-      <h2 class="about-h2">{{ t('about.updatesTitle') }}</h2>
-      <p v-if="checked" class="about-data-year">{{ t('about.dataYear', { year: dataYear, date: day(checked) }) }}</p>
-      <ul class="about-updates">
-        <li v-for="(u, i) in SITE_UPDATES" :key="i">
-          <time :datetime="u.date">{{ day(u.date) }}</time>
-          <span>{{ u.text[locale] }}</span>
-        </li>
-      </ul>
-    </section>
-
-    </div>
-
-    <!-- The promises and the ways to help, kept beside the reading on wide screens. -->
-    <aside class="about-side">
-    <section class="about-promises surface">
-      <h2 class="about-h2">{{ t('about.promisesTitle') }}</h2>
-      <ul>
+    <GuideItem id="promises" :title="t('about.promisesTitle')">
+      <ul class="plain">
         <li>{{ t('about.p.free') }}</li>
-        <li>{{ t('about.p.private') }}</li>
+        <li>{{ t('about.p.private') }} <a :href="link('privacy')">{{ t('privacy.title') }}</a></li>
         <li>{{ t('about.p.unofficial') }}</li>
       </ul>
-    </section>
+    </GuideItem>
 
-    <section class="about-helpbox surface">
-      <h2 class="about-h2">{{ t('about.helpTitle') }}</h2>
-      <p class="about-help">{{ t('about.help') }}</p>
-      <p class="about-actions">
+    <GuideItem id="help" :title="t('about.helpTitle')" :short="t('about.help')">
+      <p class="actions">
         <a class="button button-accent" :href="link('record')">{{ t('about.helpRate') }}</a>
         <a class="button button-quiet" :href="link('contribute')">{{ t('nav.contribute') }}</a>
         <a class="button button-quiet" :href="link('feedback')">{{ t('nav.feedback') }}</a>
       </p>
-    </section>
-    </aside>
-    </div>
-  </article>
+    </GuideItem>
+  </InfoPage>
 </template>
 
 <style scoped>
-.about {
-  padding-top: var(--page-top);
+.features {
   display: grid;
-  gap: 32px;
-}
-
-.about-intro,
-.about-main,
-.about-side {
-  display: grid;
-  align-content: start;
-  gap: 32px;
-  min-width: 0;
-}
-
-.about-intro {
-  gap: 12px;
-  max-width: 760px;
-}
-
-.about-why {
-  max-width: 62ch;
-  margin: 0;
-  color: var(--ink-soft);
-}
-
-.about-body {
-  display: grid;
-  gap: 32px;
-}
-
-.about-helpbox {
-  padding: 20px 22px;
-}
-
-/* Wide screens: reading on the left, promises and ways to help in a column that stays in view. */
-@media (min-width: 1100px) {
-  .about-body {
-    grid-template-columns: minmax(0, 1fr) 340px;
-    gap: 40px;
-    align-items: start;
-  }
-
-  .about-side {
-    position: sticky;
-    top: 88px;
-    gap: 20px;
-  }
-}
-
-.about-eyebrow {
-  font-size: 0.8125rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--accent);
-}
-
-
-.about-h2 {
-  margin-bottom: 12px;
-  font-size: 1.15rem;
-  font-weight: 650;
-}
-
-.about-features {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
   gap: 12px;
   margin: 0;
   padding: 0;
@@ -186,6 +97,8 @@ const features = [
   padding: 16px 18px;
   color: var(--ink);
   text-decoration: none;
+  border: 1px solid var(--card-edge);
+  border-radius: 16px;
   transition: border-color 0.15s;
 }
 
@@ -201,81 +114,14 @@ const features = [
 
 .feature-name {
   display: block;
-  font-weight: 650;
+  font-weight: var(--fw-semibold);
 }
 
 .feature-text {
   display: block;
   margin-top: 4px;
-  font-size: 0.9375rem;
+  font-size: var(--fs-small);
+  line-height: 1.55;
   color: var(--ink-soft);
-}
-
-.about-data-year {
-  margin: 0 0 var(--space-2);
-  color: var(--ink-soft);
-}
-
-.about-updates {
-  display: grid;
-  gap: 6px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.about-updates li {
-  display: grid;
-  grid-template-columns: 7.5em minmax(0, 1fr);
-  gap: var(--space-2);
-}
-
-.about-updates time {
-  color: var(--ink-soft);
-  font-variant-numeric: tabular-nums;
-}
-
-.about-list {
-  display: grid;
-  gap: 8px;
-  margin: 0;
-  padding-left: 20px;
-  line-height: 1.6;
-}
-
-.about-promises {
-  padding: 20px 22px;
-}
-
-.about-promises ul {
-  display: grid;
-  gap: 8px;
-  margin: 0;
-  padding-left: 20px;
-  line-height: 1.6;
-}
-
-.about-help {
-  line-height: 1.7;
-}
-
-.about-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 14px;
-}
-.about-lead {
-  max-width: 62ch;
-  font-size: 1.1rem;
-  color: var(--ink-soft);
-}
-
-
-/* Phones: the title a size down, like the guide's, so long languages keep it to two lines. */
-@media (max-width: 640px) {
-  .about-title {
-    font-size: 1.9rem;
-  }
 }
 </style>

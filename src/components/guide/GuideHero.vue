@@ -7,9 +7,10 @@ import type { GuidePageSlug } from '@/utils/guideSections'
 
 /**
  * The top of every guide page: a wide glass band with the title on one side and the section's
- * own illustration on the other. The overview has no back link.
+ * own illustration on the other. The overview has no back link. Other pages built the same way
+ * (the About group) pass their own `art` and get the title alone, without the guide's line.
  */
-const props = defineProps<{ slug: GuidePageSlug | null; title: string }>()
+const props = defineProps<{ slug?: GuidePageSlug | null; title: string; art?: () => Promise<Component> }>()
 const { t } = useI18n()
 
 // Each illustration is its own small chunk, loaded with the page that shows it.
@@ -24,18 +25,18 @@ const ART: Record<GuidePageSlug | 'overview', () => Promise<Component>> = {
   help: () => import('./art/ArtHelp.vue'),
   'key-dates': () => import('./art/ArtKeyDates.vue'),
 }
-const art = computed(() => defineAsyncComponent(ART[props.slug ?? 'overview']))
+const scene = computed(() => defineAsyncComponent(props.art ?? ART[props.slug ?? 'overview']))
 </script>
 
 <template>
   <header class="hero surface">
     <div class="hero-text">
-      <a v-if="slug" class="hero-back" :href="link('guide/')"><ArrowLeft :size="15" aria-hidden="true" />{{ t('guide.nav') }}</a>
-      <p v-else class="hero-back hero-eyebrow">{{ t('guide.nav') }}</p>
+      <a v-if="slug && !art" class="hero-back" :href="link('guide/')"><ArrowLeft :size="15" aria-hidden="true" />{{ t('guide.nav') }}</a>
+      <p v-else-if="!art" class="hero-back hero-eyebrow">{{ t('guide.nav') }}</p>
       <h1 class="hero-title">{{ title }}</h1>
     </div>
     <div class="hero-art" aria-hidden="true">
-      <component :is="art" />
+      <component :is="scene" />
     </div>
   </header>
 </template>

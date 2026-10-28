@@ -753,11 +753,14 @@ export const vi: Messages = {
     step3: 'Bấm Gửi. Chúng mình sẽ kiểm tra rồi mới thêm vào trang.',
     onlyFacts: 'Bản thân nội dung trang không được lưu hay gửi đi.',
     devDetails: 'Thông tin cho nhà phát triển',
+    addTitle: "Thêm môn còn thiếu",
+    fixTitle: "Thông tin bị sai",
+    fixText: "Cho chúng tôi biết mã môn và chỗ sai.",
+    fixLink: "Báo dữ liệu sai",
   },
   feedback: {
     title: 'Cùng làm cho nó tốt hơn',
     lede: 'PickMySubjects bắt nguồn từ những khó khăn khi chọn môn ở UniMelb. Dưới đây là từng khó khăn và chúng tôi đã làm được đến đâu. Hãy cho biết điều gì dùng tốt, điều gì chưa, và còn thiếu gì — không cần biết lập trình.',
-    ledeShort: "Cho chúng tôi biết điều gì ổn, chưa ổn, còn thiếu",
     status: { works: 'Đã dùng được', partly: 'Một phần', planned: 'Chưa có' },
     tryIt: 'Dùng thử',
     give: 'Góp ý về mục này',
@@ -1827,7 +1830,6 @@ export const vi: Messages = {
     },
   },
   about: {
-    eyebrow: 'Giới thiệu',
     title: "Vì sao mình làm trang này",
     me: "Mình tốt nghiệp University of Melbourne. Hồi còn đi học, mỗi lần chọn môn là một lần đau đầu.",
     why: "Thông tin nằm rải rác ở rất nhiều trang Handbook, môn tiên quyết rất dễ bị bỏ sót. Có môn một năm chỉ mở một lần, lỡ là phải chờ thêm một năm. Còn môn nào khó hay dễ thì chỉ có cách hỏi anh chị khóa trên hoặc lục Reddit.",
@@ -1892,8 +1894,8 @@ export const vi: Messages = {
     countingNone: "Chưa có môn nào trong kế hoạch được tính vào yêu cầu này.",
   },
   privacy: {
-    pills: { account: "Không cần đăng ký", local: "Dữ liệu chỉ ở trên máy bạn", anon: "Đánh giá ẩn danh" },
     title: 'Quyền riêng tư',
+    h: { local: "Dữ liệu chỉ nằm trên máy bạn", ratings: "Đánh giá môn học", grades: "Chia sẻ mức điểm", feedback: "Góp ý bạn gửi", noTracking: "Thống kê lượt xem", google: "Google Forms và GitHub", removal: "Xóa nội dung bạn đã gửi" },
     updated: "Cập nhật lần cuối: 26 tháng 10, 2026",
     local: 'Hồ sơ, kỹ năng, sở thích và kế hoạch của bạn chỉ được lưu trong trình duyệt này (localStorage). Không có tài khoản và không bao giờ được tải lên. Xóa dữ liệu trình duyệt sẽ xóa chúng. Ngoại lệ duy nhất là mức điểm bạn chọn chia sẻ (xem bên dưới).',
     ratings: "Khi bạn đánh giá một môn, câu trả lời được gửi ẩn danh đến một Google Form/Sheet riêng tư mà chỉ người quản lý mở được. Không thu thập email và không cần đăng nhập. Chỉ công bố số liệu tổng hợp (điểm trung bình và số lượng, hiển thị khi một môn có ít nhất 3 đánh giá). Câu trả lời “Điều bạn ước đã biết trước” có thể hiện trên trang môn học như một lời khuyên, nhưng chỉ sau khi người quản lý duyệt tay, chỉ khi môn có đủ 3 lời khuyên đã duyệt, và chỉ gồm nội dung, học kỳ và ngôn ngữ, không kèm các câu trả lời khác của bạn. Lời khuyên có tên, email, số điện thoại, mã số sinh viên hay đường link sẽ không hiện. Ai cũng có thể báo cáo, và lời khuyên sẽ bị gỡ sau khi xem xét.",

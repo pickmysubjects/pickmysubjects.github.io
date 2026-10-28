@@ -753,11 +753,14 @@ export const id: Messages = {
     step3: 'Tekan Kirim. Kami periksa dulu sebelum menambahkannya ke situs.',
     onlyFacts: 'Teks halaman itu sendiri tidak disimpan atau dikirim.',
     devDetails: 'Detail untuk pengembang',
+    addTitle: "Tambah mata kuliah yang belum ada",
+    fixTitle: "Ada info yang salah",
+    fixText: "Beri tahu kami kode mata kuliah dan apa yang salah.",
+    fixLink: "Laporkan data yang salah",
   },
   feedback: {
     title: 'Bantu jadikan lebih baik',
     lede: 'PickMySubjects berawal dari hal-hal yang membuat memilih mata kuliah di UniMelb melelahkan. Berikut setiap masalahnya dan sejauh mana kami sudah menanganinya. Ceritakan apa yang berhasil, apa yang belum, dan apa yang kurang — tidak perlu bisa coding.',
-    ledeShort: "Beri tahu apa yang berguna, tidak, dan kurang",
     status: { works: 'Sudah bisa', partly: 'Sebagian', planned: 'Belum' },
     tryIt: 'Coba',
     give: 'Beri masukan untuk ini',
@@ -1827,7 +1830,6 @@ export const id: Messages = {
     },
   },
   about: {
-    eyebrow: 'Tentang',
     title: "Kenapa aku membuat situs ini",
     me: "Aku lulusan University of Melbourne. Waktu kuliah, setiap kali memilih mata kuliah rasanya pusing.",
     why: "Informasinya tersebar di banyak halaman Handbook, dan prasyarat gampang terlewat. Ada mata kuliah yang cuma dibuka setahun sekali, jadi kalau terlewat harus menunggu setahun lagi. Soal susah atau tidaknya, cuma bisa tanya kakak tingkat atau cari di Reddit.",
@@ -1892,8 +1894,8 @@ export const id: Messages = {
     countingNone: "Belum ada mata kuliah di rencana yang dihitung untuk syarat ini.",
   },
   privacy: {
-    pills: { account: "Tanpa daftar", local: "Data tetap di perangkatmu", anon: "Penilaian anonim" },
     title: 'Privasi',
+    h: { local: "Data yang hanya ada di perangkatmu", ratings: "Menilai mata kuliah", grades: "Membagikan tingkat nilai", feedback: "Masukan yang kamu kirim", noTracking: "Hitungan kunjungan", google: "Google Form dan GitHub", removal: "Menghapus yang sudah kamu kirim" },
     updated: "Terakhir diperbarui: 26 Oktober 2026",
     local: 'Catatan, keterampilan, minat, dan rencanamu hanya disimpan di browser ini (localStorage). Tidak ada akun dan tidak pernah diunggah. Menghapus data browser akan menghapusnya. Satu-satunya pengecualian adalah tingkat nilai yang kamu pilih untuk dibagikan (di bawah).',
     ratings: "Saat kamu menilai mata kuliah, jawabanmu dikirim secara anonim ke Google Form/Sheet pribadi yang hanya bisa dibuka pengelola. Tidak ada email atau login yang dikumpulkan. Hanya data ringkasan (rata-rata dan jumlah, ditampilkan setelah sebuah mata kuliah punya minimal 3 penilaian) yang dipublikasikan. Jawaban “Apa yang kamu harap sudah diketahui sebelumnya” bisa tampil di halaman mata kuliah sebagai tips, tetapi hanya setelah pengelola menyetujuinya secara manual, hanya setelah mata kuliah punya 3 tips yang disetujui, dan hanya teks, semester, dan bahasanya, tanpa jawabanmu yang lain. Tips yang berisi nama, email, nomor telepon, nomor mahasiswa, atau tautan tidak ditampilkan. Siapa pun bisa melaporkan tips, dan tips dihapus setelah ditinjau.",

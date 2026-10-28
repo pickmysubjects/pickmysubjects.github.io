@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, defineAsyncComponent, nextTick, onBeforeUnmount, onMounted, shallowRef, useTemplateRef, watch } from 'vue'
+import { computed, defineAsyncComponent, type Component, nextTick, onBeforeUnmount, onMounted, shallowRef, useTemplateRef, watch } from 'vue'
 import { ChevronDown } from 'lucide-vue-next'
 import { useI18n } from '@/i18n'
 import { reducedMotion } from '@/utils/motion'
@@ -19,7 +19,8 @@ interface TocItem {
   title: string
   sub: boolean
 }
-const props = defineProps<{ items: TocItem[]; slug: GuidePageSlug }>()
+// A guide page names its slug; another page (the About group) passes its own illustration.
+const props = defineProps<{ items: TocItem[]; slug?: GuidePageSlug; art?: () => Promise<Component> }>()
 const { t } = useI18n()
 const active = shallowRef<string | null>(null)
 const open = shallowRef(false)
@@ -49,7 +50,10 @@ function jump(id: string, event: MouseEvent): void {
 }
 
 // ---- Desktop panel: the list scrolls inside it; the illustration only where it fits. ----
-const art = computed(() => defineAsyncComponent(MINI_ART[props.slug]))
+const art = computed(() => {
+  const load = props.art ?? (props.slug ? MINI_ART[props.slug] : null)
+  return load ? defineAsyncComponent(load) : null
+})
 const scroller = useTemplateRef<HTMLElement>('scroller')
 const side = useTemplateRef<HTMLElement>('side')
 const fadeTop = shallowRef(false)
@@ -119,7 +123,7 @@ watch(() => props.items, () => {
           </li>
         </ol>
       </div>
-      <div v-if="showArt" class="toc-art" aria-hidden="true"><component :is="art" /></div>
+      <div v-if="showArt && art" class="toc-art" aria-hidden="true"><component :is="art" /></div>
     </div>
     <!-- Phones -->
     <details class="toc-drop surface" :open="open" @toggle="open = ($event.target as HTMLDetailsElement).open">

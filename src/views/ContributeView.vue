@@ -8,6 +8,9 @@ import Interp from '@/components/Interp.vue'
 import { FEEDBACK_FORM } from '@/config'
 import { useI18n } from '@/i18n'
 import { isFormReady, submitGoogleForm } from '@/utils/googleForm'
+import { link } from '@/composables/useView'
+import InfoPage from '@/components/about/InfoPage.vue'
+import GuideItem from '@/components/guide/GuideItem.vue'
 
 const { t, locale } = useI18n()
 const code = shallowRef('')
@@ -66,10 +69,8 @@ function onCode(): void {
 </script>
 
 <template>
-  <div class="contribute">
-    <section class="contribute-intro">
-      <h1 class="contribute-title">{{ t('contribute.title') }}</h1>
-      <p class="contribute-lede">{{ t('contribute.lede') }}</p>
+  <InfoPage page="contribute" :title="t('menu.contribute')">
+    <GuideItem id="add" :title="t('contribute.addTitle')" :short="t('contribute.lede')">
       <ol class="steps">
         <li>
           <Interp :text="t('contribute.step1')">
@@ -81,10 +82,7 @@ function onCode(): void {
         <li>{{ t('contribute.step2') }}</li>
         <li>{{ t('contribute.step3') }}</li>
       </ol>
-      <p class="small">{{ t('contribute.onlyFacts') }}</p>
-    </section>
 
-    <div class="contribute-body surface">
       <form class="paste" @submit.prevent>
         <label class="field">
           {{ t('contribute.pasted') }}
@@ -113,30 +111,32 @@ function onCode(): void {
           </label>
         </div>
       </form>
-    </div>
 
-    <section class="send surface">
-      <template v-if="canSend">
-        <button
-          class="button button-accent"
-          type="button"
-          :disabled="!codeValid || !readSomething || sendState === 'sending' || sendState === 'sent'"
-          @click="send"
-        >
-          <Send :size="16" aria-hidden="true" />
-          {{ sendState === 'sending' ? t('contribute.sending') : t('contribute.send') }}
-        </button>
-        <p v-if="sendState === 'sent'" class="send-ok" role="status">{{ t('contribute.sent') }}</p>
-        <p v-else-if="sendState === 'failed'" class="send-bad" role="alert">{{ t('contribute.sendFailed') }}</p>
-        <p v-else-if="!codeValid || !readSomething" class="small">{{ t('contribute.needCode') }}</p>
-      </template>
+      <div class="send">
+        <template v-if="canSend">
+          <button
+            class="button button-accent"
+            type="button"
+            :disabled="!codeValid || !readSomething || sendState === 'sending' || sendState === 'sent'"
+            @click="send"
+          >
+            <Send :size="16" aria-hidden="true" />
+            {{ sendState === 'sending' ? t('contribute.sending') : t('contribute.send') }}
+          </button>
+          <p v-if="sendState === 'sent'" class="send-ok" role="status">{{ t('contribute.sent') }}</p>
+          <p v-else-if="sendState === 'failed'" class="send-bad" role="alert">{{ t('contribute.sendFailed') }}</p>
+          <p v-else-if="!codeValid || !readSomething" class="small">{{ t('contribute.needCode') }}</p>
+        </template>
+        <p class="small">{{ t('contribute.onlyFacts') }}</p>
+      </div>
+    </GuideItem>
 
-    </section>
+    <GuideItem id="fix" :title="t('contribute.fixTitle')" :short="t('contribute.fixText')">
+      <p><a class="button button-quiet" :href="link('feedback?topic=data')">{{ t('contribute.fixLink') }}</a></p>
+    </GuideItem>
 
     <!-- What the page reader picked out, and the data file it makes: for whoever reviews it. -->
-    <details class="dev">
-      <summary class="small">{{ t('contribute.devDetails') }}</summary>
-      <ParsedPreview :parsed="parsed" :yaml="yaml" />
+    <GuideItem id="developers" :title="t('contribute.devDetails')">
       <p class="small">
         <Interp :text="t('contribute.thenText')">
           <template #file>
@@ -144,24 +144,20 @@ function onCode(): void {
           </template>
         </Interp>
       </p>
-    </details>
-  </div>
+      <details class="dev">
+        <summary>{{ t('contribute.read') }}</summary>
+        <ParsedPreview :parsed="parsed" :yaml="yaml" />
+      </details>
+    </GuideItem>
+  </InfoPage>
 </template>
 
 <style scoped>
-.contribute {
-  padding-top: var(--page-top);
-  display: grid;
-  gap: var(--space-5);
-}
-
-
 .steps {
   display: grid;
   gap: var(--space-3);
-  margin: var(--space-5) 0 0;
+  margin: 0;
   padding: 0;
-  font-size: 1.02rem;
   list-style: none;
   counter-reset: step;
 }
@@ -190,7 +186,7 @@ function onCode(): void {
 }
 
 .small {
-  margin: 10px 0 0;
+  margin: 0;
   font-size: 0.875rem;
   color: var(--ink-soft);
 }
@@ -198,12 +194,7 @@ function onCode(): void {
 .send {
   display: grid;
   justify-items: start;
-  gap: 4px;
-  padding: 18px 22px;
-}
-
-.send .small {
-  margin: 4px 0 0;
+  gap: 6px;
 }
 
 .send-ok {
@@ -216,35 +207,10 @@ function onCode(): void {
   color: var(--bad);
 }
 
-.contribute-lede {
-  max-width: 76ch;
-  margin: var(--space-3) 0 0;
-  color: var(--ink-soft);
-}
-
-.contribute-body {
-  display: grid;
-  max-width: 760px;
-  padding: 20px 22px;
-}
-
-/* The send bar lines up with the form above it. */
-.send {
-  max-width: 760px;
-}
-
-.dev {
-  display: grid;
-  gap: 12px;
-}
-
-.dev > summary {
-  cursor: pointer;
-}
-
 .paste {
   display: grid;
   gap: 12px;
+  max-width: 760px;
 }
 
 .meta {
@@ -261,43 +227,37 @@ function onCode(): void {
   grid-column: span 4;
 }
 
+.dev {
+  display: grid;
+  gap: 12px;
+}
+
+.dev > summary {
+  width: fit-content;
+  font-weight: var(--fw-semibold);
+  cursor: pointer;
+}
+
 .textarea {
   font-family: var(--font-code);
   font-size: 0.8125rem;
   resize: vertical;
 }
 
-
-
 @media (max-width: 960px) {
-  .meta > .field,
-  .meta > .meta-title {
-    grid-column: auto;
-  }
-
-  .contribute-body {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
   /* Code and title full width; the three short numbers two to a row. */
   .meta {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .meta > .field,
+  .meta > .meta-title {
+    grid-column: auto;
+  }
+
   .meta > .meta-title,
   .meta > .field:first-child {
     grid-column: 1 / -1;
-  }
-
-  .contribute-body {
-    padding: 16px;
-  }
-}
-
-/* Phones: the title a size down, like the guide's, so long languages keep it to two lines. */
-@media (max-width: 640px) {
-  .contribute-title {
-    font-size: 1.9rem;
   }
 }
 </style>

@@ -8,6 +8,7 @@ import { OTHER_TOPICS, type FeedbackDraft } from '@/utils/feedback'
 import { PAIN_POINTS } from '@/painPoints'
 import Interp from '@/components/Interp.vue'
 import { PenLine } from 'lucide-vue-next'
+import InfoPage from '@/components/about/InfoPage.vue'
 import { useI18n } from '@/i18n'
 
 const { query } = useView()
@@ -41,28 +42,29 @@ function choose(id: string): void {
 </script>
 
 <template>
-  <div class="fb">
-    <section>
-      <h1 class="fb-title">{{ t('feedback.title') }}</h1>
-      <p class="fb-lede">{{ t('feedback.ledeShort') }}<InfoTip :text="t('feedback.lede')" /></p>
-      <!-- The form sits below a long status list; this gets there in one tap. -->
-      <button class="button button-accent fb-jump" type="button" @click="form?.scrollIntoView({ behavior: 'smooth', block: 'start' })">
-        <PenLine :size="16" aria-hidden="true" /> {{ t('feedback.yours') }}
-      </button>
-    </section>
-
-    <!-- Wide screens: the form stays in view beside the list, so picking a card fills it in place. -->
+  <!-- One tool rather than sections to read, so no "On this page": the form stays beside the list. -->
+  <InfoPage page="feedback" :title="t('menu.feedback')" :toc="false">
     <div class="fb-body">
-      <PainPointList :selected="draft.topic" @choose="choose" />
+      <section class="fb-panel surface" aria-labelledby="fb-problems">
+        <div class="fb-head">
+          <h2 id="fb-problems" class="fb-h2">{{ t('feedback.groupProblems') }}<InfoTip :text="t('feedback.lede')" /></h2>
+          <!-- The form sits below a long status list on narrow screens; this gets there in one tap. -->
+          <button class="button button-accent fb-jump" type="button" @click="form?.scrollIntoView({ behavior: 'smooth', block: 'start' })">
+            <PenLine :size="16" aria-hidden="true" /> {{ t('feedback.yours') }}
+          </button>
+        </div>
+        <PainPointList :selected="draft.topic" @choose="choose" />
+      </section>
 
-      <section ref="formSection" class="fb-form">
-        <h2 class="fb-form-title">{{ t('feedback.yours') }}</h2>
+      <!-- Wide screens: the form stays in view beside the list, so picking a card fills it in place. -->
+      <section ref="formSection" class="fb-form fb-panel surface" aria-labelledby="fb-yours">
+        <h2 id="fb-yours" class="fb-h2">{{ t('feedback.yours') }}</h2>
         <FeedbackForm v-model="draft" />
       </section>
     </div>
 
-    <section class="fb-code">
-      <h2 class="fb-form-title">{{ t('feedback.codeTitle') }}</h2>
+    <section class="fb-code fb-panel surface" aria-labelledby="fb-code">
+      <h2 id="fb-code" class="fb-h2">{{ t('feedback.codeTitle') }}</h2>
       <p>
         <Interp :text="t('feedback.codeText')">
           <template #link>
@@ -72,29 +74,60 @@ function choose(id: string): void {
       </p>
       <p>{{ t('feedback.translations') }}</p>
     </section>
-  </div>
+  </InfoPage>
 </template>
 
 <style scoped>
-.fb {
-  padding-top: var(--page-top);
-  display: grid;
-  gap: 24px;
-}
-
 .fb-body {
   display: grid;
   gap: 24px;
 }
 
+.fb-panel {
+  display: grid;
+  align-content: start;
+  gap: 16px;
+  min-width: 0;
+  padding: 24px 28px 28px;
+}
+
+.fb-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.fb-h2 {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--fs-section);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-heading);
+}
+
+/* The form is one panel with its heading; its own card edge would double the frame. */
+.fb-form :deep(.feedback) {
+  padding: 0;
+  border: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.fb-form {
+  scroll-margin-top: 88px;
+}
+
 @media (min-width: 1100px) {
   .fb-body {
-    grid-template-columns: minmax(0, 1fr) minmax(360px, 420px);
+    grid-template-columns: minmax(0, 1fr) minmax(380px, 440px);
     align-items: start;
-    gap: 32px;
+    gap: 24px;
   }
 
-  .fb-body .fb-form {
+  .fb-form {
     position: sticky;
     top: 88px;
     max-height: calc(100vh - 104px);
@@ -108,42 +141,24 @@ function choose(id: string): void {
   }
 }
 
-
-.fb-lede {
-  max-width: 72ch;
-  margin: var(--space-3) 0 0;
-  color: var(--ink-soft);
-}
-
-.fb-jump {
-  margin-top: 14px;
-}
-
-.fb-form {
-  display: grid;
-  gap: 12px;
-  max-width: 720px;
-  scroll-margin-top: 16px;
-}
-
-.fb-form-title {
-  font-size: 1.2rem;
-  font-weight: 700;
-}
-
 .fb-code {
-  max-width: 72ch;
+  gap: 8px;
   color: var(--ink-soft);
+}
+
+.fb-code .fb-h2 {
+  color: var(--ink);
 }
 
 .fb-code p {
-  margin: 6px 0 0;
+  margin: 0;
+  max-width: 80ch;
 }
 
-/* Phones: the title a size down, like the guide's, so long languages keep it to two lines. */
 @media (max-width: 640px) {
-  .fb-title {
-    font-size: 1.9rem;
+  .fb-panel {
+    padding: 18px 14px 20px;
+    border-radius: 18px;
   }
 }
 </style>

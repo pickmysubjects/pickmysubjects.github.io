@@ -7,11 +7,13 @@ import { localTitle } from '@/i18n/localized'
 import type { YearDiff } from '@/engine/yearDiff'
 import { changeSections, changesSummary } from '@/utils/changesText'
 import { SITE_UPDATES } from '@/content/updates'
+import InfoPage from '@/components/about/InfoPage.vue'
+import GuideItem from '@/components/guide/GuideItem.vue'
 
 /**
  * /changes/<year>: what changed in the new Handbook year, the summary first, then the lists (see
  * changeSections). /changes/ on its own: the index, with that year's page (once there is one) and
- * the site's own update log.
+ * the site's own update log (the one place it is shown; About links here).
  */
 const props = defineProps<{ year: string }>()
 const { data } = useDataset()
@@ -42,37 +44,35 @@ const sections = computed(() =>
     : [],
 )
 const hrefOf = (kind: 'subject' | 'major', id: string) => link(`${kind === 'subject' ? 'subject' : 'majors'}/${id}`)
+const title = computed(() => (props.year ? t.value('changes.heading', { year: props.year }) : t.value('menu.changes')))
 const exists = (kind: 'subject' | 'major', id: string) => (kind === 'subject' ? !!data.value.subjects[id] : data.value.components.some((c) => c.id === id))
 </script>
 
 <template>
-  <article class="changes">
+  <InfoPage page="changes" :title="title" :refresh="loaded">
     <template v-if="!year">
-      <h1 class="page-title">{{ t('menu.changes') }}</h1>
-      <p class="page-lede">{{ t('changes.indexLede') }}</p>
-      <section class="group surface" aria-labelledby="changes-handbook">
-        <h2 id="changes-handbook" class="group-title">{{ t('changes.handbookTitle') }}</h2>
+      <GuideItem id="changes-handbook" :title="t('changes.handbookTitle')">
         <p v-if="latest">
           <a :href="link(`changes/${latest.to}`)">{{ t('changes.heading', { year: latest.to }) }}</a>
         </p>
         <p v-else-if="loaded" class="note">{{ t('changes.none') }}</p>
-      </section>
-      <section class="group surface" aria-labelledby="changes-site">
-        <h2 id="changes-site" class="group-title">{{ t('about.updatesTitle') }}</h2>
-        <ul class="updates">
+      </GuideItem>
+      <GuideItem id="changes-site" :title="t('about.updatesTitle')">
+        <!-- Newest first, each update a dot on a thin rail. -->
+        <ol class="log">
           <li v-for="(u, i) in SITE_UPDATES" :key="i">
             <time :datetime="u.date">{{ day(u.date) }}</time>
             <span>{{ u.text[locale] }}</span>
           </li>
-        </ul>
-      </section>
+        </ol>
+      </GuideItem>
     </template>
     <template v-else-if="diff">
-      <h1 class="page-title">{{ t('changes.heading', { year: diff.to }) }}</h1>
-      <p class="page-lede summary">{{ summary }}</p>
-      <p class="note">{{ t('changes.lede', { from: diff.from }) }}</p>
-      <section v-for="s in sections" :key="s.key" class="group surface">
-        <h2 class="group-title">{{ s.title }}</h2>
+      <section class="summary surface">
+        <p class="summary-text">{{ summary }}</p>
+        <p class="note">{{ t('changes.lede', { from: diff.from }) }}</p>
+      </section>
+      <GuideItem v-for="s in sections" :id="s.key" :key="s.key" :title="s.title">
         <ul class="list">
           <li v-for="i in s.items" :key="i.kind + i.id">
             <a v-if="exists(i.kind, i.id)" :href="hrefOf(i.kind, i.id)">{{ i.label }}</a>
@@ -80,70 +80,80 @@ const exists = (kind: 'subject' | 'major', id: string) => (kind === 'subject' ? 
             <span v-if="i.details.length" class="detail">{{ i.details.join(' ') }}</span>
           </li>
         </ul>
-      </section>
+      </GuideItem>
     </template>
-    <section v-else-if="loaded" class="surface empty">
-      <h1 class="page-title">{{ t('changes.heading', { year }) }}</h1>
-      <p><a :href="link('')">{{ t('seo.made') }}</a></p>
-    </section>
-  </article>
+    <p v-else-if="loaded" class="foot"><a :href="link('')">{{ t('seo.made') }}</a></p>
+  </InfoPage>
 </template>
 
 <style scoped>
-.updates {
+.log {
   display: grid;
-  gap: 8px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.updates li {
+.log li {
+  position: relative;
   display: grid;
   grid-template-columns: minmax(7.5em, max-content) minmax(0, 1fr);
-  gap: var(--space-4);
+  gap: 4px 20px;
+  padding: 0 0 18px 28px;
 }
 
-.updates time {
-  color: var(--ink-soft);
+.log li:last-child {
+  padding-bottom: 0;
+}
+
+.log li::before {
+  content: '';
+  position: absolute;
+  top: 0.45em;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--accent-fill);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-fill) 16%, transparent);
+}
+
+.log li:not(:first-child)::before {
+  background: var(--divider);
+  box-shadow: none;
+}
+
+.log li:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: calc(0.45em + 18px);
+  bottom: 4px;
+  left: 5px;
+  width: 2px;
+  background: var(--divider);
+}
+
+.log time {
+  font-weight: var(--fw-semibold);
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
 }
 
 @media (max-width: 480px) {
-  .updates li {
+  .log li {
     grid-template-columns: minmax(0, 1fr);
-    gap: 0;
   }
 }
 
-.changes {
-  display: grid;
-  gap: var(--space-5);
-  padding-top: var(--page-top);
-  min-width: 0;
-}
-
 .summary {
-  font-weight: 600;
-}
-
-.note {
-  margin: 0;
-  color: var(--ink-soft);
-}
-
-.group,
-.empty {
   display: grid;
-  gap: var(--space-3);
-  padding: var(--space-5);
-  min-width: 0;
+  gap: 8px;
+  padding: 24px 32px;
 }
 
-.group-title {
-  margin: 0;
-  font-size: var(--fs-section);
+.summary-text {
+  font-size: 1.0625rem;
+  font-weight: var(--fw-semibold);
 }
 
 .list {
@@ -157,5 +167,12 @@ const exists = (kind: 'subject' | 'major', id: string) => (kind === 'subject' ? 
   display: block;
   font-size: var(--fs-small);
   color: var(--ink-soft);
+}
+
+@media (max-width: 640px) {
+  .summary {
+    padding: 18px 14px;
+    border-radius: 18px;
+  }
 }
 </style>

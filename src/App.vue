@@ -17,6 +17,7 @@ import { listPageTitle, PRESET_TITLE_KEYS, subjectPageTitle } from '@/utils/seo'
 import { careerTarget, presetFromSlug, rankFromSlug, subjectDifficulty } from '@/engine'
 import { careerPhrase } from '@/utils/careerPathText'
 import { guidePageOf } from '@/utils/guideSections'
+import { wideReading } from './components/layout/shell'
 
 const lazy = (v: keyof typeof VIEW_LOADERS) => defineAsyncComponent(VIEW_LOADERS[v])
 const HomeView = lazy('home')
@@ -98,7 +99,7 @@ watchEffect(() => {
     <AppLogo class="backdrop-mark" />
   </div>
   <AppHeader :view="view" />
-  <main class="app-main shell" :class="{ 'shell-wide': view === 'plan', 'shell-guide': view === 'guide' }">
+  <main class="app-main shell" :class="{ 'shell-wide': view === 'plan', 'shell-guide': wideReading(view) }">
     <ComingNotice v-if="view !== 'home'" slim />
     <RolloverNotice />
     <MissedAnchor />
@@ -119,7 +120,7 @@ watchEffect(() => {
     <PrivacyView v-else />
   </main>
   <footer class="footer">
-    <div class="footer-inner shell" :class="{ 'shell-guide': view === 'guide' }">
+    <div class="footer-inner shell" :class="{ 'shell-guide': wideReading(view) }">
       <nav class="footer-links" :aria-label="t('nav.more')">
         <a :href="link('subjects')">{{ t('browse.title') }}</a>
         <a :href="link('majors')">{{ t('majors.title') }}</a>

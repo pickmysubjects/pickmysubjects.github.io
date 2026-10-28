@@ -1,14 +1,14 @@
 <script setup lang="ts">
 // One topic of a guide page: a glass card with its heading, the short answer, then the detail.
 // The id (an anchor other pages link to) is set by the parent; data-toc puts it in "On this page".
-defineProps<{ title: string; short: string }>()
+defineProps<{ title: string; short?: string }>()
 </script>
 
 <template>
   <section class="topic surface" :data-toc="title">
     <header class="topic-head">
       <h2 class="topic-title">{{ title }}</h2>
-      <p class="topic-short">{{ short }}</p>
+      <p v-if="short" class="topic-short">{{ short }}</p>
     </header>
     <div class="topic-body">
       <slot />

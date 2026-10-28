@@ -757,11 +757,14 @@ export const en = {
     step3: 'Press Send. We check it before adding it to the site.',
     onlyFacts: 'The page text itself isn’t saved or sent.',
     devDetails: 'Details for developers',
+    addTitle: "Add a missing subject",
+    fixTitle: "A fact is wrong",
+    fixText: "Tell us the subject code and what's wrong.",
+    fixLink: "Report wrong data",
   },
   feedback: {
     title: 'Help make it better',
     lede: 'PickMySubjects started from the things that make choosing subjects at UniMelb painful. Here’s each one and how far we’ve got. Tell us what works, what doesn’t, and what’s missing — you don’t need to write code.',
-    ledeShort: "Tell us what works, what doesn't and what's missing",
     status: { works: 'Works now', partly: 'Partly', planned: 'Not yet' },
     tryIt: 'Try it',
     give: 'Give feedback on this',
@@ -1831,7 +1834,6 @@ export const en = {
     },
   },
   about: {
-    eyebrow: 'About',
     title: "Why I made this",
     me: "I graduated from the University of Melbourne, and picking subjects every semester was a headache.",
     why: "The details were spread over lots of Handbook pages, and prerequisites were easy to miss. Some subjects only ran once a year, so missing one meant waiting another year. Whether a subject was hard, you only found out by asking older students or digging through Reddit.",
@@ -1896,8 +1898,8 @@ export const en = {
     countingNone: "No subject in your plan counts toward this yet.",
   },
   privacy: {
-    pills: { account: "No sign-up", local: "Stays on your device", anon: "Ratings are anonymous" },
     title: 'Privacy',
+    h: { local: "What stays on your device", ratings: "Rating a subject", grades: "Sharing grade bands", feedback: "Feedback you send", noTracking: "Visit counts", google: "Google Forms and GitHub", removal: "Removing something you sent" },
     updated: "Last updated: 26 October 2026",
     local: 'Your record, skills, interests and plans are stored only in this browser (localStorage). There is no account and they are never uploaded. Clearing your browser data deletes them. The one exception is grade bands you choose to share (below).',
     ratings: "When you rate a subject, your answers are sent anonymously to a private Google Form/Sheet that only the maintainer can open. No email address or sign-in is collected. Only aggregates (averages and counts, shown once a subject has at least 3 ratings) are published. The “What I wish I knew” answer can be shown on the subject page as a tip, but only after the maintainer approves it by hand, only once a subject has 3 approved tips, and only with its text, the term and the language: never your other answers. Tips with names, emails, phone numbers, student numbers or links are left out. Anyone can report a tip, and it is removed once reviewed.",

@@ -9,6 +9,7 @@ import { MENUS, areaOf, isHere, pageTitleKey, type Area } from './nav'
 import { computed, nextTick, onBeforeUnmount, onMounted, shallowRef, useTemplateRef, watch } from 'vue'
 import type { View } from '@/composables/useView'
 import { useI18n } from '@/i18n'
+import { wideReading } from './shell'
 
 const props = defineProps<{ view: View }>()
 const { param } = useView()
@@ -158,7 +159,7 @@ watch([locale, () => props.view === 'home', t], () => void nextTick(fit))
 
 <template>
   <header ref="headerEl" class="header">
-    <div ref="innerEl" class="header-inner shell" :class="{ 'shell-guide': view === 'guide' }">
+    <div ref="innerEl" class="header-inner shell" :class="{ 'shell-guide': wideReading(view) }">
       <a class="brand" :href="link('')" :aria-current="view === 'home' ? 'page' : undefined" :title="t('nav.home')">
         <AppLogo class="mark" small />
         <span class="brand-name">PickMySubjects<span v-if="IS_BETA && view !== 'home'" class="beta-chip">Beta</span></span>
