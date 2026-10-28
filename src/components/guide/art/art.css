@@ -123,6 +123,30 @@
 .art .buoyp { fill: #e0559f; }
 .art .buoyrim { fill: none; stroke: #e0d4eb; stroke-width: 1.2; }
 
+/* About pages (src/components/about/art/) */
+.art .hd { fill: #fff; opacity: 0.85; }
+.art .bar { fill: rgb(255 255 255 / 70%); }
+.art .keyh { fill: #7a1450; }
+.art .shk { fill: none; stroke: #a893b7; stroke-width: 7; stroke-linecap: round; }
+.art .shk-big { stroke-width: 10; }
+.art .board { fill: #fbf8fd; }
+.art .bad { fill: #f5bcd6; }
+.art .tickp { fill: none; stroke: var(--a-good); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.art .pen { fill: #f7e3a6; stroke: #ddc372; stroke-width: 0.8; }
+.art .pentip { fill: #4b4553; }
+.art .pencap { fill: #e0559f; }
+.art .sheett { fill: #fffdff; }
+.art .sheetl { fill: #ece3f2; }
+.art .sheetr { fill: #ddd0e8; }
+.art .tl { fill: none; stroke: #cdbcd8; stroke-width: 3; stroke-linecap: round; }
+.art .tlv { stroke: #cdbcd8; stroke-width: 3; stroke-linecap: round; }
+.art .tldot { fill: #fff; stroke: #c2227a; stroke-width: 2.5; }
+.art .stem { stroke: #cdbcd8; stroke-width: 2; }
+.art .cap { fill: #fff; }
+.art .tas { stroke: #f7e3a6; stroke-width: 2; stroke-linecap: round; }
+.art .tasb { fill: #f7e3a6; }
+.art .heartw { fill: #fff; }
+
 @media (prefers-color-scheme: dark) {
   .art {
     --a-t: #d3c8e2;
@@ -157,4 +181,11 @@
   .art .water { fill: #4d6a86; }
   .art .case { fill: #8f7bf5; }
   .art .strap { fill: #7a66de; }
+  .art .board, .art .sheett { fill: #d3c8e2; }
+  .art .sheetl { fill: #b2a5c6; }
+  .art .sheetr { fill: #8a7ca1; }
+  .art .bar { fill: rgb(255 255 255 / 30%); }
+  .art .tl, .art .tlv, .art .stem { stroke: #6d6080; }
+  .art .tldot { fill: #3b3049; stroke: #fbaed5; }
+  .art .bad { fill: #b5507f; }
 }

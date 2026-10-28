@@ -3,12 +3,14 @@ import { createRequire } from 'node:module'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 
-// The guide's generated illustrations (scripts/art/gen.cjs) must draw nothing outside their
-// viewBox, or the hero band and the small panels clip them.
+// The generated illustrations (scripts/art/gen.cjs) of the guide and the About pages must draw
+// nothing outside their viewBox, or the hero band and the small panels clip them.
 const require = createRequire(import.meta.url)
 const { bounds } = require('../scripts/art/bounds.cjs') as { bounds: (svg: string) => { x0: number; y0: number; x1: number; y1: number } }
 const DIR = join(__dirname, '../src/components/guide/art')
+const ABOUT_DIR = join(__dirname, '../src/components/about/art')
 const FILES = readdirSync(DIR).filter((f) => /^(Art|Mini)\w+\.vue$/.test(f))
+const ABOUT_FILES = readdirSync(ABOUT_DIR).filter((f) => /^(Art|Mini)\w+\.vue$/.test(f))
 
 describe('guide illustrations', () => {
   it('has a hero scene and a small one for every page', () => {
@@ -16,8 +18,13 @@ describe('guide illustrations', () => {
     expect(FILES.filter((f) => f.startsWith('Mini')).length).toBe(8)
   })
 
-  it.each(FILES)('%s keeps every shape inside its viewBox, with some air', (f) => {
-    const src = readFileSync(join(DIR, f), 'utf8')
+  it('has a hero scene and a small one for every About page', () => {
+    expect(ABOUT_FILES.filter((f) => f.startsWith('Art')).length).toBe(5)
+    expect(ABOUT_FILES.filter((f) => f.startsWith('Mini')).length).toBe(5)
+  })
+
+  it.each([...FILES.map((f) => join(DIR, f)), ...ABOUT_FILES.map((f) => join(ABOUT_DIR, f))])('%s keeps every shape inside its viewBox, with some air', (file) => {
+    const src = readFileSync(file, 'utf8')
     const svg = /<svg[\s\S]*<\/svg>/.exec(src)![0]
     const [x, y, w, h] = /viewBox="([^"]+)"/.exec(svg)![1]!.split(' ').map(Number) as [number, number, number, number]
     const b = bounds(svg)
