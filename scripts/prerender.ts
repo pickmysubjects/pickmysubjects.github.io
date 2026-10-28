@@ -52,7 +52,7 @@ import { zhTW } from '../src/i18n/messages/zh-TW'
 import { hreflangsFor } from '../src/utils/hreflang'
 import { GUIDE_CATEGORIES, GUIDE_TOPICS, type GuideCategory } from '../src/utils/guideSections'
 import { SERVICE_TOPICS, type GuideService } from '../src/utils/guideServices'
-import { TOOL_GROUPS, TOOLS } from '../src/utils/tools'
+import { TOOLS } from '../src/utils/tools'
 import { groupKeyDates, KEY_DATES, KEY_DATES_SOURCE, EMPLOYABILITY_SOURCE } from '../src/utils/keyDates'
 import { ja } from '../src/i18n/messages/ja'
 import { ko } from '../src/i18n/messages/ko'
@@ -874,13 +874,9 @@ function mainPages(code: LocaleCode): Page[] {
 // (/tools/final/?subject=CODE) would only repeat the subject page's assessment, so it isn't prerendered.
 function toolPages(code: LocaleCode, t: Translate): Page[] {
   const toolHref = (to: string) => href(code, to.replace(/\/+$/, ''))
-  const groups = TOOL_GROUPS.map(
-    (g) => `<h2>${esc(t(g.key))}</h2><ul>${TOOLS.filter((x) => x.group === g.group)
-      .map((x) => `<li><a href="${toolHref(x.to)}">${esc(t(x.key))}</a>${x.text ? `: ${esc(t(x.text))}` : ''}</li>`)
-      .join('')}</ul>`,
-  ).join('')
+  const list = `<ul>${TOOLS.map((x) => `<li><a href="${toolHref(x.to)}">${esc(t(x.key))}</a>: ${esc(t(x.text))}</li>`).join('')}</ul>`
   return [
-    { path: 'tools', title: `${t('tools.seoTitle')} | PickMySubjects`, description: t('tools.seoDesc'), body: `<h1>${esc(t('tools.title'))}</h1><p>${esc(t('tools.lede'))}</p>${groups}` },
+    { path: 'tools', title: `${t('tools.seoTitle')} | PickMySubjects`, description: t('tools.seoDesc'), body: `<h1>${esc(t('tools.title'))}</h1>${list}` },
     {
       path: 'tools/final',
       title: `${t('seo.calcTitle')} | PickMySubjects`,

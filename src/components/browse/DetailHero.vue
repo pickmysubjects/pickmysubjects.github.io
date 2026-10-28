@@ -5,16 +5,17 @@ import { ArrowLeft } from 'lucide-vue-next'
 /**
  * The top of a major's or a career's page, like the guide's and the subject page's: a glass band
  * with the way back, a line saying what it is, the name, and whatever the page puts under it
- * (key numbers, actions); the page's scene across the right, fading out before the words.
+ * (key numbers, actions); the page's scene across the right, fading out before the words. A top
+ * page (the tools hub) has no way back.
  */
-const props = defineProps<{ back: { href: string; label: string }; eyebrow?: string; title: string; art: () => Promise<Component> }>()
+const props = defineProps<{ back?: { href: string; label: string }; eyebrow?: string; title: string; art: () => Promise<Component> }>()
 const scene = computed(() => defineAsyncComponent(props.art))
 </script>
 
 <template>
   <header class="dhero surface">
     <div class="dhero-text">
-      <a class="dhero-back" :href="back.href"><ArrowLeft :size="15" aria-hidden="true" />{{ back.label }}</a>
+      <a v-if="back" class="dhero-back" :href="back.href"><ArrowLeft :size="15" aria-hidden="true" />{{ back.label }}</a>
       <p v-if="eyebrow" class="dhero-eyebrow">{{ eyebrow }}</p>
       <h1 class="dhero-title">{{ title }}</h1>
       <slot />

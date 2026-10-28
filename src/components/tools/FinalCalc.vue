@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, shallowRef, useTemplateRef, watch } from 'vue'
-import { Lock, Plus, RotateCcw, TriangleAlert, X } from 'lucide-vue-next'
+import { Lock, Plus, RotateCcw, TriangleAlert } from 'lucide-vue-next'
 import InfoTip from '@/components/InfoTip.vue'
 import SubjectSearch from '@/components/SubjectSearch.vue'
 import { useDataset } from '@/composables/useDataset'
 import { useProfile } from '@/composables/useProfile'
 import { useFinalCalc, type CalcRow } from '@/composables/useFinalCalc'
+import { usePlan } from '@/composables/usePlan'
 import { link, replaceAddress } from '@/composables/useView'
 import { ASSESSMENT_KINDS } from '@/engine/schema'
 import { finalBand, finalNeeds, handbookChanged, partsFromAssessment, percentOf, sameCalcParts, type CalcPart } from '@/engine/finalCalc'
@@ -20,6 +21,12 @@ const { t, locale } = useI18n()
 const { data } = useDataset()
 const { profile } = useProfile()
 const saved = useFinalCalc()
+const { plannedCodes } = usePlan()
+// Subjects on the plan without a mark on the record yet: one tap picks one.
+const fromPlan = computed(() => {
+  const marked = new Set(profile.value.results.filter((r) => r.mark !== undefined || r.credit).map((r) => r.code))
+  return [...new Set(plannedCodes.value)].filter((c) => c !== props.code && !marked.has(c) && data.value.subjects[c]).slice(0, 8)
+})
 
 const subject = computed(() => (props.code ? data.value.subjects[props.code] : undefined))
 const handbookRows = computed<CalcRow[]>(() => partsFromAssessment(subject.value?.assessment).map((p) => ({ ...p, score: '', outOf: '' })))
@@ -82,6 +89,13 @@ const anyDone = computed(() => (result.value?.doneWeight ?? 0) > 0)
 const allDone = computed(() => result.value !== null && result.value.leftWeight <= 0)
 const recordMark = computed(() => profile.value.results.filter((r) => r.code === props.code && r.mark !== undefined).at(-1)?.mark)
 const kindName = (k: string) => t.value(`assess.kind.${k}`)
+// How the answer is worked out, behind the result's ⓘ.
+const mathsText = computed(() => {
+  const r = result.value
+  if (!r) return ''
+  const maths = t.value('calc.maths', { earned: r.earned, left: Math.round(r.leftWeight * (100 / r.totalWeight) * 10) / 10 })
+  return r.roundingMatters ? `${maths} ${t.value('calc.roundInfo')}` : maths
+})
 
 // What each marked part adds to the total, so a mark typed without its "out of" (24 meant as
 // 24/30 but read as 24/100) shows up as a small contribution right away.
@@ -115,16 +129,18 @@ function pick(code: string): void {
   <div class="calc">
     <section class="calc-pick surface">
       <div v-if="subject" class="calc-subject">
-        <div>
-          <p class="calc-code code">{{ subject.code }}</p>
-          <p class="calc-name">{{ localTitle(subject, locale) || subject.title }}</p>
-        </div>
-        <a class="button button-quiet" :href="link(`subject/${subject.code}`)">{{ t('calc.subjectPage') }}</a>
+        <p class="calc-code code">{{ subject.code }}</p>
+        <p class="calc-name">{{ localTitle(subject, locale) || subject.title }}</p>
+        <a class="calc-link" :href="link(`subject/${subject.code}`)">{{ t('calc.subjectPage') }}</a>
       </div>
       <label class="calc-search">
         <span class="calc-label">{{ subject ? t('calc.change') : t('calc.pick') }}</span>
         <SubjectSearch compact select :placeholder="t('calc.pickPrompt')" @pick="pick" />
       </label>
+      <div v-if="fromPlan.length" class="calc-plan">
+        <span class="calc-label">{{ t('calc.fromPlan') }}</span>
+        <button v-for="c in fromPlan" :key="c" type="button" class="chip calc-chip" @click="pick(c)">{{ c }}</button>
+      </div>
     </section>
 
     <p v-if="code && !subject" class="calc-note warn" role="status">{{ t('calc.unknown', { code }) }}</p>
@@ -161,13 +177,14 @@ function pick(code: string): void {
                 <span class="slash" aria-hidden="true">/</span>
                 <input class="input" type="number" inputmode="decimal" min="1" placeholder="100" :aria-label="t('calc.outOf')" :value="r.outOf" @input="setField(i, 'outOf', numberOf($event))" />
               </span>
-              <span v-if="contribution(r)" class="f-counts">{{ t('calc.counts', contribution(r)!) }}</span>
+              <!-- Always there, so the row keeps its height as a mark is typed. -->
+              <span class="f-counts">{{ contribution(r) ? t('calc.counts', contribution(r)!) : '' }}</span>
             </label>
             <label class="f f-hurdle">
               <input type="checkbox" :checked="!!r.hurdle" @change="setField(i, 'hurdle', ($event.target as HTMLInputElement).checked)" />
               <span>{{ t('calc.hurdle') }}</span>
             </label>
-            <button type="button" class="icon-btn" :aria-label="t('calc.remove')" :title="t('calc.remove')" @click="removeRow(i)"><X :size="16" /></button>
+            <button type="button" class="button button-quiet row-remove" @click="removeRow(i)">{{ t('calc.remove') }}</button>
           </li>
         </ul>
         <div class="calc-foot">
@@ -178,7 +195,7 @@ function pick(code: string): void {
       </section>
 
       <section v-if="result" ref="resultEl" class="surface calc-result" aria-labelledby="calc-result" aria-live="polite">
-        <h2 id="calc-result" class="sec-title">{{ allDone ? t('calc.resultAll') : t('calc.resultTitle') }}</h2>
+        <h2 id="calc-result" class="sec-title">{{ allDone ? t('calc.resultAll') : t('calc.resultTitle') }}<InfoTip v-if="!allDone" :text="mathsText" /></h2>
         <p v-if="allDone && result.mark !== null" class="final">
           <template v-if="finalBand(result, subject.passFail === true) === 'NH'">{{ t('calc.finalMarkNH', { mark: result.mark }) }}<InfoTip :text="t('calc.hurdleInfo')" /></template>
           <template v-else>{{ t('calc.finalMark', { mark: result.mark, band: finalBand(result, subject.passFail === true) }) }}</template>
@@ -193,7 +210,6 @@ function pick(code: string): void {
           <TriangleAlert :size="15" aria-hidden="true" />
           <span>{{ t('calc.hurdleUnder', { part: kindName(h.kind) }) }}<InfoTip :text="t('calc.hurdleInfo')" /></span>
         </p>
-        <p v-if="!allDone" class="maths">{{ t('calc.maths', { earned: result.earned, left: Math.round(result.leftWeight * (100 / result.totalWeight) * 10) / 10 }) }}<InfoTip v-if="result.roundingMatters" :text="t('calc.roundInfo')" /></p>
         <p v-if="!anyDone" class="calc-hint">{{ t('calc.nothingDone') }}</p>
 
         <div v-if="result.hurdlesLeft.length || subject.minAttendance" class="hurdles">
@@ -238,32 +254,66 @@ function pick(code: string): void {
   padding: var(--space-5);
 }
 
+/* The subject on the left, the search to change it on the right; stacked on narrow screens. */
 .calc-pick {
   display: grid;
-  gap: var(--space-3);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: end;
+  gap: var(--space-3) var(--space-5);
+}
+
+.calc-pick:not(:has(.calc-subject)) {
+  grid-template-columns: minmax(0, 1fr);
 }
 
 .calc-subject {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-3);
-  flex-wrap: wrap;
+  display: grid;
+  gap: 2px;
+  min-width: 0;
 }
 
 .calc-code {
+  margin: 0;
   font-size: var(--fs-small);
   color: var(--ink-soft);
 }
 
 .calc-name {
-  font-size: var(--fs-h3);
+  margin: 0;
+  font-size: var(--fs-h2);
   font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  overflow-wrap: anywhere;
+}
+
+.calc-link {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  min-height: 32px;
+  font-size: var(--fs-small);
+  font-weight: var(--fw-semibold);
+  color: var(--accent);
 }
 
 .calc-search {
   display: grid;
   gap: 6px;
+  min-width: 0;
+}
+
+.calc-plan {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  grid-column: 1 / -1;
+}
+
+.calc-chip {
+  min-height: 44px;
+  font-family: var(--font-code);
+  cursor: pointer;
 }
 
 .calc-label,
@@ -273,6 +323,7 @@ function pick(code: string): void {
 }
 
 .calc-note {
+  margin: 0;
   font-size: var(--fs-small);
   color: var(--ink-soft);
   justify-self: start;
@@ -281,6 +332,7 @@ function pick(code: string): void {
 .calc-parts,
 .calc-result {
   display: grid;
+  align-content: start;
   gap: var(--space-3);
 }
 
@@ -293,7 +345,13 @@ function pick(code: string): void {
   flex-wrap: wrap;
 }
 
+.calc-head .sec-title,
+.calc-result .sec-title {
+  margin: 0;
+}
+
 .calc-hint {
+  margin: 0;
   font-size: var(--fs-small);
   color: var(--ink-soft);
 }
@@ -310,13 +368,12 @@ function pick(code: string): void {
   list-style: none;
 }
 
+/* Fixed columns, so typing never moves a field: part, weight, mark / out of, hurdle, remove. */
 .row {
   display: grid;
-  grid-template-columns: minmax(0, 1.4fr) 6.5em minmax(0, 1.5fr) auto auto;
-  /* Top-aligned, so a "counts 7/10" line under a mark doesn't push the row's other fields down;
-     the controls without a label line up with the inputs below the labels. */
+  grid-template-columns: minmax(0, 1.2fr) 6em minmax(10.5em, 1fr) auto auto;
   align-items: start;
-  gap: var(--space-2) var(--space-3);
+  gap: 4px var(--space-3);
   padding-bottom: var(--space-2);
   border-bottom: 1px solid var(--divider);
 }
@@ -333,13 +390,10 @@ function pick(code: string): void {
 }
 
 .score {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 0.8fr);
   align-items: center;
   gap: 6px;
-}
-
-.score .input:last-child {
-  max-width: 5.5em;
 }
 
 .slash {
@@ -358,20 +412,17 @@ function pick(code: string): void {
   font-size: var(--fs-small);
 }
 
-.icon-btn {
-  display: grid;
-  place-items: center;
-  width: var(--control-h);
-  height: var(--control-h);
-  border: 0;
-  border-radius: var(--radius-sm);
-  background: transparent;
-  color: var(--ink-soft);
-  cursor: pointer;
+.f-hurdle input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent);
 }
 
-.icon-btn:hover {
-  background: var(--surface-2);
+.row-remove {
+  color: var(--ink-soft);
+}
+
+.row-remove:hover {
   color: var(--bad);
 }
 
@@ -383,9 +434,9 @@ function pick(code: string): void {
   color: var(--ink-soft);
 }
 
+/* The answer: one line per grade, the mark needed big on the right. */
 .bands {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: var(--space-2);
   margin: 0;
   padding: 0;
@@ -393,15 +444,18 @@ function pick(code: string): void {
 }
 
 .band {
-  display: grid;
-  gap: 4px;
-  padding: var(--space-3);
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: 10px var(--space-4);
   border-radius: var(--radius);
   background: var(--surface-2);
 }
 
 .band-name {
   font-weight: var(--fw-semibold);
+  white-space: nowrap;
 }
 
 .band-name small {
@@ -410,7 +464,11 @@ function pick(code: string): void {
 }
 
 .band-need {
-  font-size: var(--fs-h3);
+  font-size: clamp(1.5rem, 1.2rem + 1vw, 2rem);
+  font-weight: var(--fw-bold);
+  line-height: 1.15;
+  font-variant-numeric: tabular-nums;
+  text-align: end;
 }
 
 .s-secured {
@@ -423,21 +481,22 @@ function pick(code: string): void {
   color: var(--bad);
 }
 
-.s-impossible .band-need,
-.s-secured .band-need {
-  font-size: var(--fs-small);
+.s-secured .band-name small,
+.s-impossible .band-name small {
+  color: inherit;
 }
 
-.final {
-  font-size: var(--fs-h3);
+.s-impossible .band-need,
+.s-secured .band-need {
+  font-size: var(--fs-body, 1rem);
   font-weight: var(--fw-semibold);
 }
 
-.maths {
-  font-family: var(--font-code);
-  font-size: var(--fs-meta);
-  color: var(--ink-soft);
-  overflow-wrap: anywhere;
+.final {
+  margin: 0;
+  font-size: clamp(1.5rem, 1.2rem + 1vw, 2rem);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-tight);
 }
 
 .hurdles {
@@ -449,6 +508,7 @@ function pick(code: string): void {
   display: flex;
   gap: 8px;
   align-items: flex-start;
+  margin: 0;
   padding: var(--space-2) var(--space-3);
   border-radius: var(--radius-sm);
   background: var(--warn-soft);
@@ -462,7 +522,9 @@ function pick(code: string): void {
 }
 
 .f-counts {
+  min-height: 1.4em;
   font-size: var(--fs-meta);
+  line-height: 1.4;
   color: var(--ink-soft);
 }
 
@@ -472,21 +534,18 @@ function pick(code: string): void {
 }
 
 @media (min-width: 641px) {
-  .f-kind {
-    margin-top: 24px;
-  }
-
+  .f-kind,
   .f-hurdle,
-  .icon-btn {
-    margin-top: calc(24px + (var(--control-h) - 44px) / 2);
+  .row-remove {
+    margin-top: 24px;
   }
 }
 
-/* Wide screens: the result sits beside the parts and stays in view while marks are typed. */
+/* Wide screens: the answer sits beside the parts and stays in view while marks are typed. */
 @media (min-width: 1024px) {
   .calc-work {
     display: grid;
-    grid-template-columns: minmax(0, 1.75fr) minmax(300px, 1fr);
+    grid-template-columns: minmax(0, 1.9fr) minmax(320px, 1fr);
     align-items: start;
     gap: var(--space-4);
   }
@@ -494,10 +553,6 @@ function pick(code: string): void {
   .calc-result {
     position: sticky;
     top: 96px;
-  }
-
-  .bands {
-    grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
   }
 }
 
@@ -513,6 +568,10 @@ function pick(code: string): void {
 }
 
 @media (max-width: 720px) {
+  .calc-pick {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
   .calc-dock {
     position: fixed;
     inset: auto 12px calc(88px + env(safe-area-inset-bottom)) 12px;
@@ -553,6 +612,7 @@ function pick(code: string): void {
   }
 }
 
+/* Phones: each part as a small card of its own, full width. */
 @media (max-width: 640px) {
   .calc-pick,
   .calc-parts,
@@ -561,18 +621,14 @@ function pick(code: string): void {
   }
 
   .row {
-    grid-template-columns: 5.5em minmax(0, 1fr) auto;
-    grid-template-areas: 'kind kind x' 'weight score score' 'hurdle hurdle hurdle';
+    grid-template-columns: 5.5em minmax(0, 1fr);
+    grid-template-areas: 'kind kind' 'weight score' 'hurdle x';
   }
 
   .f-kind { grid-area: kind; }
   .f-weight { grid-area: weight; }
   .f-score { grid-area: score; }
   .f-hurdle { grid-area: hurdle; }
-  .icon-btn { grid-area: x; }
-
-  .bands {
-    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
-  }
+  .row-remove { grid-area: x; justify-self: end; }
 }
 </style>

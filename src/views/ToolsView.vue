@@ -1,35 +1,40 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { ArrowLeft } from 'lucide-vue-next'
+import DetailHero from '@/components/browse/DetailHero.vue'
 import FinalCalc from '@/components/tools/FinalCalc.vue'
 import ToolCards from '@/components/tools/ToolCards.vue'
-import WamGoal from '@/components/profile/WamGoal.vue'
+import WamCalc from '@/components/tools/WamCalc.vue'
 import { link, useView } from '@/composables/useView'
-import { useProfile } from '@/composables/useProfile'
 import { useI18n } from '@/i18n'
 
-/** /tools/ (all tools), /tools/final/?subject=CODE (final calculator), /tools/wam/ (WAM calculator). */
+/**
+ * /tools/ (all tools), /tools/final/?subject=CODE (final calculator), /tools/wam/ (WAM calculator).
+ * A calculator is the tool and nothing else: the hero says what it is, then the inputs and the answer.
+ */
 const props = defineProps<{ tool: string }>()
 const { t } = useI18n()
 const { query } = useView()
-const { wam } = useProfile()
 const page = computed(() => (props.tool === 'final' || props.tool === 'wam' ? props.tool : 'hub'))
 // A code in the address, upper-cased: links from anywhere can say ?subject=comp10001.
 const code = computed(() => (query.value.get('subject') ?? '').trim().toUpperCase())
+const ARTS = {
+  hub: () => import('@/components/tools/art/ArtTools.vue'),
+  final: () => import('@/components/tools/art/ArtFinal.vue'),
+  wam: () => import('@/components/tools/art/ArtWam.vue'),
+}
+const title = computed(() => t.value(page.value === 'final' ? 'calc.title' : page.value === 'wam' ? 'tools.wam' : 'tools.title'))
+// The hub is its two cards: no line under its title.
+const lede = computed(() => (page.value === 'final' ? t.value('calc.lede') : page.value === 'wam' ? t.value('tools.wamLede') : ''))
+const back = computed(() => (page.value === 'hub' ? undefined : { href: link('tools/'), label: t.value('tools.title') }))
 </script>
 
 <template>
-  <div class="tools" :class="{ single: page !== 'hub' }">
-    <a v-if="page !== 'hub'" class="back" :href="link('tools/')"><ArrowLeft :size="15" aria-hidden="true" /> {{ t('tools.title') }}</a>
-    <header class="head">
-      <h1 class="page-title">{{ page === 'final' ? t('calc.title') : page === 'wam' ? t('tools.wam') : t('tools.title') }}</h1>
-      <p class="lede">{{ page === 'final' ? t('calc.lede') : page === 'wam' ? t('tools.wamLede') : t('tools.lede') }}</p>
-    </header>
+  <div class="tools">
+    <DetailHero :key="page" :back="back" :title="title" :art="ARTS[page]">
+      <p v-if="lede" class="lede">{{ lede }}</p>
+    </DetailHero>
     <FinalCalc v-if="page === 'final'" :code="code" />
-    <div v-else-if="page === 'wam'" class="wam">
-      <WamGoal quick />
-      <p v-if="wam === null" class="empty">{{ t('tools.wamEmpty') }} <a class="button button-quiet" :href="link('record#sec-results')">{{ t('tools.wamGo') }}</a></p>
-    </div>
+    <WamCalc v-else-if="page === 'wam'" />
     <ToolCards v-else />
   </div>
 </template>
@@ -41,39 +46,15 @@ const code = computed(() => (query.value.get('subject') ?? '').trim().toUpperCas
   padding-top: var(--space-4);
 }
 
-/* One calculator: a form, so it keeps a form's width on the wide page, from the left edge. */
-.single {
-  max-width: 960px;
-}
-
-.head {
-  display: grid;
-  gap: var(--space-2);
-}
-
 .lede {
+  margin: 0;
   color: var(--ink-soft);
 }
 
-.back {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  justify-self: start;
-  font-size: var(--fs-small);
-  color: var(--ink-soft);
-}
-
-.wam {
-  display: grid;
-  gap: var(--space-3);
-}
-
-.empty {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: var(--space-3);
-  color: var(--ink-soft);
+@media (max-width: 640px) {
+  .tools {
+    gap: var(--space-4);
+    padding-top: var(--space-3);
+  }
 }
 </style>
