@@ -696,6 +696,51 @@ planHeroes.Compare = () => {
   return { s, css, motion: [4, 0, 0, 0] }
 }
 
+
+// ================= The tools (src/components/tools/art/) =================
+// The tools hub: its two tools as glass cards on a shelf, a calculator and a WAM gauge; the
+// calculator's answer key glows and the gauge's needle swings up.
+const toolHeroes = {}
+toolHeroes.Tools = () => {
+  let s = `<ellipse class="sh" cx="480" cy="164" rx="190" ry="10"/>`
+  s += `<rect x="318" y="30" width="120" height="128" rx="14" class="gls"/><rect x="330" y="42" width="96" height="26" rx="7" class="skt"/><rect x="382" y="52" width="34" height="6" rx="3" class="hl"/>`
+  for (let r2 = 0; r2 < 3; r2++) for (let c = 0; c < 3; c++) s += `<rect x="${330 + c * 33}" y="${78 + r2 * 24}" width="29" height="18" rx="5" class="${r2 === 2 && c === 2 ? 'pkt' : 'lnf'}"/>`
+  s += `<rect x="460" y="46" width="200" height="112" rx="14" class="gls"/>`
+  s += `<path class="lnf" d="M498 144 a62 62 0 0 1 124 0 h-18 a44 44 0 0 0 -88 0 z"/><path class="pkt" d="M593 92.3 a62 62 0 0 1 29 51.7 h-18 a44 44 0 0 0 -20.6 -36.7 z"/>`
+  s += `<g class="needle" style="transform-origin:560px 144px"><line x1="560" y1="144" x2="594" y2="104" class="stand"/></g><circle cx="560" cy="144" r="6" class="pkt"/>`
+  const css = `.art-tools .needle{animation:atl-swing 5s ease-in-out infinite}
+@keyframes atl-swing{0%,100%{transform:rotate(-36deg)}50%,80%{transform:rotate(0)}}`
+  return { s, css, motion: [0, 0, 0, 0] }
+}
+// The final calculator: an exam sheet with its parts, and bars for the grades rising towards a
+// dashed target line; the last bar grows up to it.
+toolHeroes.Final = () => {
+  let s = `<ellipse class="sh" cx="476" cy="164" rx="196" ry="10"/>`
+  s += `<rect x="296" y="20" width="132" height="138" rx="14" class="gls"/><rect x="310" y="34" width="60" height="8" rx="4" class="pkt"/>`
+  for (let k = 0; k < 4; k++) s += `<rect x="310" y="${56 + k * 22}" width="${k === 3 ? 70 : 104}" height="12" rx="6" class="lnf"/>`
+  s += `<rect x="450" y="34" width="210" height="124" rx="14" class="gls"/><line x1="464" y1="66" x2="646" y2="66" class="route"/>`
+  const bars = [[474, 70], [512, 58], [550, 46], [588, 36]]
+  bars.forEach(([x, h]) => (s += `<rect x="${x}" y="${146 - h}" width="26" height="${h}" rx="6" class="lit"/>`))
+  s += `<g class="grow"><rect x="626" y="68" width="26" height="78" rx="6" class="pkt"/><rect x="632" y="76" width="14" height="5" rx="2.5" class="hl"/></g>`
+  const css = `.art-final .grow{transform-box:fill-box;transform-origin:50% 100%;animation:afn-grow 5s ease-in-out infinite}
+@keyframes afn-grow{0%,15%{transform:scaleY(.55)}55%,100%{transform:scaleY(1)}}`
+  return { s, css, motion: [0, 0, 0, 0] }
+}
+// The WAM calculator: a gauge whose needle swings up towards a target mark, beside a stack of
+// marked subjects (blocks) adding up.
+toolHeroes.Wam = () => {
+  let s = `<ellipse class="sh" cx="470" cy="164" rx="200" ry="10"/>`
+  s += `<rect x="290" y="28" width="230" height="130" rx="16" class="gls"/>`
+  s += `<path class="lnf" d="M322 140 a83 83 0 0 1 166 0 h-22 a61 61 0 0 0 -122 0 z"/>`
+  s += `<path class="pkt" d="M444.4 82.7 a83 83 0 0 1 43.6 57.3 h-22 a61 61 0 0 0 -32.1 -42.1 z"/>`
+  s += `<g class="needle" style="transform-origin:405px 140px"><line x1="405" y1="140" x2="452" y2="86" class="stand"/></g><circle cx="405" cy="140" r="7" class="pkt"/>`
+  const stack = [['skt', 136], ['lit', 116], ['pkt', 96], ['skt', 76]]
+  stack.forEach(([c, y], i) => (s += `<rect x="${548 + (i % 2) * 8}" y="${y}" width="100" height="18" rx="9" class="${c}"/><rect x="${558 + (i % 2) * 8}" y="${y + 6.5}" width="${30 + i * 6}" height="5" rx="2.5" class="hl"/>`))
+  const css = `.art-wam .needle{animation:awm-swing 5s ease-in-out infinite}
+@keyframes awm-swing{0%,100%{transform:rotate(-38deg)}50%,80%{transform:rotate(0)}}`
+  return { s, css, motion: [0, 0, 0, 0] }
+}
+
 // ---------- write ----------
 // Each viewBox is fitted to its scene: the drawn shapes (bounds.cjs), plus how far its loop moves
 // things (`motion`: top, right, bottom, left), plus a little air, so nothing is ever clipped.
@@ -757,4 +802,10 @@ fs.mkdirSync(PLANNER, { recursive: true })
 for (const [name, fn] of Object.entries(planHeroes)) {
   const { s, css, motion } = fn()
   write(`Art${name}`, `art-${name.toLowerCase()}`, fitBox(s, motion), s, css, name === 'Plan' ? 'the wide hero band of the planner' : 'the wide hero band of the compare page', 'xMaxYMax', PLANNER, '../../guide/art/art.css')
+}
+const TOOLS_DIR = path.join(__dirname, '../../src/components/tools/art/')
+fs.mkdirSync(TOOLS_DIR, { recursive: true })
+for (const [name, fn] of Object.entries(toolHeroes)) {
+  const { s, css, motion } = fn()
+  write(`Art${name}`, `art-${name.toLowerCase()}`, fitBox(s, motion), s, css, name === 'Tools' ? 'the wide hero band of the tools page' : `the wide hero band of the ${name === 'Wam' ? 'WAM' : 'final'} calculator`, 'xMaxYMax', TOOLS_DIR, '../../guide/art/art.css')
 }
