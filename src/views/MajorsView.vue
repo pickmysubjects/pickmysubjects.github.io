@@ -7,14 +7,21 @@ defineProps<{ id: string }>()
 </script>
 
 <template>
-  <div class="majors">
+  <div class="majors" >
     <MajorDetail v-if="id" :key="id" :id="id" />
     <MajorList v-else />
   </div>
 </template>
 
 <style scoped>
+/* Both the list and each page open with a glass hero, as close under the header as the guide's. */
 .majors {
-  padding-top: var(--page-top);
+  padding-top: 20px;
+}
+
+@media (max-width: 720px) {
+  .majors {
+    padding-top: 12px;
+  }
 }
 </style>
