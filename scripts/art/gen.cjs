@@ -645,6 +645,57 @@ browseMinis.Career = () => {
   return { s, css, motion: [6, 0, 0, 0] }
 }
 
+// ================= The planner and its compare page (src/components/planner/art/) =================
+// The planner's hero: the degree as a path of semester slabs rising left to right, each holding
+// its subject blocks; a block drops into the next free slot, a student walks the path, and a
+// flag waits on the last slab.
+const planHeroes = {}
+planHeroes.Plan = () => {
+  let s = `<path class="route" d="M262 150 C 340 150, 420 120, 470 112 S 600 86, 664 70"/>`
+  const slabs = [[270, 150, 3], [352, 138, 4], [434, 124, 4], [516, 110, 4], [598, 96, 2]]
+  slabs.forEach(([cx, cy, n], i) => {
+    s += isle(cx, cy, 46, 40, 6)
+    for (let k = 0; k < n; k++) {
+      const cls = COLS[(i + k) % 5]
+      const x = 6 + (k % 2) * 18, y = 6 + Math.floor(k / 2) * 16
+      s += i === 4 && k === 1 ? `<g class="drop">${box(x, y, 0, 14, 12, 8, cls)}</g>` : box(x, y, 0, 14, 12, 8, cls)
+    }
+    if (i === 2) s += person(36, 34, '#9d8bf2', '#3a2a22', 'walk')
+  })
+  origin(676, 80)
+  const [fx, fy] = P(0, 0, 0)
+  s += `<ellipse class="sh" cx="${fx}" cy="${fy + 4}" rx="12" ry="4"/><line x1="${fx}" y1="${fy}" x2="${fx}" y2="${r(fy - 42)}" class="stand"/><g class="flag" style="transform-origin:${fx}px ${r(fy - 42)}px"><path class="pkt" d="M${fx} ${r(fy - 42)} l22 6 l-22 7z"/></g>`
+  const css = `.art-plan .drop{animation:apl-drop 5.4s cubic-bezier(.3,.7,.2,1) infinite}
+.art-plan .walk{animation:apl-bob 3.6s ease-in-out infinite}
+.art-plan .flag{animation:apl-wave 3.6s ease-in-out infinite}
+@keyframes apl-drop{0%{transform:translateY(-22px);opacity:0}15%{opacity:1}35%,85%{transform:translateY(0);opacity:1}100%{transform:translateY(0);opacity:0}}
+@keyframes apl-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@keyframes apl-wave{0%,100%{transform:skewY(0)}50%{transform:skewY(-6deg)}}`
+  return { s, css, motion: [22, 0, 0, 0] }
+}
+// The compare page's hero: two plans as glass sheets side by side, their semester rows lined up;
+// most rows match (quiet), one row in each differs and lifts a little, with a swap arrow between.
+planHeroes.Compare = () => {
+  let s = `<ellipse class="sh" cx="470" cy="166" rx="200" ry="11"/>`
+  const sheetAt = (x, head, diffRow) => {
+    let g = `<rect x="${x}" y="18" width="150" height="140" rx="14" class="gls"/><rect x="${x}" y="18" width="150" height="22" rx="11" class="${head}"/><rect x="${x}" y="30" width="150" height="10" class="${head}"/>`
+    for (let k = 0; k < 4; k++) {
+      const y = 52 + k * 25
+      const diff = k === diffRow
+      const cells = diff ? `<g class="lift"><rect x="${x + 12}" y="${y}" width="126" height="17" rx="8.5" class="${head}"/><rect x="${x + 20}" y="${y + 6}" width="54" height="5" rx="2.5" class="hl"/></g>` : `<rect x="${x + 12}" y="${y}" width="126" height="17" rx="8.5" class="lnf"/>`
+      g += cells
+    }
+    return g
+  }
+  s += sheetAt(318, 'pkt', 1) + sheetAt(512, 'skt', 2)
+  s += `<g class="swap"><circle cx="490" cy="88" r="15" class="gls"/><path class="gly" d="M482 84 h14 l-4 -4 M498 92 h-14 l4 4"/></g>`
+  const css = `.art-compare .lift{animation:acp-lift 4.6s ease-in-out infinite}
+.art-compare .swap{transform-box:fill-box;transform-origin:center;animation:acp-swap 4.6s ease-in-out infinite}
+@keyframes acp-lift{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@keyframes acp-swap{0%,40%{transform:rotate(0)}60%,100%{transform:rotate(180deg)}}`
+  return { s, css, motion: [4, 0, 0, 0] }
+}
+
 // ---------- write ----------
 // Each viewBox is fitted to its scene: the drawn shapes (bounds.cjs), plus how far its loop moves
 // things (`motion`: top, right, bottom, left), plus a little air, so nothing is ever clipped.
@@ -700,4 +751,10 @@ for (const [name, fn] of Object.entries(browseHeroes)) {
 for (const [name, fn] of Object.entries(browseMinis)) {
   const { s, css, motion } = fn()
   write(`Mini${name}`, `mini-${name.toLowerCase()}`, fitBox(s, motion), s, css, name === 'Browse' ? "the small illustration at the foot of Find subjects' filter panel" : `the small illustration at the foot of a ${name.toLowerCase()}'s "On this page" panel`, 'xMidYMid', BROWSE, '../../guide/art/art.css')
+}
+const PLANNER = path.join(__dirname, '../../src/components/planner/art/')
+fs.mkdirSync(PLANNER, { recursive: true })
+for (const [name, fn] of Object.entries(planHeroes)) {
+  const { s, css, motion } = fn()
+  write(`Art${name}`, `art-${name.toLowerCase()}`, fitBox(s, motion), s, css, name === 'Plan' ? 'the wide hero band of the planner' : 'the wide hero band of the compare page', 'xMaxYMax', PLANNER, '../../guide/art/art.css')
 }

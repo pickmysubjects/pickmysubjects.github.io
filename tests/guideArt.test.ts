@@ -15,6 +15,8 @@ const SUBJECT_DIR = join(__dirname, '../src/components/subject/art')
 const SUBJECT_FILES = readdirSync(SUBJECT_DIR).filter((f) => /^Mini\w+\.vue$/.test(f))
 const BROWSE_DIR = join(__dirname, '../src/components/browse/art')
 const BROWSE_FILES = readdirSync(BROWSE_DIR).filter((f) => /^(Art|Mini)\w+\.vue$/.test(f))
+const PLAN_DIR = join(__dirname, '../src/components/planner/art')
+const PLAN_FILES = readdirSync(PLAN_DIR).filter((f) => /^(Art|Mini)\w+\.vue$/.test(f))
 
 describe('guide illustrations', () => {
   it('has a hero scene and a small one for every page', () => {
@@ -35,7 +37,11 @@ describe('guide illustrations', () => {
     expect(BROWSE_FILES.sort()).toEqual(['ArtBrowse.vue', 'ArtCareer.vue', 'ArtMajor.vue', 'MiniBrowse.vue', 'MiniCareer.vue', 'MiniMajor.vue'])
   })
 
-  it.each([...FILES.map((f) => join(DIR, f)), ...ABOUT_FILES.map((f) => join(ABOUT_DIR, f)), ...SUBJECT_FILES.map((f) => join(SUBJECT_DIR, f)), ...BROWSE_FILES.map((f) => join(BROWSE_DIR, f))])('%s keeps every shape inside its viewBox, with some air', (file) => {
+  it('has the hero scenes of the planner and its compare page', () => {
+    expect(PLAN_FILES.sort()).toEqual(['ArtCompare.vue', 'ArtPlan.vue'])
+  })
+
+  it.each([...FILES.map((f) => join(DIR, f)), ...ABOUT_FILES.map((f) => join(ABOUT_DIR, f)), ...SUBJECT_FILES.map((f) => join(SUBJECT_DIR, f)), ...BROWSE_FILES.map((f) => join(BROWSE_DIR, f)), ...PLAN_FILES.map((f) => join(PLAN_DIR, f))])('%s keeps every shape inside its viewBox, with some air', (file) => {
     const src = readFileSync(file, 'utf8')
     const svg = /<svg[\s\S]*<\/svg>/.exec(src)![0]
     const [x, y, w, h] = /viewBox="([^"]+)"/.exec(svg)![1]!.split(' ').map(Number) as [number, number, number, number]
