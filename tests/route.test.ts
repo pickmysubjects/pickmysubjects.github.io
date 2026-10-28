@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { keepsScroll, movedTo, parsePath } from '../src/composables/useView'
+import { majorsAddress, majorsAnchorKind, majorsFromQuery } from '../src/utils/majorsAddress'
 
 describe('parsePath', () => {
   it('reads a subject address, with or without a trailing slash', () => {
@@ -48,3 +49,26 @@ describe('scroll on Back and Forward', () => {
   })
 })
 
+describe('the majors list address', () => {
+  const defaults = { degree: 'B-SCI', kind: 'major' }
+
+  it('writes the choices that differ from the defaults and reads them back', () => {
+    const c = { degree: 'B-ARTS', kind: 'minor', field: 'languages', q: 'data science' }
+    const address = majorsAddress(c, defaults)
+    expect(address).toBe('majors/?degree=B-ARTS&kind=minor&field=languages&q=data+science')
+    const [path, search] = address.split('?')
+    expect(majorsFromQuery(parsePath(path!, `?${search}`).query)).toEqual(c)
+  })
+
+  it('is the bare list at the defaults', () => {
+    expect(majorsAddress({ degree: 'B-SCI', kind: 'major', field: '', q: '' }, defaults)).toBe('majors/')
+    expect(majorsFromQuery(new URLSearchParams())).toEqual({ degree: '', kind: '', field: '', q: '' })
+  })
+
+  it('opens an old link to a kind section on that kind', () => {
+    expect(majorsAnchorKind('#minors-title')).toBe('minor')
+    expect(majorsAnchorKind('specs-title')).toBe('specialisation')
+    expect(majorsAnchorKind('informals-title')).toBe('informal')
+    expect(majorsAnchorKind('sec-results')).toBeNull()
+  })
+})

@@ -5,6 +5,7 @@ import { newVersionReady } from '@/utils/serviceWorker'
 import { countPage } from '@/utils/analytics'
 import { VIEW_LOADERS } from '@/views/loaders'
 import { movedGuideAnchor } from '@/utils/guideSections'
+import { majorsAnchorKind } from '@/utils/majorsAddress'
 
 export const VIEWS = ['home', 'subject', 'plan', 'recommend', 'record', 'contribute', 'feedback', 'privacy', 'about', 'guide', 'subjects', 'majors', 'shortlist', 'careers', 'changes', 'tools'] as const
 export type View = (typeof VIEWS)[number]
@@ -72,6 +73,14 @@ function current(): Route {
   const to = movedTo(r.view, r.param)
   if (to) {
     history.replaceState(null, '', link(to) + location.hash)
+    return parsePath(pagePath(), location.search)
+  }
+  // An old link to one kind's section of the majors list opens the list on that kind.
+  const kind = r.view === 'majors' && !r.param ? majorsAnchorKind(safeDecode(location.hash.slice(1))) : null
+  if (kind) {
+    const q = new URLSearchParams(location.search)
+    q.set('kind', kind)
+    history.replaceState(null, '', link(`majors/?${q}`))
     return parsePath(pagePath(), location.search)
   }
   // A guide topic that now lives on another page (old one-page links, topics that moved section).

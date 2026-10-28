@@ -4,11 +4,12 @@ import BrowseHero from '@/components/browse/BrowseHero.vue'
 import { computed, shallowRef, watch } from 'vue'
 import { BadgeCheck, ChevronRight, Search, SearchX } from 'lucide-vue-next'
 import { componentCareers, type Component as Major } from '@/engine'
-import { link } from '@/composables/useView'
+import { link, replaceAddress, useView } from '@/composables/useView'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
 import { useI18n } from '@/i18n'
 import { groupMajors, majorGroupOf } from '@/utils/majorGroups'
+import { MAJOR_KINDS, majorsAddress, majorsFromQuery, type MajorKind as Kind, type MajorsChoice } from '@/utils/majorsAddress'
 
 /**
  * Every major, minor and specialisation, found fast: the search (across every degree), the
@@ -18,10 +19,8 @@ import { groupMajors, majorGroupOf } from '@/utils/majorGroups'
 const { data } = useDataset()
 const plan = usePlan()
 const { t } = useI18n()
-const query = shallowRef('')
+const { query: address } = useView()
 
-const KINDS = ['major', 'minor', 'specialisation', 'informal'] as const
-type Kind = (typeof KINDS)[number]
 const kindOf = (c: Major): Kind => (c.informal ? 'informal' : c.kind === 'minor' ? 'minor' : c.kind === 'specialisation' ? 'specialisation' : 'major')
 
 // Closed to new students: not listed (their pages still open from an existing plan).
@@ -30,27 +29,48 @@ const open = computed(() => data.value.components.filter((c) => c.closedFrom ===
 const baseOf = (code: string) => data.value.courses.find((c) => c.code === code)?.basedOn ?? code
 const courseTitle = (code: string) => data.value.courses.find((c) => c.code === code)?.title ?? code
 const degrees = computed(() => [...new Set(open.value.map((c) => c.course))].map((code) => ({ code, title: courseTitle(code) })))
-const degree = shallowRef(baseOf(plan.setup.value.course || 'B-SCI'))
-watch(
-  degrees,
-  (ds) => {
-    if (!ds.some((d) => d.code === degree.value)) degree.value = ds[0]?.code ?? ''
-  },
-  { immediate: true },
-)
 
+// Degree, kind, field and search are kept in the address (see majorsAddress): what it names when
+// that's on offer, else the defaults (the student's own degree, majors first, any field).
+const wanted = computed(() => majorsFromQuery(address.value))
+const hasKind = (course: string, k: string) => open.value.some((c) => c.course === course && kindOf(c) === k)
+// The student's own degree, unless a kind is asked for that it doesn't have (/majors/?kind=minor
+// with no minors in Science): then the first degree that has it.
+function defaultDegreeFor(k: string): string {
+  const own = baseOf(plan.setup.value.course || 'B-SCI')
+  const ok = (code: string) => !k || hasKind(code, k)
+  if (degrees.value.some((d) => d.code === own) && ok(own)) return own
+  return degrees.value.find((d) => ok(d.code))?.code ?? (degrees.value.some((d) => d.code === own) ? own : (degrees.value[0]?.code ?? ''))
+}
+const defaultDegree = computed(() => defaultDegreeFor(wanted.value.kind))
+const degree = computed(() => (degrees.value.some((d) => d.code === wanted.value.degree) ? wanted.value.degree : defaultDegree.value))
 const inDegree = computed(() => open.value.filter((c) => c.course === degree.value))
-const kinds = computed(() => KINDS.map((k) => ({ k, n: inDegree.value.filter((c) => kindOf(c) === k).length })).filter((x) => x.n > 0))
-const kind = shallowRef<Kind>('major')
+const kinds = computed(() => MAJOR_KINDS.map((k) => ({ k, n: inDegree.value.filter((c) => kindOf(c) === k).length })).filter((x) => x.n > 0))
+const kind = computed<Kind>(() => kinds.value.find((x) => x.k === wanted.value.kind)?.k ?? kinds.value[0]?.k ?? 'major')
+
+// The search box writes the address as it's typed; Back puts the old text back.
+const query = shallowRef(wanted.value.q)
 watch(
-  kinds,
-  (ks) => {
-    if (!ks.some((x) => x.k === kind.value)) kind.value = ks[0]?.k ?? 'major'
+  () => wanted.value.q,
+  (q) => {
+    if (q !== query.value) query.value = q
   },
-  { immediate: true },
 )
-const field = shallowRef('')
-watch([degree, kind], () => (field.value = ''))
+watch(query, (q) => {
+  if (q !== wanted.value.q) choose({ q })
+})
+function choose(next: Partial<MajorsChoice>): void {
+  // The field is kept while searching (the search hides it), so clearing the search brings it back.
+  const now: MajorsChoice = { degree: degree.value, kind: kind.value, field: wanted.value.field, q: query.value }
+  const c = { ...now, ...next }
+  // Left out of the address: whatever the list would choose by itself for the rest.
+  const firstKind = MAJOR_KINDS.find((k) => hasKind(c.degree, k)) ?? 'major'
+  replaceAddress(majorsAddress(c, { degree: defaultDegreeFor(c.kind), kind: firstKind }))
+}
+// Another degree or kind starts from any field.
+const setDegree = (d: string) => choose({ degree: d, kind: '', field: '' })
+const setKind = (k: Kind) => choose({ kind: k, field: '' })
+const setField = (f: string) => choose({ field: f })
 
 // A search looks across every degree and kind (by name or field); otherwise the chosen degree,
 // kind and field.
@@ -59,6 +79,7 @@ const matches = (c: Major) => c.title.toLowerCase().includes(q.value) || t.value
 const pool = computed(() => (q.value ? open.value.filter(matches) : inDegree.value.filter((c) => kindOf(c) === kind.value)))
 const byField = computed(() => !q.value && kind.value === 'major')
 const fields = computed(() => (byField.value ? groupMajors(pool.value) : []))
+const field = computed(() => (fields.value.some((g) => g.id === wanted.value.field) ? wanted.value.field : ''))
 const shown = computed(() => {
   const groups = byField.value ? fields.value : [{ id: '', majors: [...pool.value].sort((a, b) => a.title.localeCompare(b.title)) }]
   return groups.filter((g) => !field.value || g.id === field.value)
@@ -101,20 +122,20 @@ const accredited = computed(() => new Set(data.value.components.filter((c) => co
     <div v-if="!q" class="pick surface">
       <div class="pick-row" role="group" :aria-label="t('majors.degree')">
         <span class="pick-label">{{ t('majors.degree') }}</span>
-        <button v-for="d in degrees" :key="d.code" type="button" class="opt" :aria-pressed="degree === d.code" @click="degree = d.code">
+        <button v-for="d in degrees" :key="d.code" type="button" class="opt" :aria-pressed="degree === d.code" @click="setDegree(d.code)">
           {{ d.title.replace(/^Bachelor of /, '') }}
         </button>
       </div>
       <div class="pick-row" role="group" :aria-label="t('majors.kind')">
         <span class="pick-label">{{ t('majors.kind') }}</span>
-        <button v-for="x in kinds" :key="x.k" type="button" class="opt" :aria-pressed="kind === x.k" @click="kind = x.k">
+        <button v-for="x in kinds" :key="x.k" type="button" class="opt" :aria-pressed="kind === x.k" @click="setKind(x.k)">
           {{ t(`majors.kinds.${x.k}`) }} <span class="opt-n">{{ x.n }}</span>
         </button>
       </div>
       <div v-if="fields.length > 1" class="pick-row" role="group" :aria-label="t('majors.field')">
         <span class="pick-label">{{ t('majors.field') }}</span>
-        <button type="button" class="opt" :aria-pressed="field === ''" @click="field = ''">{{ t('browse.any') }}</button>
-        <button v-for="g in fields" :key="g.id" type="button" class="opt" :aria-pressed="field === g.id" @click="field = g.id">
+        <button type="button" class="opt" :aria-pressed="field === ''" @click="setField('')">{{ t('browse.any') }}</button>
+        <button v-for="g in fields" :key="g.id" type="button" class="opt" :aria-pressed="field === g.id" @click="setField(g.id)">
           {{ t(`majorGroup.${g.id}`) }} <span class="opt-n">{{ g.majors.length }}</span>
         </button>
       </div>
