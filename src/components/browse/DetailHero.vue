@@ -112,5 +112,10 @@ const scene = computed(() => defineAsyncComponent(props.art))
   .dhero-art {
     display: none;
   }
+
+  /* The way back is a full 44px tap on touch screens. */
+  .dhero-back {
+    min-height: 44px;
+  }
 }
 </style>

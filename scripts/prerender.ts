@@ -794,6 +794,12 @@ function mainPages(code: LocaleCode): Page[] {
 <h2>${esc(t('seo.subjects'))}</h2><ul>${subjects.map((s) => `<li>${subjectLink(code, s.code)}</li>`).join('')}</ul>`,
     },
     simple('plan', 'plan.title', 'plan.lede'),
+    {
+      path: 'plan/compare',
+      title: `${t('cmp.seoTitle')} | PickMySubjects`,
+      description: t('cmp.lede'),
+      body: `<h1>${esc(t('cmp.title'))}</h1><p>${esc(t('cmp.lede'))}</p><p><a href="${href(code, 'plan')}">${esc(t('cmp.back'))}</a></p>${intro}`,
+    },
     simple('recommend', 'suggest.title', 'suggest.lede'),
     simple('record', 'record.title', 'record.lede'),
     simple('shortlist', 'shortlist.title', 'shortlist.lede'),

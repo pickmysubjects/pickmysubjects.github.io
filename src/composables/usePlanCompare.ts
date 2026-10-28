@@ -1,25 +1,13 @@
 import { computed, type Ref } from 'vue'
-import { checkCourse, comparePlans, findDiploma, informalPicks, planComponentIds, planRules, findCourse, forCourse, planRoles, planStress, requiredWithPrerequisites, termLoad, termsWithCarried, type Dataset, type RuleStatus } from '@/engine'
+import { alignTimeline, checkCourse, checkTerms, creditPoints, exactWam, findDiploma, informalPicks, marksForConditions, passedCodes, planComponentIds, planRules, findCourse, forCourse, planRoles, planStress, requiredWithPrerequisites, termLoad, termsWithCarried, type CourseRule, type Dataset, type PlanFacts, type RuleStatus } from '@/engine'
+import { predictMark } from '@/engine/predict'
+import { summariseAssessment } from '@/utils/assessment'
+import { careerJobLabels } from '@/utils/careersHtml'
 import { commencementYear, withPrefs, type PlanSetup } from './planStore'
 import { useDataset } from './useDataset'
 import { useProfile } from './useProfile'
 import { planFor } from './usePlan'
 import type { PlanEntry } from './usePlans'
-
-export interface CompareSummary {
-  entry: PlanEntry
-  courseTitle: string
-  /** Major (+ specialisation) titles, or '' when none is picked yet. */
-  major: string
-  /** Minor titles, or '' when there's none. */
-  minor: string
-  /** The minor picks are informal specialisations (B-DES). */
-  minorInformal: boolean
-  /** The concurrent diploma (with its stream), or '' when there's none. */
-  diploma: string
-  statuses: RuleStatus[]
-  met: number
-}
 
 /** A plan's major (+ specialisation) and minor titles, '' for whichever isn't picked. */
 export function setupTitles(data: Dataset, setup: Pick<PlanSetup, 'major' | 'major2' | 'specialisation' | 'minors'>): { major: string; minor: string; minorInformal: boolean } {
@@ -39,42 +27,109 @@ export function diplomaTitle(data: Dataset, setup: Pick<PlanSetup, 'diploma' | '
   return stream ? `${diploma.title} (${stream})` : diploma.title
 }
 
-/** Two of the student's plans, read side by side (each judged against its own degree). */
-export function usePlanCompare(a: Ref<PlanEntry | undefined>, b: Ref<PlanEntry | undefined>) {
+/** One plan as the compare page shows it: who it is, what it's for, and its facts. */
+export interface ComparedPlan {
+  entry: PlanEntry
+  courseTitle: string
+  major: string
+  minor: string
+  minorInformal: boolean
+  diploma: string
+  /** Every rule's status, with the rule's own words (for the failures list). */
+  statuses: RuleStatus[]
+  rules: CourseRule[]
+  facts: PlanFacts
+  /** Job names the plan's majors and minors lead to (their Handbook pages), in the reader's language. */
+  careers: string[]
+}
+
+/**
+ * The student's plans, each judged on its own degree with its own strengths and goal, on the one
+ * shared record: everything the compare page shows, from the engine only.
+ */
+export function useComparePlans(entries: Ref<PlanEntry[]>, locale: Ref<string>) {
   const { all } = useDataset()
   const { stored } = useProfile()
 
-  function side(entry: PlanEntry) {
+  function compared(entry: PlanEntry): ComparedPlan {
     const { setup, terms } = entry.state
-    // Judged with this plan's own strengths and goal, on the shared record.
     const profile = withPrefs(stored.value, entry.prefs)
     const data = forCourse(all, setup.course)
     const plan = planFor(entry.state, profile, data)
     const codes = terms.flatMap((t) => t.subjects)
-    const roles = planRoles(data, setup.course, commencementYear(setup, stored.value.results), planComponentIds(setup).filter((id): id is string => !!id))
+    const year = commencementYear(setup, stored.value.results)
+    const components = planComponentIds(setup).filter((id): id is string => !!id)
+    const roles = planRoles(data, setup.course, year, components)
     const fixed = requiredWithPrerequisites(new Set([...roles.required, ...roles.options]), codes, data.subjects, setup.course)
     const levels = planStress(termsWithCarried(terms, data), data, profile, fixed, setup.course).terms.map((s) => s.level)
-    const statuses = checkCourse(plan, data).statuses
-    const { major, minor, minorInformal } = setupTitles(data, setup)
-    const diploma = diplomaTitle(data, setup)
-    const summary: CompareSummary = {
-      entry,
-      courseTitle: findCourse(data, setup.course, commencementYear(setup, stored.value.results))?.title ?? setup.course,
-      major,
-      minor,
-      minorInformal,
-      diploma,
-      statuses,
-      met: statuses.filter((s) => s.status === 'ok').length,
+    const check = checkCourse(plan, data)
+    const course = findCourse(data, setup.course, year)
+    const titles = setupTitles(data, setup)
+    const pts = (c: string) => data.subjects[c]?.points ?? 12.5
+    const passed = passedCodes(stored.value.results)
+    const points = [...new Set([...passed, ...codes])].reduce((sum, c) => sum + pts(c), 0) + creditPoints(stored.value.credit)
+    const required = (course?.totalPoints ?? 0) + (findDiploma(data, setup.diploma)?.totalPoints ?? 0)
+    // The heaviest semester: the most points, and of those the heaviest for this student.
+    const rank = { ok: 0, heavy: 1, veryHeavy: 2 } as const
+    let heaviest: PlanFacts['heaviest'] = null
+    terms.forEach((t, i) => {
+      const p = termLoad(terms, i, data)
+      const level = levels[i] ?? 'ok'
+      if (p > 0 && (!heaviest || p > heaviest.points || (p === heaviest.points && rank[level] > rank[heaviest.level]))) heaviest = { year: t.year, period: t.period, points: p, level }
+    })
+    const problems = checkTerms(plan, data, course?.standardLoad).filter((i) => i.severity === 'error')
+    const at = problems.find((i) => i.termIndex !== undefined)
+    const used = terms.filter((t) => t.subjects.length)
+    const assessed = codes.map((c) => summariseAssessment(data.subjects[c]?.assessment)).filter((a) => a !== null)
+    // Predicted WAM: the record's marks, plus each planned subject at its predicted mark (and at
+    // the low and high ends of its likely range). Only with marks to go on.
+    const marks = new Map(Object.entries(marksForConditions(stored.value.results, data)))
+    let wam: PlanFacts['wam'] = null
+    if (marks.size) {
+      const guesses = codes.flatMap((c) => {
+        const s = data.subjects[c]
+        const g = s && !s.passFail ? predictMark(s, marks, data) : null
+        return g ? [{ code: c, g }] : []
+      })
+      const at = (pick: (g: { mark: number; low: number; high: number }) => number) =>
+        exactWam([...stored.value.results, ...guesses.map(({ code, g }) => ({ code, mark: pick(g) }))], data)
+      const mark = at((g) => g.mark)
+      const low = at((g) => g.low)
+      const high = at((g) => g.high)
+      if (mark !== null && low !== null && high !== null) wam = { mark, low, high }
     }
-    return { summary, levels, rules: planRules(data, plan) }
+    const careers = [...new Set(components.flatMap((id) => careerJobLabels(data, id, locale.value)))]
+    const facts: PlanFacts = {
+      points,
+      required,
+      short: Math.max(0, required - points),
+      rules: {
+        total: check.statuses.length,
+        failed: check.statuses.filter((s) => s.status === 'fail').length,
+        unknown: check.statuses.filter((s) => s.status === 'unknown').length,
+      },
+      finish: used.length ? { year: used.at(-1)!.year, period: used.at(-1)!.period } : null,
+      heaviest,
+      heavy: levels.filter((l) => l !== 'ok').length,
+      problems: problems.length,
+      problemTerm: at ? { year: terms[at.termIndex!]!.year, period: terms[at.termIndex!]!.period } : null,
+      exams: { withExam: assessed.filter((a) => a.exam > 0).length, known: assessed.length },
+      hurdles: assessed.filter((a) => a.examHurdle || a.otherHurdle).length,
+      wam,
+    }
+    return {
+      entry,
+      courseTitle: course?.title ?? setup.course,
+      ...titles,
+      diploma: diplomaTitle(data, setup),
+      statuses: check.statuses,
+      rules: planRules(data, plan),
+      facts,
+      careers,
+    }
   }
 
-  const sides = computed(() => (a.value && b.value ? [side(a.value), side(b.value)] as const : null))
-  const diff = computed(() => {
-    if (!sides.value || !a.value || !b.value) return null
-    const pts = (c: string) => all.subjects[c]?.points ?? 12.5
-    return comparePlans({ terms: a.value.state.terms, levels: sides.value[0].levels }, { terms: b.value.state.terms, levels: sides.value[1].levels }, pts, (ts, i) => termLoad(ts, i, all))
-  })
-  return { sides, diff }
+  const plans = computed(() => entries.value.map(compared))
+  const timeline = computed(() => alignTimeline(entries.value.map((e) => e.state.terms), (ts, i) => termLoad(ts, i, all)))
+  return { plans, timeline }
 }

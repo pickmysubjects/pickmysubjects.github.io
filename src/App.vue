@@ -34,6 +34,8 @@ const ShortlistView = lazy('shortlist')
 const CareersView = lazy('careers')
 const ChangesView = lazy('changes')
 const ToolsView = lazy('tools')
+// The compare page lives under /plan/ but has its own code.
+const PlanCompareView = defineAsyncComponent(() => import('./views/PlanCompareView.vue'))
 
 const { view, param } = useView()
 const { t, locale } = useI18n()
@@ -78,6 +80,8 @@ watchEffect(() => {
         ? `${breadthElsewhere ? t.value('seo.presetBreadthFor', { course: breadthElsewhere, year }) : t.value(PRESET_TITLE_KEYS[preset], { year })} | PickMySubjects`
       : guidePage.kind !== 'overview'
         ? `${t.value(guidePage.kind === 'category' ? `guide.cat.${guidePage.category}.title` : 'guide.kd.title')} | ${t.value('guide.title')} | PickMySubjects`
+      : view.value === 'plan' && param.value === 'compare'
+        ? `${t.value('cmp.seoTitle')} | PickMySubjects`
       : view.value === 'tools'
         ? `${t.value(param.value === 'final' ? 'seo.calcTitle' : param.value === 'wam' ? 'tools.wamSeoTitle' : 'tools.seoTitle')} | PickMySubjects`
       : view.value === 'changes' && param.value
@@ -98,12 +102,13 @@ watchEffect(() => {
     <AppLogo class="backdrop-mark" />
   </div>
   <AppHeader :view="view" />
-  <main class="app-main shell" :class="{ 'shell-wide': view === 'plan' }">
+  <main class="app-main shell">
     <ComingNotice v-if="view !== 'home'" slim />
     <RolloverNotice />
     <MissedAnchor />
     <HomeView v-if="view === 'home'" />
     <SubjectView v-else-if="view === 'subject'" :key="param" :code="param" />
+    <PlanCompareView v-else-if="view === 'plan' && param === 'compare'" />
     <PlannerView v-else-if="view === 'plan'" />
     <RecordView v-else-if="view === 'record'" />
     <ContributeView v-else-if="view === 'contribute'" />
@@ -207,15 +212,6 @@ watchEffect(() => {
   }
 }
 
-/* The plan board uses the whole width; its page keeps text at the usual width (PlannerView). */
-.shell-wide {
-  max-width: none;
-}
-/* Notices above a wide page keep the reading width, lined up with the page's text. */
-.shell-wide > :not(.planner) {
-  max-width: calc(var(--shell) - 80px);
-  margin-inline: auto;
-}
 .footer-meta {
   margin-left: 0.5em;
   font-variant-numeric: tabular-nums;

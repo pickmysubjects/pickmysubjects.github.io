@@ -68,8 +68,25 @@ export function movedTo(view: View, param = ''): string | null {
   return null
 }
 
+/**
+ * The compare used to open inside the plan page (/plan/?compare=1); it has its own page now.
+ * The address there, keeping the rest of the query, or null. Exported for tests.
+ */
+export function compareMoved(r: Route): string | null {
+  if (r.view !== 'plan' || r.param || !r.query.has('compare')) return null
+  const q = new URLSearchParams(r.query)
+  q.delete('compare')
+  const rest = q.toString().replace(/%2C/g, ',')
+  return `plan/compare/${rest ? `?${rest}` : ''}`
+}
+
 function current(): Route {
   const r = parsePath(pagePath(), location.search)
+  const compare = compareMoved(r)
+  if (compare) {
+    history.replaceState(null, '', link(compare) + location.hash)
+    return parsePath(pagePath(), location.search)
+  }
   const to = movedTo(r.view, r.param)
   if (to) {
     history.replaceState(null, '', link(to) + location.hash)

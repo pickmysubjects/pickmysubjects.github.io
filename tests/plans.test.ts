@@ -2,7 +2,8 @@ import { describe, expect, it } from 'vitest'
 import { readFileSync } from 'node:fs'
 import { cleanPlans } from '../src/utils/sanitize'
 import { addPlan, bookOf, MAX_PLANS, removePlan, renamePlan, switchPlan } from '../src/utils/planBook'
-import { comparePlans, type PlanTerm } from '../src/engine'
+import { alignTimeline, betterOn, compareQuery, readCompareAddress, summaryLines, type PlanFacts, type PlanTerm } from '../src/engine'
+import { compareMoved, parsePath } from '../src/composables/useView'
 import { activePlan, books, prefsOf, withPrefs, type PlanState } from '../src/composables/planStore'
 import { provideDataset } from '../src/composables/useDataset'
 import type { Dataset } from '../src/engine'
@@ -71,18 +72,46 @@ describe('adding, renaming, switching and deleting plans', () => {
 
 describe('comparing two plans', () => {
   const t = (year: number, period: PlanTerm['period'], subjects: string[]): PlanTerm => ({ year, period, subjects })
-  it('splits the subjects and lines the semesters up by date', () => {
-    const a = [t(2027, 'semester-1', ['X', 'Y']), t(2027, 'semester-2', ['Z']), t(2028, 'semester-1', [])]
-    const b = [t(2027, 'semester-1', ['X', 'W']), t(2027, 'winter', ['V']), t(2027, 'semester-2', [])]
-    const d = comparePlans({ terms: a, levels: ['heavy', 'ok', 'ok'] }, { terms: b }, (c) => (c === 'V' ? 6.25 : 12.5))
-    expect(d.onlyA).toEqual(['Y', 'Z'])
-    expect(d.onlyB).toEqual(['V', 'W'])
-    expect(d.both).toEqual(['X'])
+  it('lines every semester up across plans and marks what differs', () => {
+    const a = [t(2027, 'semester-1', ['X', 'Y']), t(2027, 'semester-2', ['Z', 'M']), t(2028, 'semester-1', [])]
+    const b = [t(2027, 'semester-1', ['X', 'W']), t(2027, 'winter', ['V', 'M']), t(2027, 'semester-2', ['Z'])]
+    const pts = (ts: PlanTerm[], i: number) => ts[i]!.subjects.length * 12.5
+    const d = alignTimeline([a, b], pts)
     expect(d.rows.map((r) => r.period)).toEqual(['semester-1', 'winter', 'semester-2'])
-    expect(d.rows[0]).toEqual({ year: 2027, period: 'semester-1', a: { points: 25, count: 2, level: 'heavy' }, b: { points: 25, count: 2 } })
-    expect(d.rows[1]!.a).toBeNull()
-    expect(d.rows[2]!.b).toBeNull()
-    expect([d.totalA, d.totalB]).toEqual([37.5, 31.25])
+    expect(d.rows[1]!.cells[0]).toBeNull()
+    expect(d.rows[0]!.cells[0]!.chips).toEqual([{ code: 'X', state: 'same' }, { code: 'Y', state: 'only' }])
+    expect(d.rows[1]!.cells[1]!.chips[1]).toEqual({ code: 'M', state: 'moved', from: { year: 2027, period: 'semester-2' } })
+    expect(d.rows[2]!.same).toBe(false)
+    expect([d.differ, d.moved]).toEqual([3, 1])
+  })
+})
+
+describe('comparing plans', () => {
+  const facts = (o: Partial<PlanFacts>): PlanFacts => ({
+    points: 300, required: 300, short: 0, rules: { total: 14, failed: 0, unknown: 0 }, finish: { year: 2028, period: 'semester-2' },
+    heaviest: { year: 2027, period: 'semester-1', points: 50, level: 'ok' }, heavy: 0, problems: 0, problemTerm: null,
+    exams: { withExam: 10, known: 20 }, hurdles: 3, wam: { mark: 74, low: 70, high: 78 }, ...o,
+  })
+  it('marks better only where fewer is plainly better, and nothing when all are equal', () => {
+    expect(betterOn('rules', [facts({}), facts({ rules: { total: 14, failed: 1, unknown: 0 } })])).toEqual([0])
+    expect(betterOn('heavy', [facts({}), facts({})])).toEqual([])
+  })
+  it('the summary leaves out equal facts and says when predicted WAMs are about the same', () => {
+    expect(summaryLines([facts({}), facts({})])).toEqual([])
+    expect(summaryLines([facts({}), facts({ wam: { mark: 71, low: 67, high: 75 } })])).toEqual([{ kind: 'wam', aboutSame: true }])
+    expect(summaryLines([facts({}), facts({ wam: { mark: 60, low: 57, high: 63 }, finish: { year: 2029, period: 'semester-1' } })])).toEqual([{ kind: 'finish' }, { kind: 'wam', aboutSame: false }])
+  })
+  it('keeps the plans, their order and the switch in the address', () => {
+    const q = compareQuery({ plans: ['B', 'A'], diff: false })
+    expect(q).toBe('plans=B,A&diff=0')
+    expect(readCompareAddress(new URLSearchParams(q), ['A', 'B'])).toEqual({ plans: ['B', 'A'], diff: false })
+    expect(readCompareAddress(new URLSearchParams('plans=a,Z,a'), ['A', 'B'])).toEqual({ plans: ['A'], diff: true })
+  })
+  it('an old ?compare=1 address moves to the compare page, keeping the rest', () => {
+    expect(compareMoved(parsePath('plan/', '?compare=1'))).toBe('plan/compare/')
+    expect(compareMoved(parsePath('zh-CN/plan/', '?compare=1&plans=A,B'))).toBe('plan/compare/?plans=A,B')
+    expect(compareMoved(parsePath('plan/', ''))).toBeNull()
+    expect(parsePath('plan/compare/').param).toBe('compare')
   })
 })
 
