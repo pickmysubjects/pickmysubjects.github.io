@@ -1187,6 +1187,8 @@ export const en = {
     skillsShort: "From the job's official page.",
     majorsLead: "{n} majors lead here",
     pickMajor: "Pick one to see its subjects below.",
+    onlyMajor: "Only this major leads there.",
+    openMajor: "See what this major takes",
     setGoal: "Make it my goal",
     isGoal: "My goal",
     title: "Careers",
@@ -1218,7 +1220,6 @@ export const en = {
       'related-field': "Same field",
     },
     subjectsTitle: "{major}: subjects for this job",
-    counts: "Required {required} · Helps {helps} · Somewhat {some} · Not much {little}",
     tier: {
       required: "Required",
       helps: "Helps",

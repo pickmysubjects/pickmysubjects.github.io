@@ -1183,6 +1183,8 @@ export const hi: Messages = {
     skillsShort: "इस करियर के आधिकारिक पेज से।",
     majorsLead: "{n} मेजर यहाँ तक ले जाते हैं",
     pickMajor: "एक चुनें, नीचे उसके सब्जेक्ट दिखेंगे।",
+    onlyMajor: "यहाँ तक सिर्फ़ यही मेजर ले जाता है।",
+    openMajor: "इस मेजर के सब्जेक्ट देखें",
     setGoal: "इसे मेरा लक्ष्य बनाएँ",
     isGoal: "मेरा लक्ष्य",
     title: "करियर",
@@ -1214,7 +1216,6 @@ export const hi: Messages = {
       'related-field': "वही क्षेत्र",
     },
     subjectsTitle: "{major}: इस नौकरी के लिए विषय",
-    counts: "ज़रूरी {required} · मददगार {helps} · थोड़ा जुड़ा {some} · कम जुड़ा {little}",
     tier: {
       required: "ज़रूरी",
       helps: "मददगार",

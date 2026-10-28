@@ -2,13 +2,13 @@
 import { viewYear } from '@/engine/dataYear'
 import InfoTip from '@/components/InfoTip.vue'
 import { computed, shallowRef, watch } from 'vue'
-import { BadgeCheck, Check, ExternalLink, GraduationCap, Target } from 'lucide-vue-next'
+import { ArrowRight, BadgeCheck, Check, ExternalLink, GraduationCap, Target } from 'lucide-vue-next'
 import CareerTiers from './CareerTiers.vue'
 import DetailHero from '@/components/browse/DetailHero.vue'
 import GuideToc from '@/components/guide/GuideToc.vue'
 import SubjectSection from '@/components/subject/SubjectSection.vue'
 import { useProfile } from '@/composables/useProfile'
-import { careerTarget, easierIn, majorForCareer, majorsForCareer, careerText, TIERS } from '@/engine'
+import { careerTarget, easierIn, majorForCareer, majorOverview, majorsForCareer, careerText, TIERS } from '@/engine'
 import { careerLabel } from '@/utils/careersHtml'
 import { link, replaceAddress, useView } from '@/composables/useView'
 import { useDataset } from '@/composables/useDataset'
@@ -50,7 +50,31 @@ const result = computed(() => {
   const m = majors.value.find((x) => x.component === chosen.value)
   return m ? majorForCareer(data.value, props.id, m.component, easierIn(data.value, m.course)) : null
 })
-const counts = computed(() => (result.value ? Object.fromEntries(TIERS.map((x) => [x, result.value!.subjects[x].length])) : {}))
+// How many subjects in each tier, the empty tiers left out ("Required 0" says nothing).
+const counts = computed(() => {
+  const r = result.value
+  if (!r) return ''
+  return TIERS.filter((x) => r.subjects[x].length > 0)
+    .map((x) => `${t.value(`careerPath.tier.${x}`)} ${r.subjects[x].length}`)
+    .join(' · ')
+})
+// Only one major leads there: no choice to make, so it shows as one wide card with its key facts.
+const only = computed(() => {
+  if (majors.value.length !== 1) return null
+  const m = majors.value[0]!
+  const comp = data.value.components.find((c) => c.id === m.component)
+  const o = majorOverview(data.value, m.component, m.course)
+  const facts = [
+    ...(comp ? [{ k: t.value('majors.factTotal'), v: String(comp.points) }] : []),
+    ...(o?.core.length ? [{ k: t.value('majors.tagCore'), v: t.value('majors.statCount', { n: o.core.length }) }] : []),
+    ...(o?.choices ?? []).map((c, i, all) => ({
+      k: all.length > 1 ? t.value('majors.factPickN', { g: String.fromCharCode(65 + i) }) : t.value('majors.factPick'),
+      v: t.value('majors.statPick', { n: c.points / 12.5, of: c.from.length }),
+    })),
+    ...(o?.pathway.length ? [{ k: t.value('majors.tagFirst'), v: t.value('majors.statCount', { n: o.pathway.length }) }] : []),
+  ]
+  return { m, facts }
+})
 const hasBreadth = computed(() => !!result.value?.breadth && TIERS.some((x) => result.value!.breadth![x].length))
 
 const { profile, setCareer } = useProfile()
@@ -107,8 +131,25 @@ const sections = computed(() =>
           </a>
         </SubjectSection>
 
-        <SubjectSection v-if="majors.length" id="c-majors" :title="t('careerPath.majorsTitle')" :short="majors.length > 1 ? t('careerPath.pickMajor') : undefined">
-          <div class="majors" role="group" :aria-label="t('careerPath.majorsTitle')">
+        <SubjectSection v-if="majors.length" id="c-majors" :title="t('careerPath.majorsTitle')" :short="majors.length > 1 ? t('careerPath.pickMajor') : t('careerPath.onlyMajor')">
+          <article v-if="only" class="only">
+            <div class="only-main">
+              <p class="major-meta">{{ courseTitle(only.m.course) }}</p>
+              <h3 class="only-title">{{ only.m.title }}</h3>
+              <span class="major-tags">
+                <span class="tag">{{ t(`careerPath.how.${only.m.how}`) }}<template v-if="only.m.via && !only.m.route">: {{ careerText(only.m.via, locale) }}</template></span>
+                <span v-if="only.m.accreditation" class="acc-chip"><BadgeCheck :size="13" aria-hidden="true" /> {{ t('majors.accChip') }}</span>
+              </span>
+            </div>
+            <dl v-if="only.facts.length" class="only-facts">
+              <div v-for="f in only.facts" :key="f.k" class="only-fact">
+                <dt>{{ f.k }}</dt>
+                <dd>{{ f.v }}</dd>
+              </div>
+            </dl>
+            <a class="only-open" :href="link(`majors/${only.m.component}`)">{{ t('careerPath.openMajor') }} <ArrowRight :size="15" aria-hidden="true" /></a>
+          </article>
+          <div v-else class="majors" role="group" :aria-label="t('careerPath.majorsTitle')">
             <button
               v-for="m in majors"
               :key="m.component"
@@ -127,7 +168,7 @@ const sections = computed(() =>
           </div>
         </SubjectSection>
 
-        <SubjectSection v-if="result" id="c-subjects" :title="t('careerPath.subjectsTitle', { major: result.major.title })" :short="t('careerPath.counts', counts)">
+        <SubjectSection v-if="result" id="c-subjects" :title="t('careerPath.subjectsTitle', { major: result.major.title })" :short="counts || undefined">
           <p v-if="result.major.accreditation" class="acc">
             <BadgeCheck :size="16" aria-hidden="true" class="acc-icon" />
             <span><strong>{{ result.major.accreditation.body }}</strong> · {{ careerText(result.major.accreditation.summary, locale) }}</span>
@@ -135,7 +176,7 @@ const sections = computed(() =>
           <CareerTiers v-if="TIERS.some((x) => result!.subjects[x].length)" :tiers="result.subjects" :year="year" />
           <p v-else class="hint">{{ t('careerPath.nothingHere') }}</p>
           <p v-if="result.needs.generic.length" class="hint">{{ t('careerPath.generic', { list: result.needs.generic.join(', ') }) }}</p>
-          <a class="more-link" :href="link(`majors/${result.major.component}`)">{{ t('majors.title') }} · {{ result.major.title }}</a>
+          <a class="more-link" :href="link(`majors/${result.major.component}`)">{{ t('browse.switchMajors') }} · {{ result.major.title }}</a>
         </SubjectSection>
 
         <SubjectSection v-if="result" id="c-breadth" :title="t('careerPath.breadthTitle')" :short="hasBreadth ? t('careerPath.breadthHintShort') : t('careerPath.breadthNone')">
@@ -244,6 +285,69 @@ const sections = computed(() =>
 .route-more > p {
   margin: 10px 0 0;
   max-width: 78ch;
+}
+
+/* The one major that leads there, as one wide card: what it is on the left, its key numbers
+   beside it, the way into its page at the end. */
+.only {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 14px 32px;
+  align-items: center;
+  padding: 20px 22px;
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--card-edge));
+  border-radius: 18px;
+  background: var(--accent-soft);
+}
+
+.only-main {
+  display: grid;
+  gap: 6px;
+  justify-items: start;
+  min-width: 0;
+}
+
+.only-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: var(--fw-bold);
+  overflow-wrap: anywhere;
+}
+
+.only-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 28px;
+  margin: 0;
+}
+
+.only-fact dt {
+  font-size: var(--fs-caption);
+  color: var(--ink-soft);
+}
+
+.only-fact dd {
+  margin: 2px 0 0;
+  font-size: 1.0625rem;
+  font-weight: var(--fw-bold);
+}
+
+.only-open {
+  grid-column: 1 / -1;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  justify-self: start;
+  font-size: var(--fs-small);
+  font-weight: var(--fw-semibold);
+  color: var(--accent);
+}
+
+@media (max-width: 640px) {
+  .only {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 16px;
+  }
 }
 
 /* The majors that lead there: tiles to pick from; the chosen one ringed in pink. */

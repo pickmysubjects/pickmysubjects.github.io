@@ -1183,6 +1183,8 @@ export const zhTW: Messages = {
     skillsShort: "來自這個職業的官方資訊頁。",
     majorsLead: "{n} 個主修能通往這裡",
     pickMajor: "選一個，下面就顯示它的課。",
+    onlyMajor: "只有這個主修能通往這裡。",
+    openMajor: "看這個主修要修哪些課",
     setGoal: "設為我的目標",
     isGoal: "已是我的目標",
     title: "職涯方向",
@@ -1214,7 +1216,6 @@ export const zhTW: Messages = {
       'related-field': "同一領域",
     },
     subjectsTitle: "{major}：對這個職業的課",
-    counts: "必修 {required} · 錦上添花 {helps} · 有一點關係 {some} · 關係不大 {little}",
     tier: {
       required: "必修",
       helps: "錦上添花",

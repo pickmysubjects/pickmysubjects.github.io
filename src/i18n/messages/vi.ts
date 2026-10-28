@@ -1183,6 +1183,8 @@ export const vi: Messages = {
     skillsShort: "Từ trang chính thức của nghề.",
     majorsLead: "{n} chuyên ngành dẫn tới đây",
     pickMajor: "Chọn một ngành để xem môn ở dưới.",
+    onlyMajor: "Chỉ có chuyên ngành này dẫn tới đây.",
+    openMajor: "Xem chuyên ngành này học những môn gì",
     setGoal: "Đặt làm mục tiêu",
     isGoal: "Mục tiêu của tôi",
     title: "Nghề nghiệp",
@@ -1214,7 +1216,6 @@ export const vi: Messages = {
       'related-field': "Cùng lĩnh vực",
     },
     subjectsTitle: "{major}: các môn cho nghề này",
-    counts: "Bắt buộc {required} · Có ích {helps} · Hơi liên quan {some} · Ít liên quan {little}",
     tier: {
       required: "Bắt buộc",
       helps: "Có ích",

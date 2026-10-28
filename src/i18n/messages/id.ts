@@ -1183,6 +1183,8 @@ export const id: Messages = {
     skillsShort: "Dari halaman resmi pekerjaan ini.",
     majorsLead: "{n} jurusan mengarah ke sini",
     pickMajor: "Pilih satu untuk melihat mata kuliahnya di bawah.",
+    onlyMajor: "Hanya jurusan ini yang mengarah ke sini.",
+    openMajor: "Lihat mata kuliah jurusan ini",
     setGoal: "Jadikan tujuanku",
     isGoal: "Tujuanku",
     title: "Karier",
@@ -1214,7 +1216,6 @@ export const id: Messages = {
       'related-field': "Bidang yang sama",
     },
     subjectsTitle: "{major}: mata kuliah untuk pekerjaan ini",
-    counts: "Wajib {required} · Membantu {helps} · Agak terkait {some} · Kurang terkait {little}",
     tier: {
       required: "Wajib",
       helps: "Membantu",

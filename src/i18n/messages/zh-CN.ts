@@ -1183,6 +1183,8 @@ export const zhCN: Messages = {
     skillsShort: "来自这个职业的官方信息页。",
     majorsLead: "{n} 个专业能通往这里",
     pickMajor: "选一个，下面就显示它的课。",
+    onlyMajor: "只有这个专业能通往这里。",
+    openMajor: "看这个专业要修哪些课",
     setGoal: "设为我的目标",
     isGoal: "已是我的目标",
     title: "职业方向",
@@ -1214,7 +1216,6 @@ export const zhCN: Messages = {
       'related-field': "同一领域",
     },
     subjectsTitle: "{major}：对这个职业的课",
-    counts: "必修 {required} · 锦上添花 {helps} · 有一点关系 {some} · 关系不大 {little}",
     tier: {
       required: "必修",
       helps: "锦上添花",

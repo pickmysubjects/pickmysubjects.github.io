@@ -1183,6 +1183,8 @@ export const ja: Messages = {
     skillsShort: "職業の公式ページより。",
     majorsLead: "ここにつながる専攻：{n}",
     pickMajor: "1つ選ぶと、下にその科目が出ます。",
+    onlyMajor: "ここにつながる専攻はこれだけです。",
+    openMajor: "この専攻で取る科目を見る",
     setGoal: "目標にする",
     isGoal: "目標に設定済み",
     title: "キャリア",
@@ -1214,7 +1216,6 @@ export const ja: Messages = {
       'related-field': "同じ分野",
     },
     subjectsTitle: "{major}：この仕事から見た科目",
-    counts: "必修 {required} · 役立つ {helps} · 少し関係あり {some} · あまり関係なし {little}",
     tier: {
       required: "必修",
       helps: "役立つ",

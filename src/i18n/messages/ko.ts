@@ -1183,6 +1183,8 @@ export const ko: Messages = {
     skillsShort: "직업 공식 페이지에서 가져왔어요.",
     majorsLead: "이어지는 전공 {n}개",
     pickMajor: "하나를 고르면 아래에 과목이 보여요.",
+    onlyMajor: "여기로 이어지는 전공은 이것 하나예요.",
+    openMajor: "이 전공에서 듣는 과목 보기",
     setGoal: "내 목표로 설정",
     isGoal: "내 목표",
     title: "진로",
@@ -1214,7 +1216,6 @@ export const ko: Messages = {
       'related-field': "같은 분야",
     },
     subjectsTitle: "{major}: 이 직업 기준 과목",
-    counts: "필수 {required} · 도움이 됨 {helps} · 조금 관련 {some} · 별로 관련 없음 {little}",
     tier: {
       required: "필수",
       helps: "도움이 됨",
