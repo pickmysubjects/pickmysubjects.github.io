@@ -123,7 +123,7 @@ const next = () => (theme.value = order[(order.indexOf(theme.value) + 1) % order
   }
 
   /* A subject page's action dock sits on the same line: go above it. */
-  :global(body:has(.dock)) .preview-pill {
+  :global(body:has(.dock) .preview-pill) {
     bottom: calc(158px + env(safe-area-inset-bottom));
   }
 
