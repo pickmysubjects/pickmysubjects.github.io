@@ -409,7 +409,7 @@ export const ja: Messages = {
     orInstead: "代わりに {codes} も選べます（どれか 1 つだけ）",
     fitHint: "選べるほかの科目との比較です。90 なら、その 90% より合っているという意味です。興味・得意分野・成績・評価から出しています。入力が多いほど正確になります。",
     fit: "選べる科目の {score}% より合っています（{confidence}）",
-    matchPct: "マッチ度 {n}%",
+    betterPct: "{n}% より合う",
     band: { great: "とても合う", good: "合う", ok: "検討の価値あり", low: "あまり合わない" },
     thinData: "判断材料が少ない",
     title: 'あなたに合う科目',

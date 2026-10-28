@@ -44,7 +44,7 @@ const sheetOpen = shallowRef(false)
 // Why a row is where it is: the list's reasons, or the first few reasons it suits the student.
 const trim = (x: string) => x.replace(/[。.]\s*$/, '')
 function reasons(r: FoundRow): string[] {
-  // "Fits me": at most two short reasons beside the match score.
+  // "Fits me": at most two short reasons beside where it ranks for the student.
   if (r.rec) return leadReasons(r.rec, 2).map((n) => trim(reasonText(t.value, n)))
   if (r.ranked) {
     const own = r.ranked.reasons.filter((x) => !SHOWN_AS_FACTS.has(x.key)).map((x) => t.value(`rank.reason.${x.key}`, x.params))

@@ -409,7 +409,7 @@ export const ms: Messages = {
     orInstead: "Atau gantinya: {codes} (hanya satu boleh dikira)",
     fitHint: "Berbanding subjek lain yang boleh anda ambil: 90 bermaksud lebih sesuai daripada 90% daripadanya. Berdasarkan minat, kekuatan, markah dan penilaian; lebih banyak diisi, lebih tepat.",
     fit: "Lebih sesuai daripada {score}% pilihan anda, {confidence}",
-    matchPct: "Padanan {n}%",
+    betterPct: "Lebih sesuai daripada {n}%",
     band: { great: "Sangat sesuai", good: "Sesuai", ok: "Boleh dipertimbang", low: "Kurang sesuai" },
     thinData: "Sedikit maklumat",
     title: 'Subjek yang sesuai untuk anda',

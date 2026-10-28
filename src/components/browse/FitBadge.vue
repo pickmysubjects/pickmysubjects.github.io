@@ -4,9 +4,10 @@ import { fitBand, type Recommendation } from '@/engine'
 import { useI18n } from '@/i18n'
 
 /**
- * How well a suggestion fits, from the "sort for me" engine: "Match 86%" with a small meter, in
- * the same spot on every card; tap for what the number means. The number is how many of the
- * student's other options this one beats (the raw score centres on 50 and read as a poor mark).
+ * Where a suggestion ranks among the student's options, from the "sort for me" engine: "Fits
+ * better than 86%" with a small meter, in the same spot on every card; tap for what it means.
+ * The number is the share of the student's other options this one beats (betterThan), said as
+ * that, the way the subject page's card says it: it isn't a match score.
  */
 const props = defineProps<{ rec: Recommendation }>()
 const { t } = useI18n()
@@ -26,7 +27,7 @@ const band = () => fitBand(props.rec.betterThan)
       @click="open = !open"
     >
       <span class="meter" aria-hidden="true"><span class="meter-fill" :style="{ width: `${rec.betterThan}%` }" /></span>
-      <span class="label">{{ t('suggest.matchPct', { n: rec.betterThan }) }}</span>
+      <span class="label">{{ t('suggest.betterPct', { n: rec.betterThan }) }}</span>
     </button>
     <span v-if="rec.confidence === 'low'" class="thin">{{ t('suggest.thinData') }}</span>
     <span v-if="open" :id="id" class="explain" role="note">{{ t('suggest.fitHint') }}</span>
@@ -40,7 +41,7 @@ const band = () => fitBand(props.rec.betterThan)
   gap: 6px;
 }
 
-/* A pink pill: the meter, then "Match 86%". */
+/* A pink pill: the meter, then "Fits better than 86%". */
 .fit-btn {
   position: relative;
   z-index: 1;

@@ -409,7 +409,7 @@ export const id: Messages = {
     orInstead: "Atau sebagai gantinya: {codes} (hanya satu yang dihitung)",
     fitHint: "Dibandingkan mata kuliah lain yang bisa kamu ambil: 90 berarti lebih cocok dari 90% di antaranya. Berdasarkan minat, kekuatan, nilai, dan penilaian; makin banyak diisi, makin tepat.",
     fit: "Lebih cocok dari {score}% pilihanmu, {confidence}",
-    matchPct: "Kecocokan {n}%",
+    betterPct: "Lebih cocok dari {n}%",
     band: { great: "Sangat cocok", good: "Cocok", ok: "Layak dipertimbangkan", low: "Kurang cocok" },
     thinData: "Sedikit data",
     title: 'Mata kuliah yang cocok untukmu',

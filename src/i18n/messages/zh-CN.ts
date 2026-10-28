@@ -409,7 +409,7 @@ export const zhCN: Messages = {
     orInstead: "也可以选 {codes}（这几门只能修一门）",
     fitHint: "和你能选的其他课比：90 表示比其中 90% 的课更适合你。参考你的兴趣、强项、成绩和评分，填得越多越准。",
     fit: "比 {score}% 的可选课更适合你，{confidence}",
-    matchPct: "匹配度 {n}%",
+    betterPct: "比 {n}% 更适合你",
     band: { great: "很适合", good: "适合", ok: "可以考虑", low: "不太适合你" },
     thinData: "依据较少",
     title: '适合你的课程',
