@@ -409,6 +409,7 @@ export const zhTW: Messages = {
     orInstead: "也可以選 {codes}（這幾門只能修一門）",
     fitHint: "和你能選的其他課比：90 表示比其中 90% 的課更適合你。參考你的興趣、強項、成績和評分，填得越多越準。",
     fit: "比 {score}% 的可選課更適合你，{confidence}",
+    matchPct: "契合度 {n}%",
     band: { great: "很適合", good: "適合", ok: "可以考慮", low: "不太適合你" },
     thinData: "依據較少",
     title: '適合你的課程',

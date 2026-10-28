@@ -409,6 +409,7 @@ export const vi: Messages = {
     orInstead: "Hoặc thay bằng {codes} (chỉ được tính một môn)",
     fitHint: "So với các môn khác bạn có thể học: 90 nghĩa là hợp với bạn hơn 90% số đó. Dựa trên sở thích, điểm mạnh, điểm số và đánh giá; điền càng nhiều càng chính xác.",
     fit: "Hợp hơn {score}% số môn bạn có thể chọn, {confidence}",
+    matchPct: "Độ phù hợp {n}%",
     band: { great: "Rất hợp", good: "Hợp", ok: "Đáng cân nhắc", low: "Không hợp lắm" },
     thinData: "Ít dữ liệu",
     title: 'Những môn hợp với bạn',

@@ -413,6 +413,7 @@ export const en = {
     orInstead: "Or instead: {codes} (only one of these can count)",
     fitHint: "How it compares with the other subjects you can take: 90 means it suits you better than 90% of them. Based on your interests, strengths, marks and ratings; the more you fill in, the better it gets.",
     fit: "Better fit than {score}% of your options, {confidence}",
+    matchPct: "Match {n}%",
     band: { great: "Great fit", good: "Good fit", ok: "Worth a look", low: "Not a strong match" },
     thinData: "Little to go on",
     title: 'Subjects that suit you',

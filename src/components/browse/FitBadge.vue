@@ -1,15 +1,18 @@
 <script setup lang="ts">
-import { computed, shallowRef, useId } from 'vue'
+import { shallowRef, useId } from 'vue'
 import { fitBand, type Recommendation } from '@/engine'
 import { useI18n } from '@/i18n'
 
-/** How well a suggestion fits: a number and a word; tap for what the number means. */
+/**
+ * How well a suggestion fits, from the "sort for me" engine: "Match 86%" with a small meter, in
+ * the same spot on every card; tap for what the number means. The number is how many of the
+ * student's other options this one beats (the raw score centres on 50 and read as a poor mark).
+ */
 const props = defineProps<{ rec: Recommendation }>()
 const { t } = useI18n()
 const open = shallowRef(false)
 const id = useId()
-// Relative to the student's other options (the raw score centres on 50 and read as a poor mark).
-const band = computed(() => fitBand(props.rec.betterThan))
+const band = () => fitBand(props.rec.betterThan)
 </script>
 
 <template>
@@ -17,13 +20,13 @@ const band = computed(() => fitBand(props.rec.betterThan))
     <button
       type="button"
       class="fit-btn"
-      :class="`fit-${band}`"
       :aria-expanded="open"
       :aria-controls="id"
-      :aria-label="t('suggest.fit', { score: rec.betterThan, confidence: t(`suggest.band.${band}`) })"
+      :aria-label="t('suggest.fit', { score: rec.betterThan, confidence: t(`suggest.band.${band()}`) })"
       @click="open = !open"
     >
-      <span class="num">{{ rec.betterThan }}</span>{{ t(`suggest.band.${band}`) }}
+      <span class="meter" aria-hidden="true"><span class="meter-fill" :style="{ width: `${rec.betterThan}%` }" /></span>
+      <span class="label">{{ t('suggest.matchPct', { n: rec.betterThan }) }}</span>
     </button>
     <span v-if="rec.confidence === 'low'" class="thin">{{ t('suggest.thinData') }}</span>
     <span v-if="open" :id="id" class="explain" role="note">{{ t('suggest.fitHint') }}</span>
@@ -37,58 +40,50 @@ const band = computed(() => fitBand(props.rec.betterThan))
   gap: 6px;
 }
 
+/* A pink pill: the meter, then "Match 86%". */
 .fit-btn {
   position: relative;
   z-index: 1;
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  padding: 1px 8px 1px 2px;
-  border: 0;
+  gap: 6px;
+  min-height: 24px;
+  padding: 2px 9px 2px 8px;
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
   border-radius: 999px;
   font: inherit;
   font-size: 0.75rem;
   font-weight: 650;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
   color: var(--accent);
   background: var(--accent-soft);
   cursor: pointer;
 }
 
 .fit-btn:hover {
-  text-decoration: underline;
-  text-underline-offset: 2px;
+  border-color: var(--accent);
 }
 
-.num {
-  display: inline-grid;
-  place-items: center;
-  min-width: 22px;
-  height: 18px;
-  padding: 0 4px;
+.fit-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.meter {
+  position: relative;
+  width: 26px;
+  height: 5px;
+  overflow: hidden;
   border-radius: 999px;
-  color: var(--surface);
+  background: color-mix(in srgb, var(--accent) 20%, transparent);
+}
+
+.meter-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: inherit;
   background: var(--accent-fill);
-  font-variant-numeric: tabular-nums;
-}
-
-.fit-ok {
-  color: var(--ink-soft);
-  background: color-mix(in srgb, var(--ink) 6%, transparent);
-}
-
-.fit-ok .num {
-  background: var(--ink-soft);
-}
-
-/* Most options suit them better: said plainly, quiet rather than alarming. */
-.fit-low {
-  color: var(--ink-faint);
-  background: color-mix(in srgb, var(--ink) 4%, transparent);
-  font-weight: 550;
-}
-
-.fit-low .num {
-  background: var(--ink-faint);
 }
 
 .thin {

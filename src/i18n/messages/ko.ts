@@ -409,6 +409,7 @@ export const ko: Messages = {
     orInstead: "대신 {codes}도 가능해요 (이 중 하나만 인정돼요)",
     fitHint: "들을 수 있는 다른 과목과 비교한 값이에요. 90이면 그중 90%보다 더 잘 맞는다는 뜻이에요. 관심사, 강점, 성적, 평가로 계산하며 많이 채울수록 정확해져요.",
     fit: "선택 가능한 과목의 {score}%보다 잘 맞아요, {confidence}",
+    matchPct: "적합도 {n}%",
     band: { great: "아주 잘 맞음", good: "잘 맞음", ok: "고려해 볼 만함", low: "잘 맞지 않음" },
     thinData: "근거가 적음",
     title: '나에게 맞는 과목',
