@@ -3,8 +3,8 @@ import { trackEvent } from '@/utils/analytics'
 import { viewYear } from '@/engine/dataYear'
 import InfoTip from '@/components/InfoTip.vue'
 import { link } from '@/composables/useView'
-import { computed, onBeforeUnmount, shallowRef, useTemplateRef, watch } from 'vue'
-import { CircleCheck, Pencil, RotateCcw, TriangleAlert, ChevronDown } from 'lucide-vue-next'
+import { computed, nextTick, onBeforeUnmount, shallowRef, useTemplateRef, watch } from 'vue'
+import { RotateCcw, TriangleAlert, ChevronDown } from 'lucide-vue-next'
 import PlanWizard from '@/components/planner/PlanWizard.vue'
 import PlanMap from '@/components/planner/PlanMap.vue'
 import SubjectPeek from '@/components/planner/SubjectPeek.vue'
@@ -17,8 +17,9 @@ import PlanPrint, { type PrintTerm } from '@/components/planner/PlanPrint.vue'
 import SharedPlanView from '@/components/planner/SharedPlanView.vue'
 import Interp from '@/components/Interp.vue'
 import PlanSwitcher from '@/components/plans/PlanSwitcher.vue'
-import PlanCompare from '@/components/plans/PlanCompare.vue'
-import { assumedOfferings, careerGap, careerGoal, careerName, hasEnded, heldMajorIds, informalPicks, isFail, passedCodes, planComponentIds, planRoles, planRules, recordedLoads, termKey, termLoad, type Issue, type PlanTerm } from '@/engine'
+import PlanHero from '@/components/planner/PlanHero.vue'
+import SubjectSection from '@/components/subject/SubjectSection.vue'
+import { assumedOfferings, creditPoints, findDiploma, careerGap, careerGoal, careerName, hasEnded, heldMajorIds, informalPicks, isFail, passedCodes, planComponentIds, planRoles, planRules, recordedLoads, termKey, termLoad, type Issue, type PlanTerm } from '@/engine'
 import { diplomaTitle } from '@/composables/usePlanCompare'
 import { ImageDown, Printer, Share2, Sparkles, X } from 'lucide-vue-next'
 import { usePlans } from '@/composables/usePlans'
@@ -28,7 +29,7 @@ import { decodePlan, encodePlan } from '@/utils/sharePlan'
 import { boardEdges, countsToward } from '@/utils/planBoard'
 import { pinSpot } from '@/utils/pendingAdd'
 import { cloneJson } from '@/utils/clone'
-import { go, useView } from '@/composables/useView'
+import { go, replaceAddress, useView } from '@/composables/useView'
 import { useProfile } from '@/composables/useProfile'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan, type PlanSetup } from '@/composables/usePlan'
@@ -37,7 +38,7 @@ import { pastTerms } from '@/utils/pastTerms'
 import RatePrompt from '@/components/rating/RatePrompt.vue'
 import { useRated } from '@/composables/useRated'
 import { useI18n } from '@/i18n'
-import { issueText, termLabel } from '@/i18n/format'
+import { issueText, stressShort, termLabel } from '@/i18n/format'
 import { reducedMotion } from '@/utils/motion'
 
 // The wizard copies the setup once, so it restarts when the dataset is switched.
@@ -48,15 +49,9 @@ const { t, locale } = useI18n()
 
 const STUDENT_SITE = 'https://students.unimelb.edu.au/'
 const editing = shallowRef(false)
-// Two plans side by side, in place of the board.
-const comparing = shallowRef(false)
 
 // A plan someone shared: /plan?share=… (packed into the link, no server).
 const { query } = useView()
-// The header's "Compare Plan A and B" lands here with ?compare=1: only with two plans to compare
-// (otherwise one line says how to make a second), and never in place of the setup questions.
-const compareWanted = shallowRef(false)
-watch(() => query.value.get('compare'), (v) => { compareWanted.value = !!v }, { immediate: true })
 const shared = computed(() => {
   const code = query.value.get('share')
   return code ? decodePlan(code) : null
@@ -164,13 +159,22 @@ const { stress } = usePlanStress()
 const unavoidable = computed(() =>
   stress.value.unavoidable.map((u) => t.value('stress.unavoidable', { skill: t.value(`skill.${u.skill}`), total: u.total, perTerm: u.perTerm })),
 )
-// Heavy semesters, counted for the status card; the line jumps to the first one's note and fix.
-const heavyTerms = computed(() => stress.value.terms.filter((x) => x && x.level !== 'ok').length)
-function showHeavy(): void {
-  const note = document.querySelector<HTMLElement>('[data-stress-term] button')
+// Heavy semesters: each one's name, how heavy and its main reason; "Show" opens its note and fix on the board.
+const heavyList = computed(() =>
+  stress.value.terms.flatMap((x, i) => {
+    const term = plan.terms.value[i]
+    if (!x || x.level === 'ok' || !term) return []
+    const why = x.reasons[0]
+    return [{ index: i, label: termLabel(t.value, term), level: t.value(`stress.${x.level}`), why: why ? stressShort(t.value, why) : '' }]
+  }),
+)
+const heavyTerms = computed(() => heavyList.value.length)
+function showHeavy(index: number): void {
+  const note = document.querySelector<HTMLElement>(`[data-stress-term="${index}"] button`)
   if (!note) return
   note.scrollIntoView({ behavior: reducedMotion() ? 'auto' : 'smooth', block: 'center' })
   note.focus({ preventScroll: true })
+  note.click()
 }
 // A first visit shows only the questions; the board and its checks come once there's a plan.
 // A shared link shows its import banner instead.
@@ -464,29 +468,93 @@ const printTerms = computed<PrintTerm[]>(() => {
   // An empty semester left at the end of the plan prints as nothing.
   return [...by.values()].filter((x) => x.items.length > 0).sort((a, b) => (a.year === null ? -1 : b.year === null ? 1 : order(a.year, a.period as string) - order(b.year, b.period as string)))
 })
-watch([compareWanted, () => plans.list.value.length, showWizard], ([want, n, wizard]) => {
-  if (!want) return
-  if (n > 1 && !wizard) comparing.value = true
-  compareWanted.value = false
-}, { immediate: true })
-const compareNeedsTwo = computed(() => !!query.value.get('compare') && plans.list.value.length < 2)
+
+// ---- The page's head and its "On this page" ----
+// Points done and planned against the degree's total (and a diploma's), rules met, and the one
+// thing to do next.
+const pointsNow = computed(() => {
+  const pts = (c: string) => data.value.subjects[c]?.points ?? 12.5
+  const codes = new Set([...passedCodes(profile.value.results), ...plan.plannedCodes.value])
+  return [...codes].reduce((sum, c) => sum + pts(c), 0) + creditPoints(profile.value.credit)
+})
+const pointsNeed = computed(() => (plan.course.value?.totalPoints ?? 0) + (findDiploma(data.value, plan.setup.value.diploma)?.totalPoints ?? 0))
+const fmt = (n: number) => String(Math.round(n * 10) / 10)
+const heroFacts = computed(() => {
+  if (!onBoard.value) return undefined
+  const statuses = plan.courseCheck.value.statuses
+  const met = statuses.filter((x) => x.status === 'ok').length
+  return {
+    points: `${fmt(pointsNow.value)} / ${fmt(pointsNeed.value)}`,
+    rules: statuses.length ? `${met} / ${statuses.length}` : '—',
+    rulesOk: statuses.length > 0 && met === statuses.length && problems.value === 0,
+  }
+})
+const nextStep = computed(() => {
+  if (problems.value) return { label: t.value('planPage.nextFix', { n: problems.value }), href: '#rules' }
+  if (heavyTerms.value) return { label: t.value('planPage.nextHeavy'), href: '#heavy' }
+  return { label: t.value(plans.list.value.length > 1 ? 'planPage.nextCompare' : 'planPage.nextCopy'), href: link('plan/compare/') }
+})
+const lastTerm = computed(() => [...plan.terms.value].reverse().find((x) => x.subjects.length))
+const boardShort = computed(() => (lastTerm.value ? t.value('planPage.boardShort', { term: termLabel(t.value, lastTerm.value), n: plan.plannedCodes.value.length }) : undefined))
+const rulesShort = computed(() => (problems.value ? t.value('plan.statusProblems', { n: problems.value }) : unknowns.value ? t.value('plan.statusUnknown', { n: unknowns.value }) : t.value('plan.statusOk')))
+// The board may reach past the page's width to the window's edge on wide screens: the window's
+// width (without its scrollbar), for that.
+const pageW = shallowRef(typeof document === 'undefined' ? 0 : document.documentElement.clientWidth)
+const onResize = () => (pageW.value = document.documentElement.clientWidth)
+window.addEventListener('resize', onResize)
+onBeforeUnmount(() => window.removeEventListener('resize', onResize))
+
+// Arriving from the compare page's Edit (?plan=B&term=2027-semester-1): open that plan, then bring
+// that semester into view. The address goes back to plain /plan/, so Back returns to the compare.
+const focusTerm = shallowRef<string | null>(null)
+watch(
+  () => query.value.get('plan'),
+  (label) => {
+    if (!label) return
+    const p = plans.list.value.find((x) => x.label === label.toUpperCase())
+    if (p && p.id !== plans.active.value.id) plans.switchTo(p.id)
+    focusTerm.value = query.value.get('term') ?? 'board'
+    replaceAddress(`plan/${location.hash}`)
+  },
+  { immediate: true },
+)
+watch(
+  [focusTerm, showWizard],
+  async ([key, wizard]) => {
+    if (!key || wizard) return
+    await nextTick()
+    window.setTimeout(() => {
+      const el = key === 'board' ? document.getElementById('board') : document.querySelector<HTMLElement>(`[data-term-key="${CSS.escape(key)}"]`)
+      focusTerm.value = null
+      if (!el) return
+      el.scrollIntoView({ block: key === 'board' ? 'start' : 'center' })
+      if (key !== 'board') {
+        el.classList.add('term-flash')
+        window.setTimeout(() => el.classList.remove('term-flash'), 1700)
+      }
+    }, 60)
+  },
+  { immediate: true },
+)
 // Arriving with ?add= when the plan is already set up: it goes in straight away.
 watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.value && !editing.value) placePending() }, { immediate: true })
 </script>
 
 <template>
   <div class="planner">
-    <section class="intro">
-      <h1 class="page-title">{{ t('plan.title') }}</h1>
+    <PlanHero
+      :title="t('plan.title')"
+      :setup="!showWizard && !shared ? summary : undefined"
+      :facts="!showWizard && !shared ? heroFacts : undefined"
+      :next="!showWizard && !shared && onBoard ? nextStep : undefined"
+      @edit="editing = true"
+    >
+      <PlanSwitcher v-if="!shared" class="hero-switcher" />
       <template v-if="showWizard">
         <p class="page-lede">{{ t('plan.ledeShort') }} <a class="guide-link" :href="link('guide')">{{ t('guide.nav') }} →</a></p>
         <p v-if="pendingAdd" class="started" role="status">{{ t('plan.addPending', { code: pendingAdd }) }}</p>
       </template>
-    </section>
-
-    <PlanSwitcher v-if="!shared && (!comparing || showWizard)" @compare="comparing = true; editing = false; trackEvent('compare-open')" />
-    <p v-if="compareNeedsTwo && !comparing && !shared" class="started" role="status">{{ t('plans.compareNeedsTwo') }}</p>
-    <PlanCompare v-if="comparing && !shared && !showWizard" @close="comparing = false" />
+    </PlanHero>
 
     <PlanWizard
       v-if="showWizard"
@@ -509,131 +577,31 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
     </section>
     <SharedPlanView v-if="shared" :setup="shared.setup" :terms="shared.terms" />
 
-    <template v-else-if="!showWizard && !comparing">
-      <section class="bar">
-        <!-- The setup line is itself the way to change it: one obvious target instead of a separate button. -->
-        <button class="bar-summary" type="button" @click="editing = true">
-          <span class="bar-summary-text">{{ summary }}</span>
-          <span class="bar-edit"><Pencil :size="15" aria-hidden="true" /> {{ t('wizard.edit') }}</span>
-        </button>
-        <div class="bar-actions">
-          <div class="bar-group" role="group">
-            <button class="bar-tool" type="button" :aria-label="copied ? t('plan.copied') : t('plan.share')" :title="t('plan.share')" @click="share">
-              <Share2 :size="16" aria-hidden="true" /> <span class="bar-label bar-swap"><span :class="{ 'swap-off': copied }">{{ t('plan.share') }}</span><span :class="{ 'swap-off': !copied }" aria-hidden="true">{{ t('plan.copied') }}</span></span>
+    <!-- The board first, at full width; the plan's other parts under it. -->
+    <div v-else-if="!showWizard" class="article">
+      <div class="body">
+        <RatePrompt v-if="rateNext" :key="rateNext" :code="rateNext" @close="rateNext = null" />
+
+        <SubjectSection id="board" class="board-sec" :style="{ '--page-w': `${pageW}px` }" :title="t('planPage.tocBoard')" :short="boardShort">
+          <template #aside>
+            <button class="button button-quiet rebuild" type="button" @click="plan.generate()">
+              <RotateCcw :size="16" aria-hidden="true" /> {{ t('plan.rebuild') }}
             </button>
-            <button class="bar-tool" type="button" :disabled="imaging" :aria-label="t('plan.saveImage')" :title="t('plan.saveImage')" @click="saveImage">
-              <ImageDown :size="16" aria-hidden="true" /> <span class="bar-label">{{ t('plan.saveImage') }}</span>
-            </button>
-            <button class="bar-tool" type="button" :aria-label="t('plan.print')" :title="t('plan.print')" @click="printPlan">
-              <Printer :size="16" aria-hidden="true" /> <span class="bar-label">{{ t('plan.print') }}</span>
-            </button>
-          </div>
-          <button class="button button-quiet" type="button" @click="plan.generate()">
-            <RotateCcw :size="16" aria-hidden="true" /> {{ t('plan.rebuild') }}
-          </button>
-        </div>
-      </section>
-
-      <div v-if="onBoard && showProfileHint" class="profile-hint" role="note">
-        <Sparkles :size="18" aria-hidden="true" class="profile-hint-icon" />
-        <p class="profile-hint-text">{{ t('plan.profileHint') }}<InfoTip :text="t('plan.profileHintInfo')" /></p>
-        <a class="button button-quiet profile-hint-go" :href="link('record') + '#sec-strengths'">{{ t('plan.profileHintGo') }}</a>
-        <button class="profile-hint-x" type="button" :aria-label="t('plan.profileHintHide')" :title="t('plan.profileHintHide')" @click="hideHint">
-          <X :size="16" aria-hidden="true" />
-        </button>
-      </div>
-
-      <p v-if="addNote" class="started" role="status">
-        <template v-if="addNote.term">{{ t('plan.addPendingThere', { code: addNote.code, term: addNote.term }) }}</template>
-        <template v-else>{{ t('plan.addPendingFailed', { code: addNote.code }) }}<InfoTip :text="t('plan.addPendingWhy')" /></template>
-      </p>
-      <!-- Notes about the plan itself, folded into one line: the plan and My record disagreeing
-           comes first (with its one fix), then which Handbook years the plan leans on. Every
-           detail is behind the ⓘ. -->
-      <p v-if="metaLine" class="started meta-line" :role="recordFix ? 'status' : undefined">
-        <span>{{ metaLine.short }}<InfoTip :text="metaLine.info" /></span>
-        <button v-if="recordFix" class="button button-quiet" type="button" @click="plan.generate()">{{ t('plan.rebuild') }}</button>
-      </p>
-
-      <!-- The plan's status and every note about it, as one slim line that opens. Problems open it by themselves. -->
-      <details v-if="onBoard && !plan.courseCheck.value.statuses.length" class="status glass" :class="problems ? 'status-bad' : unknowns ? 'status-warn' : 'status-good'" :open="problems > 0">
-        <summary class="status-line" role="status">
-          <component :is="problems || unknowns ? TriangleAlert : CircleCheck" :size="18" aria-hidden="true" />
-          <span class="status-title">
-            <template v-if="problems">{{ t('plan.statusProblems', { n: problems }) }}</template>
-            <template v-else-if="unknowns">{{ t('plan.statusUnknown', { n: unknowns }) }}</template>
-            <template v-else>{{ t('plan.statusOk') }}</template>
-          </span>
-          <span v-if="noteCount" class="status-more">{{ t('plan.moreNotes', { n: noteCount }) }}</span>
-          <ChevronDown :size="16" aria-hidden="true" class="status-chevron" />
-        </summary>
-        <div class="status-body">
-          <ul v-if="problemTexts.length" class="status-list">
-            <li v-for="(p, i) in problemTexts.slice(0, 5)" :key="i" class="status-item">
-              <span>{{ p.text }}</span>
-              <button v-if="p.confirm" class="button button-quiet confirm" type="button" @click="setConfirmed(p.confirm, true)">
-                {{ t('plan.iMeetThis') }}
-              </button>
-            </li>
-          </ul>
-          <p v-if="hasConfirmable" class="status-hint">{{ t('plan.confirmHint') }}</p>
-          <p v-for="u in unavoidable" :key="u" class="started">{{ u }}</p>
-          <p v-if="extraTermsOnVisa" class="started">{{ t('plan.extraTermsVisa') }}</p>
-          <ul v-if="failed.length" class="failed">
-            <li v-for="f in failed" :key="f.code">
-              {{ f.term ? t('plan.failedRetake', { code: f.code, term: f.term }) : t('plan.failedNotPlanned', { code: f.code }) }}
-            </li>
-            <li class="failed-more"><a :href="link('guide/semester/#fail')">{{ t('guide.failTitle') }}</a></li>
-          </ul>
-        </div>
-      </details>
-
-      <p v-if="onBoard && careerReminder" class="started career-gap">
-        {{ careerReminder.text }} <a :href="link(`careers/${careerReminder.id}`)">{{ t('careerGoal.gapLink') }}</a>
-      </p>
-
-      <RatePrompt v-if="rateNext" :key="rateNext" :code="rateNext" @close="rateNext = null" />
-
-      <div class="workspace">
-        <div class="workspace-main">
-          <PlanRequirements
-            v-if="onBoard"
-            id="rules"
-            :problems="problems + Number(recordFix)"
-            :start-open="!justBuilt"
-            :statuses="plan.courseCheck.value.statuses"
-            :rules="allRules"
-            :degree-rules="rules"
-            :members="members"
-            :active="ruleFocus"
-            @focus="focusRule"
-          >
-            <template v-if="heavyTerms" #alerts>
-              <button id="heavy" class="heavy-link" type="button" @click="showHeavy">
-                <TriangleAlert :size="15" aria-hidden="true" /> {{ t('plan.heavySummary', { n: heavyTerms }) }}
-              </button>
-            </template>
-            <template v-if="hasNotes" #notes>
-              <ul v-if="planProblems.length" class="status-list" :class="problems ? 'tone-bad' : 'tone-warn'" role="status">
-                <li v-for="(p, i) in planProblems.slice(0, 5)" :key="i" class="status-item">
-                  <component :is="TriangleAlert" :size="16" aria-hidden="true" class="status-icon" />
-                  <span>{{ p.text }}</span>
-                  <button v-if="p.confirm" class="button button-quiet confirm" type="button" @click="setConfirmed(p.confirm, true)">
-                    {{ t('plan.iMeetThis') }}
-                  </button>
-                </li>
-              </ul>
-              <p v-if="hasConfirmable" class="status-hint">{{ t('plan.confirmHint') }}</p>
-              <p v-for="u in unavoidable" :key="u" class="started">{{ u }}</p>
-              <p v-if="extraTermsOnVisa" class="started">{{ t('plan.extraTermsVisa') }}</p>
-              <ul v-if="failed.length" class="failed">
-                <li v-for="f in failed" :key="f.code">
-                  {{ f.term ? t('plan.failedRetake', { code: f.code, term: f.term }) : t('plan.failedNotPlanned', { code: f.code }) }}
-                </li>
-                <li class="failed-more"><a :href="link('guide/semester/#fail')">{{ t('guide.failTitle') }}</a></li>
-              </ul>
-            </template>
-          </PlanRequirements>
+          </template>
+          <p v-if="addNote" class="started" role="status">
+            <template v-if="addNote.term">{{ t('plan.addPendingThere', { code: addNote.code, term: addNote.term }) }}</template>
+            <template v-else>{{ t('plan.addPendingFailed', { code: addNote.code }) }}<InfoTip :text="t('plan.addPendingWhy')" /></template>
+          </p>
+          <!-- Notes about the plan itself, folded into one line: the plan and My record disagreeing
+               comes first (with its one fix), then which Handbook years the plan leans on. Every
+               detail is behind the ⓘ. -->
+          <p v-if="metaLine" class="started meta-line" :role="recordFix ? 'status' : undefined">
+            <span>{{ metaLine.short }}<InfoTip :text="metaLine.info" /></span>
+            <button v-if="recordFix" class="button button-quiet" type="button" @click="plan.generate()">{{ t('plan.rebuild') }}</button>
+          </p>
+          <p v-if="onBoard && careerReminder" class="started career-gap">
+            {{ careerReminder.text }} <a :href="link(`careers/${careerReminder.id}`)">{{ t('careerGoal.gapLink') }}</a>
+          </p>
           <p class="draft">
             {{ t('plan.draftNoteShort') }}
             <InfoTip>{{ t('plan.draftNote') }} <a :href="STUDENT_SITE" target="_blank" rel="noopener">{{ t('plan.draftLink') }}</a></InfoTip>
@@ -673,9 +641,124 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
             @select="select"
             @remove-last-term="plan.removeLastTerm()"
           />
-        </div>
-      </div>
+          <details class="details">
+            <summary class="details-summary">
+              <span>{{ t('plan.details') }}</span>
+              <ChevronDown :size="18" aria-hidden="true" class="details-chevron" />
+            </summary>
+            <div class="details-body">
+              <!-- How to read the board lives here, not above the plan. -->
+              <p class="details-info">{{ t('plan.hint') }} {{ t('plan.tagLegend') }}</p>
+              <PlanIssues class="details-card" :issues="allIssues" :rules="allRules" :statuses="plan.courseCheck.value.statuses" />
+              <PlanHowBuilt
+                v-if="plan.notes.value.length || plan.unplaced.value.length"
+                :notes="plan.notes.value"
+                :rules="rules"
+                :unplaced="plan.unplaced.value"
+                @open="peek = $event"
+              />
+            </div>
+          </details>
+        </SubjectSection>
 
+        <div v-if="onBoard && showProfileHint" class="profile-hint" role="note">
+          <Sparkles :size="18" aria-hidden="true" class="profile-hint-icon" />
+          <p class="profile-hint-text">{{ t('plan.profileHint') }}<InfoTip :text="t('plan.profileHintInfo')" /></p>
+          <a class="button button-quiet profile-hint-go" :href="link('record') + '#sec-strengths'">{{ t('plan.profileHintGo') }}</a>
+          <button class="profile-hint-x" type="button" :aria-label="t('plan.profileHintHide')" :title="t('plan.profileHintHide')" @click="hideHint">
+            <X :size="16" aria-hidden="true" />
+          </button>
+        </div>
+
+        <SubjectSection v-if="onBoard" id="rules" :title="t('planPage.tocRules')" :short="rulesShort">
+          <PlanRequirements
+            v-if="plan.courseCheck.value.statuses.length"
+            :problems="problems + Number(recordFix)"
+            :start-open="!justBuilt"
+            :statuses="plan.courseCheck.value.statuses"
+            :rules="allRules"
+            :degree-rules="rules"
+            :members="members"
+            :active="ruleFocus"
+            @focus="focusRule"
+          >
+            <template v-if="hasNotes" #notes>
+              <ul v-if="planProblems.length" class="status-list" :class="problems ? 'tone-bad' : 'tone-warn'" role="status">
+                <li v-for="(p, i) in planProblems.slice(0, 5)" :key="i" class="status-item">
+                  <component :is="TriangleAlert" :size="16" aria-hidden="true" class="status-icon" />
+                  <span>{{ p.text }}</span>
+                  <button v-if="p.confirm" class="button button-quiet confirm" type="button" @click="setConfirmed(p.confirm, true)">
+                    {{ t('plan.iMeetThis') }}
+                  </button>
+                </li>
+              </ul>
+              <p v-if="hasConfirmable" class="status-hint">{{ t('plan.confirmHint') }}</p>
+              <p v-for="u in unavoidable" :key="u" class="started">{{ u }}</p>
+              <p v-if="extraTermsOnVisa" class="started">{{ t('plan.extraTermsVisa') }}</p>
+              <ul v-if="failed.length" class="failed">
+                <li v-for="f in failed" :key="f.code">
+                  {{ f.term ? t('plan.failedRetake', { code: f.code, term: f.term }) : t('plan.failedNotPlanned', { code: f.code }) }}
+                </li>
+                <li class="failed-more"><a :href="link('guide/semester/#fail')">{{ t('guide.failTitle') }}</a></li>
+              </ul>
+            </template>
+          </PlanRequirements>
+          <!-- A degree with no rules we know: the problems and notes as a list. -->
+          <div v-else class="status-body">
+            <ul v-if="problemTexts.length" class="status-list">
+              <li v-for="(p, i) in problemTexts.slice(0, 5)" :key="i" class="status-item">
+                <span>{{ p.text }}</span>
+                <button v-if="p.confirm" class="button button-quiet confirm" type="button" @click="setConfirmed(p.confirm, true)">
+                  {{ t('plan.iMeetThis') }}
+                </button>
+              </li>
+            </ul>
+            <p v-if="hasConfirmable" class="status-hint">{{ t('plan.confirmHint') }}</p>
+            <p v-for="u in unavoidable" :key="u" class="started">{{ u }}</p>
+            <p v-if="extraTermsOnVisa" class="started">{{ t('plan.extraTermsVisa') }}</p>
+            <ul v-if="failed.length" class="failed">
+              <li v-for="f in failed" :key="f.code">
+                {{ f.term ? t('plan.failedRetake', { code: f.code, term: f.term }) : t('plan.failedNotPlanned', { code: f.code }) }}
+              </li>
+              <li class="failed-more"><a :href="link('guide/semester/#fail')">{{ t('guide.failTitle') }}</a></li>
+            </ul>
+          </div>
+        </SubjectSection>
+
+        <SubjectSection v-if="onBoard" id="heavy" :title="t('planPage.tocHeavy')" :short="heavyTerms ? t('planPage.heavyCount', { n: heavyTerms }) : t('planPage.heavyNone')" fold>
+          <ul v-if="heavyList.length" class="heavy-list">
+            <li v-for="h in heavyList" :key="h.index" class="heavy-item">
+              <TriangleAlert :size="16" aria-hidden="true" class="heavy-icon" />
+              <span class="heavy-text"><strong>{{ h.label }}</strong> · {{ h.level }}<template v-if="h.why"> · {{ h.why }}</template></span>
+              <button class="button button-quiet heavy-show" type="button" @click="showHeavy(h.index)">{{ t('planPage.heavyShow') }}</button>
+            </li>
+          </ul>
+          <p v-for="u in unavoidable" :key="u" class="started">{{ u }}</p>
+        </SubjectSection>
+
+        <SubjectSection id="calendar" :title="t('planPage.tocCalendar')" :short="t('planPage.calendarShort')" fold>
+          <p class="cal-line">
+            {{ t('plan.censusLineShort') }}<InfoTip :text="t('plan.censusLine')" />
+            <a :href="link('guide/key-dates/')">{{ t('guide.datesTitle') }}</a>
+          </p>
+          <PlanCalendar />
+        </SubjectSection>
+
+        <SubjectSection v-if="onBoard" id="share" :title="t('planPage.tocShare')" :short="t('planPage.shareShort')" fold>
+          <div class="share-tools">
+            <button class="button button-quiet" type="button" @click="share">
+              <Share2 :size="16" aria-hidden="true" />
+              <span class="swap-label"><span :class="{ 'swap-off': copied }">{{ t('plan.share') }}</span><span :class="{ 'swap-off': !copied }" aria-hidden="true">{{ t('plan.copied') }}</span></span>
+              <span class="visually-hidden" role="status">{{ copied ? t('plan.copied') : '' }}</span>
+            </button>
+            <button class="button button-quiet" type="button" :disabled="imaging" @click="saveImage"><ImageDown :size="16" aria-hidden="true" /> {{ t('plan.saveImage') }}</button>
+            <button class="button button-quiet" type="button" @click="printPlan"><Printer :size="16" aria-hidden="true" /> {{ t('plan.print') }}</button>
+          </div>
+        </SubjectSection>
+      </div>
+    </div>
+
+    <template v-if="!shared && !showWizard">
       <div v-if="undo" class="undo" role="status">
         <span>{{ undo.text }}</span>
         <button class="undo-button" type="button" @click="undoLast">{{ t('plan.undo') }}</button>
@@ -704,37 +787,9 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
       >
         <SubjectTimeline :code="peek" :edges="edges" :where-of="whereOf" @select="peek = $event" />
       </SubjectPeek>
-
-      <details class="details surface">
-        <summary class="details-summary">
-          <span>{{ t('plan.details') }}</span>
-          <ChevronDown :size="18" aria-hidden="true" class="details-chevron" />
-        </summary>
-        <div class="details-body">
-          <!-- How to read the board and the census-date reminder live here, not above the plan. -->
-          <div class="details-info">
-            <p>{{ t('plan.hint') }} {{ t('plan.tagLegend') }}</p>
-            <p>
-              {{ t('plan.censusLineShort') }}<InfoTip :text="t('plan.censusLine')" />
-              <a :href="link('guide/key-dates/')">{{ t('guide.datesTitle') }}</a>
-            </p>
-            <PlanCalendar id="calendar" />
-          </div>
-          <div class="details-pair">
-            <PlanIssues class="details-card" :issues="allIssues" :rules="allRules" :statuses="plan.courseCheck.value.statuses" />
-          </div>
-          <PlanHowBuilt
-            v-if="plan.notes.value.length || plan.unplaced.value.length"
-            :notes="plan.notes.value"
-            :rules="rules"
-            :unplaced="plan.unplaced.value"
-            @open="peek = $event"
-          />
-        </div>
-      </details>
     </template>
     <PlanPrint
-      v-if="!showWizard && !comparing && onBoard"
+      v-if="!showWizard && onBoard"
       class="print-only"
       :summary="summary"
       :terms="printTerms"
@@ -746,153 +801,55 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
 </template>
 
 <style scoped>
-.heavy-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  min-height: 32px;
-  padding: 0 12px;
-  border: 1px solid color-mix(in srgb, var(--warn) 35%, transparent);
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--warn) 10%, transparent);
-  color: color-mix(in srgb, var(--warn) 75%, var(--ink));
-  font: inherit;
-  font-size: 0.875rem;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.heavy-link:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-
+/* The guide's measures (GuideView, the subject page): frostier cards, the hero and the article
+   sharing their edges. */
 .planner {
+  --card-fill: var(--peek-fill);
+
   display: grid;
-  gap: 20px;
-  padding-top: var(--page-top);
-}
-
-/* Everything but the board stays at the usual reading width; the board takes the full screen. */
-.planner > :not(.workspace, dialog) {
-  width: 100%;
-  max-width: calc(var(--shell) - 80px);
-  margin-inline: auto;
-}
-
-/* The setup line on the left (wrapping within its column), the tools always at the right: the
-   toolbar stays in the same place whatever the plan's line says. */
-.bar {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 12px;
-}
-
-.bar-summary {
-  display: inline-flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 4px 12px;
+  gap: 24px;
   min-width: 0;
-  padding: 6px 0;
-  border: 0;
-  background: none;
-  color: var(--ink);
-  font: inherit;
-  text-align: left;
-  cursor: pointer;
+  padding-top: 20px;
 }
 
-.bar-summary-text {
-  font-size: 1.125rem;
-  font-weight: 650;
-  overflow-wrap: anywhere;
+.hero-switcher {
+  width: 100%;
 }
 
-.bar-edit {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 0.9375rem;
-  font-weight: 600;
-  color: color-mix(in srgb, var(--accent) 80%, var(--ink)); /* darker in light, lighter in dark: 4.5:1 on glass */
-  white-space: nowrap;
-}
-
-.bar-summary:hover .bar-edit,
-.bar-summary:focus-visible .bar-edit {
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-.bar-actions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
-}
-
-.bar-actions .button {
-  white-space: nowrap;
-}
-
-/* Two labels in one cell, one shown: the button is as wide as the longer and never resizes. */
-.bar-swap {
-  display: inline-grid;
-  justify-items: start;
-}
-
-.bar-swap > span {
-  grid-area: 1 / 1;
-}
-
-.bar-swap > .swap-off {
-  visibility: hidden;
-}
-
-/* Share, image and print sit together as one glass pill: they all send the plan somewhere. */
-.bar-group {
-  display: inline-flex;
-  padding: 3px;
-  border: 1px solid var(--glass-edge);
-  border-radius: 999px;
-  background: var(--glass-shine), var(--glass-fill);
-  -webkit-backdrop-filter: var(--glass-blur);
-  backdrop-filter: var(--glass-blur);
-  box-shadow: var(--glass-shadow);
-}
-
-.bar-tool {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  min-height: 36px;
-  padding: 0 14px;
-  border: 0;
-  border-radius: 999px;
-  background: none;
-  color: var(--ink);
-  font: inherit;
-  font-size: 0.9375rem;
-  font-weight: 500;
-  white-space: nowrap;
-  cursor: pointer;
-}
-
-.bar-tool:hover:not(:disabled) {
-  background: var(--accent-soft);
-  color: color-mix(in srgb, var(--accent) 80%, var(--ink)); /* darker in light, lighter in dark: 4.5:1 on glass */
-}
-
-.bar-tool:disabled {
-  opacity: 0.55;
-  cursor: default;
-}
-
-.intro {
+.article {
   display: grid;
-  gap: 6px;
+  min-width: 0;
+}
+
+.body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 24px;
+  min-width: 0;
+}
+
+/* Cards that bring their own glass (the rules card) fold into their section: never a box in a box. */
+.body :deep(.sec .progress.surface) {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+/* The board's section: on screens wider than the page it runs on to the window's edges
+   (keeping the page's gutter), so more semesters show before it scrolls. */
+.board-sec {
+  margin-inline: min(0px, calc((var(--shell) - var(--page-w, 100vw)) / 2));
+  padding-inline: 24px;
+}
+
+.rebuild {
+  min-height: 36px;
+  margin-left: auto;
+  white-space: nowrap;
 }
 
 .guide-link {
@@ -900,36 +857,9 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
   color: color-mix(in srgb, var(--accent) 80%, var(--ink)); /* darker in light, lighter in dark: 4.5:1 on glass */
 }
 
-/* Phones: the send-out tools become icons (named for screen readers), so all actions fit one row. */
-@media (max-width: 720px) {
-  .bar {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .bar-actions {
-    width: 100%;
-    justify-content: space-between;
-  }
-
-  .bar-label {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip-path: inset(50%);
-    white-space: nowrap;
-  }
-
-  .bar-tool {
-    min-width: 44px;
-    min-height: 40px;
-    justify-content: center;
-    padding: 0 12px;
-  }
-}
-
 /* Notes about the plan: a light tinted glass strip, readable in light and dark. */
 .started {
+  margin: 0;
   padding: 10px 14px;
   border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
   border-radius: var(--radius);
@@ -959,6 +889,8 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
 
 .profile-hint-text {
   flex: 1 1 16em;
+  min-width: 0;
+  overflow-wrap: anywhere;
   margin: 0;
   font-size: 0.9375rem;
   font-weight: 550;
@@ -972,8 +904,8 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
   display: inline-grid;
   flex: none;
   place-items: center;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border: 0;
   border-radius: 999px;
   background: none;
@@ -1024,74 +956,10 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
   color: var(--bad);
 }
 
-/* The shared glass card; only the icon and the one-line verdict carry the tone. */
-.status {
-  padding: 0 var(--space-4);
-  border-radius: var(--radius-lg);
-}
-
-.status-line {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  min-height: 40px;
-  cursor: pointer;
-  list-style: none;
-}
-
-.status-line::-webkit-details-marker {
-  display: none;
-}
-
-.status-line > svg {
-  flex-shrink: 0;
-}
-
-.status-more {
-  font-size: 0.8125rem;
-  opacity: 0.8;
-}
-
-.status-chevron {
-  margin-left: auto;
-  transition: transform 0.15s;
-}
-
-.status[open] .status-chevron {
-  transform: rotate(180deg);
-}
-
 .status-body {
   display: grid;
   gap: var(--space-3);
-  padding: var(--space-1) 0 var(--space-4) 28px;
   color: var(--ink);
-}
-
-.status-body .started,
-.status-body .failed {
-  color: var(--ink);
-}
-
-.status-good .status-line {
-  color: var(--good);
-}
-
-.status-warn .status-line {
-  color: color-mix(in srgb, var(--warn) 80%, var(--ink)); /* darker in light, lighter in dark: 4.5:1 on glass */
-}
-
-.status-bad .status-line {
-  color: var(--bad);
-}
-
-.status-title {
-  font-weight: 650;
-}
-
-.hint {
-  font-size: 0.875rem;
-  color: var(--ink-soft);
 }
 
 .status-list {
@@ -1111,14 +979,87 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
   gap: var(--space-2) var(--space-3);
 }
 
-.status-text {
-  margin-top: 2px;
-  font-size: 0.9375rem;
+.status-item > span {
+  flex: 1 1 14em;
+  min-width: 0;
+}
+
+.status-hint {
+  max-width: 60ch;
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.5;
   color: var(--ink-soft);
 }
 
+/* A standard quiet button, one size down. */
+.confirm {
+  flex: none;
+  min-height: 32px;
+  padding: 0 14px;
+  font-size: 0.8125rem;
+  white-space: nowrap;
+}
+
+/* The plan's notes line: text and ⓘ together, its one fix at the end. */
+.meta-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 10px;
+}
+
+.meta-line > span {
+  flex: 1 1 0;
+  min-width: 12em;
+  overflow-wrap: anywhere;
+}
+
+.meta-line .button {
+  min-height: 36px;
+  margin-left: auto;
+}
+
+.shared {
+  display: grid;
+  gap: 10px;
+  padding: 18px 20px;
+}
+
+.shared-text {
+  font-weight: 600;
+}
+
+.shared-warn {
+  font-size: 0.9375rem;
+  color: color-mix(in srgb, var(--warn) 80%, var(--ink)); /* darker in light, lighter in dark: 4.5:1 on glass */
+}
+
+.shared-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.draft {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
+}
+
+.draft a {
+  color: var(--ink-soft);
+}
+
+.timeline-bar {
+  position: sticky;
+  top: 72px;
+  z-index: 20;
+}
+
+/* How to read the board, every check and how the plan was built: one fold under the board. */
 .details {
-  padding: 0 22px;
+  border-top: 1px solid var(--divider);
 }
 
 .details-summary {
@@ -1126,7 +1067,7 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  min-height: 56px;
+  min-height: 48px;
   font-weight: 650;
   cursor: pointer;
   list-style: none;
@@ -1146,32 +1087,19 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
   transform: rotate(180deg);
 }
 
-/* One column: rules and checks side by side only when there's room for both. */
 .details-body {
   display: grid;
-  gap: 20px;
-  padding: 4px 0 22px;
+  gap: 16px;
+  padding: 4px 0 8px;
 }
 
 .details-info {
-  display: grid;
-  gap: 6px;
+  margin: 0;
   padding: 12px 14px;
   border-radius: 14px;
   background: color-mix(in srgb, var(--ink) 4%, transparent);
   font-size: 0.875rem;
   color: var(--ink-soft);
-}
-
-.details-info p {
-  margin: 0;
-}
-
-.details-pair {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
-  align-items: start;
-  gap: 16px;
 }
 
 .details-card {
@@ -1215,109 +1143,78 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
   transform: rotate(45deg);
 }
 
-
-
-
-/* A standard quiet button, one size down. */
-.confirm {
-  flex: none;
-  min-height: 32px;
-  padding: 0 14px;
-  font-size: 0.8125rem;
-  white-space: nowrap;
+@media (prefers-reduced-motion: reduce) {
+  .details-chevron,
+  .details-body :deep(details > summary::before) {
+    transition: none;
+  }
 }
 
-.status-item > span {
-  flex: 1 1 14em;
-  min-width: 0;
-}
-
-/* The plan's notes line: text and ⓘ together, its one fix at the end. */
-.meta-line {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 4px 10px;
-}
-
-.meta-line .button {
-  min-height: 36px;
-  margin-left: auto;
-}
-
-.status-hint {
-  max-width: 60ch;
+/* Heavy semesters: one line each, "Show" opens that semester's note on the board. */
+.heavy-list {
+  display: grid;
+  gap: 8px;
   margin: 0;
-  font-size: 0.875rem;
-  line-height: 1.5;
+  padding: 0;
+  list-style: none;
+}
+
+.heavy-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 10px 10px 14px;
+  border: 1px solid color-mix(in srgb, var(--warn) 30%, transparent);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--warn) 8%, var(--card-fill));
+}
+
+.heavy-icon {
+  flex: none;
+  color: color-mix(in srgb, var(--warn) 80%, var(--ink));
+}
+
+.heavy-text {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 0.9375rem;
+}
+
+.heavy-show {
+  flex: none;
+  min-height: 36px;
+}
+
+.cal-line {
+  margin: 0;
+  overflow-wrap: anywhere;
+  font-size: 0.9375rem;
   color: var(--ink-soft);
 }
-.shared {
-  display: grid;
-  gap: 10px;
-  padding: 18px 20px;
+
+.cal-line a {
+  margin-left: 8px;
+  color: color-mix(in srgb, var(--accent) 80%, var(--ink));
 }
 
-.shared-text {
-  font-weight: 600;
-}
-
-.shared-warn {
-  font-size: 0.9375rem;
-  color: color-mix(in srgb, var(--warn) 80%, var(--ink)); /* darker in light, lighter in dark: 4.5:1 on glass */
-}
-
-.shared-actions {
+.share-tools {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
 }
 
-/* The board takes the full width, with the requirements beside it on wide screens. */
-.workspace {
-  display: grid;
-  gap: 16px;
-  width: 100%;
-  max-width: 1800px;
-  margin-inline: auto;
-  padding-inline: 20px;
+/* Two labels in one cell, one shown: the button is as wide as the longer and never resizes. */
+.swap-label {
+  display: inline-grid;
+  justify-items: start;
 }
 
-.workspace-main {
-  display: grid;
-  gap: 12px;
-  align-content: start;
-  min-width: 0;
+.swap-label > span {
+  grid-area: 1 / 1;
 }
 
-.workspace-side {
-  min-width: 0;
-}
-
-@media (max-width: 640px) {
-  .workspace {
-    padding-inline: 0;
-  }
-
-  /* Phones: the timeline stays where it is instead of covering the screen. */
-  .timeline-bar {
-    position: static;
-  }
-}
-
-.timeline-bar {
-  position: sticky;
-  top: 8px;
-  z-index: 20;
-}
-
-.draft {
-  font-size: 0.8125rem;
-  color: var(--ink-soft);
-}
-
-.draft a {
-  color: var(--ink-soft);
+.swap-label > .swap-off {
+  visibility: hidden;
 }
 
 .undo {
@@ -1340,6 +1237,7 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
 
 .undo-button {
   flex: none;
+  min-height: 36px;
   padding: 4px 12px;
   border: 0;
   border-radius: 999px;
@@ -1348,6 +1246,45 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
   font: inherit;
   font-weight: 650;
   cursor: pointer;
+}
+
+@media (max-width: 720px) {
+  /* Above the floating tab bar, never on it. */
+  .undo {
+    bottom: calc(100px + env(safe-area-inset-bottom));
+  }
+
+  .undo-button,
+  .heavy-show,
+  .rebuild,
+  .confirm,
+  .meta-line .button,
+  .share-tools .button {
+    min-height: 44px;
+  }
+
+  .timeline-bar {
+    position: static;
+  }
+}
+
+@media (max-width: 640px) {
+  .planner,
+  .body {
+    gap: 14px;
+  }
+
+  .planner {
+    padding-top: 12px;
+  }
+
+  .board-sec {
+    padding-inline: 10px;
+  }
+
+  .heavy-item {
+    flex-wrap: wrap;
+  }
 }
 
 /* Printing (or saving as PDF): only the print layout, not the screen page. */

@@ -63,6 +63,12 @@ function retake(code: string): string | null {
 </template>
 
 <style scoped>
+@media (max-width: 640px) {
+  .past {
+    flex-basis: auto !important;
+  }
+}
+
 .carried {
   display: flex;
   flex-wrap: wrap;
@@ -91,8 +97,8 @@ function retake(code: string): string | null {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  flex: 1 1 0;
-  min-width: 180px;
+  flex: 0 0 208px;
+  min-width: 0;
   padding: 10px;
   border-radius: var(--radius);
   background: color-mix(in srgb, var(--good) 4%, transparent);

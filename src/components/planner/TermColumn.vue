@@ -107,6 +107,7 @@ const tone = (code: string): CardTone | null => props.tones?.get(code) ?? null
     :class="[dropClass, { 'term-short': short }]"
     :aria-label="termLabel(t, term)"
     :data-term="termIndex"
+    :data-term-key="`${term.year}-${term.period}`"
     @dragover="onDragOver"
     @dragleave="dragOver = false"
     @drop.prevent="onDrop"
@@ -182,11 +183,13 @@ const tone = (code: string): CardTone | null => props.tones?.get(code) ?? null
 <style scoped>
 .term {
   display: flex;
-  flex: 1 1 0;
+  /* A fixed, comfortable width: the board scrolls sideways rather than squeezing a semester. */
+  flex: 0 0 208px;
   flex-direction: column;
   gap: 8px;
-  min-width: 180px;
+  min-width: 0;
   padding: 10px;
+  scroll-margin: 96px 24px;
   border: 1px solid var(--card-edge);
   border-radius: var(--radius);
   background: var(--glass-shine), var(--card-fill);
@@ -197,8 +200,7 @@ const tone = (code: string): CardTone | null => props.tones?.get(code) ?? null
 /* No backdrop blur on the columns: a blur makes each column its own layer, which would paint
    over the prerequisite lines (PlanMap's .routes). The see-through fill keeps the glass look. */
 .term-short {
-  flex-grow: 0.7;
-  min-width: 150px;
+  flex-basis: 192px;
   background: color-mix(in srgb, var(--warn) 5%, transparent);
 }
 
@@ -332,9 +334,33 @@ const tone = (code: string): CardTone | null => props.tones?.get(code) ?? null
   min-height: 60px;
 }
 
+/* Arrived from the compare page's Edit: this semester glows for a moment. */
+.term-flash {
+  animation: term-flash 1.6s ease-out;
+}
+
+@keyframes term-flash {
+  0%,
+  40% {
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 45%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .term-flash {
+    animation: none;
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 45%, transparent);
+  }
+}
+
 @media (max-width: 640px) {
   .term {
+    flex-basis: auto;
     min-width: 0;
+  }
+
+  .add-slot {
+    min-height: 44px;
   }
 }
 </style>

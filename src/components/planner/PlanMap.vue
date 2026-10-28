@@ -60,6 +60,20 @@ const { data } = useDataset()
 const plan = usePlan()
 
 const board = useTemplateRef<HTMLElement>('board')
+// The semesters keep their width and the board scrolls sideways; a soft fade marks an edge with more beyond it.
+const track = useTemplateRef<HTMLElement>('track')
+const edgeStart = shallowRef(false)
+const edgeEnd = shallowRef(false)
+function edges(): void {
+  const el = track.value
+  if (!el) return
+  edgeStart.value = el.scrollLeft > 2
+  edgeEnd.value = el.scrollLeft + el.clientWidth < el.scrollWidth - 2
+}
+function onTrackScroll(): void {
+  edges()
+  measure()
+}
 const routes = shallowRef<Route[]>([])
 const hovered = shallowRef<string | null>(null)
 // Hover intent: leaving a card waits a moment, so the pointer can reach the "N more" pill.
@@ -310,6 +324,7 @@ provide(LINK_COUNTS, linkCounts)
 function measure(): void {
   readLayout()
   drawRoutes()
+  edges()
 }
 
 watch(shownEdges, drawRoutes)
@@ -411,7 +426,7 @@ onBeforeUnmount(() => {
       @mouseleave="onHover(null)"
     >{{ t('stress.more', { n: overflow.n }) }}</button>
 
-    <div class="track" @scroll.passive="measure">
+    <div ref="track" class="track" :class="{ 'fade-start': edgeStart, 'fade-end': edgeEnd }" @scroll.passive="onTrackScroll">
       <PastTermColumn
         v-if="past?.undated.length"
         :term="null"
@@ -613,7 +628,21 @@ onBeforeUnmount(() => {
   gap: 10px;
   min-width: 0;
   overflow-x: auto;
-  padding-bottom: 6px;
+  padding-bottom: 8px;
+  scroll-padding-inline: 24px;
+  scrollbar-width: thin;
+  --fade-start: 0px;
+  --fade-end: 0px;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 var(--fade-start), #000 calc(100% - var(--fade-end)), transparent);
+  mask-image: linear-gradient(to right, transparent, #000 var(--fade-start), #000 calc(100% - var(--fade-end)), transparent);
+}
+
+.track.fade-start {
+  --fade-start: 32px;
+}
+
+.track.fade-end {
+  --fade-end: 48px;
 }
 
 .board-tools {
@@ -666,6 +695,12 @@ onBeforeUnmount(() => {
   .track {
     flex-direction: column;
     overflow: visible;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .tool {
+    min-height: 44px;
   }
 
   .board-tools {

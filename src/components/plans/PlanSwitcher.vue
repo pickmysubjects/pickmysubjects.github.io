@@ -5,11 +5,11 @@ import { Columns2, Copy, Ellipsis, FilePlus, Pencil, Plus, Trash2 } from 'lucide
 import { usePlans } from '@/composables/usePlans'
 import { MAX_PLANS } from '@/utils/planBook'
 import { useI18n } from '@/i18n'
+import { link } from '@/composables/useView'
 import { planName } from './planName'
 
 /** Plan A, Plan B…: one tap to switch, and a small panel underneath for new / rename / delete. */
 const props = defineProps<{ noCompare?: boolean }>()
-const emit = defineEmits<{ compare: [] }>()
 const plans = usePlans()
 const { t } = useI18n()
 
@@ -84,9 +84,9 @@ function confirmDelete(): void {
         </button>
       </div>
       <div class="tools">
-        <button v-if="!props.noCompare && plans.list.value.length > 1" class="button button-quiet compare" type="button" @click="emit('compare')">
+        <a v-if="!props.noCompare && plans.list.value.length > 1" class="button button-quiet compare" :href="link('plan/compare/')">
           <Columns2 :size="16" aria-hidden="true" /> {{ t('plans.compare') }}
-        </button>
+        </a>
         <button class="icon plan-icon-hit" type="button" :aria-label="planName(t, plans.active.value)" :aria-expanded="panel === 'menu'" @click="toggle('menu')">
           <Ellipsis :size="16" aria-hidden="true" />
         </button>
