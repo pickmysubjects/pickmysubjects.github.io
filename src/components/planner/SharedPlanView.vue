@@ -1,34 +1,64 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import type { PlanTerm } from '@/engine'
-import type { PlanSetup } from '@/composables/usePlan'
+import { computed, nextTick, shallowRef, useTemplateRef } from 'vue'
+import { usePlans } from '@/composables/usePlans'
 import { link } from '@/composables/useView'
 import { useDataset } from '@/composables/useDataset'
 import { useI18n } from '@/i18n'
 import { termLabel } from '@/i18n/format'
 import { localTitle } from '@/i18n/localized'
+import { MAX_PLANS } from '@/utils/planBook'
+import type { SharedPlan } from '@/utils/sharePlan'
 
 /**
- * A plan from a shared link, shown as it is before the student decides to use it: the degree,
- * the major and every semester's subjects. Read-only; nothing here changes the student's plan.
+ * A plan from a shared link, read-only: the degree, the major and every semester's subjects.
+ * Import asks first, then adds it as a new plan (or fills a blank first plan); nothing the student
+ * has is replaced. A link that can't be read says so instead of showing nothing.
  */
-const props = defineProps<{ setup: PlanSetup; terms: PlanTerm[] }>()
+const props = defineProps<{ shared: SharedPlan | null }>()
+const emit = defineEmits<{ done: [] }>()
 
 const { data } = useDataset()
 const { t, locale } = useI18n()
+const plans = usePlans()
 
-const course = computed(() => data.value.courses.find((c) => c.code === props.setup.course)?.title ?? props.setup.course)
+// A degree this site doesn't know (an edited link, or one dropped since) reads as broken too.
+const readable = computed(() => {
+  const s = props.shared
+  return s && data.value.courses.some((c) => c.code === s.setup.course) ? s : null
+})
+const count = computed(() => readable.value?.terms.reduce((sum, x) => sum + x.subjects.length, 0) ?? 0)
+const room = computed(() => plans.blank.value || plans.canAdd.value)
+const asking = shallowRef(false)
+const yes = useTemplateRef<HTMLButtonElement>('yes')
+
+async function ask(): Promise<void> {
+  asking.value = true
+  await nextTick()
+  yes.value?.focus()
+}
+function take(): void {
+  if (!readable.value) return
+  plans.adopt(readable.value.setup, readable.value.terms, readable.value.name)
+  emit('done')
+}
+
+const course = computed(() => {
+  const code = readable.value?.setup.course ?? ''
+  return data.value.courses.find((c) => c.code === code)?.title ?? code
+})
 const title = (id: string | undefined) => (id ? data.value.components.find((c) => c.id === id)?.title : undefined)
 const major = computed(() => {
-  const main = [title(props.setup.major), title(props.setup.major2), title(props.setup.specialisation)].filter(Boolean).join(' + ')
-  const minors = (props.setup.minors ?? []).map(title).filter(Boolean).join(' + ')
-  const diploma = props.setup.diploma ? data.value.courses.find((c) => c.code === props.setup.diploma)?.title : undefined
-  return [main || (props.setup.field ? t.value('wizard.fieldUndecided', { field: t.value(`majorGroup.${props.setup.field}`) }) : t.value('wizard.notSure')), minors ? t.value('plans.minorLine', { title: minors }) : '', diploma ? t.value('plans.diplomaLine', { title: diploma }) : '']
+  const setup = readable.value?.setup
+  if (!setup) return ''
+  const main = [title(setup.major), title(setup.major2), title(setup.specialisation)].filter(Boolean).join(' + ')
+  const minors = (setup.minors ?? []).map(title).filter(Boolean).join(' + ')
+  const diploma = setup.diploma ? data.value.courses.find((c) => c.code === setup.diploma)?.title : undefined
+  return [main || (setup.field ? t.value('wizard.fieldUndecided', { field: t.value(`majorGroup.${setup.field}`) }) : t.value('wizard.notSure')), minors ? t.value('plans.minorLine', { title: minors }) : '', diploma ? t.value('plans.diplomaLine', { title: diploma }) : '']
     .filter(Boolean)
     .join(' · ')
 })
 const terms = computed(() =>
-  props.terms
+  (readable.value?.terms ?? [])
     .filter((term) => term.subjects.length > 0)
     .map((term) => ({
       key: `${term.year}|${term.period}`,
@@ -42,7 +72,31 @@ const terms = computed(() =>
 </script>
 
 <template>
-  <div class="shared-plan">
+  <section v-if="!readable" class="shared surface" role="alert">
+    <p class="shared-text">{{ t('plan.shareSheet.broken') }}</p>
+    <p class="shared-sub">{{ t('plan.shareSheet.brokenWhy') }}</p>
+    <div class="shared-actions">
+      <button class="button button-quiet" type="button" @click="emit('done')">{{ t('plan.shareSheet.close') }}</button>
+    </div>
+  </section>
+  <div v-else class="shared-plan">
+    <section class="shared surface">
+      <p class="shared-text">{{ readable.name ? t('plan.shareSheet.namedText', { name: readable.name, n: count }) : t('plan.sharedText', { n: count }) }}</p>
+      <template v-if="asking">
+        <p class="shared-sub" role="status">{{ plans.blank.value ? t('plan.shareSheet.askBlank') : t('plan.shareSheet.ask') }}</p>
+        <div class="shared-actions">
+          <button ref="yes" class="button button-accent" type="button" @click="take">{{ plans.blank.value ? t('plan.sharedImport') : t('plan.shareSheet.addNew') }}</button>
+          <button class="button button-quiet" type="button" @click="asking = false">{{ t('plans.cancel') }}</button>
+        </div>
+      </template>
+      <template v-else>
+        <p v-if="!room" class="shared-sub">{{ t('plan.shareSheet.full', { n: MAX_PLANS }) }}</p>
+        <div class="shared-actions">
+          <button v-if="room" class="button button-accent" type="button" @click="ask">{{ t('plan.sharedImport') }}</button>
+          <button class="button button-quiet" type="button" @click="emit('done')">{{ t('plan.sharedDismiss') }}</button>
+        </div>
+      </template>
+    </section>
     <p class="shared-plan-line">
       <strong>{{ course }}</strong> · {{ major }}
     </p>
@@ -63,6 +117,28 @@ const terms = computed(() =>
 </template>
 
 <style scoped>
+.shared {
+  display: grid;
+  gap: 10px;
+  padding: 18px 20px;
+}
+
+.shared-text {
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.shared-sub {
+  font-size: 0.9375rem;
+  color: var(--ink-soft);
+}
+
+.shared-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
 .shared-plan {
   display: grid;
   gap: 12px;

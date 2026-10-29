@@ -237,6 +237,39 @@ describe('plans in the app', () => {
     plans.switchTo(idA)
     expect(me.profile.value.career).toBe('accountant')
   })
+
+  it('a shared plan is imported as a new plan, or fills a blank first one; nothing is overwritten', async () => {
+    const { usePlan } = await import('../src/composables/usePlan')
+    const { usePlans } = await import('../src/composables/usePlans')
+    const shared = state('B-SCI', ['COMP10001', 'MAST10006'])
+    books.value = {}
+    const plan = usePlan()
+    const plans = usePlans()
+
+    // A fresh browser: the shared plan becomes Plan A, with its name, ready to use.
+    expect(plans.blank.value).toBe(true)
+    plans.adopt(shared.setup, shared.terms, 'Friend')
+    expect(plans.list.value.map((p) => [p.label, p.name])).toEqual([['A', 'Friend']])
+    expect(plan.setupChosen.value).toBe(true)
+    expect(plan.plannedCodes.value).toEqual(['COMP10001', 'MAST10006'])
+
+    // With a plan of their own: a new plan, opened, keeping their visa and study load; A as it was.
+    plan.updateSetup({ ...plan.setup.value, international: true, load: 25 })
+    plan.addSubject(0, 'MAST10007')
+    const before = JSON.stringify(plans.active.value)
+    expect(plans.blank.value).toBe(false)
+    plans.adopt(state('B-COM', ['ECON10004']).setup, state('B-COM', ['ECON10004']).terms)
+    expect(plans.list.value).toHaveLength(2)
+    expect(JSON.stringify(plans.list.value[0]!.state)).toBe(JSON.stringify(JSON.parse(before)))
+    expect(plans.active.value).toMatchObject({ label: 'B', setup: { course: 'B-COM', international: true, load: 25, confirmed: true } })
+    expect(plan.plannedCodes.value).toEqual(['ECON10004'])
+
+    // At the limit, nothing changes.
+    while (plans.canAdd.value) plans.create('copy')
+    const full = JSON.stringify(books.value)
+    plans.adopt(shared.setup, shared.terms)
+    expect(JSON.stringify(books.value)).toBe(full)
+  })
 })
 
 describe('a plan sees its own career, never the record\'s old one', () => {

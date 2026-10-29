@@ -25,7 +25,7 @@ import { usePhone } from '@/composables/usePhone'
 import { usePlans } from '@/composables/usePlans'
 import { sharePlanImage } from '@/utils/planImage'
 import { localTitle } from '@/i18n/localized'
-import { decodePlan, encodePlan } from '@/utils/sharePlan'
+import { decodePlan } from '@/utils/sharePlan'
 import { boardEdges, countsToward } from '@/utils/planBoard'
 import { pinSpot } from '@/utils/pendingAdd'
 import { cloneJson } from '@/utils/clone'
@@ -51,32 +51,15 @@ const { t, locale } = useI18n()
 
 const editing = shallowRef(false)
 
-// A plan someone shared: /plan?share=… (packed into the link, no server).
+// A plan someone shared: /plan?share=… (packed into the link, no server). A link that can't be
+// read (cut off, edited) still opens SharedPlanView, which says so.
 const { query } = useView()
-const shared = computed(() => {
-  const code = query.value.get('share')
-  return code ? decodePlan(code) : null
-})
-function importShared(): void {
-  if (!shared.value) return
-  plan.importPlan(shared.value.setup, shared.value.terms)
+const shareCode = computed(() => query.value.get('share'))
+const viewingShared = computed(() => shareCode.value !== null)
+const shared = computed(() => (shareCode.value ? decodePlan(shareCode.value) : null))
+function closeShared(): void {
   editing.value = false
   go('plan')
-}
-
-const copied = shallowRef(false)
-async function share(): Promise<void> {
-  trackEvent('plan-share')
-  const url = new URL(link(`plan?share=${encodePlan(plan.setup.value, plan.terms.value)}`), location.href).href
-  try {
-    if (navigator.share) await navigator.share({ title: 'PickMySubjects', url })
-    else await navigator.clipboard.writeText(url)
-    copied.value = true
-    setTimeout(() => (copied.value = false), 2500)
-  } catch {
-    // Cancelled, or the clipboard is blocked: show the link so it can be copied by hand.
-    window.prompt(t.value('plan.share'), url)
-  }
 }
 
 function printPlan(): void {
@@ -163,7 +146,7 @@ const failed = computed(() =>
     }),
 )
 const showWizard = computed(
-  () => editing.value || (!plan.setupChosen.value && !shared.value),
+  () => editing.value || (!plan.setupChosen.value && !viewingShared.value),
 )
 
 // Which planned subjects the degree or major insists on, shown as a tag on each card.
@@ -584,27 +567,27 @@ watch(
   { immediate: true },
 )
 // Arriving with ?add= when the plan is already set up: it goes in straight away.
-watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.value && !editing.value) placePending() }, { immediate: true })
+watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !viewingShared.value && !editing.value) placePending() }, { immediate: true })
 </script>
 
 <template>
   <div class="planner">
     <PlanHero
       :title="onBoard ? t('menu.myPlan') : t('plan.title')"
-      :setup="!showWizard && !shared ? summary : undefined"
-      :facts="!showWizard && !shared ? heroFacts : undefined"
-      :next="!showWizard && !shared && onBoard ? nextStep : undefined"
+      :setup="!showWizard && !viewingShared ? summary : undefined"
+      :facts="!showWizard && !viewingShared ? heroFacts : undefined"
+      :next="!showWizard && !viewingShared && onBoard ? nextStep : undefined"
       @edit="editing = true"
     >
-      <div v-if="!shared" class="hero-row">
+      <div v-if="!viewingShared" class="hero-row">
         <PlanSwitcher class="hero-switcher" />
-        <PlanActions v-if="!showWizard && onBoard" :copied="copied" :imaging="imaging" @share="share" @save-image="saveImage" @print="printPlan" />
+        <PlanActions v-if="!showWizard && onBoard" :imaging="imaging" @save-image="saveImage" @print="printPlan" />
       </div>
       <template v-if="showWizard">
         <p class="page-lede">{{ t('plan.ledeShort') }} <a class="guide-link" :href="link('guide')">{{ t('guide.nav') }} →</a></p>
         <p v-if="pendingAdd" class="started" role="status">{{ t('plan.addPending', { code: pendingAdd }) }}</p>
       </template>
-      <template v-if="!shared && !showWizard && onBoard" #foot>
+      <template v-if="!viewingShared && !showWizard && onBoard" #foot>
         <div id="rules" class="rules-strip">
           <PlanRequirements
             v-if="plan.courseCheck.value.statuses.length"
@@ -675,7 +658,7 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
       @cancel="editing = false"
     />
 
-    <SharedPlanView v-if="shareCode !== null" :shared="shared" @done="closeShared" />
+    <SharedPlanView v-if="viewingShared" :shared="shared" @done="closeShared" />
 
     <!-- The board first, at full width; the plan's other parts under it. -->
     <div v-else-if="!showWizard" class="article">
@@ -782,7 +765,7 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
       </div>
     </div>
 
-    <template v-if="!shared && !showWizard">
+    <template v-if="!viewingShared && !showWizard">
       <button v-if="phone && onBoard && !undo && !peek" class="add-fab" type="button" @click="addOnPhone">
         <Plus :size="18" aria-hidden="true" />{{ t('plan.addFab') }}
       </button>
@@ -840,15 +823,17 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
   padding-top: 20px;
 }
 
+/* Share and Save go on their own line when they don't fit beside the plans (phones). */
 .hero-row {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 8px;
   width: 100%;
 }
 
 .hero-switcher {
-  flex: 1;
+  flex: 1 1 auto;
   min-width: 0;
 }
 
@@ -1063,27 +1048,6 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
 .meta-line .button {
   min-height: 36px;
   margin-left: auto;
-}
-
-.shared {
-  display: grid;
-  gap: 10px;
-  padding: 18px 20px;
-}
-
-.shared-text {
-  font-weight: 600;
-}
-
-.shared-warn {
-  font-size: 0.9375rem;
-  color: color-mix(in srgb, var(--warn) 80%, var(--ink)); /* darker in light, lighter in dark: 4.5:1 on glass */
-}
-
-.shared-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
 }
 
 .timeline-bar {

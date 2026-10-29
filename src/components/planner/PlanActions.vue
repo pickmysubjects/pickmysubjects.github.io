@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, useTemplateRef } from 'vue'
-import { CalendarPlus, Ellipsis, ImageDown, Printer, Share2 } from 'lucide-vue-next'
 import InfoTip from '@/components/InfoTip.vue'
+import SharePanel from '@/components/planner/SharePanel.vue'
 import { usePlan } from '@/composables/usePlan'
 import { useProfile } from '@/composables/useProfile'
 import { useI18n } from '@/i18n'
@@ -9,12 +9,12 @@ import { termFullLabel } from '@/i18n/format'
 import { buildIcs, datesForTerms, downloadIcs, KEY_DATES, melbourneToday, type KeyDate } from '@/utils/keyDates'
 
 /**
- * The plan's share and save actions, in the hero: "Share" (copies a link), and a Save menu with
- * an image, print / PDF and the key dates as a calendar file. On phones it's one ⋯ button.
- * #share and #calendar land here (the menu opens on #calendar).
+ * The plan's share and save actions, in the hero: "Share" (a panel with the link to copy or send),
+ * and a Save menu with an image, print / PDF and the key dates as a calendar file. Text buttons,
+ * the same on phones. #share and #calendar land here (the menu opens on #calendar).
  */
-defineProps<{ copied: boolean; imaging: boolean }>()
-const emit = defineEmits<{ share: []; saveImage: []; print: [] }>()
+defineProps<{ imaging: boolean }>()
+const emit = defineEmits<{ saveImage: []; print: [] }>()
 const { t } = useI18n()
 const plan = usePlan()
 const { profile } = useProfile()
@@ -32,9 +32,8 @@ const dates = computed(() => {
 })
 const label = (d: KeyDate) => t.value(`cal.event.${d.kind}`, { term: termFullLabel(t.value, { year: d.year, period: d.term }) })
 
-function pick(what: 'share' | 'saveImage' | 'print' | 'calendar'): void {
+function pick(what: 'saveImage' | 'print' | 'calendar'): void {
   if (what === 'calendar') downloadIcs(buildIcs(dates.value, label), 'my-unimelb-dates.ics')
-  else if (what === 'share') emit('share')
   else if (what === 'saveImage') emit('saveImage')
   else emit('print')
   if (menu.value) menu.value.open = false
@@ -50,22 +49,14 @@ onBeforeUnmount(() => document.removeEventListener('pointerdown', outside))
 
 <template>
   <div id="share" class="pact">
-    <button class="button button-quiet pact-btn pact-wide" type="button" @click="pick('share')">
-      <Share2 :size="16" aria-hidden="true" />
-      <span class="swap-label"><span :class="{ 'swap-off': copied }">{{ t('plan.share') }}</span><span :class="{ 'swap-off': !copied }" aria-hidden="true">{{ t('plan.copied') }}</span></span>
-    </button>
-    <span class="visually-hidden" role="status">{{ copied ? t('plan.copied') : '' }}</span>
+    <SharePanel />
     <details ref="menu" class="pact-more">
-      <summary class="button button-quiet pact-btn" :aria-label="`${t('plan.share')} · ${t('plan.saveMenu')}`">
-        <!-- Phones: a share icon, so it isn't a second ⋯ beside the plan switcher's. -->
-        <Ellipsis :size="18" aria-hidden="true" class="pact-wide" /><Share2 :size="18" aria-hidden="true" class="pact-narrow-icon" /><span class="pact-wide">{{ t('plan.saveMenu') }}</span>
-      </summary>
+      <summary class="button button-quiet pact-btn">{{ t('plan.saveMenu') }}</summary>
       <div class="pact-menu" role="menu">
-        <button class="pact-item pact-narrow" role="menuitem" type="button" @click="pick('share')"><Share2 :size="16" aria-hidden="true" />{{ copied ? t('plan.copied') : t('plan.share') }}</button>
-        <button class="pact-item" role="menuitem" type="button" :disabled="imaging" @click="pick('saveImage')"><ImageDown :size="16" aria-hidden="true" />{{ t('plan.saveImage') }}</button>
-        <button class="pact-item" role="menuitem" type="button" @click="pick('print')"><Printer :size="16" aria-hidden="true" />{{ t('plan.print') }}</button>
+        <button class="pact-item" role="menuitem" type="button" :disabled="imaging" @click="pick('saveImage')">{{ t('plan.saveImage') }}</button>
+        <button class="pact-item" role="menuitem" type="button" @click="pick('print')">{{ t('plan.print') }}</button>
         <span class="pact-row">
-          <button id="calendar" class="pact-item" role="menuitem" type="button" :disabled="!dates.length" @click="pick('calendar')"><CalendarPlus :size="16" aria-hidden="true" />{{ t('plan.addCalendar') }}</button>
+          <button id="calendar" class="pact-item" role="menuitem" type="button" :disabled="!dates.length" @click="pick('calendar')">{{ t('plan.addCalendar') }}</button>
           <InfoTip :text="dates.length ? t('cal.info', { n: dates.length }) : t('menu.miss.noDates')" />
         </span>
       </div>
@@ -76,18 +67,18 @@ onBeforeUnmount(() => document.removeEventListener('pointerdown', outside))
 <style scoped>
 .pact {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: center;
   gap: 8px;
 }
 
-.pact-btn {
+.pact :deep(.pact-btn) {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
   min-height: 38px;
   padding: 0 14px;
   font-size: 0.875rem;
+  white-space: nowrap;
 }
 
 .pact-more {
@@ -106,7 +97,7 @@ onBeforeUnmount(() => document.removeEventListener('pointerdown', outside))
 .pact-menu {
   position: absolute;
   top: calc(100% + 6px);
-  left: 0;
+  right: 0;
   z-index: 20;
   display: grid;
   min-width: 200px;
@@ -126,7 +117,6 @@ onBeforeUnmount(() => document.removeEventListener('pointerdown', outside))
   display: flex;
   flex: 1;
   align-items: center;
-  gap: 8px;
   min-height: 40px;
   padding: 0 10px;
   border: 0;
@@ -150,47 +140,10 @@ onBeforeUnmount(() => document.removeEventListener('pointerdown', outside))
   cursor: default;
 }
 
-.pact-narrow,
-.pact-narrow-icon {
-  display: none;
-}
-
-/* Two labels in one cell, one shown: the button is as wide as the longer and never resizes. */
-.swap-label {
-  display: inline-grid;
-  justify-items: start;
-}
-
-.swap-label > span {
-  grid-area: 1 / 1;
-}
-
-.swap-label > .swap-off {
-  visibility: hidden;
-}
-
-/* Phones: one ⋯ button, share inside the menu. */
 @media (max-width: 640px) {
-  .pact-wide {
-    display: none;
-  }
-
-  .pact-narrow {
-    display: flex;
-  }
-
-  .pact-narrow-icon {
-    display: block;
-  }
-
-  .pact-btn {
+  .pact :deep(.pact-btn) {
     min-height: 44px;
     padding: 0 12px;
-  }
-
-  .pact-menu {
-    right: 0;
-    left: auto;
   }
 }
 </style>

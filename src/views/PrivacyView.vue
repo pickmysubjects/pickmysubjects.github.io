@@ -6,7 +6,7 @@ import { useI18n } from '@/i18n'
 
 /** /privacy/: one short section per thing that could be about you, then the date it was last changed. */
 const { t } = useI18n()
-const sections = ['local', 'ratings', 'grades', 'feedback', 'noTracking', 'google', 'removal'] as const
+const sections = ['local', 'shareLink', 'ratings', 'grades', 'feedback', 'noTracking', 'google', 'removal'] as const
 </script>
 
 <template>

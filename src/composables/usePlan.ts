@@ -414,15 +414,6 @@ export function usePlan() {
     })
   }
 
-  /** Take a plan someone shared (setup and terms); this replaces the current one. */
-  function importPlan(setup: PlanSetup, terms: PlanTerm[]): void {
-    // Whether you're on a student visa, and how much you study a semester, are about you, not
-    // the plan: a shared link keeps yours.
-    const { international, load } = state.value.setup
-    // A shared plan is a finished one: show it, not the setup questions (a fresh browser has no setup yet).
-    save(() => ({ setup: { ...setup, confirmed: true, ...(international !== undefined ? { international } : {}), ...(load !== undefined ? { load } : {}) }, terms, notes: [], unplaced: [] }))
-  }
-
   /** Make a heavy semester lighter: take the spread-out arrangement, or move one subject to a summer/winter term. */
   function applyRelief(termIndex: number, relief: Relief): void {
     save((s) => {
@@ -486,6 +477,5 @@ export function usePlan() {
     unstale,
     removeLastTerm,
     applyRelief,
-    importPlan,
   }
 }
