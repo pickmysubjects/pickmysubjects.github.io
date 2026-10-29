@@ -223,18 +223,16 @@ onBeforeUnmount(() => io?.disconnect())
   border-radius: 16px;
   color: var(--ink);
   text-decoration: none;
-  transition: transform 160ms ease, background-color 160ms ease;
+  transition: background-color 160ms ease;
 }
 
 .step:hover {
   background: color-mix(in srgb, var(--glass-fill-hover) 70%, transparent);
-  transform: translateY(-2px);
 }
 
 .step:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
-  transform: translateY(-2px);
 }
 
 .dot {
@@ -432,11 +430,6 @@ onBeforeUnmount(() => io?.disconnect())
   .fresh .seg::after,
   .is-next .dot::after {
     animation: none;
-  }
-
-  .step:hover,
-  .step:focus-visible {
-    transform: none;
   }
 }
 </style>

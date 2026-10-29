@@ -143,6 +143,9 @@ const returning = computed(() => plan.courseChosen.value || !plan.isEmpty.value 
 }
 
 .hero-em {
+  /* A block box keeps the gradient line inside its own line height (CJK fonts are taller). */
+  display: inline-block;
+  max-width: 100%;
   font-style: normal;
   background: linear-gradient(100deg, var(--accent-fill) 10%, #8f7bf5 95%);
   -webkit-background-clip: text;

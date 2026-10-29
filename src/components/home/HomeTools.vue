@@ -122,18 +122,16 @@ onBeforeUnmount(() => io?.disconnect())
   border-radius: 16px;
   color: var(--ink);
   text-decoration: none;
-  transition: transform 160ms ease, background-color 160ms ease;
+  transition: background-color 160ms ease;
 }
 
 .tool:hover {
   background: color-mix(in srgb, var(--glass-fill-hover) 70%, transparent);
-  transform: translateY(-2px);
 }
 
 .tool:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
-  transform: translateY(-2px);
 }
 
 /* The steps' "done" circle: a soft brand tint with the icon in the accent colour. */
@@ -218,11 +216,6 @@ onBeforeUnmount(() => io?.disconnect())
 @media (prefers-reduced-motion: reduce) {
   .tool {
     transition: none;
-  }
-
-  .tool:hover,
-  .tool:focus-visible {
-    transform: none;
   }
 }
 </style>

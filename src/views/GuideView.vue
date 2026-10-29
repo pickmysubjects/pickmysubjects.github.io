@@ -170,11 +170,6 @@ const hasToc = computed(() => showToc(toc.value.filter((i) => !i.sub).length))
   padding: 20px 24px;
   color: inherit;
   text-decoration: none;
-  transition: transform 0.2s var(--ease-spring);
-}
-
-.pager-next:hover {
-  transform: translateY(-2px);
 }
 
 .pager-next-text {
