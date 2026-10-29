@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { addDays, cleanRevision, cleanRevisionStore, dayLoad, defaultStart, examPeriod, revisionTerms, planRevision, revisionIcs, sessionTimes, subjectWeight, type RevisionInput, type RevisionPlan, type RevisionSubject } from '../src/engine/revisionPlan'
+import { addDays, cappedWeights, cleanRevision, cleanRevisionStore, DAY_BEFORE_HOURS, dayLoad, daysBetween, sittings, defaultStart, examPeriod, revisionTerms, planRevision, revisionIcs, sessionTimes, subjectWeight, type RevisionInput, type RevisionPlan, type RevisionSubject } from '../src/engine/revisionPlan'
 
 const sub = (code: string, exam: string, extra: Partial<RevisionSubject> = {}): RevisionSubject => ({ code, exam, difficulty: 'average', ...extra })
 const hoursOf = (p: RevisionPlan, code: string) => p.totals.find((t) => t.code === code)?.hours ?? 0
@@ -10,19 +10,30 @@ const four: RevisionInput = {
   subjects: [sub('COMP10001', '2026-11-04', { difficulty: 'harder', examWeight: 60 }), sub('MAST10006', '2026-11-06', { examWeight: 60 }), sub('BIOL10004', '2026-11-12', { difficulty: 'easier', examWeight: 50 }), sub('UNIB10002', '2026-11-13', { examWeight: 0 })],
 }
 
+const dayHours = (d: { sessions: { hours: number }[] }) => d.sessions.reduce((t, s) => t + s.hours, 0)
+const daysOf = (p: RevisionPlan, code: string) => p.days.filter((d) => d.sessions.some((s) => s.code === code)).map((d) => d.date)
+const TYPE_ORDER = { learn: 0, test: 1, paper: 2 } as const
+
 /** The rules every plan keeps, whatever the input. */
 function checkInvariants(input: RevisionInput, p: RevisionPlan) {
-  const limit = input.hoursPerDay == null ? 7 : Math.floor(Math.min(input.hoursPerDay, 16) * 2) / 2
+  const limit = input.hoursPerDay == null ? 6 : Math.floor(Math.min(input.hoursPerDay, 8) * 2) / 2
   for (const d of p.days) {
-    const sum = d.sessions.reduce((t, s) => t + s.hours, 0)
-    expect(sum).toBeLessThanOrEqual(limit)
+    expect(dayHours(d)).toBeLessThanOrEqual(Math.min(limit, 8))
     if (d.kind !== 'study') expect(d.sessions).toEqual([])
+    else if (d.sessions.length) expect(d.reason).toBeDefined()
     for (const s of d.sessions) {
       const exam = input.subjects.find((x) => x.code === s.code)!.exam
       expect(d.date < exam, `${s.code} on ${d.date} is after its exam`).toBe(true)
       expect(s.hours * 2).toBe(Math.round(s.hours * 2))
+      expect(s.hours).toBeLessThanOrEqual(1.5)
+      if (dayHours(d) >= 1) expect(s.hours).toBeGreaterThanOrEqual(1)
     }
-    expect(d.sessions.length).toBeLessThanOrEqual(3)
+    expect(new Set(d.sessions.map((s) => s.code)).size).toBeLessThanOrEqual(3)
+  }
+  // Each subject's sittings go learn → test → past paper, never back.
+  for (const t of p.totals) {
+    const types = p.days.flatMap((d) => d.sessions.filter((s) => s.code === t.code)).map((s) => TYPE_ORDER[s.type])
+    expect(types).toEqual([...types].sort((a, b) => a - b))
   }
   const sum = p.totals.reduce((t, x) => t + x.hours, 0)
   expect(sum).toBe(p.days.flatMap((d) => d.sessions).reduce((t, s) => t + s.hours, 0))
@@ -37,10 +48,14 @@ describe('planRevision', () => {
     checkInvariants(four, p)
   })
 
-  it('never goes over the hours given, and gives all of them the day before an exam', () => {
+  it('never goes over the hours given, nor 8 hours whatever is typed', () => {
     const p = planRevision(four)
-    for (const d of p.days.filter((d) => d.kind === 'study' && d.sessions.length)) expect(d.sessions.reduce((t, s) => t + s.hours, 0)).toBeLessThanOrEqual(6)
-    expect(p.days.find((d) => d.date === '2026-11-03')!.sessions.reduce((t, s) => t + s.hours, 0)).toBe(6)
+    for (const d of p.days) expect(dayHours(d)).toBeLessThanOrEqual(6)
+    const big = planRevision({ ...four, hoursPerDay: 40 })
+    expect(Math.max(...big.days.map(dayHours))).toBeLessThanOrEqual(8)
+    checkInvariants({ ...four, hoursPerDay: 40 }, big)
+    const auto = planRevision({ ...four, hoursPerDay: null })
+    expect(Math.max(...auto.days.map(dayHours))).toBeLessThanOrEqual(6)
   })
 
   it('keeps exam days and rest days free', () => {
@@ -50,14 +65,74 @@ describe('planRevision', () => {
     expect(p.days.filter((d) => d.kind !== 'study').every((d) => !d.sessions.length)).toBe(true)
   })
 
-  it('gives the last free day before each exam to that subject', () => {
+  it('the day before an exam: that subject only, past papers, ends early, with the reason', () => {
     const p = planRevision(four)
-    const only = (date: string) => p.days.find((d) => d.date === date)!.sessions
-    expect(only('2026-11-03')).toEqual([{ code: 'COMP10001', hours: 6, focus: true }])
-    expect(only('2026-11-05')).toEqual([{ code: 'MAST10006', hours: 6, focus: true }])
-    expect(only('2026-11-11')).toEqual([{ code: 'BIOL10004', hours: 6, focus: true }])
-    // The 12th is BIOL's exam; UNIB's day before that is the 10th.
-    expect(only('2026-11-10')).toEqual([{ code: 'UNIB10002', hours: dayLoad(2, 6), focus: true }])
+    for (const [date, code] of [['2026-11-03', 'COMP10001'], ['2026-11-05', 'MAST10006'], ['2026-11-11', 'BIOL10004'], ['2026-11-10', 'UNIB10002']] as const) {
+      const d = p.days.find((x) => x.date === date)!
+      expect(d.sessions.every((s) => s.code === code && s.focus && s.type === 'paper')).toBe(true)
+      expect(dayHours(d)).toBeLessThanOrEqual(DAY_BEFORE_HOURS)
+      expect(d.reason).toEqual({ why: 'dayBefore', code })
+      const times = sessionTimes(d, '09:00')
+      expect(times.at(-1)!.to).toBeLessThanOrEqual(20 * 60)
+    }
+  })
+
+  it('spreads every subject over at least 3 separate days when the window allows', () => {
+    const p = planRevision(four)
+    for (const t of p.totals) expect(daysOf(p, t.code).length, t.code).toBeGreaterThanOrEqual(3)
+    const long = { start: '2026-10-05', hoursPerDay: 5, subjects: [sub('AAAA10001', '2026-11-02'), sub('BBBB10001', '2026-11-04', { difficulty: 'harder' }), sub('CCCC10001', '2026-11-06'), sub('DDDD10001', '2026-11-09', { difficulty: 'easier' })] }
+    const q = planRevision(long)
+    checkInvariants(long, q)
+    for (const t of q.totals) expect(daysOf(q, t.code).length, t.code).toBeGreaterThanOrEqual(3)
+  })
+
+  it('leaves gaps of about 15% of the days left far from the exam: a subject 4 weeks out is not on every day', () => {
+    const input = { start: '2026-10-05', hoursPerDay: 4, subjects: [sub('AAAA10001', '2026-11-02'), sub('BBBB10001', '2026-11-03'), sub('CCCC10001', '2026-11-04'), sub('DDDD10001', '2026-11-05')] }
+    const p = planRevision(input)
+    const first = daysOf(p, 'DDDD10001').filter((d) => d < '2026-10-20')
+    const gaps = first.slice(1).map((d, i) => daysBetween(first[i]!, d))
+    expect(gaps.length).toBeGreaterThan(0)
+    expect(Math.min(...gaps)).toBeGreaterThanOrEqual(2)
+  })
+
+  it('mixes 2–3 subjects on a shared day and never masses one subject on it', () => {
+    const p = planRevision(four)
+    for (const d of p.days.filter((x) => x.sessions.length && !x.sessions[0]!.focus)) {
+      const codes = new Set(d.sessions.map((s) => s.code))
+      expect(codes.size).toBeGreaterThanOrEqual(2)
+      for (const c of codes) expect(d.sessions.filter((s) => s.code === c).reduce((t, s) => t + s.hours, 0)).toBeLessThanOrEqual(Math.ceil(dayHours(d) * 0.6 * 2) / 2)
+    }
+  })
+
+  it('no subject takes more than half of all the time', () => {
+    const input = { start: '2026-10-12', hoursPerDay: 6, subjects: [sub('AAAA10001', '2026-11-10', { difficulty: 'harder', examWeight: 100 }), sub('BBBB10001', '2026-11-10', { difficulty: 'easier', examWeight: 0 }), sub('CCCC10001', '2026-11-11', { difficulty: 'easier', examWeight: 0 })] }
+    const p = planRevision(input)
+    const total = p.totals.reduce((t, x) => t + x.hours, 0)
+    for (const t of p.totals) expect(t.hours / total, t.code).toBeLessThanOrEqual(0.5)
+    expect(cappedWeights([4, 1, 1])).toEqual([2, 1, 1])
+    expect(cappedWeights([2, 1])).toEqual([2, 1])
+  })
+
+  it('moves each subject from learning to self-testing to past papers', () => {
+    const p = planRevision(four)
+    for (const t of p.totals) {
+      const types = p.days.flatMap((d) => d.sessions.filter((s) => s.code === t.code)).map((s) => s.type)
+      expect(types[0], t.code).toBe('learn')
+      expect(types).toContain('test')
+      expect(types.at(-1)).toBe('paper')
+    }
+    checkInvariants(four, p)
+  })
+
+  it('an exam 3 days away or less: all self-testing, then past papers the day before', () => {
+    const input = { start: '2026-11-01', hoursPerDay: 6, subjects: [sub('AAAA10001', '2026-11-04'), sub('BBBB10001', '2026-11-20')] }
+    const p = planRevision(input)
+    const a = p.days.flatMap((d) => d.sessions.filter((s) => s.code === 'AAAA10001'))
+    expect(a.length).toBeGreaterThan(0)
+    expect(a.every((s) => s.type !== 'learn')).toBe(true)
+    expect(a.filter((s) => !s.focus).every((s) => s.reason === 'short')).toBe(true)
+    expect(p.days.find((d) => d.date === '2026-11-01')!.reason).toEqual({ why: 'short', code: 'AAAA10001' })
+    checkInvariants(input, p)
   })
 
   it('gives a harder subject with a bigger exam more time than an easier one on the same date', () => {
@@ -67,19 +142,20 @@ describe('planRevision', () => {
   })
 
   it('gives an earlier exam more of the shared days than a later one, all else equal', () => {
-    const p = planRevision({ start: '2026-10-20', hoursPerDay: 4, subjects: [sub('AAAA10001', '2026-11-20'), sub('BBBB10001', '2026-11-02')] })
+    const input = { start: '2026-10-20', hoursPerDay: 4, subjects: [sub('AAAA10001', '2026-11-20'), sub('BBBB10001', '2026-11-02')] }
+    const p = planRevision(input)
     const early = p.days.filter((d) => d.date < '2026-11-01').flatMap((d) => d.sessions)
     const h = (c: string) => early.filter((s) => s.code === c && !s.focus).reduce((t, s) => t + s.hours, 0)
     expect(h('BBBB10001')).toBeGreaterThan(h('AAAA10001'))
-    checkInvariants({ start: '2026-10-20', hoursPerDay: 4, subjects: [sub('AAAA10001', '2026-11-20'), sub('BBBB10001', '2026-11-02')] }, p)
+    checkInvariants(input, p)
   })
 
   it('shares the day before two exams on the same day', () => {
     const p = planRevision({ start: '2026-11-01', hoursPerDay: 5, subjects: [sub('AAAA10001', '2026-11-05'), sub('BBBB10001', '2026-11-05', { difficulty: 'harder' })] })
     const eve = p.days.find((d) => d.date === '2026-11-04')!.sessions
-    expect(eve.map((s) => s.code).sort()).toEqual(['AAAA10001', 'BBBB10001'])
-    expect(eve.every((s) => s.focus)).toBe(true)
-    expect(eve.reduce((t, s) => t + s.hours, 0)).toBe(5)
+    expect([...new Set(eve.map((s) => s.code))].sort()).toEqual(['AAAA10001', 'BBBB10001'])
+    expect(eve.every((s) => s.focus && s.type === 'paper')).toBe(true)
+    expect(dayHours({ sessions: eve })).toBe(5)
     expect(p.days.find((d) => d.date === '2026-11-05')!.exams).toEqual(['AAAA10001', 'BBBB10001'])
   })
 
@@ -90,7 +166,7 @@ describe('planRevision', () => {
       { code: 'BBBB10001', why: 'pastExam' },
       { code: 'CCCC10001', why: 'noDate' },
     ])
-    expect(p.totals).toEqual([{ code: 'DDDD10001', hours: [6, 7, 8].map((d) => dayLoad(9 - d, 4)).reduce((a, b) => a + b) + dayLoad(4, 4) }])
+    expect(p.totals).toEqual([{ code: 'DDDD10001', hours: [6, 7].map((d) => dayLoad(9 - d, 4)).reduce((a, b) => a + b) + dayLoad(5, 4) + Math.min(dayLoad(1, 4), DAY_BEFORE_HOURS) }])
   })
 
   it('plans nothing with zero hours, but still shows the days', () => {
@@ -100,17 +176,15 @@ describe('planRevision', () => {
     expect(p.totals.every((t) => t.hours === 0)).toBe(true)
   })
 
-  it('treats nonsense hours as zero and caps a day at 16', () => {
+  it('treats nonsense hours as zero', () => {
     expect(planRevision({ ...four, hoursPerDay: Number.NaN }).empty).toBe(true)
     expect(planRevision({ ...four, hoursPerDay: -3 }).empty).toBe(true)
-    const p = planRevision({ ...four, hoursPerDay: 40 })
-    expect(Math.max(...p.days.map((d) => d.sessions.reduce((t, s) => t + s.hours, 0)))).toBe(16)
   })
 
   it('rounds hours down to half hours', () => {
     const p = planRevision({ ...four, hoursPerDay: 2.9 })
     checkInvariants({ ...four, hoursPerDay: 2.5 }, p)
-    expect(p.days.find((d) => d.date === '2026-11-03')!.sessions[0]!.hours).toBe(2.5)
+    expect(dayHours(p.days.find((d) => d.date === '2026-11-03')!)).toBe(2.5)
   })
 
   it('plans one subject on every free day before its exam', () => {
@@ -132,6 +206,14 @@ describe('planRevision', () => {
     for (const d of p.days) expect(d.sessions.length).toBeLessThanOrEqual(1)
   })
 
+  it('splits a subject\'s hours into sittings of 1 to 1.5 hours', () => {
+    expect(sittings(1)).toEqual([1])
+    expect(sittings(2)).toEqual([1, 1])
+    expect(sittings(3)).toEqual([1.5, 1.5])
+    expect(sittings(4)).toEqual([1.5, 1.5, 1])
+    expect(sittings(0.5)).toEqual([0.5])
+  })
+
   it('keeps rest days even when every day is one', () => {
     const p = planRevision({ ...four, restWeekdays: [0, 1, 2, 3, 4, 5, 6] })
     expect(p.empty).toBe(true)
@@ -148,6 +230,7 @@ describe('planRevision', () => {
 
   it('is deterministic and keeps the first of a repeated subject', () => {
     expect(planRevision(four)).toEqual(planRevision(structuredClone(four)))
+    expect(JSON.stringify(planRevision({ ...four, hoursPerDay: null }))).toBe(JSON.stringify(planRevision({ ...structuredClone(four), hoursPerDay: null })))
     const dup = planRevision({ ...four, subjects: [...four.subjects, sub('COMP10001', '2026-11-30')] })
     expect(dup.days.at(-1)!.date).toBe('2026-11-13')
     expect(dup.totals.length).toBe(4)
@@ -162,7 +245,7 @@ describe('planRevision', () => {
 })
 
 describe('revisionIcs', () => {
-  const text = { session: (c: string, f: boolean) => `${f ? 'Final review' : 'Revise'} ${c}`, exam: (c: string) => `Exam: ${c}`, reminder: 'Study, soon' }
+  const text = { session: (c: string, t: string) => `${t === 'paper' ? 'Past paper' : 'Revise'} ${c}`, exam: (c: string) => `Exam: ${c}`, reminder: 'Study, soon' }
   const subjects = [sub('AAAA10001', '2026-10-06', { time: '13:30' }), sub('BBBB10001', '2026-10-07')]
   const p = planRevision({ start: '2026-10-02', hoursPerDay: 3, subjects })
   const ics = revisionIcs(p, subjects, '09:00', text, new Date('2026-10-01T00:00:00Z'))
@@ -187,9 +270,10 @@ describe('revisionIcs', () => {
     expect(ics).toContain('DTSTAMP:20261001T000000Z')
   })
 
-  it('puts sessions back to back and never past midnight', () => {
-    const day = { date: '2026-10-02', kind: 'study' as const, exams: [], sessions: [{ code: 'A', hours: 2, focus: false }, { code: 'B', hours: 3, focus: false }] }
-    expect(sessionTimes(day, '21:00').map((x) => [x.from, x.to])).toEqual([[1260, 1380], [1380, 1439]])
+  it('puts a 10-minute break between sittings and ends by 22:00', () => {
+    const one = (code: string, hours: number) => ({ code, hours, focus: false, type: 'test' as const, reason: 'test' as const })
+    const day = { date: '2026-10-02', kind: 'study' as const, exams: [], sessions: [one('A', 1.5), one('B', 1), one('C', 1.5)] }
+    expect(sessionTimes(day, '19:00').map((x) => [x.from, x.to])).toEqual([[1140, 1230], [1240, 1300], [1310, 1320]].slice(0, 2))
   })
 })
 
@@ -295,7 +379,7 @@ describe('several exams in one period', () => {
 
   it('gives exams a day apart their own last free days, earlier exams choosing first', () => {
     const p = planRevision(five)
-    const focus = (date: string) => p.days.find((d) => d.date === date)!.sessions.filter((s) => s.focus).map((s) => s.code)
+    const focus = (date: string) => [...new Set(p.days.find((d) => d.date === date)!.sessions.filter((s) => s.focus).map((s) => s.code))].sort()
     expect(focus('2026-11-03')).toEqual(['AAAA20001', 'BBBB20001'])
     expect(focus('2026-11-02')).toEqual(['CCCC20001'])
     expect(focus('2026-11-09')).toEqual(['DDDD20001'])
@@ -312,19 +396,19 @@ describe('several exams in one period', () => {
     const p = planRevision(input)
     checkInvariants(input, p)
     expect(p.days.map((d) => d.date)).toEqual(['2027-02-15', '2027-02-16', '2027-02-17', '2027-02-18', '2027-02-19'])
-    expect(p.totals).toEqual([{ code: 'BBBB20001', hours: [4, 3, 2, 1].map((d) => dayLoad(d)).reduce((a, b) => a + b) }])
+    expect(p.totals).toEqual([{ code: 'BBBB20001', hours: [4, 3, 2].map((d) => dayLoad(d)).reduce((a, b) => a + b) + Math.min(dayLoad(1), DAY_BEFORE_HOURS) }])
   })
 })
 
 describe('daily load', () => {
-  it('without hours: rises toward each exam, light far out, at most 7', () => {
+  it('without hours: rises toward each exam, 4 far out, at most 6', () => {
     const loads = Array.from({ length: 20 }, (_, i) => dayLoad(20 - i))
     loads.forEach((h, i) => i && expect(h).toBeGreaterThanOrEqual(loads[i - 1]!))
-    expect(loads[0]).toBe(2.5)
-    expect(dayLoad(1)).toBe(7)
-    expect(Math.max(...loads)).toBeLessThanOrEqual(7)
+    expect(loads[0]).toBe(4)
+    expect(dayLoad(1)).toBe(6)
+    expect(Math.max(...loads)).toBeLessThanOrEqual(6)
     const p = planRevision({ start: '2026-10-20', hoursPerDay: null, subjects: [sub('AAAA10001', '2026-11-10')] })
-    const day = p.days.filter((d) => d.sessions.length).map((d) => d.sessions.reduce((t, s) => t + s.hours, 0))
+    const day = p.days.filter((d) => d.sessions.length && !d.sessions[0]!.focus).map((d) => d.sessions.reduce((t, s) => t + s.hours, 0))
     day.forEach((h, i) => i && expect(h).toBeGreaterThanOrEqual(day[i - 1]!))
   })
 
@@ -338,10 +422,10 @@ describe('daily load', () => {
   it('exports sessions as all-day events when there is no start time', () => {
     const subjects = [sub('AAAA10001', '2026-10-06')]
     const p = planRevision({ start: '2026-10-03', hoursPerDay: 3, subjects })
-    const ics = revisionIcs(p, subjects, '', { session: (c, f, h) => `Revise ${c}${h ? ` ${h}h` : ''}`, exam: (c) => `Exam: ${c}`, reminder: 'Soon' }, new Date('2026-10-01T00:00:00Z'))
+    const ics = revisionIcs(p, subjects, '', { session: (c, _t, h) => `Revise ${c}${h ? ` ${h}h` : ''}`, exam: (c) => `Exam: ${c}`, reminder: 'Soon' }, new Date('2026-10-01T00:00:00Z'))
     expect(ics).not.toContain('DTSTART;TZID')
     expect(ics).toContain('DTSTART;VALUE=DATE:20261003')
     expect(ics.match(/BEGIN:VEVENT/g)!.length).toBe(p.days.flatMap((d) => d.sessions).length + 1)
-    expect(ics).toContain('SUMMARY:Revise AAAA10001 3h')
+    expect(ics).toContain('SUMMARY:Revise AAAA10001 1.5h')
   })
 })

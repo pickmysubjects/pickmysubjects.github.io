@@ -2,13 +2,15 @@
 import { computed, ref } from 'vue'
 import InfoTip from '@/components/InfoTip.vue'
 import SegmentedControl from '@/components/SegmentedControl.vue'
+import SidePanel from '@/components/SidePanel.vue'
+import RevisionPrint from '@/components/tools/RevisionPrint.vue'
 import SubjectSearch from '@/components/SubjectSearch.vue'
 import { useDataset } from '@/composables/useDataset'
 import { useRevisionPlan } from '@/composables/useRevisionPlan'
 import { useI18n } from '@/i18n'
 import { termLabel } from '@/i18n/format'
 import { localTitle } from '@/i18n/localized'
-import { addDays, revisionIcs, termKey, weekday, type RevisionDay, type RevisionDifficulty } from '@/engine/revisionPlan'
+import { addDays, revisionIcs, termKey, weekday, type RevisionDay, type RevisionDifficulty, type RevisionType } from '@/engine/revisionPlan'
 import { downloadIcs } from '@/utils/keyDates'
 
 /**
@@ -49,6 +51,21 @@ const weekdayName = (d: number) => weekdayLabel(addDays('2026-10-26', (d + 6) % 
 
 const hours = (h: number) => t.value('rev.hoursN', { n: h })
 const dayHours = (d: RevisionDay) => d.sessions.reduce((s, x) => s + x.hours, 0)
+/** A day's subjects with their hours, in the order they first come up: one block each in the calendar. */
+const blocksOf = (d: RevisionDay) => {
+  const out = new Map<string, number>()
+  for (const s of d.sessions) out.set(s.code, (out.get(s.code) ?? 0) + s.hours)
+  return [...out].map(([code, h]) => ({ code, hours: h }))
+}
+/** The one-line reason under a study day. */
+const whyOf = (d: RevisionDay) => (d.reason ? t.value(`rev.why.${d.reason.why}`, 'code' in d.reason ? { code: d.reason.code, n: 'n' in d.reason ? d.reason.n : 0 } : {}) : '')
+const typeOf = (type: RevisionType) => t.value(`rev.type.${type}`)
+/** Why a subject gets its time: its difficulty, and its final exam's share when known ("Harder · Final exam 60%"). */
+const weightWhy = (code: string) => {
+  const s = rp.subjects.value.find((x) => x.code === code)
+  if (!s) return ''
+  return [t.value(`rev.level.${s.difficulty}`), s.examWeight !== undefined ? t.value('rev.examShare', { n: s.examWeight }) : ''].filter(Boolean).join(' · ')
+}
 const timeOf = (code: string) => rows.value.find((r) => r.code === code)?.time
 const examText = (c: string) => [t.value('rev.exam'), c, timeOf(c)].filter(Boolean).join(' ')
 
@@ -57,7 +74,11 @@ const maxTotal = computed(() => Math.max(1, ...plan.value.totals.map((x) => x.ho
 const needsDate = (r: Row) => !rp.noExam(r) && !r.exam
 const missing = computed(() => (active.value.length === 0 ? 'none' : plan.value.days.length === 0 ? 'dates' : plan.value.empty ? 'hours' : ''))
 const pastSkips = computed(() => plan.value.skipped.filter((x) => x.why === 'pastExam'))
+const ART = () => import('@/components/tools/art/MiniRevision.vue')
 const summary = computed(() => t.value('rev.summary', { hours: hours(totalHours.value), n: plan.value.totals.length, start: shortLabel(start.value) }))
+
+/** The phone fold's one line: the period and the total hours. */
+const sideNow = computed(() => [term.value ? termLabel(t.value, term.value) : '', missing.value ? '' : hours(totalHours.value)].filter(Boolean).join(' · '))
 
 /** The agenda in weeks (Monday to Sunday), for the list view. */
 const weeks = computed(() => {
@@ -86,8 +107,8 @@ const picked = ref('')
 const shown = computed(() => plan.value.days.find((d) => d.date === picked.value) ?? plan.value.days.find((d) => d.date === rp.today) ?? plan.value.days[0])
 const cellNum = (c: { date: string; first: boolean }) => (c.first ? dayLabel(c.date) : fmtNum.value.format(asDate(c.date)))
 function cellLabel(d: RevisionDay): string {
-  const what = d.kind === 'exam' ? d.exams.map(examText).join(', ') : d.kind === 'rest' ? t.value('rev.restDay') : d.sessions.length ? d.sessions.map((s) => `${s.code} ${hours(s.hours)}`).join(', ') : t.value('rev.nothing')
-  return `${weekdayLabel(d.date)} ${dayLabel(d.date)}: ${what}`
+  const what = d.kind === 'exam' ? d.exams.map(examText).join(', ') : d.kind === 'rest' ? t.value('rev.restDay') : d.sessions.length ? blocksOf(d).map((s) => `${s.code} ${hours(s.hours)}`).join(', ') : t.value('rev.nothing')
+  return [`${weekdayLabel(d.date)} ${dayLabel(d.date)}: ${what}`, whyOf(d)].filter(Boolean).join('. ')
 }
 
 const view = ref<'calendar' | 'list'>('calendar')
@@ -100,7 +121,7 @@ const valueOf = (e: Event) => (e.target as HTMLInputElement).value
 function onHours(e: Event): void {
   const raw = valueOf(e).trim()
   const n = Number(raw)
-  rp.set('hoursPerDay', raw === '' || !Number.isFinite(n) ? null : Math.max(0, Math.min(16, n)))
+  rp.set('hoursPerDay', raw === '' || !Number.isFinite(n) ? null : Math.max(0, Math.min(8, n)))
 }
 function toggleRest(d: number): void {
   const list = saved.value.restWeekdays
@@ -108,7 +129,7 @@ function toggleRest(d: number): void {
 }
 function exportIcs(): void {
   const ics = revisionIcs(plan.value, rp.subjects.value, saved.value.dayStart, {
-    session: (code, focus, h) => t.value(focus ? 'rev.icsFocus' : 'rev.icsSession', { code }) + (h ? ` · ${hours(h)}` : ''),
+    session: (code, type, h) => t.value('rev.icsSession', { code, type: t.value(`rev.type.${type}`) }) + (h ? ` · ${hours(h)}` : ''),
     exam: (code) => t.value('rev.icsExam', { code }),
     reminder: t.value('rev.icsReminder'),
   }, new Date())
@@ -121,39 +142,41 @@ function print(): void {
 
 <template>
   <div class="rev">
-    <aside class="rev-side">
-      <section v-if="periods.length" class="rev-period" aria-labelledby="rev-period">
-        <h2 id="rev-period" class="rev-label">{{ t('rev.period') }}</h2>
-        <div class="rev-periods">
-          <button v-for="p in periods" :key="termKey(p)" type="button" class="chip" :aria-pressed="termKey(p) === rp.key.value" @click="rp.pick(termKey(p))">{{ termLabel(t, p) }}</button>
-        </div>
-        <p v-if="examWindow" class="rev-note">{{ t('rev.window', { from: shortLabel(examWindow.examsStart), to: shortLabel(examWindow.end) }) }}</p>
-      </section>
-
-      <section class="rev-sum" aria-labelledby="rev-sum">
-        <h2 id="rev-sum" class="rev-subtitle">{{ t('rev.totals') }}<InfoTip :text="t('rev.rule')" /></h2>
-        <template v-if="!missing">
-          <p class="rev-line">{{ summary }}</p>
-          <ul class="rev-totals">
-            <li v-for="x in plan.totals" :key="x.code" :class="colourOf(x.code)">
-              <span class="rev-tcode">{{ x.code }}</span>
-              <span class="rev-th">{{ hours(x.hours) }}</span>
-              <span class="rev-bar" aria-hidden="true"><span :style="{ width: `${(x.hours / maxTotal) * 100}%` }" /></span>
+    <div class="rev-side">
+      <SidePanel :label="t('rev.schedule')" :now="sideNow" :art="ART">
+        <div class="rev-sidebody">
+          <ul v-if="periods.length" class="side-list" :aria-label="t('rev.period')">
+            <li v-for="p in periods" :key="termKey(p)">
+              <button type="button" :aria-pressed="termKey(p) === rp.key.value" @click="rp.pick(termKey(p))">{{ termLabel(t, p) }}</button>
             </li>
-            <li class="rev-total"><span>{{ t('rev.total') }}</span><span class="rev-th">{{ hours(totalHours) }}</span></li>
           </ul>
-          <div class="rev-actions">
-            <button type="button" class="button button-accent" @click="exportIcs">{{ t('rev.ics') }}</button>
-            <button type="button" class="button button-quiet" @click="print">{{ t('rev.print') }}</button>
+          <p v-if="examWindow" class="rev-note rev-pad">{{ t('rev.window', { from: shortLabel(examWindow.examsStart), to: shortLabel(examWindow.end) }) }}</p>
+          <div class="rev-sum rev-pad">
+            <p class="rev-subtitle">{{ t('rev.totals') }}<InfoTip :text="t('rev.rule')" /></p>
+            <template v-if="!missing">
+              <ul class="rev-totals">
+                <li v-for="x in plan.totals" :key="x.code" :class="colourOf(x.code)">
+                  <span class="rev-tcode">{{ x.code }}</span>
+                  <span class="rev-th">{{ hours(x.hours) }}</span>
+                  <span class="rev-twhy">{{ weightWhy(x.code) }}</span>
+                  <span class="rev-bar" aria-hidden="true"><span :style="{ width: `${(x.hours / maxTotal) * 100}%` }" /></span>
+                </li>
+                <li class="rev-total"><span>{{ t('rev.total') }}</span><span class="rev-th">{{ hours(totalHours) }}</span></li>
+              </ul>
+              <div class="rev-actions">
+                <button type="button" class="button button-accent" @click="exportIcs">{{ t('rev.ics') }}</button>
+                <button type="button" class="button button-quiet" @click="print">{{ t('rev.print') }}</button>
+              </div>
+            </template>
+            <p v-else class="rev-note">{{ t(`rev.missing.${missing}`) }}</p>
+            <ul v-if="pastSkips.length" class="rev-skipped">
+              <li v-for="x in pastSkips" :key="x.code">{{ t('rev.skipPast', { code: x.code }) }}</li>
+            </ul>
+            <p class="rev-note">{{ t('rev.privacy') }}</p>
           </div>
-        </template>
-        <p v-else class="rev-note">{{ t(`rev.missing.${missing}`) }}</p>
-        <ul v-if="pastSkips.length" class="rev-skipped">
-          <li v-for="x in pastSkips" :key="x.code">{{ t('rev.skipPast', { code: x.code }) }}</li>
-        </ul>
-        <p class="rev-note rev-privacy">{{ t('rev.privacy') }}</p>
-      </section>
-    </aside>
+        </div>
+      </SidePanel>
+    </div>
 
     <section class="surface rev-input" aria-labelledby="rev-subjects">
       <div class="rev-head">
@@ -191,7 +214,6 @@ function print(): void {
             </select>
           </label>
           <span class="rev-rowend" role="cell">
-            <button type="button" class="rev-text" @click="rp.setNoExam(r.code, true)">{{ t('rev.skip') }}</button>
             <button type="button" class="rev-text rev-remove" @click="rp.remove(r.code)">{{ t('rev.remove') }}</button>
           </span>
         </div>
@@ -214,7 +236,7 @@ function print(): void {
         </label>
         <label class="rev-field">
           <span class="rev-label">{{ t('rev.hours') }} · {{ t('rev.optional') }}</span>
-          <input class="input rev-in" type="number" inputmode="decimal" min="0" max="16" step="0.5" :placeholder="t('rev.hoursAuto')" :value="saved.hoursPerDay ?? ''" @change="onHours" />
+          <input class="input rev-in" type="number" inputmode="decimal" min="0" max="8" step="0.5" :placeholder="t('rev.hoursAuto')" :value="saved.hoursPerDay ?? ''" @change="onHours" />
         </label>
         <label class="rev-field">
           <span class="rev-label">{{ t('rev.dayStart') }} · {{ t('rev.optional') }}</span>
@@ -246,12 +268,13 @@ function print(): void {
               class="rev-cell-day"
               :class="[`rk-${c.day.kind}`, { 'is-today': c.date === rp.today, 'is-picked': shown?.date === c.date }]"
               :aria-label="cellLabel(c.day)"
+              :title="whyOf(c.day) || undefined"
               @click="picked = c.date"
             >
               <span class="rev-num"><span class="rev-nlong">{{ cellNum(c) }}</span><span class="rev-nshort" aria-hidden="true">{{ fmtNum.format(asDate(c.date)) }}</span><span v-if="c.date === rp.today" class="rev-today">{{ t('rev.today') }}</span></span>
               <span v-for="x in c.day.exams" :key="x" class="rev-cexam">{{ examText(x) }}</span>
               <span v-if="c.day.kind === 'rest'" class="rev-cfree">{{ t('rev.restDay') }}</span>
-              <span v-for="s in c.day.sessions" :key="s.code" class="rev-block" :class="colourOf(s.code)">
+              <span v-for="s in blocksOf(c.day)" :key="s.code" class="rev-block" :class="colourOf(s.code)">
                 <span class="rev-scode">{{ s.code }}</span>
                 <span class="rev-sh">{{ hours(s.hours) }}</span>
               </span>
@@ -264,11 +287,14 @@ function print(): void {
           <p class="rev-detail-date">{{ weekdayLabel(shown.date) }} {{ dayLabel(shown.date) }}</p>
           <p v-for="x in shown.exams" :key="x" class="rev-cexam">{{ examText(x) }}</p>
           <p v-if="shown.kind === 'rest'" class="rev-note">{{ t('rev.restDay') }}</p>
-          <ul v-else-if="shown.sessions.length" class="rev-dlist">
-            <li v-for="s in shown.sessions" :key="s.code" class="rev-block" :class="colourOf(s.code)">
-              <span class="rev-scode">{{ s.code }}</span> <span class="rev-sh">{{ hours(s.hours) }}</span><span v-if="s.focus" class="rev-focus"> · {{ t('rev.focus') }}</span>
-            </li>
-          </ul>
+          <template v-else-if="shown.sessions.length">
+            <p class="rev-why">{{ whyOf(shown) }}</p>
+            <ol class="rev-dlist">
+              <li v-for="(s, i) in shown.sessions" :key="i" class="rev-block" :class="colourOf(s.code)">
+                <span class="rev-scode">{{ s.code }}</span> <span class="rev-sh">{{ hours(s.hours) }}</span><span class="rev-focus"> · {{ typeOf(s.type) }}</span>
+              </li>
+            </ol>
+          </template>
           <p v-else-if="shown.kind !== 'exam'" class="rev-note">{{ t('rev.nothing') }}</p>
         </div>
       </template>
@@ -288,11 +314,14 @@ function print(): void {
               </span>
               <span v-else-if="d.kind === 'rest'" class="rev-free">{{ t('rev.restDay') }}</span>
               <template v-else-if="d.sessions.length">
-                <ul class="rev-bars">
-                  <li v-for="s in d.sessions" :key="s.code" class="rev-block" :class="colourOf(s.code)" :style="{ flexGrow: s.hours }">
-                    <span class="rev-scode">{{ s.code }}</span> <span class="rev-sh">{{ hours(s.hours) }}</span><span v-if="s.focus" class="rev-focus"> · {{ t('rev.focus') }}</span>
-                  </li>
-                </ul>
+                <span class="rev-dbody">
+                  <ol class="rev-bars">
+                    <li v-for="(s, i) in d.sessions" :key="i" class="rev-block" :class="colourOf(s.code)" :title="`${s.code} ${hours(s.hours)} · ${typeOf(s.type)}`">
+                      <span class="rev-scode">{{ s.code }}</span> <span class="rev-sh">{{ hours(s.hours) }}</span><span class="rev-focus"> · {{ typeOf(s.type) }}</span>
+                    </li>
+                  </ol>
+                  <span class="rev-why">{{ whyOf(d) }}</span>
+                </span>
                 <span class="rev-dh">{{ hours(dayHours(d)) }}</span>
               </template>
               <span v-else class="rev-free">{{ t('rev.nothing') }}</span>
@@ -301,11 +330,13 @@ function print(): void {
         </div>
       </template>
     </section>
+
+    <RevisionPrint v-if="!missing" :plan="plan" :term="term ? termLabel(t, term) : ''" :rows="active" :name-of="nameOf" :why-of="whyOf" />
   </div>
 </template>
 
 <style scoped>
-/* Stacked by default (phones, tablets): period, inputs, totals, calendar. */
+/* Stacked by default (phones, tablets): the side panel folds at the top, then inputs and calendar. */
 .rev {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -313,27 +344,24 @@ function print(): void {
 }
 
 .rev-side {
-  display: contents;
+  min-width: 0;
 }
 
-.rev-period { order: 1; }
-.rev-input { order: 2; }
-.rev-sum { order: 3; }
-.rev-cal { order: 4; }
+/* Inside the side panel: period rows on top, then the totals as the colour legend. */
+.rev-sidebody {
+  display: grid;
+  gap: var(--space-3);
+}
 
-.rev-period,
+.rev-pad {
+  padding: 0 12px;
+}
+
 .rev-sum {
   display: grid;
   align-content: start;
   gap: var(--space-2);
   min-width: 0;
-}
-
-.rev-sum {
-  padding: var(--space-4);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  background: var(--surface);
 }
 
 .rev-input,
@@ -343,6 +371,10 @@ function print(): void {
   gap: var(--space-3);
   min-width: 0;
   padding: var(--space-4) var(--space-5);
+}
+
+.rev-input {
+  container: rev-input / inline-size;
 }
 
 .rev-head {
@@ -585,12 +617,6 @@ function print(): void {
 .c5 { --sub: #0f8a9a; }
 
 /* Totals: the colour legend. */
-.rev-line {
-  margin: 0;
-  font-weight: var(--fw-semibold);
-  font-variant-numeric: tabular-nums;
-}
-
 .rev-totals {
   display: grid;
   gap: 6px;
@@ -604,6 +630,12 @@ function print(): void {
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 2px var(--space-2);
   font-size: var(--fs-small);
+}
+
+.rev-twhy {
+  grid-column: 1 / -1;
+  font-size: var(--fs-meta);
+  color: var(--ink-soft);
 }
 
 .rev-tcode {
@@ -661,10 +693,6 @@ function print(): void {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2);
-}
-
-.rev-privacy {
-  padding-top: var(--space-2);
 }
 
 /* Calendar */
@@ -796,6 +824,23 @@ function print(): void {
   display: none;
 }
 
+/* The one-line reason under a day's sittings. */
+.rev-why {
+  font-size: var(--fs-meta);
+  line-height: 1.4;
+  color: var(--ink-soft);
+}
+
+p.rev-why {
+  margin: 0;
+}
+
+.rev-dbody {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
 /* List view (the agenda) */
 .rev-wk {
   display: grid;
@@ -848,8 +893,10 @@ function print(): void {
 }
 
 .rev-bars li {
-  flex: 1 1 0;
-  min-width: max-content;
+  flex: 0 1 auto;
+  justify-content: flex-start;
+  gap: 0 6px;
+  min-width: 0;
   white-space: nowrap;
 }
 
@@ -876,52 +923,28 @@ function print(): void {
 }
 
 /* Wide: a sticky sidebar on the left; inputs then calendar on the right. */
-@media (min-width: 1100px) {
+@media (min-width: 961px) {
   .rev {
-    grid-template-columns: 264px minmax(0, 1fr);
+    grid-template-columns: 232px minmax(0, 1fr);
     align-items: start;
-    gap: var(--space-4);
+    gap: var(--space-5);
   }
 
+  /* As tall as the page column, so the panel stays in view while it scrolls. */
   .rev-side {
-    position: sticky;
-    top: 84px;
-    display: grid;
-    gap: var(--space-4);
+    align-self: stretch;
     grid-row: 1 / span 2;
     grid-column: 1;
-    max-height: calc(100vh - 100px);
-    padding: var(--space-4);
-    border: 1px solid var(--line);
-    border-radius: var(--radius-lg);
-    background: var(--surface);
-    box-shadow: var(--shadow-1);
-    overflow-y: auto;
-  }
-
-  .rev-sum {
-    padding: 0;
-    border: 0;
-    border-radius: 0;
-    background: none;
-  }
-
-  .rev-line {
-    display: none;
   }
 
   .rev-input,
   .rev-cal {
     grid-column: 2;
   }
-
-  .rev-actions .button {
-    flex: 1 1 auto;
-  }
 }
 
 /* Tablets and phones: the table becomes one compact block per subject. */
-@media (max-width: 899px) {
+@container rev-input (max-width: 760px) {
   .rev-thead {
     display: none;
   }
@@ -1074,39 +1097,6 @@ function print(): void {
     min-width: 0;
     white-space: normal;
     overflow-wrap: anywhere;
-  }
-}
-
-@media print {
-  .rev-input,
-  .rev-period,
-  .rev-actions,
-  .rev-views,
-  .rev-detail,
-  .rev-privacy,
-  .rev-sum :deep(.infotip) {
-    display: none !important;
-  }
-
-  .rev,
-  .rev-side {
-    display: block;
-    position: static;
-    max-height: none;
-    border: 0;
-    box-shadow: none;
-  }
-
-  .rev-cal,
-  .rev-sum {
-    padding: 0;
-    border: 0;
-    margin-bottom: 16px;
-  }
-
-  .rev-cell-day,
-  .rev-day {
-    break-inside: avoid;
   }
 }
 </style>

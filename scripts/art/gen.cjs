@@ -866,6 +866,28 @@ for (const [name, fn] of Object.entries(toolHeroes)) {
   const { s, css, motion } = fn()
   write(`Art${name}`, `art-${name.toLowerCase()}`, fitBox(s, motion), s, css, name === 'Tools' ? 'the wide hero band of the tools page' : name === 'Revision' ? 'the wide hero band of the revision planner' : `the wide hero band of the ${name === 'Wam' ? 'WAM' : 'final'} calculator`, 'xMaxYMax', TOOLS_DIR, '../../guide/art/art.css')
 }
+// The foot of the revision planner's side panel: an hourglass, its sand running down, turning over
+// at the end of each loop.
+const toolMinis = {}
+toolMinis.Revision = () => {
+  let s = `<ellipse class="sh" cx="100" cy="138" rx="34" ry="6"/><g class="turn">`
+  s += `<rect x="70" y="30" width="60" height="9" rx="4" class="lil"/><rect x="70" y="121" width="60" height="9" rx="4" class="lil"/>`
+  s += `<path class="gls" d="M78 39 h44 c0 22 -16 30 -16 41 c0 11 16 19 16 41 h-44 c0 -22 16 -30 16 -41 c0 -11 -16 -19 -16 -41z"/>`
+  s += `<path class="pkt top" d="M84 50 h32 c-3 10 -11 16 -13 24 h-6 c-2 -8 -10 -14 -13 -24z"/>`
+  s += `<rect x="99" y="80" width="2" height="34" rx="1" class="pkt"/>`
+  s += `<path class="pkt bot" d="M84 119 h32 c-2 -10 -9 -15 -16 -15 c-7 0 -14 5 -16 15z"/></g>`
+  const css = `.mini-revision .turn{transform-origin:100px 80px;animation:mrv-turn 6s ease-in-out infinite}
+.mini-revision .top{transform-box:fill-box;transform-origin:50% 100%;animation:mrv-top 6s linear infinite}
+.mini-revision .bot{transform-box:fill-box;transform-origin:50% 100%;animation:mrv-bot 6s linear infinite}
+@keyframes mrv-turn{0%,85%{transform:rotate(0)}100%{transform:rotate(180deg)}}
+@keyframes mrv-top{0%{transform:scaleY(1)}85%,100%{transform:scaleY(.15)}}
+@keyframes mrv-bot{0%{transform:scaleY(.3)}85%,100%{transform:scaleY(1)}}`
+  return { s, css, motion: [0, 2, 0, 2] }
+}
+for (const [name, fn] of Object.entries(toolMinis)) {
+  const { s, css, motion } = fn()
+  write(`Mini${name}`, `mini-${name.toLowerCase()}`, fitBox(s, motion), s, css, 'the small illustration at the foot of the revision planner\'s side panel', 'xMidYMid', TOOLS_DIR, '../../guide/art/art.css')
+}
 const MY = { Record: path.join(__dirname, '../../src/components/profile/art/'), Shortlist: path.join(__dirname, '../../src/components/shortlist/art/') }
 for (const [name, fn] of Object.entries(myHeroes)) {
   const { s, css, motion } = fn()

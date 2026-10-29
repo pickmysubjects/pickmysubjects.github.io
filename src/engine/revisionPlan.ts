@@ -3,15 +3,25 @@
  * deterministic (same input, same plan); dates are Melbourne calendar days as YYYY-MM-DD and are
  * stepped with UTC date arithmetic, so daylight-saving changes never add or drop a day.
  *
- * The rule, as the page states it:
- * 1. Each subject gets a weight: its difficulty (easier 0.8, about average 1, harder 1.3) times
- *    its final exam's share of the mark when known (0.5 + share, so a 50% exam counts 1).
- * 2. Exam days and rest days are left free; no day has more than the hours the student gives.
- * 3. The last free day before each exam goes to that subject (shared by exams on the same day).
- * 4. Every other free day is shared by the subjects whose exams are still ahead, by weight times
- *    how close the exam is (1 / square root of the days left), at most three subjects a day; a
- *    subject that got less than its share on earlier days catches up first.
- * 5. Nothing is planned for a subject after its exam.
+ * What it follows, and how strong the reason is:
+ * - Spread each subject over several days (≥3 when the days allow), coming back after a gap of
+ *   about 15% of the days left to its exam (at least a day). Spaced study is remembered longer
+ *   than one long block (the spacing effect, Cepeda et al. 2008). Only the last free day before an
+ *   exam is given to one subject.
+ * - Move from learning to testing: early sittings are for understanding and summarising, later
+ *   ones for testing yourself, and a subject's last day for past papers and checking mistakes
+ *   (retrieval practice, Roediger & Karpicke 2006; Adesope et al. 2017).
+ * - The day before an exam: that subject only, a past paper and its mistakes, no new topics, a
+ *   lighter day that ends early, so there's time for 7–9 hours' sleep (Okano et al. 2019).
+ * - An exam ≤3 days after the start: all self-testing, still with full sleep.
+ * Rules of thumb, not research findings: 2–3 subjects a day and one subject a sitting; sittings of
+ * 60–90 minutes with 10-minute breaks; about 4–6 hours a day by default and never more than 8; a
+ * subject's weight of difficulty (easier 0.8, about average 1, harder 1.3) times its final exam's
+ * share (0.5 + share), with no subject weighted above half of all the time when there are 3 or more.
+ *
+ * How a day is filled: exam days and rest days stay free. Every other day, each subject still
+ * ahead earns its share of the day (weight / √days left); the subjects that must come back to
+ * reach 3 days go first, then those whose gap is over, most owed first; each gets at least an hour.
  */
 
 export type RevisionDifficulty = 'easier' | 'average' | 'harder'
@@ -34,31 +44,48 @@ export interface RevisionInput {
   /** First day of revision, YYYY-MM-DD. */
   start: string
   /**
-   * Hours a day the student has (0–16), the most on any day; days far from an exam get less.
-   * Left out (null), the planner picks the load itself: about 2.5 hours a day two weeks out,
-   * rising to 7 the day before an exam.
+   * Hours a day the student has (0–8), the most on any day; days far from an exam get less.
+   * Left out (null), the planner picks the load itself: about 4 hours a day two weeks out,
+   * rising to 6 near an exam.
    */
   hoursPerDay?: number | null
   /** Weekdays to rest, 0 = Sunday … 6 = Saturday. */
   restWeekdays?: readonly number[]
 }
 
+/** What a sitting is for: understand and summarise, test yourself, or a past paper then its mistakes. */
+export type RevisionType = 'learn' | 'test' | 'paper'
+
 export interface RevisionSession {
   code: string
-  /** Hours, in half hours. */
+  /** Hours, in half hours: 1–1.5 (less only when the whole day is shorter). */
   hours: number
-  /** The last free day before this subject's exam. */
+  /** On the last free day before this subject's exam. */
   focus: boolean
+  type: RevisionType
+  /** Why this kind of sitting: its type, or 'short' when the exam was ≤3 days away at the start. */
+  reason: RevisionType | 'short'
 }
 
 export type RevisionDayKind = 'study' | 'rest' | 'exam'
+
+/**
+ * Why a study day looks as it does, for the one-line note under it:
+ * dayBefore: one subject, past paper and mistakes, end early; short: exam within 3 days, all self-testing;
+ * spread: `code` first appears, it comes back on `n` days; testing: mostly self-testing;
+ * mix: 2–3 subjects, each with gaps; learn: understanding first.
+ */
+export type RevisionReason = { why: 'dayBefore' | 'short'; code: string } | { why: 'spread'; code: string; n: number } | { why: 'testing' | 'mix' | 'learn' }
 
 export interface RevisionDay {
   date: string
   kind: RevisionDayKind
   /** Subjects with their exam on this day (an exam day). */
   exams: string[]
+  /** Sittings in order, one subject each. */
   sessions: RevisionSession[]
+  /** Set on a study day with sittings. */
+  reason?: RevisionReason
 }
 
 export type RevisionSkip = 'noDate' | 'pastExam' | 'noExam'
@@ -74,19 +101,35 @@ export interface RevisionPlan {
 }
 
 export const DIFFICULTY_WEIGHT: Record<RevisionDifficulty, number> = { easier: 0.8, average: 1, harder: 1.3 }
-/** Subjects sharing one ordinary day, at most. */
+/** Subjects sharing one ordinary day, at most (rule of thumb). */
 export const MAX_SUBJECTS_A_DAY = 3
-export const MAX_HOURS_A_DAY = 16
-/** The planner's own load when the student gives none: light far out, heavy just before an exam. */
-export const AUTO_HOURS = { far: 2.5, near: 7 } as const
+/** The most hours on any day, whatever the student types (rule of thumb). */
+export const MAX_HOURS_A_DAY = 8
+/** The day before an exam ends early: at most this many hours. */
+export const DAY_BEFORE_HOURS = 5
+/** The planner's own load when the student gives none: lighter far out, heavier near an exam. */
+export const AUTO_HOURS = { far: 4, near: 6 } as const
 /** Days before an exam over which the load ramps up. */
 export const RAMP_DAYS = 14
 /** With the student's hours, the lightest day is this share of them. */
 export const RAMP_FLOOR = 0.6
+/** Separate days each subject should get when the days allow. */
+export const MIN_DAYS = 3
+/** The gap before a subject comes back: this share of the days left to its exam, at least a day. */
+export const GAP_SHARE = 0.15
+/** No subject's weight above this share of all weights (with 3 or more subjects). */
+export const MAX_SHARE = 0.5
+/** An exam this many days or fewer after the start: all self-testing. */
+export const SHORT_DAYS = 3
+/** A sitting's length in hours: at least, at most, and the length aimed for. */
+export const SITTING = { min: 1, max: 1.5, aim: 1.25 } as const
+/** Minutes of break between sittings, and the latest end of a day (the day before an exam earlier). */
+export const BREAK_MINUTES = 10
+export const LATEST_END = { usual: 22 * 60, dayBefore: 20 * 60 } as const
 
 /**
  * Hours for a day `daysLeft` days before the next exam (1 = the day before), in half hours:
- * rising toward the exam, never above the student's hours (or 7 when they give none).
+ * rising toward the exam, never above the student's hours (or 6 when they give none), never above 8.
  */
 export function dayLoad(daysLeft: number, hoursPerDay?: number | null): number {
   const near = Math.min(Math.max(0, RAMP_DAYS - daysLeft), RAMP_DAYS - 1) / (RAMP_DAYS - 1) // 0 far … 1 the day before
@@ -133,23 +176,56 @@ export function cleanHours(h: number): number {
   return Math.floor(Math.min(h, MAX_HOURS_A_DAY) * 2) / 2
 }
 
-/** Splits `units` among items by score (largest remainder), one unit each first; scores are > 0. */
-function split(units: number, items: { code: string; score: number }[]): Map<string, number> {
-  const list = items.slice(0, units)
-  const out = new Map(list.map((x) => [x.code, 1]))
-  let left = units - list.length
-  if (left <= 0) return out
-  const total = list.reduce((t, x) => t + x.score, 0)
-  const exact = list.map((x) => ({ code: x.code, v: (left * x.score) / total }))
-  for (const x of exact) {
-    const whole = Math.floor(x.v)
-    out.set(x.code, out.get(x.code)! + whole)
-    left -= whole
+/** Weights with none above MAX_SHARE of the sum (3 or more subjects): the excess goes to the rest. */
+export function cappedWeights(ws: readonly number[]): number[] {
+  if (ws.length < 3) return [...ws]
+  const out = [...ws]
+  for (let round = 0; round < ws.length; round++) {
+    const sum = out.reduce((a, b) => a + b, 0)
+    const over = out.findIndex((w) => w > MAX_SHARE * sum + 1e-9)
+    if (over < 0) break
+    // w = 0.5 × (others + w)  ⇒  w = others
+    out[over] = sum - out[over]!
   }
-  // Ties keep the given order (a stable sort), so the result never varies.
-  const byRest = [...exact].sort((a, b) => b.v - Math.floor(b.v) - (a.v - Math.floor(a.v)))
-  for (let i = 0; left > 0; i++, left--) out.set(byRest[i % byRest.length]!.code, out.get(byRest[i % byRest.length]!.code)! + 1)
   return out
+}
+
+/**
+ * Splits `units` (half hours) among items by score, each at least `min` units (when there's room)
+ * and at most `max`; the rest by largest remainder, ties in the given order.
+ */
+function split(units: number, items: { code: string; score: number }[], min: number, max: number): Map<string, number> {
+  const out = new Map(items.map((x) => [x.code, Math.min(min, max)]))
+  let left = units - items.length * Math.min(min, max)
+  while (left > 0) {
+    const open = items.filter((x) => out.get(x.code)! < max)
+    if (!open.length) break
+    const total = open.reduce((t, x) => t + x.score, 0)
+    let given = 0
+    for (const x of open) {
+      const add = Math.min(Math.floor((left * x.score) / total), max - out.get(x.code)!)
+      out.set(x.code, out.get(x.code)! + add)
+      given += add
+    }
+    if (!given) {
+      // Whatever is left, one unit each, highest score first.
+      const order = [...open].sort((a, b) => b.score - a.score)
+      for (const x of order) if (left - given > 0 && out.get(x.code)! < max) (out.set(x.code, out.get(x.code)! + 1), given++)
+    }
+    left -= given
+  }
+  return out
+}
+
+/** A subject's hours on one day as sittings of 1–1.5 hours (half-hour units), longest first. */
+export function sittings(hours: number): number[] {
+  const units = Math.round(hours * 2)
+  if (units <= SITTING.min * 2) return units ? [units / 2] : []
+  let k = Math.max(1, Math.round(hours / SITTING.aim))
+  while (units / k > SITTING.max * 2) k++
+  while (k > 1 && units / k < SITTING.min * 2) k--
+  const base = Math.floor(units / k)
+  return Array.from({ length: k }, (_, i) => (base + (i < units - base * k ? 1 : 0)) / 2)
 }
 
 export function planRevision(input: RevisionInput): RevisionPlan {
@@ -159,15 +235,16 @@ export function planRevision(input: RevisionInput): RevisionPlan {
   const skipped: RevisionPlan['skipped'] = []
   // One row per code (the first one wins), in the order given.
   const seen = new Set<string>()
-  const subjects: (RevisionSubject & { w: number; order: number })[] = []
+  const subjects: (RevisionSubject & { w: number; order: number; short: boolean })[] = []
   input.subjects.forEach((s) => {
     if (seen.has(s.code)) return
     seen.add(s.code)
     if (s.noExam) skipped.push({ code: s.code, why: 'noExam' })
     else if (!isDay(s.exam)) skipped.push({ code: s.code, why: 'noDate' })
     else if (!isDay(input.start) || s.exam <= input.start) skipped.push({ code: s.code, why: 'pastExam' })
-    else subjects.push({ ...s, w: subjectWeight(s), order: subjects.length })
+    else subjects.push({ ...s, w: subjectWeight(s), order: subjects.length, short: daysBetween(input.start, s.exam) <= SHORT_DAYS })
   })
+  cappedWeights(subjects.map((s) => s.w)).forEach((w, i) => (subjects[i]!.w = w))
   const totals = new Map(input.subjects.filter((s) => subjects.some((x) => x.code === s.code)).map((s) => [s.code, 0]))
   const result = (days: RevisionDay[]): RevisionPlan => ({
     days,
@@ -190,9 +267,9 @@ export function planRevision(input: RevisionInput): RevisionPlan {
   }
   if (hours === 0) return result(days)
 
-  // Rule 3: the last free day before each exam date, earliest exams choosing first.
+  // The last free day before each exam date, earliest exams choosing first.
   const focus = new Map<string, string>() // date -> exam date it's kept for
-  for (const exam of [...examsOn.keys()]) {
+  for (const exam of examsOn.keys()) {
     for (let i = daysBetween(input.start, exam) - 1; i >= 0; i--) {
       const day = days[i]!
       if (day.kind !== 'study' || focus.has(day.date)) continue
@@ -200,40 +277,102 @@ export function planRevision(input: RevisionInput): RevisionPlan {
       break
     }
   }
+  // Ordinary (shared) study days still to come for a subject, after `date` and before its exam.
+  const shared = days.filter((d) => d.kind === 'study' && !focus.has(d.date)).map((d) => d.date)
+  const sharedLeft = (s: { exam: string }, date: string) => shared.filter((d) => d > date && d < s.exam).length
 
   const owed = new Map(subjects.map((s) => [s.code, 0])) // hours deserved minus hours given
+  const lastDay = new Map<string, string>()
+  const dayCount = new Map(subjects.map((s) => [s.code, 0]))
+  const blocks: { day: RevisionDay; code: string; hours: number; focus: boolean }[] = []
   for (const day of days) {
     if (day.kind !== 'study') continue
     const ahead = byExam.filter((s) => s.exam > day.date)
     if (!ahead.length) continue
-    const load = dayLoad(daysBetween(day.date, ahead[0]!.exam), input.hoursPerDay)
+    const kept = focus.get(day.date)
+    const load = kept ? Math.min(dayLoad(1, input.hoursPerDay), DAY_BEFORE_HOURS) : dayLoad(daysBetween(day.date, ahead[0]!.exam), input.hoursPerDay)
     const units = load * 2
     if (!units) continue
-    const kept = focus.get(day.date)
     if (kept) {
       const who = ahead.filter((s) => s.exam === kept)
-      for (const [code, u] of split(units, who.map((s) => ({ code: s.code, score: s.w })))) {
-        day.sessions.push({ code, hours: u / 2, focus: true })
-      }
+      const n = Math.min(who.length, units)
+      for (const [code, u] of split(units, who.slice(0, n).map((s) => ({ code: s.code, score: s.w })), 1, units)) blocks.push({ day, code, hours: u / 2, focus: true })
     } else {
       const score = (s: (typeof ahead)[number]) => s.w / Math.sqrt(daysBetween(day.date, s.exam))
       const sum = ahead.reduce((t, s) => t + score(s), 0)
       for (const s of ahead) owed.set(s.code, owed.get(s.code)! + (load * score(s)) / sum)
-      const pick = [...ahead]
-        .sort((a, b) => owed.get(b.code)! - owed.get(a.code)! || a.exam.localeCompare(b.exam) || a.order - b.order)
-        .slice(0, Math.min(MAX_SUBJECTS_A_DAY, units))
-      const shares = split(units, pick.map((s) => ({ code: s.code, score: Math.max(owed.get(s.code)!, 0.01) })))
+      const gap = (s: (typeof ahead)[number]) => Math.max(1, Math.round(GAP_SHARE * daysBetween(day.date, s.exam)))
+      const due = (s: (typeof ahead)[number]) => !lastDay.has(s.code) || daysBetween(lastDay.get(s.code)!, day.date) >= gap(s)
+      // Must come today to still reach MIN_DAYS separate days before the exam.
+      const must = (s: (typeof ahead)[number]) => MIN_DAYS - dayCount.get(s.code)! > sharedLeft(s, day.date)
+      const rank = (s: (typeof ahead)[number]) => (must(s) && dayCount.get(s.code)! < MIN_DAYS ? 0 : due(s) ? 1 : 2)
+      const want = Math.min(ahead.length, MAX_SUBJECTS_A_DAY, load >= 4.5 ? 3 : 2, Math.max(1, Math.floor(units / (SITTING.min * 2))))
+      const pick = [...ahead].sort((a, b) => rank(a) - rank(b) || owed.get(b.code)! - owed.get(a.code)! || a.exam.localeCompare(b.exam) || a.order - b.order).slice(0, want)
+      // No massing: on a shared day one subject gets at most 60% of the day (unless it's alone).
+      const max = pick.length > 1 ? Math.max(SITTING.min * 2, Math.ceil(units * 0.6)) : units
+      const shares = split(units, pick.map((s) => ({ code: s.code, score: Math.max(owed.get(s.code)!, 0.01) })), Math.min(SITTING.min * 2, Math.floor(units / pick.length)), max)
       for (const s of byExam) {
         const u = shares.get(s.code)
-        if (u) day.sessions.push({ code: s.code, hours: u / 2, focus: false })
+        if (u) blocks.push({ day, code: s.code, hours: u / 2, focus: false })
       }
     }
-    for (const x of day.sessions) {
-      owed.set(x.code, owed.get(x.code)! - x.hours)
-      totals.set(x.code, totals.get(x.code)! + x.hours)
+    for (const b of blocks.filter((x) => x.day === day)) {
+      owed.set(b.code, owed.get(b.code)! - b.hours)
+      totals.set(b.code, totals.get(b.code)! + b.hours)
+      lastDay.set(b.code, day.date)
+      dayCount.set(b.code, dayCount.get(b.code)! + 1)
     }
   }
+
+  // Sittings, then their types per subject in time order: learn → test → past paper.
+  const bySubject = new Map<string, RevisionSession[]>(subjects.map((s) => [s.code, []]))
+  for (const b of blocks) {
+    for (const h of sittings(b.hours)) {
+      const session: RevisionSession = { code: b.code, hours: h, focus: b.focus, type: 'learn', reason: 'learn' }
+      b.day.sessions.push(session)
+      bySubject.get(b.code)!.push(session)
+    }
+  }
+  for (const s of subjects) {
+    const list = bySubject.get(s.code)!
+    const papers = list.some((x) => x.focus) ? list.filter((x) => x.focus) : list.slice(-Math.min(2, list.length))
+    const rest = list.filter((x) => !papers.includes(x))
+    const learn = s.short ? 0 : Math.ceil(rest.length * 0.4)
+    rest.forEach((x, i) => {
+      x.type = i < learn ? 'learn' : 'test'
+      x.reason = s.short ? 'short' : x.type
+    })
+    for (const x of papers) x.type = x.reason = 'paper'
+  }
+  const firstDate = new Map<string, string>()
+  for (const b of blocks) if (!firstDate.has(b.code)) firstDate.set(b.code, b.day.date)
+  // Interleave each day's sittings so one subject's sittings aren't back to back where avoidable.
+  for (const day of days) {
+    if (!day.sessions.length) continue
+    const queues = byExam.map((s) => day.sessions.filter((x) => x.code === s.code)).filter((q) => q.length)
+    const order: RevisionSession[] = []
+    while (queues.some((q) => q.length)) {
+      queues.sort((a, b) => b.length - a.length)
+      const prev = order.at(-1)?.code
+      const q = queues.find((x) => x.length && x[0]!.code !== prev) ?? queues.find((x) => x.length)!
+      order.push(q.shift()!)
+    }
+    day.sessions = order
+    day.reason = dayReason(day, subjects, dayCount, firstDate)
+  }
   return result(days)
+}
+
+function dayReason(day: RevisionDay, subjects: readonly { code: string; short: boolean }[], dayCount: Map<string, number>, firstDate: Map<string, string>): RevisionReason {
+  const codes = [...new Set(day.sessions.map((s) => s.code))]
+  if (day.sessions.every((s) => s.focus)) return { why: 'dayBefore', code: codes[0]! }
+  const short = codes.find((c) => subjects.find((s) => s.code === c)?.short)
+  if (short) return { why: 'short', code: short }
+  const tests = day.sessions.filter((s) => s.type !== 'learn').length
+  if (tests * 2 > day.sessions.length) return { why: 'testing' }
+  const first = codes.find((c) => firstDate.get(c) === day.date)
+  if (first && (dayCount.get(first) ?? 0) > 1) return { why: 'spread', code: first, n: dayCount.get(first)! }
+  return codes.length > 1 ? { why: 'mix' } : { why: 'learn' }
 }
 
 // ---------- saving ----------
@@ -426,22 +565,26 @@ function fold(line: string): string {
 const local = (date: string, minutes: number) => `${date.replaceAll('-', '')}T${String(Math.floor(minutes / 60)).padStart(2, '0')}${String(minutes % 60).padStart(2, '0')}00`
 const toMinutes = (t: string) => Number(t.slice(0, 2)) * 60 + Number(t.slice(3, 5))
 
-/** Each day's sessions back to back from the start time, cut at midnight. */
+/**
+ * A day's sittings from the start time with a short break between them, ending by 22:00 (20:00 the
+ * day before an exam, so the evening stays free for sleep); a sitting that wouldn't fit is cut.
+ */
 export function sessionTimes(day: RevisionDay, dayStart: string): { session: RevisionSession; from: number; to: number }[] {
   let at = isTime(dayStart) ? toMinutes(dayStart) : 9 * 60
+  const end = day.sessions.length && day.sessions.every((s) => s.focus) ? LATEST_END.dayBefore : LATEST_END.usual
   const out: { session: RevisionSession; from: number; to: number }[] = []
   for (const session of day.sessions) {
-    const to = Math.min(at + session.hours * 60, 24 * 60 - 1)
-    if (to <= at) break
+    const to = Math.min(at + session.hours * 60, end)
+    if (to - at < 30) break
     out.push({ session, from: at, to })
-    at = to
+    at = to + BREAK_MINUTES
   }
   return out
 }
 
 export interface IcsText {
   /** `hours` is given for an all-day session (no start time), to say how long. */
-  session: (code: string, focus: boolean, hours?: number) => string
+  session: (code: string, type: RevisionType, hours?: number) => string
   exam: (code: string) => string
   reminder: string
 }
@@ -463,10 +606,10 @@ export function revisionIcs(plan: RevisionPlan, subjects: readonly RevisionSubje
   for (const day of plan.days) {
     if (!isTime(dayStart)) {
       // No start time: each session is an all-day note on its day.
-      for (const session of day.sessions) event(`rev-${day.date}-${session.code}`, day.date.replaceAll('-', ''), addDays(day.date, 1).replaceAll('-', ''), text.session(session.code, session.focus, session.hours), '-PT12H', true)
+      day.sessions.forEach((session, i) => event(`rev-${day.date}-${i}-${session.code}`, day.date.replaceAll('-', ''), addDays(day.date, 1).replaceAll('-', ''), text.session(session.code, session.type, session.hours), '-PT12H', true))
     }
-    for (const { session, from, to } of isTime(dayStart) ? sessionTimes(day, dayStart) : []) {
-      event(`rev-${day.date}-${session.code}`, local(day.date, from), local(day.date, to), text.session(session.code, session.focus), '-PT15M')
+    for (const [i, { session, from, to }] of (isTime(dayStart) ? sessionTimes(day, dayStart) : []).entries()) {
+      event(`rev-${day.date}-${i}-${session.code}`, local(day.date, from), local(day.date, to), text.session(session.code, session.type), '-PT15M')
     }
     for (const code of day.exams) {
       const s = subjects.find((x) => x.code === code)
