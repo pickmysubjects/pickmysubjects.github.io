@@ -18,6 +18,7 @@ import {
   planStart,
   upcomingStart,
   isUpcoming,
+  isFail,
   termKey,
   standardTerms,
   type Dataset,
@@ -106,24 +107,40 @@ export function usePlan() {
   }
 
   function save(change: (s: PlanState) => PlanState): void {
-    put(settle(change(cloneJson(planBody(state.value)))))
+    const before = state.value.terms
+    const next = change(cloneJson(planBody(state.value)))
+    // A semester that has begun, changed by the student: a rebuild keeps it as it is.
+    for (const term of next.terms) {
+      const old = before.find((x) => x.year === term.year && x.period === term.period)
+      if (!isUpcoming(term) && old?.subjects.join() !== term.subjects.join()) term.edited = true
+    }
+    put(next)
   }
 
   /**
-   * The one link between the board and My record: a semester that has begun keeps its subjects
-   * on the record (marks go there too), so whatever lands in one (planned, added, moved) goes to
-   * the record for that semester and the plan's copy is emptied. The board shows them from there.
+   * Done: the subject goes to My record (with its mark), in the semester it was planned for, and
+   * leaves the plan. Already on the record: its mark changes. The record is the one place that
+   * says what is done; nothing else writes to it.
    */
-  function settle(s: PlanState): PlanState {
-    let results = profile.value.results
-    for (const term of s.terms) {
-      if (!term.subjects.length || isUpcoming(term)) continue
-      const there = (c: string) => results.some((r) => r.code === c && r.year === term.year && r.period === term.period)
-      results = recordMarks(results, term, term.subjects.filter((c) => !there(c)).map((code) => ({ code })))
-      term.subjects = []
+  function markDone(code: string, mark: number | undefined): void {
+    const results = profile.value.results
+    const term = state.value.terms.find((x) => x.subjects.includes(code))
+    if (term) {
+      setResults(recordMarks(results, term, [{ code, ...(mark === undefined ? {} : { mark }) }]))
+      save((s) => ({ ...s, terms: s.terms.map((x) => ({ ...x, subjects: x.subjects.filter((c) => c !== code) })) }))
+      return
     }
-    if (results !== profile.value.results) setResults(results)
-    return s
+    const r = results.find((x) => x.code === code && !isFail(x))
+    if (r) setResults(results.map((x) => (x === r ? { ...x, ...(mark === undefined ? {} : { mark }) } : x)))
+  }
+
+  /** Not done after all: off My record (an earlier fail stays), back into its semester as planned. */
+  function markUndone(code: string): void {
+    const results = profile.value.results
+    const r = [...results].reverse().find((x) => x.code === code && !isFail(x))
+    if (!r) return
+    setResults(results.filter((x) => x !== r))
+    if (r.year !== undefined && r.period !== undefined) addSubjectAt(r.year, r.period as Period, code)
   }
 
   /**
@@ -183,19 +200,19 @@ export function usePlan() {
 
   function generate(): void {
     const { setup } = state.value
-    // Students who started already are planned from the next semester on; what
-    // they've done comes from their record.
-    // Never into a semester that has already begun: undated subjects on the record count as done.
-    // The whole degree from the entry term: semesters that have begun get the likeliest subjects
-    // too (the student corrects them), except those My record already has, which stay as they are.
+    // The whole degree from the entry term, every subject planned (only the student marks one
+    // done). A rebuild keeps My record and the begun semesters the student changed.
     // Subjects on the record with no semester: we can't tell which semesters they filled, so
-    // planning starts after the record, from the next semester ahead, as before.
+    // planning starts after the record, from the next semester ahead.
     const entry = { year: setup.startYear, period: setup.startPeriod }
     const undated = profile.value.results.some((r) => r.year === undefined || r.period === undefined)
     const start = undated ? upcomingStart(planStart(entry, profile.value.results, startFill())) : entry
+    const kept = state.value.terms.filter((x) => x.edited && !isUpcoming(x))
+    const asTaken = kept.flatMap((x) => x.subjects.map((code) => ({ code, year: x.year, period: x.period })))
     const result = generatePlan({
       data: data.value,
-      profile: profile.value,
+      // Kept semesters are planned around, as if taken.
+      profile: { ...profile.value, results: [...profile.value.results, ...asTaken] },
       course: setup.course,
       courseYear: commencementYear(setup, profile.value.results),
       major: setup.major || undefined,
@@ -211,9 +228,9 @@ export function usePlan() {
         ? data.value.components.filter((c) => c.kind === 'major' && c.course === componentCourse(data.value, setup.course) && majorGroupOf(c.id) === setup.field && (c.closedFrom === undefined || start.year < c.closedFrom)).map((c) => c.id)
         : undefined,
     })
-    const recorded = (x: PlanTerm) => !isUpcoming(x) && profile.value.results.some((r) => r.year === x.year && r.period === x.period)
-    const terms = result.plan.terms.map((x) => (recorded(x) ? { ...x, subjects: [] } : x))
-    save((s) => ({ ...s, terms, notes: result.notes, unplaced: result.unplaced }))
+    const same = (x: PlanTerm) => kept.find((k) => k.year === x.year && k.period === x.period)
+    const terms = result.plan.terms.map((x) => (same(x) ? cloneJson(same(x)!) : x))
+    put({ ...cloneJson(planBody(state.value)), terms, notes: result.notes, unplaced: result.unplaced })
     trackEvent('plan-generate')
   }
 
@@ -437,7 +454,8 @@ export function usePlan() {
     addTerm,
     addTermAt,
     removeTerm,
-    settleBegun: () => save((s) => s),
+    markDone,
+    markUndone,
     removeLastTerm,
     applyRelief,
     importPlan,

@@ -19,7 +19,7 @@ import Interp from '@/components/Interp.vue'
 import PlanSwitcher from '@/components/plans/PlanSwitcher.vue'
 import PlanHero from '@/components/planner/PlanHero.vue'
 import SubjectSection from '@/components/subject/SubjectSection.vue'
-import { computeWam, assumedOfferings, creditPoints, findDiploma, careerGap, careerGoal, careerName, hasEnded, heldMajorIds, informalPicks, isFail, isPassedDuplicate, passedCodes, planProblems as countedProblems, planComponentIds, planRoles, planRules, recordedLoads, termKey, termLoad, type Issue, type PlanTerm } from '@/engine'
+import { computeWam, assumedOfferings, creditPoints, findDiploma, careerGap, careerGoal, careerName, heldMajorIds, informalPicks, isFail, isPassedDuplicate, passedCodes, planProblems as countedProblems, planComponentIds, planRoles, planRules, recordedLoads, termKey, termLoad, type Issue, type PlanTerm } from '@/engine'
 import { diplomaTitle } from '@/composables/usePlanCompare'
 import { Plus } from 'lucide-vue-next'
 import { usePhone } from '@/composables/usePhone'
@@ -35,7 +35,7 @@ import { useProfile } from '@/composables/useProfile'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan, type PlanSetup } from '@/composables/usePlan'
 import { usePlanStress } from '@/composables/usePlanStress'
-import { pastTerms, removeFromRecord, setRecordMark, termState } from '@/utils/pastTerms'
+import { pastTerms, termState } from '@/utils/pastTerms'
 import RatePrompt from '@/components/rating/RatePrompt.vue'
 import { useRated } from '@/composables/useRated'
 import { useI18n } from '@/i18n'
@@ -316,33 +316,18 @@ const peekTerm = computed(() => {
 })
 // Notes beside the status (shown when the line is opened).
 const noteCount = computed(() => unavoidable.value.length + Number(extraTermsOnVisa.value) + failed.value.length)
-// A term has begun (Melbourne dates): only then can a subject in it be marked done.
+// A term has begun (Melbourne dates).
 const begun = (term: Pick<PlanTerm, 'year' | 'period'>) => termState(term) !== 'ahead'
 const { shouldPrompt } = useRated()
 const rateNext = shallowRef<string | null>(null)
-// Done with a planned subject: it moves to My record, in the semester it was planned for.
+// Done or not, from any card or the subject window: My record is the one place that says so.
 function markDone(code: string, mark: number | undefined): void {
-  if (!peekRecord.value) return
-  recordMark(peekRecord.value, code, mark)
+  plan.markDone(code, mark)
   // Just finished it: offer to rate it, once per subject.
   if (mark !== undefined && shouldPrompt(code)) rateNext.value = code
 }
-// The board's semester columns that have begun are My record's: a mark typed on a card, or a
-// subject taken off, changes the record (one copy of it, shared with the record page).
-type TermRef = { year: number; period: PlanTerm['period'] }
-function recordMark(term: TermRef, code: string, mark: number | undefined): void {
-  setResults(setRecordMark(profile.value.results, term, code, mark))
-}
-function recordRemove(term: TermRef, code: string): void {
-  setResults(removeFromRecord(profile.value.results, term, code))
-}
-// Plans saved before semesters began: their subjects go to My record now.
-plan.settleBegun()
-// The open subject's record entry for a semester, when it has no mark yet: its mark can go in here.
-const peekRecord = computed(() => {
-  const r = profile.value.results.find((x) => x.code === peek.value && x.mark === undefined && !isFail(x) && x.year !== undefined && x.period !== undefined)
-  return r && !data.value.subjects[r.code]?.passFail ? { year: r.year as number, period: r.period as PlanTerm['period'] } : null
-})
+// The open subject's own entry on My record (not a fail), if it's done.
+const peekDone = computed(() => [...profile.value.results].reverse().find((x) => x.code === peek.value && !isFail(x)))
 // The board's focus: a selected subject (its timeline lights up) or a requirement (its subjects do).
 const board = useTemplateRef<InstanceType<typeof PlanMap>>('board')
 const selected = shallowRef<string | null>(null)
@@ -419,12 +404,6 @@ function onMove(code: string, from: number, to: number): void {
 // The plan and My record disagree: a planned subject is already passed, or a semester holds
 // more than its load once its recorded subjects are counted. (A part-done semester the plan
 // carries on in is fine: its done and planned subjects share the column.) Names the semester.
-// A semester that is over but still holds planned subjects the record doesn't have (made earlier).
-const pastPlanned = computed(() => {
-  const passed = new Set(passedCodes(profile.value.results))
-  const term = plan.terms.value.find((x) => hasEnded(x) && x.subjects.some((c) => !passed.has(c)))
-  return term ? termLabel(t.value, term) : null
-})
 // The Handbook year whose rules the plan uses, when it isn't the year the student started.
 const rulesFrom = computed(() => {
   const c = plan.course.value
@@ -434,11 +413,10 @@ const rulesFrom = computed(() => {
 // A later year planned on an earlier Handbook's teaching periods: said once, at the top.
 const assumed = computed(() => assumedOfferings(plan.plan.value, data.value))
 // The plan's notes as one line: the short text of the most pressing, every note behind the ⓘ.
-const recordFix = computed(() => recordOverlap.value !== null || pastPlanned.value !== null)
+const recordFix = computed(() => recordOverlap.value !== null)
 const metaLine = computed(() => {
   const notes: { short: string; info: string }[] = []
   if (recordOverlap.value) notes.push({ short: t.value('plan.recordOverlapShort', { term: recordOverlap.value }), info: t.value('plan.recordOverlap', { term: recordOverlap.value }) })
-  else if (pastPlanned.value) notes.push({ short: t.value('plan.pastPlannedShort', { term: pastPlanned.value }), info: t.value('plan.pastPlanned', { term: pastPlanned.value }) })
   if (rulesFrom.value) notes.push({ short: t.value('plan.rulesYearShort', { year: rulesFrom.value.year }), info: t.value('plan.rulesYear', rulesFrom.value) })
   if (assumed.value) notes.push({ short: t.value('plan.assumedShort', assumed.value), info: t.value('plan.assumed', assumed.value) })
   return notes[0] ? { short: notes[0].short, info: notes.map((n) => n.info).join(' ') } : null
@@ -747,8 +725,8 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
             @open="peek = $event"
             @select="select"
             @remove-last-term="plan.removeLastTerm()"
-            @record-mark="recordMark"
-            @record-remove="recordRemove"
+            @done="markDone"
+            @undo="plan.markUndone"
           />
           <details class="details">
             <summary class="details-summary">
@@ -812,9 +790,10 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
         @close="closePeek"
         @open="peek = $event"
         @swap="(from, to) => plan.swapSubject(from, to)"
-        :done-term="peekRecord ? termLabel(t, peekRecord) : undefined"
         :pass-fail="data.subjects[peek]?.passFail"
-        @mark-done="(m) => markDone(peek as string, m)"
+        :done-entry="peekDone"
+        @done="(m) => markDone(peek as string, m)"
+        @undo="plan.markUndone(peek as string)"
         :planned="!!peekTerm"
         @swap-it="board?.openSwap(peek as string)"
         @move-it="board?.openMove(peek as string)"

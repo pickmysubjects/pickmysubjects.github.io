@@ -24,7 +24,7 @@ const props = defineProps<{
   /** Year-long results recorded in the other semester of this year: half their points are here. */
   carried?: string[]
 }>()
-const emit = defineEmits<{ open: [code: string]; hover: [code: string | null] }>()
+const emit = defineEmits<{ open: [code: string]; hover: [code: string | null]; done: [code: string, mark: number | undefined]; undo: [code: string] }>()
 const { t } = useI18n()
 
 // Enrolled points, a fail included.
@@ -54,6 +54,8 @@ function retake(code: string): string | null {
       :dimmed="!!related && !related.has(r.code)"
       @open="emit('open', r.code)"
       @hover="emit('hover', $event ? r.code : null)"
+      @done="emit('done', r.code, $event)"
+      @undo="emit('undo', r.code)"
     />
     <button v-for="code in carried ?? []" :key="`carried-${code}`" class="carried" type="button" @click="emit('open', code)">
       <span class="carried-code">{{ code }}</span>

@@ -7,6 +7,7 @@ import { useI18n } from '@/i18n'
 import { useDataYear } from '@/composables/useDataYear'
 import { localTitle } from '@/i18n/localized'
 import { LINK_COUNTS, type DropVerdict } from '@/utils/planBoard'
+import DoneToggle from './DoneToggle.vue'
 
 export type CardTone = 'self' | 'need' | 'unlock' | 'rule'
 export interface MoveTarget {
@@ -48,6 +49,8 @@ const emit = defineEmits<{
   swap: []
   moveTo: [index: number]
   remove: []
+  /** Marked done (with its mark, for a graded subject): it goes to My record. */
+  done: [mark: number | undefined]
   dragStart: []
   dragEnd: []
 }>()
@@ -165,6 +168,7 @@ const linkLabel = computed(() => {
       <span v-if="links" class="link-mark" :class="{ 'link-mark-quiet': linksQuiet }" role="img" :aria-label="linkLabel" :title="linkLabel"><template v-if="links.needs">← {{ links.needs }}</template><template v-if="links.needs && links.unlocks"> · </template><template v-if="links.unlocks">→ {{ links.unlocks }}</template></span>
     </span>
     <span v-if="subject" class="row-points">{{ subject.points }}</span>
+    <DoneToggle class="row-done" :code="code" :done="false" :pass-fail="subject?.passFail" @done="emit('done', $event)" />
 
     <!-- Desktop: the actions on hover or focus, one click each. -->
     <span class="row-actions">
@@ -220,7 +224,8 @@ const linkLabel = computed(() => {
   grid-template-areas:
     'dot code pts'
     'title title title'
-    'tags tags tags';
+    'tags tags tags'
+    'done done done';
   align-items: center;
   gap: 2px 6px;
   min-width: 0;
@@ -288,6 +293,10 @@ const linkLabel = computed(() => {
   line-height: 1.35;
   overflow-wrap: anywhere;
   color: var(--ink);
+}
+
+.row-done {
+  grid-area: done;
 }
 
 .row-title-en {

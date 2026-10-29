@@ -44,9 +44,9 @@ const emit = defineEmits<{
   dragStart: [code: string]
   dragEnd: []
   removeTerm: []
-  /** A semester that has begun: its subjects are My record's, with a mark box on each card. */
-  mark: [code: string, mark: number | undefined]
-  removeDone: [code: string]
+  /** Marked done (to My record, with its mark) or back to planned. */
+  done: [code: string, mark: number | undefined]
+  undo: [code: string]
 }>()
 
 const { t } = useI18n()
@@ -143,11 +143,11 @@ const tone = (code: string): CardTone | null => props.tones?.get(code) ?? null
         :subject="subjects[r.code]"
         :highlighted="tone(r.code) !== null"
         :dimmed="tones !== null && tone(r.code) === null"
-        :editable="state !== 'ahead'"
-        @open="emit('select', r.code)"
+        :future="state === 'ahead'"
+        @open="emit('open', r.code)"
         @hover="emit('hover', $event ? r.code : null)"
-        @mark="emit('mark', r.code, $event)"
-        @remove="emit('removeDone', r.code)"
+        @done="emit('done', r.code, $event)"
+        @undo="emit('undo', r.code)"
       />
       <SubjectCard
         v-for="code in term.subjects"
@@ -172,6 +172,7 @@ const tone = (code: string): CardTone | null => props.tones?.get(code) ?? null
         @move-sheet="emit('moveSheet', $event ? code : null)"
         @move-to="emit('moveTo', code, $event)"
         @remove="emit('remove', code)"
+        @done="emit('done', code, $event)"
         @drag-start="emit('dragStart', code)"
         @drag-end="emit('dragEnd')"
       />

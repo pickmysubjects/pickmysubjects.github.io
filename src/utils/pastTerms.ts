@@ -145,18 +145,12 @@ export function recordMarks(
   return [...kept, ...list.map((x) => ({ code: x.code, year: term.year, period: term.period, ...(x.mark === undefined ? {} : { mark: x.mark }) }))]
 }
 
-const inTerm = (r: { year?: number; period?: string }, term: { year: number; period: Period }) => r.year === term.year && r.period === term.period
-
-/** A mark typed on a card in one of the board's record columns (none: the mark is cleared). */
-export function setRecordMark(results: Profile['results'], term: { year: number; period: Period }, code: string, mark: number | undefined): Profile['results'] {
-  return results.map((r) => {
-    if (r.code !== code || !inTerm(r, term)) return r
-    const { mark: _old, ...rest } = r
-    return mark === undefined ? rest : { ...rest, mark }
-  })
-}
-
-/** A subject taken off one of the board's record columns. */
-export function removeFromRecord(results: Profile['results'], term: { year: number; period: Period }, code: string): Profile['results'] {
-  return results.filter((r) => r.code !== code || !inTerm(r, term))
+/**
+ * What the done toggle may record: a pass/fail subject is done with no mark; a graded one only
+ * with a mark of 0–100 (else null: it stays planned and the box asks for one).
+ */
+export function doneWith(typed: string | undefined, passFail?: boolean): { mark?: number } | null {
+  if (passFail) return {}
+  const mark = parseMark(typed)
+  return mark === undefined ? null : { mark }
 }

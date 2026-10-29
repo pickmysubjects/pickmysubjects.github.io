@@ -47,8 +47,9 @@ const emit = defineEmits<{
   open: [code: string]
   select: [code: string | null]
   /** A semester column of My record edited on the board. */
-  recordMark: [term: { year: number; period: Period }, code: string, mark: number | undefined]
-  recordRemove: [term: { year: number; period: Period }, code: string]
+  /** Marked done (to My record) or back to planned, from any card. */
+  done: [code: string, mark: number | undefined]
+  undo: [code: string]
 }>()
 
 interface Route {
@@ -472,8 +473,10 @@ onBeforeUnmount(() => {
         :planned="terms"
         :load="load"
         :related="toneSet"
-        @open="onSelect"
+        @open="emit('open', $event)"
         @hover="onHover($event)"
+        @done="(code, mark) => emit('done', code, mark)"
+        @undo="emit('undo', $event)"
       />
       <template v-for="col in columns" :key="col.key">
         <PastTermColumn
@@ -485,8 +488,10 @@ onBeforeUnmount(() => {
           :planned="terms"
           :load="termLoadFor(col.p.period)"
           :related="toneSet"
-          @open="onSelect"
+          @open="emit('open', $event)"
           @hover="onHover($event)"
+          @done="(code, mark) => emit('done', code, mark)"
+          @undo="emit('undo', $event)"
         />
         <TermColumn
           v-else
@@ -516,8 +521,8 @@ onBeforeUnmount(() => {
           @drag-start="(code) => (dragging = { code, from: col.i })"
           @drag-end="dragging = null"
           @remove-term="emit('removeTerm', col.i)"
-          @mark="(code, mark) => emit('recordMark', col.term, code, mark)"
-          @remove-done="(code) => emit('recordRemove', col.term, code)"
+          @done="(code, mark) => emit('done', code, mark)"
+          @undo="emit('undo', $event)"
         />
       </template>
       <div class="board-tools">

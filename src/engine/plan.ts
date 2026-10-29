@@ -6,6 +6,8 @@ export interface PlanTerm {
   year: number
   period: Period
   subjects: string[]
+  /** A semester that has begun, changed by the student: a rebuild leaves it as it is. */
+  edited?: boolean
 }
 
 export interface Plan {

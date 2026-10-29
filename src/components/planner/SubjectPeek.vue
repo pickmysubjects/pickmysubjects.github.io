@@ -2,12 +2,14 @@
 import { link } from '@/composables/useView'
 import { useDataYear } from '@/composables/useDataYear'
 import FactsYearNote from '@/components/subject/FactsYearNote.vue'
+import DoneToggle from './DoneToggle.vue'
 import { computed, onBeforeUnmount, onMounted, shallowRef, toRef, useTemplateRef } from 'vue'
-import { ArrowRightLeft, BookOpen, CalendarRange, Check, CheckCheck, ChevronDown, Ellipsis, ExternalLink, TriangleAlert, X } from 'lucide-vue-next'
+import { ArrowRightLeft, BookOpen, CalendarRange, Check, ChevronDown, Ellipsis, ExternalLink, TriangleAlert, X } from 'lucide-vue-next'
 import { localTitle, pickLocalized } from '@/i18n/localized'
 import {
   alternativeGroups,
   knownNotRunning,
+  isUpcoming,
   periodsFor,
   prereqStatus,
   prerequisiteRoute,
@@ -46,8 +48,8 @@ const props = defineProps<{
   have: string[]
   /** Of those, the ones already passed (the rest are only planned). */
   done?: string[]
-  /** The plan's semester for it, once that semester has begun: it can be recorded as done there. */
-  doneTerm?: string
+  /** Its entry on My record, when it's done: shown as done, with the mark. */
+  doneEntry?: { mark?: number; year?: number; period?: string }
   /** Marked pass/fail only: no mark to ask for. */
   passFail?: boolean
   /** In the plan: it can be swapped, moved or removed from here. */
@@ -63,7 +65,8 @@ const emit = defineEmits<{
   close: []
   open: [code: string]
   swap: [from: string, to: string]
-  markDone: [mark: number | undefined]
+  done: [mark: number | undefined]
+  undo: []
   swapIt: []
   moveIt: []
   removeIt: []
@@ -76,16 +79,16 @@ function act(e: 'swapIt' | 'moveIt' | 'removeIt'): void {
   dialog.value?.close()
 }
 const { subject: detailed, ready: detailReady } = useSubjectDetail(toRef(props, 'code'))
-const doneMark = shallowRef<number | ''>('')
 // Phones: the sheet opens at part height and goes full on a tap of its handle or a scroll.
 const full = shallowRef(false)
-function markDone(): void {
-  const m = doneMark.value === '' ? undefined : Math.max(0, Math.min(100, Number(doneMark.value)))
-  emit('markDone', m)
-  dialog.value?.close()
-}
 const { t, locale } = useI18n()
 const { data } = useDataset()
+// Done (or planned) in a semester that hasn't started.
+const future = computed(() => {
+  const e = props.doneEntry
+  const at = e?.year !== undefined && e.period !== undefined ? { year: e.year, period: e.period as Period } : props.term
+  return !!at && isUpcoming(at)
+})
 const local = computed(() => (props.subject ? localTitle(props.subject, locale.value) : ''))
 const dialog = useTemplateRef<HTMLDialogElement>('dialog')
 
@@ -277,15 +280,11 @@ function onClick(event: MouseEvent): void {
     <div class="peek-body">
       <FactsYearNote v-if="factsFrom?.older" :year="factsFrom.year" />
 
-      <!-- Finished it: record it in My record, in this semester, with an optional mark. -->
-      <form v-if="doneTerm" class="peek-done" @submit.prevent="markDone">
-        <span class="peek-done-title">{{ t('plan.doneAsk', { term: doneTerm }) }}</span>
-        <label v-if="!passFail">
-          <span class="visually-hidden">{{ t('record.markFor', { code }) }}</span>
-          <input v-model="doneMark" class="input peek-done-mark" type="number" min="0" max="100" :placeholder="t('record.markShort')" />
-        </label>
-        <button class="button button-accent peek-btn" type="submit"><CheckCheck :size="16" aria-hidden="true" /> {{ t('plan.doneButton') }}</button>
-      </form>
+      <!-- Done or not: the same toggle as on the cards; a done subject says so, with its mark. -->
+      <div v-if="planned || doneEntry" class="peek-done" :class="{ 'peek-done-yes': doneEntry }">
+        <strong v-if="doneEntry" class="peek-done-title">{{ doneEntry.mark === undefined ? t('plan.doneMark') : t('plan.doneStatus', { mark: doneEntry.mark }) }}</strong>
+        <DoneToggle :code="code" :done="!!doneEntry" :mark="doneEntry?.mark" :pass-fail="passFail" :future="future" @done="emit('done', $event)" @undo="emit('undo')" />
+      </div>
 
       <template v-if="subject">
         <!-- Why the student clicked: this subject in this plan, needs and leads-to in one block. -->
@@ -1035,6 +1034,11 @@ function onClick(event: MouseEvent): void {
   gap: 8px 10px;
   padding: 10px 12px;
   border-radius: var(--radius);
+  border: 1px solid var(--col-edge, var(--glass-edge));
+}
+
+.peek-done-yes {
+  border-color: transparent;
   background: var(--good-soft);
 }
 
@@ -1042,11 +1046,6 @@ function onClick(event: MouseEvent): void {
   flex: 1 1 200px;
   font-size: 0.875rem;
   font-weight: 600;
-}
-
-.peek-done-mark {
-  width: 88px;
-  min-height: 38px;
 }
 
 /* Phones: a full-width bottom sheet with a drag handle, part height until opened. */
