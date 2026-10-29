@@ -741,6 +741,41 @@ toolHeroes.Wam = () => {
   return { s, css, motion: [0, 0, 0, 0] }
 }
 
+
+// ================= My record and Saved (src/components/profile/art/, src/components/shortlist/art/) =================
+const myHeroes = {}
+// My record: a transcript sheet, one row per subject with its mark pill, and a round WAM badge
+// beside it with a target flag; the newest row slides in.
+myHeroes.Record = () => {
+  let s = `<ellipse class="sh" cx="476" cy="164" rx="196" ry="10"/>`
+  s += `<rect x="296" y="22" width="226" height="136" rx="16" class="gls"/><rect x="312" y="36" width="70" height="8" rx="4" class="pkt"/>`
+  const rows = [['lnf', 'lit'], ['lnf', 'skt'], ['lnf', 'lit']]
+  rows.forEach(([a, b], i) => (s += `<rect x="312" y="${58 + i * 24}" width="120" height="12" rx="6" class="${a}"/><rect x="460" y="${56 + i * 24}" width="44" height="16" rx="8" class="${b}"/>`))
+  s += `<g class="slide"><rect x="312" y="130" width="96" height="12" rx="6" class="lnf"/><rect x="460" y="128" width="44" height="16" rx="8" class="pkt"/></g>`
+  s += `<circle cx="604" cy="98" r="50" class="gls"/><circle cx="604" cy="98" r="36" class="lit"/><rect x="584" y="92" width="40" height="12" rx="6" class="hl"/>`
+  s += `<line x1="652" y1="40" x2="652" y2="78" class="stand"/><path class="pkt" d="M652 40 h22 l-6 7 l6 7 h-22 z"/>`
+  const css = `.art-record .slide{animation:arc-slide 5s ease-in-out infinite}
+@keyframes arc-slide{0%,15%{transform:translateX(-10px);opacity:.4}45%,100%{transform:none;opacity:1}}`
+  return { s, css, motion: [0, 0, 0, 10] }
+}
+// Saved: the saved subjects as rows of one table with aligned columns, a heart on the top card,
+// and a sort arrow over one column; the heart beats.
+myHeroes.Shortlist = () => {
+  let s = `<ellipse class="sh" cx="478" cy="164" rx="196" ry="10"/>`
+  s += `<rect x="300" y="26" width="356" height="132" rx="16" class="gls"/>`
+  const cols = [318, 444, 512, 580]
+  cols.forEach((x, i) => (s += `<rect x="${x}" y="40" width="${i ? 44 : 100}" height="8" rx="4" class="${i === 2 ? 'pkt' : 'lnf'}"/>`))
+  ;['lit', 'skt', 'lit', 'skt'].forEach((c, r2) => {
+    const y = 62 + r2 * 22
+    s += `<rect x="318" y="${y}" width="${100 - r2 * 10}" height="12" rx="6" class="lnf"/>`
+    cols.slice(1).forEach((x, i) => (s += `<rect x="${x}" y="${y}" width="${i === 1 ? 44 - r2 * 8 : 36}" height="12" rx="6" class="${i === 1 ? c : 'lnf'}"/>`))
+  })
+  s += `<g class="beat" style="transform-origin:630px 150px"><path class="pkt" d="M630 160 c-12 -9 -18 -15 -18 -22 a9 9 0 0 1 18 -4 a9 9 0 0 1 18 4 c0 7 -6 13 -18 22 z"/></g>`
+  const css = `.art-shortlist .beat{animation:asl-beat 5s ease-in-out infinite}
+@keyframes asl-beat{0%,100%{transform:scale(1)}10%{transform:scale(1.12)}20%{transform:scale(1)}}`
+  return { s, css, motion: [4, 4, 4, 4] }
+}
+
 // ---------- write ----------
 // Each viewBox is fitted to its scene: the drawn shapes (bounds.cjs), plus how far its loop moves
 // things (`motion`: top, right, bottom, left), plus a little air, so nothing is ever clipped.
@@ -808,4 +843,10 @@ fs.mkdirSync(TOOLS_DIR, { recursive: true })
 for (const [name, fn] of Object.entries(toolHeroes)) {
   const { s, css, motion } = fn()
   write(`Art${name}`, `art-${name.toLowerCase()}`, fitBox(s, motion), s, css, name === 'Tools' ? 'the wide hero band of the tools page' : `the wide hero band of the ${name === 'Wam' ? 'WAM' : 'final'} calculator`, 'xMaxYMax', TOOLS_DIR, '../../guide/art/art.css')
+}
+const MY = { Record: path.join(__dirname, '../../src/components/profile/art/'), Shortlist: path.join(__dirname, '../../src/components/shortlist/art/') }
+for (const [name, fn] of Object.entries(myHeroes)) {
+  const { s, css, motion } = fn()
+  fs.mkdirSync(MY[name], { recursive: true })
+  write(`Art${name}`, `art-${name.toLowerCase()}`, fitBox(s, motion), s, css, name === 'Record' ? 'the wide hero band of My record' : 'the wide hero band of Saved', 'xMaxYMax', MY[name], '../../guide/art/art.css')
 }
