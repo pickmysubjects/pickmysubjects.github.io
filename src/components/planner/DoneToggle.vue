@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { nextTick, shallowRef, useTemplateRef, watch } from 'vue'
+import { computed, nextTick, shallowRef, useTemplateRef, watch } from 'vue'
 import { useI18n } from '@/i18n'
 import { doneWith } from '@/utils/pastTerms'
+import { useAnchoredOverlay } from '@/utils/anchoredOverlay'
 
 /**
  * Done or not, on every card and in the subject window: the student's own call, kept on My
@@ -9,8 +10,10 @@ import { doneWith } from '@/utils/pastTerms'
  * Done in a term that hasn't started says so, without stopping it.
  */
 // ask: on the record with no mark yet, so the mark box is open and highlighted from the start.
-// card: the board card's one bottom line: a text action, or "已修 · 82" that opens the box when tapped.
-const props = defineProps<{ code: string; done: boolean; mark?: number; passFail?: boolean; future?: boolean; ask?: boolean; card?: boolean }>()
+// card: the board card's one bottom line: a text action, or "已修 · 82" / "未通过 · 22" that opens a
+// small overlay (mark box + 标为未修) anchored to it, so the card never grows or moves.
+// failed: on the record as not passed; note: shown instead of the status text (e.g. "重修于 …").
+const props = defineProps<{ code: string; done: boolean; mark?: number; passFail?: boolean; future?: boolean; ask?: boolean; card?: boolean; failed?: boolean; note?: string }>()
 const emit = defineEmits<{ done: [mark: number | undefined]; undo: [] }>()
 const { t } = useI18n()
 
@@ -21,6 +24,7 @@ const box = useTemplateRef<HTMLInputElement>('box')
 watch(() => props.mark, (m) => (typed.value = m === undefined ? '' : String(m)), { immediate: true })
 
 async function onDone(): Promise<void> {
+  if (props.card && onRecord.value) return openMenu()
   if (props.passFail && !props.done) return emit('done', undefined)
   asking.value = true
   await nextTick()
@@ -35,6 +39,44 @@ function commit(): void {
   }
   asking.value = false
   if (!props.done || m !== props.mark) emit('done', m)
+}
+// On a card, a subject on the record (done or failed): its status opens the overlay.
+const onRecord = computed(() => props.done || props.failed === true)
+const menuOpen = shallowRef(false)
+const status = useTemplateRef<HTMLButtonElement>('status')
+const menu = useTemplateRef<HTMLElement>('menu')
+const menuBox = useTemplateRef<HTMLInputElement>('menuBox')
+const { pos } = useAnchoredOverlay({ open: menuOpen, anchor: () => status.value, panel: () => menu.value, close: () => (menuOpen.value = false), align: 'start' })
+async function openMenu(): Promise<void> {
+  typed.value = props.mark === undefined ? '' : String(props.mark)
+  menuOpen.value = !menuOpen.value
+  if (!menuOpen.value) return
+  await nextTick()
+  ;(menuBox.value ?? menu.value?.querySelector('button'))?.focus({ preventScroll: true })
+}
+function closeMenu(): void {
+  menuOpen.value = false
+  status.value?.focus()
+}
+/** The mark box in the overlay: a readable 0–100 mark updates the record; anything else is put back. */
+function saveMark(): void {
+  const m = doneWith(typed.value)?.mark
+  if (m === undefined) {
+    typed.value = props.mark === undefined ? '' : String(props.mark)
+    return
+  }
+  if (m !== props.mark) emit('done', m)
+}
+function onMenuEnter(e: KeyboardEvent): void {
+  if (e.isComposing || e.keyCode === 229) return
+  // Without this the same Enter would "click" the status button that focus returns to.
+  e.preventDefault()
+  saveMark()
+  closeMenu()
+}
+function unmark(): void {
+  menuOpen.value = false
+  emit('undo')
 }
 // On a card, editing a done subject's mark closes again once focus leaves the box and its button.
 function onFocusOut(e: FocusEvent): void {
@@ -52,7 +94,45 @@ function onEnter(e: KeyboardEvent): void {
 </script>
 
 <template>
-  <span v-if="card" class="toggle toggle-card" @click.stop @focusout="onFocusOut">
+  <span v-if="card && onRecord" class="toggle toggle-card" @click.stop>
+    <button
+      ref="status"
+      type="button"
+      class="toggle-text toggle-state"
+      :class="{ 'toggle-failed': failed }"
+      aria-haspopup="dialog"
+      :aria-expanded="menuOpen"
+      :title="future && !failed ? t('plan.doneFuture') : undefined"
+      @click="onDone"
+    >
+      <template v-if="note">{{ note }}</template>
+      <template v-else>{{ t(failed ? 'plan.pastNotPassed' : 'plan.pastTag') }}<template v-if="mark !== undefined"> · {{ mark }}</template></template>
+    </button>
+    <Teleport v-if="menuOpen" to="body">
+      <div ref="menu" class="done-menu" role="dialog" :aria-label="code" :style="pos">
+        <label v-if="!passFail" class="done-menu-mark">
+          <span>{{ t('record.markFor', { code }) }}</span>
+          <input
+            ref="menuBox"
+            v-model="typed"
+            class="input toggle-mark"
+            type="text"
+            inputmode="decimal"
+            autocomplete="off"
+            :placeholder="t('record.markShort')"
+            @change="saveMark"
+            @keydown.enter="onMenuEnter"
+          />
+        </label>
+        <p class="done-menu-ask">{{ t('plan.doneUndoAsk') }}</p>
+        <div class="done-menu-acts">
+          <button type="button" class="toggle-btn toggle-act" @click="unmark">{{ t('plan.doneUndo') }}</button>
+          <button type="button" class="toggle-btn" @click="closeMenu">{{ t('plans.cancel') }}</button>
+        </div>
+      </div>
+    </Teleport>
+  </span>
+  <span v-else-if="card" class="toggle toggle-card" @click.stop @focusout="onFocusOut">
     <template v-if="asking">
       <input
         v-if="!passFail"
@@ -99,6 +179,67 @@ function onEnter(e: KeyboardEvent): void {
 </template>
 
 <style scoped>
+/* The overlay for a subject on the record: glass like the plan menus, a sheet on phones. */
+.done-menu {
+  position: fixed;
+  z-index: 1000;
+  display: grid;
+  gap: 8px;
+  width: max-content;
+  min-width: 200px;
+  max-width: min(300px, calc(100vw - 24px));
+  padding: 10px 12px;
+  border: 1px solid var(--glass-edge);
+  border-radius: var(--radius);
+  background: var(--glass-shine), color-mix(in srgb, var(--sheet-fill) 20%, var(--bg));
+  -webkit-backdrop-filter: var(--glass-blur-strong);
+  backdrop-filter: var(--glass-blur-strong);
+  box-shadow: var(--glass-shadow), var(--shadow-2);
+  color: var(--ink);
+  font-size: 0.8125rem;
+}
+
+.done-menu-mark {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  color: var(--ink-soft);
+}
+
+.done-menu-ask {
+  margin: 0;
+  font-weight: 600;
+}
+
+.done-menu-acts {
+  display: flex;
+  gap: 8px;
+}
+
+.done-menu .toggle-btn {
+  min-height: 32px;
+  padding: 0 12px;
+  font-size: 0.8125rem;
+}
+
+@media (max-width: 640px) {
+  .done-menu {
+    inset: auto 12px calc(12px + env(safe-area-inset-bottom)) 12px;
+    width: auto;
+    max-width: none;
+  }
+
+  .done-menu .toggle-btn {
+    flex: 1;
+    min-height: 44px;
+  }
+}
+
+.toggle-state.toggle-failed {
+  color: var(--bad);
+}
+
 /* On a card: one short line of text, no pill, so the card grows by a line at most. */
 .toggle-card {
   flex-wrap: nowrap;
@@ -216,8 +357,20 @@ function onEnter(e: KeyboardEvent): void {
 }
 
 @media (pointer: coarse) {
-  .toggle-text {
+  .toggle:not(.toggle-card) .toggle-text {
     min-height: 32px;
+  }
+
+  /* On a card the line stays 22px (fixed card height); the tap area reaches past it. */
+  .toggle-card .toggle-text {
+    position: relative;
+    overflow: visible;
+  }
+
+  .toggle-card .toggle-text::after {
+    content: '';
+    position: absolute;
+    inset: -8px -4px;
   }
 
   .toggle:not(.toggle-card) .toggle-mark,

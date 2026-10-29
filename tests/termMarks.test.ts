@@ -132,6 +132,51 @@ describe('marking done', () => {
     expect(plan.terms.value[at]?.subjects).toContain('COMP10001')
   })
 
+  it('标为未修 from the card: off the record and the WAM, back to planned in its term', () => {
+    const { plan, me } = planned({ year: 2025, period: 'semester-1' })
+    const code = first(plan)
+    const term = { year: plan.terms.value[0]!.year, period: plan.terms.value[0]!.period }
+    plan.markDone(code, 82)
+    expect(computeWam(me.profile.value.results, data)).toBe(82)
+    plan.markUndone(code)
+    expect(me.profile.value.results).toEqual([])
+    expect(computeWam(me.profile.value.results, data)).toBeNull()
+    expect(plan.terms.value.find((x) => x.year === term.year && x.period === term.period)?.subjects).toContain(code)
+    expect(plan.plan.value.completed).not.toContain(code)
+  })
+
+  it('editing the mark from the card updates the record in place, a fail included', () => {
+    const { plan, me } = planned({ year: 2025, period: 'semester-1' })
+    const code = first(plan)
+    plan.markDone(code, 82)
+    plan.markDone(code, 90)
+    expect(me.profile.value.results).toEqual([{ code, year: 2025, period: 'semester-1', mark: 90 }])
+    plan.markDone(code, 22)
+    expect(me.profile.value.results).toEqual([{ code, year: 2025, period: 'semester-1', mark: 22 }])
+    plan.markDone(code, 65)
+    expect(me.profile.value.results).toEqual([{ code, year: 2025, period: 'semester-1', mark: 65 }])
+    expect(computeWam(me.profile.value.results, data)).toBe(65)
+  })
+
+  it('a failed entry can be marked not done: it leaves the record and is planned again; an earlier fail stays', () => {
+    const { plan, me } = planned({ year: 2025, period: 'semester-1' }, [
+      { code: 'COMP10002', year: 2025, period: 'semester-1', mark: 30 },
+      { code: 'COMP10002', year: 2025, period: 'semester-2', mark: 22 },
+    ])
+    plan.terms.value.forEach((x, i) => x.subjects.includes('COMP10002') && plan.removeSubject(i, 'COMP10002'))
+    plan.markUndone('COMP10002')
+    expect(me.profile.value.results).toEqual([{ code: 'COMP10002', year: 2025, period: 'semester-1', mark: 30 }])
+    expect(plan.terms.value.find((x) => x.year === 2025 && x.period === 'semester-2')?.subjects).toContain('COMP10002')
+  })
+
+  it('the card status opens an anchored overlay with the mark box and 标为未修; failed cards get it too', () => {
+    const toggle = readFileSync('src/components/planner/DoneToggle.vue', 'utf8')
+    expect(toggle).toMatch(/useAnchoredOverlay/)
+    expect(toggle).toMatch(/plan\.doneUndoAsk/)
+    const card = readFileSync('src/components/planner/DoneCard.vue', 'utf8')
+    expect(card).toMatch(/<DoneToggle[^>]*:failed="result\.failed"/s)
+  })
+
   it('My record is the one source: a change there shows on the board and the reverse', () => {
     const { plan, me } = planned({ year: 2025, period: 'semester-1' })
     const code = first(plan)

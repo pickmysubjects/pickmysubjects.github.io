@@ -135,17 +135,25 @@ export function usePlan() {
       save((s) => ({ ...s, terms: s.terms.map((x) => ({ ...x, subjects: x.subjects.filter((c) => c !== code) })) }))
       return
     }
-    const r = results.find((x) => x.code === code && !isFail(x))
-    if (r) setResults(results.map((x) => (x === r ? { ...x, ...(mark === undefined ? {} : { mark }) } : x)))
+    // The latest attempt (a pass or a fail) takes the new mark; earlier fails stay as they were.
+    const r = [...results].reverse().find((x) => x.code === code)
+    if (!r || mark === undefined) return
+    // The mark decides pass or fail from now on.
+    const { failed: _failed, ...rest } = r
+    setResults(results.map((x) => (x === r ? { ...rest, mark } : x)))
   }
 
-  /** Not done after all: off My record (an earlier fail stays), back into its semester as planned. */
+  /**
+   * Not done after all: the latest attempt (pass or fail) leaves My record (earlier fails stay)
+   * and goes back into its semester as planned, unless it is already planned somewhere else.
+   */
   function markUndone(code: string): void {
     const results = profile.value.results
-    const r = [...results].reverse().find((x) => x.code === code && !isFail(x))
+    const r = [...results].reverse().find((x) => x.code === code)
     if (!r) return
     setResults(results.filter((x) => x !== r))
-    if (r.year !== undefined && r.period !== undefined) addSubjectAt(r.year, r.period as Period, code)
+    const planned = state.value.terms.some((x) => x.subjects.includes(code))
+    if (!planned && r.year !== undefined && r.period !== undefined) addSubjectAt(r.year, r.period as Period, code)
   }
 
   /**

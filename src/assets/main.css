@@ -204,6 +204,23 @@
 }
 
 /*
+ * Plan board cards: every card (planned, done, failed, with a problem) is the same height within a
+ * language, the status line reserved even when empty. Code and title each take one fixed line;
+ * scripts with tall marks (Vietnamese tones, Devanagari) get a taller line and card.
+ * Height = 2 border + 14 padding + 2 lines + 2 gaps + 25 status line.
+ */
+:root {
+  --plan-card-line: 20px;
+  --plan-card-h: 83px;
+}
+
+:root:lang(vi),
+:root:lang(hi) {
+  --plan-card-line: 22px;
+  --plan-card-h: 87px;
+}
+
+/*
  * Each language in its own best typeface. Chinese, Japanese and Korean list their own
  * fonts first so full-width punctuation keeps its proper shape; subject codes stay in
  * Geist Mono everywhere. Chinese, Japanese and Korean

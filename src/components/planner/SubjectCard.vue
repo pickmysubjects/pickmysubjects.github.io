@@ -111,7 +111,6 @@ const rowClasses = computed(() => ({
   [`row-tone-${props.tone}`]: props.tone !== null,
   'row-dimmed': props.dimmed,
   'row-unknown': !props.subject,
-  'row-has-foot': !!problem.value || !!props.begun,
   [`row-role-${props.role}`]: !!props.role,
 }))
 const others = computed(() => props.moveTargets.filter((m) => m.index !== props.termIndex))
@@ -233,8 +232,9 @@ const linkLabel = computed(() => {
   align-items: baseline;
   gap: 1px 8px;
   min-width: 0;
-  /* Every two-line card the same height; a status line adds exactly one more. */
-  min-height: 52px;
+  /* Every card on the board the same height, the status line reserved even when empty
+     (one fixed height per language: --plan-card-h in main.css). */
+  height: var(--plan-card-h);
   padding: 7px 9px 7px 11px;
   /* A flat, solid card on the board's glass: one hairline and one light shadow, no shine. */
   border: 1px solid var(--col-edge);
@@ -243,10 +243,6 @@ const linkLabel = computed(() => {
   box-shadow: 0 1px 2px rgb(60 20 80 / 10%);
   cursor: grab;
   transition: opacity 0.12s, border-color 0.12s, box-shadow 0.12s;
-}
-
-.row-has-foot {
-  min-height: 74px;
 }
 
 /* The role as a thin left edge (the legend above the board says which is which). */
@@ -302,6 +298,7 @@ const linkLabel = computed(() => {
 }
 
 .row-code {
+  line-height: var(--plan-card-line);
   display: block;
   overflow: hidden;
   font-size: 0.875rem;
@@ -311,6 +308,7 @@ const linkLabel = computed(() => {
 }
 
 .row-points {
+  line-height: var(--plan-card-line);
   grid-area: pts;
   font-family: var(--font-code);
   font-size: 0.75rem;
@@ -319,11 +317,11 @@ const linkLabel = computed(() => {
 }
 
 .row-title {
+  line-height: var(--plan-card-line);
   grid-area: title;
   min-width: 0;
   overflow: hidden;
   font-size: 0.8125rem;
-  line-height: 1.4;
   color: var(--ink);
   white-space: nowrap;
   text-overflow: ellipsis;

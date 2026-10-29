@@ -9,7 +9,7 @@ import DoneToggle from './DoneToggle.vue'
 /**
  * A subject from My record on the plan board: the same two-line card as a planned one, in green,
  * with "已修 · 82" as its one status line (red "未通过" when not passed). A start for prerequisite
- * lines (data-past-code). Tapping the status line edits the mark or takes it back to planned.
+ * lines (data-past-code). Tapping the status line opens a small overlay: edit the mark, or mark it not done (back to planned).
  * A graded entry with no mark isn't done: a plain card with the mark box open ("add a mark").
  */
 const props = defineProps<{ result: PastResult; subject?: Subject; note?: string; highlighted?: boolean; dimmed?: boolean; future?: boolean }>()
@@ -34,9 +34,20 @@ const tooltip = computed(() => [`${props.result.code} ${local.value || props.sub
       <span v-if="subject" class="points">{{ subject.points }}</span>
       <span class="title">{{ local || subject?.title || t('subject.notYetAdded') }}</span>
     </button>
-    <span v-if="result.failed" class="foot foot-failed">{{ t('plan.pastNotPassed') }}<template v-if="result.mark !== undefined"> · {{ result.mark }}</template></span>
-    <span v-else-if="note" class="foot foot-failed">{{ note }}</span>
-    <DoneToggle v-else class="foot" card :code="result.code" :done="!result.pending" :ask="result.pending" :mark="result.mark" :pass-fail="subject?.passFail" :future="future" @done="emit('done', $event)" @undo="emit('undo')" />
+    <DoneToggle
+      class="foot"
+      card
+      :code="result.code"
+      :done="!result.pending && !result.failed"
+      :failed="result.failed"
+      :note="note"
+      :ask="result.pending"
+      :mark="result.mark"
+      :pass-fail="subject?.passFail"
+      :future="future"
+      @done="emit('done', $event)"
+      @undo="emit('undo')"
+    />
   </div>
 </template>
 
@@ -48,7 +59,10 @@ const tooltip = computed(() => [`${props.result.code} ${local.value || props.sub
   z-index: 1;
   display: grid;
   gap: 1px;
-  min-height: 74px;
+  /* One fixed height per language for every board card (see --plan-card-h in main.css). */
+  grid-template-rows: auto 1fr;
+  align-content: start;
+  height: var(--plan-card-h);
   padding: 7px 9px 7px 11px;
   border: 1px solid color-mix(in srgb, var(--good) 35%, transparent);
   border-radius: 10px;
@@ -95,6 +109,7 @@ const tooltip = computed(() => [`${props.result.code} ${local.value || props.sub
 }
 
 .code {
+  line-height: var(--plan-card-line);
   overflow: hidden;
   font-size: 0.875rem;
   font-weight: 700;
@@ -103,16 +118,17 @@ const tooltip = computed(() => [`${props.result.code} ${local.value || props.sub
 }
 
 .points {
+  line-height: var(--plan-card-line);
   font-family: var(--font-code);
   font-size: 0.75rem;
   color: var(--ink-soft);
 }
 
 .title {
+  line-height: var(--plan-card-line);
   grid-column: 1 / -1;
   overflow: hidden;
   font-size: 0.8125rem;
-  line-height: 1.4;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
@@ -124,13 +140,6 @@ const tooltip = computed(() => [`${props.result.code} ${local.value || props.sub
   line-height: 22px;
 }
 
-.foot-failed {
-  overflow: hidden;
-  font-weight: 650;
-  color: var(--bad);
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
 
 .highlighted {
   border-color: var(--overprint);
