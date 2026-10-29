@@ -64,15 +64,25 @@ const board = useTemplateRef<HTMLElement>('board')
 const track = useTemplateRef<HTMLElement>('track')
 const edgeStart = shallowRef(false)
 const edgeEnd = shallowRef(false)
-function edges(): void {
+// Not named `edges`: that would hide the `edges` prop in the template (the legend read it).
+function updateFades(): void {
   const el = track.value
   if (!el) return
   edgeStart.value = el.scrollLeft > 2
   edgeEnd.value = el.scrollLeft + el.clientWidth < el.scrollWidth - 2
 }
+// Scrolling fires many times a frame: the fades and the lines are read and redrawn once per frame,
+// and only while a route is drawn (otherwise the next route reads the layout fresh).
+let scrollFrame = 0
+let layoutStale = false
 function onTrackScroll(): void {
-  edges()
-  measure()
+  if (scrollFrame) return
+  scrollFrame = requestAnimationFrame(() => {
+    scrollFrame = 0
+    updateFades()
+    if (focus.value) measure()
+    else layoutStale = true
+  })
 }
 // The ‹ › buttons: most of a screen's width each way.
 function scrollBy(dir: -1 | 1): void {
@@ -84,7 +94,7 @@ function scrollBy(dir: -1 | 1): void {
 // Terms added or emptied change how far the board scrolls without changing its size.
 watch(
   () => props.terms.map((x) => x.subjects.length).join(),
-  () => nextTick(edges),
+  () => nextTick(updateFades),
 )
 const routes = shallowRef<Route[]>([])
 const hovered = shallowRef<string | null>(null)
@@ -334,12 +344,13 @@ const linkCounts = computed(() => {
 provide(LINK_COUNTS, linkCounts)
 
 function measure(): void {
+  layoutStale = false
   readLayout()
   drawRoutes()
-  edges()
+  updateFades()
 }
 
-watch(shownEdges, drawRoutes)
+watch(shownEdges, () => (layoutStale ? measure() : drawRoutes()))
 watch([() => props.edges, () => props.terms], () => nextTick(measure), { flush: 'post' })
 
 // While dragging: where the card may go (green) and where it can't, with the reason.
@@ -412,6 +423,7 @@ onMounted(() => {
 })
 onBeforeUnmount(() => {
   clearTimeout(leaveTimer)
+  cancelAnimationFrame(scrollFrame)
   observer?.disconnect()
   document.removeEventListener('keydown', onKey)
   document.removeEventListener('pointerdown', onPointer)
