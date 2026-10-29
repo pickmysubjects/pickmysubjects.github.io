@@ -741,6 +741,28 @@ toolHeroes.Wam = () => {
   return { s, css, motion: [0, 0, 0, 0] }
 }
 
+// The revision planner: a month calendar on glass whose days carry coloured study blocks, the
+// exam day marked with a flag, and a clock beside it; today's block fills in.
+toolHeroes.Revision = () => {
+  let s = `<ellipse class="sh" cx="474" cy="164" rx="198" ry="10"/>`
+  s += `<rect x="292" y="24" width="250" height="134" rx="16" class="gls"/><rect x="308" y="38" width="76" height="8" rx="4" class="pkt"/>`
+  const fills = ['lit', 'skt', 'lit', 'lnf', 'skt', 'lit', 'lnf', 'skt', 'lit', 'skt', 'lnf', 'lit', 'skt', 'lit', 'lnf']
+  for (let r2 = 0; r2 < 3; r2++) for (let c = 0; c < 5; c++) {
+    const k = r2 * 5 + c
+    if (k === 13) continue
+    s += `<rect x="${308 + c * 46}" y="${58 + r2 * 32}" width="38" height="24" rx="6" class="${fills[k]}"/>`
+  }
+  s += `<g class="fill"><rect x="446" y="122" width="38" height="24" rx="6" class="pkt"/></g>`
+  s += `<line x1="508" y1="118" x2="508" y2="148" class="stand"/><path class="pkt" d="M508 118 h20 l-6 6 l6 6 h-20 z"/>`
+  s += `<circle cx="612" cy="104" r="48" class="gls"/><circle cx="612" cy="104" r="34" class="lnf"/>`
+  s += `<line x1="612" y1="104" x2="612" y2="80" class="stand"/><g class="hand" style="transform-origin:612px 104px"><line x1="612" y1="104" x2="630" y2="104" class="stand"/></g><circle cx="612" cy="104" r="4" class="pkt"/>`
+  const css = `.art-revision .fill{transform-box:fill-box;transform-origin:0 50%;animation:arv-fill 5s ease-in-out infinite}
+.art-revision .hand{animation:arv-turn 5s ease-in-out infinite}
+@keyframes arv-fill{0%,15%{transform:scaleX(.2)}55%,100%{transform:scaleX(1)}}
+@keyframes arv-turn{0%,10%{transform:rotate(0)}60%,100%{transform:rotate(90deg)}}`
+  return { s, css, motion: [0, 0, 0, 0] }
+}
+
 
 // ================= My record and Saved (src/components/profile/art/, src/components/shortlist/art/) =================
 const myHeroes = {}
@@ -842,7 +864,7 @@ const TOOLS_DIR = path.join(__dirname, '../../src/components/tools/art/')
 fs.mkdirSync(TOOLS_DIR, { recursive: true })
 for (const [name, fn] of Object.entries(toolHeroes)) {
   const { s, css, motion } = fn()
-  write(`Art${name}`, `art-${name.toLowerCase()}`, fitBox(s, motion), s, css, name === 'Tools' ? 'the wide hero band of the tools page' : `the wide hero band of the ${name === 'Wam' ? 'WAM' : 'final'} calculator`, 'xMaxYMax', TOOLS_DIR, '../../guide/art/art.css')
+  write(`Art${name}`, `art-${name.toLowerCase()}`, fitBox(s, motion), s, css, name === 'Tools' ? 'the wide hero band of the tools page' : name === 'Revision' ? 'the wide hero band of the revision planner' : `the wide hero band of the ${name === 'Wam' ? 'WAM' : 'final'} calculator`, 'xMaxYMax', TOOLS_DIR, '../../guide/art/art.css')
 }
 const MY = { Record: path.join(__dirname, '../../src/components/profile/art/'), Shortlist: path.join(__dirname, '../../src/components/shortlist/art/') }
 for (const [name, fn] of Object.entries(myHeroes)) {
