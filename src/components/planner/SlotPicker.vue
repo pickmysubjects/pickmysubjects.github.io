@@ -70,8 +70,23 @@ function eligible(s: Subject, anyTerm = false): boolean {
   return slotEligible(s, at, course.value, taken.value, anyTerm)
 }
 
+// Checking a subject against the plan runs the whole plan check: kept per code until the plan,
+// the term or the language changes, so typing in the search doesn't repeat it for every key.
+const problems = computed(() => {
+  void [plan.plan.value, data.value, props.termIndex, load.value, props.replacing, course.value, t.value]
+  return new Map<string, string | null>()
+})
+
 /** The first thing stopping it here, or null when it fits. */
 function problem(code: string): string | null {
+  const cache = problems.value
+  if (cache.has(code)) return cache.get(code)!
+  const found = problemNow(code)
+  cache.set(code, found)
+  return found
+}
+
+function problemNow(code: string): string | null {
   // A swap is judged against the plan with the old subject still in (its load included).
   const issues = previewAdd(plan.plan.value, data.value, props.termIndex, code, load.value, props.replacing)
   // The most telling problem: an error other than the timetable's (a missing prerequisite says more).

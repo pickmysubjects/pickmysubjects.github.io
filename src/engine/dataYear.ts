@@ -29,8 +29,11 @@ export const thisYear = (): number => today().getFullYear()
  * zone the device is in. Built from the date's parts, not from a locale's format, which browsers
  * are free to change (en-CA has not always been ISO).
  */
+// Building a formatter is slow (it loads time-zone data); the board asks for the day per term.
+let melbourneFormat: Intl.DateTimeFormat | undefined
 export function melbourneDay(now: Date = today()): string {
-  const parts = new Intl.DateTimeFormat('en-US', { timeZone: 'Australia/Melbourne', year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(now)
+  melbourneFormat ??= new Intl.DateTimeFormat('en-US', { timeZone: 'Australia/Melbourne', year: 'numeric', month: '2-digit', day: '2-digit' })
+  const parts = melbourneFormat.formatToParts(now)
   const part = (type: Intl.DateTimeFormatPartTypes) => parts.find((p) => p.type === type)?.value ?? ''
   return `${part('year')}-${part('month')}-${part('day')}`
 }
@@ -44,7 +47,17 @@ export function dataYears(s: Subject): number[] {
 }
 
 /** The newest year with any offerings in the data: the newest Handbook year we can link to. */
+// The dataset is fixed once loaded, and every planner component asks: one pass per subject set.
+const latestCache = new WeakMap<object, number>()
 export function latestDataYear(subjects: Subjects): number {
+  const hit = latestCache.get(subjects)
+  if (hit !== undefined) return hit
+  const year = scanLatest(subjects)
+  latestCache.set(subjects, year)
+  return year
+}
+
+function scanLatest(subjects: Subjects): number {
   let max = 0
   for (const s of list(subjects)) for (const y of dataYears(s)) if (y > max) max = y
   return max || HANDBOOK_PUBLISHED
