@@ -55,7 +55,7 @@ function resolves(to: string): string | true {
   const r = parsePath(path, search ? `?${search}` : '')
   if (r.view === 'home' && path !== '') return `${to}: not a page`
   if (r.view === 'subjects' && r.param && !presetFromSlug(r.param) && !rankFromSlug(r.param)) return `${to}: unknown list`
-  if (r.view === 'tools' && !['', 'final', 'wam'].includes(r.param)) return `${to}: unknown tool`
+  if (r.view === 'tools' && !['', 'final', 'wam', 'revision'].includes(r.param)) return `${to}: unknown tool`
   if (r.view === 'guide' && r.param && !(GUIDE_PAGES as readonly string[]).includes(r.param)) return `${to}: unknown guide page`
   if (anchor) {
     if (r.view === 'guide') {
@@ -123,6 +123,10 @@ describe('feature search index', () => {
     expect(top('WAM')).toEqual(expect.arrayContaining(['tools/wam/', 'guide/basics/#wam']))
     expect(top('census', 'en', 5)).toEqual(expect.arrayContaining(['guide/key-dates/', 'guide/semester/#drop']))
     expect(top('hurdle')).toContain('guide/semester/#hurdles')
+    expect(top('revision timetable')).toContain('tools/revision/')
+    expect(top('复习计划', 'zh-CN')).toContain('tools/revision/')
+    expect(top('期末复习', 'zh-CN')).toContain('tools/revision/')
+    expect(top('exam study plan')).toContain('tools/revision/')
     expect(top('Canvas')).toContain('guide/systems/#svc-canvas')
     expect(top('MFA')).toContain('guide/systems/#svc-okta')
     expect(top('outlook')).toContain('guide/systems/#svc-email')
@@ -160,9 +164,9 @@ describe('feature search index', () => {
 })
 
 describe('menus hold destinations only', () => {
-  it('lists just the two calculators under Tools and no record sections under Me', async () => {
+  it('lists just the three tools under Tools and no record sections under Me', async () => {
     const { MENUS } = await import('../src/components/layout/nav')
-    expect(MENUS.find((m) => m.area === 'tools')!.items.map((i) => i.to)).toEqual(['tools/final/', 'tools/wam/'])
+    expect(MENUS.find((m) => m.area === 'tools')!.items.map((i) => i.to)).toEqual(['tools/final/', 'tools/wam/', 'tools/revision/'])
     expect(MENUS.find((m) => m.area === 'me')!.items.map((i) => i.to)).toEqual(['record/', 'shortlist/'])
     // Still found by the site search.
     const all = MENUS.flatMap((m) => [...m.items, ...(m.searchOnly ?? [])]).map((i) => i.to)

@@ -45,6 +45,7 @@ export const ko: Messages = {
       calendar: "캘린더|캘린더에 추가|시험 날짜",
       final: "기말 몇 점|성적 계산기|통과 점수",
       wam: "가중 평균|평균 점수|학점|GPA",
+      revision: "공부 계획|시험 공부|기말고사|공부 계획표|시험 준비|스터디 플래너|swotvac",
       compare: "과목 비교|나란히 비교",
       record: "내 성적|성적표|프로필",
       shortlist: "찜|저장한 과목|관심 과목",
@@ -113,7 +114,7 @@ export const ko: Messages = {
   },
   nav: { about: "소개", home: '홈', browse: '과목', more: '더보기', plan: '계획', record: '내 정보', contribute: '데이터 추가', feedback: '피드백', main: '메인 메뉴' },
   /** The header menus and the phone sheet: each feature's name and one short line. */
-  menu: {"aboutSite":"이 사이트 소개","feedback":"피드백과 건의","contribute":"데이터 추가·정정","changes":"연도별 변경과 업데이트","privacy":"개인정보","openMenu":"{name} 메뉴","all":"모든 기능","close":"닫기","allSubjects":"전체 과목","careers":"진로","myPlan":"내 계획","compareAB":"계획 비교","rules":"학위 규정 확인","heavy":"과부하 학기 알림","calendar":"캘린더에 추가","sharePlan":"계획 공유","allTools":"모든 도구","guideHome":"개요","backup":"백업 / 기기 변경","gradeShare":"성적 공유","d":{"aboutSite":"누가 만들었고 데이터는 어디서 오나","feedback":"오류 신고나 기능 제안","contribute":"빠진 과목이나 틀린 정보","changes":"새 Handbook 변경 사항과 사이트 업데이트","privacy":"데이터는 내 브라우저에만 저장","guideGroup":"학점, 수강신청, 시험, 비자","aboutGroup":"소개, 피드백, 데이터 정정, 개인정보","systems":"my.unimelb, Canvas, 이메일 용도","life":"상담, 진료, 안전, 동아리","help":"문의처, 학습 지원, 취업","allSubjects":"모든 과목 검색·필터","easy":"WAM 올리기 좋은 꿀강","hard":"학생들이 가장 어려워한 과목","noExam":"기말시험 없는 과목","summerWinter":"여름·겨울 방학에 듣기","breadth":"전공 밖 선택 과목","firstSem":"첫 학기에 듣기 좋은 과목","majors":"전공별 필요한 과목","careers":"원하는 직업으로 가는 과목","myPlan":"학위를 학기별로","compareAB":"계획을 항목별로 나란히","rules":"모든 규정을 충족하나요?","heavy":"너무 빡센 학기 찾기","calendar":"Census·시험·성적 발표일","sharePlan":"링크 공유, 이미지 저장, 인쇄","final":"등급별 기말 필요 점수","wam":"WAM, 목표, 가정 계산","compare":"저장한 과목 나란히","routes":"전공별 선수과목 순서","allTools":"계산기와 과목 목록","guideHome":"처음이라면 여기부터","basics":"학점, 전공, 규정, 성적, WAM","enrolling":"계획에서 실제 수강신청까지","semester":"special consideration, 시험, 성적","international":"비자 수강량 등","keyDates":"Census·시험·성적 발표","record":"학위, 성적, 목표","shortlist":"저장한 과목","backup":"데이터를 다른 브라우저로","gradeShare":"성적 등급 익명 공유"},"miss":{"noDates": "내 학기 일정은 아직 발표되지 않았어요", "noHeavy": "이 계획에는 과부하 학기가 없어요", "plan": "먼저 계획을 만들어 보세요", "grades": "먼저 내 기록에 성적을 입력하세요", "shortlist": "먼저 과목을 몇 개 저장하세요", "compareOne": "과목을 하나 더 저장하면 비교할 수 있어요"}},
+  menu: {"aboutSite":"이 사이트 소개","feedback":"피드백과 건의","contribute":"데이터 추가·정정","changes":"연도별 변경과 업데이트","privacy":"개인정보","openMenu":"{name} 메뉴","all":"모든 기능","close":"닫기","allSubjects":"전체 과목","careers":"진로","myPlan":"내 계획","compareAB":"계획 비교","rules":"학위 규정 확인","heavy":"과부하 학기 알림","calendar":"캘린더에 추가","sharePlan":"계획 공유","allTools":"모든 도구","guideHome":"개요","backup":"백업 / 기기 변경","gradeShare":"성적 공유","d":{"revision":"시험까지 날짜별 공부 시간표","aboutSite":"누가 만들었고 데이터는 어디서 오나","feedback":"오류 신고나 기능 제안","contribute":"빠진 과목이나 틀린 정보","changes":"새 Handbook 변경 사항과 사이트 업데이트","privacy":"데이터는 내 브라우저에만 저장","guideGroup":"학점, 수강신청, 시험, 비자","aboutGroup":"소개, 피드백, 데이터 정정, 개인정보","systems":"my.unimelb, Canvas, 이메일 용도","life":"상담, 진료, 안전, 동아리","help":"문의처, 학습 지원, 취업","allSubjects":"모든 과목 검색·필터","easy":"WAM 올리기 좋은 꿀강","hard":"학생들이 가장 어려워한 과목","noExam":"기말시험 없는 과목","summerWinter":"여름·겨울 방학에 듣기","breadth":"전공 밖 선택 과목","firstSem":"첫 학기에 듣기 좋은 과목","majors":"전공별 필요한 과목","careers":"원하는 직업으로 가는 과목","myPlan":"학위를 학기별로","compareAB":"계획을 항목별로 나란히","rules":"모든 규정을 충족하나요?","heavy":"너무 빡센 학기 찾기","calendar":"Census·시험·성적 발표일","sharePlan":"링크 공유, 이미지 저장, 인쇄","final":"등급별 기말 필요 점수","wam":"WAM, 목표, 가정 계산","compare":"저장한 과목 나란히","routes":"전공별 선수과목 순서","allTools":"계산기와 과목 목록","guideHome":"처음이라면 여기부터","basics":"학점, 전공, 규정, 성적, WAM","enrolling":"계획에서 실제 수강신청까지","semester":"special consideration, 시험, 성적","international":"비자 수강량 등","keyDates":"Census·시험·성적 발표","record":"학위, 성적, 목표","shortlist":"저장한 과목","backup":"데이터를 다른 브라우저로","gradeShare":"성적 등급 익명 공유"},"miss":{"noDates": "내 학기 일정은 아직 발표되지 않았어요", "noHeavy": "이 계획에는 과부하 학기가 없어요", "plan": "먼저 계획을 만들어 보세요", "grades": "먼저 내 기록에 성적을 입력하세요", "shortlist": "먼저 과목을 몇 개 저장하세요", "compareOne": "과목을 하나 더 저장하면 비교할 수 있어요"}},
   period: { summer: '여름 학기', 'semester-1': '1학기', winter: '겨울 학기', 'semester-2': '2학기' },
   periodShort: { summer: '여름', 'semester-1': 'S1', winter: '겨울', 'semester-2': 'S2' },
   termFull: '{year}년 {period}',
@@ -1399,12 +1400,14 @@ export const ko: Messages = {
     ifMark: "이 점수를 받으면",
     becomes: "WAM은 {wam}",
   },
+  /** The revision planner (/tools/revision/). */
+  rev: {"title": "시험 공부 계획표", "lede": "시험 날짜와 하루에 쓸 수 있는 시간을 넣으면, 마지막 시험까지 날짜별 공부 계획을 만들어요.", "subjects": "내 시험", "fromPlan": "내 계획에서 가져왔어요", "noSubjects": "시험이 있는 과목을 추가하세요.", "add": "과목 추가", "remove": "삭제", "examDate": "시험 날짜", "examTime": "시작 시간", "difficulty": "난이도", "level": {"easier": "쉬운 편", "average": "보통", "harder": "어려운 편"}, "estimate": "추정", "examShare": "기말시험 {n}%", "time": "내 시간", "start": "시작일", "hours": "하루 시간", "dayStart": "매일 시작 시간", "rest": "쉬는 날", "privacy": "이 기기에만 저장돼요. 내 계획과 성적 기록은 바뀌지 않아요.", "totals": "과목별 시간", "ruleShort": "어렵고 빨리 있는 시험에 시간을 더 줘요.", "rule": "시간 나누는 법: 과목마다 난이도 가중치(쉬운 편 0.8, 보통 1, 어려운 편 1.3)를 주고, 기말시험 비중을 알면 그것도 곱해요. 시험 날과 쉬는 날은 비우고, 하루 시간을 넘기지 않아요. 각 시험 전 마지막 빈 날은 그 과목만 공부해요. 나머지 날은 아직 시험이 남은 과목끼리 나누고, 비중이 크고 가까운 시험일수록 많이, 하루 최대 세 과목이에요. 시험이 끝난 과목은 넣지 않아요. 시작점으로 쓰는 간단한 규칙이지, 최적의 계획은 아니에요.", "total": "합계", "hoursN": "{n}시간", "skipNoDate": "{code}: 시험 날짜를 아직 안 넣었어요", "skipPast": "{code}: 시험이 시작일보다 앞이에요", "ics": "캘린더에 추가(.ics)", "print": "인쇄", "schedule": "공부 계획표", "missing": {"none": "먼저 과목을 추가하세요.", "dates": "시험 날짜를 넣으면 계획표가 나와요.", "hours": "하루 시간을 넣으면 계획표가 나와요."}, "examDay": "시험: {codes}", "restDay": "휴식", "focus": "시험 전 총정리", "nothing": "비어 있음", "icsSession": "{code} 복습", "icsFocus": "시험 전 총정리: {code}", "icsExam": "시험: {code}", "icsReminder": "곧 공부 시작이에요"},
   tools: {
     open: "열기",
     title: "도구",
     nav: "도구",
     /** One line on what each tool answers, on the tools page. */
-    line: {"final":"등급별로 기말에 필요한 점수","wam":"지금 WAM과 목표까지 필요한 평균"},
+    line: {"final":"등급별로 기말에 필요한 점수","wam":"지금 WAM과 목표까지 필요한 평균","revision":"마지막 시험까지 날짜별 공부 계획"},
     wam: "WAM 계산기",
     wamLede: "성적 기록으로 WAM, 목표까지 필요한 평균, 한 과목 점수가 WAM을 어떻게 바꾸는지 계산해요.",
     easy: "꿀강 목록 (점수 받기 쉬운 과목)",
@@ -1418,6 +1421,8 @@ export const ko: Messages = {
     seoDesc: "멜번대 학생용 무료 도구: H1, H2A…를 받으려면 기말에 몇 점이 필요한지, 그리고 목표와 가정을 넣어 보는 WAM 계산기. 로그인 필요 없음.",
     wamSeoTitle: "멜버른대 WAM 계산기: 목표 WAM과 가정 계산",
     wamSeoDesc: "무료 멜버른대 WAM 계산기: 점수로 WAM을 계산하고, 목표 WAM에 필요한 평균과 한 과목 점수에 따른 WAM 변화를 알려 줘요. 점수는 기기에만 저장돼요.",
+    revSeoTitle: "멜버른대 시험 공부 계획표: 기말고사 공부 플래너",
+    revSeoDesc: "멜버른대 기말고사용 무료 공부 계획 도구: 시험 날짜와 하루 시간을 넣으면 날짜별 공부 계획표를 만들고 캘린더에 추가할 수 있어요. 데이터는 기기에만 저장.",
   },
   wamCalc: {"fromRecord":"내 기록에서 {n}과목 · WAM {wam}","edit":"수정","whatIf":"만약 더 들으면","whatIfNote":"내 기록에 저장되지 않아요","yourMarks":"내 성적","add":"과목 추가","mark":"점수","save":"내 기록에 저장","saved":"내 기록에 저장됨","wamNow":"내 WAM","wamWith":"이걸 더한 WAM","pf":"Pass/Fail 과목: WAM에 안 들어가요","empty":"과목과 점수를 넣으면 WAM이 나와요.","open":"WAM 계산기에서 가정해 보기"},
   calc: {
@@ -1578,6 +1583,7 @@ export const ko: Messages = {
     examsMelbourne: "캠퍼스에서 보는 시험이 있나요? 추가 시험(supplementary exam)을 포함해 시험 기간 내내 멜버른에 있어야 하니 귀국 항공권을 너무 일찍 잡지 마세요.",
     examsResults: "성적: 발표일이 지나면 my.unimelb에서 볼 수 있어요. 날짜는 공식 성적 페이지에 있어요.",
     examsReview: "점수가 잘못된 것 같나요? 먼저 피드백을 요청하세요. 그다음 성적이 나온 날부터 영업일 10일 안에 이유를 적어 재검토를 요청할 수 있어요. 재검토가 자동으로 받아들여지는 건 아니고, 점수는 오를 수도, 그대로일 수도, 내려갈 수도 있어요.",
+    examsPlan: "시험 공부 계획표로 날짜별 복습 계획을 세워 보세요.",
     examDatesLink: "시험 일정",
     examTtLink: "시험 시간표",
     resultsLink: "성적 발표",

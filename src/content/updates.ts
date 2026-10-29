@@ -14,6 +14,20 @@ export interface SiteUpdate {
 
 export const SITE_UPDATES: SiteUpdate[] = [
   {
+    date: '2026-10-29',
+    text: {
+      en: 'New tool: the revision planner. Put in your exam dates and hours a day, get a day-by-day revision timetable and add it to your calendar.',
+      'zh-CN': '新工具「复习计划生成器」：填好考试日期和每天能学几个小时，生成每日复习计划，还能加入日历。',
+      'zh-TW': '新工具「複習計畫產生器」：填好考試日期和每天能讀幾個小時，產生每日複習計畫，還能加入行事曆。',
+      ja: '新ツール「試験勉強プランナー」：試験日と1日の時間を入れると毎日の勉強計画ができ、カレンダーにも追加できます。',
+      ko: '새 도구 ‘시험 공부 계획표’: 시험 날짜와 하루 시간을 넣으면 날짜별 공부 계획이 나오고, 캘린더에도 추가할 수 있어요.',
+      vi: 'Công cụ mới: lập kế hoạch ôn thi. Nhập ngày thi và số giờ mỗi ngày, nhận lịch ôn từng ngày và thêm vào lịch.',
+      ms: 'Alat baharu: perancang ulang kaji. Masukkan tarikh peperiksaan dan jam sehari, dapatkan jadual ulang kaji harian dan tambah ke kalendar.',
+      id: 'Alat baru: perencana belajar ujian. Isi tanggal ujian dan jam per hari, dapatkan jadwal belajar harian dan tambahkan ke kalender.',
+      hi: 'नया टूल: रिवीज़न प्लानर। परीक्षा की तारीखें और रोज़ के घंटे डालें, दिन-ब-दिन रिवीज़न टाइमटेबल पाएँ और कैलेंडर में जोड़ें।',
+    },
+  },
+  {
     date: '2026-10-28',
     text: {
       en: 'Search the whole site from the top bar (⌘K). Compare plans has its own page: your plans side by side, rule by rule and semester by semester.',

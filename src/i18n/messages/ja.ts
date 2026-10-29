@@ -45,6 +45,7 @@ export const ja: Messages = {
       calendar: "カレンダー|カレンダーに追加|試験日",
       final: "期末で何点必要|成績計算|合格点",
       wam: "加重平均|平均点|GPA",
+      revision: "勉強計画|テスト勉強|試験対策|期末試験|勉強スケジュール|計画表|swotvac",
       compare: "科目比較|並べて比較",
       record: "成績|成績表|プロフィール",
       shortlist: "お気に入り|保存した科目|候補",
@@ -113,7 +114,7 @@ export const ja: Messages = {
   },
   nav: { about: "サイト情報", home: 'ホーム', browse: '科目', more: 'その他', plan: 'プラン', record: 'マイ', contribute: 'データを追加', feedback: 'フィードバック', main: 'メインメニュー' },
   /** The header menus and the phone sheet: each feature's name and one short line. */
-  menu: {"aboutSite":"このサイトについて","feedback":"フィードバック・要望","contribute":"データの追加・訂正","changes":"年度の変更と更新履歴","privacy":"プライバシー","openMenu":"{name}メニュー","all":"すべての機能","close":"閉じる","allSubjects":"すべての科目","careers":"キャリア","myPlan":"マイプラン","compareAB":"プランを比較","rules":"学位ルールのチェック","heavy":"重い学期のお知らせ","calendar":"カレンダーに追加","sharePlan":"プランを共有","allTools":"すべてのツール","guideHome":"概要","backup":"バックアップ / 端末の移行","gradeShare":"成績をシェア","d":{"aboutSite":"作った人とデータの出どころ","feedback":"不具合の報告や機能の提案","contribute":"足りない科目や間違った情報","changes":"新しいHandbookの変更とサイトの更新","privacy":"データはあなたのブラウザにだけ保存","guideGroup":"単位・履修登録・試験・ビザ","aboutGroup":"概要・フィードバック・データ訂正・プライバシー","systems":"my.unimelb、Canvas、メールの使い道","life":"カウンセリング、診療所、安全、クラブ","help":"相談先、学習サポート、就職","allSubjects":"全科目を検索・絞り込み","easy":"WAM を上げやすい楽単","hard":"みんなが一番難しいと言う科目","noExam":"期末試験なしの科目","summerWinter":"夏休み・冬休みに履修","breadth":"専攻外の選択科目","firstSem":"最初の学期におすすめ","majors":"各専攻に必要な科目","careers":"仕事につながる科目","myPlan":"学位を学期ごとに","compareAB":"プランを項目ごとに並べて","rules":"ルールをすべて満たす？","heavy":"詰め込みすぎの学期を発見","calendar":"Census・試験・成績発表日","sharePlan":"リンク共有・画像保存・印刷","final":"成績ごとに期末で必要な点","wam":"WAM、目標、もしもの計算","compare":"保存した科目を並べて","routes":"専攻ごとの履修ルート","allTools":"計算ツールと科目リスト","guideHome":"初めての人はここから","basics":"ポイント、専攻、ルール、成績、WAM","enrolling":"プランから実際の履修登録へ","semester":"special consideration、試験、成績","international":"ビザと履修量など","keyDates":"Census・試験・成績発表","record":"学位、成績、目標","shortlist":"保存した科目","backup":"データを別のブラウザへ","gradeShare":"成績区分を匿名でシェア"},"miss":{"noDates": "あなたの学期の日程はまだ発表されていません", "noHeavy": "このプランに重すぎる学期はありません", "plan": "先にプランを作りましょう", "grades": "先にマイ記録に成績を入れましょう", "shortlist": "先に科目をいくつか保存しましょう", "compareOne": "あと1科目保存すると比較できます"}},
+  menu: {"aboutSite":"このサイトについて","feedback":"フィードバック・要望","contribute":"データの追加・訂正","changes":"年度の変更と更新履歴","privacy":"プライバシー","openMenu":"{name}メニュー","all":"すべての機能","close":"閉じる","allSubjects":"すべての科目","careers":"キャリア","myPlan":"マイプラン","compareAB":"プランを比較","rules":"学位ルールのチェック","heavy":"重い学期のお知らせ","calendar":"カレンダーに追加","sharePlan":"プランを共有","allTools":"すべてのツール","guideHome":"概要","backup":"バックアップ / 端末の移行","gradeShare":"成績をシェア","d":{"revision":"試験までの毎日の勉強スケジュール","aboutSite":"作った人とデータの出どころ","feedback":"不具合の報告や機能の提案","contribute":"足りない科目や間違った情報","changes":"新しいHandbookの変更とサイトの更新","privacy":"データはあなたのブラウザにだけ保存","guideGroup":"単位・履修登録・試験・ビザ","aboutGroup":"概要・フィードバック・データ訂正・プライバシー","systems":"my.unimelb、Canvas、メールの使い道","life":"カウンセリング、診療所、安全、クラブ","help":"相談先、学習サポート、就職","allSubjects":"全科目を検索・絞り込み","easy":"WAM を上げやすい楽単","hard":"みんなが一番難しいと言う科目","noExam":"期末試験なしの科目","summerWinter":"夏休み・冬休みに履修","breadth":"専攻外の選択科目","firstSem":"最初の学期におすすめ","majors":"各専攻に必要な科目","careers":"仕事につながる科目","myPlan":"学位を学期ごとに","compareAB":"プランを項目ごとに並べて","rules":"ルールをすべて満たす？","heavy":"詰め込みすぎの学期を発見","calendar":"Census・試験・成績発表日","sharePlan":"リンク共有・画像保存・印刷","final":"成績ごとに期末で必要な点","wam":"WAM、目標、もしもの計算","compare":"保存した科目を並べて","routes":"専攻ごとの履修ルート","allTools":"計算ツールと科目リスト","guideHome":"初めての人はここから","basics":"ポイント、専攻、ルール、成績、WAM","enrolling":"プランから実際の履修登録へ","semester":"special consideration、試験、成績","international":"ビザと履修量など","keyDates":"Census・試験・成績発表","record":"学位、成績、目標","shortlist":"保存した科目","backup":"データを別のブラウザへ","gradeShare":"成績区分を匿名でシェア"},"miss":{"noDates": "あなたの学期の日程はまだ発表されていません", "noHeavy": "このプランに重すぎる学期はありません", "plan": "先にプランを作りましょう", "grades": "先にマイ記録に成績を入れましょう", "shortlist": "先に科目をいくつか保存しましょう", "compareOne": "あと1科目保存すると比較できます"}},
   period: { summer: '夏学期', 'semester-1': '第1セメスター', winter: '冬学期', 'semester-2': '第2セメスター' },
   periodShort: { summer: '夏', 'semester-1': 'S1', winter: '冬', 'semester-2': 'S2' },
   termFull: '{year}年 {period}',
@@ -1399,12 +1400,14 @@ export const ja: Messages = {
     ifMark: "この点数なら",
     becomes: "WAM は {wam} になる",
   },
+  /** The revision planner (/tools/revision/). */
+  rev: {"title": "試験勉強プランナー", "lede": "試験日と1日に使える時間を入れると、最後の試験までの毎日の勉強計画を作ります。", "subjects": "あなたの試験", "fromPlan": "プランから入力済み", "noSubjects": "試験のある科目を追加してください。", "add": "科目を追加", "remove": "削除", "examDate": "試験日", "examTime": "開始時刻", "difficulty": "難しさ", "level": {"easier": "やさしめ", "average": "ふつう", "harder": "難しめ"}, "estimate": "推定", "examShare": "期末試験 {n}%", "time": "使える時間", "start": "開始日", "hours": "1日の時間", "dayStart": "毎日の開始時刻", "rest": "休みの日", "privacy": "この端末にだけ保存。プランと成績記録は変わりません。", "totals": "科目ごとの時間", "ruleShort": "難しい科目と早い試験ほど多めに。", "rule": "時間の分け方：各科目に難しさの重み（やさしめ 0.8、ふつう 1、難しめ 1.3）を付け、期末試験の割合がわかればそれも掛けます。試験日と休みの日は空け、1日の時間を超えません。各試験の前の最後の空き日はその科目だけ。ほかの日はまだ試験が残っている科目で分け、重くて近い試験ほど多く、1日最大3科目。試験が終わった科目は入れません。出発点にするための簡単なルールで、最適な計画ではありません。", "total": "合計", "hoursN": "{n}時間", "skipNoDate": "{code}：試験日が未入力", "skipPast": "{code}：試験日が開始日より前", "ics": "カレンダーに追加（.ics）", "print": "印刷", "schedule": "勉強計画", "missing": {"none": "まず科目を追加してください。", "dates": "試験日を入れると計画が出ます。", "hours": "1日の時間を入れると計画が出ます。"}, "examDay": "試験：{codes}", "restDay": "休み", "focus": "直前の総復習", "nothing": "空き", "icsSession": "{code} を復習", "icsFocus": "直前の総復習：{code}", "icsExam": "試験：{code}", "icsReminder": "もうすぐ勉強の時間です"},
   tools: {
     open: "開く",
     title: "ツール",
     nav: "ツール",
     /** One line on what each tool answers, on the tools page. */
-    line: {"final":"成績ごとに期末で必要な点","wam":"今の WAM と目標に必要な平均"},
+    line: {"final":"成績ごとに期末で必要な点","wam":"今の WAM と目標に必要な平均","revision":"最後の試験までの毎日の勉強計画"},
     wam: "WAM 計算",
     wamLede: "成績記録から WAM、目標に必要な平均、1 科目の点で WAM がどう変わるかを計算します。",
     easy: "楽単リスト（点を取りやすい科目）",
@@ -1418,6 +1421,8 @@ export const ja: Messages = {
     seoDesc: "メルボルン大学生向けの無料ツール：H1、H2A… を取るのに期末で必要な点数と、目標や「もし」を試せる WAM 計算。ログイン不要。",
     wamSeoTitle: "メルボルン大学 WAM 計算：目標 WAM ともしもの計算",
     wamSeoDesc: "無料のメルボルン大学 WAM 計算ツール：点数から WAM、目標 WAM に必要な平均、1 科目の点で WAM がどう変わるかを計算。点数は端末の中だけ。",
+    revSeoTitle: "メルボルン大学 試験勉強プランナー：テスト勉強の計画表",
+    revSeoDesc: "メルボルン大学の期末試験向け無料の勉強計画ツール。試験日と1日の時間を入れると毎日の計画表ができ、カレンダーにも追加できます。データは端末内だけ。",
   },
   wamCalc: {"fromRecord":"成績記録から {n} 科目 · WAM {wam}","edit":"編集","whatIf":"もし取ったら","whatIfNote":"成績記録には保存されません","yourMarks":"あなたの成績","add":"科目を追加","mark":"点数","save":"成績記録に保存","saved":"成績記録に保存しました","wamNow":"あなたの WAM","wamWith":"これを足した WAM","pf":"合否のみ：WAM に入りません","empty":"科目と点数を入れると WAM が出ます。","open":"WAM 計算で「もし」を試す"},
   calc: {
@@ -1578,6 +1583,7 @@ export const ja: Messages = {
     examsMelbourne: "キャンパスで受ける試験がある人は、追試も含めて試験期間中ずっとメルボルンにいる必要があります。帰国便を早めに取らないようにしましょう。",
     examsResults: "成績発表：発表日を過ぎると my.unimelb で見られます。日付は公式の成績ページに載っています。",
     examsReview: "点数がおかしいと思ったら、まずフィードバックを求めます。そのうえで、成績が出てから10営業日以内に理由を添えて見直し（review）を申請できます。申請すれば必ず見直されるわけではなく、点数は上がることも、変わらないことも、下がることもあります。",
+    examsPlan: "試験勉強プランナーで毎日の勉強計画を立てましょう。",
     examDatesLink: "試験の日程",
     examTtLink: "試験の時間割",
     resultsLink: "成績発表",

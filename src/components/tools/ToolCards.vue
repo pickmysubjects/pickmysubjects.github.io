@@ -9,6 +9,7 @@ const { t } = useI18n()
 const ARTS = {
   final: defineAsyncComponent(() => import('./art/ArtFinal.vue')),
   wam: defineAsyncComponent(() => import('./art/ArtWam.vue')),
+  revision: defineAsyncComponent(() => import('./art/ArtRevision.vue')),
 }
 </script>
 
@@ -30,7 +31,7 @@ const ARTS = {
 <style scoped>
 .cards {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--space-4);
   margin: 0;
   padding: 0;
@@ -101,6 +102,12 @@ const ARTS = {
 .card-art > :deep(*) {
   width: 100%;
   height: 100%;
+}
+
+@media (max-width: 1100px) and (min-width: 721px) {
+  .cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 720px) {

@@ -45,6 +45,7 @@ export const zhTW: Messages = {
       calendar: "行事曆|匯入行事曆|census 日期|考試日期",
       final: "期末要考幾分|期末計算機|及格分數|算分",
       wam: "加權平均|平均分數|GPA|學期成績",
+      revision: "複習計畫|期末複習|讀書計畫|讀書時間表|考試準備|備考|swotvac",
       compare: "比較課程|課程比較",
       record: "我的成績|成績單|個人資料|我的紀錄",
       shortlist: "收藏|想修的課|口袋名單|已儲存",
@@ -113,7 +114,7 @@ export const zhTW: Messages = {
   },
   nav: { about: "關於", home: '首頁', browse: '找課', more: '更多', plan: '排課', record: '我的', contribute: '新增資料', feedback: '意見回饋', main: '主選單' },
   /** The header menus and the phone sheet: each feature's name and one short line. */
-  menu: {"aboutSite":"關於這個網站","feedback":"意見回饋與建議","contribute":"新增／更正資料","changes":"年度變化和更新紀錄","privacy":"隱私","openMenu":"{name}選單","all":"全部功能","close":"關閉","allSubjects":"全部課程","careers":"職涯方向","myPlan":"我的排課","compareAB":"計畫比較","rules":"學位規定檢查","heavy":"學期太重提醒","calendar":"匯出到行事曆","sharePlan":"分享計畫","allTools":"全部工具","guideHome":"入門總覽","backup":"備份 / 換裝置","gradeShare":"成績分享","d":{"aboutSite":"誰做的、資料從哪來","feedback":"回報錯誤或提想要的功能","contribute":"少了某門課，或資訊有誤","changes":"新 Handbook 的變化和網站更新","privacy":"你的資料只存在你的瀏覽器裡","guideGroup":"學分、選課、考試、簽證","aboutGroup":"關於、意見回饋、更正資料、隱私","systems":"my.unimelb、Canvas、信箱各管什麼","life":"心理諮商、看診、安全、社團","help":"去哪裡問、學習協助、找工作","allSubjects":"依條件搜尋和篩選所有課","easy":"好拿分、拉 WAM 的課","hard":"大家覺得最難的課","noExam":"不用考期末的課","summerWinter":"利用寒暑假修課","breadth":"本科系以外的選修","firstSem":"第一學期適合選的課","majors":"每個主修要修哪些課","careers":"想做這份工作，該讀什麼主修和課","myPlan":"整個學位，一學期一學期排","compareAB":"幾個計畫逐項並排比較","rules":"你的計畫符合所有規定嗎","heavy":"找出課太多的學期","calendar":"census、考試和出成績日期","sharePlan":"傳連結、存圖片或列印","final":"每個等級期末要考幾分","wam":"你的 WAM、目標和假設","compare":"收藏的課並排比較","routes":"每個主修的先修鏈","allTools":"計算機和現成榜單","guideHome":"新生從這裡看起","basics":"學分、major、規定、成績和 WAM","enrolling":"從排課到正式選課","semester":"special consideration、考試、成績","international":"簽證修課量等","keyDates":"census、考試、出成績","record":"學位、成績和目標","shortlist":"你收藏的課","backup":"把資料搬到另一個瀏覽器","gradeShare":"匿名分享成績等級幫別人"},"miss":{"noDates": "你的學期還沒有公布日期", "noHeavy": "這個計畫沒有太重的學期", "plan": "先排一個計畫", "grades": "先在我的紀錄裡加上成績", "shortlist": "先收藏幾門課", "compareOne": "再收藏一門課就能比較"}},
+  menu: {"aboutSite":"關於這個網站","feedback":"意見回饋與建議","contribute":"新增／更正資料","changes":"年度變化和更新紀錄","privacy":"隱私","openMenu":"{name}選單","all":"全部功能","close":"關閉","allSubjects":"全部課程","careers":"職涯方向","myPlan":"我的排課","compareAB":"計畫比較","rules":"學位規定檢查","heavy":"學期太重提醒","calendar":"匯出到行事曆","sharePlan":"分享計畫","allTools":"全部工具","guideHome":"入門總覽","backup":"備份 / 換裝置","gradeShare":"成績分享","d":{"revision":"按天排好的期末複習時間表","aboutSite":"誰做的、資料從哪來","feedback":"回報錯誤或提想要的功能","contribute":"少了某門課，或資訊有誤","changes":"新 Handbook 的變化和網站更新","privacy":"你的資料只存在你的瀏覽器裡","guideGroup":"學分、選課、考試、簽證","aboutGroup":"關於、意見回饋、更正資料、隱私","systems":"my.unimelb、Canvas、信箱各管什麼","life":"心理諮商、看診、安全、社團","help":"去哪裡問、學習協助、找工作","allSubjects":"依條件搜尋和篩選所有課","easy":"好拿分、拉 WAM 的課","hard":"大家覺得最難的課","noExam":"不用考期末的課","summerWinter":"利用寒暑假修課","breadth":"本科系以外的選修","firstSem":"第一學期適合選的課","majors":"每個主修要修哪些課","careers":"想做這份工作，該讀什麼主修和課","myPlan":"整個學位，一學期一學期排","compareAB":"幾個計畫逐項並排比較","rules":"你的計畫符合所有規定嗎","heavy":"找出課太多的學期","calendar":"census、考試和出成績日期","sharePlan":"傳連結、存圖片或列印","final":"每個等級期末要考幾分","wam":"你的 WAM、目標和假設","compare":"收藏的課並排比較","routes":"每個主修的先修鏈","allTools":"計算機和現成榜單","guideHome":"新生從這裡看起","basics":"學分、major、規定、成績和 WAM","enrolling":"從排課到正式選課","semester":"special consideration、考試、成績","international":"簽證修課量等","keyDates":"census、考試、出成績","record":"學位、成績和目標","shortlist":"你收藏的課","backup":"把資料搬到另一個瀏覽器","gradeShare":"匿名分享成績等級幫別人"},"miss":{"noDates": "你的學期還沒有公布日期", "noHeavy": "這個計畫沒有太重的學期", "plan": "先排一個計畫", "grades": "先在我的紀錄裡加上成績", "shortlist": "先收藏幾門課", "compareOne": "再收藏一門課就能比較"}},
   period: { summer: '夏季學期', 'semester-1': '第一學期', winter: '冬季學期', 'semester-2': '第二學期' },
   periodShort: { summer: '夏季', 'semester-1': 'S1', winter: '冬季', 'semester-2': 'S2' },
   termFull: '{year} {period}',
@@ -1399,12 +1400,14 @@ export const zhTW: Messages = {
     ifMark: "如果我拿",
     becomes: "WAM 會變成 {wam}",
   },
+  /** The revision planner (/tools/revision/). */
+  rev: {"title": "複習計畫產生器", "lede": "填好考試日期和每天能讀幾個小時，產生到最後一科考試為止的每日複習計畫。", "subjects": "你的考試", "fromPlan": "已從你的計畫帶入", "noSubjects": "加上要考試的科目。", "add": "新增科目", "remove": "移除", "examDate": "考試日期", "examTime": "開考時間", "difficulty": "難度", "level": {"easier": "偏簡單", "average": "普通", "harder": "偏難"}, "estimate": "我們的估計", "examShare": "期末考占 {n}%", "time": "你的時間", "start": "開始日期", "hours": "每天時數", "dayStart": "每天開始時間", "rest": "休息日", "privacy": "只存在這台裝置上，不會改動你的計畫和成績紀錄。", "totals": "各科總時數", "ruleShort": "越難、越早考的科目分到越多時間。", "rule": "時間怎麼分：每科依難度給一個權重（偏簡單 0.8、普通 1、偏難 1.3），知道期末考占比的話再乘上它。考試當天和休息日不排複習，每天不超過你填的時數。每科考試前的最後一個空檔日只讀這一科。其餘日子分給還沒考的科目，越重、越近的考試分得越多，一天最多三科。考完的科目之後不再安排。這只是一個簡單的起點，不是最佳方案。", "total": "合計", "hoursN": "{n} 小時", "skipNoDate": "{code}：還沒填考試日期", "skipPast": "{code}：考試在開始日期之前", "ics": "加入行事曆（.ics）", "print": "列印", "schedule": "你的複習計畫", "missing": {"none": "先新增一個科目。", "dates": "填上考試日期就能看到複習計畫。", "hours": "填上每天時數就能看到複習計畫。"}, "examDay": "考試：{codes}", "restDay": "休息", "focus": "考前衝刺", "nothing": "空檔", "icsSession": "複習 {code}", "icsFocus": "考前衝刺：{code}", "icsExam": "考試：{code}", "icsReminder": "快要開始複習了"},
   tools: {
     open: "打開",
     title: "工具",
     nav: "工具",
     /** One line on what each tool answers, on the tools page. */
-    line: {"final":"每個等級期末要考幾分","wam":"現在的 WAM，衝目標平均要考多少"},
+    line: {"final":"每個等級期末要考幾分","wam":"現在的 WAM，衝目標平均要考多少","revision":"到最後一科考試為止的每日複習計畫"},
     wam: "WAM 計算機",
     wamLede: "用你的成績紀錄算 WAM、達到目標要多少平均，以及某門課的分數會帶來什麼變化。",
     easy: "涼課榜（好拿分的課）",
@@ -1418,6 +1421,8 @@ export const zhTW: Messages = {
     seoDesc: "墨爾本大學學生免費工具：期末要考幾分才能拿 H1、H2A…，以及 WAM 計算機（目標 WAM 和假設）。不用登入。",
     wamSeoTitle: "墨大 WAM 計算機：目標 WAM 和假如考幾分",
     wamSeoDesc: "免費墨爾本大學 WAM 計算機：用你的分數算 WAM，算出達到目標 WAM 需要的平均，以及某門課考幾分 WAM 會變多少。分數只存在這台裝置。",
+    revSeoTitle: "墨大期末複習計畫產生器：每日讀書時間表",
+    revSeoDesc: "免費的墨大期末複習計畫工具：填考試日期和每天能讀幾個小時，產生每日讀書計畫，可匯入行事曆。資料只存在你的裝置上。",
   },
   wamCalc: {"fromRecord":"從我的紀錄讀取了 {n} 門課 · WAM {wam}","edit":"去修改","whatIf":"假設再修","whatIfNote":"不會存進我的紀錄","yourMarks":"你的成績","add":"加一門課","mark":"分數","save":"儲存到我的紀錄","saved":"已存到我的紀錄","wamNow":"你的 WAM","wamWith":"加上這些後的 WAM","pf":"只算通過／不通過，不計入 WAM","empty":"加上課和分數就能算出 WAM。","open":"在 WAM 計算機裡試試假設"},
   calc: {
@@ -1578,6 +1583,7 @@ export const zhTW: Messages = {
     examsMelbourne: "有校內考試嗎？整個考試期間，包括補考（supplementary exams），你都必須待在墨爾本，回家的機票別訂太早。",
     examsResults: "成績：公布日之後在 my.unimelb 查看。日期寫在官方的成績頁面。",
     examsReview: "覺得分數有問題？先請老師給回饋（feedback）。之後可以在成績公布後 10 個工作天內申請複查，並寫明理由。複查不是一定會受理，分數可能上升、不變，也可能下降。",
+    examsPlan: "用複習計畫產生器按天排好期末複習。",
     examDatesLink: "考試日期",
     examTtLink: "考試時間表",
     resultsLink: "成績公布",

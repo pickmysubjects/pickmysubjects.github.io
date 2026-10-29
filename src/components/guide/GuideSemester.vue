@@ -65,6 +65,7 @@ const { t } = useI18n()
       <li>{{ t('guide.examsResults') }}</li>
       <li>{{ t('guide.examsReview') }}</li>
     </ul>
+    <p><a :href="link('tools/revision/')">{{ t('guide.examsPlan') }}</a></p>
     <GuideCallout kind="warn">{{ t('guide.examsMelbourne') }}</GuideCallout>
     <GuideLinks
       :links="[

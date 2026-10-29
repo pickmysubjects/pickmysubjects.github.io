@@ -686,6 +686,7 @@ function guideBody(code: LocaleCode, t: Translate, page: GuideCategory | 'overvi
     ].join('\n'),
     'exams': [
       `<h2 id="exams">${esc(t('guide.examsTitle'))}</h2>`, li(['examsTimetable', 'examsMelbourne', 'examsResults', 'examsReview']),
+      `<p><a href="${href(code, 'tools/revision')}">${esc(t('guide.examsPlan'))}</a></p>`,
       ext('https://students.unimelb.edu.au/course-admin/exams/exam-dates', 'examDatesLink'), ext('https://students.unimelb.edu.au/course-admin/exams/exams-timetable', 'examTtLink'), ext('https://students.unimelb.edu.au/course-admin/results', 'resultsLink'),
     ].join('\n'),
     'fail': [
@@ -883,6 +884,7 @@ function toolPages(code: LocaleCode, t: Translate): Page[] {
       description: t('seo.calcDesc'),
       body: `<h1>${esc(t('calc.title'))}</h1><p>${esc(t('calc.lede'))}</p><p>${esc(t('calc.maths', { earned: 30, left: 60 }))}</p><ul>${['H1 80', 'H2A 75', 'H2B 70', 'H3 65', 'P 50'].map((b) => `<li>${b}</li>`).join('')}</ul><h2>${esc(t('calc.hurdle'))}</h2><p>${esc(t('calc.hurdleInfo'))}</p><p>${esc(t('calc.privacyInfo'))}</p>`,
     },
+    { path: 'tools/revision', title: `${t('tools.revSeoTitle')} | PickMySubjects`, description: t('tools.revSeoDesc'), body: `<h1>${esc(t('rev.title'))}</h1><p>${esc(t('rev.lede'))}</p><h2>${esc(t('rev.totals'))}</h2><p>${esc(t('rev.rule'))}</p><p>${esc(t('rev.privacy'))}</p>` },
     { path: 'tools/wam', title: `${t('tools.wamSeoTitle')} | PickMySubjects`, description: t('tools.wamSeoDesc'), body: `<h1>${esc(t('tools.wam'))}</h1><p>${esc(t('tools.wamLede'))}</p><p>${esc(t('guide.wamText'))}</p><p>${esc(t('guide.wamFormula'))}</p>` },
   ]
 }

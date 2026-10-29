@@ -1,11 +1,12 @@
 import { cleanCalc } from '../engine/finalCalc'
+import { cleanRevision } from '../engine/revisionPlan'
 import { cleanPlans, cleanProfiles, cleanRated, cleanShortlist } from './sanitize'
 /**
- * A student's record, plans, rated and shortlisted subjects and final-calculator marks live only in this browser. A
+ * A student's record, plans, rated and shortlisted subjects, final-calculator marks and revision plan live only in this browser. A
  * backup file lets them move to another browser or computer without anything
  * being uploaded.
  */
-const KEYS = ['sc:profiles', 'sc:plans', 'sc:rated', 'sc:shortlist', 'sc:finalCalc'] as const
+const KEYS = ['sc:profiles', 'sc:plans', 'sc:rated', 'sc:shortlist', 'sc:finalCalc', 'sc:revision'] as const
 const APP = 'pickmysubjects'
 // Backups saved before the site was renamed from Subject Compass still restore.
 const OLD_APPS: readonly string[] = ['subject-compass']
@@ -42,7 +43,7 @@ export function restoreBackup(text: string): boolean {
   if (!isBackup(parsed)) return false
   try {
     // Put each part in shape before saving it, as reading it back would.
-    const CLEAN: Record<(typeof KEYS)[number], (x: unknown) => unknown> = { 'sc:profiles': cleanProfiles, 'sc:plans': cleanPlans, 'sc:rated': cleanRated, 'sc:shortlist': cleanShortlist, 'sc:finalCalc': cleanCalc }
+    const CLEAN: Record<(typeof KEYS)[number], (x: unknown) => unknown> = { 'sc:profiles': cleanProfiles, 'sc:plans': cleanPlans, 'sc:rated': cleanRated, 'sc:shortlist': cleanShortlist, 'sc:finalCalc': cleanCalc, 'sc:revision': cleanRevision }
     for (const key of KEYS) {
       const value = parsed.data[key]
       if (value !== undefined) localStorage.setItem(key, JSON.stringify(CLEAN[key](value)))

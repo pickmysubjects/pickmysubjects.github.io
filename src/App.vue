@@ -83,7 +83,7 @@ watchEffect(() => {
       : view.value === 'plan' && param.value === 'compare'
         ? `${t.value('cmp.seoTitle')} | PickMySubjects`
       : view.value === 'tools'
-        ? `${t.value(param.value === 'final' ? 'seo.calcTitle' : param.value === 'wam' ? 'tools.wamSeoTitle' : 'tools.seoTitle')} | PickMySubjects`
+        ? `${t.value(param.value === 'final' ? 'seo.calcTitle' : param.value === 'wam' ? 'tools.wamSeoTitle' : param.value === 'revision' ? 'tools.revSeoTitle' : 'tools.seoTitle')} | PickMySubjects`
       : view.value === 'changes' && param.value
         ? `${t.value('changes.seoTitle', { year: param.value })} | PickMySubjects`
       : view.value === 'subjects' || view.value === 'guide' || view.value === 'careers' || view.value === 'majors'

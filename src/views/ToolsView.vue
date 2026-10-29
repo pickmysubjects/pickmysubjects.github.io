@@ -2,29 +2,32 @@
 import { computed } from 'vue'
 import DetailHero from '@/components/browse/DetailHero.vue'
 import FinalCalc from '@/components/tools/FinalCalc.vue'
+import RevisionPlanner from '@/components/tools/RevisionPlanner.vue'
 import ToolCards from '@/components/tools/ToolCards.vue'
 import WamCalc from '@/components/tools/WamCalc.vue'
 import { link, useView } from '@/composables/useView'
 import { useI18n } from '@/i18n'
 
 /**
- * /tools/ (all tools), /tools/final/?subject=CODE (final calculator), /tools/wam/ (WAM calculator).
+ * /tools/ (all tools), /tools/final/?subject=CODE (final calculator), /tools/wam/ (WAM calculator),
+ * /tools/revision/ (revision planner).
  * A calculator is the tool and nothing else: the hero says what it is, then the inputs and the answer.
  */
 const props = defineProps<{ tool: string }>()
 const { t } = useI18n()
 const { query } = useView()
-const page = computed(() => (props.tool === 'final' || props.tool === 'wam' ? props.tool : 'hub'))
+const page = computed(() => (props.tool === 'final' || props.tool === 'wam' || props.tool === 'revision' ? props.tool : 'hub'))
 // A code in the address, upper-cased: links from anywhere can say ?subject=comp10001.
 const code = computed(() => (query.value.get('subject') ?? '').trim().toUpperCase())
 const ARTS = {
   hub: () => import('@/components/tools/art/ArtTools.vue'),
   final: () => import('@/components/tools/art/ArtFinal.vue'),
   wam: () => import('@/components/tools/art/ArtWam.vue'),
+  revision: () => import('@/components/tools/art/ArtRevision.vue'),
 }
-const title = computed(() => t.value(page.value === 'final' ? 'calc.title' : page.value === 'wam' ? 'tools.wam' : 'tools.title'))
+const title = computed(() => t.value(page.value === 'final' ? 'calc.title' : page.value === 'wam' ? 'tools.wam' : page.value === 'revision' ? 'rev.title' : 'tools.title'))
 // The hub is its two cards: no line under its title.
-const lede = computed(() => (page.value === 'final' ? t.value('calc.lede') : page.value === 'wam' ? t.value('tools.wamLede') : ''))
+const lede = computed(() => (page.value === 'final' ? t.value('calc.lede') : page.value === 'wam' ? t.value('tools.wamLede') : page.value === 'revision' ? t.value('rev.lede') : ''))
 const back = computed(() => (page.value === 'hub' ? undefined : { href: link('tools/'), label: t.value('tools.title') }))
 </script>
 
@@ -35,6 +38,7 @@ const back = computed(() => (page.value === 'hub' ? undefined : { href: link('to
     </DetailHero>
     <FinalCalc v-if="page === 'final'" :code="code" />
     <WamCalc v-else-if="page === 'wam'" />
+    <RevisionPlanner v-else-if="page === 'revision'" />
     <ToolCards v-else />
   </div>
 </template>

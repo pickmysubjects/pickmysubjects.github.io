@@ -45,6 +45,7 @@ export const zhCN: Messages = {
       calendar: "日历|导入日历|census 日期|考试日期",
       final: "期末要考多少|期末计算器|及格线|算分",
       wam: "加权平均分|均分|平均分|绩点|GPA",
+      revision: "复习计划|期末复习|复习时间表|学习计划|考试复习|备考|复习安排|swotvac",
       compare: "对比课程|课程比较",
       record: "我的成绩|成绩单|个人资料|我的记录",
       shortlist: "收藏|想上的课|心愿单|已保存",
@@ -113,7 +114,7 @@ export const zhCN: Messages = {
   },
   nav: { about: "关于", home: '首页', browse: '找课', more: '更多', plan: '排课', record: '我的', contribute: '添加数据', feedback: '反馈', main: '主导航' },
   /** The header menus and the phone sheet: each feature's name and one short line. */
-  menu: {"aboutSite":"关于这个网站","feedback":"反馈和建议","contribute":"添加 / 纠正数据","changes":"年度变化和更新记录","privacy":"隐私","openMenu":"{name}菜单","all":"全部功能","close":"关闭","allSubjects":"全部课程","careers":"职业方向","myPlan":"我的排课","compareAB":"计划对比","rules":"学位规则检查","heavy":"学期太重提醒","calendar":"导出到日历","sharePlan":"分享计划","allTools":"全部工具","guideHome":"入门总览","backup":"备份 / 换设备","gradeShare":"成绩分享","d":{"aboutSite":"谁做的、数据从哪来","feedback":"报错或提想要的功能","contribute":"缺了某门课，或信息有错","changes":"新 Handbook 的变化和网站更新","privacy":"你的数据只存在你的浏览器里","guideGroup":"学分、选课、考试、签证","aboutGroup":"关于、反馈、纠正数据、隐私","systems":"my.unimelb、Canvas、邮箱各管什么","life":"心理咨询、看病、安全、社团","help":"去哪儿问、学习帮助、找工作","allSubjects":"按条件搜索和筛选所有课","easy":"好拿分、拉 WAM 的课","hard":"大家觉得最难的课","noExam":"不用考期末的课","summerWinter":"利用寒暑假修课","breadth":"本专业以外的选修","firstSem":"第一学期适合选的课","majors":"每个专业要修哪些课","careers":"想做这份工作，该读什么专业和课","myPlan":"整个学位，一学期一学期排","compareAB":"几个计划逐项并排比较","rules":"你的计划满足所有规则吗","heavy":"找出课太多的学期","calendar":"census、考试和出分日期","sharePlan":"发链接、存图片或打印","final":"每个等级期末要考几分","wam":"你的 WAM、目标和假设","compare":"收藏的课并排比较","routes":"每个专业的先修链","allTools":"计算器和现成榜单","guideHome":"新生从这里看起","basics":"学分、major、规则、成绩和 WAM","enrolling":"从排课到正式选课","semester":"special consideration、考试、出分","international":"签证修课量等","keyDates":"census、考试、出分","record":"学位、成绩和目标","shortlist":"你收藏的课","backup":"把数据搬到另一个浏览器","gradeShare":"匿名分享成绩等级帮别人"},"miss":{"noDates": "你的学期还没有公布日期", "noHeavy": "这个计划没有太重的学期", "plan": "先排一个计划", "grades": "先在我的记录里加上成绩", "shortlist": "先收藏几门课", "compareOne": "再收藏一门课就能对比"}},
+  menu: {"aboutSite":"关于这个网站","feedback":"反馈和建议","contribute":"添加 / 纠正数据","changes":"年度变化和更新记录","privacy":"隐私","openMenu":"{name}菜单","all":"全部功能","close":"关闭","allSubjects":"全部课程","careers":"职业方向","myPlan":"我的排课","compareAB":"计划对比","rules":"学位规则检查","heavy":"学期太重提醒","calendar":"导出到日历","sharePlan":"分享计划","allTools":"全部工具","guideHome":"入门总览","backup":"备份 / 换设备","gradeShare":"成绩分享","d":{"revision":"按天排好的期末复习时间表","aboutSite":"谁做的、数据从哪来","feedback":"报错或提想要的功能","contribute":"缺了某门课，或信息有错","changes":"新 Handbook 的变化和网站更新","privacy":"你的数据只存在你的浏览器里","guideGroup":"学分、选课、考试、签证","aboutGroup":"关于、反馈、纠正数据、隐私","systems":"my.unimelb、Canvas、邮箱各管什么","life":"心理咨询、看病、安全、社团","help":"去哪儿问、学习帮助、找工作","allSubjects":"按条件搜索和筛选所有课","easy":"好拿分、拉 WAM 的课","hard":"大家觉得最难的课","noExam":"不用考期末的课","summerWinter":"利用寒暑假修课","breadth":"本专业以外的选修","firstSem":"第一学期适合选的课","majors":"每个专业要修哪些课","careers":"想做这份工作，该读什么专业和课","myPlan":"整个学位，一学期一学期排","compareAB":"几个计划逐项并排比较","rules":"你的计划满足所有规则吗","heavy":"找出课太多的学期","calendar":"census、考试和出分日期","sharePlan":"发链接、存图片或打印","final":"每个等级期末要考几分","wam":"你的 WAM、目标和假设","compare":"收藏的课并排比较","routes":"每个专业的先修链","allTools":"计算器和现成榜单","guideHome":"新生从这里看起","basics":"学分、major、规则、成绩和 WAM","enrolling":"从排课到正式选课","semester":"special consideration、考试、出分","international":"签证修课量等","keyDates":"census、考试、出分","record":"学位、成绩和目标","shortlist":"你收藏的课","backup":"把数据搬到另一个浏览器","gradeShare":"匿名分享成绩等级帮别人"},"miss":{"noDates": "你的学期还没有公布日期", "noHeavy": "这个计划没有太重的学期", "plan": "先排一个计划", "grades": "先在我的记录里加上成绩", "shortlist": "先收藏几门课", "compareOne": "再收藏一门课就能对比"}},
   period: { summer: '夏季学期', 'semester-1': '第一学期', winter: '冬季学期', 'semester-2': '第二学期' },
   periodShort: { summer: '夏季', 'semester-1': 'S1', winter: '冬季', 'semester-2': 'S2' },
   termFull: '{year} {period}',
@@ -1399,12 +1400,14 @@ export const zhCN: Messages = {
     ifMark: "如果我拿",
     becomes: "WAM 会变成 {wam}",
   },
+  /** The revision planner (/tools/revision/). */
+  rev: {"title": "复习计划生成器", "lede": "填好考试日期和每天能学几个小时，生成到最后一门考试为止的每日复习计划。", "subjects": "你的考试", "fromPlan": "已从你的计划填入", "noSubjects": "加上要考试的科目。", "add": "添加科目", "remove": "移除", "examDate": "考试日期", "examTime": "开考时间", "difficulty": "难度", "level": {"easier": "偏简单", "average": "一般", "harder": "偏难"}, "estimate": "我们的估计", "examShare": "期末考占 {n}%", "time": "你的时间", "start": "开始日期", "hours": "每天小时数", "dayStart": "每天开始时间", "rest": "休息日", "privacy": "只存在这台设备上，不会改动你的计划和成绩记录。", "totals": "各科总时长", "ruleShort": "越难、越早考的科目分到越多时间。", "rule": "时间怎么分：每门科目按难度给一个权重（偏简单 0.8、一般 1、偏难 1.3），知道期末考占比的话再乘上它。考试当天和休息日不排复习，每天不超过你填的小时数。每门考试前的最后一个空闲日只复习这一门。其余日子分给还没考的科目，越重、越近的考试分得越多，一天最多三门。考完的科目之后不再安排。这只是一个简单的起点，不是最优方案。", "total": "合计", "hoursN": "{n} 小时", "skipNoDate": "{code}：还没填考试日期", "skipPast": "{code}：考试在开始日期之前", "ics": "加入日历（.ics）", "print": "打印", "schedule": "你的复习计划", "missing": {"none": "先添加一门科目。", "dates": "填上考试日期就能看到复习计划。", "hours": "填上每天小时数就能看到复习计划。"}, "examDay": "考试：{codes}", "restDay": "休息", "focus": "考前冲刺", "nothing": "空闲", "icsSession": "复习 {code}", "icsFocus": "考前冲刺：{code}", "icsExam": "考试：{code}", "icsReminder": "马上开始复习"},
   tools: {
     open: "打开",
     title: "工具",
     nav: "工具",
     /** One line on what each tool answers, on the tools page. */
-    line: {"final":"每个等级期末要考几分","wam":"现在的 WAM，冲目标平均要考多少"},
+    line: {"final":"每个等级期末要考几分","wam":"现在的 WAM，冲目标平均要考多少","revision":"到最后一门考试为止的每日复习计划"},
     wam: "WAM 计算器",
     wamLede: "用你的成绩记录算 WAM、达到目标要多少均分，以及某门课的分数会带来什么变化。",
     easy: "水课榜（好拿分的课）",
@@ -1418,6 +1421,8 @@ export const zhCN: Messages = {
     seoDesc: "墨尔本大学学生免费工具：期末要考几分才能拿 H1、H2A…，以及 WAM 计算器（目标 WAM 和假设）。不用登录。",
     wamSeoTitle: "墨大 WAM 计算器：目标 WAM 和假如考几分",
     wamSeoDesc: "免费墨尔本大学 WAM 计算器：用你的分数算 WAM，算出达到目标 WAM 需要的均分，以及某门课考几分 WAM 会变成多少。分数只存在本机。",
+    revSeoTitle: "墨大期末复习计划生成器：每日复习时间表",
+    revSeoDesc: "免费的墨大期末复习计划工具：填考试日期和每天能学几个小时，生成每日复习计划，可导入日历。数据只存在你的设备上。",
   },
   wamCalc: {"fromRecord":"从我的记录读取了 {n} 门课 · WAM {wam}","edit":"去修改","whatIf":"假设再修","whatIfNote":"不会存进我的记录","yourMarks":"你的成绩","add":"加一门课","mark":"分数","save":"保存到我的记录","saved":"已存到我的记录","wamNow":"你的 WAM","wamWith":"加上这些后的 WAM","pf":"只算通过/不通过，不计入 WAM","empty":"加上课和分数就能算出 WAM。","open":"在 WAM 计算器里试试假设"},
   calc: {
@@ -1578,6 +1583,7 @@ export const zhCN: Messages = {
     examsMelbourne: "有线下考试的话，整个考试期（包括 supplementary 补考）你都必须在墨尔本，回国机票别订太早。",
     examsResults: "出分：成绩公布日之后在 my.unimelb 查。具体日期看官方成绩页面。",
     examsReview: "觉得分数不对？先找老师要反馈。之后可以在成绩公布后 10 个工作日内申请复核（review），要写理由。复核不是自动的，分数可能上调、不变，也可能下调。",
+    examsPlan: "用复习计划生成器按天排好期末复习。",
     examDatesLink: "考试日期",
     examTtLink: "考试时间表",
     resultsLink: "成绩",

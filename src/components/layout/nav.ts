@@ -83,6 +83,7 @@ export const MENUS: MenuArea[] = [
     items: [
       { key: 'calc.title', desc: 'menu.d.final', to: 'tools/final/', icon: Calculator },
       { key: 'tools.wam', desc: 'menu.d.wam', to: 'tools/wam/', icon: Gauge },
+      { key: 'rev.title', desc: 'menu.d.revision', to: 'tools/revision/', icon: CalendarDays },
     ],
     // Found by the site search: the tools page itself, and comparing saved subjects on the shortlist.
     searchOnly: [

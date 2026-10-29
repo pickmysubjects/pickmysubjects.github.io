@@ -43,6 +43,7 @@ const MENU_SYN: Record<string, string> = {
   'plan/#calendar': 'calendar',
   'tools/final/': 'final',
   'tools/wam/': 'wam',
+  'tools/revision/': 'revision',
   'shortlist/#compare-title': 'compare',
   'record/': 'record',
   'shortlist/': 'shortlist',
