@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useImeGuard } from '@/utils/ime'
 import { nextTick, onBeforeUnmount, onMounted, shallowRef, useTemplateRef, watch } from 'vue'
-import { Columns2, Copy, Ellipsis, FilePlus, Pencil, Plus, Trash2 } from 'lucide-vue-next'
 import { usePlans } from '@/composables/usePlans'
 import { MAX_PLANS } from '@/utils/planBook'
 import { useI18n } from '@/i18n'
@@ -55,8 +54,11 @@ function saveName(): void {
   plans.rename(plans.active.value.id, draft.value)
   panel.value = null
 }
+// With one plan left, "delete" starts it over instead, so a student can always begin again.
 function confirmDelete(): void {
-  plans.remove(plans.active.value.id)
+  const id = plans.active.value.id
+  if (plans.list.value.length > 1) plans.remove(id)
+  else plans.clear(id)
   panel.value = null
 }
 </script>
@@ -79,32 +81,29 @@ function confirmDelete(): void {
           {{ planName(t, p) }}
         </button>
         </div>
-        <button class="icon plan-icon-hit" type="button" :aria-label="t('plans.new')" :title="t('plans.new')" :aria-expanded="panel === 'new'" @click="toggle('new')">
-          <Plus :size="16" aria-hidden="true" />
-        </button>
+        <button class="button button-quiet text-btn" type="button" :aria-expanded="panel === 'new'" @click="toggle('new')">+ {{ t('plans.new') }}</button>
+        <button class="button button-quiet text-btn" type="button" :aria-expanded="panel === 'menu' || panel === 'rename' || panel === 'delete'" @click="toggle('menu')">{{ t('plans.manage') }}</button>
       </div>
       <div class="tools">
         <a v-if="!props.noCompare && plans.list.value.length > 1" class="button button-quiet compare" :href="link('plan/compare/')">
-          <Columns2 :size="16" aria-hidden="true" /> {{ t('plans.compare') }}
+{{ t('plans.compare') }}
         </a>
-        <button class="icon plan-icon-hit" type="button" :aria-label="planName(t, plans.active.value)" :aria-expanded="panel === 'menu'" @click="toggle('menu')">
-          <Ellipsis :size="16" aria-hidden="true" />
-        </button>
       </div>
     </div>
 
     <div v-if="panel === 'new'" class="panel">
       <template v-if="plans.canAdd.value">
-        <button class="button button-quiet" type="button" @click="create('copy')"><Copy :size="16" aria-hidden="true" /> {{ t('plans.copy') }}</button>
-        <button class="button button-quiet" type="button" @click="create('fresh')"><FilePlus :size="16" aria-hidden="true" /> {{ t('plans.fresh') }}</button>
+        <button class="button button-quiet" type="button" @click="create('copy')">{{ t('plans.copy') }}</button>
+        <button class="button button-quiet" type="button" @click="create('fresh')">{{ t('plans.fresh') }}</button>
       </template>
       <p v-else class="note">{{ t('plans.max', { n: MAX_PLANS }) }}</p>
     </div>
 
     <div v-else-if="panel === 'menu'" class="panel">
-      <button class="button button-quiet" type="button" @click="startRename"><Pencil :size="16" aria-hidden="true" /> {{ t('plans.rename') }}</button>
-      <button v-if="plans.list.value.length > 1" class="button button-quiet" type="button" @click="panel = 'delete'">
-        <Trash2 :size="16" aria-hidden="true" /> {{ t('plans.delete') }}
+      <button class="button button-quiet" type="button" @click="startRename">{{ t('plans.rename') }}</button>
+      <button v-if="plans.canAdd.value" class="button button-quiet" type="button" @click="create('copy')">{{ t('plans.copy') }}</button>
+      <button class="button button-quiet" type="button" @click="panel = 'delete'">
+        {{ plans.list.value.length > 1 ? t('plans.deletePlan') : t('plans.clearPlan') }}
       </button>
     </div>
 
@@ -126,8 +125,14 @@ function confirmDelete(): void {
     </form>
 
     <div v-else-if="panel === 'delete'" class="panel" role="alert">
-      <p class="note">{{ t('plans.deleteConfirm', { name: planName(t, plans.active.value) }) }}</p>
-      <button class="button button-danger" type="button" @click="confirmDelete">{{ t('plans.delete') }}</button>
+      <template v-if="plans.list.value.length > 1">
+        <p class="note">{{ t('plans.deleteConfirm', { name: planName(t, plans.active.value) }) }}</p>
+        <button class="button button-danger" type="button" @click="confirmDelete">{{ t('plans.delete') }}</button>
+      </template>
+      <template v-else>
+        <p class="note">{{ t('plans.clearConfirm', { name: planName(t, plans.active.value) }) }}</p>
+        <button class="button button-danger" type="button" @click="confirmDelete">{{ t('plans.clear') }}</button>
+      </template>
       <button class="button button-quiet" type="button" @click="panel = null">{{ t('plans.cancel') }}</button>
     </div>
   </section>
@@ -215,27 +220,14 @@ function confirmDelete(): void {
   }
 }
 
-.icon {
-  display: inline-grid;
-  flex: none;
-  place-items: center;
-  width: 40px;
-  height: 40px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: transparent;
-  color: var(--ink-soft);
-  cursor: pointer;
-}
-
+.text-btn,
 .compare {
   min-height: 40px;
   padding: 0 14px;
   font-size: 0.875rem;
 }
 
-.tab:focus-visible,
-.icon:focus-visible {
+.tab:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }

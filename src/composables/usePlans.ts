@@ -3,7 +3,7 @@ import { activePlan, books, prefsOf, type PlanBook, type PlanPrefs, type PlanSta
 import { useProfile } from './useProfile'
 import { defaultState } from './usePlan'
 import { useDataset } from './useDataset'
-import { addPlan, bookOf, MAX_PLANS, removePlan, renamePlan, switchPlan } from '@/utils/planBook'
+import { addPlan, bookOf, clearPlan, MAX_PLANS, removePlan, renamePlan, switchPlan } from '@/utils/planBook'
 import { cloneJson } from '@/utils/clone'
 import { standardTerms } from '@/engine'
 
@@ -55,5 +55,7 @@ export function usePlans() {
     switchTo: (id: string) => write(switchPlan(book.value, id)),
     rename: (id: string, to: string) => write(renamePlan(book.value, id, to)),
     remove: (id: string) => write(removePlan(book.value, id)),
+    /** Back to the empty start (the questions again); the shared record is untouched. */
+    clear: (id: string) => write(clearPlan(book.value, id, defaultState(data.value))),
   }
 }

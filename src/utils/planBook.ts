@@ -66,3 +66,11 @@ export function removePlan(book: PlanBook, id: string): PlanBook {
   const active = book.active === id ? plans[Math.max(0, at - 1)]!.id : book.active
   return { active, plans }
 }
+
+/** Start a plan over: same id and letter, this empty content, no name or settings of its own. */
+export function clearPlan(book: PlanBook, id: string, body: PlanState): PlanBook {
+  return {
+    ...book,
+    plans: book.plans.map((p) => (p.id === id ? { id: p.id, label: p.label, ...cloneJson(planBody(body)) } : p)),
+  }
+}
