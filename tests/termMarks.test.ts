@@ -5,7 +5,7 @@ import { provideDataset } from '../src/composables/useDataset'
 import { books } from '../src/composables/planStore'
 import { setToday } from '../src/engine/dataYear'
 import { computeWam, passedCodes, termKey, type Period } from '../src/engine'
-import { doneWith, parseMark, recordMarks, termState } from '../src/utils/pastTerms'
+import { doneWith, isDone, parseMark, pastTerms, recordMarks, termState, unstaleRecord } from '../src/utils/pastTerms'
 import { readFileSync } from 'node:fs'
 import { realData } from './realData'
 
@@ -181,5 +181,56 @@ describe('marks on the board', () => {
     expect(parseMark('')).toBeUndefined()
     expect(parseMark('abc')).toBeUndefined()
     expect(parseMark('130')).toBe(100)
+  })
+})
+
+describe('done needs the student (and a mark for a graded subject)', () => {
+  it('a 2025 S2 starter: nothing on the record, every subject planned (not done)', () => {
+    const { plan, me } = planned({ year: 2025, period: 'semester-2' })
+    expect(me.profile.value.results).toEqual([])
+    expect(plan.plan.value.completed).toEqual([])
+    expect(plan.terms.value[0]).toMatchObject({ year: 2025, period: 'semester-2' })
+  })
+
+  it('a graded entry with no mark is not done: asks for a mark, no WAM, not a prerequisite met', () => {
+    const results = [{ code: 'COMP10001', year: 2026, period: 'semester-1' as Period }]
+    expect(isDone(results[0]!, data.subjects)).toBe(false)
+    expect(pastTerms(results, data.subjects).terms[0]?.results[0]).toMatchObject({ code: 'COMP10001', pending: true, failed: false })
+    expect(computeWam(results, data)).toBeNull()
+    const { plan } = planned({ year: 2027, period: 'semester-1' }, results)
+    expect(plan.plan.value.completed).not.toContain('COMP10001')
+    // A mark makes it done, in place.
+    plan.markDone('COMP10001', 72)
+    expect(plan.plan.value.completed).toContain('COMP10001')
+    expect(pastTerms(useProfile().profile.value.results, data.subjects).terms[0]?.results[0]?.pending).toBeUndefined()
+  })
+
+  it('a pass/fail entry needs no mark to be done', () => {
+    const pf = Object.values(data.subjects).find((s) => s.passFail)!
+    expect(isDone({ code: pf.code }, data.subjects)).toBe(true)
+  })
+
+  it('old saved data: unmarked graded copies in plan semesters go back to planned; the rest stays', () => {
+    const pf = Object.values(data.subjects).find((s) => s.passFail)!
+    const terms = [
+      { year: 2025, period: 'semester-1' as Period, subjects: [] as string[] },
+      { year: 2025, period: 'semester-2' as Period, subjects: ['MAST10007'] },
+    ]
+    const results = [
+      { code: 'COMP10001', year: 2025, period: 'semester-1' as Period },
+      { code: 'MAST10006', year: 2025, period: 'semester-1' as Period, mark: 70 },
+      { code: pf.code, year: 2025, period: 'semester-1' as Period },
+      { code: 'COMP10002', year: 2025, period: 'semester-2' as Period, mark: 40 },
+      { code: 'MAST10007', year: 2025, period: 'semester-2' as Period },
+      { code: 'CHEM10003' },
+      { code: 'BIOL10008', year: 2024, period: 'semester-2' as Period },
+    ]
+    const out = unstaleRecord(results, terms, data.subjects)!
+    expect(out.results.map((r) => r.code)).toEqual(['MAST10006', pf.code, 'COMP10002', 'CHEM10003', 'BIOL10008'])
+    expect(out.terms[0]?.subjects).toEqual(['COMP10001'])
+    // Already planned elsewhere: not listed twice.
+    expect(out.terms[1]?.subjects).toEqual(['MAST10007'])
+    expect(terms[0]?.subjects).toEqual([])
+    expect(unstaleRecord(out.results, out.terms, data.subjects)).toBeNull()
   })
 })

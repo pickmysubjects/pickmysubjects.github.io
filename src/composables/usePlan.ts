@@ -34,7 +34,8 @@ import { activePlan, books, commencementYear, type PlanSetup, type PlanState, ty
 import { bookOf, planBody } from '@/utils/planBook'
 import { useDataset } from './useDataset'
 import { useProfile } from './useProfile'
-import { recordMarks } from '@/utils/pastTerms'
+import { isDone, recordMarks, unstaleRecord } from '@/utils/pastTerms'
+import { usePersisted } from './usePersisted'
 import { cloneJson } from '@/utils/clone'
 import { defaultState } from './planDefaults'
 
@@ -59,7 +60,8 @@ export function planFor(state: PlanState, profile: Profile, data: Dataset): Plan
     minors: state.setup.minors ?? [],
     diploma: state.setup.diploma || undefined,
     diplomaStream: (state.setup.diploma && state.setup.diplomaStream) || undefined,
-    completed: passedCodes(profile.results),
+    // Done only: a graded subject on the record with no mark isn't (see isDone).
+    completed: passedCodes(profile.results.filter((r) => isFail(r) || isDone(r, data.subjects))),
     ...(profile.credit?.length ? { credit: profile.credit } : {}),
     terms: state.terms,
     international: state.setup.international === true,
@@ -70,6 +72,9 @@ export function planFor(state: PlanState, profile: Profile, data: Dataset): Plan
     wam: exactWam(profile.results, data),
   }
 }
+
+// Set once the record was cleaned of the old build's unmarked copies (see unstaleRecord).
+const unstaled = usePersisted<boolean>('sc:record-unstaled', false)
 
 export function usePlan() {
   const { name, data } = useDataset()
@@ -198,6 +203,19 @@ export function usePlan() {
     }
   }
 
+  /** Once per browser: put the old build's unmarked record copies back into their semesters, planned. */
+  function unstale(): void {
+    if (unstaled.value) return
+    unstaled.value = true
+    const moved = unstaleRecord(profile.value.results, state.value.terms, data.value.subjects)
+    if (!moved) return
+    setResults(moved.results)
+    put({ ...cloneJson(planBody(state.value)), terms: moved.terms })
+  }
+
+  // The record as the planner reads it: done subjects and fails (an unmarked graded entry isn't done).
+  const record = () => profile.value.results.filter((r) => isFail(r) || isDone(r, data.value.subjects))
+
   function generate(): void {
     const { setup } = state.value
     // The whole degree from the entry term, every subject planned (only the student marks one
@@ -205,16 +223,17 @@ export function usePlan() {
     // Subjects on the record with no semester: we can't tell which semesters they filled, so
     // planning starts after the record, from the next semester ahead.
     const entry = { year: setup.startYear, period: setup.startPeriod }
-    const undated = profile.value.results.some((r) => r.year === undefined || r.period === undefined)
-    const start = undated ? upcomingStart(planStart(entry, profile.value.results, startFill())) : entry
+    const results = record()
+    const undated = results.some((r) => r.year === undefined || r.period === undefined)
+    const start = undated ? upcomingStart(planStart(entry, results, startFill())) : entry
     const kept = state.value.terms.filter((x) => x.edited && !isUpcoming(x))
     const asTaken = kept.flatMap((x) => x.subjects.map((code) => ({ code, year: x.year, period: x.period })))
     const result = generatePlan({
       data: data.value,
       // Kept semesters are planned around, as if taken.
-      profile: { ...profile.value, results: [...profile.value.results, ...asTaken] },
+      profile: { ...profile.value, results: [...results, ...asTaken] },
       course: setup.course,
-      courseYear: commencementYear(setup, profile.value.results),
+      courseYear: commencementYear(setup, results),
       major: setup.major || undefined,
       major2: (setup.major && setup.major2) || undefined,
       specialisation: setup.specialisation || undefined,
@@ -236,7 +255,7 @@ export function usePlan() {
 
   function startEmpty(): void {
     const { setup } = state.value
-    const start = upcomingStart(planStart({ year: setup.startYear, period: setup.startPeriod }, profile.value.results, startFill()))
+    const start = upcomingStart(planStart({ year: setup.startYear, period: setup.startPeriod }, record(), startFill()))
     save((s) => ({ ...s, terms: standardTerms(start.year, start.period, 6), notes: [], unplaced: [] }))
   }
 
@@ -361,7 +380,7 @@ export function usePlan() {
         ? standardTerms(last.year, last.period, 2)[1]
         : (() => {
             // No semesters yet: the one after the record (or the start of study).
-            const from = upcomingStart(planStart({ year: s.setup.startYear, period: s.setup.startPeriod }, profile.value.results, startFill()))
+            const from = upcomingStart(planStart({ year: s.setup.startYear, period: s.setup.startPeriod }, record(), startFill()))
             return standardTerms(from.year, from.period, 1)[0]
           })()
       if (next) s.terms.push({ ...next, subjects: [] })
@@ -456,6 +475,7 @@ export function usePlan() {
     removeTerm,
     markDone,
     markUndone,
+    unstale,
     removeLastTerm,
     applyRelief,
     importPlan,

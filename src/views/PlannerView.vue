@@ -35,7 +35,7 @@ import { useProfile } from '@/composables/useProfile'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan, type PlanSetup } from '@/composables/usePlan'
 import { usePlanStress } from '@/composables/usePlanStress'
-import { pastTerms, termState } from '@/utils/pastTerms'
+import { isDone, pastTerms, termState } from '@/utils/pastTerms'
 import RatePrompt from '@/components/rating/RatePrompt.vue'
 import { useRated } from '@/composables/useRated'
 import { useI18n } from '@/i18n'
@@ -45,6 +45,8 @@ import { reducedMotion } from '@/utils/motion'
 // The wizard copies the setup once, so it restarts when the dataset is switched.
 const { data, subjectList, name: dataName } = useDataset()
 const plan = usePlan()
+// Old saved data: unmarked record copies go back to their semesters as planned (once).
+plan.unstale()
 const { profile, setConfirmed, setResults } = useProfile()
 const { t, locale } = useI18n()
 
@@ -127,7 +129,7 @@ const extraTermsOnVisa = computed(
 const peek = shallowRef<string | null>(null)
 const plans = usePlans()
 // The student's completed subjects, in the semesters they were taken, shown before the plan.
-const past = computed(() => pastTerms(profile.value.results))
+const past = computed(() => pastTerms(profile.value.results, data.value.subjects))
 // Weak spots the degree leans on every semester: said once here, not on each semester.
 const { stress } = usePlanStress()
 const unavoidable = computed(() =>
@@ -327,7 +329,7 @@ function markDone(code: string, mark: number | undefined): void {
   if (mark !== undefined && shouldPrompt(code)) rateNext.value = code
 }
 // The open subject's own entry on My record (not a fail), if it's done.
-const peekDone = computed(() => [...profile.value.results].reverse().find((x) => x.code === peek.value && !isFail(x)))
+const peekDone = computed(() => [...profile.value.results].reverse().find((x) => x.code === peek.value && isDone(x, data.value.subjects)))
 // The board's focus: a selected subject (its timeline lights up) or a requirement (its subjects do).
 const board = useTemplateRef<InstanceType<typeof PlanMap>>('board')
 const selected = shallowRef<string | null>(null)
@@ -349,11 +351,11 @@ const edges = computed(() => boardEdges(plan.terms.value, past.value, data.value
 // Where each subject sits, for the timeline: its planned term, or "Done".
 const whereOf = computed(() => {
   const out: Record<string, string> = {}
-  for (const r of profile.value.results) if (!isFail(r)) out[r.code] = t.value('plan.pastTag')
+  for (const r of profile.value.results) if (isDone(r, data.value.subjects)) out[r.code] = t.value('plan.pastTag')
   for (const term of plan.terms.value) for (const c of term.subjects) out[c] = termLabel(t.value, term)
   return out
 })
-const boardCodes = computed(() => [...passedCodes(profile.value.results), ...plan.plannedCodes.value])
+const boardCodes = computed(() => [...passedCodes(profile.value.results.filter((r) => isDone(r, data.value.subjects))), ...plan.plannedCodes.value])
 const majorSubjects = computed(() => new Set([...roleSets.value.required, ...roleSets.value.options]))
 // Each requirement's subjects, counted automatically (nothing to tag).
 const members = computed(() => {
@@ -422,7 +424,7 @@ const metaLine = computed(() => {
   return notes[0] ? { short: notes[0].short, info: notes.map((n) => n.info).join(' ') } : null
 })
 const recordOverlap = computed(() => {
-  const passed = new Set(passedCodes(profile.value.results))
+  const passed = new Set(passedCodes(profile.value.results.filter((r) => isDone(r, data.value.subjects))))
   const load = plan.course.value?.standardLoad ?? 50
   for (const term of plan.terms.value) {
     if (term.subjects.some((c) => passed.has(c))) return termLabel(t.value, term)

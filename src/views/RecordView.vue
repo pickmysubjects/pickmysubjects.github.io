@@ -49,7 +49,9 @@ const interests = computed({ get: () => profile.value.interests, set: setInteres
 const { t } = useI18n()
 const options = computed(() => subjectList.value.map((s) => ({ code: s.code, title: s.title })))
 const ratedSkills = computed(() => Object.keys(profile.value.skills).length)
-const { setupChosen, terms: planTerms, courseCheck } = usePlan()
+const { setupChosen, terms: planTerms, courseCheck, unstale } = usePlan()
+// Old saved data: unmarked record copies go back to their semesters as planned (once).
+unstale()
 // The open plan in one line, or the way to make one.
 const planFact = computed(() => {
   const last = [...planTerms.value].reverse().find((x) => x.subjects.length)

@@ -12,6 +12,7 @@ import { LINK_COUNTS } from '@/utils/planBoard'
  * A subject from My record on the plan board: the same card as a planned one, in green with a
  * tick (red when not passed), the mark where a planned card shows its points. A start for
  * prerequisite lines (data-past-code). Its toggle edits the mark or takes it back to planned.
+ * A graded entry with no mark isn't done: a plain card with the mark box open ("add a mark").
  */
 const props = defineProps<{ result: PastResult; subject?: Subject; note?: string; highlighted?: boolean; dimmed?: boolean; future?: boolean }>()
 const emit = defineEmits<{ open: []; hover: [on: boolean]; done: [mark: number | undefined]; undo: [] }>()
@@ -33,14 +34,14 @@ const linkLabel = computed(() => {
 <template>
   <div
     class="done"
-    :class="{ failed: result.failed, highlighted, dimmed }"
+    :class="{ failed: result.failed, pending: result.pending, highlighted, dimmed }"
     :data-past-code="result.code"
     @mouseenter="emit('hover', true)"
     @mouseleave="emit('hover', false)"
   >
   <button type="button" class="done-main" @click="emit('open')" @focusin="emit('hover', true)" @focusout="emit('hover', false)">
     <span class="top">
-      <span class="mark-icon" aria-hidden="true">
+      <span v-if="!result.pending" class="mark-icon" aria-hidden="true">
         <X v-if="result.failed" :size="10" :stroke-width="3" />
         <Check v-else :size="10" :stroke-width="3" />
       </span>
@@ -52,13 +53,13 @@ const linkLabel = computed(() => {
       <span v-if="local" class="title-en">{{ subject?.title }}</span>
     </span>
     <span class="foot">
-      <span class="tag tag-state">{{ label }}</span>
+      <span v-if="!result.pending" class="tag tag-state">{{ label }}</span>
       <span v-if="subject" class="tag">L{{ subject.level }}</span>
       <span v-if="note" class="note">{{ note }}</span>
       <span v-if="links" class="link-mark" :class="{ 'link-mark-quiet': linksQuiet }" role="img" :aria-label="linkLabel" :title="linkLabel"><template v-if="links.needs">← {{ links.needs }}</template><template v-if="links.needs && links.unlocks"> · </template><template v-if="links.unlocks">→ {{ links.unlocks }}</template></span>
     </span>
   </button>
-  <DoneToggle v-if="!result.failed" :code="result.code" done :mark="result.mark" :pass-fail="subject?.passFail" :future="future" @done="emit('done', $event)" @undo="emit('undo')" />
+  <DoneToggle v-if="!result.failed" :code="result.code" :done="!result.pending" :ask="result.pending" :mark="result.mark" :pass-fail="subject?.passFail" :future="future" @done="emit('done', $event)" @undo="emit('undo')" />
   </div>
 </template>
 
@@ -114,6 +115,11 @@ const linkLabel = computed(() => {
 
 .dimmed {
   opacity: 0.45;
+}
+
+.pending {
+  border-color: var(--card-edge, var(--line));
+  background: var(--sheet-fill);
 }
 
 .failed {

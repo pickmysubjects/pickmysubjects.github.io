@@ -5,6 +5,8 @@ export interface PastResult {
   code: string
   mark?: number
   failed: boolean
+  /** On the record but not done yet: a graded subject with no mark (the card asks for one). */
+  pending?: boolean
 }
 
 export interface PastTerm {
@@ -20,11 +22,11 @@ const PERIODS: readonly Period[] = ['summer', 'semester-1', 'winter', 'semester-
  * plus the ones with no semester given. A stored semester that doesn't make sense (edited by
  * hand, say) counts as not given rather than breaking the board.
  */
-export function pastTerms(results: Profile['results']): { terms: PastTerm[]; undated: PastResult[] } {
+export function pastTerms(results: Profile['results'], subjects: Record<string, Subject> = {}): { terms: PastTerm[]; undated: PastResult[] } {
   const byTerm = new Map<number, PastTerm>()
   const undated: PastResult[] = []
   for (const r of results) {
-    const item: PastResult = { code: r.code, mark: r.mark, failed: isFail(r) }
+    const item: PastResult = { code: r.code, mark: r.mark, failed: isFail(r), ...(isFail(r) || isDone(r, subjects) ? {} : { pending: true }) }
     const valid = Number.isInteger(r.year) && (r.year as number) >= 1990 && (r.year as number) <= 2100 && PERIODS.includes(r.period as Period)
     if (!valid) {
       undated.push(item)
@@ -153,4 +155,37 @@ export function doneWith(typed: string | undefined, passFail?: boolean): { mark?
   if (passFail) return {}
   const mark = parseMark(typed)
   return mark === undefined ? null : { mark }
+}
+
+/**
+ * Done, as everything that reads the record counts it: passed, and a graded subject only with a
+ * mark. A graded entry with no mark is on the record but not done: no WAM, not a prerequisite met.
+ */
+export function isDone(r: { code: string; mark?: number; failed?: boolean }, subjects: Record<string, Subject>): boolean {
+  return !isFail(r) && (r.mark !== undefined || subjects[r.code]?.passFail === true)
+}
+
+/**
+ * One-time clean-up of a build (a02e1c08) that copied every subject of a begun semester onto My
+ * record, without marks. Those entries carry no flag, so the rule is: a graded entry with no mark
+ * (and not a fail), dated to a semester the plan has, goes back to that semester as planned.
+ * Entries with a mark, pass/fail ones, fails, undated ones and ones outside the plan's semesters
+ * stay as they are (a student who added one by hand on My record keeps it there).
+ */
+export function unstaleRecord<T extends { year: number; period: Period; subjects: string[] }>(
+  results: Profile['results'],
+  terms: readonly T[],
+  subjects: Record<string, Subject>,
+): { results: Profile['results']; terms: T[] } | null {
+  const next = terms.map((x) => ({ ...x, subjects: [...x.subjects] }))
+  const kept: Profile['results'] = []
+  for (const r of results) {
+    const home = next.find((x) => x.year === r.year && x.period === r.period)
+    if (!home || r.mark !== undefined || isFail(r) || subjects[r.code]?.passFail) {
+      kept.push(r)
+      continue
+    }
+    if (!next.some((x) => x.subjects.includes(r.code))) home.subjects.push(r.code)
+  }
+  return kept.length === results.length ? null : { results: kept, terms: next }
 }

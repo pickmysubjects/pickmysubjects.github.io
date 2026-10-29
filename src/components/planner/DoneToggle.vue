@@ -8,12 +8,13 @@ import { doneWith } from '@/utils/pastTerms'
  * record. A graded subject is done once it has a mark (0–100); a pass/fail one with a tap.
  * Done in a term that hasn't started says so, without stopping it.
  */
-const props = defineProps<{ code: string; done: boolean; mark?: number; passFail?: boolean; future?: boolean }>()
+// ask: on the record with no mark yet, so the mark box is open and highlighted from the start.
+const props = defineProps<{ code: string; done: boolean; mark?: number; passFail?: boolean; future?: boolean; ask?: boolean }>()
 const emit = defineEmits<{ done: [mark: number | undefined]; undo: [] }>()
 const { t } = useI18n()
 
 // Asking for the mark: a graded subject's 已修 opens the box first.
-const asking = shallowRef(false)
+const asking = shallowRef(props.ask === true)
 const typed = shallowRef('')
 const box = useTemplateRef<HTMLInputElement>('box')
 watch(() => props.mark, (m) => (typed.value = m === undefined ? '' : String(m)), { immediate: true })
