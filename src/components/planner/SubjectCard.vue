@@ -2,7 +2,7 @@
 import { computed, inject, nextTick, useTemplateRef, watch } from 'vue'
 import { ArrowRightLeft, BookOpen, CalendarRange, Info, Route, X } from 'lucide-vue-next'
 import type { Issue, Subject } from '@/engine'
-import { categoryLabel, categoryTag, issueText as issueTextFor } from '@/i18n/format'
+import { categoryTag, issueText as issueTextFor } from '@/i18n/format'
 import { useI18n } from '@/i18n'
 import { useDataYear } from '@/composables/useDataYear'
 import { localTitle } from '@/i18n/localized'
@@ -17,7 +17,9 @@ export interface MoveTarget {
 }
 
 /**
- * A planned subject as one compact line, so a whole degree fits on one screen. On a desktop its
+ * A planned subject as a two-line card (code and points; title), plus one status line only when
+ * it matters: a problem, or 标为已修 in a begun term. Everything else lives in the tooltip and the
+ * subject window. A planned subject as one compact card, so a whole degree fits on one screen. On a desktop its
  * actions show on hover or focus; on a phone a tap opens a small sheet with every action.
  */
 const props = defineProps<{
@@ -40,6 +42,8 @@ const props = defineProps<{
   /** The action sheet is open on this subject, with every term and whether it can go there. */
   moveOpen: boolean
   moveTargets: MoveTarget[]
+  /** The term has started or ended: the card offers 标为已修. */
+  begun?: boolean
 }>()
 const emit = defineEmits<{
   select: []
@@ -58,8 +62,7 @@ const emit = defineEmits<{
 const { t, locale } = useI18n()
 const linkCounts = inject(LINK_COUNTS, null)
 const links = computed(() => linkCounts?.value.counts.get(props.code))
-const linksQuiet = computed(() => linkCounts?.value.quiet ?? false)
-// The title in the reader's language where we have one, with the English after it, small.
+// The title in the reader's language where we have one; the English one goes to the tooltip.
 const local = computed(() => (props.subject ? localTitle(props.subject, locale.value) : ''))
 // Planned in a year whose Handbook is out but not entered for it yet: say which year's facts it uses.
 const { facts, handbookFor } = useDataYear()
@@ -91,14 +94,24 @@ const issueText = computed(() =>
     .map((i) => issueTextFor(t.value, i, [], []))
     .join('\n'),
 )
-// The full facts in the tooltip; the line itself keeps one or two tags.
-const tooltip = computed(() => [`${props.code} ${props.subject?.title ?? ''}`, category.value, props.onlyIn, factsFrom.value?.older ? t.value('dataYear.tip', { year: factsFrom.value.year }) : '', issueText.value].filter(Boolean).join('\n'))
+// One short words-only line for the worst problem ("先修未满足"); the full text is in the tooltip.
+const problem = computed(() => {
+  const top = props.issues.find((i) => i.severity === 'error') ?? props.issues.find((i) => i.severity === 'warning')
+  if (!top) return ''
+  const key = `plan.issueShort.${top.kind}`
+  const short = t.value(key)
+  return short === key ? t.value(top.severity === 'error' ? 'plan.problem' : 'plan.check') : short
+})
+const roleText = computed(() => (props.role === 'required' ? t.value('plan.tagRequired') : props.role === 'option' ? t.value('plan.tagOption') : ''))
+// The full facts in the tooltip; the card itself keeps two lines and at most one status line.
+const tooltip = computed(() => [`${props.code} ${local.value || props.subject?.title || ''}`, local.value ? props.subject?.title : '', [roleText.value, category.value].filter(Boolean).join(' · '), linkLabel.value, props.onlyIn, factsFrom.value?.older ? t.value('dataYear.tip', { year: factsFrom.value.year }) : '', issueText.value].filter(Boolean).join('\n'))
 const rowClasses = computed(() => ({
   row: true,
   [`row-${worst.value}`]: worst.value !== null,
   [`row-tone-${props.tone}`]: props.tone !== null,
   'row-dimmed': props.dimmed,
   'row-unknown': !props.subject,
+  'row-has-foot': !!problem.value || !!props.begun,
   [`row-role-${props.role}`]: !!props.role,
 }))
 const others = computed(() => props.moveTargets.filter((m) => m.index !== props.termIndex))
@@ -151,24 +164,15 @@ const linkLabel = computed(() => {
     @focusout="emit('hover', false)"
     @click="onCardClick"
   >
-    <span class="control" aria-hidden="true" />
     <button class="row-main" type="button" :aria-pressed="selected" :aria-label="t('plan.selectCard', { code })">
       <span class="code row-code">{{ code }}</span>
     </button>
-    <span class="row-title">
-      {{ local || subject?.title || t('plan.notInDataset') }}
-      <span v-if="local" class="row-title-en">{{ subject?.title }}</span>
-    </span>
-    <span class="row-tags">
-      <span v-if="worst" class="flag" :class="`flag-${worst}`">{{ worst === 'error' ? t('plan.problem') : t('plan.check') }}</span>
-      <span v-else-if="role === 'required'" class="tag tag-required">{{ t('plan.tagRequired') }}</span>
-      <span v-else-if="role === 'option'" class="tag tag-option">{{ t('plan.tagOption') }}</span>
-      <span v-if="onlyIn && !worst" class="tag tag-only">{{ onlyIn }}</span>
-      <span v-if="factsFrom?.older" class="tag tag-old">{{ t('dataYear.short', { year: factsFrom.year }) }}</span>
-      <span v-if="links" class="link-mark" :class="{ 'link-mark-quiet': linksQuiet }" role="img" :aria-label="linkLabel" :title="linkLabel"><template v-if="links.needs">← {{ links.needs }}</template><template v-if="links.needs && links.unlocks"> · </template><template v-if="links.unlocks">→ {{ links.unlocks }}</template></span>
-    </span>
     <span v-if="subject" class="row-points">{{ subject.points }}</span>
-    <DoneToggle class="row-done" :code="code" :done="false" :pass-fail="subject?.passFail" @done="emit('done', $event)" />
+    <span class="row-title">{{ local || subject?.title || t('plan.notInDataset') }}</span>
+    <span v-if="roleText" class="visually-hidden">{{ roleText }}</span>
+    <!-- One status line, only when it matters: a problem first, else 标为已修 in a begun term. -->
+    <span v-if="problem" class="row-foot row-problem" :class="`row-problem-${worst}`">{{ problem }}</span>
+    <DoneToggle v-else-if="begun" class="row-foot" card :code="code" :done="false" :pass-fail="subject?.passFail" @done="emit('done', $event)" />
 
     <!-- Desktop: the actions on hover or focus, one click each. -->
     <span class="row-actions">
@@ -220,56 +224,69 @@ const linkLabel = computed(() => {
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr) auto;
   grid-template-areas:
-    'dot code pts'
-    'title title title'
-    'tags tags tags'
-    'done done done';
-  align-items: center;
-  gap: 2px 6px;
+    'code pts'
+    'title title'
+    'foot foot';
+  align-content: start;
+  align-items: baseline;
+  gap: 1px 8px;
   min-width: 0;
-  padding: 6px 8px 6px 9px;
+  /* Every two-line card the same height; a status line adds exactly one more. */
+  min-height: 52px;
+  padding: 7px 9px 7px 11px;
   /* A flat, solid card on the board's glass: one hairline and one light shadow, no shine. */
   border: 1px solid var(--col-edge);
   border-radius: 10px;
-  background: var(--row-fill, var(--card-solid));
+  background: var(--card-solid);
   box-shadow: 0 1px 2px rgb(60 20 80 / 10%);
   cursor: grab;
   transition: opacity 0.12s, border-color 0.12s, box-shadow 0.12s;
 }
 
+.row-has-foot {
+  min-height: 74px;
+}
+
+/* The role as a thin left edge (the legend above the board says which is which). */
+.row::before {
+  content: '';
+  position: absolute;
+  top: 7px;
+  bottom: 7px;
+  left: 3px;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--row-edge, transparent);
+}
+
 .row-role-required {
-  --row-fill: color-mix(in srgb, var(--accent) 7%, var(--card-solid));
+  --row-edge: var(--accent);
 }
 
 .row-role-option {
-  --row-fill: color-mix(in srgb, #6d5dfc 7%, var(--card-solid));
+  --row-edge: color-mix(in srgb, var(--accent) 38%, transparent);
 }
 
 .row:hover {
-  box-shadow: var(--shadow-1);
+  border-color: color-mix(in srgb, var(--accent) 40%, var(--col-edge));
+}
+
+.row:focus-within {
+  outline: none;
+}
+
+.row:has(.row-main:focus-visible) {
+  box-shadow: 0 0 0 2px var(--accent);
 }
 
 .row:active {
   cursor: grabbing;
 }
 
-/* An orienteering control: an open magenta circle, filled in when it's the selected subject. */
-.control {
-  grid-area: dot;
-  width: 10px;
-  height: 10px;
-  border: 2px solid var(--overprint);
-  border-radius: 50%;
-}
-
 .row-main {
   grid-area: code;
-  overflow: hidden;
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
   min-width: 0;
   padding: 0;
   border: 0;
@@ -277,130 +294,84 @@ const linkLabel = computed(() => {
   color: inherit;
   font: inherit;
   text-align: left;
-  cursor: pointer;
+  cursor: inherit;
+}
+
+.row-main:focus-visible {
+  outline: none;
 }
 
 .row-code {
-  font-size: 0.875rem;
-  white-space: nowrap;
-  font-weight: 650;
-}
-
-.row-title {
-  grid-area: title;
-  min-width: 0;
-  font-size: 0.875rem;
-  line-height: 1.35;
-  overflow-wrap: anywhere;
-  color: var(--ink);
-}
-
-.row-done {
-  grid-area: done;
-}
-
-.row-title-en {
   display: block;
-  font-size: 0.75rem;
-  color: var(--ink-faint);
-}
-
-.row-tags:empty {
-  display: none;
-}
-
-.row-tags {
-  grid-area: tags;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-}
-
-/* "← 1 · → 2": how many of its prerequisites and follow-ons are on the board. */
-.link-mark {
-  margin-left: auto;
-  padding: 0 7px;
-  border: 1px solid var(--card-edge, var(--line));
-  border-radius: 999px;
-  background: var(--glass-shine), var(--sheet-fill);
-  font-size: 0.75rem;
-  font-weight: 650;
-  line-height: 1.5;
-  color: var(--ink-soft);
+  overflow: hidden;
+  font-size: 0.875rem;
+  font-weight: 700;
   white-space: nowrap;
-}
-
-.tag,
-.flag {
-  padding: 0 7px;
-  border-radius: 999px;
-  font-size: 0.75rem;
-  line-height: 20px;
-  white-space: nowrap;
-}
-
-.tag-required {
-  font-weight: 650;
-  color: var(--accent-ink);
-  background: var(--accent-fill);
-}
-
-.tag-option {
-  color: var(--accent);
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 45%, transparent);
-}
-
-.tag-old {
-  color: var(--ink-soft);
-}
-
-.tag-only {
-  background: var(--overprint-tint);
-  color: var(--overprint);
-  font-weight: 600;
-}
-
-.flag {
-  font-weight: 650;
-  background: var(--open-tint);
-  color: var(--open);
-}
-
-.flag-error {
-  background: var(--stop-tint);
-  color: var(--stop);
-}
-
-.row-error {
-  border-color: var(--stop);
-}
-
-.row-unknown {
-  border-style: dashed;
+  text-overflow: ellipsis;
 }
 
 .row-points {
   grid-area: pts;
   font-family: var(--font-code);
   font-size: 0.75rem;
-  color: var(--ink-faint);
+  color: var(--ink-soft);
+  transition: opacity 0.12s;
 }
 
-/* The actions float as a small glass toolbar in the card's bottom-right corner on hover or keyboard
-   focus, clear of the code and title. They take no space in the layout and never cover another card. */
+.row-title {
+  grid-area: title;
+  min-width: 0;
+  overflow: hidden;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: var(--ink);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.row-foot {
+  grid-area: foot;
+  min-width: 0;
+  margin-top: 3px;
+  font-size: 0.75rem;
+  line-height: 22px;
+}
+
+.row-problem {
+  overflow: hidden;
+  font-weight: 650;
+  color: var(--stop);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.row-problem-warning {
+  color: var(--warn-ink, var(--open));
+}
+
+.row-error {
+  border-color: color-mix(in srgb, var(--stop) 55%, var(--col-edge));
+}
+
+.row-unknown {
+  border-style: dashed;
+}
+
+/* The actions float as a small toolbar over the points in the card's top-right corner on hover or
+   keyboard focus. They take no space in the layout and never cover another card. */
 .row-actions {
   position: absolute;
-  right: 3px;
-  bottom: 3px;
+  top: 4px;
+  right: 4px;
   z-index: 2;
   display: flex;
   gap: 0;
-  height: 26px;
-  padding: 0 2px;
+  height: 24px;
+  padding: 0 1px;
   border: 1px solid var(--card-edge);
   border-radius: 999px;
-  background: var(--glass-shine), var(--sheet-fill);
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / 60%), 0 6px 16px -8px rgb(60 20 80 / 45%);
+  background: var(--card-solid);
+  box-shadow: 0 2px 6px -2px rgb(60 20 80 / 30%);
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.12s ease, visibility 0.12s;
@@ -417,23 +388,16 @@ const linkLabel = computed(() => {
   visibility: visible;
 }
 
-/* The toolbar takes the tag line's place while it shows: the tags fade out (space kept), so
-   neither covers the other and nothing moves. */
-.row-tags {
-  transition: opacity 0.12s ease, visibility 0.12s;
-}
-
 @media (hover: hover) and (min-width: 721px) {
-  .row:hover .row-tags,
-  .row:focus-within .row-tags {
+  .row:hover .row-points,
+  .row:focus-within .row-points {
     opacity: 0;
-    visibility: hidden;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .row-actions,
-  .row-tags {
+  .row-points {
     transition: none;
   }
 }
@@ -441,7 +405,7 @@ const linkLabel = computed(() => {
 .act {
   display: inline-grid;
   place-items: center;
-  width: 25px;
+  width: 22px;
   height: 100%;
   padding: 0;
   border: 0;
@@ -466,10 +430,6 @@ const linkLabel = computed(() => {
   box-shadow: 0 0 0 2px var(--overprint);
 }
 
-.row-tone-self .control {
-  background: var(--overprint);
-}
-
 .row-tone-need {
   border-color: #7a63f0;
   box-shadow: 0 0 0 1.5px #7a63f0;
@@ -483,10 +443,6 @@ const linkLabel = computed(() => {
 .row-tone-rule {
   border-color: var(--good);
   background: color-mix(in srgb, var(--good-soft) 60%, var(--paper-raised));
-}
-
-.link-mark-quiet {
-  visibility: hidden;
 }
 
 .row-dimmed {
@@ -632,12 +588,8 @@ const linkLabel = computed(() => {
     display: none;
   }
 
-  .row {
-    min-height: 44px;
-  }
-
   .row-title {
-    font-size: 0.9375rem;
+    font-size: 0.875rem;
   }
 }
 

@@ -172,6 +172,7 @@ export const zhTW: Messages = {
     swapTo: "換掉 {code}，用這門",
     problem: '有問題',
     check: '需確認',
+    issueShort: { 'prereq-unmet': '先修未滿足', 'coreq-unmet': '同修未滿足', 'not-offered': '這學期沒開', 'not-offered-assumed': '這學期沒開', discontinued: '已停開', 'closed-to-course': '不開放給你的學位', duplicate: '排了兩次' },
     moveEarlier: '把 {code} 提前一個學期',
     moveLater: '把 {code} 延後一個學期',
     remove: '刪除 {code}',

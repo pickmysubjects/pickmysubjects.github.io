@@ -176,6 +176,8 @@ export const en = {
     swapTo: "Use instead of {code}",
     problem: 'Problem',
     check: 'Check',
+    // One short red line at the bottom of a board card.
+    issueShort: { 'prereq-unmet': 'Prerequisite not met', 'coreq-unmet': 'Corequisite not met', 'not-offered': 'Not offered this term', 'not-offered-assumed': 'Not offered this term', discontinued: 'No longer offered', 'closed-to-course': 'Not open to your degree', duplicate: 'Planned twice' },
     moveEarlier: 'Move {code} one term earlier',
     moveLater: 'Move {code} one term later',
     remove: 'Remove {code}',

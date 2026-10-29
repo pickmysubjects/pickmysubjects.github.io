@@ -172,6 +172,7 @@ export const ko: Messages = {
     swapTo: "{code} 대신 이 과목",
     problem: '문제',
     check: '확인 필요',
+    issueShort: { 'prereq-unmet': '선수과목 미충족', 'coreq-unmet': '동시수강 미충족', 'not-offered': '이번 학기 미개설', 'not-offered-assumed': '이번 학기 미개설', discontinued: '폐강됨', 'closed-to-course': '내 학위는 수강 불가', duplicate: '두 번 들어감' },
     moveEarlier: '{code}를 한 학기 앞으로',
     moveLater: '{code}를 한 학기 뒤로',
     remove: '{code} 삭제',

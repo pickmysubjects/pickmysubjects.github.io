@@ -9,7 +9,8 @@ import { doneWith } from '@/utils/pastTerms'
  * Done in a term that hasn't started says so, without stopping it.
  */
 // ask: on the record with no mark yet, so the mark box is open and highlighted from the start.
-const props = defineProps<{ code: string; done: boolean; mark?: number; passFail?: boolean; future?: boolean; ask?: boolean }>()
+// card: the board card's one bottom line: a text action, or "已修 · 82" that opens the box when tapped.
+const props = defineProps<{ code: string; done: boolean; mark?: number; passFail?: boolean; future?: boolean; ask?: boolean; card?: boolean }>()
 const emit = defineEmits<{ done: [mark: number | undefined]; undo: [] }>()
 const { t } = useI18n()
 
@@ -20,7 +21,7 @@ const box = useTemplateRef<HTMLInputElement>('box')
 watch(() => props.mark, (m) => (typed.value = m === undefined ? '' : String(m)), { immediate: true })
 
 async function onDone(): Promise<void> {
-  if (props.passFail) return emit('done', undefined)
+  if (props.passFail && !props.done) return emit('done', undefined)
   asking.value = true
   await nextTick()
   box.value?.focus()
@@ -35,6 +36,15 @@ function commit(): void {
   asking.value = false
   if (!props.done || m !== props.mark) emit('done', m)
 }
+// On a card, editing a done subject's mark closes again once focus leaves the box and its button.
+function onFocusOut(e: FocusEvent): void {
+  if (!props.card || !props.done) return
+  const wrap = e.currentTarget as Element
+  // After the tap swaps the button for the box, focus moves to the box a moment later: check then.
+  setTimeout(() => {
+    if (!wrap.contains(document.activeElement)) asking.value = false
+  })
+}
 function onEnter(e: KeyboardEvent): void {
   if (e.isComposing || e.keyCode === 229) return
   ;(e.target as HTMLInputElement).blur()
@@ -42,7 +52,31 @@ function onEnter(e: KeyboardEvent): void {
 </script>
 
 <template>
-  <span class="toggle" @click.stop>
+  <span v-if="card" class="toggle toggle-card" @click.stop @focusout="onFocusOut">
+    <template v-if="asking">
+      <input
+        v-if="!passFail"
+        ref="box"
+        v-model="typed"
+        class="input toggle-mark"
+        :class="{ 'toggle-ask': !done }"
+        type="text"
+        inputmode="decimal"
+        autocomplete="off"
+        :placeholder="t('record.markShort')"
+        :aria-label="t('record.markFor', { code })"
+        :title="done ? undefined : t('plan.doneNeedsMark')"
+        @change="commit"
+        @keydown.enter="onEnter"
+      />
+      <button v-if="done" type="button" class="toggle-text" @click="emit('undo')">{{ t('plan.doneUndo') }}</button>
+    </template>
+    <button v-else-if="done" type="button" class="toggle-text toggle-state" :title="future ? t('plan.doneFuture') : undefined" @click="onDone">
+      {{ t('plan.pastTag') }}<template v-if="mark !== undefined"> · {{ mark }}</template>
+    </button>
+    <button v-else type="button" class="toggle-text toggle-act" @click="onDone">{{ t('plan.doneMark') }}</button>
+  </span>
+  <span v-else class="toggle" @click.stop>
     <input
       v-if="!passFail && (done || asking)"
       ref="box"
@@ -65,6 +99,61 @@ function onEnter(e: KeyboardEvent): void {
 </template>
 
 <style scoped>
+/* On a card: one short line of text, no pill, so the card grows by a line at most. */
+.toggle-card {
+  flex-wrap: nowrap;
+  gap: 6px;
+  min-width: 0;
+}
+
+.toggle-text {
+  min-height: 22px;
+  min-width: 0;
+  padding: 0 2px;
+  margin: 0 -2px;
+  overflow: hidden;
+  border: 0;
+  border-radius: 4px;
+  background: none;
+  color: var(--ink-soft);
+  font: inherit;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.toggle-text:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.toggle-text:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.toggle-card .toggle-act {
+  border: 0;
+  color: var(--accent);
+}
+
+.toggle-card .toggle-act:hover,
+.toggle-card .toggle-act:focus-visible {
+  background: none;
+  color: var(--accent);
+}
+
+.toggle-state {
+  color: var(--good-ink, var(--good));
+}
+
+.toggle-card .toggle-mark {
+  width: 56px;
+  min-height: 22px;
+  padding: 0 6px;
+}
+
 .toggle {
   display: flex;
   flex-wrap: wrap;
@@ -116,7 +205,7 @@ function onEnter(e: KeyboardEvent): void {
 }
 
 @media (max-width: 640px) {
-  .toggle-act {
+  .toggle:not(.toggle-card) .toggle-act {
     flex: 1 1 100%;
   }
 }
@@ -127,7 +216,11 @@ function onEnter(e: KeyboardEvent): void {
 }
 
 @media (pointer: coarse) {
-  .toggle-mark,
+  .toggle-text {
+    min-height: 32px;
+  }
+
+  .toggle:not(.toggle-card) .toggle-mark,
   .toggle-btn {
     min-height: 44px;
   }

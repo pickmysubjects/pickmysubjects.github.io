@@ -172,6 +172,7 @@ export const vi: Messages = {
     swapTo: "Dùng thay {code}",
     problem: 'Có lỗi',
     check: 'Cần xem lại',
+    issueShort: { 'prereq-unmet': 'Chưa đủ môn tiên quyết', 'coreq-unmet': 'Chưa đủ môn song hành', 'not-offered': 'Kỳ này không mở', 'not-offered-assumed': 'Kỳ này không mở', discontinued: 'Đã ngừng mở', 'closed-to-course': 'Không mở cho ngành bạn', duplicate: 'Bị xếp hai lần' },
     moveEarlier: 'Chuyển {code} sớm hơn một học kỳ',
     moveLater: 'Chuyển {code} muộn hơn một học kỳ',
     remove: 'Xóa {code}',

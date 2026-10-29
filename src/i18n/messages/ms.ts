@@ -172,6 +172,7 @@ export const ms: Messages = {
     swapTo: "Guna ganti {code}",
     problem: 'Masalah',
     check: 'Perlu semak',
+    issueShort: { 'prereq-unmet': 'Prasyarat belum dipenuhi', 'coreq-unmet': 'Kosyarat belum dipenuhi', 'not-offered': 'Tiada semester ini', 'not-offered-assumed': 'Tiada semester ini', discontinued: 'Tidak ditawarkan lagi', 'closed-to-course': 'Tidak dibuka untuk ijazah anda', duplicate: 'Dirancang dua kali' },
     moveEarlier: 'Alihkan {code} satu semester lebih awal',
     moveLater: 'Alihkan {code} satu semester kemudian',
     remove: 'Buang {code}',

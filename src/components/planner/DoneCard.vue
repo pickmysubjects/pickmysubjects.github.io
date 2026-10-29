@@ -1,34 +1,23 @@
 <script setup lang="ts">
-import { computed, inject } from 'vue'
-import { Check, X } from 'lucide-vue-next'
+import { computed } from 'vue'
 import type { Subject } from '@/engine'
 import { useI18n } from '@/i18n'
 import { localTitle } from '@/i18n/localized'
 import type { PastResult } from '@/utils/pastTerms'
 import DoneToggle from './DoneToggle.vue'
-import { LINK_COUNTS } from '@/utils/planBoard'
 
 /**
- * A subject from My record on the plan board: the same card as a planned one, in green with a
- * tick (red when not passed), the mark where a planned card shows its points. A start for
- * prerequisite lines (data-past-code). Its toggle edits the mark or takes it back to planned.
+ * A subject from My record on the plan board: the same two-line card as a planned one, in green,
+ * with "已修 · 82" as its one status line (red "未通过" when not passed). A start for prerequisite
+ * lines (data-past-code). Tapping the status line edits the mark or takes it back to planned.
  * A graded entry with no mark isn't done: a plain card with the mark box open ("add a mark").
  */
 const props = defineProps<{ result: PastResult; subject?: Subject; note?: string; highlighted?: boolean; dimmed?: boolean; future?: boolean }>()
 const emit = defineEmits<{ open: []; hover: [on: boolean]; done: [mark: number | undefined]; undo: [] }>()
 const { t, locale } = useI18n()
-const linkCounts = inject(LINK_COUNTS, null)
-const links = computed(() => linkCounts?.value.counts.get(props.result.code))
-const linksQuiet = computed(() => linkCounts?.value.quiet ?? false)
-// The title in the reader's language where we have one, with the English after it, small (as on a planned card).
+// The title in the reader's language where we have one; the English one goes to the tooltip.
 const local = computed(() => (props.subject ? localTitle(props.subject, locale.value) : ''))
-const label = computed(() => (props.result.failed ? t.value('plan.pastNotPassed') : t.value('plan.pastTag')))
-// "← 1 · → 2" in words: 需要先修 1 · 修完能解锁 2.
-const linkLabel = computed(() => {
-  const l = links.value
-  if (!l) return undefined
-  return [l.needs ? `${t.value('subject.needs')} ${l.needs}` : '', l.unlocks ? `${t.value('subject.unlocks')} ${l.unlocks}` : ''].filter(Boolean).join(' · ')
-})
+const tooltip = computed(() => [`${props.result.code} ${local.value || props.subject?.title || ''}`, local.value ? props.subject?.title : '', props.note].filter(Boolean).join('\n'))
 </script>
 
 <template>
@@ -36,76 +25,111 @@ const linkLabel = computed(() => {
     class="done"
     :class="{ failed: result.failed, pending: result.pending, highlighted, dimmed }"
     :data-past-code="result.code"
+    :title="tooltip"
     @mouseenter="emit('hover', true)"
     @mouseleave="emit('hover', false)"
   >
-  <button type="button" class="done-main" @click="emit('open')" @focusin="emit('hover', true)" @focusout="emit('hover', false)">
-    <span class="top">
-      <span v-if="!result.pending" class="mark-icon" aria-hidden="true">
-        <X v-if="result.failed" :size="10" :stroke-width="3" />
-        <Check v-else :size="10" :stroke-width="3" />
-      </span>
+    <button type="button" class="done-main" @click="emit('open')" @focusin="emit('hover', true)" @focusout="emit('hover', false)">
       <span class="code">{{ result.code }}</span>
-      <span v-if="result.mark !== undefined && (result.failed || subject?.passFail)" class="mark">{{ result.mark }}</span>
-    </span>
-    <span class="title">
-      {{ local || subject?.title || t('subject.notYetAdded') }}
-      <span v-if="local" class="title-en">{{ subject?.title }}</span>
-    </span>
-    <span class="foot">
-      <span v-if="!result.pending" class="tag tag-state">{{ label }}</span>
-      <span v-if="subject" class="tag">L{{ subject.level }}</span>
-      <span v-if="note" class="note">{{ note }}</span>
-      <span v-if="links" class="link-mark" :class="{ 'link-mark-quiet': linksQuiet }" role="img" :aria-label="linkLabel" :title="linkLabel"><template v-if="links.needs">← {{ links.needs }}</template><template v-if="links.needs && links.unlocks"> · </template><template v-if="links.unlocks">→ {{ links.unlocks }}</template></span>
-    </span>
-  </button>
-  <DoneToggle v-if="!result.failed" :code="result.code" :done="!result.pending" :ask="result.pending" :mark="result.mark" :pass-fail="subject?.passFail" :future="future" @done="emit('done', $event)" @undo="emit('undo')" />
+      <span v-if="subject" class="points">{{ subject.points }}</span>
+      <span class="title">{{ local || subject?.title || t('subject.notYetAdded') }}</span>
+    </button>
+    <span v-if="result.failed" class="foot foot-failed">{{ t('plan.pastNotPassed') }}<template v-if="result.mark !== undefined"> · {{ result.mark }}</template></span>
+    <span v-else-if="note" class="foot foot-failed">{{ note }}</span>
+    <DoneToggle v-else class="foot" card :code="result.code" :done="!result.pending" :ask="result.pending" :mark="result.mark" :pass-fail="subject?.passFail" :future="future" @done="emit('done', $event)" @undo="emit('undo')" />
   </div>
 </template>
 
 <style scoped>
-/* "← 1 · → 2": how many of its prerequisites and follow-ons are on the board. */
-.link-mark-quiet {
-  visibility: hidden;
-}
-
-.link-mark {
-  margin-left: auto;
-  padding: 0 7px;
-  border: 1px solid var(--card-edge, var(--line));
-  border-radius: 999px;
-  background: var(--glass-shine), var(--sheet-fill);
-  font-size: 0.75rem;
-  font-weight: 650;
-  line-height: 1.5;
-  color: var(--ink-soft);
-  white-space: nowrap;
-}
-
+/* The same shape as a planned card (SubjectCard): two lines and one status line, a flat tint. */
 .done {
   /* Above the prerequisite lines, like a planned card. */
   position: relative;
   z-index: 1;
   display: grid;
-  gap: 4px;
-  padding: 6px 9px;
-  border: 1px solid color-mix(in srgb, var(--good) 30%, transparent);
-  border-radius: var(--radius);
+  gap: 1px;
+  min-height: 74px;
+  padding: 7px 9px 7px 11px;
+  border: 1px solid color-mix(in srgb, var(--good) 35%, transparent);
+  border-radius: 10px;
   background: var(--good-soft);
+  box-shadow: 0 1px 2px rgb(60 20 80 / 10%);
   color: var(--ink);
+  transition: border-color 0.12s;
+}
+
+.done::before {
+  content: '';
+  position: absolute;
+  top: 7px;
+  bottom: 7px;
+  left: 3px;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--good);
+}
+
+.done:hover {
+  border-color: var(--good);
 }
 
 .done-main {
   display: grid;
-  gap: 4px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 1px 8px;
   min-width: 0;
   padding: 0;
   border: 0;
+  border-radius: 4px;
   background: none;
   color: inherit;
   font: inherit;
   text-align: left;
   cursor: pointer;
+}
+
+.done-main:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.code {
+  overflow: hidden;
+  font-size: 0.875rem;
+  font-weight: 700;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.points {
+  font-family: var(--font-code);
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+}
+
+.title {
+  grid-column: 1 / -1;
+  overflow: hidden;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.foot {
+  min-width: 0;
+  margin-top: 3px;
+  font-size: 0.75rem;
+  line-height: 22px;
+}
+
+.foot-failed {
+  overflow: hidden;
+  font-weight: 650;
+  color: var(--bad);
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .highlighted {
@@ -118,8 +142,12 @@ const linkLabel = computed(() => {
 }
 
 .pending {
-  border-color: var(--card-edge, var(--line));
-  background: var(--sheet-fill);
+  border-color: var(--col-edge, var(--line));
+  background: var(--card-solid);
+}
+
+.pending::before {
+  background: transparent;
 }
 
 .failed {
@@ -127,80 +155,13 @@ const linkLabel = computed(() => {
   background: var(--bad-soft);
 }
 
-.top {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-}
-
-.mark-icon {
-  display: inline-grid;
-  place-items: center;
-  width: 12px;
-  height: 12px;
-  flex: none;
-  border-radius: 50%;
-  background: var(--good);
-  color: #fff;
-}
-
-.failed .mark-icon {
+.failed::before {
   background: var(--bad);
 }
 
-.code {
-  font-size: 0.875rem;
-  font-weight: 600;
-}
-
-.mark {
-  margin-left: auto;
-  font-family: var(--font-code);
-  font-size: 0.8125rem;
-  font-weight: 700;
-}
-
-.title-en {
-  display: block;
-  font-size: 0.75rem;
-  font-weight: 400;
-  color: var(--ink-faint);
-}
-
-.title {
-  font-size: 0.875rem;
-  line-height: 1.35;
-  overflow-wrap: anywhere;
-}
-
-.foot {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 4px;
-  min-height: 20px;
-}
-
-.tag {
-  padding: 0 6px;
-  border-radius: 999px;
-  /* The card's own surface, lifted a little: readable in light, dark and Reduce Transparency. */
-  background: color-mix(in srgb, var(--surface) 60%, transparent);
-  font-size: 0.75rem;
-  color: var(--ink-soft);
-}
-
-.tag-state {
-  font-weight: 650;
-  color: var(--good);
-}
-
-.failed .tag-state {
-  color: var(--bad);
-}
-
-.note {
-  font-size: 0.75rem;
-  color: var(--bad);
+@media (prefers-reduced-motion: reduce) {
+  .done {
+    transition: none;
+  }
 }
 </style>

@@ -172,6 +172,7 @@ export const hi: Messages = {
     swapTo: "{code} की जगह यह लें",
     problem: 'समस्या',
     check: 'जाँचें',
+    issueShort: { 'prereq-unmet': 'प्रीरिक्विज़िट पूरा नहीं', 'coreq-unmet': 'कोरिक्विज़िट पूरा नहीं', 'not-offered': 'इस टर्म में नहीं', 'not-offered-assumed': 'इस टर्म में नहीं', discontinued: 'अब नहीं चलता', 'closed-to-course': 'आपकी डिग्री के लिए नहीं', duplicate: 'दो बार रखा है' },
     moveEarlier: '{code} को एक सेमेस्टर पहले ले जाएँ',
     moveLater: '{code} को एक सेमेस्टर बाद ले जाएँ',
     remove: '{code} हटाएँ',

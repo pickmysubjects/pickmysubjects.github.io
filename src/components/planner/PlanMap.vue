@@ -436,9 +436,14 @@ onBeforeUnmount(() => {
 
 <template>
   <div ref="board" class="board" :class="{ 'board-dragging': dragging }">
-    <p v-if="edges.length" class="route-legend" aria-hidden="true">
-      <span class="legend-need">{{ t('subject.needs') }}</span>
-      <span class="legend-unlock">{{ t('subject.unlocks') }}</span>
+    <p class="route-legend" aria-hidden="true">
+      <template v-if="edges.length">
+        <span class="legend-need">{{ t('subject.needs') }}</span>
+        <span class="legend-unlock">{{ t('subject.unlocks') }}</span>
+      </template>
+      <!-- The cards' left edges: 必修 and 专业选修. -->
+      <span class="legend-edge legend-required">{{ t('plan.tagRequired') }}</span>
+      <span class="legend-edge legend-option">{{ t('plan.tagOption') }}</span>
     </p>
     <svg class="routes" aria-hidden="true">
       <defs>
@@ -666,6 +671,25 @@ onBeforeUnmount(() => {
 
 .legend-unlock::before {
   background: var(--overprint);
+}
+
+.route-legend {
+  flex-wrap: wrap;
+  row-gap: 2px;
+}
+
+.route-legend .legend-edge::before {
+  width: 3px;
+  height: 12px;
+  margin-right: 5px;
+}
+
+.legend-required::before {
+  background: var(--accent);
+}
+
+.legend-option::before {
+  background: color-mix(in srgb, var(--accent) 38%, transparent);
 }
 
 .track {

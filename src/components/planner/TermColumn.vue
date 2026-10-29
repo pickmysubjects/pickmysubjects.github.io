@@ -165,6 +165,7 @@ const tone = (code: string): CardTone | null => props.tones?.get(code) ?? null
         :dimmed="tones !== null && tone(code) === null"
         :move-open="moveFor === code"
         :move-targets="moveFor === code ? moveTargets : []"
+        :begun="state !== 'ahead'"
         @select="emit('select', code)"
         @open="emit('open', code)"
         @hover="emit('hover', $event ? code : null)"

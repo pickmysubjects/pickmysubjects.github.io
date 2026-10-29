@@ -172,6 +172,7 @@ export const zhCN: Messages = {
     swapTo: "换掉 {code}，用这门",
     problem: '有问题',
     check: '需确认',
+    issueShort: { 'prereq-unmet': '先修未满足', 'coreq-unmet': '同修未满足', 'not-offered': '这学期不开', 'not-offered-assumed': '这学期不开', discontinued: '已停开', 'closed-to-course': '不对你的学位开放', duplicate: '排了两次' },
     moveEarlier: '把 {code} 提前一个学期',
     moveLater: '把 {code} 推后一个学期',
     remove: '删除 {code}',

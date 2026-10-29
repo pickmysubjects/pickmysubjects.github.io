@@ -172,6 +172,7 @@ export const ja: Messages = {
     swapTo: "{code} の代わりにこれ",
     problem: '問題あり',
     check: '要確認',
+    issueShort: { 'prereq-unmet': '前提科目が未履修', 'coreq-unmet': '同時履修が未充足', 'not-offered': 'この学期は開講なし', 'not-offered-assumed': 'この学期は開講なし', discontinued: '開講終了', 'closed-to-course': 'あなたの学位は履修不可', duplicate: '2回入っている' },
     moveEarlier: '{code} を1セメスター前に移動',
     moveLater: '{code} を1セメスター後に移動',
     remove: '{code} を削除',
