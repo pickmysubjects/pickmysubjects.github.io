@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { nextTick, onBeforeUnmount, shallowRef, useId, useTemplateRef, watch } from 'vue'
+import { shallowRef, useId, useTemplateRef } from 'vue'
 import { Info } from 'lucide-vue-next'
 import { useI18n } from '@/i18n'
+import { useAnchoredOverlay } from '@/utils/anchoredOverlay'
 
 /**
  * A small ⓘ after a one-line hint. Tapping it opens the full text as an overlay near the ⓘ
@@ -16,58 +17,13 @@ const open = shallowRef(false)
 const id = useId()
 const button = useTemplateRef<HTMLButtonElement>('button')
 const panel = useTemplateRef<HTMLElement>('panel')
-const pos = shallowRef<Record<string, string>>({})
-
-const GAP = 8
-const EDGE = 12
-
-function place(): void {
-  const b = button.value?.getBoundingClientRect()
-  const p = panel.value
-  if (!b || !p) return
-  if (window.innerWidth <= 640) {
-    pos.value = {}
-    return
-  }
-  const w = p.offsetWidth
-  const h = p.offsetHeight
-  const left = Math.min(Math.max(EDGE, b.left + b.width / 2 - w / 2), window.innerWidth - w - EDGE)
-  // Below the ⓘ when it fits, otherwise above it.
-  const below = b.bottom + GAP + h <= window.innerHeight - EDGE || b.top - GAP - h < EDGE
-  const top = below ? b.bottom + GAP : b.top - GAP - h
-  pos.value = { left: `${left}px`, top: `${top}px` }
-}
-
-function close(): void {
-  open.value = false
-}
-function onOutside(e: Event): void {
-  const target = e.target as Node
-  if (button.value?.contains(target) || panel.value?.contains(target)) return
-  close()
-}
-function onKey(e: KeyboardEvent): void {
-  if (e.key !== 'Escape') return
-  close()
-  button.value?.focus()
-}
-
-function listen(on: boolean): void {
-  const fn = on ? window.addEventListener : window.removeEventListener
-  fn('pointerdown', onOutside, true)
-  fn('keydown', onKey)
-  fn('scroll', close, true)
-  fn('resize', close)
-}
-
-watch(open, async (isOpen) => {
-  listen(isOpen)
-  if (!isOpen) return
-  pos.value = { visibility: 'hidden' }
-  await nextTick()
-  place()
+const { pos } = useAnchoredOverlay({
+  open,
+  anchor: () => button.value,
+  panel: () => panel.value,
+  close: () => (open.value = false),
+  closeOnMove: true,
 })
-onBeforeUnmount(() => listen(false))
 </script>
 
 <template>
