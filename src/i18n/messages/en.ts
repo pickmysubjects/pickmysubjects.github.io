@@ -149,8 +149,6 @@ export const en = {
     rulesYear: "You started in {start}, and students follow the rules of the year they started. We don't have the {start} rules, so the plan uses the {year} Handbook, the nearest we have. Check anything that changed with your faculty.",
     assumedShort: "From {year}, semesters are estimated from {from}",
     assumed: "The {year} Handbook isn't in yet, so subjects from {year} on are planned in the semesters they ran in {from}. Most subjects keep their semesters, but check the new Handbook before you enrol.",
-    termEnded: "Ended",
-    termInProgress: "In progress",
     doneMark: "Mark as done",
     doneShort: "Done",
     doneUndo: "Mark as not done",

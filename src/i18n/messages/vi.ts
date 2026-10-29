@@ -145,8 +145,6 @@ export const vi: Messages = {
     rulesYear: "Bạn nhập học năm {start}, và sinh viên theo quy định của năm nhập học. Chúng tôi chưa có quy định năm {start} nên dùng Handbook {year}, năm gần nhất. Điểm nào thay đổi thì hỏi lại khoa.",
     assumedShort: "Từ {year}, học kỳ mở môn ước tính theo năm {from}",
     assumed: "Handbook {year} chưa có, nên các môn từ {year} được xếp theo học kỳ chúng mở năm {from}. Đa số môn giữ nguyên học kỳ, nhưng hãy xem Handbook mới trước khi đăng ký.",
-    termEnded: "Đã xong",
-    termInProgress: "Đang học",
     doneMark: "Đánh dấu đã học",
     doneShort: "Đã học",
     doneUndo: "Đánh dấu chưa học",

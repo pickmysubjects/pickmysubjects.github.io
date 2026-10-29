@@ -145,8 +145,6 @@ export const ja: Messages = {
     rulesYear: "入学は {start} 年で、学生は入学年の規則に従います。{start} 年の規則はまだないため、いちばん近い {year} 年版を使っています。変更点は学部に確認してください。",
     assumedShort: "{year}年以降は{from}年の開講時期で見積もり",
     assumed: "{year}年の Handbook はまだ出ていないため、{year}年以降の科目は{from}年に開講された学期で組んでいます。ほとんどの科目は毎年同じ学期ですが、履修登録の前に新しい Handbook を確認してください。",
-    termEnded: "終了",
-    termInProgress: "履修中",
     doneMark: "履修済みにする",
     doneShort: "履修済み",
     doneUndo: "未履修に戻す",

@@ -130,7 +130,6 @@ const tone = (code: string): CardTone | null => props.tones?.get(code) ?? null
         <X :size="14" aria-hidden="true" />
       </button>
       <span class="term-bar" aria-hidden="true"><span class="term-bar-fill" :style="{ width: fill }" /></span>
-      <span v-if="state !== 'ahead'" class="term-state">{{ t(state === 'now' ? 'plan.termInProgress' : 'plan.termEnded') }}</span>
     </header>
     <TermStressNote :term-index="termIndex" />
     <p v-if="dropReason" class="drop-reason">{{ dropReason }}</p>
@@ -273,13 +272,6 @@ const tone = (code: string): CardTone | null => props.tones?.get(code) ?? null
   grid-template-columns: 1fr auto auto;
   align-items: baseline;
   gap: 4px 8px;
-}
-
-.term-state {
-  grid-column: 1 / -1;
-  font-size: 0.75rem;
-  font-weight: var(--fw-semibold);
-  color: var(--ink-soft);
 }
 
 .term-name {

@@ -145,8 +145,6 @@ export const id: Messages = {
     rulesYear: "Kamu mulai kuliah tahun {start}, dan mahasiswa mengikuti aturan tahun masuknya. Kami belum punya aturan {start}, jadi rencana ini memakai Handbook {year}, yang paling dekat. Cek perubahan apa pun ke fakultas.",
     assumedShort: "Mulai {year}, semester diperkirakan dari {from}",
     assumed: "Handbook {year} belum keluar, jadi mata kuliah mulai {year} disusun sesuai semester saat dibuka di {from}. Kebanyakan tetap di semester yang sama, tapi cek Handbook baru sebelum mendaftar.",
-    termEnded: "Selesai",
-    termInProgress: "Sedang berjalan",
     doneMark: "Tandai sudah diambil",
     doneShort: "Sudah diambil",
     doneUndo: "Tandai belum diambil",

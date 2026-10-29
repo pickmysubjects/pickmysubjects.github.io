@@ -145,8 +145,6 @@ export const ms: Messages = {
     rulesYear: "Anda mula pada {start}, dan pelajar mengikut peraturan tahun mereka bermula. Kami belum ada peraturan {start}, jadi pelan ini guna Buku Panduan {year}, yang paling hampir. Semak apa-apa perubahan dengan fakulti.",
     assumedShort: "Dari {year}, semester dianggarkan ikut {from}",
     assumed: "Handbook {year} belum keluar, jadi subjek dari {year} dirancang mengikut semester ia ditawarkan pada {from}. Kebanyakan subjek kekal pada semester yang sama, tetapi semak Handbook baharu sebelum mendaftar.",
-    termEnded: "Tamat",
-    termInProgress: "Sedang berjalan",
     doneMark: "Tanda sudah diambil",
     doneShort: "Sudah diambil",
     doneUndo: "Tanda belum diambil",

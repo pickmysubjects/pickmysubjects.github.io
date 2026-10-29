@@ -145,8 +145,6 @@ export const ko: Messages = {
     rulesYear: "{start}년에 입학했고, 학생은 입학한 해의 규칙을 따릅니다. {start}년 규칙이 아직 없어서 가장 가까운 {year}년 핸드북을 씁니다. 바뀐 부분은 학부에 확인하세요.",
     assumedShort: "{year}년부터는 {from}년 개설 학기 기준 추정",
     assumed: "{year}년 Handbook이 아직 나오지 않아 {year}년부터의 과목은 {from}년에 열린 학기로 배치했습니다. 대부분 매년 같은 학기에 열리지만, 수강 신청 전에 새 Handbook을 꼭 확인하세요.",
-    termEnded: "종료",
-    termInProgress: "진행 중",
     doneMark: "이수 완료로 표시",
     doneShort: "이수",
     doneUndo: "미이수로 표시",

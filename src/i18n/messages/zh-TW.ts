@@ -145,8 +145,6 @@ export const zhTW: Messages = {
     rulesYear: "你是 {start} 年入學的，學生一般依入學那年的規則畢業。我們還沒有 {start} 年的規則，所以先用最接近的 {year} 年手冊。有變動的地方請向學院確認。",
     assumedShort: "{year} 年起依 {from} 年的開課時間估算",
     assumed: "{year} 年的 Handbook 還沒出來，所以 {year} 年起的課依 {from} 年的開課學期來排。大部分的課每年學期不變，選課前還是要看新的 Handbook。",
-    termEnded: "已結束",
-    termInProgress: "進行中",
     doneMark: "標為已修",
     doneShort: "已修",
     doneUndo: "標為未修",

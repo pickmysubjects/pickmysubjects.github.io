@@ -145,8 +145,6 @@ export const zhCN: Messages = {
     rulesYear: "你是 {start} 年入学的，学生一般按入学那年的规则毕业。我们还没有 {start} 年的规则，所以先用最接近的 {year} 年手册。有变化的地方请找学院确认。",
     assumedShort: "{year} 年起按 {from} 年的开课时间估算",
     assumed: "{year} 年的 Handbook 还没出，所以 {year} 年起的课按 {from} 年的开课学期来排。大多数课每年学期不变，选课前还是要看新的 Handbook。",
-    termEnded: "已结束",
-    termInProgress: "进行中",
     doneMark: "标为已修",
     doneShort: "已修",
     doneUndo: "标为未修",
