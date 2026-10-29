@@ -219,9 +219,32 @@ const problemTexts = computed(() => {
 })
 // What the requirements card doesn't already say: subject-level problems. The same condition on
 // several subjects (two maths subjects needing one VCE score) is one line naming them all.
+// A condition line in parts, so the codes stand out and "we can't check this" sits quiet at the
+// end: matched against the message's own template, so every language splits the same way.
+interface ConditionParts {
+  lead: string
+  body: string
+  tail: string
+}
+function conditionParts(text: string, code: string): ConditionParts | undefined {
+  for (const key of ['issue.prereq-advisory', 'issue.prereq-unknown-missing', 'issue.prereq-unknown']) {
+    const tpl = t.value(key, { code: '\u0001', needs: '\u0002', missing: '\u0003' })
+    const first = tpl.search(/[\u0002\u0003]/)
+    if (!tpl.startsWith('\u0001') || first < 0) continue
+    const lead = tpl.slice(1, first)
+    let tail = tpl.slice(Math.max(tpl.lastIndexOf('\u0002'), tpl.lastIndexOf('\u0003')) + 1)
+    if (!text.startsWith(code + lead) || !text.endsWith(tail)) continue
+    const stop = /^[.。．।]\s*/.exec(tail)?.[0] ?? ''
+    const body = text.slice(code.length + lead.length, text.length - tail.length) + stop.trim()
+    tail = tail.slice(stop.length)
+    return { lead, body, tail }
+  }
+  return undefined
+}
 const planProblems = computed(() => {
-  const out: { text: string; confirm?: string[] }[] = []
-  const byCondition = new Map<string, { codes: string[]; item: { text: string; confirm?: string[] } }>()
+  type Item = { text: string; confirm?: string[]; parts?: ConditionParts }
+  const out: Item[] = []
+  const byCondition = new Map<string, { codes: string[]; item: Item }>()
   for (const p of problemTexts.value) {
     if (p.rule) continue
     if (!p.confirm) {
@@ -236,7 +259,7 @@ const planProblems = computed(() => {
       seen.item.confirm = [...seen.codes]
       continue
     }
-    const item = { text: p.text, confirm: [p.confirm] }
+    const item: Item = { text: p.text, confirm: [p.confirm], parts: conditionParts(p.text, p.confirm) }
     byCondition.set(key, { codes: [p.confirm], item })
     out.push(item)
   }
@@ -600,7 +623,8 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
               <ul v-if="planProblems.length" class="status-list" :class="problems ? 'tone-bad' : 'tone-warn'" role="status">
                 <li v-for="(p, i) in planProblems.slice(0, 5)" :key="i" class="status-item">
                   <component :is="TriangleAlert" :size="16" aria-hidden="true" class="status-icon" />
-                  <span>{{ p.text }}</span>
+                  <span v-if="p.parts && p.confirm" class="status-text"><b class="status-codes">{{ p.confirm.join(' / ') }}</b>{{ p.parts.lead }}{{ p.parts.body }} <span class="status-tail">{{ p.parts.tail }}</span></span>
+                  <span v-else class="status-text">{{ p.text }}</span>
                   <button v-if="p.confirm" class="button button-quiet confirm" type="button" @click="p.confirm.forEach((c) => setConfirmed(c, true))">
                     {{ t('plan.iMeetThis') }}
                   </button>
@@ -956,16 +980,45 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
   color: var(--ink);
 }
 
+/* One row per item, like the rules rows above: icon, text, then its action and ⓘ. */
 .status-item {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
   align-items: center;
   gap: var(--space-2) var(--space-3);
 }
 
+.status-codes {
+  font-weight: 700;
+}
+
+.status-tail {
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
+}
+
 .status-item > span {
-  flex: 1 1 14em;
   min-width: 0;
+}
+
+@media (max-width: 560px) {
+  /* Phones: the text gets the full width, its action goes under it. */
+  .status-item {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+  }
+
+  .status-item > :nth-child(2) {
+    grid-column: 2 / -1;
+  }
+
+  .status-item > .confirm {
+    grid-column: 2;
+    width: 100%;
+  }
+
+  .status-item > .confirm + * {
+    grid-column: 3;
+  }
 }
 
 .status-hint {

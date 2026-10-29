@@ -35,7 +35,6 @@ const open = shallowRef(props.startOpen !== false && props.statuses.some((s) => 
 
 interface Meter {
   id: string
-  kind: 'points' | 'major'
   label: string
   have: number
   need: number
@@ -62,9 +61,7 @@ const meters = computed<Meter[]>(() => {
           : rule.level !== undefined
             ? t.value('progress.level', { n: rule.level })
             : t.value('progress.total')
-      out.push({ id: s.ruleId, kind: 'points', label, have: Number(s.params.have ?? 0), need: rule.min, status: s.status })
-    } else if (rule.kind === 'major') {
-      out.push({ id: s.ruleId, kind: 'major', label: t.value('progress.major'), have: 0, need: 1, status: s.status })
+      out.push({ id: s.ruleId, label, have: Number(s.params.have ?? 0), need: rule.min, status: s.status })
     }
   }
   return out
@@ -79,6 +76,10 @@ const rows = computed(() =>
     detail: ruleDetail(t.value, s),
     members: props.members[s.ruleId] ?? [],
   })),
+)
+// The major isn't a total: it shows only while unmet, as a row under the meters.
+const majorLeft = computed(() =>
+  rows.value.filter((r) => r.status !== 'ok' && props.degreeRules.find((x) => x.id === r.id)?.kind === 'major'),
 )
 const total = computed(() => rows.value.length)
 const met = computed(() => rows.value.filter((r) => r.status === 'ok').length)
@@ -100,54 +101,64 @@ function toggle(id: string): void {
 
 <template>
   <section v-if="total" class="progress surface" :class="`health-${health}`" :aria-label="t('progress.title')">
-    <button class="head" type="button" :aria-expanded="open" @click="open = !open">
+    <div class="head">
       <span class="health">
         <span class="ring-wrap" aria-hidden="true">
           <svg class="ring" viewBox="0 0 40 40">
             <circle class="ring-track" cx="20" cy="20" r="17" />
             <circle class="ring-fill" cx="20" cy="20" r="17" :stroke-dasharray="RING" :stroke-dashoffset="ringOffset" />
           </svg>
-          <Check v-if="health === 'ok'" class="ring-mid" :size="18" :stroke-width="3" />
+          <Check v-if="health === 'ok'" class="ring-mid" :size="16" :stroke-width="3" />
           <span v-else-if="blocked" class="ring-mid ring-count">!</span>
           <span v-else class="ring-mid ring-count">{{ left }}</span>
         </span>
         <span class="health-text">
-          <span class="health-title">{{ health === 'ok' ? (unconfirmed ? t('progress.allMetConfirm', { n: unconfirmed }) : t('progress.allMet')) : blocked ? t('progress.metButProblems', { n: problems ?? 0 }) : (left === 1 ? t('progress.leftOne') : t('progress.left', { n: left })) }}</span>
-          <span class="health-sub"><span class="health-dot" aria-hidden="true">·</span>{{ t('rules.progress', { met, total }) }}</span>
+          <span class="health-title">{{ health === 'ok' ? t('progress.allMet') : blocked ? t('progress.metButProblems', { n: problems ?? 0 }) : (left === 1 ? t('progress.leftOne') : t('progress.left', { n: left })) }}</span>
+          <!-- Conditions we can't check: their own line, jumping to the rows that confirm them. -->
+          <a v-if="health === 'ok' && unconfirmed" class="confirm-chip" :href="$slots.notes ? '#rules-notes' : undefined">{{ t('progress.toConfirm', { n: unconfirmed }) }}</a>
         </span>
       </span>
-
-      <span class="meters">
-        <span v-for="m in meters" :key="m.id" class="meter" :class="[`meter-${m.status}`, `meter-kind-${m.kind}`]">
-          <span class="meter-top">
-            <span class="meter-label">{{ m.label }}</span>
-            <span v-if="m.kind === 'major'" class="chip-state">{{ m.status === 'ok' ? t('progress.done') : t('progress.notYet') }}</span>
-            <!-- A minimum met (more than enough counts too: the extra points still go to the total): a tick, not a warning. -->
-            <span v-else class="meter-value"><Check v-if="m.status === 'ok'" class="meter-tick" :size="13" :stroke-width="3" aria-hidden="true" />{{ fmt(m.have) }}<span class="meter-need"> / {{ fmt(m.need) }}</span><span v-if="m.status === 'ok'" class="visually-hidden"> ({{ t('progress.done') }})</span></span>
-          </span>
-          <span v-if="m.kind === 'points'" class="meter-bar" aria-hidden="true">
-            <span class="meter-fill" :style="{ width: `${Math.min(100, (m.have / m.need) * 100)}%` }" />
-          </span>
-        </span>
-      </span>
-
-      <span class="toggle">
+      <button class="toggle" type="button" :aria-expanded="open" aria-controls="rules-all" @click="open = !open">
         {{ t('progress.showAll', { n: total }) }}
         <ChevronDown :size="16" aria-hidden="true" class="chevron" :class="{ turned: open }" />
-      </span>
-    </button>
+      </button>
+    </div>
+
+    <!-- One row of totals, a cell each: name, points, bar, what's left. -->
+    <ul class="meters">
+      <li v-for="m in meters" :key="m.id" class="meter" :class="`meter-${m.status}`">
+        <span class="meter-label">{{ m.label }}</span>
+        <span class="meter-value">
+          {{ fmt(m.have) }}<span class="meter-need"> / {{ fmt(m.need) }}</span>
+        </span>
+        <span class="meter-bar" aria-hidden="true">
+          <span class="meter-fill" :style="{ width: `${Math.min(100, (m.have / m.need) * 100)}%` }" />
+        </span>
+        <!-- A minimum met (more than enough counts too: the extra points still go to the total). -->
+        <span class="meter-state">{{ m.status === 'ok' ? t('progress.done') : t('progress.short', { n: fmt(Math.max(0, m.need - m.have)) }) }}</span>
+      </li>
+    </ul>
+
+    <ul v-if="majorLeft.length" class="major-left">
+      <li v-for="r in majorLeft" :key="r.id">
+        <button class="major-row" :class="{ 'rule-active': active === r.id }" type="button" :aria-pressed="active === r.id" @click="toggle(r.id)">
+          <span class="major-name">{{ t('progress.major') }}</span>
+          <span>{{ r.text }}<template v-if="r.detail"> — {{ r.detail }}</template></span>
+        </button>
+      </li>
+    </ul>
+
+    <!-- The plan's other status (conditions to confirm, subject problems, notes) lives in the same card. -->
+    <div v-if="$slots.notes" id="rules-notes" class="notes">
+      <slot name="notes" />
+    </div>
 
     <!-- One-line headlines that jump elsewhere on the page (e.g. heavy semesters). -->
     <div v-if="$slots.alerts" class="alerts">
       <slot name="alerts" />
     </div>
 
-    <!-- The plan's other status (subject problems, notes) lives in the same card, not a second banner. -->
-    <div v-if="$slots.notes" class="notes">
-      <slot name="notes" />
-    </div>
-
-    <div v-if="open" class="body">
+    <div v-if="open" id="rules-all" class="body">
       <p class="hint">{{ t('progress.tapHint') }}</p>
       <ul class="rules">
         <li v-for="r in ordered" :key="r.id">
@@ -171,6 +182,9 @@ function toggle(id: string): void {
 <style scoped>
 .progress {
   --tone: var(--good);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas: 'health toggle' 'meters meters' 'major major' 'notes notes' 'alerts alerts' 'body body';
   min-width: 0;
   padding: 0;
   overflow: hidden;
@@ -185,6 +199,7 @@ function toggle(id: string): void {
 }
 
 .alerts {
+  grid-area: alerts;
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
@@ -193,32 +208,28 @@ function toggle(id: string): void {
 }
 
 .notes {
+  grid-area: notes;
   display: grid;
   gap: 8px;
-  padding: 12px 20px 14px;
+  padding: 10px 18px 12px;
+  scroll-margin-top: 96px;
   border-top: 1px solid var(--line);
   font-size: 0.9375rem;
 }
 
+/* The status and the toggle place themselves in the card's grid: side by side here, the
+   toggle under the rows on phones. */
 .head {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 24px;
-  width: 100%;
-  padding: 10px 18px;
-  border: 0;
-  background: none;
-  color: var(--ink);
-  font: inherit;
-  text-align: left;
-  cursor: pointer;
+  display: contents;
 }
 
 .health {
+  grid-area: health;
+  padding: 12px 18px 6px;
   display: flex;
   align-items: center;
   gap: 12px;
+  min-width: 0;
 }
 
 .ring-wrap {
@@ -226,8 +237,8 @@ function toggle(id: string): void {
   display: grid;
   place-items: center;
   flex: none;
-  width: 44px;
-  height: 44px;
+  width: 36px;
+  height: 36px;
 }
 
 .ring {
@@ -259,62 +270,63 @@ function toggle(id: string): void {
 
 .ring-count {
   font-family: var(--font-code);
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
   font-weight: 700;
 }
 
 .health-text {
   display: flex;
   flex-wrap: wrap;
-  align-items: baseline;
-  gap: 1px 6px;
-}
-
-.health-dot {
-  margin-right: 6px;
+  align-items: center;
+  gap: 4px 10px;
+  min-width: 0;
 }
 
 .health-title {
   font-size: 1rem;
   font-weight: 700;
   color: color-mix(in srgb, var(--tone) 80%, var(--ink)); /* darker in light, lighter in dark: 4.5:1 on glass */
-  white-space: nowrap;
 }
 
-.health-sub {
+/* A small chip, not a second headline. */
+.confirm-chip {
+  padding: 2px 10px;
+  border-radius: 999px;
   font-size: 0.8125rem;
-  color: var(--ink-soft);
-  white-space: nowrap;
+  font-weight: 600;
+  background: var(--warn-soft);
+  color: color-mix(in srgb, var(--warn) 70%, var(--ink)); /* darker in light, lighter in dark: 4.5:1 */
+  text-decoration: none;
 }
 
+.confirm-chip[href]:hover,
+.confirm-chip[href]:focus-visible {
+  text-decoration: underline;
+}
+
+/* One row of totals: equal cells with a fine line between them. */
 .meters {
+  grid-area: meters;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
-  gap: 12px 24px;
-  min-width: 0;
-  padding-left: 28px;
-  border-left: 1px solid var(--line);
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  margin: 0;
+  padding: 6px 18px 14px;
+  list-style: none;
 }
 
 .meter {
   display: grid;
-  align-content: end;
-  gap: 6px;
+  align-content: start;
+  gap: 4px;
   min-width: 0;
+  padding: 2px 16px;
+  border-left: 1px solid var(--line);
 }
 
-.meter-top {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 2px 8px;
-}
-
-.meter-kind-major .meter-top {
-  justify-content: flex-start;
-  /* Sits on the same line as the other meters' bars. */
-  margin-bottom: -2px;
+.meter:first-child {
+  padding-left: 0;
+  border-left: 0;
 }
 
 /* Category names are lower case for use inside sentences; a label starts with a capital. */
@@ -324,21 +336,15 @@ function toggle(id: string): void {
 
 .meter-label {
   display: inline-block;
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   color: var(--ink-soft);
 }
 
 .meter-value {
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
-}
-
-.meter-tick {
-  margin-right: 3px;
-  vertical-align: -1px;
-  color: var(--good);
 }
 
 .meter-need {
@@ -357,43 +363,77 @@ function toggle(id: string): void {
   display: block;
   height: 100%;
   border-radius: inherit;
-  background: var(--warn);
+  background: var(--accent);
 }
 
 .meter-ok .meter-fill {
   background: var(--good);
 }
 
-.meter-fail .meter-fill {
-  background: var(--bad);
-}
-
-.chip-state {
-  padding: 1px 9px;
-  border-radius: 999px;
-  font-size: 0.75rem;
+.meter-state {
+  font-size: 0.8125rem;
   font-weight: 650;
-  background: var(--warn-soft);
-  color: color-mix(in srgb, var(--warn) 80%, var(--ink)); /* darker in light, lighter in dark: 4.5:1 on glass */
+  white-space: nowrap;
+  color: color-mix(in srgb, var(--accent) 75%, var(--ink)); /* darker in light, lighter in dark: 4.5:1 */
 }
 
-.meter-ok .chip-state {
-  background: var(--good-soft);
-  color: var(--good);
+.meter-ok .meter-state {
+  color: color-mix(in srgb, var(--good) 75%, var(--ink));
+}
+
+.major-left {
+  grid-area: major;
+  margin: 0;
+  padding: 0 12px 10px;
+  list-style: none;
+}
+
+.major-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 10px;
+  width: 100%;
+  padding: 6px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.875rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.major-row:hover {
+  background: var(--inset-fill);
+}
+
+.major-name {
+  font-weight: 650;
+  color: color-mix(in srgb, var(--accent) 75%, var(--ink)); /* darker in light, lighter in dark: 4.5:1 */
 }
 
 .toggle {
+  grid-area: toggle;
+  align-self: center;
+  margin-right: 14px;
   display: inline-flex;
   align-items: center;
   gap: 4px;
+  min-height: 36px;
+  padding: 0 4px;
+  border: 0;
+  background: none;
+  font: inherit;
   font-size: 0.8125rem;
   font-weight: 600;
   color: var(--ink-soft);
   white-space: nowrap;
+  cursor: pointer;
 }
 
-.head:hover .toggle,
-.head:focus-visible .toggle {
+.toggle:hover,
+.toggle:focus-visible {
   color: color-mix(in srgb, var(--accent) 80%, var(--ink)); /* darker in light, lighter in dark: 4.5:1 on glass */
 }
 
@@ -406,6 +446,7 @@ function toggle(id: string): void {
 }
 
 .body {
+  grid-area: body;
   display: grid;
   gap: 8px;
   padding: 4px 16px 16px;
@@ -500,41 +541,42 @@ function toggle(id: string): void {
   overflow-wrap: anywhere;
 }
 
-/* Narrower screens: status and toggle on one line, the meters below in two columns. */
-@media (max-width: 900px) {
-  .head {
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: 14px 12px;
-    padding: 14px 16px;
-  }
-
-  .meters {
-    grid-column: 1 / -1;
-    grid-row: 2;
-    grid-template-columns: 1fr 1fr;
-    padding: 12px 0 0;
-    border-left: 0;
-    border-top: 1px solid var(--line);
-  }
-
-  .health-title {
-    white-space: normal;
-  }
-}
-
-/* Phones: the rules toggle gets its own line under the meters, so the headline and
-   "12/14 rules met" never squeeze into a broken wrap beside it. */
+/* Phones: name, points and what's left on one line, the bar under them. */
 @media (max-width: 560px) {
-  .head {
+  .progress {
     grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: 'health' 'meters' 'toggle' 'major' 'notes' 'alerts' 'body';
   }
 
-  .toggle {
-    grid-row: 3;
+  .health {
+    padding: 12px 16px 6px;
+  }
+
+  /* Phones: the cells wrap into two columns. */
+  .meters {
+    grid-auto-flow: row;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 12px;
+    padding: 6px 16px 12px;
+  }
+
+  .meter {
+    padding: 2px 10px;
+  }
+
+  .meter:nth-child(2n + 1) {
+    padding-left: 0;
+    border-left: 0;
   }
 
   .alerts {
     padding: 10px 16px;
+  }
+
+  .toggle {
+    justify-self: start;
+    min-height: 44px;
+    margin: -6px 0 4px 12px;
   }
 }
 
