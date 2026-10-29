@@ -483,10 +483,10 @@ async function onRestore(event: Event): Promise<void> {
   font-size: 0.8125rem;
 }
 
-/* Strengths beside the goal on wide screens; one column below. */
+/* Strengths, then the goal, stacked in the one main column. */
 .pair {
   display: grid;
-  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-5);
   align-items: start;
 }
@@ -543,12 +543,6 @@ async function onRestore(event: Event): Promise<void> {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2);
-}
-
-@media (max-width: 1100px) {
-  .pair {
-    grid-template-columns: minmax(0, 1fr);
-  }
 }
 
 @media (max-width: 640px) {
