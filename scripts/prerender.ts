@@ -627,7 +627,7 @@ function guideBody(code: LocaleCode, t: Translate, page: GuideCategory | 'overvi
       `<h2 id="grades">${esc(t('guide.gradesTitle'))}</h2>`, p('gradesText'), table,
     ].join('\n'),
     'wam': [
-      `<h2 id="wam">${esc(t('guide.wamTitle'))}</h2>`, p('wamText'), p('wamFormula'), p('wamExample'), li(['wamIn', 'wamOut']), p('wamSync'),
+      `<h2 id="wam">${esc(t('guide.wamTitle'))}</h2>`, p('wamText'), p('wamFormula'), p('wamExample'), li(['wamIn', 'wamOut']), p('wamSync'), p('planDoneSync'),
     ].join('\n'),
     'rules': [
       `<h2 id="rules">${esc(t('guide.rulesTitle'))}</h2>`,

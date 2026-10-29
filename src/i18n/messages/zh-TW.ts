@@ -1505,6 +1505,7 @@ export const zhTW: Messages = {
     findNotOffered: "可以把課放進它沒開的學期，例如照實際修課的學期記錄以前的課。計畫只會提醒，不會擋你。",
     wamTool: "還沒填紀錄？WAM 計算機直接輸入分數就能算。",
     wamSync: "WAM 計算機會讀取「我的紀錄」裡的成績，兩邊的目標 WAM 是同一個。",
+    planDoneSync: "在選課板上，已修的課由你自己標記，成績也在那裡填，會和「我的紀錄」和 WAM 同步。",
     majorsRelated: "每個科目頁下面還有「相關科目」：修完它之後能修什麼，以及同主修的同學常在同一學期一起修哪些課。",
     overview: "總覽",
     cat: {

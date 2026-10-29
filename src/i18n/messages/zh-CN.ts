@@ -1505,6 +1505,7 @@ export const zhCN: Messages = {
     findNotOffered: "可以把课放进它不开的学期，比如按实际修课的学期记录以前的课。计划只会提醒，不会拦着你。",
     wamTool: "还没填记录？WAM 计算器直接输入分数就能算。",
     wamSync: "WAM 计算器会读取“我的记录”里的成绩，两边的目标 WAM 是同一个。",
+    planDoneSync: "在选课板上，已修的课由你自己标记，成绩也在那里填，会和“我的记录”和 WAM 同步。",
     majorsRelated: "每个科目页下面还有“相关科目”：修完它之后能修什么，以及同专业的同学常在同一学期一起修哪些课。",
     overview: "概览",
     cat: {

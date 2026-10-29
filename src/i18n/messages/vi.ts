@@ -1505,6 +1505,7 @@ export const vi: Messages = {
     findNotOffered: "Bạn có thể đặt môn vào học kỳ môn đó không mở, ví dụ để ghi lại môn đã học đúng kỳ thực tế. Kế hoạch chỉ cảnh báo, không chặn.",
     wamTool: "Chưa nhập hồ sơ? Công cụ tính WAM chỉ cần bạn gõ điểm vào là tính được.",
     wamSync: "Công cụ tính WAM đọc điểm trong Hồ sơ của tôi, và WAM mục tiêu ở hai nơi là một.",
+    planDoneSync: "Trên bảng kế hoạch, bạn tự đánh dấu môn đã học và nhập điểm ngay đó. Điểm khớp với Hồ sơ của tôi và WAM.",
     majorsRelated: "Mỗi trang môn học còn có mục môn liên quan: học xong môn này thì học tiếp được môn nào, và sinh viên cùng chuyên ngành thường học cùng môn nào trong cùng học kỳ.",
     overview: "Tổng quan",
     cat: {

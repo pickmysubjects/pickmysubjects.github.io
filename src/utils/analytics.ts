@@ -78,8 +78,8 @@ export function optOutToggle(): boolean {
 let lastPath: string | null = null
 let counted = 0
 
-/** Count a page view. A repeat of the page just counted (same path) is skipped. */
-export function countPage(pathname: string = typeof location === 'undefined' ? '/' : location.pathname): void {
+/** Count a page view, with the page's own title. A repeat of the page just counted (same path) is skipped. */
+export function countPage(pathname: string = typeof location === 'undefined' ? '/' : location.pathname, title?: string): void {
   if (countingOff()) return
   const path = countedPath(pathname)
   if (path === lastPath) return
@@ -87,7 +87,7 @@ export function countPage(pathname: string = typeof location === 'undefined' ? '
   try {
     // The referrer only matters on the first page (where the visit came from); inside the site it's us.
     const first = counted++ === 0
-    counter()?.({ path, referrer: first ? undefined : '' })
+    counter()?.({ path, title, referrer: first ? undefined : '' })
     // Once per visit, the site language it started in, so the dashboard shows visits per language.
     if (first) counter()?.({ path: `visit-lang-${pathLocale(path)}`, title: 'visit language', event: true })
   } catch {

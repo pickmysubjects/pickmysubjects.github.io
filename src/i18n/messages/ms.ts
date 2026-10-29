@@ -1505,6 +1505,7 @@ export const ms: Messages = {
     findNotOffered: "Anda boleh letak subjek dalam semester yang ia tidak ditawarkan, contohnya untuk merekod di mana anda betul-betul mengambilnya. Rancangan hanya memberi amaran, tidak menghalang.",
     wamTool: "Belum ada rekod? Kalkulator WAM berfungsi dengan nombor yang anda taip sahaja.",
     wamSync: "Kalkulator WAM membaca markah dalam Rekod saya, dan sasaran WAM sama di kedua-duanya.",
+    planDoneSync: "Pada papan pelan, anda tandakan sendiri subjek yang sudah diambil dan masukkan markahnya di situ. Ia selari dengan Rekod saya dan WAM.",
     majorsRelated: "Setiap halaman subjek juga menyenaraikan subjek berkaitan: subjek yang boleh diambil selepasnya, dan subjek yang selalu diambil bersama oleh pelajar major yang sama dalam semester yang sama.",
     overview: "Gambaran",
     cat: {

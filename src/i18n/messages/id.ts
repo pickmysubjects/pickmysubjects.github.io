@@ -1505,6 +1505,7 @@ export const id: Messages = {
     findNotOffered: "Kamu bisa menaruh mata kuliah di semester yang tidak membukanya, misalnya untuk mencatat di mana kamu benar-benar mengambilnya. Rencana hanya memberi peringatan, tidak memblokir.",
     wamTool: "Belum ada catatan? Kalkulator WAM bisa dipakai cukup dengan mengetik angkanya.",
     wamSync: "Kalkulator WAM membaca nilai di Catatanku, dan target WAM-nya sama di keduanya.",
+    planDoneSync: "Di papan rencana, kamu sendiri yang menandai mata kuliah yang sudah diambil dan mengisi nilainya di sana. Nilainya sama dengan Catatanku dan WAM.",
     majorsRelated: "Setiap halaman mata kuliah juga mencantumkan mata kuliah terkait: apa yang bisa diambil sesudahnya, dan apa yang sering diambil bersamaan oleh mahasiswa major yang sama di semester yang sama.",
     overview: "Ringkasan",
     cat: {

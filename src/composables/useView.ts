@@ -1,4 +1,4 @@
-import { computed, shallowRef, watch } from 'vue'
+import { computed, nextTick, shallowRef, watch } from 'vue'
 import { localeInPath } from '@/i18n/codes'
 import { currentLocale, useI18n } from '@/i18n'
 import { newVersionReady } from '@/utils/serviceWorker'
@@ -158,10 +158,20 @@ export function keepsScroll(before: Route | null, after: Route): boolean {
   return before !== null && before.view === after.view && (before.param === after.param || FILTER_PARAM.has(after.view))
 }
 
+/**
+ * Count the page once its tab title is set. App.vue sets document.title in a watcher that runs
+ * after the route changes, so counting straight away sent the last page's title with the new path.
+ * The path is taken now; the title once Vue has run that watcher.
+ */
+function countAfterTitle(): void {
+  const path = location.pathname
+  void nextTick(() => countPage(path, document.title))
+}
+
 function sync(fromHistory = false): void {
   const before = route.value
   route.value = current()
-  countPage()
+  countAfterTitle()
   if (!(fromHistory && keepsScroll(before, route.value))) window.scrollTo({ top: 0 })
   revealHash()
 }
@@ -257,7 +267,7 @@ function install(): void {
   document.addEventListener('click', onClick)
   window.addEventListener('hashchange', revealHash)
   route.value = current()
-  countPage()
+  countAfterTitle()
   revealHash()
 }
 

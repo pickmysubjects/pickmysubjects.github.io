@@ -1509,6 +1509,7 @@ export const en = {
     findNotOffered: "You can put a subject in a semester it doesn't run, say to record where you really took it. The plan warns you but doesn't stop you.",
     wamTool: "No record yet? The WAM calculator works with just the numbers you type in.",
     wamSync: "The WAM calculator reads the marks in My record, and the target WAM is the same one in both.",
+    planDoneSync: "On the plan board you mark a subject done yourself and enter its mark there. It stays in step with My record and the WAM.",
     majorsRelated: "Each subject page also lists related subjects: what it leads to, and what students in the same major often take in the same semester.",
     overview: "Overview",
     cat: {
