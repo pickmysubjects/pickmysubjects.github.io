@@ -32,7 +32,7 @@ const back = computed(() => (page.value === 'hub' ? undefined : { href: link('to
 </script>
 
 <template>
-  <div class="tools">
+  <div class="tools" :class="{ 'is-compact': page === 'revision' }">
     <DetailHero :key="page" :back="back" :title="title" :art="ARTS[page]">
       <p v-if="lede" class="lede">{{ lede }}</p>
     </DetailHero>
@@ -48,6 +48,20 @@ const back = computed(() => (page.value === 'hub' ? undefined : { href: link('to
   display: grid;
   gap: var(--space-5);
   padding-top: var(--space-4);
+}
+
+/* The revision planner is a working page: a short header, no illustration, the tool right under it. */
+.tools.is-compact {
+  gap: var(--space-3);
+}
+
+.tools.is-compact :deep(.dhero) {
+  min-height: 0;
+  padding: 14px 24px;
+}
+
+.tools.is-compact :deep(.dhero-art) {
+  display: none;
 }
 
 .lede {

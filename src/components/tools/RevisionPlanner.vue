@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import InfoTip from '@/components/InfoTip.vue'
+import SegmentedControl from '@/components/SegmentedControl.vue'
 import SubjectSearch from '@/components/SubjectSearch.vue'
 import { useDataset } from '@/composables/useDataset'
 import { useRevisionPlan } from '@/composables/useRevisionPlan'
@@ -12,7 +13,10 @@ import { downloadIcs } from '@/utils/keyDates'
 
 /**
  * The revision planner: pick the exam period, fill in exam dates and the hours a student has, get
- * a day-by-day agenda. The plan only fills in the subjects; nothing here changes the plan or the record.
+ * a day-by-day calendar. The plan only fills in the subjects; nothing here changes the plan or the record.
+ *
+ * Layout: on wide screens a sticky sidebar (period, totals as the colour legend, export) beside the
+ * inputs and the calendar; narrower, the same blocks stack: period, inputs, totals, calendar.
  */
 const { t, locale } = useI18n()
 const { data } = useDataset()
@@ -24,12 +28,17 @@ const nameOf = (code: string) => {
   return s ? localTitle(s, locale.value) || s.title : code
 }
 const LEVELS: readonly RevisionDifficulty[] = ['easier', 'average', 'harder']
+
+type Row = (typeof rows.value)[number]
+const active = computed(() => rows.value.filter((r) => !rp.noExam(r)))
+const off = computed(() => rows.value.filter((r) => rp.noExam(r)))
 // Colours tell subjects apart at a glance; the code is always written too.
-const colourOf = (code: string) => `c${Math.max(0, rows.value.findIndex((r) => r.code === code)) % 6}`
+const colourOf = (code: string) => `c${Math.max(0, active.value.findIndex((r) => r.code === code)) % 6}`
 
 const fmtDay = computed(() => new Intl.DateTimeFormat(locale.value, { day: 'numeric', month: 'short', timeZone: 'UTC' }))
 const fmtShort = computed(() => new Intl.DateTimeFormat(locale.value, { day: 'numeric', month: 'numeric', timeZone: 'UTC' }))
 const fmtWeekday = computed(() => new Intl.DateTimeFormat(locale.value, { weekday: 'short', timeZone: 'UTC' }))
+const fmtNum = computed(() => new Intl.DateTimeFormat(locale.value, { day: 'numeric', timeZone: 'UTC' }))
 const asDate = (date: string) => new Date(`${date}T00:00:00Z`)
 const dayLabel = (date: string) => fmtDay.value.format(asDate(date))
 const shortLabel = (date: string) => fmtShort.value.format(asDate(date))
@@ -41,8 +50,16 @@ const weekdayName = (d: number) => weekdayLabel(addDays('2026-10-26', (d + 6) % 
 const hours = (h: number) => t.value('rev.hoursN', { n: h })
 const dayHours = (d: RevisionDay) => d.sessions.reduce((s, x) => s + x.hours, 0)
 const timeOf = (code: string) => rows.value.find((r) => r.code === code)?.time
+const examText = (c: string) => [t.value('rev.exam'), c, timeOf(c)].filter(Boolean).join(' ')
 
-/** The agenda in weeks (Monday to Sunday), each with its label. */
+const totalHours = computed(() => plan.value.totals.reduce((s, x) => s + x.hours, 0))
+const maxTotal = computed(() => Math.max(1, ...plan.value.totals.map((x) => x.hours)))
+const needsDate = (r: Row) => !rp.noExam(r) && !r.exam
+const missing = computed(() => (active.value.length === 0 ? 'none' : plan.value.days.length === 0 ? 'dates' : plan.value.empty ? 'hours' : ''))
+const pastSkips = computed(() => plan.value.skipped.filter((x) => x.why === 'pastExam'))
+const summary = computed(() => t.value('rev.summary', { hours: hours(totalHours.value), n: plan.value.totals.length, start: shortLabel(start.value) }))
+
+/** The agenda in weeks (Monday to Sunday), for the list view. */
 const weeks = computed(() => {
   const out: { label: string; days: RevisionDay[] }[] = []
   for (const d of plan.value.days) {
@@ -52,11 +69,32 @@ const weeks = computed(() => {
   return out.map((w, i) => ({ ...w, label: t.value('rev.week', { n: i + 1, from: shortLabel(w.days[0]!.date), to: shortLabel(w.days.at(-1)!.date) }) }))
 })
 
-const totalHours = computed(() => plan.value.totals.reduce((s, x) => s + x.hours, 0))
-const maxTotal = computed(() => Math.max(1, ...plan.value.totals.map((x) => x.hours)))
-const needsDate = (r: (typeof rows.value)[number]) => !rp.noExam(r) && !r.exam
-const missing = computed(() => (rows.value.length === 0 ? 'none' : plan.value.days.length === 0 ? 'dates' : plan.value.empty ? 'hours' : ''))
-const pastSkips = computed(() => plan.value.skipped.filter((x) => x.why === 'pastExam'))
+/** The calendar: whole weeks from the Monday before the first day to the Sunday after the last. */
+const cells = computed(() => {
+  const days = plan.value.days
+  if (!days.length) return []
+  const byDate = new Map(days.map((d) => [d.date, d]))
+  const first = addDays(days[0]!.date, -((weekday(days[0]!.date) + 6) % 7))
+  const lastDay = days.at(-1)!.date
+  const last = addDays(lastDay, (7 - weekday(lastDay)) % 7)
+  const out: { date: string; day?: RevisionDay; first: boolean }[] = []
+  for (let d = first; d <= last; d = addDays(d, 1)) out.push({ date: d, day: byDate.get(d), first: d === first || d.endsWith('-01') })
+  return out
+})
+const picked = ref('')
+/** The day shown under the phone calendar: the one tapped, else today, else the first. */
+const shown = computed(() => plan.value.days.find((d) => d.date === picked.value) ?? plan.value.days.find((d) => d.date === rp.today) ?? plan.value.days[0])
+const cellNum = (c: { date: string; first: boolean }) => (c.first ? dayLabel(c.date) : fmtNum.value.format(asDate(c.date)))
+function cellLabel(d: RevisionDay): string {
+  const what = d.kind === 'exam' ? d.exams.map(examText).join(', ') : d.kind === 'rest' ? t.value('rev.restDay') : d.sessions.length ? d.sessions.map((s) => `${s.code} ${hours(s.hours)}`).join(', ') : t.value('rev.nothing')
+  return `${weekdayLabel(d.date)} ${dayLabel(d.date)}: ${what}`
+}
+
+const view = ref<'calendar' | 'list'>('calendar')
+const views = computed(() => [
+  { value: 'calendar' as const, label: t.value('rev.view.calendar') },
+  { value: 'list' as const, label: t.value('rev.view.list') },
+])
 
 const valueOf = (e: Event) => (e.target as HTMLInputElement).value
 function onHours(e: Event): void {
@@ -83,102 +121,159 @@ function print(): void {
 
 <template>
   <div class="rev">
+    <aside class="rev-side">
+      <section v-if="periods.length" class="rev-period" aria-labelledby="rev-period">
+        <h2 id="rev-period" class="rev-label">{{ t('rev.period') }}</h2>
+        <div class="rev-periods">
+          <button v-for="p in periods" :key="termKey(p)" type="button" class="chip" :aria-pressed="termKey(p) === rp.key.value" @click="rp.pick(termKey(p))">{{ termLabel(t, p) }}</button>
+        </div>
+        <p v-if="examWindow" class="rev-note">{{ t('rev.window', { from: shortLabel(examWindow.examsStart), to: shortLabel(examWindow.end) }) }}</p>
+      </section>
+
+      <section class="rev-sum" aria-labelledby="rev-sum">
+        <h2 id="rev-sum" class="rev-subtitle">{{ t('rev.totals') }}<InfoTip :text="t('rev.rule')" /></h2>
+        <template v-if="!missing">
+          <p class="rev-line">{{ summary }}</p>
+          <ul class="rev-totals">
+            <li v-for="x in plan.totals" :key="x.code" :class="colourOf(x.code)">
+              <span class="rev-tcode">{{ x.code }}</span>
+              <span class="rev-th">{{ hours(x.hours) }}</span>
+              <span class="rev-bar" aria-hidden="true"><span :style="{ width: `${(x.hours / maxTotal) * 100}%` }" /></span>
+            </li>
+            <li class="rev-total"><span>{{ t('rev.total') }}</span><span class="rev-th">{{ hours(totalHours) }}</span></li>
+          </ul>
+          <div class="rev-actions">
+            <button type="button" class="button button-accent" @click="exportIcs">{{ t('rev.ics') }}</button>
+            <button type="button" class="button button-quiet" @click="print">{{ t('rev.print') }}</button>
+          </div>
+        </template>
+        <p v-else class="rev-note">{{ t(`rev.missing.${missing}`) }}</p>
+        <ul v-if="pastSkips.length" class="rev-skipped">
+          <li v-for="x in pastSkips" :key="x.code">{{ t('rev.skipPast', { code: x.code }) }}</li>
+        </ul>
+        <p class="rev-note rev-privacy">{{ t('rev.privacy') }}</p>
+      </section>
+    </aside>
+
     <section class="surface rev-input" aria-labelledby="rev-subjects">
-      <label v-if="periods.length" class="rev-field rev-period">
-        <span class="rev-label">{{ t('rev.period') }}</span>
-        <select class="select" :value="rp.key.value" @change="rp.pick(valueOf($event))">
-          <option v-for="p in periods" :key="termKey(p)" :value="termKey(p)">{{ termLabel(t, p) }}</option>
-        </select>
-        <span v-if="examWindow" class="rev-note">{{ t('rev.window', { from: dayLabel(examWindow.examsStart), to: dayLabel(examWindow.end) }) }}</span>
-      </label>
       <div class="rev-head">
-        <h2 id="rev-subjects" class="sec-title">{{ t('rev.subjects') }}</h2>
+        <h2 id="rev-subjects" class="rev-subtitle">{{ t('rev.subjects') }}</h2>
         <span v-if="prefilled && term" class="rev-note">{{ t('rev.fromPlan') }}</span>
       </div>
-      <ul v-if="rows.length" class="rev-rows">
-        <li v-for="r in rows" :key="r.code" class="rev-row" :class="[colourOf(r.code), { 'is-off': rp.noExam(r) }]">
-          <span class="rev-subject">
-            <span class="code">{{ r.code }}</span>
-            <span class="rev-name">{{ nameOf(r.code) }}</span>
-            <span v-if="rp.examShare(r.code) !== undefined" class="rev-note">{{ t('rev.examShare', { n: rp.examShare(r.code)! }) }}</span>
+      <div v-if="active.length" class="rev-table" role="table" :aria-label="t('rev.subjects')">
+        <div class="rev-tr rev-thead" role="row">
+          <span role="columnheader">{{ t('rev.subject') }}</span>
+          <span role="columnheader">{{ t('rev.examDate') }}</span>
+          <span role="columnheader">{{ t('rev.examTime') }} · {{ t('rev.optional') }}</span>
+          <span role="columnheader">{{ t('rev.difficulty') }}</span>
+          <span role="columnheader" class="visually-hidden">{{ t('rev.remove') }}</span>
+        </div>
+        <div v-for="r in active" :key="r.code" class="rev-tr" role="row">
+          <span class="rev-subject" role="cell">
+            <span class="rev-name"><span class="rev-code" :class="colourOf(r.code)">{{ r.code }}</span> {{ nameOf(r.code) }}</span>
+            <span class="rev-meta">{{ [rp.examShare(r.code) !== undefined ? t('rev.examShare', { n: rp.examShare(r.code)! }) : '', r.difficulty ? '' : `${t('rev.difficulty')}: ${t('rev.estimate')}`].filter(Boolean).join(' · ') }}</span>
           </span>
-          <template v-if="!rp.noExam(r)">
-            <label class="rev-field" :class="{ 'is-needed': needsDate(r) }">
-              <span class="rev-label">{{ needsDate(r) ? t('rev.needDate') : t('rev.examDate') }}</span>
-              <input class="input" type="date" :value="r.exam" :min="rp.examMin.value" :max="rp.examMax.value || undefined" :aria-invalid="needsDate(r) || undefined" @change="rp.setExam(r.code, valueOf($event))" />
-            </label>
-            <label class="rev-field rev-time">
-              <span class="rev-label">{{ t('rev.examTime') }}</span>
-              <input class="input" type="time" :value="r.time ?? ''" @change="rp.setTime(r.code, valueOf($event))" />
-            </label>
-            <label class="rev-field">
-              <!-- "Our estimate" goes with the label, not in the option, so a phone's select never cuts it off. -->
-              <span class="rev-label">{{ t('rev.difficulty') }}<template v-if="!r.difficulty"> · {{ t('rev.estimate') }}</template></span>
-              <select class="select" :value="r.difficulty ?? rp.estimate(r.code)" @change="rp.setDifficulty(r.code, valueOf($event) as RevisionDifficulty)">
-                <option v-for="l in LEVELS" :key="l" :value="l">{{ t(`rev.level.${l}`) }}</option>
-              </select>
-            </label>
-          </template>
-          <div class="rev-rowend">
-            <label class="rev-check"><input type="checkbox" :checked="rp.noExam(r)" @change="rp.setNoExam(r.code, ($event.target as HTMLInputElement).checked)" /> {{ t('rev.noExam') }}</label>
-            <button type="button" class="button button-quiet rev-remove" @click="rp.remove(r.code)">{{ t('rev.remove') }}</button>
-          </div>
-        </li>
-      </ul>
-      <p v-else class="rev-note">{{ t('rev.noSubjects') }}</p>
+          <label class="rev-cell rev-dateCell" role="cell" :class="{ 'is-empty': needsDate(r) }">
+            <span class="rev-cl">{{ t('rev.examDate') }}</span>
+            <span class="rev-dateWrap">
+              <input class="input rev-in" type="date" :value="r.exam" :min="rp.examMin.value" :max="rp.examMax.value || undefined" :aria-label="`${r.code} ${t('rev.examDate')}`" @change="rp.setExam(r.code, valueOf($event))" />
+              <span v-if="needsDate(r)" class="rev-ph" aria-hidden="true">{{ t('rev.needDate') }}</span>
+            </span>
+          </label>
+          <label class="rev-cell" role="cell">
+            <span class="rev-cl">{{ t('rev.examTime') }} · {{ t('rev.optional') }}</span>
+            <input class="input rev-in" type="time" :value="r.time ?? ''" :aria-label="`${r.code} ${t('rev.examTime')}`" @change="rp.setTime(r.code, valueOf($event))" />
+          </label>
+          <label class="rev-cell" role="cell">
+            <span class="rev-cl">{{ t('rev.difficulty') }}</span>
+            <select class="select rev-in" :value="r.difficulty ?? rp.estimate(r.code)" :aria-label="`${r.code} ${t('rev.difficulty')}`" @change="rp.setDifficulty(r.code, valueOf($event) as RevisionDifficulty)">
+              <option v-for="l in LEVELS" :key="l" :value="l">{{ t(`rev.level.${l}`) }}</option>
+            </select>
+          </label>
+          <span class="rev-rowend" role="cell">
+            <button type="button" class="rev-text" @click="rp.setNoExam(r.code, true)">{{ t('rev.skip') }}</button>
+            <button type="button" class="rev-text rev-remove" @click="rp.remove(r.code)">{{ t('rev.remove') }}</button>
+          </span>
+        </div>
+      </div>
+      <p v-else-if="!off.length" class="rev-note">{{ t('rev.noSubjects') }}</p>
+      <p v-if="off.length" class="rev-off">
+        <span>{{ t('rev.noExam') }}:</span>
+        <span v-for="r in off" :key="r.code" class="rev-offitem">{{ r.code }} <button type="button" class="rev-text" @click="rp.setNoExam(r.code, false)">{{ t('rev.putBack') }}</button></span>
+      </p>
       <label class="rev-add">
         <span class="rev-label">{{ t('rev.add') }}</span>
         <SubjectSearch compact select :placeholder="t('calc.pickPrompt')" @pick="rp.add" />
       </label>
 
-      <h2 class="sec-title rev-time-title">{{ t('rev.time') }}<InfoTip :text="t('rev.loadTip')" /></h2>
+      <h2 class="rev-subtitle rev-time-title">{{ t('rev.time') }}<InfoTip :text="`${t('rev.loadTip')} ${t('rev.dayStartNote')}`" /></h2>
       <div class="rev-settings">
         <label class="rev-field">
           <span class="rev-label">{{ t('rev.start') }}</span>
-          <input class="input" type="date" :value="start" :min="rp.today" :max="rp.examMax.value || undefined" @change="valueOf($event) && rp.set('start', valueOf($event))" />
+          <input class="input rev-in" type="date" :value="start" :min="rp.today" :max="rp.examMax.value || undefined" @change="valueOf($event) && rp.set('start', valueOf($event))" />
         </label>
         <label class="rev-field">
           <span class="rev-label">{{ t('rev.hours') }} · {{ t('rev.optional') }}</span>
-          <input class="input" type="number" inputmode="decimal" min="0" max="16" step="0.5" :placeholder="t('rev.hoursAuto')" :value="saved.hoursPerDay ?? ''" @change="onHours" />
+          <input class="input rev-in" type="number" inputmode="decimal" min="0" max="16" step="0.5" :placeholder="t('rev.hoursAuto')" :value="saved.hoursPerDay ?? ''" @change="onHours" />
         </label>
         <label class="rev-field">
           <span class="rev-label">{{ t('rev.dayStart') }} · {{ t('rev.optional') }}</span>
-          <input class="input" type="time" :value="saved.dayStart" :aria-describedby="'rev-daystart-note'" @change="rp.set('dayStart', valueOf($event))" />
-          <span id="rev-daystart-note" class="rev-note">{{ t('rev.dayStartNote') }}</span>
+          <input class="input rev-in" type="time" :value="saved.dayStart" @change="rp.set('dayStart', valueOf($event))" />
         </label>
+        <fieldset class="rev-field rev-rest">
+          <legend class="rev-label">{{ t('rev.rest') }} · {{ t('rev.optional') }}</legend>
+          <div class="rev-week">
+            <button v-for="d in WEEK" :key="d" type="button" class="rev-wd" :aria-pressed="saved.restWeekdays.includes(d)" @click="toggleRest(d)">{{ weekdayName(d) }}</button>
+          </div>
+        </fieldset>
       </div>
-      <fieldset class="rev-rest">
-        <legend class="rev-label">{{ t('rev.rest') }} · {{ t('rev.optional') }}</legend>
-        <div class="rev-week">
-          <button v-for="d in WEEK" :key="d" type="button" class="button button-quiet rev-wd" :aria-pressed="saved.restWeekdays.includes(d)" @click="toggleRest(d)">{{ weekdayName(d) }}</button>
-        </div>
-      </fieldset>
-      <p class="rev-note">{{ t('rev.privacy') }}</p>
     </section>
 
-    <div class="rev-out">
-      <section class="rev-sum" aria-labelledby="rev-sum">
-        <h2 id="rev-sum" class="sec-title">{{ t('rev.totals') }}<InfoTip :text="t('rev.rule')" /></h2>
-        <ul v-if="plan.totals.length && !plan.empty" class="rev-totals">
-          <li v-for="x in plan.totals" :key="x.code" :class="colourOf(x.code)">
-            <span class="rev-tcode">{{ x.code }}</span>
-            <span class="rev-bar" aria-hidden="true"><span :style="{ width: `${(x.hours / maxTotal) * 100}%` }" /></span>
-            <span class="rev-th">{{ hours(x.hours) }}</span>
-          </li>
-          <li class="rev-total"><span>{{ t('rev.total') }}</span><span /><span class="rev-th">{{ hours(totalHours) }}</span></li>
-        </ul>
-        <ul v-if="pastSkips.length" class="rev-skipped">
-          <li v-for="x in pastSkips" :key="x.code">{{ t('rev.skipPast', { code: x.code }) }}</li>
-        </ul>
-        <div v-if="!plan.empty" class="rev-actions">
-          <button type="button" class="button button-accent" @click="exportIcs">{{ t('rev.ics') }}</button>
-          <button type="button" class="button button-quiet" @click="print">{{ t('rev.print') }}</button>
-        </div>
-      </section>
+    <section class="surface rev-cal" aria-labelledby="rev-cal">
+      <div class="rev-head rev-calhead">
+        <h2 id="rev-cal" class="rev-subtitle">{{ t('rev.schedule') }}</h2>
+        <SegmentedControl v-if="!missing" v-model="view" class="rev-views" :options="views" :label="t('rev.schedule')" />
+      </div>
+      <p v-if="missing" class="rev-empty">{{ t(`rev.missing.${missing}`) }}</p>
 
-      <section class="rev-cal" aria-labelledby="rev-cal">
-        <h2 id="rev-cal" class="sec-title">{{ t('rev.schedule') }}</h2>
-        <p v-if="missing" class="rev-note">{{ t(`rev.missing.${missing}`) }}</p>
+      <template v-else-if="view === 'calendar'">
+        <div class="rev-grid">
+          <span v-for="d in WEEK" :key="d" class="rev-wdh" aria-hidden="true">{{ weekdayName(d) }}</span>
+          <template v-for="c in cells" :key="c.date">
+            <button
+              v-if="c.day"
+              type="button"
+              class="rev-cell-day"
+              :class="[`rk-${c.day.kind}`, { 'is-today': c.date === rp.today, 'is-picked': shown?.date === c.date }]"
+              :aria-label="cellLabel(c.day)"
+              @click="picked = c.date"
+            >
+              <span class="rev-num"><span class="rev-nlong">{{ cellNum(c) }}</span><span class="rev-nshort" aria-hidden="true">{{ fmtNum.format(asDate(c.date)) }}</span><span v-if="c.date === rp.today" class="rev-today">{{ t('rev.today') }}</span></span>
+              <span v-for="x in c.day.exams" :key="x" class="rev-cexam">{{ examText(x) }}</span>
+              <span v-if="c.day.kind === 'rest'" class="rev-cfree">{{ t('rev.restDay') }}</span>
+              <span v-for="s in c.day.sessions" :key="s.code" class="rev-block" :class="colourOf(s.code)">
+                <span class="rev-scode">{{ s.code }}</span>
+                <span class="rev-sh">{{ hours(s.hours) }}</span>
+              </span>
+            </button>
+            <span v-else class="rev-cell-out" aria-hidden="true"><span class="rev-num"><span class="rev-nlong">{{ cellNum(c) }}</span><span class="rev-nshort">{{ fmtNum.format(asDate(c.date)) }}</span></span></span>
+          </template>
+        </div>
+        <!-- Phones: the grid shows marks only; the tapped day's detail sits under it. -->
+        <div v-if="shown" class="rev-detail" aria-live="polite">
+          <p class="rev-detail-date">{{ weekdayLabel(shown.date) }} {{ dayLabel(shown.date) }}</p>
+          <p v-for="x in shown.exams" :key="x" class="rev-cexam">{{ examText(x) }}</p>
+          <p v-if="shown.kind === 'rest'" class="rev-note">{{ t('rev.restDay') }}</p>
+          <ul v-else-if="shown.sessions.length" class="rev-dlist">
+            <li v-for="s in shown.sessions" :key="s.code" class="rev-block" :class="colourOf(s.code)">
+              <span class="rev-scode">{{ s.code }}</span> <span class="rev-sh">{{ hours(s.hours) }}</span><span v-if="s.focus" class="rev-focus"> · {{ t('rev.focus') }}</span>
+            </li>
+          </ul>
+          <p v-else-if="shown.kind !== 'exam'" class="rev-note">{{ t('rev.nothing') }}</p>
+        </div>
+      </template>
+
+      <template v-else>
         <div v-for="(w, i) in weeks" :key="i" class="rev-wk">
           <h3 class="rev-wklabel">{{ w.label }}</h3>
           <ol class="rev-days">
@@ -189,12 +284,12 @@ function print(): void {
                 <span v-if="d.date === rp.today" class="rev-today">{{ t('rev.today') }}</span>
               </span>
               <span v-if="d.kind === 'exam'" class="rev-exam">
-                <span v-for="c in d.exams" :key="c">{{ [t('rev.exam'), c, timeOf(c)].filter(Boolean).join(' · ') }}</span>
+                <span v-for="c in d.exams" :key="c">{{ examText(c) }}</span>
               </span>
               <span v-else-if="d.kind === 'rest'" class="rev-free">{{ t('rev.restDay') }}</span>
               <template v-else-if="d.sessions.length">
                 <ul class="rev-bars">
-                  <li v-for="s in d.sessions" :key="s.code" :class="colourOf(s.code)" :style="{ flexGrow: s.hours }">
+                  <li v-for="s in d.sessions" :key="s.code" class="rev-block" :class="colourOf(s.code)" :style="{ flexGrow: s.hours }">
                     <span class="rev-scode">{{ s.code }}</span> <span class="rev-sh">{{ hours(s.hours) }}</span><span v-if="s.focus" class="rev-focus"> · {{ t('rev.focus') }}</span>
                   </li>
                 </ul>
@@ -204,34 +299,67 @@ function print(): void {
             </li>
           </ol>
         </div>
-      </section>
-    </div>
+      </template>
+    </section>
   </div>
 </template>
 
 <style scoped>
+/* Stacked by default (phones, tablets): period, inputs, totals, calendar. */
 .rev {
   display: grid;
-  gap: var(--space-4);
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-3);
 }
 
-.rev-input {
+.rev-side {
+  display: contents;
+}
+
+.rev-period { order: 1; }
+.rev-input { order: 2; }
+.rev-sum { order: 3; }
+.rev-cal { order: 4; }
+
+.rev-period,
+.rev-sum {
+  display: grid;
+  align-content: start;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.rev-sum {
+  padding: var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.rev-input,
+.rev-cal {
   display: grid;
   align-content: start;
   gap: var(--space-3);
   min-width: 0;
-  padding: var(--space-5);
+  padding: var(--space-4) var(--space-5);
 }
 
 .rev-head {
   display: flex;
   flex-wrap: wrap;
-  align-items: baseline;
+  align-items: center;
+  justify-content: space-between;
   gap: 4px var(--space-3);
 }
 
-.sec-title {
+.rev-subtitle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   margin: 0;
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-semibold);
 }
 
 .rev-time-title {
@@ -239,54 +367,66 @@ function print(): void {
 }
 
 .rev-note,
-.rev-label {
+.rev-label,
+.rev-cl,
+.rev-meta,
+.rev-thead {
   margin: 0;
-  font-size: var(--fs-small);
+  font-size: var(--fs-meta);
+  font-weight: var(--fw-regular, 400);
   color: var(--ink-soft);
 }
 
-.rev-period {
-  max-width: 360px;
-  padding-bottom: var(--space-3);
-  border-bottom: 1px solid var(--divider);
-}
-
-.rev-rows {
-  display: grid;
-  gap: var(--space-3);
-  margin: 0;
+.rev-label {
   padding: 0;
-  list-style: none;
 }
 
-/* The subject on top; exam date, start time, difficulty, then "no final exam" and remove. */
-.rev-row {
+.rev-periods {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* One control height everywhere in the inputs. */
+.rev-in {
+  height: 40px;
+  min-height: 40px;
+  padding-block: 0;
+  color-scheme: light dark;
+}
+
+.rev-in[type='date'],
+.rev-in[type='time'] {
+  font-variant-numeric: tabular-nums;
+}
+
+/* The exams table: subject | date | time | difficulty | actions. */
+.rev-table {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr) minmax(0, 1.2fr) auto;
-  align-items: end;
-  gap: var(--space-2) var(--space-3);
-  padding: 0 0 var(--space-3) 12px;
-  border-bottom: 1px solid var(--divider);
-  border-left: 4px solid var(--sub);
 }
 
-.rev-row.is-off {
-  grid-template-columns: minmax(0, 1fr);
-  border-left-color: var(--divider);
+.rev-tr {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 11.5rem 8.5rem 8rem auto;
+  align-items: center;
+  gap: var(--space-3);
+  padding: 8px 0;
+  border-top: 1px solid var(--divider);
+}
+
+.rev-thead {
+  padding: 0 0 6px;
+  border-top: 0;
+}
+
+.rev-cl {
+  display: none;
 }
 
 .rev-subject {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 2px 10px;
-  grid-column: 1 / -1;
+  display: grid;
+  gap: 2px;
   min-width: 0;
-}
-
-.rev-subject .code {
-  font-size: var(--fs-meta);
-  color: var(--ink-soft);
 }
 
 .rev-name {
@@ -294,6 +434,15 @@ function print(): void {
   overflow-wrap: anywhere;
 }
 
+.rev-code {
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--sub) 18%, transparent);
+  font-size: var(--fs-meta);
+  font-variant-numeric: tabular-nums;
+}
+
+.rev-cell,
 .rev-field,
 .rev-add {
   display: grid;
@@ -301,50 +450,63 @@ function print(): void {
   min-width: 0;
 }
 
-.rev-field .input,
-.rev-field .select {
+.rev-dateWrap {
+  position: relative;
+  display: block;
+}
+
+.rev-dateWrap .rev-in {
   width: 100%;
-  min-width: 0;
-  min-height: var(--control-h);
 }
 
-/* An exam date still to fill: a quiet outline on the field, no banner. */
-.rev-field.is-needed .rev-label {
-  color: var(--ink);
+/* An exam date still to fill: a dashed field with a quiet prompt in place of dd/mm/yyyy. */
+.is-empty .rev-in {
+  border-style: dashed;
 }
 
-.rev-field.is-needed .input {
-  border-color: var(--accent);
+.is-empty .rev-in:not(:focus),
+.is-empty .rev-in:not(:focus)::-webkit-datetime-edit {
+  color: transparent;
+}
+
+.rev-ph {
+  position: absolute;
+  inset: 0 36px 0 14px;
+  display: flex;
+  align-items: center;
+  font-size: var(--fs-meta);
+  white-space: nowrap;
+  color: var(--ink-soft);
+  pointer-events: none;
+}
+
+.rev-dateWrap:focus-within .rev-ph {
+  display: none;
 }
 
 .rev-rowend {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-2) var(--space-3);
+  gap: var(--space-3);
+  white-space: nowrap;
 }
 
-.rev-row:not(.is-off) .rev-rowend {
-  grid-column: 1 / -1;
-}
-
-.rev-check {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  min-height: var(--control-h);
+/* Plain text buttons: no fill, underline on hover, nothing moves. */
+.rev-text {
+  min-height: 32px;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
   font-size: var(--fs-small);
+  color: var(--accent);
   cursor: pointer;
 }
 
-.rev-check input {
-  width: 18px;
-  height: 18px;
-  accent-color: var(--accent);
+.rev-text:hover {
+  text-decoration: underline;
 }
 
 .rev-remove {
-  min-height: var(--control-h);
   color: var(--ink-soft);
 }
 
@@ -352,15 +514,34 @@ function print(): void {
   color: var(--bad);
 }
 
+.rev-off {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px var(--space-3);
+  margin: 0;
+  font-size: var(--fs-small);
+  color: var(--ink-soft);
+}
+
+.rev-offitem {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.rev-add {
+  max-width: 420px;
+}
+
 .rev-settings {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr)) minmax(0, 1.5fr);
+  align-items: end;
   gap: var(--space-3);
 }
 
 .rev-rest {
-  display: grid;
-  gap: 6px;
   margin: 0;
   padding: 0;
   border: 0;
@@ -369,23 +550,33 @@ function print(): void {
 .rev-week {
   display: grid;
   grid-template-columns: repeat(7, minmax(0, 1fr));
-  gap: 6px;
+  gap: 4px;
 }
 
 .rev-wd {
   min-width: 0;
-  min-height: var(--control-h);
-  padding: 0 4px;
+  height: 40px;
+  padding: 0 2px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--field-fill);
+  font: inherit;
+  font-size: var(--fs-meta);
+  color: var(--ink);
+  cursor: pointer;
 }
 
-.rev-wd[aria-pressed='true'],
-.rev-wd[aria-pressed='true']:hover {
-  background: var(--accent);
+.rev-wd:hover {
   border-color: var(--accent);
-  color: var(--accent-ink);
 }
 
-/* Subject colours: a stripe and a tint; the code is always written, so colour is never the only sign. */
+.rev-wd[aria-pressed='true'] {
+  border-color: var(--accent);
+  background: var(--accent-fill);
+  color: var(--accent-fill-ink);
+}
+
+/* Subject colours: a tint behind the code, which is always written, so colour is never the only sign. */
 .c0 { --sub: #2f6fd6; }
 .c1 { --sub: #d0457a; }
 .c2 { --sub: #1f8a5b; }
@@ -393,28 +584,16 @@ function print(): void {
 .c4 { --sub: #7a4fd0; }
 .c5 { --sub: #0f8a9a; }
 
-/* Results: totals first on phones; on wide screens the agenda leads and the totals sit beside it. */
-.rev-out {
-  display: grid;
-  gap: var(--space-4);
-  min-width: 0;
-}
-
-.rev-sum,
-.rev-cal {
-  display: grid;
-  align-content: start;
-  gap: var(--space-3);
-  min-width: 0;
-  padding: var(--space-5);
-  border-radius: var(--radius);
-  background: var(--surface);
-  border: 1px solid var(--divider);
+/* Totals: the colour legend. */
+.rev-line {
+  margin: 0;
+  font-weight: var(--fw-semibold);
+  font-variant-numeric: tabular-nums;
 }
 
 .rev-totals {
   display: grid;
-  gap: 8px;
+  gap: 6px;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -422,27 +601,32 @@ function print(): void {
 
 .rev-totals li {
   display: grid;
-  grid-template-columns: max-content minmax(40px, 1fr) auto;
-  align-items: center;
-  gap: var(--space-2);
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 2px var(--space-2);
+  font-size: var(--fs-small);
 }
 
 .rev-tcode {
-  padding-left: 8px;
-  border-left: 4px solid var(--sub);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   font-weight: var(--fw-semibold);
   font-variant-numeric: tabular-nums;
 }
 
-.rev-total .rev-tcode,
-.rev-total > span:first-child {
-  border: 0;
+.rev-tcode::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  background: var(--sub);
 }
 
 .rev-bar {
-  height: 10px;
+  grid-column: 1 / -1;
+  height: 6px;
   border-radius: 999px;
-  background: var(--surface-2);
+  background: color-mix(in srgb, var(--ink) 8%, transparent);
   overflow: hidden;
 }
 
@@ -454,13 +638,14 @@ function print(): void {
 }
 
 .rev-th,
-.rev-dh {
+.rev-dh,
+.rev-sh {
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
 
 .rev-total {
-  padding-top: 8px;
+  padding-top: 6px;
   border-top: 1px solid var(--divider);
   font-weight: var(--fw-semibold);
 }
@@ -478,11 +663,140 @@ function print(): void {
   gap: var(--space-2);
 }
 
-.rev-actions .button {
-  min-height: var(--control-h);
+.rev-privacy {
+  padding-top: var(--space-2);
 }
 
-/* The agenda: plain rows with fine lines, one row a day. */
+/* Calendar */
+.rev-calhead .rev-views {
+  min-width: 200px;
+}
+
+.rev-empty {
+  margin: 0;
+  padding: var(--space-6) var(--space-4);
+  border: 1px dashed var(--line);
+  border-radius: var(--radius);
+  text-align: center;
+  font-weight: var(--fw-semibold);
+  color: var(--ink-soft);
+}
+
+.rev-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  grid-auto-rows: minmax(7.25rem, 1fr);
+  grid-template-rows: auto;
+  border-top: 1px solid var(--divider);
+  border-left: 1px solid var(--divider);
+}
+
+.rev-wdh {
+  padding: 6px 8px;
+  border-right: 1px solid var(--divider);
+  border-bottom: 1px solid var(--divider);
+  font-size: var(--fs-meta);
+  font-weight: var(--fw-semibold);
+  color: var(--ink-soft);
+}
+
+.rev-cell-day,
+.rev-cell-out {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+  padding: 6px;
+  border: 0;
+  border-right: 1px solid var(--divider);
+  border-bottom: 1px solid var(--divider);
+  background: none;
+  font: inherit;
+  font-size: var(--fs-meta);
+  color: var(--ink);
+  text-align: left;
+}
+
+.rev-cell-day {
+  cursor: default;
+}
+
+.rev-cell-out {
+  color: var(--ink-soft);
+  background: color-mix(in srgb, var(--ink) 3%, transparent);
+}
+
+.rev-num {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: var(--fw-semibold);
+  font-variant-numeric: tabular-nums;
+}
+
+.rev-nshort {
+  display: none;
+}
+
+.rev-cell-out .rev-num {
+  font-weight: var(--fw-regular, 400);
+}
+
+.rev-cell-day.rk-rest {
+  background: color-mix(in srgb, var(--ink) 6%, transparent);
+}
+
+.is-today {
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+.rev-today {
+  padding: 0 6px;
+  border-radius: 999px;
+  background: var(--accent-fill);
+  color: var(--accent-fill-ink);
+  font-size: var(--fs-caption);
+}
+
+.rev-cexam {
+  margin: 0;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: var(--accent-fill);
+  color: var(--accent-fill-ink);
+  font-weight: var(--fw-semibold);
+  overflow-wrap: anywhere;
+}
+
+.rev-cfree {
+  color: var(--ink-soft);
+}
+
+.rev-block {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0 4px;
+  padding: 2px 6px;
+  border-left: 3px solid var(--sub);
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--sub) 16%, transparent);
+  line-height: 1.35;
+}
+
+.rev-scode {
+  font-weight: var(--fw-semibold);
+}
+
+.rev-focus {
+  color: var(--ink-soft);
+}
+
+.rev-detail {
+  display: none;
+}
+
+/* List view (the agenda) */
 .rev-wk {
   display: grid;
   gap: 2px;
@@ -506,7 +820,7 @@ function print(): void {
   grid-template-columns: 7.5em minmax(0, 1fr) auto;
   align-items: center;
   gap: 4px var(--space-3);
-  padding: 8px 0;
+  padding: 6px 0;
   border-top: 1px solid var(--divider);
 }
 
@@ -523,15 +837,6 @@ function print(): void {
   font-weight: var(--fw-regular, 400);
 }
 
-.rev-today {
-  padding: 0 6px;
-  border-radius: 999px;
-  background: var(--accent);
-  color: var(--accent-ink);
-  font-size: var(--fs-meta);
-  font-weight: var(--fw-semibold);
-}
-
 .rev-bars {
   display: flex;
   flex-wrap: wrap;
@@ -542,28 +847,10 @@ function print(): void {
   list-style: none;
 }
 
-/* Each session's length follows its hours (flex-grow); its text is the ink colour on a light tint. */
 .rev-bars li {
   flex: 1 1 0;
   min-width: max-content;
-  padding: 4px 8px;
-  border-left: 4px solid var(--sub);
-  border-radius: 4px;
-  background: color-mix(in srgb, var(--sub) 16%, transparent);
   white-space: nowrap;
-}
-
-.rev-scode {
-  font-weight: var(--fw-semibold);
-}
-
-.rev-sh,
-.rev-focus {
-  font-variant-numeric: tabular-nums;
-}
-
-.rev-focus {
-  color: var(--ink-soft);
 }
 
 .rk-exam .rev-exam {
@@ -573,13 +860,13 @@ function print(): void {
   grid-column: 2 / -1;
   padding: 4px 10px;
   border-radius: 4px;
-  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  background: var(--accent-fill);
+  color: var(--accent-fill-ink);
   font-weight: var(--fw-semibold);
   overflow-wrap: anywhere;
 }
 
-.rk-rest {
-  padding: 2px 0;
+.rev-day.rk-rest {
   font-size: var(--fs-small);
 }
 
@@ -588,35 +875,93 @@ function print(): void {
   color: var(--ink-soft);
 }
 
-@media (min-width: 1024px) {
-  .rev-out {
-    grid-template-columns: minmax(0, 1fr) minmax(280px, 340px);
+/* Wide: a sticky sidebar on the left; inputs then calendar on the right. */
+@media (min-width: 1100px) {
+  .rev {
+    grid-template-columns: 264px minmax(0, 1fr);
     align-items: start;
+    gap: var(--space-4);
   }
 
-  .rev-cal {
-    grid-row: 1;
+  .rev-side {
+    position: sticky;
+    top: 84px;
+    display: grid;
+    gap: var(--space-4);
+    grid-row: 1 / span 2;
     grid-column: 1;
+    max-height: calc(100vh - 100px);
+    padding: var(--space-4);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    box-shadow: var(--shadow-1);
+    overflow-y: auto;
   }
 
   .rev-sum {
-    grid-row: 1;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+  }
+
+  .rev-line {
+    display: none;
+  }
+
+  .rev-input,
+  .rev-cal {
     grid-column: 2;
+  }
+
+  .rev-actions .button {
+    flex: 1 1 auto;
   }
 }
 
-@media (max-width: 720px) {
+/* Tablets and phones: the table becomes one compact block per subject. */
+@media (max-width: 899px) {
+  .rev-thead {
+    display: none;
+  }
+
+  .rev-tr {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: end;
+    gap: var(--space-2);
+    padding: 10px 0;
+  }
+
+  .rev-subject,
+  .rev-rowend {
+    grid-column: 1 / -1;
+  }
+
+  .rev-cl {
+    display: block;
+  }
+
+  .rev-settings {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .rev-rest {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 640px) {
   .rev-input,
-  .rev-sum,
   .rev-cal {
     padding: var(--space-4);
   }
 
-  .rev-row {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  .rev-tr {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .rev-row > .rev-field:nth-of-type(3) {
+  .rev-dateCell {
     grid-column: 1 / -1;
   }
 
@@ -624,25 +969,92 @@ function print(): void {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  /* A compact summary: the bars give way to code and hours side by side. */
-  .rev-totals {
-    display: flex;
+  /* The phone calendar: a compact month grid of marks; tap a day for its detail below. */
+  .rev-grid {
+    grid-auto-rows: minmax(3.25rem, 1fr);
+  }
+
+  .rev-wdh {
+    padding: 4px 2px;
+    text-align: center;
+    font-size: var(--fs-caption);
+  }
+
+  .rev-cell-day,
+  .rev-cell-out {
+    flex-direction: row;
     flex-wrap: wrap;
-    gap: 6px var(--space-3);
+    align-content: flex-start;
+    justify-content: center;
+    gap: 3px;
+    padding: 4px 2px;
   }
 
-  .rev-totals li {
-    display: flex;
-    gap: 6px;
+  .rev-cell-day {
+    cursor: pointer;
   }
 
-  .rev-totals .rev-bar {
+  .rev-num {
+    flex-basis: 100%;
+    justify-content: center;
+    font-size: var(--fs-caption);
+  }
+
+  .rev-nlong {
     display: none;
   }
 
-  .rev-total {
-    padding-top: 0;
-    border-top: 0;
+  .rev-nshort {
+    display: inline;
+  }
+
+  .rev-num .rev-today,
+  .rev-cell-day .rev-cfree {
+    display: none;
+  }
+
+  .rev-cell-day .rev-cexam {
+    flex-basis: 100%;
+    height: 6px;
+    padding: 0;
+    font-size: 0;
+  }
+
+  .rev-cell-day .rev-block {
+    width: 8px;
+    height: 8px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: var(--sub);
+    font-size: 0;
+  }
+
+  .rev-cell-day.is-picked {
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
+  }
+
+  .rev-detail {
+    display: grid;
+    gap: 6px;
+  }
+
+  .rev-detail-date {
+    margin: 0;
+    font-weight: var(--fw-semibold);
+  }
+
+  .rev-dlist {
+    display: grid;
+    gap: 4px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .rev-dlist .rev-block {
+    justify-content: flex-start;
+    padding: 4px 8px;
   }
 
   .rev-day {
@@ -667,14 +1079,22 @@ function print(): void {
 
 @media print {
   .rev-input,
+  .rev-period,
   .rev-actions,
+  .rev-views,
+  .rev-detail,
+  .rev-privacy,
   .rev-sum :deep(.infotip) {
     display: none !important;
   }
 
   .rev,
-  .rev-out {
+  .rev-side {
     display: block;
+    position: static;
+    max-height: none;
+    border: 0;
+    box-shadow: none;
   }
 
   .rev-cal,
@@ -684,6 +1104,7 @@ function print(): void {
     margin-bottom: 16px;
   }
 
+  .rev-cell-day,
   .rev-day {
     break-inside: avoid;
   }
