@@ -109,6 +109,7 @@ const { wam } = useProfile()
     <GuideCallout>
       <p>{{ t('guide.findMarks') }}</p>
       <p><a :href="link('tools/wam/')">{{ t('guide.wamTool') }}</a></p>
+      <p>{{ t('guide.wamSync') }}</p>
     </GuideCallout>
     <p class="yours">
       <span>{{ wam !== null ? t('guide.wamYours', { wam }) : t('guide.wamNone') }}</span>
