@@ -151,6 +151,12 @@ function move(delta: number): void {
   pointer-events: none;
 }
 
+/* On a glass card (the calculators' pickers): the card's glass, not a second blur. */
+:global(:is(.surface, .glass)) .search-input {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
 .search-input {
   width: 100%;
   height: 60px;

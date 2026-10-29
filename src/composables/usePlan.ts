@@ -17,6 +17,7 @@ import {
   exactWam,
   planStart,
   upcomingStart,
+  isUpcoming,
   termKey,
   standardTerms,
   type Dataset,
@@ -32,6 +33,7 @@ import { activePlan, books, commencementYear, type PlanSetup, type PlanState, ty
 import { bookOf, planBody } from '@/utils/planBook'
 import { useDataset } from './useDataset'
 import { useProfile } from './useProfile'
+import { recordMarks } from '@/utils/pastTerms'
 import { cloneJson } from '@/utils/clone'
 import { defaultState } from './planDefaults'
 
@@ -70,7 +72,7 @@ export function planFor(state: PlanState, profile: Profile, data: Dataset): Plan
 
 export function usePlan() {
   const { name, data } = useDataset()
-  const { profile } = useProfile()
+  const { profile, setResults } = useProfile()
 
   // The open plan (Plan A, B…); the others wait in the book.
   const current = computed<SavedPlan | undefined>(() => activePlan(books.value[name.value]))
@@ -104,7 +106,24 @@ export function usePlan() {
   }
 
   function save(change: (s: PlanState) => PlanState): void {
-    put(change(cloneJson(planBody(state.value))))
+    put(settle(change(cloneJson(planBody(state.value)))))
+  }
+
+  /**
+   * The one link between the board and My record: a semester that has begun keeps its subjects
+   * on the record (marks go there too), so whatever lands in one (planned, added, moved) goes to
+   * the record for that semester and the plan's copy is emptied. The board shows them from there.
+   */
+  function settle(s: PlanState): PlanState {
+    let results = profile.value.results
+    for (const term of s.terms) {
+      if (!term.subjects.length || isUpcoming(term)) continue
+      const there = (c: string) => results.some((r) => r.code === c && r.year === term.year && r.period === term.period)
+      results = recordMarks(results, term, term.subjects.filter((c) => !there(c)).map((code) => ({ code })))
+      term.subjects = []
+    }
+    if (results !== profile.value.results) setResults(results)
+    return s
   }
 
   /**
@@ -167,7 +186,13 @@ export function usePlan() {
     // Students who started already are planned from the next semester on; what
     // they've done comes from their record.
     // Never into a semester that has already begun: undated subjects on the record count as done.
-    const start = upcomingStart(planStart({ year: setup.startYear, period: setup.startPeriod }, profile.value.results, startFill()))
+    // The whole degree from the entry term: semesters that have begun get the likeliest subjects
+    // too (the student corrects them), except those My record already has, which stay as they are.
+    // Subjects on the record with no semester: we can't tell which semesters they filled, so
+    // planning starts after the record, from the next semester ahead, as before.
+    const entry = { year: setup.startYear, period: setup.startPeriod }
+    const undated = profile.value.results.some((r) => r.year === undefined || r.period === undefined)
+    const start = undated ? upcomingStart(planStart(entry, profile.value.results, startFill())) : entry
     const result = generatePlan({
       data: data.value,
       profile: profile.value,
@@ -186,7 +211,9 @@ export function usePlan() {
         ? data.value.components.filter((c) => c.kind === 'major' && c.course === componentCourse(data.value, setup.course) && majorGroupOf(c.id) === setup.field && (c.closedFrom === undefined || start.year < c.closedFrom)).map((c) => c.id)
         : undefined,
     })
-    save((s) => ({ ...s, terms: result.plan.terms, notes: result.notes, unplaced: result.unplaced }))
+    const recorded = (x: PlanTerm) => !isUpcoming(x) && profile.value.results.some((r) => r.year === x.year && r.period === x.period)
+    const terms = result.plan.terms.map((x) => (recorded(x) ? { ...x, subjects: [] } : x))
+    save((s) => ({ ...s, terms, notes: result.notes, unplaced: result.unplaced }))
     trackEvent('plan-generate')
   }
 
@@ -410,6 +437,7 @@ export function usePlan() {
     addTerm,
     addTermAt,
     removeTerm,
+    settleBegun: () => save((s) => s),
     removeLastTerm,
     applyRelief,
     importPlan,

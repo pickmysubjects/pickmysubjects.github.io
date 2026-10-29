@@ -124,10 +124,6 @@ export const en = {
   termFull: '{period} {year}',
   category: { science: 'science', commerce: 'commerce', arts: 'arts', design: 'design', music: 'music', 'fine-arts': 'fine arts', agriculture: 'agriculture', 'oral-health': 'oral health', breadth: 'breadth', core: 'core' },
   plan: {
-    profileHint: "Add your interests and strengths in Me for a better fit",
-    profileHintGo: "Fill in",
-    profileHintInfo: "Suggestions and electives use this plan's interests, strengths and career goal. All optional; each plan keeps its own.",
-    profileHintHide: "Hide",
     saveImage: "Save as image",
     pastTag: "Done",
     pastUndated: "Done · semester not given",
@@ -156,6 +152,9 @@ export const en = {
     assumedShort: "From {year}, semesters are estimated from {from}",
     assumed: "The {year} Handbook isn't in yet, so subjects from {year} on are planned in the semesters they ran in {from}. Most subjects keep their semesters, but check the new Handbook before you enrol.",
     doneAsk: "Finished it in {term}? Add your mark (optional) and it goes to My record.",
+    termAddRemove: "Remove {code}",
+    termEnded: "Ended",
+    termInProgress: "In progress",
     doneButton: "Mark as done",
     addShortTerm: 'Add a summer or winter term',
     removeThisTerm: 'Remove this term',
@@ -482,6 +481,9 @@ export const en = {
     eligibilityUnknown: 'Eligibility not confirmed: {needs}.',
   },
   record: {
+    statPlan: "Plan",
+    planNone: "Not yet · we plan your whole degree for you",
+    planSome: "{name}: up to {term} · rules {met}/{total}",
     statPoints: "Points passed",
     prompt: {"interestsPrompt": "Tap the areas you like. Pick as many as you want.", "skillsPrompt": "Tap a level for the skills you know.", "goalPrompt": "Tap what matters most to you.", "picked": "{n} picked", "rated": "{n} rated", "noneYet": "None yet, all optional"},
     markScaleLabel: "My marks are in:",
@@ -1405,7 +1407,7 @@ export const en = {
     becomes: "My WAM becomes {wam}",
   },
   /** The revision planner (/tools/revision/). */
-  rev: {"title": "Revision planner", "lede": "Put in your exam dates and the hours you have. Get a day-by-day revision timetable up to your last exam.", "subjects": "Your exams", "fromPlan": "Filled in from your plan", "noSubjects": "Add the subjects you have exams in.", "add": "Add a subject", "remove": "Remove", "examDate": "Exam date", "examTime": "Start time", "difficulty": "Difficulty", "level": {"easier": "Easier", "average": "About average", "harder": "Harder"}, "estimate": "our estimate", "examShare": "Final exam {n}%", "time": "Your time", "start": "Start revising on", "hours": "About how long a day", "dayStart": "Start each day at", "rest": "Rest days", "privacy": "Saved only on this device. Your plan and record don't change.", "totals": "Hours per subject", "ruleShort": "More time for harder and earlier exams.", "rule": "How the time is shared: each subject gets a weight from its difficulty (easier 0.8, about average 1, harder 1.3) and, when we know it, its final exam's share of the mark. Exam days and rest days stay free, and no day goes over your hours. The last free day before each exam goes to that subject. Other days are shared by the subjects whose exams are still ahead, more for heavier and closer exams, at most three a day. Nothing is planned for a subject after its exam. It's a simple rule to start from, not a perfect plan.", "total": "Total", "hoursN": "{n} h", "skipNoDate": "{code}: no exam date yet", "skipPast": "{code}: exam is before the start date", "ics": "Add to calendar (.ics)", "print": "Print", "schedule": "Your timetable", "missing": {"none": "Add a subject to start.", "dates": "Add an exam date to see your timetable.", "hours": "Set your hours a day to see your timetable."}, "examDay": "Exam: {codes}", "restDay": "Rest", "focus": "Final review", "nothing": "Free", "icsSession": "Revise {code}", "icsFocus": "Final review: {code}", "icsExam": "Exam: {code}", "icsReminder": "Revision starts soon", "period": "Exam period", "window": "Exams {from} – {to}", "needDate": "Add the exam date", "noExam": "No final exam", "week": "Week {n} · {from}–{to}", "today": "Today", "exam": "Exam", "optional": "optional", "hoursAuto": "Leave empty and we plan it", "dayStartNote": "Only for calendar times; empty = all-day notes", "loadTip": "Days far from an exam get less time and the days just before it more; your hours are the most on any day."},
+  rev: {"title": "Revision planner", "lede": "Add your exam dates and get a day-by-day revision timetable.", "subjects": "Your exams", "fromPlan": "Filled in from your plan", "noSubjects": "Add the subjects you have exams in.", "add": "Add a subject", "remove": "Remove", "examDate": "Exam date", "examTime": "Start time", "difficulty": "Difficulty", "level": {"easier": "Easier", "average": "About average", "harder": "Harder"}, "estimate": "our estimate", "examShare": "Final exam {n}%", "time": "Your time", "start": "Start revising on", "hours": "About how long a day", "dayStart": "Start each day at", "rest": "Rest days", "privacy": "Saved only on this device. Your plan and record don't change.", "totals": "Hours per subject", "ruleShort": "More time for harder and earlier exams.", "rule": "How the time is shared: each subject gets a weight from its difficulty (easier 0.8, about average 1, harder 1.3) and, when we know it, its final exam's share of the mark. Exam days and rest days stay free, and no day goes over your hours. The last free day before each exam goes to that subject. Other days are shared by the subjects whose exams are still ahead, more for heavier and closer exams, at most three a day. Nothing is planned for a subject after its exam. It's a simple rule to start from, not a perfect plan.", "total": "Total", "hoursN": "{n} h", "skipNoDate": "{code}: no exam date yet", "skipPast": "{code}: exam is before the start date", "ics": "Add to calendar (.ics)", "print": "Print", "schedule": "Your timetable", "missing": {"none": "Add a subject to start.", "dates": "Add an exam date to see your timetable.", "hours": "Set your hours a day to see your timetable."}, "examDay": "Exam: {codes}", "restDay": "Rest", "focus": "Final review", "nothing": "Free", "icsSession": "Revise {code}", "icsFocus": "Final review: {code}", "icsExam": "Exam: {code}", "icsReminder": "Revision starts soon", "period": "Exam period", "window": "Exams {from} – {to}", "needDate": "Add the exam date", "noExam": "No final exam", "week": "Week {n} · {from}–{to}", "today": "Today", "exam": "Exam", "optional": "optional", "hoursAuto": "Leave empty and we plan it", "dayStartNote": "Only for calendar times; empty = all-day notes", "loadTip": "Days far from an exam get less time and the days just before it more; your hours are the most on any day."},
   tools: {
     open: "Open",
     title: "Tools",
@@ -2250,8 +2252,11 @@ export const en = {
     nextFix: "Fix {n} problems",
     nextFixOne: "Fix 1 problem",
     nextHeavy: "Look at the heavy semesters",
-    nextCompare: "Compare your plans",
-    nextCopy: "Try a second plan",
+    factMarks: "Marks",
+    marksNone: "None yet · they make suggestions and WAM predictions better",
+    marksSome: "{n} entered · WAM {wam}",
+    marksSomeNoWam: "{n} entered",
+    nextMarks: "Fill in {term}",
   },
   plans: {
     diplomaLine: "Diploma: {title}",

@@ -120,10 +120,6 @@ export const ja: Messages = {
   termFull: '{year}年 {period}',
   category: { science: '理系科目', commerce: '商学系科目', arts: '文系科目', design: 'デザイン系科目', music: '音楽系科目', 'fine-arts': '芸術系科目', agriculture: '農学系科目', 'oral-health': '口腔保健系科目', breadth: 'Breadth（専攻外科目）', core: '必修' },
   plan: {
-    profileHint: "「マイ」で興味と得意を入れると精度アップ",
-    profileHintGo: "入力する",
-    profileHintInfo: "おすすめや選択科目は、このプランの興味・得意・目指す職業をもとに選びます。すべて任意で、プランごとに保存されます。",
-    profileHintHide: "閉じる",
     saveImage: "画像で保存",
     pastTag: "履修済み",
     pastUndated: "履修済み・学期未入力",
@@ -152,6 +148,9 @@ export const ja: Messages = {
     assumedShort: "{year}年以降は{from}年の開講時期で見積もり",
     assumed: "{year}年の Handbook はまだ出ていないため、{year}年以降の科目は{from}年に開講された学期で組んでいます。ほとんどの科目は毎年同じ学期ですが、履修登録の前に新しい Handbook を確認してください。",
     doneAsk: "{term} に履修済み？点数（任意）を入れると「マイ記録」に入ります。",
+    termAddRemove: "{code} を外す",
+    termEnded: "終了",
+    termInProgress: "履修中",
     doneButton: "履修済みにする",
     addShortTerm: '夏期・冬期を追加',
     removeThisTerm: 'この学期を削除',
@@ -478,6 +477,9 @@ export const ja: Messages = {
     eligibilityUnknown: '履修条件を確認できません：{needs}。',
   },
   record: {
+    statPlan: "プラン",
+    planNone: "まだ · 学位全体を自動で組みます",
+    planSome: "{name}：{term} まで · 要件 {met}/{total}",
     statPoints: "取得ポイント",
     prompt: {"interestsPrompt": "興味のある分野をタップ（複数可）", "skillsPrompt": "わかるスキルのレベルをタップ", "goalPrompt": "いちばん大事なものをタップ", "picked": "{n} 個選択中", "rated": "{n} 個評価済み", "noneYet": "未選択（すべて任意）"},
     markScaleLabel: "成績の基準：",
@@ -1401,7 +1403,7 @@ export const ja: Messages = {
     becomes: "WAM は {wam} になる",
   },
   /** The revision planner (/tools/revision/). */
-  rev: {"title": "試験勉強プランナー", "lede": "試験日と1日に使える時間を入れると、最後の試験までの毎日の勉強計画を作ります。", "subjects": "あなたの試験", "fromPlan": "プランから入力済み", "noSubjects": "試験のある科目を追加してください。", "add": "科目を追加", "remove": "削除", "examDate": "試験日", "examTime": "開始時刻", "difficulty": "難しさ", "level": {"easier": "やさしめ", "average": "ふつう", "harder": "難しめ"}, "estimate": "推定", "examShare": "期末試験 {n}%", "time": "使える時間", "start": "復習を始める日", "hours": "1日だいたい何時間", "dayStart": "毎日の開始時刻", "rest": "休みの日", "privacy": "この端末にだけ保存。プランと成績記録は変わりません。", "totals": "科目ごとの時間", "ruleShort": "難しい科目と早い試験ほど多めに。", "rule": "時間の分け方：各科目に難しさの重み（やさしめ 0.8、ふつう 1、難しめ 1.3）を付け、期末試験の割合がわかればそれも掛けます。試験日と休みの日は空け、1日の時間を超えません。各試験の前の最後の空き日はその科目だけ。ほかの日はまだ試験が残っている科目で分け、重くて近い試験ほど多く、1日最大3科目。試験が終わった科目は入れません。出発点にするための簡単なルールで、最適な計画ではありません。", "total": "合計", "hoursN": "{n}時間", "skipNoDate": "{code}：試験日が未入力", "skipPast": "{code}：試験日が開始日より前", "ics": "カレンダーに追加（.ics）", "print": "印刷", "schedule": "勉強計画", "missing": {"none": "まず科目を追加してください。", "dates": "試験日を入れると計画が出ます。", "hours": "1日の時間を入れると計画が出ます。"}, "examDay": "試験：{codes}", "restDay": "休み", "focus": "直前の総復習", "nothing": "空き", "icsSession": "{code} を復習", "icsFocus": "直前の総復習：{code}", "icsExam": "試験：{code}", "icsReminder": "もうすぐ勉強の時間です", "period": "試験期間", "window": "試験 {from}〜{to}", "needDate": "試験日を入力", "noExam": "期末試験なし", "week": "第{n}週 · {from}〜{to}", "today": "今日", "exam": "試験", "optional": "任意", "hoursAuto": "空欄ならこちらで決めます", "dayStartNote": "カレンダーの時刻用。空欄なら終日の予定", "loadTip": "試験まで遠い日は少なめ、直前の数日は多めにします。時間を入れると、それが1日の上限です。"},
+  rev: {"title": "試験勉強プランナー", "lede": "試験日を入れると、毎日の勉強計画を作ります。", "subjects": "あなたの試験", "fromPlan": "プランから入力済み", "noSubjects": "試験のある科目を追加してください。", "add": "科目を追加", "remove": "削除", "examDate": "試験日", "examTime": "開始時刻", "difficulty": "難しさ", "level": {"easier": "やさしめ", "average": "ふつう", "harder": "難しめ"}, "estimate": "推定", "examShare": "期末試験 {n}%", "time": "使える時間", "start": "復習を始める日", "hours": "1日だいたい何時間", "dayStart": "毎日の開始時刻", "rest": "休みの日", "privacy": "この端末にだけ保存。プランと成績記録は変わりません。", "totals": "科目ごとの時間", "ruleShort": "難しい科目と早い試験ほど多めに。", "rule": "時間の分け方：各科目に難しさの重み（やさしめ 0.8、ふつう 1、難しめ 1.3）を付け、期末試験の割合がわかればそれも掛けます。試験日と休みの日は空け、1日の時間を超えません。各試験の前の最後の空き日はその科目だけ。ほかの日はまだ試験が残っている科目で分け、重くて近い試験ほど多く、1日最大3科目。試験が終わった科目は入れません。出発点にするための簡単なルールで、最適な計画ではありません。", "total": "合計", "hoursN": "{n}時間", "skipNoDate": "{code}：試験日が未入力", "skipPast": "{code}：試験日が開始日より前", "ics": "カレンダーに追加（.ics）", "print": "印刷", "schedule": "勉強計画", "missing": {"none": "まず科目を追加してください。", "dates": "試験日を入れると計画が出ます。", "hours": "1日の時間を入れると計画が出ます。"}, "examDay": "試験：{codes}", "restDay": "休み", "focus": "直前の総復習", "nothing": "空き", "icsSession": "{code} を復習", "icsFocus": "直前の総復習：{code}", "icsExam": "試験：{code}", "icsReminder": "もうすぐ勉強の時間です", "period": "試験期間", "window": "試験 {from}〜{to}", "needDate": "試験日を入力", "noExam": "期末試験なし", "week": "第{n}週 · {from}〜{to}", "today": "今日", "exam": "試験", "optional": "任意", "hoursAuto": "空欄ならこちらで決めます", "dayStartNote": "カレンダーの時刻用。空欄なら終日の予定", "loadTip": "試験まで遠い日は少なめ、直前の数日は多めにします。時間を入れると、それが1日の上限です。"},
   tools: {
     open: "開く",
     title: "ツール",
@@ -2246,8 +2248,11 @@ export const ja: Messages = {
     nextFix: "{n} 個の問題を直す",
     nextFixOne: "1 個の問題を直す",
     nextHeavy: "重めの学期を見る",
-    nextCompare: "プランを比べる",
-    nextCopy: "プランBを試す",
+    factMarks: "成績",
+    marksNone: "まだなし · 入れるとおすすめと WAM 予測が正確に",
+    marksSome: "{n} 科目入力済み · WAM {wam}",
+    marksSomeNoWam: "{n} 科目入力済み",
+    nextMarks: "{term} を入力",
   },
   plans: {
     diplomaLine: "ディプロマ：{title}",

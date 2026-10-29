@@ -120,10 +120,6 @@ export const zhTW: Messages = {
   termFull: '{year} {period}',
   category: { science: '理科', commerce: '商科', arts: '文科', design: '設計', music: '音樂', 'fine-arts': '藝術', agriculture: '農業', 'oral-health': '口腔健康', breadth: 'Breadth', core: '必修' },
   plan: {
-    profileHint: "先在「我的」填興趣和強項，排課更準",
-    profileHintGo: "去填寫",
-    profileHintInfo: "推薦和選修會參考這個計畫的興趣、強項和職涯目標。都可以不填，每個計畫各自儲存。",
-    profileHintHide: "隱藏",
     saveImage: "存成圖片",
     pastTag: "已修",
     pastUndated: "已修 · 學期未填",
@@ -152,6 +148,9 @@ export const zhTW: Messages = {
     assumedShort: "{year} 年起依 {from} 年的開課時間估算",
     assumed: "{year} 年的 Handbook 還沒出來，所以 {year} 年起的課依 {from} 年的開課學期來排。大部分的課每年學期不變，選課前還是要看新的 Handbook。",
     doneAsk: "{term} 已經修完了？填上成績（選填），會自動記進「我的記錄」。",
+    termAddRemove: "移除 {code}",
+    termEnded: "已結束",
+    termInProgress: "進行中",
     doneButton: "記為已修",
     addShortTerm: '新增夏季或冬季學期',
     removeThisTerm: '刪除這個學期',
@@ -478,6 +477,9 @@ export const zhTW: Messages = {
     eligibilityUnknown: '無法確認是否符合選課條件：{needs}。',
   },
   record: {
+    statPlan: "計畫",
+    planNone: "還沒排 · 自動幫你排好整個學位",
+    planSome: "{name}：已排到 {term} · 規則 {met}/{total}",
     statPoints: "已通過學分",
     prompt: {"interestsPrompt": "點選你有興趣的方向，可複選", "skillsPrompt": "替你會的技能選個程度", "goalPrompt": "點選你最在意的一項", "picked": "已選 {n} 個", "rated": "已評 {n} 項", "noneYet": "還沒選，全部選填"},
     markScaleLabel: "我的成績用：",
@@ -1401,7 +1403,7 @@ export const zhTW: Messages = {
     becomes: "WAM 會變成 {wam}",
   },
   /** The revision planner (/tools/revision/). */
-  rev: {"title": "複習計畫產生器", "lede": "填好考試日期和每天能讀幾個小時，產生到最後一科考試為止的每日複習計畫。", "subjects": "你的考試", "fromPlan": "已從你的計畫帶入", "noSubjects": "加上要考試的科目。", "add": "新增科目", "remove": "移除", "examDate": "考試日期", "examTime": "開考時間", "difficulty": "難度", "level": {"easier": "偏簡單", "average": "普通", "harder": "偏難"}, "estimate": "我們的估計", "examShare": "期末考占 {n}%", "time": "你的時間", "start": "開始複習日期", "hours": "每天大概能讀多久", "dayStart": "每天幾點開始", "rest": "休息日", "privacy": "只存在這台裝置上，不會改動你的計畫和成績紀錄。", "totals": "各科總時數", "ruleShort": "越難、越早考的科目分到越多時間。", "rule": "時間怎麼分：每科依難度給一個權重（偏簡單 0.8、普通 1、偏難 1.3），知道期末考占比的話再乘上它。考試當天和休息日不排複習，每天不超過你填的時數。每科考試前的最後一個空檔日只讀這一科。其餘日子分給還沒考的科目，越重、越近的考試分得越多，一天最多三科。考完的科目之後不再安排。這只是一個簡單的起點，不是最佳方案。", "total": "合計", "hoursN": "{n} 小時", "skipNoDate": "{code}：還沒填考試日期", "skipPast": "{code}：考試在開始日期之前", "ics": "加入行事曆（.ics）", "print": "列印", "schedule": "你的複習計畫", "missing": {"none": "先新增一個科目。", "dates": "填上考試日期就能看到複習計畫。", "hours": "填上每天時數就能看到複習計畫。"}, "examDay": "考試：{codes}", "restDay": "休息", "focus": "考前衝刺", "nothing": "空檔", "icsSession": "複習 {code}", "icsFocus": "考前衝刺：{code}", "icsExam": "考試：{code}", "icsReminder": "快要開始複習了", "period": "考試期間", "window": "考試期 {from} – {to}", "needDate": "填考試日期", "noExam": "沒有期末考", "week": "第 {n} 週 · {from}–{to}", "today": "今天", "exam": "考試", "optional": "選填", "hoursAuto": "不填就由我們安排", "dayStartNote": "只用在行事曆時間；不填就不寫具體時間", "loadTip": "離考試遠的日子少讀一點，考前幾天多讀一點；填了時數就是每天最多讀這麼久。"},
+  rev: {"title": "複習計畫產生器", "lede": "填好考試日期，產生每天的複習計畫。", "subjects": "你的考試", "fromPlan": "已從你的計畫帶入", "noSubjects": "加上要考試的科目。", "add": "新增科目", "remove": "移除", "examDate": "考試日期", "examTime": "開考時間", "difficulty": "難度", "level": {"easier": "偏簡單", "average": "普通", "harder": "偏難"}, "estimate": "我們的估計", "examShare": "期末考占 {n}%", "time": "你的時間", "start": "開始複習日期", "hours": "每天大概能讀多久", "dayStart": "每天幾點開始", "rest": "休息日", "privacy": "只存在這台裝置上，不會改動你的計畫和成績紀錄。", "totals": "各科總時數", "ruleShort": "越難、越早考的科目分到越多時間。", "rule": "時間怎麼分：每科依難度給一個權重（偏簡單 0.8、普通 1、偏難 1.3），知道期末考占比的話再乘上它。考試當天和休息日不排複習，每天不超過你填的時數。每科考試前的最後一個空檔日只讀這一科。其餘日子分給還沒考的科目，越重、越近的考試分得越多，一天最多三科。考完的科目之後不再安排。這只是一個簡單的起點，不是最佳方案。", "total": "合計", "hoursN": "{n} 小時", "skipNoDate": "{code}：還沒填考試日期", "skipPast": "{code}：考試在開始日期之前", "ics": "加入行事曆（.ics）", "print": "列印", "schedule": "你的複習計畫", "missing": {"none": "先新增一個科目。", "dates": "填上考試日期就能看到複習計畫。", "hours": "填上每天時數就能看到複習計畫。"}, "examDay": "考試：{codes}", "restDay": "休息", "focus": "考前衝刺", "nothing": "空檔", "icsSession": "複習 {code}", "icsFocus": "考前衝刺：{code}", "icsExam": "考試：{code}", "icsReminder": "快要開始複習了", "period": "考試期間", "window": "考試期 {from} – {to}", "needDate": "填考試日期", "noExam": "沒有期末考", "week": "第 {n} 週 · {from}–{to}", "today": "今天", "exam": "考試", "optional": "選填", "hoursAuto": "不填就由我們安排", "dayStartNote": "只用在行事曆時間；不填就不寫具體時間", "loadTip": "離考試遠的日子少讀一點，考前幾天多讀一點；填了時數就是每天最多讀這麼久。"},
   tools: {
     open: "打開",
     title: "工具",
@@ -2246,8 +2248,11 @@ export const zhTW: Messages = {
     nextFix: "修正 {n} 個問題",
     nextFixOne: "修正 1 個問題",
     nextHeavy: "看看偏重的學期",
-    nextCompare: "比較你的計畫",
-    nextCopy: "試一個計畫 B",
+    factMarks: "成績",
+    marksNone: "還沒填 · 填了推薦和 WAM 預測更準",
+    marksSome: "已填 {n} 門 · WAM {wam}",
+    marksSomeNoWam: "已填 {n} 門",
+    nextMarks: "填 {term} 的課和成績",
   },
   plans: {
     diplomaLine: "文憑：{title}",

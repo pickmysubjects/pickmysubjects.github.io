@@ -23,6 +23,7 @@ import { useDataset } from '@/composables/useDataset'
 import { useProfile } from '@/composables/useProfile'
 import { creditPoints, isFail } from '@/engine'
 import { useI18n } from '@/i18n'
+import { termLabel } from '@/i18n/format'
 
 /**
  * My record: the key numbers in the hero (points passed, WAM, target WAM), then the degree, the
@@ -46,7 +47,19 @@ const interests = computed({ get: () => profile.value.interests, set: setInteres
 const { t } = useI18n()
 const options = computed(() => subjectList.value.map((s) => ({ code: s.code, title: s.title })))
 const ratedSkills = computed(() => Object.keys(profile.value.skills).length)
-const { setupChosen } = usePlan()
+const { setupChosen, terms: planTerms, courseCheck } = usePlan()
+// The open plan in one line, or the way to make one.
+const planFact = computed(() => {
+  const last = [...planTerms.value].reverse().find((x) => x.subjects.length)
+  if (!setupChosen.value || !last) return t.value('record.planNone')
+  const statuses = courseCheck.value.statuses
+  return t.value('record.planSome', {
+    name: planName(t.value, activePlan.value),
+    term: termLabel(t.value, last),
+    met: statuses.filter((x) => x.status === 'ok').length,
+    total: statuses.length,
+  })
+})
 // Each subject passed counts once, however many attempts; credit for study elsewhere counts too.
 const pointsPassed = computed(() => {
   const passed = new Set(profile.value.results.filter((r) => !isFail(r)).map((r) => r.code))
@@ -87,6 +100,10 @@ async function onRestore(event: Event): Promise<void> {
           <dd>
             <input id="target-wam" class="input stat-input" type="number" inputmode="decimal" min="0" max="100" step="1" :value="profile.targetWam ?? ''" @change="onTarget" />
           </dd>
+        </div>
+        <div class="stat stat-plan">
+          <dt>{{ t('record.statPlan') }}</dt>
+          <dd><a class="stat-link" :href="link('plan')">{{ planFact }}<ArrowRight :size="15" aria-hidden="true" /></a></dd>
         </div>
       </dl>
     </DetailHero>
@@ -176,6 +193,23 @@ async function onRestore(event: Event): Promise<void> {
 .lede {
   margin: 0;
   color: var(--ink-soft);
+}
+
+/* The plan's line: a link, the size of the labels' text, not a big number. */
+.stat-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 28px;
+  color: color-mix(in srgb, var(--accent) 80%, var(--ink));
+  font-weight: var(--fw-bold);
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+
+.stat-link:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 /* The hero's key numbers: one row, each a label over its number. */

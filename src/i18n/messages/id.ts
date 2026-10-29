@@ -120,10 +120,6 @@ export const id: Messages = {
   termFull: '{period} {year}',
   category: { science: 'sains', commerce: 'bisnis', arts: 'humaniora', design: 'desain', music: 'musik', 'fine-arts': 'seni', agriculture: 'pertanian', 'oral-health': 'kesehatan gigi dan mulut', breadth: 'breadth', core: 'inti' },
   plan: {
-    profileHint: "Isi minat dan kekuatanmu di Saya agar lebih pas",
-    profileHintGo: "Isi sekarang",
-    profileHintInfo: "Saran dan mata kuliah pilihan memakai minat, kekuatan, dan target karier rencana ini. Semuanya opsional; tiap rencana menyimpan sendiri.",
-    profileHintHide: "Sembunyikan",
     saveImage: "Simpan sebagai gambar",
     pastTag: "Sudah diambil",
     pastUndated: "Sudah diambil · semester belum diisi",
@@ -152,6 +148,9 @@ export const id: Messages = {
     assumedShort: "Mulai {year}, semester diperkirakan dari {from}",
     assumed: "Handbook {year} belum keluar, jadi mata kuliah mulai {year} disusun sesuai semester saat dibuka di {from}. Kebanyakan tetap di semester yang sama, tapi cek Handbook baru sebelum mendaftar.",
     doneAsk: "Sudah selesai di {term}? Isi nilai (opsional), lalu masuk ke Catatan saya.",
+    termAddRemove: "Hapus {code}",
+    termEnded: "Selesai",
+    termInProgress: "Sedang berjalan",
     doneButton: "Tandai selesai",
     addShortTerm: 'Tambah semester musim panas atau dingin',
     removeThisTerm: 'Hapus semester ini',
@@ -478,6 +477,9 @@ export const id: Messages = {
     eligibilityUnknown: 'Kelayakan belum bisa dipastikan: {needs}.',
   },
   record: {
+    statPlan: "Rencana",
+    planNone: "Belum · kami susun seluruh gelarmu",
+    planSome: "{name}: sampai {term} · aturan {met}/{total}",
     statPoints: "Poin lulus",
     prompt: {"interestsPrompt": "Ketuk bidang yang kamu minati. Boleh pilih banyak.", "skillsPrompt": "Ketuk level untuk skill yang kamu tahu.", "goalPrompt": "Ketuk hal yang paling penting buatmu.", "picked": "{n} dipilih", "rated": "{n} dinilai", "noneYet": "Belum ada, semua opsional"},
     markScaleLabel: "Nilai saya dalam:",
@@ -1401,7 +1403,7 @@ export const id: Messages = {
     becomes: "WAM saya jadi {wam}",
   },
   /** The revision planner (/tools/revision/). */
-  rev: {"title": "Perencana belajar ujian", "lede": "Masukkan tanggal ujian dan jam yang kamu punya. Dapatkan jadwal belajar harian sampai ujian terakhir.", "subjects": "Ujianmu", "fromPlan": "Diisi dari rencanamu", "noSubjects": "Tambahkan mata kuliah yang ada ujiannya.", "add": "Tambah mata kuliah", "remove": "Hapus", "examDate": "Tanggal ujian", "examTime": "Jam mulai", "difficulty": "Tingkat kesulitan", "level": {"easier": "Lebih mudah", "average": "Rata-rata", "harder": "Lebih sulit"}, "estimate": "perkiraan kami", "examShare": "Ujian akhir {n}%", "time": "Waktumu", "start": "Mulai belajar tanggal", "hours": "Kira-kira berapa lama sehari", "dayStart": "Mulai setiap hari jam", "rest": "Hari istirahat", "privacy": "Hanya disimpan di perangkat ini. Rencana dan catatan nilaimu tidak berubah.", "totals": "Jam per mata kuliah", "ruleShort": "Lebih banyak waktu untuk ujian yang lebih sulit dan lebih awal.", "rule": "Cara waktu dibagi: tiap mata kuliah diberi bobot dari tingkat kesulitannya (lebih mudah 0.8, rata-rata 1, lebih sulit 1.3), dikali porsi ujian akhir kalau diketahui. Hari ujian dan hari istirahat dikosongkan, dan tidak ada hari yang melebihi jam yang kamu isi. Hari kosong terakhir sebelum tiap ujian khusus untuk mata kuliah itu. Hari lain dibagi untuk mata kuliah yang ujiannya belum lewat, lebih banyak untuk ujian yang lebih berat dan lebih dekat, paling banyak tiga per hari. Tidak ada jadwal untuk mata kuliah setelah ujiannya. Ini aturan sederhana untuk mulai, bukan rencana sempurna.", "total": "Total", "hoursN": "{n} jam", "skipNoDate": "{code}: belum ada tanggal ujian", "skipPast": "{code}: ujian sebelum tanggal mulai", "ics": "Tambah ke kalender (.ics)", "print": "Cetak", "schedule": "Jadwal belajarmu", "missing": {"none": "Tambah satu mata kuliah untuk mulai.", "dates": "Isi tanggal ujian untuk melihat jadwal.", "hours": "Isi jam per hari untuk melihat jadwal."}, "examDay": "Ujian: {codes}", "restDay": "Istirahat", "focus": "Review terakhir", "nothing": "Kosong", "icsSession": "Belajar {code}", "icsFocus": "Review terakhir: {code}", "icsExam": "Ujian: {code}", "icsReminder": "Waktu belajar sebentar lagi", "period": "Periode ujian", "window": "Ujian {from} – {to}", "needDate": "Isi tanggal ujian", "noExam": "Tidak ada ujian akhir", "week": "Minggu {n} · {from}–{to}", "today": "Hari ini", "exam": "Ujian", "optional": "opsional", "hoursAuto": "Kosongkan, kami yang atur", "dayStartNote": "Hanya untuk jam di kalender; kosong = catatan seharian", "loadTip": "Hari yang jauh dari ujian dapat waktu lebih sedikit, beberapa hari sebelum ujian lebih banyak; jam yang kamu isi jadi batas per hari."},
+  rev: {"title": "Perencana belajar ujian", "lede": "Masukkan tanggal ujian untuk jadwal belajar harian.", "subjects": "Ujianmu", "fromPlan": "Diisi dari rencanamu", "noSubjects": "Tambahkan mata kuliah yang ada ujiannya.", "add": "Tambah mata kuliah", "remove": "Hapus", "examDate": "Tanggal ujian", "examTime": "Jam mulai", "difficulty": "Tingkat kesulitan", "level": {"easier": "Lebih mudah", "average": "Rata-rata", "harder": "Lebih sulit"}, "estimate": "perkiraan kami", "examShare": "Ujian akhir {n}%", "time": "Waktumu", "start": "Mulai belajar tanggal", "hours": "Kira-kira berapa lama sehari", "dayStart": "Mulai setiap hari jam", "rest": "Hari istirahat", "privacy": "Hanya disimpan di perangkat ini. Rencana dan catatan nilaimu tidak berubah.", "totals": "Jam per mata kuliah", "ruleShort": "Lebih banyak waktu untuk ujian yang lebih sulit dan lebih awal.", "rule": "Cara waktu dibagi: tiap mata kuliah diberi bobot dari tingkat kesulitannya (lebih mudah 0.8, rata-rata 1, lebih sulit 1.3), dikali porsi ujian akhir kalau diketahui. Hari ujian dan hari istirahat dikosongkan, dan tidak ada hari yang melebihi jam yang kamu isi. Hari kosong terakhir sebelum tiap ujian khusus untuk mata kuliah itu. Hari lain dibagi untuk mata kuliah yang ujiannya belum lewat, lebih banyak untuk ujian yang lebih berat dan lebih dekat, paling banyak tiga per hari. Tidak ada jadwal untuk mata kuliah setelah ujiannya. Ini aturan sederhana untuk mulai, bukan rencana sempurna.", "total": "Total", "hoursN": "{n} jam", "skipNoDate": "{code}: belum ada tanggal ujian", "skipPast": "{code}: ujian sebelum tanggal mulai", "ics": "Tambah ke kalender (.ics)", "print": "Cetak", "schedule": "Jadwal belajarmu", "missing": {"none": "Tambah satu mata kuliah untuk mulai.", "dates": "Isi tanggal ujian untuk melihat jadwal.", "hours": "Isi jam per hari untuk melihat jadwal."}, "examDay": "Ujian: {codes}", "restDay": "Istirahat", "focus": "Review terakhir", "nothing": "Kosong", "icsSession": "Belajar {code}", "icsFocus": "Review terakhir: {code}", "icsExam": "Ujian: {code}", "icsReminder": "Waktu belajar sebentar lagi", "period": "Periode ujian", "window": "Ujian {from} – {to}", "needDate": "Isi tanggal ujian", "noExam": "Tidak ada ujian akhir", "week": "Minggu {n} · {from}–{to}", "today": "Hari ini", "exam": "Ujian", "optional": "opsional", "hoursAuto": "Kosongkan, kami yang atur", "dayStartNote": "Hanya untuk jam di kalender; kosong = catatan seharian", "loadTip": "Hari yang jauh dari ujian dapat waktu lebih sedikit, beberapa hari sebelum ujian lebih banyak; jam yang kamu isi jadi batas per hari."},
   tools: {
     open: "Buka",
     title: "Alat",
@@ -2246,8 +2248,11 @@ export const id: Messages = {
     nextFix: "Perbaiki {n} masalah",
     nextFixOne: "Perbaiki 1 masalah",
     nextHeavy: "Lihat semester berat",
-    nextCompare: "Bandingkan rencanamu",
-    nextCopy: "Coba rencana kedua",
+    factMarks: "Nilai",
+    marksNone: "Belum ada · isi agar saran dan prediksi WAM lebih tepat",
+    marksSome: "{n} diisi · WAM {wam}",
+    marksSomeNoWam: "{n} diisi",
+    nextMarks: "Isi {term}",
   },
   plans: {
     diplomaLine: "Diploma: {title}",

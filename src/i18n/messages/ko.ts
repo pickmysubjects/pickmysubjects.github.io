@@ -120,10 +120,6 @@ export const ko: Messages = {
   termFull: '{year}년 {period}',
   category: { science: '이학', commerce: '상경', arts: '인문', design: '디자인', music: '음악', 'fine-arts': '예술', agriculture: '농업', 'oral-health': '구강보건', breadth: '교양(Breadth)', core: '필수' },
   plan: {
-    profileHint: "'내 정보'에 관심사·강점을 넣으면 더 잘 맞아요",
-    profileHintGo: "입력하기",
-    profileHintInfo: "추천과 선택 과목은 이 플랜의 관심사, 강점, 진로 목표를 참고해요. 모두 선택 사항이고 플랜마다 따로 저장돼요.",
-    profileHintHide: "숨기기",
     saveImage: "이미지로 저장",
     pastTag: "이수함",
     pastUndated: "이수함 · 학기 미입력",
@@ -152,6 +148,9 @@ export const ko: Messages = {
     assumedShort: "{year}년부터는 {from}년 개설 학기 기준 추정",
     assumed: "{year}년 Handbook이 아직 나오지 않아 {year}년부터의 과목은 {from}년에 열린 학기로 배치했습니다. 대부분 매년 같은 학기에 열리지만, 수강 신청 전에 새 Handbook을 꼭 확인하세요.",
     doneAsk: "{term}에 다 들었나요? 점수(선택)를 넣으면 '내 기록'에 들어가요.",
+    termAddRemove: "{code} 빼기",
+    termEnded: "종료",
+    termInProgress: "진행 중",
     doneButton: "이수 완료로 표시",
     addShortTerm: '여름·겨울 학기 추가',
     removeThisTerm: '이 학기 삭제',
@@ -478,6 +477,9 @@ export const ko: Messages = {
     eligibilityUnknown: '수강 자격을 확인할 수 없습니다: {needs}.',
   },
   record: {
+    statPlan: "플랜",
+    planNone: "아직 없음 · 학위 전체를 자동으로 짜 드려요",
+    planSome: "{name}: {term}까지 · 요건 {met}/{total}",
     statPoints: "이수 학점",
     prompt: {"interestsPrompt": "관심 있는 분야를 눌러 주세요 (여러 개 가능)", "skillsPrompt": "아는 기술의 수준을 눌러 주세요", "goalPrompt": "가장 중요한 것을 눌러 주세요", "picked": "{n}개 선택", "rated": "{n}개 평가", "noneYet": "아직 없음, 모두 선택 사항"},
     markScaleLabel: "내 성적 기준:",
@@ -1401,7 +1403,7 @@ export const ko: Messages = {
     becomes: "WAM은 {wam}",
   },
   /** The revision planner (/tools/revision/). */
-  rev: {"title": "시험 공부 계획표", "lede": "시험 날짜와 하루에 쓸 수 있는 시간을 넣으면, 마지막 시험까지 날짜별 공부 계획을 만들어요.", "subjects": "내 시험", "fromPlan": "내 계획에서 가져왔어요", "noSubjects": "시험이 있는 과목을 추가하세요.", "add": "과목 추가", "remove": "삭제", "examDate": "시험 날짜", "examTime": "시작 시간", "difficulty": "난이도", "level": {"easier": "쉬운 편", "average": "보통", "harder": "어려운 편"}, "estimate": "추정", "examShare": "기말시험 {n}%", "time": "내 시간", "start": "복습 시작일", "hours": "하루에 대략 몇 시간", "dayStart": "매일 시작 시간", "rest": "쉬는 날", "privacy": "이 기기에만 저장돼요. 내 계획과 성적 기록은 바뀌지 않아요.", "totals": "과목별 시간", "ruleShort": "어렵고 빨리 있는 시험에 시간을 더 줘요.", "rule": "시간 나누는 법: 과목마다 난이도 가중치(쉬운 편 0.8, 보통 1, 어려운 편 1.3)를 주고, 기말시험 비중을 알면 그것도 곱해요. 시험 날과 쉬는 날은 비우고, 하루 시간을 넘기지 않아요. 각 시험 전 마지막 빈 날은 그 과목만 공부해요. 나머지 날은 아직 시험이 남은 과목끼리 나누고, 비중이 크고 가까운 시험일수록 많이, 하루 최대 세 과목이에요. 시험이 끝난 과목은 넣지 않아요. 시작점으로 쓰는 간단한 규칙이지, 최적의 계획은 아니에요.", "total": "합계", "hoursN": "{n}시간", "skipNoDate": "{code}: 시험 날짜를 아직 안 넣었어요", "skipPast": "{code}: 시험이 시작일보다 앞이에요", "ics": "캘린더에 추가(.ics)", "print": "인쇄", "schedule": "공부 계획표", "missing": {"none": "먼저 과목을 추가하세요.", "dates": "시험 날짜를 넣으면 계획표가 나와요.", "hours": "하루 시간을 넣으면 계획표가 나와요."}, "examDay": "시험: {codes}", "restDay": "휴식", "focus": "시험 전 총정리", "nothing": "비어 있음", "icsSession": "{code} 복습", "icsFocus": "시험 전 총정리: {code}", "icsExam": "시험: {code}", "icsReminder": "곧 공부 시작이에요", "period": "시험 기간", "window": "시험 {from} – {to}", "needDate": "시험 날짜 입력", "noExam": "기말시험 없음", "week": "{n}주차 · {from}–{to}", "today": "오늘", "exam": "시험", "optional": "선택", "hoursAuto": "비워 두면 알아서 정해요", "dayStartNote": "캘린더 시간에만 써요. 비우면 종일 일정", "loadTip": "시험이 먼 날은 적게, 시험 직전 며칠은 많이 공부하도록 짜요. 시간을 넣으면 하루 최대치가 돼요."},
+  rev: {"title": "시험 공부 계획표", "lede": "시험 날짜를 넣으면 날짜별 공부 계획을 만들어요.", "subjects": "내 시험", "fromPlan": "내 계획에서 가져왔어요", "noSubjects": "시험이 있는 과목을 추가하세요.", "add": "과목 추가", "remove": "삭제", "examDate": "시험 날짜", "examTime": "시작 시간", "difficulty": "난이도", "level": {"easier": "쉬운 편", "average": "보통", "harder": "어려운 편"}, "estimate": "추정", "examShare": "기말시험 {n}%", "time": "내 시간", "start": "복습 시작일", "hours": "하루에 대략 몇 시간", "dayStart": "매일 시작 시간", "rest": "쉬는 날", "privacy": "이 기기에만 저장돼요. 내 계획과 성적 기록은 바뀌지 않아요.", "totals": "과목별 시간", "ruleShort": "어렵고 빨리 있는 시험에 시간을 더 줘요.", "rule": "시간 나누는 법: 과목마다 난이도 가중치(쉬운 편 0.8, 보통 1, 어려운 편 1.3)를 주고, 기말시험 비중을 알면 그것도 곱해요. 시험 날과 쉬는 날은 비우고, 하루 시간을 넘기지 않아요. 각 시험 전 마지막 빈 날은 그 과목만 공부해요. 나머지 날은 아직 시험이 남은 과목끼리 나누고, 비중이 크고 가까운 시험일수록 많이, 하루 최대 세 과목이에요. 시험이 끝난 과목은 넣지 않아요. 시작점으로 쓰는 간단한 규칙이지, 최적의 계획은 아니에요.", "total": "합계", "hoursN": "{n}시간", "skipNoDate": "{code}: 시험 날짜를 아직 안 넣었어요", "skipPast": "{code}: 시험이 시작일보다 앞이에요", "ics": "캘린더에 추가(.ics)", "print": "인쇄", "schedule": "공부 계획표", "missing": {"none": "먼저 과목을 추가하세요.", "dates": "시험 날짜를 넣으면 계획표가 나와요.", "hours": "하루 시간을 넣으면 계획표가 나와요."}, "examDay": "시험: {codes}", "restDay": "휴식", "focus": "시험 전 총정리", "nothing": "비어 있음", "icsSession": "{code} 복습", "icsFocus": "시험 전 총정리: {code}", "icsExam": "시험: {code}", "icsReminder": "곧 공부 시작이에요", "period": "시험 기간", "window": "시험 {from} – {to}", "needDate": "시험 날짜 입력", "noExam": "기말시험 없음", "week": "{n}주차 · {from}–{to}", "today": "오늘", "exam": "시험", "optional": "선택", "hoursAuto": "비워 두면 알아서 정해요", "dayStartNote": "캘린더 시간에만 써요. 비우면 종일 일정", "loadTip": "시험이 먼 날은 적게, 시험 직전 며칠은 많이 공부하도록 짜요. 시간을 넣으면 하루 최대치가 돼요."},
   tools: {
     open: "열기",
     title: "도구",
@@ -2246,8 +2248,11 @@ export const ko: Messages = {
     nextFix: "문제 {n}개 고치기",
     nextFixOne: "문제 1개 고치기",
     nextHeavy: "빡빡한 학기 보기",
-    nextCompare: "계획 비교하기",
-    nextCopy: "계획 B 만들어 보기",
+    factMarks: "성적",
+    marksNone: "아직 없음 · 넣으면 추천과 WAM 예측이 정확해져요",
+    marksSome: "{n}과목 입력 · WAM {wam}",
+    marksSomeNoWam: "{n}과목 입력",
+    nextMarks: "{term} 입력하기",
   },
   plans: {
     diplomaLine: "디플로마: {title}",

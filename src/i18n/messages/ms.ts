@@ -120,10 +120,6 @@ export const ms: Messages = {
   termFull: '{period} {year}',
   category: { science: 'sains', commerce: 'perdagangan', arts: 'sastera', design: 'reka bentuk', music: 'muzik', 'fine-arts': 'seni', agriculture: 'pertanian', 'oral-health': 'kesihatan oral', breadth: 'breadth', core: 'teras' },
   plan: {
-    profileHint: "Isi minat dan kekuatan dalam Saya untuk padanan lebih baik",
-    profileHintGo: "Isi sekarang",
-    profileHintInfo: "Cadangan dan elektif menggunakan minat, kekuatan dan matlamat kerjaya pelan ini. Semuanya pilihan; setiap pelan simpan sendiri.",
-    profileHintHide: "Sembunyi",
     saveImage: "Simpan sebagai imej",
     pastTag: "Sudah diambil",
     pastUndated: "Sudah diambil · semester belum diisi",
@@ -152,6 +148,9 @@ export const ms: Messages = {
     assumedShort: "Dari {year}, semester dianggarkan ikut {from}",
     assumed: "Handbook {year} belum keluar, jadi subjek dari {year} dirancang mengikut semester ia ditawarkan pada {from}. Kebanyakan subjek kekal pada semester yang sama, tetapi semak Handbook baharu sebelum mendaftar.",
     doneAsk: "Sudah selesai dalam {term}? Masukkan markah (pilihan), ia masuk ke Rekod saya.",
+    termAddRemove: "Buang {code}",
+    termEnded: "Tamat",
+    termInProgress: "Sedang berjalan",
     doneButton: "Tanda selesai",
     addShortTerm: 'Tambah penggal musim panas atau sejuk',
     removeThisTerm: 'Buang penggal ini',
@@ -478,6 +477,9 @@ export const ms: Messages = {
     eligibilityUnknown: 'Kelayakan belum disahkan: {needs}.',
   },
   record: {
+    statPlan: "Pelan",
+    planNone: "Belum · kami susun seluruh ijazah anda",
+    planSome: "{name}: hingga {term} · syarat {met}/{total}",
     statPoints: "Mata lulus",
     prompt: {"interestsPrompt": "Ketik bidang yang anda minat. Pilih seberapa banyak.", "skillsPrompt": "Ketik tahap untuk kemahiran yang anda tahu.", "goalPrompt": "Ketik perkara paling penting bagi anda.", "picked": "{n} dipilih", "rated": "{n} dinilai", "noneYet": "Belum ada, semua tidak wajib"},
     markScaleLabel: "Markah saya dalam:",
@@ -1401,7 +1403,7 @@ export const ms: Messages = {
     becomes: "WAM saya menjadi {wam}",
   },
   /** The revision planner (/tools/revision/). */
-  rev: {"title": "Perancang ulang kaji", "lede": "Masukkan tarikh peperiksaan dan jam yang anda ada. Dapatkan jadual ulang kaji harian hingga peperiksaan terakhir.", "subjects": "Peperiksaan anda", "fromPlan": "Diisi daripada rancangan anda", "noSubjects": "Tambah subjek yang ada peperiksaan.", "add": "Tambah subjek", "remove": "Buang", "examDate": "Tarikh peperiksaan", "examTime": "Masa mula", "difficulty": "Kesukaran", "level": {"easier": "Lebih mudah", "average": "Sederhana", "harder": "Lebih sukar"}, "estimate": "anggaran kami", "examShare": "Peperiksaan akhir {n}%", "time": "Masa anda", "start": "Mula ulang kaji pada", "hours": "Lebih kurang berapa lama sehari", "dayStart": "Mula setiap hari pada", "rest": "Hari rehat", "privacy": "Disimpan pada peranti ini sahaja. Rancangan dan rekod anda tidak berubah.", "totals": "Jam bagi setiap subjek", "ruleShort": "Lebih masa untuk peperiksaan lebih sukar dan lebih awal.", "rule": "Cara masa dibahagi: setiap subjek diberi pemberat ikut kesukaran (lebih mudah 0.8, sederhana 1, lebih sukar 1.3), didarab dengan bahagian peperiksaan akhir jika diketahui. Hari peperiksaan dan hari rehat dibiarkan kosong, dan tiada hari melebihi jam anda. Hari kosong terakhir sebelum setiap peperiksaan untuk subjek itu sahaja. Hari lain dikongsi oleh subjek yang peperiksaannya belum tiba, lebih untuk yang lebih berat dan lebih dekat, paling banyak tiga sehari. Tiada apa dirancang untuk subjek selepas peperiksaannya. Ini peraturan mudah untuk bermula, bukan rancangan sempurna.", "total": "Jumlah", "hoursN": "{n} jam", "skipNoDate": "{code}: belum ada tarikh peperiksaan", "skipPast": "{code}: peperiksaan sebelum tarikh mula", "ics": "Tambah ke kalendar (.ics)", "print": "Cetak", "schedule": "Jadual anda", "missing": {"none": "Tambah satu subjek untuk bermula.", "dates": "Masukkan tarikh peperiksaan untuk melihat jadual.", "hours": "Masukkan jam sehari untuk melihat jadual."}, "examDay": "Peperiksaan: {codes}", "restDay": "Rehat", "focus": "Ulang kaji akhir", "nothing": "Kosong", "icsSession": "Ulang kaji {code}", "icsFocus": "Ulang kaji akhir: {code}", "icsExam": "Peperiksaan: {code}", "icsReminder": "Ulang kaji bermula tidak lama lagi", "period": "Tempoh peperiksaan", "window": "Peperiksaan {from} – {to}", "needDate": "Isi tarikh peperiksaan", "noExam": "Tiada peperiksaan akhir", "week": "Minggu {n} · {from}–{to}", "today": "Hari ini", "exam": "Peperiksaan", "optional": "pilihan", "hoursAuto": "Biar kosong, kami aturkan", "dayStartNote": "Hanya untuk masa kalendar; kosong = nota sepanjang hari", "loadTip": "Hari yang jauh dari peperiksaan dapat masa kurang, hari-hari sebelum peperiksaan lebih; jam anda ialah had sehari."},
+  rev: {"title": "Perancang ulang kaji", "lede": "Masukkan tarikh peperiksaan untuk jadual ulang kaji harian.", "subjects": "Peperiksaan anda", "fromPlan": "Diisi daripada rancangan anda", "noSubjects": "Tambah subjek yang ada peperiksaan.", "add": "Tambah subjek", "remove": "Buang", "examDate": "Tarikh peperiksaan", "examTime": "Masa mula", "difficulty": "Kesukaran", "level": {"easier": "Lebih mudah", "average": "Sederhana", "harder": "Lebih sukar"}, "estimate": "anggaran kami", "examShare": "Peperiksaan akhir {n}%", "time": "Masa anda", "start": "Mula ulang kaji pada", "hours": "Lebih kurang berapa lama sehari", "dayStart": "Mula setiap hari pada", "rest": "Hari rehat", "privacy": "Disimpan pada peranti ini sahaja. Rancangan dan rekod anda tidak berubah.", "totals": "Jam bagi setiap subjek", "ruleShort": "Lebih masa untuk peperiksaan lebih sukar dan lebih awal.", "rule": "Cara masa dibahagi: setiap subjek diberi pemberat ikut kesukaran (lebih mudah 0.8, sederhana 1, lebih sukar 1.3), didarab dengan bahagian peperiksaan akhir jika diketahui. Hari peperiksaan dan hari rehat dibiarkan kosong, dan tiada hari melebihi jam anda. Hari kosong terakhir sebelum setiap peperiksaan untuk subjek itu sahaja. Hari lain dikongsi oleh subjek yang peperiksaannya belum tiba, lebih untuk yang lebih berat dan lebih dekat, paling banyak tiga sehari. Tiada apa dirancang untuk subjek selepas peperiksaannya. Ini peraturan mudah untuk bermula, bukan rancangan sempurna.", "total": "Jumlah", "hoursN": "{n} jam", "skipNoDate": "{code}: belum ada tarikh peperiksaan", "skipPast": "{code}: peperiksaan sebelum tarikh mula", "ics": "Tambah ke kalendar (.ics)", "print": "Cetak", "schedule": "Jadual anda", "missing": {"none": "Tambah satu subjek untuk bermula.", "dates": "Masukkan tarikh peperiksaan untuk melihat jadual.", "hours": "Masukkan jam sehari untuk melihat jadual."}, "examDay": "Peperiksaan: {codes}", "restDay": "Rehat", "focus": "Ulang kaji akhir", "nothing": "Kosong", "icsSession": "Ulang kaji {code}", "icsFocus": "Ulang kaji akhir: {code}", "icsExam": "Peperiksaan: {code}", "icsReminder": "Ulang kaji bermula tidak lama lagi", "period": "Tempoh peperiksaan", "window": "Peperiksaan {from} – {to}", "needDate": "Isi tarikh peperiksaan", "noExam": "Tiada peperiksaan akhir", "week": "Minggu {n} · {from}–{to}", "today": "Hari ini", "exam": "Peperiksaan", "optional": "pilihan", "hoursAuto": "Biar kosong, kami aturkan", "dayStartNote": "Hanya untuk masa kalendar; kosong = nota sepanjang hari", "loadTip": "Hari yang jauh dari peperiksaan dapat masa kurang, hari-hari sebelum peperiksaan lebih; jam anda ialah had sehari."},
   tools: {
     open: "Buka",
     title: "Alatan",
@@ -2246,8 +2248,11 @@ export const ms: Messages = {
     nextFix: "Baiki {n} masalah",
     nextFixOne: "Baiki 1 masalah",
     nextHeavy: "Lihat semester berat",
-    nextCompare: "Banding rancangan anda",
-    nextCopy: "Cuba rancangan kedua",
+    factMarks: "Markah",
+    marksNone: "Belum ada · isi supaya cadangan dan ramalan WAM lebih tepat",
+    marksSome: "{n} diisi · WAM {wam}",
+    marksSomeNoWam: "{n} diisi",
+    nextMarks: "Isi {term}",
   },
   plans: {
     diplomaLine: "Diploma: {title}",

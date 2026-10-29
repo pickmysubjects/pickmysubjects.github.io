@@ -1,5 +1,5 @@
 import { today as clock } from '@/engine/dataYear'
-import { isFail, isUpcoming, periodsFor, termKey, type Period, type Profile, type Subject } from '@/engine'
+import { hasEnded, isFail, isUpcoming, periodsFor, termKey, type Period, type Profile, type Subject } from '@/engine'
 
 export interface PastResult {
   code: string
@@ -113,4 +113,50 @@ export function addTermChoices(
 /** The suggested term: the first offered one still ahead (see defaultTerm), else any term ahead. */
 export function defaultAddTerm<T extends AddTermChoice>(choices: readonly T[], planStart?: { year: number; period: Period }, today: Date = clock()): T | undefined {
   return defaultTerm(choices.filter((x) => x.offered), planStart, today) ?? defaultTerm(choices, planStart, today)
+}
+
+/** Where a term stands today: over, under way, or still ahead (Melbourne dates). */
+export type TermState = 'ended' | 'now' | 'ahead'
+export function termState(term: { year: number; period: Period }, now: Date = clock()): TermState {
+  if (isUpcoming(term, now)) return 'ahead'
+  return hasEnded(term, now) ? 'ended' : 'now'
+}
+
+/** A typed mark: full-width digits (from a Chinese or Japanese keyboard) count; 0–100, or none. */
+export function parseMark(raw: string | undefined): number | undefined {
+  const s = (raw ?? '').normalize('NFKC').trim()
+  if (!s) return undefined
+  const n = Number(s)
+  return Number.isFinite(n) ? Math.max(0, Math.min(100, Math.round(n))) : undefined
+}
+
+/**
+ * Marks entered for one semester, put on the record: each subject's entry for that semester (or
+ * an earlier one with no fail) is replaced, so nothing is listed twice; earlier fails stay, as both
+ * attempts are on the transcript.
+ */
+export function recordMarks(
+  results: Profile['results'],
+  term: { year: number; period: Period },
+  list: readonly { code: string; mark?: number }[],
+): Profile['results'] {
+  const codes = new Set(list.map((x) => x.code))
+  const kept = results.filter((r) => !codes.has(r.code) || (isFail(r) && !(r.year === term.year && r.period === term.period)))
+  return [...kept, ...list.map((x) => ({ code: x.code, year: term.year, period: term.period, ...(x.mark === undefined ? {} : { mark: x.mark }) }))]
+}
+
+const inTerm = (r: { year?: number; period?: string }, term: { year: number; period: Period }) => r.year === term.year && r.period === term.period
+
+/** A mark typed on a card in one of the board's record columns (none: the mark is cleared). */
+export function setRecordMark(results: Profile['results'], term: { year: number; period: Period }, code: string, mark: number | undefined): Profile['results'] {
+  return results.map((r) => {
+    if (r.code !== code || !inTerm(r, term)) return r
+    const { mark: _old, ...rest } = r
+    return mark === undefined ? rest : { ...rest, mark }
+  })
+}
+
+/** A subject taken off one of the board's record columns. */
+export function removeFromRecord(results: Profile['results'], term: { year: number; period: Period }, code: string): Profile['results'] {
+  return results.filter((r) => r.code !== code || !inTerm(r, term))
 }

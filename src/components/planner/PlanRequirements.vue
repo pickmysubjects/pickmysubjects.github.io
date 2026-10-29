@@ -44,6 +44,9 @@ interface Meter {
 
 // The totals students track: overall, each category with no level, and level 3
 // (the course-wide rule when there is one, else its category's); and the major.
+// A meter's name stands alone, so it starts with a capital ("Science"), though the word is
+// lower case mid-sentence elsewhere. Scripts without case are unchanged.
+const capitalised = (s: string) => s.charAt(0).toLocaleUpperCase() + s.slice(1)
 const meters = computed<Meter[]>(() => {
   const out: Meter[] = []
   const anyLevel3 = props.degreeRules.some((r) => r.kind === 'points' && r.level === 3 && r.category === undefined && r.min !== undefined)
@@ -55,7 +58,7 @@ const meters = computed<Meter[]>(() => {
       if (!shown) continue
       const label =
         rule.category && rule.level === undefined
-          ? categoryLabel(t.value, rule.category)
+          ? capitalised(categoryLabel(t.value, rule.category))
           : rule.level !== undefined
             ? t.value('progress.level', { n: rule.level })
             : t.value('progress.total')

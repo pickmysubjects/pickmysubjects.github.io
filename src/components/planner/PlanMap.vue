@@ -46,6 +46,9 @@ const emit = defineEmits<{
   removeLastTerm: []
   open: [code: string]
   select: [code: string | null]
+  /** A semester column of My record edited on the board. */
+  recordMark: [term: { year: number; period: Period }, code: string, mark: number | undefined]
+  recordRemove: [term: { year: number; period: Period }, code: string]
 }>()
 
 interface Route {
@@ -513,6 +516,8 @@ onBeforeUnmount(() => {
           @drag-start="(code) => (dragging = { code, from: col.i })"
           @drag-end="dragging = null"
           @remove-term="emit('removeTerm', col.i)"
+          @mark="(code, mark) => emit('recordMark', col.term, code, mark)"
+          @remove-done="(code) => emit('recordRemove', col.term, code)"
         />
       </template>
       <div class="board-tools">
@@ -743,13 +748,10 @@ onBeforeUnmount(() => {
   gap: 4px;
   min-height: 30px;
   padding: 4px 12px;
-  /* The shared glass button, small. */
-  border: 1px solid var(--glass-edge);
+  /* Flat on the board's glass: a solid pill with a hairline, no blur or lift of its own. */
+  border: 1px solid var(--divider);
   border-radius: 999px;
-  background: var(--glass-fill);
-  -webkit-backdrop-filter: var(--glass-blur);
-  backdrop-filter: var(--glass-blur);
-  box-shadow: var(--glass-shadow);
+  background: var(--card-solid);
   color: var(--ink);
   font: inherit;
   font-size: 0.75rem;
@@ -760,7 +762,7 @@ onBeforeUnmount(() => {
 
 .tool:hover,
 .tool:focus-visible {
-  background: var(--glass-fill-hover);
+  background: color-mix(in srgb, var(--accent) 6%, var(--card-solid));
   color: var(--accent);
 }
 

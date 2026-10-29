@@ -120,10 +120,6 @@ export const vi: Messages = {
   termFull: '{period} năm {year}',
   category: { science: 'khoa học', commerce: 'kinh doanh', arts: 'nhân văn', design: 'thiết kế', music: 'âm nhạc', 'fine-arts': 'nghệ thuật', agriculture: 'nông nghiệp', 'oral-health': 'sức khỏe răng miệng', breadth: 'breadth (ngoài ngành)', core: 'bắt buộc' },
   plan: {
-    profileHint: "Điền sở thích và thế mạnh ở mục Của tôi để gợi ý sát hơn",
-    profileHintGo: "Điền ngay",
-    profileHintInfo: "Gợi ý và môn tự chọn dựa vào sở thích, thế mạnh và nghề mục tiêu của kế hoạch này. Không bắt buộc; mỗi kế hoạch lưu riêng.",
-    profileHintHide: "Ẩn",
     saveImage: "Lưu thành ảnh",
     pastTag: "Đã học",
     pastUndated: "Đã học · chưa điền học kỳ",
@@ -152,6 +148,9 @@ export const vi: Messages = {
     assumedShort: "Từ {year}, học kỳ mở môn ước tính theo năm {from}",
     assumed: "Handbook {year} chưa có, nên các môn từ {year} được xếp theo học kỳ chúng mở năm {from}. Đa số môn giữ nguyên học kỳ, nhưng hãy xem Handbook mới trước khi đăng ký.",
     doneAsk: "Đã học xong ở {term}? Nhập điểm (không bắt buộc), môn sẽ vào Hồ sơ của tôi.",
+    termAddRemove: "Bỏ {code}",
+    termEnded: "Đã xong",
+    termInProgress: "Đang học",
     doneButton: "Đánh dấu đã học",
     addShortTerm: 'Thêm kỳ hè hoặc kỳ đông',
     removeThisTerm: 'Xóa kỳ này',
@@ -478,6 +477,9 @@ export const vi: Messages = {
     eligibilityUnknown: 'Chưa xác nhận được điều kiện học: {needs}.',
   },
   record: {
+    statPlan: "Kế hoạch",
+    planNone: "Chưa có · tự xếp cả bằng cho bạn",
+    planSome: "{name}: đến {term} · quy định {met}/{total}",
     statPoints: "Tín chỉ đã qua",
     prompt: {"interestsPrompt": "Chạm chọn lĩnh vực bạn thích, chọn bao nhiêu cũng được", "skillsPrompt": "Chạm chọn mức cho kỹ năng bạn biết", "goalPrompt": "Chạm chọn điều bạn coi trọng nhất", "picked": "Đã chọn {n}", "rated": "Đã đánh giá {n}", "noneYet": "Chưa chọn, đều không bắt buộc"},
     markScaleLabel: "Điểm của tôi theo:",
@@ -1401,7 +1403,7 @@ export const vi: Messages = {
     becomes: "WAM của mình thành {wam}",
   },
   /** The revision planner (/tools/revision/). */
-  rev: {"title": "Lập kế hoạch ôn thi", "lede": "Nhập ngày thi và số giờ bạn có mỗi ngày. Nhận lịch ôn thi từng ngày đến môn thi cuối.", "subjects": "Các môn thi", "fromPlan": "Đã điền từ kế hoạch của bạn", "noSubjects": "Thêm các môn bạn có thi.", "add": "Thêm môn", "remove": "Xóa", "examDate": "Ngày thi", "examTime": "Giờ bắt đầu", "difficulty": "Độ khó", "level": {"easier": "Dễ hơn", "average": "Trung bình", "harder": "Khó hơn"}, "estimate": "ước tính", "examShare": "Thi cuối kỳ {n}%", "time": "Thời gian của bạn", "start": "Ngày bắt đầu ôn", "hours": "Mỗi ngày ôn khoảng bao lâu", "dayStart": "Mỗi ngày bắt đầu lúc", "rest": "Ngày nghỉ", "privacy": "Chỉ lưu trên thiết bị này. Kế hoạch và hồ sơ điểm không thay đổi.", "totals": "Số giờ mỗi môn", "ruleShort": "Môn khó hơn và thi sớm hơn được nhiều giờ hơn.", "rule": "Cách chia giờ: mỗi môn có trọng số theo độ khó (dễ hơn 0.8, trung bình 1, khó hơn 1.3), nhân thêm tỷ trọng bài thi cuối kỳ nếu có. Ngày thi và ngày nghỉ để trống, không ngày nào vượt số giờ bạn nhập. Ngày trống cuối cùng trước mỗi kỳ thi dành riêng cho môn đó. Các ngày khác chia cho những môn chưa thi, môn nặng và gần ngày thi hơn được nhiều hơn, tối đa ba môn một ngày. Môn đã thi xong thì không xếp nữa. Đây là quy tắc đơn giản để bắt đầu, không phải kế hoạch tối ưu.", "total": "Tổng", "hoursN": "{n} giờ", "skipNoDate": "{code}: chưa có ngày thi", "skipPast": "{code}: ngày thi trước ngày bắt đầu", "ics": "Thêm vào lịch (.ics)", "print": "In", "schedule": "Lịch ôn thi", "missing": {"none": "Thêm một môn để bắt đầu.", "dates": "Nhập ngày thi để xem lịch.", "hours": "Nhập số giờ mỗi ngày để xem lịch."}, "examDay": "Thi: {codes}", "restDay": "Nghỉ", "focus": "Ôn tổng trước thi", "nothing": "Trống", "icsSession": "Ôn {code}", "icsFocus": "Ôn tổng trước thi: {code}", "icsExam": "Thi: {code}", "icsReminder": "Sắp đến giờ ôn bài", "period": "Kỳ thi", "window": "Thi {from} – {to}", "needDate": "Điền ngày thi", "noExam": "Không thi cuối kỳ", "week": "Tuần {n} · {from}–{to}", "today": "Hôm nay", "exam": "Thi", "optional": "không bắt buộc", "hoursAuto": "Để trống, mình tự xếp", "dayStartNote": "Chỉ dùng cho giờ trên lịch; để trống = ghi chú cả ngày", "loadTip": "Ngày còn xa kỳ thi học ít hơn, mấy ngày sát thi học nhiều hơn; số giờ bạn nhập là mức tối đa mỗi ngày."},
+  rev: {"title": "Lập kế hoạch ôn thi", "lede": "Nhập ngày thi để có lịch ôn thi từng ngày.", "subjects": "Các môn thi", "fromPlan": "Đã điền từ kế hoạch của bạn", "noSubjects": "Thêm các môn bạn có thi.", "add": "Thêm môn", "remove": "Xóa", "examDate": "Ngày thi", "examTime": "Giờ bắt đầu", "difficulty": "Độ khó", "level": {"easier": "Dễ hơn", "average": "Trung bình", "harder": "Khó hơn"}, "estimate": "ước tính", "examShare": "Thi cuối kỳ {n}%", "time": "Thời gian của bạn", "start": "Ngày bắt đầu ôn", "hours": "Mỗi ngày ôn khoảng bao lâu", "dayStart": "Mỗi ngày bắt đầu lúc", "rest": "Ngày nghỉ", "privacy": "Chỉ lưu trên thiết bị này. Kế hoạch và hồ sơ điểm không thay đổi.", "totals": "Số giờ mỗi môn", "ruleShort": "Môn khó hơn và thi sớm hơn được nhiều giờ hơn.", "rule": "Cách chia giờ: mỗi môn có trọng số theo độ khó (dễ hơn 0.8, trung bình 1, khó hơn 1.3), nhân thêm tỷ trọng bài thi cuối kỳ nếu có. Ngày thi và ngày nghỉ để trống, không ngày nào vượt số giờ bạn nhập. Ngày trống cuối cùng trước mỗi kỳ thi dành riêng cho môn đó. Các ngày khác chia cho những môn chưa thi, môn nặng và gần ngày thi hơn được nhiều hơn, tối đa ba môn một ngày. Môn đã thi xong thì không xếp nữa. Đây là quy tắc đơn giản để bắt đầu, không phải kế hoạch tối ưu.", "total": "Tổng", "hoursN": "{n} giờ", "skipNoDate": "{code}: chưa có ngày thi", "skipPast": "{code}: ngày thi trước ngày bắt đầu", "ics": "Thêm vào lịch (.ics)", "print": "In", "schedule": "Lịch ôn thi", "missing": {"none": "Thêm một môn để bắt đầu.", "dates": "Nhập ngày thi để xem lịch.", "hours": "Nhập số giờ mỗi ngày để xem lịch."}, "examDay": "Thi: {codes}", "restDay": "Nghỉ", "focus": "Ôn tổng trước thi", "nothing": "Trống", "icsSession": "Ôn {code}", "icsFocus": "Ôn tổng trước thi: {code}", "icsExam": "Thi: {code}", "icsReminder": "Sắp đến giờ ôn bài", "period": "Kỳ thi", "window": "Thi {from} – {to}", "needDate": "Điền ngày thi", "noExam": "Không thi cuối kỳ", "week": "Tuần {n} · {from}–{to}", "today": "Hôm nay", "exam": "Thi", "optional": "không bắt buộc", "hoursAuto": "Để trống, mình tự xếp", "dayStartNote": "Chỉ dùng cho giờ trên lịch; để trống = ghi chú cả ngày", "loadTip": "Ngày còn xa kỳ thi học ít hơn, mấy ngày sát thi học nhiều hơn; số giờ bạn nhập là mức tối đa mỗi ngày."},
   tools: {
     open: "Mở",
     title: "Công cụ",
@@ -2246,8 +2248,11 @@ export const vi: Messages = {
     nextFix: "Sửa {n} vấn đề",
     nextFixOne: "Sửa 1 vấn đề",
     nextHeavy: "Xem các học kỳ nặng",
-    nextCompare: "So sánh các kế hoạch",
-    nextCopy: "Thử kế hoạch thứ hai",
+    factMarks: "Điểm",
+    marksNone: "Chưa có · nhập để gợi ý và dự đoán WAM chuẩn hơn",
+    marksSome: "Đã nhập {n} môn · WAM {wam}",
+    marksSomeNoWam: "Đã nhập {n} môn",
+    nextMarks: "Nhập {term}",
   },
   plans: {
     diplomaLine: "Văn bằng: {title}",

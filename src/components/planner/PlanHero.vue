@@ -12,7 +12,7 @@ defineProps<{
   title: string
   /** The plan's setup in one line ("Bachelor of Science · from 2026 S1 · Data Science"). */
   setup?: string
-  facts?: { points: string; rules: string; rulesOk: boolean }
+  facts?: { points: string; rules: string; rulesOk: boolean; marks?: { text: string; href?: string } }
   next?: { label: string; href?: string }
 }>()
 const emit = defineEmits<{ edit: []; next: [] }>()
@@ -22,6 +22,7 @@ const scene = defineAsyncComponent(() => import('./art/ArtPlan.vue'))
 
 <template>
   <header class="phero surface">
+    <div class="phero-main">
     <div class="phero-text">
       <h1 class="phero-title">{{ title }}</h1>
       <slot />
@@ -38,6 +39,13 @@ const scene = defineAsyncComponent(() => import('./art/ArtPlan.vue'))
           <dt>{{ t('planPage.factRules') }}</dt>
           <dd :class="facts.rulesOk ? 'ok' : 'todo'">{{ facts.rules }}</dd>
         </div>
+        <div v-if="facts.marks" class="fact">
+          <dt>{{ t('planPage.factMarks') }}</dt>
+          <dd>
+            <a v-if="facts.marks.href" class="phero-next" :href="facts.marks.href">{{ facts.marks.text }}<ArrowRight :size="15" aria-hidden="true" /></a>
+            <template v-else>{{ facts.marks.text }}</template>
+          </dd>
+        </div>
         <div v-if="next" class="fact">
           <dt>{{ t('planPage.factNext') }}</dt>
           <dd>
@@ -48,6 +56,9 @@ const scene = defineAsyncComponent(() => import('./art/ArtPlan.vue'))
       </dl>
     </div>
     <div class="phero-art" aria-hidden="true"><component :is="scene" /></div>
+    </div>
+    <!-- The plan's rules: the same glass panel as the hero, under a hairline, not a second card. -->
+    <div v-if="$slots.foot" class="phero-foot"><slot name="foot" /></div>
   </header>
 </template>
 
@@ -55,10 +66,33 @@ const scene = defineAsyncComponent(() => import('./art/ArtPlan.vue'))
 .phero {
   position: relative;
   display: grid;
+  padding: 0;
+  overflow: hidden;
+  -webkit-backdrop-filter: var(--card-tint);
+  backdrop-filter: var(--card-tint);
+}
+
+.phero-main {
+  position: relative;
+  display: grid;
   align-items: center;
   min-height: 176px;
   padding: 22px 36px 24px;
-  overflow: hidden;
+}
+
+.phero-foot {
+  padding-inline: 18px;
+  border-top: 1px solid var(--divider);
+}
+
+/* The rules card brings its own glass: inside the hero it is just content. */
+.phero-foot :deep(.progress.surface) {
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
 }
 
 .phero-text {
@@ -190,9 +224,16 @@ const scene = defineAsyncComponent(() => import('./art/ArtPlan.vue'))
 
 @media (max-width: 720px) {
   .phero {
+    border-radius: 20px;
+  }
+
+  .phero-main {
     min-height: 0;
     padding: 16px;
-    border-radius: 20px;
+  }
+
+  .phero-foot {
+    padding-inline: 0;
   }
 
   .phero-text {

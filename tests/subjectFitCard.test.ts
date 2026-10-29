@@ -4,6 +4,7 @@ import { books } from '../src/composables/planStore'
 import { provideDataset } from '../src/composables/useDataset'
 import { recommend } from '../src/engine'
 import { realData } from './realData'
+import { setToday } from '../src/engine/dataYear'
 
 /** The card's composable: per-plan strengths/interests/goal, the shared record, and Find subjects' own list. */
 describe('useSubjectFit', () => {
@@ -15,6 +16,8 @@ describe('useSubjectFit', () => {
     const { useProfile } = await import('../src/composables/useProfile')
     const { useDataset } = await import('../src/composables/useDataset')
     const { useSortForMeOptions, useSubjectFit } = await import('../src/composables/useSubjectFit')
+    // Before the default plan's first semester begins, so what's added stays planned.
+    setToday('2025-12-01')
     books.value = {}
     const plan = usePlan()
     const plans = usePlans()
@@ -60,5 +63,6 @@ describe('useSubjectFit', () => {
     expect(card.fit.value).toMatchObject({ kind: 'out', why: { key: 'planned' } })
     plans.switchTo(idA)
     expect(card.fit.value?.kind).toBe('fit')
+    setToday(undefined)
   })
 })

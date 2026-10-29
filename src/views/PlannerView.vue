@@ -19,9 +19,9 @@ import Interp from '@/components/Interp.vue'
 import PlanSwitcher from '@/components/plans/PlanSwitcher.vue'
 import PlanHero from '@/components/planner/PlanHero.vue'
 import SubjectSection from '@/components/subject/SubjectSection.vue'
-import { assumedOfferings, creditPoints, findDiploma, careerGap, careerGoal, careerName, hasEnded, heldMajorIds, informalPicks, isFail, isPassedDuplicate, passedCodes, planProblems as countedProblems, planComponentIds, planRoles, planRules, recordedLoads, termKey, termLoad, type Issue, type PlanTerm } from '@/engine'
+import { computeWam, assumedOfferings, creditPoints, findDiploma, careerGap, careerGoal, careerName, hasEnded, heldMajorIds, informalPicks, isFail, isPassedDuplicate, passedCodes, planProblems as countedProblems, planComponentIds, planRoles, planRules, recordedLoads, termKey, termLoad, type Issue, type PlanTerm } from '@/engine'
 import { diplomaTitle } from '@/composables/usePlanCompare'
-import { Plus, Sparkles, X } from 'lucide-vue-next'
+import { Plus } from 'lucide-vue-next'
 import { usePhone } from '@/composables/usePhone'
 import { usePlans } from '@/composables/usePlans'
 import { sharePlanImage } from '@/utils/planImage'
@@ -35,7 +35,7 @@ import { useProfile } from '@/composables/useProfile'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan, type PlanSetup } from '@/composables/usePlan'
 import { usePlanStress } from '@/composables/usePlanStress'
-import { pastTerms } from '@/utils/pastTerms'
+import { pastTerms, removeFromRecord, setRecordMark, termState } from '@/utils/pastTerms'
 import RatePrompt from '@/components/rating/RatePrompt.vue'
 import { useRated } from '@/composables/useRated'
 import { useI18n } from '@/i18n'
@@ -125,34 +125,7 @@ const extraTermsOnVisa = computed(
   () => plan.setup.value.international === true && plan.notes.value.some((n) => typeof n !== 'string' && n.key === 'extraTerms'),
 )
 const peek = shallowRef<string | null>(null)
-// The open plan says nothing about the student yet (no strengths, interests or career):
-// one optional nudge toward "Me". Hidden for good per plan once dismissed.
 const plans = usePlans()
-const hintKey = computed(() => `sc:profileHint:${plans.active.value.id}`)
-const hintHidden = shallowRef(new Set<string>())
-function readHidden(key: string): boolean {
-  try {
-    return localStorage.getItem(key) === '1'
-  } catch {
-    return false
-  }
-}
-function hideHint(): void {
-  try {
-    localStorage.setItem(hintKey.value, '1')
-  } catch {
-    /* private mode: hidden for this visit only */
-  }
-  hintHidden.value = new Set([...hintHidden.value, hintKey.value])
-}
-const showProfileHint = computed(
-  () =>
-    Object.keys(profile.value.skills).length === 0 &&
-    profile.value.interests.length === 0 &&
-    !profile.value.career &&
-    !hintHidden.value.has(hintKey.value) &&
-    !readHidden(hintKey.value),
-)
 // The student's completed subjects, in the semesters they were taken, shown before the plan.
 const past = computed(() => pastTerms(profile.value.results))
 // Weak spots the degree leans on every semester: said once here, not on each semester.
@@ -343,22 +316,33 @@ const peekTerm = computed(() => {
 })
 // Notes beside the status (shown when the line is opened).
 const noteCount = computed(() => unavoidable.value.length + Number(extraTermsOnVisa.value) + failed.value.length)
-// A term has begun once its first month has: only then can a subject in it be marked done.
-const START_MONTH = { summer: 0, 'semester-1': 2, winter: 5, 'semester-2': 6 } as const
-const begun = (term: PlanTerm) => new Date() >= new Date(term.year, START_MONTH[term.period], 1)
+// A term has begun (Melbourne dates): only then can a subject in it be marked done.
+const begun = (term: Pick<PlanTerm, 'year' | 'period'>) => termState(term) !== 'ahead'
 const { shouldPrompt } = useRated()
 const rateNext = shallowRef<string | null>(null)
 // Done with a planned subject: it moves to My record, in the semester it was planned for.
 function markDone(code: string, mark: number | undefined): void {
-  const where = peekTerm.value
-  if (!where) return
-  const { year, period } = where.term
-  // An earlier fail stays: both attempts are on the transcript and count in the WAM.
-  setResults([...profile.value.results.filter((r) => r.code !== code || isFail(r)), { code, year, period, ...(mark === undefined ? {} : { mark }) }])
-  plan.removeSubject(where.index, code)
+  if (!peekRecord.value) return
+  recordMark(peekRecord.value, code, mark)
   // Just finished it: offer to rate it, once per subject.
-  if (shouldPrompt(code)) rateNext.value = code
+  if (mark !== undefined && shouldPrompt(code)) rateNext.value = code
 }
+// The board's semester columns that have begun are My record's: a mark typed on a card, or a
+// subject taken off, changes the record (one copy of it, shared with the record page).
+type TermRef = { year: number; period: PlanTerm['period'] }
+function recordMark(term: TermRef, code: string, mark: number | undefined): void {
+  setResults(setRecordMark(profile.value.results, term, code, mark))
+}
+function recordRemove(term: TermRef, code: string): void {
+  setResults(removeFromRecord(profile.value.results, term, code))
+}
+// Plans saved before semesters began: their subjects go to My record now.
+plan.settleBegun()
+// The open subject's record entry for a semester, when it has no mark yet: its mark can go in here.
+const peekRecord = computed(() => {
+  const r = profile.value.results.find((x) => x.code === peek.value && x.mark === undefined && !isFail(x) && x.year !== undefined && x.period !== undefined)
+  return r && !data.value.subjects[r.code]?.passFail ? { year: r.year as number, period: r.period as PlanTerm['period'] } : null
+})
 // The board's focus: a selected subject (its timeline lights up) or a requirement (its subjects do).
 const board = useTemplateRef<InstanceType<typeof PlanMap>>('board')
 const selected = shallowRef<string | null>(null)
@@ -512,12 +496,31 @@ const heroFacts = computed(() => {
     points: `${fmt(pointsNow.value)} / ${fmt(pointsNeed.value)}`,
     rules: statuses.length ? `${met} / ${statuses.length}` : '—',
     rulesOk: statuses.length > 0 && met === statuses.length && problems.value === 0,
+    marks: marksFact.value,
   }
 })
+// Marks on My record: how many, and the WAM; none yet, a link to add them.
+const marksFact = computed(() => {
+  const n = profile.value.results.filter((r) => r.mark !== undefined).length
+  if (!n) return { text: t.value('planPage.marksNone'), href: link('record') }
+  const wam = computeWam(profile.value.results, data.value)
+  return { text: wam === null ? t.value('planPage.marksSomeNoWam', { n }) : t.value('planPage.marksSome', { n, wam }) }
+})
+// The first semester that has begun and still needs checking: what was taken, or its marks once over.
+const termToFill = computed(() =>
+  plan.terms.value.find((x) => {
+    if (!begun(x)) return false
+    const there = profile.value.results.filter((r) => r.year === x.year && r.period === x.period)
+    return !there.length || (termState(x) === 'ended' && there.some((r) => r.mark === undefined && !isFail(r) && !data.value.subjects[r.code]?.passFail))
+  }) ?? null,
+)
 const nextStep = computed(() => {
   if (problems.value) return { label: t.value('planPage.nextFix', { n: problems.value }), href: '#rules' }
   if (heavyTerms.value) return { label: t.value('planPage.nextHeavy'), href: '#heavy' }
-  return { label: t.value(plans.list.value.length > 1 ? 'planPage.nextCompare' : 'planPage.nextCopy'), href: link('plan/compare/') }
+  const fill = termToFill.value
+  if (fill) return { label: t.value('planPage.nextMarks', { term: termLabel(t.value, fill) }), href: `#board` }
+  // Nothing to do: no "next" rather than a made-up one.
+  return undefined
 })
 const lastTerm = computed(() => [...plan.terms.value].reverse().find((x) => x.subjects.length))
 const boardShort = computed(() => (lastTerm.value ? t.value('planPage.boardShort', { term: termLabel(t.value, lastTerm.value), n: plan.plannedCodes.value.length }) : undefined))
@@ -586,7 +589,7 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
 <template>
   <div class="planner">
     <PlanHero
-      :title="t('plan.title')"
+      :title="onBoard ? t('menu.myPlan') : t('plan.title')"
       :setup="!showWizard && !shared ? summary : undefined"
       :facts="!showWizard && !shared ? heroFacts : undefined"
       :next="!showWizard && !shared && onBoard ? nextStep : undefined"
@@ -600,35 +603,8 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
         <p class="page-lede">{{ t('plan.ledeShort') }} <a class="guide-link" :href="link('guide')">{{ t('guide.nav') }} →</a></p>
         <p v-if="pendingAdd" class="started" role="status">{{ t('plan.addPending', { code: pendingAdd }) }}</p>
       </template>
-    </PlanHero>
-
-    <PlanWizard
-      v-if="showWizard"
-      :key="dataName"
-      :setup="plan.setup.value"
-      :courses="data.courses.filter((c) => c.listed)"
-      :components="data.components"
-      :cancellable="!plan.isEmpty.value"
-      @done="finishWizard"
-      @cancel="editing = false"
-    />
-
-    <section v-if="shared" class="shared surface" role="status">
-      <p class="shared-text">{{ t('plan.sharedText', { n: shared.terms.reduce((sum, x) => sum + x.subjects.length, 0) }) }}</p>
-      <p v-if="!plan.isEmpty.value" class="shared-warn">{{ t('plan.sharedReplace') }}</p>
-      <div class="shared-actions">
-        <button class="button button-accent" type="button" @click="importShared">{{ t('plan.sharedImport') }}</button>
-        <button class="button button-quiet" type="button" @click="go('plan')">{{ t('plan.sharedDismiss') }}</button>
-      </div>
-    </section>
-    <SharedPlanView v-if="shared" :setup="shared.setup" :terms="shared.terms" />
-
-    <!-- The board first, at full width; the plan's other parts under it. -->
-    <div v-else-if="!showWizard" class="article">
-      <div class="body">
-        <RatePrompt v-if="rateNext" :key="rateNext" :code="rateNext" @close="rateNext = null" />
-
-        <div v-if="onBoard" id="rules" class="rules-strip">
+      <template v-if="!shared && !showWizard && onBoard" #foot>
+        <div id="rules" class="rules-strip">
           <PlanRequirements
             v-if="plan.courseCheck.value.statuses.length"
             :problems="problems + Number(recordFix)"
@@ -683,6 +659,34 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
             </ul>
           </div>
         </div>
+      </template>
+    </PlanHero>
+
+    <PlanWizard
+      v-if="showWizard"
+      :key="dataName"
+      :setup="plan.setup.value"
+      :courses="data.courses.filter((c) => c.listed)"
+      :components="data.components"
+      :cancellable="!plan.isEmpty.value"
+      @done="finishWizard"
+      @cancel="editing = false"
+    />
+
+    <section v-if="shared" class="shared surface" role="status">
+      <p class="shared-text">{{ t('plan.sharedText', { n: shared.terms.reduce((sum, x) => sum + x.subjects.length, 0) }) }}</p>
+      <p v-if="!plan.isEmpty.value" class="shared-warn">{{ t('plan.sharedReplace') }}</p>
+      <div class="shared-actions">
+        <button class="button button-accent" type="button" @click="importShared">{{ t('plan.sharedImport') }}</button>
+        <button class="button button-quiet" type="button" @click="go('plan')">{{ t('plan.sharedDismiss') }}</button>
+      </div>
+    </section>
+    <SharedPlanView v-if="shared" :setup="shared.setup" :terms="shared.terms" />
+
+    <!-- The board first, at full width; the plan's other parts under it. -->
+    <div v-else-if="!showWizard" class="article">
+      <div class="body">
+        <RatePrompt v-if="rateNext" :key="rateNext" :code="rateNext" @close="rateNext = null" />
 
         <SubjectSection id="board" class="board-sec" :style="{ '--page-w': `${pageW}px` }" :title="t('planPage.tocBoard')" :short="boardShort">
           <template #aside>
@@ -743,6 +747,8 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
             @open="peek = $event"
             @select="select"
             @remove-last-term="plan.removeLastTerm()"
+            @record-mark="recordMark"
+            @record-remove="recordRemove"
           />
           <details class="details">
             <summary class="details-summary">
@@ -764,14 +770,6 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
           </details>
         </SubjectSection>
 
-        <div v-if="onBoard && showProfileHint" class="profile-hint" role="note">
-          <Sparkles :size="18" aria-hidden="true" class="profile-hint-icon" />
-          <p class="profile-hint-text">{{ t('plan.profileHint') }}<InfoTip :text="t('plan.profileHintInfo')" /></p>
-          <a class="button button-quiet profile-hint-go" :href="link('record') + '#sec-strengths'">{{ t('plan.profileHintGo') }}</a>
-          <button class="profile-hint-x" type="button" :aria-label="t('plan.profileHintHide')" :title="t('plan.profileHintHide')" @click="hideHint">
-            <X :size="16" aria-hidden="true" />
-          </button>
-        </div>
 
 
         <!-- Nothing heavy: one compact line, not a card with nothing in it. -->
@@ -814,7 +812,7 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
         @close="closePeek"
         @open="peek = $event"
         @swap="(from, to) => plan.swapSubject(from, to)"
-        :done-term="peekTerm && begun(peekTerm.term) ? termLabel(t, peekTerm.term) : undefined"
+        :done-term="peekRecord ? termLabel(t, peekRecord) : undefined"
         :pass-fail="data.subjects[peek]?.passFail"
         @mark-done="(m) => markDone(peek as string, m)"
         :planned="!!peekTerm"
@@ -839,11 +837,10 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
 </template>
 
 <style scoped>
-/* The guide's measures (GuideView, the subject page): frostier cards, the hero and the article
-   sharing their edges. */
+/* The guide's measures (GuideView, the subject page): the hero and the article sharing their
+   edges. Two glass panels (hero with its rules, the board) at the site's own glass strength, so
+   the frost reads; everything inside them is flat. */
 .planner {
-  --card-fill: var(--peek-fill);
-
   display: grid;
   gap: 24px;
   min-width: 0;
@@ -918,55 +915,11 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
   font-size: 0.9375rem;
 }
 
-.profile-hint {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px 12px;
-  padding: 10px 10px 10px 16px;
-  border: 1px solid var(--glass-edge);
-  border-radius: var(--radius-lg);
-  background: var(--glass-shine), color-mix(in srgb, var(--accent) 7%, var(--glass-fill));
-  -webkit-backdrop-filter: var(--glass-blur);
-  backdrop-filter: var(--glass-blur);
-  box-shadow: var(--glass-shadow);
-}
 
-.profile-hint-icon {
-  flex: none;
-  color: color-mix(in srgb, var(--accent) 80%, var(--ink));
-}
 
-.profile-hint-text {
-  flex: 1 1 16em;
-  min-width: 0;
-  overflow-wrap: anywhere;
-  margin: 0;
-  font-size: 0.9375rem;
-  font-weight: 550;
-}
 
-.profile-hint-go {
-  white-space: nowrap;
-}
 
-.profile-hint-x {
-  display: inline-grid;
-  flex: none;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  border: 0;
-  border-radius: 999px;
-  background: none;
-  color: var(--ink-soft);
-  cursor: pointer;
-}
 
-.profile-hint-x:hover {
-  background: color-mix(in srgb, var(--ink) 7%, transparent);
-  color: var(--ink);
-}
 
 .status-icon {
   flex: none;
@@ -1012,6 +965,11 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
   color: var(--ink);
 }
 
+/* In the hero's foot, under its hairline. */
+.rules-strip > .status-body {
+  padding: 14px 18px 16px;
+}
+
 .status-list {
   display: grid;
   gap: var(--space-2);
@@ -1051,8 +1009,12 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
   white-space: nowrap;
 }
 
-/* The plan's notes line: text and ⓘ together, its one fix at the end. */
+/* The plan's notes line: text and ⓘ together, its one fix at the end. A plain line on the
+   board's glass, not a box in a box. */
 .meta-line {
+  padding: 0;
+  border: 0;
+  background: none;
   display: flex;
   flex-wrap: wrap;
   align-items: center;

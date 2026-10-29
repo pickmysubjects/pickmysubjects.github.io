@@ -6,7 +6,7 @@ import { termLabel } from '@/i18n/format'
 import { useI18n } from '@/i18n'
 import SubjectCard, { type CardTone, type MoveTarget } from './SubjectCard.vue'
 import DoneCard from './DoneCard.vue'
-import type { PastResult } from '@/utils/pastTerms'
+import { termState, type PastResult } from '@/utils/pastTerms'
 import type { DropVerdict } from '@/utils/planBoard'
 import TermStressNote from './TermStressNote.vue'
 
@@ -44,6 +44,9 @@ const emit = defineEmits<{
   dragStart: [code: string]
   dragEnd: []
   removeTerm: []
+  /** A semester that has begun: its subjects are My record's, with a mark box on each card. */
+  mark: [code: string, mark: number | undefined]
+  removeDone: [code: string]
 }>()
 
 const { t } = useI18n()
@@ -55,6 +58,7 @@ const points = computed(() => donePoints.value + [...props.term.subjects, ...(pr
 const overloaded = computed(() => points.value > props.load)
 const fill = computed(() => `${Math.min(100, (points.value / props.load) * 100)}%`)
 const free = computed(() => Math.max(0, props.load - points.value))
+const state = computed(() => termState(props.term))
 const short = computed(() => props.term.period === 'summer' || props.term.period === 'winter')
 const empty = computed(() => props.term.subjects.length === 0 && !props.done?.length && !props.carried?.length)
 const dropClass = computed(() => {
@@ -126,6 +130,7 @@ const tone = (code: string): CardTone | null => props.tones?.get(code) ?? null
         <X :size="14" aria-hidden="true" />
       </button>
       <span class="term-bar" aria-hidden="true"><span class="term-bar-fill" :style="{ width: fill }" /></span>
+      <span v-if="state !== 'ahead'" class="term-state">{{ t(state === 'now' ? 'plan.termInProgress' : 'plan.termEnded') }}</span>
     </header>
     <TermStressNote :term-index="termIndex" />
     <p v-if="dropReason" class="drop-reason">{{ dropReason }}</p>
@@ -138,8 +143,11 @@ const tone = (code: string): CardTone | null => props.tones?.get(code) ?? null
         :subject="subjects[r.code]"
         :highlighted="tone(r.code) !== null"
         :dimmed="tones !== null && tone(r.code) === null"
+        :editable="state !== 'ahead'"
         @open="emit('select', r.code)"
         @hover="emit('hover', $event ? r.code : null)"
+        @mark="emit('mark', r.code, $event)"
+        @remove="emit('removeDone', r.code)"
       />
       <SubjectCard
         v-for="code in term.subjects"
@@ -190,15 +198,15 @@ const tone = (code: string): CardTone | null => props.tones?.get(code) ?? null
   min-width: 0;
   padding: 10px;
   scroll-margin: 96px 24px;
-  border: 1px solid var(--card-edge);
+  /* A lane on the board's glass: a faint tint and a hairline, no shine or shadow of its own. */
+  border: 1px solid var(--col-edge);
   border-radius: var(--radius);
-  background: var(--glass-shine), var(--card-fill);
-  box-shadow: var(--card-shadow);
+  background: var(--col-fill);
   transition: background 0.15s, border-color 0.15s, opacity 0.15s;
 }
 
 /* No backdrop blur on the columns: a blur makes each column its own layer, which would paint
-   over the prerequisite lines (PlanMap's .routes). The see-through fill keeps the glass look. */
+   over the prerequisite lines (PlanMap's .routes), and the board is already the glass. */
 .term-short {
   flex-basis: 192px;
   background: color-mix(in srgb, var(--warn) 5%, transparent);
@@ -263,6 +271,13 @@ const tone = (code: string): CardTone | null => props.tones?.get(code) ?? null
   grid-template-columns: 1fr auto auto;
   align-items: baseline;
   gap: 4px 8px;
+}
+
+.term-state {
+  grid-column: 1 / -1;
+  font-size: 0.75rem;
+  font-weight: var(--fw-semibold);
+  color: var(--ink-soft);
 }
 
 .term-name {

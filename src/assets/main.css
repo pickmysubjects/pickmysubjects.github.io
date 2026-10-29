@@ -119,7 +119,16 @@
   /* Content cards: a tinted see-through fill with the chrome's hairline and top highlight, no blur. */
   --card-fill: rgb(255 255 255 / 34%);
   --card-blur: blur(24px) saturate(195%);
+  /* A glass panel that sits still on the colour field with the real glass panels beside it (the
+     plan's hero): the field is already soft, so a saturation lift alone reads as the same glass,
+     and the page keeps to two live blurs on screen (the bar and one panel). */
+  --card-tint: saturate(195%);
   --tile-fill: rgb(255 255 255 / 55%);
+  /* Items inside a glass panel (plan board cards): flat and solid, so the panel's glass is the only glass. */
+  --card-solid: #fcf8fb;
+  /* Lanes inside a glass panel (term columns): a faint tint and a hairline, no glass. */
+  --col-fill: rgb(255 255 255 / 26%);
+  --col-edge: rgb(80 40 90 / 11%);
   --field-fill: rgb(255 255 255 / 50%);
   /* Hover and inset areas inside glass: a soft tinted wash, not grey. */
   --inset-fill: color-mix(in srgb, #c2227a 5%, rgb(255 255 255 / 45%));
@@ -182,6 +191,9 @@
     --pill-raised: var(--glass-shadow), 0 3px 10px -3px rgb(0 0 0 / 60%);
     --card-fill: rgb(30 24 44 / 44%);
     --tile-fill: rgb(30 24 44 / 55%);
+    --card-solid: #221a2e;
+    --col-fill: rgb(255 255 255 / 4%);
+    --col-edge: rgb(255 255 255 / 9%);
     --field-fill: rgb(255 255 255 / 6%);
     --inset-fill: rgb(255 255 255 / 7%);
     --peek-fill: rgb(30 24 44 / 70%);
@@ -946,8 +958,11 @@ button.chip {
   }
 }
 
-/* Repeated items (list cards, tiles) and anything inside a glass card: no blur of their own. */
+/* Repeated items (list cards, tiles) and anything inside a glass card: no blur of their own.
+   One glass per region: controls on a glass panel (buttons, chips, switches) take the panel's
+   blur instead of stacking their own, which doubles the paint cost and muddies the glass. */
 .surface .surface,
+:is(.surface, .glass) :is(.button, .chip, .select-glass, .seg-track),
 .tile {
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
@@ -1034,6 +1049,7 @@ button.chip {
   :root {
     --card-fill: #f9f2f8;
     --tile-fill: #fbf6fb;
+    --col-fill: #f4ebf3;
     --field-fill: #fdf9fc;
     --inset-fill: #f3e8f2;
     --chrome-fill: #f6edf5;
@@ -1048,6 +1064,7 @@ button.chip {
     --float-blur: none;
     --glass-blur-strong: none;
     --card-blur: none;
+    --card-tint: none;
   }
 
   :root :is(.surface, .glass) {
@@ -1062,6 +1079,8 @@ button.chip {
     /* Opaque plum tints, not grey: the same family as the colour field behind. */
     --card-fill: #22192f;
     --tile-fill: #271d36;
+    --col-fill: #271d36;
+    --card-solid: #2e2440;
     --field-fill: #2e2440;
     --inset-fill: #2e2440;
     --chrome-fill: #1c1527;
@@ -1091,6 +1110,9 @@ button.chip {
     --seg-fill: var(--surface-2);
     --sheet-fill: var(--surface);
     --card-fill: var(--surface);
+    --card-solid: var(--surface);
+    --col-fill: var(--surface);
+    --col-edge: var(--ink-faint);
     --card-edge: var(--ink-faint);
   }
 
@@ -1137,11 +1159,11 @@ html {
 
 /* Touch screens: small icon buttons and compact links keep their look but get a 44px hit area. */
 @media (pointer: coarse) {
-  :is(.infotip-button, .brand, .back, .guide-link, .discussion-link, .role-link, .wam-what, .sec-link, .add-link, .preview-more, .next-all, .can-all, .suggest-use, .profile-hint-x, .plan-icon-hit, .search-trigger, .hero-back, .dhero-back) {
+  :is(.infotip-button, .brand, .back, .guide-link, .discussion-link, .role-link, .wam-what, .sec-link, .add-link, .preview-more, .next-all, .can-all, .suggest-use, .plan-icon-hit, .search-trigger, .hero-back, .dhero-back) {
     position: relative;
   }
 
-  :is(.infotip-button, .brand, .back, .guide-link, .discussion-link, .role-link, .wam-what, .sec-link, .add-link, .preview-more, .next-all, .can-all, .suggest-use, .profile-hint-x, .plan-icon-hit, .search-trigger, .hero-back, .dhero-back)::after {
+  :is(.infotip-button, .brand, .back, .guide-link, .discussion-link, .role-link, .wam-what, .sec-link, .add-link, .preview-more, .next-all, .can-all, .suggest-use, .plan-icon-hit, .search-trigger, .hero-back, .dhero-back)::after {
     content: '';
     position: absolute;
     top: 50%;

@@ -378,8 +378,7 @@ function chooseCourse(c: Course): void {
   border: 1px solid var(--glass-edge);
   border-radius: var(--radius);
   background: var(--glass-fill);
-  -webkit-backdrop-filter: var(--glass-blur);
-  backdrop-filter: var(--glass-blur);
+  /* On the wizard's glass card: no blur of its own. */
   box-shadow: var(--glass-shadow);
   font-size: 1rem;
   font-weight: 500;

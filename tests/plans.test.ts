@@ -186,6 +186,9 @@ describe('plans in the app', () => {
     const { usePlans } = await import('../src/composables/usePlans')
     const { useProfile } = await import('../src/composables/useProfile')
     books.value = {}
+    // Before the default plan's first semester begins: its subjects stay planned, not on the record.
+    const { setToday } = await import('../src/engine/dataYear')
+    setToday('2025-12-01')
     const plan = usePlan()
     const plans = usePlans()
     const me = useProfile()
@@ -216,6 +219,7 @@ describe('plans in the app', () => {
     plans.remove(plans.active.value.id)
     expect(plans.active.value.id).not.toBe(idA)
     expect(plans.list.value).toHaveLength(2)
+    setToday(undefined)
   })
 
   it('keeps a career goal per plan: clearing it in one leaves the other’s', async () => {
