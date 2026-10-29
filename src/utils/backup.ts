@@ -1,5 +1,5 @@
 import { cleanCalc } from '../engine/finalCalc'
-import { cleanRevision } from '../engine/revisionPlan'
+import { cleanRevisionStore } from '../engine/revisionPlan'
 import { cleanPlans, cleanProfiles, cleanRated, cleanShortlist } from './sanitize'
 /**
  * A student's record, plans, rated and shortlisted subjects, final-calculator marks and revision plan live only in this browser. A
@@ -43,7 +43,7 @@ export function restoreBackup(text: string): boolean {
   if (!isBackup(parsed)) return false
   try {
     // Put each part in shape before saving it, as reading it back would.
-    const CLEAN: Record<(typeof KEYS)[number], (x: unknown) => unknown> = { 'sc:profiles': cleanProfiles, 'sc:plans': cleanPlans, 'sc:rated': cleanRated, 'sc:shortlist': cleanShortlist, 'sc:finalCalc': cleanCalc, 'sc:revision': cleanRevision }
+    const CLEAN: Record<(typeof KEYS)[number], (x: unknown) => unknown> = { 'sc:profiles': cleanProfiles, 'sc:plans': cleanPlans, 'sc:rated': cleanRated, 'sc:shortlist': cleanShortlist, 'sc:finalCalc': cleanCalc, 'sc:revision': cleanRevisionStore }
     for (const key of KEYS) {
       const value = parsed.data[key]
       if (value !== undefined) localStorage.setItem(key, JSON.stringify(CLEAN[key](value)))

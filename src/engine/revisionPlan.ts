@@ -25,14 +25,20 @@ export interface RevisionSubject {
   difficulty: RevisionDifficulty
   /** Final exam's share of the mark, 0–100, when known. */
   examWeight?: number
+  /** The student says there is no final exam: left out of the plan, not flagged. */
+  noExam?: boolean
 }
 
 export interface RevisionInput {
   subjects: readonly RevisionSubject[]
   /** First day of revision, YYYY-MM-DD. */
   start: string
-  /** Hours a day available (0–16). */
-  hoursPerDay: number
+  /**
+   * Hours a day the student has (0–16), the most on any day; days far from an exam get less.
+   * Left out (null), the planner picks the load itself: about 2.5 hours a day two weeks out,
+   * rising to 7 the day before an exam.
+   */
+  hoursPerDay?: number | null
   /** Weekdays to rest, 0 = Sunday … 6 = Saturday. */
   restWeekdays?: readonly number[]
 }
@@ -55,7 +61,7 @@ export interface RevisionDay {
   sessions: RevisionSession[]
 }
 
-export type RevisionSkip = 'noDate' | 'pastExam'
+export type RevisionSkip = 'noDate' | 'pastExam' | 'noExam'
 
 export interface RevisionPlan {
   days: RevisionDay[]
@@ -71,6 +77,23 @@ export const DIFFICULTY_WEIGHT: Record<RevisionDifficulty, number> = { easier: 0
 /** Subjects sharing one ordinary day, at most. */
 export const MAX_SUBJECTS_A_DAY = 3
 export const MAX_HOURS_A_DAY = 16
+/** The planner's own load when the student gives none: light far out, heavy just before an exam. */
+export const AUTO_HOURS = { far: 2.5, near: 7 } as const
+/** Days before an exam over which the load ramps up. */
+export const RAMP_DAYS = 14
+/** With the student's hours, the lightest day is this share of them. */
+export const RAMP_FLOOR = 0.6
+
+/**
+ * Hours for a day `daysLeft` days before the next exam (1 = the day before), in half hours:
+ * rising toward the exam, never above the student's hours (or 7 when they give none).
+ */
+export function dayLoad(daysLeft: number, hoursPerDay?: number | null): number {
+  const near = Math.min(Math.max(0, RAMP_DAYS - daysLeft), RAMP_DAYS - 1) / (RAMP_DAYS - 1) // 0 far … 1 the day before
+  if (hoursPerDay === null || hoursPerDay === undefined) return cleanHours(AUTO_HOURS.far + (AUTO_HOURS.near - AUTO_HOURS.far) * near)
+  const cap = cleanHours(hoursPerDay)
+  return cleanHours(cap * (RAMP_FLOOR + (1 - RAMP_FLOOR) * near))
+}
 
 const DATE = /^\d{4}-\d{2}-\d{2}$/
 
@@ -130,7 +153,8 @@ function split(units: number, items: { code: string; score: number }[]): Map<str
 }
 
 export function planRevision(input: RevisionInput): RevisionPlan {
-  const hours = cleanHours(input.hoursPerDay)
+  const auto = input.hoursPerDay === null || input.hoursPerDay === undefined
+  const hours = auto ? AUTO_HOURS.near : cleanHours(input.hoursPerDay!)
   const rest = new Set((input.restWeekdays ?? []).filter((d) => Number.isInteger(d) && d >= 0 && d <= 6))
   const skipped: RevisionPlan['skipped'] = []
   // One row per code (the first one wins), in the order given.
@@ -139,7 +163,8 @@ export function planRevision(input: RevisionInput): RevisionPlan {
   input.subjects.forEach((s) => {
     if (seen.has(s.code)) return
     seen.add(s.code)
-    if (!isDay(s.exam)) skipped.push({ code: s.code, why: 'noDate' })
+    if (s.noExam) skipped.push({ code: s.code, why: 'noExam' })
+    else if (!isDay(s.exam)) skipped.push({ code: s.code, why: 'noDate' })
     else if (!isDay(input.start) || s.exam <= input.start) skipped.push({ code: s.code, why: 'pastExam' })
     else subjects.push({ ...s, w: subjectWeight(s), order: subjects.length })
   })
@@ -176,12 +201,14 @@ export function planRevision(input: RevisionInput): RevisionPlan {
     }
   }
 
-  const units = hours * 2
   const owed = new Map(subjects.map((s) => [s.code, 0])) // hours deserved minus hours given
   for (const day of days) {
     if (day.kind !== 'study') continue
     const ahead = byExam.filter((s) => s.exam > day.date)
     if (!ahead.length) continue
+    const load = dayLoad(daysBetween(day.date, ahead[0]!.exam), input.hoursPerDay)
+    const units = load * 2
+    if (!units) continue
     const kept = focus.get(day.date)
     if (kept) {
       const who = ahead.filter((s) => s.exam === kept)
@@ -191,7 +218,7 @@ export function planRevision(input: RevisionInput): RevisionPlan {
     } else {
       const score = (s: (typeof ahead)[number]) => s.w / Math.sqrt(daysBetween(day.date, s.exam))
       const sum = ahead.reduce((t, s) => t + score(s), 0)
-      for (const s of ahead) owed.set(s.code, owed.get(s.code)! + (hours * score(s)) / sum)
+      for (const s of ahead) owed.set(s.code, owed.get(s.code)! + (load * score(s)) / sum)
       const pick = [...ahead]
         .sort((a, b) => owed.get(b.code)! - owed.get(a.code)! || a.exam.localeCompare(b.exam) || a.order - b.order)
         .slice(0, Math.min(MAX_SUBJECTS_A_DAY, units))
@@ -212,10 +239,11 @@ export function planRevision(input: RevisionInput): RevisionPlan {
 // ---------- saving ----------
 
 export interface RevisionState {
-  subjects: { code: string; exam: string; time?: string; difficulty?: RevisionDifficulty }[]
+  subjects: { code: string; exam: string; time?: string; difficulty?: RevisionDifficulty; noExam?: boolean }[]
   start: string
-  hoursPerDay: number
-  /** Daily start time of the first session, HH:MM. */
+  /** Hours a day, the most on any day; null: the planner decides. */
+  hoursPerDay: number | null
+  /** Daily start time of the first session, HH:MM; empty: sessions go in the calendar as all-day notes. */
   dayStart: string
   restWeekdays: number[]
   /** The student changed the list: stop filling it from the plan. */
@@ -227,7 +255,7 @@ export const isTime = (x: unknown): x is string => typeof x === 'string' && TIME
 const LEVELS: readonly RevisionDifficulty[] = ['easier', 'average', 'harder']
 
 export function emptyRevision(): RevisionState {
-  return { subjects: [], start: '', hoursPerDay: 6, dayStart: '09:00', restWeekdays: [], edited: false }
+  return { subjects: [], start: '', hoursPerDay: null, dayStart: '', restWeekdays: [], edited: false }
 }
 
 /** Puts a saved (or restored) copy back in shape; anything unknown is dropped. */
@@ -240,17 +268,117 @@ export function cleanRevision(raw: unknown): RevisionState {
         if (typeof x !== 'object' || x === null) return []
         const s = x as Record<string, unknown>
         if (typeof s.code !== 'string' || !/^[A-Z]{4}\d{5}$/.test(s.code)) return []
-        return [{ code: s.code, exam: isDay(s.exam) ? s.exam : '', ...(isTime(s.time) ? { time: s.time } : {}), ...(LEVELS.includes(s.difficulty as RevisionDifficulty) ? { difficulty: s.difficulty as RevisionDifficulty } : {}) }]
+        return [{ code: s.code, exam: isDay(s.exam) ? s.exam : '', ...(isTime(s.time) ? { time: s.time } : {}), ...(LEVELS.includes(s.difficulty as RevisionDifficulty) ? { difficulty: s.difficulty as RevisionDifficulty } : {}), ...(typeof s.noExam === 'boolean' ? { noExam: s.noExam } : {}) }]
       })
     : []
   return {
     subjects: subjects.slice(0, 12),
     start: isDay(r.start) ? r.start : '',
-    hoursPerDay: typeof r.hoursPerDay === 'number' ? cleanHours(r.hoursPerDay) : base.hoursPerDay,
+    hoursPerDay: typeof r.hoursPerDay === 'number' && Number.isFinite(r.hoursPerDay) ? cleanHours(r.hoursPerDay) : null,
     dayStart: isTime(r.dayStart) ? r.dayStart : base.dayStart,
     restWeekdays: Array.isArray(r.restWeekdays) ? [...new Set(r.restWeekdays.filter((d): d is number => Number.isInteger(d) && (d as number) >= 0 && (d as number) <= 6))].sort() : [],
     edited: r.edited === true,
   }
+}
+
+/** Every term's own revision plan, by term key ("2026-semester-2"), and the term last picked. */
+export interface RevisionStore {
+  terms: Record<string, RevisionState>
+  term: string
+}
+
+const TERM_KEY = /^\d{4}-(summer|semester-1|winter|semester-2)$/
+export const termKey = (t: { year: number; period: string }) => `${t.year}-${t.period}`
+
+export function emptyRevisionStore(): RevisionStore {
+  return { terms: {}, term: '' }
+}
+
+/**
+ * Puts a saved copy back in shape. A copy from before terms were kept apart (one flat plan) is
+ * kept under "legacy"; the page gives it to the first term the student opens that has nothing yet.
+ */
+export function cleanRevisionStore(raw: unknown): RevisionStore {
+  if (typeof raw !== 'object' || raw === null) return emptyRevisionStore()
+  const r = raw as Record<string, unknown>
+  if (!('terms' in r)) return 'subjects' in r ? { terms: { legacy: cleanRevision(r) }, term: '' } : emptyRevisionStore()
+  const terms: Record<string, RevisionState> = {}
+  if (typeof r.terms === 'object' && r.terms !== null) {
+    for (const [k, v] of Object.entries(r.terms)) if (TERM_KEY.test(k) || k === 'legacy') terms[k] = cleanRevision(v)
+  }
+  return { terms, term: typeof r.term === 'string' && TERM_KEY.test(r.term) ? r.term : '' }
+}
+
+// ---------- exam periods ----------
+
+export type RevisionPeriod = 'summer' | 'semester-1' | 'winter' | 'semester-2'
+const PERIOD_ORDER: readonly RevisionPeriod[] = ['summer', 'semester-1', 'winter', 'semester-2']
+
+/** A key-date row, as far as the planner needs one. */
+export interface TermDate {
+  kind: string
+  year: number
+  term: string
+  start: string
+  end: string
+}
+
+/** A term's exam window from the key dates: revision from `from`, exams `examsStart`–`end`. */
+export interface ExamPeriod {
+  /** First day of SWOT Vac, else of the exam period. */
+  from: string
+  examsStart: string
+  end: string
+  /** The earliest exam date a student can pick: summer and winter intensives can end any time in the term. */
+  earliest: string
+}
+
+/**
+ * The term's exam window. Without an exam period in the key dates (winter, intensive summer
+ * subjects), the exams fall in the last two weeks of teaching; with neither, there is none.
+ */
+export function examPeriod(dates: readonly TermDate[], year: number, term: string): ExamPeriod | null {
+  const of = (kind: string) => dates.find((d) => d.kind === kind && d.year === year && d.term === term)
+  const exams = of('exams')
+  const teach = of('teaching')
+  const intensive = term === 'summer' || term === 'winter'
+  if (exams) {
+    const swot = of('swotvac')
+    return { from: swot && swot.start < exams.start ? swot.start : exams.start, examsStart: exams.start, end: exams.end, earliest: intensive && teach && teach.start < exams.start ? teach.start : exams.start }
+  }
+  if (!teach) return null
+  const from = addDays(teach.end, -13) < teach.start ? teach.start : addDays(teach.end, -13)
+  return { from, examsStart: from, end: teach.end, earliest: intensive ? teach.start : from }
+}
+
+/** The first revision day: today when the window has begun, else the window's first day. */
+export function defaultStart(period: ExamPeriod | null, today: string): string {
+  return period && period.from > today ? period.from : today
+}
+
+/**
+ * The terms the student can plan revision for, in calendar order: each term of the plan or of the
+ * record with subjects in it, whose exams haven't all finished (a term with no dates counts as
+ * ahead when it is after today's year). The first one is the default.
+ */
+export function revisionTerms(
+  terms: readonly { year: number; period: string; subjects: readonly string[] }[],
+  dates: readonly TermDate[],
+  today: string,
+): { year: number; period: RevisionPeriod; subjects: string[]; window: ExamPeriod | null }[] {
+  const byKey = new Map<string, { year: number; period: RevisionPeriod; subjects: string[] }>()
+  for (const t of terms) {
+    if (!PERIOD_ORDER.includes(t.period as RevisionPeriod) || !t.subjects.length) continue
+    const k = termKey(t)
+    const cur = byKey.get(k) ?? { year: t.year, period: t.period as RevisionPeriod, subjects: [] }
+    cur.subjects = [...new Set([...cur.subjects, ...t.subjects])]
+    byKey.set(k, cur)
+  }
+  const thisYear = Number(today.slice(0, 4))
+  return [...byKey.values()]
+    .map((t) => ({ ...t, window: examPeriod(dates, t.year, t.period) }))
+    .filter((t) => (t.window ? t.window.end >= today : t.year > thisYear))
+    .sort((a, b) => a.year - b.year || PERIOD_ORDER.indexOf(a.period) - PERIOD_ORDER.indexOf(b.period))
 }
 
 // ---------- calendar file ----------
@@ -312,7 +440,8 @@ export function sessionTimes(day: RevisionDay, dayStart: string): { session: Rev
 }
 
 export interface IcsText {
-  session: (code: string, focus: boolean) => string
+  /** `hours` is given for an all-day session (no start time), to say how long. */
+  session: (code: string, focus: boolean, hours?: number) => string
   exam: (code: string) => string
   reminder: string
 }
@@ -332,7 +461,11 @@ export function revisionIcs(plan: RevisionPlan, subjects: readonly RevisionSubje
     lines.push(`SUMMARY:${esc(summary)}`, 'BEGIN:VALARM', 'ACTION:DISPLAY', `DESCRIPTION:${esc(text.reminder)}`, `TRIGGER:${trigger}`, 'END:VALARM', 'END:VEVENT')
   }
   for (const day of plan.days) {
-    for (const { session, from, to } of sessionTimes(day, dayStart)) {
+    if (!isTime(dayStart)) {
+      // No start time: each session is an all-day note on its day.
+      for (const session of day.sessions) event(`rev-${day.date}-${session.code}`, day.date.replaceAll('-', ''), addDays(day.date, 1).replaceAll('-', ''), text.session(session.code, session.focus, session.hours), '-PT12H', true)
+    }
+    for (const { session, from, to } of isTime(dayStart) ? sessionTimes(day, dayStart) : []) {
       event(`rev-${day.date}-${session.code}`, local(day.date, from), local(day.date, to), text.session(session.code, session.focus), '-PT15M')
     }
     for (const code of day.exams) {
