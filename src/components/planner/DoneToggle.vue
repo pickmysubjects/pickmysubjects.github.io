@@ -58,7 +58,7 @@ function onEnter(e: KeyboardEvent): void {
       @keydown.enter="onEnter"
     />
     <button v-if="done" type="button" class="toggle-btn" @click="emit('undo')">{{ t('plan.doneUndo') }}</button>
-    <button v-else-if="!asking" type="button" class="toggle-btn" @click="onDone">{{ t('plan.doneMark') }}</button>
+    <button v-else-if="!asking" type="button" class="toggle-btn toggle-act" @click="onDone">{{ t('plan.doneMark') }}</button>
     <span v-if="asking && !done" class="toggle-note">{{ t('plan.doneNeedsMark') }}</span>
     <span v-else-if="done && future" class="toggle-note">{{ t('plan.doneFuture') }}</span>
   </span>
@@ -100,6 +100,25 @@ function onEnter(e: KeyboardEvent): void {
 .toggle-btn:focus-visible {
   color: var(--ink);
   background: color-mix(in srgb, var(--ink) 6%, transparent);
+}
+
+/* An action, not a status: outlined in the accent, unlike the filled 必修 / 专业选修 tags. */
+.toggle-act {
+  border-color: var(--accent);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.toggle-act:hover,
+.toggle-act:focus-visible {
+  color: var(--accent-ink);
+  background: var(--accent);
+}
+
+@media (max-width: 640px) {
+  .toggle-act {
+    flex: 1 1 100%;
+  }
 }
 
 .toggle-note {

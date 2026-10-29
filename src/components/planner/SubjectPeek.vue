@@ -282,7 +282,7 @@ function onClick(event: MouseEvent): void {
 
       <!-- Done or not: the same toggle as on the cards; a done subject says so, with its mark. -->
       <div v-if="planned || doneEntry" class="peek-done" :class="{ 'peek-done-yes': doneEntry }">
-        <strong v-if="doneEntry" class="peek-done-title">{{ doneEntry.mark === undefined ? t('plan.doneMark') : t('plan.doneStatus', { mark: doneEntry.mark }) }}</strong>
+        <strong v-if="doneEntry" class="peek-done-title">{{ doneEntry.mark === undefined ? t('plan.doneShort') : t('plan.doneStatus', { mark: doneEntry.mark }) }}</strong>
         <DoneToggle :code="code" :done="!!doneEntry" :mark="doneEntry?.mark" :pass-fail="passFail" :future="future" @done="emit('done', $event)" @undo="emit('undo')" />
       </div>
 

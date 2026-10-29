@@ -473,23 +473,6 @@ onBeforeUnmount(() => io?.disconnect())
   font-weight: 600;
 }
 
-/* A chip with an ⓘ: the opened text goes on its own full-width line under the label. */
-.chip-tip {
-  flex-wrap: wrap;
-}
-
-.chip-tip:has([aria-expanded='true']) {
-  border-radius: var(--radius-sm);
-}
-
-.chip-tip :deep(.infotip) {
-  display: contents;
-}
-
-.chip-tip :deep(.infotip-panel) {
-  flex-basis: 100%;
-}
-
 .instead {
   display: flex;
   flex-wrap: wrap;

@@ -50,7 +50,6 @@ plan.unstale()
 const { profile, setConfirmed, setResults } = useProfile()
 const { t, locale } = useI18n()
 
-const STUDENT_SITE = 'https://students.unimelb.edu.au/'
 const editing = shallowRef(false)
 
 // A plan someone shared: /plan?share=… (packed into the link, no server).
@@ -689,10 +688,6 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
           <p v-if="onBoard && careerReminder" class="started career-gap">
             {{ careerReminder.text }} <a :href="link(`careers/${careerReminder.id}`)">{{ t('careerGoal.gapLink') }}</a>
           </p>
-          <p class="draft">
-            {{ t('plan.draftNoteShort') }}
-            <InfoTip>{{ t('plan.draftNote') }} <a :href="STUDENT_SITE" target="_blank" rel="noopener">{{ t('plan.draftLink') }}</a></InfoTip>
-          </p>
           <SubjectTimeline
             v-if="selected"
             class="timeline-bar"
@@ -1032,16 +1027,6 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-}
-
-.draft {
-  margin: 0;
-  font-size: 0.8125rem;
-  color: var(--ink-soft);
-}
-
-.draft a {
-  color: var(--ink-soft);
 }
 
 .timeline-bar {
