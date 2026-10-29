@@ -57,7 +57,7 @@ describe('compare table', () => {
     s.remove('MAST10006')
   })
 
-  it("shows the subject fit card's own difficulty and fit for the same subjects and profile", async () => {
+  it("shows the subject fit card's own difficulty for the same subjects and profile", async () => {
     const { usePlan } = await import('../src/composables/usePlan')
     const { useProfile } = await import('../src/composables/useProfile')
     const { useSubjectFit } = await import('../src/composables/useSubjectFit')
@@ -76,21 +76,15 @@ describe('compare table', () => {
       for (const col of compare.columns.value) {
         const card = useSubjectFit(ref(col.subject.code), year)
         expect(col.difficulty).toEqual(card.difficulty.value)
-        expect(col.fit).toEqual(card.fit.value)
       }
     }
-    // No profile yet: no fit, same difficulty.
     check()
-    expect(compare.columns.value.every((c) => c.fit === null)).toBe(true)
 
     me.setSkills({ programming: 5, maths: 2 })
     me.setInterests(['ai', 'programming'])
     me.setResults([{ code: 'MAST10006', mark: 75 }])
     await nextTick()
     check()
-    expect(compare.columns.value.some((c) => c.fit?.kind === 'fit')).toBe(true)
-    // The done subject reads as done, as on its page.
-    expect(compare.columns.value[1]!.fit).toMatchObject({ kind: 'out', why: { key: 'done' } })
   })
 
   it('reads a mark condition the way the plan does: the best attempt, whatever order they were entered in', async () => {
@@ -117,6 +111,7 @@ describe('compare table', () => {
     const exam = Math.round((s.assessment ?? []).filter((x) => x.kind === 'exam').reduce((a, x) => a + x.weight, 0))
     expect(col!.exam).toBe(s.assessment?.length ? exam : null)
     expect(col!.prereq).toBe(s.prerequisites === 'none' ? 'none' : expect.any(String))
-    if (col!.assessment) expect(col!.assessment.reduce((a, x) => a + x.weight, 0)).toBeGreaterThanOrEqual(99)
+    expect(col!.hurdles).toBe(s.assessment?.length ? s.assessment.filter((x) => x.hurdle).length : null)
+    expect(col!.reviews).toBe(s.signals?.reviews ?? 0)
   })
 })

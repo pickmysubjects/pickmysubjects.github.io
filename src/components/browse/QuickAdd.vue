@@ -14,7 +14,8 @@ import { addTermChoices, defaultAddTerm } from '@/utils/pastTerms'
  * semester picker); with no plan yet, to the planner with it ready to place. Already passed or
  * already in the plan: says so instead.
  */
-const props = defineProps<{ subject: Subject }>()
+// `text`: a plain text button saying where it goes ("Add to plan"), for tables with no room for icons.
+const props = defineProps<{ subject: Subject; text?: boolean }>()
 const plan = usePlan()
 const { profile } = useProfile()
 const { t } = useI18n()
@@ -39,15 +40,15 @@ function add(): void {
 </script>
 
 <template>
-  <span v-if="passed" class="qa qa-done"><Check :size="15" aria-hidden="true" />{{ t('subject.passed') }}</span>
+  <span v-if="passed" class="qa qa-done"><Check v-if="!text" :size="15" aria-hidden="true" />{{ t('subject.passed') }}</span>
   <a v-else-if="plannedAt" class="qa qa-done" :href="link('plan')" role="status">
-    <Check :size="15" aria-hidden="true" />{{ added ? t('subject.added', { term: termLabel(t, plannedAt) }) : t('subject.inPlanAt', { term: termLabel(t, plannedAt) }) }}
+    <Check v-if="!text" :size="15" aria-hidden="true" />{{ added ? t('subject.added', { term: termLabel(t, plannedAt) }) : t('subject.inPlanAt', { term: termLabel(t, plannedAt) }) }}
   </a>
   <a v-else-if="!plan.setupChosen.value" class="qa" :href="link(`plan?add=${code}`)" :aria-label="t('browse.addLabel', { code })">
-    <Plus :size="15" aria-hidden="true" />{{ t('browse.add') }}
+    <Plus v-if="!text" :size="15" aria-hidden="true" />{{ text ? t('shortlist.addToPlan') : t('browse.add') }}
   </a>
   <button v-else-if="target" type="button" class="qa" :aria-label="t('browse.addLabel', { code })" :title="termLabel(t, target)" @click="add">
-    <Plus :size="15" aria-hidden="true" />{{ t('browse.add') }}
+    <Plus v-if="!text" :size="15" aria-hidden="true" />{{ text ? t('shortlist.addToPlan') : t('browse.add') }}
   </button>
 </template>
 
