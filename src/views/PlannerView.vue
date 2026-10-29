@@ -4,14 +4,13 @@ import { viewYear } from '@/engine/dataYear'
 import InfoTip from '@/components/InfoTip.vue'
 import { link } from '@/composables/useView'
 import { computed, nextTick, onBeforeUnmount, shallowRef, useTemplateRef, watch } from 'vue'
-import { RotateCcw, TriangleAlert, ChevronDown } from 'lucide-vue-next'
+import { RotateCcw, TriangleAlert } from 'lucide-vue-next'
 import PlanWizard from '@/components/planner/PlanWizard.vue'
 import PlanMap from '@/components/planner/PlanMap.vue'
 import SubjectPeek from '@/components/planner/SubjectPeek.vue'
 import PlanRequirements from '@/components/planner/PlanRequirements.vue'
 import SubjectTimeline from '@/components/planner/SubjectTimeline.vue'
-import PlanHowBuilt from '@/components/planner/PlanHowBuilt.vue'
-import PlanIssues from '@/components/planner/PlanIssues.vue'
+import PlanDetails from '@/components/planner/PlanDetails.vue'
 import PlanActions from '@/components/planner/PlanActions.vue'
 import PlanPrint, { type PrintTerm } from '@/components/planner/PlanPrint.vue'
 import SharedPlanView from '@/components/planner/SharedPlanView.vue'
@@ -749,24 +748,20 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
             @done="markDone"
             @undo="plan.markUndone"
           />
-          <details class="details">
-            <summary class="details-summary">
-              <span>{{ t('plan.details') }}</span>
-              <ChevronDown :size="18" aria-hidden="true" class="details-chevron" />
-            </summary>
-            <div class="details-body">
-              <!-- How to read the board lives here, not above the plan. -->
-              <p class="details-info">{{ t('plan.hint') }} {{ t('plan.tagLegend') }}</p>
-              <PlanIssues class="details-card" :issues="allIssues" :rules="allRules" :statuses="plan.courseCheck.value.statuses" />
-              <PlanHowBuilt
-                v-if="plan.notes.value.length || plan.unplaced.value.length"
-                :notes="plan.notes.value"
-                :rules="rules"
-                :unplaced="plan.unplaced.value"
-                @open="peek = $event"
-              />
-            </div>
-          </details>
+          <PlanDetails
+            :statuses="plan.courseCheck.value.statuses"
+            :rules="allRules"
+            :degree-rules="rules"
+            :members="members"
+            :active="ruleFocus"
+            :issues="allIssues"
+            :passed="passedNow"
+            :notes="plan.notes.value"
+            :unplaced="plan.unplaced.value"
+            @focus="focusRule"
+            @select="select"
+            @open="peek = $event"
+          />
         </SubjectSection>
 
 
@@ -1086,99 +1081,6 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
   position: sticky;
   top: 72px;
   z-index: 20;
-}
-
-/* How to read the board, every check and how the plan was built: one fold under the board. */
-.details {
-  border-top: 1px solid var(--divider);
-}
-
-.details-summary {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  min-height: 48px;
-  font-weight: 650;
-  cursor: pointer;
-  list-style: none;
-}
-
-.details-summary::-webkit-details-marker {
-  display: none;
-}
-
-.details-chevron {
-  flex: none;
-  color: var(--ink-faint);
-  transition: transform 0.15s;
-}
-
-.details[open] .details-chevron {
-  transform: rotate(180deg);
-}
-
-.details-body {
-  display: grid;
-  gap: 16px;
-  padding: 4px 0 8px;
-}
-
-.details-info {
-  margin: 0;
-  padding: 12px 14px;
-  border-radius: 14px;
-  background: color-mix(in srgb, var(--ink) 4%, transparent);
-  font-size: 0.875rem;
-  color: var(--ink-soft);
-}
-
-.details-card {
-  min-width: 0;
-  padding: 16px;
-  border: 1px solid var(--glass-edge);
-  border-radius: 16px;
-  background: var(--glass-fill);
-}
-
-/* Folded parts inside (met rules, assumption notes) share one look: a chevron, not the browser triangle. */
-.details-body :deep(details > summary) {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  min-height: 36px;
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--ink-soft);
-  cursor: pointer;
-  list-style: none;
-}
-
-.details-body :deep(details > summary::-webkit-details-marker) {
-  display: none;
-}
-
-.details-body :deep(details > summary::before) {
-  content: '';
-  flex: none;
-  width: 6px;
-  height: 6px;
-  margin: 0 4px 0 2px;
-  border-right: 2px solid currentColor;
-  border-bottom: 2px solid currentColor;
-  transform: rotate(-45deg);
-  transition: transform 0.15s;
-}
-
-.details-body :deep(details[open] > summary::before) {
-  transform: rotate(45deg);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .details-chevron,
-  .details-body :deep(details > summary::before) {
-    transition: none;
-  }
 }
 
 /* Heavy semesters: one line each, "Show" opens that semester's note on the board. */
