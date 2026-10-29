@@ -894,3 +894,24 @@ for (const [name, fn] of Object.entries(myHeroes)) {
   fs.mkdirSync(MY[name], { recursive: true })
   write(`Art${name}`, `art-${name.toLowerCase()}`, fitBox(s, motion), s, css, name === 'Record' ? 'the wide hero band of My record' : 'the wide hero band of Saved', 'xMaxYMax', MY[name], '../../guide/art/art.css')
 }
+// The foot of My record's side panel: a transcript sheet, its rows of marks, and a pink tick that
+// draws itself in on each loop.
+const myMinis = {}
+myMinis.Record = () => {
+  let s = `<ellipse class="sh" cx="100" cy="140" rx="36" ry="6"/><g class="sheet">`
+  s += `<rect x="70" y="28" width="60" height="106" rx="8" class="gls"/><rect x="70" y="28" width="60" height="10" rx="5" class="lil"/>`
+  for (let i = 0; i < 5; i++) {
+    const y = 50 + i * 12
+    s += `<rect x="78" y="${y}" width="${28 - (i % 2) * 6}" height="4" rx="2" class="sh2"/><rect x="112" y="${y}" width="10" height="4" rx="2" class="skt"/>`
+  }
+  s += `<circle cx="116" cy="118" r="11" class="pkt"/><path class="tick" d="M110.5 118 l4 4 l7 -8" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" pathLength="1"/></g>`
+  const css = `.mini-record .sheet{animation:mrc-float 6s ease-in-out infinite}
+.mini-record .tick{stroke-dasharray:1;stroke-dashoffset:0;animation:mrc-tick 5s ease-in-out infinite}
+@keyframes mrc-tick{0%,10%{stroke-dashoffset:1}30%,100%{stroke-dashoffset:0}}
+@keyframes mrc-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}`
+  return { s, css, motion: [4, 0, 4, 0] }
+}
+for (const [name, fn] of Object.entries(myMinis)) {
+  const { s, css, motion } = fn()
+  write(`Mini${name}`, `mini-${name.toLowerCase()}`, fitBox(s, motion), s, css, 'the small illustration at the foot of My record\'s side panel', 'xMidYMid', MY[name], '../../guide/art/art.css')
+}

@@ -580,6 +580,7 @@ export const zhCN: Messages = {
     addTerm: "学期（可选）",
     secStrengths: "擅长与兴趣",
     secGoal: "目标与每周时间",
+    tocPlans: "计划 A/B",
     next: '下一步：生成学位计划',
   },
   skill: {

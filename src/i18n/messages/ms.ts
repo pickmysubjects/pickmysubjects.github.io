@@ -580,6 +580,7 @@ export const ms: Messages = {
     addTerm: "Semester (pilihan)",
     secStrengths: "Kekuatan dan minat",
     secGoal: "Matlamat dan jam seminggu",
+    tocPlans: "Pelan A/B",
     next: 'Seterusnya: bina rancangan ijazah',
   },
   skill: {

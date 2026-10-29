@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import InfoTip from '@/components/InfoTip.vue'
-import { computed, shallowRef } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, shallowRef, useTemplateRef } from 'vue'
+import GuideToc from '@/components/guide/GuideToc.vue'
 import DetailHero from '@/components/browse/DetailHero.vue'
 import ResultsEditor from '@/components/profile/ResultsEditor.vue'
 import SkillsEditor from '@/components/profile/SkillsEditor.vue'
@@ -33,6 +34,7 @@ import { termLabel } from '@/i18n/format'
 const { data, subjectList, topics } = useDataset()
 const { profile, wam, setResults, setCredit, setSkills, setInterests, setTargetWam } = useProfile()
 const art = () => import('@/components/profile/art/ArtRecord.vue')
+const miniArt = () => import('@/components/profile/art/MiniRecord.vue')
 // The target WAM lives on the record; the WAM calculator reads and sets the same one.
 function onTarget(e: Event): void {
   const raw = (e.target as HTMLInputElement).value
@@ -71,6 +73,41 @@ const forPlan = computed(() => t.value('plans.forPlan', { name: planName(t.value
 const restoreFailed = shallowRef(false)
 // Opened from "Credit or exemptions?" in the results header.
 const creditOpen = shallowRef(false)
+
+// "On this page", as on the guide: the page's sections by their headings' ids. Grade sharing only
+// shows when there is something to share, so a row is listed only while its heading is on the page.
+const TOC = [
+  { id: 'sec-degree', key: 'record.degreeTitle', sub: false },
+  { id: 'sec-results', key: 'record.step2', sub: false },
+  { id: 'sec-plans', key: 'record.tocPlans', sub: false },
+  { id: 'sec-strengths', key: 'record.secStrengths', sub: true },
+  { id: 'sec-goal', key: 'record.secGoal', sub: true },
+  { id: 'share-title', key: 'menu.gradeShare', sub: false },
+  { id: 'sec-backup', key: 'record.backupLink', sub: false },
+] as const
+const body = useTemplateRef<HTMLElement>('body')
+const present = shallowRef<string[]>([])
+function look(): void {
+  const ids = TOC.filter((i) => document.getElementById(i.id)).map((i) => i.id)
+  if (ids.join() !== present.value.join()) present.value = ids
+}
+const tocItems = computed(() => TOC.filter((i) => present.value.includes(i.id)).map((i) => ({ id: i.id, title: t.value(i.key), sub: i.sub })))
+let mo: MutationObserver | null = null
+let lookFrame = 0
+onMounted(() => {
+  nextTick(look)
+  if (!body.value) return
+  mo = new MutationObserver(() => {
+    cancelAnimationFrame(lookFrame)
+    lookFrame = requestAnimationFrame(look)
+  })
+  mo.observe(body.value, { childList: true, subtree: true })
+})
+onBeforeUnmount(() => {
+  mo?.disconnect()
+  cancelAnimationFrame(lookFrame)
+})
+
 async function onRestore(event: Event): Promise<void> {
   const input = event.target as HTMLInputElement
   const file = input.files?.[0]
@@ -108,75 +145,83 @@ async function onRestore(event: Event): Promise<void> {
       </dl>
     </DetailHero>
 
-    <section class="sec surface" aria-labelledby="sec-degree">
-      <header class="sec-head">
-        <h2 id="sec-degree" class="sec-title">{{ t('record.degreeTitle') }}</h2>
-        <span v-if="!setupChosen" class="sec-state">{{ t('record.stepFirst') }}</span>
-      </header>
-      <DegreeCard />
-    </section>
-
-    <section class="sec surface" aria-labelledby="sec-results">
-      <header class="sec-head">
-        <h2 id="sec-results" class="sec-title">{{ t('record.step2') }}</h2>
-        <span class="sec-links">
-          <button class="sec-link" type="button" data-testid="credit-entry" @click="creditOpen = true">{{ t('record.creditEntry') }}</button>
-          <a class="sec-link" :href="link('tools/wam/')">{{ t('wamCalc.open') }}</a>
-        </span>
-      </header>
-      <ResultsEditor v-model="results" v-model:credit="credit" v-model:credit-open="creditOpen" :subjects="data.subjects" :options="options" />
-    </section>
-
-    <!-- Plan A/B: right above what each plan keeps for itself (strengths, interests, goal). -->
-    <div class="plans">
-      <PlanSwitcher no-compare />
-      <p class="hint">{{ t('plans.prefsNoteShort') }}<InfoTip :text="t('plans.prefsNote')" /></p>
-    </div>
-
-    <div class="pair">
-      <section class="sec surface" aria-labelledby="sec-strengths">
-        <header class="sec-head">
-          <h2 id="sec-strengths" class="sec-title">{{ t('record.secStrengths') }}</h2>
-          <span class="for-plan">{{ forPlan }}</span>
-        </header>
-        <p class="prompt">{{ t('record.prompt.skillsPrompt') }} <span class="prompt-count">{{ ratedSkills ? t('record.prompt.rated', { n: ratedSkills }) : t('record.prompt.noneYet') }}</span></p>
-        <SkillsEditor v-model:skills="skills" />
-        <div class="sec-part">
-          <h3 class="sub">{{ t('record.step4') }}</h3>
-          <p class="prompt">{{ t('record.prompt.interestsPrompt') }} <span class="prompt-count">{{ interests.length ? t('record.prompt.picked', { n: interests.length }) : t('record.prompt.noneYet') }}</span></p>
-          <TopicChips v-model="interests" :topics="topics" :first-groups="3" />
-        </div>
-      </section>
-
-      <div class="col">
-        <section class="sec surface" aria-labelledby="sec-goal">
-          <header class="sec-head">
-            <h2 id="sec-goal" class="sec-title">{{ t('record.secGoal') }}</h2>
-            <span class="for-plan">{{ forPlan }}</span>
-          </header>
-          <p class="prompt">{{ t('record.prompt.goalPrompt') }}</p>
-          <GoalPicker :note="t('record.goalNote')" />
-          <div class="sec-part"><CareerGoalPicker /></div>
-          <div class="sec-part"><WorkHours /></div>
-        </section>
-        <SuggestionPreview />
-        <a class="button button-accent next" :href="link('plan')">{{ t('record.next') }} <ArrowRight :size="16" aria-hidden="true" /></a>
+    <div class="record-article">
+      <div class="record-toc">
+        <GuideToc :items="tocItems" :art="miniArt" />
       </div>
-    </div>
+      <div ref="body" class="record-body">
+        <section class="sec surface" aria-labelledby="sec-degree">
+          <header class="sec-head">
+            <h2 id="sec-degree" class="sec-title">{{ t('record.degreeTitle') }}</h2>
+            <span v-if="!setupChosen" class="sec-state">{{ t('record.stepFirst') }}</span>
+          </header>
+          <DegreeCard />
+        </section>
 
-    <div class="foot">
-      <GradeShare class="foot-card" />
-      <section class="foot-card backup surface" aria-labelledby="sec-backup">
-        <h2 id="sec-backup" class="foot-title">{{ t('record.backupLink') }} <InfoTip :text="t('record.backupText')" /></h2>
-        <p v-if="restoreFailed" class="bad" role="alert">{{ t('record.restoreFailed') }}</p>
-        <div class="backup-actions">
-          <button class="button button-quiet" type="button" @click="downloadBackup">{{ t('record.backup') }}</button>
-          <label class="button button-quiet">
-            {{ t('record.restore') }}
-            <input class="visually-hidden" type="file" accept="application/json,.json" @change="onRestore" />
-          </label>
+        <section class="sec surface" aria-labelledby="sec-results">
+          <header class="sec-head">
+            <h2 id="sec-results" class="sec-title">{{ t('record.step2') }}</h2>
+            <span class="sec-links">
+              <button class="sec-link" type="button" data-testid="credit-entry" @click="creditOpen = true">{{ t('record.creditEntry') }}</button>
+              <a class="sec-link" :href="link('tools/wam/')">{{ t('wamCalc.open') }}</a>
+            </span>
+          </header>
+          <ResultsEditor v-model="results" v-model:credit="credit" v-model:credit-open="creditOpen" :subjects="data.subjects" :options="options" />
+        </section>
+
+        <!-- Plan A/B: right above what each plan keeps for itself (strengths, interests, goal). -->
+        <div class="plans">
+          <h2 id="sec-plans" class="visually-hidden">{{ t('record.tocPlans') }}</h2>
+          <PlanSwitcher no-compare />
+          <p class="hint">{{ t('plans.prefsNoteShort') }}<InfoTip :text="t('plans.prefsNote')" /></p>
         </div>
-      </section>
+
+        <div class="pair">
+          <section class="sec surface" aria-labelledby="sec-strengths">
+            <header class="sec-head">
+              <h2 id="sec-strengths" class="sec-title">{{ t('record.secStrengths') }}</h2>
+              <span class="for-plan">{{ forPlan }}</span>
+            </header>
+            <p class="prompt">{{ t('record.prompt.skillsPrompt') }} <span class="prompt-count">{{ ratedSkills ? t('record.prompt.rated', { n: ratedSkills }) : t('record.prompt.noneYet') }}</span></p>
+            <SkillsEditor v-model:skills="skills" />
+            <div class="sec-part">
+              <h3 class="sub">{{ t('record.step4') }}</h3>
+              <p class="prompt">{{ t('record.prompt.interestsPrompt') }} <span class="prompt-count">{{ interests.length ? t('record.prompt.picked', { n: interests.length }) : t('record.prompt.noneYet') }}</span></p>
+              <TopicChips v-model="interests" :topics="topics" :first-groups="3" />
+            </div>
+          </section>
+
+          <div class="col">
+            <section class="sec surface" aria-labelledby="sec-goal">
+              <header class="sec-head">
+                <h2 id="sec-goal" class="sec-title">{{ t('record.secGoal') }}</h2>
+                <span class="for-plan">{{ forPlan }}</span>
+              </header>
+              <p class="prompt">{{ t('record.prompt.goalPrompt') }}</p>
+              <GoalPicker :note="t('record.goalNote')" />
+              <div class="sec-part"><CareerGoalPicker /></div>
+              <div class="sec-part"><WorkHours /></div>
+            </section>
+            <SuggestionPreview />
+            <a class="button button-accent next" :href="link('plan')">{{ t('record.next') }} <ArrowRight :size="16" aria-hidden="true" /></a>
+          </div>
+        </div>
+
+        <div class="foot">
+          <GradeShare class="foot-card" />
+          <section class="foot-card backup surface" aria-labelledby="sec-backup">
+            <h2 id="sec-backup" class="foot-title">{{ t('record.backupLink') }} <InfoTip :text="t('record.backupText')" /></h2>
+            <p v-if="restoreFailed" class="bad" role="alert">{{ t('record.restoreFailed') }}</p>
+            <div class="backup-actions">
+              <button class="button button-quiet" type="button" @click="downloadBackup">{{ t('record.backup') }}</button>
+              <label class="button button-quiet">
+                {{ t('record.restore') }}
+                <input class="visually-hidden" type="file" accept="application/json,.json" @change="onRestore" />
+              </label>
+            </div>
+          </section>
+        </div>
+      </div>
     </div>
     <PhoneMoreLinks />
   </div>
@@ -188,6 +233,36 @@ async function onRestore(event: Event): Promise<void> {
   gap: var(--space-5);
   padding-top: var(--space-4);
   min-width: 0;
+}
+
+/* The guide's layout (GuideView): "On this page" in a 232px column beside the sections; one
+   column, the fold on top, at 960px and below. */
+.record-article {
+  display: grid;
+  grid-template-columns: 232px minmax(0, 1fr);
+  gap: 48px;
+  align-items: start;
+}
+
+.record-toc {
+  align-self: stretch;
+}
+
+.record-body {
+  display: grid;
+  gap: var(--space-5);
+  min-width: 0;
+}
+
+.record-body :is(h2[id]) {
+  scroll-margin-top: 96px;
+}
+
+@media (max-width: 960px) {
+  .record-article {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+  }
 }
 
 .lede {
@@ -475,8 +550,12 @@ async function onRestore(event: Event): Promise<void> {
 }
 
 @media (max-width: 640px) {
-  .record {
+  .record,
+  .record-body {
     gap: var(--space-4);
+  }
+
+  .record {
     padding-top: var(--space-3);
   }
 

@@ -580,6 +580,7 @@ export const id: Messages = {
     addTerm: "Semester (opsional)",
     secStrengths: "Kekuatan dan minat",
     secGoal: "Tujuan dan jam per minggu",
+    tocPlans: "Rencana A/B",
     next: 'Berikutnya: buat rencana kuliah',
   },
   skill: {

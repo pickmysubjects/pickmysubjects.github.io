@@ -580,6 +580,7 @@ export const hi: Messages = {
     addTerm: "सेमेस्टर (वैकल्पिक)",
     secStrengths: "आपकी ताकत और रुचियाँ",
     secGoal: "लक्ष्य और हफ़्ते के घंटे",
+    tocPlans: "प्लान A/B",
     next: 'अगला: डिग्री प्लान बनाएँ',
   },
   skill: {

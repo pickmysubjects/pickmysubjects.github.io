@@ -19,7 +19,7 @@ const PLAN_DIR = join(__dirname, '../src/components/planner/art')
 const PLAN_FILES = readdirSync(PLAN_DIR).filter((f) => /^(Art|Mini)\w+\.vue$/.test(f))
 const TOOLS_DIR = join(__dirname, '../src/components/tools/art')
 const TOOLS_FILES = readdirSync(TOOLS_DIR).filter((f) => /^(Art|Mini)\w+\.vue$/.test(f))
-const MY_FILES = [join(__dirname, '../src/components/profile/art/ArtRecord.vue'), join(__dirname, '../src/components/shortlist/art/ArtShortlist.vue')]
+const MY_FILES = [join(__dirname, '../src/components/profile/art/ArtRecord.vue'), join(__dirname, '../src/components/profile/art/MiniRecord.vue'), join(__dirname, '../src/components/shortlist/art/ArtShortlist.vue')]
 
 describe('guide illustrations', () => {
   it('has a hero scene and a small one for every page', () => {
@@ -48,8 +48,8 @@ describe('guide illustrations', () => {
     expect(TOOLS_FILES.sort()).toEqual(['ArtFinal.vue', 'ArtRevision.vue', 'ArtTools.vue', 'ArtWam.vue', 'MiniRevision.vue'])
   })
 
-  it('has the hero scenes of My record and Saved', () => {
-    expect(readdirSync(join(__dirname, '../src/components/profile/art'))).toEqual(['ArtRecord.vue'])
+  it('has the hero scenes of My record and Saved, and My record\'s small one', () => {
+    expect(readdirSync(join(__dirname, '../src/components/profile/art')).sort()).toEqual(['ArtRecord.vue', 'MiniRecord.vue'])
     expect(readdirSync(join(__dirname, '../src/components/shortlist/art'))).toEqual(['ArtShortlist.vue'])
   })
 

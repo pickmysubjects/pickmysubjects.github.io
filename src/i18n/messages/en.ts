@@ -584,6 +584,7 @@ export const en = {
     addTerm: "Semester (optional)",
     secStrengths: "Strengths and interests",
     secGoal: "Goal and weekly hours",
+    tocPlans: "Plan A/B",
     next: 'Next: build your degree plan',
   },
   skill: {

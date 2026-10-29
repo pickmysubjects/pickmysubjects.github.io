@@ -580,6 +580,7 @@ export const ko: Messages = {
     addTerm: "학기 (선택)",
     secStrengths: "강점과 관심사",
     secGoal: "목표와 주간 시간",
+    tocPlans: "플랜 A/B",
     next: '다음: 학위 계획 만들기',
   },
   skill: {

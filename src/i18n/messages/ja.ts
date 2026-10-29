@@ -580,6 +580,7 @@ export const ja: Messages = {
     addTerm: "学期（任意）",
     secStrengths: "得意なことと興味",
     secGoal: "目標と週の時間",
+    tocPlans: "プラン A/B",
     next: '次へ：学位プランを作る',
   },
   skill: {

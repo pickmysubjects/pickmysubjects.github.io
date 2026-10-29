@@ -580,6 +580,7 @@ export const zhTW: Messages = {
     addTerm: "學期（選填）",
     secStrengths: "擅長與興趣",
     secGoal: "目標與每週時間",
+    tocPlans: "計畫 A/B",
     next: '下一步：產生學位計畫',
   },
   skill: {

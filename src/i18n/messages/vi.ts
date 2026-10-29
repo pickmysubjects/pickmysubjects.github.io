@@ -580,6 +580,7 @@ export const vi: Messages = {
     addTerm: "Học kỳ (tùy chọn)",
     secStrengths: "Điểm mạnh và sở thích",
     secGoal: "Mục tiêu và giờ mỗi tuần",
+    tocPlans: "Kế hoạch A/B",
     next: 'Tiếp theo: lập kế hoạch học tập',
   },
   skill: {
