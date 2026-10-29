@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import InfoTip from '@/components/InfoTip.vue'
 import { computed, shallowRef } from 'vue'
+import DetailHero from '@/components/browse/DetailHero.vue'
 import ResultsEditor from '@/components/profile/ResultsEditor.vue'
 import SkillsEditor from '@/components/profile/SkillsEditor.vue'
 import TopicChips from '@/components/profile/TopicChips.vue'
@@ -14,22 +15,28 @@ import PlanSwitcher from '@/components/plans/PlanSwitcher.vue'
 import PhoneMoreLinks from '@/components/layout/PhoneMoreLinks.vue'
 import { planName } from '@/components/plans/planName'
 import { usePlans } from '@/composables/usePlans'
-import { ArrowRight, Check, Download, Upload } from 'lucide-vue-next'
+import { ArrowRight } from 'lucide-vue-next'
 import { usePlan } from '@/composables/usePlan'
 import { link } from '@/composables/useView'
 import { downloadBackup, restoreBackup } from '@/utils/backup'
-import { useGradeShare } from '@/composables/useGradeShare'
 import { useDataset } from '@/composables/useDataset'
 import { useProfile } from '@/composables/useProfile'
+import { creditPoints, isFail } from '@/engine'
 import { useI18n } from '@/i18n'
 
+/**
+ * My record: the key numbers in the hero (points passed, WAM, target WAM), then the degree, the
+ * marks, what the open plan wants (strengths, interests, goal), and at the foot sharing grades and
+ * the backup. The record is shared by every plan; the profile below the plan switcher is the plan's.
+ */
 const { data, subjectList, topics } = useDataset()
 const { profile, wam, setResults, setCredit, setSkills, setInterests, setTargetWam } = useProfile()
-// The target WAM lives here, on the record; the WAM calculator reads and sets the same one.
+const art = () => import('@/components/profile/art/ArtRecord.vue')
+// The target WAM lives on the record; the WAM calculator reads and sets the same one.
 function onTarget(e: Event): void {
   const raw = (e.target as HTMLInputElement).value
   const n = Number(raw)
-  setTargetWam(raw === '' || !Number.isFinite(n) ? undefined : n)
+  setTargetWam(raw === '' || !Number.isFinite(n) ? undefined : Math.min(100, Math.max(0, n)))
 }
 
 const results = computed({ get: () => profile.value.results, set: setResults })
@@ -40,14 +47,17 @@ const { t } = useI18n()
 const options = computed(() => subjectList.value.map((s) => ({ code: s.code, title: s.title })))
 const ratedSkills = computed(() => Object.keys(profile.value.skills).length)
 const { setupChosen } = usePlan()
+// Each subject passed counts once, however many attempts; credit for study elsewhere counts too.
+const pointsPassed = computed(() => {
+  const passed = new Set(profile.value.results.filter((r) => !isFail(r)).map((r) => r.code))
+  return [...passed].reduce((n, c) => n + (data.value.subjects[c]?.points ?? 0), 0) + creditPoints(profile.value.credit)
+})
 // Strengths, interests and goal are the open plan's: say which one.
 const { active: activePlan } = usePlans()
 const forPlan = computed(() => t.value('plans.forPlan', { name: planName(t.value, activePlan.value) }))
 const restoreFailed = shallowRef(false)
 // Opened from "Credit or exemptions?" in the results header.
 const creditOpen = shallowRef(false)
-// Subjects with a mark not yet shared: a quiet nudge in the summary, beside where they were entered.
-const gradeShare = useGradeShare()
 async function onRestore(event: Event): Promise<void> {
   const input = event.target as HTMLInputElement
   const file = input.files?.[0]
@@ -57,67 +67,71 @@ async function onRestore(event: Event): Promise<void> {
   // Saved state is read when the app starts, so reload to pick up the restored copy.
   if (!restoreFailed.value) location.reload()
 }
-
-// The four things that drive suggestions, for the summary card.
-// Each line jumps to its section and ticks once it has something in it.
-const filled = computed(() => [
-  { key: 'record.degreeTitle', n: -1, done: setupChosen.value, href: '#sec-degree' },
-  { key: 'record.sumSubjects', n: results.value.length, done: results.value.length > 0, href: '#sec-results' },
-  { key: 'record.sumSkills', n: ratedSkills.value, done: ratedSkills.value > 0, href: '#sec-strengths' },
-  { key: 'record.sumInterests', n: interests.value.length, done: interests.value.length > 0, href: '#sec-strengths' },
-  { key: 'record.secGoal', n: -1, done: Boolean(profile.value.career), href: '#sec-goal' },
-])
-const doneCount = computed(() => filled.value.filter((f) => f.done).length)
 </script>
 
 <template>
   <div class="record">
-    <header class="intro">
-      <h1 class="page-title">{{ t('record.title') }}</h1>
+    <DetailHero :title="t('record.title')" :art="art">
       <p class="lede">{{ t('record.ledeShort') }}<InfoTip :text="t('record.lede')" /></p>
-    </header>
-
-    <div class="layout">
-      <!-- At a glance: the WAM (from the marks here; UniMelb's transcript is the official one) and what's filled in. -->
-      <div class="main">
-        <section class="sec surface" aria-labelledby="sec-degree">
-          <header class="sec-head">
-            <h2 id="sec-degree" class="sec-title">{{ t('record.degreeTitle') }}</h2>
-            <span v-if="!setupChosen" class="sec-state">{{ t('record.stepFirst') }}</span>
-          </header>
-          <DegreeCard />
-        </section>
-
-        <section class="sec surface" aria-labelledby="sec-results">
-          <header class="sec-head">
-            <h2 id="sec-results" class="sec-title">{{ t('record.step2') }}</h2>
-            <span v-if="wam !== null" class="sec-badge">{{ t('record.sumWam', { wam }) }}</span>
-            <button class="sec-link" type="button" data-testid="credit-entry" @click="creditOpen = true">{{ t('record.creditEntry') }}</button>
-          </header>
-          <ResultsEditor v-model="results" v-model:credit="credit" v-model:credit-open="creditOpen" :subjects="data.subjects" :options="options" />
-          <GradeShare class="sec-part" />
-        </section>
-
-        <!-- Plan A/B: right above what each plan keeps for itself (strengths, interests, goal). -->
-        <div class="plans">
-          <PlanSwitcher no-compare />
-          <p class="hint">{{ t('plans.prefsNoteShort') }}<InfoTip :text="t('plans.prefsNote')" /></p>
+      <dl class="stats">
+        <div class="stat">
+          <dt>{{ t('record.statPoints') }}</dt>
+          <dd class="stat-num">{{ pointsPassed }}</dd>
         </div>
+        <div class="stat">
+          <dt>WAM <InfoTip><a :href="link('guide/basics/#wam')">{{ t('guide.wamWhat') }}</a></InfoTip></dt>
+          <dd class="stat-num">{{ wam ?? '–' }}</dd>
+        </div>
+        <div class="stat">
+          <dt><label for="target-wam">{{ t('wamGoal.target') }}</label></dt>
+          <dd>
+            <input id="target-wam" class="input stat-input" type="number" inputmode="decimal" min="0" max="100" step="1" :value="profile.targetWam ?? ''" @change="onTarget" />
+          </dd>
+        </div>
+      </dl>
+    </DetailHero>
 
-        <section class="sec surface" aria-labelledby="sec-strengths">
-          <header class="sec-head">
-            <h2 id="sec-strengths" class="sec-title">{{ t('record.secStrengths') }}</h2>
-            <span class="for-plan">{{ forPlan }}</span>
-          </header>
-          <p class="prompt">{{ t('record.prompt.skillsPrompt') }} <span class="prompt-count">{{ ratedSkills ? t('record.prompt.rated', { n: ratedSkills }) : t('record.prompt.noneYet') }}</span></p>
-          <SkillsEditor v-model:skills="skills" />
-          <div class="sec-part">
-            <h3 class="sub">{{ t('record.step4') }}</h3>
-            <p class="prompt">{{ t('record.prompt.interestsPrompt') }} <span class="prompt-count">{{ interests.length ? t('record.prompt.picked', { n: interests.length }) : t('record.prompt.noneYet') }}</span></p>
-            <TopicChips v-model="interests" :topics="topics" :first-groups="3" />
-          </div>
-        </section>
+    <section class="sec surface" aria-labelledby="sec-degree">
+      <header class="sec-head">
+        <h2 id="sec-degree" class="sec-title">{{ t('record.degreeTitle') }}</h2>
+        <span v-if="!setupChosen" class="sec-state">{{ t('record.stepFirst') }}</span>
+      </header>
+      <DegreeCard />
+    </section>
 
+    <section class="sec surface" aria-labelledby="sec-results">
+      <header class="sec-head">
+        <h2 id="sec-results" class="sec-title">{{ t('record.step2') }}</h2>
+        <span class="sec-links">
+          <button class="sec-link" type="button" data-testid="credit-entry" @click="creditOpen = true">{{ t('record.creditEntry') }}</button>
+          <a class="sec-link" :href="link('tools/wam/')">{{ t('wamCalc.open') }}</a>
+        </span>
+      </header>
+      <ResultsEditor v-model="results" v-model:credit="credit" v-model:credit-open="creditOpen" :subjects="data.subjects" :options="options" />
+    </section>
+
+    <!-- Plan A/B: right above what each plan keeps for itself (strengths, interests, goal). -->
+    <div class="plans">
+      <PlanSwitcher no-compare />
+      <p class="hint">{{ t('plans.prefsNoteShort') }}<InfoTip :text="t('plans.prefsNote')" /></p>
+    </div>
+
+    <div class="pair">
+      <section class="sec surface" aria-labelledby="sec-strengths">
+        <header class="sec-head">
+          <h2 id="sec-strengths" class="sec-title">{{ t('record.secStrengths') }}</h2>
+          <span class="for-plan">{{ forPlan }}</span>
+        </header>
+        <p class="prompt">{{ t('record.prompt.skillsPrompt') }} <span class="prompt-count">{{ ratedSkills ? t('record.prompt.rated', { n: ratedSkills }) : t('record.prompt.noneYet') }}</span></p>
+        <SkillsEditor v-model:skills="skills" />
+        <div class="sec-part">
+          <h3 class="sub">{{ t('record.step4') }}</h3>
+          <p class="prompt">{{ t('record.prompt.interestsPrompt') }} <span class="prompt-count">{{ interests.length ? t('record.prompt.picked', { n: interests.length }) : t('record.prompt.noneYet') }}</span></p>
+          <TopicChips v-model="interests" :topics="topics" :first-groups="3" />
+        </div>
+      </section>
+
+      <div class="col">
         <section class="sec surface" aria-labelledby="sec-goal">
           <header class="sec-head">
             <h2 id="sec-goal" class="sec-title">{{ t('record.secGoal') }}</h2>
@@ -128,71 +142,24 @@ const doneCount = computed(() => filled.value.filter((f) => f.done).length)
           <div class="sec-part"><CareerGoalPicker /></div>
           <div class="sec-part"><WorkHours /></div>
         </section>
-
-        <section class="sec surface" aria-labelledby="sec-wam">
-          <header class="sec-head">
-            <h2 id="sec-wam" class="sec-title">{{ t('wamGoal.title') }}</h2>
-          </header>
-          <div class="target">
-            <label class="target-field">
-              <span class="visually-hidden">{{ t('wamGoal.target') }}</span>
-              <input class="input" type="number" inputmode="decimal" min="0" max="100" step="1" :value="profile.targetWam ?? ''" @change="onTarget" />
-            </label>
-            <p class="target-now">
-              <span>{{ wam !== null ? t('record.sumWam', { wam }) : t('record.noMarks') }}</span>
-              <a :href="link('tools/wam/')">{{ t('wamCalc.open') }}</a>
-            </p>
-          </div>
-        </section>
-
-        <p class="next-phone">
-          <a class="button button-accent" :href="link('plan')">{{ t('record.next') }} <ArrowRight :size="16" aria-hidden="true" /></a>
-        </p>
+        <SuggestionPreview />
+        <a class="button button-accent next" :href="link('plan')">{{ t('record.next') }} <ArrowRight :size="16" aria-hidden="true" /></a>
       </div>
+    </div>
 
-      <aside class="side">
-      <section class="summary surface" :aria-label="t('record.summaryTitle')">
-        <p class="summary-title">{{ t('record.summaryTitle') }}</p>
-        <p class="wam">
-          <span class="wam-label">WAM</span>
-          <span v-if="wam !== null" class="wam-value">{{ wam }}</span>
-          <span v-else class="wam-none">{{ t('record.noMarks') }}</span>
-          <a class="wam-what" :href="link('guide/basics/#wam')">{{ t('guide.wamWhat') }}</a>
-        </p>
-        <div class="progress" aria-hidden="true"><span :style="{ width: `${(doneCount / filled.length) * 100}%` }" /></div>
-        <ul class="counts">
-          <li v-for="f in filled" :key="f.key" :class="{ empty: !f.done }">
-            <a :href="f.href">
-              <span class="tick"><Check v-if="f.done" :size="12" :stroke-width="3" aria-hidden="true" /></span>
-              {{ f.n < 0 ? t(f.key) : t(f.key, { n: f.n }) }}
-            </a>
-          </li>
-        </ul>
-        <p v-if="gradeShare.ready.value && gradeShare.shareable.value.length" class="summary-extra">
-          <a href="#share-title">{{ t('record.shareNudge') }}</a>
-          <InfoTip>{{ t('grades.what') }} <a :href="link('privacy')">{{ t('grades.privacy') }}</a></InfoTip>
-        </p>
-        <p class="summary-extra"><a href="#sec-backup">{{ t('record.backupLink') }}</a></p>
-        <a class="button button-accent summary-next" :href="link('plan')">{{ t('record.next') }} <ArrowRight :size="16" aria-hidden="true" /></a>
-      </section>
-
-      <SuggestionPreview class="suggest" />
-
-      <section class="backup surface" aria-labelledby="sec-backup">
-        <h2 id="sec-backup" class="backup-title">{{ t('record.backupTitle') }}</h2>
-        <p class="hint">{{ t('record.backupTextShort') }}<InfoTip :text="t('record.backupText')" /></p>
+    <div class="foot">
+      <GradeShare class="foot-card" />
+      <section class="foot-card backup surface" aria-labelledby="sec-backup">
+        <h2 id="sec-backup" class="foot-title">{{ t('record.backupLink') }} <InfoTip :text="t('record.backupText')" /></h2>
         <p v-if="restoreFailed" class="bad" role="alert">{{ t('record.restoreFailed') }}</p>
         <div class="backup-actions">
-          <button class="button button-quiet" type="button" @click="downloadBackup">
-            <Download :size="16" aria-hidden="true" /> {{ t('record.backup') }}
-          </button>
+          <button class="button button-quiet" type="button" @click="downloadBackup">{{ t('record.backup') }}</button>
           <label class="button button-quiet">
-            <Upload :size="16" aria-hidden="true" /> {{ t('record.restore') }}
+            {{ t('record.restore') }}
             <input class="visually-hidden" type="file" accept="application/json,.json" @change="onRestore" />
           </label>
         </div>
       </section>
-      </aside>
     </div>
     <PhoneMoreLinks />
   </div>
@@ -202,58 +169,67 @@ const doneCount = computed(() => filled.value.filter((f) => f.done).length)
 .record {
   display: grid;
   gap: var(--space-5);
-  padding-top: var(--page-top);
+  padding-top: var(--space-4);
   min-width: 0;
 }
 
 .lede {
-  margin: var(--space-2) 0 0;
-  max-width: 62ch;
+  margin: 0;
   color: var(--ink-soft);
 }
 
-/* Desktop: the steps in the main column, summary, suggestions and backup beside them.
-   Phones: the summary first, then the steps, then suggestions and backup. */
-.layout {
+/* The hero's key numbers: one row, each a label over its number. */
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3) var(--space-6);
+  margin: var(--space-2) 0 0;
+}
+
+.stat {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 320px);
-  grid-template-areas: 'main side';
-  gap: var(--space-5) var(--space-6);
-  align-items: start;
+  gap: 2px;
+  align-content: start;
 }
 
-.main {
-  grid-area: main;
-  display: grid;
-  gap: var(--space-5);
-  min-width: 0;
+.stat dt {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--fs-small);
+  font-weight: var(--fw-semibold);
+  color: var(--ink-soft);
 }
 
-.summary {
-  grid-area: summary;
+.stat dd {
+  margin: 0;
 }
 
-.suggest {
-  grid-area: suggest;
+.stat-num {
+  font-family: var(--font-code);
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 44px;
+  color: var(--ink);
 }
 
-.backup {
-  grid-area: backup;
+.stat-input {
+  width: 5.5em;
+  min-height: 44px;
+  font-family: var(--font-code);
+  font-size: 1.25rem;
+  font-weight: 600;
 }
 
 /* One card per section, one heading style; whatever a component brings as its own card or
    heading is folded into the section so there is never a box in a box. */
 .sec {
   display: grid;
+  align-content: start;
   gap: var(--space-4);
   min-width: 0;
   padding: var(--space-5);
-}
-
-@media (max-width: 640px) {
-  .sec {
-    padding: var(--space-4);
-  }
+  scroll-margin-top: 88px;
 }
 
 .sec-head {
@@ -263,37 +239,6 @@ const doneCount = computed(() => filled.value.filter((f) => f.done).length)
   gap: var(--space-2) var(--space-3);
 }
 
-.sec-link {
-  margin-inline-start: auto;
-  padding: 4px 0;
-  border: 0;
-  background: none;
-  font: inherit;
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--accent);
-  cursor: pointer;
-}
-
-.sec-link:hover {
-  text-decoration: underline;
-}
-
-.summary-extra {
-  margin: 0;
-  font-size: 0.875rem;
-}
-
-.summary-extra a {
-  color: var(--accent);
-}
-
-/* Jump targets from the summary clear the sticky header. */
-:deep(#share-title),
-#sec-backup {
-  scroll-margin-top: 96px;
-}
-
 .sec-title {
   margin: 0;
   font-size: 1.2rem;
@@ -301,8 +246,33 @@ const doneCount = computed(() => filled.value.filter((f) => f.done).length)
   line-height: 1.3;
 }
 
+.sec-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--space-4);
+  margin-inline-start: auto;
+}
+
+.sec-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.sec-link:hover {
+  text-decoration: underline;
+}
+
 .sec-state,
-.sec-badge,
 .for-plan {
   align-self: center;
   padding: 2px 10px;
@@ -315,12 +285,6 @@ const doneCount = computed(() => filled.value.filter((f) => f.done).length)
 .sec-state {
   background: var(--accent-fill);
   color: var(--accent-ink);
-}
-
-.sec-badge {
-  background: var(--good-soft);
-  color: var(--good);
-  font-family: var(--font-code);
 }
 
 .for-plan {
@@ -343,20 +307,6 @@ const doneCount = computed(() => filled.value.filter((f) => f.done).length)
   backdrop-filter: none;
 }
 
-/* The section heading already names these; their own headings stay for screen readers only. */
-.sec :deep(:is(#degree-title, #skills-title, #goal-title)) {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
-}
-
-.sec :deep(.degree-icon) {
-  display: none;
-}
-
 .sec-part {
   display: grid;
   gap: var(--space-3);
@@ -372,7 +322,7 @@ const doneCount = computed(() => filled.value.filter((f) => f.done).length)
 /* Three steps per section: the section title, then a question as a label (body size, muted),
    then its control. */
 .sub,
-.sec :deep(:is(.goal-label, .work-label, .share-title)) {
+.sec :deep(:is(.goal-label, .work-label)) {
   margin: 0;
   padding: 0;
   font-size: 0.9375rem;
@@ -402,217 +352,6 @@ const doneCount = computed(() => filled.value.filter((f) => f.done).length)
   color: var(--ink-soft);
 }
 
-.summary {
-  display: grid;
-  gap: var(--space-3);
-  padding: var(--space-5);
-}
-
-
-/* The three sidebar cards share one padding and one title style. */
-.summary-title,
-.backup-title {
-  margin: 0;
-  font-size: 1rem;
-  font-weight: 650;
-  color: var(--ink);
-}
-
-.wam {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 4px 10px;
-  margin: 0;
-}
-
-.wam-label {
-  font-size: 0.875rem;
-  font-weight: 700;
-  color: var(--ink-soft);
-}
-
-.wam-value {
-  font-family: var(--font-code);
-  font-size: 2.25rem;
-  font-weight: 600;
-  line-height: 1;
-  color: var(--ink);
-}
-
-.wam-none {
-  font-size: 0.9375rem;
-  color: var(--ink-soft);
-}
-
-.wam-what {
-  font-size: 0.8125rem;
-}
-
-.counts {
-  display: grid;
-  gap: 4px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  font-size: 0.9375rem;
-  font-weight: 600;
-}
-
-.counts a {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 6px 8px;
-  margin-inline: -8px;
-  border-radius: 10px;
-  color: var(--ink);
-  text-decoration: none;
-}
-
-.counts a:hover {
-  background: var(--accent-soft);
-}
-
-.tick {
-  display: inline-grid;
-  flex: none;
-  place-items: center;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: var(--good);
-  color: #fff;
-}
-
-.counts .empty a {
-  font-weight: 450;
-  color: var(--ink-soft);
-}
-
-.counts .empty .tick {
-  background: transparent;
-  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--ink) 28%, transparent);
-}
-
-.progress {
-  height: 6px;
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--ink) 9%, transparent);
-  overflow: hidden;
-}
-
-.progress span {
-  display: block;
-  height: 100%;
-  border-radius: inherit;
-  background: linear-gradient(90deg, var(--accent), #8b5cf6);
-  transition: width 0.4s ease;
-}
-
-/* Desktop: the summary rides along while the long form scrolls. */
-.side {
-  grid-area: side;
-  display: grid;
-  gap: var(--space-5);
-  min-width: 0;
-}
-
-@media (min-width: 961px) {
-  .side {
-    position: sticky;
-    top: 80px;
-  }
-
-  .side > * {
-    grid-area: auto;
-  }
-}
-
-.sec {
-  scroll-margin-top: 88px;
-}
-
-.summary-next {
-  justify-self: start;
-  margin-top: var(--space-2);
-}
-
-.backup {
-  display: grid;
-  gap: var(--space-2);
-  padding: var(--space-5);
-}
-
-.bad {
-  margin: 0;
-  font-weight: 600;
-  color: var(--bad);
-}
-
-.backup-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
-  margin-top: var(--space-2);
-}
-
-.next-phone {
-  display: none;
-  margin: 0;
-}
-
-@media (max-width: 960px) {
-  .next-phone {
-    display: flex;
-    justify-content: flex-end;
-  }
-
-  .layout {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas:
-      'summary'
-      'main'
-      'suggest'
-      'backup';
-  }
-
-  .side {
-    display: contents;
-  }
-
-  /* On a phone the summary is a compact strip; the plan link comes after the steps instead. */
-  .summary {
-    gap: var(--space-2);
-    padding: var(--space-4);
-  }
-
-  .counts {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2px var(--space-4);
-  }
-
-  .summary-title,
-  .summary-next {
-    display: none;
-  }
-}
-
-@media (max-width: 560px) {
-  .sec,
-  .backup {
-    padding: var(--space-4);
-  }
-}
-
-/* Light glass: a deeper green keeps the badge at AA. */
-@media (prefers-color-scheme: light) {
-  .sec-badge {
-    color: #146c3e;
-  }
-}
-
 /* What to do in a section, with how much is picked so far. */
 .prompt {
   display: flex;
@@ -632,33 +371,93 @@ const doneCount = computed(() => filled.value.filter((f) => f.done).length)
   font-weight: 600;
   font-size: 0.8125rem;
 }
-.target {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: end;
-  gap: var(--space-3) var(--space-5);
-}
 
-.target-field {
+/* Strengths beside the goal on wide screens; one column below. */
+.pair {
   display: grid;
-  gap: 6px;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  gap: var(--space-5);
+  align-items: start;
 }
 
-.target-field .input {
-  width: 8em;
+.col {
+  display: grid;
+  gap: var(--space-5);
+  min-width: 0;
 }
 
-.target-now {
+.next {
+  justify-self: end;
+}
+
+/* Sharing grades and the backup: small cards side by side at the foot. */
+.foot {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+  gap: var(--space-5);
+}
+
+.foot-card {
+  min-width: 0;
+  padding: var(--space-5);
+}
+
+.foot-card :deep(#share-title) {
+  scroll-margin-top: 96px;
+}
+
+.backup {
+  display: grid;
+  align-content: start;
+  gap: var(--space-3);
+  scroll-margin-top: 96px;
+}
+
+.foot-title {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 650;
+}
+
+.bad {
+  margin: 0;
+  font-weight: 600;
+  color: var(--bad);
+}
+
+.backup-actions {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  gap: 4px var(--space-3);
-  min-height: var(--control-h);
-  margin: 0;
+  gap: var(--space-2);
 }
 
-.target-now a {
-  font-weight: var(--fw-semibold);
-  color: var(--accent);
+@media (max-width: 1100px) {
+  .pair {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .record {
+    gap: var(--space-4);
+    padding-top: var(--space-3);
+  }
+
+  .sec,
+  .foot-card {
+    padding: var(--space-4);
+  }
+
+  .stats {
+    gap: var(--space-3) var(--space-5);
+  }
+
+  .next {
+    justify-self: stretch;
+    justify-content: center;
+  }
 }
 </style>

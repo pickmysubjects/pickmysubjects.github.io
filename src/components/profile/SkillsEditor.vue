@@ -54,9 +54,8 @@ function pick(skill: Skill, level: number): void {
 </script>
 
 <template>
-  <section class="card surface" aria-labelledby="skills-title">
+  <div class="card">
     <header class="card-head">
-      <h2 id="skills-title" class="card-title">{{ t('record.skillsTitle') }}</h2>
       <p class="card-hint">{{ t('record.levelLegendShort') }}<InfoTip :text="t('record.levelLegend')" /></p>
       <!-- What each level means, in marks: more accurate than a feeling (see the research notes). -->
       <ul class="legend">
@@ -101,7 +100,7 @@ function pick(skill: Skill, level: number): void {
     <button v-if="hidden > 0 || showAll" type="button" class="more" @click="showAll = !showAll">
       {{ showAll ? t('record.fewerSkills') : t('record.moreSkills', { n: hidden }) }}
     </button>
-  </section>
+  </div>
 </template>
 
 <style scoped>
@@ -111,13 +110,8 @@ function pick(skill: Skill, level: number): void {
      (e.g. 韓国 内申 9 等級…) shortens in its box instead of widening the page. */
   grid-template-columns: minmax(0, 1fr);
   gap: 14px;
-  padding: 20px 22px;
 }
 
-.card-title {
-  font-size: 1.05rem;
-  font-weight: 650;
-}
 
 .card-hint {
   margin-top: 4px;

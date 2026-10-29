@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, shallowRef } from 'vue'
-import { GraduationCap, Pencil } from 'lucide-vue-next'
+import { Pencil } from 'lucide-vue-next'
 import PlanWizard from '@/components/planner/PlanWizard.vue'
 import type { PlanSetup } from '@/composables/usePlan'
 import { usePlan } from '@/composables/usePlan'
@@ -66,11 +66,9 @@ function done(setup: PlanSetup): void {
 </script>
 
 <template>
-  <section class="degree surface" aria-labelledby="degree-title">
+  <div class="degree">
     <header class="degree-head">
-      <GraduationCap :size="20" aria-hidden="true" class="degree-icon" />
       <div class="degree-text">
-        <h2 id="degree-title" class="degree-title">{{ t('record.degreeTitle') }}</h2>
         <template v-if="chosen">
           <p class="degree-course">{{ course }}</p>
           <ul class="degree-picks">
@@ -98,14 +96,13 @@ function done(setup: PlanSetup): void {
       @done="done"
       @cancel="editing = false"
     />
-  </section>
+  </div>
 </template>
 
 <style scoped>
 .degree {
   display: grid;
   gap: 12px;
-  padding: 18px 22px;
 }
 
 .degree-head {
@@ -115,11 +112,6 @@ function done(setup: PlanSetup): void {
   gap: 12px;
 }
 
-.degree-icon {
-  flex: none;
-  margin-top: 2px;
-  color: var(--accent);
-}
 
 .degree-text {
   display: grid;
@@ -130,10 +122,6 @@ function done(setup: PlanSetup): void {
   flex: 1 1 14em;
 }
 
-.degree-title {
-  font-size: 1rem;
-  font-weight: 650;
-}
 
 .degree-course {
   margin: 0;
