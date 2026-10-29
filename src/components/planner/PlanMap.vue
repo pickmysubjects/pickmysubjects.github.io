@@ -436,15 +436,18 @@ onBeforeUnmount(() => {
 
 <template>
   <div ref="board" class="board" :class="{ 'board-dragging': dragging }">
-    <p class="route-legend" aria-hidden="true">
-      <template v-if="edges.length">
-        <span class="legend-need">{{ t('subject.needs') }}</span>
-        <span class="legend-unlock">{{ t('subject.unlocks') }}</span>
-      </template>
-      <!-- The cards' left edges: 必修 and 专业选修. -->
-      <span class="legend-edge legend-required">{{ t('plan.tagRequired') }}</span>
-      <span class="legend-edge legend-option">{{ t('plan.tagOption') }}</span>
-    </p>
+    <div class="board-key">
+      <p class="route-legend" aria-hidden="true">
+        <template v-if="edges.length">
+          <span class="legend-need">{{ t('subject.needs') }}</span>
+          <span class="legend-unlock">{{ t('subject.unlocks') }}</span>
+        </template>
+        <!-- The cards' left edges: 必修 and 专业选修. -->
+        <span class="legend-edge legend-required">{{ t('plan.tagRequired') }}</span>
+        <span class="legend-edge legend-option">{{ t('plan.tagOption') }}</span>
+      </p>
+      <slot name="note" />
+    </div>
     <svg class="routes" aria-hidden="true">
       <defs>
         <marker id="route-arrow-need" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
@@ -645,6 +648,15 @@ onBeforeUnmount(() => {
   transform: translate(-50%, -50%);
   white-space: nowrap;
   cursor: pointer;
+}
+
+/* Legend on the left, the plan's data note on the right; wraps to two lines on phones. */
+.board-key {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px var(--space-4);
 }
 
 .route-legend {

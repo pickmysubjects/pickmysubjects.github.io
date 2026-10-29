@@ -675,24 +675,17 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
       @cancel="editing = false"
     />
 
-    <section v-if="shared" class="shared surface" role="status">
-      <p class="shared-text">{{ t('plan.sharedText', { n: shared.terms.reduce((sum, x) => sum + x.subjects.length, 0) }) }}</p>
-      <p v-if="!plan.isEmpty.value" class="shared-warn">{{ t('plan.sharedReplace') }}</p>
-      <div class="shared-actions">
-        <button class="button button-accent" type="button" @click="importShared">{{ t('plan.sharedImport') }}</button>
-        <button class="button button-quiet" type="button" @click="go('plan')">{{ t('plan.sharedDismiss') }}</button>
-      </div>
-    </section>
-    <SharedPlanView v-if="shared" :setup="shared.setup" :terms="shared.terms" />
+    <SharedPlanView v-if="shareCode !== null" :shared="shared" @done="closeShared" />
 
     <!-- The board first, at full width; the plan's other parts under it. -->
     <div v-else-if="!showWizard" class="article">
       <div class="body">
         <RatePrompt v-if="rateNext" :key="rateNext" :code="rateNext" @close="rateNext = null" />
 
-        <SubjectSection id="board" class="board-sec" :style="{ '--page-w': `${pageW}px` }" :title="t('planPage.tocBoard')" :short="boardShort">
+        <SubjectSection id="board" class="board-sec" :style="{ '--page-w': `${pageW}px` }" :title="t('planPage.tocBoard')">
           <template #aside>
             <InfoTip :text="t('plan.hint')" />
+            <span v-if="boardShort" class="board-sum">{{ boardShort }}</span>
             <button class="button button-quiet rebuild" type="button" @click="plan.generate()">
               <RotateCcw :size="16" aria-hidden="true" /> {{ t('plan.rebuild') }}
             </button>
@@ -704,7 +697,7 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
           <!-- Notes about the plan itself, folded into one line: the plan and My record disagreeing
                comes first (with its one fix), then which Handbook years the plan leans on. Every
                detail is behind the ⓘ. -->
-          <p v-if="metaLine" class="started meta-line" :role="recordFix ? 'status' : undefined">
+          <p v-if="metaLine && recordFix" class="started meta-line" :role="recordFix ? 'status' : undefined">
             <span>{{ metaLine.short }}<InfoTip :text="metaLine.info" /></span>
             <button v-if="recordFix" class="button button-quiet" type="button" @click="plan.generate()">{{ t('plan.rebuild') }}</button>
           </p>
@@ -747,7 +740,12 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
             @remove-last-term="plan.removeLastTerm()"
             @done="markDone"
             @undo="plan.markUndone"
-          />
+          >
+            <!-- The plan's data note, small beside the legend; a record clash shows as a status line above instead. -->
+            <template v-if="metaLine && !recordFix" #note>
+              <span class="board-note">{{ metaLine.short }}<InfoTip :text="metaLine.info" /></span>
+            </template>
+          </PlanMap>
           <PlanDetails
             :statuses="plan.courseCheck.value.statuses"
             :rules="allRules"
@@ -886,6 +884,17 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
 .board-sec {
   margin-inline: min(0px, calc((var(--shell) - var(--page-w, 100vw)) / 2));
   padding-inline: 24px;
+}
+
+/* The summary sits on the title's line, muted; the rebuild button stays at the right. */
+.board-sum {
+  font-size: 0.9375rem;
+  color: var(--ink-soft);
+}
+
+.board-note {
+  font-size: var(--fs-meta);
+  color: var(--ink-soft);
 }
 
 .rebuild {
@@ -1177,6 +1186,12 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !shared.valu
 }
 
 @media (max-width: 640px) {
+  /* Phones: title and button on the first line, the summary under them. */
+  .board-sum {
+    order: 3;
+    flex-basis: 100%;
+  }
+
   .heavy-none {
     padding: 14px 16px;
   }
