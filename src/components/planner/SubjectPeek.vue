@@ -4,7 +4,7 @@ import { useDataYear } from '@/composables/useDataYear'
 import FactsYearNote from '@/components/subject/FactsYearNote.vue'
 import DoneToggle from './DoneToggle.vue'
 import { computed, onBeforeUnmount, onMounted, shallowRef, toRef, useTemplateRef } from 'vue'
-import { ArrowRightLeft, BookOpen, CalendarRange, Check, ChevronDown, Ellipsis, ExternalLink, TriangleAlert, X } from 'lucide-vue-next'
+import { Check, ChevronDown, TriangleAlert, X } from 'lucide-vue-next'
 import { localTitle, pickLocalized } from '@/i18n/localized'
 import {
   alternativeGroups,
@@ -116,8 +116,9 @@ const runs = computed(() => {
   if (s.yearLong) return t.value('plan.yearLongRuns')
   return periods.value.map((p) => t.value(`period.${p}`)).join(' · ')
 })
+const examShare = computed(() => (props.subject ? finalExamShare(props.subject) : null))
 const exam = computed(() => {
-  const n = props.subject ? finalExamShare(props.subject) : null
+  const n = examShare.value
   return n === null ? t.value('subject.factUnknown') : n === 0 ? t.value('subject.factNone') : `${n}%`
 })
 // Planned in a semester the subject isn't offered in (when the offerings are known).
@@ -237,43 +238,44 @@ function onClick(event: MouseEvent): void {
           <X :size="20" aria-hidden="true" />
         </button>
       </div>
-      <dl v-if="subject" class="keyfacts">
-        <div class="kf">
+      <dl v-if="subject" class="keyfacts peek-facts">
+        <div class="kf kf-level">
           <dt>{{ t('subject.factLevel') }}</dt>
           <dd class="kf-num">{{ subject.level }}</dd>
         </div>
-        <div class="kf">
+        <div class="kf kf-points">
           <dt>{{ t('subject.factPoints') }}</dt>
           <dd class="kf-num">{{ subject.points }}</dd>
         </div>
-        <div class="kf">
+        <div class="kf kf-runs">
           <dt>{{ t('subject.factRuns') }}</dt>
           <dd>{{ runs }}</dd>
         </div>
-        <div class="kf">
+        <div class="kf kf-exam">
           <dt>{{ t('subject.factExam') }}</dt>
-          <dd class="kf-num">{{ exam }}</dd>
+          <!-- A share in figures; "None" or "Not recorded" in words, like the other facts. -->
+          <dd :class="{ 'kf-num': !!examShare }">{{ exam }}</dd>
         </div>
-        <div class="kf">
+        <div class="kf kf-prereq">
           <dt>{{ t('subject.factPrereq') }}</dt>
           <dd>
             {{ prereq }}
           </dd>
         </div>
       </dl>
+      <!-- Same order in every language: the main action, then plain text ones; Move and Remove in
+           a "More" menu. The row wraps at one gap; nothing is pushed to the far edge. -->
       <div class="peek-buttons">
-        <a class="button button-accent peek-btn" :href="link(`subject/${code}`)">{{ t('subject.fullPage') }} <ExternalLink :size="15" aria-hidden="true" /></a>
-        <template v-if="planned">
-          <button class="button button-quiet peek-btn" type="button" @click="act('swapIt')"><ArrowRightLeft :size="15" aria-hidden="true" /> {{ t('plan.swap') }}</button>
-          <div class="peek-more">
-            <button class="button button-quiet peek-btn peek-more-btn" type="button" :aria-label="t('peek.moreActions')" :aria-expanded="moreOpen" @click="moreOpen = !moreOpen"><Ellipsis :size="18" aria-hidden="true" /></button>
-            <div v-if="moreOpen" class="peek-menu" role="menu">
-              <button role="menuitem" type="button" class="peek-menu-item" @click="act('moveIt')"><CalendarRange :size="15" aria-hidden="true" /> {{ t('plan.move') }}</button>
-              <button role="menuitem" type="button" class="peek-menu-item peek-remove" @click="act('removeIt')"><X :size="15" aria-hidden="true" /> {{ t('plan.removeShort') }}</button>
-            </div>
+        <a class="button button-accent peek-btn" :href="link(`subject/${code}`)">{{ t('subject.fullPage') }}</a>
+        <button v-if="planned" class="peek-text-btn" type="button" @click="act('swapIt')">{{ t('plan.swap') }}</button>
+        <a class="peek-text-btn" :href="handbookFor(code, year)" target="_blank" rel="noopener">Handbook</a>
+        <div v-if="planned" class="peek-more">
+          <button class="peek-text-btn" type="button" aria-haspopup="menu" :aria-expanded="moreOpen" @click="moreOpen = !moreOpen">{{ t('peek.moreActions') }}</button>
+          <div v-if="moreOpen" class="peek-menu" role="menu">
+            <button role="menuitem" type="button" class="peek-menu-item" @click="act('moveIt')">{{ t('plan.move') }}</button>
+            <button role="menuitem" type="button" class="peek-menu-item peek-remove" @click="act('removeIt')">{{ t('plan.removeShort') }}</button>
           </div>
-        </template>
-        <a class="peek-handbook" :href="handbookFor(code, year)" target="_blank" rel="noopener"><BookOpen :size="14" aria-hidden="true" /> Handbook</a>
+        </div>
       </div>
     </header>
 
@@ -431,7 +433,10 @@ function onClick(event: MouseEvent): void {
 
 <style scoped>
 .peek {
-  width: min(640px, calc(100% - 32px));
+  /* Fixed per breakpoint: switching subjects or languages never resizes it. */
+  width: 640px;
+  max-width: calc(100% - 32px);
+  overflow-x: hidden;
   max-height: min(88vh, 820px);
   max-height: min(88dvh, 820px);
   padding: 0;
@@ -483,19 +488,20 @@ function onClick(event: MouseEvent): void {
 
 .peek-code-row {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   gap: 8px;
   margin: 0;
 }
 
 .peek-code {
+  flex: none;
   font-size: 0.9375rem;
   font-weight: 650;
   color: color-mix(in srgb, var(--accent) 80%, var(--ink));
 }
 
 .peek-cat {
+  min-width: 0;
   font-size: 0.75rem;
 }
 
@@ -504,7 +510,7 @@ function onClick(event: MouseEvent): void {
   font-size: 1.375rem;
   font-weight: var(--fw-bold);
   line-height: 1.25;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
 }
 
 .peek-title-en {
@@ -533,20 +539,22 @@ function onClick(event: MouseEvent): void {
   color: var(--accent);
 }
 
-/* The key facts as on the subject page: name above, value below, hairlines between. */
+/* The key facts: a fixed grid, name over value. Level and points hold a number, so they get the
+   narrow columns. Long values wrap inside their cell; the grid never takes its size from the
+   text, so every language lines up the same. */
 .keyfacts {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px 0;
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 3fr) minmax(0, 5fr) minmax(0, 4fr) minmax(0, 5fr);
+  gap: 12px 0;
   margin: 0;
 }
 
 .kf {
   display: grid;
   align-content: start;
-  gap: 2px;
+  gap: 3px;
   min-width: 0;
-  padding: 0 16px;
+  padding: 0 12px;
   border-left: 1px solid var(--divider);
 }
 
@@ -558,20 +566,21 @@ function onClick(event: MouseEvent): void {
 .kf dt {
   font-size: var(--fs-meta);
   font-weight: var(--fw-semibold);
-  letter-spacing: 0.04em;
+  line-height: 1.3;
+  letter-spacing: 0.02em;
   text-transform: uppercase;
   color: var(--ink-soft);
+  hyphens: manual;
+  word-break: keep-all;
 }
 
 .kf dd {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 2px 8px;
   margin: 0;
   font-size: 0.9375rem;
   font-weight: var(--fw-semibold);
   line-height: 1.35;
+  hyphens: manual;
+  overflow-wrap: break-word;
 }
 
 .kf dd.kf-num {
@@ -598,13 +607,39 @@ function onClick(event: MouseEvent): void {
 .peek-buttons {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  align-items: center;
+  gap: 8px 4px;
 }
 
 .peek-btn {
-  min-height: 38px;
-  padding: 0 14px;
+  min-height: 40px;
+  margin-right: 8px;
+  padding: 0 16px;
   font-size: 0.875rem;
+  white-space: nowrap;
+}
+
+/* Secondary actions: plain text, the same size and weight in every state. */
+.peek-text-btn {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 10px;
+  background: none;
+  color: color-mix(in srgb, var(--accent) 80%, var(--ink));
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: var(--fw-semibold);
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.peek-text-btn:hover,
+.peek-text-btn:focus-visible {
+  background: var(--glass-fill-hover);
 }
 
 .peek-remove {
@@ -631,11 +666,8 @@ function onClick(event: MouseEvent): void {
 
 .peek-label {
   margin: 0;
-  font-size: var(--fs-small);
-  font-weight: var(--fw-semibold);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: color-mix(in srgb, var(--accent) 80%, var(--ink));
+  font-size: 0.9375rem;
+  font-weight: var(--fw-bold);
 }
 
 .peek-where {
@@ -797,21 +829,8 @@ function onClick(event: MouseEvent): void {
   color: var(--ink-soft);
 }
 
-.peek-handbook {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  margin-left: auto;
-  font-size: 0.8125rem;
-  color: var(--ink-soft);
-}
-
 .peek-more {
   position: relative;
-}
-
-.peek-more-btn {
-  padding: 0 10px;
 }
 
 .peek-menu {
@@ -1093,8 +1112,19 @@ function onClick(event: MouseEvent): void {
     font-size: 1.1875rem;
   }
 
-  .kf {
-    padding: 0 10px;
+  /* The main action on a row of its own, the text ones under it from the same left edge: two
+     rows in every language, never a stray one. */
+  .peek-btn {
+    flex: 1 0 100%;
+    margin-right: 0;
+  }
+
+  .peek-btn + .peek-text-btn {
+    margin-left: -10px;
+  }
+
+  .peek-text-btn {
+    min-height: 44px;
   }
 
   .peek-btn,
@@ -1112,6 +1142,29 @@ function onClick(event: MouseEvent): void {
   .peek-card {
     padding: 14px;
   }
+}
+
+/* Narrow windows: Level, Points, Exam on one row; Runs and Prerequisites below, half each. */
+@media (max-width: 719px) {
+  .keyfacts {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .kf {
+    grid-column: span 2;
+    padding: 0 10px;
+  }
+
+  .kf-runs,
+  .kf-prereq {
+    grid-column: span 3;
+  }
+
+  .kf-level { order: 1; }
+  .kf-points { order: 2; }
+  .kf-exam { order: 3; }
+  .kf-runs { order: 4; padding-left: 0; border-left: 0; }
+  .kf-prereq { order: 5; }
 }
 
 @media (max-width: 640px) and (prefers-reduced-motion: reduce) {
