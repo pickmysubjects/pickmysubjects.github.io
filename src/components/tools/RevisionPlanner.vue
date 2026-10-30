@@ -135,7 +135,7 @@ function toggleRest(d: number): void {
 }
 function exportIcs(): void {
   const ics = revisionIcs(plan.value, rp.subjects.value, saved.value.dayStart, {
-    session: (code, type, h) => t.value('rev.icsSession', { code, type: t.value(`rev.type.${type}`) }) + (h ? ` · ${hours(h)}` : ''),
+    session: (s, h) => t.value('rev.icsSession', { code: s.code, type: whatOf(s) }) + (h ? ` · ${hours(h)}` : ''),
     exam: (code) => t.value('rev.icsExam', { code }),
     reminder: t.value('rev.icsReminder'),
   }, new Date())

@@ -245,7 +245,7 @@ describe('planRevision', () => {
 })
 
 describe('revisionIcs', () => {
-  const text = { session: (c: string, t: string) => `${t === 'paper' ? 'Past paper' : 'Revise'} ${c}`, exam: (c: string) => `Exam: ${c}`, reminder: 'Study, soon' }
+  const text = { session: (x: { code: string; type: string }) => `${x.type === 'paper' ? 'Past paper' : 'Revise'} ${x.code}`, exam: (c: string) => `Exam: ${c}`, reminder: 'Study, soon' }
   const subjects = [sub('AAAA10001', '2026-10-06', { time: '13:30' }), sub('BBBB10001', '2026-10-07')]
   const p = planRevision({ start: '2026-10-02', hoursPerDay: 3, subjects })
   const ics = revisionIcs(p, subjects, '09:00', text, new Date('2026-10-01T00:00:00Z'))
@@ -422,7 +422,7 @@ describe('daily load', () => {
   it('exports sessions as all-day events when there is no start time', () => {
     const subjects = [sub('AAAA10001', '2026-10-06')]
     const p = planRevision({ start: '2026-10-03', hoursPerDay: 3, subjects })
-    const ics = revisionIcs(p, subjects, '', { session: (c, _t, h) => `Revise ${c}${h ? ` ${h}h` : ''}`, exam: (c) => `Exam: ${c}`, reminder: 'Soon' }, new Date('2026-10-01T00:00:00Z'))
+    const ics = revisionIcs(p, subjects, '', { session: (x, h) => `Revise ${x.code}${h ? ` ${h}h` : ''}`, exam: (c) => `Exam: ${c}`, reminder: 'Soon' }, new Date('2026-10-01T00:00:00Z'))
     expect(ics).not.toContain('DTSTART;TZID')
     expect(ics).toContain('DTSTART;VALUE=DATE:20261003')
     expect(ics.match(/BEGIN:VEVENT/g)!.length).toBe(p.days.flatMap((d) => d.sessions).length + 1)

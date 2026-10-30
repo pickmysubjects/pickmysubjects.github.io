@@ -587,7 +587,7 @@ export function sessionTimes(day: RevisionDay, dayStart: string): { session: Rev
 
 export interface IcsText {
   /** `hours` is given for an all-day session (no start time), to say how long. */
-  session: (code: string, type: RevisionType, hours?: number) => string
+  session: (session: RevisionSession, hours?: number) => string
   exam: (code: string) => string
   reminder: string
 }
@@ -609,10 +609,10 @@ export function revisionIcs(plan: RevisionPlan, subjects: readonly RevisionSubje
   for (const day of plan.days) {
     if (!isTime(dayStart)) {
       // No start time: each session is an all-day note on its day.
-      day.sessions.forEach((session, i) => event(`rev-${day.date}-${i}-${session.code}`, day.date.replaceAll('-', ''), addDays(day.date, 1).replaceAll('-', ''), text.session(session.code, session.type, session.hours), '-PT12H', true))
+      day.sessions.forEach((session, i) => event(`rev-${day.date}-${i}-${session.code}`, day.date.replaceAll('-', ''), addDays(day.date, 1).replaceAll('-', ''), text.session(session, session.hours), '-PT12H', true))
     }
     for (const [i, { session, from, to }] of (isTime(dayStart) ? sessionTimes(day, dayStart) : []).entries()) {
-      event(`rev-${day.date}-${i}-${session.code}`, local(day.date, from), local(day.date, to), text.session(session.code, session.type), '-PT15M')
+      event(`rev-${day.date}-${i}-${session.code}`, local(day.date, from), local(day.date, to), text.session(session), '-PT15M')
     }
     for (const code of day.exams) {
       const s = subjects.find((x) => x.code === code)
