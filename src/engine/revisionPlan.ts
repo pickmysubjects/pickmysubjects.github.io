@@ -65,6 +65,8 @@ export interface RevisionSession {
   type: RevisionType
   /** Why this kind of sitting: its type, or 'short' when the exam was ≤3 days away at the start. */
   reason: RevisionType | 'short'
+  /** Learn and test sittings: which part of the subject, counting from 0 in each pass (learn, then test). */
+  part?: number
 }
 
 export type RevisionDayKind = 'study' | 'rest' | 'exam'
@@ -341,6 +343,7 @@ export function planRevision(input: RevisionInput): RevisionPlan {
     rest.forEach((x, i) => {
       x.type = i < learn ? 'learn' : 'test'
       x.reason = s.short ? 'short' : x.type
+      x.part = i < learn ? i : i - learn
     })
     for (const x of papers) x.type = x.reason = 'paper'
   }

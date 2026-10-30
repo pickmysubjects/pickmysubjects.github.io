@@ -429,3 +429,14 @@ describe('daily load', () => {
     expect(ics).toContain('SUMMARY:Revise AAAA10001 1.5h')
   })
 })
+
+describe('session parts', () => {
+  it('counts learn and test sittings from 0 in each pass, in time order; papers have none', () => {
+    const p = planRevision({ start: '2026-10-20', hoursPerDay: 4, subjects: [sub('AAAA10001', '2026-11-10'), sub('BBBB10001', '2026-11-12')] })
+    for (const code of ['AAAA10001', 'BBBB10001']) {
+      const list = p.days.flatMap((d) => d.sessions).filter((s) => s.code === code)
+      for (const type of ['learn', 'test'] as const) expect(list.filter((s) => s.type === type).map((s) => s.part)).toEqual(list.filter((s) => s.type === type).map((_, i) => i))
+      expect(list.filter((s) => s.type === 'paper').every((s) => s.part === undefined)).toBe(true)
+    }
+  })
+})

@@ -77,3 +77,9 @@ export function useSubjectDetail(code: Readonly<Ref<string>>) {
   const takenWith = computed(() => areas.get(detailArea(code.value))?.[code.value]?.takenWith ?? [])
   return { subject, ready, takenWith }
 }
+
+/** Each subject's learning outcomes (up to 3), loading their areas as `codes` change; [] until loaded. */
+export function useOutcomes(codes: Readonly<Ref<readonly string[]>>) {
+  watch(codes, (cs) => void cs.forEach((c) => void loadArea(detailArea(c))), { immediate: true })
+  return (code: string) => areas.get(detailArea(code))?.[code]?.about?.outcomes ?? []
+}

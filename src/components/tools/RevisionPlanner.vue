@@ -5,12 +5,12 @@ import SegmentedControl from '@/components/SegmentedControl.vue'
 import SidePanel from '@/components/SidePanel.vue'
 import RevisionPrint from '@/components/tools/RevisionPrint.vue'
 import SubjectSearch from '@/components/SubjectSearch.vue'
-import { useDataset } from '@/composables/useDataset'
+import { useDataset, useOutcomes } from '@/composables/useDataset'
 import { useRevisionPlan } from '@/composables/useRevisionPlan'
 import { useI18n } from '@/i18n'
 import { termLabel } from '@/i18n/format'
-import { localTitle } from '@/i18n/localized'
-import { addDays, revisionIcs, termKey, weekday, type RevisionDay, type RevisionDifficulty, type RevisionType } from '@/engine/revisionPlan'
+import { localTitle, pickLocalized } from '@/i18n/localized'
+import { addDays, revisionIcs, termKey, weekday, type RevisionDay, type RevisionDifficulty, type RevisionSession, type RevisionType } from '@/engine/revisionPlan'
 import { downloadIcs } from '@/utils/keyDates'
 
 /**
@@ -60,6 +60,12 @@ const blocksOf = (d: RevisionDay) => {
 /** The one-line reason under a study day. */
 const whyOf = (d: RevisionDay) => (d.reason ? t.value(`rev.why.${d.reason.why}`, 'code' in d.reason ? { code: d.reason.code, n: 'n' in d.reason ? d.reason.n : 0 } : {}) : '')
 const typeOf = (type: RevisionType) => t.value(`rev.type.${type}`)
+// Learn and test sittings go through the subject's learning outcomes in turn; past papers cover it all.
+const outcomesOf = useOutcomes(computed(() => active.value.map((r) => r.code)))
+const whatOf = (s: RevisionSession) => {
+  const o = s.part === undefined ? [] : outcomesOf(s.code)
+  return [typeOf(s.type), o.length ? pickLocalized(o[s.part! % o.length]!, locale.value) : ''].filter(Boolean).join(' · ')
+}
 /** Why a subject gets its time: its difficulty, and its final exam's share when known ("Harder · Final exam 60%"). */
 const weightWhy = (code: string) => {
   const s = rp.subjects.value.find((x) => x.code === code)
@@ -87,7 +93,7 @@ const weeks = computed(() => {
     if (!out.length || weekday(d.date) === 1) out.push({ label: '', days: [] })
     out.at(-1)!.days.push(d)
   }
-  return out.map((w, i) => ({ ...w, label: t.value('rev.week', { n: i + 1, from: shortLabel(w.days[0]!.date), to: shortLabel(w.days.at(-1)!.date) }) }))
+  return out.map((w, i) => ({ ...w, label: t.value(w.days.length > 1 ? 'rev.week' : 'rev.weekOneDay', { n: i + 1, from: shortLabel(w.days[0]!.date), to: shortLabel(w.days.at(-1)!.date) }) }))
 })
 
 /** The calendar: whole weeks from the Monday before the first day to the Sunday after the last. */
@@ -145,7 +151,7 @@ function print(): void {
     <div class="rev-side">
       <SidePanel :label="t('rev.schedule')" :now="sideNow" :art="ART">
         <div class="rev-sidebody">
-          <ul v-if="periods.length" class="side-list" :aria-label="t('rev.period')">
+          <ul v-if="periods.length > 1" class="side-list" :aria-label="t('rev.period')">
             <li v-for="p in periods" :key="termKey(p)">
               <button type="button" :aria-pressed="termKey(p) === rp.key.value" @click="rp.pick(termKey(p))">{{ termLabel(t, p) }}</button>
             </li>
@@ -274,9 +280,9 @@ function print(): void {
               <span class="rev-num"><span class="rev-nlong">{{ cellNum(c) }}</span><span class="rev-nshort" aria-hidden="true">{{ fmtNum.format(asDate(c.date)) }}</span><span v-if="c.date === rp.today" class="rev-today">{{ t('rev.today') }}</span></span>
               <span v-for="x in c.day.exams" :key="x" class="rev-cexam">{{ examText(x) }}</span>
               <span v-if="c.day.kind === 'rest'" class="rev-cfree">{{ t('rev.restDay') }}</span>
-              <span v-for="s in blocksOf(c.day)" :key="s.code" class="rev-block" :class="colourOf(s.code)">
+              <span v-for="(s, i) in c.day.sessions" :key="i" class="rev-block" :class="colourOf(s.code)">
                 <span class="rev-scode">{{ s.code }}</span>
-                <span class="rev-sh">{{ hours(s.hours) }}</span>
+                <span class="rev-ctype"><span class="rev-sh">{{ hours(s.hours) }}</span> · <span class="rev-sh">{{ typeOf(s.type) }}</span></span>
               </span>
             </button>
             <span v-else class="rev-cell-out" aria-hidden="true"><span class="rev-num"><span class="rev-nlong">{{ cellNum(c) }}</span><span class="rev-nshort">{{ fmtNum.format(asDate(c.date)) }}</span></span></span>
@@ -291,7 +297,7 @@ function print(): void {
             <p class="rev-why">{{ whyOf(shown) }}</p>
             <ol class="rev-dlist">
               <li v-for="(s, i) in shown.sessions" :key="i" class="rev-block" :class="colourOf(s.code)">
-                <span class="rev-scode">{{ s.code }}</span> <span class="rev-sh">{{ hours(s.hours) }}</span><span class="rev-focus"> · {{ typeOf(s.type) }}</span>
+                <span class="rev-scode">{{ s.code }}</span> <span class="rev-sh">{{ hours(s.hours) }}</span><span class="rev-focus"> · {{ whatOf(s) }}</span>
               </li>
             </ol>
           </template>
@@ -316,8 +322,8 @@ function print(): void {
               <template v-else-if="d.sessions.length">
                 <span class="rev-dbody">
                   <ol class="rev-bars">
-                    <li v-for="(s, i) in d.sessions" :key="i" class="rev-block" :class="colourOf(s.code)" :title="`${s.code} ${hours(s.hours)} · ${typeOf(s.type)}`">
-                      <span class="rev-scode">{{ s.code }}</span> <span class="rev-sh">{{ hours(s.hours) }}</span><span class="rev-focus"> · {{ typeOf(s.type) }}</span>
+                    <li v-for="(s, i) in d.sessions" :key="i" class="rev-block" :class="colourOf(s.code)" :title="`${s.code} ${hours(s.hours)} · ${whatOf(s)}`">
+                      <span class="rev-scode">{{ s.code }}</span> <span class="rev-sh">{{ hours(s.hours) }}</span><span class="rev-focus"> · {{ whatOf(s) }}</span>
                     </li>
                   </ol>
                   <span class="rev-why">{{ whyOf(d) }}</span>
@@ -676,6 +682,12 @@ function print(): void {
   white-space: nowrap;
 }
 
+/* In a calendar cell: the code, then "hours · type" on a line of its own (wrapping only at the dot). */
+.rev-ctype {
+  flex-basis: 100%;
+  color: var(--ink-soft);
+}
+
 .rev-total {
   padding-top: 6px;
   border-top: 1px solid var(--divider);
@@ -884,7 +896,8 @@ p.rev-why {
 
 .rev-bars {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: start;
   gap: 4px;
   min-width: 0;
   margin: 0;
