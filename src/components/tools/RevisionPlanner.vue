@@ -73,7 +73,7 @@ const weightWhy = (code: string) => {
   return [t.value(`rev.level.${s.difficulty}`), s.examWeight !== undefined ? t.value('rev.examShare', { n: s.examWeight }) : ''].filter(Boolean).join(' · ')
 }
 const timeOf = (code: string) => rows.value.find((r) => r.code === code)?.time
-const examText = (c: string) => [t.value('rev.exam'), c, timeOf(c)].filter(Boolean).join(' ')
+const examText = (c: string) => [t.value('rev.exam'), c, timeOf(c) || t.value('rev.noTime')].join(' ').replace(' （', '（')
 
 const totalHours = computed(() => plan.value.totals.reduce((s, x) => s + x.hours, 0))
 const maxTotal = computed(() => Math.max(1, ...plan.value.totals.map((x) => x.hours)))
@@ -85,6 +85,19 @@ const summary = computed(() => t.value('rev.summary', { hours: hours(totalHours.
 
 /** The phone fold's one line: the period and the total hours. */
 const sideNow = computed(() => [term.value ? termLabel(t.value, term.value) : '', missing.value ? '' : hours(totalHours.value)].filter(Boolean).join(' · '))
+
+/** List view: a study day's reason is written only when it differs from the study day before. */
+const newWhy = computed(() => {
+  const out = new Set<string>()
+  let prev = ''
+  for (const d of plan.value.days) {
+    if (!d.sessions.length) continue
+    const why = whyOf(d)
+    if (why !== prev) out.add(d.date)
+    prev = why
+  }
+  return out
+})
 
 /** The agenda in weeks (Monday to Sunday), for the list view. */
 const weeks = computed(() => {
@@ -326,7 +339,7 @@ function print(): void {
                       <span class="rev-scode">{{ s.code }}</span> <span class="rev-sh">{{ hours(s.hours) }}</span><span class="rev-focus"> · {{ whatOf(s) }}</span>
                     </li>
                   </ol>
-                  <span class="rev-why">{{ whyOf(d) }}</span>
+                  <span v-if="newWhy.has(d.date)" class="rev-why">{{ whyOf(d) }}</span>
                 </span>
                 <span class="rev-dh">{{ hours(dayHours(d)) }}</span>
               </template>
