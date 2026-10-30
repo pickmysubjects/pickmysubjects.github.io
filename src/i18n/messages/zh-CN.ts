@@ -2112,6 +2112,7 @@ export const zhCN: Messages = {
     searchFirst: '搜索一门课',
     notFoundText: '添加它来帮助其他同学——大约只要一分钟。',
     addIt: '添加课程',
+    discussPart: {"content": "难度和内容", "work": "作业和考试", "study": "怎么学", "watch": "要注意"},
     discussNote: "公开评价的摘要，这里不打分。",
     tipsTitle: "同学的建议",
     tipsNote: "由上过这门课的同学写，每条都经人工审核，去掉名字和联系方式后才显示；一门课满 3 条才会出现。看到不该有的内容可以举报。",

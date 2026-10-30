@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { MessagesSquare } from 'lucide-vue-next'
-import type { DiscussionSummary } from '@/engine'
+import { DISCUSSION_SECTIONS, type DiscussionSummary } from '@/engine'
 import { discussionLabels } from '@/i18n/discussion'
 import { pickLocalized } from '@/i18n/localized'
 import { useI18n } from '@/i18n'
@@ -17,7 +17,17 @@ const blocks = computed(() => props.discussions.filter((d) => d.points.length).m
     <!-- Inside "What students say": each source's own line is the heading, no second title. -->
     <div v-for="b in blocks" :key="b.d.source" class="discussion-block">
       <h3 class="discussion-source"><MessagesSquare :size="16" aria-hidden="true" /> {{ b.source }}</h3>
-      <ul class="discussion-points">
+      <template v-if="b.d.sections">
+        <template v-for="k in DISCUSSION_SECTIONS" :key="k">
+          <div v-if="b.d.sections[k]" class="discussion-part">
+            <h4 class="discussion-part-label">{{ t(`subject.discussPart.${k}`) }}</h4>
+            <ul class="discussion-points">
+              <li v-for="(p, i) in b.d.sections[k]" :key="i">{{ pickLocalized(p, locale) }}</li>
+            </ul>
+          </div>
+        </template>
+      </template>
+      <ul v-else class="discussion-points">
         <li v-for="(p, i) in b.d.points" :key="i">{{ pickLocalized(p, locale) }}</li>
       </ul>
       <a class="discussion-link" :href="b.d.url" target="_blank" rel="noopener nofollow">{{ b.read }}</a>
@@ -43,6 +53,17 @@ const blocks = computed(() => props.discussions.filter((d) => d.points.length).m
   margin: 0;
   padding-left: 20px;
   line-height: 1.55;
+}
+
+.discussion-part {
+  display: grid;
+  gap: 4px;
+}
+
+.discussion-part-label {
+  margin: 4px 0 0;
+  font-size: var(--fs-small);
+  font-weight: 600;
 }
 
 .discussion-block {

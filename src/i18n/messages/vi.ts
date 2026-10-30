@@ -2112,6 +2112,7 @@ export const vi: Messages = {
     searchFirst: 'Tìm một môn',
     notFoundText: 'Hãy thêm môn này để giúp các bạn khác — chỉ mất khoảng một phút.',
     addIt: 'Thêm môn học',
+    discussPart: {"content": "Độ khó và nội dung", "work": "Bài tập và thi", "study": "Cách học", "watch": "Cần lưu ý"},
     discussNote: "Tóm tắt các đánh giá công khai, không chấm điểm ở đây.",
     tipsTitle: "Lời khuyên từ sinh viên",
     tipsNote: "Do sinh viên đã học môn này viết. Mỗi lời khuyên được duyệt tay, bỏ tên và thông tin liên lạc trước khi hiện, và chỉ hiện khi môn có đủ 3. Thấy nội dung không phù hợp thì báo cáo.",

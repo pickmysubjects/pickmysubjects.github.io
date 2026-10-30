@@ -378,12 +378,21 @@ const enZh = localized
  * r/unimelb threads), kept apart from our own ratings: no scores, never mixed into averages,
  * always linked to the source. Staff are never named. A subject can have one per source.
  */
+/** The parts of a fuller summary, in the order the page shows them. */
+export const DISCUSSION_SECTIONS = ['content', 'work', 'study', 'watch'] as const
+export type DiscussionSection = (typeof DISCUSSION_SECTIONS)[number]
+
 const discussionBase = {
   code: subjectCode,
   from: z.number().int(),
   to: z.number().int(),
   checked: z.iso.date(),
   points: z.array(localized(220, 120)).min(1).max(5),
+  // The fuller version for the subject page, in four parts; `points` stays the short one for cards.
+  sections: z
+    .object(Object.fromEntries(DISCUSSION_SECTIONS.map((k) => [k, z.array(localized(220, 120)).min(1).max(3).optional()])) as Record<DiscussionSection, z.ZodOptional<z.ZodArray<z.ZodType<Localized>>>>)
+    .strict()
+    .optional(),
   // What the summary's own points say about the work and the difficulty, read off them so the
   // semester check can use it before our own ratings come in. Left out when they don't say.
   // When older and newer posts disagree, the newest decide: subjects change.

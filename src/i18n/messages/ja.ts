@@ -2112,6 +2112,7 @@ export const ja: Messages = {
     searchFirst: '科目を検索',
     notFoundText: '追加して他の学生を助けてください。約1分で終わります。',
     addIt: '科目を追加',
+    discussPart: {"content": "難易度と内容", "work": "課題と試験", "study": "勉強のしかた", "watch": "注意点"},
     discussNote: "公開レビューのまとめです。ここでは点数をつけていません。",
     tipsTitle: "先輩からのアドバイス",
     tipsNote: "履修した学生が書いたものです。表示前に一件ずつ手で確認し、名前や連絡先は載せません。1科目3件たまってから表示します。問題があれば報告してください。",

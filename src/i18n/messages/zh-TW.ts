@@ -2112,6 +2112,7 @@ export const zhTW: Messages = {
     searchFirst: '搜尋一門課',
     notFoundText: '新增它來幫助其他同學——大約只要一分鐘。',
     addIt: '新增課程',
+    discussPart: {"content": "難度和內容", "work": "作業和考試", "study": "怎麼學", "watch": "要注意"},
     discussNote: "公開評價的摘要，這裡不評分。",
     tipsTitle: "同學的建議",
     tipsNote: "由修過這門課的同學寫，每則都經人工審核，去掉姓名和聯絡方式後才顯示；一門課滿 3 則才會出現。看到不該有的內容可以檢舉。",

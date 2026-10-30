@@ -2117,6 +2117,7 @@ export const en = {
     searchFirst: 'Search for a subject',
     notFoundText: 'Help other students by adding it — it takes about a minute.',
     addIt: 'Add a subject',
+    discussPart: {"content": "Difficulty and content", "work": "Assignments and exams", "study": "How to study", "watch": "Watch out for"},
     discussNote: "A summary of public reviews, not scored here.",
     tipsTitle: "Tips from students",
     tipsNote: "Written by students who took it. Each one is checked by hand and stripped of names and contact details before it shows, and only once a subject has 3. Report anything that shouldn't be here.",

@@ -2112,6 +2112,7 @@ export const ko: Messages = {
     searchFirst: '과목 검색',
     notFoundText: '추가해서 다른 학생들을 도와주세요. 1분 정도면 됩니다.',
     addIt: '과목 추가',
+    discussPart: {"content": "난이도와 내용", "work": "과제와 시험", "study": "공부 방법", "watch": "주의할 점"},
     discussNote: "공개 후기 요약이며, 여기서 점수를 매기지 않아요.",
     tipsTitle: "선배들의 팁",
     tipsNote: "이 과목을 들은 학생들이 쓴 글이에요. 하나씩 직접 확인하고 이름과 연락처는 빼고 보여 줘요. 과목당 3개가 모여야 표시돼요. 문제가 있으면 신고해 주세요.",

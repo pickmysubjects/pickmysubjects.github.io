@@ -2112,6 +2112,7 @@ export const ms: Messages = {
     searchFirst: 'Cari subjek',
     notFoundText: 'Bantu pelajar lain dengan menambahnya — kira-kira seminit.',
     addIt: 'Tambah subjek',
+    discussPart: {"content": "Kesukaran dan kandungan", "work": "Tugasan dan peperiksaan", "study": "Cara belajar", "watch": "Perlu diberi perhatian"},
     discussNote: "Ringkasan ulasan awam, tidak diberi skor di sini.",
     tipsTitle: "Tip daripada pelajar",
     tipsNote: "Ditulis oleh pelajar yang pernah mengambilnya. Setiap satu disemak secara manual, tanpa nama dan butiran hubungan, dan hanya dipaparkan apabila subjek ada 3. Laporkan apa-apa yang tidak sepatutnya ada.",

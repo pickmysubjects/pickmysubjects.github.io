@@ -2112,6 +2112,7 @@ export const id: Messages = {
     searchFirst: 'Cari mata kuliah',
     notFoundText: 'Bantu mahasiswa lain dengan menambahkannya — sekitar satu menit.',
     addIt: 'Tambah mata kuliah',
+    discussPart: {"content": "Tingkat kesulitan dan materi", "work": "Tugas dan ujian", "study": "Cara belajar", "watch": "Perlu diperhatikan"},
     discussNote: "Ringkasan ulasan publik, tidak diberi skor di sini.",
     tipsTitle: "Tips dari mahasiswa",
     tipsNote: "Ditulis oleh mahasiswa yang pernah mengambilnya. Tiap tips dicek manual, tanpa nama dan kontak, dan baru muncul setelah mata kuliah punya 3. Laporkan kalau ada yang tidak pantas.",
