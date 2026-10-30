@@ -75,6 +75,44 @@ export function optOutToggle(): boolean {
   return true
 }
 
+// In-app browsers send no referrer, so "unknown" hides them; their user agent names the app.
+const APPS: readonly [string, RegExp][] = [
+  ['wechat', /MicroMessenger/i],
+  ['xiaohongshu', /xhsdiscover|XiaoHongShu/i],
+  ['weibo', /Weibo/i],
+  ['douyin', /aweme|BytedanceWebview/i],
+  ['qq', /\bQQ\//],
+  ['facebook', /FBAN|FBAV/],
+  ['instagram', /Instagram/],
+  ['line', /\bLine\//],
+  ['kakaotalk', /KAKAOTALK/i],
+  ['zalo', /Zalo/i],
+]
+
+/** Where a visit came from: the app whose in-app browser it is, else 'link' (has a referrer) or 'direct'. */
+export function visitSource(ua: string = typeof navigator === 'undefined' ? '' : navigator.userAgent, referrer: string = typeof document === 'undefined' ? '' : document.referrer): string {
+  return APPS.find(([, re]) => re.test(ua))?.[0] ?? (referrer ? 'link' : 'direct')
+}
+
+/**
+ * Calls `f` once, on the visitor's first real input: a tap, click, key or mouse wheel. Crawlers
+ * that run JavaScript load pages but rarely send these (a scripted scroll fires no wheel event),
+ * so visits with input against all visits gives roughly the share of real people.
+ */
+export function onFirstInput(f: () => void): void {
+  if (typeof window === 'undefined' || typeof window.addEventListener !== 'function') return
+  const types = ['pointerdown', 'keydown', 'wheel', 'touchstart'] as const
+  const done = () => {
+    for (const t of types) window.removeEventListener(t, done)
+    try {
+      f()
+    } catch {
+      // Counting must never break the page.
+    }
+  }
+  for (const t of types) window.addEventListener(t, done, { passive: true })
+}
+
 let lastPath: string | null = null
 let counted = 0
 
@@ -89,7 +127,12 @@ export function countPage(pathname: string = typeof location === 'undefined' ? '
     const first = counted++ === 0
     counter()?.({ path, referrer: first ? undefined : '' })
     // Once per visit, the site language it started in, so the dashboard shows visits per language.
-    if (first) counter()?.({ path: `visit-lang-${pathLocale(path)}`, title: 'visit language', event: true })
+    if (first) {
+      const lang = pathLocale(path)
+      counter()?.({ path: `visit-lang-${lang}`, title: 'visit language', event: true })
+      counter()?.({ path: `visit-from-${visitSource()}`, title: 'visit source', event: true })
+      onFirstInput(() => counter()?.({ path: `visit-real-${lang}`, title: 'visit with input', event: true }))
+    }
   } catch {
     // Counting must never break the page.
   }

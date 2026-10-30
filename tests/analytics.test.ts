@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { CSP, GOATCOUNTER } from '../vite.config'
-import { countPage, countedPath, optOutToggle, pathLocale, resetAnalytics, trackEvent } from '@/utils/analytics'
+import { countPage, countedPath, onFirstInput, optOutToggle, pathLocale, resetAnalytics, trackEvent, visitSource } from '@/utils/analytics'
 
 const root = new URL('../', import.meta.url)
 
@@ -51,11 +51,11 @@ describe('counting', () => {
     countPage('/plan')
     countPage('/zh-CN/guide')
     // The first page is followed once by the visit's language event.
-    expect(count.mock.calls.map((c) => c[0].path)).toEqual(['/plan', 'visit-lang-en', '/zh-CN/guide'])
+    expect(count.mock.calls.map((c) => c[0].path)).toEqual(['/plan', 'visit-lang-en', 'visit-from-direct', '/zh-CN/guide'])
     expect(count.mock.calls[1]?.[0].event).toBe(true)
     // Inside the site the referrer is us: only the first page keeps the real one.
     expect(count.mock.calls[0]?.[0].referrer).toBeUndefined()
-    expect(count.mock.calls[2]?.[0].referrer).toBe('')
+    expect(count.mock.calls[3]?.[0].referrer).toBe('')
   })
 
   it('reads the site language from the path', () => {
@@ -141,5 +141,25 @@ describe('language redirect keeps the address', () => {
     vi.stubGlobal('location', { pathname: '/subject/COMP10001', search: '?a=1', hash: '#exam' })
     const { savedLocaleAddress } = await import('@/composables/useView')
     expect(savedLocaleAddress()).toBe('/zh-CN/subject/COMP10001?a=1#exam')
+  })
+})
+
+describe('telling people from crawlers', () => {
+  it('names the in-app browser a visit came from, else link or direct', () => {
+    expect(visitSource('Mozilla/5.0 (iPhone) AppleWebKit Mobile MicroMessenger/8.0.50', '')).toBe('wechat')
+    expect(visitSource('Mozilla/5.0 (iPhone) xhsdiscover/8.0', '')).toBe('xiaohongshu')
+    expect(visitSource('Mozilla/5.0 Chrome/130', 'https://www.google.com/')).toBe('link')
+    expect(visitSource('Mozilla/5.0 Chrome/130', '')).toBe('direct')
+  })
+
+  it('fires once, on the first real input only', () => {
+    const handlers = new Map<string, () => void>()
+    vi.stubGlobal('window', { addEventListener: (t: string, h: () => void) => handlers.set(t, h), removeEventListener: (t: string) => handlers.delete(t) })
+    const f = vi.fn()
+    onFirstInput(f)
+    expect(f).not.toHaveBeenCalled()
+    handlers.get('wheel')!()
+    expect(f).toHaveBeenCalledTimes(1)
+    expect(handlers.size).toBe(0)
   })
 })
