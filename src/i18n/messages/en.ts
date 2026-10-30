@@ -84,6 +84,7 @@ export const en = {
     },
   },
   changes: {
+    olderVersions: "Show earlier versions",
     indexLede: "What changed in the new Handbook, and what's new on this site.",
     handbookTitle: "Handbook changes",
     none: "No new Handbook year yet: its changes show here once it's in.",

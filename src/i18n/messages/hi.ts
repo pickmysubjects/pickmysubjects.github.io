@@ -80,6 +80,7 @@ export const hi: Messages = {
     },
   },
   changes: {
+    olderVersions: "पुराने वर्ज़न दिखाएँ",
     indexLede: "नई Handbook में क्या बदला और साइट पर नया क्या है।",
     handbookTitle: "Handbook में बदलाव",
     none: "नए साल की Handbook अभी नहीं आई; आने पर बदलाव यहाँ दिखेंगे।",

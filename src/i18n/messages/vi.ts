@@ -80,6 +80,7 @@ export const vi: Messages = {
     },
   },
   changes: {
+    olderVersions: "Xem các phiên bản trước",
     indexLede: "Handbook mới thay đổi gì và trang có gì mới.",
     handbookTitle: "Thay đổi Handbook",
     none: "Chưa có Handbook năm mới; khi có, thay đổi sẽ hiện ở đây.",

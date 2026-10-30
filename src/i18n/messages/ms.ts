@@ -80,6 +80,7 @@ export const ms: Messages = {
     },
   },
   changes: {
+    olderVersions: "Tunjuk versi terdahulu",
     indexLede: "Apa yang berubah dalam Handbook baharu dan apa yang baharu di laman ini.",
     handbookTitle: "Perubahan Handbook",
     none: "Handbook tahun baharu belum keluar; perubahannya dipaparkan di sini nanti.",

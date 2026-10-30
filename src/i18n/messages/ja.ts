@@ -80,6 +80,7 @@ export const ja: Messages = {
     },
   },
   changes: {
+    olderVersions: "以前のバージョンを表示",
     indexLede: "新しいHandbookの変更点と、このサイトの最近の更新。",
     handbookTitle: "Handbookの変更",
     none: "新年度のHandbookはまだです。出たら変更点をここに載せます。",

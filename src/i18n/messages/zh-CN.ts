@@ -80,6 +80,7 @@ export const zhCN: Messages = {
     },
   },
   changes: {
+    olderVersions: "显示更早的版本",
     indexLede: "新 Handbook 改了什么，以及网站最近的更新。",
     handbookTitle: "Handbook 变化",
     none: "新一年的 Handbook 还没出，出了之后变化会列在这里。",

@@ -80,6 +80,7 @@ export const ko: Messages = {
     },
   },
   changes: {
+    olderVersions: "이전 버전 보기",
     indexLede: "새 Handbook에서 바뀐 점과 사이트의 최근 업데이트.",
     handbookTitle: "Handbook 변경",
     none: "새 연도 Handbook은 아직이에요. 나오면 변경 사항이 여기 표시돼요.",

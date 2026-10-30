@@ -80,6 +80,7 @@ export const id: Messages = {
     },
   },
   changes: {
+    olderVersions: "Tampilkan versi sebelumnya",
     indexLede: "Apa yang berubah di Handbook baru dan apa yang baru di situs ini.",
     handbookTitle: "Perubahan Handbook",
     none: "Handbook tahun baru belum keluar; perubahannya akan muncul di sini.",

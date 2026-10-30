@@ -80,6 +80,7 @@ export const zhTW: Messages = {
     },
   },
   changes: {
+    olderVersions: "顯示更早的版本",
     indexLede: "新 Handbook 改了什麼，以及網站最近的更新。",
     handbookTitle: "Handbook 變化",
     none: "新一年的 Handbook 還沒出，出了之後變化會列在這裡。",

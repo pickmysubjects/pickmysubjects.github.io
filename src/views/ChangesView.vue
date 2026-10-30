@@ -27,9 +27,10 @@ const latest = shallowRef<YearDiff | null>(null)
 const load = Object.values(files)[0]
 if (load) void load().then((d) => ((latest.value = d), (diff.value = String(d.to) === props.year ? d : null), (loaded.value = true)))
 else loaded.value = true
-// The update log: one version at a time, picked from a row of versions (newest first).
-const shownVersion = shallowRef(SITE_RELEASES[0]!.version)
-const shownRelease = computed(() => SITE_RELEASES.find((r) => r.version === shownVersion.value) ?? SITE_RELEASES[0]!)
+// The update log: the newest few versions, the rest on request.
+const FIRST_SHOWN = 3
+const allVersions = shallowRef(false)
+const shownReleases = computed(() => (allVersions.value ? SITE_RELEASES : SITE_RELEASES.slice(0, FIRST_SHOWN)))
 
 const sep = computed(() => t.value('listSep'))
 const summary = computed(() => (diff.value ? changesSummary(t.value, diff.value, sep.value) : ''))
@@ -61,16 +62,16 @@ const exists = (kind: 'subject' | 'major', id: string) => (kind === 'subject' ? 
       </GuideItem>
       <GuideItem id="changes-site" :title="t('about.updatesTitle')">
         <!-- Versions only, no dates; the row scrolls sideways when it doesn't fit. -->
-        <!-- One thin line with a dot per version, newest on the left; the picked dot is filled. -->
-        <div class="versions" role="group" :aria-label="t('about.updatesTitle')">
-          <button v-for="r in SITE_RELEASES" :key="r.version" type="button" class="version" :aria-pressed="r.version === shownVersion" @click="shownVersion = r.version">
-            <span class="version-dot" aria-hidden="true" />
-            <span class="version-num">v{{ r.version }}</span>
-          </button>
-        </div>
-        <ul class="log">
-          <li v-for="(p, i) in shownRelease.points" :key="i">{{ p[locale] }}</li>
-        </ul>
+        <!-- Newest first, each version a dot on one thin vertical line; older versions open on request. -->
+        <ol class="log">
+          <li v-for="r in shownReleases" :key="r.version">
+            <span class="log-version">v{{ r.version }}</span>
+            <ul class="log-points">
+              <li v-for="(p, i) in r.points" :key="i">{{ p[locale] }}</li>
+            </ul>
+          </li>
+        </ol>
+        <button v-if="!allVersions && SITE_RELEASES.length > FIRST_SHOWN" type="button" class="log-more" @click="allVersions = true">{{ t('changes.olderVersions') }}</button>
       </GuideItem>
     </template>
     <template v-else-if="diff">
@@ -93,82 +94,85 @@ const exists = (kind: 'subject' | 'major', id: string) => (kind === 'subject' ? 
 </template>
 
 <style scoped>
-.versions {
-  position: relative;
-  display: flex;
-  margin: 0 0 12px;
-  padding: 4px 0 6px;
-  overflow-x: auto;
-  scrollbar-width: thin;
-}
-
-.version {
-  position: relative;
-  flex: 1 0 64px;
+.log {
   display: grid;
-  justify-items: center;
-  gap: 8px;
+  margin: 0;
   padding: 0;
-  color: var(--ink-soft);
-  font: inherit;
-  font-size: var(--fs-meta);
-  font-variant-numeric: tabular-nums;
-  background: none;
-  border: 0;
-  cursor: pointer;
+  list-style: none;
 }
 
-/* The line: each version draws its half to the left and right of its dot. */
-.version::before {
+.log > li {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(4.5em, max-content) minmax(0, 1fr);
+  gap: 4px 20px;
+  padding: 0 0 18px 28px;
+}
+
+.log > li:last-child {
+  padding-bottom: 0;
+}
+
+.log > li::before {
   content: '';
   position: absolute;
-  top: 5px;
+  top: 0.45em;
   left: 0;
-  right: 0;
-  height: 2px;
-  background: var(--divider);
-}
-
-.version:first-child::before {
-  left: 50%;
-}
-
-.version:last-child::before {
-  right: 50%;
-}
-
-.version-dot {
-  position: relative;
   width: 12px;
   height: 12px;
   border-radius: 50%;
   background: var(--divider);
 }
 
-.version:hover {
-  color: var(--ink);
-}
-
-.version:hover .version-dot {
-  background: var(--ink-soft);
-}
-
-.version[aria-pressed='true'] {
-  color: var(--ink);
-  font-weight: var(--fw-semibold);
-}
-
-.version[aria-pressed='true'] .version-dot {
+.log > li:first-child::before {
   background: var(--accent-fill);
   box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-fill) 16%, transparent);
 }
 
-.log {
+.log > li:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: calc(0.45em + 18px);
+  bottom: 4px;
+  left: 5px;
+  width: 2px;
+  background: var(--divider);
+}
+
+.log-version {
+  font-weight: var(--fw-semibold);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.log-points {
   display: grid;
-  gap: 8px;
+  gap: 4px;
   margin: 0;
-  padding-left: 1.2em;
+  padding-left: 1.1em;
   line-height: 1.55;
+}
+
+.log-more {
+  justify-self: start;
+  margin-top: 12px;
+  padding: 0;
+  color: var(--accent);
+  font: inherit;
+  font-size: var(--fs-small);
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.log-more:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+  .log > li {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 .summary {
