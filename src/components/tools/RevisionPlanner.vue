@@ -10,7 +10,7 @@ import { useRevisionPlan } from '@/composables/useRevisionPlan'
 import { useI18n } from '@/i18n'
 import { termLabel } from '@/i18n/format'
 import { localTitle, pickLocalized } from '@/i18n/localized'
-import { addDays, revisionIcs, termKey, weekday, type RevisionDay, type RevisionDifficulty, type RevisionSession, type RevisionType } from '@/engine/revisionPlan'
+import { addDays, revisionIcs, revisionKind, termKey, weekday, type RevisionDay, type RevisionDifficulty, type RevisionSession, type RevisionType } from '@/engine/revisionPlan'
 import { downloadIcs } from '@/utils/keyDates'
 
 /**
@@ -72,6 +72,8 @@ const weightWhy = (code: string) => {
   if (!s) return ''
   return [t.value(`rev.level.${s.difficulty}`), s.examWeight !== undefined ? t.value('rev.examShare', { n: s.examWeight }) : ''].filter(Boolean).join(' · ')
 }
+/** The suggested way to revise a subject, by its kind. */
+const howOf = (code: string) => t.value(`rev.how.${revisionKind(data.value.subjects[code]?.skills)}`)
 const timeOf = (code: string) => rows.value.find((r) => r.code === code)?.time
 const examText = (c: string) => [t.value('rev.exam'), c, timeOf(c) || t.value('rev.noTime')].join(' ').replace(' （', '（')
 
@@ -178,6 +180,7 @@ function print(): void {
                   <span class="rev-tcode">{{ x.code }}</span>
                   <span class="rev-th">{{ hours(x.hours) }}</span>
                   <span class="rev-twhy">{{ weightWhy(x.code) }}</span>
+                  <span class="rev-twhy">{{ t('rev.howLine', { how: howOf(x.code) }) }}</span>
                   <span class="rev-bar" aria-hidden="true"><span :style="{ width: `${(x.hours / maxTotal) * 100}%` }" /></span>
                 </li>
                 <li class="rev-total"><span>{{ t('rev.total') }}</span><span class="rev-th">{{ hours(totalHours) }}</span></li>

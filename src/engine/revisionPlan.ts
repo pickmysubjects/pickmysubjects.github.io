@@ -102,6 +102,18 @@ export interface RevisionPlan {
   empty: boolean
 }
 
+/** How a subject is best revised, from its skills: the first match wins, in this order. */
+export type RevisionKind = 'code' | 'maths' | 'language' | 'writing' | 'other'
+const KIND_SKILLS: readonly [RevisionKind, readonly string[]][] = [
+  ['code', ['programming', 'algorithms']],
+  ['maths', ['maths', 'statistics']],
+  ['language', ['languages']],
+  ['writing', ['writing']],
+]
+export function revisionKind(skills: readonly string[] = []): RevisionKind {
+  return KIND_SKILLS.find(([, want]) => want.some((x) => skills.includes(x)))?.[0] ?? 'other'
+}
+
 export const DIFFICULTY_WEIGHT: Record<RevisionDifficulty, number> = { easier: 0.8, average: 1, harder: 1.3 }
 /** Subjects sharing one ordinary day, at most (rule of thumb). */
 export const MAX_SUBJECTS_A_DAY = 3

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { addDays, cappedWeights, cleanRevision, cleanRevisionStore, DAY_BEFORE_HOURS, dayLoad, daysBetween, sittings, defaultStart, examPeriod, revisionTerms, planRevision, revisionIcs, sessionTimes, subjectWeight, type RevisionInput, type RevisionPlan, type RevisionSubject } from '../src/engine/revisionPlan'
+import { addDays, cappedWeights, cleanRevision, cleanRevisionStore, DAY_BEFORE_HOURS, dayLoad, daysBetween, sittings, defaultStart, examPeriod, revisionTerms, planRevision, revisionIcs, revisionKind, sessionTimes, subjectWeight, type RevisionInput, type RevisionPlan, type RevisionSubject } from '../src/engine/revisionPlan'
 
 const sub = (code: string, exam: string, extra: Partial<RevisionSubject> = {}): RevisionSubject => ({ code, exam, difficulty: 'average', ...extra })
 const hoursOf = (p: RevisionPlan, code: string) => p.totals.find((t) => t.code === code)?.hours ?? 0
@@ -438,5 +438,16 @@ describe('session parts', () => {
       for (const type of ['learn', 'test'] as const) expect(list.filter((s) => s.type === type).map((s) => s.part)).toEqual(list.filter((s) => s.type === type).map((_, i) => i))
       expect(list.filter((s) => s.type === 'paper').every((s) => s.part === undefined)).toBe(true)
     }
+  })
+})
+
+describe('revision kind', () => {
+  it('picks the first matching kind from the skills, else other', () => {
+    expect(revisionKind(['writing', 'programming'])).toBe('code')
+    expect(revisionKind(['statistics'])).toBe('maths')
+    expect(revisionKind(['languages', 'writing'])).toBe('language')
+    expect(revisionKind(['writing'])).toBe('writing')
+    expect(revisionKind(['presentation'])).toBe('other')
+    expect(revisionKind()).toBe('other')
   })
 })
