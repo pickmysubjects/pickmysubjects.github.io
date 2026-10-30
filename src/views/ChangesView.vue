@@ -54,11 +54,11 @@ const exists = (kind: 'subject' | 'major', id: string) => (kind === 'subject' ? 
 <template>
   <InfoPage page="changes" :title="title" :refresh="loaded">
     <template v-if="!year">
-      <GuideItem id="changes-handbook" :title="t('changes.handbookTitle')">
-        <p v-if="latest">
+      <!-- Only once a new Handbook year has been compared with the last; until then the page is just the update log. -->
+      <GuideItem v-if="latest" id="changes-handbook" :title="t('changes.handbookTitle')">
+        <p>
           <a :href="link(`changes/${latest.to}`)">{{ t('changes.heading', { year: latest.to }) }}</a>
         </p>
-        <p v-else-if="loaded" class="note">{{ t('changes.none') }}</p>
       </GuideItem>
       <GuideItem id="changes-site" :title="t('about.updatesTitle')">
         <!-- Versions only, no dates; the row scrolls sideways when it doesn't fit. -->
