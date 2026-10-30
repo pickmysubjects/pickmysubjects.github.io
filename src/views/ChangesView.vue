@@ -61,8 +61,12 @@ const exists = (kind: 'subject' | 'major', id: string) => (kind === 'subject' ? 
       </GuideItem>
       <GuideItem id="changes-site" :title="t('about.updatesTitle')">
         <!-- Versions only, no dates; the row scrolls sideways when it doesn't fit. -->
+        <!-- One thin line with a dot per version, newest on the left; the picked dot is filled. -->
         <div class="versions" role="group" :aria-label="t('about.updatesTitle')">
-          <button v-for="r in SITE_RELEASES" :key="r.version" type="button" class="version" :aria-pressed="r.version === shownVersion" @click="shownVersion = r.version">v{{ r.version }}</button>
+          <button v-for="r in SITE_RELEASES" :key="r.version" type="button" class="version" :aria-pressed="r.version === shownVersion" @click="shownVersion = r.version">
+            <span class="version-dot" aria-hidden="true" />
+            <span class="version-num">v{{ r.version }}</span>
+          </button>
         </div>
         <ul class="log">
           <li v-for="(p, i) in shownRelease.points" :key="i">{{ p[locale] }}</li>
@@ -90,37 +94,73 @@ const exists = (kind: 'subject' | 'major', id: string) => (kind === 'subject' ? 
 
 <style scoped>
 .versions {
+  position: relative;
   display: flex;
-  gap: 6px;
   margin: 0 0 12px;
-  padding-bottom: 4px;
+  padding: 4px 0 6px;
   overflow-x: auto;
   scrollbar-width: thin;
 }
 
 .version {
-  flex: none;
-  padding: 4px 12px;
+  position: relative;
+  flex: 1 0 64px;
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  padding: 0;
   color: var(--ink-soft);
   font: inherit;
   font-size: var(--fs-meta);
   font-variant-numeric: tabular-nums;
-  background: transparent;
-  border: 1px solid var(--line);
-  border-radius: 999px;
+  background: none;
+  border: 0;
   cursor: pointer;
+}
+
+/* The line: each version draws its half to the left and right of its dot. */
+.version::before {
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--divider);
+}
+
+.version:first-child::before {
+  left: 50%;
+}
+
+.version:last-child::before {
+  right: 50%;
+}
+
+.version-dot {
+  position: relative;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--divider);
 }
 
 .version:hover {
   color: var(--ink);
-  border-color: var(--ink-soft);
+}
+
+.version:hover .version-dot {
+  background: var(--ink-soft);
 }
 
 .version[aria-pressed='true'] {
   color: var(--ink);
   font-weight: var(--fw-semibold);
-  border-color: var(--accent-fill);
-  background: color-mix(in srgb, var(--accent-fill) 16%, transparent);
+}
+
+.version[aria-pressed='true'] .version-dot {
+  background: var(--accent-fill);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-fill) 16%, transparent);
 }
 
 .log {
