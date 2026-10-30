@@ -1950,9 +1950,6 @@ export const ms: Messages = {
     metButProblems: "Syarat dipenuhi, {n} masalah perlu dibaiki",
     leftOne: "1 syarat lagi",
     showAll: "Semua {n} syarat",
-    tapHint: "Ketik satu syarat untuk menyerlahkan subjek yang dikira untuknya.",
-    counting: "Dikira: {codes}",
-    countingNone: "Belum ada subjek dalam pelan yang dikira untuk syarat ini.",
   },
   privacy: {
     title: 'Privasi',

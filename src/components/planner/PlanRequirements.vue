@@ -1,37 +1,30 @@
 <script setup lang="ts">
-import { computed, shallowRef } from 'vue'
-import { Check, ChevronDown } from 'lucide-vue-next'
+import { computed } from 'vue'
+import { Check } from 'lucide-vue-next'
 import type { CourseRule, RuleStatus } from '@/engine'
 import { useI18n } from '@/i18n'
 import { categoryLabel, ruleDetail, ruleText } from '@/i18n/format'
 
 /**
  * The plan's progress in one place: how many degree rules are met, the totals students track
- * (overall, each category, level 3, the major), and — opened — every rule in plain words.
- * Tapping a rule lights up the subjects counting toward it on the board. Counting is automatic.
+ * (overall, each category, level 3, the major), and a link to every rule in plain words, listed
+ * under the board (PlanDetails). Tapping the major row lights up its subjects on the board.
  */
 const props = defineProps<{
   statuses: RuleStatus[]
-  /** Every rule (the degree's, then a diploma's), for the full list. */
+  /** Every rule (the degree's, then a diploma's), for the rule texts. */
   rules: CourseRule[]
   /** The degree's own rules, for the meters. */
   degreeRules: CourseRule[]
-  /** For each rule, the planned or done subjects that count toward it (where that can be told). */
-  members: Record<string, string[]>
   active: string | null
   /** Problems with the plan's subjects (errors): every rule met isn't "ready to graduate" while there are any. */
   problems?: number
-  /** False: start folded even with rules unmet (a plan just built). */
-  startOpen?: boolean
   /** Conditions we can't check (a VCE score, a test) the student still has to confirm. */
   unconfirmed?: number
 }>()
-const emit = defineEmits<{ focus: [ruleId: string | null] }>()
+// showAll: "All N rules" was tapped; the page opens the list under the board.
+const emit = defineEmits<{ focus: [ruleId: string | null]; showAll: [] }>()
 const { t } = useI18n()
-
-// Folded: the status line and meters say it; the full list is one tap away. Opened only when a rule
-// fails on a plan that wasn't just built.
-const open = shallowRef(props.startOpen !== false && props.statuses.some((s) => s.status === 'fail'))
 
 interface Meter {
   id: string
@@ -67,14 +60,12 @@ const meters = computed<Meter[]>(() => {
   return out
 })
 
-const glyph = { ok: '✓', fail: '✕', unknown: '?' } as const
 const rows = computed(() =>
   props.statuses.map((s) => ({
     id: s.ruleId,
     status: s.status,
     text: ruleText(t.value, props.rules.find((r) => r.id === s.ruleId), s.description),
     detail: ruleDetail(t.value, s),
-    members: props.members[s.ruleId] ?? [],
   })),
 )
 // The major isn't a total: it shows only while unmet, as a row under the meters.
@@ -84,8 +75,6 @@ const majorLeft = computed(() =>
 const total = computed(() => rows.value.length)
 const met = computed(() => rows.value.filter((r) => r.status === 'ok').length)
 const left = computed(() => total.value - met.value)
-// Unmet first: what still needs doing is what the student came to see.
-const ordered = computed(() => [...rows.value].sort((a, b) => Number(a.status === 'ok') - Number(b.status === 'ok')))
 // Every rule met but subjects with problems (planned twice, a missing prerequisite): not "ready".
 const blocked = computed(() => left.value === 0 && (props.problems ?? 0) > 0)
 const health = computed(() => (left.value === 0 ? (blocked.value ? 'unknown' : 'ok') : rows.value.some((r) => r.status === 'fail') ? 'fail' : 'unknown'))
@@ -118,10 +107,8 @@ function toggle(id: string): void {
           <a v-if="health === 'ok' && unconfirmed" class="confirm-chip" :href="$slots.notes ? '#rules-notes' : undefined">{{ t('progress.toConfirm', { n: unconfirmed }) }}</a>
         </span>
       </span>
-      <button class="toggle" type="button" :aria-expanded="open" aria-controls="rules-all" @click="open = !open">
-        {{ t('progress.showAll', { n: total }) }}
-        <ChevronDown :size="16" aria-hidden="true" class="chevron" :class="{ turned: open }" />
-      </button>
+      <!-- The full list is the section under the board: this opens it and scrolls there. -->
+      <a class="toggle" href="#plan-details" @click.prevent="emit('showAll')">{{ t('progress.showAll', { n: total }) }}</a>
     </div>
 
     <!-- One row of totals, a cell each: name, points, bar, what's left. -->
@@ -157,25 +144,6 @@ function toggle(id: string): void {
     <div v-if="$slots.alerts" class="alerts">
       <slot name="alerts" />
     </div>
-
-    <div v-if="open" id="rules-all" class="body">
-      <p class="hint">{{ t('progress.tapHint') }}</p>
-      <ul class="rules">
-        <li v-for="r in ordered" :key="r.id">
-          <button class="rule" :class="[`rule-${r.status}`, { 'rule-active': active === r.id }]" type="button" :aria-pressed="active === r.id" @click="toggle(r.id)">
-            <span class="rule-glyph" aria-hidden="true">{{ glyph[r.status] }}</span>
-            <span class="visually-hidden">{{ t(`rules.status.${r.status}`) }}:</span>
-            <span class="rule-main">
-              <span class="rule-text">{{ r.text }}</span>
-              <span v-if="r.status !== 'ok' || active === r.id" class="rule-detail">{{ r.detail }}</span>
-              <span v-if="active === r.id" class="rule-members">
-                {{ r.members.length ? t('progress.counting', { codes: r.members.join(t('listSep')) }) : t('progress.countingNone') }}
-              </span>
-            </span>
-          </button>
-        </li>
-      </ul>
-    </div>
   </section>
 </template>
 
@@ -184,7 +152,7 @@ function toggle(id: string): void {
   --tone: var(--good);
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  grid-template-areas: 'health toggle' 'meters meters' 'major major' 'notes notes' 'alerts alerts' 'body body';
+  grid-template-areas: 'health toggle' 'meters meters' 'major major' 'notes notes' 'alerts alerts';
   min-width: 0;
   padding: 0;
   overflow: hidden;
@@ -428,6 +396,7 @@ function toggle(id: string): void {
   font-size: 0.8125rem;
   font-weight: 600;
   color: var(--ink-soft);
+  text-decoration: none;
   white-space: nowrap;
   cursor: pointer;
 }
@@ -437,115 +406,16 @@ function toggle(id: string): void {
   color: color-mix(in srgb, var(--accent) 80%, var(--ink)); /* darker in light, lighter in dark: 4.5:1 on glass */
 }
 
-.chevron {
-  transition: transform 0.15s;
-}
-
-.chevron.turned {
-  transform: rotate(180deg);
-}
-
-.body {
-  grid-area: body;
-  display: grid;
-  gap: 8px;
-  padding: 4px 16px 16px;
-  border-top: 1px solid var(--line);
-}
-
-.hint {
-  padding: 8px 4px 0;
-  font-size: 0.8125rem;
-  color: var(--ink-soft);
-}
-
-.rules {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
-  gap: 2px 12px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.rule {
-  display: flex;
-  gap: 10px;
-  align-items: flex-start;
-  width: 100%;
-  padding: 8px;
-  border: 1px solid transparent;
-  border-radius: var(--radius-sm);
-  background: none;
-  color: var(--ink);
-  font: inherit;
-  text-align: left;
-  cursor: pointer;
-}
-
-.rule:hover {
-  background: var(--inset-fill);
-}
-
 .rule-active {
   border-color: var(--good);
   background: color-mix(in srgb, var(--good-soft) 70%, transparent);
-}
-
-.rule-glyph {
-  display: inline-grid;
-  place-items: center;
-  flex: none;
-  width: 20px;
-  height: 20px;
-  margin-top: 1px;
-  border-radius: 50%;
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: #fff;
-  background: var(--good);
-}
-
-.rule-fail .rule-glyph {
-  background: var(--bad);
-}
-
-.rule-unknown .rule-glyph {
-  background: var(--warn);
-}
-
-.rule-main {
-  display: grid;
-  gap: 3px;
-  min-width: 0;
-}
-
-.rule-text {
-  font-size: 0.875rem;
-  line-height: 1.4;
-}
-
-.rule-detail {
-  font-size: 0.8125rem;
-  color: var(--ink-soft);
-}
-
-.rule-fail .rule-detail {
-  color: var(--bad);
-}
-
-.rule-members {
-  font-family: var(--font-code);
-  font-size: 0.75rem;
-  color: var(--good);
-  overflow-wrap: anywhere;
 }
 
 /* Phones: name, points and what's left on one line, the bar under them. */
 @media (max-width: 560px) {
   .progress {
     grid-template-columns: minmax(0, 1fr);
-    grid-template-areas: 'health' 'meters' 'toggle' 'major' 'notes' 'alerts' 'body';
+    grid-template-areas: 'health' 'meters' 'toggle' 'major' 'notes' 'alerts';
   }
 
   .health {
@@ -581,8 +451,7 @@ function toggle(id: string): void {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .ring-fill,
-  .chevron {
+  .ring-fill {
     transition: none;
   }
 }

@@ -1950,9 +1950,6 @@ export const zhTW: Messages = {
     metButProblems: "規則都符合，還有 {n} 個問題",
     leftOne: "還差 1 條規則",
     showAll: "查看全部 {n} 條規則",
-    tapHint: "點一條要求，計畫裡算進這條的課會亮起來。",
-    counting: "計入的課：{codes}",
-    countingNone: "計畫裡還沒有課算進這一條。",
   },
   privacy: {
     title: '隱私說明',

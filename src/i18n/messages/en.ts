@@ -1955,9 +1955,6 @@ export const en = {
     metButProblems: "Rules met, {n} problems to fix",
     leftOne: "1 rule to go",
     showAll: "All {n} rules",
-    tapHint: "Tap a requirement to light up the subjects that count toward it.",
-    counting: "Counting: {codes}",
-    countingNone: "No subject in your plan counts toward this yet.",
   },
   privacy: {
     title: 'Privacy',

@@ -1950,9 +1950,6 @@ export const hi: Messages = {
     metButProblems: "नियम पूरे, {n} समस्याएँ ठीक करनी हैं",
     leftOne: "1 नियम बाकी",
     showAll: "सभी {n} नियम",
-    tapHint: "किसी नियम पर टैप करें, उसमें गिने जाने वाले विषय हाइलाइट होंगे।",
-    counting: "गिने गए: {codes}",
-    countingNone: "अभी प्लान का कोई विषय इस नियम में नहीं गिना जाता।",
   },
   privacy: {
     title: 'गोपनीयता',

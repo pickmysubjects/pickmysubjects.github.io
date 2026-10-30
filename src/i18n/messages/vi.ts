@@ -1950,9 +1950,6 @@ export const vi: Messages = {
     metButProblems: "Đủ yêu cầu, còn {n} lỗi cần sửa",
     leftOne: "Còn 1 yêu cầu",
     showAll: "Xem cả {n} yêu cầu",
-    tapHint: "Bấm vào một yêu cầu để làm nổi các môn được tính vào đó.",
-    counting: "Được tính: {codes}",
-    countingNone: "Chưa có môn nào trong kế hoạch được tính vào yêu cầu này.",
   },
   privacy: {
     title: 'Quyền riêng tư',

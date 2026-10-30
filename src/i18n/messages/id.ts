@@ -1950,9 +1950,6 @@ export const id: Messages = {
     metButProblems: "Syarat terpenuhi, {n} masalah perlu diperbaiki",
     leftOne: "Kurang 1 syarat",
     showAll: "Semua {n} syarat",
-    tapHint: "Ketuk satu syarat untuk menyorot mata kuliah yang dihitung untuknya.",
-    counting: "Dihitung: {codes}",
-    countingNone: "Belum ada mata kuliah di rencana yang dihitung untuk syarat ini.",
   },
   privacy: {
     title: 'Privasi',

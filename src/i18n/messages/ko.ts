@@ -1950,9 +1950,6 @@ export const ko: Messages = {
     metButProblems: "요건은 충족, 고칠 문제 {n}개",
     leftOne: "1개 요건 남음",
     showAll: "요건 {n}개 모두 보기",
-    tapHint: "요건을 누르면 거기에 인정되는 과목이 표시돼요.",
-    counting: "인정 과목: {codes}",
-    countingNone: "아직 이 요건에 인정되는 과목이 없어요.",
   },
   privacy: {
     title: '개인정보 처리',

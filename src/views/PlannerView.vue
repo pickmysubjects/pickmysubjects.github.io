@@ -307,10 +307,7 @@ function placePending(): void {
   )
 }
 
-// Just built from the questions: the rules card starts folded, so the board is near the top.
-const justBuilt = shallowRef(false)
 function finishWizard(setup: PlanSetup): void {
-  justBuilt.value = true
   if (!plan.updateSetup(setup)) plan.generate()
   editing.value = false
   placePending()
@@ -336,6 +333,7 @@ function markDone(code: string, mark: number | undefined): void {
 const peekDone = computed(() => [...profile.value.results].reverse().find((x) => x.code === peek.value && isDone(x, data.value.subjects)))
 // The board's focus: a selected subject (its timeline lights up) or a requirement (its subjects do).
 const board = useTemplateRef<InstanceType<typeof PlanMap>>('board')
+const details = useTemplateRef<InstanceType<typeof PlanDetails>>('details')
 const selected = shallowRef<string | null>(null)
 const ruleFocus = shallowRef<string | null>(null)
 // Closing the subject window also clears its timeline, so the board is back to normal in one step.
@@ -593,13 +591,12 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !viewingShar
             v-if="plan.courseCheck.value.statuses.length"
             :problems="problems + Number(recordFix)"
             :unconfirmed="unknowns"
-            :start-open="!justBuilt"
             :statuses="plan.courseCheck.value.statuses"
             :rules="allRules"
             :degree-rules="rules"
-            :members="members"
             :active="ruleFocus"
             @focus="focusRule"
+            @show-all="details?.reveal()"
           >
             <template v-if="hasNotes" #notes>
               <ul v-if="planProblems.length" class="status-list" :class="problems ? 'tone-bad' : 'tone-warn'" role="status">
@@ -730,6 +727,7 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !viewingShar
             </template>
           </PlanMap>
           <PlanDetails
+            ref="details"
             :statuses="plan.courseCheck.value.statuses"
             :rules="allRules"
             :degree-rules="rules"

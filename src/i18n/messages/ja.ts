@@ -1950,9 +1950,6 @@ export const ja: Messages = {
     metButProblems: "条件は満たすが、問題が {n} 件",
     leftOne: "あと 1 件",
     showAll: "全 {n} 件の条件",
-    tapHint: "条件をタップすると、それに数えられる科目が光ります。",
-    counting: "数えられる科目：{codes}",
-    countingNone: "まだこの条件に数えられる科目はありません。",
   },
   privacy: {
     title: 'プライバシー',

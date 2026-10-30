@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, useTemplateRef } from 'vue'
 import { ChevronDown } from 'lucide-vue-next'
 import InfoTip from '@/components/InfoTip.vue'
 import PlanHowBuilt from '@/components/planner/PlanHowBuilt.vue'
@@ -90,6 +90,17 @@ const grouped = (list: Row[]) => GROUPS.map((g) => ({ g, rows: list.filter((r) =
 const open = computed(() => rows.value.filter((r) => r.status !== 'ok'))
 const met = computed(() => rows.value.filter((r) => r.status === 'ok'))
 
+// The rules strip's "All N rules" link: open this fold, bring it into view and move focus to it.
+const fold = useTemplateRef<HTMLDetailsElement>('fold')
+function reveal(): void {
+  const el = fold.value
+  if (!el) return
+  el.open = true
+  el.scrollIntoView({ behavior: reducedMotion() ? 'auto' : 'smooth', block: 'start' })
+  el.querySelector('summary')?.focus({ preventScroll: true })
+}
+defineExpose({ reveal })
+
 function scrollToBoard(): void {
   document.getElementById('board')?.scrollIntoView({ behavior: reducedMotion() ? 'auto' : 'smooth', block: 'start' })
 }
@@ -143,7 +154,7 @@ function showSubject(code: string): void {
 </script>
 
 <template>
-  <details class="details">
+  <details id="plan-details" ref="fold" class="details">
     <summary class="details-summary">
       <span>{{ t('checks.allTitle') }}</span>
       <ChevronDown :size="18" aria-hidden="true" class="details-chevron" />

@@ -1950,9 +1950,6 @@ export const zhCN: Messages = {
     metButProblems: "规则都满足，还有 {n} 个问题",
     leftOne: "还差 1 条规则",
     showAll: "查看全部 {n} 条规则",
-    tapHint: "点一条要求，计划里算进这条的课会亮起来。",
-    counting: "计入的课：{codes}",
-    countingNone: "计划里还没有课算进这一条。",
   },
   privacy: {
     title: '隐私说明',
