@@ -1974,12 +1974,6 @@ export const vi: Messages = {
     release: {
       label: "{v} · Cập nhật {date}",
       title: "Có gì mới",
-      line1: "Bảng kế hoạch: cả bằng trên một bảng. Đánh dấu môn đã học kèm điểm, mọi quy định của bằng đều được kiểm tra.",
-      line2: "Chia sẻ kế hoạch bằng đường link ngắn; so sánh kế hoạch có trang riêng.",
-      line3: "Công cụ mới: lập kế hoạch ôn thi (mỗi ngày ôn gì, ôn thế nào, thêm vào lịch), tính điểm cần đạt cuối kỳ và tính WAM.",
-      line4: "Môn có nhiều đánh giá giờ có phần “Sinh viên nói gì” chi tiết hơn: độ khó, bài tập và thi, cách học, điều cần lưu ý.",
-      line5: "Ngày quan trọng trên trang chủ; thêm ngày census, thi và có điểm vào lịch.",
-      line6: "Giao diện mới, mọi tính năng đều có trong menu, tìm kiếm toàn trang.",
       all: "Tất cả cập nhật",
     },
     proofLanguages: "9 ngôn ngữ",

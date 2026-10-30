@@ -1974,12 +1974,6 @@ export const id: Messages = {
     release: {
       label: "{v} · Diperbarui {date}",
       title: "Yang baru",
-      line1: "Papan rencana: seluruh gelarmu di satu papan. Tandai mata kuliah selesai dengan nilainya, dan semua aturan gelar dicek.",
-      line2: "Bagikan rencana dengan link pendek; bandingkan rencana di halaman tersendiri.",
-      line3: "Alat baru: perencana belajar ujian (apa dan cara belajar tiap hari, bisa masuk kalender), kalkulator nilai ujian akhir, dan kalkulator WAM.",
-      line4: "“Kata mahasiswa” lebih rinci untuk mata kuliah yang banyak ulasan: tingkat kesulitan, tugas dan ujian, cara belajar, hal yang perlu diperhatikan.",
-      line5: "Tanggal penting di beranda; tanggal census, ujian, dan pengumuman nilai bisa masuk kalender.",
-      line6: "Tampilan baru, semua fitur ada di menu, dan pencarian di seluruh situs.",
       all: "Semua pembaruan",
     },
     proofLanguages: "9 bahasa",

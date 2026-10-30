@@ -1974,12 +1974,6 @@ export const ms: Messages = {
     release: {
       label: "{v} · Dikemas kini {date}",
       title: "Apa yang baharu",
-      line1: "Papan rancangan: seluruh ijazah anda pada satu papan. Tanda subjek selesai dengan markah, dan semua peraturan ijazah disemak.",
-      line2: "Kongsi rancangan dengan pautan pendek; banding rancangan pada halamannya sendiri.",
-      line3: "Alat baharu: perancang ulang kaji (apa dan cara ulang kaji setiap hari, boleh tambah ke kalendar), kalkulator markah peperiksaan akhir dan kalkulator WAM.",
-      line4: "“Kata pelajar” lebih terperinci untuk subjek yang banyak ulasan: kesukaran, tugasan dan peperiksaan, cara belajar, perkara perlu diberi perhatian.",
-      line5: "Tarikh penting di halaman utama; tarikh census, peperiksaan dan keputusan boleh ditambah ke kalendar.",
-      line6: "Rupa baharu, setiap ciri ada dalam menu, dan carian seluruh laman.",
       all: "Semua kemas kini",
     },
     proofLanguages: "9 bahasa",

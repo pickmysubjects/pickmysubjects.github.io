@@ -3,18 +3,19 @@ import { computed, nextTick, onBeforeUnmount, onMounted, shallowRef, useId, useT
 import { useI18n } from '@/i18n'
 import { APP_VERSION, IS_BETA, releaseDate, versionLabel } from '@/release'
 import { link } from '@/composables/useView'
+import { SITE_RELEASES } from '@/content/updates'
 
 /**
  * The home page's one release line, a small glass pill at the top of the hero. During the beta
  * it carries the announcement too (home.notice.*: when the full version comes); after 1.0 it
  * says the version and when it last changed. Tapping it shows what's new in this release
- * (home.release.*). The panel floats over the page, so opening it never moves anything.
+ * (the newest SITE_RELEASES entry). The panel floats over the page, so opening it never moves anything.
  */
 const { t, locale } = useI18n()
 const open = shallowRef(false)
 const id = useId()
-// This release's lines (home.release.*, in every language); add a key here for one more.
-const LINES = ['line1', 'line2', 'line3', 'line4', 'line5', 'line6'] as const
+// This release's points: the newest entry of the update log.
+const points = computed(() => SITE_RELEASES[0]!.points.map((p) => p[locale.value]))
 const updated = computed(() => t.value('home.release.label', { v: versionLabel(), date: releaseDate(locale.value) }))
 
 /*
@@ -76,7 +77,7 @@ watch(locale, remeasure)
       <p class="release-title">{{ t('home.release.title') }}</p>
       <p v-if="IS_BETA" class="release-when">{{ updated }}</p>
       <ul>
-        <li v-for="key in LINES" :key="key">{{ t(`home.release.${key}`) }}</li>
+        <li v-for="(p, i) in points" :key="i">{{ p }}</li>
       </ul>
       <a class="release-all" :href="link('changes')">{{ t('home.release.all') }}</a>
     </div>

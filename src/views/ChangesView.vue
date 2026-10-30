@@ -6,7 +6,7 @@ import { useI18n } from '@/i18n'
 import { localTitle } from '@/i18n/localized'
 import type { YearDiff } from '@/engine/yearDiff'
 import { changeSections, changesSummary } from '@/utils/changesText'
-import { SITE_UPDATES } from '@/content/updates'
+import { SITE_RELEASES } from '@/content/updates'
 import InfoPage from '@/components/about/InfoPage.vue'
 import GuideItem from '@/components/guide/GuideItem.vue'
 
@@ -27,7 +27,9 @@ const latest = shallowRef<YearDiff | null>(null)
 const load = Object.values(files)[0]
 if (load) void load().then((d) => ((latest.value = d), (diff.value = String(d.to) === props.year ? d : null), (loaded.value = true)))
 else loaded.value = true
-const day = (iso: string) => new Date(`${iso}T00:00:00`).toLocaleDateString(locale.value, { day: 'numeric', month: 'short', year: 'numeric' })
+// The update log: one version at a time, picked from a row of versions (newest first).
+const shownVersion = shallowRef(SITE_RELEASES[0]!.version)
+const shownRelease = computed(() => SITE_RELEASES.find((r) => r.version === shownVersion.value) ?? SITE_RELEASES[0]!)
 
 const sep = computed(() => t.value('listSep'))
 const summary = computed(() => (diff.value ? changesSummary(t.value, diff.value, sep.value) : ''))
@@ -58,13 +60,13 @@ const exists = (kind: 'subject' | 'major', id: string) => (kind === 'subject' ? 
         <p v-else-if="loaded" class="note">{{ t('changes.none') }}</p>
       </GuideItem>
       <GuideItem id="changes-site" :title="t('about.updatesTitle')">
-        <!-- Newest first, each update a dot on a thin rail. -->
-        <ol class="log">
-          <li v-for="(u, i) in SITE_UPDATES" :key="i">
-            <time :datetime="u.date">{{ day(u.date) }}</time>
-            <span>{{ u.text[locale] }}</span>
-          </li>
-        </ol>
+        <!-- Versions only, no dates; the row scrolls sideways when it doesn't fit. -->
+        <div class="versions" role="group" :aria-label="t('about.updatesTitle')">
+          <button v-for="r in SITE_RELEASES" :key="r.version" type="button" class="version" :aria-pressed="r.version === shownVersion" @click="shownVersion = r.version">v{{ r.version }}</button>
+        </div>
+        <ul class="log">
+          <li v-for="(p, i) in shownRelease.points" :key="i">{{ p[locale] }}</li>
+        </ul>
       </GuideItem>
     </template>
     <template v-else-if="diff">
@@ -87,62 +89,46 @@ const exists = (kind: 'subject' | 'major', id: string) => (kind === 'subject' ? 
 </template>
 
 <style scoped>
+.versions {
+  display: flex;
+  gap: 6px;
+  margin: 0 0 12px;
+  padding-bottom: 4px;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.version {
+  flex: none;
+  padding: 4px 12px;
+  color: var(--ink-soft);
+  font: inherit;
+  font-size: var(--fs-meta);
+  font-variant-numeric: tabular-nums;
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.version:hover {
+  color: var(--ink);
+  border-color: var(--ink-soft);
+}
+
+.version[aria-pressed='true'] {
+  color: var(--ink);
+  font-weight: var(--fw-semibold);
+  border-color: var(--accent-fill);
+  background: color-mix(in srgb, var(--accent-fill) 16%, transparent);
+}
+
 .log {
   display: grid;
+  gap: 8px;
   margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.log li {
-  position: relative;
-  display: grid;
-  grid-template-columns: minmax(7.5em, max-content) minmax(0, 1fr);
-  gap: 4px 20px;
-  padding: 0 0 18px 28px;
-}
-
-.log li:last-child {
-  padding-bottom: 0;
-}
-
-.log li::before {
-  content: '';
-  position: absolute;
-  top: 0.45em;
-  left: 0;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: var(--accent-fill);
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-fill) 16%, transparent);
-}
-
-.log li:not(:first-child)::before {
-  background: var(--divider);
-  box-shadow: none;
-}
-
-.log li:not(:last-child)::after {
-  content: '';
-  position: absolute;
-  top: calc(0.45em + 18px);
-  bottom: 4px;
-  left: 5px;
-  width: 2px;
-  background: var(--divider);
-}
-
-.log time {
-  font-weight: var(--fw-semibold);
-  white-space: nowrap;
-  font-variant-numeric: tabular-nums;
-}
-
-@media (max-width: 480px) {
-  .log li {
-    grid-template-columns: minmax(0, 1fr);
-  }
+  padding-left: 1.2em;
+  line-height: 1.55;
 }
 
 .summary {

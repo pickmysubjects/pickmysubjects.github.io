@@ -1979,12 +1979,6 @@ export const en = {
     release: {
       label: "{v} · Updated {date}",
       title: "What's new",
-      line1: "Plan board: your whole degree on one board. Mark subjects done with your marks, and see every degree rule checked.",
-      line2: "Share a plan with a short link, and compare your plans on a page of their own.",
-      line3: "New tools: a revision planner (what and how to revise each day, with calendar export), a final-exam mark calculator and a WAM calculator.",
-      line4: "Fuller “What students say” for the most-reviewed subjects: difficulty, assessments, how to study, what to watch out for.",
-      line5: "Key dates on the home page, and census, exam and results dates added to your calendar.",
-      line6: "A new look, a menu for every feature, and search across the whole site.",
       all: "All updates",
     },
     proofLanguages: "9 languages",
