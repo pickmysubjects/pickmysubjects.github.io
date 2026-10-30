@@ -4,12 +4,12 @@
 
 The first full version. The Beta label and the "full version coming" notice are gone.
 
-- New look and navigation: every feature has a place in the header menus, with a one-line description each.
-- Tools: a final-exam calculator (what you need on the exam for each grade, what each mark adds, hurdle warnings) and a WAM calculator that works without My record.
-- Key dates on the home page, an exam-time view of your subjects' exam weights and hurdles, and calendar export (.ics) of your plan's dates.
-- Plan board: links in one place, heavy-semester chips, Add to my plan before there is a plan, and fixes to swap and add.
-- Shared plan links show the plan before you use it.
-- Translations reviewed in all 9 languages; the guide covers the new behaviours.
+- Plan board: the whole degree on one board. Mark subjects done with their marks; every degree rule is checked, with the details in one place.
+- Share a plan with a short link (imports as a new plan); compare plans on a page of their own.
+- New tools: a revision planner (a research-based day-by-day timetable that names what and how to revise, with calendar export and print), a final-exam mark calculator and a WAM calculator.
+- Fuller "What students say" for the most-reviewed subjects, in four parts: difficulty and content, assessments, how to study, what to watch out for.
+- Key dates on the home page, an exam-time view, and census, exam and results dates in your calendar (.ics).
+- A new look across every page, a menu for every feature, site-wide search, and majors with their prerequisite route.
 
 ## 0.9.1 — 2026-10-27
 
