@@ -106,7 +106,7 @@ export const zhTW: Messages = {
     count: { added: "新開 {n} 門", discontinued: "停開 {n} 門", changed: "有變動 {n} 門", majors: "主修變動 {n} 個" },
   },
   app: {
-    footer: "學生做的非官方工具，與墨爾本大學無關。選課前請以 {handbook} 為準。",
+    footer: "墨大畢業生做的非官方工具，與墨爾本大學無關。選課前請以 {handbook} 為準。",
     handbook: 'Handbook',
     privacy: '隱私',
     about: '關於',

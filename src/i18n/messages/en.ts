@@ -110,7 +110,7 @@ export const en = {
     count: { added: "New subjects: {n}", discontinued: "No longer running: {n}", changed: "Changed: {n}", majors: "Majors changed: {n}" },
   },
   app: {
-    footer: "Unofficial student tool, not linked to the University of Melbourne. Check the {handbook} before you enrol.",
+    footer: "Unofficial tool made by a graduate, not linked to the University of Melbourne. Check the {handbook} before you enrol.",
     handbook: 'Handbook',
     privacy: 'Privacy',
     about: 'About',

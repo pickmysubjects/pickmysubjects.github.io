@@ -106,7 +106,7 @@ export const ja: Messages = {
     count: { added: "新設 {n} 科目", discontinued: "廃止 {n} 科目", changed: "変更 {n} 科目", majors: "メジャーの変更 {n} 件" },
   },
   app: {
-    footer: "学生が作った非公式ツールで、メルボルン大学とは関係ありません。履修登録の前に {handbook} で確認してください。",
+    footer: "メルボルン大学の卒業生が作った非公式ツールで、メルボルン大学とは関係ありません。履修登録の前に {handbook} で確認してください。",
     handbook: 'Handbook',
     privacy: 'プライバシー',
     about: 'このサイトについて',

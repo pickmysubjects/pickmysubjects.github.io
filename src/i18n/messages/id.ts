@@ -106,7 +106,7 @@ export const id: Messages = {
     count: { added: "{n} mata kuliah baru", discontinued: "{n} tidak dibuka lagi", changed: "{n} berubah", majors: "{n} major berubah" },
   },
   app: {
-    footer: "Alat tidak resmi buatan mahasiswa, tidak terkait University of Melbourne. Cek {handbook} sebelum mendaftar.",
+    footer: "Alat tidak resmi buatan lulusan, tidak terkait University of Melbourne. Cek {handbook} sebelum mendaftar.",
     handbook: 'Handbook',
     privacy: 'Privasi',
     about: 'Tentang',

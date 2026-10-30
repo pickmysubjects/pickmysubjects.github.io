@@ -106,7 +106,7 @@ export const ko: Messages = {
     count: { added: "신설 {n}개", discontinued: "폐강 {n}개", changed: "변경 {n}개", majors: "전공 변경 {n}개" },
   },
   app: {
-    footer: "학생이 만든 비공식 도구로, 멜버른대학교와 관련이 없어요. 수강신청 전에 {handbook}에서 확인하세요.",
+    footer: "멜버른대학교 졸업생이 만든 비공식 도구로, 멜버른대학교와 관련이 없어요. 수강신청 전에 {handbook}에서 확인하세요.",
     handbook: 'Handbook',
     privacy: '개인정보',
     about: '소개',

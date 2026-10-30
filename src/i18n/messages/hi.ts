@@ -106,7 +106,7 @@ export const hi: Messages = {
     count: { added: "{n} नए विषय", discontinued: "{n} अब नहीं चलते", changed: "{n} बदले", majors: "{n} मेजर बदले" },
   },
   app: {
-    footer: "छात्रों का बनाया अनौपचारिक टूल, University of Melbourne से जुड़ा नहीं। एनरोल करने से पहले {handbook} में जाँचें।",
+    footer: "एक ग्रेजुएट का बनाया अनौपचारिक टूल, University of Melbourne से जुड़ा नहीं। एनरोल करने से पहले {handbook} में जाँचें।",
     handbook: 'Handbook',
     privacy: 'गोपनीयता',
     about: 'परिचय',

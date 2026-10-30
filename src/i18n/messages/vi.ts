@@ -106,7 +106,7 @@ export const vi: Messages = {
     count: { added: "{n} môn mới", discontinued: "{n} môn ngừng mở", changed: "{n} môn thay đổi", majors: "{n} chuyên ngành thay đổi" },
   },
   app: {
-    footer: "Công cụ không chính thức do sinh viên làm, không liên quan đến University of Melbourne. Hãy kiểm tra {handbook} trước khi đăng ký.",
+    footer: "Công cụ không chính thức do một cựu sinh viên làm, không liên quan đến University of Melbourne. Hãy kiểm tra {handbook} trước khi đăng ký.",
     handbook: 'Handbook',
     privacy: 'Quyền riêng tư',
     about: 'Giới thiệu',
