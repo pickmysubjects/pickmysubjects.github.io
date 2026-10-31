@@ -115,24 +115,40 @@ export function onFirstInput(f: () => void): void {
 
 let lastPath: string | null = null
 let counted = 0
+// Nothing is counted until the visitor's first tap, click, key or wheel: crawlers that run
+// JavaScript load pages but rarely send input, so they stay out of the numbers. The page open
+// at that moment is counted then; every page after it straight away.
+let real = false
+let pending: string | null = null
+let watching = false
 
-/** Count a page view. A repeat of the page just counted (same path) is skipped. */
+function send(path: string): void {
+  // The referrer only matters on the first page (where the visit came from); inside the site it's us.
+  const first = counted++ === 0
+  counter()?.({ path, referrer: first ? undefined : '' })
+  // Once per visit, the site language it started in and where it came from.
+  if (first) {
+    counter()?.({ path: `visit-lang-${pathLocale(path)}`, title: 'visit language', event: true })
+    counter()?.({ path: `visit-from-${visitSource()}`, title: 'visit source', event: true })
+  }
+}
+
+/** Count a page view once the visitor has used the page. A repeat of the page just counted (same path) is skipped. */
 export function countPage(pathname: string = typeof location === 'undefined' ? '/' : location.pathname): void {
   if (countingOff()) return
   const path = countedPath(pathname)
   if (path === lastPath) return
   lastPath = path
   try {
-    // The referrer only matters on the first page (where the visit came from); inside the site it's us.
-    const first = counted++ === 0
-    counter()?.({ path, referrer: first ? undefined : '' })
-    // Once per visit, the site language it started in, so the dashboard shows visits per language.
-    if (first) {
-      const lang = pathLocale(path)
-      counter()?.({ path: `visit-lang-${lang}`, title: 'visit language', event: true })
-      counter()?.({ path: `visit-from-${visitSource()}`, title: 'visit source', event: true })
-      onFirstInput(() => counter()?.({ path: `visit-real-${lang}`, title: 'visit with input', event: true }))
-    }
+    if (real) return send(path)
+    pending = path
+    if (watching) return
+    watching = true
+    onFirstInput(() => {
+      real = true
+      if (pending) send(pending)
+      pending = null
+    })
   } catch {
     // Counting must never break the page.
   }
@@ -151,4 +167,7 @@ export function trackEvent(name: AnalyticsEvent): void {
 export function resetAnalytics(): void {
   lastPath = null
   counted = 0
+  real = false
+  pending = null
+  watching = false
 }
