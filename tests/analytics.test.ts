@@ -44,10 +44,24 @@ describe('counting', () => {
     expect(countedPath('')).toBe('/')
   })
 
+  it('counts nothing until the first input, then the page open then and every page after', () => {
+    const count = vi.fn()
+    const handlers = new Map<string, () => void>()
+    vi.stubGlobal('window', { goatcounter: { count }, addEventListener: (t: string, h: () => void) => handlers.set(t, h), removeEventListener: (t: string) => handlers.delete(t) })
+    countPage('/subject/MUSI20243')
+    countPage('/subject/DNCE30027')
+    expect(count).not.toHaveBeenCalled()
+    handlers.get('pointerdown')!()
+    countPage('/plan')
+    expect(count.mock.calls.map((c) => c[0].path)).toEqual(['/subject/DNCE30027', 'visit-lang-en', 'visit-from-direct', '/plan'])
+  })
+
   it('sends page paths and skips a repeat of the same page', () => {
     const count = vi.fn()
-    vi.stubGlobal('window', { goatcounter: { count } })
+    const handlers = new Map<string, () => void>()
+    vi.stubGlobal('window', { goatcounter: { count }, addEventListener: (t: string, h: () => void) => handlers.set(t, h), removeEventListener: (t: string) => handlers.delete(t) })
     countPage('/plan?share=XYZ')
+    handlers.get('keydown')!()
     countPage('/plan')
     countPage('/zh-CN/guide')
     // The first page is followed once by the visit's language event.
