@@ -33,5 +33,36 @@ points:
     ms: "Pemarkahan sentiasa digambarkan ketat: beberapa orang sukar melepasi H2B walaupun bersungguh-sungguh, jadi ia bukan penaik WAM."
     id: "Penilaian selalu digambarkan ketat: beberapa orang sulit melewati H2B meski sudah serius, jadi bukan pendongkrak WAM."
     hi: "मार्किंग लगातार सख़्त बताई गई: कई लोग पूरी लगन के बावजूद H2B से ऊपर नहीं जा पाए, इसलिए यह WAM बढ़ाने वाला विषय नहीं है।"
+sections:
+  content:
+    - en: "Theories of sex, gender and sexuality. Reviewers found the ideas fascinating, but the readings are heavy and wordy, and you're expected to engage with them closely for tutorials."
+      zh: "讲性、性别与性取向的理论。同学觉得观点很吸引人，但阅读又多又绕，tutorial 要求你深入研读。"
+      zh-TW: "講性、性別與性傾向的理論。同學覺得觀點很吸引人，但閱讀又多又繞，tutorial 要求你深入研讀。"
+      ja: "性、ジェンダー、セクシュアリティの理論。考え方は魅力的だが、リーディングは重く難解で、チュートリアルのために深く読み込むことが求められる。"
+      ko: "성, 젠더, 섹슈얼리티 이론. 개념은 매혹적이지만 리딩이 무겁고 장황하며, 튜토리얼을 위해 깊이 파고들어야 한다."
+      vi: "Các lý thuyết về tình dục, giới và xu hướng tính dục. Người học thấy ý tưởng hấp dẫn, nhưng bài đọc nặng và dài dòng, và phải đọc kỹ cho tutorial."
+      ms: "Teori seks, gender dan seksualiti. Pengulas rasa idea-ideanya menarik, tetapi bacaan berat dan berjela, dan anda dijangka mendalaminya untuk tutorial."
+      id: "Teori tentang seks, gender dan seksualitas. Pengulas merasa gagasannya memukau, tapi bacaannya berat dan bertele-tele, dan kamu diharapkan mendalaminya untuk tutorial."
+      hi: "सेक्स, जेंडर और यौनिकता के सिद्धांत। रिव्यूअर्स को विचार आकर्षक लगे, पर रीडिंग भारी और शब्दों से भरी हैं, और ट्यूटोरियल के लिए उन्हें गहराई से पढ़ना अपेक्षित है।"
+  work:
+    - en: "Essays that need to balance theory with solid real examples, plus a blog component reviewers enjoyed. Nearly every reviewer found the marking harsh and an H1 hard to reach."
+      zh: "论文要把理论和扎实的实际例子结合起来，还有大家都喜欢的博客部分。几乎每位同学都觉得评分很严，H1 很难拿。"
+      zh-TW: "論文要把理論和紮實的實例結合起來，還有大家都喜歡的部落格部分。幾乎每位同學都覺得評分很嚴，H1 很難拿。"
+      ja: "理論と具体的な実例のバランスが求められるエッセイと、好評のブログ課題。ほぼ全員が採点は厳しくH1は難しいと言う。"
+      ko: "이론과 탄탄한 실제 사례의 균형이 필요한 에세이와 호평받는 블로그 과제. 거의 모든 리뷰가 채점이 엄격하고 H1이 어렵다고 한다."
+      vi: "Bài luận cần cân bằng lý thuyết với ví dụ thực tế chắc chắn, cùng phần blog được yêu thích. Hầu như ai cũng thấy chấm khắt khe và khó đạt H1."
+      ms: "Esei yang perlu mengimbangi teori dengan contoh sebenar yang kukuh, serta komponen blog yang disukai. Hampir semua pengulas rasa pemarkahan ketat dan H1 sukar."
+      id: "Esai yang harus menyeimbangkan teori dengan contoh nyata yang kuat, plus komponen blog yang disukai. Hampir semua pengulas merasa penilaian ketat dan H1 sulit diraih."
+      hi: "निबंध जिनमें थ्योरी और ठोस असली उदाहरणों का संतुलन चाहिए, साथ में ब्लॉग वाला हिस्सा जो पसंद किया गया। लगभग हर रिव्यूअर को जाँच सख़्त और H1 कठिन लगा।"
+  watch:
+    - en: "One 2021 reviewer felt the writing level expected didn't match what lectures and tutorials covered. The 2024 reviewer found feedback not very useful."
+      zh: "一位 2021 年的同学觉得要求的写作水平和讲课、tutorial 教的内容不匹配。2024 年的同学觉得反馈没什么用。"
+      zh-TW: "一位 2021 年的同學覺得要求的寫作水準和講課、tutorial 教的內容不相符。2024 年的同學覺得回饋沒什麼用。"
+      ja: "2021年の一人は、求められる文章レベルが講義やチュートリアルの内容と合っていないと感じた。2024年の一人はフィードバックがあまり役立たないと言う。"
+      ko: "2021년 한 리뷰는 요구되는 글쓰기 수준이 강의와 튜토리얼 내용과 맞지 않았다고 느꼈다. 2024년 리뷰는 피드백이 별 도움이 안 됐다고 한다."
+      vi: "Một người năm 2021 thấy mức viết được yêu cầu không khớp với nội dung bài giảng và tutorial. Người năm 2024 thấy phản hồi không mấy hữu ích."
+      ms: "Seorang pengulas 2021 rasa tahap penulisan yang dijangka tidak sepadan dengan apa yang diajar dalam kuliah dan tutorial. Pengulas 2024 rasa maklum balas kurang berguna."
+      id: "Satu pengulas 2021 merasa tingkat tulisan yang diharapkan tidak sesuai dengan isi kuliah dan tutorial. Pengulas 2024 merasa umpan balik kurang berguna."
+      hi: "2021 के एक को लगा अपेक्षित लेखन स्तर लेक्चर और ट्यूटोरियल में पढ़ाए से मेल नहीं खाता। 2024 के रिव्यूअर को फ़ीडबैक ज़्यादा उपयोगी नहीं लगा।"
 difficulty: hard
 workload: heavy

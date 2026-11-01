@@ -33,5 +33,36 @@ points:
     ms: "Pandangan tentang kuliah bercampur; seorang pengulas terkini kata jangkaan tugasan kurang jelas."
     id: "Pendapat soal kuliah beragam, dari menarik hingga membosankan; satu pengulas terbaru bilang ekspektasi tugas kurang jelas."
     hi: "लेक्चर पर राय मिली-जुली है; हाल के एक रिव्यूअर ने कहा असाइनमेंट की अपेक्षाएँ साफ़ नहीं थीं।"
+sections:
+  content:
+    - en: "An Education breadth subject about how people learn, with a practical part where you tutor school-aged children. Most reviewers found it interesting and the workload manageable; a couple found it boring."
+      zh: "教育学院的 breadth 课，讲人是怎么学习的，还有实践部分要去辅导中小学生。多数同学觉得有意思、工作量不大；也有几位觉得无聊。"
+      zh-TW: "教育學院的 breadth 課，講人是怎麼學習的，還有實作部分要去輔導中小學生。多數同學覺得有意思、工作量不大；也有幾位覺得無聊。"
+      ja: "人がどう学ぶかを扱う教育学部のブレドス科目で、学齢期の子どもを指導する実践部分がある。面白く負担も軽いという声が多いが、退屈という人も数人。"
+      ko: "사람이 어떻게 배우는지 다루는 교육학 브레드스 과목으로, 학령기 아이들을 가르치는 실습이 있다. 대부분 흥미롭고 부담이 적다고 하지만 지루하다는 사람도 몇 있다."
+      vi: "Môn breadth của khoa Giáo dục về cách con người học, có phần thực hành dạy kèm trẻ em đi học. Đa số thấy thú vị, khối lượng vừa phải; vài người thấy chán."
+      ms: "Subjek breadth Pendidikan tentang cara manusia belajar, dengan bahagian amali menjadi tutor kepada kanak-kanak sekolah. Kebanyakan rasa menarik dan beban sederhana; beberapa rasa bosan."
+      id: "Mata kuliah breadth Pendidikan tentang cara orang belajar, dengan bagian praktik menjadi tutor anak usia sekolah. Sebagian besar merasa menarik dan bebannya ringan; beberapa merasa membosankan."
+      hi: "शिक्षा विभाग का ब्रेड्थ विषय कि लोग कैसे सीखते हैं, जिसमें स्कूली बच्चों को पढ़ाने का व्यावहारिक हिस्सा है। ज़्यादातर को रोचक और काम संभालने लायक लगा; कुछ को उबाऊ।"
+  work:
+    - en: "Two written assignments that reflect on your tutoring experience, more like personal narrative than standard essays. Older reviewers found good marks easy; the newest found the expectations unclear and marking unfair."
+      zh: "两篇书面作业，反思你的辅导经历，更像个人叙述而不是普通论文。较早的同学觉得好拿分；最新的同学觉得要求不清楚、评分不公平。"
+      zh-TW: "兩篇書面作業，反思你的輔導經驗，比較像個人敘述而不是一般論文。較早的同學覺得好拿分；最新的同學覺得要求不清楚、評分不公平。"
+      ja: "指導経験を振り返る2つのレポートで、普通のエッセイより個人的な語りに近い。古いレビューは好成績が取りやすいと言うが、最新のものは求められることが不明確で採点が不公平と言う。"
+      ko: "가르친 경험을 돌아보는 글 과제 2개로, 일반 에세이보다 개인 서사에 가깝다. 예전 리뷰는 좋은 점수가 쉽다고 했지만, 최신 리뷰는 요구 사항이 불분명하고 채점이 불공정하다고 했다."
+      vi: "Hai bài viết suy ngẫm về trải nghiệm dạy kèm, giống tự sự cá nhân hơn bài luận thường. Người học trước thấy dễ điểm; người mới nhất thấy yêu cầu mơ hồ và chấm không công bằng."
+      ms: "Dua tugasan bertulis yang merenung pengalaman menjadi tutor, lebih seperti naratif peribadi daripada esei biasa. Pengulas lama rasa mudah dapat markah baik; terbaru rasa jangkaan tidak jelas dan pemarkahan tidak adil."
+      id: "Dua tugas tulis yang merefleksikan pengalaman mengajar, lebih mirip narasi pribadi daripada esai biasa. Pengulas lama merasa mudah dapat nilai bagus; yang terbaru merasa harapan tidak jelas dan penilaian tidak adil."
+      hi: "दो लिखित असाइनमेंट जो आपके पढ़ाने के अनुभव पर विचार करते हैं, सामान्य निबंध से ज़्यादा निजी कथा जैसे। पुराने रिव्यूअर्स को अच्छे अंक आसान लगे; सबसे नए को अपेक्षाएँ अस्पष्ट और जाँच अनुचित लगी।"
+  watch:
+    - en: "One reviewer suggests it for students who plan to go into teaching, since you get real experience with children."
+      zh: "有同学推荐给以后想当老师的人，因为能真正接触孩子、积累经验。"
+      zh-TW: "有同學推薦給以後想當老師的人，因為能真正接觸孩子、累積經驗。"
+      ja: "子どもと実際に関われるので、教職を目指す人に勧めるという声が一つある。"
+      ko: "아이들과 실제로 경험을 쌓을 수 있어 교사를 꿈꾸는 학생에게 추천한다는 리뷰가 있다."
+      vi: "Một người khuyên môn này cho ai định làm giáo viên, vì có trải nghiệm thật với trẻ em."
+      ms: "Seorang pengulas syorkan untuk pelajar yang mahu menjadi guru, kerana dapat pengalaman sebenar dengan kanak-kanak."
+      id: "Satu pengulas menyarankan untuk mahasiswa yang ingin jadi guru, karena dapat pengalaman nyata dengan anak-anak."
+      hi: "एक रिव्यूअर इसे शिक्षक बनने की सोच रहे छात्रों को सुझाता है, क्योंकि बच्चों के साथ असली अनुभव मिलता है।"
 workload: light
 difficulty: easy

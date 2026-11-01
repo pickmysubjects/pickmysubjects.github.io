@@ -33,5 +33,36 @@ points:
     ms: "Ramai syorkan jika suka menyanyi, tetapi bukan markah mudah terjamin; satu ulasan lama rasa suara amat penting."
     id: "Banyak yang menyarankan bagi yang suka bernyanyi, tapi bukan nilai mudah pasti; satu ulasan lama merasa suara sangat menentukan."
     hi: "गाना पसंद हो तो ज़्यादातर इसकी सलाह देते हैं, पर आसान अंक तय नहीं; एक पुराने रिव्यू को गायन क्षमता का बड़ा असर लगा।"
+sections:
+  content:
+    - en: "You sing in a choir each week and learn music theory (texture, harmony, structure) through self-paced modules. Reviewers who love singing found it fun and rewarding."
+      zh: "每周参加合唱，并通过自学模块学乐理（织体、和声、结构等）。喜欢唱歌的同学觉得有趣、收获大。"
+      zh-TW: "每週參加合唱，並透過自學模組學樂理（織體、和聲、結構等）。喜歡唱歌的同學覺得有趣、收穫大。"
+      ja: "毎週合唱で歌い、自分のペースで進めるモジュールで音楽理論（テクスチャ、和声、構成）を学ぶ。歌が好きな人には楽しく実りがあるという。"
+      ko: "매주 합창을 하고 자기 주도 모듈로 음악 이론(텍스처, 화성, 구조)을 배운다. 노래를 좋아하는 사람에겐 재미있고 보람 있다는 평."
+      vi: "Hát hợp xướng mỗi tuần và học nhạc lý (kết cấu, hòa âm, cấu trúc) qua các module tự học. Ai thích hát thấy vui và bổ ích."
+      ms: "Anda menyanyi dalam koir setiap minggu dan belajar teori muzik (tekstur, harmoni, struktur) melalui modul kendiri. Pengulas yang suka menyanyi rasa seronok dan berbaloi."
+      id: "Kamu bernyanyi dalam paduan suara tiap minggu dan belajar teori musik (tekstur, harmoni, struktur) lewat modul mandiri. Pengulas yang suka bernyanyi merasa seru dan bermanfaat."
+      hi: "हर हफ़्ते क्वायर में गाते हैं और खुद की रफ़्तार वाले मॉड्यूल से संगीत सिद्धांत (टेक्सचर, हार्मनी, संरचना) सीखते हैं। गाना पसंद करने वाले रिव्यूअर्स को मज़ेदार और फ़ायदेमंद लगा।"
+  work:
+    - en: "Written tests and quizzes are fairly easy; the listening test is the hard part, asking you to describe harmony and melody. Rehearsal participation counts, and some say volunteering for solos helps."
+      zh: "笔试和小测比较简单；难的是听力测试，要描述和声与旋律。排练出勤算分，有人说主动报名独唱有帮助。"
+      zh-TW: "筆試和小考比較簡單；難的是聽力測驗，要描述和聲與旋律。排練出席算分，有人說主動報名獨唱有幫助。"
+      ja: "筆記テストとクイズは比較的簡単。難しいのは和声や旋律を説明するリスニングテスト。練習への参加が点になり、ソロに立候補すると有利という声も。"
+      ko: "필기 시험과 퀴즈는 꽤 쉽고, 어려운 건 화성과 선율을 설명해야 하는 듣기 시험. 리허설 참여가 점수에 들어가며, 솔로에 지원하면 유리하다는 말도 있다."
+      vi: "Bài viết và quiz khá dễ; khó là bài nghe, phải mô tả hòa âm và giai điệu. Tham gia tập hát được tính điểm, vài người nói xung phong hát solo có lợi."
+      ms: "Ujian bertulis dan kuiz agak mudah; ujian mendengar bahagian sukar, perlu huraikan harmoni dan melodi. Penyertaan latihan dikira, dan ada yang kata menawarkan diri untuk solo membantu."
+      id: "Tes tertulis dan kuis cukup mudah; tes mendengar bagian sulit, harus menjelaskan harmoni dan melodi. Partisipasi latihan dihitung, dan ada yang bilang mengajukan diri untuk solo membantu."
+      hi: "लिखित टेस्ट और क्विज़ काफ़ी आसान हैं; कठिन हिस्सा लिसनिंग टेस्ट है जिसमें हार्मनी और मेलोडी का वर्णन करना होता है। रिहर्सल में भागीदारी गिनी जाती है, और कुछ कहते हैं सोलो के लिए आगे आना मदद करता है।"
+  watch:
+    - en: "Reviewers say it's not as easy as its reputation; without music theory the listening test is tough, and one 2014 reviewer felt marks depended on singing ability."
+      zh: "同学说没有传说中那么水；没学过乐理的话听力测试很难，一位 2014 年的同学觉得分数取决于唱功。"
+      zh-TW: "同學說沒有傳說中那麼涼；沒學過樂理的話聽力測驗很難，一位 2014 年的同學覺得分數取決於唱功。"
+      ja: "評判ほど楽ではなく、音楽理論の知識がないとリスニングテストは厳しい。2014年の一人は点数が歌唱力次第だと感じた。"
+      ko: "소문만큼 쉽진 않다는 평. 음악 이론을 모르면 듣기 시험이 어렵고, 2014년 한 리뷰는 점수가 노래 실력에 달렸다고 느꼈다."
+      vi: "Người học nói không dễ như lời đồn; không biết nhạc lý thì bài nghe khó, và một người năm 2014 thấy điểm phụ thuộc vào khả năng hát."
+      ms: "Pengulas kata tidak semudah reputasinya; tanpa teori muzik ujian mendengar sukar, dan seorang pengulas 2014 rasa markah bergantung pada kebolehan menyanyi."
+      id: "Pengulas bilang tidak semudah reputasinya; tanpa teori musik tes mendengar sulit, dan satu pengulas 2014 merasa nilai bergantung pada kemampuan bernyanyi."
+      hi: "रिव्यूअर्स कहते हैं यह अपनी छवि जितना आसान नहीं; संगीत सिद्धांत के बिना लिसनिंग टेस्ट कठिन है, और 2014 के एक को लगा अंक गाने की क्षमता पर निर्भर थे।"
 workload: light
 difficulty: mixed

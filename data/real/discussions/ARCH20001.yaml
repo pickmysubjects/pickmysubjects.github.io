@@ -33,5 +33,36 @@ points:
     ms: "Kuliah dan bacaan dilihat teoretikal dan kurang membantu kerja studio; nasihat utama ialah kekal di landasan sejak minggu pertama."
     id: "Kuliah dan bacaan dinilai teoretis dan kurang membantu kerja studio; saran utamanya jangan tertinggal sejak minggu pertama."
     hi: "लेक्चर और रीडिंग सैद्धांतिक लगे और स्टूडियो काम में कम मददगार; मुख्य सलाह पहले हफ़्ते से ही काम पर बने रहना।"
+sections:
+  content:
+    - en: "A design studio subject. Every reviewer calls it poorly organised, with vague assessment expectations and lectures or readings that feel theoretical and unrelated to the work."
+      zh: "设计工作室课。所有同学都说组织很差，考核要求模糊，讲课和阅读偏理论、和作业关系不大。"
+      zh-TW: "設計工作室課。所有同學都說組織很差，考核要求模糊，講課和閱讀偏理論、和作業關係不大。"
+      ja: "デザインスタジオ科目。全員が運営がまずいと言い、課題の期待があいまいで、講義やリーディングは理論的で作業と関係が薄いという。"
+      ko: "디자인 스튜디오 과목. 모든 리뷰가 운영이 엉망이고 평가 기대치가 모호하며, 강의와 리딩이 이론적이고 작업과 무관하다고 한다."
+      vi: "Môn studio thiết kế. Ai cũng nói tổ chức kém, yêu cầu đánh giá mơ hồ, bài giảng và bài đọc thiên lý thuyết và không liên quan bài làm."
+      ms: "Subjek studio reka bentuk. Semua pengulas kata ia tidak teratur, jangkaan penilaian kabur, dan kuliah atau bacaan terasa berteori dan tidak berkait dengan kerja."
+      id: "Mata kuliah studio desain. Semua pengulas bilang pengaturannya buruk, harapan penilaian samar, dan kuliah atau bacaan terasa teoretis dan tak terkait pekerjaan."
+      hi: "डिज़ाइन स्टूडियो विषय। हर रिव्यूअर इसे अव्यवस्थित बताता है, आकलन की अपेक्षाएँ अस्पष्ट, और लेक्चर या रीडिंग सैद्धांतिक व काम से असंबंधित।"
+  work:
+    - en: "Several reviewers say grades didn't match the effort, with one working very long days before the final review, which falls in the exam period. One found you can finish faster with less effort and still pass decently."
+      zh: "好几位说付出和分数不成正比，有同学在期末评图前连续几天每天工作很久，而评图安排在考试期。也有人说少花点力气也能更快完成、成绩还过得去。"
+      zh-TW: "好幾位說付出和分數不成正比，有同學在期末評圖前連續幾天每天工作很久，而評圖安排在考試期。也有人說少花點力氣也能更快完成、成績還過得去。"
+      ja: "努力が成績に見合わないという声が複数で、試験期間にある最終講評の前に長時間作業し続けた人も。手を抜いて早く終えてもそこそこの成績は取れるという人も。"
+      ko: "노력만큼 성적이 안 나온다는 평이 여럿이며, 시험 기간에 있는 최종 크리틱 전 며칠간 아주 오래 작업한 사람도 있다. 덜 해서 빨리 끝내도 그럭저럭 점수는 나온다는 사람도 있다."
+      vi: "Nhiều người nói điểm không tương xứng công sức, một người làm việc rất lâu mỗi ngày trước buổi chấm cuối rơi vào mùa thi. Một người thấy làm ít hơn, xong nhanh hơn vẫn được điểm tạm ổn."
+      ms: "Beberapa kata gred tidak setimpal usaha, seorang bekerja hari yang sangat panjang sebelum ulasan akhir yang jatuh dalam musim peperiksaan. Seorang rasa boleh siap lebih cepat dengan kurang usaha dan tetap lulus baik."
+      id: "Beberapa bilang nilai tak sebanding usaha, satu bekerja sangat lama tiap hari sebelum review akhir yang jatuh di masa ujian. Satu merasa bisa selesai lebih cepat dengan usaha lebih sedikit dan tetap lumayan."
+      hi: "कई कहते हैं ग्रेड मेहनत के मुताबिक नहीं मिले, एक ने फ़ाइनल रिव्यू से पहले बहुत लंबे दिन काम किया, जो परीक्षा अवधि में होता है। एक को लगा कम मेहनत में जल्दी खत्म करके भी ठीक-ठाक अंक मिल जाते हैं।"
+  watch:
+    - en: "Stay well on top of the work, and check the final review date early since it may not be announced until late. Reviewers found staff hard to reach at times."
+      zh: "进度一定要跟紧，尽早确认期末评图的日期，因为可能很晚才通知。同学说有时很难联系到课程老师。"
+      zh-TW: "進度一定要跟緊，儘早確認期末評圖的日期，因為可能很晚才通知。同學說有時很難聯絡到課程老師。"
+      ja: "作業に遅れないこと。最終講評の日程は直前まで知らされないことがあるので早めに確認を。スタッフに連絡がつきにくいこともあったという。"
+      ko: "작업을 꼭 따라갈 것. 최종 크리틱 날짜는 늦게 공지될 수 있으니 일찍 확인할 것. 담당자와 연락이 잘 안 될 때도 있었다고 한다."
+      vi: "Bám sát tiến độ, và hỏi sớm ngày chấm cuối vì có thể thông báo rất muộn. Người học thấy đôi khi khó liên lạc với giảng viên."
+      ms: "Ikuti kerja dengan rapi, dan semak tarikh ulasan akhir awal kerana mungkin diumumkan lewat. Pengulas rasa kakitangan kadang sukar dihubungi."
+      id: "Ikuti pekerjaan dengan disiplin, dan cek tanggal review akhir lebih awal karena mungkin diumumkan terlambat. Pengulas merasa staf kadang sulit dihubungi."
+      hi: "काम के साथ अच्छी तरह बने रहें, और फ़ाइनल रिव्यू की तारीख जल्दी पता करें क्योंकि देर से बताई जा सकती है। रिव्यूअर्स को स्टाफ़ से संपर्क कभी-कभी कठिन लगा।"
 workload: heavy
 difficulty: hard

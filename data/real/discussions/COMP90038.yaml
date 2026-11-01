@@ -33,5 +33,36 @@ points:
     ms: "Mula tugasan awal dan cuba soalan tutorial sendiri sebelum lihat jawapan. Peperiksaan disifatkan sukar tetapi adil; usaha berterusan lebih baik daripada belajar saat akhir."
     id: "Mulai tugas lebih awal dan kerjakan soal tutorial sendiri sebelum melihat jawaban. Ujian disebut sulit tapi adil; belajar rutin lebih baik daripada SKS."
     hi: "असाइनमेंट जल्दी शुरू करें और ट्यूटोरियल सवाल जवाब देखने से पहले खुद हल करें। एग्ज़ाम कठिन पर निष्पक्ष बताया गया; लगातार मेहनत रटने से बेहतर है।"
+sections:
+  content:
+    - en: "Covers asymptotic analysis, sorting, graph algorithms, dynamic programming, greedy methods and complexity (P vs NP). Reviewers found it challenging, interesting and very useful for jobs; little actual coding."
+      zh: "讲渐近分析、排序、图算法、动态规划、贪心和复杂度（P vs NP）。同学觉得有挑战、有意思，对找工作很有用；实际写代码不多。"
+      zh-TW: "講漸近分析、排序、圖演算法、動態規劃、貪婪法和複雜度（P vs NP）。同學覺得有挑戰、有意思，對找工作很有用；實際寫程式不多。"
+      ja: "漸近解析、ソート、グラフアルゴリズム、動的計画法、貪欲法、計算量（P対NP）を扱う。難しく面白く就職にも役立つという声。実際のコーディングは少ない。"
+      ko: "점근 분석, 정렬, 그래프 알고리즘, 동적 계획법, 탐욕법, 복잡도(P vs NP)를 다룬다. 도전적이고 흥미로우며 취업에 매우 유용하다는 평. 실제 코딩은 적다."
+      vi: "Học phân tích tiệm cận, sắp xếp, thuật toán đồ thị, quy hoạch động, tham lam và độ phức tạp (P vs NP). Người học thấy thử thách, thú vị và rất có ích khi đi làm; ít code thực tế."
+      ms: "Meliputi analisis asimptot, isihan, algoritma graf, pengaturcaraan dinamik, kaedah tamak dan kerumitan (P vs NP). Pengulas rasa mencabar, menarik dan berguna untuk kerjaya; sedikit pengekodan sebenar."
+      id: "Membahas analisis asimtotik, sorting, algoritma graf, pemrograman dinamis, greedy dan kompleksitas (P vs NP). Pengulas merasa menantang, menarik dan berguna untuk karier; sedikit coding sungguhan."
+      hi: "एसिम्प्टोटिक एनालिसिस, सॉर्टिंग, ग्राफ़ एल्गोरिद्म, डायनामिक प्रोग्रामिंग, ग्रीडी तरीके और कॉम्प्लेक्सिटी (P vs NP)। रिव्यूअर्स को चुनौतीपूर्ण, रोचक और नौकरी के लिए उपयोगी लगा; असली कोडिंग कम।"
+  work:
+    - en: "Assignments that apply the concepts (tough but satisfying) and a final exam reviewers call challenging but fair. One 2017 reviewer found the mid-semester test short on time."
+      zh: "作业是应用概念（难但有成就感），期末被认为有挑战但公平。一位 2017 年的同学觉得期中测验时间不够。"
+      zh-TW: "作業是應用概念（難但有成就感），期末被認為有挑戰但公平。一位 2017 年的同學覺得期中測驗時間不夠。"
+      ja: "概念を応用する課題（難しいがやりがいあり）と、難しいが公平な期末試験。2017年のレビュー1件は中間テストの時間が足りなかったと言う。"
+      ko: "개념을 적용하는 과제(어렵지만 보람 있음)와 어렵지만 공정한 기말. 2017년 한 리뷰는 중간고사 시간이 부족했다고 한다."
+      vi: "Bài tập áp dụng khái niệm (khó nhưng đáng làm) và bài thi cuối được cho là khó nhưng công bằng. Một người năm 2017 thấy bài giữa kỳ thiếu thời gian."
+      ms: "Tugasan mengaplikasi konsep (sukar tetapi memuaskan) dan peperiksaan akhir yang mencabar tetapi adil. Seorang pengulas 2017 rasa ujian pertengahan semester suntuk masa."
+      id: "Tugas yang menerapkan konsep (sulit tapi memuaskan) dan ujian akhir yang menantang tapi adil. Satu pengulas 2017 merasa waktu ujian tengah semester kurang."
+      hi: "कॉन्सेप्ट लागू करने वाले असाइनमेंट (कठिन पर संतोषजनक) और एक फ़ाइनल परीक्षा जिसे रिव्यूअर्स चुनौतीपूर्ण पर उचित कहते हैं। 2017 के एक को मिड-सेमेस्टर टेस्ट में समय कम लगा।"
+  study:
+    - en: "Keep up weekly since topics build on each other, start assignments early, and try tutorial problems before checking solutions. Reviewers say a solid maths background helps a lot."
+      zh: "每周跟上，因为内容环环相扣；作业早点开始；tutorial 题先自己做再看答案。同学说数学底子好帮助很大。"
+      zh-TW: "每週跟上，因為內容環環相扣；作業早點開始；tutorial 題先自己做再看答案。同學說數學底子好幫助很大。"
+      ja: "内容が積み上がるので毎週ついていき、課題は早めに始め、チュートリアル問題は解答を見る前に自分で解くこと。数学の基礎があると大いに助かるという。"
+      ko: "내용이 이어지니 매주 따라가고, 과제는 일찍 시작하고, 튜토리얼 문제는 답을 보기 전에 직접 풀 것. 수학 기초가 탄탄하면 큰 도움이 된다는 평."
+      vi: "Theo kịp hằng tuần vì các phần nối tiếp nhau, bắt đầu bài tập sớm, tự làm bài tutorial trước khi xem đáp án. Nền toán vững giúp rất nhiều."
+      ms: "Ikuti setiap minggu kerana topik saling bergantung, mula tugasan awal, dan cuba soalan tutorial sebelum lihat jawapan. Asas matematik yang kukuh sangat membantu."
+      id: "Ikuti tiap minggu karena topiknya saling terkait, mulai tugas lebih awal, dan coba soal tutorial sebelum melihat jawaban. Dasar matematika yang kuat sangat membantu."
+      hi: "हर हफ़्ते साथ रहें क्योंकि विषय एक-दूसरे पर टिके हैं, असाइनमेंट जल्दी शुरू करें, और हल देखने से पहले ट्यूटोरियल सवाल खुद करें। गणित की मज़बूत नींव बहुत मदद करती है।"
 workload: heavy
 difficulty: mixed

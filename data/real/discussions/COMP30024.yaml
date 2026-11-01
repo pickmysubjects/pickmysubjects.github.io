@@ -42,5 +42,36 @@ points:
     ms: "Sesetengah pengulas terkini rasa kandungannya AI klasik dan lapuk, dan sokongan forum bercampur-campur."
     id: "Beberapa ulasan terbaru merasa materinya AI klasik dan usang, dan dukungan forumnya campur aduk."
     hi: "कुछ हाल के रिव्यूअर्स को कंटेंट क्लासिकल और पुराना AI लगा, और फ़ोरम सपोर्ट मिला-जुला रहा।"
+sections:
+  content:
+    - en: "Classical AI: search algorithms, adversarial game search and constraint satisfaction, plus probability. The probability part is hard without uni probability; one 2026 reviewer found the content dated."
+      zh: "讲经典 AI：搜索算法、博弈搜索、约束满足问题，还有概率。同学说没学过大学概率的话概率部分很难；一位 2026 年的同学觉得内容过时。"
+      zh-TW: "講經典 AI：搜尋演算法、賽局搜尋、限制滿足問題，還有機率。同學說沒修過大學機率的話機率部分很難；一位 2026 年的同學覺得內容過時。"
+      ja: "古典的AI：探索アルゴリズム、ゲーム木探索、制約充足、確率。大学で確率を学んでいないと確率パートは難しいという。2026年の一人は内容が古いと感じた。"
+      ko: "고전 AI: 탐색 알고리즘, 게임 탐색, 제약 충족 문제, 그리고 확률. 대학 확률을 안 들었다면 확률 부분이 어렵다는 평. 2026년 한 리뷰는 내용이 낡았다고 했다."
+      vi: "AI cổ điển: thuật toán tìm kiếm, tìm kiếm đối kháng trong trò chơi, bài toán thỏa ràng buộc, cùng xác suất. Phần xác suất khó nếu chưa học ở đại học; một người năm 2026 thấy nội dung lỗi thời."
+      ms: "AI klasik: algoritma carian, carian permainan berlawan dan kepuasan kekangan, serta kebarangkalian. Bahagian kebarangkalian sukar jika belum belajar di universiti; seorang pengulas 2026 rasa kandungan lapuk."
+      id: "AI klasik: algoritma pencarian, pencarian permainan adversarial dan constraint satisfaction, plus probabilitas. Bagian probabilitas sulit jika belum belajar di universitas; satu pengulas 2026 merasa materinya usang."
+      hi: "क्लासिकल AI: सर्च एल्गोरिद्म, खेलों में प्रतिद्वंद्वी सर्च और कंस्ट्रेंट सैटिस्फ़ैक्शन, साथ में प्रायिकता। रिव्यूअर्स कहते हैं विश्वविद्यालय में प्रायिकता न पढ़ी हो तो वह हिस्सा कठिन है; 2026 के एक को सामग्री पुरानी लगी।"
+  work:
+    - en: "Two pair projects building a game-playing agent, which reviewers found the best and most demanding part, with reports that can save marks. The exam is 70%, closed-book, and several found it harsh."
+      zh: "两个两人项目，做一个玩棋盘游戏的 AI，同学认为是最精彩也最费力的部分，报告部分能挽回不少分。期末占 70%，闭卷，好几位觉得太重。"
+      zh-TW: "兩個兩人專題，做一個玩棋盤遊戲的 AI，同學認為是最精彩也最費力的部分，報告部分能挽回不少分。期末占 70%，閉書，好幾位覺得太重。"
+      ja: "ゲームをプレイするエージェントを作るペア課題が2つで、最も面白く大変な部分。レポートで点を拾える。試験は70%でクローズドブック、重すぎるという声が複数。"
+      ko: "게임을 하는 에이전트를 만드는 2인 프로젝트 2개가 가장 좋고 가장 힘든 부분이며, 보고서로 점수를 만회할 수 있다. 시험은 70%, 오픈북 아님, 가혹하다는 평이 여럿."
+      vi: "Hai dự án theo cặp xây agent chơi game, được cho là phần hay và nặng nhất, báo cáo có thể cứu điểm. Thi chiếm 70%, không mở tài liệu, nhiều người thấy quá nặng."
+      ms: "Dua projek berpasangan membina ejen bermain permainan, dianggap bahagian terbaik dan paling berat, dengan laporan yang boleh menyelamatkan markah. Peperiksaan 70%, buku tertutup, beberapa rasa keterlaluan."
+      id: "Dua proyek berpasangan membuat agen pemain game, dianggap bagian terbaik dan terberat, dengan laporan yang bisa menyelamatkan nilai. Ujian 70%, buku tertutup, beberapa merasa terlalu berat."
+      hi: "जोड़ी में दो प्रोजेक्ट जिनमें गेम खेलने वाला एजेंट बनाना है, जिसे सबसे अच्छा और सबसे मेहनत वाला हिस्सा माना गया, रिपोर्ट से अंक बच सकते हैं। परीक्षा 70%, क्लोज़्ड-बुक, कई को कठोर लगी।"
+  watch:
+    - en: "Find a good project partner. Some found tutorials and forum support patchy, and one reviewer felt the probability lectures were rushed and relied on heavy scaling."
+      zh: "一定要找个靠谱的项目搭档。有人觉得 tutorial 和论坛答疑参差不齐；有同学觉得概率部分讲得太赶，最后靠大幅 scaling。"
+      zh-TW: "一定要找個靠譜的專題夥伴。有人覺得 tutorial 和論壇答疑良莠不齊；有同學覺得機率部分講得太趕，最後靠大幅 scaling。"
+      ja: "良いプロジェクトの相方を見つけること。チュートリアルや掲示板のサポートにムラがあるという声も。一人は確率の講義が駆け足で、大幅なスケーリング頼みだったと言う。"
+      ko: "좋은 프로젝트 파트너를 찾을 것. 튜토리얼과 포럼 지원이 들쭉날쭉했다는 사람도 있고, 한 리뷰는 확률 강의가 급했고 큰 스케일링에 의존했다고 느꼈다."
+      vi: "Tìm bạn làm dự án đáng tin. Một số thấy tutorial và hỗ trợ trên diễn đàn thất thường; một người thấy phần xác suất dạy vội và nhờ scaling nhiều."
+      ms: "Cari rakan projek yang baik. Ada yang rasa tutorial dan sokongan forum tidak konsisten; seorang rasa kuliah kebarangkalian tergesa-gesa dan bergantung pada scaling besar."
+      id: "Cari partner proyek yang baik. Sebagian merasa tutorial dan dukungan forum tidak konsisten; satu merasa kuliah probabilitas terburu-buru dan bergantung pada scaling besar."
+      hi: "अच्छा प्रोजेक्ट पार्टनर ढूँढें। कुछ को ट्यूटोरियल और फ़ोरम सहायता असमान लगी; एक को प्रायिकता के लेक्चर जल्दबाज़ी वाले और भारी स्केलिंग पर निर्भर लगे।"
 workload: heavy
 difficulty: hard

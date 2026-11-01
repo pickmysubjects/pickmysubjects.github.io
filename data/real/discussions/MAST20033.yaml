@@ -33,5 +33,36 @@ points:
     ms: "Pengulas terdahulu dapati ia diajar dengan baik dan sangat berbaloi; pengalaman bergantung pada pensyarah."
     id: "Ulasan sebelumnya menilai pengajarannya bagus dan sangat bermanfaat; pengalaman tergantung dosen."
     hi: "पहले के रिव्यू में अच्छी पढ़ाई और काफ़ी फ़ायदेमंद बताया गया; अनुभव लेक्चरर पर निर्भर है।"
+sections:
+  content:
+    - en: "Advanced real analysis, closely following the first seven chapters of Rudin: real numbers, topology, sequences, series, continuity, differentiation and integration. Earlier reviewers found it hard but rewarding."
+      zh: "进阶实分析，内容基本对应 Rudin 前七章：实数、拓扑、数列、级数、连续、微分和积分。早期同学觉得难但很有收获。"
+      zh-TW: "進階實分析，內容基本對應 Rudin 前七章：實數、拓樸、數列、級數、連續、微分和積分。早期同學覺得難但很有收穫。"
+      ja: "上級の実解析で、Rudinの最初の7章（実数、位相、数列、級数、連続性、微分、積分）にほぼ沿う。以前のレビューは難しいがやりがいがあると言う。"
+      ko: "고급 실해석으로 Rudin 1~7장(실수, 위상, 수열, 급수, 연속, 미분, 적분)을 거의 따른다. 예전 리뷰는 어렵지만 보람 있다고 했다."
+      vi: "Giải tích thực nâng cao, bám sát bảy chương đầu của Rudin: số thực, tô pô, dãy, chuỗi, liên tục, đạo hàm và tích phân. Người học trước thấy khó nhưng đáng."
+      ms: "Analisis nyata lanjutan, mengikut rapat tujuh bab pertama Rudin: nombor nyata, topologi, jujukan, siri, keselanjaran, pembezaan dan pengamiran. Pengulas awal rasa sukar tetapi berbaloi."
+      id: "Analisis real lanjutan, mengikuti tujuh bab pertama Rudin: bilangan real, topologi, barisan, deret, kekontinuan, turunan dan integral. Pengulas awal merasa sulit tapi bermanfaat."
+      hi: "एडवांस्ड रियल एनालिसिस, Rudin के पहले सात अध्यायों के क़रीब: वास्तविक संख्याएँ, टोपोलॉजी, अनुक्रम, श्रेणियाँ, सांतत्य, अवकलन और समाकलन। पहले के रिव्यूअर्स को कठिन पर फ़ायदेमंद लगा।"
+  work:
+    - en: "Hard proof assignments, tougher tutorials and a hard exam with no scaling. Metric spaces and topology showed up a lot in 2026 assessments."
+      zh: "作业是难度高的证明题，tutorial 更难，期末也难而且不 scaling。2026 年考核里度量空间和拓扑出现得很多。"
+      zh-TW: "作業是難度高的證明題，tutorial 更難，期末也難而且不 scaling。2026 年考核裡度量空間和拓樸出現得很多。"
+      ja: "難しい証明の課題、さらに難しいチュートリアル、スケーリングなしの難しい試験。2026年は距離空間と位相がよく出た。"
+      ko: "어려운 증명 과제, 더 어려운 튜토리얼, 스케일링 없는 어려운 시험. 2026년 평가에선 거리 공간과 위상이 많이 나왔다."
+      vi: "Bài tập chứng minh khó, tutorial còn khó hơn, và bài thi khó không có scaling. Năm 2026 không gian metric và tô pô xuất hiện nhiều."
+      ms: "Tugasan pembuktian sukar, tutorial lebih mencabar dan peperiksaan sukar tanpa scaling. Ruang metrik dan topologi banyak muncul dalam penilaian 2026."
+      id: "Tugas pembuktian sulit, tutorial lebih sulit, dan ujian sulit tanpa scaling. Ruang metrik dan topologi banyak muncul di penilaian 2026."
+      hi: "कठिन प्रूफ़ असाइनमेंट, उससे कठिन ट्यूटोरियल और बिना स्केलिंग की कठिन परीक्षा। 2026 के आकलनों में मेट्रिक स्पेस और टोपोलॉजी बहुत आए।"
+  watch:
+    - en: "The lecturer changed, and all three 2026 reviewers found it far harder than before, a heavy time sink and bad for WAM. One suggests the regular real analysis plus self-study instead."
+      zh: "换了 lecturer，三位 2026 年的同学都觉得比以前难得多，非常耗时、伤 WAM。有人建议改上普通实分析，再自己读进阶内容。"
+      zh-TW: "換了 lecturer，三位 2026 年的同學都覺得比以前難得多，非常耗時、傷 WAM。有人建議改修一般實分析，再自己讀進階內容。"
+      ja: "講師が変わり、2026年の3人とも以前よりずっと難しく、時間を大量に取られWAMにも悪いと言う。通常の実解析を取って自習する方がいいという人も。"
+      ko: "강사가 바뀌었고 2026년 리뷰 세 명 모두 예전보다 훨씬 어렵고 시간이 많이 들며 WAM에 나쁘다고 한다. 일반 실해석을 듣고 독학하라는 의견도 있다."
+      vi: "Giảng viên đã đổi, và cả ba người năm 2026 thấy khó hơn trước nhiều, rất tốn thời gian và hại WAM. Một người khuyên học giải tích thực thường rồi tự học thêm."
+      ms: "Pensyarah bertukar, dan ketiga-tiga pengulas 2026 rasa jauh lebih sukar daripada dahulu, sangat memakan masa dan buruk untuk WAM. Seorang cadang ambil analisis nyata biasa dan belajar sendiri."
+      id: "Dosennya berganti, dan ketiga pengulas 2026 merasa jauh lebih sulit dari sebelumnya, sangat menyita waktu dan buruk bagi WAM. Satu menyarankan ambil analisis real biasa lalu belajar sendiri."
+      hi: "लेक्चरर बदल गए, और 2026 के तीनों रिव्यूअर्स को यह पहले से कहीं कठिन, बहुत समय लेने वाला और WAM के लिए बुरा लगा। एक सामान्य रियल एनालिसिस और खुद पढ़ाई का सुझाव देता है।"
 workload: heavy
 difficulty: hard

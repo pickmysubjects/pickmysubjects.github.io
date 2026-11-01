@@ -33,5 +33,36 @@ points:
     ms: "Pelajar yang sudah pandai melakar, membuat model dan guna Rhino rasa lebih mudah; yang lain belajar banyak tetapi perlu bekerja keras."
     id: "Yang sudah bisa sketsa, membuat maket, dan memakai Rhino merasa jauh lebih mudah; yang lain belajar banyak tapi harus kerja keras mengejar."
     hi: "जो पहले से स्केच, मॉडल और Rhino जानते थे उन्हें आसान लगा; बाकी ने बहुत सीखा पर पकड़ने में मेहनत लगी।"
+sections:
+  content:
+    - en: "A first architecture studio with lecture ideas you apply in studio. Reviewers are split: some found it well planned and engaging, others vague and confusing, with briefs and lectures that feel pretentious."
+      zh: "第一门建筑设计工作室课，把讲课里的概念用到工作室作业中。评价两极：有人觉得规划好、有意思，也有人觉得模糊混乱，任务书和讲课有点故作高深。"
+      zh-TW: "第一門建築設計工作室課，把講課裡的概念用到工作室作業中。評價兩極：有人覺得規劃好、有意思，也有人覺得模糊混亂，任務書和講課有點故作高深。"
+      ja: "最初の建築スタジオで、講義の考え方をスタジオで応用する。よく計画され面白いという人と、あいまいで混乱し課題文や講義が気取っているという人に分かれる。"
+      ko: "첫 건축 스튜디오로 강의 개념을 스튜디오 작업에 적용한다. 잘 기획되고 흥미롭다는 평과, 모호하고 혼란스러우며 과제와 강의가 허세스럽다는 평이 갈린다."
+      vi: "Studio kiến trúc đầu tiên, áp dụng ý từ bài giảng vào studio. Ý kiến chia: có người thấy chuẩn bị tốt, hấp dẫn; người khác thấy mơ hồ, rối, đề bài và bài giảng hơi màu mè."
+      ms: "Studio seni bina pertama yang mengaplikasi idea kuliah dalam studio. Pandangan berbelah: ada yang rasa dirancang baik dan menarik, ada yang rasa kabur dan mengelirukan, dengan taklimat dan kuliah yang berlagak."
+      id: "Studio arsitektur pertama yang menerapkan gagasan kuliah di studio. Pendapat terbelah: ada yang merasa terencana dan menarik, ada yang merasa samar dan membingungkan, dengan brief dan kuliah yang terkesan sok."
+      hi: "पहला आर्किटेक्चर स्टूडियो, जिसमें लेक्चर के विचार स्टूडियो में लागू होते हैं। राय बँटी है: कुछ को सुनियोजित और दिलचस्प, कुछ को अस्पष्ट और उलझाऊ लगा, ब्रीफ़ और लेक्चर दिखावटी।"
+  work:
+    - en: "The workload is very heavy; two reviewers describe losing sleep, and say an H1 is hard without strong sketching, Rhino and modelling skills. Some found marking vague and subjective."
+      zh: "工作量非常大；两位同学说为此熬夜，没有扎实的手绘、Rhino 和模型功底很难拿 H1。也有人觉得评分模糊、主观。"
+      zh-TW: "工作量非常大；兩位同學說為此熬夜，沒有紮實的手繪、Rhino 和模型功底很難拿 H1。也有人覺得評分模糊、主觀。"
+      ja: "負担は非常に重く、睡眠を削ったという人が二人。スケッチ、Rhino、模型の技術がないとH1は難しいという。採点があいまいで主観的という声も。"
+      ko: "작업량이 매우 많아 두 리뷰는 잠을 줄였다고 하며, 스케치·Rhino·모형 실력이 없으면 H1이 어렵다고 한다. 채점이 모호하고 주관적이라는 평도 있다."
+      vi: "Khối lượng rất nặng; hai người kể phải thức khuya, và nói khó đạt H1 nếu không giỏi phác thảo, Rhino và làm mô hình. Vài người thấy chấm mơ hồ, chủ quan."
+      ms: "Beban kerja sangat berat; dua pengulas kata kurang tidur, dan H1 sukar tanpa kemahiran lakaran, Rhino dan model yang kukuh. Ada yang rasa pemarkahan kabur dan subjektif."
+      id: "Beban kerjanya sangat berat; dua pengulas bilang kurang tidur, dan H1 sulit tanpa keterampilan sketsa, Rhino dan maket yang kuat. Sebagian merasa penilaian samar dan subjektif."
+      hi: "काम का बोझ बहुत भारी है; दो रिव्यूअर्स नींद गँवाने की बात कहते हैं, और कहते हैं मज़बूत स्केचिंग, Rhino और मॉडलिंग कौशल के बिना H1 कठिन है। कुछ को जाँच अस्पष्ट और व्यक्तिपरक लगी।"
+  watch:
+    - en: "One reviewer advises against taking it as a breadth outside the Bachelor of Design. Asking questions helps with the vague briefs."
+      zh: "有同学建议非设计学士的学生别把它当 breadth 选。任务书模糊时多问会有帮助。"
+      zh-TW: "有同學建議非設計學士的學生別把它當 breadth 修。任務書模糊時多問會有幫助。"
+      ja: "デザイン学士以外の人はブレドスで取らない方がいいという人も。課題文があいまいなときは質問すると助かる。"
+      ko: "디자인 학사가 아니면 브레드스로 듣지 말라는 리뷰가 있다. 과제 설명이 모호할 땐 질문하면 도움이 된다."
+      vi: "Một người khuyên không nên học làm môn breadth nếu không thuộc Bachelor of Design. Hỏi nhiều sẽ giúp với đề bài mơ hồ."
+      ms: "Seorang nasihat jangan ambil sebagai breadth di luar Bachelor of Design. Bertanya membantu dengan taklimat yang kabur."
+      id: "Satu menyarankan jangan ambil sebagai breadth di luar Bachelor of Design. Bertanya membantu menghadapi brief yang samar."
+      hi: "एक रिव्यूअर Bachelor of Design के बाहर इसे ब्रेड्थ के रूप में न लेने की सलाह देता है। अस्पष्ट ब्रीफ़ में सवाल पूछना मदद करता है।"
 workload: heavy
 difficulty: hard

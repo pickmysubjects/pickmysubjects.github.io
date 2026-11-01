@@ -33,5 +33,36 @@ points:
     ms: "Peperiksaan telah diskala, jadi H1 boleh dicapai, tetapi sumber sedikit dan pada 2026 tiada kertas lepas diberi."
     id: "Ujian di-scale sehingga H1 mungkin, tapi sumber belajar sedikit dan pada 2026 tidak ada soal ujian lama."
     hi: "एग्ज़ाम स्केल हुआ है, इसलिए H1 संभव है, पर रिसोर्सेज़ कम हैं और 2026 में कोई पुराना पेपर नहीं दिया गया।"
+sections:
+  content:
+    - en: "Thermal, classical and quantum physics. Reviewers consistently call the thermal section messy, with inconsistent notation; the quantum section was better liked, though one 2026 reviewer found it rushed."
+      zh: "讲热学、经典力学和量子物理。同学一致说热学部分很乱，符号不统一；量子部分评价更好，不过一位 2026 年的同学觉得讲得太赶。"
+      zh-TW: "講熱學、古典力學和量子物理。同學一致說熱學部分很亂，符號不統一；量子部分評價較好，不過一位 2026 年的同學覺得講得太趕。"
+      ja: "熱物理・古典力学・量子物理。熱の部分は記号がばらばらで混乱しているという声で一致。量子の部分は好評だが、2026年の一人は駆け足だったと言う。"
+      ko: "열물리, 고전역학, 양자물리. 열 부분은 기호가 일관되지 않고 엉망이라는 평이 일치한다. 양자 부분은 더 호평이지만 2026년 한 리뷰는 급했다고 한다."
+      vi: "Vật lý nhiệt, cổ điển và lượng tử. Người học đều nói phần nhiệt lộn xộn, ký hiệu không nhất quán; phần lượng tử được thích hơn, dù một người năm 2026 thấy vội."
+      ms: "Fizik terma, klasik dan kuantum. Pengulas konsisten kata bahagian terma berselerak dengan notasi tidak konsisten; bahagian kuantum lebih disukai, walaupun seorang pengulas 2026 rasa tergesa-gesa."
+      id: "Fisika termal, klasik dan kuantum. Pengulas sepakat bagian termal berantakan dengan notasi tidak konsisten; bagian kuantum lebih disukai, meski satu pengulas 2026 merasa terburu-buru."
+      hi: "थर्मल, क्लासिकल और क्वांटम भौतिकी। रिव्यूअर्स लगातार कहते हैं थर्मल हिस्सा उलझा हुआ है, चिह्न असंगत; क्वांटम हिस्सा ज़्यादा पसंद आया, हालाँकि 2026 के एक को जल्दबाज़ी लगी।"
+  work:
+    - en: "One reviewer found it a big step up from first-year physics, needing more time than other subjects for an H1. A 2026 reviewer notes no past exams were given, though scaling helped."
+      zh: "有同学觉得比大一物理难了一大截，要拿 H1 得比其他课花更多时间。一位 2026 年的同学说没有发往年试卷，不过有 scaling 帮忙。"
+      zh-TW: "有同學覺得比大一物理難了一大截，要拿 H1 得比其他課花更多時間。一位 2026 年的同學說沒有發考古題，不過有 scaling 幫忙。"
+      ja: "1年の物理から大きくレベルが上がり、H1には他の科目より多くの時間が必要だったという人も。2026年の一人は過去問が配られなかったが、スケーリングに助けられたと言う。"
+      ko: "1학년 물리보다 훨씬 어려워 H1을 받으려면 다른 과목보다 시간이 더 들었다는 리뷰가 있다. 2026년 한 리뷰는 기출을 안 줬지만 스케일링 덕을 봤다고 한다."
+      vi: "Một người thấy khó hơn hẳn vật lý năm 1, cần nhiều thời gian hơn môn khác để đạt H1. Một người năm 2026 nói không có đề cũ, dù scaling đã giúp."
+      ms: "Seorang rasa ia lonjakan besar dari fizik tahun 1, perlu lebih masa daripada subjek lain untuk H1. Seorang pengulas 2026 kata tiada kertas lepas diberi, walaupun scaling membantu."
+      id: "Satu pengulas merasa lompatan besar dari fisika tahun 1, butuh lebih banyak waktu dari mata kuliah lain untuk H1. Satu pengulas 2026 bilang tidak ada soal lama, meski scaling membantu."
+      hi: "एक को यह पहले साल की भौतिकी से बड़ी छलांग लगी, H1 के लिए दूसरे विषयों से ज़्यादा समय चाहिए। 2026 का एक रिव्यूअर बताता है पुराने पेपर नहीं दिए गए, हालाँकि स्केलिंग से मदद मिली।"
+  study:
+    - en: "Resources beyond the textbook are limited, so expect self-guided learning; one reviewer leaned on online videos. Having Calculus 2 fresh helps with the quantum part."
+      zh: "除了教材资源不多，要准备自学；有同学靠网上视频。量子部分要把 Calculus 2 的内容记牢。"
+      zh-TW: "除了課本資源不多，要準備自學；有同學靠網路影片。量子部分要把 Calculus 2 的內容記牢。"
+      ja: "教科書以外の資料は少なく自学が必要。ネット動画に頼った人も。量子の部分はCalculus 2を覚えていると助かる。"
+      ko: "교재 외 자료가 적어 독학을 각오해야 한다. 온라인 영상에 의지한 사람도 있다. 양자 부분은 Calculus 2 내용을 기억하면 도움이 된다."
+      vi: "Ngoài giáo trình thì ít tài liệu, nên phải tự học; một người dựa vào video trên mạng. Nhớ kỹ Calculus 2 sẽ giúp phần lượng tử."
+      ms: "Sumber selain buku teks terhad, jadi bersedia belajar sendiri; seorang bergantung pada video dalam talian. Ingat Calculus 2 membantu bahagian kuantum."
+      id: "Sumber selain buku teks terbatas, jadi siap belajar mandiri; satu mengandalkan video daring. Mengingat Calculus 2 membantu di bagian kuantum."
+      hi: "पाठ्यपुस्तक के अलावा संसाधन कम हैं, तो खुद सीखने के लिए तैयार रहें; एक ने ऑनलाइन वीडियो का सहारा लिया। Calculus 2 याद हो तो क्वांटम हिस्से में मदद मिलती है।"
 workload: heavy
 difficulty: hard

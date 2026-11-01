@@ -33,5 +33,36 @@ points:
     ms: "Pandangan berbelah: pengulas terkini kata ia mengajar pembinaan secara nyata, manakala yang lebih lama rasa kecewa."
     id: "Pendapat terbelah: pengulas terbaru bilang konstruksi diajarkan secara nyata, sedangkan yang lama merasa frustrasi."
     hi: "राय बँटी है: हाल के रिव्यूअर ने कहा यह निर्माण को ठोस तरीक़े से सिखाता है, पुराने लोग निराश रहे।"
+sections:
+  content:
+    - en: "A fast-paced, content-heavy first construction subject for architecture students. One recent reviewer says it teaches construction in a tangible way; others found the assignments unhelpful."
+      zh: "建筑专业的第一门构造课，节奏快、内容多。一位近期同学说它让你实实在在理解构造；也有人觉得作业帮助不大。"
+      zh-TW: "建築主修的第一門構造課，節奏快、內容多。一位近期同學說它讓你實實在在理解構造；也有人覺得作業幫助不大。"
+      ja: "建築学生向け最初の構法科目で、進みが速く内容が多い。最近の一人は構法を実感をもって学べると言うが、課題が役に立たないという人も。"
+      ko: "건축 학생의 첫 시공 과목으로 진도가 빠르고 내용이 많다. 최근 한 리뷰는 시공을 실감 나게 배운다고 하지만, 과제가 도움이 안 됐다는 사람도 있다."
+      vi: "Môn cấu tạo đầu tiên cho sinh viên kiến trúc, nhịp nhanh và nhiều nội dung. Một người gần đây nói học về xây dựng rất cụ thể; người khác thấy bài tập ít ích."
+      ms: "Subjek pembinaan pertama untuk pelajar seni bina, pantas dan padat. Seorang pengulas terkini kata ia mengajar pembinaan secara nyata; yang lain rasa tugasan kurang membantu."
+      id: "Mata kuliah konstruksi pertama untuk mahasiswa arsitektur, cepat dan padat. Satu pengulas terbaru bilang mengajarkan konstruksi secara nyata; yang lain merasa tugasnya kurang membantu."
+      hi: "आर्किटेक्चर छात्रों का पहला कंस्ट्रक्शन विषय, तेज़ और सामग्री से भरा। हाल का एक रिव्यूअर कहता है यह निर्माण ठोस ढंग से सिखाता है; दूसरों को असाइनमेंट कम मददगार लगे।"
+  work:
+    - en: "Assignments are a lot of work and cover only part of the lecture content, so you have to judge what's relevant. Some Rhino or AutoCAD skill is expected; one reviewer notes the exam is a hurdle."
+      zh: "作业工作量大，只涵盖部分讲课内容，要自己判断什么重要。需要会一些 Rhino 或 AutoCAD；有同学提到期末是 hurdle。"
+      zh-TW: "作業工作量大，只涵蓋部分講課內容，要自己判斷什麼重要。需要會一些 Rhino 或 AutoCAD；有同學提到期末是 hurdle。"
+      ja: "課題は作業量が多く講義内容の一部しか扱わないので、何が重要か自分で判断する必要がある。RhinoかAutoCADの技術がある程度求められ、試験はハードルだという人も。"
+      ko: "과제 작업량이 많고 강의 내용 일부만 다뤄 무엇이 중요한지 스스로 판단해야 한다. Rhino나 AutoCAD 실력이 어느 정도 필요하며, 시험이 hurdle이라는 리뷰도 있다."
+      vi: "Bài tập rất nhiều việc và chỉ bao một phần bài giảng, nên phải tự xác định phần nào quan trọng. Cần biết chút Rhino hoặc AutoCAD; một người nói bài thi là hurdle."
+      ms: "Tugasan banyak kerja dan hanya meliputi sebahagian kuliah, jadi anda perlu menilai apa yang relevan. Sedikit kemahiran Rhino atau AutoCAD dijangka; seorang kata peperiksaan ialah hurdle."
+      id: "Tugas banyak pekerjaan dan hanya mencakup sebagian kuliah, jadi kamu harus menilai mana yang relevan. Sedikit keterampilan Rhino atau AutoCAD diharapkan; satu bilang ujiannya hurdle."
+      hi: "असाइनमेंट में बहुत काम है और वे लेक्चर का सिर्फ़ एक हिस्सा कवर करते हैं, तो खुद तय करना होता है क्या ज़रूरी है। कुछ Rhino या AutoCAD कौशल अपेक्षित; एक बताता है परीक्षा हर्डल है।"
+  study:
+    - en: "Stay on top of weekly tasks, take lots of notes in class (in-class activities matter more than lectures for assignments), and stick to one main source of information."
+      zh: "每周任务要跟上，课上多做笔记（课堂活动比讲课对作业更有用），资料先集中看一个主要来源。"
+      zh-TW: "每週任務要跟上，課上多做筆記（課堂活動比講課對作業更有用），資料先集中看一個主要來源。"
+      ja: "毎週の課題についていき、授業中にたくさんメモを取ること（課題には講義より授業内の活動が役立つ）。情報源はまず一つに絞る。"
+      ko: "주간 과제를 따라가고 수업 중 필기를 많이 할 것(과제에는 강의보다 수업 활동이 더 중요하다). 자료는 우선 한 곳에 집중할 것."
+      vi: "Theo kịp việc hằng tuần, ghi chép nhiều trên lớp (hoạt động trên lớp sát bài tập hơn bài giảng), và bám một nguồn thông tin chính."
+      ms: "Ikuti tugasan mingguan, catat banyak nota dalam kelas (aktiviti kelas lebih relevan untuk tugasan daripada kuliah), dan berpegang pada satu sumber utama."
+      id: "Ikuti tugas mingguan, catat banyak di kelas (aktivitas kelas lebih relevan untuk tugas daripada kuliah), dan pegang satu sumber informasi utama."
+      hi: "साप्ताहिक काम के साथ बने रहें, कक्षा में खूब नोट्स लें (असाइनमेंट के लिए कक्षा गतिविधियाँ लेक्चर से ज़्यादा काम की हैं), और जानकारी के एक मुख्य स्रोत पर टिके रहें।"
 workload: heavy
 difficulty: hard

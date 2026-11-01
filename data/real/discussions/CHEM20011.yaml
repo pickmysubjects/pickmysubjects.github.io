@@ -42,5 +42,36 @@ points:
     ms: "Ada projek berkumpulan dan laporan individu. Pengalaman bergantung pada kumpulan anda."
     id: "Ada proyek kelompok plus laporan individu. Pengalamannya tergantung kelompokmu."
     hi: "एक ग्रुप प्रोजेक्ट और एक व्यक्तिगत रिपोर्ट है। अनुभव आपके ग्रुप पर निर्भर करता है।"
+sections:
+  content:
+    - en: "Earth's spheres, data and measurement, and resources, with only six weeks of lectures. Most found it fairly easy and a WAM booster, though lectures can be dry; one chemistry major found it rehashed first-year content."
+      zh: "讲地球各圈层、数据与测量以及资源，只有六周讲课。多数同学觉得比较简单、能拉 WAM，不过讲课有点枯燥；一位化学专业的同学觉得是在炒大一的冷饭。"
+      zh-TW: "講地球各圈層、數據與測量以及資源，只有六週講課。多數同學覺得比較簡單、能拉 WAM，不過講課有點枯燥；一位化學主修的同學覺得是在炒大一的冷飯。"
+      ja: "地球の各圏、データと測定、資源を扱い、講義は6週間だけ。比較的簡単でWAMを上げられるという声が多いが講義は退屈なことも。化学専攻の一人は1年の内容の焼き直しだと感じた。"
+      ko: "지구의 각 권, 데이터와 측정, 자원을 다루며 강의는 6주뿐. 대부분 꽤 쉽고 WAM 올리기 좋다고 하지만 강의는 건조할 수 있다. 화학 전공 한 명은 1학년 내용의 반복이라고 느꼈다."
+      vi: "Các quyển của Trái Đất, dữ liệu và đo lường, tài nguyên, chỉ sáu tuần bài giảng. Đa số thấy khá dễ, kéo WAM, dù bài giảng có thể khô; một người học ngành hóa thấy lặp lại năm 1."
+      ms: "Sfera Bumi, data dan pengukuran, serta sumber, dengan hanya enam minggu kuliah. Kebanyakan rasa agak mudah dan penaik WAM, walaupun kuliah boleh hambar; seorang major kimia rasa ia ulangan tahun 1."
+      id: "Lapisan Bumi, data dan pengukuran, serta sumber daya, dengan hanya enam minggu kuliah. Sebagian besar merasa cukup mudah dan pendongkrak WAM, meski kuliah bisa kering; satu mahasiswa kimia merasa mengulang materi tahun 1."
+      hi: "पृथ्वी के मंडल, डेटा और मापन, और संसाधन, सिर्फ़ छह हफ़्ते के लेक्चर के साथ। ज़्यादातर को काफ़ी आसान और WAM बढ़ाने वाला लगा, हालाँकि लेक्चर नीरस हो सकते हैं; एक केमिस्ट्री मेजर को यह पहले साल का दोहराव लगा।"
+  work:
+    - en: "Practical reports (mostly with a partner) worth about 40% and fairly easy to do well on, a group project with an individual report, and an exam that closely follows the tutorial questions."
+      zh: "实验报告（大多两人合作）约占 40%，比较容易拿高分；还有一个附带个人报告的小组项目，以及和 tutorial 题很接近的期末。"
+      zh-TW: "實驗報告（大多兩人合作）約占 40%，比較容易拿高分；還有一個附帶個人報告的小組專題，以及和 tutorial 題很接近的期末。"
+      ja: "実験レポート（多くはペア）が約40%で高得点を取りやすい。個人レポート付きのグループ課題と、チュートリアル問題によく似た試験。"
+      ko: "실험 보고서(대부분 2인)가 약 40%이고 잘 받기 쉽다. 개인 보고서가 딸린 조별 프로젝트와 튜토리얼 문제와 매우 비슷한 시험."
+      vi: "Báo cáo thực hành (phần lớn làm theo cặp) khoảng 40%, khá dễ điểm cao; một dự án nhóm kèm báo cáo cá nhân, và bài thi rất giống câu hỏi tutorial."
+      ms: "Laporan amali (kebanyakannya berpasangan) kira-kira 40% dan agak mudah skor, projek kumpulan dengan laporan individu, dan peperiksaan yang sangat mirip soalan tutorial."
+      id: "Laporan praktikum (sebagian besar berpasangan) sekitar 40% dan cukup mudah dapat nilai bagus, proyek kelompok dengan laporan individu, dan ujian yang sangat mirip soal tutorial."
+      hi: "प्रैक्टिकल रिपोर्ट (ज़्यादातर साथी के साथ) लगभग 40% की और अच्छा करना काफ़ी आसान, व्यक्तिगत रिपोर्ट वाला ग्रुप प्रोजेक्ट, और ट्यूटोरियल सवालों से काफ़ी मिलती परीक्षा।"
+  study:
+    - en: "Ask your demonstrator early how much calculation detail reports need. Use the tutorial worksheets with worked solutions for the exam, and expect to rote-learn at least one cycle with its numbers."
+      zh: "尽早问 demonstrator 报告里计算要写多详细。用带详解的 tutorial 练习备考，至少要死记一个循环及其中的数字。"
+      zh-TW: "儘早問 demonstrator 報告裡計算要寫多詳細。用附詳解的 tutorial 練習備考，至少要死背一個循環及其中的數字。"
+      ja: "レポートの計算をどこまで書くか早めにデモンストレーターに聞くこと。試験には解答付きのチュートリアル問題を使い、少なくとも一つの循環を数値ごと暗記する覚悟を。"
+      ko: "보고서에 계산을 얼마나 자세히 쓸지 조교에게 일찍 물어볼 것. 시험은 풀이가 있는 튜토리얼 문제로 준비하고, 최소 한 가지 순환은 수치까지 외워야 한다."
+      vi: "Hỏi người hướng dẫn sớm xem báo cáo cần ghi chi tiết phép tính đến đâu. Ôn thi bằng bài tutorial có lời giải, và chuẩn bị học thuộc ít nhất một chu trình kèm số liệu."
+      ms: "Tanya demonstrator awal berapa terperinci pengiraan dalam laporan. Guna lembaran tutorial berjawapan untuk peperiksaan, dan bersedia menghafal sekurang-kurangnya satu kitaran dengan angkanya."
+      id: "Tanyakan ke demonstrator sejak awal seberapa rinci perhitungan di laporan. Pakai lembar tutorial dengan pembahasan untuk ujian, dan siap menghafal minimal satu siklus beserta angkanya."
+      hi: "डेमॉन्स्ट्रेटर से जल्दी पूछें कि रिपोर्ट में गणना कितनी विस्तार से चाहिए। परीक्षा के लिए हल वाली ट्यूटोरियल शीट इस्तेमाल करें, और कम से कम एक चक्र उसके अंकों सहित रटने को तैयार रहें।"
 workload: light
 difficulty: easy

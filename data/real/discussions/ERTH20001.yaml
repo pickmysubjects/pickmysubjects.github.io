@@ -33,5 +33,36 @@ points:
     ms: "Setiap topik bencana ada pensyarah berbeza, dan kualitinya berbeza-beza."
     id: "Tiap topik bencana diajar dosen berbeda, dan kualitasnya bervariasi."
     hi: "हर डिज़ास्टर टॉपिक का लेक्चरर अलग है, और उनकी क्वालिटी अलग-अलग है।"
+sections:
+  content:
+    - en: "Covers natural disasters at a fairly surface level, with a different lecturer for each hazard and the same risk equation applied throughout. Most reviewers found the content easy; quality varies by lecturer."
+      zh: "比较浅地讲各种自然灾害，每种灾害换一位 lecturer，从头到尾都在用同一个风险公式。多数同学觉得内容简单；讲课质量看 lecturer。"
+      zh-TW: "比較淺地講各種自然災害，每種災害換一位 lecturer，從頭到尾都在用同一個風險公式。多數同學覺得內容簡單；講課品質看 lecturer。"
+      ja: "自然災害を比較的浅く扱い、災害ごとに講師が変わり、同じリスク方程式を繰り返し使う。内容は簡単という声が多く、講義の質は講師次第。"
+      ko: "자연재해를 비교적 얕게 다루며 재해마다 강사가 바뀌고 같은 위험 공식을 반복 적용한다. 내용은 쉽다는 평이 많고 강의 질은 강사마다 다르다."
+      vi: "Học về thiên tai ở mức khá cơ bản, mỗi loại do một giảng viên khác dạy và cùng một công thức rủi ro áp dụng suốt. Đa số thấy dễ; chất lượng tùy giảng viên."
+      ms: "Meliputi bencana alam pada tahap asas, pensyarah berbeza bagi setiap bahaya dan persamaan risiko yang sama digunakan sepanjang masa. Kebanyakan rasa mudah; kualiti bergantung pada pensyarah."
+      id: "Membahas bencana alam di tingkat dasar, dosen berbeda untuk tiap bahaya dan persamaan risiko yang sama dipakai terus. Sebagian besar merasa mudah; kualitas tergantung dosen."
+      hi: "प्राकृतिक आपदाओं को काफ़ी ऊपरी स्तर पर पढ़ाता है, हर आपदा के लिए अलग लेक्चरर और पूरे समय एक ही जोखिम समीकरण। ज़्यादातर को सामग्री आसान लगी; गुणवत्ता लेक्चरर पर निर्भर।"
+  work:
+    - en: "Weekly pracs (some with Excel), a group project and an individual essay or assignment. The exam is easy: choose 5 of 10 questions. Several reviewers got H1 with little study."
+      zh: "每周有 prac（有些要用 Excel），一个小组项目和一个个人论文或作业。期末很简单，10 题选 5 题。好几位同学没怎么学也拿了 H1。"
+      zh-TW: "每週有 prac（有些要用 Excel），一個小組專題和一份個人論文或作業。期末很簡單，10 題選 5 題。好幾位同學沒怎麼讀也拿了 H1。"
+      ja: "毎週の実習（Excelを使うものも）、グループ課題、個人のエッセイか課題。試験は簡単で10問中5問を選ぶ。あまり勉強せずにH1を取った人が複数。"
+      ko: "매주 실습(일부는 Excel), 조별 프로젝트, 개인 에세이나 과제. 시험은 쉬워서 10문제 중 5개를 고른다. 여러 명이 별로 공부 안 하고 H1을 받았다."
+      vi: "Prac hằng tuần (vài bài dùng Excel), một dự án nhóm và một bài luận hay bài cá nhân. Thi dễ: chọn 5 trong 10 câu. Nhiều người được H1 dù học ít."
+      ms: "Amali mingguan (ada yang guna Excel), projek kumpulan dan esei atau tugasan individu. Peperiksaan mudah: pilih 5 daripada 10 soalan. Beberapa dapat H1 dengan sedikit belajar."
+      id: "Praktikum mingguan (sebagian pakai Excel), proyek kelompok dan esai atau tugas individu. Ujiannya mudah: pilih 5 dari 10 soal. Beberapa dapat H1 dengan sedikit belajar."
+      hi: "साप्ताहिक प्रैक (कुछ में Excel), एक ग्रुप प्रोजेक्ट और एक व्यक्तिगत निबंध या असाइनमेंट। परीक्षा आसान है: 10 में से 5 सवाल चुनें। कई को कम पढ़ाई में H1 मिला।"
+  watch:
+    - en: "Nearly every reviewer says the pracs have very unclear instructions and marking, with little feedback. Working with others and asking the tutor lots of questions helps."
+      zh: "几乎每位同学都说 prac 的要求和评分很不清楚，反馈也少。和同学一起做、多问 tutor 会好一些。"
+      zh-TW: "幾乎每位同學都說 prac 的要求和評分很不清楚，回饋也少。和同學一起做、多問 tutor 會好一些。"
+      ja: "ほぼ全員が、実習の指示と採点がとても不明確でフィードバックも少ないと言う。他の人と一緒に取り組み、チューターにたくさん質問すると良い。"
+      ko: "거의 모든 리뷰가 실습 지시와 채점이 매우 불분명하고 피드백이 적다고 한다. 다른 사람과 함께 하고 튜터에게 많이 물어보면 낫다."
+      vi: "Hầu như ai cũng nói hướng dẫn và cách chấm prac rất mơ hồ, ít phản hồi. Làm cùng người khác và hỏi tutor nhiều sẽ đỡ hơn."
+      ms: "Hampir semua pengulas kata arahan dan pemarkahan amali sangat tidak jelas, dengan sedikit maklum balas. Bekerja dengan orang lain dan banyak bertanya tutor membantu."
+      id: "Hampir semua pengulas bilang instruksi dan penilaian praktikum sangat tidak jelas, dengan sedikit umpan balik. Bekerja bersama orang lain dan banyak bertanya ke tutor membantu."
+      hi: "लगभग हर रिव्यूअर कहता है प्रैक के निर्देश और जाँच बहुत अस्पष्ट हैं, फ़ीडबैक भी कम। दूसरों के साथ काम करना और ट्यूटर से खूब सवाल पूछना मदद करता है।"
 workload: light
 difficulty: easy

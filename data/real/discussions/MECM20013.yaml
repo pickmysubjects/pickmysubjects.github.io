@@ -24,5 +24,36 @@ points:
     ms: "Anda dinilai seperti wartawan sebenar dari segi idea cerita dan orang ditemu bual, jadi mencari sumber yang sudi ialah bahagian sukar. Jangka banyak kerja dan pemarkahan ketat."
     id: "Kamu dinilai seperti jurnalis sungguhan soal ide liputan dan narasumber, jadi mencari narasumber yang bersedia adalah bagian sulit. Bebannya banyak dan penilaiannya ketat."
     hi: "आपको असली पत्रकार की तरह स्टोरी आइडिया और इंटरव्यू देने वालों पर आँका जाता है, इसलिए तैयार स्रोत ढूँढना सबसे कठिन है। काफ़ी काम और सख़्त मार्किंग की उम्मीद रखें।"
+sections:
+  content:
+    - en: "A very practical subject where you work like a real journalist: no readings or essays, your sources are the people you interview. Reviewers found it engaging but demanding."
+      zh: "非常实践的课，你要像真正的记者一样工作：没有阅读也没有论文，信息来源就是你采访的人。同学觉得很投入但要求高。"
+      zh-TW: "非常實作的課，你要像真正的記者一樣工作：沒有閱讀也沒有論文，資訊來源就是你採訪的人。同學覺得很投入但要求高。"
+      ja: "本物の記者のように働く実践的な科目。リーディングもエッセイもなく、情報源は自分が取材する人。引き込まれるが要求は高いという。"
+      ko: "실제 기자처럼 일하는 매우 실용적인 과목. 리딩도 에세이도 없고 취재원은 인터뷰하는 사람들이다. 몰입되지만 요구가 높다는 평."
+      vi: "Môn rất thực tế, bạn làm như phóng viên thật: không có bài đọc hay luận, nguồn tin là người bạn phỏng vấn. Người học thấy cuốn hút nhưng đòi hỏi cao."
+      ms: "Subjek sangat praktikal di mana anda bekerja seperti wartawan sebenar: tiada bacaan atau esei, sumber anda ialah orang yang ditemu bual. Pengulas rasa menarik tetapi mencabar."
+      id: "Mata kuliah sangat praktis di mana kamu bekerja seperti jurnalis sungguhan: tanpa bacaan atau esai, sumbermu adalah orang yang kamu wawancarai. Pengulas merasa seru tapi menuntut."
+      hi: "बहुत व्यावहारिक विषय जिसमें असली पत्रकार की तरह काम करते हैं: न रीडिंग न निबंध, आपके स्रोत वे लोग हैं जिनका इंटरव्यू लेते हैं। रिव्यूअर्स को दिलचस्प पर मेहनत वाला लगा।"
+  work:
+    - en: "A feature story, a news story and an audio feature or podcast, each needing interviews. Marking rewards original story ideas and good interviewees, and some found it strict."
+      zh: "一篇特稿、一篇新闻报道和一个音频专题或播客，每项都要采访。评分看重选题新颖和采访对象质量，有人觉得评分很严。"
+      zh-TW: "一篇特稿、一篇新聞報導和一個音訊專題或 Podcast，每項都要採訪。評分看重選題新穎和受訪者品質，有人覺得評分很嚴。"
+      ja: "特集記事、ニュース記事、音声特集かポッドキャストで、どれも取材が必要。独創的な企画と良い取材相手が評価され、採点が厳しいという人も。"
+      ko: "피처 기사, 뉴스 기사, 오디오 피처나 팟캐스트로 모두 인터뷰가 필요하다. 독창적인 기획과 좋은 인터뷰 대상이 점수에 반영되며 채점이 엄격하다는 사람도 있다."
+      vi: "Một bài phóng sự, một bản tin và một phóng sự âm thanh hoặc podcast, bài nào cũng cần phỏng vấn. Chấm điểm đề cao ý tưởng mới và người được phỏng vấn tốt; vài người thấy chấm khắt khe."
+      ms: "Satu rencana, satu berita dan satu rencana audio atau podcast, setiap satu perlukan temu bual. Pemarkahan menghargai idea cerita asli dan orang yang ditemu bual yang baik; ada yang rasa ketat."
+      id: "Satu feature, satu berita dan satu feature audio atau podcast, masing-masing butuh wawancara. Penilaian menghargai ide cerita orisinal dan narasumber yang bagus; sebagian merasa ketat."
+      hi: "एक फ़ीचर स्टोरी, एक न्यूज़ स्टोरी और एक ऑडियो फ़ीचर या पॉडकास्ट, सबमें इंटरव्यू चाहिए। जाँच मौलिक विचारों और अच्छे इंटरव्यू देने वालों को पुरस्कृत करती है; कुछ को सख़्त लगी।"
+  watch:
+    - en: "Finding willing interviewees, often people you don't know, is the most stressful part. Line up interviews early and pick interesting topics; one reviewer says news stories score better with some conflict."
+      zh: "最让人头疼的是找到愿意受访的人，通常还得是陌生人。早点约采访、选有意思的题目；有同学说新闻稿里有些冲突点会得分更高。"
+      zh-TW: "最讓人頭痛的是找到願意受訪的人，通常還得是陌生人。早點約採訪、選有意思的題目；有同學說新聞稿裡有些衝突點會得分更高。"
+      ja: "一番のストレスは取材に応じてくれる人（多くは知らない人）を見つけること。早めに取材を取り付け面白いテーマを選ぶこと。ニュース記事は対立の要素があると点が高いという人も。"
+      ko: "가장 스트레스는 인터뷰에 응해 줄 사람(대개 모르는 사람)을 찾는 것. 인터뷰를 일찍 잡고 흥미로운 주제를 고를 것. 뉴스 기사는 갈등 요소가 있어야 점수가 잘 나온다는 리뷰도 있다."
+      vi: "Tìm người chịu phỏng vấn, thường là người lạ, là phần căng thẳng nhất. Hẹn phỏng vấn sớm và chọn đề hay; một người nói bản tin có chút xung đột sẽ được điểm cao hơn."
+      ms: "Mencari orang yang sudi ditemu bual, selalunya orang asing, ialah bahagian paling tertekan. Atur temu bual awal dan pilih topik menarik; seorang kata berita dengan sedikit konflik dapat markah lebih baik."
+      id: "Mencari narasumber yang bersedia, sering orang asing, adalah bagian paling bikin stres. Atur wawancara lebih awal dan pilih topik menarik; satu bilang berita dengan sedikit konflik dapat nilai lebih baik."
+      hi: "इंटरव्यू देने को तैयार लोग, अक्सर अजनबी, ढूँढना सबसे तनाव भरा हिस्सा है। इंटरव्यू जल्दी तय करें और रोचक विषय चुनें; एक कहता है ख़बर में कुछ टकराव हो तो अंक बेहतर मिलते हैं।"
 workload: heavy
 difficulty: hard

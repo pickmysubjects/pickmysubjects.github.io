@@ -33,5 +33,36 @@ points:
     ms: "Segelintir rasa kuliah dua jam membosankan, bimbingan kurang, dan markah tinggi tidak dijamin."
     id: "Beberapa merasa kuliah dua jam membosankan, bimbingan minim, dan nilai tinggi tidak dijamin."
     hi: "कुछ को दो घंटे के लेक्चर उबाऊ और मार्गदर्शन कम लगा, और कहा कि ऊँचे अंक तय नहीं हैं।"
+sections:
+  content:
+    - en: "A light intro to filmmaking, fully online with no tutorials, explaining film concepts through clips. Most reviewers found it fun and easy to do well; a couple found the lectures boring and long."
+      zh: "轻松的电影制作入门，全网课、没有 tutorial，用片段讲解电影概念。多数同学觉得有趣、容易拿好成绩；也有几位觉得讲课无聊、太长。"
+      zh-TW: "輕鬆的電影製作入門，全線上、沒有 tutorial，用片段講解電影概念。多數同學覺得有趣、容易拿好成績；也有幾位覺得講課無聊、太長。"
+      ja: "完全オンラインでチュートリアルなし、映像クリップで映画の概念を説明する軽めの入門。多くは楽しく好成績を取りやすいと言うが、講義が退屈で長いという人も数人。"
+      ko: "튜토리얼 없이 전부 온라인으로, 영상 클립으로 영화 개념을 설명하는 가벼운 입문. 대부분 재미있고 좋은 성적 받기 쉽다고 하지만, 강의가 지루하고 길다는 사람도 몇 있다."
+      vi: "Nhập môn làm phim nhẹ nhàng, học online hoàn toàn, không tutorial, giải thích khái niệm qua các đoạn phim. Đa số thấy vui và dễ điểm tốt; vài người thấy bài giảng chán và dài."
+      ms: "Pengenalan ringan kepada pembikinan filem, sepenuhnya dalam talian tanpa tutorial, menerangkan konsep filem melalui klip. Kebanyakan rasa seronok dan mudah skor; beberapa rasa kuliah membosankan dan panjang."
+      id: "Pengantar ringan pembuatan film, sepenuhnya daring tanpa tutorial, menjelaskan konsep film lewat cuplikan. Sebagian besar merasa seru dan mudah dapat nilai bagus; beberapa merasa kuliahnya membosankan dan panjang."
+      hi: "फ़िल्म निर्माण का हल्का परिचय, पूरी तरह ऑनलाइन और बिना ट्यूटोरियल, क्लिप्स से फ़िल्म कॉन्सेप्ट समझाता है। ज़्यादातर को मज़ेदार और अच्छे अंक आसान लगे; कुछ को लेक्चर उबाऊ और लंबे लगे।"
+  work:
+    - en: "Easy weekly quizzes, a storyboard assignment and a director's statement essay, with guidance sessions and past examples. Two reviewers say an H1 isn't guaranteed even with lots of effort."
+      zh: "每周小测简单，另有分镜作业和导演阐述文章，有答疑讲座和往年范例。两位同学说就算很努力也不保证 H1。"
+      zh-TW: "每週小考簡單，另有分鏡作業和導演闡述文章，有答疑講座和往年範例。兩位同學說就算很努力也不保證 H1。"
+      ja: "簡単な毎週のクイズ、絵コンテ課題、監督ステートメントのエッセイ。説明会と過去の例がある。努力してもH1は保証されないという声が2件。"
+      ko: "쉬운 주간 퀴즈, 스토리보드 과제, 감독 성명 에세이가 있고 안내 강의와 예전 예시가 제공된다. 두 리뷰는 열심히 해도 H1이 보장되진 않는다고 한다."
+      vi: "Quiz hằng tuần dễ, một bài storyboard và một bài luận tuyên bố đạo diễn, có buổi hướng dẫn và bài mẫu cũ. Hai người nói cố gắng nhiều cũng chưa chắc được H1."
+      ms: "Kuiz mingguan mudah, tugasan papan cerita dan esei kenyataan pengarah, dengan sesi bimbingan dan contoh lama. Dua pengulas kata H1 tidak dijamin walaupun berusaha keras."
+      id: "Kuis mingguan mudah, tugas storyboard dan esai pernyataan sutradara, dengan sesi panduan dan contoh lama. Dua pengulas bilang H1 tidak dijamin meski sudah berusaha keras."
+      hi: "आसान साप्ताहिक क्विज़, एक स्टोरीबोर्ड असाइनमेंट और डायरेक्टर स्टेटमेंट निबंध, मार्गदर्शन सत्रों और पुराने उदाहरणों के साथ। दो रिव्यूअर्स कहते हैं बहुत मेहनत पर भी H1 पक्का नहीं।"
+  watch:
+    - en: "One reviewer stresses following the assignment guidelines exactly (e.g. no text if it says no text). Feedback is limited since it's all online, and one found guidance thin."
+      zh: "有同学强调作业要严格按要求做（比如说不能有文字就别放文字）。因为全网课，反馈有限，也有人觉得指导不够。"
+      zh-TW: "有同學強調作業要嚴格照要求做（例如說不能有文字就別放文字）。因為全線上，回饋有限，也有人覺得指導不夠。"
+      ja: "課題のガイドラインは厳密に守ること（文字なしと書いてあれば文字を入れない）と一人が強調。全てオンラインなのでフィードバックは少なく、指導が足りないと感じた人も。"
+      ko: "과제 지침을 정확히 따르라고 한 리뷰가 강조한다(텍스트 금지면 넣지 말 것). 전부 온라인이라 피드백이 적고, 안내가 부족했다는 사람도 있다."
+      vi: "Một người nhấn mạnh làm đúng hướng dẫn bài tập (ví dụ cấm chữ thì đừng dùng chữ). Phản hồi hạn chế vì học online, và một người thấy hướng dẫn ít."
+      ms: "Seorang pengulas tekankan ikut garis panduan tugasan dengan tepat (contohnya tiada teks jika dinyatakan). Maklum balas terhad kerana semua dalam talian, dan seorang rasa bimbingan kurang."
+      id: "Satu pengulas menekankan ikuti pedoman tugas persis (misalnya tanpa teks jika diminta). Umpan balik terbatas karena semua daring, dan satu merasa bimbingannya kurang."
+      hi: "एक रिव्यूअर ज़ोर देता है असाइनमेंट दिशानिर्देश बिल्कुल मानें (जैसे 'कोई टेक्स्ट नहीं' लिखा हो तो टेक्स्ट न डालें)। सब ऑनलाइन होने से फ़ीडबैक कम है, और एक को मार्गदर्शन कम लगा।"
 workload: light
 difficulty: easy
