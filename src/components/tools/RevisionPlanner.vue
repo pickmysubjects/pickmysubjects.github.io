@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, nextTick, ref } from 'vue'
 import InfoTip from '@/components/InfoTip.vue'
 import SegmentedControl from '@/components/SegmentedControl.vue'
 import SidePanel from '@/components/SidePanel.vue'
@@ -124,6 +124,17 @@ const cells = computed(() => {
   return out
 })
 const picked = ref('')
+/**
+ * A calendar day tapped: on phones its detail shows under the calendar; wider, where there's no
+ * such panel, the list opens at that day.
+ */
+async function openDay(date: string): Promise<void> {
+  picked.value = date
+  if (window.matchMedia('(max-width: 640px)').matches) return
+  view.value = 'list'
+  await nextTick()
+  document.getElementById(`rev-day-${date}`)?.scrollIntoView({ block: 'center', behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' })
+}
 /** The day shown under the phone calendar: the one tapped, else today, else the first. */
 const shown = computed(() => plan.value.days.find((d) => d.date === picked.value) ?? plan.value.days.find((d) => d.date === rp.today) ?? plan.value.days[0])
 const cellNum = (c: { date: string; first: boolean }) => (c.first ? dayLabel(c.date) : fmtNum.value.format(asDate(c.date)))
@@ -291,7 +302,7 @@ function print(): void {
               :class="[`rk-${c.day.kind}`, { 'is-today': c.date === rp.today, 'is-picked': shown?.date === c.date }]"
               :aria-label="cellLabel(c.day)"
               :title="whyOf(c.day) || undefined"
-              @click="picked = c.date"
+              @click="openDay(c.date)"
             >
               <span class="rev-num"><span class="rev-nlong">{{ cellNum(c) }}</span><span class="rev-nshort" aria-hidden="true">{{ fmtNum.format(asDate(c.date)) }}</span><span v-if="c.date === rp.today" class="rev-today">{{ t('rev.today') }}</span></span>
               <span v-for="x in c.day.exams" :key="x" class="rev-cexam">{{ examText(x) }}</span>
@@ -325,7 +336,7 @@ function print(): void {
         <div v-for="(w, i) in weeks" :key="i" class="rev-wk">
           <h3 class="rev-wklabel">{{ w.label }}</h3>
           <ol class="rev-days">
-            <li v-for="d in w.days" :key="d.date" class="rev-day" :class="`rk-${d.kind}`">
+            <li v-for="d in w.days" :id="`rev-day-${d.date}`" :key="d.date" class="rev-day" :class="[`rk-${d.kind}`, { 'is-picked': d.date === picked }]">
               <span class="rev-date">
                 <span class="rev-dw">{{ weekdayLabel(d.date) }}</span>
                 <span>{{ dayLabel(d.date) }}</span>
@@ -886,6 +897,14 @@ p.rev-why {
   margin: 0;
   padding: 0;
   list-style: none;
+}
+
+/* The day opened from the calendar; the tint reaches past the row with a shadow, so nothing moves. */
+.rev-day.is-picked {
+  --pick: color-mix(in srgb, var(--accent-fill) 12%, transparent);
+  background: var(--pick);
+  box-shadow: 0 0 0 8px var(--pick);
+  border-radius: 2px;
 }
 
 .rev-day {
