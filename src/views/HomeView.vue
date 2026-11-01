@@ -147,7 +147,7 @@ const returning = computed(() => plan.courseChosen.value || !plan.isEmpty.value 
   display: inline-block;
   max-width: 100%;
   font-style: normal;
-  background: linear-gradient(100deg, var(--accent-fill) 10%, #8f7bf5 95%);
+  background: linear-gradient(100deg, var(--accent-fill) 10%, var(--violet) 95%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -155,7 +155,7 @@ const returning = computed(() => plan.courseChosen.value || !plan.isEmpty.value 
 
 @media (prefers-color-scheme: dark) {
   .hero-em {
-    background-image: linear-gradient(100deg, #f06bb0 10%, #b3a6ff 95%);
+    background-image: linear-gradient(100deg, #f06bb0 10%, var(--violet) 95%);
   }
 }
 

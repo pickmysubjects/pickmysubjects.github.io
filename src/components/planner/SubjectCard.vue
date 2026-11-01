@@ -429,8 +429,8 @@ const linkLabel = computed(() => {
 }
 
 .row-tone-need {
-  border-color: #7a63f0;
-  box-shadow: 0 0 0 1.5px #7a63f0;
+  border-color: var(--violet);
+  box-shadow: 0 0 0 1.5px var(--violet);
 }
 
 .row-tone-unlock {

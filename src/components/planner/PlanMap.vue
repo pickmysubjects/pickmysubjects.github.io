@@ -585,7 +585,7 @@ onBeforeUnmount(() => {
 }
 
 .route-need {
-  stroke: #7a63f0;
+  stroke: var(--violet);
 }
 
 .route-unlock {
@@ -600,20 +600,9 @@ onBeforeUnmount(() => {
 }
 
 .route-head-need {
-  stroke: #7a63f0;
+  stroke: var(--violet);
 }
 
-/* Dark: a lighter violet keeps the line at 3:1 or more on the dark glass. */
-@media (prefers-color-scheme: dark) {
-  .route-need,
-  .route-head-need {
-    stroke: #a796ff;
-  }
-
-  .legend-need::before {
-    background: #a796ff;
-  }
-}
 
 .route-head-unlock {
   stroke: var(--overprint);
@@ -678,7 +667,7 @@ onBeforeUnmount(() => {
 }
 
 .legend-need::before {
-  background: #7a63f0;
+  background: var(--violet);
 }
 
 .legend-unlock::before {

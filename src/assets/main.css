@@ -19,6 +19,8 @@
   --accent-fill-ink: #ffffff;
   --accent-ink: #ffffff;
   --accent-soft: #fbe9f2;
+  /* The second colour beside the pink: prerequisite lines, a focused card, the pink-to-violet gradients. */
+  --violet: #7a63f0;
   --good: #16703f;
   --good-soft: #e5f4ec;
   --warn: #855300;
@@ -162,6 +164,8 @@
     --accent-fill: #c2227a;
     --accent-fill-ink: #ffffff;
     --accent-ink: #1a0610;
+    /* Lighter on the dark glass, so lines in it stay at 3:1 or more. */
+    --violet: #a796ff;
     --accent-soft: #33152a;
     --good: #5fd398;
     --good-soft: #13291e;

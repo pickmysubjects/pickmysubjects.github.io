@@ -174,7 +174,7 @@ function done(setup: PlanSetup): void {
   display: block;
   height: 100%;
   border-radius: inherit;
-  background: linear-gradient(90deg, var(--accent), #8b5cf6);
+  background: linear-gradient(90deg, var(--accent), var(--violet));
 }
 
 .bar-text {
