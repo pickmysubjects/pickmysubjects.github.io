@@ -227,11 +227,14 @@ export function checkCourse(plan: Plan, given: Dataset): CourseCheck {
     const out = new Set(split.mine.filter((c) => !shared.has(c)))
     return { ...plan, completed: plan.completed.filter((c) => !out.has(c)), terms: plan.terms.map((t) => ({ ...t, subjects: t.subjects.filter((c) => !out.has(c)) })) }
   }
-  // The cross-credit that serves the bachelor best: the subjects its majors name, or those and the earliest others.
-  const fails = (c: CourseCheck) => c.statuses.filter((s) => s.status === 'fail').length
-  const best = split.shared.map((shared) => checkBachelor(without(shared), given)).reduce((a, b) => (fails(b) < fails(a) ? b : a))
-  // Progression is about everything studied, the diploma's subjects included.
+  // The cross-credit that serves the bachelor best: the subjects its majors name, or those and the
+  // earliest others, or only some of them (it's "up to" the limit, and counting a subject can push
+  // a cap over). Fewest failing rules wins; on a tie, the fuller set listed first.
+  // Progression is about everything studied, the diploma's subjects included, so it doesn't decide the cross-credit.
   const progression = new Set(findCourse(given, plan.course, plan.courseYear)!.rules.filter((r) => r.kind === 'progression').map((r) => r.id))
+  const fails = (c: CourseCheck) => c.statuses.filter((s) => s.status === 'fail' && !progression.has(s.ruleId)).length
+  const options = split.shared.flatMap((shared) => subsetsOf([...shared]).map((x) => new Set(x)))
+  const best = options.map((shared) => checkBachelor(without(shared), given)).reduce((a, b) => (fails(b) < fails(a) ? b : a))
   const whole = progression.size ? checkBachelor(plan, given) : best
   const bachelor = {
     statuses: best.statuses.map((s) => (progression.has(s.ruleId) ? (whole.statuses.find((w) => w.ruleId === s.ruleId) ?? s) : s)),
@@ -239,6 +242,13 @@ export function checkCourse(plan: Plan, given: Dataset): CourseCheck {
   }
   const own = checkDiploma(plan, given, diploma, stream, split.mine)
   return { statuses: [...bachelor.statuses, ...own.statuses], issues: [...bachelor.issues, ...own.issues] }
+}
+
+/** Every subset of a short list, largest first (the whole list, then each one left out, …, then none). */
+function subsetsOf<T>(list: readonly T[]): T[][] {
+  const out: T[][] = []
+  for (let mask = (1 << list.length) - 1; mask >= 0; mask--) out.push(list.filter((_, i) => mask & (1 << i)))
+  return out.sort((a, b) => b.length - a.length)
 }
 
 function checkBachelor(plan: Plan, given: Dataset): CourseCheck {
