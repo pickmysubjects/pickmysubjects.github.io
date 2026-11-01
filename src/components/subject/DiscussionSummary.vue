@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { MessagesSquare } from 'lucide-vue-next'
-import { DISCUSSION_SECTIONS, type DiscussionSummary } from '@/engine'
+import { DISCUSSION_SECTIONS, type DiscussionSummary, type DiscussionTag } from '@/engine'
 import { discussionLabels } from '@/i18n/discussion'
 import { pickLocalized } from '@/i18n/localized'
 import { useI18n } from '@/i18n'
@@ -9,6 +9,9 @@ import { useI18n } from '@/i18n'
 /** What students say in public places: one short block per source, labelled, never scored, always linked. */
 const props = defineProps<{ discussions: DiscussionSummary[] }>()
 const { t, locale } = useI18n()
+// Group work and hurdles come from the Handbook's assessment on this page, so only the other tags show here.
+const SHOWN_TAGS: readonly DiscussionTag[] = ['mcq-exam', 'practice-repeats', 'no-calculator', 'scaled', 'avoid-summer']
+const tagsOf = (d: DiscussionSummary) => SHOWN_TAGS.filter((k) => d.tags?.includes(k))
 const blocks = computed(() => props.discussions.filter((d) => d.points.length).map((d) => ({ d, ...discussionLabels(t.value, d) })))
 </script>
 
@@ -17,6 +20,9 @@ const blocks = computed(() => props.discussions.filter((d) => d.points.length).m
     <!-- Inside "What students say": each source's own line is the heading, no second title. -->
     <div v-for="b in blocks" :key="b.d.source" class="discussion-block">
       <h3 class="discussion-source"><MessagesSquare :size="16" aria-hidden="true" /> {{ b.source }}</h3>
+      <ul v-if="tagsOf(b.d).length" class="discussion-tags">
+        <li v-for="k in tagsOf(b.d)" :key="k">{{ t(`subject.discussTag.${k}`) }}</li>
+      </ul>
       <template v-if="b.d.sections">
         <template v-for="k in DISCUSSION_SECTIONS" :key="k">
           <div v-if="b.d.sections[k]" class="discussion-part">
@@ -53,6 +59,22 @@ const blocks = computed(() => props.discussions.filter((d) => d.points.length).m
   margin: 0;
   padding-left: 20px;
   line-height: 1.55;
+}
+
+.discussion-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 2px 0 4px;
+  padding: 0;
+  list-style: none;
+}
+
+.discussion-tags li {
+  padding: 2px 10px;
+  font-size: var(--fs-small);
+  border: 1px solid var(--line);
+  border-radius: 999px;
 }
 
 .discussion-part {

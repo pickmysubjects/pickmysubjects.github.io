@@ -102,13 +102,14 @@ function setPrereq(v: PrereqChoice): void {
 }
 
 // "Only": on/off switches, as one list. Subjects not running this year are left out unless asked for.
-type Switch = 'noGroup' | 'noHurdle' | 'noTest' | 'reviewed' | 'showOff'
+type Switch = 'noGroup' | 'noHurdle' | 'noTest' | 'mcqExam' | 'reviewed' | 'showOff'
 const switchOptions = computed<FilterOption<Switch>[]>(() => {
   const s = props.facets.switches
   return [
     { value: 'noGroup', label: t.value('browse.noGroup'), count: s.noGroup },
     { value: 'noHurdle', label: t.value('browse.noHurdle'), count: s.noHurdle },
     { value: 'noTest', label: t.value('browse.noTest'), count: s.noTest },
+    { value: 'mcqExam', label: t.value('browse.mcqExam'), count: s.mcqExam },
     { value: 'reviewed', label: t.value('browse.reviewed'), count: s.reviewed },
     { value: 'showOff', label: t.value('browse.showOff'), count: s.running },
   ]
@@ -116,11 +117,11 @@ const switchOptions = computed<FilterOption<Switch>[]>(() => {
 const switches = computed({
   get: (): readonly Switch[] => {
     const f = filters.value
-    const on: Switch[] = (['noGroup', 'noHurdle', 'noTest', 'reviewed'] as const).filter((k) => f[k])
+    const on: Switch[] = (['noGroup', 'noHurdle', 'noTest', 'mcqExam', 'reviewed'] as const).filter((k) => f[k])
     return f.running ? on : [...on, 'showOff']
   },
   set: (on: readonly Switch[]) => {
-    filters.value = { ...filters.value, noGroup: on.includes('noGroup'), noHurdle: on.includes('noHurdle'), noTest: on.includes('noTest'), reviewed: on.includes('reviewed'), running: !on.includes('showOff') }
+    filters.value = { ...filters.value, noGroup: on.includes('noGroup'), noHurdle: on.includes('noHurdle'), noTest: on.includes('noTest'), mcqExam: on.includes('mcqExam'), reviewed: on.includes('reviewed'), running: !on.includes('showOff') }
   },
 })
 

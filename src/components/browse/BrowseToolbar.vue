@@ -39,7 +39,7 @@ const chips = computed(() => {
     if (c.group === 'text') return { key: c.key, label: `“${f.text.trim()}”`, off: () => set('text', '') }
     if (c.group === 'prereq') return { key: c.key, label: tr(f.prereq === 'none' ? 'browse.noPrereq' : 'browse.prereqMet'), off: () => set('prereq', 'any') }
     if (c.group === 'running') return { key: c.key, label: tr('browse.showOff'), off: () => set('running', true) }
-    if (c.group === 'noGroup' || c.group === 'noHurdle' || c.group === 'noTest' || c.group === 'reviewed') {
+    if (c.group === 'noGroup' || c.group === 'noHurdle' || c.group === 'noTest' || c.group === 'mcqExam' || c.group === 'reviewed') {
       const k = c.group
       return { key: c.key, label: tr(`browse.${k}`), off: () => set(k, false) }
     }

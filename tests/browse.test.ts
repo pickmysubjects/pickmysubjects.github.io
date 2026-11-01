@@ -118,6 +118,7 @@ describe('browse filters in the address', () => {
       noGroup: true,
       noHurdle: true,
       noTest: true,
+      mcqExam: true,
       reviewed: true,
       sort: 'hours',
       rank: 'easy',
@@ -541,5 +542,15 @@ describe('lists by address and order chips, one model with the filter panel', ()
         expect(orderOf(back)).toBe(o)
       }
     }
+  })
+})
+
+describe('review tags', () => {
+  it('"Final exam mostly multiple choice" keeps only subjects whose reviews say so', () => {
+    const tagged = { ...subject({ code: 'AAAA10001' }), discussions: [{ source: 'StudentVIP' as const, url: 'https://studentvip.com.au/unimelb/subjects/aaaa10001', reviews: 6, code: 'AAAA10001', from: 2024, to: 2026, checked: '2026-11-01', points: [], tags: ['mcq-exam' as const] }] }
+    const plain = subject({ code: 'BBBB10001' })
+    const index = browseIndex([tagged, plain], { course: 'B-SCI', year: 2026 })
+    expect(filterIndex(index, { ...EMPTY_FILTERS, running: false, mcqExam: true }).map((r) => r.subject.code)).toEqual(['AAAA10001'])
+    expect(facetCounts(index, { ...EMPTY_FILTERS, running: false }).switches.mcqExam).toBe(1)
   })
 })

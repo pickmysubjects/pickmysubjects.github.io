@@ -39,6 +39,8 @@ export interface BrowseFilters {
   noHurdle: boolean
   /** Only subjects whose recorded assessment has no test during semester. */
   noTest: boolean
+  /** Only subjects whose reviews say the final exam is (mostly) multiple choice. */
+  mcqExam: boolean
   /** Only subjects students have reviewed (a public summary or 3+ ratings here). */
   reviewed: boolean
   sort: BrowseSort
@@ -75,6 +77,7 @@ export const EMPTY_FILTERS: BrowseFilters = {
   noGroup: false,
   noHurdle: false,
   noTest: false,
+  mcqExam: false,
   reviewed: false,
   sort: 'code',
   rank: null,
@@ -130,6 +133,8 @@ export interface BrowseRow {
   examHurdle: boolean | null
   /** Share of tests during semester; null when the assessment isn't recorded. */
   test: number | null
+  /** Reviewers say the final exam is (mostly) multiple choice. */
+  mcqExam: boolean
 }
 
 function share(subject: Subject, pick: (t: NonNullable<Subject['assessment']>[number]) => boolean): number | null {
@@ -157,6 +162,7 @@ function browseRow(subject: Subject, year: number): BrowseRow {
     rating: overall(subject),
     test: share(subject, (t) => t.kind === 'test'),
     examHurdle: subject.assessment ? subject.assessment.some((t) => t.kind === 'exam' && t.hurdle === true) : null,
+    mcqExam: (subject.discussions ?? []).some((d) => d.tags?.includes('mcq-exam')),
   }
 }
 
@@ -184,13 +190,13 @@ export interface BrowseContext {
 }
 
 /** The groups of filters; within one, options are alternatives; across them, all apply. */
-export const FILTER_GROUPS = ['category', 'topics', 'level', 'period', 'points', 'exam', 'hours', 'ease', 'prereq', 'noGroup', 'noHurdle', 'noTest', 'reviewed', 'running', 'text'] as const
+export const FILTER_GROUPS = ['category', 'topics', 'level', 'period', 'points', 'exam', 'hours', 'ease', 'prereq', 'noGroup', 'noHurdle', 'noTest', 'mcqExam', 'reviewed', 'running', 'text'] as const
 export type FilterGroup = (typeof FILTER_GROUPS)[number]
 /** The groups that take a list of options. */
 export const LIST_GROUPS = ['category', 'topics', 'level', 'period', 'points', 'exam', 'hours', 'ease'] as const
 export type ListGroup = (typeof LIST_GROUPS)[number]
 /** The groups that are a single on/off switch. */
-export const SWITCHES = ['noGroup', 'noHurdle', 'noTest', 'reviewed'] as const
+export const SWITCHES = ['noGroup', 'noHurdle', 'noTest', 'mcqExam', 'reviewed'] as const
 
 /** A subject's row with every option it matches worked out once (they don't depend on the filters). */
 export interface IndexedRow extends BrowseRow {
@@ -267,6 +273,8 @@ function passes(r: IndexedRow, g: FilterGroup, f: BrowseFilters, text: string): 
       return !f.noHurdle || r.examHurdle === false
     case 'noTest':
       return !f.noTest || r.test === 0
+    case 'mcqExam':
+      return !f.mcqExam || r.mcqExam
     case 'reviewed':
       return !f.reviewed || r.reviewed
     case 'running':
@@ -299,7 +307,7 @@ export function facetCounts(index: readonly IndexedRow[], f: BrowseFilters): Fac
   const text = f.text.trim().toLowerCase()
   const lists = Object.fromEntries(LIST_GROUPS.map((g) => [g, new Map<string | number, number>()])) as Facets['lists']
   const prereq = { none: 0, met: 0 }
-  const switches = { noGroup: 0, noHurdle: 0, noTest: 0, reviewed: 0, running: 0 }
+  const switches = { noGroup: 0, noHurdle: 0, noTest: 0, mcqExam: 0, reviewed: 0, running: 0 }
   for (const r of index) {
     let failed: FilterGroup | null = null
     let fails = 0
@@ -322,6 +330,7 @@ export function facetCounts(index: readonly IndexedRow[], f: BrowseFilters): Fac
     if (counts('noGroup') && r.group === 0) switches.noGroup++
     if (counts('noHurdle') && r.examHurdle === false) switches.noHurdle++
     if (counts('noTest') && r.test === 0) switches.noTest++
+    if (counts('mcqExam') && r.mcqExam) switches.mcqExam++
     if (counts('reviewed') && r.reviewed) switches.reviewed++
     // "Include subjects not running": how many the list would show with it on.
     if (counts('running')) switches.running++
@@ -410,6 +419,7 @@ export function filtersToQuery(f: BrowseFilters): string {
   if (f.noGroup) q.set('nogroup', '1')
   if (f.noHurdle) q.set('nohurdle', '1')
   if (f.noTest) q.set('notest', '1')
+  if (f.mcqExam) q.set('mcq', '1')
   if (f.reviewed) q.set('reviewed', '1')
   if (f.sort !== 'code') q.set('sort', f.sort)
   if (f.rank) q.set('list', f.rank)
@@ -426,7 +436,7 @@ const HOURS_SET = new Set<string>(['light', 'mid', 'heavy'])
 const EASE_SET = new Set<string>(['easy', 'hard'])
 
 /** The query keys that set filters; anything else (fbclid, utm_source from a shared link) is ignored. */
-const FILTER_KEYS = new Set(['q', 'type', 'topic', 'level', 'when', 'points', 'exam', 'hours', 'ease', 'prereq', 'noprereq', 'noexam', 'nogroup', 'nohurdle', 'notest', 'reviewed', 'sort', 'preset', 'list', 'mine', 'breadth', 'offterm', 'running'])
+const FILTER_KEYS = new Set(['q', 'type', 'topic', 'level', 'when', 'points', 'exam', 'hours', 'ease', 'prereq', 'noprereq', 'noexam', 'nogroup', 'nohurdle', 'notest', 'mcq', 'reviewed', 'sort', 'preset', 'list', 'mine', 'breadth', 'offterm', 'running'])
 
 /** A comma list from the query, each part kept only if `ok`, without repeats. */
 function parts<T>(raw: string | null, ok: (x: string) => boolean, as: (x: string) => T = (x) => x as T): T[] {
@@ -469,6 +479,7 @@ export function filtersFromQuery(q: URLSearchParams, slug = ''): BrowseFilters {
     noGroup: q.get('nogroup') === '1',
     noHurdle: q.get('nohurdle') === '1',
     noTest: q.get('notest') === '1',
+    mcqExam: q.get('mcq') === '1',
     reviewed: q.get('reviewed') === '1',
     sort: SORT_SET.has(sort) ? (sort as BrowseSort) : base.sort,
     // One order at a time: an old link with both keeps "Fits me".
