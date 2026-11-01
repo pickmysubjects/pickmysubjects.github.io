@@ -194,7 +194,12 @@ function render(page: Page, code: LocaleCode): string {
     `<meta property="og:title" content="${esc(page.title)}" />`,
     `<meta property="og:description" content="${esc(page.description)}" />`,
     `<meta property="og:url" content="${url}" />`,
-    `<meta name="twitter:card" content="summary" />`,
+    // One share picture for every page (public/og.png, 1200×630): link previews in chat apps and social posts.
+    `<meta property="og:image" content="${SITE}og.png" />`,
+    `<meta property="og:image:width" content="1200" />`,
+    `<meta property="og:image:height" content="630" />`,
+    `<meta property="og:image:alt" content="${BRAND}" />`,
+    `<meta name="twitter:card" content="summary_large_image" />`,
     `<script type="application/ld+json">${JSON.stringify(structured(page, code, url)).replace(/</g, '\\u003c')}</script>`,
   ]
   const chunk = code === 'en' ? undefined : messagesChunk(code)
