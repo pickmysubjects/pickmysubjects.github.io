@@ -71,6 +71,15 @@ describe('discussion summaries from several sources', () => {
     expect(full.discussions?.map((d) => d.points.length)).toEqual([1, 1])
   })
 
+  it('keeps the fuller sections out of core but the tags in, and puts the sections back with the detail', () => {
+    const sections = { work: [{ en: 'All multiple choice.', zh: '全是选择题。' }] }
+    const s = { ...subject({ code: 'AAAA10001' }), discussions: [vip({ sections, tags: ['mcq-exam' as const] })] }
+    const { core, details } = splitDataset(dataset([s]))
+    expect(core.subjects.AAAA10001!.discussions?.[0]).not.toHaveProperty('sections')
+    expect(core.subjects.AAAA10001!.discussions?.[0]?.tags).toEqual(['mcq-exam'])
+    expect(withDetail(core.subjects.AAAA10001!, details.AAAA!.AAAA10001).discussions?.[0]?.sections).toEqual(sections)
+  })
+
   it('labels each source in its own words', () => {
     expect(discussionLabels(t, vip()).source).toBe('Summarised from 10 students on StudentVIP (2024–2026)')
     expect(discussionLabels(t, reddit)).toEqual({ source: 'From r/unimelb discussions (12 threads, 2023–2026)', read: 'Read the threads' })

@@ -378,6 +378,14 @@ const enZh = localized
  * r/unimelb threads), kept apart from our own ratings: no scores, never mixed into averages,
  * always linked to the source. Staff are never named. A subject can have one per source.
  */
+/**
+ * Facts read off a fuller summary: the final exam is (mostly) multiple choice; exam questions
+ * repeat the practice ones; there's group work; a hurdle; marks were scaled; no calculator in
+ * the exam; reviewers advise against the summer intensive.
+ */
+export const DISCUSSION_TAGS = ['mcq-exam', 'practice-repeats', 'group-work', 'hurdle', 'scaled', 'no-calculator', 'avoid-summer'] as const
+export type DiscussionTag = (typeof DISCUSSION_TAGS)[number]
+
 /** The parts of a fuller summary, in the order the page shows them. */
 export const DISCUSSION_SECTIONS = ['content', 'work', 'study', 'watch'] as const
 export type DiscussionSection = (typeof DISCUSSION_SECTIONS)[number]
@@ -397,6 +405,9 @@ const discussionBase = {
   // semester check can use it before our own ratings come in. Left out when they don't say.
   // When older and newer posts disagree, the newest decide: subjects change.
   workload: z.enum(['light', 'heavy', 'mixed']).optional(),
+  // Plain facts the fuller summary (`sections`) states, as tags for cards and filters. Only
+  // what reviewers say; left out when they don't.
+  tags: z.array(z.enum(DISCUSSION_TAGS)).optional(),
   difficulty: z.enum(['easy', 'hard', 'mixed']).optional(),
 }
 export const discussionFileSchema = z.discriminatedUnion('source', [

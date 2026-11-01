@@ -36,7 +36,8 @@ export function splitDataset(data: Dataset, takenWith: Record<string, string[]> 
     const { about, discussions, breadthFor, comments, studentFacts, prescribedTexts, examBook, languages, ...rest } = s
     const lean: Subject = { ...rest } as Subject
     if (about) lean.about = { ...about, learn: { en: about.learn.en, zh: '' }, outcomes: [] }
-    if (discussions) lean.discussions = discussions.map((d) => ({ ...d, points: [] }))
+    // Core keeps a summary's counts, years, workload, difficulty and tags (lists and filters use them); its text loads with the detail.
+    if (discussions) lean.discussions = discussions.map(({ sections: _sections, ...d }) => ({ ...d, points: [] }))
     subjects[code] = lean
     const tw = takenWith[code]
     const hb = prescribedTexts !== undefined || examBook !== undefined || languages !== undefined
