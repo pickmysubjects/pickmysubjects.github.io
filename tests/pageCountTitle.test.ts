@@ -26,13 +26,16 @@ function fakeBrowser(path: string) {
   vi.stubGlobal('location', loc)
   vi.stubGlobal('history', { state: null, pushState: setAddress, replaceState: setAddress })
   vi.stubGlobal('document', doc)
+  // Listeners are kept so a test can send the first input (counting waits for it).
+  const listeners = new Map<string, () => void>()
   vi.stubGlobal('window', {
-    addEventListener: vi.fn(),
+    addEventListener: (type: string, fn: () => void) => void listeners.set(type, fn),
+    removeEventListener: (type: string) => void listeners.delete(type),
     scrollTo: vi.fn(),
     setTimeout,
     goatcounter: { count: (v: { path: string; title?: string; event?: boolean }) => counts.push(v) },
   })
-  return { counts, doc }
+  return { counts, doc, input: () => listeners.get('pointerdown')?.() }
 }
 
 afterEach(() => {
@@ -43,7 +46,7 @@ afterEach(() => {
 
 describe('page counts', () => {
   it('send each page with its own title, once per move and once on first load', async () => {
-    const { counts, doc } = fakeBrowser('/')
+    const { counts, doc, input } = fakeBrowser('/')
     vi.resetModules()
     const { useView, go, replaceAddress } = await import('@/composables/useView')
     const { view, param } = useView()
@@ -51,6 +54,7 @@ describe('page counts', () => {
     const title = computed(() => `${view.value}${param.value ? ` ${param.value}` : ''} | PickMySubjects`)
     watchEffect(() => { doc.title = title.value })
     await nextTick()
+    input()
     go('plan')
     await nextTick()
     go('subject/FINA30025')
