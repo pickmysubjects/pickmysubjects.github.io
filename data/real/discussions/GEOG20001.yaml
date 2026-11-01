@@ -64,4 +64,4 @@ sections:
       ms: "Kuliah kurang berkait dengan penilaian. Kebanyakan ulasan dari 2017 atau lebih awal, satu dari 2022, jadi mungkin telah berubah."
       id: "Kuliah tidak banyak terkait dengan penilaian. Sebagian besar ulasan dari 2017 atau sebelumnya, satu dari 2022, jadi mungkin sudah berubah."
       hi: "लेक्चर का आकलन से कम संबंध है। ज़्यादातर रिव्यू 2017 या पहले के हैं, एक 2022 का, तो विषय बदल गया हो सकता है।"
-workload: light
+difficulty: hard

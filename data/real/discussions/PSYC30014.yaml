@@ -73,5 +73,5 @@ sections:
       ms: "Tidak disyorkan jika anda tidak berminat dengan psikologi klinikal atau kurang yakin menulis esei."
       id: "Tidak disarankan kalau tidak tertarik psikologi klinis atau kurang percaya diri menulis esai."
       hi: "अगर क्लिनिकल साइकोलॉजी में रुचि नहीं या निबंध लिखने में भरोसा नहीं, तो सलाह नहीं दी जाती।"
-workload: heavy
+tags: [mcq-exam]
 difficulty: mixed

@@ -92,4 +92,5 @@ sections:
       ms: "Kebanyakan kata peperiksaan yang mudah menampung gred; seorang pengulas terkini tidak syorkan ia sekadar subjek pengisi."
       id: "Kebanyakan bilang ujian yang mudah menopang nilai; satu pengulas terbaru tidak menyarankannya sekadar pengisi SKS."
       hi: "ज़्यादातर कहते हैं आसान परीक्षा ग्रेड संभालती है; एक हालिया रिव्यूअर सिर्फ़ खाली जगह भरने के लिए इसे लेने की सलाह नहीं देता।"
+tags: [mcq-exam, group-work]
 difficulty: easy

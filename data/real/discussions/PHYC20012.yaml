@@ -64,5 +64,6 @@ sections:
       ms: "Sumber selain buku teks terhad, jadi bersedia belajar sendiri; seorang bergantung pada video dalam talian. Ingat Calculus 2 membantu bahagian kuantum."
       id: "Sumber selain buku teks terbatas, jadi siap belajar mandiri; satu mengandalkan video daring. Mengingat Calculus 2 membantu di bagian kuantum."
       hi: "पाठ्यपुस्तक के अलावा संसाधन कम हैं, तो खुद सीखने के लिए तैयार रहें; एक ने ऑनलाइन वीडियो का सहारा लिया। Calculus 2 याद हो तो क्वांटम हिस्से में मदद मिलती है।"
+tags: [scaled]
 workload: heavy
 difficulty: hard

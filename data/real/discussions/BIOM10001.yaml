@@ -73,5 +73,6 @@ sections:
       ms: "Semua ulasan ini dari 2023 atau lebih awal; subjek mungkin telah berubah."
       id: "Semua ulasan ini dari 2023 atau sebelumnya; mata kuliah ini mungkin sudah berubah."
       hi: "ये सभी रिव्यू 2023 या उससे पहले के हैं; विषय अब बदल गया हो सकता है।"
+tags: [group-work]
 workload: light
 difficulty: easy

@@ -101,5 +101,6 @@ sections:
       ms: "Beberapa pengulas dapati video modul gen kemudian kabur dan soalan latihannya tidak seperti peperiksaan, walaupun banyak soalan akhir dari situ."
       id: "Beberapa pengulas merasa video modul gen bagian akhir kabur dan soal latihannya tidak mirip ujian, padahal banyak soal akhir dari sana."
       hi: "कई रिव्यूअर्स को बाद के जीन मॉड्यूल के वीडियो अस्पष्ट लगे और प्रैक्टिस सवाल परीक्षा जैसे नहीं, जबकि फ़ाइनल का बड़ा हिस्सा उन्हीं से आता है।"
+tags: [practice-repeats]
 workload: heavy
 difficulty: mixed

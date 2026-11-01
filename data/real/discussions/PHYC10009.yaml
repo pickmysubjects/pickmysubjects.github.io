@@ -92,5 +92,6 @@ sections:
       ms: "Bukan penaik WAM: ramai nasihat elakkan kecuali ia prasyarat, dan beberapa kata anda tidak perlukannya untuk GAMSAT."
       id: "Bukan pendongkrak WAM: banyak yang menyarankan menghindarinya kecuali prasyarat, dan beberapa bilang tidak perlu untuk GAMSAT."
       hi: "WAM बूस्टर नहीं: कई कहते हैं पूर्वापेक्षा न हो तो इससे बचें, और कई के अनुसार GAMSAT के लिए इसकी ज़रूरत नहीं।"
+tags: [scaled]
 workload: heavy
 difficulty: hard

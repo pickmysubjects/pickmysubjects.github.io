@@ -83,4 +83,5 @@ sections:
       ms: "Beberapa pengulas kata maklum balas tugasan hanya tiba selepas peperiksaan atau semester tamat, dan ada yang akan pilih subjek anatomi atau neurosains."
       id: "Beberapa pengulas bilang umpan balik tugas baru datang setelah ujian atau semester selesai, dan sebagian akan memilih mata kuliah anatomi atau neurosains."
       hi: "कई रिव्यूअर्स कहते हैं असाइनमेंट का फ़ीडबैक परीक्षा या सेमेस्टर ख़त्म होने के बाद ही मिला, और कुछ इसकी जगह एनाटॉमी या न्यूरोसाइंस विषय चुनेंगे।"
+tags: [group-work]
 difficulty: easy

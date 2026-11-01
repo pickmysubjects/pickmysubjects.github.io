@@ -82,5 +82,6 @@ sections:
       ms: "Pengulas terkini kata ia bukan penaik WAM atau pengisi yang baik; ambil jika ia teras atau anda sanggup luangkan banyak masa. Seorang kata penskalaan besar membantunya."
       id: "Pengulas terbaru bilang ini bukan pendongkrak WAM atau pengisi; ambil kalau wajib atau siap meluangkan banyak waktu. Satu bilang penskalaan besar membantunya."
       hi: "हाल के रिव्यूअर कहते हैं यह न WAM बूस्टर है न अच्छा फ़िलर; अनिवार्य हो या बहुत समय दे सकें तभी लें। एक के अनुसार भारी स्केलिंग से मदद मिली।"
+tags: [scaled]
 workload: heavy
 difficulty: hard

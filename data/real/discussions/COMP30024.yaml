@@ -73,5 +73,6 @@ sections:
       ms: "Cari rakan projek yang baik. Ada yang rasa tutorial dan sokongan forum tidak konsisten; seorang rasa kuliah kebarangkalian tergesa-gesa dan bergantung pada scaling besar."
       id: "Cari partner proyek yang baik. Sebagian merasa tutorial dan dukungan forum tidak konsisten; satu merasa kuliah probabilitas terburu-buru dan bergantung pada scaling besar."
       hi: "अच्छा प्रोजेक्ट पार्टनर ढूँढें। कुछ को ट्यूटोरियल और फ़ोरम सहायता असमान लगी; एक को प्रायिकता के लेक्चर जल्दबाज़ी वाले और भारी स्केलिंग पर निर्भर लगे।"
+tags: [group-work, scaled]
 workload: heavy
 difficulty: hard

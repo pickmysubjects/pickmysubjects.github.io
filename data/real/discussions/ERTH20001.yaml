@@ -64,5 +64,6 @@ sections:
       ms: "Hampir semua pengulas kata arahan dan pemarkahan amali sangat tidak jelas, dengan sedikit maklum balas. Bekerja dengan orang lain dan banyak bertanya tutor membantu."
       id: "Hampir semua pengulas bilang instruksi dan penilaian praktikum sangat tidak jelas, dengan sedikit umpan balik. Bekerja bersama orang lain dan banyak bertanya ke tutor membantu."
       hi: "लगभग हर रिव्यूअर कहता है प्रैक के निर्देश और जाँच बहुत अस्पष्ट हैं, फ़ीडबैक भी कम। दूसरों के साथ काम करना और ट्यूटर से खूब सवाल पूछना मदद करता है।"
+tags: [group-work]
 workload: light
 difficulty: easy

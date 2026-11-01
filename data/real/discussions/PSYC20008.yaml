@@ -92,3 +92,5 @@ sections:
       ms: "Bukan H1 mudah menurut beberapa pengulas, terutama jika belum pernah menulis laporan makmal psikologi."
       id: "Bukan H1 yang mudah menurut beberapa pengulas, terutama kalau belum pernah menulis laporan lab psikologi."
       hi: "कई रिव्यूअर्स के अनुसार आसान H1 नहीं, ख़ासकर अगर पहले कभी साइकोलॉजी लैब रिपोर्ट नहीं लिखी।"
+tags: [mcq-exam]
+difficulty: mixed

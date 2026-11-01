@@ -64,5 +64,4 @@ sections:
       ms: "Ikuti setiap minggu kerana topik saling bergantung, mula tugasan awal, dan cuba soalan tutorial sebelum lihat jawapan. Asas matematik yang kukuh sangat membantu."
       id: "Ikuti tiap minggu karena topiknya saling terkait, mulai tugas lebih awal, dan coba soal tutorial sebelum melihat jawaban. Dasar matematika yang kuat sangat membantu."
       hi: "हर हफ़्ते साथ रहें क्योंकि विषय एक-दूसरे पर टिके हैं, असाइनमेंट जल्दी शुरू करें, और हल देखने से पहले ट्यूटोरियल सवाल खुद करें। गणित की मज़बूत नींव बहुत मदद करती है।"
-workload: heavy
-difficulty: mixed
+difficulty: hard

@@ -84,3 +84,4 @@ sections:
       id: "Pendapat soal tingkat kesulitan berbeda: ada yang mudah mengikuti tanpa latar, tapi satu pengulas terbaru merasa kuliah menganggap kamu sudah tahu dan perlu banyak riset."
       hi: "कठिनाई पर राय बँटी है: कुछ को बिना बैकग्राउंड के भी आसान लगा, पर हाल के एक रिव्यूअर को लगा लेक्चर पहले से ज्ञान मानते हैं और बहुत रिसर्च चाहिए।"
 workload: heavy
+difficulty: hard

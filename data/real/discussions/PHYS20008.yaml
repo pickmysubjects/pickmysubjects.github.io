@@ -101,4 +101,4 @@ sections:
       ms: "Beberapa pengulas terkini syorkan semak siapa penyelaras sebelum mendaftar, dan jangan pilih hanya kerana ulasan lama kata ia penaik WAM mudah."
       id: "Beberapa pengulas terbaru menyarankan cek siapa koordinatornya sebelum mendaftar, dan jangan memilih hanya karena ulasan lama bilang pendongkrak WAM yang mudah."
       hi: "कई हालिया रिव्यूअर नामांकन से पहले उस सेमेस्टर के कोऑर्डिनेटर की जाँच की सलाह देते हैं, और कहते हैं सिर्फ़ पुराने रिव्यू में आसान WAM बूस्टर कहे जाने से इसे न चुनें।"
-workload: heavy
+difficulty: hard

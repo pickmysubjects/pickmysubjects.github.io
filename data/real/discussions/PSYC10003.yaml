@@ -110,4 +110,5 @@ sections:
       ms: "Beberapa dapati amali mingguan kurang berguna dan hampir tiada kaitan dengan peperiksaan."
       id: "Beberapa merasa praktikum mingguan kurang berguna dan hampir tidak terkait ujian."
       hi: "कई को साप्ताहिक प्रैक्टिकल ज़्यादा काम के नहीं लगे और परीक्षा से उनका लेना-देना कम था।"
+tags: [mcq-exam, practice-repeats, group-work, scaled]
 difficulty: easy

@@ -91,4 +91,5 @@ sections:
       ms: "Semak soalan amali sebelum kelas; seorang pengulas kata kuliah mengikut buku teks rapat, jadi ia sandaran yang baik."
       id: "Lihat soal praktikum sebelum kelas; satu pengulas bilang kuliah mengikuti buku teks, jadi buku bisa jadi andalan."
       hi: "क्लास से पहले प्रैक्टिकल सवाल देख लें; एक के अनुसार लेक्चर पाठ्यपुस्तक के क़रीब चलते हैं, तो वह अच्छा सहारा है।"
+tags: [scaled]
 difficulty: mixed

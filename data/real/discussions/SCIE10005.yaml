@@ -83,5 +83,4 @@ sections:
       ms: "Hadir pada minggu pembentangan kumpulan atau anda mungkin tiada kumpulan; beberapa pengulas ada pengalaman buruk dengan kumpulan atau tutor."
       id: "Datang di minggu presentasi kelompok atau bisa tidak kebagian kelompok; beberapa pengulas punya pengalaman buruk dengan kelompok atau tutor."
       hi: "ग्रुप प्रेज़ेंटेशन वाले हफ़्तों में ज़रूर आएँ, वरना ग्रुप नहीं मिलेगा; कुछ रिव्यूअर्स का ग्रुप या ट्यूटर के साथ बुरा अनुभव रहा।"
-workload: light
-difficulty: easy
+tags: [group-work]
