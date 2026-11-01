@@ -36,7 +36,8 @@ const coreq = computed(() => {
   const co = props.subject.corequisites
   return co && co !== 'none' && co !== 'unknown' ? describeReq(t.value, co, course.value) : ''
 })
-const blocks = computed(() => (props.subject.nonAllowed !== 'unknown' ? props.subject.nonAllowed : []))
+// Only subjects we list (undergraduate): a graduate-only code can't be taken in a bachelor's degree anyway.
+const blocks = computed(() => (props.subject.nonAllowed !== 'unknown' ? props.subject.nonAllowed.filter((c) => data.value.subjects[c]) : []))
 
 // The chain shows the first few it unlocks (the student's own first); the full list sits below.
 const CHAIN_UNLOCKS = 6

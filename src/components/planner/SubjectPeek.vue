@@ -195,7 +195,8 @@ const clashes = computed(() => {
   const listed = Object.values(props.subjects)
     .filter((s) => s.nonAllowed !== 'unknown' && s.nonAllowed.includes(props.code))
     .map((s) => s.code)
-  return [...new Set([...own, ...listed])].sort(inPlanFirst)
+  // Only subjects we list (undergraduate): a graduate-only code can't be taken in a bachelor's plan anyway.
+  return [...new Set([...own, ...listed])].filter((c) => props.subjects[c]).sort(inPlanFirst)
 })
 
 const ratings = computed(() => {
