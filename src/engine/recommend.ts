@@ -19,6 +19,9 @@ import { areaField, homeTopics, relatedTopics, topicsOf } from './topics'
 /** 'easy': marks only, whatever the subject is about (the "easiest H1" list). */
 export type Goal = 'wam' | 'balanced' | 'challenge' | 'easy'
 
+/** The category a diploma's subject has in the course while a plan is generated: planned for the diploma only. */
+export const DIPLOMA_ONLY = 'diploma-only' as const
+
 export interface Profile {
   /**
    * Completed subjects; marks are optional (0–100), and so is when it was taken (shown in its
@@ -503,7 +506,8 @@ export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions =
       continue
     }
     // In a course where other subjects are categorised, an uncategorised one doesn't count for credit.
-    if (opts.course && creditCourses.has(opts.course) && !s.categories[opts.course]) {
+    // Nor does a diploma's subject while planning (DIPLOMA_ONLY): it counts for the diploma, not the course.
+    if (opts.course && creditCourses.has(opts.course) && (!s.categories[opts.course] || s.categories[opts.course] === DIPLOMA_ONLY)) {
       skip({ key: 'notInCourse' })
       continue
     }

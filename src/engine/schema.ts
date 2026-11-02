@@ -270,7 +270,8 @@ export const subjectFileSchema = z
     prerequisites: reqField,
     corequisites: reqField,
     non_allowed: z.union([z.literal('unknown'), z.array(subjectCode)]).default('unknown'),
-    categories: z.record(z.string(), z.enum(['science', 'commerce', 'arts', 'design', 'music', 'fine-arts', 'agriculture', 'oral-health', 'breadth', 'core'])).default({}),
+    // 'diploma-only' is never in the data: the plan generator sets it on a diploma's subjects (DIPLOMA_ONLY).
+    categories: z.record(z.string(), z.enum(['science', 'commerce', 'arts', 'design', 'music', 'fine-arts', 'agriculture', 'oral-health', 'breadth', 'core', 'diploma-only'])).default({}),
     skills: z.array(z.enum(SKILLS)).default([]),
     topics: z.array(z.enum(TOPICS)).default([]),
     // Semester version from the Handbook; weights add up to 100.
@@ -474,7 +475,7 @@ export const aboutFileSchema = z
 
 export type SubjectAbout = z.output<typeof aboutFileSchema>
 // 'core': counts towards the course total only, in none of its category rules (B-SCI's SCIE10005).
-export type SubjectCategory = 'science' | 'commerce' | 'arts' | 'design' | 'music' | 'fine-arts' | 'agriculture' | 'oral-health' | 'breadth' | 'core'
+export type SubjectCategory = 'science' | 'commerce' | 'arts' | 'design' | 'music' | 'fine-arts' | 'agriculture' | 'oral-health' | 'breadth' | 'core' | 'diploma-only'
 
 const componentReq = z.union([
   z.object({ all: z.array(subjectCode).min(1) }).strict(),

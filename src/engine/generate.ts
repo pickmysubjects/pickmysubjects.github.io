@@ -6,7 +6,7 @@ import { careerGoal } from './careerGoal'
 import { evaluateField, referencedSubjects, type EvalContext, type Tri } from './expr'
 import type { Note, Params, Plan, PlanTerm } from './plan'
 import { nextEntry, standardTerms } from './plan'
-import { HEAVY_PICK_COST, exactWam, isFail, marksForConditions, passedCodes, recommend, type Profile } from './recommend'
+import { DIPLOMA_ONLY, HEAVY_PICK_COST, exactWam, isFail, marksForConditions, passedCodes, recommend, type Profile } from './recommend'
 import { checkTerms } from './planCheck'
 import { balanceTerms, fixHeavyTerms } from './relieve'
 import { skillsOf, termStress, weakSkills, type StressLevel } from './termStress'
@@ -97,7 +97,7 @@ function generateFrom(raw: GenerateInput): GenerateResult {
   // Periods as this course's students see them (breadth-only periods for breadth subjects).
   // A subject the student's major won't let count as breadth is never picked to fill breadth.
   // Credit from elsewhere stands in as completed subjects, so every sum and cap counts it.
-  const input = { ...raw, data: withCredit(withBarredBreadth(forCourse(raw.data, raw.course), raw.course, planComponentIds(raw)), raw.profile.credit, raw.course) }
+  const input = { ...raw, data: withDiplomaCredit(withCredit(withBarredBreadth(forCourse(raw.data, raw.course), raw.course, planComponentIds(raw)), raw.profile.credit, raw.course), raw) }
   // Unplaced subjects weigh most; then course rules the plan fails (e.g. breadth
   // squeezed out by a heavy major + specialisation).
   const shortfall = (r: GenerateResult) =>
@@ -208,7 +208,29 @@ function diplomaOnlyAsCore(input: GenerateInput, required: Set<string>): { input
       moved.push(code)
     }
   }
+  // The diploma's other subjects aren't picked to fill the degree's electives: which of them the
+  // diploma counts would then shift (another stream route), leaving its prerequisites as breadth.
+  const done = new Set(input.profile.results.map((r) => r.code))
+  for (const [code, s] of Object.entries(subjects)) {
+    if (required.has(code) || done.has(code) || named.has(code) || !inDiploma(input.data, diploma, stream, code)) continue
+    subjects[code] = { ...s, categories: { ...s.categories, [input.course]: DIPLOMA_ONLY } }
+  }
   return { input: { ...input, data: { ...input.data, subjects } }, moved }
+}
+
+/**
+ * With a diploma, its subjects the degree gives no credit for (B-AGR and level-2 MAST) still
+ * count, for the diploma: they can be planned, as prerequisites too, but never as the degree's electives.
+ */
+function withDiplomaCredit(data: Dataset, input: GenerateInput): Dataset {
+  const diploma = findDiploma(data, input.diploma)
+  if (!diploma) return data
+  const stream = diplomaStream(data, diploma, input.diplomaStream)
+  const subjects = { ...data.subjects }
+  for (const [code, s] of Object.entries(subjects)) {
+    if (s.categories[input.course] === undefined && inDiploma(data, diploma, stream, code)) subjects[code] = { ...s, categories: { ...s.categories, [input.course]: DIPLOMA_ONLY } }
+  }
+  return { ...data, subjects }
 }
 
 /**
@@ -669,7 +691,20 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
       }
       return n
     }
-    const extra = (c: string) => (adds(c) >= 3 ? adds(c) : 0)
+    // Or whose chain, all the way down, brings in four or more (one subject resting on three more):
+    // a student's interest still wins over a chain of three, as over three direct prerequisites.
+    const chainOf = new Map<string, number>()
+    const chain = (c: string) => {
+      let n = chainOf.get(c)
+      if (n === undefined) {
+        const withIt = new Set([...coming, c])
+        closePrereqs(input, withIt, done, [], new Map())
+        n = withIt.size - coming.size - (coming.has(c) ? 0 : 1)
+        chainOf.set(c, n)
+      }
+      return n
+    }
+    const extra = (c: string) => (adds(c) >= 3 ? adds(c) : adds(c) > 0 && chain(c) >= 4 ? chain(c) : 0)
     // Each subject an option brings in first takes an elective's place (and, in a full plan, can
     // push a cap over): it has to fit clearly better than an option that needs nothing more.
     const fit = (c: string) => (score.get(c) ?? -1) - EXTRA_SUBJECT_COST * adds(c)
