@@ -1138,7 +1138,7 @@ export const zhTW: Messages = {
     activeFilters: "已選的篩選",
     results: "結果",
     emptySearch: "找不到「{q}」。",
-    emptySearchHint: "檢查一下拼字，或試試課號（COMP10001）或更短的字。",
+    didYouMean: "你是不是要找", emptySearchHint: "檢查一下拼字，或試試課號（COMP10001）或更短的字。",
     emptyHint: "拿掉一兩個篩選條件，就能看到更多。",
     allSubjects: "看全部課程",
     add: "加入計畫",

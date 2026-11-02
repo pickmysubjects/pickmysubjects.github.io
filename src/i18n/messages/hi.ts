@@ -1138,7 +1138,7 @@ export const hi: Messages = {
     activeFilters: "चालू फ़िल्टर",
     results: "नतीजे",
     emptySearch: "“{q}” से कोई सब्जेक्ट नहीं मिला।",
-    emptySearchHint: "स्पेलिंग जाँचें, या कोड (COMP10001) या छोटा शब्द आज़माएँ।",
+    didYouMean: "क्या आपका मतलब था", emptySearchHint: "स्पेलिंग जाँचें, या कोड (COMP10001) या छोटा शब्द आज़माएँ।",
     emptyHint: "ज़्यादा देखने के लिए एक-दो फ़िल्टर हटाएँ।",
     allSubjects: "सभी सब्जेक्ट देखें",
     add: "जोड़ें",

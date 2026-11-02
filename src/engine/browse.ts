@@ -260,11 +260,68 @@ export function browseIndex(subjects: readonly Subject[], ctx: BrowseContext): I
   })
 }
 
+/**
+ * Search text as matched: lower case, single spaces, and a code typed with a space ("comp 10001")
+ * joined up. Each word is then looked for on its own, in any order ("reports accounting").
+ */
+export function normaliseSearch(text: string): string {
+  return text.trim().toLowerCase().replace(/\s+/g, ' ').replace(/\b([a-z]{4}) (\d{5})\b/g, '$1$2')
+}
+export const searchTokens = (text: string): string[] => text.split(' ').filter(Boolean)
+
+/** Edit distance between two short strings (insertions, deletions, swaps of one letter each). */
+function editDistance(a: string, b: string): number {
+  const row = Array.from({ length: b.length + 1 }, (_, i) => i)
+  for (let i = 1; i <= a.length; i++) {
+    let prev = row[0]!
+    row[0] = i
+    for (let j = 1; j <= b.length; j++) {
+      const keep = row[j]!
+      row[j] = Math.min(row[j]! + 1, row[j - 1]! + 1, prev + (a[i - 1] === b[j - 1] ? 0 : 1))
+      prev = keep
+    }
+  }
+  return row[b.length]!
+}
+
+/**
+ * "Did you mean …" when a search finds nothing: codes one or two keystrokes away ("COMP1001",
+ * "COMP10010"), or titles whose words are each one letter off ("acounting"). Up to three, closest first.
+ */
+export function searchSuggestions(subjects: readonly Subject[], text: string, limit = 3): Subject[] {
+  const q = normaliseSearch(text)
+  if (q.length < 3) return []
+  const scored: { s: Subject; d: number }[] = []
+  const codeLike = /^[a-z]{4}\d{3,6}$/.test(q)
+  const words = searchTokens(q).filter((w) => w.length >= 4)
+  for (const s of subjects) {
+    if (codeLike) {
+      const d = editDistance(q, s.code.toLowerCase())
+      if (d <= 2) scored.push({ s, d })
+      continue
+    }
+    if (!words.length) continue
+    const title = s.title.toLowerCase().split(/[^a-z]+/).filter(Boolean)
+    let total = 0
+    let ok = true
+    for (const w of words) {
+      const best = Math.min(...title.map((t) => editDistance(w, t)))
+      if (best > 1) {
+        ok = false
+        break
+      }
+      total += best
+    }
+    if (ok && total > 0) scored.push({ s, d: total })
+  }
+  return scored.sort((a, b) => a.d - b.d || a.s.code.localeCompare(b.s.code)).slice(0, limit).map((x) => x.s)
+}
+
 /** Whether a row passes one group of filters. A filter on something not recorded leaves the row out. */
 function passes(r: IndexedRow, g: FilterGroup, f: BrowseFilters, text: string): boolean {
   switch (g) {
     case 'text':
-      return !text || r.words.includes(text)
+      return !text || searchTokens(text).every((w) => r.words.includes(w))
     case 'prereq':
       return f.prereq === 'any' || (f.prereq === 'none' ? r.prereqNone : r.prereqMet)
     case 'noGroup':
@@ -288,7 +345,7 @@ function passes(r: IndexedRow, g: FilterGroup, f: BrowseFilters, text: string): 
 
 /** The rows matching every filter, in the index's order. */
 export function filterIndex(index: readonly IndexedRow[], f: BrowseFilters): IndexedRow[] {
-  const text = f.text.trim().toLowerCase()
+  const text = normaliseSearch(f.text)
   return index.filter((r) => FILTER_GROUPS.every((g) => passes(r, g, f, text)))
 }
 
@@ -304,7 +361,7 @@ export interface Facets {
  * other group (so picking level 1 doesn't make level 2 read 0: they are alternatives).
  */
 export function facetCounts(index: readonly IndexedRow[], f: BrowseFilters): Facets {
-  const text = f.text.trim().toLowerCase()
+  const text = normaliseSearch(f.text)
   const lists = Object.fromEntries(LIST_GROUPS.map((g) => [g, new Map<string | number, number>()])) as Facets['lists']
   const prereq = { none: 0, met: 0 }
   const switches = { noGroup: 0, noHurdle: 0, noTest: 0, mcqExam: 0, reviewed: 0, running: 0 }

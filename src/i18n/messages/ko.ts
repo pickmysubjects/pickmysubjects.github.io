@@ -1138,7 +1138,7 @@ export const ko: Messages = {
     activeFilters: "선택한 조건",
     results: "결과",
     emptySearch: "“{q}”에 맞는 과목이 없어요.",
-    emptySearchHint: "철자를 확인하거나 과목 코드(COMP10001)나 더 짧은 단어로 찾아보세요.",
+    didYouMean: "혹시 이것을 찾으셨나요?", emptySearchHint: "철자를 확인하거나 과목 코드(COMP10001)나 더 짧은 단어로 찾아보세요.",
     emptyHint: "조건을 한두 개 빼면 더 많이 보여요.",
     allSubjects: "모든 과목 보기",
     add: "추가",

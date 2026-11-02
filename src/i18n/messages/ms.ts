@@ -1138,7 +1138,7 @@ export const ms: Messages = {
     activeFilters: "Tapisan yang dipilih",
     results: "Keputusan",
     emptySearch: "Tiada subjek sepadan dengan “{q}”.",
-    emptySearchHint: "Semak ejaan, atau cuba kod subjek (COMP10001) atau perkataan yang lebih pendek.",
+    didYouMean: "Adakah anda maksudkan", emptySearchHint: "Semak ejaan, atau cuba kod subjek (COMP10001) atau perkataan yang lebih pendek.",
     emptyHint: "Buang satu dua tapisan untuk lihat lebih banyak.",
     allSubjects: "Lihat semua subjek",
     add: "Tambah",

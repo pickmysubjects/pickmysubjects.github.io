@@ -1143,7 +1143,7 @@ export const en = {
     activeFilters: "Filters on",
     results: "Results",
     emptySearch: "No subject matches “{q}”.",
-    emptySearchHint: "Check the spelling, or try the code (COMP10001) or a shorter word.",
+    didYouMean: "Did you mean", emptySearchHint: "Check the spelling, or try the code (COMP10001) or a shorter word.",
     emptyHint: "Turn a filter or two off to see more.",
     allSubjects: "Show all subjects",
     add: "Add",

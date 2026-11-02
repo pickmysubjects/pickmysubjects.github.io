@@ -1,4 +1,4 @@
-import { knownNotRunning, TOPIC_GROUPS, type Subject } from '@/engine'
+import { knownNotRunning, normaliseSearch, searchSuggestions, searchTokens, TOPIC_GROUPS, type Subject } from '@/engine'
 
 export interface SearchOptions {
   /** A topic's name in the page's language (and in Chinese: students search in Chinese anywhere). */
@@ -23,9 +23,11 @@ export function runsNow(s: Subject, year: number): boolean {
  * matches ("计算机" finds the computing subjects, not only titles with that word).
  */
 export function searchSubjects(list: readonly Subject[], query: string, o: SearchOptions): Subject[] {
-  const q = query.trim().toLowerCase()
+  // "comp 10001" reads as the code; title words match in any order ("reports accounting").
+  const q = normaliseSearch(query)
   if (!q) return []
   const has = (text: string | undefined) => !!text && text.toLowerCase().includes(q)
+  const hasWords = (text: string | undefined) => !!text && searchTokens(q).every((w) => text.toLowerCase().includes(w))
   // Topic names are words, not letters: only a query of two characters or more searches them.
   const topics = new Set<string>()
   if ([...q].length >= 2) {
@@ -37,17 +39,19 @@ export function searchSubjects(list: readonly Subject[], query: string, o: Searc
   const rank = (s: Subject): number => {
     if (s.code.toLowerCase().startsWith(q)) return 0
     if (has(s.code)) return 1
-    if (has(s.title) || has(s.titles?.zh) || has(s.titles?.['zh-TW'])) return 2
+    if (hasWords(s.title) || has(s.titles?.zh) || has(s.titles?.['zh-TW'])) return 2
     if (s.topics.some((t) => topics.has(t))) return 3
     return -1
   }
   // Among topic matches, the subjects most about it first (share of their topics that match).
   const share = (s: Subject) => (s.topics.length ? s.topics.filter((t) => topics.has(t)).length / s.topics.length : 0)
-  return list
+  const found = list
     .map((s) => ({ s, r: rank(s), w: share(s) }))
     .filter((x) => x.r >= 0)
     // A code typed is that subject; otherwise running subjects first, title matches before topic ones.
     .sort((a, b) => Number(a.r > 1) - Number(b.r > 1) || Number(runsNow(b.s, o.year)) - Number(runsNow(a.s, o.year)) || a.r - b.r || b.w - a.w || a.s.code.localeCompare(b.s.code))
     .slice(0, o.limit)
     .map((x) => x.s)
+  // Nothing at all: the codes or titles it was probably meant to be ("COMP1001", "acounting").
+  return found.length ? found : searchSuggestions(list, q, Math.min(3, o.limit))
 }

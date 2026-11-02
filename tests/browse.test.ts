@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { activeCount, activePreset, applyQuick, chooseOrder, choosePreset, orderOf, PRESETS, PRESET_SLUGS, activeFilters, historyStep, browse, browseAddress, browseIndex, clearFilters, EASY_CUTS, EMPTY_FILTERS, facetCounts, filterIndex, filtersFromQuery, filtersToQuery, findRows, quickChoice, QUICK_CHOICES, rankCourseOf, type BrowseFilters } from '../src/engine/browse'
+import { searchSuggestions, activeCount, activePreset, applyQuick, chooseOrder, choosePreset, orderOf, PRESETS, PRESET_SLUGS, activeFilters, historyStep, browse, browseAddress, browseIndex, clearFilters, EASY_CUTS, EMPTY_FILTERS, facetCounts, filterIndex, filtersFromQuery, filtersToQuery, findRows, quickChoice, QUICK_CHOICES, rankCourseOf, type BrowseFilters } from '../src/engine/browse'
 import { rankSubjects } from '../src/engine/easeRanking'
 import { simplifyFor } from '../src/engine/expr'
 import { prereqStatus, recommend, standingOf, type Profile } from '../src/engine/recommend'
@@ -552,5 +552,20 @@ describe('review tags', () => {
     const index = browseIndex([tagged, plain], { course: 'B-SCI', year: 2026 })
     expect(filterIndex(index, { ...EMPTY_FILTERS, running: false, mcqExam: true }).map((r) => r.subject.code)).toEqual(['AAAA10001'])
     expect(facetCounts(index, { ...EMPTY_FILTERS, running: false }).switches.mcqExam).toBe(1)
+  })
+})
+
+describe('forgiving search', () => {
+  const subs = [subject({ code: 'COMP10001', title: 'Foundations of Computing' }), subject({ code: 'ACCT10001', title: 'Accounting Reports and Analysis' }), subject({ code: 'COMP10002', title: 'Foundations of Algorithms' })]
+  const run = (text: string) => filterIndex(browseIndex(subs, { course: 'B-SCI', year: 2026 }), { ...EMPTY_FILTERS, running: false, text }).map((r) => r.subject.code)
+  it('joins a code typed with a space, and matches words in any order', () => {
+    expect(run('comp 10001')).toEqual(['COMP10001'])
+    expect(run('reports  accounting')).toEqual(['ACCT10001'])
+  })
+  it('suggests near codes and near titles when nothing matches', () => {
+    expect(run('COMP1001')).toEqual([])
+    expect(searchSuggestions(subs, 'COMP1001').map((s) => s.code)[0]).toBe('COMP10001')
+    expect(searchSuggestions(subs, 'acounting').map((s) => s.code)).toEqual(['ACCT10001'])
+    expect(searchSuggestions(subs, 'xx')).toEqual([])
   })
 })

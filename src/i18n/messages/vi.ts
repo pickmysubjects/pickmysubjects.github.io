@@ -1138,7 +1138,7 @@ export const vi: Messages = {
     activeFilters: "Bộ lọc đang bật",
     results: "Kết quả",
     emptySearch: "Không có môn nào khớp “{q}”.",
-    emptySearchHint: "Kiểm tra chính tả, hoặc thử mã môn (COMP10001) hay một từ ngắn hơn.",
+    didYouMean: "Có phải bạn muốn tìm", emptySearchHint: "Kiểm tra chính tả, hoặc thử mã môn (COMP10001) hay một từ ngắn hơn.",
     emptyHint: "Bỏ một hai bộ lọc để thấy nhiều môn hơn.",
     allSubjects: "Xem tất cả môn",
     add: "Thêm",

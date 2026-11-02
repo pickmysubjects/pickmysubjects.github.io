@@ -1138,7 +1138,7 @@ export const zhCN: Messages = {
     activeFilters: "已选的筛选",
     results: "结果",
     emptySearch: "没有找到“{q}”。",
-    emptySearchHint: "检查一下拼写，或者试试课程代码（COMP10001）或更短的词。",
+    didYouMean: "你是不是要找", emptySearchHint: "检查一下拼写，或者试试课程代码（COMP10001）或更短的词。",
     emptyHint: "去掉一两个筛选条件，就能看到更多。",
     allSubjects: "看全部课程",
     add: "加入计划",

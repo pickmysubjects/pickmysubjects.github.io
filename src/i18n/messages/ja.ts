@@ -1138,7 +1138,7 @@ export const ja: Messages = {
     activeFilters: "選択中の条件",
     results: "結果",
     emptySearch: "「{q}」に合う科目はありません。",
-    emptySearchHint: "綴りを確かめるか、科目コード（COMP10001）や短い語で試してください。",
+    didYouMean: "もしかして", emptySearchHint: "綴りを確かめるか、科目コード（COMP10001）や短い語で試してください。",
     emptyHint: "条件を1つか2つ外すと、もっと表示されます。",
     allSubjects: "すべての科目を見る",
     add: "追加",

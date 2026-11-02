@@ -1138,7 +1138,7 @@ export const id: Messages = {
     activeFilters: "Filter yang aktif",
     results: "Hasil",
     emptySearch: "Tidak ada mata kuliah yang cocok dengan “{q}”.",
-    emptySearchHint: "Cek ejaannya, atau coba kode (COMP10001) atau kata yang lebih pendek.",
+    didYouMean: "Mungkin maksud Anda", emptySearchHint: "Cek ejaannya, atau coba kode (COMP10001) atau kata yang lebih pendek.",
     emptyHint: "Matikan satu dua filter untuk melihat lebih banyak.",
     allSubjects: "Lihat semua mata kuliah",
     add: "Tambah",

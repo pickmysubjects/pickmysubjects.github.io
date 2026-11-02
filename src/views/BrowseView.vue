@@ -10,7 +10,7 @@ import DegreePick from '@/components/browse/DegreePick.vue'
 import GoalPicker from '@/components/profile/GoalPicker.vue'
 import Interp from '@/components/Interp.vue'
 import Pager from '@/components/Pager.vue'
-import { clearFilters, EASY_CUTS, leadReasons, SHOWN_AS_FACTS, type FoundRow } from '@/engine'
+import { clearFilters, EASY_CUTS, leadReasons, searchSuggestions, SHOWN_AS_FACTS, type FoundRow } from '@/engine'
 import { link } from '@/composables/useView'
 import { useBrowse } from '@/composables/useBrowse'
 import { useDataset } from '@/composables/useDataset'
@@ -67,6 +67,8 @@ function clearAll(): void {
   filters.value = { ...clearFilters(filters.value), text: '' }
 }
 const searching = computed(() => filters.value.text.trim() !== '')
+// Nothing found for the text: the codes or titles it was probably meant to be.
+const suggestions = computed(() => (searching.value && !rows.value.length ? searchSuggestions(subjectList.value, filters.value.text) : []))
 </script>
 
 <template>
@@ -131,7 +133,11 @@ const searching = computed(() => filters.value.text.trim() !== '')
           <div v-else class="empty surface">
             <SearchX :size="28" aria-hidden="true" class="empty-icon" />
             <p class="empty-title">{{ searching ? t('browse.emptySearch', { q: filters.text.trim() }) : t('browse.emptyFiltered') }}</p>
-            <p class="empty-hint">{{ searching ? t('browse.emptySearchHint') : t('browse.emptyHint') }}</p>
+            <p v-if="suggestions.length" class="empty-hint">
+              {{ t('browse.didYouMean') }}
+              <template v-for="(s, i) in suggestions" :key="s.code"><template v-if="i">{{ t('listSep') }}</template><button type="button" class="suggest" @click="set('text', s.code)">{{ s.code }}</button></template>
+            </p>
+            <p v-else class="empty-hint">{{ searching ? t('browse.emptySearchHint') : t('browse.emptyHint') }}</p>
             <div class="empty-actions">
               <button v-if="searching" type="button" class="button button-quiet" @click="set('text', '')">{{ t('browse.clearSearch') }}</button>
               <button v-if="active" type="button" class="button button-accent" @click="clearAll">{{ t('browse.clear') }}</button>
@@ -231,6 +237,17 @@ const searching = computed(() => filters.value.text.trim() !== '')
 }
 
 /* Results: two cards a row when there's room for both to breathe, one otherwise. */
+.suggest {
+  padding: 0;
+  color: var(--accent);
+  font: inherit;
+  font-weight: var(--fw-semibold);
+  background: none;
+  border: 0;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr));
