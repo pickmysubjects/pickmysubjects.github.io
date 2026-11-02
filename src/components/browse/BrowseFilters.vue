@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, defineAsyncComponent, nextTick, onBeforeUnmount, onMounted, shallowRef, useTemplateRef, watch, type Component } from 'vue'
-import { CalendarDays, Clock, Coins, FileText, Gauge, Layers, ListChecks, Route, Shapes, SlidersHorizontal, Tags, X } from 'lucide-vue-next'
+import { CalendarDays, Clock, Coins, FileText, Gauge, Layers, ListChecks, Route, Shapes, SlidersHorizontal, Tags } from 'lucide-vue-next'
 import { activeCount, clearFilters, type BrowseFilters, type Facets, type IndexedRow, type ListGroup, type PrereqChoice } from '@/engine'
 import { useI18n } from '@/i18n'
 import { categoryTag } from '@/i18n/format'
@@ -227,7 +227,7 @@ onBeforeUnmount(() => {
           <span v-if="phone" class="sheet-grip" aria-hidden="true" />
           <h2 id="browse-filters-title" class="fpanel-title"><SlidersHorizontal :size="16" aria-hidden="true" />{{ t('browse.filters') }}</h2>
           <button v-if="active && !phone" type="button" class="fclear" @click="clear">{{ t('browse.clearAll') }}</button>
-          <button v-if="phone" type="button" class="sheet-close" :aria-label="t('subject.close')" @click="open = false"><X :size="20" aria-hidden="true" /></button>
+          <button v-if="phone" type="button" class="sheet-close" @click="open = false">{{ t('subject.close') }}</button>
         </div>
         <div ref="scroller" class="fpanel-scroll" :class="{ 'fade-top': fadeTop, 'fade-bottom': fadeBottom }" @scroll.passive="edges">
           <div class="fpanel-groups">
@@ -483,11 +483,11 @@ onBeforeUnmount(() => {
 }
 
 .sheet-close {
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  color: var(--ink-soft);
+  min-height: 44px;
+  padding: 0 16px;
+  color: var(--ink);
+  font: inherit;
+  font-size: var(--fs-small);
   background: color-mix(in srgb, var(--ink) 7%, transparent);
   border: 0;
   border-radius: 999px;

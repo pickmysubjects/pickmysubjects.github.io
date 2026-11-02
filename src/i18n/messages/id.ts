@@ -1078,7 +1078,7 @@ export const id: Messages = {
     lede: "Saring sesuai kebutuhanmu: breadth, level, semester, tanpa ujian.",
     ledeShort: "Saring menurut breadth, level, semester, ujian",
     searchLabel: "Cari mata kuliah",
-    searchPlaceholder: "Kode atau nama, misalnya COMP10001",
+    searchPlaceholder: "Kode atau nama",
     type: "Jenis",
     any: "Semua",
     level: "Level",

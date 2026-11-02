@@ -1078,7 +1078,7 @@ export const hi: Messages = {
     lede: "जो चाहिए उसी से छाँटें: breadth, लेवल, सेमेस्टर, बिना परीक्षा।",
     ledeShort: "ब्रेड्थ, लेवल, सेमेस्टर या परीक्षा से छाँटें",
     searchLabel: "सब्जेक्ट खोजें",
-    searchPlaceholder: "कोड या नाम, जैसे COMP10001",
+    searchPlaceholder: "कोड या नाम",
     type: "प्रकार",
     any: "सभी",
     level: "लेवल",

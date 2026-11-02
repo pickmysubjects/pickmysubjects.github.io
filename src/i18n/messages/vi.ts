@@ -1078,7 +1078,7 @@ export const vi: Messages = {
     lede: "Lọc theo điều bạn cần: breadth, level, học kỳ, không thi.",
     ledeShort: "Lọc theo breadth, cấp độ, học kỳ hoặc thi",
     searchLabel: "Tìm môn học",
-    searchPlaceholder: "Mã hoặc tên môn, ví dụ COMP10001",
+    searchPlaceholder: "Mã hoặc tên môn",
     type: "Loại",
     any: "Tất cả",
     level: "Level",

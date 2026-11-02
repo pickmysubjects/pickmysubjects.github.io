@@ -1078,7 +1078,7 @@ export const zhCN: Messages = {
     lede: "按你需要的条件筛：Breadth、年级、学期、没有考试。",
     ledeShort: "按 Breadth、年级、学期、考试筛选",
     searchLabel: "搜索课程",
-    searchPlaceholder: "课程代码或名字，比如 COMP10001",
+    searchPlaceholder: "课号或课名",
     type: "类型",
     any: "全部",
     level: "年级",

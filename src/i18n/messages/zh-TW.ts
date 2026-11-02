@@ -1078,7 +1078,7 @@ export const zhTW: Messages = {
     lede: "按你需要的條件篩：Breadth、年級、學期、沒有考試。",
     ledeShort: "依 Breadth、年級、學期、考試篩選",
     searchLabel: "搜尋課程",
-    searchPlaceholder: "課程代碼或名稱，例如 COMP10001",
+    searchPlaceholder: "課號或課名",
     type: "類型",
     any: "全部",
     level: "年級",

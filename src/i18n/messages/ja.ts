@@ -1078,7 +1078,7 @@ export const ja: Messages = {
     lede: "Breadth、レベル、学期、試験なしなど、必要な条件でしぼり込めます。",
     ledeShort: "Breadth・レベル・学期・試験で絞り込み",
     searchLabel: "科目を検索",
-    searchPlaceholder: "科目コードか名前（例：COMP10001）",
+    searchPlaceholder: "科目コードか名前",
     type: "種類",
     any: "すべて",
     level: "レベル",

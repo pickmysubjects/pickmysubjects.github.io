@@ -1083,7 +1083,7 @@ export const en = {
     lede: "Narrow the list down to what you need: breadth, a level, a semester, no exam.",
     ledeShort: "Filter by breadth, level, semester or exam",
     searchLabel: "Search subjects",
-    searchPlaceholder: "Code or name, e.g. COMP10001",
+    searchPlaceholder: "Code or name",
     type: "Type",
     any: "Any",
     level: "Level",

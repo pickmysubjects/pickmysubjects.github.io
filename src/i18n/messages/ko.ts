@@ -1078,7 +1078,7 @@ export const ko: Messages = {
     lede: "Breadth, 레벨, 학기, 시험 없음처럼 필요한 조건으로 골라보세요.",
     ledeShort: "Breadth, 학년, 학기, 시험으로 걸러요",
     searchLabel: "과목 검색",
-    searchPlaceholder: "과목 코드나 이름 (예: COMP10001)",
+    searchPlaceholder: "과목 코드나 이름",
     type: "종류",
     any: "전체",
     level: "레벨",

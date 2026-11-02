@@ -1078,7 +1078,7 @@ export const ms: Messages = {
     lede: "Tapis ikut apa yang anda perlukan: breadth, tahap, semester, tanpa peperiksaan.",
     ledeShort: "Tapis ikut breadth, tahap, semester atau peperiksaan",
     searchLabel: "Cari subjek",
-    searchPlaceholder: "Kod atau nama, contohnya COMP10001",
+    searchPlaceholder: "Kod atau nama",
     type: "Jenis",
     any: "Semua",
     level: "Tahap",
