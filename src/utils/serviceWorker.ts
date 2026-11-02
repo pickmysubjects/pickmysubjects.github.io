@@ -10,7 +10,35 @@ export function newVersionReady(): boolean {
   return updated
 }
 
+/**
+ * A page left open across a deploy still asks for the old version's chunks, which the new deploy
+ * no longer has: Vite reports that as `vite:preloadError`. Reload once to pick up the new version
+ * (a flag stops a loop if the chunk is missing for some other reason).
+ */
+export function reloadOnStaleChunk(): void {
+  if (typeof window === 'undefined') return
+  window.addEventListener('vite:preloadError', (event) => {
+    try {
+      if (sessionStorage.getItem('sc:chunk-reloaded')) return
+      sessionStorage.setItem('sc:chunk-reloaded', '1')
+    } catch {
+      return
+    }
+    event.preventDefault()
+    location.reload()
+  })
+  // A page that loaded fine clears the flag, so a later deploy can reload it again.
+  window.addEventListener('load', () => {
+    try {
+      sessionStorage.removeItem('sc:chunk-reloaded')
+    } catch {
+      // Storage blocked: nothing to clear.
+    }
+  })
+}
+
 export function registerServiceWorker(): void {
+  if (import.meta.env.PROD) reloadOnStaleChunk()
   if (!import.meta.env.PROD || !('serviceWorker' in navigator)) return
   // A local preview build: never cache it, and drop any worker an earlier local build left behind,
   // so a rebuild shows up on a plain reload.
