@@ -7,9 +7,9 @@ The first full version. The Beta label and the "full version coming" notice are 
 - Plan board: the whole degree on one board. Mark subjects done with their marks; every degree rule is checked, with the details in one place.
 - Share a plan with a short link (imports as a new plan); compare plans on a page of their own.
 - New tools: a revision planner (a research-based day-by-day timetable that names what and how to revise, with calendar export and print), a final-exam mark calculator and a WAM calculator.
-- Fuller "What students say" for the most-reviewed subjects, in four parts: difficulty and content, assessments, how to study, what to watch out for.
+- Fuller "What students say" for the 273 most-reviewed subjects, in four parts (difficulty and content, assessments, how to study, what to watch out for), with tags such as "final exam mostly multiple choice" and a filter for it.
 - Key dates on the home page, an exam-time view, and census, exam and results dates in your calendar (.ics).
-- A new look across every page, a menu for every feature, site-wide search, and majors with their prerequisite route.
+- A new look across every page, a menu for every feature, site-wide search that forgives typos ("COMP1001" suggests COMP10001), page numbers on Find subjects, a share picture for link previews, and majors with their prerequisite route.
 
 ## 0.9.1 — 2026-10-27
 
