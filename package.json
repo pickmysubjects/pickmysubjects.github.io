@@ -18,6 +18,7 @@
     "import-batch": "tsx scripts/import-batch.ts",
     "indexnow": "tsx scripts/indexnow.ts",
     "audit": "tsx scripts/audit-data.ts",
+    "sweep": "tsx scripts/sweep-plans.ts",
     "snapshot-year": "tsx scripts/snapshot-year.ts",
     "changes": "tsx scripts/changes.ts"
   },
