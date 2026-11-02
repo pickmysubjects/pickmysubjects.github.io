@@ -33,21 +33,7 @@ assessment:
     weight: 20
     group: true
 weekly_contact_hours: 2.5
-breadth_for:
-  - Bachelor of Biomedicine
-  - Bachelor of Commerce
-  - Bachelor of Design
-  - Bachelor of Fine Arts (Acting)
-  - Bachelor of Fine Arts (Animation)
-  - Bachelor of Fine Arts (Dance)
-  - Bachelor of Fine Arts (Film and Television)
-  - Bachelor of Fine Arts (Music Theatre)
-  - Bachelor of Fine Arts (Production)
-  - Bachelor of Fine Arts (Screenwriting)
-  - Bachelor of Fine Arts (Theatre)
-  - Bachelor of Fine Arts (Visual Art)
-  - Bachelor of Music
-  - Bachelor of Science
+breadth_for: [] # Handbook 2026: not available as breadth
 min_attendance: 80
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2026/subjects/arbc30001
