@@ -80,12 +80,13 @@ const serviceWorker = (): Plugin => ({
 const PREVIEW = process.env.VITE_FORCE_GLASS === '1' || process.argv.every((a) => a !== 'build')
 
 // The site version (package.json) and build date, shown in the home hero and the footer.
-const pkg = JSON.parse(readFileSync(fileURLToPath(new URL('./package.json', import.meta.url)), 'utf8')) as { version: string }
+const pkg = JSON.parse(readFileSync(fileURLToPath(new URL('./package.json', import.meta.url)), 'utf8')) as { version: string; released?: string }
 
 export default defineConfig({
   define: {
     __APP_VERSION__: JSON.stringify(pkg.version),
-    __APP_UPDATED__: JSON.stringify(new Date().toISOString()),
+    // The day this version went live (package.json "released", Melbourne noon); the build time until it has one.
+    __APP_UPDATED__: JSON.stringify(pkg.released ? `${pkg.released}T12:00:00+11:00` : new Date().toISOString()),
   },
   css: { postcss: { plugins: PREVIEW ? [themePreview()] : [] } },
   plugins: [vue(), contentSecurityPolicy(), preloadCoreData(), serviceWorker()],

@@ -35,3 +35,12 @@ describe('site update log', () => {
       }
   })
 })
+
+describe('the release date shown', () => {
+  it('is the version’s own date in package.json once it has shipped, matching the update log', () => {
+    const pkg = JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8')) as { version: string; released?: string }
+    const entry = SITE_RELEASES.find((r) => r.version === pkg.version)!
+    if (pkg.released) expect(pkg.released).toBe(entry.date)
+    else expect(entry.date).toBeNull()
+  })
+})
