@@ -1065,6 +1065,7 @@ export const zhTW: Messages = {
       firstYear: "一年級課",
     },
   },
+  pager: { label: "分頁", prev: "上一頁", next: "下一頁" },
   browse: {
     switchSubjects: "課程",
     switchMajors: "專業",
@@ -1103,7 +1104,6 @@ export const zhTW: Messages = {
     emptyFiltered: "沒有符合這些條件的課。",
     clear: "清除篩選",
     empty: "沒有符合的課。試試拿掉一個條件。",
-    more: "顯示更多（還有 {n} 門）",
     notRunning: "今年不開",
     closedForYou: "你的學位不能選",
     metaExam: "考試 {n}%",

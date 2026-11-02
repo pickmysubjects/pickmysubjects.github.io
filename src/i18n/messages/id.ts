@@ -1065,6 +1065,7 @@ export const id: Messages = {
       firstYear: "Mata kuliah tahun pertama",
     },
   },
+  pager: { label: "Halaman", prev: "Sebelumnya", next: "Berikutnya" },
   browse: {
     switchSubjects: "Mata kuliah",
     switchMajors: "Jurusan",
@@ -1103,7 +1104,6 @@ export const id: Messages = {
     emptyFiltered: "Tidak ada yang cocok dengan filter ini.",
     clear: "Hapus filter",
     empty: "Tidak ada yang cocok. Coba matikan satu filter.",
-    more: "Tampilkan lagi ({n} lagi)",
     notRunning: "Tidak dibuka tahun ini",
     closedForYou: "Tidak terbuka untuk gelarmu",
     metaExam: "Ujian {n}%",

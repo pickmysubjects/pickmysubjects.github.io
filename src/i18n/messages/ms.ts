@@ -1065,6 +1065,7 @@ export const ms: Messages = {
       firstYear: "Subjek tahun pertama",
     },
   },
+  pager: { label: "Halaman", prev: "Sebelumnya", next: "Seterusnya" },
   browse: {
     switchSubjects: "Subjek",
     switchMajors: "Major",
@@ -1103,7 +1104,6 @@ export const ms: Messages = {
     emptyFiltered: "Tiada subjek sepadan dengan penapis ini.",
     clear: "Kosongkan tapisan",
     empty: "Tiada yang sepadan. Cuba buang satu tapisan.",
-    more: "Tunjuk lagi ({n} lagi)",
     notRunning: "Tidak ditawarkan tahun ini",
     closedForYou: "Tidak dibuka untuk ijazah anda",
     metaExam: "Peperiksaan {n}%",

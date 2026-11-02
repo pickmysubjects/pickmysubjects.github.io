@@ -1065,6 +1065,7 @@ export const zhCN: Messages = {
       firstYear: "一年级课",
     },
   },
+  pager: { label: "分页", prev: "上一页", next: "下一页" },
   browse: {
     switchSubjects: "课程",
     switchMajors: "专业",
@@ -1103,7 +1104,6 @@ export const zhCN: Messages = {
     emptyFiltered: "没有符合这些条件的课。",
     clear: "清除筛选",
     empty: "没有符合的课。试试去掉一个条件。",
-    more: "显示更多（还有 {n} 门）",
     notRunning: "今年不开",
     closedForYou: "你的学位不能选",
     metaExam: "考试 {n}%",

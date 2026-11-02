@@ -1065,6 +1065,7 @@ export const vi: Messages = {
       firstYear: "Môn năm nhất",
     },
   },
+  pager: { label: "Trang", prev: "Trước", next: "Sau" },
   browse: {
     switchSubjects: "Môn học",
     switchMajors: "Chuyên ngành",
@@ -1103,7 +1104,6 @@ export const vi: Messages = {
     emptyFiltered: "Không có môn nào khớp bộ lọc này.",
     clear: "Bỏ lọc",
     empty: "Không có môn nào phù hợp. Thử bỏ bớt một điều kiện.",
-    more: "Xem thêm (còn {n})",
     notRunning: "Năm nay không mở",
     closedForYou: "Ngành của bạn không được học",
     metaExam: "Thi {n}%",

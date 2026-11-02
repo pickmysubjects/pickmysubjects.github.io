@@ -1070,6 +1070,7 @@ export const en = {
       firstYear: "First-year subject",
     },
   },
+  pager: { label: "Pages", prev: "Previous", next: "Next" },
   browse: {
     switchSubjects: "Subjects",
     switchMajors: "Majors",
@@ -1108,7 +1109,6 @@ export const en = {
     emptyFiltered: "Nothing matches these filters.",
     clear: "Clear filters",
     empty: "Nothing matches. Try turning a filter off.",
-    more: "Show more ({n} left)",
     notRunning: "Not running this year",
     closedForYou: "Not open to your degree",
     metaExam: "Exam {n}%",

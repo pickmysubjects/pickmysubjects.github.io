@@ -1065,6 +1065,7 @@ export const hi: Messages = {
       firstYear: "पहले साल का सब्जेक्ट",
     },
   },
+  pager: { label: "पेज", prev: "पिछला", next: "अगला" },
   browse: {
     switchSubjects: "सब्जेक्ट",
     switchMajors: "मेजर",
@@ -1103,7 +1104,6 @@ export const hi: Messages = {
     emptyFiltered: "इन फ़िल्टर से कोई सब्जेक्ट नहीं मिला।",
     clear: "फ़िल्टर हटाएँ",
     empty: "कुछ नहीं मिला। कोई एक फ़िल्टर हटाकर देखें।",
-    more: "और दिखाएँ ({n} बाकी)",
     notRunning: "इस साल नहीं चल रहा",
     closedForYou: "आपकी डिग्री के लिए उपलब्ध नहीं",
     metaExam: "परीक्षा {n}%",

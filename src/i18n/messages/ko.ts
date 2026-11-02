@@ -1065,6 +1065,7 @@ export const ko: Messages = {
       firstYear: "1학년 과목",
     },
   },
+  pager: { label: "페이지", prev: "이전", next: "다음" },
   browse: {
     switchSubjects: "과목",
     switchMajors: "전공",
@@ -1103,7 +1104,6 @@ export const ko: Messages = {
     emptyFiltered: "이 조건에 맞는 과목이 없어요.",
     clear: "조건 지우기",
     empty: "맞는 과목이 없어요. 조건을 하나 빼 보세요.",
-    more: "더 보기 ({n}개 남음)",
     notRunning: "올해 개설 안 됨",
     closedForYou: "내 학위에서는 수강 불가",
     metaExam: "시험 {n}%",

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, shallowRef, watch } from 'vue'
+import { computed, nextTick, shallowRef, useTemplateRef, watch } from 'vue'
 import { Info, Search, SearchX, X } from 'lucide-vue-next'
 import BrowseHero from '@/components/browse/BrowseHero.vue'
 import PresetCards from '@/components/browse/PresetCards.vue'
@@ -9,6 +9,7 @@ import BrowseRow from '@/components/browse/BrowseRow.vue'
 import DegreePick from '@/components/browse/DegreePick.vue'
 import GoalPicker from '@/components/profile/GoalPicker.vue'
 import Interp from '@/components/Interp.vue'
+import Pager from '@/components/Pager.vue'
 import { clearFilters, EASY_CUTS, leadReasons, SHOWN_AS_FACTS, type FoundRow } from '@/engine'
 import { link } from '@/composables/useView'
 import { useBrowse } from '@/composables/useBrowse'
@@ -31,9 +32,17 @@ const plan = usePlan()
 const { filters, course, year, rows, facets, active, choice, order, hasProfile, hasRecord, index, set, choose, setOrder } = useBrowse()
 const aboutOf = useLearnLines()
 
-const shown = shallowRef(PAGE)
-watch(filters, () => (shown.value = PAGE))
-const visible = computed(() => rows.value.slice(0, shown.value))
+// Page numbers, not "show more": the list stays short and the footer stays in reach.
+const page = shallowRef(1)
+watch(filters, () => (page.value = 1))
+const pages = computed(() => Math.max(1, Math.ceil(rows.value.length / PAGE)))
+const visible = computed(() => rows.value.slice((page.value - 1) * PAGE, page.value * PAGE))
+const listTop = useTemplateRef<HTMLElement>('listTop')
+async function goPage(n: number): Promise<void> {
+  page.value = Math.min(Math.max(1, n), pages.value)
+  await nextTick()
+  listTop.value?.scrollIntoView({ block: 'start', behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' })
+}
 const anyRated = computed(() => subjectList.value.some((s) => (s.signals?.reviews ?? 0) >= 3))
 // No degree yet: breadth depends on it, so that list asks for it rather than guessing.
 const askDegree = computed(() => !plan.courseChosen.value && filters.value.category.includes('breadth'))
@@ -113,7 +122,7 @@ const searching = computed(() => filters.value.text.trim() !== '')
             <a :href="link(`subjects/${EASY_CUTS.level3Breadth.slug}/`)">{{ t('rank.l3Breadth') }}</a>
           </p>
 
-          <ul v-if="rows.length" class="grid">
+          <ul v-if="rows.length" ref="listTop" class="grid">
             <li v-for="r in visible" :key="r.subject.code" class="cell">
               <BrowseRow :row="r" :course="course" :about="aboutOf(r.subject)" :reasons="reasons(r)" :rec="r.rec" :fit="hasProfile" :has-record="hasRecord" />
             </li>
@@ -130,9 +139,7 @@ const searching = computed(() => filters.value.text.trim() !== '')
             </div>
           </div>
 
-          <button v-if="rows.length > shown" type="button" class="button button-quiet more" @click="shown += PAGE">
-            {{ t('browse.more', { n: rows.length - shown }) }}
-          </button>
+          <Pager v-if="rows.length" :page="page" :pages="pages" @go="goPage" />
 
           <p class="coverage">{{ t('browse.coverage', { n: subjectList.length, breadth: breadthCount }) }}</p>
         </template>
@@ -319,9 +326,6 @@ const searching = computed(() => filters.value.text.trim() !== '')
   margin-top: 4px;
 }
 
-.more {
-  justify-self: center;
-}
 
 @media (max-width: 960px) {
   .layout {

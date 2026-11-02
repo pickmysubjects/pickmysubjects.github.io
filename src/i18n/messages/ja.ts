@@ -1065,6 +1065,7 @@ export const ja: Messages = {
       firstYear: "1 年生向け科目",
     },
   },
+  pager: { label: "ページ", prev: "前へ", next: "次へ" },
   browse: {
     switchSubjects: "科目",
     switchMajors: "専攻",
@@ -1103,7 +1104,6 @@ export const ja: Messages = {
     emptyFiltered: "この条件に合う科目はありません。",
     clear: "条件をクリア",
     empty: "当てはまる科目がありません。条件を1つ外してみてください。",
-    more: "もっと見る（残り {n}）",
     notRunning: "今年は開講なし",
     closedForYou: "あなたの学位では履修不可",
     metaExam: "試験 {n}%",
