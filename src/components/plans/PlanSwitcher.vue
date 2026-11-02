@@ -198,16 +198,20 @@ function confirmDelete(): void {
 
 .row {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
   min-width: 0;
 }
 
-/* The tabs scroll sideways when there are many; the text buttons keep one line. */
+/* The tabs scroll sideways when there are many; each text button keeps one line, and on the
+   narrowest phones the buttons wrap under each other rather than run off the edge. */
 .tools {
   display: flex;
-  flex: none;
+  flex: 0 1 auto;
+  flex-wrap: wrap;
+  min-width: 0;
   align-items: center;
   gap: 2px;
 }
@@ -217,7 +221,9 @@ function confirmDelete(): void {
   position: relative;
   display: inline-flex;
   flex: 0 1 auto;
-  min-width: 0;
+  /* Plan names stay whole: the text buttons go to the next line first (long languages on a
+     phone), and only more plans than the row holds scroll. */
+  min-width: min-content;
   max-width: 100%;
   padding: 3px;
   overflow-x: auto;
