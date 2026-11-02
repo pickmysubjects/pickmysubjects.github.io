@@ -169,9 +169,12 @@ export function subjectFactSentences(t: Translate, s: Subject, locale: LocaleCod
 export function subjectPageDescription(t: Translate, s: Subject, locale: LocaleCode, opts: { difficulty: TitleDifficulty; year: number }): string {
   const title = withLocalTitle(s.title, localTitle(s, locale))
   const firstPoint = s.discussions?.find((d) => d.points.length)?.points[0]
+  // The code leads, so two subjects with the same facts never share a description.
+  const [first = '', ...rest] = subjectFactSentences(t, s, locale, opts)
   return fitSentences(
     [
-      ...subjectFactSentences(t, s, locale, opts),
+      `${s.code}${CJK.has(locale) ? '：' : ': '}${first}`,
+      ...rest,
       firstPoint ? pickLocalized(firstPoint, locale) : '',
       s.about ? pickLocalized(s.about.learn, locale) : '',
       t('seo.subjectDesc', { code: s.code, title, level: s.level, points: s.points }),

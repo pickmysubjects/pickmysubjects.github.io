@@ -464,9 +464,12 @@ function majorPage(code: LocaleCode, m: (typeof majors)[number]): Page {
   const jobs = careerJobLabels(data, m.id, code)
   const withCareers = m.kind === 'major' && !m.informal && !!ce && (ce.careerText || !!ce.accreditation)
   const courseTitle = data.courses.find((c) => c.code === m.course)?.title ?? ''
+  // Two degrees can each have a major of the same name (Economics in Arts and in Commerce): name the degree then.
+  const shared = data.components.filter((c) => c.title === m.title).length > 1
+  const shownTitle = shared && courseTitle ? `${m.title} (${courseTitle})` : m.title
   return {
     path: `majors/${m.id}`,
-    title: `${t(m.informal ? 'seo.informalTitle' : m.kind === 'minor' ? 'seo.minorTitle' : m.kind === 'specialisation' ? 'seo.specTitle' : withCareers ? 'seo.majorTitleCareers' : 'seo.majorTitle', { title: m.title })} | PickMySubjects`,
+    title: `${t(m.informal ? 'seo.informalTitle' : m.kind === 'minor' ? 'seo.minorTitle' : m.kind === 'specialisation' ? 'seo.specTitle' : withCareers ? 'seo.majorTitleCareers' : 'seo.majorTitle', { title: shownTitle })} | PickMySubjects`,
     // No empty "compulsory:" when a minor or specialisation has no fixed core.
     description: [`${heading} (${courseTitle}).`, core ? `${t('majors.coreTitle')} ${core}.` : '', jobs.length ? `${t('careers.title')}: ${jobs.slice(0, 4).join(', ')}.` : '', ce?.accreditation ? `${t('careers.accTitle')}: ${ce.accreditation.body}.` : '', t('majors.cardText')].filter(Boolean).join(' '),
     body: parts.join('\n'),

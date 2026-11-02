@@ -68,12 +68,15 @@ watchEffect(() => {
   // Breadth depends on the degree: the static page names the Bachelor of Science, but a student
   // planning another degree sees that degree's breadth list, so the title names it instead.
   const breadthElsewhere = preset === 'breadth' && course.value !== 'B-SCI' ? data.value.courses.find((c) => c.code === course.value)?.title : undefined
+  // Same as the static page: a name two degrees share (Economics) carries its degree.
+  const majorTitle = (m: { title: string; course: string }) =>
+    data.value.components.filter((c) => c.title === m.title).length > 1 ? `${m.title} (${data.value.courses.find((c) => c.code === m.course)?.title ?? m.course})` : m.title
   document.title = s
     ? subjectPageTitle(t.value, s, locale.value, subjectDifficulty(data.value.subjects, s.code, course.value, year))
     : career
       ? `${t.value('careerPath.seoTitle', { job: careerPhrase(career.names, locale.value) })} | PickMySubjects`
     : major
-      ? `${t.value(major.informal ? 'seo.informalTitle' : major.kind === 'minor' ? 'seo.minorTitle' : major.kind === 'specialisation' ? 'seo.specTitle' : 'seo.majorTitle', { title: major.title })} | PickMySubjects`
+      ? `${t.value(major.informal ? 'seo.informalTitle' : major.kind === 'minor' ? 'seo.minorTitle' : major.kind === 'specialisation' ? 'seo.specTitle' : 'seo.majorTitle', { title: majorTitle(major) })} | PickMySubjects`
       : ranking
         ? `${t.value(ranking === 'easy' ? 'seo.rankEasy' : 'seo.rankHard', { year })} | PickMySubjects`
       : preset
