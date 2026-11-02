@@ -2,7 +2,7 @@
 // Import this before anything that imports src/release.ts.
 import { readFileSync } from 'node:fs'
 
-const pkg = JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8')) as { version: string }
+const pkg = JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8')) as { version: string; released?: string }
 const g = globalThis as Record<string, unknown>
 g.__APP_VERSION__ ??= pkg.version
-g.__APP_UPDATED__ ??= new Date().toISOString()
+g.__APP_UPDATED__ ??= pkg.released ? `${pkg.released}T12:00:00+11:00` : new Date().toISOString()
