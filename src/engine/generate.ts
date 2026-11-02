@@ -190,9 +190,9 @@ function plannedCourse(input: GenerateInput): Course | undefined {
  * diploma count towards the degree's total, not its categories, so the degree's own rules are
  * met without them (they are the diploma's, apart from any cross-credit).
  */
-function diplomaOnlyAsCore(input: GenerateInput, required: Set<string>): GenerateInput {
+function diplomaOnlyAsCore(input: GenerateInput, required: Set<string>): { input: GenerateInput; moved: string[] } {
   const diploma = findDiploma(input.data, input.diploma)
-  if (!diploma) return input
+  if (!diploma) return { input, moved: [] }
   const stream = diplomaStream(input.data, diploma, input.diplomaStream)
   const course = findCourse(input.data, input.course, input.courseYear)
   const named = new Set([
@@ -200,15 +200,30 @@ function diplomaOnlyAsCore(input: GenerateInput, required: Set<string>): Generat
     ...planComponentIds(input).flatMap((id) => componentNeeds(findComponent(input.data, id)).flatMap((q) => ('all' in q ? q.all : q.choose.from))),
   ])
   const subjects = { ...input.data.subjects }
+  const moved: string[] = []
   for (const code of required) {
     const s = subjects[code]
-    if (s && !named.has(code) && inDiploma(input.data, diploma, stream, code)) subjects[code] = { ...s, categories: { ...s.categories, [input.course]: 'core' } }
+    if (s && !named.has(code) && inDiploma(input.data, diploma, stream, code)) {
+      subjects[code] = { ...s, categories: { ...s.categories, [input.course]: 'core' } }
+      moved.push(code)
+    }
   }
-  return { ...input, data: { ...input.data, subjects } }
+  return { input: { ...input, data: { ...input.data, subjects } }, moved }
+}
+
+/**
+ * The degree's level minimums ("75 points at level 2") don't count the diploma's own subjects,
+ * as the course check counts them: each minimum grows by the points they have at that level.
+ */
+function withDiplomaLevels(course: Course | undefined, moved: string[], data: Dataset): Course | undefined {
+  if (!course || !moved.length) return course
+  const at = (level: number) => moved.reduce((sum, c) => sum + (data.subjects[c]?.level === level ? (data.subjects[c]?.points ?? 12.5) : 0), 0)
+  const rules = course.rules.map((r) => (r.kind === 'points' && r.category === undefined && r.level !== undefined && r.min !== undefined ? { ...r, min: r.min + at(r.level) } : r))
+  return { ...course, rules }
 }
 
 function buildPlan(given: GenerateInput): GenerateResult {
-  const course = plannedCourse(given)
+  let course = plannedCourse(given)
   const notes: Note[] = []
   const completed = [...passedCodes(given.profile.results), ...creditCodes(given.profile.credit)]
   const done = new Set(completed)
@@ -217,7 +232,9 @@ function buildPlan(given: GenerateInput): GenerateResult {
   // needs: subjects the generator added as prerequisites for each required subject.
   const needs = new Map<string, string[]>()
   const required = collectRequired(given, done, notes, needs)
-  const input = diplomaOnlyAsCore(given, required)
+  const asCore = diplomaOnlyAsCore(given, required)
+  const input = asCore.input
+  course = withDiplomaLevels(course, asCore.moved, given.data)
   const { data, profile } = input
   const groupOf = coGroups(required, done, data)
   const firstSemester = new Set(
@@ -492,8 +509,11 @@ function note(key: string, params: Params, text: string): Note {
   return { key, params, text }
 }
 
-function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[], needs: Map<string, string[]>): Set<string> {
+function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[], needs: Map<string, string[]>, avoid: ReadonlySet<string> = new Set()): Set<string> {
   const { data } = input
+  const notesFrom = notes.length
+  // The path chosen for each requirement with several, and the fixed subjects it brought in.
+  const chosen: { key: string; fixed: string[] }[] = []
   const course = findCourse(data, input.course, input.courseYear)
   const required = new Set<string>()
   for (const rule of course?.rules ?? []) {
@@ -552,12 +572,14 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
     if (rule.kind !== 'requirement') continue
     const codesOf = (path: ComponentReq[]) => path.flatMap((r) => ('all' in r ? r.all : r.choose.from))
     // A path with a subject that can't be taken alongside one already required is out.
-    const usable = rule.paths.filter((p) => !(p.flatMap((r) => ('all' in r ? r.all : [])).some((c) => clashes(c, done, ahead, data))))
+    // So is one that, chosen before, clashed with what the plan went on to add.
+    const usable = rule.paths.filter((p, i) => !avoid.has(`${rule.id}:${i}`) && !(p.flatMap((r) => ('all' in r ? r.all : [])).some((c) => clashes(c, done, ahead, data))))
     const score = (path: ComponentReq[]) => {
       const codes = codesOf(path)
       return codes.filter((c) => done.has(c) || required.has(c)).length * 10 + codes.filter((c) => named.has(c)).length
     }
     const path = (usable.length ? usable : rule.paths).reduce((best, p) => (score(p) > score(best) ? p : best))
+    if (rule.paths.length > 1) chosen.push({ key: `${rule.id}:${rule.paths.indexOf(path)}`, fixed: path.flatMap((r) => ('all' in r ? r.all : [])) })
     const used = new Set<string>()
     for (const req of path) {
       if ('all' in req) req.all.forEach((c) => (required.add(c), used.add(c)))
@@ -605,9 +627,14 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
       return true
     }
     let have = 0
+    // What the plan brings in anyway as prerequisites of what's required so far fills the choice
+    // too (a diploma's level-3 picks resting on its own level-1 and level-2 electives).
+    const coming = new Set(required)
+    closePrereqs(input, coming, done, [], new Map())
     for (const c of req.choose.from) {
       if (have >= req.choose.points) break
-      if ((done.has(c) || required.has(c)) && !taken(c) && fits(c, data.subjects[c]?.points ?? 12.5)) {
+      if ((done.has(c) || coming.has(c)) && !taken(c) && fits(c, data.subjects[c]?.points ?? 12.5)) {
+        if (!done.has(c)) required.add(c)
         used.add(c)
         // A subject we have no data for counts as a standard 12.5 points, as the course check counts it.
         have += data.subjects[c]?.points ?? 12.5
@@ -695,6 +722,18 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
         notes.push(note('chose', { code: s.code, title: diploma.title }, `Chose ${s.code} for ${diploma.title} (best match among its options).`))
         closePrereqs(input, required, done, notes, needs)
       }
+    }
+  }
+  // A path's fixed subject that clashes with one the plan added later (a specialisation's
+  // MAST20005 against the standard path's ECON10005): plan again without that path.
+  const clash = chosen.find(({ key, fixed }) => !avoid.has(key) && fixed.some((c) => clashes(c, done, new Set([...required].filter((x) => x !== c)), data)))
+  if (clash) {
+    const again = collectRequired(input, done, [], new Map(), new Set([...avoid, clash.key]))
+    const stillClashes = [...again].some((c) => clashes(c, done, new Set([...again].filter((x) => x !== c)), data))
+    if (!stillClashes) {
+      notes.splice(notesFrom)
+      needs.clear()
+      return collectRequired(input, done, notes, needs, new Set([...avoid, clash.key]))
     }
   }
   return required
