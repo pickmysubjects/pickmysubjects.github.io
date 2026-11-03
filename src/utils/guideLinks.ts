@@ -12,6 +12,10 @@ export const URLS = {
   RSL: 'https://students.unimelb.edu.au/support-and-wellbeing/international-student-support/reduced-study-load',
   SKILLS: 'https://students.unimelb.edu.au/academic-skills',
   EXAMS: 'https://library.unimelb.edu.au/examination_papers',
+  // Where internships and graduate programs are advertised (job-timeline in the guide).
+  CAREERS_ONLINE: 'https://careersonline.unimelb.edu.au/',
+  PROSPLE: 'https://au.prosple.com/',
+  GRADCONNECTION: 'https://au.gradconnection.com/',
   FAILING: 'https://students.unimelb.edu.au/course-admin/planning-your-course-and-subjects/failing-a-subject',
   ENROLLING: 'https://students.unimelb.edu.au/course-admin/enrolling-in-subjects',
   PLANNER: 'https://students.unimelb.edu.au/course-admin/planning-your-course-and-subjects/faculty-course-planning-resources/my-course-planner',

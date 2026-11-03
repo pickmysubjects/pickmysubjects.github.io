@@ -126,9 +126,9 @@ describe('guide: one place per topic', () => {
     expect(neighbours('basics')).toEqual({ prev: null, next: 'systems' })
     expect(neighbours('key-dates')).toEqual({ prev: 'help', next: null })
   })
-  it('lists the overview and every page in the 墨大入门 menu, in reading order', () => {
+  it('lists the overview and every page in the 墨大入门 menu, in reading order, then the clubs', () => {
     const guide = MENUS.find((m) => m.area === 'guide')!
-    expect(guide.items.map((i) => i.to)).toEqual(['guide/', ...GUIDE_PAGES.map((p) => `guide/${p}/`)])
+    expect(guide.items.map((i) => i.to)).toEqual(['guide/', ...GUIDE_PAGES.map((p) => `guide/${p}/`), 'clubs/'])
   })
   it('has every topic title and menu line in all nine languages', () => {
     const guide = MENUS.find((m) => m.area === 'guide')!

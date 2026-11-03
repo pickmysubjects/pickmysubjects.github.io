@@ -34,6 +34,7 @@ import { ACCREDITATION } from '../src/utils/accreditation'
 import { careerJobLabels, careerListHtml, careerPageHtml, careerSeo, careersHtml, subjectCareersHtml } from '../src/utils/careersHtml'
 import { careerTargets } from '../src/engine/careerPaths'
 import { componentCareers } from '../src/engine/careers'
+import { URLS } from '../src/utils/guideLinks'
 import { CLUB_CATEGORIES, CLUBS, CLUBS_LISTING, type Club } from '../src/content/clubs'
 import { clubSubjects, similarClubs } from '../src/engine/clubs'
 import { buildLeadsTo, buildTakenWith, relatedSubjects } from '../src/engine/related'
@@ -714,6 +715,10 @@ function guideBody(code: LocaleCode, t: Translate, page: GuideCategory | 'overvi
     'careers': [
       `<h2 id="careers">${esc(t('guide.careersTitle'))}</h2>`, p('careersText'),
       `<p><a href="${href(code, 'careers')}">${esc(t('guide.careersLink'))}</a></p>`,
+    ].join('\n'),
+    'job-timeline': [
+      `<h2 id="job-timeline">${esc(t('guide.jobTitle'))}</h2>`, p('jobShort'), li(['jobFirst', 'jobPenult', 'jobFinal', 'jobWhere']), p('jobResume'),
+      ext(URLS.CAREERS_ONLINE, 'jobCareersOnline'), ext(URLS.PROSPLE, 'jobProsple'), ext(URLS.GRADCONNECTION, 'jobGradConnection'),
     ].join('\n'),
     'accreditation': [
       `<h2 id="accreditation">${esc(t('guide.accTitle'))}</h2>`, p('accShort'),

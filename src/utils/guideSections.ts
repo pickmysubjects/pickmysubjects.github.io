@@ -26,7 +26,7 @@ export const GUIDE_TOPICS: Record<GuidePageSlug, readonly string[]> = {
   semester: ['special-consideration', 'hurdles', 'late', 'integrity', 'exams', 'drop', 'fail'],
   life: ['wellbeing', 'safety', 'community', 'advocacy'],
   international: ['rsl', 'online', 'abroad'],
-  help: ['it-help', 'study-help', 'careers', 'uni-careers', 'accreditation', 'rankings'],
+  help: ['it-help', 'study-help', 'careers', 'uni-careers', 'job-timeline', 'accreditation', 'rankings'],
   'key-dates': ['dates'],
 }
 
@@ -61,6 +61,7 @@ const TITLE_KEYS: Record<string, string> = {
   abroad: 'guide.abroadTitle',
   'study-help': 'guide.helpTitle',
   careers: 'guide.careersTitle',
+  'job-timeline': 'guide.jobTitle',
   accreditation: 'guide.accTitle',
   rankings: 'guide.rankTitle',
   dates: 'guide.datesTitle',
@@ -78,7 +79,7 @@ export const GUIDE_FEATURED: Record<GuidePageSlug, readonly string[]> = {
   semester: ['special-consideration', 'hurdles', 'drop', 'fail'],
   life: ['wellbeing', 'safety', 'community', 'advocacy'],
   international: ['rsl', 'online', 'abroad'],
-  help: ['it-help', 'study-help', 'uni-careers', 'rankings'],
+  help: ['it-help', 'study-help', 'uni-careers', 'job-timeline'],
   'key-dates': [],
 }
 
@@ -96,7 +97,7 @@ export function topicTitleKey(id: string): string {
  * When the guide's facts were last checked against the official pages. Not shown on the page;
  * kept up to date for search data (a page's last-modified date).
  */
-export const GUIDE_CHECKED = '2026-10-28'
+export const GUIDE_CHECKED = '2026-11-04'
 
 /**
  * "On this page" earns its place once a page is made of real sections: two or more topics, each

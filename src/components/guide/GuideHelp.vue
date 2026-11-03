@@ -48,6 +48,28 @@ const RANKINGS = [
     <GuideServiceList topic="uni-careers" />
   </GuideItem>
 
+  <!-- When big employers hire: a year ahead. Patterns only; each employer's own dates differ. -->
+  <GuideItem id="job-timeline" :title="t('guide.jobTitle')" :short="t('guide.jobShort')">
+    <ul class="plain">
+      <li>{{ t('guide.jobFirst') }}</li>
+      <li>{{ t('guide.jobPenult') }}</li>
+      <li>{{ t('guide.jobFinal') }}</li>
+      <li>{{ t('guide.jobWhere') }}</li>
+    </ul>
+    <p>{{ t('guide.jobResume') }}</p>
+    <p class="actions">
+      <a class="button button-quiet" :href="link('record/#sec-skilltree')">{{ t('skillTree.title') }}</a>
+      <a class="button button-quiet" :href="link('clubs/')">{{ t('clubsPage.title') }}</a>
+    </p>
+    <GuideLinks
+      :links="[
+        { href: URLS.CAREERS_ONLINE, label: 'Careers Online' },
+        { href: URLS.PROSPLE, label: 'Prosple' },
+        { href: URLS.GRADCONNECTION, label: 'GradConnection' },
+      ]"
+    />
+  </GuideItem>
+
   <GuideItem id="accreditation" :title="t('guide.accTitle')" :short="t('guide.accShort')">
     <ul class="acc">
       <li v-for="a in ACC" :key="a.href">
