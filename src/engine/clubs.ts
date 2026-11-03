@@ -1,0 +1,43 @@
+import type { Club } from '@/content/clubs'
+import type { Dataset } from './schema'
+import { topicsOf } from './topics'
+
+/** Why a club came up: an interest the student picked, what their subjects are about, or their degree. */
+export type ClubReason = { kind: 'interest'; topic: string } | { kind: 'studied'; topic: string } | { kind: 'degree' }
+
+export interface ClubSuggestion {
+  club: Club
+  reasons: ClubReason[]
+}
+
+// An interest the student picked counts most; their own degree's society next; then what the
+// subjects they've done or planned are about.
+const INTEREST = 3
+const DEGREE = 2
+const STUDIED = 1
+
+/**
+ * Clubs that fit this student, best first: by the interests they picked, their degree, and the
+ * topics of the subjects on their record and plan. A club needs at least one reason to show.
+ */
+export function suggestClubs(
+  clubs: readonly Club[],
+  opts: { interests: readonly string[]; course?: string; codes: readonly string[]; data: Dataset },
+  limit = 5,
+): ClubSuggestion[] {
+  const interests = new Set(opts.interests)
+  const studied = new Set(opts.codes.flatMap((c) => (opts.data.subjects[c] ? topicsOf(opts.data.subjects[c]!).specific : [])))
+  const scored = clubs.map((club, i) => {
+    const reasons: ClubReason[] = []
+    for (const topic of club.topics) if (interests.has(topic)) reasons.push({ kind: 'interest', topic })
+    if (opts.course && club.courses?.includes(opts.course)) reasons.push({ kind: 'degree' })
+    for (const topic of club.topics) if (!interests.has(topic) && studied.has(topic)) reasons.push({ kind: 'studied', topic })
+    const score = reasons.reduce((sum, r) => sum + (r.kind === 'interest' ? INTEREST : r.kind === 'degree' ? DEGREE : STUDIED), 0)
+    return { club, reasons, score, i }
+  })
+  return scored
+    .filter((s) => s.score > 0)
+    .sort((a, b) => b.score - a.score || a.i - b.i)
+    .slice(0, limit)
+    .map(({ club, reasons }) => ({ club, reasons }))
+}

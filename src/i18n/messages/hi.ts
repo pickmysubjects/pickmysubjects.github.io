@@ -673,6 +673,15 @@ export const hi: Messages = {
     built: 'निर्मित परिवेश',
     other: 'अन्य',
   },
+  clubs: {
+    title: "आपके लिए सही क्लब",
+    all: "UMSU के सभी क्लब",
+    empty: "ऊपर कुछ रुचियाँ चुनें, या रिकॉर्ड या प्लान में सब्जेक्ट जोड़ें, तो सही क्लब यहाँ दिखेंगे।",
+    note: "UMSU की क्लब सूची से; जुड़ना हर क्लब के UMSU पेज पर होता है।",
+    forInterest: "आपने {topic} चुना",
+    forStudied: "आपके सब्जेक्ट: {topic}",
+    forDegree: "आपकी डिग्री की सोसाइटी",
+  },
   topic: {
     programming: 'प्रोग्रामिंग',
     algorithms: 'एल्गोरिदम',

@@ -673,6 +673,15 @@ export const zhCN: Messages = {
     built: '建筑与城市',
     other: '其他',
   },
+  clubs: {
+    title: "可能适合你的社团",
+    all: "UMSU 全部社团",
+    empty: "在上面选几个兴趣，或在成绩、计划里加上课，适合你的社团会显示在这里。",
+    note: "来自 UMSU 社团名单，加入要在各社团的 UMSU 页面上。",
+    forInterest: "你选了「{topic}」",
+    forStudied: "你的课：{topic}",
+    forDegree: "你学位的学生会",
+  },
   topic: {
     programming: '编程',
     algorithms: '算法',

@@ -12,6 +12,7 @@ import GoalPicker from '@/components/profile/GoalPicker.vue'
 import CareerGoalPicker from '@/components/profile/CareerGoalPicker.vue'
 import GradeShare from '@/components/profile/GradeShare.vue'
 import WorkHours from '@/components/profile/WorkHours.vue'
+import ClubsCard from '@/components/profile/ClubsCard.vue'
 import PlanSwitcher from '@/components/plans/PlanSwitcher.vue'
 import PhoneMoreLinks from '@/components/layout/PhoneMoreLinks.vue'
 import { planName } from '@/components/plans/planName'
@@ -84,6 +85,7 @@ const TOC = [
   { id: 'sec-plans', key: 'record.tocPlans', sub: false },
   { id: 'sec-strengths', key: 'record.secStrengths', sub: true },
   { id: 'sec-goal', key: 'record.secGoal', sub: true },
+  { id: 'sec-clubs', key: 'clubs.title', sub: false },
   { id: 'share-title', key: 'menu.gradeShare', sub: false },
   { id: 'sec-backup', key: 'record.backupLink', sub: false },
 ] as const
@@ -208,6 +210,15 @@ async function onRestore(event: Event): Promise<void> {
             <a class="button button-accent next" :href="link('plan')">{{ t('record.next') }} <ArrowRight :size="16" aria-hidden="true" /></a>
           </div>
         </div>
+
+        <!-- UMSU clubs that fit what the student picked and studies. -->
+        <section class="sec surface" aria-labelledby="sec-clubs">
+          <header class="sec-head">
+            <h2 id="sec-clubs" class="sec-title">{{ t('clubs.title') }}</h2>
+            <span class="for-plan">{{ forPlan }}</span>
+          </header>
+          <ClubsCard />
+        </section>
 
         <div class="foot">
           <GradeShare class="foot-card" />

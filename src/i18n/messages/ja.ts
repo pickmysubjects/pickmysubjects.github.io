@@ -673,6 +673,15 @@ export const ja: Messages = {
     built: '建築・都市',
     other: 'その他',
   },
+  clubs: {
+    title: "あなたに合いそうなクラブ",
+    all: "UMSU のクラブ一覧",
+    empty: "上で興味を選ぶか、記録やプランに科目を入れると、合うクラブがここに出ます。",
+    note: "UMSU のクラブ一覧から。入会は各クラブの UMSU ページで。",
+    forInterest: "「{topic}」を選択",
+    forStudied: "履修科目：{topic}",
+    forDegree: "あなたの学位の学生会",
+  },
   topic: {
     programming: 'プログラミング',
     algorithms: 'アルゴリズム',

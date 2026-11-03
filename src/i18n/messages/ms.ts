@@ -673,6 +673,15 @@ export const ms: Messages = {
     built: 'Alam bina',
     other: 'Lain-lain',
   },
+  clubs: {
+    title: "Kelab yang mungkin sesuai",
+    all: "Semua kelab UMSU",
+    empty: "Pilih beberapa minat di atas, atau tambah subjek dalam rekod atau rancangan, dan kelab yang sesuai akan dipaparkan di sini.",
+    note: "Daripada senarai kelab UMSU; sertai melalui halaman UMSU setiap kelab.",
+    forInterest: "Anda pilih {topic}",
+    forStudied: "Subjek anda: {topic}",
+    forDegree: "Persatuan ijazah anda",
+  },
   topic: {
     programming: 'Pengaturcaraan',
     algorithms: 'Algoritma',

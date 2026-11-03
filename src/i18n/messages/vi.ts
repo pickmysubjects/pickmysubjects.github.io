@@ -673,6 +673,15 @@ export const vi: Messages = {
     built: 'Môi trường xây dựng',
     other: 'Khác',
   },
+  clubs: {
+    title: "Câu lạc bộ có thể hợp với bạn",
+    all: "Tất cả CLB của UMSU",
+    empty: "Chọn vài sở thích ở trên, hoặc thêm môn vào hồ sơ hay kế hoạch, các CLB phù hợp sẽ hiện ở đây.",
+    note: "Lấy từ danh sách CLB của UMSU; đăng ký trên trang UMSU của từng CLB.",
+    forInterest: "Bạn chọn {topic}",
+    forStudied: "Môn của bạn: {topic}",
+    forDegree: "Hội sinh viên ngành của bạn",
+  },
   topic: {
     programming: 'Lập trình',
     algorithms: 'Thuật toán',

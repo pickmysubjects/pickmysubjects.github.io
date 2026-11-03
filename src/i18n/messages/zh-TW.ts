@@ -673,6 +673,15 @@ export const zhTW: Messages = {
     built: '建築與城市',
     other: '其他',
   },
+  clubs: {
+    title: "可能適合你的社團",
+    all: "UMSU 全部社團",
+    empty: "在上面選幾個興趣，或在成績、計畫裡加上課，適合你的社團會顯示在這裡。",
+    note: "來自 UMSU 社團名單，加入要在各社團的 UMSU 頁面上。",
+    forInterest: "你選了「{topic}」",
+    forStudied: "你的課：{topic}",
+    forDegree: "你學位的學生會",
+  },
   topic: {
     programming: '程式設計',
     algorithms: '演算法',

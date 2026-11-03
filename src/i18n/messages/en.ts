@@ -678,6 +678,15 @@ export const en = {
     built: 'Built environment',
     other: 'Other',
   },
+  clubs: {
+    title: "Clubs you might like",
+    all: "All UMSU clubs",
+    empty: "Pick some interests above, or add subjects to your record or plan, and clubs that fit will show here.",
+    note: "From the UMSU clubs list; you join on each club's UMSU page.",
+    forInterest: "You picked {topic}",
+    forStudied: "Your subjects: {topic}",
+    forDegree: "Your degree's society",
+  },
   topic: {
     programming: 'Programming',
     algorithms: 'Algorithms',

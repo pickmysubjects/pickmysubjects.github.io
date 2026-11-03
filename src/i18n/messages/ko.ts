@@ -673,6 +673,15 @@ export const ko: Messages = {
     built: '건축·도시',
     other: '기타',
   },
+  clubs: {
+    title: "어울릴 만한 동아리",
+    all: "UMSU 동아리 전체",
+    empty: "위에서 관심 분야를 고르거나 기록·플랜에 과목을 넣으면 맞는 동아리가 여기 보여요.",
+    note: "UMSU 동아리 목록 기준이며, 가입은 각 동아리의 UMSU 페이지에서 해요.",
+    forInterest: "‘{topic}’ 선택",
+    forStudied: "내 과목: {topic}",
+    forDegree: "내 학위의 학생회",
+  },
   topic: {
     programming: '프로그래밍',
     algorithms: '알고리즘',

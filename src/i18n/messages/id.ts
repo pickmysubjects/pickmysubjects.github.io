@@ -673,6 +673,15 @@ export const id: Messages = {
     built: 'Lingkungan binaan',
     other: 'Lainnya',
   },
+  clubs: {
+    title: "Klub yang mungkin cocok",
+    all: "Semua klub UMSU",
+    empty: "Pilih beberapa minat di atas, atau tambahkan mata kuliah ke catatan atau rencana, dan klub yang cocok akan muncul di sini.",
+    note: "Dari daftar klub UMSU; bergabung lewat halaman UMSU tiap klub.",
+    forInterest: "Kamu memilih {topic}",
+    forStudied: "Mata kuliahmu: {topic}",
+    forDegree: "Himpunan gelarmu",
+  },
   topic: {
     programming: 'Pemrograman',
     algorithms: 'Algoritma',
