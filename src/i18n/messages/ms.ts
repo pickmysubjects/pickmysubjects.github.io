@@ -1967,6 +1967,15 @@ export const ms: Messages = {
     contact: 'Ada soalan? Gunakan halaman Maklum balas.',
   },
   home: {
+    install: {
+      title: "Simpan PickMySubjects di skrin utama",
+      prompt: "Ia dibuka seperti aplikasi, dan rancangan anda boleh dilihat tanpa internet.",
+      ios: "Ketik butang Kongsi pelayar anda, kemudian “Tambah ke Skrin Utama”.",
+      "in-app": "Pelayar dalam aplikasi ini tidak boleh menambahnya. Buka halaman dalam pelayar dahulu (biasanya dari menu “…”), kemudian tambah dari situ.",
+      menu: "Buka menu pelayar dan pilih “Tambah ke skrin utama” atau “Pasang”.",
+      add: "Tambah ke skrin utama",
+      close: "Tidak, terima kasih",
+    },
     notice: {
       title: "Versi penuh dijangka akhir November",
       sub: "Termasuk Handbook 2027",

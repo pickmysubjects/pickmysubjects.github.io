@@ -1972,6 +1972,15 @@ export const en = {
     contact: 'Questions? Use the Feedback page.',
   },
   home: {
+    install: {
+      title: "Keep PickMySubjects on your home screen",
+      prompt: "It opens like an app, and your plans work offline.",
+      ios: "Tap your browser's Share button, then “Add to Home Screen”.",
+      "in-app": "This app's browser can't add it. Open the page in your browser first (usually from the “…” menu), then add it there.",
+      menu: "Open your browser's menu and choose “Add to Home screen” or “Install”.",
+      add: "Add to home screen",
+      close: "No thanks",
+    },
     notice: {
       title: "Full version coming by end of November",
       sub: "Includes the 2027 Handbook",

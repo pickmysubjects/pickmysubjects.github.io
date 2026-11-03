@@ -17,6 +17,7 @@ export type AnalyticsEvent =
   | 'career-goal-set'
   | 'shortlist-add'
   | 'compare-open'
+  | 'install-accept'
   | `language-${string}`
 
 import { LOCALE_CODES } from '@/i18n/codes'
@@ -89,6 +90,13 @@ const APPS: readonly [string, RegExp][] = [
   ['zalo', /Zalo/i],
 ]
 
+/** True when the page was opened from the home screen (or runs as an installed app on a computer). */
+export function runningInstalled(): boolean {
+  if (typeof window === 'undefined' || typeof navigator === 'undefined') return false
+  const ios = (navigator as Navigator & { standalone?: boolean }).standalone === true
+  return ios || (typeof window.matchMedia === 'function' && window.matchMedia('(display-mode: standalone)').matches)
+}
+
 /** Where a visit came from: the app whose in-app browser it is, else 'link' (has a referrer) or 'direct'. */
 export function visitSource(ua: string = typeof navigator === 'undefined' ? '' : navigator.userAgent, referrer: string = typeof document === 'undefined' ? '' : document.referrer): string {
   return APPS.find(([, re]) => re.test(ua))?.[0] ?? (referrer ? 'link' : 'direct')
@@ -129,7 +137,8 @@ function send(path: string, title?: string): void {
   // Once per visit, the site language it started in and where it came from.
   if (first) {
     counter()?.({ path: `visit-lang-${pathLocale(path)}`, title: 'visit language', event: true })
-    counter()?.({ path: `visit-from-${visitSource()}`, title: 'visit source', event: true })
+    // Opened from the home screen: the visits that show the site kept a place on a phone.
+    counter()?.({ path: `visit-from-${runningInstalled() ? 'home-screen' : visitSource()}`, title: 'visit source', event: true })
   }
 }
 

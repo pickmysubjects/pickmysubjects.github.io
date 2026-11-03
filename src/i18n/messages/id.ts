@@ -1967,6 +1967,15 @@ export const id: Messages = {
     contact: 'Ada pertanyaan? Gunakan halaman Masukan.',
   },
   home: {
+    install: {
+      title: "Simpan PickMySubjects di layar utama",
+      prompt: "Terbuka seperti aplikasi, dan rencanamu tetap bisa dilihat tanpa internet.",
+      ios: "Ketuk tombol Bagikan di browser, lalu “Tambah ke Layar Utama”.",
+      "in-app": "Browser di dalam aplikasi ini tidak bisa menambahkannya. Buka halaman di browser dulu (biasanya dari menu “…”), lalu tambahkan dari sana.",
+      menu: "Buka menu browser dan pilih “Tambahkan ke layar utama” atau “Instal”.",
+      add: "Tambah ke layar utama",
+      close: "Tidak, terima kasih",
+    },
     notice: {
       title: "Versi penuh rilis akhir November",
       sub: "Termasuk Handbook 2027",

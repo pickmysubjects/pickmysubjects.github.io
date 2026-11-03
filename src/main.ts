@@ -6,6 +6,7 @@ import { VIEW_LOADERS } from './views/loaders'
 import { currentLocale, loadLocale } from './i18n'
 import { registerServiceWorker } from './utils/serviceWorker'
 import { optOutToggle } from './utils/analytics'
+import { captureInstallPrompt } from './utils/install'
 // Fonts are bundled (not loaded from Google Fonts) so visitors' IPs aren't sent to a third party.
 import '@fontsource/geist-sans/400.css'
 import '@fontsource/geist-sans/500.css'
@@ -42,6 +43,8 @@ if (import.meta.env.VITE_FORCE_GLASS === '1' || import.meta.env.DEV) {
 // straight away instead of drawing the English one and switching it over.
 // #toggle-goatcounter first, so neither the redirect nor the first page is counted.
 optOutToggle()
+// Before anything loads: Chrome's install prompt can fire before the app has mounted.
+captureInstallPrompt()
 const moveTo = savedLocaleAddress()
 if (moveTo) location.replace(moveTo)
 else start()

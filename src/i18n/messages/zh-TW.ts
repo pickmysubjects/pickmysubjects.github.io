@@ -1967,6 +1967,15 @@ export const zhTW: Messages = {
     contact: '有疑問？請使用「意見回饋」頁面。',
   },
   home: {
+    install: {
+      title: "把 PickMySubjects 放到手機主畫面",
+      prompt: "下次像 App 一樣直接打開，沒網路也能看你的計畫。",
+      ios: "點瀏覽器的「分享」按鈕，再選「加入主畫面」。",
+      "in-app": "在這個 App 裡加不了。先點右上角「…」，選用瀏覽器開啟，再從瀏覽器加入。",
+      menu: "打開瀏覽器選單，選「加到主畫面」或「安裝應用程式」。",
+      add: "加到主畫面",
+      close: "不用了",
+    },
     notice: {
       title: "正式版預計 11 月底上線",
       sub: "含 2027 Handbook",

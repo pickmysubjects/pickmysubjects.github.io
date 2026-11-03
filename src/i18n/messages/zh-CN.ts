@@ -1967,6 +1967,15 @@ export const zhCN: Messages = {
     contact: '有疑问？请使用“反馈”页面。',
   },
   home: {
+    install: {
+      title: "把 PickMySubjects 放到手机主屏幕",
+      prompt: "下次像 App 一样直接打开，没网也能看你的计划。",
+      ios: "点浏览器的「分享」按钮，再选「添加到主屏幕」。",
+      "in-app": "在这个 App 里加不了。先点右上角「…」，选在浏览器打开，再从浏览器添加。",
+      menu: "打开浏览器菜单，选「添加到主屏幕」或「安装应用」。",
+      add: "加到主屏幕",
+      close: "不用了",
+    },
     notice: {
       title: "正式版预计 11 月底上线",
       sub: "含 2027 Handbook",

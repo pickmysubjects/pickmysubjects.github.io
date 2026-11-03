@@ -1967,6 +1967,15 @@ export const vi: Messages = {
     contact: 'Có câu hỏi? Hãy dùng trang Góp ý.',
   },
   home: {
+    install: {
+      title: "Đưa PickMySubjects ra màn hình chính",
+      prompt: "Mở như một ứng dụng, và kế hoạch vẫn xem được khi không có mạng.",
+      ios: "Nhấn nút Chia sẻ của trình duyệt, rồi chọn “Thêm vào MH chính”.",
+      "in-app": "Trình duyệt trong ứng dụng này không thêm được. Hãy mở trang bằng trình duyệt trước (thường ở menu “…”), rồi thêm từ đó.",
+      menu: "Mở menu trình duyệt và chọn “Thêm vào màn hình chính” hoặc “Cài đặt”.",
+      add: "Thêm vào màn hình chính",
+      close: "Không, cảm ơn",
+    },
     notice: {
       title: "Bản chính thức: cuối tháng 11",
       sub: "Có Handbook 2027",
