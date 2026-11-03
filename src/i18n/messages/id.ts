@@ -688,6 +688,11 @@ export const id: Messages = {
     copy: "Salin untuk CV (Inggris)",
     copied: "Disalin",
     note: "Tiap baris menyebut mata kuliah sumbernya. Alat bertanda “Kata mahasiswa” tidak ada di Handbook, jadi cek dulu.",
+    goal: "Dibanding tujuan karier",
+    forGoal: "Dibanding tujuanmu: {career}",
+    goalSource: "Keahlian yang dicari pemberi kerja, dari yourcareer.gov.au (Pemerintah Australia)",
+    goalNoList: "Tidak ada daftar keahlian resmi untuk tujuan ini.",
+    pickGoal: "Pilih tujuan karier di bawah untuk dibandingkan dengan yang dicari pemberi kerja",
     ability: {
       teamwork: "Kerja tim",
       writing: "Menulis",
@@ -698,6 +703,11 @@ export const id: Messages = {
       lab: "Kerja lab",
       fieldwork: "Kerja lapangan",
     },
+  },
+  employerSkills: {
+    sum: "Mata kuliahmu menunjukkan {n} dari {total}",
+    outside: "Ditunjukkan lewat kerja, klub atau relawan",
+    notYet: "Belum",
   },
   clubs: {
     title: "Klub yang mungkin cocok",

@@ -1,5 +1,6 @@
 import type { Dataset, Subject } from './schema'
 import { markingShare, skillsOf } from './skills'
+import { topicsOf } from './topics'
 
 /**
  * What a student can show from their subjects, in the three layers the Australian Skills
@@ -112,4 +113,75 @@ export function resumeText(tree: SkillTree, data: Dataset, outcomesOf: (code: st
     for (const c of coursework) lines.push(`- ${title(c)}: ${outcomesOf(c).join('; ')}`)
   }
   return lines.join('\n')
+}
+
+/** One skill employers ask for in a job (yourcareer.gov.au), and what the student has to show for it. */
+export interface EmployerSkill {
+  skill: string
+  /** Subjects that show it; empty when none do yet. */
+  codes: string[]
+  /** Shown by work, clubs or volunteering rather than a subject ("Building Relationships"). */
+  outsideClass: boolean
+}
+
+// Employer skills that are one of our tools under another name.
+const TOOL_ALIASES: Record<string, string> = {
+  'microsoft excel': 'Excel',
+  'adobe photoshop': 'Adobe Creative Suite',
+  'adobe indesign': 'Adobe Creative Suite',
+  'adobe illustrator': 'Adobe Creative Suite',
+  'adobe creative suite': 'Adobe Creative Suite',
+}
+// Employer skills a subject's marking or content shows, as our abilities.
+const ABILITY_ALIASES: Record<string, Ability[]> = {
+  'communication skills': ['writing', 'speaking'],
+  writing: ['writing'],
+  'teamwork / collaboration': ['teamwork'],
+  'team work/ collaboration': ['teamwork'],
+  'team building': ['teamwork'],
+  research: ['research', 'lab'],
+  'data analysis': ['numeracy'],
+  'software development': ['programming'],
+  'computer literacy': ['programming'],
+}
+// Skills built by doing, which no subject's marking tells apart from any other's.
+const OUTSIDE_CLASS = new Set([
+  'planning',
+  'building relationships',
+  'organisational skills',
+  'time management',
+  'problem solving',
+  'stakeholder management',
+  'mentoring',
+  'customer service',
+  'typing',
+])
+
+/**
+ * The job's skills against the student's tree: each with the subjects that show it (its tool,
+ * its ability, or a subject named for it or about it), or marked as one built outside class.
+ */
+export function employerSkills(skills: readonly string[], tree: SkillTree, data: Dataset, outcomesOf: (code: string) => readonly string[] = () => []): EmployerSkill[] {
+  const toolCodes = new Map(tree.tools.map((t) => [t.name, t.codes]))
+  const abilityCodes = new Map(tree.abilities.map((a) => [a.ability, a.codes]))
+  return skills.map((skill) => {
+    const key = skill.toLowerCase()
+    if (OUTSIDE_CLASS.has(key)) return { skill, codes: [], outsideClass: true }
+    const tool = TOOL_ALIASES[key] ?? tree.tools.find((t) => t.name.toLowerCase() === key)?.name
+    if (tool) return { skill, codes: toolCodes.get(tool) ?? [], outsideClass: false }
+    const abilities = ABILITY_ALIASES[key]
+    if (abilities) return { skill, codes: [...new Set(abilities.flatMap((a) => abilityCodes.get(a) ?? []))], outsideClass: false }
+    // A field ("Financial Accounting", "Psychology"): subjects named for it, tagged with one of its
+    // words as a topic, or whose learning outcomes have every word of it ("Budgeting" in "use cost
+    // and revenue data for budgets": words are matched on their first six letters).
+    const words = key.split(/[^a-z]+/).filter(Boolean)
+    const stems = words.filter((w) => w.length >= 4).map((w) => w.slice(0, 6))
+    const codes = tree.subjects.filter((c) => {
+      const s = data.subjects[c]!
+      if (s.title.toLowerCase().includes(key) || topicsOf(s).topics.some((topic) => words.includes(topic.replace(/-/g, ' ')))) return true
+      const said = outcomesOf(c).join(' ').toLowerCase()
+      return stems.length > 0 && stems.every((st) => new RegExp(`\\b${st}`).test(said))
+    })
+    return { skill, codes, outsideClass: false }
+  })
 }

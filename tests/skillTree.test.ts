@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { abilitiesOf, buildSkillTree, resumeText } from '@/engine/skillTree'
+import { abilitiesOf, buildSkillTree, employerSkills, resumeText } from '@/engine/skillTree'
 import { studentTools, toolsIn } from '../scripts/extract-tools'
 import { realData } from './realData'
 
@@ -47,5 +47,33 @@ describe('the skill tree', () => {
     expect(text).toContain('Relevant coursework\n- COMP10001 Foundations of Computing: Read, write and debug small programs')
     // A subject with no outcomes loaded isn't listed under coursework.
     expect(text).not.toContain('- MAST10006')
+  })
+})
+
+describe("a job's skills against the student's subjects", () => {
+  const accountant = ['Accounting', 'Communication Skills', 'Budgeting', 'Microsoft Excel', 'Financial Accounting', 'Building Relationships']
+
+  it('names the subjects that show each skill: by tool, by ability or by field', () => {
+    const tree = buildSkillTree(['ACCT10001', 'ECON10005'], data)
+    const rows = Object.fromEntries(employerSkills(accountant, tree, data).map((r) => [r.skill, r]))
+    expect(rows['Microsoft Excel']!.codes).toEqual(['ECON10005'])
+    expect(rows['Accounting']!.codes).toContain('ACCT10001')
+    expect(rows['Financial Accounting']!.codes).toContain('ACCT10001')
+  })
+
+  it('says which skills are built outside class, and which have nothing yet', () => {
+    const rows = employerSkills(accountant, buildSkillTree(['COMP10001'], data), data)
+    expect(rows.find((r) => r.skill === 'Building Relationships')).toEqual({ skill: 'Building Relationships', codes: [], outsideClass: true })
+    expect(rows.find((r) => r.skill === 'Budgeting')).toEqual({ skill: 'Budgeting', codes: [], outsideClass: false })
+  })
+})
+
+describe('reading a skill out of what a subject taught', () => {
+  it('counts a learning outcome that names it ("budgets" for Budgeting)', () => {
+    const tree = buildSkillTree(['ACCT10001'], data)
+    const rows = employerSkills(['Budgeting', 'Account Reconciliation'], tree, data, () => ['Use cost and revenue data for budgets and planning'])
+    expect(rows[0]!.codes).toEqual(['ACCT10001'])
+    // Every word has to be there: "account" alone doesn't make "Account Reconciliation".
+    expect(rows[1]!.codes).toEqual([])
   })
 })

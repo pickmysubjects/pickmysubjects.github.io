@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import EmployerSkills from '@/components/careers/EmployerSkills.vue'
 import { viewYear } from '@/engine/dataYear'
 import InfoTip from '@/components/InfoTip.vue'
 import { computed, shallowRef, watch } from 'vue'
@@ -187,9 +188,7 @@ const sections = computed(() =>
         </SubjectSection>
 
         <SubjectSection v-if="skills.length" id="c-skills" :title="t('careerPath.skillsTitle')" :short="t('careerPath.skillsShort')">
-          <ul class="skill-list">
-            <li v-for="x in skills" :key="x" class="chip">{{ x }}</li>
-          </ul>
+          <EmployerSkills :skills="skills" />
           <a v-if="target.occupation" class="official" :href="target.occupation.url" target="_blank" rel="noopener">
             {{ t('careers.official') }} · {{ target.occupation.name }} <ExternalLink :size="13" aria-hidden="true" />
           </a>
@@ -440,19 +439,6 @@ const sections = computed(() =>
   font-size: var(--fs-small);
   font-weight: var(--fw-semibold);
   color: var(--accent);
-}
-
-.skill-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.skill-list .chip {
-  color: var(--ink);
 }
 
 /* Where it comes from: one frosted strip at the end, never straight on the colour field. */

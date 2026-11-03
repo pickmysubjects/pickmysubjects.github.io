@@ -688,6 +688,11 @@ export const ko: Messages = {
     copy: "영문 이력서용으로 복사",
     copied: "복사했어요",
     note: "각 줄에 근거가 된 과목을 적었어요. ‘학생들 말’ 표시 도구는 Handbook에 없으니 쓰기 전에 확인하세요.",
+    goal: "진로 목표와 비교",
+    forGoal: "목표와 비교: {career}",
+    goalSource: "고용주가 원하는 스킬은 호주 정부 yourcareer.gov.au 기준",
+    goalNoList: "이 목표에는 공식 스킬 목록이 없어요.",
+    pickGoal: "아래에서 진로 목표를 고르면 고용주가 원하는 스킬과 비교할 수 있어요",
     ability: {
       teamwork: "팀워크",
       writing: "글쓰기",
@@ -698,6 +703,11 @@ export const ko: Messages = {
       lab: "실험",
       fieldwork: "현장 실습",
     },
+  },
+  employerSkills: {
+    sum: "이수 과목으로 {total}개 중 {n}개 보여줄 수 있어요",
+    outside: "일·동아리·봉사로 보여주는 스킬",
+    notYet: "아직 없음",
   },
   clubs: {
     title: "어울릴 만한 동아리",

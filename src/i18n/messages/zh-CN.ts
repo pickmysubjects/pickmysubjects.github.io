@@ -688,6 +688,11 @@ export const zhCN: Messages = {
     copy: "复制成英文简历内容",
     copied: "已复制",
     note: "每一条都写了出自哪些课。标「同学说」的工具 Handbook 没写，写进简历前先确认一下。",
+    goal: "对照职业目标",
+    forGoal: "对照你的目标：{career}",
+    goalSource: "招聘方要的技能来自澳洲政府 yourcareer.gov.au",
+    goalNoList: "这个目标没有官方的技能清单。",
+    pickGoal: "在下面选一个职业目标，就能对照招聘方要的技能",
     ability: {
       teamwork: "团队合作",
       writing: "书面写作",
@@ -698,6 +703,11 @@ export const zhCN: Messages = {
       lab: "实验",
       fieldwork: "野外实习",
     },
+  },
+  employerSkills: {
+    sum: "你修过的课能证明 {n} / {total} 项",
+    outside: "靠实习、社团或志愿活动来展示",
+    notYet: "还没有",
   },
   clubs: {
     title: "可能适合你的社团",

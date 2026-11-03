@@ -693,6 +693,11 @@ export const en = {
     copy: "Copy for my resume (English)",
     copied: "Copied",
     note: "Each line names the subjects behind it. Tools marked “Students say” aren't in the Handbook, so check before you list them.",
+    goal: "Against a career goal",
+    forGoal: "Against your goal: {career}",
+    goalSource: "Skills employers list for this job, from yourcareer.gov.au (Australian Government)",
+    goalNoList: "There's no official skills list for this goal.",
+    pickGoal: "Pick a career goal below to compare with what employers ask for",
     ability: {
       teamwork: "Teamwork",
       writing: "Written communication",
@@ -703,6 +708,11 @@ export const en = {
       lab: "Lab work",
       fieldwork: "Fieldwork",
     },
+  },
+  employerSkills: {
+    sum: "Your subjects show {n} of {total}",
+    outside: "Shown through work, clubs or volunteering",
+    notYet: "Not yet",
   },
   clubs: {
     title: "Clubs you might like",

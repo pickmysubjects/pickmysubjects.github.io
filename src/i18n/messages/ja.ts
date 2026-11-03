@@ -688,6 +688,11 @@ export const ja: Messages = {
     copy: "英語の履歴書用にコピー",
     copied: "コピーしました",
     note: "各行に根拠の科目を載せています。「学生の声」のツールは Handbook に書かれていないので、書く前に確認を。",
+    goal: "キャリア目標と比べる",
+    forGoal: "目標と比べる：{career}",
+    goalSource: "雇用側が求めるスキルはオーストラリア政府の yourcareer.gov.au より",
+    goalNoList: "この目標には公式のスキル一覧がありません。",
+    pickGoal: "下でキャリア目標を選ぶと、雇用側が求めるスキルと比べられます",
     ability: {
       teamwork: "チームワーク",
       writing: "文章力",
@@ -698,6 +703,11 @@ export const ja: Messages = {
       lab: "実験",
       fieldwork: "フィールドワーク",
     },
+  },
+  employerSkills: {
+    sum: "履修科目で示せるのは {total} 項目中 {n}",
+    outside: "仕事・クラブ・ボランティアで示すもの",
+    notYet: "まだなし",
   },
   clubs: {
     title: "あなたに合いそうなクラブ",

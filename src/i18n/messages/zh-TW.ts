@@ -688,6 +688,11 @@ export const zhTW: Messages = {
     copy: "複製成英文履歷內容",
     copied: "已複製",
     note: "每一條都寫了出自哪些課。標「同學說」的工具 Handbook 沒寫，寫進履歷前先確認一下。",
+    goal: "對照職業目標",
+    forGoal: "對照你的目標：{career}",
+    goalSource: "雇主要的技能來自澳洲政府 yourcareer.gov.au",
+    goalNoList: "這個目標沒有官方的技能清單。",
+    pickGoal: "在下面選一個職業目標，就能對照雇主要的技能",
     ability: {
       teamwork: "團隊合作",
       writing: "書面寫作",
@@ -698,6 +703,11 @@ export const zhTW: Messages = {
       lab: "實驗",
       fieldwork: "野外實習",
     },
+  },
+  employerSkills: {
+    sum: "你修過的課能證明 {n} / {total} 項",
+    outside: "靠實習、社團或志工活動來展現",
+    notYet: "還沒有",
   },
   clubs: {
     title: "可能適合你的社團",

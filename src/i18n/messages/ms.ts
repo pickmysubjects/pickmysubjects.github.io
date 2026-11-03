@@ -688,6 +688,11 @@ export const ms: Messages = {
     copy: "Salin untuk resume (Inggeris)",
     copied: "Disalin",
     note: "Setiap baris menyebut subjek di sebaliknya. Alat bertanda “Kata pelajar” tiada dalam Handbook, jadi semak dahulu.",
+    goal: "Berbanding matlamat kerjaya",
+    forGoal: "Berbanding matlamat anda: {career}",
+    goalSource: "Kemahiran yang majikan senaraikan, daripada yourcareer.gov.au (Kerajaan Australia)",
+    goalNoList: "Tiada senarai kemahiran rasmi untuk matlamat ini.",
+    pickGoal: "Pilih matlamat kerjaya di bawah untuk dibandingkan dengan kehendak majikan",
     ability: {
       teamwork: "Kerja berpasukan",
       writing: "Penulisan",
@@ -698,6 +703,11 @@ export const ms: Messages = {
       lab: "Kerja makmal",
       fieldwork: "Kerja lapangan",
     },
+  },
+  employerSkills: {
+    sum: "Subjek anda menunjukkan {n} daripada {total}",
+    outside: "Ditunjukkan melalui kerja, kelab atau sukarela",
+    notYet: "Belum",
   },
   clubs: {
     title: "Kelab yang mungkin sesuai",

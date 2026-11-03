@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { computed, shallowRef } from 'vue'
 import SegmentedControl from '@/components/SegmentedControl.vue'
+import EmployerSkills from '@/components/careers/EmployerSkills.vue'
+import { careerTarget } from '@/engine/careerPaths'
+import type { CareerLang } from '@/engine/careers'
 import { passedCodes } from '@/engine/recommend'
 import { buildSkillTree, resumeText } from '@/engine/skillTree'
 import { link } from '@/composables/useView'
@@ -37,6 +40,10 @@ const scopes = computed(() => [
   { value: 'done' as const, label: t.value('skillTree.done', { n: done.value.length }) },
   { value: 'all' as const, label: t.value('skillTree.withPlan', { n: done.value.length + planned.value.length }) },
 ])
+
+// The plan's career goal, read against the skills employers list for that job.
+const goal = computed(() => (profile.value.career ? careerTarget(data.value, profile.value.career) : undefined))
+const goalName = computed(() => (goal.value ? (goal.value.names[t.value('careerLang') as CareerLang] ?? goal.value.names.en) : ''))
 
 const copied = shallowRef(false)
 async function copy(): Promise<void> {
@@ -95,6 +102,16 @@ async function copy(): Promise<void> {
         <button v-if="tree.subjects.length > FIRST" class="more" type="button" @click="showAll = !showAll">
           {{ showAll ? t('skillTree.fewer') : t('skillTree.all', { n: tree.subjects.length }) }}
         </button>
+      </div>
+
+      <div class="part">
+        <h3 class="part-title">{{ goal ? t('skillTree.forGoal', { career: goalName }) : t('skillTree.goal') }}</h3>
+        <template v-if="goal?.occupation?.skills.length">
+          <EmployerSkills :skills="goal.occupation.skills" />
+          <a class="source" :href="goal.occupation.url" target="_blank" rel="noopener">{{ t('skillTree.goalSource') }}</a>
+        </template>
+        <p v-else-if="goal" class="tree-empty">{{ t('skillTree.goalNoList') }}</p>
+        <p v-else class="tree-empty"><a class="source" href="#sec-goal">{{ t('skillTree.pickGoal') }}</a></p>
       </div>
 
       <div class="actions">
@@ -205,6 +222,12 @@ a.code:hover {
   line-height: 1.5;
 }
 
+/* A hanging dot: a line that wraps lines up under the text, not under the dot. */
+.outcomes li {
+  padding-left: 0.9em;
+  text-indent: -0.9em;
+}
+
 .outcomes li::before {
   content: '· ';
 }
@@ -222,6 +245,13 @@ a.code:hover {
 
 .more:hover {
   text-decoration: underline;
+}
+
+.source {
+  display: inline-block;
+  margin-top: 6px;
+  color: var(--accent);
+  font-size: var(--fs-small);
 }
 
 .actions {

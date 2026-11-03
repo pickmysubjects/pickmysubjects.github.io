@@ -688,6 +688,11 @@ export const vi: Messages = {
     copy: "Sao chép cho CV (tiếng Anh)",
     copied: "Đã sao chép",
     note: "Mỗi dòng ghi rõ từ môn nào. Công cụ có nhãn “Sinh viên nói” không có trong Handbook, hãy kiểm tra trước khi ghi.",
+    goal: "So với mục tiêu nghề nghiệp",
+    forGoal: "So với mục tiêu: {career}",
+    goalSource: "Kỹ năng nhà tuyển dụng cần, theo yourcareer.gov.au (Chính phủ Úc)",
+    goalNoList: "Mục tiêu này không có danh sách kỹ năng chính thức.",
+    pickGoal: "Chọn một mục tiêu nghề nghiệp bên dưới để so với yêu cầu của nhà tuyển dụng",
     ability: {
       teamwork: "Làm việc nhóm",
       writing: "Viết",
@@ -698,6 +703,11 @@ export const vi: Messages = {
       lab: "Thí nghiệm",
       fieldwork: "Thực địa",
     },
+  },
+  employerSkills: {
+    sum: "Các môn của bạn chứng minh được {n}/{total}",
+    outside: "Thể hiện qua đi làm, CLB hoặc tình nguyện",
+    notYet: "Chưa có",
   },
   clubs: {
     title: "Câu lạc bộ có thể hợp với bạn",
