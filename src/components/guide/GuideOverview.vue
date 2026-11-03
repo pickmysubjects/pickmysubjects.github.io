@@ -65,7 +65,7 @@ function when(i: StripItem): string {
 }
 
 .cards-start {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .cards-rest {

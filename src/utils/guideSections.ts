@@ -4,7 +4,7 @@
  * link to a topic (/guide/#<id>, or a section that no longer holds it) is sent to the page that
  * holds it now.
  */
-export const GUIDE_CATEGORIES = ['basics', 'systems', 'enrolling', 'semester', 'life', 'international', 'help'] as const
+export const GUIDE_CATEGORIES = ['new-students', 'basics', 'systems', 'enrolling', 'semester', 'life', 'international', 'help'] as const
 export type GuideCategory = (typeof GUIDE_CATEGORIES)[number]
 
 /** Extra pages under /guide/ that aren't categories, and the category they sit in. */
@@ -20,6 +20,7 @@ export type GuidePageSlug = (typeof GUIDE_PAGES)[number]
  * would look in for it. Other pages link to it instead of repeating it.
  */
 export const GUIDE_TOPICS: Record<GuidePageSlug, readonly string[]> = {
+  'new-students': ['after-atar', 'atar-offers', 'first-year', 'first-tips'],
   basics: ['first', 'points', 'majors', 'caps', 'rules', 'grades', 'wam'],
   systems: ['systems', 'systems-class', 'systems-lookup'],
   enrolling: ['enrol', 'plans', 'load', 'check', 'waiver', 'timetable', 'late-enrol', 'cross-institutional', 'exchange', 'fees'],
@@ -32,6 +33,10 @@ export const GUIDE_TOPICS: Record<GuidePageSlug, readonly string[]> = {
 
 /** The message key of each topic's title (the topic's h2 and its line in "On this page"). */
 const TITLE_KEYS: Record<string, string> = {
+  'after-atar': 'guide.ns.timelineTitle',
+  'atar-offers': 'guide.ns.offersTitle',
+  'first-year': 'guide.ns.firstYearTitle',
+  'first-tips': 'guide.ns.tipsTitle',
   first: 'guide.firstTitle',
   points: 'guide.pointsTitle',
   majors: 'guide.majorsTitle',
@@ -73,6 +78,7 @@ const TITLE_KEYS: Record<string, string> = {
  * Key dates has none: the overview shows the next dates themselves.
  */
 export const GUIDE_FEATURED: Record<GuidePageSlug, readonly string[]> = {
+  'new-students': ['after-atar', 'atar-offers', 'first-year', 'first-tips'],
   basics: ['points', 'rules', 'grades', 'wam'],
   systems: ['svc-myUnimelb', 'svc-canvas', 'svc-email', 'svc-myTimetable'],
   enrolling: ['load', 'timetable', 'waiver', 'fees'],

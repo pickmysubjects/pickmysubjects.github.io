@@ -78,6 +78,8 @@ const TOPIC_SYN: Record<string, string> = {
   wellbeing: 'wellbeing',
   'uni-careers': 'uniCareers',
   'job-timeline': 'jobTimeline',
+  'after-atar': 'afterAtar',
+  'first-year': 'firstYear',
 }
 
 /** Extra words for the official systems, by system id (search.syn.<key>). */

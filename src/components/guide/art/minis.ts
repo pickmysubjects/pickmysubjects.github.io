@@ -6,6 +6,8 @@ import type { GuidePageSlug } from '@/utils/guideSections'
  * "On this page" panel and on its card on the overview. Each is its own small chunk.
  */
 export const MINI_ART: Record<GuidePageSlug, () => Promise<Component>> = {
+  // New students share the getting-started picture: the same first steps.
+  'new-students': () => import('./MiniBasics.vue'),
   basics: () => import('./MiniBasics.vue'),
   systems: () => import('./MiniSystems.vue'),
   enrolling: () => import('./MiniEnrolling.vue'),

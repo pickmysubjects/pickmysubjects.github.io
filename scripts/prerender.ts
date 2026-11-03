@@ -35,6 +35,8 @@ import { careerJobLabels, careerListHtml, careerPageHtml, careerSeo, careersHtml
 import { careerTargets } from '../src/engine/careerPaths'
 import { componentCareers } from '../src/engine/careers'
 import { URLS } from '../src/utils/guideLinks'
+import { ADMISSION_STEPS, ADMISSION_YEAR, ATAR_GUARANTEES_URL, UNIMELB_VTAC_URL, VTAC_DATES_SOURCE } from '../src/content/admissions'
+import type { FirstYearSlot } from '../src/engine/firstYear'
 import { CLUB_CATEGORIES, CLUBS, CLUBS_LISTING, type Club } from '../src/content/clubs'
 import { clubSubjects, similarClubs } from '../src/engine/clubs'
 import { buildLeadsTo, buildTakenWith, relatedSubjects } from '../src/engine/related'
@@ -66,6 +68,8 @@ import { hi } from '../src/i18n/messages/hi'
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
 const data = JSON.parse(readFileSync(join(ROOT, 'src', 'generated', 'real.json'), 'utf8')) as Dataset
+// Each degree's first year before a major, worked out by `npm run data` (the new-students guide).
+const FIRST_YEARS = JSON.parse(readFileSync(join(ROOT, 'src', 'generated', 'first-year.json'), 'utf8')) as Record<string, [FirstYearSlot[], FirstYearSlot[]]>
 const DIST = join(ROOT, 'dist')
 const SITE = 'https://pickmysubjects.github.io/'
 const BASE = '/'
@@ -608,8 +612,44 @@ function guideBody(code: LocaleCode, t: Translate, page: GuideCategory | 'overvi
     .join('')}</tbody></table>`
   const h2 = (k: string) => `<h2>${esc(t(`guide.${k}`))}</h2>`
   const ext = (url: string, k: string) => `<p><a href="${url}">${esc(t(`guide.${k}`))}</a></p>`
+  // New students: VTAC's dates, then the University's own (Orientation, first day), and each degree's first year.
+  const nsDay = (iso: string) => new Date(`${iso}T12:00:00`).toLocaleDateString(code, { weekday: 'short', day: 'numeric', month: 'long', year: 'numeric' })
+  const own = (kind: string) => KEY_DATES.find((d) => d.kind === kind && d.term === 'semester-1' && d.year === ADMISSION_YEAR)
+  const nsSteps = [
+    ...ADMISSION_STEPS.map((x) => ({ id: x.id, when: x.end ? `${nsDay(x.date)} – ${nsDay(x.end)}` : `${nsDay(x.date)}${x.time ? ` ${x.time}` : ''}` })),
+    { id: 'enrol', when: '' },
+    ...(own('orientation') ? [{ id: 'orientation', when: `${nsDay(own('orientation')!.start)} – ${nsDay(own('orientation')!.end)}` }] : []),
+    ...(own('teaching') ? [{ id: 'teaching', when: nsDay(own('teaching')!.start) }] : []),
+  ]
+  const slotHtml = (x: FirstYearSlot) =>
+    x.kind === 'elective' ? `${esc(`${t(`guide.ns.elective.${x.category}`)} (${t('guide.ns.yourPick')}`)}${x.example ? `${esc(t('guide.ns.forExample'))}<a href="${href(code, `subject/${x.example}`)}">${x.example}</a>` : ''})` : `<a href="${href(code, `subject/${x.code}`)}">${x.code} ${esc(data.subjects[x.code]?.title ?? '')}</a>${x.kind === 'choice' ? ` (${esc(t('guide.ns.oneOf'))})` : ''}`
+  const firstYearHtml = Object.entries(FIRST_YEARS)
+    .map(([course, sems]) => ({ title: data.courses.find((c) => c.code === course)?.title ?? course, sems }))
+    .sort((a, b) => a.title.localeCompare(b.title))
+    .map(({ title, sems }) => `<h3>${esc(title)}</h3>\n${sems.map((slots, i) => `<p>${esc(t(i === 0 ? 'guide.ns.sem1' : 'guide.ns.sem2'))}:</p>${slots.length ? `<ul>${slots.map((x) => `<li>${slotHtml(x)}</li>`).join('')}</ul>` : `<p>${esc(t('guide.ns.yearLong'))}</p>`}`).join('\n')}`)
+    .join('\n')
+
   // Each topic's HTML, keyed by its anchor (the same ids the app uses).
   const topics: Record<string, string> = {
+    'after-atar': [
+      `<h2 id="after-atar">${esc(t('guide.ns.timelineTitle'))}</h2>`, `<p>${esc(t('guide.ns.timelineShort'))}</p>`,
+      `<ol>${nsSteps.map((x) => `<li><strong>${esc(t(`guide.ns.step.${x.id}`))}</strong>${x.when ? ` · ${esc(x.when)}` : ''}: ${esc(t(`guide.ns.stepText.${x.id}`))}</li>`).join('')}</ol>`,
+      `<p><a href="${VTAC_DATES_SOURCE}">${esc(t('guide.ns.vtacDates'))}</a></p>`,
+    ].join('\n'),
+    'atar-offers': [
+      `<h2 id="atar-offers">${esc(t('guide.ns.offersTitle'))}</h2>`, `<p>${esc(t('guide.ns.offersShort'))}</p>`,
+      `<ul>${['offerGuaranteed', 'offerLsr', 'offerChange', 'offerAccept'].map((k) => `<li>${esc(t(`guide.ns.${k}`))}</li>`).join('')}</ul>`,
+      `<p><a href="${ATAR_GUARANTEES_URL}">${esc(t('guide.ns.atarLink'))}</a></p>`, `<p><a href="${UNIMELB_VTAC_URL}">${esc(t('guide.ns.vtacInfoLink'))}</a></p>`,
+    ].join('\n'),
+    'first-year': [
+      `<h2 id="first-year">${esc(t('guide.ns.firstYearTitle'))}</h2>`, `<p>${esc(t('guide.ns.firstYearShort'))}</p>`, firstYearHtml,
+      `<p>${esc(t('guide.ns.firstYearNote', { year: YEAR }))}</p>`, `<p><a href="${href(code, 'plan')}">${esc(t('guide.ns.planIt'))}</a></p>`,
+    ].join('\n'),
+    'first-tips': [
+      `<h2 id="first-tips">${esc(t('guide.ns.tipsTitle'))}</h2>`, `<p>${esc(t('guide.ns.tipsShort'))}</p>`,
+      `<ul>${['tipBreadth', 'tipLoad', 'tipMajor', 'tipClubs'].map((k) => `<li>${esc(t(`guide.ns.${k}`))}</li>`).join('')}</ul>`,
+      `<p><a href="${href(code, 'subjects/breadth')}">${esc(t('tools.breadth'))}</a> · <a href="${href(code, 'subjects/first-semester')}">${esc(t('tools.firstSem'))}</a> · <a href="${href(code, 'clubs')}">${esc(t('clubsPage.title'))}</a></p>`,
+    ].join('\n'),
     'first': [
       `<h2 id="first">${esc(t('guide.firstTitle'))}</h2>`, p('firstText'), `<ol>${['firstStep1', 'firstStep2', 'firstStep3', 'firstStep4'].map((k) => `<li>${esc(t(`guide.${k}`))}</li>`).join('')}</ol>`, p('breadthText'),
       `<p>${esc(t('guide.easyHardText'))} ${RANKS.map((d) => `<a href="${href(code, `subjects/${RANK_SLUGS[d]}`)}">${esc(t(`browse.rankList.${d}`))}</a>`).join(' · ')}</p>`,

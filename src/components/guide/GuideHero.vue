@@ -16,6 +16,8 @@ const { t } = useI18n()
 // Each illustration is its own small chunk, loaded with the page that shows it.
 const ART: Record<GuidePageSlug | 'overview', () => Promise<Component>> = {
   overview: () => import('./art/ArtOverview.vue'),
+  // New students share the getting-started scene: the same first steps.
+  'new-students': () => import('./art/ArtOverview.vue'),
   basics: () => import('./art/ArtBasics.vue'),
   systems: () => import('./art/ArtSystems.vue'),
   enrolling: () => import('./art/ArtEnrolling.vue'),

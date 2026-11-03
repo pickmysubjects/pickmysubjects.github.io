@@ -1,4 +1,4 @@
-import type { LocaleCode } from "@/i18n/codes";
+import type { LocaleCode } from '@/i18n/codes'
 
 /**
  * The site's update log by version, newest first: shown on /changes/ (versions only, no dates),
@@ -8,23 +8,21 @@ import type { LocaleCode } from "@/i18n/codes";
  * updates and internal changes stay out. tests/siteUpdates.test.ts checks the shape.
  */
 export interface SiteRelease {
-  version: string;
+  version: string
   /** YYYY-MM-DD, the day this version went live; null while it is still being built. */
-  date: string | null;
-  points: Record<LocaleCode, string>[];
+  date: string | null
+  points: Record<LocaleCode, string>[]
 }
 
 export const SITE_RELEASES: SiteRelease[] = [
   {
-    version: "1.0.0",
+    version: '1.0.0',
     date: null,
     points: [
       {
         en: "Plan board: your whole degree on one board, with every degree rule checked. Share a plan with a short link, and compare your plans side by side.",
-        "zh-CN":
-          "规划板：整个学位排在一张板上，每条学位规则都帮你检查。用短链接分享计划，几个计划还能并排对比。",
-        "zh-TW":
-          "規劃板：整個學位排在一張板上，每條學位規則都幫你檢查。用短連結分享計畫，幾個計畫還能並排比較。",
+        'zh-CN': "规划板：整个学位排在一张板上，每条学位规则都帮你检查。用短链接分享计划，几个计划还能并排对比。",
+        'zh-TW': "規劃板：整個學位排在一張板上，每條學位規則都幫你檢查。用短連結分享計畫，幾個計畫還能並排比較。",
         ja: "プランボード：学位全体を1枚に、すべての学位ルールをチェック。短いリンクで共有し、プラン同士を並べて比較。",
         ko: "계획 보드: 학위 전체를 한 보드에, 모든 학위 요건을 확인해요. 짧은 링크로 공유하고 계획끼리 나란히 비교해요.",
         vi: "Bảng kế hoạch: cả bằng trên một bảng, mọi quy định của bằng đều được kiểm tra. Chia sẻ bằng link ngắn và so sánh các kế hoạch cạnh nhau.",
@@ -34,10 +32,8 @@ export const SITE_RELEASES: SiteRelease[] = [
       },
       {
         en: "New tools: a revision planner (what and how to revise each day, with calendar export), a final-exam mark calculator and a WAM calculator.",
-        "zh-CN":
-          "新工具：复习计划生成器（每天复习什么、怎么复习，可加入日历）、期末要考几分、WAM 计算器。",
-        "zh-TW":
-          "新工具：複習計畫產生器（每天複習什麼、怎麼複習，可加入行事曆）、期末要考幾分、WAM 計算機。",
+        'zh-CN': "新工具：复习计划生成器（每天复习什么、怎么复习，可加入日历）、期末要考几分、WAM 计算器。",
+        'zh-TW': "新工具：複習計畫產生器（每天複習什麼、怎麼複習，可加入行事曆）、期末要考幾分、WAM 計算機。",
         ja: "新ツール：試験勉強プランナー（毎日何をどう復習するか、カレンダーにも追加）、期末で必要な点数、WAM計算。",
         ko: "새 도구: 시험 공부 계획표(날마다 무엇을 어떻게 공부할지, 캘린더 추가), 기말 필요 점수 계산기, WAM 계산기.",
         vi: "Công cụ mới: lập kế hoạch ôn thi (mỗi ngày ôn gì, ôn thế nào, thêm vào lịch), tính điểm cần đạt cuối kỳ và tính WAM.",
@@ -47,10 +43,8 @@ export const SITE_RELEASES: SiteRelease[] = [
       },
       {
         en: "Fuller “What students say” for the most-reviewed subjects, with tags like “final exam mostly multiple choice”, and a filter for it.",
-        "zh-CN":
-          "评价多的课，「同学怎么说」更详细了，还有「期末多为选择题」等标签，找课时也能按它筛选。",
-        "zh-TW":
-          "評價多的課，「同學怎麼說」更詳細了，還有「期末多為選擇題」等標籤，找課時也能用它篩選。",
+        'zh-CN': "评价多的课，「同学怎么说」更详细了，还有「期末多为选择题」等标签，找课时也能按它筛选。",
+        'zh-TW': "評價多的課，「同學怎麼說」更詳細了，還有「期末多為選擇題」等標籤，找課時也能用它篩選。",
         ja: "レビューの多い科目は「学生の声」がより詳しく。「期末はほぼ選択式」などのタグ付きで、絞り込みにも使えます。",
         ko: "리뷰가 많은 과목은 ‘학생들의 평가’가 더 자세해졌고, ‘기말 대부분 객관식’ 같은 태그로 필터할 수도 있어요.",
         vi: "“Sinh viên nói gì” chi tiết hơn cho môn có nhiều đánh giá, kèm nhãn như “thi cuối kỳ chủ yếu trắc nghiệm” và bộ lọc theo nhãn đó.",
@@ -59,37 +53,31 @@ export const SITE_RELEASES: SiteRelease[] = [
         hi: "ज़्यादा रिव्यू वाले विषयों में “छात्र क्या कहते हैं” अब विस्तार से, “फ़ाइनल ज़्यादातर बहुविकल्पीय” जैसे टैग और उनका फ़िल्टर।",
       },
       {
-        en: "Skills for your resume: the tools, abilities and outcomes your subjects show, each with its subjects, set against what employers list for your career goal.",
-        "zh-CN":
-          "简历上的技能：你修过的课能证明的工具、能力和学习成果，每条都写明出自哪门课，还能对照职业目标里招聘方要的技能。",
-        "zh-TW":
-          "履歷上的技能：你修過的課能證明的工具、能力和學習成果，每條都寫明出自哪門課，還能對照職業目標裡雇主要的技能。",
-        ja: "履歴書に書けるスキル：履修科目で示せるツール・能力・学習成果を科目つきで。キャリア目標で雇用側が求めるスキルとも比べられます。",
-        ko: "이력서에 쓸 스킬: 수강 과목으로 보여줄 수 있는 도구·역량·학습 성과를 과목과 함께, 진로 목표에서 고용주가 원하는 스킬과 비교해요.",
-        vi: "Kỹ năng cho CV: công cụ, năng lực và kết quả học tập mà các môn của bạn chứng minh, kèm môn học, so với kỹ năng nhà tuyển dụng cần cho mục tiêu nghề nghiệp.",
-        ms: "Kemahiran untuk resume: alat, kebolehan dan hasil pembelajaran daripada subjek anda, dengan subjeknya, dibanding kehendak majikan untuk matlamat kerjaya anda.",
-        id: "Keahlian untuk CV: alat, kemampuan dan capaian belajar dari mata kuliahmu, beserta mata kuliahnya, dibanding yang dicari pemberi kerja untuk tujuan kariermu.",
-        hi: "रिज़्यूमे के लिए स्किल: आपके सब्जेक्ट से दिखने वाले टूल, क्षमताएँ और सीख, हर एक अपने सब्जेक्ट के साथ, और आपके करियर लक्ष्य के लिए नियोक्ताओं की माँग से तुलना।",
+        en: "Skills for your resume, each with the subjects behind it, set against what employers list for your goal; and when to apply for internships and graduate jobs.",
+        'zh-CN': "简历上的技能：每条都写明出自哪门课，并对照职业目标里招聘方要的技能；还有实习和毕业生项目什么时候申请。",
+        'zh-TW': "履歷上的技能：每條都寫明出自哪門課，並對照職業目標裡雇主要的技能；還有實習和畢業生計畫什麼時候申請。",
+        ja: "履歴書に書けるスキル：根拠の科目つきで、目標の職で求められるスキルと比較。インターンと新卒採用の応募時期も。",
+        ko: "이력서에 쓸 스킬: 근거 과목과 함께, 목표 직업에서 원하는 스킬과 비교해요. 인턴·졸업생 채용 지원 시기도.",
+        vi: "Kỹ năng cho CV, kèm môn chứng minh, so với yêu cầu của nhà tuyển dụng cho mục tiêu của bạn; và khi nào nộp đơn thực tập, việc làm sau tốt nghiệp.",
+        ms: "Kemahiran untuk resume, dengan subjek di sebaliknya, dibanding kehendak majikan untuk matlamat anda; dan bila memohon latihan industri dan kerja graduan.",
+        id: "Keahlian untuk CV, beserta mata kuliah sumbernya, dibanding yang dicari pemberi kerja untuk tujuanmu; dan kapan melamar magang dan kerja lulusan.",
+        hi: "रिज़्यूमे के लिए स्किल, उनके सब्जेक्ट के साथ, आपके लक्ष्य के लिए नियोक्ताओं की माँग से तुलना; और इंटर्नशिप व ग्रैजुएट नौकरी के लिए कब आवेदन करें।",
       },
       {
-        en: "Clubs: all 246 UMSU clubs by category, the ones that fit you first. Plus when to apply for internships and graduate jobs, and the site on your phone's home screen.",
-        "zh-CN":
-          "社团：UMSU 全部 246 个社团按分类列出，适合你的排在前面。还有实习和毕业生项目什么时候申请，以及把网站放到手机主屏幕。",
-        "zh-TW":
-          "社團：UMSU 全部 246 個社團按分類列出，適合你的排在前面。還有實習和畢業生計畫什麼時候申請，以及把網站放到手機主畫面。",
-        ja: "クラブ：UMSU の全246クラブを分類別に、合うものを先に。インターンと新卒採用の応募時期、スマホのホーム画面への追加も。",
-        ko: "동아리: UMSU 동아리 246개 전체를 분류별로, 맞는 곳 먼저. 인턴·졸업생 채용 지원 시기와 휴대폰 홈 화면에 추가하기도.",
-        vi: "CLB: tất cả 246 CLB của UMSU theo loại, CLB hợp với bạn ở trước. Thêm lịch nộp đơn thực tập và việc làm sau tốt nghiệp, và đưa trang ra màn hình chính điện thoại.",
-        ms: "Kelab: semua 246 kelab UMSU ikut kategori, yang sesuai dahulu. Juga bila memohon latihan industri dan kerja graduan, dan laman ini di skrin utama telefon.",
-        id: "Klub: semua 246 klub UMSU per kategori, yang cocok lebih dulu. Plus kapan melamar magang dan kerja lulusan, dan situs ini di layar utama ponsel.",
-        hi: "क्लब: UMSU के सभी 246 क्लब श्रेणी के हिसाब से, आपके लिए सही पहले। साथ में इंटर्नशिप और ग्रैजुएट नौकरियों के लिए कब आवेदन करें, और साइट को फ़ोन की होम स्क्रीन पर रखना।",
+        en: "New students: the dates from results to your first day, and what each degree's first year looks like. Plus all 246 UMSU clubs, the ones for you first.",
+        'zh-CN': "新生页：从出分到开学的日期，以及每个学位第一年上什么。还有 UMSU 全部 246 个社团，适合你的排在前面。",
+        'zh-TW': "新生頁：從出分到開學的日期，以及每個學位第一年上什麼。還有 UMSU 全部 246 個社團，適合你的排在前面。",
+        ja: "新入生ページ：結果発表から初日までの日程と、各学位の1年目の内容。UMSU の全246クラブも、合うものを先に。",
+        ko: "신입생 페이지: 결과 발표부터 첫날까지의 일정과 학위별 1학년 과정. UMSU 동아리 246개도 맞는 곳부터.",
+        vi: "Tân sinh viên: các mốc từ ngày có kết quả đến ngày đầu tiên, và năm nhất của từng bằng. Thêm 246 CLB của UMSU, CLB hợp với bạn ở trước.",
+        ms: "Pelajar baharu: tarikh dari keputusan ke hari pertama, dan rupa tahun pertama setiap ijazah. Juga semua 246 kelab UMSU, yang sesuai dahulu.",
+        id: "Mahasiswa baru: tanggal dari hasil ke hari pertama, dan isi tahun pertama tiap gelar. Plus semua 246 klub UMSU, yang cocok lebih dulu.",
+        hi: "नए छात्र: नतीजों से पहले दिन तक की तारीख़ें, और हर डिग्री का पहला साल। साथ में UMSU के सभी 246 क्लब, आपके लिए सही पहले।",
       },
       {
         en: "A new look with key dates on the home page, a menu for every feature, page numbers on long lists, and a search that forgives typos (“COMP1001” finds COMP10001).",
-        "zh-CN":
-          "全新外观，首页显示重要日期，每个功能都在菜单里；长列表分页；搜索能容错，打错课号也会提示（如 COMP1001）。",
-        "zh-TW":
-          "全新外觀，首頁顯示重要日期，每個功能都在選單裡；長列表分頁；搜尋能容錯，打錯課號也會提示（如 COMP1001）。",
+        'zh-CN': "全新外观，首页显示重要日期，每个功能都在菜单里；长列表分页；搜索能容错，打错课号也会提示（如 COMP1001）。",
+        'zh-TW': "全新外觀，首頁顯示重要日期，每個功能都在選單裡；長列表分頁；搜尋能容錯，打錯課號也會提示（如 COMP1001）。",
         ja: "新デザイン、ホームに重要な日程、全機能をメニューに。長いリストはページ分け、検索は打ち間違いにも対応（COMP1001 でも候補を表示）。",
         ko: "새 디자인, 홈에 주요 일정, 모든 기능을 메뉴에. 긴 목록은 페이지로, 검색은 오타도 알아들어요(COMP1001도 제안).",
         vi: "Giao diện mới, ngày quan trọng trên trang chủ, mọi tính năng trong menu, danh sách dài chia trang, và tìm kiếm chấp nhận gõ sai (“COMP1001” vẫn ra COMP10001).",
@@ -100,15 +88,13 @@ export const SITE_RELEASES: SiteRelease[] = [
     ],
   },
   {
-    version: "0.9.1",
+    version: '0.9.1',
     date: "2026-10-27",
     points: [
       {
         en: "Add to my plan lets you pick any semester, past ones too; a semester the subject doesn’t run in shows a warning.",
-        "zh-CN":
-          "「加入我的计划」可以选任意学期，包括过去的学期；这门课不开的学期会给出提醒。",
-        "zh-TW":
-          "「加入我的計畫」可以選任意學期，包括過去的學期；這門課沒開的學期會提醒你。",
+        'zh-CN': "「加入我的计划」可以选任意学期，包括过去的学期；这门课不开的学期会给出提醒。",
+        'zh-TW': "「加入我的計畫」可以選任意學期，包括過去的學期；這門課沒開的學期會提醒你。",
         ja: "「プランに追加」でどの学期も選べるように（過去の学期も）。開講しない学期には注意が出ます。",
         ko: "‘내 계획에 추가’에서 지난 학기를 포함해 아무 학기나 고를 수 있어요. 개설되지 않는 학기는 경고가 떠요.",
         vi: "Thêm vào kế hoạch giờ chọn được mọi học kỳ, cả học kỳ đã qua; học kỳ môn không mở sẽ có cảnh báo.",
@@ -118,8 +104,8 @@ export const SITE_RELEASES: SiteRelease[] = [
       },
       {
         en: "The site is marked Beta until 1.0.0, with a notice on the home page.",
-        "zh-CN": "1.0.0 之前网站标为 Beta，首页有提示。",
-        "zh-TW": "1.0.0 之前網站標為 Beta，首頁有提示。",
+        'zh-CN': "1.0.0 之前网站标为 Beta，首页有提示。",
+        'zh-TW': "1.0.0 之前網站標為 Beta，首頁有提示。",
         ja: "1.0.0まではベータ版と表示し、ホームにお知らせを掲載。",
         ko: "1.0.0 전까지 베타로 표시하고 홈에 안내를 띄워요.",
         vi: "Trang được ghi là Beta cho đến 1.0.0, có thông báo ở trang chủ.",
@@ -130,15 +116,13 @@ export const SITE_RELEASES: SiteRelease[] = [
     ],
   },
   {
-    version: "0.9.0",
+    version: '0.9.0',
     date: "2026-10-27",
     points: [
       {
         en: "A new look and logo, filters in a sidebar on desktop and a sheet on phones, and easier-to-read text in all 9 languages.",
-        "zh-CN":
-          "全新外观和 logo；电脑上筛选在侧栏、手机上在底部面板；9 种语言的文字都更好读。",
-        "zh-TW":
-          "全新外觀和 logo；電腦上篩選在側欄、手機上在底部面板；9 種語言的文字都更好讀。",
+        'zh-CN': "全新外观和 logo；电脑上筛选在侧栏、手机上在底部面板；9 种语言的文字都更好读。",
+        'zh-TW': "全新外觀和 logo；電腦上篩選在側欄、手機上在底部面板；9 種語言的文字都更好讀。",
         ja: "新しいデザインとロゴ。絞り込みはPCでサイドバー、スマホで下から開く画面に。9言語とも読みやすく。",
         ko: "새 디자인과 로고, 필터는 PC에선 사이드바·폰에선 하단 시트로, 9개 언어 모두 더 읽기 쉽게.",
         vi: "Giao diện và logo mới, bộ lọc ở thanh bên trên máy tính và bảng dưới trên điện thoại, chữ dễ đọc hơn ở cả 9 ngôn ngữ.",
@@ -148,10 +132,8 @@ export const SITE_RELEASES: SiteRelease[] = [
       },
       {
         en: "Plan board: prerequisite lines, clearer markers, and a subject sheet that opens from any subject.",
-        "zh-CN":
-          "规划板：显示先修关系连线，标记更清楚，点任何一门课都能打开课程小窗。",
-        "zh-TW":
-          "規劃板：顯示先修關係連線，標記更清楚，點任何一門課都能打開課程小窗。",
+        'zh-CN': "规划板：显示先修关系连线，标记更清楚，点任何一门课都能打开课程小窗。",
+        'zh-TW': "規劃板：顯示先修關係連線，標記更清楚，點任何一門課都能打開課程小窗。",
         ja: "プランボード：先修科目の線、わかりやすい目印、どの科目からも開ける科目シート。",
         ko: "계획 보드: 선수과목 연결선, 더 분명한 표시, 어느 과목에서나 열리는 과목 창.",
         vi: "Bảng kế hoạch: đường nối môn tiên quyết, đánh dấu rõ hơn, cửa sổ môn học mở từ bất kỳ môn nào.",
@@ -160,28 +142,26 @@ export const SITE_RELEASES: SiteRelease[] = [
         hi: "प्लान बोर्ड: प्रीरिक्विज़िट की लाइनें, साफ़ निशान, और किसी भी विषय से खुलने वाली विषय शीट।",
       },
       {
-        en: 'My record gets a summary and a "My degree" card; fixes for iOS, Android and Windows.',
-        "zh-CN":
-          '「我的记录」有了概览和"我的学位"卡片；修复 iOS、Android 和 Windows 上的问题。',
-        "zh-TW":
-          "「我的紀錄」有了概覽和「我的學位」卡片；修正 iOS、Android 和 Windows 上的問題。",
+        en: "My record gets a summary and a \"My degree\" card; fixes for iOS, Android and Windows.",
+        'zh-CN': "「我的记录」有了概览和\"我的学位\"卡片；修复 iOS、Android 和 Windows 上的问题。",
+        'zh-TW': "「我的紀錄」有了概覽和「我的學位」卡片；修正 iOS、Android 和 Windows 上的問題。",
         ja: "「マイ記録」に概要と「私の学位」カード。iOS・Android・Windowsの不具合を修正。",
         ko: "‘내 기록’에 요약과 ‘내 학위’ 카드 추가, iOS·Android·Windows 문제 수정.",
-        vi: 'Hồ sơ của tôi có phần tóm tắt và thẻ "Bằng của tôi"; sửa lỗi trên iOS, Android và Windows.',
-        ms: 'Rekod saya ada ringkasan dan kad "Ijazah saya"; pembaikan untuk iOS, Android dan Windows.',
-        id: 'Catatan saya punya ringkasan dan kartu "Gelar saya"; perbaikan untuk iOS, Android, dan Windows.',
-        hi: 'मेरा रिकॉर्ड में सारांश और "मेरी डिग्री" कार्ड; iOS, Android और Windows की गड़बड़ियाँ ठीक।',
+        vi: "Hồ sơ của tôi có phần tóm tắt và thẻ \"Bằng của tôi\"; sửa lỗi trên iOS, Android và Windows.",
+        ms: "Rekod saya ada ringkasan dan kad \"Ijazah saya\"; pembaikan untuk iOS, Android dan Windows.",
+        id: "Catatan saya punya ringkasan dan kartu \"Gelar saya\"; perbaikan untuk iOS, Android, dan Windows.",
+        hi: "मेरा रिकॉर्ड में सारांश और \"मेरी डिग्री\" कार्ड; iOS, Android और Windows की गड़बड़ियाँ ठीक।",
       },
     ],
   },
   {
-    version: "0.8.0",
+    version: '0.8.0',
     date: "2026-10-26",
     points: [
       {
         en: "Related subjects on every subject page, and save your plan as an image to share.",
-        "zh-CN": "每门课的页面都有相关课程；计划可以存成图片分享。",
-        "zh-TW": "每門課的頁面都有相關課程；計畫可以存成圖片分享。",
+        'zh-CN': "每门课的页面都有相关课程；计划可以存成图片分享。",
+        'zh-TW': "每門課的頁面都有相關課程；計畫可以存成圖片分享。",
         ja: "各科目ページに関連科目。プランを画像で保存して共有。",
         ko: "과목 페이지마다 관련 과목, 계획을 이미지로 저장해 공유.",
         vi: "Mỗi trang môn học có môn liên quan; lưu kế hoạch thành ảnh để chia sẻ.",
@@ -191,8 +171,8 @@ export const SITE_RELEASES: SiteRelease[] = [
       },
       {
         en: "2027 re-enrolment dates; the site moves to the new Handbook year by itself.",
-        "zh-CN": "加入 2027 年续选课时间；新 Handbook 出来后网站自动切换年份。",
-        "zh-TW": "加入 2027 年續選課時間；新 Handbook 出來後網站自動切換年份。",
+        'zh-CN': "加入 2027 年续选课时间；新 Handbook 出来后网站自动切换年份。",
+        'zh-TW': "加入 2027 年續選課時間；新 Handbook 出來後網站自動切換年份。",
         ja: "2027年の再履修登録期間。新しいHandbookの年度に自動で切り替え。",
         ko: "2027년 재등록 기간, 새 Handbook 연도로 자동 전환.",
         vi: "Lịch đăng ký lại 2027; trang tự chuyển sang năm Handbook mới.",
@@ -202,10 +182,8 @@ export const SITE_RELEASES: SiteRelease[] = [
       },
       {
         en: "Plans take credit from study elsewhere and a part-time load; new guide pages on uni systems, wellbeing and careers help.",
-        "zh-CN":
-          "计划可以计入外校学分、按非全日制排课；指南新增学校系统、身心健康和就业帮助。",
-        "zh-TW":
-          "計畫可以計入外校學分、按非全時排課；指南新增學校系統、身心健康和就業協助。",
+        'zh-CN': "计划可以计入外校学分、按非全日制排课；指南新增学校系统、身心健康和就业帮助。",
+        'zh-TW': "計畫可以計入外校學分、按非全時排課；指南新增學校系統、身心健康和就業協助。",
         ja: "プランに他大学の単位とパートタイムの履修量。ガイドに学内システム、心身の健康、キャリア支援を追加。",
         ko: "계획에 타 기관 학점과 파트타임 수강 반영, 가이드에 학교 시스템·건강·취업 지원 추가.",
         vi: "Kế hoạch tính tín chỉ học nơi khác và học bán thời gian; hướng dẫn thêm hệ thống trường, sức khỏe và hỗ trợ nghề nghiệp.",
@@ -216,15 +194,13 @@ export const SITE_RELEASES: SiteRelease[] = [
     ],
   },
   {
-    version: "0.7.1",
+    version: '0.7.1',
     date: "2026-10-25",
     points: [
       {
         en: "Mark estimates read shared grade bands as ranges, and the likely range says how sure it is.",
-        "zh-CN":
-          '分数估计把大家分享的成绩段当作区间来算，"大概范围"会说明有多大把握。',
-        "zh-TW":
-          "分數估計把大家分享的成績級距當作區間來算，「大概範圍」會說明有多大把握。",
+        'zh-CN': "分数估计把大家分享的成绩段当作区间来算，\"大概范围\"会说明有多大把握。",
+        'zh-TW': "分數估計把大家分享的成績級距當作區間來算，「大概範圍」會說明有多大把握。",
         ja: "点数の予想は共有された成績帯を範囲として扱い、予想範囲の確かさも示します。",
         ko: "점수 예측은 공유된 성적대를 구간으로 보고, 예상 범위가 얼마나 확실한지 알려 줘요.",
         vi: "Ước tính điểm coi các khoảng điểm được chia sẻ là khoảng, và khoảng dự đoán nói rõ độ chắc chắn.",
@@ -235,13 +211,13 @@ export const SITE_RELEASES: SiteRelease[] = [
     ],
   },
   {
-    version: "0.7.0",
+    version: '0.7.0',
     date: "2026-10-24",
     points: [
       {
         en: "Pick a career goal for each plan; suggestions and the plan use it.",
-        "zh-CN": "每个计划可以设一个职业目标，推荐和计划都会参考它。",
-        "zh-TW": "每個計畫可以設一個職涯目標，推薦和計畫都會參考它。",
+        'zh-CN': "每个计划可以设一个职业目标，推荐和计划都会参考它。",
+        'zh-TW': "每個計畫可以設一個職涯目標，推薦和計畫都會參考它。",
         ja: "プランごとに目標の職業を選べ、おすすめとプランに反映されます。",
         ko: "계획마다 진로 목표를 정하면 추천과 계획에 반영돼요.",
         vi: "Chọn mục tiêu nghề nghiệp cho từng kế hoạch; gợi ý và kế hoạch đều dựa vào đó.",
@@ -251,10 +227,8 @@ export const SITE_RELEASES: SiteRelease[] = [
       },
       {
         en: "Subjects, majors and careers sit side by side in the menu; long hints fold behind a small info button.",
-        "zh-CN":
-          "课程、专业和职业在菜单里并排；较长的提示收进小小的说明按钮里。",
-        "zh-TW":
-          "課程、主修和職涯在選單裡並排；較長的提示收進小小的說明按鈕裡。",
+        'zh-CN': "课程、专业和职业在菜单里并排；较长的提示收进小小的说明按钮里。",
+        'zh-TW': "課程、主修和職涯在選單裡並排；較長的提示收進小小的說明按鈕裡。",
         ja: "科目・専攻・職業がメニューに並び、長いヒントは小さな情報ボタンの中に。",
         ko: "과목·전공·진로가 메뉴에 나란히, 긴 안내는 작은 정보 버튼 안으로.",
         vi: "Môn học, ngành và nghề nghiệp nằm cạnh nhau trong menu; gợi ý dài được gom vào nút thông tin nhỏ.",
@@ -265,24 +239,24 @@ export const SITE_RELEASES: SiteRelease[] = [
     ],
   },
   {
-    version: "0.6.0",
+    version: '0.6.0',
     date: "2026-10-23",
     points: [
       {
-        en: '"Is it hard? Is it right for me?" on every subject page, with the reasons in plain words.',
-        "zh-CN": '每门课的页面都有"难不难？适不适合我？"，用大白话说明理由。',
-        "zh-TW": "每門課的頁面都有「難不難？適不適合我？」，用白話說明理由。",
+        en: "\"Is it hard? Is it right for me?\" on every subject page, with the reasons in plain words.",
+        'zh-CN': "每门课的页面都有\"难不难？适不适合我？\"，用大白话说明理由。",
+        'zh-TW': "每門課的頁面都有「難不難？適不適合我？」，用白話說明理由。",
         ja: "各科目ページに「難しい？自分に合う？」と、その理由をわかりやすく。",
         ko: "과목 페이지마다 ‘어려울까? 나에게 맞을까?’와 그 이유를 쉬운 말로.",
-        vi: 'Mỗi trang môn học có "Có khó không? Có hợp với mình không?" kèm lý do dễ hiểu.',
-        ms: '"Susah tak? Sesuai untuk saya?" di setiap halaman subjek, dengan sebab dalam bahasa mudah.',
-        id: '"Sulit tidak? Cocok untukku?" di tiap halaman mata kuliah, dengan alasan yang mudah dipahami.',
-        hi: 'हर विषय पेज पर "कठिन है? मेरे लिए सही है?" और उसकी वजह आसान शब्दों में।',
+        vi: "Mỗi trang môn học có \"Có khó không? Có hợp với mình không?\" kèm lý do dễ hiểu.",
+        ms: "\"Susah tak? Sesuai untuk saya?\" di setiap halaman subjek, dengan sebab dalam bahasa mudah.",
+        id: "\"Sulit tidak? Cocok untukku?\" di tiap halaman mata kuliah, dengan alasan yang mudah dipahami.",
+        hi: "हर विषय पेज पर \"कठिन है? मेरे लिए सही है?\" और उसकी वजह आसान शब्दों में।",
       },
       {
         en: "Save subjects and compare them side by side; careers pages lead from a job back to majors and subjects.",
-        "zh-CN": "可以收藏课程并排对比；新增职业页，从职业倒推专业和课程。",
-        "zh-TW": "可以收藏課程並排比較；新增職涯頁，從職業倒推主修和課程。",
+        'zh-CN': "可以收藏课程并排对比；新增职业页，从职业倒推专业和课程。",
+        'zh-TW': "可以收藏課程並排比較；新增職涯頁，從職業倒推主修和課程。",
         ja: "科目を保存して並べて比較。職業ページで仕事から専攻・科目へ。",
         ko: "과목을 저장해 나란히 비교, 진로 페이지에서 직업에서 전공·과목으로.",
         vi: "Lưu môn học và so sánh cạnh nhau; trang nghề nghiệp đi ngược từ nghề về ngành và môn.",
@@ -292,10 +266,8 @@ export const SITE_RELEASES: SiteRelease[] = [
       },
       {
         en: "The guide splits into sections, with enrolment, fees and census, exams and results, and a key dates page.",
-        "zh-CN":
-          "指南分成几个部分，新增选课流程、学费和 census、考试和成绩，以及关键日期页。",
-        "zh-TW":
-          "指南分成幾個部分，新增選課流程、學費和 census、考試和成績，以及重要日期頁。",
+        'zh-CN': "指南分成几个部分，新增选课流程、学费和 census、考试和成绩，以及关键日期页。",
+        'zh-TW': "指南分成幾個部分，新增選課流程、學費和 census、考試和成績，以及重要日期頁。",
         ja: "ガイドをセクションに分け、履修登録、学費とcensus、試験と成績、重要な日付のページを追加。",
         ko: "가이드를 여러 섹션으로 나누고 수강신청, 학비와 census, 시험과 성적, 주요 날짜 페이지 추가.",
         vi: "Hướng dẫn chia thành các phần, thêm đăng ký môn, học phí và census, thi và kết quả, cùng trang ngày quan trọng.",
@@ -306,15 +278,13 @@ export const SITE_RELEASES: SiteRelease[] = [
     ],
   },
   {
-    version: "0.5.0",
+    version: '0.5.0',
     date: "2026-10-22",
     points: [
       {
         en: "A compact plan board: swap, move and add in one tap, with a prerequisite timeline.",
-        "zh-CN":
-          "更紧凑的规划板：一下就能替换、移动、添加课程，还有先修时间线。",
-        "zh-TW":
-          "更緊湊的規劃板：一下就能替換、移動、新增課程，還有先修時間線。",
+        'zh-CN': "更紧凑的规划板：一下就能替换、移动、添加课程，还有先修时间线。",
+        'zh-TW': "更緊湊的規劃板：一下就能替換、移動、新增課程，還有先修時間線。",
         ja: "コンパクトなプランボード：入れ替え・移動・追加がワンタップで、先修科目のタイムライン付き。",
         ko: "더 촘촘한 계획 보드: 한 번에 바꾸기·옮기기·추가, 선수과목 타임라인.",
         vi: "Bảng kế hoạch gọn hơn: đổi, chuyển và thêm môn chỉ một chạm, có dòng thời gian môn tiên quyết.",
@@ -324,10 +294,8 @@ export const SITE_RELEASES: SiteRelease[] = [
       },
       {
         en: "Redesigned subject pages and My record; new guide topics on timetabling, special consideration and hurdles; a WAM what-if.",
-        "zh-CN":
-          "课程页和「我的记录」重新设计；指南新增排课表、特殊考虑和 hurdle；可以试算 WAM。",
-        "zh-TW":
-          "課程頁和「我的紀錄」重新設計；指南新增排課表、特殊考量和 hurdle；可以試算 WAM。",
+        'zh-CN': "课程页和「我的记录」重新设计；指南新增排课表、特殊考虑和 hurdle；可以试算 WAM。",
+        'zh-TW': "課程頁和「我的紀錄」重新設計；指南新增排課表、特殊考量和 hurdle；可以試算 WAM。",
         ja: "科目ページとマイ記録を刷新。ガイドに時間割、特別配慮、ハードルを追加。WAMの試算も。",
         ko: "과목 페이지와 내 기록 새 디자인, 가이드에 시간표·특별 고려·허들 추가, WAM 가정 계산.",
         vi: "Thiết kế lại trang môn học và Hồ sơ của tôi; hướng dẫn thêm xếp thời khóa biểu, xét đặc biệt và hurdle; thử tính WAM.",
@@ -338,13 +306,13 @@ export const SITE_RELEASES: SiteRelease[] = [
     ],
   },
   {
-    version: "0.4.0",
+    version: '0.4.0',
     date: "2026-10-21",
     points: [
       {
         en: "Every 2026 undergraduate subject is in, with music subjects and more majors.",
-        "zh-CN": "收录了 2026 年全部本科课程，加入音乐课和更多专业。",
-        "zh-TW": "收錄了 2026 年全部大學部課程，加入音樂課和更多主修。",
+        'zh-CN': "收录了 2026 年全部本科课程，加入音乐课和更多专业。",
+        'zh-TW': "收錄了 2026 年全部大學部課程，加入音樂課和更多主修。",
         ja: "2026年の学部科目をすべて収録。音楽の科目と専攻も追加。",
         ko: "2026년 학부 과목 전체 수록, 음악 과목과 더 많은 전공 추가.",
         vi: "Có đủ mọi môn đại học năm 2026, thêm môn âm nhạc và nhiều ngành hơn.",
@@ -354,25 +322,25 @@ export const SITE_RELEASES: SiteRelease[] = [
       },
       {
         en: "One Find subjects page with quick lists; year-long subjects split their load across both semesters.",
-        "zh-CN": "一个「找课」页面加上快捷清单；全年课的学习量平摊到两个学期。",
-        "zh-TW": "一個「找課」頁面加上快捷清單；全年課的學習量平攤到兩個學期。",
+        'zh-CN': "一个「找课」页面加上快捷清单；全年课的学习量平摊到两个学期。",
+        'zh-TW': "一個「找課」頁面加上快捷清單；全年課的學習量平攤到兩個學期。",
         ja: "「科目を探す」ページにクイックリスト。通年科目は負担を両学期に分けて計算。",
         ko: "‘과목 찾기’ 한 페이지에 빠른 목록, 연간 과목은 부담을 두 학기에 나눠 계산.",
         vi: "Một trang Tìm môn học với danh sách nhanh; môn học cả năm chia khối lượng cho hai học kỳ.",
         ms: "Satu halaman Cari subjek dengan senarai pantas; subjek setahun membahagi beban kepada dua semester.",
         id: "Satu halaman Cari mata kuliah dengan daftar cepat; mata kuliah setahun membagi beban ke dua semester.",
-        hi: 'एक "विषय खोजें" पेज और झटपट सूचियाँ; साल भर के विषयों का लोड दोनों सेमेस्टर में बँटता है।',
+        hi: "एक \"विषय खोजें\" पेज और झटपट सूचियाँ; साल भर के विषयों का लोड दोनों सेमेस्टर में बँटता है।",
       },
     ],
   },
   {
-    version: "0.3.0",
+    version: '0.3.0',
     date: "2026-10-19",
     points: [
       {
         en: "Easy and hard subject lists (水课/难课), each with its reasons.",
-        "zh-CN": "水课和难课清单，每门都写明理由。",
-        "zh-TW": "涼課和硬課清單，每門都寫明理由。",
+        'zh-CN': "水课和难课清单，每门都写明理由。",
+        'zh-TW': "涼課和硬課清單，每門都寫明理由。",
         ja: "楽な科目・難しい科目のリスト、それぞれ理由付き。",
         ko: "쉬운 과목·어려운 과목 목록, 각각 이유와 함께.",
         vi: "Danh sách môn dễ và môn khó, mỗi môn kèm lý do.",
@@ -382,8 +350,8 @@ export const SITE_RELEASES: SiteRelease[] = [
       },
       {
         en: "Much faster first load, and the site works offline once opened.",
-        "zh-CN": "首次打开快了很多；打开过之后没有网络也能用。",
-        "zh-TW": "首次開啟快了很多；開過之後沒有網路也能用。",
+        'zh-CN': "首次打开快了很多；打开过之后没有网络也能用。",
+        'zh-TW': "首次開啟快了很多；開過之後沒有網路也能用。",
         ja: "初回の読み込みが大幅に速く。一度開けばオフラインでも使えます。",
         ko: "첫 로딩이 훨씬 빨라지고, 한 번 열면 오프라인에서도 써요.",
         vi: "Lần mở đầu nhanh hơn nhiều, và mở rồi thì dùng được khi không có mạng.",
@@ -394,13 +362,13 @@ export const SITE_RELEASES: SiteRelease[] = [
     ],
   },
   {
-    version: "0.2.0",
+    version: '0.2.0',
     date: "2026-10-08",
     points: [
       {
         en: "Every subject has its own page, in all 9 languages.",
-        "zh-CN": "每门课都有自己的页面，9 种语言都有。",
-        "zh-TW": "每門課都有自己的頁面，9 種語言都有。",
+        'zh-CN': "每门课都有自己的页面，9 种语言都有。",
+        'zh-TW': "每門課都有自己的頁面，9 種語言都有。",
         ja: "すべての科目に専用ページ、9言語に対応。",
         ko: "모든 과목에 전용 페이지, 9개 언어 지원.",
         vi: "Mỗi môn học có trang riêng, đủ 9 ngôn ngữ.",
@@ -410,10 +378,8 @@ export const SITE_RELEASES: SiteRelease[] = [
       },
       {
         en: "Share a plan by link or print it; a warning for heavy semesters; student review summaries for 201 subjects.",
-        "zh-CN":
-          "计划可以用链接分享或打印；课太重的学期会提醒；201 门课有学生评价总结。",
-        "zh-TW":
-          "計畫可以用連結分享或列印；課太重的學期會提醒；201 門課有學生評價總結。",
+        'zh-CN': "计划可以用链接分享或打印；课太重的学期会提醒；201 门课有学生评价总结。",
+        'zh-TW': "計畫可以用連結分享或列印；課太重的學期會提醒；201 門課有學生評價總結。",
         ja: "プランをリンクで共有・印刷。負担の重い学期に注意。201科目に学生レビューのまとめ。",
         ko: "계획을 링크로 공유하거나 인쇄, 부담 큰 학기 경고, 201개 과목에 학생 리뷰 요약.",
         vi: "Chia sẻ kế hoạch bằng link hoặc in; cảnh báo học kỳ quá nặng; tóm tắt đánh giá của sinh viên cho 201 môn.",
@@ -423,8 +389,8 @@ export const SITE_RELEASES: SiteRelease[] = [
       },
       {
         en: "A UniMelb basics guide for new students.",
-        "zh-CN": "新生用的墨大入门指南。",
-        "zh-TW": "新生用的墨大入門指南。",
+        'zh-CN': "新生用的墨大入门指南。",
+        'zh-TW': "新生用的墨大入門指南。",
         ja: "新入生向けのメルボルン大学入門ガイド。",
         ko: "신입생을 위한 멜버른대 기초 가이드.",
         vi: "Hướng dẫn cơ bản về UniMelb cho sinh viên mới.",
@@ -435,15 +401,13 @@ export const SITE_RELEASES: SiteRelease[] = [
     ],
   },
   {
-    version: "0.1.0",
+    version: '0.1.0',
     date: "2026-10-07",
     points: [
       {
         en: "First version: plan your degree semester by semester, get subject suggestions, and rate subjects anonymously.",
-        "zh-CN":
-          "第一个版本：按学期规划整个学位、获得选课推荐、匿名给课程打分。",
-        "zh-TW":
-          "第一個版本：按學期規劃整個學位、取得選課推薦、匿名幫課程評分。",
+        'zh-CN': "第一个版本：按学期规划整个学位、获得选课推荐、匿名给课程打分。",
+        'zh-TW': "第一個版本：按學期規劃整個學位、取得選課推薦、匿名幫課程評分。",
         ja: "最初のバージョン：学位を学期ごとに計画、科目のおすすめ、匿名で科目を評価。",
         ko: "첫 버전: 학기별로 학위 계획, 과목 추천, 익명으로 과목 평가.",
         vi: "Phiên bản đầu: lên kế hoạch cả bằng theo từng học kỳ, nhận gợi ý môn học, và đánh giá môn ẩn danh.",
@@ -453,8 +417,8 @@ export const SITE_RELEASES: SiteRelease[] = [
       },
       {
         en: "Available in 9 languages.",
-        "zh-CN": "支持 9 种语言。",
-        "zh-TW": "支援 9 種語言。",
+        'zh-CN': "支持 9 种语言。",
+        'zh-TW': "支援 9 種語言。",
         ja: "9言語に対応。",
         ko: "9개 언어 지원.",
         vi: "Có 9 ngôn ngữ.",
@@ -464,4 +428,4 @@ export const SITE_RELEASES: SiteRelease[] = [
       },
     ],
   },
-];
+]

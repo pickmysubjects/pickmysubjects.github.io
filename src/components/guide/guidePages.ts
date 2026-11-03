@@ -13,12 +13,13 @@ export interface GuidePageCardData {
   links: { to: string; key: string }[]
 }
 
-/** The three pages a new student starts with. */
-export const GUIDE_START: readonly GuidePageSlug[] = ['basics', 'systems', 'enrolling']
+/** The four pages a new student starts with: from an offer to the first semester. */
+export const GUIDE_START: readonly GuidePageSlug[] = ['new-students', 'basics', 'systems', 'enrolling']
 
 /** Every guide page but the overview and key dates, in menu order, as a card. */
 export const GUIDE_PAGE_CARDS: GuidePageCardData[] = MENUS.find((m) => m.area === 'guide')!
-  .items.filter((i) => i.to !== 'guide/' && i.to !== 'guide/key-dates/')
+  // Guide pages only: the menu also holds the clubs page, which isn't one.
+  .items.filter((i) => i.to.startsWith('guide/') && i.to !== 'guide/' && i.to !== 'guide/key-dates/')
   .map((i) => {
     const slug = i.to.split('/')[1] as GuidePageSlug
     return {

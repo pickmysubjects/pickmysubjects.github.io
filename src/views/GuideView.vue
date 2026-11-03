@@ -6,6 +6,7 @@ import GuideHero from '@/components/guide/GuideHero.vue'
 import GuideToc from '@/components/guide/GuideToc.vue'
 import GuideOverview from '@/components/guide/GuideOverview.vue'
 import GuideBasics from '@/components/guide/GuideBasics.vue'
+import GuideNewStudents from '@/components/guide/GuideNewStudents.vue'
 import GuideEnrolling from '@/components/guide/GuideEnrolling.vue'
 import GuideSemester from '@/components/guide/GuideSemester.vue'
 import GuideInternational from '@/components/guide/GuideInternational.vue'
@@ -27,7 +28,7 @@ const { param } = useView()
 const page = computed(() => guidePageOf(param.value))
 const slug = computed(() => slugOf(page.value))
 // Categories without their own component (systems, life) are plain service lists.
-const SECTIONS: Partial<Record<GuideCategory, Component>> = { basics: GuideBasics, enrolling: GuideEnrolling, semester: GuideSemester, international: GuideInternational, help: GuideHelp }
+const SECTIONS: Partial<Record<GuideCategory, Component>> = { 'new-students': GuideNewStudents, basics: GuideBasics, enrolling: GuideEnrolling, semester: GuideSemester, international: GuideInternational, help: GuideHelp }
 
 const title = computed(() => {
   const p = page.value

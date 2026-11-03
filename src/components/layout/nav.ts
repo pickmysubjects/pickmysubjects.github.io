@@ -98,6 +98,7 @@ export const MENUS: MenuArea[] = [
     to: 'guide/',
     items: [
       { key: 'menu.guideHome', desc: 'menu.d.guideHome', to: 'guide/', icon: Compass },
+      { key: 'guide.cat.new-students.nav', desc: 'menu.d.newStudents', to: 'guide/new-students/', icon: Sprout },
       { key: 'guide.cat.basics.nav', desc: 'menu.d.basics', to: 'guide/basics/', icon: BookOpen },
       { key: 'guide.cat.systems.nav', desc: 'menu.d.systems', to: 'guide/systems/', icon: Laptop },
       { key: 'guide.cat.enrolling.nav', desc: 'menu.d.enrolling', to: 'guide/enrolling/', icon: ClipboardList },

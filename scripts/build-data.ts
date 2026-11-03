@@ -10,6 +10,7 @@ import { buildDataset, ROOT } from './dataset'
 import { splitDataset } from '../src/engine/split'
 import { buildTakenWith } from '../src/engine/related'
 import { buildKeyDates } from './keyDates'
+import { firstYear } from '../src/engine/firstYear'
 import { pickLocalized } from '../src/i18n/localized'
 import { LOCALE_CODES } from '../src/i18n/codes'
 const OUT = join(ROOT, 'src', 'generated')
@@ -49,6 +50,10 @@ for (const name of ['real', 'demo'] as const) {
       const lines = Object.fromEntries(Object.values(dataset.subjects).flatMap((s) => (s.about ? [[s.code, pickLocalized(s.about.learn, locale)]] : [])))
       writeFileSync(join(learn, `${locale}.json`), JSON.stringify(lines))
     }
+    // Each degree's first year before a major is chosen (the new-students guide): planning takes
+    // seconds a degree, so it's done here once rather than in the browser.
+    const firstYears = Object.fromEntries([...new Set(dataset.courses.map((c) => c.code))].map((code) => [code, firstYear(dataset, code).semesters]))
+    writeFileSync(join(OUT, 'first-year.json'), JSON.stringify(firstYears))
     // "What changed in <year>", only once the next year is entered and differs (no empty page).
     const changes = buildChanges(dataset, SNAPSHOT_DIR(ROOT))
     if (changes) writeFileSync(join(OUT, 'changes.json'), JSON.stringify(changes))

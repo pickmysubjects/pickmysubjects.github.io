@@ -121,9 +121,10 @@ describe('guide: one place per topic', () => {
     expect(movedGuideAnchor('key-dates', 'term-2026-semester-2')).toBeNull()
     expect(movedGuideAnchor('basics', '')).toBeNull()
   })
-  it('reads straight through: overview, the seven sections, key dates, back to the overview', () => {
-    expect(GUIDE_PAGES).toEqual(['basics', 'systems', 'enrolling', 'semester', 'life', 'international', 'help', 'key-dates'])
-    expect(neighbours('basics')).toEqual({ prev: null, next: 'systems' })
+  it('reads straight through: overview, new students first, the sections, key dates, back to the overview', () => {
+    expect(GUIDE_PAGES).toEqual(['new-students', 'basics', 'systems', 'enrolling', 'semester', 'life', 'international', 'help', 'key-dates'])
+    expect(neighbours('new-students')).toEqual({ prev: null, next: 'basics' })
+    expect(neighbours('basics')).toEqual({ prev: 'new-students', next: 'systems' })
     expect(neighbours('key-dates')).toEqual({ prev: 'help', next: null })
   })
   it('lists the overview and every page in the 墨大入门 menu, in reading order, then the clubs', () => {
