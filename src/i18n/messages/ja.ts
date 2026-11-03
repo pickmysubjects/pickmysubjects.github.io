@@ -730,7 +730,7 @@ export const ja: Messages = {
     joinNote: "入会は UMSU のサイトで。UMSU アカウントが必要で、少額の会費があるクラブもあります。",
     about: "どんなクラブか",
     subjects: "同じ分野の科目",
-    subjectsHint: "1年次の科目を先に、次にレビューの多い順。",
+    subjectsHint: "クラブの内容に最も近い科目を先に、次にレビューの多い順。",
     similar: "似たクラブ",
     checked: "クラブ一覧は {date} に確認。クラブ名は UMSU の表記のまま。",
     notFound: "クラブが見つかりません",

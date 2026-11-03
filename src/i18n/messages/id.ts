@@ -730,7 +730,7 @@ export const id: Messages = {
     joinNote: "Pendaftaran di situs UMSU: perlu akun UMSU, dan beberapa klub memungut iuran kecil.",
     about: "Tentang apa",
     subjects: "Mata kuliah di bidang yang sama",
-    subjectsHint: "Mata kuliah tahun pertama dulu, lalu yang paling banyak diulas.",
+    subjectsHint: "Yang paling dekat dengan bidang klub lebih dulu, lalu yang paling banyak diulas.",
     similar: "Klub serupa",
     checked: "Daftar klub dicek pada {date}. Nama klub sesuai daftar UMSU.",
     notFound: "Klub tidak ditemukan",

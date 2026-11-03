@@ -730,7 +730,7 @@ export const ko: Messages = {
     joinNote: "가입은 UMSU 사이트에서 해요. UMSU 계정이 필요하고, 회비를 조금 받는 동아리도 있어요.",
     about: "어떤 동아리인가요",
     subjects: "같은 분야 과목",
-    subjectsHint: "1학년 과목 먼저, 그다음 리뷰가 많은 순서.",
+    subjectsHint: "동아리 내용과 가장 가까운 과목 먼저, 그다음 리뷰가 많은 순서.",
     similar: "비슷한 동아리",
     checked: "동아리 목록은 {date}에 확인했어요. 이름은 UMSU 표기 그대로예요.",
     notFound: "동아리를 찾을 수 없어요",

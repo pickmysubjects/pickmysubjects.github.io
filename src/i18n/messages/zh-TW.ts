@@ -730,7 +730,7 @@ export const zhTW: Messages = {
     joinNote: "加入要在 UMSU 網站上：需要 UMSU 帳號，有的社團會收一點會費。",
     about: "這個社團關於什麼",
     subjects: "相關的課",
-    subjectsHint: "一年級的課排前面，其次是評價多的。",
+    subjectsHint: "和這個社團最相關的排前面，其次是評價多的。",
     similar: "類似的社團",
     checked: "社團名單核對於 {date}。社團名稱照 UMSU 原文。",
     notFound: "找不到這個社團",

@@ -730,7 +730,7 @@ export const zhCN: Messages = {
     joinNote: "加入要在 UMSU 网站上：需要 UMSU 账号，有的社团会收一点会费。",
     about: "这个社团关于什么",
     subjects: "相关的课",
-    subjectsHint: "一年级的课排前面，其次是评价多的。",
+    subjectsHint: "和这个社团最相关的排前面，其次是评价多的。",
     similar: "类似的社团",
     checked: "社团名单核对于 {date}。社团名称按 UMSU 原文。",
     notFound: "找不到这个社团",

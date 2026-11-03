@@ -730,7 +730,7 @@ export const ms: Messages = {
     joinNote: "Pendaftaran di laman UMSU: perlu akaun UMSU, dan sesetengah kelab mengenakan yuran kecil.",
     about: "Tentang apa",
     subjects: "Subjek dalam bidang yang sama",
-    subjectsHint: "Subjek tahun pertama dahulu, kemudian yang paling banyak ulasan.",
+    subjectsHint: "Yang paling dekat dengan bidang kelab dahulu, kemudian yang paling banyak ulasan.",
     similar: "Kelab serupa",
     checked: "Senarai kelab disemak pada {date}. Nama kelab seperti dalam senarai UMSU.",
     notFound: "Kelab tidak dijumpai",

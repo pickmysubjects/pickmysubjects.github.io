@@ -730,7 +730,7 @@ export const vi: Messages = {
     joinNote: "Đăng ký trên trang UMSU: cần tài khoản UMSU, một số CLB thu phí nhỏ.",
     about: "CLB về gì",
     subjects: "Môn học cùng lĩnh vực",
-    subjectsHint: "Môn năm nhất trước, rồi đến môn nhiều đánh giá.",
+    subjectsHint: "Môn gần nhất với nội dung CLB ở trước, rồi đến môn nhiều đánh giá.",
     similar: "CLB tương tự",
     checked: "Danh sách CLB kiểm tra ngày {date}. Tên CLB giữ nguyên như UMSU.",
     notFound: "Không tìm thấy CLB",

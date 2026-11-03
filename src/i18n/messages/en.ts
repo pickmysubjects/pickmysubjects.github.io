@@ -735,7 +735,7 @@ export const en = {
     joinNote: "Joining happens on UMSU's site: you need a UMSU account, and some clubs ask a small fee.",
     about: "What it's about",
     subjects: "Subjects on the same thing",
-    subjectsHint: "First-year subjects first, then the most reviewed.",
+    subjectsHint: "Closest to what the club is about first, then the most reviewed.",
     similar: "Clubs like this",
     checked: "Club list checked on {date}. Club names are as UMSU lists them.",
     notFound: "Club not found",
