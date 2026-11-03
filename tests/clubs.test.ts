@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { CLUBS } from '@/content/clubs'
-import { suggestClubs } from '@/engine/clubs'
+import { clubSubjects, similarClubs, suggestClubs } from '@/engine/clubs'
 import { realData } from './realData'
 
 const data = realData()
@@ -13,8 +13,16 @@ describe('club list', () => {
     expect(new Set(CLUBS.map((c) => c.name)).size).toBe(CLUBS.length)
   })
 
-  it('gives every club a reason to come up: a topic or a degree', () => {
-    for (const c of CLUBS) expect(c.topics.length + (c.courses?.length ?? 0)).toBeGreaterThan(0)
+  it('has every UMSU club, each at its own address on this site', () => {
+    expect(CLUBS).toHaveLength(246)
+    for (const c of CLUBS) expect(c.slug).toMatch(/^[a-z0-9]+(-[a-z0-9]+)*$/)
+    expect(new Set(CLUBS.map((c) => c.slug)).size).toBe(CLUBS.length)
+  })
+
+  it('suggests only clubs tied to what students study: never a cultural, faith or games club', () => {
+    const everything = suggestClubs(CLUBS, { interests: [...new Set(CLUBS.flatMap((c) => c.topics))], codes: [], data }, CLUBS.length)
+    expect(everything.every((s) => s.club.topics.length > 0)).toBe(true)
+    expect(everything.some((s) => ['culture', 'spiritual', 'political', 'sports-games', 'food'].includes(s.club.category) && s.club.topics.length === 0)).toBe(false)
   })
 
   it('names only degrees the site knows', () => {
@@ -48,5 +56,23 @@ describe('suggesting clubs', () => {
   it('keeps to five', () => {
     const out = suggestClubs(CLUBS, { interests: ['finance', 'programming', 'engineering', 'music'], course: 'B-SCI', codes: [], data })
     expect(out).toHaveLength(5)
+  })
+})
+
+describe("a club's page", () => {
+  const club = (slug: string) => CLUBS.find((c) => c.slug === slug)!
+
+  it('lists the subjects most about what the club is about', () => {
+    const subjects = clubSubjects(club('data-science-students-society-ds-cubed'), data)
+    expect(subjects.length).toBeGreaterThan(0)
+    expect(subjects.every((c) => data.subjects[c]!.discontinuedFrom === undefined)).toBe(true)
+  })
+
+  it('suggests clubs on the same thing, not just the same UMSU category', () => {
+    const ds = club('data-science-students-society-ds-cubed')
+    expect(similarClubs(ds, CLUBS).every((c) => c.topics.some((x) => ds.topics.includes(x)))).toBe(true)
+    // A games club has no topics: others in its category stand in.
+    const chess = club('chess-club')
+    expect(similarClubs(chess, CLUBS).every((c) => c.category === 'sports-games')).toBe(true)
   })
 })

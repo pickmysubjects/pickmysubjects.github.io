@@ -34,6 +34,8 @@ import { ACCREDITATION } from '../src/utils/accreditation'
 import { careerJobLabels, careerListHtml, careerPageHtml, careerSeo, careersHtml, subjectCareersHtml } from '../src/utils/careersHtml'
 import { careerTargets } from '../src/engine/careerPaths'
 import { componentCareers } from '../src/engine/careers'
+import { CLUB_CATEGORIES, CLUBS, CLUBS_LISTING, type Club } from '../src/content/clubs'
+import { clubSubjects, similarClubs } from '../src/engine/clubs'
 import { buildLeadsTo, buildTakenWith, relatedSubjects } from '../src/engine/related'
 import type { Dataset, Subject } from '../src/engine/schema'
 import { factsYear, latestDataYear, publishedYear, thisYear } from '../src/engine/dataYear'
@@ -851,6 +853,12 @@ function mainPages(code: LocaleCode): Page[] {
       body: careerListHtml(data, t, code, (id) => href(code, `careers/${id}`)),
     },
     {
+      path: 'clubs',
+      title: `${t('clubsPage.seoTitle')} | PickMySubjects`,
+      description: t('clubsPage.lede', { n: CLUBS.length }),
+      body: clubsListBody(code, t),
+    },
+    {
       path: 'guide',
       title: listPageTitle(t, 'guide'),
       description: listPageDescription(t, 'guide', counts),
@@ -946,6 +954,41 @@ function careerPage(code: LocaleCode, c: (typeof careerList)[number]): Page {
   }
 }
 
+// ---------- clubs ----------
+
+/** Every UMSU club, by UMSU category, each linking to its page here. */
+function clubsListBody(code: LocaleCode, t: Translate): string {
+  const groups = CLUB_CATEGORIES.map((c) => {
+    const clubs = CLUBS.filter((x) => x.category === c).sort((a, b) => a.name.localeCompare(b.name))
+    return `<h2>${esc(t(`clubsPage.cat.${c}`))}</h2>\n<ul>${clubs.map((x) => `<li><a href="${href(code, `clubs/${x.slug}`)}">${esc(x.name)}</a></li>`).join('')}</ul>`
+  })
+  return [`<h1>${esc(t('clubsPage.title'))}</h1>`, `<p>${esc(t('clubsPage.lede', { n: CLUBS.length }))}</p>`, ...groups, `<p>${esc(t('clubsPage.source'))} <a href="${CLUBS_LISTING}">UMSU</a></p>`].join('\n')
+}
+
+function clubPage(code: LocaleCode, club: Club): Page {
+  const t = translator(code)
+  const category = t(`clubsPage.cat.${club.category}`)
+  const topics = club.topics.map((x) => t(`topic.${x}`))
+  const subjects = clubSubjects(club, data)
+  const similar = similarClubs(club, CLUBS)
+  const parts = [
+    `<p><a href="${href(code, 'clubs')}">${esc(t('clubsPage.back'))}</a></p>`,
+    `<h1>${esc(club.name)}</h1>`,
+    `<p>${esc(category)}</p>`,
+    `<p><a href="${club.url}">${esc(t('clubsPage.join'))}</a></p>`,
+    `<p>${esc(t('clubsPage.joinNote'))}</p>`,
+  ]
+  if (topics.length) parts.push(`<h2>${esc(t('clubsPage.about'))}</h2>`, `<p>${esc(topics.join(t('listSep')))}</p>`)
+  if (subjects.length) parts.push(`<h2>${esc(t('clubsPage.subjects'))}</h2>`, `<ul>${subjects.map((c) => `<li><a href="${href(code, `subject/${c}`)}">${c} ${esc(data.subjects[c]!.title)}</a></li>`).join('')}</ul>`)
+  if (similar.length) parts.push(`<h2>${esc(t('clubsPage.similar'))}</h2>`, `<ul>${similar.map((x) => `<li><a href="${href(code, `clubs/${x.slug}`)}">${esc(x.name)}</a></li>`).join('')}</ul>`)
+  return {
+    path: `clubs/${club.slug}`,
+    title: `${t('clubsPage.seoClub', { club: club.name })} | PickMySubjects`,
+    description: [club.name, category, topics.join(', ')].filter(Boolean).join(' · '),
+    body: parts.join('\n'),
+  }
+}
+
 // ---------- last modified ----------
 
 // When each data file last changed, from one pass over git history (CI checks out full history).
@@ -979,7 +1022,7 @@ for (const code of LOCALE_CODES) {
   const main = mainPages(code)
   // Every page links every main page, so a crawler following links reaches all of them, not just the sitemap.
   const siteNav = `<nav>${main.map((m) => `<a href="${href(code, m.path)}">${esc(m.title.split(' | ')[0]!)}</a>`).join(' · ')}</nav><footer><p>${esc(copyright())} · v${APP_VERSION}</p></footer>`
-  const pages = [...main, ...majors.map((m) => majorPage(code, m)), ...minors.map((m) => majorPage(code, m)), ...informals.map((m) => majorPage(code, m)), ...specs.map((m) => majorPage(code, m)), ...careerList.map((c) => careerPage(code, c)), ...subjects.map((s) => subjectPage(code, s))]
+  const pages = [...main, ...majors.map((m) => majorPage(code, m)), ...minors.map((m) => majorPage(code, m)), ...informals.map((m) => majorPage(code, m)), ...specs.map((m) => majorPage(code, m)), ...careerList.map((c) => careerPage(code, c)), ...CLUBS.map((c) => clubPage(code, c)), ...subjects.map((s) => subjectPage(code, s))]
   for (const page of pages) {
     write(code, page.path, render({ ...page, body: page.body + siteNav }, code))
     urls.push(absolute(code, page.path))

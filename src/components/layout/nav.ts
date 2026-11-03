@@ -1,7 +1,7 @@
 import {
   BookOpen, Briefcase, Calculator, CalendarDays, CalendarPlus, ClipboardList, Columns2, Compass, DatabaseZap, FileX, Flame, Gauge, GraduationCap,
   Heart, HeartPulse, History, House, Info, Laptop, Layers, Library, LifeBuoy, ListChecks, ListFilter, MessageSquare, NotebookPen, Plane, Route,
-  Save, Scale, Share2, Shapes, ShieldCheck, Snowflake, Sparkles, Sprout, TriangleAlert, User, Wrench,
+  Save, Scale, Share2, Shapes, ShieldCheck, Snowflake, Sparkles, Sprout, TriangleAlert, User, Users, Wrench,
 } from 'lucide-vue-next'
 import type { View } from '@/composables/useView'
 
@@ -106,6 +106,7 @@ export const MENUS: MenuArea[] = [
       { key: 'guide.cat.international.nav', desc: 'menu.d.international', to: 'guide/international/', icon: Plane },
       { key: 'guide.cat.help.nav', desc: 'menu.d.help', to: 'guide/help/', icon: LifeBuoy },
       { key: 'guide.datesTitle', desc: 'menu.d.keyDates', to: 'guide/key-dates/', icon: CalendarDays },
+      { key: 'clubsPage.title', desc: 'menu.d.clubs', to: 'clubs/', icon: Users },
     ],
   },
   {
@@ -119,6 +120,7 @@ export const MENUS: MenuArea[] = [
     ],
     // Sections of My record, not pages of their own: found by the site search, landing on their place.
     searchOnly: [
+      { key: 'skillTree.title', desc: 'menu.d.skillTree', to: 'record/#sec-skilltree', icon: ListChecks },
       { key: 'menu.backup', desc: 'menu.d.backup', to: 'record/#sec-backup', icon: Save },
       { key: 'menu.gradeShare', desc: 'menu.d.gradeShare', to: 'record/#share-title', icon: Share2 },
     ],
@@ -143,7 +145,7 @@ export function areaOf(view: View): Area | null {
   if (view === 'subjects' || view === 'subject' || view === 'majors' || view === 'careers') return 'browse'
   if (view === 'plan') return 'plan'
   if (view === 'tools') return 'tools'
-  if (view === 'guide') return 'guide'
+  if (view === 'guide' || view === 'clubs') return 'guide'
   if (view === 'record' || view === 'shortlist') return 'me'
   if (view === 'about' || view === 'feedback' || view === 'contribute' || view === 'changes' || view === 'privacy') return 'about'
   return null

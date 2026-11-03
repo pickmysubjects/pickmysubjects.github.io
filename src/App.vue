@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { CLUBS } from '@/content/clubs'
 import { copyright, versionLabel } from '@/release'
 import { latestDataYear } from '@/engine/dataYear'
 import AppHeader from './components/layout/AppHeader.vue'
@@ -32,6 +33,7 @@ const BrowseView = lazy('subjects')
 const MajorsView = lazy('majors')
 const ShortlistView = lazy('shortlist')
 const CareersView = lazy('careers')
+const ClubsView = lazy('clubs')
 const ChangesView = lazy('changes')
 const ToolsView = lazy('tools')
 // The compare page lives under /plan/ but has its own code.
@@ -59,6 +61,7 @@ watchEffect(() => {
   const key = TITLES[view.value]
   const guidePage = view.value === 'guide' ? guidePageOf(param.value) : ({ kind: 'overview' } as const)
   const career = view.value === 'careers' && param.value ? careerTarget(data.value, param.value) : undefined
+  const club = view.value === 'clubs' && param.value ? CLUBS.find((c) => c.slug === param.value) : undefined
   const major = view.value === 'majors' && param.value ? data.value.components.find((c) => c.id === param.value) : undefined
   // A quick pick's own page keeps the title its static page has, so search engines that run
   // the app see the same one.
@@ -73,6 +76,10 @@ watchEffect(() => {
     data.value.components.filter((c) => c.title === m.title).length > 1 ? `${m.title} (${data.value.courses.find((c) => c.code === m.course)?.title ?? m.course})` : m.title
   document.title = s
     ? subjectPageTitle(t.value, s, locale.value, subjectDifficulty(data.value.subjects, s.code, course.value, year))
+    : club
+      ? `${t.value('clubsPage.seoClub', { club: club.name })} | PickMySubjects`
+    : view.value === 'clubs'
+      ? `${t.value('clubsPage.seoTitle')} | PickMySubjects`
     : career
       ? `${t.value('careerPath.seoTitle', { job: careerPhrase(career.names, locale.value) })} | PickMySubjects`
     : major
@@ -122,6 +129,7 @@ watchEffect(() => {
     <MajorsView v-else-if="view === 'majors'" :id="param" />
     <ShortlistView v-else-if="view === 'shortlist'" />
     <CareersView v-else-if="view === 'careers'" :id="param" />
+    <ClubsView v-else-if="view === 'clubs'" :id="param" />
     <ChangesView v-else-if="view === 'changes'" :key="param" :year="param" />
     <ToolsView v-else-if="view === 'tools'" :tool="param" />
     <PrivacyView v-else />

@@ -1,5 +1,5 @@
 import type { Club } from '@/content/clubs'
-import type { Dataset } from './schema'
+import type { Dataset, Subject } from './schema'
 import { topicsOf } from './topics'
 
 /** Why a club came up: an interest the student picked, what their subjects are about, or their degree. */
@@ -40,4 +40,34 @@ export function suggestClubs(
     .sort((a, b) => b.score - a.score || a.i - b.i)
     .slice(0, limit)
     .map(({ club, reasons }) => ({ club, reasons }))
+}
+
+/** How many written reviews our summaries of a subject cover. */
+const reviews = (s: Subject) => (s.discussions ?? []).reduce((sum, d) => sum + ('reviews' in d ? d.reviews : 0), 0)
+
+/**
+ * Subjects about what a club is about (its topics), for its page: those sharing most of its
+ * topics first, then the most reviewed, then the earlier year level. Subjects no longer running
+ * are left out.
+ */
+export function clubSubjects(club: Club, data: Dataset, limit = 6): string[] {
+  if (!club.topics.length) return []
+  const topics = new Set<string>(club.topics)
+  const overlap = (s: Subject) => topicsOf(s).specific.filter((x) => topics.has(x)).length
+  return Object.values(data.subjects)
+    .filter((s) => s.level <= 3 && s.discontinuedFrom === undefined && overlap(s) > 0)
+    .sort((a, b) => overlap(b) - overlap(a) || reviews(b) - reviews(a) || a.level - b.level || a.code.localeCompare(b.code))
+    .slice(0, limit)
+    .map((s) => s.code)
+}
+
+/**
+ * Other clubs like this one: those sharing its topics (most shared first). A club with no topics
+ * (a cultural or games club) gets others in its UMSU category instead.
+ */
+export function similarClubs(club: Club, clubs: readonly Club[], limit = 6): Club[] {
+  const shared = (c: Club) => c.topics.filter((x) => club.topics.includes(x)).length
+  const others = clubs.filter((c) => c.slug !== club.slug)
+  const like = club.topics.length ? others.filter((c) => shared(c) > 0) : others.filter((c) => c.category === club.category)
+  return like.sort((a, b) => shared(b) - shared(a) || a.name.localeCompare(b.name)).slice(0, limit)
 }

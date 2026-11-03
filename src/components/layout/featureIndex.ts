@@ -55,6 +55,8 @@ const MENU_SYN: Record<string, string> = {
   'changes/': 'changes',
   'privacy/': 'privacy',
   'guide/key-dates/': 'dates',
+  'clubs/': 'clubs',
+  'record/#sec-skilltree': 'skillTree',
 }
 
 /** Extra words for guide topics, by topic anchor (search.syn.<key>). */

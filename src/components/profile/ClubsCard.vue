@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { CLUBS, CLUBS_LISTING } from '@/content/clubs'
+import { CLUBS } from '@/content/clubs'
+import { link } from '@/composables/useView'
 import { suggestClubs, type ClubReason } from '@/engine/clubs'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
@@ -37,12 +38,12 @@ function reason(r: ClubReason): string {
   <div class="clubs">
     <ul v-if="suggestions.length" class="club-list">
       <li v-for="s in suggestions" :key="s.club.url" class="club">
-        <a class="club-name" :href="s.club.url" target="_blank" rel="noopener">{{ s.club.name }}</a>
+        <a class="club-name" :href="link(`clubs/${s.club.slug}`)">{{ s.club.name }}</a>
         <span class="club-why">{{ reason(s.reasons[0]!) }}</span>
       </li>
     </ul>
     <p v-else class="clubs-empty">{{ t('clubs.empty') }}</p>
-    <p class="clubs-note">{{ t('clubs.note') }} <a class="clubs-all" :href="CLUBS_LISTING" target="_blank" rel="noopener">{{ t('clubs.all') }}</a></p>
+    <p class="clubs-note">{{ t('clubs.note') }} <a class="clubs-all" :href="link('clubs')">{{ t('clubsPage.browseAll') }}</a></p>
   </div>
 </template>
 
