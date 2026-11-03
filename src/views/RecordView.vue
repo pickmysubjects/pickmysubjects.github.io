@@ -13,6 +13,7 @@ import CareerGoalPicker from '@/components/profile/CareerGoalPicker.vue'
 import GradeShare from '@/components/profile/GradeShare.vue'
 import WorkHours from '@/components/profile/WorkHours.vue'
 import ClubsCard from '@/components/profile/ClubsCard.vue'
+import SkillTreeCard from '@/components/profile/SkillTreeCard.vue'
 import PlanSwitcher from '@/components/plans/PlanSwitcher.vue'
 import PhoneMoreLinks from '@/components/layout/PhoneMoreLinks.vue'
 import { planName } from '@/components/plans/planName'
@@ -82,6 +83,7 @@ const creditOpen = shallowRef(false)
 const TOC = [
   { id: 'sec-degree', key: 'record.degreeTitle', sub: false },
   { id: 'sec-results', key: 'record.step2', sub: false },
+  { id: 'sec-skilltree', key: 'skillTree.title', sub: false },
   { id: 'sec-plans', key: 'record.tocPlans', sub: false },
   { id: 'sec-strengths', key: 'record.secStrengths', sub: true },
   { id: 'sec-goal', key: 'record.secGoal', sub: true },
@@ -171,6 +173,14 @@ async function onRestore(event: Event): Promise<void> {
             </span>
           </header>
           <ResultsEditor v-model="results" v-model:credit="credit" v-model:credit-open="creditOpen" :subjects="data.subjects" :options="options" />
+        </section>
+
+        <!-- What the subjects done (or planned) add up to on a resume. -->
+        <section class="sec surface" aria-labelledby="sec-skilltree">
+          <header class="sec-head">
+            <h2 id="sec-skilltree" class="sec-title">{{ t('skillTree.title') }}</h2>
+          </header>
+          <SkillTreeCard />
         </section>
 
         <!-- Plan A/B: right above what each plan keeps for itself (strengths, interests, goal). -->

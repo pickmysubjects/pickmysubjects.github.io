@@ -349,9 +349,19 @@ export const subjectFileSchema = z
     about: undefined as SubjectAbout | undefined,
     // Filled in from data/<set>/subject-titles.yaml: the title in Chinese, for Chinese readers.
     titles: undefined as SubjectTitles | undefined,
+    // Filled in from data/<set>/tools.yaml: software and languages it teaches or uses.
+    tools: undefined as SubjectTools | undefined,
   }))
 
 export type Subject = z.output<typeof subjectFileSchema>
+
+/**
+ * Software and programming languages a subject teaches or uses (data/<set>/tools.yaml, made by
+ * scripts/extract-tools.ts): named in its Handbook text, or only in what students say about it.
+ */
+const subjectTools = z.object({ handbook: z.array(z.string().min(1)).optional(), students: z.array(z.string().min(1)).optional() }).strict()
+export type SubjectTools = z.output<typeof subjectTools>
+export const toolsFileSchema = z.record(subjectCode, subjectTools)
 
 /** Our own translation of a subject's title, so Chinese readers can recognise and search for it. */
 const subjectTitles = z.object({ zh: z.string().min(1).max(40), 'zh-TW': z.string().min(1).max(40).optional() }).strict()
