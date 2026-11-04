@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import DetailHero from '@/components/browse/DetailHero.vue'
 import SubjectSection from '@/components/subject/SubjectSection.vue'
+import GuideToc from '@/components/guide/GuideToc.vue'
 import { CLUBS, CLUBS_CHECKED } from '@/content/clubs'
 import { clubSubjects, similarClubs } from '@/engine/clubs'
 import { link } from '@/composables/useView'
@@ -30,6 +31,21 @@ const links = computed(() => {
   const l = CLUB_LINKS[props.slug] ?? {}
   return (['website', 'instagram', 'facebook'] as const).filter((k) => l[k]).map((k) => ({ key: k, href: l[k]! }))
 })
+
+// The page's sections in order, for "On this page" (as on a career's page).
+const tocArt = () => import('@/components/browse/art/MiniMajor.vue')
+const sections = computed(() =>
+  [
+    { id: 'k-does', title: t.value('clubsPage.does'), show: !!text.value?.activities.length },
+    { id: 'k-draws', title: t.value('clubsPage.draws'), show: !!text.value?.draws.length },
+    { id: 'k-follow', title: t.value('clubsPage.follow'), show: links.value.length > 0 },
+    { id: 'k-about', title: t.value('clubsPage.about'), show: !!club.value?.topics.length },
+    { id: 'k-subjects', title: t.value('clubsPage.subjects'), show: subjects.value.length > 0 },
+    { id: 'k-similar', title: t.value('clubsPage.similar'), show: similar.value.length > 0 },
+  ]
+    .filter((x) => x.show)
+    .map(({ id, title }) => ({ id, title, sub: false })),
+)
 </script>
 
 <template>
@@ -43,32 +59,36 @@ const links = computed(() => {
       <p class="hero-note">{{ t('clubsPage.joinNote') }}</p>
     </DetailHero>
 
-    <div class="article">
-      <SubjectSection v-if="text?.activities.length" :title="t('clubsPage.does')">
+    <div class="article" :class="{ 'no-toc': sections.length < 2 }">
+      <div v-if="sections.length >= 2" class="article-toc">
+        <GuideToc :items="sections" :art="tocArt" />
+      </div>
+      <div class="body">
+      <SubjectSection v-if="text?.activities.length" id="k-does" :title="t('clubsPage.does')">
         <ul class="plain">
           <li v-for="(a, i) in text.activities" :key="i">{{ a }}</li>
         </ul>
       </SubjectSection>
 
-      <SubjectSection v-if="text?.draws.length" :title="t('clubsPage.draws')">
+      <SubjectSection v-if="text?.draws.length" id="k-draws" :title="t('clubsPage.draws')">
         <ul class="plain">
           <li v-for="(a, i) in text.draws" :key="i">{{ a }}</li>
         </ul>
       </SubjectSection>
 
-      <SubjectSection v-if="links.length" :title="t('clubsPage.follow')">
+      <SubjectSection v-if="links.length" id="k-follow" :title="t('clubsPage.follow')">
         <p class="follow">
           <a v-for="l in links" :key="l.key" class="button button-quiet" :href="l.href" target="_blank" rel="noopener">{{ t(`clubsPage.link.${l.key}`) }}</a>
         </p>
       </SubjectSection>
 
-      <SubjectSection v-if="club.topics.length" :title="t('clubsPage.about')">
+      <SubjectSection v-if="club.topics.length" id="k-about" :title="t('clubsPage.about')">
         <ul class="chips">
           <li v-for="x in club.topics" :key="x" class="chip">{{ t(`topic.${x}`) }}</li>
         </ul>
       </SubjectSection>
 
-      <SubjectSection v-if="subjects.length" :title="t('clubsPage.subjects')" :short="t('clubsPage.subjectsHint')">
+      <SubjectSection v-if="subjects.length" id="k-subjects" :title="t('clubsPage.subjects')" :short="t('clubsPage.subjectsHint')">
         <ul class="links">
           <li v-for="c in subjects" :key="c">
             <a :href="link(`subject/${c}`)"><span class="code">{{ c }}</span> {{ data.subjects[c]?.title }}</a>
@@ -76,7 +96,7 @@ const links = computed(() => {
         </ul>
       </SubjectSection>
 
-      <SubjectSection v-if="similar.length" :title="t('clubsPage.similar')">
+      <SubjectSection v-if="similar.length" id="k-similar" :title="t('clubsPage.similar')">
         <ul class="links">
           <li v-for="c in similar" :key="c.slug">
             <a :href="link(`clubs/${c.slug}`)">{{ c.name }}</a>
@@ -85,6 +105,7 @@ const links = computed(() => {
       </SubjectSection>
 
       <p class="foot">{{ t('clubsPage.checked', { date: checked }) }}</p>
+      </div>
     </div>
   </div>
 
@@ -102,9 +123,41 @@ const links = computed(() => {
   min-width: 0;
 }
 
+/* The career page's layout: "On this page" beside the sections, once there are two or more. */
 .article {
   display: grid;
-  gap: 16px;
+  grid-template-columns: 232px minmax(0, 1fr);
+  gap: 48px;
+  align-items: start;
+}
+
+.article.no-toc {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.article-toc {
+  align-self: stretch;
+}
+
+.body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 24px;
+  min-width: 0;
+}
+
+@media (max-width: 960px) {
+  .article {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+  }
+}
+
+@media (max-width: 640px) {
+  .detail,
+  .body {
+    gap: 14px;
+  }
 }
 
 .hero-summary {
