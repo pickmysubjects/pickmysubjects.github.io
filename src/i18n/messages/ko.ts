@@ -1133,6 +1133,7 @@ export const ko: Messages = {
       hard: "쉬운 과목 보기",
     },
     factsOnly: "아직 학생 리뷰가 없어 Handbook 정보로만 판단했어요",
+    factsOnlyReviewed: "학생 리뷰에 난이도 이야기가 없어 Handbook 정보로 판단했어요",
     breadthSection: "이학사 학생이 들을 수 있는 Breadth",
     l3Breadth: "제일 쉬운 Level 3 breadth",
     reason: {

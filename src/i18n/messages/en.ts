@@ -1138,6 +1138,7 @@ export const en = {
       hard: "See the easiest subjects",
     },
     factsOnly: "No student reviews yet — based on the Handbook only",
+    factsOnlyReviewed: "Student reviews don't say how hard it is — based on the Handbook",
     breadthSection: "Breadth for Bachelor of Science students",
     l3Breadth: "Easiest level 3 breadth",
     reason: {

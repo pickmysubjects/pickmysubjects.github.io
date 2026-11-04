@@ -86,7 +86,8 @@ const hasWatch = computed(() => !!watchRec.value?.warnings.length || !!watchRec.
 const source = computed(() => {
   const d = difficulty.value
   if (d.level === 'unknown') return ''
-  if (d.factsOnly) return t.value('rank.factsOnly')
+  // Reviews summarised but none says how hard it is: don't claim there are no reviews.
+  if (d.factsOnly) return t.value(props.subject.discussions?.length ? 'rank.factsOnlyReviewed' : 'rank.factsOnly')
   if (d.reviews <= 0) return ''
   // Named by where they come from, so it matches "What students say" (no ratings here yet, but
   // ten reviews summarised from elsewhere).

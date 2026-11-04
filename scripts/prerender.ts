@@ -15,7 +15,7 @@
 import './releaseGlobals'
 import { APP_VERSION, copyright, releaseDate } from '../src/release'
 import { localTitle, pickLocalized, withLocalTitle } from '../src/i18n/localized'
-import { aggregateRatingLd, BRAND, listPageDescription, listPageTitle, PRESET_TITLE_KEYS, runsLine, subjectFactSentences, subjectPageDescription, subjectPageTitle } from '../src/utils/seo'
+import { aggregateRatingLd, BRAND, listPageDescription, listPageTitle, PRESET_TITLE_KEYS, subjectFactSentences, subjectPageDescription, subjectPageTitle } from '../src/utils/seo'
 import { execFileSync } from 'node:child_process'
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs'
 import type { YearDiff } from '../src/engine/yearDiff'
@@ -232,7 +232,6 @@ const relatedIndex = { leadsTo: buildLeadsTo(data.subjects), takenWith: buildTak
 /** How many of each related list show before "+N more". */
 const RELATED_SHOWN = 6
 
-const runs = (t: Translate, s: Subject, sep: string): string => runsLine(t, s, YEAR, sep)
 
 function assessment(t: Translate, s: Subject, sep: string): string | null {
   if (!s.assessment) return null
@@ -262,7 +261,7 @@ function difficultyLine(t: Translate, code: LocaleCode, s: Subject, d: Difficult
     note && !/[.。।]$/.test(note) ? note + end : note,
     reasons ? reasons + end : '',
     d.level === 'average' && both ? t('fit.balanced') : '',
-    d.factsOnly ? t('rank.factsOnly') + end : '',
+    d.factsOnly ? t(s.discussions?.length ? 'rank.factsOnlyReviewed' : 'rank.factsOnly') + end : '',
   ]
     .filter(Boolean)
     .join(sentenceSep(code))
@@ -282,10 +281,9 @@ function subjectPage(code: LocaleCode, s: Subject): Page {
   const hard = difficultyLine(t, code, s, difficulty)
   const parts = [
     `<h1>${esc(s.code)} ${esc(facts.title)}</h1>`,
-    `<p>${esc(t('seo.facts', facts))} · ${esc(runs(t, s, listSep(code)))}</p>`,
-    // The same at-a-glance lines the app shows under the title, so search engines quote them.
-    ...(gist.length ? [`<ul>${gist.map((g) => `<li>${esc(g)}</li>`).join('')}</ul>`] : []),
-    // The key facts again as plain sentences near the top, the way search summaries quote a page.
+    `<p>${esc(t('seo.facts', facts))}</p>`,
+    // The key facts as plain sentences near the top, the way search summaries quote a page: the
+    // app's at-a-glance lines (exam share, class hours) and when it runs are in them, said once.
     `<p>${esc(subjectFactSentences(t, s, code, { difficulty, year: YEAR }).join(sentenceSep(code)))}</p>`,
     // "Is it hard?" answered first, as the app's card does, for searches like "is COMP10001 hard".
     `<h2>${esc(t('seo.hardQ', { code: s.code }))}</h2><p>${esc(hard)}</p>`,

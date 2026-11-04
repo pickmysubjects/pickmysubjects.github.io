@@ -1133,6 +1133,7 @@ export const ja: Messages = {
       hard: "取りやすい科目を見る",
     },
     factsOnly: "学生のレビューはまだなく、Handbook の情報だけで判断しています",
+    factsOnlyReviewed: "学生のレビューは難しさに触れていないため、Handbook の情報で判断しています",
     breadthSection: "理学士が取れる Breadth",
     l3Breadth: "楽な Level 3 breadth",
     reason: {

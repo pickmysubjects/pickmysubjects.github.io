@@ -1133,6 +1133,7 @@ export const hi: Messages = {
       hard: "सबसे आसान सब्जेक्ट देखें",
     },
     factsOnly: "अभी किसी छात्र का रिव्यू नहीं — सिर्फ़ Handbook के आधार पर",
+    factsOnlyReviewed: "छात्रों के रिव्यू में कठिनाई की बात नहीं — Handbook के आधार पर",
     breadthSection: "Bachelor of Science छात्रों के लिए breadth",
     l3Breadth: "सबसे आसान लेवल 3 breadth",
     reason: {

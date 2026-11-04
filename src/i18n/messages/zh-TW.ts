@@ -1133,6 +1133,7 @@ export const zhTW: Messages = {
       hard: "看涼課排行",
     },
     factsOnly: "還沒有同學評價，只根據 Handbook 判斷",
+    factsOnlyReviewed: "同學評價沒說難不難，只根據 Handbook 判斷",
     breadthSection: "理學士可選的 Breadth",
     l3Breadth: "最輕鬆的 Level 3 breadth",
     reason: {
