@@ -6,6 +6,7 @@ import { CLUBS, CLUBS_CHECKED } from '@/content/clubs'
 import { clubSubjects, similarClubs } from '@/engine/clubs'
 import { link } from '@/composables/useView'
 import { useDataset } from '@/composables/useDataset'
+import { CLUB_LINKS, useClubInfo } from '@/composables/useClubInfo'
 import { useI18n } from '@/i18n'
 
 /**
@@ -22,11 +23,19 @@ const similar = computed(() => (club.value ? similarClubs(club.value, CLUBS) : [
 const degree = computed(() => club.value?.courses?.map((c) => data.value.courses.find((x) => x.code === c)?.title ?? c).join(t.value('listSep')))
 const checked = computed(() => new Date(`${CLUBS_CHECKED}T12:00:00`).toLocaleDateString(locale.value, { year: 'numeric', month: 'long', day: 'numeric' }))
 const heroArt = () => import('@/components/browse/art/ArtMajor.vue')
+// What it does and runs, in the reader's language; and where it posts (the same in every language).
+const info = useClubInfo(locale)
+const text = computed(() => info.value[props.slug])
+const links = computed(() => {
+  const l = CLUB_LINKS[props.slug] ?? {}
+  return (['website', 'instagram', 'facebook'] as const).filter((k) => l[k]).map((k) => ({ key: k, href: l[k]! }))
+})
 </script>
 
 <template>
   <div v-if="club" class="detail">
     <DetailHero :back="{ href: link('clubs'), label: t('clubsPage.back') }" :eyebrow="t(`clubsPage.cat.${club.category}`)" :title="club.name" :art="heroArt">
+      <p v-if="text?.summary" class="hero-summary">{{ text.summary }}</p>
       <p v-if="degree" class="hero-line">{{ t('clubsPage.degreeSociety', { degree }) }}</p>
       <div class="hero-actions">
         <a class="button button-accent" :href="club.url" target="_blank" rel="noopener">{{ t('clubsPage.join') }}</a>
@@ -35,6 +44,24 @@ const heroArt = () => import('@/components/browse/art/ArtMajor.vue')
     </DetailHero>
 
     <div class="article">
+      <SubjectSection v-if="text?.activities.length" :title="t('clubsPage.does')">
+        <ul class="plain">
+          <li v-for="(a, i) in text.activities" :key="i">{{ a }}</li>
+        </ul>
+      </SubjectSection>
+
+      <SubjectSection v-if="text?.draws.length" :title="t('clubsPage.draws')">
+        <ul class="plain">
+          <li v-for="(a, i) in text.draws" :key="i">{{ a }}</li>
+        </ul>
+      </SubjectSection>
+
+      <SubjectSection v-if="links.length" :title="t('clubsPage.follow')">
+        <p class="follow">
+          <a v-for="l in links" :key="l.key" class="button button-quiet" :href="l.href" target="_blank" rel="noopener">{{ t(`clubsPage.link.${l.key}`) }}</a>
+        </p>
+      </SubjectSection>
+
       <SubjectSection v-if="club.topics.length" :title="t('clubsPage.about')">
         <ul class="chips">
           <li v-for="x in club.topics" :key="x" class="chip">{{ t(`topic.${x}`) }}</li>
@@ -80,9 +107,48 @@ const heroArt = () => import('@/components/browse/art/ArtMajor.vue')
   gap: 16px;
 }
 
+.hero-summary {
+  margin: 0 0 6px;
+  max-width: 60ch;
+  font-size: 1.0625rem;
+  line-height: 1.5;
+}
+
 .hero-line {
   margin: 0;
   color: var(--ink-soft);
+}
+
+.plain {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.plain li {
+  position: relative;
+  padding-left: 20px;
+}
+
+.plain li::before {
+  content: '';
+  position: absolute;
+  top: 0.65em;
+  left: 4px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-fill);
+  opacity: 0.75;
+}
+
+.follow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
 }
 
 .hero-actions {

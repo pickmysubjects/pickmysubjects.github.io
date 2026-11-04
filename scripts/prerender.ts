@@ -1005,13 +1005,32 @@ function careerPage(code: LocaleCode, c: (typeof careerList)[number]): Page {
 function clubsListBody(code: LocaleCode, t: Translate): string {
   const groups = CLUB_CATEGORIES.map((c) => {
     const clubs = CLUBS.filter((x) => x.category === c).sort((a, b) => a.name.localeCompare(b.name))
-    return `<h2>${esc(t(`clubsPage.cat.${c}`))}</h2>\n<ul>${clubs.map((x) => `<li><a href="${href(code, `clubs/${x.slug}`)}">${esc(x.name)}</a></li>`).join('')}</ul>`
+    const info = clubInfo(code)
+    return `<h2>${esc(t(`clubsPage.cat.${c}`))}</h2>\n<ul>${clubs.map((x) => `<li><a href="${href(code, `clubs/${x.slug}`)}">${esc(x.name)}</a>${info[x.slug] ? `: ${esc(info[x.slug]!.summary)}` : ''}</li>`).join('')}</ul>`
   })
   return [`<h1>${esc(t('clubsPage.title'))}</h1>`, `<p>${esc(t('clubsPage.lede', { n: CLUBS.length }))}</p>`, ...groups, `<p>${esc(t('clubsPage.source'))} <a href="${CLUBS_LISTING}">UMSU</a></p>`].join('\n')
 }
 
+// Each club's own line, activities and draws (src/content/clubInfo/<locale>.json, English where a language has none yet) and its links.
+type ClubText = { summary: string; activities: string[]; draws: string[] }
+const CLUB_INFO_DIR = join(ROOT, 'src', 'content', 'clubInfo')
+const clubInfoEn = JSON.parse(readFileSync(join(CLUB_INFO_DIR, 'en.json'), 'utf8')) as Record<string, ClubText>
+const clubLinks = JSON.parse(readFileSync(join(CLUB_INFO_DIR, 'links.json'), 'utf8')) as Record<string, Record<string, string>>
+const clubInfoCache = new Map<LocaleCode, Record<string, ClubText>>()
+function clubInfo(code: LocaleCode): Record<string, ClubText> {
+  let info = clubInfoCache.get(code)
+  if (!info) {
+    const file = join(CLUB_INFO_DIR, `${code}.json`)
+    info = { ...clubInfoEn, ...(existsSync(file) ? (JSON.parse(readFileSync(file, 'utf8')) as Record<string, ClubText>) : {}) }
+    clubInfoCache.set(code, info)
+  }
+  return info
+}
+
 function clubPage(code: LocaleCode, club: Club): Page {
   const t = translator(code)
+  const text = clubInfo(code)[club.slug]
+  const links = clubLinks[club.slug] ?? {}
   const category = t(`clubsPage.cat.${club.category}`)
   const topics = club.topics.map((x) => t(`topic.${x}`))
   const subjects = clubSubjects(club, data)
@@ -1020,16 +1039,21 @@ function clubPage(code: LocaleCode, club: Club): Page {
     `<p><a href="${href(code, 'clubs')}">${esc(t('clubsPage.back'))}</a></p>`,
     `<h1>${esc(club.name)}</h1>`,
     `<p>${esc(category)}</p>`,
+    ...(text ? [`<p>${esc(text.summary)}</p>`] : []),
     `<p><a href="${club.url}">${esc(t('clubsPage.join'))}</a></p>`,
     `<p>${esc(t('clubsPage.joinNote'))}</p>`,
   ]
+  if (text?.activities.length) parts.push(`<h2>${esc(t('clubsPage.does'))}</h2>`, `<ul>${text.activities.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>`)
+  if (text?.draws.length) parts.push(`<h2>${esc(t('clubsPage.draws'))}</h2>`, `<ul>${text.draws.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>`)
+  const follow = (['website', 'instagram', 'facebook'] as const).filter((k) => links[k])
+  if (follow.length) parts.push(`<h2>${esc(t('clubsPage.follow'))}</h2>`, `<p>${follow.map((k) => `<a href="${esc(links[k]!)}">${esc(t(`clubsPage.link.${k}`))}</a>`).join(' · ')}</p>`)
   if (topics.length) parts.push(`<h2>${esc(t('clubsPage.about'))}</h2>`, `<p>${esc(topics.join(t('listSep')))}</p>`)
   if (subjects.length) parts.push(`<h2>${esc(t('clubsPage.subjects'))}</h2>`, `<ul>${subjects.map((c) => `<li><a href="${href(code, `subject/${c}`)}">${c} ${esc(data.subjects[c]!.title)}</a></li>`).join('')}</ul>`)
   if (similar.length) parts.push(`<h2>${esc(t('clubsPage.similar'))}</h2>`, `<ul>${similar.map((x) => `<li><a href="${href(code, `clubs/${x.slug}`)}">${esc(x.name)}</a></li>`).join('')}</ul>`)
   return {
     path: `clubs/${club.slug}`,
     title: `${t('clubsPage.seoClub', { club: club.name })} | PickMySubjects`,
-    description: [club.name, category, topics.join(', ')].filter(Boolean).join(' · '),
+    description: text ? `${club.name}: ${text.summary}` : [club.name, category, topics.join(', ')].filter(Boolean).join(' · '),
     body: parts.join('\n'),
   }
 }

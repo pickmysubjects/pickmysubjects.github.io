@@ -738,6 +738,10 @@ export const zhTW: Messages = {
     notFound: "找不到這個社團",
     seoTitle: "墨大社團：找一個適合你的",
     seoClub: "{club}：墨大社團",
+    does: "平常做什麼",
+    draws: "吸引人的地方",
+    follow: "追蹤他們",
+    link: { website: "官網", instagram: "Instagram", facebook: "Facebook" },
     cat: {
       course: "學科相關",
       "special-interest": "興趣嗜好",

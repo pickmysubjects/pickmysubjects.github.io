@@ -743,6 +743,10 @@ export const en = {
     notFound: "Club not found",
     seoTitle: "UniMelb clubs and societies: find one that fits",
     seoClub: "{club}: UniMelb club",
+    does: "What it does",
+    draws: "Why students join",
+    follow: "Follow them",
+    link: { website: "Website", instagram: "Instagram", facebook: "Facebook" },
     cat: {
       course: "Course related",
       "special-interest": "Special interest",

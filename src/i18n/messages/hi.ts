@@ -738,6 +738,10 @@ export const hi: Messages = {
     notFound: "क्लब नहीं मिला",
     seoTitle: "UniMelb के क्लब और सोसाइटी: अपने लिए सही चुनें",
     seoClub: "{club}: UniMelb क्लब",
+    does: "क्लब क्या करता है",
+    draws: "छात्र क्यों जुड़ते हैं",
+    follow: "उन्हें फ़ॉलो करें",
+    link: { website: "वेबसाइट", instagram: "Instagram", facebook: "Facebook" },
     cat: {
       course: "कोर्स से जुड़े",
       "special-interest": "विशेष रुचि",

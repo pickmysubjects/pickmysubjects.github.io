@@ -738,6 +738,10 @@ export const zhCN: Messages = {
     notFound: "找不到这个社团",
     seoTitle: "墨大社团：找一个适合你的",
     seoClub: "{club}：墨大社团",
+    does: "平常做什么",
+    draws: "吸引人的地方",
+    follow: "关注他们",
+    link: { website: "官网", instagram: "Instagram", facebook: "Facebook" },
     cat: {
       course: "学科相关",
       "special-interest": "兴趣爱好",

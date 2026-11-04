@@ -738,6 +738,10 @@ export const ms: Messages = {
     notFound: "Kelab tidak dijumpai",
     seoTitle: "Kelab dan persatuan UniMelb: cari yang sesuai",
     seoClub: "{club}: kelab UniMelb",
+    does: "Apa yang kelab buat",
+    draws: "Kenapa pelajar sertai",
+    follow: "Ikuti mereka",
+    link: { website: "Laman web", instagram: "Instagram", facebook: "Facebook" },
     cat: {
       course: "Berkaitan kursus",
       "special-interest": "Minat khas",

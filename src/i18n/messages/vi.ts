@@ -738,6 +738,10 @@ export const vi: Messages = {
     notFound: "Không tìm thấy CLB",
     seoTitle: "CLB ở UniMelb: tìm CLB hợp với bạn",
     seoClub: "{club}: CLB ở UniMelb",
+    does: "CLB thường làm gì",
+    draws: "Điều hấp dẫn sinh viên",
+    follow: "Theo dõi CLB",
+    link: { website: "Trang web", instagram: "Instagram", facebook: "Facebook" },
     cat: {
       course: "Liên quan ngành học",
       "special-interest": "Sở thích riêng",

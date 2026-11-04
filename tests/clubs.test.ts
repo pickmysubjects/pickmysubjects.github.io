@@ -1,3 +1,4 @@
+import { existsSync, readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 import { CLUBS } from '@/content/clubs'
 import { clubSubjects, similarClubs, suggestClubs } from '@/engine/clubs'
@@ -74,5 +75,43 @@ describe("a club's page", () => {
     // A games club has no topics: others in its category stand in.
     const chess = club('chess-club')
     expect(similarClubs(chess, CLUBS).every((c) => c.category === 'sports-games')).toBe(true)
+  })
+})
+
+describe("each club's own text", () => {
+  const en = JSON.parse(readFileSync(new URL('../src/content/clubInfo/en.json', import.meta.url), 'utf8')) as Record<string, { summary: string; activities: string[]; draws: string[] }>
+  const links = JSON.parse(readFileSync(new URL('../src/content/clubInfo/links.json', import.meta.url), 'utf8')) as Record<string, Record<string, string>>
+
+  it('is there for every club, short, and only for clubs we list', () => {
+    const slugs = new Set(CLUBS.map((c) => c.slug))
+    for (const slug of [...Object.keys(en), ...Object.keys(links)]) expect(slugs, slug).toContain(slug)
+    for (const c of CLUBS) expect(en[c.slug]?.summary, c.slug).toBeTruthy()
+    for (const [slug, t] of Object.entries(en)) {
+      expect(t.summary.length, slug).toBeLessThanOrEqual(150)
+      expect(t.activities.length, slug).toBeLessThanOrEqual(4)
+      expect(t.draws.length, slug).toBeLessThanOrEqual(2)
+    }
+  })
+
+  it('links only to secure pages, on the site each link says', () => {
+    for (const [slug, l] of Object.entries(links)) {
+      for (const u of Object.values(l)) expect(u, slug).toMatch(/^https?:\/\//)
+      if (l.instagram) expect(l.instagram, slug).toMatch(/instagram\.com\//)
+      if (l.facebook) expect(l.facebook, slug).toMatch(/facebook\.com\//)
+    }
+  })
+
+  it('has every translation with the same shape as the English', () => {
+    for (const locale of ['zh-CN', 'zh-TW', 'ja', 'ko', 'vi', 'ms', 'id', 'hi']) {
+      const url = new URL(`../src/content/clubInfo/${locale}.json`, import.meta.url)
+      if (!existsSync(url)) continue
+      const tr = JSON.parse(readFileSync(url, 'utf8')) as typeof en
+      expect(Object.keys(tr).sort(), locale).toEqual(Object.keys(en).sort())
+      for (const [slug, t] of Object.entries(en)) {
+        expect(tr[slug]!.activities.length, `${locale} ${slug}`).toBe(t.activities.length)
+        expect(tr[slug]!.draws.length, `${locale} ${slug}`).toBe(t.draws.length)
+        expect(tr[slug]!.summary, `${locale} ${slug}`).toBeTruthy()
+      }
+    }
   })
 })

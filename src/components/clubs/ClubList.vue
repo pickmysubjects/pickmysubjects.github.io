@@ -7,6 +7,7 @@ import { suggestClubs } from '@/engine/clubs'
 import { foldSearch } from '@/engine/careerPaths'
 import { link } from '@/composables/useView'
 import { useDataset } from '@/composables/useDataset'
+import { useClubInfo } from '@/composables/useClubInfo'
 import { usePlan } from '@/composables/usePlan'
 import { useProfile } from '@/composables/useProfile'
 import { useI18n } from '@/i18n'
@@ -15,7 +16,9 @@ import { useI18n } from '@/i18n'
  * Every UMSU club: the ones that fit the student first (when they've told us anything), then all
  * of them by UMSU's own categories, searchable by name, a page at a time.
  */
-const { t } = useI18n()
+const { t, locale } = useI18n()
+// Each club's one line, in the reader's language: shown on its card, and searched with its name.
+const info = useClubInfo(locale)
 const { data, course } = useDataset()
 const { profile } = useProfile()
 const plan = usePlan()
@@ -35,7 +38,12 @@ const counts = computed(() => Object.fromEntries(CLUB_CATEGORIES.map((c) => [c, 
 const byName = [...CLUBS].sort((a, b) => a.name.localeCompare(b.name))
 const shown = computed(() => {
   const q = foldSearch(query.value)
-  return byName.filter((c) => (!category.value || c.category === category.value) && (!q || foldSearch(c.name).includes(q)))
+  // A club is found by its name or anything it says it does: "pizza", "hackathon", "beginners".
+  const said = (slug: string) => {
+    const x = info.value[slug]
+    return x ? foldSearch([x.summary, ...x.activities, ...x.draws].join(' ')) : ''
+  }
+  return byName.filter((c) => (!category.value || c.category === category.value) && (!q || foldSearch(c.name).includes(q) || said(c.slug).includes(q)))
 })
 
 // A page at a time, as on Find subjects; a new filter starts again from the first page.
@@ -85,6 +93,7 @@ const topicNames = (topics: readonly string[]) => topics.slice(0, 3).map((x) => 
       <div v-else class="cards">
         <a v-for="c in rows" :key="c.slug" class="card surface tile" :href="link(`clubs/${c.slug}`)">
           <span class="card-title">{{ c.name }}</span>
+          <span v-if="info[c.slug]?.summary" class="card-summary">{{ info[c.slug]!.summary }}</span>
           <span class="card-meta">{{ t(`clubsPage.cat.${c.category}`) }}<template v-if="c.topics.length"> · {{ topicNames(c.topics) }}</template></span>
         </a>
       </div>
@@ -204,6 +213,16 @@ const topicNames = (topics: readonly string[]) => topics.slice(0, 3).map((x) => 
 .card-title {
   font-size: var(--fs-small);
   font-weight: 600;
+}
+
+.card-summary {
+  display: -webkit-box;
+  overflow: hidden;
+  font-size: var(--fs-meta);
+  line-height: 1.45;
+  color: var(--ink);
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
 .card-meta {

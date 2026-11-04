@@ -738,6 +738,10 @@ export const ko: Messages = {
     notFound: "동아리를 찾을 수 없어요",
     seoTitle: "멜버른대 동아리: 나에게 맞는 곳 찾기",
     seoClub: "{club}: 멜버른대 동아리",
+    does: "평소 하는 활동",
+    draws: "이런 점이 좋아요",
+    follow: "팔로우하기",
+    link: { website: "웹사이트", instagram: "Instagram", facebook: "Facebook" },
     cat: {
       course: "전공 관련",
       "special-interest": "특별 관심사",

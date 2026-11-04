@@ -738,6 +738,10 @@ export const ja: Messages = {
     notFound: "クラブが見つかりません",
     seoTitle: "メルボルン大学のクラブ・サークル：合うものを探す",
     seoClub: "{club}：メルボルン大学のクラブ",
+    does: "どんな活動をしているか",
+    draws: "ここが魅力",
+    follow: "フォローする",
+    link: { website: "ウェブサイト", instagram: "Instagram", facebook: "Facebook" },
     cat: {
       course: "学科関連",
       "special-interest": "特別な興味",
