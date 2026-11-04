@@ -189,6 +189,28 @@ const OUTSIDE_CLASS = new Set([
   'typing',
 ])
 
+const MAJOR_NAMES = new WeakMap<Dataset, Map<string, string[]>>()
+/**
+ * The majors a subject is compulsory for, by name, when it's from the major's own area (most of
+ * its compulsory subjects): a CVEN subject is part of "Civil Systems", an economics subject a
+ * Marketing major requires is not part of "Marketing".
+ */
+function majorNames(data: Dataset): Map<string, string[]> {
+  let out = MAJOR_NAMES.get(data)
+  if (out) return out
+  out = new Map()
+  for (const m of data.components) {
+    if (m.kind !== 'major' || m.requirements === 'unknown') continue
+    const must = m.requirements.flatMap((r) => ('all' in r && Array.isArray(r.all) ? (r.all as string[]) : []))
+    const count = new Map<string, number>()
+    for (const c of must) count.set(c.slice(0, 4), (count.get(c.slice(0, 4)) ?? 0) + 1)
+    const area = [...count].sort((a, b) => b[1] - a[1])[0]?.[0]
+    for (const c of must) if (c.slice(0, 4) === area) out.set(c, [...new Set([...(out.get(c) ?? []), m.title])])
+  }
+  MAJOR_NAMES.set(data, out)
+  return out
+}
+
 const SMALL_WORDS = new Set(['and', 'or', 'of', 'the', 'with', 'for', 'in', 'to', 'a', 'an', 'skills'])
 const escape = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 
@@ -237,7 +259,7 @@ export function employerSkills(skills: readonly string[], tree: SkillTree, data:
     for (const x of tree.specialist) for (const c of x.codes) own.set(c, [...(own.get(c) ?? []), x.name])
     const codes = tree.subjects.filter((c) => {
       const s = data.subjects[c]!
-      const field = [s.title, ...topicsOf(s).topics.map((t) => t.replace(/-/g, ' '))].join(' | ')
+      const field = [s.title, ...topicsOf(s).topics.map((t) => t.replace(/-/g, ' ')), ...(majorNames(data).get(c) ?? [])].join(' | ')
       return [field, ...(own.get(c) ?? []), ...outcomesOf(c)].some((text) => has(text.toLowerCase()))
     })
     return { skill, codes, outsideClass: false }

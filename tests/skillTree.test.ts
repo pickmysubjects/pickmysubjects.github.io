@@ -129,6 +129,8 @@ describe('specialist skills from each subject', () => {
     const tree = buildSkillTree(['ANTH30003'], data, () => undefined)
     // Title and topics together are the subject's field.
     expect(employerSkills(['Mechanical Engineering'], buildSkillTree(['MCEN30021'], data), data)[0]!.codes).toEqual(['MCEN30021'])
+    // A major's name counts for its own area's compulsory subjects: CVEN subjects are civil engineering.
+    expect(employerSkills(['Civil Engineering'], buildSkillTree(['CVEN30009'], data), data)[0]!.codes).toEqual(['CVEN30009'])
     const said = () => ['Explain religion in general terms', 'Reflect on religious practice']
     expect(employerSkills(['General Practice'], tree, data, said)[0]!.codes).toEqual([])
     expect(employerSkills(['General Practice'], tree, data, () => ['Observe general practice clinics'])[0]!.codes).toEqual(['ANTH30003'])
