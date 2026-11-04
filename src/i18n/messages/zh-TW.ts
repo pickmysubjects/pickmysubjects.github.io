@@ -2575,6 +2575,17 @@ export const zhTW: Messages = {
       a: '還沒做。職涯路線（哪些主修和課程通往哪些工作或深造方向）已在規劃中。',
     },
   },
+  compare: {
+    pairTitle: "{a} 對比 {b}",
+    seoTitle: "{a} 和 {b} 選哪個？",
+    cantBoth: "這兩門課學位裡只能算一門，所以大多數同學要二選一。下面並排列出來。",
+    pairLede: "兩門課並排對比。",
+    pairQ: "{a} 還是 {b}，選哪個？",
+    withOther: "和 {code} 對比",
+    table: "並排對比",
+    learn: "學什麼",
+    hard: "難不難",
+  },
   shortlist: {
     "title": "收藏",
     "local": "只存在這個瀏覽器裡，和你的其他資料一樣（備份檔裡也有）。",

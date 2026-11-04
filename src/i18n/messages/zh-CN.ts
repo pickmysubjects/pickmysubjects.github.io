@@ -2575,6 +2575,17 @@ export const zhCN: Messages = {
       a: '还没做。职业路线（哪些主修和课程通向哪些工作或深造方向）已在计划中。',
     },
   },
+  compare: {
+    pairTitle: "{a} 对比 {b}",
+    seoTitle: "{a} 和 {b} 选哪个？",
+    cantBoth: "这两门课学位里只能算一门，所以大多数同学要二选一。下面并排列出来。",
+    pairLede: "两门课并排对比。",
+    pairQ: "{a} 还是 {b}，选哪个？",
+    withOther: "和 {code} 对比",
+    table: "并排对比",
+    learn: "学什么",
+    hard: "难不难",
+  },
   shortlist: {
     "title": "收藏",
     "local": "只存在这个浏览器里，和你的其他资料一样（备份文件里也有）。",

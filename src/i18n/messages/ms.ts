@@ -2575,6 +2575,17 @@ export const ms: Messages = {
       a: 'Belum ada. Laluan kerjaya (major dan subjek mana membawa ke pekerjaan atau pengajian lanjut tertentu) sedang dirancang.',
     },
   },
+  compare: {
+    pairTitle: "{a} lawan {b}",
+    seoTitle: "{a} atau {b}: yang mana patut diambil?",
+    cantBoth: "Hanya satu daripada dua subjek ini dikira untuk ijazah anda, jadi kebanyakan pelajar memilih satu. Ini perbandingan sebelah-menyebelah.",
+    pairLede: "Dua subjek sebelah-menyebelah.",
+    pairQ: "{a} atau {b}: yang mana patut diambil?",
+    withOther: "Banding dengan {code}",
+    table: "Sebelah-menyebelah",
+    learn: "Apa yang diajar",
+    hard: "Tahap kesukaran",
+  },
   shortlist: {
     "title": "Disimpan",
     "local": "Disimpan dalam pelayar ini sahaja, seperti profil anda yang lain (dan dalam fail sandaran).",

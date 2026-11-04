@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { pairFromSlug } from '@/engine/comparePairs'
 import { CLUBS } from '@/content/clubs'
 import { copyright, versionLabel } from '@/release'
 import { latestDataYear } from '@/engine/dataYear'
@@ -74,7 +75,10 @@ watchEffect(() => {
   // Same as the static page: a name two degrees share (Economics) carries its degree.
   const majorTitle = (m: { title: string; course: string }) =>
     data.value.components.filter((c) => c.title === m.title).length > 1 ? `${m.title} (${data.value.courses.find((c) => c.code === m.course)?.title ?? m.course})` : m.title
-  document.title = s
+  const pair = view.value === 'compare' ? pairFromSlug(param.value) : null
+  document.title = pair
+    ? `${t.value('compare.seoTitle', { a: pair[0], b: pair[1] })} | PickMySubjects`
+    : s
     ? subjectPageTitle(t.value, s, locale.value, subjectDifficulty(data.value.subjects, s.code, course.value, year))
     : club
       ? `${t.value('clubsPage.seoClub', { club: club.name })} | PickMySubjects`
@@ -127,7 +131,7 @@ watchEffect(() => {
     <GuideView v-else-if="view === 'guide'" />
     <BrowseView v-else-if="view === 'subjects'" />
     <MajorsView v-else-if="view === 'majors'" :id="param" />
-    <ShortlistView v-else-if="view === 'shortlist'" />
+    <ShortlistView v-else-if="view === 'shortlist' || view === 'compare'" :key="view + param" />
     <CareersView v-else-if="view === 'careers'" :id="param" />
     <ClubsView v-else-if="view === 'clubs'" :id="param" />
     <ChangesView v-else-if="view === 'changes'" :key="param" :year="param" />

@@ -8,6 +8,7 @@ import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
 import { useProfile } from '@/composables/useProfile'
 import { useI18n } from '@/i18n'
+import { isComparePair, pairSlug } from '@/engine/comparePairs'
 import { usePhone } from '@/composables/usePhone'
 import { describeReq, requirementList, termLabel } from '@/i18n/format'
 import type { Edge } from '@/utils/planBoard'
@@ -38,6 +39,8 @@ const coreq = computed(() => {
 })
 // Only subjects we list (undergraduate): a graduate-only code can't be taken in a bachelor's degree anyway.
 const blocks = computed(() => (props.subject.nonAllowed !== 'unknown' ? props.subject.nonAllowed.filter((c) => data.value.subjects[c]) : []))
+// The ones a student picks between get a side-by-side page of their own.
+const comparable = computed(() => blocks.value.filter((c) => isComparePair(data.value.subjects, props.subject.code, c)))
 
 // The chain shows the first few it unlocks (the student's own first); the full list sits below.
 const CHAIN_UNLOCKS = 6
@@ -104,6 +107,9 @@ function go(c: string): void {
         <template v-if="blocks.length">
           <h3 class="sub">{{ t('subject.blocks') }}</h3>
           <SubjectLinks :codes="blocks" :year="year" />
+          <p v-if="comparable.length" class="compare-links">
+            <a v-for="c in comparable" :key="c" class="compare-link" :href="link(`compare/${pairSlug(subject.code, c)}`)">{{ t('compare.withOther', { code: c }) }}</a>
+          </p>
         </template>
       </section>
     </div>
@@ -112,6 +118,24 @@ function go(c: string): void {
 </template>
 
 <style scoped>
+.compare-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  margin: 6px 0 0;
+}
+
+.compare-link {
+  color: var(--accent);
+  font-size: var(--fs-small);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.compare-link:hover {
+  color: var(--ink);
+}
+
 .cols-summary {
   padding: 10px 0;
   font-size: var(--fs-body);

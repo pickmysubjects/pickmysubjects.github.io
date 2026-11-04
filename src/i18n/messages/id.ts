@@ -2575,6 +2575,17 @@ export const id: Messages = {
       a: 'Belum ada. Jalur karier (jurusan dan mata kuliah mana yang mengarah ke pekerjaan atau studi lanjut tertentu) sedang direncanakan.',
     },
   },
+  compare: {
+    pairTitle: "{a} vs {b}",
+    seoTitle: "{a} atau {b}: pilih yang mana?",
+    cantBoth: "Hanya satu dari dua mata kuliah ini yang dihitung untuk gelarmu, jadi kebanyakan mahasiswa memilih salah satu. Ini perbandingannya berdampingan.",
+    pairLede: "Dua mata kuliah berdampingan.",
+    pairQ: "{a} atau {b}: pilih yang mana?",
+    withOther: "Bandingkan dengan {code}",
+    table: "Berdampingan",
+    learn: "Yang dipelajari",
+    hard: "Tingkat kesulitan",
+  },
   shortlist: {
     "title": "Disimpan",
     "local": "Hanya disimpan di browser ini, seperti profilmu yang lain (dan ikut di file cadangan).",

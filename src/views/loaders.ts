@@ -24,4 +24,6 @@ export const VIEW_LOADERS: Record<View, () => Promise<Component>> = {
   clubs: () => import('./ClubsView.vue').then((m) => m.default),
   changes: () => import('./ChangesView.vue').then((m) => m.default),
   tools: () => import('./ToolsView.vue').then((m) => m.default),
+  // Two subjects side by side (/compare/A-vs-B/): the shortlist's comparison table.
+  compare: () => import('./ShortlistView.vue').then((m) => m.default),
 }

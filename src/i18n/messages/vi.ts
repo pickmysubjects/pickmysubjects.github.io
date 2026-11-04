@@ -2575,6 +2575,17 @@ export const vi: Messages = {
       a: 'Chưa có. Lộ trình nghề nghiệp (chuyên ngành và môn nào dẫn tới công việc hoặc học tiếp nào) đang được lên kế hoạch.',
     },
   },
+  compare: {
+    pairTitle: "{a} và {b}",
+    seoTitle: "{a} hay {b}: nên học môn nào?",
+    cantBoth: "Bằng của bạn chỉ tính một trong hai môn này, nên đa số sinh viên phải chọn một. Đây là hai môn đặt cạnh nhau.",
+    pairLede: "Hai môn đặt cạnh nhau.",
+    pairQ: "{a} hay {b}: nên chọn môn nào?",
+    withOther: "So sánh với {code}",
+    table: "So sánh cạnh nhau",
+    learn: "Học gì",
+    hard: "Độ khó",
+  },
   shortlist: {
     "title": "Môn đã lưu",
     "local": "Chỉ lưu trong trình duyệt này, như phần còn lại của hồ sơ (và có trong tệp sao lưu).",

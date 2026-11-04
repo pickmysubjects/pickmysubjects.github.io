@@ -2575,6 +2575,17 @@ export const ko: Messages = {
       a: '아직 없습니다. 진로 경로(어떤 전공과 과목이 어떤 직업이나 진학으로 이어지는지)를 계획 중입니다.',
     },
   },
+  compare: {
+    pairTitle: "{a} 대 {b}",
+    seoTitle: "{a}와 {b}, 어느 쪽을 들을까?",
+    cantBoth: "이 두 과목은 학위에서 하나만 인정돼서 대부분 둘 중 하나를 골라요. 나란히 비교해 보세요.",
+    pairLede: "두 과목 나란히 비교.",
+    pairQ: "{a}와 {b}, 무엇을 들을까?",
+    withOther: "{code}와 비교",
+    table: "나란히 비교",
+    learn: "배우는 내용",
+    hard: "난이도",
+  },
   shortlist: {
     "title": "저장 목록",
     "local": "다른 프로필 정보처럼 이 브라우저에만 저장돼요(백업 파일에도 들어가요).",

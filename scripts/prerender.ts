@@ -15,6 +15,7 @@
 import './releaseGlobals'
 import { APP_VERSION, copyright, releaseDate } from '../src/release'
 import { localTitle, pickLocalized, withLocalTitle } from '../src/i18n/localized'
+import { comparePairs, isComparePair, pairSlug } from '../src/engine/comparePairs'
 import { aggregateRatingLd, BRAND, listPageDescription, listPageTitle, PRESET_TITLE_KEYS, subjectFactSentences, subjectPageDescription, subjectPageTitle } from '../src/utils/seo'
 import { execFileSync } from 'node:child_process'
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs'
@@ -297,7 +298,11 @@ function subjectPage(code: LocaleCode, s: Subject): Page {
     `<h2>${esc(t('subject.needs'))}</h2><p>${esc(prereq)}</p>`,
     ...(coreq ? [`<h3>${esc(t('subject.coreqTitle'))}</h3><p>${esc(coreq)}</p>`] : []),
   ]
-  if (blocks.length) parts.push(`<h2>${esc(t('subject.blocks'))}</h2><ul>${blocks.map((c) => `<li>${subjectLink(code, c)}</li>`).join('')}</ul>`)
+  if (blocks.length) {
+    const pairs = blocks.filter((c) => isComparePair(data.subjects, s.code, c))
+    const cmp = pairs.length ? `<p>${pairs.map((c) => `<a href="${href(code, `compare/${pairSlug(s.code, c)}`)}">${esc(t('compare.withOther', { code: c }))}</a>`).join(' · ')}</p>` : ''
+    parts.push(`<h2>${esc(t('subject.blocks'))}</h2><ul>${blocks.map((c) => `<li>${subjectLink(code, c)}</li>`).join('')}</ul>${cmp}`)
+  }
   // Related subjects: what it leads to, what's taken with it, what comes before. Every link is in
   // the HTML (the rest of a long list behind a fold), and none repeats one already on the page.
   const rel = relatedSubjects(s, data.subjects, relatedIndex, blocks)
@@ -1078,8 +1083,37 @@ function lastModified(path: string): string {
   return dates.sort().at(-1) ?? fallbackDate
 }
 
+// Two subjects a student picks between (they can't both count): each one's key facts, how hard it
+// is and what it teaches, side by side, for searches like "MAST10006 or MAST10021".
+function comparePage(code: LocaleCode, [a, b]: readonly [string, string]): Page {
+  const t = translator(code)
+  const one = (c: string) => {
+    const s = data.subjects[c]!
+    const title = withLocalTitle(s.title, localTitle(s, code))
+    const difficulty = subjectDifficulty(sciSubjectMap, s.code, 'B-SCI', YEAR)
+    const assess = assessment(t, s, listSep(code))
+    return [
+      `<h2><a href="${href(code, `subject/${s.code}`)}">${esc(s.code)} ${esc(title)}</a></h2>`,
+      `<p>${esc(t('seo.facts', { code: s.code, title, level: s.level, points: s.points }))}</p>`,
+      // "How hard" has its own line below, and the reviews are on the subject's page, not this one.
+      `<p>${esc(subjectFactSentences(t, s, code, { difficulty: { level: 'unknown', factsOnly: true }, year: YEAR }).filter((x) => x !== t('seo.reviewsHere')).join(sentenceSep(code)))}</p>`,
+      `<h3>${esc(t('compare.hard'))}</h3><p>${esc(difficultyLine(t, code, s, difficulty))}</p>`,
+      ...(s.about ? [`<h3>${esc(t('compare.learn'))}</h3><p>${esc(pickLocalized(s.about.learn, code))}</p>`] : []),
+      ...(assess ? [`<h3>${esc(t('assess.title'))}</h3><p>${esc(assess)}</p>`] : []),
+    ].join('\n')
+  }
+  const q = t('compare.pairQ', { a, b })
+  return {
+    path: `compare/${pairSlug(a, b)}`,
+    title: `${t('compare.seoTitle', { a, b })} | PickMySubjects`,
+    description: `${q} ${t('compare.cantBoth')}`.slice(0, 300),
+    body: [`<h1>${esc(q)}</h1>`, `<p>${esc(t('compare.cantBoth'))}</p>`, one(a), one(b)].join('\n'),
+  }
+}
+
 // ---------- write ----------
 
+const pairs = comparePairs(data.subjects)
 const urls: string[] = []
 // Per language: each page's address and the last time its own content changed.
 const byLocale = new Map<LocaleCode, { url: string; lastmod: string }[]>()
@@ -1089,7 +1123,7 @@ for (const code of LOCALE_CODES) {
   const main = mainPages(code)
   // Every page links every main page, so a crawler following links reaches all of them, not just the sitemap.
   const siteNav = `<nav>${main.map((m) => `<a href="${href(code, m.path)}">${esc(m.title.split(' | ')[0]!)}</a>`).join(' · ')}</nav><footer><p>${esc(copyright())} · v${APP_VERSION}</p></footer>`
-  const pages = [...main, ...majors.map((m) => majorPage(code, m)), ...minors.map((m) => majorPage(code, m)), ...informals.map((m) => majorPage(code, m)), ...specs.map((m) => majorPage(code, m)), ...careerList.map((c) => careerPage(code, c)), ...CLUBS.map((c) => clubPage(code, c)), ...subjects.map((s) => subjectPage(code, s))]
+  const pages = [...main, ...majors.map((m) => majorPage(code, m)), ...minors.map((m) => majorPage(code, m)), ...informals.map((m) => majorPage(code, m)), ...specs.map((m) => majorPage(code, m)), ...careerList.map((c) => careerPage(code, c)), ...CLUBS.map((c) => clubPage(code, c)), ...subjects.map((s) => subjectPage(code, s)), ...pairs.map((p) => comparePage(code, p))]
   for (const page of pages) {
     write(code, page.path, render({ ...page, body: page.body + siteNav }, code))
     urls.push(absolute(code, page.path))

@@ -2580,6 +2580,17 @@ export const en = {
       a: 'Not yet. Career pathways (which majors and subjects lead to which jobs or further study) are planned.',
     },
   },
+  compare: {
+    pairTitle: "{a} vs {b}",
+    seoTitle: "{a} vs {b}: which one should I take?",
+    cantBoth: "You can only count one of these two towards your degree, so most students pick between them. Here they are side by side.",
+    pairLede: "These two side by side.",
+    pairQ: "{a} or {b}: which should I take?",
+    withOther: "Compare with {code}",
+    table: "Side by side",
+    learn: "What it teaches",
+    hard: "How hard",
+  },
   shortlist: {
     "title": "Shortlist",
     "local": "Saved in this browser only, like the rest of your profile (and in your backup file).",

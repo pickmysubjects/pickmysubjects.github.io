@@ -7,30 +7,40 @@ import { compareFromQuery, useShortlist } from '@/composables/useShortlist'
 import { link, useView } from '@/composables/useView'
 import { useDataset } from '@/composables/useDataset'
 import { useI18n } from '@/i18n'
+import { isComparePair, pairFromSlug } from '@/engine/comparePairs'
 
 /**
  * Saved subjects, and the comparison of them: one table, a row per saved subject. An old compare
  * link (?compare=A,B,C, or #compare-title from the menu) opens the same table with those first.
  */
 const { t } = useI18n()
-const { query } = useView()
+const { view, param, query } = useView()
 const { data } = useDataset()
 const shortlist = useShortlist()
 const art = () => import('@/components/shortlist/art/ArtShortlist.vue')
 
+// /compare/A-vs-B/: just those two, as their own page (one a student can't count both of).
+const pair = computed(() => {
+  const p = view.value === 'compare' ? pairFromSlug(param.value) : null
+  return p && p.every((c) => data.value.subjects[c]) ? p : null
+})
+const cantBoth = computed(() => !!pair.value && isComparePair(data.value.subjects, pair.value[0], pair.value[1]))
+const title = computed(() => (pair.value ? t.value('compare.pairTitle', { a: pair.value[0], b: pair.value[1] }) : t.value('shortlist.title')))
+
 const saved = computed(() => shortlist.codes.value.filter((c) => data.value.subjects[c]))
-const asked = computed(() => compareFromQuery(query.value.get('compare')).filter((c) => data.value.subjects[c]))
+const asked = computed(() => (pair.value ? [...pair.value] : compareFromQuery(query.value.get('compare')).filter((c) => data.value.subjects[c])))
 // A subject from a shared compare link that isn't saved here still gets its row, with a save button.
-const codes = computed(() => [...new Set([...saved.value, ...asked.value])])
+const codes = computed(() => (pair.value ? [...pair.value] : [...new Set([...saved.value, ...asked.value])]))
 </script>
 
 <template>
   <div class="shortlist">
-    <DetailHero :title="t('shortlist.title')" :art="art">
-      <p v-if="codes.length" class="lede">{{ t('shortlist.lede') }}<InfoTip :text="t('shortlist.local')" /></p>
+    <DetailHero :title="title" :art="art">
+      <p v-if="pair" class="lede">{{ cantBoth ? t('compare.cantBoth') : t('compare.pairLede') }}</p>
+      <p v-else-if="codes.length" class="lede">{{ t('shortlist.lede') }}<InfoTip :text="t('shortlist.local')" /></p>
     </DetailHero>
 
-    <section v-if="codes.length" id="compare-title" class="list surface" :aria-label="t('shortlist.title')">
+    <section v-if="codes.length" id="compare-title" class="list surface" :aria-label="title">
       <SavedTable :codes="codes" :highlight="asked" />
     </section>
 
