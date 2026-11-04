@@ -2588,6 +2588,7 @@ export const ms: Messages = {
     hard: "Tahap kesukaran",
   },
   shortlist: {
+    noRatings: "Belum ada",
     "title": "Disimpan",
     "local": "Disimpan dalam pelayar ini sahaja, seperti profil anda yang lain (dan dalam fail sandaran).",
     "localShort": "Disimpan dalam pelayar ini sahaja",

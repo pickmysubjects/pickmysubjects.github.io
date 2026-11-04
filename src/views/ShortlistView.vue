@@ -3,6 +3,7 @@ import InfoTip from '@/components/InfoTip.vue'
 import { computed } from 'vue'
 import DetailHero from '@/components/browse/DetailHero.vue'
 import SavedTable from '@/components/shortlist/SavedTable.vue'
+import PairLearn from '@/components/shortlist/PairLearn.vue'
 import { compareFromQuery, useShortlist } from '@/composables/useShortlist'
 import { link, useView } from '@/composables/useView'
 import { useDataset } from '@/composables/useDataset'
@@ -43,6 +44,8 @@ const codes = computed(() => (pair.value ? [...pair.value] : [...new Set([...sav
     <section v-if="codes.length" id="compare-title" class="list surface" :aria-label="title">
       <SavedTable :codes="codes" :highlight="asked" />
     </section>
+
+    <PairLearn v-if="pair" :a="pair[0]" :b="pair[1]" />
 
     <section v-else class="empty surface">
       <p>{{ t('shortlist.empty') }}</p>

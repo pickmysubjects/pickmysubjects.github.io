@@ -67,7 +67,7 @@ function cell(c: CompareColumn, key: Key): Cell {
       return c.hurdles === null ? { text: tr('shortlist.unknown'), rank: 999 } : { text: c.hurdles ? String(c.hurdles) : tr('shortlist.prereq.none'), rank: c.hurdles }
     case 'ratings':
       // Most rated first: the order students want for this one.
-      return { text: String(c.reviews), rank: -c.reviews }
+      return { text: c.reviews ? String(c.reviews) : tr('shortlist.noRatings'), rank: -c.reviews }
   }
 }
 
@@ -122,7 +122,7 @@ const shown = computed(() => (onlyDiff.value ? KEYS.filter((k) => !same.value.ha
         <input v-model="onlyDiff" type="checkbox" />
         <span>{{ t('shortlist.onlyDiff') }}</span>
       </label>
-      <label v-if="phone" class="sort">
+      <label v-if="phone && rows.length > 2" class="sort">
         <span>{{ t('shortlist.sortBy') }}</span>
         <select class="input" :value="sortKey" @change="onSortSelect">
           <option value="">{{ t('shortlist.savedOrder') }}</option>

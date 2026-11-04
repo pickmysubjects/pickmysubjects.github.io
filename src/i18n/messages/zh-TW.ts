@@ -2588,6 +2588,7 @@ export const zhTW: Messages = {
     hard: "難不難",
   },
   shortlist: {
+    noRatings: "還沒有",
     "title": "收藏",
     "local": "只存在這個瀏覽器裡，和你的其他資料一樣（備份檔裡也有）。",
     "localShort": "只存在這個瀏覽器裡",

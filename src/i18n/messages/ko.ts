@@ -2588,6 +2588,7 @@ export const ko: Messages = {
     hard: "난이도",
   },
   shortlist: {
+    noRatings: "아직 없음",
     "title": "저장 목록",
     "local": "다른 프로필 정보처럼 이 브라우저에만 저장돼요(백업 파일에도 들어가요).",
     "localShort": "이 브라우저에만 저장돼요",

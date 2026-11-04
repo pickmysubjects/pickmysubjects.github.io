@@ -2593,6 +2593,7 @@ export const en = {
     hard: "How hard",
   },
   shortlist: {
+    noRatings: "None yet",
     "title": "Shortlist",
     "local": "Saved in this browser only, like the rest of your profile (and in your backup file).",
     "localShort": "Kept in this browser only",

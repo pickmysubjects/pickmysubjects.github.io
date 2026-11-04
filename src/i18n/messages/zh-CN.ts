@@ -2588,6 +2588,7 @@ export const zhCN: Messages = {
     hard: "难不难",
   },
   shortlist: {
+    noRatings: "还没有",
     "title": "收藏",
     "local": "只存在这个浏览器里，和你的其他资料一样（备份文件里也有）。",
     "localShort": "只存在这个浏览器里",

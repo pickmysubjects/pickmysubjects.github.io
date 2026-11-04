@@ -2588,6 +2588,7 @@ export const id: Messages = {
     hard: "Tingkat kesulitan",
   },
   shortlist: {
+    noRatings: "Belum ada",
     "title": "Disimpan",
     "local": "Hanya disimpan di browser ini, seperti profilmu yang lain (dan ikut di file cadangan).",
     "localShort": "Hanya disimpan di browser ini",

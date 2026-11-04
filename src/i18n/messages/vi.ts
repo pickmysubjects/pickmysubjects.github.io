@@ -2588,6 +2588,7 @@ export const vi: Messages = {
     hard: "Độ khó",
   },
   shortlist: {
+    noRatings: "Chưa có",
     "title": "Môn đã lưu",
     "local": "Chỉ lưu trong trình duyệt này, như phần còn lại của hồ sơ (và có trong tệp sao lưu).",
     "localShort": "Chỉ lưu trên trình duyệt này",

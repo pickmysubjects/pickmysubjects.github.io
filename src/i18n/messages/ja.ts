@@ -2588,6 +2588,7 @@ export const ja: Messages = {
     hard: "難しさ",
   },
   shortlist: {
+    noRatings: "まだなし",
     "title": "保存リスト",
     "local": "プロフィールと同じく、このブラウザにだけ保存されます（バックアップファイルにも入ります）。",
     "localShort": "このブラウザにだけ保存",
