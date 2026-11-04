@@ -98,18 +98,6 @@ async function copy(): Promise<void> {
         </button>
       </div>
 
-      <div v-if="tree.abilities.length" class="part">
-        <h3 class="part-title">{{ t('skillTree.abilities') }}</h3>
-        <ul class="rows">
-          <li v-for="a in tree.abilities" :key="a.ability" class="row">
-            <span class="row-name">{{ t(`skillTree.ability.${a.ability}`) }}</span>
-            <span class="row-codes">
-              <a v-for="c in a.codes" :key="c" class="code" :href="link(`subject/${c}/`)">{{ c }}</a>
-            </span>
-          </li>
-        </ul>
-      </div>
-
       <div class="part">
         <h3 class="part-title">{{ t('skillTree.learned') }}</h3>
         <ul class="learned">

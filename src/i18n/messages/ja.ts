@@ -593,7 +593,7 @@ export const ja: Messages = {
     restore: 'バックアップを開く',
     restoreFailed: 'PickMySubjects のバックアップファイルではありません。',
     addTerm: "学期（任意）",
-    secStrengths: "得意なことと興味",
+    secStrengths: "得意なことと興味（履修計画用）",
     secGoal: "目標と週の時間",
     tocPlans: "プラン A/B",
     next: '次へ：学位プランを作る',
@@ -679,7 +679,7 @@ export const ja: Messages = {
     other: 'その他',
   },
   skillTree: {
-    title: "履歴書に書けるスキル",
+    title: "履歴書に書けるスキル（企業向け）",
     scope: "対象の科目",
     done: "履修済み（{n}）",
     withPlan: "プランも含める（{n}）",

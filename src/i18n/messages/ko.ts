@@ -593,7 +593,7 @@ export const ko: Messages = {
     restore: '백업 열기',
     restoreFailed: 'PickMySubjects 백업 파일이 아닙니다.',
     addTerm: "학기 (선택)",
-    secStrengths: "강점과 관심사",
+    secStrengths: "강점과 관심사 (수강 계획용)",
     secGoal: "목표와 주간 시간",
     tocPlans: "플랜 A/B",
     next: '다음: 학위 계획 만들기',
@@ -679,7 +679,7 @@ export const ko: Messages = {
     other: '기타',
   },
   skillTree: {
-    title: "이력서에 쓸 스킬",
+    title: "이력서에 쓸 스킬 (고용주용)",
     scope: "어떤 과목",
     done: "이수({n})",
     withPlan: "플랜 포함({n})",

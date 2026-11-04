@@ -593,7 +593,7 @@ export const hi: Messages = {
     restore: 'बैकअप खोलें',
     restoreFailed: 'यह PickMySubjects की बैकअप फ़ाइल नहीं है।',
     addTerm: "सेमेस्टर (वैकल्पिक)",
-    secStrengths: "आपकी ताकत और रुचियाँ",
+    secStrengths: "आपकी ताकत और रुचियाँ (विषय योजना के लिए)",
     secGoal: "लक्ष्य और हफ़्ते के घंटे",
     tocPlans: "प्लान A/B",
     next: 'अगला: डिग्री प्लान बनाएँ',
@@ -679,7 +679,7 @@ export const hi: Messages = {
     other: 'अन्य',
   },
   skillTree: {
-    title: "रिज़्यूमे के लिए स्किल",
+    title: "रिज़्यूमे के लिए स्किल (नियोक्ताओं के लिए)",
     scope: "कौन से सब्जेक्ट",
     done: "पूरे किए ({n})",
     withPlan: "प्लान समेत ({n})",

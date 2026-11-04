@@ -593,7 +593,7 @@ export const id: Messages = {
     restore: 'Buka cadangan',
     restoreFailed: 'File itu bukan cadangan PickMySubjects.',
     addTerm: "Semester (opsional)",
-    secStrengths: "Kekuatan dan minat",
+    secStrengths: "Kekuatan dan minat (untuk menyusun mata kuliah)",
     secGoal: "Tujuan dan jam per minggu",
     tocPlans: "Rencana A/B",
     next: 'Berikutnya: buat rencana kuliah',
@@ -679,7 +679,7 @@ export const id: Messages = {
     other: 'Lainnya',
   },
   skillTree: {
-    title: "Keahlian untuk CV",
+    title: "Keahlian untuk CV (untuk perekrut)",
     scope: "Mata kuliah mana",
     done: "Selesai ({n})",
     withPlan: "Dengan rencana ({n})",

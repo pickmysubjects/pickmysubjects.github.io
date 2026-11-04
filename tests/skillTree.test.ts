@@ -44,7 +44,7 @@ describe('the skill tree', () => {
     // A subject with no resume lines of its own falls back to its learning outcomes.
     const text = resumeText(tree, data, (c) => (c === 'COMP10001' ? ['Read, write and debug small programs'] : []), () => undefined)
     expect(text).toContain('Tools: Python (COMP10001)')
-    expect(text).toContain('Programming: COMP10001')
+    expect(text).toMatch(/^Employability skills: .*Programming \(COMP10001\)/m)
     expect(text).toContain('Relevant coursework\n- COMP10001 Foundations of Computing: Read, write and debug small programs')
     // A subject with no outcomes loaded isn't listed under coursework.
     expect(text).not.toContain('- MAST10006')

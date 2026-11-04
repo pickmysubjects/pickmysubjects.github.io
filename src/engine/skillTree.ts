@@ -133,7 +133,9 @@ export function resumeText(tree: SkillTree, data: Dataset, outcomesOf: (code: st
   const lines: string[] = []
   if (tree.tools.length) lines.push(`Tools: ${tree.tools.map((t) => `${t.name} (${t.codes.join(', ')})`).join('; ')}`)
   if (tree.specialist.length) lines.push(`Specialist skills: ${tree.specialist.map((t) => t.name).join(', ')}`)
-  for (const a of tree.abilities) lines.push(`${RESUME_LABELS[a.ability]}: ${a.codes.join(', ')}`)
+  // Broad abilities aren't shown on the page (the strengths card covers them), but a resume's
+  // "Employability skills" line is where they go.
+  if (tree.abilities.length) lines.push(`Employability skills: ${tree.abilities.map((a) => `${RESUME_LABELS[a.ability]} (${a.codes.join(', ')})`).join('; ')}`)
   // Each subject: what the student did in it (its resume lines), else what it taught (its outcomes).
   const said = (c: string) => resumeOf(c)?.lines.length ? resumeOf(c)!.lines : outcomesOf(c)
   const coursework = tree.subjects.filter((c) => said(c).length)

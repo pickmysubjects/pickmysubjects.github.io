@@ -593,7 +593,7 @@ export const zhCN: Messages = {
     restore: '打开备份',
     restoreFailed: '这不是 PickMySubjects 的备份文件。',
     addTerm: "学期（可选）",
-    secStrengths: "擅长与兴趣",
+    secStrengths: "擅长与兴趣（排课用）",
     secGoal: "目标与每周时间",
     tocPlans: "计划 A/B",
     next: '下一步：生成学位计划',
@@ -679,7 +679,7 @@ export const zhCN: Messages = {
     other: '其他',
   },
   skillTree: {
-    title: "简历上的技能",
+    title: "简历上的技能（给雇主看）",
     scope: "算哪些课",
     done: "已修（{n}）",
     withPlan: "加上计划（{n}）",

@@ -598,7 +598,7 @@ export const en = {
     restore: 'Open a backup',
     restoreFailed: 'That file isn’t a PickMySubjects backup.',
     addTerm: "Semester (optional)",
-    secStrengths: "Strengths and interests",
+    secStrengths: "Strengths and interests (for planning)",
     secGoal: "Goal and weekly hours",
     tocPlans: "Plan A/B",
     next: 'Next: build your degree plan',
@@ -684,7 +684,7 @@ export const en = {
     other: 'Other',
   },
   skillTree: {
-    title: "Skills for your resume",
+    title: "Skills for your resume (for employers)",
     scope: "Which subjects",
     done: "Done ({n})",
     withPlan: "With my plan ({n})",

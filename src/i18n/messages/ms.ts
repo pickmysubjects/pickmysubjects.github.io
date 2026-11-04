@@ -593,7 +593,7 @@ export const ms: Messages = {
     restore: 'Buka sandaran',
     restoreFailed: 'Fail itu bukan sandaran PickMySubjects.',
     addTerm: "Semester (pilihan)",
-    secStrengths: "Kekuatan dan minat",
+    secStrengths: "Kekuatan dan minat (untuk rancang subjek)",
     secGoal: "Matlamat dan jam seminggu",
     tocPlans: "Pelan A/B",
     next: 'Seterusnya: bina rancangan ijazah',
@@ -679,7 +679,7 @@ export const ms: Messages = {
     other: 'Lain-lain',
   },
   skillTree: {
-    title: "Kemahiran untuk resume",
+    title: "Kemahiran untuk resume (untuk majikan)",
     scope: "Subjek mana",
     done: "Selesai ({n})",
     withPlan: "Dengan rancangan ({n})",

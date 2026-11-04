@@ -593,7 +593,7 @@ export const vi: Messages = {
     restore: 'Mở bản sao lưu',
     restoreFailed: 'Tệp này không phải bản sao lưu của PickMySubjects.',
     addTerm: "Học kỳ (tùy chọn)",
-    secStrengths: "Điểm mạnh và sở thích",
+    secStrengths: "Điểm mạnh và sở thích (để xếp môn)",
     secGoal: "Mục tiêu và giờ mỗi tuần",
     tocPlans: "Kế hoạch A/B",
     next: 'Tiếp theo: lập kế hoạch học tập',
@@ -679,7 +679,7 @@ export const vi: Messages = {
     other: 'Khác',
   },
   skillTree: {
-    title: "Kỹ năng cho CV",
+    title: "Kỹ năng cho CV (cho nhà tuyển dụng)",
     scope: "Tính những môn nào",
     done: "Đã học ({n})",
     withPlan: "Cả kế hoạch ({n})",

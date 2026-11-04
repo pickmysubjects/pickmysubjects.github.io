@@ -593,7 +593,7 @@ export const zhTW: Messages = {
     restore: '打開備份',
     restoreFailed: '這不是 PickMySubjects 的備份檔。',
     addTerm: "學期（選填）",
-    secStrengths: "擅長與興趣",
+    secStrengths: "擅長與興趣（排課用）",
     secGoal: "目標與每週時間",
     tocPlans: "計畫 A/B",
     next: '下一步：產生學位計畫',
@@ -679,7 +679,7 @@ export const zhTW: Messages = {
     other: '其他',
   },
   skillTree: {
-    title: "履歷上的技能",
+    title: "履歷上的技能（給雇主看）",
     scope: "算哪些課",
     done: "已修（{n}）",
     withPlan: "加上計畫（{n}）",
