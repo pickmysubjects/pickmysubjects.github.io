@@ -717,7 +717,6 @@ export const zhTW: Messages = {
   employerSkills: {
     teaches: "能學到的課：",
     inPlan: "你的計畫裡有：",
-    add: "加入計畫",
     outsideClubs: "課外才能練的技能，適合你的社團：",
     sum: "你修過的課能證明 {n} / {total} 項",
     outside: "靠實習、社團或志工活動來展現",

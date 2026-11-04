@@ -717,7 +717,6 @@ export const zhCN: Messages = {
   employerSkills: {
     teaches: "能学到的课：",
     inPlan: "你的计划里有：",
-    add: "加入计划",
     outsideClubs: "课外才能练的技能，适合你的社团：",
     sum: "你修过的课能证明 {n} / {total} 项",
     outside: "靠实习、社团或志愿活动来展示",

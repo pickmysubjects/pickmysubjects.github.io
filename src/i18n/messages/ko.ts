@@ -717,7 +717,6 @@ export const ko: Messages = {
   employerSkills: {
     teaches: "배울 수 있는 과목:",
     inPlan: "계획에 있어요:",
-    add: "계획에 추가",
     outsideClubs: "수업 밖에서 기르는 스킬에는 이런 동아리:",
     sum: "이수 과목으로 {total}개 중 {n}개 보여줄 수 있어요",
     outside: "일·동아리·봉사로 보여주는 스킬",

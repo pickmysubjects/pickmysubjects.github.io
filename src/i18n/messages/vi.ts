@@ -717,7 +717,6 @@ export const vi: Messages = {
   employerSkills: {
     teaches: "Môn dạy kỹ năng này:",
     inPlan: "Có trong kế hoạch:",
-    add: "Thêm vào kế hoạch",
     outsideClubs: "Với kỹ năng rèn ngoài giờ học, CLB hợp với bạn:",
     sum: "Các môn của bạn chứng minh được {n}/{total}",
     outside: "Thể hiện qua đi làm, CLB hoặc tình nguyện",

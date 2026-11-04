@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import QuickAdd from '@/components/browse/QuickAdd.vue'
 import { CLUBS } from '@/content/clubs'
 import { suggestClubs } from '@/engine/clubs'
 import { passedCodes, standingOf } from '@/engine/recommend'
@@ -10,6 +11,7 @@ import { useDataset, useOutcomes, useResume } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
 import { useProfile } from '@/composables/useProfile'
 import { useI18n } from '@/i18n'
+import { localTitle } from '@/i18n/localized'
 
 /**
  * A job's skills as employers list them (yourcareer.gov.au), each beside what the student has
@@ -18,7 +20,7 @@ import { useI18n } from '@/i18n'
  * to the clubs that suit them. Before any subject is on the record, just the list.
  */
 const props = defineProps<{ skills: readonly string[] }>()
-const { t } = useI18n()
+const { t, locale } = useI18n()
 const { data, course } = useDataset()
 const { profile } = useProfile()
 const plan = usePlan()
@@ -45,7 +47,7 @@ const clubs = computed(() =>
     ? suggestClubs(CLUBS, { interests: profile.value.interests, course: plan.setupChosen.value ? course.value : undefined, codes: [...done.value, ...planned.value], data: data.value }, 3)
     : [],
 )
-const title = (c: string) => data.value.subjects[c]?.title ?? ''
+const title = (c: string) => localTitle(data.value.subjects[c]!, locale.value) || data.value.subjects[c]!.title
 </script>
 
 <template>
@@ -65,13 +67,15 @@ const title = (c: string) => data.value.subjects[c]?.title ?? ''
           {{ t('employerSkills.inPlan') }}
           <a v-for="c in picks[r.skill]!.planned" :key="c" class="code" :href="link(`subject/${c}/`)">{{ c }}</a>
         </span>
-        <span v-else-if="picks[r.skill]?.picks.length" class="picks">
+        <div v-else-if="picks[r.skill]?.picks.length" class="picks">
           <span class="none">{{ t('employerSkills.teaches') }}</span>
-          <span v-for="c in picks[r.skill]!.picks" :key="c" class="pick">
-            <a class="code" :href="link(`subject/${c}/`)" :title="title(c)">{{ c }}</a>
-            <a class="add" :href="link(`plan?add=${c}`)">{{ t('employerSkills.add') }}</a>
-          </span>
-        </span>
+          <ul class="pick-list">
+            <li v-for="c in picks[r.skill]!.picks" :key="c" class="pick">
+              <a class="pick-name" :href="link(`subject/${c}/`)"><span class="code">{{ c }}</span> {{ title(c) }}</a>
+              <QuickAdd :subject="data.subjects[c]!" text />
+            </li>
+          </ul>
+        </div>
         <span v-else class="none">{{ t('employerSkills.notYet') }}</span>
       </li>
     </ul>
@@ -151,8 +155,7 @@ const title = (c: string) => data.value.subjects[c]?.title ?? ''
   font-size: var(--fs-small);
 }
 
-.planned,
-.picks {
+.planned {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
@@ -161,13 +164,38 @@ const title = (c: string) => data.value.subjects[c]?.title ?? ''
   font-size: var(--fs-small);
 }
 
-.pick {
-  display: inline-flex;
-  align-items: baseline;
+.picks {
+  display: grid;
   gap: 6px;
 }
 
-.add,
+.pick-list {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* The subject (code and name, as other subject lists show it), its Add button at the end. */
+.pick {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.pick-name {
+  min-width: 0;
+  color: var(--ink);
+  font-size: var(--fs-small);
+  text-decoration: none;
+}
+
+.pick-name:hover {
+  color: var(--accent);
+}
+
 .club {
   color: var(--accent);
   font-size: var(--fs-small);
@@ -175,7 +203,6 @@ const title = (c: string) => data.value.subjects[c]?.title ?? ''
   text-decoration: none;
 }
 
-.add:hover,
 .club:hover {
   color: var(--ink);
 }

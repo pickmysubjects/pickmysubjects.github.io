@@ -722,7 +722,6 @@ export const en = {
   employerSkills: {
     teaches: "Subjects that teach it:",
     inPlan: "In your plan:",
-    add: "Add to plan",
     outsideClubs: "For those built outside class, clubs for you:",
     sum: "Your subjects show {n} of {total}",
     outside: "Shown through work, clubs or volunteering",

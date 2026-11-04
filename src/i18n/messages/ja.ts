@@ -717,7 +717,6 @@ export const ja: Messages = {
   employerSkills: {
     teaches: "身につく科目：",
     inPlan: "プランに入っています：",
-    add: "プランに追加",
     outsideClubs: "授業外で身につくスキルには、おすすめのサークル：",
     sum: "履修科目で示せるのは {total} 項目中 {n}",
     outside: "仕事・クラブ・ボランティアで示すもの",

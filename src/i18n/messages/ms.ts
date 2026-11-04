@@ -717,7 +717,6 @@ export const ms: Messages = {
   employerSkills: {
     teaches: "Subjek yang mengajarnya:",
     inPlan: "Dalam rancangan anda:",
-    add: "Tambah ke rancangan",
     outsideClubs: "Untuk kemahiran luar kelas, kelab untuk anda:",
     sum: "Subjek anda menunjukkan {n} daripada {total}",
     outside: "Ditunjukkan melalui kerja, kelab atau sukarela",
