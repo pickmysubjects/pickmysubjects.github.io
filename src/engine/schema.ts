@@ -351,6 +351,8 @@ export const subjectFileSchema = z
     titles: undefined as SubjectTitles | undefined,
     // Filled in from data/<set>/tools.yaml: software and languages it teaches or uses.
     tools: undefined as SubjectTools | undefined,
+    // Filled in from data/<set>/resume.yaml: specialist skills and resume lines, in English.
+    resume: undefined as SubjectResume | undefined,
   }))
 
 export type Subject = z.output<typeof subjectFileSchema>
@@ -362,6 +364,15 @@ export type Subject = z.output<typeof subjectFileSchema>
 const subjectTools = z.object({ handbook: z.array(z.string().min(1)).optional(), students: z.array(z.string().min(1)).optional() }).strict()
 export type SubjectTools = z.output<typeof subjectTools>
 export const toolsFileSchema = z.record(subjectCode, subjectTools)
+
+/**
+ * What a subject gives a student for a resume (data/<set>/resume.yaml), in English as Australian
+ * resumes are: the specialist skills it teaches, named as job ads name them, and one or two lines
+ * on what the student did in it, from its Handbook outcomes and assessment.
+ */
+const subjectResume = z.object({ skills: z.array(z.string().min(2).max(60)).max(6), lines: z.array(z.string().min(10).max(200)).max(2) }).strict()
+export type SubjectResume = z.output<typeof subjectResume>
+export const resumeFileSchema = z.record(subjectCode, subjectResume)
 
 /** Our own translation of a subject's title, so Chinese readers can recognise and search for it. */
 const subjectTitles = z.object({ zh: z.string().min(1).max(40), 'zh-TW': z.string().min(1).max(40).optional() }).strict()

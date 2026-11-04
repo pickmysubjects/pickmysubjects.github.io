@@ -7,7 +7,7 @@ import type { CareerLang } from '@/engine/careers'
 import { passedCodes } from '@/engine/recommend'
 import { buildSkillTree, resumeText } from '@/engine/skillTree'
 import { link } from '@/composables/useView'
-import { useDataset, useOutcomes } from '@/composables/useDataset'
+import { useDataset, useOutcomes, useResume } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
 import { useProfile } from '@/composables/useProfile'
 import { useI18n } from '@/i18n'
@@ -26,7 +26,9 @@ const done = computed(() => passedCodes(profile.value.results))
 const planned = computed(() => plan.plan.value.terms.flatMap((term) => term.subjects).filter((c) => !done.value.includes(c)))
 const scope = shallowRef<'done' | 'all'>('done')
 const codes = computed(() => (scope.value === 'all' ? [...done.value, ...planned.value] : done.value))
-const tree = computed(() => buildSkillTree(codes.value, data.value))
+// Specialist skills and resume lines come with each subject's detail, loaded as the list changes.
+const resumeOf = useResume(codes)
+const tree = computed(() => buildSkillTree(codes.value, data.value, resumeOf))
 
 const outcomes = useOutcomes(codes)
 const lines = (code: string) => outcomes(code).map((o) => pickLocalized(o, locale.value))
@@ -35,6 +37,10 @@ const lines = (code: string) => outcomes(code).map((o) => pickLocalized(o, local
 const FIRST = 4
 const showAll = shallowRef(false)
 const shownSubjects = computed(() => (showAll.value ? tree.value.subjects : tree.value.subjects.slice(0, FIRST)))
+// Specialist skills: the ones most subjects back first, the rest a tap away (the copy has them all).
+const FIRST_SKILLS = 8
+const allSkills = shallowRef(false)
+const shownSkills = computed(() => (allSkills.value ? tree.value.specialist : tree.value.specialist.slice(0, FIRST_SKILLS)))
 
 const scopes = computed(() => [
   { value: 'done' as const, label: t.value('skillTree.done', { n: done.value.length }) },
@@ -47,7 +53,7 @@ const goalName = computed(() => (goal.value ? (goal.value.names[t.value('careerL
 
 const copied = shallowRef(false)
 async function copy(): Promise<void> {
-  const text = resumeText(tree.value, data.value, (c) => outcomes(c).map((o) => o.en))
+  const text = resumeText(tree.value, data.value, (c) => outcomes(c).map((o) => o.en), resumeOf)
   try {
     await navigator.clipboard.writeText(text)
     copied.value = true
@@ -77,6 +83,21 @@ async function copy(): Promise<void> {
         </ul>
       </div>
 
+      <div v-if="tree.specialist.length" class="part">
+        <h3 class="part-title">{{ t('skillTree.specialist') }}</h3>
+        <ul class="rows">
+          <li v-for="x in shownSkills" :key="x.name" class="row">
+            <span class="row-name" lang="en">{{ x.name }}</span>
+            <span class="row-codes">
+              <a v-for="c in x.codes" :key="c" class="code" :href="link(`subject/${c}/`)">{{ c }}</a>
+            </span>
+          </li>
+        </ul>
+        <button v-if="tree.specialist.length > FIRST_SKILLS" class="more" type="button" @click="allSkills = !allSkills">
+          {{ allSkills ? t('skillTree.fewer') : t('skillTree.allSkills', { n: tree.specialist.length }) }}
+        </button>
+      </div>
+
       <div v-if="tree.abilities.length" class="part">
         <h3 class="part-title">{{ t('skillTree.abilities') }}</h3>
         <ul class="rows">
@@ -97,6 +118,10 @@ async function copy(): Promise<void> {
             <ul v-if="lines(c).length" class="outcomes">
               <li v-for="(line, i) in lines(c)" :key="i">{{ line }}</li>
             </ul>
+            <div v-if="resumeOf(c)?.lines.length" class="resume-lines">
+              <span class="resume-label">{{ t('skillTree.resumeLines') }}</span>
+              <p v-for="(line, i) in resumeOf(c)!.lines" :key="i" lang="en">{{ line }}</p>
+            </div>
           </li>
         </ul>
         <button v-if="tree.subjects.length > FIRST" class="more" type="button" @click="showAll = !showAll">
@@ -230,6 +255,31 @@ a.code:hover {
 
 .outcomes li::before {
   content: '· ';
+}
+
+.resume-lines {
+  margin-top: 6px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--ink) 4%, transparent);
+  font-size: var(--fs-small);
+  line-height: 1.5;
+}
+
+.resume-label {
+  display: block;
+  margin-bottom: 2px;
+  font-size: var(--fs-meta);
+  color: var(--ink-soft);
+}
+
+.resume-lines p {
+  margin: 0;
+}
+
+/* Two resume lines are two separate bullets on a resume, so keep them apart. */
+.resume-lines p + p {
+  margin-top: 6px;
 }
 
 .more {

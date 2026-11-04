@@ -78,6 +78,12 @@ export function useSubjectDetail(code: Readonly<Ref<string>>) {
   return { subject, ready, takenWith }
 }
 
+/** Each subject's specialist skills and resume lines, loading their areas as `codes` change; undefined until loaded. */
+export function useResume(codes: Readonly<Ref<readonly string[]>>) {
+  watch(codes, (cs) => void cs.forEach((c) => void loadArea(detailArea(c))), { immediate: true })
+  return (code: string) => areas.get(detailArea(code))?.[code]?.resume
+}
+
 /** Each subject's learning outcomes (up to 3), loading their areas as `codes` change; [] until loaded. */
 export function useOutcomes(codes: Readonly<Ref<readonly string[]>>) {
   watch(codes, (cs) => void cs.forEach((c) => void loadArea(detailArea(c))), { immediate: true })

@@ -1,6 +1,6 @@
 import type { StudentComment } from './comments'
 import type { StudentFacts } from './studentFacts'
-import type { Dataset, DiscussionSummary, Subject, SubjectAbout } from './schema'
+import type { Dataset, DiscussionSummary, Subject, SubjectAbout, SubjectResume } from './schema'
 
 /** The long text of one subject, loaded only when its page is opened. */
 export interface SubjectDetail {
@@ -13,6 +13,8 @@ export interface SubjectDetail {
   prescribedTexts?: boolean
   examBook?: 'open' | 'closed'
   languages?: Subject['languages']
+  /** Specialist skills and resume lines (My page's skills for a resume). */
+  resume?: SubjectResume
   /** Subjects often taken with it (see buildTakenWith), worked out at build. */
   takenWith?: string[]
 }
@@ -33,7 +35,7 @@ export function splitDataset(data: Dataset, takenWith: Record<string, string[]> 
   const subjects: Record<string, Subject> = {}
   const details: Record<string, Record<string, SubjectDetail>> = {}
   for (const [code, s] of Object.entries(data.subjects)) {
-    const { about, discussions, breadthFor, comments, studentFacts, prescribedTexts, examBook, languages, ...rest } = s
+    const { about, discussions, breadthFor, comments, studentFacts, prescribedTexts, examBook, languages, resume, ...rest } = s
     const lean: Subject = { ...rest } as Subject
     if (about) lean.about = { ...about, learn: { en: about.learn.en, zh: '' }, outcomes: [] }
     // Core keeps a summary's counts, years, workload, difficulty and tags (lists and filters use them); its text loads with the detail.
@@ -41,7 +43,7 @@ export function splitDataset(data: Dataset, takenWith: Record<string, string[]> 
     subjects[code] = lean
     const tw = takenWith[code]
     const hb = prescribedTexts !== undefined || examBook !== undefined || languages !== undefined
-    if (about || discussions || breadthFor || comments || studentFacts || hb || tw) {
+    if (about || discussions || breadthFor || comments || studentFacts || hb || tw || resume) {
       const d: SubjectDetail = {}
       if (tw) d.takenWith = tw
       if (about) d.about = about
@@ -52,6 +54,7 @@ export function splitDataset(data: Dataset, takenWith: Record<string, string[]> 
       if (prescribedTexts !== undefined) d.prescribedTexts = prescribedTexts
       if (examBook) d.examBook = examBook
       if (languages) d.languages = languages
+      if (resume) d.resume = resume
       ;(details[detailArea(code)] ??= {})[code] = d
     }
   }

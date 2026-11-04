@@ -1,4 +1,4 @@
-import type { Dataset, Subject } from './schema'
+import type { Dataset, Subject, SubjectResume } from './schema'
 import { markingShare, skillsOf } from './skills'
 import { topicsOf } from './topics'
 
@@ -37,8 +37,15 @@ export interface AbilityLine {
   codes: string[]
 }
 
+/** A specialist skill (named as job ads name it) and the subjects that teach it. */
+export interface SpecialistLine {
+  name: string
+  codes: string[]
+}
+
 export interface SkillTree {
   tools: ToolLine[]
+  specialist: SpecialistLine[]
   abilities: AbilityLine[]
   /** Subjects with learning outcomes to show, in the order given. */
   subjects: string[]
@@ -68,12 +75,25 @@ export function abilitiesOf(s: Subject, data: Dataset): Ability[] {
   return out
 }
 
-/** The tree for these subjects (done, or done and planned): tools and abilities by how many subjects back them. */
-export function buildSkillTree(codes: readonly string[], data: Dataset): SkillTree {
+/** A subject's resume skills and lines: on the full dataset its own; in the browser, loaded with its detail. */
+export type ResumeOf = (code: string) => SubjectResume | undefined
+
+/** The tree for these subjects (done, or done and planned): tools, specialist skills and abilities by how many subjects back them. */
+export function buildSkillTree(codes: readonly string[], data: Dataset, resumeOf: ResumeOf = (c) => data.subjects[c]?.resume): SkillTree {
   const subjects = [...new Set(codes)].filter((c) => data.subjects[c])
   const tools = new Map<string, { codes: string[]; handbook: boolean }>()
   const abilities = new Map<Ability, string[]>()
+  // Specialist skills, merged across subjects whatever their capitals ("SQL", "sql"). `rank` is the
+  // skill's best place in a subject's own list: each subject names its main skill first.
+  const specialist = new Map<string, { name: string; codes: string[]; rank: number }>()
   for (const code of subjects) {
+    for (const [i, name] of (resumeOf(code)?.skills ?? []).entries()) {
+      const key = name.toLowerCase()
+      const line = specialist.get(key) ?? { name, codes: [], rank: i }
+      if (!line.codes.includes(code)) line.codes.push(code)
+      line.rank = Math.min(line.rank, i)
+      specialist.set(key, line)
+    }
     const s = data.subjects[code]!
     for (const [list, handbook] of [
       [s.tools?.handbook ?? [], true],
@@ -88,10 +108,17 @@ export function buildSkillTree(codes: readonly string[], data: Dataset): SkillTr
     }
     for (const a of abilitiesOf(s, data)) abilities.set(a, [...(abilities.get(a) ?? []), code])
   }
+  const toolNames = new Set([...tools.keys()].map((t) => t.toLowerCase()))
   return {
     tools: [...tools]
       .map(([name, t]) => ({ name, codes: t.codes, studentsOnly: !t.handbook }))
       .sort((a, b) => b.codes.length - a.codes.length || a.name.localeCompare(b.name)),
+    // A tool already listed (Excel, SQL, "C" for "C programming") isn't said again as a specialist skill.
+    // Most subjects first, then each subject's main skill before its others.
+    specialist: [...specialist.values()]
+      .filter((x) => !toolNames.has(x.name.toLowerCase().replace(/ (programming|programming language|language)$/, '')))
+      .sort((a, b) => b.codes.length - a.codes.length || a.rank - b.rank || subjects.indexOf(a.codes[0]!) - subjects.indexOf(b.codes[0]!))
+      .map(({ name, codes }) => ({ name, codes })),
     abilities: ABILITIES.filter((a) => abilities.has(a)).map((ability) => ({ ability, codes: abilities.get(ability)! })),
     subjects,
   }
@@ -101,16 +128,19 @@ export function buildSkillTree(codes: readonly string[], data: Dataset): SkillTr
  * The tree as plain English for a resume: tools, abilities with their subjects, then each
  * subject's learning outcomes. Resumes in Australia are written in English.
  */
-export function resumeText(tree: SkillTree, data: Dataset, outcomesOf: (code: string) => string[]): string {
+export function resumeText(tree: SkillTree, data: Dataset, outcomesOf: (code: string) => string[], resumeOf: ResumeOf = (c) => data.subjects[c]?.resume): string {
   const title = (c: string) => `${c} ${data.subjects[c]?.title ?? ''}`.trim()
   const lines: string[] = []
   if (tree.tools.length) lines.push(`Tools: ${tree.tools.map((t) => `${t.name} (${t.codes.join(', ')})`).join('; ')}`)
+  if (tree.specialist.length) lines.push(`Specialist skills: ${tree.specialist.map((t) => t.name).join(', ')}`)
   for (const a of tree.abilities) lines.push(`${RESUME_LABELS[a.ability]}: ${a.codes.join(', ')}`)
-  const coursework = tree.subjects.filter((c) => outcomesOf(c).length)
+  // Each subject: what the student did in it (its resume lines), else what it taught (its outcomes).
+  const said = (c: string) => resumeOf(c)?.lines.length ? resumeOf(c)!.lines : outcomesOf(c)
+  const coursework = tree.subjects.filter((c) => said(c).length)
   if (coursework.length) {
     if (lines.length) lines.push('')
     lines.push('Relevant coursework')
-    for (const c of coursework) lines.push(`- ${title(c)}: ${outcomesOf(c).join('; ')}`)
+    for (const c of coursework) lines.push(`- ${title(c)}: ${said(c).join('; ')}`)
   }
   return lines.join('\n')
 }
@@ -169,6 +199,10 @@ export function employerSkills(skills: readonly string[], tree: SkillTree, data:
     if (OUTSIDE_CLASS.has(key)) return { skill, codes: [], outsideClass: true }
     const tool = TOOL_ALIASES[key] ?? tree.tools.find((t) => t.name.toLowerCase() === key)?.name
     if (tool) return { skill, codes: toolCodes.get(tool) ?? [], outsideClass: false }
+    // A specialist skill of the same name, or one whose words it all contains ("Financial accounting" in "Financial accounting standards").
+    const words0 = key.split(/[^a-z]+/).filter((w) => w.length >= 3)
+    const named = tree.specialist.filter((x) => x.name.toLowerCase() === key || (words0.length > 0 && words0.every((w) => x.name.toLowerCase().includes(w))))
+    if (named.length) return { skill, codes: [...new Set(named.flatMap((x) => x.codes))], outsideClass: false }
     const abilities = ABILITY_ALIASES[key]
     if (abilities) return { skill, codes: [...new Set(abilities.flatMap((a) => abilityCodes.get(a) ?? []))], outsideClass: false }
     // A field ("Financial Accounting", "Psychology"): subjects named for it, tagged with one of its

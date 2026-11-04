@@ -3,7 +3,7 @@ import { computed } from 'vue'
 import { passedCodes } from '@/engine/recommend'
 import { buildSkillTree, employerSkills } from '@/engine/skillTree'
 import { link } from '@/composables/useView'
-import { useDataset, useOutcomes } from '@/composables/useDataset'
+import { useDataset, useOutcomes, useResume } from '@/composables/useDataset'
 import { useProfile } from '@/composables/useProfile'
 import { useI18n } from '@/i18n'
 
@@ -20,7 +20,8 @@ const { profile } = useProfile()
 const done = computed(() => passedCodes(profile.value.results))
 // Learning outcomes (in English) count too: they load with each subject's area.
 const outcomes = useOutcomes(done)
-const rows = computed(() => employerSkills(props.skills, buildSkillTree(done.value, data.value), data.value, (c) => outcomes(c).map((o) => o.en)))
+const resumeOf = useResume(done)
+const rows = computed(() => employerSkills(props.skills, buildSkillTree(done.value, data.value, resumeOf), data.value, (c) => outcomes(c).map((o) => o.en)))
 const shown = computed(() => rows.value.filter((r) => r.codes.length).length)
 </script>
 

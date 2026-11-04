@@ -36,12 +36,13 @@ describe('the skill tree', () => {
 
   it('leaves out codes it has no data for, and says nothing for no subjects', () => {
     expect(buildSkillTree(['ZZZZ10001'], data).subjects).toEqual([])
-    expect(buildSkillTree([], data)).toEqual({ tools: [], abilities: [], subjects: [] })
+    expect(buildSkillTree([], data)).toEqual({ tools: [], specialist: [], abilities: [], subjects: [] })
   })
 
   it('writes an English resume block with every line traced to its subjects', () => {
     const tree = buildSkillTree(['COMP10001', 'MAST10006'], data)
-    const text = resumeText(tree, data, (c) => (c === 'COMP10001' ? ['Read, write and debug small programs'] : []))
+    // A subject with no resume lines of its own falls back to its learning outcomes.
+    const text = resumeText(tree, data, (c) => (c === 'COMP10001' ? ['Read, write and debug small programs'] : []), () => undefined)
     expect(text).toContain('Tools: Python (COMP10001)')
     expect(text).toContain('Programming: COMP10001')
     expect(text).toContain('Relevant coursework\n- COMP10001 Foundations of Computing: Read, write and debug small programs')
@@ -75,5 +76,43 @@ describe('reading a skill out of what a subject taught', () => {
     expect(rows[0]!.codes).toEqual(['ACCT10001'])
     // Every word has to be there: "account" alone doesn't make "Account Reconciliation".
     expect(rows[1]!.codes).toEqual([])
+  })
+})
+
+describe('specialist skills from each subject', () => {
+  it('adds the skills a subject teaches, named as job ads name them, with the subjects behind each', () => {
+    const tree = buildSkillTree(['ACCT10001', 'INFO20003'], data)
+    const names = tree.specialist.map((x) => x.name)
+    expect(names).toContain('Financial statement analysis')
+    expect(names).toContain('Relational database design')
+    expect(tree.specialist.find((x) => x.name === 'Relational database design')!.codes).toEqual(['INFO20003'])
+    // SQL is already a tool (its Handbook names it), so it isn't listed twice.
+    expect(names).not.toContain('SQL')
+  })
+
+  it('leaves out "<tool> programming" when the tool is listed, and puts each subject\'s main skill first', () => {
+    const own: Record<string, { skills: string[]; lines: string[] }> = {
+      COMP10002: { skills: ['Data structures', 'C programming'], lines: [] },
+      ACCT10001: { skills: ['Financial statement analysis', 'Accounting standards', 'Budgeting'], lines: [] },
+    }
+    const tree = buildSkillTree(['COMP10002', 'ACCT10001'], data, (c) => own[c])
+    const names = tree.specialist.map((x) => x.name)
+    expect(tree.tools.map((t) => t.name)).toContain('C')
+    expect(names).not.toContain('C programming')
+    expect(names.slice(0, 2)).toEqual(['Data structures', 'Financial statement analysis'])
+  })
+
+  it('puts them in the resume text, with what the student did in each subject', () => {
+    const tree = buildSkillTree(['ACCT10001'], data)
+    const text = resumeText(tree, data, () => ['an outcome'])
+    expect(text).toMatch(/^Specialist skills: .*Financial statement analysis/m)
+    // A subject's own resume lines come before its outcomes.
+    expect(text).toContain(`- ACCT10001 Accounting Reports and Analysis: ${data.subjects.ACCT10001!.resume!.lines[0]}`)
+    expect(text).not.toContain('an outcome')
+  })
+
+  it("matches a job's skill to a specialist skill of the same name", () => {
+    const rows = employerSkills(['Financial statement analysis'], buildSkillTree(['ACCT10001'], data), data)
+    expect(rows[0]!.codes).toEqual(['ACCT10001'])
   })
 })

@@ -9,7 +9,7 @@ import { isRatingTag } from '../src/engine/ratingTags'
 import { studentFactsSchema } from '../src/engine/studentFacts'
 import type { ReqExpr, ReqField } from '../src/engine/schema'
 import { assembleCareers, careerTermsFileSchema, courseFurtherStudyFileSchema, graduateFileSchema, jobsFileSchema, majorCareersFileSchema, occupationsFileSchema } from '../src/engine/careers'
-import { aboutFileSchema, componentFileSchema, courseFileSchema, diplomaFileSchema, DISCUSSION_SOURCES, discussionFileSchema, SKILLS, subjectFileSchema, subjectTitlesFileSchema, toolsFileSchema, type Dataset, type DiscussionSummary, type Skill, type Subject } from '../src/engine/schema'
+import { aboutFileSchema, componentFileSchema, courseFileSchema, diplomaFileSchema, DISCUSSION_SOURCES, discussionFileSchema, SKILLS, subjectFileSchema, subjectTitlesFileSchema, toolsFileSchema, resumeFileSchema, type Dataset, type DiscussionSummary, type Skill, type Subject } from '../src/engine/schema'
 
 export const ROOT = join(import.meta.dirname, '..')
 
@@ -197,6 +197,16 @@ export function buildDataset(name: Dataset['name']): BuildResult {
       const s = subjects[code]
       if (!s) errors.push(`${relative(ROOT, toolsFile)}: ${code} is not a subject`)
       else s.tools = t
+    }
+  }
+
+  // Specialist skills and resume lines, in English (one file for every subject that has them).
+  const resumeFile = join(base, 'resume.yaml')
+  if (existsSync(resumeFile)) {
+    for (const [code, r] of Object.entries(load(resumeFile, resumeFileSchema, errors) ?? {})) {
+      const s = subjects[code]
+      if (!s) errors.push(`${relative(ROOT, resumeFile)}: ${code} is not a subject`)
+      else s.resume = r
     }
   }
 

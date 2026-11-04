@@ -77,6 +77,7 @@ function standIn(code: string, c: Credit, course: string): Subject {
     about: undefined,
     titles: undefined,
     tools: undefined,
+    resume: undefined,
   } as Subject
 }
 
