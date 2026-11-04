@@ -6,7 +6,7 @@
  * and jobs for "I want to be ___", per-component entries for the major page, and accreditation
  * subjects for a subject's career relevance.
  */
-import { z } from 'zod'
+import { z } from './zod'
 import { localized, SUBJECT_CODE, type Localized } from './schema'
 
 /** Every language the site has; job and occupation names are written in all of them. */

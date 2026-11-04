@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from './zod'
 import { PERIODS } from './schema'
 import { LOCALE_CODES } from '../i18n/codes'
 

@@ -2,7 +2,7 @@ import type { GradeOffset } from './grades'
 import type { StudentComment } from './comments'
 import { LANGUAGES, type StudentFacts } from './studentFacts'
 import { ATTEND_CLASSES } from './handbookFacts'
-import { z } from 'zod'
+import { z } from './zod'
 
 /**
  * Data-file schemas. YAML files use snake_case keys; everything the engine and

@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from '@/engine/zod'
 
 export const KEY_DATE_KINDS = ['teaching', 'orientation', 'selfEnrol', 'employability', 'census', 'break', 'withdraw', 'swotvac', 'exams', 'results', 'supp', 'reenrol', 'reenrolLate'] as const
 export type KeyDateKind = (typeof KEY_DATE_KINDS)[number]

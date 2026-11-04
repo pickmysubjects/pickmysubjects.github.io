@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from './zod'
 
 /**
  * Facts students report that the Handbook doesn't say (exam format, recordings, group work,
