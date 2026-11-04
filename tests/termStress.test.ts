@@ -300,3 +300,18 @@ describe('many deadlines names the subjects behind them', () => {
     expect(s.reasons.find((r) => r.key === 'deadlines')?.params).toEqual({ n: 22, codes: 'BBBB10001, CCCC10001' })
   })
 })
+
+describe('paid work in a semester', () => {
+  const data = realData()
+  // Four subjects with no recorded class hours (about 14 h a week), as one student had it.
+  const codes = ['MAST10005', 'PHYC10003', 'ACCT10001', 'BLAW10001']
+  const withWork = (workHours: number) => ({ results: [], skills: {}, interests: [], goal: 'balanced', workHours }) as unknown as Profile
+
+  it('a usual casual job (12 h a week) doesn’t make a normal semester heavy', () => {
+    expect(termStress(codes, data, withWork(12)).reasons.map((r) => r.key)).not.toContain('hoursWork')
+  })
+
+  it('a job close to full time still does', () => {
+    expect(termStress(codes, data, withWork(25)).reasons.map((r) => r.key)).toContain('hoursWork')
+  })
+})

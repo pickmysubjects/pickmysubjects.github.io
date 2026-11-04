@@ -75,6 +75,11 @@ const DEFAULT_HOURS = 3.5
 const HOURS_RULE = 20
 /** How much an hour of work or other fixed commitments weighs against an hour of class. */
 const WORK_SHARE = 0.5
+/**
+ * Hours of paid work a week that don't count at all: a usual casual job. Students with one and a
+ * normal semester told us (stress-hint feedback, Oct 2026) that "heavy" was wrong for them.
+ */
+const WORK_FREE = 10
 /** A subject is decided by the exam from this final-exam share, and by coursework up to COURSEWORK_EXAM. */
 const EXAM_HEAVY = 70
 const COURSEWORK_EXAM = 40
@@ -248,7 +253,8 @@ export function termStress(codes: string[], data: Dataset, profile?: Profile, op
   // Paid work or other fixed hours take from the same week. Each hour counts as half a class hour:
   // a judgement, not a published rate, so a full-time-ish job tips a busy semester, not every one.
   const work = profile?.workHours ?? 0
-  if (hours + work * WORK_SHARE >= line(HOURS_RULE, f.hours)) {
+  const workLoad = Math.max(0, work - WORK_FREE) * WORK_SHARE
+  if (hours + workLoad >= line(HOURS_RULE, f.hours)) {
     points++
     const most = [...subjects].sort((a, b) => (b.weeklyContactHours ?? 0) - (a.weeklyContactHours ?? 0)).slice(0, 2)
     if (work > 0) reasons.push({ key: 'hoursWork', params: { hours, work, codes: list(most) } })
@@ -257,7 +263,7 @@ export function termStress(codes: string[], data: Dataset, profile?: Profile, op
     points++
     reasons.push({ key: 'workload', params: { n: heavyWork.length, codes: list(heavyWork) } })
   }
-  score += Math.max(0, (hours + work * WORK_SHARE - 16) / (HOURS_RULE - 16)) + heavyWork.length / RATED_RULE
+  score += Math.max(0, (hours + workLoad - 16) / (HOURS_RULE - 16)) + heavyWork.length / RATED_RULE
 
   // Busy all semester, or all at the end.
   const recorded = subjects.filter((s) => s.assessment)
