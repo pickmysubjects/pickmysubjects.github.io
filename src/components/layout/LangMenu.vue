@@ -17,9 +17,8 @@ function onChange(event: Event): void {
   <label class="lang" :title="t('app.language')">
     <Languages class="lang-icon" :size="17" aria-hidden="true" />
     <span class="lang-name">{{ LOCALES.find((l) => l.code === locale)?.name }}</span>
-    <span class="visually-hidden">{{ t('app.language') }}</span>
     <!-- A real <select> over the button: native, accessible, works on phones. -->
-    <select class="lang-select" :value="locale" @change="onChange">
+    <select class="lang-select" :value="locale" :aria-label="t('app.language')" @change="onChange">
       <option v-for="l in LOCALES" :key="l.code" :value="l.code" :lang="l.code">{{ l.name }}</option>
     </select>
   </label>
@@ -28,6 +27,9 @@ function onChange(event: Event): void {
 <style scoped>
 .lang {
   position: relative;
+  /* Safari sizes the select once, while the header is still wide, and keeps that overflow after the
+     header shrinks: past the right edge it let every iPhone page scroll sideways a little. */
+  overflow: hidden;
   display: inline-flex;
   flex: none;
   white-space: nowrap;
@@ -58,6 +60,7 @@ function onChange(event: Event): void {
 .lang-select {
   position: absolute;
   inset: 0;
+  width: 100%;
   opacity: 0;
   cursor: pointer;
 }
