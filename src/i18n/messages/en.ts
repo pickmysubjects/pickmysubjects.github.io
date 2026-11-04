@@ -684,6 +684,8 @@ export const en = {
     other: 'Other',
   },
   skillTree: {
+    copyFor: "Copy for {career}",
+    copyAll: "Copy everything",
     title: "Skills for your resume (for employers)",
     scope: "Which subjects",
     done: "Done ({n})",
@@ -718,6 +720,10 @@ export const en = {
     },
   },
   employerSkills: {
+    teaches: "Subjects that teach it:",
+    inPlan: "In your plan:",
+    add: "Add to plan",
+    outsideClubs: "For those built outside class, clubs for you:",
     sum: "Your subjects show {n} of {total}",
     outside: "Shown through work, clubs or volunteering",
     notYet: "Not yet",
@@ -1846,7 +1852,7 @@ export const en = {
     jobPenult: "Second-last year (year 2 of a 3-year degree): summer internships and vacationer programs are mostly advertised between February and August, for the summer break. Many lead to a graduate job offer.",
     jobFinal: "Last year: graduate programs open from about February and many close by March or April; some employers hire as late as August. The job starts the year after you finish.",
     jobWhere: "Where to look: Careers Online (the University's job board), Prosple, GradConnection and each employer's own site. Dates differ from employer to employer, so check theirs.",
-    jobResume: "When you write a resume, the My record page lists what your subjects show: tools and languages, specialist skills named the way job ads name them, and one or two English lines for each subject you can put under Relevant coursework. Every item says which subject it comes from. Set a career goal and it also checks your subjects against the skills employers ask for.",
+    jobResume: "When you write a resume, the My record page lists what your subjects show: tools and languages, specialist skills named the way job ads name them, and one or two English lines for each subject you can put under Relevant coursework. Every item says which subject it comes from. Set a career goal and it also checks your subjects against the skills employers ask for, suggests subjects for the ones you don't have yet, and copies a resume tailored to that job.",
     jobCareersOnline: "Careers Online (UniMelb's job board)",
     jobProsple: "Prosple (graduate jobs and internships)",
     jobGradConnection: "GradConnection (graduate jobs and internships)",

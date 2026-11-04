@@ -136,6 +136,19 @@ describe('specialist skills from each subject', () => {
     expect(employerSkills(['General Practice'], tree, data, () => ['Observe general practice clinics'])[0]!.codes).toEqual(['ANTH30003'])
   })
 
+  it('finds a field\u2019s subjects even when one subject also lists the field as its own skill', () => {
+    const tree = buildSkillTree(['CHEM10003', 'SCIE10009'], data)
+    expect(employerSkills(['Chemistry'], tree, data)[0]!.codes).toEqual(expect.arrayContaining(['CHEM10003', 'SCIE10009']))
+  })
+
+  it('tailors the resume text to a job: only its subjects under coursework, their skills first', () => {
+    const tree = buildSkillTree(['ACCT10001', 'COMP10001'], data)
+    const text = resumeText(tree, data, () => ['an outcome'], undefined, ['ACCT10001'])
+    expect(text).toContain('ACCT10001 Accounting Reports and Analysis')
+    expect(text).not.toMatch(/^- COMP10001/m)
+    expect(text).toMatch(/^Specialist skills: Financial statement analysis/m)
+  })
+
   it("matches a job's skill to a specialist skill of the same name", () => {
     const rows = employerSkills(['Financial statement analysis'], buildSkillTree(['ACCT10001'], data), data)
     expect(rows[0]!.codes).toEqual(['ACCT10001'])

@@ -679,6 +679,8 @@ export const ms: Messages = {
     other: 'Lain-lain',
   },
   skillTree: {
+    copyFor: "Salin untuk {career}",
+    copyAll: "Salin semua",
     title: "Kemahiran untuk resume (untuk majikan)",
     scope: "Subjek mana",
     done: "Selesai ({n})",
@@ -713,6 +715,10 @@ export const ms: Messages = {
     },
   },
   employerSkills: {
+    teaches: "Subjek yang mengajarnya:",
+    inPlan: "Dalam rancangan anda:",
+    add: "Tambah ke rancangan",
+    outsideClubs: "Untuk kemahiran luar kelas, kelab untuk anda:",
     sum: "Subjek anda menunjukkan {n} daripada {total}",
     outside: "Ditunjukkan melalui kerja, kelab atau sukarela",
     notYet: "Belum",
@@ -1841,7 +1847,7 @@ export const ms: Messages = {
     jobPenult: "Tahun kedua terakhir (tahun 2 ijazah 3 tahun): latihan musim panas dan program vacationer kebanyakannya diiklankan antara Februari dan Ogos, untuk cuti musim panas. Banyak yang membawa kepada tawaran kerja graduan.",
     jobFinal: "Tahun akhir: program graduan dibuka sekitar Februari dan banyak yang tutup menjelang Mac atau April; sesetengah majikan mengambil hingga Ogos. Kerja bermula tahun selepas anda tamat.",
     jobWhere: "Di mana mencari: Careers Online (papan kerja universiti), Prosple, GradConnection dan laman setiap majikan. Tarikh berbeza antara majikan, jadi semak tarikh mereka.",
-    jobResume: "Semasa menulis resume, halaman Rekod saya menyenaraikan apa yang dibuktikan oleh subjek anda: alat dan bahasa pengaturcaraan, kemahiran khusus dengan nama yang dipakai iklan kerja, dan satu dua ayat Inggeris bagi setiap subjek untuk bahagian Relevant coursework. Setiap satu menyatakan subjek asalnya. Jika anda menetapkan matlamat kerjaya, ia juga membandingkan dengan kemahiran yang dicari majikan.",
+    jobResume: "Semasa menulis resume, halaman Rekod saya menyenaraikan apa yang dibuktikan oleh subjek anda: alat dan bahasa pengaturcaraan, kemahiran khusus dengan nama yang dipakai iklan kerja, dan satu dua ayat Inggeris bagi setiap subjek untuk bahagian Relevant coursework. Setiap satu menyatakan subjek asalnya. Jika anda menetapkan matlamat kerjaya, ia juga membandingkan dengan kemahiran yang dicari majikan, mencadangkan subjek bagi kemahiran yang belum ada, dan menyalin resume khusus untuk kerja itu.",
     jobCareersOnline: "Careers Online (papan kerja UniMelb)",
     jobProsple: "Prosple (kerja graduan dan latihan)",
     jobGradConnection: "GradConnection (kerja graduan dan latihan)",

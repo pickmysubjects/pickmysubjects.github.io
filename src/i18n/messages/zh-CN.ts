@@ -679,6 +679,8 @@ export const zhCN: Messages = {
     other: '其他',
   },
   skillTree: {
+    copyFor: "复制给 {career} 的简历内容",
+    copyAll: "复制全部",
     title: "简历上的技能（给雇主看）",
     scope: "算哪些课",
     done: "已修（{n}）",
@@ -713,6 +715,10 @@ export const zhCN: Messages = {
     },
   },
   employerSkills: {
+    teaches: "能学到的课：",
+    inPlan: "你的计划里有：",
+    add: "加入计划",
+    outsideClubs: "课外才能练的技能，适合你的社团：",
     sum: "你修过的课能证明 {n} / {total} 项",
     outside: "靠实习、社团或志愿活动来展示",
     notYet: "还没有",
@@ -1841,7 +1847,7 @@ export const zhCN: Messages = {
     jobPenult: "倒数第二年（三年制学位的大二）：暑期实习和 vacationer 项目大多在 2 月到 8 月之间招，暑假去做，很多能直接拿到毕业生项目的 offer。",
     jobFinal: "最后一年：毕业生项目大约 2 月开放，很多在 3、4 月就截止，也有公司 8 月才招。入职是毕业后的那一年。",
     jobWhere: "去哪找：Careers Online（墨大的招聘平台）、Prosple、GradConnection 和各公司自己的网站。每家时间不一样，以他们的为准。",
-    jobResume: "写简历时，「我的」页面会列出你修过的课能证明什么：工具和编程语言、用招聘广告里的叫法写的专业技能，还有每门课一两句可以直接放进 Relevant coursework 的英文。每一条都写了出自哪门课。设了职业目标，还会对照招聘方要的技能，看你的课能证明几项。",
+    jobResume: "写简历时，「我的」页面会列出你修过的课能证明什么：工具和编程语言、用招聘广告里的叫法写的专业技能，还有每门课一两句可以直接放进 Relevant coursework 的英文。每一条都写了出自哪门课。设了职业目标，还会对照招聘方要的技能，看你的课能证明几项；还没有的，会推荐能学到的课，也能复制一份针对这个职业的简历内容。",
     jobCareersOnline: "Careers Online（墨大招聘平台）",
     jobProsple: "Prosple（毕业生工作和实习）",
     jobGradConnection: "GradConnection（毕业生工作和实习）",

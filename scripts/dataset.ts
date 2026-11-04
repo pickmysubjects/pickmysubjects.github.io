@@ -8,6 +8,7 @@ import { MIN_GRADE_SHARES, type GradeOffset } from '../src/engine/grades'
 import { isRatingTag } from '../src/engine/ratingTags'
 import { studentFactsSchema } from '../src/engine/studentFacts'
 import type { ReqExpr, ReqField } from '../src/engine/schema'
+import { buildSkillTree, employerSkills, isBroadSkill, majorNames, wordsMatcher } from '../src/engine/skillTree'
 import { assembleCareers, careerTermsFileSchema, courseFurtherStudyFileSchema, graduateFileSchema, jobsFileSchema, majorCareersFileSchema, occupationsFileSchema } from '../src/engine/careers'
 import { aboutFileSchema, componentFileSchema, courseFileSchema, diplomaFileSchema, DISCUSSION_SOURCES, discussionFileSchema, SKILLS, subjectFileSchema, subjectTitlesFileSchema, toolsFileSchema, resumeFileSchema, type Dataset, type DiscussionSummary, type Skill, type Subject } from '../src/engine/schema'
 
@@ -270,6 +271,7 @@ export function buildDataset(name: Dataset['name']): BuildResult {
   }
 
   const dataset: Dataset = { name, generatedAt: new Date().toISOString(), subjects, courses, components, ...(diplomas.length ? { diplomas } : {}), ...(careers ? { careers } : {}) }
+  if (careers) careers.skillSubjects = skillSubjects(dataset)
   return { dataset, errors, warnings, missing: [...missing].sort() }
 }
 
@@ -333,4 +335,47 @@ function mergeRatings(file: string, subjects: Dataset['subjects'], errors: strin
       s.skills = r.skills.filter((k): k is Skill => (SKILLS as readonly string[]).includes(k))
     }
   }
+}
+
+/** Most subjects listed per employer skill: enough to suggest a few the student can take. */
+const SKILL_SUBJECTS_MAX = 40
+
+/**
+ * For each skill the occupations list, the subjects that teach it, matched as on the careers page
+ * (employerSkills) against every running subject's own skills and learning outcomes.
+ */
+function skillSubjects(data: Dataset): Record<string, string[][]> {
+  const year = Math.max(...Object.values(data.subjects).flatMap((s) => (s.offerings === 'unknown' ? [] : Object.keys(s.offerings).map(Number))))
+  const running = Object.values(data.subjects)
+    .filter((s) => s.offerings !== 'unknown' && (s.offerings[String(year)]?.length ?? 0) > 0)
+    .sort((a, b) => a.level - b.level || a.code.localeCompare(b.code))
+    .map((s) => s.code)
+  const skills = [...new Set(Object.values(data.careers?.occupations ?? {}).flatMap((o) => o.skills))]
+  const tree = buildSkillTree(running, data)
+  const outcomes = (c: string) => (data.subjects[c]?.about?.outcomes ?? []).map((o) => o.en)
+  const out: Record<string, string[][]> = {}
+  for (const r of employerSkills(skills, tree, data, outcomes)) {
+    // Broad abilities (Communication Skills) come from many subjects; a list of a few is just noise.
+    if (r.outsideClass || !r.codes.length || isBroadSkill(r.skill)) continue
+    // Closest first: one in a major named for the skill or named for it, then one that lists it as
+    // its own skill, then one whose outcomes only mention it; then by level.
+    const has = wordsMatcher(r.skill)
+    const majors = majorNames(data)
+    // The areas of a major named for the skill (PSYC for Psychology): every subject there is close,
+    // including the first-year ones a major's compulsory list leaves out (PSYC10003).
+    const areas = new Set([...majors].filter(([, ms]) => ms.some((m) => has?.(m.toLowerCase()))).map(([c]) => c.slice(0, 4)))
+    const strength = (c: string) => {
+      const s = data.subjects[c]!
+      if (areas.has(c.slice(0, 4)) || has?.(s.title.toLowerCase())) return 0
+      if ((s.resume?.skills ?? []).some((k) => k.toLowerCase() === r.skill.toLowerCase() || has?.(k.toLowerCase()))) return 1
+      return 2
+    }
+    const sorted = [...r.codes].sort((a, b) => strength(a) - strength(b) || running.indexOf(a) - running.indexOf(b)).slice(0, SKILL_SUBJECTS_MAX)
+    // Kept as tiers, closest first, so the browser orders by prerequisites only within a tier and
+    // a loose match never comes before a real one just because its prerequisites are easier.
+    const tiers: string[][] = []
+    for (const c of sorted) (tiers[strength(c)] ??= []).push(c)
+    out[r.skill] = tiers.filter((t) => t?.length)
+  }
+  return out
 }

@@ -679,6 +679,8 @@ export const id: Messages = {
     other: 'Lainnya',
   },
   skillTree: {
+    copyFor: "Salin untuk {career}",
+    copyAll: "Salin semua",
     title: "Keahlian untuk CV (untuk perekrut)",
     scope: "Mata kuliah mana",
     done: "Selesai ({n})",
@@ -713,6 +715,10 @@ export const id: Messages = {
     },
   },
   employerSkills: {
+    teaches: "Mata kuliah yang mengajarkannya:",
+    inPlan: "Ada di rencanamu:",
+    add: "Tambah ke rencana",
+    outsideClubs: "Untuk keahlian di luar kelas, klub untukmu:",
     sum: "Mata kuliahmu menunjukkan {n} dari {total}",
     outside: "Ditunjukkan lewat kerja, klub atau relawan",
     notYet: "Belum",
@@ -1841,7 +1847,7 @@ export const id: Messages = {
     jobPenult: "Tahun kedua terakhir (tahun 2 gelar 3 tahun): magang musim panas dan program vacationer kebanyakan diiklankan antara Februari dan Agustus, untuk libur musim panas. Banyak yang berujung tawaran kerja lulusan.",
     jobFinal: "Tahun terakhir: program lulusan dibuka sekitar Februari dan banyak yang tutup Maret atau April; beberapa perusahaan merekrut sampai Agustus. Kerja dimulai setahun setelah kamu lulus.",
     jobWhere: "Tempat mencari: Careers Online (papan lowongan kampus), Prosple, GradConnection dan situs tiap perusahaan. Tanggalnya beda-beda, jadi cek punya mereka.",
-    jobResume: "Saat menulis CV, halaman Catatan saya mencantumkan apa yang dibuktikan mata kuliahmu: alat dan bahasa pemrograman, keahlian khusus dengan nama yang dipakai lowongan kerja, dan satu-dua kalimat bahasa Inggris per mata kuliah untuk bagian Relevant coursework. Setiap butir menyebut asal mata kuliahnya. Kalau kamu menetapkan tujuan karier, halaman ini juga mencocokkan dengan keahlian yang dicari perekrut.",
+    jobResume: "Saat menulis CV, halaman Catatan saya mencantumkan apa yang dibuktikan mata kuliahmu: alat dan bahasa pemrograman, keahlian khusus dengan nama yang dipakai lowongan kerja, dan satu-dua kalimat bahasa Inggris per mata kuliah untuk bagian Relevant coursework. Setiap butir menyebut asal mata kuliahnya. Kalau kamu menetapkan tujuan karier, halaman ini juga mencocokkan dengan keahlian yang dicari perekrut, menyarankan mata kuliah untuk keahlian yang belum ada, dan menyalin CV khusus untuk pekerjaan itu.",
     jobCareersOnline: "Careers Online (papan lowongan UniMelb)",
     jobProsple: "Prosple (kerja lulusan dan magang)",
     jobGradConnection: "GradConnection (kerja lulusan dan magang)",

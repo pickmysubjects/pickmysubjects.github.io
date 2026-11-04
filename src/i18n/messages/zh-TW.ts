@@ -679,6 +679,8 @@ export const zhTW: Messages = {
     other: '其他',
   },
   skillTree: {
+    copyFor: "複製給 {career} 的履歷內容",
+    copyAll: "複製全部",
     title: "履歷上的技能（給雇主看）",
     scope: "算哪些課",
     done: "已修（{n}）",
@@ -713,6 +715,10 @@ export const zhTW: Messages = {
     },
   },
   employerSkills: {
+    teaches: "能學到的課：",
+    inPlan: "你的計畫裡有：",
+    add: "加入計畫",
+    outsideClubs: "課外才能練的技能，適合你的社團：",
     sum: "你修過的課能證明 {n} / {total} 項",
     outside: "靠實習、社團或志工活動來展現",
     notYet: "還沒有",
@@ -1841,7 +1847,7 @@ export const zhTW: Messages = {
     jobPenult: "倒數第二年（三年制學位的大二）：暑期實習和 vacationer 計畫大多在 2 月到 8 月之間招，暑假去做，很多能直接拿到畢業生計畫的 offer。",
     jobFinal: "最後一年：畢業生計畫大約 2 月開放，很多在 3、4 月就截止，也有公司 8 月才招。到職是畢業後的那一年。",
     jobWhere: "去哪找：Careers Online（墨大的徵才平台）、Prosple、GradConnection 和各公司自己的網站。每家時間不同，以他們的為準。",
-    jobResume: "寫履歷時，「我的」頁面會列出你修過的課能證明什麼：工具和程式語言、用徵才廣告裡的說法寫的專業技能，還有每門課一兩句可以直接放進 Relevant coursework 的英文。每一條都寫了出自哪門課。設了職涯目標，還會對照雇主要的技能，看你的課能證明幾項。",
+    jobResume: "寫履歷時，「我的」頁面會列出你修過的課能證明什麼：工具和程式語言、用徵才廣告裡的說法寫的專業技能，還有每門課一兩句可以直接放進 Relevant coursework 的英文。每一條都寫了出自哪門課。設了職涯目標，還會對照雇主要的技能，看你的課能證明幾項；還沒有的，會推薦能學到的課，也能複製一份針對這個職業的履歷內容。",
     jobCareersOnline: "Careers Online（墨大徵才平台）",
     jobProsple: "Prosple（畢業生工作和實習）",
     jobGradConnection: "GradConnection（畢業生工作和實習）",

@@ -679,6 +679,8 @@ export const ja: Messages = {
     other: 'その他',
   },
   skillTree: {
+    copyFor: "{career} 向けにコピー",
+    copyAll: "すべてコピー",
     title: "履歴書に書けるスキル（企業向け）",
     scope: "対象の科目",
     done: "履修済み（{n}）",
@@ -713,6 +715,10 @@ export const ja: Messages = {
     },
   },
   employerSkills: {
+    teaches: "身につく科目：",
+    inPlan: "プランに入っています：",
+    add: "プランに追加",
+    outsideClubs: "授業外で身につくスキルには、おすすめのサークル：",
     sum: "履修科目で示せるのは {total} 項目中 {n}",
     outside: "仕事・クラブ・ボランティアで示すもの",
     notYet: "まだなし",
@@ -1841,7 +1847,7 @@ export const ja: Messages = {
     jobPenult: "卒業前年（3年制なら2年生）：夏のインターンや vacationer プログラムの多くは2月〜8月に募集され、夏休みに行います。新卒採用のオファーにつながることも多いです。",
     jobFinal: "最終学年：新卒プログラムは2月ごろから始まり、多くは3〜4月に締め切り。8月まで採用する企業もあります。入社は卒業の翌年です。",
     jobWhere: "探す場所：Careers Online（大学の求人サイト）、Prosple、GradConnection、各企業のサイト。日程は企業ごとに違うので、各社で確認を。",
-    jobResume: "履歴書を書くときは、「マイページ」に履修科目から言えることがまとまっています。ツールやプログラミング言語、求人広告と同じ呼び方の専門スキル、そして各科目について Relevant coursework にそのまま書ける英文1〜2行です。どれも出どころの科目つきです。キャリア目標を設定すると、企業が求めるスキルと照らし合わせることもできます。",
+    jobResume: "履歴書を書くときは、「マイページ」に履修科目から言えることがまとまっています。ツールやプログラミング言語、求人広告と同じ呼び方の専門スキル、そして各科目について Relevant coursework にそのまま書ける英文1〜2行です。どれも出どころの科目つきです。キャリア目標を設定すると、企業が求めるスキルと照らし合わせ、まだないスキルが身につく科目を提案し、その職向けの履歴書の内容もコピーできます。",
     jobCareersOnline: "Careers Online（メルボルン大学の求人サイト）",
     jobProsple: "Prosple（新卒採用とインターン）",
     jobGradConnection: "GradConnection（新卒採用とインターン）",

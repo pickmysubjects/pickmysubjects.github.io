@@ -127,18 +127,23 @@ export function buildSkillTree(codes: readonly string[], data: Dataset, resumeOf
 /**
  * The tree as plain English for a resume: tools, abilities with their subjects, then each
  * subject's learning outcomes. Resumes in Australia are written in English.
+ *
+ * `focus`, when given, tailors it to one job: only those subjects (the ones that show a skill the
+ * job asks for) go under Relevant coursework, and their specialist skills come first.
  */
-export function resumeText(tree: SkillTree, data: Dataset, outcomesOf: (code: string) => string[], resumeOf: ResumeOf = (c) => data.subjects[c]?.resume): string {
+export function resumeText(tree: SkillTree, data: Dataset, outcomesOf: (code: string) => string[], resumeOf: ResumeOf = (c) => data.subjects[c]?.resume, focus?: readonly string[]): string {
+  const inFocus = focus?.length ? new Set(focus) : null
   const title = (c: string) => `${c} ${data.subjects[c]?.title ?? ''}`.trim()
   const lines: string[] = []
   if (tree.tools.length) lines.push(`Tools: ${tree.tools.map((t) => `${t.name} (${t.codes.join(', ')})`).join('; ')}`)
-  if (tree.specialist.length) lines.push(`Specialist skills: ${tree.specialist.map((t) => t.name).join(', ')}`)
+  const specialist = inFocus ? [...tree.specialist].sort((a, b) => Number(b.codes.some((c) => inFocus.has(c))) - Number(a.codes.some((c) => inFocus.has(c)))) : tree.specialist
+  if (specialist.length) lines.push(`Specialist skills: ${specialist.map((t) => t.name).join(', ')}`)
   // Broad abilities aren't shown on the page (the strengths card covers them), but a resume's
   // "Employability skills" line is where they go.
   if (tree.abilities.length) lines.push(`Employability skills: ${tree.abilities.map((a) => `${RESUME_LABELS[a.ability]} (${a.codes.join(', ')})`).join('; ')}`)
   // Each subject: what the student did in it (its resume lines), else what it taught (its outcomes).
   const said = (c: string) => resumeOf(c)?.lines.length ? resumeOf(c)!.lines : outcomesOf(c)
-  const coursework = tree.subjects.filter((c) => said(c).length)
+  const coursework = tree.subjects.filter((c) => said(c).length && (!inFocus || inFocus.has(c)))
   if (coursework.length) {
     if (lines.length) lines.push('')
     lines.push('Relevant coursework')
@@ -176,6 +181,10 @@ const ABILITY_ALIASES: Record<string, Ability[]> = {
   'software development': ['programming'],
   'computer literacy': ['programming'],
 }
+/** A broad skill read as one of our abilities (Communication Skills, Teamwork), not a subject's field. */
+export function isBroadSkill(skill: string): boolean {
+  return ABILITY_ALIASES[skill.toLowerCase()] !== undefined
+}
 // Skills built by doing, which no subject's marking tells apart from any other's.
 const OUTSIDE_CLASS = new Set([
   'planning',
@@ -195,7 +204,7 @@ const MAJOR_NAMES = new WeakMap<Dataset, Map<string, string[]>>()
  * its compulsory subjects): a CVEN subject is part of "Civil Systems", an economics subject a
  * Marketing major requires is not part of "Marketing".
  */
-function majorNames(data: Dataset): Map<string, string[]> {
+export function majorNames(data: Dataset): Map<string, string[]> {
   let out = MAJOR_NAMES.get(data)
   if (out) return out
   out = new Map()
@@ -244,11 +253,12 @@ export function employerSkills(skills: readonly string[], tree: SkillTree, data:
     if (OUTSIDE_CLASS.has(key)) return { skill, codes: [], outsideClass: true }
     const tool = TOOL_ALIASES[key] ?? tree.tools.find((t) => t.name.toLowerCase() === key)?.name
     if (tool) return { skill, codes: toolCodes.get(tool) ?? [], outsideClass: false }
-    // A specialist skill of the same name.
-    const named = tree.specialist.filter((x) => x.name.toLowerCase() === key)
-    if (named.length) return { skill, codes: [...new Set(named.flatMap((x) => x.codes))], outsideClass: false }
+    // A specialist skill of the same name means subjects teach it by name: they're found below, with
+    // the subjects whose field it is ("Chemistry" as SCIE10009's skill, and every Chemistry subject).
+    // Without one, a broad skill ("Data Analysis") is read as our ability.
+    const named = tree.specialist.some((x) => x.name.toLowerCase() === key)
     const abilities = ABILITY_ALIASES[key]
-    if (abilities) return { skill, codes: [...new Set(abilities.flatMap((a) => abilityCodes.get(a) ?? []))], outsideClass: false }
+    if (abilities && !named) return { skill, codes: [...new Set(abilities.flatMap((a) => abilityCodes.get(a) ?? []))], outsideClass: false }
     // Otherwise a subject backs it when one thing about it has every word of it: its field (title and
     // topics: "Mechanical Systems Design" in engineering), one of its specialist skills, or one
     // learning outcome. One shared word isn't enough: a design studio doesn't show "Electrical

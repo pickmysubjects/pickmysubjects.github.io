@@ -5,7 +5,7 @@ import EmployerSkills from '@/components/careers/EmployerSkills.vue'
 import { careerTarget } from '@/engine/careerPaths'
 import type { CareerLang } from '@/engine/careers'
 import { passedCodes } from '@/engine/recommend'
-import { buildSkillTree, resumeText } from '@/engine/skillTree'
+import { buildSkillTree, employerSkills, resumeText } from '@/engine/skillTree'
 import { link } from '@/composables/useView'
 import { useDataset, useOutcomes, useResume } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
@@ -51,15 +51,23 @@ const scopes = computed(() => [
 const goal = computed(() => (profile.value.career ? careerTarget(data.value, profile.value.career) : undefined))
 const goalName = computed(() => (goal.value ? (goal.value.names[t.value('careerLang') as CareerLang] ?? goal.value.names.en) : ''))
 
-const copied = shallowRef(false)
-async function copy(): Promise<void> {
-  const text = resumeText(tree.value, data.value, (c) => outcomes(c).map((o) => o.en), resumeOf)
+// With a goal: the subjects that show a skill the job asks for, for a resume tailored to it.
+const relevant = computed(() => {
+  const skills = goal.value?.occupation?.skills ?? []
+  if (!skills.length) return []
+  const rows = employerSkills(skills, tree.value, data.value, (c) => outcomes(c).map((o) => o.en))
+  return [...new Set(rows.flatMap((r) => r.codes))]
+})
+
+const copied = shallowRef<'' | 'goal' | 'all'>('')
+async function copy(which: 'goal' | 'all'): Promise<void> {
+  const text = resumeText(tree.value, data.value, (c) => outcomes(c).map((o) => o.en), resumeOf, which === 'goal' ? relevant.value : undefined)
   try {
     await navigator.clipboard.writeText(text)
-    copied.value = true
-    setTimeout(() => (copied.value = false), 2500)
+    copied.value = which
+    setTimeout(() => (copied.value = ''), 2500)
   } catch {
-    copied.value = false
+    copied.value = ''
   }
 }
 </script>
@@ -128,7 +136,13 @@ async function copy(): Promise<void> {
       </div>
 
       <div class="actions">
-        <button class="button button-quiet" type="button" @click="copy">{{ copied ? t('skillTree.copied') : t('skillTree.copy') }}</button>
+        <!-- With a goal, a copy tailored to that job first; everything is a second button. -->
+        <button v-if="relevant.length" class="button button-accent" type="button" @click="copy('goal')">
+          {{ copied === 'goal' ? t('skillTree.copied') : t('skillTree.copyFor', { career: goalName }) }}
+        </button>
+        <button class="button button-quiet" type="button" @click="copy('all')">
+          {{ copied === 'all' ? t('skillTree.copied') : relevant.length ? t('skillTree.copyAll') : t('skillTree.copy') }}
+        </button>
         <p class="note">{{ t('skillTree.note') }}</p>
       </div>
     </template>

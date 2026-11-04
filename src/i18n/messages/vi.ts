@@ -679,6 +679,8 @@ export const vi: Messages = {
     other: 'Khác',
   },
   skillTree: {
+    copyFor: "Sao chép cho {career}",
+    copyAll: "Sao chép tất cả",
     title: "Kỹ năng cho CV (cho nhà tuyển dụng)",
     scope: "Tính những môn nào",
     done: "Đã học ({n})",
@@ -713,6 +715,10 @@ export const vi: Messages = {
     },
   },
   employerSkills: {
+    teaches: "Môn dạy kỹ năng này:",
+    inPlan: "Có trong kế hoạch:",
+    add: "Thêm vào kế hoạch",
+    outsideClubs: "Với kỹ năng rèn ngoài giờ học, CLB hợp với bạn:",
     sum: "Các môn của bạn chứng minh được {n}/{total}",
     outside: "Thể hiện qua đi làm, CLB hoặc tình nguyện",
     notYet: "Chưa có",
@@ -1841,7 +1847,7 @@ export const vi: Messages = {
     jobPenult: "Năm áp chót (năm 2 của bằng 3 năm): thực tập hè và chương trình vacationer phần lớn tuyển từ tháng 2 đến tháng 8, làm vào kỳ nghỉ hè. Nhiều chương trình dẫn tới lời mời làm việc sau tốt nghiệp.",
     jobFinal: "Năm cuối: chương trình sau tốt nghiệp mở từ khoảng tháng 2, nhiều nơi đóng vào tháng 3 hoặc 4; có công ty tuyển tới tháng 8. Bạn đi làm vào năm sau khi tốt nghiệp.",
     jobWhere: "Tìm ở đâu: Careers Online (trang việc làm của trường), Prosple, GradConnection và trang của từng công ty. Mỗi nơi một lịch, hãy xem của họ.",
-    jobResume: "Khi viết CV, trang Hồ sơ của tôi liệt kê những gì các môn đã học chứng minh được: công cụ và ngôn ngữ lập trình, kỹ năng chuyên môn gọi theo cách tin tuyển dụng gọi, và một hai câu tiếng Anh cho mỗi môn để đưa vào mục Relevant coursework. Mỗi mục đều ghi rõ từ môn nào. Nếu đặt mục tiêu nghề nghiệp, trang còn đối chiếu với các kỹ năng nhà tuyển dụng cần.",
+    jobResume: "Khi viết CV, trang Hồ sơ của tôi liệt kê những gì các môn đã học chứng minh được: công cụ và ngôn ngữ lập trình, kỹ năng chuyên môn gọi theo cách tin tuyển dụng gọi, và một hai câu tiếng Anh cho mỗi môn để đưa vào mục Relevant coursework. Mỗi mục đều ghi rõ từ môn nào. Nếu đặt mục tiêu nghề nghiệp, trang còn đối chiếu với các kỹ năng nhà tuyển dụng cần, gợi ý môn học cho kỹ năng bạn chưa có, và sao chép nội dung CV dành riêng cho nghề đó.",
     jobCareersOnline: "Careers Online (trang việc làm của UniMelb)",
     jobProsple: "Prosple (việc làm và thực tập cho sinh viên)",
     jobGradConnection: "GradConnection (việc làm và thực tập cho sinh viên)",

@@ -213,6 +213,13 @@ export interface Careers {
   courses: Record<string, CourseFurtherStudy>
   /** Graduate-entry routes, by job id. */
   graduate: Record<string, GraduateRoute>
+  /**
+   * For each skill an occupation lists, the subjects that teach it (lowest level first), worked
+   * out at build time from every subject's skills and outcomes, which the browser loads lazily.
+   * For "which subject would give me this skill" on a career goal. Grouped in tiers, closest first
+   * (in a major named for the skill or named for it, listing it as its own skill, only mentioning it).
+   */
+  skillSubjects?: Record<string, string[][]>
 }
 
 /** Every subject code an accreditation route names, required ones first. */

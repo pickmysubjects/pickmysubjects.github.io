@@ -679,6 +679,8 @@ export const ko: Messages = {
     other: '기타',
   },
   skillTree: {
+    copyFor: "{career}용으로 복사",
+    copyAll: "전부 복사",
     title: "이력서에 쓸 스킬 (고용주용)",
     scope: "어떤 과목",
     done: "이수({n})",
@@ -713,6 +715,10 @@ export const ko: Messages = {
     },
   },
   employerSkills: {
+    teaches: "배울 수 있는 과목:",
+    inPlan: "계획에 있어요:",
+    add: "계획에 추가",
+    outsideClubs: "수업 밖에서 기르는 스킬에는 이런 동아리:",
     sum: "이수 과목으로 {total}개 중 {n}개 보여줄 수 있어요",
     outside: "일·동아리·봉사로 보여주는 스킬",
     notYet: "아직 없음",
@@ -1841,7 +1847,7 @@ export const ko: Messages = {
     jobPenult: "졸업 전 해(3년제 학위의 2학년): 여름 인턴과 vacationer 프로그램은 대부분 2월~8월에 모집하고 여름방학에 해요. 졸업생 채용 제안으로 이어지는 경우가 많아요.",
     jobFinal: "마지막 해: 졸업생 프로그램은 2월쯤 열리고 상당수가 3~4월에 마감해요. 8월까지 뽑는 곳도 있어요. 입사는 졸업 다음 해예요.",
     jobWhere: "찾는 곳: Careers Online(대학 채용 사이트), Prosple, GradConnection, 각 회사 사이트. 일정이 회사마다 달라서 각자 확인하세요.",
-    jobResume: "이력서를 쓸 때 '내 기록' 페이지에 들은 과목으로 증명할 수 있는 것들이 정리돼 있어요. 도구와 프로그래밍 언어, 채용 공고에서 쓰는 이름으로 적은 전문 스킬, 그리고 과목마다 Relevant coursework에 바로 넣을 수 있는 영어 문장 한두 줄이에요. 모두 어느 과목에서 나왔는지 적혀 있어요. 진로 목표를 정하면 고용주가 원하는 스킬과도 대조해 줘요.",
+    jobResume: "이력서를 쓸 때 '내 기록' 페이지에 들은 과목으로 증명할 수 있는 것들이 정리돼 있어요. 도구와 프로그래밍 언어, 채용 공고에서 쓰는 이름으로 적은 전문 스킬, 그리고 과목마다 Relevant coursework에 바로 넣을 수 있는 영어 문장 한두 줄이에요. 모두 어느 과목에서 나왔는지 적혀 있어요. 진로 목표를 정하면 고용주가 원하는 스킬과 대조하고, 아직 없는 스킬은 배울 수 있는 과목을 추천하며, 그 직업에 맞춘 이력서 내용도 복사할 수 있어요.",
     jobCareersOnline: "Careers Online (멜버른대 채용 사이트)",
     jobProsple: "Prosple (졸업생 채용과 인턴)",
     jobGradConnection: "GradConnection (졸업생 채용과 인턴)",
