@@ -187,6 +187,27 @@ const OUTSIDE_CLASS = new Set([
   'typing',
 ])
 
+const SMALL_WORDS = new Set(['and', 'or', 'of', 'the', 'with', 'for', 'in', 'to', 'a', 'an', 'skills'])
+const escape = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+
+/**
+ * A test for text that has every word of a skill, as whole words: "SAS" isn't in "disaster", nor
+ * "Java" in "Javanese", nor "Physiotherapy" in "physiology", and a plural counts ("Microscopy" in
+ * "microscopies"). No other endings: "Marketing" isn't "markets". Null when there's no word to find.
+ */
+export function wordsMatcher(skill: string): ((text: string) => boolean) | null {
+  const words = skill
+    .toLowerCase()
+    .split(/[\s/,()-]+/)
+    .filter((w) => w && !SMALL_WORDS.has(w))
+  if (!words.length) return null
+  const tests = words.map((w) => {
+    if (!/^[a-z]+$/.test(w)) return new RegExp(`(?<![a-z0-9])${escape(w)}(?![a-z0-9#+])`)
+    return new RegExp(`(?<![a-z0-9])${w}(s|es)?(?![a-z])`)
+  })
+  return (text) => tests.every((t) => t.test(text))
+}
+
 /**
  * The job's skills against the student's tree: each with the subjects that show it (its tool,
  * its ability, or a subject named for it or about it), or marked as one built outside class.
@@ -199,22 +220,23 @@ export function employerSkills(skills: readonly string[], tree: SkillTree, data:
     if (OUTSIDE_CLASS.has(key)) return { skill, codes: [], outsideClass: true }
     const tool = TOOL_ALIASES[key] ?? tree.tools.find((t) => t.name.toLowerCase() === key)?.name
     if (tool) return { skill, codes: toolCodes.get(tool) ?? [], outsideClass: false }
-    // A specialist skill of the same name, or one whose words it all contains ("Financial accounting" in "Financial accounting standards").
-    const words0 = key.split(/[^a-z]+/).filter((w) => w.length >= 3)
-    const named = tree.specialist.filter((x) => x.name.toLowerCase() === key || (words0.length > 0 && words0.every((w) => x.name.toLowerCase().includes(w))))
+    // A specialist skill of the same name.
+    const named = tree.specialist.filter((x) => x.name.toLowerCase() === key)
     if (named.length) return { skill, codes: [...new Set(named.flatMap((x) => x.codes))], outsideClass: false }
     const abilities = ABILITY_ALIASES[key]
     if (abilities) return { skill, codes: [...new Set(abilities.flatMap((a) => abilityCodes.get(a) ?? []))], outsideClass: false }
-    // A field ("Financial Accounting", "Psychology"): subjects named for it, tagged with one of its
-    // words as a topic, or whose learning outcomes have every word of it ("Budgeting" in "use cost
-    // and revenue data for budgets": words are matched on their first six letters).
-    const words = key.split(/[^a-z]+/).filter(Boolean)
-    const stems = words.filter((w) => w.length >= 4).map((w) => w.slice(0, 6))
+    // Otherwise a subject backs it when one thing about it has every word of it: its field (title and
+    // topics: "Mechanical Systems Design" in engineering), one of its specialist skills, or one
+    // learning outcome. One shared word isn't enough: a design studio doesn't show "Electrical
+    // Design", nor "general" in one outcome and "practice" in another "General Practice".
+    const has = wordsMatcher(key.includes(':') ? key.slice(key.lastIndexOf(':') + 1) : key)
+    if (!has) return { skill, codes: [], outsideClass: false }
+    const own = new Map<string, string[]>()
+    for (const x of tree.specialist) for (const c of x.codes) own.set(c, [...(own.get(c) ?? []), x.name])
     const codes = tree.subjects.filter((c) => {
       const s = data.subjects[c]!
-      if (s.title.toLowerCase().includes(key) || topicsOf(s).topics.some((topic) => words.includes(topic.replace(/-/g, ' ')))) return true
-      const said = outcomesOf(c).join(' ').toLowerCase()
-      return stems.length > 0 && stems.every((st) => new RegExp(`\\b${st}`).test(said))
+      const field = [s.title, ...topicsOf(s).topics.map((t) => t.replace(/-/g, ' '))].join(' | ')
+      return [field, ...(own.get(c) ?? []), ...outcomesOf(c)].some((text) => has(text.toLowerCase()))
     })
     return { skill, codes, outsideClass: false }
   })

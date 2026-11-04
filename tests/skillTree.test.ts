@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { abilitiesOf, buildSkillTree, employerSkills, resumeText } from '@/engine/skillTree'
+import { abilitiesOf, buildSkillTree, employerSkills, resumeText, wordsMatcher } from '@/engine/skillTree'
 import { studentTools, toolsIn } from '../scripts/extract-tools'
 import { realData } from './realData'
 
@@ -55,11 +55,12 @@ describe("a job's skills against the student's subjects", () => {
   const accountant = ['Accounting', 'Communication Skills', 'Budgeting', 'Microsoft Excel', 'Financial Accounting', 'Building Relationships']
 
   it('names the subjects that show each skill: by tool, by ability or by field', () => {
-    const tree = buildSkillTree(['ACCT10001', 'ECON10005'], data)
+    const tree = buildSkillTree(['ACCT10001', 'ACCT10002', 'ECON10005'], data)
     const rows = Object.fromEntries(employerSkills(accountant, tree, data).map((r) => [r.skill, r]))
     expect(rows['Microsoft Excel']!.codes).toEqual(['ECON10005'])
     expect(rows['Accounting']!.codes).toContain('ACCT10001')
-    expect(rows['Financial Accounting']!.codes).toContain('ACCT10001')
+    // Financial accounting is ACCT10002's own skill; ACCT10001 teaches management accounting.
+    expect(rows['Financial Accounting']!.codes).toEqual(['ACCT10002'])
   })
 
   it('says which skills are built outside class, and which have nothing yet', () => {
@@ -70,9 +71,9 @@ describe("a job's skills against the student's subjects", () => {
 })
 
 describe('reading a skill out of what a subject taught', () => {
-  it('counts a learning outcome that names it ("budgets" for Budgeting)', () => {
-    const tree = buildSkillTree(['ACCT10001'], data)
-    const rows = employerSkills(['Budgeting', 'Account Reconciliation'], tree, data, () => ['Use cost and revenue data for budgets and planning'])
+  it('counts a learning outcome that names it', () => {
+    const tree = buildSkillTree(['ACCT10001'], data, () => undefined)
+    const rows = employerSkills(['Budgeting', 'Account Reconciliation'], tree, data, () => ['Use cost and revenue data for budgeting and planning'])
     expect(rows[0]!.codes).toEqual(['ACCT10001'])
     // Every word has to be there: "account" alone doesn't make "Account Reconciliation".
     expect(rows[1]!.codes).toEqual([])
@@ -109,6 +110,28 @@ describe('specialist skills from each subject', () => {
     // A subject's own resume lines come before its outcomes.
     expect(text).toContain(`- ACCT10001 Accounting Reports and Analysis: ${data.subjects.ACCT10001!.resume!.lines[0]}`)
     expect(text).not.toContain('an outcome')
+  })
+
+  it('matches whole words only, and every word of the skill', () => {
+    const has = (skill: string, text: string) => wordsMatcher(skill)!(text.toLowerCase())
+    expect(has('SAS', 'Disaster risk management')).toBe(false)
+    expect(has('Java', 'Javanese music')).toBe(false)
+    expect(has('Zoology', 'Anthrozoology')).toBe(false)
+    expect(has('Microsoft C#', 'Microsoft Excel')).toBe(false)
+    expect(has('Budgeting', 'Use cost data for budgeting')).toBe(true)
+    // Only plurals: "Marketing" isn't "markets".
+    expect(has('Marketing', 'How markets set prices')).toBe(false)
+    expect(has('Physiotherapy', 'Animal physiology')).toBe(false)
+    expect(has('Process Improvement', 'Jazz and improvisation')).toBe(false)
+  })
+
+  it('needs every word of a skill in one place, not spread over a subject', () => {
+    const tree = buildSkillTree(['ANTH30003'], data, () => undefined)
+    // Title and topics together are the subject's field.
+    expect(employerSkills(['Mechanical Engineering'], buildSkillTree(['MCEN30021'], data), data)[0]!.codes).toEqual(['MCEN30021'])
+    const said = () => ['Explain religion in general terms', 'Reflect on religious practice']
+    expect(employerSkills(['General Practice'], tree, data, said)[0]!.codes).toEqual([])
+    expect(employerSkills(['General Practice'], tree, data, () => ['Observe general practice clinics'])[0]!.codes).toEqual(['ANTH30003'])
   })
 
   it("matches a job's skill to a specialist skill of the same name", () => {
