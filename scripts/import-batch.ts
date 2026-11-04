@@ -22,6 +22,8 @@ const { values, positionals } = parseArgs({
 })
 
 const KEEP = ['categories', 'skills', 'topics', 'breadth_offerings'] as const
+const REQUISITES = ['prerequisites', 'corequisites', 'non_allowed'] as const
+const same = (a: unknown, b: unknown) => JSON.stringify(a) === JSON.stringify(b)
 let written = 0
 
 for (const file of positionals) {
@@ -56,12 +58,28 @@ for (const file of positionals) {
     if (!values.write || empty || problems.some((p) => p.startsWith('ASSESSMENT SUMS'))) continue
 
     const doc = parse(subjectYaml({ code, title, level, points, year: Number(values.year) }, parsed)) as Record<string, unknown>
-    if (doc.offerings === 'unknown' && old.offerings) doc.offerings = old.offerings
+    // A new year adds to the years already there: plans and past results still need when it ran before.
+    const oldOfferings = old.offerings && old.offerings !== 'unknown' ? (old.offerings as Record<string, unknown>) : {}
+    if (doc.offerings === 'unknown') doc.offerings = old.offerings ?? 'unknown'
+    else doc.offerings = { ...oldOfferings, ...(doc.offerings as Record<string, unknown>) }
     for (const k of KEEP) if (old[k] !== undefined) doc[k] = old[k]
     // A paste without its "Breadth options" part keeps the list we already had.
     if (doc.breadth_for === undefined && old.breadth_for !== undefined) doc.breadth_for = old.breadth_for
     if (doc.recommended === undefined && old.recommended !== undefined) doc.recommended = old.recommended
-    doc.notes = `Source: ${values.year} University of Melbourne Handbook; facts summarised and checked.`
+    // Our own notes (a Handbook mistake we corrected, an intensive's dates) carry over, marked to
+    // re-check. Where a subject has one and the new Handbook's requisites differ from ours, ours stay
+    // and the new wording is printed for a person to decide; otherwise the new facts win, printed too.
+    const handNote = String(old.notes ?? '').replace(/^Source: \d{4} University of Melbourne Handbook; facts summarised and checked\.\s*/, '').trim()
+    for (const k of REQUISITES) {
+      if (old[k] === undefined || same(old[k], doc[k])) continue
+      if (handNote) {
+        console.log(`     KEPT ${k} (hand note): ${values.year} Handbook says ${JSON.stringify(doc[k])}`)
+        doc[k] = old[k]
+      } else console.log(`     CHANGED ${k}: ${JSON.stringify(old[k])} -> ${JSON.stringify(doc[k])}`)
+    }
+    if (old.assessment !== undefined && !same(old.assessment, doc.assessment)) console.log('     CHANGED assessment')
+    const oldYear = String(old.source_year ?? '')
+    doc.notes = `Source: ${values.year} University of Melbourne Handbook; facts summarised and checked.${handNote ? ` ${oldYear && oldYear !== values.year ? `(From ${oldYear}, re-check:) ` : ''}${handNote}` : ''}`
     writeFileSync(path, stringify(doc, { lineWidth: 0 }))
     written++
   }
