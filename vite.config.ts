@@ -99,6 +99,13 @@ export default defineConfig({
   build: {
     // Data files are fetched, and the CSP only allows fetching from this site: never inline them as data: URLs.
     assetsInlineLimit: (file) => (file.endsWith('.json') ? false : undefined),
+    rolldownOptions: {
+      output: {
+        // One file for all the icons instead of one per icon: a first visit asked for ~50 tiny
+        // files, each a round trip on a slow phone connection. Together they're a few KB.
+        codeSplitting: { groups: [{ name: 'icons', test: /node_modules[\\/]lucide-vue-next/ }] },
+      },
+    },
   },
   // Fixed local addresses: `npm run dev` (live reload) and `npm run local` (a built copy, like the live site).
   server: { port: 5180, strictPort: true },
