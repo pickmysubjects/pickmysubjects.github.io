@@ -47,6 +47,7 @@ const { t } = useI18n()
     <ul class="plain">
       <li>{{ t('guide.findPlan') }}</li>
       <li>{{ t('guide.findAddFirst') }}</li>
+      <li>{{ t('guide.pickBetween') }}</li>
       <li>{{ t('guide.findNotOffered') }}</li>
       <li>{{ t('guide.plansAssumed') }}</li>
       <li>{{ t('guide.plansCampus') }}</li>

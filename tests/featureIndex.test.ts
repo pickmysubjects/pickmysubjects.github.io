@@ -90,8 +90,9 @@ describe('menus', () => {
 
   it('every page is reachable from the menus (detail pages and redirects aside)', () => {
     const reached = new Set(MENUS.flatMap((m) => [m.to, ...m.items.map((i) => i.to)]).map((to) => parsePath(to.split(/[?#]/)[0] ?? '').view))
-    // home: the logo and the tab bar; subject: a detail page; recommend: an old address that redirects.
-    const exempt = new Set(['home', 'subject', 'recommend'])
+    // home: the logo and the tab bar; subject and compare: detail pages (compare is linked from a
+    // subject's page); recommend: an old address that redirects.
+    const exempt = new Set(['home', 'subject', 'compare', 'recommend'])
     expect(VIEWS.filter((v) => !exempt.has(v) && !reached.has(v))).toEqual([])
   })
 })
