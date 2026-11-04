@@ -70,13 +70,22 @@ const yearLong = computed(() => semesters.value[0].some((s) => s.kind !== 'elect
 <style scoped>
 .fy {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 16px;
+  min-width: 0;
 }
 
+/* A long degree name in the menu mustn't widen the page on a narrow phone. */
 .fy-pick {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 6px;
   max-width: 420px;
+}
+
+.fy-pick select {
+  width: 100%;
+  min-width: 0;
 }
 
 .fy-label {
@@ -122,6 +131,7 @@ const yearLong = computed(() => semesters.value[0].some((s) => s.kind !== 'elect
 }
 
 .fy-name {
+  overflow-wrap: anywhere;
   color: var(--ink);
   font-weight: 600;
   text-decoration: none;
@@ -157,7 +167,7 @@ a.fy-name:hover {
 
 @media (max-width: 640px) {
   .fy-sems {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 </style>
