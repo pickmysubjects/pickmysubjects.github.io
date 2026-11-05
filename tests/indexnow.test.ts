@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { BATCH, chunk, collectUrls, explainStatus, KEY, payload, SITE, sitemapLocs } from '../scripts/indexnow'
+import { BATCH, chunk, collectUrls, recentSince, explainStatus, KEY, payload, SITE, sitemapLocs } from '../scripts/indexnow'
 
 const index = `<?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -57,5 +57,20 @@ describe('IndexNow', () => {
     for (const s of [400, 403, 422, 429, 500]) expect(explainStatus(s).ok).toBe(false)
     expect(explainStatus(403).text).toMatch(/key/)
     expect(explainStatus(422).text).toMatch(/host/)
+  })
+})
+
+describe('only recent pages', () => {
+  it('keeps pages whose lastmod is on or after the day given', async () => {
+    const files: Record<string, string> = {
+      [`${SITE}/sitemap.xml`]: `<sitemapindex><sitemap><loc>${SITE}/sitemap-en.xml</loc></sitemap></sitemapindex>`,
+      [`${SITE}/sitemap-en.xml`]: `<urlset><url><loc>${SITE}/old/</loc><lastmod>2026-10-01</lastmod></url><url><loc>${SITE}/new/</loc><lastmod>2026-11-04</lastmod></url><url><loc>${SITE}/none/</loc></url></urlset>`,
+    }
+    const read = async (u: string) => files[u]!
+    expect(await collectUrls(read, undefined, '2026-10-29')).toEqual([`${SITE}/new/`])
+    expect(await collectUrls(read)).toEqual([`${SITE}/old/`, `${SITE}/new/`, `${SITE}/none/`])
+  })
+  it('counts back RECENT_DAYS from today', () => {
+    expect(recentSince(new Date('2026-11-05T03:00:00Z'))).toBe('2026-10-29')
   })
 })

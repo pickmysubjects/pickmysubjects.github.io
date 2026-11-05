@@ -1,7 +1,8 @@
 /**
  * Tells IndexNow search engines (Bing, and through it Copilot and ChatGPT search; also Yandex,
- * Seznam, Naver) about every page in the sitemap, so new and changed pages are crawled soon
- * instead of whenever the crawler next comes by.
+ * Seznam, Naver) about the pages that changed lately (sitemap lastmod within RECENT_DAYS), so they
+ * are crawled soon instead of whenever the crawler next comes by. IndexNow is meant for changed
+ * pages: sending the whole site every day would look like spam. --all sends every page once.
  *
  * The deploy workflow runs it after each successful Pages deploy, at most once a day (a cache
  * entry named after the UTC date marks a day as done). IndexNow accepts the same URLs again, but
@@ -23,6 +24,8 @@ import { fileURLToPath, pathToFileURL } from 'node:url'
 export const SITE = 'https://pickmysubjects.github.io'
 export const KEY = '876442e96cb453de6a57008ed8287770'
 export const ENDPOINT = 'https://api.indexnow.org/indexnow'
+/** A page counts as changed when its lastmod is this many days back or newer (deploys aren't daily). */
+export const RECENT_DAYS = 7
 /** IndexNow takes at most 10,000 URLs per request. */
 export const BATCH = 10_000
 
@@ -35,11 +38,25 @@ export function sitemapLocs(xml: string): string[] {
  * All page URLs under the sitemap index: each child sitemap read in turn, duplicates dropped,
  * and only addresses on our own host kept (IndexNow rejects the whole request otherwise).
  */
-export async function collectUrls(read: (url: string) => Promise<string>, index = `${SITE}/sitemap.xml`): Promise<string[]> {
+export async function collectUrls(read: (url: string) => Promise<string>, index = `${SITE}/sitemap.xml`, since?: string): Promise<string[]> {
   const host = new URL(SITE).host
   const children = sitemapLocs(await read(index))
-  const pages = (await Promise.all(children.map(async (c) => sitemapLocs(await read(c))))).flat()
-  return [...new Set(pages)].filter((u) => new URL(u).host === host)
+  const pages = (await Promise.all(children.map(async (c) => sitemapEntries(await read(c))))).flat()
+  return [...new Set(pages.filter((e) => !since || (e.lastmod ?? '') >= since).map((e) => e.loc))].filter((u) => new URL(u).host === host)
+}
+
+/** Each <url>'s address and lastmod (when it has one). */
+export function sitemapEntries(xml: string): { loc: string; lastmod?: string }[] {
+  return [...xml.matchAll(/<url>([\s\S]*?)<\/url>/g)].flatMap((m) => {
+    const loc = /<loc>\s*([^<\s]+)\s*<\/loc>/.exec(m[1]!)?.[1]
+    const lastmod = /<lastmod>\s*([^<\s]+)\s*<\/lastmod>/.exec(m[1]!)?.[1]
+    return loc ? [{ loc: loc.replace(/&amp;/g, '&'), ...(lastmod ? { lastmod: lastmod.slice(0, 10) } : {}) }] : []
+  })
+}
+
+/** The first day that still counts as recent, as YYYY-MM-DD. */
+export function recentSince(today: Date, days = RECENT_DAYS): string {
+  return new Date(today.getTime() - days * 86_400_000).toISOString().slice(0, 10)
 }
 
 export function chunk<T>(items: T[], size = BATCH): T[][] {
@@ -84,8 +101,12 @@ function reader(dist: string | undefined): (url: string) => Promise<string> {
 
 async function main(argv: string[]): Promise<void> {
   const dist = argv.includes('--dist') ? fileURLToPath(new URL('../dist', import.meta.url)) : undefined
-  const urls = await collectUrls(reader(dist))
-  if (!urls.length) throw new Error('sitemap: no URLs')
+  const since = argv.includes('--all') ? undefined : recentSince(new Date())
+  const urls = await collectUrls(reader(dist), undefined, since)
+  if (!urls.length) {
+    console.log(`IndexNow: no page changed since ${since}, nothing sent`)
+    return
+  }
   if (argv.includes('--dry-run')) {
     console.log(`IndexNow (dry run): ${urls.length} URLs in ${chunk(urls).length} request(s), nothing sent`)
     return
