@@ -16,6 +16,7 @@
 import { writeFileSync } from 'node:fs'
 const R = '../'
 const { checkCourse, diplomaClash, findDiploma, planComponentIds } = await import(R + 'src/engine/courseRules')
+const { cannotCombine, majorClash, maxMajors, minorClash } = await import(R + 'src/engine/index')
 const { generatePlan } = await import(R + 'src/engine/generate')
 const { checkTerms } = await import(R + 'src/engine/planCheck')
 const { relieveTerm } = await import(R + 'src/engine/relieve')
@@ -147,9 +148,10 @@ function personaFrom(row: any[], n: number, courseJobs: string[]) {
 const labelOf = (p: any, start: string, load: any, record: string) => `[${p.goal};${Object.entries(p.skills).map(([k, v]) => k.slice(0, 3) + v).join('')};${p.interests.join('+')}${p.career ? ';' + p.career : ''}${p.workHours ? ';w' + p.workHours : ''}${start === 'semester-2' ? ';S2' : ''}${load ? ';pt' : ''};${record}]`
 
 function runProgramme(L0: string, base: any, personas: number, withRecs: boolean) {
+  if (++done % 20 === 0) console.error(`progress: ${done} programmes, ${plans} plans, ${rows.length} problems`)
   const blank = checkPlan(`${L0} blank`, { ...base, profile: blankP() })
-  const rows = personas >= DESIGN.length ? DESIGN : Array.from({ length: personas }, (_, i) => DESIGN[(i * 7) % DESIGN.length])
-  rows.forEach((row, n) => {
+  const personaRows = personas >= DESIGN.length ? DESIGN : Array.from({ length: personas }, (_, i) => DESIGN[(i * 7) % DESIGN.length])
+  personaRows.forEach((row, n) => {
     const { profile: p, start, load, stage, record, shortTerms } = personaFrom(row, n, [])
     const L = `${L0} p${n}${labelOf(p, start, load, stage + '/' + record + (shortTerms ? '/sw' : ''))}`
     let input: any = { ...base, profile: p, startPeriod: start, ...(load ? { load } : {}), ...(shortTerms ? { useShortTerms: true, fillShortTerms: true } : {}) }
@@ -181,17 +183,20 @@ function runProgramme(L0: string, base: any, personas: number, withRecs: boolean
 const only = process.argv[3]
 const shard = process.argv[4] ? process.argv[4].split('/').map(Number) : [0, 1]
 const courses = [...new Set(data.courses.map((c: any) => c.code))].filter((c) => c.startsWith('B-') && (!only || c === only))
+const specOk = (spec: string, major: string) => { const c: any = data.components.find((x: any) => x.id === spec); return !!c && (c.requiresMajor.length === 0 || c.requiresMajor.includes(major)) && !cannotCombine(data, major, spec) }
 let job = 0
+let done = 0
 const mine = () => job++ % shard[1] === shard[0]
 for (const course of courses) {
   const majors = of(course, 'major')
   const base = (extra: any) => ({ data, course, minors: [], courseYear: YEAR, startYear: YEAR, startPeriod: 'semester-1', ...extra })
   for (const major of majors.length ? majors : [undefined]) if (mine()) runProgramme(`${course} ${major ?? '-'}`, base({ major }), DESIGN.length, true)
   const first = majors[0]
-  for (const minor of of(course, 'minor')) if (mine()) runProgramme(`${course} ${first} +minor ${minor}`, base({ major: first, minors: [minor] }), 8, false)
-  for (const spec of of(course, 'specialisation')) for (const major of majors) if (mine()) runProgramme(`${course} ${major} +spec ${spec}`, base({ major, specialisation: spec }), 4, false)
+  // Only what the plan wizard lets a student choose (PlanWizard.vue's filters).
+  for (const minor of of(course, 'minor')) if (!minorClash(data, [first], minor) && mine()) runProgramme(`${course} ${first} +minor ${minor}`, base({ major: first, minors: [minor] }), 8, false)
+  for (const spec of of(course, 'specialisation')) for (const major of majors) if (specOk(spec, major) && mine()) runProgramme(`${course} ${major} +spec ${spec}`, base({ major, specialisation: spec }), 4, false)
   // Double majors (B-ARTS/B-COM/B-SCI allow two): each major paired with the next, a few personas.
-  if (['B-ARTS', 'B-COM', 'B-SCI'].includes(course)) majors.forEach((m, i) => { const m2 = majors[(i + 1) % majors.length]; if (m2 !== m && mine()) runProgramme(`${course} ${m} +major2 ${m2}`, base({ major: m, major2: m2 }), 4, false) })
+  if (maxMajors(data, course, YEAR) >= 2) majors.forEach((m, i) => { const m2 = majors[(i + 1) % majors.length]; if (m2 !== m && !majorClash(data, m, m2) && mine()) runProgramme(`${course} ${m} +major2 ${m2}`, base({ major: m, major2: m2 }), 4, false) })
   for (const d of (data as any).diplomas ?? []) for (const stream of d.streams?.length ? d.streams : [undefined]) if (!diplomaClash(data, findDiploma(data, d.code), { course, major: first, diplomaStream: stream }) && mine()) runProgramme(`${course} ${first} +${d.code} ${stream ?? ''}`, base({ major: first, diploma: d.code, diplomaStream: stream }), 3, false)
 }
 const byKind: Record<string, number> = {}
