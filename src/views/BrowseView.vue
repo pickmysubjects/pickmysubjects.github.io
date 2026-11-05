@@ -10,7 +10,7 @@ import DegreePick from '@/components/browse/DegreePick.vue'
 import GoalPicker from '@/components/profile/GoalPicker.vue'
 import Interp from '@/components/Interp.vue'
 import Pager from '@/components/Pager.vue'
-import { clearFilters, EASY_CUTS, leadReasons, searchSuggestions, SHOWN_AS_FACTS, type FoundRow } from '@/engine'
+import { clearFilters, discussionCount, EASY_CUTS, leadReasons, searchSuggestions, SHOWN_AS_FACTS, type FoundRow } from '@/engine'
 import { link } from '@/composables/useView'
 import { useBrowse } from '@/composables/useBrowse'
 import { useDataset } from '@/composables/useDataset'
@@ -81,23 +81,25 @@ async function saveListImage(): Promise<void> {
       url: `${site.host}${site.pathname}`.replace(/\/$/, ''),
       title: t.value(`browse.heading.${choice.value}`),
       subtitle: [courseTitle, String(year.value)].filter(Boolean).join(' · '),
-      lede: t.value(`rank.lede.${filters.value.rank}`),
       note: t.value('seo.confirm'),
-      columns: [t.value('subject.factRuns'), t.value('browse.imageCol.level'), t.value('browse.imageCol.exam'), t.value('browse.imageCol.hours'), t.value('subject.factPrereq')],
+      columns: [t.value('subject.factRuns'), t.value('browse.imageCol.level'), t.value('subject.factPoints'), t.value('browse.imageCol.exam'), t.value('browse.imageCol.hours'), t.value('subject.factPrereq'), t.value('browse.imageCol.reviews')],
       rows: rows.value.slice(0, IMAGE_TOP).map((r) => {
         const local = localTitle(r.subject, locale.value)
         const hours = r.subject.weeklyContactHours
         return {
           code: r.subject.code,
           title: local || r.subject.title,
-          // The official (English) name when the title shown is a translation, then why it's listed.
-          sub: [local && local !== r.subject.title ? r.subject.title : '', ...reasons(r).slice(0, 2)].filter(Boolean).join(' · '),
+          // The official (English) name when the title shown is a translation. Facts only, no reasons.
+          sub: local && local !== r.subject.title ? r.subject.title : '',
           stats: [
             r.periods.length ? r.periods.map((p) => t.value(`periodShort.${p}`)).join(' · ') : '–',
             String(r.subject.level),
+            String(r.subject.points),
             r.exam === null ? '–' : r.exam === 0 ? t.value('browse.imageCol.none') : `${r.exam}%`,
             hours ? String(hours) : '–',
             r.prereqNone ? t.value('browse.imageCol.none') : t.value('browse.imageCol.yes'),
+            // Student reviews summarised for it (StudentVIP reviews, Reddit threads): what the list rests on.
+            String((r.subject.discussions ?? []).reduce((n, d) => n + discussionCount(d), 0) || '–'),
           ],
         }
       }),

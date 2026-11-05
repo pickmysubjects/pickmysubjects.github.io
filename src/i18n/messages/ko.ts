@@ -1258,7 +1258,7 @@ export const ko: Messages = {
     addLabel: "{code}을(를) 내 계획에 추가",
     rankLabel: "순위",
     saveImage: "상위 15개를 이미지로 저장",
-    imageCol: { level: "레벨", exam: "기말", hours: "주당시간", none: "없음", yes: "있음" },
+    imageCol: { level: "레벨", exam: "기말", hours: "주당시간", none: "없음", yes: "있음", reviews: "후기 수" },
     imageTop: "상위 {n}개",
     heading: { easy: "멜버른대 꿀강", hard: "멜버른대 어려운 과목", noExam: "기말시험 없는 과목", firstSemester: "신입생 1학기 과목", breadth: "브레드스 과목", summerWinter: "여름·겨울 학기 과목" },
     rankList: {

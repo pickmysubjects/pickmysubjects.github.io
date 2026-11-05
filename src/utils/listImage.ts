@@ -1,17 +1,17 @@
 /**
  * A ranked list (the easiest or hardest subjects) as an A4 picture to share or print, laid out
- * like a league table: the site's mark and name, the title, how the list is ranked, then one row
- * per subject: its place, a coloured tag for its area, code and name, five fact columns, and a
- * second line with its English name and why it's there. Deep plum with the site's pink and
+ * like a league table: the site's mark and name, the title, the degree and year, then one row
+ * per subject: its place, a coloured tag for its area, code and name, its official (English) name
+ * under it, and the fact columns. Facts only, every word in full: text wraps, never "…". Deep plum with the site's pink and
  * violet; the address at the bottom so a passed-around screenshot says where it's from.
  * Made on a <canvas> in the browser; nothing is uploaded.
  */
-import { downloadOrShare } from './planImage'
+import { downloadOrShare, wrapText } from './planImage'
 
 export interface ListImageRow {
   code: string
   title: string
-  /** The second line: the English name (when the title is a translation) and why it's listed. */
+  /** The official (English) name, when the title shown is a translation; '' otherwise. */
   sub: string
   /** One cell per column, already formatted ("S1 · S2", "1", "40%"). */
   stats: string[]
@@ -22,8 +22,6 @@ export interface ListImageInput {
   url: string
   title: string
   subtitle: string
-  /** How the list is ranked, one sentence under the title. */
-  lede: string
   /** The fact columns' headings, one per stat cell. */
   columns: string[]
   rows: ListImageRow[]
@@ -69,11 +67,13 @@ export function listImageFileName(site: string, title: string, subtitle: string)
 
 const font = (weight: number, size: number, family: string) => `${weight} ${size}px ${family}`
 
-function fit(ctx: CanvasRenderingContext2D, text: string, max: number): string {
-  if (ctx.measureText(text).width <= max) return text
-  let s = text
-  while (s.length > 1 && ctx.measureText(`${s}…`).width > max) s = s.slice(0, -1)
-  return `${s}…`
+/** Lines of `text` in `f` no wider than `max`: breaks at spaces (or between CJK characters), never cut. */
+function lines(ctx: CanvasRenderingContext2D, text: string, max: number, f: string): string[] {
+  if (!text) return []
+  return wrapText(text, max, f, (t, ff) => {
+    ctx.font = ff
+    return ctx.measureText(t).width
+  })
 }
 
 /** The site's mark: a white mortarboard on a pink glass tile (src/components/AppLogo.vue). */
@@ -136,97 +136,139 @@ export function drawListImage(canvas: HTMLCanvasElement, input: ListImageInput, 
   const PAD = 72
   ctx.textBaseline = 'alphabetic'
 
-  // Header: the mark and the site's name, the title, the degree and year in pink, how it's ranked.
+  // Header: the mark and the site's name, the title (as large as fits, then wrapped), the degree and year.
   drawMark(ctx, PAD, 60, 56)
   ctx.font = font(750, 28, fonts.ui)
   ctx.fillStyle = C.ink
   ctx.fillText(input.site, PAD + 72, 98)
   let size = 64
   do ctx.font = font(900, size, fonts.ui)
-  while (ctx.measureText(input.title).width > W - PAD * 2 && (size -= 4) >= 40)
-  ctx.fillText(fit(ctx, input.title, W - PAD * 2), PAD, 196)
-  ctx.font = font(700, 28, fonts.ui)
-  ctx.fillStyle = C.pink
-  ctx.fillText(fit(ctx, input.subtitle, W - PAD * 2), PAD, 244)
-  ctx.font = font(500, 21, fonts.ui)
-  ctx.fillStyle = C.soft
-  ctx.fillText(fit(ctx, input.lede, W - PAD * 2), PAD, 282)
+  while (ctx.measureText(input.title).width > W - PAD * 2 && (size -= 4) >= 44)
+  let y = 150
+  for (const l of lines(ctx, input.title, W - PAD * 2, font(900, size, fonts.ui))) {
+    ctx.font = font(900, size, fonts.ui)
+    ctx.fillStyle = C.ink
+    y += size
+    ctx.fillText(l, PAD, y)
+  }
+  for (const l of lines(ctx, input.subtitle, W - PAD * 2, font(700, 28, fonts.ui))) {
+    ctx.font = font(700, 28, fonts.ui)
+    ctx.fillStyle = C.pink
+    y += 40
+    ctx.fillText(l, PAD, y)
+  }
 
-  // Columns: the stat cells on the right, each centred on its x; widths from the widest cell.
-  const statFont = font(700, 20, fonts.ui)
-  const headFont = font(700, 16, fonts.ui)
-  const widths = input.columns.map((c, k) => {
-    ctx.font = headFont
-    let w = ctx.measureText(c).width
+  // Columns: the fact cells on the right, each centred. A cell wider than CELL_MAX wraps at its
+  // " · " separators; a heading wraps to its column's width rather than widening it.
+  const statFont = font(700, 19, fonts.ui)
+  const headFont = font(700, 15, fonts.ui)
+  const CELL_MAX = 120
+  const cellLines = (v: string): string[] => {
     ctx.font = statFont
-    for (const r of input.rows) w = Math.max(w, ctx.measureText(r.stats[k] ?? '').width)
+    if (ctx.measureText(v).width <= CELL_MAX) return [v]
+    const out: string[] = []
+    for (const part of v.split(' · ')) {
+      const last = out.at(-1)
+      if (last !== undefined && ctx.measureText(`${last} · ${part}`).width <= CELL_MAX) out[out.length - 1] = `${last} · ${part}`
+      else out.push(part)
+    }
+    return out
+  }
+  const cells = input.rows.map((r) => r.stats.map(cellLines))
+  const widths = input.columns.map((c, k) => {
+    // At least the heading's longest word, so a heading wraps between words, never inside one.
+    ctx.font = headFont
+    let w = Math.max(44, ...c.split(/\s+/).map((word) => ctx.measureText(word).width))
+    ctx.font = statFont
+    for (const row of cells) for (const l of row[k] ?? []) w = Math.max(w, ctx.measureText(l).width)
     return w + 22
   })
-  const right = W - PAD
+  const heads = input.columns.map((c, k) => lines(ctx, c, widths[k]! - 8, headFont))
   const centres: number[] = []
-  let x = right
+  let x = W - PAD
   for (let k = widths.length - 1; k >= 0; k--) {
     centres[k] = x - widths[k]! / 2
     x -= widths[k]!
   }
   const statsLeft = x
-  const top = 336
+  const headLines = Math.max(1, ...heads.map((h) => h.length))
+  const top = y + 40 + headLines * 18
   ctx.font = headFont
   ctx.fillStyle = C.faint
   ctx.textAlign = 'center'
-  input.columns.forEach((c, k) => ctx.fillText(c, centres[k]!, top))
+  heads.forEach((h, k) => h.forEach((l, j) => ctx.fillText(l, centres[k]!, top - (h.length - 1 - j) * 18)))
   ctx.textAlign = 'left'
 
+  // Each row's lines worked out first, so a long name wraps and the row grows with it.
+  const tagX = PAD + 48
+  const textX = tagX + 60
+  const textMax = statsLeft - 16 - textX
+  const codeFont = font(800, 21, fonts.code)
+  const titleFont = font(650, 21, fonts.ui)
+  const subFont = font(500, 16, fonts.ui)
+  const laid = input.rows.map((r, i) => {
+    ctx.font = codeFont
+    const codeW = ctx.measureText(r.code).width + 12
+    // The name beside the code when it fits on that line; otherwise under it, at full width.
+    const beside = lines(ctx, r.title, textMax - codeW, titleFont).length === 1
+    const title = beside ? [r.title] : lines(ctx, r.title, textMax, titleFont)
+    const sub = lines(ctx, r.sub, textMax, subFont)
+    const statH = Math.max(...cells[i]!.map((c) => c.length)) * 24
+    const textH = (beside ? 0 : 28) + title.length * 28 + sub.length * 21
+    return { r, i, codeW, beside, title, sub, h: 24 + Math.max(textH, statH) }
+  })
   const footH = 120
-  const tableTop = top + 18
   const gap = 6
-  const rowH = Math.min(84, Math.floor((H - footH - tableTop - gap * input.rows.length) / Math.max(1, input.rows.length)))
-  input.rows.forEach((r, i) => {
-    const y = tableTop + i * (rowH + gap)
+  const tableTop = top + 16
+  ctx.textBaseline = 'alphabetic'
+  let rowY = tableTop
+  laid.forEach(({ r, codeW, beside, title, sub, h }, i) => {
+    // A row that would run into the footer isn't drawn (a short list rather than a cut one).
+    if (rowY + h > H - footH) return
     ctx.beginPath()
-    ctx.roundRect(PAD - 14, y, W - PAD * 2 + 28, rowH, 14)
+    ctx.roundRect(PAD - 14, rowY, W - PAD * 2 + 28, h, 14)
     ctx.fillStyle = i < 3 ? C.podium : i % 2 ? C.rowB : C.rowA
     ctx.fill()
-    const line1 = y + rowH * 0.44
-    const line2 = y + rowH * 0.8
-    // Place.
+    const mid = rowY + h / 2
     ctx.font = font(900, 26, fonts.ui)
     ctx.fillStyle = i < 3 ? C.pink : C.ink
     ctx.textAlign = 'right'
-    ctx.fillText(String(i + 1), PAD + 34, y + rowH / 2 + 9)
+    ctx.fillText(String(i + 1), PAD + 34, mid + 9)
     ctx.textAlign = 'left'
-    // The area's tag, like a club crest.
-    const tagX = PAD + 48
     ctx.beginPath()
-    ctx.roundRect(tagX, y + (rowH - 36) / 2, 44, 36, 10)
+    ctx.roundRect(tagX, mid - 18, 44, 36, 10)
     ctx.fillStyle = areaColour(r.code)
     ctx.fill()
     ctx.font = font(800, 13, fonts.code)
     ctx.fillStyle = '#fff'
     ctx.textAlign = 'center'
-    ctx.fillText(r.code.slice(0, 4), tagX + 22, y + rowH / 2 + 5)
+    ctx.fillText(r.code.slice(0, 4), tagX + 22, mid + 5)
     ctx.textAlign = 'left'
-    // Code and name, then the second line.
-    const textX = tagX + 60
-    const textMax = statsLeft - 16 - textX
-    ctx.font = font(800, 22, fonts.code)
+    let ty = rowY + 12
+    ctx.font = codeFont
     ctx.fillStyle = C.ink
-    ctx.fillText(r.code, textX, line1)
-    const codeW = ctx.measureText(r.code).width
-    ctx.font = font(650, 22, fonts.ui)
-    ctx.fillText(fit(ctx, r.title, textMax - codeW - 12), textX + codeW + 12, line1)
-    ctx.font = font(500, 16, fonts.ui)
+    ctx.fillText(r.code, textX, ty + 22)
+    if (!beside) ty += 28
+    ctx.font = titleFont
+    for (const l of title) {
+      ty += 28
+      ctx.fillText(l, beside ? textX + codeW : textX, ty - 6)
+    }
+    ctx.font = subFont
     ctx.fillStyle = C.faint
-    ctx.fillText(fit(ctx, r.sub, textMax), textX, line2)
-    // Facts.
+    for (const l of sub) {
+      ty += 21
+      ctx.fillText(l, textX, ty - 2)
+    }
     ctx.font = statFont
     ctx.fillStyle = C.ink
     ctx.textAlign = 'center'
-    r.stats.forEach((v, k) => ctx.fillText(v, centres[k]!, y + rowH / 2 + 7))
+    cells[i]!.forEach((c, k) => c.forEach((l, j) => ctx.fillText(l, centres[k]!, mid + 7 + (j - (c.length - 1) / 2) * 24)))
     ctx.textAlign = 'left'
+    rowY += h + gap
   })
 
-  // Footer: the mark and address, and the reminder to check the Handbook.
+  // Footer: the mark and address, and the reminder to check the Handbook (wrapped, never cut).
   const fy = H - footH + 24
   ctx.fillStyle = 'rgba(255,255,255,0.14)'
   ctx.fillRect(PAD, fy, W - PAD * 2, 2)
@@ -234,10 +276,11 @@ export function drawListImage(canvas: HTMLCanvasElement, input: ListImageInput, 
   ctx.font = font(700, 24, fonts.code)
   ctx.fillStyle = C.pink
   ctx.fillText(input.url, PAD + 54, fy + 54)
-  ctx.font = font(500, 18, fonts.ui)
+  const noteLines = lines(ctx, input.note, 520, font(500, 17, fonts.ui))
+  ctx.font = font(500, 17, fonts.ui)
   ctx.fillStyle = C.faint
   ctx.textAlign = 'right'
-  ctx.fillText(fit(ctx, input.note, W - PAD * 2 - 520), W - PAD, fy + 52)
+  noteLines.forEach((l, i) => ctx.fillText(l, W - PAD, fy + 52 - (noteLines.length - 1 - i) * 22))
   ctx.textAlign = 'left'
 }
 
@@ -248,7 +291,7 @@ export async function shareListImage(input: ListImageInput): Promise<'shared' | 
     ui: style.getPropertyValue('--font-ui').trim() || 'system-ui, sans-serif',
     code: style.getPropertyValue('--font-code').trim() || 'ui-monospace, monospace',
   }
-  const sample = [input.title, input.subtitle, input.lede, ...input.rows.map((r) => `${r.title} ${r.sub}`)].join(' ')
+  const sample = [input.title, input.subtitle, ...input.rows.map((r) => `${r.title} ${r.sub}`)].join(' ')
   await Promise.all([
     document.fonts.load(font(900, 64, fonts.ui), sample),
     document.fonts.load(font(650, 22, fonts.ui), sample),
