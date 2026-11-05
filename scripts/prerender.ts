@@ -531,7 +531,7 @@ function rankPages(code: LocaleCode, t: Translate): Page[] {
     const all = rankSubjects(sciSubjects, { direction, course: 'B-SCI', year: YEAR })
     const breadth = rankSubjects(sciSubjects, { direction, course: 'B-SCI', year: YEAR, breadthOnly: true, limit: RANK_TOP_BREADTH })
     const item = (r: (typeof all)[number]) =>
-      `<li>${subjectLink(code, r.subject.code)}: ${esc([...r.reasons.map((x) => reasonText(t, code, x)), ...(r.reviews === null ? [t('rank.factsOnly')] : [])].join(listSep(code)))}</li>`
+      `<li>${subjectLink(code, r.subject.code)}: ${esc([...r.reasons.map((x) => reasonText(t, code, x)), ...(r.reviews === null ? [t(r.subject.discussions?.length ? 'rank.factsOnlyReviewed' : 'rank.factsOnly')] : [])].join(listSep(code)))}</li>`
     const facts = { n: all.length, year: YEAR }
     const title = t(direction === 'easy' ? 'seo.rankEasy' : 'seo.rankHard', facts)
     const description = t(direction === 'easy' ? 'seo.rankEasyDesc' : 'seo.rankHardDesc', facts)
@@ -586,7 +586,7 @@ function easyCutPages(code: LocaleCode, t: Translate): Page[] {
   const title = t('seo.rankEasyL3Breadth', facts)
   const description = t('seo.rankEasyL3BreadthDesc', facts)
   const item = (r: (typeof rows)[number]) =>
-    `<li>${subjectLink(code, r.subject.code)}: ${esc([...r.reasons.map((x) => reasonText(t, code, x)), ...(r.reviews === null ? [t('rank.factsOnly')] : [])].join(listSep(code)))}</li>`
+    `<li>${subjectLink(code, r.subject.code)}: ${esc([...r.reasons.map((x) => reasonText(t, code, x)), ...(r.reviews === null ? [t(r.subject.discussions?.length ? 'rank.factsOnlyReviewed' : 'rank.factsOnly')] : [])].join(listSep(code)))}</li>`
   const body = [
     `<h1>${esc(title)}</h1>`,
     `<p>${esc(description)}</p>`,

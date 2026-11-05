@@ -57,7 +57,8 @@ function reasons(r: FoundRow): string[] {
   if (r.rec) return leadReasons(r.rec, 2).map((n) => trim(reasonText(t.value, n)))
   if (r.ranked) {
     const own = r.ranked.reasons.filter((x) => !SHOWN_AS_FACTS.has(x.key)).map((x) => t.value(`rank.reason.${x.key}`, x.params))
-    return [...own, ...(r.ranked.reviews === null ? [t.value('rank.factsOnly')] : [])]
+    // Reviews summarised but none says how hard it is: don't claim there are none.
+    return [...own, ...(r.ranked.reviews === null ? [t.value(r.subject.discussions?.length ? 'rank.factsOnlyReviewed' : 'rank.factsOnly')] : [])]
   }
   return []
 }
