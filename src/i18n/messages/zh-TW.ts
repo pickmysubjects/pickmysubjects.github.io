@@ -2144,6 +2144,12 @@ export const zhTW: Messages = {
     removal: '評分是匿名的，我們無法知道哪一則是你的。如果你想刪除某則內容，請透過意見回饋描述它（課程、學期、大概時間），我們會刪除相符的紀錄。',
     contact: '有疑問？請使用「意見回饋」頁面。',
   },
+  news: {
+    title: "來自作者的消息",
+    more: "讀全文",
+    less: "收起",
+    privacy: "隱私和使用條款",
+  },
   home: {
     install: {
       title: "把 PickMySubjects 放到手機主畫面",

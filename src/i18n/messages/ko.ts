@@ -2144,6 +2144,12 @@ export const ko: Messages = {
     removal: '평가는 익명이라 어떤 것이 내 것인지 알 수 없습니다. 삭제를 원하면 피드백으로 내용(과목, 학기, 대략적인 시기)을 알려 주세요. 해당 기록을 삭제합니다.',
     contact: '궁금한 점은 "피드백" 페이지를 이용하세요.',
   },
+  news: {
+    title: "만든 사람의 소식",
+    more: "전체 읽기",
+    less: "접기",
+    privacy: "개인정보 및 이용 약관",
+  },
   home: {
     install: {
       title: "PickMySubjects를 홈 화면에",

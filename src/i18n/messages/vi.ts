@@ -2144,6 +2144,12 @@ export const vi: Messages = {
     removal: 'Đánh giá là ẩn danh nên chúng tôi không biết cái nào là của bạn. Nếu muốn xóa, hãy gửi góp ý mô tả nội dung (môn, học kỳ, thời gian gần đúng) và chúng tôi sẽ xóa các mục phù hợp.',
     contact: 'Có câu hỏi? Hãy dùng trang Góp ý.',
   },
+  news: {
+    title: "Tin từ người làm trang",
+    more: "Đọc hết",
+    less: "Thu gọn",
+    privacy: "Quyền riêng tư và điều khoản",
+  },
   home: {
     install: {
       title: "Đưa PickMySubjects ra màn hình chính",

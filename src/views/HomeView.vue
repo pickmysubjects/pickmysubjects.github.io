@@ -4,6 +4,7 @@ import { computed } from 'vue'
 import { ArrowRight, CalendarCheck, Gauge, Globe } from 'lucide-vue-next'
 import ReleasePill from '@/components/home/ReleasePill.vue'
 import WhatsNext from '@/components/home/WhatsNext.vue'
+import NewsCard from '@/components/home/NewsCard.vue'
 import HomeTools from '@/components/home/HomeTools.vue'
 import StartSteps from '@/components/home/StartSteps.vue'
 import HeroCampus from '@/components/home/HeroCampus.vue'
@@ -72,6 +73,9 @@ const returning = computed(() => plan.courseChosen.value || !plan.isEmpty.value 
     </section>
 
     <WhatsNext />
+
+    <!-- The latest news from the person who makes the site. -->
+    <NewsCard />
 
     <!-- Phones only, for a student who has been here before: keep the site on the home screen. -->
     <InstallCard :returning="returning" />

@@ -2144,6 +2144,12 @@ export const ms: Messages = {
     removal: 'Penilaian adalah tanpa nama, jadi kami tidak tahu yang mana milik anda. Jika anda mahu sesuatu dibuang, hantar maklum balas yang menerangkannya (subjek, semester, lebih kurang bila) dan kami akan membuang entri yang sepadan.',
     contact: 'Ada soalan? Gunakan halaman Maklum balas.',
   },
+  news: {
+    title: "Berita daripada pembina laman",
+    more: "Baca semua",
+    less: "Tutup",
+    privacy: "Privasi dan terma",
+  },
   home: {
     install: {
       title: "Simpan PickMySubjects di skrin utama",

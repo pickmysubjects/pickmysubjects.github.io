@@ -2144,6 +2144,12 @@ export const id: Messages = {
     removal: 'Penilaian bersifat anonim, jadi kami tidak tahu mana yang milikmu. Jika ingin sesuatu dihapus, kirim masukan yang menjelaskannya (mata kuliah, semester, kira-kira kapan) dan kami akan menghapus entri yang cocok.',
     contact: 'Ada pertanyaan? Gunakan halaman Masukan.',
   },
+  news: {
+    title: "Kabar dari pembuat situs",
+    more: "Baca semua",
+    less: "Tutup",
+    privacy: "Privasi dan ketentuan",
+  },
   home: {
     install: {
       title: "Simpan PickMySubjects di layar utama",

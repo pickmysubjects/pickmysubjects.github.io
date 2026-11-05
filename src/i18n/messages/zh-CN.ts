@@ -2144,6 +2144,12 @@ export const zhCN: Messages = {
     removal: '评分是匿名的，我们无法知道哪一条是你的。如果你想删除某条内容，请通过反馈描述它（课程、学期、大概时间），我们会删除匹配的记录。',
     contact: '有疑问？请使用“反馈”页面。',
   },
+  news: {
+    title: "来自作者的消息",
+    more: "读全文",
+    less: "收起",
+    privacy: "隐私和使用条款",
+  },
   home: {
     install: {
       title: "把 PickMySubjects 放到手机主屏幕",

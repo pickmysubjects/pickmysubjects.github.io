@@ -2149,6 +2149,12 @@ export const en = {
     removal: 'Ratings are anonymous, so we cannot tell which one is yours. If you want something removed, send feedback describing it (subject, semester, roughly when) and we will remove matching entries.',
     contact: 'Questions? Use the Feedback page.',
   },
+  news: {
+    title: "News from the creator",
+    more: "Read it all",
+    less: "Show less",
+    privacy: "Privacy and terms",
+  },
   home: {
     install: {
       title: "Keep PickMySubjects on your home screen",
