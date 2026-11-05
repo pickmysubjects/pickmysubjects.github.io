@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, shallowRef, useTemplateRef } from 'vue'
 import { ArrowLeft, BookOpen, ChartNoAxesColumn, Check, Link2, MapPin, Plus, Share2, Star } from 'lucide-vue-next'
-import { isFail, isQuotaSubject, knownNotRunning, listPlace, periodsFor, prereqStatus, simplifyFor, standingOf, RANK_SLUGS, type Period, type Subject } from '@/engine'
+import { isFail, isQuotaSubject, knownNotRunning, listPlace, periodsFor, prereqStatus, prerequisiteRoute, referencedSubjects, simplifyFor, standingOf, RANK_SLUGS, type Period, type Subject } from '@/engine'
 import { link } from '@/composables/useView'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
@@ -67,12 +67,23 @@ const needs = computed(() => simplifyFor(props.subject.prerequisites, plan.setup
 const prereq = computed(() => prereqGist(t.value, needs.value))
 // Met by what the student has done or planned (or a condition they said they meet), checked as
 // suggestions and Find subjects check it: said only when it's certain.
-const prereqMet = computed(() => {
+// Judged only once the student has a record or a plan: with nothing yet, every subject would "need" its prerequisites.
+const prereqState = computed(() => {
   const n = needs.value
-  if (n === 'none' || n === 'unknown') return false
+  if (n === 'none' || n === 'unknown') return null
   const standing = standingOf(profile.value, data.value, plan.plannedCodes.value)
-  if (standing.completed.size === 0 && standing.confirmed.length === 0) return false
-  return prereqStatus(props.subject, standing, { subjects: data.value.subjects, course: plan.setup.value.course }).status === 'ok'
+  if (standing.completed.size === 0 && standing.confirmed.length === 0) return null
+  return prereqStatus(props.subject, standing, { subjects: data.value.subjects, course: plan.setup.value.course }).status
+})
+const prereqMet = computed(() => prereqState.value === 'ok')
+// Not met: the subjects it names that are still missing, taking one way through any choice (the
+// planner's route); the ones further back show in the route below.
+const MISSING_SHOWN = 3
+const prereqMissing = computed(() => {
+  if (prereqState.value !== 'fail') return []
+  const have = new Set([...plan.plannedCodes.value, ...profile.value.results.filter((r) => !isFail(r)).map((r) => r.code)])
+  const direct = new Set(referencedSubjects(needs.value))
+  return prerequisiteRoute(code.value, data.value.subjects, plan.setup.value.course, have).filter((c) => direct.has(c) && !have.has(c))
 })
 
 const taken = computed(() => profile.value.results.some((r) => r.code === code.value))
@@ -216,6 +227,11 @@ onBeforeUnmount(() => io?.disconnect())
           <dd>
             <a class="kf-link" href="#route">{{ prereq }}</a>
             <span v-if="prereqMet" class="kf-met"><Check :size="14" aria-hidden="true" />{{ t('subject.prereqDone') }}</span>
+            <span v-else-if="prereqMissing.length" class="kf-missing">
+              {{ t('subject.prereqMissing') }}
+              <template v-for="(c, i) in prereqMissing.slice(0, MISSING_SHOWN)" :key="c"><a :href="link(`subject/${c}`)">{{ c }}</a><template v-if="i < Math.min(prereqMissing.length, MISSING_SHOWN) - 1">, </template></template>
+              {{ " " }}<a v-if="prereqMissing.length > MISSING_SHOWN" href="#route">{{ t('subject.prereqMore', { n: prereqMissing.length - MISSING_SHOWN }) }}</a>
+            </span>
           </dd>
         </div>
       </dl>
@@ -456,6 +472,17 @@ onBeforeUnmount(() => io?.disconnect())
   gap: 3px;
   font-size: var(--fs-small);
   color: var(--good);
+}
+
+.kf-missing {
+  display: block;
+  font-size: var(--fs-small);
+  color: var(--warn, var(--ink-soft));
+}
+
+.kf-missing a {
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
 }
 
 .facts {

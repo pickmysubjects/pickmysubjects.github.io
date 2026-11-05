@@ -8,6 +8,7 @@ import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
 import { useProfile } from '@/composables/useProfile'
 import { useI18n } from '@/i18n'
+import { link } from '@/composables/useView'
 import { issueText, ruleDetail, ruleText } from '@/i18n/format'
 import { reducedMotion } from '@/utils/motion'
 
@@ -32,8 +33,16 @@ const props = defineProps<{
   unplaced: { code: string; reason: string; reasonKey?: string }[]
 }>()
 const emit = defineEmits<{ focus: [ruleId: string | null]; select: [code: string]; open: [code: string] }>()
-const { t } = useI18n()
+const { t, locale } = useI18n()
 const { data } = useDataset()
+// Where the rules come from: the degree's Handbook page and the day we last checked them against it.
+const course = computed(() => data.value.courses.find((c) => c.code === plan.setup.value.course))
+const verified = computed(() => {
+  const d = course.value?.verifiedOn
+  if (!d) return ''
+  const [y, m, day] = d.split('-').map(Number)
+  return new Intl.DateTimeFormat(locale.value, { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(y!, m! - 1, day!))
+})
 const plan = usePlan()
 const { setConfirmed } = useProfile()
 
@@ -57,6 +66,8 @@ interface Row {
   /** 0–1 for a points rule, shown as a slim bar. */
   share?: number
   members: string[]
+  /** The Handbook's own wording of the rule, on hover. */
+  source?: string
 }
 const rows = computed<Row[]>(() =>
   props.statuses.map((s) => {
@@ -79,6 +90,7 @@ const rows = computed<Row[]>(() =>
       group: groupOf(rule),
       status: s.status,
       name: ruleText(t.value, rule, s.description),
+      source: rule?.description,
       state,
       progress,
       share: points ? Math.min(1, have / rule.min!) : undefined,
@@ -168,7 +180,7 @@ function showSubject(code: string): void {
             <h3 class="group-title">{{ t(`checks.group.${x.g}`) }}</h3>
             <ul class="rows">
               <li v-for="r in x.rows" :key="r.id" class="row" :class="[`row-${r.status}`, { 'row-active': active === r.id }]">
-                <span class="row-name">{{ r.name }}</span>
+                <span class="row-name" :title="r.source">{{ r.name }}</span>
                 <span class="row-state">{{ r.state }}</span>
                 <span class="row-progress">
                   <span v-if="r.share !== undefined" class="bar" aria-hidden="true"><span class="bar-fill" :style="{ width: `${r.share * 100}%` }" /></span>
@@ -188,7 +200,7 @@ function showSubject(code: string): void {
             <h3 class="group-title">{{ t(`checks.group.${x.g}`) }}</h3>
             <ul class="rows">
               <li v-for="r in x.rows" :key="r.id" class="row row-ok" :class="{ 'row-active': active === r.id }">
-                <span class="row-name">{{ r.name }}</span>
+                <span class="row-name" :title="r.source">{{ r.name }}</span>
                 <span class="row-state">{{ r.state }}</span>
                 <span class="row-progress"><span class="row-detail">{{ r.progress }}</span></span>
                 <button v-if="r.members.length" class="row-action" type="button" :aria-pressed="active === r.id" @click="show(r.id)">
@@ -226,12 +238,41 @@ function showSubject(code: string): void {
           <PlanHowBuilt :notes="notes" :rules="degreeRules" :unplaced="[]" @open="emit('open', $event)" />
         </details>
         <span class="board-help">{{ t('checks.boardHelp') }} <InfoTip :text="`${t('plan.hint')} ${t('plan.tagLegend')}`" /></span>
+        <!-- Where the rules come from, last in the foot like the other notes about the plan. -->
+        <p v-if="course" class="source">
+          <span>{{ verified ? t('rules.sourceChecked', { date: verified }) : t('rules.source') }}</span>
+          <a v-if="course.handbook" :href="course.handbook" target="_blank" rel="noopener">{{ t('rules.handbook') }}</a>
+          <a :href="link('feedback')">{{ t('rules.report') }}</a>
+        </p>
       </div>
     </div>
   </details>
 </template>
 
 <style scoped>
+/* Where the rules come from: a full-width line at the end of the foot, as quiet as the notes beside it. */
+.source {
+  display: flex;
+  flex: 1 1 100%;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 14px;
+  min-height: 40px;
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.875rem;
+}
+
+.source a {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.source a:hover {
+  color: var(--ink);
+}
+
 .details {
   border-top: 1px solid var(--divider);
 }

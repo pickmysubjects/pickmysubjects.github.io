@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, useTemplateRef } from 'vue'
+import { computed, onBeforeUnmount, onMounted, shallowRef, useTemplateRef } from 'vue'
 import InfoTip from '@/components/InfoTip.vue'
 import SharePanel from '@/components/planner/SharePanel.vue'
 import { usePlan } from '@/composables/usePlan'
 import { useProfile } from '@/composables/useProfile'
+import { useDataset } from '@/composables/useDataset'
+import { isFail } from '@/engine'
 import { useI18n } from '@/i18n'
 import { termFullLabel } from '@/i18n/format'
 import { buildIcs, datesForTerms, downloadIcs, KEY_DATES, melbourneToday, type KeyDate } from '@/utils/keyDates'
@@ -18,6 +20,7 @@ const emit = defineEmits<{ saveImage: []; print: [] }>()
 const { t } = useI18n()
 const plan = usePlan()
 const { profile } = useProfile()
+const { data } = useDataset()
 const menu = useTemplateRef<HTMLDetailsElement>('menu')
 
 // Census, exam and results dates for the plan's and the record's terms still ahead. Made on the
@@ -31,6 +34,30 @@ const dates = computed(() => {
   return datesForTerms(KEY_DATES, terms).filter((d) => d.end >= today)
 })
 const label = (d: KeyDate) => t.value(`cal.event.${d.kind}`, { term: termFullLabel(t.value, { year: d.year, period: d.term }) })
+
+// The list to enrol from in my.unimelb: each term still to take, its subjects by code and official
+// (English) title, the way the enrolment page names them. Subjects already passed, and terms whose
+// teaching has started (enrolled already), are left out.
+const enrolText = computed(() => {
+  const today = melbourneToday()
+  const started = (term: { year: number; period: string }) => KEY_DATES.some((d) => d.kind === 'teaching' && d.year === term.year && d.term === term.period && d.start <= today)
+  const passed = new Set(profile.value.results.filter((r) => !isFail(r)).map((r) => r.code))
+  return plan.terms.value
+    .map((term) => ({ term, codes: term.subjects.filter((c) => !passed.has(c)) }))
+    .filter((x) => x.codes.length && !started(x.term))
+    .map(({ term, codes }) => [termFullLabel(t.value, term), ...codes.map((c) => `${c}  ${data.value.subjects[c]?.title ?? ''}`.trim())].join('\n'))
+    .join('\n\n')
+})
+const copied = shallowRef(false)
+async function copyEnrol(): Promise<void> {
+  try {
+    await navigator.clipboard.writeText(enrolText.value)
+    copied.value = true
+    setTimeout(() => (copied.value = false), 2000)
+  } catch {
+    // No clipboard (an old browser, a blocked permission): nothing to undo.
+  }
+}
 
 function pick(what: 'saveImage' | 'print' | 'calendar'): void {
   if (what === 'calendar') downloadIcs(buildIcs(dates.value, label), 'my-unimelb-dates.ics')
@@ -58,6 +85,10 @@ onBeforeUnmount(() => document.removeEventListener('pointerdown', outside))
         <span class="pact-row">
           <button id="calendar" class="pact-item" role="menuitem" type="button" :disabled="!dates.length" @click="pick('calendar')">{{ t('plan.addCalendar') }}</button>
           <InfoTip :text="dates.length ? t('cal.info', { n: dates.length }) : t('menu.miss.noDates')" />
+        </span>
+        <span class="pact-row">
+          <button class="pact-item" role="menuitem" type="button" :disabled="!enrolText" @click="copyEnrol">{{ copied ? t('plan.enrolCopied') : t('plan.enrolCopy') }}</button>
+          <InfoTip :text="t('plan.enrolInfo')" />
         </span>
       </div>
     </details>
