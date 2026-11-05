@@ -942,6 +942,7 @@ export const id: Messages = {
       hard: "Lihat yang paling mudah",
     },
     factsOnly: "Belum ada ulasan mahasiswa — hanya berdasarkan Handbook",
+    factsOnlyReviewed: "Ulasan mahasiswa tidak menyebut sulit atau tidak — berdasarkan Handbook",
     breadthSection: "Breadth untuk mahasiswa Bachelor of Science",
     l3Breadth: "Breadth level 3 paling mudah",
     reason: {

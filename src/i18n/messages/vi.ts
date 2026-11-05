@@ -942,6 +942,7 @@ export const vi: Messages = {
       hard: "Xem các môn dễ nhất",
     },
     factsOnly: "Chưa có sinh viên nào đánh giá — chỉ dựa trên Handbook",
+    factsOnlyReviewed: "Đánh giá của sinh viên không nói môn khó hay dễ — dựa trên Handbook",
     breadthSection: "Breadth cho sinh viên Bachelor of Science",
     l3Breadth: "Breadth level 3 dễ nhất",
     reason: {

@@ -942,6 +942,7 @@ export const ms: Messages = {
       hard: "Lihat subjek paling mudah",
     },
     factsOnly: "Belum ada ulasan pelajar — berdasarkan Handbook sahaja",
+    factsOnlyReviewed: "Ulasan pelajar tidak menyebut susah atau senang — berdasarkan Handbook",
     breadthSection: "Breadth untuk pelajar Bachelor of Science",
     l3Breadth: "Breadth tahap 3 paling mudah",
     reason: {

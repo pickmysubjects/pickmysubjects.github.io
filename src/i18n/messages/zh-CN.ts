@@ -942,6 +942,7 @@ export const zhCN: Messages = {
       hard: "看水课排行",
     },
     factsOnly: "还没有同学评价，只根据 Handbook 判断",
+    factsOnlyReviewed: "同学评价没说难不难，只根据 Handbook 判断",
     breadthSection: "理学士可选的 Breadth",
     l3Breadth: "最轻松的 Level 3 breadth",
     reason: {
