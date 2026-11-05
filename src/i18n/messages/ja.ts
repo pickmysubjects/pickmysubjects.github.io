@@ -1258,7 +1258,7 @@ export const ja: Messages = {
     addLabel: "{code} をプランに追加",
     rankLabel: "ランキング",
     saveImage: "上位 15 件を画像で保存",
-    imageCol: { level: "レベル", exam: "期末", hours: "週時間", none: "なし", yes: "あり", reviews: "レビュー数" },
+    imageCol: { level: "レベル", exam: "期末", hours: "週時間", none: "なし", yes: "あり", hurdle: "必須合格", group: "グループ課題" },
     imageTop: "上位 {n}",
     heading: { easy: "メルボルン大学の楽単", hard: "メルボルン大学の難しい科目", noExam: "期末試験がない科目", firstSemester: "1年目第1学期の科目", breadth: "ブレッドス科目", summerWinter: "夏学期・冬学期の科目" },
     rankList: {

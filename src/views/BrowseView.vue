@@ -10,7 +10,7 @@ import DegreePick from '@/components/browse/DegreePick.vue'
 import GoalPicker from '@/components/profile/GoalPicker.vue'
 import Interp from '@/components/Interp.vue'
 import Pager from '@/components/Pager.vue'
-import { clearFilters, discussionCount, EASY_CUTS, leadReasons, searchSuggestions, SHOWN_AS_FACTS, type FoundRow } from '@/engine'
+import { clearFilters, EASY_CUTS, leadReasons, searchSuggestions, SHOWN_AS_FACTS, type FoundRow } from '@/engine'
 import { link } from '@/composables/useView'
 import { useBrowse } from '@/composables/useBrowse'
 import { useDataset } from '@/composables/useDataset'
@@ -69,6 +69,12 @@ function reasons(r: FoundRow): string[] {
 // The easy or hard list's top ten as a picture to share (made in the browser, never uploaded), with
 // the site's address at the bottom, so a screenshot passed around still says where it came from.
 const IMAGE_TOP = 15
+function groupShare(s: FoundRow['subject']): string {
+  const tasks = s.assessment
+  if (!tasks?.length) return '–'
+  const n = Math.round(tasks.filter((x) => x.group).reduce((a, x) => a + x.weight, 0))
+  return n > 0 ? `${n}%` : t.value('browse.imageCol.none')
+}
 const imaging = shallowRef(false)
 async function saveListImage(): Promise<void> {
   if (imaging.value || !filters.value.rank) return
@@ -82,7 +88,7 @@ async function saveListImage(): Promise<void> {
       title: t.value(`browse.heading.${choice.value}`),
       subtitle: [courseTitle, String(year.value)].filter(Boolean).join(' · '),
       note: t.value('seo.confirm'),
-      columns: [t.value('subject.factRuns'), t.value('browse.imageCol.level'), t.value('subject.factPoints'), t.value('browse.imageCol.exam'), t.value('browse.imageCol.hours'), t.value('subject.factPrereq'), t.value('browse.imageCol.reviews')],
+      columns: [t.value('subject.factRuns'), t.value('browse.imageCol.level'), t.value('subject.factPoints'), t.value('browse.imageCol.exam'), t.value('browse.imageCol.hours'), t.value('subject.factPrereq'), t.value('browse.imageCol.hurdle'), t.value('browse.imageCol.group')],
       rows: rows.value.slice(0, IMAGE_TOP).map((r) => {
         const local = localTitle(r.subject, locale.value)
         const hours = r.subject.weeklyContactHours
@@ -98,8 +104,9 @@ async function saveListImage(): Promise<void> {
             r.exam === null ? '–' : r.exam === 0 ? t.value('browse.imageCol.none') : `${r.exam}%`,
             hours ? String(hours) : '–',
             r.prereqNone ? t.value('browse.imageCol.none') : t.value('browse.imageCol.yes'),
-            // Student reviews summarised for it (StudentVIP reviews, Reddit threads): what the list rests on.
-            String((r.subject.discussions ?? []).reduce((n, d) => n + discussionCount(d), 0) || '–'),
+            // From the Handbook's assessment: a task that must be passed on its own, and the share done in groups.
+            !r.subject.assessment?.length ? '–' : r.subject.assessment.some((x) => x.hurdle) ? t.value('browse.imageCol.yes') : t.value('browse.imageCol.none'),
+            groupShare(r.subject),
           ],
         }
       }),

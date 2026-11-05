@@ -1263,7 +1263,7 @@ export const en = {
     addLabel: "Add {code} to my plan",
     rankLabel: "Ranked lists",
     saveImage: "Save the top 15 as an image",
-    imageCol: { level: "Level", exam: "Exam", hours: "Hrs/wk", none: "none", yes: "yes", reviews: "Reviews" },
+    imageCol: { level: "Level", exam: "Exam", hours: "Hrs/wk", none: "none", yes: "yes", hurdle: "Hurdle", group: "Group work" },
     imageTop: "Top {n}",
     heading: { easy: "Easy subjects at UniMelb", hard: "Hardest subjects at UniMelb", noExam: "Subjects with no final exam", firstSemester: "First-semester subjects", breadth: "Breadth subjects", summerWinter: "Summer and winter subjects" },
     rankList: {
