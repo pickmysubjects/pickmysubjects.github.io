@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { aggregate, buildRatingFiles, COLUMNS, rowsToObjects } from '../scripts/ratings/aggregate'
+import { aggregate, buildRatingFiles, COLUMNS, rowsToObjects, screenRows } from '../scripts/ratings/aggregate'
 
 const header = Object.values(COLUMNS)
 function row(over: Partial<Record<keyof typeof COLUMNS, string>> = {}): string[] {
@@ -268,4 +268,13 @@ it('the Google Form script offers exactly the app\'s tag ids', async () => {
   const src = readFileSync(new URL('../scripts/google/create-forms.gs', import.meta.url), 'utf8')
   const list = /const RATING_TAG_IDS = \[([^\]]*)\]/.exec(src)?.[1] ?? ''
   expect([...list.matchAll(/'([^']+)'/g)].map((m) => m[1])).toEqual([...RATING_TAGS])
+})
+
+describe('why rows are turned away', () => {
+  it('counts each reason', () => {
+    const why: Record<string, number> = {}
+    const row = (code: string, extra: Record<string, string> = {}) => ({ [COLUMNS.code]: code, [COLUMNS.difficulty]: '3', ...extra })
+    screenRows([row('bad'), row('ZZZZ99999'), row('COMP10001', { [COLUMNS.year]: '1990' }), row('COMP10001', { [COLUMNS.difficulty]: '' }), row('COMP10001'), row('COMP10001')], new Date('2026-11-05'), new Set(['COMP10001']), (r) => (r[COLUMNS.difficulty] ?? '') !== '', why)
+    expect(why).toEqual({ 'not a subject code': 1, 'subject not in our data': 1, 'year not plausible': 1, 'no answer this part uses': 1, 'same answers sent again': 1 })
+  })
 })
