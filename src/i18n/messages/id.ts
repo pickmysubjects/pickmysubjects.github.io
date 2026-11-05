@@ -1730,9 +1730,16 @@ export const id: Messages = {
   },
   home: {
     notice: {
-      title: "Versi penuh rilis akhir November",
-      sub: "Termasuk Handbook 2027",
+      title: "Terima kasih atas masukanmu: 1.0.0 rilis sebelum akhir November",
+      sub: "Sekarang 0.9.2",
       close: "Tutup",
+      more: "Baca catatan",
+      less: "Tutup catatan",
+      p1: "Terima kasih untuk semua yang meninggalkan komentar dan masukan. Fitur baru yang kalian minta sedang dimasukkan ke 1.0.0, versi resminya rilis sebelum akhir November.",
+      p2: "Situs sekarang di versi 0.9.2, versi 0.9 terakhir. Versi 0.9 sudah memperbaiki banyak masalah yang kalian laporkan: info mata kuliah, penyusunan rencana, tingkat kesulitan mata kuliah, dan cara rekomendasinya. Karena masukannya sangat banyak, perubahan berikutnya akan rilis bersama 1.0.0.",
+      p3: "Saya tidak menyangka begitu banyak yang mengirim masukan berharga. Terima kasih atas dukungannya. Saya membuat situs ini supaya mahasiswa tetap bisa mendapat informasi yang lengkap dan berguna meski informasinya timpang, tanpa tertipu atau buang waktu dan uang.",
+      p4: "P.S. Situs ini sepenuhnya gratis dan kodenya terbuka. Rencana dan nilaimu hanya tersimpan di browsermu sendiri; situs hanya menerima masukan dan penilaian yang kamu kirim, serta jumlah kunjungan anonim.",
+      privacy: "Privasi dan ketentuan",
     },
     release: {
       label: "{v} · Diperbarui {date}",

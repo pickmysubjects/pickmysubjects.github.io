@@ -98,7 +98,8 @@ const hasWatch = computed(() => !!watchRec.value?.warnings.length || !!watchRec.
 const source = computed(() => {
   const d = difficulty.value
   if (d.level === 'unknown') return ''
-  return d.factsOnly ? t.value('rank.factsOnly') : d.reviews > 0 ? t.value('fit.fromReviews', { n: d.reviews }) : ''
+  // Reviews summarised but none says how hard it is: don't claim there are no reviews.
+  return d.factsOnly ? t.value(props.subject.discussions?.length ? 'rank.factsOnlyReviewed' : 'rank.factsOnly') : d.reviews > 0 ? t.value('fit.fromReviews', { n: d.reviews }) : ''
 })
 const basis = computed(() => (fit.value?.kind === 'fit' ? basisText(t.value, fitBasis(profile.value)) : ''))
 const hasLists = computed(() => easierItems.value.length + harderItems.value.length + suitsItems.value.length + whyNotItems.value.length > 0 || hasWatch.value)

@@ -1730,9 +1730,16 @@ export const ms: Messages = {
   },
   home: {
     notice: {
-      title: "Versi penuh dijangka akhir November",
-      sub: "Termasuk Handbook 2027",
+      title: "Terima kasih atas maklum balas anda: 1.0.0 keluar sebelum hujung November",
+      sub: "Kini 0.9.2",
       close: "Tutup",
+      more: "Baca nota",
+      less: "Tutup nota",
+      p1: "Terima kasih kepada semua yang meninggalkan komen dan cadangan. Ciri baharu yang anda minta semuanya dimasukkan ke dalam 1.0.0, yang akan keluar sebelum hujung November.",
+      p2: "Laman kini di versi 0.9.2, versi 0.9 yang terakhir. Versi 0.9 telah membetulkan banyak masalah yang dilaporkan: maklumat subjek, perancangan, tahap kesukaran subjek dan cadangan. Komen terlalu banyak, jadi perubahan seterusnya akan keluar bersama 1.0.0.",
+      p3: "Saya tidak sangka begitu ramai yang menghantar cadangan berharga. Terima kasih atas sokongan anda. Saya membina laman ini supaya pelajar boleh mendapat maklumat yang lengkap dan berguna walaupun maklumat tidak seimbang, tanpa tertipu atau rugi masa dan wang.",
+      p4: "P.S. Laman ini percuma sepenuhnya dan kodnya terbuka. Rancangan dan markah anda hanya disimpan dalam pelayar anda sendiri; laman hanya menerima maklum balas dan penilaian yang anda hantar, serta kiraan lawatan tanpa nama.",
+      privacy: "Privasi dan terma",
     },
     release: {
       label: "{v} · Dikemas kini {date}",

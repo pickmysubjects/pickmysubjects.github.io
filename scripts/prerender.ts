@@ -251,7 +251,7 @@ function difficultyLine(t: Translate, code: LocaleCode, s: Subject, d: Difficult
     note && !/[.。।]$/.test(note) ? note + end : note,
     reasons ? reasons + end : '',
     d.level === 'average' && both ? t('fit.balanced') : '',
-    d.factsOnly ? t('rank.factsOnly') + end : '',
+    d.factsOnly ? t(s.discussions?.length ? 'rank.factsOnlyReviewed' : 'rank.factsOnly') + end : '',
   ]
     .filter(Boolean)
     .join(sentenceSep(code))

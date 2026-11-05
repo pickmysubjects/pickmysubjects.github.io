@@ -2,6 +2,7 @@
 import { onMounted, shallowRef } from 'vue'
 import { X } from 'lucide-vue-next'
 import { useI18n } from '@/i18n'
+import { link } from '@/composables/useView'
 import { en } from '@/i18n/messages/en'
 import { IS_BETA } from '@/release'
 
@@ -16,6 +17,8 @@ const KEY = 'sc:notice-hidden'
 // Quotes and backslashes dropped so public/boot.js can match it in a CSS selector.
 const stamp = en.home.notice.title.replace(/["\\\n]/g, '')
 const hidden = shallowRef(false)
+// On the home page the strip opens into the full note, in place.
+const open = shallowRef(false)
 onMounted(() => {
   try {
     hidden.value = localStorage.getItem(KEY) === stamp
@@ -34,21 +37,84 @@ function hide(): void {
 </script>
 
 <template>
-  <div v-if="IS_BETA && !hidden" class="notice" :class="{ slim }" :data-notice="stamp" role="status">
-    <span class="notice-dot" aria-hidden="true" />
-    <span class="notice-text">
-      <strong>{{ t('home.notice.title') }}</strong>
-      <span class="notice-sub">{{ t('home.notice.sub') }}</span>
-    </span>
-    <button class="notice-close" type="button" :aria-label="t('home.notice.close')" @click="hide">
-      <X :size="16" aria-hidden="true" />
-    </button>
+  <div v-if="IS_BETA && !hidden" class="notice-wrap" :class="{ slim }" :data-notice="stamp">
+    <div class="notice" role="status">
+      <span class="notice-dot" aria-hidden="true" />
+      <span class="notice-text">
+        <strong>{{ t('home.notice.title') }}</strong>
+        <span class="notice-sub">{{ t('home.notice.sub') }}</span>
+      </span>
+      <button v-if="!slim" class="notice-more" type="button" :aria-expanded="open" aria-controls="notice-note" @click="open = !open">
+        {{ open ? t('home.notice.less') : t('home.notice.more') }}
+      </button>
+      <button class="notice-close" type="button" :aria-label="t('home.notice.close')" @click="hide">
+        <X :size="16" aria-hidden="true" />
+      </button>
+    </div>
+    <div v-if="!slim && open" id="notice-note" class="notice-note">
+      <p>{{ t('home.notice.p1') }}</p>
+      <p>{{ t('home.notice.p2') }}</p>
+      <p>{{ t('home.notice.p3') }}</p>
+      <p>{{ t('home.notice.p4') }} <a :href="link('privacy')">{{ t('home.notice.privacy') }}</a></p>
+    </div>
   </div>
 </template>
 
 <style scoped>
+.notice-wrap {
+  display: grid;
+  gap: 8px;
+}
+
+.notice-more {
+  flex: none;
+  margin-left: auto;
+  padding: 4px 10px;
+  color: var(--accent);
+  font: inherit;
+  font-weight: 600;
+  background: none;
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.notice-more:hover {
+  color: var(--ink);
+}
+
+.notice-more + .notice-close {
+  margin-left: 0;
+}
+
+/* The full note: the same glass as the strip, plain paragraphs. */
+.notice-note {
+  padding: 14px 16px;
+  color: var(--ink);
+  font-size: var(--fs-small);
+  line-height: 1.6;
+  background: var(--glass-shine), var(--glass-fill);
+  border: 1px solid var(--glass-edge);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+}
+
+.notice-note p {
+  margin: 0;
+}
+
+.notice-note p + p {
+  margin-top: 8px;
+}
+
+.notice-note a {
+  color: var(--accent);
+}
+
 /* One line on other pages: the sub-line is cut first. */
-.notice.slim {
+.slim .notice {
   margin-bottom: 12px;
   padding-block: 4px;
 }

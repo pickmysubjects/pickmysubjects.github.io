@@ -1733,9 +1733,16 @@ export const en = {
   },
   home: {
     notice: {
-      title: "Full version coming by end of November",
-      sub: "Includes the 2027 Handbook",
+      title: "Thank you for your feedback: 1.0.0 is out by the end of November",
+      sub: "This is 0.9.2",
       close: "Hide",
+      more: "Read the note",
+      less: "Hide the note",
+      p1: "Thank you to everyone who left comments and ideas. The new features you asked for are all going into 1.0.0, which will be out by the end of November.",
+      p2: "The site is now on 0.9.2, the last 0.9 version. The 0.9 versions fixed many of the problems you reported: subject details, planning, how hard a subject is, and the suggestions. There have been so many comments that the next changes will all come with 1.0.0.",
+      p3: "I didn't expect so many of you to send such useful ideas. Thank you for the support. I made this site so students can get full, useful information when they don't have it, instead of being misled and losing time and money.",
+      p4: "P.S. The site is completely free and its code is open. Your plans and marks stay in your own browser; the site only receives the feedback and ratings you choose to send, and anonymous visit counts.",
+      privacy: "Privacy and terms",
     },
     release: {
       label: "{v} · Updated {date}",
