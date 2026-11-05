@@ -41,5 +41,5 @@ export function usePlanStress() {
     return pinnedIn(plan.plan.value, data.value, termIndex, codes)
   }
 
-  return { stress, stressWith, relief, pinned, applyRelief: plan.applyRelief }
+  return { stress, stackFloor, stressWith, relief, pinned, applyRelief: plan.applyRelief }
 }

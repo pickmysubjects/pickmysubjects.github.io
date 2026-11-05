@@ -10,7 +10,7 @@ import { FITTED } from './fitted'
 import { sharedOffset } from './grades'
 import { offsetOf, predictMark } from './predict'
 import { MARKING_SKILLS, markingShare, skillsOf } from './skills'
-import { termStress } from './termStress'
+import { termStress, type StressOptions } from './termStress'
 import { creditCodes, creditPoints, isCreditCode, withCredit, type Credit } from './credit'
 import { planRoles } from './roles'
 import { areaField, homeTopics, relatedTopics, topicsOf } from './topics'
@@ -109,6 +109,11 @@ export interface RecommendOptions {
    * gives up a few points, as the plan builder does, so a close alternative ranks above it.
    */
   termSubjects?: string[]
+  /**
+   * How the plan judges that term (its unavoidable weak-skill stacks), so the warning agrees with
+   * the label the plan shows. termSubjects should then include year-long halves carried into it.
+   */
+  termStress?: Omit<StressOptions, 'course'>
   /** The student's major and specialisation (component ids): their subjects get a nudge and say so. */
   programme?: { courseYear: number; components: string[]; minors?: string[] }
   /**
@@ -388,7 +393,7 @@ export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions =
   const creditCourses = new Set(Object.values(data.subjects).flatMap((x) => Object.keys(x.categories)))
   const ratingMean = siteRatingMean(data)
 
-  const termBefore = opts.termSubjects ? termStress(opts.termSubjects, data, profile, { course: opts.course }).level : null
+  const termBefore = opts.termSubjects ? termStress(opts.termSubjects, data, profile, { ...opts.termStress, course: opts.course }).level : null
   const recs: Recommendation[] = []
   for (const s of Object.values(data.subjects)) {
     // Credit stands in as a subject only for the plan builder's sums; it is never a suggestion.
@@ -571,7 +576,7 @@ export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions =
       }
     }
     if (opts.termSubjects && termBefore) {
-      const after = termStress([...opts.termSubjects, s.code], data, profile, { course: opts.course }).level
+      const after = termStress([...opts.termSubjects, s.code], data, profile, { ...opts.termStress, course: opts.course }).level
       if (STRESS_RANK[after] > STRESS_RANK[termBefore]) {
         shift(rec, 'heavyTerm', -HEAVY_PICK_COST)
         rec.warnings.push(note(after === 'veryHeavy' ? 'makesVeryHeavy' : 'makesHeavy', {}, 'Adding it makes that semester heavier.'))

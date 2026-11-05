@@ -2,10 +2,11 @@
 import InfoTip from '@/components/InfoTip.vue'
 import { computed, onMounted, shallowRef, useTemplateRef } from 'vue'
 import { CircleCheck, Search, TriangleAlert, X } from 'lucide-vue-next'
-import { categoryOf, doneBefore, heldMajorIds, previewAdd, recommend, type Plan, type Subject } from '@/engine'
+import { carriedInto, categoryOf, doneBefore, heldMajorIds, previewAdd, recommend, type Plan, type Subject } from '@/engine'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
 import { useProfile } from '@/composables/useProfile'
+import { usePlanStress } from '@/composables/usePlanStress'
 import { useI18n } from '@/i18n'
 import { issueText, reasonText, termLabel } from '@/i18n/format'
 import { runsIn } from '@/utils/planBoard'
@@ -29,6 +30,7 @@ const { t } = useI18n()
 const { data, subjectList } = useDataset()
 const plan = usePlan()
 const { profile } = useProfile()
+const { stackFloor } = usePlanStress()
 const dialog = useTemplateRef<HTMLDialogElement>('dialog')
 const input = useTemplateRef<HTMLInputElement>('input')
 const text = shallowRef('')
@@ -84,7 +86,10 @@ const suggested = computed<Row[]>(() => {
     term: { year: at.year, period: at.period },
     planned: [...taken.value].filter((c) => !base.value.completed.includes(c)),
     eligibleWith: [...doneBefore(base.value.completed, base.value.terms, props.termIndex, data.value)],
-    termSubjects: base.value.terms[props.termIndex]?.subjects ?? [],
+    // Judged as the plan shows the term: with year-long halves carried in, and the plan's
+    // unavoidable weak-skill stacks not counted, so "makes it heavier" agrees with its label.
+    termSubjects: [...(base.value.terms[props.termIndex]?.subjects ?? []), ...carriedInto(base.value.terms, props.termIndex, data.value)],
+    termStress: { stackFloor: stackFloor.value },
     programme: { courseYear: plan.setup.value.courseYear, components: heldMajorIds(base.value).filter((id): id is string => !!id), minors: plan.setup.value.minors ?? [] },
     ...(current.value ? { category: categoryOf(current.value, course.value), level: current.value.level } : {}),
   })
