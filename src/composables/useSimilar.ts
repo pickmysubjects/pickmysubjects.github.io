@@ -9,6 +9,6 @@ export function useSimilar(subject: Ref<Subject | undefined>, year: Ref<number>)
   const { data } = useDataset()
   const { profile } = useProfile()
   const plan = usePlan()
-  const done = computed(() => new Set([...passedCodes(profile.value.results), ...plan.plan.value.completed]))
+  const done = computed(() => new Set([...passedCodes(profile.value.results, data.value.subjects), ...plan.plan.value.completed]))
   return computed(() => (subject.value ? similarSubjects(subject.value, data.value.subjects, year.value, done.value) : []))
 }

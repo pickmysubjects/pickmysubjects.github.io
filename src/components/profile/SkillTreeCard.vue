@@ -22,7 +22,7 @@ const { data } = useDataset()
 const { profile } = useProfile()
 const plan = usePlan()
 
-const done = computed(() => passedCodes(profile.value.results))
+const done = computed(() => passedCodes(profile.value.results, data.value.subjects))
 const planned = computed(() => plan.plan.value.terms.flatMap((term) => term.subjects).filter((c) => !done.value.includes(c)))
 const scope = shallowRef<'done' | 'all'>('done')
 const codes = computed(() => (scope.value === 'all' ? [...done.value, ...planned.value] : done.value))

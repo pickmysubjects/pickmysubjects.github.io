@@ -61,7 +61,7 @@ export function planFor(state: PlanState, profile: Profile, data: Dataset): Plan
     diploma: state.setup.diploma || undefined,
     diplomaStream: (state.setup.diploma && state.setup.diplomaStream) || undefined,
     // Done only: a graded subject on the record with no mark isn't (see isDone).
-    completed: passedCodes(profile.results.filter((r) => isFail(r) || isDone(r, data.subjects))),
+    completed: passedCodes(profile.results, data.subjects),
     ...(profile.credit?.length ? { credit: profile.credit } : {}),
     terms: state.terms,
     international: state.setup.international === true,

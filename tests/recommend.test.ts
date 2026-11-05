@@ -316,13 +316,13 @@ describe('fails and retakes', () => {
     const data = dataset([subject({ code: 'AAAA10001', points: 12.5 }), subject({ code: 'AAAA10002', points: 12.5 })])
     const results = [{ code: 'AAAA10001', mark: 40 }, { code: 'AAAA10001', mark: 70 }, { code: 'AAAA10002', mark: 70 }]
     expect(computeWam(results, data)).toBe(60)
-    expect(passedCodes(results)).toEqual(['AAAA10001', 'AAAA10002'])
+    expect(passedCodes(results, data.subjects)).toEqual(['AAAA10001', 'AAAA10002'])
   })
 
   it('treats a pass/fail subject marked not passed as a fail', () => {
     expect(isFail({ failed: true })).toBe(true)
     expect(isFail({})).toBe(false)
-    expect(passedCodes([{ code: 'AAAA10001', failed: true }])).toEqual([])
+    expect(passedCodes([{ code: "AAAA10001", failed: true }], {})).toEqual([])
   })
 })
 

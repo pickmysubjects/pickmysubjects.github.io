@@ -249,8 +249,17 @@ export function isFail(r: { mark?: number; failed?: boolean }): boolean {
   return r.failed === true || (r.mark !== undefined && r.mark < PASS_MARK)
 }
 
-export function passedCodes(results: Profile['results']): string[] {
-  return results.filter((r) => !isFail(r)).map((r) => r.code)
+/**
+ * Done, as everything that reads the record counts it: passed, and a graded subject only with a
+ * mark. A graded entry with no mark is on the record but not done: no WAM, not a prerequisite met.
+ */
+export function isDone(r: { code: string; mark?: number; failed?: boolean }, subjects: Record<string, Subject>): boolean {
+  return !isFail(r) && (r.mark !== undefined || subjects[r.code]?.passFail === true)
+}
+
+/** Codes of the subjects done on the record (see isDone): one rule for every page and pass. */
+export function passedCodes(results: Profile['results'], subjects: Record<string, Subject>): string[] {
+  return results.filter((r) => isDone(r, subjects)).map((r) => r.code)
 }
 
 /** Credit-point weighted average of marked results, fails included (UniMelb WAM is points-weighted), to one decimal for showing. */
@@ -294,6 +303,17 @@ export function marksForConditions(results: Profile['results'], data: Dataset): 
 }
 
 /**
+ * Marks as predictions read them: one per subject, a retake as the average of its attempts, so an
+ * earlier fail still says something about how the student goes in that area (the best attempt hid
+ * it). Every predicted mark (subject page, lists, plan compare) starts from these.
+ */
+export function predictionMarks(results: Profile['results'], data: Pick<Dataset, 'subjects'>): Map<string, number> {
+  const attempts = new Map<string, number[]>()
+  for (const r of results) if (r.mark !== undefined && !data.subjects[r.code]?.passFail) attempts.set(r.code, [...(attempts.get(r.code) ?? []), r.mark])
+  return new Map([...attempts].map(([code, ms]) => [code, ms.reduce((a, b) => a + b, 0) / ms.length]))
+}
+
+/**
  * What a student's prerequisites are checked against: subjects passed (or credited) and planned,
  * their marks and WAM for mark conditions, and the conditions they said they meet. Built the same
  * way for suggestions, Find subjects' "prerequisites I meet" and a subject page's header.
@@ -308,7 +328,7 @@ export interface Standing {
 
 export function standingOf(profile: Pick<Profile, 'results' | 'credit' | 'confirmed'>, data: Dataset, planned: readonly string[] = []): Standing {
   return {
-    completed: new Set([...passedCodes(profile.results), ...creditCodes(profile.credit), ...planned]),
+    completed: new Set([...passedCodes(profile.results, data.subjects), ...creditCodes(profile.credit), ...planned]),
     marks: marksForConditions(profile.results, data),
     wam: exactWam(profile.results, data),
     confirmed: profile.confirmed ?? [],
@@ -355,17 +375,15 @@ export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions =
   const liked = given.goal === 'easy' ? new Map<string, string>() : likedTopics
   // Credit for study elsewhere stands in as completed subjects, so a points prerequisite counts it.
   const data = withCredit(opts.course ? forCourse(raw, opts.course) : raw, profile.credit, opts.course ?? '')
-  const completed = new Set([...passedCodes(profile.results), ...creditCodes(profile.credit)])
-  const taken = new Set([...completed, ...(opts.planned ?? [])])
+  const completed = new Set([...passedCodes(profile.results, data.subjects), ...creditCodes(profile.credit)])
+  // On the record without a mark yet isn't done (no prerequisite met), but it is being taken:
+  // never suggested again, and its non-allowed partners stay out, as for planned subjects.
+  const onRecord = profile.results.filter((r) => !isFail(r)).map((r) => r.code)
+  const taken = new Set([...completed, ...onRecord, ...(opts.planned ?? [])])
   const wam = computeWam(profile.results, data)
   const wamExact = exactWam(profile.results, data)
   // Taken twice (a fail, then a pass): the better mark says how they now go in it.
-  const marks = new Map<string, number>()
-  // Retaken subjects: the average of the attempts, so an earlier fail still says something
-  // about how the student goes in that area (taking only the best attempt hid it).
-  const attempts = new Map<string, number[]>()
-  for (const r of profile.results) if (r.mark !== undefined && !raw.subjects[r.code]?.passFail) attempts.set(r.code, [...(attempts.get(r.code) ?? []), r.mark])
-  for (const [code, ms] of attempts) marks.set(code, ms.reduce((a, b) => a + b, 0) / ms.length)
+  const marks = predictionMarks(profile.results, raw)
   // The latest attempt, for "you got … last time": by semester when both are dated, else the one entered last.
   const lastMark = new Map<string, Profile['results'][number]>()
   for (const r of profile.results) {
@@ -451,7 +469,8 @@ export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions =
   // Prerequisites are checked against what's done and planned (the plan builder narrows it to
   // earlier terms), with the marks, WAM and confirmed conditions behind mark and VCE conditions.
   const standing: Standing = {
-    completed: opts.eligibleWith ? new Set(opts.eligibleWith) : taken,
+    // Credit always counts as done, whatever the caller narrowed eligibleWith to (as the checker counts it).
+    completed: opts.eligibleWith ? new Set([...opts.eligibleWith, ...creditCodes(profile.credit)]) : taken,
     marks: markRecord,
     wam: wamExact,
     confirmed: profile.confirmed ?? [],
@@ -1152,7 +1171,7 @@ export function studyYear(level: number): number {
 
 /** The highest level a student can usually take: year 1 until 100 points are done, and so on. */
 export function yearLevel(results: Profile['results'], data: Dataset, credit?: readonly Credit[]): number {
-  const done = passedCodes(results).reduce((sum, c) => sum + (data.subjects[c]?.points ?? 12.5), 0) + creditPoints(credit)
+  const done = passedCodes(results, data.subjects).reduce((sum, c) => sum + (data.subjects[c]?.points ?? 12.5), 0) + creditPoints(credit)
   return Math.min(3, Math.floor(done / 100) + 1)
 }
 

@@ -4,7 +4,7 @@ import { useProfile } from '../src/composables/useProfile'
 import { provideDataset } from '../src/composables/useDataset'
 import { books, commencementYear } from '../src/composables/planStore'
 import { setToday } from '../src/engine/dataYear'
-import { checkCourse, checkTerms, generatePlan, hasEnded, passedCodes, upcomingStart, type Period, type Profile } from '../src/engine'
+import { checkCourse, checkTerms, generatePlan, hasEnded, passedCodes, recommend, upcomingStart, type Period, type Profile } from '../src/engine'
 import { recordTermChoices } from '../src/utils/pastTerms'
 import { realData } from './realData'
 
@@ -48,7 +48,7 @@ describe('a plan never fills semesters that have already begun', () => {
     expect(first.year * 10 + (first.period === 'semester-2' ? 2 : 1)).toBeGreaterThanOrEqual(20271)
     const planned = plan.terms.value.flatMap((t) => t.subjects)
     expect(planned.filter((c) => undated.some((r) => r.code === c))).toEqual([])
-    expect(pts([...passedCodes(undated), ...planned])).toBe(300)
+    expect(pts([...passedCodes(undated, data.subjects), ...planned])).toBe(300)
     setResults([])
   })
 
@@ -87,7 +87,7 @@ describe('changing major after two years', () => {
       const course = from === 'criminology' ? 'B-ARTS' : 'B-SCI'
       const results = recordFrom(course, from, 4)
       const r = generatePlan({ data, profile: { ...empty, results }, course, courseYear: 2025, major: to, startYear: 2027, startPeriod: 'semester-1' })
-      const completed = passedCodes(results)
+      const completed = passedCodes(results, data.subjects)
       const plan = { ...r.plan, completed }
       const planned = plan.terms.flatMap((t) => t.subjects)
       const total = pts([...completed, ...planned])
@@ -116,4 +116,23 @@ describe('a failed subject planned again', () => {
 
 it('no saved plans leak between files', () => {
   books.value = {}
+})
+
+describe('part-time plans with subjects bigger than the load', () => {
+  // FINA30002 (37.5 points) and FLTV30009 + FLTV30032 (corequisites, 37.5 together) can't fit a
+  // 25-point semester: each goes alone in a semester instead of being left out.
+  for (const course of ['B-FAVISART', 'B-FAFILMTV']) {
+    it(`${course} at 25 points a semester places every required subject`, () => {
+      const r = generatePlan({ data, profile: { results: [], skills: {}, interests: [], goal: 'balanced' }, course, courseYear: 2026, startYear: 2026, startPeriod: 'semester-1', load: 25 })
+      expect(r.unplaced).toEqual([])
+    })
+  }
+})
+
+describe('a graded subject on the record without a mark', () => {
+  it('is not done (no prerequisite met) but is never suggested again', () => {
+    const p = { results: [{ code: 'COMP10001' }], skills: {}, interests: [], goal: 'balanced' as const }
+    expect(passedCodes(p.results, data.subjects)).toEqual([])
+    expect(recommend(data, p, { course: 'B-SCI' }).map((r) => r.code)).not.toContain('COMP10001')
+  })
 })

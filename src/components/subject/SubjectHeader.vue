@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, shallowRef, useTemplateRef } from 'vue'
 import { ArrowLeft, BookOpen, ChartNoAxesColumn, Check, Link2, MapPin, Plus, Share2, Star } from 'lucide-vue-next'
-import { isFail, isQuotaSubject, knownNotRunning, listPlace, periodsFor, prereqStatus, prerequisiteRoute, referencedSubjects, simplifyFor, standingOf, RANK_SLUGS, type Period, type Subject } from '@/engine'
+import { isDone, isFail, isQuotaSubject, passedCodes, knownNotRunning, listPlace, periodsFor, prereqStatus, prerequisiteRoute, referencedSubjects, simplifyFor, standingOf, RANK_SLUGS, type Period, type Subject } from '@/engine'
 import { link } from '@/composables/useView'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
@@ -81,13 +81,13 @@ const prereqMet = computed(() => prereqState.value === 'ok')
 const MISSING_SHOWN = 3
 const prereqMissing = computed(() => {
   if (prereqState.value !== 'fail') return []
-  const have = new Set([...plan.plannedCodes.value, ...profile.value.results.filter((r) => !isFail(r)).map((r) => r.code)])
+  const have = new Set([...plan.plannedCodes.value, ...passedCodes(profile.value.results, data.value.subjects)])
   const direct = new Set(referencedSubjects(needs.value))
   return prerequisiteRoute(code.value, data.value.subjects, plan.setup.value.course, have).filter((c) => direct.has(c) && !have.has(c))
 })
 
 const taken = computed(() => profile.value.results.some((r) => r.code === code.value))
-const passed = computed(() => profile.value.results.find((r) => r.code === code.value && !isFail(r)))
+const passed = computed(() => profile.value.results.find((r) => r.code === code.value && isDone(r, data.value.subjects)))
 const plannedAt = computed(() => plan.terms.value.find((x) => x.subjects.includes(code.value)))
 
 // Where "Add to my plan" can put it: any semester of the plan, past ones too; terms it doesn't run in are flagged.

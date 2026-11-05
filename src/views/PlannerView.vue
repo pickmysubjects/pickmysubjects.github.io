@@ -168,7 +168,7 @@ const careerReminder = computed(() => {
   const goal = careerGoal(data.value, profile.value.career, heldMajorIds(plan.plan.value).filter((id): id is string => !!id))
   const body = goal?.major?.accreditation?.body
   if (!goal || !body) return null
-  const have = new Set([...passedCodes(profile.value.results), ...plan.plannedCodes.value])
+  const have = new Set([...passedCodes(profile.value.results, data.value.subjects), ...plan.plannedCodes.value])
   const gap = careerGap(data.value, goal, have, roleSets.value.required)
   const codes = [...gap.required, ...gap.breadth]
   if (!codes.length) return null
@@ -182,7 +182,7 @@ const allIssues = computed(() => [...plan.termIssues.value, ...plan.courseCheck.
 
 // A subject planned again though My record has it passed: the one record line above says so
 // and its Rebuild fixes them all, so they aren't listed one by one.
-const passedNow = computed(() => new Set(passedCodes(profile.value.results)))
+const passedNow = computed(() => new Set(passedCodes(profile.value.results, data.value.subjects)))
 const onRecord = (i: Issue) => isPassedDuplicate(i, passedNow.value)
 // Counted the same way as the compare page's "Subject problems" row.
 const problems = computed(() => countedProblems(allIssues.value, passedNow.value).length)
@@ -358,7 +358,7 @@ const whereOf = computed(() => {
   for (const term of plan.terms.value) for (const c of term.subjects) out[c] = termLabel(t.value, term)
   return out
 })
-const boardCodes = computed(() => [...passedCodes(profile.value.results.filter((r) => isDone(r, data.value.subjects))), ...plan.plannedCodes.value])
+const boardCodes = computed(() => [...passedCodes(profile.value.results, data.value.subjects), ...plan.plannedCodes.value])
 const majorSubjects = computed(() => new Set([...roleSets.value.required, ...roleSets.value.options]))
 // Each requirement's subjects, counted automatically (nothing to tag).
 const members = computed(() => {
@@ -427,7 +427,7 @@ const metaLine = computed(() => {
   return notes[0] ? { short: notes[0].short, info: notes.map((n) => n.info).join(' ') } : null
 })
 const recordOverlap = computed(() => {
-  const passed = new Set(passedCodes(profile.value.results.filter((r) => isDone(r, data.value.subjects))))
+  const passed = new Set(passedCodes(profile.value.results, data.value.subjects))
   const load = plan.course.value?.standardLoad ?? 50
   for (const term of plan.terms.value) {
     if (term.subjects.some((c) => passed.has(c))) return termLabel(t.value, term)
@@ -466,7 +466,7 @@ const printTerms = computed<PrintTerm[]>(() => {
 // thing to do next.
 const pointsNow = computed(() => {
   const pts = (c: string) => data.value.subjects[c]?.points ?? 12.5
-  const codes = new Set([...passedCodes(profile.value.results), ...plan.plannedCodes.value])
+  const codes = new Set([...passedCodes(profile.value.results, data.value.subjects), ...plan.plannedCodes.value])
   return [...codes].reduce((sum, c) => sum + pts(c), 0) + creditPoints(profile.value.credit)
 })
 const pointsNeed = computed(() => (plan.course.value?.totalPoints ?? 0) + (findDiploma(data.value, plan.setup.value.diploma)?.totalPoints ?? 0))

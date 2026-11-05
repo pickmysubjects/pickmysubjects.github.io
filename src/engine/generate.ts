@@ -247,7 +247,7 @@ function withDiplomaLevels(course: Course | undefined, moved: string[], data: Da
 function buildPlan(given: GenerateInput): GenerateResult {
   let course = plannedCourse(given)
   const notes: Note[] = []
-  const completed = [...passedCodes(given.profile.results), ...creditCodes(given.profile.credit)]
+  const completed = [...passedCodes(given.profile.results, given.data.subjects), ...creditCodes(given.profile.credit)]
   const done = new Set(completed)
   const load = loadOf(given, course)
 
@@ -365,7 +365,11 @@ function buildPlan(given: GenerateInput): GenerateResult {
         const group = groupOf(code).filter((c) => !before.has(c) && !term.subjects.includes(c))
         if (!group.every((c) => fits(c, group))) continue
         const pts = group.reduce((sum, c) => sum + termShare(data.subjects[c]), 0)
-        if (used + pts > limit) continue
+        // A subject (or corequisites taken together) bigger than a part-time load, a 37.5-point
+        // studio say, can never fit under it: it goes alone in an otherwise empty semester, as the
+        // student would have to take it (up to the course's full-time load).
+        const alone = used === 0 && !isShort(term) && pts <= chosenLoad(undefined, course)
+        if (used + pts > limit && !alone) continue
         // A year-long subject's second half needs room in Semester 2 as well.
         const later = group.filter((c) => isYearLong(data.subjects[c])).reduce((sum, c) => sum + termShare(data.subjects[c]), 0)
         if (later > 0 && later > secondRoom(termIndex)) continue

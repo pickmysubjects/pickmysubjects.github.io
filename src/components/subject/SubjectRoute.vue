@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { isFail, prerequisiteRoute, referencedSubjects, simplifyFor, type Subject } from '@/engine'
+import { isDone, prerequisiteRoute, referencedSubjects, simplifyFor, type Subject } from '@/engine'
 import SubjectLinks from '@/components/majors/SubjectLinks.vue'
 import SubjectTimeline from '@/components/planner/SubjectTimeline.vue'
 import { link } from '@/composables/useView'
@@ -53,7 +53,7 @@ const edges = computed<Edge[]>(() => [
 const whereOf = computed(() => {
   const out: Record<string, string> = {}
   for (const term of plan.terms.value) for (const c of term.subjects) out[c] = termLabel(t.value, term)
-  for (const r of profile.value.results) if (!isFail(r)) out[r.code] = t.value('plan.doneIt')
+  for (const r of profile.value.results) if (isDone(r, data.value.subjects)) out[r.code] = t.value('plan.doneIt')
   return out
 })
 function go(c: string): void {

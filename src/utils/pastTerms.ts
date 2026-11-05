@@ -1,5 +1,5 @@
 import { today as clock } from '@/engine/dataYear'
-import { hasEnded, isFail, isUpcoming, periodsFor, termKey, type Period, type Profile, type Subject } from '@/engine'
+import { hasEnded, isDone, isFail, isUpcoming, periodsFor, termKey, type Period, type Profile, type Subject } from '@/engine'
 
 export interface PastResult {
   code: string
@@ -157,13 +157,7 @@ export function doneWith(typed: string | undefined, passFail?: boolean): { mark?
   return mark === undefined ? null : { mark }
 }
 
-/**
- * Done, as everything that reads the record counts it: passed, and a graded subject only with a
- * mark. A graded entry with no mark is on the record but not done: no WAM, not a prerequisite met.
- */
-export function isDone(r: { code: string; mark?: number; failed?: boolean }, subjects: Record<string, Subject>): boolean {
-  return !isFail(r) && (r.mark !== undefined || subjects[r.code]?.passFail === true)
-}
+export { isDone }
 
 /**
  * One-time clean-up of a build (a02e1c08) that copied every subject of a begun semester onto My

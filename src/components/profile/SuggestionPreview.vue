@@ -3,7 +3,7 @@ import InfoTip from '@/components/InfoTip.vue'
 import { link } from '@/composables/useView'
 import { computed } from 'vue'
 import { Sparkles } from 'lucide-vue-next'
-import { heldMajorIds, recommend, yearLevel } from '@/engine'
+import { hasFitProfile, heldMajorIds, recommend, yearLevel } from '@/engine'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
 import { useProfile } from '@/composables/useProfile'
@@ -15,9 +15,8 @@ const { profile } = useProfile()
 const plan = usePlan()
 const { t } = useI18n()
 
-const hasInput = computed(
-  () => profile.value.results.length > 0 || Object.keys(profile.value.skills).length > 0 || profile.value.interests.length > 0,
-)
+// The same test Find subjects and the fit card use (a career goal or own ratings count too).
+const hasInput = computed(() => hasFitProfile(profile.value))
 const top = computed(() =>
   recommend(data.value, profile.value, {
     course: plan.setup.value.course,

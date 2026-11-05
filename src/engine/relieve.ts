@@ -362,7 +362,7 @@ function replaceFor(
   }
   const stress = judge.at(plan.terms, termIndex)
   const named = stress.reasons.flatMap((r) => String(r.params.codes ?? '').split(', ')).filter((c) => term.subjects.includes(c))
-  const done = [...plan.completed, ...passedCodes(profile?.results ?? [])]
+  const done = [...plan.completed, ...passedCodes(profile?.results ?? [], data.subjects)]
   // What a stand-in's prerequisites can rest on: everything finished before this semester.
   const before = doneBefore(plan.completed, plan.terms, termIndex, data)
   const student: Profile = profile ?? { results: [], skills: {}, interests: [], goal: 'balanced' }

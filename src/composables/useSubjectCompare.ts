@@ -1,12 +1,10 @@
 import { viewYear } from '@/engine/dataYear'
 import { computed, type Ref } from 'vue'
 import {
-  exactWam,
-  evaluateField,
-  isFail,
-  marksForConditions,
   periodsFor,
+  prereqStatus,
   simplifyFor,
+  standingOf,
   subjectDifficulty,
   type Difficulty,
   type Period,
@@ -58,11 +56,8 @@ export function useSubjectCompare(codes: Ref<string[]>) {
   function column(s: Subject): CompareColumn {
     const tasks = s.assessment
     const needs = simplifyFor(s.prerequisites, course.value)
-    const passed = profile.value.results.filter((r) => !isFail(r))
-    // As the plan and suggestions read them: each subject's best attempt (pass/fail ones have no
-    // mark), and the WAM over every attempt.
-    const marks = marksForConditions(profile.value.results, data.value)
-    const wam = exactWam(profile.value.results, data.value)
+    // Checked as the subject page and Find subjects check it: done, credit, planned and confirmed.
+    const standing = standingOf(profile.value, data.value, plan.plannedCodes.value)
     return {
       subject: s,
       difficulty: subjectDifficulty(data.value.subjects, s.code, course.value, year.value),
@@ -73,7 +68,7 @@ export function useSubjectCompare(codes: Ref<string[]>) {
       prereq:
         needs === 'none'
           ? 'none'
-          : evaluateField(needs, { completed: new Set(passed.map((r) => r.code)), subjects: data.value.subjects, admittedCourse: course.value, marks, wam }).status,
+          : prereqStatus(s, standing, { subjects: data.value.subjects, course: course.value }).status,
       reviews: s.signals?.reviews ?? 0,
     }
   }

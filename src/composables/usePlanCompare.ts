@@ -1,5 +1,5 @@
 import { computed, type Ref } from 'vue'
-import { alignTimeline, checkCourse, checkTerms, creditPoints, exactWam, findDiploma, informalPicks, marksForConditions, passedCodes, planComponentIds, planProblems, planRules, findCourse, forCourse, planRoles, planStress, requiredWithPrerequisites, termLoad, termsWithCarried, type CourseRule, type Dataset, type PlanFacts, type RuleStatus } from '@/engine'
+import { alignTimeline, checkCourse, checkTerms, creditPoints, exactWam, findDiploma, informalPicks, predictionMarks, passedCodes, planComponentIds, planProblems, planRules, findCourse, forCourse, planRoles, planStress, requiredWithPrerequisites, termLoad, termsWithCarried, type CourseRule, type Dataset, type PlanFacts, type RuleStatus } from '@/engine'
 import { predictMark, RANGE_Z } from '@/engine/predict'
 import { summariseAssessment } from '@/utils/assessment'
 import { careerJobLabels } from '@/utils/careersHtml'
@@ -66,7 +66,7 @@ export function useComparePlans(entries: Ref<PlanEntry[]>, locale: Ref<string>) 
     const course = findCourse(data, setup.course, year)
     const titles = setupTitles(data, setup)
     const pts = (c: string) => data.subjects[c]?.points ?? 12.5
-    const passed = passedCodes(stored.value.results)
+    const passed = passedCodes(stored.value.results, data.subjects)
     const passedSet = new Set(passed)
     const points = [...new Set([...passed, ...codes])].reduce((sum, c) => sum + pts(c), 0) + creditPoints(stored.value.credit)
     const required = (course?.totalPoints ?? 0) + (findDiploma(data, setup.diploma)?.totalPoints ?? 0)
@@ -86,7 +86,7 @@ export function useComparePlans(entries: Ref<PlanEntry[]>, locale: Ref<string>) 
     // Predicted WAM: the record's marks, plus each planned subject at its predicted mark (and at
     // the low and high ends of its likely range). Only with marks to go on. A subject planned twice
     // counts once, and one already passed on the record not at all (the plan has it by mistake).
-    const marks = new Map(Object.entries(marksForConditions(stored.value.results, data)))
+    const marks = predictionMarks(stored.value.results, data)
     let wam: PlanFacts['wam'] = null
     if (marks.size) {
       const guesses = [...new Set(codes)].flatMap((c) => {

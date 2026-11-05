@@ -25,7 +25,7 @@ const { data, course } = useDataset()
 const { profile } = useProfile()
 const plan = usePlan()
 
-const done = computed(() => passedCodes(profile.value.results))
+const done = computed(() => passedCodes(profile.value.results, data.value.subjects))
 const planned = computed(() => plan.plan.value.terms.flatMap((term) => term.subjects))
 // Learning outcomes (in English) count too: they load with each subject's area.
 const outcomes = useOutcomes(done)

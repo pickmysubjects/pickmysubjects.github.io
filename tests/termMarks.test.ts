@@ -199,7 +199,7 @@ describe('marking done', () => {
     expect(me.profile.value.results).toEqual(record)
     expect(plan.terms.value.find((x) => x.year === 2025 && x.period === 'semester-2')?.subjects).toEqual(edited)
     expect(plan.plannedCodes.value).not.toContain(code)
-    expect(pts([...passedCodes(me.profile.value.results), ...plan.plannedCodes.value])).toBeGreaterThanOrEqual(300)
+    expect(pts([...passedCodes(me.profile.value.results, data.subjects), ...plan.plannedCodes.value])).toBeGreaterThanOrEqual(300)
   })
 
   it('one subject window for done and planned subjects; done cards open it too', () => {
