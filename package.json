@@ -20,6 +20,7 @@
     "indexnow": "tsx scripts/indexnow.ts",
     "audit": "tsx scripts/audit-data.ts",
     "sweep": "tsx scripts/sweep-plans.ts",
+    "simulate": "tsx scripts/simulate-students.mts",
     "snapshot-year": "tsx scripts/snapshot-year.ts",
     "changes": "tsx scripts/changes.ts",
     "seo:check": "node scripts/seo-check.mjs"
