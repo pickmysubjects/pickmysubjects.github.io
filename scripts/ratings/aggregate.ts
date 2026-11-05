@@ -111,6 +111,8 @@ export interface AggregateResult {
   subjects: Record<string, SubjectAggregate>
   accepted: number
   rejected: number
+  /** Rows turned away, by reason. */
+  reasons: Record<string, number>
 }
 
 export function rowsToObjects(values: string[][]): Record<string, string>[] {
@@ -135,7 +137,12 @@ export function screenRows(
   now: Date,
   known: Set<string> | undefined,
   answered: (row: Record<string, string>) => boolean,
+  /** Filled with how many rows each check turned away, for the log (counts only, no answers). */
+  why?: Record<string, number>,
 ): Record<string, string>[] {
+  const no = (reason: string) => {
+    if (why) why[reason] = (why[reason] ?? 0) + 1
+  }
   const seen = new Set<string>()
   const perDay = new Map<string, number>()
   const out: Record<string, string>[] = []
@@ -150,7 +157,18 @@ export function screenRows(
     const fingerprint = JSON.stringify(Object.entries(row).filter(([k]) => k !== COLUMNS.timestamp))
     // The date part of the form's timestamp ("2026/10/07 10:00:00" or "07/10/2026 …").
     const dayKey = `${code}|${(row[COLUMNS.timestamp] ?? '').split(/[ T]/)[0]}`
-    if (!valid || seen.has(fingerprint) || (perDay.get(dayKey) ?? 0) >= MAX_PER_SUBJECT_PER_DAY) continue
+    if (!valid) {
+      no(!/^[A-Z]{4}\d{5}$/.test(code) ? 'not a subject code' : known && !known.has(code) ? 'subject not in our data' : !yearOk ? 'year not plausible' : 'no answer this part uses')
+      continue
+    }
+    if (seen.has(fingerprint)) {
+      no('same answers sent again')
+      continue
+    }
+    if ((perDay.get(dayKey) ?? 0) >= MAX_PER_SUBJECT_PER_DAY) {
+      no('too many for one subject that day')
+      continue
+    }
     seen.add(fingerprint)
     perDay.set(dayKey, (perDay.get(dayKey) ?? 0) + 1)
     out.push(row)
@@ -204,7 +222,8 @@ export function fitRatingPrior(kept: Record<string, string>[]): number | undefin
 export function aggregate(rows: Record<string, string>[], now = new Date(), known?: Set<string>): AggregateResult {
   const bySubject = new Map<string, Record<string, string>[]>()
 
-  const kept = screenRows(rows, now, known, rated)
+  const reasons: Record<string, number> = {}
+  const kept = screenRows(rows, now, known, rated, reasons)
   for (const row of kept) {
     const code = row[COLUMNS.code] as string
     bySubject.set(code, [...(bySubject.get(code) ?? []), row])
@@ -254,7 +273,7 @@ export function aggregate(rows: Record<string, string>[], now = new Date(), know
       ...(tagCounts.size ? { tags: Object.fromEntries([...tagCounts].sort(([a], [b]) => a.localeCompare(b))) } : {}),
     }
   }
-  return { subjects, accepted: rows.length - rejected, rejected }
+  return { subjects, accepted: rows.length - rejected, rejected, reasons }
 }
 
 /**
@@ -282,7 +301,7 @@ export function buildRatingFiles(values: string[][], known?: Set<string>, now = 
   if (grades.featurePrior) model.featurePrior = grades.featurePrior
   const ratingPrior = fitRatingPrior(screenRows(rows, now, known, rated))
   if (ratingPrior !== undefined) model.ratingPrior = ratingPrior
-  return { ratings: result.subjects, offsets: grades.offsets, model, accepted: result.accepted, rejected: result.rejected }
+  return { ratings: result.subjects, offsets: grades.offsets, model, accepted: result.accepted, rejected: result.rejected, reasons: result.reasons }
 }
 
 /**

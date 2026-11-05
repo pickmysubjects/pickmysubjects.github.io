@@ -11,7 +11,7 @@ import { createSign } from 'node:crypto'
 import { writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { buildDataset, ROOT } from '../dataset'
-import { buildRatingFiles, rowsToObjects } from './aggregate'
+import { buildRatingFiles, COLUMNS, rowsToObjects } from './aggregate'
 import { buildComments } from './comments'
 import { fitReviewPrior } from '../../src/engine/easeRanking'
 import { offsetFeatures } from '../../src/engine/gradeModel'
@@ -80,6 +80,12 @@ const known = new Set(Object.keys(subjects))
 const out = buildRatingFiles(values, known, new Date(), (code) => (subjects[code] ? offsetFeatures(subjects[code]) : null))
 writeFileSync(join(ROOT, 'data', 'real', 'ratings.json'), `${JSON.stringify(out.ratings, null, 2)}\n`)
 console.log(`Ratings: ${out.accepted} accepted, ${out.rejected} rejected, ${Object.keys(out.ratings).length} subjects.`)
+if (out.rejected) console.log(`Rejected by reason: ${Object.entries(out.reasons).map(([k, n]) => `${k} ${n}`).join(', ')}.`)
+// The form's own column titles against the ones read here: a question renamed in the form would
+// otherwise turn every new row away without a word. Titles only, never answers.
+const header = new Set(values[0] ?? [])
+const missing = Object.values(COLUMNS).filter((c) => !header.has(c))
+if (missing.length) console.log(`Columns not in the sheet: ${missing.join(' | ')}.`)
 // Student-reported facts (exam format, recordings, …) ride in ratings.json, read by question title.
 console.log(`Student facts: ${Object.values(out.ratings).filter((r) => r.facts).length} subjects.`)
 writeFileSync(join(ROOT, 'data', 'real', 'grade-offsets.json'), `${JSON.stringify(out.offsets, null, 2)}\n`)
