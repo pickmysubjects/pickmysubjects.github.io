@@ -986,6 +986,8 @@ export const en = {
     majorsDesc: "What each UniMelb major, minor and specialisation needs, year by year: core subjects, options, and what two majors share.",
     hardQ: "Is {code} hard?",
     verdict: { easier: "Is {code} hard? On the easier side.", average: "Is {code} hard? About average.", harder: "Is {code} hard? On the harder side." },
+    reviewsHereN: "A summary of {n} student reviews is on this page.",
+    updated: "Page updated {date}",
     reviewsHere: "Student reviews summarised on the page.",
     subjectsTitle: "UniMelb subjects: reviews, difficulty, easy picks",
     subjectsDesc: "Look up {n} UniMelb subjects by code or name: semesters, prerequisites, final-exam share. Review summaries for {r}. Easy, hard and no-exam lists.",

@@ -981,6 +981,8 @@ export const zhTW: Messages = {
     majorsDesc: "墨大每個主修、輔修和專業方向一到三年級要修什麼：必修課、選修課，還能看兩個主修有哪些課重疊。",
     hardQ: "{code} 難嗎？",
     verdict: { easier: "{code} 難嗎？偏容易。", average: "{code} 難嗎？難度中等。", harder: "{code} 難嗎？偏難。" },
+    reviewsHereN: "頁面上有 {n} 則同學評價的總結。",
+    updated: "頁面更新於 {date}",
     reviewsHere: "頁面上有同學評價整理。",
     subjectsTitle: "墨大選課：課程評價、難不難、涼課推薦",
     subjectsDesc: "用課號或課名查 {n} 門墨大課程：開課學期、先修課、期末考佔比，{r} 門有同學評價整理。還有涼課榜、難課榜和沒有期末考的課。",

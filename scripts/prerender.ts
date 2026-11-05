@@ -210,6 +210,12 @@ function fitDescription(text: string): string {
   return out.trim() || text
 }
 
+/** 2026-10-19 as the reader's language writes a date. */
+function longDate(code: LocaleCode, iso: string): string {
+  const [y, m, d] = iso.split('-').map(Number)
+  return new Intl.DateTimeFormat(code, { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }).format(Date.UTC(y!, m! - 1, d!))
+}
+
 function render(page: Page, code: LocaleCode): string {
   const url = absolute(code, page.path)
   page = { ...page, title: fitTitle(page.title), description: fitDescription(page.description) }
@@ -310,6 +316,15 @@ function subjectPage(code: LocaleCode, s: Subject): Page {
     // The key facts as plain sentences near the top, the way search summaries quote a page: the
     // app's at-a-glance lines (exam share, class hours) and when it runs are in them, said once.
     `<p>${esc(subjectFactSentences(t, s, code, { difficulty, year: YEAR }).join(sentenceSep(code)))}</p>`,
+    // Where the facts come from and how fresh they are, right under them: what an answer quoting
+    // this page needs to cite it (the Handbook year and link, the day we checked, the page's last change).
+    `<p>${[
+      `<a href="${esc(handbookUrl(s.code, factsYear(s, WANTED, PUBLISHED).year))}">${esc(t('subject.source', { year: s.sourceYear }))}</a>`,
+      s.verifiedOn ? esc(t('subject.verified', { date: longDate(code, s.verifiedOn) })) : '',
+      esc(t('seo.updated', { date: longDate(code, lastModified(`subject/${s.code}`)) })),
+    ]
+      .filter(Boolean)
+      .join(' · ')}</p>`,
     // "Is it hard?" answered first, as the app's card does, for searches like "is COMP10001 hard".
     `<h2>${esc(t('seo.hardQ', { code: s.code }))}</h2><p>${esc(hard)}</p>`,
     // Our own summary, in this page's language, so crawlers that don't run scripts see it too.
@@ -367,7 +382,6 @@ function subjectPage(code: LocaleCode, s: Subject): Page {
   parts.push(reviews.join(''))
   const hbYear = factsYear(s, WANTED, PUBLISHED)
   if (hbYear.older) parts.push(`<p>${esc(t('dataYear.from', { year: hbYear.year }))} ${esc(t('dataYear.tip', { year: hbYear.year }))}</p>`)
-  parts.push(`<p>${esc(t('subject.source', { year: s.sourceYear }))}</p>`)
   parts.push(`<p><a href="${esc(handbookUrl(s.code, hbYear.year))}">${esc(t('seo.confirm'))}</a></p>`)
   parts.push(`<p><a href="${href(code, '')}">${esc(t('seo.made'))}</a></p>`)
 

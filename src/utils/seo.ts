@@ -157,7 +157,7 @@ export function subjectFactSentences(t: Translate, s: Subject, locale: LocaleCod
     hurdle ? `${hurdle}${end}` : '',
     runsLine(t, s, opts.year, listSep),
     rated ? t('seo.ratings', { d: sig.difficulty!, w: sig.workload!, g: sig.grading!, n: sig.reviews }) : '',
-    s.discussions?.length ? t('seo.reviewsHere') : '',
+    s.discussions?.length ? (s.signals?.reviews ? t('seo.reviewsHereN', { n: s.signals.reviews }) : t('seo.reviewsHere')) : '',
     s.prerequisites === 'none' ? t('seo.noPrereq') : s.prerequisites === 'unknown' ? '' : t('seo.needs', { needs: describeReq(t, s.prerequisites, 'B-SCI') }),
   ].filter(Boolean)
 }

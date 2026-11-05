@@ -27,6 +27,31 @@ The next year's Handbook comes out around mid-November, and the data is entered 
 - Triage new issues: label them, and close the ones with nothing to do.
 - Thank contributors, and add data-only contributors to the README.
 
+## Search and AI answers: rules for every change
+
+These keep Google, Bing and AI answer engines (ChatGPT, Gemini, Perplexity, Claude) trusting the site.
+`scripts/prerender.ts` does most of it; don't work around it.
+
+- **Dates only move when content moves.** The sitemap's `lastmod`, the page's `dateModified` and the
+  "Page updated" line all come from `lastModified()` (git dates of the page's own data files). Never set
+  them to the build day, and never bump a date without a real change to that page's content.
+- **Every new page type gets its own date source** in `lastModified()` (its data files), not the
+  site-wide fallback.
+- **Titles and descriptions** stay real, specific and different per page. `fitTitle` / `fitDescription`
+  trim long ones; write the important words first. No keyword lists, no near-duplicate pages that only
+  swap a word (doorway pages).
+- **No rating markup for other people's reviews.** `aggregateRating` only from ratings students left on
+  this site. Never Review / AggregateRating for summarised StudentVIP, Reddit or other reviews.
+- **Same content for bots and people.** Never hide text for crawlers or show them something else.
+- **Sources and dates near the top** of fact pages (Handbook link, the day checked), as subject pages do.
+- **robots.txt**: training-only crawlers are blocked in `TRAINING_CRAWLERS`; ClaudeBot, Google-Extended
+  and Bytespider stay allowed (owner's choice, 2026-10-14). Never block Googlebot, Bingbot, OAI-SearchBot,
+  ChatGPT-User, PerplexityBot or Claude-SearchBot.
+- **Translations**: Korean particles are written as `{x}이(가)`; `interpolate` picks the right one. A new
+  name (career, club) must not share its translated name with another page in the same language.
+- **Before a release**: run the SEO check (every page has one title, description, canonical, hreflang,
+  H1 and JSON-LD; sitemap matches the built pages; no duplicate titles per language).
+
 ## Handover
 
 - At least two maintainers at all times. Before you graduate, add a successor as a GitHub collaborator and walk them through this file.

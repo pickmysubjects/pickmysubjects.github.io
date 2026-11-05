@@ -981,6 +981,8 @@ export const ko: Messages = {
     majorsDesc: "멜버른대 각 전공·부전공·세부 전공에서 학년별로 들어야 할 것: 필수 과목, 선택 과목, 두 전공이 겹치는 과목.",
     hardQ: "{code}는 어렵나요?",
     verdict: { easier: "{code} 어렵나요? 쉬운 편입니다.", average: "{code} 어렵나요? 보통 수준입니다.", harder: "{code} 어렵나요? 어려운 편입니다." },
+    reviewsHereN: "학생 리뷰 {n}개를 요약한 내용이 이 페이지에 있습니다.",
+    updated: "페이지 업데이트: {date}",
     reviewsHere: "학생 후기 요약이 있습니다.",
     subjectsTitle: "멜버른대 과목 찾기: 후기, 난이도, 꿀강",
     subjectsDesc: "멜버른대 {n}개 과목을 코드나 이름으로 검색: 개설 학기, 선수 과목, 기말고사 비중. {r}개 과목은 후기 요약 포함. 꿀강·어려운 과목·시험 없는 과목 목록도.",

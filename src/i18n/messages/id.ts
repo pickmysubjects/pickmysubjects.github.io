@@ -981,6 +981,8 @@ export const id: Messages = {
     majorsDesc: "Apa yang dibutuhkan setiap jurusan, minor, dan spesialisasi UniMelb per tahun: mata kuliah inti, pilihan, dan yang sama di dua jurusan.",
     hardQ: "Apakah {code} sulit?",
     verdict: { easier: "Apakah {code} sulit? Cenderung mudah.", average: "Apakah {code} sulit? Rata-rata.", harder: "Apakah {code} sulit? Cenderung sulit." },
+    reviewsHereN: "Ringkasan {n} ulasan mahasiswa ada di halaman ini.",
+    updated: "Halaman diperbarui {date}",
     reviewsHere: "Ada ringkasan ulasan mahasiswa.",
     subjectsTitle: "Mata kuliah UniMelb: ulasan, kesulitan, matkul mudah",
     subjectsDesc: "Cari {n} mata kuliah UniMelb: semester, prasyarat, porsi ujian akhir. {r} punya ringkasan ulasan. Ada daftar matkul mudah, sulit, dan tanpa ujian.",
