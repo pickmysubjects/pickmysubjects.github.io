@@ -1733,6 +1733,8 @@ export const vi: Messages = {
     more: "Đọc hết",
     less: "Thu gọn",
     privacy: "Quyền riêng tư và điều khoản",
+    all: "Tất cả tin",
+    lede: "Lời của người làm PickMySubjects: thay đổi gì, sắp có gì, và lời cảm ơn.",
   },
   home: {
     notice: {

@@ -1733,6 +1733,8 @@ export const ms: Messages = {
     more: "Baca semua",
     less: "Tutup",
     privacy: "Privasi dan terma",
+    all: "Semua berita",
+    lede: "Nota daripada pembina PickMySubjects: apa yang berubah, apa yang akan datang, dan ucapan terima kasih.",
   },
   home: {
     notice: {

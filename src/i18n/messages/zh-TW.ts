@@ -1733,6 +1733,8 @@ export const zhTW: Messages = {
     more: "讀全文",
     less: "收起",
     privacy: "隱私和使用條款",
+    all: "所有消息",
+    lede: "PickMySubjects 作者寫給大家的話：改了什麼、接下來做什麼，還有感謝。",
   },
   home: {
     notice: {

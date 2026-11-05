@@ -1733,6 +1733,8 @@ export const ja: Messages = {
     more: "全文を読む",
     less: "閉じる",
     privacy: "プライバシーと利用規約",
+    all: "すべてのお知らせ",
+    lede: "PickMySubjects の作者から：変わったこと、これからのこと、そして感謝。",
   },
   home: {
     notice: {

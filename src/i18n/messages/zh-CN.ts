@@ -1733,6 +1733,8 @@ export const zhCN: Messages = {
     more: "读全文",
     less: "收起",
     privacy: "隐私和使用条款",
+    all: "所有消息",
+    lede: "PickMySubjects 作者写给大家的话：改了什么、接下来做什么，还有感谢。",
   },
   home: {
     notice: {

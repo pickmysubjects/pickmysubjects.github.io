@@ -15,6 +15,7 @@
 import './releaseGlobals'
 import { APP_VERSION, copyright, releaseDate } from '../src/release'
 import { localTitle, pickLocalized, withLocalTitle } from '../src/i18n/localized'
+import { NEWS } from '../src/content/news'
 import { aggregateRatingLd, BRAND, listPageDescription, listPageTitle, PRESET_TITLE_KEYS, runsLine, subjectFactSentences, subjectPageDescription, subjectPageTitle } from '../src/utils/seo'
 import { execFileSync } from 'node:child_process'
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs'
@@ -853,6 +854,24 @@ ${homeDemoHtml(code, t)}
     simple('contribute', 'contribute.title', 'contribute.lede'),
     simple('feedback', 'feedback.title', 'feedback.lede'),
     { path: 'privacy', title: `${t('privacy.title')} | PickMySubjects`, description: t('privacy.local'), body: `<h1>${esc(t('privacy.title'))}</h1><p>${esc(t('privacy.local'))}</p>` },
+    // News from the person who makes the site, every item in full, newest first.
+    {
+      path: 'news',
+      title: `${t('news.title')} | PickMySubjects`,
+      description: t('news.lede'),
+      body: [
+        `<h1>${esc(t('news.title'))}</h1><p>${esc(t('news.lede'))}</p>`,
+        ...NEWS.map((n) =>
+          [
+            `<article><h2>${esc(n.title[code])}</h2><p><time datetime="${n.date}">${n.date}</time></p>`,
+            ...n.body[code].map((p) => `<p>${esc(p)}</p>`),
+            n.closing ? `<p>${esc(n.closing[code])}</p>` : '',
+            n.ps ? `<p>${esc(n.ps[code])}${n.privacyLink ? ` <a href="${href(code, 'privacy')}">${esc(t('news.privacy'))}</a>` : ''}</p>` : '',
+            '</article>',
+          ].join(''),
+        ),
+      ].join('\n'),
+    },
     ...(yearChanges ? [changesPage(code, yearChanges)] : []),
   ]
 }

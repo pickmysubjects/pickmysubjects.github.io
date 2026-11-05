@@ -1736,6 +1736,8 @@ export const en = {
     more: "Read it all",
     less: "Show less",
     privacy: "Privacy and terms",
+    all: "All news",
+    lede: "Notes from the person who makes PickMySubjects: what's changed, what's coming, and thanks.",
   },
   home: {
     notice: {

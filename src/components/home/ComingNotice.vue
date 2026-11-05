@@ -60,6 +60,16 @@ function hide(): void {
 .notice-wrap {
   display: grid;
   gap: 8px;
+  /* A grid or flex item: without this, the strip's one line sets the page width on phones. */
+  min-width: 0;
+}
+
+.notice {
+  min-width: 0;
+}
+
+.notice-text {
+  flex: 1 1 auto;
 }
 
 .notice-more {

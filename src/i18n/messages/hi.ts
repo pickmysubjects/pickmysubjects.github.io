@@ -1733,6 +1733,8 @@ export const hi: Messages = {
     more: "पूरा पढ़ें",
     less: "कम दिखाएँ",
     privacy: "गोपनीयता और शर्तें",
+    all: "सारी खबरें",
+    lede: "PickMySubjects बनाने वाले की ओर से: क्या बदला, आगे क्या आ रहा है, और धन्यवाद।",
   },
   home: {
     notice: {
