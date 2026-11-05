@@ -981,7 +981,6 @@ export const ms: Messages = {
     majorsDesc: "Apa yang setiap major, minor dan pengkhususan UniMelb perlukan, tahun demi tahun: subjek teras, pilihan, dan subjek yang dikongsi dua major.",
     hardQ: "Adakah {code} sukar?",
     verdict: { easier: "Adakah {code} susah? Agak mudah.", average: "Adakah {code} susah? Sederhana.", harder: "Adakah {code} susah? Agak susah." },
-    reviewsHereN: "Ringkasan {n} ulasan pelajar ada di halaman ini.",
     updated: "Halaman dikemas kini {date}",
     reviewsHere: "Ada ringkasan ulasan pelajar.",
     subjectsTitle: "Subjek UniMelb: ulasan, kesukaran, subjek mudah",

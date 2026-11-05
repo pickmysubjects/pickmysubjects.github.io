@@ -981,7 +981,6 @@ export const ja: Messages = {
     majorsDesc: "メルボルン大学の各専攻・副専攻・専門分野で、学年ごとに何を履修するか：必修科目、選択科目、2つの専攻で重なる科目。",
     hardQ: "{code} は難しいですか？",
     verdict: { easier: "{code} は難しい？やさしめ。", average: "{code} は難しい？難しさは平均的。", harder: "{code} は難しい？難しめ。" },
-    reviewsHereN: "{n} 件の学生レビューのまとめがこのページにあります。",
     updated: "ページ更新日：{date}",
     reviewsHere: "学生レビューのまとめあり。",
     subjectsTitle: "メルボルン大学の科目：評判・難易度・楽単",

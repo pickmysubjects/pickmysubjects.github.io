@@ -981,7 +981,6 @@ export const vi: Messages = {
     majorsDesc: "Mỗi ngành chính, ngành phụ và chuyên ngành ở UniMelb cần học gì theo từng năm: môn bắt buộc, môn tự chọn, môn hai ngành trùng nhau.",
     hardQ: "{code} có khó không?",
     verdict: { easier: "{code} có khó không? Thuộc loại dễ.", average: "{code} có khó không? Ở mức trung bình.", harder: "{code} có khó không? Thuộc loại khó." },
-    reviewsHereN: "Trang này có tóm tắt {n} đánh giá của sinh viên.",
     updated: "Cập nhật trang: {date}",
     reviewsHere: "Có tóm tắt review của sinh viên.",
     subjectsTitle: "Môn học UniMelb: review, độ khó, môn dễ",

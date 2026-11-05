@@ -981,7 +981,6 @@ export const zhCN: Messages = {
     majorsDesc: "墨大每个主修、辅修和方向一二三年级要修什么：必修课、选修课，还能看两个主修有哪些课重合。",
     hardQ: "{code} 难吗？",
     verdict: { easier: "{code} 难吗？偏容易。", average: "{code} 难吗？难度中等。", harder: "{code} 难吗？偏难。" },
-    reviewsHereN: "页面上有 {n} 条同学评价的总结。",
     updated: "页面更新于 {date}",
     reviewsHere: "页面上有同学评价总结。",
     subjectsTitle: "墨大选课：课程评价、难度、水课推荐",
