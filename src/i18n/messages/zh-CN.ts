@@ -484,6 +484,7 @@ export const zhCN: Messages = {
     averagedHigh: '按你在相近课程（{codes}）的成绩，预计约 {mark} 分。',
     likedBefore: "和你评价不错的 {codes} 方向相近。",
     interestsNear: "和你感兴趣的 {topics} 方向相关。",
+    noMatch: "能算进你的学位，但和你填的兴趣、强项不太相关。",
     averagedLow: '按你在相近课程（{codes}）的成绩，预计只有 {mark} 分左右，可能会比较吃力。',
     recommendedFirst: "Handbook 建议先修 {codes}（不是硬性要求）。",
     predictedRange: '按你在相近课程（{codes}）的成绩，有一半把握在 {low}–{high} 分。',

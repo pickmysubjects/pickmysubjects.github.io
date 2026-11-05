@@ -657,6 +657,9 @@ export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions =
         rec.warnings.push(note(after === 'veryHeavy' ? 'makesVeryHeavy' : 'makesHeavy', {}, 'Adding it makes that semester heavier.'))
       }
     }
+    // Nothing about it matched what the student told us: say so, rather than show a suggestion
+    // with no reason (it's here because it counts towards the degree and fewer subjects fit better).
+    if (!rec.reasons.length && !rec.warnings.length) rec.reasons.push(note('noMatch', {}, 'It counts towards your degree, but doesn’t match your interests or strengths.'))
     recs.push(rec)
   }
 

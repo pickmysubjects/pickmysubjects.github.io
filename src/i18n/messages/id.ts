@@ -484,6 +484,7 @@ export const id: Messages = {
     averagedHigh: 'Dari nilaimu di mata kuliah serupa ({codes}), perkiraannya sekitar {mark}.',
     likedBefore: "Mirip dengan {codes}, yang kamu nilai bagus.",
     interestsNear: "Dekat dengan {topics}, yang kamu minati.",
+    noMatch: "Mata kuliah ini dihitung untuk gelarmu, tapi tidak cocok dengan minat atau kekuatanmu.",
     averagedLow: 'Dari nilaimu di mata kuliah serupa ({codes}), perkiraannya hanya sekitar {mark}, jadi ini mungkin berat.',
     recommendedFirst: "Handbook menyarankan {codes} terlebih dahulu (tidak wajib).",
     predictedRange: 'Dari nilaimu di mata kuliah serupa ({codes}), peluangnya 1 dari 2 untuk dapat {low}–{high}.',

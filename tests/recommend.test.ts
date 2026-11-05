@@ -151,7 +151,7 @@ describe('the five skill steps read differently', () => {
   it('strong, good at, neutral, weaker, a struggle', () => {
     expect(keys(5)).toEqual(['strengths'])
     expect(keys(4)).toEqual(['goodAt'])
-    expect(keys(3)).toEqual([])
+    expect(keys(3)).toEqual(['noMatch'])
     expect(keys(2)).toEqual(['weakSkills'])
     expect(keys(1)).toEqual(['struggleSkills'])
   })

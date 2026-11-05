@@ -484,6 +484,7 @@ export const ja: Messages = {
     averagedHigh: '似た科目（{codes}）の成績から、約 {mark} 点の見込みです。',
     likedBefore: "あなたが高く評価した {codes} に近い内容です。",
     interestsNear: "興味のある {topics} に近い内容です。",
+    noMatch: "学位の単位にはなりますが、興味や得意分野とはあまり合いません。",
     averagedLow: '似た科目（{codes}）の成績から {mark} 点前後の見込みで、苦戦するかもしれません。',
     recommendedFirst: "Handbook では先に {codes} の履修を推奨しています（必須ではありません）。",
     predictedRange: '似た科目（{codes}）の成績から、2回に1回は {low}〜{high} 点に入る見込みです。',

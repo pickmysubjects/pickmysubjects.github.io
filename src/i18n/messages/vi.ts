@@ -484,6 +484,7 @@ export const vi: Messages = {
     averagedHigh: 'Theo điểm các môn tương tự ({codes}), dự kiến khoảng {mark}.',
     likedBefore: "Gần với {codes}, môn bạn đánh giá tốt.",
     interestsNear: "Gần với {topics} mà bạn quan tâm.",
+    noMatch: "Môn này được tính vào bằng của bạn, nhưng không khớp với sở thích hay điểm mạnh của bạn.",
     averagedLow: 'Theo điểm các môn tương tự ({codes}), dự kiến chỉ khoảng {mark}, nên môn này có thể khó.',
     recommendedFirst: "Handbook khuyên học {codes} trước (không bắt buộc).",
     predictedRange: 'Theo điểm các môn tương tự ({codes}), khả năng 1/2 bạn được {low}–{high}.',

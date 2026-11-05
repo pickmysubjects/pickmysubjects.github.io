@@ -76,6 +76,13 @@ export function generatePlan(given: GenerateInput): GenerateResult {
   const entry = started ? { year: given.startYear, period: given.startPeriod } : nextEntry(course, { year: given.startYear, period: given.startPeriod })
   const moved = entry.year !== given.startYear || entry.period !== given.startPeriod
   const result = generateFrom({ ...given, startYear: entry.year, startPeriod: entry.period })
+  // Once more on the finished plan, as the plan page judges it: steps after the builder's own pass
+  // (a longer or shorter plan, trimming) can leave a semester heavy that a safe swap still fixes,
+  // and the page would then offer that swap on a plan just made for the student.
+  for (const { a, b, kind } of fixHeavyTerms(result.plan, given.data, given.profile)) {
+    if (kind === 'swap') result.notes.push(note('balanced', { a, b }, `Swapped ${a} and ${b} between semesters to spread the load.`))
+    else result.notes.push(note('lighter', { a, b }, `Took ${b} instead of ${a}, which would have made that semester heavy.`))
+  }
   if (moved) result.notes.unshift(note('entryMoved', { year: entry.year, period: entry.period }, `This degree takes new students only in some semesters, so the plan starts in ${entry.period} ${entry.year}.`))
   // More points than the degree's total: surplus electives were already trimmed (buildPlan), so
   // what's left is needed by a rule or as a prerequisite. Say why, so it doesn't look like a mistake.

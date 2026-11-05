@@ -59,7 +59,7 @@ const fitHeadline = computed(() => {
   if (w.key === 'needsFirst') return t.value('fit.out.needsFirst', { needs: trim(describeReq(t.value, props.subject.prerequisites, course.value)) })
   return t.value(`fit.out.${w.key}`, { codes: (w.codes ?? []).join(t.value('listSep')), level: w.level ?? '' })
 })
-const suitsItems = computed(() => (fit.value?.kind === 'fit' ? fit.value.reasons.map((n) => ({ text: trim(reasonText(t.value, n)), range: RANGE_KEYS.has(n.key) })) : []))
+const suitsItems = computed(() => (fit.value?.kind === 'fit' ? fit.value.reasons.filter((n) => n.key !== 'noMatch').map((n) => ({ text: trim(reasonText(t.value, n)), range: RANGE_KEYS.has(n.key) })) : []))
 const cautions = computed(() =>
   (fit.value && fit.value.kind !== 'missing' ? fit.value.cautions : []).map((c) =>
     c.key === 'closed' ? t.value('browse.closedForYou') : t.value('fit.notThisYear', { year: c.year }),
