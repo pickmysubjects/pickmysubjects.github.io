@@ -233,10 +233,15 @@ export async function sharePlanImage(input: PlanImageInput, fileName: string): P
   }
   renderPlanImage(planImageLayout(input, measure, fonts), canvas)
   const blob = await new Promise<Blob>((resolve, reject) => canvas.toBlob((b) => (b ? resolve(b) : reject(new Error('PNG failed'))), 'image/png'))
+  return downloadOrShare(blob, fileName, input.site)
+}
+
+/** Hands a PNG over: the share sheet when the device can share files, otherwise a download. */
+export async function downloadOrShare(blob: Blob, fileName: string, title: string): Promise<'shared' | 'downloaded' | 'cancelled'> {
   const file = new File([blob], fileName, { type: 'image/png' })
   if (navigator.canShare?.({ files: [file] })) {
     try {
-      await navigator.share({ files: [file], title: input.site })
+      await navigator.share({ files: [file], title })
       return 'shared'
     } catch (e) {
       if ((e as Error).name === 'AbortError') return 'cancelled'

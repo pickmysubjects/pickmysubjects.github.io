@@ -19,7 +19,8 @@ import { usePlan } from '@/composables/usePlan'
 import { useI18n } from '@/i18n'
 import { reasonText } from '@/i18n/format'
 import { localTitle } from '@/i18n/localized'
-import { sharePlanImage } from '@/utils/planImage'
+import { shareListImage } from '@/utils/listImage'
+import { finalExamShare } from '@/i18n/gist'
 import { trackEvent } from '@/utils/analytics'
 
 /**
@@ -76,21 +77,22 @@ async function saveListImage(): Promise<void> {
   try {
     const site = new URL(link(''), location.href)
     const courseTitle = data.value.courses.find((c) => c.code === course.value)?.title ?? ''
-    const result = await sharePlanImage(
-      {
-        site: 'PickMySubjects',
-        url: `${site.host}${site.pathname}`.replace(/\/$/, ''),
-        course: t.value(`browse.heading.${choice.value}`),
-        major: [courseTitle, String(year.value)].filter(Boolean).join(' · '),
-        terms: [
-          {
-            label: t.value('browse.imageTop', { n: Math.min(IMAGE_TOP, rows.value.length) }),
-            subjects: rows.value.slice(0, IMAGE_TOP).map((r, i) => ({ code: `${i + 1}. ${r.subject.code}`, title: localTitle(r.subject, locale.value) || r.subject.title })),
-          },
-        ],
-      },
-      `pickmysubjects-${choice.value}-${locale.value}.png`,
-    )
+    const result = await shareListImage({
+      site: 'PickMySubjects',
+      url: `${site.host}${site.pathname}`.replace(/\/$/, ''),
+      title: t.value(`browse.heading.${choice.value}`),
+      subtitle: [courseTitle, String(year.value)].filter(Boolean).join(' · '),
+      columns: [t.value('browse.imageCol.level'), t.value('browse.imageCol.exam'), t.value('browse.imageCol.hours')],
+      rows: rows.value.slice(0, IMAGE_TOP).map((r) => {
+        const exam = finalExamShare(r.subject)
+        const hours = r.subject.weeklyContactHours
+        return {
+          code: r.subject.code,
+          title: localTitle(r.subject, locale.value) || r.subject.title,
+          stats: [String(r.subject.level), exam === null ? '–' : exam === 0 ? t.value('browse.imageCol.none') : `${exam}%`, hours ? String(hours) : '–'],
+        }
+      }),
+    })
     if (result !== 'cancelled') trackEvent('list-image-save')
   } finally {
     imaging.value = false

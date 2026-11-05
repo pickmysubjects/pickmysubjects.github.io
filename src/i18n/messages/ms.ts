@@ -1258,6 +1258,7 @@ export const ms: Messages = {
     addLabel: "Tambah {code} ke pelan saya",
     rankLabel: "Kedudukan",
     saveImage: "Simpan 10 teratas sebagai imej",
+    imageCol: { level: "Tahap", exam: "Ujian", hours: "Jam/mgg", none: "tiada" },
     imageTop: "{n} teratas",
     heading: { easy: "Subjek mudah di UniMelb", hard: "Subjek paling sukar di UniMelb", noExam: "Subjek tanpa peperiksaan akhir", firstSemester: "Subjek semester pertama", breadth: "Subjek breadth", summerWinter: "Subjek musim panas dan sejuk" },
     rankList: {

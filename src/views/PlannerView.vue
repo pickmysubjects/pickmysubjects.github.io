@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { trackEvent } from '@/utils/analytics'
+import { listImageFileName } from '@/utils/listImage'
 import { viewYear } from '@/engine/dataYear'
 import InfoTip from '@/components/InfoTip.vue'
 import { link } from '@/composables/useView'
@@ -97,7 +98,7 @@ async function saveImage(): Promise<void> {
             }),
           })),
       },
-      `pickmysubjects-plan-${locale.value}.png`,
+      listImageFileName('PickMySubjects', t.value('menu.myPlan'), [plan.course.value?.title ?? plan.setup.value.course, majorTitle.value].filter(Boolean).join(' ')),
     )
     if (result !== 'cancelled') trackEvent('plan-image-save')
   } finally {

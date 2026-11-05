@@ -1258,6 +1258,7 @@ export const zhTW: Messages = {
     addLabel: "把 {code} 加入我的計畫",
     rankLabel: "排行",
     saveImage: "前 10 名存成圖片",
+    imageCol: { level: "級別", exam: "期末", hours: "週學時", none: "無" },
     imageTop: "前 {n} 名",
     heading: { easy: "墨大涼課榜", hard: "墨大難課榜", noExam: "沒有期末考的課", firstSemester: "新生第一學期的課", breadth: "Breadth 課", summerWinter: "暑期和冬季課" },
     rankList: {
