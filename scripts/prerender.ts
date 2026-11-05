@@ -183,13 +183,36 @@ function structured(page: Page, code: LocaleCode, url: string): object {
       ],
     }
   }
-  const webPage = { '@type': 'WebPage', name: page.title, description: page.description, url, inLanguage: code, isPartOf: site, isAccessibleForFree: true }
+  // dateModified: the same day as the sitemap's lastmod, from when the page's own data last changed.
+  const webPage = { '@type': 'WebPage', name: page.title, description: page.description, url, inLanguage: code, isPartOf: site, isAccessibleForFree: true, dateModified: lastModified(page.path) }
   if (!page.ld?.length) return { '@context': 'https://schema.org', ...webPage }
   return { '@context': 'https://schema.org', '@graph': [webPage, ...page.ld] }
 }
 
+// Search results cut a title at about 600px and a description at about two lines. Measured in
+// half-width units (a CJK character counts two). Google shows the site's name above the result, so a
+// long title drops its " | PickMySubjects" first; a long description keeps its whole sentences that fit.
+const TITLE_MAX = 70
+const DESCRIPTION_MAX = 320
+const width = (s: string) => [...s].reduce((n, c) => n + (/[\u1100-\u115f\u2e80-\ua4cf\uac00-\ud7a3\uf900-\ufaff\ufe30-\ufe4f\uff00-\uff60\uffe0-\uffe6]/u.test(c) ? 2 : 1), 0)
+function fitTitle(title: string): string {
+  const suffix = ` | ${BRAND}`
+  return width(title) > TITLE_MAX && title.endsWith(suffix) ? title.slice(0, -suffix.length) : title
+}
+function fitDescription(text: string): string {
+  if (width(text) <= DESCRIPTION_MAX) return text
+  const sentences = text.match(/[^.!?。！？।]+[.!?。！？।]+\s*/gu) ?? []
+  let out = ''
+  for (const s of sentences) {
+    if (width(out + s) > DESCRIPTION_MAX) break
+    out += s
+  }
+  return out.trim() || text
+}
+
 function render(page: Page, code: LocaleCode): string {
   const url = absolute(code, page.path)
+  page = { ...page, title: fitTitle(page.title), description: fitDescription(page.description) }
   const alternates = LOCALE_CODES.flatMap((c) => hreflangsFor(c).map((h) => `<link rel="alternate" hreflang="${h}" href="${absolute(c, page.path)}" />`))
   const head = [
     `<title>${esc(page.title)}</title>`,
@@ -1095,11 +1118,22 @@ try {
   // No git (a plain copy of the files): every page falls back to today.
 }
 const fallbackDate = [...changed.values()].sort().at(-1) ?? new Date().toISOString().slice(0, 10)
+const subjectDate = (code: string): string | undefined =>
+  [`data/real/subjects/${code}.yaml`, `data/real/about/${code}.yaml`, `data/real/discussions/${code}.yaml`]
+    .map((f) => changed.get(f))
+    .filter((d): d is string => !!d)
+    .sort()
+    .at(-1)
+// A subject page dates from its own files; a two-subject comparison from the later of the two.
 function lastModified(path: string): string {
-  const code = /^subject\/([a-z]{4}\d{5})/i.exec(path)?.[1]?.toUpperCase()
-  if (!code) return fallbackDate
-  const dates = [`data/real/subjects/${code}.yaml`, `data/real/about/${code}.yaml`, `data/real/discussions/${code}.yaml`].map((f) => changed.get(f)).filter((d): d is string => !!d)
-  return dates.sort().at(-1) ?? fallbackDate
+  const one = /^subject\/([a-z]{4}\d{5})/i.exec(path)?.[1]?.toUpperCase()
+  if (one) return subjectDate(one) ?? fallbackDate
+  const pair = /^compare\/([a-z]{4}\d{5})-vs-([a-z]{4}\d{5})/i.exec(path)
+  if (pair) {
+    const dates = [subjectDate(pair[1]!.toUpperCase()), subjectDate(pair[2]!.toUpperCase())].filter((d): d is string => !!d).sort()
+    return dates.at(-1) ?? fallbackDate
+  }
+  return fallbackDate
 }
 
 // Two subjects a student picks between (they can't both count): each one's key facts, how hard it
