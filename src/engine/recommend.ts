@@ -870,6 +870,11 @@ function score(s: Subject, ctx: ScoreCtx): Recommendation {
     if (best > 0) {
       parts.interest = best
       if (likedHit && best === fromLiked && direct === 0) reasons.push(note('likedBefore', { codes: likedHit }, `Close to ${likedHit}, which you rated well.`))
+      // A related topic scored it: say which interest, or the student sees a score with no reason.
+      else if (direct === 0 && best === related && best > viaPath) {
+        const mine = interests.filter((i) => topics.some((t) => relatedTopics(t, i)))
+        reasons.push(note('interestsNear', { topics: mine.join(', ') }, `Close to ${mine.join(', ')}, which you're interested in.`))
+      }
     }
     // The area code is a coarse guess, so a mismatch there counts for less than a tagged one.
     else if (topics.length) parts.interest = inferred ? INTEREST_INFERRED_MISS : 0

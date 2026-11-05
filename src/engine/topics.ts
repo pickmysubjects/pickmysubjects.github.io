@@ -47,9 +47,40 @@ const AREA_TOPICS: Record<string, Topic[]> = {
 
 const GROUP_OF = new Map(TOPIC_GROUPS.flatMap((g) => g.topics.map((t) => [t as string, g.id])))
 
-/** Topics in the same group count as related (machine learning and AI, finance and accounting). */
-export function relatedTopics(a: string, b: string): boolean {
+/**
+ * Topics close enough that an interest in one makes the other a likely fit (machine learning and
+ * AI, finance and accounting). Tighter than TOPIC_GROUPS, which only sorts the interest chips:
+ * a psychology interest says nothing about physics, nor finance about law.
+ */
+const RELATED: readonly (readonly Topic[])[] = [
+  ['ai', 'machine-learning', 'data-science'],
+  ['programming', 'algorithms', 'software-engineering', 'theory'],
+  ['databases', 'data-science'],
+  ['security', 'systems'],
+  ['mathematics', 'calculus', 'linear-algebra', 'pure-maths'],
+  ['probability', 'statistics', 'data-science'],
+  ['optimisation', 'modelling'],
+  ['finance', 'accounting', 'actuarial', 'economics'],
+  ['marketing', 'management', 'entrepreneurship', 'human-resources', 'business', 'supply-chain'],
+  ['law', 'politics'],
+  ['biology', 'ecology', 'environment'],
+  ['earth-science', 'geography', 'environment'],
+  ['psychology', 'health'],
+  ['history', 'politics', 'society', 'philosophy', 'ethics', 'indigenous-studies'],
+  ['languages', 'literature'],
+  ['design', 'visual-communication', 'art'],
+  ['performance', 'music'],
+  ['film-and-screen', 'media'],
+  ['architecture', 'urban-planning', 'construction', 'property'],
+]
+
+/** Topics in the same broad group (finance and marketing): a neighbouring field for a career's "somewhat related". */
+export function sameTopicGroup(a: string, b: string): boolean {
   return a !== b && GROUP_OF.get(a) !== undefined && GROUP_OF.get(a) === GROUP_OF.get(b)
+}
+
+export function relatedTopics(a: string, b: string): boolean {
+  return a !== b && RELATED.some((g) => g.includes(a as Topic) && g.includes(b as Topic))
 }
 
 /**

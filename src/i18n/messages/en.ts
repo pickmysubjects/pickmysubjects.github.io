@@ -488,6 +488,7 @@ export const en = {
     interests: 'Covers {topics}, which you’re interested in.',
     averagedHigh: 'Your marks in similar subjects ({codes}) point to about {mark}.',
     likedBefore: "Close to {codes}, which you rated well.",
+    interestsNear: "Close to {topics}, which you’re interested in.",
     averagedLow: 'Your marks in similar subjects ({codes}) point to about {mark}, so this may be tough.',
     recommendedFirst: "The Handbook recommends {codes} first (not required).",
     predictedRange: '1 in 2 chance of {low}–{high}, from your marks in similar subjects ({codes}).',

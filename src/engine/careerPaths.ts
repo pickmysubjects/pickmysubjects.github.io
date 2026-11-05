@@ -21,7 +21,7 @@ import { referencedSubjects } from './expr'
 import { majorOverview } from './roles'
 import type { Dataset, Skill, Subject, Topic } from './schema'
 import { skillsOf } from './skills'
-import { homeTopics, relatedTopics, topicsOf } from './topics'
+import { homeTopics, sameTopicGroup, topicsOf } from './topics'
 
 /** A career a student can pick: a job the Handbook names, or an official occupation linked by field. */
 export interface CareerTarget {
@@ -446,7 +446,7 @@ export function tierSubject(s: Subject, ctx: TierContext, data?: Dataset): Tiere
     weight += touches.length
   }
   const wanted = [...ctx.needs.fields.keys()]
-  const near = own.filter((x) => !matched.includes(x) && wanted.some((w) => relatedTopics(x, w)))
+  const near = own.filter((x) => !matched.includes(x) && wanted.some((w) => sameTopicGroup(x, w)))
   const skills = skillsOf(s, data).filter((k) => ctx.needs.skills.has(k))
   if (!fields.length && !touches.length && near.length) {
     reasons.push({ kind: 'near', topics: near })

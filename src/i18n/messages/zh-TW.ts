@@ -483,6 +483,7 @@ export const zhTW: Messages = {
     interests: '涉及 {topics}，是你感興趣的方向。',
     averagedHigh: '依你在相近課程（{codes}）的成績，預計約 {mark} 分。',
     likedBefore: "和你評價不錯的 {codes} 方向相近。",
+    interestsNear: "和你感興趣的 {topics} 方向相關。",
     averagedLow: '依你在相近課程（{codes}）的成績，預計只有 {mark} 分左右，可能會比較吃力。',
     recommendedFirst: "Handbook 建議先修 {codes}（不是硬性要求）。",
     predictedRange: '依你在相近課程（{codes}）的成績，有一半把握在 {low}–{high} 分。',

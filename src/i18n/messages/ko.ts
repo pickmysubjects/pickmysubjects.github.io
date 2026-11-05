@@ -483,6 +483,7 @@ export const ko: Messages = {
     interests: '관심 있는 {topics}을(를) 다룹니다.',
     averagedHigh: '비슷한 과목({codes}) 성적으로 보면 약 {mark}점이 예상돼요.',
     likedBefore: "좋게 평가한 {codes}와 비슷한 분야예요.",
+    interestsNear: "관심 있는 분야({topics})와 가까워요.",
     averagedLow: '비슷한 과목({codes}) 성적으로 보면 {mark}점 정도라 어려울 수 있어요.',
     recommendedFirst: "Handbook은 {codes}를 먼저 듣길 권장해요(필수 아님).",
     predictedRange: '비슷한 과목({codes}) 성적으로 보면 두 번에 한 번은 {low}–{high}점이에요.',
