@@ -1,7 +1,7 @@
 import type { Component } from 'vue'
 
 /** The pages of the About group, each with its own illustrations. */
-export type AboutPage = 'about' | 'feedback' | 'contribute' | 'changes' | 'privacy'
+export type AboutPage = 'about' | 'feedback' | 'contribute' | 'changes' | 'privacy' | 'news'
 
 /**
  * Each About page's hero scene and its small illustration for the foot of "On this page"
@@ -13,4 +13,6 @@ export const ABOUT_ART: Record<AboutPage, { hero: () => Promise<Component>; mini
   contribute: { hero: () => import('./ArtContribute.vue'), mini: () => import('./MiniContribute.vue') },
   changes: { hero: () => import('./ArtChanges.vue'), mini: () => import('./MiniChanges.vue') },
   privacy: { hero: () => import('./ArtPrivacy.vue'), mini: () => import('./MiniPrivacy.vue') },
+  // News shares the update log's scenes: both are about what's new on the site.
+  news: { hero: () => import('./ArtChanges.vue'), mini: () => import('./MiniChanges.vue') },
 }

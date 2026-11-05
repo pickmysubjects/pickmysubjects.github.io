@@ -49,6 +49,7 @@ const MENU_SYN: Record<string, string> = {
   'shortlist/': 'shortlist',
   'record/#sec-backup': 'backup',
   'record/#share-title': 'gradeShare',
+  'news/': 'news',
   'about/': 'about',
   'feedback/': 'feedback',
   'contribute/': 'contribute',

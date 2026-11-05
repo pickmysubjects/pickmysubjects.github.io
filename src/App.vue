@@ -29,6 +29,7 @@ const ContributeView = lazy('contribute')
 const FeedbackView = lazy('feedback')
 const PrivacyView = lazy('privacy')
 const AboutView = lazy('about')
+const NewsView = lazy('news')
 const GuideView = lazy('guide')
 const BrowseView = lazy('subjects')
 const MajorsView = lazy('majors')
@@ -52,6 +53,7 @@ const TITLES: Partial<Record<string, string>> = {
   feedback: 'feedback.title',
   privacy: 'privacy.title',
   about: 'about.title',
+  news: 'news.title',
   majors: 'majors.title',
   shortlist: 'shortlist.title',
   careers: 'careerPath.title',
@@ -128,6 +130,7 @@ watchEffect(() => {
     <ContributeView v-else-if="view === 'contribute'" />
     <FeedbackView v-else-if="view === 'feedback'" />
     <AboutView v-else-if="view === 'about'" />
+    <NewsView v-else-if="view === 'news'" />
     <GuideView v-else-if="view === 'guide'" />
     <BrowseView v-else-if="view === 'subjects'" />
     <MajorsView v-else-if="view === 'majors'" :id="param" />
@@ -147,6 +150,7 @@ watchEffect(() => {
         <a :href="link('careers')">{{ t('browse.switchCareers') }}</a>
         <a :href="link('guide')">{{ t('guide.nav') }}</a>
         <a :href="link('tools/')">{{ t('tools.nav') }}</a>
+        <a :href="link('news')">{{ t('news.title') }}</a>
         <a :href="link('about')">{{ t('app.about') }}</a>
         <a :href="link('contribute')">{{ t('nav.contribute') }}</a>
         <a :href="link('feedback')">{{ t('nav.feedback') }}</a>

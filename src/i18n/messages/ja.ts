@@ -28,6 +28,7 @@ export const ja: Messages = {
     hint: "「WAM」「census」や科目コードで検索",
     keys: "↑↓ で選択 · Enter で開く · Esc で閉じる",
     syn: {
+      news: "お知らせ|ニュース|更新",
       allSubjects: "科目一覧|科目検索|シラバス",
       easy: "楽単|楽な科目|単位が取りやすい|GPA 上げ",
       hard: "鬼単|難しい科目|落としやすい",
@@ -120,7 +121,7 @@ export const ja: Messages = {
   },
   nav: { about: "サイト情報", home: 'ホーム', browse: '科目', more: 'その他', plan: 'プラン', record: 'マイ', contribute: 'データを追加', feedback: 'フィードバック', main: 'メインメニュー' },
   /** The header menus and the phone sheet: each feature's name and one short line. */
-  menu: {"aboutSite":"このサイトについて","feedback":"フィードバック・要望","contribute":"データの追加・訂正","changes":"年度の変更と更新履歴","privacy":"プライバシー","openMenu":"{name}メニュー","all":"すべての機能","close":"閉じる","allSubjects":"すべての科目","careers":"キャリア","myPlan":"マイプラン","compareAB":"プランを比較","rules":"学位ルールのチェック","heavy":"重い学期のお知らせ","calendar":"カレンダーに追加","sharePlan":"プランを共有","allTools":"すべてのツール","guideHome":"概要","backup":"バックアップ / 端末の移行","gradeShare":"成績をシェア","d":{"newStudents":"結果発表・合格・学位の1年目","clubs":"UMSU の全クラブ、合うものを先に","skillTree":"履修科目から言えるツール、専門スキル、英語の履歴書用の文","revision":"試験までの毎日の勉強スケジュール","aboutSite":"作った人とデータの出どころ","feedback":"不具合の報告や機能の提案","contribute":"足りない科目や間違った情報","changes":"新しいHandbookの変更とサイトの更新","privacy":"データはあなたのブラウザにだけ保存","guideGroup":"単位・履修登録・試験・ビザ","aboutGroup":"概要・フィードバック・データ訂正・プライバシー","systems":"my.unimelb、Canvas、メールの使い道","life":"カウンセリング、診療所、安全、クラブ","help":"相談先、学習サポート、就職","allSubjects":"全科目を検索・絞り込み","easy":"WAM を上げやすい楽単","hard":"みんなが一番難しいと言う科目","noExam":"期末試験なしの科目","summerWinter":"夏休み・冬休みに履修","breadth":"専攻外の選択科目","firstSem":"最初の学期におすすめ","majors":"各専攻に必要な科目","careers":"仕事につながる科目","myPlan":"学位を学期ごとに","compareAB":"プランを項目ごとに並べて","rules":"ルールをすべて満たす？","heavy":"詰め込みすぎの学期を発見","calendar":"Census・試験・成績発表日","sharePlan":"リンク共有・画像保存・印刷","final":"成績ごとに期末で必要な点","wam":"WAM、目標、もしもの計算","compare":"保存した科目を並べて","routes":"専攻ごとの履修ルート","allTools":"計算ツールと科目リスト","guideHome":"初めての人はここから","basics":"ポイント、専攻、ルール、成績、WAM","enrolling":"プランから実際の履修登録へ","semester":"special consideration、試験、成績","international":"ビザと履修量など","keyDates":"Census・試験・成績発表","record":"学位、成績、目標","shortlist":"保存した科目","backup":"データを別のブラウザへ","gradeShare":"成績区分を匿名でシェア"},"miss":{"noDates": "あなたの学期の日程はまだ発表されていません", "noHeavy": "このプランに重すぎる学期はありません", "plan": "先にプランを作りましょう", "grades": "先にマイ記録に成績を入れましょう", "shortlist": "先に科目をいくつか保存しましょう", "compareOne": "あと1科目保存すると比較できます"}},
+  menu: {"aboutSite": "このサイトについて", "feedback": "フィードバック・要望", "contribute": "データの追加・訂正", "changes": "年度の変更と更新履歴", "privacy": "プライバシー", "openMenu": "{name}メニュー", "all": "すべての機能", "close": "閉じる", "allSubjects": "すべての科目", "careers": "キャリア", "myPlan": "マイプラン", "compareAB": "プランを比較", "rules": "学位ルールのチェック", "heavy": "重い学期のお知らせ", "calendar": "カレンダーに追加", "sharePlan": "プランを共有", "allTools": "すべてのツール", "guideHome": "概要", "backup": "バックアップ / 端末の移行", "gradeShare": "成績をシェア", "d": {"newStudents": "結果発表・合格・学位の1年目", "clubs": "UMSU の全クラブ、合うものを先に", "skillTree": "履修科目から言えるツール、専門スキル、英語の履歴書用の文", "revision": "試験までの毎日の勉強スケジュール", "aboutSite": "作った人とデータの出どころ", "feedback": "不具合の報告や機能の提案", "contribute": "足りない科目や間違った情報", "changes": "新しいHandbookの変更とサイトの更新", "privacy": "データはあなたのブラウザにだけ保存", "guideGroup": "単位・履修登録・試験・ビザ", "aboutGroup": "概要・フィードバック・データ訂正・プライバシー", "systems": "my.unimelb、Canvas、メールの使い道", "life": "カウンセリング、診療所、安全、クラブ", "help": "相談先、学習サポート、就職", "allSubjects": "全科目を検索・絞り込み", "easy": "WAM を上げやすい楽単", "hard": "みんなが一番難しいと言う科目", "noExam": "期末試験なしの科目", "summerWinter": "夏休み・冬休みに履修", "breadth": "専攻外の選択科目", "firstSem": "最初の学期におすすめ", "majors": "各専攻に必要な科目", "careers": "仕事につながる科目", "myPlan": "学位を学期ごとに", "compareAB": "プランを項目ごとに並べて", "rules": "ルールをすべて満たす？", "heavy": "詰め込みすぎの学期を発見", "calendar": "Census・試験・成績発表日", "sharePlan": "リンク共有・画像保存・印刷", "final": "成績ごとに期末で必要な点", "wam": "WAM、目標、もしもの計算", "compare": "保存した科目を並べて", "routes": "専攻ごとの履修ルート", "allTools": "計算ツールと科目リスト", "guideHome": "初めての人はここから", "basics": "ポイント、専攻、ルール、成績、WAM", "enrolling": "プランから実際の履修登録へ", "semester": "special consideration、試験、成績", "international": "ビザと履修量など", "keyDates": "Census・試験・成績発表", "record": "学位、成績、目標", "shortlist": "保存した科目", "backup": "データを別のブラウザへ", "gradeShare": "成績区分を匿名でシェア", "news": "変わったこと、これからのこと"}, "miss": {"noDates": "あなたの学期の日程はまだ発表されていません", "noHeavy": "このプランに重すぎる学期はありません", "plan": "先にプランを作りましょう", "grades": "先にマイ記録に成績を入れましょう", "shortlist": "先に科目をいくつか保存しましょう", "compareOne": "あと1科目保存すると比較できます"}, "news": "作者からのお知らせ"},
   period: { summer: '夏学期', 'semester-1': '第1セメスター', winter: '冬学期', 'semester-2': '第2セメスター' },
   periodShort: { summer: '夏', 'semester-1': 'S1', winter: '冬', 'semester-2': 'S2' },
   termFull: '{year}年 {period}',
@@ -2149,6 +2150,8 @@ export const ja: Messages = {
     more: "全文を読む",
     less: "閉じる",
     privacy: "プライバシーと利用規約",
+    all: "すべてのお知らせ",
+    lede: "PickMySubjects の作者から：変わったこと、これからのこと、そして感謝。",
   },
   home: {
     install: {

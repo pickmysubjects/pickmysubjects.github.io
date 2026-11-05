@@ -16,6 +16,7 @@ export const VIEW_LOADERS: Record<View, () => Promise<Component>> = {
   feedback: () => import('./FeedbackView.vue').then((m) => m.default),
   privacy: () => import('./PrivacyView.vue').then((m) => m.default),
   about: () => import('./AboutView.vue').then((m) => m.default),
+  news: () => import('./NewsView.vue').then((m) => m.default),
   guide: () => import('./GuideView.vue').then((m) => m.default),
   subjects: () => import('./BrowseView.vue').then((m) => m.default),
   majors: () => import('./MajorsView.vue').then((m) => m.default),

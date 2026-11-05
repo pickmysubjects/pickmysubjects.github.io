@@ -1,7 +1,45 @@
 import {
-  BookOpen, Briefcase, Calculator, CalendarDays, CalendarPlus, ClipboardList, Columns2, Compass, DatabaseZap, FileX, Flame, Gauge, GraduationCap,
-  Heart, HeartPulse, History, House, Info, Laptop, Layers, Library, LifeBuoy, ListChecks, ListFilter, MessageSquare, NotebookPen, Plane, Route,
-  Save, Scale, Share2, Shapes, ShieldCheck, Snowflake, Sparkles, Sprout, TriangleAlert, User, Users, Wrench,
+  BookOpen,
+  Briefcase,
+  Calculator,
+  CalendarDays,
+  CalendarPlus,
+  ClipboardList,
+  Columns2,
+  Compass,
+  DatabaseZap,
+  FileX,
+  Flame,
+  Gauge,
+  GraduationCap,
+  Heart,
+  HeartPulse,
+  History,
+  House,
+  Info,
+  Laptop,
+  Layers,
+  Library,
+  LifeBuoy,
+  ListChecks,
+  ListFilter,
+  MessageSquare,
+  Newspaper,
+  NotebookPen,
+  Plane,
+  Route,
+  Save,
+  Scale,
+  Shapes,
+  Share2,
+  ShieldCheck,
+  Snowflake,
+  Sparkles,
+  Sprout,
+  TriangleAlert,
+  User,
+  Users,
+  Wrench,
 } from 'lucide-vue-next'
 import type { View } from '@/composables/useView'
 
@@ -132,6 +170,7 @@ export const MENUS: MenuArea[] = [
     icon: Info,
     to: 'about/',
     items: [
+      { key: 'menu.news', desc: 'menu.d.news', to: 'news/', icon: Newspaper },
       { key: 'menu.aboutSite', desc: 'menu.d.aboutSite', to: 'about/', icon: Info },
       { key: 'menu.feedback', desc: 'menu.d.feedback', to: 'feedback/', icon: MessageSquare },
       { key: 'menu.contribute', desc: 'menu.d.contribute', to: 'contribute/', icon: DatabaseZap },
@@ -148,7 +187,7 @@ export function areaOf(view: View): Area | null {
   if (view === 'tools') return 'tools'
   if (view === 'guide' || view === 'clubs') return 'guide'
   if (view === 'record' || view === 'shortlist') return 'me'
-  if (view === 'about' || view === 'feedback' || view === 'contribute' || view === 'changes' || view === 'privacy') return 'about'
+  if (view === 'about' || view === 'feedback' || view === 'contribute' || view === 'changes' || view === 'privacy' || view === 'news') return 'about'
   return null
 }
 
