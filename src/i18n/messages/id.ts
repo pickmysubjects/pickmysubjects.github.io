@@ -914,6 +914,10 @@ export const id: Messages = {
     translations: 'Terjemahan selain bahasa Inggris dibantu mesin. Menemukan kesalahan? Pilih “Terjemahan salah” di atas.',
   },
   rating: {
+    quickTitle: "Pernah ambil {code}? Seberapa susah?",
+    quickNote: "Sekali ketuk langsung terkirim, anonim.",
+    quickThanks: "Terima kasih! Penilaianmu sudah masuk.",
+    quickMore: "Ceritakan lebih banyak",
     rate: 'Beri nilai',
     rated: 'Sudah dinilai — terima kasih',
     title: 'Nilai {code}',

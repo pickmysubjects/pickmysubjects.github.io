@@ -914,6 +914,10 @@ export const vi: Messages = {
     translations: 'Các bản dịch ngoài tiếng Anh có sự hỗ trợ của máy dịch. Thấy lỗi? Hãy chọn “Bản dịch bị sai” ở trên.',
   },
   rating: {
+    quickTitle: "Đã học {code}? Khó cỡ nào?",
+    quickNote: "Chạm một lần là gửi, ẩn danh.",
+    quickThanks: "Cảm ơn! Đã nhận đánh giá của bạn.",
+    quickMore: "Kể thêm một chút",
     rate: 'Đánh giá',
     rated: 'Đã đánh giá — cảm ơn',
     title: 'Đánh giá {code}',

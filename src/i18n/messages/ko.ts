@@ -914,6 +914,10 @@ export const ko: Messages = {
     translations: '영어 외 번역은 기계 번역의 도움을 받았습니다. 오류를 발견하면 위에서 "번역 오류"를 선택해 알려 주세요.',
   },
   rating: {
+    quickTitle: "{code} 들었나요? 난이도는?",
+    quickNote: "한 번 누르면 익명으로 보내져요.",
+    quickThanks: "고마워요! 평가를 받았어요.",
+    quickMore: "조금 더 알려 주기",
     rate: '평가하기',
     rated: '평가 완료, 감사합니다',
     title: '{code} 평가하기',

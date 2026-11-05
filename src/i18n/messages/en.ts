@@ -919,6 +919,10 @@ export const en = {
     translations: 'Translations other than English are machine-assisted. Spot a mistake? Choose “A translation is wrong” above.',
   },
   rating: {
+    quickTitle: "Took {code}? How hard was it?",
+    quickNote: "One tap sends it, anonymously.",
+    quickThanks: "Thanks! Your rating is in.",
+    quickMore: "Tell us a bit more",
     rate: 'Rate it',
     rated: 'Rated — thanks',
     title: 'Rate {code}',

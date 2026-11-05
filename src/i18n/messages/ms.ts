@@ -914,6 +914,10 @@ export const ms: Messages = {
     translations: 'Terjemahan selain bahasa Inggeris dibantu oleh mesin. Jumpa kesilapan? Pilih “Terjemahan salah” di atas.',
   },
   rating: {
+    quickTitle: "Pernah ambil {code}? Sesusah mana?",
+    quickNote: "Sekali tekan terus dihantar, tanpa nama.",
+    quickThanks: "Terima kasih! Penilaian anda diterima.",
+    quickMore: "Ceritakan lagi",
     rate: 'Beri penilaian',
     rated: 'Sudah dinilai — terima kasih',
     title: 'Nilai {code}',

@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, shallowRef } from 'vue'
 import { Star } from 'lucide-vue-next'
 import type { Subject } from '@/engine'
 import RatingForm from '@/components/rating/RatingForm.vue'
+import QuickRate from '@/components/rating/QuickRate.vue'
 import RatingTagChips from '@/components/rating/RatingTagChips.vue'
 import DiscussionSummary from '@/components/subject/DiscussionSummary.vue'
 import SubjectTips from '@/components/subject/SubjectTips.vue'
@@ -19,6 +20,14 @@ const props = defineProps<{ subject: Subject; taken: boolean; thanks: boolean; d
 const formOpen = defineModel<boolean>('formOpen', { required: true })
 const emit = defineEmits<{ rated: [sent: boolean] }>()
 const { rated } = useRated()
+// The one-tap rating stays on screen after its tap (for its thanks and "tell us more"), so whether
+// to show it is decided once, when the page opens.
+const quickLive = shallowRef(!rated.value.has(props.subject.code))
+const quickDifficulty = shallowRef<number | undefined>()
+function more(n: number): void {
+  quickDifficulty.value = n
+  formOpen.value = true
+}
 const { t } = useI18n()
 
 interface Meter {
@@ -82,11 +91,12 @@ const discussions = computed(() => (props.detailReady ? (props.subject.discussio
     <StudentFactsRow v-if="detailReady" :subject="subject" />
 
     <p v-if="thanks" class="good" role="status">{{ t('rating.sent') }}</p>
-    <p v-else-if="rated.has(subject.code)" class="muted">{{ t('rating.rated') }}</p>
+    <QuickRate v-else-if="quickLive && !formOpen" class="rate-quick" :code="subject.code" @more="more" />
+    <p v-else-if="rated.has(subject.code) && !formOpen" class="muted">{{ t('rating.rated') }}</p>
     <button v-else-if="!formOpen" class="button button-quiet rate-ask" :class="{ 'rate-ask-strong': taken }" type="button" @click="formOpen = true">
       <Star :size="16" aria-hidden="true" /> {{ t('subject.rateAsk') }}
     </button>
-    <RatingForm v-if="formOpen" :code="subject.code" @done="emit('rated', $event)" />
+    <RatingForm v-if="formOpen" :code="subject.code" :difficulty-given="quickDifficulty" @done="emit('rated', $event)" />
 
     <DiscussionSummary v-if="discussions.length" class="reviews" :discussions="discussions" />
     <SubjectTips v-if="detailReady && subject.comments" :code="subject.code" :comments="subject.comments" />

@@ -914,6 +914,10 @@ export const zhTW: Messages = {
     translations: '英文以外的翻譯由機器輔助完成。發現錯誤？在上方選擇「翻譯有誤」告訴我們。',
   },
   rating: {
+    quickTitle: "修過 {code}？難度打幾分？",
+    quickNote: "點一下就送出，匿名。",
+    quickThanks: "謝謝！已經收到你的評分。",
+    quickMore: "再多說幾句",
     rate: '評分',
     rated: '已評分，謝謝',
     title: '為 {code} 評分',

@@ -914,6 +914,10 @@ export const zhCN: Messages = {
     translations: '英文以外的翻译由机器辅助完成。发现错误？在上面选择“翻译有误”告诉我们。',
   },
   rating: {
+    quickTitle: "修过 {code}？难度打几分？",
+    quickNote: "点一下就提交，匿名。",
+    quickThanks: "谢谢！已经收到你的评分。",
+    quickMore: "再多说几句",
     rate: '打分',
     rated: '已打分，谢谢',
     title: '给 {code} 打分',

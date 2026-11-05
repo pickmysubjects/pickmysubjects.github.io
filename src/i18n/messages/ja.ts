@@ -914,6 +914,10 @@ export const ja: Messages = {
     translations: '英語以外の翻訳は機械翻訳を補助に使っています。誤りを見つけたら、上で「翻訳の誤り」を選んで教えてください。',
   },
   rating: {
+    quickTitle: "{code} を履修した？難しさは？",
+    quickNote: "タップするだけで匿名で送信されます。",
+    quickThanks: "ありがとう！評価を受け取りました。",
+    quickMore: "もう少し教える",
     rate: '評価する',
     rated: '評価済み・ありがとう',
     title: '{code} を評価',

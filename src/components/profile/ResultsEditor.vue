@@ -12,6 +12,7 @@ import { useI18n } from '@/i18n'
 import { localTitle } from '@/i18n/localized'
 import { link } from '@/composables/useView'
 import RatingForm from '@/components/rating/RatingForm.vue'
+import QuickRate from '@/components/rating/QuickRate.vue'
 import { useRated } from '@/composables/useRated'
 
 const results = defineModel<Profile['results']>({ required: true })
@@ -24,10 +25,20 @@ const props = defineProps<{ subjects: Record<string, Subject>; options: { code: 
 const ime = useImeGuard()
 const listId = useId()
 const { t, locale } = useI18n()
-const { rated, markRated } = useRated()
+const { rated, markRated, shouldPrompt, markPrompted } = useRated()
 // Rating is offered once, on each row (no second banner after adding a subject).
 const rating = shallowRef<string | null>(null)
 const thanks = shallowRef<string | null>(null)
+// Just added a subject not rated yet: ask how hard it was, in one tap, right then (once per subject).
+const quick = shallowRef<string | null>(null)
+const quickDifficulty = shallowRef<number | undefined>()
+const quickDifficultyCode = shallowRef<string | null>(null)
+function more(code: string, n: number): void {
+  quick.value = null
+  quickDifficultyCode.value = code
+  quickDifficulty.value = n
+  rating.value = code
+}
 
 function onRated(code: string, sent: boolean): void {
   rating.value = null
@@ -58,6 +69,10 @@ function add(): void {
   const m = mark.value === '' || props.subjects[c]?.passFail ? undefined : Number(mark.value)
   const [y, p] = addTerm.value.split('|')
   results.value = [...results.value, y && p ? { code: c, mark: m, year: Number(y), period: p as Period } : { code: c, mark: m }]
+  if (props.subjects[c] && shouldPrompt(c)) {
+    quick.value = c
+    markPrompted(c)
+  }
   code.value = ''
   mark.value = ''
   error.value = ''
@@ -250,7 +265,8 @@ function remove(i: number): void {
       <a :href="link('guide/semester/#fail')">{{ t('guide.failTitle') }}</a>
     </p>
     <p v-if="thanks" class="thanks" role="status">{{ t('rating.sent') }}</p>
-    <RatingForm v-if="rating" :key="rating" class="rating-form" :code="rating" @done="onRated(rating, $event)" />
+    <QuickRate v-if="quick && !rating" :key="quick" class="rating-form" :code="quick" @more="more(quick, $event)" />
+    <RatingForm v-if="rating" :key="rating" class="rating-form" :code="rating" :difficulty-given="rating === quickDifficultyCode ? quickDifficulty : undefined" @done="onRated(rating, $event)" />
   </section>
 </template>
 

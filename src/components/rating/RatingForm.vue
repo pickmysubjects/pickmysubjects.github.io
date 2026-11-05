@@ -11,7 +11,8 @@ import { hasQuestion, isFormReady, submitGoogleForm } from '@/utils/googleForm'
 import { useGradeShare } from '@/composables/useGradeShare'
 import { useProfile } from '@/composables/useProfile'
 
-const props = defineProps<{ code: string }>()
+// difficultyGiven: already sent with the one-tap rating (QuickRate), so not asked or sent again.
+const props = defineProps<{ code: string; difficultyGiven?: number }>()
 const emit = defineEmits<{ done: [sent: boolean] }>()
 const { t, locale } = useI18n()
 
@@ -99,7 +100,7 @@ const scales = [
   { key: 'difficulty', model: difficulty, low: 'rating.diffLow', high: 'rating.diffHigh' },
   { key: 'workload', model: workload, low: 'rating.loadLow', high: 'rating.loadHigh' },
   { key: 'generosity', model: generosity, low: 'rating.genLow', high: 'rating.genHigh' },
-] as const
+].filter((x) => !(x.key === 'difficulty' && props.difficultyGiven))
 // Optional extras, shown only once the Google Form has the matching question.
 const extraScales = [
   { key: 'overall', model: overall, low: 'rating.teachLow', high: 'rating.teachHigh' },
@@ -130,7 +131,7 @@ async function send(): Promise<void> {
       year: year.value === '' ? '' : String(year.value),
       semester: semester.value === '' ? '' : formSemester[semester.value],
       // Unanswered stays blank: "null" would be an invalid scale answer and the form would drop the whole response.
-      difficulty: asText(difficulty.value),
+      difficulty: props.difficultyGiven ? '' : asText(difficulty.value),
       workload: asText(workload.value),
       generosity: asText(generosity.value),
       examDifficulty: asText(examDifficulty.value),
@@ -156,7 +157,7 @@ async function send(): Promise<void> {
     if (wamBand.value) markShared([props.code])
     // Kept in this browser too: how they found it shapes their own suggestions.
     const rec = recommend.value === 'Yes' || recommend.value === 'Maybe' || recommend.value === 'No' ? recommend.value : undefined
-    setOwnRating(props.code, { difficulty: difficulty.value ?? undefined, interest: interest.value ?? undefined, recommend: rec })
+    setOwnRating(props.code, { difficulty: props.difficultyGiven ?? difficulty.value ?? undefined, interest: interest.value ?? undefined, recommend: rec })
     emit('done', true)
   } catch {
     status.value = 'failed'
