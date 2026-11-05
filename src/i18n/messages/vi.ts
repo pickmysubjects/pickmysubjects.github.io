@@ -1728,18 +1728,18 @@ export const vi: Messages = {
     removal: 'Đánh giá là ẩn danh nên chúng tôi không biết cái nào là của bạn. Nếu muốn xóa, hãy gửi góp ý mô tả nội dung (môn, học kỳ, thời gian gần đúng) và chúng tôi sẽ xóa các mục phù hợp.',
     contact: 'Có câu hỏi? Hãy dùng trang Góp ý.',
   },
+  news: {
+    title: "Tin từ người làm trang",
+    more: "Đọc hết",
+    less: "Thu gọn",
+    privacy: "Quyền riêng tư và điều khoản",
+  },
   home: {
     notice: {
       title: "Cảm ơn góp ý của các bạn: bản 1.0.0 ra trước cuối tháng 11",
       sub: "Hiện là 0.9.2",
       close: "Đóng",
-      more: "Đọc thư",
-      less: "Thu gọn",
-      p1: "Cảm ơn rất nhiều bạn đã để lại bình luận và góp ý. Các tính năng mới các bạn đề xuất đều đang được đưa vào 1.0.0, bản chính thức sẽ ra trước cuối tháng 11.",
-      p2: "Trang hiện ở bản 0.9.2, bản cuối cùng của 0.9. Các bản 0.9 đã sửa nhiều lỗi các bạn báo: thông tin môn học, xếp kế hoạch, đánh giá độ khó và cách gợi ý môn. Vì góp ý quá nhiều nên các thay đổi tiếp theo sẽ ra cùng bản 1.0.0.",
-      p3: "Mình không ngờ có nhiều bạn gửi góp ý quý như vậy, cảm ơn các bạn đã ủng hộ. Mình làm trang này để sinh viên, kể cả khi thiếu thông tin, vẫn có được thông tin đầy đủ và hữu ích, không bị lừa và không mất thời gian, tiền bạc vô ích.",
-      p4: "P.S. Trang hoàn toàn miễn phí và mã nguồn công khai. Kế hoạch và điểm của bạn chỉ lưu trong trình duyệt của bạn; trang chỉ nhận góp ý và đánh giá bạn tự gửi, cùng số lượt truy cập ẩn danh.",
-      privacy: "Quyền riêng tư và điều khoản",
+      read: "Đọc tin",
     },
     release: {
       label: "{v} · Cập nhật {date}",

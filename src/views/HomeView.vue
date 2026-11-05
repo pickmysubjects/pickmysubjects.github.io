@@ -3,6 +3,7 @@ import { link } from '@/composables/useView'
 import { computed } from 'vue'
 import { ArrowRight, Check, CircleCheck } from 'lucide-vue-next'
 import ReleasePill from '@/components/home/ReleasePill.vue'
+import NewsCard from '@/components/home/NewsCard.vue'
 import ComingNotice from '@/components/home/ComingNotice.vue'
 import CanDoList from '@/components/home/CanDoList.vue'
 import SubjectSearch from '@/components/SubjectSearch.vue'
@@ -114,6 +115,9 @@ const next = computed(() => {
     <ul class="proof" :aria-label="t('home.eyebrow')">
       <li v-for="p in proof" :key="p">{{ p }}</li>
     </ul>
+
+    <!-- The latest news from the person who makes the site (the top strip links here). -->
+    <NewsCard />
 
     <!-- The three steps first (the path), then a real subject card beside the easy-to-miss features. -->
     <div class="bento">

@@ -1728,18 +1728,18 @@ export const ms: Messages = {
     removal: 'Penilaian adalah tanpa nama, jadi kami tidak tahu yang mana milik anda. Jika anda mahu sesuatu dibuang, hantar maklum balas yang menerangkannya (subjek, semester, lebih kurang bila) dan kami akan membuang entri yang sepadan.',
     contact: 'Ada soalan? Gunakan halaman Maklum balas.',
   },
+  news: {
+    title: "Berita daripada pembina laman",
+    more: "Baca semua",
+    less: "Tutup",
+    privacy: "Privasi dan terma",
+  },
   home: {
     notice: {
       title: "Terima kasih atas maklum balas anda: 1.0.0 keluar sebelum hujung November",
       sub: "Kini 0.9.2",
       close: "Tutup",
-      more: "Baca nota",
-      less: "Tutup nota",
-      p1: "Terima kasih kepada semua yang meninggalkan komen dan cadangan. Ciri baharu yang anda minta semuanya dimasukkan ke dalam 1.0.0, yang akan keluar sebelum hujung November.",
-      p2: "Laman kini di versi 0.9.2, versi 0.9 yang terakhir. Versi 0.9 telah membetulkan banyak masalah yang dilaporkan: maklumat subjek, perancangan, tahap kesukaran subjek dan cadangan. Komen terlalu banyak, jadi perubahan seterusnya akan keluar bersama 1.0.0.",
-      p3: "Saya tidak sangka begitu ramai yang menghantar cadangan berharga. Terima kasih atas sokongan anda. Saya membina laman ini supaya pelajar boleh mendapat maklumat yang lengkap dan berguna walaupun maklumat tidak seimbang, tanpa tertipu atau rugi masa dan wang.",
-      p4: "P.S. Laman ini percuma sepenuhnya dan kodnya terbuka. Rancangan dan markah anda hanya disimpan dalam pelayar anda sendiri; laman hanya menerima maklum balas dan penilaian yang anda hantar, serta kiraan lawatan tanpa nama.",
-      privacy: "Privasi dan terma",
+      read: "Baca berita",
     },
     release: {
       label: "{v} · Dikemas kini {date}",

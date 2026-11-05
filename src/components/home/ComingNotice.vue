@@ -7,7 +7,8 @@ import { en } from '@/i18n/messages/en'
 import { IS_BETA } from '@/release'
 
 /**
- * A glass strip at the top of the home page (and, slim, on top of every other page) for what's coming next (home.notice.*). Closing it
+ * A glass strip at the top of the home page (and, slim, on top of every other page) for what's coming next (home.notice.*),
+ * linking to the latest news on the home page (#news). Closing it
  * remembers the English text it hid, so a new notice comes back on its own.
  */
 defineProps<{ slim?: boolean }>()
@@ -17,8 +18,6 @@ const KEY = 'sc:notice-hidden'
 // Quotes and backslashes dropped so public/boot.js can match it in a CSS selector.
 const stamp = en.home.notice.title.replace(/["\\\n]/g, '')
 const hidden = shallowRef(false)
-// On the home page the strip opens into the full note, in place.
-const open = shallowRef(false)
 onMounted(() => {
   try {
     hidden.value = localStorage.getItem(KEY) === stamp
@@ -26,6 +25,10 @@ onMounted(() => {
     // Storage blocked: just show it.
   }
 })
+// On the home page the news is further down: scroll to it (the app handles links, not the browser).
+function toNews(): void {
+  document.getElementById('news')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+}
 function hide(): void {
   hidden.value = true
   try {
@@ -44,18 +47,11 @@ function hide(): void {
         <strong>{{ t('home.notice.title') }}</strong>
         <span class="notice-sub">{{ t('home.notice.sub') }}</span>
       </span>
-      <button v-if="!slim" class="notice-more" type="button" :aria-expanded="open" aria-controls="notice-note" @click="open = !open">
-        {{ open ? t('home.notice.less') : t('home.notice.more') }}
-      </button>
+      <a v-if="slim" class="notice-more" :href="link('') + '#news'">{{ t('home.notice.read') }}</a>
+      <button v-else class="notice-more" type="button" @click="toNews">{{ t('home.notice.read') }}</button>
       <button class="notice-close" type="button" :aria-label="t('home.notice.close')" @click="hide">
         <X :size="16" aria-hidden="true" />
       </button>
-    </div>
-    <div v-if="!slim && open" id="notice-note" class="notice-note">
-      <p>{{ t('home.notice.p1') }}</p>
-      <p>{{ t('home.notice.p2') }}</p>
-      <p>{{ t('home.notice.p3') }}</p>
-      <p>{{ t('home.notice.p4') }} <a :href="link('privacy')">{{ t('home.notice.privacy') }}</a></p>
     </div>
   </div>
 </template>
@@ -73,9 +69,10 @@ function hide(): void {
   color: var(--accent);
   font: inherit;
   font-weight: 600;
+  white-space: nowrap;
+  text-decoration: none;
   background: none;
   border: 0;
-  border-radius: 999px;
   cursor: pointer;
 }
 
@@ -87,31 +84,6 @@ function hide(): void {
   margin-left: 0;
 }
 
-/* The full note: the same glass as the strip, plain paragraphs. */
-.notice-note {
-  padding: 14px 16px;
-  color: var(--ink);
-  font-size: var(--fs-small);
-  line-height: 1.6;
-  background: var(--glass-shine), var(--glass-fill);
-  border: 1px solid var(--glass-edge);
-  border-radius: var(--radius-sm);
-  box-shadow: var(--glass-shadow);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-}
-
-.notice-note p {
-  margin: 0;
-}
-
-.notice-note p + p {
-  margin-top: 8px;
-}
-
-.notice-note a {
-  color: var(--accent);
-}
 
 /* One line on other pages: the sub-line is cut first. */
 .slim .notice {
