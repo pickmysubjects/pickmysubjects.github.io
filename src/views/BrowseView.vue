@@ -20,7 +20,6 @@ import { useI18n } from '@/i18n'
 import { reasonText } from '@/i18n/format'
 import { localTitle } from '@/i18n/localized'
 import { shareListImage } from '@/utils/listImage'
-import { finalExamShare } from '@/i18n/gist'
 import { trackEvent } from '@/utils/analytics'
 
 /**
@@ -69,7 +68,7 @@ function reasons(r: FoundRow): string[] {
 
 // The easy or hard list's top ten as a picture to share (made in the browser, never uploaded), with
 // the site's address at the bottom, so a screenshot passed around still says where it came from.
-const IMAGE_TOP = 10
+const IMAGE_TOP = 15
 const imaging = shallowRef(false)
 async function saveListImage(): Promise<void> {
   if (imaging.value || !filters.value.rank) return
@@ -82,14 +81,24 @@ async function saveListImage(): Promise<void> {
       url: `${site.host}${site.pathname}`.replace(/\/$/, ''),
       title: t.value(`browse.heading.${choice.value}`),
       subtitle: [courseTitle, String(year.value)].filter(Boolean).join(' · '),
-      columns: [t.value('browse.imageCol.level'), t.value('browse.imageCol.exam'), t.value('browse.imageCol.hours')],
+      lede: t.value(`rank.lede.${filters.value.rank}`),
+      note: t.value('seo.confirm'),
+      columns: [t.value('subject.factRuns'), t.value('browse.imageCol.level'), t.value('browse.imageCol.exam'), t.value('browse.imageCol.hours'), t.value('subject.factPrereq')],
       rows: rows.value.slice(0, IMAGE_TOP).map((r) => {
-        const exam = finalExamShare(r.subject)
+        const local = localTitle(r.subject, locale.value)
         const hours = r.subject.weeklyContactHours
         return {
           code: r.subject.code,
-          title: localTitle(r.subject, locale.value) || r.subject.title,
-          stats: [String(r.subject.level), exam === null ? '–' : exam === 0 ? t.value('browse.imageCol.none') : `${exam}%`, hours ? String(hours) : '–'],
+          title: local || r.subject.title,
+          // The official (English) name when the title shown is a translation, then why it's listed.
+          sub: [local && local !== r.subject.title ? r.subject.title : '', ...reasons(r).slice(0, 2)].filter(Boolean).join(' · '),
+          stats: [
+            r.periods.length ? r.periods.map((p) => t.value(`periodShort.${p}`)).join(' · ') : '–',
+            String(r.subject.level),
+            r.exam === null ? '–' : r.exam === 0 ? t.value('browse.imageCol.none') : `${r.exam}%`,
+            hours ? String(hours) : '–',
+            r.prereqNone ? t.value('browse.imageCol.none') : t.value('browse.imageCol.yes'),
+          ],
         }
       }),
     })

@@ -1257,8 +1257,8 @@ export const id: Messages = {
     add: "Tambah",
     addLabel: "Tambahkan {code} ke rencana saya",
     rankLabel: "Peringkat",
-    saveImage: "Simpan 10 teratas sebagai gambar",
-    imageCol: { level: "Level", exam: "Ujian", hours: "Jam/mgg", none: "tidak" },
+    saveImage: "Simpan 15 teratas sebagai gambar",
+    imageCol: { level: "Level", exam: "Ujian", hours: "Jam/mgg", none: "tidak", yes: "ada" },
     imageTop: "{n} teratas",
     heading: { easy: "Matkul mudah di UniMelb", hard: "Matkul paling sulit di UniMelb", noExam: "Matkul tanpa ujian akhir", firstSemester: "Matkul semester pertama", breadth: "Matkul breadth", summerWinter: "Matkul musim panas dan dingin" },
     rankList: {

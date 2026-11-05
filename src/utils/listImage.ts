@@ -1,8 +1,9 @@
 /**
- * A ranked list (the easiest or hardest subjects) as a picture to share, laid out like a league
- * table: the site's mark and name, a big title, then one row per subject with its place, a
- * coloured tag for its area, code and name, and three stat columns. Deep plum with the site's
- * pink and violet; the address at the bottom so a passed-around screenshot says where it's from.
+ * A ranked list (the easiest or hardest subjects) as an A4 picture to share or print, laid out
+ * like a league table: the site's mark and name, the title, how the list is ranked, then one row
+ * per subject: its place, a coloured tag for its area, code and name, five fact columns, and a
+ * second line with its English name and why it's there. Deep plum with the site's pink and
+ * violet; the address at the bottom so a passed-around screenshot says where it's from.
  * Made on a <canvas> in the browser; nothing is uploaded.
  */
 import { downloadOrShare } from './planImage'
@@ -10,8 +11,10 @@ import { downloadOrShare } from './planImage'
 export interface ListImageRow {
   code: string
   title: string
-  /** The three stat cells, already formatted ("1", "40%", "3"). */
-  stats: [string, string, string]
+  /** The second line: the English name (when the title is a translation) and why it's listed. */
+  sub: string
+  /** One cell per column, already formatted ("S1 · S2", "1", "40%"). */
+  stats: string[]
 }
 
 export interface ListImageInput {
@@ -19,13 +22,18 @@ export interface ListImageInput {
   url: string
   title: string
   subtitle: string
-  /** The three stat columns' headings. */
-  columns: [string, string, string]
+  /** How the list is ranked, one sentence under the title. */
+  lede: string
+  /** The fact columns' headings, one per stat cell. */
+  columns: string[]
   rows: ListImageRow[]
+  /** The last line: check with the official Handbook. */
+  note: string
 }
 
-export const LIST_IMAGE_WIDTH = 1080
-export const LIST_IMAGE_HEIGHT = 1350 // 4:5, what 小红书 and Instagram show whole
+// A4 portrait (1 : √2), so it prints whole as well as showing on a phone.
+export const LIST_IMAGE_WIDTH = 1240
+export const LIST_IMAGE_HEIGHT = 1754
 
 const C = {
   top: '#2b0b2e',
@@ -125,84 +133,112 @@ export function drawListImage(canvas: HTMLCanvasElement, input: ListImageInput, 
     ctx.fillRect(0, 0, W, H)
   }
 
-  const PAD = 64
+  const PAD = 72
   ctx.textBaseline = 'alphabetic'
 
-  // Header: the mark and the site's name, then the title large and the degree and year in pink.
-  drawMark(ctx, PAD, 56, 64)
-  ctx.font = font(750, 34, fonts.ui)
+  // Header: the mark and the site's name, the title, the degree and year in pink, how it's ranked.
+  drawMark(ctx, PAD, 60, 56)
+  ctx.font = font(750, 28, fonts.ui)
   ctx.fillStyle = C.ink
-  ctx.fillText(input.site, PAD + 84, 100)
-  // The title as large as fits on one line (92px, down to 56px for a long English one).
-  let size = 92
+  ctx.fillText(input.site, PAD + 72, 98)
+  let size = 64
   do ctx.font = font(900, size, fonts.ui)
-  while (ctx.measureText(input.title).width > W - PAD * 2 && (size -= 4) >= 56)
-  ctx.fillText(fit(ctx, input.title, W - PAD * 2), PAD, 236)
-  ctx.font = font(700, 38, fonts.ui)
+  while (ctx.measureText(input.title).width > W - PAD * 2 && (size -= 4) >= 40)
+  ctx.fillText(fit(ctx, input.title, W - PAD * 2), PAD, 196)
+  ctx.font = font(700, 28, fonts.ui)
   ctx.fillStyle = C.pink
-  ctx.fillText(fit(ctx, input.subtitle, W - PAD * 2), PAD, 296)
+  ctx.fillText(fit(ctx, input.subtitle, W - PAD * 2), PAD, 244)
+  ctx.font = font(500, 21, fonts.ui)
+  ctx.fillStyle = C.soft
+  ctx.fillText(fit(ctx, input.lede, W - PAD * 2), PAD, 282)
 
-  // The table: column headings, then a row per subject.
-  const statX = [W - PAD - 250, W - PAD - 140, W - PAD - 30] // right edges of the three stat cells
-  const top = 352
-  ctx.font = font(700, 24, fonts.ui)
+  // Columns: the stat cells on the right, each centred on its x; widths from the widest cell.
+  const statFont = font(700, 20, fonts.ui)
+  const headFont = font(700, 16, fonts.ui)
+  const widths = input.columns.map((c, k) => {
+    ctx.font = headFont
+    let w = ctx.measureText(c).width
+    ctx.font = statFont
+    for (const r of input.rows) w = Math.max(w, ctx.measureText(r.stats[k] ?? '').width)
+    return w + 22
+  })
+  const right = W - PAD
+  const centres: number[] = []
+  let x = right
+  for (let k = widths.length - 1; k >= 0; k--) {
+    centres[k] = x - widths[k]! / 2
+    x -= widths[k]!
+  }
+  const statsLeft = x
+  const top = 336
+  ctx.font = headFont
   ctx.fillStyle = C.faint
-  ctx.textAlign = 'right'
-  input.columns.forEach((c, i) => ctx.fillText(c, statX[i]!, top))
+  ctx.textAlign = 'center'
+  input.columns.forEach((c, k) => ctx.fillText(c, centres[k]!, top))
   ctx.textAlign = 'left'
 
-  const rowH = 74
-  const gap = 8
-  const tableTop = top + 22
+  const footH = 120
+  const tableTop = top + 18
+  const gap = 6
+  const rowH = Math.min(84, Math.floor((H - footH - tableTop - gap * input.rows.length) / Math.max(1, input.rows.length)))
   input.rows.forEach((r, i) => {
     const y = tableTop + i * (rowH + gap)
     ctx.beginPath()
-    ctx.roundRect(PAD - 16, y, W - PAD * 2 + 32, rowH, 18)
+    ctx.roundRect(PAD - 14, y, W - PAD * 2 + 28, rowH, 14)
     ctx.fillStyle = i < 3 ? C.podium : i % 2 ? C.rowB : C.rowA
     ctx.fill()
-    const mid = y + rowH / 2 + 12
+    const line1 = y + rowH * 0.44
+    const line2 = y + rowH * 0.8
     // Place.
-    ctx.font = font(900, 36, fonts.ui)
+    ctx.font = font(900, 26, fonts.ui)
     ctx.fillStyle = i < 3 ? C.pink : C.ink
     ctx.textAlign = 'right'
-    ctx.fillText(String(i + 1), PAD + 44, mid)
+    ctx.fillText(String(i + 1), PAD + 34, y + rowH / 2 + 9)
     ctx.textAlign = 'left'
     // The area's tag, like a club crest.
-    const tagX = PAD + 64
+    const tagX = PAD + 48
     ctx.beginPath()
-    ctx.roundRect(tagX, y + (rowH - 40) / 2, 40, 40, 12)
+    ctx.roundRect(tagX, y + (rowH - 36) / 2, 44, 36, 10)
     ctx.fillStyle = areaColour(r.code)
     ctx.fill()
-    ctx.font = font(800, 15, fonts.code)
+    ctx.font = font(800, 13, fonts.code)
     ctx.fillStyle = '#fff'
     ctx.textAlign = 'center'
-    ctx.fillText(r.code.slice(0, 4), tagX + 20, y + rowH / 2 + 5)
+    ctx.fillText(r.code.slice(0, 4), tagX + 22, y + rowH / 2 + 5)
     ctx.textAlign = 'left'
-    // Code, then the name in what's left before the stats.
-    const textX = tagX + 58
-    ctx.font = font(800, 30, fonts.code)
+    // Code and name, then the second line.
+    const textX = tagX + 60
+    const textMax = statsLeft - 16 - textX
+    ctx.font = font(800, 22, fonts.code)
     ctx.fillStyle = C.ink
-    ctx.fillText(r.code, textX, mid)
+    ctx.fillText(r.code, textX, line1)
     const codeW = ctx.measureText(r.code).width
-    ctx.font = font(600, 28, fonts.ui)
-    ctx.fillStyle = C.soft
-    ctx.fillText(fit(ctx, r.title, statX[0]! - 90 - (textX + codeW + 18)), textX + codeW + 18, mid)
-    // Stats.
-    ctx.font = font(800, 32, fonts.ui)
+    ctx.font = font(650, 22, fonts.ui)
+    ctx.fillText(fit(ctx, r.title, textMax - codeW - 12), textX + codeW + 12, line1)
+    ctx.font = font(500, 16, fonts.ui)
+    ctx.fillStyle = C.faint
+    ctx.fillText(fit(ctx, r.sub, textMax), textX, line2)
+    // Facts.
+    ctx.font = statFont
     ctx.fillStyle = C.ink
-    ctx.textAlign = 'right'
-    r.stats.forEach((v, k) => ctx.fillText(v, statX[k]!, mid))
+    ctx.textAlign = 'center'
+    r.stats.forEach((v, k) => ctx.fillText(v, centres[k]!, y + rowH / 2 + 7))
     ctx.textAlign = 'left'
   })
 
-  // Footer: the address, in pink, by the mark.
-  const fy = H - 64
+  // Footer: the mark and address, and the reminder to check the Handbook.
+  const fy = H - footH + 24
   ctx.fillStyle = 'rgba(255,255,255,0.14)'
-  ctx.fillRect(PAD, fy - 58, W - PAD * 2, 2)
-  drawMark(ctx, PAD, fy - 38, 44)
-  ctx.font = font(700, 30, fonts.code)
+  ctx.fillRect(PAD, fy, W - PAD * 2, 2)
+  drawMark(ctx, PAD, fy + 26, 40)
+  ctx.font = font(700, 24, fonts.code)
   ctx.fillStyle = C.pink
-  ctx.fillText(input.url, PAD + 60, fy - 4)
+  ctx.fillText(input.url, PAD + 54, fy + 54)
+  ctx.font = font(500, 18, fonts.ui)
+  ctx.fillStyle = C.faint
+  ctx.textAlign = 'right'
+  ctx.fillText(fit(ctx, input.note, W - PAD * 2 - 520), W - PAD, fy + 52)
+  ctx.textAlign = 'left'
 }
 
 /** Draws the list in the page's own typefaces and hands it over (share sheet, else a download). */
@@ -212,11 +248,11 @@ export async function shareListImage(input: ListImageInput): Promise<'shared' | 
     ui: style.getPropertyValue('--font-ui').trim() || 'system-ui, sans-serif',
     code: style.getPropertyValue('--font-code').trim() || 'ui-monospace, monospace',
   }
-  const sample = [input.title, input.subtitle, ...input.rows.map((r) => r.title)].join(' ')
+  const sample = [input.title, input.subtitle, input.lede, ...input.rows.map((r) => `${r.title} ${r.sub}`)].join(' ')
   await Promise.all([
-    document.fonts.load(font(900, 92, fonts.ui), sample),
-    document.fonts.load(font(600, 28, fonts.ui), sample),
-    document.fonts.load(font(800, 30, fonts.code), 'ABCD10001'),
+    document.fonts.load(font(900, 64, fonts.ui), sample),
+    document.fonts.load(font(650, 22, fonts.ui), sample),
+    document.fonts.load(font(800, 22, fonts.code), 'ABCD10001'),
   ]).catch(() => undefined)
   const canvas = document.createElement('canvas')
   drawListImage(canvas, input, fonts)
