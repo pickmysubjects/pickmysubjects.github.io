@@ -11,6 +11,7 @@ import { termFullLabel } from '@/i18n/format'
 import type { Period } from '@/engine'
 import { localTitle } from '@/i18n/localized'
 import { summariseAssessment } from '@/utils/assessment'
+import { NEWS } from '@/content/news'
 import { KEY_DATES, melbourneToday, type KeyDate } from '@/utils/keyDates'
 import { examWindow, myTerm, upcomingDates, type StripItem } from '@/utils/whatsNext'
 
@@ -35,6 +36,9 @@ onMounted(() => {
 const items = computed(() => (today.value ? upcomingDates(KEY_DATES, today.value) : []))
 const mine = computed(() => (today.value ? myTerm(KEY_DATES, today.value, plan.terms.value, profile.value.results, (code) => code in data.value.subjects) : null))
 const exam = computed(() => (today.value ? examWindow(KEY_DATES, today.value) : null))
+
+// The latest note from the person who makes the site: one row under the dates, linking to it.
+const news = NEWS[0]
 
 const fmt = computed(() => new Intl.DateTimeFormat(locale.value, { day: 'numeric', month: 'short', timeZone: 'UTC' }))
 const day = (d: string) => fmt.value.format(new Date(`${d}T00:00:00Z`))
@@ -85,6 +89,11 @@ const examSubjects = computed(() => {
         <a class="exam-link" :href="link(`tools/final/?subject=${s.code}`)">{{ t('calc.open') }}<ArrowRight :size="14" aria-hidden="true" /></a>
       </li>
     </ul>
+    <a v-if="news" id="news" class="next-news" :href="link('news')">
+      <span class="next-what">{{ t('news.title') }}</span>
+      <span class="news-title">{{ news.title[locale] }}</span>
+      <span class="news-read">{{ t('news.more') }}<ArrowRight :size="14" aria-hidden="true" /></span>
+    </a>
   </section>
   <section v-else-if="items.length || mineLine" class="next glass" aria-labelledby="next-title">
     <h2 id="next-title" class="next-head">
@@ -100,10 +109,47 @@ const examSubjects = computed(() => {
       </li>
     </ul>
     <a class="next-all" :href="link('guide/key-dates/')">{{ t('next.all') }}<ArrowRight :size="14" aria-hidden="true" /></a>
+    <a v-if="news" id="news" class="next-news" :href="link('news')">
+      <span class="next-what">{{ t('news.title') }}</span>
+      <span class="news-title">{{ news.title[locale] }}</span>
+      <span class="news-read">{{ t('news.more') }}<ArrowRight :size="14" aria-hidden="true" /></span>
+    </a>
   </section>
 </template>
 
 <style scoped>
+/* The news row: full width under the dates, a hairline above; the whole row is the link. */
+.next-news {
+  display: flex;
+  flex: 1 1 100%;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+  color: var(--ink);
+  font-size: var(--fs-small);
+  text-decoration: none;
+}
+
+.news-title {
+  flex: 1 1 200px;
+  min-width: 0;
+  color: var(--ink-soft);
+}
+
+.news-read {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.next-news:hover .news-title {
+  color: var(--ink);
+}
+
 .next {
   display: flex;
   flex-wrap: wrap;

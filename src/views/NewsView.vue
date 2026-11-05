@@ -21,7 +21,10 @@ const dateOf = (iso: string) => {
 
 <template>
   <InfoPage page="news" :title="t('news.title')">
-    <GuideItem v-for="(n, i) in NEWS" :id="`news-${n.date}-${i}`" :key="`${n.date}-${i}`" :title="n.title[locale]" :short="dateOf(n.date)">
+    <ol class="timeline">
+      <li v-for="(n, i) in NEWS" :key="`${n.date}-${i}`" class="entry">
+        <time class="when" :datetime="n.date">{{ dateOf(n.date) }}</time>
+        <GuideItem :id="`news-${n.date}-${i}`" :title="n.title[locale]">
       <div class="letter">
         <p v-for="(p, j) in n.body[locale]" :key="j">{{ p }}</p>
         <p v-if="n.closing" class="closing">
@@ -33,11 +36,75 @@ const dateOf = (iso: string) => {
           <a v-if="n.privacyLink" :href="link('privacy')">{{ t('news.privacy') }}</a>
         </p>
       </div>
-    </GuideItem>
+        </GuideItem>
+      </li>
+    </ol>
   </InfoPage>
 </template>
 
 <style scoped>
+/* A vertical timeline: a hairline down the left, a dot and the date for each note, newest on top. */
+.timeline {
+  position: relative;
+  display: grid;
+  gap: 28px;
+  padding: 0 0 0 28px;
+  margin: 0;
+  list-style: none;
+}
+
+.timeline::before {
+  position: absolute;
+  top: 8px;
+  bottom: 8px;
+  left: 6px;
+  width: 2px;
+  content: '';
+  background: var(--line);
+  border-radius: 2px;
+}
+
+.entry {
+  position: relative;
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+
+.entry::before {
+  position: absolute;
+  top: 4px;
+  left: -28px;
+  width: 14px;
+  height: 14px;
+  content: '';
+  background: var(--accent);
+  border: 3px solid var(--bg, #fff);
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px var(--line);
+}
+
+.when {
+  color: var(--ink-soft);
+  font-size: var(--fs-small);
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.02em;
+}
+
+@media (max-width: 640px) {
+  .timeline {
+    padding-left: 22px;
+  }
+
+  .timeline::before {
+    left: 4px;
+  }
+
+  .entry::before {
+    left: -22px;
+  }
+}
+
 .letter {
   display: grid;
   gap: 12px;
