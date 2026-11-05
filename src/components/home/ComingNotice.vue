@@ -47,7 +47,7 @@ function hide(): void {
         <strong>{{ t('home.notice.title') }}</strong>
         <span class="notice-sub">{{ t('home.notice.sub') }}</span>
       </span>
-      <a v-if="slim" class="notice-more" :href="link('') + '#news'">{{ t('home.notice.read') }}</a>
+      <a v-if="slim" class="notice-more" :href="link('news')">{{ t('home.notice.read') }}</a>
       <button v-else class="notice-more" type="button" @click="toNews">{{ t('home.notice.read') }}</button>
       <button class="notice-close" type="button" :aria-label="t('home.notice.close')" @click="hide">
         <X :size="16" aria-hidden="true" />
