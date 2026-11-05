@@ -372,3 +372,16 @@ describe('skills from marks', () => {
     }
   })
 })
+
+describe('recommend: heavy-term warning agrees with the plan', () => {
+  it("doesn't warn about a weak-skill stack the plan counts as unavoidable", () => {
+    const real = realData()
+    const p: Profile = { results: [], skills: { maths: 1 }, interests: [], goal: 'balanced' }
+    const opts = { course: 'B-SCI', term: { year: 2027, period: 'semester-1' as const }, termSubjects: ['MAST10006', 'COMP10001', 'BIOL10004'] }
+    const warned = (o: object) => recommend(real, p, { ...opts, ...o }).find((r) => r.code === 'MAST10007')?.warnings.map((w) => w.key) ?? []
+    // On its own, a second maths subject for someone who struggles with maths is a stack...
+    expect(warned({})).toContain('makesVeryHeavy')
+    // ...but not when the plan puts two maths subjects in every semester anyway.
+    expect(warned({ termStress: { stackFloor: { maths: 2 } } }).filter((k) => k.startsWith('makes'))).toEqual([])
+  })
+})
