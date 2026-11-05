@@ -1219,6 +1219,14 @@ writeFileSync(
     .join('\n')}\n</sitemapindex>\n`,
 )
 
+// The same pages twice more, for Google: Search Console has kept saying "Couldn't fetch" for
+// sitemap.xml on github.io sites (ours since October 2026) while Bing reads it fine. Others report
+// Google reading a plain-text list (one URL a line, at most 50,000) or an index not named
+// sitemap.xml. Both are listed in robots.txt; sitemap.xml stays as it is.
+const allUrls = [...byLocale.values()].flat().map((e) => e.url)
+writeFileSync(join(DIST, 'sitemap.txt'), `${allUrls.join('\n')}\n`)
+writeFileSync(join(DIST, 'pages.xml'), readFileSync(join(DIST, 'sitemap.xml'), 'utf8'))
+
 // A plain summary for AI assistants (the llms.txt convention).
 const countOf = (pred: (c: (typeof data.components)[number]) => boolean) => data.components.filter((c) => listedCourses.has(c.course) && pred(c)).length
 const majorCount = countOf((c) => c.kind === 'major')
@@ -1345,7 +1353,7 @@ ${subjects.map((x) => `- [${x.code} ${x.title}](${SITE}subject/${x.code}/)`).joi
 const TRAINING_CRAWLERS = ['GPTBot', 'anthropic-ai', 'CCBot', 'Applebot-Extended', 'meta-externalagent', 'Diffbot', 'cohere-training-data-crawler']
 writeFileSync(
   join(DIST, 'robots.txt'),
-  `${TRAINING_CRAWLERS.map((b) => `User-agent: ${b}\nDisallow: /\n`).join('\n')}\nUser-agent: *\nAllow: /\n\nSitemap: ${SITE}sitemap.xml\n`,
+  `${TRAINING_CRAWLERS.map((b) => `User-agent: ${b}\nDisallow: /\n`).join('\n')}\nUser-agent: *\nAllow: /\n\nSitemap: ${SITE}sitemap.xml\nSitemap: ${SITE}pages.xml\nSitemap: ${SITE}sitemap.txt\n`,
 )
 
 console.log(`Prerendered ${urls.length} pages in ${LOCALE_CODES.length} languages, 404.html, sitemap.xml, robots.txt and llms.txt.`)

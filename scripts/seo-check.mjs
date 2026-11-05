@@ -1,6 +1,6 @@
 // Checks the built site (dist/) the way search engines read it: every page has one title,
 // description, canonical (its own address), hreflang, H1 and JSON-LD; the sitemaps list exactly the
-// built pages; no two pages in one language share a title; no lastmod is in the future.
+// built pages (and sitemap.txt / pages.xml list the same); no two pages in one language share a title; no lastmod is in the future.
 // Run after the build: npm run seo:check. Exits 1 on any problem.
 import { readdirSync, readFileSync, statSync } from 'node:fs'
 import { join } from 'node:path'
@@ -42,6 +42,9 @@ for (const f of readdirSync(DIST).filter((f) => /^sitemap-.+\.xml$/.test(f))) {
     if (mod > today) problems.push(`lastmod in the future (${mod}): ${loc}`)
   }
 }
+const txt = new Set(readFileSync(join(DIST, 'sitemap.txt'), 'utf8').split('\n').filter(Boolean))
+if (txt.size !== listed.size || [...listed].some((u) => !txt.has(u))) problems.push('sitemap.txt and the XML sitemaps list different pages')
+if (readFileSync(join(DIST, 'pages.xml'), 'utf8') !== readFileSync(join(DIST, 'sitemap.xml'), 'utf8')) problems.push('pages.xml differs from sitemap.xml')
 for (const u of listed) if (!pages.has(u)) problems.push(`in the sitemap, not built: ${u}`)
 for (const u of pages.keys()) if (!listed.has(u)) problems.push(`built, not in the sitemap: ${u}`)
 
