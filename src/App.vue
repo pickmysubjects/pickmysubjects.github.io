@@ -5,6 +5,7 @@ import { copyright, versionLabel } from '@/release'
 import { latestDataYear } from '@/engine/dataYear'
 import AppHeader from './components/layout/AppHeader.vue'
 import ComingNotice from './components/home/ComingNotice.vue'
+import NewsPopup from './components/news/NewsPopup.vue'
 import BottomNav from './components/layout/BottomNav.vue'
 import Interp from './components/Interp.vue'
 import AppLogo from './components/AppLogo.vue'
@@ -118,6 +119,7 @@ watchEffect(() => {
     <AppLogo class="backdrop-mark" />
   </div>
   <AppHeader :view="view" />
+  <NewsPopup :view="view" />
   <main class="app-main shell">
     <ComingNotice v-if="view !== 'home'" slim />
     <RolloverNotice />

@@ -2149,6 +2149,8 @@ export const vi: Messages = {
     title: "Tin từ người làm trang",
     more: "Đọc hết",
     less: "Thu gọn",
+    close: "Đóng",
+    badge: "Tin mới",
     privacy: "Quyền riêng tư và điều khoản",
     all: "Tất cả tin",
     lede: "Lời của người làm PickMySubjects: thay đổi gì, sắp có gì, và lời cảm ơn.",

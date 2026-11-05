@@ -2149,6 +2149,8 @@ export const ja: Messages = {
     title: "作者からのお知らせ",
     more: "全文を読む",
     less: "閉じる",
+    close: "閉じる",
+    badge: "新着",
     privacy: "プライバシーと利用規約",
     all: "すべてのお知らせ",
     lede: "PickMySubjects の作者から：変わったこと、これからのこと、そして感謝。",

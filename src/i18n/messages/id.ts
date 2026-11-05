@@ -2149,6 +2149,8 @@ export const id: Messages = {
     title: "Kabar dari pembuat situs",
     more: "Baca semua",
     less: "Tutup",
+    close: "Tutup",
+    badge: "Kabar baru",
     privacy: "Privasi dan ketentuan",
     all: "Semua kabar",
     lede: "Catatan dari pembuat PickMySubjects: apa yang berubah, apa yang akan datang, dan ucapan terima kasih.",

@@ -2149,6 +2149,8 @@ export const ms: Messages = {
     title: "Berita daripada pembina laman",
     more: "Baca semua",
     less: "Tutup",
+    close: "Tutup",
+    badge: "Berita baharu",
     privacy: "Privasi dan terma",
     all: "Semua berita",
     lede: "Nota daripada pembina PickMySubjects: apa yang berubah, apa yang akan datang, dan ucapan terima kasih.",

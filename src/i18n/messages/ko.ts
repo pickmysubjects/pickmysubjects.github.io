@@ -2149,6 +2149,8 @@ export const ko: Messages = {
     title: "만든 사람의 소식",
     more: "전체 읽기",
     less: "접기",
+    close: "닫기",
+    badge: "새 소식",
     privacy: "개인정보 및 이용 약관",
     all: "모든 소식",
     lede: "PickMySubjects를 만든 사람이 전하는 이야기: 바뀐 점, 앞으로 할 일, 그리고 감사 인사.",

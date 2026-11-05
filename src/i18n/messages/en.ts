@@ -2154,6 +2154,8 @@ export const en = {
     title: "News from the creator",
     more: "Read it all",
     less: "Show less",
+    close: "Close",
+    badge: "New",
     privacy: "Privacy and terms",
     all: "All news",
     lede: "Notes from the person who makes PickMySubjects: what's changed, what's coming, and thanks.",

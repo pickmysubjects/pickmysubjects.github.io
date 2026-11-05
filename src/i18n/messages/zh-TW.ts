@@ -2149,6 +2149,8 @@ export const zhTW: Messages = {
     title: "來自作者的消息",
     more: "讀全文",
     less: "收起",
+    close: "關閉",
+    badge: "新消息",
     privacy: "隱私和使用條款",
     all: "所有消息",
     lede: "PickMySubjects 作者寫給大家的話：改了什麼、接下來做什麼，還有感謝。",
