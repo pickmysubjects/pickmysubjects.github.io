@@ -36,7 +36,8 @@ export interface PlanImageInput {
   url: string // shown at the bottom, without https://
   course: string
   major: string
-  status: { text: string; tone: Tone }
+  /** The rule check; left out for a list that isn't a plan (the easiest subjects, say). */
+  status?: { text: string; tone: Tone }
   terms: { label: string; subjects: { code: string; title: string }[] }[]
 }
 
@@ -126,6 +127,7 @@ export function planImageLayout(input: PlanImageInput, measure: Measure, fonts: 
 
   // The rule check, in its tone.
   y += 28
+  if (input.status) {
   const tone: readonly [string, string] = ({ good: [C.good, C.goodSoft], warn: [C.warn, C.warnSoft], bad: [C.bad, C.badSoft] } as const)[input.status.tone]
   const statusFont = font(650, 30, fonts.ui)
   const statusLines = wrapText(input.status.text, inner - 56, statusFont, measure, 2)
@@ -139,6 +141,7 @@ export function planImageLayout(input: PlanImageInput, measure: Measure, fonts: 
     y += 40
   }
   y = statusTop + statusH + 36
+  } else y += 8
 
   // One card per semester: its label, then each subject's code and short title.
   const codeFont = font(700, 30, fonts.code)

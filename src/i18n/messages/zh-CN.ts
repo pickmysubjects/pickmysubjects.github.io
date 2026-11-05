@@ -1257,6 +1257,8 @@ export const zhCN: Messages = {
     add: "加入计划",
     addLabel: "把 {code} 加入我的计划",
     rankLabel: "排行",
+    saveImage: "前 10 名存成图片",
+    imageTop: "前 {n} 名",
     heading: { easy: "墨大水课榜", hard: "墨大难课榜", noExam: "没有期末考试的课", firstSemester: "新生第一学期的课", breadth: "Breadth 课", summerWinter: "暑期和冬季课" },
     rankList: {
       easy: "水课",

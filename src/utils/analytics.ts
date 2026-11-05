@@ -11,6 +11,7 @@ export type AnalyticsEvent =
   | 'plan-generate'
   | 'plan-share'
   | 'plan-image-save'
+  | 'list-image-save'
   | 'plan-print'
   | 'rating-submit'
   | 'grades-share'

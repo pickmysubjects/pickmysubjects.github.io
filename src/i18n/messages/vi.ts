@@ -1257,6 +1257,8 @@ export const vi: Messages = {
     add: "Thêm",
     addLabel: "Thêm {code} vào kế hoạch",
     rankLabel: "Xếp hạng",
+    saveImage: "Lưu top 10 thành ảnh",
+    imageTop: "Top {n}",
     heading: { easy: "Môn dễ ở UniMelb", hard: "Môn khó nhất ở UniMelb", noExam: "Môn không thi cuối kỳ", firstSemester: "Môn cho học kỳ đầu", breadth: "Môn breadth", summerWinter: "Môn kỳ hè và kỳ đông" },
     rankList: {
       easy: "Môn dễ",

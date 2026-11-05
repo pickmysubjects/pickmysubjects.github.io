@@ -1257,6 +1257,8 @@ export const hi: Messages = {
     add: "जोड़ें",
     addLabel: "{code} को मेरे प्लान में जोड़ें",
     rankLabel: "रैंकिंग",
+    saveImage: "टॉप 10 को इमेज के रूप में सेव करें",
+    imageTop: "टॉप {n}",
     heading: { easy: "UniMelb के आसान सब्जेक्ट", hard: "UniMelb के सबसे कठिन सब्जेक्ट", noExam: "बिना फ़ाइनल एग्ज़ाम वाले सब्जेक्ट", firstSemester: "पहले सेमेस्टर के सब्जेक्ट", breadth: "ब्रेड्थ सब्जेक्ट", summerWinter: "समर और विंटर सब्जेक्ट" },
     rankList: {
       easy: "आसान सब्जेक्ट",

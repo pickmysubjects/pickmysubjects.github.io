@@ -18,6 +18,9 @@ import { useLearnLines } from '@/composables/useLearnLines'
 import { usePlan } from '@/composables/usePlan'
 import { useI18n } from '@/i18n'
 import { reasonText } from '@/i18n/format'
+import { localTitle } from '@/i18n/localized'
+import { sharePlanImage } from '@/utils/planImage'
+import { trackEvent } from '@/utils/analytics'
 
 /**
  * Find subjects: the hero (title, search, the subjects/majors/careers switch), the order chips
@@ -26,8 +29,8 @@ import { reasonText } from '@/i18n/format'
  */
 const PAGE = 20
 
-const { t } = useI18n()
-const { subjectList } = useDataset()
+const { t, locale } = useI18n()
+const { subjectList, data } = useDataset()
 const plan = usePlan()
 const { filters, course, year, rows, facets, active, choice, order, hasProfile, hasRecord, index, set, choose, setOrder } = useBrowse()
 const aboutOf = useLearnLines()
@@ -61,6 +64,37 @@ function reasons(r: FoundRow): string[] {
     return [...own, ...(r.ranked.reviews === null ? [t.value(r.subject.discussions?.length ? 'rank.factsOnlyReviewed' : 'rank.factsOnly')] : [])]
   }
   return []
+}
+
+// The easy or hard list's top ten as a picture to share (made in the browser, never uploaded), with
+// the site's address at the bottom, so a screenshot passed around still says where it came from.
+const IMAGE_TOP = 10
+const imaging = shallowRef(false)
+async function saveListImage(): Promise<void> {
+  if (imaging.value || !filters.value.rank) return
+  imaging.value = true
+  try {
+    const site = new URL(link(''), location.href)
+    const courseTitle = data.value.courses.find((c) => c.code === course.value)?.title ?? ''
+    const result = await sharePlanImage(
+      {
+        site: 'PickMySubjects',
+        url: `${site.host}${site.pathname}`.replace(/\/$/, ''),
+        course: t.value(`browse.heading.${choice.value}`),
+        major: [courseTitle, String(year.value)].filter(Boolean).join(' · '),
+        terms: [
+          {
+            label: t.value('browse.imageTop', { n: Math.min(IMAGE_TOP, rows.value.length) }),
+            subjects: rows.value.slice(0, IMAGE_TOP).map((r, i) => ({ code: `${i + 1}. ${r.subject.code}`, title: localTitle(r.subject, locale.value) || r.subject.title })),
+          },
+        ],
+      },
+      `pickmysubjects-${choice.value}-${locale.value}.png`,
+    )
+    if (result !== 'cancelled') trackEvent('list-image-save')
+  } finally {
+    imaging.value = false
+  }
 }
 
 // "Clear all": every filter and the search text; the list chosen and the order stay.
@@ -120,6 +154,7 @@ const suggestions = computed(() => (searching.value && !rows.value.length ? sear
               <li>{{ t('rank.how5') }}</li>
             </ul>
           </details>
+          <button v-if="filters.rank && !filters.mine && rows.length" class="button button-quiet save-image" type="button" :disabled="imaging" @click="saveListImage">{{ t('browse.saveImage') }}</button>
 
           <p v-if="choice === 'easy' || choice === 'breadth'" class="cut-link">
             <a :href="link(`subjects/${EASY_CUTS.level3Breadth.slug}/`)">{{ t('rank.l3Breadth') }}</a>
@@ -156,6 +191,13 @@ const suggestions = computed(() => (searching.value && !rows.value.length ? sear
 </template>
 
 <style scoped>
+.save-image {
+  justify-self: start;
+  min-height: 38px;
+  padding: 0 14px;
+  font-size: 0.875rem;
+}
+
 .browse {
   display: grid;
   gap: 20px;

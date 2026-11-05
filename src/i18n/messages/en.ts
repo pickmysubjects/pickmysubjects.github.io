@@ -1262,6 +1262,8 @@ export const en = {
     add: "Add",
     addLabel: "Add {code} to my plan",
     rankLabel: "Ranked lists",
+    saveImage: "Save the top 10 as an image",
+    imageTop: "Top {n}",
     heading: { easy: "Easy subjects at UniMelb", hard: "Hardest subjects at UniMelb", noExam: "Subjects with no final exam", firstSemester: "First-semester subjects", breadth: "Breadth subjects", summerWinter: "Summer and winter subjects" },
     rankList: {
       easy: "Easy subjects",
