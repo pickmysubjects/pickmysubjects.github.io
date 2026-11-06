@@ -251,10 +251,11 @@ export function isFail(r: { mark?: number; failed?: boolean }): boolean {
 
 /**
  * Done, as everything that reads the record counts it: passed, and a graded subject only with a
- * mark. A graded entry with no mark is on the record but not done: no WAM, not a prerequisite met.
+ * mark (or as credit from elsewhere). A graded entry with no mark is on the record but not done: no WAM, not a prerequisite met.
  */
-export function isDone(r: { code: string; mark?: number; failed?: boolean }, subjects: Record<string, Subject>): boolean {
-  return !isFail(r) && (r.mark !== undefined || subjects[r.code]?.passFail === true)
+export function isDone(r: { code: string; mark?: number; failed?: boolean; credit?: boolean }, subjects: Record<string, Subject>): boolean {
+  // Credit for a named subject studied elsewhere is passed, and never has a mark.
+  return !isFail(r) && (r.mark !== undefined || r.credit === true || subjects[r.code]?.passFail === true)
 }
 
 /** Codes of the subjects done on the record (see isDone): one rule for every page and pass. */
