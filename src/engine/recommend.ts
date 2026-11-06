@@ -543,7 +543,7 @@ export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions =
     }
     const eligibility = pre.status
 
-    const rec = score(s, { profile, data, wam, marks, dependents, eligibility, unmet: pre.unmet, ratingMean, taken, blocked, liked })
+    const rec = score(s, { profile, data, course: opts.course, wam, marks, dependents, eligibility, unmet: pre.unmet, ratingMean, taken, blocked, liked })
     // A fail on My page: this would be a retake, which the student should know before adding it.
     const failed = lastMark.get(s.code)?.mark
     if (failed !== undefined && failed < PASS_MARK) rec.warnings.unshift(note('retake', { mark: failed }, `You got ${failed} last time: this would be a retake.`))
@@ -665,7 +665,7 @@ export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions =
 
   // Equal scores (common when a student has told us little): the subject more of the degree
   // builds on comes first, a better first step than whichever code sorts first.
-  const builtOn = (r: Recommendation) => usefulLater(r.code, dependents, data, profile.interests)
+  const builtOn = (r: Recommendation) => usefulLater(r.code, dependents, data, profile.interests, opts.course)
   // Nothing to go on about the student (no record, strengths, interests, career, ratings, major
   // or the plan builder's majors) and a goal that isn't about marks: a fit score would only be the subjects' ease, so
   // they go in the order the degree's own majors start with: subjects more of its majors need or
@@ -774,6 +774,8 @@ function afterPrerequisites(recs: Recommendation[], data: Dataset, taken: Readon
 interface ScoreCtx {
   profile: Profile
   data: Dataset
+  /** The student's course: which follow-ons count as part of the degree. */
+  course?: string
   wam: number | null
   marks: Map<string, number>
   dependents: Map<string, string[]>
@@ -978,7 +980,7 @@ function score(s: Subject, ctx: ScoreCtx): Recommendation {
   if (parts.ease !== undefined) parts.hardness = 1 - parts.ease
 
   // Useful later: how many subjects build on it (and students' usefulness rating, once rated).
-  const builtOn = usefulLater(s.code, ctx.dependents, ctx.data, interests)
+  const builtOn = usefulLater(s.code, ctx.dependents, ctx.data, interests, ctx.course)
   const ratedUseful = s.signals && s.signals.reviews >= MIN_REVIEWS && s.signals.usefulness !== undefined ? (s.signals.usefulness - 1) / 4 : 0
   parts.opens = Math.max(Math.min(1, builtOn / OPENS_FULL), ratedUseful)
   if (builtOn >= 3) reasons.push(note('opensMany', { n: builtOn }, `${builtOn} later subjects build on it.`))
@@ -1077,9 +1079,11 @@ function pathTo(code: string, interests: string[], ctx: ScoreCtx): { steps: numb
  * the student wants to go count: forty physics subjects after PHYC10001 say nothing to someone
  * who chose data science. Used for "useful later" and to break ties, so the two agree.
  */
-function usefulLater(code: string, dependents: Map<string, string[]>, data: Dataset, interests: string[]): number {
+function usefulLater(code: string, dependents: Map<string, string[]>, data: Dataset, interests: string[], course?: string): number {
   const after = dependents.get(code) ?? []
-  if (!interests.length) return after.length
+  // Nothing said about interests: only follow-ons in the degree itself count. Breadth leads
+  // anywhere (French 5's 22 French subjects say nothing to a science student).
+  if (!interests.length) return course ? after.filter((c) => { const k = data.subjects[c]?.categories[course]; return k !== undefined && k !== 'breadth' }).length : after.length
   return after.filter((c) => {
     const next = data.subjects[c]
     return next !== undefined && topicsOf(next).topics.some((t) => interests.includes(t))
