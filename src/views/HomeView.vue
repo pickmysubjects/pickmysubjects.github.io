@@ -40,7 +40,7 @@ const returning = computed(() => plan.courseChosen.value || !plan.isEmpty.value 
   <div class="home">
     <!-- The hero: the promise, the search, one quiet second step and three facts; the campus beside it. -->
     <section class="hero">
-      <div class="hero-panel">
+      <div class="hero-panel rim">
         <ReleasePill />
         <p class="eyebrow">{{ t('home.eyebrow') }}</p>
         <!-- "|" marks where the title may break, so a phrase is never split mid-word. -->

@@ -1054,6 +1054,75 @@ button.chip {
   }
 }
 
+/* Liquid Glass rim: not a flat 1px line all round, but a ring brightest where the light falls
+   (top-left), fading along the sides and catching a little light again bottom-right. Drawn as
+   a masked ring over the (now clear) border, so the translucent fill isn't tinted by it.
+   Component styles that position a card (sticky sidebars) still win: the ring follows them. */
+:root {
+  --rim: linear-gradient(150deg, rgb(255 255 255 / 95%) 0%, rgb(255 255 255 / 60%) 18%, rgb(255 255 255 / 22%) 48%, rgb(255 255 255 / 28%) 78%, rgb(255 255 255 / 70%) 100%);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --rim: linear-gradient(150deg, rgb(255 255 255 / 34%) 0%, rgb(255 255 255 / 14%) 20%, rgb(255 255 255 / 5%) 50%, rgb(255 255 255 / 7%) 78%, rgb(255 255 255 / 18%) 100%);
+  }
+}
+
+:is(.surface, .glass) {
+  position: relative;
+  border-color: transparent;
+}
+
+/* The same rim on a component's own glass panel (hero, header bar, menus): add class "rim".
+   The panel keeps its own position when it has one; only its flat border gives way. */
+.rim {
+  border-color: transparent !important;
+}
+
+.rim {
+  position: relative;
+}
+
+:is(.surface, .glass, .rim)::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  z-index: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: var(--rim);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Nested cards and flat sections stay plain: one rim per region; a nested card keeps its hairline. */
+:is(.surface .surface, .flat)::before {
+  content: none;
+}
+
+.surface .surface {
+  border-color: var(--card-edge);
+}
+
+/* Increase Contrast: a solid, clearly visible edge instead of the soft rim. */
+@media (prefers-contrast: more) {
+  :is(.surface, .glass) {
+    border-color: var(--line);
+  }
+
+  :is(.surface, .glass, .rim)::before {
+    content: none;
+  }
+
+  .rim {
+    border-color: var(--line) !important;
+  }
+}
+
 @media (max-width: 640px) {
   :root {
     --page-top: var(--space-4);

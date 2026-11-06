@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { X } from 'lucide-vue-next'
 import { computed, onBeforeUnmount, onMounted, shallowRef } from 'vue'
 import { NEWS } from '@/content/news'
 import HelixSmile from '@/components/home/HelixSmile.vue'
@@ -46,20 +47,20 @@ function remember(): void {
 
 <template>
   <Transition name="pop">
-    <aside v-if="show && latest" class="news-pop" role="status" aria-labelledby="news-pop-title">
+    <aside v-if="show && latest" class="news-pop rim" role="status" aria-labelledby="news-pop-title">
       <div class="pop-top">
         <HelixSmile :size="34" />
         <div class="pop-label">
           <span class="pop-badge">{{ t('news.badge') }}</span>
           <span class="pop-from">{{ t('news.title') }}</span>
         </div>
-        <button class="pop-x" type="button" :aria-label="t('news.close')" @click="remember">×</button>
+        <button class="pop-x" type="button" :aria-label="t('news.close')" @click="remember"><X :size="16" aria-hidden="true" /></button>
       </div>
       <h2 id="news-pop-title" class="pop-title">{{ latest.title[locale] }}</h2>
       <p class="pop-lede">{{ lede }}</p>
       <div class="pop-actions">
-        <a class="pop-read" :href="link('news')" @click="remember">{{ t('news.more') }}</a>
-        <button class="pop-close" type="button" @click="remember">{{ t('news.close') }}</button>
+        <a class="button button-accent pop-btn" :href="link('news')" @click="remember">{{ t('news.more') }}</a>
+        <button class="button button-quiet pop-btn" type="button" @click="remember">{{ t('news.close') }}</button>
       </div>
     </aside>
   </Transition>
@@ -76,24 +77,13 @@ function remember(): void {
   width: min(380px, calc(100vw - 32px));
   padding: 18px 18px 16px;
   color: var(--ink);
-  background: var(--surface);
-  backdrop-filter: blur(24px) saturate(1.6);
-  -webkit-backdrop-filter: blur(24px) saturate(1.6);
-  border: 1.5px solid color-mix(in srgb, var(--accent) 45%, transparent);
-  border-radius: 22px;
-  box-shadow:
-    0 18px 50px -12px color-mix(in srgb, var(--accent) 45%, transparent),
-    0 4px 14px rgb(0 0 0 / 10%);
-}
-
-/* A strip of the accent along the top edge, so it reads as news at a glance. */
-.news-pop::before {
-  position: absolute;
-  inset: 0 0 auto;
-  height: 4px;
-  content: '';
-  background: linear-gradient(90deg, var(--accent), #8b5cf6);
-  border-radius: 22px 22px 0 0;
+  /* The same floating glass as the header menus: mostly opaque so the text reads, the site's rim. */
+  background: linear-gradient(180deg, color-mix(in srgb, var(--accent-fill) 6%, var(--surface)), var(--surface) 70%);
+  -webkit-backdrop-filter: var(--float-blur);
+  backdrop-filter: var(--float-blur);
+  border: 1px solid var(--card-edge);
+  border-radius: 24px;
+  box-shadow: var(--float-rim), 0 18px 48px -12px rgb(0 0 0 / 28%), 0 4px 12px -4px rgb(0 0 0 / 12%);
 }
 
 .pop-top {
@@ -126,11 +116,11 @@ function remember(): void {
 }
 
 .pop-x {
+  display: inline-grid;
+  place-items: center;
   width: 32px;
   height: 32px;
   color: var(--ink-soft);
-  font-size: 1.4rem;
-  line-height: 1;
   background: none;
   border: 0;
   border-radius: 50%;
@@ -139,6 +129,11 @@ function remember(): void {
 
 .pop-x:hover {
   color: var(--ink);
+}
+
+.pop-x:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
 }
 
 .pop-title {
@@ -166,36 +161,11 @@ function remember(): void {
   margin-top: 4px;
 }
 
-.pop-read,
-.pop-close {
+.pop-btn {
   flex: 1;
-  padding: 9px 14px;
+  min-height: 40px;
+  padding: 0 14px;
   font-size: var(--fs-small);
-  font-weight: var(--fw-semibold);
-  text-align: center;
-  text-decoration: none;
-  border-radius: 999px;
-  cursor: pointer;
-}
-
-.pop-read {
-  color: #fff;
-  background: var(--accent);
-  border: 0;
-}
-
-.pop-read:hover {
-  background: color-mix(in srgb, var(--accent) 85%, #000);
-}
-
-.pop-close {
-  color: var(--ink);
-  background: transparent;
-  border: 1px solid var(--line);
-}
-
-.pop-close:hover {
-  color: var(--accent);
 }
 
 .pop-enter-active,
