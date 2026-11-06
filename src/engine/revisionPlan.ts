@@ -12,7 +12,9 @@
  *   ones for testing yourself, and a subject's last day for past papers and checking mistakes
  *   (retrieval practice, Roediger & Karpicke 2006; Adesope et al. 2017).
  * - The day before an exam: that subject only, a past paper and its mistakes, no new topics, a
- *   lighter day that ends early, so there's time for 7–9 hours' sleep (Okano et al. 2019).
+ *   lighter day that ends early, and no day past 22:00. Okano et al. 2019 found sleep over the week
+ *   and month before a test went with better grades, the single night before did not (checked
+ *   against the paper 2026-11-06): the point is steady sleep through revision, not one early night.
  * - An exam ≤3 days after the start: all self-testing, still with full sleep.
  * Rules of thumb, not research findings: 2–3 subjects a day and one subject a sitting; sittings of
  * 60–90 minutes with 10-minute breaks; about 4–6 hours a day by default and never more than 8; a
@@ -308,7 +310,11 @@ export function planRevision(input: RevisionInput): RevisionPlan {
     const units = load * 2
     if (!units) continue
     if (kept) {
-      const who = ahead.filter((s) => s.exam === kept)
+      // A subject with no other study day left before its exam (an exam the day after another,
+      // whose only free day this is) shares it rather than going without any revision.
+      const keptFor = new Set(focus.values())
+      const orphans = ahead.filter((s) => s.exam !== kept && !keptFor.has(s.exam) && !dayCount.get(s.code) && !shared.some((d) => d >= day.date && d < s.exam))
+      const who = [...ahead.filter((s) => s.exam === kept), ...orphans]
       const n = Math.min(who.length, units)
       for (const [code, u] of split(units, who.slice(0, n).map((s) => ({ code: s.code, score: s.w })), 1, units)) blocks.push({ day, code, hours: u / 2, focus: true })
     } else {
@@ -582,11 +588,13 @@ const toMinutes = (t: string) => Number(t.slice(0, 2)) * 60 + Number(t.slice(3, 
 
 /**
  * A day's sittings from the start time with a short break between them, ending by 22:00 (20:00 the
- * day before an exam, so the evening stays free for sleep); a sitting that wouldn't fit is cut.
+ * day before an exam, so the evening stays free for sleep). When they wouldn't all fit from a late
+ * start, the day starts earlier instead, so the calendar holds every hour the plan shows.
  */
 export function sessionTimes(day: RevisionDay, dayStart: string): { session: RevisionSession; from: number; to: number }[] {
-  let at = isTime(dayStart) ? toMinutes(dayStart) : 9 * 60
   const end = day.sessions.length && day.sessions.every((s) => s.focus) ? LATEST_END.dayBefore : LATEST_END.usual
+  const needed = day.sessions.reduce((t, s) => t + s.hours * 60, 0) + Math.max(0, day.sessions.length - 1) * BREAK_MINUTES
+  let at = Math.max(0, Math.min(isTime(dayStart) ? toMinutes(dayStart) : 9 * 60, end - needed))
   const out: { session: RevisionSession; from: number; to: number }[] = []
   for (const session of day.sessions) {
     const to = Math.min(at + session.hours * 60, end)

@@ -270,10 +270,12 @@ describe('revisionIcs', () => {
     expect(ics).toContain('DTSTAMP:20261001T000000Z')
   })
 
-  it('puts a 10-minute break between sittings and ends by 22:00', () => {
+  it('puts a 10-minute break between sittings and ends by 22:00, starting earlier when a late start would not fit them', () => {
     const one = (code: string, hours: number) => ({ code, hours, focus: false, type: 'test' as const, reason: 'test' as const })
     const day = { date: '2026-10-02', kind: 'study' as const, exams: [], sessions: [one('A', 1.5), one('B', 1), one('C', 1.5)] }
-    expect(sessionTimes(day, '19:00').map((x) => [x.from, x.to])).toEqual([[1140, 1230], [1240, 1300], [1310, 1320]].slice(0, 2))
+    expect(sessionTimes(day, '09:00').map((x) => [x.from, x.to])).toEqual([[540, 630], [640, 700], [710, 800]])
+    // From 19:00 they'd run to 23:20: the day starts at 17:40 instead and ends at 22:00.
+    expect(sessionTimes(day, '19:00').map((x) => [x.from, x.to])).toEqual([[1060, 1150], [1160, 1220], [1230, 1320]])
   })
 })
 
@@ -449,5 +451,25 @@ describe('revision kind', () => {
     expect(revisionKind(['writing'])).toBe('writing')
     expect(revisionKind(['presentation'])).toBe('other')
     expect(revisionKind()).toBe('other')
+  })
+})
+
+describe('revision plan edge cases (simulated inputs, 2026-11-06)', () => {
+  it('an exam the day after another still gets revision on the one free day', () => {
+    const plan = planRevision({
+      subjects: [
+        { code: 'AAAA10001', exam: '2026-10-27', difficulty: 'harder' },
+        { code: 'BBBB10001', exam: '2026-10-28', difficulty: 'harder' },
+      ],
+      start: '2026-10-26',
+      hoursPerDay: null,
+    })
+    expect(plan.totals.find((x) => x.code === 'BBBB10001')!.hours).toBeGreaterThan(0)
+  })
+  it('a late start time still puts every sitting in the calendar, ending by 22:00', () => {
+    const day = { date: '2026-11-02', kind: 'study' as const, exams: [], sessions: [1.5, 1.5, 1.5, 1.5, 1].map((hours, i) => ({ code: `AAAA1000${i}`, hours, focus: false, type: 'learn' as const, reason: 'learn' as const })) }
+    const times = sessionTimes(day, '19:00')
+    expect(times).toHaveLength(5)
+    expect(times.at(-1)!.to).toBeLessThanOrEqual(22 * 60)
   })
 })
