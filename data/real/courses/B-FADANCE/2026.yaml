@@ -14,6 +14,9 @@ area_categories:
   home: fine-arts
   areas: [CREA, DNCE, PERF]
   other: breadth
+# One intake a year, at the start of the year: study.unimelb.edu.au/find/courses/undergraduate/
+# bachelor-of-fine-arts-dance/ lists "Intake: March" only (checked 2026-11-06).
+entry_periods: [semester-1]
 handbook: https://handbook.unimelb.edu.au/2026/courses/b-fadance/course-structure
 verified_on: 2026-10-21 # rules checked by hand against the Handbook course structure
 listed: true
