@@ -861,6 +861,12 @@ function resolvePrereqs(expr: ReqExpr, done: Set<string>, required: Set<string>,
       )
     let best: string[] | null = null
     let bestCost = Infinity
+    let bestShared = false
+    // Of equal cost, an option another required subject also builds on serves both, and can't
+    // later clash with what that one needs (BCMB20002 for both ANSC30001 and BCMB30002).
+    const others = [...required].filter((r) => r !== forCode)
+    const shared = (o: string[]) =>
+      o.some((x) => others.some((r) => { const p = data.subjects[r]?.prerequisites; return !!p && p !== 'none' && p !== 'unknown' && referencedSubjects(p).includes(x) }))
     const firstYear = data.subjects[forCode]?.level === 1
     // What an option assumes rather than plans: manual conditions anywhere inside it.
     const assumed = (e: ReqExpr): number =>
@@ -883,7 +889,7 @@ function resolvePrereqs(expr: ReqExpr, done: Set<string>, required: Set<string>,
       // For a first-year subject, waiting on another subject (even one already in the plan)
       // costs a semester, so the school result most students have wins over it.
       const c = cost(o) + assumed(e) + (firstYear ? o.length : 0)
-      if (c < bestCost) [best, bestCost] = [o, c]
+      if (c < bestCost || (c === bestCost && !bestShared && o.length > 0 && shared(o))) [best, bestCost, bestShared] = [o, c, o.length > 0 && shared(o)]
     }
     return best ?? []
   }
@@ -941,10 +947,13 @@ function closedTo(code: string, course: string, data: Dataset, held: Held = {}):
   closedCache.set(data, cache)
   const key = `${course}:${held.majors?.join('|') ?? '?'}:${held.minors?.join('|') ?? '?'}:${code}`
   if (!cache.has(key)) {
-    // Everything counts as done, including prerequisites we have no file for: only a condition
-    // no subject can meet (admission to another course) closes it.
-    const everything = new Set([...Object.keys(data.subjects), ...referencedSubjects(s.prerequisites)].filter((c) => c !== code))
-    cache.set(key, evaluateField(s.prerequisites, { completed: everything, subjects: data.subjects, admittedCourse: course, ...held }).status === 'fail')
+    // Everything counts as done, including prerequisites we have no file for, except subjects
+    // themselves closed to this course: only a condition no subject open to the student can meet
+    // (admission to another course, here or one step down) closes it. BIOM20001 rests on
+    // Biomedicine-only subjects, so it is closed too.
+    cache.set(key, false) // a cycle reads as open
+    const open = [...Object.keys(data.subjects), ...referencedSubjects(s.prerequisites)].filter((c) => c !== code && !(referencedSubjects(s.prerequisites).includes(c) && closedTo(c, course, data, held)))
+    cache.set(key, evaluateField(s.prerequisites, { completed: new Set(open), subjects: data.subjects, admittedCourse: course, ...held }).status === 'fail')
   }
   return cache.get(key) as boolean
 }
@@ -1006,12 +1015,19 @@ function pickForPoints(
     )
   candidates.sort((a, b) => a.level - b.level || runs(b) - runs(a) || a.code.localeCompare(b.code))
   const picks: string[] = []
-  for (const s of candidates) {
-    if (have >= req.min) break
-    // Nor one non-allowed with a pick made just before it (two versions of the same subject).
-    if (picks.length && clashes(s.code, done, new Set([...required, ...picks]), data)) continue
-    picks.push(s.code)
-    have += s.points
+  // Within the course's caps first (level-1 points from one area, say); over one only when
+  // nothing else is left.
+  const capCourse = data.courses.find((c) => c.code === course)
+  const fitsCaps = (s: Subject) => !capCourse || withinCaps(s, [...done, ...required, ...picks], capCourse, data)
+  for (const strict of [true, false]) {
+    for (const s of candidates) {
+      if (have >= req.min) break
+      if (picks.includes(s.code) || (strict && !fitsCaps(s))) continue
+      // Nor one non-allowed with a pick made just before it (two versions of the same subject).
+      if (picks.length && clashes(s.code, done, new Set([...required, ...picks]), data)) continue
+      picks.push(s.code)
+      have += s.points
+    }
   }
   return picks
 }
