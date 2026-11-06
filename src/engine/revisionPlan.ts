@@ -39,7 +39,14 @@ export interface RevisionSubject {
   examWeight?: number
   /** The student says there is no final exam: left out of the plan, not flagged. */
   noExam?: boolean
+  /** Open-book exam: the same time, a different way to revise (see revisionKind's tips). */
+  openBook?: boolean
 }
+
+/** How hard the student wants to go: sets the planner's own hours when they don't give theirs. */
+export type RevisionIntensity = 'light' | 'normal' | 'intense'
+/** How well the student says they hold on to what they learn. */
+export type RevisionMemory = 'strong' | 'average' | 'weak'
 
 export interface RevisionInput {
   subjects: readonly RevisionSubject[]
@@ -53,6 +60,14 @@ export interface RevisionInput {
   hoursPerDay?: number | null
   /** Weekdays to rest, 0 = Sunday … 6 = Saturday. */
   restWeekdays?: readonly number[]
+  /** Particular days the student is busy (a shift, a trip), YYYY-MM-DD: no revision on them. */
+  offDays?: readonly string[]
+  /** The planner's own hours (no hoursPerDay given): lighter or harder going. Default normal. */
+  intensity?: RevisionIntensity
+  /** Paid work or other fixed hours a week (My page): a busy week lowers the planner's own hours. */
+  workHours?: number
+  /** Default average. Weaker: more separate days per subject and self-testing sooner. */
+  memory?: RevisionMemory
 }
 
 /** What a sitting is for: understand and summarise, test yourself, or a past paper then its mistakes. */
@@ -105,11 +120,13 @@ export interface RevisionPlan {
 }
 
 /** How a subject is best revised, from its skills: the first match wins, in this order. */
-export type RevisionKind = 'code' | 'maths' | 'language' | 'writing' | 'other'
+export type RevisionKind = 'code' | 'maths' | 'language' | 'recall' | 'writing' | 'other'
 const KIND_SKILLS: readonly [RevisionKind, readonly string[]][] = [
   ['code', ['programming', 'algorithms']],
   ['maths', ['maths', 'statistics']],
   ['language', ['languages']],
+  // Business and law exams lean on remembering frameworks, cases and terms from the textbook.
+  ['recall', ['business', 'law']],
   ['writing', ['writing']],
 ]
 export function revisionKind(skills: readonly string[] = []): RevisionKind {
@@ -125,6 +142,19 @@ export const MAX_HOURS_A_DAY = 8
 export const DAY_BEFORE_HOURS = 5
 /** The planner's own load when the student gives none: lighter far out, heavier near an exam. */
 export const AUTO_HOURS = { far: 4, near: 6 } as const
+/** The same by how hard the student wants to go (rules of thumb, never over MAX_HOURS_A_DAY). */
+export const AUTO_BY_INTENSITY: Record<RevisionIntensity, { far: number; near: number }> = { light: { far: 2.5, near: 4 }, normal: AUTO_HOURS, intense: { far: 5.5, near: 7.5 } }
+/** Work hours a week from which the planner's own hours drop, and by how much a day (rule of thumb). */
+export const WORK_BUSY_HOURS = 20
+export const WORK_CUT = 1
+/** The planner's own hours for a student: their pace, less a little in a busy work week, at least 2. */
+export function autoHours(intensity: RevisionIntensity = 'normal', workHours = 0): { far: number; near: number } {
+  const base = AUTO_BY_INTENSITY[intensity] ?? AUTO_HOURS
+  const cut = workHours >= WORK_BUSY_HOURS ? WORK_CUT : 0
+  return { far: Math.max(2, base.far - cut), near: Math.max(2, base.near - cut) }
+}
+/** By memory: separate days a subject should get, and the share of its sittings spent learning before self-testing. */
+export const MEMORY_RULES: Record<RevisionMemory, { minDays: number; learn: number }> = { strong: { minDays: 3, learn: 0.5 }, average: { minDays: 3, learn: 0.4 }, weak: { minDays: 4, learn: 0.3 } }
 /** Days before an exam over which the load ramps up. */
 export const RAMP_DAYS = 14
 /** With the student's hours, the lightest day is this share of them. */
@@ -156,9 +186,9 @@ export const LATEST_END = { usual: 22 * 60, dayBefore: 20 * 60 } as const
  * Hours for a day `daysLeft` days before the next exam (1 = the day before), in half hours:
  * rising toward the exam, never above the student's hours (or 6 when they give none), never above 8.
  */
-export function dayLoad(daysLeft: number, hoursPerDay?: number | null): number {
+export function dayLoad(daysLeft: number, hoursPerDay?: number | null, auto: { far: number; near: number } = AUTO_HOURS): number {
   const near = Math.min(Math.max(0, RAMP_DAYS - daysLeft), RAMP_DAYS - 1) / (RAMP_DAYS - 1) // 0 far … 1 the day before
-  if (hoursPerDay === null || hoursPerDay === undefined) return cleanHours(AUTO_HOURS.far + (AUTO_HOURS.near - AUTO_HOURS.far) * near)
+  if (hoursPerDay === null || hoursPerDay === undefined) return cleanHours(auto.far + (auto.near - auto.far) * near)
   const cap = cleanHours(hoursPerDay)
   return cleanHours(cap * (RAMP_FLOOR + (1 - RAMP_FLOOR) * near))
 }
@@ -255,8 +285,11 @@ export function sittings(hours: number): number[] {
 
 export function planRevision(input: RevisionInput): RevisionPlan {
   const auto = input.hoursPerDay === null || input.hoursPerDay === undefined
-  const hours = auto ? AUTO_HOURS.near : cleanHours(input.hoursPerDay!)
+  const own = autoHours(input.intensity, input.workHours)
+  const hours = auto ? own.near : cleanHours(input.hoursPerDay!)
   const rest = new Set((input.restWeekdays ?? []).filter((d) => Number.isInteger(d) && d >= 0 && d <= 6))
+  const offDays = new Set((input.offDays ?? []).filter(isDay))
+  const mem = MEMORY_RULES[input.memory ?? 'average'] ?? MEMORY_RULES.average
   const skipped: RevisionPlan['skipped'] = []
   // One row per code (the first one wins), in the order given.
   const seen = new Set<string>()
@@ -288,7 +321,7 @@ export function planRevision(input: RevisionInput): RevisionPlan {
   const days: RevisionDay[] = []
   for (let d = input.start; d <= last; d = addDays(d, 1)) {
     const exams = examsOn.get(d) ?? []
-    days.push({ date: d, kind: exams.length ? 'exam' : rest.has(weekday(d)) ? 'rest' : 'study', exams, sessions: [] })
+    days.push({ date: d, kind: exams.length ? 'exam' : rest.has(weekday(d)) || offDays.has(d) ? 'rest' : 'study', exams, sessions: [] })
   }
   if (hours === 0) return result(days)
 
@@ -315,7 +348,7 @@ export function planRevision(input: RevisionInput): RevisionPlan {
     const ahead = byExam.filter((s) => s.exam > day.date)
     if (!ahead.length) continue
     const kept = focus.get(day.date)
-    const load = kept ? Math.min(dayLoad(1, input.hoursPerDay), DAY_BEFORE_HOURS) : dayLoad(daysBetween(day.date, ahead[0]!.exam), input.hoursPerDay)
+    const load = kept ? Math.min(dayLoad(1, input.hoursPerDay, own), DAY_BEFORE_HOURS) : dayLoad(daysBetween(day.date, ahead[0]!.exam), input.hoursPerDay, own)
     const units = load * 2
     if (!units) continue
     if (kept) {
@@ -333,8 +366,8 @@ export function planRevision(input: RevisionInput): RevisionPlan {
       const gap = (s: (typeof ahead)[number]) => { const left = daysBetween(day.date, s.exam); return Math.max(1, Math.round(gapShare(left) * left)) }
       const due = (s: (typeof ahead)[number]) => !lastDay.has(s.code) || daysBetween(lastDay.get(s.code)!, day.date) >= gap(s)
       // Must come today to still reach MIN_DAYS separate days before the exam.
-      const must = (s: (typeof ahead)[number]) => MIN_DAYS - dayCount.get(s.code)! > sharedLeft(s, day.date)
-      const rank = (s: (typeof ahead)[number]) => (must(s) && dayCount.get(s.code)! < MIN_DAYS ? 0 : due(s) ? 1 : 2)
+      const must = (s: (typeof ahead)[number]) => mem.minDays - dayCount.get(s.code)! > sharedLeft(s, day.date)
+      const rank = (s: (typeof ahead)[number]) => (must(s) && dayCount.get(s.code)! < mem.minDays ? 0 : due(s) ? 1 : 2)
       const want = Math.min(ahead.length, MAX_SUBJECTS_A_DAY, load >= 4.5 ? 3 : 2, Math.max(1, Math.floor(units / (SITTING.min * 2))))
       const pick = [...ahead].sort((a, b) => rank(a) - rank(b) || owed.get(b.code)! - owed.get(a.code)! || a.exam.localeCompare(b.exam) || a.order - b.order).slice(0, want)
       // No massing: on a shared day one subject gets at most 60% of the day (unless it's alone).
@@ -366,7 +399,7 @@ export function planRevision(input: RevisionInput): RevisionPlan {
     const list = bySubject.get(s.code)!
     const papers = list.some((x) => x.focus) ? list.filter((x) => x.focus) : list.slice(-Math.min(2, list.length))
     const rest = list.filter((x) => !papers.includes(x))
-    const learn = s.short ? 0 : Math.ceil(rest.length * 0.4)
+    const learn = s.short ? 0 : Math.ceil(rest.length * mem.learn)
     rest.forEach((x, i) => {
       x.type = i < learn ? 'learn' : 'test'
       x.reason = s.short ? 'short' : x.type
@@ -408,13 +441,17 @@ function dayReason(day: RevisionDay, subjects: readonly { code: string; short: b
 // ---------- saving ----------
 
 export interface RevisionState {
-  subjects: { code: string; exam: string; time?: string; difficulty?: RevisionDifficulty; noExam?: boolean }[]
+  subjects: { code: string; exam: string; time?: string; difficulty?: RevisionDifficulty; noExam?: boolean; openBook?: boolean }[]
   start: string
   /** Hours a day, the most on any day; null: the planner decides. */
   hoursPerDay: number | null
   /** Daily start time of the first session, HH:MM; empty: sessions go in the calendar as all-day notes. */
   dayStart: string
   restWeekdays: number[]
+  /** Particular busy days, YYYY-MM-DD. */
+  offDays: string[]
+  intensity: RevisionIntensity
+  memory: RevisionMemory
   /** The student changed the list: stop filling it from the plan. */
   edited: boolean
 }
@@ -424,7 +461,7 @@ export const isTime = (x: unknown): x is string => typeof x === 'string' && TIME
 const LEVELS: readonly RevisionDifficulty[] = ['easier', 'average', 'harder']
 
 export function emptyRevision(): RevisionState {
-  return { subjects: [], start: '', hoursPerDay: null, dayStart: '', restWeekdays: [], edited: false }
+  return { subjects: [], start: '', hoursPerDay: null, dayStart: '', restWeekdays: [], offDays: [], intensity: 'normal', memory: 'average', edited: false }
 }
 
 /** Puts a saved (or restored) copy back in shape; anything unknown is dropped. */
@@ -437,7 +474,7 @@ export function cleanRevision(raw: unknown): RevisionState {
         if (typeof x !== 'object' || x === null) return []
         const s = x as Record<string, unknown>
         if (typeof s.code !== 'string' || !/^[A-Z]{4}\d{5}$/.test(s.code)) return []
-        return [{ code: s.code, exam: isDay(s.exam) ? s.exam : '', ...(isTime(s.time) ? { time: s.time } : {}), ...(LEVELS.includes(s.difficulty as RevisionDifficulty) ? { difficulty: s.difficulty as RevisionDifficulty } : {}), ...(typeof s.noExam === 'boolean' ? { noExam: s.noExam } : {}) }]
+        return [{ code: s.code, exam: isDay(s.exam) ? s.exam : '', ...(isTime(s.time) ? { time: s.time } : {}), ...(LEVELS.includes(s.difficulty as RevisionDifficulty) ? { difficulty: s.difficulty as RevisionDifficulty } : {}), ...(typeof s.noExam === 'boolean' ? { noExam: s.noExam } : {}), ...(s.openBook === true ? { openBook: true } : {}) }]
       })
     : []
   return {
@@ -446,6 +483,9 @@ export function cleanRevision(raw: unknown): RevisionState {
     hoursPerDay: typeof r.hoursPerDay === 'number' && Number.isFinite(r.hoursPerDay) ? cleanHours(r.hoursPerDay) : null,
     dayStart: isTime(r.dayStart) ? r.dayStart : base.dayStart,
     restWeekdays: Array.isArray(r.restWeekdays) ? [...new Set(r.restWeekdays.filter((d): d is number => Number.isInteger(d) && (d as number) >= 0 && (d as number) <= 6))].sort() : [],
+    offDays: Array.isArray(r.offDays) ? [...new Set(r.offDays.filter(isDay))].sort().slice(0, 60) : [],
+    intensity: r.intensity === 'light' || r.intensity === 'intense' ? r.intensity : 'normal',
+    memory: r.memory === 'strong' || r.memory === 'weak' ? r.memory : 'average',
     edited: r.edited === true,
   }
 }

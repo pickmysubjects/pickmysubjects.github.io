@@ -82,7 +82,7 @@ export function useRevisionPlan() {
   const subjects = computed<RevisionSubject[]>(() =>
     rows.value.map((r) => {
       const share = examShare(r.code)
-      return { code: r.code, exam: r.exam, ...(r.time ? { time: r.time } : {}), difficulty: r.difficulty ?? estimate(r.code), ...(share !== undefined ? { examWeight: share } : {}), ...(noExam(r) ? { noExam: true } : {}) }
+      return { code: r.code, exam: r.exam, ...(r.time ? { time: r.time } : {}), difficulty: r.difficulty ?? estimate(r.code), ...(share !== undefined ? { examWeight: share } : {}), ...(noExam(r) ? { noExam: true } : {}), ...(r.openBook ? { openBook: true } : {}) }
     }),
   )
   // A saved start outside this period (left from an earlier year) falls back to the default.
@@ -95,7 +95,19 @@ export function useRevisionPlan() {
     const def = defaultStart(w, today)
     return first && first <= def ? (addDays(first, -14) > today ? addDays(first, -14) : today) : def
   })
-  const plan = computed(() => planRevision({ subjects: subjects.value, start: start.value, hoursPerDay: saved.value.hoursPerDay, restWeekdays: saved.value.restWeekdays }))
+  const plan = computed(() =>
+    planRevision({
+      subjects: subjects.value,
+      start: start.value,
+      hoursPerDay: saved.value.hoursPerDay,
+      restWeekdays: saved.value.restWeekdays,
+      offDays: saved.value.offDays,
+      intensity: saved.value.intensity,
+      memory: saved.value.memory,
+      // Work hours from My page: a busy week lowers the planner's own hours (not ones the student typed).
+      workHours: profile.value.workHours,
+    }),
+  )
   /** Exam dates a student can pick: within the period's exam window, never before today. */
   const examMin = computed(() => (window.value && window.value.earliest > today ? window.value.earliest : today))
   const examMax = computed(() => window.value?.end ?? '')
@@ -151,7 +163,15 @@ export function useRevisionPlan() {
     setNoExam(code: string, value: boolean) {
       patch(code, { noExam: value })
     },
-    set<K extends 'start' | 'hoursPerDay' | 'dayStart' | 'restWeekdays'>(key: K, value: RevisionState[K]) {
+    setOpenBook(code: string, value: boolean) {
+      patch(code, value ? { openBook: true } : { openBook: undefined })
+    },
+    /** A busy day on or off (a shift, a trip): no revision that day. */
+    toggleOff(date: string) {
+      const list = saved.value.offDays
+      write({ ...saved.value, offDays: list.includes(date) ? list.filter((d) => d !== date) : [...list, date].sort() })
+    },
+    set<K extends 'start' | 'hoursPerDay' | 'dayStart' | 'restWeekdays' | 'intensity' | 'memory'>(key: K, value: RevisionState[K]) {
       write({ ...saved.value, [key]: value })
     },
   }

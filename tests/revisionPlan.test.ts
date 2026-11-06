@@ -282,7 +282,7 @@ describe('revisionIcs', () => {
 describe('cleanRevision', () => {
   it('keeps what is valid and drops the rest', () => {
     const r = cleanRevision({ subjects: [{ code: 'COMP10001', exam: '2026-11-04', time: '25:00', difficulty: 'harder' }, { code: 'bad' }, null], start: '2026-02-30', hoursPerDay: 7.3, dayStart: '08:30', restWeekdays: [0, 0, 9, 6], edited: true })
-    expect(r).toEqual({ subjects: [{ code: 'COMP10001', exam: '2026-11-04', difficulty: 'harder' }], start: '', hoursPerDay: 7, dayStart: '08:30', restWeekdays: [0, 6], edited: true })
+    expect(r).toEqual({ subjects: [{ code: 'COMP10001', exam: '2026-11-04', difficulty: 'harder' }], start: '', hoursPerDay: 7, dayStart: '08:30', restWeekdays: [0, 6], offDays: [], intensity: 'normal', memory: 'average', edited: true })
     expect(cleanRevision('junk').subjects).toEqual([])
   })
 })
@@ -471,5 +471,42 @@ describe('revision plan edge cases (simulated inputs, 2026-11-06)', () => {
     const times = sessionTimes(day, '19:00')
     expect(times).toHaveLength(5)
     expect(times.at(-1)!.to).toBeLessThanOrEqual(22 * 60)
+  })
+})
+
+describe("revision plan, the student's own situation", () => {
+  const subjects = [sub('AAAA10001', '2026-11-12'), sub('BBBB10001', '2026-11-16')]
+  const base: RevisionInput = { subjects, start: '2026-11-02', hoursPerDay: null }
+  it('a busy day gets no revision', () => {
+    const p = planRevision({ ...base, offDays: ['2026-11-04'] })
+    const d = p.days.find((x) => x.date === '2026-11-04')!
+    expect(d.kind).toBe('rest')
+    expect(d.sessions).toEqual([])
+  })
+  it('light goes easier and intense harder than normal, and a busy work week lowers it', () => {
+    const total = (x: Partial<RevisionInput>) => planRevision({ ...base, ...x }).totals.reduce((t, s) => t + s.hours, 0)
+    expect(total({ intensity: 'light' })).toBeLessThan(total({}))
+    expect(total({ intensity: 'intense' })).toBeGreaterThan(total({}))
+    expect(total({ workHours: 25 })).toBeLessThan(total({}))
+    // Hours the student typed are theirs: work hours don't change them.
+    expect(total({ hoursPerDay: 4, workHours: 25 })).toBe(total({ hoursPerDay: 4 }))
+  })
+  it('a weaker memory spreads each subject over more days and tests sooner', () => {
+    const days = (p: RevisionPlan, code: string) => new Set(p.days.filter((d) => d.sessions.some((s) => s.code === code)).map((d) => d.date)).size
+    const learnShare = (p: RevisionPlan) => { const s = p.days.flatMap((d) => d.sessions).filter((x) => x.type !== 'paper'); return s.filter((x) => x.type === 'learn').length / s.length }
+    const weak = planRevision({ ...base, memory: 'weak' })
+    const avg = planRevision(base)
+    expect(days(weak, 'AAAA10001')).toBeGreaterThanOrEqual(days(avg, 'AAAA10001'))
+    expect(learnShare(weak)).toBeLessThan(learnShare(avg))
+  })
+  it('business and law subjects are revised by recall', () => {
+    expect(revisionKind(['business', 'writing'])).toBe('recall')
+    expect(revisionKind(['business', 'maths'])).toBe('maths')
+  })
+  it('keeps busy days, pace and memory when saved', () => {
+    const r = cleanRevision({ subjects: [{ code: 'COMP10001', exam: '2026-11-04', openBook: true }], offDays: ['2026-11-03', 'bad'], intensity: 'intense', memory: 'weak' })
+    expect(r.subjects[0]!.openBook).toBe(true)
+    expect(r.offDays).toEqual(['2026-11-03'])
+    expect([r.intensity, r.memory]).toEqual(['intense', 'weak'])
   })
 })

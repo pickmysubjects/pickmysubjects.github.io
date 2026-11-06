@@ -10,7 +10,7 @@ import { useRevisionPlan } from '@/composables/useRevisionPlan'
 import { useI18n } from '@/i18n'
 import { termLabel } from '@/i18n/format'
 import { localTitle, pickLocalized } from '@/i18n/localized'
-import { addDays, revisionIcs, revisionKind, termKey, weekday, type RevisionDay, type RevisionDifficulty, type RevisionSession, type RevisionType } from '@/engine/revisionPlan'
+import { addDays, revisionIcs, revisionKind, termKey, weekday, type RevisionDay, type RevisionDifficulty, type RevisionIntensity, type RevisionMemory, type RevisionSession, type RevisionType } from '@/engine/revisionPlan'
 import { downloadIcs } from '@/utils/keyDates'
 
 /**
@@ -30,6 +30,11 @@ const nameOf = (code: string) => {
   return s ? localTitle(s, locale.value) || s.title : code
 }
 const LEVELS: readonly RevisionDifficulty[] = ['easier', 'average', 'harder']
+const PACES: readonly RevisionIntensity[] = ['light', 'normal', 'intense']
+const MEMORIES: readonly RevisionMemory[] = ['strong', 'average', 'weak']
+/** A day the student marked busy (shown as busy, not as a weekly rest day). */
+const isBusy = (date: string) => saved.value.offDays.includes(date)
+const restText = (date: string) => t.value(isBusy(date) ? 'rev.busyDay' : 'rev.restDay')
 
 type Row = (typeof rows.value)[number]
 const active = computed(() => rows.value.filter((r) => !rp.noExam(r)))
@@ -73,7 +78,8 @@ const weightWhy = (code: string) => {
   return [t.value(`rev.level.${s.difficulty}`), s.examWeight !== undefined ? t.value('rev.examShare', { n: s.examWeight }) : ''].filter(Boolean).join(' · ')
 }
 /** The suggested way to revise a subject, by its kind. */
-const howOf = (code: string) => t.value(`rev.how.${revisionKind(data.value.subjects[code]?.skills)}`)
+// An open-book exam is revised differently whatever the subject: know where things are, practise under time.
+const howOf = (code: string) => t.value(`rev.how.${rows.value.find((r) => r.code === code)?.openBook ? 'open' : revisionKind(data.value.subjects[code]?.skills)}`)
 const timeOf = (code: string) => rows.value.find((r) => r.code === code)?.time
 const examText = (c: string) => [t.value('rev.exam'), c, timeOf(c) || t.value('rev.noTime')].join(' ').replace(' （', '（')
 
@@ -228,6 +234,7 @@ function print(): void {
           <span class="rev-subject" role="cell">
             <span class="rev-name"><span class="rev-code" :class="colourOf(r.code)">{{ r.code }}</span> {{ nameOf(r.code) }}</span>
             <span class="rev-meta">{{ [rp.examShare(r.code) !== undefined ? t('rev.examShare', { n: rp.examShare(r.code)! }) : '', r.difficulty ? '' : `${t('rev.difficulty')}: ${t('rev.estimate')}`].filter(Boolean).join(' · ') }}</span>
+            <label class="rev-open"><input type="checkbox" :checked="!!r.openBook" @change="rp.setOpenBook(r.code, ($event.target as HTMLInputElement).checked)" /> {{ t('rev.openBook') }}</label>
           </span>
           <label class="rev-cell rev-dateCell" role="cell" :class="{ 'is-empty': needsDate(r) }">
             <span class="rev-cl">{{ t('rev.examDate') }}</span>
@@ -281,7 +288,20 @@ function print(): void {
             <button v-for="d in WEEK" :key="d" type="button" class="rev-wd" :aria-pressed="saved.restWeekdays.includes(d)" @click="toggleRest(d)">{{ weekdayName(d) }}</button>
           </div>
         </fieldset>
+        <label class="rev-field">
+          <span class="rev-label">{{ t('rev.pace') }}<InfoTip :text="t('rev.paceTip')" /></span>
+          <select class="select rev-in" :value="saved.intensity" @change="rp.set('intensity', valueOf($event) as RevisionIntensity)">
+            <option v-for="x in PACES" :key="x" :value="x">{{ t(`rev.paces.${x}`) }}</option>
+          </select>
+        </label>
+        <label class="rev-field">
+          <span class="rev-label">{{ t('rev.memory') }}<InfoTip :text="t('rev.memoryTip')" /></span>
+          <select class="select rev-in" :value="saved.memory" @change="rp.set('memory', valueOf($event) as RevisionMemory)">
+            <option v-for="x in MEMORIES" :key="x" :value="x">{{ t(`rev.memories.${x}`) }}</option>
+          </select>
+        </label>
       </div>
+      <p class="rev-note rev-busyhint">{{ t('rev.busyHint') }}</p>
     </section>
 
     <section class="surface rev-cal" aria-labelledby="rev-cal">
@@ -306,7 +326,7 @@ function print(): void {
             >
               <span class="rev-num"><span class="rev-nlong">{{ cellNum(c) }}</span><span class="rev-nshort" aria-hidden="true">{{ fmtNum.format(asDate(c.date)) }}</span><span v-if="c.date === rp.today" class="rev-today">{{ t('rev.today') }}</span></span>
               <span v-for="x in c.day.exams" :key="x" class="rev-cexam">{{ examText(x) }}</span>
-              <span v-if="c.day.kind === 'rest'" class="rev-cfree">{{ t('rev.restDay') }}</span>
+              <span v-if="c.day.kind === 'rest'" class="rev-cfree">{{ restText(c.date) }}</span>
               <span v-for="(s, i) in c.day.sessions" :key="i" class="rev-block" :class="colourOf(s.code)">
                 <span class="rev-scode">{{ s.code }}</span>
                 <span class="rev-ctype"><span class="rev-sh">{{ hours(s.hours) }}</span> · <span class="rev-sh">{{ typeOf(s.type) }}</span></span>
@@ -319,7 +339,7 @@ function print(): void {
         <div v-if="shown" class="rev-detail" aria-live="polite">
           <p class="rev-detail-date">{{ weekdayLabel(shown.date) }} {{ dayLabel(shown.date) }}</p>
           <p v-for="x in shown.exams" :key="x" class="rev-cexam">{{ examText(x) }}</p>
-          <p v-if="shown.kind === 'rest'" class="rev-note">{{ t('rev.restDay') }}</p>
+          <p v-if="shown.kind === 'rest'" class="rev-note">{{ restText(shown.date) }}</p>
           <template v-else-if="shown.sessions.length">
             <p class="rev-why">{{ whyOf(shown) }}</p>
             <ol class="rev-dlist">
@@ -329,6 +349,7 @@ function print(): void {
             </ol>
           </template>
           <p v-else-if="shown.kind !== 'exam'" class="rev-note">{{ t('rev.nothing') }}</p>
+          <button v-if="shown.kind !== 'exam' && (shown.kind !== 'rest' || isBusy(shown.date))" type="button" class="rev-text rev-busybtn" @click="rp.toggleOff(shown.date)">{{ t(isBusy(shown.date) ? 'rev.notBusy' : 'rev.markBusy') }}</button>
         </div>
       </template>
 
@@ -341,11 +362,12 @@ function print(): void {
                 <span class="rev-dw">{{ weekdayLabel(d.date) }}</span>
                 <span>{{ dayLabel(d.date) }}</span>
                 <span v-if="d.date === rp.today" class="rev-today">{{ t('rev.today') }}</span>
+                <button v-if="d.date === picked && d.kind !== 'exam' && (d.kind !== 'rest' || isBusy(d.date))" type="button" class="rev-text rev-busybtn" @click="rp.toggleOff(d.date)">{{ t(isBusy(d.date) ? 'rev.notBusy' : 'rev.markBusy') }}</button>
               </span>
               <span v-if="d.kind === 'exam'" class="rev-exam">
                 <span v-for="c in d.exams" :key="c">{{ examText(c) }}</span>
               </span>
-              <span v-else-if="d.kind === 'rest'" class="rev-free">{{ t('rev.restDay') }}</span>
+              <span v-else-if="d.kind === 'rest'" class="rev-free">{{ restText(d.date) }}</span>
               <template v-else-if="d.sessions.length">
                 <span class="rev-dbody">
                   <ol class="rev-bars">
@@ -1146,5 +1168,22 @@ p.rev-why {
     white-space: normal;
     overflow-wrap: anywhere;
   }
+}
+.rev-open {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+  color: var(--ink-soft);
+  font-size: var(--fs-small);
+  cursor: pointer;
+}
+
+.rev-busyhint {
+  margin-top: 8px;
+}
+
+.rev-busybtn {
+  margin-top: 8px;
 }
 </style>
