@@ -1,7 +1,7 @@
 import { forCourse } from './forCourse'
 import { creditCodes, creditPoints, isCreditCode, withCredit } from './credit'
 import { offeredIn, periodsFor, termKey } from './availability'
-import { capExempt, categoryOf, matches, pointRules, sumPoints, withinCaps, type PointsRule, disciplineOf, checkCourse, componentNeeds, diplomaStream, findComponent, findCourse, findDiploma, inDiploma, heldMajorIds, majorTitles, minorTitles, planComponentIds, sharesAllowed, withBarredBreadth } from './courseRules'
+import { capExempt, categoryOf, matches, pointRules, sumPoints, withinCaps, type PointsRule, disciplineOf, checkCourse, componentNeeds, diplomaSplit, diplomaStream, findComponent, findCourse, findDiploma, inDiploma, heldMajorIds, majorTitles, minorTitles, planComponentIds, sharesAllowed, withBarredBreadth } from './courseRules'
 import { careerGoal } from './careerGoal'
 import { evaluateField, referencedSubjects, type EvalContext, type Tri } from './expr'
 import type { Note, Params, Plan, PlanTerm } from './plan'
@@ -687,7 +687,10 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
       return ps.length ? Math.min(...ps.map((p) => crowd.get(p) ?? 0)) : Infinity
     }
     // A summer- or winter-only option comes last: the plan is laid out in semesters.
-    const off = (c: string) => (data.subjects[c] && semesterless(data.subjects[c]!) ? 1 : 0)
+    // Not running in any year we know of (ITAL30012 lists no 2026 periods) comes last of all;
+    // summer- or winter-only just before it.
+    const notRunning = (x: Subject) => x.offerings !== 'unknown' && Object.values(x.offerings).flat().length === 0
+    const off = (c: string) => { const x = data.subjects[c]; return !x ? 0 : notRunning(x) ? 2 : semesterless(x) ? 1 : 0 }
     // An option the required subjects build on comes first: picking another would add it anyway.
     // An option only a by-hand condition can open ("excellent results", coordinator approval),
     // whatever else is done, comes after the ones the plan can show are open.
@@ -732,7 +735,11 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
     // Options within the course's caps first (B-ARTS: 125 points from one discipline, the record
     // included); only when none is left does an option over a cap fill the choice.
     const components = planComponentIds(input)
-    const overCap = (c: string) => !!course && !!data.subjects[c] && !withinCaps(data.subjects[c]!, [...done, ...required], course, data, components)
+    // A diploma's own subjects count for the diploma, not the degree: its caps don't apply.
+    const dip = findDiploma(data, input.diploma)
+    const dipStream = dip ? diplomaStream(data, dip, input.diplomaStream) : undefined
+    const forDiploma = (c: string) => !!dip && inDiploma(data, dip, dipStream, c)
+    const overCap = (c: string) => !!course && !!data.subjects[c] && !forDiploma(c) && !withinCaps(data.subjects[c]!, [...done, ...required], course, data, components)
     for (const strict of [true, false]) for (const c of order) {
       if (have >= req.choose.points) break
       if (done.has(c) || required.has(c)) continue
@@ -853,10 +860,14 @@ function resolvePrereqs(expr: ReqExpr, done: Set<string>, required: Set<string>,
     // one that gives no credit in this course (another degree's first-year subject) nearly so.
     const MANUAL = 50
     const SCHOOL = 0.5
+    // What the required subjects certainly need too (named outright or in an "all of"): an option
+    // non-allowed with one of those clashes as surely as with a required subject (ABPL10004
+    // against the ARCH10004 a landscape subject needs).
+    const coming = new Set([...required, ...[...required].flatMap((r) => certainNeeds(data.subjects[r]?.prerequisites))])
     const cost = (o: string[]) =>
       o.reduce(
         (sum, c) =>
-          sum + (closedTo(c, course, data, held) ? 10_000 : required.has(c) ? 0 : clashes(c, done, required, data) ? 10_000 : !data.subjects[c] || needsMissing(c, data) ? 100 : data.subjects[c]!.campus ? 40 : noCredit(data.subjects[c]!, course, data) ? 30 : semesterless(data.subjects[c]!) ? 20 : 1),
+          sum + (closedTo(c, course, data, held) ? 10_000 : required.has(c) ? 0 : clashes(c, done, coming, data) ? 10_000 : !data.subjects[c] || needsMissing(c, data) ? 100 : data.subjects[c]!.campus ? 40 : noCredit(data.subjects[c]!, course, data) ? 30 : semesterless(data.subjects[c]!) ? 20 : 1),
         0,
       )
     let best: string[] | null = null
@@ -956,6 +967,13 @@ function closedTo(code: string, course: string, data: Dataset, held: Held = {}):
     cache.set(key, evaluateField(s.prerequisites, { completed: new Set(open), subjects: data.subjects, admittedCourse: course, ...held }).status === 'fail')
   }
   return cache.get(key) as boolean
+}
+
+/** Subjects a prerequisite certainly calls for: named outright or in an "all of", never one option of several. */
+function certainNeeds(p: Subject['prerequisites'] | undefined): string[] {
+  if (!p || p === 'none' || p === 'unknown') return []
+  const walk = (e: ReqExpr): string[] => ('subject' in e ? [e.subject] : 'all' in e ? e.all.flatMap(walk) : [])
+  return walk(p)
 }
 
 function clashes(code: string, done: Set<string>, required: Set<string>, data: Dataset): boolean {
@@ -1344,9 +1362,17 @@ function pickElective(ctx: PickCtx): { code: string; why: string; ruleId: string
   // electives only ever fill what the required subjects leave of the degree's points, so a
   // required subject pushed to a later semester isn't crowded out by electives past the total.
   const all = [...new Set([...ctx.completed, ...ctx.placed, ...ctx.reserved])]
+  // With a diploma, what the course check will give the diploma doesn't count towards the degree's
+  // level minimums (a stream's level-2 French isn't the commerce degree's level 2): counted as the
+  // check splits them, so the two never disagree.
+  const dip = findDiploma(input.data, input.diploma)
+  const forDiploma = dip
+    ? new Set(diplomaSplit({ ...input, completed: ctx.completed, terms: [{ year: term.year, period: term.period, subjects: [...ctx.placed, ...ctx.reserved] }] } as Plan, data, dip, diplomaStream(data, dip, input.diplomaStream)).mine)
+    : new Set<string>()
+  const degreeOnly = all.filter((c) => !forDiploma.has(c))
   const deficits = pointRules(course)
     .filter((r) => r.min !== undefined)
-    .map((r) => ({ rule: r, gap: (r.min as number) - sumPoints(all, data, course.code, r) }))
+    .map((r) => ({ rule: r, gap: (r.min as number) - sumPoints(r.level !== undefined ? degreeOnly : all, data, course.code, r) }))
     .filter((d) => d.gap > 0)
     // A requirement that has fallen behind an even pace goes first, so ones that
     // need a chain (level-1 breadth is capped, so level 2 needs a start) begin early.
