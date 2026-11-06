@@ -5,7 +5,7 @@
  *
  * What it follows, and how strong the reason is:
  * - Spread each subject over several days (≥3 when the days allow), coming back after a gap of
- *   about 15% of the days left to its exam (at least a day). Spaced study is remembered longer
+ *   about 20–30% of the days left to its exam (at least a day; see gapShare). Spaced study is remembered longer
  *   than one long block (the spacing effect, Cepeda et al. 2008). Only the last free day before an
  *   exam is given to one subject.
  * - Move from learning to testing: early sittings are for understanding and summarising, later
@@ -131,8 +131,17 @@ export const RAMP_DAYS = 14
 export const RAMP_FLOOR = 0.6
 /** Separate days each subject should get when the days allow. */
 export const MIN_DAYS = 3
-/** The gap before a subject comes back: this share of the days left to its exam, at least a day. */
-export const GAP_SHARE = 0.15
+/**
+ * The gap before a subject comes back, as a share of the days left to its exam (at least a day):
+ * Cepeda et al. 2008 found the best gap is about 20–40% of a one-week test delay, shrinking as the
+ * delay grows (5–10% of a year; abstract checked 2026-11-06). So 30% with a week or less to go,
+ * easing to 20% at four weeks and beyond.
+ */
+export const GAP_SHARE = { near: 0.3, far: 0.2, nearDays: 7, farDays: 28 } as const
+export function gapShare(daysLeft: number): number {
+  const t = Math.min(1, Math.max(0, (daysLeft - GAP_SHARE.nearDays) / (GAP_SHARE.farDays - GAP_SHARE.nearDays)))
+  return GAP_SHARE.near + (GAP_SHARE.far - GAP_SHARE.near) * t
+}
 /** No subject's weight above this share of all weights (with 3 or more subjects). */
 export const MAX_SHARE = 0.5
 /** An exam this many days or fewer after the start: all self-testing. */
@@ -321,7 +330,7 @@ export function planRevision(input: RevisionInput): RevisionPlan {
       const score = (s: (typeof ahead)[number]) => s.w / Math.sqrt(daysBetween(day.date, s.exam))
       const sum = ahead.reduce((t, s) => t + score(s), 0)
       for (const s of ahead) owed.set(s.code, owed.get(s.code)! + (load * score(s)) / sum)
-      const gap = (s: (typeof ahead)[number]) => Math.max(1, Math.round(GAP_SHARE * daysBetween(day.date, s.exam)))
+      const gap = (s: (typeof ahead)[number]) => { const left = daysBetween(day.date, s.exam); return Math.max(1, Math.round(gapShare(left) * left)) }
       const due = (s: (typeof ahead)[number]) => !lastDay.has(s.code) || daysBetween(lastDay.get(s.code)!, day.date) >= gap(s)
       // Must come today to still reach MIN_DAYS separate days before the exam.
       const must = (s: (typeof ahead)[number]) => MIN_DAYS - dayCount.get(s.code)! > sharedLeft(s, day.date)
