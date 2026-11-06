@@ -725,8 +725,11 @@ export function diplomaClash(data: Dataset, diploma: Diploma, plan: PlanComponen
 /** The subject area most of a component's subjects share (FREN for French Studies). */
 function mainArea(component: Component): string | undefined {
   const count = new Map<string, number>()
-  for (const reqs of component.routes ? component.routes.map((r) => r.requirements) : component.requirements === 'unknown' ? [] : [component.requirements])
-    for (const code of codesOf(reqs)) count.set(code.slice(0, 4), (count.get(code.slice(0, 4)) ?? 0) + 1)
+  const lists = component.routes ? component.routes.map((r) => r.requirements) : component.requirements === 'unknown' ? [] : [component.requirements]
+  // Its core ("all") subjects name the language; long elective lists can lean on another area
+  // (Russian Studies offers twelve EURO electives against five RUSS subjects).
+  const core = lists.flatMap((reqs) => reqs.flatMap((q) => ('all' in q ? q.all : [])))
+  for (const code of core.length ? core : lists.flatMap(codesOf)) count.set(code.slice(0, 4), (count.get(code.slice(0, 4)) ?? 0) + 1)
   return [...count].sort((a, b) => b[1] - a[1])[0]?.[0]
 }
 

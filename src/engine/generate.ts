@@ -219,7 +219,7 @@ function diplomaOnlyAsCore(input: GenerateInput, required: Set<string>): { input
   // diploma counts would then shift (another stream route), leaving its prerequisites as breadth.
   const done = new Set(input.profile.results.map((r) => r.code))
   for (const [code, s] of Object.entries(subjects)) {
-    if (required.has(code) || done.has(code) || named.has(code) || !inDiploma(input.data, diploma, stream, code)) continue
+    if (required.has(code) || named.has(code) || !inDiploma(input.data, diploma, stream, code)) continue
     subjects[code] = { ...s, categories: { ...s.categories, [input.course]: DIPLOMA_ONLY } }
   }
   return { input: { ...input, data: { ...input.data, subjects } }, moved }
@@ -384,6 +384,9 @@ function buildPlan(given: GenerateInput): GenerateResult {
         term.subjects.push(...group)
         used += pts
         placedAny = true
+        // Sort again after every placement: a subject this one lets in (a one-way corequisite)
+        // may be more urgent than the rest of the list and must get the room first.
+        break
       }
     }
 
@@ -638,8 +641,12 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
   const route = input.profile.career ? careerGoal(data, input.profile.career, goalMajors(input))?.major?.accreditation : undefined
   if (route) {
     const running = (c: string) => !!data.subjects[c] && data.subjects[c]!.discontinuedFrom === undefined
+    // Not one the degree's own components rule out (ACTL20005 against a specialisation's FNCE30001,
+    // which its FNCE30010 builds on): the components come first, the career route is extra.
+    const coming = new Set(required)
+    closePrereqs(input, coming, done, [], new Map())
     for (const r of [...route.required, ...route.requiredBreadth]) {
-      const codes = (Array.isArray(r) ? r : [r]).filter(running)
+      const codes = (Array.isArray(r) ? r : [r]).filter(running).filter((c) => coming.has(c) || !clashes(c, done, coming, data))
       if (codes.length && !codes.some((c) => done.has(c) || required.has(c))) required.add(codes[0]!)
     }
   }
@@ -722,9 +729,14 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
     const order = [...req.choose.from].sort(
       (a, b) => off(a) - off(b) || byHand(a) - byHand(b) || Number(named.has(b)) - Number(named.has(a)) || extra(a) - extra(b) || fit(b) - fit(a) || busy(a) - busy(b),
     )
-    for (const c of order) {
+    // Options within the course's caps first (B-ARTS: 125 points from one discipline, the record
+    // included); only when none is left does an option over a cap fill the choice.
+    const components = planComponentIds(input)
+    const overCap = (c: string) => !!course && !!data.subjects[c] && !withinCaps(data.subjects[c]!, [...done, ...required], course, data, components)
+    for (const strict of [true, false]) for (const c of order) {
       if (have >= req.choose.points) break
       if (done.has(c) || required.has(c)) continue
+      if (strict && overCap(c)) continue
       if (!runsDuringPlan(data.subjects[c], input.startYear)) continue
       // Nor one whose prerequisites nothing that runs can meet (ACCT30001 needs ACCT20008,
       // which isn't running): it would only end up unplaced.
@@ -748,7 +760,7 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
     // The diploma's points (and its level minimums) beyond what its stream and rules name: the
     // best-matching subjects of its pool, those with nothing more to take first.
     const pts = (c: string) => data.subjects[c]?.points ?? 12.5
-    const mine = () => [...required, ...done].filter((c) => inDiploma(data, diploma, stream, c))
+    const mine = () => [...new Set([...required, ...done])].filter((c) => inDiploma(data, diploma, stream, c))
     const levelRules = diploma.rules.filter((r): r is Extract<CourseRule, { kind: 'points' }> => r.kind === 'points' && r.min !== undefined && r.category === undefined)
     const short = (r: { level?: number; min?: number }) => (r.min ?? 0) - mine().filter((c) => r.level === undefined || data.subjects[c]?.level === r.level).reduce((sum, c) => sum + pts(c), 0)
     // Caps on a level (Music: at most 50 points of level 1): a subject that would go over is skipped.
@@ -763,7 +775,8 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
         .sort((a, b) => a.adds - b.adds || (score.get(b.s.code) ?? -1) - (score.get(a.s.code) ?? -1) || a.s.code.localeCompare(b.s.code))
       for (const { s } of order) {
         if (short(rule) <= 0) break
-        if (required.has(s.code) || !fits(s.code)) continue
+        // Picks earlier in this loop (and their prerequisites) may be non-allowed with this one.
+        if (required.has(s.code) || !fits(s.code) || clashes(s.code, done, required, data)) continue
         required.add(s.code)
         notes.push(note('chose', { code: s.code, title: diploma.title }, `Chose ${s.code} for ${diploma.title} (best match among its options).`))
         closePrereqs(input, required, done, notes, needs)
@@ -795,6 +808,8 @@ function closePrereqs(input: GenerateInput, required: Set<string>, done: Set<str
   while (queue.length > 0) {
     const code = queue.pop() as string
     const s = data.subjects[code]
+    // A subject already passed needs nothing more first (a failed alternative isn't retaken for it).
+    if (done.has(code)) continue
     // Nothing is added for a subject the course closes: it's left out of the plan (see buildPlan).
     if (!s || data.courses.some((c) => c.code === input.course && c.closed.includes(code))) continue
     const pre = s.prerequisites !== 'none' && s.prerequisites !== 'unknown' ? resolvePrereqs(s.prerequisites, done, required, data, input.course, code, majorsOf(input)) : []
@@ -872,7 +887,7 @@ function resolvePrereqs(expr: ReqExpr, done: Set<string>, required: Set<string>,
     }
     return best ?? []
   }
-  if ('points' in expr) return pickForPoints(expr.points, done, required, data, course, held)
+  if ('points' in expr) return pickForPoints(expr.points, done, required, data, course, held, forCode)
   return [] // admission / manual can't be resolved to specific subjects
 }
 
@@ -955,6 +970,8 @@ function pickForPoints(
   data: Dataset,
   course: string,
   held: Held = {},
+  /** The subject asking: it never counts towards its own prerequisite points. */
+  forCode = '',
 ): string[] {
   const levels = req.levels ?? (req.level !== undefined ? [req.level] : undefined)
   const areas = req.areas ?? (req.area !== undefined ? [req.area] : undefined)
@@ -968,7 +985,7 @@ function pickForPoints(
     (areas === undefined || areas.includes(s.area))
   // What's done or already required counts first: "200 points of study" before a capstone is
   // mostly the major itself, not a pile of extra first-year subjects.
-  let have = [...new Set([...done, ...required])].reduce((sum, c) => {
+  let have = [...new Set([...done, ...required])].filter((c) => c !== forCode).reduce((sum, c) => {
     const s = data.subjects[c]
     return s && fits(s) ? sum + s.points : sum
   }, 0)
@@ -987,10 +1004,12 @@ function pickForPoints(
         !clashes(s.code, done, required, data) &&
         !closedTo(s.code, course, data, held),
     )
-    .sort((a, b) => a.level - b.level || runs(b) - runs(a) || a.code.localeCompare(b.code))
+  candidates.sort((a, b) => a.level - b.level || runs(b) - runs(a) || a.code.localeCompare(b.code))
   const picks: string[] = []
   for (const s of candidates) {
     if (have >= req.min) break
+    // Nor one non-allowed with a pick made just before it (two versions of the same subject).
+    if (picks.length && clashes(s.code, done, new Set([...required, ...picks]), data)) continue
     picks.push(s.code)
     have += s.points
   }
