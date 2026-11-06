@@ -871,16 +871,12 @@ button.chip {
   -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent);
   mask-image: linear-gradient(to bottom, #000 55%, transparent);
   /* Large, saturated patches with light and dark between them, so glass always has edges to bend.
-     First, a few crisp shapes in the logo's colours, away from the reading column: soft patches
-     alone give the blur nothing to show, and the glass reads as a plain tint. */
+     First, a few shapes in the logo's colours, away from the reading column, solid in the middle
+     and fading out at the edge (no hard rim): the glass has colour to blur, without a drawn outline. */
   background:
-    radial-gradient(circle 86px at 7% 24%, #f27db6, #c8478f 97%, transparent 100%),
-    radial-gradient(circle 66px at 95% 46%, #a497ff, #6a58e0 97%, transparent 100%),
-    radial-gradient(circle 48px at 72% 9%, #ffc6a4, #ff8fb2 97%, transparent 100%),
-    /* A bright ring of glow hugging each shape's edge. */
-    radial-gradient(circle 104px at 7% 24%, transparent 80px, rgb(255 170 210 / 75%) 86px, rgb(255 170 210 / 0%) 104px),
-    radial-gradient(circle 82px at 95% 46%, transparent 60px, rgb(180 168 255 / 75%) 66px, rgb(180 168 255 / 0%) 82px),
-    radial-gradient(circle 62px at 72% 9%, transparent 43px, rgb(255 200 190 / 75%) 48px, rgb(255 200 190 / 0%) 62px),
+    radial-gradient(circle 110px at 7% 24%, #f27db6, rgb(200 71 143 / 85%) 30%, rgb(200 71 143 / 45%) 62%, rgb(200 71 143 / 0%) 100%),
+    radial-gradient(circle 86px at 95% 46%, #a497ff, rgb(106 88 224 / 85%) 30%, rgb(106 88 224 / 45%) 62%, rgb(106 88 224 / 0%) 100%),
+    radial-gradient(circle 64px at 72% 9%, #ffc6a4, rgb(255 143 178 / 85%) 30%, rgb(255 143 178 / 45%) 62%, rgb(255 143 178 / 0%) 100%),
     /* Each shape's own glow, under it: light spilling out around the colour. */
     radial-gradient(circle 210px at 7% 24%, rgb(242 125 182 / 55%), rgb(242 125 182 / 18%) 55%, transparent 100%),
     radial-gradient(circle 170px at 95% 46%, rgb(140 125 250 / 55%), rgb(140 125 250 / 18%) 55%, transparent 100%),
@@ -943,12 +939,9 @@ button.chip {
 @media (prefers-color-scheme: dark) {
   .backdrop {
     background:
-      radial-gradient(circle 86px at 7% 24%, #9c3474, #6a1d4f 97%, transparent 100%),
-      radial-gradient(circle 66px at 95% 46%, #5a4bb8, #34287a 97%, transparent 100%),
-      radial-gradient(circle 48px at 72% 9%, #8a4a5c, #5c2a42 97%, transparent 100%),
-      radial-gradient(circle 104px at 7% 24%, transparent 80px, rgb(214 90 160 / 55%) 86px, rgb(214 90 160 / 0%) 104px),
-      radial-gradient(circle 82px at 95% 46%, transparent 60px, rgb(130 110 240 / 55%) 66px, rgb(130 110 240 / 0%) 82px),
-      radial-gradient(circle 62px at 72% 9%, transparent 43px, rgb(200 110 140 / 50%) 48px, rgb(200 110 140 / 0%) 62px),
+      radial-gradient(circle 110px at 7% 24%, #9c3474, rgb(106 29 79 / 85%) 30%, rgb(106 29 79 / 45%) 62%, rgb(106 29 79 / 0%) 100%),
+      radial-gradient(circle 86px at 95% 46%, #5a4bb8, rgb(52 40 122 / 85%) 30%, rgb(52 40 122 / 45%) 62%, rgb(52 40 122 / 0%) 100%),
+      radial-gradient(circle 64px at 72% 9%, #8a4a5c, rgb(92 42 66 / 85%) 30%, rgb(92 42 66 / 45%) 62%, rgb(92 42 66 / 0%) 100%),
       radial-gradient(circle 210px at 7% 24%, rgb(176 54 126 / 45%), rgb(176 54 126 / 12%) 55%, transparent 100%),
       radial-gradient(circle 170px at 95% 46%, rgb(110 90 230 / 45%), rgb(110 90 230 / 12%) 55%, transparent 100%),
       radial-gradient(circle 130px at 72% 9%, rgb(170 80 110 / 40%), rgb(170 80 110 / 10%) 55%, transparent 100%),
