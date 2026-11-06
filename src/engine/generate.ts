@@ -972,6 +972,8 @@ function clashes(code: string, done: Set<string>, required: Set<string>, data: D
  * Subjects to add for an "N points of X" prerequisite: the lowest-level matching
  * subjects that run most often, until the threshold is met.
  */
+let chainDepth = 0
+
 function pickForPoints(
   req: { min: number; level?: number; area?: string; levels?: number[]; areas?: string[]; from?: string[] },
   done: Set<string>,
@@ -1013,12 +1015,55 @@ function pickForPoints(
         !clashes(s.code, done, required, data) &&
         !closedTo(s.code, course, data, held),
     )
-  candidates.sort((a, b) => a.level - b.level || runs(b) - runs(a) || a.code.localeCompare(b.code))
+  // What a candidate brings with it, its whole chain down (CHEM20011 brings CHEM10004, which
+  // brings CHEM10003).
+  const chains = new Map<string, string[]>()
+  const chainOf = (s: Subject): string[] => {
+    const known = chains.get(s.code)
+    if (known) return known
+    // Only from the outermost pick: resolving a chain can ask for points again.
+    if (chainDepth > 0) return []
+    chainDepth++
+    const pre: string[] = []
+    const queue = [s.code]
+    while (queue.length) {
+      const x = data.subjects[queue.pop() as string]
+      if (!x || x.prerequisites === 'none' || x.prerequisites === 'unknown') continue
+      for (const c of resolvePrereqs(x.prerequisites, done, required, data, course, x.code, held)) {
+        if (required.has(c) || done.has(c) || pre.includes(c) || c === s.code) continue
+        pre.push(c)
+        queue.push(c)
+      }
+    }
+    chainDepth--
+    chains.set(s.code, pre)
+    return pre
+  }
+  // Above level 1, one that brings fewer subjects with it first (ERTH20001, open to anyone, before
+  // BIOL20001 and its level-1 biology).
+  const adds = (s: Subject) => (s.level > 1 ? chainOf(s).length : 0)
+  candidates.sort((a, b) => a.level - b.level || adds(a) - adds(b) || runs(b) - runs(a) || a.code.localeCompare(b.code))
   const picks: string[] = []
   // Within the course's caps first (level-1 points from one area, say); over one only when
   // nothing else is left.
   const capCourse = data.courses.find((c) => c.code === course)
-  const fitsCaps = (s: Subject) => !capCourse || withinCaps(s, [...done, ...required, ...picks], capCourse, data)
+  // The subject and what it brings with it (BIOL20001's level-1 biology on top of a full level 1).
+  const fitsCaps = (s: Subject) => {
+    if (!capCourse) return true
+    const pre = chainOf(s)
+    const taken = [...done, ...required, ...picks, ...pulled]
+    for (const c of [...pre, s.code]) {
+      const x = data.subjects[c]
+      if (!x || taken.includes(c)) continue
+      if (!withinCaps(x, taken, capCourse, data)) return false
+      taken.push(c)
+    }
+    pending = pre
+    return true
+  }
+  // Prerequisites earlier picks bring with them, so the caps see them too.
+  const pulled: string[] = []
+  let pending: string[] = []
   for (const strict of [true, false]) {
     for (const s of candidates) {
       if (have >= req.min) break
@@ -1026,6 +1071,7 @@ function pickForPoints(
       // Nor one non-allowed with a pick made just before it (two versions of the same subject).
       if (picks.length && clashes(s.code, done, new Set([...required, ...picks]), data)) continue
       picks.push(s.code)
+      if (strict) pulled.push(...pending)
       have += s.points
     }
   }
