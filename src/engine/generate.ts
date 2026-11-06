@@ -753,6 +753,9 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
       // An option that can't be taken alongside a subject already required (COMP20003 and a
       // major's ENGR30004) leaves the other options to fill the choice.
       if (clashes(c, done, required, data)) continue
+      // Nor one whose own certain prerequisites can't be taken alongside them (MAST30025 needs
+      // MAST20005, which a commerce degree's ECON10005 rules out).
+      if (certainNeeds(data.subjects[c]?.prerequisites).some((p) => !done.has(p) && !required.has(p) && clashes(p, done, required, data))) continue
       // Nor one past the component's cap on that kind of choice (B-MUS: 25 points of level 1).
       if (!fits(c, data.subjects[c]?.points ?? 12.5)) continue
       required.add(c)
