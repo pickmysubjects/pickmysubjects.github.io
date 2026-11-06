@@ -360,6 +360,21 @@ export function prereqStatus(
 const noSkip = (_: Exclusion): void => {}
 
 /** Move a suggestion's score (kept within 0–100) and note by how much and why, for "why it fits". */
+/** Notes that carry a predicted mark (params mark, low, high). */
+const PREDICTED_KEYS = new Set(['predictedWam', 'averagedHigh', 'averagedLow', 'predictedRange'])
+/** Points a target WAM moves a subject either way. */
+const TARGET_NUDGE = 4
+/** Hours a week of work from which a subject's workload counts for or against it, and by how much. */
+const WORK_BUSY_HOURS = 20
+const WORK_NUDGE = 4
+
+/** What students say about a subject's workload: our ratings once three gave them, else the review summary. */
+function workloadOf(s: Subject): 'heavy' | 'light' | undefined {
+  if (s.signals && s.signals.reviews >= MIN_REVIEWS && s.signals.workload !== undefined) return s.signals.workload >= 4 ? 'heavy' : s.signals.workload <= 2 ? 'light' : undefined
+  const v = discussionVerdict(s.discussions, 'workload')?.value
+  return v === 'heavy' ? 'heavy' : v === 'light' ? 'light' : undefined
+}
+
 function shift(rec: Recommendation, key: string, delta: number, params: Params = {}): void {
   const before = rec.score
   rec.score = Math.min(100, Math.max(0, before + delta))
@@ -552,6 +567,34 @@ export function recommend(raw: Dataset, given: Profile, opts: RecommendOptions =
     // A third-year student rarely gains from a first-year science subject (the degree wants
     // level-3 points), and a level below their year is a smaller step back; breadth is
     // different, since level-1 breadth is the usual way in.
+    // The WAM the student is aiming for: a subject their marks say reaches it moves up, one whose
+    // likely range sits wholly below it moves down. "Challenge yourself" takes the hard ones anyway.
+    if (profile.targetWam !== undefined && profile.goal !== 'challenge') {
+      const p = [...rec.reasons, ...rec.warnings].find((n) => PREDICTED_KEYS.has(n.key))?.params
+      if (p && typeof p.mark === 'number' && typeof p.high === 'number') {
+        const params = { mark: p.mark, target: profile.targetWam }
+        if (p.mark >= profile.targetWam) {
+          shift(rec, 'meetsTarget', TARGET_NUDGE, params)
+          rec.reasons.push(note('meetsTarget', params, `Your marks point to about ${p.mark}, at or above your target of ${profile.targetWam}.`))
+        } else if (p.high < profile.targetWam) {
+          shift(rec, 'belowTarget', -TARGET_NUDGE, params)
+          rec.warnings.push(note('belowTarget', params, `Your marks point to about ${p.mark}, below your target of ${profile.targetWam}.`))
+        }
+      }
+    }
+    // Paid work or other fixed hours: with a busy week, what students call a heavy workload moves
+    // down and a light one up (termStress still judges each semester as a whole).
+    if ((profile.workHours ?? 0) >= WORK_BUSY_HOURS) {
+      const w = workloadOf(s)
+      const params = { hours: profile.workHours ?? 0 }
+      if (w === 'heavy') {
+        shift(rec, 'heavyForWork', -WORK_NUDGE, params)
+        rec.warnings.push(note('heavyForWork', params, `Students say the workload is heavy, on top of your ${params.hours} hours of work a week.`))
+      } else if (w === 'light') {
+        shift(rec, 'lightForWork', WORK_NUDGE / 2, params)
+        rec.reasons.push(note('lightForWork', params, `Students say the workload is light, which suits ${params.hours} hours of work a week.`))
+      }
+    }
     const behindBy = opts.maxLevel === undefined ? 0 : opts.maxLevel - studyYear(s.level)
     if (behindBy > 0 && opts.course && s.categories[opts.course] !== 'breadth') {
       shift(rec, 'behindLevel', -(behindBy >= 2 ? BEHIND_LEVEL_COST : BEHIND_LEVEL_COST / 2), { level: opts.maxLevel ?? 0 })
