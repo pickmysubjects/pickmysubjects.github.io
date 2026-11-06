@@ -6,9 +6,13 @@ offerings:
   "2026":
     - semester-1
 prerequisites:
+  # Handbook 2026: "One of CHIN10016 Chinese 4, CHIN10018 Chinese 6 OR Equivalent" (checked
+  # 2026-11-06); the level-2 Chinese 4 and Chinese 6 (CHIN20002, CHIN20004) are those equivalents.
   any:
     - CHIN10016
     - CHIN10018
+    - CHIN20002
+    - CHIN20004
 corequisites: none
 non_allowed:
   - CHIN30011
