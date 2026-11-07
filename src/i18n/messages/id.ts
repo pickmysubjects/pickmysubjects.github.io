@@ -768,6 +768,7 @@ export const id: Messages = {
   },
   seo: {
     titleForm: "{code} {title}: {rest}",
+    titleFormUni: "{code} {title} (UniMelb): {rest}",
     titleSep: ", ",
     titleHard: "sulitkah?",
     titleLevel: { easier: "cenderung mudah", average: "rata-rata", harder: "cenderung sulit" },
@@ -778,8 +779,8 @@ export const id: Messages = {
     careersDesc: "Pilih pekerjaan untuk melihat jurusan UniMelb yang mengarah ke sana dan mata kuliah yang paling penting. Sebelum kuliah atau saat memilih jurusan.",
     majorsTitle: "Jurusan, minor, dan spesialisasi di UniMelb",
     majorsDesc: "Apa yang dibutuhkan setiap jurusan, minor, dan spesialisasi UniMelb per tahun: mata kuliah inti, pilihan, dan yang sama di dua jurusan.",
-    hardQ: "Apakah {code} sulit?",
-    verdict: { easier: "Apakah {code} sulit? Cenderung mudah.", average: "Apakah {code} sulit? Rata-rata.", harder: "Apakah {code} sulit? Cenderung sulit." },
+    hardQ: "Apakah {code} UniMelb sulit?",
+    verdict: { easier: "Apakah {code} UniMelb sulit? Cenderung mudah.", average: "Apakah {code} UniMelb sulit? Rata-rata.", harder: "Apakah {code} UniMelb sulit? Cenderung sulit." },
     reviewsHere: "Ada ringkasan ulasan mahasiswa.",
     subjectsTitle: "Mata kuliah UniMelb: ulasan, kesulitan, matkul mudah",
     subjectsDesc: "Cari {n} mata kuliah UniMelb: semester, prasyarat, porsi ujian akhir. {r} punya ringkasan ulasan. Ada daftar matkul mudah, sulit, dan tanpa ujian.",

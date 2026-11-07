@@ -768,6 +768,7 @@ export const vi: Messages = {
   },
   seo: {
     titleForm: "{code} {title}: {rest}",
+    titleFormUni: "{code} {title} (UniMelb): {rest}",
     titleSep: ", ",
     titleHard: "khó không?",
     titleLevel: { easier: "khá dễ", average: "độ khó trung bình", harder: "khá khó" },
@@ -778,8 +779,8 @@ export const vi: Messages = {
     careersDesc: "Chọn một nghề để xem ngành nào ở UniMelb dẫn tới đó và môn nào quan trọng nhất. Dùng được trước khi nhập học, khi chọn ngành hay giữa chừng.",
     majorsTitle: "Các ngành chính, ngành phụ, chuyên ngành ở UniMelb",
     majorsDesc: "Mỗi ngành chính, ngành phụ và chuyên ngành ở UniMelb cần học gì theo từng năm: môn bắt buộc, môn tự chọn, môn hai ngành trùng nhau.",
-    hardQ: "{code} có khó không?",
-    verdict: { easier: "{code} có khó không? Thuộc loại dễ.", average: "{code} có khó không? Ở mức trung bình.", harder: "{code} có khó không? Thuộc loại khó." },
+    hardQ: "{code} UniMelb có khó không?",
+    verdict: { easier: "{code} UniMelb có khó không? Thuộc loại dễ.", average: "{code} UniMelb có khó không? Ở mức trung bình.", harder: "{code} UniMelb có khó không? Thuộc loại khó." },
     reviewsHere: "Có tóm tắt review của sinh viên.",
     subjectsTitle: "Môn học UniMelb: review, độ khó, môn dễ",
     subjectsDesc: "Tra {n} môn của Đại học Melbourne: học kỳ, môn tiên quyết, tỉ lệ thi. {r} môn có tóm tắt review. Danh sách môn dễ, môn khó, môn không thi.",

@@ -768,6 +768,7 @@ export const hi: Messages = {
   },
   seo: {
     titleForm: "{code} {title}: {rest}",
+    titleFormUni: "{code} {title} (UniMelb): {rest}",
     titleSep: ", ",
     titleHard: "कितना कठिन?",
     titleLevel: { easier: "अपेक्षाकृत आसान", average: "औसत कठिनाई", harder: "अपेक्षाकृत कठिन" },
@@ -778,8 +779,8 @@ export const hi: Messages = {
     careersDesc: "कोई नौकरी चुनें और देखें कि UniMelb के कौन-से मेजर वहाँ ले जाते हैं और कौन-से सब्जेक्ट सबसे ज़रूरी हैं। यूनि से पहले, मेजर चुनते समय या बीच में।",
     majorsTitle: "UniMelb मेजर, माइनर और स्पेशलाइज़ेशन",
     majorsDesc: "UniMelb के हर मेजर, माइनर और स्पेशलाइज़ेशन में साल-दर-साल क्या पढ़ना है: कोर सब्जेक्ट, विकल्प, और दो मेजर में साझा सब्जेक्ट।",
-    hardQ: "क्या {code} कठिन है?",
-    verdict: { easier: "क्या {code} कठिन है? अपेक्षाकृत आसान।", average: "क्या {code} कठिन है? औसत।", harder: "क्या {code} कठिन है? अपेक्षाकृत कठिन।" },
+    hardQ: "क्या UniMelb {code} कठिन है?",
+    verdict: { easier: "क्या UniMelb {code} कठिन है? अपेक्षाकृत आसान।", average: "क्या UniMelb {code} कठिन है? औसत।", harder: "क्या UniMelb {code} कठिन है? अपेक्षाकृत कठिन।" },
     reviewsHere: "छात्र रिव्यू का सार पेज पर है।",
     subjectsTitle: "UniMelb सब्जेक्ट: रिव्यू, कठिनाई, आसान विषय",
     subjectsDesc: "मेलबर्न यूनिवर्सिटी के {n} सब्जेक्ट कोड या नाम से खोजें: सेमेस्टर, प्रीरिक्विज़िट, एग्ज़ाम का हिस्सा। {r} के रिव्यू का सार। आसान, कठिन और बिना एग्ज़ाम वाले सब्जेक्ट की लिस्ट।",

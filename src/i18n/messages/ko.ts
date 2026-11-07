@@ -768,6 +768,7 @@ export const ko: Messages = {
   },
   seo: {
     titleForm: "{code} {title}: {rest}",
+    titleFormUni: "{code} {title} (멜번대): {rest}",
     titleSep: ", ",
     titleHard: "어려울까?",
     titleLevel: { easier: "쉬운 편", average: "보통 난이도", harder: "어려운 편" },
@@ -778,8 +779,8 @@ export const ko: Messages = {
     careersDesc: "직업을 고르면 멜버른대 어떤 전공으로 갈 수 있는지, 어떤 과목이 가장 중요한지 보여줍니다. 입학 전, 전공 고를 때, 학기 중에도.",
     majorsTitle: "멜번대 전공, 부전공, 세부 전공",
     majorsDesc: "멜버른대 각 전공·부전공·세부 전공에서 학년별로 들어야 할 것: 필수 과목, 선택 과목, 두 전공이 겹치는 과목.",
-    hardQ: "{code}는 어렵나요?",
-    verdict: { easier: "{code} 어렵나요? 쉬운 편입니다.", average: "{code} 어렵나요? 보통 수준입니다.", harder: "{code} 어렵나요? 어려운 편입니다." },
+    hardQ: "멜번대 {code}는 어렵나요?",
+    verdict: { easier: "멜번대 {code} 어렵나요? 쉬운 편입니다.", average: "멜번대 {code} 어렵나요? 보통 수준입니다.", harder: "멜번대 {code} 어렵나요? 어려운 편입니다." },
     reviewsHere: "학생 후기 요약이 있습니다.",
     subjectsTitle: "멜번대 과목 찾기: 후기, 난이도, 꿀강",
     subjectsDesc: "멜버른대 {n}개 과목을 코드나 이름으로 검색: 개설 학기, 선수 과목, 기말고사 비중. {r}개 과목은 후기 요약 포함. 꿀강·어려운 과목·시험 없는 과목 목록도.",

@@ -768,6 +768,7 @@ export const ms: Messages = {
   },
   seo: {
     titleForm: "{code} {title}: {rest}",
+    titleFormUni: "{code} {title} (UniMelb): {rest}",
     titleSep: ", ",
     titleHard: "susah tak?",
     titleLevel: { easier: "agak mudah", average: "sederhana", harder: "agak susah" },
@@ -778,8 +779,8 @@ export const ms: Messages = {
     careersDesc: "Pilih kerjaya untuk lihat major UniMelb yang menuju ke sana dan subjek yang paling penting. Sebelum masuk universiti atau semasa memilih major.",
     majorsTitle: "Major, minor dan pengkhususan di UniMelb",
     majorsDesc: "Apa yang setiap major, minor dan pengkhususan UniMelb perlukan, tahun demi tahun: subjek teras, pilihan, dan subjek yang dikongsi dua major.",
-    hardQ: "Adakah {code} sukar?",
-    verdict: { easier: "Adakah {code} susah? Agak mudah.", average: "Adakah {code} susah? Sederhana.", harder: "Adakah {code} susah? Agak susah." },
+    hardQ: "Adakah {code} UniMelb sukar?",
+    verdict: { easier: "Adakah {code} UniMelb susah? Agak mudah.", average: "Adakah {code} UniMelb susah? Sederhana.", harder: "Adakah {code} UniMelb susah? Agak susah." },
     reviewsHere: "Ada ringkasan ulasan pelajar.",
     subjectsTitle: "Subjek UniMelb: ulasan, kesukaran, subjek mudah",
     subjectsDesc: "Cari {n} subjek UniMelb: semester, prasyarat, bahagian peperiksaan akhir. {r} ada ringkasan ulasan. Senarai subjek mudah, susah dan tanpa peperiksaan.",

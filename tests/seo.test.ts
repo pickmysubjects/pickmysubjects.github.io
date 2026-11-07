@@ -167,8 +167,7 @@ describe('page titles and descriptions', () => {
 
   it('a subject title keeps code, name and verdict, and drops the site name before the facts', () => {
     const { title } = subjectMeta('en', 'COMP10001')
-    expect(title).toMatch(/^COMP10001 Foundations of Computing: /)
-    expect(title).toMatch(/50% exam/)
+    expect(title).toMatch(/^COMP10001 Foundations of Computing \(UniMelb\): /)
     expect(textWidth(title)).toBeLessThanOrEqual(TITLE_WIDTH)
   })
 

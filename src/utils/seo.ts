@@ -96,7 +96,8 @@ function backedLevel(d?: TitleDifficulty): Exclude<DifficultyLevel, 'unknown'> |
  * answer they want: how hard it is (only when students' reviews back the verdict, otherwise the
  * question itself), the final exam's share (only when the assessment is recorded) and "reviews"
  * (only when the page has some). The longest wording that fits is used: the site name goes first,
- * then "reviews", then the exam; the code, a name and the verdict always stay.
+ * then "reviews", then the exam, then the university's name; the code, a name and the verdict
+ * always stay.
  */
 export function subjectPageTitle(t: Translate, s: Subject, locale: string, difficulty?: TitleDifficulty): string {
   const local = localTitle(s, locale)
@@ -113,11 +114,15 @@ export function subjectPageTitle(t: Translate, s: Subject, locale: string, diffi
     return rest ? lead + (/？$/.test(lead) ? '' : /\?$/.test(lead) ? ' ' : sep) + rest : lead
   }
   const rests = [...new Set([join([exam, reviews]), join([exam]), lead])]
-  const candidates = rests.flatMap((rest) =>
-    names.flatMap((title) => {
-      const form = t('seo.titleForm', { code: s.code, title, rest })
-      return [`${form} | ${BRAND}`, form]
-    }),
+  // The university's name comes before the exam share and "reviews": a bare code search shows
+  // several universities' pages, and students skip one that doesn't say it's UniMelb.
+  const candidates = ['seo.titleFormUni', 'seo.titleForm'].flatMap((key) =>
+    rests.flatMap((rest) =>
+      names.flatMap((title) => {
+        const form = t(key, { code: s.code, title, rest })
+        return [`${form} | ${BRAND}`, form]
+      }),
+    ),
   )
   // A very long name runs past the width rather than lose the words in the page's language.
   return firstThatFits(candidates)

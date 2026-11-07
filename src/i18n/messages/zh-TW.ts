@@ -768,6 +768,7 @@ export const zhTW: Messages = {
   },
   seo: {
     titleForm: "{code} {title}：{rest}",
+    titleFormUni: "{code} {title}（墨大）：{rest}",
     titleSep: "，",
     titleHard: "難不難？",
     titleLevel: { easier: "偏容易", average: "難度中等", harder: "偏難" },
@@ -778,8 +779,8 @@ export const zhTW: Messages = {
     careersDesc: "選一個職業，看墨大哪些主修能通往它、哪些課最重要。入學前、選主修時、讀到一半都能用。",
     majorsTitle: "墨大主修、輔修和專業方向一覽",
     majorsDesc: "墨大每個主修、輔修和專業方向一到三年級要修什麼：必修課、選修課，還能看兩個主修有哪些課重疊。",
-    hardQ: "{code} 難嗎？",
-    verdict: { easier: "{code} 難嗎？偏容易。", average: "{code} 難嗎？難度中等。", harder: "{code} 難嗎？偏難。" },
+    hardQ: "墨大 {code} 難嗎？",
+    verdict: { easier: "墨大 {code} 難嗎？偏容易。", average: "墨大 {code} 難嗎？難度中等。", harder: "墨大 {code} 難嗎？偏難。" },
     reviewsHere: "頁面上有同學評價整理。",
     subjectsTitle: "墨大選課：課程評價、難不難、涼課推薦",
     subjectsDesc: "用課號或課名查 {n} 門墨大課程：開課學期、先修課、期末考佔比，{r} 門有同學評價整理。還有涼課榜、難課榜和沒有期末考的課。",

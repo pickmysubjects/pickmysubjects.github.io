@@ -768,6 +768,7 @@ export const ja: Messages = {
   },
   seo: {
     titleForm: "{code} {title}：{rest}",
+    titleFormUni: "{code} {title}（メルボルン大学）：{rest}",
     titleSep: "・",
     titleHard: "難しい？",
     titleLevel: { easier: "やさしめ", average: "難しさは平均的", harder: "難しめ" },
@@ -778,8 +779,8 @@ export const ja: Messages = {
     careersDesc: "仕事を選ぶと、メルボルン大学のどの専攻につながり、どの科目が大切かがわかります。入学前にも、専攻選びにも、在学中にも。",
     majorsTitle: "メルボルン大学の専攻・副専攻・専門分野",
     majorsDesc: "メルボルン大学の各専攻・副専攻・専門分野で、学年ごとに何を履修するか：必修科目、選択科目、2つの専攻で重なる科目。",
-    hardQ: "{code} は難しいですか？",
-    verdict: { easier: "{code} は難しい？やさしめ。", average: "{code} は難しい？難しさは平均的。", harder: "{code} は難しい？難しめ。" },
+    hardQ: "メルボルン大学の{code} は難しいですか？",
+    verdict: { easier: "メルボルン大学の{code} は難しい？やさしめ。", average: "メルボルン大学の{code} は難しい？難しさは平均的。", harder: "メルボルン大学の{code} は難しい？難しめ。" },
     reviewsHere: "学生レビューのまとめあり。",
     subjectsTitle: "メルボルン大学の科目：評判・難易度・楽単",
     subjectsDesc: "メルボルン大学の{n}科目をコードや名前で検索：開講学期、前提科目、期末試験の割合。{r}科目は学生レビューのまとめつき。楽単・難関・試験なしの一覧も。",
