@@ -1463,7 +1463,7 @@ export const ko: Messages = {
     routeOneOf: "다음 중 하나: {list}",
     routeLeads: "다음 과목: {list}",
     legendNeeds: "반드시 먼저 수강",
-    legendOneOf: "여러 과목 중 하나",
+    legendOneOf: "여러 과목 중 하나 (과목에 마우스를 올리면 표시)",
     structTip: "각 과목 아래 작은 글씨에 먼저 들어야 할 과목이 적혀 있어요. 실선: 반드시 먼저 들어야 해요. 점선: 여러 과목 중 하나면 돼요. 과목에 마우스를 올리면 이어진 과목이 모두 강조돼요.",
     alsoIn: "{list}에도 포함",
     listedIn: "그 밖에 {n}개는 {where}에 있어요",

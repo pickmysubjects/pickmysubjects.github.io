@@ -1463,7 +1463,7 @@ export const ms: Messages = {
     routeOneOf: "perlu salah satu: {list}",
     routeLeads: "membuka {list}",
     legendNeeds: "mesti diambil dulu",
-    legendOneOf: "salah satu daripada beberapa",
+    legendOneOf: "salah satu daripada beberapa (muncul apabila menuding subjek)",
     structTip: "Teks kecil di bawah setiap subjek menyatakan apa yang perlu diambil dulu. Garis penuh: mesti diambil dulu. Garis putus-putus: cukup salah satu. Halakan tetikus pada subjek untuk menyerlahkan seluruh rantaiannya.",
     alsoIn: "Juga dikira untuk {list}",
     listedIn: "Tambah {n} lagi di bawah {where}",

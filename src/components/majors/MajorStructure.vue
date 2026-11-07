@@ -270,12 +270,18 @@ const dense = computed(() => route.value.edges.length > 40)
   transition: opacity 0.15s;
 }
 
+/* "One of several" links show only with a picked-out chain: drawn all at once they tangle,
+   and each subject already says them as text. */
 .edge.one-of {
   stroke-dasharray: 4 4;
-  opacity: 0.45;
 }
 
-.legend .edge {
+.wrap .edge.one-of {
+  opacity: 0;
+}
+
+.legend .edge,
+.legend .edge.one-of {
   opacity: 1;
 }
 
@@ -283,9 +289,6 @@ const dense = computed(() => route.value.edges.length > 40)
   opacity: 0.28;
 }
 
-.dense .edge.one-of {
-  opacity: 0.16;
-}
 
 .lit .edge {
   opacity: 0.06;

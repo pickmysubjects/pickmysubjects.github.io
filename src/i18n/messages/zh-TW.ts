@@ -1463,7 +1463,7 @@ export const zhTW: Messages = {
     routeOneOf: "需要其中一門：{list}",
     routeLeads: "可接著修 {list}",
     legendNeeds: "必須先修",
-    legendOneOf: "幾門裡修一門就好",
+    legendOneOf: "幾門裡修一門就行（指向課程時顯示）",
     structTip: "每門課下面的小字寫著它要先修什麼。實線：必須先修；虛線：幾門裡修一門就好。滑鼠移到課程上，會標出它的整條先修鏈。",
     alsoIn: "也可算進{list}",
     listedIn: "另有 {n} 門列在{where} 裡",

@@ -1463,7 +1463,7 @@ export const ja: Messages = {
     routeOneOf: "次のうち1つ：{list}",
     routeLeads: "次に取れる：{list}",
     legendNeeds: "必ず先に履修",
-    legendOneOf: "いずれか1つでOK",
+    legendOneOf: "いずれか1つでOK（科目にカーソルを合わせると表示）",
     structTip: "各科目の下の小さな文字に、先に取る科目が書いてあります。実線：必ず先に履修。点線：いくつかのうち1つでOK。科目にカーソルを合わせると、つながり全体が強調されます。",
     alsoIn: "{list}にも数えられる",
     listedIn: "ほかに {n} 科目が{where}に載っています",

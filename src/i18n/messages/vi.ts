@@ -1463,7 +1463,7 @@ export const vi: Messages = {
     routeOneOf: "cần một trong {list}",
     routeLeads: "mở ra {list}",
     legendNeeds: "phải học trước",
-    legendOneOf: "một trong vài môn",
+    legendOneOf: "một trong vài môn (hiện khi trỏ vào môn)",
     structTip: "Dòng chữ nhỏ dưới mỗi môn ghi môn đó cần học gì trước. Nét liền: bắt buộc học trước. Nét đứt: chỉ cần một trong vài môn. Rê chuột lên một môn để làm nổi cả chuỗi môn liên quan.",
     alsoIn: "Cũng tính cho {list}",
     listedIn: "Thêm {n} môn nằm ở {where}",

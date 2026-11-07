@@ -1468,7 +1468,7 @@ export const en = {
     routeOneOf: "needs one of {list}",
     routeLeads: "leads to {list}",
     legendNeeds: "needed first",
-    legendOneOf: "one of several",
+    legendOneOf: "one of several (shown when you point at a subject)",
     structTip: "The small text under each subject says what it needs first. Solid line: you need it. Dashed: one of several ways in. Hover a subject to light up its whole chain.",
     alsoIn: "Also counts for {list}",
     listedIn: "Plus {n} listed under {where}",
