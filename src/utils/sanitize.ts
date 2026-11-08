@@ -85,12 +85,19 @@ function cleanState(v: unknown): PlanState | null {
   if (!isObject(v) || !isObject(v.setup) || typeof v.setup.course !== 'string' || !Array.isArray(v.terms)) return null
   const terms = v.terms
     .filter((t): t is Record<string, unknown> => isObject(t) && typeof t.year === 'number' && (PERIODS as readonly string[]).includes(String(t.period)))
-    .map((t) => ({ year: t.year, period: t.period, subjects: strings(t.subjects), ...(t.edited === true ? { edited: true } : {}) }))
+    // A code twice in one semester (a hand-edited copy) would count its points twice: kept once.
+    .map((t) => ({ year: t.year, period: t.period, subjects: [...new Set(strings(t.subjects))], ...(t.edited === true ? { edited: true } : {}) }))
   return {
     // A plan saved before second majors existed has none; anything but a string is dropped.
     // Likewise a diploma and its stream.
-    setup: (({ major2, diploma, diplomaStream, load, ...rest }) => ({
+    setup: (({ major2, diploma, diplomaStream, load, startYear, startPeriod, courseYear, major, specialisation, ...rest }) => ({
       ...rest,
+      // The parts every page reads: a wrong type here would break the board, so a sound default.
+      startYear: typeof startYear === 'number' ? startYear : ((terms[0]?.year as number | undefined) ?? new Date().getFullYear()),
+      startPeriod: (PERIODS as readonly unknown[]).includes(startPeriod) ? startPeriod : 'semester-1',
+      courseYear: typeof courseYear === 'number' ? courseYear : typeof startYear === 'number' ? startYear : ((terms[0]?.year as number | undefined) ?? new Date().getFullYear()),
+      major: typeof major === 'string' ? major : '',
+      specialisation: typeof specialisation === 'string' ? specialisation : '',
       // A part-time load, only one of those offered; full-time (or anything else) is left out.
       ...(typeof load === 'number' && (STUDY_LOADS as readonly number[]).includes(load) && load < 50 ? { load } : {}),
       minors: strings(v.setup.minors),
@@ -99,8 +106,9 @@ function cleanState(v: unknown): PlanState | null {
       ...(typeof diplomaStream === 'string' && diplomaStream ? { diplomaStream } : {}),
     }))(v.setup) as unknown as PlanState['setup'],
     terms: terms as PlanState['terms'],
-    notes: Array.isArray(v.notes) ? v.notes : [],
-    unplaced: Array.isArray(v.unplaced) ? v.unplaced : [],
+    // Notes and unplaced subjects are only shown; one that isn't the right shape is left out.
+    notes: Array.isArray(v.notes) ? v.notes.filter((n) => isObject(n) && typeof n.key === 'string' && typeof n.text === 'string') : [],
+    unplaced: Array.isArray(v.unplaced) ? v.unplaced.filter((u) => isObject(u) && typeof u.code === 'string' && typeof u.reasonKey === 'string') : [],
   }
 }
 
