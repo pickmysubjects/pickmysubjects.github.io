@@ -1468,7 +1468,7 @@ export const ja: Messages = {
     alsoIn: "{list}にも数えられる",
     listedIn: "ほかに {n} 科目が{where}に載っています",
     level: "レベル {n}",
-    noPathway: "この専攻のレベル1・2科目はまだ入力しきれていません。先に取る科目は Handbook を確認してください。",
+    noPathway: "ここにある科目やその前提科目の一部は、まだデータが揃っていません。何を先に取るかは Handbook で確認してください。",
     compareTitle: "ほかの専攻と比べる",
     comparePick: "専攻を選ぶ",
     compareShared: "共通の科目が {n} 個あります",

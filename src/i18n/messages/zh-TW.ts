@@ -1468,7 +1468,7 @@ export const zhTW: Messages = {
     alsoIn: "也可算進{list}",
     listedIn: "另有 {n} 門列在{where} 裡",
     level: "{n} 年級",
-    noPathway: "這個主修的一二年級課程我們還沒輸入完整，先修什麼請以 Handbook 為準。",
+    noPathway: "這裡有些課或它們的先修課我們還沒錄全，先修什麼請以 Handbook 為準。",
     compareTitle: "和別的主修比較",
     comparePick: "選一個主修",
     compareShared: "有 {n} 門課是共同的",

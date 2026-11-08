@@ -1468,7 +1468,7 @@ export const zhCN: Messages = {
     alsoIn: "也可算进{list}",
     listedIn: "另有 {n} 门列在{where} 里",
     level: "{n} 年级",
-    noPathway: "这个专业的一二年级课程我们还没录全，先修什么请以 Handbook 为准。",
+    noPathway: "这里有些课或它们的先修课我们还没录全，先修什么请以 Handbook 为准。",
     compareTitle: "和别的专业比较",
     comparePick: "选一个专业",
     compareShared: "有 {n} 门课是共同的",

@@ -142,6 +142,8 @@ export interface MajorOverview {
   routes: { code: string; via: string }[]
   /** A major with entry points: their names, the first being the one shown. */
   entryRoutes: { title: string; note?: string }[]
+  /** Some listed subject, or a subject its prerequisites name, isn't in our data (or its prerequisites aren't recorded). */
+  gaps: boolean
 }
 
 const OVERVIEWS = new WeakMap<Dataset, Map<string, MajorOverview | null>>()
@@ -174,7 +176,9 @@ function overviewOf(data: Dataset, id: string, course: string): MajorOverview | 
     else if (role?.role === 'route' && role.via) routes.push({ code: s.code, via: role.via })
   }
   const byCode = (a: { code: string }, b: { code: string }) => a.code.localeCompare(b.code)
-  return { core, choices, pathway: pathway.sort(byCode), routes: routes.sort(byCode), entryRoutes: (c.routes ?? []).map((r) => ({ title: r.title, note: r.note })) }
+  const known = (code: string) => !!data.subjects[code] && data.subjects[code]!.prerequisites !== 'unknown'
+  const gaps = [...listed].some((code) => !known(code) || prereqRefs(data, code).some((ref) => !data.subjects[ref]))
+  return { core, choices, pathway: pathway.sort(byCode), routes: routes.sort(byCode), entryRoutes: (c.routes ?? []).map((r) => ({ title: r.title, note: r.note })), gaps }
 }
 
 /** Subjects two majors share anywhere in their overview (core, choices or pathway). */

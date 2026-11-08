@@ -161,7 +161,7 @@ function planWithIt(): void {
               <span class="route-names">{{ overview.entryRoutes.map((r) => r.title).join(' · ') }}</span>
             </p>
             <MajorStructure :overview="overview" :year="year" :course="major.course" />
-            <p v-if="!overview.pathway.length" class="note-line">{{ t('majors.noPathway') }}</p>
+            <p v-if="overview.gaps" class="note-line">{{ t('majors.noPathway') }}</p>
           </SubjectSection>
         </template>
 

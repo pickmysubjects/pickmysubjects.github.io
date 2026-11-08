@@ -81,7 +81,8 @@ const byField = computed(() => !q.value && kind.value === 'major')
 const fields = computed(() => (byField.value ? groupMajors(pool.value) : []))
 const field = computed(() => (fields.value.some((g) => g.id === wanted.value.field) ? wanted.value.field : ''))
 const shown = computed(() => {
-  const groups = byField.value ? fields.value : [{ id: '', majors: [...pool.value].sort((a, b) => a.title.localeCompare(b.title)) }]
+  // One field only (a degree whose majors aren't sorted into fields): one plain list, no heading.
+  const groups = fields.value.length > 1 ? fields.value : [{ id: '', majors: [...pool.value].sort((a, b) => a.title.localeCompare(b.title)) }]
   return groups.filter((g) => !field.value || g.id === field.value)
 })
 const count = computed(() => shown.value.reduce((n, g) => n + g.majors.length, 0))

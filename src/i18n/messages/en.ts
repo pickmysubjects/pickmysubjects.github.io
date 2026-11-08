@@ -1473,7 +1473,7 @@ export const en = {
     alsoIn: "Also counts for {list}",
     listedIn: "Plus {n} listed under {where}",
     level: "Level {n}",
-    noPathway: "We haven't finished entering this major's level-1 and level-2 subjects. Check the Handbook for what to take first.",
+    noPathway: "Some subjects here, or what they build on, aren't fully in our data yet. Check the Handbook for what to take first.",
     compareTitle: "Compare with another major",
     comparePick: "Pick a major",
     compareShared: "{n} subjects in common",

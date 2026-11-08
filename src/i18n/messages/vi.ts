@@ -1468,7 +1468,7 @@ export const vi: Messages = {
     alsoIn: "Cũng tính cho {list}",
     listedIn: "Thêm {n} môn nằm ở {where}",
     level: "Level {n}",
-    noPathway: "Chúng tôi chưa nhập đủ các môn level 1 và 2 của chuyên ngành này. Xem Handbook để biết cần học gì trước.",
+    noPathway: "Một số môn ở đây, hoặc môn tiên quyết của chúng, chưa có đủ trong dữ liệu. Hãy xem Handbook để biết cần học gì trước.",
     compareTitle: "So sánh với chuyên ngành khác",
     comparePick: "Chọn chuyên ngành",
     compareShared: "{n} môn chung",

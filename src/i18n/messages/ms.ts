@@ -1468,7 +1468,7 @@ export const ms: Messages = {
     alsoIn: "Juga dikira untuk {list}",
     listedIn: "Tambah {n} lagi di bawah {where}",
     level: "Tahap {n}",
-    noPathway: "Subjek tahap 1 dan 2 untuk major ini belum lengkap kami masukkan. Semak Handbook untuk apa yang perlu diambil dulu.",
+    noPathway: "Sesetengah subjek di sini, atau prasyaratnya, belum lengkap dalam data kami. Semak Handbook untuk tahu apa yang perlu diambil dahulu.",
     compareTitle: "Bandingkan dengan major lain",
     comparePick: "Pilih major",
     compareShared: "{n} subjek yang sama",

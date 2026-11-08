@@ -1468,7 +1468,7 @@ export const ko: Messages = {
     alsoIn: "{list}에도 포함",
     listedIn: "그 밖에 {n}개는 {where}에 있어요",
     level: "레벨 {n}",
-    noPathway: "이 전공의 레벨 1·2 과목은 아직 다 입력하지 못했어요. 먼저 들을 과목은 Handbook을 확인하세요.",
+    noPathway: "여기 일부 과목이나 그 선수과목은 아직 데이터가 다 입력되지 않았어요. 무엇을 먼저 들을지는 Handbook에서 확인하세요.",
     compareTitle: "다른 전공과 비교",
     comparePick: "전공 고르기",
     compareShared: "공통 과목 {n}개",

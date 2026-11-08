@@ -1468,7 +1468,7 @@ export const id: Messages = {
     alsoIn: "Juga dihitung untuk {list}",
     listedIn: "Ditambah {n} lagi di {where}",
     level: "Level {n}",
-    noPathway: "Mata kuliah level 1 dan 2 untuk major ini belum lengkap kami masukkan. Cek Handbook untuk yang harus diambil dulu.",
+    noPathway: "Beberapa mata kuliah di sini, atau prasyaratnya, belum lengkap di data kami. Cek Handbook untuk tahu apa yang diambil dulu.",
     compareTitle: "Bandingkan dengan major lain",
     comparePick: "Pilih major",
     compareShared: "{n} mata kuliah yang sama",
