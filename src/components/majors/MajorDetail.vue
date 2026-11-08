@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { thisYear } from '@/engine/dataYear'
 import { pickText } from '@/utils/majorPick'
 import { viewYear } from '@/engine/dataYear'
 import { computed, shallowRef } from 'vue'
@@ -58,6 +59,8 @@ const otherId = shallowRef('')
 const others = computed(() =>
   data.value.components
     .filter((c) => c.course === major.value?.course && c.kind === major.value?.kind && c.informal === major.value?.informal && c.id !== props.id)
+    // Closed to new students: not something to weigh this one against (the list hides them too).
+    .filter((c) => c.closedFrom === undefined || thisYear() < c.closedFrom)
     .sort((a, b) => a.title.localeCompare(b.title)),
 )
 const shared = computed(() => {
