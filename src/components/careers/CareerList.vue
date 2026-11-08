@@ -1,17 +1,20 @@
 <script setup lang="ts">
 import InfoTip from '@/components/InfoTip.vue'
 import BrowseHero from '@/components/browse/BrowseHero.vue'
-import { computed, shallowRef } from 'vue'
+import { computed, shallowRef, watch } from 'vue'
 import { Briefcase, ChevronRight, GraduationCap, Search } from 'lucide-vue-next'
 import { careerGroups, careerMatchRank, careerSearchTerms, careerTargets, majorsForCareer } from '@/engine'
 import { careerLabel } from '@/utils/careersHtml'
-import { link } from '@/composables/useView'
+import { link, replaceAddress, useView } from '@/composables/useView'
 import { useDataset } from '@/composables/useDataset'
 import { useI18n } from '@/i18n'
 
 const { data } = useDataset()
 const { t, locale } = useI18n()
-const query = shallowRef('')
+// The search lives in the address (/careers/?q=…), so Back from a career keeps it.
+const { query: address } = useView()
+const query = shallowRef(address.value.get('q') ?? '')
+watch(query, (q) => replaceAddress(`careers/${q ? `?q=${encodeURIComponent(q)}` : ''}`))
 
 const all = computed(() =>
   careerTargets(data.value).map((c) => ({

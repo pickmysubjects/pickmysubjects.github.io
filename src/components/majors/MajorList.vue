@@ -10,7 +10,7 @@ import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
 import { useI18n } from '@/i18n'
 import { groupMajors, majorGroupOf } from '@/utils/majorGroups'
-import { MAJOR_KINDS, majorsAddress, majorsFromQuery, type MajorKind as Kind, type MajorsChoice } from '@/utils/majorsAddress'
+import { MAJOR_KINDS, majorsAddress, majorsFromQuery, rememberMajorsList, type MajorKind as Kind, type MajorsChoice } from '@/utils/majorsAddress'
 
 /**
  * Every major, minor and specialisation, found fast: the search (across every degree), the
@@ -66,7 +66,9 @@ function choose(next: Partial<MajorsChoice>): void {
   const c = { ...now, ...next }
   // Left out of the address: whatever the list would choose by itself for the rest.
   const firstKind = MAJOR_KINDS.find((k) => hasKind(c.degree, k)) ?? 'major'
-  replaceAddress(majorsAddress(c, { degree: defaultDegreeFor(c.kind), kind: firstKind }))
+  const to = majorsAddress(c, { degree: defaultDegreeFor(c.kind), kind: firstKind })
+  rememberMajorsList(to)
+  replaceAddress(to)
 }
 // Another degree or kind starts from any field.
 const setDegree = (d: string) => choose({ degree: d, kind: '', field: '' })

@@ -36,3 +36,22 @@ const OLD_ANCHORS: Record<string, MajorKind> = { 'majors-title': 'major', 'minor
 export function majorsAnchorKind(hash: string): MajorKind | null {
   return OLD_ANCHORS[hash.replace(/^#/, '')] ?? null
 }
+
+const LAST_LIST = 'sc:majors-list'
+/** Remembers the list's address (this tab only), so a major's "All majors" link returns to it. */
+export function rememberMajorsList(address: string): void {
+  try {
+    sessionStorage.setItem(LAST_LIST, address)
+  } catch {
+    // Storage blocked: the link opens the plain list.
+  }
+}
+/** The list's last address in this tab, or the plain list. */
+export function lastMajorsList(): string {
+  try {
+    const a = sessionStorage.getItem(LAST_LIST)
+    return a && a.startsWith('majors/') ? a : 'majors/'
+  } catch {
+    return 'majors/'
+  }
+}

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { lastMajorsList } from '@/utils/majorsAddress'
 import { thisYear } from '@/engine/dataYear'
 import { pickText } from '@/utils/majorPick'
 import { viewYear } from '@/engine/dataYear'
@@ -115,7 +116,7 @@ function planWithIt(): void {
 
 <template>
   <div v-if="major" class="detail">
-    <DetailHero :back="{ href: link('majors'), label: t('majors.all') }" :eyebrow="`${courseTitle} · ${kind}`" :title="major.title" :art="heroArt">
+    <DetailHero :back="{ href: link(lastMajorsList()), label: t('majors.all') }" :eyebrow="`${courseTitle} · ${kind}`" :title="major.title" :art="heroArt">
       <dl class="facts">
         <div class="fact">
           <dt>{{ t('majors.factTotal') }}</dt>
@@ -198,7 +199,7 @@ function planWithIt(): void {
   </div>
 
   <div v-else class="detail">
-    <DetailHero :back="{ href: link('majors'), label: t('majors.all') }" :title="t('majors.notFound')" :art="heroArt" />
+    <DetailHero :back="{ href: link(lastMajorsList()), label: t('majors.all') }" :title="t('majors.notFound')" :art="heroArt" />
     <nav v-if="close.length" class="close surface" :aria-label="t('majors.didYouMean')">
       <p class="close-title">{{ t('majors.didYouMean') }}</p>
       <ul class="close-list">

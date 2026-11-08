@@ -5,7 +5,7 @@ import Pager from '@/components/Pager.vue'
 import { CLUB_CATEGORIES, CLUBS, CLUBS_LISTING, type ClubCategory } from '@/content/clubs'
 import { suggestClubs } from '@/engine/clubs'
 import { foldSearch } from '@/engine/careerPaths'
-import { link } from '@/composables/useView'
+import { link, replaceAddress, useView } from '@/composables/useView'
 import { useDataset } from '@/composables/useDataset'
 import { useClubInfo } from '@/composables/useClubInfo'
 import { usePlan } from '@/composables/usePlan'
@@ -33,8 +33,12 @@ const forYou = computed(() =>
   }),
 )
 
-const query = shallowRef('')
-const category = shallowRef<ClubCategory | ''>('')
+// Search, category and page live in the address (/clubs/?q=…&cat=…&page=2), so Back from a club
+// or a reload opens the list as it was left.
+const { query: address } = useView()
+const startCat = address.value.get('cat') ?? ''
+const query = shallowRef(address.value.get('q') ?? '')
+const category = shallowRef<ClubCategory | ''>((CLUB_CATEGORIES as readonly string[]).includes(startCat) ? (startCat as ClubCategory) : '')
 const counts = computed(() => Object.fromEntries(CLUB_CATEGORIES.map((c) => [c, CLUBS.filter((x) => x.category === c).length])))
 const byName = [...CLUBS].sort((a, b) => a.name.localeCompare(b.name))
 const shown = computed(() => {
@@ -49,10 +53,20 @@ const shown = computed(() => {
 
 // A page at a time, as on Find subjects; a new filter starts again from the first page.
 const PER_PAGE = 24
-const page = shallowRef(1)
+const page = shallowRef(Math.max(1, Number(address.value.get('page')) || 1))
 const pages = computed(() => Math.max(1, Math.ceil(shown.value.length / PER_PAGE)))
-const rows = computed(() => shown.value.slice((page.value - 1) * PER_PAGE, page.value * PER_PAGE))
+// A page past the end (fewer clubs match now) shows the last one.
+const current = computed(() => Math.min(page.value, pages.value))
+const rows = computed(() => shown.value.slice((current.value - 1) * PER_PAGE, current.value * PER_PAGE))
 watch([query, category], () => (page.value = 1))
+watch([query, category, page], ([q, cat, n]) => {
+  const p = new URLSearchParams()
+  if (q) p.set('q', q)
+  if (cat) p.set('cat', cat)
+  if (n > 1) p.set('page', String(n))
+  const rest = p.toString()
+  replaceAddress(`clubs/${rest ? `?${rest}` : ''}`)
+})
 function go(n: number): void {
   page.value = n
   document.getElementById('clubs-all')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -98,7 +112,7 @@ const topicNames = (topics: readonly string[]) => topics.slice(0, 3).map((x) => 
           <span class="card-meta">{{ t(`clubsPage.cat.${c.category}`) }}<template v-if="c.topics.length"> · {{ topicNames(c.topics) }}</template></span>
         </a>
       </div>
-      <Pager v-if="pages > 1" :page="page" :pages="pages" @go="go" />
+      <Pager v-if="pages > 1" :page="current" :pages="pages" @go="go" />
     </section>
 
     <p class="source">{{ t('clubsPage.source') }} <a :href="CLUBS_LISTING" target="_blank" rel="noopener">{{ t('clubs.all') }}</a></p>
