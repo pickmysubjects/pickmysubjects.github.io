@@ -66,7 +66,8 @@ function add(): void {
     return
   }
   // Pass/fail subjects have no mark to keep.
-  const m = mark.value === '' || props.subjects[c]?.passFail ? undefined : Number(mark.value)
+  // Marks are 0–100, as the row's own mark box keeps them; a typed 150 would be dropped on reload.
+  const m = mark.value === '' || props.subjects[c]?.passFail ? undefined : Math.max(0, Math.min(100, Number(mark.value)))
   const [y, p] = addTerm.value.split('|')
   results.value = [...results.value, y && p ? { code: c, mark: m, year: Number(y), period: p as Period } : { code: c, mark: m }]
   if (props.subjects[c] && shouldPrompt(c)) {

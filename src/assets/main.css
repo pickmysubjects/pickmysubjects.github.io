@@ -1310,6 +1310,14 @@ html {
 /* Windows High Contrast (forced colours): glass, shadows and tinted fills vanish, so give every
    panel, control and divider a real system-colour border and keep focus rings visible. */
 @media (forced-colors: active) {
+  /* Components swap their outline for a box-shadow, which forced colours removes: put a real ring back. */
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible,
+  :focus-visible {
+    outline: 3px solid Highlight !important;
+    outline-offset: 2px;
+  }
   .surface,
   .glass,
   .card,

@@ -89,7 +89,9 @@ function current(): Route {
   }
   const to = movedTo(r.view, r.param)
   if (to) {
-    history.replaceState(null, '', link(to) + location.hash)
+    // The old suggestions page's own choices (?course=…) carry over to the list.
+    const rest = r.view === 'recommend' ? location.search.slice(1) : ''
+    history.replaceState(null, '', link(to) + (rest ? `${to.includes('?') ? '&' : '?'}${rest}` : '') + location.hash)
     return parsePath(pagePath(), location.search)
   }
   // An old link to one kind's section of the majors list opens the list on that kind.

@@ -26,7 +26,8 @@ const plan = usePlan()
 const forYou = computed(() =>
   suggestClubs(CLUBS, {
     interests: profile.value.interests,
-    course: plan.setupChosen.value ? course.value : undefined,
+    // A degree based on another (Science Extended) shares its societies.
+    course: plan.setupChosen.value ? (data.value.courses.find((c) => c.code === course.value)?.basedOn ?? course.value) : undefined,
     codes: [...profile.value.results.map((r) => r.code), ...plan.plan.value.terms.flatMap((term) => term.subjects)],
     data: data.value,
   }),

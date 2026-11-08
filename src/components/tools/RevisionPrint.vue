@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { melbourneToday } from '@/utils/keyDates'
 import { computed } from 'vue'
 import { useI18n } from '@/i18n'
 import { addDays, weekday, type RevisionDay, type RevisionPlan, type RevisionType } from '@/engine/revisionPlan'
@@ -34,7 +35,8 @@ const examText = (code: string) => [t.value('rev.exam'), code, timeOf(code)].fil
 const total = computed(() => props.plan.totals.reduce((s, x) => s + x.hours, 0))
 const first = computed(() => props.plan.days[0]?.date ?? '')
 const last = computed(() => props.plan.days.at(-1)?.date ?? '')
-const today = new Date().toISOString().slice(0, 10)
+// Melbourne's date, not UTC's (which is yesterday before 10 or 11 am there).
+const today = melbourneToday()
 const meta = computed(() => t.value('rev.printMeta', { from: dayLabel(first.value), to: dayLabel(last.value), hours: hours(total.value), date: dayLabel(today) }))
 
 /** A day's sittings, back-to-back ones of the same subject and kind joined: "COMP10001 3 h · 自测". */

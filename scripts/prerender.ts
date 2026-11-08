@@ -69,6 +69,8 @@ import { id } from '../src/i18n/messages/id'
 import { ms } from '../src/i18n/messages/ms'
 import { hi } from '../src/i18n/messages/hi'
 
+// Open Graph wants language_TERRITORY: the place each language's readers most likely are.
+const OG_LOCALE: Record<LocaleCode, string> = { en: 'en_AU', 'zh-CN': 'zh_CN', 'zh-TW': 'zh_TW', ja: 'ja_JP', ko: 'ko_KR', vi: 'vi_VN', id: 'id_ID', ms: 'ms_MY', hi: 'hi_IN' }
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
 const data = JSON.parse(readFileSync(join(ROOT, 'src', 'generated', 'real.json'), 'utf8')) as Dataset
 // Each degree's first year before a major, worked out by `npm run data` (the new-students guide).
@@ -229,7 +231,7 @@ function render(page: Page, code: LocaleCode): string {
     `<link rel="alternate" hreflang="x-default" href="${absolute('en', page.path)}" />`,
     `<meta property="og:type" content="website" />`,
     `<meta property="og:site_name" content="${BRAND}" />`,
-    `<meta property="og:locale" content="${code.replace('-', '_')}" />`,
+    `<meta property="og:locale" content="${OG_LOCALE[code]}" />`,
     `<meta property="og:title" content="${esc(page.title)}" />`,
     `<meta property="og:description" content="${esc(page.description)}" />`,
     `<meta property="og:url" content="${url}" />`,

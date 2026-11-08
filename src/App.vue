@@ -59,6 +59,8 @@ const TITLES: Partial<Record<string, string>> = {
   shortlist: 'shortlist.title',
   careers: 'careerPath.title',
   changes: 'menu.changes',
+  // A compare link that isn't a valid pair shows the saved subjects.
+  compare: 'shortlist.title',
 }
 watchEffect(() => {
   const s = view.value === 'subject' ? data.value.subjects[param.value.toUpperCase()] : undefined

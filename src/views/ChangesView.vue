@@ -47,7 +47,9 @@ const sections = computed(() =>
     : [],
 )
 const hrefOf = (kind: 'subject' | 'major', id: string) => link(`${kind === 'subject' ? 'subject' : 'majors'}/${id}`)
-const title = computed(() => (props.year ? t.value('changes.heading', { year: props.year }) : t.value('menu.changes')))
+// A year with no comparison (a mistyped or old one) shows the index rather than an empty page.
+const year = computed(() => (diff.value || !loaded.value ? props.year : ''))
+const title = computed(() => (year.value ? t.value('changes.heading', { year: year.value }) : t.value('menu.changes')))
 const exists = (kind: 'subject' | 'major', id: string) => (kind === 'subject' ? !!data.value.subjects[id] : data.value.components.some((c) => c.id === id))
 </script>
 
