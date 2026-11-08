@@ -1188,6 +1188,7 @@ export const vi: Messages = {
   },
   pager: { label: "Trang", prev: "Trước", next: "Sau" },
   browse: {
+    yearLong: "cả năm",
     switchSubjects: "Môn học",
     switchMajors: "Chuyên ngành",
     switchCareers: "Nghề nghiệp",

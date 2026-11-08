@@ -1,4 +1,5 @@
 import { periodsFor } from './availability'
+import { withYearLong } from './yearLongPeriods'
 import { compareListed, inTopShare, listMember, RANK_SLUGS, rankFromSlug, type RankDirection, type RankedSubject } from './easeRanking'
 import { simplifyFor } from './expr'
 import { prereqStatus, type Recommendation, type Standing } from './recommend'
@@ -155,7 +156,8 @@ function overall(subject: Subject): number | null {
 function browseRow(subject: Subject, year: number): BrowseRow {
   return {
     subject,
-    periods: periodsFor(subject, year),
+    // A year-long subject is enrolled once in Semester 1 and runs through Semester 2 too.
+    periods: withYearLong(subject, periodsFor(subject, year)),
     exam: share(subject, (t) => t.kind === 'exam'),
     group: share(subject, (t) => t.group === true),
     hours: subject.weeklyContactHours ?? null,

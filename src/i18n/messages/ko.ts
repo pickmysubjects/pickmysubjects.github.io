@@ -1188,6 +1188,7 @@ export const ko: Messages = {
   },
   pager: { label: "페이지", prev: "이전", next: "다음" },
   browse: {
+    yearLong: "연간",
     switchSubjects: "과목",
     switchMajors: "전공",
     switchCareers: "진로",

@@ -136,7 +136,8 @@ export function runsLine(t: Translate, s: Subject, wanted: number, listSep: stri
   if (s.offerings === 'unknown') return t('seo.notRecorded')
   const year = factsYear(s, wanted).year
   const periods = periodsFor(s, year)
-  return periods.length ? t('seo.runs', { year, periods: periods.map((p) => t(`period.${p}`)).join(listSep) }) : t('seo.notRunning', { year })
+  if (!periods.length) return t('seo.notRunning', { year })
+  return t('seo.runs', { year, periods: s.yearLong && periods.includes('semester-1') ? t('plan.yearLongRuns') : periods.map((p) => t(`period.${p}`)).join(listSep) })
 }
 
 const CJK = new Set(['zh-CN', 'zh-TW', 'ja'])

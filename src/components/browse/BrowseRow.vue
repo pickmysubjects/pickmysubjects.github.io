@@ -33,7 +33,7 @@ const closed = computed(() => data.value.courses.some((c) => c.code === props.co
 
 const runs = computed(() => {
   const r = props.row
-  if (r.periods.length) return r.periods.map((p) => t.value(`periodShort.${p}`)).join(' · ')
+  if (r.periods.length) return r.periods.map((p) => t.value(`periodShort.${p}`)).join(' · ') + (s.value.yearLong ? ` (${t.value('browse.yearLong')})` : '')
   return s.value.offerings === 'unknown' ? '—' : t.value('browse.notRunning')
 })
 const exam = computed(() => {

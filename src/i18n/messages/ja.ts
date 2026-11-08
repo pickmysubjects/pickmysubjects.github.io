@@ -1188,6 +1188,7 @@ export const ja: Messages = {
   },
   pager: { label: "ページ", prev: "前へ", next: "次へ" },
   browse: {
+    yearLong: "通年",
     switchSubjects: "科目",
     switchMajors: "専攻",
     switchCareers: "キャリア",

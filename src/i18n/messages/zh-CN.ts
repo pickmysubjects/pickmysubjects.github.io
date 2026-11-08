@@ -1188,6 +1188,7 @@ export const zhCN: Messages = {
   },
   pager: { label: "分页", prev: "上一页", next: "下一页" },
   browse: {
+    yearLong: "全年",
     switchSubjects: "课程",
     switchMajors: "专业",
     switchCareers: "职业方向",

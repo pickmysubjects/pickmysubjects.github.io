@@ -1188,6 +1188,7 @@ export const id: Messages = {
   },
   pager: { label: "Halaman", prev: "Sebelumnya", next: "Berikutnya" },
   browse: {
+    yearLong: "setahun",
     switchSubjects: "Mata kuliah",
     switchMajors: "Jurusan",
     switchCareers: "Karier",

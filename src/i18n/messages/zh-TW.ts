@@ -1188,6 +1188,7 @@ export const zhTW: Messages = {
   },
   pager: { label: "分頁", prev: "上一頁", next: "下一頁" },
   browse: {
+    yearLong: "全年",
     switchSubjects: "課程",
     switchMajors: "專業",
     switchCareers: "職涯方向",

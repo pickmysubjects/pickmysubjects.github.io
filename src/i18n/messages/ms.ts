@@ -1188,6 +1188,7 @@ export const ms: Messages = {
   },
   pager: { label: "Halaman", prev: "Sebelumnya", next: "Seterusnya" },
   browse: {
+    yearLong: "setahun",
     switchSubjects: "Subjek",
     switchMajors: "Major",
     switchCareers: "Kerjaya",

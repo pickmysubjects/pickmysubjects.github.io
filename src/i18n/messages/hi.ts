@@ -1188,6 +1188,7 @@ export const hi: Messages = {
   },
   pager: { label: "पेज", prev: "पिछला", next: "अगला" },
   browse: {
+    yearLong: "पूरे साल",
     switchSubjects: "सब्जेक्ट",
     switchMajors: "मेजर",
     switchCareers: "करियर",

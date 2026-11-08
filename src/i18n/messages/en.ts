@@ -1193,6 +1193,7 @@ export const en = {
   },
   pager: { label: "Pages", prev: "Previous", next: "Next" },
   browse: {
+    yearLong: "year-long",
     switchSubjects: "Subjects",
     switchMajors: "Majors",
     switchCareers: "Careers",

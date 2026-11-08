@@ -103,7 +103,7 @@ async function saveListImage(): Promise<void> {
             String(r.subject.points),
             r.exam === null ? '–' : r.exam === 0 ? t.value('browse.imageCol.none') : `${r.exam}%`,
             hours ? String(hours) : '–',
-            r.prereqNone ? t.value('browse.imageCol.none') : t.value('browse.imageCol.yes'),
+            r.prereqNone ? t.value('browse.imageCol.none') : r.subject.prerequisites === 'unknown' ? '–' : t.value('browse.imageCol.yes'),
             // From the Handbook's assessment: a task that must be passed on its own, and the share done in groups.
             !r.subject.assessment?.length ? '–' : r.subject.assessment.some((x) => x.hurdle) ? t.value('browse.imageCol.yes') : t.value('browse.imageCol.none'),
             groupShare(r.subject),
