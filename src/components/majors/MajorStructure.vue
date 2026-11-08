@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { pickText } from '@/utils/majorPick'
 import { computed, nextTick, onBeforeUnmount, onMounted, shallowRef, useTemplateRef, watch } from 'vue'
 import InfoTip from '@/components/InfoTip.vue'
 import { periodsFor, type MajorOverview } from '@/engine'
@@ -107,7 +108,7 @@ const columns = computed(() =>
       { key: 'core', label: t.value('majors.tagCore'), kind: 'core' as const, items: of('core'), elsewhere: [] },
       ...props.overview.choices.map((c, i) => ({
         key: `pick${i}`,
-        label: t.value('majors.tagPick', { g: letter(i), n: c.points / 12.5, of: c.from.length }),
+        label: pickText(t.value, 'majors.tagPick', c, data.value.subjects, { g: letter(i) }),
         kind: 'pick' as const,
         items: of('choice', i),
         elsewhere: elsewhere(i),

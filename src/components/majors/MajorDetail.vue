@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { pickText } from '@/utils/majorPick'
 import { viewYear } from '@/engine/dataYear'
 import { computed, shallowRef } from 'vue'
 import { ExternalLink, Route } from 'lucide-vue-next'
@@ -43,7 +44,7 @@ const structureShort = computed(() => {
   const sep = t.value('listSep')
   return [
     o.core.length ? t.value('majors.sumCore', { n: o.core.length }) : '',
-    ...o.choices.map((c) => t.value('majors.sumPick', { n: c.points / 12.5, of: c.from.length })),
+    ...o.choices.map((c) => pickText(t.value, 'majors.sumPick', c, data.value.subjects)),
     o.pathway.length ? t.value('majors.sumFirst', { n: o.pathway.length }) : '',
   ]
     .filter(Boolean)
@@ -124,7 +125,7 @@ function planWithIt(): void {
           </div>
           <div v-for="(c, i) in overview.choices" :key="i" class="fact">
             <dt>{{ overview.choices.length > 1 ? t('majors.factPickN', { g: String.fromCharCode(65 + i) }) : t('majors.factPick') }}</dt>
-            <dd>{{ t('majors.statPick', { n: c.points / 12.5, of: c.from.length }) }}</dd>
+            <dd>{{ pickText(t, 'majors.statPick', c, data.subjects) }}</dd>
           </div>
           <div v-if="pathwayCount" class="fact">
             <dt>{{ t('majors.tagFirst') }}</dt>

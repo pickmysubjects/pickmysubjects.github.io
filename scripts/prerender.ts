@@ -32,6 +32,7 @@ import { majorOverview } from '../src/engine/roles'
 import { majorRoute } from '../src/engine/majorRoute'
 import { routeLines } from '../src/engine/majorRouteText'
 import { groupMajors } from '../src/utils/majorGroups'
+import { pickText } from '../src/utils/majorPick'
 import { ACCREDITATION } from '../src/utils/accreditation'
 import { careerJobLabels, careerListHtml, careerPageHtml, careerSeo, careersHtml, subjectCareersHtml } from '../src/utils/careersHtml'
 import { careerTargets } from '../src/engine/careerPaths'
@@ -485,9 +486,9 @@ function majorPage(code: LocaleCode, m: (typeof majors)[number]): Page {
   if (!o) parts.push(`<p>${esc(t('majors.notCurated'))}</p>`)
   else {
     if (o.core.length) parts.push(`<h2>${esc(t('majors.coreTitle'))}</h2>${list(o.core)}`)
-    for (const c of o.choices) parts.push(`<h2>${esc(t('majors.choiceTitle', { n: c.points / 12.5 }))}</h2>${list(c.from)}`)
-    parts.push(`<h2>${esc(t('majors.pathwayTitle'))}</h2>`)
-    parts.push(o.pathway.length ? list(o.pathway.map((p) => p.code)) : `<p>${esc(t('majors.noPathway'))}</p>`)
+    for (const c of o.choices) parts.push(`<h2>${esc(pickText(t, 'majors.sumPick', c, data.subjects))}</h2>${list(c.from)}`)
+    if (o.pathway.length) parts.push(`<h2>${esc(t('majors.pathwayTitle'))}</h2>${list(o.pathway.map((p) => p.code))}`)
+    if (o.gaps) parts.push(`<p>${esc(t('majors.noPathway'))}</p>`)
     // The prerequisite route as text: the same thing the app draws.
     if (o.core.length || o.choices.length) {
       const say = (key: string, cs: string[]) => (cs.length ? esc(t(key, { list: cs.join(t('listSep')) })) : '')

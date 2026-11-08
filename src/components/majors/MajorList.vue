@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { pickText } from '@/utils/majorPick'
 import { thisYear } from '@/engine/dataYear'
 import BrowseHero from '@/components/browse/BrowseHero.vue'
 import { computed, shallowRef, watch } from 'vue'
@@ -91,7 +92,7 @@ const count = computed(() => shown.value.reduce((n, g) => n + g.majors.length, 0
 const levelOf = (code: string) => data.value.subjects[code]?.level ?? (Number(code.match(/\d/)?.[0]) || 0)
 interface Facts {
   core: number
-  picks: { n: number; of: number }[]
+  picks: string[]
   levels: string
   key: string[]
 }
@@ -100,7 +101,7 @@ const factsOf = computed(() => {
   for (const c of pool.value) {
     const req = c.requirements === 'unknown' ? [] : c.requirements
     const core = [...new Set(req.flatMap((r) => ('all' in r ? r.all : [])))]
-    const picks = req.flatMap((r) => ('choose' in r ? [{ n: r.choose.points / 12.5, of: r.choose.from.length }] : []))
+    const picks = req.flatMap((r) => ('choose' in r ? [pickText(t.value, 'majors.sumPick', r.choose, data.value.subjects)] : []))
     const lv = [...new Set([...core, ...req.flatMap((r) => ('choose' in r ? r.choose.from : []))].map(levelOf).filter((x) => x > 0))].sort()
     const levels = !lv.length ? '' : lv.length === 1 ? `${lv[0]}` : `${lv[0]}–${lv[lv.length - 1]}`
     out.set(c.id, { core: core.length, picks, levels, key: core.slice(0, 3) })
@@ -162,7 +163,7 @@ const accredited = computed(() => new Set(data.value.components.filter((c) => co
             <span class="card-facts">
               <span>{{ t('majors.points', { n: m.points }) }}</span>
               <span v-if="factsOf.get(m.id)?.core">{{ t('majors.sumCore', { n: factsOf.get(m.id)!.core }) }}</span>
-              <span v-for="(p, i) in factsOf.get(m.id)?.picks ?? []" :key="i">{{ t('majors.sumPick', p) }}</span>
+              <span v-for="(p, i) in factsOf.get(m.id)?.picks ?? []" :key="i">{{ p }}</span>
               <span v-if="factsOf.get(m.id)?.levels">{{ t('majors.levels', { x: factsOf.get(m.id)!.levels }) }}</span>
             </span>
             <span v-if="factsOf.get(m.id)?.key.length" class="card-key">

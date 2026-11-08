@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { pickText } from '@/utils/majorPick'
 import EmployerSkills from '@/components/careers/EmployerSkills.vue'
 import { viewYear } from '@/engine/dataYear'
 import InfoTip from '@/components/InfoTip.vue'
@@ -70,7 +71,7 @@ const only = computed(() => {
     ...(o?.core.length ? [{ k: t.value('majors.tagCore'), v: t.value('majors.statCount', { n: o.core.length }) }] : []),
     ...(o?.choices ?? []).map((c, i, all) => ({
       k: all.length > 1 ? t.value('majors.factPickN', { g: String.fromCharCode(65 + i) }) : t.value('majors.factPick'),
-      v: t.value('majors.statPick', { n: c.points / 12.5, of: c.from.length }),
+      v: pickText(t.value, 'majors.statPick', c, data.value.subjects),
     })),
     ...(o?.pathway.length ? [{ k: t.value('majors.tagFirst'), v: t.value('majors.statCount', { n: o.pathway.length }) }] : []),
   ]
