@@ -26,8 +26,17 @@ describe('finalNeeds', () => {
     expect(r.earned).toBe(30)
     expect(r.leftWeight).toBe(60)
     expect(need(parts, 'H1')).toMatchObject({ needed: 83, status: 'possible' })
-    expect(need(parts, 'P')).toMatchObject({ needed: 33, status: 'possible' })
+    // 33 would reach 50 overall, but the exam is a hurdle: passing needs 50 on it.
+    expect(need(parts, 'P')).toMatchObject({ needed: 50, status: 'possible' })
     expect(r.roundingMatters).toBe(true)
+  })
+
+  it('never asks less than the pass mark of a hurdle still to come, nor calls a grade secured before it', () => {
+    const p: CalcPart[] = [{ kind: 'assignment', weight: 40, score: 100 }, { kind: 'exam', weight: 60, hurdle: true }]
+    expect(need(p, 'P')).toMatchObject({ needed: 50, status: 'possible' })
+    expect(need(p, 'H3')).toMatchObject({ needed: 50, status: 'possible' })
+    const easy: CalcPart[] = [{ kind: 'assignment', weight: 90, score: 100 }, { kind: 'exam', weight: 10, hurdle: true }]
+    expect(need(easy, 'H1')).toMatchObject({ needed: 50, status: 'possible' })
   })
 
   it('rounds the needed mark up, so it is always enough', () => {

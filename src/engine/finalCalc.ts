@@ -94,10 +94,13 @@ export function finalNeeds(parts: readonly CalcPart[]): CalcResult | null {
   const leftWeight = totalWeight - doneWeight
   const earned = done.reduce((s, p) => s + (Math.max(0, Math.min(100, p.score as number)) * p.weight) / 100, 0) * scale
   const leftShare = leftWeight * scale
+  // A hurdle still to come needs at least its pass mark: no grade is secured and none needs less.
+  // (One already failed is told apart: hurdlesMissed, and finalBand gives NH.)
+  const floor = left.some((p) => p.hurdle) ? HURDLE_PASS : 0
   const need = (mark: number, from: number) => {
     if (leftShare <= 0) return { needed: null, status: (earned + 1e-9 >= from ? 'secured' : 'impossible') as NeedStatus }
     // Rounded up: the mark shown must be enough on its own. The 1e-9 keeps 70.0000001 at 70.
-    const needed = Math.ceil(((from - earned) / leftShare) * 100 - 1e-9)
+    const needed = Math.max(floor, Math.ceil(((from - earned) / leftShare) * 100 - 1e-9))
     if (needed <= 0) return { needed: 0, status: 'secured' as NeedStatus }
     return { needed, status: (needed > 100 ? 'impossible' : 'possible') as NeedStatus }
   }

@@ -85,7 +85,7 @@ function cleanState(v: unknown): PlanState | null {
   if (!isObject(v) || !isObject(v.setup) || typeof v.setup.course !== 'string' || !Array.isArray(v.terms)) return null
   const terms = v.terms
     .filter((t): t is Record<string, unknown> => isObject(t) && typeof t.year === 'number' && (PERIODS as readonly string[]).includes(String(t.period)))
-    .map((t) => ({ year: t.year, period: t.period, subjects: strings(t.subjects) }))
+    .map((t) => ({ year: t.year, period: t.period, subjects: strings(t.subjects), ...(t.edited === true ? { edited: true } : {}) }))
   return {
     // A plan saved before second majors existed has none; anything but a string is dropped.
     // Likewise a diploma and its stream.

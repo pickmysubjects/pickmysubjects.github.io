@@ -386,6 +386,15 @@ function undoLast(): void {
   undo.value = null
 }
 onBeforeUnmount(() => clearTimeout(undoTimer))
+// Undo belongs to the board it was made on: another plan or degree drops it, so it never writes
+// one plan's semesters into another.
+watch(
+  () => `${plan.setup.value.course}|${plans.active.value.id}`,
+  () => {
+    undo.value = null
+    clearTimeout(undoTimer)
+  },
+)
 const labelAt = (i: number) => {
   const term = plan.terms.value[i]
   return term ? termLabel(t.value, term) : ''

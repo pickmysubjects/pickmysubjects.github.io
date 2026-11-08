@@ -2,6 +2,12 @@ import { describe, expect, it } from 'vitest'
 import { cleanGoal, cleanPlans, cleanProfile, cleanRated } from '../src/utils/sanitize'
 
 describe('saved data is put back in shape', () => {
+  it('keeps the mark on a begun semester the student changed, so a rebuild leaves it alone', () => {
+    const plans = cleanPlans({ p: { setup: { course: 'B-SCI' }, terms: [{ year: 2026, period: 'semester-2', subjects: ['A'], edited: true }, { year: 2027, period: 'semester-1', subjects: ['B'], edited: 'yes' }] } })
+    expect(plans.p!.plans[0]!.terms[0]).toMatchObject({ edited: true })
+    expect(plans.p!.plans[0]!.terms[1]).not.toHaveProperty('edited')
+  })
+
   it('fills a half-saved profile and drops what can’t be read', () => {
     expect(cleanProfile({ results: [{ code: 'MAST10006', mark: 80 }, { mark: 5 }, 'x'] })).toEqual({
       results: [{ code: 'MAST10006', mark: 80 }],
