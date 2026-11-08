@@ -964,7 +964,7 @@ function mainPages(code: LocaleCode): Page[] {
     },
     ...toolPages(code, t),
     simple('changes', 'menu.changes', 'changes.indexLede'),
-    simple('contribute', 'contribute.title', 'contribute.lede'),
+    simple('contribute', 'contribute.title', 'contribute.seoDesc'),
     simple('feedback', 'feedback.title', 'feedback.lede'),
     { path: 'privacy', title: `${t('privacy.title')} | PickMySubjects`, description: t('privacy.local'), body: `<h1>${esc(t('privacy.title'))}</h1><p>${esc(t('privacy.local'))}</p>` },
     // News from the person who makes the site, every item in full, newest first.

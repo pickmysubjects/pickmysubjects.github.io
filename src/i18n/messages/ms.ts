@@ -852,6 +852,7 @@ export const ms: Messages = {
   contribute: {
     title: 'Tambah subjek yang belum ada',
     lede: 'Tidak jumpa subjek? Anda boleh menambahnya:',
+    seoDesc: "Tidak jumpa subjek UniMelb di sini? Tampal halaman Handbook subjek itu, kami akan menambahnya bersama prasyarat, semester dan penilaiannya.",
     handbookPage: 'halaman Handbook',
     code: 'Kod',
     titleField: 'Nama',

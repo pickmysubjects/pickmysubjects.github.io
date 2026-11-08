@@ -852,6 +852,7 @@ export const id: Messages = {
   contribute: {
     title: 'Tambahkan mata kuliah yang belum ada',
     lede: 'Tidak menemukan mata kuliah? Anda bisa menambahkannya:',
+    seoDesc: "Tidak menemukan mata kuliah UniMelb di sini? Tempel halaman Handbook-nya, kami akan menambahkannya beserta prasyarat, semester, dan penilaiannya.",
     handbookPage: 'halaman Handbook',
     code: 'Kode',
     titleField: 'Nama',

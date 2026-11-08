@@ -857,6 +857,7 @@ export const en = {
   contribute: {
     title: 'Add a subject we don’t have yet',
     lede: 'Can’t find a subject here? You can add it:',
+    seoDesc: "Can’t find a UniMelb subject here? Paste its Handbook page and we’ll add it, with its prerequisites, semesters and assessment.",
     handbookPage: 'Handbook page',
     code: 'Code',
     titleField: 'Title',

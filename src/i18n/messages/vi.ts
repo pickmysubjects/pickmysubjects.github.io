@@ -852,6 +852,7 @@ export const vi: Messages = {
   contribute: {
     title: 'Thêm môn học chưa có',
     lede: 'Không tìm thấy môn học? Bạn có thể thêm vào:',
+    seoDesc: "Không tìm thấy môn UniMelb ở đây? Dán trang Handbook của môn đó, chúng tôi sẽ thêm vào cùng môn tiên quyết, học kỳ và cách đánh giá.",
     handbookPage: 'trang Handbook',
     code: 'Mã môn',
     titleField: 'Tên môn',

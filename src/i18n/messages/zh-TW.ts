@@ -852,6 +852,7 @@ export const zhTW: Messages = {
   contribute: {
     title: '新增一門我們還沒有的課',
     lede: '網站上找不到某門課？你可以幫忙加上：',
+    seoDesc: "找不到某門墨大課程？把它的 Handbook 頁面貼過來，我們會把先修、開課學期和考核方式一起加上。",
     handbookPage: 'Handbook 頁面',
     code: '課程代碼',
     titleField: '課程名稱',

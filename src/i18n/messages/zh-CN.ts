@@ -852,6 +852,7 @@ export const zhCN: Messages = {
   contribute: {
     title: '添加一门我们还没有的课',
     lede: '网站上找不到某门课？你可以帮忙加上：',
+    seoDesc: "找不到某门墨大课程？把它的 Handbook 页面贴过来，我们会把先修、开课学期和考核方式一起加上。",
     handbookPage: 'Handbook 页面',
     code: '课程代码',
     titleField: '课程名称',

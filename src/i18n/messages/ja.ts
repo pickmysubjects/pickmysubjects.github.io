@@ -852,6 +852,7 @@ export const ja: Messages = {
   contribute: {
     title: 'まだない科目を追加',
     lede: '見つからない科目は、次の手順で追加できます：',
+    seoDesc: "メルボルン大学の科目が見つからないときは、Handbook のページを貼り付けてください。前提科目、開講学期、評価方法とあわせて追加します。",
     handbookPage: 'Handbook ページ',
     code: 'コード',
     titleField: '科目名',

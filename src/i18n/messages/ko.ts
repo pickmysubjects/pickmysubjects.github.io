@@ -852,6 +852,7 @@ export const ko: Messages = {
   contribute: {
     title: '아직 없는 과목 추가하기',
     lede: '찾는 과목이 없나요? 직접 추가할 수 있습니다:',
+    seoDesc: "멜번대 과목을 찾을 수 없나요? Handbook 페이지를 붙여 넣으면 선수과목, 개설 학기, 평가 방식과 함께 추가해 드려요.",
     handbookPage: 'Handbook 페이지',
     code: '코드',
     titleField: '과목명',

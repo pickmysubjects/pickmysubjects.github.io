@@ -852,6 +852,7 @@ export const hi: Messages = {
   contribute: {
     title: 'ऐसा विषय जोड़ें जो अभी नहीं है',
     lede: 'कोई विषय नहीं मिला? आप उसे जोड़ सकते हैं:',
+    seoDesc: "यहाँ UniMelb का कोई सब्जेक्ट नहीं मिला? उसका Handbook पेज पेस्ट करें, हम उसे पहले की ज़रूरतों, सेमेस्टर और असेसमेंट के साथ जोड़ देंगे।",
     handbookPage: 'Handbook पेज',
     code: 'कोड',
     titleField: 'नाम',
