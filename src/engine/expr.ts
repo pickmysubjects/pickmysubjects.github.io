@@ -57,7 +57,11 @@ export function evaluateField(field: ReqField, ctx: EvalContext): EvalResult {
 export function evaluate(expr: ReqExpr, ctx: EvalContext): EvalResult {
   if ('subject' in expr) {
     const done = expr.concurrent ? (ctx.sameTerm ?? ctx.completed) : ctx.completed
-    return done.has(expr.subject) ? ok() : { status: 'fail', unmet: [expr.subject] }
+    if (done.has(expr.subject)) return ok()
+    // A subject our data doesn't have yet: there's no way to plan it here, so it can't be called
+    // unmet; the student checks the Handbook (and can confirm they meet it).
+    if (!ctx.subjects[expr.subject]) return { status: 'unknown', unmet: [expr.subject] }
+    return { status: 'fail', unmet: [expr.subject] }
   }
   if ('all' in expr) {
     const parts = expr.all.map((e) => evaluate(e, ctx))

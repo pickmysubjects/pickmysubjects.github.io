@@ -827,7 +827,9 @@ function closePrereqs(input: GenerateInput, required: Set<string>, done: Set<str
     // A corequisite that names this subject back (VETS30016 and VETS30029) goes in the same
     // term; a one-way one ("25 points of GEOL, can be concurrent") may also come earlier.
     const mutual = (c: string) => referencedSubjects(data.subjects[c]?.corequisites ?? 'none').includes(code)
-    for (const need of [...pre, ...co]) {
+    // A prerequisite our data doesn't have can't be placed (nothing is known about when it runs):
+    // it's left to the plan check, which says to check the Handbook.
+    for (const need of [...pre, ...co].filter((c) => data.subjects[c])) {
       if ((pre.includes(need) || !mutual(need)) && !needs.get(code)?.includes(need)) needs.set(code, [...(needs.get(code) ?? []), need])
       if (!required.has(need) && !done.has(need)) {
         required.add(need)

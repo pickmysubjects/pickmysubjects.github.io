@@ -189,3 +189,11 @@ group('typed conditions', () => {
     expect(s.prerequisites).toMatchObject({ any: expect.arrayContaining([{ placement: 'French', note: 'x' }]) })
   })
 })
+
+group('a prerequisite our data does not have', () => {
+  it('is unknown (check the Handbook, can be confirmed), not unmet', () => {
+    const r = evaluate({ subject: 'ZZZZ99999' }, { completed: new Set<string>(), subjects: {} })
+    expect(r.status).toBe('unknown')
+    expect(evaluate({ subject: 'ZZZZ99999' }, { completed: new Set(['ZZZZ99999']), subjects: {} }).status).toBe('ok')
+  })
+})
