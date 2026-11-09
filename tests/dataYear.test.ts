@@ -38,7 +38,9 @@ const plansFrom = (d: Dataset, startYear: number) =>
 function runsLineBefore(s: Subject): string {
   if (s.offerings === 'unknown') return t('seo.notRecorded')
   const periods = periodsFor(s, 2026)
-  return periods.length ? t('seo.runs', { year: 2026, periods: periods.map((p) => t(`period.${p}`)).join(', ') }) : t('seo.notRunning', { year: 2026 })
+  if (!periods.length) return t('seo.notRunning', { year: 2026 })
+  // A year-long subject says so (enrolled in Semester 1, runs through Semester 2).
+  return t('seo.runs', { year: 2026, periods: s.yearLong && periods.includes('semester-1') ? t('plan.yearLongRuns') : periods.map((p) => t(`period.${p}`)).join(', ') })
 }
 
 afterEach(() => setToday(undefined))
