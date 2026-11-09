@@ -222,9 +222,10 @@ export function drawListImage(canvas: HTMLCanvasElement, input: ListImageInput, 
   const tableTop = top + 16
   ctx.textBaseline = 'alphabetic'
   let rowY = tableTop
-  laid.forEach(({ r, codeW, beside, title, sub, h }, i) => {
-    // A row that would run into the footer isn't drawn (a short list rather than a cut one).
-    if (rowY + h > H - footH) return
+  for (const [i, { r, codeW, beside, title, sub, h }] of laid.entries()) {
+    // A row that would run into the footer ends the list there (a short list rather than a cut
+    // one), so a shorter row after it never shows with a number skipped.
+    if (rowY + h > H - footH) break
     ctx.beginPath()
     ctx.roundRect(PAD - 14, rowY, W - PAD * 2 + 28, h, 14)
     ctx.fillStyle = i < 3 ? C.podium : i % 2 ? C.rowB : C.rowA
@@ -266,7 +267,7 @@ export function drawListImage(canvas: HTMLCanvasElement, input: ListImageInput, 
     cells[i]!.forEach((c, k) => c.forEach((l, j) => ctx.fillText(l, centres[k]!, mid + 7 + (j - (c.length - 1) / 2) * 24)))
     ctx.textAlign = 'left'
     rowY += h + gap
-  })
+  }
 
   // Footer: the mark and address, and the reminder to check the Handbook (wrapped, never cut).
   const fy = H - footH + 24

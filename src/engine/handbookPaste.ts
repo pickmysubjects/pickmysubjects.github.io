@@ -186,7 +186,13 @@ function perDegree(lines: string[], warnings: string[]): ReqField | null {
     const block = lines.slice(h.i + 1, heads[k + 1]?.i ?? lines.length)
     while (block.length && /^(or|and)?\s*$/i.test(block.at(-1)!.trim())) block.pop()
     const own = parseRequirement(splitConcurrent(block).before, 'prerequisites', warnings)
-    if (!code || own === 'unknown') return own
+    if (own === 'unknown') return own
+    // A heading for a degree we can't name: its "None" can't be said to apply to everyone (it would
+    // make the whole field free), so that branch is left for a person to read.
+    if (!code) {
+      warnings.push(`Unknown degree heading: ${lines[h.i]!.trim()}`)
+      return own === 'none' ? 'unknown' : own
+    }
     const guard: ReqExpr = { admission: code, note: lines[h.i]!.trim() }
     if (own === 'none') return guard
     // "Admission into the B-COM …" already inside the branch: no need to say it twice.
