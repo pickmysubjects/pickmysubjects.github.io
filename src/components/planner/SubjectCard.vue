@@ -75,8 +75,6 @@ const touch = () => typeof window !== 'undefined' && window.matchMedia('(hover: 
 // One click opens the details; the window shows the subject's chain itself, so nothing lights
 // up behind it (hovering a card still previews its route on the board).
 function onCardClick(event: MouseEvent): void {
-  // Already opened by a short "drag" (see onDragStart): not twice.
-  if (event.type === 'click' && Date.now() - clickedByDrag < 600) return
   if ((event.target as Element).closest('.row-actions, .sheet')) return
   if (touch()) return emit('moveSheet', true)
   emit('open')
@@ -138,21 +136,7 @@ function reasonOf(v: DropVerdict): string {
   return v.ok ? t.value(v.warn ? `plan.why.${v.warn}` : 'plan.why.ok') : t.value(`plan.why.${v.reason}`)
 }
 
-// A click with a little hand movement (a trackpad, a quick tap) must stay a click: the browser
-// starts a drag after a few pixels. A "drag" that is short and quick is taken back and opens the
-// subject instead; a real drag (held, or moved further) goes ahead.
-let press: { x: number; y: number; at: number } | null = null
-let clickedByDrag = 0
-function onPress(event: PointerEvent): void {
-  press = { x: event.clientX, y: event.clientY, at: Date.now() }
-}
 function onDragStart(event: DragEvent): void {
-  if (press && Date.now() - press.at < 200 && Math.hypot(event.clientX - press.x, event.clientY - press.y) < 12 && !(event.target as Element).closest?.('.row-actions')) {
-    event.preventDefault()
-    clickedByDrag = Date.now()
-    onCardClick(event)
-    return
-  }
   event.dataTransfer?.setData('text/plain', JSON.stringify({ code: props.code, from: props.termIndex }))
   if (event.dataTransfer) event.dataTransfer.effectAllowed = 'move'
   emit('dragStart')
@@ -171,7 +155,6 @@ const linkLabel = computed(() => {
     :data-code="code"
     :title="tooltip"
     draggable="true"
-    @pointerdown="onPress"
     @dragstart="onDragStart"
     @dragend="emit('dragEnd')"
     @mouseenter="emit('hover', true)"

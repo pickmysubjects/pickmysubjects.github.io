@@ -450,7 +450,8 @@ function buildPlan(given: GenerateInput): GenerateResult {
   }
 
   // Trimming can empty the last semesters: the degree ends with the last one that has subjects.
-  while (terms.length > 1 && (terms.at(-1) as PlanTerm).subjects.length === 0) terms.pop()
+  // A semester holding the second half of a year-long subject has no codes of its own but isn't empty.
+  while (terms.length > 1 && (terms.at(-1) as PlanTerm).subjects.length === 0 && termLoad(terms, terms.length - 1, data) === 0) terms.pop()
 
   // Spread the load, so the hard subjects don't all land in one semester.
   const draft: Plan = { course: input.course, courseYear: input.courseYear, major: input.major, major2: input.major2, specialisation: input.specialisation, minors: input.minors, diploma: input.diploma, diplomaStream: input.diplomaStream, completed, terms }
