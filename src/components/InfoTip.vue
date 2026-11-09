@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { shallowRef, useId, useTemplateRef } from 'vue'
+import { computed, shallowRef, useId, useTemplateRef } from 'vue'
 import { Info } from 'lucide-vue-next'
 import { useI18n } from '@/i18n'
 import { useAnchoredOverlay } from '@/utils/anchoredOverlay'
@@ -17,6 +17,21 @@ const open = shallowRef(false)
 const id = useId()
 const button = useTemplateRef<HTMLButtonElement>('button')
 const panel = useTemplateRef<HTMLElement>('panel')
+// Inside a modal window (the subject window is a <dialog>), the text opens inside that window: a
+// modal dialog sits above everything, so text added to the page's end would open behind it.
+const target = shallowRef<string | Element>('body')
+function toggle(): void {
+  if (!open.value) target.value = button.value?.closest('dialog[open]') ?? 'body'
+  open.value = !open.value
+}
+// A frosted window (backdrop-filter) makes position:fixed count from the window, not the screen:
+// the screen position is moved into the window's own coordinates there.
+const panelStyle = computed(() => {
+  const el = target.value
+  if (typeof el === 'string' || !pos.value.left) return pos.value
+  const r = el.getBoundingClientRect()
+  return { left: `${parseFloat(pos.value.left) - r.left - el.clientLeft + el.scrollLeft}px`, top: `${parseFloat(pos.value.top ?? '0') - r.top - el.clientTop + el.scrollTop}px` }
+})
 const { pos } = useAnchoredOverlay({
   open,
   anchor: () => button.value,
@@ -36,13 +51,13 @@ const { pos } = useAnchoredOverlay({
       :aria-describedby="id"
       :aria-label="t('infoTip')"
       :title="t('infoTip')"
-      @click="open = !open"
+      @click="toggle"
     >
       <Info :size="14" aria-hidden="true" />
     </button>
     <span :id="id" class="infotip-source" hidden><slot>{{ text }}</slot></span>
-    <Teleport v-if="open" to="body">
-      <span ref="panel" class="infotip-panel" role="tooltip" :style="pos"><slot>{{ text }}</slot></span>
+    <Teleport v-if="open" :to="target">
+      <span ref="panel" class="infotip-panel" role="tooltip" :style="panelStyle"><slot>{{ text }}</slot></span>
     </Teleport>
   </span>
 </template>

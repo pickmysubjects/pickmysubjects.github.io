@@ -2,6 +2,7 @@
 import InfoTip from '@/components/InfoTip.vue'
 import { computed, shallowRef, watch } from 'vue'
 import { useDataset } from '@/composables/useDataset'
+import { link } from '@/composables/useView'
 import { useProfile } from '@/composables/useProfile'
 import { useI18n } from '@/i18n'
 import { localTitle } from '@/i18n/localized'
@@ -35,7 +36,7 @@ function onMark(e: Event): void {
 <template>
   <div v-if="shown" class="whatif-sub">
     <p class="wi-title">{{ t('whatIf.title') }}</p>
-    <p v-if="wam === null" class="wi-answer wi-empty">{{ t('whatIf.noMarksShort') }}<InfoTip :text="t('whatIf.noMarks')" /></p>
+    <p v-if="wam === null" class="wi-answer wi-empty"><a :href="link('record')">{{ t('whatIf.noMarksShort') }}</a><InfoTip :text="t('whatIf.noMarks')" /></p>
     <template v-else>
     <div class="wi-row">
       <label v-if="!code" class="wi-field wi-pick">

@@ -78,13 +78,17 @@ function unmark(): void {
   menuOpen.value = false
   emit('undo')
 }
-// On a card, editing a done subject's mark closes again once focus leaves the box and its button.
+// On a card, the mark box closes again once focus leaves the box and its button.
 function onFocusOut(e: FocusEvent): void {
-  if (!props.card || !props.done) return
+  // Also a "标为已修" left without a mark: the card goes back to its button instead of keeping an
+  // empty box (which took the card's bottom line for good).
+  if (!props.card) return
   const wrap = e.currentTarget as Element
   // After the tap swaps the button for the box, focus moves to the box a moment later: check then.
   setTimeout(() => {
-    if (!wrap.contains(document.activeElement)) asking.value = false
+    if (wrap.contains(document.activeElement)) return
+    asking.value = false
+    if (!props.done) typed.value = ''
   })
 }
 function onEnter(e: KeyboardEvent): void {
