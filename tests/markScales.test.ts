@@ -6,7 +6,8 @@ describe('mark scales', () => {
   it('every scale has five bands', () => {
     for (const id of MARK_SCALE_IDS) expect(MARK_SCALES[id]).toHaveLength(5)
     expect(MARK_SCALE_IDS).toHaveLength(14)
-    expect(MARK_SCALES.jp[2]).toBe(MARK_SCALES.jp[3])
+    // Every level has its own label, so a student can tell which one is theirs.
+    for (const id of MARK_SCALE_IDS) expect(new Set(MARK_SCALES[id]).size).toBe(5)
   })
 
   it('defaults by locale, UniMelb with uni results', () => {
