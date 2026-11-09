@@ -9,7 +9,9 @@ export const MARK_SCALES = {
   ib: ['1–3', '4', '5', '6', '7'],
   alevel: ['D–E', 'C', 'B', 'A', 'A*'],
   us: ['≤C', 'B−–B', 'B+', 'A−', 'A'],
-  cn: ['<70', '70–79', '80–84', '85–89', '90+'],
+  // A subject's score as students know it: out of 100, or out of 150 for Chinese, maths and
+  // English (the same share, side by side, so nobody has to convert).
+  cn: ['<70｜<105', '70–79｜105–119', '80–84｜120–127', '85–89｜128–134', '90+｜135+'],
   tw: ['≤7', '8–9', '10–11', '12', '13–15'],
   // 評定平均 in the five bands Japanese school reports (調査書, 学習成績の状況) use: E ≤1.8,
   // D 1.9–2.6, C 2.7–3.4, B 3.5–4.2, A 4.3–5.0. Whole grades alone would give two levels one label.

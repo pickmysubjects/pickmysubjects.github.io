@@ -69,7 +69,7 @@ function pick(skill: Skill, level: number): void {
           </select>
         </label>
         <p class="scale-note">
-          {{ t('record.markScaleNoteShort') }}<InfoTip :text="t('record.markScaleNote') + (scale === 'cn' ? ' ' + t('record.markScaleCn150') : '')" />
+          {{ t('record.markScaleNoteShort') }}<InfoTip :text="t('record.markScaleNote')" />
         </p>
       </div>
     </header>
