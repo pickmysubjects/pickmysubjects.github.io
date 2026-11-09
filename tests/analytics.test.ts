@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { CSP, GOATCOUNTER } from '../vite.config'
-import { countPage, countedPath, onFirstInput, optOutToggle, pathLocale, resetAnalytics, trackEvent, visitSource } from '@/utils/analytics'
+import { countPage, countedPath, looksAutomated, onFirstInput, optOutToggle, pathLocale, resetAnalytics, trackEvent, visitSource } from '@/utils/analytics'
 
 const root = new URL('../', import.meta.url)
 
@@ -72,6 +72,29 @@ describe('counting', () => {
     expect(count.mock.calls[3]?.[0].referrer).toBe('')
   })
 
+  it('ignores made-up input (dispatchEvent) and a click with no pointer', () => {
+    const count = vi.fn()
+    const handlers = new Map<string, (e?: unknown) => void>()
+    vi.stubGlobal('window', { goatcounter: { count }, addEventListener: (t: string, h: () => void) => handlers.set(t, h), removeEventListener: (t: string) => handlers.delete(t) })
+    countPage('/plan')
+    handlers.get('pointerdown')!({ type: 'pointerdown', isTrusted: false, pointerType: 'mouse' })
+    handlers.get('pointerdown')!({ type: 'pointerdown', isTrusted: true, pointerType: '' })
+    expect(count).not.toHaveBeenCalled()
+    handlers.get('pointerdown')!({ type: 'pointerdown', isTrusted: true, pointerType: 'touch' })
+    expect(count.mock.calls[0]?.[0].path).toBe('/plan')
+  })
+
+  it('never counts a browser that says it is driven by a program or is a crawler', () => {
+    const chrome = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36'
+    expect(looksAutomated({ userAgent: chrome, languages: ['en-AU'] }, { outerWidth: 1400, outerHeight: 900 })).toBe(false)
+    expect(looksAutomated({ userAgent: chrome, webdriver: true, languages: ['en'] })).toBe(true)
+    expect(looksAutomated({ userAgent: chrome.replace('Chrome/', 'HeadlessChrome/'), languages: ['en'] })).toBe(true)
+    expect(looksAutomated({ userAgent: 'Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko; compatible; GPTBot/1.2; +https://openai.com/gptbot)', languages: ['en'] })).toBe(true)
+    expect(looksAutomated({ userAgent: 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)', languages: ['en'] })).toBe(true)
+    expect(looksAutomated({ userAgent: chrome, languages: [] })).toBe(true)
+    expect(looksAutomated({ userAgent: chrome, languages: ['en'] }, { outerWidth: 0, outerHeight: 0 })).toBe(true)
+  })
+
   it('reads the site language from the path', () => {
     expect(pathLocale('/')).toBe('en')
     expect(pathLocale('/subject/COMP10001')).toBe('en')
@@ -79,9 +102,15 @@ describe('counting', () => {
     expect(pathLocale('/hi/')).toBe('hi')
   })
 
-  it('sends events as named events', () => {
+  it('sends events as named events, once the visit has had real input', () => {
     const count = vi.fn()
-    vi.stubGlobal('window', { goatcounter: { count } })
+    const handlers = new Map<string, (e?: unknown) => void>()
+    vi.stubGlobal('window', { goatcounter: { count }, addEventListener: (t: string, h: () => void) => handlers.set(t, h), removeEventListener: (t: string) => handlers.delete(t) })
+    trackEvent('plan-share')
+    expect(count).not.toHaveBeenCalled()
+    countPage('/plan')
+    handlers.get('pointerdown')!()
+    count.mockClear()
     trackEvent('plan-share')
     trackEvent('language-zh-TW')
     expect(count.mock.calls.map((c) => c[0])).toEqual([

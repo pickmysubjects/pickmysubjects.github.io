@@ -111,7 +111,11 @@ export function visitSource(ua: string = typeof navigator === 'undefined' ? '' :
 export function onFirstInput(f: () => void): void {
   if (typeof window === 'undefined' || typeof window.addEventListener !== 'function') return
   const types = ['pointerdown', 'keydown', 'wheel', 'touchstart'] as const
-  const done = () => {
+  const done = (e?: Event) => {
+    // Input a script made up (dispatchEvent) isn't a person; nor a click with no pointer behind it,
+    // nor input on a page nobody can see (a background or prerendering tab).
+    if (e && (e.isTrusted === false || (e.type === 'pointerdown' && (e as PointerEvent).pointerType === ''))) return
+    if (typeof document !== 'undefined' && document.visibilityState === 'hidden') return
     for (const t of types) window.removeEventListener(t, done)
     try {
       f()
@@ -120,6 +124,22 @@ export function onFirstInput(f: () => void): void {
     }
   }
   for (const t of types) window.addEventListener(t, done, { passive: true })
+}
+
+// Crawlers, AI agents and test browsers that say what they are. GoatCounter drops many known bots
+// on its side too; these are the ones that run JavaScript and can send input.
+const AUTOMATED = /bot\b|bot\/|crawl|spider|slurp|headless|lighthouse|pagespeed|gptbot|chatgpt|oai-searchbot|claude|anthropic|perplexity|bytespider|amazonbot|applebot|google-(inspectiontool|extended|read-aloud)|bingpreview|yandex|baiduspider|petalbot|semrush|ahrefs|mj12|dotbot|facebookexternalhit|playwright|puppeteer|phantom|selenium|cypress/i
+
+/** True for a browser that is driven by a program or says it is a crawler: never counted. */
+export function looksAutomated(nav: { webdriver?: boolean; userAgent?: string; languages?: readonly string[] } | undefined = typeof navigator === 'undefined' ? undefined : navigator, win: { outerWidth?: number; outerHeight?: number } | undefined = typeof window === 'undefined' ? undefined : window): boolean {
+  if (!nav) return false
+  if (nav.webdriver === true) return true
+  if (AUTOMATED.test(nav.userAgent ?? '')) return true
+  // Headless browsers have no window around the page.
+  if (win && win.outerWidth === 0 && win.outerHeight === 0) return true
+  // A real browser always has at least one language.
+  if (Array.isArray(nav.languages) && nav.languages.length === 0) return true
+  return false
 }
 
 let lastPath: string | null = null
@@ -145,7 +165,7 @@ function send(path: string, title?: string): void {
 
 /** Count a page view, with the page's own title, once the visitor has used the page. A repeat of the page just counted (same path) is skipped. */
 export function countPage(pathname: string = typeof location === 'undefined' ? '/' : location.pathname, title?: string): void {
-  if (countingOff()) return
+  if (countingOff() || looksAutomated()) return
   const path = countedPath(pathname)
   if (path === lastPath) return
   lastPath = path
@@ -165,7 +185,8 @@ export function countPage(pathname: string = typeof location === 'undefined' ? '
 }
 /** Count an anonymous action, e.g. trackEvent('plan-share'). */
 export function trackEvent(name: AnalyticsEvent): void {
-  if (countingOff()) return
+  // Only for a visit that has been counted (a person, see countPage): no events from crawlers.
+  if (countingOff() || !real) return
   try {
     counter()?.({ path: name, title: name, event: true })
   } catch {
