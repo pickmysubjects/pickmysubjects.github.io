@@ -115,10 +115,13 @@ function main(): void {
   const handbook: Record<string, string[]> = {}
   if (existsSync(INBOX)) {
     const files = readdirSync(INBOX).filter((f) => f.endsWith('.txt')).map((f) => join(INBOX, f))
-    for (const [code, text] of Object.entries(handbookTexts(files))) {
+    const texts = handbookTexts(files)
+    for (const [code, text] of Object.entries(texts)) {
       const tools = toolsIn(text)
       if (tools.length) handbook[code] = tools
     }
+    // A subject whose page has left the inbox keeps the list read from it before.
+    for (const [code, t] of Object.entries(old)) if (!(code in texts) && t.handbook?.length) handbook[code] = t.handbook
   } else {
     console.warn(`No inbox at ${INBOX}: keeping the Handbook lists already in tools.yaml.`)
     for (const [code, t] of Object.entries(old)) if (t.handbook?.length) handbook[code] = t.handbook

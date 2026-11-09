@@ -345,9 +345,16 @@ const SKILL_SUBJECTS_MAX = 40
  * (employerSkills) against every running subject's own skills and learning outcomes.
  */
 function skillSubjects(data: Dataset): Record<string, string[][]> {
-  const year = Math.max(...Object.values(data.subjects).flatMap((s) => (s.offerings === 'unknown' ? [] : Object.keys(s.offerings).map(Number))))
+  // Each subject by its own newest year: while a new Handbook year is part-entered, the subjects
+  // not re-entered yet still count (their last year says they run).
+  const runsInItsNewestYear = (s: Dataset['subjects'][string]) => {
+    if (s.offerings === 'unknown') return false
+    const newest = Math.max(...Object.keys(s.offerings).map(Number))
+    if (s.discontinuedFrom !== undefined && newest >= s.discontinuedFrom) return false
+    return (s.offerings[String(newest)]?.length ?? 0) > 0
+  }
   const running = Object.values(data.subjects)
-    .filter((s) => s.offerings !== 'unknown' && (s.offerings[String(year)]?.length ?? 0) > 0)
+    .filter(runsInItsNewestYear)
     .sort((a, b) => a.level - b.level || a.code.localeCompare(b.code))
     .map((s) => s.code)
   const skills = [...new Set(Object.values(data.careers?.occupations ?? {}).flatMap((o) => o.skills))]
