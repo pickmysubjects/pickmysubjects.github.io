@@ -11,9 +11,9 @@ export const MARK_SCALES = {
   us: ['≤C', 'B−–B', 'B+', 'A−', 'A'],
   cn: ['<70', '70–79', '80–84', '85–89', '90+'],
   tw: ['≤7', '8–9', '10–11', '12', '13–15'],
-  // 評定平均 (a subject's 1–5 grade averaged over the terms): whole grades alone would give two
-  // levels the same label.
-  jp: ['<3.0', '3.0–3.4', '3.5–3.9', '4.0–4.4', '4.5+'],
+  // 評定平均 in the five bands Japanese school reports (調査書, 学習成績の状況) use: E ≤1.8,
+  // D 1.9–2.6, C 2.7–3.4, B 3.5–4.2, A 4.3–5.0. Whole grades alone would give two levels one label.
+  jp: ['≤1.8', '1.9–2.6', '2.7–3.4', '3.5–4.2', '4.3–5.0'],
   kr9: ['7–9', '5–6', '4', '3', '1–2'],
   kr5: ['5', '4', '3', '2', '1'],
   vn: ['<6.5', '6.5–7.4', '7.5–7.9', '8.0–8.9', '9.0+'],
