@@ -256,7 +256,8 @@ export function termStress(codes: string[], data: Dataset, profile?: Profile, op
   const workLoad = Math.max(0, work - WORK_FREE) * WORK_SHARE
   if (hours + workLoad >= line(HOURS_RULE, f.hours)) {
     points++
-    const most = [...subjects].sort((a, b) => (b.weeklyContactHours ?? 0) - (a.weeklyContactHours ?? 0)).slice(0, 2)
+    // Ranked the way the total counts them: a subject without its hours counts the usual amount.
+    const most = [...subjects].sort((a, b) => (b.weeklyContactHours ?? DEFAULT_HOURS) - (a.weeklyContactHours ?? DEFAULT_HOURS)).slice(0, 2)
     if (work > 0) reasons.push({ key: 'hoursWork', params: { hours, work, codes: list(most) } })
     else reasons.push({ key: 'hours', params: { hours, codes: list(most) } })
   } else if (heavyWork.length >= line(RATED_RULE, f.workload)) {

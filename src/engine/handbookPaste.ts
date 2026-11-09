@@ -612,7 +612,8 @@ export function parseContactHours(text: string): number | undefined {
   const line = text.split(/\r?\n/).find((l) => /^\s*contact hours\b/i.test(l))
   if (!line) return undefined
   const half = (x: number) => Math.round(x * 2) / 2
-  const body = line.replace(/^\s*contact hours\s*/i, '').replace(/×/g, 'x')
+  // "Contact hours: 36 hours, …": the colon or dash after the label is not part of the hours.
+  const body = line.replace(/^\s*contact hours\s*[:\-–]?\s*/i, '').replace(/×/g, 'x')
   // "48 hours, comprising …" / "48 hours: 24 x one-hour lectures …" give the semester total first.
   const lead = body.match(/^(\d+(?:\.\d+)?)\s*(?:hours?)?\s*(?:in total|total)?\s*(?:[,:(;.]|$|comprising|consisting)/i)
   // A bare 170 is the total time commitment pasted in the wrong row, not time in class.

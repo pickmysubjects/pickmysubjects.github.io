@@ -37,6 +37,8 @@ export function useClubInfo(locale: Ref<string>) {
     locale,
     async (l) => {
       const [mine, en] = await Promise.all([load(l), load('en')])
+      // A quicker switch to another language since: that one's text wins, not this late one.
+      if (l !== locale.value) return
       info.value = { ...en, ...mine }
     },
     { immediate: true },
