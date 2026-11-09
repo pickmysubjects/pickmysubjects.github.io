@@ -47,6 +47,8 @@ function onEnter(): void {
   const hit = results.value[active.value]
   if (hit) pick(hit.code)
   else if (/^[A-Za-z]{4}\d{5}$/.test(query.value.trim())) pick(query.value.trim().toUpperCase())
+  // Nothing found: Enter does what the "report it" option in the empty list does.
+  else if (query.value.trim() && results.value.length === 0) reportMissing()
 }
 
 // Enter that confirms an input method's word (Chinese, Japanese…) isn't a pick.
@@ -103,7 +105,7 @@ function move(delta: number): void {
       :placeholder="placeholder ?? (compact ? t('home.searchShort') : t('home.search'))"
       @focus="open = true"
       @blur="open = false"
-      :aria-activedescendant="open && results[active] ? `${listId}-${active}` : undefined"
+      :aria-activedescendant="open && results[active] ? `${listId}-${active}` : open && query.trim() && !results.length ? `${listId}-missing` : undefined"
       @input="onInput"
       @keydown.enter="onEnterKey"
       @compositionstart="ime.onCompositionstart"
@@ -129,7 +131,7 @@ function move(delta: number): void {
         <span v-if="localFirst && localTitle(s, locale)" class="result-title">{{ localTitle(s, locale) }}<span class="result-en" lang="en"> · {{ s.title }}</span></span>
         <span v-else class="result-title">{{ s.title }}<template v-if="localTitle(s, locale)"> · {{ localTitle(s, locale) }}</template></span>
       </li>
-      <li v-if="results.length === 0" class="result result-empty">
+      <li v-if="results.length === 0" :id="`${listId}-missing`" class="result result-empty" role="option" aria-selected="true">
         {{ t('home.noResults', { q: query.trim() }) }}
         <a class="result-missing" :href="link(missingHref)" @mousedown.prevent="reportMissing">{{ t('home.missing') }}</a>
       </li>

@@ -181,6 +181,31 @@ const otherCount = computed(() => {
   return typeof n === 'object' && 'any' in n ? n.any.length - 1 : otherNeeds.value.length
 })
 const moreOpen = shallowRef(false)
+const moreBtn = useTemplateRef<HTMLButtonElement>('moreBtn')
+// The "More" menu: Esc closes it (not the whole window) and returns focus to its button; a tap
+// outside closes it; arrow keys move between its items.
+function onMoreKey(event: KeyboardEvent): void {
+  if (!moreOpen.value) return
+  if (event.key === 'Escape') {
+    event.preventDefault()
+    event.stopPropagation()
+    moreOpen.value = false
+    moreBtn.value?.focus()
+    return
+  }
+  if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') return
+  const items = [...(event.currentTarget as HTMLElement).querySelectorAll<HTMLElement>('[role="menuitem"]')]
+  if (!items.length) return
+  event.preventDefault()
+  const at = items.indexOf(document.activeElement as HTMLElement)
+  const next = event.key === 'ArrowDown' ? (at + 1) % items.length : (at - 1 + items.length) % items.length
+  items[next]?.focus()
+}
+function onOutside(event: PointerEvent): void {
+  if (moreOpen.value && !(event.target as Element).closest?.('.peek-more')) moreOpen.value = false
+}
+onMounted(() => document.addEventListener('pointerdown', onOutside))
+onBeforeUnmount(() => document.removeEventListener('pointerdown', onOutside))
 const confirmed = computed(() => profile.value.confirmed?.includes(props.code) ?? false)
 
 // Leads to: problems (planned too early) first, then the ones in the plan, then the rest folded.
@@ -270,8 +295,8 @@ function onClick(event: MouseEvent): void {
         <a class="button button-accent peek-btn" :href="link(`subject/${code}`)">{{ t('subject.fullPage') }}</a>
         <button v-if="planned" class="peek-text-btn" type="button" @click="act('swapIt')">{{ t('plan.swap') }}</button>
         <a class="peek-text-btn" :href="handbookFor(code, year)" target="_blank" rel="noopener">Handbook</a>
-        <div v-if="planned" class="peek-more">
-          <button class="peek-text-btn" type="button" aria-haspopup="menu" :aria-expanded="moreOpen" @click="moreOpen = !moreOpen">{{ t('peek.moreActions') }}</button>
+        <div v-if="planned" class="peek-more" @keydown="onMoreKey">
+          <button ref="moreBtn" class="peek-text-btn" type="button" aria-haspopup="menu" :aria-expanded="moreOpen" @click="moreOpen = !moreOpen">{{ t('peek.moreActions') }}</button>
           <div v-if="moreOpen" class="peek-menu" role="menu">
             <button role="menuitem" type="button" class="peek-menu-item" @click="act('moveIt')">{{ t('plan.move') }}</button>
             <button role="menuitem" type="button" class="peek-menu-item peek-remove" @click="act('removeIt')">{{ t('plan.removeShort') }}</button>
@@ -465,9 +490,9 @@ function onClick(event: MouseEvent): void {
   gap: 14px;
   padding: 22px 24px 16px;
   border-bottom: 1px solid var(--divider);
-  background: var(--glass-shine), var(--sheet-fill);
-  -webkit-backdrop-filter: var(--glass-blur-strong);
-  backdrop-filter: var(--glass-blur-strong);
+  /* Solid underneath: a blur inside the already-frosted window doesn't take, so text scrolling
+     under the header showed through it. */
+  background: var(--glass-shine), var(--surface);
 }
 
 .peek-handle {

@@ -39,6 +39,10 @@ const aboutOf = useLearnLines()
 const page = shallowRef(1)
 watch(filters, () => (page.value = 1))
 const pages = computed(() => Math.max(1, Math.ceil(rows.value.length / PAGE)))
+// Fewer rows now (a profile or plan change, not a filter): stay on the last page that exists.
+watch(pages, (n) => {
+  if (page.value > n) page.value = n
+})
 const visible = computed(() => rows.value.slice((page.value - 1) * PAGE, page.value * PAGE))
 const listTop = useTemplateRef<HTMLElement>('listTop')
 async function goPage(n: number): Promise<void> {

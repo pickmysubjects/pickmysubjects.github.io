@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import type { Period, Subject } from '@/engine'
 import { useI18n } from '@/i18n'
+import { localTitle } from '@/i18n/localized'
 
 /** One subject on the printed page: done (with its mark), not passed, or planned. */
 export interface PrintItem {
@@ -27,6 +28,11 @@ const props = defineProps<{
   roles: Record<string, 'required' | 'option'>
   notes: string[]
 }>()
+// The student's language first, as on the cards.
+const titleOf = (code: string) => {
+  const s = props.subjects[code]
+  return s ? localTitle(s, locale.value) || s.title : t.value('plan.notInDataset')
+}
 const { t, locale } = useI18n()
 
 const years = computed(() => {
@@ -85,7 +91,7 @@ const subline = computed(() => parts.value.slice(0, -1))
           <ul class="subjects">
             <li v-for="x in term.items" :key="`${x.code}-${x.state}`" :class="`item-${x.state}`">
               <span class="code">{{ x.code }}</span>
-              <span class="name">{{ subjects[x.code]?.title ?? t('plan.notInDataset') }}</span>
+              <span class="name">{{ titleOf(x.code) }}</span>
               <span v-if="x.state === 'failed'" class="tag tag-failed">{{ t('plan.pastNotPassed') }}{{ x.mark !== undefined ? ` ${x.mark}` : '' }}</span>
               <span v-else-if="x.state === 'done'" class="tag tag-done">{{ x.mark !== undefined ? x.mark : t('plan.pastTag') }}</span>
               <span v-else-if="role(x.code)" class="tag" :class="`tag-${role(x.code)}`">

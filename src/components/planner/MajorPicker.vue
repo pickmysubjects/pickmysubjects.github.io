@@ -60,7 +60,7 @@ const shown = computed(() => (searching.value || single.value ? groups.value : g
 
     <button type="button" class="option option-unsure" :aria-pressed="major === '' && !openField" @click="pickUnsure('')">
       <span>{{ t('wizard.notSure') }}</span>
-      <Check v-if="major === ''" :size="18" aria-hidden="true" />
+      <Check v-if="major === '' && !openField" :size="18" aria-hidden="true" />
     </button>
 
     <p v-if="searching && groups.length === 0" class="empty">{{ t('wizard.noMajorMatch') }}</p>

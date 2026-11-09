@@ -153,12 +153,39 @@ const onChange = (e: MediaQueryListEvent): void => {
   void nextTick(fit)
 }
 // The page behind the sheet stays still while it is open; focus goes into it.
+// Closing it puts focus back where it was (the toolbar's Filters button).
+let opener: HTMLElement | null = null
 watch(open, (v) => {
   document.documentElement.style.overflow = v && phone.value ? 'hidden' : ''
-  if (v) void nextTick(() => document.querySelector<HTMLElement>('#browse-filters .sheet-close')?.focus())
+  if (v) {
+    opener = document.activeElement instanceof HTMLElement ? document.activeElement : null
+    void nextTick(() => document.querySelector<HTMLElement>('#browse-filters .sheet-close')?.focus())
+  } else if (opener?.isConnected) {
+    opener.focus({ preventScroll: true })
+    opener = null
+  }
 })
 function onKey(e: KeyboardEvent): void {
-  if (e.key === 'Escape' && open.value) open.value = false
+  if (!open.value || !phone.value) return
+  if (e.key === 'Escape') {
+    open.value = false
+    return
+  }
+  // A modal sheet: Tab stays inside it.
+  if (e.key !== 'Tab' || !panel.value) return
+  const items = [...panel.value.querySelectorAll<HTMLElement>('a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])')].filter(
+    (el) => el.offsetParent !== null,
+  )
+  const first = items[0]
+  const last = items.at(-1)
+  if (!first || !last) return
+  if (e.shiftKey && document.activeElement === first) {
+    e.preventDefault()
+    last.focus()
+  } else if (!e.shiftKey && document.activeElement === last) {
+    e.preventDefault()
+    first.focus()
+  }
 }
 
 // ---- Desktop panel: groups scroll inside it; the illustration only where it fits (as GuideToc). ----

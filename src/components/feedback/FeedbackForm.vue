@@ -47,6 +47,13 @@ function set<K extends keyof FeedbackDraft>(key: K, value: FeedbackDraft[K]): vo
   draft.value = { ...draft.value, [key]: value }
 }
 
+// The score only belongs to pain-point topics: drop it when the topic moves elsewhere, so it isn't
+// counted for sending, sent, or copied with feedback it wasn't given for.
+function setTopic(topic: string): void {
+  const pain = PAIN_POINTS.some((p) => p.id === topic)
+  draft.value = { ...draft.value, topic, rating: pain ? draft.value.rating : null }
+}
+
 async function copy(): Promise<void> {
   const { title, body } = feedbackText(draft.value, locale.value)
   try {
@@ -67,7 +74,7 @@ function value(event: Event): string {
   <form class="feedback surface" @submit.prevent>
     <label class="field">
       {{ t('feedback.about') }}
-      <select class="select" :value="draft.topic" @change="set('topic', value($event))">
+      <select class="select" :value="draft.topic" @change="setTopic(value($event))">
         <optgroup :label="t('feedback.groupProblems')">
           <option v-for="p in PAIN_POINTS" :key="p.id" :value="p.id">{{ t(`pain.${p.id}.q`) }}</option>
         </optgroup>

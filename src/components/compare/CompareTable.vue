@@ -122,11 +122,13 @@ const cols = computed(() => ({ '--n': props.plans.length }))
 
     <div v-for="g in groups" :key="g.id" :id="`cmp-g-${g.id}`" class="group" role="rowgroup">
       <div class="group-row" role="row">
-        <button class="group-head" type="button" role="rowheader" :aria-expanded="open[g.id]" @click="emit('toggle', g.id)">
+        <div role="rowheader">
+        <button class="group-head" type="button" :aria-expanded="open[g.id]" @click="emit('toggle', g.id)">
           <ChevronDown :size="16" aria-hidden="true" class="group-chev" :class="{ shut: !open[g.id] }" />
           <span class="group-title">{{ g.title }}</span>
           <span v-if="diff && hiddenCount(g)" class="group-same">{{ t('cmp.sameRows', { n: hiddenCount(g) }) }}</span>
         </button>
+        </div>
       </div>
       <template v-if="open[g.id]">
         <div v-for="r in visible(g)" :id="`cmp-${r.id}`" :key="r.id" class="row" :class="{ 'row-same': r.same }" role="row">

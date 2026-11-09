@@ -6,6 +6,8 @@
 export const en = {
   /** Between items of a list shown in text ("A, B" / "A、B"). */
   listSep: ", ",
+  /** After a label that leads into a list ("Helps toward: …"). */
+  labelSep: ": ",
   /** Which career-name language this locale reads (career names come with the data). */
   careerLang: "en",
   infoTip: "More info",
@@ -213,6 +215,7 @@ export const en = {
     saveMenu: "Save",
     enrolCopy: "Copy subject codes to enrol",
     enrolCopied: "Copied",
+    enrolCopyFailed: "Couldn't copy",
     enrolInfo: "Each term's subject codes and official titles, to enrol from in my.unimelb. Subjects you've passed are left out.",
     addCalendar: "Add to calendar",
     print: 'Print / PDF',
@@ -225,7 +228,7 @@ export const en = {
     removeShort: "Remove",
     tlShow: "Show its route",
     moreNotes: "+{n} more",
-    selectCard: "Select {code} to see its prerequisites and what it unlocks",
+    selectCard: "Open {code}: prerequisites, what it unlocks and more",
     swap: "Swap",
     swapCode: "Swap {code} for another subject",
     move: "Move",
@@ -251,6 +254,7 @@ export const en = {
     undo: "Undo",
     didAdd: "Added {code} to {term}",
     didSwap: "Swapped {from} for {to}",
+    swapNoRoom: "No room for {code} in the plan before it's needed. Nothing changed.",
     didRemove: "Removed {code}",
     didMove: "Moved {code} to {term}",
     addPending: "Once you're done, {code} goes into the plan.",
@@ -519,8 +523,7 @@ export const en = {
     markScaleLabel: "My marks are in:",
     markScaleNote: "A rough guide, not an official conversion. Schools grade differently.",
     markScaleNoteShort: "A rough guide, not official",
-    markScaleCn150: "For subjects out of 150, multiply by 1.5.",
-    markScale: { unimelb: "UniMelb marks", vce: "VCE study score", ib: "IB (1–7)", alevel: "A-Level", us: "US letter grades", cn: "China (100-point)", tw: "Taiwan GSAT (levels)", jp: "Japan (5-point grades)", kr9: "Korea (9 grades, before 2025)", kr5: "Korea (5 grades, 2025 on)", vn: "Vietnam (10-point)", spm: "Malaysia SPM", id: "Indonesia (report card)", cbse: "India CBSE" },
+    markScale: { unimelb: "UniMelb marks", vce: "VCE study score", hsc: "NSW HSC bands", ib: "IB (1–7)", alevel: "A-Level", hkdse: "Hong Kong DSE", us: "US letter grades", cn: "China, subject score (out of 100 | 150)", tw: "Taiwan GSAT (levels)", jp: "Japan (5-point grade average)", kr9: "Korea (9 grades, before 2025)", kr5: "Korea (5 grades, 2025 on)", vn: "Vietnam (10-point)", spm: "Malaysia SPM", id: "Indonesia (report card)", cbse: "India CBSE", pct: "Percentage (other systems)" },
     skillFromMarks: "Your marks ({codes}: average {avg}) look like “{level}”.",
     useIt: "Use this",
     pfPass: "Passed",
@@ -1593,6 +1596,7 @@ export const en = {
     remove: "Remove",
     reset: "Back to the Handbook's",
     weightsOff: "Weights add up to {n}%, not 100: counted in proportion.",
+    setWeight: "Give at least one part a weight to see what you need.",
     resultTitle: "You need on what's left",
     resultAll: "Your final mark",
     secured: "Already secured",

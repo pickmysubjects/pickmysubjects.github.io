@@ -104,7 +104,7 @@ function toggle(id: string): void {
         <span class="health-text">
           <span class="health-title">{{ health === 'ok' ? t('progress.allMet') : blocked ? t('progress.metButProblems', { n: problems ?? 0 }) : (left === 1 ? t('progress.leftOne') : t('progress.left', { n: left })) }}</span>
           <!-- Conditions we can't check: their own line, jumping to the rows that confirm them. -->
-          <a v-if="health === 'ok' && unconfirmed" class="confirm-chip" :href="$slots.notes ? '#rules-notes' : undefined">{{ t('progress.toConfirm', { n: unconfirmed }) }}</a>
+          <component :is="$slots.notes ? 'a' : 'span'" v-if="health === 'ok' && unconfirmed" class="confirm-chip" :href="$slots.notes ? '#rules-notes' : undefined">{{ t('progress.toConfirm', { n: unconfirmed }) }}</component>
         </span>
       </span>
       <!-- The full list is the section under the board: this opens it and scrolls there. -->

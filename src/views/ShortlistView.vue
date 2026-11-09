@@ -47,7 +47,7 @@ const codes = computed(() => (pair.value ? [...pair.value] : [...new Set([...sav
 
     <PairLearn v-if="pair" :a="pair[0]" :b="pair[1]" />
 
-    <section v-else class="empty surface">
+    <section v-else-if="!codes.length" class="empty surface">
       <p>{{ t('shortlist.empty') }}</p>
       <a class="button button-accent" :href="link('subjects')">{{ t('shortlist.browseLink') }}</a>
     </section>

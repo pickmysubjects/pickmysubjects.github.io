@@ -30,7 +30,14 @@ function openSheet(): void {
   sheetOpen.value = true
 }
 function closeSheet(): void {
-  sheet.value?.close()
+  const d = sheet.value
+  if (!d) return
+  if (typeof d.close === 'function') d.close()
+  else {
+    // No <dialog> support: undo the fallback, which fires no "close" event.
+    d.removeAttribute('open')
+    sheetOpen.value = false
+  }
 }
 // A tap on the dimmed page around the sheet closes it.
 function onSheetClick(e: MouseEvent): void {

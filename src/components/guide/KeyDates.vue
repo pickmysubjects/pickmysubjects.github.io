@@ -28,15 +28,18 @@ const groupId = (g: KeyDateGroup) => `term-${g.year}-${g.term}`
 const label = (d: KeyDate) => `${t.value(`guide.kd.kind.${d.kind}`)} · ${termFullLabel(t.value, { year: d.year, period: d.term })}`
 const isPast = (g: KeyDateGroup) => groups.value.past.includes(g)
 
+// Only dates still to come go in the file; with none, there's nothing to add.
+const upcomingItems = computed(() => groups.value.upcoming.flatMap((g) => g.items.filter((i) => !i.past)))
 function download(): void {
-  const items = groups.value.upcoming.flatMap((g) => g.items.filter((i) => !i.past))
+  const items = upcomingItems.value
+  if (!items.length) return
   downloadIcs(buildIcs(items, label), 'unimelb-key-dates.ics')
 }
 </script>
 
 <template>
   <div class="kd-actions surface">
-    <button type="button" class="button button-accent" @click="download">
+    <button type="button" class="button button-accent" :disabled="!upcomingItems.length" @click="download">
       <CalendarPlus :size="16" aria-hidden="true" />{{ t('guide.kd.add') }}
     </button>
     <!-- What the file holds and where the dates come from, behind one ⓘ. -->

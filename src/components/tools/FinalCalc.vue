@@ -61,10 +61,22 @@ const numberOf = (e: Event, allowNegative = false): number | '' => {
   const n = Number(raw)
   return raw === '' || !Number.isFinite(n) || (n < 0 && !allowNegative) ? '' : n
 }
+// Stable keys for the rows on screen, so removing one doesn't hand its typing state to the next.
+let nextId = 0
+const ids = shallowRef<number[]>([])
+watch(
+  () => [props.code, rows.value.length] as const,
+  ([code, n], old) => {
+    if (old?.[0] !== code || ids.value.length !== n) ids.value = Array.from({ length: n }, () => nextId++)
+  },
+  { immediate: true },
+)
 function addRow(): void {
+  ids.value = [...ids.value, nextId++]
   save([...rows.value, { kind: 'assignment', weight: 0, score: '', outOf: '' }])
 }
 function removeRow(i: number): void {
+  ids.value = ids.value.filter((_, j) => j !== i)
   save(rows.value.filter((_, j) => j !== i))
 }
 function reset(): void {
@@ -84,6 +96,8 @@ const badScore = (r: CalcRow) => r.score !== '' && percentOf(r.score, r.outOf ==
 const result = computed(() => finalNeeds(parts.value))
 // A pass/fail subject has only one grade worth aiming for.
 const shownBands = computed(() => (subject.value?.passFail ? result.value?.bands.filter((b) => b.band === 'P') : result.value?.bands) ?? [])
+// Parts listed but every weight is 0: nothing to work out until one has a weight.
+const noWeights = computed(() => rows.value.length > 0 && rows.value.every((r) => !r.weight))
 const weightsOff = computed(() => result.value && Math.abs(result.value.totalWeight - 100) > 0.01)
 const anyDone = computed(() => (result.value?.doneWeight ?? 0) > 0)
 const allDone = computed(() => result.value !== null && result.value.leftWeight <= 0)
@@ -159,7 +173,7 @@ function pick(code: string): void {
         <p class="calc-hint" :class="{ warn: changed }">{{ changed ? t('calc.handbookChanged') : handbookRows.length ? t('calc.fromHandbook') : t('calc.noData') }}</p>
 
         <ul v-if="rows.length" class="rows">
-          <li v-for="(r, i) in rows" :key="i" class="row">
+          <li v-for="(r, i) in rows" :key="ids[i] ?? `i${i}`" class="row">
             <label class="f f-kind">
               <span class="visually-hidden">{{ t('calc.part') }}</span>
               <select class="input" :value="r.kind" @change="setField(i, 'kind', ($event.target as HTMLSelectElement).value)">
@@ -191,6 +205,7 @@ function pick(code: string): void {
           <button type="button" class="button button-quiet" @click="addRow"><Plus :size="15" aria-hidden="true" /> {{ t('calc.add') }}</button>
           <span class="calc-privacy"><Lock :size="13" aria-hidden="true" /> {{ t('calc.privacy') }}<InfoTip :text="t('calc.privacyInfo')" /></span>
         </div>
+        <p v-if="noWeights" class="calc-hint warn">{{ t('calc.setWeight') }}</p>
         <p v-if="weightsOff && result" class="calc-hint warn">{{ t('calc.weightsOff', { n: result.totalWeight }) }}</p>
       </section>
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, shallowRef, toRef } from 'vue'
+import { computed, shallowRef, toRef, watch } from 'vue'
 import QuickAdd from '@/components/browse/QuickAdd.vue'
 import ShortlistToggle from './ShortlistToggle.vue'
 import { PERIODS } from '@/engine'
@@ -113,6 +113,10 @@ const onlyDiff = shallowRef(false)
 // A column every subject answers the same way says nothing about which to pick.
 const same = computed(() => new Set(KEYS.filter((k) => rows.value.length > 1 && rows.value.every((r) => r.cells[k].text === rows.value[0]!.cells[k].text && r.cells[k].sub === rows.value[0]!.cells[k].sub))))
 const shown = computed(() => (onlyDiff.value ? KEYS.filter((k) => !same.value.has(k)) : KEYS))
+// Sorting by a column that "Only differences" just hid would order the list by something unseen.
+watch(shown, (keys) => {
+  if (sortKey.value && sortKey.value !== 'subject' && !keys.includes(sortKey.value)) sortKey.value = ''
+})
 </script>
 
 <template>

@@ -116,6 +116,7 @@ function addToPlan(): void {
 }
 
 const copied = shallowRef(false)
+let copiedTimer: ReturnType<typeof setTimeout> | undefined
 async function share(): Promise<void> {
   const url = location.href
   const title = `${code.value} ${local.value || props.subject.title}`
@@ -124,7 +125,8 @@ async function share(): Promise<void> {
     else {
       await navigator.clipboard.writeText(url)
       copied.value = true
-      setTimeout(() => (copied.value = false), 2400)
+      clearTimeout(copiedTimer)
+      copiedTimer = setTimeout(() => (copied.value = false), 2400)
     }
   } catch {
     // Cancelled or blocked: nothing to say.
@@ -143,7 +145,10 @@ onMounted(() => {
   })
   io.observe(actionsEl.value)
 })
-onBeforeUnmount(() => io?.disconnect())
+onBeforeUnmount(() => {
+  io?.disconnect()
+  clearTimeout(copiedTimer)
+})
 </script>
 
 <template>
@@ -229,7 +234,7 @@ onBeforeUnmount(() => io?.disconnect())
             <span v-if="prereqMet" class="kf-met"><Check :size="14" aria-hidden="true" />{{ t('subject.prereqDone') }}</span>
             <span v-else-if="prereqMissing.length" class="kf-missing">
               {{ t('subject.prereqMissing') }}
-              <template v-for="(c, i) in prereqMissing.slice(0, MISSING_SHOWN)" :key="c"><a :href="link(`subject/${c}`)">{{ c }}</a><template v-if="i < Math.min(prereqMissing.length, MISSING_SHOWN) - 1">, </template></template>
+              <template v-for="(c, i) in prereqMissing.slice(0, MISSING_SHOWN)" :key="c"><a :href="link(`subject/${c}`)">{{ c }}</a><template v-if="i < Math.min(prereqMissing.length, MISSING_SHOWN) - 1">{{ t('listSep') }}</template></template>
               {{ " " }}<a v-if="prereqMissing.length > MISSING_SHOWN" href="#route">{{ t('subject.prereqMore', { n: prereqMissing.length - MISSING_SHOWN }) }}</a>
             </span>
           </dd>

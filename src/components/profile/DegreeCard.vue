@@ -6,7 +6,7 @@ import type { PlanSetup } from '@/composables/usePlan'
 import { usePlan } from '@/composables/usePlan'
 import { useDataset } from '@/composables/useDataset'
 import { termLabel } from '@/i18n/format'
-import { informalPicks } from '@/engine'
+import { informalPicks, isFail } from '@/engine'
 import { useI18n } from '@/i18n'
 import { diplomaTitle } from '@/composables/usePlanCompare'
 import { useProfile } from '@/composables/useProfile'
@@ -42,7 +42,8 @@ const { profile } = useProfile()
 const totalPoints = computed(() => data.value.courses.find((c) => c.code === plan.setup.value.course)?.totalPoints ?? 0)
 const pointsDone = computed(
   () =>
-    profile.value.results.filter((r) => r.mark === undefined || r.mark === null || r.mark >= 50).reduce((n, r) => n + (data.value.subjects[r.code]?.points ?? 0), 0) +
+    // Each subject once: a retake that passed counts its points one time, a fail not at all.
+    [...new Set(profile.value.results.filter((r) => !isFail(r)).map((r) => r.code))].reduce((n, c) => n + (data.value.subjects[c]?.points ?? 0), 0) +
     creditPoints(profile.value.credit),
 )
 const pct = computed(() => (totalPoints.value ? Math.min(100, (pointsDone.value / totalPoints.value) * 100) : 0))

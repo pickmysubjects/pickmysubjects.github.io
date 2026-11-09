@@ -158,13 +158,13 @@ const hasLists = computed(() => easierItems.value.length + harderItems.value.len
         <div v-if="easierItems.length" class="group">
           <h3 class="group-title">{{ t('fit.easierGroup') }}</h3>
           <ul class="items">
-            <li v-for="r in easierItems" :key="r" class="item item-good"><Plus :size="14" aria-hidden="true" />{{ r }}</li>
+            <li v-for="(r, i) in easierItems" :key="`${i}-${r}`" class="item item-good"><Plus :size="14" aria-hidden="true" />{{ r }}</li>
           </ul>
         </div>
         <div v-if="harderItems.length" class="group">
           <h3 class="group-title">{{ t('fit.harderGroup') }}</h3>
           <ul class="items">
-            <li v-for="r in harderItems" :key="r" class="item item-warn"><Minus :size="14" aria-hidden="true" />{{ r }}</li>
+            <li v-for="(r, i) in harderItems" :key="`${i}-${r}`" class="item item-warn"><Minus :size="14" aria-hidden="true" />{{ r }}</li>
           </ul>
         </div>
         <p v-if="difficulty.level === 'average' && easierItems.length && harderItems.length" class="note">{{ t('fit.balanced') }}</p>
@@ -173,13 +173,13 @@ const hasLists = computed(() => easierItems.value.length + harderItems.value.len
         <div v-if="whyNotItems.length" class="group">
           <h3 class="group-title">{{ fit?.kind === 'fit' && fit.band === 'low' ? t('fit.whyNotGroup') : t('fit.holdsBackGroup') }}</h3>
           <ul class="items">
-            <li v-for="r in whyNotItems" :key="r" class="item item-warn"><CircleMinus :size="14" aria-hidden="true" />{{ r }}</li>
+            <li v-for="(r, i) in whyNotItems" :key="`${i}-${r}`" class="item item-warn"><CircleMinus :size="14" aria-hidden="true" />{{ r }}</li>
           </ul>
         </div>
         <div v-if="suitsItems.length" class="group">
           <h3 class="group-title">{{ weak ? t('fit.worksGroup') : t('fit.suitsGroup') }}</h3>
           <ul class="items">
-            <li v-for="r in suitsItems" :key="r.text" class="item item-good">
+            <li v-for="(r, i) in suitsItems" :key="`${i}-${r.text}`" class="item item-good">
               <Check :size="14" aria-hidden="true" /><span>{{ r.text }}<InfoTip v-if="r.range" :text="t('fit.rangeInfo')" /></span>
             </li>
           </ul>
@@ -188,7 +188,7 @@ const hasLists = computed(() => easierItems.value.length + harderItems.value.len
           <h3 class="group-title">{{ t('fit.watchGroup') }}</h3>
           <RowWarnings v-if="watchRec" class="watch" :rec="watchRec" />
           <ul v-if="cautions.length" class="items">
-            <li v-for="c in cautions" :key="c" class="item item-warn"><TriangleAlert :size="13" aria-hidden="true" />{{ c }}</li>
+            <li v-for="(c, i) in cautions" :key="`${i}-${c}`" class="item item-warn"><TriangleAlert :size="13" aria-hidden="true" />{{ c }}</li>
           </ul>
         </div>
       </div>

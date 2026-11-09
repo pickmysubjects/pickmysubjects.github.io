@@ -17,6 +17,8 @@ const props = defineProps<{
   rows: readonly { code: string; exam: string; time?: string }[]
   nameOf: (code: string) => string
   whyOf: (d: RevisionDay) => string
+  /** "Rest day" or "Busy", as the screen labels it. */
+  restText: (date: string) => string
 }>()
 const { t, locale } = useI18n()
 const asDate = (d: string) => new Date(`${d}T00:00:00Z`)
@@ -97,7 +99,7 @@ const reasons = computed(() => props.plan.days.filter((d) => d.reason).map((d) =
             <span class="pr-date">{{ dayLabel(c.date) }}</span>
             <template v-if="c.day">
               <strong v-for="x in c.day.exams" :key="x" class="pr-exam">{{ examText(x) }}</strong>
-              <span v-if="c.day.kind === 'rest'" class="pr-rest">{{ t('rev.restDay') }}</span>
+              <span v-if="c.day.kind === 'rest'" class="pr-rest">{{ restText(c.day.date) }}</span>
               <span v-for="(l, j) in lines(c.day)" :key="j" class="pr-line"><span class="pr-tag" :class="styleOf(l.code)">{{ l.code }}</span><span class="pr-what">{{ hours(l.hours) }} · {{ typeOf(l.type) }}</span></span>
             </template>
           </td>
@@ -110,7 +112,7 @@ const reasons = computed(() => props.plan.days.filter((d) => d.reason).map((d) =
         <span class="pr-ldate">{{ weekdayLabel(d.date) }} {{ dayLabel(d.date) }}</span>
         <span>
           <strong v-for="x in d.exams" :key="x" class="pr-exam">{{ examText(x) }}</strong>
-          <span v-if="d.kind === 'rest'" class="pr-rest">{{ t('rev.restDay') }}</span>
+          <span v-if="d.kind === 'rest'" class="pr-rest">{{ restText(d.date) }}</span>
           <span v-for="(l, j) in lines(d)" :key="j" class="pr-line"><span class="pr-tag" :class="styleOf(l.code)">{{ l.code }}</span><span class="pr-what">{{ hours(l.hours) }} · {{ typeOf(l.type) }}</span></span>
           <span v-if="d.reason" class="pr-why">{{ whyOf(d) }}</span>
         </span>

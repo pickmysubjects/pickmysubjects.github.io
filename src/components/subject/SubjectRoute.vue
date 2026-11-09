@@ -3,7 +3,7 @@ import { computed } from 'vue'
 import { isDone, prerequisiteRoute, referencedSubjects, simplifyFor, type Subject } from '@/engine'
 import SubjectLinks from '@/components/majors/SubjectLinks.vue'
 import SubjectTimeline from '@/components/planner/SubjectTimeline.vue'
-import { link } from '@/composables/useView'
+import { go as goTo, link } from '@/composables/useView'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
 import { useProfile } from '@/composables/useProfile'
@@ -57,7 +57,7 @@ const whereOf = computed(() => {
   return out
 })
 function go(c: string): void {
-  location.assign(link(`subject/${c}`))
+  goTo(`subject/${c}`)
 }
 </script>
 

@@ -17,7 +17,18 @@ import { useI18n } from '@/i18n'
 const { t, locale } = useI18n()
 const { ready, shared, shareable: rows, markShared } = useGradeShare()
 const picked = shallowRef<string[]>([])
-watch(rows, (rs) => (picked.value = rs.map((r) => r.code)), { immediate: true })
+// Tick only codes that are new to the list, so a rebuild of `rows` keeps the student's unticks.
+let known = new Set<string>()
+watch(
+  rows,
+  (rs) => {
+    const codes = rs.map((r) => r.code)
+    const kept = picked.value.filter((c) => codes.includes(c))
+    picked.value = [...kept, ...codes.filter((c) => !known.has(c) && !kept.includes(c))]
+    known = new Set(codes)
+  },
+  { immediate: true },
+)
 const status = shallowRef<'idle' | 'sending' | 'sent' | 'failed'>('idle')
 
 function toggle(code: string): void {

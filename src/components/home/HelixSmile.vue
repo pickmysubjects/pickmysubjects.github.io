@@ -8,7 +8,7 @@ defineProps<{ size?: number }>()
 </script>
 
 <template>
-  <svg class="helix-smile" :width="size ?? 28" :height="size ?? 28" viewBox="0 0 64 64" role="img" aria-label="Helix :)">
+  <svg class="helix-smile" :width="size ?? 28" :height="size ?? 28" viewBox="0 0 64 64" aria-hidden="true">
     <defs>
       <linearGradient id="hs-tile" x1="0" y1="0" x2="1" y2="1">
         <stop offset="0" stop-color="#2a2c36" />

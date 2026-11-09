@@ -86,6 +86,7 @@ const complete = computed(
     Object.values(facts.value).some(Boolean) ||
     languages.value.length > 0 ||
     recommend.value !== '' ||
+    wish.value.trim() !== '' ||
     BANDS.includes(grade.value),
 )
 const periods: Period[] = ['summer', 'semester-1', 'winter', 'semester-2']

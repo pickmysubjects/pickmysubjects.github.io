@@ -32,7 +32,7 @@ const more = computed(() => info.value.helps.length - SUBJECT_CAREERS_SHOWN)
       </li>
     </ul>
     <p v-else class="helps">
-      {{ t('careerPath.subjectHelps') }}:
+      {{ t('careerPath.subjectHelps') }}{{ t('labelSep') }}
       <template v-for="(c, i) in helps" :key="c.id">
         <a :href="link(`careers/${c.id}`)">{{ careerShortName(c.names, locale) }}</a><template v-if="i < helps.length - 1">{{ t('listSep') }}</template>
       </template>

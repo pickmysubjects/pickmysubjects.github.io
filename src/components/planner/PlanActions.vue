@@ -48,15 +48,18 @@ const enrolText = computed(() => {
     .map(({ term, codes }) => [termFullLabel(t.value, term), ...codes.map((c) => `${c}  ${data.value.subjects[c]?.title ?? ''}`.trim())].join('\n'))
     .join('\n\n')
 })
-const copied = shallowRef(false)
+const copied = shallowRef<'idle' | 'ok' | 'failed'>('idle')
+let copyTimer: ReturnType<typeof setTimeout> | undefined
 async function copyEnrol(): Promise<void> {
+  clearTimeout(copyTimer)
   try {
     await navigator.clipboard.writeText(enrolText.value)
-    copied.value = true
-    setTimeout(() => (copied.value = false), 2000)
+    copied.value = 'ok'
   } catch {
-    // No clipboard (an old browser, a blocked permission): nothing to undo.
+    // No clipboard (an old browser, a blocked permission): say so instead of nothing happening.
+    copied.value = 'failed'
   }
+  copyTimer = setTimeout(() => (copied.value = 'idle'), 2500)
 }
 
 function pick(what: 'saveImage' | 'print' | 'calendar'): void {
@@ -71,13 +74,24 @@ function outside(e: PointerEvent): void {
   if (menu.value?.open && !menu.value.contains(e.target as Node)) menu.value.open = false
 }
 onMounted(() => document.addEventListener('pointerdown', outside))
-onBeforeUnmount(() => document.removeEventListener('pointerdown', outside))
+onBeforeUnmount(() => {
+  document.removeEventListener('pointerdown', outside)
+  clearTimeout(copyTimer)
+})
+// Esc closes the menu and puts focus back on its button.
+function onMenuKey(e: KeyboardEvent): void {
+  if (e.key !== 'Escape' || !menu.value?.open) return
+  e.preventDefault()
+  e.stopPropagation()
+  menu.value.open = false
+  menu.value.querySelector('summary')?.focus()
+}
 </script>
 
 <template>
   <div id="share" class="pact">
     <SharePanel />
-    <details ref="menu" class="pact-more">
+    <details ref="menu" class="pact-more" @keydown="onMenuKey">
       <summary class="button button-quiet pact-btn">{{ t('plan.saveMenu') }}</summary>
       <div class="pact-menu" role="menu">
         <button class="pact-item" role="menuitem" type="button" :disabled="imaging" @click="pick('saveImage')">{{ t('plan.saveImage') }}</button>
@@ -87,7 +101,7 @@ onBeforeUnmount(() => document.removeEventListener('pointerdown', outside))
           <InfoTip :text="dates.length ? t('cal.info', { n: dates.length }) : t('menu.miss.noDates')" />
         </span>
         <span class="pact-row">
-          <button class="pact-item" role="menuitem" type="button" :disabled="!enrolText" @click="copyEnrol">{{ copied ? t('plan.enrolCopied') : t('plan.enrolCopy') }}</button>
+          <button class="pact-item" role="menuitem" type="button" :disabled="!enrolText" @click="copyEnrol">{{ copied === 'ok' ? t('plan.enrolCopied') : copied === 'failed' ? t('plan.enrolCopyFailed') : t('plan.enrolCopy') }}</button>
           <InfoTip :text="t('plan.enrolInfo')" />
         </span>
       </div>

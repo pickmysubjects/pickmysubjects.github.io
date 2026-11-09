@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, shallowRef } from 'vue'
+import { computed, onBeforeUnmount, shallowRef } from 'vue'
 import type { PasteResult } from '@/engine'
 import { useI18n } from '@/i18n'
 import { describeReq, periodLabel } from '@/i18n/format'
@@ -9,6 +9,8 @@ const props = defineProps<{ parsed: PasteResult; yaml: string }>()
 
 const { t } = useI18n()
 const copied = shallowRef(false)
+let copiedTimer: ReturnType<typeof setTimeout> | undefined
+onBeforeUnmount(() => clearTimeout(copiedTimer))
 const offerings = computed(() =>
   props.parsed.offerings === 'unknown'
     ? t.value('contribute.notFound')
@@ -37,7 +39,8 @@ async function copy(): Promise<void> {
   try {
     await navigator.clipboard.writeText(props.yaml)
     copied.value = true
-    setTimeout(() => (copied.value = false), 2000)
+    clearTimeout(copiedTimer)
+    copiedTimer = setTimeout(() => (copied.value = false), 2000)
   } catch {
     copied.value = false
   }

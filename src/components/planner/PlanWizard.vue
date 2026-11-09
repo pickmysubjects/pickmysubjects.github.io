@@ -51,7 +51,8 @@ const shownCourses = computed(() => {
 const draft = shallowRef<PlanSetup>({ ...props.setup, ...start0 })
 const step = shallowRef(0)
 const thisYear = calendarYear()
-const firstYear = Math.min(thisYear - 2, fromRecord.value?.year ?? thisYear)
+// A saved start older than the usual range stays offered, so opening the wizard doesn't lose it.
+const firstYear = Math.min(thisYear - 2, fromRecord.value?.year ?? thisYear, draft.value.startYear || thisYear)
 const years = Array.from({ length: thisYear + 1 - firstYear + 1 }, (_, i) => firstYear + i)
 const startFromRecord = computed(
   () => fromRecord.value !== null && draft.value.startYear === fromRecord.value.year && draft.value.startPeriod === fromRecord.value.period,
@@ -145,6 +146,8 @@ function finish(): void {
   emit('done', { ...draft.value, courseYear: draft.value.startYear, commencementYear: draft.value.startYear, major2, specialisation: spec, minors: kept, diploma: dip, diplomaStream: stream })
 }
 
+// The picked degree as resolved (code and Handbook year), so only one listed version shows as chosen.
+const isChosen = (c: Course) => course.value?.code === c.code && course.value?.year === c.year
 function chooseCourse(c: Course): void {
   // A new student's start moves to the next term the course takes new students in.
   const start = fromRecord.value ? { year: draft.value.startYear, period: draft.value.startPeriod } : nextEntry(c, { year: draft.value.startYear, period: draft.value.startPeriod })
@@ -173,14 +176,14 @@ function chooseCourse(c: Course): void {
           :key="`${c.code}-${c.year}`"
           type="button"
           class="option"
-          :aria-pressed="draft.course === c.code"
+          :aria-pressed="isChosen(c)"
           @click="chooseCourse(c)"
         >
           <span>
             {{ c.title }}
             <span v-if="c.entryNote" class="intl-hint">{{ t(`entry.${c.entryNote}`) }}</span>
           </span>
-          <Check v-if="draft.course === c.code" :size="18" aria-hidden="true" />
+          <Check v-if="isChosen(c)" :size="18" aria-hidden="true" />
         </button>
       </div>
       <p class="scope-note">{{ t('wizard.scopeShort') }}<InfoTip :text="t('wizard.scope')" /></p>

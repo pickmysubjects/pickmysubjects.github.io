@@ -36,6 +36,13 @@ const MEMORIES: readonly RevisionMemory[] = ['strong', 'average', 'weak']
 const isBusy = (date: string) => saved.value.offDays.includes(date)
 const restText = (date: string) => t.value(isBusy(date) ? 'rev.busyDay' : 'rev.restDay')
 
+// Clearing the date isn't a choice: put the current start back in the box.
+function onStart(event: Event): void {
+  const v = valueOf(event)
+  if (v) rp.set('start', v)
+  else (event.target as HTMLInputElement).value = start.value
+}
+
 type Row = (typeof rows.value)[number]
 const active = computed(() => rows.value.filter((r) => !rp.noExam(r)))
 const off = computed(() => rows.value.filter((r) => rp.noExam(r)))
@@ -145,7 +152,7 @@ async function openDay(date: string): Promise<void> {
 const shown = computed(() => plan.value.days.find((d) => d.date === picked.value) ?? plan.value.days.find((d) => d.date === rp.today) ?? plan.value.days[0])
 const cellNum = (c: { date: string; first: boolean }) => (c.first ? dayLabel(c.date) : fmtNum.value.format(asDate(c.date)))
 function cellLabel(d: RevisionDay): string {
-  const what = d.kind === 'exam' ? d.exams.map(examText).join(', ') : d.kind === 'rest' ? t.value('rev.restDay') : d.sessions.length ? blocksOf(d).map((s) => `${s.code} ${hours(s.hours)}`).join(', ') : t.value('rev.nothing')
+  const what = d.kind === 'exam' ? d.exams.map(examText).join(', ') : d.kind === 'rest' ? restText(d.date) : d.sessions.length ? blocksOf(d).map((s) => `${s.code} ${hours(s.hours)}`).join(', ') : t.value('rev.nothing')
   return [`${weekdayLabel(d.date)} ${dayLabel(d.date)}: ${what}`, whyOf(d)].filter(Boolean).join('. ')
 }
 
@@ -272,7 +279,7 @@ function print(): void {
       <div class="rev-settings">
         <label class="rev-field">
           <span class="rev-label">{{ t('rev.start') }}</span>
-          <input class="input rev-in" type="date" :value="start" :min="rp.today" :max="rp.examMax.value || undefined" @change="valueOf($event) && rp.set('start', valueOf($event))" />
+          <input class="input rev-in" type="date" :value="start" :min="rp.today" :max="rp.examMax.value || undefined" @change="onStart" />
         </label>
         <label class="rev-field">
           <span class="rev-label">{{ t('rev.hours') }} · {{ t('rev.optional') }}</span>
@@ -386,7 +393,7 @@ function print(): void {
       </template>
     </section>
 
-    <RevisionPrint v-if="!missing" :plan="plan" :term="term ? termLabel(t, term) : ''" :rows="active" :name-of="nameOf" :why-of="whyOf" />
+    <RevisionPrint v-if="!missing" :plan="plan" :term="term ? termLabel(t, term) : ''" :rows="active" :name-of="nameOf" :why-of="whyOf" :rest-text="restText" />
   </div>
 </template>
 

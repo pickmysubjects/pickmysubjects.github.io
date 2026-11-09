@@ -41,7 +41,10 @@ const miniArt = () => import('@/components/profile/art/MiniRecord.vue')
 function onTarget(e: Event): void {
   const raw = (e.target as HTMLInputElement).value
   const n = Number(raw)
-  setTargetWam(raw === '' || !Number.isFinite(n) ? undefined : Math.min(100, Math.max(0, n)))
+  const next = raw === '' || !Number.isFinite(n) ? undefined : Math.min(100, Math.max(0, n))
+  setTargetWam(next)
+  // Show the value kept (e.g. 120 becomes 100), even when the saved one didn't change.
+  ;(e.target as HTMLInputElement).value = next === undefined ? '' : String(next)
 }
 
 const results = computed({ get: () => profile.value.results, set: setResults })

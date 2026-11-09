@@ -37,18 +37,21 @@ const handbookUrl = computed(() =>
 )
 
 // A pasted print page carries its own code, title, level and points: fill the boxes from it.
-watch(parsed, (p) => {
-  if (p.code) code.value = p.code
-  if (p.title) title.value = p.title
-  if (p.level) level.value = p.level
-  if (p.points) points.value = p.points
+// Only a value the paste changed is filled, so typing in the paste box never undoes a box the
+// student corrected by hand.
+watch(parsed, (p, old) => {
+  if (p.code && p.code !== old?.code) code.value = p.code
+  if (p.title && p.title !== old?.title) title.value = p.title
+  if (p.level && p.level !== old?.level) level.value = p.level
+  if (p.points && p.points !== old?.points) points.value = p.points
 })
 
 // Only the facts (the YAML) go to the feedback form, never the pasted text.
 const canSend = isFormReady(FEEDBACK_FORM)
 const readSomething = computed(() => parsed.value.offerings !== 'unknown' || parsed.value.prerequisites !== 'unknown')
 const sendState = shallowRef<'idle' | 'sending' | 'sent' | 'failed'>('idle')
-watch(text, () => (sendState.value = 'idle'))
+// Anything that changes what would be sent (paste or boxes) allows sending again.
+watch(yaml, () => (sendState.value = 'idle'))
 
 async function send(): Promise<void> {
   if (!codeValid.value || !readSomething.value) return

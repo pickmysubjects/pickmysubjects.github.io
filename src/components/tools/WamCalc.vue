@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, shallowRef } from 'vue'
+import { computed, onBeforeUnmount, shallowRef } from 'vue'
 import SubjectSearch from '@/components/SubjectSearch.vue'
 import { useDataset } from '@/composables/useDataset'
 import { useWamCalc } from '@/composables/useWamCalc'
@@ -29,17 +29,29 @@ const numberOf = (e: Event): number | '' => {
   return raw === '' || !Number.isFinite(n) ? '' : n
 }
 // Target edits go to the record; a short "saved" line says so.
+// Both "saved" lines are short-lived: they fade after a few seconds.
 const targetSaved = shallowRef(false)
+let targetTimer: ReturnType<typeof setTimeout> | undefined
 function onTarget(e: Event): void {
   calc.setTarget(numberOf(e))
-  targetSaved.value = true
+  clearTimeout(targetTimer)
+  // A cleared target isn't a saved one.
+  targetSaved.value = target.value !== null
+  targetTimer = setTimeout(() => (targetSaved.value = false), 3000)
 }
 const typed = computed(() => rows.value.some((r) => r.mark !== ''))
 const justSaved = shallowRef(false)
 function save(): void {
   calc.save()
   justSaved.value = true
+  clearTimeout(savedTimer)
+  savedTimer = setTimeout(() => (justSaved.value = false), 3000)
 }
+let savedTimer: ReturnType<typeof setTimeout> | undefined
+onBeforeUnmount(() => {
+  clearTimeout(targetTimer)
+  clearTimeout(savedTimer)
+})
 const verdict = computed(() => {
   const n = need.value
   if (target.value === null || wam.value === null) return ''

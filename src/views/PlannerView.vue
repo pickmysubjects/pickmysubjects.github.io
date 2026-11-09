@@ -371,7 +371,8 @@ const members = computed(() => {
 const ruleCodes = computed(() => (ruleFocus.value ? new Set(members.value[ruleFocus.value] ?? []) : null))
 
 // Every change on the board can be taken back once, from a short note at the bottom.
-const undo = shallowRef<{ text: string; terms: PlanTerm[] } | null>(null)
+// `terms: null` is a plain note (nothing to undo), e.g. a swap that found no room.
+const undo = shallowRef<{ text: string; terms: PlanTerm[] | null } | null>(null)
 let undoTimer: ReturnType<typeof setTimeout> | undefined
 function change(text: string, act: () => void): void {
   const before = cloneJson(plan.terms.value)
@@ -381,7 +382,7 @@ function change(text: string, act: () => void): void {
   undoTimer = setTimeout(() => (undo.value = null), 8000)
 }
 function undoLast(): void {
-  if (!undo.value) return
+  if (!undo.value?.terms) return
   plan.restoreTerms(undo.value.terms)
   undo.value = null
 }
@@ -404,6 +405,16 @@ function onAdd(i: number, code: string): void {
 }
 function onReplace(i: number, from: string, to: string): void {
   change(t.value('plan.didSwap', { from, to }), () => plan.replaceSubject(i, from, to))
+  if (selected.value === from) selected.value = to
+}
+// "Use this" in the subject window: same undo and selection as a swap on the board.
+function onPeekSwap(from: string, to: string): void {
+  let done = false
+  change(t.value('plan.didSwap', { from, to }), () => (done = plan.swapSubject(from, to) !== null))
+  if (!done) {
+    undo.value = { text: t.value('plan.swapNoRoom', { code: to }), terms: null }
+    return
+  }
   if (selected.value === from) selected.value = to
 }
 function onRemove(i: number, code: string): void {
@@ -779,7 +790,7 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !viewingShar
       </button>
       <div v-if="undo" class="undo" role="status">
         <span>{{ undo.text }}</span>
-        <button class="undo-button" type="button" @click="undoLast">{{ t('plan.undo') }}</button>
+        <button v-if="undo.terms" class="undo-button" type="button" @click="undoLast">{{ t('plan.undo') }}</button>
       </div>
 
       <SubjectPeek
@@ -794,7 +805,7 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !viewingShar
         :done="plan.plan.value.completed"
         @close="closePeek"
         @open="peek = $event"
-        @swap="(from, to) => plan.swapSubject(from, to)"
+        @swap="onPeekSwap"
         :pass-fail="data.subjects[peek]?.passFail"
         :done-entry="peekDone"
         @done="(m) => markDone(peek as string, m)"
