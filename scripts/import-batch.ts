@@ -2,11 +2,12 @@
  * Import a batch of Handbook pages you copied by hand (nothing is fetched). Each page in the
  * file starts with a "===== CODE Title" line; "#" lines are notes.
  *
- *   npm run import-batch -- ../subject-compass-inbox/batch17-subjects.txt            (dry run)
- *   npm run import-batch -- ../subject-compass-inbox/batch17-subjects.txt --write
+ *   npm run import-batch -- ../subject-compass-inbox/batch17-subjects.txt --year 2027             (dry run)
+ *   npm run import-batch -- ../subject-compass-inbox/batch17-subjects.txt --year 2027 --write
  *
- * Title, level, points, categories and hand tags already in the subject file are kept, and so
- * are its teaching periods when the paste has none.
+ * Everything already in the subject file stays unless the page says otherwise (title and level
+ * are kept; points come from the page header when it has one), and its teaching periods for
+ * other years are kept too. --year is required.
  */
 import { existsSync, readFileSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
@@ -18,8 +19,14 @@ import { ROOT } from './dataset'
 
 const { values, positionals } = parseArgs({
   allowPositionals: true,
-  options: { write: { type: 'boolean', default: false }, year: { type: 'string', default: '2026' } },
+  options: { write: { type: 'boolean', default: false }, year: { type: 'string' } },
 })
+
+// The Handbook year must be said: a default would write 2027 pages as 2026's (or the other way).
+if (!values.year || !/^20\d\d$/.test(values.year)) {
+  console.error('Say which Handbook year the pages are from: --year 2027')
+  process.exit(1)
+}
 
 const KEEP = ['categories', 'skills', 'topics', 'breadth_offerings'] as const
 const REQUISITES = ['prerequisites', 'corequisites', 'non_allowed'] as const
@@ -57,7 +64,11 @@ for (const file of positionals) {
     const empty = parsed.prerequisites === 'unknown' && parsed.assessment === 'unknown'
     if (!values.write || empty || problems.some((p) => p.startsWith('ASSESSMENT SUMS'))) continue
 
-    const doc = parse(subjectYaml({ code, title, level, points, year: Number(values.year) }, parsed)) as Record<string, unknown>
+    const fresh = parse(subjectYaml({ code, title, level, points, year: Number(values.year) }, parsed)) as Record<string, unknown>
+    // Start from the file as it is, then lay the page's facts over it: everything the page doesn't
+    // carry (year-long, discontinued, campus, attendance, texts, signals, a hand-entered contact
+    // hours…) stays instead of being dropped.
+    const doc: Record<string, unknown> = { ...old, ...fresh }
     // A new year adds to the years already there: plans and past results still need when it ran before.
     const oldOfferings = old.offerings && old.offerings !== 'unknown' ? (old.offerings as Record<string, unknown>) : {}
     if (doc.offerings === 'unknown') doc.offerings = old.offerings ?? 'unknown'
@@ -79,7 +90,9 @@ for (const file of positionals) {
     }
     if (old.assessment !== undefined && !same(old.assessment, doc.assessment)) console.log('     CHANGED assessment')
     const oldYear = String(old.source_year ?? '')
-    doc.notes = `Source: ${values.year} University of Melbourne Handbook; facts summarised and checked.${handNote ? ` ${oldYear && oldYear !== values.year ? `(From ${oldYear}, re-check:) ` : ''}${handNote}` : ''}`
+    // One "(From …, re-check:)" mark at most: the older one is replaced, not stacked year on year.
+    const bareNote = handNote.replace(/^\(From \d{4}, re-check:\)\s*/, '')
+    doc.notes = `Source: ${values.year} University of Melbourne Handbook; facts summarised and checked.${bareNote ? ` ${oldYear && oldYear !== values.year ? `(From ${oldYear}, re-check:) ` : ''}${bareNote}` : ''}`
     writeFileSync(path, stringify(doc, { lineWidth: 0 }))
     written++
   }

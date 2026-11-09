@@ -901,9 +901,13 @@ export function withinCaps(s: Subject, taken: string[], course: Course, data: Da
   for (const r of course.rules) {
     if (r.kind !== 'level1-areas' || s.level !== 1) continue
     if (r.category !== undefined && categoryOf(s, course.code) !== r.category) continue
+    // Counted as the rule check counts it: only subjects of the rule's category (a science
+    // student's breadth PHYC subject doesn't use up the science PHYC allowance), no credit.
     const inArea = taken.reduce((sum, c) => {
       const t = data.subjects[c]
-      return t && t.level === 1 && t.area === s.area ? sum + t.points : sum
+      if (!t || t.level !== 1 || t.area !== s.area || t.area === CREDIT_AREA) return sum
+      if (r.category !== undefined && categoryOf(t, course.code) !== r.category) return sum
+      return sum + t.points
     }, 0)
     if (inArea + s.points > r.maxPointsPerArea) return false
   }
