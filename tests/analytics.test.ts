@@ -67,9 +67,9 @@ describe('counting', () => {
     // The first page is followed once by the visit's language event.
     expect(count.mock.calls.map((c) => c[0].path)).toEqual(['/plan', 'visit-lang-en', 'visit-from-direct', '/zh-CN/guide'])
     expect(count.mock.calls[1]?.[0].event).toBe(true)
-    // Inside the site the referrer is us: only the first page keeps the real one.
-    expect(count.mock.calls[0]?.[0].referrer).toBeUndefined()
-    expect(count.mock.calls[3]?.[0].referrer).toBe('')
+    // Only the first page keeps the real referrer; later pages are tagged in-site.
+    expect(count.mock.calls[0]?.[0].referrer).toBe('direct')
+    expect(count.mock.calls[3]?.[0].referrer).toBe('in-site')
   })
 
   it('ignores made-up input (dispatchEvent) and a click with no pointer', () => {
@@ -101,9 +101,9 @@ describe('counting', () => {
     expect(referrerFallback('', chrome, '?ref=XHS')).toBe('xhs')
     expect(referrerFallback('', chrome, '?utm_source=reddit&utm_medium=post')).toBe('reddit')
     expect(referrerFallback('', `${chrome} MicroMessenger/8.0.50`, '')).toBe('wechat')
-    expect(referrerFallback('', chrome, '?share=abc')).toBeUndefined()
+    expect(referrerFallback('', chrome, '?share=abc')).toBe('direct')
     // Nothing but a short plain tag is ever sent.
-    expect(referrerFallback('', chrome, '?ref=' + encodeURIComponent('a plan with spaces'))).toBeUndefined()
+    expect(referrerFallback('', chrome, '?ref=' + encodeURIComponent('a plan with spaces'))).toBe('direct')
   })
 
   it('reads the site language from the path', () => {
