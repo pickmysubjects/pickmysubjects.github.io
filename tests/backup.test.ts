@@ -48,4 +48,24 @@ describe('backup', () => {
     expect(restoreBackup(JSON.stringify({ app: 'something-else', version: 1, data: {} }))).toBe(false)
     expect(store.size).toBe(0)
   })
+
+  it('puts the old data back when storage fills up half-way through a restore', () => {
+    store.set('sc:profiles', JSON.stringify({ real: { results: [{ code: 'COMP10001', mark: 80 }] } }))
+    store.set('sc:rated', JSON.stringify(['COMP10001']))
+    const file = makeBackup()
+    store.set('sc:profiles', 'OLD-PROFILES')
+    store.delete('sc:rated')
+    let writes = 0
+    vi.stubGlobal('localStorage', {
+      getItem: (k: string) => store.get(k) ?? null,
+      setItem: (k: string, v: string) => {
+        if (++writes === 2) throw new Error('QuotaExceededError')
+        store.set(k, v)
+      },
+      removeItem: (k: string) => void store.delete(k),
+    })
+    expect(restoreBackup(file)).toBe(false)
+    expect(store.get('sc:profiles')).toBe('OLD-PROFILES')
+    expect(store.has('sc:rated')).toBe(false)
+  })
 })

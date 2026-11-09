@@ -41,14 +41,24 @@ export function restoreBackup(text: string): boolean {
     return false
   }
   if (!isBackup(parsed)) return false
+  // What was there before, so a restore that fails half-way (storage full) puts it all back
+  // instead of leaving this browser with half the backup and half the old data.
+  const saved = new Map<string, string | null>()
   try {
     // Put each part in shape before saving it, as reading it back would.
     const CLEAN: Record<(typeof KEYS)[number], (x: unknown) => unknown> = { 'sc:profiles': cleanProfiles, 'sc:plans': cleanPlans, 'sc:rated': cleanRated, 'sc:shortlist': cleanShortlist, 'sc:finalCalc': cleanCalc, 'sc:revision': cleanRevisionStore }
-    for (const key of KEYS) {
-      const value = parsed.data[key]
-      if (value !== undefined) localStorage.setItem(key, JSON.stringify(CLEAN[key](value)))
-    }
+    const parts = KEYS.flatMap((key) => (parsed.data[key] === undefined ? [] : [[key, JSON.stringify(CLEAN[key](parsed.data[key]))] as const]))
+    for (const [key] of parts) saved.set(key, localStorage.getItem(key))
+    for (const [key, value] of parts) localStorage.setItem(key, value)
   } catch {
+    try {
+      for (const [key, old] of saved) {
+        if (old === null) localStorage.removeItem(key)
+        else localStorage.setItem(key, old)
+      }
+    } catch {
+      // Storage unusable: nothing more can be done here.
+    }
     return false
   }
   return true

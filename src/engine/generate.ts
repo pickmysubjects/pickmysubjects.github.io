@@ -428,14 +428,18 @@ function buildPlan(given: GenerateInput): GenerateResult {
     const total = () => [...completed, ...allPlaced()].reduce((sum, c) => sum + (data.subjects[c]?.points ?? 12.5), 0)
     const draftOf = (): Plan => ({ course: input.course, courseYear: input.courseYear, major: input.major, major2: input.major2, specialisation: input.specialisation, minors: input.minors, diploma: input.diploma, diplomaStream: input.diplomaStream, completed, terms })
     const failing = () => checkCourse(draftOf(), data).statuses.filter((st) => st.status === 'fail').length
+    const errorCount = () => checkTerms(draftOf(), data).filter((x) => x.severity === 'error').length
     for (let i = terms.length - 1; i >= 0 && total() > course.totalPoints; i--) {
       const term = terms[i] as PlanTerm
       for (const code of [...term.subjects].reverse()) {
         const points = data.subjects[code]?.points ?? 12.5
         if (!electives.has(code) || total() - points < course.totalPoints) continue
         const before = failing()
+        // Errors compared before and after, like the rules: one the plan already had (unrelated to
+        // this subject) mustn't stop every surplus elective from going.
+        const errorsBefore = errorCount()
         term.subjects.splice(term.subjects.indexOf(code), 1)
-        if (failing() > before || checkTerms(draftOf(), data).some((x) => x.severity === 'error')) term.subjects.push(code)
+        if (failing() > before || errorCount() > errorsBefore) term.subjects.push(code)
         else {
           electives.delete(code)
           // Its "added in …" note would no longer be true.
@@ -444,6 +448,9 @@ function buildPlan(given: GenerateInput): GenerateResult {
       }
     }
   }
+
+  // Trimming can empty the last semesters: the degree ends with the last one that has subjects.
+  while (terms.length > 1 && (terms.at(-1) as PlanTerm).subjects.length === 0) terms.pop()
 
   // Spread the load, so the hard subjects don't all land in one semester.
   const draft: Plan = { course: input.course, courseYear: input.courseYear, major: input.major, major2: input.major2, specialisation: input.specialisation, minors: input.minors, diploma: input.diploma, diplomaStream: input.diplomaStream, completed, terms }
@@ -1624,7 +1631,15 @@ function trySwap(r: PointsRule, terms: PlanTerm[], all: string[], ctx: RepairCtx
             sumPoints(after, data, course.code, q) >= q.min,
         )
         if (!keepsMinimums) continue
+        // Taking out a level-1 subject can leave a later one without the level-1 points it needs
+        // to move up a level (the course's progression rule): a swap that does that is undone.
+        const stuck = () => terms.slice(ti + 1).reduce((n, t, k) => n + t.subjects.filter((c) => !progressionAllows(c, course, [...doneBefore(completed, terms, ti + 1 + k, data)], data)).length, 0)
+        const stuckBefore = stuck()
         term.subjects[term.subjects.indexOf(e)] = s.code
+        if (stuck() > stuckBefore) {
+          term.subjects[term.subjects.indexOf(s.code)] = e
+          continue
+        }
         electives.delete(e)
         electives.add(s.code)
         notes.push(note('swapped', { from: e, to: s.code, year: term.year, period: term.period, rule: r.id }, `Swapped ${e} for ${s.code} in ${term.year} ${term.period} to meet: ${r.description.toLowerCase()}.`))

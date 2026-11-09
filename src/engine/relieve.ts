@@ -297,6 +297,7 @@ function goalMajors(plan: Plan): string[] {
 }
 
 const ALTERNATIVES = new WeakMap<Dataset, Map<string, string[]>>()
+const ALTERNATIVES_KEPT = 200
 
 /**
  * Subjects that could fill a free-elective slot, best first for this student (the suggestions'
@@ -313,6 +314,9 @@ function alternatives(data: Dataset, profile: Profile, course: string, category:
     out = recommend(data, profile, { course, category, level, term: { year: term.year, period: term.period }, eligibleWith: [...before], ...(profile.career ? { goalComponents: majors } : {}) })
       .filter((x) => x.eligibility !== 'fail')
       .map((x) => x.code)
+    // Kept small: every change to the student's settings makes new keys, and an old one is
+    // never asked for again. The oldest goes first (a Map keeps insertion order).
+    if (cache.size >= ALTERNATIVES_KEPT) cache.delete(cache.keys().next().value as string)
     cache.set(key, out)
   }
   return out
