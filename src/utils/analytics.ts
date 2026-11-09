@@ -139,13 +139,13 @@ let counted = 0
 // JavaScript load pages but rarely send input, so they stay out of the numbers. The page open
 // at that moment is counted then; every page after it straight away.
 let real = false
-let pending: string | null = null
+let pending: { path: string; title?: string } | null = null
 let watching = false
 
-function send(path: string): void {
+function send(path: string, title?: string): void {
   // The referrer only matters on the first page (where the visit came from); inside the site it's us.
   const first = counted++ === 0
-  counter()?.({ path, referrer: first ? undefined : '' })
+  counter()?.({ path, title, referrer: first ? undefined : '' })
   // Once per visit, the site language it started in and where it came from.
   if (first) {
     counter()?.({ path: `visit-lang-${pathLocale(path)}`, title: 'visit language', event: true })
@@ -154,19 +154,19 @@ function send(path: string): void {
 }
 
 /** Count a page view once the visitor has used the page. A repeat of the page just counted (same path) is skipped. */
-export function countPage(pathname: string = typeof location === 'undefined' ? '/' : location.pathname): void {
+export function countPage(pathname: string = typeof location === 'undefined' ? '/' : location.pathname, title?: string): void {
   if (countingOff() || looksAutomated()) return
   const path = countedPath(pathname)
   if (path === lastPath) return
   lastPath = path
   try {
-    if (real) return send(path)
-    pending = path
+    if (real) return send(path, title)
+    pending = { path, title }
     if (watching) return
     watching = true
     onFirstInput(() => {
       real = true
-      if (pending) send(pending)
+      if (pending) send(pending.path, pending.title)
       pending = null
     })
   } catch {

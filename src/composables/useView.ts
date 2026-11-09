@@ -1,4 +1,4 @@
-import { computed, shallowRef, watch } from 'vue'
+import { computed, nextTick, shallowRef, watch } from 'vue'
 import { localeInPath } from '@/i18n/codes'
 import { currentLocale, useI18n } from '@/i18n'
 import { newVersionReady } from '@/utils/serviceWorker'
@@ -102,9 +102,19 @@ function upgradeHashLink(): void {
 // One route for the whole app; every useView() reads the same one.
 const route = shallowRef<Route | null>(null)
 
+/**
+ * Count the page once its tab title is set. App.vue sets document.title in a watcher that runs
+ * after the route changes, so counting straight away sent the last page's title with the new path.
+ * The path is taken now; the title once Vue has run that watcher.
+ */
+function countAfterTitle(): void {
+  const path = location.pathname
+  void nextTick(() => countPage(path, document.title))
+}
+
 function sync(): void {
   route.value = current()
-  countPage()
+  countAfterTitle()
   window.scrollTo({ top: 0 })
 }
 
@@ -161,7 +171,7 @@ function install(): void {
   })
   document.addEventListener('click', onClick)
   route.value = current()
-  countPage()
+  countAfterTitle()
 }
 
 /**
