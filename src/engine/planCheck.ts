@@ -6,7 +6,7 @@ import { evaluateField, referencedSubjects } from './expr'
 import type { Issue, Plan } from './plan'
 import { isUpcoming, termLabel } from './plan'
 import { PERIOD_LABELS } from './schema'
-import type { Dataset } from './schema'
+import type { Dataset, Subject } from './schema'
 import { termLoad, unfinishedIn } from './yearLong'
 
 /**
@@ -48,6 +48,22 @@ export function checkTerms(plan: Plan, given: Dataset, standardLoad = 50): Issue
     const load = termLoad(plan.terms, termIndex, data)
     const short = term.period === 'summer' || term.period === 'winter'
 
+    // Non-allowed works both ways, but the Handbook often lists it on one side only (e.g. only on a
+    // subject already completed). Checked for every subject, also one closed to the degree or
+    // discontinued: it still clashes with what's planned or done.
+    const reportClashes = (code: string, s: Subject) => {
+      const clashes = new Set(s.nonAllowed !== 'unknown' ? s.nonAllowed.filter((o) => everywhere.has(o)) : [])
+      for (const other of everywhere) {
+        const o = data.subjects[other]
+        if (o && o.nonAllowed !== 'unknown' && o.nonAllowed.includes(code)) clashes.add(other)
+      }
+      for (const other of clashes) {
+        const pair = [code, other].sort().join('|')
+        if (reportedPairs.has(pair)) continue
+        reportedPairs.add(pair)
+        issues.push({ severity: 'error', kind: 'non-allowed', subject: code, termIndex, params: { code, other }, message: `${code} and ${other} can't both count — they're non-allowed with each other.` })
+      }
+    }
     for (const code of term.subjects) {
       const s = data.subjects[code]
       if (seen.has(code)) {
@@ -61,10 +77,12 @@ export function checkTerms(plan: Plan, given: Dataset, standardLoad = 50): Issue
 
       if (closed.has(code)) {
         issues.push({ severity: 'error', kind: 'closed-to-course', subject: code, termIndex, params: { code }, message: `${code} isn't open to students in your degree.` })
+        reportClashes(code, s)
         continue
       }
       if (s.discontinuedFrom !== undefined && term.year >= s.discontinuedFrom) {
         issues.push({ severity: 'error', kind: 'discontinued', subject: code, termIndex, params: { code, year: s.discontinuedFrom, instead: s.replacedBy.join(', ') }, message: `${code} doesn't run from ${s.discontinuedFrom}${s.replacedBy.length ? `; take ${s.replacedBy.join(', ')} instead` : ''}.` })
+        reportClashes(code, s)
         continue
       }
       const avail = offeredIn(s, term.year, term.period)
@@ -103,19 +121,7 @@ export function checkTerms(plan: Plan, given: Dataset, standardLoad = 50): Issue
         issues.push({ severity: 'error', kind: 'coreq-unmet', subject: code, termIndex, params: { code, needs: co.unmet.join(', ') }, message: `${code} needs ${co.unmet.join(', ')} in the same or an earlier term.` })
       }
 
-      // Non-allowed works both ways, but the Handbook often lists it on one side only
-      // (e.g. only on a subject already completed).
-      const clashes = new Set(s.nonAllowed !== 'unknown' ? s.nonAllowed.filter((o) => everywhere.has(o)) : [])
-      for (const other of everywhere) {
-        const o = data.subjects[other]
-        if (o && o.nonAllowed !== 'unknown' && o.nonAllowed.includes(code)) clashes.add(other)
-      }
-      for (const other of clashes) {
-        const pair = [code, other].sort().join('|')
-        if (reportedPairs.has(pair)) continue
-        reportedPairs.add(pair)
-        issues.push({ severity: 'error', kind: 'non-allowed', subject: code, termIndex, params: { code, other }, message: `${code} and ${other} can't both count — they're non-allowed with each other.` })
-      }
+      reportClashes(code, s)
     }
 
 
@@ -169,7 +175,12 @@ function visaLoadIssues(plan: Plan, data: Dataset): Issue[] {
     if (term.period === 'semester-1' || term.period === 'semester-2') entry.termIndex = termIndex
     halves.set(key, entry)
   })
-  const withStudy = [...halves.values()].filter((h) => h.load > 0)
+  // Every half-year from the first with study to the last: an empty one in between (a semester
+  // left blank mid-degree) is the lightest load of all, not one to skip.
+  const all = [...halves.values()]
+  const firstAt = all.findIndex((h) => h.load > 0)
+  const lastAt = all.length - 1 - [...all].reverse().findIndex((h) => h.load > 0)
+  const withStudy = firstAt < 0 ? [] : all.slice(firstAt, lastAt + 1)
   const last = withStudy.at(-1)
   // A lighter load chosen on purpose is said once for the whole plan, not on every half-year;
   // a half-year below even that still gets its own line.

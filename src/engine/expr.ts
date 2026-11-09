@@ -256,8 +256,8 @@ function evaluateAverage(req: { min: number; levels?: number[]; areas?: string[]
   // the average, as it does towards the WAM.
   const record = ctx.marks ? new Set([...ctx.completed, ...Object.keys(ctx.marks)]) : ctx.completed
   const { codes } = matching(req, { ...ctx, completed: record })
-  // Nothing done that it could be the average of: it can't be met yet.
-  if (!codes.length) return { status: 'fail', unmet }
+  // Nothing done that it could be the average of (pass/fail subjects have no mark): it can't be met yet.
+  if (!codes.some((c) => !ctx.subjects[c]?.passFail)) return { status: 'fail', unmet }
   const mean = meanMark(codes, ctx)
   if (mean === null) return { status: 'unknown', unmet }
   return mean >= req.min ? ok() : { status: 'fail', unmet: [`${unmet[0]} (have ${below(mean)})`] }

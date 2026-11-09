@@ -145,6 +145,9 @@ group('typed conditions', () => {
     // Nothing done it could be the average of: not met yet.
     expect(evaluate(rule, withMarks(['AAAA10001'], { AAAA10001: 90 })).status).toBe('fail')
     expect(evaluate({ average: { min: 75, areas: ['BBBB'] } }, withMarks(['AAAA20001', 'BBBB20001'], { AAAA20001: 50, BBBB20001: 80 })).status).toBe('ok')
+    // Only pass/fail subjects (no marks to average): not met yet, the same as nothing done.
+    const pf = { ...subjects, PFPF20001: { ...subjects.AAAA20001!, code: 'PFPF20001', passFail: true } }
+    expect(evaluate(rule, { completed: new Set(['PFPF20001']), subjects: pf, marks: {} }).status).toBe('fail')
   })
 
   it('a WAM is the average of everything done, unknown without marks', () => {

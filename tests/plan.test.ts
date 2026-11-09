@@ -221,6 +221,18 @@ describe('checkTerms (student visa load)', () => {
     expect(checkTerms(plan(false, terms), data).filter((i) => i.kind.startsWith('visa-'))).toEqual([])
   })
 
+  it('warns about a semester left empty mid-degree, but not about empty terms before or after the study', () => {
+    const terms: Plan['terms'] = [
+      { year: 2027, period: 'semester-1', subjects: ['AAAA10001', 'AAAA10002', 'AAAA10003', 'AAAA10004'] },
+      { year: 2027, period: 'semester-2', subjects: [] }, // empty in between: 0 points
+      { year: 2028, period: 'semester-1', subjects: ['AAAA10005'] }, // final half-year
+      { year: 2028, period: 'semester-2', subjects: [] },
+    ]
+    const visa = checkTerms(plan(true, terms), data).filter((i) => i.kind.startsWith('visa-'))
+    expect(visa.map((i) => i.kind)).toEqual(['visa-underload-h2'])
+    expect(visa[0]?.params).toMatchObject({ year: 2027, load: 0 })
+  })
+
   it('counts summer towards January–June', () => {
     const terms: Plan['terms'] = [
       { year: 2027, period: 'summer', subjects: ['AAAA10001', 'AAAA10002'] },
@@ -406,5 +418,17 @@ describe('term dates are Melbourne dates, whatever the device\'s time zone', () 
   it('the next semester\'s year is Melbourne\'s year on New Year\'s Eve UTC', () => {
     // 31 Dec 14:00 UTC is 1 Jan 2027 in Melbourne: the next semester to start is 2027's first.
     expect(firstUpcomingSemester(new Date('2026-12-31T14:00:00Z'))).toEqual({ year: 2027, period: 'semester-1' })
+  })
+})
+
+describe('checkTerms (non-allowed with a subject closed to the degree)', () => {
+  it('still reports the clash when the closed subject is the one that lists it', () => {
+    const done = subject({ code: 'AAAA10001', prerequisites: 'none', offerings: { 2027: ['semester-1'] } })
+    const closedOne = subject({ code: 'BBBB10001', prerequisites: 'none', non_allowed: ['AAAA10001'], offerings: { 2027: ['semester-1'] } })
+    const data = dataset([done, closedOne], { courses: [{ code: 'X', closed: ['BBBB10001'] } as never] })
+    const plan: Plan = { course: 'X', courseYear: 2026, completed: ['AAAA10001'], terms: [{ year: 2027, period: 'semester-1', subjects: ['BBBB10001'] }] }
+    const kinds = checkTerms(plan, data as never).map((i) => i.kind)
+    expect(kinds).toContain('closed-to-course')
+    expect(kinds).toContain('non-allowed')
   })
 })
