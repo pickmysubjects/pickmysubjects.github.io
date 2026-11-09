@@ -151,10 +151,32 @@ let real = false
 let pending: { path: string; title?: string } | null = null
 let watching = false
 
+// The address the visit landed on, read before the app tidies it (language redirect, ?share=).
+const LANDING_SEARCH = typeof location === 'undefined' ? '' : location.search
+
+/**
+ * Where a visit with no referrer came from, so it doesn't show as "(unknown)": a tag on the link
+ * (?ref=xhs or utm_source=…, for links posted in groups and apps), else the app whose in-app
+ * browser opened it (WeChat, Xiaohongshu… send no referrer). Undefined when the browser sent a
+ * referrer (count.js uses it) or nothing is known.
+ */
+export function referrerFallback(
+  referrer: string = typeof document === 'undefined' ? '' : document.referrer,
+  ua: string = typeof navigator === 'undefined' ? '' : navigator.userAgent,
+  search: string = LANDING_SEARCH,
+): string | undefined {
+  if (referrer) return undefined
+  const q = new URLSearchParams(search)
+  const tag = (q.get('ref') ?? q.get('utm_source') ?? '').trim().toLowerCase()
+  // Only a short plain tag: never anything else from the address (it can carry a shared plan).
+  if (/^[a-z0-9._-]{1,30}$/.test(tag)) return tag
+  return APPS.find(([, re]) => re.test(ua))?.[0]
+}
+
 function send(path: string, title?: string): void {
   // The referrer only matters on the first page (where the visit came from); inside the site it's us.
   const first = counted++ === 0
-  counter()?.({ path, title, referrer: first ? undefined : '' })
+  counter()?.({ path, title, referrer: first ? referrerFallback() : '' })
   // Once per visit, the site language it started in and where it came from.
   if (first) {
     counter()?.({ path: `visit-lang-${pathLocale(path)}`, title: 'visit language', event: true })

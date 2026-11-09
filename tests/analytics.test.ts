@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { CSP, GOATCOUNTER } from '../vite.config'
-import { countPage, countedPath, looksAutomated, onFirstInput, optOutToggle, pathLocale, resetAnalytics, trackEvent, visitSource } from '@/utils/analytics'
+import { countPage, countedPath, looksAutomated, referrerFallback, onFirstInput, optOutToggle, pathLocale, resetAnalytics, trackEvent, visitSource } from '@/utils/analytics'
 
 const root = new URL('../', import.meta.url)
 
@@ -93,6 +93,17 @@ describe('counting', () => {
     expect(looksAutomated({ userAgent: 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)', languages: ['en'] })).toBe(true)
     expect(looksAutomated({ userAgent: chrome, languages: [] })).toBe(true)
     expect(looksAutomated({ userAgent: chrome, languages: ['en'] }, { outerWidth: 0, outerHeight: 0 })).toBe(true)
+  })
+
+  it('names where a visit with no referrer came from: a link tag, else the in-app browser', () => {
+    const chrome = 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 Mobile/15E148'
+    expect(referrerFallback('https://www.google.com/', chrome, '?ref=xhs')).toBeUndefined()
+    expect(referrerFallback('', chrome, '?ref=XHS')).toBe('xhs')
+    expect(referrerFallback('', chrome, '?utm_source=reddit&utm_medium=post')).toBe('reddit')
+    expect(referrerFallback('', `${chrome} MicroMessenger/8.0.50`, '')).toBe('wechat')
+    expect(referrerFallback('', chrome, '?share=abc')).toBeUndefined()
+    // Nothing but a short plain tag is ever sent.
+    expect(referrerFallback('', chrome, '?ref=' + encodeURIComponent('a plan with spaces'))).toBeUndefined()
   })
 
   it('reads the site language from the path', () => {
