@@ -16,7 +16,8 @@ const SHELL = '/404.html'
 const STATIC = `pms-static-${VERSION}`
 const ASSETS = 'pms-assets'
 const PAGES = `pms-pages-${VERSION}`
-const OTHER = 'pms-other'
+// Versioned like the others, so a new deploy starts it afresh (older copies are dropped on activate).
+const OTHER = `pms-other-${VERSION}`
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -74,7 +75,8 @@ async function page(event) {
 async function staleWhileRevalidate(event) {
   const { request } = event
   const cache = await caches.open(OTHER)
-  const hit = await caches.match(request)
+  // The refreshed copy first: the precached one (the app shell, icons) would otherwise always win.
+  const hit = (await cache.match(request)) || (await caches.match(request))
   const update = fetch(request).then((response) => {
     if (response.ok) event.waitUntil(cache.put(request, response.clone()))
     return response

@@ -126,7 +126,9 @@ for (const file of readdirSync(dir).filter((f) => f.endsWith('.txt')).sort()) {
 
     // Likely mark from earlier marks only, next to the WAM so far.
     const marks = new Map(before.filter((r) => r.mark !== undefined).map((r) => [r.code, r.mark!]))
-    const wam = avg([...marks.values()])
+    // Weighted by points, as a WAM is (a 25-point subject counts twice).
+    const pts = (c: string) => data.subjects[c]?.points ?? 12.5
+    const wam = [...marks].reduce((a, [c, m]) => a + m * pts(c), 0) / [...marks.keys()].reduce((a, c) => a + pts(c), 0)
     for (const t of target) {
       if (t.mark === undefined || marks.size < 3) continue
       const guess = predictMark(data.subjects[t.code]!, marks, data)

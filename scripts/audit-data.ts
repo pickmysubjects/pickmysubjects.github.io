@@ -160,8 +160,9 @@ for (const [code, s] of subjects) {
   const h = s.weekly_contact_hours
   if (h === undefined) add('contact-hours', 'missing weekly_contact_hours', code)
   else if (h < 0.5) add('contact-hours', '< 0.5 h/week', `${code} (${h})`)
-  else if (h > 12) add('contact-hours', '> 12 h/week (semester total?)', `${code} (${h})`)
+  // A whole multiple of 12 from 24 up is most likely a semester total typed as weekly: said first.
   else if (h >= 24 && h % 12 === 0) add('contact-hours', 'looks like a semester total', `${code} (${h})`)
+  else if (h > 12) add('contact-hours', '> 12 h/week (semester total?)', `${code} (${h})`)
 
   // 3. Offerings
   if (closed) add('offerings', `discontinued (from ${YEAR} or earlier) — info`, code)

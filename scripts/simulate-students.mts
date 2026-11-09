@@ -29,7 +29,9 @@ const { skillsOf } = await import(R + 'src/engine/skills')
 const { TOPICS } = await import(R + 'src/engine/schema')
 const { realData } = await import(R + 'tests/realData')
 const data = realData()
-const YEAR = 2026
+// The newest Handbook year in the data, so the simulation follows the import (2027 and on).
+const { latestDataYear } = await import(R + 'src/engine/dataYear')
+const YEAR = latestDataYear(data.subjects)
 let seed = 12345
 const rnd = () => ((seed = (seed * 1103515245 + 12345) % 2147483648) / 2147483648)
 const pick = <T,>(xs: readonly T[]) => xs[Math.floor(rnd() * xs.length)] as T
@@ -207,4 +209,4 @@ for (const course of courses) {
 const byKind: Record<string, number> = {}
 for (const r of rows) byKind[r.kind] = (byKind[r.kind] ?? 0) + 1
 writeFileSync(process.argv[2], rows.map((r) => `${r.kind}\t${r.label}\t${r.detail}`).join('\n'))
-console.log(JSON.stringify({ plans, recLists, problems: rows.length, expectedHandbookConflicts: expected, byKind, interestShare: { blank: +(stats.interestShareBlank / stats.n).toFixed(3), personal: +(stats.interestSharePers / stats.n).toFixed(3), n: stats.n } }, null, 1))
+console.log(JSON.stringify({ plans, recLists, problems: rows.length, expectedHandbookConflicts: expected, byKind, interestShare: { blank: stats.n ? +(stats.interestShareBlank / stats.n).toFixed(3) : null, personal: stats.n ? +(stats.interestSharePers / stats.n).toFixed(3) : null, n: stats.n } }, null, 1))

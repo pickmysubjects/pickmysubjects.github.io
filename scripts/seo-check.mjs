@@ -33,7 +33,8 @@ for (const [url, h] of pages) {
   else titles.set(key, url)
 }
 
-const today = new Date().toISOString().slice(0, 10)
+// Melbourne's date (the build's lastmod), not UTC's: before 10 or 11 am there UTC is still yesterday.
+const today = new Intl.DateTimeFormat('en-CA', { timeZone: 'Australia/Melbourne' }).format(new Date())
 const listed = new Set()
 for (const f of readdirSync(DIST).filter((f) => /^sitemap-.+\.xml$/.test(f))) {
   const xml = readFileSync(join(DIST, f), 'utf8')

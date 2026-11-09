@@ -13,9 +13,11 @@ import { checkCourse, diplomaClash, findDiploma } from '../src/engine/courseRule
 import { generatePlan, type GenerateInput } from '../src/engine/generate'
 import { checkTerms } from '../src/engine/planCheck'
 import { realData } from '../tests/realData'
+import { latestDataYear } from '../src/engine/dataYear'
 
 const data = realData()
-const YEAR = 2026
+// The newest Handbook year in the data, so the sweep follows the import (2027 and on).
+const YEAR = latestDataYear(data.subjects)
 const profile = { results: [], skills: {}, interests: [], goal: 'balanced' as const }
 const majorsOnly = process.argv.includes('--majors')
 const open = (c: { closedFrom?: number }) => c.closedFrom === undefined || YEAR < c.closedFrom

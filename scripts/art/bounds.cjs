@@ -42,8 +42,18 @@ function bounds(svg) {
     else if (tag === 'path') {
       const d = attr(a, 'd') || ''
       const p = num(d)
-      if (/^[MLCSQTHVZ\s\d.,-]+$/.test(d)) for (let i = 0; i + 1 < p.length; i += 2) add(p[i], p[i + 1])
-      else if (p.length >= 2) add(p[0], p[1])
+      if (/^[MLCSQTHVZ\s\d.,-]+$/.test(d)) {
+        // Absolute commands, read one at a time: H and V carry a single coordinate each (the other
+        // stays where the pen is); every other command's numbers are x,y pairs.
+        let x = 0
+        let y = 0
+        for (const [, cmd, args] of d.matchAll(/([MLCSQTHVZ])([^MLCSQTHVZ]*)/g)) {
+          const v = num(args)
+          if (cmd === 'H') for (const n of v) add((x = n), y)
+          else if (cmd === 'V') for (const n of v) add(x, (y = n))
+          else for (let i = 0; i + 1 < v.length; i += 2) add((x = v[i]), (y = v[i + 1]))
+        }
+      } else if (p.length >= 2) add(p[0], p[1])
     }
   }
   return box
