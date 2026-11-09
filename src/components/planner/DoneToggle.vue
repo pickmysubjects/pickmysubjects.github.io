@@ -91,6 +91,11 @@ function onFocusOut(e: FocusEvent): void {
     if (!props.done) typed.value = ''
   })
 }
+// On a card the line is as wide as the card: only its button and mark box keep their clicks; a
+// click on the empty rest reaches the card and opens the subject, like anywhere else on it.
+function onCardLine(e: MouseEvent): void {
+  if ((e.target as Element).closest('button, input')) e.stopPropagation()
+}
 function onEnter(e: KeyboardEvent): void {
   if (e.isComposing || e.keyCode === 229) return
   ;(e.target as HTMLInputElement).blur()
@@ -98,7 +103,7 @@ function onEnter(e: KeyboardEvent): void {
 </script>
 
 <template>
-  <span v-if="card && onRecord" class="toggle toggle-card" @click.stop>
+  <span v-if="card && onRecord" class="toggle toggle-card" @click="onCardLine">
     <button
       ref="status"
       type="button"
@@ -136,7 +141,7 @@ function onEnter(e: KeyboardEvent): void {
       </div>
     </Teleport>
   </span>
-  <span v-else-if="card" class="toggle toggle-card" @click.stop @focusout="onFocusOut">
+  <span v-else-if="card" class="toggle toggle-card" @click="onCardLine" @focusout="onFocusOut">
     <template v-if="asking">
       <input
         v-if="!passFail"
