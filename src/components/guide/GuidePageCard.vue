@@ -89,6 +89,7 @@ const links = computed(() => (props.limit ? props.page.links.slice(0, props.limi
 
 .card-links a {
   display: block;
+  overflow-wrap: break-word;
   padding: 6px 10px;
   margin-inline: -10px;
   font-size: var(--fs-small);
@@ -121,7 +122,7 @@ const links = computed(() => (props.limit ? props.page.links.slice(0, props.limi
 }
 
 .big .card-links {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, max(10em, calc(50% - 8px))), 1fr));
   column-gap: 16px;
 }
 

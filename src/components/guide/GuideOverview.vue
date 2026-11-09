@@ -64,12 +64,14 @@ function when(i: StripItem): string {
   list-style: none;
 }
 
+/* Columns as wide as the longest words need (Malay, Hindi names run long): the start pages two
+   to a row, the rest four on a wide screen, fewer as it narrows. */
 .cards-start {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .cards-rest {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 270px), 1fr));
 }
 
 .upcoming {
@@ -145,11 +147,6 @@ function when(i: StripItem): string {
 }
 
 @media (max-width: 1100px) {
-  .cards-start {
-    grid-template-columns: 1fr;
-  }
-
-  .cards-rest,
   .up-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -160,7 +157,7 @@ function when(i: StripItem): string {
     gap: 12px;
   }
 
-  .cards-rest,
+  .cards-start,
   .up-list {
     grid-template-columns: 1fr;
   }
