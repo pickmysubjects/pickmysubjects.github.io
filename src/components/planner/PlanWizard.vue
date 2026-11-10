@@ -12,10 +12,13 @@ import { useI18n } from '@/i18n'
 import { useProfile } from '@/composables/useProfile'
 import { termLabel } from '@/i18n/format'
 
-/** Three plain questions, one at a time, then "Build my plan". */
+/**
+ * Three plain questions, one at a time, then "Build my plan". `startAt` opens it at a later
+ * question (trying another major starts at the major), with `lead` saying why above it.
+ */
 const props = withDefaults(
-  defineProps<{ setup: PlanSetup; courses: Course[]; components: Component[]; cancellable?: boolean }>(),
-  { cancellable: true },
+  defineProps<{ setup: PlanSetup; courses: Course[]; components: Component[]; cancellable?: boolean; startAt?: number; lead?: string }>(),
+  { cancellable: true, startAt: 0, lead: '' },
 )
 const emit = defineEmits<{ done: [setup: PlanSetup]; cancel: [] }>()
 const { t } = useI18n()
@@ -49,7 +52,7 @@ const shownCourses = computed(() => {
   return q ? sorted.filter((c) => c.title.toLowerCase().includes(q) || c.code.toLowerCase().includes(q) || c.code === draft.value.course) : sorted
 })
 const draft = shallowRef<PlanSetup>({ ...props.setup, ...start0 })
-const step = shallowRef(0)
+const step = shallowRef(Math.min(Math.max(props.startAt, 0), 2))
 const thisYear = calendarYear()
 // A saved start older than the usual range stays offered, so opening the wizard doesn't lose it.
 const firstYear = Math.min(thisYear - 2, fromRecord.value?.year ?? thisYear, draft.value.startYear || thisYear)
@@ -163,6 +166,7 @@ function chooseCourse(c: Course): void {
         <span v-for="n in 3" :key="n" class="dot" :class="{ 'dot-on': n - 1 <= step }" />
       </span>
     </header>
+    <p v-if="lead" class="lead">{{ lead }}</p>
 
     <div v-if="step === 0" class="q">
       <h2 class="q-title">{{ t('wizard.qCourse') }}</h2>
@@ -304,7 +308,12 @@ function chooseCourse(c: Course): void {
     </div>
 
     <footer class="wizard-foot">
-      <button v-if="step > 0" class="button button-quiet" type="button" @click="step--">
+      <!-- Opened part-way (trying another major): Cancel stays, and Back can still change the degree. -->
+      <span v-if="lead && cancellable && step > 0" class="foot-left">
+        <button class="button button-quiet" type="button" @click="emit('cancel')">{{ t('rating.cancel') }}</button>
+        <button class="button button-quiet" type="button" @click="step--"><ArrowLeft :size="16" aria-hidden="true" /> {{ t('wizard.back') }}</button>
+      </span>
+      <button v-else-if="step > 0" class="button button-quiet" type="button" @click="step--">
         <ArrowLeft :size="16" aria-hidden="true" /> {{ t('wizard.back') }}
       </button>
       <button v-else-if="cancellable" class="button button-quiet" type="button" @click="emit('cancel')">{{ t('rating.cancel') }}</button>
@@ -321,6 +330,17 @@ function chooseCourse(c: Course): void {
 </template>
 
 <style scoped>
+.lead {
+  margin: -4px 0 0;
+  color: var(--ink-soft);
+}
+
+.foot-left {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
 .wizard {
   display: grid;
   gap: 22px;

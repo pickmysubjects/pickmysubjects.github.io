@@ -4,7 +4,7 @@ import { computed, nextTick, onBeforeUnmount, onMounted, shallowRef, useTemplate
 import { usePlans } from '@/composables/usePlans'
 import { MAX_PLANS } from '@/utils/planBook'
 import { useI18n } from '@/i18n'
-import { link } from '@/composables/useView'
+import { go, link } from '@/composables/useView'
 import { planName } from './planName'
 import { useAnchoredOverlay } from '@/utils/anchoredOverlay'
 
@@ -77,6 +77,15 @@ function create(mode: 'copy' | 'fresh'): void {
   plans.create(mode)
   panel.value = null
 }
+// Same plan, another major: a copy (the record is shared), with the questions open at the major,
+// then both plans side by side. Only once the plan has its questions answered.
+const canSwitch = computed(() => plans.active.value.setup.confirmed === true || plans.active.value.notes.length > 0)
+function tryMajor(): void {
+  const from = plans.active.value.label
+  plans.create('copy')
+  panel.value = null
+  go(`plan/?switch=${from}`)
+}
 async function startDelete(): Promise<void> {
   panel.value = 'delete'
   await nextTick()
@@ -140,6 +149,7 @@ function confirmDelete(): void {
           <template v-if="plans.canAdd.value">
             <button class="item" type="button" @click="create('copy')">{{ t('plans.copy') }}</button>
             <button class="item" type="button" @click="create('fresh')">{{ t('plans.fresh') }}</button>
+            <button v-if="canSwitch" class="item" type="button" @click="tryMajor">{{ t('plans.switchMajor') }}</button>
           </template>
           <p v-else class="note">{{ t('plans.max', { n: MAX_PLANS }) }}</p>
         </template>

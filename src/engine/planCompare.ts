@@ -39,6 +39,11 @@ export interface PlanFacts {
   hurdles: number
   /** Predicted WAM at the end (record marks plus each planned subject's predicted mark), or null with no marks. */
   wam: PlanWam | null
+  /**
+   * Of the subjects passed on the record, how many the plan's major (and specialisation) count:
+   * what a switch of major keeps. Left out with nothing passed yet.
+   */
+  doneInMajor?: { counted: number; done: number }
 }
 
 /** A plan's predicted WAM and what it rests on. */

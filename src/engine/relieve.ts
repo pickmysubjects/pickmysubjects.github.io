@@ -286,9 +286,9 @@ function fixedSubjects(data: Dataset, plan: Plan): Set<string> {
   return out
 }
 
-/** Subjects the career goal's accreditation route needs (required, "one of", breadth), for this plan's majors. */
+/** Subjects the career goal's route needs (accreditation or graduate course: required, "one of", breadth), for this plan's majors. */
 function routeSubjects(data: Dataset, plan: Plan, profile: Profile | undefined): string[] {
-  const a = careerGoal(data, profile?.career, goalMajors(plan))?.major?.accreditation
+  const a = careerGoal(data, profile?.career, goalMajors(plan))?.route
   return a ? [...a.required.flat(), ...a.requiredBreadth] : []
 }
 

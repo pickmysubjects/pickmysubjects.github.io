@@ -4,8 +4,8 @@
  * the student's major when that major leads to the career (its accreditation route counts then),
  * else against the career's fields alone.
  */
-import { componentCareers, type CareerLang } from './careers'
-import { careerNeeds, careerTarget, majorsForCareer, tierSubject, type CareerMajor, type CareerTarget, type TierContext, type TieredSubject } from './careerPaths'
+import { componentCareers, type Accreditation, type CareerLang } from './careers'
+import { careerNeeds, careerTarget, graduateAccreditation, majorsForCareer, tierSubject, type CareerMajor, type CareerTarget, type TierContext, type TieredSubject } from './careerPaths'
 import { majorOverview } from './roles'
 import type { Params } from './plan'
 import type { Dataset, Subject } from './schema'
@@ -14,6 +14,12 @@ export interface CareerGoal {
   target: CareerTarget
   /** The student's major that leads to the career, when one does (its accreditation route applies). */
   major?: CareerMajor
+  /**
+   * The subjects the way there names by code: the major's accreditation route, else the graduate
+   * course's prerequisites when the student would go on to one (no major of theirs leads straight
+   * to the job). Undefined when neither names any.
+   */
+  route?: Accreditation
   ctx: TierContext
   /** The major's own subjects: inside them, any field the career is about counts (as on the career page). */
   own: Set<string>
@@ -35,7 +41,9 @@ export function careerGoal(data: Dataset, careerId: string | undefined, componen
     const entry = major ? componentCareers(data.careers, major.component) : undefined
     const o = major ? majorOverview(data, major.component, major.course) : null
     const own = new Set([...(o?.core ?? []), ...(o?.choices.flatMap((x) => x.from) ?? []), ...(o?.pathway.map((p) => p.code) ?? [])])
-    goal = { target, ...(major ? { major } : {}), own, ctx: { needs: careerNeeds(target), accreditation: major?.accreditation, helpful: entry?.helpfulSubjects?.codes } }
+    // A major leading straight to the job needs no graduate course; otherwise its prerequisites apply.
+    const route = major?.accreditation ?? (major?.how === 'direct' ? undefined : graduateAccreditation(target.graduate))
+    goal = { target, ...(major ? { major } : {}), ...(route ? { route } : {}), own, ctx: { needs: careerNeeds(target), accreditation: route, helpful: entry?.helpfulSubjects?.codes } }
   }
   cache.set(key, goal)
   return goal
@@ -60,7 +68,7 @@ export function careerNameParams(t: CareerTarget): Params {
   return out
 }
 
-/** What the career's accreditation route still asks for that the plan and record don't have. */
+/** What the career's route (accreditation or graduate course) still asks for that the plan and record don't have. */
 export interface CareerGap {
   /** Subjects the route needs in the degree; a "one of" list as its codes joined by " / ". */
   required: string[]
@@ -73,7 +81,7 @@ export interface CareerGap {
  * plan already warns about (the major's compulsory ones): not said twice.
  */
 export function careerGap(data: Dataset, goal: CareerGoal, have: ReadonlySet<string>, flagged: ReadonlySet<string> = new Set()): CareerGap {
-  const a = goal.major?.accreditation
+  const a = goal.route
   const gap: CareerGap = { required: [], breadth: [] }
   if (!a) return gap
   const known = (c: string) => !!data.subjects[c] && data.subjects[c]!.discontinuedFrom === undefined

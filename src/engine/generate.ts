@@ -644,20 +644,47 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
     if (common.length) notes.push(note('keptOpen', { codes: common.join(', '), n: input.keepOpen.length }, `Planned ${common.join(', ')}, which most of the ${input.keepOpen.length} majors you're deciding between start from.`))
   }
 
-  // A career goal the major leads to: its accreditation route's subjects are planned like the
-  // major's own (a "one of" list: the first still running, unless one is already in).
-  const route = input.profile.career ? careerGoal(data, input.profile.career, goalMajors(input))?.major?.accreditation : undefined
-  if (route) {
-    const running = (c: string) => !!data.subjects[c] && data.subjects[c]!.discontinuedFrom === undefined
-    // Not one the degree's own components rule out (ACTL20005 against a specialisation's FNCE30001,
-    // which its FNCE30010 builds on): the components come first, the career route is extra.
-    const coming = new Set(required)
-    closePrereqs(input, coming, done, [], new Map())
+  // A career goal's route. The major's accreditation route comes now: its subjects are planned
+  // like the major's own, often filling its choices (a "one of" list: the first still running,
+  // unless one is already in). A graduate course's prerequisites come after the major's subjects
+  // are settled (addRoute below), so the major always comes first.
+  const goal = input.profile.career ? careerGoal(data, input.profile.career, goalMajors(input)) : null
+  const route = goal?.route
+  const graduateRoute = !!route && route !== goal?.major?.accreditation
+  const running = (c: string) => !!data.subjects[c] && data.subjects[c]!.discontinuedFrom === undefined
+  /**
+   * The route's subjects the plan doesn't have yet, each with what it needs first, as long as that
+   * clashes with nothing planned and keeps the degree within its caps (a commerce student's level-1
+   * breadth can't take four first-year science subjects for an engineering master's). What doesn't
+   * fit stays in the plan page's reminder, and the degree's rules hold.
+   */
+  const addRoute = (withCaps: boolean): void => {
+    if (!route) return
+    const components = planComponentIds(input)
     for (const r of [...route.required, ...route.requiredBreadth]) {
-      const codes = (Array.isArray(r) ? r : [r]).filter(running).filter((c) => coming.has(c) || !clashes(c, done, coming, data))
-      if (codes.length && !codes.some((c) => done.has(c) || required.has(c))) required.add(codes[0]!)
+      const all = (Array.isArray(r) ? r : [r]).filter(running)
+      if (all.some((c) => done.has(c) || required.has(c))) continue
+      // Not one the degree's own components rule out (ACTL20005 against a specialisation's FNCE30001,
+      // which its FNCE30010 builds on): the components come first, the career route is extra.
+      const coming = new Set(required)
+      closePrereqs(input, coming, done, [], new Map())
+      const fits = (c: string): boolean => {
+        if (!withCaps || !course) return true
+        const trial = new Set([...coming, c])
+        closePrereqs(input, trial, done, [], new Map())
+        const taken = [...done, ...coming]
+        for (const x of trial) {
+          if (coming.has(x) || !data.subjects[x]) continue
+          if (!withinCaps(data.subjects[x]!, taken, course, data, components)) return false
+          taken.push(x)
+        }
+        return true
+      }
+      const pick = all.find((c) => (coming.has(c) || !clashes(c, done, coming, data)) && fits(c))
+      if (pick) required.add(pick)
     }
   }
+  if (!graduateRoute) addRoute(false)
 
   // "Choose N points from" groups, once every fixed subject is known. Ties in
   // score go to subjects that run in the least crowded teaching period.
@@ -773,6 +800,7 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
     }
   }
 
+  if (graduateRoute) addRoute(true)
   closePrereqs(input, required, done, notes, needs)
   if (diploma) {
     // The diploma's points (and its level minimums) beyond what its stream and rules name: the

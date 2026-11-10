@@ -19,11 +19,12 @@ import Interp from '@/components/Interp.vue'
 import PlanSwitcher from '@/components/plans/PlanSwitcher.vue'
 import PlanHero from '@/components/planner/PlanHero.vue'
 import SubjectSection from '@/components/subject/SubjectSection.vue'
-import { computeWam, assumedOfferings, creditPoints, findDiploma, careerGap, careerGoal, careerName, heldMajorIds, informalPicks, isFail, isPassedDuplicate, passedCodes, planProblems as countedProblems, planComponentIds, planRoles, planRules, recordedLoads, termKey, termLoad, type Issue, type PlanTerm } from '@/engine'
+import { compareQuery, computeWam, assumedOfferings, creditPoints, findDiploma, careerGap, careerGoal, careerName, heldMajorIds, informalPicks, isFail, isPassedDuplicate, passedCodes, planProblems as countedProblems, planComponentIds, planRoles, planRules, recordedLoads, termKey, termLoad, type Issue, type PlanTerm } from '@/engine'
 import { diplomaTitle } from '@/composables/usePlanCompare'
 import { Plus } from 'lucide-vue-next'
 import { usePhone } from '@/composables/usePhone'
 import { usePlans } from '@/composables/usePlans'
+import { planName } from '@/components/plans/planName'
 import { sharePlanImage } from '@/utils/planImage'
 import { localTitle } from '@/i18n/localized'
 import { decodePlan } from '@/utils/sharePlan'
@@ -162,11 +163,11 @@ const roles = computed(() => {
   for (const c of r.options) out[c] = 'option'
   return out
 })
-// A career goal whose accreditation route still needs subjects the plan doesn't have: one line,
+// A career goal whose route (accreditation, or a graduate course's prerequisites) still needs subjects the plan doesn't have: one line,
 // leaving out the major's compulsory subjects (the course check already says when they're missing).
 const careerReminder = computed(() => {
   const goal = careerGoal(data.value, profile.value.career, heldMajorIds(plan.plan.value).filter((id): id is string => !!id))
-  const body = goal?.major?.accreditation?.body
+  const body = goal?.route?.body
   if (!goal || !body) return null
   const have = new Set([...passedCodes(profile.value.results, data.value.subjects), ...plan.plannedCodes.value])
   const gap = careerGap(data.value, goal, have, roleSets.value.required)
@@ -308,9 +309,32 @@ function placePending(): void {
   )
 }
 
+// Trying another major (?switch=A, from the plan menu): the open plan is a copy of plan A, and the
+// questions open at the major. Built, the two plans open side by side; cancelled, the copy goes.
+const switchFrom = computed(() => {
+  const label = query.value.get('switch')?.toUpperCase()
+  const from = label ? plans.list.value.find((p) => p.label === label) : undefined
+  return from && from.id !== plans.active.value.id ? from : null
+})
+watch(switchFrom, (from) => { if (from) editing.value = true }, { immediate: true })
+function cancelWizard(): void {
+  editing.value = false
+  const from = switchFrom.value
+  if (!from) return
+  plans.remove(plans.active.value.id)
+  plans.switchTo(from.id)
+  go('plan')
+}
+
 function finishWizard(setup: PlanSetup): void {
   if (!plan.updateSetup(setup)) plan.generate()
   editing.value = false
+  const from = switchFrom.value
+  if (from) {
+    trackEvent('plan-switch-major')
+    go(`plan/compare/?${compareQuery({ plans: [from.label, plans.active.value.label], diff: true })}`)
+    return
+  }
   placePending()
 }
 // The plan's semester for the subject open in the peek, if it's in the plan.
@@ -672,8 +696,10 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !viewingShar
       :courses="data.courses.filter((c) => c.listed)"
       :components="data.components"
       :cancellable="!plan.isEmpty.value"
+      :start-at="switchFrom ? 2 : 0"
+      :lead="switchFrom ? t('plans.switchLead', { name: planName(t, switchFrom) }) : ''"
       @done="finishWizard"
-      @cancel="editing = false"
+      @cancel="cancelWizard"
     />
 
     <SharedPlanView v-if="viewingShared" :shared="shared" @done="closeShared" />

@@ -9,6 +9,7 @@
 /** Anonymous actions. Names only: never a subject code, mark or anything from a student's record. */
 export type AnalyticsEvent =
   | 'plan-generate'
+  | 'plan-switch-major'
   | 'plan-share'
   | 'plan-image-save'
   | 'list-image-save'

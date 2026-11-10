@@ -172,6 +172,14 @@ function listedMajors(data: Dataset, id: string): CareerMajor[] {
   return out
 }
 
+/**
+ * A graduate course's prerequisite subjects, as a route like an accreditation one: undefined when
+ * the course names none by code (its pages mostly name study areas, which a plan can't check).
+ */
+export function graduateAccreditation(r: GraduateRoute | undefined): Accreditation | undefined {
+  return r?.required.length ? { body: r.title, summary: r.entry, required: r.required, requiredBreadth: [], recommended: [], withOneOf: [], source: r.source } : undefined
+}
+
 /** Majors listed for a graduate course: any degree is accepted, so these are only the closest fits. */
 export const ROUTE_MAJORS_SHOWN = 8
 
@@ -495,8 +503,7 @@ export function majorForCareer(data: Dataset, careerId: string, component: strin
   const comp = data.components.find((x) => x.id === component)
   const isBreadth = (code: string) => data.subjects[code]?.categories[major.course] === 'breadth' && !(comp && barsBreadth(comp, code))
   // A graduate course that names prerequisite subjects by code makes them required, as an accreditation route would.
-  const r = major.route
-  const routeAcc: Accreditation | undefined = r?.required.length ? { body: r.title, summary: r.entry, required: r.required, requiredBreadth: [], recommended: [], withOneOf: [], source: r.source } : undefined
+  const routeAcc = graduateAccreditation(major.route)
   const ctx: TierContext = { needs, accreditation: major.accreditation ?? routeAcc, helpful: entry?.helpfulSubjects?.codes, easier, breadth: isBreadth }
 
   const o = majorOverview(data, component, major.course)

@@ -164,6 +164,62 @@ describe('career goal in the plan builder and the heavy-term fix', () => {
   })
 })
 
+describe('career goal reached through a graduate course', () => {
+  const empty: Profile = { results: [], skills: {}, interests: [], goal: 'balanced' }
+  const build = (career?: string) =>
+    generatePlan({ data: real, profile: { ...empty, ...(career ? { career } : {}) }, course: 'B-COM', courseYear: 2026, major: 'finance', startYear: 2027, startPeriod: 'semester-1' })
+
+  it('applies the course’s named prerequisites when no major of the student’s leads straight to the job', () => {
+    // Finance doesn't lead to business analyst; the Master of Data Science names MAST10006 and MAST10007.
+    const goal = careerGoal(real, 'business-analyst', ['finance'])!
+    expect(goal.major).toBeUndefined()
+    expect(goal.route?.body).toBe(real.careers!.graduate['business-analyst']!.title)
+    expect(careerGap(real, goal, new Set(['MAST10006'])).required).toEqual(['MAST10007'])
+    // A major the Handbook says leads straight there needs no graduate course, so nothing is added.
+    const direct = careerGoal(real, 'business-analyst', ['business-analytics'])!
+    expect(direct.major?.how).toBe('direct')
+    expect(direct.route).toBeUndefined()
+  })
+
+  it('plans those prerequisites, and the plan still checks out', () => {
+    const base = build().plan
+    const plan = build('business-analyst').plan
+    const codes = plan.terms.flatMap((t) => t.subjects)
+    expect(codes).toEqual(expect.arrayContaining(['MAST10006', 'MAST10007']))
+    const unmet = (p: Plan) => checkCourse(p, real).statuses.filter((r) => r.status !== 'ok').map((r) => r.ruleId)
+    expect(unmet(plan)).toEqual(unmet(base))
+    expect(checkTerms(plan, real).filter((i) => i.severity === 'error')).toEqual([])
+  })
+
+  it('keeps within the degree’s caps, and the reminder names what didn’t fit', () => {
+    // An arts student aiming at mechanical engineering: four first-year science subjects are more
+    // level-1 breadth than the degree allows, so the plan takes what fits and the rules still hold.
+    const arts = (career?: string) =>
+      generatePlan({ data: real, profile: { ...empty, ...(career ? { career } : {}) }, course: 'B-ARTS', courseYear: 2026, major: 'history', startYear: 2027, startPeriod: 'semester-1' }).plan
+    const plan = arts('mechanical-engineer')
+    const failing = (p: Plan) => checkCourse(p, real).statuses.filter((r) => r.status === 'fail').map((r) => r.ruleId)
+    expect(failing(plan)).toEqual(failing(arts()))
+    const codes = new Set(plan.terms.flatMap((t) => t.subjects))
+    const route = real.careers!.graduate['mechanical-engineer']!.required
+    expect(route.filter((c) => codes.has(c)).length).toBeGreaterThan(0)
+    const gap = careerGap(real, careerGoal(real, 'mechanical-engineer', ['history'])!, codes)
+    expect(gap.required).toEqual(route.filter((c) => !codes.has(c)))
+  })
+
+  it('puts the major first: a second-year student’s major subjects never lose room to the course’s prerequisites', () => {
+    // Animal science, first year done (one subject failed): the major's own level-1 subjects and
+    // the retake fill the level-1 cap, so the chemical engineering master's prerequisites take what's left.
+    const base = { data: real, course: 'B-SCI', minors: [], courseYear: 2026, major: 'animal-science-and-management', startPeriod: 'semester-1' as const }
+    const blank = generatePlan({ ...base, startYear: 2026, profile: empty }).plan
+    const year1 = blank.terms.filter((t) => t.period === 'semester-1' || t.period === 'semester-2').slice(0, 2)
+    const results = year1.flatMap((t, ti) => t.subjects.map((code, ci) => ({ code, mark: ti === 0 && ci === 0 ? 42 : 70, year: t.year, period: t.period })))
+    const plan = generatePlan({ ...base, startYear: 2027, profile: { ...empty, results, career: 'chemical-engineer' } }).plan
+    const passed = results.filter((r) => r.mark >= 50).map((r) => r.code)
+    const failing = checkCourse({ ...plan, completed: passed }, real).statuses.filter((r) => r.status === 'fail').map((r) => r.ruleId)
+    expect(failing).toEqual([])
+  })
+})
+
 describe('career goal and breadth', () => {
   // A Finance student aiming at management consulting: breadth (non-commerce) subjects seldom
   // have the job's field as their main one, so the goal used to leave breadth as it was.

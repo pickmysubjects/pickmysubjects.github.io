@@ -85,6 +85,22 @@ export function compareGroups(plans: ComparedPlan[], ctx: RowContext): Group[] {
       'rules',
     ),
     row('finish', t('cmp.rowFinish'), plans.map((p) => ({ text: f(p).finish ? termLabel(t, f(p).finish!) : none })), plans),
+    // Only with subjects passed: how many of them each plan's major counts (what switching keeps).
+    ...(plans.some((p) => f(p).doneInMajor)
+      ? [
+          row(
+            'doneInMajor',
+            t('cmp.rowDoneInMajor'),
+            plans.map((p) => {
+              const d = f(p).doneInMajor
+              return { text: d ? t('cmp.doneInMajorOf', { n: d.counted, done: d.done }) : none }
+            }),
+            plans,
+            undefined,
+            t('cmp.doneInMajorInfo'),
+          ),
+        ]
+      : []),
     row(
       'problems',
       t('cmp.rowProblems'),

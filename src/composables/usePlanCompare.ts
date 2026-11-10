@@ -1,5 +1,5 @@
 import { computed, type Ref } from 'vue'
-import { alignTimeline, checkCourse, checkTerms, creditPoints, exactWam, findDiploma, informalPicks, predictionMarks, passedCodes, planComponentIds, planProblems, planRules, findCourse, forCourse, planRoles, planStress, requiredWithPrerequisites, termLoad, termsWithCarried, type CourseRule, type Dataset, type PlanFacts, type RuleStatus } from '@/engine'
+import { alignTimeline, checkCourse, referencedSubjects, checkTerms, creditPoints, exactWam, findDiploma, informalPicks, predictionMarks, passedCodes, planComponentIds, planProblems, planRules, findCourse, forCourse, planRoles, planStress, requiredWithPrerequisites, termLoad, termsWithCarried, type CourseRule, type Dataset, type PlanFacts, type RuleStatus } from '@/engine'
 import { predictMark, RANGE_Z } from '@/engine/predict'
 import { summariseAssessment } from '@/utils/assessment'
 import { careerJobLabels } from '@/utils/careersHtml'
@@ -106,6 +106,20 @@ export function useComparePlans(entries: Ref<PlanEntry[]>, locale: Ref<string>) 
       const planned = guesses.map(({ code, g }) => ({ code, share: pts(code) / total, sd: (g.high - g.low) / 2 / RANGE_Z }))
       if (mark !== null && low !== null && high !== null) wam = { mark, low, high, planned }
     }
+    // What a change of major keeps: the passed subjects the major (and specialisation) counts, or
+    // that its subjects need first, however far back (COMP10001 before COMP10002 before COMP20003).
+    const majorIds = [setup.major, setup.major && setup.major2, setup.specialisation].filter((id): id is string => !!id)
+    const majorRoles = majorIds.length ? planRoles(data, setup.course, year, majorIds) : null
+    const uses = new Set<string>()
+    const queue = majorRoles ? [...majorRoles.required, ...majorRoles.options] : []
+    while (queue.length) {
+      const c = queue.pop()!
+      if (uses.has(c)) continue
+      uses.add(c)
+      const s = data.subjects[c]
+      if (s) queue.push(...referencedSubjects(s.prerequisites), ...referencedSubjects(s.corequisites))
+    }
+    const inMajor = passed.filter((c) => uses.has(c)).length
     const careers = [...new Set(components.flatMap((id) => careerJobLabels(data, id, locale.value)))]
     const facts: PlanFacts = {
       points,
@@ -124,6 +138,7 @@ export function useComparePlans(entries: Ref<PlanEntry[]>, locale: Ref<string>) 
       exams: { withExam: assessed.filter((a) => a.exam > 0).length, known: assessed.length },
       hurdles: assessed.filter((a) => a.examHurdle || a.otherHurdle).length,
       wam,
+      ...(passed.length ? { doneInMajor: { counted: inMajor, done: passed.length } } : {}),
     }
     return {
       entry,

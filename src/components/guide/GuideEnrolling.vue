@@ -43,6 +43,7 @@ const { t } = useI18n()
   <!-- Planning on this site: everything about plans A and B in one place (was spread over Majors). -->
   <GuideItem id="plans" :title="t('guide.plansTitle')" :short="t('guide.plansShort')">
     <p>{{ t('guide.majorsPlans') }}</p>
+    <p>{{ t('guide.plansSwitch', { new: t('plans.new'), item: t('plans.switchMajor') }) }}</p>
     <p>{{ t('guide.planProfile') }}</p>
     <ul class="plain">
       <li>{{ t('guide.findPlan') }}</li>
