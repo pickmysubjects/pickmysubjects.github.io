@@ -19,6 +19,24 @@ describe('rating consumers only use our own ratings from 3 people', () => {
     expect(rankSubject(rated('AAAA10004', { reviews: 2, examDifficulty: 1 }), 'easy')).toBeNull()
   })
 
+  it('weighs our ratings by how many people gave them, as review summaries are', () => {
+    // Six reviews say hard; three ratings here say easy. Three people don't overturn six: the
+    // subject stays harder than one only the ratings speak for, and more ratings move it further.
+    const easy = (n: number) => ({ reviews: n, difficulty: 1, grading: 5, workload: 1 })
+    const withHardReviews = (code: string, n: number) => {
+      const s = rated(code, easy(n))
+      // Only what the ranking reads of a summary: its source, its count and its verdict.
+      s.discussions = [{ source: 'StudentVIP', reviews: 6, difficulty: 'hard' } as unknown as NonNullable<typeof s.discussions>[number]]
+      return s
+    }
+    const score = (s: ReturnType<typeof rated>) => rankSubject(s, 'easy')!.reviews!
+    const three = score(withHardReviews('AAAA10011', 3))
+    const ten = score(withHardReviews('AAAA10012', 10))
+    const ratingsOnly = score(rated('AAAA10013', easy(3)))
+    expect(three).toBeLessThan(ratingsOnly)
+    expect(ten).toBeGreaterThan(three)
+  })
+
   it('says "most would recommend it" from 80% and three ratings only', () => {
     const keys = (signals: Record<string, unknown>) => {
       const data = dataset([rated('BBBB10001', signals)])
