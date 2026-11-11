@@ -21,7 +21,9 @@ const visible = computed(() => (all.value ? list.value : list.value.slice(0, SHO
 const canReport = isFormReady(FEEDBACK_FORM)
 const reported = shallowRef(new Set<string>())
 
+// The term it was taken in, '' when the student left the year blank.
 function term(c: StudentComment): string {
+  if (c.year === undefined) return ''
   return c.period ? termLabel(t.value, { year: c.year, period: c.period }) : String(c.year)
 }
 
@@ -45,9 +47,9 @@ async function report(c: StudentComment): Promise<void> {
       <li v-for="c in visible" :key="c.id" class="tip" :lang="c.lang">
         <p class="tip-text">{{ c.text }}</p>
         <p class="tip-meta">
-          <span>{{ term(c) }}</span>
+          <span v-if="term(c)">{{ term(c) }}</span>
           <template v-if="canReport">
-            ·
+            <template v-if="term(c)">·</template>
             <span v-if="reported.has(c.id)" role="status">{{ t('subject.tipsReported') }}</span>
             <button v-else class="tip-report" type="button" @click="report(c)">{{ t('subject.tipsReport') }}</button>
           </template>

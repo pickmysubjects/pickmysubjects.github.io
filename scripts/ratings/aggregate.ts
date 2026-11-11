@@ -31,6 +31,7 @@ export const COLUMNS = {
   grade: 'Grade band',
   skills: 'Skills used',
   recommend: 'Would you recommend it',
+  language: 'App language',
   // Optional questions, added to the form later.
   examDifficulty: 'Exam difficulty',
   usefulness: 'Usefulness',
@@ -75,6 +76,8 @@ const ANSWER_COLUMNS = [
 export const MIN_ANSWERS = 3
 /** Ratings a subject needs before anything about it is published (the privacy page promises 3). */
 export const MIN_REVIEWS = 3
+/** Identical answers this close together are one submission sent twice (refresh, double click). */
+export const RESEND_MS = 5 * 60 * 1000
 /** At most this many ratings per subject per day count, so a burst can't take over a subject. */
 export const MAX_PER_SUBJECT_PER_DAY = 10
 
@@ -143,7 +146,7 @@ export function screenRows(
   const no = (reason: string) => {
     if (why) why[reason] = (why[reason] ?? 0) + 1
   }
-  const seen = new Set<string>()
+  const seenAt = new Map<string, { at: number | null; day: string }[]>()
   const perDay = new Map<string, number>()
   const out: Record<string, string>[] = []
   for (const raw of rows) {
@@ -154,17 +157,20 @@ export function screenRows(
     const yearOk = yearText === '' || (Number.isInteger(year) && year >= 2010 && year <= now.getFullYear())
     const valid = /^[A-Z]{4}\d{5}$/.test(code) && yearOk && answered(row) && (!known || known.has(code))
     // The date part of the form's timestamp ("2026/10/07 10:00:00" or "07/10/2026 …").
-    const day = (row[COLUMNS.timestamp] ?? '').split(/[ T]/)[0]
+    const day = (row[COLUMNS.timestamp] ?? '').split(/[ T]/)[0] ?? ''
     const dayKey = `${code}|${day}`
-    // Identical answers sent again the same day (refresh, double click) count once. On another
-    // day they're another student: with only a few 1–5 questions, two people who took the same
-    // subject often answer exactly alike.
-    const fingerprint = `${day}|${JSON.stringify(Object.entries(row).filter(([k]) => k !== COLUMNS.timestamp))}`
+    // Identical answers sent again within minutes (refresh, double click) count once. Later
+    // they're another student: with a one-tap rating (code and difficulty) or a few 1–5
+    // questions, people who took the same subject often answer exactly alike. A timestamp that
+    // can't be read falls back to the same day.
+    const answers = JSON.stringify(Object.entries(row).filter(([k]) => k !== COLUMNS.timestamp))
+    const at = stampTime(row[COLUMNS.timestamp] ?? '')
+    const repeat = (seenAt.get(answers) ?? []).some((p) => (at !== null && p.at !== null ? Math.abs(at - p.at) <= RESEND_MS : p.day === day))
     if (!valid) {
       no(!/^[A-Z]{4}\d{5}$/.test(code) ? 'not a subject code' : known && !known.has(code) ? 'subject not in our data' : !yearOk ? 'year not plausible' : 'no answer this part uses')
       continue
     }
-    if (seen.has(fingerprint)) {
+    if (repeat) {
       no('same answers sent again')
       continue
     }
@@ -172,7 +178,7 @@ export function screenRows(
       no('too many for one subject that day')
       continue
     }
-    seen.add(fingerprint)
+    seenAt.set(answers, [...(seenAt.get(answers) ?? []), { at, day }])
     perDay.set(dayKey, (perDay.get(dayKey) ?? 0) + 1)
     out.push(row)
   }
@@ -182,6 +188,51 @@ export function screenRows(
 /** A row that answers at least one rating question. */
 function rated(row: Record<string, string>): boolean {
   return ANSWER_COLUMNS.some((c) => (row[c] ?? '') !== '')
+}
+
+/** How long after a one-tap difficulty rating the same student's full form can still arrive. */
+export const QUICK_FOLLOW_UP_MS = 2 * 60 * 60 * 1000
+
+/**
+ * The form's timestamp as a time: "11/9/2026 22:11:06" (the sheet's US format), "2026/10/07
+ * 10:00:00", or ISO. Null when it can't be read.
+ */
+export function stampTime(stamp: string): number | null {
+  const t = stamp.trim()
+  let m = /^(\d{1,2})\/(\d{1,2})\/(\d{4})[ T](\d{1,2}):(\d{2})(?::(\d{2}))?/.exec(t)
+  if (m) return Date.UTC(+m[3]!, +m[1]! - 1, +m[2]!, +m[4]!, +m[5]!, +(m[6] ?? 0))
+  m = /^(\d{4})[/-](\d{1,2})[/-](\d{1,2})[ T](\d{1,2}):(\d{2})(?::(\d{2}))?/.exec(t)
+  if (m) return Date.UTC(+m[1]!, +m[2]! - 1, +m[3]!, +m[4]!, +m[5]!, +(m[6] ?? 0))
+  return null
+}
+
+/**
+ * One student, one rating. The one-tap rating (QuickRate) sends the difficulty at once; the full
+ * form the student may open next leaves the difficulty out, so it arrives as a second row. A
+ * difficulty-only row followed, for the same subject and app language within QUICK_FOLLOW_UP_MS,
+ * by a row with the difficulty blank is one rating: the difficulty joins the later row. Rows come
+ * in the sheet's order (oldest first).
+ */
+export function joinQuickRatings(rows: Record<string, string>[]): Record<string, string>[] {
+  const onlyDifficulty = (r: Record<string, string>) => (r[COLUMNS.difficulty] ?? '') !== '' && ANSWER_COLUMNS.every((c) => c === COLUMNS.difficulty || (r[c] ?? '') === '')
+  const out = rows.map((r) => ({ ...r }))
+  const dropped = new Set<number>()
+  out.forEach((quick, i) => {
+    if (!onlyDifficulty(quick)) return
+    const at = stampTime(quick[COLUMNS.timestamp] ?? '')
+    if (at === null) return
+    const j = out.findIndex((later, k) => {
+      if (k <= i || dropped.has(k) || later[COLUMNS.code] !== quick[COLUMNS.code]) return false
+      if ((later[COLUMNS.difficulty] ?? '') !== '' || !rated(later)) return false
+      if ((later[COLUMNS.language] ?? '') !== (quick[COLUMNS.language] ?? '')) return false
+      const t = stampTime(later[COLUMNS.timestamp] ?? '')
+      return t !== null && t >= at && t - at <= QUICK_FOLLOW_UP_MS
+    })
+    if (j < 0) return
+    out[j]![COLUMNS.difficulty] = quick[COLUMNS.difficulty]!
+    dropped.add(i)
+  })
+  return out.filter((_, i) => !dropped.has(i))
 }
 
 /** Rated subjects needed before the rating prior is estimated from the ratings. */
@@ -226,12 +277,14 @@ export function aggregate(rows: Record<string, string>[], now = new Date(), know
   const bySubject = new Map<string, Record<string, string>[]>()
 
   const reasons: Record<string, number> = {}
-  const kept = screenRows(rows, now, known, rated, reasons)
+  const kept = joinQuickRatings(screenRows(rows, now, known, rated, reasons))
   for (const row of kept) {
     const code = row[COLUMNS.code] as string
     bySubject.set(code, [...(bySubject.get(code) ?? []), row])
   }
-  const rejected = rows.length - kept.length
+  // A one-tap rating joined to the same student's full form is one rating, not a rejected row.
+  const screened = screenRows(rows, now, known, rated).length
+  const rejected = rows.length - screened
 
   const subjects: Record<string, SubjectAggregate> = {}
   for (const [code, list] of [...bySubject].sort(([a], [b]) => a.localeCompare(b))) {
@@ -302,7 +355,7 @@ export function buildRatingFiles(values: string[][], known?: Set<string>, now = 
   const model: FittedModel = {}
   if (grades.fitted) model.grade = { ...grades.model, rows: grades.rows }
   if (grades.featurePrior) model.featurePrior = grades.featurePrior
-  const ratingPrior = fitRatingPrior(screenRows(rows, now, known, rated))
+  const ratingPrior = fitRatingPrior(joinQuickRatings(screenRows(rows, now, known, rated)))
   if (ratingPrior !== undefined) model.ratingPrior = ratingPrior
   return { ratings: result.subjects, offsets: grades.offsets, model, accepted: result.accepted, rejected: result.rejected, reasons: result.reasons }
 }

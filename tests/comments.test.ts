@@ -72,9 +72,15 @@ describe('screenComment (automatic filter)', () => {
 })
 
 describe('buildComments', () => {
-  it('drops a comment with no year (blank is not year 0), so the file still validates', () => {
-    const out = build(row({ year: '' }), row(), row(), row())
-    expect(out.COMP30027).toHaveLength(3)
+  it('keeps a comment with no year (the year is optional), without a term, and the file still validates', () => {
+    const out = build(row({ year: '', semester: 'Semester 1', wish: 'No year on this one.' }), row(), row(), row())
+    expect(out.COMP30027).toHaveLength(4)
+    const undated = out.COMP30027?.find((c) => c.text === 'No year on this one.')
+    expect(undated).toBeDefined()
+    expect(undated?.year).toBeUndefined()
+    expect(undated?.period).toBeUndefined()
+    // Dated ones first: the undated one sorts last.
+    expect(out.COMP30027?.at(-1)?.text).toBe('No year on this one.')
     expect(commentsFileSchema.safeParse(out).success).toBe(true)
   })
 
@@ -95,7 +101,7 @@ describe('buildComments', () => {
   it('keeps only text, term and language: nothing else from the row', () => {
     const out = build(row({ grade: 'H1', wamBand: '80-84' }), row({ grade: 'N', semester: 'Semester 2' }), row({ grade: 'P', language: 'zh-CN', semester: '' }))
     for (const c of out.COMP30027 ?? []) {
-      expect(Object.keys(c).sort()).toEqual(expect.arrayContaining(['id', 'lang', 'text', 'year']))
+      expect(Object.keys(c).sort()).toEqual(expect.arrayContaining(['id', 'lang', 'text']))
       expect(Object.keys(c).every((k) => ['id', 'lang', 'text', 'year', 'period'].includes(k))).toBe(true)
     }
     const json = JSON.stringify(out)
@@ -163,6 +169,14 @@ describe('tips on the page', () => {
     expect(html).toContain('2025 Sem 1')
     expect(html).not.toContain('<b>')
     expect(html.match(/<li /g)).toHaveLength(5)
+  })
+
+  it('prerenders a tip with no year without an empty term', () => {
+    const undated = [...tips.slice(0, 2), { ...tips[2]!, year: undefined, period: undefined }]
+    const html = tipsHtml(t, undated)
+    expect(html.match(/<li /g)).toHaveLength(3)
+    expect(html).not.toContain('()')
+    expect(html).not.toContain('undefined')
   })
 
   it('prerenders nothing below MIN_COMMENTS', () => {

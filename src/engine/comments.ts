@@ -16,7 +16,8 @@ export const studentCommentSchema = z
   .object({
     id: z.string().regex(/^[0-9a-f]{12}$/),
     text: z.string().min(1).max(MAX_COMMENT_LENGTH),
-    year: z.number().int().min(2010).max(2100),
+    // Optional on the form: a tip without a year still shows, just without its term.
+    year: z.number().int().min(2010).max(2100).optional(),
     period: z.enum(PERIODS).optional(),
     lang: z.enum(LOCALE_CODES),
   })
