@@ -685,11 +685,26 @@ onBeforeUnmount(() => {
     width: 100%;
   }
 
-  /* Grow to share the row, but never break a label: a button that doesn't fit moves down a row. */
+  /* The quiet actions share one row in equal columns, icon above label (3 or 4 of them), so a
+     long label (Malay, Indonesian) never pushes one onto a row of its own. */
+  .actions-quiet {
+    display: grid;
+    grid-auto-columns: minmax(0, 1fr);
+    grid-auto-flow: column;
+    gap: 6px;
+  }
+
   .actions-quiet .button {
-    flex: 1 1 auto;
-    padding-inline: 10px;
-    white-space: nowrap;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+    min-height: 56px;
+    padding: 6px 4px;
+    font-size: var(--fs-meta);
+    line-height: 1.2;
+    text-align: center;
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
 }
 </style>

@@ -2678,7 +2678,7 @@ export const en = {
       "points": "Points",
       "runs": "Offered",
       "exam": "Final exam",
-      "difficulty": "How hard it is",
+      "difficulty": "Difficulty",
       "prereq": "Prerequisites",
       "hurdles": "Hurdles",
       "ratings": "Ratings"

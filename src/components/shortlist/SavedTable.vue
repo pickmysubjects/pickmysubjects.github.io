@@ -286,6 +286,8 @@ tbody tr:last-child > * {
   display: inline-flex;
   align-items: center;
   gap: 4px;
+  text-align: left;
+  text-wrap: balance;
   min-height: 44px;
   padding: 0 8px;
   border: 0;
