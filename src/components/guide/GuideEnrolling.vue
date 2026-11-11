@@ -2,6 +2,7 @@
 import { ExternalLink } from 'lucide-vue-next'
 import { useI18n } from '@/i18n'
 import GuideItem from './GuideItem.vue'
+import NextDate from './NextDate.vue'
 import GuideCallout from './GuideCallout.vue'
 import GuideLinks from './GuideLinks.vue'
 import GuideSee from './GuideSee.vue'
@@ -31,6 +32,7 @@ const { t } = useI18n()
         {{ t('guide.reenrolShort') }}<InfoTip>{{ t('guide.reenrolMore') }} <a :href="URLS.REENROL" target="_blank" rel="noopener">{{ t('guide.reenrolLink') }}<ExternalLink :size="13" aria-hidden="true" /></a></InfoTip>
       </p>
     </GuideCallout>
+    <NextDate :kinds="['reenrol', 'selfEnrol']" />
     <GuideLinks
       :links="[
         { href: URLS.ENROLLING, label: t('guide.enrolLink') },
@@ -154,6 +156,7 @@ const { t } = useI18n()
     <p>
       {{ t('guide.lateEnrolLine') }}<InfoTip>{{ t('guide.lateEnrolMore') }} <a :href="URLS.CENSUS" target="_blank" rel="noopener">{{ t('guide.lateEnrolLink') }}<ExternalLink :size="13" aria-hidden="true" /></a></InfoTip>
     </p>
+    <NextDate :kinds="['selfEnrol', 'census']" />
   </GuideItem>
 
   <GuideItem id="cross-institutional" :title="t('guide.crossTitle')" :short="t('guide.crossShort')">
@@ -177,6 +180,7 @@ const { t } = useI18n()
     <GuideCallout kind="warn">{{ t('guide.feesCensus') }}</GuideCallout>
     <p>{{ t('guide.feesSee') }}</p>
     <GuideSee to="drop">{{ t('guide.feesSeeDrop') }}</GuideSee>
+    <NextDate :kinds="['census']" />
     <GuideLinks
       :links="[
         { href: URLS.FEES, label: t('guide.feesLink') },

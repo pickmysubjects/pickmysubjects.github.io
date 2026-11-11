@@ -2,6 +2,7 @@
 import { useI18n } from '@/i18n'
 import { link } from '@/composables/useView'
 import GuideItem from './GuideItem.vue'
+import NextDate from './NextDate.vue'
 import GuideCallout from './GuideCallout.vue'
 import GuideLinks from './GuideLinks.vue'
 import { URLS } from '@/utils/guideLinks'
@@ -67,6 +68,7 @@ const { t } = useI18n()
     </ul>
     <p><a :href="link('tools/revision/')">{{ t('guide.examsPlan') }}</a></p>
     <GuideCallout kind="warn">{{ t('guide.examsMelbourne') }}</GuideCallout>
+    <NextDate :kinds="['swotvac', 'exams', 'results']" />
     <GuideLinks
       :links="[
         { href: URLS.EXAM_DATES, label: t('guide.examDatesLink') },
@@ -83,6 +85,7 @@ const { t } = useI18n()
       <li class="tl-warn">{{ t('guide.dropWd') }}</li>
       <li class="tl-bad">{{ t('guide.dropFail') }}</li>
     </ol>
+    <NextDate :kinds="['census', 'withdraw']" />
     <p>{{ t('guide.dropLate') }}</p>
     <div class="who">
       <p class="who-card">{{ t('guide.dropLocal') }}</p>

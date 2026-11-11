@@ -59,7 +59,7 @@ function download(): void {
       <span v-if="isPast(g)" class="kd-past-tag">{{ t('guide.kd.past') }}</span>
     </h2>
     <ol class="kd-list">
-      <li v-for="i in g.items" :key="i.id" class="kd-item" :class="[i.kind, { past: i.past, next: i.id === nextId }]">
+      <li v-for="i in g.items" :id="i.id" :key="i.id" class="kd-item" :class="[i.kind, { past: i.past, next: i.id === nextId }]">
         <time class="kd-date" :datetime="i.start">
           <span class="kd-day">{{ day(i.start) }}<template v-if="i.end !== i.start"> – {{ day(i.end) }}</template></span>
           <span class="kd-weekday">{{ weekday(i.start) }}<template v-if="i.end !== i.start"> – {{ weekday(i.end) }}</template></span>
@@ -145,6 +145,13 @@ function download(): void {
   margin: 0;
   padding: 0;
   list-style: none;
+}
+
+/* Arrived at from a "next date" link elsewhere in the guide: that row stands out. */
+.kd-item:target {
+  border-radius: 12px;
+  background: var(--accent-soft);
+  scroll-margin-top: 96px;
 }
 
 .kd-item {

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { KEY_DATES } from '@/utils/keyDates'
-import { currentTerms, daysBetween, examWindow, myTerm, upcomingDates } from '@/utils/whatsNext'
+import { currentTerms, daysBetween, examWindow, myTerm, nextOfKinds, upcomingDates } from '@/utils/whatsNext'
 
 describe('upcomingDates', () => {
   it('census week: the census date comes first with its day count', () => {
@@ -49,5 +49,19 @@ describe('myTerm', () => {
   it('no subjects in the current term: nothing personal', () => {
     expect(myTerm(KEY_DATES, '2026-04-10', plan, results)).toBeNull()
     expect(currentTerms(KEY_DATES, '2026-04-10')).toEqual([{ year: 2026, term: 'semester-1' }])
+  })
+})
+
+describe('nextOfKinds', () => {
+  it('gives the nearest date of each kind still ahead, and nothing for a kind with none published', () => {
+    const [census, withdraw] = nextOfKinds(KEY_DATES, '2026-08-01', ['census', 'withdraw'])
+    expect(census?.date.id).toBe('2026-semester-2-census')
+    expect(census?.days).toBe(30)
+    expect(withdraw?.date.id).toBe('2026-semester-2-withdraw')
+    // One term: during Semester 2 exams, its exams and results, not next year's SWOT Vac.
+    const now = nextOfKinds(KEY_DATES, '2026-11-05', ['swotvac', 'exams', 'results'])
+    expect(now.map((i) => i.date.id)).toEqual(['2026-semester-2-exams', '2026-semester-2-results'])
+    expect(now[0]?.running).toBe(true)
+    expect(nextOfKinds(KEY_DATES, '2099-01-01', ['census'])).toEqual([])
   })
 })

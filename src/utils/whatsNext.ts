@@ -36,6 +36,28 @@ export function upcomingDates(dates: KeyDate[], today: string, max = 3, horizon 
   return items.sort((a, b) => Number(b.running) - Number(a.running) || a.date.start.localeCompare(b.date.start) || a.date.end.localeCompare(b.date.end)).slice(0, max)
 }
 
+/**
+ * The dates of the given kinds for one term, for "census date: … in N days" beside the text that
+ * explains it: the term of the nearest one still to come (or running now), so a passage never
+ * mixes this semester's exams with next year's SWOT Vac. A kind with nothing published in that
+ * term is left out, never guessed.
+ */
+export function nextOfKinds(dates: KeyDate[], today: string, kinds: readonly KeyDate['kind'][]): StripItem[] {
+  const ahead = dates
+    .filter((d) => kinds.includes(d.kind) && d.end >= today)
+    .sort((a, b) => a.start.localeCompare(b.start) || a.end.localeCompare(b.end))
+  const first = ahead[0]
+  if (!first) return []
+  const out: StripItem[] = []
+  for (const kind of kinds) {
+    const next = ahead.find((d) => d.kind === kind && d.year === first.year && d.term === first.term)
+    if (!next) continue
+    const days = daysBetween(today, next.start)
+    out.push({ date: next, days, running: days < 0 })
+  }
+  return out
+}
+
 export interface ExamWindow {
   year: number
   term: KeyDateTerm
