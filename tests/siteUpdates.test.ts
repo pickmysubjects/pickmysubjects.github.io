@@ -44,3 +44,16 @@ describe('the release date shown', () => {
     else expect(entry.date).toBeNull()
   })
 })
+
+describe('update links', () => {
+  it('link only to pages the menu names, one list per point', async () => {
+    const { SITE_RELEASES } = await import('../src/content/updates')
+    const { MENUS } = await import('../src/components/layout/nav')
+    const paths = new Set(MENUS.flatMap((a) => a.items.map((i) => i.to)))
+    for (const r of SITE_RELEASES) {
+      if (!r.links) continue
+      expect(r.links.length, r.version).toBeLessThanOrEqual(r.points.length)
+      for (const to of r.links.flat()) expect(paths.has(to), `${r.version} ${to}`).toBe(true)
+    }
+  })
+})

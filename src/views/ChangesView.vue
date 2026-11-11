@@ -7,6 +7,7 @@ import { localTitle } from '@/i18n/localized'
 import type { YearDiff } from '@/engine/yearDiff'
 import { changeSections, changesSummary } from '@/utils/changesText'
 import { SITE_RELEASES } from '@/content/updates'
+import { MENUS } from '@/components/layout/nav'
 import InfoPage from '@/components/about/InfoPage.vue'
 import GuideItem from '@/components/guide/GuideItem.vue'
 
@@ -30,6 +31,39 @@ else loaded.value = true
 // The update log: the newest few versions, the rest on request.
 const FIRST_SHOWN = 3
 const allVersions = shallowRef(false)
+// A page's name as the menu shows it, for the links under each update point.
+const MENU_NAMES = new Map(MENUS.flatMap((a) => a.items.map((i) => [i.to, i.key] as const)))
+// Only pages the menu names: a link with no name of its own would have to guess one.
+const named = (paths: string[] | undefined) => (paths ?? []).filter((to) => MENU_NAMES.has(to))
+/**
+ * An update point with its pages linked inside the sentence: where the text names a page as the
+ * menu does ("WAM 计算器", "重要日期"), that phrase is the link; else the point's lead before its
+ * colon ("规划板："); anything left follows as a small link at the end (`rest`).
+ */
+function woven(text: string, paths: string[] | undefined): { segments: { text: string; to?: string }[]; rest: string[] } {
+  const found: { at: number; len: number; to: string }[] = []
+  const rest: string[] = []
+  for (const to of named(paths)) {
+    const name = t.value(MENU_NAMES.get(to)!).replace(/[?？]$/, '')
+    const at = name ? text.toLowerCase().indexOf(name.toLowerCase()) : -1
+    if (at >= 0 && !found.some((f) => at < f.at + f.len && f.at < at + name.length)) found.push({ at, len: name.length, to })
+    else rest.push(to)
+  }
+  // Nothing named in the text: the point's lead ("规划板：", "Skills for your resume:") links to its
+  // first page. A lead over several named pages ("New tools:") is a heading for them, so no link.
+  const lead = /^([^:：]{1,40})[:：]/.exec(text)
+  if (rest.length && lead && !found.length) found.push({ at: 0, len: lead[1]!.length, to: rest.shift()! })
+  found.sort((a, b) => a.at - b.at)
+  const segments: { text: string; to?: string }[] = []
+  let i = 0
+  for (const f of found) {
+    if (f.at > i) segments.push({ text: text.slice(i, f.at) })
+    segments.push({ text: text.slice(f.at, f.at + f.len), to: f.to })
+    i = f.at + f.len
+  }
+  if (i < text.length) segments.push({ text: text.slice(i) })
+  return { segments, rest }
+}
 const shownReleases = computed(() => (allVersions.value ? SITE_RELEASES : SITE_RELEASES.slice(0, FIRST_SHOWN)))
 
 const sep = computed(() => t.value('listSep'))
@@ -69,7 +103,12 @@ const exists = (kind: 'subject' | 'major', id: string) => (kind === 'subject' ? 
           <li v-for="r in shownReleases" :key="r.version">
             <span class="log-version">v{{ r.version }}</span>
             <ul class="log-points">
-              <li v-for="(p, i) in r.points" :key="i">{{ p[locale] }}</li>
+              <li v-for="(p, i) in r.points" :key="i">
+                <template v-for="(seg, k) in woven(p[locale], r.links?.[i]).segments" :key="k"><a v-if="seg.to" :href="link(seg.to)">{{ seg.text }}</a><template v-else>{{ seg.text }}</template></template>
+                <span v-if="woven(p[locale], r.links?.[i]).rest.length" class="log-links">
+                  <a v-for="to in woven(p[locale], r.links?.[i]).rest" :key="to" :href="link(to)">{{ t(MENU_NAMES.get(to)!) }}</a>
+                </span>
+              </li>
             </ul>
           </li>
         </ol>
@@ -96,6 +135,15 @@ const exists = (kind: 'subject' | 'major', id: string) => (kind === 'subject' ? 
 </template>
 
 <style scoped>
+.log-links {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  margin-left: 8px;
+  font-size: var(--fs-meta);
+  font-weight: var(--fw-semibold);
+}
+
 .log {
   display: grid;
   margin: 0;

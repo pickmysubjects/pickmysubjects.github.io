@@ -1733,6 +1733,7 @@ export const zhCN: Messages = {
       note: "这里的 census 和退课日期是标准日期。每门课自己的日期在它的 Handbook 页面上。",
       notYet: "2027 年的 census、自主选课和退课日期官方页面还没公布。",
       add: "添加到我的日历",
+      source: "官方页面",
       addHint: "下载一个日历文件（.ics），包含还没到的日期。里面没有任何你的个人信息。",
       past: "今年早些时候",
       official: "官方重要日期",

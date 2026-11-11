@@ -1733,6 +1733,7 @@ export const ko: Messages = {
       note: "여기 나온 census와 취소 날짜는 표준 날짜예요. 과목별 날짜는 각 과목의 Handbook 페이지에 있어요.",
       notYet: "2027년 census, 직접 수강신청, 취소 날짜는 아직 공식 페이지에 없어요.",
       add: "내 캘린더에 추가",
+      source: "공식 페이지",
       addHint: "앞으로 남은 날짜가 담긴 캘린더 파일(.ics)을 내려받아요. 개인 정보는 하나도 없어요.",
       past: "올해 지난 일정",
       official: "공식 주요 일정",

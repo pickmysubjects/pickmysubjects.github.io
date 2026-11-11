@@ -3,6 +3,8 @@ import { computed } from 'vue'
 import DetailHero from '@/components/browse/DetailHero.vue'
 import FinalCalc from '@/components/tools/FinalCalc.vue'
 import RevisionPlanner from '@/components/tools/RevisionPlanner.vue'
+import TermText from '@/components/guide/TermText.vue'
+import NextDate from '@/components/guide/NextDate.vue'
 import ToolCards from '@/components/tools/ToolCards.vue'
 import WamCalc from '@/components/tools/WamCalc.vue'
 import { link, useView } from '@/composables/useView'
@@ -34,7 +36,9 @@ const back = computed(() => (page.value === 'hub' ? undefined : { href: link('to
 <template>
   <div class="tools">
     <DetailHero :key="page" :back="back" :title="title" :art="ARTS[page]">
-      <p v-if="lede" class="lede">{{ lede }}</p>
+      <p v-if="lede" class="lede"><TermText :text="lede" /></p>
+      <!-- Planning revision: when the exams actually are, a tap from the key dates. -->
+      <NextDate v-if="page === 'revision'" class="hero-dates" :kinds="['swotvac', 'exams']" />
     </DetailHero>
     <FinalCalc v-if="page === 'final'" :code="code" />
     <WamCalc v-else-if="page === 'wam'" />
@@ -48,6 +52,11 @@ const back = computed(() => (page.value === 'hub' ? undefined : { href: link('to
   display: grid;
   gap: var(--space-5);
   padding-top: var(--space-4);
+}
+
+.hero-dates {
+  /* Clear of the hero's picture on the right. */
+  max-width: min(100%, 460px);
 }
 
 .lede {

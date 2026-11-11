@@ -1733,6 +1733,7 @@ export const vi: Messages = {
       note: "Ngày census và rút môn ở đây là ngày chuẩn. Ngày riêng của từng môn có trên trang Handbook của môn đó.",
       notYet: "Ngày census, tự đăng ký môn và rút môn năm 2027 chưa có trên trang chính thức.",
       add: "Thêm vào lịch của tôi",
+      source: "Trang chính thức",
       addHint: "Tải về file lịch (.ics) gồm các ngày sắp tới. Trong đó không có thông tin gì về bạn.",
       past: "Đầu năm nay",
       official: "Lịch chính thức (key dates)",

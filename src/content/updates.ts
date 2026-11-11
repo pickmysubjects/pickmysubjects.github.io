@@ -12,12 +12,25 @@ export interface SiteRelease {
   /** YYYY-MM-DD, the day this version went live; null while it is still being built. */
   date: string | null
   points: Record<LocaleCode, string>[]
+  /**
+   * For each point (same order), the pages it is about, as menu paths ('tools/wam/'): the changes
+   * page links them by their menu names, so a note leads straight to what it describes.
+   */
+  links?: string[][]
 }
 
 export const SITE_RELEASES: SiteRelease[] = [
   {
     version: '1.0.0',
     date: null,
+    links: [
+      ['plan/', 'plan/compare/'],
+      ['tools/revision/', 'tools/final/', 'tools/wam/'],
+      ['subjects/'],
+      ['record/'],
+      ['guide/new-students/', 'clubs/'],
+      ['guide/key-dates/'],
+    ],
     points: [
       {
         en: "Plan board: your whole degree, every rule checked, tested on every degree and major. Share or compare plans; suggestions fit your goals and say why.",

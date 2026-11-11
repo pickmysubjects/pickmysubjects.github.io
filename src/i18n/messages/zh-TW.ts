@@ -1733,6 +1733,7 @@ export const zhTW: Messages = {
       note: "這裡的 census 和退選日期是標準日期。每門課自己的日期在它的 Handbook 頁面。",
       notYet: "2027 年的 census、自行選課和退選日期還沒出現在官方頁面上。",
       add: "加入我的行事曆",
+      source: "官方頁面",
       addHint: "下載一個行事曆檔案（.ics），包含還沒到的日期。裡面沒有任何你的個人資料。",
       past: "今年稍早",
       official: "官方重要日期",

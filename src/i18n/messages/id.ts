@@ -1733,6 +1733,7 @@ export const id: Messages = {
       note: "Tanggal census dan withdraw di sini adalah tanggal standar. Tanggal tiap mata kuliah ada di halaman Handbook-nya.",
       notYet: "Tanggal census, enrol mandiri dan withdraw 2027 belum ada di halaman resmi.",
       add: "Tambahkan ke kalenderku",
+      source: "Halaman resmi",
       addHint: "Mengunduh file kalender (.ics) berisi tanggal yang belum lewat. Tidak ada data tentang dirimu di dalamnya.",
       past: "Awal tahun ini",
       official: "Key dates resmi",

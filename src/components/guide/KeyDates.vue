@@ -2,10 +2,11 @@
 import InfoTip from '@/components/InfoTip.vue'
 import { computed } from 'vue'
 import { CalendarPlus, ExternalLink } from 'lucide-vue-next'
+import { link } from '@/composables/useView'
 import { useI18n } from '@/i18n'
 import { termFullLabel } from '@/i18n/format'
 import { URLS } from '@/utils/guideLinks'
-import { buildIcs, downloadIcs, groupKeyDates, KEY_DATES, melbourneToday, type KeyDate, type KeyDateGroup } from '@/utils/keyDates'
+import { buildIcs, downloadIcs, groupKeyDates, KEY_DATES, melbourneToday, type KeyDate, type KeyDateGroup, type KeyDateKind } from '@/utils/keyDates'
 import GuideItem from './GuideItem.vue'
 import GuideCallout from './GuideCallout.vue'
 import GuideLinks from './GuideLinks.vue'
@@ -27,6 +28,20 @@ const groupName = (g: KeyDateGroup) => termFullLabel(t.value, { year: g.year, pe
 const groupId = (g: KeyDateGroup) => `term-${g.year}-${g.term}`
 const label = (d: KeyDate) => `${t.value(`guide.kd.kind.${d.kind}`)} · ${termFullLabel(t.value, { year: d.year, period: d.term })}`
 const isPast = (g: KeyDateGroup) => groups.value.past.includes(g)
+// Each kind of date beside the guide section (or tool) that explains what it means for a student.
+const EXPLAINED: Partial<Record<KeyDateKind, string>> = {
+  census: 'guide/semester/#drop',
+  withdraw: 'guide/semester/#drop',
+  selfEnrol: 'guide/enrolling/#late-enrol',
+  exams: 'guide/semester/#exams',
+  results: 'guide/semester/#exams',
+  supp: 'guide/semester/#exams',
+  swotvac: 'tools/revision/',
+  reenrol: 'guide/enrolling/#enrol',
+  reenrolLate: 'guide/enrolling/#enrol',
+  orientation: 'guide/new-students/',
+  employability: 'guide/help/#uni-careers',
+}
 
 // Only dates still to come go in the file; with none, there's nothing to add.
 const upcomingItems = computed(() => groups.value.upcoming.flatMap((g) => g.items.filter((i) => !i.past)))
@@ -66,8 +81,11 @@ function download(): void {
         </time>
         <span class="kd-dot" aria-hidden="true" />
         <span class="kd-what">
-          <a v-if="i.url !== URLS.KEY_DATES" :href="i.url" target="_blank" rel="noopener">{{ t(`guide.kd.kind.${i.kind}`) }}<ExternalLink :size="13" aria-hidden="true" /></a>
+          <!-- The name itself leads to what it means for a student; an official page of its own is the small ↗ beside it. -->
+          <a v-if="EXPLAINED[i.kind]" :href="link(EXPLAINED[i.kind]!)">{{ t(`guide.kd.kind.${i.kind}`) }}</a>
+          <a v-else-if="i.url !== URLS.KEY_DATES" :href="i.url" target="_blank" rel="noopener">{{ t(`guide.kd.kind.${i.kind}`) }}<ExternalLink :size="13" aria-hidden="true" /></a>
           <template v-else>{{ t(`guide.kd.kind.${i.kind}`) }}</template>
+          <a v-if="EXPLAINED[i.kind] && i.url !== URLS.KEY_DATES" class="kd-source" :href="i.url" target="_blank" rel="noopener" :aria-label="t('guide.kd.source')"><ExternalLink :size="13" aria-hidden="true" /></a>
           <span v-if="i.id === nextId" class="kd-next">{{ t('next.title') }}</span>
         </span>
       </li>
@@ -148,6 +166,12 @@ function download(): void {
 }
 
 /* Arrived at from a "next date" link elsewhere in the guide: that row stands out. */
+.kd-source {
+  display: inline-flex;
+  margin-left: 4px;
+  vertical-align: middle;
+}
+
 .kd-item:target {
   border-radius: 12px;
   background: var(--accent-soft);

@@ -1733,6 +1733,7 @@ export const ms: Messages = {
       note: "Tarikh census dan tarik diri di sini ialah tarikh standard. Tarikh setiap subjek ada di halaman Handbook subjek itu.",
       notYet: "Tarikh census, daftar sendiri dan tarik diri 2027 belum ada di halaman rasmi.",
       add: "Tambah ke kalendar saya",
+      source: "Halaman rasmi",
       addHint: "Muat turun fail kalendar (.ics) dengan tarikh yang belum tiba. Tiada apa-apa maklumat tentang anda di dalamnya.",
       past: "Awal tahun ini",
       official: "Key dates rasmi",

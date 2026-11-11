@@ -1739,6 +1739,7 @@ export const en = {
       note: "Census and withdrawal dates here are the standard ones. Each subject's own dates are on its Handbook page.",
       notYet: "The 2027 census, self-enrolment and withdrawal dates aren't on the official page yet.",
       add: "Add to my calendar",
+      source: "Official page",
       addHint: "Downloads a calendar file (.ics) with the dates still to come. There's nothing about you in it.",
       past: "Earlier this year",
       official: "Official key dates",
