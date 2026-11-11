@@ -62,7 +62,8 @@ function approved(row: Record<string, string>): boolean {
   return (row[COMMENT_COLUMNS.show] ?? '').trim().toUpperCase() === 'TRUE'
 }
 
-const termKey = (c: StudentComment) => c.year * 10 + (c.period ? PERIODS.indexOf(c.period) + 1 : 0)
+// A tip without a year sorts after the dated ones.
+const termKey = (c: StudentComment) => (c.year ?? 0) * 10 + (c.period ? PERIODS.indexOf(c.period) + 1 : 0)
 
 /**
  * Pure: raw rows in, the file out. Rows pass the same spam screen as ratings, then approval and the
@@ -74,17 +75,18 @@ export function buildComments(rows: Record<string, string>[], now: Date, known?:
   const bySubject = new Map<string, StudentComment[]>()
   for (const r of kept) {
     const text = screenComment(r[COMMENT_COLUMNS.wish] ?? '')
-    // The year is optional on the form; a blank one would read as 0 and fail the file's schema.
+    if (text === null) continue
+    // The year is optional on the form: without one the tip still goes, just without its term
+    // (a blank would read as 0 and fail the file's schema). screenRows has checked it's plausible.
     const yearText = (r[COLUMNS.year] ?? '').trim()
-    const year = Number(yearText)
-    if (text === null || yearText === '' || !Number.isInteger(year)) continue
+    const year = yearText === '' ? undefined : Number(yearText)
     const code = r[COLUMNS.code] as string
     const id = commentId(code, text)
     const list = bySubject.get(code) ?? []
     if (list.some((c) => c.id === id)) continue
-    const period = SEMESTERS[r[COLUMNS.semester] ?? '']
+    const period = year === undefined ? undefined : SEMESTERS[r[COLUMNS.semester] ?? '']
     const lang = (LOCALE_CODES as readonly string[]).includes(r[COMMENT_COLUMNS.language] ?? '') ? (r[COMMENT_COLUMNS.language] as LocaleCode) : 'en'
-    list.push({ id, text, year, ...(period ? { period } : {}), lang })
+    list.push({ id, text, ...(year !== undefined ? { year } : {}), ...(period ? { period } : {}), lang })
     bySubject.set(code, list)
   }
   const out: Record<string, StudentComment[]> = {}
