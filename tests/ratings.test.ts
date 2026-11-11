@@ -82,7 +82,7 @@ describe('aggregate ratings', () => {
       header,
       row(),
       row(), // exact duplicate (same timestamp too)
-      row({ timestamp: 'later' }), // identical answers resubmitted later
+      row({ timestamp: '2026/10/07 18:30:00' }), // identical answers resubmitted later the same day
       row({ code: 'not a code' }),
       row({ timestamp: 'empty', difficulty: '', workload: '', generosity: '', hours: '', skills: '', recommend: '' }), // answers nothing
       row({ year: '2099' }),
@@ -90,6 +90,14 @@ describe('aggregate ratings', () => {
     const result = aggregate(rowsToObjects(values), now)
     expect(result.accepted).toBe(1)
     expect(result.rejected).toBe(5)
+  })
+
+  it('counts two students who answer exactly alike on different days', () => {
+    // Few 1–5 questions: classmates often give the same answers. Only a same-day repeat is a resubmission.
+    const values = [header, row(), row({ timestamp: '2026/10/09 09:00:00' }), row({ timestamp: '2026/10/12 20:00:00' })]
+    const result = aggregate(rowsToObjects(values), now)
+    expect(result.accepted).toBe(3)
+    expect(result.subjects.COMP30027?.reviews).toBe(3)
   })
 
   it('takes partial answers: a blank year or question is fine, an out-of-range answer is ignored', () => {
@@ -200,11 +208,11 @@ describe('grade bands pass the same spam filter as ratings', () => {
     const spaced = [1, 2, 3, 4, 5].map((i) => row({ ...bandOnly, code: 'COMP 10001', year: String(2020 + i), wamBand: '70–74', timestamp: `t${i}` }))
     expect(buildRatingFiles([header, ...spaced], undefined, now).offsets.COMP10001?.n).toBe(5)
     const cased = [1, 2, 3, 4].flatMap((i) => [
-      row({ ...bandOnly, code: 'COMP10001', year: String(2020 + i), wamBand: '70–74', timestamp: `t${i}` }),
-      row({ ...bandOnly, code: 'comp10001', year: String(2020 + i), wamBand: '70–74', timestamp: `u${i}` }),
+      row({ ...bandOnly, code: 'COMP10001', year: String(2020 + i), wamBand: '70–74', timestamp: `2026/10/0${i} 10:00:00` }),
+      row({ ...bandOnly, code: 'comp10001', year: String(2020 + i), wamBand: '70–74', timestamp: `2026/10/0${i} 10:05:00` }),
     ])
     expect(buildRatingFiles([header, ...cased], undefined, now).offsets.COMP10001).toBeUndefined() // 4 distinct < 5
-    const ratings = ['COMP30027', 'comp30027', 'COMP 30027'].map((c, i) => row({ code: c, timestamp: `r${i}` }))
+    const ratings = ['COMP30027', 'comp30027', 'COMP 30027'].map((c, i) => row({ code: c, timestamp: `2026/10/07 1${i}:00:00` }))
     expect(aggregate(rowsToObjects([header, ...ratings]), now).subjects.COMP30027).toBeUndefined() // 1 distinct < 3
   })
 })

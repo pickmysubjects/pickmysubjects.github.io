@@ -153,10 +153,13 @@ export function screenRows(
     const year = Number(yearText)
     const yearOk = yearText === '' || (Number.isInteger(year) && year >= 2010 && year <= now.getFullYear())
     const valid = /^[A-Z]{4}\d{5}$/.test(code) && yearOk && answered(row) && (!known || known.has(code))
-    // Identical answers submitted again (refresh, double click, simple spam) count once.
-    const fingerprint = JSON.stringify(Object.entries(row).filter(([k]) => k !== COLUMNS.timestamp))
     // The date part of the form's timestamp ("2026/10/07 10:00:00" or "07/10/2026 …").
-    const dayKey = `${code}|${(row[COLUMNS.timestamp] ?? '').split(/[ T]/)[0]}`
+    const day = (row[COLUMNS.timestamp] ?? '').split(/[ T]/)[0]
+    const dayKey = `${code}|${day}`
+    // Identical answers sent again the same day (refresh, double click) count once. On another
+    // day they're another student: with only a few 1–5 questions, two people who took the same
+    // subject often answer exactly alike.
+    const fingerprint = `${day}|${JSON.stringify(Object.entries(row).filter(([k]) => k !== COLUMNS.timestamp))}`
     if (!valid) {
       no(!/^[A-Z]{4}\d{5}$/.test(code) ? 'not a subject code' : known && !known.has(code) ? 'subject not in our data' : !yearOk ? 'year not plausible' : 'no answer this part uses')
       continue

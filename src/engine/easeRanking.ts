@@ -79,24 +79,30 @@ function evidence(s: Subject): Evidence {
 
   // ---- what students say (strongest first, so their reasons lead) ----
   const parts: { value: number; weight: number }[] = []
+  // More people, more weight, up to 10: the same for our own ratings as for a public summary, so
+  // three ratings here don't outweigh a summary of six reviews saying the opposite.
+  const many = (n: number) => 0.5 + 0.5 * Math.min(n, 10) / 10
   const sig = s.signals && s.signals.reviews >= MIN_RATINGS ? s.signals : undefined
   if (sig) {
     const n = sig.reviews
+    const m = many(n)
+    // Difficulty, marking and exam difficulty are one person's view of how hard the marks are:
+    // together they weigh what a summary's difficulty verdict does (2), not three votes.
     if (sig.difficulty !== undefined) {
-      parts.push({ value: (3 - sig.difficulty) / 2, weight: 2 })
+      parts.push({ value: (3 - sig.difficulty) / 2, weight: 0.8 * m })
       if (sig.difficulty <= 2.5) easy.push({ key: 'ratedEasy', params: { score: round1(sig.difficulty), n } })
       if (sig.difficulty >= 3.5) hard.push({ key: 'ratedHard', params: { score: round1(sig.difficulty), n } })
     }
     if (sig.grading !== undefined) {
-      parts.push({ value: (sig.grading - 3) / 2, weight: 2 })
+      parts.push({ value: (sig.grading - 3) / 2, weight: 0.8 * m })
       if (sig.grading >= 3.5) easy.push({ key: 'generous', params: { score: round1(sig.grading), n } })
       if (sig.grading <= 2.5) hard.push({ key: 'harsh', params: { score: round1(sig.grading), n } })
     }
     // How hard the exams and assignments were: it's about marks, but overlaps difficulty, so it
     // counts once alongside it rather than as a second full vote.
-    if (sig.examDifficulty !== undefined) parts.push({ value: (3 - sig.examDifficulty) / 2, weight: 1 })
+    if (sig.examDifficulty !== undefined) parts.push({ value: (3 - sig.examDifficulty) / 2, weight: 0.4 * m })
     if (sig.workload !== undefined) {
-      parts.push({ value: (3 - sig.workload) / 2, weight: 1 })
+      parts.push({ value: (3 - sig.workload) / 2, weight: m })
       if (sig.workload <= 2.5) easy.push({ key: 'ratedLight', params: { score: round1(sig.workload), n } })
       if (sig.workload >= 3.5) hard.push({ key: 'ratedHeavy', params: { score: round1(sig.workload), n } })
     }
@@ -111,7 +117,6 @@ function evidence(s: Subject): Evidence {
     if (g.offset <= -2) hard.push({ key: 'gradesBelow', params })
   }
   // All public summaries together: sources that disagree give no verdict (see discussionVerdict).
-  const many = (n: number) => 0.5 + 0.5 * Math.min(n, 10) / 10
   const diff = discussionVerdict(s.discussions, 'difficulty')
   if (diff) {
     const n = diff.n
