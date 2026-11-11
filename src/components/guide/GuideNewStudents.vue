@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import GuideItem from './GuideItem.vue'
+import TermText from './TermText.vue'
 import GuideLinks from './GuideLinks.vue'
 import FirstYearPreview from './FirstYearPreview.vue'
 import { ADMISSION_STEPS, ADMISSION_YEAR, ATAR_GUARANTEES_URL, UNIMELB_VTAC_URL, VTAC_DATES_SOURCE } from '@/content/admissions'
@@ -54,10 +55,10 @@ const steps = computed(() => {
 
   <GuideItem id="atar-offers" :title="t('guide.ns.offersTitle')" :short="t('guide.ns.offersShort')">
     <ul class="plain">
-      <li>{{ t('guide.ns.offerGuaranteed') }}</li>
-      <li>{{ t('guide.ns.offerLsr') }}</li>
-      <li>{{ t('guide.ns.offerChange') }}</li>
-      <li>{{ t('guide.ns.offerAccept') }}</li>
+      <li><TermText :text="t('guide.ns.offerGuaranteed')" /></li>
+      <li><TermText :text="t('guide.ns.offerLsr')" /></li>
+      <li><TermText :text="t('guide.ns.offerChange')" /></li>
+      <li><TermText :text="t('guide.ns.offerAccept')" /></li>
     </ul>
     <GuideLinks
       :links="[
@@ -73,10 +74,10 @@ const steps = computed(() => {
 
   <GuideItem id="first-tips" :title="t('guide.ns.tipsTitle')" :short="t('guide.ns.tipsShort')">
     <ul class="plain">
-      <li>{{ t('guide.ns.tipBreadth') }}</li>
-      <li>{{ t('guide.ns.tipLoad') }}</li>
-      <li>{{ t('guide.ns.tipMajor') }}</li>
-      <li>{{ t('guide.ns.tipClubs') }}</li>
+      <li><TermText :text="t('guide.ns.tipBreadth')" /></li>
+      <li><TermText :text="t('guide.ns.tipLoad')" /></li>
+      <li><TermText :text="t('guide.ns.tipMajor')" /></li>
+      <li><TermText :text="t('guide.ns.tipClubs')" /></li>
     </ul>
     <p class="actions">
       <a class="button button-quiet" :href="link('guide/basics/')">{{ t('guide.cat.basics.nav') }}</a>

@@ -3,6 +3,7 @@ import { computed } from 'vue'
 import { ExternalLink } from 'lucide-vue-next'
 import { useI18n } from '@/i18n'
 import GuideItem from './GuideItem.vue'
+import TermText from './TermText.vue'
 import GuideCallout from './GuideCallout.vue'
 import GuideLinks from './GuideLinks.vue'
 import GuideSee from './GuideSee.vue'
@@ -36,30 +37,30 @@ const ELSEWHERE = ['load', 'drop', 'exams', 'fail'] as const
 <template>
   <GuideItem id="rsl" :title="t('guide.rslTitle')" :short="t('guide.rslShort')">
     <ul class="plain">
-      <li>{{ t('guide.rsl8202') }}</li>
-      <li>{{ t('guide.rslUnder') }}</li>
+      <li><TermText :text="t('guide.rsl8202')" /></li>
+      <li><TermText :text="t('guide.rslUnder')" /></li>
     </ul>
     <div class="who">
-      <p class="who-card who-yes">{{ t('guide.rslGrounds') }}</p>
-      <p class="who-card who-no">{{ t('guide.rslNot') }}</p>
+      <p class="who-card who-yes"><TermText :text="t('guide.rslGrounds')" /></p>
+      <p class="who-card who-no"><TermText :text="t('guide.rslNot')" /></p>
     </div>
-    <GuideCallout kind="pull">{{ t('guide.rslStay') }}</GuideCallout>
+    <GuideCallout kind="pull"><TermText :text="t('guide.rslStay')" /></GuideCallout>
     <GuideLinks :links="[{ href: URLS.RSL, label: t('guide.rslLink') }]" />
   </GuideItem>
 
   <GuideItem id="online" :title="t('guide.onlineTitle')" :short="t('guide.onlineShort')">
     <p>
-      {{ t('guide.onlineLine') }}<InfoTip>{{ t('guide.onlineMore') }} <a :href="URLS.ONLINE_LIMIT" target="_blank" rel="noopener">{{ t('guide.onlineLink') }}<ExternalLink :size="13" aria-hidden="true" /></a></InfoTip>
+      <TermText :text="t('guide.onlineLine')" /><InfoTip><TermText :text="t('guide.onlineMore')" /> <a :href="URLS.ONLINE_LIMIT" target="_blank" rel="noopener">{{ t('guide.onlineLink') }}<ExternalLink :size="13" aria-hidden="true" /></a></InfoTip>
     </p>
   </GuideItem>
 
   <GuideItem id="abroad" :title="t('guide.abroadTitle')" :short="t('guide.abroadShort')">
-    <p>{{ t('guide.abroadText') }}</p>
+    <p><TermText :text="t('guide.abroadText')" /></p>
     <GuideLinks :links="ABROAD.map((l) => ({ href: l.href, label: t(l.key) }))" />
   </GuideItem>
 
   <section id="elsewhere" class="elsewhere surface" aria-labelledby="intl-also">
-    <h2 id="intl-also" class="elsewhere-title">{{ t('guide.intlAlso') }}</h2>
+    <h2 id="intl-also" class="elsewhere-title"><TermText :text="t('guide.intlAlso')" /></h2>
     <ul class="elsewhere-list">
       <li v-for="id in ELSEWHERE" :key="id"><GuideSee :to="id" /></li>
     </ul>

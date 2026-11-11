@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useI18n } from '@/i18n'
 import GuideItem from './GuideItem.vue'
+import TermText from './TermText.vue'
 import GuideCallout from './GuideCallout.vue'
 import GuideSee from './GuideSee.vue'
 import DegreeGlance from './DegreeGlance.vue'
@@ -18,17 +19,17 @@ const { wam } = useProfile()
 
   <GuideItem id="first" :title="t('guide.firstTitle')" :short="t('guide.firstShort')">
     <ol class="steps">
-      <li>{{ t('guide.firstStep1') }}</li>
-      <li>{{ t('guide.firstStep2') }}</li>
-      <li>{{ t('guide.firstStep3') }}</li>
-      <li>{{ t('guide.firstStep4') }}</li>
+      <li><TermText :text="t('guide.firstStep1')" /></li>
+      <li><TermText :text="t('guide.firstStep2')" /></li>
+      <li><TermText :text="t('guide.firstStep3')" /></li>
+      <li><TermText :text="t('guide.firstStep4')" /></li>
     </ol>
     <GuideSee to="enrol" />
-    <p>{{ t('guide.breadthText') }}</p>
+    <p><TermText :text="t('guide.breadthText')" /></p>
     <GuideCallout>
-      <p>{{ t('guide.findShortlist') }}</p>
+      <p><TermText :text="t('guide.findShortlist')" /></p>
       <p>
-        {{ t('guide.easyHardText') }}
+        <TermText :text="t('guide.easyHardText')" />
         <a :href="link('subjects/easy/')">{{ t('browse.rankList.easy') }}</a> ·
         <a :href="link('subjects/hard/')">{{ t('browse.rankList.hard') }}</a>
       </p>
@@ -41,57 +42,57 @@ const { wam } = useProfile()
   </GuideItem>
 
   <GuideItem id="points" :title="t('guide.pointsTitle')" :short="t('guide.pointsShort')">
-    <p>{{ t('guide.pointsText') }}</p>
-    <p>{{ t('guide.pointsYearLong') }}</p>
-    <p>{{ t('guide.pointsCredit') }}</p>
-    <GuideCallout>{{ t('guide.findCredit') }}</GuideCallout>
+    <p><TermText :text="t('guide.pointsText')" /></p>
+    <p><TermText :text="t('guide.pointsYearLong')" /></p>
+    <p><TermText :text="t('guide.pointsCredit')" /></p>
+    <GuideCallout><TermText :text="t('guide.findCredit')" /></GuideCallout>
   </GuideItem>
 
   <GuideItem id="majors" :title="t('guide.majorsTitle')" :short="t('guide.majorsShort')">
     <ul class="plain">
-      <li>{{ t('guide.majorsOne') }}</li>
-      <li>{{ t('guide.majorsSecond') }}</li>
-      <li>{{ t('guide.majorsMinor') }}</li>
-      <li>{{ t('guide.majorsOnce') }}</li>
+      <li><TermText :text="t('guide.majorsOne')" /></li>
+      <li><TermText :text="t('guide.majorsSecond')" /></li>
+      <li><TermText :text="t('guide.majorsMinor')" /></li>
+      <li><TermText :text="t('guide.majorsOnce')" /></li>
     </ul>
-    <GuideCallout kind="pull">{{ t('guide.majorsRulesYear') }}</GuideCallout>
+    <GuideCallout kind="pull"><TermText :text="t('guide.majorsRulesYear')" /></GuideCallout>
     <ul class="plain">
-      <li>{{ t('guide.majorsPairs') }}</li>
-      <li>{{ t('guide.majorsDiploma') }}</li>
-      <li>{{ t('guide.majorsDouble') }}</li>
-      <li>{{ t('guide.majorsScope') }}</li>
+      <li><TermText :text="t('guide.majorsPairs')" /></li>
+      <li><TermText :text="t('guide.majorsDiploma')" /></li>
+      <li><TermText :text="t('guide.majorsDouble')" /></li>
+      <li><TermText :text="t('guide.majorsScope')" /></li>
     </ul>
     <GuideCallout>
-      <p>{{ t('guide.majorsRoute') }}</p>
-      <p>{{ t('guide.majorsRelated') }}</p>
+      <p><TermText :text="t('guide.majorsRoute')" /></p>
+      <p><TermText :text="t('guide.majorsRelated')" /></p>
     </GuideCallout>
     <GuideSee to="plans" />
   </GuideItem>
 
   <GuideItem id="caps" :title="t('guide.capsTitle')" :short="t('guide.capsShort')">
     <ul class="plain">
-      <li>{{ t('guide.capsDiscipline') }}</li>
-      <li>{{ t('guide.capsDesignBreadth') }}</li>
-      <li>{{ t('guide.capsDesignInformal') }}</li>
+      <li><TermText :text="t('guide.capsDiscipline')" /></li>
+      <li><TermText :text="t('guide.capsDesignBreadth')" /></li>
+      <li><TermText :text="t('guide.capsDesignInformal')" /></li>
     </ul>
   </GuideItem>
 
   <GuideItem id="rules" :title="t('guide.rulesTitle')" :short="t('guide.rulesShort')">
     <dl class="terms">
       <div>
-        <dt>{{ t('guide.prereqTerm') }}</dt>
-        <dd>{{ t('guide.prereqText') }}</dd>
+        <dt><TermText :text="t('guide.prereqTerm')" /></dt>
+        <dd><TermText :text="t('guide.prereqText')" /></dd>
       </div>
       <div>
-        <dt>{{ t('guide.coreqTerm') }}</dt>
-        <dd>{{ t('guide.coreqText') }}</dd>
+        <dt><TermText :text="t('guide.coreqTerm')" /></dt>
+        <dd><TermText :text="t('guide.coreqText')" /></dd>
       </div>
       <div>
-        <dt>{{ t('guide.nonTerm') }}</dt>
-        <dd>{{ t('guide.nonText') }}</dd>
+        <dt><TermText :text="t('guide.nonTerm')" /></dt>
+        <dd><TermText :text="t('guide.nonText')" /></dd>
       </div>
     </dl>
-    <GuideSee to="waiver">{{ t('guide.waiverText') }}</GuideSee>
+    <GuideSee to="waiver"><TermText :text="t('guide.waiverText')" /></GuideSee>
   </GuideItem>
 
   <GuideItem id="grades" :title="t('guide.gradesTitle')" :short="t('guide.gradesShort')">
@@ -99,18 +100,18 @@ const { wam } = useProfile()
   </GuideItem>
 
   <GuideItem id="wam" :title="t('guide.wamTitle')" :short="t('guide.wamShort')">
-    <p>{{ t('guide.wamText') }}</p>
-    <p class="formula">{{ t('guide.wamFormula') }}</p>
-    <p>{{ t('guide.wamExample') }}</p>
+    <p><TermText :text="t('guide.wamText')" /></p>
+    <p class="formula"><TermText :text="t('guide.wamFormula')" /></p>
+    <p><TermText :text="t('guide.wamExample')" /></p>
     <ul class="plain">
-      <li>{{ t('guide.wamIn') }}</li>
-      <li>{{ t('guide.wamOut') }}</li>
+      <li><TermText :text="t('guide.wamIn')" /></li>
+      <li><TermText :text="t('guide.wamOut')" /></li>
     </ul>
     <GuideCallout>
-      <p>{{ t('guide.findMarks') }}</p>
+      <p><TermText :text="t('guide.findMarks')" /></p>
       <p><a :href="link('tools/wam/')">{{ t('guide.wamTool') }}</a></p>
-      <p>{{ t('guide.wamSync') }}</p>
-      <p>{{ t('guide.planDoneSync') }}</p>
+      <p><TermText :text="t('guide.wamSync')" /></p>
+      <p><TermText :text="t('guide.planDoneSync')" /></p>
     </GuideCallout>
     <p class="yours">
       <span>{{ wam !== null ? t('guide.wamYours', { wam }) : t('guide.wamNone') }}</span>

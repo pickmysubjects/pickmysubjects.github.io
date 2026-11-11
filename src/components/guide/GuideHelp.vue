@@ -2,6 +2,7 @@
 import { ExternalLink } from 'lucide-vue-next'
 import { useI18n } from '@/i18n'
 import GuideItem from './GuideItem.vue'
+import TermText from './TermText.vue'
 import GuideLinks from './GuideLinks.vue'
 import GuideServiceList from './GuideServiceList.vue'
 import { URLS } from '@/utils/guideLinks'
@@ -24,9 +25,9 @@ const RANKINGS = [
 
   <GuideItem id="study-help" :title="t('guide.helpTitle')" :short="t('guide.helpShort')">
     <ul class="plain">
-      <li>{{ t('guide.helpSkills') }}</li>
-      <li>{{ t('guide.helpPass') }}</li>
-      <li>{{ t('guide.helpExams') }}</li>
+      <li><TermText :text="t('guide.helpSkills')" /></li>
+      <li><TermText :text="t('guide.helpPass')" /></li>
+      <li><TermText :text="t('guide.helpExams')" /></li>
     </ul>
     <GuideLinks
       :links="[
@@ -37,9 +38,9 @@ const RANKINGS = [
   </GuideItem>
 
   <GuideItem id="careers" :title="t('guide.careersTitle')" :short="t('guide.careersShort')">
-    <p>{{ t('guide.careersText') }}</p>
-    <p>{{ t('guide.careersPlan') }}</p>
-    <p>{{ t('guide.careersGraduate') }}</p>
+    <p><TermText :text="t('guide.careersText')" /></p>
+    <p><TermText :text="t('guide.careersPlan')" /></p>
+    <p><TermText :text="t('guide.careersGraduate')" /></p>
     <p class="actions">
       <a class="button button-quiet" :href="link('careers/')">{{ t('guide.careersLink') }}</a>
     </p>
@@ -52,12 +53,12 @@ const RANKINGS = [
   <!-- When big employers hire: a year ahead. Patterns only; each employer's own dates differ. -->
   <GuideItem id="job-timeline" :title="t('guide.jobTitle')" :short="t('guide.jobShort')">
     <ul class="plain">
-      <li>{{ t('guide.jobFirst') }}</li>
-      <li>{{ t('guide.jobPenult') }}</li>
-      <li>{{ t('guide.jobFinal') }}</li>
-      <li>{{ t('guide.jobWhere') }}</li>
+      <li><TermText :text="t('guide.jobFirst')" /></li>
+      <li><TermText :text="t('guide.jobPenult')" /></li>
+      <li><TermText :text="t('guide.jobFinal')" /></li>
+      <li><TermText :text="t('guide.jobWhere')" /></li>
     </ul>
-    <p>{{ t('guide.jobResume') }}</p>
+    <p><TermText :text="t('guide.jobResume')" /></p>
     <p class="actions">
       <a class="button button-quiet" :href="link('record/#sec-skilltree')">{{ t('skillTree.title') }}</a>
       <a class="button button-quiet" :href="link('clubs/')">{{ t('clubsPage.title') }}</a>
@@ -83,7 +84,7 @@ const RANKINGS = [
   </GuideItem>
 
   <GuideItem id="rankings" :title="t('guide.rankTitle')" :short="t('guide.rankShort')">
-    <p>{{ t('guide.rankText') }}</p>
+    <p><TermText :text="t('guide.rankText')" /></p>
     <GuideLinks :links="RANKINGS.map((l) => ({ href: l.href, label: t(l.key) }))" />
   </GuideItem>
 </template>

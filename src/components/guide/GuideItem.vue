@@ -1,7 +1,14 @@
 <script setup lang="ts">
+import { provide, useAttrs } from 'vue'
+import { sectionClaims } from '@/utils/termLinks'
+import { GUIDE_SECTION } from './termContext'
+
 // One topic of a guide page: a glass card with its heading, the short answer, then the detail.
 // The id (an anchor other pages link to) is set by the parent; data-toc puts it in "On this page".
 defineProps<{ title: string; short?: string }>()
+// Terms in the section's text link once each, never back to this section (TermText).
+const attrs = useAttrs()
+provide(GUIDE_SECTION, { id: typeof attrs.id === 'string' ? attrs.id : undefined, claim: sectionClaims() })
 </script>
 
 <template>

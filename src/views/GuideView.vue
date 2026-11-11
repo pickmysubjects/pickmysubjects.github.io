@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Interp from '@/components/Interp.vue'
-import { computed, nextTick, shallowRef, type Component, useTemplateRef, watch } from 'vue'
+import { computed, nextTick, provide, shallowRef, type Component, useTemplateRef, watch } from 'vue'
+import { GUIDE_PAGE } from '@/components/guide/termContext'
 import { ArrowLeft, ArrowRight } from 'lucide-vue-next'
 import GuideHero from '@/components/guide/GuideHero.vue'
 import GuideToc from '@/components/guide/GuideToc.vue'
@@ -27,6 +28,8 @@ const { t, locale } = useI18n()
 const { param } = useView()
 const page = computed(() => guidePageOf(param.value))
 const slug = computed(() => slugOf(page.value))
+// The page TermText's links are judged against (no link to where the reader already is).
+provide(GUIDE_PAGE, computed(() => (slug.value ? `guide/${slug.value}/` : 'guide/')))
 // Categories without their own component (systems, life) are plain service lists.
 const SECTIONS: Partial<Record<GuideCategory, Component>> = { 'new-students': GuideNewStudents, basics: GuideBasics, enrolling: GuideEnrolling, semester: GuideSemester, international: GuideInternational, help: GuideHelp }
 

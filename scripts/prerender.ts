@@ -38,6 +38,7 @@ import { careerJobLabels, careerListHtml, careerPageHtml, careerSeo, careersHtml
 import { careerTargets } from '../src/engine/careerPaths'
 import { componentCareers } from '../src/engine/careers'
 import { URLS } from '../src/utils/guideLinks'
+import { termSegments } from '../src/utils/termLinks'
 import { ADMISSION_STEPS, ADMISSION_YEAR, ATAR_GUARANTEES_URL, UNIMELB_VTAC_URL, VTAC_DATES_SOURCE } from '../src/content/admissions'
 import type { FirstYearSlot } from '../src/engine/firstYear'
 import { CLUB_CATEGORIES, CLUBS, CLUBS_LISTING, type Club } from '../src/content/clubs'
@@ -94,6 +95,8 @@ const messagesChunk = (code: LocaleCode): string | undefined => {
   return hits.length === 1 ? `${BASE}assets/${hits[0]}` : undefined
 }
 const subjects = Object.values(data.subjects).sort((a, b) => a.code.localeCompare(b.code))
+// Codes with a page of their own: guide text links them (termLinks.ts).
+const SUBJECT_CODES = new Set(Object.keys(data.subjects))
 
 function lookup(messages: unknown, key: string): string | undefined {
   let node: unknown = messages
@@ -641,8 +644,21 @@ function easyCutPages(code: LocaleCode, t: Translate): Page[] {
 
 /** The UniMelb basics page as plain HTML: the same facts as the app, readable without JavaScript. */
 function guideBody(code: LocaleCode, t: Translate, page: GuideCategory | 'overview'): string {
-  const p = (k: string) => `<p>${esc(t(`guide.${k}`))}</p>`
-  const li = (keys: string[]) => `<ul>${keys.map((k) => `<li>${esc(t(`guide.${k}`))}</li>`).join('')}</ul>`
+  // Terms linked to their own pages as the app links them (termLinks.ts): each once on the page,
+  // never to this page (the static page has no sections to tell apart).
+  const used = new Set<string>()
+  const claim = (id: string) => (used.has(id) ? false : (used.add(id), true))
+  const here = page === 'overview' ? 'guide/' : `guide/${page}/`
+  const to = (target: string) => {
+    const [path, anchor] = target.split('#')
+    return `${href(code, (path ?? '').replace(/\/$/, ''))}${anchor ? `#${anchor}` : ''}`
+  }
+  const linked = (text: string) =>
+    termSegments(text, { page: here, subjects: SUBJECT_CODES, claim })
+      .map((s) => (s.to && !s.to.startsWith(here) ? `<a href="${to(s.to)}">${esc(s.text)}</a>` : esc(s.text)))
+      .join('')
+  const p = (k: string) => `<p>${linked(t(`guide.${k}`))}</p>`
+  const li = (keys: string[]) => `<ul>${keys.map((k) => `<li>${linked(t(`guide.${k}`))}</li>`).join('')}</ul>`
   const grades = [
     ['H1', '80–100'],
     ['H2A', '75–79'],
