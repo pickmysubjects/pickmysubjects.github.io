@@ -5,14 +5,22 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
-prerequisites: none
+  "2027":
+    - semester-1
+prerequisites:
+  all:
+    - GDES20001
+    - GDES20002
+    - GDES20004
 corequisites: none
 non_allowed: []
 assessment:
-  - kind: presentation
+  - kind: project
+    weight: 35
+  - kind: project
     weight: 25
-  - kind: report
-    weight: 75
+  - kind: project
+    weight: 40
 weekly_contact_hours: 3
 categories:
   B-DES: design
@@ -29,16 +37,15 @@ breadth_for:
   - Bachelor of Fine Arts (Theatre)
   - Bachelor of Fine Arts (Visual Art)
   - Bachelor of Music
-  - Bachelor of Science
 min_attendance: 75
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/gdes30002
-source_year: 2026
-verified_on: 2026-10-19
+handbook: https://handbook.unimelb.edu.au/2027/subjects/gdes30002
+source_year: 2027
+verified_on: 2026-11-13
 skills:
   - design
 topics:
   - visual-communication
   - design
   - marketing
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

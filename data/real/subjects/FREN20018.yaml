@@ -5,6 +5,8 @@ points: 25
 offerings:
   "2026":
     - summer
+  "2027":
+    - summer
 prerequisites: FREN10005
 corequisites: none
 non_allowed:
@@ -34,6 +36,7 @@ breadth_for:
   - Bachelor of Biomedicine
   - Bachelor of Commerce
   - Bachelor of Design
+  - Bachelor of Environments
   - Bachelor of Fine Arts (Acting)
   - Bachelor of Fine Arts (Animation)
   - Bachelor of Fine Arts (Dance)
@@ -51,7 +54,7 @@ attendance_applies_to:
   - workshops
   - seminars
 prescribed_texts: true
-handbook: https://handbook.unimelb.edu.au/2026/subjects/fren20018
-source_year: 2026
-verified_on: 2026-10-17
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/fren20018
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

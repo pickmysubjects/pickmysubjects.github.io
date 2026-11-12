@@ -5,10 +5,9 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
-prerequisites:
-  all:
-    - manual: "Admission into or selection of one of the following: French Studies major in the B-ARTS Bachelor of Arts French Studies specialisation (formal) in the GD-ARTS Graduate Diploma in Arts"
-    - FREN30003
+  "2027":
+    - semester-2
+prerequisites: FREN30003
 corequisites: none
 non_allowed:
   - FREN10008
@@ -28,10 +27,10 @@ topics:
 assessment:
   - kind: quiz
     weight: 20
-  - kind: project
+  - kind: presentation
     weight: 30
     group: true
-  - kind: report
+  - kind: project
     weight: 50
 weekly_contact_hours: 3
 breadth_for: []
@@ -41,7 +40,7 @@ attendance_applies_to:
   - workshops
   - seminars
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/fren30023
-source_year: 2026
-verified_on: 2026-10-17
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/fren30023
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

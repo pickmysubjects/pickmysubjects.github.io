@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
+  "2027":
+    - semester-1
 prerequisites: none
 corequisites: none
 non_allowed: []
@@ -20,14 +22,14 @@ assessment:
   - kind: assignment
     weight: 20
     group: true
-weekly_contact_hours: 4
-handbook: https://handbook.unimelb.edu.au/2026/subjects/frst30001
-source_year: 2026
-verified_on: 2026-10-13
+weekly_contact_hours: 4.5
+handbook: https://handbook.unimelb.edu.au/2027/subjects/frst30001
+source_year: 2027
+verified_on: 2026-11-13
 categories:
   B-SCI: science
 breadth_for: []
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Taught in February, with a 4-day field trip the week before teaching starts."
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. (From 2026, re-check:) Taught in February, with a 4-day field trip the week before teaching starts."
 skills:
   - fieldwork
   - writing

@@ -1,0 +1,26 @@
+code: GDES20004
+title: "Typography: History, Theory, Practice"
+level: 2
+points: 12.5
+offerings:
+  "2027": []
+prerequisites:
+  all:
+    - ARCH10001
+    - GDES10001
+    - FINA10026
+corequisites: none
+non_allowed:
+  - GDES30005
+assessment:
+  - kind: project
+    weight: 35
+  - kind: assignment
+    weight: 15
+  - kind: project
+    weight: 50
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/gdes20004
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

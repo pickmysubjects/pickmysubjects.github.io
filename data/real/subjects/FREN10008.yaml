@@ -5,9 +5,11 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
+  "2027":
+    - semester-1
 prerequisites:
   placement: French
-  note: All students enrolling in French for the first time are required to complete the online language questionnaire/ placement test at the link below. This applies to all students, from total beginners through to formal study, such as VCE or equivalent, or informally through family or overseas travel. Upon completion of the placement test, students will receive an email with the outcome and entry point. Within 5 working days of receiving the email, study plans will be updated and students will be able to self-enrol into the first subject of their entry point. The results of the test are binding and enrolment can only be changed with approval from the coordinator of the language major. It is recommended that students undertake the language placement test at least two weeks prior to the commencement of semester. https://arts.unimelb.edu.au/school-of-languages-and-linguistics/resources/language-placement-testing
+  note: All students enrolling in a language subject for the first time are required to complete the online language questionnaire and the placement test (if applicable) to the best of their knowledge and ability. This applies to all students, from beginners through to students who have completed formal language study (such as VCE or equivalent), or learned language informally through family, social networks or travel. The language questionnaire and placement test are designed to place students in the class that will best develop their language skills. Upon completion of the placement procedure, students will receive an email with the outcome. Within five working days of receiving the email, study plans will be updated, and students will be able to self-enrol into the first subject of their entry point. Students can appeal the outcome of the placement test by emailing the subject or program coordinator, who will review the case and make a final decision. Program staff are responsible for placing students appropriately. This means that, if program staff believe a student has been incorrectly placed in a subject, they have the right to move that student after classes have already begun. Program staff may make this decision upon further assessment of a student’s language skills. All students must read carefully and accept the academic staff rights clause before continuing. Link
 corequisites: none
 non_allowed:
   - FREN20019
@@ -18,12 +20,13 @@ skills:
 topics:
   - languages
 assessment:
-  - kind: presentation
-    weight: 25
-  - kind: assignment
-    weight: 30
   - kind: quiz
     weight: 10
+  - kind: presentation
+    weight: 25
+    group: true
+  - kind: assignment
+    weight: 30
   - kind: exam
     weight: 35
 weekly_contact_hours: 4
@@ -48,7 +51,7 @@ attendance_applies_to:
   - tutorials
   - workshops
   - seminars
-handbook: https://handbook.unimelb.edu.au/2026/subjects/fren10008
-source_year: 2026
-verified_on: 2026-10-17
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/fren10008
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

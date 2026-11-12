@@ -5,24 +5,22 @@ points: 25
 offerings:
   "2026":
     - semester-2
+  "2027":
+    - semester-2
 prerequisites:
-  points:
-    min: 25
-    from:
-      - GDES30001
-      - GDES30002
-      - GDES30007
-      - GDES30008
+  all:
+    - GDES30002
+    - GDES30008
 corequisites: none
 non_allowed: []
 assessment:
-  - kind: presentation
+  - kind: project
     weight: 20
-  - kind: presentation
+  - kind: project
     weight: 20
-  - kind: presentation
+  - kind: project
     weight: 20
-  - kind: presentation
+  - kind: project
     weight: 40
 weekly_contact_hours: 6
 categories:
@@ -31,12 +29,12 @@ breadth_for:
   - Bachelor of Design
 min_attendance: 75
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/gdes30003
-source_year: 2026
-verified_on: 2026-10-19
+handbook: https://handbook.unimelb.edu.au/2027/subjects/gdes30003
+source_year: 2027
+verified_on: 2026-11-13
 skills:
   - design
 topics:
   - visual-communication
   - design
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
+  "2027":
+    - winter
 prerequisites: FLTV20005
 corequisites: none
 non_allowed: []
@@ -16,19 +18,10 @@ topics:
   - film-and-screen
   - media
 assessment:
-  - kind: participation
-    weight: 10
   - kind: assignment
-    weight: 45
-  - kind: assignment
-    weight: 15
-  - kind: assignment
-    weight: 15
+    weight: 50
   - kind: presentation
-    weight: 15
-  - kind: participation
-    weight: 0
-    hurdle: true
+    weight: 50
 weekly_contact_hours: 2.5
 min_attendance: 75
 breadth_for:
@@ -36,6 +29,7 @@ breadth_for:
   - Bachelor of Biomedicine
   - Bachelor of Commerce
   - Bachelor of Design
+  - Bachelor of Environments
   - Bachelor of Fine Arts (Acting)
   - Bachelor of Fine Arts (Dance)
   - Bachelor of Fine Arts (Music Theatre)
@@ -45,7 +39,7 @@ breadth_for:
   - Bachelor of Music
   - Bachelor of Science
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/fltv30022
-source_year: 2026
-verified_on: 2026-10-21
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. In-person filmmaking intensive over two weekends in August (1-9 August, shown as Semester 2): small teams write and shoot two short films in the film school's studios. Quotas apply. All assessment must be submitted to pass."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/fltv30022
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. (From 2026, re-check:) In-person filmmaking intensive over two weekends in August (1-9 August, shown as Semester 2): small teams write and shoot two short films in the film school's studios. Quotas apply. All assessment must be submitted to pass."

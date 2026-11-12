@@ -5,20 +5,18 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
+  "2027":
+    - semester-2
 prerequisites:
   all:
-    - subject: FNCE30001
-      concurrent: true
     - any:
         - ECOM20001
         - ECON20003
         - MAST20004
         - MAST20005
         - MAST20006
-    - any:
-        - COMP10001
-        - COMP10002
-corequisites: none
+    - manual: Prior experience with Python programming is essential, including the use of common data structures, object-oriented programming concepts, and third-party libraries. Students are also expected to have experience using Integrated Development Environments (IDEs) to write, run, test, and debug Python code.
+corequisites: FNCE30001
 non_allowed: []
 skills:
   - business
@@ -42,6 +40,7 @@ breadth_for:
   - Bachelor of Arts
   - Bachelor of Biomedicine
   - Bachelor of Design
+  - Bachelor of Environments
   - Bachelor of Fine Arts (Acting)
   - Bachelor of Fine Arts (Animation)
   - Bachelor of Fine Arts (Dance)
@@ -53,7 +52,7 @@ breadth_for:
   - Bachelor of Fine Arts (Visual Art)
   - Bachelor of Music
   - Bachelor of Science
-handbook: https://handbook.unimelb.edu.au/2026/subjects/fnce30010
-source_year: 2026
-verified_on: 2026-10-26
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/fnce30010
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

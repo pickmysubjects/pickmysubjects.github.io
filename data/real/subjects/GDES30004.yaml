@@ -6,6 +6,9 @@ offerings:
   "2026":
     - semester-1
     - winter
+  "2027":
+    - semester-1
+    - winter
 prerequisites:
   any:
     - ARCH10001
@@ -34,7 +37,7 @@ categories:
 breadth_for: []
 min_attendance: 75
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/gdes30004
-source_year: 2026
-verified_on: 2026-10-19
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/gdes30004
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

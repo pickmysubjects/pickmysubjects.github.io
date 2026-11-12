@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
+  "2027":
+    - semester-1
 prerequisites:
   all:
     - FOOD20003
@@ -18,16 +20,17 @@ assessment:
     weight: 25
   - kind: exam
     weight: 50
-weekly_contact_hours: 5
+weekly_contact_hours: 6.5
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/food30007
-source_year: 2026
-verified_on: 2026-10-13
+handbook: https://handbook.unimelb.edu.au/2027/subjects/food30007
+source_year: 2027
+verified_on: 2026-11-13
 categories:
   B-SCI: science
 breadth_for:
   - Bachelor of Arts
   - Bachelor of Design
+  - Bachelor of Environments
   - Bachelor of Fine Arts (Acting)
   - Bachelor of Fine Arts (Animation)
   - Bachelor of Fine Arts (Dance)
@@ -38,7 +41,7 @@ breadth_for:
   - Bachelor of Fine Arts (Theatre)
   - Bachelor of Fine Arts (Visual Art)
   - Bachelor of Music
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
 skills:
   - lab
   - fieldwork

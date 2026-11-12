@@ -5,12 +5,15 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
+  "2027":
+    - semester-2
 prerequisites:
-  all:
-    - ARCH10001
-    - FINA10026
-    - GDES10001
-corequisites: FINA10032
+  any:
+    - all:
+        - GDES10001
+        - FINA10026
+    - ARCH10003
+corequisites: none
 non_allowed: []
 skills:
   - design
@@ -25,7 +28,7 @@ assessment:
     weight: 25
   - kind: assignment
     weight: 20
-  - kind: project
+  - kind: presentation
     weight: 40
 weekly_contact_hours: 3
 categories:
@@ -34,7 +37,7 @@ breadth_for:
   - Bachelor of Design
 min_attendance: 75
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/gdes20002
-source_year: 2026
-verified_on: 2026-10-19
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/gdes20002
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
+  "2027":
+    - semester-1
 prerequisites:
   all:
     - any:
@@ -16,7 +18,6 @@ prerequisites:
         - MAST20004
         - MAST20005
         - MAST20006
-        - MAST20018
         - MAST20029
 corequisites: none
 non_allowed: []
@@ -27,7 +28,7 @@ topics:
   - finance
   - entrepreneurship
 assessment:
-  - kind: assignment
+  - kind: quiz
     weight: 20
   - kind: project
     weight: 20
@@ -38,6 +39,7 @@ breadth_for:
   - Bachelor of Arts
   - Bachelor of Biomedicine
   - Bachelor of Design
+  - Bachelor of Environments
   - Bachelor of Fine Arts (Acting)
   - Bachelor of Fine Arts (Animation)
   - Bachelor of Fine Arts (Dance)
@@ -49,7 +51,7 @@ breadth_for:
   - Bachelor of Fine Arts (Visual Art)
   - Bachelor of Music
   - Bachelor of Science
-handbook: https://handbook.unimelb.edu.au/2026/subjects/fnce30006
-source_year: 2026
-verified_on: 2026-10-14
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/fnce30006
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
