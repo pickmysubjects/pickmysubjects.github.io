@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
+  "2027":
+    - semester-1
 prerequisites:
   all:
     - FINA20030
@@ -16,13 +18,17 @@ skills:
 topics:
   - art
 assessment:
-  - kind: project
-    weight: 100
+  - kind: participation
+    weight: 15
+  - kind: assignment
+    weight: 15
+  - kind: assignment
+    weight: 70
 weekly_contact_hours: 3
 min_attendance: 75
 breadth_for: []
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/fina30025
-source_year: 2026
-verified_on: 2026-10-21
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/fina30025
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

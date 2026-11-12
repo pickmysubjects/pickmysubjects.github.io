@@ -234,6 +234,8 @@ describe('parseHandbookPaste – assessment and contact hours', () => {
     expect(parseHandbookPaste(page).weeklyContactHours).toBe(3)
     expect(parseContactHours('Contact hours\t3 x one hour lectures per week, 1 x one hour practice class per week')).toBe(4)
     expect(parseContactHours('Contact hours\t36 one-hour lectures (three per week); 12 one-hour practice classes')).toBe(4)
+    // A note naming what isn't accepted doesn't add its codes as options.
+    expect(parseHandbookPaste('Prerequisites\nOne of\nCode\tName\tTeaching period\tCredit Points\nMAST20005\tStatistics\tSemester 1\t12.5\nNeither MAST10012 Introduction to Mathematics nor UMEP Mathematics is accepted as a prerequisite.\nCorequisites\nNone\n').prerequisites).toEqual({ subject: 'MAST20005' })
     // A year it doesn't run: no Availability row, only a note under "Dates & times".
     expect(parseHandbookPaste('Prerequisites\nNone\nDates & times\n\nNot available in 2027\n').offerings).toEqual([])
     // A large total followed by its breakdown is the total, not the total plus the breakdown.

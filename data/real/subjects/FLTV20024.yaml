@@ -5,6 +5,9 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
+  "2027":
+    - semester-1
+    - semester-2
 prerequisites: none
 corequisites: none
 non_allowed: []
@@ -16,9 +19,9 @@ topics:
   - graphics
   - media
 assessment:
-  - kind: presentation
-    weight: 30
   - kind: project
+    weight: 30
+  - kind: assignment
     weight: 40
     group: true
   - kind: assignment
@@ -38,7 +41,7 @@ breadth_for:
   - Bachelor of Music
   - Bachelor of Science
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/fltv20024
-source_year: 2026
-verified_on: 2026-10-21
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Online only. Unreal Engine runs on provided virtual workstations, so you only need a computer and a stable internet connection. Quotas apply."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/fltv20024
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. (From 2026, re-check:) Online only. Unreal Engine runs on provided virtual workstations, so you only need a computer and a stable internet connection. Quotas apply."

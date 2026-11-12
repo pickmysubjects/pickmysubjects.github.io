@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - summer
+  "2027":
+    - summer
 prerequisites:
   all:
     - points:
@@ -30,14 +32,15 @@ assessment:
     group: true
   - kind: report
     weight: 50
+    hurdle: true
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/engr30005
-source_year: 2026
-verified_on: 2026-10-10
+handbook: https://handbook.unimelb.edu.au/2027/subjects/engr30005
+source_year: 2027
+verified_on: 2026-11-13
 categories:
   B-SCI: science
 breadth_for: []
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
 skills:
   - presentation
   - writing
@@ -45,3 +48,4 @@ topics:
   - design
   - history
   - engineering
+weekly_contact_hours: 2

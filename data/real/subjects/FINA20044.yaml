@@ -8,6 +8,11 @@ offerings:
     - semester-1
     - winter
     - semester-2
+  "2027":
+    - summer
+    - semester-1
+    - winter
+    - semester-2
 prerequisites: none
 corequisites: none
 non_allowed: []
@@ -17,12 +22,11 @@ skills:
 topics:
   - art
 assessment:
-  - kind: assignment
+  - kind: project
     weight: 25
   - kind: project
     weight: 75
-  - kind: participation
-    weight: 0
+    group: true
     hurdle: true
 weekly_contact_hours: 3
 min_attendance: 75
@@ -42,7 +46,7 @@ breadth_for:
   - Bachelor of Music
   - Bachelor of Science
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/fina20044
-source_year: 2026
-verified_on: 2026-10-21
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Runs online. February (summer) and July (winter) are 6-day intensives of 6 hours a day; the semesters are 3 hours a week. Quotas apply. All assessment must be submitted to pass."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/fina20044
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. (From 2026, re-check:) Runs online. February (summer) and July (winter) are 6-day intensives of 6 hours a day; the semesters are 3 hours a week. Quotas apply. All assessment must be submitted to pass."

@@ -5,6 +5,8 @@ points: 18.75
 offerings:
   "2026":
     - semester-1
+  "2027":
+    - semester-1
 prerequisites: none
 corequisites: none
 non_allowed: []
@@ -16,20 +18,20 @@ topics:
   - media
 assessment:
   - kind: assignment
-    weight: 25
-  - kind: project
+    weight: 10
+  - kind: assignment
     weight: 20
-  - kind: project
+  - kind: assignment
     weight: 25
   - kind: participation
-    weight: 10
+    weight: 25
   - kind: presentation
     weight: 20
 weekly_contact_hours: 11.5
 min_attendance: 75
 breadth_for: []
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/fltv10006
-source_year: 2026
-verified_on: 2026-10-21
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/fltv10006
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

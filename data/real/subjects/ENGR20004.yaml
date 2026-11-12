@@ -6,6 +6,9 @@ offerings:
   "2026":
     - semester-1
     - semester-2
+  "2027":
+    - semester-1
+    - semester-2
 prerequisites:
   any:
     - all:
@@ -53,9 +56,9 @@ assessment:
     weight: 50
     hurdle: true
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/engr20004
-source_year: 2026
-verified_on: 2026-10-13
+handbook: https://handbook.unimelb.edu.au/2027/subjects/engr20004
+source_year: 2027
+verified_on: 2026-11-13
 categories:
   B-DES: design
   B-SCI: science
@@ -73,7 +76,7 @@ breadth_for:
   - Bachelor of Fine Arts (Theatre)
   - Bachelor of Fine Arts (Visual Art)
   - Bachelor of Music
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
 skills:
   - maths
   - lab
@@ -81,3 +84,4 @@ topics:
   - physics
   - calculus
   - engineering
+weekly_contact_hours: 5.5

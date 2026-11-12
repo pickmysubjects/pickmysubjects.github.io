@@ -332,6 +332,9 @@ function optionFromWords(line: string): ReqField {
 }
 
 function parseRequirement(lines: string[], label: string, warnings: string[]): ReqField {
+  // "Neither MAST10012 nor … is accepted as a prerequisite": a note naming what does NOT count;
+  // its codes must not be read as options.
+  lines = lines.filter((l) => !(CODE_ONE.test(l) && /\bneither\b|\b(?:is|are|be) not accepted\b/i.test(l)))
   if (lines.length === 0 || (lines.length === 1 && /^none\.?$/i.test(lines[0] ?? ''))) return 'none'
 
   // "Meet one of the following options:" then one option per line in words ("A total of 150 or

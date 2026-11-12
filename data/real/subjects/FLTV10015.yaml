@@ -5,6 +5,8 @@ points: 25
 offerings:
   "2026":
     - semester-2
+  "2027":
+    - semester-2
 prerequisites:
   all:
     - FLTV10012
@@ -17,21 +19,18 @@ skills:
 topics:
   - film-and-screen
 assessment:
+  - kind: assignment
+    weight: 10
   - kind: presentation
-    weight: 10
-  - kind: assignment
-    weight: 40
-  - kind: presentation
-    weight: 10
-  - kind: assignment
-    weight: 30
-  - kind: assignment
-    weight: 10
-weekly_contact_hours: 8
+    weight: 20
+    group: true
+  - kind: project
+    weight: 70
+weekly_contact_hours: 6.5
 min_attendance: 75
 breadth_for: []
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/fltv10015
-source_year: 2026
-verified_on: 2026-10-21
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/fltv10015
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

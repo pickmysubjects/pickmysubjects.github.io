@@ -5,11 +5,14 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
+  "2027":
+    - semester-1
 prerequisites:
   all:
-    - FINA20043
+    - ARCH10001
     - MUSI10223
     - FINA20041
+    - FINA20043
 corequisites: FINA30023
 non_allowed: []
 assessment:
@@ -32,12 +35,12 @@ min_attendance: 75
 attendance_applies_to:
   - studios
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/fina30022
-source_year: 2026
-verified_on: 2026-10-19
+handbook: https://handbook.unimelb.edu.au/2027/subjects/fina30022
+source_year: 2027
+verified_on: 2026-11-13
 skills:
   - design
 topics:
   - design
   - art
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
