@@ -13,7 +13,10 @@ prerequisites:
         - COMP20003
         - COMP20007
         - COMP90038
-    - manual: "Admission into one of the following: Admission into or selection of one of the following: MC-IT100 Master of Information Technology MC-IT150 Master of Information Technology Admission into or selection of one of the following: GC-CS Graduate Certificate in Computer Science"
+    - admission: MC-IT
+      note: Admission into the Master of Information Technology
+    - admission: GC-CS
+      note: Admission into the Graduate Certificate in Computer Science
 corequisites: none
 non_allowed: []
 categories:
