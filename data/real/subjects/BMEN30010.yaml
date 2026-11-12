@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
+  "2027":
+    - semester-1
 prerequisites:
   all:
     - MAST20029
@@ -29,22 +31,22 @@ assessment:
     weight: 15
     group: true
   - kind: project
-    weight: 15
+    weight: 10
     group: true
   - kind: test
     weight: 15
   - kind: exam
-    weight: 50
+    weight: 55
     hurdle: true
-weekly_contact_hours: 5
+weekly_contact_hours: 4
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/bmen30010
-source_year: 2026
-verified_on: 2026-10-13
+handbook: https://handbook.unimelb.edu.au/2027/subjects/bmen30010
+source_year: 2027
+verified_on: 2026-11-12
 categories:
   B-SCI: science
 breadth_for: []
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. ANAT20006 and PHYS20008 may also be taken at the same time as this subject."
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. (From 2026, re-check:) ANAT20006 and PHYS20008 may also be taken at the same time as this subject."
 skills:
   - maths
   - lab

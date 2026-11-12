@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
+  "2027":
+    - semester-1
 prerequisites:
   all:
     - admission: B-DES
@@ -12,25 +14,27 @@ prerequisites:
     - points:
         min: 150
 corequisites: none
-non_allowed: []
+non_allowed:
+  - ABPL90432
 skills:
   - design
 topics:
   - construction
   - architecture
 assessment:
-  - kind: report
+  - kind: assignment
     weight: 30
   - kind: assignment
     weight: 40
     group: true
+    hurdle: true
   - kind: exam
     weight: 30
     hurdle: true
 weekly_contact_hours: 4
 breadth_for: []
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/cons30001
-source_year: 2026
-verified_on: 2026-10-19
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/cons30001
+source_year: 2027
+verified_on: 2026-11-12
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

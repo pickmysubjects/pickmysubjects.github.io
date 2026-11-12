@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
+  "2027":
+    - semester-1
 prerequisites: none
 corequisites: none
 non_allowed: []
@@ -15,17 +17,14 @@ topics:
   - art
   - history
 assessment:
+  - kind: participation
+    weight: 10
   - kind: assignment
     weight: 10
-    hurdle: true
   - kind: report
-    weight: 50
-    hurdle: true
-  - kind: exam
-    weight: 35
-    hurdle: true
-  - kind: participation
-    weight: 5
+    weight: 40
+  - kind: test
+    weight: 40
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Biomedicine
@@ -42,7 +41,7 @@ breadth_for:
   - Bachelor of Fine Arts (Visual Art)
   - Bachelor of Music
   - Bachelor of Science
-handbook: https://handbook.unimelb.edu.au/2026/subjects/ahis10001
-source_year: 2026
-verified_on: 2026-10-16
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/ahis10001
+source_year: 2027
+verified_on: 2026-11-12
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
+  "2027":
+    - semester-1
 prerequisites:
   any:
     - all:
@@ -36,12 +38,12 @@ attendance_applies_to:
   - workshops
   - practicals
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/agri20044
-source_year: 2026
-verified_on: 2026-10-13
+handbook: https://handbook.unimelb.edu.au/2027/subjects/agri20044
+source_year: 2027
+verified_on: 2026-11-12
 categories: {}
 breadth_for: []
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Part of the Bachelor of Agriculture; not on the 2026 B-SCI science list, so it gives no B-SCI credit."
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. (From 2026, re-check:) Part of the Bachelor of Agriculture; not on the 2026 B-SCI science list, so it gives no B-SCI credit."
 skills:
   - lab
 topics:

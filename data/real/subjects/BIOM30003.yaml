@@ -7,37 +7,41 @@ offerings:
     - summer
     - semester-1
     - semester-2
+  "2027":
+    - semester-1
+    - semester-2
 prerequisites:
   all:
-    - average:
+    - wam:
         min: 75
-        levels:
-          - 2
-          - 3
-      note: Excellent results in a discipline appropriate to the project (normally an average of at least 75% in relevant 2nd and 3rd year subjects)
-    - permission: coordinator
-      note: "Approval of the relevant Department Coordinator. Department specific details are listed in the link below: Link"
+      note: Completed/Passed at least 175 points, including at least 50points at Level 2 in health, science or technology areas of study relevant to the project discipline. WAM of at least 75% or equivalent
+    - permission: application
+      note: "Approval of the relevant Department Coordinator. Further information on the application process and how to find a supervisor: Link"
 corequisites: none
 non_allowed:
   - PATH30004
+  - SCIE30001
 assessment:
-  - kind: report
-    weight: 60
-  - kind: presentation
-    weight: 30
   - kind: project
     weight: 10
+  - kind: project
+    weight: 10
+  - kind: presentation
+    weight: 30
+  - kind: report
+    weight: 50
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/biom30003
-source_year: 2026
-verified_on: 2026-10-09
+handbook: https://handbook.unimelb.edu.au/2027/subjects/biom30003
+source_year: 2027
+verified_on: 2026-11-12
 categories:
   B-SCI: science
 breadth_for: []
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
 skills:
   - writing
   - lab
   - presentation
 topics:
   - biology
+weekly_contact_hours: 8

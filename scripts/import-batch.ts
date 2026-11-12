@@ -88,7 +88,12 @@ for (const file of positionals) {
         doc[k] = old[k]
       } else console.log(`     CHANGED ${k}: ${JSON.stringify(old[k])} -> ${JSON.stringify(doc[k])}`)
     }
-    if (old.assessment !== undefined && !same(old.assessment, doc.assessment)) console.log('     CHANGED assessment')
+    // A page whose table can't be used (weights not adding up to 100, no percentages) keeps the
+    // assessment we had, rather than wiping it: the Handbook's own slip shouldn't erase checked facts.
+    if (doc.assessment === 'unknown' && old.assessment !== undefined && old.assessment !== 'unknown') {
+      console.log(`     KEPT assessment: the ${values.year} page's table couldn't be used`)
+      doc.assessment = old.assessment
+    } else if (old.assessment !== undefined && !same(old.assessment, doc.assessment)) console.log('     CHANGED assessment')
     const oldYear = String(old.source_year ?? '')
     // One "(From …, re-check:)" mark at most: the older one is replaced, not stacked year on year.
     const bareNote = handNote.replace(/^\(From \d{4}, re-check:\)\s*/, '')

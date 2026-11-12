@@ -6,43 +6,56 @@ offerings:
   "2026":
     - semester-1
     - semester-2
+  "2027":
+    - semester-1
+    - semester-2
 prerequisites:
-  all:
+  any:
+    - all:
+        - ARCH30001
+        - ARCH20004
+        - ARCH20003
+        - ABPL20055
+        - any:
+            - ABPL30041
+            - ABPL30046
+        - any:
+            - ABPL20033
+            - ABPL20042
+        - any:
+            - ABPL10007
+            - ABPL10008
     - all:
         - ABPL30041
         - ARCH20003
         - ARCH20004
         - ARCH30001
-    - any:
-        - ABPL20036
-        - ABPL10007
-    - ABPL20055
-    - ABPL30041
+        - ABPL20055
+        - any:
+            - ABPL20036
+            - ABPL10007
 corequisites: none
 non_allowed:
   - ABPL30037
 assessment:
-  - kind: assignment
-    weight: 15
-  - kind: assignment
-    weight: 15
-  - kind: assignment
+  - kind: presentation
     weight: 20
-  - kind: assignment
-    weight: 40
-  - kind: quiz
-    weight: 10
+  - kind: project
+    weight: 30
+  - kind: project
+    weight: 50
+    hurdle: true
 weekly_contact_hours: 7
 breadth_for:
   - Bachelor of Design
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/arch30002
-source_year: 2026
-verified_on: 2026-10-19
+handbook: https://handbook.unimelb.edu.au/2027/subjects/arch30002
+source_year: 2027
+verified_on: 2026-11-12
 skills:
   - design
   - presentation
 topics:
   - architecture
   - design
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

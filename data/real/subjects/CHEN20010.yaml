@@ -5,6 +5,9 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
+  "2027":
+    - semester-1
+    - semester-2
 prerequisites:
   any:
     - all:
@@ -28,25 +31,24 @@ assessment:
     group: true
   - kind: assignment
     weight: 10
-  - kind: assignment
-    weight: 10
-  - kind: assignment
+  - kind: participation
     weight: 20
   - kind: exam
-    weight: 50
+    weight: 60
     hurdle: true
 weekly_contact_hours: 5.5
 prescribed_texts: true
 exam_book: closed
-handbook: https://handbook.unimelb.edu.au/2026/subjects/chen20010
-source_year: 2026
-verified_on: 2026-10-10
+handbook: https://handbook.unimelb.edu.au/2027/subjects/chen20010
+source_year: 2027
+verified_on: 2026-11-12
 categories:
   B-SCI: science
 breadth_for:
   - Bachelor of Arts
   - Bachelor of Commerce
   - Bachelor of Design
+  - Bachelor of Environments
   - Bachelor of Fine Arts (Acting)
   - Bachelor of Fine Arts (Animation)
   - Bachelor of Fine Arts (Dance)
@@ -57,7 +59,7 @@ breadth_for:
   - Bachelor of Fine Arts (Theatre)
   - Bachelor of Fine Arts (Visual Art)
   - Bachelor of Music
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
 skills:
   - maths
 topics:

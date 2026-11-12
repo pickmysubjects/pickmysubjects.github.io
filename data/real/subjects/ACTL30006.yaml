@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
+  "2027":
+    - semester-2
 prerequisites:
   all:
     - ACTL20003
@@ -30,8 +32,9 @@ assessment:
   - kind: exam
     weight: 70
     hurdle: true
-weekly_contact_hours: 3
+weekly_contact_hours: 1
 breadth_for:
+  - Bachelor of Environments
   - Bachelor of Fine Arts (Acting)
   - Bachelor of Fine Arts (Animation)
   - Bachelor of Fine Arts (Dance)
@@ -42,7 +45,7 @@ breadth_for:
   - Bachelor of Fine Arts (Theatre)
   - Bachelor of Fine Arts (Visual Art)
   - Bachelor of Music
-handbook: https://handbook.unimelb.edu.au/2026/subjects/actl30006
-source_year: 2026
-verified_on: 2026-10-21
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Students who started their degree in 2018 or earlier need ACTL20002 instead. You must pass the end-of-semester exam to pass."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/actl30006
+source_year: 2027
+verified_on: 2026-11-12
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. (From 2026, re-check:) Students who started their degree in 2018 or earlier need ACTL20002 instead. You must pass the end-of-semester exam to pass."

@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
+  "2027":
+    - semester-2
 prerequisites:
   any:
     - any:
@@ -33,16 +35,16 @@ assessment:
   - kind: exam
     weight: 50
     hurdle: true
-weekly_contact_hours: 5
+weekly_contact_hours: 2
 prescribed_texts: false
 exam_book: open
-handbook: https://handbook.unimelb.edu.au/2026/subjects/bmen20002
-source_year: 2026
-verified_on: 2026-10-13
+handbook: https://handbook.unimelb.edu.au/2027/subjects/bmen20002
+source_year: 2027
+verified_on: 2026-11-12
 categories:
   B-SCI: science
 breadth_for: []
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
 skills:
   - lab
 topics:

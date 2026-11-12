@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
+  "2027":
+    - semester-1
 prerequisites:
   placement: Arabic
   note: All students enrolling in Arabic for the first time are required to complete the online language questionnaire/placement test at the link below. This applies to all students, from total beginners through to formal study, such as VCE or equivalent, or informally through family or overseas travel. Upon completion of the placement test, students will receive an email with the outcome and entry point. Within 5 working days of receiving the email, study plans will be updated and students will be able to self-enrol into the first subject of their entry point. The results of the test are binding and enrolment can only be changed with approval from the coordinator of the language major. Link It is recommended that students undertake the language placement test at least two weeks prior to the commencement of semester.
@@ -33,6 +35,7 @@ breadth_for:
   - Bachelor of Biomedicine
   - Bachelor of Commerce
   - Bachelor of Design
+  - Bachelor of Environments
   - Bachelor of Fine Arts (Acting)
   - Bachelor of Fine Arts (Animation)
   - Bachelor of Fine Arts (Dance)
@@ -46,7 +49,7 @@ breadth_for:
   - Bachelor of Science
 min_attendance: 80
 prescribed_texts: true
-handbook: https://handbook.unimelb.edu.au/2026/subjects/arbc10001
-source_year: 2026
-verified_on: 2026-10-17
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/arbc10001
+source_year: 2027
+verified_on: 2026-11-12
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

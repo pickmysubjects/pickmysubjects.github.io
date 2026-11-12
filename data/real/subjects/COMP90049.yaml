@@ -6,6 +6,9 @@ offerings:
   "2026":
     - semester-1
     - semester-2
+  "2027":
+    - semester-1
+    - semester-2
 prerequisites:
   any:
     - any:
@@ -37,10 +40,10 @@ assessment:
     weight: 50
     hurdle: true
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/comp90049
-source_year: 2026
-verified_on: 2026-10-10
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/comp90049
+source_year: 2027
+verified_on: 2026-11-12
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
 skills:
   - programming
   - maths
@@ -49,3 +52,4 @@ topics:
   - machine-learning
   - data-science
 breadth_for: []
+weekly_contact_hours: 3

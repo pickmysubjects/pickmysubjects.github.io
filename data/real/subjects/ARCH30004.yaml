@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - summer
+  "2027":
+    - winter
 prerequisites:
   any:
     - ABPL20036
@@ -19,17 +21,23 @@ topics:
   - construction
 assessment:
   - kind: report
-    weight: 10
+    weight: 15
+  - kind: presentation
+    weight: 15
+    group: true
+    hurdle: true
   - kind: presentation
     weight: 20
     group: true
+    hurdle: true
   - kind: report
-    weight: 70
+    weight: 50
 weekly_contact_hours: 18
 breadth_for:
   - Bachelor of Arts
   - Bachelor of Biomedicine
   - Bachelor of Commerce
+  - Bachelor of Environments
   - Bachelor of Fine Arts (Acting)
   - Bachelor of Fine Arts (Animation)
   - Bachelor of Fine Arts (Dance)
@@ -42,7 +50,7 @@ breadth_for:
   - Bachelor of Music
   - Bachelor of Science
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/arch30004
-source_year: 2026
-verified_on: 2026-10-19
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/arch30004
+source_year: 2027
+verified_on: 2026-11-12
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
+  "2027":
+    - semester-2
 prerequisites:
   all:
     - ABPL10005
@@ -19,15 +21,18 @@ topics:
   - engineering
 assessment:
   - kind: assignment
-    weight: 25
+    weight: 20
     group: true
   - kind: assignment
-    weight: 50
+    weight: 30
   - kind: assignment
-    weight: 25
+    weight: 20
+  - kind: assignment
+    weight: 30
     group: true
 weekly_contact_hours: 4
 breadth_for:
+  - Bachelor of Commerce
   - Bachelor of Design
   - Bachelor of Fine Arts (Acting)
   - Bachelor of Fine Arts (Animation)
@@ -42,7 +47,7 @@ min_attendance: 80
 attendance_applies_to:
   - tutorials
 prescribed_texts: true
-handbook: https://handbook.unimelb.edu.au/2026/subjects/cons20002
-source_year: 2026
-verified_on: 2026-10-19
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/cons20002
+source_year: 2027
+verified_on: 2026-11-12
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

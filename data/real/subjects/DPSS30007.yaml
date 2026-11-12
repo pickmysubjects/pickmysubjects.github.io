@@ -2,15 +2,29 @@ code: DPSS30007
 title: Design and Production Global Atelier
 level: 3
 points: 12.5
-offerings: unknown
+offerings:
+  "2027":
+    - semester-1
 prerequisites:
-  any:
-    - all:
-        - admission: B-FAPRO
-          note: Admission into the B-FAPRO Bachelor of Fine Arts (Production)
-        - DPSS10010
-    - manual: Admission into the Performance Design major in the B-DES Bachelor of Design
-corequisites: FINA30022
+  all:
+    - permission: application
+      note: Apply for permission to enrol (Enrolment Assistance form to Stop 1) and submit a 200-word expression of interest.
+    - any:
+        - all:
+            - admission: B-FAPRO
+              note: Admission into the B-FAPRO Bachelor of Fine Arts (Production)
+            - DPSS10010
+        - all:
+            - manual: Admission into the Performance Design major in the B-DES Bachelor of Design
+            - subject: FINA30022
+              concurrent: true
+        - all:
+            - manual: Admission into the Graphic Design major in the B-DES Bachelor of Design
+            - subject: GDES30001
+              concurrent: true
+            - subject: GDES30002
+              concurrent: true
+corequisites: none
 non_allowed: []
 skills:
   - fieldwork
@@ -24,12 +38,13 @@ assessment:
     weight: 40
   - kind: assignment
     weight: 30
-  - kind: assignment
+  - kind: presentation
     weight: 30
 breadth_for: []
 min_attendance: 75
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/dpss30007
-source_year: 2026
-verified_on: 2026-10-19
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/dpss30007
+source_year: 2027
+verified_on: 2026-11-12
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
+weekly_contact_hours: 3.5

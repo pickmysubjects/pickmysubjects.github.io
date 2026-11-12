@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - winter
+  "2027":
+    - winter
 prerequisites: none
 corequisites: none
 non_allowed: []
@@ -27,11 +29,14 @@ assessment:
     weight: 20
   - kind: report
     weight: 50
+  - kind: assignment
+    weight: 0
+    hurdle: true
 weekly_contact_hours: 1
 min_attendance: 100
 breadth_for: []
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/agri20046
-source_year: 2026
-verified_on: 2026-10-21
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Includes a 10-day field trip in Fiji."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/agri20046
+source_year: 2027
+verified_on: 2026-11-12
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. (From 2026, re-check:) Includes a 10-day field trip in Fiji."

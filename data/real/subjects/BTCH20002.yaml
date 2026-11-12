@@ -5,31 +5,36 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
+  "2027":
+    - semester-2
 prerequisites:
   any:
     - BIOL10002
     - BIOL10008
-    - BIOL10009
-    - BIOL10004
+    - BIOL10010
+    - AGRI10050
 corequisites: none
 non_allowed: []
 assessment:
   - kind: assignment
-    weight: 25
+    weight: 15
   - kind: test
     weight: 15
+  - kind: assignment
+    weight: 20
   - kind: exam
-    weight: 60
+    weight: 50
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/btch20002
-source_year: 2026
-verified_on: 2026-10-09
+handbook: https://handbook.unimelb.edu.au/2027/subjects/btch20002
+source_year: 2027
+verified_on: 2026-11-12
 categories:
   B-SCI: science
 breadth_for:
   - Bachelor of Arts
   - Bachelor of Commerce
   - Bachelor of Design
+  - Bachelor of Environments
   - Bachelor of Fine Arts (Acting)
   - Bachelor of Fine Arts (Animation)
   - Bachelor of Fine Arts (Dance)
@@ -40,7 +45,7 @@ breadth_for:
   - Bachelor of Fine Arts (Theatre)
   - Bachelor of Fine Arts (Visual Art)
   - Bachelor of Music
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
 weekly_contact_hours: 3.5
 skills:
   - writing

@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
+  "2027":
+    - semester-2
 prerequisites:
   all:
     - ACTL20001
@@ -19,18 +21,21 @@ topics:
   - actuarial
 assessment:
   - kind: assignment
-    weight: 20
+    weight: 15
   - kind: test
     weight: 5
   - kind: test
     weight: 5
+  - kind: presentation
+    weight: 5
+    group: true
   - kind: exam
     weight: 70
     hurdle: true
 weekly_contact_hours: 3
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/actl20003
-source_year: 2026
-verified_on: 2026-10-13
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/actl20003
+source_year: 2027
+verified_on: 2026-11-12
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
 breadth_for: []

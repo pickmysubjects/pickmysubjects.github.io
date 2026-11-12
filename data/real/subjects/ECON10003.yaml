@@ -7,22 +7,21 @@ offerings:
     - summer
     - semester-1
     - semester-2
+  "2027":
+    - summer
+    - semester-1
+    - semester-2
 prerequisites:
-  all:
-    - ECON10004
-    - any:
-        - admission: B-SCI
-          note: Admission into the Bachelor of Science
-        - admission: B-COM
-          note: Admission into the Bachelor of Commerce
-        - MAST10012
-        - school:
-            subject: Mathematical Methods or Specialist Mathematics
-            minScore: 25
-          note: VCE Mathematical Methods or Specialist Mathematics 3/4 study score of at least 25 (or equivalent)
-        - all:
-            - MAST10014
-            - MAST10015
+  any:
+    - manual: "Admission into one of the following: B-COM Bachelor of Commerce B-SCI Bachelor of Science"
+    - MAST10012
+    - school:
+        subject: Mathematical Methods or Specialist Mathematics
+        minScore: 25
+      note: A study score of at least 25 in VCE Mathematical Methods (Units 3 and 4) or Specialist Mathematics (Units 3 and 4), or equivalent
+    - all:
+        - MAST10014
+        - MAST10015
 corequisites: none
 non_allowed: []
 categories:
@@ -31,6 +30,7 @@ breadth_for:
   - Bachelor of Arts
   - Bachelor of Biomedicine
   - Bachelor of Design
+  - Bachelor of Environments
   - Bachelor of Fine Arts (Acting)
   - Bachelor of Fine Arts (Animation)
   - Bachelor of Fine Arts (Dance)
@@ -42,10 +42,10 @@ breadth_for:
   - Bachelor of Fine Arts (Visual Art)
   - Bachelor of Music
   - Bachelor of Science
-handbook: https://handbook.unimelb.edu.au/2026/subjects/econ10003
-source_year: 2026
-verified_on: 2026-10-07
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/econ10003
+source_year: 2027
+verified_on: 2026-11-12
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
 skills:
   - business
   - writing
@@ -59,10 +59,13 @@ assessment:
     weight: 10
     group: true
   - kind: assignment
-    weight: 20
+    weight: 15
     group: true
+  - kind: quiz
+    weight: 5
   - kind: participation
     weight: 10
   - kind: exam
     weight: 40
     hurdle: true
+weekly_contact_hours: 6

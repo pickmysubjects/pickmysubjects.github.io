@@ -5,21 +5,16 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
+  "2027":
+    - semester-1
 prerequisites:
-  any:
-    - all:
-        - any:
-            - ABPL20038
-            - ABPL20040
-            - ABPL20049
-        - any:
-            - ABPL20055
-            - ARCH10004
-    - all:
-        - ABPL10004
-        - any:
-            - ARCH20001
-            - ARCH20002
+  all:
+    - any:
+        - ABPL20055
+        - ARCH10004
+    - any:
+        - ARCH20001
+        - ARCH20002
 corequisites: ARCH20004
 non_allowed: []
 assessment:
@@ -27,7 +22,10 @@ assessment:
     weight: 20
     group: true
   - kind: project
-    weight: 80
+    weight: 20
+  - kind: project
+    weight: 60
+    group: true
     hurdle: true
 weekly_contact_hours: 4
 breadth_for: []
@@ -35,13 +33,13 @@ recommended:
   - ENVS10007
   - ABPL20047
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/abpl30042
-source_year: 2026
-verified_on: 2026-10-19
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl30042
+source_year: 2027
+verified_on: 2026-11-12
 skills:
   - design
 topics:
   - architecture
   - urban-planning
   - design
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

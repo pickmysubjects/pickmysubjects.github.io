@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
+  "2027":
+    - semester-2
 prerequisites:
   any:
     - any:
@@ -12,9 +14,9 @@ prerequisites:
         - COMP20007
         - COMP90038
     - admission: GC-CS
-      note: Admission into the Graduate Certificate in Computer Science
+      note: Admission into the GC-CS Graduate Certificate in Computer Science
     - admission: MC-IT
-      note: Admission into some Master of Information Technology specialisations
+      note: Admission into the Artificial Intelligence (100pt) specialisation (formal) in the MC-IT Master of Information Technology, Artificial Intelligence (150pt) specialisation (formal) in the MC-IT Master of Information Technology, Computing (100pt) specialisation (formal) in the MC-IT Master of Information Technology, Computing (150pt) specialisation (formal) in the MC-IT Master of Information Technology
 corequisites: none
 non_allowed:
   - COMP20004
@@ -22,10 +24,10 @@ categories:
   B-SCI: science
   B-DES: design
 breadth_for: []
-handbook: https://handbook.unimelb.edu.au/2026/subjects/comp30026
-source_year: 2026
-verified_on: 2026-10-07
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/comp30026
+source_year: 2027
+verified_on: 2026-11-12
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
 skills:
   - maths
   - algorithms
@@ -34,9 +36,13 @@ topics:
   - algorithms
 assessment:
   - kind: assignment
-    weight: 24
+    weight: 12
+  - kind: assignment
+    weight: 12
   - kind: quiz
     weight: 6
   - kind: exam
     weight: 70
 weekly_contact_hours: 4
+recommended:
+  - MAST20036

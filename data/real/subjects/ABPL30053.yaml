@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
+  "2027":
+    - semester-1
 prerequisites:
   any:
     - ARCH20003
@@ -20,13 +22,16 @@ topics:
   - design
 assessment:
   - kind: report
-    weight: 5
-  - kind: report
-    weight: 35
+    weight: 40
+    hurdle: true
   - kind: assignment
-    weight: 30
+    weight: 20
+    group: true
+  - kind: quiz
+    weight: 10
   - kind: exam
     weight: 30
+    hurdle: true
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Arts
@@ -45,7 +50,7 @@ breadth_for:
   - Bachelor of Music
   - Bachelor of Science
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/abpl30053
-source_year: 2026
-verified_on: 2026-10-19
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl30053
+source_year: 2027
+verified_on: 2026-11-12
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

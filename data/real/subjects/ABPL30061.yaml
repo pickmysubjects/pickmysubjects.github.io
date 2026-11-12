@@ -5,29 +5,30 @@ points: 25
 offerings:
   "2026":
     - semester-2
+  "2027":
+    - semester-2
 prerequisites:
-  all:
-    - any:
-        - ARCH20002
-        - ABPL20038
-        - ABPL20040
-    - any:
-        - ABPL30042
-        - ARCH20002
-        - ABPL20038
-        - ABPL20040
+  any:
     - all:
+        - ARCH20001
+        - ABPL30042
+        - LARC10001
+    - all:
+        - ARCH20002
         - ABPL30042
         - LARC10001
 corequisites: none
 non_allowed: []
 assessment:
-  - kind: report
+  - kind: presentation
     weight: 20
+    group: true
   - kind: presentation
     weight: 30
-  - kind: project
-    weight: 50
+  - kind: presentation
+    weight: 10
+  - kind: assignment
+    weight: 40
 weekly_contact_hours: 7
 breadth_for: []
 recommended:
@@ -36,13 +37,13 @@ min_attendance: 75
 attendance_applies_to:
   - studios
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/abpl30061
-source_year: 2026
-verified_on: 2026-10-19
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl30061
+source_year: 2027
+verified_on: 2026-11-12
 skills:
   - design
 topics:
   - architecture
   - design
   - ecology
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

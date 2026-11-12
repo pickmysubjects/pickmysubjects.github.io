@@ -1,0 +1,34 @@
+code: AGRI30005
+title: Industry Project
+level: 3
+points: 25
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites:
+  points:
+    min: 150
+corequisites: none
+non_allowed:
+  - AGRI30006
+assessment:
+  - kind: presentation
+    weight: 15
+    hurdle: true
+  - kind: project
+    weight: 20
+    hurdle: true
+  - kind: presentation
+    weight: 25
+  - kind: report
+    weight: 40
+  - kind: project
+    weight: 0
+    hurdle: true
+weekly_contact_hours: 1
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/agri30005
+source_year: 2027
+verified_on: 2026-11-12
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

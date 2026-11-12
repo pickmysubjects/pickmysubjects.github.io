@@ -1,0 +1,21 @@
+code: ABPL30066
+title: Architecture as Political History
+level: 3
+points: 12.5
+offerings: unknown
+prerequisites:
+  manual: Approval from the MC-ARCH Course Coordinator
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: presentation
+    weight: 40
+  - kind: presentation
+    weight: 50
+  - kind: participation
+    weight: 10
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl30066
+source_year: 2027
+verified_on: 2026-11-12
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

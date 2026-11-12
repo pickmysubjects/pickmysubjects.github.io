@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
+  "2027":
+    - semester-2
 prerequisites: none
 corequisites: none
 non_allowed: []
@@ -17,9 +19,9 @@ topics:
   - art
 assessment:
   - kind: assignment
-    weight: 20
+    weight: 30
   - kind: presentation
-    weight: 25
+    weight: 15
   - kind: project
     weight: 40
   - kind: report
@@ -30,10 +32,19 @@ breadth_for:
   - Bachelor of Biomedicine
   - Bachelor of Commerce
   - Bachelor of Design
+  - Bachelor of Fine Arts (Acting)
+  - Bachelor of Fine Arts (Animation)
+  - Bachelor of Fine Arts (Dance)
+  - Bachelor of Fine Arts (Film and Television)
+  - Bachelor of Fine Arts (Music Theatre)
+  - Bachelor of Fine Arts (Production)
+  - Bachelor of Fine Arts (Screenwriting)
+  - Bachelor of Fine Arts (Theatre)
+  - Bachelor of Fine Arts (Visual Art)
   - Bachelor of Music
   - Bachelor of Science
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/aind10005
-source_year: 2026
-verified_on: 2026-10-21
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. One 3-hour studio a week at Southbank, taught by First Nations people. Quota of 30 students, so a place is not guaranteed."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/aind10005
+source_year: 2027
+verified_on: 2026-11-12
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. (From 2026, re-check:) One 3-hour studio a week at Southbank, taught by First Nations people. Quota of 30 students, so a place is not guaranteed."

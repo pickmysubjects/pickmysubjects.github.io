@@ -1,0 +1,27 @@
+code: ACTL40009
+title: Actuarial Practice and Control III
+level: 4
+points: 12.5
+offerings: unknown
+prerequisites:
+  all:
+    - ACTL30003
+    - ACTL30004
+    - ACTL30006
+corequisites: none
+non_allowed:
+  - ACTL90009
+assessment:
+  - kind: assignment
+    weight: 20
+  - kind: exam
+    weight: 80
+    hurdle: true
+breadth_for: []
+recommended:
+  - ACTL40006
+  - ACTL40007
+handbook: https://handbook.unimelb.edu.au/2027/subjects/actl40009
+source_year: 2027
+verified_on: 2026-11-12
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

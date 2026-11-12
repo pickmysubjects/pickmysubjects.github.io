@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
+  "2027":
+    - semester-1
 prerequisites: none
 corequisites: none
 non_allowed:
@@ -12,26 +14,29 @@ non_allowed:
 assessment:
   - kind: report
     weight: 20
-  - kind: report
+    group: true
+  - kind: presentation
     weight: 10
   - kind: report
     weight: 20
-  - kind: report
-    weight: 20
     group: true
+  - kind: presentation
+    weight: 10
+  - kind: assignment
+    weight: 10
   - kind: exam
     weight: 30
 weekly_contact_hours: 4
 prescribed_texts: false
 exam_book: open
-handbook: https://handbook.unimelb.edu.au/2026/subjects/cven20001
-source_year: 2026
-verified_on: 2026-10-10
+handbook: https://handbook.unimelb.edu.au/2027/subjects/cven20001
+source_year: 2027
+verified_on: 2026-11-12
 categories:
   B-DES: design
   B-SCI: science
 breadth_for: []
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
 skills:
   - writing
   - presentation

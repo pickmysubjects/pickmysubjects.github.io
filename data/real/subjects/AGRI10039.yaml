@@ -7,6 +7,10 @@ offerings:
     - summer
     - winter
     - semester-2
+  "2027":
+    - summer
+    - winter
+    - semester-2
 prerequisites: none
 corequisites: none
 non_allowed: []
@@ -22,6 +26,9 @@ assessment:
     weight: 40
   - kind: quiz
     weight: 10
+  - kind: assignment
+    weight: 0
+    hurdle: true
 weekly_contact_hours: 3.5
 min_attendance: 80
 campus: Dookie
@@ -30,6 +37,7 @@ breadth_for:
   - Bachelor of Biomedicine
   - Bachelor of Commerce
   - Bachelor of Design
+  - Bachelor of Environments
   - Bachelor of Fine Arts (Acting)
   - Bachelor of Fine Arts (Animation)
   - Bachelor of Fine Arts (Dance)
@@ -43,7 +51,7 @@ breadth_for:
   - Bachelor of Science
 attendance_applies_to:
   - practicals
-handbook: https://handbook.unimelb.edu.au/2026/subjects/agri10039
-source_year: 2026
-verified_on: 2026-10-21
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Students must be 18 or over on the first day of teaching (wine tasting)."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/agri10039
+source_year: 2027
+verified_on: 2026-11-12
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. (From 2026, re-check:) Students must be 18 or over on the first day of teaching (wine tasting)."

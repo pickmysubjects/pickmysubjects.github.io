@@ -5,15 +5,19 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
+  "2027":
+    - semester-2
 prerequisites:
   all:
     - admission: B-DES
       note: Admission into the B-DES Bachelor of Design
     - all:
         - ABPL30055
-        - ABPL20036
         - CONS20002
         - ABPL30046
+    - any:
+        - ABPL20036
+        - ABPL10008
 corequisites: none
 non_allowed: []
 assessment:
@@ -25,19 +29,16 @@ assessment:
   - kind: assignment
     weight: 30
   - kind: report
-    weight: 10
-    group: true
-  - kind: presentation
-    weight: 10
+    weight: 20
     group: true
 weekly_contact_hours: 4
 breadth_for: []
 recommended:
   - ABPL30039
-handbook: https://handbook.unimelb.edu.au/2026/subjects/abpl30044
-source_year: 2026
-verified_on: 2026-10-19
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl30044
+source_year: 2027
+verified_on: 2026-11-12
 topics:
   - construction
   - management
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

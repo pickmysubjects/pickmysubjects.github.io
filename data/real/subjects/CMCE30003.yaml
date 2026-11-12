@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
+  "2027":
+    - semester-2
 prerequisites: BUSA20001
 corequisites: none
 non_allowed: []
@@ -28,10 +30,10 @@ weekly_contact_hours: 3
 prescribed_texts: false
 languages:
   - Python
-handbook: https://handbook.unimelb.edu.au/2026/subjects/cmce30003
-source_year: 2026
-verified_on: 2026-10-13
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/cmce30003
+source_year: 2027
+verified_on: 2026-11-12
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
 breadth_for:
   - Bachelor of Arts
   - Bachelor of Biomedicine

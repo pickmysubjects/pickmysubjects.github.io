@@ -5,13 +5,19 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
+  "2027":
+    - semester-2
 prerequisites:
   any:
-    - CEDB20003
-    - ZOOL20006
     - BCMB20002
     - BIOM20001
+    - BIOM20003
+    - BIOM20004
+    - BIOM20006
+    - BIOM20007
+    - CEDB20003
     - GENE20001
+    - ZOOL20006
 corequisites: none
 non_allowed: []
 assessment:
@@ -25,14 +31,14 @@ assessment:
     weight: 30
   - kind: exam
     weight: 40
-weekly_contact_hours: 3
-handbook: https://handbook.unimelb.edu.au/2026/subjects/cedb30004
-source_year: 2026
-verified_on: 2026-10-10
+weekly_contact_hours: 4
+handbook: https://handbook.unimelb.edu.au/2027/subjects/cedb30004
+source_year: 2027
+verified_on: 2026-11-12
 categories:
   B-SCI: science
 breadth_for: []
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
 skills:
   - writing
 topics:

@@ -5,46 +5,57 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
+  "2027":
+    - semester-2
 prerequisites:
-  all:
-    - any:
-        - CHEM10003
-        - CHEM10006
-    - any:
-        - BIOL10002
-        - BIOL10008
-        - BIOL10009
-        - BIOL10004
-    - any:
+  any:
+    - all:
+        - any:
+            - CHEM10003
+            - CHEM10006
+        - any:
+            - BIOL10002
+            - BIOL10008
         - BMEN30010
-        - BMEN20001
+    - all:
+        - admission: MC-BIOMENG
+          note: Admission into the MC-BIOMENG Master of Biomedical Engineering
+        - subject: CHEM10003
+          concurrent: true
+        - any:
+            - subject: BIOL10008
+              concurrent: true
+            - subject: BIOL10010
+              concurrent: true
+        - subject: BMEN30010
+          concurrent: true
 corequisites: none
 non_allowed:
   - BMEN90023
 assessment:
-  - kind: quiz
+  - kind: test
     weight: 10
   - kind: report
-    weight: 20
+    weight: 15
     group: true
   - kind: report
-    weight: 20
+    weight: 15
     group: true
   - kind: presentation
     weight: 10
     group: true
   - kind: exam
-    weight: 40
+    weight: 50
     hurdle: true
-weekly_contact_hours: 2
+weekly_contact_hours: 1.5
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/bmen30009
-source_year: 2026
-verified_on: 2026-10-10
+handbook: https://handbook.unimelb.edu.au/2027/subjects/bmen30009
+source_year: 2027
+verified_on: 2026-11-12
 categories:
   B-SCI: science
 breadth_for: []
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
 skills:
   - lab
   - writing

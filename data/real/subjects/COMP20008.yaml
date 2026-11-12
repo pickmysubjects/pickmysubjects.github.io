@@ -6,6 +6,9 @@ offerings:
   "2026":
     - semester-1
     - semester-2
+  "2027":
+    - semester-1
+    - semester-2
 prerequisites:
   any:
     - any:
@@ -13,8 +16,15 @@ prerequisites:
         - COMP10002
         - COMP10003
         - COMP90059
-    - admission: MC-DATASC
-      note: Admission into the Master of Data Science (or GD-CS, GD-DATASC, MC-SOFTENG)
+    - any:
+        - admission: GD-CS
+          note: "Admission into one of the following: Admission into or selection of one of the following: GD-CS Graduate Diploma in Computer Science Admission into or selection of one of the following: MC-DATASC Master of Data Science Admission into or selection of one of the following: GD-DATASC Graduate Diploma in Data Science Admission into or selection of one of the following: MC-SOFTENG Master of Software Engineering"
+        - admission: MC-DATASC
+          note: "Admission into one of the following: Admission into or selection of one of the following: GD-CS Graduate Diploma in Computer Science Admission into or selection of one of the following: MC-DATASC Master of Data Science Admission into or selection of one of the following: GD-DATASC Graduate Diploma in Data Science Admission into or selection of one of the following: MC-SOFTENG Master of Software Engineering"
+        - admission: GD-DATASC
+          note: "Admission into one of the following: Admission into or selection of one of the following: GD-CS Graduate Diploma in Computer Science Admission into or selection of one of the following: MC-DATASC Master of Data Science Admission into or selection of one of the following: GD-DATASC Graduate Diploma in Data Science Admission into or selection of one of the following: MC-SOFTENG Master of Software Engineering"
+        - admission: MC-SOFTENG
+          note: "Admission into one of the following: Admission into or selection of one of the following: GD-CS Graduate Diploma in Computer Science Admission into or selection of one of the following: MC-DATASC Master of Data Science Admission into or selection of one of the following: GD-DATASC Graduate Diploma in Data Science Admission into or selection of one of the following: MC-SOFTENG Master of Software Engineering"
 corequisites: none
 non_allowed: []
 categories:
@@ -34,10 +44,10 @@ breadth_for:
   - Bachelor of Fine Arts (Theatre)
   - Bachelor of Fine Arts (Visual Art)
   - Bachelor of Music
-handbook: https://handbook.unimelb.edu.au/2026/subjects/comp20008
-source_year: 2026
-verified_on: 2026-10-07
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/comp20008
+source_year: 2027
+verified_on: 2026-11-12
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
 skills:
   - data
   - programming
@@ -52,3 +62,4 @@ assessment:
   - kind: exam
     weight: 50
     hurdle: true
+weekly_contact_hours: 4

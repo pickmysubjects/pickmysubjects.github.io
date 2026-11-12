@@ -2,7 +2,9 @@ code: CREA30001
 title: Resistance in Indigenous Design
 level: 3
 points: 12.5
-offerings: unknown
+offerings:
+  "2027":
+    - semester-2
 prerequisites: none
 corequisites: none
 non_allowed: []
@@ -15,14 +17,11 @@ topics:
   - history
 assessment:
   - kind: assignment
-    weight: 30
-    hurdle: true
+    weight: 25
   - kind: project
     weight: 50
-    hurdle: true
   - kind: assignment
-    weight: 20
-    hurdle: true
+    weight: 25
 breadth_for:
   - Bachelor of Arts
   - Bachelor of Biomedicine
@@ -40,7 +39,8 @@ breadth_for:
   - Bachelor of Music
   - Bachelor of Science
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/crea30001
-source_year: 2026
-verified_on: 2026-10-19
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/crea30001
+source_year: 2027
+verified_on: 2026-11-12
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
+weekly_contact_hours: 3

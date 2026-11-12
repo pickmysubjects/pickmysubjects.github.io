@@ -5,13 +5,15 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
+  "2027":
+    - semester-1
 prerequisites:
   any:
     - any:
         - COMP20003
         - COMP20007
-    - admission: GC-CS
-      note: Admission into the Graduate Certificate in Computer Science (or MC-SOFTENG)
+    - admission: MC-SOFTENG
+      note: "Admission into or selection of one of the following: GC-CS Graduate Certificate in Computer Science MC-SOFTENG Master of Software Engineering"
 corequisites: none
 non_allowed: []
 categories:
@@ -31,10 +33,10 @@ breadth_for:
   - Bachelor of Fine Arts (Theatre)
   - Bachelor of Fine Arts (Visual Art)
   - Bachelor of Music
-handbook: https://handbook.unimelb.edu.au/2026/subjects/comp30024
-source_year: 2026
-verified_on: 2026-10-07
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/comp30024
+source_year: 2027
+verified_on: 2026-11-12
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
 skills:
   - programming
   - algorithms
@@ -44,7 +46,6 @@ topics:
 assessment:
   - kind: project
     weight: 30
-    group: true
     hurdle: true
   - kind: exam
     weight: 70

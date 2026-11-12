@@ -22,7 +22,7 @@ assessment:
     weight: 25
   - kind: quiz
     weight: 20
-  - kind: project
+  - kind: assignment
     weight: 35
 weekly_contact_hours: 4
 breadth_for:
@@ -41,7 +41,7 @@ breadth_for:
   - Bachelor of Music
   - Bachelor of Science
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/crea10001
-source_year: 2026
-verified_on: 2026-10-21
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Online only: weekly podcast modules, an online lecture and discussion forum; the final task is your own artwork."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/crea10001
+source_year: 2027
+verified_on: 2026-11-12
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. (From 2026, re-check:) Online only: weekly podcast modules, an online lecture and discussion forum; the final task is your own artwork."

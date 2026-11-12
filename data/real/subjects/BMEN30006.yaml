@@ -5,19 +5,29 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
+  "2027":
+    - semester-1
 prerequisites:
   any:
     - all:
         - any:
             - BMEN20003
             - COMP20005
-            - BMEN20001
         - MAST20029
+    - all:
+        - admission: MC-BIOMENG
+          note: Admission into the MC-BIOMENG Master of Biomedical Engineering
+        - any:
+            - subject: BMEN20003
+              concurrent: true
+            - subject: COMP20005
+              concurrent: true
+        - subject: MAST20029
+          concurrent: true
     - all:
         - any:
             - BMEN20003
             - COMP20005
-            - BMEN20001
         - any:
             - MAST20009
             - MAST20032
@@ -26,19 +36,19 @@ corequisites: none
 non_allowed:
   - ELEN30012
 assessment:
-  - kind: report
+  - kind: assignment
     weight: 30
     group: true
   - kind: quiz
-    weight: 20
+    weight: 10
   - kind: exam
-    weight: 50
+    weight: 60
     hurdle: true
 weekly_contact_hours: 5.5
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/bmen30006
-source_year: 2026
-verified_on: 2026-10-10
+handbook: https://handbook.unimelb.edu.au/2027/subjects/bmen30006
+source_year: 2027
+verified_on: 2026-11-12
 categories:
   B-SCI: science
 breadth_for:
@@ -55,7 +65,7 @@ breadth_for:
   - Bachelor of Fine Arts (Theatre)
   - Bachelor of Fine Arts (Visual Art)
   - Bachelor of Music
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
 skills:
   - lab
   - maths

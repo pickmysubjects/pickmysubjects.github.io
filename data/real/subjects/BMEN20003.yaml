@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
+  "2027":
+    - semester-1
 prerequisites:
   any:
     - all:
@@ -29,24 +31,26 @@ non_allowed:
   - BMEN20001
 assessment:
   - kind: assignment
-    weight: 20
+    weight: 10
   - kind: quiz
-    weight: 15
+    weight: 10
+  - kind: test
+    weight: 10
   - kind: project
-    weight: 25
+    weight: 20
     group: true
   - kind: exam
-    weight: 40
+    weight: 50
     hurdle: true
-weekly_contact_hours: 5
+weekly_contact_hours: 1
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/bmen20003
-source_year: 2026
-verified_on: 2026-10-13
+handbook: https://handbook.unimelb.edu.au/2027/subjects/bmen20003
+source_year: 2027
+verified_on: 2026-11-12
 categories:
   B-SCI: science
 breadth_for: []
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
 skills:
   - programming
   - maths

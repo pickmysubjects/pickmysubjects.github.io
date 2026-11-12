@@ -6,10 +6,13 @@ offerings:
   "2026":
     - semester-1
     - semester-2
+  "2027":
+    - semester-1
+    - semester-2
 prerequisites:
   all:
     - permission: coordinator
-      note: Permission from the School of CIS and an academic supervisor
+      note: Permission required from the School of CIS, jianzhong.qi@unimelb.edu.au A student will need a member of academic staff to agree to supervise the study.
     - any:
         - COMP20003
         - COMP20007
@@ -19,10 +22,10 @@ categories:
   B-SCI: science
   B-DES: design
 breadth_for: []
-handbook: https://handbook.unimelb.edu.au/2026/subjects/comp30013
-source_year: 2026
-verified_on: 2026-10-07
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/comp30013
+source_year: 2027
+verified_on: 2026-11-12
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
 skills:
   - writing
   - presentation
@@ -30,10 +33,10 @@ skills:
 topics:
   - programming
 assessment:
-  - kind: report
+  - kind: project
     weight: 10
   - kind: presentation
     weight: 10
-  - kind: report
+  - kind: project
     weight: 80
     hurdle: true

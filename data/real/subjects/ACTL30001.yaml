@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
+  "2027":
+    - semester-1
 prerequisites:
   all:
     - MAST20005
@@ -21,12 +23,13 @@ assessment:
     weight: 70
     hurdle: true
 weekly_contact_hours: 3
-handbook: https://handbook.unimelb.edu.au/2026/subjects/actl30001
-source_year: 2026
+handbook: https://handbook.unimelb.edu.au/2027/subjects/actl30001
+source_year: 2027
 categories: {}
 breadth_for:
   - Bachelor of Arts
   - Bachelor of Design
+  - Bachelor of Environments
   - Bachelor of Fine Arts (Acting)
   - Bachelor of Fine Arts (Animation)
   - Bachelor of Fine Arts (Dance)
@@ -45,5 +48,5 @@ topics:
   - statistics
   - finance
   - modelling
-verified_on: 2026-10-08
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+verified_on: 2026-11-12
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

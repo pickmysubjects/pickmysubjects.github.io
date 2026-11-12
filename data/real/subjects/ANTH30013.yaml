@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
+  "2027":
+    - semester-2
 prerequisites:
   any:
     - ANTH10001
@@ -21,12 +23,9 @@ assessment:
     weight: 10
     group: true
   - kind: report
-    weight: 40
-  - kind: presentation
-    weight: 10
-    group: true
+    weight: 30
   - kind: report
-    weight: 40
+    weight: 60
     group: true
 weekly_contact_hours: 3
 breadth_for: []
@@ -35,7 +34,7 @@ attendance_applies_to:
   - tutorials
   - workshops
   - seminars
-handbook: https://handbook.unimelb.edu.au/2026/subjects/anth30013
-source_year: 2026
-verified_on: 2026-10-17
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/anth30013
+source_year: 2027
+verified_on: 2026-11-12
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

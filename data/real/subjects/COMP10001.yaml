@@ -7,6 +7,10 @@ offerings:
     - summer
     - semester-1
     - semester-2
+  "2027":
+    - summer
+    - semester-1
+    - semester-2
 prerequisites: none
 corequisites: none
 non_allowed: []
@@ -17,6 +21,7 @@ breadth_for:
   - Bachelor of Arts
   - Bachelor of Commerce
   - Bachelor of Design
+  - Bachelor of Environments
   - Bachelor of Fine Arts (Acting)
   - Bachelor of Fine Arts (Animation)
   - Bachelor of Fine Arts (Dance)
@@ -27,10 +32,10 @@ breadth_for:
   - Bachelor of Fine Arts (Theatre)
   - Bachelor of Fine Arts (Visual Art)
   - Bachelor of Music
-handbook: https://handbook.unimelb.edu.au/2026/subjects/comp10001
-source_year: 2026
-verified_on: 2026-10-07
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. COMP10001 can’t be taken after COMP20005 (the other order is fine). The Handbook’s INFO10001 exclusion is the pre-2011 Informatics 1, not today’s INFO10001."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/comp10001
+source_year: 2027
+verified_on: 2026-11-12
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. (From 2026, re-check:) COMP10001 can’t be taken after COMP20005 (the other order is fine). The Handbook’s INFO10001 exclusion is the pre-2011 Informatics 1, not today’s INFO10001."
 skills:
   - programming
 topics:
@@ -40,9 +45,9 @@ assessment:
     weight: 50
     hurdle: true
   - kind: project
-    weight: 30
+    weight: 20
   - kind: test
-    weight: 10
+    weight: 20
   - kind: assignment
     weight: 10
-    hurdle: true
+weekly_contact_hours: 4

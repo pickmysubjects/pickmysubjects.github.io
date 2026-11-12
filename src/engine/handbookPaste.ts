@@ -616,8 +616,9 @@ export function parseContactHours(text: string): number | undefined {
   const body = line.replace(/^\s*contact hours\s*[:\-–]?\s*/i, '').replace(/×/g, 'x')
   // "48 hours, comprising …" / "48 hours: 24 x one-hour lectures …" give the semester total first.
   const lead = body.match(/^(\d+(?:\.\d+)?)\s*(?:hours?)?\s*(?:in total|total)?\s*(?:[,:(;.]|$|comprising|consisting)/i)
-  // A bare 170 is the total time commitment pasted in the wrong row, not time in class.
-  if (lead && Number(lead[1]) < 120) return half(Number(lead[1]) / 12)
+  // A bare 170 is the total time commitment pasted in the wrong row, not time in class; but
+  // "180 hours, comprising 15 hours of class per week" is a real total with its breakdown after it.
+  if (lead && (Number(lead[1]) < 120 || /comprising|consisting/i.test(body))) return half(Number(lead[1]) / 12)
   // "Total of 44 hours - …", "Total contact is 62 hours", "(36 hours total)", "36 in total".
   const stated =
     body.match(/\btotal(?: contact(?: hours)?)?(?: is| of|\s*[-:=])?\s*(\d+(?:\.\d+)?)\s*(?:contact )?hours?/i) ??
@@ -658,9 +659,12 @@ export function parseContactHours(text: string): number | undefined {
   }
   // "A 2 hour lecture and a 1 hour tutorial" with no "per week": a semester of under 12 hours
   // doesn't happen, so a total that small is already weekly.
-  if (total) return half(total < 12 ? total : total / 12)
+  // Over 40 hours a week isn't a class load: a reading we can't trust, so none (the importer then
+  // keeps what the subject had).
+  const sane = (h: number) => (h > 40 ? undefined : h)
+  if (total) return sane(half(total < 12 ? total : total / 12))
   const stray = line.match(/(\d+(?:\.\d+)?)\s*hours/i)
-  return stray ? half(Number(stray[1]) / 12) : undefined
+  return stray ? sane(half(Number(stray[1]) / 12)) : undefined
 }
 
 const WORDS: Record<string, number> = {

@@ -5,6 +5,8 @@ points: 25
 offerings:
   "2026":
     - semester-2
+  "2027":
+    - semester-2
 prerequisites:
   all:
     - DRAM10032
@@ -18,14 +20,15 @@ skills:
 topics:
   - performance
 assessment:
-  - kind: presentation
+  - kind: assignment
     weight: 20
     hurdle: true
-  - kind: presentation
+  - kind: assignment
     weight: 50
     hurdle: true
   - kind: assignment
     weight: 20
+    hurdle: true
   - kind: participation
     weight: 10
     hurdle: true
@@ -34,7 +37,7 @@ min_attendance: 75
 pass_fail: true
 breadth_for: []
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/dram10035
-source_year: 2026
-verified_on: 2026-10-21
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/dram10035
+source_year: 2027
+verified_on: 2026-11-12
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
+  "2027":
+    - semester-2
 prerequisites:
   admission: B-ARTS
   note: Admission into the B-ARTS Bachelor of Arts
@@ -21,7 +23,7 @@ assessment:
     weight: 40
 weekly_contact_hours: 3
 breadth_for: []
-handbook: https://handbook.unimelb.edu.au/2026/subjects/arts30001
-source_year: 2026
-verified_on: 2026-10-16
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/arts30001
+source_year: 2027
+verified_on: 2026-11-12
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

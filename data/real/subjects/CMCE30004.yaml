@@ -4,6 +4,8 @@ level: 3
 points: 12.5
 offerings:
   "2026": []
+  "2027":
+    - semester-1
 prerequisites: BUSA20001
 corequisites: none
 non_allowed: []
@@ -14,22 +16,21 @@ skills:
 topics:
   - business
 assessment:
-  - kind: presentation
+  - kind: participation
     weight: 10
-    group: true
+  - kind: test
+    weight: 10
   - kind: assignment
-    weight: 25
-  - kind: report
-    weight: 15
+    weight: 30
     group: true
   - kind: exam
     weight: 50
     hurdle: true
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/cmce30004
-source_year: 2026
-verified_on: 2026-10-13
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/cmce30004
+source_year: 2027
+verified_on: 2026-11-12
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
 breadth_for:
   - Bachelor of Arts
   - Bachelor of Biomedicine
@@ -44,3 +45,4 @@ breadth_for:
   - Bachelor of Fine Arts (Theatre)
   - Bachelor of Fine Arts (Visual Art)
   - Bachelor of Music
+weekly_contact_hours: 3

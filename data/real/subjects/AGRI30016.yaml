@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - winter
+  "2027":
+    - winter
 prerequisites: none
 corequisites: none
 non_allowed: []
@@ -18,14 +20,15 @@ assessment:
 weekly_contact_hours: 3.5
 campus: Dookie
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/agri30016
-source_year: 2026
-verified_on: 2026-10-13
+handbook: https://handbook.unimelb.edu.au/2027/subjects/agri30016
+source_year: 2027
+verified_on: 2026-11-12
 categories:
   B-SCI: science
 breadth_for:
   - Bachelor of Arts
   - Bachelor of Design
+  - Bachelor of Environments
   - Bachelor of Fine Arts (Acting)
   - Bachelor of Fine Arts (Animation)
   - Bachelor of Fine Arts (Dance)
@@ -36,7 +39,7 @@ breadth_for:
   - Bachelor of Fine Arts (Theatre)
   - Bachelor of Fine Arts (Visual Art)
   - Bachelor of Music
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. One-week June intensive taught only at the Dookie campus; accommodation and meals cost about $450."
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. (From 2026, re-check:) One-week June intensive taught only at the Dookie campus; accommodation and meals cost about $450."
 skills:
   - maths
 topics:

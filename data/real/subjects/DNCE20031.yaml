@@ -6,6 +6,9 @@ offerings:
   "2026":
     - semester-1
     - semester-2
+  "2027":
+    - semester-1
+    - semester-2
 prerequisites: DNCE10027
 corequisites: none
 non_allowed: []
@@ -16,10 +19,10 @@ topics:
 assessment:
   - kind: participation
     weight: 10
-  - kind: presentation
+  - kind: assignment
     weight: 20
     group: true
-  - kind: presentation
+  - kind: assignment
     weight: 40
     group: true
   - kind: assignment
@@ -30,6 +33,7 @@ breadth_for:
   - Bachelor of Biomedicine
   - Bachelor of Commerce
   - Bachelor of Design
+  - Bachelor of Environments
   - Bachelor of Fine Arts (Acting)
   - Bachelor of Fine Arts (Animation)
   - Bachelor of Fine Arts (Film and Television)
@@ -39,7 +43,7 @@ breadth_for:
   - Bachelor of Fine Arts (Visual Art)
   - Bachelor of Music
   - Bachelor of Science
-handbook: https://handbook.unimelb.edu.au/2026/subjects/dnce20031
-source_year: 2026
-verified_on: 2026-10-21
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. On campus at Southbank, one 3-hour dance workshop a week, ending in a group performance with lighting and sound."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/dnce20031
+source_year: 2027
+verified_on: 2026-11-12
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. (From 2026, re-check:) On campus at Southbank, one 3-hour dance workshop a week, ending in a group performance with lighting and sound."

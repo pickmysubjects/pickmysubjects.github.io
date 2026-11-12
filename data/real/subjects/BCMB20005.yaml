@@ -6,6 +6,9 @@ offerings:
   "2026":
     - semester-1
     - semester-2
+  "2027":
+    - semester-1
+    - semester-2
 prerequisites:
   all:
     - any:
@@ -26,7 +29,7 @@ assessment:
     weight: 5
   - kind: assignment
     weight: 10
-  - kind: exam
+  - kind: test
     weight: 10
   - kind: report
     weight: 25
@@ -39,14 +42,14 @@ attendance_applies_to:
   - tutorials
   - practicals
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/bcmb20005
-source_year: 2026
-verified_on: 2026-10-13
+handbook: https://handbook.unimelb.edu.au/2027/subjects/bcmb20005
+source_year: 2027
+verified_on: 2026-11-12
 min_attendance: 80
 categories:
   B-SCI: science
 breadth_for: []
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
 skills:
   - lab
   - writing
@@ -54,3 +57,4 @@ skills:
 topics:
   - biology
   - chemistry
+weekly_contact_hours: 3

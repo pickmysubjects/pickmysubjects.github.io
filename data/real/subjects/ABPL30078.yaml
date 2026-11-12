@@ -1,0 +1,23 @@
+code: ABPL30078
+title: Acoustic Environments
+level: 3
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites: ARCH10001
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: assignment
+    weight: 25
+  - kind: assignment
+    weight: 35
+  - kind: assignment
+    weight: 40
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl30078
+source_year: 2027
+verified_on: 2026-11-12
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
