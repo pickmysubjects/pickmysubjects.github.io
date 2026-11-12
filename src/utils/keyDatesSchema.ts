@@ -21,7 +21,8 @@ export const keyDatesFileSchema = z.strictObject({
         term: z.enum(KEY_DATE_TERMS),
         start: isoDate,
         end: isoDate.optional(),
-        source: z.string().regex(/^https:\/\/students\.unimelb\.edu\.au\//),
+        // The students site, or the Handbook (each subject page gives its census and withdraw dates).
+        source: z.string().regex(/^https:\/\/(?:students|handbook)\.unimelb\.edu\.au\//),
       })
       .refine((d) => !d.end || d.start <= d.end, 'start must not be after end'),
   ),

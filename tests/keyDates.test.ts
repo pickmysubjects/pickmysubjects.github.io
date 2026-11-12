@@ -12,15 +12,15 @@ describe('key dates data', () => {
       expect(d.start <= d.end, d.id).toBe(true)
       expect(KEY_DATE_KINDS).toContain(d.kind)
       expect(KEY_DATE_TERMS).toContain(d.term)
-      expect(d.url).toMatch(/^https:\/\/students\.unimelb\.edu\.au\//)
+      expect(d.url).toMatch(/^https:\/\/(?:students|handbook)\.unimelb\.edu\.au\//)
     }
   })
   it('ids are unique', () => {
     expect(new Set(KEY_DATES.map((d) => d.id)).size).toBe(KEY_DATES.length)
   })
-  it('has the standard census dates for 2026 and none guessed for 2027', () => {
+  it('has the standard census dates for 2026 and 2027 (2027 from the Handbook subject pages)', () => {
     const census = KEY_DATES.filter((d) => d.kind === 'census')
-    expect(census.map((d) => d.start)).toEqual(['2026-03-31', '2026-08-31'])
+    expect(census.map((d) => d.start)).toEqual(['2026-03-31', '2026-08-31', '2027-03-31', '2027-08-31'])
   })
   it('Employability Week links to its own page', () => {
     const e = KEY_DATES.filter((d) => d.kind === 'employability')

@@ -12,6 +12,10 @@ dates:
   - { kind: exams, term: summer, start: '2027-02-15', end: '2027-02-22', source: https://students.unimelb.edu.au/course-admin/key-dates }
   - { kind: orientation, term: semester-1, start: '2027-02-22', end: '2027-02-26', source: https://students.unimelb.edu.au/course-admin/key-dates }
   - { kind: teaching, term: semester-1, start: '2027-03-01', end: '2027-05-30', source: https://students.unimelb.edu.au/course-admin/key-dates }
+  # From the 2027 Handbook: every standard Semester 1 subject page gives these dates.
+  - { kind: selfEnrol, term: semester-1, start: '2027-03-12', source: https://handbook.unimelb.edu.au/2027/subjects/comp10001 }
+  - { kind: census, term: semester-1, start: '2027-03-31', source: https://handbook.unimelb.edu.au/2027/subjects/comp10001 }
+  - { kind: withdraw, term: semester-1, start: '2027-05-07', source: https://handbook.unimelb.edu.au/2027/subjects/comp10001 }
   - { kind: employability, term: semester-1, start: '2027-03-15', end: '2027-03-19', source: https://students.unimelb.edu.au/careers/employability-week }
   - { kind: break, term: semester-1, start: '2027-03-26', end: '2027-04-04', source: https://students.unimelb.edu.au/course-admin/key-dates }
   - { kind: swotvac, term: semester-1, start: '2027-05-31', end: '2027-06-04', source: https://students.unimelb.edu.au/course-admin/key-dates }
@@ -21,6 +25,10 @@ dates:
   - { kind: teaching, term: winter, start: '2027-06-28', end: '2027-07-25', source: https://students.unimelb.edu.au/course-admin/key-dates }
   - { kind: orientation, term: semester-2, start: '2027-07-19', end: '2027-07-23', source: https://students.unimelb.edu.au/course-admin/key-dates }
   - { kind: teaching, term: semester-2, start: '2027-07-26', end: '2027-10-24', source: https://students.unimelb.edu.au/course-admin/key-dates }
+  # From the 2027 Handbook: every standard Semester 2 subject page gives these dates.
+  - { kind: selfEnrol, term: semester-2, start: '2027-08-06', source: https://handbook.unimelb.edu.au/2027/subjects/comp10001 }
+  - { kind: census, term: semester-2, start: '2027-08-31', source: https://handbook.unimelb.edu.au/2027/subjects/comp10001 }
+  - { kind: withdraw, term: semester-2, start: '2027-09-24', source: https://handbook.unimelb.edu.au/2027/subjects/comp10001 }
   - { kind: employability, term: semester-2, start: '2027-08-09', end: '2027-08-13', source: https://students.unimelb.edu.au/careers/employability-week }
   - { kind: break, term: semester-2, start: '2027-09-27', end: '2027-10-03', source: https://students.unimelb.edu.au/course-admin/key-dates }
   - { kind: swotvac, term: semester-2, start: '2027-10-25', end: '2027-10-29', source: https://students.unimelb.edu.au/course-admin/key-dates }
