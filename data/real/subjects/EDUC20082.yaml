@@ -1,9 +1,11 @@
 code: EDUC20082
-title: "Indigenous Education in Community"
+title: Indigenous Education in Community
 level: 2
 points: 12.5
 offerings:
   "2026":
+    - summer
+  "2027":
     - summer
 prerequisites: none
 corequisites: none
@@ -15,11 +17,11 @@ topics:
   - indigenous-studies
   - society
 assessment:
-  - kind: assignment
+  - kind: test
     weight: 20
   - kind: assignment
     weight: 30
-  - kind: assignment
+  - kind: report
     weight: 50
 weekly_contact_hours: 3
 min_attendance: 80
@@ -43,7 +45,7 @@ attendance_applies_to:
   - tutorials
   - workshops
   - seminars
-handbook: https://handbook.unimelb.edu.au/2026/subjects/educ20082
-source_year: 2026
-verified_on: 2026-10-21
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Two-week February intensive (9-20 February) of seminars and visits to schools and community sites; no background needed."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/educ20082
+source_year: 2027
+verified_on: 2026-11-12
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. (From 2026, re-check:) Two-week February intensive (9-20 February) of seminars and visits to schools and community sites; no background needed."

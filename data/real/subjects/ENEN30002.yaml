@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
+  "2027":
+    - semester-1
 prerequisites:
   any:
     - ENEN20002
@@ -13,22 +15,29 @@ prerequisites:
 corequisites: ENGR30002
 non_allowed: []
 assessment:
-  - kind: assignment
-    weight: 34
+  - kind: project
+    weight: 20
+    group: true
+  - kind: project
+    weight: 16
     group: true
   - kind: assignment
-    weight: 66
+    weight: 22
+  - kind: presentation
+    weight: 22
+  - kind: quiz
+    weight: 20
 min_attendance: 80
-weekly_contact_hours: 2.5
+weekly_contact_hours: 3
 attendance_applies_to:
   - tutorials
   - workshops
   - seminars
   - lectures
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/enen30002
-source_year: 2026
-verified_on: 2026-10-13
+handbook: https://handbook.unimelb.edu.au/2027/subjects/enen30002
+source_year: 2027
+verified_on: 2026-11-12
 categories:
   B-SCI: science
 breadth_for:
@@ -36,8 +45,9 @@ breadth_for:
   - Bachelor of Biomedicine
   - Bachelor of Commerce
   - Bachelor of Design
+  - Bachelor of Environments
   - Bachelor of Music
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
 skills:
   - systems
   - writing

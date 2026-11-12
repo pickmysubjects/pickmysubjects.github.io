@@ -6,6 +6,9 @@ offerings:
   "2026":
     - semester-1
     - semester-2
+  "2027":
+    - semester-1
+    - semester-2
 prerequisites: none
 corequisites: none
 non_allowed: []
@@ -14,9 +17,9 @@ skills:
 topics:
   - art
 assessment:
-  - kind: assignment
-    weight: 10
   - kind: project
+    weight: 10
+  - kind: assignment
     weight: 40
   - kind: project
     weight: 50
@@ -27,6 +30,7 @@ breadth_for:
   - Bachelor of Biomedicine
   - Bachelor of Commerce
   - Bachelor of Design
+  - Bachelor of Environments
   - Bachelor of Fine Arts (Acting)
   - Bachelor of Fine Arts (Animation)
   - Bachelor of Fine Arts (Dance)
@@ -37,7 +41,7 @@ breadth_for:
   - Bachelor of Fine Arts (Theatre)
   - Bachelor of Music
   - Bachelor of Science
-handbook: https://handbook.unimelb.edu.au/2026/subjects/educ10054
-source_year: 2026
-verified_on: 2026-10-21
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Quota of 50 in Semester 1 and 75 in Semester 2, by enrolment date. Weekly 3-hour studio workshops, some at museums and galleries."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/educ10054
+source_year: 2027
+verified_on: 2026-11-12
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. (From 2026, re-check:) Quota of 50 in Semester 1 and 75 in Semester 2, by enrolment date. Weekly 3-hour studio workshops, some at museums and galleries."

@@ -1,0 +1,52 @@
+code: CVEN30012
+title: Civil Engineering Systems Capstone
+level: 3
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  any:
+    - any:
+        - admission: MC-ARCHENG
+          note: "Admission into or selection of one of the following: • MC-ARCHENG Master of Architectural Engineering • MC-CIVENG Master of Civil Engineering • MC-ENVENG Master of Environmental Engineering • Civil specialisation (formal) in the MC-ENG Master of Engineering • Environmental specialisation (formal) in the MC-ENG Master of Engineering"
+        - admission: MC-CIVENG
+          note: "Admission into or selection of one of the following: • MC-ARCHENG Master of Architectural Engineering • MC-CIVENG Master of Civil Engineering • MC-ENVENG Master of Environmental Engineering • Civil specialisation (formal) in the MC-ENG Master of Engineering • Environmental specialisation (formal) in the MC-ENG Master of Engineering"
+        - admission: MC-ENVENG
+          note: "Admission into or selection of one of the following: • MC-ARCHENG Master of Architectural Engineering • MC-CIVENG Master of Civil Engineering • MC-ENVENG Master of Environmental Engineering • Civil specialisation (formal) in the MC-ENG Master of Engineering • Environmental specialisation (formal) in the MC-ENG Master of Engineering"
+        - admission: MC-ENG
+          note: "Admission into or selection of one of the following: • MC-ARCHENG Master of Architectural Engineering • MC-CIVENG Master of Civil Engineering • MC-ENVENG Master of Environmental Engineering • Civil specialisation (formal) in the MC-ENG Master of Engineering • Environmental specialisation (formal) in the MC-ENG Master of Engineering"
+    - all:
+        - ENEN20002
+        - CVEN20001
+        - any:
+            - ENGR30002
+            - MCEN30018
+        - points:
+            min: 12.5
+            area: PHYC
+        - points:
+            min: 25
+            areas:
+              - PHYC
+              - COMP
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: presentation
+    weight: 10
+  - kind: project
+    weight: 20
+    group: true
+  - kind: project
+    weight: 30
+    group: true
+  - kind: presentation
+    weight: 15
+  - kind: project
+    weight: 25
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/cven30012
+source_year: 2027
+verified_on: 2026-11-12
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

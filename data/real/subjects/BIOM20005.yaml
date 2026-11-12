@@ -1,0 +1,36 @@
+code: BIOM20005
+title: Molecules to Therapeutics
+level: 2
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  all:
+    - admission: B-BMED
+      note: Admission into the B-BMED Bachelor of Biomedicine
+    - all:
+        - BIOM10002
+        - CHEM10006
+    - any:
+        - BIOL10002
+        - BIOL10008
+corequisites: none
+non_allowed:
+  - BIOM20001
+  - BCMB20002
+assessment:
+  - kind: assignment
+    weight: 27.5
+  - kind: quiz
+    weight: 7.5
+  - kind: test
+    weight: 15
+  - kind: exam
+    weight: 50
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/biom20005
+source_year: 2027
+verified_on: 2026-11-12
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

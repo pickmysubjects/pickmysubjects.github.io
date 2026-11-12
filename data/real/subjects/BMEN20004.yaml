@@ -1,0 +1,31 @@
+code: BMEN20004
+title: Cellular and Molecular Bioengineering
+level: 2
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites: BIOL10008
+corequisites: none
+non_allowed:
+  - BIOM20001
+  - BCMB20002
+assessment:
+  - kind: quiz
+    weight: 10
+  - kind: assignment
+    weight: 10
+  - kind: assignment
+    weight: 10
+  - kind: project
+    weight: 30
+    group: true
+  - kind: exam
+    weight: 40
+    hurdle: true
+weekly_contact_hours: 4.5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/bmen20004
+source_year: 2027
+verified_on: 2026-11-12
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

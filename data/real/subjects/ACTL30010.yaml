@@ -1,0 +1,38 @@
+code: ACTL30010
+title: Actuarial Analytics and Data II
+level: 3
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  all:
+    - all:
+        - ACTL30004
+        - ACTL30008
+    - admission: B-COM
+      note: Admission into the B-COM Bachelor of Commerce
+    - any:
+        - admission: D-COMP
+          note: "Admission into or selection of one of the following: D-COMP Diploma in Computing D-MATHSC Diploma in Mathematical Sciences"
+        - admission: D-MATHSC
+          note: "Admission into or selection of one of the following: D-COMP Diploma in Computing D-MATHSC Diploma in Mathematical Sciences"
+    - permission: coordinator
+      note: Subject enrolment is subject to approval by the Actuarial Major Coordinator.
+corequisites: none
+non_allowed:
+  - ACTL40012
+assessment:
+  - kind: assignment
+    weight: 20
+  - kind: assignment
+    weight: 20
+  - kind: exam
+    weight: 60
+    hurdle: true
+weekly_contact_hours: 3
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/actl30010
+source_year: 2027
+verified_on: 2026-11-12
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

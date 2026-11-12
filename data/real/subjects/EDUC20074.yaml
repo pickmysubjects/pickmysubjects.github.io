@@ -1,9 +1,11 @@
 code: EDUC20074
-title: "Positive Communities and Organisations"
+title: Positive Communities and Organisations
 level: 2
 points: 12.5
 offerings:
   "2026":
+    - semester-2
+  "2027":
     - semester-2
 prerequisites: none
 corequisites: none
@@ -28,6 +30,7 @@ breadth_for:
   - Bachelor of Biomedicine
   - Bachelor of Commerce
   - Bachelor of Design
+  - Bachelor of Environments
   - Bachelor of Fine Arts (Acting)
   - Bachelor of Fine Arts (Animation)
   - Bachelor of Fine Arts (Dance)
@@ -41,7 +44,7 @@ breadth_for:
   - Bachelor of Science
 attendance_applies_to:
   - tutorials
-handbook: https://handbook.unimelb.edu.au/2026/subjects/educ20074
-source_year: 2026
-verified_on: 2026-10-21
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Weekly 1-hour tutorial plus online activities; no exam."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/educ20074
+source_year: 2027
+verified_on: 2026-11-12
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. (From 2026, re-check:) Weekly 1-hour tutorial plus online activities; no exam."

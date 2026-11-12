@@ -1,0 +1,42 @@
+code: ACTL30011
+title: Actuarial Practice and Control I
+level: 3
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  all:
+    - all:
+        - ACTL30003
+        - ACTL30004
+    - admission: B-COM
+      note: Admission into the B-COM Bachelor of Commerce
+    - any:
+        - admission: D-COMP
+          note: "Admission into or selection of one of the following: D-COMP Diploma in Computing D-MATHSC Diploma in Mathematical Sciences"
+        - admission: D-MATHSC
+          note: "Admission into or selection of one of the following: D-COMP Diploma in Computing D-MATHSC Diploma in Mathematical Sciences"
+    - permission: coordinator
+      note: Subject enrolment is subject to approval by the Actuarial Major Coordinator.
+corequisites: none
+non_allowed:
+  - ACTL40006
+assessment:
+  - kind: assignment
+    weight: 20
+    group: true
+  - kind: presentation
+    weight: 5
+    group: true
+  - kind: assignment
+    weight: 5
+  - kind: exam
+    weight: 70
+    hurdle: true
+weekly_contact_hours: 4
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/actl30011
+source_year: 2027
+verified_on: 2026-11-12
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

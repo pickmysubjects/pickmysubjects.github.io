@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
+  "2027":
+    - semester-1
 prerequisites: none
 corequisites: none
 non_allowed: []
@@ -15,11 +17,11 @@ topics:
 assessment:
   - kind: assignment
     weight: 10
-  - kind: test
+  - kind: assignment
     weight: 25
   - kind: report
     weight: 40
-  - kind: assignment
+  - kind: exam
     weight: 25
 weekly_contact_hours: 3
 breadth_for:
@@ -37,7 +39,7 @@ breadth_for:
   - Bachelor of Fine Arts (Visual Art)
   - Bachelor of Music
   - Bachelor of Science
-handbook: https://handbook.unimelb.edu.au/2026/subjects/engl10002
-source_year: 2026
-verified_on: 2026-10-16
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/engl10002
+source_year: 2027
+verified_on: 2026-11-12
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

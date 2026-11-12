@@ -1,0 +1,29 @@
+code: AHIS30027
+title: Studying Contemporary Art Abroad
+level: 3
+points: 12.5
+offerings:
+  "2027":
+    - winter
+prerequisites:
+  permission: application
+  note: "Intensive taught subject off-campus. Students must seek coordinator approval before enrolling in this subject. Please note special entry conditions apply for this subject. This subject is taught overseas. Students must make an application and obtain approval from the subject co-ordinator. Further information here: https://studyos.students.unimelb.edu.au/_portal/tds-program-brochure?programid=10440"
+corequisites: none
+non_allowed:
+  - AHIS30002
+assessment:
+  - kind: presentation
+    weight: 30
+  - kind: assignment
+    weight: 20
+  - kind: report
+    weight: 50
+weekly_contact_hours: 2.5
+breadth_for:
+  - Bachelor of Biomedicine
+  - Bachelor of Commerce
+  - Bachelor of Science
+handbook: https://handbook.unimelb.edu.au/2027/subjects/ahis30027
+source_year: 2027
+verified_on: 2026-11-12
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
