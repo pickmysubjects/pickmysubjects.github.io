@@ -78,7 +78,8 @@ export function parseHandbookPaste(text: string): PasteResult {
     prerequisites: degrees ?? (split ? parseRequirement(split.before, 'prerequisites', warnings) : 'unknown'),
     corequisites: sections.co || split?.concurrent.length ? parseRequirement(coLines, 'corequisites', warnings) : 'unknown',
     nonAllowed: sections.non ? parseNonAllowed(sections.non) : 'unknown',
-    offerings: sections.avail ? parseAvailability(sections.avail.join('\n'), text) : 'unknown',
+    // A subject not running that year has no Availability row; its "Dates & times" says so instead.
+    offerings: sections.avail ? parseAvailability(sections.avail.join('\n'), text) : /^Dates & times\s*\n\s*Not available in \d{4}\s*$/im.test(text) ? [] : 'unknown',
     assessment: sections.assess ? parseAssessment(sections.assess, warnings) : 'unknown',
     weeklyContactHours: parseContactHours(text),
     ...(/marked on a pass\s*\/\s*fail basis|pass\s*\/\s*fail grade/i.test(text) ? { passFail: true } : {}),

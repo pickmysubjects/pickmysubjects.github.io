@@ -2,7 +2,8 @@ code: DNCE20033
 title: "Dancing the Dance 3: Solo Moves"
 level: 2
 points: 12.5
-offerings: unknown
+offerings:
+  "2027": []
 prerequisites: DNCE10027
 corequisites: none
 non_allowed: []

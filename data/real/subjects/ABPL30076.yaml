@@ -2,7 +2,8 @@ code: ABPL30076
 title: "Game Design Studio: Solar"
 level: 3
 points: 25
-offerings: unknown
+offerings:
+  "2027": []
 prerequisites:
   all:
     - ABPL20057

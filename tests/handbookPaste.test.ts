@@ -234,6 +234,8 @@ describe('parseHandbookPaste – assessment and contact hours', () => {
     expect(parseHandbookPaste(page).weeklyContactHours).toBe(3)
     expect(parseContactHours('Contact hours\t3 x one hour lectures per week, 1 x one hour practice class per week')).toBe(4)
     expect(parseContactHours('Contact hours\t36 one-hour lectures (three per week); 12 one-hour practice classes')).toBe(4)
+    // A year it doesn't run: no Availability row, only a note under "Dates & times".
+    expect(parseHandbookPaste('Prerequisites\nNone\nDates & times\n\nNot available in 2027\n').offerings).toEqual([])
     // A large total followed by its breakdown is the total, not the total plus the breakdown.
     expect(parseContactHours('Contact hours\t180 hours, comprising 15 hours of class per week')).toBe(15)
     // Over 40 a week is a misreading: none, so the importer keeps what the subject had.

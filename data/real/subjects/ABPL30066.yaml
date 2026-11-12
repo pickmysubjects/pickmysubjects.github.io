@@ -2,7 +2,8 @@ code: ABPL30066
 title: Architecture as Political History
 level: 3
 points: 12.5
-offerings: unknown
+offerings:
+  "2027": []
 prerequisites:
   manual: Approval from the MC-ARCH Course Coordinator
 corequisites: none

@@ -5,6 +5,7 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
+  "2027": []
 prerequisites:
   admission: B-BMED
   note: Admission into the B-BMED Bachelor of Biomedicine

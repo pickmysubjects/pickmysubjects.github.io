@@ -2,7 +2,8 @@ code: ABPL30075
 title: "Game Design Studio: Frost"
 level: 3
 points: 12.5
-offerings: unknown
+offerings:
+  "2027": []
 prerequisites:
   all:
     - CCDP10003

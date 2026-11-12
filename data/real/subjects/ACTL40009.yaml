@@ -2,7 +2,8 @@ code: ACTL40009
 title: Actuarial Practice and Control III
 level: 4
 points: 12.5
-offerings: unknown
+offerings:
+  "2027": []
 prerequisites:
   all:
     - ACTL30003

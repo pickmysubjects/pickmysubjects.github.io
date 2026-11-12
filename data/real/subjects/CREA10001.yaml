@@ -5,6 +5,7 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
+  "2027": []
 prerequisites: none
 corequisites: none
 non_allowed: []

@@ -2,7 +2,8 @@ code: ABPL20058
 title: "Game Design Studio: Cyber"
 level: 2
 points: 12.5
-offerings: unknown
+offerings:
+  "2027": []
 prerequisites: ARCH10001
 corequisites: none
 non_allowed: []

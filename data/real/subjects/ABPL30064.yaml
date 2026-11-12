@@ -2,7 +2,8 @@ code: ABPL30064
 title: Humanitarian Design Internship
 level: 3
 points: 12.5
-offerings: unknown
+offerings:
+  "2027": []
 prerequisites: none
 corequisites: none
 non_allowed: []

@@ -13,6 +13,8 @@ prerequisites:
     - any:
         - INFO30005
         - SWEN30006
+    - subject: COMP20008
+      concurrent: true
 corequisites: none
 non_allowed: []
 categories:
@@ -35,7 +37,7 @@ breadth_for:
 handbook: https://handbook.unimelb.edu.au/2027/subjects/comp30022
 source_year: 2027
 verified_on: 2026-11-12
-notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. (From 2026, re-check:) Prerequisites are the 2026 rule; from 2027 onwards the Handbook adds COMP20008 (INFO20003 and COMP20008, plus one of INFO30005 or SWEN30006)."
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
 skills:
   - programming
   - design

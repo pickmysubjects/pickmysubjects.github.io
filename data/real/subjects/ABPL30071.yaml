@@ -2,7 +2,8 @@ code: ABPL30071
 title: Managing Design Projects
 level: 3
 points: 12.5
-offerings: unknown
+offerings:
+  "2027": []
 prerequisites:
   all:
     - admission: B-DES

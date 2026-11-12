@@ -4,6 +4,7 @@ level: 3
 points: 12.5
 offerings:
   "2026": []
+  "2027": []
 prerequisites: ACCT20008
 corequisites: none
 non_allowed:

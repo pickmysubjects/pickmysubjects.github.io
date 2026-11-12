@@ -2,7 +2,8 @@ code: ABPL30074
 title: Interior Design Capstone Studio-Retrofit
 level: 3
 points: 25
-offerings: unknown
+offerings:
+  "2027": []
 prerequisites:
   all:
     - all:
