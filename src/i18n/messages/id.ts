@@ -1161,7 +1161,7 @@ export const id: Messages = {
       hard: "Lihat yang paling mudah",
     },
     factsOnly: "Belum ada ulasan mahasiswa — hanya berdasarkan Handbook",
-    factsOnlyReviewed: "Ulasan mahasiswa tidak menyebut sulit atau tidak — berdasarkan Handbook",
+    factsOnlyReviewed: "Berdasarkan Handbook; ulasan mahasiswa hanya diringkas, tidak diberi skor",
     breadthSection: "Breadth untuk mahasiswa Bachelor of Science",
     l3Breadth: "Breadth level 3 paling mudah",
     reason: {
@@ -2281,6 +2281,7 @@ export const id: Messages = {
   subject: {
     quota: "Kuota terbatas",
     quotaTip: "Tempat terbatas. Daftar lebih awal dan cek Handbook soal cara pembagian tempat.",
+    categoryInCourse: "{cat} di gelar kamu",
     relatedTitle: "Mata kuliah terkait",
     relatedLeads: "Membuka jalan ke",
     relatedWith: "Sering diambil bersama",

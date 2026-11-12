@@ -1161,7 +1161,7 @@ export const ja: Messages = {
       hard: "取りやすい科目を見る",
     },
     factsOnly: "学生のレビューはまだなく、Handbook の情報だけで判断しています",
-    factsOnlyReviewed: "学生のレビューは難しさに触れていないため、Handbook の情報で判断しています",
+    factsOnlyReviewed: "Handbook の情報で判断しています。学生のレビューは要約のみで、点数はありません",
     breadthSection: "理学士が取れる Breadth",
     l3Breadth: "楽な Level 3 breadth",
     reason: {
@@ -2281,6 +2281,7 @@ export const ja: Messages = {
   subject: {
     quota: "定員あり",
     quotaTip: "定員があります。早めに登録し、選考方法は Handbook で確認してください。",
+    categoryInCourse: "あなたの学位では {cat}",
     relatedTitle: "関連科目",
     relatedLeads: "この後に取れる科目",
     relatedWith: "一緒に取られる科目",

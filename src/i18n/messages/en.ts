@@ -1167,7 +1167,7 @@ export const en = {
       hard: "See the easiest subjects",
     },
     factsOnly: "No student reviews yet — based on the Handbook only",
-    factsOnlyReviewed: "Student reviews don't say how hard it is — based on the Handbook",
+    factsOnlyReviewed: "Based on the Handbook; student reviews are summarised, not scored",
     breadthSection: "Breadth for Bachelor of Science students",
     l3Breadth: "Easiest level 3 breadth",
     reason: {
@@ -2287,6 +2287,7 @@ export const en = {
   subject: {
     quota: "Limited places",
     quotaTip: "Places are limited. Enrol early and check the Handbook for how places are given.",
+    categoryInCourse: "{cat} in your degree",
     relatedTitle: "Related subjects",
     relatedLeads: "Leads to",
     relatedWith: "Often taken with",

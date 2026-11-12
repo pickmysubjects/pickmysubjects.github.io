@@ -89,6 +89,9 @@ const discussions = computed(() => (props.detailReady ? (props.subject.discussio
     <!-- With no ratings the section's summary line says so, unless reviews from elsewhere fill it. -->
     <p v-else-if="discussions.length" class="muted">{{ t('subject.noRatings') }}</p>
     <StudentFactsRow v-if="detailReady" :subject="subject" />
+    <!-- What students said comes first; asking for a rating comes after it. -->
+    <DiscussionSummary v-if="discussions.length" class="reviews" :discussions="discussions" />
+    <SubjectTips v-if="detailReady && subject.comments" :code="subject.code" :comments="subject.comments" />
 
     <p v-if="thanks" class="good" role="status">{{ t('rating.sent') }}</p>
     <QuickRate v-else-if="quickLive && !formOpen" class="rate-quick" :code="subject.code" @more="more" />
@@ -97,9 +100,6 @@ const discussions = computed(() => (props.detailReady ? (props.subject.discussio
       <Star :size="16" aria-hidden="true" /> {{ t('subject.rateAsk') }}
     </button>
     <RatingForm v-if="formOpen" :code="subject.code" :difficulty-given="quickDifficulty" @done="emit('rated', $event)" />
-
-    <DiscussionSummary v-if="discussions.length" class="reviews" :discussions="discussions" />
-    <SubjectTips v-if="detailReady && subject.comments" :code="subject.code" :comments="subject.comments" />
   </div>
 </template>
 

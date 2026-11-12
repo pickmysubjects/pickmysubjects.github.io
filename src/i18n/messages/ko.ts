@@ -1161,7 +1161,7 @@ export const ko: Messages = {
       hard: "쉬운 과목 보기",
     },
     factsOnly: "아직 학생 리뷰가 없어 Handbook 정보로만 판단했어요",
-    factsOnlyReviewed: "학생 리뷰에 난이도 이야기가 없어 Handbook 정보로 판단했어요",
+    factsOnlyReviewed: "Handbook 정보로 판단했어요. 학생 리뷰는 요약만 있고 점수는 없어요",
     breadthSection: "이학사 학생이 들을 수 있는 Breadth",
     l3Breadth: "제일 쉬운 Level 3 breadth",
     reason: {
@@ -2281,6 +2281,7 @@ export const ko: Messages = {
   subject: {
     quota: "정원 제한",
     quotaTip: "정원이 정해져 있어요. 일찍 신청하고, 자리 배정 방식은 Handbook에서 확인하세요.",
+    categoryInCourse: "내 학위에서는 {cat}",
     relatedTitle: "관련 과목",
     relatedLeads: "다음에 들을 수 있는 과목",
     relatedWith: "함께 많이 듣는 과목",

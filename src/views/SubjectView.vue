@@ -193,6 +193,8 @@ const sections = computed(() => {
   display: grid;
   gap: 24px;
   padding-top: 20px;
+  /* Room for the floating dock (SubjectHeader), so the page's last lines can scroll clear of it. */
+  padding-bottom: 96px;
   min-width: 0;
 }
 

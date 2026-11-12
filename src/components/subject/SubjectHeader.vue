@@ -40,7 +40,12 @@ const { facts, handbookFor } = useDataYear()
 const factsFrom = computed(() => facts(props.subject, props.year))
 const gone = computed(() => props.subject.discontinuedFrom !== undefined && props.year >= props.subject.discontinuedFrom)
 const closedForYou = computed(() => data.value.courses.some((c) => c.code === plan.setup.value.course && c.closed.includes(code.value)))
-const category = computed(() => (closedForYou.value ? t.value('browse.closedForYou') : categoryTag(t.value, props.subject.categories[plan.setup.value.course])))
+// The subject's group in the student's own degree ("Breadth in your degree"), so a bare "Breadth" isn't left unexplained.
+const category = computed(() => {
+  if (closedForYou.value) return t.value('browse.closedForYou')
+  const tag = categoryTag(t.value, props.subject.categories[plan.setup.value.course])
+  return tag ? t.value('subject.categoryInCourse', { cat: tag }) : ''
+})
 const runs = computed(() => {
   if (gone.value) return t.value('subject.discontinued', { year: props.subject.discontinuedFrom ?? '' })
   if (props.subject.offerings === 'unknown') return t.value('subject.runsUnknown')

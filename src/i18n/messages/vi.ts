@@ -1161,7 +1161,7 @@ export const vi: Messages = {
       hard: "Xem các môn dễ nhất",
     },
     factsOnly: "Chưa có sinh viên nào đánh giá — chỉ dựa trên Handbook",
-    factsOnlyReviewed: "Đánh giá của sinh viên không nói môn khó hay dễ — dựa trên Handbook",
+    factsOnlyReviewed: "Dựa trên Handbook; đánh giá của sinh viên chỉ được tóm tắt, không chấm điểm",
     breadthSection: "Breadth cho sinh viên Bachelor of Science",
     l3Breadth: "Breadth level 3 dễ nhất",
     reason: {
@@ -2281,6 +2281,7 @@ export const vi: Messages = {
   subject: {
     quota: "Giới hạn chỗ",
     quotaTip: "Số chỗ có hạn. Hãy đăng ký sớm và xem Handbook để biết cách xét chỗ.",
+    categoryInCourse: "{cat} trong bằng của bạn",
     relatedTitle: "Môn liên quan",
     relatedLeads: "Học tiếp được",
     relatedWith: "Thường học cùng",

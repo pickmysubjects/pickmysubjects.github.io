@@ -1161,7 +1161,7 @@ export const hi: Messages = {
       hard: "सबसे आसान सब्जेक्ट देखें",
     },
     factsOnly: "अभी किसी छात्र का रिव्यू नहीं — सिर्फ़ Handbook के आधार पर",
-    factsOnlyReviewed: "छात्रों के रिव्यू में कठिनाई की बात नहीं — Handbook के आधार पर",
+    factsOnlyReviewed: "Handbook के आधार पर; छात्रों के रिव्यू का सिर्फ़ सार है, कोई स्कोर नहीं",
     breadthSection: "Bachelor of Science छात्रों के लिए breadth",
     l3Breadth: "सबसे आसान लेवल 3 breadth",
     reason: {
@@ -2281,6 +2281,7 @@ export const hi: Messages = {
   subject: {
     quota: "सीमित सीटें",
     quotaTip: "सीटें सीमित हैं। जल्दी एनरोल करें और Handbook में देखें कि सीटें कैसे दी जाती हैं।",
+    categoryInCourse: "आपकी डिग्री में {cat}",
     relatedTitle: "संबंधित विषय",
     relatedLeads: "इसके बाद ले सकते हैं",
     relatedWith: "अक्सर साथ लिए जाते हैं",

@@ -1161,7 +1161,7 @@ export const zhTW: Messages = {
       hard: "看涼課排行",
     },
     factsOnly: "還沒有同學評價，只根據 Handbook 判斷",
-    factsOnlyReviewed: "同學評價沒說難不難，只根據 Handbook 判斷",
+    factsOnlyReviewed: "根據 Handbook 判斷；同學評價只做了摘要，沒有打分",
     breadthSection: "理學士可選的 Breadth",
     l3Breadth: "最輕鬆的 Level 3 breadth",
     reason: {
@@ -2281,6 +2281,7 @@ export const zhTW: Messages = {
   subject: {
     quota: "名額有限",
     quotaTip: "名額有限。請盡早選課，並到 Handbook 查看名額如何分配。",
+    categoryInCourse: "你的學位裡算 {cat}",
     relatedTitle: "相關科目",
     relatedLeads: "之後可以修",
     relatedWith: "常一起修",

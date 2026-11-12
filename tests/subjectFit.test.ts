@@ -238,10 +238,10 @@ describe('difficulty = the easy/hard lists', () => {
       expect(shown.length).toBeLessThan(listed.size)
     }
     const codes = new Set(filterIndex(index, { ...EMPTY_FILTERS, ease: ['easy'] }).map((r) => r.subject.code))
-    expect(codes.has('CHIN10009')).toBe(false)
+    // (CHIN10009 was the other repro; the 2027 Handbook made it B-SCI breadth, so it belongs there now.)
     expect(codes.has('BIOM10001')).toBe(false)
     // Their pages still compare them with the degree's subjects, and say they aren't on its lists.
-    expect(subjectDifficulty(data.subjects, 'CHIN10009', course, YEAR)).toMatchObject({ unranked: 'notInCourse', place: null })
+    expect(subjectDifficulty(data.subjects, 'BIOM10001', course, YEAR)).toMatchObject({ unranked: 'notInCourse', place: null })
   })
 
   it('regression: easy-leaning subjects are never "harder" (reviewer repros)', () => {

@@ -1161,7 +1161,7 @@ export const zhCN: Messages = {
       hard: "看水课排行",
     },
     factsOnly: "还没有同学评价，只根据 Handbook 判断",
-    factsOnlyReviewed: "同学评价没说难不难，只根据 Handbook 判断",
+    factsOnlyReviewed: "根据 Handbook 判断；同学评价只做了摘要，没有打分",
     breadthSection: "理学士可选的 Breadth",
     l3Breadth: "最轻松的 Level 3 breadth",
     reason: {
@@ -2281,6 +2281,7 @@ export const zhCN: Messages = {
   subject: {
     quota: "限额课",
     quotaTip: "名额有限。尽早选课，并在 Handbook 查看名额怎么分配。",
+    categoryInCourse: "你的学位里算 {cat}",
     relatedTitle: "相关科目",
     relatedLeads: "之后可以修",
     relatedWith: "常一起修",
