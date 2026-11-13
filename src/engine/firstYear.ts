@@ -1,3 +1,4 @@
+import { findCourse } from './courseRules'
 import { latestDataYear } from './dataYear'
 import { generatePlan } from './generate'
 import type { Dataset } from './schema'
@@ -48,7 +49,8 @@ export function firstYear(data: Dataset, course: string): FirstYear {
   const added = new Map(notes.filter((n) => n.key === 'added').map((n) => [String(n.params.code), String(n.params.rule)]))
   const chosen = new Set(notes.filter((n) => n.key === 'chose').map((n) => String(n.params.code)))
   // The category the rule counts (arts, breadth…); a rule on the total or a level alone takes anything.
-  const rules = data.courses.find((c) => c.code === course && c.year === courseYear)?.rules ?? []
+  // The rules in force for that start year (the nearest earlier version when it has none of its own).
+  const rules = findCourse(data, course, courseYear)?.rules ?? []
   const category = (ruleId: string) => {
     const r = rules.find((x) => x.id === ruleId)
     return r?.kind === 'points' && r.category ? r.category : 'any'

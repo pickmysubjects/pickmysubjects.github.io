@@ -3,7 +3,7 @@ import { computed, useTemplateRef } from 'vue'
 import { ChevronDown } from 'lucide-vue-next'
 import InfoTip from '@/components/InfoTip.vue'
 import PlanHowBuilt from '@/components/planner/PlanHowBuilt.vue'
-import { isPassedDuplicate, type CourseRule, type Issue, type Note, type RuleStatus } from '@/engine'
+import { findCourse, isPassedDuplicate, type CourseRule, type Issue, type Note, type RuleStatus } from '@/engine'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
 import { useProfile } from '@/composables/useProfile'
@@ -36,7 +36,8 @@ const emit = defineEmits<{ focus: [ruleId: string | null]; select: [code: string
 const { t, locale } = useI18n()
 const { data } = useDataset()
 // Where the rules come from: the degree's Handbook page and the day we last checked them against it.
-const course = computed(() => data.value.courses.find((c) => c.code === plan.setup.value.course))
+// The rules in force for the plan's start year (the source line links that year's Handbook).
+const course = computed(() => findCourse(data.value, plan.setup.value.course, plan.setup.value.courseYear))
 const verified = computed(() => {
   const d = course.value?.verifiedOn
   if (!d) return ''

@@ -3,7 +3,8 @@ import { defaultCourse, standardTerms, type Dataset } from '@/engine'
 import type { PlanSetup, PlanState } from './planStore'
 
 function defaultSetup(data: Dataset): PlanSetup {
-  const course = data.courses.find((c) => c.code === defaultCourse(data))
+  // The newest version of the default course: its year is the Handbook year we have.
+  const course = data.courses.filter((c) => c.code === defaultCourse(data)).sort((a, b) => b.year - a.year)[0]
   // Only a starting suggestion (the wizard asks): semester 1 of the Handbook year we have.
   const year = course?.year ?? thisYear()
   return {
