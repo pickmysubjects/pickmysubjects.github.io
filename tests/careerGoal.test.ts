@@ -230,7 +230,9 @@ describe('career goal and breadth', () => {
   const breadthOf = (plan: Plan) => plan.terms.flatMap((t) => t.subjects).filter((c) => real.subjects[c]?.categories['B-COM'] === 'breadth')
 
   it('nudges breadth only when its main field is the job’s, never one that only touches it', () => {
-    const opts: RecommendOptions = { course: 'B-COM', category: 'breadth', level: 2, term: { year: 2027, period: 'semester-1' }, goalComponents: ['finance'], eligibleWith: [] }
+    // Level 1, Semester 2: the breadth that serves consulting in 2027 (ISYS10001); the level-2 one
+    // it used to be (ISYS20006) doesn't run in 2027.
+    const opts: RecommendOptions = { course: 'B-COM', category: 'breadth', level: 1, term: { year: 2027, period: 'semester-2' }, goalComponents: ['finance'], eligibleWith: [] }
     const recs = recommend(real, { ...empty, career: 'management-consultant' }, opts)
     const effect = (code: string) => recs.find((r) => r.code === code)?.factors?.find((f) => f.key === 'career')?.effect
     const helps = recs.filter((r) => goalTier(goal, real.subjects[r.code]!, real).tier === 'helps')
@@ -263,8 +265,12 @@ describe('career goal and breadth', () => {
     const unmet = (p: Plan) => checkCourse(p, real).statuses.filter((r) => r.status !== 'ok').map((r) => r.ruleId)
     expect(unmet(plan)).toEqual(unmet(base))
     expect(checkTerms(plan, real).filter((i) => i.severity === 'error')).toEqual([])
-    // Finance aiming at consulting: no breadth has the job's main field, so breadth stays as it was.
-    expect(breadthOf(build('management-consultant').plan)).toEqual(breadthOf(build().plan))
+    // Finance aiming at consulting: no breadth has the job's main field, so no breadth is picked for
+    // the goal (other picks may shift a breadth slot, but never because of the career).
+    const consult = build('management-consultant')
+    const forCareer = new Set(consult.notes.filter((n) => n.key === 'added' && n.params && 'career' in n.params).map((n) => n.params!.code as string))
+    expect(breadthOf(consult.plan).filter((c) => forCareer.has(c))).toEqual([])
+    expect(breadthOf(consult.plan).filter((c) => goalTier(goal, real.subjects[c]!, real).tier === 'helps')).toEqual([])
   })
 
   it('says when the goal is why an elective was picked, in the reader’s language', () => {
