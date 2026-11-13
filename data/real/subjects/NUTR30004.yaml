@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
+  "2027":
+    - semester-2
 prerequisites:
   all:
     - FOOD20003
@@ -12,33 +14,34 @@ prerequisites:
 corequisites: none
 non_allowed: []
 recommended:
-  - AGRI20003
   - FOOD20006
 assessment:
-  - kind: report
-    weight: 20
-    hurdle: true
-  - kind: assignment
-    weight: 30
+  - kind: project
+    weight: 10
+    group: true
+  - kind: project
+    weight: 40
     hurdle: true
   - kind: project
-    weight: 30
-    hurdle: true
+    weight: 25
+    group: true
   - kind: project
-    weight: 20
-    hurdle: true
-weekly_contact_hours: 4
+    weight: 25
+weekly_contact_hours: 2.5
 min_attendance: 80
 attendance_applies_to:
   - tutorials
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/nutr30004
-source_year: 2026
-verified_on: 2026-10-13
+handbook: https://handbook.unimelb.edu.au/2027/subjects/nutr30004
+source_year: 2027
+verified_on: 2026-11-14
 categories:
   B-SCI: science
 breadth_for:
+  - Bachelor of Arts
   - Bachelor of Commerce
+  - Bachelor of Design
+  - Bachelor of Environments
   - Bachelor of Fine Arts (Acting)
   - Bachelor of Fine Arts (Animation)
   - Bachelor of Fine Arts (Dance)
@@ -49,7 +52,7 @@ breadth_for:
   - Bachelor of Fine Arts (Theatre)
   - Bachelor of Fine Arts (Visual Art)
   - Bachelor of Music
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
 skills:
   - writing
   - presentation

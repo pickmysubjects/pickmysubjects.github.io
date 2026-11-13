@@ -6,16 +6,17 @@ offerings:
   "2026":
     - semester-1
     - semester-2
+  "2027":
+    - semester-1
+    - semester-2
 prerequisites:
-  any:
-    - PHRM20001
-    - manual: At least one level-2 subject in Anatomy and Cell Biology; Biochemistry and Molecular Biology; Microbiology and Immunology; Neuroscience; Pathology; Physiology; or Zoology
-    - all:
-        - admission: B-BMED
-          note: Bachelor of Biomedicine students
-        - BIOM20002
-    - permission: coordinator
-      note: Breadth students need the approval of the subject coordinator
+  all:
+    - any:
+        - BIOM20001
+        - BIOM20005
+        - PHRM20001
+    - points:
+        min: 200
 corequisites: none
 non_allowed: []
 assessment:
@@ -31,15 +32,16 @@ assessment:
 min_attendance: 80
 attendance_applies_to:
   - practicals
-handbook: https://handbook.unimelb.edu.au/2026/subjects/phrm30009
-source_year: 2026
-verified_on: 2026-10-13
+handbook: https://handbook.unimelb.edu.au/2027/subjects/phrm30009
+source_year: 2027
+verified_on: 2026-11-14
 categories:
   B-SCI: science
 breadth_for:
   - Bachelor of Arts
   - Bachelor of Commerce
   - Bachelor of Design
+  - Bachelor of Environments
   - Bachelor of Fine Arts (Acting)
   - Bachelor of Fine Arts (Animation)
   - Bachelor of Fine Arts (Dance)
@@ -50,7 +52,7 @@ breadth_for:
   - Bachelor of Fine Arts (Theatre)
   - Bachelor of Fine Arts (Visual Art)
   - Bachelor of Music
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
 skills:
   - lab
   - writing
@@ -59,3 +61,4 @@ topics:
   - biology
   - chemistry
   - health
+weekly_contact_hours: 4

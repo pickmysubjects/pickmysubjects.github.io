@@ -1,9 +1,11 @@
 code: PHYC20017
-title: "Archaeoastronomy"
+title: Archaeoastronomy
 level: 2
 points: 12.5
 offerings:
   "2026":
+    - semester-2
+  "2027":
     - semester-2
 prerequisites: none
 corequisites: none
@@ -15,17 +17,14 @@ topics:
   - history
   - indigenous-studies
 assessment:
-  - kind: assignment
+  - kind: report
     weight: 12.5
   - kind: test
     weight: 25
   - kind: test
     weight: 25
-  - kind: assignment
+  - kind: report
     weight: 37.5
-  - kind: participation
-    weight: 0
-    hurdle: true
 min_attendance: 80
 breadth_for:
   - Bachelor of Arts
@@ -46,7 +45,7 @@ breadth_for:
 recommended:
   - PHYC10010
   - HPSC20015
-handbook: "https://handbook.unimelb.edu.au/2026/subjects/phyc20017"
-source_year: 2026
-verified_on: 2026-10-21
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. At Parkville (dual delivery, with on-campus assessment). A background in astronomy or archaeology is strongly recommended."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/phyc20017
+source_year: 2027
+verified_on: 2026-11-14
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. A background in astronomy or archaeology is strongly recommended."

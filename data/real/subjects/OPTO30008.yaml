@@ -1,11 +1,13 @@
 code: OPTO30008
-title: "Ocular Anatomy and Physiology"
+title: Ocular Anatomy and Physiology
 level: 3
 points: 12.5
 offerings:
   "2026":
     - semester-1
-prerequisites: BIOM20002
+  "2027":
+    - semester-1
+prerequisites: BIOM20007
 corequisites: none
 non_allowed: []
 skills:
@@ -23,7 +25,7 @@ assessment:
 weekly_contact_hours: 4
 breadth_for: []
 prescribed_texts: false
-handbook: "https://handbook.unimelb.edu.au/2026/subjects/opto30008"
-source_year: 2026
-verified_on: 2026-10-21
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. On campus at Parkville: lectures, tutorials, seminars and six 3-hour practical classes. Part of the Bachelor of Biomedicine."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/opto30008
+source_year: 2027
+verified_on: 2026-11-14
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. On campus at Parkville: lectures, tutorials, seminars and six 3-hour practical classes. Part of the Bachelor of Biomedicine."

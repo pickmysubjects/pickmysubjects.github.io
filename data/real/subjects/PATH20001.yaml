@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
+  "2027":
+    - semester-1
 prerequisites:
   subject: BIOL10010
 corequisites:
@@ -21,13 +23,13 @@ assessment:
     weight: 60
 weekly_contact_hours: 3
 prescribed_texts: true
-handbook: https://handbook.unimelb.edu.au/2026/subjects/path20001
-source_year: 2026
-verified_on: 2026-10-09
+handbook: https://handbook.unimelb.edu.au/2027/subjects/path20001
+source_year: 2027
+verified_on: 2026-11-14
 categories:
   B-SCI: science
 breadth_for: []
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. BIOL10008 can be taken at the same time."
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. BIOL10008 can be taken at the same time."
 topics:
   - biology
   - health

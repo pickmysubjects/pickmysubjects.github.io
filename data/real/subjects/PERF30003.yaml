@@ -1,0 +1,23 @@
+code: PERF30003
+title: Illuminated Environments
+level: 3
+points: 12.5
+offerings:
+  "2027": []
+prerequisites: none
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: assignment
+    weight: 25
+  - kind: presentation
+    weight: 35
+  - kind: presentation
+    weight: 40
+breadth_for: []
+recommended:
+  - ARCH10001
+handbook: https://handbook.unimelb.edu.au/2027/subjects/perf30003
+source_year: 2027
+verified_on: 2026-11-14
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

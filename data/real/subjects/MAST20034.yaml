@@ -17,6 +17,7 @@ corequisites:
     - ECON10005
     - ECOM20001
     - MAST10024
+    - CMCE10002
     - MAST10011
     - MAST20005
 non_allowed: []

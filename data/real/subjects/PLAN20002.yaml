@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
+  "2027":
+    - semester-2
 prerequisites: none
 corequisites: none
 non_allowed:
@@ -18,7 +20,7 @@ topics:
 assessment:
   - kind: report
     weight: 20
-  - kind: assignment
+  - kind: project
     weight: 20
   - kind: project
     weight: 60
@@ -28,7 +30,7 @@ weekly_contact_hours: 1.5
 breadth_for:
   - Bachelor of Design
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/plan20002
-source_year: 2026
-verified_on: 2026-10-19
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/plan20002
+source_year: 2027
+verified_on: 2026-11-14
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

@@ -6,6 +6,9 @@ offerings:
   "2026":
     - summer
     - semester-2
+  "2027":
+    - summer
+    - semester-2
 prerequisites:
   all:
     - any:
@@ -40,9 +43,9 @@ assessment:
   - kind: exam
     weight: 60
 prescribed_texts: true
-handbook: https://handbook.unimelb.edu.au/2026/subjects/phyc10004
-source_year: 2026
-verified_on: 2026-10-13
+handbook: https://handbook.unimelb.edu.au/2027/subjects/phyc10004
+source_year: 2027
+verified_on: 2026-11-14
 categories:
   B-DES: design
   B-SCI: science
@@ -50,6 +53,7 @@ breadth_for:
   - Bachelor of Arts
   - Bachelor of Commerce
   - Bachelor of Design
+  - Bachelor of Environments
   - Bachelor of Fine Arts (Acting)
   - Bachelor of Fine Arts (Animation)
   - Bachelor of Fine Arts (Dance)
@@ -60,9 +64,10 @@ breadth_for:
   - Bachelor of Fine Arts (Theatre)
   - Bachelor of Fine Arts (Visual Art)
   - Bachelor of Music
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. PHYC10009 counts only with a result of at least 75 (H2A)."
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. PHYC10009 counts only with a result of at least 75 (H2A)."
 skills:
   - maths
 topics:
   - physics
   - calculus
+weekly_contact_hours: 16

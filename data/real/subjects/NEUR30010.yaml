@@ -1,0 +1,26 @@
+code: NEUR30010
+title: "Neuroscience: Capstone Project"
+level: 3
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  all:
+    - NEUR30008
+    - NEUR30009
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: assignment
+    weight: 25
+  - kind: assignment
+    weight: 50
+  - kind: report
+    weight: 25
+weekly_contact_hours: 1
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/neur30010
+source_year: 2027
+verified_on: 2026-11-14
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

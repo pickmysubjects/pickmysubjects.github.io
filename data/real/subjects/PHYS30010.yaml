@@ -5,32 +5,36 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
+  "2027":
+    - semester-1
 prerequisites:
   any:
     - BIOM20002
-    - PHYS20008
-corequisites:
-  any:
-    - PHYS20009
-    - admission: B-BMED
-      note: Bachelor of Biomedicine students (BIOM20002 route)
+    - all:
+        - BIOM20006
+        - BIOM20007
+    - all:
+        - PHYS20008
+        - subject: PHYS20009
+          concurrent: true
+corequisites: none
 non_allowed: []
 assessment:
   - kind: assignment
-    weight: 20
+    weight: 15
   - kind: assignment
-    weight: 40
+    weight: 35
   - kind: exam
-    weight: 40
+    weight: 50
 weekly_contact_hours: 3
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/phys30010
-source_year: 2026
-verified_on: 2026-10-13
+handbook: https://handbook.unimelb.edu.au/2027/subjects/phys30010
+source_year: 2027
+verified_on: 2026-11-14
 categories:
   B-SCI: science
 breadth_for: []
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
 skills:
   - writing
 topics:

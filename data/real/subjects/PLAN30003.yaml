@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
+  "2027":
+    - semester-1
 prerequisites: ABPL20035
 corequisites: none
 non_allowed: []
@@ -20,6 +22,7 @@ breadth_for:
   - Bachelor of Biomedicine
   - Bachelor of Commerce
   - Bachelor of Design
+  - Bachelor of Environments
   - Bachelor of Fine Arts (Acting)
   - Bachelor of Fine Arts (Animation)
   - Bachelor of Fine Arts (Dance)
@@ -31,13 +34,13 @@ breadth_for:
   - Bachelor of Fine Arts (Visual Art)
   - Bachelor of Music
   - Bachelor of Science
-handbook: https://handbook.unimelb.edu.au/2026/subjects/plan30003
-source_year: 2026
-verified_on: 2026-10-19
+handbook: https://handbook.unimelb.edu.au/2027/subjects/plan30003
+source_year: 2027
+verified_on: 2026-11-14
 skills:
   - writing
 topics:
   - urban-planning
   - society
   - geography
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

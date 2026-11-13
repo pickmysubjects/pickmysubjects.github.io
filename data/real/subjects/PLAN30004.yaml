@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
+  "2027":
+    - semester-1
 prerequisites: none
 corequisites: none
 non_allowed: []
@@ -15,14 +17,15 @@ topics:
   - environment
   - society
 assessment:
-  - kind: test
-    weight: 30
-  - kind: report
-    weight: 40
-    group: true
   - kind: presentation
+    weight: 20
+    group: true
+  - kind: report
     weight: 30
     group: true
+  - kind: exam
+    weight: 50
+    hurdle: true
 weekly_contact_hours: 3
 categories:
   B-DES: design
@@ -30,6 +33,7 @@ breadth_for:
   - Bachelor of Arts
   - Bachelor of Biomedicine
   - Bachelor of Commerce
+  - Bachelor of Environments
   - Bachelor of Fine Arts (Acting)
   - Bachelor of Fine Arts (Animation)
   - Bachelor of Fine Arts (Dance)
@@ -42,7 +46,7 @@ breadth_for:
   - Bachelor of Music
   - Bachelor of Science
 prescribed_texts: true
-handbook: https://handbook.unimelb.edu.au/2026/subjects/plan30004
-source_year: 2026
-verified_on: 2026-10-19
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/plan30004
+source_year: 2027
+verified_on: 2026-11-14
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

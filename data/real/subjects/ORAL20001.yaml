@@ -7,11 +7,16 @@ offerings:
   "2026":
     - semester-1
     - semester-2
-# Handbook: at least 100 points of successfully completed Bachelor of Oral Health subjects from the earlier year(s).
+  "2027":
+    - semester-1
+    - semester-2
 prerequisites:
   points:
     min: 100
-    from: [ORAL10001, ORAL10003, ORAL10005]
+    from:
+      - ORAL10001
+      - ORAL10003
+      - ORAL10005
 corequisites: none
 non_allowed: []
 skills:
@@ -40,10 +45,10 @@ assessment:
     weight: 25
   - kind: assignment
     weight: 5
-weekly_contact_hours: 3.5
+weekly_contact_hours: 6.5
 breadth_for: []
 prescribed_texts: true
-handbook: https://handbook.unimelb.edu.au/2026/subjects/oral20001
-source_year: 2026
-verified_on: 2026-10-21
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Year-long subject (both semesters, one enrolment); shown here as semester 1 and semester 2."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/oral20001
+source_year: 2027
+verified_on: 2026-11-14
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. Year-long subject (both semesters, one enrolment); shown here as semester 1 and semester 2."

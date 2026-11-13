@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
+  "2027":
+    - semester-1
 prerequisites:
   all:
     - PHYC20015
@@ -21,19 +23,23 @@ corequisites: none
 non_allowed: []
 assessment:
   - kind: assignment
-    weight: 15
-  - kind: project
+    weight: 5
+  - kind: assignment
+    weight: 5
+  - kind: assignment
+    weight: 5
+  - kind: assignment
     weight: 10
   - kind: exam
     weight: 75
 weekly_contact_hours: 4
-handbook: https://handbook.unimelb.edu.au/2026/subjects/phyc30023
-source_year: 2026
-verified_on: 2026-10-10
+handbook: https://handbook.unimelb.edu.au/2027/subjects/phyc30023
+source_year: 2027
+verified_on: 2026-11-14
 categories:
   B-SCI: science
 breadth_for: []
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
 skills:
   - programming
   - maths

@@ -1,0 +1,46 @@
+code: NEUR30008
+title: "Neuroscience: From Sensation to Action"
+level: 3
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  any:
+    - NEUR20001
+    - BIOM20002
+    - PHYS20008
+    - BIOM20006
+    - BIOM20007
+corequisites: none
+non_allowed:
+  - NEUR30002
+assessment:
+  - kind: exam
+    weight: 15
+  - kind: assignment
+    weight: 15
+    group: true
+  - kind: project
+    weight: 30
+    group: true
+  - kind: exam
+    weight: 40
+weekly_contact_hours: 2
+breadth_for:
+  - Bachelor of Arts
+  - Bachelor of Commerce
+  - Bachelor of Fine Arts (Acting)
+  - Bachelor of Fine Arts (Animation)
+  - Bachelor of Fine Arts (Dance)
+  - Bachelor of Fine Arts (Film and Television)
+  - Bachelor of Fine Arts (Music Theatre)
+  - Bachelor of Fine Arts (Production)
+  - Bachelor of Fine Arts (Screenwriting)
+  - Bachelor of Fine Arts (Theatre)
+  - Bachelor of Fine Arts (Visual Art)
+  - Bachelor of Music
+handbook: https://handbook.unimelb.edu.au/2027/subjects/neur30008
+source_year: 2027
+verified_on: 2026-11-14
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

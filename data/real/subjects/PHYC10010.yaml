@@ -1,9 +1,11 @@
 code: PHYC10010
-title: "Indigenous Astronomy"
+title: Indigenous Astronomy
 level: 1
 points: 12.5
 offerings:
   "2026":
+    - semester-1
+  "2027":
     - semester-1
 prerequisites: none
 corequisites: none
@@ -15,13 +17,13 @@ topics:
   - physics
   - indigenous-studies
 assessment:
-  - kind: test
+  - kind: quiz
     weight: 50
-  - kind: assignment
+  - kind: report
     weight: 10
   - kind: report
     weight: 20
-  - kind: project
+  - kind: presentation
     weight: 20
 breadth_for:
   - Bachelor of Arts
@@ -40,7 +42,8 @@ breadth_for:
   - Bachelor of Music
   - Bachelor of Science
 prescribed_texts: true
-handbook: "https://handbook.unimelb.edu.au/2026/subjects/phyc10010"
-source_year: 2026
-verified_on: 2026-10-21
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. On campus at Parkville. Five fortnightly 30-minute practical exams, then a 10-minute video project at the end. High school maths and science recommended."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/phyc10010
+source_year: 2027
+verified_on: 2026-11-14
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. On campus at Parkville; includes a 10-minute project video. High school maths and science recommended."
+weekly_contact_hours: 2

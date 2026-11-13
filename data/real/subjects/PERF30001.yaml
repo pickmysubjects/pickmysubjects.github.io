@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - winter
+  "2027":
+    - winter
 prerequisites:
   any:
     - ARCH10001
@@ -22,7 +24,7 @@ assessment:
   - kind: presentation
     weight: 20
     group: true
-  - kind: assignment
+  - kind: presentation
     weight: 30
   - kind: assignment
     weight: 50
@@ -31,7 +33,7 @@ categories:
   B-DES: design
 breadth_for: []
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/perf30001
-source_year: 2026
-verified_on: 2026-10-19
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/perf30001
+source_year: 2027
+verified_on: 2026-11-14
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

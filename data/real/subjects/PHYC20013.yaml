@@ -6,6 +6,9 @@ offerings:
   "2026":
     - semester-1
     - semester-2
+  "2027":
+    - semester-1
+    - semester-2
 prerequisites:
   all:
     - any:
@@ -29,16 +32,17 @@ assessment:
   - kind: presentation
     weight: 60
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/phyc20013
-source_year: 2026
-verified_on: 2026-10-13
+handbook: https://handbook.unimelb.edu.au/2027/subjects/phyc20013
+source_year: 2027
+verified_on: 2026-11-14
 categories:
   B-SCI: science
 breadth_for: []
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. PHYC10009 counts only with a result of at least 75 (H2A)."
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. PHYC10009 counts only with a result of at least 75 (H2A)."
 skills:
   - lab
   - programming
 topics:
   - physics
   - programming
+weekly_contact_hours: 6
