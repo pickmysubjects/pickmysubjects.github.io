@@ -40,6 +40,7 @@ breadth_for:
 attendance_applies_to:
   - tutorials
 prescribed_texts: false
+discontinued_from: 2027 # not in the 2027 Handbook (its page is gone)
 handbook: https://handbook.unimelb.edu.au/2026/subjects/mgmt20011
 source_year: 2026
 verified_on: 2026-10-14

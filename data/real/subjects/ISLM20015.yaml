@@ -41,6 +41,7 @@ attendance_applies_to:
   - tutorials
   - workshops
   - seminars
+discontinued_from: 2027 # not in the 2027 Handbook (its page is gone)
 handbook: https://handbook.unimelb.edu.au/2026/subjects/islm20015
 source_year: 2026
 verified_on: 2026-10-17
