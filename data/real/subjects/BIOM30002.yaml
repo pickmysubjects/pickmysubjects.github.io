@@ -8,9 +8,18 @@ offerings:
   "2027":
     - semester-1
 prerequisites:
-  all:
-    - BIOM20001
-    - BIOM20002
+  any:
+    - all:
+        - BIOM20001
+        - BIOM20002
+    - points:
+        min: 50
+        from:
+          - BIOM20003
+          - BIOM20004
+          - BIOM20005
+          - BIOM20006
+          - BIOM20007
 corequisites: none
 non_allowed: []
 skills:
@@ -30,4 +39,4 @@ breadth_for: []
 handbook: https://handbook.unimelb.edu.au/2027/subjects/biom30002
 source_year: 2027
 verified_on: 2026-11-12
-notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. Students who start the Bachelor of Biomedicine in 2027 take 50 points of BIOM20003-BIOM20007 at level 2 instead of BIOM20001/BIOM20002 (2027 course structure); this subject's own 2027 page still lists BIOM20001 and BIOM20002."
