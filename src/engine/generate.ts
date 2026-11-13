@@ -299,7 +299,7 @@ function buildPlan(given: GenerateInput): GenerateResult {
 
   // A required subject the course closes to its students (B-SCI's INFO30005, for a major only
   // pre-2018 starters may finish) can't be planned without an error: it's left out, with why.
-  const closedList = new Set(data.courses.find((c) => c.code === input.course)?.closed ?? [])
+  const closedList = new Set(findCourse(data, input.course, input.courseYear)?.closed ?? [])
   const closedRequired = [...required].filter((c) => !done.has(c) && closedList.has(c))
   const pending = [...required].filter((c) => !done.has(c) && !closedList.has(c))
   // Areas of the major/specialisation, used to break ties between equally scored electives.

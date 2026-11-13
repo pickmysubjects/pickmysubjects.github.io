@@ -1,5 +1,5 @@
 import { evaluateField, referencedSubjects } from './expr'
-import { componentCourse } from './courseRules'
+import { componentCourse, findCourse } from './courseRules'
 import type { Dataset } from './schema'
 
 /** How a subject matters to a major or specialisation. */
@@ -202,7 +202,7 @@ export function planRoles(
 ): { required: Set<string>; options: Set<string> } {
   const required = new Set<string>()
   const options = new Set<string>()
-  const c = data.courses.find((x) => x.code === course && x.year === courseYear) ?? data.courses.find((x) => x.code === course)
+  const c = findCourse(data, course, courseYear)
   for (const rule of c?.rules ?? []) if (rule.kind === 'compulsory') rule.subjects.forEach((s) => required.add(s))
   for (const id of components.filter(Boolean)) {
     const o = majorOverview(data, id, course)

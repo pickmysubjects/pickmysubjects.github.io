@@ -1,6 +1,6 @@
 import { offeredIn } from './availability'
 import { creditCodes, withCredit } from './credit'
-import { heldMajorIds, majorTitles, minorTitles, planComponentIds } from './courseRules'
+import { findCourse, heldMajorIds, majorTitles, minorTitles, planComponentIds } from './courseRules'
 import { planRoles } from './roles'
 import { evaluateField, referencedSubjects } from './expr'
 import type { Issue, Plan } from './plan'
@@ -26,7 +26,7 @@ export function checkTerms(plan: Plan, given: Dataset, standardLoad = 50): Issue
   const seen = new Set([...plan.completed, ...creditCodes(plan.credit)])
   const everywhere = new Set([...plan.completed, ...plan.terms.flatMap((t) => t.subjects)])
   // Subjects the student's course has closed to them (B-COM's ACCT10002).
-  const closed = new Set(data.courses.find((c) => c.code === plan.course)?.closed ?? [])
+  const closed = new Set(findCourse(data, plan.course, plan.courseYear)?.closed ?? [])
   const reportedPairs = new Set<string>()
   // The subjects the plan's major, specialisation and minors name (worked out only when needed).
   let own: Set<string> | undefined
