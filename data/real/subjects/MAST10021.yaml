@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
+  "2027":
+    - semester-2
 prerequisites:
   any:
     - school:
@@ -22,6 +24,9 @@ non_allowed:
 categories:
   B-SCI: science
 breadth_for:
+  - Bachelor of Arts
+  - Bachelor of Commerce
+  - Bachelor of Design
   - Bachelor of Fine Arts (Acting)
   - Bachelor of Fine Arts (Animation)
   - Bachelor of Fine Arts (Dance)
@@ -32,10 +37,10 @@ breadth_for:
   - Bachelor of Fine Arts (Theatre)
   - Bachelor of Fine Arts (Visual Art)
   - Bachelor of Music
-handbook: https://handbook.unimelb.edu.au/2026/subjects/mast10021
-source_year: 2026
-verified_on: 2026-10-13
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Via MAST10005 you need at least 80; via MAST10007 at least 75. MAST10005 needs a mark of at least 80; MAST10007 needs at least 75."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mast10021
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. Via MAST10005 you need at least 80; via MAST10007 at least 75. MAST10005 needs a mark of at least 80; MAST10007 needs at least 75."
 skills:
   - maths
 topics:

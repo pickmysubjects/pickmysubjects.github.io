@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
+  "2027":
+    - semester-2
 prerequisites: MAST10014
 corequisites: none
 non_allowed: []
@@ -24,8 +26,8 @@ assessment:
 weekly_contact_hours: 6
 min_attendance: 75
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/mast10015
-source_year: 2026
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mast10015
+source_year: 2027
 categories:
   B-SCIEXTD: core
 breadth_for: []
@@ -34,5 +36,5 @@ skills:
 topics:
   - mathematics
   - calculus
-verified_on: 2026-10-13
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Follows MAST10014. Only for students in the Bachelor of Science (Extended) or Bachelor of Arts (Extended), so not available in the standard B-SCI."
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. Follows MAST10014. Only for students in the Bachelor of Science (Extended) or Bachelor of Arts (Extended), so not available in the standard B-SCI."

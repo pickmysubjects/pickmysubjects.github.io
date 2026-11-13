@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
+  "2027":
+    - semester-1
 prerequisites:
   any:
     - admission: B-SCIEXTD
@@ -21,8 +23,8 @@ assessment:
   - kind: exam
     weight: 45
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/mast10014
-source_year: 2026
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mast10014
+source_year: 2027
 weekly_contact_hours: 6
 min_attendance: 80
 categories:
@@ -32,5 +34,5 @@ skills:
   - maths
 topics:
   - mathematics
-verified_on: 2026-10-13
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Only for the Bachelor of Science (Extended) and Bachelor of Arts (Extended). Only for students in the Bachelor of Science (Extended) or Bachelor of Arts (Extended), so not available in the standard B-SCI."
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. Only for the Bachelor of Science (Extended) and Bachelor of Arts (Extended). Only for students in the Bachelor of Science (Extended) or Bachelor of Arts (Extended), so not available in the standard B-SCI."

@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
+  "2027":
+    - semester-1
 prerequisites:
   manual: Enrolment in the Uni Ready Enabling Program
 corequisites: MAST10026
@@ -18,12 +20,12 @@ assessment:
     weight: 55
 weekly_contact_hours: 5
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/mast10025
-source_year: 2026
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mast10025
+source_year: 2027
 skills:
   - maths
 topics:
   - mathematics
-verified_on: 2026-10-13
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Only for the Uni Ready enabling program; not for credit in any undergraduate course."
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. Only for the Uni Ready enabling program; not for credit in any undergraduate course."
 breadth_for: []

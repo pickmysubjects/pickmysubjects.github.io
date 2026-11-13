@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
+  "2027":
+    - semester-2
 prerequisites: none
 corequisites: none
 non_allowed: []
@@ -17,11 +19,11 @@ topics:
 assessment:
   - kind: participation
     weight: 10
-  - kind: assignment
+  - kind: report
     weight: 20
-  - kind: assignment
+  - kind: report
     weight: 70
-weekly_contact_hours: 3
+weekly_contact_hours: 2
 breadth_for:
   - Bachelor of Arts
   - Bachelor of Biomedicine
@@ -38,7 +40,7 @@ breadth_for:
   - Bachelor of Fine Arts (Visual Art)
   - Bachelor of Music
   - Bachelor of Science
-handbook: https://handbook.unimelb.edu.au/2026/subjects/laws10009
-source_year: 2026
-verified_on: 2026-10-21
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. The participation mark needs at least eight tutorials attended."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/laws10009
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. The participation mark needs at least eight tutorials attended."

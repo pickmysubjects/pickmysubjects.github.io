@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
+  "2027":
+    - semester-2
 prerequisites:
   any:
     - KORE10003
@@ -39,12 +41,13 @@ breadth_for:
   - Bachelor of Fine Arts (Dance)
   - Bachelor of Fine Arts (Film and Television)
   - Bachelor of Fine Arts (Music Theatre)
+  - Bachelor of Fine Arts (Production)
   - Bachelor of Fine Arts (Screenwriting)
   - Bachelor of Fine Arts (Theatre)
   - Bachelor of Fine Arts (Visual Art)
   - Bachelor of Music
 min_attendance: 80
-handbook: https://handbook.unimelb.edu.au/2026/subjects/kore20004
-source_year: 2026
-verified_on: 2026-10-17
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/kore20004
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

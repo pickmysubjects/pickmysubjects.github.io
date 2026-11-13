@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
+  "2027":
+    - semester-2
 prerequisites:
   all:
     - any:
@@ -15,19 +17,13 @@ prerequisites:
         - MAST10007
         - MAST10008
         - MAST10022
-    - any:
-        - any:
-            - COMP10001
-            - COMP20005
-            - PHYC20013
-        - placement: programming
-          note: Other evidence of programming competence (e.g. a Year 12 subject, a MOOC, a programming test)
 corequisites: none
 non_allowed: []
 categories:
   B-SCI: science
 breadth_for:
   - Bachelor of Commerce
+  - Bachelor of Environments
   - Bachelor of Fine Arts (Acting)
   - Bachelor of Fine Arts (Animation)
   - Bachelor of Fine Arts (Dance)
@@ -38,10 +34,10 @@ breadth_for:
   - Bachelor of Fine Arts (Theatre)
   - Bachelor of Fine Arts (Visual Art)
   - Bachelor of Music
-handbook: https://handbook.unimelb.edu.au/2026/subjects/mast30028
-source_year: 2026
-verified_on: 2026-10-07
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mast30028
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
 skills:
   - maths
   - programming

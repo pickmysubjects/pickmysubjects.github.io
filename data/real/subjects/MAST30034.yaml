@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
+  "2027":
+    - semester-2
 prerequisites:
   all:
     - COMP30027
@@ -14,10 +16,10 @@ non_allowed: []
 categories:
   B-SCI: science
 breadth_for: []
-handbook: https://handbook.unimelb.edu.au/2026/subjects/mast30034
-source_year: 2026
-verified_on: 2026-10-07
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mast30034
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
 skills:
   - data
   - programming
@@ -31,10 +33,7 @@ assessment:
   - kind: project
     weight: 30
   - kind: project
-    weight: 10
-    group: true
-  - kind: presentation
-    weight: 40
+    weight: 50
     group: true
   - kind: quiz
     weight: 20

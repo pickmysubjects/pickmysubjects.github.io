@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
+  "2027":
+    - semester-1
 prerequisites: none
 corequisites: none
 non_allowed:
@@ -18,16 +20,12 @@ topics:
 assessment:
   - kind: quiz
     weight: 10
-    hurdle: true
   - kind: project
-    weight: 20
-    hurdle: true
+    weight: 15
   - kind: assignment
     weight: 25
-    hurdle: true
-  - kind: report
-    weight: 45
-    hurdle: true
+  - kind: exam
+    weight: 50
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Biomedicine
@@ -44,7 +42,7 @@ breadth_for:
   - Bachelor of Fine Arts (Visual Art)
   - Bachelor of Music
   - Bachelor of Science
-handbook: https://handbook.unimelb.edu.au/2026/subjects/lang10001
-source_year: 2026
-verified_on: 2026-10-16
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/lang10001
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

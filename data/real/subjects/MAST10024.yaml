@@ -6,6 +6,8 @@ offerings:
   "2026":
     - semester-1
     - semester-2
+  "2027":
+    - semester-1
 prerequisites: none
 corequisites: none
 non_allowed:
@@ -24,9 +26,9 @@ assessment:
   - kind: exam
     weight: 50
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/mast10024
-source_year: 2026
-verified_on: 2026-10-13
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mast10024
+source_year: 2027
+verified_on: 2026-11-13
 categories: {}
 breadth_for:
   - Bachelor of Arts
@@ -41,7 +43,7 @@ breadth_for:
   - Bachelor of Fine Arts (Theatre)
   - Bachelor of Fine Arts (Visual Art)
   - Bachelor of Music
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Not on the 2026 B-SCI science list, and its Handbook page lists no breadth use, so it gives no B-SCI credit here."
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. (From 2026, re-check:) Not on the 2026 B-SCI science list, and its Handbook page lists no breadth use, so it gives no B-SCI credit here."
 skills:
   - maths
   - statistics
@@ -49,3 +51,4 @@ topics:
   - modelling
   - statistics
   - health
+weekly_contact_hours: 3

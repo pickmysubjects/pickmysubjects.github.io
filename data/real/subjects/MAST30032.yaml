@@ -5,28 +5,18 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
-prerequisites:
-  all:
-    - MAST20030
-    - any:
-        - MAST20004
-        - MAST20006
-    - any:
-        - any:
-            - COMP10001
-            - COMP20005
-            - PHYC20013
-        - placement: programming
-          note: Other evidence of programming competence (e.g. a Year 12 subject, a MOOC, a programming test)
+  "2027":
+    - semester-1
+prerequisites: MAST20030
 corequisites: none
 non_allowed: []
 categories:
   B-SCI: science
 breadth_for: []
-handbook: https://handbook.unimelb.edu.au/2026/subjects/mast30032
-source_year: 2026
-verified_on: 2026-10-07
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mast30032
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
 skills:
   - maths
   - programming
@@ -35,7 +25,7 @@ topics:
   - modelling
   - biology
 assessment:
-  - kind: report
+  - kind: test
     weight: 20
   - kind: assignment
     weight: 30

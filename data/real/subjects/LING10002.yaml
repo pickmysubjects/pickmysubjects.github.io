@@ -6,6 +6,9 @@ offerings:
   "2026":
     - semester-1
     - semester-2
+  "2027":
+    - semester-1
+    - semester-2
 prerequisites: none
 corequisites: none
 non_allowed: []
@@ -15,12 +18,14 @@ topics:
   - languages
   - society
 assessment:
-  - kind: report
-    weight: 40
-    hurdle: true
-  - kind: report
-    weight: 60
-    hurdle: true
+  - kind: quiz
+    weight: 10
+  - kind: assignment
+    weight: 15
+  - kind: assignment
+    weight: 25
+  - kind: exam
+    weight: 50
 breadth_for:
   - Bachelor of Biomedicine
   - Bachelor of Commerce
@@ -36,7 +41,8 @@ breadth_for:
   - Bachelor of Fine Arts (Visual Art)
   - Bachelor of Music
   - Bachelor of Science
-handbook: https://handbook.unimelb.edu.au/2026/subjects/ling10002
-source_year: 2026
-verified_on: 2026-10-16
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/ling10002
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
+weekly_contact_hours: 3

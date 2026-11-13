@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
+  "2027":
+    - semester-1
 prerequisites:
   any:
     - school:
@@ -23,13 +25,14 @@ assessment:
   - kind: exam
     weight: 60
 weekly_contact_hours: 5
-handbook: https://handbook.unimelb.edu.au/2026/subjects/mast10012
-source_year: 2026
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mast10012
+source_year: 2027
 min_attendance: 73
 categories: {}
 breadth_for:
   - Bachelor of Arts
   - Bachelor of Design
+  - Bachelor of Environments
   - Bachelor of Fine Arts (Acting)
   - Bachelor of Fine Arts (Animation)
   - Bachelor of Fine Arts (Dance)
@@ -45,5 +48,5 @@ skills:
 topics:
   - mathematics
   - calculus
-verified_on: 2026-10-13
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Not available to students enrolled in the Bachelor of Science; not for credit with a VCE Mathematical Methods 3/4 study score of 25 or more."
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. Not available to students enrolled in the Bachelor of Science; not for credit with a VCE Mathematical Methods 3/4 study score of 25 or more."
