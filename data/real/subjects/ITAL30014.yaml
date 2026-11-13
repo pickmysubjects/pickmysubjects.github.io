@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
+  "2027":
+    - semester-2
 prerequisites:
   any:
     - ITAL10006
@@ -27,7 +29,7 @@ topics:
 assessment:
   - kind: assignment
     weight: 15
-  - kind: report
+  - kind: assignment
     weight: 20
   - kind: presentation
     weight: 10
@@ -41,6 +43,7 @@ breadth_for:
   - Bachelor of Biomedicine
   - Bachelor of Commerce
   - Bachelor of Design
+  - Bachelor of Environments
   - Bachelor of Fine Arts (Acting)
   - Bachelor of Fine Arts (Animation)
   - Bachelor of Fine Arts (Dance)
@@ -57,7 +60,7 @@ attendance_applies_to:
   - workshops
   - seminars
 prescribed_texts: true
-handbook: https://handbook.unimelb.edu.au/2026/subjects/ital30014
-source_year: 2026
-verified_on: 2026-10-17
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/ital30014
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

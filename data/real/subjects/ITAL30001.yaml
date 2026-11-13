@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
+  "2027":
+    - semester-1
 prerequisites:
   any:
     - ITAL20003
@@ -25,7 +27,7 @@ assessment:
     weight: 20
   - kind: presentation
     weight: 20
-  - kind: project
+  - kind: report
     weight: 30
 weekly_contact_hours: 3
 breadth_for:
@@ -33,6 +35,7 @@ breadth_for:
   - Bachelor of Biomedicine
   - Bachelor of Commerce
   - Bachelor of Design
+  - Bachelor of Environments
   - Bachelor of Fine Arts (Acting)
   - Bachelor of Fine Arts (Animation)
   - Bachelor of Fine Arts (Dance)
@@ -49,7 +52,7 @@ attendance_applies_to:
   - tutorials
   - workshops
   - seminars
-handbook: https://handbook.unimelb.edu.au/2026/subjects/ital30001
-source_year: 2026
-verified_on: 2026-10-17
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/ital30001
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

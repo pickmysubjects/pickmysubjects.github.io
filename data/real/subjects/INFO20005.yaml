@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
+  "2027":
+    - semester-1
 prerequisites:
   all:
     - INFO10003
@@ -15,23 +17,28 @@ corequisites: none
 non_allowed: []
 assessment:
   - kind: report
-    weight: 25
+    weight: 10
+  - kind: report
+    weight: 20
     hurdle: true
   - kind: report
-    weight: 25
+    weight: 20
     hurdle: true
-  - kind: project
+  - kind: exam
     weight: 50
+    hurdle: true
+  - kind: participation
+    weight: 0
     hurdle: true
 weekly_contact_hours: 4
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/info20005
-source_year: 2026
-verified_on: 2026-10-13
+handbook: https://handbook.unimelb.edu.au/2027/subjects/info20005
+source_year: 2027
+verified_on: 2026-11-13
 categories:
   B-DES: design
 breadth_for: []
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Not on the 2026 B-SCI science list, and its Handbook page lists no breadth use, so it gives no B-SCI credit here."
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. (From 2026, re-check:) Not on the 2026 B-SCI science list, and its Handbook page lists no breadth use, so it gives no B-SCI credit here."
 skills:
   - design
   - programming

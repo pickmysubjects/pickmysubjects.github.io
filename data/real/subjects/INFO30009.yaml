@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
+  "2027":
+    - semester-1
 prerequisites:
   points:
     min: 50
@@ -13,13 +15,14 @@ prerequisites:
 corequisites: none
 non_allowed: []
 assessment:
-  - kind: report
-    weight: 20
   - kind: project
     weight: 40
     group: true
   - kind: assignment
-    weight: 40
+    weight: 30
+  - kind: exam
+    weight: 30
+    hurdle: true
 weekly_contact_hours: 4
 categories:
   B-DES: design
@@ -40,12 +43,12 @@ breadth_for:
   - Bachelor of Music
   - Bachelor of Science
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/info30009
-source_year: 2026
-verified_on: 2026-10-19
+handbook: https://handbook.unimelb.edu.au/2027/subjects/info30009
+source_year: 2027
+verified_on: 2026-11-13
 skills:
   - design
 topics:
   - design
   - media
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

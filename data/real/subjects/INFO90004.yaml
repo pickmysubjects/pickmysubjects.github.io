@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
+  "2027":
+    - semester-1
 prerequisites:
   any:
     - any:
@@ -15,13 +17,11 @@ prerequisites:
           note: "Admission into or selection of one of the following: MC-CS Master of Computer Science MC-SOFTENG Master of Software Engineering"
         - admission: MC-SOFTENG
           note: "Admission into or selection of one of the following: MC-CS Master of Computer Science MC-SOFTENG Master of Software Engineering"
-    - all:
-        - admission: MC-IT
-          note: "Admission into one of the following: 100pt Program course entry point in the MC-IT Master of Information Technology, 150pt Program course entry point in the MC-IT Master of Information Technology"
-        - admission: MC-IT
-          note: Selection of the Human-Computer Interaction specialisation (formal) in the MC-IT Master of Information Technology
+    - admission: MC-IT
+      note: "Admission into one of the following: 100pt Program course entry point in the MC-IT Master of Information Technology, 150pt Program course entry point in the MC-IT Master of Information Technology"
 corequisites: none
-non_allowed: []
+non_allowed:
+  - INFO20004
 skills:
   - design
   - data
@@ -41,7 +41,7 @@ assessment:
 weekly_contact_hours: 3
 breadth_for: []
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/info90004
-source_year: 2026
-verified_on: 2026-10-17
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/info90004
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

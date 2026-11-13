@@ -6,6 +6,9 @@ offerings:
   "2026":
     - semester-1
     - semester-2
+  "2027":
+    - semester-1
+    - semester-2
 prerequisites:
   any:
     - any:
@@ -13,10 +16,14 @@ prerequisites:
         - COMP20005
         - COMP10002
         - COMP10003
+    - manual: VCE Algorithmics Units 3/4*
     - placement: programming
-      note: At least 75% in the programming competency test
-    - admission: MC-SOFTENG
-      note: Admission into the Master of Software Engineering (or GD-CS)
+      note: Achieving 75% in the programming competency test
+    - any:
+        - admission: MC-SOFTENG
+          note: "Admission into one of the following: MC-SOFTENG Master of Software Engineering GD-CS Graduate Diploma in Computer Science *Please note that VCE Algorithmics Units 3/4 will cease to be a pre-requisite for this subject from 2023. Students who have completed VCE Algorithmics Units 3/4 should contact the subject coordinator to discuss their enrolment."
+        - admission: GD-CS
+          note: "Admission into one of the following: MC-SOFTENG Master of Software Engineering GD-CS Graduate Diploma in Computer Science *Please note that VCE Algorithmics Units 3/4 will cease to be a pre-requisite for this subject from 2023. Students who have completed VCE Algorithmics Units 3/4 should contact the subject coordinator to discuss their enrolment."
 corequisites: none
 non_allowed:
   - INFO90002
@@ -29,6 +36,7 @@ breadth_for:
   - Bachelor of Arts
   - Bachelor of Commerce
   - Bachelor of Design
+  - Bachelor of Environments
   - Bachelor of Fine Arts (Acting)
   - Bachelor of Fine Arts (Animation)
   - Bachelor of Fine Arts (Dance)
@@ -39,10 +47,10 @@ breadth_for:
   - Bachelor of Fine Arts (Theatre)
   - Bachelor of Fine Arts (Visual Art)
   - Bachelor of Music
-handbook: https://handbook.unimelb.edu.au/2026/subjects/info20003
-source_year: 2026
-verified_on: 2026-10-07
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/info20003
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
 skills:
   - data
   - programming
@@ -57,3 +65,4 @@ assessment:
   - kind: quiz
     weight: 10
     hurdle: true
+weekly_contact_hours: 4

@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
+  "2027":
+    - semester-1
 prerequisites:
   any:
     - all:
@@ -20,20 +22,27 @@ corequisites: none
 non_allowed: []
 assessment:
   - kind: report
-    weight: 30
+    weight: 20
   - kind: project
-    weight: 70
+    weight: 30
     group: true
-weekly_contact_hours: 4
+  - kind: exam
+    weight: 50
+    hurdle: true
+  - kind: assignment
+    weight: 0
+    hurdle: true
+weekly_contact_hours: 39
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/info30005
-source_year: 2026
+handbook: https://handbook.unimelb.edu.au/2027/subjects/info30005
+source_year: 2027
 categories:
   B-DES: design
 breadth_for:
   - Bachelor of Arts
   - Bachelor of Commerce
   - Bachelor of Design
+  - Bachelor of Environments
   - Bachelor of Fine Arts (Acting)
   - Bachelor of Fine Arts (Animation)
   - Bachelor of Fine Arts (Dance)
@@ -51,5 +60,5 @@ skills:
 topics:
   - design
   - software-engineering
-verified_on: 2026-10-13
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Also a hurdle: attend at least 8 lectures and 8 tutorials. Not on the 2026 B-SCI science list, and its Handbook page lists no breadth use, so it gives no B-SCI credit here."
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. (From 2026, re-check:) Also a hurdle: attend at least 8 lectures and 8 tutorials. Not on the 2026 B-SCI science list, and its Handbook page lists no breadth use, so it gives no B-SCI credit here."
