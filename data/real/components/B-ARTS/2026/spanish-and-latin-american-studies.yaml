@@ -46,5 +46,5 @@ routes:
 limits:
   - max: 12.5
     from: [EURO20001, EURO20003, EURO20005, EURO20006, EURO20010, EURO30001, EURO30002, EURO30004, EURO30005, EURO30006, EURO30009, ARTS30002]
-handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
-verified_on: 2026-10-17 # structure; source: 2026 Handbook major page
+handbook: https://handbook.unimelb.edu.au/2027/components/b-arts-major-29
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

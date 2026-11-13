@@ -38,5 +38,5 @@ routes:
       - all: [ITAL20001, ITAL20012]
       # 25 points of Level 3 minor electives.
       - choose: { points: 25, from: [ITAL30005, ITAL30006, ITAL30007, ITAL30010, ITAL30012, ITAL30016] }
-handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
-verified_on: 2026-10-19 # structure; source: 2026 Handbook minor page
+handbook: https://handbook.unimelb.edu.au/2027/components/b-arts-minor-34
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

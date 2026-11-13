@@ -30,5 +30,5 @@ routes:
       - choose: { points: 12.5, from: [INDO20014, INDO20015, INDO20016, INDO20017, INDO20001, INDO20018] }
       # 25 points of Level 3 minor electives.
       - choose: { points: 25, from: [INDO30006, INDO30018, INDO30019, INDO30020] }
-handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
-verified_on: 2026-10-19 # structure; source: 2026 Handbook minor page
+handbook: https://handbook.unimelb.edu.au/2027/components/b-arts-minor-32
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

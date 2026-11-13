@@ -24,5 +24,5 @@ routes:
       - choose: { points: 12.5, from: [ISLM30003, ISLM30018] }
       # Capstone.
       - all: [ARBC30001]
-handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
-verified_on: 2026-10-17 # structure; source: 2026 Handbook major page
+handbook: https://handbook.unimelb.edu.au/2027/components/b-arts-major-2
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

@@ -5,9 +5,11 @@ kind: major
 title: Cell and Developmental Biology
 points: 50
 requirements:
+  # Capstone.
   - all: [CEDB30002]
-  # 12.5 to 37.5 points of selectives; the rest (at most 25) may be electives.
-  - choose: { points: 12.5, from: [CEDB30003] }
+  # Level 3 major core.
+  - all: [CEDB30003]
+  # 25 points of Level 3 major electives.
   - choose: { points: 25, from: [BCMB30004, CEDB30004, GENE30002, GENE30005, NEUR30005] }
 handbook: https://handbook.unimelb.edu.au/2027/components/b-bmed-major-6
 verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

@@ -18,5 +18,5 @@ routes:
       - all: [ARBC20006, ARBC20007]
       # Level 3 core.
       - all: [ARBC30006, ARBC30001]
-handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
-verified_on: 2026-10-19 # structure; source: 2026 Handbook minor page
+handbook: https://handbook.unimelb.edu.au/2027/components/b-arts-minor-12
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

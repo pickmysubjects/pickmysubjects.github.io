@@ -32,5 +32,5 @@ routes:
       - all: [GERM30002]
       # Level 3 elective.
       - choose: { points: 12.5, from: [GERM30024, LANG30001, EURO30001, EURO30002, EURO30004, EURO30005, ARTS30002, EURO30009] }
-handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
-verified_on: 2026-10-19 # structure; source: 2026 Handbook minor page
+handbook: https://handbook.unimelb.edu.au/2027/components/b-arts-minor-27
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

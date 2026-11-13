@@ -5,6 +5,7 @@ kind: major
 title: Human Structure and Function
 points: 50
 requirements:
+  # Both capstones (quotas apply; the School selects students, so plan a back-up major).
   - all: [ANAT30007, ANAT30008]
   - choose: { points: 25, from: [CEDB30003, NEUR30008, PHYS30010, PHYS30011] }
 # Structure from the 2027 Handbook component page; foundation subjects come in as prerequisites.
