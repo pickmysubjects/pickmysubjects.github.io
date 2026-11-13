@@ -5,8 +5,12 @@ kind: major
 title: Pathology
 points: 50
 requirements:
-  - all: [PATH30001, PATH30002, PATH30003]
-  - choose: { points: 12.5, from: [PATH30004, BIOM30003] }
-# Structure from the 2026 Handbook major page (pasted); foundation subjects come in as prerequisites.
-handbook: https://handbook.unimelb.edu.au/2026/courses/b-biomed/majors-minors-specialisations
-verified_on: 2026-10-16 # structure; source: 2026 Handbook major page
+  # Capstone (quotas apply to a core and an optional subject)
+  - all: [PATH30002]
+  # Level 3 major core
+  - all: [PATH30001, PATH30003]
+  # 12.5 points of Level 3 major electives
+  - choose: { points: 12.5, from: [ANAT30008, CEDB30004, PATH30004, PHRM30003] }
+# Structure from the 2027 Handbook component page; foundation subjects come in as prerequisites.
+handbook: https://handbook.unimelb.edu.au/2027/components/b-bmed-major-10
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

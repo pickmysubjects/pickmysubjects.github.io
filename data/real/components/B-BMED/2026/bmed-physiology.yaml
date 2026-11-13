@@ -5,8 +5,11 @@ kind: major
 title: Physiology
 points: 50
 requirements:
+  # Both capstones
+  - all: [PHYS30011, PHYS30012]
+  # Level 3 major core
   - all: [PHYS30010]
-  - choose: { points: 12.5, from: [PHYS30009, PHYS30011, PHYS30012] }
-  - choose: { points: 25, from: [PHYS30009, PHYS30011, PHYS30012, ANAT30007, ANAT30008, BIOM30003, BIOL30001, NEUR30002, NEUR30003, NEUR30004, PATH30001, PHRM30003] }
-handbook: https://handbook.unimelb.edu.au/2026/courses/b-biomed/majors-minors-specialisations
-verified_on: 2026-10-16 # structure; source: 2026 Handbook major page
+  # 12.5 points of Level 3 major electives
+  - choose: { points: 12.5, from: [BIOL30001, PHRM30002, PHYS30009, NEUR30008, NEUR30009] }
+handbook: https://handbook.unimelb.edu.au/2027/components/b-bmed-major-13
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

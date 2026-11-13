@@ -5,8 +5,10 @@ kind: major
 title: Neuroscience
 points: 50
 requirements:
-  - all: [NEUR30003, NEUR30002]
-  - choose: { points: 25, from: [NEUR30005, NEUR30004, OPTO30007, PHRM30002, BCMB30004, BIOM30003, NEUR30006, NEUR30007] }
-# Structure from the 2026 Handbook major page (pasted); foundation subjects come in as prerequisites.
-handbook: https://handbook.unimelb.edu.au/2026/courses/b-biomed/majors-minors-specialisations
-verified_on: 2026-10-16 # structure; source: 2026 Handbook major page
+  # Capstone and Level 3 major core
+  - all: [NEUR30010, NEUR30008, NEUR30009]
+  # 12.5 points of Level 3 major electives
+  - choose: { points: 12.5, from: [NEUR30005, NEUR30006, NEUR30007, OPTO30007] }
+# Structure from the 2027 Handbook component page; foundation subjects come in as prerequisites.
+handbook: https://handbook.unimelb.edu.au/2027/components/b-bmed-major-9
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

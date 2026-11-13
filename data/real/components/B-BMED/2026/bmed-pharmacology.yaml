@@ -5,9 +5,11 @@ kind: major
 title: Pharmacology
 points: 50
 requirements:
+  # Capstone
   - all: [PHRM30009]
-  - choose: { points: 25, from: [PHRM30003, PHRM30002, PHRM30008] }
-  # The last 12.5 may also be any level-3 subject from a range of biomedical areas (not listed here).
-  - choose: { points: 12.5, from: [PHRM30003, PHRM30002, PHRM30008, BIOM30003] }
-handbook: https://handbook.unimelb.edu.au/2026/courses/b-biomed/majors-minors-specialisations
-verified_on: 2026-10-16 # structure; source: 2026 Handbook major page
+  # Level 3 major core
+  - all: [PHRM30003, PHRM30008]
+  # 12.5 points of Level 3 major electives
+  - choose: { points: 12.5, from: [BCMB30004, BCMB30011, CEDB30002, PHRM30002] }
+handbook: https://handbook.unimelb.edu.au/2027/components/b-bmed-major-11
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

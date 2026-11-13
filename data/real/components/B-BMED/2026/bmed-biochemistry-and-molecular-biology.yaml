@@ -5,8 +5,10 @@ kind: major
 title: Biochemistry and Molecular Biology
 points: 50
 requirements:
-  - all: [BCMB30010, BCMB30012]
-  - choose: { points: 25, from: [BCMB30001, BCMB30002, BCMB30004, BCMB30011, MIIM30017, BIOM30003, CEDB30002] }
-# Structure from the 2026 Handbook major page (pasted); foundation subjects come in as prerequisites.
-handbook: https://handbook.unimelb.edu.au/2026/courses/b-biomed/majors-minors-specialisations
-verified_on: 2026-10-16 # structure; source: 2026 Handbook major page
+  # Capstone and Level 3 major core
+  - all: [BCMB30012, BCMB30010]
+  # 25 points of Level 3 major electives
+  - choose: { points: 25, from: [BCMB30001, BCMB30002, BCMB30004, BCMB30011, CEDB30002] }
+# Structure from the 2027 Handbook component page; foundation subjects come in as prerequisites.
+handbook: https://handbook.unimelb.edu.au/2027/components/b-bmed-major-12
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

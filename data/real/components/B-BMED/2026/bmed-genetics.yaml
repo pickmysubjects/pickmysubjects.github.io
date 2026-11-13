@@ -5,8 +5,10 @@ kind: major
 title: Genetics
 points: 50
 requirements:
-  - all: [GENE30001, GENE30002, GENE30004]
-  - choose: { points: 12.5, from: [BOTA30002, BOTA30005, CEDB30002, GENE30005, SCIE30001, ZOOL30004] }
-# Structure from the 2026 Handbook major page (pasted); foundation subjects come in as prerequisites.
-handbook: https://handbook.unimelb.edu.au/2026/courses/b-biomed/majors-minors-specialisations
-verified_on: 2026-10-16 # structure; source: 2026 Handbook major page
+  # Capstone and Level 3 major core
+  - all: [GENE30004, GENE30001, GENE30002]
+  # 12.5 points of Level 3 major electives
+  - choose: { points: 12.5, from: [CEDB30002, GENE30005] }
+# Structure from the 2027 Handbook component page; foundation subjects come in as prerequisites.
+handbook: https://handbook.unimelb.edu.au/2027/components/b-bmed-major-7
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked
