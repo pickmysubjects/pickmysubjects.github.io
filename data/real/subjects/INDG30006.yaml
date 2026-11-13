@@ -1,0 +1,24 @@
+code: INDG30006
+title: Indigenous Economic Sovereignty
+level: 3
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites: none
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: assignment
+    weight: 10
+  - kind: presentation
+    weight: 50
+    group: true
+  - kind: report
+    weight: 40
+weekly_contact_hours: 2
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/indg30006
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

@@ -1,0 +1,16 @@
+code: IBUS20006
+title: Doing Business in the Asia-Pacific
+level: 2
+points: 12.5
+offerings:
+  "2027": []
+prerequisites:
+  points:
+    min: 100
+corequisites: none
+non_allowed: []
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/ibus20006
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
