@@ -1,0 +1,26 @@
+code: MUSI10240
+title: Big Band 1
+level: 1
+points: 6.25
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  permission: coordinator
+  note: "AUDITION: Students are required to request an audition for this subject. Follow the link below to locate the relevant audition form. Link to audition forms This subject requires a successful audition outcome to enrol. A successful audition outcome may be used as proof of permission to enrol with the submission of an Enrolment Assistance form to Stop 1. Link to Enrolment Assistance Form Students admitted into the Jazz and Improvisation major may only enrol in Big Band subjects twice over the course of their degree and must seek permission of the Head of Area."
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: assignment
+    weight: 60
+    group: true
+  - kind: participation
+    weight: 10
+  - kind: test
+    weight: 30
+weekly_contact_hours: 2.5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/musi10240
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

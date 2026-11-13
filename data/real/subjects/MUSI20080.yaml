@@ -4,32 +4,34 @@ level: 2
 points: 6.25
 offerings:
   "2026":
-  - semester-1
+    - semester-1
+  "2027":
+    - semester-1
 prerequisites:
   permission: application
   note: Successful audition required
 corequisites: none
 non_allowed: []
 skills:
-- presentation
-- music
+  - presentation
+  - music
 topics:
-- performance
-- history
-- music
+  - performance
+  - history
+  - music
 assessment:
-- kind: participation
-  weight: 40
-  group: true
-- kind: presentation
-  weight: 50
-- kind: participation
-  weight: 10
+  - kind: assignment
+    weight: 40
+    group: true
+  - kind: test
+    weight: 50
+  - kind: participation
+    weight: 10
 weekly_contact_hours: 2
 min_attendance: 100
 breadth_for: []
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/musi20080
-source_year: 2026
-verified_on: 2026-10-21
-notes: 'Source: 2026 University of Melbourne Handbook; facts summarised and checked.'
+handbook: https://handbook.unimelb.edu.au/2027/subjects/musi20080
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

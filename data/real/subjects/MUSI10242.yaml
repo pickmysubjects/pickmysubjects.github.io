@@ -1,0 +1,43 @@
+code: MUSI10242
+title: Big Band 1 (Breadth)
+level: 1
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  permission: coordinator
+  note: "AUDITION: Students are required to request an audition for this subject. Follow the link below to locate the relevant audition form. Link to audition forms This subject requires a successful audition outcome to enrol. A successful audition outcome may be used as proof of permission to enrol with the submission of an Enrolment Assistance form to Stop 1. Link to Enrolment Assistance form"
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: assignment
+    weight: 50
+    group: true
+  - kind: test
+    weight: 20
+  - kind: project
+    weight: 10
+  - kind: project
+    weight: 10
+  - kind: participation
+    weight: 10
+weekly_contact_hours: 2.5
+breadth_for:
+  - Bachelor of Arts
+  - Bachelor of Biomedicine
+  - Bachelor of Commerce
+  - Bachelor of Fine Arts (Acting)
+  - Bachelor of Fine Arts (Animation)
+  - Bachelor of Fine Arts (Dance)
+  - Bachelor of Fine Arts (Film and Television)
+  - Bachelor of Fine Arts (Music Theatre)
+  - Bachelor of Fine Arts (Production)
+  - Bachelor of Fine Arts (Screenwriting)
+  - Bachelor of Fine Arts (Theatre)
+  - Bachelor of Fine Arts (Visual Art)
+  - Bachelor of Science
+handbook: https://handbook.unimelb.edu.au/2027/subjects/musi10242
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

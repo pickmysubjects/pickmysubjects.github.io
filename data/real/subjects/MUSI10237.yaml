@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
+  "2027":
+    - semester-2
 prerequisites: none
 corequisites: none
 non_allowed:
@@ -17,10 +19,10 @@ topics:
   - society
   - music
 assessment:
-  - kind: participation
-    weight: 40
-  - kind: assignment
-    weight: 60
+  - kind: quiz
+    weight: 50
+  - kind: exam
+    weight: 50
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Arts
@@ -38,7 +40,7 @@ breadth_for:
   - Bachelor of Fine Arts (Visual Art)
   - Bachelor of Science
 prescribed_texts: true
-handbook: https://handbook.unimelb.edu.au/2026/subjects/musi10237
-source_year: 2026
-verified_on: 2026-10-21
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Offered online and on campus (Parkville). Co-delivered with MUSI20150 and MUSI40074."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/musi10237
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. Offered on campus (Parkville) or online with a compulsory in-person assessment at the end of semester; quotas apply. Co-delivered with MUSI20150 and MUSI40074."

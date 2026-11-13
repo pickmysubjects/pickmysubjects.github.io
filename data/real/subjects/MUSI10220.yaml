@@ -6,14 +6,12 @@ offerings:
   "2026":
     - semester-1
     - semester-2
+  "2027":
+    - semester-1
+    - semester-2
 prerequisites:
-  any:
-    - admission: B-MUS
-      note: Admission into B-MUS Bachelor of Music
-    - all:
-        - admission: D-MUSIC
-          note: Admission into D-MUSIC Diploma in Music
-        - manual: "AUDITION: Diploma in Music students are required to request an audition for this subject: Link to audition form"
+  admission: B-MUS
+  note: Admission into the B-MUS Bachelor of Music
 corequisites: none
 non_allowed: []
 skills:
@@ -23,15 +21,15 @@ topics:
   - performance
   - music
 assessment:
-  - kind: presentation
+  - kind: project
     weight: 25
-  - kind: presentation
+  - kind: exam
     weight: 75
-weekly_contact_hours: 4
+weekly_contact_hours: 7
 min_attendance: 100
 breadth_for: []
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/musi10220
-source_year: 2026
-verified_on: 2026-10-21
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/musi10220
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

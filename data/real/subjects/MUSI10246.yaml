@@ -1,0 +1,27 @@
+code: MUSI10246
+title: Jazz and Improvisation Performance 1
+level: 1
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites:
+  permission: coordinator
+  note: "AUDITION: Students are required to request an audition and consultation meeting for this subject. Follow the link below to locate the relevant audition form. Link to audition forms This subject requires a successful audition outcome to enrol. A successful audition outcome may be used as proof of permission to enrol with the submission of an Enrolment Assistance form to Stop 1. Link to Enrolment Assistance form Classical Performance students must seek written permission from their head of area before auditioning for this subject."
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: assignment
+    weight: 15
+  - kind: assignment
+    weight: 25
+  - kind: exam
+    weight: 60
+    hurdle: true
+weekly_contact_hours: 2
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/musi10246
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

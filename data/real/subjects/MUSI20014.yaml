@@ -4,40 +4,43 @@ level: 2
 points: 6.25
 offerings:
   "2026":
-  - summer
-  - semester-1
-  - semester-2
+    - summer
+    - semester-1
+    - semester-2
+  "2027":
+    - summer
+    - semester-1
+    - semester-2
 prerequisites:
   all:
-  - any:
-    - admission: B-MUS
-      note: Admission into B-MUS Bachelor of Music
-    - admission: D-MUSIC
-      note: Admission into D-MUSIC Diploma in Music
-  - permission: application
-    note: Apply via the Chamber Music application form with an Enrolment Assistance form
+    - any:
+        - admission: B-MUS
+          note: Admission into B-MUS Bachelor of Music
+        - admission: D-MUSIC
+          note: Admission into D-MUSIC Diploma in Music
+    - permission: application
+      note: Apply via the Chamber Music application form with an Enrolment Assistance form
 corequisites: none
 non_allowed: []
 skills:
-- presentation
-- music
+  - presentation
+  - music
 topics:
-- performance
-- music
+  - performance
+  - music
 assessment:
-- kind: participation
-  weight: 35
-- kind: assignment
-  weight: 15
-  group: true
-- kind: presentation
-  weight: 50
-  group: true
+  - kind: assignment
+    weight: 35
+  - kind: assignment
+    weight: 15
+    group: true
+  - kind: assignment
+    weight: 50
 weekly_contact_hours: 2.5
 min_attendance: 100
 breadth_for: []
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/musi20014
-source_year: 2026
-verified_on: 2026-10-21
-notes: 'Source: 2026 University of Melbourne Handbook; facts summarised and checked.'
+handbook: https://handbook.unimelb.edu.au/2027/subjects/musi20014
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

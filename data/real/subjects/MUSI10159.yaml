@@ -5,9 +5,11 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
+  "2027":
+    - semester-1
 prerequisites:
   permission: application
-  note: "Audition required (submitted through Canvas); you can enrol provisionally until the result comes."
+  note: Audition required (submitted through Canvas); you can enrol provisionally until the result comes.
 corequisites: none
 non_allowed: []
 skills:
@@ -19,14 +21,8 @@ topics:
 assessment:
   - kind: participation
     weight: 75
-  - kind: quiz
+  - kind: test
     weight: 25
-  - kind: presentation
-    weight: 0
-    hurdle: true
-  - kind: participation
-    weight: 0
-    hurdle: true
 weekly_contact_hours: 2.5
 min_attendance: 80
 pass_fail: true
@@ -35,6 +31,7 @@ breadth_for:
   - Bachelor of Biomedicine
   - Bachelor of Commerce
   - Bachelor of Design
+  - Bachelor of Environments
   - Bachelor of Fine Arts (Acting)
   - Bachelor of Fine Arts (Animation)
   - Bachelor of Fine Arts (Dance)
@@ -45,7 +42,7 @@ breadth_for:
   - Bachelor of Fine Arts (Theatre)
   - Bachelor of Fine Arts (Visual Art)
   - Bachelor of Science
-handbook: https://handbook.unimelb.edu.au/2026/subjects/musi10159
-source_year: 2026
-verified_on: 2026-10-21
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Pass/fail. Large choir singing Western choral music from the 1600s to today, co-taught with Conservatorium Choir; you must sing in the end-of-semester concert. Reading music and some choir experience recommended."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/musi10159
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. Pass/fail. Large choir singing Western choral music from the 1600s to today, co-taught with Conservatorium Choir; you must sing in the end-of-semester concert. Reading music and some choir experience recommended."

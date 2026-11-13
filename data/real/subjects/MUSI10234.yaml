@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
+  "2027":
+    - semester-2
 prerequisites: MUSI10233
 corequisites: none
 non_allowed: []
@@ -15,19 +17,19 @@ topics:
   - performance
   - music
 assessment:
-  - kind: participation
+  - kind: assignment
     weight: 50
-  - kind: presentation
+  - kind: participation
     weight: 10
-  - kind: presentation
+  - kind: participation
     weight: 10
-  - kind: presentation
+  - kind: assignment
     weight: 30
 min_attendance: 80
 weekly_contact_hours: 6
 breadth_for: []
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/musi10234
-source_year: 2026
-verified_on: 2026-10-21
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Only for Bachelor of Music students concurrently enrolled at the Australian National Academy of Music (ANAM)."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/musi10234
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. Only for Bachelor of Music students concurrently enrolled at the Australian National Academy of Music (ANAM)."

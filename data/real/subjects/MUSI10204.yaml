@@ -5,6 +5,8 @@ points: 6.25
 offerings:
   "2026":
     - semester-1
+  "2027":
+    - semester-1
 prerequisites: none
 corequisites: none
 non_allowed: []
@@ -16,21 +18,17 @@ topics:
   - music
 assessment:
   - kind: quiz
+    weight: 15
+  - kind: presentation
+    weight: 20
+  - kind: quiz
+    weight: 25
+  - kind: presentation
     weight: 40
-  - kind: assignment
-    weight: 12.5
-  - kind: assignment
-    weight: 12.5
-  - kind: assignment
-    weight: 12.5
-  - kind: assignment
-    weight: 12.5
-  - kind: participation
-    weight: 10
 weekly_contact_hours: 2.5
 min_attendance: 80
 breadth_for: []
-handbook: https://handbook.unimelb.edu.au/2026/subjects/musi10204
-source_year: 2026
-verified_on: 2026-10-21
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/musi10204
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

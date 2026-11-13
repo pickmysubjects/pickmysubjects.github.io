@@ -6,6 +6,9 @@ offerings:
   "2026":
     - summer
     - semester-2
+  "2027":
+    - summer
+    - semester-2
 prerequisites: MUSI10023
 corequisites: none
 non_allowed: []
@@ -19,11 +22,9 @@ assessment:
   - kind: assignment
     weight: 50
   - kind: test
-    weight: 15
+    weight: 20
   - kind: exam
-    weight: 25
-  - kind: participation
-    weight: 10
+    weight: 30
 weekly_contact_hours: 3
 min_attendance: 80
 breadth_for:
@@ -31,6 +32,7 @@ breadth_for:
   - Bachelor of Biomedicine
   - Bachelor of Commerce
   - Bachelor of Design
+  - Bachelor of Environments
   - Bachelor of Fine Arts (Acting)
   - Bachelor of Fine Arts (Animation)
   - Bachelor of Fine Arts (Dance)
@@ -42,7 +44,7 @@ breadth_for:
   - Bachelor of Fine Arts (Visual Art)
   - Bachelor of Science
 prescribed_texts: true
-handbook: https://handbook.unimelb.edu.au/2026/subjects/musi20061
-source_year: 2026
-verified_on: 2026-10-21
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Summer term runs as a 6-week intensive (about 6 hours a week); figure shown is for semester 2."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/musi20061
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. Summer term runs as a 6-week intensive (about 6 hours a week); figure shown is for semester 2."

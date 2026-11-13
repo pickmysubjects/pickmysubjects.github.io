@@ -4,29 +4,33 @@ level: 2
 points: 6.25
 offerings:
   "2026":
-  - semester-2
+    - semester-2
+  "2027":
+    - semester-2
 prerequisites:
-  permission: application
-  note: Successful audition required
+  permission: coordinator
+  note: "AUDITION: Students are required to request an audition for this subject. Follow the link below to locate the relevant audition form. Link to audition forms This subject requires a successful audition outcome to enrol. A successful audition outcome may be used as proof of permission to enrol with the submission of an Enrolment Assistance form to Stop 1. Link to Enrolment Assistance form Students admitted into the Jazz and Improvisation major may only enrol in Big Band subjects twice over the course of their degree and must seek permission of the Head of Area."
 corequisites: none
 non_allowed: []
 skills:
-- presentation
-- music
+  - presentation
+  - music
 topics:
-- performance
-- music
+  - performance
+  - music
 assessment:
-- kind: participation
-  weight: 70
-  group: true
-- kind: presentation
-  weight: 30
+  - kind: assignment
+    weight: 60
+    group: true
+  - kind: test
+    weight: 30
+  - kind: participation
+    weight: 10
 weekly_contact_hours: 2.5
 min_attendance: 100
 breadth_for: []
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/musi20072
-source_year: 2026
-verified_on: 2026-10-21
-notes: 'Source: 2026 University of Melbourne Handbook; facts summarised and checked.'
+handbook: https://handbook.unimelb.edu.au/2027/subjects/musi20072
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

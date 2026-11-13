@@ -1,0 +1,27 @@
+code: MUSI10247
+title: Diploma Practical Music 1
+level: 1
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites:
+  all:
+    - admission: D-MUSIC
+      note: Admission into D-MUSIC Diploma in Music
+    - permission: coordinator
+      note: "AUDITION: Students are required to request an audition for this subject: Link to audition form This subject requires a successful audition outcome to enrol. A successful audition outcome may be used as proof of permission to enrol with the submission of an Enrolment Assistance form to Stop 1. Link to Enrolment Assistance form"
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: project
+    weight: 25
+  - kind: exam
+    weight: 75
+weekly_contact_hours: 7
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/musi10247
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

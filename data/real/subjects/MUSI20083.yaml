@@ -4,29 +4,28 @@ level: 2
 points: 6.25
 offerings:
   "2026":
-  - semester-2
+    - semester-2
+  "2027":
+    - semester-2
 prerequisites:
   permission: application
   note: Audition via Canvas; you may enrol provisionally, but the place is confirmed only once you pass
 corequisites: none
 non_allowed: []
 skills:
-- presentation
-- music
+  - presentation
+  - music
 topics:
-- performance
-- music
+  - performance
+  - music
 assessment:
-- kind: participation
-  weight: 100
-- kind: presentation
-  weight: 0
-  hurdle: true
+  - kind: participation
+    weight: 100
 weekly_contact_hours: 2.5
 pass_fail: true
 min_attendance: 100
 breadth_for: []
-handbook: https://handbook.unimelb.edu.au/2026/subjects/musi20083
-source_year: 2026
-verified_on: 2026-10-21
-notes: 'Source: 2026 University of Melbourne Handbook; facts summarised and checked.'
+handbook: https://handbook.unimelb.edu.au/2027/subjects/musi20083
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
