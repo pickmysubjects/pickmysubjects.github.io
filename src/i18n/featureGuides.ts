@@ -6,7 +6,7 @@ import type { LocaleCode } from './codes'
  * running the app, so without it the planner and tools pages say almost nothing about themselves.
  * Every line must stay true to what the feature really does; update it when the feature changes.
  */
-export type FeatureId = 'plan' | 'compare' | 'recommend' | 'record' | 'final' | 'wam' | 'revision'
+export type FeatureId = 'plan' | 'compare' | 'recommend' | 'record' | 'final' | 'wam' | 'revision' | 'shortlist'
 
 export interface FeatureGuide {
   what: string[]
@@ -28,6 +28,7 @@ export const FEATURE_PATHS: Record<FeatureId, string> = {
   final: 'tools/final',
   wam: 'tools/wam',
   revision: 'tools/revision',
+  shortlist: 'shortlist',
 }
 
 export const FEATURE_GUIDES: Record<LocaleCode, FeatureLocale> = {
@@ -40,6 +41,7 @@ export const FEATURE_GUIDES: Record<LocaleCode, FeatureLocale> = {
           'Checks every subject’s prerequisites, your course rules (points, levels, breadth and discipline limits) and how heavy each semester is. Each check shows as met, not met or can’t tell yet.',
           'Explains heavy semesters and suggests swaps to spread them out, plans failed subjects again, and warns when the plan runs past the usual length, which matters on a student visa.',
           'Drag subjects between semesters, add summer or winter terms, see census dates, share the plan as a link, or print it and save it as PDF.',
+          "With a career goal set (such as data analyst or accountant), the plan fills your electives with subjects the job requires or that help toward it, and says so on each one.",
         ],
         steps: [
           'Choose your degree, major and the semester you start.',
@@ -51,6 +53,7 @@ export const FEATURE_GUIDES: Record<LocaleCode, FeatureLocale> = {
           'Which subjects should I take each semester for my major?',
           'Can I fit a second major or a minor into my degree?',
           'Will I still finish on time after failing a subject?',
+          "Which subjects should I take to become a data analyst?",
         ],
       },
       compare: {
@@ -66,9 +69,10 @@ export const FEATURE_GUIDES: Record<LocaleCode, FeatureLocale> = {
           'Ranks the subjects you can take from your own marks, strengths and interests, each with the reason.',
           'Pick a goal: protect my WAM, balanced, or stretch me.',
           'Lists only subjects whose prerequisites you meet and that run soon.',
+          "Shows the mark you're likely to get: a range you have a 1 in 2 chance of landing in, from your marks in similar subjects or your WAM so far, and how students who shared their grades did here compared with their WAM.",
         ],
         steps: ['Add your finished subjects and marks on My record.', 'Tap your strengths, interests and goal (all optional; the more you add, the better it gets).', 'Open Subjects that suit you (or turn on Sort for me in Find subjects) and read the reason under each subject.'],
-        asks: ['Which UniMelb subjects should I take next semester?', 'Which electives or breadth subjects suit me?', 'Which subjects are good for my WAM?'],
+        asks: ['Which UniMelb subjects should I take next semester?', 'Which electives or breadth subjects suit me?', 'Which subjects are good for my WAM?', "What mark am I likely to get in this subject?"],
       },
       record: {
         what: [
@@ -76,9 +80,9 @@ export const FEATURE_GUIDES: Record<LocaleCode, FeatureLocale> = {
           'Target WAM: the average you need on the rest of your degree.',
           'What-if: the WAM you would have with a given mark in one subject.',
           'Saved only in your browser; back it up to a file and restore it on another device. Your plan and suggestions use it.',
-        ],
+          "Career goal: pick a job and suggestions favour the subjects it requires or that help toward it; the record shows what is still to add.", "Skills for your resume: the tools, specialist skills and abilities your subjects taught, as resume lines naming the subjects behind them, compared with what employers list for your career goal. Copy them in one tap."],
         steps: ['Add each finished subject and its mark.', 'Read your WAM, set a target and try what-ifs.', 'Add your strengths, interests and goal so the plan and suggestions fit you.'],
-        asks: ['What is my WAM so far?', 'What average do I need to reach my target WAM?'],
+        asks: ['What is my WAM so far?', 'What average do I need to reach my target WAM?', "What skills can I put on my resume from my subjects?", "Which subjects do I still need for the job I want?"],
       },
       final: {
         what: [
@@ -110,6 +114,11 @@ export const FEATURE_GUIDES: Record<LocaleCode, FeatureLocale> = {
         steps: ['Add the subjects you have exams in and their dates.', 'Set when you start and about how long a day.', 'Follow the timetable; mark a day busy if something comes up.'],
         asks: ['How should I plan my revision for exams?', 'How many hours a day should I study before exams?', 'I have several exams close together: how do I split my time?'],
       },
+      shortlist: {
+        what: ["Save subjects with ♡ from any subject page or Find subjects.", "See them side by side in one table: points, when they run, final exam share, difficulty, whether you have the prerequisites, hurdles and ratings.", "Sort by any column or show only the differences, then add the one you pick straight to your plan."],
+        steps: ["Tap ♡ Shortlist on the subjects you're deciding between.", "Open Shortlist and compare them in one table.", "Add the one you choose to your plan."],
+        asks: ["Which of these subjects should I take?", "Which one has the smaller final exam, or is easier?"],
+      },
     },
   },
   'zh-CN': {
@@ -121,9 +130,10 @@ export const FEATURE_GUIDES: Record<LocaleCode, FeatureLocale> = {
           '检查每门课的前修、课程规则（学分、级别、breadth 和学科上限）以及每个学期的负担。每项检查都显示满足、不满足或暂时无法判断。',
           '说明哪个学期太重并建议换课分散压力；挂科的课会重新排进去；超过正常学制时会提醒，这对学生签证很重要。',
           '可以拖动课程换学期、加夏季或冬季学期、看 census date，把排课用链接分享，或打印、存成 PDF。',
+          "设了职业目标（比如数据分析师、会计）的话，排课会用这个职业要求或有帮助的课来填选修，并在每门课上注明。",
         ],
         steps: ['选你的学位、专业和入学学期。', '在“我的记录”里加上已经修完的课（刚入学可以跳过）。', '打开排课：每个学期都已排好并检查过。移动或换课直到每项检查都满足，再到 Handbook 和 My Course Planner 确认。'],
-        asks: ['墨大怎么排课？', '我的专业每学期该选哪些课？', '我的学位能不能加第二专业或辅修？', '挂了一门课还能按时毕业吗？'],
+        asks: ['墨大怎么排课？', '我的专业每学期该选哪些课？', '我的学位能不能加第二专业或辅修？', '挂了一门课还能按时毕业吗？', "想做数据分析师，应该选哪些课？"],
       },
       compare: {
         what: ['最多保存五个计划（计划 A、计划 B…），每个都有自己的专业、强项、兴趣和目标。', '并排比较：学位规则是否满足、最后一个学期、负担重的学期、预测 WAM，以及每一门不同的课。'],
@@ -131,14 +141,14 @@ export const FEATURE_GUIDES: Record<LocaleCode, FeatureLocale> = {
         asks: ['该选这个专业还是那个专业？', '我的哪个计划毕业更早、学期更轻松？'],
       },
       recommend: {
-        what: ['按你自己的成绩、强项和兴趣，给你能选的课排序，每门都写出理由。', '选一个目标：保 WAM、平衡，或挑战自己。', '只列出你满足前修、近期开课的课。'],
+        what: ['按你自己的成绩、强项和兴趣，给你能选的课排序，每门都写出理由。', '选一个目标：保 WAM、平衡，或挑战自己。', '只列出你满足前修、近期开课的课。', "预测你可能拿到的分数：根据你类似课程的成绩或目前的 WAM，给出一个有 1/2 机会落在其中的分数范围；还会显示分享过成绩的同学在这门课比自己的 WAM 高还是低。"],
         steps: ['在“我的记录”里加上修完的课和成绩。', '点选你的强项、兴趣和目标（都可以不填，填得越多越准）。', '打开“适合你的课程”（或在“找课”里打开“按我的情况排序”），看每门课下面的理由。'],
-        asks: ['墨大下学期该选什么课？', '哪些选修课或 breadth 适合我？', '哪些课对 WAM 友好？'],
+        asks: ['墨大下学期该选什么课？', '哪些选修课或 breadth 适合我？', '哪些课对 WAM 友好？', "这门课我大概能拿多少分？"],
       },
       record: {
-        what: ['你修完的课和成绩，自动算出 WAM；pass/fail 课和挂科都按学校的规则处理。', '目标 WAM：剩下的课平均要考多少。', '假设计算：某门课考某个分数时，你的 WAM 会变成多少。', '只保存在你的浏览器里；可以备份成文件，在别的设备上恢复。排课和推荐都会用到它。'],
+        what: ['你修完的课和成绩，自动算出 WAM；pass/fail 课和挂科都按学校的规则处理。', '目标 WAM：剩下的课平均要考多少。', '假设计算：某门课考某个分数时，你的 WAM 会变成多少。', '只保存在你的浏览器里；可以备份成文件，在别的设备上恢复。排课和推荐都会用到它。', "职业目标：选一个职业，推荐就会优先考虑它要求或有帮助的课；记录里会列出还缺哪些课。", "简历技能：把你修过的课教的工具、专业技能和能力，整理成可以写进简历的句子，并注明来自哪些课，还会和你的职业目标里雇主要求的技能对比。一键复制。"],
         steps: ['加上每门修完的课和成绩。', '看你的 WAM，设目标，试试假设分数。', '加上强项、兴趣和目标，让排课和推荐更适合你。'],
-        asks: ['我现在的 WAM 是多少？', '要达到目标 WAM，剩下的课平均要多少分？'],
+        asks: ['我现在的 WAM 是多少？', '要达到目标 WAM，剩下的课平均要多少分？', "我修的课能在简历上写哪些技能？", "想做的工作还缺哪些课？"],
       },
       final: {
         what: [
@@ -165,6 +175,11 @@ export const FEATURE_GUIDES: Record<LocaleCode, FeatureLocale> = {
         steps: ['加上要考试的课和日期。', '设好开始日期和每天大约多久。', '按时间表复习；哪天有事就标成忙碌。'],
         asks: ['期末复习怎么安排？', '考前每天该学几个小时？', '几门考试挨得很近，时间怎么分？'],
       },
+      shortlist: {
+        what: ["在任意课程页面或“找课”里点 ♡ 收藏课程。", "在一张表里并排看：学分、开课学期、期末考试占比、难度、你有没有满足前修、hurdle 和评分。", "按任意一列排序，或只看不同的地方，选好后一键加进排课。"],
+        steps: ["在犹豫的几门课上点 ♡ 收藏。", "打开“收藏”，在一张表里比较。", "把选中的那门加进排课。"],
+        asks: ["这几门课该选哪一门？", "哪门课期末占比小、更容易？"],
+      },
     },
   },
   'zh-TW': {
@@ -176,9 +191,10 @@ export const FEATURE_GUIDES: Record<LocaleCode, FeatureLocale> = {
           '檢查每門課的先修、課程規則（學分、級別、breadth 和學科上限）以及每個學期的負擔。每項檢查都顯示符合、不符合或暫時無法判斷。',
           '說明哪個學期太重並建議換課分散壓力；被當的課會重新排進去；超過正常修業年限時會提醒，這對學生簽證很重要。',
           '可以拖動課程換學期、加夏季或冬季學期、看 census date，把排課用連結分享，或列印、存成 PDF。',
+          "設了職業目標（例如資料分析師、會計）的話，排課會用這個職業要求或有幫助的課來填選修，並在每門課上註明。",
         ],
         steps: ['選你的學位、主修和入學學期。', '在「我的紀錄」裡加上已經修完的課（剛入學可以跳過）。', '打開排課：每個學期都已排好並檢查過。移動或換課直到每項檢查都符合，再到 Handbook 和 My Course Planner 確認。'],
-        asks: ['墨大怎麼排課？', '我的主修每學期該選哪些課？', '我的學位能不能加第二主修或副修？', '被當一門課還能準時畢業嗎？'],
+        asks: ['墨大怎麼排課？', '我的主修每學期該選哪些課？', '我的學位能不能加第二主修或副修？', '被當一門課還能準時畢業嗎？', "想當資料分析師，應該選哪些課？"],
       },
       compare: {
         what: ['最多保存五個計畫（計畫 A、計畫 B…），每個都有自己的主修、強項、興趣和目標。', '並排比較：學位規則是否符合、最後一個學期、負擔重的學期、預測 WAM，以及每一門不同的課。'],
@@ -186,14 +202,14 @@ export const FEATURE_GUIDES: Record<LocaleCode, FeatureLocale> = {
         asks: ['該選這個主修還是那個主修？', '我的哪個計畫畢業更早、學期更輕鬆？'],
       },
       recommend: {
-        what: ['依你自己的成績、強項和興趣，替你能選的課排序，每門都寫出理由。', '選一個目標：保 WAM、平衡，或挑戰自己。', '只列出你符合先修、近期開課的課。'],
+        what: ['依你自己的成績、強項和興趣，替你能選的課排序，每門都寫出理由。', '選一個目標：保 WAM、平衡，或挑戰自己。', '只列出你符合先修、近期開課的課。', "預測你可能拿到的分數：根據你類似課程的成績或目前的 WAM，給出一個有 1/2 機會落在其中的分數範圍；還會顯示分享過成績的同學在這門課比自己的 WAM 高還是低。"],
         steps: ['在「我的紀錄」裡加上修完的課和成績。', '點選你的強項、興趣和目標（都可以不填，填得越多越準）。', '打開「適合你的課程」（或在「找課」裡打開「按我的情況排序」），看每門課下面的理由。'],
-        asks: ['墨大下學期該選什麼課？', '哪些選修課或 breadth 適合我？', '哪些課對 WAM 友善？'],
+        asks: ['墨大下學期該選什麼課？', '哪些選修課或 breadth 適合我？', '哪些課對 WAM 友善？', "這門課我大概能拿多少分？"],
       },
       record: {
-        what: ['你修完的課和成績，自動算出 WAM；pass/fail 課和被當的課都依學校的規則處理。', '目標 WAM：剩下的課平均要考多少。', '假設計算：某門課考某個分數時，你的 WAM 會變成多少。', '只保存在你的瀏覽器裡；可以備份成檔案，在別的裝置上還原。排課和推薦都會用到它。'],
+        what: ['你修完的課和成績，自動算出 WAM；pass/fail 課和被當的課都依學校的規則處理。', '目標 WAM：剩下的課平均要考多少。', '假設計算：某門課考某個分數時，你的 WAM 會變成多少。', '只保存在你的瀏覽器裡；可以備份成檔案，在別的裝置上還原。排課和推薦都會用到它。', "職業目標：選一個職業，推薦就會優先考慮它要求或有幫助的課；紀錄裡會列出還缺哪些課。", "履歷技能：把你修過的課教的工具、專業技能和能力，整理成可以寫進履歷的句子，並註明來自哪些課，還會和你職業目標裡雇主要求的技能比較。一鍵複製。"],
         steps: ['加上每門修完的課和成績。', '看你的 WAM，設目標，試試假設分數。', '加上強項、興趣和目標，讓排課和推薦更適合你。'],
-        asks: ['我現在的 WAM 是多少？', '要達到目標 WAM，剩下的課平均要多少分？'],
+        asks: ['我現在的 WAM 是多少？', '要達到目標 WAM，剩下的課平均要多少分？', "我修的課能在履歷上寫哪些技能？", "想做的工作還缺哪些課？"],
       },
       final: {
         what: [
@@ -220,6 +236,11 @@ export const FEATURE_GUIDES: Record<LocaleCode, FeatureLocale> = {
         steps: ['加上要考試的課和日期。', '設好開始日期和每天大約多久。', '照時間表複習；哪天有事就標成忙碌。'],
         asks: ['期末複習怎麼安排？', '考前每天該讀幾個小時？', '幾科考試很接近，時間怎麼分？'],
       },
+      shortlist: {
+        what: ["在任意課程頁面或「找課」裡點 ♡ 收藏課程。", "在一張表裡並排看：學分、開課學期、期末考比重、難度、你有沒有符合先修、hurdle 和評分。", "依任意一欄排序，或只看不同的地方，選好後一鍵加進排課。"],
+        steps: ["在猶豫的幾門課上點 ♡ 收藏。", "打開「收藏」，在一張表裡比較。", "把選中的那門加進排課。"],
+        asks: ["這幾門課該選哪一門？", "哪門課期末比重小、更容易？"],
+      },
     },
   },
   ja: {
@@ -231,9 +252,10 @@ export const FEATURE_GUIDES: Record<LocaleCode, FeatureLocale> = {
           '各科目の前提科目、コースのルール（単位数、レベル、ブレッドスと分野の上限）、各学期の負担をチェックします。各チェックは「満たす」「満たさない」「まだ判断できない」で表示されます。',
           '負担の重い学期を説明し、分散させる入れ替えを提案します。不合格の科目は組み直し、通常の年限を超えると警告します（学生ビザでは重要です）。',
           '科目をドラッグして学期を移したり、夏学期・冬学期を加えたり、census date を確認したり、リンクで共有したり、印刷・PDF 保存したりできます。',
+          "キャリア目標（データアナリスト、会計士など）を設定すると、その職業に必要な科目や役立つ科目で選択科目を埋め、各科目にその旨を示します。",
         ],
         steps: ['学位、専攻、入学する学期を選びます。', '修了した科目を「自分の記録」に追加します（入学したばかりなら不要）。', '履修計画を開くと、全学期が埋まりチェック済みです。すべてのチェックを満たすまで科目を移動・入れ替えし、Handbook と My Course Planner で確認します。'],
-        asks: ['メルボルン大学の履修計画はどう立てる？', '専攻のために各学期どの科目を取るべき？', '第二専攻や副専攻を入れられる？', '科目を落としても予定どおり卒業できる？'],
+        asks: ['メルボルン大学の履修計画はどう立てる？', '専攻のために各学期どの科目を取るべき？', '第二専攻や副専攻を入れられる？', '科目を落としても予定どおり卒業できる？', "データアナリストになるにはどの科目を取るべき？"],
       },
       compare: {
         what: ['最大5つの計画（プラン A、プラン B…）を保存でき、それぞれ専攻・得意分野・興味・目標を持てます。', '並べて比較：学位ルールの達成、最終学期、重い学期、予測 WAM、異なる科目すべて。'],
@@ -241,14 +263,14 @@ export const FEATURE_GUIDES: Record<LocaleCode, FeatureLocale> = {
         asks: ['この専攻とあの専攻、どちらにすべき？', 'どのプランが早く卒業できて、学期が軽い？'],
       },
       recommend: {
-        what: ['自分の成績・得意分野・興味から、履修できる科目を理由付きで並べます。', '目標を選択：WAM を守る、バランス、チャレンジ。', '前提科目を満たし、近く開講される科目だけを表示します。'],
+        what: ['自分の成績・得意分野・興味から、履修できる科目を理由付きで並べます。', '目標を選択：WAM を守る、バランス、チャレンジ。', '前提科目を満たし、近く開講される科目だけを表示します。', "取れそうな点数を示します：似た科目の成績やこれまでの WAM から、2回に1回は入る点数の範囲と、成績を共有した学生がこの科目で自分の WAM より高かったか低かったかを表示します。"],
         steps: ['「自分の記録」に修了科目と成績を追加します。', '得意分野・興味・目標をタップします（すべて任意。多く入れるほど精度が上がります）。', '「あなたに合う科目」を開く（または「科目をさがす」で「自分に合う順」をオン）と、各科目の理由が読めます。'],
-        asks: ['来学期どの科目を取るべき？', '自分に合う選択科目やブレッドス科目は？', 'WAM に有利な科目は？'],
+        asks: ['来学期どの科目を取るべき？', '自分に合う選択科目やブレッドス科目は？', 'WAM に有利な科目は？', "この科目で何点くらい取れそう？"],
       },
       record: {
-        what: ['修了科目と成績から WAM を計算します。合否のみの科目や不合格は大学と同じ方法で扱います。', '目標 WAM：残りの学位で必要な平均点。', 'もしも計算：ある科目で特定の点を取ったときの WAM。', 'ブラウザにだけ保存。ファイルにバックアップして別の端末で復元できます。履修計画やおすすめにも使われます。'],
+        what: ['修了科目と成績から WAM を計算します。合否のみの科目や不合格は大学と同じ方法で扱います。', '目標 WAM：残りの学位で必要な平均点。', 'もしも計算：ある科目で特定の点を取ったときの WAM。', 'ブラウザにだけ保存。ファイルにバックアップして別の端末で復元できます。履修計画やおすすめにも使われます。', "キャリア目標：職業を選ぶと、その職業に必要な科目や役立つ科目がおすすめで優先され、まだ足りない科目も表示されます。", "履歴書のスキル：履修した科目で身につけたツール・専門スキル・能力を、元の科目名つきの履歴書向けの文にまとめ、キャリア目標で雇用主が求めるスキルと比べます。ワンタップでコピーできます。"],
         steps: ['修了した科目と成績を追加します。', 'WAM を確認し、目標を設定し、もしも計算を試します。', '得意分野・興味・目標を加えて、計画とおすすめを自分に合わせます。'],
-        asks: ['今の WAM はいくつ？', '目標 WAM には残りの科目で平均何点必要？'],
+        asks: ['今の WAM はいくつ？', '目標 WAM には残りの科目で平均何点必要？', "履修した科目から履歴書に書けるスキルは？", "希望する仕事にはあとどの科目が必要？"],
       },
       final: {
         what: [
@@ -275,6 +297,11 @@ export const FEATURE_GUIDES: Record<LocaleCode, FeatureLocale> = {
         steps: ['試験のある科目と日付を追加します。', '開始日と1日の目安時間を設定します。', 'スケジュールに沿って復習し、予定が入った日は「忙しい」にします。'],
         asks: ['試験勉強の計画はどう立てる？', '試験前は1日何時間勉強すべき？', '試験が近くに重なったら時間をどう分ける？'],
       },
+      shortlist: {
+        what: ["科目ページや「科目をさがす」で ♡ を押して科目を保存します。", "1つの表で並べて比較：単位数、開講時期、期末試験の割合、難しさ、前提科目を満たしているか、ハードル、評価。", "どの列でも並べ替えたり、違いだけを表示したりでき、決めた科目はそのまま履修計画に追加できます。"],
+        steps: ["迷っている科目で ♡ を押します。", "保存リストを開いて1つの表で比べます。", "選んだ科目を履修計画に追加します。"],
+        asks: ["この中でどの科目を取るべき？", "期末試験の割合が小さい、または易しいのはどれ？"],
+      },
     },
   },
   ko: {
@@ -286,9 +313,10 @@ export const FEATURE_GUIDES: Record<LocaleCode, FeatureLocale> = {
           '모든 과목의 선수과목, 과정 규칙(학점, 레벨, breadth와 학문 분야 한도), 학기별 부담을 확인해요. 각 확인은 충족, 미충족, 아직 판단 불가로 표시돼요.',
           '부담이 큰 학기를 설명하고 분산할 수 있는 교체를 제안해요. 낙제한 과목은 다시 넣고, 정상 기간을 넘기면 알려 줘요(학생 비자에 중요해요).',
           '과목을 끌어서 학기를 옮기고, 여름·겨울 학기를 추가하고, census date를 보고, 링크로 공유하거나 인쇄·PDF로 저장할 수 있어요.',
+          "진로 목표(데이터 분석가, 회계사 등)를 정하면 그 직업에 필요하거나 도움이 되는 과목으로 선택 과목을 채우고, 과목마다 그 이유를 표시해요.",
         ],
         steps: ['학위, 전공, 시작 학기를 고르세요.', '이미 이수한 과목을 "내 기록"에 추가하세요(막 입학했다면 건너뛰어도 돼요).', '계획을 열면 모든 학기가 채워지고 확인돼 있어요. 모든 확인이 충족될 때까지 과목을 옮기거나 바꾼 뒤 Handbook과 My Course Planner에서 확인하세요.'],
-        asks: ['멜버른대 수강 계획은 어떻게 짜나요?', '전공을 위해 학기마다 어떤 과목을 들어야 하나요?', '두 번째 전공이나 부전공을 넣을 수 있나요?', '과목을 낙제해도 제때 졸업할 수 있나요?'],
+        asks: ['멜버른대 수강 계획은 어떻게 짜나요?', '전공을 위해 학기마다 어떤 과목을 들어야 하나요?', '두 번째 전공이나 부전공을 넣을 수 있나요?', '과목을 낙제해도 제때 졸업할 수 있나요?', "데이터 분석가가 되려면 어떤 과목을 들어야 하나요?"],
       },
       compare: {
         what: ['최대 다섯 개의 계획(계획 A, 계획 B…)을 저장하고, 각각 전공·강점·관심사·목표를 따로 가질 수 있어요.', '나란히 비교: 학위 규칙 충족 여부, 마지막 학기, 무거운 학기, 예상 WAM, 다른 과목 전부.'],
@@ -296,14 +324,14 @@ export const FEATURE_GUIDES: Record<LocaleCode, FeatureLocale> = {
         asks: ['이 전공과 저 전공 중 무엇을 해야 할까요?', '어느 계획이 더 빨리 끝나고 학기가 가벼운가요?'],
       },
       recommend: {
-        what: ['내 성적, 강점, 관심사를 바탕으로 들을 수 있는 과목을 이유와 함께 순위로 보여 줘요.', '목표 선택: WAM 지키기, 균형, 도전.', '선수과목을 충족하고 곧 개설되는 과목만 보여 줘요.'],
+        what: ['내 성적, 강점, 관심사를 바탕으로 들을 수 있는 과목을 이유와 함께 순위로 보여 줘요.', '목표 선택: WAM 지키기, 균형, 도전.', '선수과목을 충족하고 곧 개설되는 과목만 보여 줘요.', "받을 만한 점수를 보여 줘요: 비슷한 과목 성적이나 지금까지의 WAM으로 두 번에 한 번은 들어갈 점수 범위를 알려 주고, 성적을 공유한 학생들이 이 과목에서 자기 WAM보다 잘했는지 못했는지도 보여 줘요."],
         steps: ['"내 기록"에 이수한 과목과 성적을 추가하세요.', '강점, 관심사, 목표를 누르세요(모두 선택 사항이고, 많이 넣을수록 정확해져요).', '"나에게 맞는 과목"을 열고(또는 과목 찾기에서 "나에게 맞는 순"을 켜고) 각 과목의 이유를 읽어 보세요.'],
-        asks: ['다음 학기에 어떤 과목을 들어야 하나요?', '나에게 맞는 선택 과목이나 breadth 과목은?', 'WAM에 유리한 과목은?'],
+        asks: ['다음 학기에 어떤 과목을 들어야 하나요?', '나에게 맞는 선택 과목이나 breadth 과목은?', 'WAM에 유리한 과목은?', "이 과목에서 몇 점쯤 받을 수 있을까요?"],
       },
       record: {
-        what: ['이수한 과목과 성적으로 WAM을 계산해요. 패스/페일 과목과 낙제는 학교 방식대로 처리해요.', '목표 WAM: 남은 학위에서 필요한 평균.', '가정 계산: 한 과목에서 특정 점수를 받으면 WAM이 어떻게 되는지.', '브라우저에만 저장돼요. 파일로 백업해 다른 기기에서 복원할 수 있고, 계획과 추천에도 쓰여요.'],
+        what: ['이수한 과목과 성적으로 WAM을 계산해요. 패스/페일 과목과 낙제는 학교 방식대로 처리해요.', '목표 WAM: 남은 학위에서 필요한 평균.', '가정 계산: 한 과목에서 특정 점수를 받으면 WAM이 어떻게 되는지.', '브라우저에만 저장돼요. 파일로 백업해 다른 기기에서 복원할 수 있고, 계획과 추천에도 쓰여요.', "진로 목표: 직업을 고르면 그 직업에 필요하거나 도움이 되는 과목이 추천에서 우선되고, 아직 더 들어야 할 과목도 보여 줘요.", "이력서용 스킬: 들은 과목에서 배운 도구, 전문 스킬, 역량을 과목 이름과 함께 이력서 문장으로 정리하고, 진로 목표에서 고용주가 요구하는 스킬과 비교해요. 한 번에 복사할 수 있어요."],
         steps: ['이수한 과목과 성적을 추가하세요.', 'WAM을 확인하고 목표를 정하고 가정 점수를 넣어 보세요.', '강점, 관심사, 목표를 추가해 계획과 추천을 나에게 맞추세요.'],
-        asks: ['지금 내 WAM은 얼마인가요?', '목표 WAM에 도달하려면 남은 과목 평균이 얼마여야 하나요?'],
+        asks: ['지금 내 WAM은 얼마인가요?', '목표 WAM에 도달하려면 남은 과목 평균이 얼마여야 하나요?', "들은 과목으로 이력서에 어떤 스킬을 쓸 수 있나요?", "원하는 직업에 아직 어떤 과목이 더 필요한가요?"],
       },
       final: {
         what: [
@@ -330,6 +358,11 @@ export const FEATURE_GUIDES: Record<LocaleCode, FeatureLocale> = {
         steps: ['시험이 있는 과목과 날짜를 추가하세요.', '시작 날짜와 하루 공부 시간을 정하세요.', '시간표대로 복습하고, 일이 생긴 날은 바쁨으로 표시하세요.'],
         asks: ['시험 복습 계획은 어떻게 세우나요?', '시험 전에는 하루 몇 시간 공부해야 하나요?', '시험이 몰려 있으면 시간을 어떻게 나누나요?'],
       },
+      shortlist: {
+        what: ["과목 페이지나 과목 찾기에서 ♡를 눌러 과목을 저장해요.", "한 표에서 나란히 비교: 학점, 개설 학기, 기말시험 비중, 난이도, 선수과목 충족 여부, 허들, 평점.", "원하는 열로 정렬하거나 차이점만 볼 수 있고, 고른 과목은 바로 계획에 넣을 수 있어요."],
+        steps: ["고민 중인 과목에 ♡를 누르세요.", "저장 목록을 열어 한 표에서 비교하세요.", "고른 과목을 계획에 추가하세요."],
+        asks: ["이 과목들 중 무엇을 들어야 하나요?", "기말 비중이 작거나 더 쉬운 과목은?"],
+      },
     },
   },
   vi: {
@@ -341,9 +374,10 @@ export const FEATURE_GUIDES: Record<LocaleCode, FeatureLocale> = {
           'Kiểm tra môn tiên quyết của từng môn, quy định của khóa học (tín chỉ, cấp độ, giới hạn breadth và ngành) và độ nặng của mỗi học kỳ. Mỗi mục hiện là đạt, chưa đạt hoặc chưa xác định được.',
           'Giải thích học kỳ nào quá nặng và gợi ý đổi môn để chia đều; xếp lại môn bị trượt; cảnh báo khi kế hoạch kéo dài hơn thời gian chuẩn, điều quan trọng với visa du học.',
           'Kéo môn sang học kỳ khác, thêm kỳ hè hoặc kỳ đông, xem census date, chia sẻ kế hoạch bằng đường link, hoặc in và lưu thành PDF.',
+          "Khi đặt mục tiêu nghề nghiệp (như chuyên viên phân tích dữ liệu hay kế toán), kế hoạch sẽ lấp các môn tự chọn bằng những môn công việc đó yêu cầu hoặc có ích, và ghi rõ ở từng môn.",
         ],
         steps: ['Chọn bằng, chuyên ngành và học kỳ bắt đầu.', 'Thêm các môn đã học xong ở mục Hồ sơ của tôi (bỏ qua nếu bạn mới bắt đầu).', 'Mở Kế hoạch: mọi học kỳ đã được xếp và kiểm tra. Di chuyển hoặc đổi môn đến khi mọi mục đều đạt, rồi xác nhận trên Handbook và My Course Planner.'],
-        asks: ['Lên kế hoạch môn học ở UniMelb thế nào?', 'Mỗi học kỳ nên học môn gì cho chuyên ngành của mình?', 'Có thêm được chuyên ngành thứ hai hoặc ngành phụ không?', 'Trượt một môn thì có tốt nghiệp đúng hạn không?'],
+        asks: ['Lên kế hoạch môn học ở UniMelb thế nào?', 'Mỗi học kỳ nên học môn gì cho chuyên ngành của mình?', 'Có thêm được chuyên ngành thứ hai hoặc ngành phụ không?', 'Trượt một môn thì có tốt nghiệp đúng hạn không?', "Muốn làm chuyên viên phân tích dữ liệu thì nên học những môn nào?"],
       },
       compare: {
         what: ['Lưu tối đa năm kế hoạch (Kế hoạch A, Kế hoạch B…), mỗi cái có chuyên ngành, thế mạnh, sở thích và mục tiêu riêng.', 'Đặt cạnh nhau: quy định của bằng đã đạt chưa, học kỳ cuối, học kỳ nặng, WAM dự đoán và mọi môn khác nhau.'],
@@ -351,14 +385,14 @@ export const FEATURE_GUIDES: Record<LocaleCode, FeatureLocale> = {
         asks: ['Nên chọn chuyên ngành này hay chuyên ngành kia?', 'Kế hoạch nào xong sớm hơn hoặc nhẹ hơn?'],
       },
       recommend: {
-        what: ['Xếp hạng các môn bạn học được dựa trên điểm, thế mạnh và sở thích của bạn, kèm lý do cho từng môn.', 'Chọn mục tiêu: giữ WAM, cân bằng hoặc thử thách bản thân.', 'Chỉ liệt kê môn bạn đủ điều kiện tiên quyết và sắp mở.'],
+        what: ['Xếp hạng các môn bạn học được dựa trên điểm, thế mạnh và sở thích của bạn, kèm lý do cho từng môn.', 'Chọn mục tiêu: giữ WAM, cân bằng hoặc thử thách bản thân.', 'Chỉ liệt kê môn bạn đủ điều kiện tiên quyết và sắp mở.', "Cho thấy điểm bạn có khả năng đạt: một khoảng điểm có 1/2 cơ hội rơi vào, dựa trên điểm các môn tương tự hoặc WAM hiện tại, và những sinh viên đã chia sẻ điểm làm tốt hơn hay kém hơn WAM của họ ở môn này."],
         steps: ['Thêm các môn đã học xong và điểm ở Hồ sơ của tôi.', 'Chọn thế mạnh, sở thích và mục tiêu (đều không bắt buộc; càng điền nhiều càng chính xác).', 'Mở Những môn hợp với bạn (hoặc bật Xếp theo mình trong Tìm môn học) và đọc lý do dưới mỗi môn.'],
-        asks: ['Học kỳ tới nên học môn gì ở UniMelb?', 'Môn tự chọn hoặc breadth nào hợp với mình?', 'Môn nào tốt cho WAM?'],
+        asks: ['Học kỳ tới nên học môn gì ở UniMelb?', 'Môn tự chọn hoặc breadth nào hợp với mình?', 'Môn nào tốt cho WAM?', "Môn này mình có khả năng được bao nhiêu điểm?"],
       },
       record: {
-        what: ['Các môn đã học xong và điểm, kèm WAM được tính sẵn; môn đậu/rớt và môn trượt được xử lý như trường làm.', 'WAM mục tiêu: điểm trung bình bạn cần ở phần còn lại của khóa học.', 'Giả định: WAM sẽ là bao nhiêu nếu bạn đạt một điểm nào đó ở một môn.', 'Chỉ lưu trong trình duyệt; có thể sao lưu ra tệp và khôi phục trên thiết bị khác. Kế hoạch và gợi ý đều dùng nó.'],
+        what: ['Các môn đã học xong và điểm, kèm WAM được tính sẵn; môn đậu/rớt và môn trượt được xử lý như trường làm.', 'WAM mục tiêu: điểm trung bình bạn cần ở phần còn lại của khóa học.', 'Giả định: WAM sẽ là bao nhiêu nếu bạn đạt một điểm nào đó ở một môn.', 'Chỉ lưu trong trình duyệt; có thể sao lưu ra tệp và khôi phục trên thiết bị khác. Kế hoạch và gợi ý đều dùng nó.', "Mục tiêu nghề nghiệp: chọn một công việc, gợi ý sẽ ưu tiên các môn công việc đó yêu cầu hoặc có ích; hồ sơ hiện các môn còn thiếu.", "Kỹ năng cho CV: công cụ, kỹ năng chuyên môn và năng lực mà các môn đã dạy bạn, viết thành câu cho CV kèm tên môn, so với những gì nhà tuyển dụng yêu cầu cho mục tiêu nghề nghiệp của bạn. Sao chép chỉ với một chạm."],
         steps: ['Thêm từng môn đã học xong và điểm.', 'Xem WAM, đặt mục tiêu và thử giả định.', 'Thêm thế mạnh, sở thích và mục tiêu để kế hoạch và gợi ý hợp với bạn.'],
-        asks: ['WAM hiện tại của mình là bao nhiêu?', 'Cần trung bình bao nhiêu để đạt WAM mục tiêu?'],
+        asks: ['WAM hiện tại của mình là bao nhiêu?', 'Cần trung bình bao nhiêu để đạt WAM mục tiêu?', "Mình ghi được kỹ năng gì vào CV từ các môn đã học?", "Công việc mình muốn còn cần những môn nào?"],
       },
       final: {
         what: [
@@ -385,6 +419,11 @@ export const FEATURE_GUIDES: Record<LocaleCode, FeatureLocale> = {
         steps: ['Thêm các môn có thi và ngày thi.', 'Đặt ngày bắt đầu và khoảng bao lâu mỗi ngày.', 'Ôn theo thời gian biểu; đánh dấu ngày bận nếu có việc.'],
         asks: ['Lên kế hoạch ôn thi thế nào?', 'Trước kỳ thi nên học bao nhiêu giờ mỗi ngày?', 'Nhiều môn thi sát nhau thì chia thời gian thế nào?'],
       },
+      shortlist: {
+        what: ["Lưu môn bằng ♡ từ trang môn học hoặc Tìm môn học.", "Xem cạnh nhau trong một bảng: tín chỉ, kỳ mở, tỷ trọng thi cuối kỳ, độ khó, bạn đã đủ tiên quyết chưa, hurdle và đánh giá.", "Sắp xếp theo cột bất kỳ hoặc chỉ xem điểm khác nhau, rồi thêm môn đã chọn thẳng vào kế hoạch."],
+        steps: ["Nhấn ♡ ở các môn bạn đang phân vân.", "Mở danh sách đã lưu và so sánh trong một bảng.", "Thêm môn bạn chọn vào kế hoạch."],
+        asks: ["Trong mấy môn này nên học môn nào?", "Môn nào thi cuối kỳ chiếm ít hơn hoặc dễ hơn?"],
+      },
     },
   },
   id: {
@@ -396,9 +435,10 @@ export const FEATURE_GUIDES: Record<LocaleCode, FeatureLocale> = {
           'Memeriksa prasyarat setiap mata kuliah, aturan program (poin, level, batas breadth dan disiplin), dan beratnya tiap semester. Setiap pemeriksaan tampil sebagai terpenuhi, belum terpenuhi, atau belum bisa dipastikan.',
           'Menjelaskan semester yang berat dan menyarankan penukaran agar lebih merata, menjadwalkan ulang mata kuliah yang gagal, dan memberi peringatan bila rencana melewati masa studi normal, yang penting untuk visa pelajar.',
           'Seret mata kuliah antar semester, tambahkan semester musim panas atau musim dingin, lihat census date, bagikan rencana lewat tautan, atau cetak dan simpan sebagai PDF.',
+          "Dengan tujuan karier (misalnya analis data atau akuntan), rencana mengisi mata kuliah pilihan dengan yang diwajibkan atau membantu untuk pekerjaan itu, dan menyebutkannya di tiap mata kuliah.",
         ],
         steps: ['Pilih gelar, jurusan, dan semester mulai.', 'Tambahkan mata kuliah yang sudah selesai di Catatanku (lewati jika baru mulai).', 'Buka Rencana: setiap semester sudah terisi dan diperiksa. Pindahkan atau tukar mata kuliah sampai semua pemeriksaan terpenuhi, lalu pastikan di Handbook dan My Course Planner.'],
-        asks: ['Bagaimana menyusun rencana mata kuliah di UniMelb?', 'Mata kuliah apa yang diambil tiap semester untuk jurusanku?', 'Bisakah aku menambah jurusan kedua atau minor?', 'Apakah aku tetap lulus tepat waktu setelah gagal satu mata kuliah?'],
+        asks: ['Bagaimana menyusun rencana mata kuliah di UniMelb?', 'Mata kuliah apa yang diambil tiap semester untuk jurusanku?', 'Bisakah aku menambah jurusan kedua atau minor?', 'Apakah aku tetap lulus tepat waktu setelah gagal satu mata kuliah?', "Mata kuliah apa yang sebaiknya kuambil untuk menjadi analis data?"],
       },
       compare: {
         what: ['Simpan hingga lima rencana (Rencana A, Rencana B…), masing-masing dengan jurusan, kekuatan, minat, dan tujuannya sendiri.', 'Bandingkan berdampingan: aturan gelar yang terpenuhi, semester terakhir, semester berat, perkiraan WAM, dan setiap mata kuliah yang berbeda.'],
@@ -406,14 +446,14 @@ export const FEATURE_GUIDES: Record<LocaleCode, FeatureLocale> = {
         asks: ['Sebaiknya ambil jurusan ini atau itu?', 'Rencana mana yang lebih cepat selesai atau semesternya lebih ringan?'],
       },
       recommend: {
-        what: ['Mengurutkan mata kuliah yang bisa kamu ambil berdasarkan nilai, kekuatan, dan minatmu, masing-masing dengan alasannya.', 'Pilih tujuan: jaga WAM, seimbang, atau tantang diri.', 'Hanya menampilkan mata kuliah yang prasyaratnya kamu penuhi dan segera dibuka.'],
+        what: ['Mengurutkan mata kuliah yang bisa kamu ambil berdasarkan nilai, kekuatan, dan minatmu, masing-masing dengan alasannya.', 'Pilih tujuan: jaga WAM, seimbang, atau tantang diri.', 'Hanya menampilkan mata kuliah yang prasyaratnya kamu penuhi dan segera dibuka.', "Menunjukkan nilai yang kemungkinan kamu dapat: rentang dengan peluang 1 banding 2, dari nilaimu di mata kuliah serupa atau WAM-mu sejauh ini, serta apakah mahasiswa yang membagikan nilainya mendapat lebih tinggi atau lebih rendah dari WAM mereka di sini."],
         steps: ['Tambahkan mata kuliah yang sudah selesai dan nilainya di Catatanku.', 'Ketuk kekuatan, minat, dan tujuanmu (semuanya opsional; makin banyak, makin tepat).', 'Buka Urutkan untukku dan baca alasan di bawah tiap mata kuliah.'],
-        asks: ['Mata kuliah apa yang sebaiknya kuambil semester depan di UniMelb?', 'Mata kuliah pilihan atau breadth apa yang cocok untukku?', 'Mata kuliah apa yang bagus untuk WAM?'],
+        asks: ['Mata kuliah apa yang sebaiknya kuambil semester depan di UniMelb?', 'Mata kuliah pilihan atau breadth apa yang cocok untukku?', 'Mata kuliah apa yang bagus untuk WAM?', "Berapa nilai yang kemungkinan kudapat di mata kuliah ini?"],
       },
       record: {
-        what: ['Mata kuliah yang sudah selesai dan nilainya, dengan WAM yang langsung dihitung; mata kuliah lulus/gagal dan yang gagal diperlakukan seperti aturan universitas.', 'Target WAM: rata-rata yang kamu perlukan di sisa studimu.', 'Andai-andai: WAM-mu jika mendapat nilai tertentu di satu mata kuliah.', 'Hanya tersimpan di browsermu; cadangkan ke berkas dan pulihkan di perangkat lain. Rencana dan saran memakainya.'],
+        what: ['Mata kuliah yang sudah selesai dan nilainya, dengan WAM yang langsung dihitung; mata kuliah lulus/gagal dan yang gagal diperlakukan seperti aturan universitas.', 'Target WAM: rata-rata yang kamu perlukan di sisa studimu.', 'Andai-andai: WAM-mu jika mendapat nilai tertentu di satu mata kuliah.', 'Hanya tersimpan di browsermu; cadangkan ke berkas dan pulihkan di perangkat lain. Rencana dan saran memakainya.', "Tujuan karier: pilih pekerjaan dan saran akan mengutamakan mata kuliah yang diwajibkan atau membantu untuk pekerjaan itu; catatan menunjukkan apa yang masih kurang.", "Keterampilan untuk CV: alat, keterampilan khusus, dan kemampuan yang diajarkan mata kuliahmu, ditulis sebagai kalimat CV beserta nama mata kuliahnya, dibandingkan dengan yang diminta pemberi kerja untuk tujuan kariermu. Salin dengan sekali ketuk."],
         steps: ['Tambahkan tiap mata kuliah yang selesai beserta nilainya.', 'Lihat WAM-mu, tetapkan target, dan coba andai-andai.', 'Tambahkan kekuatan, minat, dan tujuan agar rencana dan saran cocok untukmu.'],
-        asks: ['Berapa WAM-ku sekarang?', 'Berapa rata-rata yang kuperlukan untuk mencapai target WAM?'],
+        asks: ['Berapa WAM-ku sekarang?', 'Berapa rata-rata yang kuperlukan untuk mencapai target WAM?', "Keterampilan apa yang bisa kutulis di CV dari mata kuliahku?", "Mata kuliah apa yang masih kuperlukan untuk pekerjaan yang kuinginkan?"],
       },
       final: {
         what: [
@@ -440,6 +480,11 @@ export const FEATURE_GUIDES: Record<LocaleCode, FeatureLocale> = {
         steps: ['Tambahkan mata kuliah yang ada ujiannya beserta tanggalnya.', 'Atur kapan mulai dan kira-kira berapa lama per hari.', 'Ikuti jadwalnya; tandai hari sibuk bila ada urusan.'],
         asks: ['Bagaimana menyusun jadwal belajar untuk ujian?', 'Berapa jam sehari sebaiknya belajar sebelum ujian?', 'Beberapa ujian berdekatan: bagaimana membagi waktu?'],
       },
+      shortlist: {
+        what: ["Simpan mata kuliah dengan ♡ dari halaman mata kuliah atau pencarian mata kuliah.", "Lihat berdampingan dalam satu tabel: poin, kapan dibuka, bobot ujian akhir, tingkat kesulitan, apakah prasyarat terpenuhi, hurdle, dan rating.", "Urutkan menurut kolom mana pun atau tampilkan perbedaannya saja, lalu tambahkan pilihanmu langsung ke rencana."],
+        steps: ["Ketuk ♡ pada mata kuliah yang masih kamu pertimbangkan.", "Buka daftar simpanan dan bandingkan dalam satu tabel.", "Tambahkan pilihanmu ke rencana."],
+        asks: ["Dari mata kuliah ini, mana yang sebaiknya kuambil?", "Mata kuliah mana yang bobot ujian akhirnya lebih kecil atau lebih mudah?"],
+      },
     },
   },
   ms: {
@@ -451,9 +496,10 @@ export const FEATURE_GUIDES: Record<LocaleCode, FeatureLocale> = {
           'Menyemak prasyarat setiap subjek, peraturan kursus (mata kredit, tahap, had breadth dan disiplin) dan betapa berat setiap semester. Setiap semakan dipaparkan sebagai dipenuhi, tidak dipenuhi atau belum pasti.',
           'Menerangkan semester yang berat dan mencadangkan pertukaran untuk menyebarkannya, merancang semula subjek yang gagal, dan memberi amaran jika pelan melebihi tempoh biasa, yang penting untuk visa pelajar.',
           'Seret subjek antara semester, tambah semester musim panas atau musim sejuk, lihat census date, kongsi pelan melalui pautan, atau cetak dan simpan sebagai PDF.',
+          "Dengan matlamat kerjaya (seperti penganalisis data atau akauntan), pelan mengisi subjek elektif dengan subjek yang diperlukan atau membantu untuk kerja itu, dan menyatakannya pada setiap subjek.",
         ],
         steps: ['Pilih ijazah, major dan semester anda bermula.', 'Tambah subjek yang sudah selesai di Rekod saya (langkau jika baru bermula).', 'Buka Pelan: setiap semester sudah diisi dan disemak. Alih atau tukar subjek sehingga semua semakan dipenuhi, kemudian sahkan dalam Handbook dan My Course Planner.'],
-        asks: ['Bagaimana merancang subjek di UniMelb?', 'Subjek apa perlu diambil setiap semester untuk major saya?', 'Bolehkah saya tambah major kedua atau minor?', 'Adakah saya masih tamat tepat pada masanya selepas gagal satu subjek?'],
+        asks: ['Bagaimana merancang subjek di UniMelb?', 'Subjek apa perlu diambil setiap semester untuk major saya?', 'Bolehkah saya tambah major kedua atau minor?', 'Adakah saya masih tamat tepat pada masanya selepas gagal satu subjek?', "Subjek apa patut saya ambil untuk menjadi penganalisis data?"],
       },
       compare: {
         what: ['Simpan sehingga lima rancangan (Rancangan A, Rancangan B…), setiap satu dengan major, kekuatan, minat dan matlamat sendiri.', 'Letak sebelah-menyebelah: peraturan ijazah yang dipenuhi, semester terakhir, semester berat, ramalan WAM dan setiap subjek yang berbeza.'],
@@ -461,14 +507,14 @@ export const FEATURE_GUIDES: Record<LocaleCode, FeatureLocale> = {
         asks: ['Patutkah saya ambil major ini atau yang itu?', 'Rancangan mana yang tamat lebih awal atau semesternya lebih ringan?'],
       },
       recommend: {
-        what: ['Menyusun subjek yang boleh anda ambil berdasarkan markah, kekuatan dan minat anda sendiri, setiap satu dengan sebabnya.', 'Pilih matlamat: lindungi WAM, seimbang atau cabar diri.', 'Hanya menyenaraikan subjek yang prasyaratnya anda penuhi dan akan ditawarkan tidak lama lagi.'],
+        what: ['Menyusun subjek yang boleh anda ambil berdasarkan markah, kekuatan dan minat anda sendiri, setiap satu dengan sebabnya.', 'Pilih matlamat: lindungi WAM, seimbang atau cabar diri.', 'Hanya menyenaraikan subjek yang prasyaratnya anda penuhi dan akan ditawarkan tidak lama lagi.', "Menunjukkan markah yang mungkin anda dapat: julat dengan peluang 1 dalam 2, daripada markah anda dalam subjek serupa atau WAM anda setakat ini, serta sama ada pelajar yang berkongsi gred mereka mendapat lebih tinggi atau lebih rendah daripada WAM mereka di sini."],
         steps: ['Tambah subjek yang sudah selesai dan markahnya di Rekod saya.', 'Ketik kekuatan, minat dan matlamat anda (semuanya pilihan; lebih banyak, lebih tepat).', 'Buka Susun untuk saya dan baca sebab di bawah setiap subjek.'],
-        asks: ['Subjek UniMelb apa patut saya ambil semester depan?', 'Subjek elektif atau breadth apa sesuai untuk saya?', 'Subjek apa yang baik untuk WAM?'],
+        asks: ['Subjek UniMelb apa patut saya ambil semester depan?', 'Subjek elektif atau breadth apa sesuai untuk saya?', 'Subjek apa yang baik untuk WAM?', "Berapa markah yang mungkin saya dapat dalam subjek ini?"],
       },
       record: {
-        what: ['Subjek yang sudah selesai dan markahnya, dengan WAM dikira; subjek lulus/gagal dan kegagalan dikendalikan seperti cara universiti.', 'Sasaran WAM: purata yang anda perlukan untuk baki ijazah.', 'Andaian: WAM anda jika mendapat markah tertentu dalam satu subjek.', 'Disimpan dalam pelayar anda sahaja; sandarkan ke fail dan pulihkan pada peranti lain. Pelan dan cadangan menggunakannya.'],
+        what: ['Subjek yang sudah selesai dan markahnya, dengan WAM dikira; subjek lulus/gagal dan kegagalan dikendalikan seperti cara universiti.', 'Sasaran WAM: purata yang anda perlukan untuk baki ijazah.', 'Andaian: WAM anda jika mendapat markah tertentu dalam satu subjek.', 'Disimpan dalam pelayar anda sahaja; sandarkan ke fail dan pulihkan pada peranti lain. Pelan dan cadangan menggunakannya.', "Matlamat kerjaya: pilih pekerjaan dan cadangan akan mengutamakan subjek yang diperlukan atau membantu untuknya; rekod menunjukkan apa yang masih perlu ditambah.", "Kemahiran untuk resume: alat, kemahiran khusus dan kebolehan yang diajar oleh subjek anda, ditulis sebagai ayat resume bersama nama subjeknya, dibandingkan dengan apa yang diminta majikan untuk matlamat kerjaya anda. Salin dengan satu ketikan."],
         steps: ['Tambah setiap subjek yang selesai dan markahnya.', 'Lihat WAM anda, tetapkan sasaran dan cuba andaian.', 'Tambah kekuatan, minat dan matlamat supaya pelan dan cadangan sesuai untuk anda.'],
-        asks: ['Berapakah WAM saya sekarang?', 'Berapa purata yang saya perlukan untuk mencapai sasaran WAM?'],
+        asks: ['Berapakah WAM saya sekarang?', 'Berapa purata yang saya perlukan untuk mencapai sasaran WAM?', "Kemahiran apa boleh saya tulis dalam resume daripada subjek saya?", "Subjek apa yang masih saya perlukan untuk kerja yang saya mahu?"],
       },
       final: {
         what: [
@@ -495,6 +541,11 @@ export const FEATURE_GUIDES: Record<LocaleCode, FeatureLocale> = {
         steps: ['Tambah subjek yang ada peperiksaan dan tarikhnya.', 'Tetapkan bila bermula dan lebih kurang berapa lama sehari.', 'Ikut jadual; tandakan hari sibuk jika ada urusan.'],
         asks: ['Bagaimana merancang ulang kaji untuk peperiksaan?', 'Berapa jam sehari patut belajar sebelum peperiksaan?', 'Beberapa peperiksaan berdekatan: bagaimana membahagikan masa?'],
       },
+      shortlist: {
+        what: ["Simpan subjek dengan ♡ daripada halaman subjek atau carian subjek.", "Lihat sebelah-menyebelah dalam satu jadual: mata kredit, bila ditawarkan, wajaran peperiksaan akhir, tahap kesukaran, sama ada anda memenuhi prasyarat, hurdle dan penilaian.", "Susun mengikut mana-mana lajur atau tunjukkan perbezaan sahaja, kemudian tambah pilihan anda terus ke dalam pelan."],
+        steps: ["Ketik ♡ pada subjek yang anda masih fikirkan.", "Buka senarai simpanan dan bandingkan dalam satu jadual.", "Tambah pilihan anda ke dalam pelan."],
+        asks: ["Antara subjek ini, yang mana patut saya ambil?", "Subjek mana yang wajaran peperiksaan akhirnya lebih kecil atau lebih mudah?"],
+      },
     },
   },
   hi: {
@@ -506,9 +557,10 @@ export const FEATURE_GUIDES: Record<LocaleCode, FeatureLocale> = {
           'हर विषय की पूर्वापेक्षाएँ, कोर्स के नियम (क्रेडिट पॉइंट, लेवल, breadth और विषय-क्षेत्र की सीमाएँ) और हर सेमेस्टर का भार जाँचता है। हर जाँच पूरी, अधूरी या अभी तय नहीं के रूप में दिखती है।',
           'भारी सेमेस्टर समझाता है और उन्हें बाँटने के लिए विषय बदलने के सुझाव देता है, फ़ेल हुए विषय दोबारा जोड़ता है, और योजना सामान्य अवधि से लंबी हो तो चेतावनी देता है, जो स्टूडेंट वीज़ा के लिए ज़रूरी है।',
           'विषयों को खींचकर दूसरे सेमेस्टर में ले जाएँ, समर या विंटर टर्म जोड़ें, census date देखें, योजना लिंक से साझा करें, या प्रिंट करके PDF में सहेजें।',
+          "करियर लक्ष्य (जैसे डेटा एनालिस्ट या अकाउंटेंट) तय करने पर, योजना आपके ऐच्छिक विषयों में वे विषय भरती है जो उस नौकरी के लिए ज़रूरी हैं या मदद करते हैं, और हर विषय पर यह बताती है।",
         ],
         steps: ['अपनी डिग्री, मेजर और शुरुआती सेमेस्टर चुनें।', 'पूरे किए हुए विषय "मेरा रिकॉर्ड" में जोड़ें (अभी शुरू कर रहे हैं तो छोड़ दें)।', 'प्लान खोलें: हर सेमेस्टर भरा और जाँचा हुआ है। सब जाँचें पूरी होने तक विषय खिसकाएँ या बदलें, फिर Handbook और My Course Planner में पुष्टि करें।'],
-        asks: ['UniMelb में विषयों की योजना कैसे बनाएँ?', 'अपने मेजर के लिए हर सेमेस्टर कौन-से विषय लूँ?', 'क्या मैं दूसरा मेजर या माइनर जोड़ सकता हूँ?', 'एक विषय में फ़ेल होने के बाद भी क्या मैं समय पर डिग्री पूरी कर पाऊँगा?'],
+        asks: ['UniMelb में विषयों की योजना कैसे बनाएँ?', 'अपने मेजर के लिए हर सेमेस्टर कौन-से विषय लूँ?', 'क्या मैं दूसरा मेजर या माइनर जोड़ सकता हूँ?', 'एक विषय में फ़ेल होने के बाद भी क्या मैं समय पर डिग्री पूरी कर पाऊँगा?', "डेटा एनालिस्ट बनने के लिए कौन-से विषय लूँ?"],
       },
       compare: {
         what: ['पाँच तक योजनाएँ (प्लान A, प्लान B…) रखें, हर एक का अपना मेजर, ताकतें, रुचियाँ और लक्ष्य।', 'साथ-साथ तुलना: डिग्री के नियम पूरे हुए या नहीं, आखिरी सेमेस्टर, भारी सेमेस्टर, अनुमानित WAM और हर अलग विषय।'],
@@ -516,14 +568,14 @@ export const FEATURE_GUIDES: Record<LocaleCode, FeatureLocale> = {
         asks: ['यह मेजर लूँ या वह?', 'कौन-सी योजना जल्दी पूरी होती है या जिसके सेमेस्टर हल्के हैं?'],
       },
       recommend: {
-        what: ['आपके अपने अंकों, ताकतों और रुचियों से, जो विषय आप ले सकते हैं उन्हें कारण सहित क्रम में रखता है।', 'लक्ष्य चुनें: WAM बचाएँ, संतुलित, या चुनौती।', 'सिर्फ़ वही विषय दिखाता है जिनकी पूर्वापेक्षाएँ आप पूरी करते हैं और जो जल्द चलेंगे।'],
+        what: ['आपके अपने अंकों, ताकतों और रुचियों से, जो विषय आप ले सकते हैं उन्हें कारण सहित क्रम में रखता है।', 'लक्ष्य चुनें: WAM बचाएँ, संतुलित, या चुनौती।', 'सिर्फ़ वही विषय दिखाता है जिनकी पूर्वापेक्षाएँ आप पूरी करते हैं और जो जल्द चलेंगे।', "आपके संभावित अंक दिखाता है: मिलते-जुलते विषयों के अंकों या अब तक के WAM से एक दायरा, जिसमें आने की संभावना 2 में 1 है, और यह भी कि अपने ग्रेड साझा करने वाले छात्रों ने यहाँ अपने WAM से बेहतर किया या कम।"],
         steps: ['"मेरा रिकॉर्ड" में पूरे किए विषय और अंक जोड़ें।', 'अपनी ताकतें, रुचियाँ और लक्ष्य चुनें (सब वैकल्पिक; जितना ज़्यादा भरेंगे, उतना सटीक)।', '"आपके लिए सही विषय" खोलें (या "सब्जेक्ट खोजें" में "मेरे हिसाब से क्रम" चालू करें) और हर विषय के नीचे कारण पढ़ें।'],
-        asks: ['अगले सेमेस्टर UniMelb में कौन-से विषय लूँ?', 'कौन-से ऐच्छिक या breadth विषय मेरे लिए ठीक हैं?', 'कौन-से विषय WAM के लिए अच्छे हैं?'],
+        asks: ['अगले सेमेस्टर UniMelb में कौन-से विषय लूँ?', 'कौन-से ऐच्छिक या breadth विषय मेरे लिए ठीक हैं?', 'कौन-से विषय WAM के लिए अच्छे हैं?', "इस विषय में मुझे कितने अंक मिलने की संभावना है?"],
       },
       record: {
-        what: ['आपके पूरे किए विषय और अंक, WAM की गणना के साथ; पास/फ़ेल विषय और फ़ेल हुए विषय यूनिवर्सिटी के तरीके से गिने जाते हैं।', 'लक्ष्य WAM: बाकी डिग्री में आपको कितना औसत चाहिए।', 'अगर-तो: किसी विषय में कोई अंक आने पर आपका WAM कितना होगा।', 'सिर्फ़ आपके ब्राउज़र में सहेजा जाता है; फ़ाइल में बैकअप लेकर दूसरे डिवाइस पर वापस ला सकते हैं। आपकी योजना और सुझाव इसका इस्तेमाल करते हैं।'],
+        what: ['आपके पूरे किए विषय और अंक, WAM की गणना के साथ; पास/फ़ेल विषय और फ़ेल हुए विषय यूनिवर्सिटी के तरीके से गिने जाते हैं।', 'लक्ष्य WAM: बाकी डिग्री में आपको कितना औसत चाहिए।', 'अगर-तो: किसी विषय में कोई अंक आने पर आपका WAM कितना होगा।', 'सिर्फ़ आपके ब्राउज़र में सहेजा जाता है; फ़ाइल में बैकअप लेकर दूसरे डिवाइस पर वापस ला सकते हैं। आपकी योजना और सुझाव इसका इस्तेमाल करते हैं।', "करियर लक्ष्य: कोई नौकरी चुनें, तो सुझाव उन विषयों को आगे रखते हैं जो उसके लिए ज़रूरी हैं या मदद करते हैं; रिकॉर्ड बताता है कि अभी क्या जोड़ना बाकी है।", "रिज़्यूमे के लिए स्किल्स: आपके विषयों ने जो टूल्स, विशेष कौशल और क्षमताएँ सिखाईं, उन्हें विषयों के नाम के साथ रिज़्यूमे की पंक्तियों में लिखता है, और आपके करियर लक्ष्य के लिए नियोक्ता जो माँगते हैं उससे तुलना करता है। एक टैप में कॉपी करें।"],
         steps: ['हर पूरा किया विषय और उसके अंक जोड़ें।', 'अपना WAM देखें, लक्ष्य रखें और अगर-तो आज़माएँ।', 'ताकतें, रुचियाँ और लक्ष्य जोड़ें ताकि योजना और सुझाव आपके हिसाब से हों।'],
-        asks: ['अभी मेरा WAM कितना है?', 'लक्ष्य WAM तक पहुँचने के लिए बाकी विषयों में औसत कितना चाहिए?'],
+        asks: ['अभी मेरा WAM कितना है?', 'लक्ष्य WAM तक पहुँचने के लिए बाकी विषयों में औसत कितना चाहिए?', "अपने विषयों से रिज़्यूमे में कौन-सी स्किल्स लिख सकता हूँ?", "जो नौकरी चाहिए उसके लिए अभी कौन-से विषय बाकी हैं?"],
       },
       final: {
         what: [
@@ -549,6 +601,11 @@ export const FEATURE_GUIDES: Record<LocaleCode, FeatureLocale> = {
         ],
         steps: ['जिन विषयों की परीक्षा है वे और उनकी तारीखें जोड़ें।', 'कब शुरू करना है और रोज़ लगभग कितना समय, तय करें।', 'टाइमटेबल के अनुसार पढ़ें; कोई काम आ जाए तो उस दिन को व्यस्त चिह्नित करें।'],
         asks: ['परीक्षा के लिए रिवीज़न की योजना कैसे बनाएँ?', 'परीक्षा से पहले रोज़ कितने घंटे पढ़ना चाहिए?', 'कई परीक्षाएँ पास-पास हैं: समय कैसे बाँटूँ?'],
+      },
+      shortlist: {
+        what: ["किसी भी विषय पेज या \"सब्जेक्ट खोजें\" से ♡ दबाकर विषय सहेजें।", "एक ही तालिका में साथ-साथ देखें: क्रेडिट पॉइंट, कब चलता है, फ़ाइनल परीक्षा का हिस्सा, कठिनाई, पूर्वापेक्षाएँ पूरी हैं या नहीं, hurdle और रेटिंग।", "किसी भी कॉलम से क्रम बदलें या सिर्फ़ अंतर दिखाएँ, फिर चुना हुआ विषय सीधे अपनी योजना में जोड़ें।"],
+        steps: ["जिन विषयों में उलझन है उन पर ♡ दबाएँ।", "सहेजी सूची खोलें और एक तालिका में तुलना करें।", "चुना हुआ विषय योजना में जोड़ें।"],
+        asks: ["इन विषयों में से कौन-सा लूँ?", "किस विषय में फ़ाइनल परीक्षा का हिस्सा कम है, या कौन-सा आसान है?"],
       },
     },
   },

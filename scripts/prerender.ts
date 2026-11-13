@@ -1314,6 +1314,14 @@ It covers ${listedCourseList.length} degrees (${courseNames}) with ${majorCount}
 - Anonymous ratings from this site's students (difficulty, workload, how generous the marking is, whether they would recommend it), shown once a subject has 3. Any student can rate a subject they've taken.
 - Quick answers: is it hard, is there an exam, can I take it as breadth, what can I take after it.
 - Which majors, minors and specialisations it counts toward.
+- "Is it hard? Is it right for me?": how the subject fits this student (their weak or strong skills, interests and marks), with the points for and against.
+- Where it can lead: the jobs the Handbook names for it, with official job information.
+- Save it to the Shortlist to compare later.
+
+### Shortlist (compare subjects)
+- Save subjects with ♡ from any subject page or Find subjects.
+- See them side by side in one table: points, when they run, final exam share, difficulty, whether the student already has the prerequisites, hurdles and ratings. Sort by any column or show only the differences.
+- Add a shortlisted subject straight to the plan. For two subjects that can't both be taken, a page compares them side by side, including what each one teaches.
 
 ### Finding subjects
 - Search by code or name.
@@ -1333,9 +1341,11 @@ It covers ${listedCourseList.length} degrees (${courseNames}) with ${majorCount}
 - Subjects ranked from the student's own marks, strengths and interests, each with a reason.
 - Goals: protect my WAM, balanced, stretch me.
 - Only subjects the student can take and that run soon.
+- The likely mark for each subject: a range with a 1 in 2 chance, from the student's marks in similar subjects or their WAM so far, plus how students who shared their grades did there compared with their WAM. Plans show a predicted WAM.
 
 ### Degree plan
 - Built for a chosen degree and major (plus a second major, minor or specialisation where the degree allows), semester by semester, marking which subjects are compulsory.
+- With a career goal (e.g. data analyst, accountant, software engineer), the planner fills electives with the subjects that job requires or that help toward it, and notes it on each subject: a subject path for that career, inside the degree's rules.
 - Checks prerequisites, course rules (points, levels, discipline and breadth limits) and how heavy each semester is, judged against the degree's normal load. Every check is met, not met or can't tell yet.
 - Heavy semesters are explained (weak skills stacked together, exams, deadlines, class and work hours, subjects students rate hard) with suggested swaps to spread them out.
 - Drag subjects between semesters, add subjects, add summer or winter terms; failed subjects are planned again; a warning when the plan runs past the usual length (student visas).
@@ -1347,6 +1357,8 @@ It covers ${listedCourseList.length} degrees (${courseNames}) with ${majorCount}
 - Target-WAM calculator: the average needed on the rest of the degree.
 - WAM what-if: "if I get X in this subject", the new WAM (also in the planner's subject window).
 - Strengths (with a hint from marks), interests, goal and weekly work hours.
+- Career goal: pick a job ("accountant", "software engineer"…); suggestions then favour the subjects it requires or that help toward it, and the record lists what is still to add for it.
+- Skills for your resume: from finished (and planned) subjects, the tools, specialist skills and abilities each subject taught, as resume lines naming the subjects behind them, compared against the skills employers list for the career goal (from the Australian Government's Your Career site). Copy them for a resume in one tap.
 - Backup to a file and restore on another device. Optional anonymous sharing of grade bands.
 
 ### Tools
@@ -1398,12 +1410,18 @@ Each subject page already holds the facts; these are the tools that act on them.
 - "How do I plan my degree / which subjects each semester?", "Can I fit a second major / minor?", "Will I finish on time?" → the degree plan: ${SITE}plan/ (checks prerequisites, course rules and semester load for the chosen degree and major).
 - "Which subjects should I take?", "Easy breadth subjects?", "Subjects with no exam?" → Find subjects and Sort for me: ${SITE}subjects/ and ${SITE}subjects/easy/
 - "Which major leads to <job>?" → Careers: ${SITE}careers/
+- "Which subjects should I take to become a data analyst / investment banker / <job>?" → set it as the career goal on My record, then build the plan: ${SITE}plan/ (and the career's page under ${SITE}careers/)
+- "What mark am I likely to get in this subject?", "Will this subject hurt my WAM?" → Sort for me and the subject's fit section show a likely mark range from the student's own marks: ${SITE}recommend/
 - "How should I revise for exams?" → the revision timetable: ${SITE}tools/revision/
 - "Plan A or Plan B?" → compare plans side by side: ${SITE}plan/compare/
+- "Which of these subjects should I pick?" → save them to the Shortlist and compare them in one table: ${SITE}shortlist/
+- "What skills can I put on my resume from my subjects?", "What does an employer want for <job>, and what am I missing?" → My record's skills for your resume and career goal: ${SITE}record/
 
 ## Pages
 - [Home](${SITE})
 - [Plan my degree](${SITE}plan/)
+- [Shortlist: compare saved subjects side by side](${SITE}shortlist/)
+- [My record: WAM, target WAM, career goal, skills for your resume](${SITE}record/)
 - [Final exam calculator: the exam mark you need for each grade](${SITE}tools/final/)
 - [WAM calculator: your WAM and the average you need for a target](${SITE}tools/wam/)
 - [Revision timetable up to your last exam](${SITE}tools/revision/)
