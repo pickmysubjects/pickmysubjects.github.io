@@ -3,18 +3,14 @@ course: B-ARTS
 year: 2026
 kind: major
 title: Psychology
-points: 125
+points: 100
 requirements:
-  # Level 1 core, group A.
-  - choose: { points: 12.5, from: [PSYC10003, PSYC10006] }
-  # Level 1 core, group B.
-  - choose: { points: 12.5, from: [PSYC10004, PSYC10007] }
-  # Level 2 core.
+  # Level 2 major core
   - all: [PSYC20006, PSYC20008, PSYC20007, PSYC20009]
-  # Level 3 core.
+  # Capstone and Level 3 major core (PSYC10003/10006 and PSYC10004/10007 come in as prerequisites; they are part of the APAC sequence, not the major)
   - all: [PSYC30013, PSYC30021]
-  # 25 points of Level 3 electives.
+  # 25 points of Level 3 electives
   - choose: { points: 25, from: [PSYC30014, PSYC30016, PSYC30017, PSYC30018, PSYC30019, PSYC30020, PSYC30022, PSYC30023] }
-# Structure from the 2026 Handbook major page (pasted); foundation subjects come in as prerequisites.
-handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
-verified_on: 2026-10-17 # structure; source: 2026 Handbook major page
+# Structure from the 2027 Handbook component page; foundation subjects come in as prerequisites.
+handbook: https://handbook.unimelb.edu.au/2027/components/b-arts-major-26
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked
