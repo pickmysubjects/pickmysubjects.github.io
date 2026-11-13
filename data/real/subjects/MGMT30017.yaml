@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - summer
+  "2027":
+    - summer
 prerequisites:
   all:
     - points:
@@ -31,7 +33,8 @@ min_attendance: 100
 attendance_applies_to:
   - seminars
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/mgmt30017
-source_year: 2026
-verified_on: 2026-10-14
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mgmt30017
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
+weekly_contact_hours: 23.5

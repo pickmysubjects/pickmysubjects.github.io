@@ -6,6 +6,9 @@ offerings:
   "2026":
     - semester-1
     - semester-2
+  "2027":
+    - semester-1
+    - semester-2
 prerequisites:
   all:
     - points:
@@ -20,23 +23,24 @@ topics:
   - business
 assessment:
   - kind: participation
-    weight: 20
+    weight: 25
     hurdle: true
   - kind: project
     weight: 5
     group: true
   - kind: presentation
+    weight: 25
+  - kind: presentation
     weight: 10
     group: true
   - kind: report
-    weight: 45
+    weight: 35
     group: true
-  - kind: report
-    weight: 20
 min_attendance: 100
 breadth_for: []
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/mgmt30012
-source_year: 2026
-verified_on: 2026-10-14
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mgmt30012
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
+weekly_contact_hours: 2.5

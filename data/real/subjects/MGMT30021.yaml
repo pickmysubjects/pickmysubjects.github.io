@@ -4,6 +4,8 @@ level: 3
 points: 12.5
 offerings:
   "2026": []
+  "2027":
+    - semester-1
 prerequisites: BUSA20001
 corequisites: none
 non_allowed: []
@@ -12,7 +14,7 @@ topics:
 assessment:
   - kind: assignment
     weight: 10
-  - kind: test
+  - kind: quiz
     weight: 20
   - kind: project
     weight: 20
@@ -38,7 +40,7 @@ breadth_for:
   - Bachelor of Music
   - Bachelor of Science
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/mgmt30021
-source_year: 2026
-verified_on: 2026-10-14
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mgmt30021
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

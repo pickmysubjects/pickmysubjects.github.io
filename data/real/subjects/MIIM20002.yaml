@@ -5,33 +5,34 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
+  "2027":
+    - semester-2
 prerequisites:
   any:
+    - BIOM20001
+    - BIOM20004
     - MIIM20001
-    - all:
-        - admission: B-BMED
-          note: Bachelor of Biomedicine students
-        - subject: CHEM10006
-        - subject: BIOM20001
 corequisites: none
 non_allowed: []
 assessment:
-  - kind: test
-    weight: 40
   - kind: quiz
     weight: 5
+  - kind: test
+    weight: 20
+  - kind: test
+    weight: 20
   - kind: exam
     weight: 55
-weekly_contact_hours: 4.5
+weekly_contact_hours: 5
 min_attendance: 80
 prescribed_texts: true
-handbook: https://handbook.unimelb.edu.au/2026/subjects/miim20002
-source_year: 2026
-verified_on: 2026-10-13
+handbook: https://handbook.unimelb.edu.au/2027/subjects/miim20002
+source_year: 2027
+verified_on: 2026-11-13
 categories:
   B-SCI: science
 breadth_for: []
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
 skills:
   - lab
 topics:

@@ -7,18 +7,20 @@ offerings:
     - summer
     - semester-1
     - semester-2
+  "2027":
+    - summer
+    - semester-1
+    - semester-2
 prerequisites:
   all:
     - points:
         min: 100
-    - all:
-        - points:
-            min: 100
-        - permission: application
-          note: "Students are required to apply for permission to enrol into this subject prior to commencement of the internship. Students should make this application via the online application form: Link Applications will be reviewed in three rounds: Round 1 (Summer and Semester 1 availability): closing 31 October Round 2 (Semester 1 availability): closing 31 January Round 3 (Semester 2 availability): closing 31 May Students will receive outcomes within two weeks of the closing date for the relevant round. For further information including FAQS on the Application and Selection Process see: Link"
+    - permission: application
+      note: "Students are required to apply for permission to enrol into this subject prior to commencement of the internship. Students should make this application via the online application form: Link Applications will be reviewed in three rounds: Round 1 (Summer and Semester 1 availability): closing 31 October Round 2 (Semester 1 availability): closing 31 January Round 3 (Semester 2 availability): closing 31 May Students will receive outcomes within two weeks of the closing date for the relevant round. For further information including FAQS on the Application and Selection Process see: Link"
 corequisites: none
 non_allowed:
   - MULT30019
+  - MULT20012
 skills:
   - writing
   - presentation
@@ -41,7 +43,8 @@ breadth_for:
   - Bachelor of Fine Arts (Visual Art)
   - Bachelor of Music
   - Bachelor of Science
-handbook: https://handbook.unimelb.edu.au/2026/subjects/mult20010
-source_year: 2026
-verified_on: 2026-10-16
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mult20010
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
+weekly_contact_hours: 10

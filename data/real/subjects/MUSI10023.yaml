@@ -6,6 +6,9 @@ offerings:
   "2026":
     - summer
     - semester-2
+  "2027":
+    - summer
+    - semester-2
 prerequisites:
   any:
     - admission: B-MUS Bachelor of Music, D-MUSIC Diploma in Music or GD-MUS Graduate Diploma in Music
@@ -24,11 +27,12 @@ topics:
   - music
 assessment:
   - kind: assignment
-    weight: 65
-  - kind: quiz
-    weight: 15
+    weight: 50
   - kind: exam
     weight: 20
+  - kind: exam
+    weight: 30
+    hurdle: true
 weekly_contact_hours: 3
 min_attendance: 80
 breadth_for:
@@ -36,6 +40,7 @@ breadth_for:
   - Bachelor of Biomedicine
   - Bachelor of Commerce
   - Bachelor of Design
+  - Bachelor of Environments
   - Bachelor of Fine Arts (Acting)
   - Bachelor of Fine Arts (Animation)
   - Bachelor of Fine Arts (Dance)
@@ -47,7 +52,7 @@ breadth_for:
   - Bachelor of Fine Arts (Visual Art)
   - Bachelor of Science
 prescribed_texts: true
-handbook: https://handbook.unimelb.edu.au/2026/subjects/musi10023
-source_year: 2026
-verified_on: 2026-10-21
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Summer Term runs as a 6-week intensive (Parkville); Semester 2 is at Southbank. All assessment must be submitted to pass."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/musi10023
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. Summer Term runs as a 6-week intensive (4 January to 12 February); in Semester 2, tutorials are at Southbank or Parkville. All assessment must be submitted to pass."

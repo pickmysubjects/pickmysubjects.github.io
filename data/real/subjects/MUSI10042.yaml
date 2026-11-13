@@ -5,6 +5,8 @@ points: 6.25
 offerings:
   "2026":
     - semester-2
+  "2027":
+    - semester-2
 prerequisites:
   permission: application
   note: "PERMISSION OF COORDINATOR: Students are required to apply for permission to enrol in this subject. Students must specify their instrument when applying for permission. Students must submit proof of permission with an Enrolment Assistance form to Stop 1: Link to Enrolment Assistance form"
@@ -18,17 +20,17 @@ topics:
   - history
   - music
 assessment:
-  - kind: presentation
+  - kind: assignment
     weight: 40
-  - kind: participation
+  - kind: assignment
     weight: 40
-  - kind: presentation
+  - kind: test
     weight: 20
 weekly_contact_hours: 2
 min_attendance: 75
 breadth_for: []
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/musi10042
-source_year: 2026
-verified_on: 2026-10-21
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Co-taught with MUSI20070 and MUSI30164. Needs skill on an early (period) instrument, about AMEB grade 7."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/musi10042
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. Co-taught with MUSI20070 and MUSI30164. Needs skill on an early (period) instrument, about AMEB grade 7."

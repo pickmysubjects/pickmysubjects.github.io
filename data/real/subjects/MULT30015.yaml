@@ -8,9 +8,14 @@ offerings:
     - semester-1
     - winter
     - semester-2
+  "2027":
+    - summer
+    - semester-1
+    - winter
+    - semester-2
 prerequisites:
   permission: coordinator
-  note: "Needs a workable research proposal and an academic who agrees to supervise it."
+  note: Needs a workable research proposal and an academic who agrees to supervise it.
 corequisites: none
 non_allowed: []
 skills:
@@ -21,7 +26,7 @@ assessment:
   - kind: assignment
     weight: 100
 breadth_for: []
-handbook: https://handbook.unimelb.edu.au/2026/subjects/mult30015
-source_year: 2026
-verified_on: 2026-10-21
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Your own 4000-word research paper with a supervisor, usually 30-minute meetings every fortnight; works like a small Honours project. Summer Term runs January-February and Winter Term June-July. All assessment must be submitted to pass."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mult30015
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. Your own 4000-word research paper with a supervisor, usually 30-minute meetings every fortnight; works like a small Honours project. Summer Term runs January-February and Winter Term June-July. All assessment must be submitted to pass."

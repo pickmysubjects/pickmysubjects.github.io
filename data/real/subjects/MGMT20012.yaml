@@ -1,0 +1,28 @@
+code: MGMT20012
+title: Business Case Analysis
+level: 2
+points: 12.5
+offerings:
+  "2027": []
+prerequisites:
+  permission: coordinator
+  note: Students must obtain written permission to enrol in this subject by emailing the Subject Coordinator.
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: presentation
+    weight: 20
+    group: true
+  - kind: presentation
+    weight: 30
+    group: true
+  - kind: presentation
+    weight: 30
+    group: true
+  - kind: report
+    weight: 20
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mgmt20012
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

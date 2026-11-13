@@ -5,49 +5,45 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
+  "2027":
+    - semester-2
 prerequisites:
-  any:
-    - all:
-        - any:
-            - MIIM20001
-            - BCMB20002
-        - any:
-            - BCMB20005
-            - GENE20004
-            - MIIM20002
-            - PATH20003
-            - GENE20003
-        - MIIM30002
-    - all:
-        - admission: B-BMED
-          note: Bachelor of Biomedicine students
-        - subject: BIOM20001
-        - subject: MIIM30002
+  all:
+    - MIIM30002
+    - any:
+        - BCMB20002
+        - BIOM20001
+        - BIOM20004
+        - MIIM20001
+    - any:
+        - BCMB20005
+        - GENE20004
+        - MIIM20002
+        - PATH20003
 corequisites: none
-non_allowed:
-  - MIIM30013
+non_allowed: []
 assessment:
   - kind: presentation
     weight: 12.5
-  - kind: report
+  - kind: assignment
     weight: 2.5
   - kind: report
     weight: 12.5
-  - kind: presentation
+  - kind: assignment
     weight: 22.5
     group: true
   - kind: exam
     weight: 50
 min_attendance: 80
 prescribed_texts: true
-handbook: https://handbook.unimelb.edu.au/2026/subjects/miim30015
-source_year: 2026
-verified_on: 2026-10-13
+handbook: https://handbook.unimelb.edu.au/2027/subjects/miim30015
+source_year: 2027
+verified_on: 2026-11-13
 categories:
   B-SCI: science
 breadth_for: []
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
-weekly_contact_hours: 5
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
+weekly_contact_hours: 37
 skills:
   - lab
   - presentation

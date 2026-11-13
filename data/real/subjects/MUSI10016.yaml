@@ -4,6 +4,7 @@ level: 1
 points: 6.25
 offerings:
   "2026": []
+  "2027": []
 prerequisites:
   all:
     - admission: B-MUS Bachelor of Music
@@ -20,13 +21,13 @@ topics:
   - performance
   - music
 assessment:
-  - kind: presentation
+  - kind: assignment
     weight: 50
   - kind: assignment
     weight: 50
 min_attendance: 80
 breadth_for: []
-handbook: https://handbook.unimelb.edu.au/2026/subjects/musi10016
-source_year: 2026
-verified_on: 2026-10-21
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Not available in 2026."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/musi10016
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. Not available in 2026 or 2027."

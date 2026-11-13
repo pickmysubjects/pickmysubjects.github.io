@@ -4,9 +4,12 @@ level: 3
 points: 12.5
 offerings:
   "2026": []
+  "2027":
+    - semester-1
 prerequisites: none
 corequisites: none
-non_allowed: []
+non_allowed:
+  - MGMT20011
 topics:
   - management
 assessment:
@@ -24,7 +27,8 @@ breadth_for: []
 attendance_applies_to:
   - tutorials
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/mgmt30022
-source_year: 2026
-verified_on: 2026-10-14
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mgmt30022
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
+weekly_contact_hours: 3

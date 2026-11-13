@@ -4,6 +4,8 @@ level: 3
 points: 12.5
 offerings:
   "2026": []
+  "2027":
+    - semester-1
 prerequisites:
   any:
     - ECON20003
@@ -17,17 +19,15 @@ topics:
   - management
 assessment:
   - kind: assignment
-    weight: 10
-  - kind: test
     weight: 20
-  - kind: project
+  - kind: assignment
+    weight: 20
+    group: true
+  - kind: presentation
     weight: 10
     group: true
-  - kind: participation
-    weight: 10
   - kind: exam
     weight: 50
-    hurdle: true
 breadth_for:
   - Bachelor of Arts
   - Bachelor of Biomedicine
@@ -43,7 +43,7 @@ breadth_for:
   - Bachelor of Fine Arts (Visual Art)
   - Bachelor of Music
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/mgmt30020
-source_year: 2026
-verified_on: 2026-10-14
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/mgmt30020
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
