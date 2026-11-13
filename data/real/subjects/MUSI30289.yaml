@@ -1,11 +1,15 @@
 code: MUSI30289
-title: "Guitar Ensemble 2 (Breadth)"
+title: Guitar Ensemble 2 (Breadth)
 level: 3
 points: 12.5
 offerings:
   "2026":
     - semester-2
-prerequisites: none
+  "2027":
+    - semester-2
+prerequisites:
+  permission: application
+  note: Audition required; a successful audition counts as permission to enrol (submit it with an Enrolment Assistance form to Stop 1).
 corequisites: none
 non_allowed: []
 skills:
@@ -18,9 +22,6 @@ assessment:
     weight: 75
   - kind: assignment
     weight: 25
-  - kind: participation
-    weight: 0
-    hurdle: true
 weekly_contact_hours: 2
 min_attendance: 80
 breadth_for:
@@ -37,7 +38,7 @@ breadth_for:
   - Bachelor of Fine Arts (Theatre)
   - Bachelor of Fine Arts (Visual Art)
 prescribed_texts: false
-handbook: "https://handbook.unimelb.edu.au/2026/subjects/musi30289"
-source_year: 2026
-verified_on: 2026-10-21
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. On campus at Southbank, one 2-hour rehearsal a week. Not available to Bachelor of Music students. Co-taught with the other Guitar Ensemble 2 subjects (MUSI10067, MUSI10174, MUSI20090, MUSI20239, MUSI30182). Good sight reading needed (about AMEB grade 7); nylon-string guitar preferred."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/musi30289
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. On campus at Southbank, one 2-hour rehearsal a week. Not available to Bachelor of Music students. Co-taught with the other Guitar Ensemble 2 subjects (MUSI10067, MUSI10174, MUSI20090, MUSI20239, MUSI30182). Good sight reading needed (about AMEB grade 7); nylon-string guitar preferred."

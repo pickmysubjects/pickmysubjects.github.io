@@ -1,0 +1,20 @@
+code: MUSI30298
+title: Diploma Practical Music 5
+level: 3
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites: MUSI20254
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: exam
+    weight: 100
+weekly_contact_hours: 7
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/musi30298
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

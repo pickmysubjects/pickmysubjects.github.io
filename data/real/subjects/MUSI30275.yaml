@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
+  "2027":
+    - semester-1
 prerequisites: MUSI20230
 corequisites: none
 non_allowed: []
@@ -16,17 +18,17 @@ topics:
   - art
   - music
 assessment:
+  - kind: assignment
+    weight: 30
   - kind: participation
     weight: 30
-  - kind: presentation
-    weight: 30
-  - kind: presentation
+  - kind: assignment
     weight: 40
 weekly_contact_hours: 6
 min_attendance: 80
 breadth_for: []
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/musi30275
-source_year: 2026
-verified_on: 2026-10-21
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Only for Bachelor of Music students enrolled concurrently at the Australian National Academy of Music (ANAM)."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/musi30275
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. Only for Bachelor of Music students enrolled concurrently at the Australian National Academy of Music (ANAM)."

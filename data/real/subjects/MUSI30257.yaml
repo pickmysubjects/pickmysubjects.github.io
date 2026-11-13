@@ -5,10 +5,13 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
+  "2027":
+    - semester-2
 prerequisites:
   average:
     min: 75
-    from: [MUSI20244]
+    from:
+      - MUSI20244
 corequisites: none
 non_allowed:
   - MUSI40103
@@ -20,18 +23,18 @@ topics:
   - history
   - music
 assessment:
-  - kind: presentation
+  - kind: assignment
     weight: 20
-  - kind: presentation
+  - kind: assignment
     weight: 20
-  - kind: presentation
+  - kind: assignment
     weight: 50
   - kind: participation
     weight: 10
 weekly_contact_hours: 3
 breadth_for: []
 prescribed_texts: true
-handbook: https://handbook.unimelb.edu.au/2026/subjects/musi30257
-source_year: 2026
-verified_on: 2026-10-21
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. For continuo players (harpsichord, piano, organ, lute or guitar); about AMEB grade 6 recommended."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/musi30257
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. For continuo players (harpsichord, piano, organ, lute or guitar); about AMEB grade 6 recommended."

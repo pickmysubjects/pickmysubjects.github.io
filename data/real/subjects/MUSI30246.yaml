@@ -4,6 +4,8 @@ level: 3
 points: 12.5
 offerings:
   "2026": []
+  "2027":
+    - semester-1
 prerequisites: none
 corequisites: none
 non_allowed: []
@@ -14,12 +16,14 @@ topics:
   - history
   - music
 assessment:
-  - kind: project
-    weight: 40
   - kind: assignment
-    weight: 30
+    weight: 15
+  - kind: presentation
+    weight: 50
   - kind: assignment
-    weight: 30
+    weight: 10
+  - kind: report
+    weight: 25
 breadth_for:
   - Bachelor of Arts
   - Bachelor of Biomedicine
@@ -36,7 +40,8 @@ breadth_for:
   - Bachelor of Fine Arts (Visual Art)
   - Bachelor of Science
 prescribed_texts: true
-handbook: https://handbook.unimelb.edu.au/2026/subjects/musi30246
-source_year: 2026
-verified_on: 2026-10-21
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Not available in 2026."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/musi30246
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
+weekly_contact_hours: 2

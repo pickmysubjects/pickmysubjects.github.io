@@ -5,9 +5,11 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
+  "2027":
+    - semester-2
 prerequisites:
   permission: application
-  note: "Audition required; a successful audition is your permission to enrol."
+  note: Audition required; a successful audition is your permission to enrol.
 corequisites: none
 non_allowed: []
 skills:
@@ -17,17 +19,18 @@ topics:
   - performance
   - music
 assessment:
-  - kind: participation
+  - kind: assignment
     weight: 50
     group: true
-  - kind: presentation
-    weight: 25
-  - kind: assignment
-    weight: 25
+  - kind: test
+    weight: 20
+  - kind: project
+    weight: 10
+  - kind: project
+    weight: 10
   - kind: participation
-    weight: 0
-    hurdle: true
-weekly_contact_hours: 3
+    weight: 10
+weekly_contact_hours: 2.5
 min_attendance: 80
 breadth_for:
   - Bachelor of Arts
@@ -45,7 +48,7 @@ breadth_for:
   - Bachelor of Fine Arts (Visual Art)
   - Bachelor of Science
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/musi30278
-source_year: 2026
-verified_on: 2026-10-21
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Big Band playing jazz from the 1930s to today, with improvising encouraged; one 2-hour rehearsal a week plus concerts. Auditions at the start of the year; about AMEB grade 8 standard recommended."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/musi30278
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. Big Band playing jazz from the 1930s to today, with improvising encouraged; one 2-hour rehearsal a week plus concerts. Auditions at the start of the year; about AMEB grade 8 standard recommended."

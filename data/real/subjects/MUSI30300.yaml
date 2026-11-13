@@ -1,0 +1,22 @@
+code: MUSI30300
+title: Music Administration and Strategy
+level: 3
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites: none
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: presentation
+    weight: 50
+    group: true
+  - kind: assignment
+    weight: 50
+weekly_contact_hours: 2
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/musi30300
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

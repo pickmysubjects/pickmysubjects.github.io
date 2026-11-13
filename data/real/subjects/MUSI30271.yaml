@@ -4,6 +4,7 @@ level: 3
 points: 12.5
 offerings:
   "2026": []
+  "2027": []
 prerequisites:
   any:
     - MUSI10047
@@ -19,7 +20,7 @@ topics:
 assessment:
   - kind: assignment
     weight: 50
-  - kind: assignment
+  - kind: project
     weight: 10
   - kind: project
     weight: 40
@@ -30,7 +31,7 @@ breadth_for:
   - Bachelor of Design
   - Bachelor of Science
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/musi30271
-source_year: 2026
-verified_on: 2026-10-21
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Not available in 2026. The research topic changes each year."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/musi30271
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. Not available in 2026 or 2027. The research topic changes each year."

@@ -1,0 +1,30 @@
+code: MUSI30301
+title: Music Internship
+level: 3
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  all:
+    - permission: application
+      note: "PERMISSION OF COORDINATOR: Students are required to apply for permission to enrol in this subject. Students must submit proof of permission with an Enrolment Assistance form to Stop 1: Enrolment Assistance Form"
+    - manual: Submit a 200-word expression of interest with a current CV
+    - MUSI30300
+corequisites: none
+non_allowed:
+  - MUSI40091
+assessment:
+  - kind: assignment
+    weight: 25
+  - kind: presentation
+    weight: 25
+  - kind: assignment
+    weight: 50
+    hurdle: true
+weekly_contact_hours: 6
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/musi30301
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

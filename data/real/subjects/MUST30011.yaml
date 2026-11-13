@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - summer
+  "2027":
+    - summer
 prerequisites: MUST20015
 corequisites: none
 non_allowed: []
@@ -20,7 +22,7 @@ assessment:
     group: true
   - kind: presentation
     weight: 20
-  - kind: presentation
+  - kind: project
     weight: 30
   - kind: report
     weight: 30
@@ -28,7 +30,7 @@ weekly_contact_hours: 4
 min_attendance: 75
 breadth_for: []
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/must30011
-source_year: 2026
-verified_on: 2026-10-21
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/must30011
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

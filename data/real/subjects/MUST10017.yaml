@@ -1,0 +1,29 @@
+code: MUST10017
+title: The Art of Working Online
+level: 1
+points: 12.5
+offerings:
+  "2027": []
+prerequisites: none
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: quiz
+    weight: 35
+  - kind: assignment
+    weight: 10
+  - kind: assignment
+    weight: 15
+  - kind: assignment
+    weight: 40
+breadth_for:
+  - Bachelor of Arts
+  - Bachelor of Biomedicine
+  - Bachelor of Design
+  - Bachelor of Environments
+  - Bachelor of Music
+  - Bachelor of Science
+handbook: https://handbook.unimelb.edu.au/2027/subjects/must10017
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

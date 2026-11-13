@@ -3,34 +3,34 @@ title: Guitar Ensemble 1
 level: 3
 points: 6.25
 offerings:
-  '2026':
-  - semester-1
+  "2026":
+    - semester-1
+  "2027":
+    - semester-1
 prerequisites: none
 corequisites: none
 non_allowed: []
 skills:
-- presentation
-- teamwork
-- music
+  - presentation
+  - teamwork
+  - music
 topics:
-- performance
-- art
-- music
+  - performance
+  - art
+  - music
 assessment:
-- kind: participation
-  weight: 30
-- kind: presentation
-  weight: 60
-- kind: participation
-  weight: 10
-- kind: participation
-  weight: 0
-  hurdle: true
+  - kind: assignment
+    weight: 30
+    group: true
+  - kind: test
+    weight: 60
+  - kind: participation
+    weight: 10
 weekly_contact_hours: 2
 min_attendance: 100
 breadth_for: []
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/musi30181
-source_year: 2026
-verified_on: 2026-10-21
-notes: 'Source: 2026 University of Melbourne Handbook; facts summarised and checked.'
+handbook: https://handbook.unimelb.edu.au/2027/subjects/musi30181
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
