@@ -293,6 +293,7 @@ export const ja: Messages = {
     dcomp: "WAM 65、50 ポイント修了、COMP10001 修了が必要。学生ビザでは取れません",
     dmathsc: "Specialist Maths のスタディスコア 30 以上（または同等）が必要。学生ビザでは取れません",
     dmusic: "これまでの成績で選考。学生ビザでは取れません",
+    oralhealth: "2027年から1・3年次は番号未定の新科目に。プランには現行の科目を表示",
   },
   rule: {
     diploma: "{title}：{rule}",

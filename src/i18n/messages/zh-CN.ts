@@ -293,6 +293,7 @@ export const zhCN: Messages = {
     dcomp: "要求 WAM 65、已修 50 学分且修过 COMP10001；持学生签证不能读",
     dmathsc: "要求 VCE Specialist Maths 30 分或同等；持学生签证不能读",
     dmusic: "按已有成绩择优录取；持学生签证不能读",
+    oralhealth: "2027 年起一、三年级改用还没编号的新课，计划里先显示现有的课",
   },
   rule: {
     diploma: "{title}：{rule}",

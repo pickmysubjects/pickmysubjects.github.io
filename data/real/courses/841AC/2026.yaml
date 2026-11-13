@@ -13,6 +13,9 @@ area_categories:
 handbook: https://handbook.unimelb.edu.au/2026/courses/841ac/course-structure
 verified_on: 2026-10-21 # rules checked by hand against the Handbook course structure
 listed: true
+# 2027 Handbook: years 1 and 3 change to new subjects whose codes are not published yet (ORAL1XXXX,
+# ORAL3XXXX); until they are, plans use the current subjects and the wizard says so.
+entry_note: oralhealth
 rules:
   - id: total
     kind: points

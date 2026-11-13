@@ -606,7 +606,7 @@ export const courseFileSchema = z
     // so they are kept once, under that course.
     based_on: z.string().min(1).optional(),
     // Who can enrol, when that limits the course (an i18n key under entry.*): shown under it.
-    entry_note: z.enum(['sciextd', 'dlang', 'dcomp', 'dmathsc', 'dmusic']).optional(),
+    entry_note: z.enum(['sciextd', 'dlang', 'dcomp', 'dmathsc', 'dmusic', 'oralhealth']).optional(),
     // The periods a new student can start the course in, when it doesn't take every intake.
     entry_periods: z.array(z.enum(PERIODS)).min(1).optional(),
     rules: z.array(courseRule),

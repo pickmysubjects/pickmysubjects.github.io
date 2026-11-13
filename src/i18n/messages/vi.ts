@@ -293,6 +293,7 @@ export const vi: Messages = {
     dcomp: "Cần WAM 65, đã học 50 tín chỉ và COMP10001; không mở cho visa du học",
     dmathsc: "Cần điểm Specialist Maths 30 hoặc tương đương; không mở cho visa du học",
     dmusic: "Xét tuyển theo kết quả học tập; không mở cho visa du học",
+    oralhealth: "Từ 2027, năm 1 và năm 3 dùng môn mới chưa có mã; kế hoạch tạm hiện các môn hiện tại",
   },
   rule: {
     diploma: "{title}: {rule}",

@@ -299,6 +299,7 @@ export const en = {
     dcomp: "Needs a WAM of 65, 50 points done and COMP10001; not open on a student visa",
     dmathsc: "Needs a Specialist Maths study score of 30 or equivalent; not open on a student visa",
     dmusic: "Selected on your results so far; not open on a student visa",
+    oralhealth: "From 2027, years 1 and 3 use new subjects not numbered yet; the plan shows the current ones",
   },
   rule: {
     diploma: "{title}: {rule}",

@@ -293,6 +293,7 @@ export const id: Messages = {
     dcomp: "Perlu WAM 65, 50 poin selesai dan COMP10001; tidak terbuka untuk visa pelajar",
     dmathsc: "Perlu nilai Specialist Maths 30 atau setara; tidak terbuka untuk visa pelajar",
     dmusic: "Seleksi berdasarkan nilai sejauh ini; tidak terbuka untuk visa pelajar",
+    oralhealth: "Mulai 2027, tahun 1 dan 3 memakai mata kuliah baru yang belum bernomor; rencana menampilkan yang sekarang",
   },
   rule: {
     diploma: "{title}: {rule}",
