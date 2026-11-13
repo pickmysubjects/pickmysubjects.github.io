@@ -518,8 +518,8 @@
 - handbook_id: b-bmed-major-5
   course: B-BMED
   title: "Biotechnology"
-  components: ["bmed-biotechnology-agrifood", "bmed-biotechnology-biomedical-biochemistry", "bmed-biotechnology-biomedical-microbiology", "bmed-biotechnology-biomedical-pharmacology", "bmed-biotechnology-chemical", "bmed-biotechnology-molecular-cell", "bmed-biotechnology-molecular-genetics"]
-  source: https://handbook.unimelb.edu.au/2026/components/b-bmed-major-5
+  components: ["bmed-biotechnology", "bmed-biotechnology-agrifood", "bmed-biotechnology-biomedical-biochemistry", "bmed-biotechnology-biomedical-microbiology", "bmed-biotechnology-biomedical-pharmacology", "bmed-biotechnology-chemical", "bmed-biotechnology-molecular-cell", "bmed-biotechnology-molecular-genetics"]
+  source: https://handbook.unimelb.edu.au/2027/components/b-bmed-major-5
   checked: 2026-10-23
   career_text: true
   industries: ["industry", "health", "agribusiness"]

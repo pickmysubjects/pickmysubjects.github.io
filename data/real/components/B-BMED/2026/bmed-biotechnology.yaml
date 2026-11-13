@@ -1,0 +1,15 @@
+id: bmed-biotechnology
+course: B-BMED
+year: 2027
+kind: major
+title: Biotechnology
+points: 50
+# From 2027 one Biotechnology major replaces the seven streams (bmed-biotechnology-*), which stay for
+# students who started before 2027.
+requirements:
+  # Capstone and Level 3 major core.
+  - all: [BTCH30004, BTCH30003]
+  # 25 points of Level 3 major electives.
+  - choose: { points: 25, from: [BCMB30001, BCMB30002, BOTA30005, PHRM30008, PHRM30009] }
+handbook: https://handbook.unimelb.edu.au/2027/components/b-bmed-major-5
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

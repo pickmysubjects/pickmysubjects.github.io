@@ -4,6 +4,7 @@ year: 2026
 kind: major
 title: Biotechnology (Chemical Biotechnology)
 points: 50
+closed_from: 2027 # 2027 Handbook: one Biotechnology major (bmed-biotechnology) replaces the streams
 requirements:
   - all: [BTCH30003, CHEM30016, CHEM30012]
   - choose: { points: 12.5, from: [CHEM30017, CHEM30014] }

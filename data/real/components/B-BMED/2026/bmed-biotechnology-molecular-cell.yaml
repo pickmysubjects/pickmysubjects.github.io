@@ -4,6 +4,7 @@ year: 2026
 kind: major
 title: "Biotechnology (Molecular: Cell and Developmental Biology)"
 points: 50
+closed_from: 2027 # 2027 Handbook: one Biotechnology major (bmed-biotechnology) replaces the streams
 requirements:
   - all: [BTCH30003, CEDB30002]
   - choose: { points: 25, from: [CEDB30003, BIOL30001, GENE30002, BIOL30002, BOTA30005, CEDB30004] }

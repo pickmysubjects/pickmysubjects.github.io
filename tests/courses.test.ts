@@ -106,10 +106,12 @@ describe('per-course rules (B-SCI and B-COM)', () => {
   })
   it('"not available in 2026" is unknown for later years, not never; the year itself stays no', async () => {
     const { offeredIn } = await import('../src/engine/availability')
-    const s = data.subjects.ACCT20008!
+    // ACCT20008 as it was in the 2026 Handbook: "not available in 2026", nothing known for later years.
+    const s = { ...data.subjects.ACCT20008!, offerings: { 2026: [] } }
+    const d = { ...data, subjects: { ...data.subjects, ACCT20008: s } }
     expect(offeredIn(s, 2026, 'semester-1').status).toBe('fail')
     expect(offeredIn(s, 2027, 'semester-1').status).toBe('unknown')
-    const { plan: p, unplaced } = generatePlan({ data, profile: { results: [], skills: {}, interests: [], goal: 'balanced' }, course: 'B-COM', courseYear: 2026, major: 'accounting', startYear: 2027, startPeriod: 'semester-1' })
+    const { plan: p, unplaced } = generatePlan({ data: d, profile: { results: [], skills: {}, interests: [], goal: 'balanced' }, course: 'B-COM', courseYear: 2026, major: 'accounting', startYear: 2027, startPeriod: 'semester-1' })
     expect(unplaced).toEqual([])
     expect(p.terms.flatMap((t) => t.subjects)).toContain('ACCT20008')
   })

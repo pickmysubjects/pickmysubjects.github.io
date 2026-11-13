@@ -76,8 +76,15 @@ describe('double majors: checking', () => {
     const p = plan('B-ARTS', 'history', undefined, ['history-and-philosophy-of-science-minor']).plan
     expect(fails(p)).toEqual([])
     const l3 = (codes: string[]) => p.terms.flatMap((t) => t.subjects).filter((c) => codes.includes(c))
-    const hist = ['HIST30004', 'HIST30006', 'HIST30010', 'HIST30051', 'HIST30064', 'HIST30065', 'HIST30066', 'HIST30068', 'HIST30076', 'HIST30077', 'HIST30078', 'HPSC30034']
-    const hps = ['HPSC30037', 'HPSC30023', 'HPSC30034', 'HPSC30019', 'HPSC30038', 'HIST30004', 'HPSC30039']
+    // The two level-3 lists, read from the data (they change with the Handbook year).
+    const level3 = (id: string) => {
+      const c = real.components.find((x) => x.id === id)!
+      // Elective (choose) lists only: the capstone is compulsory and stays in the plan.
+      const chooses = JSON.stringify(c.requirements.filter((r) => 'choose' in r))
+      return [...new Set(chooses.match(/[A-Z]{4}3\d{4}/g) ?? [])]
+    }
+    const hist = level3('history')
+    const hps = level3('history-and-philosophy-of-science-minor')
     // 25 points for each, with no subject counted twice: at least four distinct subjects.
     expect(new Set([...l3(hist), ...l3(hps)]).size).toBeGreaterThanOrEqual(4)
     // Only HIST30004 and HPSC30034 at level 3: enough for one of the two, not for both.
