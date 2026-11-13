@@ -1490,7 +1490,7 @@ export const en = {
     compareShared: "{n} subjects in common",
     compareNone: "No subjects in common.",
     compareOpen: "Open that major",
-    source: "From the 2026 University of Melbourne Handbook. Check it before you enrol.",
+    source: "From the 2027 University of Melbourne Handbook. Check it before you enrol.",
     notFound: "We can't find that major.",
     didYouMean: "Did you mean",
     majorTitle: "{title} major",
@@ -1871,7 +1871,7 @@ export const en = {
     helpSkillsLink: "Academic Skills",
     helpExamsLink: "Past exam papers",
     accTitle: "Professional accreditation",
-    accShort: "Only some majors lead to accreditation, and usually only if you take specific subjects. These are the ones the 2026 Handbook lists.",
+    accShort: "Only some majors lead to accreditation, and usually only if you take specific subjects. These are the ones the 2027 Handbook lists.",
     accWhole: "Whole course",
     accCondCss: "The major alone isn't enough: add the Artificial Intelligence or Advanced Computing specialisation.",
     accCondPsych: "Take the full 125-point accredited Psychology sequence, not the shorter 50-point Level 3 version.",
@@ -2635,7 +2635,7 @@ export const en = {
     },
     'rules-change': {
       q: 'Rules change every year and differ by degree, major, bachelor/master/PhD.',
-      a: "The plan follows the 2026 Handbook rules for each degree on the site, including second majors, minors, specialisations and the normal load per semester. Always confirm in the Handbook and My Course Planner.",
+      a: "The plan follows the 2027 Handbook rules for each degree on the site, including second majors, minors, specialisations and the normal load per semester. Always confirm in the Handbook and My Course Planner.",
     },
     future: {
       q: 'Which subjects lead where I want to go after uni?',

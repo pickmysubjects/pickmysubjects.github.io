@@ -1484,7 +1484,7 @@ export const ko: Messages = {
     compareShared: "공통 과목 {n}개",
     compareNone: "공통 과목이 없어요.",
     compareOpen: "그 전공 열기",
-    source: "출처: 멜버른대 2026 Handbook. 수강 신청 전에 다시 확인하세요.",
+    source: "출처: 멜버른대 2027 Handbook. 수강 신청 전에 다시 확인하세요.",
     notFound: "그 전공을 찾을 수 없어요.",
     didYouMean: "혹시 이 전공인가요",
     majorTitle: "{title} 전공",
@@ -1865,7 +1865,7 @@ export const ko: Messages = {
     helpSkillsLink: "Academic Skills",
     helpExamsLink: "기출 시험지",
     accTitle: "전문 자격 인증",
-    accShort: "인증으로 이어지는 전공은 일부뿐이고, 보통 지정 과목을 들어야 해요. 2026 Handbook 기준으로 정리하면 다음과 같아요.",
+    accShort: "인증으로 이어지는 전공은 일부뿐이고, 보통 지정 과목을 들어야 해요. 2027 Handbook 기준으로 정리하면 다음과 같아요.",
     accWhole: "학위 전체",
     accCondCss: "전공만으로는 부족해요. Artificial Intelligence나 Advanced Computing 세부전공을 더해야 해요.",
     accCondPsych: "125학점짜리 인증 심리학 과정 전체를 들어야 해요. 레벨 3만 있는 50학점 버전으로는 안 돼요.",
@@ -2629,7 +2629,7 @@ export const ko: Messages = {
     },
     'rules-change': {
       q: '규정은 매년 바뀌고 학위, 전공, 학사/석사/박사마다 다릅니다.',
-      a: "플랜은 사이트에 있는 각 학위의 2026년 Handbook 규칙을 따라요. 복수전공, 부전공, 세부전공, 학기별 기본 수강량도 포함돼요. 꼭 Handbook과 My Course Planner에서 다시 확인하세요.",
+      a: "플랜은 사이트에 있는 각 학위의 2027년 Handbook 규칙을 따라요. 복수전공, 부전공, 세부전공, 학기별 기본 수강량도 포함돼요. 꼭 Handbook과 My Course Planner에서 다시 확인하세요.",
     },
     future: {
       q: '졸업 후 가고 싶은 방향으로 이어지는 과목은?',

@@ -1484,7 +1484,7 @@ export const zhTW: Messages = {
     compareShared: "有 {n} 門課是共同的",
     compareNone: "沒有共同的課。",
     compareOpen: "打開那個主修",
-    source: "資料來源：墨爾本大學 2026 Handbook。選課前請再核對一次。",
+    source: "資料來源：墨爾本大學 2027 Handbook。選課前請再核對一次。",
     notFound: "找不到這個主修。",
     didYouMean: "你是不是要找",
     majorTitle: "{title} 主修",
@@ -1865,7 +1865,7 @@ export const zhTW: Messages = {
     helpSkillsLink: "Academic Skills",
     helpExamsLink: "考古題",
     accTitle: "專業認證",
-    accShort: "只有部分主修能拿到認證，而且通常要修指定的課。下面是 2026 Handbook 列出的。",
+    accShort: "只有部分主修能拿到認證，而且通常要修指定的課。下面是 2027 Handbook 列出的。",
     accWhole: "整個學位",
     accCondCss: "只讀這個主修不夠：還要加 Artificial Intelligence 或 Advanced Computing 方向。",
     accCondPsych: "要修完整的 125 分認證心理學序列，不是只有 Level 3 的 50 分版本。",
@@ -2629,7 +2629,7 @@ export const zhTW: Messages = {
     },
     'rules-change': {
       q: '規則每年都在變，不同學位、主修、學士／碩士／博士也不一樣。',
-      a: "排課依照 2026 年 Handbook 裡網站上每個學位的規則，包括雙主修、輔修、方向和每學期的正常課量。請務必在 Handbook 和 My Course Planner 裡再確認。",
+      a: "排課依照 2027 年 Handbook 裡網站上每個學位的規則，包括雙主修、輔修、方向和每學期的正常課量。請務必在 Handbook 和 My Course Planner 裡再確認。",
     },
     future: {
       q: '哪些課能幫我走向畢業後想去的方向？',

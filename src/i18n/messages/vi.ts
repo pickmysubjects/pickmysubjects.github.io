@@ -1484,7 +1484,7 @@ export const vi: Messages = {
     compareShared: "{n} môn chung",
     compareNone: "Không có môn chung.",
     compareOpen: "Mở chuyên ngành đó",
-    source: "Nguồn: Handbook 2026 của University of Melbourne. Hãy kiểm tra lại trước khi đăng ký.",
+    source: "Nguồn: Handbook 2027 của University of Melbourne. Hãy kiểm tra lại trước khi đăng ký.",
     notFound: "Không tìm thấy chuyên ngành này.",
     didYouMean: "Có phải bạn muốn tìm",
     majorTitle: "Chuyên ngành {title}",
@@ -1865,7 +1865,7 @@ export const vi: Messages = {
     helpSkillsLink: "Academic Skills",
     helpExamsLink: "Đề thi cũ",
     accTitle: "Chứng nhận nghề nghiệp (accreditation)",
-    accShort: "Chỉ một số ngành chính (major) dẫn tới chứng nhận nghề nghiệp, và thường phải học các môn được chỉ định. Đây là những ngành Handbook 2026 liệt kê.",
+    accShort: "Chỉ một số ngành chính (major) dẫn tới chứng nhận nghề nghiệp, và thường phải học các môn được chỉ định. Đây là những ngành Handbook 2027 liệt kê.",
     accWhole: "Cả khóa học",
     accCondCss: "Chỉ ngành chính thì chưa đủ: thêm chuyên ngành Artificial Intelligence hoặc Advanced Computing.",
     accCondPsych: "Học đủ chuỗi Tâm lý học được công nhận 125 tín chỉ, không phải bản rút gọn 50 tín chỉ chỉ có Level 3.",
@@ -2629,7 +2629,7 @@ export const vi: Messages = {
     },
     'rules-change': {
       q: 'Quy định thay đổi mỗi năm và khác nhau theo chương trình, chuyên ngành, cử nhân/thạc sĩ/tiến sĩ.',
-      a: "Kế hoạch theo quy định của Handbook 2026 cho từng bằng có trên trang, gồm cả chuyên ngành thứ hai, ngành phụ, hướng chuyên sâu và khối lượng học bình thường mỗi kỳ. Luôn kiểm tra lại trong Handbook và My Course Planner.",
+      a: "Kế hoạch theo quy định của Handbook 2027 cho từng bằng có trên trang, gồm cả chuyên ngành thứ hai, ngành phụ, hướng chuyên sâu và khối lượng học bình thường mỗi kỳ. Luôn kiểm tra lại trong Handbook và My Course Planner.",
     },
     future: {
       q: 'Môn nào dẫn tới con đường tôi muốn sau khi ra trường?',

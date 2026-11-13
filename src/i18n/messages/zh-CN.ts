@@ -1484,7 +1484,7 @@ export const zhCN: Messages = {
     compareShared: "有 {n} 门课是共同的",
     compareNone: "没有共同的课。",
     compareOpen: "打开那个专业",
-    source: "信息来源：墨尔本大学 2026 Handbook。选课前请再核对一次。",
+    source: "信息来源：墨尔本大学 2027 Handbook。选课前请再核对一次。",
     notFound: "找不到这个专业。",
     didYouMean: "你是不是要找",
     majorTitle: "{title} 专业",
@@ -1865,7 +1865,7 @@ export const zhCN: Messages = {
     helpSkillsLink: "Academic Skills",
     helpExamsLink: "往年考卷",
     accTitle: "专业认证",
-    accShort: "只有部分专业能拿到认证，而且通常要修指定的课。下面是 2026 Handbook 列出的。",
+    accShort: "只有部分专业能拿到认证，而且通常要修指定的课。下面是 2027 Handbook 列出的。",
     accWhole: "整个学位",
     accCondCss: "只读这个专业不够：还要加 Artificial Intelligence 或 Advanced Computing 方向。",
     accCondPsych: "要修完整的 125 分认证心理学序列，不是只有 Level 3 的 50 分版本。",
@@ -2629,7 +2629,7 @@ export const zhCN: Messages = {
     },
     'rules-change': {
       q: '规则每年都在变，不同学位、主修、本科/硕士/博士也不一样。',
-      a: "排课按 2026 年 Handbook 里网站上每个学位的规则，包括双主修、辅修、方向和每学期的正常课量。请务必在 Handbook 和 My Course Planner 里再确认。",
+      a: "排课按 2027 年 Handbook 里网站上每个学位的规则，包括双主修、辅修、方向和每学期的正常课量。请务必在 Handbook 和 My Course Planner 里再确认。",
     },
     future: {
       q: '哪些课能帮我走向毕业后想去的方向？',

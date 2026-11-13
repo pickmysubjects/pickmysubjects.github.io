@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it } from 'vitest'
 import { realData } from './realData'
 import { periodsFor } from '../src/engine/availability'
-import { factsYear, knownNotRunning, latestDataYear, publishedYear, setToday, shareUpdated, thisYear } from '../src/engine/dataYear'
+import { factsYear, HANDBOOK_PUBLISHED, knownNotRunning, latestDataYear, publishedYear, setToday, shareUpdated, thisYear } from '../src/engine/dataYear'
 import { forCourse } from '../src/engine/forCourse'
 import { generatePlan } from '../src/engine/generate'
 import { assumedOfferings, checkTerms } from '../src/engine/planCheck'
@@ -18,7 +18,19 @@ import { subject } from './helpers'
  * The year rollover: the 2027 Handbook comes out in November and is entered subject by subject.
  * The clock is injected (setToday), never the real date.
  */
-const data = realData()
+const real = realData()
+/** The real data as it was before the 2027 Handbook was entered: every year after 2026 taken out. */
+function only2026(d: Dataset): Dataset {
+  const subjects: Dataset['subjects'] = {}
+  for (const [code, s] of Object.entries(d.subjects)) {
+    if (s.offerings === 'unknown') { subjects[code] = s; continue }
+    const offerings = Object.fromEntries(Object.entries(s.offerings).filter(([y]) => Number(y) <= 2026))
+    if (!Object.keys(offerings).length) continue
+    subjects[code] = { ...s, offerings, sourceYear: Math.min(s.sourceYear ?? 2026, 2026) } as Subject
+  }
+  return { ...d, subjects }
+}
+const data = only2026(real)
 const sci = forCourse(data, 'B-SCI').subjects
 const t: Translate = (key: string, params?: Params) => {
   let node: unknown = en
@@ -49,7 +61,7 @@ describe('today (October 2026), data from the 2026 Handbook only', () => {
   it('the newest data year is 2026 and nothing is behind', () => {
     setToday('2026-10-26')
     expect(latestDataYear(data.subjects)).toBe(2026)
-    expect(publishedYear(data.subjects)).toBe(2026)
+    expect(publishedYear(data.subjects)).toBe(Math.max(HANDBOOK_PUBLISHED, 2026))
     expect(shareUpdated(data.subjects, 2026)).toBeGreaterThan(0.99)
   })
 
@@ -77,8 +89,8 @@ describe('today (October 2026), data from the 2026 Handbook only', () => {
 
   it('a plan in 2027 gets no markers yet: the 2027 Handbook is not out', () => {
     setToday('2026-10-26')
-    const pub = publishedYear(data.subjects)
-    for (const s of Object.values(data.subjects).slice(0, 200)) if (s.offerings !== 'unknown' && s.offerings['2026']) expect(factsYear(s, 2027, pub).older).toBe(false)
+    // Before the 2027 Handbook came out, the newest published year was 2026.
+    for (const s of Object.values(data.subjects).slice(0, 200)) if (s.offerings !== 'unknown' && s.offerings['2026']) expect(factsYear(s, 2027, 2026).older).toBe(false)
   })
 
   it('planner checks on real plans do not depend on the clock', () => {
@@ -171,5 +183,23 @@ describe('the plan’s one line about assumed teaching periods', () => {
     expect(assumedOfferings({ terms }, d)).toEqual({ year: 2027, from: 2026 })
     // Not one note per subject any more.
     expect(checkTerms({ course: 'B-SCI', courseYear: 2026, completed: [], terms }, d).some((i) => i.kind === 'offering-assumed')).toBe(false)
+  })
+})
+
+describe('November 2026: the 2027 Handbook is entered', () => {
+  it('the data is 2027 and nearly every subject has it', () => {
+    setToday('2026-11-14')
+    expect(HANDBOOK_PUBLISHED).toBe(2027)
+    expect(latestDataYear(real.subjects)).toBe(2027)
+    expect(publishedYear(real.subjects)).toBe(2027)
+    expect(shareUpdated(real.subjects, 2027)).toBeGreaterThan(0.9)
+  })
+
+  it('a subject with 2027 data shows 2027 facts and links to the 2027 Handbook', () => {
+    setToday('2026-11-14')
+    const s = Object.values(real.subjects).find((x) => x.offerings !== 'unknown' && (x.offerings['2027']?.length ?? 0) > 0)!
+    expect(factsYear(s, 2027, 2027)).toEqual({ year: 2027, older: false })
+    expect(handbookUrl(s.code, 2027)).toContain('/2027/')
+    expect(runsLine(t, s, 2027, ', ')).toContain('2027')
   })
 })

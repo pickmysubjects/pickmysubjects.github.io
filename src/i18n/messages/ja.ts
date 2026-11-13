@@ -1484,7 +1484,7 @@ export const ja: Messages = {
     compareShared: "共通の科目が {n} 個あります",
     compareNone: "共通の科目はありません。",
     compareOpen: "その専攻を開く",
-    source: "出典：メルボルン大学 2026 Handbook。履修登録の前にもう一度確認してください。",
+    source: "出典：メルボルン大学 2027 Handbook。履修登録の前にもう一度確認してください。",
     notFound: "その専攻が見つかりません。",
     didYouMean: "もしかして",
     majorTitle: "{title} 専攻",
@@ -1865,7 +1865,7 @@ export const ja: Messages = {
     helpSkillsLink: "Academic Skills",
     helpExamsLink: "過去問",
     accTitle: "専門資格の認定",
-    accShort: "資格認定につながるのは一部のメジャーだけで、たいていは指定科目の履修が条件です。2026年の Handbook に載っているものは次のとおりです。",
+    accShort: "資格認定につながるのは一部のメジャーだけで、たいていは指定科目の履修が条件です。2027年の Handbook に載っているものは次のとおりです。",
     accWhole: "学位全体",
     accCondCss: "メジャーだけでは足りません。Artificial Intelligence か Advanced Computing のスペシャライゼーションを追加します。",
     accCondPsych: "125ポイントの認定心理学シーケンスを全部取ります。レベル3だけの50ポイント版ではありません。",
@@ -2629,7 +2629,7 @@ export const ja: Messages = {
     },
     'rules-change': {
       q: '規則は毎年変わり、学位・メジャー・学士／修士／博士でも違う。',
-      a: "プランはサイトにある各学位の2026年Handbookのルールに従います。セカンドメジャー、マイナー、専門分野、学期ごとの標準的な履修量も含みます。必ずHandbookとMy Course Plannerで確認してください。",
+      a: "プランはサイトにある各学位の2027年Handbookのルールに従います。セカンドメジャー、マイナー、専門分野、学期ごとの標準的な履修量も含みます。必ずHandbookとMy Course Plannerで確認してください。",
     },
     future: {
       q: '卒業後に進みたい道につながる科目は？',

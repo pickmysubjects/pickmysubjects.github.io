@@ -1484,7 +1484,7 @@ export const hi: Messages = {
     compareShared: "{n} सब्जेक्ट दोनों में हैं",
     compareNone: "कोई सब्जेक्ट साझा नहीं है।",
     compareOpen: "वह मेजर खोलें",
-    source: "University of Melbourne की 2026 Handbook से। एनरोल करने से पहले फिर से जाँच लें।",
+    source: "University of Melbourne की 2027 Handbook से। एनरोल करने से पहले फिर से जाँच लें।",
     notFound: "यह मेजर नहीं मिला।",
     didYouMean: "क्या आप इसे ढूंढ रहे थे",
     majorTitle: "{title} मेजर",
@@ -1865,7 +1865,7 @@ export const hi: Messages = {
     helpSkillsLink: "Academic Skills",
     helpExamsLink: "पुराने एग्ज़ाम पेपर",
     accTitle: "प्रोफ़ेशनल accreditation",
-    accShort: "सिर्फ़ कुछ मेजर से accreditation मिलता है, और आमतौर पर तभी जब आप कुछ खास सब्जेक्ट लें। नीचे वही हैं जो 2026 Handbook में दिए गए हैं।",
+    accShort: "सिर्फ़ कुछ मेजर से accreditation मिलता है, और आमतौर पर तभी जब आप कुछ खास सब्जेक्ट लें। नीचे वही हैं जो 2027 Handbook में दिए गए हैं।",
     accWhole: "पूरा कोर्स",
     accCondCss: "सिर्फ़ मेजर काफ़ी नहीं: Artificial Intelligence या Advanced Computing स्पेशलाइज़ेशन जोड़ें।",
     accCondPsych: "पूरा 125-पॉइंट accredited Psychology sequence लें, छोटा 50-पॉइंट Level 3 वर्ज़न नहीं।",
@@ -2629,7 +2629,7 @@ export const hi: Messages = {
     },
     'rules-change': {
       q: 'नियम हर साल बदलते हैं और डिग्री, मेजर, बैचलर/मास्टर/PhD के हिसाब से अलग होते हैं।',
-      a: "प्लान साइट पर हर डिग्री के 2026 Handbook नियमों पर चलता है, जिसमें दूसरा मेजर, माइनर, स्पेशलाइज़ेशन और हर सेमेस्टर का सामान्य लोड भी शामिल है। Handbook और My Course Planner में ज़रूर पक्का करें।",
+      a: "प्लान साइट पर हर डिग्री के 2027 Handbook नियमों पर चलता है, जिसमें दूसरा मेजर, माइनर, स्पेशलाइज़ेशन और हर सेमेस्टर का सामान्य लोड भी शामिल है। Handbook और My Course Planner में ज़रूर पक्का करें।",
     },
     future: {
       q: 'कौन-से विषय मुझे पढ़ाई के बाद मेरी मंज़िल तक ले जाते हैं?',

@@ -1484,7 +1484,7 @@ export const id: Messages = {
     compareShared: "{n} mata kuliah yang sama",
     compareNone: "Tidak ada mata kuliah yang sama.",
     compareOpen: "Buka major itu",
-    source: "Dari Handbook University of Melbourne 2026. Cek lagi sebelum mendaftar.",
+    source: "Dari Handbook University of Melbourne 2027. Cek lagi sebelum mendaftar.",
     notFound: "Major itu tidak ditemukan.",
     didYouMean: "Mungkin maksudmu",
     majorTitle: "Major {title}",
@@ -1865,7 +1865,7 @@ export const id: Messages = {
     helpSkillsLink: "Academic Skills",
     helpExamsLink: "Soal ujian lama",
     accTitle: "Akreditasi profesi",
-    accShort: "Hanya sebagian jurusan yang mengarah ke akreditasi, dan biasanya hanya jika kamu mengambil mata kuliah tertentu. Ini yang tercantum di Handbook 2026.",
+    accShort: "Hanya sebagian jurusan yang mengarah ke akreditasi, dan biasanya hanya jika kamu mengambil mata kuliah tertentu. Ini yang tercantum di Handbook 2027.",
     accWhole: "Seluruh program",
     accCondCss: "Jurusan saja tidak cukup: tambahkan spesialisasi Artificial Intelligence atau Advanced Computing.",
     accCondPsych: "Ambil urutan Psikologi terakreditasi 125 poin secara penuh, bukan versi 50 poin yang hanya Level 3.",
@@ -2629,7 +2629,7 @@ export const id: Messages = {
     },
     'rules-change': {
       q: 'Aturan berubah tiap tahun dan berbeda menurut program, jurusan, S1/S2/S3.',
-      a: "Rencana mengikuti aturan Handbook 2026 untuk tiap gelar di situs ini, termasuk major kedua, minor, spesialisasi dan beban normal per semester. Selalu cek lagi di Handbook dan My Course Planner.",
+      a: "Rencana mengikuti aturan Handbook 2027 untuk tiap gelar di situs ini, termasuk major kedua, minor, spesialisasi dan beban normal per semester. Selalu cek lagi di Handbook dan My Course Planner.",
     },
     future: {
       q: 'Mata kuliah mana yang mengarah ke tujuanku setelah lulus?',

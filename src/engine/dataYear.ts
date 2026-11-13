@@ -11,7 +11,7 @@ import type { Subject } from './schema'
  * Handbook comes out (mid-November); see MAINTENANCE.md. The calendar year counts as published
  * too, so a forgotten bump can't hide that the data is behind.
  */
-export const HANDBOOK_PUBLISHED = 2026
+export const HANDBOOK_PUBLISHED = 2027
 
 /** "Today", replaceable in tests (the browser's own Date is mocked with page.clock instead). */
 let fixedToday: Date | undefined
