@@ -1,0 +1,30 @@
+code: MUSI20247
+title: Jazz in the Community 1
+level: 2
+points: 6.25
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites:
+  manual: Admission into the Jazz & Improvisation major in the B-MUS Bachelor of Music
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: project
+    weight: 15
+    group: true
+  - kind: project
+    weight: 25
+    group: true
+  - kind: project
+    weight: 35
+  - kind: presentation
+    weight: 25
+weekly_contact_hours: 2
+pass_fail: true
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/musi20247
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

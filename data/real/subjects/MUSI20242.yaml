@@ -3,34 +3,34 @@ title: African Music & Dance Ensemble 2
 level: 2
 points: 6.25
 offerings:
-  '2026':
-  - semester-2
+  "2026":
+    - semester-2
+  "2027":
+    - semester-1
+    - semester-2
 prerequisites: none
 corequisites: none
 non_allowed:
-- MUSI10022
+  - MUSI10022
 skills:
-- presentation
-- teamwork
-- music
+  - presentation
+  - teamwork
+  - music
 topics:
-- performance
-- art
-- society
-- music
+  - performance
+  - art
+  - society
+  - music
 assessment:
-- kind: participation
-  weight: 50
-- kind: presentation
-  weight: 50
-- kind: participation
-  weight: 0
-  hurdle: true
+  - kind: assignment
+    weight: 50
+  - kind: exam
+    weight: 50
 weekly_contact_hours: 2
 min_attendance: 75
 breadth_for: []
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/musi20242
-source_year: 2026
-verified_on: 2026-10-21
-notes: 'Source: 2026 University of Melbourne Handbook; facts summarised and checked.'
+handbook: https://handbook.unimelb.edu.au/2027/subjects/musi20242
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

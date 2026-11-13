@@ -1,0 +1,25 @@
+code: MUSI20252
+title: Jazz and Improvisation Performance 2
+level: 2
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+    - semester-2
+prerequisites: MUSI10246
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: assignment
+    weight: 15
+  - kind: assignment
+    weight: 25
+  - kind: exam
+    weight: 60
+    hurdle: true
+weekly_contact_hours: 2
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/musi20252
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

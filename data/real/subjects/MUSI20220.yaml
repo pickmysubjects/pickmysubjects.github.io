@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
+  "2027":
+    - semester-1
 prerequisites: MUSI10228
 corequisites: none
 non_allowed: []
@@ -15,15 +17,16 @@ topics:
   - art
   - music
 assessment:
+  - kind: test
+    weight: 50
+    hurdle: true
   - kind: assignment
-    weight: 40
-  - kind: project
-    weight: 60
+    weight: 50
 weekly_contact_hours: 4
 breadth_for: []
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/musi20220
-source_year: 2026
-verified_on: 2026-10-21
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/musi20220
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
 min_attendance: 80

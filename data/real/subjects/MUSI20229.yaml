@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
+  "2027":
+    - semester-1
 prerequisites: MUSI10234
 corequisites: none
 non_allowed: []
@@ -16,19 +18,19 @@ topics:
   - art
   - music
 assessment:
-  - kind: participation
+  - kind: assignment
     weight: 35
-  - kind: presentation
+  - kind: participation
     weight: 15
-  - kind: presentation
+  - kind: participation
     weight: 15
-  - kind: presentation
+  - kind: assignment
     weight: 35
 weekly_contact_hours: 6
 breadth_for: []
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/musi20229
-source_year: 2026
-verified_on: 2026-10-21
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Only for Bachelor of Music students enrolled concurrently at ANAM. The Handbook gives no weight for the ANAM large ensemble task; 15% assumed so the total is 100%."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/musi20229
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. Only for Bachelor of Music students enrolled concurrently at ANAM. The Handbook gives no weight for the ANAM large ensemble task; 15% assumed so the total is 100%."
 min_attendance: 80

@@ -7,6 +7,10 @@ offerings:
     - summer
     - semester-1
     - semester-2
+  "2027":
+    - summer
+    - semester-1
+    - semester-2
 prerequisites: none
 corequisites: none
 non_allowed: []
@@ -20,13 +24,10 @@ topics:
 assessment:
   - kind: quiz
     weight: 40
-  - kind: participation
+  - kind: assignment
     weight: 50
   - kind: assignment
     weight: 10
-  - kind: participation
-    weight: 0
-    hurdle: true
 weekly_contact_hours: 3
 min_attendance: 75
 breadth_for:
@@ -34,6 +35,7 @@ breadth_for:
   - Bachelor of Biomedicine
   - Bachelor of Commerce
   - Bachelor of Design
+  - Bachelor of Environments
   - Bachelor of Fine Arts (Acting)
   - Bachelor of Fine Arts (Animation)
   - Bachelor of Fine Arts (Dance)
@@ -45,7 +47,7 @@ breadth_for:
   - Bachelor of Fine Arts (Visual Art)
   - Bachelor of Science
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/musi20143
-source_year: 2026
-verified_on: 2026-10-21
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Summer Term (January-February) has two rehearsals a week; the semesters have one, plus online modules."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/musi20143
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. Summer Term (January-February) has two rehearsals a week; the semesters have one, plus online modules."

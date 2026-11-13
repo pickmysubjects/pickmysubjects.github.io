@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
+  "2027":
+    - semester-1
 prerequisites: none
 corequisites: none
 non_allowed: []
@@ -16,12 +18,12 @@ topics:
   - media
   - music
 assessment:
-  - kind: assignment
-    weight: 15
-  - kind: assignment
-    weight: 25
   - kind: project
-    weight: 60
+    weight: 20
+  - kind: project
+    weight: 30
+  - kind: exam
+    weight: 50
 weekly_contact_hours: 2
 categories:
   B-DES: design
@@ -30,6 +32,7 @@ breadth_for:
   - Bachelor of Biomedicine
   - Bachelor of Commerce
   - Bachelor of Design
+  - Bachelor of Environments
   - Bachelor of Fine Arts (Acting)
   - Bachelor of Fine Arts (Animation)
   - Bachelor of Fine Arts (Dance)
@@ -42,7 +45,7 @@ breadth_for:
   - Bachelor of Science
 min_attendance: 80
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/musi20173
-source_year: 2026
-verified_on: 2026-10-19
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/musi20173
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

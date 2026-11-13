@@ -8,6 +8,11 @@ offerings:
     - semester-1
     - winter
     - semester-2
+  "2027":
+    - summer
+    - semester-1
+    - winter
+    - semester-2
 prerequisites: none
 corequisites: none
 non_allowed: []
@@ -18,15 +23,12 @@ topics:
   - performance
   - music
 assessment:
-  - kind: participation
+  - kind: assignment
     weight: 50
   - kind: assignment
     weight: 15
-  - kind: presentation
+  - kind: assignment
     weight: 35
-  - kind: participation
-    weight: 0
-    hurdle: true
 weekly_contact_hours: 2
 min_attendance: 80
 breadth_for:
@@ -45,7 +47,7 @@ breadth_for:
   - Bachelor of Fine Arts (Visual Art)
   - Bachelor of Science
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/musi20164
-source_year: 2026
-verified_on: 2026-10-21
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. February (summer), Semester 1 and June (winter) run online; Semester 2 on campus. February and June are 4-week intensives of three 2-hour classes a week. Quotas apply. All assessment must be submitted to pass. Not available to Bachelor of Music or Diploma in Music students."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/musi20164
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. February (summer), Semester 1 and June (winter) run online; Semester 2 on campus. February and June are 4-week intensives of three 2-hour classes a week. Quotas apply. All assessment must be submitted to pass. Not available to Bachelor of Music or Diploma in Music students."

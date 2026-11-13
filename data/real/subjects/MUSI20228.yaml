@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
+  "2027":
+    - semester-1
 prerequisites: none
 corequisites: none
 non_allowed: []
@@ -17,7 +19,7 @@ topics:
 assessment:
   - kind: assignment
     weight: 30
-  - kind: presentation
+  - kind: project
     weight: 20
   - kind: assignment
     weight: 50
@@ -25,9 +27,10 @@ weekly_contact_hours: 4
 breadth_for:
   - Bachelor of Arts
   - Bachelor of Biomedicine
+  - Bachelor of Design
   - Bachelor of Science
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/musi20228
-source_year: 2026
-verified_on: 2026-10-21
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Online only and self-paced (about 4 hours a week)."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/musi20228
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. Online only and self-paced (about 4 hours a week)."

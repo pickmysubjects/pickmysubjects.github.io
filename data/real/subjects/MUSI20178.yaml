@@ -6,6 +6,9 @@ offerings:
   "2026":
     - semester-1
     - semester-2
+  "2027":
+    - semester-1
+    - semester-2
 prerequisites: MUSI20175
 corequisites: none
 non_allowed: []
@@ -17,18 +20,18 @@ topics:
   - art
   - music
 assessment:
-  - kind: presentation
+  - kind: assignment
     weight: 60
     hurdle: true
-  - kind: presentation
+  - kind: assignment
     weight: 10
-  - kind: presentation
+  - kind: assignment
     weight: 10
-  - kind: participation
+  - kind: assignment
     weight: 20
 weekly_contact_hours: 3.5
 breadth_for: []
-handbook: https://handbook.unimelb.edu.au/2026/subjects/musi20178
-source_year: 2026
-verified_on: 2026-10-21
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/musi20178
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
