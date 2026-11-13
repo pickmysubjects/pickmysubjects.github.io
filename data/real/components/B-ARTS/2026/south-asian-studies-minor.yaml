@@ -9,5 +9,5 @@ requirements:
   - choose: { points: 25, from: [GEOG20011, ISLM20015, POLS20023, ASIA20009] }
   # 25 points of Level 3 minor electives.
   - choose: { points: 25, from: [ASIA30003, ASIA30004, ISLM30018] }
-handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
-verified_on: 2026-10-19 # structure; source: 2026 Handbook minor page
+handbook: https://handbook.unimelb.edu.au/2027/components/b-arts-minor-48
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

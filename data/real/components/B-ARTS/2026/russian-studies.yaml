@@ -15,6 +15,6 @@ requirements:
   - all: [RUSS30006]
   # Level 3 elective.
   - choose: { points: 12.5, from: [EURO30001, EURO30002, EURO30004, EURO30005, EURO30006, RUSS30005, ARTS30002, LANG30001, EURO30009] }
-# Structure from the 2026 Handbook major page (pasted); foundation subjects come in as prerequisites.
-handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
-verified_on: 2026-10-17 # structure; source: 2026 Handbook major page
+# Structure from the 2027 Handbook component page; foundation subjects come in as prerequisites.
+handbook: https://handbook.unimelb.edu.au/2027/components/b-arts-major-27
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

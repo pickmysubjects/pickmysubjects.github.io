@@ -8,8 +8,8 @@ requirements:
   # Level 2 core.
   - all: [ISLM20003]
   # Level 2 elective.
-  - choose: { points: 12.5, from: [ASIA20003, JEWI20006, JEWI20007, ISLM20015, ISLM20016, POLS20025, INDO20017, ASIA20007, ISLM20017] }
+  - choose: { points: 12.5, from: [ASIA20003, JEWI20006, JEWI20007, ISLM20016, POLS20025, INDO20017, ASIA20007, ISLM20017, ISLM20018] }
   # 25 points of Level 3 minor electives.
   - choose: { points: 25, from: [ASIA30003, ISLM30003, ISLM30018, ISLM30021] }
-handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
-verified_on: 2026-10-19 # structure; source: 2026 Handbook minor page
+handbook: https://handbook.unimelb.edu.au/2027/components/b-arts-minor-33
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

@@ -14,5 +14,5 @@ requirements:
   - choose: { points: 25, from: [PSYC20006, PSYC20008, PSYC20007, PSYC20009] }
   # 25 points of Level 3 electives.
   - choose: { points: 25, from: [PSYC30014, PSYC30016, PSYC30017, PSYC30018, PSYC30019, PSYC30020, PSYC30022, PSYC30023] }
-handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
-verified_on: 2026-10-19 # structure; source: 2026 Handbook minor page
+handbook: https://handbook.unimelb.edu.au/2027/components/b-arts-minor-42
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

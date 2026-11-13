@@ -6,7 +6,7 @@ title: Human Structure and Function
 points: 50
 requirements:
   - all: [ANAT30007, ANAT30008]
-  - choose: { points: 25, from: [NEUR30005, CEDB30003, OPTO30007, PATH30001, NEUR30003, NEUR30002, PATH30002, BIOM30003, PHYS30010, PHYS30011, PHYS30012] }
-# Structure from the 2026 Handbook major page (pasted); foundation subjects come in as prerequisites.
-handbook: https://handbook.unimelb.edu.au/2026/courses/b-biomed/majors-minors-specialisations
-verified_on: 2026-10-16 # structure; source: 2026 Handbook major page
+  - choose: { points: 25, from: [CEDB30003, NEUR30008, PHYS30010, PHYS30011] }
+# Structure from the 2027 Handbook component page; foundation subjects come in as prerequisites.
+handbook: https://handbook.unimelb.edu.au/2027/components/b-bmed-major-8
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

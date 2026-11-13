@@ -18,5 +18,5 @@ requirements:
   - choose: { points: 25, from: [AGRI30037, AGRI30042, AGRI30048, AGRI30016] }
   # Capstone.
   - all: [AGRI30038]
-handbook: https://handbook.unimelb.edu.au/2026/courses/b-agr/majors-minors-specialisations
-verified_on: 2026-10-21 # structure; source: 2026 Handbook major page
+handbook: https://handbook.unimelb.edu.au/2027/components/b-agr-major-1
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

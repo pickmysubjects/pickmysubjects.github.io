@@ -12,6 +12,6 @@ requirements:
   # Level 3 core.
   - all: [ARTS30003]
   # Level 3 elective.
-  - choose: { points: 12.5, from: [MECM30016, MECM30017, MECM30013, SCRN30005, ANTH30019, HPSC30038, GEOG30028, LING30015] }
-handbook: https://handbook.unimelb.edu.au/2026/courses/b-arts/majors-minors-specialisations
-verified_on: 2026-10-19 # structure; source: 2026 Handbook minor page
+  - choose: { points: 12.5, from: [MECM30016, MECM30017, MECM30013, SCRN30005, ANTH30019, GEOG30028, LING30015] }
+handbook: https://handbook.unimelb.edu.au/2027/components/b-arts-minor-47
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked
