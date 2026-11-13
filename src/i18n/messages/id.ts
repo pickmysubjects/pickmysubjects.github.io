@@ -2122,7 +2122,7 @@ export const id: Messages = {
       record: "Nilai dan WAM",
       recordText: "Tambahkan mata kuliah yang sudah selesai untuk melihat WAM, hitung rata-rata yang dibutuhkan sisanya untuk target WAM, dan simpan file cadangan.",
       plans: "Plan A, Plan B",
-      plansText: "Simpan hingga lima rencana, masing-masing dengan major, kekuatan, minat dan tujuan sendiri, lalu bandingkan dua berdampingan.",
+      plansText: "Simpan hingga lima rencana, masing-masing dengan major, kekuatan, minat dan tujuan sendiri, lalu bandingkan berdampingan.",
     },
     promisesTitle: "Beberapa hal yang perlu kamu tahu",
     p: {
@@ -2601,11 +2601,11 @@ export const id: Messages = {
     },
     'what-when': {
       q: 'Selama seluruh studi (misalnya 2027–2029), apa yang harus diambil tiap semester?',
-      a: '“Buatkan rencana” menyusun setiap semester agar semua aturan program terpenuhi, lalu kamu bisa menyesuaikannya.',
+      a: '“Buat rencanaku” menyusun setiap semester agar semua aturan program terpenuhi, lalu kamu bisa menyesuaikannya.',
     },
     prerequisites: {
       q: 'Apa yang harus diambil sebelum sebuah mata kuliah?',
-      a: 'Prasyarat dicek per semester, dan garis hijau menunjukkan mata kuliah mana membuka mata kuliah lain.',
+      a: 'Prasyarat dicek per semester. Ketuk mata kuliah di rencanamu untuk melihat garis ke mata kuliah yang dibutuhkannya dan yang dibukanya.',
     },
     blocks: {
       q: 'Kalau mengambil mata kuliah ini, mana yang tidak bisa diambil lagi?',
@@ -2621,7 +2621,7 @@ export const id: Messages = {
     },
     skills: {
       q: 'Keterampilan apa yang dibutuhkan, dan apakah aku punya?',
-      a: "Setiap mata kuliah punya tag keterampilan (pemrograman, matematika, lab, kerja lapangan…), dan kekuatan serta kelemahanmu di Saya memengaruhi saran dan rencana.",
+      a: "Setiap mata kuliah punya tag keterampilan (pemrograman, matematika, lab, kerja lapangan…), dan kekuatan serta kelemahanmu di Catatanku memengaruhi saran dan rencana.",
     },
     'fit-me': {
       q: 'Mata kuliah mana yang cocok untukku — nilai, WAM, kekuatan, dan tujuanku?',
@@ -2633,7 +2633,7 @@ export const id: Messages = {
     },
     future: {
       q: 'Mata kuliah mana yang mengarah ke tujuanku setelah lulus?',
-      a: 'Belum ada. Jalur karier (jurusan dan mata kuliah mana yang mengarah ke pekerjaan atau studi lanjut tertentu) sedang direncanakan.',
+      a: 'Halaman karier: pilih pekerjaan untuk melihat jurusan yang mengarah ke sana, seberapa besar tiap mata kuliah membantu, dan studi pascasarjana yang diperlukan. Jadikan tujuan karier, maka saran dan rencanamu mengutamakan mata kuliah itu.',
     },
   },
   compare: {

@@ -2122,7 +2122,7 @@ export const ms: Messages = {
       record: "Markah dan WAM",
       recordText: "Tambah subjek yang sudah selesai untuk melihat WAM, kira purata yang diperlukan untuk WAM sasaran, dan simpan fail sandaran.",
       plans: "Plan A, Plan B",
-      plansText: "Simpan sehingga lima pelan, setiap satu dengan major, kekuatan, minat dan matlamat sendiri, dan bandingkan dua sebelah-menyebelah.",
+      plansText: "Simpan sehingga lima pelan, setiap satu dengan major, kekuatan, minat dan matlamat sendiri, dan bandingkan sebelah-menyebelah.",
     },
     promisesTitle: "Beberapa perkara yang perlu tahu",
     p: {
@@ -2601,11 +2601,11 @@ export const ms: Messages = {
     },
     'what-when': {
       q: 'Sepanjang ijazah (cth. 2027–2029), apa yang patut diambil setiap semester?',
-      a: '“Bina rancangan untuk saya” menyusun setiap semester supaya semua peraturan kursus dipenuhi, kemudian anda boleh melaraskannya.',
+      a: '“Bina rancangan saya” menyusun setiap semester supaya semua peraturan kursus dipenuhi, kemudian anda boleh melaraskannya.',
     },
     prerequisites: {
       q: 'Apa yang perlu diambil sebelum sesuatu subjek?',
-      a: 'Prasyarat disemak setiap semester, dan garis hijau menunjukkan subjek mana membuka subjek lain.',
+      a: 'Prasyarat disemak setiap semester. Ketik subjek dalam rancangan anda untuk melihat garis ke subjek yang diperlukannya dan yang dibukanya.',
     },
     blocks: {
       q: 'Jika saya ambil subjek ini, subjek mana yang tidak boleh diambil lagi?',
@@ -2621,7 +2621,7 @@ export const ms: Messages = {
     },
     skills: {
       q: 'Kemahiran apa yang diperlukan, dan adakah saya memilikinya?',
-      a: "Setiap subjek ada tag kemahiran (pengaturcaraan, matematik, makmal, kerja lapangan…), dan kekuatan serta kelemahan anda dalam Saya mempengaruhi cadangan dan rancangan.",
+      a: "Setiap subjek ada tag kemahiran (pengaturcaraan, matematik, makmal, kerja lapangan…), dan kekuatan serta kelemahan anda dalam Rekod saya mempengaruhi cadangan dan rancangan.",
     },
     'fit-me': {
       q: 'Subjek mana sesuai untuk saya — keputusan, WAM, kekuatan dan matlamat saya?',
@@ -2633,7 +2633,7 @@ export const ms: Messages = {
     },
     future: {
       q: 'Subjek mana membawa ke arah yang saya mahu selepas tamat pengajian?',
-      a: 'Belum ada. Laluan kerjaya (major dan subjek mana membawa ke pekerjaan atau pengajian lanjut tertentu) sedang dirancang.',
+      a: 'Halaman kerjaya: pilih pekerjaan untuk melihat major yang membawa ke sana, sejauh mana setiap subjek membantu, dan pengajian siswazah yang diperlukan. Jadikannya matlamat kerjaya, dan cadangan serta rancangan anda akan mengutamakan subjek itu.',
     },
   },
   compare: {

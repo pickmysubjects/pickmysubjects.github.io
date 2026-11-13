@@ -2122,7 +2122,7 @@ export const vi: Messages = {
       record: "Điểm và WAM",
       recordText: "Thêm các môn đã học để xem WAM, tính điểm trung bình cần đạt ở các môn còn lại cho WAM mục tiêu, và lưu file sao lưu.",
       plans: "Plan A, Plan B",
-      plansText: "Lưu tối đa năm kế hoạch, mỗi cái có chuyên ngành, thế mạnh, sở thích và mục tiêu riêng, và so sánh hai cái cạnh nhau.",
+      plansText: "Lưu tối đa năm kế hoạch, mỗi cái có chuyên ngành, thế mạnh, sở thích và mục tiêu riêng, và so sánh chúng cạnh nhau.",
     },
     promisesTitle: "Vài điều nên biết trước",
     p: {
@@ -2601,11 +2601,11 @@ export const vi: Messages = {
     },
     'what-when': {
       q: 'Trong cả chương trình (ví dụ 2027–2029), mỗi học kỳ nên học gì?',
-      a: '“Lập kế hoạch giúp tôi” xếp đủ mọi học kỳ sao cho đáp ứng mọi quy định, sau đó bạn tự điều chỉnh.',
+      a: '“Lập kế hoạch của tôi” xếp đủ mọi học kỳ sao cho đáp ứng mọi quy định, sau đó bạn tự điều chỉnh.',
     },
     prerequisites: {
       q: 'Cần học gì trước khi học một môn?',
-      a: 'Môn tiên quyết được kiểm tra theo từng học kỳ, và đường màu xanh lá cho thấy môn nào mở khóa môn nào.',
+      a: 'Môn tiên quyết được kiểm tra theo từng học kỳ. Nhấn vào một môn trong kế hoạch để thấy các đường nối tới môn nó cần và các môn nó mở khóa.',
     },
     blocks: {
       q: 'Nếu học môn này thì những môn nào không học được nữa?',
@@ -2621,7 +2621,7 @@ export const vi: Messages = {
     },
     skills: {
       q: 'Một môn cần kỹ năng gì, và tôi có chưa?',
-      a: "Môn nào cũng có thẻ kỹ năng (lập trình, toán, thí nghiệm, thực địa…), và điểm mạnh, điểm yếu bạn ghi ở Của tôi ảnh hưởng đến gợi ý và kế hoạch.",
+      a: "Môn nào cũng có thẻ kỹ năng (lập trình, toán, thí nghiệm, thực địa…), và điểm mạnh, điểm yếu bạn ghi ở Hồ sơ của tôi ảnh hưởng đến gợi ý và kế hoạch.",
     },
     'fit-me': {
       q: 'Môn nào hợp với tôi — theo điểm, WAM, thế mạnh và mục tiêu?',
@@ -2633,7 +2633,7 @@ export const vi: Messages = {
     },
     future: {
       q: 'Môn nào dẫn tới con đường tôi muốn sau khi ra trường?',
-      a: 'Chưa có. Lộ trình nghề nghiệp (chuyên ngành và môn nào dẫn tới công việc hoặc học tiếp nào) đang được lên kế hoạch.',
+      a: 'Trang nghề nghiệp: chọn một công việc để xem các chuyên ngành dẫn tới đó, mỗi môn giúp ích bao nhiêu, và việc học sau đại học nếu cần. Đặt làm mục tiêu nghề nghiệp thì gợi ý và kế hoạch sẽ ưu tiên những môn đó.',
     },
   },
   compare: {

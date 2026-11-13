@@ -2128,7 +2128,7 @@ export const en = {
       record: "Your marks and WAM",
       recordText: "Add subjects you've finished to see your WAM, work out what you need on the rest for a target WAM, and save a backup file.",
       plans: "Plan A, Plan B",
-      plansText: "Keep up to five plans, each with its own major, strengths, interests and goal, and compare two side by side.",
+      plansText: "Keep up to five plans, each with its own major, strengths, interests and goal, and compare them side by side.",
     },
     promisesTitle: "A few things to know",
     p: {
@@ -2607,11 +2607,11 @@ export const en = {
     },
     'what-when': {
       q: 'Across my whole degree (e.g. 2027–2029), what should I take each semester?',
-      a: '“Build a plan for me” lays out every semester so all course rules are met, then you adjust it.',
+      a: '“Build my plan” lays out every semester so all course rules are met, then you adjust it.',
     },
     prerequisites: {
       q: 'What do I need before I can take a subject?',
-      a: 'Prerequisites are checked semester by semester, and green lines show which subject unlocks which.',
+      a: 'Prerequisites are checked semester by semester. Tap a subject in your plan to see lines to the subjects it needs and the ones it unlocks.',
     },
     blocks: {
       q: 'If I take this subject, which others can I no longer take?',
@@ -2627,7 +2627,7 @@ export const en = {
     },
     skills: {
       q: 'What skills does a subject need, and do I have them?',
-      a: "Every subject has skill tags (programming, maths, lab, fieldwork…), and your strengths and weak spots in Me shape suggestions and plans.",
+      a: "Every subject has skill tags (programming, maths, lab, fieldwork…), and your strengths and weak spots in My record shape suggestions and plans.",
     },
     'fit-me': {
       q: 'Which subjects suit me — my results, WAM, strengths and goals?',
@@ -2639,7 +2639,7 @@ export const en = {
     },
     future: {
       q: 'Which subjects lead where I want to go after uni?',
-      a: 'Not yet. Career pathways (which majors and subjects lead to which jobs or further study) are planned.',
+      a: 'Careers pages: pick a job to see the majors that lead there, each subject sorted by how much it helps, and any graduate study it needs. Make it your career goal and suggestions and your plan favour those subjects.',
     },
   },
   compare: {

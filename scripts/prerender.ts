@@ -1312,10 +1312,14 @@ It covers ${listedCourseList.length} degrees (${courseNames}) with ${majorCount}
 - A short summary of what the subject teaches.
 - For ${reviewed} subjects, a summary of what students said in public (${discussionSources.join(' and ')}: tough exams, heavy workload, harsh marking, and how that changed over the years), in all 9 languages, with a link to the source.
 - Anonymous ratings from this site's students (difficulty, workload, how generous the marking is, whether they would recommend it), shown once a subject has 3. Any student can rate a subject they've taken.
-- Quick answers: is it hard, is there an exam, can I take it as breadth, what can I take after it.
 - Which majors, minors and specialisations it counts toward.
 - "Is it hard? Is it right for me?": how the subject fits this student (their weak or strong skills, interests and marks), with the points for and against.
-- Where it can lead: the jobs the Handbook names for it, with official job information.
+- Where it can lead: the accreditation routes that require it, or the careers it helps toward, each linking to that career's page.
+- What students who took it agree on (shown once 3 agree, only for things the Handbook doesn't say): open-book or closed-book exam, lectures recorded, prescribed textbook, groups assigned or chosen, extra costs, programming languages used; plus the tags students often mention.
+- A one-tap difficulty rating, and "What I wish I knew" tips from students (checked by hand, shown once a subject has 3, each can be reported).
+- Related subjects (what it leads to, what students often take with it, what to take before it), similar subjects, and the full prerequisite route back to first year.
+- Links to discussions about the subject in the reader's language: StudentVIP and r/unimelb in English; 小红书, 知乎, 哔哩哔哩 in Chinese; Dcard and PTT in Traditional Chinese; Naver in Korean; and others.
+- Add it to the plan in a chosen semester, share or copy its link, and open the final exam calculator with it chosen.
 - Save it to the Shortlist to compare later.
 
 ### Shortlist (compare subjects)
@@ -1324,8 +1328,9 @@ It covers ${listedCourseList.length} degrees (${courseNames}) with ${majorCount}
 - Add a shortlisted subject straight to the plan. For two subjects that can't both be taken, a page compares them side by side, including what each one teaches.
 
 ### Finding subjects
-- Search by code or name.
-- Filters: breadth for your degree, level, semester, no prerequisites, no final exam, no group work; sort by exam share, class hours or rating.
+- Search by code or name, with "did you mean" for typos.
+- Filters: breadth for your degree, field, level, semester, points, exam share, class hours, difficulty, no prerequisites or only prerequisites the student meets, no group work, exam not a hurdle, no test during semester, final exam mostly multiple choice, reviewed by students; sort by easiest, smallest exam, fewest hours or best rated.
+- Save the top 15 of any list as an image to share; add a subject to the plan straight from the list.
 - One row of quick choices at the top: easy subjects ("水课"), hard subjects ("难课"), no final exam, first semester, breadth, summer & winter term subjects. Each has its own address (e.g. /subjects/easy/).
 - The easy and hard lists are ranked from public review summaries, the site's own ratings and the Handbook's assessment and class hours, each subject with its reasons; subjects nobody has reviewed are ranked on Handbook facts only and marked so. The other filters narrow them further.
 - "Sort for me": orders the list by the student's own marks, strengths, interests and goal, each subject with a reason.
@@ -1333,30 +1338,37 @@ It covers ${listedCourseList.length} degrees (${courseNames}) with ${majorCount}
 ### Majors, minors and specialisations
 - A page for each: compulsory subjects, the ones you choose from, and the level-1 and level-2 subjects to take first, year by year.
 - Majors with more than one entry point (e.g. languages by starting level) show each way in.
+- A prerequisite-route diagram for each major, and where it can lead: the jobs the Handbook names with official job information, accreditation, industries and further study.
 - Compare two majors and see the subjects they share.
 - Start from a job ("I want to be an accountant"): see the majors that lead there, then each subject of a major sorted as required for accreditation, helps, somewhat related or not much related, with the reason, plus breadth ideas.
+- Each career page also lists the skills employers ask for (from the Australian Government's Your Career site), the graduate entry route for jobs like doctor or lawyer (MD, JD, master's), and a "Make it my goal" button that sets the career goal for suggestions and the plan.
 - Second majors in: ${doubleMajorCourses}. Minors in: ${minorCourses}. Informal specialisations in: ${informalCourses}.
 
 ### Sort for me (on Find subjects)
 - Subjects ranked from the student's own marks, strengths and interests, each with a reason.
 - Goals: protect my WAM, balanced, stretch me.
 - Only subjects the student can take and that run soon.
-- The likely mark for each subject: a range with a 1 in 2 chance, from the student's marks in similar subjects or their WAM so far, plus how students who shared their grades did there compared with their WAM. Plans show a predicted WAM.
+- The likely mark for each subject: a range with a 1 in 2 chance, from the student's marks in similar subjects or their WAM so far, plus how students who shared their grades did there compared with their WAM.
 
 ### Degree plan
 - Built for a chosen degree and major (plus a second major, minor or specialisation where the degree allows), semester by semester, marking which subjects are compulsory.
 - With a career goal (e.g. data analyst, accountant, software engineer), the planner fills electives with the subjects that job requires or that help toward it, and notes it on each subject: a subject path for that career, inside the degree's rules.
 - Checks prerequisites, course rules (points, levels, discipline and breadth limits) and how heavy each semester is, judged against the degree's normal load. Every check is met, not met or can't tell yet.
 - Heavy semesters are explained (weak skills stacked together, exams, deadlines, class and work hours, subjects students rate hard) with suggested swaps to spread them out.
+- Setup options: start semester, a concurrent diploma (such as Languages, Computing, Mathematical Sciences or Music) with its stream, a part-time load, and a student-visa option that adds the visa study-load checks.
+- Already partway through? Past semesters come from My record, and a planned subject can be marked done with its mark.
+- Swap or add a subject from a list of only the subjects that run that semester, count in the degree and have their prerequisites met, best fit first. "How this plan was built" explains why each subject is there. Changes can be undone.
+- Tap a subject to see its prerequisite and unlock lines, other prerequisite routes, and a WAM what-if; tap a course rule to see which subjects count toward it.
 - Drag subjects between semesters, add subjects, add summer or winter terms; failed subjects are planned again; a warning when the plan runs past the usual length (student visas).
-- Census dates, share a plan as a link, print or save the whole degree as PDF.
-- Up to five plans (Plan A, Plan B…), each with its own major, strengths, interests and goal, compared side by side.
+- Share a plan as a link (the person opening it can import it as their own), print or save the whole degree as PDF, save it as an image, copy each semester's subject codes to enrol, and add its census, exam and results dates to a calendar (.ics).
+- Up to five plans (Plan A, Plan B…), each with its own major, strengths, interests and goal; "Try another major" copies a plan with a different major. Compare plans shows them side by side: points still missing, rules, last semester, heaviest semester, exams, hurdles, jobs and, once marks are entered, a predicted WAM.
 
 ### My record
 - Finished subjects and marks, with the WAM worked out; pass/fail subjects and fails handled as the University does.
-- Target-WAM calculator: the average needed on the rest of the degree.
-- WAM what-if: "if I get X in this subject", the new WAM (also in the planner's subject window).
-- Strengths (with a hint from marks), interests, goal and weekly work hours.
+- A target WAM, with the WAM calculator working out the average needed on the rest of the degree; what-ifs are in the WAM calculator and the planner's subject window.
+- Credit or advanced standing (from TAFE or another uni): counts toward points and course rules, never the WAM.
+- Strengths (with a hint from marks), rated in the student's own school grade scale if they haven't started uni: VCE, HSC, IB, A-Level, HKDSE, gaokao, and Taiwanese, Japanese, Korean, Vietnamese, Malaysian (SPM), Indonesian, Indian (CBSE) or US grades, or a percentage. Also interests, goal and weekly work hours (20+ hours favours lighter workloads).
+- Clubs suggested from the student's interests and subjects.
 - Career goal: pick a job ("accountant", "software engineer"…); suggestions then favour the subjects it requires or that help toward it, and the record lists what is still to add for it.
 - Skills for your resume: from finished (and planned) subjects, the tools, specialist skills and abilities each subject taught, as resume lines naming the subjects behind them, compared against the skills employers list for the career goal (from the Australian Government's Your Career site). Copy them for a resume in one tap.
 - Backup to a file and restore on another device. Optional anonymous sharing of grade bands.
@@ -1364,12 +1376,16 @@ It covers ${listedCourseList.length} degrees (${courseNames}) with ${majorCount}
 ### Tools
 - Final exam calculator (${SITE}tools/final/): pick a subject, enter the marks so far, and it shows the exam mark needed for each grade (H1 to P), with the subject's own assessment and hurdles filled in. Each subject page links to it with that subject chosen.
 - WAM calculator (${SITE}tools/wam/): the WAM from finished subjects, the average needed on the rest of the degree to reach a target, and what one subject's mark would do to it.
-- Revision timetable (${SITE}tools/revision/): enter exam dates and it lays out a day-by-day revision timetable up to the last exam: each subject spread over several days, moving from learning to self-testing and past papers, with a calendar (.ics) download.
+- Revision timetable (${SITE}tools/revision/): enter exam dates and it lays out a day-by-day revision timetable up to the last exam: each subject spread over several days, moving from learning to self-testing and past papers. Set busy days, rest days, pace, how well you remember and open-book exams; each subject gets a study method that suits it (maths, code, languages, essays…). Calendar or list view, print, and a calendar (.ics) download.
 
 ### Guide (UniMelb basics, from your ATAR offer to your first job)
 ${guideOutline}
 
 ### Other
+- The home page counts down to the next census and exam dates; in exam season it shows the student's own subjects' exam weights and hurdles. The key dates page downloads as a calendar (.ics).
+- Each UMSU club has its own page: what it does, why students join, related subjects and similar clubs.
+- Search the whole site from any page.
+- What changed in the new Handbook, and News from the person who makes the site.
 - Add a subject that's missing by pasting its Handbook page; send feedback or report wrong data.
 - Every page in English, Simplified and Traditional Chinese, Japanese, Korean, Vietnamese, Indonesian, Malay and Hindi.
 - Free, no ads, no sign-in. A student's marks and plans stay in their own browser. Works offline once opened and can be installed to the home screen.
@@ -1381,6 +1397,7 @@ ${guideOutline}
 ## What it does not do
 - It is not official and does not enrol anyone: always confirm in the Handbook and My Course Planner.
 - It does not check class timetable clashes, and has no class times.
+- It does not plan double degrees, has no accounts or cloud sync (moving to another device is by backup file), and its WAM is not an official one.
 - It covers ${courseNames} today; more degrees are being added.
 - It plans bachelor's degrees only; graduate courses (master's, the JD, the MD) appear on the career pages as next steps, not in the planner.
 
