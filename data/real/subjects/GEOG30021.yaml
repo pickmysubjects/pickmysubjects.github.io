@@ -5,13 +5,14 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
+  "2027":
+    - semester-2
 prerequisites: none
 corequisites: none
 non_allowed: []
 assessment:
   - kind: presentation
     weight: 15
-    group: true
   - kind: participation
     weight: 10
     group: true
@@ -20,9 +21,9 @@ assessment:
   - kind: report
     weight: 50
 weekly_contact_hours: 3
-handbook: https://handbook.unimelb.edu.au/2026/subjects/geog30021
-source_year: 2026
-verified_on: 2026-10-10
+handbook: https://handbook.unimelb.edu.au/2027/subjects/geog30021
+source_year: 2027
+verified_on: 2026-11-13
 categories:
   B-SCI: science
 breadth_for:
@@ -37,7 +38,7 @@ breadth_for:
   - Bachelor of Fine Arts (Theatre)
   - Bachelor of Fine Arts (Visual Art)
   - Bachelor of Music
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
 skills:
   - writing
   - fieldwork

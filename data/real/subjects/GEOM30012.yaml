@@ -5,16 +5,39 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
+  "2027":
+    - semester-2
 prerequisites:
-  all:
+  any:
     - all:
-        - GEOM20013
-        - GEOM30009
-        - CVEN20001
-    - any:
-        - COMP20005
-        - ENGR20005
-    - GEOM20015
+        - admission: MC-DINFENG
+          note: Admission into the Master of Digital Infrastructure Engineering
+        - &a1
+          subject: GEOM20013
+          concurrent: true
+        - &a2
+          subject: CVEN20001
+          concurrent: true
+        - &a3
+          subject: GEOM20015
+          concurrent: true
+        - &a4
+          any:
+            - subject: COMP20005
+              concurrent: true
+            - subject: ENGR20005
+              concurrent: true
+    - all:
+        - any:
+            - admission: B-SCI
+              note: Admission into the Bachelor of Science
+            - admission: B-DES
+              note: Admission into the Bachelor of Design
+        - *a1
+        - *a2
+        - *a3
+        - *a4
+        - manual: 25 credit points of Maths and 25 credit points of Science subjects at tertiary level (subjects with prefixes of ‘MAST*’, ‘CHEM*’, ‘BIOL*’, ‘PHYC’, ‘GEOG*’, ‘COMP’, and ‘INFO’).
 corequisites: none
 non_allowed:
   - EVSC30007
@@ -29,9 +52,9 @@ assessment:
   - kind: presentation
     weight: 20
 weekly_contact_hours: 4
-handbook: https://handbook.unimelb.edu.au/2026/subjects/geom30012
-source_year: 2026
-verified_on: 2026-10-10
+handbook: https://handbook.unimelb.edu.au/2027/subjects/geom30012
+source_year: 2027
+verified_on: 2026-11-13
 categories:
   B-SCI: science
   B-DES: design
@@ -39,6 +62,7 @@ breadth_for:
   - Bachelor of Arts
   - Bachelor of Commerce
   - Bachelor of Design
+  - Bachelor of Environments
   - Bachelor of Fine Arts (Acting)
   - Bachelor of Fine Arts (Animation)
   - Bachelor of Fine Arts (Dance)
@@ -49,7 +73,7 @@ breadth_for:
   - Bachelor of Fine Arts (Theatre)
   - Bachelor of Fine Arts (Visual Art)
   - Bachelor of Music
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
 skills:
   - design
   - presentation

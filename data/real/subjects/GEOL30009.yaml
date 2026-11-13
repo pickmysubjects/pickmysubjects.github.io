@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - winter
+  "2027":
+    - winter
 prerequisites:
   any:
     - GEOL20002
@@ -22,12 +24,12 @@ assessment:
     weight: 10
   - kind: assignment
     weight: 10
-  - kind: report
+  - kind: assignment
     weight: 40
-weekly_contact_hours: 6
-handbook: https://handbook.unimelb.edu.au/2026/subjects/geol30009
-source_year: 2026
-verified_on: 2026-10-10
+weekly_contact_hours: 8
+handbook: https://handbook.unimelb.edu.au/2027/subjects/geol30009
+source_year: 2027
+verified_on: 2026-11-13
 categories:
   B-SCI: science
 breadth_for:
@@ -45,7 +47,7 @@ breadth_for:
   - Bachelor of Fine Arts (Theatre)
   - Bachelor of Fine Arts (Visual Art)
   - Bachelor of Music
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
 skills:
   - fieldwork
 topics:

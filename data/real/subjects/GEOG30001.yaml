@@ -5,42 +5,24 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
+  "2027":
+    - semester-1
 prerequisites:
   any:
-    - any:
-        - GEOG20002
-        - GEOG30023
-        - EVSC20008
-        - MAST20031
-    - any:
-        - points:
-            min: 25
-            levels:
-              - 2
-            areas:
-              - GEOG
-              - ERTH
-              - GEOL
-        - any:
-            - points:
-                min: 25
-                levels:
-                  - 2
-                areas:
-                  - GEOG
-                  - ERTH
-                  - GEOL
-            - any:
-                - points:
-                    min: 25
-                    levels:
-                      - 2
-                    areas:
-                      - GEOG
-                      - ERTH
-                      - GEOL
-                - permission: coordinator
-                  note: 25 credit points of Level 2 Geography or Earth Sciences subjects (or equivalent as approved by the subject coordinator)
+    - GEOG20002
+    - GEOG30023
+    - EVSC20008
+    - MAST20031
+    - points:
+        min: 25
+        levels:
+          - 2
+        areas:
+          - GEOG
+          - ERTH
+          - GEOL
+    - permission: coordinator
+      note: Or an equivalent approved by the subject coordinator
 corequisites: none
 non_allowed: []
 assessment:
@@ -52,9 +34,9 @@ assessment:
     weight: 50
 weekly_contact_hours: 5
 prescribed_texts: true
-handbook: https://handbook.unimelb.edu.au/2026/subjects/geog30001
-source_year: 2026
-verified_on: 2026-10-13
+handbook: https://handbook.unimelb.edu.au/2027/subjects/geog30001
+source_year: 2027
+verified_on: 2026-11-13
 categories:
   B-SCI: science
 breadth_for:
@@ -68,7 +50,7 @@ breadth_for:
   - Bachelor of Fine Arts (Theatre)
   - Bachelor of Fine Arts (Visual Art)
   - Bachelor of Music
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. GEOG20002 is strongly recommended."
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. (From 2026, re-check:) GEOG20002 is strongly recommended."
 skills:
   - lab
   - writing

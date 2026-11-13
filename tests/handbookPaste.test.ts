@@ -234,6 +234,8 @@ describe('parseHandbookPaste – assessment and contact hours', () => {
     expect(parseHandbookPaste(page).weeklyContactHours).toBe(3)
     expect(parseContactHours('Contact hours\t3 x one hour lectures per week, 1 x one hour practice class per week')).toBe(4)
     expect(parseContactHours('Contact hours\t36 one-hour lectures (three per week); 12 one-hour practice classes')).toBe(4)
+    // A note inside the text about a later year's rule doesn't apply yet.
+    expect(parseHandbookPaste("You're viewing the 2027 Handbook\nPrerequisites\nCode\tName\tTeaching period\tCredit Points\nGENE20001\tFoundations\tSemester 1\t12.5\nImportant note: From 2028 onwards, Evolution (BIOL20001) will be a prerequisite in addition to GENE20001.\nCorequisites\nNone\n").prerequisites).toEqual({ subject: 'GENE20001' })
     // A note naming what isn't accepted doesn't add its codes as options.
     expect(parseHandbookPaste('Prerequisites\nOne of\nCode\tName\tTeaching period\tCredit Points\nMAST20005\tStatistics\tSemester 1\t12.5\nNeither MAST10012 Introduction to Mathematics nor UMEP Mathematics is accepted as a prerequisite.\nCorequisites\nNone\n').prerequisites).toEqual({ subject: 'MAST20005' })
     // A year it doesn't run: no Availability row, only a note under "Dates & times".

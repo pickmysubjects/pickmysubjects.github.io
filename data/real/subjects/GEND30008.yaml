@@ -1,0 +1,46 @@
+code: GEND30008
+title: Gender Studies Internship
+level: 3
+points: 25
+offerings:
+  "2027":
+    - semester-2
+prerequisites:
+  all:
+    - all:
+        - wam:
+            min: 70
+          note: "Criteria for applying: Students must be admitted in the Bachelor of Arts- Gender Studies Major or Graduate Diploma in Arts- Specialisation in Gender Studies. At the time of application: Students must be undertaking a Major or a Specialisation in Gender Studies and will have completed 12.5 points at Level 1 in Gender Studies, and 25 points of Level 2 subjects and in Gender Studies. All students should have at least a WAM of 70."
+        - permission: application
+          note: "Criteria for applying: Students must be admitted in the Bachelor of Arts- Gender Studies Major or Graduate Diploma in Arts- Specialisation in Gender Studies. At the time of application: Students must be undertaking a Major or a Specialisation in Gender Studies and will have completed 12.5 points at Level 1 in Gender Studies, and 25 points of Level 2 subjects and in Gender Studies. All students should have at least a WAM of 70."
+    - any:
+        - GEND10001
+        - GEND10002
+    - points:
+        min: 25
+        from:
+          - GEND20001
+          - GEND20008
+          - GEND20010
+          - GEND20011
+          - GEND20012
+corequisites: none
+non_allowed:
+  - MULT20014
+  - MULT30021
+  - POLS30001
+  - POLS30003
+  - SOCI30005
+assessment:
+  - kind: assignment
+    weight: 25
+  - kind: report
+    weight: 25
+  - kind: report
+    weight: 50
+weekly_contact_hours: 2
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/gend30008
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

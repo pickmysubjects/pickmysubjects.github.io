@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
+  "2027":
+    - semester-1
 prerequisites:
   manual: a minimum of 25 credit points of level 2 subjects with a social or natural science focus from the Bachelor of Arts, Bachelor of Science, Bachelor of Biomedicine or Bachelor of Environments
 corequisites: none
@@ -16,19 +18,20 @@ topics:
   - geography
   - society
 assessment:
-  - kind: assignment
-    weight: 15
   - kind: presentation
-    weight: 15
-  - kind: report
+    weight: 20
+  - kind: participation
+    weight: 5
+  - kind: test
     weight: 30
   - kind: report
-    weight: 40
+    weight: 45
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Biomedicine
   - Bachelor of Commerce
   - Bachelor of Design
+  - Bachelor of Environments
   - Bachelor of Fine Arts (Acting)
   - Bachelor of Fine Arts (Animation)
   - Bachelor of Fine Arts (Dance)
@@ -41,7 +44,7 @@ breadth_for:
   - Bachelor of Music
   - Bachelor of Science
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/geog30029
-source_year: 2026
-verified_on: 2026-10-17
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/geog30029
+source_year: 2027
+verified_on: 2026-11-13
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

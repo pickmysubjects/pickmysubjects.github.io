@@ -241,6 +241,14 @@ function handbookYear(text: string): number {
 
 /** "For 2020, students must … From 2021, students must …": only the rule in force now applies. */
 function latestRuleOnly(all: string[], warnings: string[], year: number): string[] {
+  // "Important note: From 2028 onwards, X will be a prerequisite": a note about a later year
+  // inside the text (not opening a rule block) doesn't apply yet either: drop just that line.
+  all = all.filter((l) => {
+    const y = /\bfrom (\d{4}) onwards\b/i.exec(l)?.[1]
+    const later = y !== undefined && Number(y) > year && !/^from \d{4}\b/i.test(l.trim())
+    if (later) warnings.push(`Left out a note about a later year ("${l.trim().slice(0, 40)}").`)
+    return !later
+  })
   // A rule that starts in a later year ("From 2027 onwards") doesn't apply yet: drop it.
   const future = all.findIndex((l) => Number(/^from (\d{4})\b/i.exec(l.trim())?.[1] ?? 0) > year)
   const lines = future < 0 ? all : all.slice(0, future)
