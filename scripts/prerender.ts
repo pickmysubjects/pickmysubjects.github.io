@@ -1397,7 +1397,7 @@ ${guideOutline}
 ## What it does not do
 - It is not official and does not enrol anyone: always confirm in the Handbook and My Course Planner.
 - It does not check class timetable clashes, and has no class times.
-- It does not plan double degrees, has no accounts or cloud sync (moving to another device is by backup file), and its WAM is not an official one.
+- It plans one bachelor's degree at a time: a second major (where the degree allows) and a concurrent diploma (Languages, Computing, Mathematical Sciences or Music) can be planned, but two bachelor's degrees studied together (a double degree) cannot. It has no accounts or cloud sync (moving to another device is by backup file), and its WAM is not an official one.
 - It covers ${courseNames} today; more degrees are being added.
 - It plans bachelor's degrees only; graduate courses (master's, the JD, the MD) appear on the career pages as next steps, not in the planner.
 
