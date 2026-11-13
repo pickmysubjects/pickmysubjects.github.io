@@ -17,6 +17,8 @@ prerequisites:
       note: Admission into the B-DES Bachelor of Design
     - points:
         min: 150
+    - permission: coordinator
+      note: Coordinator approval after receiving your resume and an endorsed work placement; you find the placement yourself before semester starts.
 corequisites: none
 non_allowed: []
 skills:

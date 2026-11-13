@@ -12,6 +12,11 @@ offerings:
     - semester-2
 prerequisites:
   all:
+    - points:
+        min: 175
+    - points:
+        min: 50
+        level: 2
     - wam:
         min: 75
       note: Completed/Passed at least 175 points, including at least 50points at Level 2 in health, science or technology areas of study relevant to the project discipline. WAM of at least 75% or equivalent
