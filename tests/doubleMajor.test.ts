@@ -80,7 +80,8 @@ describe('double majors: checking', () => {
     const level3 = (id: string) => {
       const c = real.components.find((x) => x.id === id)!
       // Elective (choose) lists only: the capstone is compulsory and stays in the plan.
-      const chooses = JSON.stringify(c.requirements.filter((r) => 'choose' in r))
+      const reqs = c.requirements === 'unknown' ? [] : c.requirements
+      const chooses = JSON.stringify(reqs.filter((r) => 'choose' in r))
       return [...new Set(chooses.match(/[A-Z]{4}3\d{4}/g) ?? [])]
     }
     const hist = level3('history')
