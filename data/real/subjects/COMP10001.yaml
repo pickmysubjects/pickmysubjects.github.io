@@ -35,7 +35,7 @@ breadth_for:
 handbook: https://handbook.unimelb.edu.au/2027/subjects/comp10001
 source_year: 2027
 verified_on: 2026-11-12
-notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. (From 2026, re-check:) COMP10001 can’t be taken after COMP20005 (the other order is fine). The Handbook’s INFO10001 exclusion is the pre-2011 Informatics 1, not today’s INFO10001."
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. COMP10001 can’t be taken after COMP20005 (the other order is fine). The Handbook’s INFO10001 exclusion is the pre-2011 Informatics 1, not today’s INFO10001."
 skills:
   - programming
 topics:
