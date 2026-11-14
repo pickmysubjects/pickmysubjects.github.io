@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { Check, MessageSquareText } from 'lucide-vue-next'
-import { simplifyFor, type IndexedRow, type Recommendation } from '@/engine'
+import { degreeCourses, simplifyFor, type IndexedRow, type Recommendation } from '@/engine'
 import FitBadge from './FitBadge.vue'
 import QuickAdd from './QuickAdd.vue'
 import ShortlistToggle from '@/components/shortlist/ShortlistToggle.vue'
@@ -29,7 +29,8 @@ const s = computed(() => props.row.subject)
 const local = computed(() => localTitle(s.value, locale.value))
 const category = computed(() => s.value.categories[props.course])
 // Closed to new students of this course (B-COM's ACCT10002).
-const closed = computed(() => data.value.courses.some((c) => c.code === props.course && c.closed.includes(s.value.code)))
+// New students follow the newest version of the course's rules.
+const closed = computed(() => !!degreeCourses(data.value).find((c) => c.code === props.course)?.closed.includes(s.value.code))
 
 const runs = computed(() => {
   const r = props.row
