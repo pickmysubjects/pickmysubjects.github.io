@@ -10,7 +10,7 @@ offerings:
 prerequisites:
   any:
     - BLAW10001
-    - manual: An equivalent of BLAW10001 (2027 Handbook: "BLAW10001 OR Equivalent")
+    - manual: 'An equivalent of BLAW10001 (2027 Handbook: "BLAW10001 OR Equivalent")'
 corequisites: none
 non_allowed: []
 skills:
