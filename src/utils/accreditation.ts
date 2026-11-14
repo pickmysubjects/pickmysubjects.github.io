@@ -1,6 +1,7 @@
-// Accreditation by degree and major, checked against the 2026 Handbook print pages.
+// Accreditation by degree and major, checked against the 2027 Handbook print pages. The 2027
+// Accounting page says "Professional Associations"; the body names come from the 2026 page.
 // Body names stay in English: they are official names.
-const HB = 'https://handbook.unimelb.edu.au/2026/'
+const HB = 'https://handbook.unimelb.edu.au/2027/'
 const ACS = 'Australian Computer Society (ACS)'
 const APAC = 'Australian Psychology Accreditation Council (APAC)'
 export const ACCREDITATION: { degree: string; major?: string; body: string; cond: string /* guide.* key */; href: string }[] = [
