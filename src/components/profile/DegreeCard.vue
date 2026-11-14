@@ -6,7 +6,7 @@ import type { PlanSetup } from '@/composables/usePlan'
 import { usePlan } from '@/composables/usePlan'
 import { useDataset } from '@/composables/useDataset'
 import { termLabel } from '@/i18n/format'
-import { informalPicks, isFail } from '@/engine'
+import { degreeCourses, informalPicks, isFail } from '@/engine'
 import { useI18n } from '@/i18n'
 import { diplomaTitle } from '@/composables/usePlanCompare'
 import { useProfile } from '@/composables/useProfile'
@@ -92,7 +92,7 @@ function done(setup: PlanSetup): void {
       v-if="editing"
       class="degree-wizard"
       :setup="plan.setup.value"
-      :courses="data.courses.filter((c) => c.listed)"
+      :courses="degreeCourses(data).filter((c) => c.listed)"
       :components="data.components"
       @done="done"
       @cancel="editing = false"

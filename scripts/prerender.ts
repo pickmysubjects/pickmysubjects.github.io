@@ -15,6 +15,7 @@
 import './releaseGlobals'
 import { APP_VERSION, copyright, releaseDate } from '../src/release'
 import { localTitle, pickLocalized, withLocalTitle } from '../src/i18n/localized'
+import { degreeCourses } from '../src/engine/courseRules'
 import { comparePairs, isComparePair, pairSlug } from '../src/engine/comparePairs'
 import { NEWS } from '../src/content/news'
 import { aggregateRatingLd, BRAND, listPageDescription, listPageTitle, PRESET_TITLE_KEYS, subjectFactSentences, subjectPageDescription, subjectPageTitle } from '../src/utils/seo'
@@ -144,7 +145,7 @@ function subjectLink(code: LocaleCode, c: string): string {
 }
 
 // Counts and degree names come from the data, so no description goes stale as degrees are added.
-const listedCourseList = data.courses.filter((c) => c.listed)
+const listedCourseList = degreeCourses(data).filter((c) => c.listed)
 const courseNames = listedCourseList.map((c) => c.title).join(', ')
 const reviewed = subjects.filter((x) => x.discussions?.length).length
 // Where the summaries come from, as the data has them (a source with no files isn't named).
@@ -463,7 +464,7 @@ const overviews = new Map([...majors, ...minors, ...informals, ...specs].map((m)
 
 function majorsListBody(code: LocaleCode, t: Translate): string {
   // One section per course, each with its majors grouped by field.
-  return data.courses
+  return degreeCourses(data)
     .filter((c) => majors.some((m) => m.course === c.code))
     .map((c) => {
       // Closed majors stay reachable for earlier students but aren't listed, as in the app.
@@ -481,7 +482,7 @@ function majorsListBody(code: LocaleCode, t: Translate): string {
       const ownSpecs = specs.filter((m) => m.course === c.code).sort((a, b) => a.title.localeCompare(b.title))
       const specsPart = ownSpecs.length ? `<h3>${esc(t('majors.specsTitle'))}</h3>${list(ownSpecs)}` : ''
       // Courses that use these majors (B-SCIEXTD uses B-SCI's): a line, not pages of their own.
-      const basedLine = data.courses
+      const basedLine = degreeCourses(data)
         .filter((x) => x.listed && x.basedOn === c.code)
         .map((x) => `<p>${esc([t('majors.basedOn', { course: x.title, base: c.title }), x.entryNote ? t(`entry.${x.entryNote}`) : ''].filter(Boolean).join(' '))}</p>`)
         .join('')

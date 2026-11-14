@@ -19,7 +19,7 @@ import Interp from '@/components/Interp.vue'
 import PlanSwitcher from '@/components/plans/PlanSwitcher.vue'
 import PlanHero from '@/components/planner/PlanHero.vue'
 import SubjectSection from '@/components/subject/SubjectSection.vue'
-import { compareQuery, computeWam, assumedOfferings, creditPoints, findDiploma, careerGap, careerGoal, careerName, heldMajorIds, informalPicks, isFail, isPassedDuplicate, passedCodes, planProblems as countedProblems, planComponentIds, planRoles, planRules, recordedLoads, termKey, termLoad, type Issue, type PlanTerm } from '@/engine'
+import { compareQuery, computeWam, degreeCourses, assumedOfferings, creditPoints, findDiploma, careerGap, careerGoal, careerName, heldMajorIds, informalPicks, isFail, isPassedDuplicate, passedCodes, planProblems as countedProblems, planComponentIds, planRoles, planRules, recordedLoads, termKey, termLoad, type Issue, type PlanTerm } from '@/engine'
 import { diplomaTitle } from '@/composables/usePlanCompare'
 import { Plus } from 'lucide-vue-next'
 import { usePhone } from '@/composables/usePhone'
@@ -693,7 +693,7 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !viewingShar
       v-if="showWizard"
       :key="dataName"
       :setup="plan.setup.value"
-      :courses="data.courses.filter((c) => c.listed)"
+      :courses="degreeCourses(data).filter((c) => c.listed)"
       :components="data.components"
       :cancellable="!plan.isEmpty.value"
       :start-at="switchFrom ? 2 : 0"

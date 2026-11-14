@@ -29,6 +29,16 @@ export function findCourse(data: Dataset, code: string, year: number): Course | 
 }
 
 /**
+ * One entry per degree: its newest version (B-SCI has a 2026 and a 2027 file). For lists of
+ * degrees; a plan's rules come from findCourse with its own year.
+ */
+export function degreeCourses(data: Dataset): Course[] {
+  const newest = new Map<string, Course>()
+  for (const c of data.courses) if ((newest.get(c.code)?.year ?? -Infinity) < c.year) newest.set(c.code, c)
+  return data.courses.filter((c) => newest.get(c.code) === c)
+}
+
+/**
  * The course whose majors, minors and specialisations a course uses: its own, or those of the
  * course it is based on (B-SCIEXTD runs on B-SCI's).
  */

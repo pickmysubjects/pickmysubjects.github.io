@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { degreeCourses } from '@/engine'
 import { GraduationCap } from 'lucide-vue-next'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
@@ -9,7 +10,7 @@ import { useI18n } from '@/i18n'
 const { all } = useDataset()
 const plan = usePlan()
 const { t } = useI18n()
-const courses = computed(() => all.courses.filter((c) => c.listed).sort((a, b) => a.title.localeCompare(b.title, 'en')))
+const courses = computed(() => degreeCourses(all).filter((c) => c.listed).sort((a, b) => a.title.localeCompare(b.title, 'en')))
 </script>
 
 <template>
