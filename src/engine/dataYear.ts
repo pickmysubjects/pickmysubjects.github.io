@@ -25,6 +25,13 @@ export function setToday(d: Date | string | undefined): void {
 export const thisYear = (): number => today().getFullYear()
 
 /**
+ * The first year a student choosing now would start in: once the next year's Handbook is out
+ * (November), new students are picking for that year, so a major closed from it is no longer
+ * offered to them. Lists of majors "open to new students" use this, not the calendar year.
+ */
+export const starterYear = (): number => Math.max(thisYear(), HANDBOOK_PUBLISHED)
+
+/**
  * The date in Melbourne as YYYY-MM-DD: the University's dates are Melbourne dates, whatever time
  * zone the device is in. Built from the date's parts, not from a locale's format, which browsers
  * are free to change (en-CA has not always been ISO).

@@ -12,7 +12,7 @@
  *   employers list (lab work for a lab scientist);
  * - little: none of the above. Never called useless: its other merits are listed instead.
  */
-import { latestDataYear, thisYear } from './dataYear'
+import { latestDataYear, starterYear } from './dataYear'
 import { CAREER_LANGS, componentCareers, type Accreditation, type CareerLang, type CareerQualifier, type CareerText, type GraduateRoute, type Occupation } from './careers'
 import { barsBreadth } from './courseRules'
 import { inTopShare } from './easeRanking'
@@ -133,7 +133,7 @@ const HOW_ORDER: CareerHow[] = ['direct', 'via-further-study', 'needs-qualificat
 /** Majors students can pick now (listed course, not closed), with their own subjects. */
 function openComponents(data: Dataset) {
   const listed = new Set(data.courses.filter((x) => x.listed).map((x) => x.code))
-  return data.components.filter((comp) => listed.has(comp.course) && !(comp.closedFrom !== undefined && thisYear() >= comp.closedFrom))
+  return data.components.filter((comp) => listed.has(comp.course) && !(comp.closedFrom !== undefined && starterYear() >= comp.closedFrom))
 }
 
 /**

@@ -2,7 +2,7 @@
 export const MAJOR_GROUPS: { id: string; match: RegExp }[] = [
   { id: 'computing', match: /^(computing|data-science|informatics|mathematics)/ },
   { id: 'biomed', match: /^(biochemistry|cell-and|genetics|human-|immunology|infection|microbiology|neuroscience|pathology|pharmacology|physiology|biotechnology|public-health)/ },
-  { id: 'chemphys', match: /^(chemistry|physics|mathematical-physics)/ },
+  { id: 'chemphys', match: /^(chemistry|chemical-biology|physics|mathematical-physics)/ },
   { id: 'psych', match: /^(arts-)?psychology/ },
   { id: 'eco', match: /^(ecology|ecosystem|environmental-science|(arts-)?geography|geology|geoscience|climate|marine|plant|zoology)/ },
   { id: 'eng', match: /systems$/ },

@@ -46,7 +46,7 @@ import { CLUB_CATEGORIES, CLUBS, CLUBS_LISTING, type Club } from '../src/content
 import { clubSubjects, similarClubs } from '../src/engine/clubs'
 import { buildLeadsTo, buildTakenWith, relatedSubjects } from '../src/engine/related'
 import type { Dataset, Subject } from '../src/engine/schema'
-import { factsYear, latestDataYear, publishedYear, thisYear } from '../src/engine/dataYear'
+import { factsYear, latestDataYear, publishedYear, starterYear, thisYear } from '../src/engine/dataYear'
 import { handbookUrl } from '../src/utils/links'
 import { describeReq } from '../src/i18n/format'
 import { tipsHtml } from '../src/utils/tipsHtml'
@@ -470,7 +470,7 @@ function majorsListBody(code: LocaleCode, t: Translate): string {
     .filter((c) => majors.some((m) => m.course === c.code))
     .map((c) => {
       // Closed majors stay reachable for earlier students but aren't listed, as in the app.
-      const own = majors.filter((m) => m.course === c.code && (m.closedFrom === undefined || thisYear() < m.closedFrom))
+      const own = majors.filter((m) => m.course === c.code && (m.closedFrom === undefined || starterYear() < m.closedFrom))
       const groups = groupMajors(own)
       const list = (ms: typeof own) => `<ul>${ms.map((m) => `<li><a href="${href(code, `majors/${m.id}`)}">${esc(m.title)}</a></li>`).join('')}</ul>`
       const body = groups.length === 1 ? list(groups[0]!.majors) : groups.map((g) => `<h3>${esc(t(`majorGroup.${g.id}`))}</h3>${list(g.majors)}`).join('')
@@ -1276,10 +1276,12 @@ writeFileSync(join(DIST, 'sitemap.txt'), `${allUrls.join('\n')}\n`)
 writeFileSync(join(DIST, 'pages.xml'), readFileSync(join(DIST, 'sitemap.xml'), 'utf8'))
 
 // A plain summary for AI assistants (the llms.txt convention).
-const countOf = (pred: (c: (typeof data.components)[number]) => boolean) => data.components.filter((c) => listedCourses.has(c.course) && pred(c)).length
+// Open to new students only (closed streams stay for earlier students but aren't offered).
+const countOf = (pred: (c: (typeof data.components)[number]) => boolean) =>
+  data.components.filter((c) => listedCourses.has(c.course) && (c.closedFrom === undefined || starterYear() < c.closedFrom) && pred(c)).length
 const majorCount = countOf((c) => c.kind === 'major')
 const minorCount = countOf((c) => c.kind === 'minor')
-const specCount = countOf((c) => c.kind === 'specialisation')
+const specCount = countOf((c) => c.kind === 'specialisation' && !c.informal)
 // Degrees that allow a second major, a minor or an informal specialisation, read from their course rules.
 const withRule = (pred: (r: { kind: string; max?: number; informal?: boolean }) => boolean) =>
   listedCourseList.filter((c) => (c.rules as unknown as { kind: string; max?: number; informal?: boolean }[]).some(pred)).map((c) => c.title).join(', ') || 'none yet'

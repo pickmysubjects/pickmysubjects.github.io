@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { pickText } from '@/utils/majorPick'
-import { thisYear } from '@/engine/dataYear'
+import { starterYear } from '@/engine/dataYear'
 import BrowseHero from '@/components/browse/BrowseHero.vue'
 import { computed, shallowRef, watch } from 'vue'
 import { BadgeCheck, ChevronRight, Search, SearchX } from 'lucide-vue-next'
@@ -25,7 +25,7 @@ const { query: address } = useView()
 const kindOf = (c: Major): Kind => (c.informal ? 'informal' : c.kind === 'minor' ? 'minor' : c.kind === 'specialisation' ? 'specialisation' : 'major')
 
 // Closed to new students: not listed (their pages still open from an existing plan).
-const open = computed(() => data.value.components.filter((c) => c.closedFrom === undefined || thisYear() < c.closedFrom))
+const open = computed(() => data.value.components.filter((c) => c.closedFrom === undefined || starterYear() < c.closedFrom))
 // The degrees that have majors; a degree based on another (B-SCIEXTD) shows that one's.
 const baseOf = (code: string) => data.value.courses.find((c) => c.code === code)?.basedOn ?? code
 const courseTitle = (code: string) => data.value.courses.find((c) => c.code === code)?.title ?? code
