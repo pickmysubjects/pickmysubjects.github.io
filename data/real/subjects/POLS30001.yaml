@@ -5,6 +5,8 @@ points: 25
 offerings:
   "2026":
     - semester-1
+  "2027":
+    - semester-1
 prerequisites:
   all:
     - manual: "Students are required to apply for permission to enrol into this subject prior to commencement of the internship, there is a quota of up to or around 15 students. Criteria for applying: Selection of one of the following: Politics and International Studies major in the B-ARTS Bachelor of Arts, Politics and International Studies specialisation (formal) in the GD-ARTS Graduate Diploma in Arts"
@@ -22,7 +24,6 @@ prerequisites:
           - POLS20011
           - POLS20023
           - POLS20025
-          - POLS20026
           - POLS20031
           - POLS20035
           - POLS20033
@@ -48,7 +49,7 @@ assessment:
     weight: 20
 breadth_for: []
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/pols30001
-source_year: 2026
-verified_on: 2026-10-17
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/pols30001
+source_year: 2027
+verified_on: 2026-11-14
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

@@ -5,30 +5,20 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
+  "2027":
+    - semester-2
 prerequisites:
   any:
     - points:
         min: 25
-        from:
-          - POLS10001
-          - POLS10003
-          - INTS10001
+        from: [POLS10001, POLS10003, INTS10001]
     - all:
-        - AHIS10001
-        - ARTS10005
-        - CRIM10001
-        - ENGL10002
-        - HPSC10002
-        - INDG10001
-        - LANG10001
-        - LING10002
-        - PHIL10002
-        - POLS10003
-        - SOCI10001
-        - ASIA10003
-        - HIST10015
-        - POLS10001
-        - INTS10001
+        - points:
+            min: 12.5
+            from: [AHIS10001, ARTS10005, ARTS10006, CRIM10001, ENGL10002, HPSC10002, INDG10001, LANG10001, LING10002, PHIL10002, POLS10003, SOCI10001, ASIA10003, HIST10015]
+        - points:
+            min: 12.5
+            from: [POLS10001, POLS10003, INTS10001]
     - admission: GD-ARTS
       note: Admission into the GD-ARTS Graduate Diploma in Arts, GC-ARTS Graduate Certificate in Arts
 corequisites: none
@@ -55,7 +45,7 @@ attendance_applies_to:
   - workshops
   - seminars
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/pols20034
-source_year: 2026
-verified_on: 2026-10-17
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/pols20034
+source_year: 2027
+verified_on: 2026-11-14
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
