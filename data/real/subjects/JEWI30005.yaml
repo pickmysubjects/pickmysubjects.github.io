@@ -8,13 +8,15 @@ offerings:
   "2027":
     - semester-2
 prerequisites:
-  any:
-    - HEBR10001
-    - HEBR10002
-    - HEBR10005
-    - HEBR10006
-    - HEBR10011
-    - HEBR10012
+  all:
+    - manual: "This is a Capstone subject and only available to students in the Hebrew and Jewish Studies Major within the Bachelor of Arts or the Hebrew and Jewish Studies specialisation of the Graduate Diploma in Arts. This subject is not available to students in the Minor or as Breadth. Admission into or selection of one of the following: Hebrew and Jewish Studies major in the B-ARTS Bachelor of Arts Hebrew and Jewish Studies specialisation (formal) in the GD-ARTS Graduate Diploma in Arts"
+    - any:
+        - HEBR10001
+        - HEBR10002
+        - HEBR10005
+        - HEBR10006
+        - HEBR10011
+        - HEBR10012
 corequisites: none
 non_allowed: []
 skills:

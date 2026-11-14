@@ -8,10 +8,12 @@ offerings:
   "2027":
     - semester-2
 prerequisites:
-  any:
-    - ASIA10001
-    - ASIA10002
-    - ASIA10003
+  all:
+    - manual: "This is a Capstone subject and only available to students in the Asian Studies Major within the Bachelor of Arts or the Asian Studies specialisation of the Graduate Diploma in Arts. This subject is not available to students in the Minor or as Breadth. Admission into or selection of one of the following: Asian Studies major in the B-ARTS Bachelor of Arts Asian Studies specialisation (formal) in the GD-ARTS Graduate Diploma in Arts"
+    - any:
+        - ASIA10001
+        - ASIA10002
+        - ASIA10003
 corequisites: none
 non_allowed: []
 skills:

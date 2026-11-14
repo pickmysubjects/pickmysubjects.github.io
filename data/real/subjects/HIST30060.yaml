@@ -8,11 +8,13 @@ offerings:
   "2027":
     - semester-2
 prerequisites:
-  any:
-    - HIST10012
-    - HIST10015
-    - HIST10016
-    - HIST10017
+  all:
+    - manual: "This is a Capstone subject and only available to students in the History Major within the Bachelor of Arts or the History specialisation of the Graduate Diploma in Arts. This subject is not available to students in the Minor or as Breadth. Admission into or selection of one of the following: History major in the B-ARTS Bachelor of Arts History specialisation (formal) in the GD-ARTS Graduate Diploma in Arts"
+    - any:
+        - HIST10012
+        - HIST10015
+        - HIST10016
+        - HIST10017
 corequisites: none
 non_allowed: []
 skills:

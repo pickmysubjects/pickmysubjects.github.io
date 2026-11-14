@@ -9,10 +9,12 @@ offerings:
     - semester-2
 prerequisites:
   all:
-    - any:
-        - ARBC20006
-        - ARBC30004
-    - ARBC20001
+    - manual: "This is a Capstone subject and only available to students in the Arabic Studies Studies Major within the Bachelor of Arts, the Arabic Studies specialisation of the Diploma in Languages or the Arabic Studies Studies specialisation of the Graduate Diploma in Arts. This subject is not available to students as Breadth. Admission into or selection of one of the following: Arabic Studies major in the B-ARTS Bachelor of Arts Arabic Studies informal specialisation in the D-LANG Diploma in Languages Arabic Studies specialisation (formal) in the GD-ARTS Graduate Diploma in Arts"
+    - all:
+        - any:
+            - ARBC20006
+            - ARBC30004
+        - ARBC20001
 corequisites: none
 non_allowed: []
 skills:

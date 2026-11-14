@@ -8,9 +8,11 @@ offerings:
   "2027":
     - semester-2
 prerequisites:
-  any:
-    - ENGL10001
-    - ENGL10002
+  all:
+    - manual: "This is a Capstone subject and only available to students in the English and Theatre Studies Major within the Bachelor of Arts or the English and Theatre Studies specialisation of the Graduate Diploma in Arts. This subject is not available to students in the Minor or as Breadth. Admission into or selection of one of the following: English and Theatre Studies major in the B-ARTS Bachelor of Arts English and Theatre Studies specialisation (formal) in the GD-ARTS Graduate Diploma in Arts"
+    - any:
+        - ENGL10001
+        - ENGL10002
 corequisites: none
 non_allowed: []
 skills:

@@ -8,9 +8,11 @@ offerings:
   "2027":
     - semester-2
 prerequisites:
-  any:
-    - CWRI10001
-    - CWRI10003
+  all:
+    - manual: "This is a Capstone subject and only available to students in the Creative Writing Major within the Bachelor of Arts or the Creative Writing specialisation of the Graduate Diploma in Arts. This subject is not available to students in the Minor or as Breadth. Admission into or selection of one of the following: Creative Writing major in the B-ARTS Bachelor of Arts Creative Writing specialisation (formal) in the GD-ARTS Graduate Diploma in Arts"
+    - any:
+        - CWRI10001
+        - CWRI10003
 corequisites: none
 non_allowed: []
 skills:

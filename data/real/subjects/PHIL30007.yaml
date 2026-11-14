@@ -8,10 +8,12 @@ offerings:
   "2027":
     - semester-2
 prerequisites:
-  any:
-    - PHIL10002
-    - PHIL10003
-    - ARTS10004
+  all:
+    - manual: "This is a Capstone subject and only available to students in the Philosophy Major within the Bachelor of Arts or the Philosophy specialisation of the Graduate Diploma in Arts. This subject is not available to students in the Minor or as Breadth. Admission into or selection of one of the following: Philosophy major in the B-ARTS Bachelor of Arts Philosophy specialisation (formal) in the GD-ARTS Graduate Diploma in Arts"
+    - any:
+        - PHIL10002
+        - PHIL10003
+        - ARTS10004
 corequisites: none
 non_allowed: []
 skills:

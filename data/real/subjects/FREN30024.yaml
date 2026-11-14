@@ -8,10 +8,12 @@ offerings:
   "2027":
     - semester-2
 prerequisites:
-  any:
-    - FREN10008
-    - FREN20019
-    - FREN30001
+  all:
+    - manual: "This is a Capstone subject and only available to students in the French Studies Major within the Bachelor of Arts or the French Studies specialisation of the Graduate Diploma in Arts. This subject is not available to students in the Minor or as Breadth. Admission into or selection of one of the following: French Studies major in the B-ARTS Bachelor of Arts French Studies specialisation (formal) in the GD-ARTS Graduate Diploma in Arts"
+    - any:
+        - FREN10008
+        - FREN20019
+        - FREN30001
 corequisites: none
 non_allowed:
   - FREN30023

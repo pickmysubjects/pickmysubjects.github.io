@@ -8,9 +8,11 @@ offerings:
   "2027":
     - semester-2
 prerequisites:
-  any:
-    - ANTH10001
-    - ANTH10002
+  all:
+    - manual: "This is a Capstone subject and only available to students in the Anthropology Major within the Bachelor of Arts or the Anthropology specialisation of the Graduate Diploma in Arts. This subject is not available to students in the Minor or as Breadth. Admission into or selection of one of the following: Anthropology major in the B-ARTS Bachelor of Arts Anthropology specialisation (formal) in the GD-ARTS Graduate Diploma in Arts"
+    - any:
+        - ANTH10001
+        - ANTH10002
 corequisites: none
 non_allowed: []
 skills:
