@@ -3,13 +3,21 @@ course: B-DES
 year: 2026
 kind: major
 title: Computing and Software Systems
-points: 50
+points: 100
+# From 2027 a B-DES major counts its level-2 subjects too (2027 Handbook).
 requirements:
-  # Core.
-  - all: [COMP30023, COMP30022, SWEN30006, COMP30026]
-# ACS accreditation needs the Artificial Intelligence or Advanced Computing specialisation as well.
-# Subjects the page says students in this major can't take as breadth.
+  # Level 2 Major Core
+  - all: [COMP20008, INFO20003, SWEN20003]
+  # Level 2 Major Electives
+  - choose: { points: 12.5, from: [COMP20003, COMP20007] }
+  # Level 3 Major Core
+  - all: [COMP30023, SWEN30006, COMP30026]
+  # Capstone subject
+  - all: [COMP30022]
+# 2027 Handbook: no subjects taught by the Faculty of Engineering and IT (FEIT) as breadth. Its subject areas
+# are read from the Handbook search by faculty; the other codes are that faculty's subjects in mixed areas.
 non_allowed_breadth:
-  areas: [COMP, ENGR, GEOM, INFO, ISYS, MAST, PHYC, SINF]
-handbook: https://handbook.unimelb.edu.au/2026/courses/b-des/majors-minors-specialisations
-verified_on: 2026-10-19 # structure; source: 2026 Handbook major page
+  areas: [BMEN, CHEN, COMP, CVEN, ELEN, ENEN, ENGR, GEOM, INFO, ISYS, MCEN, SWEN]
+  subjects: [EDUC20071, MULT20018, MULT30022, MULT30023, MULT30024]
+handbook: https://handbook.unimelb.edu.au/2027/components/b-des-major-3
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

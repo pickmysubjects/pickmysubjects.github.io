@@ -1,0 +1,15 @@
+id: des-spec-lighting-and-acoustic-design
+course: B-DES
+year: 2027
+kind: specialisation
+title: Lighting and Acoustic Design
+points: 50
+# New specialisation in the 2027 Handbook.
+requirements:
+  # Level 2 (may also count towards the major)
+  - all: [ARCH20001, ARCH20002, ARCH20004, ABPL20057, ABPL20058, GDES20002, GDES20004]
+  - choose: { points: 12.5, from: [ABPL20033, ABPL20035, ABPL20055, ABPL20042, ABPL20056, ARCH20003, LARC20001, CONS20002, PROP20003, PROP20002, PLAN20002, GDES20001, GDES20003, CVEN20001, COMP20007, FINA20041, FINA20029, INFO20003, INFO20004, GEOM20013, GEOM20015, ENEN20002, ENGR20003, COMP20005, FINA20043] }
+  # Level 3
+  - all: [ABPL30078, PERF30003]
+handbook: https://handbook.unimelb.edu.au/2027/components/b-des-spec-12
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

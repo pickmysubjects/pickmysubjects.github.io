@@ -4,6 +4,7 @@ year: 2026
 kind: specialisation
 informal: true
 title: Environmental Design
+closed_from: 2027 # 2027 Handbook: now the formal des-spec-environmental-design
 points: 25
 requirements:
   # Core: commercial (winter) and housing (summer) environmental design.

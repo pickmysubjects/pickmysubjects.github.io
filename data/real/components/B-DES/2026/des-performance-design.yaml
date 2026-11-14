@@ -3,13 +3,19 @@ course: B-DES
 year: 2026
 kind: major
 title: Performance Design
-points: 50
+points: 87.5
+# From 2027 a B-DES major counts its level-2 subjects too (2027 Handbook).
 requirements:
-  # Capstone subjects.
-  - all: [FINA30023, FINA30022, FINA30024]
-# Subjects the page says students in this major can't take as breadth.
+  # Level 2 Major Core
+  - all: [FINA20041, FINA20043, DPSS20014]
+  # Level 3 Major Core
+  - all: [FINA30023, FINA30022]
+  # Capstone
+  - all: [FINA30024]
+# 2027 Handbook: no subjects taught by the Faculty of Fine Arts and Music (FFAM) as breadth. Its subject areas
+# are read from the Handbook search by faculty; the other codes are that faculty's subjects in mixed areas.
 non_allowed_breadth:
-  # Dropped ABPL20028, ABPL30037, ABPL30048, FLTV10021, THTR20042, THTR30039: not in the 2026 Handbook (checked 2026-10-26).
-  subjects: [COMP30019, FINA20033, FINA20026, FINA20035, SCRN30005, THTR20043, GDES10001, GDES20001, GDES20002]
-handbook: https://handbook.unimelb.edu.au/2026/courses/b-des/majors-minors-specialisations
-verified_on: 2026-10-19 # structure; source: 2026 Handbook major page
+  areas: [CREA, DNCE, DPSS, DRAM, FINA, FLTV, GDES, MUSI, MUST, PERF, THTR]
+  subjects: [AIND10004, AIND10005, AIND20011, AIND20013, CCDP20001]
+handbook: https://handbook.unimelb.edu.au/2027/components/b-des-major-9
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

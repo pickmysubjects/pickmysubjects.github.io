@@ -4,6 +4,7 @@ year: 2026
 kind: specialisation
 informal: true
 title: Event Design
+closed_from: 2027 # 2027 Handbook: now the formal des-spec-event-design
 points: 25
 requirements:
   # Core: both intensive event design subjects.

@@ -4,6 +4,7 @@ year: 2026
 kind: specialisation
 informal: true
 title: Working with First Peoples Design Knowledge
+closed_from: 2027 # 2027 Handbook: now the formal des-spec-working-with-first-peoples-design-knowledge
 points: 25
 requirements:
   # First Peoples perspectives subject.

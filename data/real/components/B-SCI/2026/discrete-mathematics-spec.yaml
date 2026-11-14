@@ -1,0 +1,14 @@
+id: discrete-mathematics-spec
+course: B-SCI
+year: 2027
+kind: specialisation
+title: Discrete Mathematics
+points: 50
+# New specialisation in the 2027 Handbook.
+# The level-2 subjects can also count towards the major; level-3 ones cannot (2027 Handbook).
+requirements:
+  - all: [MAST20036]
+  - choose: { points: 12.5, from: [MAST20026, MAST20033] }
+  - choose: { points: 25, from: [MAST30036, MAST30011, MAST30035] }
+handbook: https://handbook.unimelb.edu.au/2027/components/b-sci-spec-8
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

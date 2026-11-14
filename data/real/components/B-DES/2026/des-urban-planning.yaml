@@ -3,14 +3,18 @@ course: B-DES
 year: 2026
 kind: major
 title: Urban Planning
-points: 50
+points: 87.5
+# From 2027 a B-DES major counts its level-2 subjects too (2027 Handbook).
 requirements:
-  # Core (PLAN30005 replaces ABPL30060 Urban Precinct Studio).
-  - all: [PLAN30005, PLAN30001, PLAN30003]
-# Subjects the page says students in this major can't take as breadth.
+  # Level 2 Major Core
+  - all: [ABPL20035, ABPL20056, PLAN20002]
+  # Level 3 Major Core
+  - all: [PLAN30001, PLAN30003]
+  # Capstone
+  - all: [PLAN30005]
+# 2027 Handbook: no subjects taught by the Faculty of Architecture, Building and Planning (ABP) as breadth. Its subject areas
+# are read from the Handbook search by faculty; the other codes are that faculty's subjects in mixed areas.
 non_allowed_breadth:
-  areas: [GEOG]
-  # Dropped ECON30021, HORT10015: not in the 2026 Handbook (checked 2026-10-26).
-  subjects: [ABPL30042, ABPL30051, EVSC30006]
-handbook: https://handbook.unimelb.edu.au/2026/courses/b-des/majors-minors-specialisations
-verified_on: 2026-10-19 # structure; source: 2026 Handbook major page
+  areas: [ABPL, ARCH, CONS, LARC, PLAN, PROP]
+handbook: https://handbook.unimelb.edu.au/2027/components/b-des-major-12
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

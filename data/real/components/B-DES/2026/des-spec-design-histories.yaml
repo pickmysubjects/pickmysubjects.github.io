@@ -1,0 +1,15 @@
+id: des-spec-design-histories
+course: B-DES
+year: 2027
+kind: specialisation
+title: Design Histories
+points: 50
+# From 2027 a formal 50-point specialisation; replaces the informal one (des-informal-design-histories).
+requirements:
+  # Level 2 (may also count towards the major)
+  - all: [ARCH20003]
+  - choose: { points: 12.5, from: [ABPL20035, ABPL20033, ABPL20042, ABPL20055, ABPL20056, ABPL20057, ABPL20058, ARCH20001, ARCH20002, ARCH20004, LARC20001, PLAN20002, PROP20002, CVEN20001, ENEN20002, ENGR20003, COMP20007, INFO20003, GEOM20015, GEOM20013, GDES20001, GDES20002, FINA20029, ENGR20004, FINA20043, FINA20041, COMP20008, COMP20003, INFO20004, INFO20005, GDES20004, DPSS20014] }
+  # Level 3
+  - choose: { points: 25, from: [ABPL30053, ABPL30057, LARC30002] }
+handbook: https://handbook.unimelb.edu.au/2027/components/b-des-spec-4
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

@@ -1,0 +1,15 @@
+id: des-spec-design-visualisation
+course: B-DES
+year: 2027
+kind: specialisation
+title: Design Visualisation
+points: 50
+# From 2027 a formal 50-point specialisation; replaces the informal one (des-informal-design-visualisation).
+requirements:
+  # Level 2 (may also count towards the major)
+  - all: [ARCH20004]
+  - choose: { points: 12.5, from: [ABPL20033, ABPL20035, ABPL20042, ABPL20055, ABPL20056, ABPL20057, ABPL20058, ARCH20001, ARCH20002, ARCH20003, CONS20002, LARC20001, PLAN20002, PROP20001, PROP20002, COMP20003, COMP20005, ELEN20005, ENEN20002, ENGR20003, ENGR20004, GEOM20013, GEOM20015, INFO20003, INFO20004, INFO20005, MAST20029, FINA20029, FINA20041, FINA20043, GDES20001, GDES20002, COMP20007, CVEN20001, DPSS20014, GDES20004] }
+  # Level 3
+  - all: [ARCH30005, GDES30004]
+handbook: https://handbook.unimelb.edu.au/2027/components/b-des-spec-5
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

@@ -1,0 +1,16 @@
+id: operations-research-spec
+course: B-SCI
+year: 2027
+kind: specialisation
+title: Mathematical Operations Research
+points: 50
+not_with: [mathematics-and-statistics-operations-research]
+# New specialisation in the 2027 Handbook.
+# The level-2 subjects can also count towards the major; level-3 ones cannot (2027 Handbook).
+requirements:
+  - all: [MAST20035]
+  - choose: { points: 12.5, from: [MAST20026, MAST20033] }
+  - all: [MAST30013]
+  - choose: { points: 12.5, from: [MAST30011, MAST30022] }
+handbook: https://handbook.unimelb.edu.au/2027/components/b-sci-spec-5
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

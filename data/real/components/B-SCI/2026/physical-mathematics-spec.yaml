@@ -1,0 +1,15 @@
+id: physical-mathematics-spec
+course: B-SCI
+year: 2027
+kind: specialisation
+title: Physical Mathematics
+points: 62.5
+# New specialisation in the 2027 Handbook.
+# Intended for the Pure Mathematics, Applied Mathematics, Operations Research and Statistics majors.
+# The level-2 subjects can also count towards the major; level-3 ones cannot (2027 Handbook).
+requirements:
+  - all: [MAST20030, MAST20026]
+  - choose: { points: 12.5, from: [MAST20009, MAST20032] }
+  - all: [MAST30031, MAST30021]
+handbook: https://handbook.unimelb.edu.au/2027/components/b-sci-spec-4
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

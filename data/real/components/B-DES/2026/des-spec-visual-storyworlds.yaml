@@ -1,0 +1,14 @@
+id: des-spec-visual-storyworlds
+course: B-DES
+year: 2027
+kind: specialisation
+title: Visual Storyworlds
+points: 50
+# New specialisation in the 2027 Handbook.
+requirements:
+  # Level 2 (may also count towards the major)
+  - choose: { points: 25, from: [GDES20002, GDES20001] }
+  # Level 3
+  - choose: { points: 25, from: [GDES30001, GDES30006, GDES30007] }
+handbook: https://handbook.unimelb.edu.au/2027/components/b-des-spec-11
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

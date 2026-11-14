@@ -3,12 +3,19 @@ course: B-DES
 year: 2026
 kind: major
 title: User Experience Design
-points: 50
+points: 87.5
+# From 2027 a B-DES major counts its level-2 subjects too (2027 Handbook).
 requirements:
-  # Core.
-  - all: [INFO30005, INFO30009, INFO30008]
-# Subjects the page says students in this major can't take as breadth.
+  # Level 2 Major Core
+  - all: [INFO20003, INFO20004, INFO20005]
+  # Level 3 Major Core
+  - all: [INFO30005, INFO30009]
+  # Capstone
+  - all: [INFO30008]
+# 2027 Handbook: no subjects taught by the Faculty of Engineering and IT (FEIT) as breadth. Its subject areas
+# are read from the Handbook search by faculty; the other codes are that faculty's subjects in mixed areas.
 non_allowed_breadth:
-  areas: [COMP, INFO, GEOM, ISYS]
-handbook: https://handbook.unimelb.edu.au/2026/courses/b-des/majors-minors-specialisations
-verified_on: 2026-10-19 # structure; source: 2026 Handbook major page
+  areas: [BMEN, CHEN, COMP, CVEN, ELEN, ENEN, ENGR, GEOM, INFO, ISYS, MCEN, SWEN]
+  subjects: [EDUC20071, MULT20018, MULT30022, MULT30023, MULT30024]
+handbook: https://handbook.unimelb.edu.au/2027/components/b-des-major-5
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

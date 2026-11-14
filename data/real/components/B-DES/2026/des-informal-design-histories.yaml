@@ -4,6 +4,7 @@ year: 2026
 kind: specialisation
 informal: true
 title: Design Histories
+closed_from: 2027 # 2027 Handbook: now the formal des-spec-design-histories
 points: 25
 requirements:
   # Listed as core, but only 25 points of the three are needed (Venice Studio ABPL30070 dropped: no longer available).

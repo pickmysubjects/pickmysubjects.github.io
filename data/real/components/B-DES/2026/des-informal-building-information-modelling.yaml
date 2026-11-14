@@ -4,6 +4,7 @@ year: 2026
 kind: specialisation
 informal: true
 title: Building Information Modelling
+closed_from: 2027 # 2027 Handbook: now the formal des-spec-building-information-modelling
 points: 25
 requirements:
   # Core: both level 3 BIM subjects.

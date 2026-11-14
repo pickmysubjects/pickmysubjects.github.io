@@ -11,5 +11,5 @@ requirements:
   - all: [MKTG30009]
   - choose: { points: 12.5, from: [MKTG30008, MKTG30014] }
 # The level-3 subjects can't also count towards the major's level-3 subjects.
-handbook: https://handbook.unimelb.edu.au/2026/components/b-com-spec-9
-verified_on: 2026-10-26 # structure; source: 2026 Handbook specialisation page
+handbook: https://handbook.unimelb.edu.au/2027/components/b-com-spec-9
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked (unchanged)

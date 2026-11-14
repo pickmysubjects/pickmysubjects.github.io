@@ -1,0 +1,15 @@
+id: des-spec-event-design
+course: B-DES
+year: 2027
+kind: specialisation
+title: Event Design
+points: 50
+# From 2027 a formal 50-point specialisation; replaces the informal one (des-informal-event-design).
+requirements:
+  # Level 2 (may also count towards the major)
+  - all: [ARCH20001, ARCH20002, ARCH20004, GDES20002, GDES20004, ABPL20057, ABPL20058]
+  - choose: { points: 12.5, from: [ABPL20033, ABPL20035, ABPL20042, ABPL20053, ABPL20055, ABPL20056, ARCH20003, CONS20002, LARC20001, PLAN20002, PROP20001, PROP20002, ENGR20004, ENGR20005, COMP20003, COMP20005, COMP20007, COMP20008, INFO20002, INFO20003, CVEN20001, FINA20029, FINA20041, FINA20043, GDES20001] }
+  # Level 3
+  - choose: { points: 25, from: [ABPL30069, PERF30001, PERF30002] }
+handbook: https://handbook.unimelb.edu.au/2027/components/b-des-spec-7
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

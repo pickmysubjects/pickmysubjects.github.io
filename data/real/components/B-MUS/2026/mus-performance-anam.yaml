@@ -13,5 +13,5 @@ requirements:
   - all: [MUSI20198, MUSI20201, MUSI20229, MUSI20061, MUSI20202, MUSI20230]
   # Level 3 core.
   - all: [MUSI30249, MUSI30252, MUSI30275, MUSI30046, MUSI30253, MUSI30276]
-handbook: https://handbook.unimelb.edu.au/2026/courses/b-mus/majors-minors-specialisations
-verified_on: 2026-10-21 # structure; source: 2026 Handbook major page
+handbook: https://handbook.unimelb.edu.au/2027/components/b-mus-major-7
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked (unchanged)

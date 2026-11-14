@@ -4,6 +4,7 @@ year: 2026
 kind: specialisation
 informal: true
 title: Towards Practice
+closed_from: 2027 # 2027 Handbook: now the formal des-spec-towards-practice
 points: 25
 requirements:
   # Electives: internships, visiting studios and practice subjects (some not available in 2026).

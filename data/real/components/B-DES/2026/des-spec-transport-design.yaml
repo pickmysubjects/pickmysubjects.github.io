@@ -1,0 +1,15 @@
+id: des-spec-transport-design
+course: B-DES
+year: 2027
+kind: specialisation
+title: Transport Design
+points: 50
+# From 2027 a formal 50-point specialisation; replaces the informal one (des-informal-transport-design).
+requirements:
+  # Level 2 (may also count towards the major)
+  - all: [CVEN20001, GEOM20013, ABPL20056]
+  - choose: { points: 12.5, from: [ABPL20033, ABPL20035, ABPL20042, ABPL20055, ABPL20057, ABPL20058, ARCH20001, ARCH20002, ARCH20003, ARCH20004, CONS20002, LARC20001, PLAN20002, PROP20001, PROP20002, ENEN20002, ENGR20003, ENGR20004, GEOM20015, INFO20003, INFO20004, FINA20029, FINA20041, FINA20043, GDES20001, INFO20005, SWEN20003, GDES20002] }
+  # Level 3
+  - all: [PLAN30004, CVEN30011]
+handbook: https://handbook.unimelb.edu.au/2027/components/b-des-spec-9
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

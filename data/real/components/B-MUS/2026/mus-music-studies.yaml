@@ -35,5 +35,5 @@ limits:
   # No more than 25 points of level-1 music electives.
   - max: 25
     from: [MUSI10004, MUSI10204, MUSI10179, MUSI10184, MUSI10219, MUSI10227, MUSI10041, MUSI10042, MUSI10052, MUSI10053, MUSI10056, MUSI10057, MUSI10058, MUSI10059, MUSI10060, MUSI10061, MUSI10066, MUSI10067, MUSI10068, MUSI10069, MUSI10076, MUSI10092, MUSI10093, MUSI10206, MUSI10207, MUSI10225, MUSI10226, MUSI10238, MUSI10239, MUSI10237, MUSI10016]
-handbook: https://handbook.unimelb.edu.au/2026/courses/b-mus/majors-minors-specialisations
-verified_on: 2026-10-21 # structure; source: 2026 Handbook major page
+handbook: https://handbook.unimelb.edu.au/2027/components/b-mus-major-5
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked (unchanged)

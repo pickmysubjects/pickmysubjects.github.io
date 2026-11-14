@@ -4,6 +4,7 @@ year: 2026
 kind: specialisation
 informal: true
 title: Design Visualisation
+closed_from: 2027 # 2027 Handbook: now the formal des-spec-design-visualisation
 points: 25
 requirements:
   # Core: digital and analogue visualisation.

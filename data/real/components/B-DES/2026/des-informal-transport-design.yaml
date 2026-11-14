@@ -4,6 +4,7 @@ year: 2026
 kind: specialisation
 informal: true
 title: Transport Design
+closed_from: 2027 # 2027 Handbook: now the formal des-spec-transport-design
 points: 25
 requirements:
   # Core: transport planning and data-driven transport planning.

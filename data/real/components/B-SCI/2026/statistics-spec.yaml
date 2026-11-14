@@ -1,0 +1,15 @@
+id: statistics-spec
+course: B-SCI
+year: 2027
+kind: specialisation
+title: Statistics
+points: 50
+not_with: [mathematics-and-statistics-statistics]
+# New specialisation in the 2027 Handbook.
+# The level-2 subjects can also count towards the major; level-3 ones cannot (2027 Handbook).
+requirements:
+  - all: [MAST20005]
+  - choose: { points: 12.5, from: [MAST20004, MAST20006] }
+  - all: [MAST30025, MAST30027]
+handbook: https://handbook.unimelb.edu.au/2027/components/b-sci-spec-6
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

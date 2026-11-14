@@ -1,0 +1,14 @@
+id: des-spec-urban-design
+course: B-DES
+year: 2027
+kind: specialisation
+title: Urban Design
+points: 50
+# New specialisation in the 2027 Handbook.
+requirements:
+  # Level 2 (may also count towards the major)
+  - choose: { points: 25, from: [ARCH20001, ARCH20002, ARCH20004, ABPL20057, ABPL20058, GDES20002, GDES20004, ABPL20033, ABPL20035, ABPL20042, ABPL20055, ABPL20056, ARCH20003, PLAN20002, CONS20002, PROP20002, LARC20001, COMP20005, ENEN20002, ENGR20003, ENGR20004, GEOM20013, GEOM20015, INFO20003, FINA20029, FINA20041, FINA20043, GDES20001, COMP20007, CVEN20001] }
+  # Level 3
+  - all: [ABPL30051, ABPL30077]
+handbook: https://handbook.unimelb.edu.au/2027/components/b-des-spec-13
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked
