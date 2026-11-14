@@ -1,4 +1,4 @@
-import { findCourse } from './courseRules'
+import { componentCourse, findCourse } from './courseRules'
 import { latestDataYear } from './dataYear'
 import { generatePlan } from './generate'
 import type { Dataset } from './schema'
@@ -28,7 +28,9 @@ export interface FirstYear {
 /** The degree's majors still offered in the latest year we have. */
 export function openMajors(data: Dataset, course: string): string[] {
   const year = latestDataYear(data.subjects)
-  return data.components.filter((c) => c.course === course && c.kind === 'major' && (c.closedFrom === undefined || year < c.closedFrom)).map((c) => c.id)
+  // A course on another's majors (B-SCIEXTD on B-SCI's) keeps those open.
+  const own = componentCourse(data, course)
+  return data.components.filter((c) => c.course === own && c.kind === 'major' && (c.closedFrom === undefined || year < c.closedFrom)).map((c) => c.id)
 }
 
 export function firstYear(data: Dataset, course: string): FirstYear {
