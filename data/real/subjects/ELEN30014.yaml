@@ -7,7 +7,11 @@ offerings:
     - semester-1
   "2027":
     - semester-1
-prerequisites: ELEN20005
+prerequisites:
+  any:
+    - ELEN20005
+    - admission: MC-MTRNENG
+      note: Admission into the Master of Mechatronics Engineering
 corequisites: none
 non_allowed:
   - ELEN30009
