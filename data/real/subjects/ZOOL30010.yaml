@@ -1,0 +1,49 @@
+code: ZOOL30010
+title: Comparative Animal Ecophysiology
+level: 3
+points: 12.5
+offerings:
+  "2027":
+    - semester-1
+prerequisites:
+  all:
+    - any:
+        - ZOOL20005
+        - ANSC20001
+        - PHYS20008
+    - any:
+        - ANSC20001
+        - ANSC20002
+        - BIOM20002
+        - ECOL20003
+        - MAST20031
+        - PHYS20008
+        - PHYS20009
+        - ZOOL20005
+        - ZOOL20004
+corequisites: none
+non_allowed:
+  - ZOOL20006
+assessment:
+  - kind: assignment
+    weight: 2.5
+    group: true
+  - kind: assignment
+    weight: 5
+    group: true
+  - kind: assignment
+    weight: 7.5
+  - kind: quiz
+    weight: 15
+  - kind: report
+    weight: 20
+  - kind: quiz
+    weight: 10
+  - kind: exam
+    weight: 40
+weekly_contact_hours: 4
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/zool30010
+source_year: 2027
+verified_on: 2026-11-14
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

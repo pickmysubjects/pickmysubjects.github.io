@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - winter
+  "2027":
+    - winter
 prerequisites: none
 corequisites: none
 non_allowed: []
@@ -14,7 +16,7 @@ skills:
 topics:
   - performance
 assessment:
-  - kind: presentation
+  - kind: assignment
     weight: 50
   - kind: assignment
     weight: 50
@@ -24,6 +26,7 @@ breadth_for:
   - Bachelor of Biomedicine
   - Bachelor of Commerce
   - Bachelor of Design
+  - Bachelor of Environments
   - Bachelor of Fine Arts (Animation)
   - Bachelor of Fine Arts (Dance)
   - Bachelor of Fine Arts (Film and Television)
@@ -32,7 +35,7 @@ breadth_for:
   - Bachelor of Fine Arts (Visual Art)
   - Bachelor of Science
 prescribed_texts: false
-handbook: "https://handbook.unimelb.edu.au/2026/subjects/thtr20022"
-source_year: 2026
-verified_on: 2026-10-21
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Winter intensive at Southbank (13 to 17 July 2026): ten tutorials, 22 contact hours."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/thtr20022
+source_year: 2027
+verified_on: 2026-11-14
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. (From 2026, re-check:) Winter intensive at Southbank (13 to 17 July 2026): ten tutorials, 22 contact hours."

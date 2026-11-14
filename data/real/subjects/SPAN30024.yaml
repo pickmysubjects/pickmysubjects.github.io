@@ -4,6 +4,8 @@ level: 3
 points: 12.5
 offerings:
   "2026": []
+  "2027":
+    - summer
 prerequisites:
   all:
     - all:
@@ -24,14 +26,16 @@ topics:
   - society
   - history
 assessment:
+  - kind: participation
+    weight: 10
   - kind: presentation
     weight: 15
   - kind: presentation
-    weight: 25
+    weight: 15
   - kind: assignment
-    weight: 25
-  - kind: report
-    weight: 35
+    weight: 15
+  - kind: project
+    weight: 45
 breadth_for:
   - Bachelor of Biomedicine
   - Bachelor of Commerce
@@ -52,7 +56,8 @@ attendance_applies_to:
   - tutorials
   - workshops
   - seminars
-handbook: https://handbook.unimelb.edu.au/2026/subjects/span30024
-source_year: 2026
-verified_on: 2026-10-17
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/span30024
+source_year: 2027
+verified_on: 2026-11-14
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
+weekly_contact_hours: 3

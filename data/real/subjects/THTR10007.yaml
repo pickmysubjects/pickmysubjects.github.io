@@ -1,9 +1,11 @@
 code: THTR10007
-title: "The Actors Process"
+title: The Actors Process
 level: 1
 points: 12.5
 offerings:
   "2026":
+    - winter
+  "2027":
     - winter
 prerequisites: none
 corequisites: none
@@ -14,11 +16,11 @@ skills:
 topics:
   - performance
 assessment:
-  - kind: presentation
-    weight: 30
-  - kind: presentation
-    weight: 20
   - kind: assignment
+    weight: 30
+  - kind: assignment
+    weight: 20
+  - kind: report
     weight: 40
   - kind: participation
     weight: 10
@@ -27,6 +29,7 @@ breadth_for:
   - Bachelor of Arts
   - Bachelor of Biomedicine
   - Bachelor of Design
+  - Bachelor of Environments
   - Bachelor of Fine Arts (Animation)
   - Bachelor of Fine Arts (Dance)
   - Bachelor of Fine Arts (Film and Television)
@@ -35,7 +38,7 @@ breadth_for:
   - Bachelor of Fine Arts (Visual Art)
   - Bachelor of Science
 prescribed_texts: false
-handbook: "https://handbook.unimelb.edu.au/2026/subjects/thtr10007"
-source_year: 2026
-verified_on: 2026-10-21
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Winter intensive at Southbank (6 to 10 July 2026): five daily 3-hour tutorials, 15 contact hours."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/thtr10007
+source_year: 2027
+verified_on: 2026-11-14
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. (From 2026, re-check:) Winter intensive at Southbank (6 to 10 July 2026): five daily 3-hour tutorials, 15 contact hours."

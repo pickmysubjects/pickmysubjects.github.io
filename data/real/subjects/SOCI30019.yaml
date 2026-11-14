@@ -1,0 +1,24 @@
+code: SOCI30019
+title: Understanding the Life Course
+level: 3
+points: 12.5
+offerings:
+  "2027":
+    - semester-2
+prerequisites: none
+corequisites: none
+non_allowed:
+  - SOCI40003
+assessment:
+  - kind: assignment
+    weight: 25
+  - kind: assignment
+    weight: 25
+  - kind: presentation
+    weight: 50
+weekly_contact_hours: 2.5
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/soci30019
+source_year: 2027
+verified_on: 2026-11-14
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

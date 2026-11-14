@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
+  "2027":
+    - semester-1
 prerequisites:
   any:
     - all:
@@ -22,18 +24,9 @@ prerequisites:
         - BIOL10002
         - CHEM10006
         - BIOM10002
-corequisites:
-  any:
-    - BIOM20001
-    - all:
-        - BIOL10008
-        - BIOL10010
-    - all:
-        - BIOL10009
-        - BIOL10011
-    - all:
-        - BIOL10004
-        - BIOL10005
+        - subject: BIOM20001
+          concurrent: true
+corequisites: none
 non_allowed: []
 assessment:
   - kind: report
@@ -44,17 +37,18 @@ assessment:
     weight: 50
 weekly_contact_hours: 5
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/vets20019
-source_year: 2026
-verified_on: 2026-10-13
+handbook: https://handbook.unimelb.edu.au/2027/subjects/vets20019
+source_year: 2027
+verified_on: 2026-11-14
 categories:
   B-SCI: science
 breadth_for:
   - Bachelor of Arts
   - Bachelor of Commerce
   - Bachelor of Design
+  - Bachelor of Environments
   - Bachelor of Music
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Biomedicine route: BIOM20001 may be taken at the same time."
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. (From 2026, re-check:) Biomedicine route: BIOM20001 may be taken at the same time."
 skills:
   - writing
 topics:

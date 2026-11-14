@@ -4,13 +4,14 @@ level: 3
 points: 12.5
 offerings:
   "2026": []
+  "2027": []
 prerequisites: SWEN30006
 corequisites: none
 non_allowed:
   - SWEN30004
   - COMP30016
 assessment:
-  - kind: report
+  - kind: test
     weight: 55
     group: true
   - kind: assignment
@@ -19,13 +20,13 @@ assessment:
   - kind: project
     weight: 15
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/swen30007
-source_year: 2026
-verified_on: 2026-10-13
+handbook: https://handbook.unimelb.edu.au/2027/subjects/swen30007
+source_year: 2027
+verified_on: 2026-11-14
 categories:
   B-SCI: science
 breadth_for: []
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
 skills:
   - programming
   - design

@@ -1,9 +1,11 @@
 code: UNIB10028
-title: "Australian Surfing"
+title: Australian Surfing
 level: 1
 points: 12.5
 offerings:
   "2026":
+    - semester-1
+  "2027":
     - semester-1
 prerequisites: none
 corequisites: none
@@ -24,10 +26,25 @@ assessment:
   - kind: presentation
     weight: 33
     group: true
-weekly_contact_hours: 4
-breadth_for: []
+weekly_contact_hours: 18.5
+breadth_for:
+  - Bachelor of Arts
+  - Bachelor of Biomedicine
+  - Bachelor of Commerce
+  - Bachelor of Design
+  - Bachelor of Fine Arts (Acting)
+  - Bachelor of Fine Arts (Animation)
+  - Bachelor of Fine Arts (Dance)
+  - Bachelor of Fine Arts (Film and Television)
+  - Bachelor of Fine Arts (Music Theatre)
+  - Bachelor of Fine Arts (Production)
+  - Bachelor of Fine Arts (Screenwriting)
+  - Bachelor of Fine Arts (Theatre)
+  - Bachelor of Fine Arts (Visual Art)
+  - Bachelor of Music
+  - Bachelor of Science
 prescribed_texts: false
-handbook: "https://handbook.unimelb.edu.au/2026/subjects/unib10028"
-source_year: 2026
-verified_on: 2026-10-21
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. At Parkville: weekly lectures, six practicals and two full-day field trips. The paste lists no breadth courses."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/unib10028
+source_year: 2027
+verified_on: 2026-11-14
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. (From 2026, re-check:) At Parkville: weekly lectures, six practicals and two full-day field trips. The paste lists no breadth courses."

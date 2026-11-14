@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
+  "2027":
+    - semester-2
 prerequisites:
   any:
     - ECOL20003
@@ -28,17 +30,18 @@ assessment:
     weight: 38
 weekly_contact_hours: 2
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/vets30033
-source_year: 2026
-verified_on: 2026-10-10
+handbook: https://handbook.unimelb.edu.au/2027/subjects/vets30033
+source_year: 2027
+verified_on: 2026-11-14
 categories:
   B-SCI: science
 breadth_for:
   - Bachelor of Arts
   - Bachelor of Commerce
   - Bachelor of Design
+  - Bachelor of Environments
   - Bachelor of Music
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
 skills:
   - writing
 topics:

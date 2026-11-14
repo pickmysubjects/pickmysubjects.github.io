@@ -6,13 +6,16 @@ offerings:
   "2026":
     - semester-1
     - semester-2
+  "2027":
+    - semester-1
+    - semester-2
 prerequisites:
   any:
     - any:
         - COMP10002
         - COMP20005
     - admission: MC-SOFTENG
-      note: Admission into the Master of Software Engineering
+      note: Admission into the MC-SOFTENG Master of Software Engineering
 corequisites: none
 non_allowed:
   - COMP90041
@@ -23,6 +26,7 @@ breadth_for:
   - Bachelor of Arts
   - Bachelor of Commerce
   - Bachelor of Design
+  - Bachelor of Environments
   - Bachelor of Fine Arts (Acting)
   - Bachelor of Fine Arts (Animation)
   - Bachelor of Fine Arts (Dance)
@@ -33,10 +37,10 @@ breadth_for:
   - Bachelor of Fine Arts (Theatre)
   - Bachelor of Fine Arts (Visual Art)
   - Bachelor of Music
-handbook: https://handbook.unimelb.edu.au/2026/subjects/swen20003
-source_year: 2026
-verified_on: 2026-10-07
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/swen20003
+source_year: 2027
+verified_on: 2026-11-14
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
 skills:
   - programming
   - design
@@ -45,13 +49,14 @@ topics:
   - programming
 assessment:
   - kind: assignment
-    weight: 20
+    weight: 25
   - kind: test
     weight: 20
     hurdle: true
   - kind: participation
-    weight: 10
+    weight: 5
     group: true
   - kind: exam
     weight: 50
     hurdle: true
+weekly_contact_hours: 4

@@ -7,6 +7,9 @@ offerings:
     - summer
     - winter
     - semester-2
+  "2027":
+    - summer
+    - semester-2
 prerequisites: none
 corequisites: none
 non_allowed: []
@@ -26,6 +29,7 @@ breadth_for:
   - Bachelor of Biomedicine
   - Bachelor of Commerce
   - Bachelor of Design
+  - Bachelor of Environments
   - Bachelor of Fine Arts (Acting)
   - Bachelor of Fine Arts (Animation)
   - Bachelor of Fine Arts (Dance)
@@ -38,13 +42,13 @@ breadth_for:
   - Bachelor of Science
 min_attendance: 75
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/thtr30042
-source_year: 2026
-verified_on: 2026-10-19
+handbook: https://handbook.unimelb.edu.au/2027/subjects/thtr30042
+source_year: 2027
+verified_on: 2026-11-14
 skills:
   - design
 topics:
   - design
   - media
   - marketing
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

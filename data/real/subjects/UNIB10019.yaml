@@ -1,9 +1,11 @@
 code: UNIB10019
-title: "Thinking Tools for Wicked Problems"
+title: Thinking Tools for Wicked Problems
 level: 1
 points: 12.5
 offerings:
   "2026":
+    - semester-2
+  "2027":
     - semester-2
 prerequisites: none
 corequisites: none
@@ -19,9 +21,6 @@ assessment:
     weight: 40
   - kind: assignment
     weight: 60
-  - kind: participation
-    weight: 0
-    hurdle: true
 weekly_contact_hours: 3
 min_attendance: 80
 breadth_for:
@@ -29,6 +28,7 @@ breadth_for:
   - Bachelor of Biomedicine
   - Bachelor of Commerce
   - Bachelor of Design
+  - Bachelor of Environments
   - Bachelor of Fine Arts (Acting)
   - Bachelor of Fine Arts (Animation)
   - Bachelor of Fine Arts (Dance)
@@ -44,7 +44,7 @@ attendance_applies_to:
   - tutorials
   - workshops
   - seminars
-handbook: "https://handbook.unimelb.edu.au/2026/subjects/unib10019"
-source_year: 2026
-verified_on: 2026-10-21
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. At Parkville: a 1-hour lecture and 2-hour tutorial a week."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/unib10019
+source_year: 2027
+verified_on: 2026-11-14
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. (From 2026, re-check:) At Parkville: a 1-hour lecture and 2-hour tutorial a week."
