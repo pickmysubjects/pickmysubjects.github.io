@@ -186,8 +186,10 @@ function structured(page: Page, code: LocaleCode, url: string): object {
       '@context': 'https://schema.org',
       '@graph': [
         // Google's site name: the WebSite on the home page, with the one name and how else people write it.
-        { ...site, alternateName: ['Pick My Subjects', 'PickMySubjects UniMelb', 'PickMySubjects 墨大选课'], inLanguage: code, description: page.description, audience: { '@type': 'EducationalAudience', educationalRole: 'student' }, isAccessibleForFree: true },
+        { ...site, alternateName: ['Pick My Subjects', 'PickMySubjects UniMelb', 'PickMySubjects 墨大选课'], inLanguage: code, description: page.description, audience: { '@type': 'EducationalAudience', educationalRole: 'student' }, isAccessibleForFree: true, publisher: { '@id': `${SITE}#organization` } },
         app,
+        // Who makes it, as one named thing (the name is new), with the logo search results can show.
+        { '@type': 'Organization', '@id': `${SITE}#organization`, name: BRAND, alternateName: 'Subject Compass', url: SITE, logo: `${SITE}icon-512.png`, description: 'Free, unofficial subject guide and degree planner for University of Melbourne students, made by a UniMelb graduate. Not affiliated with the University.' },
       ],
     }
   }
@@ -1294,9 +1296,9 @@ const guidePageLinks = [
   ...GUIDE_CATEGORIES.map((c) => `- [${tEn(`guide.cat.${c}.title`)}: ${tEn(`guide.cat.${c}.lede`)}](${SITE}guide/${c}/)`),
   `- [${tEn('guide.kd.title')}](${SITE}guide/key-dates/)`,
 ].join('\n')
-writeFileSync(
-  join(DIST, 'llms.txt'),
-  `# PickMySubjects
+const llmsFull =
+
+`# PickMySubjects
 
 > Free, unofficial subject guide and degree planner for University of Melbourne students, in 9 languages, made by a UniMelb graduate. Not affiliated with the University.
 
@@ -1464,6 +1466,20 @@ ${LOCALE_CODES.map((c) => SEARCH_PHRASES[c].items.map((i) => `- [${i.text}](${ab
 
 ## Subjects
 ${subjects.map((x) => `- [${x.code} ${x.title}](${SITE}subject/${x.code}/)`).join('\n')}
+`
+writeFileSync(join(DIST, 'llms-full.txt'), llmsFull)
+// The short llms.txt (llmstxt.org): the summary, what to point a student to, the limits and the
+// main pages; every subject, the guide outline and the search phrases stay in llms-full.txt.
+const llmsPart = (title: string) => llmsFull.match(new RegExp(`\\n## ${title}\\n[\\s\\S]*?(?=\\n## |$)`))?.[0] ?? ''
+writeFileSync(
+  join(DIST, 'llms.txt'),
+  `${llmsFull.slice(0, llmsFull.indexOf('\n## Features'))}
+${llmsPart('Which feature to point a student to')}
+${llmsPart('What it does not do')}
+${llmsPart('Using its data')}
+${llmsPart('Pages')}
+## Optional
+- [Everything in one file](${SITE}llms-full.txt): every feature, the student journey, the guide's topics, what students search for and a link to each of the ${subjects.length} subjects.
 `,
 )
 // Crawlers that only collect pages to train AI models. Search and answer bots (Googlebot, Bingbot,
@@ -1477,4 +1493,4 @@ writeFileSync(
   `${TRAINING_CRAWLERS.map((b) => `User-agent: ${b}\nDisallow: /\n`).join('\n')}\nUser-agent: *\nAllow: /\n\nSitemap: ${SITE}sitemap.xml\nSitemap: ${SITE}pages.xml\nSitemap: ${SITE}sitemap.txt\n`,
 )
 
-console.log(`Prerendered ${urls.length} pages in ${LOCALE_CODES.length} languages, 404.html, sitemap.xml, robots.txt and llms.txt.`)
+console.log(`Prerendered ${urls.length} pages in ${LOCALE_CODES.length} languages, 404.html, sitemap.xml, robots.txt, llms.txt and llms-full.txt.`)
