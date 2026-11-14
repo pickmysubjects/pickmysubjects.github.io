@@ -251,10 +251,12 @@ const planProblems = computed(() => {
 })
 const hasNotes = computed(() => planProblems.value.length > 0 || noteCount.value > 0)
 const hasConfirmable = computed(() => problemTexts.value.some((p) => p.confirm))
+// Counted as the list below shows them: one condition shared by several subjects (MAST10006 /
+// MAST10007) is one line there, so one here.
 const unknowns = computed(
   () =>
     plan.courseCheck.value.statuses.filter((s) => s.status === 'unknown').length +
-    plan.termIssues.value.filter((i) => i.severity === 'warning').length,
+    (problems.value ? plan.termIssues.value.filter((i) => i.severity === 'warning').length : planProblems.value.length),
 )
 const majorTitle = computed(() => {
   const field = plan.setup.value.field

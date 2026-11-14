@@ -7,6 +7,8 @@ points: 62.5
 # New specialisation in the 2027 Handbook.
 # Intended for the Pure Mathematics, Applied Mathematics, Operations Research and Statistics majors.
 # The level-2 subjects can also count towards the major; level-3 ones cannot (2027 Handbook).
+# 2027 Handbook: level-3 specialisation subjects can't also count towards the major.
+no_share_levels: [3]
 requirements:
   - all: [MAST20030, MAST20026]
   - choose: { points: 12.5, from: [MAST20009, MAST20032] }

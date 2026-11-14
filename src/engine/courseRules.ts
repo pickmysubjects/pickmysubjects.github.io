@@ -342,17 +342,24 @@ function onRoute(component: Component, codes: string[]): Component {
 function allocate(ctx: RuleCtx): void {
   const ids = [...new Set(planComponentIds(ctx.plan).filter((id): id is string => !!id))]
   const comps = ids.map((id) => findComponent(ctx.data, id)).filter((c): c is Component => !!c).map((c) => onRoute(c, ctx.codes))
-  if (comps.every((a) => comps.every((b) => a === b || sharesAllowed(ctx.course, a.id, b.id)))) return
+  // Levels two components can't share: all of them when the course says so, else those either names.
+  const apart = (a: Component, b: Component): number[] | 'all' =>
+    !sharesAllowed(ctx.course, a.id, b.id) ? 'all' : [...new Set([...(a.noShareLevels ?? []), ...(b.noShareLevels ?? [])])]
+  const blocks = (lv: number[] | 'all', code: string) => lv === 'all' || lv.includes(ctx.data.subjects[code]?.level ?? Number(code[4]))
+  if (comps.every((a) => comps.every((b) => { const lv = a === b ? [] : apart(a, b); return lv !== 'all' && lv.length === 0 }))) return
   const reqsOf = (c: Component) => (c.requirements === 'unknown' ? [] : c.requirements)
   const fixed = (c: Component) => reqsOf(c).flatMap((r) => ('all' in r ? r.all : []))
   const counted = new Map<string, Set<string>>()
   for (const c of comps) {
-    const partners = comps.filter((o) => o !== c && !sharesAllowed(ctx.course, c.id, o.id))
+    const partners = comps.filter((o) => { if (o === c) return false; const lv = apart(c, o); return lv === 'all' || lv.length > 0 })
     const own = new Set(fixed(c))
     const mine = new Set<string>()
     for (const o of partners) {
-      for (const x of fixed(o)) if (!own.has(x)) mine.add(x)
-      for (const x of counted.get(o.id) ?? []) if (!own.has(x)) mine.add(x)
+      const lv = apart(c, o)
+      // A subject both list as compulsory counts for both, unless it's at a level they can't share.
+      const ownOk = (x: string) => own.has(x) && (lv === 'all' || !blocks(lv, x))
+      for (const x of fixed(o)) if (!ownOk(x) && blocks(lv, x) && !(lv === 'all' && own.has(x))) mine.add(x)
+      for (const x of counted.get(o.id) ?? []) if (!ownOk(x) && blocks(lv, x) && !(lv === 'all' && own.has(x))) mine.add(x)
     }
     ctx.blocked.set(c.id, mine)
     // A choice both could count goes to the one that has no other option for it: picked last here.
@@ -688,6 +695,24 @@ export function cannotCombine(data: Dataset, aId: string, bId: string): string |
     const nx = data.subjects[x]?.nonAllowed
     const ny = data.subjects[y]?.nonAllowed
     return (nx !== undefined && nx !== 'unknown' && nx.includes(y)) || (ny !== undefined && ny !== 'unknown' && ny.includes(x))
+  }
+  // A subject both must take at a level they can't share (a 2027 specialisation's level 3): it can
+  // count for only one, so the other can't be completed (Data Science and the Statistics spec).
+  const levels = new Set([...(a?.noShareLevels ?? []), ...(b?.noShareLevels ?? [])])
+  if (levels.size) {
+    const fa = componentNeeds(a).flatMap((r) => ('all' in r ? r.all : []))
+    const both = componentNeeds(b).flatMap((r) => ('all' in r ? r.all : [])).filter((c) => fa.includes(c) && levels.has(data.subjects[c]?.level ?? Number(c[4])))
+    if (both.length) return `${both.join(', ')} can count for only one of ${a?.title} and ${b?.title}.`
+    // Or a choice of one left short by what the other must count at those levels (Applied
+    // Mathematics' level-3 list, two of whose three the Physical Mathematics spec requires).
+    for (const [one, other] of [[a, b], [b, a]] as const) {
+      const theirs = new Set(componentNeeds(other).flatMap((r) => ('all' in r ? r.all : [])).filter((c) => levels.has(data.subjects[c]?.level ?? Number(c[4]))))
+      for (const req of componentNeeds(one)) {
+        if (!('choose' in req)) continue
+        const left = req.choose.from.filter((c) => !theirs.has(c)).reduce((sum, c) => sum + (data.subjects[c]?.points ?? 12.5), 0)
+        if (left < req.choose.points) return `${[...theirs].filter((c) => req.choose.from.includes(c)).join(', ')} (${other?.title}) leave too few of ${one?.title}'s choices.`
+      }
+    }
   }
   for (const [one, other] of [[a, b], [b, a]] as const) {
     const fixed = componentNeeds(one).flatMap((r) => ('all' in r ? r.all : []))

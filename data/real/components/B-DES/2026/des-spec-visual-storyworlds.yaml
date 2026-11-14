@@ -5,6 +5,8 @@ kind: specialisation
 title: Visual Storyworlds
 points: 50
 # New specialisation in the 2027 Handbook.
+# 2027 Handbook: level-3 specialisation subjects can't also count towards the major.
+no_share_levels: [3]
 requirements:
   # Level 2 (may also count towards the major)
   - choose: { points: 25, from: [GDES20002, GDES20001] }

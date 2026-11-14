@@ -564,7 +564,7 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
     if (rule.kind === 'compulsory') rule.subjects.forEach((c) => required.add(c))
   }
 
-  const groups: { title: string; req: Extract<ComponentReq, { choose: unknown }>; used: Set<string>; others?: Set<string>[]; limits?: (ComponentLimit & { taken: number })[] }[] = []
+  const groups: { title: string; req: Extract<ComponentReq, { choose: unknown }>; used: Set<string>; owner?: string; limits?: (ComponentLimit & { taken: number })[] }[] = []
   // Each component's claimed subjects, for courses where a subject counts towards one major or minor only.
   const claimed: { id: string; used: Set<string> }[] = []
   const diploma = findDiploma(data, input.diploma)
@@ -584,12 +584,26 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
     const limits = [...(component?.limits ?? []), ...(route?.limits ?? [])].map((l) => ({ ...l, taken: 0 }))
     for (const req of needs) {
       if ('all' in req) req.all.forEach((c) => (required.add(c), used.add(c)))
-      else groups.push({ title: component?.title ?? id ?? '', req, used, others: component ? partnersOf(component.id) : undefined, limits })
+      else groups.push({ title: component?.title ?? id ?? '', req, used, owner: component?.id, limits })
     }
   }
   // What the components a subject can't count twice with have claimed (filled in as they go).
-  function partnersOf(id: string): Set<string>[] {
-    return claimed.filter((o) => o.id !== id && !sharesAllowed(course, id, o.id)).map((o) => o.used)
+  /** Whether a subject can't count for both of these components (by the course, or at a level either names). */
+  function apartAt(x: string, y: string, code: string): boolean {
+    if (!sharesAllowed(course, x, y)) return true
+    const lv = [...(findComponent(data, x)?.noShareLevels ?? []), ...(findComponent(data, y)?.noShareLevels ?? [])]
+    return lv.includes(data.subjects[code]?.level ?? Number(code[4]))
+  }
+  function partnersOf(id: string): Pick<Set<string>, 'has'>[] {
+    // Whole components the course doesn't let share, or only the levels either names (a 2027
+    // specialisation's level-3 subjects can't be the major's), as the course check allocates them.
+    const levels = (x: string) => findComponent(data, x)?.noShareLevels ?? []
+    return claimed.flatMap((o) => {
+      if (o.id === id) return []
+      if (!sharesAllowed(course, id, o.id)) return [o.used]
+      const lv = new Set([...levels(id), ...levels(o.id)])
+      return lv.size ? [{ has: (c: string) => o.used.has(c) && lv.has(data.subjects[c]?.level ?? Number(c[4])) }] : []
+    })
   }
 
   // Also what the required subjects' own prerequisites name, two steps down: Actuarial's
@@ -691,7 +705,13 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
   // Every option is scored as if its prerequisites were met: the plan adds them (closePrereqs),
   // and an empty list here left out every option that needs something first (most of a major's).
   const score = new Map(recommend(data, input.profile, { course: input.course, eligibleWith: Object.keys(data.subjects), year: input.startYear, goalComponents: goalMajors(input) }).map((r) => [r.code, r.score]))
-  for (const { title, req, used, others = [], limits = [] } of groups) {
+  for (const { title, req, used, owner, limits = [] } of groups) {
+    // Asked here, not when the group was listed: every component's compulsory subjects are claimed by now.
+    const others = owner ? partnersOf(owner) : []
+    // An option another component's choice could also use, where the two can't share it, comes
+    // after the rest: left to that component (Mathematical Physics leaves MAST30026 to the Pure
+    // Mathematics spec), as the course check gives a contested subject to the one with no other.
+    const contested = new Set(groups.flatMap((g) => (g.owner && owner && g.owner !== owner ? g.req.choose.from.filter((c) => apartAt(owner, g.owner!, c)) : [])))
     // Claimed by a component this one can't share subjects with (B-ARTS: one major or minor each).
     const taken = (c: string) => used.has(c) || others.some((o) => o.has(c))
     // Whether counting `c` keeps within the component's caps; if so, counts it against them.
@@ -765,7 +785,7 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
     // push a cap over): it has to fit clearly better than an option that needs nothing more.
     const fit = (c: string) => (score.get(c) ?? -1) - EXTRA_SUBJECT_COST * adds(c)
     const order = [...req.choose.from].sort(
-      (a, b) => off(a) - off(b) || byHand(a) - byHand(b) || Number(named.has(b)) - Number(named.has(a)) || extra(a) - extra(b) || fit(b) - fit(a) || busy(a) - busy(b),
+      (a, b) => off(a) - off(b) || Number(contested.has(a)) - Number(contested.has(b)) || byHand(a) - byHand(b) || Number(named.has(b)) - Number(named.has(a)) || extra(a) - extra(b) || fit(b) - fit(a) || busy(a) - busy(b),
     )
     // Options within the course's caps first (B-ARTS: 125 points from one discipline, the record
     // included); only when none is left does an option over a cap fill the choice.

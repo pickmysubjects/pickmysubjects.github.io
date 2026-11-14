@@ -5,6 +5,8 @@ kind: specialisation
 title: Building Information Modelling
 points: 50
 # From 2027 a formal 50-point specialisation; replaces the informal one (des-informal-building-information-modelling).
+# 2027 Handbook: level-3 specialisation subjects can't also count towards the major.
+no_share_levels: [3]
 requirements:
   # Level 2 (may also count towards the major)
   - choose: { points: 25, from: [ABPL20033, ABPL20035, ABPL20042, ABPL20053, ABPL20055, ABPL20056, ABPL20057, ABPL20058, ARCH20001, ARCH20002, ARCH20003, ARCH20004, CONS20002, PLAN20002, PROP20001, PROP20002, PROP20003, CVEN20001, ENEN20002, ENGR20003, COMP20007, INFO20003, COMP20008, GEOM20013, GEOM20015, GDES20001, ENGR20004, ENGR20005, INFO20004, MAST20029, GDES20002, GDES20004, LARC20001, FINA20041, DPSS20014, SWEN20003, INFO20005] }

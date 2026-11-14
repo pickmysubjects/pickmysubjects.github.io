@@ -32,7 +32,7 @@ export function scienceCombos(data: Dataset): (readonly [string, string | undefi
   return majors.flatMap((m) => [
     [m.id, undefined] as const,
     ...specs
-      .filter((s) => (s.requiresMajor.length === 0 || s.requiresMajor.includes(m.id)) && !cannotCombine(data, m.id, s.id))
+      .filter((s) => (s.requiresMajor.length === 0 || s.requiresMajor.includes(m.id)) && !s.notWith.includes(m.id) && !m.notWith.includes(s.id) && !cannotCombine(data, m.id, s.id))
       .map((s) => [m.id, s.id] as const),
   ])
 }

@@ -710,6 +710,9 @@ export const componentFileSchema = z
     informal: z.boolean().default(false),
     // Components that can't be taken alongside this one (Handbook "Diversity of study" pairs).
     not_with: z.array(z.string()).default([]),
+    // Levels whose subjects can't also count towards the student's other components (a 2027
+    // specialisation: its level-2 subjects may be the major's, its level-3 ones may not).
+    no_share_levels: z.array(z.number().int().min(1).max(9)).default([]),
     requirements: z.union([z.literal('unknown'), z.array(componentReq)]).default('unknown'),
     // Several ways through, one to complete (a language major's entry points, by prior knowledge).
     // `requirements` is then left out; the first route stands in wherever one list is needed.
@@ -745,6 +748,7 @@ export const componentFileSchema = z
     points: c.points,
     requiresMajor: c.requires_major,
     notWith: c.not_with,
+    noShareLevels: c.no_share_levels,
     requirements: (c.routes ? c.routes[0]!.requirements : c.requirements) as 'unknown' | ComponentReq[],
     routes: c.routes as { title: string; note?: string; requirements: ComponentReq[]; limits?: ComponentLimit[] }[] | undefined,
     limits: c.limits as ComponentLimit[],

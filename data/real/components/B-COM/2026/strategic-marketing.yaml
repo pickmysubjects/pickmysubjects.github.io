@@ -4,6 +4,8 @@ year: 2026
 kind: specialisation
 title: Strategic Marketing
 points: 50
+# 2027 Handbook: level-3 specialisation subjects can't also count towards the major.
+no_share_levels: [3]
 requirements:
   # Level 2 (25 points); may be the same subjects as the major's.
   - all: [MKTG20001, MKTG20006]

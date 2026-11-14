@@ -89,7 +89,7 @@ describe('double majors: checking', () => {
     // 25 points for each, with no subject counted twice: at least four distinct subjects.
     expect(new Set([...l3(hist), ...l3(hps)]).size).toBeGreaterThanOrEqual(4)
     // Only HIST30004 and HPSC30034 at level 3: enough for one of the two, not for both.
-    const drop = l3(hist).filter((c) => !['HIST30004', 'HPSC30034'].includes(c))
+    const drop = l3([...hist, ...hps]).filter((c) => !['HIST30004', 'HPSC30034'].includes(c))
     const shared = { ...p, terms: p.terms.map((t) => ({ ...t, subjects: t.subjects.filter((c) => !drop.includes(c)) })) }
     for (const c of ['HIST30004', 'HPSC30034']) if (!shared.terms.some((t) => t.subjects.includes(c))) shared.terms.at(-1)!.subjects.push(c)
     const both = (data: Dataset) => ['major', 'minor'].map((id) => checkCourse(shared, data).statuses.find((s) => s.ruleId === id)?.status)

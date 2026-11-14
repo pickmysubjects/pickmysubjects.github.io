@@ -7,6 +7,8 @@ points: 50
 not_with: [mathematics-and-statistics-statistics]
 # New specialisation in the 2027 Handbook.
 # The level-2 subjects can also count towards the major; level-3 ones cannot (2027 Handbook).
+# 2027 Handbook: level-3 specialisation subjects can't also count towards the major.
+no_share_levels: [3]
 requirements:
   - choose: { points: 12.5, from: [MAST20026, MAST20033] }
   - choose: { points: 12.5, from: [MAST20004, MAST20006] }

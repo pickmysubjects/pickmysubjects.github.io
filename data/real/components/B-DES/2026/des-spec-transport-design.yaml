@@ -5,6 +5,8 @@ kind: specialisation
 title: Transport Design
 points: 50
 # From 2027 a formal 50-point specialisation; replaces the informal one (des-informal-transport-design).
+# 2027 Handbook: level-3 specialisation subjects can't also count towards the major.
+no_share_levels: [3]
 requirements:
   # Level 2 (may also count towards the major)
   - all: [CVEN20001, GEOM20013, ABPL20056]
