@@ -19,6 +19,8 @@ assessment:
   - kind: report
     weight: 25
 weekly_contact_hours: 1
+categories:
+  B-SCI: science # on the 2027 B-SCI science list (b-sci-stdopt-1)
 breadth_for: []
 handbook: https://handbook.unimelb.edu.au/2027/subjects/neur30010
 source_year: 2027

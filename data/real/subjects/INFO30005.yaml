@@ -38,6 +38,8 @@ handbook: https://handbook.unimelb.edu.au/2027/subjects/info30005
 source_year: 2027
 categories:
   B-DES: design
+categories:
+  B-SCI: science # on the 2027 B-SCI science list (b-sci-stdopt-1)
 breadth_for:
   - Bachelor of Arts
   - Bachelor of Commerce
@@ -61,4 +63,4 @@ topics:
   - design
   - software-engineering
 verified_on: 2026-11-13
-notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. (From 2026, re-check:) Also a hurdle: attend at least 8 lectures and 8 tutorials. Not on the 2026 B-SCI science list, and its Handbook page lists no breadth use, so it gives no B-SCI credit here."
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. Also a hurdle: attend at least 8 lectures and 8 tutorials. On the 2027 B-SCI science list."

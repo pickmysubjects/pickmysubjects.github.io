@@ -20,8 +20,6 @@ prerequisites:
 corequisites: none
 non_allowed:
   - MAST20018
-categories:
-  B-SCI: science
 breadth_for:
   - Bachelor of Science
 handbook: https://handbook.unimelb.edu.au/2027/subjects/mast20035

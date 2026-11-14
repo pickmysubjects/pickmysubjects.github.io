@@ -45,6 +45,8 @@ assessment:
     weight: 15
   - kind: project
     weight: 25
+categories:
+  B-SCI: science # on the 2027 B-SCI science list (b-sci-stdopt-1)
 breadth_for: []
 handbook: https://handbook.unimelb.edu.au/2027/subjects/cven30012
 source_year: 2027

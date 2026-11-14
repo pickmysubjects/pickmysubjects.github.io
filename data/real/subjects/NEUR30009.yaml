@@ -25,6 +25,8 @@ assessment:
   - kind: exam
     weight: 40
 weekly_contact_hours: 2
+categories:
+  B-SCI: science # on the 2027 B-SCI science list (b-sci-stdopt-1)
 breadth_for:
   - Bachelor of Arts
   - Bachelor of Commerce
