@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
+  "2027":
+    - semester-1
 prerequisites:
   admission: B-SCIEXTD
   note: Admission into the B-SCIEXTD Bachelor of Science (Extended)
@@ -28,7 +30,7 @@ categories:
   B-SCIEXTD: core
 breadth_for: []
 prescribed_texts: true
-handbook: https://handbook.unimelb.edu.au/2026/subjects/scie10008
-source_year: 2026
-verified_on: 2026-10-21
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/scie10008
+source_year: 2027
+verified_on: 2026-11-14
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

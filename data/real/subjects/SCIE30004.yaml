@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - winter
+  "2027":
+    - winter
 prerequisites: none
 corequisites: none
 non_allowed: []
@@ -32,7 +34,6 @@ breadth_for:
   - Bachelor of Arts
   - Bachelor of Biomedicine
   - Bachelor of Commerce
-  - Bachelor of Design
   - Bachelor of Fine Arts (Acting)
   - Bachelor of Fine Arts (Animation)
   - Bachelor of Fine Arts (Dance)
@@ -45,7 +46,7 @@ breadth_for:
   - Bachelor of Music
   - Bachelor of Science
 prescribed_texts: false
-handbook: "https://handbook.unimelb.edu.au/2026/subjects/scie30004"
-source_year: 2026
-verified_on: 2026-10-21
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. Intensive in July (20 to 31 July 2026) at Parkville: five 8-hour days of field trips around Melbourne, then three 2-hour seminars, 46 contact hours. Written work is due after teaching ends."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/scie30004
+source_year: 2027
+verified_on: 2026-11-14
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. (From 2026, re-check:) Intensive in July (20 to 31 July 2026) at Parkville: five 8-hour days of field trips around Melbourne, then three 2-hour seminars, 46 contact hours. Written work is due after teaching ends."

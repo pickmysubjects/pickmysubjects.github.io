@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - winter
+  "2027":
+    - summer
 prerequisites:
   any:
     - all:
@@ -19,7 +21,7 @@ prerequisites:
                 levels:
                   - 2
     - admission: GD-ARTS
-      note: "Selection of the Politics and International Studies specialisation (formal) in the GD-ARTS Graduate Diploma in Arts, Indigenous Studies specialisation (formal) in the GD-ARTS Graduate Diploma in Arts Students must apply through the online application process by 2 February 2026 and obtain subject coordinator approval to enrol via the link below: Link A quota of 24 applies to this subject."
+      note: "Selection of the Politics and International Studies specialisation (formal) in the GD-ARTS Graduate Diploma in Arts, Indigenous Studies specialisation (formal) in the GD-ARTS Graduate Diploma in Arts Students must apply through the online application process by 9 December 2026 and obtain subject coordinator approval to enrol via the link below: Link A quota of 24 applies to this subject."
 corequisites: none
 non_allowed: []
 skills:
@@ -35,7 +37,7 @@ assessment:
   - kind: report
     weight: 60
 breadth_for: []
-handbook: https://handbook.unimelb.edu.au/2026/subjects/pols30028
-source_year: 2026
-verified_on: 2026-10-17
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/pols30028
+source_year: 2027
+verified_on: 2026-11-14
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

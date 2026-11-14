@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
+  "2027":
+    - semester-2
 prerequisites:
   all:
     - POPH30003
@@ -30,7 +32,7 @@ assessment:
     weight: 10
   - kind: presentation
     weight: 25
-weekly_contact_hours: 3
+weekly_contact_hours: 16
 breadth_for:
   - Bachelor of Arts
   - Bachelor of Commerce
@@ -46,7 +48,7 @@ breadth_for:
   - Bachelor of Fine Arts (Visual Art)
   - Bachelor of Music
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/poph30005
-source_year: 2026
-verified_on: 2026-10-16
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/poph30005
+source_year: 2027
+verified_on: 2026-11-14
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

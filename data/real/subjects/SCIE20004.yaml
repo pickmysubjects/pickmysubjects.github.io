@@ -1,9 +1,11 @@
 code: SCIE20004
-title: "Collaborative Animal, Human and Eco-Hlth"
+title: Collaborative Animal, Human and Eco-Hlth
 level: 2
 points: 12.5
 offerings:
   "2026":
+    - semester-2
+  "2027":
     - semester-2
 prerequisites: none
 corequisites: none
@@ -16,9 +18,9 @@ topics:
   - ecology
   - biology
 assessment:
-  - kind: test
+  - kind: assignment
     weight: 35
-  - kind: report
+  - kind: assignment
     weight: 55
   - kind: participation
     weight: 10
@@ -40,7 +42,7 @@ breadth_for:
   - Bachelor of Music
   - Bachelor of Science
 prescribed_texts: false
-handbook: "https://handbook.unimelb.edu.au/2026/subjects/scie20004"
-source_year: 2026
-verified_on: 2026-10-21
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked. At Parkville: two 1-hour lectures and a 2-hour tutorial a week."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/scie20004
+source_year: 2027
+verified_on: 2026-11-14
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked. (From 2026, re-check:) At Parkville: two 1-hour lectures and a 2-hour tutorial a week."

@@ -7,6 +7,10 @@ offerings:
     - summer
     - semester-1
     - semester-2
+  "2027":
+    - summer
+    - semester-1
+    - semester-2
 prerequisites:
   manual: "Completion of a minimum of 100 credit points of study that may contribute to the science component of the Bachelor of Science or Bachelor of Biomedicine or included in the following Bachelor of Environments majors: Civil Systems, Environmental Science, Geomatics, Landscape Management, Environmental Engineering Systems (previously Physical Systems). Approval from subject coordinator is required to enrol in this subject, following review of the student's internship application form and placement. If you have questions on how and where to find an internship you should contact the Careers and Industry team in the Faculty of Science at hyperlink: https://forms.your.unimelb.edu.au/4747166?SID=a3xOY000000018z More information is available on the subject webpage here: More information can be found at: https://science.unimelb.edu.au/students/plan-your-study/internship-subjects"
 corequisites: none
@@ -21,14 +25,15 @@ assessment:
   - kind: assignment
     weight: 10
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/scie30002
-source_year: 2026
-verified_on: 2026-10-10
+handbook: https://handbook.unimelb.edu.au/2027/subjects/scie30002
+source_year: 2027
+verified_on: 2026-11-14
 categories:
   B-SCI: science
 breadth_for: []
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
 skills:
   - writing
 topics:
   - science-communication
+weekly_contact_hours: 8.5

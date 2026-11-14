@@ -1,0 +1,31 @@
+code: SCIE30005
+title: Science Internship
+level: 3
+points: 12.5
+offerings:
+  "2027":
+    - summer
+    - semester-1
+    - semester-2
+prerequisites:
+  manual: Completion of a minimum of 100 credit points of study that may contribute to the science component of the Bachelor of Science, Bachelor of Agriculture, Bachelor of Biomedicine. Approval from the subject coordinator is required to enrol in this subject, following a review of the student's internship application form. To be approved, students should demonstrate that a minimum of 70% of the placement activities are aligned with their course and the intended learning objectives of this subject, and that a maximum of 15% of the placement activities are administrative in nature. Ideally placements will be new opportunity in a new organisation that the student has sourced specifically for this subject. If placement occurs in an organisation where the student has had previous employment they must be able to demonstrate the internship is a substantially different role to any previously undertaken. Entering an entirely new work environment is an important requirement of this subject. If you have questions on how and where to find an internship you should contact the Careers and Industry team in the Faculty of Science.
+corequisites: none
+non_allowed: []
+assessment:
+  - kind: quiz
+    weight: 20
+    hurdle: true
+  - kind: report
+    weight: 20
+    hurdle: true
+  - kind: assignment
+    weight: 20
+    hurdle: true
+  - kind: presentation
+    weight: 40
+    hurdle: true
+breadth_for: []
+handbook: https://handbook.unimelb.edu.au/2027/subjects/scie30005
+source_year: 2027
+verified_on: 2026-11-14
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

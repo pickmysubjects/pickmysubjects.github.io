@@ -5,6 +5,8 @@ points: 12.5
 offerings:
   "2026":
     - semester-1
+  "2027":
+    - semester-1
 prerequisites: none
 corequisites: none
 non_allowed: []
@@ -14,13 +16,12 @@ topics:
   - society
   - environment
 assessment:
-  - kind: assignment
-    weight: 15
-  - kind: presentation
-    weight: 25
-    group: true
   - kind: report
-    weight: 60
+    weight: 25
+  - kind: report
+    weight: 25
+  - kind: report
+    weight: 50
 weekly_contact_hours: 2.5
 breadth_for:
   - Bachelor of Biomedicine
@@ -42,7 +43,7 @@ attendance_applies_to:
   - workshops
   - seminars
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/soci20020
-source_year: 2026
-verified_on: 2026-10-17
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+handbook: https://handbook.unimelb.edu.au/2027/subjects/soci20020
+source_year: 2027
+verified_on: 2026-11-14
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."

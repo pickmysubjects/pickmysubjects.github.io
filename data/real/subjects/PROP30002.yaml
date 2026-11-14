@@ -5,42 +5,32 @@ points: 12.5
 offerings:
   "2026":
     - semester-2
+  "2027":
+    - semester-2
 prerequisites:
-  all:
+  any:
     - all:
+        - admission: B-DES
+          note: "For Bachelor of Design students (B-DES):"
         - ABPL30059
         - PROP30001
     - any:
         - all:
-            - admission: B-ENVS
-              note: "For Bachelor of Environments students:"
-            - PROP20002
-            - any:
-                - ABPL20035
-                - ACCT10001
-                - BLAW10001
-                - PROP20003
-        - any:
-            - all:
-                - admission: B-COM
-                  note: Admission into the B-COM Bachelor of Commerce
-                - PROP30001
-            - permission: coordinator
-              note: Approval from the Subject Coordinator
+            - admission: B-COM
+              note: Admission into the B-COM Bachelor of Commerce
+            - PROP30001
+        - permission: coordinator
+          note: Approval from the Subject Coordinator
 corequisites: none
 non_allowed:
   - ABPL30012
 assessment:
-  - kind: assignment
-    weight: 10
+  - kind: presentation
+    weight: 30
     group: true
-  - kind: assignment
+    hurdle: true
+  - kind: test
     weight: 20
-    group: true
-  - kind: test
-    weight: 10
-  - kind: test
-    weight: 10
   - kind: exam
     weight: 50
     hurdle: true
@@ -60,13 +50,13 @@ breadth_for:
   - Bachelor of Fine Arts (Theatre)
   - Bachelor of Fine Arts (Visual Art)
 prescribed_texts: false
-handbook: https://handbook.unimelb.edu.au/2026/subjects/prop30002
-source_year: 2026
-verified_on: 2026-10-19
+handbook: https://handbook.unimelb.edu.au/2027/subjects/prop30002
+source_year: 2027
+verified_on: 2026-11-14
 skills:
   - business
 topics:
   - property
   - management
   - environment
-notes: "Source: 2026 University of Melbourne Handbook; facts summarised and checked."
+notes: "Source: 2027 University of Melbourne Handbook; facts summarised and checked."
