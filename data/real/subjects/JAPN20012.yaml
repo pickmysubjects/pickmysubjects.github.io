@@ -41,7 +41,7 @@ assessment:
     weight: 15
   - kind: exam
     weight: 50
-weekly_contact_hours: 5.5
+weekly_contact_hours: 4
 breadth_for:
   - Bachelor of Biomedicine
   - Bachelor of Commerce

@@ -74,4 +74,4 @@ assessment:
   - kind: exam
     weight: 40
     hurdle: true
-weekly_contact_hours: 6
+weekly_contact_hours: 3

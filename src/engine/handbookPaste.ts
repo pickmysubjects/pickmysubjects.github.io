@@ -621,7 +621,15 @@ export function parseHeader(text: string): Pick<PasteResult, 'code' | 'title' | 
  * "36 one-hour lectures (three per week); 12 one-hour practice classes".
  */
 export function parseContactHours(text: string): number | undefined {
-  const line = text.split(/\r?\n/).find((l) => /^\s*contact hours\b/i.test(l))
+  // One line per teaching period: a semester's, not a summer or winter intensive's (MAST10007
+  // runs twice as many classes a week in January). The period's dates follow its contact hours.
+  const lines = text.split(/\r?\n/)
+  const at = lines.flatMap((l, i) => (/^\s*contact hours\b/i.test(l) ? [i] : []))
+  const semester = at.find((i) => {
+    const period = lines.slice(i + 1, i + 12).find((l) => /^\s*teaching period\b/i.test(l))
+    return !!period && /\b\d{1,2} (february|march|july|august) \d{4} to \d{1,2} (may|june|october|november) \d{4}/i.test(period)
+  })
+  const line = at.length ? lines[semester ?? at[0]!] : undefined
   if (!line) return undefined
   const half = (x: number) => Math.round(x * 2) / 2
   // "Contact hours: 36 hours, …": the colon or dash after the label is not part of the hours.

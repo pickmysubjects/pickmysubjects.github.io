@@ -234,6 +234,8 @@ describe('parseHandbookPaste – assessment and contact hours', () => {
     expect(parseHandbookPaste(page).weeklyContactHours).toBe(3)
     expect(parseContactHours('Contact hours\t3 x one hour lectures per week, 1 x one hour practice class per week')).toBe(4)
     expect(parseContactHours('Contact hours\t36 one-hour lectures (three per week); 12 one-hour practice classes')).toBe(4)
+    // A summer intensive listed first doesn't stand for the semesters (MAST10007, 2027 Handbook).
+    expect(parseContactHours('Contact hours\t6 x one hour lectures per week, 2 x one hour practice classes per week\nTeaching period\t4 January 2027 to 12 February 2027\nContact hours\t3 x one hour lectures per week, 1 x one hour practice class per week\nTeaching period\t1 March 2027 to 30 May 2027')).toBe(4)
     // A note inside the text about a later year's rule doesn't apply yet.
     expect(parseHandbookPaste("You're viewing the 2027 Handbook\nPrerequisites\nCode\tName\tTeaching period\tCredit Points\nGENE20001\tFoundations\tSemester 1\t12.5\nImportant note: From 2028 onwards, Evolution (BIOL20001) will be a prerequisite in addition to GENE20001.\nCorequisites\nNone\n").prerequisites).toEqual({ subject: 'GENE20001' })
     // A note naming what isn't accepted doesn't add its codes as options.

@@ -50,4 +50,4 @@ assessment:
     weight: 10
   - kind: exam
     weight: 70
-weekly_contact_hours: 15
+weekly_contact_hours: 5

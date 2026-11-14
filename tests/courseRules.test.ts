@@ -36,7 +36,7 @@ describe('rule fixes from the code review', () => {
     const { checkCourse } = await import('../src/engine/courseRules')
     const real = realData()
     const { forCourse } = await import('../src/engine/forCourse')
-    const r = checkCourse({ course: 'B-SCI', courseYear: 2026, completed: ['MAST29999'], terms: [] } as never, forCourse(real, 'B-SCI'))
+    const r = checkCourse({ course: 'B-SCI', courseYear: 2026, completed: ['MAST39999'], terms: [] } as never, forCourse(real, 'B-SCI'))
     expect(r.statuses.find((s) => s.ruleId === 'science')?.detail).toMatch(/^12\.5 /)
   })
 })

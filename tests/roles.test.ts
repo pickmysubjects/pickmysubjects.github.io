@@ -17,8 +17,8 @@ describe('subjectRoles (real data)', () => {
   })
 
   it('marks a usual first step that has alternatives as a route, not a must', () => {
-    // COMP10002 can also follow COMP10003 or the programming competency test.
-    expect(roles('COMP10001')).toContain('computing-and-software-systems:route>COMP30022')
+    // COMP20008 (level-2 core from 2027) can also follow COMP10002 or COMP10003.
+    expect(roles('COMP10001')).toContain('computing-and-software-systems:route>COMP20008')
   })
 
   it('marks options', () => {

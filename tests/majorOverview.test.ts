@@ -5,8 +5,8 @@ import { realData } from './realData'
 describe('majorOverview (real data)', () => {
   const data = realData()
 
-  it('lists the core level-3 subjects', () => {
-    expect(majorOverview(data, 'data-science', 'B-SCI')?.core).toEqual(['COMP30027', 'MAST30025', 'MAST30027', 'MAST30034'])
+  it('lists the core subjects (from 2027 level 2 as well as level 3)', () => {
+    expect(majorOverview(data, 'data-science', 'B-SCI')?.core).toEqual(['COMP20008', 'COMP30027', 'INFO20003', 'MAST20005', 'MAST30025', 'MAST30027', 'MAST30034'])
   })
 
   it('finds earlier subjects the major cannot be done without', () => {
@@ -67,10 +67,10 @@ describe('planRoles', () => {
 describe('a major address that matches nothing', () => {
   const data = realData()
   it('offers the majors whose id or title shares a word with it, best first', () => {
-    // /majors/chemistry: the real ids are chemistry-chemistry and chemistry-medicinal, and nothing
-    // on the site links to the short one, so the page offers them instead of a dead end.
-    expect(data.components.some((c) => c.id === 'chemistry')).toBe(false)
-    const ids = closeComponents(data.components, 'chemistry').map((c) => c.id)
+    // /majors/chemistry-stream: no such id, so the page offers the chemistry majors (the 2027 one
+    // and the earlier streams) instead of a dead end.
+    expect(data.components.some((c) => c.id === 'chemistry-stream')).toBe(false)
+    const ids = closeComponents(data.components, 'chemistry-stream').map((c) => c.id)
     expect(ids).toContain('chemistry-chemistry')
     expect(ids).toContain('chemistry-medicinal')
     expect(ids.length).toBeLessThanOrEqual(6)

@@ -129,17 +129,20 @@ describe('checkCourse (one subject fills one requirement)', () => {
     const plan: Plan = {
       course: 'B-SCI',
       courseYear: 2026,
-      major: 'mathematics-and-statistics-operations-research',
+      major: 'geography',
       completed: codes,
       terms: [],
     }
     return checkCourse(plan, real).statuses.find((s) => s.ruleId === 'major')?.status
   }
 
-  it("doesn't let MAST30021 count for both 'one of 30021/30022' and the fourth subject", () => {
-    expect(status(['MAST30012', 'MAST30013', 'MAST30021'])).toBe('fail')
-    expect(status(['MAST30012', 'MAST30013', 'MAST30021', 'MAST30022'])).toBe('ok')
-    expect(status(['MAST30012', 'MAST30013', 'MAST30022', 'MAST30011'])).toBe('ok')
+  // Geography (2027): 37.5 points of level 2, then 12.5 from the capstones and 37.5 more from the
+  // electives or capstones. A capstone fills only one of the two lists.
+  const l2 = ['GEOG20013', 'GEOG20001', 'GEOG20016']
+  it("doesn't let a capstone count for both the capstone list and the electives", () => {
+    expect(status([...l2, 'GEOG30023', 'GEOG30030', 'GEOG30001'])).toBe('fail')
+    expect(status([...l2, 'GEOG30023', 'GEOG30025', 'GEOG30030', 'GEOG30001'])).toBe('ok')
+    expect(status([...l2, 'GEOG30023', 'GEOG30030', 'GEOG30001', 'GEOG30019'])).toBe('ok')
   })
 })
 
