@@ -12,5 +12,6 @@ const real = realData()
 describe('generatePlan (real B-SCI data, every major with a specialisation)', () => {
   it.each(scienceCombos(real).filter(([, s]) => s !== undefined))('%s + %s: a whole degree with every course rule met and no term errors', (major, specialisation) => {
     expect(wholeDegreeProblems(real, major, specialisation)).toEqual([])
-  })
+    // About 0.7 s a plan; 496 in one worker can pass the 5 s default on a pause.
+  }, 30_000)
 })
