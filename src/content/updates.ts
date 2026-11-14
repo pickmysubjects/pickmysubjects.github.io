@@ -22,7 +22,7 @@ export interface SiteRelease {
 export const SITE_RELEASES: SiteRelease[] = [
   {
     version: '1.0.0',
-    date: null,
+    date: "2026-11-14",
     links: [
       ['subjects/', 'changes/'],
       ['plan/', 'plan/compare/'],
