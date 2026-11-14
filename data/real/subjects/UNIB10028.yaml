@@ -26,7 +26,7 @@ assessment:
   - kind: presentation
     weight: 33
     group: true
-weekly_contact_hours: 18.5
+weekly_contact_hours: 4
 breadth_for:
   - Bachelor of Arts
   - Bachelor of Biomedicine

@@ -19,7 +19,7 @@ assessment:
     weight: 20
   - kind: exam
     weight: 50
-weekly_contact_hours: 37
+weekly_contact_hours: 3
 min_attendance: 80
 attendance_applies_to:
   - labs

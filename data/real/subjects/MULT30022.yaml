@@ -34,7 +34,7 @@ assessment:
     group: true
   - kind: participation
     weight: 50
-weekly_contact_hours: 30
+weekly_contact_hours: 5.5
 breadth_for:
   - Bachelor of Arts
   - Bachelor of Biomedicine

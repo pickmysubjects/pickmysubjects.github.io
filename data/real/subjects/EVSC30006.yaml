@@ -26,7 +26,7 @@ assessment:
     weight: 25
   - kind: exam
     weight: 50
-weekly_contact_hours: 14.5
+weekly_contact_hours: 3.5
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/evsc30006
 source_year: 2027

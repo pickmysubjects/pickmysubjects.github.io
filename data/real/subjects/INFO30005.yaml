@@ -32,7 +32,7 @@ assessment:
   - kind: assignment
     weight: 0
     hurdle: true
-weekly_contact_hours: 39
+weekly_contact_hours: 3
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/info30005
 source_year: 2027

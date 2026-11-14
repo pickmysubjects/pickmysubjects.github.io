@@ -3,13 +3,25 @@ import { setToday } from '../../src/engine/dataYear'
 import { generatePlan } from '../../src/engine/generate'
 import { assumedOfferings, checkTerms } from '../../src/engine/planCheck'
 import type { Profile } from '../../src/engine/recommend'
+import type { Dataset, Subject } from '../../src/engine/schema'
 import { realData } from '../realData'
 
 /*
  * The year rollover on real plans (the clock injected with setToday, never the real date). A
  * couple of these plans run in tests/dataYear.test.ts too, for test:fast.
  */
-const data = realData()
+// The real data cut back to the 2026 Handbook (the 2027 one is in now), as tests/dataYear.test.ts does.
+function only2026(d: Dataset): Dataset {
+  const subjects: Dataset['subjects'] = {}
+  for (const [code, s] of Object.entries(d.subjects)) {
+    if (s.offerings === 'unknown') { subjects[code] = s; continue }
+    const offerings = Object.fromEntries(Object.entries(s.offerings).filter(([y]) => Number(y) <= 2026))
+    if (!Object.keys(offerings).length) continue
+    subjects[code] = { ...s, offerings, sourceYear: Math.min(s.sourceYear ?? 2026, 2026) } as Subject
+  }
+  return { ...d, subjects }
+}
+const data = only2026(realData())
 const profile: Profile = { results: [], skills: {}, interests: [], goal: 'balanced' }
 const PLANS: [string, string | undefined][] = [
   ['B-SCI', undefined],

@@ -30,7 +30,7 @@ assessment:
   - kind: exam
     weight: 60
     hurdle: true
-weekly_contact_hours: 33.5
+weekly_contact_hours: 5
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/chen30016
 source_year: 2027
