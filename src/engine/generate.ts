@@ -790,7 +790,7 @@ function collectRequired(input: GenerateInput, done: Set<string>, notes: Note[],
       if (clashes(c, done, required, data)) continue
       // Nor one whose own certain prerequisites can't be taken alongside them (MAST30025 needs
       // MAST20005, which a commerce degree's ECON10005 rules out).
-      if (certainNeeds(data.subjects[c]?.prerequisites).some((p) => !done.has(p) && !required.has(p) && clashes(p, done, required, data))) continue
+      if (certainNeeds(data.subjects[c]?.prerequisites, input.course).some((p) => !done.has(p) && !required.has(p) && clashes(p, done, required, data))) continue
       // Nor one past the component's cap on that kind of choice (B-MUS: 25 points of level 1).
       if (!fits(c, data.subjects[c]?.points ?? 12.5)) continue
       required.add(c)
@@ -1010,10 +1010,24 @@ function closedTo(code: string, course: string, data: Dataset, held: Held = {}):
   return cache.get(key) as boolean
 }
 
-/** Subjects a prerequisite certainly calls for: named outright or in an "all of", never one option of several. */
-function certainNeeds(p: Subject['prerequisites'] | undefined): string[] {
+/**
+ * Subjects a prerequisite certainly calls for: named outright or in an "all of", never one option
+ * of several. Given the course, an "any of" counts what every option open to its students needs
+ * (COMP20007: COMP10002 on both routes, the other one being admission to a master's degree).
+ */
+function certainNeeds(p: Subject['prerequisites'] | undefined, course?: string): string[] {
   if (!p || p === 'none' || p === 'unknown') return []
-  const walk = (e: ReqExpr): string[] => ('subject' in e ? [e.subject] : 'all' in e ? e.all.flatMap(walk) : [])
+  const walk = (e: ReqExpr): string[] => {
+    if ('subject' in e) return [e.subject]
+    if ('all' in e) return e.all.flatMap(walk)
+    if ('any' in e && course !== undefined) {
+      const open = e.any.filter((x) => !needsOtherAdmission(x, course))
+      if (!open.length) return []
+      const [first, ...rest] = open.map((x) => new Set(walk(x)))
+      return [...first!].filter((c) => rest.every((r) => r.has(c)))
+    }
+    return []
+  }
   return walk(p)
 }
 
