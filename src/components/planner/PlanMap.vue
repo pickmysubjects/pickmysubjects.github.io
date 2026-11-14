@@ -568,7 +568,9 @@ onBeforeUnmount(() => {
 .routes {
   position: absolute;
   inset: 0;
-  z-index: 0;
+  /* Above the term columns: a line and its arrowhead end inside the next column, where the
+     column's own fill would hide them. Below the link counts (5) and scroll arrows (6). */
+  z-index: 4;
   width: 100%;
   height: 100%;
   pointer-events: none;
