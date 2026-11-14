@@ -3,8 +3,16 @@ course: B-SCI
 year: 2026
 kind: major
 title: Computing and Software Systems
-points: 50
+points: 100
+# From 2027 a B-SCI major counts its level-2 subjects too (2027 Handbook).
 requirements:
-  - all: [SWEN30006, COMP30023, COMP30022, COMP30026]
-handbook: https://handbook.unimelb.edu.au/2026/components/b-sci-major-1
-verified_on: 2026-10-07 # structure; source: 2026 Handbook, checked
+  # Level 2 Major Core
+  - all: [INFO20003, SWEN20003, COMP20008]
+  # Level 2 Major Elective
+  - choose: { points: 12.5, from: [COMP20003, COMP20007] }
+  # Level 3 Major Core
+  - all: [COMP30023, SWEN30006, COMP30026]
+  # Capstone
+  - all: [COMP30022]
+handbook: https://handbook.unimelb.edu.au/2027/components/b-sci-major-1
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

@@ -4,9 +4,18 @@ course: B-SCI
 year: 2026
 kind: major
 title: Cell and Developmental Biology
-points: 50
+points: 87.5
+# From 2027 a B-SCI major counts its level-2 subjects too (2027 Handbook).
 requirements:
+  # Level 2 Major Core
+  - all: [CEDB20003]
+  # Level 2 Major Electives
+  - choose: { points: 25, from: [ANAT20006, BCMB20002, GENE20001, NEUR20001, PHYS20008] }
+  # Level 3 Major Core
+  - all: [CEDB30003]
+  # Capstone
   - all: [CEDB30002]
-  - choose: { points: 12.5, from: [BIOL30001, BOTA30005, BTCH30003, CEDB30003, CEDB30004] }
-  - choose: { points: 25, from: [BIOL30001, BOTA30005, BTCH30003, CEDB30003, CEDB30004, BCMB30002, BCMB30004, BIOL30002, BIOM30003, GENE30002, GENE30005, MIIM30002, NEUR30005, NEUR30002, PATH30001] }
-verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked
+  # Level 3 Major Electives
+  - choose: { points: 25, from: [CEDB30004, BCMB30004, GENE30002, GENE30005, NEUR30005] }
+handbook: https://handbook.unimelb.edu.au/2027/components/b-sci-major-15
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

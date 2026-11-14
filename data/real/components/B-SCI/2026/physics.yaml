@@ -1,0 +1,25 @@
+id: physics
+course: B-SCI
+year: 2027
+kind: major
+title: Physics
+points: 112.5
+# From 2027 one Physics major replaces the streams (physics-chemical, physics-physics), which stay for
+# students who started before 2027.
+requirements:
+  # Level 2 Major Core
+  - all: [PHYC20013, PHYC20012, PHYC20015]
+  # Level 2 Major Elective (Group A)
+  - choose: { points: 12.5, from: [MAST20026, MAST20030, PHYC20014, MAST20033] }
+  # Level 2 Major Elective (Group B)
+  - choose: { points: 12.5, from: [MAST20009, MAST20032] }
+  # Level 3 Major Core
+  - all: [PHYC30021]
+  # Level 3 Major Elective (Group A)
+  - choose: { points: 12.5, from: [PHYC30017, PHYC30016] }
+  # Level 3 Major Elective (Group B)
+  - choose: { points: 12.5, from: [PHYC30011, PHYC30019, PHYC30022, PHYC30023, PHYC30024] }
+  # Capstone
+  - all: [PHYC30018]
+handbook: https://handbook.unimelb.edu.au/2027/components/b-sci-major-34
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

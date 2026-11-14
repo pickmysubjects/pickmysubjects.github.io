@@ -4,8 +4,14 @@ course: B-SCI
 year: 2026
 kind: major
 title: Geoscience
-points: 50
+points: 87.5
+# From 2027 a B-SCI major counts its level-2 subjects too (2027 Handbook).
 requirements:
+  # Level 2: 25-37.5 points from Group A, at most 12.5 from Group B
+  - choose: { points: 25, from: [GEOL20002, GEOL20003, EVSC20008] }
+  - choose: { points: 12.5, from: [GEOL20002, GEOL20003, EVSC20008, GEOL20001, ERTH20002, ERTH20003, ERTH20001] }
+  # Level 3: 12.5-25 points of Capstone, 25-37.5 of the electives
   - choose: { points: 12.5, from: [ERTH30002, GEOL30009] }
-  - choose: { points: 37.5, from: [GEOL30002, GEOL30003, GEOL30004, GEOL30007, GEOL30009, SCIE30001, ERTH30002] }
-verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked
+  - choose: { points: 37.5, from: [GEOL30002, GEOL30003, GEOL30004, GEOL30007, ERTH30002, GEOL30009] }
+handbook: https://handbook.unimelb.edu.au/2027/components/b-sci-major-47
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

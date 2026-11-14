@@ -4,9 +4,18 @@ course: B-SCI
 year: 2026
 kind: major
 title: Pharmacology
-points: 50
+points: 87.5
+# From 2027 a B-SCI major counts its level-2 subjects too (2027 Handbook).
 requirements:
+  # Level 2 Major Core
+  - all: [PHRM20001]
+  # Level 2 Major Electives
+  - choose: { points: 25, from: [BCMB20002, BCMB20005, CHEM20019, CHEM20018, CHEM20020] }
+  # Level 3 Major Core
+  - all: [PHRM30003, PHRM30008]
+  # Capstone
   - all: [PHRM30009]
-  - choose: { points: 25, from: [PHRM30003, PHRM30002, PHRM30008] }
-  - choose: { points: 12.5, from: [PHRM30003, PHRM30002, PHRM30008, BIOM30003] }
-verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked
+  # Level 3 Major Elective
+  - choose: { points: 12.5, from: [PHRM30002, BCMB30004, BCMB30011, CEDB30002] }
+handbook: https://handbook.unimelb.edu.au/2027/components/b-sci-major-33
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

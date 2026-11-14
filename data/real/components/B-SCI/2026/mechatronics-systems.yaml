@@ -3,7 +3,14 @@ course: B-SCI
 year: 2026
 kind: major
 title: Mechatronics Engineering Systems
-points: 50
+points: 100
+# From 2027 a B-SCI major counts its level-2 subjects too (2027 Handbook).
 requirements:
-  - all: [ELEN30014, MCEN30020, MCEN30021, ENGR30004]
-verified_on: 2026-10-13 # structure; source: 2026 Handbook, checked
+  # Level 2 Major Core
+  - all: [MAST20029, COMP20005, ELEN20005, ENGR20004]
+  # Level 3 Major Core
+  - all: [ELEN30014, MCEN30020, ENGR30004]
+  # Capstone
+  - all: [MCEN30021]
+handbook: https://handbook.unimelb.edu.au/2027/components/b-sci-major-6
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

@@ -3,6 +3,7 @@ course: B-SCI
 year: 2026
 kind: major
 title: Ecosystem Science (Forest Ecosystems)
+closed_from: 2027 # 2027 Handbook: one Ecosystem Science major (ecosystem-science) replaces the streams
 points: 50
 requirements:
   - all: [EVSC30007, FRST30001]

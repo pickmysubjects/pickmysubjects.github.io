@@ -4,9 +4,18 @@ course: B-SCI
 year: 2026
 kind: major
 title: Zoology
-points: 50
+points: 87.5
+# From 2027 a B-SCI major counts its level-2 subjects too (2027 Handbook).
 requirements:
-  - choose: { points: 12.5, from: [BIOL30002, ZOOL30007] }
-  - choose: { points: 12.5, from: [BIOL30001, ZOOL30006] }
-  - choose: { points: 25, from: [BIOL30001, BIOL30002, CEDB30003, ECOL30007, SCIE30001, ZOOL30006, ZOOL30007, CEDB30002, VETS30033] }
-verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked
+  # Level 2 Major Core
+  - all: [MAST20031, ZOOL20005]
+  # Level 2 Major Electives
+  - choose: { points: 12.5, from: [BIOL20001, ECOL20003] }
+  # Level 3 Major Core
+  - all: [ZOOL30010]
+  # Level 3 Major Electives
+  - choose: { points: 25, from: [BIOL30001, ZOOL30006, CEDB30002] }
+  # Capstone
+  - all: [BIOL30002]
+handbook: https://handbook.unimelb.edu.au/2027/components/b-sci-major-37
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

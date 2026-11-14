@@ -4,6 +4,7 @@ course: B-SCI
 year: 2026
 kind: major
 title: Biotechnology (Agri-food Biotechnology)
+closed_from: 2027 # 2027 Handbook: one Biotechnology major (biotechnology) replaces the streams
 points: 50
 requirements:
   - all: [BTCH30002]

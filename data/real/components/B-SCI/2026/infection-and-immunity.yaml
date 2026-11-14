@@ -3,9 +3,18 @@ course: B-SCI
 year: 2026
 kind: major
 title: Infection and Immunity
-points: 50
+points: 87.5
+# From 2027 a B-SCI major counts its level-2 subjects too (2027 Handbook).
 requirements:
+  # Level 2 Major Core
+  - all: [MIIM20001, MIIM20002]
+  # Level 2 Major Electives
+  - choose: { points: 12.5, from: [BCMB20002, CEDB20003, GENE20001] }
+  # Level 3 Major Core
   - all: [MIIM30002]
-  - choose: { points: 25, from: [MIIM30011, MIIM30014, MIIM30017] }
+  # Capstone
   - choose: { points: 12.5, from: [MIIM30015, MIIM30016] }
-verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked
+  # Level 3 Major Electives
+  - choose: { points: 25, from: [MIIM30011, MIIM30014, MIIM30017] }
+handbook: https://handbook.unimelb.edu.au/2027/components/b-sci-major-5
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

@@ -3,6 +3,7 @@ course: B-SCI
 year: 2026
 kind: major
 title: Biotechnology (Chemical Biotechnology)
+closed_from: 2027 # 2027 Handbook: one Biotechnology major (biotechnology) replaces the streams
 points: 50
 requirements:
   - all: [BTCH30003, CHEM30016, CHEM30012]

@@ -3,7 +3,16 @@ course: B-SCI
 year: 2026
 kind: major
 title: Human Nutrition
-points: 50
+points: 87.5
+# From 2027 a B-SCI major counts its level-2 subjects too (2027 Handbook).
 requirements:
-  - all: [NUTR30002, NUTR30003, NUTR30004, NUTR30005]
-verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked
+  # Level 2 Major Core
+  - all: [FOOD20003, NUTR20001]
+  # Level 2 Major Electives
+  - choose: { points: 12.5, from: [AGRI20043, BCMB20002] }
+  # Level 3 Major Core
+  - all: [NUTR30002, NUTR30005, NUTR30003]
+  # Capstone
+  - all: [NUTR30004]
+handbook: https://handbook.unimelb.edu.au/2027/components/b-sci-major-43
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

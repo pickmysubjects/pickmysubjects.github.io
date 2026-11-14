@@ -3,10 +3,16 @@ course: B-SCI
 year: 2026
 kind: major
 title: Agricultural Science
-points: 50
+points: 87.5
+# From 2027 a B-SCI major counts its level-2 subjects too (2027 Handbook).
 requirements:
+  # Level 2 Major Core
+  - all: [AGRI20037, ANSC20001, AGRI20038]
+  # Level 3 Major Core
+  - all: [AGRI30045]
+  # Capstone
   - all: [AGRI30038]
-  - choose: { points: 37.5, from: [AGRI30042, AGRI30016, AGRI30037, AGRI30045, AGRI30048, AGRI30046, ANSC30006] }
-# Source: the 2026 Handbook page for this major under the Bachelor of Science Advanced (Honours);
-# B-SCI lists the same major (50 points).
-verified_on: 2026-10-13 # structure; source: 2026 Handbook, checked
+  # Level 3 Major Electives
+  - choose: { points: 25, from: [AGRI30037, AGRI30048, ANSC30009, AGRI30046, AGRI30016] }
+handbook: https://handbook.unimelb.edu.au/2027/components/b-sci-major-10
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

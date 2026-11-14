@@ -4,9 +4,13 @@ course: B-SCI
 year: 2026
 kind: major
 title: Geography
-points: 50
+points: 87.5
+# From 2027 a B-SCI major counts its level-2 subjects too (2027 Handbook).
 requirements:
-  - choose: { points: 12.5, from: [GEOG30007, GEOG30023, GEOG30025, GEOG30026, GEOG30027, GEOG30033] }
-  - choose: { points: 25, from: [GEOG30001, GEOG30019, GEOG30021, GEOG30024, GEOG30030] }
-  - choose: { points: 12.5, from: [GEOG30007, GEOG30023, GEOG30025, GEOG30026, GEOG30027, GEOG30033, GEOG30001, GEOG30019, GEOG30021, GEOG30024, GEOG30030] }
-verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked
+  # Level 2 Major Electives
+  - choose: { points: 37.5, from: [GEOG20013, GEOG20001, GEOG20016, GEOG20017, GEOG20003, GEOG20002, GEOG20015] }
+  # 50 points of level 3: at least 12.5 from the Capstone list, at most 37.5 from the electives
+  - choose: { points: 12.5, from: [GEOG30023, GEOG30025, GEOG30026] }
+  - choose: { points: 37.5, from: [GEOG30030, GEOG30001, GEOG30019, GEOG30021, GEOG30024, GEOG30027, GEOG30033, GEOG30023, GEOG30025, GEOG30026] }
+handbook: https://handbook.unimelb.edu.au/2027/components/b-sci-major-24
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

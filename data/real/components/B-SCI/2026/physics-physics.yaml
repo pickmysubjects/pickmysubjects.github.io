@@ -4,6 +4,7 @@ course: B-SCI
 year: 2026
 kind: major
 title: Physics (Physics)
+closed_from: 2027 # 2027 Handbook: one Physics major (physics) replaces the streams
 points: 50
 requirements:
   - all: [PHYC30018, PHYC30021]

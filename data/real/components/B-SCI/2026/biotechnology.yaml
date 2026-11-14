@@ -1,0 +1,21 @@
+id: biotechnology
+course: B-SCI
+year: 2027
+kind: major
+title: Biotechnology
+points: 87.5
+# From 2027 one Biotechnology major replaces the streams (biotechnology-agrifood, biotechnology-biomedical-biochemistry, biotechnology-biomedical-microbiology, biotechnology-biomedical-pharmacology, biotechnology-chemical, biotechnology-molecular-cell, biotechnology-molecular-genetics), which stay for
+# students who started before 2027.
+requirements:
+  # Level 2 Major Core
+  - all: [BTCH20002, MAST20031]
+  # Level 2 Major Elective
+  - choose: { points: 12.5, from: [BCMB20002, PHRM20001] }
+  # Level 3 Major Core
+  - all: [BTCH30003]
+  # Level 3 Major Electives
+  - choose: { points: 25, from: [BCMB30001, BCMB30002, PHRM30008, PHRM30009, BOTA30005] }
+  # Capstone
+  - all: [BTCH30004]
+handbook: https://handbook.unimelb.edu.au/2027/components/b-sci-major-14
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

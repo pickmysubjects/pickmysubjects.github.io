@@ -3,7 +3,14 @@ course: B-SCI
 year: 2026
 kind: major
 title: Chemical Engineering Systems
-points: 50
+points: 100
+# From 2027 a B-SCI major counts its level-2 subjects too (2027 Handbook).
 requirements:
-  - all: [ENGR30002, CHEN30001, CHEN30015, CHEN30016]
-verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked
+  # Level 2 Major Core
+  - all: [CHEN20010, CHEN20011, CHEN20012, MAST20029]
+  # Level 3 Major Core
+  - all: [CHEN30001, CHEN30016, ENGR30002]
+  # Capstone
+  - all: [CHEN30015]
+handbook: https://handbook.unimelb.edu.au/2027/components/b-sci-major-16
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

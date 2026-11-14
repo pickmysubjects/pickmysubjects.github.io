@@ -3,10 +3,17 @@ id: ecology-and-evolutionary-biology
 course: B-SCI
 year: 2026
 kind: major
-title: Ecology and Evolutionary Biology
-points: 50
+title: Ecology
+points: 87.5
+# From 2027 a B-SCI major counts its level-2 subjects too (2027 Handbook); 2027 name.
 requirements:
-  - choose: { points: 12.5, from: [ECOL30005, ECOL30006] }
-  - choose: { points: 12.5, from: [ZOOL30007, ZOOL30009, SCIE30001] }
-  - choose: { points: 25, from: [BOTA30002, BOTA30006, BOTA30004, ECOL30005, ECOL30006, ECOL30007, EVSC30006, GENE30001, SCIE30001, ZOOL30004, ZOOL30006, ZOOL30007, ZOOL30009] }
-verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked
+  # Level 2 Major Core
+  - all: [MAST20031, ECOL20003, BIOL20001]
+  # Level 3 Major Core
+  - all: [ECOL30006]
+  # Level 3 Major Elective
+  - choose: { points: 25, from: [EVSC30002, ECOL30005, EVSC30006] }
+  # Capstone
+  - all: [ZOOL30009]
+handbook: https://handbook.unimelb.edu.au/2027/components/b-sci-major-41
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

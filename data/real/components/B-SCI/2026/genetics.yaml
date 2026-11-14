@@ -3,8 +3,16 @@ course: B-SCI
 year: 2026
 kind: major
 title: Genetics
-points: 50
+points: 87.5
+# From 2027 a B-SCI major counts its level-2 subjects too (2027 Handbook).
 requirements:
-  - all: [GENE30001, GENE30002, GENE30004]
-  - choose: { points: 12.5, from: [BOTA30002, CEDB30002, GENE30005, MIIM30002, MIIM30011, SCIE30001, SCIE30002, ZOOL30004] }
-verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked
+  # Level 2 Major Core
+  - all: [MAST20031, BIOL20001, GENE20001]
+  # Level 3 Major Core
+  - all: [GENE30001, GENE30002]
+  # Capstone
+  - all: [GENE30004]
+  # Level 3 Major Elective
+  - choose: { points: 12.5, from: [GENE30005, CEDB30002] }
+handbook: https://handbook.unimelb.edu.au/2027/components/b-sci-major-23
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

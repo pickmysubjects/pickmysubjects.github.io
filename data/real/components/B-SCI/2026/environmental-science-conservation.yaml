@@ -4,6 +4,7 @@ course: B-SCI
 year: 2026
 kind: major
 title: Environmental Science (Conservation and Ecosystems)
+closed_from: 2027 # 2027 Handbook: one Environmental Science major (environmental-science) replaces the streams
 points: 50
 requirements:
   - all: [EVSC30003, EVSC30002]

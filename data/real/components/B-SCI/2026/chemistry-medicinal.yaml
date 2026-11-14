@@ -3,6 +3,7 @@ course: B-SCI
 year: 2026
 kind: major
 title: Chemistry (Medicinal Chemistry)
+closed_from: 2027 # 2027 Handbook: one Chemistry major (chemistry) replaces the streams
 points: 50
 requirements:
   - all: [CHEM30016, CHEM30015, PHRM30008, PHRM30009]

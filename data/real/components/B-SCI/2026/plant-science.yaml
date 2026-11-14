@@ -4,8 +4,16 @@ course: B-SCI
 year: 2026
 kind: major
 title: Plant Science
-points: 50
+points: 87.5
+# From 2027 a B-SCI major counts its level-2 subjects too (2027 Handbook).
 requirements:
-  - choose: { points: 12.5, from: [BOTA30002, BOTA30005] }
-  - choose: { points: 37.5, from: [AGRI30042, BOTA30001, BOTA30004, BOTA30005, BOTA30006, ECOL30006, FRST30001, SCIE30001, BOTA30002] }
-verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked
+  # Level 2 Major Core
+  - all: [MAST20031, BOTA20001, BOTA20002]
+  # Level 3 Major Core
+  - all: [BOTA30002]
+  # Level 3 Major Electives
+  - choose: { points: 25, from: [BOTA30004, BOTA30006, AGRI30042] }
+  # Capstone
+  - all: [BOTA30005]
+handbook: https://handbook.unimelb.edu.au/2027/components/b-sci-major-35
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

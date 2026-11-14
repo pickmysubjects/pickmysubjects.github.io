@@ -3,7 +3,16 @@ course: B-SCI
 year: 2026
 kind: major
 title: Animal Health and Disease
-points: 50
+points: 87.5
+# From 2027 a B-SCI major counts its level-2 subjects too (2027 Handbook).
 requirements:
-  - all: [VETS30033, ANSC30001, ANSC30002, ANSC30006]
-verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked
+  # Level 2 Major Core
+  - all: [ANSC20003, VETS20019]
+  # Level 2 Major Elective
+  - choose: { points: 12.5, from: [BCMB20002, AGRI20043] }
+  # Level 3 Major Core
+  - all: [ANSC30001, ANSC30002, ANSC30006]
+  # Capstone
+  - all: [VETS30033]
+handbook: https://handbook.unimelb.edu.au/2027/components/b-sci-major-11
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

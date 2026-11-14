@@ -1,0 +1,19 @@
+id: ecosystem-science
+course: B-SCI
+year: 2027
+kind: major
+title: Ecosystem Science
+points: 87.5
+# From 2027 one Ecosystem Science major replaces the streams (ecosystem-science-forest, ecosystem-science-urban), which stay for
+# students who started before 2027.
+requirements:
+  # Level 2 Major Core
+  - all: [ENST20001, ECOL20003, MAST20031]
+  # Level 3 Major Core
+  - all: [ECOL30005]
+  # Capstone
+  - all: [EVSC30007]
+  # Level 3 Major Electives
+  - choose: { points: 25, from: [ENST30003, FRST30001, FRST30003, BOTA30004, EVSC30006, ENST30004] }
+handbook: https://handbook.unimelb.edu.au/2027/components/b-sci-major-42
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

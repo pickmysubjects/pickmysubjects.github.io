@@ -3,7 +3,14 @@ course: B-SCI
 year: 2026
 kind: major
 title: Climate and Weather
-points: 50
+points: 87.5
+# From 2027 a B-SCI major counts its level-2 subjects too (2027 Handbook).
 requirements:
-  - all: [ATOC30004, ATOC30006, ATOC30003, ATOC30008]
-verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked
+  # Level 2 Major Electives
+  - choose: { points: 37.5, from: [ERTH20003, ATOC20001, ATOC20003, MAST20009] }
+  # Level 3 Major Core
+  - all: [ATOC30004, ATOC30006, ATOC30003]
+  # Capstone
+  - all: [ATOC30008]
+handbook: https://handbook.unimelb.edu.au/2027/components/b-sci-major-12
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

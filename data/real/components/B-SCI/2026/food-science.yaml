@@ -3,7 +3,16 @@ course: B-SCI
 year: 2026
 kind: major
 title: Food Science
-points: 50
+points: 87.5
+# From 2027 a B-SCI major counts its level-2 subjects too (2027 Handbook).
 requirements:
-  - all: [FOOD30008, FOOD30007, FOOD30009, FOOD30010]
-verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked
+  # Level 2 Major Core
+  - all: [FOOD20003, FOOD20006]
+  # Level 2 Major Electives
+  - choose: { points: 12.5, from: [BCMB20002, AGRI20043] }
+  # Level 3 Major Core
+  - all: [FOOD30008, FOOD30007, FOOD30010]
+  # Capstone
+  - all: [FOOD30009]
+handbook: https://handbook.unimelb.edu.au/2027/components/b-sci-major-22
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

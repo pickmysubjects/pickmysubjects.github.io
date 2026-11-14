@@ -3,8 +3,18 @@ course: B-SCI
 year: 2026
 kind: major
 title: Biochemistry and Molecular Biology
-points: 50
+points: 87.5
+# From 2027 a B-SCI major counts its level-2 subjects too (2027 Handbook).
 requirements:
-  - all: [BCMB30010, BCMB30012]
-  - choose: { points: 25, from: [BCMB30001, BCMB30002, BCMB30004, BCMB30011, BIOM30003, MIIM30017, CEDB30002] }
-verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked
+  # Level 2 Major Core
+  - all: [BCMB20002, BCMB20005]
+  # Level 2 Major Electives
+  - choose: { points: 12.5, from: [CEDB20003, CHEM20026, PHRM20001] }
+  # Level 3 Major Core
+  - all: [BCMB30010]
+  # Capstone
+  - all: [BCMB30012]
+  # Level 3 Major Electives
+  - choose: { points: 25, from: [BCMB30001, BCMB30002, CEDB30002, BCMB30004, BCMB30011] }
+handbook: https://handbook.unimelb.edu.au/2027/components/b-sci-major-39
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

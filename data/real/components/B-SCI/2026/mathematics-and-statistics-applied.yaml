@@ -2,10 +2,21 @@ id: mathematics-and-statistics-applied
 course: B-SCI
 year: 2026
 kind: major
-title: Mathematics and Statistics (Applied Mathematics)
-points: 50
+title: Applied Mathematics
+points: 87.5
+# From 2027 a B-SCI major counts its level-2 subjects too (2027 Handbook); 2027 name.
 requirements:
-  - all: [MAST30021, MAST30028]
-  - choose: { points: 25, from: [MAST30001, MAST30030, MAST30031, MAST30032] }
-handbook: https://handbook.unimelb.edu.au/2026/components/b-sci-major-29
-verified_on: 2026-10-13 # Applied Mathematics specialisation structure; source: 2026 Handbook, checked
+  # Level 2 Major Core
+  - all: [MAST20030]
+  # Level 2 Major Elective (Group A)
+  - choose: { points: 12.5, from: [MAST20026, MAST20033] }
+  # Level 2 Major Elective (Group B)
+  - choose: { points: 12.5, from: [MAST20009, MAST20032] }
+  # Level 3 Major Core
+  - all: [MAST30028]
+  # Level 3 Major Electives
+  - choose: { points: 25, from: [MAST30031, MAST30032, MAST30021] }
+  # Capstone
+  - all: [MAST30030]
+handbook: https://handbook.unimelb.edu.au/2027/components/b-sci-major-51
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

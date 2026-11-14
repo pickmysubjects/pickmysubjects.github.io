@@ -3,6 +3,7 @@ course: B-SCI
 year: 2026
 kind: major
 title: "Biotechnology (Molecular: Genetics)"
+closed_from: 2027 # 2027 Handbook: one Biotechnology major (biotechnology) replaces the streams
 points: 50
 requirements:
   - all: [GENE30002, GENE30001, GENE30004, BTCH30003]

@@ -2,12 +2,21 @@ id: mathematics-and-statistics-operations-research
 course: B-SCI
 year: 2026
 kind: major
-title: Mathematics and Statistics (Operations Research / Discrete Mathematics)
-points: 50
+title: Mathematical Operations Research
+points: 87.5
+# From 2027 a B-SCI major counts its level-2 subjects too (2027 Handbook); 2027 name.
 requirements:
-  - all: [MAST30012, MAST30013]
-  - choose: { points: 12.5, from: [MAST30021, MAST30022] }
-  # the other of MAST30021 / MAST30022, or one of the listed electives
-  - choose: { points: 12.5, from: [MAST30021, MAST30022, MAST30001, MAST30005, MAST30011, MAST30025] }
-handbook: https://handbook.unimelb.edu.au/2026/components/b-sci-major-29
-verified_on: 2026-10-07 # Operations Research / Discrete Mathematics specialisation structure; source: 2026 Handbook, checked
+  # Level 2 Major Core
+  - all: [MAST20035]
+  # Level 2 Major Electives (Group A)
+  - choose: { points: 12.5, from: [MAST20026, MAST20033] }
+  # Level 2 Major Electives (Group B)
+  - choose: { points: 12.5, from: [MAST20004, MAST20006] }
+  # Level 3 Major Core
+  - all: [MAST30022]
+  # Level 3 Major Electives
+  - choose: { points: 25, from: [MAST30001, MAST30011, MAST30021, MAST30028] }
+  # Capstone
+  - all: [MAST30013]
+handbook: https://handbook.unimelb.edu.au/2027/components/b-sci-major-48
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

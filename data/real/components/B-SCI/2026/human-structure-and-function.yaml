@@ -3,8 +3,16 @@ course: B-SCI
 year: 2026
 kind: major
 title: Human Structure and Function
-points: 50
+points: 87.5
+# From 2027 a B-SCI major counts its level-2 subjects too (2027 Handbook).
 requirements:
+  # Level 2 Major Core
+  - all: [ANAT20006]
+  # Level 2 Major Electives
+  - choose: { points: 25, from: [CEDB20003, NEUR20001, PHYS20008, PHYS20009] }
+  # Capstone
   - all: [ANAT30007, ANAT30008]
-  - choose: { points: 25, from: [BIOM30003, CEDB30003, NEUR30002, NEUR30003, NEUR30005, OPTO30007, PATH30001, PATH30002, PHYS30010, PHYS30011, PHYS30012] }
-verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked
+  # Level 3 Major Electives
+  - choose: { points: 25, from: [CEDB30003, NEUR30008, PHYS30010, PHYS30011] }
+handbook: https://handbook.unimelb.edu.au/2027/components/b-sci-major-26
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

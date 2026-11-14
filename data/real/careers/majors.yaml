@@ -107,7 +107,7 @@
 - handbook_id: b-sci-major-14
   course: B-SCI
   title: "Biotechnology"
-  components: ["biotechnology-agrifood", "biotechnology-biomedical-biochemistry", "biotechnology-biomedical-microbiology", "biotechnology-biomedical-pharmacology", "biotechnology-chemical", "biotechnology-molecular-cell", "biotechnology-molecular-genetics"]
+  components: ["biotechnology", "biotechnology-agrifood", "biotechnology-biomedical-biochemistry", "biotechnology-biomedical-microbiology", "biotechnology-biomedical-pharmacology", "biotechnology-chemical", "biotechnology-molecular-cell", "biotechnology-molecular-genetics"]
   source: https://handbook.unimelb.edu.au/2026/components/b-sci-major-14
   checked: 2026-10-23
   career_text: true
@@ -136,7 +136,7 @@
 - handbook_id: b-sci-major-17
   course: B-SCI
   title: "Chemistry"
-  components: ["chemistry-chemistry", "chemistry-medicinal"]
+  components: ["chemical-biology-and-therapeutics", "chemistry", "chemistry-chemistry", "chemistry-medicinal"]
   source: https://handbook.unimelb.edu.au/2026/components/b-sci-major-17
   checked: 2026-10-23
   career_text: true
@@ -207,7 +207,7 @@
 - handbook_id: b-sci-major-42
   course: B-SCI
   title: "Ecosystem Science"
-  components: ["ecosystem-science-forest", "ecosystem-science-urban"]
+  components: ["ecosystem-science", "ecosystem-science-forest", "ecosystem-science-urban"]
   source: https://handbook.unimelb.edu.au/2026/components/b-sci-major-42
   checked: 2026-10-23
   career_text: false
@@ -237,7 +237,7 @@
 - handbook_id: b-sci-major-21
   course: B-SCI
   title: "Environmental Science"
-  components: ["environmental-science-climate", "environmental-science-conservation", "environmental-science-energy", "environmental-science-resources", "environmental-science-sustainability"]
+  components: ["environmental-science", "environmental-science-climate", "environmental-science-conservation", "environmental-science-energy", "environmental-science-resources", "environmental-science-sustainability"]
   source: https://handbook.unimelb.edu.au/2026/components/b-sci-major-21
   checked: 2026-10-23
   career_text: true
@@ -409,7 +409,7 @@
 - handbook_id: b-sci-major-34
   course: B-SCI
   title: "Physics"
-  components: ["physics-chemical", "physics-physics"]
+  components: ["physics", "physics-chemical", "physics-physics"]
   source: https://handbook.unimelb.edu.au/2026/components/b-sci-major-34
   checked: 2026-10-23
   career_text: true

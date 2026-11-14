@@ -3,8 +3,18 @@ course: B-SCI
 year: 2026
 kind: major
 title: Neuroscience
-points: 50
+points: 87.5
+# From 2027 a B-SCI major counts its level-2 subjects too (2027 Handbook).
 requirements:
-  - all: [NEUR30003, NEUR30002]
-  - choose: { points: 25, from: [BCMB30004, BIOM30003, NEUR30004, NEUR30005, NEUR30006, NEUR30007, OPTO30007, PHRM30002] }
-verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked
+  # Level 2 Major Core
+  - all: [NEUR20001]
+  # Level 2 Major Electives
+  - choose: { points: 25, from: [BCMB20002, CEDB20003, PHRM20001, PHYS20008] }
+  # Level 3 Major Core
+  - all: [NEUR30008, NEUR30009]
+  # Capstone
+  - all: [NEUR30010]
+  # Level 3 Major Electives
+  - choose: { points: 12.5, from: [NEUR30005, NEUR30007, OPTO30007, NEUR30006] }
+handbook: https://handbook.unimelb.edu.au/2027/components/b-sci-major-31
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

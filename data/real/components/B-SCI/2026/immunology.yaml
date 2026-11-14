@@ -3,8 +3,20 @@ course: B-SCI
 year: 2026
 kind: major
 title: Immunology
-points: 50
+points: 87.5
+# From 2027 a B-SCI major counts its level-2 subjects too (2027 Handbook).
 requirements:
-  - all: [MIIM30002, MIIM30003, MIIM30015]
-  - choose: { points: 12.5, from: [BCMB30001, BCMB30002, BCMB30004, BCMB30011, CEDB30002, GENE30002, MIIM30011, MIIM30014, MIIM30017, NEUR30003, PATH30001, PHRM30003] }
-verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked
+  # Level 2 Major Core
+  - all: [MIIM20001]
+  # Level 2 Major Practical Electives
+  - choose: { points: 12.5, from: [MIIM20002, BCMB20005, PATH20003] }
+  # Level 2 Major General Electives
+  - choose: { points: 12.5, from: [PATH20001, BCMB20002, CEDB20003, GENE20001] }
+  # Level 3 Major Core
+  - all: [MIIM30002, MIIM30003]
+  # Capstone
+  - all: [MIIM30015]
+  # Level 3 Major Electives
+  - choose: { points: 12.5, from: [MIIM30011, MIIM30014, MIIM30017, PATH30001, BCMB30002, CEDB30002] }
+handbook: https://handbook.unimelb.edu.au/2027/components/b-sci-major-4
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

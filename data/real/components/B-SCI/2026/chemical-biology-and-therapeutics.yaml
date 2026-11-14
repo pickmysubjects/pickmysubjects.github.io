@@ -1,0 +1,16 @@
+id: chemical-biology-and-therapeutics
+course: B-SCI
+year: 2027
+kind: major
+title: Chemical Biology and Therapeutics
+points: 100
+# New major in the 2027 Handbook.
+requirements:
+  # Level 2 Major Core
+  - all: [CHEM20018, CHEM20026, BCMB20005, PHRM20001]
+  # Level 3 Major Core
+  - all: [CHEM30018, PHRM30008, CHEM30019]
+  # Capstone
+  - all: [PHRM30009]
+handbook: https://handbook.unimelb.edu.au/2027/components/b-sci-major-52
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked

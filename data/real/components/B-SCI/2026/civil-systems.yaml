@@ -3,7 +3,14 @@ course: B-SCI
 year: 2026
 kind: major
 title: Civil Engineering Systems
-points: 50
+points: 100
+# From 2027 a B-SCI major counts its level-2 subjects too (2027 Handbook).
 requirements:
-  - all: [CVEN30008, CVEN30010, CVEN30009, ENGR30002]
-verified_on: 2026-10-08 # structure; source: 2026 Handbook, checked
+  # Level 2 Major Core
+  - all: [CVEN20001, MAST20029, ENEN20002, ENGR20003]
+  # Level 3 Major Core
+  - all: [CVEN30008, ENGR30002, CVEN30009]
+  # Capstone
+  - all: [CVEN30012]
+handbook: https://handbook.unimelb.edu.au/2027/components/b-sci-major-18
+verified_on: 2026-11-14 # structure; source: 2027 Handbook component page, checked
