@@ -2203,9 +2203,10 @@ export const ja: Messages = {
       close: "今はしない",
     },
     notice: {
-      title: "正式版は11月末公開予定",
-      sub: "2027年Handbook対応",
+      title: "ご意見ありがとうございます：1.0.0 正式版は 11 月末までに公開",
+      sub: "現在は 0.9.2",
       close: "閉じる",
+      read: "読む",
     },
     release: {
       label: "{v} · {date}更新",

@@ -2203,9 +2203,10 @@ export const zhCN: Messages = {
       close: "不用了",
     },
     notice: {
-      title: "正式版预计 11 月底上线",
-      sub: "含 2027 Handbook",
+      title: "谢谢大家的意见：1.0.0 正式版 11 月底上线",
+      sub: "现在是 0.9.2",
       close: "关闭",
+      read: "读一下",
     },
     release: {
       label: "{v} · 更新于 {date}",

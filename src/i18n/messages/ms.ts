@@ -2203,9 +2203,10 @@ export const ms: Messages = {
       close: "Tidak, terima kasih",
     },
     notice: {
-      title: "Versi penuh dijangka akhir November",
-      sub: "Termasuk Handbook 2027",
+      title: "Terima kasih atas maklum balas anda: 1.0.0 keluar sebelum hujung November",
+      sub: "Kini 0.9.2",
       close: "Tutup",
+      read: "Baca berita",
     },
     release: {
       label: "{v} · Dikemas kini {date}",

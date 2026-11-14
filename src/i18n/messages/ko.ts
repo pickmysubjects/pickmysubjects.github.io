@@ -2203,9 +2203,10 @@ export const ko: Messages = {
       close: "괜찮아요",
     },
     notice: {
-      title: "정식 버전 11월 말 공개 예정",
-      sub: "2027 Handbook 반영",
+      title: "의견 감사합니다: 1.0.0 정식판은 11월 말까지 공개",
+      sub: "지금은 0.9.2",
       close: "닫기",
+      read: "읽어 보기",
     },
     release: {
       label: "{v} · {date} 업데이트",

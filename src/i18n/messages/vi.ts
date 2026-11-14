@@ -2203,9 +2203,10 @@ export const vi: Messages = {
       close: "Không, cảm ơn",
     },
     notice: {
-      title: "Bản chính thức: cuối tháng 11",
-      sub: "Có Handbook 2027",
+      title: "Cảm ơn góp ý của các bạn: bản 1.0.0 ra trước cuối tháng 11",
+      sub: "Hiện là 0.9.2",
       close: "Đóng",
+      read: "Đọc tin",
     },
     release: {
       label: "{v} · Cập nhật {date}",

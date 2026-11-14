@@ -2203,9 +2203,10 @@ export const hi: Messages = {
       close: "रहने दें",
     },
     notice: {
-      title: "पूरा वर्ज़न नवंबर के अंत तक",
-      sub: "2027 Handbook के साथ",
+      title: "आपके सुझावों के लिए धन्यवाद: 1.0.0 नवंबर के अंत तक",
+      sub: "अभी 0.9.2",
       close: "बंद करें",
+      read: "खबर पढ़ें",
     },
     release: {
       label: "{v} · {date} को अपडेट",

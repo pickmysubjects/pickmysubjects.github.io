@@ -2,11 +2,13 @@
 import { onMounted, shallowRef } from 'vue'
 import { X } from 'lucide-vue-next'
 import { useI18n } from '@/i18n'
+import { link } from '@/composables/useView'
 import { en } from '@/i18n/messages/en'
 import { IS_BETA } from '@/release'
 
 /**
- * A glass strip at the top of the home page (and, slim, on top of every other page) for what's coming next (home.notice.*). Closing it
+ * A glass strip at the top of the home page (and, slim, on top of every other page) for what's coming next (home.notice.*),
+ * linking to the latest news on the home page (#news). Closing it
  * remembers the English text it hid, so a new notice comes back on its own.
  */
 defineProps<{ slim?: boolean }>()
@@ -23,6 +25,10 @@ onMounted(() => {
     // Storage blocked: just show it.
   }
 })
+// On the home page the news is further down: scroll to it (the app handles links, not the browser).
+function toNews(): void {
+  document.getElementById('news')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+}
 function hide(): void {
   hidden.value = true
   try {
@@ -34,21 +40,63 @@ function hide(): void {
 </script>
 
 <template>
-  <div v-if="IS_BETA && !hidden" class="notice" :class="{ slim }" :data-notice="stamp" role="status">
-    <span class="notice-dot" aria-hidden="true" />
-    <span class="notice-text">
-      <strong>{{ t('home.notice.title') }}</strong>
-      <span class="notice-sub">{{ t('home.notice.sub') }}</span>
-    </span>
-    <button class="notice-close" type="button" :aria-label="t('home.notice.close')" @click="hide">
-      <X :size="16" aria-hidden="true" />
-    </button>
+  <div v-if="IS_BETA && !hidden" class="notice-wrap" :class="{ slim }" :data-notice="stamp">
+    <div class="notice" role="status">
+      <span class="notice-dot" aria-hidden="true" />
+      <span class="notice-text">
+        <strong>{{ t('home.notice.title') }}</strong>
+        <span class="notice-sub">{{ t('home.notice.sub') }}</span>
+      </span>
+      <a v-if="slim" class="notice-more" :href="link('news')">{{ t('home.notice.read') }}</a>
+      <button v-else class="notice-more" type="button" @click="toNews">{{ t('home.notice.read') }}</button>
+      <button class="notice-close" type="button" :aria-label="t('home.notice.close')" @click="hide">
+        <X :size="16" aria-hidden="true" />
+      </button>
+    </div>
   </div>
 </template>
 
 <style scoped>
+.notice-wrap {
+  display: grid;
+  gap: 8px;
+  /* A grid or flex item: without this, the strip's one line sets the page width on phones. */
+  min-width: 0;
+}
+
+.notice {
+  min-width: 0;
+}
+
+.notice-text {
+  flex: 1 1 auto;
+}
+
+.notice-more {
+  flex: none;
+  margin-left: auto;
+  padding: 4px 10px;
+  color: var(--accent);
+  font: inherit;
+  font-weight: 600;
+  white-space: nowrap;
+  text-decoration: none;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.notice-more:hover {
+  color: var(--ink);
+}
+
+.notice-more + .notice-close {
+  margin-left: 0;
+}
+
+
 /* One line on other pages: the sub-line is cut first. */
-.notice.slim {
+.slim .notice {
   margin-bottom: 12px;
   padding-block: 4px;
 }

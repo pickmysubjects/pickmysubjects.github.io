@@ -2209,9 +2209,10 @@ export const en = {
       close: "No thanks",
     },
     notice: {
-      title: "Full version coming by end of November",
-      sub: "Includes the 2027 Handbook",
+      title: "Thank you for your feedback: 1.0.0 is out by the end of November",
+      sub: "This is 0.9.2",
       close: "Hide",
+      read: "Read the news",
     },
     release: {
       label: "{v} · Updated {date}",

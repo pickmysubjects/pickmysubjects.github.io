@@ -2203,9 +2203,10 @@ export const zhTW: Messages = {
       close: "不用了",
     },
     notice: {
-      title: "正式版預計 11 月底上線",
-      sub: "含 2027 Handbook",
+      title: "謝謝大家的意見：1.0.0 正式版 11 月底上線",
+      sub: "現在是 0.9.2",
       close: "關閉",
+      read: "讀一下",
     },
     release: {
       label: "{v} · 更新於 {date}",
