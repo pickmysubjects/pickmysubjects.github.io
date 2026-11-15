@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { trackEvent } from '@/utils/analytics'
 import { thisYear as calendarYear } from '@/engine/dataYear'
+import { MAX_COMMENT_LENGTH } from '@/engine/comments'
 import InfoTip from '@/components/InfoTip.vue'
 import { computed, shallowRef } from 'vue'
 import { RATINGS_FORM } from '@/config'
@@ -303,7 +304,9 @@ function value(event: Event): string {
 
           <label class="field">
             {{ t('rating.wish') }}
-            <textarea v-model="wish" class="textarea" rows="3" maxlength="1000" />
+            <!-- Longer tips are never published, so the box stops where the site would. -->
+            <textarea v-model="wish" class="textarea" rows="3" :maxlength="MAX_COMMENT_LENGTH" />
+            <span class="count" aria-live="polite">{{ wish.length }} / {{ MAX_COMMENT_LENGTH }}</span>
             <span class="hint">{{ t('rating.wishHint') }}<InfoTip :text="t('rating.wishInfo')" /></span>
           </label>
         </div>
@@ -352,6 +355,14 @@ function value(event: Event): string {
 }
 
 .rate-intro,
+.count {
+  justify-self: end;
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+
 .hint {
   margin: 0;
   font-size: 0.875rem;
