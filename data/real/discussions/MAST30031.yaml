@@ -33,3 +33,5 @@ points:
     ms: "Buat semua soalan tutorial. Seorang pengulas terkini dapati soalan tugasan kurang jelas."
     id: "Kerjakan semua soal tutorial. Satu ulasan terbaru menilai soal tugasnya kurang jelas."
     hi: "सारे ट्यूटोरियल सवाल करें। एक हालिया रिव्यूअर को असाइनमेंट के सवाल अस्पष्ट लगे।"
+difficulty: mixed
+workload: heavy
