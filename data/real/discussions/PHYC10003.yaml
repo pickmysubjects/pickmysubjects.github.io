@@ -73,15 +73,15 @@ sections:
       id: "Praktikum harus menyelesaikan laporan penuh dalam sekitar 2,5 jam, meski demonstrator menilai adil. PR belakangan ini soal aplikasi sulit. Pengulas terbaru merasa ujian jauh lebih sulit dari ujian lama."
       hi: "प्रैक्टिकल में लगभग 2.5 घंटे में पूरी रिपोर्ट लिखनी होती है, हालाँकि डेमॉन्स्ट्रेटर उचित अंक देते हैं। हाल में होमवर्क कठिन अनुप्रयोग सवाल हैं। हाल के रिव्यूअर्स को परीक्षा पुराने पेपरों से कहीं कठिन लगी।"
   watch:
-    - en: "Recent reviewers say it is not a WAM booster or a good filler; take it if it's core for you or you are ready to put in a lot of time. One notes heavy scaling helped them."
-      zh: "近期同学说它不是刷分课，也不适合凑学分；专业需要或愿意花大量时间再选。有人说靠大幅 scale 才拿到好分。"
-      zh-TW: "近期同學說它不是拉分課，也不適合湊學分；主修需要或願意花大量時間再選。有人說靠大幅調分才拿到好分。"
-      ja: "最近のレビューはWAMを稼げる科目でも単位埋めでもないという。必修か、時間をたっぷり使える人向け。大きなスケーリングに助けられたという人も。"
-      ko: "최근 리뷰는 WAM 부스터도, 학점 채우기용도 아니라고 한다. 필수이거나 시간을 많이 쏟을 수 있을 때 들어라. 큰 스케일링 덕을 봤다는 사람도 있다."
-      vi: "Người học gần đây nói không phải môn kéo WAM hay để lấp chỗ; chỉ học nếu bắt buộc hoặc sẵn sàng bỏ nhiều thời gian. Một người nói nhờ scale nhiều mới được điểm tốt."
-      ms: "Pengulas terkini kata ia bukan penaik WAM atau pengisi yang baik; ambil jika ia teras atau anda sanggup luangkan banyak masa. Seorang kata penskalaan besar membantunya."
-      id: "Pengulas terbaru bilang ini bukan pendongkrak WAM atau pengisi; ambil kalau wajib atau siap meluangkan banyak waktu. Satu bilang penskalaan besar membantunya."
-      hi: "हाल के रिव्यूअर कहते हैं यह न WAM बूस्टर है न अच्छा फ़िलर; अनिवार्य हो या बहुत समय दे सकें तभी लें। एक के अनुसार भारी स्केलिंग से मदद मिली।"
+    - en: "Recent reviewers say it is **not a WAM booster or a good filler**; take it if it's core for you or you are ready to put in a lot of time. One notes heavy scaling helped them."
+      zh: "近期同学说它**不是刷分课，也不适合凑学分**；专业需要或愿意花大量时间再选。有人说靠大幅 scale 才拿到好分。"
+      zh-TW: "近期同學說它**不是拉分課，也不適合湊學分**；主修需要或願意花大量時間再選。有人說靠大幅調分才拿到好分。"
+      ja: "最近のレビューは**WAMを稼げる科目でも単位埋めでもない**という。必修か、時間をたっぷり使える人向け。大きなスケーリングに助けられたという人も。"
+      ko: "최근 리뷰는 **WAM 부스터도, 학점 채우기용도 아니라고 한다**. 필수이거나 시간을 많이 쏟을 수 있을 때 들어라. 큰 스케일링 덕을 봤다는 사람도 있다."
+      vi: "Người học gần đây nói **không phải môn kéo WAM hay để lấp chỗ**; chỉ học nếu bắt buộc hoặc sẵn sàng bỏ nhiều thời gian. Một người nói nhờ scale nhiều mới được điểm tốt."
+      ms: "Pengulas terkini kata ia **bukan penaik WAM atau pengisi yang baik**; ambil jika ia teras atau anda sanggup luangkan banyak masa. Seorang kata penskalaan besar membantunya."
+      id: "Pengulas terbaru bilang ini **bukan pendongkrak WAM atau pengisi**; ambil kalau wajib atau siap meluangkan banyak waktu. Satu bilang penskalaan besar membantunya."
+      hi: "हाल के रिव्यूअर कहते हैं यह **न WAM बूस्टर है न अच्छा फ़िलर**; अनिवार्य हो या बहुत समय दे सकें तभी लें। एक के अनुसार भारी स्केलिंग से मदद मिली।"
 tags: [scaled]
 workload: heavy
 difficulty: hard

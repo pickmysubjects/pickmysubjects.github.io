@@ -74,14 +74,14 @@ sections:
       id: "Datang kuliah langsung dan beri catatan pada slide cetak, ikuti tiap minggu, pakai video luar untuk konsep yang belum nyambung; kuasai topik paruh akhir secara rinci untuk ujian."
       hi: "लेक्चर में ख़ुद जाएँ और छपी स्लाइड पर नोट्स लिखें, हर हफ़्ते साथ चलें, जो कॉन्सेप्ट समझ न आएँ उनके लिए बाहरी वीडियो देखें; परीक्षा के लिए बाद के टॉपिक विस्तार से जानें।"
   watch:
-    - en: "The two most recent reviews found the exam much harder than expected, focused on tough scenario questions, and one felt the basics weren't explained well."
-      zh: "最近两条评价都觉得期末比预想的难很多，集中考难的情景题；有同学觉得基础概念讲得不够清楚。"
-      zh-TW: "最近兩則評價都覺得期末比預期難很多，集中考難的情境題；有同學覺得基礎概念講得不夠清楚。"
-      ja: "直近の2件はいずれも期末が予想よりずっと難しく、難しい場面設定問題中心だったという。基礎の説明が足りなかったという声も一つ。"
-      ko: "가장 최근 리뷰 두 개 모두 기말이 예상보다 훨씬 어렵고 까다로운 상황 문제 위주였다고 했다. 기초 설명이 부족했다는 의견도 있다."
-      vi: "Hai đánh giá gần nhất đều thấy bài thi khó hơn dự kiến nhiều, tập trung câu tình huống khó, và một người thấy kiến thức cơ bản chưa được giải thích kỹ."
-      ms: "Dua ulasan terkini dapati peperiksaan jauh lebih sukar daripada jangkaan, tertumpu pada soalan senario sukar, dan seorang rasa asas tidak diterangkan dengan baik."
-      id: "Dua ulasan terbaru merasa ujiannya jauh lebih sulit dari dugaan, fokus pada soal skenario yang sulit, dan satu merasa dasar-dasarnya kurang dijelaskan."
-      hi: "दो सबसे हाल के रिव्यूअर्स को परीक्षा उम्मीद से कहीं कठिन और मुश्किल परिदृश्य सवालों पर केंद्रित लगी, और एक को लगा बुनियादी बातें ठीक से नहीं समझाई गईं।"
+    - en: "The two most recent reviews found **the exam much harder than expected**, focused on tough scenario questions, and one felt the basics weren't explained well."
+      zh: "最近两条评价都觉得**期末比预想的难很多**，集中考难的情景题；有同学觉得基础概念讲得不够清楚。"
+      zh-TW: "最近兩則評價都覺得**期末比預期難很多**，集中考難的情境題；有同學覺得基礎概念講得不夠清楚。"
+      ja: "直近の2件はいずれも**期末が予想よりずっと難しく**、難しい場面設定問題中心だったという。基礎の説明が足りなかったという声も一つ。"
+      ko: "가장 최근 리뷰 두 개 모두 **기말이 예상보다 훨씬 어렵고** 까다로운 상황 문제 위주였다고 했다. 기초 설명이 부족했다는 의견도 있다."
+      vi: "Hai đánh giá gần nhất đều thấy **bài thi khó hơn dự kiến nhiều**, tập trung câu tình huống khó, và một người thấy kiến thức cơ bản chưa được giải thích kỹ."
+      ms: "Dua ulasan terkini dapati **peperiksaan jauh lebih sukar daripada jangkaan**, tertumpu pada soalan senario sukar, dan seorang rasa asas tidak diterangkan dengan baik."
+      id: "Dua ulasan terbaru merasa **ujiannya jauh lebih sulit dari dugaan**, fokus pada soal skenario yang sulit, dan satu merasa dasar-dasarnya kurang dijelaskan."
+      hi: "दो सबसे हाल के रिव्यूअर्स को **परीक्षा उम्मीद से कहीं कठिन** और मुश्किल परिदृश्य सवालों पर केंद्रित लगी, और एक को लगा बुनियादी बातें ठीक से नहीं समझाई गईं।"
 workload: heavy
 difficulty: hard

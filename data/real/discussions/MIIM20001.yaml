@@ -73,14 +73,14 @@ sections:
       id: "Kuis mingguan, dua MST yang kebanyakan pilihan ganda dan dinilai adil, tugas kelompok dan ujian akhir. Ada yang merasa ujian akhir mepet waktu dan perlu hafal contoh kunci."
       hi: "साप्ताहिक क्विज़, ज़्यादातर MCQ वाले दो MST जिन्हें ज़्यादातर ने उचित माना, एक ग्रुप असाइनमेंट और फ़ाइनल। कुछ को परीक्षा में समय कम और मुख्य उदाहरण याद करने वाली लगी।"
   study:
-    - en: "Keep up, since it's hard to cram; attend the MST review sessions, and for the large group project pick a leader early so it isn't left to the last minute."
-      zh: "跟上进度，这门很难临时抱佛脚；去 MST 讲评课；大组作业早点定个组长，免得拖到最后。"
-      zh-TW: "跟上進度，這門很難臨時抱佛腳；去 MST 講評課；大組作業早點定個組長，免得拖到最後。"
-      ja: "一夜漬けは難しいのでついていく。MSTの振り返りセッションに出る。大人数のグループ課題は早めにリーダーを決め、直前まで放置しない。"
-      ko: "벼락치기가 어려우니 진도를 따라가라. MST 리뷰 세션에 참석하고, 큰 조별 과제는 일찍 리더를 정해 막판까지 미루지 마라."
-      vi: "Theo kịp vì môn này khó học dồn; đi buổi chữa MST, và với bài nhóm đông người hãy chọn trưởng nhóm sớm để không dồn đến phút chót."
-      ms: "Ikut rentak kerana sukar untuk mengasak; hadir sesi ulasan MST, dan untuk projek kumpulan besar pilih ketua awal supaya tidak ditangguh saat akhir."
-      id: "Jangan tertinggal karena sulit belajar kebut semalam; ikuti sesi review MST, dan untuk proyek kelompok besar tunjuk ketua lebih awal agar tidak mepet."
-      hi: "साथ बने रहें क्योंकि रटकर पार पाना कठिन है; MST समीक्षा सेशन में जाएँ, और बड़े ग्रुप प्रोजेक्ट के लिए जल्दी लीडर चुनें ताकि काम आख़िरी समय तक न टले।"
+    - en: "**Keep up, since it's hard to cram**; attend the MST review sessions, and for the large group project pick a leader early so it isn't left to the last minute."
+      zh: "**跟上进度，这门很难临时抱佛脚**；去 MST 讲评课；大组作业早点定个组长，免得拖到最后。"
+      zh-TW: "**跟上進度，這門很難臨時抱佛腳**；去 MST 講評課；大組作業早點定個組長，免得拖到最後。"
+      ja: "**一夜漬けは難しいのでついていく**。MSTの振り返りセッションに出る。大人数のグループ課題は早めにリーダーを決め、直前まで放置しない。"
+      ko: "**벼락치기가 어려우니 진도를 따라가라**. MST 리뷰 세션에 참석하고, 큰 조별 과제는 일찍 리더를 정해 막판까지 미루지 마라."
+      vi: "**Theo kịp vì môn này khó học dồn**; đi buổi chữa MST, và với bài nhóm đông người hãy chọn trưởng nhóm sớm để không dồn đến phút chót."
+      ms: "**Ikut rentak kerana sukar untuk mengasak**; hadir sesi ulasan MST, dan untuk projek kumpulan besar pilih ketua awal supaya tidak ditangguh saat akhir."
+      id: "**Jangan tertinggal karena sulit belajar kebut semalam**; ikuti sesi review MST, dan untuk proyek kelompok besar tunjuk ketua lebih awal agar tidak mepet."
+      hi: "**साथ बने रहें क्योंकि रटकर पार पाना कठिन है**; MST समीक्षा सेशन में जाएँ, और बड़े ग्रुप प्रोजेक्ट के लिए जल्दी लीडर चुनें ताकि काम आख़िरी समय तक न टले।"
 tags: [group-work]
 workload: heavy

@@ -92,14 +92,14 @@ sections:
       id: "Ulangi materi secara rutin sepanjang semester, terutama metode neuroimaging yang paling lama dipahami."
       hi: "पूरे सेमेस्टर लगातार दोहराएँ, ख़ासकर न्यूरोइमेजिंग तरीके, जिन्हें समझने में सबसे ज़्यादा समय लगता है।"
   watch:
-    - en: "A few strongly advise against it unless it's part of your major, and it may drag for students mainly interested in the humanities side of psychology."
-      zh: "有几位强烈建议除非是专业要求否则别选；主要对心理学人文一面感兴趣的同学可能会觉得很煎熬。"
-      zh-TW: "有幾位強烈建議除非是主修要求否則別選；主要對心理學人文面感興趣的同學可能會覺得很煎熬。"
-      ja: "専攻の必修でなければ取らないほうがいいと強く言う人も数人。心理学の人文的な面に興味がある人には苦痛かも。"
-      ko: "전공 필수가 아니면 듣지 말라고 강하게 말하는 사람도 몇 있다. 심리학의 인문적 측면에 관심 있는 학생에겐 지루할 수 있다."
-      vi: "Vài người khuyên mạnh là đừng học trừ khi thuộc chuyên ngành, và sẽ nặng nề với ai chủ yếu thích mặt nhân văn của tâm lý học."
-      ms: "Beberapa orang sangat tidak syorkan kecuali ia sebahagian daripada major, dan mungkin membosankan bagi yang lebih minat aspek kemanusiaan psikologi."
-      id: "Beberapa orang sangat tidak menyarankannya kecuali bagian dari jurusan, dan bisa terasa berat bagi yang lebih tertarik sisi humaniora psikologi."
-      hi: "कुछ लोग ज़ोर देकर कहते हैं कि मेजर का हिस्सा न हो तो न लें, और मनोविज्ञान के मानविकी पक्ष में रुचि वालों के लिए यह भारी लग सकता है।"
+    - en: "A few strongly **advise against it unless it's part of your major**, and it may drag for students mainly interested in the humanities side of psychology."
+      zh: "有几位强烈建议**除非是专业要求否则别选**；主要对心理学人文一面感兴趣的同学可能会觉得很煎熬。"
+      zh-TW: "有幾位強烈建議**除非是主修要求否則別選**；主要對心理學人文面感興趣的同學可能會覺得很煎熬。"
+      ja: "**専攻の必修でなければ取らないほうがいい**と強く言う人も数人。心理学の人文的な面に興味がある人には苦痛かも。"
+      ko: "**전공 필수가 아니면 듣지 말라고** 강하게 말하는 사람도 몇 있다. 심리학의 인문적 측면에 관심 있는 학생에겐 지루할 수 있다."
+      vi: "Vài người khuyên mạnh là **đừng học trừ khi thuộc chuyên ngành**, và sẽ nặng nề với ai chủ yếu thích mặt nhân văn của tâm lý học."
+      ms: "Beberapa orang sangat **tidak syorkan kecuali ia sebahagian daripada major**, dan mungkin membosankan bagi yang lebih minat aspek kemanusiaan psikologi."
+      id: "Beberapa orang sangat **tidak menyarankannya kecuali bagian dari jurusan**, dan bisa terasa berat bagi yang lebih tertarik sisi humaniora psikologi."
+      hi: "कुछ लोग ज़ोर देकर कहते हैं कि **मेजर का हिस्सा न हो तो न लें**, और मनोविज्ञान के मानविकी पक्ष में रुचि वालों के लिए यह भारी लग सकता है।"
 tags: [mcq-exam]
 difficulty: mixed

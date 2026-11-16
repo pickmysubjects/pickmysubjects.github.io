@@ -83,15 +83,15 @@ sections:
       id: "Ikuti kelas problem-solving dengan lembar sudah dikerjakan agar bisa bertanya; baca catatan praktikum sebelum lab, dan pertimbangkan belajar mekanika dasar sebelum semester."
       hi: "प्रॉब्लम-सॉल्विंग क्लास में शीट पहले से हल करके जाएँ ताकि सवाल पूछ सकें; लैब से पहले प्रैक्टिकल नोट्स पढ़ें, और सेमेस्टर से पहले बुनियादी यांत्रिकी सीखने पर विचार करें।"
   watch:
-    - en: "Not a WAM booster: many advise avoiding it unless it's a prerequisite, and several say you don't need it for the GAMSAT."
-      zh: "不是刷分课：很多人建议除非是先修要求否则别选，好几位说考 GAMSAT 也不需要它。"
-      zh-TW: "不是拉分課：很多人建議除非是先修要求否則別選，好幾位說考 GAMSAT 也不需要它。"
-      ja: "WAMは稼げない。前提科目でなければ避けるよう勧める声が多く、GAMSATのためには不要という人も複数。"
-      ko: "WAM 부스터가 아니다. 선수 과목이 아니면 피하라는 사람이 많고, GAMSAT에도 필요 없다는 사람이 여럿이다."
-      vi: "Không phải môn kéo WAM: nhiều người khuyên tránh trừ khi là môn tiên quyết, vài người nói thi GAMSAT cũng không cần."
-      ms: "Bukan penaik WAM: ramai nasihat elakkan kecuali ia prasyarat, dan beberapa kata anda tidak perlukannya untuk GAMSAT."
-      id: "Bukan pendongkrak WAM: banyak yang menyarankan menghindarinya kecuali prasyarat, dan beberapa bilang tidak perlu untuk GAMSAT."
-      hi: "WAM बूस्टर नहीं: कई कहते हैं पूर्वापेक्षा न हो तो इससे बचें, और कई के अनुसार GAMSAT के लिए इसकी ज़रूरत नहीं।"
+    - en: "**Not a WAM booster**: many advise avoiding it unless it's a prerequisite, and several say you don't need it for the GAMSAT."
+      zh: "**不是刷分课**：很多人建议除非是先修要求否则别选，好几位说考 GAMSAT 也不需要它。"
+      zh-TW: "**不是拉分課**：很多人建議除非是先修要求否則別選，好幾位說考 GAMSAT 也不需要它。"
+      ja: "**WAMは稼げない**。前提科目でなければ避けるよう勧める声が多く、GAMSATのためには不要という人も複数。"
+      ko: "**WAM 부스터가 아니다**. 선수 과목이 아니면 피하라는 사람이 많고, GAMSAT에도 필요 없다는 사람이 여럿이다."
+      vi: "**Không phải môn kéo WAM**: nhiều người khuyên tránh trừ khi là môn tiên quyết, vài người nói thi GAMSAT cũng không cần."
+      ms: "**Bukan penaik WAM**: ramai nasihat elakkan kecuali ia prasyarat, dan beberapa kata anda tidak perlukannya untuk GAMSAT."
+      id: "**Bukan pendongkrak WAM**: banyak yang menyarankan menghindarinya kecuali prasyarat, dan beberapa bilang tidak perlu untuk GAMSAT."
+      hi: "**WAM बूस्टर नहीं**: कई कहते हैं पूर्वापेक्षा न हो तो इससे बचें, और कई के अनुसार GAMSAT के लिए इसकी ज़रूरत नहीं।"
 tags: [scaled]
 workload: heavy
 difficulty: hard

@@ -83,14 +83,14 @@ sections:
       id: "Kerjakan pra-lab sebelum praktikum, ulas demonstrasi kuliah, kerjakan lembar problem-solving dan ujian lama, dan latih menurunkan rumus."
       hi: "प्रैक्टिकल से पहले प्री-लैब करें, लेक्चर डेमो दोहराएँ, प्रॉब्लम-सॉल्विंग शीट और पुराने पेपर हल करें, और सूत्र निकालने का अभ्यास करें।"
   watch:
-    - en: "One reviewer says the workload feels like 1.5 to 2 subjects; several biomed students who had to take it disliked it more than science students did."
-      zh: "有同学说工作量相当于 1.5 到 2 门课；好几位必修这门的生物医学学生比理科生更不喜欢它。"
-      zh-TW: "有同學說工作量相當於 1.5 到 2 門課；好幾位必修這門的生物醫學學生比理科生更不喜歡它。"
-      ja: "負担は1.5〜2科目分に感じるという人も。必修で取った生物医学の学生は理学部の学生より不満が多かった。"
-      ko: "부담이 1.5~2과목 수준이라는 사람도 있다. 필수로 들은 생물의학 학생들은 이과 학생보다 더 싫어했다."
-      vi: "Một người nói khối lượng như 1,5 đến 2 môn; vài sinh viên y sinh bắt buộc học thì không thích bằng sinh viên khoa học."
-      ms: "Seorang pengulas kata beban terasa seperti 1.5 hingga 2 subjek; beberapa pelajar bioperubatan yang wajib mengambilnya kurang suka berbanding pelajar sains."
-      id: "Satu pengulas bilang bebannya terasa seperti 1,5 sampai 2 mata kuliah; beberapa mahasiswa biomedis yang wajib mengambilnya kurang suka dibanding mahasiswa sains."
-      hi: "एक के अनुसार काम 1.5 से 2 विषयों जितना लगता है; जिन बायोमेड छात्रों को यह अनिवार्य रूप से लेना पड़ा, उन्हें यह साइंस छात्रों से कम पसंद आया।"
+    - en: "One reviewer says **the workload feels like 1.5 to 2 subjects**; several biomed students who had to take it disliked it more than science students did."
+      zh: "有同学说**工作量相当于 1.5 到 2 门课**；好几位必修这门的生物医学学生比理科生更不喜欢它。"
+      zh-TW: "有同學說**工作量相當於 1.5 到 2 門課**；好幾位必修這門的生物醫學學生比理科生更不喜歡它。"
+      ja: "**負担は1.5〜2科目分に感じる**という人も。必修で取った生物医学の学生は理学部の学生より不満が多かった。"
+      ko: "**부담이 1.5~2과목 수준**이라는 사람도 있다. 필수로 들은 생물의학 학생들은 이과 학생보다 더 싫어했다."
+      vi: "Một người nói **khối lượng như 1,5 đến 2 môn**; vài sinh viên y sinh bắt buộc học thì không thích bằng sinh viên khoa học."
+      ms: "Seorang pengulas kata **beban terasa seperti 1.5 hingga 2 subjek**; beberapa pelajar bioperubatan yang wajib mengambilnya kurang suka berbanding pelajar sains."
+      id: "Satu pengulas bilang **bebannya terasa seperti 1,5 sampai 2 mata kuliah**; beberapa mahasiswa biomedis yang wajib mengambilnya kurang suka dibanding mahasiswa sains."
+      hi: "एक के अनुसार **काम 1.5 से 2 विषयों जितना लगता है**; जिन बायोमेड छात्रों को यह अनिवार्य रूप से लेना पड़ा, उन्हें यह साइंस छात्रों से कम पसंद आया।"
 workload: heavy
 difficulty: hard

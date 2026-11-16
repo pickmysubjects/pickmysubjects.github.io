@@ -65,14 +65,14 @@ sections:
       id: "Kerjakan bacaan, dan tulis jawaban singkat dengan rinci, misalnya definisikan istilah dulu sebelum menjelaskan dampaknya bagi kesehatan."
       hi: "रीडिंग करें, और शॉर्ट आंसर पूरे विस्तार से लिखें, जैसे स्वास्थ्य पर असर बताने से पहले शब्द की परिभाषा दें।"
   watch:
-    - en: "2023 reviewers found it poorly coordinated, with contradictory rubrics and unhelpful tutorials, and warned it is not the WAM booster it seems; several disliked the group work."
-      zh: "2023 年的同学觉得组织混乱，评分标准自相矛盾，tutorial 没帮助，提醒它不是看起来那样的刷分课；好几位不喜欢小组作业。"
-      zh-TW: "2023 年的同學覺得安排混亂，評分標準自相矛盾，tutorial 沒幫助，提醒它不是看起來那樣的拉分課；好幾位不喜歡小組作業。"
-      ja: "2023年のレビューでは運営がまずく、ルーブリックが矛盾しチュートリアルも役に立たず、見た目ほどWAMは上がらないと警告。グループ作業が嫌だったという声も複数。"
-      ko: "2023년 리뷰는 운영이 엉망이고 루브릭이 모순되며 튜토리얼이 쓸모없다며, 보이는 것만큼 WAM 과목이 아니라고 경고했다. 조별 과제를 싫어한 사람도 여럿."
-      vi: "Người học năm 2023 thấy môn tổ chức kém, rubric mâu thuẫn và tutorial vô ích, cảnh báo đây không phải môn kéo WAM như tưởng; vài người không thích bài nhóm."
-      ms: "Pengulas 2023 dapati ia kurang diselaras, rubrik bercanggah dan tutorial tidak membantu, serta beri amaran ia bukan penaik WAM seperti disangka; beberapa tidak suka kerja kumpulan."
-      id: "Pengulas 2023 merasa koordinasinya buruk, rubrik saling bertentangan dan tutorial tidak membantu, serta mengingatkan ini bukan pendongkrak WAM seperti kelihatannya; beberapa tidak suka tugas kelompok."
-      hi: "2023 के रिव्यूअर्स को समन्वय कमज़ोर, रूब्रिक विरोधाभासी और ट्यूटोरियल बेकार लगे, और चेताया कि यह दिखने जैसा WAM बूस्टर नहीं है; कई को ग्रुप काम नापसंद था।"
+    - en: "2023 reviewers found it poorly coordinated, with contradictory rubrics and unhelpful tutorials, and warned it is **not the WAM booster it seems**; several disliked the group work."
+      zh: "2023 年的同学觉得组织混乱，评分标准自相矛盾，tutorial 没帮助，提醒它**不是看起来那样的刷分课**；好几位不喜欢小组作业。"
+      zh-TW: "2023 年的同學覺得安排混亂，評分標準自相矛盾，tutorial 沒幫助，提醒它**不是看起來那樣的拉分課**；好幾位不喜歡小組作業。"
+      ja: "2023年のレビューでは運営がまずく、ルーブリックが矛盾しチュートリアルも役に立たず、**見た目ほどWAMは上がらない**と警告。グループ作業が嫌だったという声も複数。"
+      ko: "2023년 리뷰는 운영이 엉망이고 루브릭이 모순되며 튜토리얼이 쓸모없다며, **보이는 것만큼 WAM 과목이 아니라고** 경고했다. 조별 과제를 싫어한 사람도 여럿."
+      vi: "Người học năm 2023 thấy môn tổ chức kém, rubric mâu thuẫn và tutorial vô ích, cảnh báo đây **không phải môn kéo WAM như tưởng**; vài người không thích bài nhóm."
+      ms: "Pengulas 2023 dapati ia kurang diselaras, rubrik bercanggah dan tutorial tidak membantu, serta beri amaran ia **bukan penaik WAM seperti disangka**; beberapa tidak suka kerja kumpulan."
+      id: "Pengulas 2023 merasa koordinasinya buruk, rubrik saling bertentangan dan tutorial tidak membantu, serta mengingatkan ini **bukan pendongkrak WAM seperti kelihatannya**; beberapa tidak suka tugas kelompok."
+      hi: "2023 के रिव्यूअर्स को समन्वय कमज़ोर, रूब्रिक विरोधाभासी और ट्यूटोरियल बेकार लगे, और चेताया कि यह **दिखने जैसा WAM बूस्टर नहीं है**; कई को ग्रुप काम नापसंद था।"
 tags: [group-work]
 difficulty: mixed

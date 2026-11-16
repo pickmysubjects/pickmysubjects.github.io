@@ -83,14 +83,14 @@ sections:
       id: "Penuhi setiap bagian rubrik di tugas, ikuti kredit partisipasi riset (REP) untuk nilai gampang, dan buat soal PeerWise sendiri untuk belajar."
       hi: "असाइनमेंट में रूब्रिक के हर हिस्से को कवर करें, आसान अंकों के लिए रिसर्च पार्टिसिपेशन क्रेडिट (REP) करें, और दोहराने के लिए अपने PeerWise सवाल लिखें।"
   watch:
-    - en: "Most call it an easy H1, but one reviewer warns it isn't a WAM booster if the humanities side of psych doesn't interest you."
-      zh: "多数人说很容易拿 H1，但有人提醒：如果对心理学偏人文的一面没兴趣，它就不算刷分课。"
-      zh-TW: "多數人說很容易拿 H1，但有人提醒：如果對心理學偏人文的一面沒興趣，它就不算拉分課。"
-      ja: "簡単にH1が取れるという声が多いが、心理学の人文的な面に興味がなければWAMは稼げないという人も。"
-      ko: "대부분 H1 받기 쉽다고 하지만, 심리학의 인문적 측면에 관심이 없으면 WAM 부스터가 아니라는 경고도 있다."
-      vi: "Đa số nói dễ đạt H1, nhưng một người cảnh báo đây không phải môn kéo WAM nếu bạn không thích mặt nhân văn của tâm lý học."
-      ms: "Kebanyakan kata H1 mudah, tetapi seorang pengulas beri amaran ia bukan penaik WAM jika anda tidak berminat dengan sisi kemanusiaan psikologi."
-      id: "Kebanyakan bilang H1 mudah, tapi satu pengulas mengingatkan ini bukan pendongkrak WAM kalau tidak tertarik sisi humaniora psikologi."
-      hi: "ज़्यादातर इसे आसान H1 कहते हैं, पर एक रिव्यूअर चेताता है कि अगर मनोविज्ञान के मानविकी पक्ष में रुचि नहीं तो यह WAM बूस्टर नहीं।"
+    - en: "Most call it an easy H1, but one reviewer warns it **isn't a WAM booster** if the humanities side of psych doesn't interest you."
+      zh: "多数人说很容易拿 H1，但有人提醒：如果对心理学偏人文的一面没兴趣，**它就不算刷分课**。"
+      zh-TW: "多數人說很容易拿 H1，但有人提醒：如果對心理學偏人文的一面沒興趣，**它就不算拉分課**。"
+      ja: "簡単にH1が取れるという声が多いが、心理学の人文的な面に興味がなければ**WAMは稼げない**という人も。"
+      ko: "대부분 H1 받기 쉽다고 하지만, 심리학의 인문적 측면에 관심이 없으면 **WAM 부스터가 아니라는** 경고도 있다."
+      vi: "Đa số nói dễ đạt H1, nhưng một người cảnh báo **đây không phải môn kéo WAM** nếu bạn không thích mặt nhân văn của tâm lý học."
+      ms: "Kebanyakan kata H1 mudah, tetapi seorang pengulas beri amaran **ia bukan penaik WAM** jika anda tidak berminat dengan sisi kemanusiaan psikologi."
+      id: "Kebanyakan bilang H1 mudah, tapi satu pengulas mengingatkan ini **bukan pendongkrak WAM** kalau tidak tertarik sisi humaniora psikologi."
+      hi: "ज़्यादातर इसे आसान H1 कहते हैं, पर एक रिव्यूअर चेताता है कि अगर मनोविज्ञान के मानविकी पक्ष में रुचि नहीं तो **यह WAM बूस्टर नहीं**।"
 tags: [mcq-exam, practice-repeats]
 difficulty: easy

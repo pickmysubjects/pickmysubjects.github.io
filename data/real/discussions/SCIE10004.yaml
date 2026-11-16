@@ -74,14 +74,14 @@ sections:
       id: "Tonton kuliah (kecepatan 2x bisa) dan buat catatan yang bisa dicari saat kuis; mulai esai lebih awal dan lihat contoh paragraf di bagian keterampilan akademik."
       hi: "लेक्चर देखें (2x स्पीड चलेगी) और ऐसे नोट्स बनाएँ जो क्विज़ में सर्च हो सकें; निबंध जल्दी शुरू करें और अकादमिक स्किल्स सेक्शन के सैंपल पैराग्राफ़ देखें।"
   watch:
-    - en: "Most call it a WAM booster with low effort, but a few warn an H1 is not guaranteed because the essay carries so much weight."
-      zh: "多数人说是省力的刷分课，但有几位提醒论文比重太大，H1 并不保险。"
-      zh-TW: "多數人說是省力的拉分課，但有幾位提醒論文比重太大，H1 並不保險。"
-      ja: "少ない労力でWAMを稼げるという声が多いが、エッセイの比重が大きいのでH1は確実でないという警告も数件。"
-      ko: "대부분 적은 노력으로 WAM을 올릴 수 있다고 하지만, 에세이 비중이 커서 H1이 보장되진 않는다는 경고도 몇 있다."
-      vi: "Đa số gọi là môn kéo WAM ít tốn sức, nhưng vài người cảnh báo H1 không chắc vì bài luận chiếm tỷ trọng lớn."
-      ms: "Kebanyakan kata ia penaik WAM dengan sedikit usaha, tetapi beberapa beri amaran H1 tidak terjamin kerana esei sangat berat."
-      id: "Kebanyakan bilang pendongkrak WAM yang ringan, tapi beberapa mengingatkan H1 tidak terjamin karena bobot esainya besar."
-      hi: "ज़्यादातर इसे कम मेहनत वाला WAM बूस्टर कहते हैं, पर कुछ चेताते हैं कि निबंध का वज़न ज़्यादा होने से H1 पक्का नहीं।"
+    - en: "Most call it a WAM booster with low effort, but a few warn **an H1 is not guaranteed** because the essay carries so much weight."
+      zh: "多数人说是省力的刷分课，但有几位提醒论文比重太大，**H1 并不保险**。"
+      zh-TW: "多數人說是省力的拉分課，但有幾位提醒論文比重太大，**H1 並不保險**。"
+      ja: "少ない労力でWAMを稼げるという声が多いが、エッセイの比重が大きいので**H1は確実でない**という警告も数件。"
+      ko: "대부분 적은 노력으로 WAM을 올릴 수 있다고 하지만, 에세이 비중이 커서 **H1이 보장되진 않는다**는 경고도 몇 있다."
+      vi: "Đa số gọi là môn kéo WAM ít tốn sức, nhưng vài người cảnh báo **H1 không chắc** vì bài luận chiếm tỷ trọng lớn."
+      ms: "Kebanyakan kata ia penaik WAM dengan sedikit usaha, tetapi beberapa beri amaran **H1 tidak terjamin** kerana esei sangat berat."
+      id: "Kebanyakan bilang pendongkrak WAM yang ringan, tapi beberapa mengingatkan **H1 tidak terjamin** karena bobot esainya besar."
+      hi: "ज़्यादातर इसे कम मेहनत वाला WAM बूस्टर कहते हैं, पर कुछ चेताते हैं कि निबंध का वज़न ज़्यादा होने से **H1 पक्का नहीं**।"
 workload: light
 difficulty: easy

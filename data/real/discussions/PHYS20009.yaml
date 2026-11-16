@@ -83,14 +83,14 @@ sections:
       id: "Menulis dengan rubrik di samping, catat setiap petunjuk demonstrator di kelas, bertanya lebih awal, dan kumpulkan draf lengkap bukan sekadar kerangka."
       hi: "रूब्रिक पास रखकर लिखें, क्लास में डेमॉन्स्ट्रेटर के हर संकेत को नोट करें, सवाल जल्दी पूछें, और सिर्फ़ रूपरेखा नहीं, पूरा ड्राफ़्ट जमा करें।"
   watch:
-    - en: "The workload is very high and many found it the most stressful subject they've done; your experience depends a lot on your group. Several say only take it if your major requires it."
-      zh: "工作量非常大，很多人说是读过压力最大的课；体验很看组员。好几位说只有专业要求才选。"
-      zh-TW: "工作量非常大，很多人說是修過壓力最大的課；體驗很看組員。好幾位說只有主修要求才選。"
-      ja: "負担が非常に大きく、これまでで最もストレスの多い科目だったという声が多い。体験はグループ次第。専攻で必要な場合のみ取るべきという人も複数。"
-      ko: "부담이 매우 크고 지금까지 가장 스트레스 받은 과목이라는 사람이 많다. 경험은 조에 크게 좌우된다. 전공 필수일 때만 들으라는 사람이 여럿이다."
-      vi: "Khối lượng rất nặng, nhiều người nói đây là môn căng thẳng nhất từng học; trải nghiệm phụ thuộc nhiều vào nhóm. Vài người nói chỉ học nếu chuyên ngành bắt buộc."
-      ms: "Beban kerja sangat tinggi dan ramai kata ia subjek paling menekan pernah diambil; pengalaman banyak bergantung pada kumpulan. Beberapa kata ambil hanya jika major memerlukannya."
-      id: "Bebannya sangat tinggi dan banyak yang bilang ini mata kuliah paling bikin stres; pengalaman sangat tergantung kelompok. Beberapa bilang ambil hanya jika jurusan mewajibkan."
-      hi: "काम का बोझ बहुत ज़्यादा है और कई ने इसे अब तक का सबसे तनावपूर्ण विषय बताया; अनुभव ग्रुप पर बहुत निर्भर है। कई कहते हैं इसे तभी लें जब मेजर में ज़रूरी हो।"
+    - en: "The workload is very high and many found it **the most stressful subject they've done**; your experience depends a lot on your group. Several say only take it if your major requires it."
+      zh: "工作量非常大，很多人说是读过**压力最大的课**；体验很看组员。好几位说只有专业要求才选。"
+      zh-TW: "工作量非常大，很多人說是修過**壓力最大的課**；體驗很看組員。好幾位說只有主修要求才選。"
+      ja: "負担が非常に大きく、これまでで**最もストレスの多い科目**だったという声が多い。体験はグループ次第。専攻で必要な場合のみ取るべきという人も複数。"
+      ko: "부담이 매우 크고 지금까지 **가장 스트레스 받은 과목**이라는 사람이 많다. 경험은 조에 크게 좌우된다. 전공 필수일 때만 들으라는 사람이 여럿이다."
+      vi: "Khối lượng rất nặng, nhiều người nói đây là **môn căng thẳng nhất từng học**; trải nghiệm phụ thuộc nhiều vào nhóm. Vài người nói chỉ học nếu chuyên ngành bắt buộc."
+      ms: "Beban kerja sangat tinggi dan ramai kata ia **subjek paling menekan** pernah diambil; pengalaman banyak bergantung pada kumpulan. Beberapa kata ambil hanya jika major memerlukannya."
+      id: "Bebannya sangat tinggi dan banyak yang bilang ini **mata kuliah paling bikin stres**; pengalaman sangat tergantung kelompok. Beberapa bilang ambil hanya jika jurusan mewajibkan."
+      hi: "काम का बोझ बहुत ज़्यादा है और कई ने इसे अब तक का **सबसे तनावपूर्ण विषय** बताया; अनुभव ग्रुप पर बहुत निर्भर है। कई कहते हैं इसे तभी लें जब मेजर में ज़रूरी हो।"
 tags: [group-work]
 workload: heavy

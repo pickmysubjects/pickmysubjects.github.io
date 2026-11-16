@@ -83,15 +83,15 @@ sections:
       id: "Benar-benar tonton kuliah dan catat ucapan dosen, bukan hanya slide; ikuti tiap minggu, kerjakan soal mingguan dan buat soal latihan sendiri."
       hi: "लेक्चर सच में देखें और सिर्फ़ स्लाइड नहीं, लेक्चरर की कही बातें नोट करें; हर हफ़्ते साथ चलें, साप्ताहिक सवाल करें और अपने अभ्यास सवाल बनाएँ।"
   watch:
-    - en: "Several 2026 reviewers strongly advise avoiding it unless you're majoring in neuroscience; others say the negativity is overblown if you engage with the content."
-      zh: "好几位 2026 年的同学强烈建议除非主修神经科学否则别选；也有人说只要认真投入，差评有点夸张。"
-      zh-TW: "好幾位 2026 年的同學強烈建議除非主修神經科學否則別選；也有人說只要認真投入，負評有點誇張。"
-      ja: "2026年のレビュー複数が、神経科学専攻でなければ避けるよう強く勧める。一方、内容に向き合えば悪評は大げさだという人も。"
-      ko: "2026년 리뷰 여럿이 신경과학 전공이 아니면 피하라고 강하게 권한다. 반면 내용에 몰입하면 혹평은 과장이라는 사람도 있다."
-      vi: "Vài người năm 2026 khuyên mạnh là tránh trừ khi học chuyên ngành thần kinh; người khác nói nếu chịu đầu tư thì các lời chê là quá lời."
-      ms: "Beberapa pengulas 2026 sangat menasihatkan elak kecuali major neurosains; yang lain kata kritikan itu berlebihan jika anda benar-benar terlibat."
-      id: "Beberapa pengulas 2026 sangat menyarankan menghindarinya kecuali jurusan neurosains; yang lain bilang kritiknya berlebihan kalau benar-benar terlibat."
-      hi: "2026 के कई रिव्यूअर ज़ोर देकर कहते हैं न्यूरोसाइंस मेजर न हो तो इससे बचें; दूसरों के अनुसार कंटेंट से जुड़ें तो आलोचना बढ़ा-चढ़ाकर है।"
+    - en: "Several 2026 reviewers strongly advise **avoiding it unless you're majoring in neuroscience**; others say the negativity is overblown if you engage with the content."
+      zh: "好几位 2026 年的同学强烈建议**除非主修神经科学否则别选**；也有人说只要认真投入，差评有点夸张。"
+      zh-TW: "好幾位 2026 年的同學強烈建議**除非主修神經科學否則別選**；也有人說只要認真投入，負評有點誇張。"
+      ja: "2026年のレビュー複数が、**神経科学専攻でなければ避けるよう強く勧める**。一方、内容に向き合えば悪評は大げさだという人も。"
+      ko: "2026년 리뷰 여럿이 **신경과학 전공이 아니면 피하라고** 강하게 권한다. 반면 내용에 몰입하면 혹평은 과장이라는 사람도 있다."
+      vi: "Vài người năm 2026 khuyên mạnh là **tránh trừ khi học chuyên ngành thần kinh**; người khác nói nếu chịu đầu tư thì các lời chê là quá lời."
+      ms: "Beberapa pengulas 2026 sangat menasihatkan **elak kecuali major neurosains**; yang lain kata kritikan itu berlebihan jika anda benar-benar terlibat."
+      id: "Beberapa pengulas 2026 sangat menyarankan **menghindarinya kecuali jurusan neurosains**; yang lain bilang kritiknya berlebihan kalau benar-benar terlibat."
+      hi: "2026 के कई रिव्यूअर ज़ोर देकर कहते हैं **न्यूरोसाइंस मेजर न हो तो इससे बचें**; दूसरों के अनुसार कंटेंट से जुड़ें तो आलोचना बढ़ा-चढ़ाकर है।"
 tags: [mcq-exam]
 workload: heavy
 difficulty: mixed

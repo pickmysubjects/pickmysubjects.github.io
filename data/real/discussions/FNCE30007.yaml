@@ -64,14 +64,14 @@ sections:
       id: "MST dan ujian berbeda tiap tahun: ada yang merasa standar, ada yang merasa sangat sulit, panjang, dan penuh hitungan. Beberapa menyebut nilainya di-scale naik. Soal tutorial setara tingkat kesulitan ujian."
       hi: "MST और परीक्षा साल के हिसाब से बदलते हैं: कुछ को सामान्य लगे, कुछ को बहुत कठिन, लंबे और गणना-भरे। कई कहते हैं विषय में स्केलिंग होती है। ट्यूटोरियल सवाल परीक्षा जितने कठिन हैं।"
   study:
-    - en: "Don't rely on memorising formulas: work through practice questions and keep asking why each model works. In the exam, manage time and don't get stuck on low-mark questions."
-      zh: "别只背公式：多做练习，反复问自己每个模型为什么成立。考试时要控制时间，别卡在分值低的题上。"
-      zh-TW: "別只背公式：多做練習，反覆問自己每個模型為什麼成立。考試時要控制時間，別卡在配分低的題目上。"
-      ja: "公式の暗記に頼らず、練習問題を解きながら各モデルがなぜ成り立つのかを考え続けよう。試験では時間配分に注意し、配点の低い問題で止まらないこと。"
-      ko: "공식 암기에 의존하지 말고, 연습문제를 풀며 각 모델이 왜 성립하는지 계속 생각하자. 시험에선 시간 관리를 하고 배점 낮은 문제에 매달리지 말자."
-      vi: "Đừng chỉ học thuộc công thức: làm bài luyện tập và luôn hỏi vì sao mỗi mô hình đúng. Khi thi, quản lý thời gian và đừng sa lầy ở câu ít điểm."
-      ms: "Jangan bergantung pada hafal formula: buat soalan latihan dan sentiasa tanya kenapa setiap model berfungsi. Dalam peperiksaan, urus masa dan jangan tersekat pada soalan bermarkah rendah."
-      id: "Jangan mengandalkan hafalan rumus: kerjakan soal latihan dan terus tanya kenapa tiap model berlaku. Saat ujian, atur waktu dan jangan terjebak di soal bernilai kecil."
-      hi: "फ़ॉर्मूले रटने पर न टिकें: प्रैक्टिस सवाल करें और पूछते रहें कि हर मॉडल क्यों काम करता है। परीक्षा में समय संभालें और कम अंक वाले सवाल पर न अटकें।"
+    - en: "**Don't rely on memorising formulas**: work through practice questions and keep asking why each model works. In the exam, manage time and don't get stuck on low-mark questions."
+      zh: "**别只背公式**：多做练习，反复问自己每个模型为什么成立。考试时要控制时间，别卡在分值低的题上。"
+      zh-TW: "**別只背公式**：多做練習，反覆問自己每個模型為什麼成立。考試時要控制時間，別卡在配分低的題目上。"
+      ja: "**公式の暗記に頼らず**、練習問題を解きながら各モデルがなぜ成り立つのかを考え続けよう。試験では時間配分に注意し、配点の低い問題で止まらないこと。"
+      ko: "**공식 암기에 의존하지 말고**, 연습문제를 풀며 각 모델이 왜 성립하는지 계속 생각하자. 시험에선 시간 관리를 하고 배점 낮은 문제에 매달리지 말자."
+      vi: "**Đừng chỉ học thuộc công thức**: làm bài luyện tập và luôn hỏi vì sao mỗi mô hình đúng. Khi thi, quản lý thời gian và đừng sa lầy ở câu ít điểm."
+      ms: "**Jangan bergantung pada hafal formula**: buat soalan latihan dan sentiasa tanya kenapa setiap model berfungsi. Dalam peperiksaan, urus masa dan jangan tersekat pada soalan bermarkah rendah."
+      id: "**Jangan mengandalkan hafalan rumus**: kerjakan soal latihan dan terus tanya kenapa tiap model berlaku. Saat ujian, atur waktu dan jangan terjebak di soal bernilai kecil."
+      hi: "**फ़ॉर्मूले रटने पर न टिकें**: प्रैक्टिस सवाल करें और पूछते रहें कि हर मॉडल क्यों काम करता है। परीक्षा में समय संभालें और कम अंक वाले सवाल पर न अटकें।"
 tags: [scaled]
 difficulty: mixed

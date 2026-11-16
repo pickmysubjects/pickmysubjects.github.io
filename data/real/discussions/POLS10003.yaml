@@ -65,14 +65,14 @@ sections:
       id: "Ikuti bacaan sejak minggu pertama karena penilaian akhir memakainya; cari sumber bagus dan rencanakan esai riset lebih awal."
       hi: "पहले हफ़्ते से रीडिंग्स के साथ चलें, क्योंकि अंतिम असेसमेंट उन पर आधारित है; अच्छे स्रोत ढूँढें और रिसर्च निबंध की योजना जल्दी बनाएँ।"
   watch:
-    - en: "Several advise against it unless you enjoy theory and philosophy; one wouldn't recommend it as a breadth."
-      zh: "好几位说除非喜欢理论和哲学，否则别选；有人不推荐当 breadth 修。"
-      zh-TW: "好幾位說除非喜歡理論和哲學，否則別選；有人不推薦當 breadth 修。"
-      ja: "理論や哲学が好きでなければ勧めないという声が複数。ブレッドスとしては勧めないという人も。"
-      ko: "이론과 철학을 좋아하지 않으면 추천하지 않는다는 사람이 여럿이다. 브레스 과목으로는 비추천이라는 사람도 있다."
-      vi: "Vài người khuyên đừng học trừ khi thích lý thuyết và triết học; một người không khuyên chọn làm môn breadth."
-      ms: "Beberapa orang tidak syorkan kecuali anda suka teori dan falsafah; seorang tidak syorkan ia sebagai breadth."
-      id: "Beberapa orang tidak menyarankan kecuali suka teori dan filsafat; satu tidak menyarankannya sebagai breadth."
-      hi: "कई कहते हैं थ्योरी और दर्शन पसंद न हो तो न लें; एक इसे breadth के रूप में लेने की सलाह नहीं देता।"
+    - en: "Several advise against it **unless you enjoy theory and philosophy**; one wouldn't recommend it as a breadth."
+      zh: "好几位说**除非喜欢理论和哲学**，否则别选；有人不推荐当 breadth 修。"
+      zh-TW: "好幾位說**除非喜歡理論和哲學**，否則別選；有人不推薦當 breadth 修。"
+      ja: "**理論や哲学が好きでなければ勧めない**という声が複数。ブレッドスとしては勧めないという人も。"
+      ko: "**이론과 철학을 좋아하지 않으면 추천하지 않는다**는 사람이 여럿이다. 브레스 과목으로는 비추천이라는 사람도 있다."
+      vi: "Vài người khuyên đừng học **trừ khi thích lý thuyết và triết học**; một người không khuyên chọn làm môn breadth."
+      ms: "Beberapa orang tidak syorkan **kecuali anda suka teori dan falsafah**; seorang tidak syorkan ia sebagai breadth."
+      id: "Beberapa orang tidak menyarankan **kecuali suka teori dan filsafat**; satu tidak menyarankannya sebagai breadth."
+      hi: "कई कहते हैं **थ्योरी और दर्शन पसंद न हो तो न लें**; एक इसे breadth के रूप में लेने की सलाह नहीं देता।"
 workload: heavy
 difficulty: hard

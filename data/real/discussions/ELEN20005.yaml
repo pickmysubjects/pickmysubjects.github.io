@@ -64,14 +64,14 @@ sections:
       id: "Praktikum dengan breadboard dan LTspice, tugas kelompok, dan kuis mingguan yang cukup sulit. Satu reviewer terbaru merasa MST sangat sulit tapi ujian akhir adil dan mirip soal sebelumnya."
       hi: "ब्रेडबोर्ड और LTspice के साथ प्रैक्टिकल लैब, ग्रुप असाइनमेंट, और कुछ कठिन साप्ताहिक क्विज़। एक हालिया रिव्यूअर को MST बहुत कठिन लगा पर परीक्षा उचित और पहले के सवालों जैसी।"
   study:
-    - en: "Keep up for the weekly quizzes, and work through assignment, problem sheet and workshop questions since the exam draws on similar ones. Try to get a reliable group early."
-      zh: "跟上进度应付每周小测；作业、problem sheet 和 workshop 的题都要做，考试会出类似的。尽早找到靠谱的组员。"
-      zh-TW: "跟上進度應付每週小考；作業、problem sheet 和 workshop 的題目都要做，考試會出類似的。盡早找到可靠的組員。"
-      ja: "毎週のクイズのために遅れないこと。試験は似た問題が出るので、課題・問題シート・ワークショップの問題を解いておこう。信頼できるグループを早めに。"
-      ko: "주간 퀴즈를 위해 진도를 따라가자. 시험에 비슷한 문제가 나오니 과제, 문제지, 워크숍 문제를 풀어 두자. 믿을 만한 조원을 일찍 구하자."
-      vi: "Theo kịp để làm quiz hằng tuần, và làm hết câu hỏi bài tập, problem sheet, workshop vì đề thi lấy dạng tương tự. Tìm nhóm đáng tin sớm."
-      ms: "Ikuti perkembangan untuk kuiz mingguan, dan buat soalan tugasan, helaian masalah dan bengkel kerana peperiksaan guna soalan serupa. Cari kumpulan yang boleh diharap awal."
-      id: "Ikuti terus untuk kuis mingguan, dan kerjakan soal tugas, problem sheet, dan workshop karena ujian memakai soal serupa. Cari kelompok yang bisa diandalkan sejak awal."
-      hi: "साप्ताहिक क्विज़ के लिए साथ चलते रहें, और असाइनमेंट, प्रॉब्लम शीट और वर्कशॉप सवाल करें क्योंकि परीक्षा में मिलते-जुलते आते हैं। जल्दी भरोसेमंद ग्रुप बनाएँ।"
+    - en: "Keep up for the weekly quizzes, and **work through assignment, problem sheet and workshop questions** since the exam draws on similar ones. Try to get a reliable group early."
+      zh: "跟上进度应付每周小测；**作业、problem sheet 和 workshop 的题都要做**，考试会出类似的。尽早找到靠谱的组员。"
+      zh-TW: "跟上進度應付每週小考；**作業、problem sheet 和 workshop 的題目都要做**，考試會出類似的。盡早找到可靠的組員。"
+      ja: "毎週のクイズのために遅れないこと。試験は似た問題が出るので、**課題・問題シート・ワークショップの問題を解いておこう**。信頼できるグループを早めに。"
+      ko: "주간 퀴즈를 위해 진도를 따라가자. 시험에 비슷한 문제가 나오니 **과제, 문제지, 워크숍 문제를 풀어 두자**. 믿을 만한 조원을 일찍 구하자."
+      vi: "Theo kịp để làm quiz hằng tuần, và **làm hết câu hỏi bài tập, problem sheet, workshop** vì đề thi lấy dạng tương tự. Tìm nhóm đáng tin sớm."
+      ms: "Ikuti perkembangan untuk kuiz mingguan, dan **buat soalan tugasan, helaian masalah dan bengkel** kerana peperiksaan guna soalan serupa. Cari kumpulan yang boleh diharap awal."
+      id: "Ikuti terus untuk kuis mingguan, dan **kerjakan soal tugas, problem sheet, dan workshop** karena ujian memakai soal serupa. Cari kelompok yang bisa diandalkan sejak awal."
+      hi: "साप्ताहिक क्विज़ के लिए साथ चलते रहें, और **असाइनमेंट, प्रॉब्लम शीट और वर्कशॉप सवाल करें** क्योंकि परीक्षा में मिलते-जुलते आते हैं। जल्दी भरोसेमंद ग्रुप बनाएँ।"
 tags: [group-work, practice-repeats]
 difficulty: mixed

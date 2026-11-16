@@ -83,14 +83,14 @@ sections:
       id: "Pilih kelompok yang baik kalau bisa, tulis esai latihan sebelum ujian, dan kaitkan beberapa konsep dalam jawaban."
       hi: "हो सके तो अच्छा ग्रुप चुनें, परीक्षा से पहले अभ्यास निबंध लिखें, और उत्तरों में कई अवधारणाएँ जोड़ें।"
   watch:
-    - en: "Views split on difficulty: some found it easy, while others say an H1 is hard to get and it's not an easy WAM booster."
-      zh: "难度看法不一：有人觉得简单，也有人说 H1 很难拿，不是轻松的刷分课。"
-      zh-TW: "難度看法不一：有人覺得簡單，也有人說 H1 很難拿，不是輕鬆的拉分課。"
-      ja: "難易度は意見が分かれる。簡単という人もいれば、H1は取りにくく楽にWAMを稼げる科目ではないという人も。"
-      ko: "난이도는 의견이 갈린다. 쉽다는 사람도 있지만 H1 받기 어렵고 쉬운 WAM 부스터가 아니라는 사람도 있다."
-      vi: "Ý kiến về độ khó chia: có người thấy dễ, người khác nói khó đạt H1 và không phải môn kéo WAM dễ."
-      ms: "Pandangan tentang kesukaran berbelah: ada yang rasa mudah, yang lain kata H1 sukar dicapai dan ia bukan penaik WAM mudah."
-      id: "Pendapat soal tingkat kesulitan terbelah: ada yang merasa mudah, yang lain bilang H1 sulit dan bukan pendongkrak WAM yang gampang."
-      hi: "कठिनाई पर राय बँटी: कुछ को आसान लगा, दूसरे कहते हैं H1 मुश्किल है और यह आसान WAM बूस्टर नहीं।"
+    - en: "Views split on difficulty: some found it easy, while others say an H1 is hard to get and **it's not an easy WAM booster**."
+      zh: "难度看法不一：有人觉得简单，也有人说 H1 很难拿，**不是轻松的刷分课**。"
+      zh-TW: "難度看法不一：有人覺得簡單，也有人說 H1 很難拿，**不是輕鬆的拉分課**。"
+      ja: "難易度は意見が分かれる。簡単という人もいれば、H1は取りにくく**楽にWAMを稼げる科目ではない**という人も。"
+      ko: "난이도는 의견이 갈린다. 쉽다는 사람도 있지만 H1 받기 어렵고 **쉬운 WAM 부스터가 아니라는** 사람도 있다."
+      vi: "Ý kiến về độ khó chia: có người thấy dễ, người khác nói khó đạt H1 và **không phải môn kéo WAM dễ**."
+      ms: "Pandangan tentang kesukaran berbelah: ada yang rasa mudah, yang lain kata H1 sukar dicapai dan ia **bukan penaik WAM mudah**."
+      id: "Pendapat soal tingkat kesulitan terbelah: ada yang merasa mudah, yang lain bilang H1 sulit dan **bukan pendongkrak WAM yang gampang**."
+      hi: "कठिनाई पर राय बँटी: कुछ को आसान लगा, दूसरे कहते हैं H1 मुश्किल है और यह **आसान WAM बूस्टर नहीं**।"
 tags: [group-work]
 difficulty: mixed

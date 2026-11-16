@@ -74,14 +74,14 @@ sections:
       id: "Kerjakan kuis tepat setelah video dan podcast, pakai catatan atau transkrip kalau ada, dan cek jawaban sebelum mengirim. Untuk esai, ikuti rubrik dan masukkan latar belakangmu sendiri."
       hi: "वीडियो और पॉडकास्ट के तुरंत बाद क्विज़ करें, ट्रांसक्रिप्ट हो तो उसका, वरना नोट्स का सहारा लें, और जमा करने से पहले जाँचें। निबंध में रूब्रिक मानें और अपना अनुभव जोड़ें।"
   watch:
-    - en: "The quizzes are trickier than they look; several got low marks on the first ones. A 2026 reviewer said no transcripts were given and suggested another music breadth instead."
-      zh: "小测比看起来难，好几位前几次都考得很低。2026 年有同学说没有提供讲稿，建议改修别的音乐类 breadth。"
-      zh-TW: "小考比看起來難，好幾位前幾次都考得很低。2026 年有同學說沒有提供逐字稿，建議改修別的音樂類 breadth。"
-      ja: "小テストは見た目より難しく、最初の数回で低得点だった人が複数。2026年には書き起こしが提供されず、他の音楽系ブレドスを勧める声も。"
-      ko: "퀴즈는 보기보다 까다로워 초반에 낮은 점수를 받은 사람이 여럿이다. 2026년 한 리뷰어는 스크립트가 제공되지 않았다며 다른 음악 브레드스를 권했다."
-      vi: "Quiz khó hơn vẻ ngoài; vài người bị điểm thấp ở mấy bài đầu. Một người năm 2026 nói không có bản ghi và khuyên học môn breadth âm nhạc khác."
-      ms: "Kuiz lebih rumit daripada yang disangka; beberapa dapat markah rendah pada kuiz awal. Seorang pengulas 2026 kata tiada transkrip diberi dan cadangkan breadth muzik lain."
-      id: "Kuisnya lebih rumit dari kelihatannya; beberapa dapat nilai rendah di kuis awal. Satu pengulas 2026 bilang tidak ada transkrip dan menyarankan breadth musik lain."
-      hi: "क्विज़ दिखने से ज़्यादा पेचीदा हैं; कई के शुरुआती क्विज़ में अंक कम आए। 2026 के एक रिव्यूअर ने कहा ट्रांसक्रिप्ट नहीं मिले और कोई दूसरा संगीत ब्रेड्थ लेने की सलाह दी।"
+    - en: "**The quizzes are trickier than they look**; several got low marks on the first ones. A 2026 reviewer said no transcripts were given and suggested another music breadth instead."
+      zh: "**小测比看起来难**，好几位前几次都考得很低。2026 年有同学说没有提供讲稿，建议改修别的音乐类 breadth。"
+      zh-TW: "**小考比看起來難**，好幾位前幾次都考得很低。2026 年有同學說沒有提供逐字稿，建議改修別的音樂類 breadth。"
+      ja: "**小テストは見た目より難しく**、最初の数回で低得点だった人が複数。2026年には書き起こしが提供されず、他の音楽系ブレドスを勧める声も。"
+      ko: "**퀴즈는 보기보다 까다로워** 초반에 낮은 점수를 받은 사람이 여럿이다. 2026년 한 리뷰어는 스크립트가 제공되지 않았다며 다른 음악 브레드스를 권했다."
+      vi: "**Quiz khó hơn vẻ ngoài**; vài người bị điểm thấp ở mấy bài đầu. Một người năm 2026 nói không có bản ghi và khuyên học môn breadth âm nhạc khác."
+      ms: "**Kuiz lebih rumit daripada yang disangka**; beberapa dapat markah rendah pada kuiz awal. Seorang pengulas 2026 kata tiada transkrip diberi dan cadangkan breadth muzik lain."
+      id: "**Kuisnya lebih rumit dari kelihatannya**; beberapa dapat nilai rendah di kuis awal. Satu pengulas 2026 bilang tidak ada transkrip dan menyarankan breadth musik lain."
+      hi: "**क्विज़ दिखने से ज़्यादा पेचीदा हैं**; कई के शुरुआती क्विज़ में अंक कम आए। 2026 के एक रिव्यूअर ने कहा ट्रांसक्रिप्ट नहीं मिले और कोई दूसरा संगीत ब्रेड्थ लेने की सलाह दी।"
 workload: light
 difficulty: easy

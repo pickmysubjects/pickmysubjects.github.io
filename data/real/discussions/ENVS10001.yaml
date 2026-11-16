@@ -74,14 +74,14 @@ sections:
       id: "Pilih teman kelompok dengan cermat karena nilai kelompok bergantung pada mereka, dan kuasai materi kuliah untuk tes akhir."
       hi: "ग्रुप साथी सोच-समझकर चुनें, क्योंकि ग्रुप के अंक उन पर निर्भर हैं, और फ़ाइनल टेस्ट के लिए लेक्चर का कंटेंट अच्छे से जानें।"
   watch:
-    - en: "Several found some lectures dull and the weekly worksheets time-consuming for so few marks. One 2026 reviewer warned not to pick it just for having no exam, as the final test is much like one."
-      zh: "好几位觉得部分讲课沉闷，每周练习花时间却只占很少分。2026 年有同学提醒别只因为没考试就选，期末测验其实跟考试差不多。"
-      zh-TW: "好幾位覺得部分上課沉悶，每週練習花時間卻只佔很少分。2026 年有同學提醒別只因為沒考試就選，期末測驗其實跟考試差不多。"
-      ja: "一部の講義が退屈で、毎週のワークシートは配点の割に時間がかかるという声が複数。試験がないから選ぶのはやめるべき、最終テストは実質試験だという2026年の声も。"
-      ko: "일부 강의가 지루하고 주간 워크시트는 배점에 비해 시간이 많이 든다는 의견이 여럿. 시험이 없어서 고르지 말라, 기말 테스트가 사실상 시험이라는 2026년 리뷰도 있다."
-      vi: "Vài người thấy một số bài giảng chán và phiếu bài tập hằng tuần tốn thời gian mà ít điểm. Một người năm 2026 khuyên đừng chọn chỉ vì không có thi, vì bài kiểm tra cuối gần như là thi."
-      ms: "Beberapa rasa sesetengah kuliah membosankan dan lembaran mingguan memakan masa untuk markah sedikit. Seorang pengulas 2026 pesan jangan pilih kerana tiada peperiksaan, kerana ujian akhir hampir sama."
-      id: "Beberapa merasa sebagian kuliah membosankan dan lembar kerja mingguan makan waktu untuk nilai sekecil itu. Satu pengulas 2026 mengingatkan jangan memilihnya karena tanpa ujian, sebab tes akhirnya mirip ujian."
-      hi: "कई को कुछ लेक्चर उबाऊ और साप्ताहिक वर्कशीट इतने कम अंकों के लिए समय लेने वाली लगीं। 2026 के एक रिव्यूअर ने चेताया कि सिर्फ़ 'परीक्षा नहीं' देखकर न लें, फ़ाइनल टेस्ट लगभग परीक्षा जैसा है।"
+    - en: "Several found some lectures dull and the weekly worksheets time-consuming for so few marks. One 2026 reviewer warned **not to pick it just for having no exam**, as the final test is much like one."
+      zh: "好几位觉得部分讲课沉闷，每周练习花时间却只占很少分。2026 年有同学提醒**别只因为没考试就选**，期末测验其实跟考试差不多。"
+      zh-TW: "好幾位覺得部分上課沉悶，每週練習花時間卻只佔很少分。2026 年有同學提醒**別只因為沒考試就選**，期末測驗其實跟考試差不多。"
+      ja: "一部の講義が退屈で、毎週のワークシートは配点の割に時間がかかるという声が複数。**試験がないから選ぶのはやめるべき**、最終テストは実質試験だという2026年の声も。"
+      ko: "일부 강의가 지루하고 주간 워크시트는 배점에 비해 시간이 많이 든다는 의견이 여럿. **시험이 없어서 고르지 말라**, 기말 테스트가 사실상 시험이라는 2026년 리뷰도 있다."
+      vi: "Vài người thấy một số bài giảng chán và phiếu bài tập hằng tuần tốn thời gian mà ít điểm. Một người năm 2026 khuyên **đừng chọn chỉ vì không có thi**, vì bài kiểm tra cuối gần như là thi."
+      ms: "Beberapa rasa sesetengah kuliah membosankan dan lembaran mingguan memakan masa untuk markah sedikit. Seorang pengulas 2026 pesan **jangan pilih kerana tiada peperiksaan**, kerana ujian akhir hampir sama."
+      id: "Beberapa merasa sebagian kuliah membosankan dan lembar kerja mingguan makan waktu untuk nilai sekecil itu. Satu pengulas 2026 mengingatkan **jangan memilihnya karena tanpa ujian**, sebab tes akhirnya mirip ujian."
+      hi: "कई को कुछ लेक्चर उबाऊ और साप्ताहिक वर्कशीट इतने कम अंकों के लिए समय लेने वाली लगीं। 2026 के एक रिव्यूअर ने चेताया कि **सिर्फ़ 'परीक्षा नहीं' देखकर न लें**, फ़ाइनल टेस्ट लगभग परीक्षा जैसा है।"
 tags: [group-work]
 difficulty: easy

@@ -384,12 +384,18 @@ export const subjectTitlesFileSchema = z.record(subjectCode, subjectTitles)
  * together, the others translated from the English (left out until they are).
  */
 const OTHER_LANGS = ['zh-TW', 'ja', 'ko', 'vi', 'ms', 'id', 'hi'] as const
+// Length as shown on the page: **emphasis** marks don't count.
+const shown = (min: number, max: number) =>
+  z
+    .string()
+    .min(min)
+    .refine((s) => s.replace(/\*\*(.+?)\*\*/g, '$1').length <= max, { message: `Too big: expected string to have <=${max} characters` })
 export const localized = (en: number, zh: number) =>
   z
     .object({
-      en: z.string().min(10).max(en),
-      zh: z.string().min(4).max(zh),
-      ...Object.fromEntries(OTHER_LANGS.map((l) => [l, z.string().min(2).max(Math.round(en * 1.8)).optional()])),
+      en: shown(10, en),
+      zh: shown(4, zh),
+      ...Object.fromEntries(OTHER_LANGS.map((l) => [l, shown(2, Math.round(en * 1.8)).optional()])),
     })
     .strict() as z.ZodType<Localized>
 export type Localized = { en: string; zh: string } & Partial<Record<(typeof OTHER_LANGS)[number], string>>

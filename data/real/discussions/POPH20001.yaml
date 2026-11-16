@@ -92,15 +92,15 @@ sections:
       id: "Ikuti tutorial karena jawaban tidak diunggah dan menunjukkan topik penting; kuasai empat prinsip etika inti. Buat presentasi kelompok sekreatif mungkin."
       hi: "ट्यूटोरियल में जाएँ, क्योंकि जवाब पोस्ट नहीं होते और इनसे पता चलता है कौन से टॉपिक ज़रूरी हैं; चार मूल नैतिक सिद्धांत अच्छी तरह जानें। ग्रुप प्रेज़ेंटेशन में रचनात्मक रहें।"
   watch:
-    - en: "Most call it a WAM booster, but group marks depend on your groupmates (one reviewer notes there's no peer review), and one found it far from easy."
-      zh: "多数人说是刷分课，但小组分数取决于组员（有人提到没有互评），也有人觉得一点都不轻松。"
-      zh-TW: "多數人說是拉分課，但小組分數取決於組員（有人提到沒有互評），也有人覺得一點都不輕鬆。"
-      ja: "WAMを稼げるという声が多いが、グループの点はメンバー次第（相互評価なしとの指摘も）。全然簡単でなかったという人も。"
-      ko: "대부분 WAM 부스터라고 하지만 조별 점수는 조원에 달렸고(동료 평가가 없다는 지적도) 전혀 쉽지 않았다는 사람도 있다."
-      vi: "Đa số gọi là môn kéo WAM, nhưng điểm nhóm phụ thuộc bạn cùng nhóm (một người nói không có đánh giá chéo), và một người thấy không hề dễ."
-      ms: "Kebanyakan kata penaik WAM, tetapi markah kumpulan bergantung pada ahli (seorang kata tiada penilaian rakan), dan seorang rasa ia jauh dari mudah."
-      id: "Kebanyakan bilang pendongkrak WAM, tapi nilai kelompok tergantung anggota (satu bilang tidak ada peer review), dan satu merasa jauh dari mudah."
-      hi: "ज़्यादातर इसे WAM बूस्टर कहते हैं, पर ग्रुप के अंक साथियों पर निर्भर हैं (एक के अनुसार पीयर रिव्यू नहीं), और एक को यह बिल्कुल आसान नहीं लगा।"
+    - en: "**Most call it a WAM booster**, but group marks depend on your groupmates (one reviewer notes there's no peer review), and one found it far from easy."
+      zh: "**多数人说是刷分课**，但小组分数取决于组员（有人提到没有互评），也有人觉得一点都不轻松。"
+      zh-TW: "**多數人說是拉分課**，但小組分數取決於組員（有人提到沒有互評），也有人覺得一點都不輕鬆。"
+      ja: "**WAMを稼げるという声が多い**が、グループの点はメンバー次第（相互評価なしとの指摘も）。全然簡単でなかったという人も。"
+      ko: "**대부분 WAM 부스터라고 하지만** 조별 점수는 조원에 달렸고(동료 평가가 없다는 지적도) 전혀 쉽지 않았다는 사람도 있다."
+      vi: "**Đa số gọi là môn kéo WAM**, nhưng điểm nhóm phụ thuộc bạn cùng nhóm (một người nói không có đánh giá chéo), và một người thấy không hề dễ."
+      ms: "**Kebanyakan kata penaik WAM**, tetapi markah kumpulan bergantung pada ahli (seorang kata tiada penilaian rakan), dan seorang rasa ia jauh dari mudah."
+      id: "**Kebanyakan bilang pendongkrak WAM**, tapi nilai kelompok tergantung anggota (satu bilang tidak ada peer review), dan satu merasa jauh dari mudah."
+      hi: "**ज़्यादातर इसे WAM बूस्टर कहते हैं**, पर ग्रुप के अंक साथियों पर निर्भर हैं (एक के अनुसार पीयर रिव्यू नहीं), और एक को यह बिल्कुल आसान नहीं लगा।"
 tags: [group-work]
 workload: light
 difficulty: easy

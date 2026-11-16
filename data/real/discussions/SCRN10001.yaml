@@ -56,14 +56,14 @@ sections:
       id: "Tonton setiap film mingguan, perhatikan kuliah, dan kerjakan bacaan, karena diskusi tutorial bertumpu padanya."
       hi: "हर हफ़्ते की फ़िल्म देखें, लेक्चर में ध्यान दें, और रीडिंग करें, क्योंकि ट्यूटोरियल चर्चा उन्हीं पर टिकी है।"
   watch:
-    - en: "The only 2025 reviewer, a first-semester student, found the weekly hours and readings heavy and the essays marked harshly, and warned against expecting a WAM booster."
-      zh: "唯一一条 2025 年的评价来自大一第一学期的同学，觉得每周课时和阅读量都重、论文给分严，提醒别指望它刷分。"
-      zh-TW: "唯一一則 2025 年的評價來自大一第一學期的同學，覺得每週課時和閱讀量都重、論文給分嚴，提醒別指望它拉分。"
-      ja: "2025年唯一のレビューは1年前期の学生で、毎週の時間とリーディングが重く、エッセイの採点も厳しかったとし、WAM稼ぎを期待しないよう警告。"
-      ko: "유일한 2025년 리뷰어는 1학년 첫 학기 학생으로, 주당 시간과 읽기가 많고 에세이 채점이 박했다며 WAM 과목을 기대하지 말라고 했다."
-      vi: "Người duy nhất năm 2025, sinh viên học kỳ đầu, thấy số giờ và bài đọc mỗi tuần nặng, bài luận chấm gắt, và khuyên đừng kỳ vọng đây là môn kéo WAM."
-      ms: "Satu-satunya pengulas 2025, pelajar semester pertama, rasa jam dan bacaan mingguan berat dan esei dinilai keras, serta pesan jangan harap ia penaik WAM."
-      id: "Satu-satunya pengulas 2025, mahasiswa semester pertama, merasa jam dan bacaan mingguan berat serta esai dinilai keras, dan mengingatkan jangan berharap ini pendongkrak WAM."
-      hi: "2025 के इकलौते रिव्यूअर, पहले सेमेस्टर के छात्र, को हर हफ़्ते के घंटे और रीडिंग भारी और निबंध की मार्किंग सख़्त लगी, और उन्होंने इसे WAM बूस्टर न समझने की चेतावनी दी।"
+    - en: "The only 2025 reviewer, a first-semester student, found the weekly hours and readings heavy and the essays marked harshly, and **warned against expecting a WAM booster**."
+      zh: "唯一一条 2025 年的评价来自大一第一学期的同学，觉得每周课时和阅读量都重、论文给分严，**提醒别指望它刷分**。"
+      zh-TW: "唯一一則 2025 年的評價來自大一第一學期的同學，覺得每週課時和閱讀量都重、論文給分嚴，**提醒別指望它拉分**。"
+      ja: "2025年唯一のレビューは1年前期の学生で、毎週の時間とリーディングが重く、エッセイの採点も厳しかったとし、**WAM稼ぎを期待しないよう警告**。"
+      ko: "유일한 2025년 리뷰어는 1학년 첫 학기 학생으로, 주당 시간과 읽기가 많고 에세이 채점이 박했다며 **WAM 과목을 기대하지 말라고 했다**."
+      vi: "Người duy nhất năm 2025, sinh viên học kỳ đầu, thấy số giờ và bài đọc mỗi tuần nặng, bài luận chấm gắt, và **khuyên đừng kỳ vọng đây là môn kéo WAM**."
+      ms: "Satu-satunya pengulas 2025, pelajar semester pertama, rasa jam dan bacaan mingguan berat dan esei dinilai keras, serta pesan **jangan harap ia penaik WAM**."
+      id: "Satu-satunya pengulas 2025, mahasiswa semester pertama, merasa jam dan bacaan mingguan berat serta esai dinilai keras, dan mengingatkan **jangan berharap ini pendongkrak WAM**."
+      hi: "2025 के इकलौते रिव्यूअर, पहले सेमेस्टर के छात्र, को हर हफ़्ते के घंटे और रीडिंग भारी और निबंध की मार्किंग सख़्त लगी, और उन्होंने इसे **WAM बूस्टर न समझने की चेतावनी** दी।"
 workload: heavy
 difficulty: hard

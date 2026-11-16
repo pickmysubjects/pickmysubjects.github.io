@@ -83,14 +83,14 @@ sections:
       id: "Kerjakan laporan lab sejak awal, dan pastikan bisa menjelaskan ulang materi dengan tepat."
       hi: "लैब रिपोर्ट पर शुरू से ध्यान दें, और जो पढ़ाया गया उसे अपने शब्दों में सही-सही समझा सकें।"
   watch:
-    - en: "Several wouldn't take it just for fun; it suits psych majors more than students picking an elective."
-      zh: "好几位说别只为兴趣来选；更适合心理专业的学生，而不是来选修的。"
-      zh-TW: "好幾位說別只為興趣來選；更適合心理主修的學生，而不是來選修的。"
-      ja: "興味本位では勧めないという声が複数。選択科目として取るより心理学専攻向き。"
-      ko: "재미로 듣는 건 추천하지 않는다는 사람이 여럿이다. 선택 과목보다는 심리학 전공생에게 맞다."
-      vi: "Vài người không khuyên học chỉ để cho vui; hợp với sinh viên chuyên ngành tâm lý hơn là học tự chọn."
-      ms: "Beberapa orang tidak syorkan ia sekadar suka-suka; lebih sesuai untuk pelajar major psikologi berbanding elektif."
-      id: "Beberapa orang tidak menyarankannya sekadar iseng; lebih cocok bagi mahasiswa jurusan psikologi daripada sebagai pilihan."
-      hi: "कई इसे सिर्फ़ शौक़ के लिए लेने की सलाह नहीं देते; यह इलेक्टिव से ज़्यादा साइकोलॉजी मेजर वालों के लिए है।"
+    - en: "Several wouldn't take it just for fun; it **suits psych majors** more than students picking an elective."
+      zh: "好几位说别只为兴趣来选；**更适合心理专业的学生**，而不是来选修的。"
+      zh-TW: "好幾位說別只為興趣來選；**更適合心理主修的學生**，而不是來選修的。"
+      ja: "興味本位では勧めないという声が複数。選択科目として取るより**心理学専攻向き**。"
+      ko: "재미로 듣는 건 추천하지 않는다는 사람이 여럿이다. 선택 과목보다는 **심리학 전공생에게 맞다**."
+      vi: "Vài người không khuyên học chỉ để cho vui; **hợp với sinh viên chuyên ngành tâm lý** hơn là học tự chọn."
+      ms: "Beberapa orang tidak syorkan ia sekadar suka-suka; **lebih sesuai untuk pelajar major psikologi** berbanding elektif."
+      id: "Beberapa orang tidak menyarankannya sekadar iseng; **lebih cocok bagi mahasiswa jurusan psikologi** daripada sebagai pilihan."
+      hi: "कई इसे सिर्फ़ शौक़ के लिए लेने की सलाह नहीं देते; यह इलेक्टिव से ज़्यादा **साइकोलॉजी मेजर वालों के लिए है**।"
 tags: [practice-repeats]
 difficulty: hard

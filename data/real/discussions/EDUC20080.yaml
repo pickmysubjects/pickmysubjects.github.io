@@ -65,14 +65,14 @@ sections:
       id: "Baca instruksi dengan teliti dan cocokkan dengan rubrik. Saat penempatan, ambil inisiatif dan sampaikan apa yang kamu inginkan, karena sebagian besar dilepas sendiri."
       hi: "निर्देश ध्यान से पढ़ें और रूब्रिक से अपना काम मिलाएँ। प्लेसमेंट में पहल करें और बताएँ आप क्या चाहते हैं, क्योंकि ज़्यादातर ख़ुद पर छोड़ा जाता है।"
   watch:
-    - en: "Reviewers up to 2023 called it an easy WAM booster; several from 2024–25 say it changed, with harsher or vaguer marking and dull mandatory seminars. A 2026 reviewer was positive again."
-      zh: "2023 年及以前的同学说是轻松刷分课；2024–25 年好几位说改版后变了，评分更严或更含糊，强制出勤的研讨课很无聊。2026 年有同学评价又转好。"
-      zh-TW: "2023 年以前的同學說是輕鬆拉分課；2024–25 年好幾位說改版後變了，評分更嚴或更含糊，強制出席的研討課很無聊。2026 年有同學評價又轉好。"
-      ja: "2023年までは楽にWAMが上がる科目という声。2024〜25年は変わった、採点が厳しく曖昧になり必修セミナーが退屈という声が複数。2026年は再び好意的な声。"
-      ko: "2023년까지는 쉬운 WAM 과목이라는 평. 2024–25년엔 바뀌어 채점이 더 가혹하거나 모호해지고 필수 세미나가 지루하다는 의견이 여럿. 2026년엔 다시 긍정적이다."
-      vi: "Người học đến 2023 gọi là môn kéo WAM dễ; vài người năm 2024–25 nói môn đã thay đổi, chấm gắt hoặc mơ hồ hơn, seminar bắt buộc nhàm chán. Một người năm 2026 lại đánh giá tốt."
-      ms: "Pengulas hingga 2023 kata ia penaik WAM mudah; beberapa dari 2024–25 kata ia berubah, pemarkahan lebih keras atau kabur dan seminar wajib membosankan. Seorang pengulas 2026 positif semula."
-      id: "Pengulas hingga 2023 menyebutnya pendongkrak WAM mudah; beberapa dari 2024–25 bilang sudah berubah, penilaian lebih keras atau kabur dan seminar wajib membosankan. Satu pengulas 2026 kembali positif."
-      hi: "2023 तक के रिव्यूअर्स ने इसे आसान WAM बूस्टर कहा; 2024–25 के कई कहते हैं यह बदल गया, मार्किंग सख़्त या अस्पष्ट हुई और अनिवार्य सेमिनार उबाऊ। 2026 का एक रिव्यूअर फिर सकारात्मक था।"
+    - en: "Reviewers up to 2023 called it an easy WAM booster; **several from 2024–25 say it changed, with harsher or vaguer marking** and dull mandatory seminars. A 2026 reviewer was positive again."
+      zh: "2023 年及以前的同学说是轻松刷分课；**2024–25 年好几位说改版后变了，评分更严或更含糊**，强制出勤的研讨课很无聊。2026 年有同学评价又转好。"
+      zh-TW: "2023 年以前的同學說是輕鬆拉分課；**2024–25 年好幾位說改版後變了，評分更嚴或更含糊**，強制出席的研討課很無聊。2026 年有同學評價又轉好。"
+      ja: "2023年までは楽にWAMが上がる科目という声。**2024〜25年は変わった、採点が厳しく曖昧になり**必修セミナーが退屈という声が複数。2026年は再び好意的な声。"
+      ko: "2023년까지는 쉬운 WAM 과목이라는 평. **2024–25년엔 바뀌어 채점이 더 가혹하거나 모호해지고** 필수 세미나가 지루하다는 의견이 여럿. 2026년엔 다시 긍정적이다."
+      vi: "Người học đến 2023 gọi là môn kéo WAM dễ; **vài người năm 2024–25 nói môn đã thay đổi, chấm gắt hoặc mơ hồ hơn**, seminar bắt buộc nhàm chán. Một người năm 2026 lại đánh giá tốt."
+      ms: "Pengulas hingga 2023 kata ia penaik WAM mudah; **beberapa dari 2024–25 kata ia berubah, pemarkahan lebih keras atau kabur** dan seminar wajib membosankan. Seorang pengulas 2026 positif semula."
+      id: "Pengulas hingga 2023 menyebutnya pendongkrak WAM mudah; **beberapa dari 2024–25 bilang sudah berubah, penilaian lebih keras atau kabur** dan seminar wajib membosankan. Satu pengulas 2026 kembali positif."
+      hi: "2023 तक के रिव्यूअर्स ने इसे आसान WAM बूस्टर कहा; **2024–25 के कई कहते हैं यह बदल गया, मार्किंग सख़्त या अस्पष्ट हुई** और अनिवार्य सेमिनार उबाऊ। 2026 का एक रिव्यूअर फिर सकारात्मक था।"
 tags: [group-work]
 difficulty: mixed

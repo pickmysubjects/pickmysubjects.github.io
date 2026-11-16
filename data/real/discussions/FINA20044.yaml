@@ -65,14 +65,14 @@ sections:
       id: "Mulai portofolio dan esai lebih awal, dan tunjukkan proses berpikir serta riset tambahan di buku harian visual."
       hi: "फ़ोलियो और निबंध जल्दी शुरू करें, और विज़ुअल डायरी में अपनी सोच और अतिरिक्त रिसर्च दिखाएँ।"
   watch:
-    - en: "The 2024 reviewers all warn the workload is intense with little guidance and that it suits people who already draw; don't take it as an easy WAM booster."
-      zh: "2024 年的几位同学都提醒工作量很大、指导很少，更适合本来就会画画的人；别把它当轻松刷分课。"
-      zh-TW: "2024 年的幾位同學都提醒工作量很大、指導很少，更適合本來就會畫畫的人；別把它當輕鬆拉分課。"
-      ja: "2024年のレビューは全員、作業量が多く指導が少なく、もともと絵を描く人向けだと警告。楽なWAM稼ぎとして取らないこと。"
-      ko: "2024년 리뷰어들은 모두 작업량이 많고 지도가 적으며 원래 그림을 그리는 사람에게 맞다고 경고한다. 쉬운 WAM 과목으로 생각하지 마라."
-      vi: "Các đánh giá năm 2024 đều cảnh báo khối lượng rất lớn, ít hướng dẫn và hợp với người vốn đã biết vẽ; đừng coi đây là môn kéo WAM dễ."
-      ms: "Pengulas 2024 semuanya memberi amaran beban sangat tinggi dengan sedikit panduan dan sesuai untuk yang sudah melukis; jangan ambil sebagai penaik WAM mudah."
-      id: "Semua pengulas 2024 mengingatkan bebannya berat dengan sedikit bimbingan dan cocok untuk yang sudah biasa menggambar; jangan ambil sebagai pendongkrak WAM mudah."
-      hi: "2024 के सभी रिव्यूअर्स चेताते हैं कि वर्कलोड बहुत भारी और मार्गदर्शन कम है, और यह पहले से चित्र बनाने वालों के लिए है; इसे आसान WAM बूस्टर न समझें।"
+    - en: "The 2024 reviewers all warn the workload is intense with little guidance and that it suits people who already draw; **don't take it as an easy WAM booster**."
+      zh: "2024 年的几位同学都提醒工作量很大、指导很少，更适合本来就会画画的人；**别把它当轻松刷分课**。"
+      zh-TW: "2024 年的幾位同學都提醒工作量很大、指導很少，更適合本來就會畫畫的人；**別把它當輕鬆拉分課**。"
+      ja: "2024年のレビューは全員、作業量が多く指導が少なく、もともと絵を描く人向けだと警告。**楽なWAM稼ぎとして取らないこと**。"
+      ko: "2024년 리뷰어들은 모두 작업량이 많고 지도가 적으며 원래 그림을 그리는 사람에게 맞다고 경고한다. **쉬운 WAM 과목으로 생각하지 마라**."
+      vi: "Các đánh giá năm 2024 đều cảnh báo khối lượng rất lớn, ít hướng dẫn và hợp với người vốn đã biết vẽ; **đừng coi đây là môn kéo WAM dễ**."
+      ms: "Pengulas 2024 semuanya memberi amaran beban sangat tinggi dengan sedikit panduan dan sesuai untuk yang sudah melukis; **jangan ambil sebagai penaik WAM mudah**."
+      id: "Semua pengulas 2024 mengingatkan bebannya berat dengan sedikit bimbingan dan cocok untuk yang sudah biasa menggambar; **jangan ambil sebagai pendongkrak WAM mudah**."
+      hi: "2024 के सभी रिव्यूअर्स चेताते हैं कि वर्कलोड बहुत भारी और मार्गदर्शन कम है, और यह पहले से चित्र बनाने वालों के लिए है; **इसे आसान WAM बूस्टर न समझें**।"
 workload: heavy
 difficulty: hard

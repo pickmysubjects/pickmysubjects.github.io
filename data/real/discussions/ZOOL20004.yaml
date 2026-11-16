@@ -74,14 +74,14 @@ sections:
       id: "Terapkan konsep sambil jalan lewat blog dan kunjungan, ikuti rubrik blog dengan cermat; latih Excel sejak awal untuk laporan."
       hi: "ब्लॉग और भ्रमण में सीखे कॉन्सेप्ट साथ-साथ लागू करें, और ब्लॉग रूब्रिक ध्यान से मानें; रिपोर्ट के लिए Excel जल्दी सीख लें।"
   watch:
-    - en: "Reviewers since 2021 say it is no longer the WAM booster it was under earlier staff, and one found blog feedback came too late to use."
-      zh: "2021 年以来的同学说，它已经不是以前那种刷分课了；有同学说博客反馈来得太晚，用不上。"
-      zh-TW: "2021 年以來的同學說，它已經不是以前那種拉分課了；有同學說部落格回饋來得太晚，用不上。"
-      ja: "2021年以降のレビューでは、以前の教員時代のようなWAM稼ぎ科目ではなくなったという。ブログのフィードバックが遅すぎて活かせなかったという声も一つ。"
-      ko: "2021년 이후 리뷰는 예전 교수진 시절처럼 WAM 올리기 좋은 과목이 아니라고 한다. 블로그 피드백이 너무 늦게 와 쓸모없었다는 의견도 있다."
-      vi: "Người học từ 2021 nói môn không còn là môn kéo WAM như thời giảng viên trước, và một người thấy phản hồi blog đến quá muộn để dùng."
-      ms: "Pengulas sejak 2021 kata ia bukan lagi penaik WAM seperti di bawah staf terdahulu, dan seorang dapati maklum balas blog terlalu lewat untuk digunakan."
-      id: "Pengulas sejak 2021 bilang ini bukan lagi pendongkrak WAM seperti di bawah staf sebelumnya, dan satu merasa umpan balik blog datang terlambat untuk dipakai."
-      hi: "2021 से रिव्यूअर्स कहते हैं यह अब पहले के स्टाफ़ वाले समय जैसा WAM बूस्टर नहीं रहा, और एक को ब्लॉग का फ़ीडबैक इतनी देर से मिला कि काम न आया।"
+    - en: "Reviewers since 2021 say it is **no longer the WAM booster** it was under earlier staff, and one found blog feedback came too late to use."
+      zh: "2021 年以来的同学说，它**已经不是以前那种刷分课了**；有同学说博客反馈来得太晚，用不上。"
+      zh-TW: "2021 年以來的同學說，它**已經不是以前那種拉分課了**；有同學說部落格回饋來得太晚，用不上。"
+      ja: "2021年以降のレビューでは、以前の教員時代のような**WAM稼ぎ科目ではなくなった**という。ブログのフィードバックが遅すぎて活かせなかったという声も一つ。"
+      ko: "2021년 이후 리뷰는 예전 교수진 시절처럼 **WAM 올리기 좋은 과목이 아니라고 한다**. 블로그 피드백이 너무 늦게 와 쓸모없었다는 의견도 있다."
+      vi: "Người học từ 2021 nói môn **không còn là môn kéo WAM** như thời giảng viên trước, và một người thấy phản hồi blog đến quá muộn để dùng."
+      ms: "Pengulas sejak 2021 kata ia **bukan lagi penaik WAM** seperti di bawah staf terdahulu, dan seorang dapati maklum balas blog terlalu lewat untuk digunakan."
+      id: "Pengulas sejak 2021 bilang ini **bukan lagi pendongkrak WAM** seperti di bawah staf sebelumnya, dan satu merasa umpan balik blog datang terlambat untuk dipakai."
+      hi: "2021 से रिव्यूअर्स कहते हैं यह अब पहले के स्टाफ़ वाले समय जैसा **WAM बूस्टर नहीं रहा**, और एक को ब्लॉग का फ़ीडबैक इतनी देर से मिला कि काम न आया।"
 workload: heavy
 difficulty: mixed

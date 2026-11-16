@@ -74,14 +74,14 @@ sections:
       id: "Hadiri tutorial yang membahas materi penerapan dan patologi yang diujikan; catat detail yang diucapkan tapi tidak ada di slide, pelajari materi implan koklea dengan teliti, dan latih membaca grafik tes pendengaran."
       hi: "ट्यूटोरियल में जाएँ, जिनमें परीक्षा में आने वाला प्रयोग और बीमारियाँ पढ़ाई जाती हैं; जो बातें बोली गईं पर स्लाइड पर नहीं उन्हें नोट करें, कॉक्लियर इम्प्लांट वाला हिस्सा ध्यान से सीखें, और श्रवण-परीक्षण ग्राफ़ पढ़ने का अभ्यास करें।"
   watch:
-    - en: "The final exam can be harder than the practice questions, since multi-select items don't say how many answers are correct, and one reviewer found the cochlear implant lectures dry."
-      zh: "期末可能比练习题难，因为多选题不告诉你有几个正确答案；有同学觉得人工耳蜗的讲课比较枯燥。"
-      zh-TW: "期末可能比練習題難，因為多選題不告訴你有幾個正確答案；有同學覺得人工電子耳的課比較枯燥。"
-      ja: "複数選択問題は正解の数が示されないので、期末は練習問題より難しいことがある。人工内耳の講義は退屈だったという声も一つ。"
-      ko: "복수 선택 문제는 정답 개수를 알려 주지 않아 기말이 연습 문제보다 어려울 수 있다. 인공와우 강의가 건조했다는 리뷰어도 있다."
-      vi: "Bài thi có thể khó hơn câu luyện tập vì câu chọn nhiều không cho biết có bao nhiêu đáp án đúng, và một người thấy bài giảng về ốc tai điện tử khô."
-      ms: "Peperiksaan akhir boleh lebih sukar daripada soalan latihan kerana soalan pilihan berbilang tidak menyatakan berapa jawapan betul, dan seorang pengulas rasa kuliah implan koklea hambar."
-      id: "Ujian akhir bisa lebih sulit dari soal latihan karena soal pilihan jamak tidak menyebut berapa jawaban yang benar, dan satu pengulas merasa kuliah implan koklea kering."
-      hi: "फ़ाइनल परीक्षा प्रैक्टिस सवालों से कठिन हो सकती है, क्योंकि मल्टी-सेलेक्ट सवाल नहीं बताते कितने उत्तर सही हैं, और एक रिव्यूअर को कॉक्लियर इम्प्लांट वाले लेक्चर नीरस लगे।"
+    - en: "The final exam can be harder than the practice questions, since **multi-select items don't say how many answers are correct**, and one reviewer found the cochlear implant lectures dry."
+      zh: "期末可能比练习题难，因为**多选题不告诉你有几个正确答案**；有同学觉得人工耳蜗的讲课比较枯燥。"
+      zh-TW: "期末可能比練習題難，因為**多選題不告訴你有幾個正確答案**；有同學覺得人工電子耳的課比較枯燥。"
+      ja: "**複数選択問題は正解の数が示されない**ので、期末は練習問題より難しいことがある。人工内耳の講義は退屈だったという声も一つ。"
+      ko: "**복수 선택 문제는 정답 개수를 알려 주지 않아** 기말이 연습 문제보다 어려울 수 있다. 인공와우 강의가 건조했다는 리뷰어도 있다."
+      vi: "Bài thi có thể khó hơn câu luyện tập vì **câu chọn nhiều không cho biết có bao nhiêu đáp án đúng**, và một người thấy bài giảng về ốc tai điện tử khô."
+      ms: "Peperiksaan akhir boleh lebih sukar daripada soalan latihan kerana **soalan pilihan berbilang tidak menyatakan berapa jawapan betul**, dan seorang pengulas rasa kuliah implan koklea hambar."
+      id: "Ujian akhir bisa lebih sulit dari soal latihan karena **soal pilihan jamak tidak menyebut berapa jawaban yang benar**, dan satu pengulas merasa kuliah implan koklea kering."
+      hi: "फ़ाइनल परीक्षा प्रैक्टिस सवालों से कठिन हो सकती है, क्योंकि **मल्टी-सेलेक्ट सवाल नहीं बताते कितने उत्तर सही हैं**, और एक रिव्यूअर को कॉक्लियर इम्प्लांट वाले लेक्चर नीरस लगे।"
 tags: [group-work]
 difficulty: mixed
