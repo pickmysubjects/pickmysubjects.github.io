@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { latestCourse } from '@/engine'
 import { computed } from 'vue'
 import { GraduationCap } from 'lucide-vue-next'
 import { link } from '@/composables/useView'
@@ -11,7 +12,7 @@ const props = defineProps<{ course: string }>()
 const { data } = useDataset()
 const plan = usePlan()
 const { t } = useI18n()
-const title = computed(() => data.value.courses.find((c) => c.code === props.course)?.title ?? props.course)
+const title = computed(() => latestCourse(data.value, props.course)?.title ?? props.course)
 const chosen = plan.courseChosen
 </script>
 

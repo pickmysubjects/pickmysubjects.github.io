@@ -10,7 +10,7 @@ import DetailHero from '@/components/browse/DetailHero.vue'
 import GuideToc from '@/components/guide/GuideToc.vue'
 import SubjectSection from '@/components/subject/SubjectSection.vue'
 import { useProfile } from '@/composables/useProfile'
-import { careerTarget, easierIn, majorForCareer, majorOverview, majorsForCareer, careerText, TIERS } from '@/engine'
+import { careerTarget, easierIn, majorForCareer, majorOverview, majorsForCareer, careerText, TIERS, latestCourse } from '@/engine'
 import { careerLabel } from '@/utils/careersHtml'
 import { link, replaceAddress, useView } from '@/composables/useView'
 import { useDataset } from '@/composables/useDataset'
@@ -31,7 +31,7 @@ const { t, locale } = useI18n()
 
 const target = computed(() => careerTarget(data.value, props.id))
 const majors = computed(() => majorsForCareer(data.value, props.id))
-const courseTitle = (code: string) => data.value.courses.find((c) => c.code === code)?.title ?? code
+const courseTitle = (code: string) => latestCourse(data.value, code)?.title ?? code
 const year = computed(() => viewYear(plan.terms.value[0]?.year))
 
 // The chosen major: from the address (?major=), else the plan's own major when it leads here, else the first.

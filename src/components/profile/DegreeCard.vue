@@ -6,7 +6,7 @@ import type { PlanSetup } from '@/composables/usePlan'
 import { usePlan } from '@/composables/usePlan'
 import { useDataset } from '@/composables/useDataset'
 import { termLabel } from '@/i18n/format'
-import { degreeCourses, informalPicks, isFail } from '@/engine'
+import { degreeCourses, informalPicks, isFail, latestCourse } from '@/engine'
 import { useI18n } from '@/i18n'
 import { diplomaTitle } from '@/composables/usePlanCompare'
 import { useProfile } from '@/composables/useProfile'
@@ -24,7 +24,7 @@ const editing = shallowRef(false)
 // Until the questions have been answered once, the setup is only the default.
 const chosen = plan.setupChosen
 const title = (id: string) => data.value.components.find((c) => c.id === id)?.title
-const course = computed(() => data.value.courses.find((c) => c.code === plan.setup.value.course)?.title ?? plan.setup.value.course)
+const course = computed(() => latestCourse(data.value, plan.setup.value.course)?.title ?? plan.setup.value.course)
 const major = computed(
   () =>
     title(plan.setup.value.major) ??
@@ -39,7 +39,7 @@ const start = computed(() => termLabel(t.value, { year: plan.setup.value.startYe
 
 // Points so far: passed (or not yet marked) subjects plus credit, against the degree's total.
 const { profile } = useProfile()
-const totalPoints = computed(() => data.value.courses.find((c) => c.code === plan.setup.value.course)?.totalPoints ?? 0)
+const totalPoints = computed(() => plan.course.value?.totalPoints ?? 0)
 const pointsDone = computed(
   () =>
     // Each subject once: a retake that passed counts its points one time, a fail not at all.

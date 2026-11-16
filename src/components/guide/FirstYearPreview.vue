@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { latestCourse } from '@/engine'
 import { computed, shallowRef } from 'vue'
 import firstYears from '@/generated/first-year.json'
 import type { FirstYearSlot } from '@/engine/firstYear'
@@ -18,7 +19,7 @@ const { data, course } = useDataset()
 
 const courses = computed(() =>
   Object.keys(YEARS)
-    .map((code) => ({ code, title: data.value.courses.find((c) => c.code === code)?.title ?? code }))
+    .map((code) => ({ code, title: latestCourse(data.value, code)?.title ?? code }))
     .sort((a, b) => a.title.localeCompare(b.title)),
 )
 const pick = shallowRef(course.value in YEARS ? course.value : 'B-SCI')

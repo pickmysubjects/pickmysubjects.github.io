@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { latestCourse } from '@/engine'
 import { computed, shallowRef, watch } from 'vue'
 import BrowseHero from '@/components/browse/BrowseHero.vue'
 import Pager from '@/components/Pager.vue'
@@ -27,7 +28,7 @@ const forYou = computed(() =>
   suggestClubs(CLUBS, {
     interests: profile.value.interests,
     // A degree based on another (Science Extended) shares its societies.
-    course: plan.setupChosen.value ? (data.value.courses.find((c) => c.code === course.value)?.basedOn ?? course.value) : undefined,
+    course: plan.setupChosen.value ? (latestCourse(data.value, course.value)?.basedOn ?? course.value) : undefined,
     codes: [...profile.value.results.map((r) => r.code), ...plan.plan.value.terms.flatMap((term) => term.subjects)],
     data: data.value,
   }),

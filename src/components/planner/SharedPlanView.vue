@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { latestCourse } from '@/engine'
 import { computed, nextTick, shallowRef, useTemplateRef } from 'vue'
 import { usePlans } from '@/composables/usePlans'
 import { link } from '@/composables/useView'
@@ -44,7 +45,7 @@ function take(): void {
 
 const course = computed(() => {
   const code = readable.value?.setup.course ?? ''
-  return data.value.courses.find((c) => c.code === code)?.title ?? code
+  return latestCourse(data.value, code)?.title ?? code
 })
 const title = (id: string | undefined) => (id ? data.value.components.find((c) => c.id === id)?.title : undefined)
 const major = computed(() => {
@@ -52,7 +53,7 @@ const major = computed(() => {
   if (!setup) return ''
   const main = [title(setup.major), title(setup.major2), title(setup.specialisation)].filter(Boolean).join(' + ')
   const minors = (setup.minors ?? []).map(title).filter(Boolean).join(' + ')
-  const diploma = setup.diploma ? data.value.courses.find((c) => c.code === setup.diploma)?.title : undefined
+  const diploma = setup.diploma ? latestCourse(data.value, setup.diploma)?.title : undefined
   return [main || (setup.field ? t.value('wizard.fieldUndecided', { field: t.value(`majorGroup.${setup.field}`) }) : t.value('wizard.notSure')), minors ? t.value('plans.minorLine', { title: minors }) : '', diploma ? t.value('plans.diplomaLine', { title: diploma }) : '']
     .filter(Boolean)
     .join(' · ')

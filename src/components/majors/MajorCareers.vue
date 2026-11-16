@@ -2,7 +2,7 @@
 import InfoTip from '@/components/InfoTip.vue'
 import { computed } from 'vue'
 import { BadgeCheck, ExternalLink } from 'lucide-vue-next'
-import { careerText, componentCareers } from '@/engine'
+import { careerText, componentCareers, latestCourse } from '@/engine'
 import { careerLabel } from '@/utils/careersHtml'
 import { careerPhrase } from '@/utils/careerPathText'
 import { link } from '@/composables/useView'
@@ -33,7 +33,7 @@ const acc = computed(() => entry.value?.accreditation)
 const withOneOf = computed(() => (acc.value?.withOneOf ?? []).map((id) => ({ id, title: data.value.components.find((c) => c.id === id)?.title ?? id })))
 const courseStudy = computed(() => {
   const s = careers.value?.courses[props.course]?.summary
-  const title = data.value.courses.find((c) => c.code === props.course)?.title ?? props.course
+  const title = latestCourse(data.value, props.course)?.title ?? props.course
   return s ? t.value('careers.courseStudy', { course: title, summary: careerText(s, locale.value) }) : ''
 })
 const hasText = computed(() => entry.value?.careerText === true)

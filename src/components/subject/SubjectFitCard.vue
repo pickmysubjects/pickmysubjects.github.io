@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, toRef } from 'vue'
 import { ArrowRight, Check, CircleMinus, Info, Minus, Plus, ThumbsUp, TriangleAlert } from 'lucide-vue-next'
-import { fitBasis, reviewSources, whyNotFit, type Subject } from '@/engine'
+import { fitBasis, reviewSources, whyNotFit, type Subject, latestCourse } from '@/engine'
 import InfoTip from '@/components/InfoTip.vue'
 import RowWarnings from '@/components/browse/RowWarnings.vue'
 import { link } from '@/composables/useView'
@@ -29,7 +29,7 @@ type Tone = 'good' | 'neutral' | 'warn'
 // Reasons that give the likely-mark range: an ⓘ says what the range means.
 const RANGE_KEYS = new Set(['predictedRange', 'predictedWam'])
 const trim = (s: string) => s.replace(/[。.]\s*$/, '')
-const courseTitle = computed(() => data.value.courses.find((c) => c.code === course.value)?.title ?? course.value)
+const courseTitle = computed(() => latestCourse(data.value, course.value)?.title ?? course.value)
 
 // ---- difficulty ----
 const DOTS = { easier: 1, average: 2, harder: 3, unknown: 0 } as const

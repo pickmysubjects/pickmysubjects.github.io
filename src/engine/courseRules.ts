@@ -28,6 +28,11 @@ export function findCourse(data: Dataset, code: string, year: number): Course | 
   return byYear.filter((c) => c.year <= year).at(-1) ?? byYear[0]
 }
 
+/** A degree's newest version, for its name and other details that don't depend on the start year. */
+export function latestCourse(data: Dataset, code: string | undefined): Course | undefined {
+  return code === undefined ? undefined : findCourse(data, code, Number.MAX_SAFE_INTEGER)
+}
+
 /**
  * One entry per degree: its newest version (B-SCI has a 2026 and a 2027 file). For lists of
  * degrees; a plan's rules come from findCourse with its own year.
@@ -43,7 +48,7 @@ export function degreeCourses(data: Dataset): Course[] {
  * course it is based on (B-SCIEXTD runs on B-SCI's).
  */
 export function componentCourse(data: Dataset, code: string): string {
-  return data.courses.find((c) => c.code === code)?.basedOn ?? code
+  return latestCourse(data, code)?.basedOn ?? code
 }
 
 export function findComponent(data: Dataset, id: string | undefined): Component | undefined {
@@ -744,7 +749,7 @@ export function diplomaStream(data: Dataset, diploma: Diploma, id: string | unde
  * already the plan's major or minor (the same study twice).
  */
 export function diplomaClash(data: Dataset, diploma: Diploma, plan: PlanComponents & { diplomaStream?: string; course?: string }): string | null {
-  if (plan.course && diploma.notInCourses.includes(plan.course)) return `The ${diploma.title} isn't open to ${data.courses.find((c) => c.code === plan.course)?.title ?? plan.course} students.`
+  if (plan.course && diploma.notInCourses.includes(plan.course)) return `The ${diploma.title} isn't open to ${latestCourse(data, plan.course)?.title ?? plan.course} students.`
   for (const id of [plan.major, plan.major2, plan.specialisation]) {
     if (id && diploma.notWith.includes(id)) return `The ${diploma.title} can't be taken with the ${findComponent(data, id)?.title ?? id} major.`
   }

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { latestCourse } from '@/engine'
 import { computed } from 'vue'
 import DetailHero from '@/components/browse/DetailHero.vue'
 import SubjectSection from '@/components/subject/SubjectSection.vue'
@@ -21,7 +22,7 @@ const { data } = useDataset()
 const club = computed(() => CLUBS.find((c) => c.slug === props.slug))
 const subjects = computed(() => (club.value ? clubSubjects(club.value, data.value) : []))
 const similar = computed(() => (club.value ? similarClubs(club.value, CLUBS) : []))
-const degree = computed(() => club.value?.courses?.map((c) => data.value.courses.find((x) => x.code === c)?.title ?? c).join(t.value('listSep')))
+const degree = computed(() => club.value?.courses?.map((c) => latestCourse(data.value, c)?.title ?? c).join(t.value('listSep')))
 const checked = computed(() => new Date(`${CLUBS_CHECKED}T12:00:00`).toLocaleDateString(locale.value, { year: 'numeric', month: 'long', day: 'numeric' }))
 const heroArt = () => import('@/components/browse/art/ArtMajor.vue')
 // What it does and runs, in the reader's language; and where it posts (the same in every language).

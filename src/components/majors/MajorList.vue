@@ -4,7 +4,7 @@ import { starterYear } from '@/engine/dataYear'
 import BrowseHero from '@/components/browse/BrowseHero.vue'
 import { computed, shallowRef, watch } from 'vue'
 import { BadgeCheck, ChevronRight, Search, SearchX } from 'lucide-vue-next'
-import { componentCareers, type Component as Major } from '@/engine'
+import { componentCareers, type Component as Major, latestCourse } from '@/engine'
 import { link, replaceAddress, useView } from '@/composables/useView'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
@@ -27,8 +27,8 @@ const kindOf = (c: Major): Kind => (c.informal ? 'informal' : c.kind === 'minor'
 // Closed to new students: not listed (their pages still open from an existing plan).
 const open = computed(() => data.value.components.filter((c) => c.closedFrom === undefined || starterYear() < c.closedFrom))
 // The degrees that have majors; a degree based on another (B-SCIEXTD) shows that one's.
-const baseOf = (code: string) => data.value.courses.find((c) => c.code === code)?.basedOn ?? code
-const courseTitle = (code: string) => data.value.courses.find((c) => c.code === code)?.title ?? code
+const baseOf = (code: string) => latestCourse(data.value, code)?.basedOn ?? code
+const courseTitle = (code: string) => latestCourse(data.value, code)?.title ?? code
 const degrees = computed(() => [...new Set(open.value.map((c) => c.course))].map((code) => ({ code, title: courseTitle(code) })))
 
 // Degree, kind, field and search are kept in the address (see majorsAddress): what it names when

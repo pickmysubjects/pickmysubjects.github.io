@@ -62,9 +62,9 @@ describe('concurrent diplomas', () => {
   it.each([
     ['B-ARTS', 'history', 'D-LANG', 'french-studies'],
     ['B-SCI', 'genetics', 'D-COMP', undefined],
-    // Pure Mathematics: the 2027 Statistics stream (112.5 points with its level-1 maths) is a known gap,
-    // the builder doesn't yet count cross-credited maths against commerce breadth (the check flags it).
-    ['B-COM', 'finance', 'D-MATHSC', 'mathematics-and-statistics'],
+    // The 2027 Statistics stream is 112.5 points with its level-1 maths: past the diploma's 100, the
+    // rest counts as commerce breadth, and the builder leaves room for it.
+    ['B-COM', 'finance', 'D-MATHSC', 'mathematics-and-statistics-statistics'],
     ['B-SCI', 'genetics', 'D-MUSIC', undefined],
   ])('%s %s + %s %s: a year longer, every rule met', (course, major, diploma, stream) => {
     const { plan: p, unplaced } = plan(course, major, diploma, stream)

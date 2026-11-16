@@ -17,7 +17,7 @@ import { useView, link } from './composables/useView'
 import { useDataset } from './composables/useDataset'
 import { useI18n } from './i18n'
 import { listPageTitle, PRESET_TITLE_KEYS, subjectPageTitle } from '@/utils/seo'
-import { careerTarget, presetFromSlug, rankFromSlug, subjectDifficulty } from '@/engine'
+import { careerTarget, presetFromSlug, rankFromSlug, subjectDifficulty, latestCourse } from '@/engine'
 import { careerPhrase } from '@/utils/careerPathText'
 import { guidePageOf } from '@/utils/guideSections'
 
@@ -76,10 +76,10 @@ watchEffect(() => {
   const year = latestDataYear(data.value.subjects)
   // Breadth depends on the degree: the static page names the Bachelor of Science, but a student
   // planning another degree sees that degree's breadth list, so the title names it instead.
-  const breadthElsewhere = preset === 'breadth' && course.value !== 'B-SCI' ? data.value.courses.find((c) => c.code === course.value)?.title : undefined
+  const breadthElsewhere = preset === 'breadth' && course.value !== 'B-SCI' ? latestCourse(data.value, course.value)?.title : undefined
   // Same as the static page: a name two degrees share (Economics) carries its degree.
   const majorTitle = (m: { title: string; course: string }) =>
-    data.value.components.filter((c) => c.title === m.title).length > 1 ? `${m.title} (${data.value.courses.find((c) => c.code === m.course)?.title ?? m.course})` : m.title
+    data.value.components.filter((c) => c.title === m.title).length > 1 ? `${m.title} (${latestCourse(data.value, m.course)?.title ?? m.course})` : m.title
   const pair = view.value === 'compare' ? pairFromSlug(param.value) : null
   document.title = pair
     ? `${t.value('compare.seoTitle', { a: pair[0], b: pair[1] })} | PickMySubjects`

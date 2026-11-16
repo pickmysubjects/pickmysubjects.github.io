@@ -1,3 +1,4 @@
+import { latestCourse } from '@/engine'
 import { careerName, careerText, componentCareers, type CareerLang } from '../engine/careers'
 import type { Dataset } from '../engine/schema'
 import { careerPhrase, careerShortName, subjectNote } from './careerPathText'
@@ -42,7 +43,7 @@ export function careersHtml(
   const e = componentCareers(c, componentId)
   if (!c || !e) return ''
   const title = data.components.find((x) => x.id === componentId)?.title ?? ''
-  const courseTitle = data.courses.find((x) => x.code === course)?.title ?? course
+  const courseTitle = latestCourse(data, course)?.title ?? course
   const study = c.courses[course]?.summary
   const studyLine = study ? t('careers.courseStudy', { course: courseTitle, summary: careerText(study, locale) }) : ''
   const subj = (code: string) => (data.subjects[code] ? `<a href="${subjectHref(code)}">${esc(code)}</a>` : esc(code))
@@ -120,7 +121,7 @@ export function careerPageHtml(
   listHref: string,
 ): string {
   const majors = majorsForCareer(data, target.id)
-  const courseTitle = (code: string) => data.courses.find((c) => c.code === code)?.title ?? code
+  const courseTitle = (code: string) => latestCourse(data, code)?.title ?? code
   const subj = (code: string) => `<a href="${subjectHref(code)}">${esc(code)} ${esc(data.subjects[code]?.title ?? '')}</a>`
   const tiers = (x: Tiered) =>
     TIERS.filter((tier) => x[tier].length)

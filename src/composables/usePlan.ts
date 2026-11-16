@@ -6,6 +6,7 @@ import {
   chosenLoad,
   componentCourse,
   findCourse,
+  latestCourse,
   generatePlan,
   offeredIn,
   recordedLoads,
@@ -197,7 +198,7 @@ export function usePlan() {
    */
   function chooseCourse(code: string): void {
     if (current.value !== undefined && setupChosen.value) return
-    const c = data.value.courses.find((x) => x.code === code)
+    const c = latestCourse(data.value, code)
     if (!c) return
     save((s) => ({ ...s, setup: { ...s.setup, course: c.code, courseYear: s.setup.startYear, major: '', major2: '', specialisation: '', minors: [], diploma: '', diplomaStream: '' } }))
   }

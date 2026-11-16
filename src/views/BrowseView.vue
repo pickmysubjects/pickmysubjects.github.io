@@ -10,7 +10,7 @@ import DegreePick from '@/components/browse/DegreePick.vue'
 import GoalPicker from '@/components/profile/GoalPicker.vue'
 import Interp from '@/components/Interp.vue'
 import Pager from '@/components/Pager.vue'
-import { clearFilters, EASY_CUTS, leadReasons, searchSuggestions, SHOWN_AS_FACTS, type FoundRow } from '@/engine'
+import { clearFilters, EASY_CUTS, leadReasons, searchSuggestions, SHOWN_AS_FACTS, type FoundRow, latestCourse } from '@/engine'
 import { link } from '@/composables/useView'
 import { useBrowse } from '@/composables/useBrowse'
 import { useDataset } from '@/composables/useDataset'
@@ -85,7 +85,7 @@ async function saveListImage(): Promise<void> {
   imaging.value = true
   try {
     const site = new URL(link(''), location.href)
-    const courseTitle = data.value.courses.find((c) => c.code === course.value)?.title ?? ''
+    const courseTitle = latestCourse(data.value, course.value)?.title ?? ''
     const result = await shareListImage({
       site: 'PickMySubjects',
       url: `${site.host}${site.pathname}`.replace(/\/$/, ''),

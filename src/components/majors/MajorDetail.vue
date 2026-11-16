@@ -10,7 +10,7 @@ import MajorStructure from './MajorStructure.vue'
 import DetailHero from '@/components/browse/DetailHero.vue'
 import GuideToc from '@/components/guide/GuideToc.vue'
 import SubjectSection from '@/components/subject/SubjectSection.vue'
-import { closeComponents, componentCareers, componentCourse, heldAsMinor, majorOverview, minorClash, sharedSubjects } from '@/engine'
+import { closeComponents, componentCareers, componentCourse, heldAsMinor, majorOverview, minorClash, sharedSubjects, latestCourse } from '@/engine'
 import { go, link } from '@/composables/useView'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
@@ -31,7 +31,7 @@ const major = computed(() => data.value.components.find((c) => c.id === props.id
 const close = computed(() => (major.value ? [] : closeComponents(data.value.components, props.id)))
 const overview = computed(() => (major.value ? majorOverview(data.value, major.value.id, major.value.course) : null))
 const year = computed(() => viewYear(plan.terms.value[0]?.year))
-const courseTitle = computed(() => data.value.courses.find((c) => c.code === major.value?.course)?.title ?? major.value?.course ?? '')
+const courseTitle = computed(() => latestCourse(data.value, major.value?.course)?.title ?? major.value?.course ?? '')
 
 const pathwayCount = computed(() => overview.value?.pathway.length ?? 0)
 const kind = computed(() => {

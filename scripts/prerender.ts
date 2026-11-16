@@ -15,7 +15,7 @@
 import './releaseGlobals'
 import { APP_VERSION, copyright, releaseDate } from '../src/release'
 import { localTitle, pickLocalized, withLocalTitle } from '../src/i18n/localized'
-import { degreeCourses } from '../src/engine/courseRules'
+import { degreeCourses, latestCourse } from '../src/engine/courseRules'
 import { emphasisParts } from '../src/engine/reviewAspects'
 import { comparePairs, isComparePair, pairSlug } from '../src/engine/comparePairs'
 import { NEWS } from '../src/content/news'
@@ -530,7 +530,7 @@ function majorPage(code: LocaleCode, m: (typeof majors)[number]): Page {
   const ce = componentCareers(data.careers, m.id)
   const jobs = careerJobLabels(data, m.id, code)
   const withCareers = m.kind === 'major' && !m.informal && !!ce && (ce.careerText || !!ce.accreditation)
-  const courseTitle = data.courses.find((c) => c.code === m.course)?.title ?? ''
+  const courseTitle = latestCourse(data, m.course)?.title ?? ''
   // Two degrees can each have a major of the same name (Economics in Arts and in Commerce): name the degree then.
   const shared = data.components.filter((c) => c.title === m.title).length > 1
   const shownTitle = shared && courseTitle ? `${m.title} (${courseTitle})` : m.title
@@ -697,7 +697,7 @@ function guideBody(code: LocaleCode, t: Translate, page: GuideCategory | 'overvi
   const slotHtml = (x: FirstYearSlot) =>
     x.kind === 'elective' ? `${esc(`${t(`guide.ns.elective.${x.category}`)} (${t('guide.ns.yourPick')}`)}${x.example ? `${esc(t('guide.ns.forExample'))}<a href="${href(code, `subject/${x.example}`)}">${x.example}</a>` : ''})` : `<a href="${href(code, `subject/${x.code}`)}">${x.code} ${esc(data.subjects[x.code]?.title ?? '')}</a>${x.kind === 'choice' ? ` (${esc(t('guide.ns.oneOf'))})` : ''}`
   const firstYearHtml = Object.entries(FIRST_YEARS)
-    .map(([course, sems]) => ({ title: data.courses.find((c) => c.code === course)?.title ?? course, sems }))
+    .map(([course, sems]) => ({ title: latestCourse(data, course)?.title ?? course, sems }))
     .sort((a, b) => a.title.localeCompare(b.title))
     .map(({ title, sems }) => `<h3>${esc(title)}</h3>\n${sems.map((slots, i) => `<p>${esc(t(i === 0 ? 'guide.ns.sem1' : 'guide.ns.sem2'))}:</p>${slots.length ? `<ul>${slots.map((x) => `<li>${slotHtml(x)}</li>`).join('')}</ul>` : `<p>${esc(t('guide.ns.yearLong'))}</p>`}`).join('\n')}`)
     .join('\n')

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { Flame, GraduationCap, Scale, SlidersHorizontal, Sparkles, X } from 'lucide-vue-next'
-import { activeFilters, chooseOrder, type ListGroup, type BrowseFilters, type BrowseSort } from '@/engine'
+import { activeFilters, chooseOrder, type ListGroup, type BrowseFilters, type BrowseSort, latestCourse } from '@/engine'
 import { link } from '@/composables/useView'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
@@ -20,7 +20,7 @@ const { t } = useI18n()
 const { data } = useDataset()
 const plan = usePlan()
 
-const courseTitle = computed(() => data.value.courses.find((c) => c.code === props.course)?.title ?? props.course)
+const courseTitle = computed(() => latestCourse(data.value, props.course)?.title ?? props.course)
 
 function set<K extends keyof BrowseFilters>(key: K, value: BrowseFilters[K]): void {
   filters.value = { ...filters.value, [key]: value }

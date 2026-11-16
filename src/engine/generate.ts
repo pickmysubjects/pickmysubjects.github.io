@@ -208,9 +208,12 @@ function diplomaOnlyAsCore(input: GenerateInput, required: Set<string>): { input
   ])
   const subjects = { ...input.data.subjects }
   const moved: string[] = []
+  // Only what the diploma will hold: past its total (a 112.5-point stream route in a 100-point
+  // diploma), the rest stays the degree's, in its own category, as the course check counts it.
+  const held = new Set(diplomaSplit({ ...input, completed: [...input.profile.results.map((r) => r.code), ...required], terms: [] } as unknown as Plan, input.data, diploma, stream).mine)
   for (const code of required) {
     const s = subjects[code]
-    if (s && !named.has(code) && inDiploma(input.data, diploma, stream, code)) {
+    if (s && !named.has(code) && held.has(code) && inDiploma(input.data, diploma, stream, code)) {
       subjects[code] = { ...s, categories: { ...s.categories, [input.course]: 'core' } }
       moved.push(code)
     }
@@ -252,6 +255,7 @@ function withDiplomaLevels(course: Course | undefined, moved: string[], data: Da
 }
 
 function buildPlan(given: GenerateInput): GenerateResult {
+  capsYear = given.courseYear
   let course = plannedCourse(given)
   const notes: Note[] = []
   const completed = [...passedCodes(given.profile.results, given.data.subjects), ...creditCodes(given.profile.credit)]
@@ -1066,6 +1070,8 @@ function clashes(code: string, done: Set<string>, required: Set<string>, data: D
  * subjects that run most often, until the threshold is met.
  */
 let chainDepth = 0
+/** The course year of the plan being built, for the caps prerequisite filling checks (set by buildPlan). */
+let capsYear = Number.MAX_SAFE_INTEGER
 
 function pickForPoints(
   req: { min: number; level?: number; area?: string; levels?: number[]; areas?: string[]; from?: string[] },
@@ -1139,7 +1145,8 @@ function pickForPoints(
   const picks: string[] = []
   // Within the course's caps first (level-1 points from one area, say); over one only when
   // nothing else is left.
-  const capCourse = data.courses.find((c) => c.code === course)
+  // The rules of the student's own course year (B-SCI's level-1 breadth cap differs between years).
+  const capCourse = findCourse(data, course, capsYear)
   // The subject and what it brings with it (BIOL20001's level-1 biology on top of a full level 1).
   const fitsCaps = (s: Subject) => {
     if (!capCourse) return true
