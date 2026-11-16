@@ -21,6 +21,35 @@ export interface SiteRelease {
 
 export const SITE_RELEASES: SiteRelease[] = [
   {
+    version: '1.0.1',
+    date: "2026-11-16",
+    links: [['subjects/'], ['subjects/']],
+    points: [
+      {
+        en: "What students say: see at a glance whether reviews call a subject hard or heavy, and tap a topic such as exams or group work to highlight what reviewers said about it.",
+        'zh-CN': "同学们怎么说：一眼看出评价觉得这门课难不难、累不累；点“考试”“小组作业”等主题，就能高亮评价里说到它的句子。",
+        'zh-TW': "同學們怎麼說：一眼看出評價覺得這門課難不難、累不累；點「考試」「小組作業」等主題，就能標示評價裡提到它的句子。",
+        ja: "みんなの声：評判で難しいか・重いかがひと目で分かり、「試験」「グループワーク」などのトピックをタップすると関係する文が強調されます。",
+        ko: "학생들 후기: 어려운지, 학습량이 많은지 한눈에 보이고, '시험', '조별 과제' 같은 주제를 누르면 관련 문장이 강조돼요.",
+        vi: "Sinh viên nói gì: thấy ngay đánh giá cho rằng môn khó hay nặng, và chạm vào chủ đề như thi cử hay làm nhóm để làm nổi các câu nói về nó.",
+        ms: "Kata pelajar: lihat sekilas sama ada ulasan kata subjek ini sukar atau berat, lalu ketik topik seperti peperiksaan atau kerja berkumpulan untuk menyerlahkan ayatnya.",
+        id: "Kata mahasiswa: lihat sekilas apakah ulasan menyebut mata kuliah ini sulit atau berat, lalu ketuk topik seperti ujian atau kerja kelompok untuk menyorot kalimatnya.",
+        hi: "छात्र क्या कहते हैं: एक नज़र में दिखता है कि रिव्यू विषय को कठिन या भारी मानते हैं या नहीं, और परीक्षा या ग्रुप वर्क जैसे टॉपिक पर टैप करके उससे जुड़े वाक्य हाइलाइट करें।",
+      },
+      {
+        en: "More subjects' 'Is it hard?' now draws on what students said in their reviews, not only the Handbook.",
+        'zh-CN': "更多课程的“难不难”现在会参考同学的评价，不再只看 Handbook。",
+        'zh-TW': "更多課程的「難不難」現在會參考同學的評價，不再只看 Handbook。",
+        ja: "より多くの科目で「難しい？」の判定が、Handbookだけでなく学生の評判も踏まえるようになりました。",
+        ko: "더 많은 과목의 '어려울까?'가 이제 Handbook뿐 아니라 학생 후기도 반영해요.",
+        vi: "Nhiều môn hơn giờ có mục 'Có khó không?' dựa trên cả đánh giá của sinh viên, không chỉ Handbook.",
+        ms: "Lebih banyak subjek kini menilai 'Susah tak?' berdasarkan ulasan pelajar juga, bukan Handbook sahaja.",
+        id: "Lebih banyak mata kuliah kini menilai 'Sulit nggak?' dari ulasan mahasiswa juga, bukan hanya Handbook.",
+        hi: "अब और विषयों में 'कठिन है?' सिर्फ़ Handbook नहीं, छात्रों के रिव्यू भी देखता है।",
+      },
+    ],
+  },
+  {
     version: '1.0.0',
     date: "2026-11-14",
     links: [
