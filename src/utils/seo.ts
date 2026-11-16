@@ -1,4 +1,4 @@
-import { factsYear, periodsFor, type PresetName, type Subject } from '@/engine'
+import { factsYear, periodsFor, plainEmphasis, type PresetName, type Subject } from '@/engine'
 import type { DifficultyLevel } from '@/engine/subjectFit'
 import type { LocaleCode } from '@/i18n/codes'
 import { describeReq } from '@/i18n/format'
@@ -181,7 +181,7 @@ export function subjectPageDescription(t: Translate, s: Subject, locale: LocaleC
     [
       `${s.code}${CJK.has(locale) ? '：' : ': '}${first}`,
       ...rest,
-      firstPoint ? pickLocalized(firstPoint, locale) : '',
+      firstPoint ? plainEmphasis(pickLocalized(firstPoint, locale)) : '',
       s.about ? pickLocalized(s.about.learn, locale) : '',
       t('seo.subjectDesc', { code: s.code, title, level: s.level, points: s.points }),
       t('seo.rateDesc'),

@@ -2347,7 +2347,7 @@ export const vi: Messages = {
     searchFirst: 'Tìm một môn',
     notFoundText: 'Hãy thêm môn này để giúp các bạn khác — chỉ mất khoảng một phút.',
     addIt: 'Thêm môn học',
-    discussTag: {"mcq-exam": "Thi cuối kỳ chủ yếu trắc nghiệm", "practice-repeats": "Đề thi trùng nhiều với bài luyện", "scaled": "Có nâng điểm", "no-calculator": "Không được dùng máy tính khi thi", "avoid-summer": "Không nên học kỳ hè"}, discussPart: {"content": "Độ khó và nội dung", "work": "Bài tập và thi", "study": "Cách học", "watch": "Cần lưu ý"},
+    discussTag: {"mcq-exam": "Thi cuối kỳ chủ yếu trắc nghiệm", "practice-repeats": "Đề thi trùng nhiều với bài luyện", "scaled": "Có nâng điểm", "no-calculator": "Không được dùng máy tính khi thi", "avoid-summer": "Không nên học kỳ hè"}, discussAspect: {"exam": "Thi cử", "assessment": "Bài tập", "group": "Làm nhóm", "teaching": "Giảng dạy", "marking": "Chấm điểm", "workload": "Khối lượng", "background": "Kiến thức nền", "resources": "Tài liệu học"}, discussVerdict: {"difficulty": {"hard": "Đánh giá: khó", "easy": "Đánh giá: dễ", "mixed": "Đánh giá: tùy người"}, "workload": {"heavy": "Đánh giá: khối lượng nặng", "light": "Đánh giá: khối lượng nhẹ", "mixed": "Đánh giá: khối lượng tùy"}}, discussAspectHint: "Chạm vào một chủ đề để làm nổi các câu nói về nó", discussPart: {"content": "Độ khó và nội dung", "work": "Bài tập và thi", "study": "Cách học", "watch": "Cần lưu ý"},
     discussNote: "Tóm tắt các đánh giá công khai, không chấm điểm ở đây.",
     tipsTitle: "Lời khuyên từ sinh viên",
     tipsNote: "Do sinh viên đã học môn này viết. Mỗi lời khuyên được duyệt tay, bỏ tên và thông tin liên lạc trước khi hiện, và chỉ hiện khi môn có đủ 3. Thấy nội dung không phù hợp thì báo cáo.",

@@ -141,8 +141,9 @@ describe('page titles and descriptions', () => {
         expect(textWidth(description), `${code} ${s.code}: ${description}`).toBeLessThanOrEqual(DESC_WIDTH)
       }
     }
-    const { description } = subjectMeta('en', 'COMP10001')
-    expect(description).toMatch(/Final exam 50%/)
+    // A subject whose reviews give no verdict, so the facts have room (MAST10007: 60% exam).
+    const { description } = subjectMeta('en', 'MAST10007')
+    expect(description).toMatch(/Final exam 60%/)
     expect(description).toMatch(/Runs in 2026/)
   })
 
@@ -166,8 +167,8 @@ describe('page titles and descriptions', () => {
   })
 
   it('a subject title keeps code, name and verdict, and drops the site name before the facts', () => {
-    const { title } = subjectMeta('en', 'COMP10001')
-    expect(title).toMatch(/^COMP10001 Foundations of Computing \(UniMelb\): /)
+    const { title } = subjectMeta('en', 'MAST10007')
+    expect(title).toMatch(/^MAST10007 Linear Algebra \(UniMelb\): /)
     expect(textWidth(title)).toBeLessThanOrEqual(TITLE_WIDTH)
   })
 

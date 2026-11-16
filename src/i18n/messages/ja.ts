@@ -2347,7 +2347,7 @@ export const ja: Messages = {
     searchFirst: '科目を検索',
     notFoundText: '追加して他の学生を助けてください。約1分で終わります。',
     addIt: '科目を追加',
-    discussTag: {"mcq-exam": "期末試験はほぼ選択式", "practice-repeats": "試験は練習問題とよく重なる", "scaled": "点数の調整あり", "no-calculator": "試験で電卓不可", "avoid-summer": "サマー履修は非推奨"}, discussPart: {"content": "難易度と内容", "work": "課題と試験", "study": "勉強のしかた", "watch": "注意点"},
+    discussTag: {"mcq-exam": "期末試験はほぼ選択式", "practice-repeats": "試験は練習問題とよく重なる", "scaled": "点数の調整あり", "no-calculator": "試験で電卓不可", "avoid-summer": "サマー履修は非推奨"}, discussAspect: {"exam": "試験", "assessment": "課題", "group": "グループワーク", "teaching": "授業・教員", "marking": "採点", "workload": "負担", "background": "必要な前提知識", "resources": "学習資料"}, discussVerdict: {"difficulty": {"hard": "評判：難しめ", "easy": "評判：易しめ", "mixed": "評判：人による"}, "workload": {"heavy": "評判：負担が重い", "light": "評判：負担が軽い", "mixed": "評判：負担は人による"}}, discussAspectHint: "トピックをタップすると、関係する文が強調されます", discussPart: {"content": "難易度と内容", "work": "課題と試験", "study": "勉強のしかた", "watch": "注意点"},
     discussNote: "公開レビューのまとめです。ここでは点数をつけていません。",
     tipsTitle: "先輩からのアドバイス",
     tipsNote: "履修した学生が書いたものです。表示前に一件ずつ手で確認し、名前や連絡先は載せません。1科目3件たまってから表示します。問題があれば報告してください。",

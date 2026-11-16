@@ -16,6 +16,7 @@ import './releaseGlobals'
 import { APP_VERSION, copyright, releaseDate } from '../src/release'
 import { localTitle, pickLocalized, withLocalTitle } from '../src/i18n/localized'
 import { degreeCourses } from '../src/engine/courseRules'
+import { emphasisParts } from '../src/engine/reviewAspects'
 import { comparePairs, isComparePair, pairSlug } from '../src/engine/comparePairs'
 import { NEWS } from '../src/content/news'
 import { aggregateRatingLd, BRAND, listPageDescription, listPageTitle, PRESET_TITLE_KEYS, subjectFactSentences, subjectPageDescription, subjectPageTitle } from '../src/utils/seo'
@@ -381,7 +382,7 @@ function subjectPage(code: LocaleCode, s: Subject): Page {
   if (factsRow) reviews.push(factsRow)
   for (const d of ds) {
     const l = discussionLabels(t, d)
-    reviews.push(`<h3>${esc(l.source)}</h3><ul>${d.points.map((p) => `<li>${esc(pickLocalized(p, code))}</li>`).join('')}</ul><p><a href="${esc(d.url)}" rel="nofollow">${esc(l.read)}</a></p>`)
+    reviews.push(`<h3>${esc(l.source)}</h3><ul>${d.points.map((p) => `<li>${emphasisParts(pickLocalized(p, code)).map((x) => (x.strong ? `<strong>${esc(x.text)}</strong>` : esc(x.text))).join('')}</li>`).join('')}</ul><p><a href="${esc(d.url)}" rel="nofollow">${esc(l.read)}</a></p>`)
   }
   if (ds.length) reviews.push(`<p>${esc(t('subject.discussNote'))}</p>`)
   // Approved "What I wish I knew" tips, only for subjects with MIN_COMMENTS of them (as in the app).

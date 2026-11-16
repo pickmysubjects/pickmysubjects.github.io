@@ -2347,7 +2347,7 @@ export const ko: Messages = {
     searchFirst: '과목 검색',
     notFoundText: '추가해서 다른 학생들을 도와주세요. 1분 정도면 됩니다.',
     addIt: '과목 추가',
-    discussTag: {"mcq-exam": "기말이 대부분 객관식", "practice-repeats": "시험이 연습 문제와 많이 겹침", "scaled": "점수 조정 있음", "no-calculator": "시험에 계산기 불가", "avoid-summer": "여름 학기 비추천"}, discussPart: {"content": "난이도와 내용", "work": "과제와 시험", "study": "공부 방법", "watch": "주의할 점"},
+    discussTag: {"mcq-exam": "기말이 대부분 객관식", "practice-repeats": "시험이 연습 문제와 많이 겹침", "scaled": "점수 조정 있음", "no-calculator": "시험에 계산기 불가", "avoid-summer": "여름 학기 비추천"}, discussAspect: {"exam": "시험", "assessment": "과제", "group": "조별 과제", "teaching": "수업·강사", "marking": "채점", "workload": "학습량", "background": "필요한 배경지식", "resources": "학습 자료"}, discussVerdict: {"difficulty": {"hard": "평가: 어려운 편", "easy": "평가: 쉬운 편", "mixed": "평가: 사람마다 다름"}, "workload": {"heavy": "평가: 학습량 많음", "light": "평가: 학습량 적음", "mixed": "평가: 학습량 엇갈림"}}, discussAspectHint: "주제를 누르면 관련 문장이 강조돼요", discussPart: {"content": "난이도와 내용", "work": "과제와 시험", "study": "공부 방법", "watch": "주의할 점"},
     discussNote: "공개 후기 요약이며, 여기서 점수를 매기지 않아요.",
     tipsTitle: "선배들의 팁",
     tipsNote: "이 과목을 들은 학생들이 쓴 글이에요. 하나씩 직접 확인하고 이름과 연락처는 빼고 보여 줘요. 과목당 3개가 모여야 표시돼요. 문제가 있으면 신고해 주세요.",

@@ -2347,7 +2347,7 @@ export const zhTW: Messages = {
     searchFirst: '搜尋一門課',
     notFoundText: '新增它來幫助其他同學——大約只要一分鐘。',
     addIt: '新增課程',
-    discussTag: {"mcq-exam": "期末多為選擇題", "practice-repeats": "考題和練習題重複多", "scaled": "有調分", "no-calculator": "考試不能用計算機", "avoid-summer": "不建議暑期修"}, discussPart: {"content": "難度和內容", "work": "作業和考試", "study": "怎麼學", "watch": "要注意"},
+    discussTag: {"mcq-exam": "期末多為選擇題", "practice-repeats": "考題和練習題重複多", "scaled": "有調分", "no-calculator": "考試不能用計算機", "avoid-summer": "不建議暑期修"}, discussAspect: {"exam": "考試", "assessment": "作業", "group": "小組作業", "teaching": "老師和上課", "marking": "給分", "workload": "工作量", "background": "需要的基礎", "resources": "學習資料"}, discussVerdict: {"difficulty": {"hard": "評價：偏難", "easy": "評價：不難", "mixed": "評價：難易因人而異"}, "workload": {"heavy": "評價：工作量大", "light": "評價：工作量小", "mixed": "評價：工作量不一"}}, discussAspectHint: "點一個主題，標示評價裡提到它的句子", discussPart: {"content": "難度和內容", "work": "作業和考試", "study": "怎麼學", "watch": "要注意"},
     discussNote: "公開評價的摘要，這裡不評分。",
     tipsTitle: "同學的建議",
     tipsNote: "由修過這門課的同學寫，每則都經人工審核，去掉姓名和聯絡方式後才顯示；一門課滿 3 則才會出現。看到不該有的內容可以檢舉。",

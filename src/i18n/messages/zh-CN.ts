@@ -2347,7 +2347,7 @@ export const zhCN: Messages = {
     searchFirst: '搜索一门课',
     notFoundText: '添加它来帮助其他同学——大约只要一分钟。',
     addIt: '添加课程',
-    discussTag: {"mcq-exam": "期末多为选择题", "practice-repeats": "考题和练习题重复多", "scaled": "有调分", "no-calculator": "考试不能用计算器", "avoid-summer": "不建议暑期修"}, discussPart: {"content": "难度和内容", "work": "作业和考试", "study": "怎么学", "watch": "要注意"},
+    discussTag: {"mcq-exam": "期末多为选择题", "practice-repeats": "考题和练习题重复多", "scaled": "有调分", "no-calculator": "考试不能用计算器", "avoid-summer": "不建议暑期修"}, discussAspect: {"exam": "考试", "assessment": "作业", "group": "小组作业", "teaching": "老师和上课", "marking": "给分", "workload": "工作量", "background": "需要的基础", "resources": "学习资料"}, discussVerdict: {"difficulty": {"hard": "评价：偏难", "easy": "评价：不难", "mixed": "评价：难易因人而异"}, "workload": {"heavy": "评价：工作量大", "light": "评价：工作量小", "mixed": "评价：工作量不一"}}, discussAspectHint: "点一个主题，高亮评价里说到它的句子", discussPart: {"content": "难度和内容", "work": "作业和考试", "study": "怎么学", "watch": "要注意"},
     discussNote: "公开评价的摘要，这里不打分。",
     tipsTitle: "同学的建议",
     tipsNote: "由上过这门课的同学写，每条都经人工审核，去掉名字和联系方式后才显示；一门课满 3 条才会出现。看到不该有的内容可以举报。",
