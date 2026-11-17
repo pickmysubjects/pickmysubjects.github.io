@@ -648,18 +648,23 @@ onBeforeUnmount(() => {
     padding-top: 16px;
   }
 
-  /* A short spec sheet: one fact a row, the names in one column, the values beside them. */
+  /* The four short facts side by side, each name over its value; prerequisites get their own
+     line. One row instead of five, so "Is it hard?" below comes into the first screen. */
   .keyfacts {
     display: grid;
     flex: 1 1 100%;
-    grid-template-columns: max-content minmax(0, 1fr);
-    gap: 10px 20px;
-    align-items: baseline;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px 10px;
   }
 
   .kf,
   .kf:first-child {
-    display: contents;
+    padding: 0;
+    border-left: 0;
+  }
+
+  .kf:nth-child(5) {
+    grid-column: 1 / -1;
   }
 
   .kf dd,

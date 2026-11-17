@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { thisYear as calendarYear } from '@/engine/dataYear'
 import { link } from '@/composables/useView'
-import { computed, shallowRef } from 'vue'
+import { computed, onMounted, shallowRef, watch } from 'vue'
+import { trackEvent } from '@/utils/analytics'
 import { ArrowLeft, ArrowRight, Check, Search } from 'lucide-vue-next'
 import { STUDY_LOADS, canEnterIn, cannotCombine, componentCourse, findCourse, nextEntry, diplomaClash, heldAsMinor, majorClash, maxMajors, minorClash, type Component, type Course, type Period } from '@/engine'
 import { useDataset } from '@/composables/useDataset'
@@ -53,6 +54,15 @@ const shownCourses = computed(() => {
 })
 const draft = shallowRef<PlanSetup>({ ...props.setup, ...start0 })
 const step = shallowRef(Math.min(Math.max(props.startAt, 0), 2))
+// Each step counted once per opening (anonymous, no answers), to see where students stop.
+const counted = new Set<number>()
+function countStep(n: number): void {
+  if (counted.has(n)) return
+  counted.add(n)
+  trackEvent(n === 0 ? 'plan-step-1' : n === 1 ? 'plan-step-2' : 'plan-step-3')
+}
+onMounted(() => countStep(step.value))
+watch(step, countStep)
 const thisYear = calendarYear()
 // A saved start older than the usual range stays offered, so opening the wizard doesn't lose it.
 const firstYear = Math.min(thisYear - 2, fromRecord.value?.year ?? thisYear, draft.value.startYear || thisYear)

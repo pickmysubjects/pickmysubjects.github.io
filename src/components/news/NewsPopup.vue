@@ -8,14 +8,13 @@ import { useI18n } from '@/i18n'
 
 /**
  * The latest news from the person who makes the site, popping up once at the top right (full width
- * on phones) a moment after a browsing page opens. Closing it or opening it remembers that note, so
- * it comes back only when there is a new one. Never on pages where the student is busy working
- * (planner, record, tools, forms) or on the news page itself; no overlay, the page stays usable.
+ * on phones) a moment after the home page opens. Closing it or opening it remembers that note, so
+ * it comes back only when there is a new one. Home only: most visitors land on a subject page from
+ * search, and a note there covers what they came to read. No overlay, the page stays usable.
  */
 const props = defineProps<{ view: string }>()
 const { t, locale } = useI18n()
 const KEY = 'sc:news-seen'
-const QUIET = new Set(['plan', 'record', 'tools', 'contribute', 'feedback', 'news', 'privacy'])
 const latest = NEWS[0]
 const stamp = latest ? `${latest.date}:${latest.title.en}` : ''
 
@@ -32,7 +31,7 @@ onMounted(() => {
 })
 onBeforeUnmount(() => clearTimeout(timer))
 
-const show = computed(() => !!latest && ready.value && !seen.value && !QUIET.has(props.view))
+const show = computed(() => !!latest && ready.value && !seen.value && props.view === 'home')
 const lede = computed(() => latest?.body[locale.value]?.[0] ?? '')
 
 function remember(): void {
