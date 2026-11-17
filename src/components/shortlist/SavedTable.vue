@@ -266,7 +266,7 @@ th,
 td {
   padding: 12px 10px;
   text-align: left;
-  vertical-align: top;
+  vertical-align: middle;
   border-bottom: 1px solid var(--line);
 }
 
