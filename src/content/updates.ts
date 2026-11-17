@@ -23,7 +23,7 @@ export const SITE_RELEASES: SiteRelease[] = [
   {
     version: '1.0.2',
     date: null,
-    links: [['subjects/'], ['subjects/']],
+    links: [['subjects/']],
     points: [
       {
         en: "Rating is easier: it's at the top of 'What students say', a wrong tap can be undone for a few seconds, and you can add a tip or more answers right after.",
@@ -35,17 +35,6 @@ export const SITE_RELEASES: SiteRelease[] = [
         ms: "Penilaian kini di atas 'Kata pelajar': tersalah tekan boleh dibatalkan seketika, kemudian tambah tip atau jawapan lain.",
         id: "Penilaian kini di atas 'Kata mahasiswa': salah tekan bisa dibatalkan sebentar, lalu tambahkan tips atau jawaban lain.",
         hi: "रेटिंग अब 'छात्र क्या कहते हैं' में सबसे ऊपर है: गलत टैप कुछ सेकंड में वापस लें, फिर टिप या और जवाब जोड़ें।",
-      },
-      {
-        en: "Changed your mind? You can change a rating you sent from the same browser.",
-        'zh-CN': "改主意了？用同一个浏览器发过的评分，现在可以修改。",
-        'zh-TW': "改變主意了？用同一個瀏覽器送出的評分，現在可以修改。",
-        ja: "気が変わったら、同じブラウザから送った評価を変更できます。",
-        ko: "생각이 바뀌었나요? 같은 브라우저에서 보낸 평가는 이제 바꿀 수 있어요.",
-        vi: "Đổi ý? Giờ bạn có thể sửa đánh giá đã gửi từ cùng trình duyệt.",
-        ms: "Ubah fikiran? Anda kini boleh ubah penilaian yang dihantar dari pelayar yang sama.",
-        id: "Berubah pikiran? Kini kamu bisa mengubah penilaian yang dikirim dari browser yang sama.",
-        hi: "मन बदल गया? उसी ब्राउज़र से भेजी गई रेटिंग अब बदल सकते हैं।",
       },
     ],
   },
