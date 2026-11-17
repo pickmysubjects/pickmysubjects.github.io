@@ -13,6 +13,7 @@ import { localTitle } from '@/i18n/localized'
 import { link } from '@/composables/useView'
 import RatingForm from '@/components/rating/RatingForm.vue'
 import QuickRate from '@/components/rating/QuickRate.vue'
+import type { QuickStart } from '@/composables/useMyRatings'
 import { useRated } from '@/composables/useRated'
 
 const results = defineModel<Profile['results']>({ required: true })
@@ -31,12 +32,12 @@ const rating = shallowRef<string | null>(null)
 const thanks = shallowRef<string | null>(null)
 // Just added a subject not rated yet: ask how hard it was, in one tap, right then (once per subject).
 const quick = shallowRef<string | null>(null)
-const quickDifficulty = shallowRef<number | undefined>()
-const quickDifficultyCode = shallowRef<string | null>(null)
-function more(code: string, n: number): void {
+const quickStart = shallowRef<QuickStart | undefined>()
+const quickStartCode = shallowRef<string | null>(null)
+function more(code: string, start: QuickStart): void {
   quick.value = null
-  quickDifficultyCode.value = code
-  quickDifficulty.value = n
+  quickStartCode.value = code
+  quickStart.value = start
   rating.value = code
 }
 
@@ -267,7 +268,7 @@ function remove(i: number): void {
     </p>
     <p v-if="thanks" class="thanks" role="status">{{ t('rating.sent') }}</p>
     <QuickRate v-if="quick && !rating" :key="quick" class="rating-form" :code="quick" @more="more(quick, $event)" />
-    <RatingForm v-if="rating" :key="rating" class="rating-form" :code="rating" :difficulty-given="rating === quickDifficultyCode ? quickDifficulty : undefined" @done="onRated(rating, $event)" />
+    <RatingForm v-if="rating" :key="rating" class="rating-form" :code="rating" :start="rating === quickStartCode ? quickStart : undefined" @done="onRated(rating, $event)" />
   </section>
 </template>
 

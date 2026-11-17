@@ -11,9 +11,11 @@ import { FACT_KEYS, FACT_QUESTIONS, LANGUAGES, NO_LANGUAGE, type FactKey } from 
 import { hasQuestion, isFormReady, submitGoogleForm } from '@/utils/googleForm'
 import { useGradeShare } from '@/composables/useGradeShare'
 import { useProfile } from '@/composables/useProfile'
+import { useMyRatings, type QuickStart } from '@/composables/useMyRatings'
 
-// difficultyGiven: already sent with the one-tap rating (QuickRate), so not asked or sent again.
-const props = defineProps<{ code: string; difficultyGiven?: number }>()
+// start: where the one-tap rating (QuickRate) had got to. edit: change this browser's earlier
+// rating of the subject, starting from what it sent (useMyRatings).
+const props = defineProps<{ code: string; start?: QuickStart; edit?: boolean }>()
 const emit = defineEmits<{ done: [sent: boolean] }>()
 const { t, locale } = useI18n()
 
@@ -22,28 +24,38 @@ const thisYear = calendarYear()
 // where they took it comes from My page if it's there; otherwise blank rather than a guess that
 // would quietly go out with every rating.
 const { profile, setOwnRating } = useProfile()
+const mine = useMyRatings()
+const editId = mine.idFor(props.code)
+// Answers sent before (editing), read back into the form's own values.
+const before = props.edit ? (mine.get(props.code)?.answers ?? {}) : {}
+const text = (k: string): string => (typeof before[k] === 'string' ? (before[k] as string) : '')
+const list = (k: string): string[] => (Array.isArray(before[k]) ? (before[k] as string[]) : [])
+const num = (k: string): number | null => (/^[1-5]$/.test(text(k)) ? Number(text(k)) : null)
+// The one-tap difficulty already counted and can't be replaced: not asked or sent again.
+const difficultyGiven = props.start?.sent && !mine.editable ? props.start.difficulty : undefined
 const taken = profile.value.results.find((r) => r.code === props.code)
-const year = shallowRef<number | ''>(taken?.year ?? '')
-const semester = shallowRef<Period | ''>(taken?.period ?? '')
-const difficulty = shallowRef<number | null>(null)
-const workload = shallowRef<number | null>(null)
-const generosity = shallowRef<number | null>(null)
-const examDifficulty = shallowRef<number | null>(null)
-const usefulness = shallowRef<number | null>(null)
-const interest = shallowRef<number | null>(null)
-const teaching = shallowRef<number | null>(null)
-const overall = shallowRef<number | null>(null)
-const hours = shallowRef<number | ''>('')
-const grade = shallowRef('')
-const skills = shallowRef<Skill[]>([])
+const year = shallowRef<number | ''>(/^\d{4}$/.test(text('year')) ? Number(text('year')) : (taken?.year ?? ''))
+const SEMESTER_OF: Record<string, Period> = { Summer: 'summer', 'Semester 1': 'semester-1', Winter: 'winter', 'Semester 2': 'semester-2' }
+const semester = shallowRef<Period | ''>(SEMESTER_OF[text('semester')] ?? taken?.period ?? '')
+const difficulty = shallowRef<number | null>(num('difficulty') ?? props.start?.difficulty ?? null)
+const workload = shallowRef<number | null>(num('workload'))
+const generosity = shallowRef<number | null>(num('generosity'))
+const examDifficulty = shallowRef<number | null>(num('examDifficulty'))
+const usefulness = shallowRef<number | null>(num('usefulness'))
+const interest = shallowRef<number | null>(num('interest'))
+const teaching = shallowRef<number | null>(num('teaching'))
+const overall = shallowRef<number | null>(num('overall'))
+const hours = shallowRef<number | ''>(text('hours') === '' ? '' : Number(text('hours')))
+const grade = shallowRef(text('grade'))
+const skills = shallowRef<Skill[]>(list('skills').filter((x): x is Skill => (SKILLS as readonly string[]).includes(x)))
 // Optional tags (shown once the form has the question). Nothing is prefilled.
-const tags = shallowRef<RatingTag[]>([])
+const tags = shallowRef<RatingTag[]>(list('tags').filter((x): x is RatingTag => (RATING_TAGS as readonly string[]).includes(x)))
 const hasTags = hasQuestion(RATINGS_FORM, 'tags')
-const recommend = shallowRef('')
+const recommend = shallowRef(text('recommend'))
 // Facts the Handbook doesn't give (exam format, recordings, …). Each shows only once the Google
 // Form has that question; the value sent is the form's English option label.
-const facts = shallowRef<Partial<Record<FactKey, string>>>({})
-const languages = shallowRef<string[]>([])
+const facts = shallowRef<Partial<Record<FactKey, string>>>(Object.fromEntries(FACT_KEYS.filter((k) => text(k)).map((k) => [k, text(k)])))
+const languages = shallowRef<string[]>(list('languages'))
 const hasLanguages = hasQuestion(RATINGS_FORM, 'languages')
 const OPTION_TEXT: Record<FactKey, Record<string, string>> = {
   exam: { open: 'studentFacts.q.examOpen', closed: 'studentFacts.q.examClosed', none: 'studentFacts.q.examNone' },
@@ -69,7 +81,7 @@ function toggleLanguage(x: string): void {
   if (languages.value.includes(x)) languages.value = languages.value.filter((y) => y !== x)
   else languages.value = x === NO_LANGUAGE ? [x] : [...languages.value.filter((y) => y !== NO_LANGUAGE), x]
 }
-const wish = shallowRef('')
+const wish = shallowRef(text('wish') || (props.start?.wish ?? ''))
 const status = shallowRef<'idle' | 'sending' | 'failed'>('idle')
 // With a grade band, the student's WAM range without this subject goes too (when the form has the
 // question and My page has enough other marks): that's what makes a band comparable across students.
@@ -102,7 +114,7 @@ const scales = [
   { key: 'difficulty', model: difficulty, low: 'rating.diffLow', high: 'rating.diffHigh' },
   { key: 'workload', model: workload, low: 'rating.loadLow', high: 'rating.loadHigh' },
   { key: 'generosity', model: generosity, low: 'rating.genLow', high: 'rating.genHigh' },
-].filter((x) => !(x.key === 'difficulty' && props.difficultyGiven))
+].filter((x) => !(x.key === 'difficulty' && difficultyGiven))
 // Optional extras, shown only once the Google Form has the matching question.
 const extraScales = [
   { key: 'overall', model: overall, low: 'rating.teachLow', high: 'rating.teachHigh' },
@@ -128,12 +140,12 @@ async function send(): Promise<void> {
   if (!complete.value) return
   status.value = 'sending'
   try {
-    await submitGoogleForm(RATINGS_FORM, {
+    const answers = {
       code: props.code,
       year: year.value === '' ? '' : String(year.value),
       semester: semester.value === '' ? '' : formSemester[semester.value],
       // Unanswered stays blank: "null" would be an invalid scale answer and the form would drop the whole response.
-      difficulty: props.difficultyGiven ? '' : asText(difficulty.value),
+      difficulty: difficultyGiven ? '' : asText(difficulty.value),
       workload: asText(workload.value),
       generosity: asText(generosity.value),
       examDifficulty: asText(examDifficulty.value),
@@ -154,12 +166,15 @@ async function send(): Promise<void> {
       recommend: recommend.value,
       wish: wish.value.trim(),
       language: locale.value,
-    })
-    trackEvent('rating-submit')
+      ...(mine.editable ? { editId } : {}),
+    }
+    await submitGoogleForm(RATINGS_FORM, answers)
+    if (mine.editable) mine.save(props.code, editId, answers)
+    trackEvent(props.edit ? 'rating-edit' : 'rating-submit')
     if (wamBand.value) markShared([props.code])
     // Kept in this browser too: how they found it shapes their own suggestions.
     const rec = recommend.value === 'Yes' || recommend.value === 'Maybe' || recommend.value === 'No' ? recommend.value : undefined
-    setOwnRating(props.code, { difficulty: props.difficultyGiven ?? difficulty.value ?? undefined, interest: interest.value ?? undefined, recommend: rec })
+    setOwnRating(props.code, { difficulty: difficultyGiven ?? difficulty.value ?? undefined, interest: interest.value ?? undefined, recommend: rec })
     emit('done', true)
   } catch {
     status.value = 'failed'
@@ -194,7 +209,15 @@ function value(event: Event): string {
         <p v-if="wamBand" class="rate-note">{{ t('rating.wamBandNoteShort', { range: wamBand }) }}<InfoTip :text="t('rating.wamBandNote', { range: wamBand })" /></p>
       </fieldset>
 
-      <details class="rate-more">
+      <label class="field">
+        {{ t('rating.wish') }}
+        <!-- Longer tips are never published, so the box stops where the site would. -->
+        <textarea v-model="wish" class="textarea" rows="3" :maxlength="MAX_COMMENT_LENGTH" :placeholder="t('rating.tipPlaceholder')" />
+        <span class="count" aria-live="polite">{{ wish.length }} / {{ MAX_COMMENT_LENGTH }}</span>
+        <span class="hint">{{ t('rating.wishHint') }}<InfoTip :text="t('rating.wishInfo')" /></span>
+      </label>
+
+      <details class="rate-more" :open="edit">
         <summary class="rate-more-summary">{{ t('rating.more') }}</summary>
         <div class="rate-more-body">
           <div class="rate-row">
@@ -302,13 +325,6 @@ function value(event: Event): string {
             </button>
           </fieldset>
 
-          <label class="field">
-            {{ t('rating.wish') }}
-            <!-- Longer tips are never published, so the box stops where the site would. -->
-            <textarea v-model="wish" class="textarea" rows="3" :maxlength="MAX_COMMENT_LENGTH" />
-            <span class="count" aria-live="polite">{{ wish.length }} / {{ MAX_COMMENT_LENGTH }}</span>
-            <span class="hint">{{ t('rating.wishHint') }}<InfoTip :text="t('rating.wishInfo')" /></span>
-          </label>
         </div>
       </details>
 
@@ -317,7 +333,7 @@ function value(event: Event): string {
 
     <div class="rate-actions">
       <button v-if="ready" class="button" type="submit" :disabled="!complete || status === 'sending'">
-        {{ t('rating.submit') }}
+        {{ edit ? t('rating.update') : t('rating.submit') }}
       </button>
       <button class="button button-quiet" type="button" @click="emit('done', false)">{{ t('rating.cancel') }}</button>
       <span v-if="ready && !complete" class="rate-need">{{ t('rating.needOne') }}</span>

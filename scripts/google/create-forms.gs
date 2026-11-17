@@ -162,3 +162,17 @@ function addTagsQuestion() {
   const link = form.createResponse().withItemResponse(item.createResponse(['interesting'])).toPrefilledUrl();
   Logger.log('Tags question pre-filled link (the entry.<number> goes into tags in src/config.ts): ' + link);
 }
+
+// Run once on the existing ratings form: adds the optional "Edit id" question (short text, not
+// required). The app sends a random id per student and subject; sending again with the same id
+// replaces the earlier answer (scripts/ratings/aggregate.ts latestEdits). Its entry.<number> goes
+// in RATINGS_FORM.entries.editId in src/config.ts.
+function addEditIdQuestion() {
+  const form = FormApp.openByUrl(RATINGS_FORM_EDIT_URL);
+  const title = 'Edit id';
+  const existing = form.getItems().filter(function (i) { return i.getTitle() === title; })[0];
+  const item = existing ? existing.asTextItem() : form.addTextItem().setTitle(title);
+  item.setRequired(false).setHelpText('Filled in by the app. Leave blank.');
+  const link = form.createResponse().withItemResponse(item.createResponse('abc123')).toPrefilledUrl();
+  Logger.log('Edit id question pre-filled link (the entry.<number> goes into editId in src/config.ts): ' + link);
+}

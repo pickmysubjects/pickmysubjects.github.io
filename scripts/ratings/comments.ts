@@ -9,7 +9,7 @@
  * Each published comment carries only its text, the term and the app language.
  */
 import { createHash } from 'node:crypto'
-import { COLUMNS, screenRows } from './aggregate'
+import { COLUMNS, latestEdits, screenRows } from './aggregate'
 import { MAX_COMMENT_LENGTH, MIN_COMMENTS, type StudentComment } from '../../src/engine/comments'
 import { PERIODS, type Period } from '../../src/engine/schema'
 import { LOCALE_CODES, type LocaleCode } from '../../src/i18n/codes'
@@ -71,7 +71,8 @@ const termKey = (c: StudentComment) => (c.year ?? 0) * 10 + (c.period ? PERIODS.
  * reveal when each comment arrived.
  */
 export function buildComments(rows: Record<string, string>[], now: Date, known?: Set<string>): Record<string, StudentComment[]> {
-  const kept = screenRows(rows, now, known, (r) => (r[COMMENT_COLUMNS.wish] ?? '') !== '' && approved(r))
+  // An edited rating replaces its earlier row, tip included: the new tip waits for approval again.
+  const kept = screenRows(latestEdits(rows), now, known, (r) => (r[COMMENT_COLUMNS.wish] ?? '') !== '' && approved(r))
   const bySubject = new Map<string, StudentComment[]>()
   for (const r of kept) {
     const text = screenComment(r[COMMENT_COLUMNS.wish] ?? '')

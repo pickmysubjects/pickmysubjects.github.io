@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { aggregate, buildRatingFiles, COLUMNS, rowsToObjects, screenRows } from '../scripts/ratings/aggregate'
+import { aggregate, buildRatingFiles, COLUMNS, latestEdits, rowsToObjects, screenRows } from '../scripts/ratings/aggregate'
 
 const header = Object.values(COLUMNS)
 function row(over: Partial<Record<keyof typeof COLUMNS, string>> = {}): string[] {
@@ -28,6 +28,7 @@ function row(over: Partial<Record<keyof typeof COLUMNS, string>> = {}): string[]
     groups: '',
     cost: '',
     languages: '',
+    editId: '',
   }
   return (Object.keys(COLUMNS) as (keyof typeof COLUMNS)[]).map((k) => over[k] ?? base[k])
 }
@@ -301,5 +302,35 @@ describe('why rows are turned away', () => {
     const row = (code: string, extra: Record<string, string> = {}) => ({ [COLUMNS.code]: code, [COLUMNS.difficulty]: '3', ...extra })
     screenRows([row('bad'), row('ZZZZ99999'), row('COMP10001', { [COLUMNS.year]: '1990' }), row('COMP10001', { [COLUMNS.difficulty]: '' }), row('COMP10001'), row('COMP10001')], new Date('2026-11-05'), new Set(['COMP10001']), (r) => (r[COLUMNS.difficulty] ?? '') !== '', why)
     expect(why).toEqual({ 'not a subject code': 1, 'subject not in our data': 1, 'year not plausible': 1, 'no answer this part uses': 1, 'same answers sent again': 1 })
+  })
+})
+
+describe('edited ratings', () => {
+  const now = new Date('2026-11-18')
+  it('keeps only the newest row per subject and edit id', () => {
+    const rows = rowsToObjects([
+      header,
+      row({ timestamp: '11/17/2026 10:00:00', difficulty: '1', editId: 'a1' }),
+      row({ timestamp: '11/17/2026 10:00:30', difficulty: '4', editId: 'a1' }),
+      row({ timestamp: '11/17/2026 11:00:00', difficulty: '2', editId: 'b2' }),
+      row({ timestamp: '11/17/2026 12:00:00', difficulty: '3' }),
+    ])
+    expect(latestEdits(rows).map((r) => r[COLUMNS.difficulty])).toEqual(['4', '2', '3'])
+    // The same id on another subject is another rating.
+    const other = rowsToObjects([header, row({ editId: 'a1' }), row({ timestamp: 't2', code: 'COMP10001', editId: 'a1' })])
+    expect(latestEdits(other)).toHaveLength(2)
+  })
+
+  it('counts an edited rating once, with its newest answers', () => {
+    const rows = rowsToObjects([
+      header,
+      row({ timestamp: '11/17/2026 10:00:00', difficulty: '1', editId: 'a1' }),
+      row({ timestamp: '11/18/2026 9:00:00', difficulty: '5', editId: 'a1' }),
+      row({ timestamp: '11/17/2026 12:00:00', difficulty: '3' }),
+      row({ timestamp: '11/17/2026 13:00:00', difficulty: '3', workload: '2' }),
+    ])
+    const { subjects } = aggregate(rows, now)
+    expect(subjects.COMP30027?.reviews).toBe(3)
+    expect(subjects.COMP30027?.difficulty).toBe(3.7)
   })
 })

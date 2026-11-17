@@ -9,6 +9,7 @@ import DiscussionSummary from '@/components/subject/DiscussionSummary.vue'
 import SubjectTips from '@/components/subject/SubjectTips.vue'
 import StudentFactsRow from '@/components/subject/StudentFactsRow.vue'
 import { useRated } from '@/composables/useRated'
+import { useMyRatings, type QuickStart } from '@/composables/useMyRatings'
 import { useI18n } from '@/i18n'
 
 /**
@@ -23,9 +24,19 @@ const { rated } = useRated()
 // The one-tap rating stays on screen after its tap (for its thanks and "tell us more"), so whether
 // to show it is decided once, when the page opens.
 const quickLive = shallowRef(!rated.value.has(props.subject.code))
-const quickDifficulty = shallowRef<number | undefined>()
-function more(n: number): void {
-  quickDifficulty.value = n
+const quickStart = shallowRef<QuickStart | undefined>()
+function more(start: QuickStart): void {
+  quickStart.value = start
+  editing.value = false
+  formOpen.value = true
+}
+// A rating sent from this browser can be changed later (when the form takes an edit id).
+const mine = useMyRatings()
+const editing = shallowRef(false)
+const canEdit = computed(() => mine.editable && !!mine.get(props.subject.code))
+function edit(): void {
+  quickStart.value = undefined
+  editing.value = true
   formOpen.value = true
 }
 const { t } = useI18n()
@@ -86,20 +97,25 @@ const discussions = computed(() => (props.detailReady ? (props.subject.discussio
         </div>
       </dl>
     </template>
-    <!-- With no ratings the section's summary line says so, unless reviews from elsewhere fill it. -->
-    <p v-else-if="discussions.length" class="muted">{{ t('subject.noRatings') }}</p>
-    <StudentFactsRow v-if="detailReady" :subject="subject" />
-    <!-- What students said comes first; asking for a rating comes after it. -->
-    <DiscussionSummary v-if="discussions.length" class="reviews" :discussions="discussions" />
-    <SubjectTips v-if="detailReady && subject.comments" :code="subject.code" :comments="subject.comments" />
+    <!-- With no ratings the section's summary line says so, unless reviews from elsewhere fill it
+         (or the one-tap card below asks to be the first). -->
+    <p v-else-if="discussions.length && !(quickLive && !formOpen && !thanks)" class="muted">{{ t('subject.noRatings') }}</p>
 
+    <!-- Asking for a rating comes right under the numbers, before the long reviews, so it's seen. -->
     <p v-if="thanks" class="good" role="status">{{ t('rating.sent') }}</p>
-    <QuickRate v-else-if="quickLive && !formOpen" class="rate-quick" :code="subject.code" @more="more" />
-    <p v-else-if="rated.has(subject.code) && !formOpen" class="muted">{{ t('rating.rated') }}</p>
+    <QuickRate v-else-if="quickLive && !formOpen" class="rate-card" :code="subject.code" :count="subject.signals?.reviews" :first="!hasRatings" @more="more" />
+    <p v-else-if="rated.has(subject.code) && !formOpen" class="muted rated-line">
+      {{ t('rating.rated') }}
+      <button v-if="canEdit" class="rated-edit" type="button" @click="edit">{{ t('rating.change') }}</button>
+    </p>
     <button v-else-if="!formOpen" class="button button-quiet rate-ask" :class="{ 'rate-ask-strong': taken }" type="button" @click="formOpen = true">
       <Star :size="16" aria-hidden="true" /> {{ t('subject.rateAsk') }}
     </button>
-    <RatingForm v-if="formOpen" :code="subject.code" :difficulty-given="quickDifficulty" @done="emit('rated', $event)" />
+    <RatingForm v-if="formOpen" :code="subject.code" :start="quickStart" :edit="editing" @done="emit('rated', $event)" />
+
+    <StudentFactsRow v-if="detailReady" :subject="subject" />
+    <DiscussionSummary v-if="discussions.length" class="reviews" :discussions="discussions" />
+    <SubjectTips v-if="detailReady && subject.comments" :code="subject.code" :comments="subject.comments" />
   </div>
 </template>
 
@@ -222,6 +238,36 @@ const discussions = computed(() => (props.detailReady ? (props.subject.discussio
 
 .rate-ask {
   justify-self: start;
+}
+
+/* The one-tap rating: a card of its own under the numbers, so it reads as an invitation. */
+.rate-card {
+  padding: 14px 16px;
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--line));
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--accent) 6%, var(--surface));
+}
+
+.rated-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+  margin: 0;
+}
+
+.rated-edit {
+  padding: 0;
+  color: var(--accent);
+  font: inherit;
+  font-weight: var(--fw-semibold);
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.rated-edit:hover {
+  color: var(--ink);
 }
 
 .rate-ask-strong {

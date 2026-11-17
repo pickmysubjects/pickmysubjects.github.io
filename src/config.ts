@@ -45,6 +45,7 @@ export type RatingField =
   | 'groups'
   | 'cost'
   | 'languages'
+  | 'editId'
 
 export const RATINGS_FORM: GoogleFormConfig<RatingField> = {
   formId: '1FAIpQLSfJcmsShsJlO8jOqAun_X4NksYJ2O0D8Vi0AVJJ5dwzoNzcRw',
@@ -78,8 +79,11 @@ export const RATINGS_FORM: GoogleFormConfig<RatingField> = {
     groups: 'entry.1373690995',
     cost: 'entry.659192873',
     languages: 'entry.262982733',
+    // A random id per student and subject, so a rating can be changed later (added with
+    // addEditIdQuestion()). Blank until the form has it: ratings then can't be edited after sending.
+    editId: '',
   },
-  optional: ['examDifficulty', 'usefulness', 'interest', 'teaching', 'overall', 'wamBand', 'tags', 'exam', 'lectures', 'groups', 'cost', 'languages'],
+  optional: ['examDifficulty', 'usefulness', 'interest', 'teaching', 'overall', 'wamBand', 'tags', 'exam', 'lectures', 'groups', 'cost', 'languages', 'editId'],
 }
 
 export type FeedbackField = 'topic' | 'rating' | 'subject' | 'message' | 'contact' | 'language'

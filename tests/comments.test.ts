@@ -72,6 +72,14 @@ describe('screenComment (automatic filter)', () => {
 })
 
 describe('buildComments', () => {
+  it('an edited rating replaces its earlier tip, which waits for approval again', () => {
+    const old = row({ editId: 'x9', wish: 'First version of the tip.' })
+    const edit = row({ editId: 'x9', wish: 'Second version of the tip.', show: '' })
+    expect(build(row(), row(), old, edit)).toEqual({})
+    const approved = row({ editId: 'x9', wish: 'Second version of the tip.' })
+    expect(build(row(), row(), old, approved).COMP30027?.map((c) => c.text)).toContain('Second version of the tip.')
+  })
+
   it('keeps a comment with no year (the year is optional), without a term, and the file still validates', () => {
     const out = build(row({ year: '', semester: 'Semester 1', wish: 'No year on this one.' }), row(), row(), row())
     expect(out.COMP30027).toHaveLength(4)

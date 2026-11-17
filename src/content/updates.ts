@@ -21,6 +21,35 @@ export interface SiteRelease {
 
 export const SITE_RELEASES: SiteRelease[] = [
   {
+    version: '1.0.2',
+    date: null,
+    links: [['subjects/'], ['subjects/']],
+    points: [
+      {
+        en: "Rating is easier: it's at the top of 'What students say', a wrong tap can be undone for a few seconds, and you can add a tip or more answers right after.",
+        'zh-CN': "打分放到了“同学们怎么说”最上面，点错了几秒内可以撤销，点完还能直接留建议或多回答几题。",
+        'zh-TW': "評分放到了「同學們怎麼說」最上面，點錯了幾秒內可以撤銷，點完還能直接留建議或多回答幾題。",
+        ja: "評価は「みんなの声」の一番上に。押し間違いは数秒以内なら取り消せて、続けてアドバイスや追加の回答もできます。",
+        ko: "평가가 '학생들 후기' 맨 위로 왔어요. 잘못 누르면 몇 초 안에 취소하고, 바로 팁이나 추가 답변을 남길 수 있어요.",
+        vi: "Đánh giá nằm ở đầu 'Sinh viên nói gì': bấm nhầm có vài giây để hoàn tác, rồi có thể thêm lời khuyên hoặc trả lời thêm.",
+        ms: "Penilaian kini di atas 'Kata pelajar': tersalah tekan boleh dibatalkan seketika, kemudian tambah tip atau jawapan lain.",
+        id: "Penilaian kini di atas 'Kata mahasiswa': salah tekan bisa dibatalkan sebentar, lalu tambahkan tips atau jawaban lain.",
+        hi: "रेटिंग अब 'छात्र क्या कहते हैं' में सबसे ऊपर है: गलत टैप कुछ सेकंड में वापस लें, फिर टिप या और जवाब जोड़ें।",
+      },
+      {
+        en: "Changed your mind? You can change a rating you sent from the same browser.",
+        'zh-CN': "改主意了？用同一个浏览器发过的评分，现在可以修改。",
+        'zh-TW': "改變主意了？用同一個瀏覽器送出的評分，現在可以修改。",
+        ja: "気が変わったら、同じブラウザから送った評価を変更できます。",
+        ko: "생각이 바뀌었나요? 같은 브라우저에서 보낸 평가는 이제 바꿀 수 있어요.",
+        vi: "Đổi ý? Giờ bạn có thể sửa đánh giá đã gửi từ cùng trình duyệt.",
+        ms: "Ubah fikiran? Anda kini boleh ubah penilaian yang dihantar dari pelayar yang sama.",
+        id: "Berubah pikiran? Kini kamu bisa mengubah penilaian yang dikirim dari browser yang sama.",
+        hi: "मन बदल गया? उसी ब्राउज़र से भेजी गई रेटिंग अब बदल सकते हैं।",
+      },
+    ],
+  },
+  {
     version: '1.0.1',
     date: "2026-11-16",
     links: [['subjects/'], ['subjects/']],

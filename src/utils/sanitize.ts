@@ -191,3 +191,24 @@ export const SHORTLIST_MAX = 40
 /** Subject codes as saved on the shortlist: well-formed, upper case, each once, oldest first. */
 export const cleanShortlist = (x: unknown): string[] =>
   [...new Set(strings(x).map((c) => c.trim().toUpperCase()).filter((c) => /^[A-Z]{4}\d{5}$/.test(c)))].slice(0, SHORTLIST_MAX)
+
+/** One saved rating: its edit id and the answers as they were sent (form values, strings). */
+export interface MyRating {
+  id: string
+  answers: Record<string, string | string[]>
+}
+/** Ratings this browser sent, by subject code; anything malformed is dropped. */
+export function cleanMyRatings(x: unknown): Record<string, MyRating> {
+  if (!isObject(x)) return {}
+  const out: Record<string, MyRating> = {}
+  for (const [code, v] of Object.entries(x)) {
+    if (!/^[A-Z]{4}\d{5}$/.test(code) || !isObject(v) || typeof v.id !== 'string' || !/^[a-z0-9]{6,32}$/.test(v.id) || !isObject(v.answers)) continue
+    const answers: Record<string, string | string[]> = {}
+    for (const [k, a] of Object.entries(v.answers)) {
+      if (typeof a === 'string') answers[k] = a
+      else if (Array.isArray(a)) answers[k] = strings(a)
+    }
+    out[code] = { id: v.id, answers }
+  }
+  return out
+}

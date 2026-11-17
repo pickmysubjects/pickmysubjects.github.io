@@ -6,6 +6,7 @@ import { useI18n } from '@/i18n'
 import { useRated } from '@/composables/useRated'
 import { RATINGS_FORM } from '@/config'
 import { isFormReady } from '@/utils/googleForm'
+import type { QuickStart } from '@/composables/useMyRatings'
 
 /** A one-time offer to rate a subject the student just marked done. Dismissed for good either way. */
 const props = defineProps<{ code: string }>()
@@ -14,9 +15,9 @@ const { t } = useI18n()
 const { markRated, markPrompted } = useRated()
 const open = shallowRef(false)
 const thanks = shallowRef(false)
-const quickDifficulty = shallowRef<number | undefined>()
-function more(n: number): void {
-  quickDifficulty.value = n
+const quickStart = shallowRef<QuickStart | undefined>()
+function more(start: QuickStart): void {
+  quickStart.value = start
   open.value = true
 }
 
@@ -42,7 +43,7 @@ function onDone(sent: boolean): void {
         <button class="button button-quiet" type="button" @click="emit('close')">{{ t('rating.notNow') }}</button>
       </div>
     </template>
-    <RatingForm v-else :code="code" :difficulty-given="quickDifficulty" @done="onDone" />
+    <RatingForm v-else :code="code" :start="quickStart" @done="onDone" />
     <button v-if="thanks" class="button button-quiet" type="button" @click="emit('close')">{{ t('subject.close') }}</button>
   </section>
 </template>

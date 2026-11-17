@@ -49,6 +49,9 @@ export const COLUMNS = {
   groups: FACT_QUESTIONS.groups.title,
   cost: FACT_QUESTIONS.cost.title,
   languages: LANGUAGES_TITLE,
+  // A random id the browser makes for one student's rating of one subject; sending again with the
+  // same id is an edit (src/composables/useMyRatings.ts). Optional: older rows have none.
+  editId: 'Edit id',
 } as const
 
 /** Questions whose answer makes a row count as a rating. */
@@ -235,6 +238,23 @@ export function joinQuickRatings(rows: Record<string, string>[]): Record<string,
   return out.filter((_, i) => !dropped.has(i))
 }
 
+/**
+ * A student who changes their rating sends it again with the same edit id: only the newest row per
+ * subject and id counts (earlier ones, and any tip on them, drop out). Rows without an id are
+ * each their own rating. Rows come in the sheet's order (oldest first).
+ */
+export function latestEdits(rows: Record<string, string>[]): Record<string, string>[] {
+  const last = new Map<string, number>()
+  rows.forEach((r, i) => {
+    const id = (r[COLUMNS.editId] ?? '').trim()
+    if (id) last.set(`${normaliseCode(r[COLUMNS.code] ?? '')}|${id}`, i)
+  })
+  return rows.filter((r, i) => {
+    const id = (r[COLUMNS.editId] ?? '').trim()
+    return !id || last.get(`${normaliseCode(r[COLUMNS.code] ?? '')}|${id}`) === i
+  })
+}
+
 /** Rated subjects needed before the rating prior is estimated from the ratings. */
 export const MIN_PRIOR_SUBJECTS = 30
 
@@ -277,7 +297,7 @@ export function aggregate(rows: Record<string, string>[], now = new Date(), know
   const bySubject = new Map<string, Record<string, string>[]>()
 
   const reasons: Record<string, number> = {}
-  const kept = joinQuickRatings(screenRows(rows, now, known, rated, reasons))
+  const kept = joinQuickRatings(screenRows(latestEdits(rows), now, known, rated, reasons))
   for (const row of kept) {
     const code = row[COLUMNS.code] as string
     bySubject.set(code, [...(bySubject.get(code) ?? []), row])
@@ -355,7 +375,7 @@ export function buildRatingFiles(values: string[][], known?: Set<string>, now = 
   const model: FittedModel = {}
   if (grades.fitted) model.grade = { ...grades.model, rows: grades.rows }
   if (grades.featurePrior) model.featurePrior = grades.featurePrior
-  const ratingPrior = fitRatingPrior(joinQuickRatings(screenRows(rows, now, known, rated)))
+  const ratingPrior = fitRatingPrior(joinQuickRatings(screenRows(latestEdits(rows), now, known, rated)))
   if (ratingPrior !== undefined) model.ratingPrior = ratingPrior
   return { ratings: result.subjects, offsets: grades.offsets, model, accepted: result.accepted, rejected: result.rejected, reasons: result.reasons }
 }

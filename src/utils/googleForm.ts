@@ -57,6 +57,8 @@ export async function submitGoogleForm<K extends string>(
   await fetch(`https://docs.google.com/forms/d/e/${cfg.formId}/formResponse`, {
     method: 'POST',
     mode: 'no-cors',
+    // Still goes if the page is closing (a one-tap rating sent as the student leaves).
+    keepalive: true,
     body,
   })
 }
