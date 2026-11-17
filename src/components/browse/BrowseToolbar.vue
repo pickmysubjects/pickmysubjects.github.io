@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { Flame, GraduationCap, Scale, SlidersHorizontal, Sparkles, X } from 'lucide-vue-next'
-import { activeFilters, chooseOrder, type ListGroup, type BrowseFilters, type BrowseSort, latestCourse } from '@/engine'
+import { GraduationCap, SlidersHorizontal, X } from 'lucide-vue-next'
+import { activeFilters, type ListGroup, type BrowseFilters, type BrowseSort, latestCourse } from '@/engine'
 import { link } from '@/composables/useView'
 import { useDataset } from '@/composables/useDataset'
 import { usePlan } from '@/composables/usePlan'
@@ -26,10 +26,10 @@ function set<K extends keyof BrowseFilters>(key: K, value: BrowseFilters[K]): vo
   filters.value = { ...filters.value, [key]: value }
 }
 
-// The order the chips set, shown where the sort menu goes, with a way to turn it off.
+// The order the preset chips set, named where the sort menu goes.
 const order = computed(() => {
   const f = filters.value
-  return f.mine ? { icon: Sparkles, label: t.value('browse.preset.mine') } : f.rank ? { icon: f.rank === 'easy' ? Scale : Flame, label: t.value(`browse.rankList.${f.rank}`) } : null
+  return f.mine ? { label: t.value('browse.preset.mine') } : f.rank ? { label: t.value(`browse.rankList.${f.rank}`) } : null
 })
 // Every filter that's on, each with its own ✕ (an old /subjects/no-exam/ address included).
 const chips = computed(() => {
@@ -73,13 +73,12 @@ function optionName(g: ListGroup, v: string | number): string {
         <span>{{ plan.courseChosen.value ? t('majors.shownFor', { course: courseTitle }) : t('majors.shownDefault', { course: courseTitle }) }}</span>
         <a class="degree-change" :href="link('record')">{{ t('majors.change') }}</a>
       </p>
-      <!-- "Fits me" or a ranked list sets the order itself: said here, with a way to turn it off. -->
-      <span v-if="order" class="sort">
+      <!-- "Fits me" or a ranked list sets the order itself: named here as plain text (its chip
+           above, with the ✕, is the one way to turn it off). -->
+      <p v-if="order" class="sort sort-fixed">
         <span class="sort-label">{{ t('browse.sort') }}</span>
-        <button type="button" class="chip-on" :aria-label="t('browse.removeFilter', { x: order.label })" @click="filters = chooseOrder(filters, null)">
-          <component :is="order.icon" :size="14" aria-hidden="true" />{{ order.label }}<X :size="14" aria-hidden="true" />
-        </button>
-      </span>
+        <span class="sort-value">{{ order.label }}</span>
+      </p>
       <label v-else class="sort">
         <span class="sort-label">{{ t('browse.sort') }}</span>
         <select class="select-glass" :value="filters.sort" @change="set('sort', ($event.target as HTMLSelectElement).value as BrowseSort)">
@@ -141,11 +140,15 @@ function optionName(g: ListGroup, v: string | number): string {
   color: var(--ink-soft);
 }
 
+/* Up to two lines, then cut: the degree's name is the part that matters. */
 .degree > span {
+  display: -webkit-box;
   min-width: 0;
   overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  line-height: 1.35;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
 }
 
 .degree svg {
@@ -181,6 +184,17 @@ function optionName(g: ListGroup, v: string | number): string {
 
 .sort .select-glass {
   min-height: 36px;
+}
+
+/* Plain text sits as far from the bar's right end as the count does from its left. */
+.sort-fixed {
+  min-height: 36px;
+  margin: 0 10px 0 auto;
+}
+
+.sort-value {
+  font-weight: var(--fw-semibold);
+  color: var(--ink);
 }
 
 .ftoggle {
@@ -286,6 +300,15 @@ function optionName(g: ListGroup, v: string | number): string {
 
   .sort-label {
     display: none;
+  }
+
+  /* Without its menu, the order needs its name to read as one. */
+  .sort-fixed {
+    margin-right: 0;
+  }
+
+  .sort-fixed .sort-label {
+    display: inline;
   }
 
   .sort .select-glass {

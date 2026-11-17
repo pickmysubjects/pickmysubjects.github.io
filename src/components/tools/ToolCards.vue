@@ -20,7 +20,7 @@ const ARTS = {
         <span class="card-text">
           <span class="card-name">{{ t(x.key) }}</span>
           <span class="card-desc">{{ t(x.text) }}</span>
-          <span class="card-go">{{ t('tools.open') }}</span>
+          <span class="button button-accent card-go">{{ t('tools.open') }}</span>
         </span>
         <span class="card-art" aria-hidden="true"><component :is="ARTS[x.art]" /></span>
       </a>
@@ -38,9 +38,19 @@ const ARTS = {
   list-style: none;
 }
 
+/* Cards in a row share their rows (text, art), so the Open buttons line up even when one
+   description runs to two lines. */
+.cards > li {
+  display: grid;
+  grid-row: span 2;
+  grid-template-rows: subgrid;
+  gap: 0;
+}
+
 .card {
   display: grid;
-  grid-template-rows: auto 1fr;
+  grid-row: span 2;
+  grid-template-rows: subgrid;
   gap: var(--space-4);
   height: 100%;
   padding: 28px 32px;
@@ -50,10 +60,17 @@ const ARTS = {
   transition: box-shadow 0.15s, border-color 0.15s;
 }
 
+/* Name and description on top, the Open button at the bottom: every card's button on one line,
+   however long its description. */
 .card-text {
   display: grid;
+  grid-template-rows: auto 1fr auto;
   gap: 8px;
   justify-items: start;
+}
+
+.card-desc {
+  align-self: start;
 }
 
 .card-name {
@@ -68,17 +85,9 @@ const ARTS = {
   overflow-wrap: anywhere;
 }
 
-/* Looks like the site's accent button; the whole card is the link. */
+/* The site's accent button, as a look only: the whole card is the link. */
 .card-go {
-  display: inline-flex;
-  align-items: center;
-  min-height: var(--control-h);
   margin-top: 4px;
-  padding: 0 20px;
-  border-radius: 999px;
-  background: var(--accent);
-  color: var(--accent-ink);
-  font-weight: var(--fw-semibold);
 }
 
 .card:hover {

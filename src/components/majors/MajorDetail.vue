@@ -74,8 +74,8 @@ const shared = computed(() => {
 const sections = computed(() =>
   [
     { id: 'm-core', title: t.value('majors.structureTitle'), show: !!overview.value },
-    { id: 'm-careers', title: t.value('careers.title'), show: hasCareers.value },
     { id: 'm-compare', title: t.value('majors.compareTitle'), show: !!overview.value && others.value.length > 0 },
+    { id: 'm-careers', title: t.value('careers.title'), show: hasCareers.value },
   ]
     .filter((x) => x.show)
     .map(({ id, title }) => ({ id, title, sub: false })),
@@ -170,10 +170,7 @@ function planWithIt(): void {
           </SubjectSection>
         </template>
 
-        <div v-if="hasCareers" id="m-careers" class="card surface">
-          <MajorCareers :id="major.id" :course="major.course" :title="major.title" />
-        </div>
-
+        <!-- Short, and about the structure above: before the longer careers part. -->
         <SubjectSection v-if="overview && others.length" id="m-compare" :title="t('majors.compareTitle')">
           <label class="compare-pick">
             <span class="visually-hidden">{{ t('majors.comparePick') }}</span>
@@ -192,6 +189,10 @@ function planWithIt(): void {
             <a class="compare-open" :href="link(`majors/${otherId}`)">{{ t('majors.compareOpen') }}</a>
           </template>
         </SubjectSection>
+
+        <div v-if="hasCareers" id="m-careers" class="card surface">
+          <MajorCareers :id="major.id" :course="major.course" :title="major.title" />
+        </div>
 
         <p class="foot">{{ t('majors.source') }}</p>
       </div>

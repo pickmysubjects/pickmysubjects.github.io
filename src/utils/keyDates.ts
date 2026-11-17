@@ -106,6 +106,14 @@ export function datesForTerms(items: KeyDate[], terms: { year: number; period: s
   return items.filter((d) => wanted.has(`${d.year}-${d.term}`) && (d.kind === 'census' || d.kind === 'exams' || d.kind === 'results'))
 }
 
+/**
+ * Re-enrolment open today (the on-time window, not the late one with its fee), or null. Its
+ * `year` is the academic year being enrolled for, its `end` the last day without a late fee.
+ */
+export function openReenrolment(items: KeyDate[], today: string): KeyDate | null {
+  return items.find((d) => d.kind === 'reenrol' && d.start <= today && today <= d.end) ?? null
+}
+
 /** An iCalendar file of all-day events. `label` names each item (in the reader's language). */
 export function buildIcs(items: KeyDate[], label: (d: KeyDate) => string): string {
   const stamp = `${compact(KEY_DATES_CHECKED)}T000000Z`

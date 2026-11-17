@@ -107,7 +107,7 @@ const verdict = computed(() => {
       </div>
       <label class="wc-target">
         <span class="wc-label">{{ t('wamGoal.target') }}</span>
-        <input class="input" type="number" inputmode="decimal" min="0" max="100" step="1" :value="target ?? ''" @change="onTarget" />
+        <input class="input" type="number" inputmode="decimal" min="0" max="100" step="1" placeholder="75" :value="target ?? ''" @change="onTarget" />
       </label>
       <p v-if="targetSaved" class="wc-note" role="status">{{ t('wamCalc.saved') }}</p>
       <div v-if="need !== null && need > 50 && need <= 100" class="wc-need">

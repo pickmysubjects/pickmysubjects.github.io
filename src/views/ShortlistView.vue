@@ -1,18 +1,20 @@
 <script setup lang="ts">
 import InfoTip from '@/components/InfoTip.vue'
-import { computed } from 'vue'
+import { computed, shallowRef } from 'vue'
+import SubjectSearch from '@/components/SubjectSearch.vue'
 import DetailHero from '@/components/browse/DetailHero.vue'
 import SavedTable from '@/components/shortlist/SavedTable.vue'
 import PairLearn from '@/components/shortlist/PairLearn.vue'
 import { compareFromQuery, useShortlist } from '@/composables/useShortlist'
-import { link, useView } from '@/composables/useView'
+import { go, link, useView } from '@/composables/useView'
 import { useDataset } from '@/composables/useDataset'
 import { useI18n } from '@/i18n'
 import { isComparePair, pairFromSlug } from '@/engine/comparePairs'
 
 /**
- * Saved subjects, and the comparison of them: one table, a row per saved subject. An old compare
- * link (?compare=A,B,C, or #compare-title from the menu) opens the same table with those first.
+ * Saved subjects, and the comparison of them: one table, a row per subject. Any subject can be
+ * added to compare from the search at the top, without saving it first (it goes in ?compare=, so
+ * the address shares the same table); saving with the heart keeps it here for good.
  */
 const { t } = useI18n()
 const { view, param, query } = useView()
@@ -29,28 +31,50 @@ const cantBoth = computed(() => !!pair.value && isComparePair(data.value.subject
 const title = computed(() => (pair.value ? t.value('compare.pairTitle', { a: pair.value[0], b: pair.value[1] }) : t.value('shortlist.title')))
 
 const saved = computed(() => shortlist.codes.value.filter((c) => data.value.subjects[c]))
-const asked = computed(() => (pair.value ? [...pair.value] : compareFromQuery(query.value.get('compare')).filter((c) => data.value.subjects[c])))
-// A subject from a shared compare link that isn't saved here still gets its row, with a save button.
-const codes = computed(() => (pair.value ? [...pair.value] : [...new Set([...saved.value, ...asked.value])]))
+// Subjects added just to compare: from a shared link's ?compare=, then the search.
+const extra = shallowRef<string[]>(compareFromQuery(query.value.get('compare')).filter((c) => data.value.subjects[c]))
+const asked = computed(() => (pair.value ? [...pair.value] : extra.value))
+// A subject added to compare that isn't saved still gets its row, with a save button and an ×.
+const codes = computed(() => (pair.value ? [...pair.value] : [...new Set([...saved.value, ...extra.value])]))
+const droppable = computed(() => extra.value.filter((c) => !shortlist.codes.value.includes(c)))
+
+// The address keeps the compared subjects, so it can be shared or reloaded as it is.
+function keepInAddress(): void {
+  const q = new URLSearchParams(location.search)
+  if (extra.value.length) q.set('compare', extra.value.join(','))
+  else q.delete('compare')
+  const search = q.toString()
+  history.replaceState(history.state, '', location.pathname + (search ? `?${search}` : '') + location.hash)
+}
+function addCompare(code: string): void {
+  // On a two-subject page, a third one opens the full table with all three.
+  if (pair.value) return go(`shortlist?compare=${[...pair.value, code].join(',')}`)
+  if (codes.value.includes(code)) return
+  extra.value = [...extra.value, code]
+  keepInAddress()
+}
+function dropCompare(code: string): void {
+  extra.value = extra.value.filter((c) => c !== code)
+  keepInAddress()
+}
 </script>
 
 <template>
   <div class="shortlist">
     <DetailHero :title="title" :art="art">
       <p v-if="pair" class="lede">{{ cantBoth ? t('compare.cantBoth') : t('compare.pairLede') }}</p>
-      <p v-else-if="codes.length" class="lede">{{ t('shortlist.lede') }}<InfoTip :text="t('shortlist.local')" /></p>
+      <p v-else class="lede">{{ t('shortlist.compareLede') }}<InfoTip :text="t('shortlist.local')" /></p>
     </DetailHero>
 
-    <section v-if="codes.length" id="compare-title" class="list surface" :aria-label="title">
-      <SavedTable :codes="codes" :highlight="asked" />
+    <section id="compare-title" class="list surface" :aria-label="title">
+      <div class="add-row">
+        <SubjectSearch class="add-search" select compact :placeholder="t('shortlist.compareAdd')" @pick="addCompare" />
+        <a v-if="!codes.length" class="add-browse" :href="link('subjects')">{{ t('shortlist.browseLink') }} →</a>
+      </div>
+      <SavedTable v-if="codes.length" :codes="codes" :highlight="asked" :droppable="droppable" @drop="dropCompare" />
     </section>
 
     <PairLearn v-if="pair" :a="pair[0]" :b="pair[1]" />
-
-    <section v-else-if="!codes.length" class="empty surface">
-      <p>{{ t('shortlist.empty') }}</p>
-      <a class="button button-accent" :href="link('subjects')">{{ t('shortlist.browseLink') }}</a>
-    </section>
   </div>
 </template>
 
@@ -73,28 +97,35 @@ const codes = computed(() => (pair.value ? [...pair.value] : [...new Set([...sav
   scroll-margin-top: 88px;
 }
 
-.empty {
+/* The search to add a subject, lined up with the table's left edge below it. */
+.add-row {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
   gap: var(--space-3) var(--space-5);
-  padding: var(--space-5);
+  padding: var(--space-4) 16px var(--space-2);
 }
 
-.empty p {
-  margin: 0;
-  color: var(--ink-soft);
+/* Nothing to compare yet: the search alone, with even space above and below. */
+.add-row:only-child {
+  padding-bottom: var(--space-4);
 }
+
+.add-search {
+  flex: 1 1 320px;
+  max-width: 480px;
+}
+
+.add-browse {
+  font-weight: var(--fw-semibold);
+  white-space: nowrap;
+}
+
 
 @media (max-width: 640px) {
   .shortlist {
     gap: var(--space-4);
     padding-top: var(--space-3);
-  }
-
-  .empty {
-    padding: var(--space-4);
   }
 }
 </style>

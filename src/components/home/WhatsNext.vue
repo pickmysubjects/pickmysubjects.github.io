@@ -72,10 +72,14 @@ const examSubjects = computed(() => {
 
 <template>
   <section v-if="exam && examSubjects.length" class="next glass next-exam" aria-labelledby="next-title">
-    <h2 id="next-title" class="next-head">
-      <GraduationCap :size="18" aria-hidden="true" />{{ t('next.examTitle', { term: termName(exam.year, exam.term) }) }}
-      <span class="next-sub">{{ t('next.examsOn', { range: range(exam.exams) }) }}</span>
-    </h2>
+    <div class="exam-top">
+      <h2 id="next-title" class="next-head">
+        <GraduationCap :size="18" aria-hidden="true" />{{ t('next.examTitle', { term: termName(exam.year, exam.term) }) }}
+        <span class="next-sub">{{ t('next.examsOn', { range: range(exam.exams) }) }}</span>
+      </h2>
+      <!-- The whole exam period, not one subject: beside the heading, right-aligned with the rows' links. -->
+      <a class="exam-link" :href="link('tools/revision/')">{{ t('next.revision') }}<ArrowRight :size="14" aria-hidden="true" /></a>
+    </div>
     <ul class="exam-list">
       <li v-for="s in examSubjects" :key="s.code" class="exam-row">
         <span class="exam-name"><span class="exam-code">{{ s.code }}</span> {{ s.title }}</span>
@@ -220,6 +224,14 @@ const examSubjects = computed(() => {
 
 .next-exam {
   display: grid;
+}
+
+.exam-top {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 4px 16px;
 }
 
 .exam-list {

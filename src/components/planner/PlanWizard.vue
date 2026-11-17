@@ -329,7 +329,7 @@ function chooseCourse(c: Course): void {
       <button v-else-if="cancellable" class="button button-quiet" type="button" @click="emit('cancel')">{{ t('rating.cancel') }}</button>
       <!-- Nothing to go back to on a first visit: keep "Next" on the right. -->
       <span v-else aria-hidden="true" />
-      <button v-if="step < 2" class="button" type="button" :disabled="step === 0 && !draft.course" @click="step++">
+      <button v-if="step < 2" class="button button-accent" type="button" :disabled="step === 0 && !draft.course" @click="step++">
         {{ t('wizard.next') }} <ArrowRight :size="16" aria-hidden="true" />
       </button>
       <button v-else class="button button-accent" type="button" @click="finish">

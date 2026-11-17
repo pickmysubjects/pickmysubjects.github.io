@@ -7,7 +7,7 @@ import GuidePageCard from '@/components/guide/GuidePageCard.vue'
 import { GUIDE_PAGE_CARDS, GUIDE_START } from '@/components/guide/guidePages'
 
 /**
- * The way into the 墨大入门 guide: its three start pages as the overview's cards, a few topics
+ * The way into the 墨大入门 guide: its four start pages as the overview's cards, a few topics
  * each, plus the site search (the header's own dialog) for any other topic.
  */
 const { t } = useI18n()
@@ -117,7 +117,7 @@ const start = GUIDE_PAGE_CARDS.filter((p) => GUIDE_START.includes(p.slug))
 
 .cards {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 16px;
   margin: 0;
   padding: 0;
@@ -129,9 +129,11 @@ const start = GUIDE_PAGE_CARDS.filter((p) => GUIDE_START.includes(p.slug))
   grid-template-columns: minmax(0, 1fr);
 }
 
-@media (max-width: 960px) {
+/* Four start pages: one row on a wide screen, two by two as it narrows, one column on a phone
+   (the same steps as the guide overview's dates). */
+@media (max-width: 1100px) {
   .cards {
-    grid-template-columns: minmax(0, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -152,6 +154,7 @@ const start = GUIDE_PAGE_CARDS.filter((p) => GUIDE_START.includes(p.slug))
   }
 
   .cards {
+    grid-template-columns: minmax(0, 1fr);
     gap: 12px;
   }
 

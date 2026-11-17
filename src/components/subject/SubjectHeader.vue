@@ -16,6 +16,9 @@ import { useDataYear } from '@/composables/useDataYear'
 import FactsYearNote from './FactsYearNote.vue'
 import InfoTip from '@/components/InfoTip.vue'
 import ShortlistToggle from '@/components/shortlist/ShortlistToggle.vue'
+import { isComparePair, pairSlug } from '@/engine/comparePairs'
+import { subjectChange } from '@/utils/changesText'
+import type { YearDiff } from '@/engine/yearDiff'
 
 /**
  * The top of a subject's page, a glass hero: code and title, what the student can do with it
@@ -31,6 +34,20 @@ const plan = usePlan()
 const { profile } = useProfile()
 const { rated } = useRated()
 const { t, locale } = useI18n()
+
+// Subjects only one of which counts toward a degree: said up top, where the choice is made, with
+// the side-by-side page one tap away (the full rule is under "Where it fits").
+const onlyOneOf = computed(() =>
+  props.subject.nonAllowed === 'unknown' ? [] : props.subject.nonAllowed.filter((c) => data.value.subjects[c] && isComparePair(data.value.subjects, props.subject.code, c)),
+)
+// What the new Handbook year changed about this subject (loaded on its own, only when it exists).
+const changeFiles = import.meta.glob<YearDiff>('@/generated/changes.json', { import: 'default' })
+const diff = shallowRef<YearDiff | null>(null)
+onMounted(() => {
+  const load = Object.values(changeFiles)[0]
+  if (load) void load().then((d) => (diff.value = d))
+})
+const change = computed(() => (diff.value && props.year >= diff.value.to ? subjectChange(t.value, diff.value, props.subject.code, t.value('listSep')) : null))
 
 const code = computed(() => props.subject.code)
 const local = computed(() => localTitle(props.subject, locale.value))
@@ -53,6 +70,13 @@ const runs = computed(() => {
   if (periods.value.length === 0) return knownNotRunning(props.subject, props.year) ? t.value('subject.notRunning') : t.value('subject.runsUnknown')
   if (props.subject.yearLong) return t.value('plan.yearLongRuns')
   return periods.value.map((p) => t.value(`period.${p}`)).join(' · ')
+})
+// The same in the list cards' short words ("Sem 1"), for the narrow phone column; null when
+// the long form is a status rather than a list of periods.
+const runsShort = computed(() => {
+  if (gone.value || props.subject.offerings === 'unknown' || periods.value.length === 0) return null
+  if (props.subject.yearLong) return t.value('plan.yearLong')
+  return periods.value.map((p) => t.value(`periodShort.${p}`)).join(' · ')
 })
 // Near the top of the easy or hard list for the student's degree (or the default one).
 const onList = computed(() => {
@@ -226,7 +250,9 @@ onBeforeUnmount(() => {
         </div>
         <div class="kf">
           <dt>{{ t('subject.factRuns') }}</dt>
-          <dd :class="{ 'kf-bad': gone }">{{ runs }}</dd>
+          <dd :class="{ 'kf-bad': gone }">
+            <span :class="{ 'kf-long': runsShort }">{{ runs }}</span><span v-if="runsShort" class="kf-short">{{ runsShort }}</span>
+          </dd>
         </div>
         <div class="kf">
           <dt>{{ t('subject.factExam') }}</dt>
@@ -253,6 +279,16 @@ onBeforeUnmount(() => {
         <li v-if="quota" class="chip chip-tip">{{ t('subject.quota') }}<InfoTip :text="t('subject.quotaTip')" /></li>
       </ul>
     </div>
+    <ul v-if="onlyOneOf.length || change" class="notes">
+      <li v-for="c in onlyOneOf" :key="c">
+        {{ t('compare.onlyOne', { code: c }) }}
+        <a class="note-link" :href="link(`compare/${pairSlug(subject.code, c)}`)">{{ t('compare.sideBySide') }} →</a>
+      </li>
+      <li v-if="change">
+        <a class="note-link" :href="link(`changes/${diff!.to}`)">{{ change.added ? t('changes.newIn', { year: diff!.to }) : t('changes.inYear', { year: diff!.to }) }}</a>
+        <template v-if="change.details.length">{{ t('changes.detail', { details: change.details.join(t('listSep')) }) }}</template>
+      </li>
+    </ul>
     <FactsYearNote v-if="factsFrom.older && !gone" :year="factsFrom.year" />
     <p v-if="gone && subject.replacedBy.length" class="instead">
       {{ t('subject.insteadTake') }}
@@ -465,6 +501,10 @@ onBeforeUnmount(() => {
   color: var(--bad);
 }
 
+.kf-short {
+  display: none;
+}
+
 .kf-link {
   color: inherit;
   text-decoration: underline;
@@ -654,22 +694,44 @@ onBeforeUnmount(() => {
     display: grid;
     flex: 1 1 100%;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 12px 10px;
+    gap: 4px 10px;
   }
 
+  /* Each fact spans a name row and a value row shared across the four columns, so a name that
+     wraps (a long word in Malay) never knocks its value off the others' line. */
   .kf,
   .kf:first-child {
+    grid-row: span 2;
+    grid-template-rows: subgrid;
     padding: 0;
     border-left: 0;
   }
 
   .kf:nth-child(5) {
     grid-column: 1 / -1;
+    margin-top: 8px;
+  }
+
+  /* Plain names: capitals and tracking made them too wide for a quarter of a phone. */
+  .kf dt {
+    align-self: end;
+    letter-spacing: 0;
+    text-transform: none;
   }
 
   .kf dd,
   .kf dd.kf-num {
+    align-self: baseline;
     font-size: 1rem;
+    line-height: 1.3;
+  }
+
+  .kf-long {
+    display: none;
+  }
+
+  .kf-short {
+    display: inline;
   }
 
   .facts {
@@ -716,5 +778,27 @@ onBeforeUnmount(() => {
     white-space: normal;
     overflow-wrap: anywhere;
   }
+}
+
+/* Short notes under the facts: the left edge of the facts, small text, the link in accent. */
+.notes {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--fs-small);
+  color: var(--ink-soft);
+}
+
+.note-link {
+  font-weight: var(--fw-semibold);
+  color: var(--accent);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.note-link:hover {
+  text-decoration: underline;
 }
 </style>

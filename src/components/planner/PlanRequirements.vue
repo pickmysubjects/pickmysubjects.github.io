@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { Check } from 'lucide-vue-next'
+import { ArrowRight, Check } from 'lucide-vue-next'
 import type { CourseRule, RuleStatus } from '@/engine'
 import { useI18n } from '@/i18n'
 import { categoryLabel, ruleDetail, ruleText } from '@/i18n/format'
+import { link } from '@/composables/useView'
 
 /**
  * The plan's progress in one place: how many degree rules are met, the totals students track
@@ -32,6 +33,8 @@ interface Meter {
   have: number
   need: number
   status: RuleStatus['status']
+  /** A breadth total: while it's short, the ready-made breadth list is one tap away. */
+  breadth: boolean
 }
 
 // The totals students track: overall, each category with no level, and level 3
@@ -54,7 +57,7 @@ const meters = computed<Meter[]>(() => {
           : rule.level !== undefined
             ? t.value('progress.level', { n: rule.level })
             : t.value('progress.total')
-      out.push({ id: s.ruleId, label, have: Number(s.params.have ?? 0), need: rule.min, status: s.status })
+      out.push({ id: s.ruleId, label, have: Number(s.params.have ?? 0), need: rule.min, status: s.status, breadth: rule.category === 'breadth' && rule.level === undefined })
     }
   }
   return out
@@ -122,7 +125,10 @@ function toggle(id: string): void {
           <span class="meter-fill" :style="{ width: `${Math.min(100, (m.have / m.need) * 100)}%` }" />
         </span>
         <!-- A minimum met (more than enough counts too: the extra points still go to the total). -->
-        <span class="meter-state">{{ m.status === 'ok' ? t('progress.done') : t('progress.short', { n: fmt(Math.max(0, m.need - m.have)) }) }}</span>
+        <span class="meter-state">
+          <span>{{ m.status === 'ok' ? t('progress.done') : t('progress.short', { n: fmt(Math.max(0, m.need - m.have)) }) }}</span>
+          <a v-if="m.breadth && m.status !== 'ok'" class="meter-link" :href="link('subjects/breadth/')">{{ t('progress.findBreadth') }}<ArrowRight :size="13" aria-hidden="true" /></a>
+        </span>
       </li>
     </ul>
 
@@ -339,10 +345,29 @@ function toggle(id: string): void {
 }
 
 .meter-state {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 10px;
   font-size: 0.8125rem;
   font-weight: 650;
   white-space: nowrap;
   color: color-mix(in srgb, var(--accent) 75%, var(--ink)); /* darker in light, lighter in dark: 4.5:1 */
+}
+
+.meter-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  font-weight: var(--fw-semibold);
+  color: color-mix(in srgb, var(--accent) 80%, var(--ink)); /* darker in light, lighter in dark: 4.5:1 on glass */
+  text-decoration: none;
+}
+
+.meter-link:hover,
+.meter-link:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .meter-ok .meter-state {

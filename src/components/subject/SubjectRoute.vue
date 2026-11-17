@@ -133,14 +133,15 @@ function go(c: string): void {
 }
 
 .compare-link:hover {
-  color: var(--ink);
+  text-decoration: underline;
 }
 
+/* A fold's summary reads like the site's other folds (and the "Majors and specialisations"
+   one beside it): ink, semibold, the browser's own marker. */
 .cols-summary {
   padding: 10px 0;
   font-size: var(--fs-body);
   font-weight: 650;
-  color: var(--accent);
   cursor: pointer;
 }
 

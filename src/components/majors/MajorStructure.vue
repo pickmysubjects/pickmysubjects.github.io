@@ -12,7 +12,7 @@ import { localTitle } from '@/i18n/localized'
 
 /**
  * A major in one view: one column per level, left to right, each subject once. In a column: the
- * subjects to take first, the usual ways in, the compulsory ones and the lists to pick from
+ * compulsory subjects, the ones to take first, the usual ways in and the lists to pick from
  * (with how many to choose). The prerequisite links are drawn between side-by-side columns
  * (solid: needed; dashed: one of several) and said on every subject as text ("needs ANCW10007"),
  * so they still read when the columns stack on a phone. Hover or focus a subject: its chain
@@ -103,9 +103,10 @@ const columns = computed(() =>
       return [...by].map(([where, n]) => t.value('majors.listedIn', { n, where }))
     }
     const parts: Part[] = [
+      // Compulsory first: it's what every student of the major takes; the ways in come after.
+      { key: 'core', label: t.value('majors.tagCore'), kind: 'core' as const, items: of('core'), elsewhere: [] },
       { key: 'first', label: t.value('majors.tagFirst'), kind: 'first' as const, items: of('pathway'), elsewhere: [] },
       { key: 'route', label: t.value('subject.role.route'), kind: 'route' as const, items: of('route'), elsewhere: [] },
-      { key: 'core', label: t.value('majors.tagCore'), kind: 'core' as const, items: of('core'), elsewhere: [] },
       ...props.overview.choices.map((c, i) => ({
         key: `pick${i}`,
         label: pickText(t.value, 'majors.tagPick', c, data.value.subjects, { g: letter(i) }),
@@ -449,6 +450,14 @@ const dense = computed(() => route.value.edges.length > 40)
 .missing .it-title {
   font-weight: var(--fw-regular);
   color: var(--ink-soft);
+}
+
+/* Phones: the details run the card's full width, not a narrow column under the name. */
+@media (max-width: 640px) {
+  .it-when,
+  .it-link {
+    grid-column: 1 / -1;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

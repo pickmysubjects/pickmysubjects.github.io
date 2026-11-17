@@ -8,6 +8,7 @@ import { usePlan } from '@/composables/usePlan'
 import { useProfile } from '@/composables/useProfile'
 import { usePlanStress } from '@/composables/usePlanStress'
 import { useI18n } from '@/i18n'
+import { link } from '@/composables/useView'
 import { issueText, reasonText, termLabel } from '@/i18n/format'
 import { slotEligible } from '@/utils/planBoard'
 import { localTitle } from '@/i18n/localized'
@@ -50,6 +51,8 @@ onMounted(() => {
 const term = computed(() => plan.terms.value[props.termIndex])
 const where = computed(() => (term.value ? termLabel(t.value, term.value) : ''))
 const course = computed(() => plan.setup.value.course)
+// Summer and winter terms: the whole ready-made list is one tap away (this sheet shows only what fits here).
+const shortTerm = computed(() => term.value?.period === 'summer' || term.value?.period === 'winter')
 const load = computed(() => plan.course.value?.standardLoad ?? 50)
 const current = computed<Subject | undefined>(() => (props.replacing ? data.value.subjects[props.replacing] : undefined))
 
@@ -182,7 +185,11 @@ function onClick(event: MouseEvent): void {
         <input ref="input" v-model="text" class="slot-input" type="search" :placeholder="t('plan.addSearch')" />
       </label>
 
-      <p v-if="!text.trim() && rows.length" class="slot-label">{{ t('plan.addSuggested') }}</p>
+      <div v-if="shortTerm" class="slot-label-row">
+        <p v-if="!text.trim() && rows.length" class="slot-label">{{ t('plan.addSuggested') }}</p>
+        <a class="slot-more" :href="link('subjects/summer-winter/')">{{ t('guide.loadSummerLink') }}</a>
+      </div>
+      <p v-else-if="!text.trim() && rows.length" class="slot-label">{{ t('plan.addSuggested') }}</p>
       <ul v-if="rows.length" class="slot-list">
         <li v-for="r in rows" :key="r.code">
           <button class="slot-row" type="button" @click="pick(r.code)">
@@ -366,6 +373,28 @@ function onClick(event: MouseEvent): void {
 
 .slot-fit-bad svg {
   color: var(--bad);
+}
+
+/* "Suggested for this term" with the whole summer and winter list on the same line, at the right. */
+.slot-label-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px 12px;
+}
+
+.slot-more {
+  margin-left: auto;
+  font-size: 0.8125rem;
+  font-weight: var(--fw-semibold);
+  color: color-mix(in srgb, var(--accent) 80%, var(--ink)); /* darker in light, lighter in dark: 4.5:1 on glass */
+  text-decoration: none;
+}
+
+.slot-more:hover,
+.slot-more:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .slot-empty {

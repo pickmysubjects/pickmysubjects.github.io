@@ -83,15 +83,31 @@ const { t } = useI18n()
   border-color: var(--accent);
 }
 
-/* Phones: the five buttons and both ends stay on one line. */
-@media (max-width: 420px) {
+/* Phones: both end labels on one line above (low left, high right), then the five buttons
+   sharing the full width in equal columns. Ten tracks, two per button, so each label gets half. */
+@media (max-width: 480px) {
   .scale-row {
-    gap: 4px;
+    display: grid;
+    grid-template-columns: repeat(10, minmax(0, 1fr));
+    gap: 6px;
+  }
+
+  .scale-end {
+    grid-row: 1;
+    grid-column: 1 / 6;
+    min-width: 0;
+  }
+
+  .scale-end:last-child {
+    grid-column: 6 / -1;
+    text-align: right;
   }
 
   .scale-btn {
-    min-width: 40px;
-    min-height: 40px;
+    grid-row: 2;
+    grid-column: span 2;
+    min-width: 0;
+    min-height: 44px;
   }
 }
 </style>

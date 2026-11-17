@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, shallowRef, toRef, watch } from 'vue'
+import { X } from 'lucide-vue-next'
 import QuickAdd from '@/components/browse/QuickAdd.vue'
 import ShortlistToggle from './ShortlistToggle.vue'
 import { PERIODS } from '@/engine'
@@ -17,7 +18,9 @@ import { localTitle } from '@/i18n/localized'
  * says the same. Phones get a card per subject with the same facts as a two-column list.
  * `highlight`: subjects from an old ?compare= link, shown first and marked.
  */
-const props = defineProps<{ codes: string[]; highlight: string[] }>()
+// droppable: rows added only to compare (not saved): they get an × to take them out again.
+const props = defineProps<{ codes: string[]; highlight: string[]; droppable?: string[] }>()
+const emit = defineEmits<{ drop: [code: string] }>()
 const { t, locale } = useI18n()
 const shortlist = useShortlist()
 const phone = usePhone('(max-width: 720px)')
@@ -152,6 +155,7 @@ watch(shown, (keys) => {
           <QuickAdd :subject="r.c.subject" text />
           <button v-if="r.saved" type="button" class="text-btn" :aria-label="t('shortlist.removeLabel', { code: r.c.subject.code })" @click="shortlist.remove(r.c.subject.code)">{{ t('shortlist.remove') }}</button>
           <ShortlistToggle v-else :code="r.c.subject.code" compact />
+                <button v-if="!r.saved && droppable?.includes(r.c.subject.code)" type="button" class="drop-btn" :aria-label="t('shortlist.dropLabel', { code: r.c.subject.code })" :title="t('shortlist.dropLabel', { code: r.c.subject.code })" @click="emit('drop', r.c.subject.code)"><X :size="18" aria-hidden="true" /></button>
         </div>
       </li>
     </ul>
@@ -188,6 +192,7 @@ watch(shown, (keys) => {
                 <QuickAdd :subject="r.c.subject" text />
                 <button v-if="r.saved" type="button" class="text-btn" :aria-label="t('shortlist.removeLabel', { code: r.c.subject.code })" @click="shortlist.remove(r.c.subject.code)">{{ t('shortlist.remove') }}</button>
                 <ShortlistToggle v-else :code="r.c.subject.code" compact />
+                <button v-if="!r.saved && droppable?.includes(r.c.subject.code)" type="button" class="drop-btn" :aria-label="t('shortlist.dropLabel', { code: r.c.subject.code })" :title="t('shortlist.dropLabel', { code: r.c.subject.code })" @click="emit('drop', r.c.subject.code)"><X :size="18" aria-hidden="true" /></button>
               </div>
             </td>
           </tr>
@@ -414,6 +419,25 @@ tr.marked > *,
   font-weight: var(--fw-semibold);
   color: var(--ink-soft);
   cursor: pointer;
+}
+
+.drop-btn {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  color: var(--ink-faint);
+  background: transparent;
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.drop-btn:hover {
+  color: var(--ink);
+  background: var(--accent-soft);
 }
 
 .text-btn:hover {

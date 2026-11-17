@@ -231,10 +231,6 @@ const sections = computed(() => {
   backdrop-filter: none;
 }
 
-.body :deep(.links .row) {
-  padding-inline: 0;
-}
-
 .sub-title,
 .body :deep(.roles-title) {
   margin: 0;
@@ -271,6 +267,11 @@ const sections = computed(() => {
   min-height: 32px;
   font-size: var(--fs-small);
   font-weight: var(--fw-semibold);
+  text-decoration: none;
+}
+
+.aside-link:hover {
+  text-decoration: underline;
 }
 
 /* Where the facts come from: one frosted strip at the end, never straight on the colour field. */

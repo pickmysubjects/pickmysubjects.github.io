@@ -54,7 +54,6 @@ const more = computed(() => props.links.slice(2))
 .more summary {
   font-size: var(--fs-body);
   font-weight: 600;
-  color: var(--ink-soft);
   cursor: pointer;
 }
 

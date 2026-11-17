@@ -144,7 +144,7 @@ async function onRestore(event: Event): Promise<void> {
         <div class="stat">
           <dt><label for="target-wam">{{ t('wamGoal.target') }}</label></dt>
           <dd>
-            <input id="target-wam" class="input stat-input" type="number" inputmode="decimal" min="0" max="100" step="1" :value="profile.targetWam ?? ''" @change="onTarget" />
+            <input id="target-wam" class="input stat-input" type="number" inputmode="decimal" min="0" max="100" step="1" placeholder="75" :value="profile.targetWam ?? ''" @change="onTarget" />
           </dd>
         </div>
         <div class="stat stat-plan">
@@ -348,12 +348,19 @@ async function onRestore(event: Event): Promise<void> {
   color: var(--ink);
 }
 
+/* Same 44px band as the numbers beside it, so labels and values line up across the row. */
 .stat-input {
   width: 5.5em;
-  min-height: 44px;
+  height: 44px;
+  padding-block: 0;
   font-family: var(--font-code);
   font-size: 1.25rem;
   font-weight: 600;
+}
+
+/* A light hint, so the example target never reads as one already set. */
+.stat-input::placeholder {
+  font-weight: 400;
 }
 
 /* One card per section, one heading style; whatever a component brings as its own card or

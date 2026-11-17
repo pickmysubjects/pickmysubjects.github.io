@@ -73,3 +73,13 @@ export function changeSections(t: Translate, d: YearDiff, names: Names): ChangeS
   ]
   return sections.filter((s) => s.items.length > 0)
 }
+
+/**
+ * What changed about one subject in the new Handbook year, for a line on its own page: null when
+ * nothing did (or it stopped running, which the page already says); `added` for a new subject.
+ */
+export function subjectChange(t: Translate, d: YearDiff, code: string, sep: string): { added: boolean; details: string[] } | null {
+  if (d.subjects.added.includes(code)) return { added: true, details: [] }
+  const c = d.subjects.changed.find((x) => x.code === code)
+  return c ? { added: false, details: c.changes.map((x) => changeText(t, x, sep)) } : null
+}

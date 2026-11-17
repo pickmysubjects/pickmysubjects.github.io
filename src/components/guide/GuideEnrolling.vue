@@ -8,6 +8,7 @@ import GuideCallout from './GuideCallout.vue'
 import GuideLinks from './GuideLinks.vue'
 import GuideSee from './GuideSee.vue'
 import InfoTip from '@/components/InfoTip.vue'
+import Interp from '@/components/Interp.vue'
 import { URLS } from '@/utils/guideLinks'
 import { link } from '@/composables/useView'
 
@@ -19,7 +20,10 @@ const { t } = useI18n()
   <GuideItem id="enrol" :title="t('guide.enrolTitle')" :short="t('guide.enrolShort')">
     <ol class="steps">
       <li><TermText :text="t('guide.enrolStep1')" /></li>
-      <li><TermText :text="t('guide.enrolStep2')" /></li>
+      <li>
+        <TermText :text="t('guide.enrolStep2')" />
+        {{ ' ' }}<Interp :text="t('guide.enrolStep2Tip')"><template #plan><a :href="link('plan/')">{{ t('guide.enrolStep2Plan') }}</a></template></Interp>
+      </li>
       <li><TermText :text="t('guide.enrolStep3')" /></li>
       <li><TermText :text="t('guide.enrolStep4')" /></li>
     </ol>

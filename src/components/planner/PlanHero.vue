@@ -13,9 +13,12 @@ defineProps<{
   /** The plan's setup in one line ("Bachelor of Science · from 2026 S1 · Data Science"). */
   setup?: string
   facts?: { points: string; rules: string; rulesOk: boolean; marks?: { text: string; href?: string } }
-  next?: { label: string; href?: string }
+  /** The one thing to do next; `note` is a plain lead-in before the action ("Re-enrolment … is open until …"). */
+  next?: { label: string; href?: string; note?: string }
+  /** Offer "try another major as a new plan" beside Change, so changing the major needn't overwrite this plan. */
+  tryMajor?: boolean
 }>()
-const emit = defineEmits<{ edit: []; next: [] }>()
+const emit = defineEmits<{ edit: []; next: []; tryMajor: [] }>()
 const { t } = useI18n()
 const scene = defineAsyncComponent(() => import('./art/ArtPlan.vue'))
 </script>
@@ -26,10 +29,13 @@ const scene = defineAsyncComponent(() => import('./art/ArtPlan.vue'))
     <div class="phero-text">
       <h1 class="phero-title">{{ title }}</h1>
       <slot />
-      <button v-if="setup" class="phero-setup" type="button" @click="emit('edit')">
-        <span class="phero-setup-text">{{ setup }}</span>
-        <span class="phero-edit"><Pencil :size="14" aria-hidden="true" />{{ t('wizard.edit') }}</span>
-      </button>
+      <div v-if="setup" class="phero-setup-row">
+        <button class="phero-setup" type="button" @click="emit('edit')">
+          <span class="phero-setup-text">{{ setup }}</span>
+          <span class="phero-edit"><Pencil :size="14" aria-hidden="true" />{{ t('wizard.edit') }}</span>
+        </button>
+        <button v-if="tryMajor" class="phero-try" type="button" @click="emit('tryMajor')">{{ t('plans.tryAsNew') }}</button>
+      </div>
       <dl v-if="facts" class="phero-facts">
         <div class="fact">
           <dt>{{ t('planPage.factPoints') }}</dt>
@@ -48,7 +54,8 @@ const scene = defineAsyncComponent(() => import('./art/ArtPlan.vue'))
         </div>
         <div v-if="next" class="fact">
           <dt>{{ t('planPage.factNext') }}</dt>
-          <dd>
+          <dd :class="{ 'phero-next-row': next.note }">
+            <span v-if="next.note" class="phero-next-note">{{ next.note }}</span>
             <a v-if="next.href" class="phero-next" :href="next.href">{{ next.label }}<ArrowRight :size="15" aria-hidden="true" /></a>
             <button v-else class="phero-next" type="button" @click="emit('next')">{{ next.label }}<ArrowRight :size="15" aria-hidden="true" /></button>
           </dd>
@@ -111,8 +118,37 @@ const scene = defineAsyncComponent(() => import('./art/ArtPlan.vue'))
   line-height: var(--lh-tight);
   letter-spacing: var(--track-display);
   text-wrap: balance;
-  word-break: keep-all;
+  /* No keep-all here: a Chinese title has no spaces, so it would only break on its last
+     character. Korean still keeps its words whole (main.css), Japanese breaks by phrase. */
   overflow-wrap: anywhere;
+}
+
+/* The setup line and, beside it, the option to try another major as a new plan. */
+.phero-setup-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 18px;
+  max-width: 100%;
+}
+
+.phero-try {
+  min-height: 36px;
+  padding: 4px 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: var(--fs-small);
+  font-weight: var(--fw-semibold);
+  color: color-mix(in srgb, var(--accent) 80%, var(--ink)); /* darker in light, lighter in dark: 4.5:1 on glass */
+  text-align: left;
+  cursor: pointer;
+}
+
+.phero-try:hover,
+.phero-try:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .phero-setup {
@@ -174,6 +210,19 @@ const scene = defineAsyncComponent(() => import('./art/ArtPlan.vue'))
 
 .fact dd.ok {
   color: var(--good);
+}
+
+/* A note before the action ("Re-enrolment … is open until …"), then the action itself. */
+.phero-next-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 12px;
+}
+
+.phero-next-note {
+  font-weight: var(--fw-semibold);
+  text-wrap: pretty;
 }
 
 .phero-next {
@@ -245,6 +294,7 @@ const scene = defineAsyncComponent(() => import('./art/ArtPlan.vue'))
   }
 
   .phero-setup,
+  .phero-try,
   .phero-next {
     min-height: 44px;
   }

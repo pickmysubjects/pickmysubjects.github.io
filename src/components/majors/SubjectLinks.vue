@@ -62,6 +62,8 @@ const rows = computed(() =>
 </template>
 
 <style scoped>
+/* Every page shows this list folded into its section (no card of its own), so rows and the
+   "show all" line sit flush with the section's text, one left edge for all of them. */
 .row-missing .title {
   font-weight: 400;
   color: var(--ink-soft);
@@ -80,7 +82,7 @@ const rows = computed(() =>
 
 .more {
   width: 100%;
-  padding: 10px 14px;
+  padding: 10px 0;
   border: 0;
   background: none;
   font: inherit;
@@ -99,7 +101,7 @@ const rows = computed(() =>
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 12px 16px;
+  padding: 12px 0;
   color: var(--ink);
   text-decoration: none;
 }

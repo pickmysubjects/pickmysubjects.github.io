@@ -65,12 +65,15 @@ const BUCKETS = [0, 5, 15, 25] as const
   color: var(--ink-soft);
 }
 
+/* Phones: an even 2 x 2 grid, so no choice stretches alone across a row. */
 @media (max-width: 480px) {
-  /* Each choice stays on one line; they share the row, wrapping to a second when needed. */
+  .seg {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .seg button {
-    flex: 1 1 auto;
-    padding: 6px 10px;
-    font-size: 0.875rem;
+    justify-content: center;
     white-space: nowrap;
   }
 }

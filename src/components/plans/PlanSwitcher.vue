@@ -2,9 +2,10 @@
 import { useImeGuard } from '@/utils/ime'
 import { computed, nextTick, onBeforeUnmount, onMounted, shallowRef, useTemplateRef, watch } from 'vue'
 import { usePlans } from '@/composables/usePlans'
+import { useTryMajor } from '@/composables/useTryMajor'
 import { MAX_PLANS } from '@/utils/planBook'
 import { useI18n } from '@/i18n'
-import { go, link } from '@/composables/useView'
+import { link } from '@/composables/useView'
 import { planName } from './planName'
 import { useAnchoredOverlay } from '@/utils/anchoredOverlay'
 
@@ -77,14 +78,11 @@ function create(mode: 'copy' | 'fresh'): void {
   plans.create(mode)
   panel.value = null
 }
-// Same plan, another major: a copy (the record is shared), with the questions open at the major,
-// then both plans side by side. Only once the plan has its questions answered.
-const canSwitch = computed(() => plans.active.value.setup.confirmed === true || plans.active.value.notes.length > 0)
+// Same plan, another major (useTryMajor); the plan hero offers it too.
+const { canTry: canSwitch, tryMajor: startTryMajor } = useTryMajor()
 function tryMajor(): void {
-  const from = plans.active.value.label
-  plans.create('copy')
   panel.value = null
-  go(`plan/?switch=${from}`)
+  startTryMajor()
 }
 async function startDelete(): Promise<void> {
   panel.value = 'delete'

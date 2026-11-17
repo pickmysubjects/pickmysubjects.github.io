@@ -224,5 +224,11 @@ function mark(b: (typeof blocks.value)[number], part: DiscussionSection | 'point
 .discussion-link {
   justify-self: start;
   font-size: var(--fs-small);
+  font-weight: var(--fw-semibold);
+  text-decoration: none;
+}
+
+.discussion-link:hover {
+  text-decoration: underline;
 }
 </style>

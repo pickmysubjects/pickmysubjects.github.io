@@ -42,6 +42,9 @@ import { useRated } from '@/composables/useRated'
 import { useI18n } from '@/i18n'
 import { issueText, stressShort, termLabel } from '@/i18n/format'
 import { reducedMotion } from '@/utils/motion'
+import { useEnrolCopy } from '@/composables/useEnrolCopy'
+import { useTryMajor } from '@/composables/useTryMajor'
+import { KEY_DATES, melbourneToday, openReenrolment } from '@/utils/keyDates'
 
 // The wizard copies the setup once, so it restarts when the dataset is switched.
 const { data, subjectList, name: dataName } = useDataset()
@@ -176,6 +179,9 @@ const careerReminder = computed(() => {
   const career = careerName(goal.target.names, locale.value) || goal.target.names.en
   return { id: goal.target.id, text: t.value('careerGoal.gap', { career, body, codes: codes.join(t.value('listSep')) }) }
 })
+// No career goal and no interests: electives were filled without anything to go on. Said on the
+// board, where the electives are, with the way to set them.
+const untailored = computed(() => !profile.value.career && !profile.value.interests.length)
 // The degree's own rules (its progress meters), and those with the diploma's after them.
 const rules = computed(() => plan.course.value?.rules ?? [])
 const allRules = computed(() => planRules(data.value, plan.plan.value))
@@ -543,14 +549,26 @@ const termToFill = computed(() =>
     return !there.length || (termState(x) === 'ended' && there.some((r) => r.mark === undefined && !isFail(r) && !data.value.subjects[r.code]?.passFail))
   }) ?? null,
 )
+// "Copy subject codes to enrol", the same as the Save menu's; offered in the hero while re-enrolment is open.
+const enrol = useEnrolCopy()
+const reenrol = computed(() => openReenrolment(KEY_DATES, melbourneToday()))
 const nextStep = computed(() => {
   if (problems.value) return { label: t.value('planPage.nextFix', { n: problems.value }), href: '#rules' }
   if (heavyTerms.value) return { label: t.value('planPage.nextHeavy'), href: '#heavy' }
   const fill = termToFill.value
   if (fill) return { label: t.value('planPage.nextMarks', { term: termLabel(t.value, fill) }), href: `#board` }
+  // Re-enrolment is open and the plan has terms still to enrol in: the codes to enrol from.
+  const re = reenrol.value
+  if (re && enrol.enrolText.value) {
+    const label = enrol.copied.value === 'ok' ? t.value('plan.enrolCopied') : enrol.copied.value === 'failed' ? t.value('plan.enrolCopyFailed') : t.value('planPage.enrolCopyShort')
+    const date = new Intl.DateTimeFormat(locale.value, { day: 'numeric', month: 'short', timeZone: 'UTC' }).format(new Date(`${re.end}T00:00:00Z`))
+    return { label, note: t.value('planPage.enrolOpen', { year: re.year, date }) }
+  }
   // Nothing to do: no "next" rather than a made-up one.
   return undefined
 })
+// Trying another major as a new plan, from beside the hero's Change.
+const { canTry: canTryMajor, tryMajor } = useTryMajor()
 const lastTerm = computed(() => [...plan.terms.value].reverse().find((x) => x.subjects.length))
 const boardShort = computed(() => (lastTerm.value ? t.value('planPage.boardShort', { term: termLabel(t.value, lastTerm.value), n: plan.plannedCodes.value.length }) : undefined))
 // The board may reach past the page's width to the window's edge on wide screens: the window's
@@ -622,7 +640,10 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !viewingShar
       :setup="!showWizard && !viewingShared ? summary : undefined"
       :facts="!showWizard && !viewingShared ? heroFacts : undefined"
       :next="!showWizard && !viewingShared && onBoard ? nextStep : undefined"
+      :try-major="canTryMajor"
       @edit="editing = true"
+      @next="enrol.copyEnrol()"
+      @try-major="tryMajor"
     >
       <div v-if="!viewingShared" class="hero-row">
         <PlanSwitcher class="hero-switcher" />
@@ -732,6 +753,9 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !viewingShar
           </p>
           <p v-if="onBoard && careerReminder" class="started career-gap">
             {{ careerReminder.text }} <a :href="link(`careers/${careerReminder.id}`)">{{ t('careerGoal.gapLink') }}</a>
+          </p>
+          <p v-else-if="onBoard && untailored" class="started career-gap">
+            {{ t('plan.howNoGoal') }} <a :href="link('record/#sec-goal')">{{ t('plan.howNoGoalLink') }}</a>
           </p>
           <SubjectTimeline
             v-if="selected"
@@ -935,9 +959,19 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !viewingShar
   white-space: nowrap;
 }
 
+/* On its own line under the lede, so the sentence wraps by itself instead of around the link. */
 .guide-link {
+  display: block;
+  width: fit-content;
+  margin-top: 4px;
   white-space: nowrap;
   color: color-mix(in srgb, var(--accent) 80%, var(--ink)); /* darker in light, lighter in dark: 4.5:1 on glass */
+  font-weight: var(--fw-semibold);
+  text-decoration: none;
+}
+
+.guide-link:hover {
+  text-decoration: underline;
 }
 
 /* Notes about the plan: a light tinted glass strip, readable in light and dark. */

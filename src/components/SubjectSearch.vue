@@ -148,15 +148,11 @@ function move(delta: number): void {
   position: absolute;
   top: 50%;
   left: 20px;
+  /* Above the input, which paints over a plain absolute sibling when it has its own blur. */
+  z-index: 1;
   transform: translateY(-50%);
   color: var(--ink-faint);
   pointer-events: none;
-}
-
-/* On a glass card (the calculators' pickers): the card's glass, not a second blur. */
-:global(:is(.surface, .glass)) .search-input {
-  -webkit-backdrop-filter: none;
-  backdrop-filter: none;
 }
 
 .search-input {
@@ -180,14 +176,18 @@ function move(delta: number): void {
 }
 
 .search-compact .search-icon {
-  left: 13px;
+  left: 14px;
 }
 
+/* Inside a tool card: the same height and type size as the card's other fields (.input), and
+   the card's glass rather than a second blur. */
 .search-compact .search-input {
-  height: 38px;
-  padding-left: 36px;
+  height: auto;
+  padding: 10px 14px 10px 38px;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
   box-shadow: var(--glass-shadow);
-  font-size: 0.875rem;
+  font-size: 0.9375rem;
 }
 
 /* The home capsule: taller, a bright top edge, and a round pink go button inside its right end. */

@@ -66,8 +66,8 @@ const hasText = computed(() => entry.value?.careerText === true)
     <div v-if="related.length" class="part">
       <h3 class="part-title">{{ t('careers.relatedTitle') }}</h3>
       <p class="part-hint">{{ t('careers.relatedHint') }}</p>
+      <a v-for="o in related" :key="`in-${o.id}`" class="reverse" :href="link(`careers/${o.id}?major=${id}`)">{{ t('careerPath.fromMajor', { job: careerPhrase(o.names, locale) }) }}</a>
       <p class="chips">
-        <a v-for="o in related" :key="`in-${o.id}`" class="chip" :href="link(`careers/${o.id}?major=${id}`)">{{ t('careerPath.fromMajor', { job: careerPhrase(o.names, locale) }) }}</a>
         <a v-for="o in related" :key="o.id" class="chip" :href="o.url" target="_blank" rel="noopener">{{ o.label }} <ExternalLink :size="12" aria-hidden="true" /></a>
       </p>
     </div>
@@ -182,11 +182,14 @@ const hasText = computed(() => entry.value?.careerText === true)
   color: var(--ink-soft);
 }
 
+/* "Which subjects matter more?" is the same text link under a job and under a related field;
+   like the site's other text links, it underlines on hover. */
 .reverse {
   justify-self: start;
   font-size: 0.875rem;
   font-weight: 600;
   color: var(--accent);
+  text-decoration: none;
 }
 
 .official {
@@ -197,6 +200,12 @@ const hasText = computed(() => entry.value?.careerText === true)
   justify-self: start;
   font-size: 0.8125rem;
   color: var(--accent);
+  text-decoration: none;
+}
+
+.reverse:hover,
+.official:hover {
+  text-decoration: underline;
 }
 
 .part {

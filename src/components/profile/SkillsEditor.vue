@@ -83,7 +83,6 @@ function pick(skill: Skill, level: number): void {
             type="button"
             role="radio"
             class="step"
-            :class="`step-${n}`"
             :aria-checked="skills[s] === n"
             :title="t(`record.level.${n}`)"
             @click="pick(s, n)"
@@ -140,80 +139,80 @@ function pick(skill: Skill, level: number): void {
   font-size: 0.9375rem;
 }
 
+/* Five equal pills, the same chips as the goal and work-hours questions on this page. */
 .scale {
   display: grid;
-  /* Equal cells that may shrink below their label width: a long label (e.g. かなり得意)
-     wraps inside its cell instead of pushing the scale out of its column. */
-  grid-template-columns: repeat(5, minmax(44px, 1fr));
-  flex: 0 1 auto;
-  max-width: 100%;
-  border: 1.5px solid color-mix(in srgb, var(--accent) 45%, var(--glass-edge));
-  border-radius: var(--radius-sm);
-  overflow: hidden;
-  background: var(--glass-shine);
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 6px;
+  width: 100%;
 }
 
 .step {
-  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
   min-height: 44px;
   padding: 6px 8px;
-  border: 0;
-  border-left: 1px solid color-mix(in srgb, var(--ink) 8%, transparent);
-  background: color-mix(in srgb, var(--glass-fill) 55%, transparent);
+  border: 1.5px solid color-mix(in srgb, var(--accent) 45%, var(--glass-edge));
+  border-radius: 999px;
+  background: var(--glass-shine), var(--glass-fill);
+  box-shadow: var(--glass-shadow);
   font: inherit;
-  font-size: 0.8125rem;
-  line-height: 1.25;
+  font-size: 0.875rem;
+  line-height: 1.2;
+  text-align: center;
   color: var(--ink);
   cursor: pointer;
-}
-
-.step:first-child {
-  border-left: 0;
+  transition: border-color 0.15s, background-color 0.15s, transform 0.1s;
 }
 
 .step:hover {
-  background: var(--inset-fill);
+  border-color: var(--accent);
+  background: var(--glass-shine), var(--glass-fill-hover);
+}
+
+.step:active {
+  transform: scale(0.97);
+}
+
+.step:focus-visible {
+  outline: 2px solid var(--overprint);
+  outline-offset: 2px;
 }
 
 .step[aria-checked='true'] {
+  border-color: var(--accent-fill);
   background: var(--accent-fill);
   color: var(--accent-fill-ink);
   font-weight: 600;
 }
 
-.step-1[aria-checked='true'],
-.step-2[aria-checked='true'] {
-  background: var(--warn);
-  color: #fff;
-}
-
-@media (prefers-color-scheme: dark) {
-  .step-1[aria-checked='true'],
-  .step-2[aria-checked='true'] {
-    color: #1d1300;
-  }
-}
-
-.step-3[aria-checked='true'] {
-  background: var(--ink-soft);
-  color: var(--bg);
-}
-
-/* Narrow screens: the same words, smaller, so every step says what it means. */
+/* Narrow screens: tighter pills; a long word (Sederhana, かなり得意) wraps inside its own pill. */
 @media (max-width: 640px) {
   .scale {
-    width: 100%;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 4px;
   }
 
   .step {
-    min-width: 0;
-    min-height: 44px;
     padding: 4px 2px;
-    font-size: 0.75rem;
     overflow-wrap: anywhere;
   }
 }
+
+/* The smallest phones (320px): a size down, so a short word (Lemah, Cukup) stays whole. */
+@media (max-width: 380px) {
+  .step {
+    font-size: 0.75rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .step:active {
+    transform: none;
+  }
+}
+
 .more {
   justify-self: start;
   padding: 6px 0;

@@ -48,7 +48,6 @@ const shown = computed(() => (expanded.value ? roles.value : roles.value.slice(0
 <style scoped>
 .roles-summary {
   padding: 10px 0;
-  color: var(--accent);
   cursor: pointer;
 }
 

@@ -276,14 +276,19 @@ const ease = computed(() => {
   text-overflow: ellipsis;
 }
 
+/* Up to two lines ("One of 2 subjects"), then cut. */
 .fact dd {
+  display: -webkit-box;
   margin: 2px 0 0;
   overflow: hidden;
   font-size: var(--fs-meta);
   font-weight: var(--fw-semibold);
+  line-height: 1.35;
   color: var(--ink);
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  overflow-wrap: break-word;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
 }
 
 .fact dd.good {
@@ -325,9 +330,9 @@ const ease = computed(() => {
   line-height: 1.4;
 }
 
-/* Plain accent text, not more pills. */
+/* Plain soft text: a note on why it's listed, not a link. */
 .reason {
-  color: var(--accent);
+  color: var(--ink-soft);
 }
 
 .reason + .reason::before {

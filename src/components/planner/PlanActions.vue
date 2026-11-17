@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, shallowRef, useTemplateRef } from 'vue'
+import { computed, onBeforeUnmount, onMounted, useTemplateRef } from 'vue'
 import InfoTip from '@/components/InfoTip.vue'
 import SharePanel from '@/components/planner/SharePanel.vue'
 import { usePlan } from '@/composables/usePlan'
 import { useProfile } from '@/composables/useProfile'
 import { useDataset } from '@/composables/useDataset'
-import { isFail } from '@/engine'
 import { useI18n } from '@/i18n'
 import { termFullLabel } from '@/i18n/format'
 import { buildIcs, datesForTerms, downloadIcs, KEY_DATES, melbourneToday, type KeyDate } from '@/utils/keyDates'
+import { useEnrolCopy } from '@/composables/useEnrolCopy'
 
 /**
  * The plan's share and save actions, in the hero: "Share" (a panel with the link to copy or send),
@@ -35,32 +35,8 @@ const dates = computed(() => {
 })
 const label = (d: KeyDate) => t.value(`cal.event.${d.kind}`, { term: termFullLabel(t.value, { year: d.year, period: d.term }) })
 
-// The list to enrol from in my.unimelb: each term still to take, its subjects by code and official
-// (English) title, the way the enrolment page names them. Subjects already passed, and terms whose
-// teaching has started (enrolled already), are left out.
-const enrolText = computed(() => {
-  const today = melbourneToday()
-  const started = (term: { year: number; period: string }) => KEY_DATES.some((d) => d.kind === 'teaching' && d.year === term.year && d.term === term.period && d.start <= today)
-  const passed = new Set(profile.value.results.filter((r) => !isFail(r)).map((r) => r.code))
-  return plan.terms.value
-    .map((term) => ({ term, codes: term.subjects.filter((c) => !passed.has(c)) }))
-    .filter((x) => x.codes.length && !started(x.term))
-    .map(({ term, codes }) => [termFullLabel(t.value, term), ...codes.map((c) => `${c}  ${data.value.subjects[c]?.title ?? ''}`.trim())].join('\n'))
-    .join('\n\n')
-})
-const copied = shallowRef<'idle' | 'ok' | 'failed'>('idle')
-let copyTimer: ReturnType<typeof setTimeout> | undefined
-async function copyEnrol(): Promise<void> {
-  clearTimeout(copyTimer)
-  try {
-    await navigator.clipboard.writeText(enrolText.value)
-    copied.value = 'ok'
-  } catch {
-    // No clipboard (an old browser, a blocked permission): say so instead of nothing happening.
-    copied.value = 'failed'
-  }
-  copyTimer = setTimeout(() => (copied.value = 'idle'), 2500)
-}
+// "Copy subject codes to enrol" (shared with the plan hero's next step).
+const { enrolText, copied, copyEnrol } = useEnrolCopy()
 
 function pick(what: 'saveImage' | 'print' | 'calendar'): void {
   if (what === 'calendar') downloadIcs(buildIcs(dates.value, label), 'my-unimelb-dates.ics')
@@ -74,10 +50,7 @@ function outside(e: PointerEvent): void {
   if (menu.value?.open && !menu.value.contains(e.target as Node)) menu.value.open = false
 }
 onMounted(() => document.addEventListener('pointerdown', outside))
-onBeforeUnmount(() => {
-  document.removeEventListener('pointerdown', outside)
-  clearTimeout(copyTimer)
-})
+onBeforeUnmount(() => document.removeEventListener('pointerdown', outside))
 // Esc closes the menu and puts focus back on its button.
 function onMenuKey(e: KeyboardEvent): void {
   if (e.key !== 'Escape' || !menu.value?.open) return
