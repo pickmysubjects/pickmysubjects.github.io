@@ -1,0 +1,102 @@
+/* Shared look of the rating card (QuickRate and RatingForm): the full form is the same card,
+   carried on, so the one-tap part and the rest read as one thing. */
+.rating-card {
+  display: grid;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--line));
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--accent) 6%, var(--surface));
+}
+
+.rating-q {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: var(--fw-semibold);
+}
+
+.rating-note {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: var(--fs-small);
+}
+
+.rating-done {
+  margin: 0;
+  color: var(--good);
+}
+
+.rating-bad {
+  margin: 0;
+  color: var(--bad);
+}
+
+.rating-link {
+  padding: 0;
+  color: var(--accent);
+  font: inherit;
+  font-weight: var(--fw-semibold);
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.rating-link:hover {
+  color: var(--ink);
+}
+
+.rating-label {
+  margin: 0 0 6px;
+  padding: 0;
+  font-weight: var(--fw-semibold);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* One chip size everywhere; a picked chip takes the accent, a chip that adds text is dashed. */
+.chip {
+  min-height: 34px;
+  padding: 4px 12px;
+  color: var(--ink);
+  font: inherit;
+  font-size: var(--fs-small);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.chip:hover {
+  border-color: var(--accent);
+}
+
+.chip[aria-pressed='true'] {
+  color: var(--accent);
+  font-weight: var(--fw-semibold);
+  background: color-mix(in srgb, var(--accent) 12%, var(--surface));
+  border-color: var(--accent);
+}
+
+.chip-add {
+  border-style: dashed;
+}
+
+.rating-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.rating-split {
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}

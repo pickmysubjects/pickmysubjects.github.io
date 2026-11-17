@@ -35,7 +35,7 @@ function onDone(sent: boolean): void {
 </script>
 
 <template>
-  <section v-if="ready" class="rate-prompt surface">
+  <section v-if="ready" class="rate-prompt">
     <p v-if="thanks" class="rate-prompt-text" role="status">{{ t('rating.sent') }}</p>
     <template v-else-if="!open">
       <QuickRate :code="code" @more="more" />
@@ -52,7 +52,6 @@ function onDone(sent: boolean): void {
 .rate-prompt {
   display: grid;
   gap: 10px;
-  padding: 14px 16px;
 }
 
 .rate-prompt-text {

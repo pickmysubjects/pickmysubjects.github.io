@@ -103,7 +103,7 @@ const discussions = computed(() => (props.detailReady ? (props.subject.discussio
 
     <!-- Asking for a rating comes right under the numbers, before the long reviews, so it's seen. -->
     <p v-if="thanks" class="good" role="status">{{ t('rating.sent') }}</p>
-    <QuickRate v-else-if="quickLive && !formOpen" class="rate-card" :code="subject.code" :count="subject.signals?.reviews" :first="!hasRatings" @more="more" />
+    <QuickRate v-else-if="quickLive && !formOpen" :code="subject.code" :count="subject.signals?.reviews" :first="!hasRatings" @more="more" />
     <p v-else-if="rated.has(subject.code) && !formOpen" class="muted rated-line">
       {{ t('rating.rated') }}
       <button v-if="canEdit" class="rated-edit" type="button" @click="edit">{{ t('rating.change') }}</button>
@@ -238,14 +238,6 @@ const discussions = computed(() => (props.detailReady ? (props.subject.discussio
 
 .rate-ask {
   justify-self: start;
-}
-
-/* The one-tap rating: a card of its own under the numbers, so it reads as an invitation. */
-.rate-card {
-  padding: 14px 16px;
-  border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--line));
-  border-radius: var(--radius);
-  background: color-mix(in srgb, var(--accent) 6%, var(--surface));
 }
 
 .rated-line {

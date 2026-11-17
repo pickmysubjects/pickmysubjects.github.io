@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { trackEvent } from '@/utils/analytics'
 import { thisYear as calendarYear } from '@/engine/dataYear'
-import { MAX_COMMENT_LENGTH } from '@/engine/comments'
 import InfoTip from '@/components/InfoTip.vue'
+import RatingScale from './RatingScale.vue'
+import TipBox from './TipBox.vue'
 import { computed, shallowRef } from 'vue'
 import { RATINGS_FORM } from '@/config'
 import { RATING_TAGS, SKILLS, type Period, type RatingTag, type Skill } from '@/engine'
@@ -110,11 +111,13 @@ const formSemester: Record<Period, string> = {
   winter: 'Winter',
   'semester-2': 'Semester 2',
 }
+// Difficulty and the tip lead, as on the one-tap card; then the two other quick scales.
 const scales = [
-  { key: 'difficulty', model: difficulty, low: 'rating.diffLow', high: 'rating.diffHigh' },
   { key: 'workload', model: workload, low: 'rating.loadLow', high: 'rating.loadHigh' },
   { key: 'generosity', model: generosity, low: 'rating.genLow', high: 'rating.genHigh' },
-].filter((x) => !(x.key === 'difficulty' && difficultyGiven))
+]
+// Coming from the one-tap card the heading carries on its question; otherwise the form's own.
+const heading = computed(() => (props.start ? t.value('rating.quickTitle', { code: props.code }) : props.edit ? t.value('rating.change') : t.value('rating.title', { code: props.code })))
 // Optional extras, shown only once the Google Form has the matching question.
 const extraScales = [
   { key: 'overall', model: overall, low: 'rating.teachLow', high: 'rating.teachHigh' },
@@ -187,35 +190,25 @@ function value(event: Event): string {
 </script>
 
 <template>
-  <form class="rate surface" @submit.prevent="send">
-    <h3 class="rate-title">{{ t('rating.title', { code }) }}</h3>
-    <p class="rate-intro">{{ t('rating.intro') }}</p>
+  <!-- The same card as the one-tap rating, carried on: its question, the 1–5 buttons and the tip
+       box stay as they were, and the other questions follow below. -->
+  <form class="rating-card rate" @submit.prevent="send">
+    <p class="rating-q">{{ heading }}</p>
     <p v-if="!ready" class="rate-off">{{ t('rating.notReady') }}</p>
     <template v-else>
-      <!-- The four that matter most, a tap each; everything else is folded away. -->
-      <fieldset v-for="s in scales" :key="s.key" class="scale">
-        <legend class="field">{{ t(`rating.${s.key}`) }}</legend>
-        <span class="scale-end">{{ t(s.low) }}</span>
-        <label v-for="n in 5" :key="n" class="scale-option">
-          <input type="radio" :name="`${code}-${s.key}`" :value="n" :checked="s.model.value === n" @change="s.model.value = n" />
-          {{ n }}
-        </label>
-        <span class="scale-end">{{ t(s.high) }}</span>
-      </fieldset>
+      <RatingScale v-if="!difficultyGiven" :value="difficulty" :label="start ? undefined : t('rating.difficulty')" low="rating.diffLow" high="rating.diffHigh" @pick="difficulty = $event" />
 
-      <fieldset class="chips-field">
-        <legend class="field">{{ t('rating.grade') }}</legend>
-        <button v-for="g in BANDS" :key="g" type="button" class="chip" :aria-pressed="grade === g" @click="grade = grade === g ? '' : g">{{ g }}</button>
-        <p v-if="wamBand" class="rate-note">{{ t('rating.wamBandNoteShort', { range: wamBand }) }}<InfoTip :text="t('rating.wamBandNote', { range: wamBand })" /></p>
-      </fieldset>
+      <TipBox v-model="wish" class="rating-split" :code="code" />
 
-      <label class="field">
-        {{ t('rating.wish') }}
-        <!-- Longer tips are never published, so the box stops where the site would. -->
-        <textarea v-model="wish" class="textarea" rows="3" :maxlength="MAX_COMMENT_LENGTH" :placeholder="t('rating.tipPlaceholder')" />
-        <span class="count" aria-live="polite">{{ wish.length }} / {{ MAX_COMMENT_LENGTH }}</span>
-        <span class="hint">{{ t('rating.wishHint') }}<InfoTip :text="t('rating.wishInfo')" /></span>
-      </label>
+      <div class="rating-split rate-rest">
+        <RatingScale v-for="s in scales" :key="s.key" :value="s.model.value" :label="t(`rating.${s.key}`)" :low="s.low" :high="s.high" @pick="s.model.value = $event" />
+
+        <fieldset class="chips">
+          <legend class="rating-label">{{ t('rating.grade') }}</legend>
+          <button v-for="g in BANDS" :key="g" type="button" class="chip" :aria-pressed="grade === g" @click="grade = grade === g ? '' : g">{{ g }}</button>
+          <p v-if="wamBand" class="rate-note">{{ t('rating.wamBandNoteShort', { range: wamBand }) }}<InfoTip :text="t('rating.wamBandNote', { range: wamBand })" /></p>
+        </fieldset>
+
 
       <details class="rate-more" :open="edit">
         <summary class="rate-more-summary">{{ t('rating.more') }}</summary>
@@ -245,18 +238,10 @@ function value(event: Event): string {
             </label>
           </div>
 
-          <fieldset v-for="s in extras" :key="s.key" class="scale">
-            <legend class="field">{{ t(`rating.${s.key}`) }}</legend>
-            <span class="scale-end">{{ t(s.low) }}</span>
-            <label v-for="n in 5" :key="n" class="scale-option">
-              <input type="radio" :name="`${code}-${s.key}`" :value="n" :checked="s.model.value === n" @change="s.model.value = n" />
-              {{ n }}
-            </label>
-            <span class="scale-end">{{ t(s.high) }}</span>
-          </fieldset>
+          <RatingScale v-for="s in extras" :key="s.key" :value="s.model.value" :label="t(`rating.${s.key}`)" :low="s.low" :high="s.high" @pick="s.model.value = $event" />
 
-          <fieldset class="chips-field">
-            <legend class="field">{{ t('rating.recommend') }}</legend>
+          <fieldset class="chips">
+            <legend class="rating-label">{{ t('rating.recommend') }}</legend>
             <button
               v-for="r in ['Yes', 'Maybe', 'No']"
               :key="r"
@@ -269,8 +254,8 @@ function value(event: Event): string {
             </button>
           </fieldset>
 
-          <fieldset class="chips-field">
-            <legend class="field">{{ t('rating.skills') }}</legend>
+          <fieldset class="chips">
+            <legend class="rating-label">{{ t('rating.skills') }}</legend>
             <button
               v-for="sk in rateableSkills"
               :key="sk"
@@ -283,8 +268,8 @@ function value(event: Event): string {
             </button>
           </fieldset>
 
-          <fieldset v-if="hasTags" class="chips-field">
-            <legend class="field">{{ t('ratingTags.question') }}</legend>
+          <fieldset v-if="hasTags" class="chips">
+            <legend class="rating-label">{{ t('ratingTags.question') }}</legend>
             <button
               v-for="x in RATING_TAGS"
               :key="x"
@@ -297,8 +282,8 @@ function value(event: Event): string {
             </button>
           </fieldset>
 
-          <fieldset v-for="q in factQuestions" :key="q.key" class="chips-field">
-            <legend class="field">{{ t(`studentFacts.q.${q.key}`) }}</legend>
+          <fieldset v-for="q in factQuestions" :key="q.key" class="chips">
+            <legend class="rating-label">{{ t(`studentFacts.q.${q.key}`) }}</legend>
             <button
               v-for="o in q.options"
               :key="o.label"
@@ -311,8 +296,8 @@ function value(event: Event): string {
             </button>
           </fieldset>
 
-          <fieldset v-if="hasLanguages" class="chips-field">
-            <legend class="field">{{ t('studentFacts.q.languages') }}</legend>
+          <fieldset v-if="hasLanguages" class="chips">
+            <legend class="rating-label">{{ t('studentFacts.q.languages') }}</legend>
             <button
               v-for="x in languageOptions"
               :key="x"
@@ -327,11 +312,13 @@ function value(event: Event): string {
 
         </div>
       </details>
+      </div>
 
-      <p v-if="status === 'failed'" class="rate-failed" role="alert">{{ t('rating.failed') }}</p>
+      <p v-if="status === 'failed'" class="rating-bad" role="alert">{{ t('rating.failed') }}</p>
     </template>
 
-    <div class="rate-actions">
+    <p class="rating-note">{{ t('rating.intro') }}</p>
+    <div class="rating-actions">
       <button v-if="ready" class="button" type="submit" :disabled="!complete || status === 'sending'">
         {{ edit ? t('rating.update') : t('rating.submit') }}
       </button>
@@ -341,11 +328,11 @@ function value(event: Event): string {
   </form>
 </template>
 
+<style scoped src="./rating.css"></style>
 <style scoped>
-.rate {
+.rate-rest {
   display: grid;
   gap: 14px;
-  padding: 18px;
 }
 
 .rate-more {
@@ -353,37 +340,17 @@ function value(event: Event): string {
   gap: 12px;
 }
 
-.rate-more[open] {
-  padding-bottom: 4px;
-}
-
 .rate-more-summary {
   width: fit-content;
-  font-size: 0.9375rem;
-  font-weight: 600;
+  font-weight: var(--fw-semibold);
   color: var(--accent);
   cursor: pointer;
 }
 
-.rate-title {
-  font-size: 1.05rem;
-  font-weight: 700;
-}
-
-.rate-intro,
-.count {
-  justify-self: end;
-  font-size: 0.75rem;
-  font-weight: 400;
-  color: var(--ink-soft);
-  font-variant-numeric: tabular-nums;
-}
-
-.hint {
-  margin: 0;
-  font-size: 0.875rem;
-  font-weight: 400;
-  color: var(--ink-soft);
+.rate-more-body {
+  display: grid;
+  gap: 14px;
+  margin-top: 12px;
 }
 
 .rate-off {
@@ -395,140 +362,25 @@ function value(event: Event): string {
 
 .rate-row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 12px;
 }
 
-.scale,
-.chips-field {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 6px;
+.rate-note {
+  flex-basis: 100%;
   margin: 0;
-  padding: 0;
-  border: 0;
-}
-
-.scale legend,
-.chips-field legend {
-  margin-bottom: 6px;
-}
-
-.scale-end {
   font-size: 0.8125rem;
   color: var(--ink-soft);
 }
 
-.scale-option {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 5px 11px;
-  border: 1px solid var(--contour);
-  border-radius: 999px;
-  cursor: pointer;
-}
-
-.scale-option:has(input:checked) {
-  border-color: var(--overprint);
-  background: var(--overprint-tint);
-  color: var(--overprint);
-  font-weight: 600;
-}
-
-.scale-option input {
-  accent-color: var(--overprint);
-}
-
-.chip {
-  padding: 5px 11px;
-  border: 1px solid var(--contour);
-  border-radius: 999px;
-  background: var(--glass-shine), var(--sheet-fill);
-  font-size: 0.875rem;
-  cursor: pointer;
-}
-
-.chip[aria-pressed='true'] {
-  border-color: var(--overprint);
-  background: var(--overprint-tint);
-  color: var(--overprint);
-  font-weight: 600;
-}
-
-.textarea {
-  resize: vertical;
-}
-
-.rate-failed {
-  margin: 0;
-  color: var(--stop);
-}
-
-.rate-actions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
-}
-
-
 .rate-need {
-  font-size: 0.875rem;
+  font-size: var(--fs-small);
   color: var(--ink-soft);
 }
 
 @media (max-width: 640px) {
   .rate-row {
     grid-template-columns: 1fr;
-  }
-}
-.rate-note {
-  grid-column: 1 / -1;
-  margin: 0;
-  font-size: 0.8125rem;
-  color: var(--ink-soft);
-}
-.rate-more-body {
-  display: grid;
-  gap: 14px;
-  margin-top: 12px;
-}
-
-/* Phones: the five choices on one line, with the two end labels above them. */
-@media (max-width: 560px) {
-  .scale {
-    display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 6px;
-  }
-
-  .scale legend {
-    grid-column: 1 / -1;
-  }
-
-  .scale-end {
-    grid-row: 2;
-  }
-
-  .scale-end:first-of-type {
-    grid-column: 1 / 3;
-  }
-
-  .scale-end:last-of-type {
-    grid-column: 4 / 6;
-    text-align: right;
-  }
-
-  .scale-option {
-    grid-row: 3;
-    justify-content: center;
-    padding: 6px 0;
-  }
-
-  .scale-option input {
-    display: none;
   }
 }
 </style>
