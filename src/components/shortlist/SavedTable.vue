@@ -151,7 +151,7 @@ watch(shown, (keys) => {
         <div class="acts">
           <QuickAdd :subject="r.c.subject" text />
           <button v-if="r.saved" type="button" class="text-btn" :aria-label="t('shortlist.removeLabel', { code: r.c.subject.code })" @click="shortlist.remove(r.c.subject.code)">{{ t('shortlist.remove') }}</button>
-          <ShortlistToggle v-else :code="r.c.subject.code" />
+          <ShortlistToggle v-else :code="r.c.subject.code" compact />
         </div>
       </li>
     </ul>
@@ -187,7 +187,7 @@ watch(shown, (keys) => {
               <div class="acts">
                 <QuickAdd :subject="r.c.subject" text />
                 <button v-if="r.saved" type="button" class="text-btn" :aria-label="t('shortlist.removeLabel', { code: r.c.subject.code })" @click="shortlist.remove(r.c.subject.code)">{{ t('shortlist.remove') }}</button>
-                <ShortlistToggle v-else :code="r.c.subject.code" />
+                <ShortlistToggle v-else :code="r.c.subject.code" compact />
               </div>
             </td>
           </tr>
@@ -389,13 +389,12 @@ tr.marked > *,
 }
 
 .acts-cell :deep(.qa) {
-  white-space: normal;
+  white-space: nowrap;
 }
 
-/* In the table the two actions stack, so the facts keep the width. */
+/* Add and save side by side, as on the subject cards: "+ Add to plan" and the heart. */
 .acts-cell .acts {
-  flex-direction: column;
-  align-items: flex-start;
+  gap: 4px;
 }
 
 .acts {
