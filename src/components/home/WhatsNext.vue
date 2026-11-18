@@ -1,120 +1,64 @@
 <script setup lang="ts">
-import { computed, onMounted, shallowRef } from 'vue'
-import { ArrowRight, CalendarClock, GraduationCap } from 'lucide-vue-next'
-import InfoTip from '@/components/InfoTip.vue'
+import { computed } from 'vue'
+import { ArrowRight } from 'lucide-vue-next'
+import WeekStrip from '@/components/semester/WeekStrip.vue'
 import { link } from '@/composables/useView'
-import { useDataset } from '@/composables/useDataset'
-import { usePlan } from '@/composables/usePlan'
-import { useProfile } from '@/composables/useProfile'
+import { useSemester } from '@/composables/useSemester'
 import { useI18n } from '@/i18n'
-import { termFullLabel } from '@/i18n/format'
-import type { Period } from '@/engine'
-import { localTitle } from '@/i18n/localized'
-import { summariseAssessment } from '@/utils/assessment'
 import { NEWS } from '@/content/news'
-import { KEY_DATES, melbourneToday, type KeyDate } from '@/utils/keyDates'
-import { examWindow, myTerm, upcomingDates, type StripItem } from '@/utils/whatsNext'
+import { KEY_DATES } from '@/utils/keyDates'
+import { examWindow } from '@/utils/whatsNext'
+import { nextKeyDates } from '@/utils/semester'
 
 /**
- * A compact strip near the top of home: the next 1–3 key dates (Melbourne time, from the
- * device clock), the student's own term when they have subjects in it, and during SWOT Vac and
- * exams a card of their subjects' exam weights and hurdles. Shows nothing when nothing is near.
+ * The home page's one "now" card, a preview of /this-semester/ in at most four short lines: which
+ * week it is, a slim strip of the semester's weeks, the single next thing (during SWOT Vac and
+ * exams: the student's own exams, with the revision planner beside them), and the latest news.
+ * Drawn after mounting only (the prerendered page would freeze the build day).
  */
 const { t, locale } = useI18n()
-const { data } = useDataset()
-const { profile } = useProfile()
-const plan = usePlan()
+const { today, now, subjects, day, range, when, termName, status } = useSemester()
 
-// Only in the browser (the prerendered page would freeze the build day), and a dev-only
-// ?today=YYYY-MM-DD to look at any day.
-const today = shallowRef('')
-onMounted(() => {
-  const fake = import.meta.env.DEV ? new URLSearchParams(location.search).get('today') : null
-  today.value = fake && /^\d{4}-\d{2}-\d{2}$/.test(fake) ? fake : melbourneToday()
-})
-
-const items = computed(() => (today.value ? upcomingDates(KEY_DATES, today.value) : []))
-const mine = computed(() => (today.value ? myTerm(KEY_DATES, today.value, plan.terms.value, profile.value.results, (code) => code in data.value.subjects) : null))
-const exam = computed(() => (today.value ? examWindow(KEY_DATES, today.value) : null))
-
-// The latest note from the person who makes the site: one row under the dates, linking to it.
 const news = NEWS[0]
+const name = computed(() => (now.value ? termName(now.value.sem.year, now.value.sem.term) : ''))
+const next = computed(() => (today.value ? (nextKeyDates(KEY_DATES, today.value, 1)[0] ?? null) : null))
 
-const fmt = computed(() => new Intl.DateTimeFormat(locale.value, { day: 'numeric', month: 'short', timeZone: 'UTC' }))
-const day = (d: string) => fmt.value.format(new Date(`${d}T00:00:00Z`))
-const range = (d: KeyDate) => (d.start === d.end ? day(d.start) : fmt.value.formatRange(new Date(`${d.start}T00:00:00Z`), new Date(`${d.end}T00:00:00Z`)))
-const termName = (year: number, term: string) => termFullLabel(t.value, { year, period: term as Period })
-
-function when(i: StripItem): string {
-  if (i.running) return t.value('next.until', { date: day(i.date.end) })
-  if (i.days === 0) return t.value('next.today')
-  if (i.days === 1) return t.value('next.tomorrow')
-  return t.value('next.inDays', { n: i.days })
-}
-
-const mineLine = computed(() => {
-  const m = mine.value
-  return m?.exams ? t.value(m.subjects.length === 1 ? 'next.mineOne' : 'next.mine', { n: m.subjects.length, range: range(m.exams) }) : ''
+// SWOT Vac and exams with the student's subjects in that term: their exams are the next thing.
+const exam = computed(() => {
+  const w = today.value ? examWindow(KEY_DATES, today.value) : null
+  const n = now.value
+  if (!w || !n || n.sem.year !== w.year || n.sem.term !== w.term || !subjects.value.length) return null
+  return t.value(subjects.value.length === 1 ? 'next.mineOne' : 'next.mine', { n: subjects.value.length, range: range(w.exams) })
 })
 
-// Exam mode: the student's subjects in the term whose exams are on, with what's recorded.
-const examSubjects = computed(() => {
-  const w = exam.value
-  if (!w || !mine.value || mine.value.year !== w.year || mine.value.term !== w.term) return []
-  return mine.value.subjects.flatMap((code) => {
-    const s = data.value.subjects[code]
-    if (!s) return []
-    const a = summariseAssessment(s.assessment)
-    return [{ code, title: localTitle(s, locale.value) || s.title, assessment: a }]
-  })
+const nextLine = computed(() => {
+  const i = next.value
+  if (!i) return null
+  const whenText = i.running ? t.value('next.until', { date: day(i.date.end) }) : when(i.days, i.date.start)
+  return { what: t.value(`guide.kd.kind.${i.date.kind}`), when: whenText, soon: !i.running && i.days <= 2, census: i.date.kind === 'census' }
 })
 </script>
 
 <template>
-  <section v-if="exam && examSubjects.length" class="next glass next-exam" aria-labelledby="next-title">
-    <div class="exam-top">
-      <h2 id="next-title" class="next-head">
-        <GraduationCap :size="18" aria-hidden="true" />{{ t('next.examTitle', { term: termName(exam.year, exam.term) }) }}
-        <span class="next-sub">{{ t('next.examsOn', { range: range(exam.exams) }) }}</span>
-      </h2>
-      <!-- The whole exam period, not one subject: beside the heading, right-aligned with the rows' links. -->
-      <a class="exam-link" :href="link('tools/revision/')">{{ t('next.revision') }}<ArrowRight :size="14" aria-hidden="true" /></a>
+  <section v-if="today && (now || nextLine)" class="next glass" aria-labelledby="next-title">
+    <div class="next-top">
+      <h2 id="next-title" class="next-head">{{ status || t('next.title') }}</h2>
+      <a class="next-open" :href="link('this-semester/')">{{ t('sem.open') }}<ArrowRight :size="14" aria-hidden="true" /></a>
     </div>
-    <ul class="exam-list">
-      <li v-for="s in examSubjects" :key="s.code" class="exam-row">
-        <span class="exam-name"><span class="exam-code">{{ s.code }}</span> {{ s.title }}</span>
-        <span class="exam-facts">
-          <template v-if="!s.assessment">{{ t('next.notRecorded') }}</template>
-          <template v-else-if="s.assessment.exam > 0">
-            {{ t('next.examLine', { n: s.assessment.exam }) }}<span v-if="s.assessment.examHurdle" class="exam-hurdle">{{ t('next.hurdle') }}</span>
-          </template>
-          <template v-else>{{ t('next.noExam') }}</template>
-        </span>
-        <a class="exam-link" :href="link(`tools/final/?subject=${s.code}`)">{{ t('calc.open') }}<ArrowRight :size="14" aria-hidden="true" /></a>
-      </li>
-    </ul>
+    <WeekStrip v-if="now" class="next-strip" :sem="now.sem" :today="today" :name="name" slim />
+    <p v-if="exam" class="next-line">
+      <span class="next-label">{{ t('sem.nextLabel') }}</span>
+      <span class="next-what">{{ exam }}</span>
+      <a class="next-act" :href="link('tools/revision/')">{{ t('next.revision') }}<ArrowRight :size="14" aria-hidden="true" /></a>
+    </p>
+    <p v-else-if="nextLine" class="next-line">
+      <span class="next-label">{{ t('sem.nextLabel') }}</span>
+      <span class="next-what">{{ nextLine.what }}</span>
+      <span class="next-when" :class="{ soon: nextLine.soon }">{{ nextLine.when }}</span>
+      <span v-if="nextLine.census" class="next-why">{{ t('next.censusWhy') }}</span>
+    </p>
     <a v-if="news" id="news" class="next-news" :href="link('news')">
-      <span class="next-what">{{ t('news.title') }}</span>
-      <span class="news-title">{{ news.title[locale] }}</span>
-      <span class="news-read">{{ t('news.more') }}<ArrowRight :size="14" aria-hidden="true" /></span>
-    </a>
-  </section>
-  <section v-else-if="items.length || mineLine" class="next glass" aria-labelledby="next-title">
-    <h2 id="next-title" class="next-head">
-      <CalendarClock :size="18" aria-hidden="true" />{{ t('next.title') }}
-      <InfoTip :text="t('guide.kd.note')" />
-    </h2>
-    <ul class="next-list">
-      <li v-if="mineLine" class="next-item next-mine">{{ mineLine }}</li>
-      <li v-for="i in items" :key="i.date.id" class="next-item">
-        <span class="next-what">{{ t(`guide.kd.kind.${i.date.kind}`) }}</span>
-        <span class="next-when">{{ when(i) }}</span>
-        <span v-if="i.date.kind === 'census'" class="next-why">{{ t('next.censusWhy') }}</span>
-      </li>
-    </ul>
-    <a class="next-all" :href="link('guide/key-dates/')">{{ t('next.all') }}<ArrowRight :size="14" aria-hidden="true" /></a>
-    <a v-if="news" id="news" class="next-news" :href="link('news')">
-      <span class="next-what">{{ t('news.title') }}</span>
+      <span class="next-label">{{ t('news.title') }}</span>
       <span class="news-title">{{ news.title[locale] }}</span>
       <span class="news-read">{{ t('news.more') }}<ArrowRight :size="14" aria-hidden="true" /></span>
     </a>
@@ -122,17 +66,83 @@ const examSubjects = computed(() => {
 </template>
 
 <style scoped>
-/* The news row: full width under the dates, a hairline above; the whole row is the link. */
+.next {
+  display: grid;
+  gap: 8px;
+  padding: 12px 18px;
+  border-radius: var(--radius, 16px);
+}
+
+.next-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2px 16px;
+}
+
+.next-head {
+  margin: 0;
+  font-size: var(--fs-small);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.next-open,
+.next-act {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--fs-small);
+  font-weight: var(--fw-semibold);
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.next-act {
+  margin-inline-start: auto;
+}
+
+.next-strip {
+  margin: 2px 0;
+}
+
+.next-line,
 .next-news {
   display: flex;
-  flex: 1 1 100%;
   flex-wrap: wrap;
   align-items: center;
   gap: 2px 10px;
-  padding-top: 10px;
+  margin: 0;
+  font-size: var(--fs-small);
+}
+
+.next-label {
+  font-weight: 650;
+}
+
+.next-what {
+  min-width: 0;
+}
+
+.next-when {
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.next-when.soon {
+  color: var(--bad);
+}
+
+.next-why {
+  color: var(--ink-soft);
+}
+
+/* The news row: under the rest, a hairline above; the whole row is the link. */
+.next-news {
+  padding-top: 8px;
   border-top: 1px solid var(--line);
   color: var(--ink);
-  font-size: var(--fs-small);
   text-decoration: none;
 }
 
@@ -152,138 +162,5 @@ const examSubjects = computed(() => {
 
 .next-news:hover .news-title {
   color: var(--ink);
-}
-
-.next {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px 20px;
-  padding: 12px 18px;
-  border-radius: var(--radius, 16px);
-}
-
-.next-head {
-  display: inline-flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 6px;
-  margin: 0;
-  font-size: var(--fs-small);
-  font-weight: 700;
-}
-
-.next-sub {
-  font-weight: 500;
-  color: var(--ink-soft);
-}
-
-.next-list {
-  display: flex;
-  flex: 1 1 320px;
-  flex-wrap: wrap;
-  gap: 6px 20px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  font-size: var(--fs-small);
-}
-
-.next-item {
-  display: inline-flex;
-  flex-wrap: wrap;
-  gap: 0 6px;
-  min-width: 0;
-}
-
-.next-what {
-  font-weight: 650;
-}
-
-.next-when {
-  color: var(--accent);
-  font-variant-numeric: tabular-nums;
-}
-
-.next-why {
-  color: var(--ink-soft);
-}
-
-.next-mine {
-  font-weight: 650;
-}
-
-.next-all,
-.exam-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-size: var(--fs-small);
-  white-space: nowrap;
-}
-
-.next-exam {
-  display: grid;
-}
-
-.exam-top {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  gap: 4px 16px;
-}
-
-.exam-list {
-  display: grid;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  font-size: var(--fs-small);
-}
-
-.exam-row {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto auto;
-  align-items: center;
-  gap: 4px 16px;
-  padding: 6px 0;
-  border-top: 1px solid var(--line);
-}
-
-.exam-row:first-child {
-  border-top: 0;
-}
-
-.exam-name {
-  min-width: 0;
-  overflow-wrap: anywhere;
-}
-
-.exam-code {
-  font-weight: 650;
-  font-variant-numeric: tabular-nums;
-}
-
-.exam-facts {
-  font-variant-numeric: tabular-nums;
-}
-
-.exam-hurdle {
-  margin-left: 8px;
-  padding: 1px 8px;
-  border-radius: 999px;
-  background: var(--accent-soft, var(--line));
-  font-size: 0.8125rem;
-}
-
-@media (max-width: 520px) {
-  .exam-row {
-    grid-template-columns: minmax(0, 1fr) auto;
-  }
-
-  .exam-name {
-    grid-column: 1 / -1;
-  }
 }
 </style>

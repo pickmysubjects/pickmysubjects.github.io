@@ -47,6 +47,7 @@ const MENU_SYN: Record<string, string> = {
   'tools/resume/': 'skillTree',
   'shortlist/#compare-title': 'compare',
   'record/': 'record',
+  'this-semester/': 'thisSemester',
   'shortlist/': 'shortlist',
   'record/#sec-backup': 'backup',
   'record/#share-title': 'gradeShare',

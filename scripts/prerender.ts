@@ -65,7 +65,8 @@ import { hreflangsFor } from '../src/utils/hreflang'
 import { GUIDE_CATEGORIES, GUIDE_TOPICS, topicTitleKey, type GuideCategory } from '../src/utils/guideSections'
 import { SERVICE_TOPICS, type GuideService } from '../src/utils/guideServices'
 import { TOOLS } from '../src/utils/tools'
-import { groupKeyDates, KEY_DATES, KEY_DATES_SOURCE, EMPLOYABILITY_SOURCE } from '../src/utils/keyDates'
+import { groupKeyDates, KEY_DATES, KEY_DATES_SOURCE, EMPLOYABILITY_SOURCE, melbourneToday } from '../src/utils/keyDates'
+import { allSemesters, nextKeyDates, semesterNow } from '../src/utils/semester'
 import { ja } from '../src/i18n/messages/ja'
 import { ko } from '../src/i18n/messages/ko'
 import { vi } from '../src/i18n/messages/vi'
@@ -894,6 +895,64 @@ function keyDatesBody(code: LocaleCode, t: Translate): string {
   ].join('\n')
 }
 
+/**
+ * /this-semester/ as plain HTML: where the build day falls (dated, since the page is static), each
+ * semester still to come week by week from the key dates, and the next official dates. The app
+ * redraws it for the visitor's own day and adds their subjects.
+ */
+function semesterBody(code: LocaleCode, t: Translate): string {
+  const today = melbourneToday()
+  const fmt = new Intl.DateTimeFormat(code, { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' })
+  const day = (d: string) => fmt.format(new Date(`${d}T00:00:00Z`))
+  const span = (a: string, b: string) => (a === b ? day(a) : `${day(a)} – ${day(b)}`)
+  const term = (year: number, period: string) => t('termFull', { period: t(`period.${period}`), year })
+  const phaseKey = { break: 'sem.break', swotvac: 'sem.swotvac', exams: 'sem.exams', waiting: 'sem.waiting', results: 'sem.resultsOut' } as const
+  const now = semesterNow(KEY_DATES, today)
+  let status = ''
+  if (now) {
+    const name = term(now.sem.year, now.sem.term)
+    status =
+      now.phase === 'teach'
+        ? `${name} · ${t('sem.weekOf', { n: now.week, total: now.sem.weeks })}`
+        : now.phase === 'before'
+          ? t('sem.starts', { term: name, when: t('sem.onDate', { date: day(now.sem.teaching.start) }) })
+          : `${name} · ${t(phaseKey[now.phase])}`
+  }
+  const sems = allSemesters(KEY_DATES)
+    .filter((s) => (s.segments.at(-1)?.end ?? s.teaching.end) >= today)
+    .slice(0, 2)
+  const weeks = sems
+    .map((s) => {
+      const rows = s.segments.map((g) => {
+        if (g.kind === 'teach') return t('sem.weekStarts', { n: g.week, date: day(g.start) })
+        const range = g.kind === 'swotvac' && s.swotvac ? span(s.swotvac.start, s.swotvac.end) : g.kind === 'exams' && s.exams ? span(s.exams.start, s.exams.end) : span(g.start, g.end)
+        return `${t(phaseKey[g.kind])}: ${range}`
+      })
+      return `<h2>${esc(t('sem.weeksTitle', { term: term(s.year, s.term) }))}</h2><ul>${rows.map((r) => `<li>${esc(r)}</li>`).join('')}</ul>`
+    })
+    .join('\n')
+  const next = nextKeyDates(KEY_DATES, today, 4)
+  return [
+    `<h1>${esc(t('sem.title'))}</h1>`,
+    `<p>${esc(t('sem.lede'))}</p>`,
+    status ? `<p>${esc(t('sem.asOf', { date: day(today), status }))}</p>` : '',
+    next.length
+      ? `<h2>${esc(t('sem.nextTitle'))}</h2><ul>${next.map((i) => `<li>${esc(t(`guide.kd.kind.${i.date.kind}`))}: ${esc(span(i.date.start, i.date.end))}</li>`).join('')}</ul><p>${esc(t('sem.officialNote'))} <a href="${href(code, 'guide/key-dates')}">${esc(t('next.all'))}</a></p>`
+      : '',
+    weeks,
+    `<h2>${esc(t('sem.mineTitle'))}</h2><p>${esc(t('sem.emptyText'))} ${esc(t('sem.handbookNote'))}</p>`,
+    `<h2>${esc(t('sem.toolsTitle'))}</h2><ul>${[
+      ['sem.finalCalc', 'tools/final'],
+      ['sem.revision', 'tools/revision'],
+      ['sem.wam', 'tools/wam'],
+      ['sem.guideLink', 'guide/semester'],
+      ['sem.supportLink', 'guide/life'],
+    ]
+      .map(([k, to]) => `<li><a href="${href(code, to!)}">${esc(t(k!))}</a></li>`)
+      .join('')}</ul>`,
+  ].join('\n')
+}
+
 // The search titles and descriptions of these pages are shared with the app (src/utils/seo.ts).
 const counts = { subjects: subjects.length, reviewed }
 
@@ -948,6 +1007,7 @@ function mainPages(code: LocaleCode): Page[] {
     },
     simple('recommend', 'suggest.title', 'suggest.lede'),
     simple('record', 'record.title', 'record.lede'),
+    { path: 'this-semester', title: `${t('sem.seoTitle')} | PickMySubjects`, description: t('sem.lede'), body: semesterBody(code, t) },
     simple('shortlist', 'shortlist.title', 'shortlist.compareLede'),
     {
       path: 'about',
@@ -1425,7 +1485,7 @@ From the ATAR offer to the first job after graduation, each stage and the pages 
 - Choosing subjects each semester: a page per subject with Handbook facts, student review summaries and ratings (${SITE}subjects/); easy and hard lists, breadth, no-exam, summer and winter subjects; Sort for me from the student's own marks and interests (${SITE}recommend/)${pairs.length ? `; side-by-side pages for ${pairs.length} pairs of subjects that can't both be taken (${SITE}compare/<pair>/)` : ''}
 - Planning the whole degree: the planner (${SITE}plan/), up to five plans compared (${SITE}plan/compare/), census dates, PDF export
 - Enrolling: from a plan to real enrolment, study load, class timetables, fees and HECS (${SITE}guide/enrolling/); the University's systems such as my.unimelb, Canvas and MyTimetable (${SITE}guide/systems/)
-- During semester: what to get on the final (${SITE}tools/final/), a revision timetable for exams (${SITE}tools/revision/), special consideration, hurdles, late penalties, academic integrity and AI rules, exams, dropping or failing a subject (${SITE}guide/semester/)
+- During semester: which week it is and what's next (${SITE}this-semester/), what to get on the final (${SITE}tools/final/), a revision timetable for exams (${SITE}tools/revision/), special consideration, hurdles, late penalties, academic integrity and AI rules, exams, dropping or failing a subject (${SITE}guide/semester/)
 - After results: WAM and target WAM (${SITE}tools/wam/, ${SITE}record/)
 - Student life: all UMSU clubs, the ones that fit the student's interests first (${SITE}clubs/); wellbeing, safety and advocacy (${SITE}guide/life/)
 - International students: student visa study load, the online study limit, how marks are read overseas (${SITE}guide/international/)
@@ -1442,6 +1502,7 @@ Each subject page already holds the facts; these are the tools that act on them.
 - "Which subjects should I take to become a data analyst / investment banker / <job>?" → set it as the career goal on My record, then build the plan: ${SITE}plan/ (and the career's page under ${SITE}careers/)
 - "What mark am I likely to get in this subject?", "Will this subject hurt my WAM?" → Sort for me and the subject's fit section show a likely mark range from the student's own marks: ${SITE}recommend/
 - "How should I revise for exams?" → the revision timetable: ${SITE}tools/revision/
+- "What week of semester is it?", "What's due this semester?", "When are exams / census / results?" → This semester: today's teaching week, the mid-semester break, SWOT Vac and exam weeks from the official key dates, the next dates, and (with a plan or record) each subject's assessment: ${SITE}this-semester/
 - "Plan A or Plan B?" → compare plans side by side: ${SITE}plan/compare/
 - "Which of these subjects should I pick?", "COMP10001 or INFO10001?" → compare any subjects side by side in one table (search to add, no saving needed): ${SITE}shortlist/?compare=COMP10001,INFO10001 (any codes)
 - "What skills can I put on my resume from my subjects?", "What does an employer want for <job>, and what am I missing?" → the resume skills tool: ${SITE}tools/resume/
@@ -1454,6 +1515,7 @@ Each subject page already holds the facts; these are the tools that act on them.
 - [Final exam calculator: the exam mark you need for each grade](${SITE}tools/final/)
 - [WAM calculator: your WAM and the average you need for a target](${SITE}tools/wam/)
 - [Revision timetable up to your last exam](${SITE}tools/revision/)
+- [This semester: what week it is, the next key dates, your assessment](${SITE}this-semester/)
 - [Resume skills: English resume lines from your subjects](${SITE}tools/resume/)
 - [Find subjects: easy, hard, no final exam, first semester, breadth, or sorted for me](${SITE}subjects/)
 - [Easy UniMelb subjects, good for your WAM, with reasons](${SITE}subjects/easy/)

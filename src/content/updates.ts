@@ -21,6 +21,24 @@ export interface SiteRelease {
 
 export const SITE_RELEASES: SiteRelease[] = [
   {
+    version: '1.1.0',
+    date: null,
+    links: [['this-semester/']],
+    points: [
+      {
+        en: "New This semester page: which week of semester it is, the next key dates, and your subjects' assessment in plain words, with local ticks for what's done.",
+        'zh-CN': '新增“本学期”页面：现在第几周、接下来的关键日期，还有你每门课的考核，做完的可以打勾。',
+        'zh-TW': '新增「本學期」頁面：現在第幾週、接下來的關鍵日期，還有你每門課的考核，做完的可以打勾。',
+        ja: '新しく「今学期」ページ：今が第何週か、次の重要日程、各科目の評価。終わった課題にチェックできます。',
+        ko: "새 '이번 학기' 페이지: 지금 몇 주차인지, 다음 주요 일정, 과목별 평가. 끝낸 건 체크할 수 있어요.",
+        vi: "Trang mới 'Học kỳ này': đang là tuần mấy, các mốc sắp tới và cách các môn của bạn được đánh giá, đánh dấu được phần đã xong.",
+        ms: "Halaman baharu 'Semester ini': minggu ke berapa, tarikh penting seterusnya dan penilaian subjek anda, tandakan yang sudah siap.",
+        id: "Halaman baru 'Semester ini': minggu ke berapa, tanggal penting berikutnya dan penilaian mata kuliahmu, tandai yang sudah selesai.",
+        hi: "नया 'यह सेमेस्टर' पेज: कौन-सा हफ़्ता है, अगली ज़रूरी तारीख़ें और आपके विषयों का मूल्यांकन, पूरे काम पर निशान लगाएँ।",
+      },
+    ],
+  },
+  {
     version: '1.0.2',
     date: "2026-11-18",
     links: [['subjects/'], ['tools/resume/']],

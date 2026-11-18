@@ -6,7 +6,7 @@ import type { LocaleCode } from './codes'
  * quick links, and listed in llms.txt, so a search engine or AI assistant can tell which questions
  * the site answers. Every line must stay true: link only to a page that really answers it.
  */
-export type SearchTarget = 'plan' | 'recommend' | 'subjects' | 'subjects/easy' | 'subjects/hard' | 'subjects/no-exam' | 'subjects/breadth' | 'subjects/first-semester' | 'subjects/summer-winter' | 'majors' | 'careers' | 'guide' | 'tools/final' | 'tools/wam' | 'tools/revision' | 'clubs'
+export type SearchTarget = 'plan' | 'recommend' | 'subjects' | 'subjects/easy' | 'subjects/hard' | 'subjects/no-exam' | 'subjects/breadth' | 'subjects/first-semester' | 'subjects/summer-winter' | 'majors' | 'careers' | 'guide' | 'tools/final' | 'tools/wam' | 'tools/revision' | 'this-semester' | 'clubs'
 
 export interface SearchPhrases {
   heading: string
@@ -21,6 +21,7 @@ export const SEARCH_PHRASES: Record<LocaleCode, SearchPhrases> = {
       { text: 'UniMelb final exam calculator: what do I need on the final to get an H1 or pass', to: 'tools/final' },
       { text: 'UniMelb WAM calculator and target WAM', to: 'tools/wam' },
       { text: 'Exam revision timetable for UniMelb exams', to: 'tools/revision' },
+      { text: 'What week of semester is it at UniMelb, and what is due', to: 'this-semester' },
       { text: 'UniMelb clubs and societies (UMSU)', to: 'clubs' },
       { text: 'Easy UniMelb subjects to boost your WAM', to: 'subjects/easy' },
       { text: 'Hardest UniMelb subjects, from student reviews', to: 'subjects/hard' },
@@ -43,6 +44,7 @@ export const SEARCH_PHRASES: Record<LocaleCode, SearchPhrases> = {
       { text: '墨大期末要考多少分才能拿 H1 / 及格（期末分数计算器）', to: 'tools/final' },
       { text: '墨大 WAM 怎么算、WAM 计算器', to: 'tools/wam' },
       { text: '墨大期末复习计划表', to: 'tools/revision' },
+      { text: '墨大现在第几周、这学期有什么要交', to: 'this-semester' },
       { text: '墨大社团（UMSU clubs）', to: 'clubs' },
       { text: '墨大水课推荐、好拿分的课（刷 WAM）', to: 'subjects/easy' },
       { text: '墨大难课排行、最难的课', to: 'subjects/hard' },
@@ -65,6 +67,7 @@ export const SEARCH_PHRASES: Record<LocaleCode, SearchPhrases> = {
       { text: '墨大期末要考多少分才能拿 H1 / 及格（期末分數計算器）', to: 'tools/final' },
       { text: '墨大 WAM 怎麼算、WAM 計算器', to: 'tools/wam' },
       { text: '墨大期末複習計畫表', to: 'tools/revision' },
+      { text: '墨大現在第幾週、這學期有什麼要交', to: 'this-semester' },
       { text: '墨大社團（UMSU clubs）', to: 'clubs' },
       { text: '墨大涼課推薦、好拿分的課（衝 WAM）', to: 'subjects/easy' },
       { text: '墨大難課排行、最難的課', to: 'subjects/hard' },
@@ -87,6 +90,7 @@ export const SEARCH_PHRASES: Record<LocaleCode, SearchPhrases> = {
       { text: '期末試験で何点必要？H1・合格ラインの計算ツール', to: 'tools/final' },
       { text: 'メルボルン大学の WAM 計算ツール', to: 'tools/wam' },
       { text: '試験の復習スケジュール作成', to: 'tools/revision' },
+      { text: 'メルボルン大学は今第何週？今学期の予定', to: 'this-semester' },
       { text: 'メルボルン大学のクラブ・サークル（UMSU）', to: 'clubs' },
       { text: 'メルボルン大学で成績（WAM）を取りやすい科目', to: 'subjects/easy' },
       { text: 'メルボルン大学の難しい科目', to: 'subjects/hard' },
@@ -109,6 +113,7 @@ export const SEARCH_PHRASES: Record<LocaleCode, SearchPhrases> = {
       { text: '기말시험 필요 점수 계산기 (H1, 통과)', to: 'tools/final' },
       { text: '멜버른대 WAM 계산기', to: 'tools/wam' },
       { text: '시험 복습 계획표 만들기', to: 'tools/revision' },
+      { text: '멜번대 지금 몇 주차? 이번 학기 일정', to: 'this-semester' },
       { text: '멜버른대 동아리 (UMSU 클럽)', to: 'clubs' },
       { text: '멜버른대 학점(WAM) 잘 나오는 과목', to: 'subjects/easy' },
       { text: '멜버른대 어려운 과목', to: 'subjects/hard' },
@@ -131,6 +136,7 @@ export const SEARCH_PHRASES: Record<LocaleCode, SearchPhrases> = {
       { text: 'Tính điểm thi cuối kỳ cần đạt để được H1 hoặc qua môn ở UniMelb', to: 'tools/final' },
       { text: 'Máy tính WAM UniMelb', to: 'tools/wam' },
       { text: 'Lịch ôn thi cho các kỳ thi ở UniMelb', to: 'tools/revision' },
+      { text: 'UniMelb đang là tuần mấy của học kỳ', to: 'this-semester' },
       { text: 'Câu lạc bộ sinh viên UniMelb (UMSU)', to: 'clubs' },
       { text: 'Môn dễ lấy điểm cao để tăng WAM ở UniMelb', to: 'subjects/easy' },
       { text: 'Các môn khó nhất ở UniMelb', to: 'subjects/hard' },
@@ -153,6 +159,7 @@ export const SEARCH_PHRASES: Record<LocaleCode, SearchPhrases> = {
       { text: 'Kalkulator nilai ujian akhir UniMelb: berapa yang dibutuhkan untuk H1 atau lulus', to: 'tools/final' },
       { text: 'Kalkulator WAM UniMelb', to: 'tools/wam' },
       { text: 'Jadwal belajar untuk ujian UniMelb', to: 'tools/revision' },
+      { text: 'Sekarang minggu ke berapa semester di UniMelb', to: 'this-semester' },
       { text: 'Klub mahasiswa UniMelb (UMSU)', to: 'clubs' },
       { text: 'Mata kuliah UniMelb yang mudah dapat nilai tinggi (WAM)', to: 'subjects/easy' },
       { text: 'Mata kuliah UniMelb paling sulit', to: 'subjects/hard' },
@@ -175,6 +182,7 @@ export const SEARCH_PHRASES: Record<LocaleCode, SearchPhrases> = {
       { text: 'Kalkulator markah peperiksaan akhir UniMelb: berapa perlu untuk H1 atau lulus', to: 'tools/final' },
       { text: 'Kalkulator WAM UniMelb', to: 'tools/wam' },
       { text: 'Jadual ulang kaji untuk peperiksaan UniMelb', to: 'tools/revision' },
+      { text: 'Minggu ke berapa semester di UniMelb sekarang', to: 'this-semester' },
       { text: 'Kelab pelajar UniMelb (UMSU)', to: 'clubs' },
       { text: 'Subjek UniMelb yang mudah dapat markah tinggi (WAM)', to: 'subjects/easy' },
       { text: 'Subjek UniMelb paling sukar', to: 'subjects/hard' },
@@ -197,6 +205,7 @@ export const SEARCH_PHRASES: Record<LocaleCode, SearchPhrases> = {
       { text: 'फ़ाइनल परीक्षा कैलकुलेटर: H1 या पास के लिए कितने अंक चाहिए', to: 'tools/final' },
       { text: 'यूनिमेलब WAM कैलकुलेटर', to: 'tools/wam' },
       { text: 'यूनिमेलब परीक्षाओं के लिए रिवीज़न टाइमटेबल', to: 'tools/revision' },
+      { text: 'यूनिमेलब में सेमेस्टर का कौन-सा हफ़्ता चल रहा है', to: 'this-semester' },
       { text: 'यूनिमेलब क्लब (UMSU)', to: 'clubs' },
       { text: 'यूनिमेलब के आसान सब्जेक्ट, अच्छा WAM पाने के लिए', to: 'subjects/easy' },
       { text: 'यूनिमेलब के सबसे कठिन सब्जेक्ट', to: 'subjects/hard' },

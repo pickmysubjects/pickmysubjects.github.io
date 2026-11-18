@@ -39,6 +39,7 @@ const CareersView = lazy('careers')
 const ClubsView = lazy('clubs')
 const ChangesView = lazy('changes')
 const ToolsView = lazy('tools')
+const SemesterView = lazy('this-semester')
 // The compare page lives under /plan/ but has its own code.
 const PlanCompareView = defineAsyncComponent(() => import('./views/PlanCompareView.vue'))
 
@@ -59,6 +60,7 @@ const TITLES: Partial<Record<string, string>> = {
   shortlist: 'shortlist.title',
   careers: 'careerPath.title',
   changes: 'menu.changes',
+  'this-semester': 'sem.seoTitle',
   // A compare link that isn't a valid pair shows the saved subjects.
   compare: 'shortlist.title',
 }
@@ -143,6 +145,7 @@ watchEffect(() => {
     <ClubsView v-else-if="view === 'clubs'" :id="param" />
     <ChangesView v-else-if="view === 'changes'" :key="param" :year="param" />
     <ToolsView v-else-if="view === 'tools'" :tool="param" />
+    <SemesterView v-else-if="view === 'this-semester'" />
     <PrivacyView v-else />
   </main>
   <footer class="footer">
