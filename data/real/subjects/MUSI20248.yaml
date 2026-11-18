@@ -16,10 +16,16 @@ assessment:
   - kind: project
     weight: 25
     group: true
+    timing:
+      kind: mid
+      text: Mid teaching period
   - kind: project
     weight: 35
   - kind: presentation
     weight: 25
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
 weekly_contact_hours: 2
 pass_fail: true
 breadth_for: []

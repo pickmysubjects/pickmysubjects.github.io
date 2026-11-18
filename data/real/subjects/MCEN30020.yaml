@@ -30,13 +30,28 @@ non_allowed:
 assessment:
   - kind: assignment
     weight: 10
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
   - kind: assignment
     weight: 15
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
   - kind: assignment
     weight: 15
+    timing:
+      kind: week
+      from: 11
+      text: Week 11
   - kind: exam
     weight: 60
     hurdle: true
+    timing:
+      kind: end
+      text: End of semester
 prescribed_texts: false
 exam_book: closed
 handbook: https://handbook.unimelb.edu.au/2027/subjects/mcen30020

@@ -22,6 +22,10 @@ assessment:
     group: true
   - kind: assignment
     weight: 30
+    timing:
+      kind: afterTeaching
+      weeks: 3
+      text: 3 Weeks after the end of teaching
 breadth_for:
   - Bachelor of Biomedicine
   - Bachelor of Commerce

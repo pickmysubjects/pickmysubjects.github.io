@@ -23,8 +23,17 @@ topics:
 assessment:
   - kind: assignment
     weight: 50
+    timing:
+      kind: week
+      from: 2
+      to: 11
+      text: From Week 2 to Week 11
   - kind: assignment
     weight: 25
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
   - kind: assignment
     weight: 25
 weekly_contact_hours: 1

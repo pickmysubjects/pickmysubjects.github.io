@@ -24,6 +24,10 @@ assessment:
     weight: 20
   - kind: test
     weight: 35
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
   - kind: exam
     weight: 35
 breadth_for:

@@ -25,6 +25,9 @@ assessment:
   - kind: participation
     weight: 10
     group: true
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
 weekly_contact_hours: 3.5
 breadth_for:
   - Bachelor of Biomedicine

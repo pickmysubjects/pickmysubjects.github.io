@@ -25,15 +25,37 @@ non_allowed: []
 assessment:
   - kind: presentation
     weight: 12.5
+    timing:
+      kind: week
+      from: 3
+      to: 5
+      text: From Week 3 to Week 5
   - kind: assignment
     weight: 2.5
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
   - kind: report
     weight: 12.5
+    timing:
+      kind: week
+      from: 7
+      to: 9
+      text: From Week 7 to Week 9
   - kind: assignment
     weight: 22.5
     group: true
+    timing:
+      kind: week
+      from: 9
+      to: 12
+      text: From Week 9 to Week 12
   - kind: exam
     weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
 min_attendance: 80
 prescribed_texts: true
 handbook: https://handbook.unimelb.edu.au/2027/subjects/miim30015

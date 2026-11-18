@@ -24,6 +24,10 @@ assessment:
     group: true
   - kind: report
     weight: 50
+    timing:
+      kind: afterTeaching
+      weeks: 5
+      text: 5 Weeks after the end of teaching
 weekly_contact_hours: 2
 breadth_for:
   - Bachelor of Biomedicine

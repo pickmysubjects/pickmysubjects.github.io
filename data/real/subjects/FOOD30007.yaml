@@ -16,10 +16,20 @@ non_allowed: []
 assessment:
   - kind: report
     weight: 25
+    timing:
+      kind: week
+      from: 10
+      text: Week 10
   - kind: test
     weight: 25
+    timing:
+      kind: mid
+      text: Mid semester
   - kind: exam
     weight: 50
+    timing:
+      kind: end
+      text: End of semester
 weekly_contact_hours: 6.5
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/food30007

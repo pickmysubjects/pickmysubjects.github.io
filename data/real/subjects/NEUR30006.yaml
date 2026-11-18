@@ -19,10 +19,19 @@ non_allowed: []
 assessment:
   - kind: quiz
     weight: 20
+    timing:
+      kind: teaching
+      text: Throughout the semester
   - kind: test
     weight: 20
+    timing:
+      kind: mid
+      text: Mid semester
   - kind: report
     weight: 60
+    timing:
+      kind: exam
+      text: During the examination period
 prescribed_texts: false
 languages:
   - Python

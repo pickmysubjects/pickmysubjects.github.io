@@ -30,6 +30,9 @@ topics:
 assessment:
   - kind: exam
     weight: 100
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 7
 min_attendance: 100
 breadth_for: []

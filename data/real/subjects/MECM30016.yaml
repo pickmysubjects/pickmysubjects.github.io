@@ -17,8 +17,16 @@ topics:
 assessment:
   - kind: presentation
     weight: 50
+    timing:
+      kind: week
+      from: 6
+      to: 7
+      text: From Week 6 to Week 7
   - kind: report
     weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 2
 breadth_for: []
 min_attendance: 80

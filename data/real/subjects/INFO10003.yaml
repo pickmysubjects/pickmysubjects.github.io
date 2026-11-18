@@ -20,6 +20,9 @@ assessment:
   - kind: assignment
     weight: 40
     group: true
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 3
 handbook: https://handbook.unimelb.edu.au/2027/subjects/info10003
 source_year: 2027

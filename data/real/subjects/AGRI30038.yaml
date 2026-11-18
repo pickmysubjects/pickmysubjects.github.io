@@ -39,11 +39,24 @@ assessment:
   - kind: presentation
     weight: 25
     group: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: assignment
     weight: 15
+    timing:
+      kind: week
+      from: 2
+      to: 11
+      text: From Week 2 to Week 11
   - kind: assignment
     weight: 0
     hurdle: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
 min_attendance: 80
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/agri30038

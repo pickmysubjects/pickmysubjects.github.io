@@ -37,17 +37,33 @@ assessment:
   - kind: assignment
     weight: 10
     hurdle: true
+    timing:
+      kind: week
+      from: 2
+      to: 10
+      text: From Week 2 to Week 10
   - kind: report
     weight: 20
     group: true
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
   - kind: presentation
     weight: 40
     group: true
     hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
   - kind: project
     weight: 30
     group: true
     hurdle: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
 weekly_contact_hours: 3
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/bmen30011

@@ -21,9 +21,19 @@ topics:
 assessment:
   - kind: assignment
     weight: 20
+    timing:
+      kind: week
+      from: 3
+      to: 5
+      text: From Week 3 to Week 5
   - kind: assignment
     weight: 20
     hurdle: true
+    timing:
+      kind: week
+      from: 8
+      to: 10
+      text: From Week 8 to Week 10
   - kind: presentation
     weight: 60
 weekly_contact_hours: 2

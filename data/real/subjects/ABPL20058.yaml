@@ -17,14 +17,30 @@ topics:
 assessment:
   - kind: assignment
     weight: 20
+    timing:
+      kind: week
+      from: 3
+      text: Week 3
   - kind: presentation
     weight: 30
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
   - kind: project
     weight: 40
     hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
   - kind: assignment
     weight: 10
     hurdle: true
+    timing:
+      kind: week
+      from: 7
+      to: 12
+      text: From Week 7 to Week 12
 min_attendance: 75
 breadth_for: []
 attendance_applies_to:

@@ -29,6 +29,9 @@ assessment:
     group: true
   - kind: exam
     weight: 45
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 4.5
 breadth_for: []
 prescribed_texts: false

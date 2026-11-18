@@ -20,10 +20,19 @@ topics:
 assessment:
   - kind: assignment
     weight: 50
+    timing:
+      kind: teaching
+      text: During the teaching period
   - kind: project
     weight: 10
+    timing:
+      kind: mid
+      text: Mid semester
   - kind: project
     weight: 40
+    timing:
+      kind: exam
+      text: During the examination period
 breadth_for:
   - Bachelor of Arts
   - Bachelor of Biomedicine

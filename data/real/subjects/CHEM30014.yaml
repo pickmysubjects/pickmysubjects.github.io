@@ -13,6 +13,9 @@ non_allowed: []
 assessment:
   - kind: exam
     weight: 100
+    timing:
+      kind: teaching
+      text: During the teaching period
 weekly_contact_hours: 3.5
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/chem30014

@@ -15,10 +15,22 @@ non_allowed:
 assessment:
   - kind: exam
     weight: 55
+    timing:
+      kind: exam
+      text: During the examination period
   - kind: report
     weight: 40
+    timing:
+      kind: week
+      from: 7
+      to: 11
+      text: From Week 7 to Week 11
   - kind: participation
     weight: 5
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
 weekly_contact_hours: 4
 min_attendance: 80
 attendance_applies_to:

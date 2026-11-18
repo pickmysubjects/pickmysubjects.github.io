@@ -26,13 +26,25 @@ topics:
 assessment:
   - kind: assignment
     weight: 20
+    timing:
+      kind: end
+      text: End of the teaching period
   - kind: exam
     weight: 30
     hurdle: true
+    timing:
+      kind: exam
+      text: End of year examination period
   - kind: exam
     weight: 20
+    timing:
+      kind: exam
+      text: End of year examination period
   - kind: exam
     weight: 30
+    timing:
+      kind: exam
+      text: Mid-year examination period
 weekly_contact_hours: 35.5
 min_attendance: 100
 breadth_for: []

@@ -28,10 +28,21 @@ non_allowed: []
 assessment:
   - kind: assignment
     weight: 20
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: test
     weight: 20
+    timing:
+      kind: week
+      from: 6
+      to: 7
+      text: From Week 6 to Week 7
   - kind: exam
     weight: 60
+    timing:
+      kind: end
+      text: End of semester
 weekly_contact_hours: 4.5
 min_attendance: 80
 attendance_applies_to:

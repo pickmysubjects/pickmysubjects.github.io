@@ -35,14 +35,31 @@ assessment:
   - kind: quiz
     weight: 20
     hurdle: true
+    timing:
+      kind: week
+      from: 1
+      to: 5
+      text: From Week 1 to Week 5
   - kind: report
     weight: 20
     hurdle: true
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
   - kind: report
     weight: 20
     hurdle: true
+    timing:
+      kind: week
+      from: 10
+      text: Week 10
   - kind: project
     weight: 40
     group: true
     hurdle: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
 weekly_contact_hours: 4

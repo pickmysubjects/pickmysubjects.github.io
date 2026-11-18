@@ -21,14 +21,26 @@ assessment:
     weight: 20
   - kind: presentation
     weight: 25
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: exam
     weight: 55
+    timing:
+      kind: exam
+      text: During the examination period
   - kind: participation
     weight: 0
     hurdle: true
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: participation
     weight: 0
     hurdle: true
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
 weekly_contact_hours: 4
 breadth_for: []
 prescribed_texts: false

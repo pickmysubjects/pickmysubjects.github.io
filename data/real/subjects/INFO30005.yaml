@@ -29,9 +29,15 @@ assessment:
   - kind: exam
     weight: 50
     hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
   - kind: assignment
     weight: 0
     hurdle: true
+    timing:
+      kind: teaching
+      text: Throughout the semester
 weekly_contact_hours: 3
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/info30005

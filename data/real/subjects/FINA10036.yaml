@@ -20,10 +20,20 @@ topics:
 assessment:
   - kind: assignment
     weight: 10
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
   - kind: project
     weight: 25
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
   - kind: project
     weight: 65
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
 weekly_contact_hours: 3
 min_attendance: 75
 breadth_for:

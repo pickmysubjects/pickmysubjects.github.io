@@ -40,6 +40,9 @@ assessment:
     weight: 30
   - kind: presentation
     weight: 30
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
 breadth_for: []
 min_attendance: 75
 prescribed_texts: false

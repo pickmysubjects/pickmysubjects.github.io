@@ -25,12 +25,24 @@ assessment:
   - kind: assignment
     weight: 20
     group: true
+    timing:
+      kind: early
+      text: Early in the teaching period
   - kind: assignment
     weight: 20
+    timing:
+      kind: late
+      text: Second half of the teaching period
   - kind: presentation
     weight: 20
+    timing:
+      kind: late
+      text: Second half of the teaching period
   - kind: report
     weight: 40
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
 weekly_contact_hours: 2.5
 min_attendance: 75
 breadth_for: []

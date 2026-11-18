@@ -30,6 +30,9 @@ assessment:
     weight: 15
   - kind: exam
     weight: 70
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
 weekly_contact_hours: 3.5
 handbook: https://handbook.unimelb.edu.au/2027/subjects/phyc30024
 source_year: 2027

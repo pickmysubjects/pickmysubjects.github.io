@@ -13,6 +13,11 @@ non_allowed:
 assessment:
   - kind: quiz
     weight: 10
+    timing:
+      kind: week
+      from: 2
+      to: 12
+      text: From Week 2 to Week 12
   - kind: assignment
     weight: 10
   - kind: assignment
@@ -20,9 +25,15 @@ assessment:
   - kind: project
     weight: 30
     group: true
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: exam
     weight: 40
     hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 4.5
 categories:
   B-SCI: science # on the 2027 B-SCI science list (b-sci-stdopt-1)

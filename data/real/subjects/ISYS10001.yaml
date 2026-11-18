@@ -20,11 +20,23 @@ topics:
 assessment:
   - kind: assignment
     weight: 20
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
   - kind: presentation
     weight: 20
     group: true
+    timing:
+      kind: week
+      from: 11
+      to: 12
+      text: From Week 11 to Week 12
   - kind: exam
     weight: 60
+    timing:
+      kind: end
+      text: End of semester
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Arts

@@ -16,6 +16,9 @@ assessment:
     weight: 30
   - kind: assignment
     weight: 20
+    timing:
+      kind: end
+      text: End of the teaching period
   - kind: report
     weight: 50
 weekly_contact_hours: 2.5

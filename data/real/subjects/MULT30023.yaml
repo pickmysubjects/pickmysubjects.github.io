@@ -20,13 +20,25 @@ topics:
 assessment:
   - kind: test
     weight: 30
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
   - kind: assignment
     weight: 20
     group: true
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
   - kind: presentation
     weight: 20
     group: true
     hurdle: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: report
     weight: 30
     group: true

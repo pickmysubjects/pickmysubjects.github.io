@@ -13,10 +13,19 @@ non_allowed: []
 assessment:
   - kind: report
     weight: 40
+    timing:
+      kind: early
+      text: First half of the teaching period
   - kind: exam
     weight: 45
+    timing:
+      kind: end
+      text: End of semester
   - kind: presentation
     weight: 15
+    timing:
+      kind: end
+      text: End of semester
 weekly_contact_hours: 3
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/geog20013

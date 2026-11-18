@@ -12,8 +12,15 @@ assessment:
     weight: 30
   - kind: participation
     weight: 20
+    timing:
+      kind: teaching
+      text: Throughout the semester
   - kind: assignment
     weight: 10
+    timing:
+      kind: week
+      from: 9
+      text: Week 9
   - kind: assignment
     weight: 40
 breadth_for:

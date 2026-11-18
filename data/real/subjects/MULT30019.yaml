@@ -28,8 +28,16 @@ assessment:
   - kind: assignment
     weight: 50
     group: true
+    timing:
+      kind: week
+      from: 2
+      to: 11
+      text: From Week 2 to Week 11
   - kind: presentation
     weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
 breadth_for:
   - Bachelor of Design
   - Bachelor of Fine Arts (Acting)

@@ -15,15 +15,31 @@ assessment:
   - kind: quiz
     weight: 20
     hurdle: true
+    timing:
+      kind: week
+      from: 3
+      to: 9
+      text: From Week 3 to Week 9
   - kind: report
     weight: 20
     hurdle: true
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
   - kind: assignment
     weight: 20
     hurdle: true
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
   - kind: presentation
     weight: 40
     hurdle: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
 breadth_for: []
 handbook: https://handbook.unimelb.edu.au/2027/subjects/scie30005
 source_year: 2027

@@ -31,6 +31,9 @@ assessment:
     weight: 10
   - kind: exam
     weight: 40
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 2.5
 prescribed_texts: true
 handbook: https://handbook.unimelb.edu.au/2027/subjects/zool20005

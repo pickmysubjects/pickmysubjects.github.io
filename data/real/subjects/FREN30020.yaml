@@ -31,14 +31,31 @@ topics:
 assessment:
   - kind: assignment
     weight: 10
+    timing:
+      kind: week
+      from: 1
+      to: 10
+      text: From Week 1 to Week 10
   - kind: test
     weight: 20
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
   - kind: presentation
     weight: 30
     group: true
+    timing:
+      kind: week
+      from: 7
+      to: 11
+      text: From Week 7 to Week 11
   - kind: assignment
     weight: 40
     group: true
+    timing:
+      kind: exam
+      text: During the examination period
 breadth_for:
   - Bachelor of Biomedicine
   - Bachelor of Commerce

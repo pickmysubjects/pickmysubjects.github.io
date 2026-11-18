@@ -26,12 +26,25 @@ topics:
 assessment:
   - kind: project
     weight: 20
+    timing:
+      kind: week
+      from: 3
+      to: 4
+      text: From Week 3 to Week 4
   - kind: assignment
     weight: 30
     hurdle: true
+    timing:
+      kind: week
+      from: 8
+      to: 9
+      text: From Week 8 to Week 9
   - kind: project
     weight: 50
     hurdle: true
+    timing:
+      kind: teaching
+      text: During the teaching period
 weekly_contact_hours: 4
 breadth_for:
   - Bachelor of Arts

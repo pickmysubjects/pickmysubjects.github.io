@@ -20,8 +20,14 @@ assessment:
     weight: 20
   - kind: presentation
     weight: 40
+    timing:
+      kind: assessmentPeriod
+      text: End of the assessment period
   - kind: assignment
     weight: 30
+    timing:
+      kind: assessmentPeriod
+      text: End of the assessment period
   - kind: participation
     weight: 10
 breadth_for: []

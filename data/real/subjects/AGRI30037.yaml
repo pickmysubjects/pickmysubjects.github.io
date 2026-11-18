@@ -13,19 +13,46 @@ non_allowed: []
 assessment:
   - kind: quiz
     weight: 10
+    timing:
+      kind: week
+      from: 3
+      to: 4
+      text: From Week 3 to Week 4
   - kind: quiz
     weight: 10
+    timing:
+      kind: week
+      from: 6
+      to: 7
+      text: From Week 6 to Week 7
   - kind: report
     weight: 5
     hurdle: true
+    timing:
+      kind: week
+      from: 6
+      to: 7
+      text: From Week 6 to Week 7
   - kind: report
     weight: 25
     hurdle: true
+    timing:
+      kind: week
+      from: 11
+      text: Week 11
   - kind: report
     weight: 10
     hurdle: true
+    timing:
+      kind: week
+      from: 6
+      to: 8
+      text: From Week 6 to Week 8
   - kind: exam
     weight: 40
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 4.5
 attendance_applies_to:
   - workshops

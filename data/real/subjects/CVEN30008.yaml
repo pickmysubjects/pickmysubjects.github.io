@@ -18,12 +18,18 @@ non_allowed: []
 assessment:
   - kind: exam
     weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
   - kind: assignment
     weight: 20
   - kind: assignment
     weight: 20
   - kind: participation
     weight: 10
+    timing:
+      kind: teaching
+      text: During the teaching period
 weekly_contact_hours: 3
 prescribed_texts: true
 exam_book: closed

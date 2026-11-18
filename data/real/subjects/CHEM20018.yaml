@@ -16,8 +16,16 @@ non_allowed: []
 assessment:
   - kind: test
     weight: 20
+    timing:
+      kind: week
+      from: 2
+      to: 10
+      text: From Week 2 to Week 10
   - kind: exam
     weight: 80
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 4.5
 handbook: https://handbook.unimelb.edu.au/2027/subjects/chem20018
 source_year: 2027

@@ -17,8 +17,18 @@ topics:
 assessment:
   - kind: assignment
     weight: 20
+    timing:
+      kind: week
+      from: 4
+      to: 7
+      text: From Week 4 to Week 7
   - kind: assignment
     weight: 20
+    timing:
+      kind: week
+      from: 6
+      to: 10
+      text: From Week 6 to Week 10
   - kind: project
     weight: 60
 breadth_for:

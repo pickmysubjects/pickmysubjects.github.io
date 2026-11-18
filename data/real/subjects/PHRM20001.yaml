@@ -29,12 +29,26 @@ assessment:
   - kind: assignment
     weight: 10
     hurdle: true
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: quiz
     weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: test
     weight: 20
+    timing:
+      kind: week
+      from: 6
+      to: 8
+      text: From Week 6 to Week 8
   - kind: exam
     weight: 60
+    timing:
+      kind: exam
+      text: During the examination period
 handbook: https://handbook.unimelb.edu.au/2027/subjects/phrm20001
 source_year: 2027
 verified_on: 2026-11-14

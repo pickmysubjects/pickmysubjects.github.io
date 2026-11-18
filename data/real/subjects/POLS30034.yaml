@@ -19,8 +19,14 @@ assessment:
     weight: 25
   - kind: assignment
     weight: 25
+    timing:
+      kind: teaching
+      text: During the teaching period
   - kind: report
     weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
 breadth_for: []
 handbook: https://handbook.unimelb.edu.au/2027/subjects/pols30034
 source_year: 2027

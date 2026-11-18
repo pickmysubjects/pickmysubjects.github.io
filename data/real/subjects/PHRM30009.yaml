@@ -24,11 +24,19 @@ assessment:
     weight: 15
   - kind: project
     weight: 15
+    timing:
+      kind: week
+      from: 10
+      to: 12
+      text: Weeks 10 to 12
   - kind: report
     weight: 35
     hurdle: true
   - kind: exam
     weight: 35
+    timing:
+      kind: exam
+      text: During the examination period
 min_attendance: 80
 attendance_applies_to:
   - practicals

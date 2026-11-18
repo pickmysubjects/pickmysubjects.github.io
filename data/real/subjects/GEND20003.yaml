@@ -18,6 +18,10 @@ topics:
 assessment:
   - kind: test
     weight: 25
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
   - kind: assignment
     weight: 25
   - kind: report

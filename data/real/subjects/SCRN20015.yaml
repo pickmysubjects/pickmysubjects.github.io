@@ -18,10 +18,20 @@ topics:
 assessment:
   - kind: presentation
     weight: 35
+    timing:
+      kind: teaching
+      text: During the teaching period
   - kind: report
     weight: 15
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
   - kind: report
     weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
 breadth_for:
   - Bachelor of Biomedicine
   - Bachelor of Commerce

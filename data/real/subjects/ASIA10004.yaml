@@ -12,8 +12,19 @@ non_allowed:
 assessment:
   - kind: assignment
     weight: 25
+    timing:
+      kind: week
+      from: 3
+      to: 11
+      text: From Week 3 to Week 11
   - kind: assignment
     weight: 25
+    timing:
+      kind: weeks
+      weeks:
+        - 5
+        - 10
+      text: Week 5 and 10
   - kind: presentation
     weight: 50
 weekly_contact_hours: 3

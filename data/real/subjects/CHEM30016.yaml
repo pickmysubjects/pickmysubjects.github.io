@@ -16,8 +16,14 @@ non_allowed: []
 assessment:
   - kind: test
     weight: 20
+    timing:
+      kind: teaching
+      text: During the teaching period
   - kind: exam
     weight: 80
+    timing:
+      kind: end
+      text: End of semester
 weekly_contact_hours: 4
 handbook: https://handbook.unimelb.edu.au/2027/subjects/chem30016
 source_year: 2027

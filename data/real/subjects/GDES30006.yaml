@@ -22,14 +22,35 @@ topics:
 assessment:
   - kind: project
     weight: 20
+    timing:
+      kind: week
+      from: 4
+      to: 5
+      text: From Week 4 to Week 5
   - kind: project
     weight: 20
+    timing:
+      kind: week
+      from: 7
+      to: 9
+      text: From Week 7 to Week 9
   - kind: project
     weight: 20
+    timing:
+      kind: week
+      from: 10
+      to: 11
+      text: From Week 10 to Week 11
   - kind: project
     weight: 25
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
   - kind: assignment
     weight: 15
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
 weekly_contact_hours: 3
 categories:
   B-DES: design

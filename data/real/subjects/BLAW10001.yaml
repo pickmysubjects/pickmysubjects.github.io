@@ -45,5 +45,13 @@ topics:
 assessment:
   - kind: quiz
     weight: 20
+    timing:
+      kind: week
+      from: 4
+      to: 9
+      text: From Week 4 to Week 9
   - kind: exam
     weight: 80
+    timing:
+      kind: exam
+      text: During the examination period

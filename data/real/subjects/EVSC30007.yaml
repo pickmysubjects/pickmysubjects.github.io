@@ -17,12 +17,24 @@ assessment:
   - kind: project
     weight: 25
     group: true
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
   - kind: project
     weight: 25
     group: true
+    timing:
+      kind: week
+      from: 11
+      text: Week 11
   - kind: project
     weight: 40
     group: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: report
     weight: 10
 weekly_contact_hours: 4

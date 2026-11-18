@@ -18,8 +18,14 @@ topics:
 assessment:
   - kind: assignment
     weight: 40
+    timing:
+      kind: teaching
+      text: Throughout the semester
   - kind: assignment
     weight: 60
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 3
 breadth_for: []
 recommended:

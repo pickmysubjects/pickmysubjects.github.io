@@ -22,9 +22,17 @@ assessment:
   - kind: project
     weight: 30
     hurdle: true
+    timing:
+      kind: week
+      from: 6
+      to: 11
+      text: From Week 6 to Week 11
   - kind: exam
     weight: 70
     hurdle: true
+    timing:
+      kind: end
+      text: End of semester
 handbook: https://handbook.unimelb.edu.au/2027/subjects/comp30020
 source_year: 2027
 verified_on: 2026-11-12

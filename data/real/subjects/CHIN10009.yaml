@@ -27,12 +27,25 @@ topics:
 assessment:
   - kind: report
     weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
   - kind: report
     weight: 25
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
   - kind: presentation
     weight: 20
+    timing:
+      kind: teaching
+      text: Throughout the semester
   - kind: participation
     weight: 5
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Biomedicine

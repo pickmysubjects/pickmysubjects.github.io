@@ -34,8 +34,16 @@ topics:
 assessment:
   - kind: report
     weight: 40
+    timing:
+      kind: afterTeaching
+      weeks: 2
+      text: 2 Weeks after the end of teaching
   - kind: report
     weight: 60
+    timing:
+      kind: afterTeaching
+      weeks: 5
+      text: 5 Weeks after the end of teaching
 breadth_for: []
 handbook: https://handbook.unimelb.edu.au/2027/subjects/pols30028
 source_year: 2027

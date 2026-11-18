@@ -21,12 +21,23 @@ assessment:
   - kind: assignment
     weight: 10
     group: true
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
   - kind: assignment
     weight: 30
     group: true
+    timing:
+      kind: week
+      from: 11
+      text: Week 11
   - kind: exam
     weight: 60
     hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
 breadth_for:
   - Bachelor of Arts
   - Bachelor of Biomedicine

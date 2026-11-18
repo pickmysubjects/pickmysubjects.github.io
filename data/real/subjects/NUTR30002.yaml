@@ -17,15 +17,33 @@ assessment:
   - kind: assignment
     weight: 10
     hurdle: true
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
   - kind: test
     weight: 20
+    timing:
+      kind: mid
+      text: Mid semester
   - kind: assignment
     weight: 10
     hurdle: true
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
   - kind: quiz
     weight: 10
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
   - kind: exam
     weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 4
 min_attendance: 80
 attendance_applies_to:

@@ -25,12 +25,26 @@ assessment:
   - kind: project
     weight: 30
     group: true
+    timing:
+      kind: teaching
+      text: Throughout the semester
   - kind: assignment
     weight: 20
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
   - kind: presentation
     weight: 20
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: presentation
     weight: 30
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 4
 breadth_for:
   - Bachelor of Arts

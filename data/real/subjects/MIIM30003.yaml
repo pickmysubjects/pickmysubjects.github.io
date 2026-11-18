@@ -13,14 +13,36 @@ non_allowed: []
 assessment:
   - kind: test
     weight: 10
+    timing:
+      kind: week
+      from: 4
+      to: 5
+      text: From Week 4 to Week 5
   - kind: test
     weight: 15
+    timing:
+      kind: week
+      from: 7
+      to: 8
+      text: From Week 7 to Week 8
   - kind: test
     weight: 15
+    timing:
+      kind: week
+      from: 10
+      to: 11
+      text: From Week 10 to Week 11
   - kind: report
     weight: 10
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: exam
     weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 7
 prescribed_texts: true
 handbook: https://handbook.unimelb.edu.au/2027/subjects/miim30003

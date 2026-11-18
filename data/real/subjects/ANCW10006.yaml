@@ -22,8 +22,20 @@ topics:
 assessment:
   - kind: test
     weight: 60
+    timing:
+      kind: weeks
+      weeks:
+        - 2
+        - 4
+        - 6
+        - 8
+        - 10
+      text: Week 2, 4, 6, 8, 10
   - kind: exam
     weight: 40
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 4
 breadth_for:
   - Bachelor of Arts

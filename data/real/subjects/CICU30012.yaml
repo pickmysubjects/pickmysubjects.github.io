@@ -23,10 +23,21 @@ topics:
 assessment:
   - kind: project
     weight: 20
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
   - kind: project
     weight: 60
+    timing:
+      kind: week
+      from: 11
+      text: Week 11
   - kind: assignment
     weight: 20
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 2.5
 breadth_for: []
 min_attendance: 80

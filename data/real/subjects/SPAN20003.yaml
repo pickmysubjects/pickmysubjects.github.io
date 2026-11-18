@@ -23,10 +23,21 @@ assessment:
     weight: 25
   - kind: presentation
     weight: 30
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
   - kind: assignment
     weight: 20
+    timing:
+      kind: week
+      from: 11
+      text: Week 11
   - kind: exam
     weight: 25
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 4
 breadth_for:
   - Bachelor of Arts

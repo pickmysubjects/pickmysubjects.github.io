@@ -19,15 +19,36 @@ non_allowed: []
 assessment:
   - kind: test
     weight: 20
+    timing:
+      kind: week
+      from: 11
+      to: 12
+      text: From Week 11 to Week 12
   - kind: project
     weight: 15
+    timing:
+      kind: week
+      from: 6
+      to: 7
+      text: From Week 6 to Week 7
   - kind: assignment
     weight: 7.5
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
   - kind: assignment
     weight: 7.5
     group: true
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
   - kind: project
     weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 3.5
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/evsc30002

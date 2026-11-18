@@ -19,12 +19,26 @@ topics:
 assessment:
   - kind: quiz
     weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: participation
     weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: test
     weight: 20
+    timing:
+      kind: week
+      from: 5
+      to: 9
+      text: From Week 5 to Week 9
   - kind: exam
     weight: 60
+    timing:
+      kind: exam
+      text: During the examination period
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/fnce20006
 source_year: 2027

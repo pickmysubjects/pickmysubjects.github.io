@@ -51,4 +51,7 @@ assessment:
     weight: 20
   - kind: exam
     weight: 40
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 3

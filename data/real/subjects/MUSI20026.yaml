@@ -11,23 +11,23 @@ offerings:
     - semester-2
 prerequisites:
   any:
-  - all:
-    - MUSI20025
-    - permission: application
-      note: 'Performance students: apply to the coordinator.'
-  - all:
-    - average:
-        min: 75
-        from:
-        - MUSI10221
-    - permission: application
-      note: 'Composition students: also apply to the coordinator.'
+    - all:
+        - MUSI20025
+        - permission: application
+          note: 'Performance students: apply to the coordinator.'
+    - all:
+        - average:
+            min: 75
+            from:
+              - MUSI10221
+        - permission: application
+          note: 'Composition students: also apply to the coordinator.'
 corequisites:
   any:
-  - MUSI20201
-  - MUSI20202
-  - MUSI20055
-  - MUSI20056
+    - MUSI20201
+    - MUSI20202
+    - MUSI20055
+    - MUSI20056
 non_allowed: []
 skills:
   - presentation
@@ -39,6 +39,9 @@ topics:
 assessment:
   - kind: assignment
     weight: 100
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 2.5
 min_attendance: 100
 breadth_for: []

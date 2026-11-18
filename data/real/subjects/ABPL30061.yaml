@@ -23,12 +23,27 @@ assessment:
   - kind: presentation
     weight: 20
     group: true
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
   - kind: presentation
     weight: 30
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
   - kind: presentation
     weight: 10
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: assignment
     weight: 40
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 7
 breadth_for: []
 recommended:

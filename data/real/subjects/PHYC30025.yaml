@@ -23,13 +23,27 @@ topics:
 assessment:
   - kind: report
     weight: 20
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
   - kind: report
     weight: 20
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
   - kind: project
     weight: 40
+    timing:
+      kind: exam
+      text: During the examination period
   - kind: assignment
     weight: 20
     hurdle: true
+    timing:
+      kind: teaching
+      text: Weekly
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Arts

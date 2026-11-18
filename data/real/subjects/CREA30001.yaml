@@ -18,10 +18,20 @@ topics:
 assessment:
   - kind: assignment
     weight: 25
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
   - kind: project
     weight: 50
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
   - kind: assignment
     weight: 25
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
 breadth_for:
   - Bachelor of Arts
   - Bachelor of Biomedicine

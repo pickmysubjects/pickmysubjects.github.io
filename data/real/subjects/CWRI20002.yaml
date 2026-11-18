@@ -17,8 +17,17 @@ topics:
 assessment:
   - kind: participation
     weight: 15
+    timing:
+      kind: week
+      from: 1
+      to: 12
+      text: From Week 1 to Week 12
   - kind: test
     weight: 30
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
   - kind: participation
     weight: 55
 weekly_contact_hours: 3

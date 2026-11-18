@@ -33,15 +33,34 @@ topics:
 assessment:
   - kind: project
     weight: 5
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
   - kind: test
     weight: 10
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
   - kind: project
     weight: 10
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
   - kind: project
     weight: 25
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: exam
     weight: 50
     hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
 handbook: https://handbook.unimelb.edu.au/2027/subjects/ecom30001
 source_year: 2027
 verified_on: 2026-11-12

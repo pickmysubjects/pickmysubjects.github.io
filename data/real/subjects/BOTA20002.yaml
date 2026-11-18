@@ -26,10 +26,19 @@ non_allowed: []
 assessment:
   - kind: test
     weight: 20
+    timing:
+      kind: teaching
+      text: During the teaching period
   - kind: report
     weight: 20
+    timing:
+      kind: teaching
+      text: During the teaching period
   - kind: exam
     weight: 60
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 5
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/bota20002

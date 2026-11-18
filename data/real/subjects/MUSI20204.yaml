@@ -23,12 +23,23 @@ topics:
 assessment:
   - kind: assignment
     weight: 40
+    timing:
+      kind: week
+      from: 2
+      to: 11
+      text: From Week 2 to Week 11
   - kind: presentation
     weight: 20
     group: true
+    timing:
+      kind: teaching
+      text: During the teaching period
   - kind: report
     weight: 40
     hurdle: true
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
 weekly_contact_hours: 2
 breadth_for:
   - Bachelor of Arts

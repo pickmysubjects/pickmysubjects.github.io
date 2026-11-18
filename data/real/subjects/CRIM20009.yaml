@@ -19,6 +19,13 @@ topics:
 assessment:
   - kind: assignment
     weight: 45
+    timing:
+      kind: weeks
+      weeks:
+        - 5
+        - 8
+        - 11
+      text: Week 5, 8 and 11
   - kind: presentation
     weight: 55
 weekly_contact_hours: 2.5

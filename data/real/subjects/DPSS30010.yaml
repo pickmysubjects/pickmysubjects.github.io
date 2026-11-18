@@ -26,6 +26,9 @@ topics:
 assessment:
   - kind: assignment
     weight: 15
+    timing:
+      kind: early
+      text: Early in the teaching period
   - kind: assignment
     weight: 20
   - kind: assignment

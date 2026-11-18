@@ -45,8 +45,14 @@ topics:
 assessment:
   - kind: report
     weight: 80
+    timing:
+      kind: exam
+      text: During the examination period
   - kind: report
     weight: 20
+    timing:
+      kind: exam
+      text: During the examination period
 breadth_for: []
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/pols30001

@@ -24,11 +24,28 @@ topics:
 assessment:
   - kind: quiz
     weight: 10
+    timing:
+      kind: weeks
+      weeks:
+        - 4
+        - 7
+        - 11
+      text: Weeks 4, 7 and 11
   - kind: presentation
     weight: 25
     group: true
+    timing:
+      kind: week
+      from: 5
+      to: 7
+      text: From Week 5 to Week 7
   - kind: test
     weight: 30
+    timing:
+      kind: week
+      from: 8
+      to: 10
+      text: From Week 8 to Week 10
   - kind: project
     weight: 35
 weekly_contact_hours: 4

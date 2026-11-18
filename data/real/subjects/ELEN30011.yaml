@@ -22,12 +22,21 @@ assessment:
   - kind: exam
     weight: 50
     hurdle: true
+    timing:
+      kind: end
+      text: End of semester
   - kind: project
     weight: 30
     group: true
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: test
     weight: 20
     hurdle: true
+    timing:
+      kind: mid
+      text: Mid semester
 weekly_contact_hours: 6
 handbook: https://handbook.unimelb.edu.au/2027/subjects/elen30011
 source_year: 2027

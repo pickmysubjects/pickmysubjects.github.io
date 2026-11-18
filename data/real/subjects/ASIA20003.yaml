@@ -18,10 +18,19 @@ topics:
 assessment:
   - kind: presentation
     weight: 35
+    timing:
+      kind: teaching
+      text: Throughout the semester
   - kind: assignment
     weight: 15
+    timing:
+      kind: end
+      text: End of semester
   - kind: report
     weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 2.5
 breadth_for:
   - Bachelor of Biomedicine

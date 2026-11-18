@@ -16,11 +16,24 @@ non_allowed: []
 assessment:
   - kind: project
     weight: 30
+    timing:
+      kind: week
+      from: 4
+      to: 5
+      text: From Week 4 to Week 5
   - kind: project
     weight: 25
     group: true
+    timing:
+      kind: week
+      from: 8
+      to: 9
+      text: From Week 8 to Week 9
   - kind: project
     weight: 45
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
 weekly_contact_hours: 3
 categories:
   B-DES: design

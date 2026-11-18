@@ -18,10 +18,16 @@ topics:
 assessment:
   - kind: assignment
     weight: 40
+    timing:
+      kind: mid
+      text: Mid semester
   - kind: assignment
     weight: 20
   - kind: project
     weight: 40
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Arts

@@ -20,11 +20,22 @@ topics:
 assessment:
   - kind: test
     weight: 25
+    timing:
+      kind: mid
+      text: Mid semester
   - kind: assignment
     weight: 15
     group: true
+    timing:
+      kind: week
+      from: 9
+      to: 11
+      text: From Week 9 to Week 11
   - kind: exam
     weight: 60
+    timing:
+      kind: exam
+      text: During the examination period
 handbook: https://handbook.unimelb.edu.au/2027/subjects/acct30002
 source_year: 2027
 verified_on: 2026-11-12

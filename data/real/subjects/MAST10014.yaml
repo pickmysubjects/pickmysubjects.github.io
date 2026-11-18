@@ -18,10 +18,20 @@ non_allowed: []
 assessment:
   - kind: assignment
     weight: 30
+    timing:
+      kind: teaching
+      text: Throughout the semester
   - kind: test
     weight: 25
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
   - kind: exam
     weight: 45
+    timing:
+      kind: exam
+      text: During the examination period
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/mast10014
 source_year: 2027

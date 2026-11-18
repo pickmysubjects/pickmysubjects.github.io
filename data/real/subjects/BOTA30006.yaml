@@ -16,8 +16,14 @@ non_allowed: []
 assessment:
   - kind: project
     weight: 60
+    timing:
+      kind: end
+      text: End of semester
   - kind: assignment
     weight: 20
+    timing:
+      kind: teaching
+      text: During the teaching period
   - kind: exam
     weight: 20
 weekly_contact_hours: 5

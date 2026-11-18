@@ -27,6 +27,9 @@ assessment:
     weight: 30
   - kind: exam
     weight: 30
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Arts

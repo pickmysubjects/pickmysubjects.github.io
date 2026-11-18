@@ -30,10 +30,18 @@ assessment:
     weight: 20
     group: true
     hurdle: true
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
   - kind: report
     weight: 15
     group: true
     hurdle: true
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
   - kind: report
     weight: 65
 weekly_contact_hours: 1

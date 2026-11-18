@@ -19,11 +19,17 @@ assessment:
   - kind: participation
     weight: 10
     group: true
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: presentation
     weight: 60
     group: true
   - kind: project
     weight: 30
+    timing:
+      kind: assessmentPeriod
+      text: End of the assessment period
 weekly_contact_hours: 3
 breadth_for: []
 prescribed_texts: false

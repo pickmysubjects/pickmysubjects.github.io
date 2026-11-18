@@ -19,15 +19,32 @@ non_allowed: []
 assessment:
   - kind: presentation
     weight: 10
+    timing:
+      kind: week
+      from: 3
+      text: Week 3
   - kind: report
     weight: 10
     group: true
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
   - kind: participation
     weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: report
     weight: 60
+    timing:
+      kind: exam
+      text: During the examination period
   - kind: assignment
     weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
 handbook: https://handbook.unimelb.edu.au/2027/subjects/phys30009
 source_year: 2027
 verified_on: 2026-11-14

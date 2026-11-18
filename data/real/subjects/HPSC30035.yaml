@@ -22,6 +22,9 @@ assessment:
     weight: 50
   - kind: report
     weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Biomedicine

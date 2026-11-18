@@ -19,22 +19,52 @@ assessment:
   - kind: participation
     weight: 0
     hurdle: true
+    timing:
+      kind: week
+      from: 1
+      text: Week 1
   - kind: assignment
     weight: 0
     hurdle: true
+    timing:
+      kind: week
+      from: 1
+      text: Week 1
   - kind: quiz
     weight: 0
     hurdle: true
+    timing:
+      kind: assessmentPeriod
+      text: End of the assessment period
   - kind: report
     weight: 10
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
   - kind: presentation
     weight: 15
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
   - kind: report
     weight: 20
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
   - kind: report
     weight: 15
+    timing:
+      kind: week
+      from: 11
+      text: Week 11
   - kind: exam
     weight: 40
+    timing:
+      kind: end
+      text: End of semester
 weekly_contact_hours: 3.5
 breadth_for: []
 prescribed_texts: false

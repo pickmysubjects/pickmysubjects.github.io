@@ -23,17 +23,38 @@ non_allowed:
 assessment:
   - kind: test
     weight: 10
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
   - kind: assignment
     weight: 10
     group: true
+    timing:
+      kind: week
+      from: 9
+      text: Week 9
   - kind: test
     weight: 10
+    timing:
+      kind: week
+      from: 10
+      text: Week 10
   - kind: quiz
     weight: 15
+    timing:
+      kind: teaching
+      text: Throughout the semester
   - kind: assignment
     weight: 5
+    timing:
+      kind: teaching
+      text: Throughout the semester
   - kind: exam
     weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 2
 prescribed_texts: true
 handbook: https://handbook.unimelb.edu.au/2027/subjects/cedb20003

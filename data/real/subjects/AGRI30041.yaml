@@ -26,11 +26,20 @@ topics:
 assessment:
   - kind: assignment
     weight: 25
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
   - kind: report
     weight: 50
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
   - kind: presentation
     weight: 25
     group: true
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
 weekly_contact_hours: 1.5
 breadth_for: []
 prescribed_texts: false

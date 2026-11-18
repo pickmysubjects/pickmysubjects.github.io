@@ -10,11 +10,23 @@ non_allowed: []
 assessment:
   - kind: exam
     weight: 60
+    timing:
+      kind: exam
+      text: During the examination period
   - kind: test
     weight: 10
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
   - kind: report
     weight: 30
     hurdle: true
+    timing:
+      kind: week
+      from: 9
+      to: 12
+      text: From Week 9 to Week 12
 categories:
   B-SCI: science # on the 2027 B-SCI science list (b-sci-stdopt-1)
 breadth_for: []

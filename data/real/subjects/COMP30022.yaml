@@ -51,12 +51,22 @@ assessment:
     weight: 45
     group: true
     hurdle: true
+    timing:
+      kind: teaching
+      text: Throughout the semester
   - kind: project
     weight: 20
     group: true
+    timing:
+      kind: exam
+      text: During the examination period
   - kind: presentation
     weight: 15
     group: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: report
     weight: 20
 weekly_contact_hours: 3

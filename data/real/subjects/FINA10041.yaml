@@ -12,11 +12,24 @@ non_allowed:
 assessment:
   - kind: assignment
     weight: 15
+    timing:
+      kind: week
+      from: 3
+      to: 6
+      text: From Week 3 to Week 6
   - kind: assignment
     weight: 35
     group: true
+    timing:
+      kind: week
+      from: 7
+      to: 8
+      text: From Week 7 to Week 8
   - kind: presentation
     weight: 50
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
 breadth_for:
   - Bachelor of Arts
   - Bachelor of Biomedicine

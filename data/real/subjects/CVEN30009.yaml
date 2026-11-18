@@ -20,15 +20,29 @@ non_allowed: []
 assessment:
   - kind: exam
     weight: 45
+    timing:
+      kind: exam
+      text: During the examination period
   - kind: assignment
     weight: 15
     group: true
     hurdle: true
+    timing:
+      kind: week
+      from: 5
+      to: 7
+      text: From Week 5 to Week 7
   - kind: assignment
     weight: 30
     group: true
+    timing:
+      kind: end
+      text: End of semester
   - kind: participation
     weight: 10
+    timing:
+      kind: teaching
+      text: During the teaching period
 weekly_contact_hours: 4
 prescribed_texts: false
 exam_book: closed

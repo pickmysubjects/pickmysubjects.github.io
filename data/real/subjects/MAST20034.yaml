@@ -24,13 +24,25 @@ non_allowed: []
 assessment:
   - kind: quiz
     weight: 5
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: assignment
     weight: 20
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: project
     weight: 15
     group: true
+    timing:
+      kind: late
+      text: Second half of the teaching period
   - kind: exam
     weight: 60
+    timing:
+      kind: exam
+      text: During the examination period
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/mast20034
 source_year: 2027

@@ -41,8 +41,14 @@ assessment:
     weight: 12
   - kind: quiz
     weight: 6
+    timing:
+      kind: teaching
+      text: Weekly, during the teaching period
   - kind: exam
     weight: 70
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 4
 recommended:
   - MAST20036

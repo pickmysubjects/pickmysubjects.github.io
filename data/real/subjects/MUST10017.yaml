@@ -10,12 +10,24 @@ non_allowed: []
 assessment:
   - kind: quiz
     weight: 35
+    timing:
+      kind: early
+      text: First half of the teaching period
   - kind: assignment
     weight: 10
+    timing:
+      kind: mid
+      text: Mid teaching period
   - kind: assignment
     weight: 15
+    timing:
+      kind: end
+      text: End of the teaching period
   - kind: assignment
     weight: 40
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
 breadth_for:
   - Bachelor of Arts
   - Bachelor of Biomedicine

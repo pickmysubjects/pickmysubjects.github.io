@@ -20,6 +20,9 @@ topics:
 assessment:
   - kind: assignment
     weight: 35
+    timing:
+      kind: end
+      text: End of the teaching period
   - kind: report
     weight: 65
 breadth_for:

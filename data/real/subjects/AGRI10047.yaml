@@ -18,19 +18,44 @@ topics:
 assessment:
   - kind: assignment
     weight: 25
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
   - kind: assignment
     weight: 25
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
   - kind: assignment
     weight: 50
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: participation
     weight: 0
     hurdle: true
+    timing:
+      kind: week
+      from: 1
+      text: Week 1
   - kind: quiz
     weight: 0
     hurdle: true
+    timing:
+      kind: week
+      from: 1
+      to: 3
+      text: From Week 1 to Week 3
   - kind: assignment
     weight: 0
     hurdle: true
+    timing:
+      kind: week
+      from: 1
+      text: Week 1
 weekly_contact_hours: 5
 breadth_for: []
 handbook: https://handbook.unimelb.edu.au/2027/subjects/agri10047

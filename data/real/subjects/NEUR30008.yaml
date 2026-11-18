@@ -24,8 +24,14 @@ assessment:
   - kind: project
     weight: 30
     group: true
+    timing:
+      kind: end
+      text: End of semester
   - kind: exam
     weight: 40
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
 weekly_contact_hours: 2
 categories:
   B-SCI: science # on the 2027 B-SCI science list (b-sci-stdopt-1)

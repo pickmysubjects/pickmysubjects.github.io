@@ -21,10 +21,22 @@ assessment:
   - kind: participation
     weight: 50
     group: true
+    timing:
+      kind: week
+      from: 1
+      to: 12
+      text: From Week 1 to Week 12
   - kind: project
     weight: 25
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
   - kind: project
     weight: 25
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
 weekly_contact_hours: 2.5
 pass_fail: true
 breadth_for: []

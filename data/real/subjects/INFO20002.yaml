@@ -22,9 +22,17 @@ assessment:
     weight: 40
     group: true
     hurdle: true
+    timing:
+      kind: week
+      from: 4
+      to: 8
+      text: From Week 4 to Week 8
   - kind: exam
     weight: 60
     hurdle: true
+    timing:
+      kind: end
+      text: End of semester
 prescribed_texts: false
 exam_book: closed
 handbook: https://handbook.unimelb.edu.au/2027/subjects/info20002

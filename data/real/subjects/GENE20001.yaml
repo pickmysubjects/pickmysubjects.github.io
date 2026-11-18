@@ -21,9 +21,16 @@ assessment:
     weight: 40
   - kind: test
     weight: 25
+    timing:
+      kind: exam
+      text: During the examination period
   - kind: presentation
     weight: 20
     group: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
 weekly_contact_hours: 5
 prescribed_texts: true
 handbook: https://handbook.unimelb.edu.au/2027/subjects/gene20001

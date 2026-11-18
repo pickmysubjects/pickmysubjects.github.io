@@ -40,8 +40,17 @@ topics:
 assessment:
   - kind: quiz
     weight: 20
+    timing:
+      kind: teaching
+      text: During the teaching period
   - kind: report
     weight: 20
+    timing:
+      kind: teaching
+      text: During the teaching period
   - kind: exam
     weight: 60
+    timing:
+      kind: end
+      text: End of semester
 weekly_contact_hours: 5

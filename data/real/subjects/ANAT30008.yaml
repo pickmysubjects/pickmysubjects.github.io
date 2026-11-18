@@ -19,8 +19,14 @@ assessment:
     weight: 20
   - kind: exam
     weight: 40
+    timing:
+      kind: exam
+      text: During the examination period
   - kind: exam
     weight: 40
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 6
 prescribed_texts: true
 handbook: https://handbook.unimelb.edu.au/2027/subjects/anat30008

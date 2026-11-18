@@ -17,10 +17,19 @@ non_allowed: []
 assessment:
   - kind: test
     weight: 20
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: exam
     weight: 40
+    timing:
+      kind: exam
+      text: During the examination period
   - kind: exam
     weight: 40
+    timing:
+      kind: end
+      text: End of semester
 weekly_contact_hours: 6
 prescribed_texts: true
 handbook: https://handbook.unimelb.edu.au/2027/subjects/anat30007

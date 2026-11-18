@@ -21,12 +21,27 @@ assessment:
   - kind: presentation
     weight: 20
     group: true
+    timing:
+      kind: week
+      from: 2
+      text: Week 2
   - kind: assignment
     weight: 25
+    timing:
+      kind: afterTeaching
+      weeks: 1
+      text: 1 Weeks after the end of teaching
   - kind: report
     weight: 5
+    timing:
+      kind: afterTeaching
+      weeks: 1
+      text: 1 Weeks after the end of teaching
   - kind: exam
     weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Biomedicine

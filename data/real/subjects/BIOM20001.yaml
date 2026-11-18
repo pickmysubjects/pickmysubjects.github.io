@@ -41,6 +41,9 @@ assessment:
   - kind: exam
     weight: 40
     group: true
+    timing:
+      kind: exam
+      text: During the examination period
   - kind: assignment
     weight: 0
     hurdle: true

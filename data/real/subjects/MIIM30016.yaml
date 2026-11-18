@@ -19,15 +19,30 @@ non_allowed: []
 assessment:
   - kind: presentation
     weight: 12.5
+    timing:
+      kind: mid
+      text: Mid semester
   - kind: assignment
     weight: 2.5
+    timing:
+      kind: mid
+      text: Mid semester
   - kind: report
     weight: 12.5
+    timing:
+      kind: mid
+      text: Mid semester
   - kind: presentation
     weight: 22.5
     group: true
+    timing:
+      kind: late
+      text: Late in the teaching period
   - kind: exam
     weight: 50
+    timing:
+      kind: end
+      text: End of semester
 min_attendance: 80
 attendance_applies_to:
   - practicals

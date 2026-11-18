@@ -21,8 +21,14 @@ topics:
 assessment:
   - kind: quiz
     weight: 50
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: exam
     weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Arts

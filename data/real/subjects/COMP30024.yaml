@@ -47,7 +47,13 @@ assessment:
   - kind: project
     weight: 30
     hurdle: true
+    timing:
+      kind: teaching
+      text: During the teaching period
   - kind: exam
     weight: 70
     hurdle: true
+    timing:
+      kind: end
+      text: End of semester
 weekly_contact_hours: 3

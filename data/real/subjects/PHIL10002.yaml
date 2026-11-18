@@ -19,15 +19,31 @@ assessment:
   - kind: assignment
     weight: 20
     hurdle: true
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
   - kind: report
     weight: 30
     hurdle: true
+    timing:
+      kind: week
+      from: 9
+      text: Week 9
   - kind: exam
     weight: 40
     hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
   - kind: quiz
     weight: 10
     hurdle: true
+    timing:
+      kind: week
+      from: 2
+      to: 11
+      text: From Week 2 to Week 11
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Biomedicine

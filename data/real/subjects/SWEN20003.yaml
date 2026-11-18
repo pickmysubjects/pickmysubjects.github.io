@@ -50,13 +50,34 @@ topics:
 assessment:
   - kind: assignment
     weight: 25
+    timing:
+      kind: weeks
+      weeks:
+        - 6
+        - 10
+      text: Weeks 6 and 10
   - kind: test
     weight: 20
     hurdle: true
+    timing:
+      kind: weeks
+      weeks:
+        - 8
+        - 12
+      text: Weeks 8 and 12
   - kind: participation
     weight: 5
     group: true
+    timing:
+      kind: weeks
+      weeks:
+        - 3
+        - 5
+      text: Weeks 3 and 5
   - kind: exam
     weight: 50
     hurdle: true
+    timing:
+      kind: end
+      text: End of semester
 weekly_contact_hours: 4

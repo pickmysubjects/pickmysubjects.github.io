@@ -19,8 +19,19 @@ topics:
 assessment:
   - kind: participation
     weight: 30
+    timing:
+      kind: week
+      from: 2
+      to: 7
+      text: From Week 2 to Week 7
   - kind: assignment
     weight: 20
+    timing:
+      kind: weeks
+      weeks:
+        - 6
+        - 12
+      text: Week 6 and week 12
   - kind: report
     weight: 50
 weekly_contact_hours: 3

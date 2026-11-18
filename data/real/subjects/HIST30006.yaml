@@ -17,8 +17,14 @@ topics:
 assessment:
   - kind: quiz
     weight: 15
+    timing:
+      kind: teaching
+      text: During the teaching period
   - kind: assignment
     weight: 35
+    timing:
+      kind: late
+      text: Second half of the teaching period
   - kind: report
     weight: 50
     hurdle: true

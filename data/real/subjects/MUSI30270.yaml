@@ -20,14 +20,35 @@ topics:
 assessment:
   - kind: presentation
     weight: 15
+    timing:
+      kind: week
+      from: 2
+      to: 12
+      text: From Week 2 to Week 12
   - kind: assignment
     weight: 15
+    timing:
+      kind: week
+      from: 3
+      to: 8
+      text: From Week 3 to Week 8
   - kind: presentation
     weight: 25
+    timing:
+      kind: week
+      from: 8
+      to: 12
+      text: From Week 8 to Week 12
   - kind: report
     weight: 35
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
   - kind: participation
     weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
 breadth_for:
   - Bachelor of Arts
   - Bachelor of Biomedicine

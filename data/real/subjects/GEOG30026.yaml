@@ -22,6 +22,9 @@ assessment:
   - kind: presentation
     weight: 30
     group: true
+    timing:
+      kind: assessmentPeriod
+      text: End of the assessment period
 handbook: https://handbook.unimelb.edu.au/2027/subjects/geog30026
 source_year: 2027
 verified_on: 2026-11-13

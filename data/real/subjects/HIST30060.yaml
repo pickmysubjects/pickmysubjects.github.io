@@ -25,12 +25,29 @@ topics:
 assessment:
   - kind: participation
     weight: 10
+    timing:
+      kind: week
+      from: 2
+      to: 11
+      text: From Week 2 to Week 11
   - kind: project
     weight: 15
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
   - kind: quiz
     weight: 15
+    timing:
+      kind: week
+      from: 2
+      to: 11
+      text: From Week 2 to Week 11
   - kind: project
     weight: 60
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 2
 breadth_for: []
 min_attendance: 80

@@ -17,11 +17,23 @@ non_allowed:
 assessment:
   - kind: assignment
     weight: 25
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
   - kind: presentation
     weight: 25
+    timing:
+      kind: week
+      from: 2
+      to: 9
+      text: From Week 2 to Week 9
   - kind: assignment
     weight: 50
     hurdle: true
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
 weekly_contact_hours: 6
 breadth_for: []
 handbook: https://handbook.unimelb.edu.au/2027/subjects/musi30301

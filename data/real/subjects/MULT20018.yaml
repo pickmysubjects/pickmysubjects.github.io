@@ -11,11 +11,23 @@ non_allowed: []
 assessment:
   - kind: participation
     weight: 10
+    timing:
+      kind: week
+      from: 2
+      to: 11
+      text: From Week 2 to Week 11
   - kind: project
     weight: 40
     group: true
+    timing:
+      kind: week
+      from: 11
+      text: Week 11
   - kind: exam
     weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Arts

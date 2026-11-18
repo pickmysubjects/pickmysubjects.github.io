@@ -19,8 +19,15 @@ topics:
 assessment:
   - kind: report
     weight: 40
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
   - kind: assignment
     weight: 60
+    timing:
+      kind: end
+      text: End of semester
 weekly_contact_hours: 3
 min_attendance: 80
 breadth_for:

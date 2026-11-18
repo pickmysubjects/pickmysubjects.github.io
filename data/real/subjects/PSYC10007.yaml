@@ -20,12 +20,32 @@ topics:
 assessment:
   - kind: quiz
     weight: 50
+    timing:
+      kind: week
+      from: 1
+      to: 6
+      text: From Week 1 to Week 6
   - kind: assignment
     weight: 40
+    timing:
+      kind: week
+      from: 6
+      to: 8
+      text: From Week 6 to Week 8
   - kind: assignment
     weight: 5
+    timing:
+      kind: week
+      from: 1
+      to: 6
+      text: From Week 1 to Week 6
   - kind: participation
     weight: 5
+    timing:
+      kind: week
+      from: 1
+      to: 6
+      text: From Week 1 to Week 6
 breadth_for: []
 min_attendance: 80
 attendance_applies_to:

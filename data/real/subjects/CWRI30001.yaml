@@ -17,8 +17,17 @@ topics:
 assessment:
   - kind: presentation
     weight: 20
+    timing:
+      kind: week
+      from: 4
+      to: 6
+      text: From Week 4 to Week 6
   - kind: test
     weight: 25
+    timing:
+      kind: week
+      from: 9
+      text: Week 9
   - kind: participation
     weight: 55
 weekly_contact_hours: 2.5

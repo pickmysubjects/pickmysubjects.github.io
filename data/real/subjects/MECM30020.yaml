@@ -20,10 +20,21 @@ assessment:
   - kind: assignment
     weight: 20
     group: true
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
   - kind: project
     weight: 40
+    timing:
+      kind: week
+      from: 9
+      text: Week 9
   - kind: assignment
     weight: 40
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Biomedicine

@@ -41,11 +41,23 @@ topics:
 assessment:
   - kind: test
     weight: 30
+    timing:
+      kind: week
+      from: 2
+      text: Week 2
   - kind: project
     weight: 50
     group: true
+    timing:
+      kind: week
+      from: 3
+      text: Week 3
   - kind: assignment
     weight: 20
+    timing:
+      kind: afterTeaching
+      weeks: 2
+      text: 2 Weeks after the end of teaching
 weekly_contact_hours: 3.5
 breadth_for:
   - Bachelor of Fine Arts (Acting)

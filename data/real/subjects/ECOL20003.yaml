@@ -26,14 +26,33 @@ recommended:
 assessment:
   - kind: quiz
     weight: 15
+    timing:
+      kind: teaching
+      text: Throughout the semester
   - kind: assignment
     weight: 10
+    timing:
+      kind: week
+      from: 1
+      to: 4
+      text: From Week 1 to Week 4
   - kind: project
     weight: 10
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
   - kind: project
     weight: 25
+    timing:
+      kind: week
+      from: 11
+      text: Week 11
   - kind: exam
     weight: 40
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 5
 prescribed_texts: true
 handbook: https://handbook.unimelb.edu.au/2027/subjects/ecol20003

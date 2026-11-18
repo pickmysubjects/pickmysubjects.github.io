@@ -20,12 +20,24 @@ topics:
 assessment:
   - kind: participation
     weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: assignment
     weight: 30
+    timing:
+      kind: mid
+      text: Mid teaching period
   - kind: assignment
     weight: 20
+    timing:
+      kind: late
+      text: Second half of the teaching period
   - kind: assignment
     weight: 40
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
 weekly_contact_hours: 2.5
 breadth_for:
   - Bachelor of Arts

@@ -27,8 +27,16 @@ assessment:
     weight: 25
   - kind: assignment
     weight: 20
+    timing:
+      kind: afterTeaching
+      weeks: 1
+      text: 1 Weeks after the end of teaching
   - kind: report
     weight: 50
+    timing:
+      kind: afterTeaching
+      weeks: 4
+      text: 4 Weeks after the end of teaching
   - kind: assignment
     weight: 0
     hurdle: true

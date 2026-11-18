@@ -13,6 +13,11 @@ non_allowed: []
 assessment:
   - kind: test
     weight: 40
+    timing:
+      kind: week
+      from: 5
+      to: 11
+      text: From Week 5 to Week 11
   - kind: assignment
     weight: 60
 weekly_contact_hours: 4

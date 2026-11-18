@@ -28,8 +28,16 @@ topics:
 assessment:
   - kind: project
     weight: 15
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
   - kind: report
     weight: 85
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
 weekly_contact_hours: 1
 breadth_for: []
 min_attendance: 80

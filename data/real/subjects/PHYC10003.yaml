@@ -34,10 +34,19 @@ assessment:
   - kind: assignment
     weight: 25
     hurdle: true
+    timing:
+      kind: teaching
+      text: Throughout the semester
   - kind: assignment
     weight: 15
+    timing:
+      kind: teaching
+      text: Throughout the semester
   - kind: exam
     weight: 60
+    timing:
+      kind: exam
+      text: During the examination period
 prescribed_texts: true
 handbook: https://handbook.unimelb.edu.au/2027/subjects/phyc10003
 source_year: 2027

@@ -20,10 +20,21 @@ topics:
 assessment:
   - kind: quiz
     weight: 10
+    timing:
+      kind: teaching
+      text: During the teaching period
   - kind: assignment
     weight: 40
+    timing:
+      kind: afterTeaching
+      weeks: 1
+      text: 1 Week after the end of teaching
   - kind: project
     weight: 50
+    timing:
+      kind: afterTeaching
+      weeks: 4
+      text: 4 Weeks after the end of teaching
 weekly_contact_hours: 2.5
 min_attendance: 80
 breadth_for:

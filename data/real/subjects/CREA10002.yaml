@@ -20,8 +20,16 @@ topics:
 assessment:
   - kind: participation
     weight: 10
+    timing:
+      kind: week
+      from: 1
+      text: Week 1
   - kind: assignment
     weight: 90
+    timing:
+      kind: week
+      from: 1
+      text: Week 1
 weekly_contact_hours: 2.5
 pass_fail: true
 breadth_for: []

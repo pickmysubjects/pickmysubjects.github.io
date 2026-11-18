@@ -21,10 +21,23 @@ topics:
 assessment:
   - kind: assignment
     weight: 35
+    timing:
+      kind: week
+      from: 2
+      to: 6
+      text: From Week 2 to Week 6
   - kind: assignment
     weight: 35
+    timing:
+      kind: week
+      from: 6
+      to: 10
+      text: From Week 6 to Week 10
   - kind: test
     weight: 30
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
 weekly_contact_hours: 7
 min_attendance: 75
 breadth_for: []

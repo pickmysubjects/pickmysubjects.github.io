@@ -24,13 +24,24 @@ topics:
 assessment:
   - kind: assignment
     weight: 30
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
   - kind: assignment
     weight: 40
     group: true
     hurdle: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: exam
     weight: 30
     hurdle: true
+    timing:
+      kind: end
+      text: End of semester
 weekly_contact_hours: 4
 breadth_for: []
 prescribed_texts: false

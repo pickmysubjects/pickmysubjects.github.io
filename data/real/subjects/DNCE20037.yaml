@@ -24,12 +24,21 @@ assessment:
   - kind: assignment
     weight: 25
     group: true
+    timing:
+      kind: week
+      from: 5
+      to: 6
+      text: From Week 5 to Week 6
   - kind: assignment
     weight: 35
     group: true
   - kind: presentation
     weight: 40
     group: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
 weekly_contact_hours: 6
 min_attendance: 75
 breadth_for: []

@@ -13,8 +13,14 @@ assessment:
     weight: 30
   - kind: participation
     weight: 30
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: assignment
     weight: 40
+    timing:
+      kind: late
+      text: Second half of the teaching period
 weekly_contact_hours: 3
 pass_fail: true
 breadth_for:

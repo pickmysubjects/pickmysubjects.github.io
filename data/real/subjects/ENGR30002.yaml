@@ -19,15 +19,37 @@ non_allowed:
 assessment:
   - kind: quiz
     weight: 20
+    timing:
+      kind: week
+      from: 2
+      to: 12
+      text: From Week 2 to Week 12
   - kind: assignment
     weight: 10
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
   - kind: report
     weight: 10
+    timing:
+      kind: week
+      from: 6
+      to: 8
+      text: From Week 6 to Week 8
   - kind: report
     weight: 10
+    timing:
+      kind: week
+      from: 9
+      to: 11
+      text: From Week 9 to Week 11
   - kind: exam
     weight: 50
     hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
 prescribed_texts: false
 exam_book: closed
 handbook: https://handbook.unimelb.edu.au/2027/subjects/engr30002

@@ -27,6 +27,9 @@ assessment:
     hurdle: true
   - kind: assignment
     weight: 20
+    timing:
+      kind: exam
+      text: Mid-year examination period
   - kind: presentation
     weight: 15
     group: true

@@ -29,11 +29,24 @@ assessment:
     weight: 30
     group: true
     hurdle: true
+    timing:
+      kind: week
+      from: 4
+      to: 10
+      text: From Week 4 to Week 10
   - kind: test
     weight: 20
+    timing:
+      kind: week
+      from: 5
+      to: 11
+      text: From Week 5 to Week 11
   - kind: exam
     weight: 50
     hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Arts

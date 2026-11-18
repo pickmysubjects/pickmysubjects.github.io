@@ -30,16 +30,36 @@ assessment:
   - kind: quiz
     weight: 10
     hurdle: true
+    timing:
+      kind: week
+      from: 2
+      text: Week 2
   - kind: presentation
     weight: 25
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
   - kind: presentation
     weight: 25
+    timing:
+      kind: week
+      from: 9
+      text: Week 9
   - kind: presentation
     weight: 40
     hurdle: true
+    timing:
+      kind: week
+      from: 9
+      text: Week 9
   - kind: participation
     weight: 0
     hurdle: true
+    timing:
+      kind: week
+      from: 3
+      text: Week 3
 weekly_contact_hours: 9
 breadth_for: []
 prescribed_texts: false

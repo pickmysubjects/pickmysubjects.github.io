@@ -23,11 +23,20 @@ assessment:
   - kind: assignment
     weight: 40
     group: true
+    timing:
+      kind: late
+      text: Second half of the teaching period
   - kind: presentation
     weight: 10
     group: true
+    timing:
+      kind: late
+      text: Second half of the teaching period
   - kind: exam
     weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
 breadth_for: []
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/fnce30013

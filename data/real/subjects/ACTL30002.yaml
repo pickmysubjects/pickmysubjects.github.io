@@ -25,11 +25,22 @@ topics:
 assessment:
   - kind: assignment
     weight: 20
+    timing:
+      kind: late
+      text: Second half of the teaching period
   - kind: test
     weight: 20
+    timing:
+      kind: week
+      from: 7
+      to: 9
+      text: From Week 7 to Week 9
   - kind: exam
     weight: 60
     hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 3
 handbook: https://handbook.unimelb.edu.au/2027/subjects/actl30002
 source_year: 2027

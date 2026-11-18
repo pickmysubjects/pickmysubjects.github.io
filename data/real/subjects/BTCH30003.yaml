@@ -18,6 +18,9 @@ assessment:
     weight: 30
   - kind: exam
     weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 3
 min_attendance: 75
 attendance_applies_to:

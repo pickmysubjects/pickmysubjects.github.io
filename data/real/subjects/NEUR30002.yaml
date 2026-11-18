@@ -17,8 +17,14 @@ recommended:
 assessment:
   - kind: test
     weight: 50
+    timing:
+      kind: mid
+      text: Mid semester
   - kind: exam
     weight: 50
+    timing:
+      kind: end
+      text: End of semester
 weekly_contact_hours: 3
 prescribed_texts: true
 handbook: https://handbook.unimelb.edu.au/2027/subjects/neur30002

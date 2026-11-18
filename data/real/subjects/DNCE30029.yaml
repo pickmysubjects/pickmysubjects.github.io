@@ -21,12 +21,24 @@ topics:
 assessment:
   - kind: participation
     weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: assignment
     weight: 20
+    timing:
+      kind: mid
+      text: Mid teaching period
   - kind: assignment
     weight: 20
+    timing:
+      kind: end
+      text: End of the teaching period
   - kind: exam
     weight: 50
+    timing:
+      kind: end
+      text: End of the teaching period
 weekly_contact_hours: 9
 min_attendance: 75
 breadth_for: []

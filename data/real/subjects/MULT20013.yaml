@@ -19,6 +19,9 @@ assessment:
     weight: 25
   - kind: report
     weight: 25
+    timing:
+      kind: end
+      text: End of the teaching period
   - kind: report
     weight: 50
 breadth_for:

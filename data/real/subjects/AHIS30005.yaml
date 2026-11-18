@@ -18,8 +18,14 @@ topics:
 assessment:
   - kind: report
     weight: 60
+    timing:
+      kind: teaching
+      text: During the teaching period
   - kind: exam
     weight: 40
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 2.5
 breadth_for:
   - Bachelor of Biomedicine

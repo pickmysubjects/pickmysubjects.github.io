@@ -10,12 +10,26 @@ non_allowed: []
 assessment:
   - kind: report
     weight: 10
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
   - kind: report
     weight: 50
+    timing:
+      kind: week
+      from: 10
+      text: Week 10
   - kind: assignment
     weight: 15
+    timing:
+      kind: teaching
+      text: Throughout the semester
   - kind: exam
     weight: 25
+    timing:
+      kind: exam
+      text: During the examination period
 breadth_for:
   - Bachelor of Arts
   - Bachelor of Biomedicine

@@ -21,8 +21,14 @@ assessment:
     weight: 10
   - kind: project
     weight: 25
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
   - kind: project
     weight: 65
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Arts

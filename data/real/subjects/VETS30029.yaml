@@ -24,10 +24,19 @@ non_allowed: []
 assessment:
   - kind: test
     weight: 15
+    timing:
+      kind: teaching
+      text: Throughout the semester
   - kind: test
     weight: 25
+    timing:
+      kind: mid
+      text: Mid semester
   - kind: exam
     weight: 60
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 6
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/vets30029

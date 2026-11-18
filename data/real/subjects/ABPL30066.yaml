@@ -11,8 +11,14 @@ non_allowed: []
 assessment:
   - kind: presentation
     weight: 40
+    timing:
+      kind: teaching
+      text: During the teaching period
   - kind: presentation
     weight: 50
+    timing:
+      kind: end
+      text: End of the teaching period
   - kind: participation
     weight: 10
 breadth_for: []

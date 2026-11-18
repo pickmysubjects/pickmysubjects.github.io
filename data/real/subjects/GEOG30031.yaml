@@ -23,12 +23,25 @@ assessment:
   - kind: report
     weight: 30
     hurdle: true
+    timing:
+      kind: week
+      from: 3
+      to: 5
+      text: From Week 3 to Week 5
   - kind: presentation
     weight: 30
     hurdle: true
+    timing:
+      kind: week
+      from: 3
+      to: 4
+      text: From Week 3 to Week 4
   - kind: report
     weight: 40
     hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
 breadth_for:
   - Bachelor of Biomedicine
   - Bachelor of Commerce

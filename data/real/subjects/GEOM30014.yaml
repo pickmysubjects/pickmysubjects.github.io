@@ -14,13 +14,30 @@ assessment:
   - kind: project
     weight: 50
     group: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: presentation
     weight: 15
     group: true
+    timing:
+      kind: week
+      from: 9
+      text: Week 9
   - kind: quiz
     weight: 25
+    timing:
+      kind: week
+      from: 2
+      to: 10
+      text: From Week 2 to Week 10
   - kind: project
     weight: 10
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
 weekly_contact_hours: 4
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/geom30014

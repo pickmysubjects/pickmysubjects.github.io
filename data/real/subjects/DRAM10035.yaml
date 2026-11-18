@@ -23,15 +23,27 @@ assessment:
   - kind: assignment
     weight: 20
     hurdle: true
+    timing:
+      kind: mid
+      text: Mid teaching period
   - kind: assignment
     weight: 50
     hurdle: true
+    timing:
+      kind: end
+      text: End of the teaching period
   - kind: assignment
     weight: 20
     hurdle: true
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
   - kind: participation
     weight: 10
     hurdle: true
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
 weekly_contact_hours: 20
 min_attendance: 75
 pass_fail: true

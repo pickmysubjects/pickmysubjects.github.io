@@ -19,8 +19,18 @@ topics:
 assessment:
   - kind: quiz
     weight: 10
+    timing:
+      kind: week
+      from: 2
+      to: 11
+      text: From Week 2 to Week 11
   - kind: presentation
     weight: 45
+    timing:
+      kind: week
+      from: 7
+      to: 9
+      text: From Week 7 to Week 9
   - kind: project
     weight: 45
     group: true

@@ -14,12 +14,26 @@ non_allowed:
 assessment:
   - kind: participation
     weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the semester
   - kind: quiz
     weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the semester
   - kind: assignment
     weight: 20
+    timing:
+      kind: week
+      from: 6
+      to: 11
+      text: From Week 6 to Week 11
   - kind: exam
     weight: 60
+    timing:
+      kind: exam
+      text: During the examination period
 handbook: https://handbook.unimelb.edu.au/2027/subjects/acct20008
 source_year: 2027
 categories:

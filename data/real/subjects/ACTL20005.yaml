@@ -22,10 +22,21 @@ topics:
 assessment:
   - kind: test
     weight: 15
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
   - kind: assignment
     weight: 25
+    timing:
+      kind: week
+      from: 10
+      text: Week 10
   - kind: exam
     weight: 60
+    timing:
+      kind: exam
+      text: During the examination period
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/actl20005
 source_year: 2027

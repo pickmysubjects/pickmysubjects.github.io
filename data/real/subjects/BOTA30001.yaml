@@ -38,12 +38,26 @@ assessment:
   - kind: project
     weight: 15
     group: true
+    timing:
+      kind: end
+      text: End of the teaching period
   - kind: assignment
     weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: exam
     weight: 35
+    timing:
+      kind: afterTeaching
+      weeks: 1
+      text: 1 Weeks after the end of teaching
   - kind: exam
     weight: 35
+    timing:
+      kind: afterTeaching
+      weeks: 1
+      text: 1 Weeks after the end of teaching
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/bota30001
 source_year: 2027

@@ -21,6 +21,9 @@ assessment:
     weight: 30
   - kind: assignment
     weight: 70
+    timing:
+      kind: assessmentPeriod
+      text: End of the assessment period
 weekly_contact_hours: 2.5
 breadth_for:
   - Bachelor of Arts

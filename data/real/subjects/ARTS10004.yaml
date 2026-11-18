@@ -17,8 +17,15 @@ topics:
 assessment:
   - kind: report
     weight: 40
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
   - kind: exam
     weight: 60
+    timing:
+      kind: exam
+      text: During the examination period
 breadth_for:
   - Bachelor of Biomedicine
   - Bachelor of Design

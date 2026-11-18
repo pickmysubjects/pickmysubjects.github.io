@@ -22,10 +22,19 @@ topics:
 assessment:
   - kind: test
     weight: 60
+    timing:
+      kind: week
+      from: 1
+      to: 12
+      text: From Week 1 to Week 12
   - kind: assignment
     weight: 20
   - kind: report
     weight: 20
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
 weekly_contact_hours: 5
 breadth_for: []
 prescribed_texts: true

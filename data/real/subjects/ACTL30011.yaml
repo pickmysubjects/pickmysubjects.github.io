@@ -26,14 +26,30 @@ assessment:
   - kind: assignment
     weight: 20
     group: true
+    timing:
+      kind: week
+      from: 8
+      to: 10
+      text: From Week 8 to Week 10
   - kind: presentation
     weight: 5
     group: true
+    timing:
+      kind: week
+      from: 9
+      to: 11
+      text: From Week 9 to Week 11
   - kind: assignment
     weight: 5
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: exam
     weight: 70
     hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 4
 breadth_for: []
 handbook: https://handbook.unimelb.edu.au/2027/subjects/actl30011

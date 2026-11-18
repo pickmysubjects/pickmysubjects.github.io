@@ -19,6 +19,10 @@ topics:
 assessment:
   - kind: assignment
     weight: 25
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
   - kind: presentation
     weight: 15
   - kind: participation

@@ -14,10 +14,21 @@ non_allowed:
 assessment:
   - kind: test
     weight: 20
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
   - kind: test
     weight: 20
+    timing:
+      kind: week
+      from: 9
+      text: Week 9
   - kind: exam
     weight: 60
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 3
 prescribed_texts: true
 handbook: https://handbook.unimelb.edu.au/2027/subjects/agri20042

@@ -13,10 +13,19 @@ non_allowed: []
 assessment:
   - kind: assignment
     weight: 50
+    timing:
+      kind: mid
+      text: Mid semester
   - kind: test
     weight: 12.5
+    timing:
+      kind: mid
+      text: Mid semester
   - kind: exam
     weight: 37.5
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 3
 min_attendance: 80
 attendance_applies_to:

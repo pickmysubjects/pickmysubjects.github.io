@@ -22,12 +22,24 @@ assessment:
     weight: 10
     group: true
     hurdle: true
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
   - kind: presentation
     weight: 45
     group: true
+    timing:
+      kind: week
+      from: 11
+      to: 12
+      text: From Week 11 to Week 12
   - kind: report
     weight: 45
     hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Biomedicine

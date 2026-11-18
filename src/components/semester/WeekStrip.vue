@@ -27,7 +27,9 @@ const state = (s: WeekSegment) => (props.today > s.end ? 'past' : props.today >=
 const monthFmt = computed(() => new Intl.DateTimeFormat(locale.value, { month: 'short', timeZone: 'UTC' }))
 
 // The exam segment shows the official exam dates, not the Monday-to-Sunday weeks around them.
-const datesOf = (s: WeekSegment) => (s.kind === 'exams' && props.sem.exams ? numericRange(locale.value, props.sem.exams.start, props.sem.exams.end) : numericRange(locale.value, s.start, s.end))
+const spanOf = (s: WeekSegment) => (s.kind === 'exams' && props.sem.exams ? props.sem.exams : s)
+const dayFmt = computed(() => new Intl.DateTimeFormat(locale.value, { day: 'numeric', month: 'numeric', timeZone: 'UTC' }))
+const dayOf = (d: string) => dayFmt.value.format(new Date(`${d}T00:00:00Z`))
 
 const cells = computed(() =>
   props.sem.segments.map((s, i) => {
@@ -40,7 +42,9 @@ const cells = computed(() =>
       label: label(s),
       short: short(s),
       state: state(s),
-      dates: datesOf(s),
+      dates: numericRange(locale.value, spanOf(s).start, spanOf(s).end),
+      from: dayOf(spanOf(s).start),
+      to: dayOf(spanOf(s).end),
       // A month's name over the first week that starts in it.
       month: !prev || prev.start.slice(0, 7) !== month ? monthFmt.value.format(new Date(`${s.start}T00:00:00Z`)) : '',
       due: tasks.filter((x) => !x.ongoing),
@@ -76,7 +80,7 @@ watch(() => props.today, () => void nextTick(centreNow))
   <div v-else class="week-strip">
     <div ref="box" class="strip-box">
       <ol class="strip" :aria-label="t('sem.stripLabel', { term: name })">
-        <li v-for="c in cells" :key="c.i" class="col" :style="{ flexGrow: c.span, flexBasis: `${c.span * 52 + (c.span - 1) * 4}px` }">
+        <li v-for="c in cells" :key="c.i" class="col" :style="{ flexGrow: c.span, flexBasis: `${c.span * 48 + (c.span - 1) * 4}px` }">
           <span class="month" aria-hidden="true">{{ c.month }}</span>
           <button
             type="button"
@@ -90,7 +94,7 @@ watch(() => props.today, () => void nextTick(centreNow))
             @focus="picked = c.i"
           >
             <span class="cell-label">{{ c.short }}</span>
-            <span class="cell-dates">{{ c.dates }}</span>
+            <span class="cell-dates" aria-hidden="true"><span>{{ c.from }}</span><span>–{{ c.to }}</span></span>
           </button>
           <span class="marks" aria-hidden="true">
             <span v-if="c.due.length" class="dots"><span v-for="n in Math.min(c.due.length, 3)" :key="n" class="dot" /></span>
@@ -164,8 +168,8 @@ watch(() => props.today, () => void nextTick(centreNow))
   align-content: center;
   gap: 2px;
   width: 100%;
-  min-height: 56px;
-  padding: 6px 4px;
+  height: 64px;
+  padding: 4px 2px;
   border-radius: 10px;
   border: 1px solid var(--line);
   background: transparent;
@@ -183,12 +187,11 @@ watch(() => props.today, () => void nextTick(centreNow))
 }
 
 .cell-dates {
-  max-width: 5.5em;
+  display: grid;
+  justify-items: center;
   font-size: var(--fs-meta);
-  line-height: 1.2;
+  line-height: 1.25;
   font-variant-numeric: tabular-nums;
-  text-align: center;
-  white-space: normal;
 }
 
 .cell:hover,

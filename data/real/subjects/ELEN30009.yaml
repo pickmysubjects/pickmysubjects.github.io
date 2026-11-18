@@ -21,16 +21,34 @@ recommended:
 assessment:
   - kind: report
     weight: 20
+    timing:
+      kind: week
+      from: 1
+      to: 8
+      text: From Week 1 to Week 8
   - kind: test
     weight: 10
     hurdle: true
+    timing:
+      kind: week
+      from: 7
+      to: 8
+      text: From Week 7 to Week 8
   - kind: project
     weight: 20
     group: true
     hurdle: true
+    timing:
+      kind: week
+      from: 9
+      to: 12
+      text: From Week 9 to Week 12
   - kind: exam
     weight: 50
     hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
 handbook: https://handbook.unimelb.edu.au/2027/subjects/elen30009
 source_year: 2027
 verified_on: 2026-11-12

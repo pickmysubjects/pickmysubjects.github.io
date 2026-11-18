@@ -29,6 +29,9 @@ assessment:
     weight: 40
   - kind: exam
     weight: 40
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 5.5
 handbook: https://handbook.unimelb.edu.au/2027/subjects/geol30007
 source_year: 2027

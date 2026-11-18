@@ -17,13 +17,29 @@ recommended:
 assessment:
   - kind: exam
     weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
   - kind: assignment
     weight: 40
+    timing:
+      kind: week
+      from: 5
+      to: 9
+      text: From Week 5 to Week 9
   - kind: participation
     weight: 10
     group: true
+    timing:
+      kind: week
+      from: 10
+      to: 12
+      text: From Week 10 to Week 12
   - kind: quiz
     weight: 0
+    timing:
+      kind: late
+      text: Late in the teaching period
 min_attendance: 80
 attendance_applies_to:
   - labs

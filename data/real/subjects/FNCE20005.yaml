@@ -45,10 +45,26 @@ topics:
 assessment:
   - kind: test
     weight: 25
+    timing:
+      kind: week
+      from: 5
+      to: 9
+      text: From Week 5 to Week 9
   - kind: exam
     weight: 60
+    timing:
+      kind: exam
+      text: During the examination period
   - kind: participation
     weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: quiz
     weight: 5
+    timing:
+      kind: week
+      from: 3
+      to: 5
+      text: From Week 3 to Week 5
 weekly_contact_hours: 3

@@ -20,8 +20,15 @@ assessment:
   - kind: presentation
     weight: 25
     group: true
+    timing:
+      kind: teaching
+      text: During the teaching period
   - kind: report
     weight: 75
+    timing:
+      kind: afterTeaching
+      weeks: 4
+      text: 4 Weeks after the end of teaching
 weekly_contact_hours: 2.5
 min_attendance: 80
 breadth_for:

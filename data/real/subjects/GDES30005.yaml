@@ -21,10 +21,19 @@ topics:
 assessment:
   - kind: project
     weight: 25
+    timing:
+      kind: early
+      text: Early in the teaching period
   - kind: project
     weight: 60
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
   - kind: assignment
     weight: 15
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
 weekly_contact_hours: 3
 categories:
   B-DES: design

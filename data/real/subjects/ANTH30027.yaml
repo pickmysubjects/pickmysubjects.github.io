@@ -17,8 +17,16 @@ topics:
 assessment:
   - kind: assignment
     weight: 15
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
   - kind: report
     weight: 35
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
   - kind: assignment
     weight: 50
 weekly_contact_hours: 3

@@ -25,10 +25,20 @@ non_allowed: []
 assessment:
   - kind: report
     weight: 50
+    timing:
+      kind: afterTeaching
+      weeks: 2
+      text: 2 Weeks after the end of teaching
   - kind: assignment
     weight: 20
+    timing:
+      kind: teaching
+      text: During the teaching period
   - kind: assignment
     weight: 30
+    timing:
+      kind: teaching
+      text: During the teaching period
 weekly_contact_hours: 8.5
 prescribed_texts: true
 handbook: https://handbook.unimelb.edu.au/2027/subjects/geog30023

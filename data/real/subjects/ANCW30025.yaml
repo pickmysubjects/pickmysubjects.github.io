@@ -18,10 +18,21 @@ topics:
 assessment:
   - kind: assignment
     weight: 25
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: assignment
     weight: 25
+    timing:
+      kind: week
+      from: 2
+      text: Week 2
   - kind: report
     weight: 50
+    timing:
+      kind: afterTeaching
+      weeks: 3
+      text: 3 Weeks after the end of teaching
 breadth_for:
   - Bachelor of Biomedicine
   - Bachelor of Commerce

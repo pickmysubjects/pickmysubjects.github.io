@@ -20,12 +20,24 @@ assessment:
   - kind: presentation
     weight: 20
     group: true
+    timing:
+      kind: teaching
+      text: During the teaching period
   - kind: presentation
     weight: 20
+    timing:
+      kind: teaching
+      text: During the teaching period
   - kind: project
     weight: 30
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
   - kind: report
     weight: 30
+    timing:
+      kind: assessmentPeriod
+      text: End of the assessment period
 weekly_contact_hours: 4
 min_attendance: 75
 breadth_for: []

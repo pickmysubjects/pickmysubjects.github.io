@@ -18,8 +18,19 @@ topics:
 assessment:
   - kind: quiz
     weight: 25
+    timing:
+      kind: weeks
+      weeks:
+        - 4
+        - 8
+        - 12
+      text: Week 4, 8, and 12
   - kind: assignment
     weight: 20
+    timing:
+      kind: week
+      from: 10
+      text: Week 10
   - kind: report
     weight: 55
 weekly_contact_hours: 2.5

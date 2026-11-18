@@ -35,11 +35,24 @@ non_allowed:
 assessment:
   - kind: assignment
     weight: 20
+    timing:
+      kind: week
+      from: 4
+      to: 6
+      text: From Week 4 to Week 6
   - kind: assignment
     weight: 20
+    timing:
+      kind: week
+      from: 8
+      to: 12
+      text: From Week 8 to Week 12
   - kind: exam
     weight: 60
     hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/engr30004
 source_year: 2027

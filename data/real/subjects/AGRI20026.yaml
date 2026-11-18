@@ -14,10 +14,21 @@ non_allowed:
 assessment:
   - kind: report
     weight: 25
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
   - kind: report
     weight: 35
+    timing:
+      kind: week
+      from: 11
+      text: Week 11
   - kind: exam
     weight: 40
+    timing:
+      kind: end
+      text: End of semester
 weekly_contact_hours: 5
 attendance_applies_to:
   - workshops

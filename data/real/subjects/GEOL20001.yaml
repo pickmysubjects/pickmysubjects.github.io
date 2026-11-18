@@ -15,6 +15,9 @@ assessment:
     weight: 50
   - kind: assignment
     weight: 50
+    timing:
+      kind: teaching
+      text: During the teaching period
 weekly_contact_hours: 3.5
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/geol20001

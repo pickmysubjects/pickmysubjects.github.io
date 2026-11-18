@@ -30,10 +30,23 @@ topics:
 assessment:
   - kind: quiz
     weight: 20
+    timing:
+      kind: week
+      from: 2
+      to: 12
+      text: From Week 2 to Week 12
   - kind: project
     weight: 20
+    timing:
+      kind: week
+      from: 8
+      to: 11
+      text: From Week 8 to Week 11
   - kind: exam
     weight: 60
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Arts

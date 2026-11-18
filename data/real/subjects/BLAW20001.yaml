@@ -18,10 +18,19 @@ topics:
 assessment:
   - kind: quiz
     weight: 15
+    timing:
+      kind: teaching
+      text: During the teaching period
   - kind: test
     weight: 30
+    timing:
+      kind: teaching
+      text: During the teaching period
   - kind: exam
     weight: 55
+    timing:
+      kind: exam
+      text: During the examination period
 prescribed_texts: true
 handbook: https://handbook.unimelb.edu.au/2027/subjects/blaw20001
 source_year: 2027

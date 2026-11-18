@@ -27,8 +27,14 @@ assessment:
     weight: 40
     group: true
     hurdle: true
+    timing:
+      kind: mid
+      text: Mid semester
   - kind: report
     weight: 60
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Biomedicine

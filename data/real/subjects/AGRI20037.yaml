@@ -20,10 +20,21 @@ recommended:
 assessment:
   - kind: report
     weight: 25
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
   - kind: report
     weight: 25
+    timing:
+      kind: week
+      from: 10
+      text: Week 10
   - kind: exam
     weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 5
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/agri20037

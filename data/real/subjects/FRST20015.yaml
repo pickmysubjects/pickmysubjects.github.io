@@ -23,6 +23,11 @@ non_allowed:
 assessment:
   - kind: report
     weight: 50
+    timing:
+      kind: week
+      from: 1
+      to: 12
+      text: From Week 1 to Week 12
   - kind: assignment
     weight: 50
 weekly_contact_hours: 4.5

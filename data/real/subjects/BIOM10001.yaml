@@ -33,6 +33,10 @@ assessment:
     weight: 30
     group: true
     hurdle: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
 breadth_for: []
 min_attendance: 80
 attendance_applies_to:

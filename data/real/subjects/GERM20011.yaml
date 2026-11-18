@@ -27,8 +27,15 @@ assessment:
     weight: 35
   - kind: presentation
     weight: 15
+    timing:
+      kind: teaching
+      text: During the teaching period
   - kind: test
     weight: 25
+    timing:
+      kind: week
+      from: 3
+      text: Week 3
   - kind: project
     weight: 25
 weekly_contact_hours: 2.5

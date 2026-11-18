@@ -17,11 +17,21 @@ recommended:
 assessment:
   - kind: assignment
     weight: 60
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: assignment
     weight: 20
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: assignment
     weight: 20
     group: true
+    timing:
+      kind: afterTeaching
+      weeks: 3
+      text: 3 Weeks after the end of teaching
 weekly_contact_hours: 4.5
 handbook: https://handbook.unimelb.edu.au/2027/subjects/frst30001
 source_year: 2027

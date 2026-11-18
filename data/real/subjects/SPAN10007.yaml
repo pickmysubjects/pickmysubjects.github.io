@@ -22,13 +22,34 @@ topics:
 assessment:
   - kind: quiz
     weight: 20
+    timing:
+      kind: weeks
+      weeks:
+        - 2
+        - 4
+        - 6
+        - 8
+        - 10
+      text: Weeks 2, 4, 6, 8, 10
   - kind: assignment
     weight: 20
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
   - kind: presentation
     weight: 30
+    timing:
+      kind: week
+      from: 6
+      to: 12
+      text: From Week 6 to Week 12
   - kind: presentation
     weight: 30
     group: true
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Arts

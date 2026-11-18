@@ -18,6 +18,9 @@ topics:
 assessment:
   - kind: test
     weight: 40
+    timing:
+      kind: teaching
+      text: During the teaching period
   - kind: presentation
     weight: 60
 breadth_for:

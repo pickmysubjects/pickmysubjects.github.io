@@ -11,12 +11,27 @@ non_allowed: []
 assessment:
   - kind: presentation
     weight: 15
+    timing:
+      kind: week
+      from: 4
+      to: 8
+      text: From Week 4 to Week 8
   - kind: report
     weight: 15
+    timing:
+      kind: week
+      from: 10
+      text: Week 10
   - kind: test
     weight: 20
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
   - kind: assignment
     weight: 50
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
 weekly_contact_hours: 2
 breadth_for:
   - Bachelor of Arts

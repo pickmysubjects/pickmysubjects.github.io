@@ -21,10 +21,21 @@ recommended:
 assessment:
   - kind: assignment
     weight: 35
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
   - kind: presentation
     weight: 15
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: exam
     weight: 50
+    timing:
+      kind: end
+      text: End of semester
 weekly_contact_hours: 6
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/ansc30005

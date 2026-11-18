@@ -17,8 +17,16 @@ topics:
 assessment:
   - kind: report
     weight: 25
+    timing:
+      kind: week
+      from: 2
+      text: Week 2
   - kind: report
     weight: 75
+    timing:
+      kind: afterTeaching
+      weeks: 1
+      text: 1 Weeks after the end of teaching
 breadth_for:
   - Bachelor of Biomedicine
   - Bachelor of Commerce

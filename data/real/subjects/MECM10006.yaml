@@ -19,12 +19,28 @@ topics:
 assessment:
   - kind: participation
     weight: 10
+    timing:
+      kind: week
+      from: 1
+      to: 12
+      text: From Week 1 to Week 12
   - kind: assignment
     weight: 20
+    timing:
+      kind: week
+      from: 5
+      text: Week 5
   - kind: report
     weight: 25
+    timing:
+      kind: week
+      from: 9
+      text: Week 9
   - kind: assignment
     weight: 45
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 3
 breadth_for: []
 min_attendance: 80

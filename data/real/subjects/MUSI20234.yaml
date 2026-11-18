@@ -27,13 +27,25 @@ assessment:
   - kind: assignment
     weight: 20
     group: true
+    timing:
+      kind: early
+      text: Early in the teaching period
   - kind: assignment
     weight: 20
+    timing:
+      kind: teaching
+      text: During the teaching period
   - kind: assignment
     weight: 30
     group: true
+    timing:
+      kind: end
+      text: End of the teaching period
   - kind: assignment
     weight: 30
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
 weekly_contact_hours: 1.5
 breadth_for: []
 prescribed_texts: false

@@ -26,6 +26,10 @@ assessment:
     weight: 10
   - kind: assignment
     weight: 40
+    timing:
+      kind: afterTeaching
+      weeks: 2
+      text: 2 Weeks after the end of teaching
 weekly_contact_hours: 8
 handbook: https://handbook.unimelb.edu.au/2027/subjects/geol30009
 source_year: 2027

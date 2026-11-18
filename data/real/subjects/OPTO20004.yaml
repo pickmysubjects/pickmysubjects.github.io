@@ -13,10 +13,20 @@ non_allowed: []
 assessment:
   - kind: test
     weight: 15
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
   - kind: report
     weight: 15
+    timing:
+      kind: end
+      text: End of semester
   - kind: exam
     weight: 70
+    timing:
+      kind: exam
+      text: During the examination period
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/opto20004
 source_year: 2027

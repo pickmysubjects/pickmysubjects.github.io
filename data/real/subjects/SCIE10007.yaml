@@ -30,17 +30,44 @@ topics:
 assessment:
   - kind: test
     weight: 5
+    timing:
+      kind: week
+      from: 3
+      to: 4
+      text: From Week 3 to Week 4
   - kind: test
     weight: 15
+    timing:
+      kind: week
+      from: 6
+      to: 10
+      text: From Week 6 to Week 10
   - kind: report
     weight: 20
+    timing:
+      kind: week
+      from: 6
+      to: 9
+      text: From Week 6 to Week 9
   - kind: presentation
     weight: 20
     group: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: assignment
     weight: 20
+    timing:
+      kind: week
+      from: 5
+      to: 12
+      text: From Week 5 to Week 12
   - kind: presentation
     weight: 20
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 5
 categories:
   B-SCIEXTD: core

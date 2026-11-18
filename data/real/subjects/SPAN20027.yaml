@@ -30,6 +30,10 @@ assessment:
     weight: 20
   - kind: exam
     weight: 25
+    timing:
+      kind: afterTeaching
+      weeks: 1
+      text: 1 Weeks after the end of teaching
 weekly_contact_hours: 8.5
 breadth_for:
   - Bachelor of Arts

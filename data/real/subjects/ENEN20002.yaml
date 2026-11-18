@@ -31,18 +31,41 @@ assessment:
   - kind: assignment
     weight: 20
     group: true
+    timing:
+      kind: week
+      from: 4
+      to: 8
+      text: From Week 4 to Week 8
   - kind: quiz
     weight: 10
+    timing:
+      kind: week
+      from: 6
+      to: 9
+      text: From Week 6 to Week 9
   - kind: assignment
     weight: 5
     hurdle: true
+    timing:
+      kind: week
+      from: 6
+      to: 8
+      text: From Week 6 to Week 8
   - kind: report
     weight: 15
     group: true
     hurdle: true
+    timing:
+      kind: week
+      from: 9
+      to: 12
+      text: From Week 9 to Week 12
   - kind: exam
     weight: 50
     hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/enen20002
 source_year: 2027

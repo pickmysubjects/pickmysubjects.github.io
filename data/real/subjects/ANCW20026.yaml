@@ -16,10 +16,21 @@ topics:
 assessment:
   - kind: test
     weight: 25
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
   - kind: presentation
     weight: 25
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: assignment
     weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
 breadth_for:
   - Bachelor of Biomedicine
   - Bachelor of Commerce

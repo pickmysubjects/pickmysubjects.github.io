@@ -17,10 +17,19 @@ non_allowed: []
 assessment:
   - kind: test
     weight: 25
+    timing:
+      kind: mid
+      text: Mid semester
   - kind: presentation
     weight: 25
+    timing:
+      kind: late
+      text: Second half of the teaching period
   - kind: report
     weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 4
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/food30009

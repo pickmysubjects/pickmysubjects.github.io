@@ -24,6 +24,9 @@ assessment:
     weight: 50
     group: true
     hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 3
 categories:
   B-DES: design

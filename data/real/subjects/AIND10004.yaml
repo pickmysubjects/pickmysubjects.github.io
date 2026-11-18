@@ -19,12 +19,24 @@ topics:
 assessment:
   - kind: assignment
     weight: 15
+    timing:
+      kind: early
+      text: Early in the teaching period
   - kind: presentation
     weight: 25
+    timing:
+      kind: late
+      text: Second half of the teaching period
   - kind: assignment
     weight: 40
+    timing:
+      kind: late
+      text: Late in the teaching period
   - kind: assignment
     weight: 20
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
 weekly_contact_hours: 0.5
 breadth_for:
   - Bachelor of Arts

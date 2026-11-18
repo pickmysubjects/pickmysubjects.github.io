@@ -35,8 +35,19 @@ topics:
 assessment:
   - kind: project
     weight: 10
+    timing:
+      kind: week
+      from: 3
+      text: Week 3
   - kind: presentation
     weight: 10
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: project
     weight: 80
     hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period

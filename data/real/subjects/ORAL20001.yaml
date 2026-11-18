@@ -34,17 +34,32 @@ assessment:
     group: true
   - kind: assignment
     weight: 15
+    timing:
+      kind: early
+      text: First half of teaching period
   - kind: assignment
     weight: 15
+    timing:
+      kind: early
+      text: First half of teaching period
   - kind: assignment
     weight: 5
     group: true
   - kind: assignment
     weight: 15
+    timing:
+      kind: late
+      text: Second half of teaching period
   - kind: report
     weight: 25
+    timing:
+      kind: late
+      text: Second half of teaching period
   - kind: assignment
     weight: 5
+    timing:
+      kind: exam
+      text: End of year examination period
 weekly_contact_hours: 6.5
 breadth_for: []
 prescribed_texts: true

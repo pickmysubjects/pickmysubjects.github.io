@@ -20,6 +20,14 @@ topics:
 assessment:
   - kind: presentation
     weight: 40
+    timing:
+      kind: weeks
+      weeks:
+        - 3
+        - 6
+        - 9
+        - 12
+      text: Weeks 3, 6, 9, 12
   - kind: presentation
     weight: 60
 weekly_contact_hours: 3

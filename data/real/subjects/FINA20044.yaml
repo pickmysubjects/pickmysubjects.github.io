@@ -24,10 +24,16 @@ topics:
 assessment:
   - kind: project
     weight: 25
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
   - kind: project
     weight: 75
     group: true
     hurdle: true
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
 weekly_contact_hours: 3
 min_attendance: 75
 breadth_for:

@@ -22,6 +22,9 @@ assessment:
     group: true
   - kind: exam
     weight: 45
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 5.5
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/agri10046

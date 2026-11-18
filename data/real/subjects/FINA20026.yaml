@@ -23,10 +23,19 @@ topics:
 assessment:
   - kind: quiz
     weight: 10
+    timing:
+      kind: early
+      text: Early in the teaching period
   - kind: assignment
     weight: 40
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
   - kind: project
     weight: 50
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Arts

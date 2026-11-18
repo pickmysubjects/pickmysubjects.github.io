@@ -18,11 +18,26 @@ topics:
 assessment:
   - kind: quiz
     weight: 50
+    timing:
+      kind: weeks
+      weeks:
+        - 3
+        - 6
+        - 9
+        - 12
+      text: Weeks 3, 6, 9 and 12
   - kind: report
     weight: 5
     hurdle: true
+    timing:
+      kind: week
+      from: 10
+      text: Week 10
   - kind: report
     weight: 45
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 2.5
 breadth_for:
   - Bachelor of Biomedicine

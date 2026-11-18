@@ -19,10 +19,22 @@ topics:
 assessment:
   - kind: presentation
     weight: 20
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
   - kind: presentation
     weight: 30
+    timing:
+      kind: week
+      from: 8
+      text: Week 8
   - kind: assignment
     weight: 50
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Arts

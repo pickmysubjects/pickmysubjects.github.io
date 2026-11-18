@@ -41,11 +41,20 @@ assessment:
   - kind: exam
     weight: 60
     hurdle: true
+    timing:
+      kind: end
+      text: End of semester
   - kind: test
     weight: 10
+    timing:
+      kind: mid
+      text: Mid semester
   - kind: quiz
     weight: 30
     group: true
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
 handbook: https://handbook.unimelb.edu.au/2027/subjects/elen20005
 source_year: 2027
 verified_on: 2026-11-12

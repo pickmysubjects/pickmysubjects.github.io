@@ -18,12 +18,24 @@ assessment:
   - kind: presentation
     weight: 20
     group: true
+    timing:
+      kind: teaching
+      text: During the teaching period
   - kind: presentation
     weight: 20
+    timing:
+      kind: end
+      text: End of the teaching period
   - kind: project
     weight: 30
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
   - kind: report
     weight: 30
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
 breadth_for: []
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/must30019

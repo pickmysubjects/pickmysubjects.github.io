@@ -21,8 +21,16 @@ assessment:
     weight: 20
   - kind: assignment
     weight: 30
+    timing:
+      kind: afterTeaching
+      weeks: 2
+      text: 2 Weeks after the end of teaching
   - kind: report
     weight: 50
+    timing:
+      kind: afterTeaching
+      weeks: 6
+      text: 6 Weeks after the end of teaching
 weekly_contact_hours: 3
 min_attendance: 80
 breadth_for:

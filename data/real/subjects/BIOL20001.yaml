@@ -25,12 +25,24 @@ assessment:
     weight: 25
   - kind: project
     weight: 25
+    timing:
+      kind: week
+      from: 4
+      to: 9
+      text: From Week 4 to Week 9
   - kind: presentation
     weight: 10
     group: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: exam
     weight: 40
     hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
 prescribed_texts: true
 handbook: https://handbook.unimelb.edu.au/2027/subjects/biol20001
 source_year: 2027

@@ -12,8 +12,16 @@ non_allowed:
 assessment:
   - kind: project
     weight: 40
+    timing:
+      kind: week
+      from: 4
+      to: 6
+      text: From Week 4 to Week 6
   - kind: project
     weight: 60
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Arts

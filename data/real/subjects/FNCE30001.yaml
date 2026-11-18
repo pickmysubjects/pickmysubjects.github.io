@@ -42,13 +42,31 @@ assessment:
   - kind: assignment
     weight: 10
     group: true
+    timing:
+      kind: week
+      from: 4
+      to: 8
+      text: From Week 4 to Week 8
   - kind: assignment
     weight: 15
     group: true
+    timing:
+      kind: week
+      from: 9
+      to: 11
+      text: From Week 9 to Week 11
   - kind: test
     weight: 25
+    timing:
+      kind: week
+      from: 5
+      to: 9
+      text: From Week 5 to Week 9
   - kind: exam
     weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
 breadth_for:
   - Bachelor of Arts
   - Bachelor of Biomedicine

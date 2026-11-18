@@ -19,10 +19,19 @@ topics:
 assessment:
   - kind: assignment
     weight: 20
+    timing:
+      kind: teaching
+      text: Weekly during semester
   - kind: assignment
     weight: 30
+    timing:
+      kind: mid
+      text: Mid semester
   - kind: report
     weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 5
 breadth_for:
   - Bachelor of Biomedicine

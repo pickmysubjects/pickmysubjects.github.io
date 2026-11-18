@@ -26,8 +26,15 @@ assessment:
     weight: 15
   - kind: assignment
     weight: 15
+    timing:
+      kind: exam
+      text: During the examination period
   - kind: test
     weight: 30
+    timing:
+      kind: week
+      from: 4
+      text: Week 4
   - kind: exam
     weight: 30
 breadth_for:

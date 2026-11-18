@@ -19,11 +19,22 @@ assessment:
   - kind: report
     weight: 25
     group: true
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
   - kind: presentation
     weight: 25
     group: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: exam
     weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 4
 categories:
   B-SCI: science # on the 2027 B-SCI science list (b-sci-stdopt-1)

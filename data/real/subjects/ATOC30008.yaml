@@ -32,8 +32,15 @@ assessment:
     weight: 25
   - kind: report
     weight: 25
+    timing:
+      kind: week
+      from: 9
+      text: Week 9
   - kind: exam
     weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 5
 handbook: https://handbook.unimelb.edu.au/2027/subjects/atoc30008
 source_year: 2027

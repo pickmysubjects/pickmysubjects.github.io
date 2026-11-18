@@ -23,12 +23,24 @@ non_allowed: []
 assessment:
   - kind: report
     weight: 60
+    timing:
+      kind: teaching
+      text: During the teaching period
   - kind: report
     weight: 15
+    timing:
+      kind: end
+      text: End of the teaching period
   - kind: project
     weight: 15
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: participation
     weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
 min_attendance: 80
 attendance_applies_to:
   - labs

@@ -23,12 +23,24 @@ assessment:
   - kind: assignment
     weight: 60
     hurdle: true
+    timing:
+      kind: exam
+      text: During the examination period
   - kind: assignment
     weight: 10
+    timing:
+      kind: mid
+      text: Mid teaching period
   - kind: assignment
     weight: 10
+    timing:
+      kind: end
+      text: End of the teaching period
   - kind: assignment
     weight: 20
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
 weekly_contact_hours: 3.5
 breadth_for: []
 handbook: https://handbook.unimelb.edu.au/2027/subjects/musi20178

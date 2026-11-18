@@ -20,12 +20,28 @@ topics:
 assessment:
   - kind: presentation
     weight: 30
+    timing:
+      kind: week
+      from: 5
+      to: 9
+      text: From Week 5 to Week 9
   - kind: presentation
     weight: 30
+    timing:
+      kind: week
+      from: 7
+      to: 11
+      text: From Week 7 to Week 11
   - kind: report
     weight: 30
+    timing:
+      kind: assessmentPeriod
+      text: During the assessment period
   - kind: assignment
     weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
 weekly_contact_hours: 2
 breadth_for:
   - Bachelor of Arts

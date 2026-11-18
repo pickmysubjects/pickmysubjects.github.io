@@ -11,12 +11,26 @@ non_allowed: []
 assessment:
   - kind: participation
     weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: test
     weight: 20
+    timing:
+      kind: teaching
+      text: During the teaching period
   - kind: assignment
     weight: 30
+    timing:
+      kind: week
+      from: 6
+      to: 8
+      text: From Week 6 to Week 8
   - kind: exam
     weight: 40
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Arts

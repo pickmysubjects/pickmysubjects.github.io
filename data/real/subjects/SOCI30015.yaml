@@ -18,8 +18,17 @@ assessment:
   - kind: presentation
     weight: 5
     group: true
+    timing:
+      kind: week
+      from: 2
+      to: 11
+      text: From Week 2 to Week 11
   - kind: report
     weight: 40
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
   - kind: report
     weight: 55
 weekly_contact_hours: 2.5

@@ -18,8 +18,17 @@ topics:
 assessment:
   - kind: presentation
     weight: 25
+    timing:
+      kind: week
+      from: 2
+      to: 12
+      text: From Week 2 to Week 12
   - kind: test
     weight: 25
+    timing:
+      kind: week
+      from: 7
+      text: Week 7
   - kind: report
     weight: 50
 weekly_contact_hours: 2.5

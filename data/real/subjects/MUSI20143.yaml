@@ -24,10 +24,23 @@ topics:
 assessment:
   - kind: quiz
     weight: 40
+    timing:
+      kind: week
+      from: 4
+      to: 12
+      text: From Week 4 to Week 12
   - kind: assignment
     weight: 50
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: assignment
     weight: 10
+    timing:
+      kind: week
+      from: 6
+      to: 12
+      text: From Week 6 to Week 12
 weekly_contact_hours: 3
 min_attendance: 75
 breadth_for:

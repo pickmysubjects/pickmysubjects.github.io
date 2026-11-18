@@ -22,12 +22,24 @@ assessment:
   - kind: assignment
     weight: 20
     group: true
+    timing:
+      kind: teaching
+      text: During the teaching period
   - kind: assignment
     weight: 20
+    timing:
+      kind: teaching
+      text: During the teaching period
   - kind: assignment
     weight: 10
+    timing:
+      kind: teaching
+      text: During the teaching period
   - kind: project
     weight: 50
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 2
 breadth_for: []
 min_attendance: 80

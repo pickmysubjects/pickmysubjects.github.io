@@ -23,14 +23,28 @@ non_allowed:
 assessment:
   - kind: report
     weight: 10
+    timing:
+      kind: teaching
+      text: Throughout the teaching period
   - kind: test
     weight: 22.5
     group: true
+    timing:
+      kind: week
+      from: 6
+      text: Week 6
   - kind: test
     weight: 22.5
     group: true
+    timing:
+      kind: week
+      from: 12
+      text: Week 12
   - kind: exam
     weight: 45
+    timing:
+      kind: exam
+      text: During the examination period
 weekly_contact_hours: 2.5
 breadth_for: []
 handbook: https://handbook.unimelb.edu.au/2027/subjects/biom20006

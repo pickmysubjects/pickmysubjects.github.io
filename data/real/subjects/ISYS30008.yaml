@@ -28,6 +28,9 @@ assessment:
     weight: 25
     group: true
     hurdle: true
+    timing:
+      kind: mid
+      text: Mid semester
   - kind: report
     weight: 25
     group: true
@@ -35,6 +38,9 @@ assessment:
   - kind: exam
     weight: 50
     hurdle: true
+    timing:
+      kind: end
+      text: End of semester
 breadth_for:
   - Bachelor of Biomedicine
   - Bachelor of Commerce

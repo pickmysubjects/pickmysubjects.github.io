@@ -28,14 +28,36 @@ topics:
 assessment:
   - kind: participation
     weight: 10
+    timing:
+      kind: week
+      from: 1
+      to: 3
+      text: From Week 1 to Week 3
   - kind: presentation
     weight: 15
+    timing:
+      kind: week
+      from: 1
+      text: Week 1
   - kind: presentation
     weight: 15
+    timing:
+      kind: week
+      from: 3
+      text: Week 3
   - kind: assignment
     weight: 15
+    timing:
+      kind: week
+      from: 1
+      to: 4
+      text: From Week 1 to Week 4
   - kind: project
     weight: 45
+    timing:
+      kind: afterTeaching
+      weeks: 1
+      text: 1 Weeks after the end of teaching
 breadth_for:
   - Bachelor of Biomedicine
   - Bachelor of Commerce
