@@ -26,6 +26,7 @@ export type AnalyticsEvent =
   | 'shortlist-add'
   | 'compare-open'
   | 'install-accept'
+  | 'install-shown'
   | `language-${string}`
 
 import { LOCALE_CODES } from '@/i18n/codes'

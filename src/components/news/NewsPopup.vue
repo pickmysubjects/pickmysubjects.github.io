@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { X } from 'lucide-vue-next'
-import { computed, onBeforeUnmount, onMounted, shallowRef } from 'vue'
+import { computed, onBeforeUnmount, onMounted, shallowRef, watchEffect } from 'vue'
 import { NEWS } from '@/content/news'
 import HelixSmile from '@/components/home/HelixSmile.vue'
 import { link } from '@/composables/useView'
 import { useI18n } from '@/i18n'
+import { setNewsPending } from '@/utils/install'
 
 /**
  * The latest news from the person who makes the site, popping up once at the top right (full width
@@ -28,6 +29,8 @@ onMounted(() => {
     seen.value = false
   }
   timer = setTimeout(() => (ready.value = true), 1200)
+  // The install nudge holds back while this note is up or about to be.
+  watchEffect(() => setNewsPending(!!latest && !seen.value && props.view === 'home'))
 })
 onBeforeUnmount(() => clearTimeout(timer))
 

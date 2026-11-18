@@ -3,6 +3,7 @@ import { link } from '@/composables/useView'
 import { ArrowRight, BookOpen, Calculator, Compass, GitCompare, GraduationCap, Route, Sparkles, Star } from 'lucide-vue-next'
 import InfoPage from '@/components/about/InfoPage.vue'
 import GuideItem from '@/components/guide/GuideItem.vue'
+import InstallPrompt from '@/components/layout/InstallPrompt.vue'
 import { useI18n } from '@/i18n'
 import { latestDataYear, lastVerified } from '@/engine/dataYear'
 import { useDataset } from '@/composables/useDataset'
@@ -68,6 +69,10 @@ const features = [
         <li>{{ t('about.p.private') }} <a :href="link('privacy')">{{ t('privacy.title') }}</a></li>
         <li>{{ t('about.p.unofficial') }}</li>
       </ul>
+    </GuideItem>
+
+    <GuideItem id="get-app" :title="t('home.install.aboutTitle')" :short="t('home.install.aboutShort')">
+      <InstallPrompt variant="steps" />
     </GuideItem>
 
     <GuideItem id="help" :title="t('about.helpTitle')" :short="t('about.help')">

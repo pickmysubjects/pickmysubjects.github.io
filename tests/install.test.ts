@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { installWay, isIos } from '@/utils/install'
+import { installWay, isIos, isMacSafari } from '@/utils/install'
 
 const IPHONE = 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.1 Mobile/15E148 Safari/604.1'
 const IPAD_DESKTOP = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.1 Safari/605.1.15'
@@ -28,5 +28,19 @@ describe('adding the site to the home screen', () => {
 
   it("falls back to the browser's menu with no prompt (Firefox on Android)", () => {
     expect(installWay({ ua: ANDROID.replace('Chrome/130.0.0.0', 'Firefox/132.0'), standalone: false, hasPrompt: false })).toBe('menu')
+  })
+
+  it('points Safari 17+ on a Mac to File › Add to Dock, not older Safari or an iPad', () => {
+    expect(installWay({ ua: IPAD_DESKTOP, standalone: false, hasPrompt: false })).toBe('mac')
+    expect(isMacSafari(IPAD_DESKTOP.replace(/Version\/18\.1/, 'Version/16.6'))).toBe(false)
+    expect(isMacSafari(IPAD_DESKTOP, 5)).toBe(false)
+  })
+
+  it('offers nothing on a computer without a prompt (Firefox, or Chrome before it is ready)', () => {
+    const FIREFOX_MAC = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 14.7; rv:132.0) Gecko/20100101 Firefox/132.0'
+    const CHROME_WIN = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36'
+    expect(installWay({ ua: FIREFOX_MAC, standalone: false, hasPrompt: false })).toBe('none')
+    expect(installWay({ ua: CHROME_WIN, standalone: false, hasPrompt: false })).toBe('none')
+    expect(installWay({ ua: CHROME_WIN, standalone: false, hasPrompt: true })).toBe('prompt')
   })
 })

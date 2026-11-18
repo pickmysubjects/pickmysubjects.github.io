@@ -194,7 +194,7 @@ describe('parseHandbookPaste – assessment and contact hours', () => {
 
   it('reads the first (semester) table: kinds, weights, group work and hurdles', () => {
     expect(parseHandbookPaste(page).assessment).toEqual([
-      { kind: 'project', weight: 30, group: true, hurdle: true },
+      { kind: 'project', weight: 30, group: true, hurdle: true, timing: { kind: 'week', from: 6, text: 'Week 6' } },
       { kind: 'quiz', weight: 10 },
       { kind: 'exam', weight: 60 },
     ])

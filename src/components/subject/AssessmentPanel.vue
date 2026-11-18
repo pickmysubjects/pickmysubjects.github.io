@@ -7,6 +7,7 @@ import { useDataset } from '@/composables/useDataset'
 import { useI18n } from '@/i18n'
 import { summariseAssessment } from '@/utils/assessment'
 import { attendanceText } from '@/utils/attendance'
+import { timingLabel, timingOrder } from '@/utils/taskTiming'
 
 // `titled: false`: the heading and the calculator link come from the page around it (the subject page's section).
 const props = withDefaults(defineProps<{ subject: Subject; year: number; titled?: boolean }>(), { titled: true })
@@ -22,6 +23,22 @@ const guessed = computed(() => props.subject.skills.length === 0)
 const info = computed(() => summariseAssessment(props.subject.assessment))
 const parts = computed(() => info.value?.parts ?? [])
 const summary = computed(() => parts.value.map((p) => `${t.value(`assess.kind.${p.kind}`)} ${p.weight}%`).join(t.value('listSep')))
+// Each task with when the Handbook says it happens, in that order ("Quizzes 2 · 10% · Week 6").
+const tasks = computed(() => {
+  const list = Array.isArray(props.subject.assessment) ? props.subject.assessment : []
+  if (!list.some((x) => x.timing)) return []
+  const counts = new Map<string, number>()
+  for (const x of list) counts.set(x.kind, (counts.get(x.kind) ?? 0) + 1)
+  const seen = new Map<string, number>()
+  return list
+    .map((x) => {
+      const n = (seen.get(x.kind) ?? 0) + 1
+      seen.set(x.kind, n)
+      const name = t.value(`assess.kind.${x.kind}`) + ((counts.get(x.kind) ?? 0) > 1 ? ` ${n}` : '')
+      return { name, weight: x.weight, hurdle: !!x.hurdle, when: timingLabel(t.value, x.timing), source: x.timing?.text, order: timingOrder(x.timing) }
+    })
+    .sort((a, b) => a.order - b.order)
+})
 const examHurdle = computed(() => info.value?.examHurdle ?? false)
 const otherHurdle = computed(() => info.value?.otherHurdle ?? false)
 // Exam share, class hours and group work are in the summary under the title; here only the
@@ -58,6 +75,14 @@ const otherTerms = computed(() => {
       </ul>
     </template>
     <p v-else class="assess-muted">{{ t('assess.none') }}</p>
+
+    <ul v-if="tasks.length" class="assess-tasks" :aria-label="t('timing.title')">
+      <li v-for="(x, i) in tasks" :key="i" class="assess-task">
+        <span class="assess-task-name">{{ x.name }} <strong>{{ x.weight }}%</strong></span>
+        <span v-if="x.hurdle" class="assess-pill">{{ t('next.hurdle') }}</span>
+        <span class="assess-when" :title="x.source ? t('timing.source', { text: x.source }) : undefined">{{ x.when }}</span>
+      </li>
+    </ul>
 
     <p v-if="hasFacts" class="assess-facts">
       <span v-if="examHurdle" class="chip chip-warn"><TriangleAlert :size="14" aria-hidden="true" /> {{ t('assess.mustPassExam') }}</span>
@@ -185,6 +210,50 @@ const otherTerms = computed(() => {
 
 .assess-small {
   font-size: var(--fs-small);
+}
+
+/* One row per task: name and weight, a hurdle pill, when (from the Handbook). */
+.assess-tasks {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--fs-small);
+}
+
+.assess-task {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, auto);
+  align-items: center;
+  gap: 4px 12px;
+  min-height: 40px;
+  border-top: 1px solid var(--divider);
+}
+
+.assess-task:first-child {
+  border-top: 0;
+}
+
+.assess-task-name {
+  grid-column: 1;
+  min-width: 0;
+}
+
+.assess-pill {
+  grid-column: 2;
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: var(--warn-soft);
+  color: var(--warn);
+  font-size: var(--fs-meta);
+  white-space: nowrap;
+}
+
+.assess-when {
+  grid-column: 3;
+  color: var(--ink-soft);
+  text-align: end;
+  font-variant-numeric: tabular-nums;
 }
 
 @media (max-width: 560px) {

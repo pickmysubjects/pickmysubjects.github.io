@@ -121,12 +121,23 @@ export const ASSESSMENT_KINDS = [
 ] as const
 export type AssessmentKind = (typeof ASSESSMENT_KINDS)[number]
 
+const week = z.number().int().min(1).max(12)
+const timingText = z.string().min(1)
+const assessmentTiming = z.discriminatedUnion('kind', [
+  z.object({ kind: z.literal('week'), from: week, to: week.optional(), text: timingText }).strict(),
+  z.object({ kind: z.literal('weeks'), weeks: z.array(week).min(2), text: timingText }).strict(),
+  z.object({ kind: z.literal('afterTeaching'), weeks: z.number().int().min(1).max(6), text: timingText }).strict(),
+  ...(['teaching', 'early', 'mid', 'late', 'end', 'exam', 'assessmentPeriod'] as const).map((k) => z.object({ kind: z.literal(k), text: timingText }).strict()),
+])
+
 const assessmentTask = z
   .object({
     kind: z.enum(ASSESSMENT_KINDS),
     weight: z.number().min(0).max(100),
     group: z.boolean().optional(), // done in a group, at least partly
     hurdle: z.boolean().optional(), // must be passed on its own to pass the subject
+    // When it happens, from the Handbook's Timing cell (src/engine/timing.ts); absent = not given / not understood.
+    timing: assessmentTiming.optional(),
   })
   .strict()
 

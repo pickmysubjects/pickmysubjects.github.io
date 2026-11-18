@@ -8,7 +8,7 @@ import HomeTools from '@/components/home/HomeTools.vue'
 import StartSteps from '@/components/home/StartSteps.vue'
 import HeroCampus from '@/components/home/HeroCampus.vue'
 import HomeGuide from '@/components/home/HomeGuide.vue'
-import InstallCard from '@/components/home/InstallCard.vue'
+import InstallPrompt from '@/components/layout/InstallPrompt.vue'
 import Interp from '@/components/Interp.vue'
 import SubjectSearch from '@/components/SubjectSearch.vue'
 import { useDataset } from '@/composables/useDataset'
@@ -74,7 +74,7 @@ const returning = computed(() => plan.courseChosen.value || !plan.isEmpty.value 
     <WhatsNext />
 
     <!-- Phones only, for a student who has been here before: keep the site on the home screen. -->
-    <InstallCard :returning="returning" />
+    <InstallPrompt variant="card" :returning="returning" />
 
     <!-- The three steps for a new student, and the tools beside them. -->
     <div class="duo">

@@ -1,6 +1,7 @@
 import { thisYear } from './dataYear'
 import { admissionCourses, namedComponents } from './expr'
 import type { AssessmentKind, Period, ReqExpr, ReqField } from './schema'
+import { normaliseTiming, type Timing } from './timing'
 
 /**
  * Parses text that a person copied from a Handbook page they were reading
@@ -36,6 +37,7 @@ export interface AssessmentTask {
   weight: number
   group?: boolean
   hurdle?: boolean
+  timing?: Timing
 }
 
 const CODE = /\b[A-Z]{4}\d{5}\b/g
@@ -133,7 +135,7 @@ function splitSections(text: string): Partial<Record<Section, string[]>> {
       continue
     }
     // The assessment table keeps its tabs: the weight column is the cell after the last tab.
-    if (current === 'assess') out.assess?.push(raw.replace(/ +/g, ' ').trim())
+    if (current === 'assess') out.assess?.push(raw.replace(/ +/g, ' ').replace(/^ +| +$/g, ''))
     else if (current && current !== 'skip') out[current]?.push(line)
   }
   return out
@@ -556,6 +558,27 @@ function classify(description: string): AssessmentKind | undefined {
   return first?.kind ?? KIND_WORDS.find(([re]) => re.test(description))?.[1]
 }
 
+/** The cell before the weight ("\tWeek 6\t20%"), when the row has one; undefined when we can't read it. */
+export function timingCell(row: string): Timing | undefined {
+  const cells = row.split('\t')
+  return cells.length >= 3 ? normaliseTiming(cells[cells.length - 2]!) : undefined
+}
+
+/** Every timing cell's text, recognised or not, in table order (for the import report). */
+export function assessmentTimingTexts(text: string): (string | undefined)[] {
+  const rows = splitSections(text).assess ?? []
+  const tabbed = rows.some((l) => /\t\s*\d+(?:\.\d+)?%\s*$/.test(l))
+  const WEIGHT = tabbed ? /\t\s*(\d+(?:\.\d+)?)%\s*$/ : /(\d+(?:\.\d+)?)%$/
+  const out: (string | undefined)[] = []
+  for (const raw of rows) {
+    if (/N\/A\s*$/.test(raw)) continue
+    if (!(raw.match(WEIGHT) ?? raw.match(/^\s*(\d+(?:\.\d+)?)%\s*$/))) continue
+    const cells = raw.split('\t')
+    out.push(tabbed && cells.length >= 3 ? cells[cells.length - 2]!.replace(/\s+/g, ' ').trim() : undefined)
+  }
+  return out
+}
+
 /**
  * Rows of the "Description / Timing / Percentage" table: description lines,
  * then a line ending in the weight. Only the first (semester) version is read.
@@ -588,6 +611,8 @@ function parseAssessment(lines: string[], warnings: string[]): AssessmentTask[] 
     const task: AssessmentTask = { kind: kind ?? 'assignment', weight: Number(weight[1]) }
     if (/\bgroups?\b(?! discussions?)|\bteams?\b/i.test(description)) task.group = true
     if (/hurdle requirement/i.test(all)) task.hurdle = true
+    const timing = tabbed ? timingCell(raw) : undefined
+    if (timing) task.timing = timing
     tasks.push(task)
     text = []
   }

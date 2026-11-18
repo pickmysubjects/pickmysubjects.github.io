@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { offerInstall } from '@/utils/install'
 import { computed, onBeforeUnmount, shallowRef, useTemplateRef, watch } from 'vue'
 import { Lock, Plus, RotateCcw, TriangleAlert } from 'lucide-vue-next'
 import InfoTip from '@/components/InfoTip.vue'
@@ -137,6 +138,8 @@ onBeforeUnmount(() => io?.disconnect())
 function pick(code: string): void {
   replaceAddress(`tools/final/?subject=${code}`)
 }
+// An answer on screen is a good moment to offer the app.
+watch(() => anyDone.value, (on) => on && offerInstall())
 </script>
 
 <template>

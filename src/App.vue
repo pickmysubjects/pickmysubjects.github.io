@@ -11,6 +11,8 @@ import Interp from './components/Interp.vue'
 import AppLogo from './components/AppLogo.vue'
 import RolloverNotice from './components/RolloverNotice.vue'
 import MissedAnchor from './components/layout/MissedAnchor.vue'
+import InstallPrompt from './components/layout/InstallPrompt.vue'
+import { semesterVisit } from './utils/install'
 import { VIEW_LOADERS } from './views/loaders'
 import { defineAsyncComponent, watchEffect } from 'vue'
 import { useView, link } from './composables/useView'
@@ -44,6 +46,10 @@ const SemesterView = lazy('this-semester')
 const PlanCompareView = defineAsyncComponent(() => import('./views/PlanCompareView.vue'))
 
 const { view, param } = useView()
+// A second visit that opens this semester's page is a good moment to offer the app.
+watchEffect(() => {
+  if (view.value === 'this-semester' && typeof window !== 'undefined') semesterVisit()
+})
 const { t, locale } = useI18n()
 const { data, course } = useDataset()
 
@@ -159,6 +165,7 @@ watchEffect(() => {
         <a :href="link('tools/')">{{ t('tools.nav') }}</a>
         <a :href="link('news')">{{ t('news.title') }}</a>
         <a :href="link('about')">{{ t('app.about') }}</a>
+        <a :href="link('about#get-app')">{{ t('home.install.nav') }}</a>
         <a :href="link('contribute')">{{ t('nav.contribute') }}</a>
         <a :href="link('feedback')">{{ t('nav.feedback') }}</a>
         <a :href="link('privacy')">{{ t('app.privacy') }}</a>
@@ -175,6 +182,7 @@ watchEffect(() => {
     </div>
   </footer>
   <BottomNav :view="view" />
+  <InstallPrompt variant="float" />
 </template>
 
 <style scoped>

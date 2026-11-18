@@ -2,7 +2,7 @@
 import { computed, shallowRef } from 'vue'
 import { ArrowRight, Calculator, CalendarDays, Check, Gauge, LifeBuoy, NotebookPen } from 'lucide-vue-next'
 import DetailHero from '@/components/browse/DetailHero.vue'
-import WeekStrip from '@/components/semester/WeekStrip.vue'
+import WeekStrip, { type StripTask } from '@/components/semester/WeekStrip.vue'
 import QuickRate from '@/components/rating/QuickRate.vue'
 import RatingForm from '@/components/rating/RatingForm.vue'
 import { link } from '@/composables/useView'
@@ -16,7 +16,8 @@ import { useI18n } from '@/i18n'
 import { localTitle } from '@/i18n/localized'
 import { summariseAssessment } from '@/utils/assessment'
 import { KEY_DATES, type KeyDate } from '@/utils/keyDates'
-import { nextKeyDates, taskTiming } from '@/utils/semester'
+import { nextKeyDates } from '@/utils/semester'
+import { dueSegments, numericRange, spanSegments, timingLabel, timingOrder } from '@/utils/taskTiming'
 import { RATINGS_FORM } from '@/config'
 import { isFormReady } from '@/utils/googleForm'
 
@@ -58,7 +59,11 @@ function showAll(): void {
   hiddenStore.value = rest
 }
 
-// Each task of a subject, numbered within its kind ("Assignment 2"), with what's known of its timing.
+// The official exam dates, short ("6/7–6/25"), for tasks in the exam period.
+const examRange = computed(() => (now.value?.sem.exams ? numericRange(locale.value, now.value.sem.exams.start, now.value.sem.exams.end) : ''))
+
+// Each task of a subject, numbered within its kind ("Assignment 2"), with its Handbook timing,
+// in the order they come up (untimed ones last).
 const cards = computed(() =>
   shown.value.map((code) => {
     const s = data.value.subjects[code]!
@@ -70,8 +75,9 @@ const cards = computed(() =>
       const n = (seen.get(x.kind) ?? 0) + 1
       seen.set(x.kind, n)
       const label = t.value(`assess.kind.${x.kind}`) + ((counts.get(x.kind) ?? 0) > 1 ? ` ${n}` : '')
-      return { id: `${code}:${i}`, label, weight: x.weight, hurdle: !!x.hurdle, timing: taskTiming(x.kind) }
+      return { id: `${code}:${i}`, label, weight: x.weight, hurdle: !!x.hurdle, timing: x.timing, when: timingLabel(t.value, x.timing, examRange.value), order: timingOrder(x.timing) }
     })
+    items.sort((a, b) => a.order - b.order)
     const done = new Set(doneStore.value[termKey.value] ?? [])
     return {
       code,
@@ -89,11 +95,21 @@ function toggle(id: string): void {
   doneStore.value = { ...doneStore.value, [termKey.value]: list.includes(id) ? list.filter((x) => x !== id) : [...list, id] }
 }
 
-const examRange = computed(() => (now.value?.sem.exams ? range(now.value.sem.exams) : ''))
-function timingText(timing: 'exams' | 'semester'): string {
-  if (timing === 'semester') return t.value('sem.whenSemester')
-  return examRange.value ? t.value('sem.whenExams', { range: examRange.value }) : t.value('sem.whenExamsNoDate')
-}
+// The week strip's markers: each task under the week it's due in ("COMP10001 Quiz 20%, hurdle"),
+// and ranged ones ("Weeks 4–12") under every week they run through, marked as ongoing.
+const stripTasks = computed<StripTask[][]>(() => {
+  const sem = now.value?.sem
+  if (!sem) return []
+  const out: StripTask[][] = sem.segments.map(() => [])
+  for (const c of cards.value) {
+    for (const i of c.items) {
+      const base = `${c.code} ${i.label} ${i.weight}%${i.hurdle ? `, ${t.value('next.hurdle')}` : ''}`
+      for (const k of dueSegments(i.timing, sem)) out[k]!.push({ label: base })
+      for (const k of spanSegments(i.timing, sem)) out[k]!.push({ label: `${base} · ${t.value('timing.ongoing', { when: i.when })}`, ongoing: true })
+    }
+  }
+  return out
+})
 
 /** "Final exam 60%, hurdle · Assignments 40%": the summary in plain words. */
 function plainSummary(c: (typeof cards.value)[number]): string {
@@ -216,9 +232,7 @@ const caption = computed(() => {
             <h2 id="sem-weeks" class="card-title">{{ t('sem.stripLabel', { term: name }) }}</h2>
             <span v-if="caption" class="card-meta">{{ caption }}</span>
           </header>
-          <div class="strip-scroll">
-            <WeekStrip :sem="now.sem" :today="today" :name="name" />
-          </div>
+          <WeekStrip :sem="now.sem" :today="today" :name="name" :tasks="teachingish && cards.length ? stripTasks : undefined" />
         </section>
 
         <!-- The student's own subjects this term. -->
@@ -229,7 +243,7 @@ const caption = computed(() => {
           </header>
           <p class="card-sub">{{ t('sem.handbookNote') }}</p>
           <div class="subjects">
-            <details v-for="c in cards" :key="c.code + phone" class="subject" :open="!phone">
+            <details v-for="(c, n) in cards" :key="c.code + phone" class="subject" :open="!phone && n === 0">
               <summary class="subject-head">
                 <span class="subject-name"><span class="code">{{ c.code }}</span> {{ c.title }}</span>
                 <span class="subject-sum">{{ plainSummary(c) }}</span>
@@ -243,7 +257,7 @@ const caption = computed(() => {
                     <span class="task-name" :class="{ 'is-done': c.doneSet.has(i.id) }">{{ i.label }} {{ i.weight }}%</span>
                   </label>
                   <span v-if="i.hurdle" class="pill">{{ t('next.hurdle') }}</span>
-                  <span class="task-when">{{ timingText(i.timing) }}</span>
+                  <span class="task-when" :title="i.timing ? t('timing.source', { text: i.timing.text }) : undefined">{{ i.when }}</span>
                 </li>
               </ul>
               <div class="subject-actions">
@@ -430,13 +444,6 @@ const caption = computed(() => {
   font-weight: var(--fw-semibold);
   color: var(--accent);
   cursor: pointer;
-}
-
-/* The strip scrolls inside its own box, never the page. */
-.strip-scroll {
-  overflow-x: auto;
-  padding-bottom: 4px;
-  -webkit-overflow-scrolling: touch;
 }
 
 .code {

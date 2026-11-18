@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed, nextTick, ref } from 'vue'
+import { offerInstall } from '@/utils/install'
+import { computed, nextTick, ref, watch } from 'vue'
 import InfoTip from '@/components/InfoTip.vue'
 import SegmentedControl from '@/components/SegmentedControl.vue'
 import SidePanel from '@/components/SidePanel.vue'
@@ -183,6 +184,8 @@ function exportIcs(): void {
 function print(): void {
   window.print()
 }
+// An answer on screen is a good moment to offer the app.
+watch(() => !missing.value, (on) => on && offerInstall())
 </script>
 
 <template>
