@@ -94,7 +94,9 @@ watch(() => props.today, () => void nextTick(centreNow))
             @focus="picked = c.i"
           >
             <span class="cell-label">{{ c.short }}</span>
-            <span class="cell-dates" aria-hidden="true"><span>{{ c.from }}</span><span>–{{ c.to }}</span></span>
+            <!-- Each week shows only its start date; the full range is in the panel below. The exam
+                 segment keeps its official dates, the one range worth reading at a glance. -->
+            <span class="cell-dates" aria-hidden="true">{{ c.kind === 'exams' ? `${c.from}–${c.to}` : c.from }}</span>
           </button>
           <span class="marks" aria-hidden="true">
             <span v-if="c.due.length" class="dots"><span v-for="n in Math.min(c.due.length, 3)" :key="n" class="dot" /></span>
@@ -187,11 +189,11 @@ watch(() => props.today, () => void nextTick(centreNow))
 }
 
 .cell-dates {
-  display: grid;
-  justify-items: center;
-  font-size: var(--fs-meta);
-  line-height: 1.25;
+  font-size: 0.6875rem;
+  line-height: 1.2;
+  color: var(--ink-soft);
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 
 .cell:hover,
@@ -237,6 +239,11 @@ watch(() => props.today, () => void nextTick(centreNow))
   background: var(--accent-fill);
   color: var(--accent-fill-ink);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-fill) 25%, transparent);
+}
+
+.cell.is-now .cell-dates {
+  color: inherit;
+  opacity: 0.9;
 }
 
 .cell.is-now .cell-label {
