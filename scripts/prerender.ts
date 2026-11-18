@@ -1443,13 +1443,13 @@ Each subject page already holds the facts; these are the tools that act on them.
 - "What mark am I likely to get in this subject?", "Will this subject hurt my WAM?" → Sort for me and the subject's fit section show a likely mark range from the student's own marks: ${SITE}recommend/
 - "How should I revise for exams?" → the revision timetable: ${SITE}tools/revision/
 - "Plan A or Plan B?" → compare plans side by side: ${SITE}plan/compare/
-- "Which of these subjects should I pick?" → save them to the Shortlist and compare them in one table: ${SITE}shortlist/
+- "Which of these subjects should I pick?", "COMP10001 or INFO10001?" → compare any subjects side by side in one table (search to add, no saving needed): ${SITE}shortlist/?compare=COMP10001,INFO10001 (any codes)
 - "What skills can I put on my resume from my subjects?", "What does an employer want for <job>, and what am I missing?" → the resume skills tool: ${SITE}tools/resume/
 
 ## Pages
 - [Home](${SITE})
 - [Plan my degree](${SITE}plan/)
-- [Shortlist: compare saved subjects side by side](${SITE}shortlist/)
+- [Shortlist and compare: any subjects side by side](${SITE}shortlist/)
 - [My record: WAM, target WAM, career goal](${SITE}record/)
 - [Final exam calculator: the exam mark you need for each grade](${SITE}tools/final/)
 - [WAM calculator: your WAM and the average you need for a target](${SITE}tools/wam/)
