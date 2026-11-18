@@ -10,6 +10,7 @@ const ARTS = {
   final: defineAsyncComponent(() => import('./art/ArtFinal.vue')),
   wam: defineAsyncComponent(() => import('./art/ArtWam.vue')),
   revision: defineAsyncComponent(() => import('./art/ArtRevision.vue')),
+  resume: defineAsyncComponent(() => import('./art/ArtResume.vue')),
 }
 </script>
 
@@ -31,7 +32,8 @@ const ARTS = {
 <style scoped>
 .cards {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  /* Four tools: one row of four on wide screens, two by two below that. */
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: var(--space-4);
   margin: 0;
   padding: 0;
@@ -53,7 +55,7 @@ const ARTS = {
   grid-template-rows: subgrid;
   gap: var(--space-4);
   height: 100%;
-  padding: 28px 32px;
+  padding: 28px;
   border-radius: var(--radius-lg, 24px);
   color: var(--ink);
   text-decoration: none;
@@ -113,7 +115,7 @@ const ARTS = {
   height: 100%;
 }
 
-@media (max-width: 1100px) and (min-width: 721px) {
+@media (max-width: 1199px) and (min-width: 721px) {
   .cards {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }

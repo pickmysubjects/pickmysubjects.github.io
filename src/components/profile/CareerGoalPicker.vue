@@ -13,8 +13,10 @@ import { useI18n } from '@/i18n'
 /**
  * The open plan's career goal (optional): search a job by its name in any language or an everyday
  * name (程序员, IT), or open the full list grouped like the careers page; pick one, clear it.
- * Suggestions favour subjects the career page puts under Required or Helps.
+ * Suggestions favour subjects the career page puts under Required or Helps. `noHint` leaves out the
+ * line about suggestions, for pages that use the goal for something else (the resume tool).
  */
+defineProps<{ noHint?: boolean }>()
 const SHOWN = 6
 const { data } = useDataset()
 const { profile, setCareer } = useProfile()
@@ -56,7 +58,7 @@ function pick(id: string | undefined): void {
 <template>
   <div class="career">
     <h3 id="career-goal-title" class="career-label">{{ t('careerGoal.title') }}</h3>
-    <p class="career-hint">{{ t('careerGoal.hintShort') }}<InfoTip :text="t('careerGoal.hint')" /></p>
+    <p v-if="!noHint" class="career-hint">{{ t('careerGoal.hintShort') }}<InfoTip :text="t('careerGoal.hint')" /></p>
     <div v-if="chosen" class="chosen">
       <span class="chosen-tick" aria-hidden="true"><Check :size="14" :stroke-width="3" /></span>
       <a class="chosen-name" :href="link(`careers/${chosen.id}`)" :title="t('careerGoal.see')">{{ chosen.label }}</a>

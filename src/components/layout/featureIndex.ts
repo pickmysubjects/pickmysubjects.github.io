@@ -44,6 +44,7 @@ const MENU_SYN: Record<string, string> = {
   'tools/final/': 'final',
   'tools/wam/': 'wam',
   'tools/revision/': 'revision',
+  'tools/resume/': 'skillTree',
   'shortlist/#compare-title': 'compare',
   'record/': 'record',
   'shortlist/': 'shortlist',
@@ -57,7 +58,6 @@ const MENU_SYN: Record<string, string> = {
   'privacy/': 'privacy',
   'guide/key-dates/': 'dates',
   'clubs/': 'clubs',
-  'record/#sec-skilltree': 'skillTree',
 }
 
 /** Extra words for guide topics, by topic anchor (search.syn.<key>). */

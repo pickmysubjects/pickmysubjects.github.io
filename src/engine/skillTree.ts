@@ -13,18 +13,6 @@ import { topicsOf } from './topics'
 export const ABILITIES = ['teamwork', 'writing', 'speaking', 'numeracy', 'programming', 'research', 'lab', 'fieldwork'] as const
 export type Ability = (typeof ABILITIES)[number]
 
-/** How each ability reads on a resume (in English, as Australian resumes are). */
-export const RESUME_LABELS: Record<Ability, string> = {
-  teamwork: 'Teamwork (group assessments)',
-  writing: 'Written communication',
-  speaking: 'Presentations',
-  numeracy: 'Quantitative analysis',
-  programming: 'Programming',
-  research: 'Independent project work',
-  lab: 'Laboratory work',
-  fieldwork: 'Fieldwork',
-}
-
 export interface ToolLine {
   name: string
   codes: string[]
@@ -124,32 +112,52 @@ export function buildSkillTree(codes: readonly string[], data: Dataset, resumeOf
   }
 }
 
+/** What a subject says on a resume: its own English lines, else its learning outcomes (in English). */
+export function courseworkLines(code: string, outcomesOf: (code: string) => readonly string[], resumeOf: ResumeOf): string[] {
+  const own = resumeOf(code)?.lines ?? []
+  return [...(own.length ? own : outcomesOf(code))]
+}
+
+/** The key of one coursework line (a subject's line by its place), for leaving it out of the copy. */
+export const resumeLineKey = (code: string, index: number): string => `${code}:${index}`
+
+export interface ResumeTextOptions {
+  resumeOf?: ResumeOf
+  /**
+   * Tailors it to one job: only these subjects (the ones that show a skill the job asks for) go
+   * under Relevant coursework, and their specialist skills come first.
+   */
+  focus?: readonly string[]
+  /** Coursework lines the student unticked, by resumeLineKey. */
+  skip?: ReadonlySet<string>
+}
+
 /**
- * The tree as plain English for a resume: tools, abilities with their subjects, then each
- * subject's learning outcomes. Resumes in Australia are written in English.
- *
- * `focus`, when given, tailors it to one job: only those subjects (the ones that show a skill the
- * job asks for) go under Relevant coursework, and their specialist skills come first.
+ * The tree as a resume section in plain English (Australian resumes are in English): Technical
+ * skills (the tools), Skills (specialist skills, most-backed first) and Relevant coursework (each
+ * subject's lines under its code and title), each item a "• " bullet. No subject codes in the
+ * skill lines: on a resume the coursework says where they come from.
  */
-export function resumeText(tree: SkillTree, data: Dataset, outcomesOf: (code: string) => string[], resumeOf: ResumeOf = (c) => data.subjects[c]?.resume, focus?: readonly string[]): string {
-  const inFocus = focus?.length ? new Set(focus) : null
-  const title = (c: string) => `${c} ${data.subjects[c]?.title ?? ''}`.trim()
-  const lines: string[] = []
-  if (tree.tools.length) lines.push(`Tools: ${tree.tools.map((t) => `${t.name} (${t.codes.join(', ')})`).join('; ')}`)
-  const specialist = inFocus ? [...tree.specialist].sort((a, b) => Number(b.codes.some((c) => inFocus.has(c))) - Number(a.codes.some((c) => inFocus.has(c)))) : tree.specialist
-  if (specialist.length) lines.push(`Specialist skills: ${specialist.map((t) => t.name).join(', ')}`)
-  // Broad abilities aren't shown on the page (the strengths card covers them), but a resume's
-  // "Employability skills" line is where they go.
-  if (tree.abilities.length) lines.push(`Employability skills: ${tree.abilities.map((a) => `${RESUME_LABELS[a.ability]} (${a.codes.join(', ')})`).join('; ')}`)
-  // Each subject: what the student did in it (its resume lines), else what it taught (its outcomes).
-  const said = (c: string) => resumeOf(c)?.lines.length ? resumeOf(c)!.lines : outcomesOf(c)
-  const coursework = tree.subjects.filter((c) => said(c).length && (!inFocus || inFocus.has(c)))
-  if (coursework.length) {
-    if (lines.length) lines.push('')
-    lines.push('Relevant coursework')
-    for (const c of coursework) lines.push(`- ${title(c)}: ${said(c).join('; ')}`)
+export function resumeText(tree: SkillTree, data: Dataset, outcomesOf: (code: string) => readonly string[], opts: ResumeTextOptions = {}): string {
+  const resumeOf = opts.resumeOf ?? ((c: string) => data.subjects[c]?.resume)
+  const inFocus = opts.focus?.length ? new Set(opts.focus) : null
+  const out: string[] = []
+  const section = (heading: string, body: string[]) => {
+    if (!body.length) return
+    if (out.length) out.push('')
+    out.push(heading, ...body)
   }
-  return lines.join('\n')
+  section('Technical skills', tree.tools.length ? [`• ${tree.tools.map((t) => t.name).join(', ')}`] : [])
+  const specialist = inFocus ? [...tree.specialist].sort((a, b) => Number(b.codes.some((c) => inFocus.has(c))) - Number(a.codes.some((c) => inFocus.has(c)))) : tree.specialist
+  section('Skills', specialist.length ? [`• ${specialist.map((x) => x.name).join(', ')}`] : [])
+  const coursework: string[] = []
+  for (const c of tree.subjects) {
+    if (inFocus && !inFocus.has(c)) continue
+    const lines = courseworkLines(c, outcomesOf, resumeOf).filter((_, i) => !opts.skip?.has(resumeLineKey(c, i)))
+    if (lines.length) coursework.push(`${c} ${data.subjects[c]?.title ?? ''}`.trim(), ...lines.map((l) => `• ${l}`))
+  }
+  section('Relevant coursework', coursework)
+  return out.join('\n')
 }
 
 /** One skill employers ask for in a job (yourcareer.gov.au), and what the student has to show for it. */

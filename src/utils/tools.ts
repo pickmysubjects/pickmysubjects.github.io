@@ -6,11 +6,12 @@ export interface Tool {
   key: string
   to: string
   text: string
-  art: 'final' | 'wam' | 'revision'
+  art: 'final' | 'wam' | 'revision' | 'resume'
 }
 
 export const TOOLS: readonly Tool[] = [
   { key: 'calc.title', to: 'tools/final/', text: 'tools.line.final', art: 'final' },
   { key: 'tools.wam', to: 'tools/wam/', text: 'tools.line.wam', art: 'wam' },
   { key: 'rev.title', to: 'tools/revision/', text: 'tools.line.revision', art: 'revision' },
+  { key: 'tools.resume', to: 'tools/resume/', text: 'tools.line.resume', art: 'resume' },
 ]

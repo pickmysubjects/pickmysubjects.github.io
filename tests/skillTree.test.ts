@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { abilitiesOf, buildSkillTree, employerSkills, resumeText, wordsMatcher } from '@/engine/skillTree'
+import { abilitiesOf, buildSkillTree, employerSkills, resumeLineKey, resumeText, wordsMatcher } from '@/engine/skillTree'
 import { studentTools, toolsIn } from '../scripts/extract-tools'
 import { realData } from './realData'
 
@@ -39,15 +39,25 @@ describe('the skill tree', () => {
     expect(buildSkillTree([], data)).toEqual({ tools: [], specialist: [], abilities: [], subjects: [] })
   })
 
-  it('writes an English resume block with every line traced to its subjects', () => {
+  it('writes an English resume section: tools, skills, then each subject with its lines', () => {
     const tree = buildSkillTree(['COMP10001', 'MAST10006'], data)
     // A subject with no resume lines of its own falls back to its learning outcomes.
-    const text = resumeText(tree, data, (c) => (c === 'COMP10001' ? ['Read, write and debug small programs'] : []), () => undefined)
-    expect(text).toContain('Tools: Python (COMP10001)')
-    expect(text).toMatch(/^Employability skills: .*Programming \(COMP10001\)/m)
-    expect(text).toContain('Relevant coursework\n- COMP10001 Foundations of Computing: Read, write and debug small programs')
+    const text = resumeText(tree, data, (c) => (c === 'COMP10001' ? ['Read, write and debug small programs'] : []), { resumeOf: () => undefined })
+    expect(text).toMatch(/^Technical skills\n• .*Python/)
+    expect(text).toContain('Relevant coursework\nCOMP10001 Foundations of Computing\n• Read, write and debug small programs')
+    // Skill lines carry no subject codes: the coursework says where they come from.
+    expect(text).not.toMatch(/\(COMP10001\)/)
     // A subject with no outcomes loaded isn't listed under coursework.
-    expect(text).not.toContain('- MAST10006')
+    expect(text).not.toContain('MAST10006')
+  })
+
+  it('leaves out the lines the student unticked, and a subject with none left', () => {
+    const tree = buildSkillTree(['COMP10001', 'MAST10006'], data)
+    const said = () => ['First line', 'Second line']
+    const text = resumeText(tree, data, said, { resumeOf: () => undefined, skip: new Set([resumeLineKey('COMP10001', 0), resumeLineKey('MAST10006', 0), resumeLineKey('MAST10006', 1)]) })
+    expect(text).toContain('COMP10001 Foundations of Computing\n• Second line')
+    expect(text).not.toContain('• First line')
+    expect(text).not.toContain('MAST10006')
   })
 })
 
@@ -106,9 +116,9 @@ describe('specialist skills from each subject', () => {
   it('puts them in the resume text, with what the student did in each subject', () => {
     const tree = buildSkillTree(['ACCT10001'], data)
     const text = resumeText(tree, data, () => ['an outcome'])
-    expect(text).toMatch(/^Specialist skills: .*Financial statement analysis/m)
+    expect(text).toMatch(/^Skills\n• .*Financial statement analysis/m)
     // A subject's own resume lines come before its outcomes.
-    expect(text).toContain(`- ACCT10001 Accounting Reports and Analysis: ${data.subjects.ACCT10001!.resume!.lines[0]}`)
+    expect(text).toContain(`ACCT10001 Accounting Reports and Analysis\n• ${data.subjects.ACCT10001!.resume!.lines[0]}`)
     expect(text).not.toContain('an outcome')
   })
 
@@ -143,10 +153,10 @@ describe('specialist skills from each subject', () => {
 
   it('tailors the resume text to a job: only its subjects under coursework, their skills first', () => {
     const tree = buildSkillTree(['ACCT10001', 'COMP10001'], data)
-    const text = resumeText(tree, data, () => ['an outcome'], undefined, ['ACCT10001'])
+    const text = resumeText(tree, data, () => ['an outcome'], { focus: ['ACCT10001'] })
     expect(text).toContain('ACCT10001 Accounting Reports and Analysis')
-    expect(text).not.toMatch(/^- COMP10001/m)
-    expect(text).toMatch(/^Specialist skills: Financial statement analysis/m)
+    expect(text).not.toMatch(/^COMP10001/m)
+    expect(text).toMatch(/^• Financial statement analysis/m)
   })
 
   it("matches a job's skill to a specialist skill of the same name", () => {

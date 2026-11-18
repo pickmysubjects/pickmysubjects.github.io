@@ -60,7 +60,7 @@ const RANKINGS = [
     </ul>
     <p><TermText :text="t('guide.jobResume')" /></p>
     <p class="actions">
-      <a class="button button-quiet" :href="link('record/#sec-skilltree')">{{ t('skillTree.title') }}</a>
+      <a class="button button-quiet" :href="link('tools/resume/')">{{ t('tools.resume') }}</a>
       <a class="button button-quiet" :href="link('clubs/')">{{ t('clubsPage.title') }}</a>
     </p>
     <GuideLinks

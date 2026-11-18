@@ -1054,6 +1054,12 @@ function toolPages(code: LocaleCode, t: Translate): Page[] {
       body: `<h1>${esc(t('calc.title'))}</h1><p>${esc(t('calc.lede'))}</p><p>${esc(t('calc.maths', { earned: 30, left: 60 }))}</p><ul>${['H1 80', 'H2A 75', 'H2B 70', 'H3 65', 'P 50'].map((b) => `<li>${b}</li>`).join('')}</ul><h2>${esc(t('calc.hurdle'))}</h2><p>${esc(t('calc.hurdleInfo'))}</p><p>${esc(t('calc.privacyInfo'))}</p>`,
     },
     { path: 'tools/revision', title: `${t('tools.revSeoTitle')} | PickMySubjects`, description: t('tools.revSeoDesc'), body: `<h1>${esc(t('rev.title'))}</h1><p>${esc(t('rev.lede'))}</p><h2>${esc(t('rev.totals'))}</h2><p>${esc(t('rev.rule'))}</p><p>${esc(t('rev.privacy'))}</p>` },
+    {
+      path: 'tools/resume',
+      title: `${t('tools.resumeSeoTitle')} | PickMySubjects`,
+      description: t('tools.resumeSeoDesc'),
+      body: `<h1>${esc(t('tools.resume'))}</h1><p>${esc(t('tools.resumeLede'))}</p><h2>${esc(t('resume.tech'))}</h2><h2>${esc(t('resume.skills'))}</h2><h2>${esc(t('resume.coursework'))}</h2><p>${esc(t('resume.note'))}</p><p>${esc(t('guide.jobResume'))}</p>`,
+    },
     { path: 'tools/wam', title: `${t('tools.wamSeoTitle')} | PickMySubjects`, description: t('tools.wamSeoDesc'), body: `<h1>${esc(t('tools.wam'))}</h1><p>${esc(t('tools.wamLede'))}</p><p>${esc(t('guide.wamText'))}</p><p>${esc(t('guide.wamFormula'))}</p>` },
   ]
 }
@@ -1376,12 +1382,12 @@ It covers ${listedCourseList.length} degrees (${courseNames}) with ${majorCount}
 - Strengths (with a hint from marks), rated in the student's own school grade scale if they haven't started uni: VCE, HSC, IB, A-Level, HKDSE, gaokao, and Taiwanese, Japanese, Korean, Vietnamese, Malaysian (SPM), Indonesian, Indian (CBSE) or US grades, or a percentage. Also interests, goal and weekly work hours (20+ hours favours lighter workloads).
 - Clubs suggested from the student's interests and subjects.
 - Career goal: pick a job ("accountant", "software engineer"…); suggestions then favour the subjects it requires or that help toward it, and the record lists what is still to add for it.
-- Skills for your resume: from finished (and planned) subjects, the tools, specialist skills and abilities each subject taught, as resume lines naming the subjects behind them, compared against the skills employers list for the career goal (from the Australian Government's Your Career site). Copy them for a resume in one tap.
 - Backup to a file and restore on another device. Optional anonymous sharing of grade bands.
 
 ### Tools
 - Final exam calculator (${SITE}tools/final/): pick a subject, enter the marks so far, and it shows the exam mark needed for each grade (H1 to P), with the subject's own assessment and hurdles filled in. Each subject page links to it with that subject chosen.
 - WAM calculator (${SITE}tools/wam/): the WAM from finished subjects, the average needed on the rest of the degree to reach a target, and what one subject's mark would do to it.
+- Resume skills (${SITE}tools/resume/): from the record's finished (and planned) subjects, or any subjects added on the page, a resume section in English: technical skills, specialist skills and Relevant coursework lines for each subject, each line ticked or unticked before copying. With a career goal it shows how many of the skills employers list for that job (from the Australian Government's Your Career site) the subjects show, and how to show the rest. Nothing on the page changes the record.
 - Revision timetable (${SITE}tools/revision/): enter exam dates and it lays out a day-by-day revision timetable up to the last exam: each subject spread over several days, moving from learning to self-testing and past papers. Set busy days, rest days, pace, how well you remember and open-book exams; each subject gets a study method that suits it (maths, code, languages, essays…). Calendar or list view, print, and a calendar (.ics) download.
 
 ### Guide (UniMelb basics, from your ATAR offer to your first job)
@@ -1438,16 +1444,17 @@ Each subject page already holds the facts; these are the tools that act on them.
 - "How should I revise for exams?" → the revision timetable: ${SITE}tools/revision/
 - "Plan A or Plan B?" → compare plans side by side: ${SITE}plan/compare/
 - "Which of these subjects should I pick?" → save them to the Shortlist and compare them in one table: ${SITE}shortlist/
-- "What skills can I put on my resume from my subjects?", "What does an employer want for <job>, and what am I missing?" → My record's skills for your resume and career goal: ${SITE}record/
+- "What skills can I put on my resume from my subjects?", "What does an employer want for <job>, and what am I missing?" → the resume skills tool: ${SITE}tools/resume/
 
 ## Pages
 - [Home](${SITE})
 - [Plan my degree](${SITE}plan/)
 - [Shortlist: compare saved subjects side by side](${SITE}shortlist/)
-- [My record: WAM, target WAM, career goal, skills for your resume](${SITE}record/)
+- [My record: WAM, target WAM, career goal](${SITE}record/)
 - [Final exam calculator: the exam mark you need for each grade](${SITE}tools/final/)
 - [WAM calculator: your WAM and the average you need for a target](${SITE}tools/wam/)
 - [Revision timetable up to your last exam](${SITE}tools/revision/)
+- [Resume skills: English resume lines from your subjects](${SITE}tools/resume/)
 - [Find subjects: easy, hard, no final exam, first semester, breadth, or sorted for me](${SITE}subjects/)
 - [Easy UniMelb subjects, good for your WAM, with reasons](${SITE}subjects/easy/)
 - [Hardest UniMelb subjects, with reasons](${SITE}subjects/hard/)

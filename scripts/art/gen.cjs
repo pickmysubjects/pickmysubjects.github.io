@@ -762,6 +762,23 @@ toolHeroes.Revision = () => {
 @keyframes arv-turn{0%,10%{transform:rotate(0)}60%,100%{transform:rotate(90deg)}}`
   return { s, css, motion: [0, 0, 0, 0] }
 }
+// Resume skills: a resume sheet on glass (a heading, a row of skill chips, ticked lines), and a
+// clipboard beside it whose lines fill in as the ticked ones are copied across.
+toolHeroes.Resume = () => {
+  let s = `<ellipse class="sh" cx="476" cy="164" rx="196" ry="10"/>`
+  s += `<rect x="296" y="20" width="214" height="138" rx="16" class="gls"/><rect x="312" y="34" width="88" height="9" rx="4.5" class="pkt"/><rect x="312" y="50" width="58" height="5" rx="2.5" class="lnf"/>`
+  ;[[312, 38, 'lit'], [356, 48, 'skt'], [410, 34, 'lit'], [450, 40, 'skt']].forEach(([x, w, c]) => (s += `<rect x="${x}" y="64" width="${w}" height="13" rx="6.5" class="${c}"/>`))
+  ;[[90, 150], [110, 124], [130, 140]].forEach(([y, w], i) => {
+    s += `<rect x="312" y="${y - 1}" width="11" height="11" rx="3" class="${i === 1 ? 'lnf' : 'pkt'}"/><rect x="332" y="${y + 2}" width="${w}" height="6" rx="3" class="lnf"/>`
+  })
+  s += `<rect x="534" y="44" width="124" height="114" rx="16" class="gls"/><rect x="572" y="36" width="48" height="16" rx="8" class="pkt"/>`
+  s += `<g class="copy">`
+  ;[[70, 92], [88, 76], [106, 88], [124, 60]].forEach(([y, w]) => (s += `<rect x="550" y="${y}" width="${w}" height="7" rx="3.5" class="lit"/>`))
+  s += `</g>`
+  const css = `.art-resume .copy{transform-box:fill-box;transform-origin:0 50%;animation:ars-copy 5s ease-in-out infinite}
+@keyframes ars-copy{0%,15%{transform:scaleX(.25);opacity:.5}55%,100%{transform:scaleX(1);opacity:1}}`
+  return { s, css, motion: [0, 0, 0, 0] }
+}
 
 
 // ================= My record and Saved (src/components/profile/art/, src/components/shortlist/art/) =================
@@ -864,7 +881,7 @@ const TOOLS_DIR = path.join(__dirname, '../../src/components/tools/art/')
 fs.mkdirSync(TOOLS_DIR, { recursive: true })
 for (const [name, fn] of Object.entries(toolHeroes)) {
   const { s, css, motion } = fn()
-  write(`Art${name}`, `art-${name.toLowerCase()}`, fitBox(s, motion), s, css, name === 'Tools' ? 'the wide hero band of the tools page' : name === 'Revision' ? 'the wide hero band of the revision planner' : `the wide hero band of the ${name === 'Wam' ? 'WAM' : 'final'} calculator`, 'xMaxYMax', TOOLS_DIR, '../../guide/art/art.css')
+  write(`Art${name}`, `art-${name.toLowerCase()}`, fitBox(s, motion), s, css, name === 'Tools' ? 'the wide hero band of the tools page' : name === 'Revision' ? 'the wide hero band of the revision planner' : name === 'Resume' ? 'the wide hero band of the resume skills tool' : `the wide hero band of the ${name === 'Wam' ? 'WAM' : 'final'} calculator`, 'xMaxYMax', TOOLS_DIR, '../../guide/art/art.css')
 }
 // The foot of the revision planner's side panel: an hourglass, its sand running down, turning over
 // at the end of each loop.

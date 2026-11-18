@@ -44,8 +44,8 @@ describe('guide illustrations', () => {
     expect(PLAN_FILES.sort()).toEqual(['ArtCompare.vue', 'ArtPlan.vue'])
   })
 
-  it('has the hero scenes of the tools page and its three tools, and the revision planner small one', () => {
-    expect(TOOLS_FILES.sort()).toEqual(['ArtFinal.vue', 'ArtRevision.vue', 'ArtTools.vue', 'ArtWam.vue', 'MiniRevision.vue'])
+  it('has the hero scenes of the tools page and its four tools, and the revision planner small one', () => {
+    expect(TOOLS_FILES.sort()).toEqual(['ArtFinal.vue', 'ArtResume.vue', 'ArtRevision.vue', 'ArtTools.vue', 'ArtWam.vue', 'MiniRevision.vue'])
   })
 
   it('has the hero scenes of My record and Saved, and My record\'s small one', () => {

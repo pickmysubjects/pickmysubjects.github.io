@@ -55,7 +55,7 @@ function resolves(to: string): string | true {
   const r = parsePath(path, search ? `?${search}` : '')
   if (r.view === 'home' && path !== '') return `${to}: not a page`
   if (r.view === 'subjects' && r.param && !presetFromSlug(r.param) && !rankFromSlug(r.param)) return `${to}: unknown list`
-  if (r.view === 'tools' && !['', 'final', 'wam', 'revision'].includes(r.param)) return `${to}: unknown tool`
+  if (r.view === 'tools' && !['', 'final', 'wam', 'revision', 'resume'].includes(r.param)) return `${to}: unknown tool`
   if (r.view === 'guide' && r.param && !(GUIDE_PAGES as readonly string[]).includes(r.param)) return `${to}: unknown guide page`
   if (anchor) {
     if (r.view === 'guide') {
@@ -165,9 +165,9 @@ describe('feature search index', () => {
 })
 
 describe('menus hold destinations only', () => {
-  it('lists just the three tools under Tools and no record sections under Me', async () => {
+  it('lists just the four tools under Tools and no record sections under Me', async () => {
     const { MENUS } = await import('../src/components/layout/nav')
-    expect(MENUS.find((m) => m.area === 'tools')!.items.map((i) => i.to)).toEqual(['tools/final/', 'tools/wam/', 'tools/revision/'])
+    expect(MENUS.find((m) => m.area === 'tools')!.items.map((i) => i.to)).toEqual(['tools/final/', 'tools/wam/', 'tools/revision/', 'tools/resume/'])
     expect(MENUS.find((m) => m.area === 'me')!.items.map((i) => i.to)).toEqual(['record/', 'shortlist/'])
     // Still found by the site search.
     const all = MENUS.flatMap((m) => [...m.items, ...(m.searchOnly ?? [])]).map((i) => i.to)

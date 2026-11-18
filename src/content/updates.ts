@@ -22,8 +22,8 @@ export interface SiteRelease {
 export const SITE_RELEASES: SiteRelease[] = [
   {
     version: '1.0.2',
-    date: null,
-    links: [['subjects/']],
+    date: "2026-11-18",
+    links: [['subjects/'], ['tools/resume/']],
     points: [
       {
         en: "Rating is easier: it's at the top of 'What students say', a wrong tap can be undone for a few seconds, and you can add a tip or more answers right after.",
@@ -35,6 +35,17 @@ export const SITE_RELEASES: SiteRelease[] = [
         ms: "Penilaian kini di atas 'Kata pelajar': tersalah tekan boleh dibatalkan seketika, kemudian tambah tip atau jawapan lain.",
         id: "Penilaian kini di atas 'Kata mahasiswa': salah tekan bisa dibatalkan sebentar, lalu tambahkan tips atau jawaban lain.",
         hi: "रेटिंग अब 'छात्र क्या कहते हैं' में सबसे ऊपर है: गलत टैप कुछ सेकंड में वापस लें, फिर टिप या और जवाब जोड़ें।",
+      },
+      {
+        en: "New Resume skills tool: pick your subjects, untick the lines you don't need and copy an English resume section, checked against the skills your career goal asks for.",
+        'zh-CN': "新工具“简历技能”：选好课程、取消不需要的句子，就能复制一段英文简历内容，还会对照职业目标要的技能。",
+        'zh-TW': "新工具「履歷技能」：選好課程、取消不需要的句子，就能複製一段英文履歷內容，還會對照職涯目標要的技能。",
+        ja: "新ツール「履歴書スキル」：科目を選び、要らない行を外すだけで英語の履歴書セクションをコピー。キャリア目標のスキルとも比べられます。",
+        ko: "새 도구 '이력서 스킬': 과목을 고르고 필요 없는 줄을 빼면 영어 이력서 항목을 복사할 수 있고, 진로 목표의 스킬과도 비교해요.",
+        vi: "Công cụ mới Kỹ năng cho CV: chọn môn, bỏ những dòng không cần và sao chép một phần CV tiếng Anh, có so với kỹ năng nghề bạn nhắm tới.",
+        ms: "Alat baharu Kemahiran resume: pilih subjek, nyahtanda baris yang tidak perlu dan salin bahagian resume bahasa Inggeris, dibandingkan dengan kemahiran kerjaya anda.",
+        id: "Alat baru Keahlian untuk CV: pilih mata kuliah, hapus centang baris yang tidak perlu, lalu salin bagian CV bahasa Inggris, dibandingkan dengan keahlian kariermu.",
+        hi: "नया टूल रिज़्यूमे स्किल: विषय चुनें, गैर-ज़रूरी पंक्तियाँ हटाएँ और अंग्रेज़ी रिज़्यूमे सेक्शन कॉपी करें, करियर लक्ष्य की स्किल से मिलाकर।",
       },
     ],
   },

@@ -13,7 +13,6 @@ import CareerGoalPicker from '@/components/profile/CareerGoalPicker.vue'
 import GradeShare from '@/components/profile/GradeShare.vue'
 import WorkHours from '@/components/profile/WorkHours.vue'
 import ClubsCard from '@/components/profile/ClubsCard.vue'
-import SkillTreeCard from '@/components/profile/SkillTreeCard.vue'
 import PlanSwitcher from '@/components/plans/PlanSwitcher.vue'
 import PhoneMoreLinks from '@/components/layout/PhoneMoreLinks.vue'
 import { planName } from '@/components/plans/planName'
@@ -22,9 +21,11 @@ import { ArrowRight } from 'lucide-vue-next'
 import { usePlan } from '@/composables/usePlan'
 import { link } from '@/composables/useView'
 import { downloadBackup, restoreBackup } from '@/utils/backup'
-import { useDataset } from '@/composables/useDataset'
+import { useDataset, useResume } from '@/composables/useDataset'
 import { useProfile } from '@/composables/useProfile'
 import { creditPoints, isFail } from '@/engine'
+import { passedCodes } from '@/engine/recommend'
+import { buildSkillTree } from '@/engine/skillTree'
 import { useI18n } from '@/i18n'
 import { termLabel } from '@/i18n/format'
 
@@ -77,6 +78,18 @@ const pointsPassed = computed(() => {
 // Strengths, interests and goal are the open plan's: say which one.
 const { active: activePlan } = usePlans()
 const forPlan = computed(() => t.value('plans.forPlan', { name: planName(t.value, activePlan.value) }))
+// What the subjects passed add up to on a resume, in one line; the resume tool has the rest.
+const passed = computed(() => passedCodes(profile.value.results, data.value.subjects))
+const resumeOf = useResume(passed)
+const resumeSummary = computed(() => {
+  const tree = buildSkillTree(passed.value, data.value, resumeOf)
+  if (!tree.subjects.length) return ''
+  return t.value('resume.summary', {
+    tools: t.value('resume.countTools', { n: tree.tools.length }),
+    skills: t.value('resume.countSkills', { n: tree.specialist.length }),
+    subjects: t.value('resume.countSubjects', { n: tree.subjects.length }),
+  })
+})
 const restoreFailed = shallowRef(false)
 // Opened from "Credit or exemptions?" in the results header.
 const creditOpen = shallowRef(false)
@@ -178,12 +191,15 @@ async function onRestore(event: Event): Promise<void> {
           <ResultsEditor v-model="results" v-model:credit="credit" v-model:credit-open="creditOpen" :subjects="data.subjects" :options="options" />
         </section>
 
-        <!-- What the subjects done (or planned) add up to on a resume. -->
-        <section class="sec surface" aria-labelledby="sec-skilltree">
+        <!-- What the subjects done add up to on a resume, in one line; the resume tool has the rest. -->
+        <section class="sec surface skilltree" aria-labelledby="sec-skilltree">
           <header class="sec-head">
             <h2 id="sec-skilltree" class="sec-title">{{ t('skillTree.title') }}</h2>
+            <span class="sec-links">
+              <a class="sec-link" :href="link('tools/resume/')">{{ t('resume.open') }} →</a>
+            </span>
           </header>
-          <SkillTreeCard />
+          <p class="hint">{{ resumeSummary || t('skillTree.empty') }}</p>
         </section>
 
         <!-- Plan A/B: right above what each plan keeps for itself (strengths, interests, goal). -->
@@ -481,6 +497,11 @@ async function onRestore(event: Event): Promise<void> {
 
 .sec :deep(.seg) {
   max-width: 560px;
+}
+
+/* The resume card is a title and one line: kept close together. */
+.skilltree {
+  gap: var(--space-2);
 }
 
 .plans {

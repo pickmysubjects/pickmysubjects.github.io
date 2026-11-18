@@ -122,6 +122,7 @@ export const MENUS: MenuArea[] = [
       { key: 'calc.title', desc: 'menu.d.final', to: 'tools/final/', icon: Calculator },
       { key: 'tools.wam', desc: 'menu.d.wam', to: 'tools/wam/', icon: Gauge },
       { key: 'rev.title', desc: 'menu.d.revision', to: 'tools/revision/', icon: CalendarDays },
+      { key: 'tools.resume', desc: 'menu.d.skillTree', to: 'tools/resume/', icon: ListChecks },
     ],
     // Found by the site search: the tools page itself, and comparing saved subjects on the shortlist.
     searchOnly: [
@@ -159,7 +160,6 @@ export const MENUS: MenuArea[] = [
     ],
     // Sections of My record, not pages of their own: found by the site search, landing on their place.
     searchOnly: [
-      { key: 'skillTree.title', desc: 'menu.d.skillTree', to: 'record/#sec-skilltree', icon: ListChecks },
       { key: 'menu.backup', desc: 'menu.d.backup', to: 'record/#sec-backup', icon: Save },
       { key: 'menu.gradeShare', desc: 'menu.d.gradeShare', to: 'record/#share-title', icon: Share2 },
     ],

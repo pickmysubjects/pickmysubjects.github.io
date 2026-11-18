@@ -1,14 +1,10 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, toRef } from 'vue'
 import QuickAdd from '@/components/browse/QuickAdd.vue'
-import { CLUBS } from '@/content/clubs'
-import { suggestClubs } from '@/engine/clubs'
-import { passedCodes, standingOf } from '@/engine/recommend'
-import { buildSkillTree, employerSkills } from '@/engine/skillTree'
-import { skillPicks } from '@/engine/skillPicks'
+import { passedCodes } from '@/engine/recommend'
 import { link } from '@/composables/useView'
-import { useDataset, useOutcomes, useResume } from '@/composables/useDataset'
-import { usePlan } from '@/composables/usePlan'
+import { useDataset } from '@/composables/useDataset'
+import { useEmployerMatch } from '@/composables/useEmployerMatch'
 import { useProfile } from '@/composables/useProfile'
 import { useI18n } from '@/i18n'
 import { localTitle } from '@/i18n/localized'
@@ -21,32 +17,11 @@ import { localTitle } from '@/i18n/localized'
  */
 const props = defineProps<{ skills: readonly string[] }>()
 const { t, locale } = useI18n()
-const { data, course } = useDataset()
+const { data } = useDataset()
 const { profile } = useProfile()
-const plan = usePlan()
 
 const done = computed(() => passedCodes(profile.value.results, data.value.subjects))
-const planned = computed(() => plan.plan.value.terms.flatMap((term) => term.subjects))
-// Learning outcomes (in English) count too: they load with each subject's area.
-const outcomes = useOutcomes(done)
-const resumeOf = useResume(done)
-const rows = computed(() => employerSkills(props.skills, buildSkillTree(done.value, data.value, resumeOf), data.value, (c) => outcomes(c).map((o) => o.en)))
-const shown = computed(() => rows.value.filter((r) => r.codes.length).length)
-
-const standing = computed(() => standingOf(profile.value, data.value, planned.value))
-const picks = computed(() =>
-  Object.fromEntries(
-    rows.value
-      .filter((r) => !r.codes.length && !r.outsideClass)
-      .map((r) => [r.skill, skillPicks(r.skill, { data: data.value, course: course.value, done: done.value, planned: planned.value, standing: standing.value })]),
-  ),
-)
-const outside = computed(() => rows.value.filter((r) => r.outsideClass).map((r) => r.skill))
-const clubs = computed(() =>
-  outside.value.length
-    ? suggestClubs(CLUBS, { interests: profile.value.interests, course: plan.setupChosen.value ? course.value : undefined, codes: [...done.value, ...planned.value], data: data.value }, 3)
-    : [],
-)
+const { rows, shown, picks, clubs } = useEmployerMatch(toRef(props, 'skills'), done)
 const title = (c: string) => localTitle(data.value.subjects[c]!, locale.value) || data.value.subjects[c]!.title
 </script>
 
