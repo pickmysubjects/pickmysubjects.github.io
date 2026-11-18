@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { KEY_DATES } from '../src/utils/keyDates'
-import { mondayOf, nextKeyDates, semesterNow, semesterShape, taskTiming } from '../src/utils/semester'
+import { mondayOf, nextKeyDates, semesterNow, semesterShape } from '../src/utils/semester'
 
 describe('semester weeks from the key dates', () => {
   it('Semester 1 2027: twelve teaching weeks around a one-week break, then SWOT Vac and three exam weeks', () => {
@@ -74,10 +74,5 @@ describe('next key dates', () => {
     expect(next[0]).toMatchObject({ running: true, date: { kind: 'break' } })
     expect(next.map((n) => n.date.kind)).not.toContain('teaching')
     expect(next).toHaveLength(4)
-  })
-
-  it('only the exam has a known period', () => {
-    expect(taskTiming('exam')).toBe('exams')
-    expect(taskTiming('assignment')).toBe('semester')
   })
 })

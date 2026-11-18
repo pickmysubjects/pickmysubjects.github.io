@@ -9,6 +9,7 @@ import { link } from '@/composables/useView'
 import { useDataset } from '@/composables/useDataset'
 import { usePersisted } from '@/composables/usePersisted'
 import { usePhone } from '@/composables/usePhone'
+import { usePlan } from '@/composables/usePlan'
 import { useRated } from '@/composables/useRated'
 import { useSemester } from '@/composables/useSemester'
 import type { QuickStart } from '@/composables/useMyRatings'
@@ -17,6 +18,7 @@ import { localTitle } from '@/i18n/localized'
 import { summariseAssessment } from '@/utils/assessment'
 import { KEY_DATES, type KeyDate } from '@/utils/keyDates'
 import { nextKeyDates } from '@/utils/semester'
+import { subjectsIn } from '@/utils/whatsNext'
 import { dueSegments, numericRange, spanSegments, timingLabel, timingOrder } from '@/utils/taskTiming'
 import { RATINGS_FORM } from '@/config'
 import { isFormReady } from '@/utils/googleForm'
@@ -32,6 +34,7 @@ const { data } = useDataset()
 const phone = usePhone()
 const { rated, markRated } = useRated()
 const { today, now, subjects, day, range, when, termName, status } = useSemester()
+const plan = usePlan()
 
 const art = () => import('@/components/tools/art/ArtRevision.vue')
 
@@ -150,7 +153,7 @@ function actionFor(d: KeyDate): { to: string; label: string } {
       return { to: 'guide/enrolling/', label: t.value('guide.cat.enrolling.nav') }
     case 'orientation':
     case 'teaching':
-      return { to: 'guide/new-students/', label: t.value('guide.cat.new-students.nav') }
+      return { to: 'guide/semester/#first-week', label: t.value('guide.weekTitle') }
     default:
       return { to: 'guide/semester/', label: t.value('sem.guideLink') }
   }
@@ -182,11 +185,27 @@ const nextSem = computed(() => {
   if (n.phase === 'results' && n.next) return { name: termName(n.next.year, n.next.term), days: Math.round((Date.parse(n.next.teaching.start) - Date.parse(today.value)) / 86_400_000), start: n.next.teaching.start }
   return null
 })
+// Between semesters: what the plan already has in the semester coming up (planned only, not the record).
+const nextPlanned = computed(() => {
+  const n = now.value
+  const sem = n?.phase === 'before' ? n.sem : n?.phase === 'results' ? n.next : null
+  if (!sem) return []
+  return subjectsIn(sem.year, sem.term, plan.terms.value, [])
+    .filter((c) => c in data.value.subjects)
+    .map((code) => ({ code, title: localTitle(data.value.subjects[code]!, locale.value) || data.value.subjects[code]!.title }))
+})
 const nextSemLine = computed(() => {
   const s = nextSem.value
   if (!s) return ''
   const w = s.days > 14 ? t.value('sem.inWeeks', { n: Math.round(s.days / 7) }) : when(s.days, s.start)
   return t.value('sem.starts', { term: s.name, when: w })
+})
+
+// The rail's semester guide link: the first-weeks section until census is past, the whole page after.
+const guideTo = computed(() => {
+  const n = now.value
+  const early = n?.phase === 'before' || n?.phase === 'results' || (n?.phase === 'teach' && n.week <= 4)
+  return early ? 'guide/semester/#first-week' : 'guide/semester/'
 })
 
 // The week strip's caption: this week's dates, or the break after week n.
@@ -295,6 +314,14 @@ const caption = computed(() => {
         <section v-if="nextSem" class="surface card empty-card">
           <h2 class="card-title">{{ nextSemLine }}</h2>
           <p class="card-sub">{{ t('sem.beforeText') }}</p>
+          <template v-if="nextPlanned.length">
+            <h3 class="card-eyebrow planned-title">{{ t('sem.plannedTitle') }}<span class="pill">{{ t('sem.nextSemLabel') }}</span></h3>
+            <ul class="planned">
+              <li v-for="p in nextPlanned" :key="p.code">
+                <a class="planned-row" :href="link(`subject/${p.code}/`)"><span class="code">{{ p.code }}</span> {{ p.title }}</a>
+              </li>
+            </ul>
+          </template>
           <div class="row-actions">
             <a class="button button-accent" :href="link('plan/')">{{ t('sem.toPlanner') }}</a>
           </div>
@@ -330,7 +357,7 @@ const caption = computed(() => {
             <li><a class="tool" :href="link('tools/revision/')"><CalendarDays :size="18" aria-hidden="true" /><span>{{ t('sem.revision') }}</span></a></li>
             <li><a class="tool" :href="link('tools/wam/')"><Gauge :size="18" aria-hidden="true" /><span>{{ t('sem.wam') }}</span></a></li>
             <li>
-              <a class="tool" :href="link('guide/semester/')"><NotebookPen :size="18" aria-hidden="true" /><span>{{ t('sem.guideLink') }}<small>{{ t('sem.guideText') }}</small></span></a>
+              <a class="tool" :href="link(guideTo)"><NotebookPen :size="18" aria-hidden="true" /><span>{{ t('sem.guideLink') }}<small>{{ t('sem.guideText') }}</small></span></a>
             </li>
             <li>
               <a class="tool" :href="link('guide/life/')"><LifeBuoy :size="18" aria-hidden="true" /><span>{{ t('sem.supportLink') }}<small>{{ t('sem.supportText') }}</small></span></a>
@@ -444,6 +471,44 @@ const caption = computed(() => {
   font-weight: var(--fw-semibold);
   color: var(--accent);
   cursor: pointer;
+}
+
+.planned-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.planned-title .pill {
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+.planned {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.planned-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink);
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+
+.planned li:last-child .planned-row {
+  border-bottom: 0;
+}
+
+.planned-row:hover {
+  color: var(--accent);
 }
 
 .code {

@@ -166,7 +166,3 @@ export function nextKeyDates(dates: KeyDate[], today: string, max = 4): { date: 
     .slice(0, max)
 }
 
-/** What each assessment task's timing can honestly be said to be: only the exam has a known period. */
-export function taskTiming(kind: string): 'exams' | 'semester' {
-  return kind === 'exam' ? 'exams' : 'semester'
-}

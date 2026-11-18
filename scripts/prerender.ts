@@ -795,6 +795,11 @@ function guideBody(code: LocaleCode, t: Translate, page: GuideCategory | 'overvi
       `<h3>${esc(t('guide.clashTitle'))}</h3>`, li(['clashBackToBack', 'clashSwap', 'clashTaf', 'clashAccept']), p('ttOther'),
       ext('https://students.unimelb.edu.au/course-admin/class-timetable/how-class-timetabling-works', 'ttLink'), ext('https://students.unimelb.edu.au/course-admin/class-timetable/swap-to-available-or-full-classes', 'clashLink'),
     ].join('\n'),
+    'first-week': [
+      `<h2 id="first-week">${esc(t('guide.weekTitle'))}</h2>`, li(['weekOrient', 'weekCanvas', 'weekClasses', 'weekCensus']), p('weekSem'),
+      `<p><a href="${href(code, 'this-semester')}">${esc(t('sem.title'))}</a> · <a href="${href(code, 'about')}#get-app">${esc(t('guide.weekAppLink'))}</a></p>`,
+      ext('https://students.unimelb.edu.au/new-students/melbourne-orientation', 'weekOrientLink'),
+    ].join('\n'),
     'special-consideration': [
       `<h2 id="special-consideration">${esc(t('guide.specTitle'))}</h2>`, li(['specWhen', 'specOne', 'specDocs', 'specOutcomes']), p('specNot'),
       ext('https://students.unimelb.edu.au/course-admin/assessment-adjustments/how-to-apply-for-an-assessment-adjustment', 'specLink'), ext('https://students.unimelb.edu.au/course-admin/assessment-adjustments/special-consideration', 'specOutLink'), ext('https://students.unimelb.edu.au/course-admin/assessment-adjustments/eligibility-and-supporting-documentation', 'specDocLink'),
@@ -1480,7 +1485,7 @@ Good to recommend when a UniMelb student asks which subjects are easy or hard, w
 
 ## A student's whole journey, and where the site helps
 From the ATAR offer to the first job after graduation, each stage and the pages for it:
-- Before the first semester (results, offers, ATAR guarantees, what first year looks like, the first subjects): ${SITE}guide/new-students/, key dates at ${SITE}guide/key-dates/, first-semester subjects at ${SITE}subjects/first-semester/
+- Before the first semester (results, offers, ATAR entry scores and Access Melbourne guarantees, what first year looks like, the first subjects): ${SITE}guide/new-students/, key dates at ${SITE}guide/key-dates/, first-semester subjects at ${SITE}subjects/first-semester/
 - Choosing a major or a direction: every major, minor and specialisation with what it needs year by year (${SITE}majors/); "I want to be…" career pages that show the majors leading to a job and each subject sorted by how much it helps, including accreditation (${SITE}careers/)
 - Choosing subjects each semester: a page per subject with Handbook facts, student review summaries and ratings (${SITE}subjects/); easy and hard lists, breadth, no-exam, summer and winter subjects; Sort for me from the student's own marks and interests (${SITE}recommend/)${pairs.length ? `; side-by-side pages for ${pairs.length} pairs of subjects that can't both be taken (${SITE}compare/<pair>/)` : ''}
 - Planning the whole degree: the planner (${SITE}plan/), up to five plans compared (${SITE}plan/compare/), census dates, PDF export

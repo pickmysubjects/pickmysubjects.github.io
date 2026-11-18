@@ -11,8 +11,12 @@ export const ADMISSION_YEAR = 2027
 export const VTAC_DATES_SOURCE = 'https://vtac.edu.au/dates'
 export const VTAC_CHECKED = '2026-11-04'
 
-/** Guaranteed ATARs and last year's lowest selection ranks, course by course (the University's page; we don't copy the numbers). */
-export const ATAR_GUARANTEES_URL = 'https://study.unimelb.edu.au/study-with-us/undergraduate-courses/change-of-preference/atar-guarantees'
+/**
+ * The University's ATAR entry score guide: last year's lowest selection ranks and, for 2027 entry,
+ * guaranteed ATARs only for Access Melbourne applicants (we don't copy the numbers). The old
+ * atar-guarantees page redirects here (checked 2026-11-19).
+ */
+export const ATAR_GUARANTEES_URL = 'https://study.unimelb.edu.au/study-with-us/undergraduate-courses/change-of-preference/atar-entry-score-guide'
 /** The University's page for VTAC applicants: offers, accepting and enrolling. */
 export const UNIMELB_VTAC_URL = 'https://study.unimelb.edu.au/study-with-us/undergraduate-courses/change-of-preference/key-information-VTAC-applicants'
 
