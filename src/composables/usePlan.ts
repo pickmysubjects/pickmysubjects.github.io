@@ -107,7 +107,8 @@ export function usePlan() {
     const id = activePlan(book)!.id
     const plans = book.plans.map((p) => {
       if (p.id !== id) return p
-      const { kept: _old, ...meta } = p
+      // countsAs lives in the body: dropped here too, or an override the student removed would survive.
+      const { kept: _old, countsAs: _counts, ...meta } = p
       return { ...meta, ...planBody(body), ...(kept && Object.keys(kept).length ? { kept } : {}) }
     })
     books.value = { ...books.value, [name.value]: { active: id, plans } }
