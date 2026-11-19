@@ -285,6 +285,25 @@ export function usePlan() {
     })
   }
 
+  /** How a subject counts in this plan: a category, or undefined to go back to the Handbook's. */
+  function setCountsAs(code: string, category: string | undefined): void {
+    save((s) => {
+      const next = { ...(s.countsAs ?? {}) }
+      if (category) next[code] = category
+      else delete next[code]
+      if (Object.keys(next).length) s.countsAs = next
+      else delete s.countsAs
+      return s
+    })
+  }
+
+  function clearCountsAs(): void {
+    save((s) => {
+      delete s.countsAs
+      return s
+    })
+  }
+
   function startEmpty(): void {
     const { setup } = state.value
     const start = upcomingStart(planStart({ year: setup.startYear, period: setup.startPeriod }, record(), startFill()))
