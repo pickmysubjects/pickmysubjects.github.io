@@ -350,7 +350,9 @@ watch(() => props.today, () => void nextTick(centreNow))
 
 .slim .cell {
   display: block;
-  flex: 1 0 auto;
+  /* Basis 0, not the cell's full width: every week shares the bar instead of each taking all of it. */
+  flex: 1 1 0;
+  width: auto;
   min-width: 0;
   min-height: 0;
   height: 6px;
