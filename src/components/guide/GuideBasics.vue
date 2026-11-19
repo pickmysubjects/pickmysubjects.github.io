@@ -26,6 +26,7 @@ const { wam } = useProfile()
     </ol>
     <GuideSee to="enrol" />
     <p><TermText :text="t('guide.breadthText')" /></p>
+    <p><TermText :text="t('guide.countsAsText')" /></p>
     <GuideCallout>
       <p><TermText :text="t('guide.findShortlist')" /></p>
       <p>

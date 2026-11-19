@@ -60,6 +60,10 @@ const props = defineProps<{
   term?: { year: number; period: Period }
   /** The plan's semesters, to tell which subjects this one opens and which are placed too early. */
   terms?: readonly PlanTerm[]
+  /** Categories the student may say this subject counts as in this plan (none: not offered). */
+  countsChoices?: string[]
+  /** The student's own choice of how it counts, if they changed it. */
+  countsAs?: string
 }>()
 const emit = defineEmits<{
   close: []
@@ -70,6 +74,7 @@ const emit = defineEmits<{
   swapIt: []
   moveIt: []
   removeIt: []
+  countsAs: [category: string | undefined]
 }>()
 // Hand over to the board (its picker or move list opens in this window's place), then close.
 function act(e: 'swapIt' | 'moveIt' | 'removeIt'): void {
@@ -107,7 +112,7 @@ onBeforeUnmount(() => {
 const periods = computed(() => (props.subject ? periodsFor(props.subject, props.year) : []))
 const { facts, handbookFor } = useDataYear()
 const factsFrom = computed(() => (props.subject ? facts(props.subject, props.year) : null))
-const category = computed(() => categoryTag(t.value, props.subject?.categories[props.course]))
+const category = computed(() => categoryTag(t.value, props.countsAs ?? props.subject?.categories[props.course]))
 const runs = computed(() => {
   const s = props.subject
   if (!s) return ''
@@ -322,6 +327,16 @@ function onClick(event: MouseEvent): void {
             <strong>{{ where(code) || t('peek.notInPlan') }}</strong>
             <span v-if="notOfferedThen" class="peek-warn"><TriangleAlert :size="15" aria-hidden="true" />{{ t('peek.notOfferedThen') }}</span>
           </p>
+
+          <!-- How it counts for the degree: the Handbook's, or the student's faculty-approved exception. -->
+          <div v-if="planned && countsChoices?.length" class="peek-counts">
+            <h4 class="peek-sub">{{ t('countsAs.title') }}</h4>
+            <div class="peek-counts-chips" role="group" :aria-label="t('countsAs.title')">
+              <button type="button" class="chip" :aria-pressed="!countsAs" @click="emit('countsAs', undefined)">{{ t('countsAs.handbook') }}</button>
+              <button v-for="c in countsChoices" :key="c" type="button" class="chip" :aria-pressed="countsAs === c" @click="emit('countsAs', c)">{{ categoryTag(t, c) }}</button>
+            </div>
+            <p class="muted peek-counts-help">{{ t('countsAs.help') }}</p>
+          </div>
 
           <div class="peek-links">
             <div class="peek-col">
@@ -725,6 +740,22 @@ function onClick(event: MouseEvent): void {
   align-content: start;
   gap: 8px;
   min-width: 0;
+}
+
+.peek-counts {
+  display: grid;
+  gap: 8px;
+}
+
+.peek-counts-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.peek-counts-help {
+  margin: 0;
+  font-size: 0.875rem;
 }
 
 .peek-sub {

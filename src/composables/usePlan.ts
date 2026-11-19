@@ -71,6 +71,7 @@ export function planFor(state: PlanState, profile: Profile, data: Dataset): Plan
     recordedLoad: recordedLoads(profile.results, data),
     marks: marksForConditions(profile.results, data),
     wam: exactWam(profile.results, data),
+    ...(state.countsAs && Object.keys(state.countsAs).length ? { countsAs: state.countsAs } : {}),
   }
 }
 
@@ -252,6 +253,7 @@ export function usePlan() {
       startYear: start.year,
       startPeriod: start.period,
       ...(setup.load !== undefined ? { load: setup.load } : {}),
+      ...(state.value.countsAs ? { countsAs: state.value.countsAs } : {}),
       keepOpen: !setup.major && setup.field
         ? data.value.components.filter((c) => c.kind === 'major' && c.course === componentCourse(data.value, setup.course) && majorGroupOf(c.id) === setup.field && (c.closedFrom === undefined || start.year < c.closedFrom)).map((c) => c.id)
         : undefined,
@@ -260,6 +262,25 @@ export function usePlan() {
     const terms = result.plan.terms.map((x) => (same(x) ? cloneJson(same(x)!) : x))
     put({ ...cloneJson(planBody(state.value)), terms, notes: result.notes, unplaced: result.unplaced })
     trackEvent('plan-generate')
+  }
+
+  /** How a subject counts in this plan: a category, or undefined to go back to the Handbook's. */
+  function setCountsAs(code: string, category: string | undefined): void {
+    save((s) => {
+      const next = { ...(s.countsAs ?? {}) }
+      if (category) next[code] = category
+      else delete next[code]
+      if (Object.keys(next).length) s.countsAs = next
+      else delete s.countsAs
+      return s
+    })
+  }
+
+  function clearCountsAs(): void {
+    save((s) => {
+      delete s.countsAs
+      return s
+    })
   }
 
   function startEmpty(): void {
@@ -450,6 +471,7 @@ export function usePlan() {
     terms: computed(() => state.value.terms),
     notes: computed(() => state.value.notes),
     unplaced: computed(() => state.value.unplaced),
+    countsAs: computed(() => state.value.countsAs ?? {}),
     plan,
     course,
     load,
@@ -463,6 +485,8 @@ export function usePlan() {
     updateSetup,
     generate,
     startEmpty,
+    setCountsAs,
+    clearCountsAs,
     addSubject,
     addSubjectAt,
     removeSubject,

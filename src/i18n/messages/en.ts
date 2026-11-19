@@ -134,6 +134,7 @@ export const en = {
   period: { summer: 'Summer', 'semester-1': 'Semester 1', winter: 'Winter', 'semester-2': 'Semester 2' },
   periodShort: { summer: 'Summer', 'semester-1': 'Sem 1', winter: 'Winter', 'semester-2': 'Sem 2' },
   termFull: '{period} {year}',
+  countsAs: { title: "Counts as", handbook: "As in the Handbook", help: "Use this only if your faculty approved it; keep their written approval.", changed: "You changed how subjects count in this plan ({n}).", undo: "Undo all", changedShort: "changed by you", cardLabel: "Counts as {category} (changed by you)" },
   category: { science: 'science', commerce: 'commerce', arts: 'arts', design: 'design', music: 'music', 'fine-arts': 'fine arts', agriculture: 'agriculture', 'oral-health': 'oral health', breadth: 'breadth', core: 'core' },
   plan: {
     saveImage: "Save as image",
@@ -2002,6 +2003,7 @@ export const en = {
     firstStep3: "Enrol in my.unimelb, then choose your class times in MyTimetable.",
     firstStep4: "Don’t like a subject? You can still drop it for free before the census date. International students, check with Stop 1 first.",
     breadthText: "Breadth means subjects from outside your degree’s own area, such as commerce or arts for a science student. Each subject’s Handbook page lists the degrees that may take it as breadth. All six degrees here need at least 50 points of breadth (4 subjects). Level-1 breadth counts up to 25 points in Science and up to 37.5 points in Arts, Biomedicine, Commerce and Design; Commerce also counts no more than 62.5 points of breadth in all.",
+    countsAsText: "If your faculty approves an exception (say, a subject counting as breadth), open the subject in your plan and pick Counts as. Keep their written approval.",
     easyHardText: "Wondering which subjects students find easier or harder? See the easy and hard subject lists, each with its reasons.",
     firstFind: "Find first-semester subjects",
     firstPlan: "Open the Plan page",

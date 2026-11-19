@@ -19,7 +19,7 @@ import Interp from '@/components/Interp.vue'
 import PlanSwitcher from '@/components/plans/PlanSwitcher.vue'
 import PlanHero from '@/components/planner/PlanHero.vue'
 import SubjectSection from '@/components/subject/SubjectSection.vue'
-import { compareQuery, computeWam, degreeCourses, assumedOfferings, creditPoints, findDiploma, careerGap, careerGoal, careerName, heldMajorIds, informalPicks, isFail, isPassedDuplicate, passedCodes, planProblems as countedProblems, planComponentIds, planRoles, planRules, recordedLoads, termKey, termLoad, type Issue, type PlanTerm } from '@/engine'
+import { compareQuery, computeWam, degreeCourses, assumedOfferings, creditPoints, findDiploma, careerGap, careerGoal, careerName, heldMajorIds, informalPicks, isFail, isPassedDuplicate, passedCodes, planProblems as countedProblems, planComponentIds, countsAsChoices, planRoles, planRules, recordedLoads, termKey, termLoad, type Issue, type PlanTerm } from '@/engine'
 import { diplomaTitle } from '@/composables/usePlanCompare'
 import { Plus } from 'lucide-vue-next'
 import { usePhone } from '@/composables/usePhone'
@@ -255,7 +255,10 @@ const planProblems = computed(() => {
   }
   return out
 })
-const hasNotes = computed(() => planProblems.value.length > 0 || noteCount.value > 0)
+// Subjects whose category the student changed in this plan (faculty-approved exceptions).
+const countsChanged = computed(() => Object.keys(plan.countsAs.value).length)
+const countsChoices = computed(() => countsAsChoices(plan.course.value))
+const hasNotes = computed(() => countsChanged.value > 0 || planProblems.value.length > 0 || noteCount.value > 0)
 const hasConfirmable = computed(() => problemTexts.value.some((p) => p.confirm))
 // Counted as the list below shows them: one condition shared by several subjects (MAST10006 /
 // MAST10007) is one line there, so one here.
@@ -678,6 +681,12 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !viewingShar
                   <InfoTip v-if="p.confirm" :text="t('plan.confirmHint')" />
                 </li>
               </ul>
+              <ul v-if="countsChanged" class="status-list">
+                <li class="status-item counts-item">
+                  <span class="status-text">{{ t('countsAs.changed', { n: countsChanged }) }}</span>
+                  <button class="button button-quiet confirm" type="button" @click="plan.clearCountsAs()">{{ t('countsAs.undo') }}</button>
+                </li>
+              </ul>
               <p v-for="u in unavoidable" :key="u" class="started">{{ u }}</p>
               <p v-if="extraTermsOnVisa" class="started">{{ t('plan.extraTermsVisa') }}</p>
               <ul v-if="failed.length" class="failed">
@@ -869,6 +878,9 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !viewingShar
         :where-of="whereOf"
         :term="peekTerm?.term"
         :terms="plan.terms.value"
+        :counts-choices="countsChoices"
+        :counts-as="plan.countsAs.value[peek]"
+        @counts-as="(c) => plan.setCountsAs(peek as string, c)"
       />
     </template>
     <PlanPrint
@@ -1038,6 +1050,15 @@ watch(pendingAdd, (code) => { if (code && plan.setupChosen.value && !viewingShar
 /* In the hero's foot, under its hairline. */
 .rules-strip > .status-body {
   padding: 14px 18px 16px;
+}
+
+.status-item.counts-item {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.status-item.counts-item > .confirm {
+  grid-column: auto;
+  width: auto;
 }
 
 .status-list {

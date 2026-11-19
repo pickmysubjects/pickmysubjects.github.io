@@ -31,6 +31,12 @@ function loaded(): Dataset {
   return real
 }
 
+/** The open plan's own changes to how subjects count (a category by subject code), for the cards. */
+export function useCountsAs() {
+  const real = loaded()
+  return computed<Record<string, string>>(() => activePlan(books.value[real.name])?.countsAs ?? {})
+}
+
 export function useDataset() {
   const real = loaded()
   // Seen as a student of the planned course (or the default one) sees it.

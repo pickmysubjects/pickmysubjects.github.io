@@ -1,7 +1,7 @@
 import { forCourse } from './forCourse'
 import { creditCodes, creditPoints, isCreditCode, withCredit } from './credit'
 import { offeredIn, periodsFor, termKey } from './availability'
-import { capExempt, categoryOf, matches, pointRules, sumPoints, withinCaps, type PointsRule, disciplineOf, checkCourse, componentNeeds, diplomaSplit, diplomaStream, findComponent, findCourse, findDiploma, inDiploma, heldMajorIds, majorTitles, minorTitles, planComponentIds, sharesAllowed, withBarredBreadth } from './courseRules'
+import { capExempt, categoryOf, matches, pointRules, sumPoints, withinCaps, type PointsRule, disciplineOf, checkCourse, componentNeeds, diplomaSplit, diplomaStream, findComponent, findCourse, findDiploma, inDiploma, heldMajorIds, majorTitles, minorTitles, planComponentIds, sharesAllowed, withBarredBreadth, withCountsAs } from './courseRules'
 import { careerGoal } from './careerGoal'
 import { evaluateField, referencedSubjects, type EvalContext, type Tri } from './expr'
 import type { Note, Params, Plan, PlanTerm } from './plan'
@@ -43,6 +43,8 @@ export interface GenerateInput {
   keepOpen?: string[]
   /** Internal: also offer summer and winter terms, for chain subjects that would otherwise fall a semester behind. */
   useShortTerms?: boolean
+  /** The student's own changes to how subjects count (faculty-approved exceptions), by subject code. */
+  countsAs?: Record<string, string>
 }
 
 export interface GenerateResult {
@@ -104,7 +106,7 @@ function generateFrom(raw: GenerateInput): GenerateResult {
   // Periods as this course's students see them (breadth-only periods for breadth subjects).
   // A subject the student's major won't let count as breadth is never picked to fill breadth.
   // Credit from elsewhere stands in as completed subjects, so every sum and cap counts it.
-  const input = { ...raw, data: withDiplomaCredit(withCredit(withBarredBreadth(forCourse(raw.data, raw.course), raw.course, planComponentIds(raw)), raw.profile.credit, raw.course), raw) }
+  const input = { ...raw, data: withDiplomaCredit(withCredit(withCountsAs(withBarredBreadth(forCourse(raw.data, raw.course), raw.course, planComponentIds(raw)), raw.course, raw.countsAs), raw.profile.credit, raw.course), raw) }
   // Unplaced subjects weigh most; then course rules the plan fails (e.g. breadth
   // squeezed out by a heavy major + specialisation).
   const shortfall = (r: GenerateResult) =>

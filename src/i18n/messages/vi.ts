@@ -129,6 +129,7 @@ export const vi: Messages = {
   period: { summer: 'Học kỳ hè', 'semester-1': 'Học kỳ 1', winter: 'Học kỳ đông', 'semester-2': 'Học kỳ 2' },
   periodShort: { summer: 'Hè', 'semester-1': 'HK1', winter: 'Đông', 'semester-2': 'HK2' },
   termFull: '{period} năm {year}',
+  countsAs: { title: "Tính là", handbook: "Theo Handbook", help: "Chỉ dùng khi khoa đã duyệt; hãy giữ văn bản duyệt.", changed: "Bạn đã đổi cách tính {n} môn trong kế hoạch này.", undo: "Hoàn tác tất cả", changedShort: "bạn đã đổi", cardLabel: "Tính là {category} (bạn đã đổi)" },
   category: { science: 'khoa học', commerce: 'kinh doanh', arts: 'nhân văn', design: 'thiết kế', music: 'âm nhạc', 'fine-arts': 'nghệ thuật', agriculture: 'nông nghiệp', 'oral-health': 'sức khỏe răng miệng', breadth: 'breadth (ngoài ngành)', core: 'bắt buộc' },
   plan: {
     saveImage: "Lưu thành ảnh",
@@ -1996,6 +1997,7 @@ export const vi: Messages = {
     firstStep3: "Đăng ký môn (enrol) trên my.unimelb, rồi chọn giờ học trong MyTimetable.",
     firstStep4: "Học thấy không hợp? Trước census date vẫn rút được miễn phí. Sinh viên quốc tế nên hỏi Stop 1 trước.",
     breadthText: "Breadth là môn ngoài lĩnh vực bằng của bạn, ví dụ học khoa học thì chọn kinh doanh hoặc xã hội. Trang Handbook của mỗi môn ghi rõ ngành nào được học nó như Breadth. Cả sáu ngành ở đây đều cần ít nhất 50 tín chỉ Breadth (4 môn). Breadth level 1 được tính tối đa 25 tín chỉ với Science và 37.5 tín chỉ với Arts, Biomedicine, Commerce và Design; Commerce còn tính tối đa 62.5 tín chỉ Breadth tổng cộng.",
+    countsAsText: "Nếu khoa duyệt một ngoại lệ (ví dụ một môn được tính là breadth), hãy mở môn đó trong kế hoạch và chọn Tính là. Giữ lại văn bản duyệt.",
     easyHardText: "Muốn biết môn nào sinh viên thấy dễ hay khó? Xem danh sách môn dễ và môn khó, có ghi lý do.",
     firstFind: "Tìm môn cho học kỳ đầu",
     firstPlan: "Mở trang Kế hoạch",

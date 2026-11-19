@@ -35,6 +35,8 @@ export interface PlanState {
   terms: PlanTerm[]
   notes: Note[]
   unplaced: { code: string; reason: string; reasonKey: string }[]
+  /** How the student says a subject counts in this plan (a category, by subject code): a faculty-approved exception. */
+  countsAs?: Record<string, string>
 }
 
 /** One of a student's plans (Plan A, Plan B…). The record is shared; this is only the plan. */

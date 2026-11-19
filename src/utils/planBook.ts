@@ -13,7 +13,7 @@ const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
 /** The plan's own content, without its name or id. */
 export function planBody(p: PlanState): PlanState {
-  return { setup: p.setup, terms: p.terms, notes: p.notes, unplaced: p.unplaced }
+  return { setup: p.setup, terms: p.terms, notes: p.notes, unplaced: p.unplaced, ...(p.countsAs && Object.keys(p.countsAs).length ? { countsAs: p.countsAs } : {}) }
 }
 
 function freshId(book: PlanBook): string {
