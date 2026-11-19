@@ -21,6 +21,24 @@ export interface SiteRelease {
 
 export const SITE_RELEASES: SiteRelease[] = [
   {
+    version: '1.0.3',
+    date: "2026-11-19",
+    links: [['plan/']],
+    points: [
+      {
+        en: "Got a faculty-approved exception? In your plan, you can now change whether a subject counts as breadth or as your degree's own subject.",
+        'zh-CN': "学院批准过例外？现在可以在计划里改一门课算 breadth 还是本学位的课。",
+        'zh-TW': "學院批准過例外？現在可以在計畫裡改一門課算 breadth 還是本學位的課。",
+        ja: "学部に例外を認められたら、プランで科目をbreadthか学位の科目か切り替えられます。",
+        ko: "학부에서 예외를 승인받았다면, 계획에서 과목을 breadth나 학위 과목으로 바꿀 수 있어요.",
+        vi: "Được khoa duyệt ngoại lệ? Giờ bạn có thể đổi một môn trong kế hoạch sang breadth hoặc môn của ngành.",
+        ms: "Ada pengecualian yang diluluskan fakulti? Kini anda boleh tukar sama ada subjek dikira sebagai breadth atau subjek ijazah anda.",
+        id: "Punya pengecualian dari fakultas? Kini kamu bisa ubah apakah mata kuliah dihitung sebagai breadth atau mata kuliah gelar.",
+        hi: "फ़ैकल्टी ने छूट दी है? अब प्लान में विषय को breadth या अपनी डिग्री का विषय गिनवा सकते हैं।",
+      },
+    ],
+  },
+  {
     version: '1.0.2',
     date: "2026-11-18",
     links: [['subjects/'], ['tools/resume/']],
