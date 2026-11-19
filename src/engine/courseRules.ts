@@ -214,6 +214,34 @@ export function withBarredBreadth(data: Dataset, course: string, ids: readonly (
   return view
 }
 
+/**
+ * The categories a student may move one of their subjects into for this course: the ones its
+ * rules sort subjects by. None when the course doesn't sort subjects into categories.
+ */
+export function countsAsChoices(course: Course | undefined): string[] {
+  if (!course) return []
+  const used = new Set<string>(course.categories)
+  for (const r of course.rules) if (r.kind === 'points' && r.category) used.add(r.category)
+  return [...used].filter((c) => c !== 'core' && c !== 'diploma-only')
+}
+
+/**
+ * The dataset with the student's own changes to how subjects count (an exception their faculty
+ * approved): each named subject takes that category in this course. The change wins over the
+ * Handbook and over a major's breadth bar.
+ */
+export function withCountsAs(data: Dataset, course: string, countsAs: Readonly<Record<string, string>> | undefined): Dataset {
+  if (!countsAs) return data
+  const entries = Object.entries(countsAs).filter(([code, cat]) => data.subjects[code] && data.subjects[code]!.categories[course] !== cat)
+  if (!entries.length) return data
+  const subjects = { ...data.subjects }
+  for (const [code, cat] of entries) {
+    const s = subjects[code]!
+    subjects[code] = { ...s, categories: { ...s.categories, [course]: cat as Subject['categories'][string] } }
+  }
+  return { ...data, subjects }
+}
+
 export function categoryOf(subject: Subject, course: string): string | undefined {
   return subject.categories[course]
 }
@@ -287,7 +315,7 @@ function checkBachelor(plan: Plan, given: Dataset): CourseCheck {
   // Each subject once, even if it's both completed and planned again (counted twice otherwise).
   const codes = [...new Set([...plan.completed, ...credit, ...plan.terms.flatMap((t) => t.subjects)])]
   const barred = barredBreadth(given, plan.course, planComponentIds(plan))
-  const data = withCredit(withBarredBreadth(given, plan.course, planComponentIds(plan)), plan.credit, plan.course)
+  const data = withCredit(withCountsAs(withBarredBreadth(given, plan.course, planComponentIds(plan)), plan.course, plan.countsAs), plan.credit, plan.course)
   const known = codes.map((c) => data.subjects[c]).filter((s): s is Subject => s !== undefined)
   const ctx: RuleCtx = { plan: credit.length ? { ...plan, completed: [...plan.completed, ...credit] } : plan, data, course, known, codes, blocked: new Map(), contested: new Map() }
   allocate(ctx)

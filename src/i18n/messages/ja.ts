@@ -130,6 +130,7 @@ export const ja: Messages = {
   period: { summer: '夏学期', 'semester-1': '第1セメスター', winter: '冬学期', 'semester-2': '第2セメスター' },
   periodShort: { summer: '夏', 'semester-1': 'S1', winter: '冬', 'semester-2': 'S2' },
   termFull: '{year}年 {period}',
+  countsAs: { title: "どの枠で数えるか", handbook: "Handbook どおり", help: "学部の承認がある時だけ使い、書面の承認を保管してください。", changed: "{n} 科目の数え方を変更しました。", undo: "すべて元に戻す", changedShort: "自分で変更", cardLabel: "{category}として数える（自分で変更）" },
   category: { science: '理系科目', commerce: '商学系科目', arts: '文系科目', design: 'デザイン系科目', music: '音楽系科目', 'fine-arts': '芸術系科目', agriculture: '農学系科目', 'oral-health': '口腔保健系科目', breadth: 'Breadth（専攻外科目）', core: '必修' },
   plan: {
     saveImage: "画像で保存",
@@ -2031,6 +2032,7 @@ export const ja: Messages = {
     firstStep3: "my.unimelb で履修登録（enrol）してから、MyTimetable で授業の時間を選ぶ。",
     firstStep4: "合わないと思ったら、census date までは無料で取り消せます。留学生は先に Stop 1 に相談してください。",
     breadthText: "Breadth は自分の学位の分野外の科目です（理学士なら商学や文系など）。どの学位が Breadth として取れるかは各科目の Handbook ページに載っています。ここにある 6 つの学位はどれも Breadth が 50 ポイント（4 科目）以上必要です。レベル 1 の Breadth は理学士で 25 ポイントまで、文学士・生物医学士・商学士・デザイン学士で 37.5 ポイントまで。商学士は Breadth 全体でも 62.5 ポイントまでです。",
+    countsAsText: "学部が例外を認めた場合（ある科目を Breadth として数えるなど）は、プランでその科目を開き「どの枠で数えるか」を選びます。書面の承認は保管しておきましょう。",
     easyHardText: "どの科目が取りやすく、どれが難しいと言われているかは、取りやすい科目・難しい科目のランキングで理由と一緒に見られます。",
     firstFind: "1学期目に取れる科目を探す",
     firstPlan: "プランを開く",

@@ -81,6 +81,17 @@ export function cleanProfiles(x: unknown): Record<string, Profile> {
 }
 
 /** Plans whose setup or terms can't be read are dropped; the student builds a new one. */
+// Categories a subject can be said to count as (the schema's, without the internal ones).
+const COUNTS_AS = new Set(['science', 'commerce', 'arts', 'design', 'music', 'fine-arts', 'agriculture', 'oral-health', 'breadth'])
+
+/** A plan's own changes to how subjects count: subject code to a known category; anything else is dropped. */
+function cleanCountsAs(x: unknown): { countsAs?: Record<string, string> } {
+  if (!isObject(x)) return {}
+  const out: Record<string, string> = {}
+  for (const [code, cat] of Object.entries(x)) if (/^[A-Z]{4}\d{5}$/.test(code) && typeof cat === 'string' && COUNTS_AS.has(cat)) out[code] = cat
+  return Object.keys(out).length ? { countsAs: out } : {}
+}
+
 function cleanState(v: unknown): PlanState | null {
   if (!isObject(v) || !isObject(v.setup) || typeof v.setup.course !== 'string' || !Array.isArray(v.terms)) return null
   const terms = v.terms
@@ -109,6 +120,7 @@ function cleanState(v: unknown): PlanState | null {
     // Notes and unplaced subjects are only shown; one that isn't the right shape is left out.
     notes: Array.isArray(v.notes) ? v.notes.filter((n) => isObject(n) && typeof n.key === 'string' && typeof n.text === 'string') : [],
     unplaced: Array.isArray(v.unplaced) ? v.unplaced.filter((u) => isObject(u) && typeof u.code === 'string' && typeof u.reasonKey === 'string') : [],
+    ...cleanCountsAs(v.countsAs),
   }
 }
 

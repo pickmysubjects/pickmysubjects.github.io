@@ -130,6 +130,7 @@ export const id: Messages = {
   period: { summer: 'Semester musim panas', 'semester-1': 'Semester 1', winter: 'Semester musim dingin', 'semester-2': 'Semester 2' },
   periodShort: { summer: 'Musim panas', 'semester-1': 'Sem 1', winter: 'Musim dingin', 'semester-2': 'Sem 2' },
   termFull: '{period} {year}',
+  countsAs: { title: "Dihitung sebagai", handbook: "Sesuai Handbook", help: "Pakai hanya jika fakultas menyetujuinya; simpan persetujuan tertulisnya.", changed: "Kamu mengubah cara {n} mata kuliah dihitung di rencana ini.", undo: "Batalkan semua", changedShort: "diubah olehmu", cardLabel: "Dihitung sebagai {category} (diubah olehmu)" },
   category: { science: 'sains', commerce: 'bisnis', arts: 'humaniora', design: 'desain', music: 'musik', 'fine-arts': 'seni', agriculture: 'pertanian', 'oral-health': 'kesehatan gigi dan mulut', breadth: 'breadth', core: 'inti' },
   plan: {
     saveImage: "Simpan sebagai gambar",
@@ -2031,6 +2032,7 @@ export const id: Messages = {
     firstStep3: "Enrol di my.unimelb, lalu pilih jam kelas di MyTimetable.",
     firstStep4: "Ternyata tidak cocok? Sebelum census date kamu masih bisa membatalkannya gratis. Mahasiswa internasional, tanya Stop 1 dulu.",
     breadthText: "Breadth adalah mata kuliah di luar bidang gelarmu, misalnya bisnis atau humaniora untuk mahasiswa sains. Halaman Handbook tiap mata kuliah mencantumkan gelar mana yang boleh mengambilnya sebagai breadth. Keenam gelar di sini butuh minimal 50 poin breadth (4 mata kuliah). Breadth level 1 dihitung maksimal 25 poin di Science dan 37,5 poin di Arts, Biomedicine, Commerce dan Design; Commerce juga menghitung maksimal 62,5 poin breadth secara total.",
+    countsAsText: "Kalau fakultas menyetujui pengecualian (misalnya satu mata kuliah dihitung sebagai breadth), buka mata kuliah itu di rencanamu dan pilih Dihitung sebagai. Simpan persetujuan tertulisnya.",
     easyHardText: "Penasaran mata kuliah mana yang dianggap mudah atau sulit? Lihat daftar mata kuliah mudah dan sulit, lengkap dengan alasannya.",
     firstFind: "Cari mata kuliah semester pertama",
     firstPlan: "Buka halaman Rencana",

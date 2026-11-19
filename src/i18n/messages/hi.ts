@@ -130,6 +130,7 @@ export const hi: Messages = {
   period: { summer: 'समर टर्म', 'semester-1': 'सेमेस्टर 1', winter: 'विंटर टर्म', 'semester-2': 'सेमेस्टर 2' },
   periodShort: { summer: 'समर', 'semester-1': 'सेम 1', winter: 'विंटर', 'semester-2': 'सेम 2' },
   termFull: '{period} {year}',
+  countsAs: { title: "किसमें गिना जाए", handbook: "Handbook के अनुसार", help: "इसे तभी इस्तेमाल करें जब फ़ैकल्टी ने मंज़ूरी दी हो; लिखित मंज़ूरी संभालकर रखें।", changed: "आपने इस प्लान में {n} सब्जेक्ट की गिनती बदली है।", undo: "सब पहले जैसा करें", changedShort: "आपने बदला", cardLabel: "{category} में गिना गया (आपने बदला)" },
   category: { science: 'साइंस', commerce: 'कॉमर्स', arts: 'आर्ट्स', design: 'डिज़ाइन', music: 'संगीत', 'fine-arts': 'ललित कला', agriculture: 'कृषि', 'oral-health': 'ओरल हेल्थ', breadth: 'Breadth', core: 'अनिवार्य' },
   plan: {
     saveImage: "इमेज के रूप में सेव करें",
@@ -2031,6 +2032,7 @@ export const hi: Messages = {
     firstStep3: "my.unimelb में एनरोल करें, फिर MyTimetable में क्लास का समय चुनें।",
     firstStep4: "सब्जेक्ट पसंद नहीं आया? census date से पहले मुफ़्त में छोड़ सकते हैं। इंटरनेशनल स्टूडेंट पहले Stop 1 से पूछें।",
     breadthText: "Breadth का मतलब है आपकी डिग्री के क्षेत्र के बाहर के सब्जेक्ट, जैसे साइंस वालों के लिए कॉमर्स या आर्ट्स। हर सब्जेक्ट के Handbook पेज पर लिखा होता है कि कौन सी डिग्री उसे breadth के रूप में ले सकती है। यहाँ की छहों डिग्रियों में कम से कम 50 पॉइंट (4 सब्जेक्ट) breadth चाहिए। लेवल 1 breadth Science में 25 पॉइंट तक और Arts, Biomedicine, Commerce व Design में 37.5 पॉइंट तक गिनी जाती है; Commerce में कुल breadth भी 62.5 पॉइंट तक ही गिनी जाती है।",
+    countsAsText: "अगर फ़ैकल्टी ने कोई छूट मंज़ूर की है (जैसे किसी सब्जेक्ट को breadth में गिनना), तो प्लान में वह सब्जेक्ट खोलें और 'किसमें गिना जाए' चुनें। लिखित मंज़ूरी संभालकर रखें।",
     easyHardText: "कौन से सब्जेक्ट स्टूडेंट्स को आसान या कठिन लगते हैं, यह जानना है? आसान और कठिन सब्जेक्ट की लिस्ट वजहों के साथ देखें।",
     firstFind: "पहले सेमेस्टर के सब्जेक्ट खोजें",
     firstPlan: "प्लान पेज खोलें",

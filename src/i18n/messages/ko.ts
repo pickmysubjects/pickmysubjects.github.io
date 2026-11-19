@@ -130,6 +130,7 @@ export const ko: Messages = {
   period: { summer: '여름 학기', 'semester-1': '1학기', winter: '겨울 학기', 'semester-2': '2학기' },
   periodShort: { summer: '여름', 'semester-1': 'S1', winter: '겨울', 'semester-2': 'S2' },
   termFull: '{year}년 {period}',
+  countsAs: { title: "인정 구분", handbook: "Handbook대로", help: "학부 승인을 받았을 때만 쓰고, 서면 승인을 보관하세요.", changed: "{n}과목의 인정 구분을 바꿨어요.", undo: "모두 되돌리기", changedShort: "직접 변경", cardLabel: "{category}(으)로 인정 (직접 변경)" },
   category: { science: '이학', commerce: '상경', arts: '인문', design: '디자인', music: '음악', 'fine-arts': '예술', agriculture: '농업', 'oral-health': '구강보건', breadth: '교양(Breadth)', core: '필수' },
   plan: {
     saveImage: "이미지로 저장",
@@ -2031,6 +2032,7 @@ export const ko: Messages = {
     firstStep3: "my.unimelb에서 수강신청(enrol)을 하고, MyTimetable에서 수업 시간을 고르세요.",
     firstStep4: "들어보니 별로라면 census date 전까지는 무료로 취소할 수 있어요. 유학생은 먼저 Stop 1에 물어보세요.",
     breadthText: "Breadth는 내 학위 분야 밖의 과목이에요(이학사라면 상경·인문 과목 등). 어떤 학위가 Breadth로 들을 수 있는지는 각 과목의 Handbook 페이지에 나와 있어요. 이 사이트의 여섯 학위 모두 Breadth를 최소 50학점(4과목) 들어야 해요. 레벨 1 Breadth는 이학사 25학점, 인문·생명의학·상경·디자인 학사는 37.5학점까지 인정되고, 상경학사는 Breadth 전체도 62.5학점까지예요.",
+    countsAsText: "학부가 예외를 승인했다면(예: 어떤 과목을 Breadth로 인정) 플랜에서 그 과목을 열고 '인정 구분'을 고르세요. 서면 승인은 보관해 두세요.",
     easyHardText: "어떤 과목이 꿀과목이고 어떤 과목이 어렵다는지 궁금하면, 이유와 함께 정리한 쉬운 과목·어려운 과목 순위를 보세요.",
     firstFind: "첫 학기에 들을 수 있는 과목 찾기",
     firstPlan: "계획 열기",

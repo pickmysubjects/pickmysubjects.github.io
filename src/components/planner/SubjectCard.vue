@@ -5,6 +5,7 @@ import type { Issue, Subject } from '@/engine'
 import { categoryTag, issueText as issueTextFor } from '@/i18n/format'
 import { useI18n } from '@/i18n'
 import { useDataYear } from '@/composables/useDataYear'
+import { useCountsAs } from '@/composables/useDataset'
 import { localTitle } from '@/i18n/localized'
 import { LINK_COUNTS, type DropVerdict } from '@/utils/planBoard'
 import DoneToggle from './DoneToggle.vue'
@@ -87,7 +88,13 @@ const worst = computed(() => {
   if (props.issues.some((i) => i.severity === 'warning')) return 'warning'
   return null
 })
-const category = computed(() => categoryTag(t.value, props.subject?.categories[props.course]))
+// The student's own change to how it counts (a faculty-approved exception), if any.
+const countsAs = useCountsAs()
+const changed = computed(() => countsAs.value[props.code])
+const category = computed(() => {
+  const tag = categoryTag(t.value, changed.value ?? props.subject?.categories[props.course])
+  return changed.value ? `${tag} (${t.value('countsAs.changedShort')})` : tag
+})
 const issueText = computed(() =>
   props.issues
     .filter((i) => i.severity !== 'info')
@@ -166,7 +173,8 @@ const linkLabel = computed(() => {
     <button class="row-main" type="button" :aria-label="t('plan.selectCard', { code })">
       <span class="code row-code">{{ code }}</span>
     </button>
-    <span v-if="subject" class="row-points">{{ subject.points }}</span>
+    <span v-if="subject" class="row-points"><span v-if="changed" class="row-changed" aria-hidden="true" />{{ subject.points }}</span>
+    <span v-if="changed" class="visually-hidden">{{ t('countsAs.cardLabel', { category: categoryTag(t, changed) }) }}</span>
     <span class="row-title">{{ local || subject?.title || t('plan.notInDataset') }}</span>
     <span v-if="roleText" class="visually-hidden">{{ roleText }}</span>
     <!-- One status line, only when it matters: a problem first, else 标为已修 in a begun term. -->
@@ -314,6 +322,16 @@ const linkLabel = computed(() => {
   font-size: 0.75rem;
   color: var(--ink-soft);
   transition: opacity 0.12s;
+}
+
+.row-changed {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-right: 4px;
+  border-radius: 50%;
+  background: var(--accent-fill);
+  vertical-align: middle;
 }
 
 .row-title {

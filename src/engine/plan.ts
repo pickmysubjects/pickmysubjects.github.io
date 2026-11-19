@@ -43,6 +43,8 @@ export interface Plan {
   wam?: number | null
   /** Subjects whose prerequisites the student says they meet where we can't check (e.g. a VCE score). */
   confirmed?: string[]
+  /** How the student says a subject counts (a category), where their faculty approved an exception. */
+  countsAs?: Record<string, string>
 }
 
 /** Points a semester a student can choose to study: part-time (25, 37.5) or full-time (50). */

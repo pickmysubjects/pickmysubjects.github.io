@@ -130,6 +130,7 @@ export const zhTW: Messages = {
   period: { summer: '夏季學期', 'semester-1': '第一學期', winter: '冬季學期', 'semester-2': '第二學期' },
   periodShort: { summer: '夏季', 'semester-1': 'S1', winter: '冬季', 'semester-2': 'S2' },
   termFull: '{year} {period}',
+  countsAs: { title: "算作", handbook: "依 Handbook", help: "只在學院核准後使用，並保留書面核准。", changed: "你改了 {n} 門課的算法。", undo: "全部復原", changedShort: "你改的", cardLabel: "算作{category}（你改的）" },
   category: { science: '理科', commerce: '商科', arts: '文科', design: '設計', music: '音樂', 'fine-arts': '藝術', agriculture: '農業', 'oral-health': '口腔健康', breadth: 'Breadth', core: '必修' },
   plan: {
     saveImage: "存成圖片",
@@ -2031,6 +2032,7 @@ export const zhTW: Messages = {
     firstStep3: "在 my.unimelb 選課（enrol），然後到 MyTimetable 選上課時間。",
     firstStep4: "上了之後覺得不喜歡？census date 之前還能免費退。國際學生退課前先問 Stop 1。",
     breadthText: "Breadth 就是你學位領域以外的課，例如讀理科的去修商科或文科。每門課的 Handbook 頁面會寫明哪些學位可以把它當 Breadth。這裡的六個學位都要求至少 50 學分（4 門）Breadth。一年級 Breadth 理學士最多算 25 學分，文學士、生物醫學學士、商學士和設計學士最多算 37.5 學分；商學士的 Breadth 總共最多算 62.5 學分。",
+    countsAsText: "如果學院核准了例外（例如某門課算作 Breadth），在計畫裡點開這門課，選「算作」。記得保留書面核准。",
     easyHardText: "想知道哪些課大家覺得容易、哪些難？可以看涼課和難課排行，每門都寫了原因。",
     firstFind: "找第一學期能上的課",
     firstPlan: "去排課",

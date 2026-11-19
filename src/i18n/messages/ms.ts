@@ -130,6 +130,7 @@ export const ms: Messages = {
   period: { summer: 'Penggal musim panas', 'semester-1': 'Semester 1', winter: 'Penggal musim sejuk', 'semester-2': 'Semester 2' },
   periodShort: { summer: 'Musim panas', 'semester-1': 'Sem 1', winter: 'Musim sejuk', 'semester-2': 'Sem 2' },
   termFull: '{period} {year}',
+  countsAs: { title: "Dikira sebagai", handbook: "Ikut Handbook", help: "Guna hanya jika fakulti meluluskannya; simpan kelulusan bertulis.", changed: "Anda menukar cara {n} subjek dikira dalam pelan ini.", undo: "Batalkan semua", changedShort: "ditukar oleh anda", cardLabel: "Dikira sebagai {category} (ditukar oleh anda)" },
   category: { science: 'sains', commerce: 'perdagangan', arts: 'sastera', design: 'reka bentuk', music: 'muzik', 'fine-arts': 'seni', agriculture: 'pertanian', 'oral-health': 'kesihatan oral', breadth: 'breadth', core: 'teras' },
   plan: {
     saveImage: "Simpan sebagai imej",
@@ -2031,6 +2032,7 @@ export const ms: Messages = {
     firstStep3: "Daftar (enrol) di my.unimelb, kemudian pilih waktu kelas di MyTimetable.",
     firstStep4: "Tak suka subjek itu? Sebelum census date anda masih boleh gugurkan secara percuma. Pelajar antarabangsa, tanya Stop 1 dulu.",
     breadthText: "Breadth ialah subjek di luar bidang ijazah anda, contohnya perdagangan atau sastera untuk pelajar sains. Halaman Handbook setiap subjek menyenaraikan ijazah yang boleh mengambilnya sebagai breadth. Keenam-enam ijazah di sini memerlukan sekurang-kurangnya 50 mata breadth (4 subjek). Breadth tahap 1 dikira paling banyak 25 mata untuk Science dan 37.5 mata untuk Arts, Biomedicine, Commerce dan Design; Commerce juga mengira paling banyak 62.5 mata breadth secara keseluruhan.",
+    countsAsText: "Jika fakulti meluluskan pengecualian (contohnya satu subjek dikira sebagai breadth), buka subjek itu dalam pelan anda dan pilih Dikira sebagai. Simpan kelulusan bertulis.",
     easyHardText: "Nak tahu subjek mana yang pelajar rasa mudah atau sukar? Lihat senarai subjek mudah dan sukar, dengan sebabnya.",
     firstFind: "Cari subjek semester pertama",
     firstPlan: "Buka halaman Rancangan",
