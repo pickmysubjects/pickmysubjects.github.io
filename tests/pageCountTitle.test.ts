@@ -1,6 +1,16 @@
-import { afterEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { computed, nextTick, watchEffect } from 'vue'
 import { resetAnalytics } from '@/utils/analytics'
+
+// The test machine may run on UTC (CI does), which counting treats as a data centre.
+const RealDTF = Intl.DateTimeFormat
+beforeEach(() => {
+  vi.spyOn(Intl, 'DateTimeFormat').mockImplementation(((...args: ConstructorParameters<typeof Intl.DateTimeFormat>) => {
+    const f = new RealDTF(...args)
+    const resolved = f.resolvedOptions()
+    return Object.assign(Object.create(f), { resolvedOptions: () => ({ ...resolved, timeZone: 'Australia/Melbourne' }) })
+  }) as unknown as typeof Intl.DateTimeFormat)
+})
 
 // A browser just big enough for useView: an address bar, history and a fake goatcounter.
 function fakeBrowser(path: string) {
@@ -33,12 +43,14 @@ function fakeBrowser(path: string) {
     removeEventListener: (type: string) => void listeners.delete(type),
     scrollTo: vi.fn(),
     setTimeout,
+    chrome: {},
     goatcounter: { count: (v: { path: string; title?: string; event?: boolean }) => counts.push(v) },
   })
   return { counts, doc, input: () => listeners.get('pointerdown')?.() }
 }
 
 afterEach(() => {
+  vi.restoreAllMocks()
   vi.unstubAllGlobals()
   vi.resetModules()
   resetAnalytics()

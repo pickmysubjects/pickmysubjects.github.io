@@ -1,11 +1,23 @@
 import { readFileSync } from 'node:fs'
-import { afterEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { CSP, GOATCOUNTER } from '../vite.config'
 import { countPage, countedPath, looksAutomated, referrerFallback, onFirstInput, optOutToggle, pathLocale, resetAnalytics, trackEvent, visitSource } from '@/utils/analytics'
 
 const root = new URL('../', import.meta.url)
 
+// The machine running the tests may be on UTC (CI is), which the counter treats as a data
+// centre: tests see a student's time zone unless they pass one.
+const RealDTF = Intl.DateTimeFormat
+beforeEach(() => {
+  vi.spyOn(Intl, 'DateTimeFormat').mockImplementation(((...args: ConstructorParameters<typeof Intl.DateTimeFormat>) => {
+    const f = new RealDTF(...args)
+    const resolved = f.resolvedOptions()
+    return Object.assign(Object.create(f), { resolvedOptions: () => ({ ...resolved, timeZone: 'Australia/Melbourne' }) })
+  }) as unknown as typeof Intl.DateTimeFormat)
+})
+
 afterEach(() => {
+  vi.restoreAllMocks()
   vi.unstubAllGlobals()
   resetAnalytics()
 })
@@ -93,6 +105,16 @@ describe('counting', () => {
     expect(looksAutomated({ userAgent: 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)', languages: ['en'] })).toBe(true)
     expect(looksAutomated({ userAgent: chrome, languages: [] })).toBe(true)
     expect(looksAutomated({ userAgent: chrome, languages: ['en'] }, { outerWidth: 0, outerHeight: 0 })).toBe(true)
+    // A machine set to UTC (data centres); a student's own time zone counts.
+    expect(looksAutomated({ userAgent: chrome, languages: ['en'] }, { outerWidth: 1400, outerHeight: 900 }, 'Etc/UTC')).toBe(true)
+    expect(looksAutomated({ userAgent: chrome, languages: ['en'] }, { outerWidth: 1400, outerHeight: 900 }, 'UTC')).toBe(true)
+    expect(looksAutomated({ userAgent: chrome, languages: ['zh-CN'] }, { outerWidth: 1400, outerHeight: 900 }, 'Australia/Melbourne')).toBe(false)
+    expect(looksAutomated({ userAgent: chrome, languages: ['en'] }, { outerWidth: 1400, outerHeight: 900 }, 'Europe/London')).toBe(false)
+    // Desktop Chrome without window.chrome is a scripted browser; a phone's in-app browser isn't.
+    expect(looksAutomated({ userAgent: chrome, languages: ['en'] }, { outerWidth: 1400, outerHeight: 900 }, 'Australia/Melbourne', false)).toBe(true)
+    expect(looksAutomated({ userAgent: chrome, languages: ['en'] }, { outerWidth: 1400, outerHeight: 900 }, 'Australia/Melbourne', true)).toBe(false)
+    const wechat = 'Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/120.0.0.0 Mobile Safari/537.36 MicroMessenger/8.0.47'
+    expect(looksAutomated({ userAgent: wechat, languages: ['zh-CN'] }, { outerWidth: 400, outerHeight: 800 }, 'Asia/Shanghai', false)).toBe(false)
   })
 
   it('names where a visit with no referrer came from: a link tag, else the in-app browser', () => {
