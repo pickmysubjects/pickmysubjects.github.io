@@ -137,9 +137,33 @@ export function onFirstInput(f: () => void): void {
 // on its side too; these are the ones that run JavaScript and can send input.
 const AUTOMATED = /bot\b|bot\/|crawl|spider|slurp|headless|lighthouse|pagespeed|gptbot|chatgpt|oai-searchbot|claude|anthropic|perplexity|bytespider|amazonbot|applebot|google-(inspectiontool|extended|read-aloud)|bingpreview|yandex|baiduspider|petalbot|semrush|ahrefs|mj12|dotbot|facebookexternalhit|playwright|puppeteer|phantom|selenium|cypress/i
 
+const UTC_ZONES = new Set(['UTC', 'Etc/UTC', 'Etc/GMT', 'GMT', 'Etc/Universal', 'Universal', 'Etc/Zulu', 'Zulu'])
+
+function browserTimeZone(): string | undefined {
+  try {
+    return Intl.DateTimeFormat().resolvedOptions().timeZone
+  } catch {
+    return undefined
+  }
+}
+
 /** True for a browser that is driven by a program or says it is a crawler: never counted. */
-export function looksAutomated(nav: { webdriver?: boolean; userAgent?: string; languages?: readonly string[] } | undefined = typeof navigator === 'undefined' ? undefined : navigator, win: { outerWidth?: number; outerHeight?: number } | undefined = typeof window === 'undefined' ? undefined : window): boolean {
+export function looksAutomated(
+  nav: { webdriver?: boolean; userAgent?: string; languages?: readonly string[] } | undefined = typeof navigator === 'undefined' ? undefined : navigator,
+  win: { outerWidth?: number; outerHeight?: number } | undefined = typeof window === 'undefined' ? undefined : window,
+  timeZone: string | undefined = browserTimeZone(),
+  hasChromeObject: boolean | undefined = typeof window === 'undefined' ? undefined : typeof (window as unknown as { chrome?: unknown }).chrome === 'object',
+): boolean {
   if (!nav) return false
+  // A desktop browser that says it's Chrome (or Edge, Opera, Brave: all Chromium) always has
+  // window.chrome; scripted browsers pretending to be one often don't. Desktop only: phones'
+  // in-app browsers (WeChat, Instagram…) are Chromium without it.
+  const ua = nav.userAgent ?? ''
+  if (hasChromeObject === false && /Chrome\//.test(ua) && /Windows NT|Macintosh|X11/.test(ua) && !/Android|Mobile/.test(ua)) return true
+  // Data-centre machines (crawlers that pass every other check) run on UTC; people's computers
+  // are set to where they live. Seen 2026-11-20: ~140 visits from US Linux Chrome right after
+  // pages were sent for indexing.
+  if (timeZone && UTC_ZONES.has(timeZone)) return true
   if (nav.webdriver === true) return true
   if (AUTOMATED.test(nav.userAgent ?? '')) return true
   // Headless browsers have no window around the page.
