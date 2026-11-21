@@ -10,7 +10,7 @@ import { useFinalCalc, type CalcRow } from '@/composables/useFinalCalc'
 import { usePlan } from '@/composables/usePlan'
 import { link, replaceAddress } from '@/composables/useView'
 import { ASSESSMENT_KINDS } from '@/engine/schema'
-import { finalBand, finalNeeds, handbookChanged, partsFromAssessment, percentOf, sameCalcParts, type CalcPart } from '@/engine/finalCalc'
+import { finalBand, finalNeeds, handbookChanged, partsFromAssessment, partsFromRows, percentOf, sameCalcParts, type CalcPart } from '@/engine/finalCalc'
 import { useI18n } from '@/i18n'
 import { localTitle } from '@/i18n/localized'
 import { attendanceText } from '@/utils/attendance'
@@ -87,12 +87,7 @@ function reset(): void {
   saved.value = { ...saved.value, [props.code]: { rows: next } }
 }
 
-const parts = computed<CalcPart[]>(() =>
-  rows.value.map((r) => {
-    const pct = r.score === '' ? null : percentOf(r.score, r.outOf === '' ? 100 : r.outOf)
-    return { kind: r.kind, weight: r.weight, ...(r.hurdle ? { hurdle: true } : {}), ...(pct !== null ? { score: pct } : {}) }
-  }),
-)
+const parts = computed<CalcPart[]>(() => partsFromRows(rows.value))
 const badScore = (r: CalcRow) => r.score !== '' && percentOf(r.score, r.outOf === '' ? 100 : r.outOf) === null
 const result = computed(() => finalNeeds(parts.value))
 // A pass/fail subject has only one grade worth aiming for.

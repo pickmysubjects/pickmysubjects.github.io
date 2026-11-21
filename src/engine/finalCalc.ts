@@ -181,3 +181,11 @@ export function sameCalcParts(a: readonly PartShape[], b: readonly PartShape[]):
 export function handbookChanged(entry: CalcEntry | undefined, handbook: readonly PartShape[]): boolean {
   return !!entry && !entry.custom && handbook.length > 0 && !sameCalcParts(entry.rows, handbook)
 }
+
+/** A saved calculator's rows as parts, each mark turned into a percentage (a bad mark counts as not done). */
+export function partsFromRows(rows: readonly CalcRow[]): CalcPart[] {
+  return rows.map((r) => {
+    const pct = r.score === '' ? null : percentOf(r.score, r.outOf === '' ? 100 : r.outOf)
+    return { kind: r.kind, weight: r.weight, ...(r.hurdle ? { hurdle: true } : {}), ...(pct !== null ? { score: pct } : {}) }
+  })
+}

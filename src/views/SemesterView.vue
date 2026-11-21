@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, shallowRef } from 'vue'
-import { ArrowRight, Calculator, CalendarDays, Check, Gauge, LifeBuoy, NotebookPen } from 'lucide-vue-next'
+import { ArrowRight, Calculator, CalendarDays, CalendarPlus, Check, Gauge, LifeBuoy, NotebookPen } from 'lucide-vue-next'
 import DetailHero from '@/components/browse/DetailHero.vue'
 import WeekStrip, { type StripTask } from '@/components/semester/WeekStrip.vue'
 import QuickRate from '@/components/rating/QuickRate.vue'
@@ -16,12 +16,15 @@ import type { QuickStart } from '@/composables/useMyRatings'
 import { useI18n } from '@/i18n'
 import { localTitle } from '@/i18n/localized'
 import { summariseAssessment } from '@/utils/assessment'
-import { KEY_DATES, type KeyDate } from '@/utils/keyDates'
+import { buildIcs, datesForTerms, downloadIcs, KEY_DATES, type KeyDate } from '@/utils/keyDates'
+import { useFinalCalc } from '@/composables/useFinalCalc'
+import { finalNeeds, partsFromRows } from '@/engine/finalCalc'
+import { gradeOf } from '@/utils/wamGoal'
 import { nextKeyDates } from '@/utils/semester'
 import { subjectsIn } from '@/utils/whatsNext'
 import { dueSegments, numericRange, spanSegments, timingLabel, timingOrder } from '@/utils/taskTiming'
 import { RATINGS_FORM } from '@/config'
-import { isFormReady } from '@/utils/googleForm'
+import { isFormReady, LIVE_HOST } from '@/utils/googleForm'
 
 /**
  * /this-semester/: which week it is, the semester as a strip of weeks, the next official dates,
@@ -92,6 +95,42 @@ const cards = computed(() =>
     }
   }),
 )
+
+// Marks typed into the final calculator, in a line under each subject: what's in so far and the
+// best grade still within reach ("H1 needs 81% on the rest"), or the mark once everything is in.
+const calc = useFinalCalc()
+function marksLine(code: string): string {
+  const rows = calc.value[code]?.rows
+  const r = rows ? finalNeeds(partsFromRows(rows)) : null
+  if (!r || r.doneWeight <= 0) return ''
+  if (r.mark !== null) return t.value('sem.markFinal', { mark: r.mark, band: gradeOf(r.mark) })
+  const soFar = t.value('sem.marksSoFar', { earned: r.earned, done: r.doneWeight })
+  const aim = r.bands.find((b) => b.status !== 'impossible')
+  if (!aim) return soFar
+  return `${soFar} · ${aim.status === 'secured' ? t.value('sem.bandSecured', { band: aim.band }) : t.value('sem.bandNeeds', { band: aim.band, n: aim.needed! })}`
+}
+
+// This semester as a calendar file: its census, exam and results dates, and each task in the
+// week the Handbook puts it (Monday to Friday, or the exam period), never a made-up day.
+function saveCalendar(): void {
+  const n = now.value
+  if (!n) return
+  const sem = n.sem
+  const official = datesForTerms(KEY_DATES, [{ year: sem.year, period: sem.term }])
+  const tasks = cards.value.flatMap((c) =>
+    c.items.flatMap((i) =>
+      dueSegments(i.timing, sem).map((k) => {
+        const seg = sem.segments[k]!
+        const end = seg.kind === 'teach' ? addDays(seg.start, 4) : (sem.exams?.end ?? seg.end)
+        // One event per week, each with its own id (a task due in Weeks 7 and 12 is two events).
+        return { id: `${termKey.value}-${i.id.replace(':', '-')}-${k}`, start: seg.start, end, url: `https://${LIVE_HOST}/subject/${c.code}/`, summary: t.value('sem.icsTask', { code: c.code, task: i.label, weight: i.weight, when: i.when }) }
+      }),
+    ),
+  )
+  const label = (d: { summary?: string; kind?: KeyDate['kind'] }) => d.summary ?? `${kindName(d as KeyDate)} · ${name.value}`
+  downloadIcs(buildIcs<(typeof tasks)[number] | KeyDate>([...official, ...tasks], label), `unimelb-${termKey.value}.ics`)
+}
+const addDays = (d: string, n: number) => new Date(Date.parse(`${d}T00:00:00Z`) + n * 86_400_000).toISOString().slice(0, 10)
 
 function toggle(id: string): void {
   const list = doneStore.value[termKey.value] ?? []
@@ -266,7 +305,8 @@ const caption = computed(() => {
               <summary class="subject-head">
                 <span class="subject-name"><span class="code">{{ c.code }}</span> {{ c.title }}</span>
                 <span class="subject-sum">{{ plainSummary(c) }}</span>
-                <span v-if="c.items.length" class="subject-done">{{ t('sem.doneOf', { done: c.done, total: c.items.length }) }}</span>
+                <span v-if="marksLine(c.code)" class="subject-marks">{{ marksLine(c.code) }}</span>
+                <span v-if="c.items.length" class="subject-done" :class="{ tall: marksLine(c.code) }">{{ t('sem.doneOf', { done: c.done, total: c.items.length }) }}</span>
               </summary>
               <ul v-if="c.items.length" class="tasks">
                 <li v-for="i in c.items" :key="i.id" class="task">
@@ -355,6 +395,9 @@ const caption = computed(() => {
           <ul class="tool-list">
             <li><a class="tool" :href="link('tools/final/')"><Calculator :size="18" aria-hidden="true" /><span>{{ t('sem.finalCalc') }}</span></a></li>
             <li><a class="tool" :href="link('tools/revision/')"><CalendarDays :size="18" aria-hidden="true" /><span>{{ t('sem.revision') }}</span></a></li>
+            <li v-if="now">
+              <button class="tool" type="button" @click="saveCalendar"><CalendarPlus :size="18" aria-hidden="true" /><span>{{ t('sem.addCalendar') }}<small>{{ t('sem.addCalendarText') }}</small></span></button>
+            </li>
             <li><a class="tool" :href="link('tools/wam/')"><Gauge :size="18" aria-hidden="true" /><span>{{ t('sem.wam') }}</span></a></li>
             <li>
               <a class="tool" :href="link(guideTo)"><NotebookPen :size="18" aria-hidden="true" /><span>{{ t('sem.guideLink') }}<small>{{ t('sem.guideText') }}</small></span></a>
@@ -555,6 +598,10 @@ const caption = computed(() => {
   color: var(--ink-soft);
 }
 
+.subject-done.tall {
+  grid-row: 1 / span 3;
+}
+
 .subject-done {
   grid-column: 2;
   grid-row: 1 / span 2;
@@ -647,6 +694,14 @@ const caption = computed(() => {
   padding: 0;
 }
 
+.subject-marks {
+  grid-column: 1;
+  color: var(--ink);
+  font-size: var(--fs-small);
+  font-weight: var(--fw-semibold);
+  font-variant-numeric: tabular-nums;
+}
+
 .subject-actions .button {
   gap: 6px;
 }
@@ -731,6 +786,18 @@ const caption = computed(() => {
   color: var(--ink);
   font-weight: var(--fw-semibold);
   text-decoration: none;
+}
+
+/* The calendar one is a button (it saves a file): looks the same as the links around it. */
+button.tool {
+  width: 100%;
+  border: 0;
+  border-top: 1px solid var(--divider);
+  background: none;
+  font: inherit;
+  font-weight: var(--fw-semibold);
+  text-align: start;
+  cursor: pointer;
 }
 
 .tool-list li:first-child .tool {

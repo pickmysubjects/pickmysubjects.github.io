@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { finalNeeds, handbookChanged, partsFromAssessment, percentOf, type CalcPart, type CalcRow } from '../src/engine/finalCalc'
+import { finalNeeds, handbookChanged, partsFromAssessment, partsFromRows, percentOf, type CalcPart, type CalcRow } from '../src/engine/finalCalc'
 import { LOCALE_CODES } from '../src/i18n/codes'
 import { en } from '../src/i18n/messages/en'
 import { zhCN } from '../src/i18n/messages/zh-CN'
@@ -183,5 +183,20 @@ describe('handbookChanged', () => {
     expect(handbookChanged({ rows: [row(50)], custom: true }, handbook)).toBe(false)
     expect(handbookChanged(undefined, handbook)).toBe(false)
     expect(handbookChanged({ rows: [row(50)] }, [])).toBe(false)
+  })
+})
+
+describe('partsFromRows', () => {
+  it('turns typed marks into percentages, and leaves bad or empty ones not done', () => {
+    const rows: CalcRow[] = [
+      { kind: 'assignment', weight: 20, score: 15, outOf: 20 },
+      { kind: 'assignment', weight: 20, score: 30, outOf: 20 },
+      { kind: 'exam', weight: 60, hurdle: true, score: '', outOf: '' },
+    ]
+    expect(partsFromRows(rows)).toEqual([
+      { kind: 'assignment', weight: 20, score: 75 },
+      { kind: 'assignment', weight: 20 },
+      { kind: 'exam', weight: 60, hurdle: true },
+    ])
   })
 })

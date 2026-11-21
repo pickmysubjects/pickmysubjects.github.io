@@ -36,6 +36,17 @@ export const SITE_RELEASES: SiteRelease[] = [
         id: "Halaman baru 'Semester ini': minggu ke berapa, tanggal penting berikutnya dan penilaian mata kuliahmu, tandai yang sudah selesai.",
         hi: "नया 'यह सेमेस्टर' पेज: कौन-सा हफ़्ता है, अगली ज़रूरी तारीख़ें और आपके विषयों का मूल्यांकन, पूरे काम पर निशान लगाएँ।",
       },
+      {
+        en: "This semester now shows the marks from your final mark calculator, and can add the semester to your calendar, each assessment in its week.",
+        'zh-CN': "“本学期”页会显示期末计算器里的成绩，还能把整个学期加到日历，考核放在各自那一周。",
+        'zh-TW': "「本學期」頁會顯示期末計算器裡的成績，還能把整個學期加到行事曆，考核放在各自那一週。",
+        ja: "「今学期」に期末計算機の点数が出ます。学期をカレンダーに追加でき、課題はその週に入ります。",
+        ko: "'이번 학기'에 기말 계산기 점수가 나오고, 학기를 캘린더에 추가하면 과제가 해당 주차에 들어가요.",
+        vi: "Trang 'Học kỳ này' hiện điểm từ máy tính điểm cuối kỳ, và thêm được cả học kỳ vào lịch, mỗi bài đúng tuần.",
+        ms: "'Semester ini' kini menunjukkan markah dari kalkulator markah akhir, dan boleh menambah semester ke kalendar, setiap tugasan pada minggunya.",
+        id: "'Semester ini' kini menampilkan nilai dari kalkulator nilai akhir, dan bisa menambahkan semester ke kalender, tiap tugas di minggunya.",
+        hi: "'यह सेमेस्टर' अब फ़ाइनल मार्क कैलकुलेटर के अंक दिखाता है, और पूरा सेमेस्टर कैलेंडर में जोड़ता है, हर असेसमेंट अपने हफ़्ते में।",
+      },
     ],
   },
   {
