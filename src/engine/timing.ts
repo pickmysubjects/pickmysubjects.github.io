@@ -1,7 +1,7 @@
 /**
  * When an assessment task happens, read off the Handbook's "Timing" cell. Only phrasings we
- * recognise for sure get a kind; anything else stays unset (the original text is still kept
- * by the caller for tooltips), so the site never shows a time the Handbook didn't give.
+ * recognise for sure get a kind; anything else stays unset (and the import drops it), so the
+ * site never shows a time the Handbook didn't give.
  */
 export type TimingKind = 'week' | 'weeks' | 'teaching' | 'early' | 'mid' | 'late' | 'end' | 'exam' | 'assessmentPeriod' | 'afterTeaching'
 

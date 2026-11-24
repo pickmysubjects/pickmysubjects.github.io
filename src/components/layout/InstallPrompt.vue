@@ -4,15 +4,16 @@ import { Share, X } from 'lucide-vue-next'
 import Interp from '@/components/Interp.vue'
 import { useI18n } from '@/i18n'
 import { trackEvent } from '@/utils/analytics'
-import { installHidden, installMoment, installOffered, newsWaiting, useInstall } from '@/utils/install'
+import { installFloating, installHidden, installMoment, installOffered, newsWaiting, useInstall } from '@/utils/install'
 
 /**
  * The one install nudge, in three places:
  * - 'float': after a useful moment (a plan made, a tool's answer), once, as a small card in the
  *   bottom-right corner on a computer or just above the bottom tabs on a phone. Never a modal.
  * - 'card': on the home page, for a returning visitor on a phone.
- * - 'steps': the About page's "Get the app" section, always there; the steps for every browser
- *   are in the prerendered page, and this browser's own button or steps come first once it loads.
+ * - 'steps': the About page's "Get the app" section, always there: the steps for every browser
+ *   (also in the prerendered page), with this browser's install button, or "already installed",
+ *   above them once it loads.
  * It never shows while the home news pop-up is up or about to be.
  * It shows only where installing works (Chrome/Edge's prompt, Safari on iPhone or a Mac, a phone
  * browser's menu) and never once installed. Closing it hides the float and the card for good.
@@ -35,8 +36,9 @@ onMounted(() => {
 
 const current = computed(() => (mounted.value ? way() : 'none'))
 const usable = computed(() => ['prompt', 'ios', 'mac', 'menu'].includes(current.value))
-// The float stays up for the visit it first appeared in, until closed.
-const floating = shallowRef(false)
+// The float stays up for the visit it first appeared in, until closed. Shared, so the home card
+// never shows beside it.
+const floating = installFloating()
 const shown = computed(() => {
   if (props.variant === 'steps') return true
   // Never alongside the news pop-up: wait until it's closed.
@@ -245,10 +247,13 @@ async function add(): Promise<void> {
 
 /* On a phone: a sheet just above the floating bottom tabs. */
 @media (max-width: 720px) {
+  /* Under the top bar: the bottom of a phone screen holds the tabs and each page's own dock
+     (the calculator's answer, the planner's add button), which the offer must not cover. */
   .install.float {
     right: 12px;
     left: 12px;
-    bottom: calc(92px + env(safe-area-inset-bottom));
+    top: calc(64px + env(safe-area-inset-top));
+    bottom: auto;
     width: auto;
   }
 }

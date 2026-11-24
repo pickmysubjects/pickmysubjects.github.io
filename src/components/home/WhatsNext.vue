@@ -17,7 +17,7 @@ import { nextKeyDates } from '@/utils/semester'
  * Drawn after mounting only (the prerendered page would freeze the build day).
  */
 const { t, locale } = useI18n()
-const { today, now, subjects, day, range, when, termName, status } = useSemester()
+const { today, now, subjects, day, range, when, termName, status, dateLabel } = useSemester()
 
 const news = NEWS[0]
 const name = computed(() => (now.value ? termName(now.value.sem.year, now.value.sem.term) : ''))
@@ -35,7 +35,7 @@ const nextLine = computed(() => {
   const i = next.value
   if (!i) return null
   const whenText = i.running ? t.value('next.until', { date: day(i.date.end) }) : when(i.days, i.date.start)
-  return { what: t.value(`guide.kd.kind.${i.date.kind}`), when: whenText, soon: !i.running && i.days <= 2, census: i.date.kind === 'census' }
+  return { what: dateLabel(i.date), when: whenText, soon: !i.running && i.days <= 2, census: i.date.kind === 'census' }
 })
 </script>
 

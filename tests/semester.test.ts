@@ -76,3 +76,30 @@ describe('next key dates', () => {
     expect(next).toHaveLength(4)
   })
 })
+
+describe('edge days in the date data', () => {
+  const brk = (start: string, end: string) => ({ id: 'b', kind: 'break' as const, year: 2030, term: 'semester-1' as const, start, end, url: '' })
+  const base = [
+    { id: 't', kind: 'teaching' as const, year: 2030, term: 'semester-1' as const, start: '2030-03-04', end: '2030-06-02', url: '' },
+    { id: 'e', kind: 'exams' as const, year: 2030, term: 'semester-1' as const, start: '2030-06-11', end: '2030-06-28', url: '' },
+    { id: 'r', kind: 'results' as const, year: 2030, term: 'semester-1' as const, start: '2030-07-12', end: '2030-07-12', url: '' },
+  ]
+
+  it('a day after teaching with SWOT Vac not published yet is SWOT Vac, not the next semester', () => {
+    expect(semesterNow([...base, brk('2030-04-15', '2030-04-21')], '2030-06-04')).toMatchObject({ phase: 'swotvac' })
+  })
+
+  it('the Monday before a Tuesday first exam is still SWOT Vac, and the weekend after the last exam is waiting', () => {
+    const d = [...base, brk('2030-04-15', '2030-04-21')]
+    expect(semesterNow(d, '2030-06-10')).toMatchObject({ phase: 'swotvac' })
+    expect(semesterNow(d, '2030-06-11')).toMatchObject({ phase: 'exams' })
+    expect(semesterNow(d, '2030-06-29')).toMatchObject({ phase: 'waiting' })
+  })
+
+  it('a break ending on a Tuesday counts the weeks before it, not the week it runs into', () => {
+    // Fri 12 Apr to Tue 23 Apr: week 6 (8–14 Apr) teaching, 15–21 Apr the break, 22–28 Apr week 7.
+    const d = [...base, brk('2030-04-12', '2030-04-23')]
+    expect(semesterNow(d, '2030-04-22')).toMatchObject({ phase: 'break', week: 6 })
+    expect(semesterNow(d, '2030-04-24')).toMatchObject({ phase: 'teach', week: 7 })
+  })
+})

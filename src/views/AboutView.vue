@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { link } from '@/composables/useView'
-import { ArrowRight, BookOpen, Calculator, Compass, GitCompare, GraduationCap, Route, Sparkles, Star } from 'lucide-vue-next'
+import { ArrowRight, BookOpen, Calculator, CalendarDays, Compass, GitCompare, GraduationCap, Route, Sparkles, Star } from 'lucide-vue-next'
 import InfoPage from '@/components/about/InfoPage.vue'
 import GuideItem from '@/components/guide/GuideItem.vue'
 import InstallPrompt from '@/components/layout/InstallPrompt.vue'
@@ -26,6 +26,7 @@ const features = [
   { key: 'suggest', icon: Sparkles, href: link('subjects/?mine=1'), name: 'about.f.suggest', text: 'about.f.suggestText' },
   { key: 'majors', icon: GraduationCap, href: link('majors'), name: 'browse.switchMajors', text: 'majors.cardText' },
   { key: 'record', icon: Calculator, href: link('record'), name: 'about.f.record', text: 'about.f.recordText' },
+  { key: 'semester', icon: CalendarDays, href: link('this-semester/'), name: 'about.f.semester', text: 'about.f.semesterText' },
   { key: 'guide', icon: Compass, href: link('guide'), name: 'guide.nav', text: 'guide.lede' },
   { key: 'rate', icon: Star, href: link('record'), name: 'about.f.rate', text: 'about.f.rateText' },
 ] as const

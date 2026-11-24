@@ -1,4 +1,4 @@
-import { computed, onMounted, shallowRef } from 'vue'
+import { computed, onBeforeUnmount, onMounted, shallowRef } from 'vue'
 import { useDataset } from './useDataset'
 import { usePlan } from './usePlan'
 import { useProfile } from './useProfile'
@@ -24,9 +24,29 @@ export function useSemester() {
   onMounted(() => {
     const fake = import.meta.env.DEV ? new URLSearchParams(location.search).get('today') : null
     today.value = fake && /^\d{4}-\d{2}-\d{2}$/.test(fake) ? fake : melbourneToday()
+    if (fake) return
+    // An installed app is resumed days later, and a tab can stay open past midnight.
+    const refresh = () => {
+      const d = melbourneToday()
+      if (d !== today.value) today.value = d
+    }
+    const onShow = () => document.visibilityState === 'visible' && refresh()
+    document.addEventListener('visibilitychange', onShow)
+    const timer = setInterval(refresh, 60_000)
+    onBeforeUnmount(() => {
+      document.removeEventListener('visibilitychange', onShow)
+      clearInterval(timer)
+    })
   })
 
   const now = computed<SemesterNow | null>(() => (today.value ? semesterNow(KEY_DATES, today.value) : null))
+
+  /** The student's subjects in the semester shown, whatever the phase (the calendar file wants them before it starts too). */
+  const termSubjects = computed<string[]>(() => {
+    const n = now.value
+    if (!n) return []
+    return subjectsIn(n.sem.year, n.sem.term, plan.terms.value, profile.value.results).filter((c) => c in data.value.subjects)
+  })
 
   /** The student's subjects in the semester shown (planned there or on the record), known codes only. */
   const subjects = computed<string[]>(() => {
@@ -39,6 +59,19 @@ export function useSemester() {
   const day = (d: string) => fmt.value.format(new Date(`${d}T00:00:00Z`))
   const range = (d: Pick<KeyDate, 'start' | 'end'>) => (d.start === d.end ? day(d.start) : fmt.value.formatRange(new Date(`${d.start}T00:00:00Z`), new Date(`${d.end}T00:00:00Z`)))
   const termName = (year: number, term: string) => termFullLabel(t.value, { year, period: term as Period })
+
+  /**
+   * A key date's name, with its term when it's a Summer or Winter Term date ("Exams · Summer
+   * 2027"): those fall around the semesters and would otherwise read as the semester's own.
+   * Semester dates need no label (the next semester's orientation is plainly the next one).
+   */
+  function dateLabel(d: KeyDate): string {
+    const name = t.value(`guide.kd.kind.${d.kind}`)
+    const sem = now.value?.sem
+    const short = d.term === 'summer' || d.term === 'winter'
+    const shown = sem !== undefined && d.year === sem.year && d.term === sem.term
+    return short && !shown && d.kind !== 'reenrol' && d.kind !== 'reenrolLate' ? `${name} · ${termName(d.year, d.term)}` : name
+  }
 
   /** Relative for near days ("in 9 days"), absolute for far ones ("on 7 Jun"). */
   function when(days: number, date: string): string {
@@ -78,5 +111,5 @@ export function useSemester() {
     return ''
   })
 
-  return { today, now, subjects, day, range, when, termName, status }
+  return { today, now, subjects, termSubjects, day, range, when, termName, status, dateLabel }
 }

@@ -120,6 +120,11 @@ export function offerInstall(delay = 1500): void {
   clearTimeout(timer)
   timer = setTimeout(() => (moment.value = true), delay)
 }
+// The float is up this visit (shared, so the home card stays away while it is).
+const floatingNow = shallowRef(false)
+export function installFloating() {
+  return floatingNow
+}
 /** Whether a useful moment has come this visit. */
 export function installMoment() {
   return moment

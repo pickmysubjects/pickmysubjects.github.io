@@ -122,21 +122,32 @@ export function semesterNow(dates: KeyDate[], today: string): SemesterNow | null
       // Results of the semester before still count as "just out" only in the loop below.
       return { phase: 'before', sem, days: daysBetween(today, sem.teaching.start) }
     }
-    const idx = sem.segments.findIndex((s) => s.start <= today && today <= s.end)
+    let idx = sem.segments.findIndex((s) => s.start <= today && today <= s.end)
+    // A day between published segments (say SWOT Vac not out yet) belongs to the one before it,
+    // not to the next semester.
+    if (idx < 0 && sem.segments.length && today <= sem.segments.at(-1)!.end) idx = sem.segments.reduce((last, s, k) => (s.start <= today ? k : last), -1)
     const seg = sem.segments[idx]
-    if (seg) {
+    const afterExams = seg?.kind === 'exams' && sem.exams !== undefined && today > sem.exams.end
+    if (seg && !afterExams) {
+      const ended = today > seg.end
       if (seg.kind === 'teach' || seg.kind === 'break') {
+        // Past the last teaching week with nothing published after it yet: that's SWOT Vac's time.
+        if (ended) return { phase: 'swotvac', sem, segment: idx }
         // A break that starts mid-week (Easter Friday) shows as the break on those days.
         const brk = find(dates, sem.year, sem.term, 'break')
         const inBreak = seg.kind === 'break' || (brk !== undefined && today >= brk.start && today <= brk.end)
-        const week = seg.kind === 'teach' ? seg.week : sem.segments.slice(0, idx).filter((s) => s.kind === 'teach').length
+        const before = sem.segments.slice(0, idx).filter((s) => s.kind === 'teach').length
+        // In a teaching week the break runs into (it began the week before), the last full week is the one before.
+        const week = seg.kind === 'teach' && !(inBreak && brk !== undefined && brk.start < seg.start) ? seg.week : before
         return { phase: inBreak ? 'break' : 'teach', sem, week, segment: idx }
       }
+      // Exam weeks run Monday to Sunday; the days before the first exam are still SWOT Vac.
+      if (seg.kind === 'exams' && sem.exams && today < sem.exams.start) return { phase: 'swotvac', sem, segment: idx }
       // Weekend days between SWOT Vac and the exams belong to SWOT Vac's segment already.
       return { phase: seg.kind, sem, segment: idx }
     }
     const last = sem.segments.at(-1)
-    if (last && today <= last.end) continue
+    if (!afterExams && last && today <= last.end) continue
     if (sem.results) {
       if (today < sem.results.start) return { phase: 'waiting', sem }
       const until = [addDays(sem.results.start, RESULTS_WINDOW_DAYS - 1), next?.orientation ? addDays(next.orientation.start, -1) : null, next ? addDays(mondayOf(next.teaching.start), -1) : null]

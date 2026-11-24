@@ -29,15 +29,16 @@ const tasks = computed(() => {
   if (!list.some((x) => x.timing)) return []
   const counts = new Map<string, number>()
   for (const x of list) counts.set(x.kind, (counts.get(x.kind) ?? 0) + 1)
+  // Sorted by when they happen first, then numbered in that order ("Assignment 1" comes first).
   const seen = new Map<string, number>()
-  return list
+  return [...list]
+    .sort((a, b) => timingOrder(a.timing) - timingOrder(b.timing))
     .map((x) => {
       const n = (seen.get(x.kind) ?? 0) + 1
       seen.set(x.kind, n)
       const name = t.value(`assess.kind.${x.kind}`) + ((counts.get(x.kind) ?? 0) > 1 ? ` ${n}` : '')
-      return { name, weight: x.weight, hurdle: !!x.hurdle, when: timingLabel(t.value, x.timing), source: x.timing?.text, order: timingOrder(x.timing) }
+      return { name, weight: x.weight, hurdle: !!x.hurdle, when: timingLabel(t.value, x.timing), source: x.timing?.text }
     })
-    .sort((a, b) => a.order - b.order)
 })
 const examHurdle = computed(() => info.value?.examHurdle ?? false)
 const otherHurdle = computed(() => info.value?.otherHurdle ?? false)

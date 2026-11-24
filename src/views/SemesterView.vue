@@ -18,8 +18,8 @@ import { localTitle } from '@/i18n/localized'
 import { summariseAssessment } from '@/utils/assessment'
 import { buildIcs, datesForTerms, downloadIcs, KEY_DATES, type KeyDate } from '@/utils/keyDates'
 import { useFinalCalc } from '@/composables/useFinalCalc'
-import { finalNeeds, partsFromRows } from '@/engine/finalCalc'
-import { gradeOf } from '@/utils/wamGoal'
+import { finalBand, finalNeeds, partsFromRows } from '@/engine/finalCalc'
+import { cleanStringLists } from '@/utils/sanitize'
 import { nextKeyDates } from '@/utils/semester'
 import { subjectsIn } from '@/utils/whatsNext'
 import { dueSegments, numericRange, spanSegments, timingLabel, timingOrder } from '@/utils/taskTiming'
@@ -36,18 +36,13 @@ const { t, locale } = useI18n()
 const { data } = useDataset()
 const phone = usePhone()
 const { rated, markRated } = useRated()
-const { today, now, subjects, day, range, when, termName, status } = useSemester()
+const { today, now, subjects, termSubjects, day, range, when, termName, status, dateLabel } = useSemester()
 const plan = usePlan()
 
 const art = () => import('@/components/tools/art/ArtRevision.vue')
 
 // Saved on this device only: hidden subjects and ticked tasks, by term ("2027-semester-1").
-const asStringLists = (raw: unknown): Record<string, string[]> => {
-  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return {}
-  const out: Record<string, string[]> = {}
-  for (const [k, v] of Object.entries(raw as Record<string, unknown>)) if (Array.isArray(v)) out[k] = v.filter((x): x is string => typeof x === 'string')
-  return out
-}
+const asStringLists = cleanStringLists
 const hiddenStore = usePersisted<Record<string, string[]>>('sc:semHidden', {}, asStringLists)
 const doneStore = usePersisted<Record<string, string[]>>('sc:semDone', {}, asStringLists)
 const rateSeen = usePersisted<string[]>('sc:semRateSeen', [], (raw) => (Array.isArray(raw) ? raw.filter((x): x is string => typeof x === 'string') : []))
@@ -56,6 +51,8 @@ const termKey = computed(() => (now.value ? `${now.value.sem.year}-${now.value.s
 const name = computed(() => (now.value ? termName(now.value.sem.year, now.value.sem.term) : ''))
 const hidden = computed(() => new Set(hiddenStore.value[termKey.value] ?? []))
 const shown = computed(() => subjects.value.filter((c) => !hidden.value.has(c)))
+// Only the hidden ones still in this term count (one taken off the plan since isn't "hidden").
+const hiddenCount = computed(() => subjects.value.filter((c) => hidden.value.has(c)).length)
 
 function hide(code: string): void {
   hiddenStore.value = { ...hiddenStore.value, [termKey.value]: [...hidden.value, code] }
@@ -70,20 +67,23 @@ const examRange = computed(() => (now.value?.sem.exams ? numericRange(locale.val
 
 // Each task of a subject, numbered within its kind ("Assignment 2"), with its Handbook timing,
 // in the order they come up (untimed ones last).
-const cards = computed(() =>
-  shown.value.map((code) => {
+const cardsFor = (codes: string[]) =>
+  codes.map((code) => {
     const s = data.value.subjects[code]!
     const tasks = Array.isArray(s.assessment) ? s.assessment : []
     const counts = new Map<string, number>()
     for (const x of tasks) counts.set(x.kind, (counts.get(x.kind) ?? 0) + 1)
+    // Sorted by when they happen, then numbered in that order; the id keeps the Handbook position.
     const seen = new Map<string, number>()
-    const items = tasks.map((x, i) => {
-      const n = (seen.get(x.kind) ?? 0) + 1
-      seen.set(x.kind, n)
-      const label = t.value(`assess.kind.${x.kind}`) + ((counts.get(x.kind) ?? 0) > 1 ? ` ${n}` : '')
-      return { id: `${code}:${i}`, label, weight: x.weight, hurdle: !!x.hurdle, timing: x.timing, when: timingLabel(t.value, x.timing, examRange.value), order: timingOrder(x.timing) }
-    })
-    items.sort((a, b) => a.order - b.order)
+    const items = tasks
+      .map((x, i) => ({ x, i }))
+      .sort((a, b) => timingOrder(a.x.timing) - timingOrder(b.x.timing))
+      .map(({ x, i }) => {
+        const n = (seen.get(x.kind) ?? 0) + 1
+        seen.set(x.kind, n)
+        const label = t.value(`assess.kind.${x.kind}`) + ((counts.get(x.kind) ?? 0) > 1 ? ` ${n}` : '')
+        return { id: `${code}:${i}`, label, weight: x.weight, hurdle: !!x.hurdle, timing: x.timing, when: timingLabel(t.value, x.timing, examRange.value) }
+      })
     const done = new Set(doneStore.value[termKey.value] ?? [])
     return {
       code,
@@ -93,8 +93,8 @@ const cards = computed(() =>
       done: items.filter((i) => done.has(i.id)).length,
       doneSet: done,
     }
-  }),
-)
+  })
+const cards = computed(() => cardsFor(shown.value))
 
 // Marks typed into the final calculator, in a line under each subject: what's in so far and the
 // best grade still within reach ("H1 needs 81% on the rest"), or the mark once everything is in.
@@ -103,9 +103,14 @@ function marksLine(code: string): string {
   const rows = calc.value[code]?.rows
   const r = rows ? finalNeeds(partsFromRows(rows)) : null
   if (!r || r.doneWeight <= 0) return ''
-  if (r.mark !== null) return t.value('sem.markFinal', { mark: r.mark, band: gradeOf(r.mark) })
-  const soFar = t.value('sem.marksSoFar', { earned: r.earned, done: r.doneWeight })
-  const aim = r.bands.find((b) => b.status !== 'impossible')
+  // Same grade as the calculator: a failed hurdle is NH, a pass/fail subject is P or N.
+  const passFail = !!data.value.subjects[code]?.passFail
+  if (r.mark !== null) return t.value('sem.markFinal', { mark: r.mark, band: finalBand(r, passFail) })
+  // Both out of 100, as the calculator counts them (hand-typed weights may not add up to 100).
+  const soFar = t.value('sem.marksSoFar', { earned: r.earned, done: Math.round(r.doneWeight * (100 / r.totalWeight) * 10) / 10 })
+  // A hurdle already failed: no grade is in reach, the calculator says why.
+  if (r.hurdlesMissed.length) return soFar
+  const aim = r.bands.find((b) => b.status !== 'impossible' && (!passFail || b.band === 'P'))
   if (!aim) return soFar
   return `${soFar} · ${aim.status === 'secured' ? t.value('sem.bandSecured', { band: aim.band }) : t.value('sem.bandNeeds', { band: aim.band, n: aim.needed! })}`
 }
@@ -117,13 +122,16 @@ function saveCalendar(): void {
   if (!n) return
   const sem = n.sem
   const official = datesForTerms(KEY_DATES, [{ year: sem.year, period: sem.term }])
-  const tasks = cards.value.flatMap((c) =>
+  // Before the semester starts too: its subjects come from the plan (hidden ones left out).
+  const tasks = cardsFor(termSubjects.value.filter((c) => !hidden.value.has(c))).flatMap((c) =>
     c.items.flatMap((i) =>
       dueSegments(i.timing, sem).map((k) => {
         const seg = sem.segments[k]!
         const end = seg.kind === 'teach' ? addDays(seg.start, 4) : (sem.exams?.end ?? seg.end)
         // One event per week, each with its own id (a task due in Weeks 7 and 12 is two events).
-        return { id: `${termKey.value}-${i.id.replace(':', '-')}-${k}`, start: seg.start, end, url: `https://${LIVE_HOST}/subject/${c.code}/`, summary: t.value('sem.icsTask', { code: c.code, task: i.label, weight: i.weight, when: i.when }) }
+        // The exam period starts on the first exam day, not the Monday of its week.
+        const start = seg.kind === 'exams' ? (sem.exams?.start ?? seg.start) : seg.start
+        return { id: `${termKey.value}-${i.id.replace(':', '-')}-${k}`, start, end, url: `https://${LIVE_HOST}/subject/${c.code}/`, summary: t.value('sem.icsTask', { code: c.code, task: i.label, weight: i.weight, when: i.when }) }
       }),
     ),
   )
@@ -167,6 +175,10 @@ const upcoming = computed(() => (today.value ? nextKeyDates(KEY_DATES, today.val
 const first = computed(() => upcoming.value[0])
 const later = computed(() => upcoming.value.slice(1))
 const kindName = (d: KeyDate) => t.value(`guide.kd.kind.${d.kind}`)
+// The last day the University has published; past it, the page says so instead of going blank.
+const lastPublished = KEY_DATES.reduce((m, d) => (d.end > m ? d.end : m), '')
+// With the year: it's read from a later year.
+const lastPublishedText = computed(() => new Intl.DateTimeFormat(locale.value, { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' }).format(new Date(`${lastPublished}T00:00:00Z`)))
 function dateWhen(i: { date: KeyDate; days: number; running: boolean }): string {
   if (i.running) return t.value('next.until', { date: day(i.date.end) })
   return when(i.days, i.date.start)
@@ -326,18 +338,18 @@ const caption = computed(() => {
               </div>
             </details>
           </div>
-          <p v-if="hidden.size" class="hidden-line">
-            {{ t('sem.hiddenCount', { n: hidden.size }) }}
+          <p v-if="hiddenCount" class="hidden-line">
+            {{ t('sem.hiddenCount', { n: hiddenCount }) }}
             <button class="text-button" type="button" @click="showAll">{{ t('sem.showHidden') }}</button>
           </p>
         </section>
 
         <!-- Under way but nothing of theirs: one way to add them. -->
         <section v-else-if="teachingish" class="surface card empty-card">
-          <h2 class="card-title">{{ hidden.size ? t('sem.mineTitle') : t('sem.emptyTitle') }}</h2>
-          <template v-if="hidden.size">
+          <h2 class="card-title">{{ hiddenCount ? t('sem.mineTitle') : t('sem.emptyTitle') }}</h2>
+          <template v-if="hiddenCount">
             <p class="hidden-line">
-              {{ t('sem.hiddenCount', { n: hidden.size }) }}
+              {{ t('sem.hiddenCount', { n: hiddenCount }) }}
               <button class="text-button" type="button" @click="showAll">{{ t('sem.showHidden') }}</button>
             </p>
           </template>
@@ -366,22 +378,30 @@ const caption = computed(() => {
             <a class="button button-accent" :href="link('plan/')">{{ t('sem.toPlanner') }}</a>
           </div>
         </section>
+        <!-- Past the last published date: say so rather than leave the page blank. -->
+        <section v-if="!first" class="surface card empty-card">
+          <h2 class="card-title">{{ t('sem.nextTitle') }}</h2>
+          <p class="card-sub">{{ t('sem.noMoreDates', { date: lastPublishedText }) }}</p>
+          <div class="row-actions">
+            <a class="text-link" :href="link('guide/key-dates/')">{{ t('next.all') }}<ArrowRight :size="14" aria-hidden="true" /></a>
+          </div>
+        </section>
       </div>
 
       <aside class="sem-rail">
         <section v-if="first" class="surface card next-card" aria-labelledby="sem-next">
           <h2 id="sem-next" class="card-eyebrow">{{ t('sem.nextTitle') }}</h2>
-          <p class="next-what">{{ kindName(first.date) }}</p>
+          <p class="next-what">{{ dateLabel(first.date) }}</p>
           <p class="next-date">
             <span>{{ range(first.date) }}</span>
-            <span v-if="!first.running" class="next-when" :class="{ soon: soon(first) }">{{ dateWhen(first) }}</span>
+            <span v-if="!first.running && first.days <= 14" class="next-when" :class="{ soon: soon(first) }">{{ dateWhen(first) }}</span>
           </p>
           <a class="text-link" :href="link(actionFor(first.date).to)">{{ actionFor(first.date).label }}<ArrowRight :size="14" aria-hidden="true" /></a>
           <template v-if="later.length">
             <h3 class="card-eyebrow later-title">{{ t('sem.laterTitle') }}</h3>
             <ul class="later">
               <li v-for="i in later" :key="i.date.id" class="later-row">
-                <span class="later-what">{{ kindName(i.date) }}</span>
+                <span class="later-what">{{ dateLabel(i.date) }}</span>
                 <span class="later-when" :class="{ soon: soon(i) }">{{ i.days <= 14 || i.running ? dateWhen(i) : range(i.date) }}</span>
               </li>
             </ul>
@@ -395,7 +415,8 @@ const caption = computed(() => {
           <ul class="tool-list">
             <li><a class="tool" :href="link('tools/final/')"><Calculator :size="18" aria-hidden="true" /><span>{{ t('sem.finalCalc') }}</span></a></li>
             <li><a class="tool" :href="link('tools/revision/')"><CalendarDays :size="18" aria-hidden="true" /><span>{{ t('sem.revision') }}</span></a></li>
-            <li v-if="now">
+            <!-- After results the semester shown is the one just finished: nothing ahead to add. -->
+            <li v-if="now && now.phase !== 'results'">
               <button class="tool" type="button" @click="saveCalendar"><CalendarPlus :size="18" aria-hidden="true" /><span>{{ t('sem.addCalendar') }}<small>{{ t('sem.addCalendarText') }}</small></span></button>
             </li>
             <li><a class="tool" :href="link('tools/wam/')"><Gauge :size="18" aria-hidden="true" /><span>{{ t('sem.wam') }}</span></a></li>

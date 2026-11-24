@@ -931,7 +931,7 @@ function semesterBody(code: LocaleCode, t: Translate): string {
       const rows = s.segments.map((g) => {
         if (g.kind === 'teach') return t('sem.weekStarts', { n: g.week, date: day(g.start) })
         const range = g.kind === 'swotvac' && s.swotvac ? span(s.swotvac.start, s.swotvac.end) : g.kind === 'exams' && s.exams ? span(s.exams.start, s.exams.end) : span(g.start, g.end)
-        return `${t(phaseKey[g.kind])}: ${range}`
+        return `${t(phaseKey[g.kind])}${t('labelSep')}${range}`
       })
       return `<h2>${esc(t('sem.weeksTitle', { term: term(s.year, s.term) }))}</h2><ul>${rows.map((r) => `<li>${esc(r)}</li>`).join('')}</ul>`
     })
@@ -942,7 +942,7 @@ function semesterBody(code: LocaleCode, t: Translate): string {
     `<p>${esc(t('sem.lede'))}</p>`,
     status ? `<p>${esc(t('sem.asOf', { date: day(today), status }))}</p>` : '',
     next.length
-      ? `<h2>${esc(t('sem.nextTitle'))}</h2><ul>${next.map((i) => `<li>${esc(t(`guide.kd.kind.${i.date.kind}`))}: ${esc(span(i.date.start, i.date.end))}</li>`).join('')}</ul><p>${esc(t('sem.officialNote'))} <a href="${href(code, 'guide/key-dates')}">${esc(t('next.all'))}</a></p>`
+      ? `<h2>${esc(t('sem.nextTitle'))}</h2><ul>${next.map((i) => `<li>${esc(t(`guide.kd.kind.${i.date.kind}`) + ((i.date.term === 'summer' || i.date.term === 'winter') && i.date.kind !== 'reenrol' && i.date.kind !== 'reenrolLate' ? ` · ${term(i.date.year, i.date.term)}` : ''))}${t('labelSep')}${esc(span(i.date.start, i.date.end))}</li>`).join('')}</ul><p>${esc(t('sem.officialNote'))} <a href="${href(code, 'guide/key-dates')}">${esc(t('next.all'))}</a></p>`
       : '',
     weeks,
     `<h2>${esc(t('sem.mineTitle'))}</h2><p>${esc(t('sem.emptyText'))} ${esc(t('sem.handbookNote'))}</p>`,
@@ -1025,11 +1025,12 @@ function mainPages(code: LocaleCode): Page[] {
         ['about.f.suggest', 'about.f.suggestText'],
         ['browse.switchMajors', 'majors.cardText'],
         ['about.f.record', 'about.f.recordText'],
+        ['about.f.semester', 'about.f.semesterText'],
         ['guide.nav', 'guide.lede'],
         ['about.f.rate', 'about.f.rateText'],
       ]
         .map(([n, x]) => `<li><strong>${esc(t(n!))}</strong>: ${esc(t(x!))}</li>`)
-        .join('')}</ul><ul>${['free', 'private', 'unofficial'].map((k) => `<li>${esc(t(`about.p.${k}`))}</li>`).join('')}</ul><h2>${esc(t('about.dataTitle'))}</h2><ul>${['dataFacts', 'dataRatings', 'dataDiscuss', 'dataSuggest'].map((k) => `<li>${esc(t(`about.${k}`))}</li>`).join('')}</ul>`,
+        .join('')}</ul><ul>${['free', 'private', 'unofficial'].map((k) => `<li>${esc(t(`about.p.${k}`))}</li>`).join('')}</ul><h2 id="get-app">${esc(t('home.install.aboutTitle'))}</h2><p>${esc(t('home.install.aboutShort'))}</p><ul>${['stepChrome', 'stepMac', 'stepIos', 'stepAndroid', 'stepOther'].map((k) => `<li>${esc(t(`home.install.${k}`, { share: t('home.install.share') }))}</li>`).join('')}</ul><h2>${esc(t('about.dataTitle'))}</h2><ul>${['dataFacts', 'dataRatings', 'dataDiscuss', 'dataSuggest'].map((k) => `<li>${esc(t(`about.${k}`))}</li>`).join('')}</ul>`,
     },
     {
       path: 'subjects',

@@ -55,8 +55,10 @@ const cells = computed(() =>
 
 const nowIndex = computed(() => cells.value.findIndex((c) => c.state === 'now'))
 const picked = shallowRef<number | null>(null)
-const shownIndex = computed(() => picked.value ?? (nowIndex.value >= 0 ? nowIndex.value : 0))
-const shown = computed(() => cells.value[shownIndex.value])
+// Outside the semester's weeks (before it, or waiting for results) no week is open until one is picked:
+// opening week 1 then read as if it were this week.
+const shownIndex = computed(() => picked.value ?? (nowIndex.value >= 0 ? nowIndex.value : null))
+const shown = computed(() => (shownIndex.value === null ? undefined : cells.value[shownIndex.value]))
 
 // This week scrolled into view inside the strip's own box (never the page).
 const box = useTemplateRef<HTMLElement>('box')

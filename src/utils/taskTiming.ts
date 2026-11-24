@@ -12,7 +12,8 @@ export function numericRange(locale: string, start: string, end: string): string
 
 /**
  * How a task's timing reads ("Week 6", "Weeks 4–12", "Exam period 6/7–6/25"). With no timing the
- * Handbook gave nothing we understood, so it just says "During semester". `examRange`: the
+ * Handbook gave nothing we could read for sure (or nothing at all), so it points to Canvas rather
+ * than guess. `examRange`: the
  * official exam dates, when known.
  */
 export function timingLabel(t: T, timing: Timing | undefined, examRange?: string): string {
@@ -21,7 +22,7 @@ export function timingLabel(t: T, timing: Timing | undefined, examRange?: string
     case 'week':
       return timing.to ? t('timing.weekRange', { from: timing.from, to: timing.to }) : t('timing.week', { n: timing.from })
     case 'weeks':
-      return t('timing.weeks', { list: timing.weeks.join(', ') })
+      return t('timing.weeks', { list: timing.weeks.join(t('listSep')) })
     case 'afterTeaching':
       return timing.weeks === 1 ? t('timing.afterTeachingOne') : t('timing.afterTeaching', { n: timing.weeks })
     case 'exam':
