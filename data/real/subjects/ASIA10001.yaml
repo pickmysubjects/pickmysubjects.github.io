@@ -32,6 +32,9 @@ assessment:
       text: Week 6
   - kind: report
     weight: 60
+    timing:
+      kind: other
+      text: Week 10 and examination period
 weekly_contact_hours: 2.5
 breadth_for:
   - Bachelor of Biomedicine

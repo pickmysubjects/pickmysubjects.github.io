@@ -30,6 +30,9 @@ assessment:
       text: From Week 1 to Week 12
   - kind: assignment
     weight: 50
+    timing:
+      kind: other
+      text: Due end of Week 1 of examination period
 weekly_contact_hours: 4.5
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/frst20015

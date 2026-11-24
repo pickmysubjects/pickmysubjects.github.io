@@ -23,6 +23,9 @@ assessment:
       text: Mid semester
   - kind: assignment
     weight: 20
+    timing:
+      kind: other
+      text: Late semester
   - kind: project
     weight: 40
     timing:

@@ -25,10 +25,19 @@ non_allowed: []
 assessment:
   - kind: assignment
     weight: 30
+    timing:
+      kind: other
+      text: Two weeks after practical class
   - kind: assignment
     weight: 20
+    timing:
+      kind: other
+      text: Two weeks after practical class
   - kind: quiz
     weight: 10
+    timing:
+      kind: other
+      text: At the end of each module
   - kind: exam
     weight: 40
     timing:

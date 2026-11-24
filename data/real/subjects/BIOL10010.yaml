@@ -41,6 +41,9 @@ topics:
 assessment:
   - kind: test
     weight: 40
+    timing:
+      kind: other
+      text: Fortnightly across the semester
   - kind: report
     weight: 20
     group: true

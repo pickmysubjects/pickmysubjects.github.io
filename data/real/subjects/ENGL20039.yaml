@@ -23,6 +23,9 @@ assessment:
       text: Week 8
   - kind: report
     weight: 60
+    timing:
+      kind: other
+      text: Written component due Week 12 with Interactive Oral (IOA) during exam period
 weekly_contact_hours: 2
 breadth_for:
   - Bachelor of Biomedicine

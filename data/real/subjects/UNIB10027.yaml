@@ -28,6 +28,9 @@ assessment:
   - kind: presentation
     weight: 30
     group: true
+    timing:
+      kind: other
+      text: Approx. weeks 7‐8
   - kind: report
     weight: 40
     timing:

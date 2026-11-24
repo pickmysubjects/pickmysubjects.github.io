@@ -24,6 +24,9 @@ assessment:
       text: Week 5 and Week 11
   - kind: test
     weight: 30
+    timing:
+      kind: other
+      text: From Week 2 to Week 11 (on a roster)
   - kind: assignment
     weight: 50
     timing:

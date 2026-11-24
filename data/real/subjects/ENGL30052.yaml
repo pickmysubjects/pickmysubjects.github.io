@@ -23,8 +23,14 @@ topics:
 assessment:
   - kind: project
     weight: 15
+    timing:
+      kind: other
+      text: Early-to-mid semester
   - kind: assignment
     weight: 70
+    timing:
+      kind: other
+      text: Mid-to-late semester
   - kind: presentation
     weight: 15
     timing:

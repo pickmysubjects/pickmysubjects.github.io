@@ -35,6 +35,9 @@ non_allowed: []
 assessment:
   - kind: assignment
     weight: 45
+    timing:
+      kind: other
+      text: Due in Week 3, 6, 8 and 10.
   - kind: quiz
     weight: 20
     timing:

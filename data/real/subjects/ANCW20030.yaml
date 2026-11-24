@@ -29,6 +29,9 @@ assessment:
       text: Week 9
   - kind: presentation
     weight: 35
+    timing:
+      kind: other
+      text: "Portfolio: Week 12 Oral: Examination period"
 weekly_contact_hours: 2
 breadth_for:
   - Bachelor of Commerce

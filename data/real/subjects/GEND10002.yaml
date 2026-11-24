@@ -40,6 +40,9 @@ assessment:
   - kind: presentation
     weight: 40
     group: true
+    timing:
+      kind: other
+      text: IOA takes place in weeks 10 to 12; group project due during the exam period
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Biomedicine

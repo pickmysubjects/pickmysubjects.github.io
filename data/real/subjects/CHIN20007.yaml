@@ -18,6 +18,9 @@ topics:
 assessment:
   - kind: presentation
     weight: 40
+    timing:
+      kind: other
+      text: Week 5 (written) and Week 6 (oral)
   - kind: assignment
     weight: 20
     group: true
@@ -27,6 +30,9 @@ assessment:
       text: Week 10
   - kind: presentation
     weight: 40
+    timing:
+      kind: other
+      text: Week 12 (oral) and during the examination period (written)
 weekly_contact_hours: 2.5
 breadth_for:
   - Bachelor of Biomedicine

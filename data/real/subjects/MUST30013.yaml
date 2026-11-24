@@ -19,12 +19,24 @@ topics:
 assessment:
   - kind: assignment
     weight: 20
+    timing:
+      kind: other
+      text: End of placement
   - kind: project
     weight: 20
+    timing:
+      kind: other
+      text: End of placement
   - kind: project
     weight: 30
+    timing:
+      kind: other
+      text: 2 weeks after placement
   - kind: report
     weight: 30
+    timing:
+      kind: other
+      text: 3 weeks after placement
 weekly_contact_hours: 4
 min_attendance: 75
 breadth_for: []

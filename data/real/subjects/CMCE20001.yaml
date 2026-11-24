@@ -39,6 +39,9 @@ assessment:
       text: Week 12
   - kind: presentation
     weight: 25
+    timing:
+      kind: other
+      text: Week 14
 breadth_for: []
 pass_fail: true
 prescribed_texts: false

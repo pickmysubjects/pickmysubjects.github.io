@@ -25,6 +25,9 @@ assessment:
   - kind: presentation
     weight: 60
     group: true
+    timing:
+      kind: other
+      text: End of 2nd week of teaching
   - kind: project
     weight: 30
     timing:

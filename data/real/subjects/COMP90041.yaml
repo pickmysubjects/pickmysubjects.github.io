@@ -49,6 +49,9 @@ assessment:
   - kind: assignment
     weight: 50
     hurdle: true
+    timing:
+      kind: other
+      text: Week 7 or 8 (Assignment 1) and Week 11 or 12 (Assignment 2)
   - kind: exam
     weight: 40
     hurdle: true

@@ -14,6 +14,9 @@ assessment:
   - kind: presentation
     weight: 15
     group: true
+    timing:
+      kind: other
+      text: Due in Week 4-5
   - kind: report
     weight: 50
     timing:

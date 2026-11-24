@@ -56,6 +56,9 @@ assessment:
     weight: 20
     group: true
     hurdle: true
+    timing:
+      kind: other
+      text: During the examination period (Week 14)
 prescribed_texts: true
 handbook: https://handbook.unimelb.edu.au/2027/subjects/mcen30021
 source_year: 2027

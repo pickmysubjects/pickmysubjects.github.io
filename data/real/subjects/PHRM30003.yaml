@@ -20,6 +20,9 @@ non_allowed: []
 assessment:
   - kind: quiz
     weight: 10
+    timing:
+      kind: other
+      text: Weeks 3-4; 6-8; 9-11
   - kind: test
     weight: 20
     timing:

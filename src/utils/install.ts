@@ -30,6 +30,14 @@ export function captureInstallPrompt(): void {
     installed.value = true
     deferred.value = null
   })
+  // Chrome on Android fires no install prompt once the site is installed, which would read as "no
+  // prompt, use the menu": ask it directly (the manifest lists the site as its own related app).
+  const nav = navigator as Navigator & { getInstalledRelatedApps?: () => Promise<unknown[]> }
+  nav.getInstalledRelatedApps?.()
+    .then((apps) => {
+      if (apps.length) installed.value = true
+    })
+    .catch(() => {})
 }
 
 /** iPhone and iPad, including an iPad that asks for desktop pages (it reports itself as a Mac). */

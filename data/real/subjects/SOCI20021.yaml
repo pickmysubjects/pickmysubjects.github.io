@@ -30,6 +30,9 @@ assessment:
       text: Week 6
   - kind: project
     weight: 55
+    timing:
+      kind: other
+      text: "Project: week 10; Oral reflection: examination period"
 weekly_contact_hours: 1
 breadth_for:
   - Bachelor of Biomedicine

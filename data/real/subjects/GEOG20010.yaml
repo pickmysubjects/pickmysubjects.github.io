@@ -12,6 +12,9 @@ non_allowed: []
 assessment:
   - kind: report
     weight: 10
+    timing:
+      kind: other
+      text: Due one week after the associated tutorial topic
   - kind: project
     weight: 25
     timing:
@@ -19,6 +22,9 @@ assessment:
       text: Mid semester
   - kind: report
     weight: 60
+    timing:
+      kind: other
+      text: During Week 1 of examination period
   - kind: participation
     weight: 5
     timing:

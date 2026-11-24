@@ -44,6 +44,9 @@ assessment:
       text: Throughout the semester
   - kind: test
     weight: 10
+    timing:
+      kind: other
+      text: In either Week 6 or 7
   - kind: exam
     weight: 50
     hurdle: true

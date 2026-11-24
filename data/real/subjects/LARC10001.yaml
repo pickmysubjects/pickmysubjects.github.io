@@ -50,6 +50,9 @@ assessment:
       text: Week 11
   - kind: assignment
     weight: 20
+    timing:
+      kind: other
+      text: Week 14
   - kind: participation
     weight: 10
     timing:

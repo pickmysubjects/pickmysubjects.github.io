@@ -21,6 +21,9 @@ non_allowed: []
 assessment:
   - kind: report
     weight: 50
+    timing:
+      kind: other
+      text: Week 7 and end of Week 1 of Examination Period
   - kind: presentation
     weight: 25
     group: true

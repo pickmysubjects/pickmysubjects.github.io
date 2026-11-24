@@ -9,7 +9,7 @@
  * Only pages from that Handbook year, for subject files whose data is from that year too, are used.
  * The page's tasks are matched to ours by order and weight; when the count or any weight differs,
  * the subject is skipped and listed, never guessed. Timing text we don't recognise leaves that
- * task's timing unset and is listed too. Later pages of the same subject win over earlier ones.
+ * task's words as they are (kind 'other', only quoted on the site) and is listed too. Later pages of the same subject win over earlier ones.
  */
 import { existsSync, readFileSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
@@ -91,7 +91,9 @@ for (const [code, body] of [...pages].sort(([a], [b]) => a.localeCompare(b))) {
       yamlDoc.setIn(['assessment', i, 'timing'], yamlDoc.createNode(timing))
       timed++
     } else {
-      yamlDoc.deleteIn(['assessment', i, 'timing'])
+      // Text we can't read for sure is kept as the Handbook wrote it (only quoted on the site).
+      if (text) yamlDoc.setIn(['assessment', i, 'timing'], yamlDoc.createNode({ kind: 'other', text: text.replace(/\s+/g, ' ').trim() }))
+      else yamlDoc.deleteIn(['assessment', i, 'timing'])
       const key = text || '(no timing cell)'
       unknownText.set(key, [...(unknownText.get(key) ?? []), code])
     }

@@ -30,6 +30,9 @@ non_allowed: []
 assessment:
   - kind: assignment
     weight: 60
+    timing:
+      kind: other
+      text: Throughout the semester and during the examination period
   - kind: presentation
     weight: 10
     hurdle: true

@@ -26,6 +26,9 @@ assessment:
       text: From Week 2 to Week 12
   - kind: quiz
     weight: 20
+    timing:
+      kind: other
+      text: Weeks 2-6, 8-10
   - kind: test
     weight: 30
     timing:

@@ -27,6 +27,9 @@ assessment:
       text: Week 5 and 10
   - kind: presentation
     weight: 50
+    timing:
+      kind: other
+      text: Week 12 (IOA) and during the examination period (essay)
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Biomedicine

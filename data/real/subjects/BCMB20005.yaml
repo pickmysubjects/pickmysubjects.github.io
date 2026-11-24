@@ -45,6 +45,9 @@ assessment:
       text: Week 12
   - kind: report
     weight: 25
+    timing:
+      kind: other
+      text: Report 1 Due Week 5Report 2 Due first day of exam period
   - kind: exam
     weight: 35
     timing:

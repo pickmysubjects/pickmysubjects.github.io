@@ -47,8 +47,18 @@ assessment:
   - kind: report
     weight: 40
     group: true
+    timing:
+      kind: week
+      from: 6
+      to: 8
+      text: Weeks 6-8
   - kind: test
     weight: 20
+    timing:
+      kind: week
+      from: 6
+      to: 8
+      text: Weeks 6-8
   - kind: exam
     weight: 40
     timing:

@@ -41,8 +41,14 @@ assessment:
       text: Throughout the semester
   - kind: participation
     weight: 10
+    timing:
+      kind: other
+      text: In lectures throughout the semester
   - kind: participation
     weight: 5
+    timing:
+      kind: other
+      text: In tutorials throughout the semester
   - kind: exam
     weight: 60
     hurdle: true

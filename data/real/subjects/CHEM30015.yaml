@@ -30,6 +30,9 @@ assessment:
   - kind: report
     weight: 12
     group: true
+    timing:
+      kind: other
+      text: During Weeks 9 - 12, with report due during the examination period
 weekly_contact_hours: 7
 handbook: https://handbook.unimelb.edu.au/2027/subjects/chem30015
 source_year: 2027

@@ -28,6 +28,9 @@ assessment:
       text: Week 5, 8 and 11
   - kind: presentation
     weight: 55
+    timing:
+      kind: other
+      text: Interactive oral assessment in week 12, Policy brief due during the examination period.
 weekly_contact_hours: 2.5
 breadth_for: []
 min_attendance: 80

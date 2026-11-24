@@ -32,6 +32,9 @@ assessment:
   - kind: assignment
     weight: 35
     group: true
+    timing:
+      kind: other
+      text: Week 11 (Performance) & during the assessment period (Self & peer assessment)
   - kind: presentation
     weight: 40
     group: true

@@ -47,6 +47,9 @@ assessment:
       text: From Week 11 to Week 12
   - kind: report
     weight: 40
+    timing:
+      kind: other
+      text: Week 14
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Design

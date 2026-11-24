@@ -29,6 +29,9 @@ assessment:
       text: Week 6
   - kind: participation
     weight: 60
+    timing:
+      kind: other
+      text: "Workshopping in Weeks 7-12; written output: examination period"
   - kind: assignment
     weight: 10
     timing:

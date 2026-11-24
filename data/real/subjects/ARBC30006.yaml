@@ -28,6 +28,9 @@ assessment:
       text: Throughout the semester
   - kind: report
     weight: 25
+    timing:
+      kind: other
+      text: Due after Easter non-teaching period
   - kind: presentation
     weight: 15
     timing:

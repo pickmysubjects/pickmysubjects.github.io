@@ -11,6 +11,9 @@ non_allowed: []
 assessment:
   - kind: assignment
     weight: 30
+    timing:
+      kind: other
+      text: Week 4, Week 8 and During the assessment period
   - kind: participation
     weight: 30
     timing:

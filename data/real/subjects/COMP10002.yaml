@@ -51,6 +51,9 @@ assessment:
   - kind: test
     weight: 15
     hurdle: true
+    timing:
+      kind: other
+      text: Week 4 or 5
   - kind: assignment
     weight: 12.5
     timing:

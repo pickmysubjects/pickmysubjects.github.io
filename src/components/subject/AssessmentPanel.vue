@@ -37,7 +37,7 @@ const tasks = computed(() => {
       const n = (seen.get(x.kind) ?? 0) + 1
       seen.set(x.kind, n)
       const name = t.value(`assess.kind.${x.kind}`) + ((counts.get(x.kind) ?? 0) > 1 ? ` ${n}` : '')
-      return { name, weight: x.weight, hurdle: !!x.hurdle, when: timingLabel(t.value, x.timing), source: x.timing?.text }
+      return { name, weight: x.weight, hurdle: !!x.hurdle, when: timingLabel(t.value, x.timing), source: x.timing?.kind === 'other' ? undefined : x.timing?.text, quote: x.timing?.kind === 'other' }
     })
 })
 const examHurdle = computed(() => info.value?.examHurdle ?? false)
@@ -81,7 +81,7 @@ const otherTerms = computed(() => {
       <li v-for="(x, i) in tasks" :key="i" class="assess-task">
         <span class="assess-task-name">{{ x.name }} <strong>{{ x.weight }}%</strong></span>
         <span v-if="x.hurdle" class="assess-pill">{{ t('next.hurdle') }}</span>
-        <span class="assess-when" :title="x.source ? t('timing.source', { text: x.source }) : undefined">{{ x.when }}</span>
+        <span class="assess-when" :class="{ quote: x.quote }" :title="x.source ? t('timing.source', { text: x.source }) : undefined">{{ x.when }}</span>
       </li>
     </ul>
 
@@ -255,6 +255,14 @@ const otherTerms = computed(() => {
   color: var(--ink-soft);
   text-align: end;
   font-variant-numeric: tabular-nums;
+}
+
+/* The Handbook's own words can be a sentence: on their own line under the task. */
+.assess-when.quote {
+  grid-column: 1 / -1;
+  padding-bottom: 8px;
+  font-size: var(--fs-small);
+  text-align: start;
 }
 
 @media (max-width: 560px) {

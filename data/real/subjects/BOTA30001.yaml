@@ -35,6 +35,9 @@ recommended:
 assessment:
   - kind: test
     weight: 5
+    timing:
+      kind: other
+      text: Mid-way through the intensive teaching period
   - kind: project
     weight: 15
     group: true

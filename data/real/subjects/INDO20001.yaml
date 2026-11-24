@@ -23,10 +23,19 @@ topics:
 assessment:
   - kind: participation
     weight: 10
+    timing:
+      kind: other
+      text: From Day 1 to Day 8
   - kind: report
     weight: 30
+    timing:
+      kind: other
+      text: Day 9
   - kind: presentation
     weight: 30
+    timing:
+      kind: other
+      text: Day 10
   - kind: report
     weight: 30
     timing:

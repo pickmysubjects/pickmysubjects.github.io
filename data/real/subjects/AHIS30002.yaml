@@ -25,8 +25,14 @@ assessment:
   - kind: report
     weight: 25
     group: true
+    timing:
+      kind: other
+      text: Due two weeks after the on-site teaching has ended
   - kind: report
     weight: 50
+    timing:
+      kind: other
+      text: Due two months after the on-site teaching has ended
 breadth_for:
   - Bachelor of Biomedicine
   - Bachelor of Commerce

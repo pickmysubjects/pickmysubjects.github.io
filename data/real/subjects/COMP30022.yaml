@@ -69,4 +69,7 @@ assessment:
       text: Week 12
   - kind: report
     weight: 20
+    timing:
+      kind: other
+      text: Approximately Week 11
 weekly_contact_hours: 3

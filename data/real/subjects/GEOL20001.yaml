@@ -13,6 +13,9 @@ non_allowed: []
 assessment:
   - kind: report
     weight: 50
+    timing:
+      kind: other
+      text: Four weeks after the completion of field trip
   - kind: assignment
     weight: 50
     timing:

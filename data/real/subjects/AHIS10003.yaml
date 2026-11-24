@@ -19,6 +19,9 @@ topics:
 assessment:
   - kind: participation
     weight: 10
+    timing:
+      kind: other
+      text: Weeks 2, 3 and 5 to 11
   - kind: assignment
     weight: 10
     timing:

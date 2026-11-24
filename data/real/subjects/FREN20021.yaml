@@ -38,6 +38,9 @@ topics:
 assessment:
   - kind: presentation
     weight: 20
+    timing:
+      kind: other
+      text: During the pre-teaching period
   - kind: assignment
     weight: 30
     timing:

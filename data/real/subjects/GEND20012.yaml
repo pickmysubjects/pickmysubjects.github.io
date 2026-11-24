@@ -23,6 +23,9 @@ assessment:
       text: Week 6
   - kind: report
     weight: 50
+    timing:
+      kind: other
+      text: Week 10 (essay) and Week 12 (oral assessment)
   - kind: assignment
     weight: 15
     timing:

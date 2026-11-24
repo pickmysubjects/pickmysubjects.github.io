@@ -25,8 +25,14 @@ assessment:
       text: Throughout the teaching period
   - kind: test
     weight: 10
+    timing:
+      kind: other
+      text: Around week 5
   - kind: test
     weight: 10
+    timing:
+      kind: other
+      text: Around week 10
   - kind: exam
     weight: 45
     timing:

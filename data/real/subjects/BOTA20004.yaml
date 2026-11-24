@@ -31,6 +31,9 @@ assessment:
       text: During the teaching period
   - kind: project
     weight: 25
+    timing:
+      kind: other
+      text: At the start of Semester 1
   - kind: exam
     weight: 65
     timing:

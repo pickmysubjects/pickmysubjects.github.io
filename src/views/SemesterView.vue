@@ -36,7 +36,7 @@ const { t, locale } = useI18n()
 const { data } = useDataset()
 const phone = usePhone()
 const { rated, markRated } = useRated()
-const { today, now, subjects, termSubjects, day, range, when, termName, status, dateLabel } = useSemester()
+const { today, now, subjects, termSubjects, shortTerm, day, range, when, termName, status, dateLabel } = useSemester()
 const plan = usePlan()
 
 const art = () => import('@/components/tools/art/ArtRevision.vue')
@@ -297,6 +297,20 @@ const caption = computed(() => {
           </ul>
         </section>
 
+        <!-- A Summer or Winter Term under way with the student's subjects in it. -->
+        <section v-if="shortTerm" class="surface card empty-card" aria-labelledby="sem-short">
+          <h2 id="sem-short" class="card-title">{{ t('sem.shortTitle', { term: termName(shortTerm.year, shortTerm.term) }) }}</h2>
+          <p class="card-sub">
+            {{ shortTerm.exams ? t('sem.shortWhen', { classes: range(shortTerm.teaching), exams: range(shortTerm.exams) }) : t('sem.shortClasses', { classes: range(shortTerm.teaching) }) }}
+          </p>
+          <ul class="planned">
+            <li v-for="code in shortTerm.subjects" :key="code">
+              <a class="planned-row" :href="link(`subject/${code}/`)"><span class="code">{{ code }}</span> {{ localTitle(data.subjects[code]!, locale) || data.subjects[code]!.title }}</a>
+            </li>
+          </ul>
+          <p class="note">{{ t('assess.otherTerms') }}</p>
+        </section>
+
         <section v-if="now" class="surface card strip-card" aria-labelledby="sem-weeks">
           <header class="card-head">
             <h2 id="sem-weeks" class="card-title">{{ t('sem.stripLabel', { term: name }) }}</h2>
@@ -328,7 +342,7 @@ const caption = computed(() => {
                     <span class="task-name" :class="{ 'is-done': c.doneSet.has(i.id) }">{{ i.label }} {{ i.weight }}%</span>
                   </label>
                   <span v-if="i.hurdle" class="pill">{{ t('next.hurdle') }}</span>
-                  <span class="task-when" :title="i.timing ? t('timing.source', { text: i.timing.text }) : undefined">{{ i.when }}</span>
+                  <span class="task-when" :class="{ quote: i.timing?.kind === 'other' }" :title="i.timing && i.timing.kind !== 'other' ? t('timing.source', { text: i.timing.text }) : undefined">{{ i.when }}</span>
                 </li>
               </ul>
               <div class="subject-actions">
@@ -692,6 +706,15 @@ const caption = computed(() => {
 .task-when {
   color: var(--ink-soft);
   text-align: end;
+}
+
+/* The Handbook's own words can be a sentence: on their own line, under the task's name. */
+.task-when.quote {
+  grid-column: 1 / -1;
+  margin-top: -10px;
+  padding-inline-start: 32px;
+  padding-bottom: 6px;
+  text-align: start;
 }
 
 .pill {

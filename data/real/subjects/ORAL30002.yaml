@@ -40,9 +40,15 @@ assessment:
       text: Second half of the teaching period
   - kind: presentation
     weight: 15
+    timing:
+      kind: other
+      text: During the final placement period
   - kind: assignment
     weight: 5
     group: true
+    timing:
+      kind: other
+      text: During the rural placement
   - kind: assignment
     weight: 20
     hurdle: true

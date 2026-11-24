@@ -33,6 +33,9 @@ assessment:
       text: From Week 3 to Week 11
   - kind: assignment
     weight: 15
+    timing:
+      kind: other
+      text: Due in week following presentation
   - kind: exam
     weight: 40
     timing:

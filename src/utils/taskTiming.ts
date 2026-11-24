@@ -29,6 +29,9 @@ export function timingLabel(t: T, timing: Timing | undefined, examRange?: string
       return examRange ? t('timing.examDates', { range: examRange }) : t('timing.exam')
     case 'assessmentPeriod':
       return examRange ? t('timing.assessmentPeriodDates', { range: examRange }) : t('timing.assessmentPeriod')
+    case 'other':
+      // The Handbook's own words, quoted (in English: it's the Handbook's text).
+      return t('timing.handbookSays', { text: timing.text })
     default:
       return t(`timing.${timing.kind}`)
   }
@@ -57,6 +60,8 @@ export function timingOrder(timing: Timing | undefined): number {
       return 20
     case 'afterTeaching':
       return 20 + timing.weeks
+    case 'other':
+      return 98
   }
 }
 

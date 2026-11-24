@@ -36,6 +36,9 @@ assessment:
       text: Week 7
   - kind: assignment
     weight: 25
+    timing:
+      kind: other
+      text: Week 14
 weekly_contact_hours: 1
 breadth_for:
   - Bachelor of Biomedicine

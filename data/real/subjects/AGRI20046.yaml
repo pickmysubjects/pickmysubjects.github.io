@@ -23,8 +23,14 @@ assessment:
   - kind: participation
     weight: 5
     hurdle: true
+    timing:
+      kind: other
+      text: Week 1 of Winter term
   - kind: presentation
     weight: 25
+    timing:
+      kind: other
+      text: Week 2 or 3 of Winter term; during field trip
   - kind: assignment
     weight: 20
     timing:
@@ -40,6 +46,9 @@ assessment:
   - kind: assignment
     weight: 0
     hurdle: true
+    timing:
+      kind: other
+      text: Week 2 or 3 of Winter term
 weekly_contact_hours: 1
 min_attendance: 100
 breadth_for: []

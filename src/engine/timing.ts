@@ -1,9 +1,9 @@
 /**
  * When an assessment task happens, read off the Handbook's "Timing" cell. Only phrasings we
- * recognise for sure get a kind; anything else stays unset (and the import drops it), so the
- * site never shows a time the Handbook didn't give.
+ * recognise for sure get a kind. Anything else is kept by the import as 'other' with the
+ * Handbook's own words, which the site only quotes, so it never shows a time the Handbook didn't give.
  */
-export type TimingKind = 'week' | 'weeks' | 'teaching' | 'early' | 'mid' | 'late' | 'end' | 'exam' | 'assessmentPeriod' | 'afterTeaching'
+export type TimingKind = 'week' | 'weeks' | 'teaching' | 'early' | 'mid' | 'late' | 'end' | 'exam' | 'assessmentPeriod' | 'afterTeaching' | 'other'
 
 export type Timing =
   /** One teaching week, or a run of them ("From Week 4 to Week 12"). */
@@ -23,6 +23,8 @@ export type Timing =
   | { kind: 'assessmentPeriod'; text: string }
   /** N weeks after teaching ends. */
   | { kind: 'afterTeaching'; weeks: number; text: string }
+  /** Something we can't read for sure ("Week 4 or 5"): only quoted, never placed on a week. */
+  | { kind: 'other'; text: string }
 
 const MAX_WEEK = 12 // teaching weeks; "Week 14" and the like count past the break and are left unset
 const okWeek = (n: number) => Number.isInteger(n) && n >= 1 && n <= MAX_WEEK

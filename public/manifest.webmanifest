@@ -67,5 +67,11 @@
         }
       ]
     }
+  ],
+  "related_applications": [
+    {
+      "platform": "webapp",
+      "url": "https://pickmysubjects.github.io/manifest.webmanifest"
+    }
   ]
 }

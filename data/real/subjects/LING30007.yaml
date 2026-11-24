@@ -22,8 +22,14 @@ assessment:
       text: During the teaching period
   - kind: assignment
     weight: 20
+    timing:
+      kind: other
+      text: Between weeks 5 and 6
   - kind: assignment
     weight: 20
+    timing:
+      kind: other
+      text: Between weeks 8 and 10
   - kind: exam
     weight: 50
     timing:

@@ -19,6 +19,9 @@ topics:
 assessment:
   - kind: quiz
     weight: 35
+    timing:
+      kind: other
+      text: From Day 1 to Day 10
   - kind: presentation
     weight: 40
     timing:

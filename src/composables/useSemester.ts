@@ -7,7 +7,7 @@ import { termFullLabel } from '@/i18n/format'
 import type { Period } from '@/engine'
 import { KEY_DATES, melbourneToday, type KeyDate } from '@/utils/keyDates'
 import { semesterNow, type SemesterNow } from '@/utils/semester'
-import { subjectsIn } from '@/utils/whatsNext'
+import { currentTerms, subjectsIn } from '@/utils/whatsNext'
 
 /**
  * Today's place in the semester, shared by the home preview and /this-semester/. Only worked out
@@ -40,6 +40,22 @@ export function useSemester() {
   })
 
   const now = computed<SemesterNow | null>(() => (today.value ? semesterNow(KEY_DATES, today.value) : null))
+
+  /**
+   * A Summer or Winter Term under way (classes or its exams) with the student's subjects in it.
+   * The page is built around the semesters; this keeps those subjects from going missing.
+   */
+  const shortTerm = computed(() => {
+    if (!today.value) return null
+    for (const t of currentTerms(KEY_DATES, today.value)) {
+      if (t.term !== 'summer' && t.term !== 'winter') continue
+      const codes = subjectsIn(t.year, t.term, plan.terms.value, profile.value.results).filter((c) => c in data.value.subjects)
+      if (!codes.length) continue
+      const of = (kind: KeyDate['kind']) => KEY_DATES.find((d) => d.kind === kind && d.year === t.year && d.term === t.term)
+      return { year: t.year, term: t.term, subjects: codes, teaching: of('teaching')!, exams: of('exams') }
+    }
+    return null
+  })
 
   /** The student's subjects in the semester shown, whatever the phase (the calendar file wants them before it starts too). */
   const termSubjects = computed<string[]>(() => {
@@ -111,5 +127,5 @@ export function useSemester() {
     return ''
   })
 
-  return { today, now, subjects, termSubjects, day, range, when, termName, status, dateLabel }
+  return { today, now, subjects, termSubjects, shortTerm, day, range, when, termName, status, dateLabel }
 }

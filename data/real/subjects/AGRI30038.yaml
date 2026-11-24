@@ -36,6 +36,9 @@ non_allowed: []
 assessment:
   - kind: report
     weight: 60
+    timing:
+      kind: other
+      text: From week 4 to the end of semester
   - kind: presentation
     weight: 25
     group: true

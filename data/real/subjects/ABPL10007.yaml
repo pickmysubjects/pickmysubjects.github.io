@@ -35,6 +35,9 @@ assessment:
       text: Week 9
   - kind: assignment
     weight: 25
+    timing:
+      kind: other
+      text: Week 14
   - kind: quiz
     weight: 15
     timing:

@@ -23,13 +23,22 @@ assessment:
   - kind: quiz
     weight: 10
     hurdle: true
+    timing:
+      kind: other
+      text: Day 3
   - kind: exam
     weight: 20
     hurdle: true
+    timing:
+      kind: other
+      text: Day 6
   - kind: project
     weight: 20
     group: true
     hurdle: true
+    timing:
+      kind: other
+      text: Day 10
   - kind: project
     weight: 50
     timing:

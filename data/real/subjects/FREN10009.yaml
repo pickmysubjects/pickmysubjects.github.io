@@ -48,6 +48,9 @@ assessment:
       text: From Week 8 to Week 10
   - kind: project
     weight: 35
+    timing:
+      kind: other
+      text: Interactive oral assessment - Week 12; research project - examination period
 weekly_contact_hours: 4
 breadth_for:
   - Bachelor of Arts

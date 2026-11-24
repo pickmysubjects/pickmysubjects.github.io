@@ -17,13 +17,25 @@ assessment:
   - kind: assignment
     weight: 15
     group: true
+    timing:
+      kind: other
+      text: Week 4 or 5
   - kind: assignment
     weight: 20
+    timing:
+      kind: other
+      text: Approximately Week 7
   - kind: assignment
     weight: 15
     group: true
+    timing:
+      kind: other
+      text: Approximately Week 10
   - kind: assignment
     weight: 20
+    timing:
+      kind: other
+      text: Approximately Week 11
   - kind: assignment
     weight: 30
     timing:

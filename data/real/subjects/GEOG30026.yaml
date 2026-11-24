@@ -17,8 +17,14 @@ non_allowed: []
 assessment:
   - kind: report
     weight: 50
+    timing:
+      kind: other
+      text: Prior to departure to Timor-Leste for field trip
   - kind: assignment
     weight: 20
+    timing:
+      kind: other
+      text: End of field intensive
   - kind: presentation
     weight: 30
     group: true

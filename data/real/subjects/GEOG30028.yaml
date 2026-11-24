@@ -18,10 +18,19 @@ topics:
 assessment:
   - kind: assignment
     weight: 10
+    timing:
+      kind: other
+      text: In the middle of the 2-week teaching period
   - kind: report
     weight: 30
+    timing:
+      kind: other
+      text: One week after the 2-week teaching period
   - kind: report
     weight: 50
+    timing:
+      kind: other
+      text: Five weeks after the 2-week teaching period
   - kind: participation
     weight: 10
     group: true

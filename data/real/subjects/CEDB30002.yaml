@@ -33,6 +33,9 @@ assessment:
   - kind: presentation
     weight: 10
     group: true
+    timing:
+      kind: other
+      text: Late in the semester
   - kind: assignment
     weight: 25
     timing:

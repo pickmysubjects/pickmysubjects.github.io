@@ -42,6 +42,9 @@ assessment:
   - kind: assignment
     weight: 30
     group: true
+    timing:
+      kind: other
+      text: Week 14
 weekly_contact_hours: 4
 breadth_for:
   - Bachelor of Commerce

@@ -19,6 +19,9 @@ topics:
 assessment:
   - kind: participation
     weight: 10
+    timing:
+      kind: other
+      text: Weeks 2 to 6 and 8 to 11
   - kind: presentation
     weight: 10
     group: true

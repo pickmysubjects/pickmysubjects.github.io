@@ -20,6 +20,9 @@ topics:
 assessment:
   - kind: participation
     weight: 10
+    timing:
+      kind: other
+      text: Week 4 (workshop) and Week 5 (summary)
   - kind: assignment
     weight: 20
     timing:

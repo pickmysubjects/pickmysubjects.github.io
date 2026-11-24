@@ -25,6 +25,9 @@ assessment:
       text: Week 7
   - kind: presentation
     weight: 50
+    timing:
+      kind: other
+      text: Synopsis due in Week 12, IOA to take place during the examination period
 weekly_contact_hours: 2.5
 breadth_for: []
 handbook: https://handbook.unimelb.edu.au/2027/subjects/soci30019

@@ -40,6 +40,9 @@ assessment:
       text: Week 7
   - kind: project
     weight: 50
+    timing:
+      kind: other
+      text: Week 11 to 12 (interactive oral) and during the examination period (project)
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Biomedicine

@@ -23,6 +23,9 @@ assessment:
       text: From Week 2 to Week 11
   - kind: participation
     weight: 60
+    timing:
+      kind: other
+      text: "Workshopping: Weeks 4-12; original creative non-fiction piece: exam period"
   - kind: assignment
     weight: 20
     timing:

@@ -19,6 +19,9 @@ topics:
 assessment:
   - kind: assignment
     weight: 30
+    timing:
+      kind: other
+      text: Middle of the assessment period
   - kind: assignment
     weight: 70
     timing:

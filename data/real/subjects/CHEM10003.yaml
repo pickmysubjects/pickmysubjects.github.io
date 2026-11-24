@@ -43,6 +43,9 @@ non_allowed:
 assessment:
   - kind: test
     weight: 15
+    timing:
+      kind: other
+      text: Weekly starting in week 1
   - kind: assignment
     weight: 20
     hurdle: true

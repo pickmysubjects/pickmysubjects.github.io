@@ -24,6 +24,9 @@ topics:
 assessment:
   - kind: quiz
     weight: 25
+    timing:
+      kind: other
+      text: Weeks 3, 5, 7, 10, examination period
   - kind: presentation
     weight: 30
     timing:

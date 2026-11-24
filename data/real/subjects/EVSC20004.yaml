@@ -27,6 +27,9 @@ non_allowed: []
 assessment:
   - kind: quiz
     weight: 15
+    timing:
+      kind: other
+      text: Every second week throughout the semester
   - kind: assignment
     weight: 15
     group: true

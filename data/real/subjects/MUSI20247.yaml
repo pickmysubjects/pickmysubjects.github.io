@@ -14,6 +14,9 @@ assessment:
   - kind: project
     weight: 15
     group: true
+    timing:
+      kind: other
+      text: Early-mid teaching period
   - kind: project
     weight: 25
     group: true
@@ -22,6 +25,9 @@ assessment:
       text: Mid teaching period
   - kind: project
     weight: 35
+    timing:
+      kind: other
+      text: Mid-late teaching period
   - kind: presentation
     weight: 25
     timing:

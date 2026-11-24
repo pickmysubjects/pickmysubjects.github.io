@@ -20,13 +20,25 @@ topics:
 assessment:
   - kind: quiz
     weight: 10
+    timing:
+      kind: other
+      text: During the intensive week
   - kind: presentation
     weight: 20
     group: true
+    timing:
+      kind: other
+      text: During intensive week
   - kind: quiz
     weight: 30
+    timing:
+      kind: other
+      text: Week 1 of Semester 2
   - kind: assignment
     weight: 40
+    timing:
+      kind: other
+      text: Week 2 of Semester 2
 weekly_contact_hours: 3
 campus: Dookie
 breadth_for:

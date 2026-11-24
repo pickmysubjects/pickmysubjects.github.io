@@ -42,6 +42,9 @@ non_allowed:
 assessment:
   - kind: quiz
     weight: 15
+    timing:
+      kind: other
+      text: From Week 2
   - kind: test
     weight: 15
     timing:

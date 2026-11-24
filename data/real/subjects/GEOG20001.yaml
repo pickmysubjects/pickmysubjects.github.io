@@ -36,6 +36,9 @@ assessment:
       text: Throughout the teaching period
   - kind: report
     weight: 20
+    timing:
+      kind: other
+      text: Midway through the teaching period
   - kind: report
     weight: 30
     timing:

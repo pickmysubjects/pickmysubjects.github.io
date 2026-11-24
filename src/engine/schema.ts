@@ -127,7 +127,7 @@ const assessmentTiming = z.discriminatedUnion('kind', [
   z.object({ kind: z.literal('week'), from: week, to: week.optional(), text: timingText }).strict(),
   z.object({ kind: z.literal('weeks'), weeks: z.array(week).min(2), text: timingText }).strict(),
   z.object({ kind: z.literal('afterTeaching'), weeks: z.number().int().min(1).max(6), text: timingText }).strict(),
-  ...(['teaching', 'early', 'mid', 'late', 'end', 'exam', 'assessmentPeriod'] as const).map((k) => z.object({ kind: z.literal(k), text: timingText }).strict()),
+  ...(['teaching', 'early', 'mid', 'late', 'end', 'exam', 'assessmentPeriod', 'other'] as const).map((k) => z.object({ kind: z.literal(k), text: timingText }).strict()),
 ])
 
 const assessmentTask = z

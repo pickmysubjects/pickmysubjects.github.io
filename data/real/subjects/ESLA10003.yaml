@@ -43,6 +43,9 @@ assessment:
       text: From Week 8 to Week 10
   - kind: assignment
     weight: 60
+    timing:
+      kind: other
+      text: From week 11 to the examination period
 weekly_contact_hours: 3
 min_attendance: 80
 breadth_for:

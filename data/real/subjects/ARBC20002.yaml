@@ -27,6 +27,9 @@ assessment:
       text: Throughout the semester
   - kind: test
     weight: 15
+    timing:
+      kind: other
+      text: Due after the Easter non-teaching period
   - kind: assignment
     weight: 20
     timing:

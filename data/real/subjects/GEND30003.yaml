@@ -35,6 +35,9 @@ assessment:
       text: Week 8
   - kind: report
     weight: 60
+    timing:
+      kind: other
+      text: Report due in Week 12; interactive oral assessment conducted in exam period
 weekly_contact_hours: 2
 breadth_for: []
 min_attendance: 80

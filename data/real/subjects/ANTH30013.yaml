@@ -37,6 +37,9 @@ assessment:
   - kind: report
     weight: 60
     group: true
+    timing:
+      kind: other
+      text: Week 12 and Examination period
 weekly_contact_hours: 3
 breadth_for: []
 min_attendance: 80

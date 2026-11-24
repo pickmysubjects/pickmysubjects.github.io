@@ -28,6 +28,9 @@ assessment:
       text: Week 6
   - kind: report
     weight: 60
+    timing:
+      kind: other
+      text: "Essay: Week 12; interactive oral assessment: examination period"
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Biomedicine

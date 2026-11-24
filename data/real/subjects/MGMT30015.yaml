@@ -39,6 +39,9 @@ assessment:
       text: From Week 9 to Week 12
   - kind: assignment
     weight: 35
+    timing:
+      kind: other
+      text: Career inventories across the semester and final portfolio due Week 12
 weekly_contact_hours: 2
 breadth_for:
   - Bachelor of Arts

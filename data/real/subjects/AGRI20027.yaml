@@ -20,8 +20,14 @@ topics:
 assessment:
   - kind: assignment
     weight: 50
+    timing:
+      kind: other
+      text: 5/6 Weeks after the end of teaching intensive
   - kind: test
     weight: 50
+    timing:
+      kind: other
+      text: During the Semester 1 mid semester break.
   - kind: assignment
     weight: 0
     hurdle: true

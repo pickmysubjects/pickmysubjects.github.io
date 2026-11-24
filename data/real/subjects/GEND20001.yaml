@@ -18,6 +18,9 @@ topics:
 assessment:
   - kind: quiz
     weight: 15
+    timing:
+      kind: other
+      text: Between Week 4 and Week 6
   - kind: report
     weight: 60
     timing:

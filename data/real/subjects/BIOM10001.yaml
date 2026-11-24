@@ -22,13 +22,22 @@ assessment:
   - kind: quiz
     weight: 20
     hurdle: true
+    timing:
+      kind: other
+      text: Approximately one quiz every 2 weeks.
   - kind: assignment
     weight: 30
     hurdle: true
+    timing:
+      kind: other
+      text: Approximately 5 reflections during semester of 200 words each, plus final reflection of 1000 words due in the exam period
   - kind: project
     weight: 20
     group: true
     hurdle: true
+    timing:
+      kind: other
+      text: Draft due from the group in Week 5 (500 words). Final due in Week 9 (1000 words).
   - kind: presentation
     weight: 30
     group: true

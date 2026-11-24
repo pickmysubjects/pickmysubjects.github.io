@@ -25,6 +25,9 @@ assessment:
       text: Throughout the teaching period
   - kind: assignment
     weight: 10
+    timing:
+      kind: other
+      text: After Week 8 of Semester
   - kind: test
     weight: 20
     timing:

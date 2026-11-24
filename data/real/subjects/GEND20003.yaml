@@ -24,8 +24,14 @@ assessment:
       text: Week 6
   - kind: assignment
     weight: 25
+    timing:
+      kind: other
+      text: Weekly entries from weeks 2 to 9
   - kind: report
     weight: 50
+    timing:
+      kind: other
+      text: Essay due week 12 and interactive oral assessment occurs in examination period
 breadth_for:
   - Bachelor of Biomedicine
   - Bachelor of Commerce

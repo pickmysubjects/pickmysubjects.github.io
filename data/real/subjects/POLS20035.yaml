@@ -25,6 +25,9 @@ assessment:
       text: Week 5
   - kind: assignment
     weight: 35
+    timing:
+      kind: other
+      text: Annotated bibliography due in Week 8; visual review due in Week 9
   - kind: report
     weight: 50
     timing:

@@ -43,6 +43,9 @@ assessment:
     weight: 30
     group: true
     hurdle: true
+    timing:
+      kind: other
+      text: Week 15
 weekly_contact_hours: 3.5
 breadth_for:
   - Bachelor of Arts

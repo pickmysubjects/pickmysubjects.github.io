@@ -30,6 +30,9 @@ assessment:
       text: Week 7
   - kind: participation
     weight: 55
+    timing:
+      kind: other
+      text: "Workshopping: Weeks 4-11; original short fiction: exam period"
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Biomedicine

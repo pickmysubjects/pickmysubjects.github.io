@@ -33,6 +33,9 @@ assessment:
       text: Week 10
   - kind: report
     weight: 55
+    timing:
+      kind: other
+      text: Week 11 (written component) and during the examination period (interactive oral)
 weekly_contact_hours: 2.5
 breadth_for:
   - Bachelor of Biomedicine

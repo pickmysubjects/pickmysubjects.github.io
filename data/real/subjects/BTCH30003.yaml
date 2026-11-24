@@ -14,8 +14,14 @@ assessment:
   - kind: project
     weight: 20
     group: true
+    timing:
+      kind: other
+      text: Around week 6
   - kind: report
     weight: 30
+    timing:
+      kind: other
+      text: Around week 10
   - kind: exam
     weight: 50
     timing:

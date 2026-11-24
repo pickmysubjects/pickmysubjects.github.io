@@ -37,6 +37,9 @@ assessment:
       text: From Week 1 to Week 12
   - kind: report
     weight: 40
+    timing:
+      kind: other
+      text: "Observed writing activity: Week 10; research essay: during exam period"
 weekly_contact_hours: 2.5
 breadth_for:
   - Bachelor of Biomedicine

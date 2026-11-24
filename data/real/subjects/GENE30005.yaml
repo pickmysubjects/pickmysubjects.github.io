@@ -13,10 +13,19 @@ non_allowed: []
 assessment:
   - kind: report
     weight: 20
+    timing:
+      kind: other
+      text: Due by week 12
   - kind: test
     weight: 12.5
+    timing:
+      kind: other
+      text: Week 6 or 7
   - kind: test
     weight: 12.5
+    timing:
+      kind: other
+      text: Week 9 or 10
   - kind: project
     weight: 0
     group: true

@@ -10,6 +10,9 @@ non_allowed: []
 assessment:
   - kind: assignment
     weight: 30
+    timing:
+      kind: other
+      text: From Week 7 to Week 14
   - kind: participation
     weight: 20
     timing:
@@ -23,6 +26,9 @@ assessment:
       text: Week 9
   - kind: assignment
     weight: 40
+    timing:
+      kind: other
+      text: Week 14
 breadth_for:
   - Bachelor of Arts
   - Bachelor of Biomedicine

@@ -30,6 +30,9 @@ assessment:
   - kind: assignment
     weight: 0
     hurdle: true
+    timing:
+      kind: other
+      text: Early and late in semester
   - kind: report
     weight: 15
     timing:
@@ -37,6 +40,9 @@ assessment:
       text: Throughout the semester
   - kind: report
     weight: 20
+    timing:
+      kind: other
+      text: First week of the end of semester exam period
   - kind: exam
     weight: 15
     timing:

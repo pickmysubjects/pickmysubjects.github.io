@@ -17,8 +17,14 @@ assessment:
   - kind: assignment
     weight: 15
     hurdle: true
+    timing:
+      kind: other
+      text: Weekly submissions (weeks 2-11)
   - kind: report
     weight: 40
+    timing:
+      kind: other
+      text: Week 4-6 and 9-10
   - kind: test
     weight: 25
     timing:

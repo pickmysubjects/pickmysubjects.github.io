@@ -20,6 +20,9 @@ topics:
 assessment:
   - kind: quiz
     weight: 40
+    timing:
+      kind: other
+      text: Due in Week 4, 7 and 11
   - kind: assignment
     weight: 35
     group: true

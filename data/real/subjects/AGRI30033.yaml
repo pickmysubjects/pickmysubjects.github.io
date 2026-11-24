@@ -29,6 +29,9 @@ assessment:
       text: From Week 1 to Week 12
   - kind: assignment
     weight: 20
+    timing:
+      kind: other
+      text: Week 4 or 5 Week 9 or 10
   - kind: report
     weight: 20
     timing:

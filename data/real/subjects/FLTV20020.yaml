@@ -17,8 +17,14 @@ topics:
 assessment:
   - kind: assignment
     weight: 50
+    timing:
+      kind: other
+      text: 4 to 6 weeks after the end of teaching
   - kind: assignment
     weight: 40
+    timing:
+      kind: other
+      text: 2 to 4 weeks after the end of teaching
   - kind: participation
     weight: 10
     timing:

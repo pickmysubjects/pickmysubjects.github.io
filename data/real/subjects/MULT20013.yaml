@@ -17,6 +17,9 @@ topics:
 assessment:
   - kind: report
     weight: 25
+    timing:
+      kind: other
+      text: Due Mid teaching period
   - kind: report
     weight: 25
     timing:
@@ -24,6 +27,9 @@ assessment:
       text: End of the teaching period
   - kind: report
     weight: 50
+    timing:
+      kind: other
+      text: Due four weeks after the end of teaching period
 breadth_for:
   - Bachelor of Biomedicine
   - Bachelor of Commerce

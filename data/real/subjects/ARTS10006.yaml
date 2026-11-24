@@ -11,6 +11,9 @@ non_allowed: []
 assessment:
   - kind: test
     weight: 50
+    timing:
+      kind: other
+      text: Due in Weeks 4, 6, 8, 10, 12
   - kind: report
     weight: 50
     timing:

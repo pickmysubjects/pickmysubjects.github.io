@@ -29,6 +29,9 @@ assessment:
       text: Throughout the teaching period
   - kind: report
     weight: 20
+    timing:
+      kind: other
+      text: 1 week after in-class presentation
   - kind: presentation
     weight: 50
     timing:

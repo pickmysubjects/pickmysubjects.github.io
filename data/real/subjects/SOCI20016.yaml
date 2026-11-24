@@ -31,6 +31,9 @@ assessment:
       text: Week 8
   - kind: assignment
     weight: 50
+    timing:
+      kind: other
+      text: Object analyses in weeks 6, 9, and 11; reflection paper due in the exam period
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Biomedicine

@@ -31,6 +31,9 @@ assessment:
       text: From Week 2 to Week 11
   - kind: presentation
     weight: 50
+    timing:
+      kind: other
+      text: Written piece - Week 12; Oral - examination period
 weekly_contact_hours: 3
 breadth_for: []
 handbook: https://handbook.unimelb.edu.au/2027/subjects/hpsc30041

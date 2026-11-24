@@ -20,8 +20,14 @@ assessment:
       text: From Week 2 to Week 12
   - kind: assignment
     weight: 10
+    timing:
+      kind: other
+      text: Week 6 or 7
   - kind: assignment
     weight: 10
+    timing:
+      kind: other
+      text: Week 11 or 12
   - kind: project
     weight: 30
     group: true

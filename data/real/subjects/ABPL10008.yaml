@@ -32,6 +32,9 @@ assessment:
   - kind: assignment
     weight: 50
     hurdle: true
+    timing:
+      kind: other
+      text: Week 14
 weekly_contact_hours: 4
 breadth_for: []
 handbook: https://handbook.unimelb.edu.au/2027/subjects/abpl10008

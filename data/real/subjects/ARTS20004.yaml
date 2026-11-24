@@ -20,10 +20,19 @@ topics:
 assessment:
   - kind: presentation
     weight: 25
+    timing:
+      kind: other
+      text: Due 2 weeks from the start teaching date
   - kind: assignment
     weight: 25
+    timing:
+      kind: other
+      text: Due 3 weeks from the start teaching date
   - kind: report
     weight: 50
+    timing:
+      kind: other
+      text: Due 3 weeks from the last teaching date
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Biomedicine

@@ -19,6 +19,9 @@ topics:
 assessment:
   - kind: assignment
     weight: 10
+    timing:
+      kind: other
+      text: Day 3
   - kind: project
     weight: 25
     timing:

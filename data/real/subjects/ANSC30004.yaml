@@ -22,6 +22,9 @@ recommended:
 assessment:
   - kind: quiz
     weight: 20
+    timing:
+      kind: other
+      text: End of week 3, 6, 9 and 12
   - kind: assignment
     weight: 20
     timing:

@@ -32,6 +32,9 @@ assessment:
       text: From Week 2 to Week 12
   - kind: presentation
     weight: 10
+    timing:
+      kind: other
+      text: Between weeks 2 and 12; due one week after oral presentation
   - kind: report
     weight: 40
     timing:

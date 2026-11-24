@@ -44,6 +44,9 @@ assessment:
       text: Week 6
   - kind: presentation
     weight: 25
+    timing:
+      kind: other
+      text: Week 10 to 12 (IOA) and Week 12 (written)
   - kind: exam
     weight: 50
     timing:

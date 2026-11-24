@@ -51,6 +51,9 @@ assessment:
   - kind: project
     weight: 50
     group: true
+    timing:
+      kind: other
+      text: Project Week 10, IOA Weeks 10 and 11, Reflection due in the examination period
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Biomedicine

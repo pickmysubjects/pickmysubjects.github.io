@@ -18,6 +18,9 @@ topics:
 assessment:
   - kind: test
     weight: 15
+    timing:
+      kind: other
+      text: Between week 2 and 4
   - kind: report
     weight: 35
     timing:

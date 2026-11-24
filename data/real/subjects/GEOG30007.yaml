@@ -16,11 +16,20 @@ non_allowed:
 assessment:
   - kind: assignment
     weight: 25
+    timing:
+      kind: other
+      text: Written on the last day of the fieldtrip
   - kind: assignment
     weight: 25
+    timing:
+      kind: other
+      text: Fourth Monday of semester 2
   - kind: report
     weight: 50
     group: true
+    timing:
+      kind: other
+      text: The first Monday after the non-teaching week in semester two.
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/geog30007
 source_year: 2027

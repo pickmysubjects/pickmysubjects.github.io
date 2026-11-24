@@ -37,6 +37,9 @@ assessment:
       text: Mid teaching period
   - kind: report
     weight: 60
+    timing:
+      kind: other
+      text: Start of examination period
   - kind: presentation
     weight: 20
     timing:

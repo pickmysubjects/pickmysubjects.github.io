@@ -25,8 +25,14 @@ non_allowed: []
 assessment:
   - kind: quiz
     weight: 20
+    timing:
+      kind: other
+      text: Weeks 2, 4, 7, and 9 of teaching semester
   - kind: report
     weight: 40
+    timing:
+      kind: other
+      text: Week 5 and Week 11 of teaching semester
   - kind: exam
     weight: 40
     timing:

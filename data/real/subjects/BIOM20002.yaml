@@ -28,6 +28,9 @@ topics:
 assessment:
   - kind: assignment
     weight: 20
+    timing:
+      kind: other
+      text: After each topic block
   - kind: test
     weight: 15
     timing:

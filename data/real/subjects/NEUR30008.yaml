@@ -18,9 +18,15 @@ non_allowed:
 assessment:
   - kind: exam
     weight: 15
+    timing:
+      kind: other
+      text: Taken in class at regular time points throughout semester
   - kind: assignment
     weight: 15
     group: true
+    timing:
+      kind: other
+      text: Completed in class time at regular time points throughout semester
   - kind: project
     weight: 30
     group: true

@@ -71,3 +71,18 @@ describe('assessment table timing', () => {
     ])
   })
 })
+
+describe('Handbook words we cannot read for sure', () => {
+  it('are quoted as they are, sorted after dated tasks and never placed on a week', async () => {
+    const { timingLabel, timingOrder, dueSegments, spanSegments } = await import('../src/utils/taskTiming')
+    const { semesterShape } = await import('../src/utils/semester')
+    const { KEY_DATES } = await import('../src/utils/keyDates')
+    const other = { kind: 'other' as const, text: 'Week 4 or 5' }
+    const t = (k: string, p?: Record<string, unknown>) => (k === 'timing.handbookSays' ? `Handbook: ${p?.text}` : k)
+    expect(timingLabel(t, other)).toBe('Handbook: Week 4 or 5')
+    expect(timingOrder(other)).toBeGreaterThan(timingOrder({ kind: 'afterTeaching', weeks: 3, text: 'x' }))
+    const sem = semesterShape(KEY_DATES, 2027, 'semester-1')!
+    expect(dueSegments(other, sem)).toEqual([])
+    expect(spanSegments(other, sem)).toEqual([])
+  })
+})

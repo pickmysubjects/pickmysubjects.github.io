@@ -48,6 +48,9 @@ assessment:
       text: Week 12
   - kind: participation
     weight: 50
+    timing:
+      kind: other
+      text: "Weekly reflections: Weeks 1–11; meta-reflection: Week 12"
 weekly_contact_hours: 5.5
 breadth_for:
   - Bachelor of Arts

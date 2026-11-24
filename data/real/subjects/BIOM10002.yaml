@@ -19,6 +19,9 @@ topics:
 assessment:
   - kind: quiz
     weight: 10
+    timing:
+      kind: other
+      text: Throughout semester, approximately one every 3 weeks
   - kind: assignment
     weight: 5
     timing:

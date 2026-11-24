@@ -17,6 +17,9 @@ topics:
 assessment:
   - kind: assignment
     weight: 20
+    timing:
+      kind: other
+      text: Week 4 or Week 5
   - kind: project
     weight: 50
     timing:

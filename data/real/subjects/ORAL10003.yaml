@@ -21,6 +21,9 @@ topics:
 assessment:
   - kind: exam
     weight: 30
+    timing:
+      kind: other
+      text: Mid-year
   - kind: exam
     weight: 35
     timing:
@@ -33,6 +36,9 @@ assessment:
       text: End of year examination period
   - kind: test
     weight: 7.5
+    timing:
+      kind: other
+      text: Middle of first half of year teaching period
   - kind: assignment
     weight: 2.5
     timing:
@@ -45,6 +51,9 @@ assessment:
       text: Throughout the teaching period
   - kind: test
     weight: 7.5
+    timing:
+      kind: other
+      text: Middle of second half of year teaching period
 weekly_contact_hours: 8
 breadth_for: []
 prescribed_texts: false

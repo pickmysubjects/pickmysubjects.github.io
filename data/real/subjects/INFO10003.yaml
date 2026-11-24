@@ -15,8 +15,14 @@ assessment:
   - kind: assignment
     weight: 30
     group: true
+    timing:
+      kind: other
+      text: Week 6 (approx.)
   - kind: assignment
     weight: 30
+    timing:
+      kind: other
+      text: Week 8 (approx.)
   - kind: assignment
     weight: 40
     group: true

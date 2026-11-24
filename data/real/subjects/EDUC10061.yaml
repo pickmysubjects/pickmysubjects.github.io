@@ -32,6 +32,9 @@ assessment:
       text: Early semester
   - kind: participation
     weight: 30
+    timing:
+      kind: other
+      text: Second half of semester
   - kind: assignment
     weight: 20
     timing:

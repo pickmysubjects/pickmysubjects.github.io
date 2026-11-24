@@ -24,8 +24,14 @@ non_allowed: []
 assessment:
   - kind: report
     weight: 20
+    timing:
+      kind: other
+      text: During the field trip in in the non-teaching week, with report due two weeks after the trip
   - kind: report
     weight: 30
+    timing:
+      kind: other
+      text: During scheduled practical classes in Weeks 3 or 4, 6 or 7, and 12
   - kind: exam
     weight: 50
     timing:

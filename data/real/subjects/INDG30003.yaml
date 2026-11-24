@@ -22,8 +22,14 @@ topics:
 assessment:
   - kind: assignment
     weight: 40
+    timing:
+      kind: other
+      text: Due within the intensive study period
   - kind: report
     weight: 60
+    timing:
+      kind: other
+      text: Due in the second week after the intensive study period has concluded
 weekly_contact_hours: 4.5
 breadth_for:
   - Bachelor of Biomedicine

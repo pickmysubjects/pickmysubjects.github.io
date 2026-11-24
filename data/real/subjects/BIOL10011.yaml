@@ -16,6 +16,9 @@ non_allowed:
 assessment:
   - kind: test
     weight: 40
+    timing:
+      kind: other
+      text: Fortnightly throughout the semester
   - kind: report
     weight: 20
     timing:

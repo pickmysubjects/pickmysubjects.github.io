@@ -30,6 +30,9 @@ assessment:
       text: Week 10
   - kind: quiz
     weight: 10
+    timing:
+      kind: other
+      text: Approximately week 5
   - kind: exam
     weight: 40
     timing:

@@ -32,6 +32,9 @@ assessment:
       text: Throughout the semester
   - kind: test
     weight: 20
+    timing:
+      kind: other
+      text: Provisionally Weeks 3, 6, and 9
   - kind: test
     weight: 30
     timing:

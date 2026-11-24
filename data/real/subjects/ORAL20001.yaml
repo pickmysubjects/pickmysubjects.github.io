@@ -29,9 +29,15 @@ topics:
 assessment:
   - kind: assignment
     weight: 10
+    timing:
+      kind: other
+      text: Early first half of year teaching period
   - kind: presentation
     weight: 10
     group: true
+    timing:
+      kind: other
+      text: Early first half of year teaching period
   - kind: assignment
     weight: 15
     timing:
@@ -45,6 +51,9 @@ assessment:
   - kind: assignment
     weight: 5
     group: true
+    timing:
+      kind: other
+      text: Early second half of year teaching period
   - kind: assignment
     weight: 15
     timing:

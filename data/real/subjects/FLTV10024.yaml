@@ -36,6 +36,9 @@ assessment:
       text: From Week 8 to Week 10
   - kind: presentation
     weight: 60
+    timing:
+      kind: other
+      text: Week 12 (Film) and During the assessment period (IOA)
 weekly_contact_hours: 2
 breadth_for:
   - Bachelor of Arts

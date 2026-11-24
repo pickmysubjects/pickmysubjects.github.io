@@ -39,6 +39,9 @@ assessment:
   - kind: project
     weight: 40
     group: true
+    timing:
+      kind: other
+      text: Week 12 (Portfolio) and Assessment Period (Reflections)
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Arts

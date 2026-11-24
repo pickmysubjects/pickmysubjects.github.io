@@ -16,6 +16,9 @@ assessment:
   - kind: assignment
     weight: 0
     hurdle: true
+    timing:
+      kind: other
+      text: Pre-teaching period; submission up to Week 4 to cater for late enrolments.
   - kind: assignment
     weight: 10
     timing:

@@ -32,6 +32,9 @@ assessment:
       text: Week 4 and 8
   - kind: report
     weight: 20
+    timing:
+      kind: other
+      text: From weeks 10-12, with the plan submitted 1 day prior to the IOA
   - kind: report
     weight: 30
     timing:

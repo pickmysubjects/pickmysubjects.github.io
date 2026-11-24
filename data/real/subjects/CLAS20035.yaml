@@ -24,8 +24,14 @@ assessment:
       text: Throughout the teaching period
   - kind: assignment
     weight: 35
+    timing:
+      kind: other
+      text: From Day 2 to Day 12
   - kind: test
     weight: 30
+    timing:
+      kind: other
+      text: Day 7
   - kind: exam
     weight: 30
     timing:

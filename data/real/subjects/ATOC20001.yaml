@@ -41,6 +41,9 @@ recommended:
 assessment:
   - kind: quiz
     weight: 20
+    timing:
+      kind: other
+      text: Equally spaced throughout the semester
   - kind: report
     weight: 25
     timing:

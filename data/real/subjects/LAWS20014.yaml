@@ -29,6 +29,9 @@ assessment:
       text: Week 5
   - kind: assignment
     weight: 25
+    timing:
+      kind: other
+      text: Due no later than the end of week 6.
   - kind: exam
     weight: 50
     timing:

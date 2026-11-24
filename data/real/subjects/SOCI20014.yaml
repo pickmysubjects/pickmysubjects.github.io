@@ -30,6 +30,9 @@ assessment:
       text: From Week 2 to Week 12
   - kind: assignment
     weight: 55
+    timing:
+      kind: other
+      text: Observed exercise occurs in week 12; research report due in examination period
 weekly_contact_hours: 2.5
 breadth_for:
   - Bachelor of Biomedicine

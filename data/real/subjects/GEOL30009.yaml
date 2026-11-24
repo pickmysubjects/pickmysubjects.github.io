@@ -18,12 +18,24 @@ non_allowed: []
 assessment:
   - kind: report
     weight: 20
+    timing:
+      kind: other
+      text: Due prior to commencement of trip
   - kind: assignment
     weight: 20
+    timing:
+      kind: other
+      text: During the field excursion
   - kind: assignment
     weight: 10
+    timing:
+      kind: other
+      text: During the field excursion
   - kind: assignment
     weight: 10
+    timing:
+      kind: other
+      text: During the field excursion
   - kind: assignment
     weight: 40
     timing:

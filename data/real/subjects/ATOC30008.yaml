@@ -30,6 +30,9 @@ recommended:
 assessment:
   - kind: assignment
     weight: 25
+    timing:
+      kind: other
+      text: Evenly spaced throughout the semester
   - kind: report
     weight: 25
     timing:

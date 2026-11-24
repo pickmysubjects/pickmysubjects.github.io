@@ -23,8 +23,14 @@ assessment:
       text: During the examination period
   - kind: assignment
     weight: 20
+    timing:
+      kind: other
+      text: Due week 6-7
   - kind: assignment
     weight: 20
+    timing:
+      kind: other
+      text: Due week 11-12
   - kind: participation
     weight: 10
     timing:

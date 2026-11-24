@@ -46,6 +46,9 @@ assessment:
       text: From Week 4 to Week 10
   - kind: presentation
     weight: 35
+    timing:
+      kind: other
+      text: Online exhibition due in Week 10, oral in Week 12
   - kind: report
     weight: 40
     timing:

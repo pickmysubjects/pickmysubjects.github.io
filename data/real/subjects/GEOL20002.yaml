@@ -25,6 +25,9 @@ assessment:
   - kind: assignment
     weight: 25
     hurdle: true
+    timing:
+      kind: other
+      text: Two weeks after the field excursion
   - kind: test
     weight: 25
     timing:
@@ -33,6 +36,9 @@ assessment:
       text: Week 12
   - kind: assignment
     weight: 25
+    timing:
+      kind: other
+      text: Week 3 and week 5 of the semester respectively
   - kind: exam
     weight: 25
     timing:

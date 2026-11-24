@@ -18,6 +18,9 @@ non_allowed: []
 assessment:
   - kind: assignment
     weight: 40
+    timing:
+      kind: other
+      text: Equally spaced throughout the semester
   - kind: exam
     weight: 60
     timing:

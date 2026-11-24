@@ -39,6 +39,9 @@ assessment:
       text: Week 6
   - kind: presentation
     weight: 25
+    timing:
+      kind: other
+      text: Week 10 to 12 (presentation) and during the examination period (written)
   - kind: exam
     weight: 50
     timing:

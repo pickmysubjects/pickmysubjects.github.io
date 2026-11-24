@@ -37,6 +37,9 @@ assessment:
       text: Week 12
   - kind: report
     weight: 10
+    timing:
+      kind: other
+      text: During the first week of the examination period
 weekly_contact_hours: 4
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/evsc30007

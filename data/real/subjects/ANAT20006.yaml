@@ -53,6 +53,9 @@ assessment:
       text: From Week 8 to Week 10
   - kind: quiz
     weight: 10
+    timing:
+      kind: other
+      text: 8 of 12 weeks during the semester
   - kind: exam
     weight: 60
     timing:

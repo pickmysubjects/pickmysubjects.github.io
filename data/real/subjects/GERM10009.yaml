@@ -26,6 +26,9 @@ topics:
 assessment:
   - kind: project
     weight: 30
+    timing:
+      kind: other
+      text: During the teaching period. Due date will depend on the topic chosen.
   - kind: test
     weight: 20
     timing:

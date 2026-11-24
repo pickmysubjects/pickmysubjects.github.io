@@ -18,9 +18,15 @@ non_allowed: []
 assessment:
   - kind: report
     weight: 10
+    timing:
+      kind: other
+      text: Week 3 or Week 4
   - kind: report
     weight: 20
     hurdle: true
+    timing:
+      kind: other
+      text: Week 4, 5 or 6
   - kind: report
     weight: 20
     hurdle: true

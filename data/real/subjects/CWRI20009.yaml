@@ -25,8 +25,14 @@ assessment:
       text: Week 7
   - kind: presentation
     weight: 15
+    timing:
+      kind: other
+      text: "Part A: Weeks 5-6; Part B: Examination period"
   - kind: participation
     weight: 60
+    timing:
+      kind: other
+      text: "Workshopping: Weeks 7-12; original screenplay: exam period"
 weekly_contact_hours: 2.5
 breadth_for:
   - Bachelor of Biomedicine

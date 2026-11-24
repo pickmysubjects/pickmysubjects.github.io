@@ -20,19 +20,37 @@ assessment:
   - kind: presentation
     weight: 0
     hurdle: true
+    timing:
+      kind: other
+      text: within 2 weeks prior to departure
   - kind: report
     weight: 10
     group: true
+    timing:
+      kind: other
+      text: within 1 week prior to departure
   - kind: assignment
     weight: 10
+    timing:
+      kind: other
+      text: Mid-trip
   - kind: assignment
     weight: 10
+    timing:
+      kind: other
+      text: End of trip
   - kind: presentation
     weight: 20
     group: true
+    timing:
+      kind: other
+      text: 1 week after the end of the trip
   - kind: report
     weight: 50
     hurdle: true
+    timing:
+      kind: other
+      text: 2-3 weeks after end of trip
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/engr30005
 source_year: 2027

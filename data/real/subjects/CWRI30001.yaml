@@ -30,6 +30,9 @@ assessment:
       text: Week 9
   - kind: participation
     weight: 55
+    timing:
+      kind: other
+      text: "Workshopping: Weeks 7-12; novel opening: examination period"
 weekly_contact_hours: 2.5
 breadth_for:
   - Bachelor of Biomedicine

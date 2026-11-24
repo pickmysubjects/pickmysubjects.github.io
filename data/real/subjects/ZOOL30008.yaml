@@ -19,10 +19,19 @@ non_allowed: []
 assessment:
   - kind: report
     weight: 30
+    timing:
+      kind: other
+      text: 3 - 4 weeks post fieldwork
   - kind: report
     weight: 60
+    timing:
+      kind: other
+      text: 8-9 weeks post fieldwork
   - kind: report
     weight: 10
+    timing:
+      kind: other
+      text: 6 - 8 weeks post fieldwork
 weekly_contact_hours: 4.5
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/zool30008

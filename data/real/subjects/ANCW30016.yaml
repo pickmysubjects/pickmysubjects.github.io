@@ -18,6 +18,9 @@ topics:
 assessment:
   - kind: presentation
     weight: 40
+    timing:
+      kind: other
+      text: Day 8
   - kind: report
     weight: 45
     timing:

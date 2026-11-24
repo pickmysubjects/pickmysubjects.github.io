@@ -30,6 +30,9 @@ assessment:
       text: Weeks 3, 6, 9, 12
   - kind: presentation
     weight: 60
+    timing:
+      kind: other
+      text: IOA & Written pitch - Wk 8 or 9; Project - exam period
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Biomedicine

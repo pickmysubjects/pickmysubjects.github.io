@@ -23,6 +23,9 @@ assessment:
       text: Week 8
   - kind: report
     weight: 50
+    timing:
+      kind: other
+      text: Essay due in Week 12 and Interactive Oral during the examination period
 weekly_contact_hours: 2.5
 breadth_for:
   - Bachelor of Commerce

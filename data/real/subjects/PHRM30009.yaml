@@ -22,6 +22,9 @@ non_allowed: []
 assessment:
   - kind: test
     weight: 15
+    timing:
+      kind: other
+      text: Around weeks 6-8
   - kind: project
     weight: 15
     timing:
@@ -32,6 +35,9 @@ assessment:
   - kind: report
     weight: 35
     hurdle: true
+    timing:
+      kind: other
+      text: Practical reports/assignments are due in weeks 3‐4 and 8-9. Submission of completed laboratory notebook is in week 12
   - kind: exam
     weight: 35
     timing:

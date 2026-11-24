@@ -20,6 +20,9 @@ topics:
 assessment:
   - kind: presentation
     weight: 50
+    timing:
+      kind: other
+      text: One in weeks 3-7; the other in weeks 8-12
   - kind: report
     weight: 50
     timing:

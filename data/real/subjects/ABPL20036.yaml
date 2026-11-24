@@ -21,6 +21,9 @@ topics:
 assessment:
   - kind: assignment
     weight: 15
+    timing:
+      kind: other
+      text: Throughout the semester, due Weeks 4, 8 and 11
   - kind: assignment
     weight: 5
     group: true
@@ -38,6 +41,9 @@ assessment:
   - kind: assignment
     weight: 50
     hurdle: true
+    timing:
+      kind: other
+      text: Week 14
 weekly_contact_hours: 4
 breadth_for:
   - Bachelor of Arts

@@ -26,6 +26,9 @@ assessment:
       text: During the teaching period
   - kind: exam
     weight: 20
+    timing:
+      kind: other
+      text: After completion of the field trip
 weekly_contact_hours: 5
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/bota30006

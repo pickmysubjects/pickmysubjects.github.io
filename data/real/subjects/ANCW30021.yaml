@@ -19,6 +19,9 @@ topics:
 assessment:
   - kind: test
     weight: 25
+    timing:
+      kind: other
+      text: Seminar 6
   - kind: report
     weight: 40
     timing:

@@ -23,6 +23,9 @@ assessment:
   - kind: presentation
     weight: 40
     group: true
+    timing:
+      kind: other
+      text: End of the in-country period
   - kind: report
     weight: 40
     group: true

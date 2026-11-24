@@ -14,9 +14,15 @@ assessment:
   - kind: assignment
     weight: 40
     group: true
+    timing:
+      kind: other
+      text: At the end of each 3 or 4 week module
   - kind: assignment
     weight: 0
     hurdle: true
+    timing:
+      kind: other
+      text: Progressively in each of the 3 week modules
   - kind: test
     weight: 30
     timing:
@@ -25,6 +31,9 @@ assessment:
   - kind: assignment
     weight: 0
     hurdle: true
+    timing:
+      kind: other
+      text: At the end of each 3‐week module
   - kind: assignment
     weight: 30
     timing:

@@ -42,6 +42,9 @@ assessment:
   - kind: test
     weight: 10
     hurdle: true
+    timing:
+      kind: other
+      text: Week 7 or 8
   - kind: project
     weight: 17
     group: true

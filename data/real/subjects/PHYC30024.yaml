@@ -26,8 +26,14 @@ non_allowed: []
 assessment:
   - kind: assignment
     weight: 15
+    timing:
+      kind: other
+      text: Friday 5.00pm, Week 5
   - kind: assignment
     weight: 15
+    timing:
+      kind: other
+      text: Friday 5.00pm, Week 11
   - kind: exam
     weight: 70
     timing:

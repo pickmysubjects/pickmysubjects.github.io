@@ -55,8 +55,14 @@ assessment:
       text: From Week 1 to Week 3
   - kind: assignment
     weight: 15
+    timing:
+      kind: other
+      text: 10 Weeks after the end of teaching
   - kind: report
     weight: 25
+    timing:
+      kind: other
+      text: 10 Weeks after the end of teaching
 weekly_contact_hours: 2
 breadth_for:
   - Bachelor of Biomedicine

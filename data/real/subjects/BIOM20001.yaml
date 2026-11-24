@@ -33,11 +33,20 @@ assessment:
     weight: 0
     group: true
     hurdle: true
+    timing:
+      kind: other
+      text: Week 2 or week 3
   - kind: assignment
     weight: 10
     hurdle: true
+    timing:
+      kind: other
+      text: Week 3 or Week 4 and Week 9 or Week 10
   - kind: test
     weight: 50
+    timing:
+      kind: other
+      text: In Week 4, Week 6, Week 8, Week 10 and Week 12
   - kind: exam
     weight: 40
     group: true

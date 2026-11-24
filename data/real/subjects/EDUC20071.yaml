@@ -29,6 +29,9 @@ assessment:
       text: Week 8
   - kind: report
     weight: 30
+    timing:
+      kind: other
+      text: Week 16
 breadth_for: []
 handbook: https://handbook.unimelb.edu.au/2027/subjects/educ20071
 source_year: 2027

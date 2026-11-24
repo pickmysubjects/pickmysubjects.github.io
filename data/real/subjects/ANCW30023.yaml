@@ -17,9 +17,15 @@ topics:
 assessment:
   - kind: assignment
     weight: 20
+    timing:
+      kind: other
+      text: Day 2
   - kind: presentation
     weight: 50
     group: true
+    timing:
+      kind: other
+      text: From Day 6 to Day 7
   - kind: assignment
     weight: 30
     timing:

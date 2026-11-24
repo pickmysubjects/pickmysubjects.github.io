@@ -19,8 +19,14 @@ topics:
 assessment:
   - kind: assignment
     weight: 20
+    timing:
+      kind: other
+      text: Day 5
   - kind: assignment
     weight: 20
+    timing:
+      kind: other
+      text: 3 Days after the end of teaching
   - kind: assignment
     weight: 10
     timing:

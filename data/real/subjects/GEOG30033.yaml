@@ -19,6 +19,9 @@ recommended:
 assessment:
   - kind: assignment
     weight: 15
+    timing:
+      kind: other
+      text: Due last day of field trip
   - kind: presentation
     weight: 35
     group: true
@@ -28,6 +31,9 @@ assessment:
   - kind: report
     weight: 50
     hurdle: true
+    timing:
+      kind: other
+      text: Due 2 weeks after the teaching period.
 weekly_contact_hours: 10
 prescribed_texts: false
 handbook: https://handbook.unimelb.edu.au/2027/subjects/geog30033

@@ -36,8 +36,14 @@ topics:
 assessment:
   - kind: participation
     weight: 40
+    timing:
+      kind: other
+      text: Week 2 of the intensive teaching period
   - kind: assignment
     weight: 30
+    timing:
+      kind: other
+      text: Week 3 of the intensive teaching period
   - kind: presentation
     weight: 30
     timing:

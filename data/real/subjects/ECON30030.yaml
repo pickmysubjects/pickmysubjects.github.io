@@ -27,6 +27,9 @@ assessment:
       text: Throughout the teaching period
   - kind: test
     weight: 20
+    timing:
+      kind: other
+      text: Week 6 or Week 7
   - kind: participation
     weight: 10
     timing:

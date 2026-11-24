@@ -18,6 +18,9 @@ topics:
 assessment:
   - kind: test
     weight: 20
+    timing:
+      kind: other
+      text: Mid Semester and End of Semester
   - kind: test
     weight: 30
     timing:

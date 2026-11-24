@@ -34,6 +34,9 @@ non_allowed:
 assessment:
   - kind: assignment
     weight: 25
+    timing:
+      kind: other
+      text: During placement hours
   - kind: report
     weight: 25
     timing:

@@ -30,6 +30,9 @@ assessment:
       text: 4 Weeks after the end of teaching
   - kind: assignment
     weight: 20
+    timing:
+      kind: other
+      text: 4 Days after the end of teaching
   - kind: assignment
     weight: 50
     timing:

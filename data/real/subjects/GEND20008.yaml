@@ -34,6 +34,9 @@ assessment:
       text: Week 6 and week 12
   - kind: report
     weight: 50
+    timing:
+      kind: other
+      text: Essay due in week 11, IOA occurs during the examination period
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Biomedicine

@@ -27,6 +27,9 @@ assessment:
       text: During the teaching period
   - kind: exam
     weight: 50
+    timing:
+      kind: other
+      text: Following the teaching period
 weekly_contact_hours: 2.5
 breadth_for:
   - Bachelor of Arts

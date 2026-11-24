@@ -35,6 +35,9 @@ assessment:
       text: Week 5
   - kind: report
     weight: 60
+    timing:
+      kind: other
+      text: Research Essay due week 11; oral defence in the examination period
 weekly_contact_hours: 2.5
 breadth_for: []
 min_attendance: 80

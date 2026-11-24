@@ -33,6 +33,9 @@ assessment:
       text: Week 10
   - kind: report
     weight: 35
+    timing:
+      kind: other
+      text: Week 14
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Arts

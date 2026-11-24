@@ -29,6 +29,11 @@ non_allowed:
 assessment:
   - kind: quiz
     weight: 10
+    timing:
+      kind: week
+      from: 2
+      to: 12
+      text: Weeks 2-12
   - kind: assignment
     weight: 40
     group: true

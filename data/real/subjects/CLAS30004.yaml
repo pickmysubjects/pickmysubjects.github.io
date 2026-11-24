@@ -22,8 +22,14 @@ topics:
 assessment:
   - kind: test
     weight: 10
+    timing:
+      kind: other
+      text: From Day 4 to Day 31
   - kind: assignment
     weight: 15
+    timing:
+      kind: other
+      text: From Day 10 to Day 34
   - kind: assignment
     weight: 15
     timing:
@@ -37,6 +43,9 @@ assessment:
       text: Week 4
   - kind: exam
     weight: 30
+    timing:
+      kind: other
+      text: 1 Days after the end of teaching
 breadth_for:
   - Bachelor of Arts
   - Bachelor of Biomedicine

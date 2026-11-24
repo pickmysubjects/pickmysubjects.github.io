@@ -31,6 +31,9 @@ assessment:
       text: Week 10
   - kind: report
     weight: 50
+    timing:
+      kind: other
+      text: Presentation in week 12, essay during exam period
 weekly_contact_hours: 3
 breadth_for:
   - Bachelor of Biomedicine

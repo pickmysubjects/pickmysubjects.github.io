@@ -19,6 +19,9 @@ topics:
 assessment:
   - kind: test
     weight: 20
+    timing:
+      kind: other
+      text: Start of intensive week 2
   - kind: assignment
     weight: 30
     timing:

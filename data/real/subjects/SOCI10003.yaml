@@ -19,6 +19,9 @@ assessment:
   - kind: presentation
     weight: 5
     group: true
+    timing:
+      kind: other
+      text: Week 2 -11 based on roster
   - kind: assignment
     weight: 15
     timing:

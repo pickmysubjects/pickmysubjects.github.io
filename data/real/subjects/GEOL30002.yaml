@@ -19,6 +19,9 @@ non_allowed: []
 assessment:
   - kind: assignment
     weight: 25
+    timing:
+      kind: other
+      text: Due on the last day of the scheduled field trip, immediately prior to departure from the field station.
   - kind: assignment
     weight: 35
     timing:

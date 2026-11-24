@@ -13,6 +13,9 @@ non_allowed: []
 assessment:
   - kind: quiz
     weight: 15
+    timing:
+      kind: other
+      text: At equal intervals throughout the teaching period
   - kind: exam
     weight: 50
     timing:
