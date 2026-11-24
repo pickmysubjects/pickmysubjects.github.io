@@ -47,6 +47,17 @@ export const SITE_RELEASES: SiteRelease[] = [
         id: "'Semester ini' kini menampilkan nilai dari kalkulator nilai akhir, dan bisa menambahkan semester ke kalender, termasuk tugas yang minggunya pasti.",
         hi: "'यह सेमेस्टर' अब फ़ाइनल मार्क कैलकुलेटर के अंक दिखाता है, और सेमेस्टर कैलेंडर में जोड़ता है, तय हफ़्ते वाले असेसमेंट के साथ।",
       },
+      {
+        en: "Taking a Summer or Winter Term subject? This semester lists it with that term's class and exam dates.",
+        'zh-CN': "选了暑期或冬季课程？“本学期”页会列出来，并附上那个学期的上课和考试日期。",
+        'zh-TW': "選了暑期或冬季課程？「本學期」頁會列出來，並附上那個學期的上課和考試日期。",
+        ja: "夏学期・冬学期の科目も「今学期」に出ます。その学期の授業と試験の日程付き。",
+        ko: "여름·겨울 학기 과목도 '이번 학기'에 나와요. 그 학기의 수업과 시험 일정과 함께.",
+        vi: "Học môn kỳ hè hoặc kỳ đông? Trang 'Học kỳ này' liệt kê kèm ngày học và ngày thi của kỳ đó.",
+        ms: "Ambil subjek Penggal Musim Panas atau Sejuk? 'Semester ini' menyenaraikannya dengan tarikh kelas dan peperiksaan penggal itu.",
+        id: "Ambil mata kuliah Summer atau Winter Term? 'Semester ini' menampilkannya beserta tanggal kuliah dan ujian term itu.",
+        hi: "समर या विंटर टर्म का विषय लिया है? 'यह सेमेस्टर' उसे उस टर्म की क्लास और परीक्षा की तारीख़ों के साथ दिखाता है।",
+      },
     ],
   },
   {
