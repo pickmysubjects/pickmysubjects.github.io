@@ -20,7 +20,7 @@ export interface NewsItem {
 
 export const NEWS: NewsItem[] = [
   {
-    date: '2026-12-15',
+    date: '2026-11-25',
     title: {
       en: "Version 1.1.0: the This semester page",
       'zh-CN': "1.1.0 上线：「本学期」页",
